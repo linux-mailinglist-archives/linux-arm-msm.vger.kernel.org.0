@@ -1,131 +1,121 @@
-Return-Path: <linux-arm-msm+bounces-41514-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-41515-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5C9FE9ECF0A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2024 15:53:33 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id DEFDE9ECF1F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2024 15:55:07 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 590E1167E77
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2024 14:53:30 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id C52B6188802A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2024 14:54:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id ABE1418A6DE;
-	Wed, 11 Dec 2024 14:53:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 054711494CC;
+	Wed, 11 Dec 2024 14:54:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Z8Xwhc6X"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="nTcLD1z/"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pf1-f173.google.com (mail-pf1-f173.google.com [209.85.210.173])
+Received: from mail-ej1-f47.google.com (mail-ej1-f47.google.com [209.85.218.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DDD11494CC
-	for <linux-arm-msm@vger.kernel.org>; Wed, 11 Dec 2024 14:53:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 357561D61A2
+	for <linux-arm-msm@vger.kernel.org>; Wed, 11 Dec 2024 14:54:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733928808; cv=none; b=c0KzWIflvjg+aAwSmF3fTHyiZICORPQv8CDTMYo0njx/pcgItp5wBVljjLfivUZhAkrx3MvO4fINYgJSdr7idYMy/iFYLinkBaSDESfobKexnuA3CPq5TkxsPf25RHjUN6otjU5akZhRydkBpIjLYLmm12RuHP18oCZe/8fcEdc=
+	t=1733928852; cv=none; b=kle09LUsa0XcNqL4ZKBmxYXeV8/UYCiw8hT26bxFa779mkRQ1I2laN19ztwxCg+rye4KuSTOfP+fV+YS8MFYH+NbWZ3PuY8LJRZY2weOf9eDXmlBs/m/vfBwH31e5RoqClBVEow4NTqnhgfz/7Ao2FJq7+Qb6koAqDVbvBAnh3o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733928808; c=relaxed/simple;
-	bh=71rnSn7wFVoD21U48pjt1zEn20evixs1VxJ1eb4i9XA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=MjdNdjmuVyYqFgadTF4cHln3y5a1N78Z3Advt8x7rzpPXZ5fU6IMd8eYozPYNJrVI5ITHkOcwbIZWmyjt4wxWTazwrMpJkCdtfFlbxKW5ZbNJUvhLdkXU/ZBD7FefbMJkMUk0HmYhqwUOSL8iC/ipsbeAUnsSWeQsZBP2kt+2cY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Z8Xwhc6X; arc=none smtp.client-ip=209.85.210.173
+	s=arc-20240116; t=1733928852; c=relaxed/simple;
+	bh=TA26KGjfUYtHcpviYZWDnnwFJwB1nA6T2oAA/scN6hU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=dNsrRS5AkXHbcf3wzmVDUPRK3N9HImPyL+DMoELpf/yPYunja9HD1RyJYLz/Z9HSI7GMjpdhI5+lzI5+a2xh5fhm6n/BJZvHmgGGt1nfUvZ8kLIq3bTYUw+L5UQLLmsB1mYKTUe1iqflCvcU7eRlLqfhEn2nrr7hnnolgxfljsk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=nTcLD1z/; arc=none smtp.client-ip=209.85.218.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pf1-f173.google.com with SMTP id d2e1a72fcca58-728eedfca37so805762b3a.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Dec 2024 06:53:26 -0800 (PST)
+Received: by mail-ej1-f47.google.com with SMTP id a640c23a62f3a-aa67af4dc60so618724666b.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Dec 2024 06:54:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1733928806; x=1734533606; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=ymW0qBk2uaFHFENJ06sbcJsCW5UbRGhhuFjHIPKzUxM=;
-        b=Z8Xwhc6X+ORWsd1PyKMplb0d92snfxj6PPptVVhfmea0zGvD2n6gxMDxkWowoIXeJ6
-         qlPLSLimbO3AT34yyqNAyyTyuOrai2tLhGHZIn9sbh6/9LOFCdTstLqQgkxm9A62t842
-         XJDqlKq+Z/A6J1IKmK7KbmulBVVj7lmo/sadGJcOH5hRNkeowsjkn56Nj5aSgYgLwIUh
-         y/gCNj+TRnZpPIb0HT1+QIy2r937bdQLR/s91YdC8oTo/xdPfVwtrUjIJ9IW2ZJx8uw2
-         4Ej8B6T0h0uap5OeMSpvibuWCT7aZImfscHRJujE9RDdJg5FDGGfLdljzuYS2FHzR5f0
-         qT+A==
+        d=linaro.org; s=google; t=1733928849; x=1734533649; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=3ktlO6czYcyYSCmYggj2K8QrV0XdcUJX5mHC3XGXDtU=;
+        b=nTcLD1z/hx6Mz0dpJu78nxwyu9yUzZLsjYihxO0rpUMK8albX8aKyeh+/yHyxHGeAH
+         EknDZiMcTt/XD0iR/35YWwntvbRDxMM0veWkpw2yj6g2G0Omr83w14ktMuN6Kx/rimRP
+         0dqNXx32rCFLwuX2pH9dxIzpl8ovmFikn/WncVpVReWp6J2SdBaFQh/CZJoCZhaBvMYL
+         WnwBHPF/TvtLEHJBomfGcDMXmH0EEGcYiMmrfNnMDsCFqLkYlBtXnCMGHlQIu+7LbKwY
+         HkxM7W2yOQtCP6OMQhFN2SzXpkUuuzIhQniLB9Wp44Ecl5Ef1avkf1MUb/+H0+7U/uj1
+         GnVw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733928806; x=1734533606;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
+        d=1e100.net; s=20230601; t=1733928849; x=1734533649;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ymW0qBk2uaFHFENJ06sbcJsCW5UbRGhhuFjHIPKzUxM=;
-        b=rmqLx7/IxdlrKxtckprfwmjETnHpGY7IrTjVFqsvgoSz8vV+LM81LfbcebNOGf6njf
-         GVpX1YorQv1Nx3T2i5q8LT+ARADQ3UjO3F5KxlkBJf7S9Wft/lXxb7RaZo5x/s8cShNb
-         VJxUegI4teNYP2XFUB6p7l0Ev/oDAHkl2OXkk/cJMe3Vh7Ion04TKRDD3kU77RrTwM8J
-         SzE7Rsc5ZNVR3tj1oJU0nE4DwOhbKDKUk8v3tlsU/oB04sSFBmbiLiqbK9/PXrdVW9Kg
-         o67JhWY/l8nkI4Y7WdgcTh9WwZKpi12L4uRnMTkYqbIfzimQQsDHf74UPoA1j2A65zM4
-         xX7A==
-X-Forwarded-Encrypted: i=1; AJvYcCXfFjxLlQ/Xo8a7AopPBM/JiUNl1knCYlKQqB5rOjT/93pSqFGlix4pGuG9epKYOxhX76qwJfQ9jB3j6AIi@vger.kernel.org
-X-Gm-Message-State: AOJu0YygmrF38WQC8GNjyPNwAO+hgm0ULiRYNa/cZulEI2IcS6/c3fJ7
-	WTBTEhj2O6Lq6SxDI63benYL5cScozW63mY3TjyyytSTtueKoI36YuZ0KbRdm1Ow6m4skcKQfHM
-	=
-X-Gm-Gg: ASbGncsAuDbf64u7oIRmGreetmMMaKfnbN//n9IMFDYhGvJn3lFyJgq/5+N/e0bb3Ui
-	FS6lPlKhElc+ElxEe0pV9C7loZqprrvg2Xlx958BEc2bPSRPWUCDeJ4OL4HTQgkI1XCuDv9tUf/
-	YMqy9w2TCjjLNzVatwOTJioPw7UaOKH7wErdZMw5Uc2TPeXnAnyiXCwlFp+iYYLDW8wsIv3NTRS
-	dkL4fMh0te+sB7fW38ZjeXXl8qJwaI0tG+4UbI2v1Qaqg0/HFfhcFXapLF606A=
-X-Google-Smtp-Source: AGHT+IFq2maYgX0r5WCfZcfI+e7jk/jBe+sBMf30hjHmbIonDMVLKoFqFD2DGiVukLa2oSKZQbvJiw==
-X-Received: by 2002:a05:6a00:c8a:b0:727:3b77:4174 with SMTP id d2e1a72fcca58-728ed4b9fa7mr5561458b3a.23.1733928806217;
-        Wed, 11 Dec 2024 06:53:26 -0800 (PST)
-Received: from thinkpad ([120.60.55.53])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-725f03a0ca4sm5205402b3a.113.2024.12.11.06.53.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 11 Dec 2024 06:53:25 -0800 (PST)
-Date: Wed, 11 Dec 2024 20:23:15 +0530
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: Johan Hovold <johan@kernel.org>
-Cc: mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: mhi resume failure on reboot with 6.13-rc2
-Message-ID: <20241211145315.vaf7gbapieywcvau@thinkpad>
-References: <Z1me8iaK7cwgjL92@hovoldconsulting.com>
+        bh=3ktlO6czYcyYSCmYggj2K8QrV0XdcUJX5mHC3XGXDtU=;
+        b=QWj2gEulJci+jcKGBo9CcuOM0DPUrPPlwlkbLGAuOzTqpzK0c05mzM9vaMGEbf34S4
+         XMEOK9n2uTVdivKl0x+vSlq/U5TaaoaKAODyrOSUPPN9RuczsRxmmWI4QZefb07ts0BG
+         Cx76ZABDuR3k2gtj3Ct7Ix4h6hBHGOA6Ci0zlEuzt0U1QVe6nYW8ZLYl0GsyxMym9VJR
+         59f4UEmPqcSCbt1U6E6QPL3XmNTH30sMU6RBaB2JDE4xIFT1BZYjQLEacIqyAJW/Xhve
+         TTvDbg765HI4a7ugN91hcdQsFb3PjyOpTxlQun6k37rVNywgbyrkXHTeF2Hbp/WVIhm+
+         vtDA==
+X-Gm-Message-State: AOJu0YyJB4rIfmIu8Wuh2Hr40b8Je/jrXxNKiekZNbsrg1PK1tbEr9Ij
+	ZnaLYLh8+xD8tzig0YX85j0C5vW4gL3lpdYKfd+Fa1Hsq6aJV/sPAbHUrvHT8cY=
+X-Gm-Gg: ASbGnctdCZxakU4Z093PDVULpJWUeHCCtwBoZpkHFfh+IQ9BwaummOr9OHo7LmOXlZC
+	rS2GFAnTSQY5hpGhbrYxckXaD9lQBGUZ3I14rWZYj6jdgoCtWIEi1GX88hlwJB232W5rKZO/Yc2
+	PCaAzh0FSui09LRx6CINqmxBVNnjBzAFeqAO9MeFUNfjmnap0Cd/PV8liYAuGjOW+rqGdvkzDKy
+	O4ChaebbzivC/5PrjYmWzjxHfP1Zghp79nCDHOwyuM3SYUMAy67ruPPkCUHQjm7MsI=
+X-Google-Smtp-Source: AGHT+IExrTQgcrzFJ0AioGe6gUTXc8SXmmdedfxuT1544kYxd1QbVPq7wj4wcyNV0DI4WQLs6/DGMw==
+X-Received: by 2002:a17:907:82a7:b0:aa6:9ee2:f4c9 with SMTP id a640c23a62f3a-aa6c1ae752bmr8454466b.23.1733928849467;
+        Wed, 11 Dec 2024 06:54:09 -0800 (PST)
+Received: from [192.168.0.40] ([176.61.106.227])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-aa68770c4a4sm473262766b.163.2024.12.11.06.54.08
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 11 Dec 2024 06:54:09 -0800 (PST)
+Message-ID: <beaf4e8a-51a5-431e-8538-269d2db94f15@linaro.org>
+Date: Wed, 11 Dec 2024 14:54:08 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v7 2/3] clk: qcom: common: Add support for power-domain
+ attachment
+To: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
+ <sboyd@kernel.org>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20241211-b4-linux-next-24-11-18-clock-multiple-power-domains-v7-0-7e302fd09488@linaro.org>
+ <20241211-b4-linux-next-24-11-18-clock-multiple-power-domains-v7-2-7e302fd09488@linaro.org>
+ <fca39cde-b9c8-4f1d-a4d0-92a1d739b57f@linaro.org>
+Content-Language: en-US
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <fca39cde-b9c8-4f1d-a4d0-92a1d739b57f@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <Z1me8iaK7cwgjL92@hovoldconsulting.com>
 
-Hi,
-
-On Wed, Dec 11, 2024 at 03:17:22PM +0100, Johan Hovold wrote:
-> Hi Mani,
+On 11/12/2024 13:36, Vladimir Zapolskiy wrote:
+>> +    struct dev_pm_domain_attach_data pd_data = {
+>> +        .pd_names = 0,
+>> +        .num_pd_names = 0,
+>> +    };
 > 
-> I just hit the following modem related error on reboot of the x1e80100
-> CRD for the second time with 6.13-rc2:
+> Please remove the added local variable.
 > 
-> 	[  138.348724] shutdown[1]: Rebooting.
->         [  138.545683] arm-smmu 3da0000.iommu: disabling translation
->         [  138.582505] mhi mhi0: Resuming from non M3 state (SYS ERROR)
->         [  138.588516] mhi-pci-generic 0005:01:00.0: failed to resume device: -22
->         [  138.595375] mhi-pci-generic 0005:01:00.0: device recovery started
->         [  138.603841] wwan wwan0: port wwan0qcdm0 disconnected
->         [  138.609508] wwan wwan0: port wwan0mbim0 disconnected
->         [  138.615137] wwan wwan0: port wwan0qmi0 disconnected
->         [  138.702604] mhi mhi0: Requested to power ON
->         [  139.027494] mhi mhi0: Power on setup success
->         [  139.027640] mhi mhi0: Wait for device to enter SBL or Mission mode
+>>       cc = devm_kzalloc(dev, sizeof(*cc), GFP_KERNEL);
+>>       if (!cc)
+>>           return -ENOMEM;
+>> +    ret = devm_pm_domain_attach_list(dev, &pd_data, &cc->pd_list);
 > 
-> and then the machine hangs.
+> Please simplify it to
 > 
-> Do you know if there are any changes since 6.12 that could cause this?
-> 
+>      ret = devm_pm_domain_attach_list(dev, NULL, &cc->pd_list);
 
-Only 3 changes went in for 6.13-rc1 and they shouldn't cause any issues. One
-caused the regression with pcim_iomap_region(), but you submitted a fix for
-that and other two were trivial.
+My apologies, I cherry-picked the wrong version of this patch from my 
+working tree to my b4/send tree.
 
-From the log, 'mhi mhi0: Resuming from non M3 state (SYS ERROR)' indicates that
-the firmware got crashed while resuming. So maybe you should check with ath12k
-folks.
-
-- Mani
-
--- 
-மணிவண்ணன் சதாசிவம்
+---
+bod
 
