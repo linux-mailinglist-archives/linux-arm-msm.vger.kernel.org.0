@@ -1,259 +1,139 @@
-Return-Path: <linux-arm-msm+bounces-41400-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-41401-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id F17E59EC477
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2024 06:53:39 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 180769EC48B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2024 07:00:24 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 25626164B26
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2024 05:53:36 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E34A2167B63
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2024 06:00:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A4F4C1C2324;
-	Wed, 11 Dec 2024 05:53:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F37DE1C07F7;
+	Wed, 11 Dec 2024 06:00:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="AnEQHZ8s"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Xipfkh1P"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f180.google.com (mail-pf1-f180.google.com [209.85.210.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D94702451CC;
-	Wed, 11 Dec 2024 05:53:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CA778635C
+	for <linux-arm-msm@vger.kernel.org>; Wed, 11 Dec 2024 06:00:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733896416; cv=none; b=T1jPEGEeM7P3ETnwYSpLPFWXvTAyDg6fah0ELqYUDmARl4x9A/ItTOkXzMz5yUYsofDHh/Stwm1IWhR24LL1PLzPPs6RpVbH5af0cU4zEuGswY8sT6znW9iry79tUP87O24A1IAH8sShAENYvJVv0s+Cxcy70C78vSIgug1c7F4=
+	t=1733896815; cv=none; b=JINmmkpIjzei6hyhtbDnLitgmVWWn/ff8FAviJUwWQ23kWpEgxvnR1x6qY0WCFjM3km7li70nHTx1JyriRPQMpIS6ubp0222xH25SxqfcoTb7A4uBmU5PnVn+2LWkONP0C27kiOaH0qwHO8NLAdA27Ds6gy8hQu96VHpDSKWOpM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733896416; c=relaxed/simple;
-	bh=QxRpAVNXkbIAVUiz32iWyuxIOggkmsPVhFGj9HPj798=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=SH9+3554vY1zabAgnIfHZs6JPbZzzZ4knLnb3YQSr8JIINEnmjVj1bqDtVyTyJDEDf4Gq1B3Me6sKzQf0fRf7soVF5M/xcKL9nX4/t3NWr/2KRLHKczQm7zyXk3WoxEI8k9PzAOTYImhYRVHTin5CwMPmhmIpJcUiguMLKBfsgc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=AnEQHZ8s; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BB4mim3027746;
-	Wed, 11 Dec 2024 05:53:27 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	wJqIu8MlLVnjkO5uOkWhWu+8Cc+eMZUqFilakTEtHnI=; b=AnEQHZ8sxEneL9Ld
-	LIWZA36P9WJU3XgLSLxoslCtKdpnMvNVFfXh3gSXuPsnuOBR4w5TegRgI67Q+2Cx
-	65QpcJsiyg5t5wmYUsfSkbgBZVskv1xLbCXKTjJjR3MhimWI9jjO47sN6y4crZ1q
-	iSlakjeDItoeR7Lsb0A1j0DjV0U3UtpeLPQmbZg8t9HHo08VfFQVUlLEa8YAJZ+O
-	NQfRPq4tbfvwIkib20BVflzH+KKXiiTkmLZLqqB1LfQlQIy9k6M9sKi5H3aJGH6F
-	cq0Z2e/8kKfHoRhCaUqflM3uBjSZO2aYO+W+qRSqG/3T8lEDTrZCgNz6DqWiYNZ+
-	2sjv3w==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43eg9ekn4n-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 11 Dec 2024 05:53:27 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4BB5rQsD000968
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 11 Dec 2024 05:53:26 GMT
-Received: from [10.231.216.175] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 10 Dec
- 2024 21:53:21 -0800
-Message-ID: <7eb71706-1393-4e49-996e-1cf9d8c98d16@quicinc.com>
-Date: Wed, 11 Dec 2024 13:53:18 +0800
+	s=arc-20240116; t=1733896815; c=relaxed/simple;
+	bh=O/HUgr1J4WfobxzE8q+ngELR/opzNqY/jg3OvkCE2s0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=flFbG7WQjztyJ2J8/h+x2AK5R6k0wRBJtVzhmbjhAVyoj0ADOQyNmrN+dtlcwg5qJyHgugagADbyVTxvLF4mCMnmGG/Up5yXiGwePIewu4xLzEZdd0mdEG3EzN6hwMaCJ162qjVkjV3N4E1l0aPdc2yrvVj9GXcuLnnoHbLZmgk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Xipfkh1P; arc=none smtp.client-ip=209.85.210.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-pf1-f180.google.com with SMTP id d2e1a72fcca58-725f2f79ed9so2263092b3a.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Dec 2024 22:00:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1733896813; x=1734501613; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=o6D+5UJWf2Pb6ZMQTYtdZG9lwxLVemgiQeSinsEy4PM=;
+        b=Xipfkh1PvJuKvPJZA7QDTVaH9AbL+BKKgPGprps+M/GhJuYzBDbulJXXzCdi2MfGAw
+         2QP5+r9UJ9YFXPrMs/qaLI8pumzLBFksbTdfYGxePxMDZzaPx7WvTpRXDPn2dVxBNVLZ
+         fQqKlhOrMHW3awuIyJ2lmVEFILvo/FrxlR6Zi2iZF+5CGA0SOVjlg89FHcQETRyMgvrx
+         gpIlldISzDi0I3f96jFAd66i/W6ozkMBgNW5gEvmCqn1ERQ4D3iyp56ZJv7ISLre7DQB
+         K1TZxAfJtShua6RfpDKhNj/uv5KK2u9UXVcg5lj4jMQMZnPJA40Mkk2WL0HYgm/gReUH
+         RgAg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1733896813; x=1734501613;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=o6D+5UJWf2Pb6ZMQTYtdZG9lwxLVemgiQeSinsEy4PM=;
+        b=oVuQnm5wmzFaQ8r7meTbKGxRIBqLNzus6kJg3GAI2fJ/dSyVq4U+j8Hxn/hsClVpPP
+         Z42BVfbMOuzE9ZwcSDLDbWkcRjsX86PgS1LwI/YTFV651KEZWUBa5ISrTAbyC6Vlrw59
+         irsjDC0OvDppC1wJVJah+MyRZtaZJD12WK8VT00e8F1lp4ZL94G9eZi67h6z+19UnWaK
+         /OhsUdWBvfo34W6hch1vqizwg2ZamMASmV4UZxpI5JOqe4mh0PkWnaW3xNKa6OFL9L6u
+         U0STC4odzLdxo66XGTCNrsqeGSjdqJHVT/D0mH34VpPiMxSi128rtAkeOm5kN72GUk+V
+         JUxg==
+X-Forwarded-Encrypted: i=1; AJvYcCUdRrUlK0+U16WV44CXKfToATHPdWoTu8AXno22sRnFHEu3l0TwPxSDnaeq2hKQxOXSjtWXeKLLpsVyeY6X@vger.kernel.org
+X-Gm-Message-State: AOJu0YwUnQYmggI3GR8jfdqL855K17gCPfVJOdIFekAr5D1JynNkbGvX
+	bCcSmoBQgnJCmK9+WzGZ0o3EPHzWbpMrV3COj6622rBQrX+Srv3/prQXXX82vg==
+X-Gm-Gg: ASbGnctkINbiL7Q5D1tyMW/FALVAcgsWaQ9HEVYHGueMeOuxj0nWjmN3IvNovZizSvc
+	C6+4CX9L7TirEZapUfQL6bXKv9Sm3+T+kZzgr0jZX+LOdtNsyfGDdf1638eLtihqTrLoU65/y4q
+	4o8JWuPKKisyISu8A44GldURf9imzHRvGSKkuKqAjZ2Bt54A8KDXkm6U3VI7K3bzven5i5XVzET
+	y2gaNwpg8eBdn37YufbbFXCyY/6EHdPLVqmxVQ8IYlp+0AFLZKu5gYD0rbl+Yc=
+X-Google-Smtp-Source: AGHT+IETlOHgTkLxhqU/G3R9N0fR+q6nWJP5t1CaevYyD+oehCnYRHb6VBsIy/3q5g8vtc8rjNY1ow==
+X-Received: by 2002:a05:6a20:d50c:b0:1e0:d5f3:f3ed with SMTP id adf61e73a8af0-1e1c129622amr3306101637.19.1733896813626;
+        Tue, 10 Dec 2024 22:00:13 -0800 (PST)
+Received: from thinkpad ([120.60.55.53])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-725e6e024e4sm5434850b3a.153.2024.12.10.22.00.07
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 10 Dec 2024 22:00:13 -0800 (PST)
+Date: Wed, 11 Dec 2024 11:30:00 +0530
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To: Bjorn Helgaas <helgaas@kernel.org>
+Cc: Krishna chaitanya chundru <quic_krichai@quicinc.com>,
+	andersson@kernel.org, Bjorn Helgaas <bhelgaas@google.com>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	cros-qcom-dts-watchers@chromium.org,
+	Jingoo Han <jingoohan1@gmail.com>,
+	Bartosz Golaszewski <brgl@bgdev.pl>, quic_vbadigan@quicinc.com,
+	linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3 1/6] dt-bindings: PCI: Add binding for qps615
+Message-ID: <20241211060000.3vn3iumouggjcbva@thinkpad>
+References: <20241112-qps615_pwr-v3-1-29a1e98aa2b0@quicinc.com>
+ <20241204212559.GA3007963@bhelgaas>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 2/4] Bluetooth: qca: Add support in firmware-name to
- load board specific nvm
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC: Marcel Holtmann <marcel@holtmann.org>,
-        Luiz Augusto von Dentz
-	<luiz.dentz@gmail.com>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski
-	<krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Bjorn Andersson
-	<andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        "Balakrishna
- Godavarthi" <quic_bgodavar@quicinc.com>,
-        Rocky Liao
-	<quic_rjliao@quicinc.com>,
-        <linux-bluetooth@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <quic_jiaymao@quicinc.com>, <quic_shuaz@quicinc.com>,
-        <quic_zijuhu@quicinc.com>, <quic_mohamull@quicinc.com>
-References: <20241210151636.2474809-1-quic_chejiang@quicinc.com>
- <20241210151636.2474809-3-quic_chejiang@quicinc.com>
- <wxb6oo3f7cri27eq3fnqttbl74lkn3rjo5o5rfttbwz7k5v2ug@w4hlrtig2nza>
-Content-Language: en-US
-From: "Cheng Jiang (IOE)" <quic_chejiang@quicinc.com>
-In-Reply-To: <wxb6oo3f7cri27eq3fnqttbl74lkn3rjo5o5rfttbwz7k5v2ug@w4hlrtig2nza>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: EnniXAaPZ-SipArb8z28DOaSyrQ1FHLa
-X-Proofpoint-ORIG-GUID: EnniXAaPZ-SipArb8z28DOaSyrQ1FHLa
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015
- priorityscore=1501 phishscore=0 spamscore=0 mlxscore=0 suspectscore=0
- bulkscore=0 lowpriorityscore=0 impostorscore=0 adultscore=0
- mlxlogscore=999 malwarescore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2411120000 definitions=main-2412110042
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20241204212559.GA3007963@bhelgaas>
 
-Hi Dmitry, 
-
-On 12/10/2024 11:28 PM, Dmitry Baryshkov wrote:
-> On Tue, Dec 10, 2024 at 11:16:34PM +0800, Cheng Jiang wrote:
->> Different connectivity boards may be attached to the same platform. For
->> example, QCA6698-based boards can support either a two-antenna or
->> three-antenna solution, both of which work on the sa8775p-ride platform.
->> Due to differences in connectivity boards and variations in RF
->> performance from different foundries, different NVM configurations are
->> used based on the board ID.
->>
->> Therefore, in the firmware-name property, if the NVM file has an
->> extension, the NVM file will be used. Otherwise, the system will first
->> try the .bNN (board ID) file, and if that fails, it will fall back to
->> the .bin file.
->>
->> Possible configurations:
->> firmware-name = "QCA6698/hpnv21";
->> firmware-name = "QCA6698/hpnv21.bin";
->>
->> Signed-off-by: Cheng Jiang <quic_chejiang@quicinc.com>
->> ---
->>  drivers/bluetooth/btqca.c | 67 +++++++++++++++++++++++++++++++++++++--
->>  1 file changed, 65 insertions(+), 2 deletions(-)
->>
->> diff --git a/drivers/bluetooth/btqca.c b/drivers/bluetooth/btqca.c
->> index dfbbac922..deb2b1753 100644
->> --- a/drivers/bluetooth/btqca.c
->> +++ b/drivers/bluetooth/btqca.c
->> @@ -272,6 +272,27 @@ int qca_send_pre_shutdown_cmd(struct hci_dev *hdev)
->>  }
->>  EXPORT_SYMBOL_GPL(qca_send_pre_shutdown_cmd);
->>  
->> +static bool qca_get_alt_nvm_path(char *path, size_t max_size)
->> +{
->> +	char fwname[64];
->> +	const char *suffix;
->> +
->> +	suffix = strrchr(path, '.');
->> +
->> +	/* nvm file name has a suffix, replace with .bin */
->> +	if (suffix && suffix != path && *(suffix + 1) != '\0' && strchr(suffix, '/') == NULL) {
->> +		strscpy(fwname, path, suffix - path + 1);
->> +		snprintf(fwname + (suffix - path), sizeof(fwname) - (suffix - path), ".bin");
->> +		/* If nvm file is already the default one, return false to skip the retry. */
->> +		if (strcmp(fwname, path) == 0)
->> +			return false;
->> +
->> +		snprintf(path, max_size, "%s", fwname);
->> +		return true;
->> +	}
->> +	return false;
->> +}
->> +
->>  static int qca_tlv_check_data(struct hci_dev *hdev,
->>  			       struct qca_fw_config *config,
->>  			       u8 *fw_data, size_t fw_size,
->> @@ -564,6 +585,19 @@ static int qca_download_firmware(struct hci_dev *hdev,
->>  					   config->fwname, ret);
->>  				return ret;
->>  			}
->> +		}
->> +		/* For nvm, if desired nvm file is not present and it's not the
->> +		 * default nvm file(ends with .bin), try to load the default nvm.
->> +		 */
->> +		else if (config->type == TLV_TYPE_NVM &&
->> +			 qca_get_alt_nvm_path(config->fwname, sizeof(config->fwname))) {
->> +			bt_dev_info(hdev, "QCA Downloading %s", config->fwname);
->> +			ret = request_firmware(&fw, config->fwname, &hdev->dev);
->> +			if (ret) {
->> +				bt_dev_err(hdev, "QCA Failed to request file: %s (%d)",
->> +					   config->fwname, ret);
->> +				return ret;
->> +			}
->>  		} else {
->>  			bt_dev_err(hdev, "QCA Failed to request file: %s (%d)",
->>  				   config->fwname, ret);
->> @@ -730,6 +764,26 @@ static inline void qca_get_nvm_name_generic(struct qca_fw_config *cfg,
->>  			 "qca/%snv%02x.b%02x", stem, rom_ver, bid);
->>  }
->>  
->> +static void qca_get_nvm_name_by_board(char *fwname, size_t max_size,
->> +		const char *firmware_name, struct qca_btsoc_version ver,
->> +		enum qca_btsoc_type soc_type, u16 bid)
->> +{
->> +	const char *variant;
->> +
->> +	/* Set the variant to empty by default */
->> +	variant = "";
->> +	/* hsp gf chip */
->> +	if (soc_type == QCA_WCN6855) {
->> +		if ((le32_to_cpu(ver.soc_id) & QCA_HSP_GF_SOC_MASK) == QCA_HSP_GF_SOC_ID)
->> +			variant = "g";
->> +	}
->> +
->> +	if (bid == 0x0 || bid == 0xffff)
->> +		snprintf(fwname, max_size, "qca/%s%s.bin", firmware_name, variant);
->> +	else
->> +		snprintf(fwname, max_size, "qca/%s%s.b%02x", firmware_name, variant, bid);
+On Wed, Dec 04, 2024 at 03:25:59PM -0600, Bjorn Helgaas wrote:
+> On Tue, Nov 12, 2024 at 08:31:33PM +0530, Krishna chaitanya chundru wrote:
+> > Add binding describing the Qualcomm PCIe switch, QPS615,
+> > which provides Ethernet MAC integrated to the 3rd downstream port
+> > and two downstream PCIe ports.
 > 
-> So, we have qca_generate_hsp_nvm_name(), qca_get_nvm_name_generic(), now
-> you are adding a third one. Can we please have a single function that
-> handles that?
+> > +$defs:
+> > +  qps615-node:
+> > +    type: object
+> > +
+> > +    properties:
+> > +      qcom,l0s-entry-delay-ns:
+> > +        description: Aspm l0s entry delay.
+> > +
+> > +      qcom,l1-entry-delay-ns:
+> > +        description: Aspm l1 entry delay.
 > 
-Ack, will use a single function to handle this.
->> +}
->> +
->>  int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
->>  		   enum qca_btsoc_type soc_type, struct qca_btsoc_version ver,
->>  		   const char *firmware_name)
->> @@ -739,6 +793,7 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
->>  	u8 rom_ver = 0;
->>  	u32 soc_ver;
->>  	u16 boardid = 0;
->> +	const char *suffix;
->>  
->>  	bt_dev_dbg(hdev, "QCA setup on UART");
->>  
->> @@ -816,8 +871,16 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
->>  	/* Download NVM configuration */
->>  	config.type = TLV_TYPE_NVM;
->>  	if (firmware_name) {
->> -		snprintf(config.fwname, sizeof(config.fwname),
->> -			 "qca/%s", firmware_name);
->> +		/* The firmware name has suffix, use it directly */
->> +		suffix = strrchr(firmware_name, '.');
->> +		if (suffix && suffix != firmware_name &&
->> +			*(suffix + 1) != '\0' && strchr(suffix, '/') == NULL) {
+> To match spec usage:
+> s/Aspm/ASPM/
+> s/l0s/L0s/
+> s/l1/L1/
 > 
-> The have-suffix code should be extracted to a helper function. You have
-> two copies of it.
-> 
-Ack.
->> +			snprintf(config.fwname, sizeof(config.fwname), "qca/%s", firmware_name);
->> +		} else {
->> +			qca_read_fw_board_id(hdev, &boardid);
->> +			qca_get_nvm_name_by_board(config.fwname, sizeof(config.fwname),
->> +				 firmware_name, ver, soc_type, boardid);
->> +		}
->>  	} else {
->>  		switch (soc_type) {
->>  		case QCA_WCN3990:
->> -- 
->> 2.25.1
->>
+> Other than the fact that qps615 needs the driver to configure these,
+> there's nothing qcom-specific here, so I suggest the names should omit
+> "qcom" and include "aspm".
 > 
 
+In that case, these properties should be documented in dt-schema:
+https://github.com/devicetree-org/dt-schema/blob/main/dtschema/schemas/pci/pci-bus-common.yaml
+
+- Mani
+
+-- 
+மணிவண்ணன் சதாசிவம்
 
