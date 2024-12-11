@@ -1,85 +1,99 @@
-Return-Path: <linux-arm-msm+bounces-41389-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-41388-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id BF8109EC1A5
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2024 02:37:32 +0100 (CET)
-Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id ACA509EC15B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2024 02:14:00 +0100 (CET)
+Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 737D52819FE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2024 01:37:31 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9DAED1889198
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2024 01:14:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EC84F6A33B;
-	Wed, 11 Dec 2024 01:37:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 65B086A33B;
+	Wed, 11 Dec 2024 01:13:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iS/3PWM9"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from 19.mo582.mail-out.ovh.net (19.mo582.mail-out.ovh.net [188.165.56.177])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08BBF3A8F7
-	for <linux-arm-msm@vger.kernel.org>; Wed, 11 Dec 2024 01:37:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=188.165.56.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A9D52770B;
+	Wed, 11 Dec 2024 01:13:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733881049; cv=none; b=PPAOoSbQtRdb5ua4XQRaFnmbz9V6KrsAQH9pHjrak3g18ZJRsDObQhdMwVlwkHU5GV2AGDsFd/Wbl9xlmQTP9JO7lb6nsorSNehAyv5KJafpRe+XtmJ7V7gNWE+zu38phxoa6VAlYlDUw2PSXbIISS8LCLfoBxhaWT7sGViGEtk=
+	t=1733879636; cv=none; b=DUGz12uxEB1NCDFo0fvteHiGLePuzFzAgQmnirQM3yVFknq4s13NHFDa+tndB6xusqAzvl9ACwjhieAv7NtEWgYgFKvFUqjp1BhSM91i3x/NwyWhNUyc9keygXfa1vIV/TpDbOySNjPusuzzgCLD21FudlENG4EwJXrnX3XHbco=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733881049; c=relaxed/simple;
-	bh=j5ER/U++K3NTN1bsXcSqkjj7oAx3VBI4ceUUXc1ubLs=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=toXUic2CmehO+8y3E1JjOfwWpvN87RRkhfgqczB0ZRe4QW/3j8z41Ye2Ken/AkD89VyBnc65WRqB2lspwWo15POjs6No5f42siyID7DbGfzZR6gwEXMXf5JCTcZw1hG1PcRv3HoAHuomKDGUCdrnWXl7na5iaM2svK0jlZrfQ/M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=quarantine dis=none) header.from=kernel.org; spf=pass smtp.mailfrom=etezian.org; arc=none smtp.client-ip=188.165.56.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=quarantine dis=none) header.from=kernel.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=etezian.org
-Received: from director6.ghost.mail-out.ovh.net (unknown [10.108.9.127])
-	by mo582.mail-out.ovh.net (Postfix) with ESMTP id 4Y7Dy40c6Bz1HlH
-	for <linux-arm-msm@vger.kernel.org>; Tue, 10 Dec 2024 23:11:40 +0000 (UTC)
-Received: from ghost-submission-5b5ff79f4f-4ztgx (unknown [10.110.96.141])
-	by director6.ghost.mail-out.ovh.net (Postfix) with ESMTPS id C28531FDDD;
-	Tue, 10 Dec 2024 23:11:39 +0000 (UTC)
-Received: from etezian.org ([37.59.142.113])
-	by ghost-submission-5b5ff79f4f-4ztgx with ESMTPSA
-	id xdhtJ6vKWGesBAAA0jbQjQ
-	(envelope-from <andi@etezian.org>); Tue, 10 Dec 2024 23:11:39 +0000
-Authentication-Results:garm.ovh; auth=pass (GARM-113S0073d1be6e0-ac99-4a32-abac-3ac2cd99c39c,
-                    FE3B76875E3B0A6FCB1003007887B313CBEB2737) smtp.auth=andi@etezian.org
-X-OVh-ClientIp:178.39.90.92
-From: Andi Shyti <andi.shyti@kernel.org>
-To: linux-arm-msm@vger.kernel.org,
-	linux-i2c@vger.kernel.org
-Cc: Andi Shyti <andi.shyti@kernel.org>
-Subject: [PATCH 0/2] Qcom Geni exit path cleanups
-Date: Wed, 11 Dec 2024 00:10:52 +0100
-Message-ID: <20241210231054.2844202-1-andi.shyti@kernel.org>
-X-Mailer: git-send-email 2.45.2
+	s=arc-20240116; t=1733879636; c=relaxed/simple;
+	bh=WXYFL2lzpahBm9B+v7DU3pKQd5XfIBdEGGOSasUIPzI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=W+ukUg2/oeqZUJFqTsbfvs8fCu+tKYEUue2uU1/vRlQSplphm81TnzYi4xWVQxNwdZ7e3Hwi0sqQqhon8zT1BPtUH/jsVgJvH/80dEenrBSjOJ+HwhvRHC5ltBjpuxbjLF+JlILcZeNwOxjJZhATGxmSNQ9jealKWzoU1x3v3oU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iS/3PWM9; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91169C4CED6;
+	Wed, 11 Dec 2024 01:13:54 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1733879635;
+	bh=WXYFL2lzpahBm9B+v7DU3pKQd5XfIBdEGGOSasUIPzI=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=iS/3PWM9TNlHS7RGLrXMkZAdwOkldLNzoXEaOeoqgBMx5ECYOict+BBcv0x/hvTYJ
+	 4+N5Jv0yQTjXHhbj7h3A0h7YsYbbnYIg6B2GI584k/gTZd94F72j47lunKkC/DGK0m
+	 5E9yQokf1WvYnWUltojmWOiab1zudFtSzncq1sQ8T7o79V5iGjAjddaa6r1DsDCmHM
+	 j8EDEhMAf71gMbVt0NY9r55TRtxtYbetNeJBxWBozJIOKi/86G10z+mka3ccWpMWT4
+	 CsLknvFUygFyYVCakkAfqMcUNKGKcFegooKAU+uMGGCMdFfjWeZBx5dHpRkB0cwQJx
+	 VvXsLHYhlowdA==
+Date: Tue, 10 Dec 2024 19:13:52 -0600
+From: Bjorn Andersson <andersson@kernel.org>
+To: Akhil P Oommen <quic_akhilpo@quicinc.com>
+Cc: Rob Clark <robdclark@gmail.com>, 
+	Pavan Kondeti <quic_pkondeti@quicinc.com>, Sean Paul <sean@poorly.run>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Marijn Suijten <marijn.suijten@somainline.org>, 
+	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
+	Elliot Berman <quic_eberman@quicinc.com>, linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+	freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
+	linux-arm-kernel@lists.infradead.org
+Subject: Re: [PATCH] drm/msm/a6xx: Skip gpu secure fw load in EL2 mode
+Message-ID: <iyknardi445n4h74am22arpgc4vlchh6z6cvkbff2xg76pd655@nozwz7snt476>
+References: <20241209-drm-msm-kvm-support-v1-1-1c983a8a8087@quicinc.com>
+ <CAF6AEGtKfWOGpd1gMfJ96BjCqwERZzBVmj5GzmjKxw8_vmSrJg@mail.gmail.com>
+ <f4813046-5952-4d16-bae6-37303f22ad1a@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Ovh-Tracer-Id: 14604047693996165703
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: 0
-X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgeefuddrjeelgddthecutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfqggfjpdevjffgvefmvefgnecuuegrihhlohhuthemucehtddtnecunecujfgurhephffvvefufffkofgggfestdekredtredttdenucfhrhhomheptehnughiucfuhhihthhiuceorghnughirdhshhihthhisehkvghrnhgvlhdrohhrgheqnecuggftrfgrthhtvghrnheptdevueeiheeftedujefhheelieejvdevteelfefhheeutdelkedtveejudejgfdvnecukfhppeduvdejrddtrddtrddupddujeekrdefledrledtrdelvddpfeejrdehledrudegvddruddufeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepihhnvghtpeduvdejrddtrddtrddupdhmrghilhhfrhhomheprghnughisegvthgviihirghnrdhorhhgpdhnsggprhgtphhtthhopedupdhrtghpthhtoheplhhinhhugidqrghrmhdqmhhsmhesvhhgvghrrdhkvghrnhgvlhdrohhrghdpoffvtefjohhsthepmhhoheekvdgmpdhmohguvgepshhmthhpohhuth
+In-Reply-To: <f4813046-5952-4d16-bae6-37303f22ad1a@quicinc.com>
 
-Hi,
+On Tue, Dec 10, 2024 at 02:22:27AM +0530, Akhil P Oommen wrote:
+> On 12/10/2024 1:24 AM, Rob Clark wrote:
+> > On Mon, Dec 9, 2024 at 12:20 AM Akhil P Oommen <quic_akhilpo@quicinc.com> wrote:
+> >>
+> >> When kernel is booted in EL2, SECVID registers are accessible to the
+> >> KMD. So we can use that to switch GPU's secure mode to avoid dependency
+> >> on Zap firmware. Also, we can't load a secure firmware without a
+> >> hypervisor that supports it.
+> > 
+> > Shouldn't we do this based on whether zap node is in dtb (and not disabled)?
+> 
+> This is better, isn't it? Otherwise, multiple overlays should be
+> maintained for each soc/board since EL2 can be toggled from bootloader.
+> And this feature is likely going to be more widely available.
+> 
 
-I am submitting two trivial cleanups in this series. The first 
-replaces all instances of dev_err with dev_err_probe throughout 
-the probe function for consistency. The second improves the error
-exit path by introducing a single 'goto' label for better 
-maintainability.
+The DeviceTree passed to the OS needs to describe the world that said OS
+is going to operate in. If you change the world you need to change the
+description.
+There are several other examples where this would be necessary
+(remoteproc and watchdog to name two examples from the Qualcomm upstream
+world).
 
-Thank you,  
-Andi
+So, if we can cover this by zap-shader being enabled or disabled, that
+sounds like a clean and scaleable solution.
 
-Andi Shyti (2):
-  i2c: qcom-geni: Use dev_err_probe in the probe function
-  i2c: qcom-geni: Simplify error handling in probe function
-
- drivers/i2c/busses/i2c-qcom-geni.c | 53 ++++++++++++++----------------
- 1 file changed, 25 insertions(+), 28 deletions(-)
-
--- 
-2.45.2
-
+Regards,
+Bjorn
 
