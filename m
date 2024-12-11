@@ -1,449 +1,186 @@
-Return-Path: <linux-arm-msm+bounces-41460-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-41461-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2407C9EC9A8
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2024 10:49:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id A941E9EC9B6
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2024 10:52:27 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id ACAFB28175D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2024 09:49:17 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 278BB287BEF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2024 09:52:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C9B471C5F0C;
-	Wed, 11 Dec 2024 09:49:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B74E61DFE26;
+	Wed, 11 Dec 2024 09:52:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BZCNOb9F"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f173.google.com (mail-lj1-f173.google.com [209.85.208.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B90EC236FA9;
-	Wed, 11 Dec 2024 09:49:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A2591DC9BD;
+	Wed, 11 Dec 2024 09:52:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733910555; cv=none; b=QL5/lEZsY77DjYYnDHsNuaYLRrBuHFXHEuo4AC5opjsGBbiLWNtZ7M3Wz0eQto0lvUHkV0uYXNVq7pY2WKUDjYPs2+t4CUGFtA6mlOTvbGaXuCRi2NeCNS1xhok3UgXz6aFUsVSFkbH+zdzySMcDllYaRCynTx80zkBF3W+n6mI=
+	t=1733910739; cv=none; b=aU+iPw9z7uJKIKFKKVlqZkEEGYdY+NP6olcfhht5nB7hYwYsIYjVU1P2IaiIoCUo65VyNDdIVnCYMcyJfWWrvybjRmJ0pKS+ks5Wc8boYmgXDxUUhvrPz7IAUS6EOGlYjaFMsHwmycGepnp0WQr5jHSWBcL8RXi99trA0MMLLWs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733910555; c=relaxed/simple;
-	bh=ZUQ2IJvBnojUTDcKcS+ybMxTwUjg3Lso5sEdHoLrj/s=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=rC+DENUw0FIlziZSheufmMKQ7VAYxSlFZp7BQWdDPWG8d9OtEFZ9nPzdrkrazFyJp6z9Riy/KWRzo8LKhUnJKf7oBTRvjwg12tE1b8vaxv6CXVyiT4bQsfDs5rl99nlSX3bnLw8BboA6gS2N0kwV1MkLR4xTw1KwDHCtSFdyfdM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=csie.org; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.208.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=csie.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-lj1-f173.google.com with SMTP id 38308e7fff4ca-300392cc4caso43217751fa.3;
-        Wed, 11 Dec 2024 01:49:12 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733910549; x=1734515349;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :reply-to:in-reply-to:references:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=hPj/BPEUjCTbTNbQyMrIM316Wmjv6S1W3Jo0zGaEmZ4=;
-        b=kg41sz5HrXF46bG6wcjEVLlcgwrEa6jctoTcIdGfTqwY3cPbJJseDmtcUhKxVIiXCt
-         WQkSI1rvr87wKKej7eteRcuTbAj29OunL1GMoCko0gAxYS1zJ9IN+TUU0Onga5mUYK/V
-         N/YeoKPAf3sqy/hjWoGeCQyQIlfE3SnnbsqbppOqxuHji9lfNvnCTjS56D9tZjrWH1I+
-         uMykqyH/HZOGKwePvXxekeZw2pIp2hwkqBhna/B9U1qiTRFSugFG+sDLcpvTENzy7Wfk
-         MG6EyYWBtbZ/Swb+BJ2pJpkZV0KpeSrSb1A4HX4UGo0urWIsib/+k/xG1ntWnR4weGy4
-         Jfyg==
-X-Forwarded-Encrypted: i=1; AJvYcCV58ZgLyrvu1nj9Qgwi6CHosvjr1IG8VXTNasE4B8wNO2j8gN7lETMZdXEvXzZAw3Cn5lnRMcbFkz5IJ6aB@vger.kernel.org, AJvYcCWcLgw49Z47+K+HmwTr0SBxFG5sTH/nNiblgxBGKdABI3MQo3+RorbFfJ5hsievmEmVIc1fZPKswObmo/W+gA==@vger.kernel.org, AJvYcCXI4DSlCrenDHMwqPGm7R8ojWpznw91mO77ltdqD1zAkq9p7mg838CKhQe2EcbZbyZO9SDdE9hLIzUt@vger.kernel.org, AJvYcCXQMIGeCX4o+2dAP2bF5i0mMAgydTHWMxQ+hqiBhIPo0a215EmRX59dTZY6VbZjSQvg90AGcGmgBsGwuyc=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxkrDQapWnTqYRu56ZVNb4B6ivNUixD65sy6GEelQMpEBtuUhvN
-	use24rfk+IdjuHqaQ6sILXJEHSFhY9vufaobXCq8XUzSOlfWVQzr5i5Ys+sX
-X-Gm-Gg: ASbGnctFFmoYpIpdEww2PoJSn23zsrYKlk6rnli4U0ZUm1dZHHcxP3L/G34/9ZA77s+
-	M4NuFB+YfmdB8VqtLjC7BKTuOl4fxnk/0stCw/UsDenmYoVpz+jcrem7bTvsiVaH46W2NOu2+QB
-	4BacEn1N8vnXAtUp4hI4Q2WCniM24+3iOXq/2dcPdV7npiAghPq4NL2pAsrWiPl8NZESSEwFI+4
-	ldehv6pede4Exx9Fztx/11IgZG0dEA6UBIimj5GokToSBULNAEcookHPNGMU1ZpTYeAb0Re297k
-	28YphxJOhLM=
-X-Google-Smtp-Source: AGHT+IFeEnLuWTqfaXtkqs9vsgKzAGzWK695ujMCHusxXFd0a3Yd/HNshVLnckIzq0f0aFZS/NBGSg==
-X-Received: by 2002:a05:651c:1541:b0:302:1e65:f2ab with SMTP id 38308e7fff4ca-30240d08a91mr8226131fa.20.1733910548237;
-        Wed, 11 Dec 2024 01:49:08 -0800 (PST)
-Received: from mail-lj1-f179.google.com (mail-lj1-f179.google.com. [209.85.208.179])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-3003a2e4575sm13680261fa.1.2024.12.11.01.49.07
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 11 Dec 2024 01:49:07 -0800 (PST)
-Received: by mail-lj1-f179.google.com with SMTP id 38308e7fff4ca-3003e203acaso36075701fa.1;
-        Wed, 11 Dec 2024 01:49:07 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AJvYcCVH+21qHUv7NK+zp+9Er56RcbUKcCd4jw8mRGFOhyeZ89aIzAhNilwjkNDne7x972/mKZjiMOuRVGao@vger.kernel.org, AJvYcCVObjNmsKiuEF0/YbdrH5p2FayR7gZkdU1dLykm9Agkn9cnKVtV4XGJIyITHBSgyWIKCmcYnxfSfMVkIwA=@vger.kernel.org, AJvYcCX0+PvVezYbeg3RupXyJRAdPjfxTup34y5+p0nTFTAI8/v7YDHh3eZQpEcoJCo6ULk29L211cwjDWtbYXqfEg==@vger.kernel.org, AJvYcCXNRA0WewsEPIsRoe4/v9lRnwBUSKYrBNEB5QFJvEtdMSst7IG6yj0AQTMdjEfP4UYe+jkPQmtSDM6z0Ihm@vger.kernel.org
-X-Received: by 2002:a05:651c:556:b0:300:3a15:8f1f with SMTP id
- 38308e7fff4ca-30240d5d82amr7824591fa.32.1733910547069; Wed, 11 Dec 2024
- 01:49:07 -0800 (PST)
+	s=arc-20240116; t=1733910739; c=relaxed/simple;
+	bh=1MvPVOm2KT4I3D3hDmh8qUenmdswE/c+r2gVB3m84Fk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=aKcf06DP6pL6omoG+U/g8Dbfiq8uAnrN7brpgEC1g0EfCwEpqzHGMPThqRnetdAcrM520V9/p5pDUb4QKlBCq9MWbtV/x/7DNbJQj+uo7rpPwhDXkE5O+NxW+ybCJ5kPVqn3NufDvunl6GOX5r5+L5fZTnNda+PsMfm5CDFCYG0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BZCNOb9F; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2E1CC4CEDE;
+	Wed, 11 Dec 2024 09:52:13 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1733910739;
+	bh=1MvPVOm2KT4I3D3hDmh8qUenmdswE/c+r2gVB3m84Fk=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=BZCNOb9F091Lge08SDZcjO25UI/Ji+Hkv0ozwWHtSXP/7LtzkHkpCUVpxB3+JuWG8
+	 cBw41kTpv9gpt99Iy4Rq/4rurBdoeAdifDKR+N39lQBudF6QMu43DndXVIj7184C7i
+	 i84xVfDLYCc2jjjxnAQ9478drcrZl5ciES4jDCXk+kC190/WUygReGVB67YL4EyGAZ
+	 kfDb/uo/pbXmwgKVXXUH1MRLpSf24mp5BY1lTmnpvwsexZRZhd1LaR4krT9l5lOnqk
+	 IiZKKYSPChXvKAABvVqKb+/ChHWLoH63DCwpCE1S7cA62X1mjTaIv3wrdaBXKkX0wc
+	 PuDnMGpPriC/g==
+Message-ID: <3c7ddb08-38db-44b3-a7a7-ec7b270a408f@kernel.org>
+Date: Wed, 11 Dec 2024 10:52:11 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20241211092509.34342-1-krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20241211092509.34342-1-krzysztof.kozlowski@linaro.org>
-Reply-To: wens@csie.org
-From: Chen-Yu Tsai <wens@csie.org>
-Date: Wed, 11 Dec 2024 17:48:54 +0800
-X-Gmail-Original-Message-ID: <CAGb2v64bGgum7L2Fcg=FBru7ousCJgSyew7kr7VvYhM+ok_dKA@mail.gmail.com>
-Message-ID: <CAGb2v64bGgum7L2Fcg=FBru7ousCJgSyew7kr7VvYhM+ok_dKA@mail.gmail.com>
-Subject: Re: [RESEND PATCH] media: dt-bindings: trivial white-space and
- example cleanup
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc: Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Jernej Skrabec <jernej.skrabec@gmail.com>, Samuel Holland <samuel@sholland.org>, 
-	Neil Armstrong <neil.armstrong@linaro.org>, Kevin Hilman <khilman@baylibre.com>, 
-	Jerome Brunet <jbrunet@baylibre.com>, 
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>, Ming Qian <ming.qian@nxp.com>, 
-	Zhou Peng <eagle.zhou@nxp.com>, Shawn Guo <shawnguo@kernel.org>, 
-	Sascha Hauer <s.hauer@pengutronix.de>, Pengutronix Kernel Team <kernel@pengutronix.de>, 
-	Fabio Estevam <festevam@gmail.com>, Tiffany Lin <tiffany.lin@mediatek.com>, 
-	Andrew-CT Chen <andrew-ct.chen@mediatek.com>, Yunfei Dong <yunfei.dong@mediatek.com>, 
-	Ezequiel Garcia <ezequiel@vanguardiasur.com.ar>, Philipp Zabel <p.zabel@pengutronix.de>, 
-	Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>, 
-	"Bryan O'Donoghue" <bryan.odonoghue@linaro.org>, Heiko Stuebner <heiko@sntech.de>, 
-	Matthias Brugger <matthias.bgg@gmail.com>, 
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, 
-	Viktor Prutyanov <viktor.prutyanov@phystech.edu>, Shijie Qin <shijie.qin@nxp.com>, 
-	Michael Tretter <m.tretter@pengutronix.de>, Emil Velikov <emil.velikov@collabora.com>, 
-	Del Regno <angelogioacchino.delregno@somainline.org>, 
-	Nicolas Frattaroli <frattaroli.nicolas@gmail.com>, linux-media@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
-	linux-sunxi@lists.linux.dev, linux-kernel@vger.kernel.org, 
-	linux-amlogic@lists.infradead.org, imx@lists.linux.dev, 
-	linux-rockchip@lists.infradead.org, linux-arm-msm@vger.kernel.org, 
-	linux-mediatek@lists.infradead.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/3] dt-bindings: phy: qcom,qmp-pcie: add optional current
+ load properties
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc: Ziyue Zhang <quic_ziyuzhan@quicinc.com>, vkoul@kernel.org,
+ kishon@kernel.org, dmitry.baryshkov@linaro.org, abel.vesa@linaro.org,
+ neil.armstrong@linaro.org, andersson@kernel.org, konradybcio@kernel.org,
+ robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
+ linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+ linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
+References: <20241204105249.3544114-1-quic_ziyuzhan@quicinc.com>
+ <20241204105249.3544114-2-quic_ziyuzhan@quicinc.com>
+ <qvjtwilukxbeaxnbyzfkdsfkktm6p4yv3sgx3rbugpb6qkcbjy@rohvixslizhh>
+ <20241211062053.vxdpovlmetvyx3za@thinkpad>
+ <33697bd9-02f4-4a9a-b8c0-4930d7fdaee2@kernel.org>
+ <20241211082404.p7fbmhooikmipxvm@thinkpad>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 fv0=
+In-Reply-To: <20241211082404.p7fbmhooikmipxvm@thinkpad>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Wed, Dec 11, 2024 at 5:25=E2=80=AFPM Krzysztof Kozlowski
-<krzysztof.kozlowski@linaro.org> wrote:
->
-> Minor cleanups without funcitonal impact:
->  - There should not be an empty blank line after SPDX tag,
->  - Convention is to indent DTS examples in coding style with 2- or
->    4-space indentation (4 is preferred),
->  - Drop unused labels in DTS examples.
->
-> Reviewed-by: Rob Herring (Arm) <robh@kernel.org>
-> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> Reviewed-by: Heiko Stuebner <heiko@sntech.de>
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->
-> ---
->
-> Resending second time, because I missed previous Rob's review.
->
-> I added now also Bryan's and Heiko's reviews from last resend.
-> ---
->  .../media/allwinner,sun50i-h6-vpu-g2.yaml     |  1 -
+On 11/12/2024 09:24, Manivannan Sadhasivam wrote:
+> On Wed, Dec 11, 2024 at 09:09:18AM +0100, Krzysztof Kozlowski wrote:
+>> On 11/12/2024 07:20, Manivannan Sadhasivam wrote:
+>>> On Thu, Dec 05, 2024 at 11:23:11AM +0100, Krzysztof Kozlowski wrote:
+>>>> On Wed, Dec 04, 2024 at 06:52:47PM +0800, Ziyue Zhang wrote:
+>>>>> On some platforms, the power supply for PCIe PHY is not able to provide
+>>>>> enough current when it works in LPM mode. Hence, PCIe PHY driver needs to
+>>>>> set current load to vote the regulator to HPM mode.
+>>>>>
+>>>>> Document the current load as properties for each power supply PCIe PHY
+>>>>> required, namely vdda-phy-max-microamp, vdda-pll-max-microamp and
+>>>>> vdda-qref-max-microamp, respectively.PCIe PHY driver should parse them to
+>>>>> set appropriate current load during PHY power on.
+>>>>>
+>>>>> This three properties are optional and not mandatory for those platforms
+>>>>> that PCIe PHY can still work with power supply.
+>>>>
+>>>>
+>>>> Uh uh, so the downstream comes finally!
+>>>>
+>>>> No sorry guys, use existing regulator bindings for this.
+>>>>
+>>>
+>>> Maybe they got inspired by upstream UFS bindings?
+>>> Documentation/devicetree/bindings/ufs/ufs-common.yaml:
+>>>
+>>> vcc-max-microamp
+>>> vccq-max-microamp
+>>> vccq2-max-microamp
+>>
+>> And it is already an ABI, so we cannot do anything about it.
+>>
+>>>
+>>> Regulator binding only describes the min/max load for the regulators and not
+>>
+>> No, it exactly describes min/max consumers can use. Let's quote:
+>> "largest current consumers may set"
+>> It is all about consumers.
+>>
+>>> consumers. What if the consumers need to set variable load per platform? Should
+>>
+>> Then each platform uses regulator API or regulator bindings to set it? I
+>> don't see the problem here.
+>>
+>>> they hardcode the load in driver? (even so, the load should not vary for each
+>>> board).
+>>
+>> The load must vary per board, because regulators vary per board. Of
+>> course in practice most designs could be the same, but regulators and
+>> their limits are always properties of the board, not the SoC.
+>>
+> 
+> How the consumer drivers are supposed to know the optimum load?
+> 
+> I don't see how the consumer drivers can set the load without hardcoding the
+> values. And I could see from UFS properties that each board has different
+> values.
 
-FWIW,
 
-Acked-by: Chen-Yu Tsai <wens@csie.org>
+Drivers do not need to know, it's not the driver's responsibility. If
+these are constraints per board, then regulator properties apply and
+there is no difference between this "vdd-max-microamp = 10" and
+"regulator-max-microamp".
 
->  .../bindings/media/amlogic,meson-ir-tx.yaml   |  1 -
->  .../bindings/media/amphion,vpu.yaml           |  1 -
->  .../bindings/media/fsl,imx6ull-pxp.yaml       |  1 -
->  .../media/mediatek,vcodec-decoder.yaml        |  1 -
->  .../media/mediatek,vcodec-encoder.yaml        |  1 -
->  .../media/mediatek,vcodec-subdev-decoder.yaml |  1 -
->  .../media/microchip,sama5d4-vdec.yaml         | 17 ++++----
->  .../bindings/media/nxp,imx8mq-vpu.yaml        | 41 +++++++++----------
->  .../bindings/media/qcom,msm8916-camss.yaml    |  1 -
->  .../bindings/media/qcom,msm8996-camss.yaml    |  1 -
->  .../bindings/media/qcom,sdm660-camss.yaml     |  1 -
->  .../bindings/media/qcom,sdm845-camss.yaml     |  1 -
->  .../bindings/media/qcom,sm8250-camss.yaml     |  1 -
->  .../bindings/media/rockchip,rk3568-vepu.yaml  |  1 -
->  .../bindings/media/rockchip-vpu.yaml          | 29 +++++++------
->  16 files changed, 42 insertions(+), 58 deletions(-)
->
-> diff --git a/Documentation/devicetree/bindings/media/allwinner,sun50i-h6-=
-vpu-g2.yaml b/Documentation/devicetree/bindings/media/allwinner,sun50i-h6-v=
-pu-g2.yaml
-> index a4f06bbdfe49..8ba5177ac631 100644
-> --- a/Documentation/devicetree/bindings/media/allwinner,sun50i-h6-vpu-g2.=
-yaml
-> +++ b/Documentation/devicetree/bindings/media/allwinner,sun50i-h6-vpu-g2.=
-yaml
-> @@ -1,5 +1,4 @@
->  # SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
-> -
->  %YAML 1.2
->  ---
->  $id: http://devicetree.org/schemas/media/allwinner,sun50i-h6-vpu-g2.yaml=
-#
-> diff --git a/Documentation/devicetree/bindings/media/amlogic,meson-ir-tx.=
-yaml b/Documentation/devicetree/bindings/media/amlogic,meson-ir-tx.yaml
-> index 377acce93423..6da8a6aded23 100644
-> --- a/Documentation/devicetree/bindings/media/amlogic,meson-ir-tx.yaml
-> +++ b/Documentation/devicetree/bindings/media/amlogic,meson-ir-tx.yaml
-> @@ -1,5 +1,4 @@
->  # SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> -
->  %YAML 1.2
->  ---
->  $id: http://devicetree.org/schemas/media/amlogic,meson-ir-tx.yaml#
-> diff --git a/Documentation/devicetree/bindings/media/amphion,vpu.yaml b/D=
-ocumentation/devicetree/bindings/media/amphion,vpu.yaml
-> index 9801de3ed84e..5a920d9e78c7 100644
-> --- a/Documentation/devicetree/bindings/media/amphion,vpu.yaml
-> +++ b/Documentation/devicetree/bindings/media/amphion,vpu.yaml
-> @@ -1,5 +1,4 @@
->  # SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
-> -
->  %YAML 1.2
->  ---
->  $id: http://devicetree.org/schemas/media/amphion,vpu.yaml#
-> diff --git a/Documentation/devicetree/bindings/media/fsl,imx6ull-pxp.yaml=
- b/Documentation/devicetree/bindings/media/fsl,imx6ull-pxp.yaml
-> index 84a5e894ace4..3f47744459aa 100644
-> --- a/Documentation/devicetree/bindings/media/fsl,imx6ull-pxp.yaml
-> +++ b/Documentation/devicetree/bindings/media/fsl,imx6ull-pxp.yaml
-> @@ -1,5 +1,4 @@
->  # SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
-> -
->  %YAML 1.2
->  ---
->  $id: http://devicetree.org/schemas/media/fsl,imx6ull-pxp.yaml#
-> diff --git a/Documentation/devicetree/bindings/media/mediatek,vcodec-deco=
-der.yaml b/Documentation/devicetree/bindings/media/mediatek,vcodec-decoder.=
-yaml
-> index b401c67e3ba0..d726d141a434 100644
-> --- a/Documentation/devicetree/bindings/media/mediatek,vcodec-decoder.yam=
-l
-> +++ b/Documentation/devicetree/bindings/media/mediatek,vcodec-decoder.yam=
-l
-> @@ -1,5 +1,4 @@
->  # SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> -
->  %YAML 1.2
->  ---
->  $id: http://devicetree.org/schemas/media/mediatek,vcodec-decoder.yaml#
-> diff --git a/Documentation/devicetree/bindings/media/mediatek,vcodec-enco=
-der.yaml b/Documentation/devicetree/bindings/media/mediatek,vcodec-encoder.=
-yaml
-> index b45743d0a9ec..110e8f5f1f9e 100644
-> --- a/Documentation/devicetree/bindings/media/mediatek,vcodec-encoder.yam=
-l
-> +++ b/Documentation/devicetree/bindings/media/mediatek,vcodec-encoder.yam=
-l
-> @@ -1,5 +1,4 @@
->  # SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> -
->  %YAML 1.2
->  ---
->  $id: http://devicetree.org/schemas/media/mediatek,vcodec-encoder.yaml#
-> diff --git a/Documentation/devicetree/bindings/media/mediatek,vcodec-subd=
-ev-decoder.yaml b/Documentation/devicetree/bindings/media/mediatek,vcodec-s=
-ubdev-decoder.yaml
-> index a500a585c692..5865e6f0be89 100644
-> --- a/Documentation/devicetree/bindings/media/mediatek,vcodec-subdev-deco=
-der.yaml
-> +++ b/Documentation/devicetree/bindings/media/mediatek,vcodec-subdev-deco=
-der.yaml
-> @@ -1,5 +1,4 @@
->  # SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> -
->  %YAML 1.2
->  ---
->  $id: http://devicetree.org/schemas/media/mediatek,vcodec-subdev-decoder.=
-yaml#
-> diff --git a/Documentation/devicetree/bindings/media/microchip,sama5d4-vd=
-ec.yaml b/Documentation/devicetree/bindings/media/microchip,sama5d4-vdec.ya=
-ml
-> index 59b805ca47c5..ede086d55add 100644
-> --- a/Documentation/devicetree/bindings/media/microchip,sama5d4-vdec.yaml
-> +++ b/Documentation/devicetree/bindings/media/microchip,sama5d4-vdec.yaml
-> @@ -1,5 +1,4 @@
->  # SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
-> -
->  %YAML 1.2
->  ---
->  $id: http://devicetree.org/schemas/media/microchip,sama5d4-vdec.yaml#
-> @@ -36,12 +35,12 @@ additionalProperties: false
->
->  examples:
->    - |
-> -        #include <dt-bindings/clock/at91.h>
-> -        #include <dt-bindings/interrupt-controller/irq.h>
-> +    #include <dt-bindings/clock/at91.h>
-> +    #include <dt-bindings/interrupt-controller/irq.h>
->
-> -        vdec0: vdec@300000 {
-> -                compatible =3D "microchip,sama5d4-vdec";
-> -                reg =3D <0x00300000 0x100000>;
-> -                interrupts =3D <19 IRQ_TYPE_LEVEL_HIGH 4>;
-> -                clocks =3D <&pmc PMC_TYPE_PERIPHERAL 19>;
-> -        };
-> +    vdec@300000 {
-> +        compatible =3D "microchip,sama5d4-vdec";
-> +        reg =3D <0x00300000 0x100000>;
-> +        interrupts =3D <19 IRQ_TYPE_LEVEL_HIGH 4>;
-> +        clocks =3D <&pmc PMC_TYPE_PERIPHERAL 19>;
-> +    };
-> diff --git a/Documentation/devicetree/bindings/media/nxp,imx8mq-vpu.yaml =
-b/Documentation/devicetree/bindings/media/nxp,imx8mq-vpu.yaml
-> index 3d58f02b0c5d..19528262810a 100644
-> --- a/Documentation/devicetree/bindings/media/nxp,imx8mq-vpu.yaml
-> +++ b/Documentation/devicetree/bindings/media/nxp,imx8mq-vpu.yaml
-> @@ -1,5 +1,4 @@
->  # SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
-> -
->  %YAML 1.2
->  ---
->  $id: http://devicetree.org/schemas/media/nxp,imx8mq-vpu.yaml#
-> @@ -44,26 +43,26 @@ additionalProperties: false
->
->  examples:
->    - |
-> -        #include <dt-bindings/clock/imx8mq-clock.h>
-> -        #include <dt-bindings/power/imx8mq-power.h>
-> -        #include <dt-bindings/interrupt-controller/arm-gic.h>
-> +    #include <dt-bindings/clock/imx8mq-clock.h>
-> +    #include <dt-bindings/power/imx8mq-power.h>
-> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
->
-> -        vpu_g1: video-codec@38300000 {
-> -                compatible =3D "nxp,imx8mq-vpu-g1";
-> -                reg =3D <0x38300000 0x10000>;
-> -                interrupts =3D <GIC_SPI 7 IRQ_TYPE_LEVEL_HIGH>;
-> -                clocks =3D <&clk IMX8MQ_CLK_VPU_G1_ROOT>;
-> -                power-domains =3D <&vpu_blk_ctrl IMX8MQ_VPUBLK_PD_G1>;
-> -        };
-> +    video-codec@38300000 {
-> +        compatible =3D "nxp,imx8mq-vpu-g1";
-> +        reg =3D <0x38300000 0x10000>;
-> +        interrupts =3D <GIC_SPI 7 IRQ_TYPE_LEVEL_HIGH>;
-> +        clocks =3D <&clk IMX8MQ_CLK_VPU_G1_ROOT>;
-> +        power-domains =3D <&vpu_blk_ctrl IMX8MQ_VPUBLK_PD_G1>;
-> +    };
->    - |
-> -        #include <dt-bindings/clock/imx8mq-clock.h>
-> -        #include <dt-bindings/power/imx8mq-power.h>
-> -        #include <dt-bindings/interrupt-controller/arm-gic.h>
-> +    #include <dt-bindings/clock/imx8mq-clock.h>
-> +    #include <dt-bindings/power/imx8mq-power.h>
-> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
->
-> -        vpu_g2: video-codec@38300000 {
-> -                compatible =3D "nxp,imx8mq-vpu-g2";
-> -                reg =3D <0x38310000 0x10000>;
-> -                interrupts =3D <GIC_SPI 8 IRQ_TYPE_LEVEL_HIGH>;
-> -                clocks =3D <&clk IMX8MQ_CLK_VPU_G2_ROOT>;
-> -                power-domains =3D <&vpu_blk_ctrl IMX8MQ_VPUBLK_PD_G2>;
-> -        };
-> +    video-codec@38300000 {
-> +        compatible =3D "nxp,imx8mq-vpu-g2";
-> +        reg =3D <0x38310000 0x10000>;
-> +        interrupts =3D <GIC_SPI 8 IRQ_TYPE_LEVEL_HIGH>;
-> +        clocks =3D <&clk IMX8MQ_CLK_VPU_G2_ROOT>;
-> +        power-domains =3D <&vpu_blk_ctrl IMX8MQ_VPUBLK_PD_G2>;
-> +    };
-> diff --git a/Documentation/devicetree/bindings/media/qcom,msm8916-camss.y=
-aml b/Documentation/devicetree/bindings/media/qcom,msm8916-camss.yaml
-> index 9cc0a968a401..3469a43f00d4 100644
-> --- a/Documentation/devicetree/bindings/media/qcom,msm8916-camss.yaml
-> +++ b/Documentation/devicetree/bindings/media/qcom,msm8916-camss.yaml
-> @@ -1,5 +1,4 @@
->  # SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
-> -
->  %YAML 1.2
->  ---
->  $id: http://devicetree.org/schemas/media/qcom,msm8916-camss.yaml#
-> diff --git a/Documentation/devicetree/bindings/media/qcom,msm8996-camss.y=
-aml b/Documentation/devicetree/bindings/media/qcom,msm8996-camss.yaml
-> index 5cb0e337ea6e..644646de338a 100644
-> --- a/Documentation/devicetree/bindings/media/qcom,msm8996-camss.yaml
-> +++ b/Documentation/devicetree/bindings/media/qcom,msm8996-camss.yaml
-> @@ -1,5 +1,4 @@
->  # SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
-> -
->  %YAML 1.2
->  ---
->  $id: http://devicetree.org/schemas/media/qcom,msm8996-camss.yaml#
-> diff --git a/Documentation/devicetree/bindings/media/qcom,sdm660-camss.ya=
-ml b/Documentation/devicetree/bindings/media/qcom,sdm660-camss.yaml
-> index 584106e275f6..68d8670557f5 100644
-> --- a/Documentation/devicetree/bindings/media/qcom,sdm660-camss.yaml
-> +++ b/Documentation/devicetree/bindings/media/qcom,sdm660-camss.yaml
-> @@ -1,5 +1,4 @@
->  # SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
-> -
->  %YAML 1.2
->  ---
->  $id: http://devicetree.org/schemas/media/qcom,sdm660-camss.yaml#
-> diff --git a/Documentation/devicetree/bindings/media/qcom,sdm845-camss.ya=
-ml b/Documentation/devicetree/bindings/media/qcom,sdm845-camss.yaml
-> index d32daaef1b50..289494f561e5 100644
-> --- a/Documentation/devicetree/bindings/media/qcom,sdm845-camss.yaml
-> +++ b/Documentation/devicetree/bindings/media/qcom,sdm845-camss.yaml
-> @@ -1,5 +1,4 @@
->  # SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
-> -
->  %YAML 1.2
->  ---
->  $id: http://devicetree.org/schemas/media/qcom,sdm845-camss.yaml#
-> diff --git a/Documentation/devicetree/bindings/media/qcom,sm8250-camss.ya=
-ml b/Documentation/devicetree/bindings/media/qcom,sm8250-camss.yaml
-> index 06db2c1e6079..a372d991e652 100644
-> --- a/Documentation/devicetree/bindings/media/qcom,sm8250-camss.yaml
-> +++ b/Documentation/devicetree/bindings/media/qcom,sm8250-camss.yaml
-> @@ -1,5 +1,4 @@
->  # SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
-> -
->  %YAML 1.2
->  ---
->  $id: http://devicetree.org/schemas/media/qcom,sm8250-camss.yaml#
-> diff --git a/Documentation/devicetree/bindings/media/rockchip,rk3568-vepu=
-.yaml b/Documentation/devicetree/bindings/media/rockchip,rk3568-vepu.yaml
-> index 947ad699cc5e..d246f5d38427 100644
-> --- a/Documentation/devicetree/bindings/media/rockchip,rk3568-vepu.yaml
-> +++ b/Documentation/devicetree/bindings/media/rockchip,rk3568-vepu.yaml
-> @@ -1,5 +1,4 @@
->  # SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
-> -
->  %YAML 1.2
->  ---
->  $id: http://devicetree.org/schemas/media/rockchip,rk3568-vepu.yaml#
-> diff --git a/Documentation/devicetree/bindings/media/rockchip-vpu.yaml b/=
-Documentation/devicetree/bindings/media/rockchip-vpu.yaml
-> index 719aeb2dc593..8c2501634080 100644
-> --- a/Documentation/devicetree/bindings/media/rockchip-vpu.yaml
-> +++ b/Documentation/devicetree/bindings/media/rockchip-vpu.yaml
-> @@ -1,5 +1,4 @@
->  # SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
-> -
->  %YAML 1.2
->  ---
->  $id: http://devicetree.org/schemas/media/rockchip-vpu.yaml#
-> @@ -92,18 +91,18 @@ additionalProperties: false
->
->  examples:
->    - |
-> -        #include <dt-bindings/clock/rk3288-cru.h>
-> -        #include <dt-bindings/interrupt-controller/arm-gic.h>
-> -        #include <dt-bindings/power/rk3288-power.h>
-> +    #include <dt-bindings/clock/rk3288-cru.h>
-> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
-> +    #include <dt-bindings/power/rk3288-power.h>
->
-> -        vpu: video-codec@ff9a0000 {
-> -                compatible =3D "rockchip,rk3288-vpu";
-> -                reg =3D <0xff9a0000 0x800>;
-> -                interrupts =3D <GIC_SPI 9 IRQ_TYPE_LEVEL_HIGH>,
-> -                             <GIC_SPI 10 IRQ_TYPE_LEVEL_HIGH>;
-> -                interrupt-names =3D "vepu", "vdpu";
-> -                clocks =3D <&cru ACLK_VCODEC>, <&cru HCLK_VCODEC>;
-> -                clock-names =3D "aclk", "hclk";
-> -                power-domains =3D <&power RK3288_PD_VIDEO>;
-> -                iommus =3D <&vpu_mmu>;
-> -        };
-> +    video-codec@ff9a0000 {
-> +        compatible =3D "rockchip,rk3288-vpu";
-> +        reg =3D <0xff9a0000 0x800>;
-> +        interrupts =3D <GIC_SPI 9 IRQ_TYPE_LEVEL_HIGH>,
-> +                     <GIC_SPI 10 IRQ_TYPE_LEVEL_HIGH>;
-> +        interrupt-names =3D "vepu", "vdpu";
-> +        clocks =3D <&cru ACLK_VCODEC>, <&cru HCLK_VCODEC>;
-> +        clock-names =3D "aclk", "hclk";
-> +        power-domains =3D <&power RK3288_PD_VIDEO>;
-> +        iommus =3D <&vpu_mmu>;
-> +    };
-> --
-> 2.43.0
->
->
+If this varies runtime, then your property is already not suitable and
+very limited and you should use OPP table.
+
+Best regards,
+Krzysztof
 
