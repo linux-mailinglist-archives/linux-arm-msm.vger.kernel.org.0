@@ -1,101 +1,104 @@
-Return-Path: <linux-arm-msm+bounces-41567-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-41568-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5085E9ED854
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2024 22:19:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 787CB9ED857
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2024 22:20:31 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 05EE11886D10
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2024 21:19:44 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3B8F51886C03
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2024 21:20:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C72881E9B34;
-	Wed, 11 Dec 2024 21:19:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 843991D63F9;
+	Wed, 11 Dec 2024 21:20:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="k7zbKkyl"
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="D8/wlLoJ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yb1-f179.google.com (mail-yb1-f179.google.com [209.85.219.179])
+Received: from mail-yw1-f170.google.com (mail-yw1-f170.google.com [209.85.128.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36B0D1E9B35
-	for <linux-arm-msm@vger.kernel.org>; Wed, 11 Dec 2024 21:19:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F257C1C07E4
+	for <linux-arm-msm@vger.kernel.org>; Wed, 11 Dec 2024 21:20:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733951974; cv=none; b=XA40UmcsfHeASS1fKnorG0dI0iapa79OKkE6Vo/+Kywkvd+qC3Phts6Ngt37PFeggX7tZzoVfW31D+OhQkL37+1vdxSgLqRpDX7leNz9MBE/21J+wFZVr1cwYdWtDefF4Q4uQKKNxemla1InS36NKy2IG8MiZBo1XWlz+/X8LPY=
+	t=1733952025; cv=none; b=IViWB9d6Yymbv8WkJtLbzja6IrGTK40tAgooVd//TtHa1rGPq/95WMix5+LkreTAsaFUic5DzNGKrzQkqblXTEeVyf6NF8EfH1en8uFewyfkb71Degc8vIsxxAoKZGyZ6WNIinzH9Yf6bHPbQ9+e0+7oSmFJtCJcxT66B73GZLg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733951974; c=relaxed/simple;
-	bh=HYpTBgw49iGGQnoZixVyDOp+jWreZ3c1N/xlRY2EXfY=;
+	s=arc-20240116; t=1733952025; c=relaxed/simple;
+	bh=SKfxs3pDMj3GC7YQPCyoK1BtKC5bUlyrggnykcN/Mw8=;
 	h=MIME-Version:In-Reply-To:References:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=fpJ3nhq+8ZIdXctOIjgdEs+v62q4uav2/ftSTXhmWEWmOvj9GY4DbKmxA0Rl3ahbVd9xD3aoqIPIWcMkn8CHwOASP2WHEP321tv4+b3ogGXgtIEDK9v6zkHbHAcgc0DunMgUEDqJyNpk1fRIl325YGyQfgUE0vY5+4D/Wx+8Vro=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=k7zbKkyl; arc=none smtp.client-ip=209.85.219.179
+	 To:Cc:Content-Type; b=r3nqlptMIFnUIrOPZDY35Qp0bs6BMgTQnTQezvKa5UbTdtG3Nz/4Yn27JTUE0GfGNWQreI55uD2JdeInzGghOpMo4dwpIUz4Jq8kLmmSTq3wC9K5QFAvZkTZ0KGTwIX6PZWA4k2WyfGbDpydWaM5UHYh7nmLocQ5fV5nuTCoJKk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=D8/wlLoJ; arc=none smtp.client-ip=209.85.128.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
-Received: by mail-yb1-f179.google.com with SMTP id 3f1490d57ef6-e399e904940so5613150276.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Dec 2024 13:19:33 -0800 (PST)
+Received: by mail-yw1-f170.google.com with SMTP id 00721157ae682-6eff5f99de4so50332507b3.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Dec 2024 13:20:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1733951972; x=1734556772; darn=vger.kernel.org;
+        d=chromium.org; s=google; t=1733952023; x=1734556823; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:user-agent:from:references
          :in-reply-to:mime-version:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=HYpTBgw49iGGQnoZixVyDOp+jWreZ3c1N/xlRY2EXfY=;
-        b=k7zbKkylDfXQKrfwtGV+Eii+as6j+ngABWpEa73iwgd/nKCSeKpcXS7GzUDU42Tk8o
-         l0Tv2uJjhbEsjvXnN2AVoo9kde3Xr98kXAuchQmeipFsMk+xC3li7iA4x9SKE4qHbCaU
-         Oxv61kve+EQPNvT8ptmlgcwd0aeViaPNpt9zU=
+        bh=SKfxs3pDMj3GC7YQPCyoK1BtKC5bUlyrggnykcN/Mw8=;
+        b=D8/wlLoJgzEP9OfIDjcP/mvD0diE3K+8ECn62GJ5gE5b/1iKTJcJUimAzaiFRRCgdq
+         WFCRfSCqvGB/rEFC1lMl1VZ51gmAZBbSZDde9aeZURh0ccN+VSkKpikLIdEPltcM05wX
+         enjKNPH8ZzW5nn0n7LsnJp85ZWOKlF/jxffwo=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733951972; x=1734556772;
+        d=1e100.net; s=20230601; t=1733952023; x=1734556823;
         h=cc:to:subject:message-id:date:user-agent:from:references
          :in-reply-to:mime-version:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=HYpTBgw49iGGQnoZixVyDOp+jWreZ3c1N/xlRY2EXfY=;
-        b=nnyCdRbHfJYsxtYkYjHlmJgy2J6CfIECFZvIXLHJRLbDXXwxWrE96b0YEFgNdTwGqH
-         mQq208KLMqCaxa8V/foJU4WN2RViSIiZS3S8DyBkoZ0E1frOfrG4xL1u1uwQFw31QS+K
-         jLZkOcL7yOHyWYnOGVAPb53LoLJyG7yHvpHXix/5vx4odsa3T9/sk6R0jBLWKMsjMN4c
-         F/dcjkPeIRwcUx6e9Hchgjo1vaOs5QrQIBt5TUS6+OZoU+wRkSmfUOETxwWK2zrGRuQu
-         XRw8SLGh9HIh1HMRNeZWqTMRCHSY+37RySqeN6Ac5s+ivtSZSNcjr720I8UG9tQGi1RG
-         1VCw==
-X-Forwarded-Encrypted: i=1; AJvYcCVXqc73abP2dNLxh7D1XlC/wYLrF+bJwfy4Fst48t4phLZ2eOSAGgISIbLsZD7hZizma+aSBxLmUwdyt8iG@vger.kernel.org
-X-Gm-Message-State: AOJu0YwbjMrYOWu7Z7qXoyBMpMj6i+jRav+rCyNLBVMf+vBrxBmPpYil
-	aMB6F0PZXnNFMpV99hv9ahfnqtvZMgvQnFGxW8F4LzoOZ4ADDijfYWJOi9BD8p7y8WPqRPjK5z5
-	MbDyV7cv6NTtGuH8CLDo6jM1qPTXwqeIsCo34
-X-Gm-Gg: ASbGnctvwh3FYuEMvlO0wuQnO+zhHhQIm7pc+BnXOW4mfPojuilQQ4QmnvUUDgs5GGQ
-	1dU+mEjb0JHKA5lhJnsx5tyZt/k9um3Mbvw8TRojAcwDeZD2pectyZbylholuMI4=
-X-Google-Smtp-Source: AGHT+IG0n1apsTNyaVMm69eKfJ0OWmTmr6rAMEZdQLhM95ckH8dadOxw475UNN17L54dURE+0mDPgl6bERAbF28z3lI=
-X-Received: by 2002:a05:6902:2709:b0:e3c:9ed1:4944 with SMTP id
- 3f1490d57ef6-e3d8fb607a4mr1059614276.1.1733951972207; Wed, 11 Dec 2024
- 13:19:32 -0800 (PST)
+        bh=SKfxs3pDMj3GC7YQPCyoK1BtKC5bUlyrggnykcN/Mw8=;
+        b=Bw/boUYVGZFnGXxysmFgBerGsi/YkR2gJAaPPDfAsoHdSiLZziUjQLQlePDqIUXs1z
+         YuQPi64UbERYxuLjYMaNYOIiGTz2z1c8Uy+7Y9xkccyX1jsU7SIvoMiOiJl1Ds4Ay8BN
+         nhAQhoMmfCcGDz8jM7G2jpIYbrp5ikdDrPrxwCnxSLeZ5hfzbb8XQLbrrgnaS3nYQgAR
+         Y89Zv35ctaeNye4h5jC3vQ2t0QrcHIRuTcS43vS/bhpbrhP4ZWniLQ3zWxxBxV+nAJbM
+         ZmZKd1b3T9fKL6heRB4iVa+dhDvz3Zt73zcEavPjBoAEDlajpp0gItKxa9CCIPcdidzn
+         DWcA==
+X-Forwarded-Encrypted: i=1; AJvYcCVwXYQRF//ECSIBTf66bJ7CQDmWunpMQYVsQ2t4bYIC87LKxsSRW1HZTq5XWp1uWNEOHwxLxvoPHxsx4rZS@vger.kernel.org
+X-Gm-Message-State: AOJu0YwwZB3y+8ogLNZSaqM/EQKeWZN0F5tGxfbf1iDqVR5qg26PFSP8
+	6B0tru3e0zq9N5UO3gqrxlunbwgYA0zFigLT2PLq1iv5udtHm5ARPGMTKlI/5g4Y1dHg6SPGDNe
+	e1Wp8IKu0GhpABkIsaKuBv251adoOcq+vs1g3
+X-Gm-Gg: ASbGncuj1iwYK0VQS/qqgLZVJY+1bsnL/wWhJ6gsM4jRfeQ1jVP7/zoLbZhvBOWlVoa
+	fswg9nFt/oseKQSY4WvOteQfuORs0N6Sen1HqfB5EB77jJIokEBC+RhpOtmfbB9s=
+X-Google-Smtp-Source: AGHT+IGiqcJUcizFAGyQuCjc5BPiqK/fm5496Pa//h9SFBYiB9+QTvjnCAELvBpBSrKYiF5MVCjIFkIU1R/GLCyr/Zg=
+X-Received: by 2002:a05:690c:6e03:b0:6ef:8122:282f with SMTP id
+ 00721157ae682-6f1a508837dmr10285587b3.24.1733952023136; Wed, 11 Dec 2024
+ 13:20:23 -0800 (PST)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 11 Dec 2024 13:19:31 -0800
+ HTTPREST; Wed, 11 Dec 2024 13:20:22 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-In-Reply-To: <20241202-fd-dp-audio-fixup-v2-1-d9187ea96dad@linaro.org>
-References: <20241202-fd-dp-audio-fixup-v2-0-d9187ea96dad@linaro.org> <20241202-fd-dp-audio-fixup-v2-1-d9187ea96dad@linaro.org>
+In-Reply-To: <20241202-fd-dp-audio-fixup-v2-2-d9187ea96dad@linaro.org>
+References: <20241202-fd-dp-audio-fixup-v2-0-d9187ea96dad@linaro.org> <20241202-fd-dp-audio-fixup-v2-2-d9187ea96dad@linaro.org>
 From: Stephen Boyd <swboyd@chromium.org>
 User-Agent: alot/0.12.dev1+gaa8c22fdeedb
-Date: Wed, 11 Dec 2024 13:19:31 -0800
-Message-ID: <CAE-0n533qmCvd78GncN=cEkYqvfQ8ejs3xr7E=ucUJ8SqfSeDA@mail.gmail.com>
-Subject: Re: [PATCH v2 01/14] drm/msm/dp: set safe_to_exit_level before
- printing it
+Date: Wed, 11 Dec 2024 13:20:22 -0800
+Message-ID: <CAE-0n52dsQko18bY2uu_k4AFNdeirQ0FaE-k0Jy9=Re_fGV+-Q@mail.gmail.com>
+Subject: Re: [PATCH v2 02/14] drm/msm/dp: fix msm_dp_utils_pack_sdp_header interface
 To: Abhinav Kumar <quic_abhinavk@quicinc.com>, David Airlie <airlied@gmail.com>, 
 	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
 	Marijn Suijten <marijn.suijten@somainline.org>, Paloma Arellano <quic_parellan@quicinc.com>, 
 	Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, Simona Vetter <simona@ffwll.ch>
 Cc: Douglas Anderson <dianders@chromium.org>, linux-arm-msm@vger.kernel.org, 
 	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
-	linux-kernel@vger.kernel.org, kernel test robot <lkp@intel.com>
+	linux-kernel@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 
-Quoting Dmitry Baryshkov (2024-12-02 02:06:31)
-> Rather than printing random garbage from stack and pretending that it is
-> the default safe_to_exit_level, set the variable beforehand.
+Quoting Dmitry Baryshkov (2024-12-02 02:06:32)
+> The msm_dp_utils_pack_sdp_header() accepts an unlimited-size u32 pointer
+> for the header output, while it expects a two-element array. It performs
+> a sizeof check which is always true on 64-bit platforms (since
+> sizeof(u32*) is 8) and is always falce on 32-bit platforms. It returns
+> an error code which nobody actually checks.
 >
-> Fixes: d13e36d7d222 ("drm/msm/dp: add audio support for Display Port on MSM")
-> Reported-by: kernel test robot <lkp@intel.com>
-> Closes: https://lore.kernel.org/oe-kbuild-all/202411081748.0PPL9MIj-lkp@intel.com/
+> Fix the function interface to accept u32[2] and return void, skipping
+> all the checks.
+>
+> Fixes: 55fb8ffc1802 ("drm/msm/dp: add VSC SDP support for YUV420 over DP")
 > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
 
