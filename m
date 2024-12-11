@@ -1,100 +1,112 @@
-Return-Path: <linux-arm-msm+bounces-41581-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-41582-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2D3309ED9BA
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2024 23:32:04 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 296589EDA19
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2024 23:38:30 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 4A39B1617B9
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2024 22:31:59 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id B6F19188732A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2024 22:38:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 386271A83FA;
-	Wed, 11 Dec 2024 22:32:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 833B62063C6;
+	Wed, 11 Dec 2024 22:32:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="N7wxCJg9"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cqZ00nyo"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qt1-f176.google.com (mail-qt1-f176.google.com [209.85.160.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A17AB195
-	for <linux-arm-msm@vger.kernel.org>; Wed, 11 Dec 2024 22:31:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 534F5206294;
+	Wed, 11 Dec 2024 22:32:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733956320; cv=none; b=Sumakeq6ZazrIw7xEyuzd2AJRGFkhCLdI5aiFJcSFHV4UmU8ZU1xrnQcqT2TmHOSoW94/8B34G/N4h/PXG/m+4qm/kZaczNHJ3bRAlc20yyDuZEk3t3EjDcFg2PC/bu3fkhT4j9+W4pOK1cUpx+0+5LEvmSozFltHmXczDnp2cM=
+	t=1733956373; cv=none; b=kE+2n4gWzSKcRw5BaljCtg85wKO7DXr9mB05SeEzjL7RnO/4pDaPG7Yil2OyrJlBa1zgFBVWKbezxahVzsm7MMUsBH66Pm6SeFynQC7G0gPNB4UfwXQSQtvuNU9R69tPle9nqo2GlSBpzEQC9qrS2dBMZQy/THtrtcJ/+hpQirk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733956320; c=relaxed/simple;
-	bh=NHbSAVasy0M5518vl1c8RnaP4kK4Vq9FshCC3WUmEd8=;
-	h=MIME-Version:In-Reply-To:References:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=pS8kkLacsGUatyrwah/JF4zK5EYnbX5YICD798KFxkfblW6fxlDW/2Y8EylFi6SbR0867lnI61JEV05nnq+xTCu3jgeDmEXyxBc+djzQugWrsvRKVahguQsSeiM1Xt8LDaGc7XJZUKf8rqUhR/FUlawnLnFnmolOK9hei/b5xAw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=N7wxCJg9; arc=none smtp.client-ip=209.85.160.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
-Received: by mail-qt1-f176.google.com with SMTP id d75a77b69052e-4676f1a43dfso11414331cf.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Dec 2024 14:31:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1733956317; x=1734561117; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:user-agent:from:references
-         :in-reply-to:mime-version:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=NHbSAVasy0M5518vl1c8RnaP4kK4Vq9FshCC3WUmEd8=;
-        b=N7wxCJg9A3sKkUOw68tbcdKVX+7OYPjOyxZj8DsBs20SA2HBFwFh3+ZXKmw9vNBfLa
-         sWGyGzbIidavutlAOM++iTZLCPUW7Fd1mqzRylt1ulVq4JqqEgjOwskZKeE4UgmtRLtE
-         Hd2+vVE7UIvQbtuTmZ8butYrRq6IcobIU/YF0=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733956317; x=1734561117;
-        h=cc:to:subject:message-id:date:user-agent:from:references
-         :in-reply-to:mime-version:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=NHbSAVasy0M5518vl1c8RnaP4kK4Vq9FshCC3WUmEd8=;
-        b=ne7rsbX+1lsu8d50g2eTnXaUT2TyEPBSYlebk2GcN27TkbkhV7lZeon6JRrlMBbWkB
-         LdgHHwiYjaSV5cpw4dEGnyxe8isDYF+JOl5UFCZXrRXfap4FIUyGLx9bJmSX1bIX6ai/
-         8anRFnlahOicNVZCLR+45P8Sf9TPmkTPfIBG3YJzQ1Y+1tnJ0ere06+499DEYUGqNTK8
-         mLGrs3PBZfVs8UQ5bEwYooYUwz6pvipyUpsjWKJdnK1BOODZSCIX1aJ65L/1zTaaNwV9
-         Tv6S/cMMOmWIeN4lRnfg4h62VWXGs9BrfOmxshnKpZ9GtNLh+B6mzgXzIERlvLblxLci
-         WWeQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXlpJmLuu4R354WrIgUI9FQ9gOoetjrbDM0MgzsbY8XXhjM3ohgaw1mSU69wgoBb5C1uBrg6KY1Heuf04bO@vger.kernel.org
-X-Gm-Message-State: AOJu0YwqMyTTIR83rrvAMQH8bRt04SV4KcdoPpLHFWLcd4Bp/EwS7Wbj
-	t31p4rOQ+Up2cGiyUSR5d6owvNtVUKZGYIj90GZEcFcBVRtlcwdTieLRBm+LxD4JzKxQCLtPrz5
-	8z8CS1bRE3FIIuU6EFXUXdYTKQv7jb9CyxCsF
-X-Gm-Gg: ASbGnctipxq/UMYEwedKuaFhnfpwgZ6ZRj/J/fh9KR3GqgCAjKo86T/Kfv1v6FbcE0C
-	DWCVUVipvPhViorC5ZfJ0mlFOn+Nr8Khji9AWhM3Oilw7/Tc18Gnlou0ArglJ/ug=
-X-Google-Smtp-Source: AGHT+IH0phbrtePElXJxDxj9HI12gSYY0Q06etMElvaeqdDYhA8EkdDjpS2cR8ruv8dvm22YKh6KLSLREA129gVkVUA=
-X-Received: by 2002:ac8:7d95:0:b0:466:93b9:8356 with SMTP id
- d75a77b69052e-467968a1451mr15126531cf.22.1733956317709; Wed, 11 Dec 2024
- 14:31:57 -0800 (PST)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 11 Dec 2024 14:31:57 -0800
+	s=arc-20240116; t=1733956373; c=relaxed/simple;
+	bh=cVsBRq85rissDz94gS1APPLak1L31WJ3t5TGTSYE/as=;
+	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
+	 In-Reply-To:To:Cc; b=QZ1OYrjIuDJ7KNQRVYBVbyLFHeTZBG7pktYMmaVO1gVDjbt5EqKy4lui2wPIMExmcPFm+sCDqrfAV8CKdfD0LxYz/QIWff3zUhAfb33Z5sS4ARtieTSq9cAF+lBhJR+uEQj87IQ/M30U5bpwbe2ehX6tQTCFppOAvqIOUxCbzUk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cqZ00nyo; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24AB1C4CED3;
+	Wed, 11 Dec 2024 22:32:53 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1733956373;
+	bh=cVsBRq85rissDz94gS1APPLak1L31WJ3t5TGTSYE/as=;
+	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
+	b=cqZ00nyo1Apj+jfDOCjAb0Dxj/1hdrSgL4z0d1BQUgbsnfyS1cxj2Bs3BmSupO9YI
+	 ZrIs7UmW8cKEp43GKNoiniGEMwWKwmjdnER3WeCSCGcRBKWotkXLcx8jndR1TkSpRP
+	 uiVGhMx/F4anBNn2cXEIgvbbMNAcLgjaLi7WcLTW60LB7hq+FQhuXx3i6Ic5UlnfEU
+	 vzGsMum9i7o+4Bz2yDi5hvchzvThH3EecYX333iWDVqDeJrI5DcrWWqj0yc7VIBVVl
+	 GPNr0CGIC5KgEmOa8jzIJQb3v4R6rhXRyTCF1prrQpAlkKDu/E5iMLuOrlL7ULHRg3
+	 dPb253YfD0mvw==
+Received: from [10.30.226.235] (localhost [IPv6:::1])
+	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id 70CC8380A965;
+	Wed, 11 Dec 2024 22:33:10 +0000 (UTC)
+Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-In-Reply-To: <20241202-fd-dp-audio-fixup-v2-10-d9187ea96dad@linaro.org>
-References: <20241202-fd-dp-audio-fixup-v2-0-d9187ea96dad@linaro.org> <20241202-fd-dp-audio-fixup-v2-10-d9187ea96dad@linaro.org>
-From: Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.12.dev1+gaa8c22fdeedb
-Date: Wed, 11 Dec 2024 14:31:57 -0800
-Message-ID: <CAE-0n50T1yJEhx+NbcoNbEZ6Q8Bx7asOHHx=bOY_uKNaQ-y8xQ@mail.gmail.com>
-Subject: Re: [PATCH v2 10/14] drm/msm/dp: drop obsolete audio headers access
- through catalog
-To: Abhinav Kumar <quic_abhinavk@quicinc.com>, David Airlie <airlied@gmail.com>, 
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, Paloma Arellano <quic_parellan@quicinc.com>, 
-	Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, Simona Vetter <simona@ffwll.ch>
-Cc: Douglas Anderson <dianders@chromium.org>, linux-arm-msm@vger.kernel.org, 
-	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
-	linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH] soc: Switch back to struct platform_driver::remove()
+From: patchwork-bot+linux-riscv@kernel.org
+Message-Id: 
+ <173395638899.1729195.5401091299734997866.git-patchwork-notify@kernel.org>
+Date: Wed, 11 Dec 2024 22:33:08 +0000
+References: <20241029074859.509587-2-u.kleine-koenig@baylibre.com>
+In-Reply-To: <20241029074859.509587-2-u.kleine-koenig@baylibre.com>
+To: =?utf-8?q?Uwe_Kleine-K=C3=B6nig_=3Cu=2Ekleine-koenig=40baylibre=2Ecom=3E?=@codeaurora.org
+Cc: linux-riscv@lists.infradead.org, arnd@arndb.de, olof@lixom.net,
+ joel@jms.id.au, andrew@codeconstruct.com.au, christophe.leroy@csgroup.eu,
+ herve.codina@bootlin.com, qiang.zhao@nxp.com, hasegawa-hitomi@fujitsu.com,
+ lihuisong@huawei.com, linusw@kernel.org, kaloz@openwrt.org,
+ kgugala@antmicro.com, mholenko@antmicro.com, gsomlo@gmail.com,
+ zhuyinbo@loongson.cn, matthias.bgg@gmail.com,
+ angelogioacchino.delregno@collabora.com, conor.dooley@microchip.com,
+ daire.mcnamara@microchip.com, krzysztof.kozlowski@linaro.org,
+ andersson@kernel.org, konradybcio@kernel.org, heiko@sntech.de,
+ alim.akhtar@samsung.com, thierry.reding@gmail.com, jonathanh@nvidia.com,
+ nm@ti.com, ssantosh@kernel.org, michal.simek@amd.com,
+ andriy.shevchenko@linux.intel.com, duje.mihanovic@skole.hr,
+ broonie@kernel.org, david.wu@rock-chips.com, jay.xu@rock-chips.com,
+ jay.buddhabhatti@amd.com, radhey.shyam.pandey@amd.com,
+ izhar.ameer.shaikh@amd.com, naman.trivedimanojbhai@amd.com,
+ linux-arm-kernel@lists.infradead.org, soc@lists.linux.dev,
+ linux-aspeed@lists.ozlabs.org, linux-kernel@vger.kernel.org,
+ linuxppc-dev@lists.ozlabs.org, loongarch@lists.linux.dev,
+ linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+ linux-rockchip@lists.infradead.org, linux-samsung-soc@vger.kernel.org,
+ linux-tegra@vger.kernel.org, linux-pm@vger.kernel.org
 
-Quoting Dmitry Baryshkov (2024-12-02 02:06:40)
-> Drop obsolete functions to access audio packet headers. The dp_audio.c
-> now writes them using msm_dp_write_link() directly.
->
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
+Hello:
 
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+This patch was applied to riscv/linux.git (fixes)
+by Arnd Bergmann <arnd@arndb.de>:
+
+On Tue, 29 Oct 2024 08:48:58 +0100 you wrote:
+> After commit 0edb555a65d1 ("platform: Make platform_driver::remove()
+> return void") .remove() is (again) the right callback to implement for
+> platform drivers.
+> 
+> Convert all platform drivers below drivers/soc to use .remove(), with
+> the eventual goal to drop struct platform_driver::remove_new(). As
+> .remove() and .remove_new() have the same prototypes, conversion is done
+> by just changing the structure member name in the driver initializer.
+> 
+> [...]
+
+Here is the summary with links:
+  - soc: Switch back to struct platform_driver::remove()
+    https://git.kernel.org/riscv/c/511c06e39035
+
+You are awesome, thank you!
+-- 
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/patchwork/pwbot.html
+
+
 
