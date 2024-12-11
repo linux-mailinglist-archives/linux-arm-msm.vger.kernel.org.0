@@ -1,64 +1,65 @@
-Return-Path: <linux-arm-msm+bounces-41390-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-41391-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id DD03B9EC1CC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2024 02:59:24 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 202209EC1CE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2024 02:59:37 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 48BE0188AFD6
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2024 01:59:24 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id BE925165275
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2024 01:59:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7A0001DF25A;
-	Wed, 11 Dec 2024 01:59:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E330E1DF75A;
+	Wed, 11 Dec 2024 01:59:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="LXD0rmE5"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="VE5XKxGd"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A84891DED47;
-	Wed, 11 Dec 2024 01:59:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 307701DF733;
+	Wed, 11 Dec 2024 01:59:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733882359; cv=none; b=DFCiOTJ8ylEiNMlifycFEnZ/jYn7a+2/J/2wnkNDlTMyaSSVTvH9gpxvQplYeATAV+fcZOxvl+wb4E7CojMzPX7tefV/GXUWXAq0cFIzvDtjqYbTLMPteWFnyND/EXSH8IhOR2yU1Fap17i4JCQeeo1HAphjlIrU9PkilrgpLsk=
+	t=1733882362; cv=none; b=Vcm1gTmtiSWdXvTPvO+wVcFtTJ5rt87mcl+kQgdyUXJKyY/VpujjuMRhvZWLxMeP5vYPkCdoNEiCN3QWWPdNOkXFf3UCfqIhv7Vrf/ZOZgXDhwddL4F3PjByQGIRByyRgVEKz0yn+uQEDrmSruyoWgKqwiRuAH7P2G1UV0z3p7o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733882359; c=relaxed/simple;
-	bh=Qin8aGcUZb8vNzoOZBdj9PnK2Rh+bnYpjrtsl+gWVD8=;
-	h=From:Subject:Date:Message-ID:MIME-Version:Content-Type:To:CC; b=fFbohoSB+6UA87nO2KRtdXPxIzScc+Y5ofetw6ociaSB7fmFJlcsAqNXKqiZLh5QyUP6+t4OirCRWt2RLeYrH3sKLvISV1fSrJRLQ9ezn51Ljm1D56mYblaS4aYV80P8WNH34jrM/mi1GEYpzZyAlrG/nHg7WUWjbQwB2wymtW4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=LXD0rmE5; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1733882362; c=relaxed/simple;
+	bh=KEjmGe/TKv4+PCay/VECQdcXdi8Uz0WEI1WSKDVwixA=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:References:
+	 In-Reply-To:To:CC; b=tWXJNp7scUd0SpoTe88YvaMTofFGjrWsNRoXCjJUI77/3+9JBO7LYLq9GhpeRzKf8tiSRWyA/iWb8i3S2xklSKFj2yJO9AV9lX0vkI+yoNY2WNjoMF8mO9hwV89nG3fp/gTBg1M1KIJu8c7xbIapO6lxYV+12GikCdhEoDnr9E4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=VE5XKxGd; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BAMLvmF018051;
-	Wed, 11 Dec 2024 01:59:14 GMT
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BAHIhch002489;
+	Wed, 11 Dec 2024 01:59:17 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:message-id
-	:mime-version:subject:to; s=qcppdkim1; bh=ognURcBK1+7hoSJ7P6ej1u
-	5vSlt9elZKquIVaB6LhqM=; b=LXD0rmE5MowQuUdbU3R668Guz7Ng7nM6o7Wy7V
-	YAhrxo6nL9tt1PU4sDkXut1ZxDFijAc4AVh2HlIfU+v9VGZ8ezxFqp7woq0XfNnG
-	XpTMdIZZNw2G1t6HndAaSaEFSOr71hmQmU0TmUG9vlS8bw1+31jnlpHfjJrJ5TPS
-	5TCG/ejyVdN0Af3resVdg5CQUyp9TjmmhnJM3lhVViOq+GXX2FSLskn0HBLoJBXk
-	QagJ4zm3+CFMZNh09z5dNgUHWdVIS6M9Tjjcx3EX4ft868hrGR/RgGlhm3sK00u0
-	AJ58FeIWwW8D0/TmrcHhodn/CL4QzsipPbS8L6jb4nkOoU2Q==
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43eak3bw10-1
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	KH2r6G7DANoBRuT8BNlzXYkIFySPvaZ2ggAovQXeiJw=; b=VE5XKxGd77WzxKt1
+	8n+mn3zywxuYyg6fb16Gwm2ehHkT9cDIoZzUzWMPVOoRSPGpMZ6xGvXt6QBjJQkU
+	5C5yhT2HyJuypuptqi2kZKGvbPjOrrLZ3zJKFIzdQXe/LLLeheRRVDbbxMgwLGOh
+	TOJOhfD825Cd+VHIW+cGGgWSUkKQIWpOwN16zYtyr45kh2lLma0hagEbYXo6qrpv
+	vJZBPsnoggSPi8J8Eb8hWpqOKv1evaCnA712QY98cPn44BOpc/ZbDtVcTjx9UqQi
+	ndYE//V3cfThyg2Z2j5H9cvO1XNIWfjgpxQ2bBrbjjcj0DXjGXfJRkbnHhLRZfU8
+	9mTYCA==
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43dxw465bc-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 11 Dec 2024 01:59:14 +0000 (GMT)
+	Wed, 11 Dec 2024 01:59:17 +0000 (GMT)
 Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4BB1xDhQ025678
+	by NASANPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4BB1xGlx020290
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 11 Dec 2024 01:59:13 GMT
+	Wed, 11 Dec 2024 01:59:16 GMT
 Received: from songxue-gv.qualcomm.com (10.80.80.8) by
  nasanex01c.na.qualcomm.com (10.45.79.139) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Tue, 10 Dec 2024 17:59:08 -0800
+ 15.2.1544.9; Tue, 10 Dec 2024 17:59:11 -0800
 From: Song Xue <quic_songxue@quicinc.com>
-Subject: [PATCH 0/2] arm64: dts: qcom: Add DT support for secondary usb on
- QCS615
-Date: Wed, 11 Dec 2024 09:57:56 +0800
-Message-ID: <20241211-add_usb_host_mode_for_qcs615-v1-0-edce37204a85@quicinc.com>
+Date: Wed, 11 Dec 2024 09:57:57 +0800
+Subject: [PATCH 1/2] arm64: dts: qcom: Add support for secondary usb node
+ on QCS615
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -67,11 +68,9 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAKTxWGcC/yXNSw6DIBSF4a0YxiXhouJjK40hwL1UBkoFbZoY9
- 15Sh98Z/OdkmVKgzMbqZIk+IYe4FsCjYm4264t4wGImhWxAAnCDqI9s9RzzrpeIpH1MenNZQcs
- VeLIgvbEoWEm8E/nw/eef0+1E21Fe9ntk1mTiLi5L2MfKSyt65d3gRT10Xd00LUolFDrVohMDk
- IO+Fp5N1/UDT0+/sroAAAA=
-X-Change-ID: 20241211-add_usb_host_mode_for_qcs615-61feb12fabd0
+Message-ID: <20241211-add_usb_host_mode_for_qcs615-v1-1-edce37204a85@quicinc.com>
+References: <20241211-add_usb_host_mode_for_qcs615-v1-0-edce37204a85@quicinc.com>
+In-Reply-To: <20241211-add_usb_host_mode_for_qcs615-v1-0-edce37204a85@quicinc.com>
 To: Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio
 	<konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
@@ -84,59 +83,136 @@ CC: <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
 	<krishna.kurapati@oss.qualcomm.com>,
         Song Xue <quic_songxue@quicinc.com>
 X-Mailer: b4 0.15-dev-88a27
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1733882348; l=1089;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1733882348; l=3029;
  i=quic_songxue@quicinc.com; s=20240911; h=from:subject:message-id;
- bh=TqlTX0bLEfiSPxAFrw520lc7bqKnFJ7oWldk8b4i/M0=;
- b=55MaLgjlOLvC2jPxz3eQGxepRZq2OQoqrES/0d1B8M9+zMl/mcv3/jgyimU7VuI+SJPK6O/r4
- EKWMoVOLsB7BliRJWmxHf9n9Cz2VKOI/jaBIsg7w5Uu/dz3Mon6wxId
+ bh=ZU6mzm7e+mY7SzHCvxWc39BXcE6CkKvFlMzdpzou3t8=;
+ b=bPoG3jD9VaAqYd6kVmB8VaLDeAGPaO9ymRuxEobeqLbCm9cTwlgeXvGrBsmzcE30JV8RsTPpQ
+ D8CSmqi1vwwDnx4IDBv1TCZraM5mqAsXxl4bHjGPpL5S5zhbdwenScm
 X-Developer-Key: i=quic_songxue@quicinc.com; a=ed25519;
  pk=Z6tjs+BBbyg1kYqhBq0EfW2Pl/yZdOPXutG9TOVA1yc=
 X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nasanex01c.na.qualcomm.com (10.45.79.139)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: RUfW_0sVQa-Z02FFmy4doqvgRO-pBXM_
-X-Proofpoint-GUID: RUfW_0sVQa-Z02FFmy4doqvgRO-pBXM_
+X-Proofpoint-ORIG-GUID: B4ZTNsih-xmvUz0-gnoir32qLwjWux2u
+X-Proofpoint-GUID: B4ZTNsih-xmvUz0-gnoir32qLwjWux2u
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
- mlxlogscore=666 clxscore=1015 spamscore=0 mlxscore=0 impostorscore=0
- malwarescore=0 lowpriorityscore=0 priorityscore=1501 adultscore=0
- bulkscore=0 phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 bulkscore=0
+ suspectscore=0 priorityscore=1501 adultscore=0 mlxlogscore=927
+ clxscore=1015 spamscore=0 mlxscore=0 lowpriorityscore=0 phishscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.19.0-2411120000 definitions=main-2412110014
 
 From: Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>
 
-These series aim at enabling secondary USB on QCS615. The secondary
-controller is High Speed capable and has a QUSB2 Phy.
+Add support for secondary USB controller and its high-speed phy
+on QCS615.
 
-Base DT Support has been added and is enabled on Ride Platform. The
-secondary controller is enabled in host mode.
-
+Signed-off-by: Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>
+Co-developed-by: Song Xue <quic_songxue@quicinc.com>
 Signed-off-by: Song Xue <quic_songxue@quicinc.com>
 ---
-Dependencies:
-Link to bindings and driver changes:
-https://lore.kernel.org/all/20241017130701.3301785-1-quic_kriskura@quicinc.com/
+ arch/arm64/boot/dts/qcom/qcs615.dtsi | 76 ++++++++++++++++++++++++++++++++++++
+ 1 file changed, 76 insertions(+)
 
-PMIC DT:
-https://lore.kernel.org/all/20241202-adds-spmi-pmic-peripherals-for-qcs615-v6-0-bdd306b4940d@quicinc.com/
+diff --git a/arch/arm64/boot/dts/qcom/qcs615.dtsi b/arch/arm64/boot/dts/qcom/qcs615.dtsi
+index b8388dcca94cd8f4e6f1360305d5f6c7fff4eec3..8ebcb886e8ebfacc436dac2c6f27beb9a6405bfe 100644
+--- a/arch/arm64/boot/dts/qcom/qcs615.dtsi
++++ b/arch/arm64/boot/dts/qcom/qcs615.dtsi
+@@ -3079,6 +3079,20 @@ usb_1_hsphy: phy@88e2000 {
+ 			status = "disabled";
+ 		};
+ 
++		usb_hsphy_2: phy@88e3000 {
++			compatible = "qcom,qcs615-qusb2-phy";
++			reg = <0x0 0x088e3000 0x0 0x180>;
++
++			clocks = <&gcc GCC_AHB2PHY_WEST_CLK>, <&rpmhcc RPMH_CXO_CLK>;
++			clock-names = "cfg_ahb", "ref";
++
++			resets = <&gcc GCC_QUSB2PHY_SEC_BCR>;
++
++			#phy-cells = <0>;
++
++			status = "disabled";
++		};
++
+ 		usb_qmpphy: phy@88e6000 {
+ 			compatible = "qcom,qcs615-qmp-usb3-phy";
+ 			reg = <0x0 0x88e6000 0x0 0x1000>;
+@@ -3168,6 +3182,68 @@ usb_1_dwc3: usb@a600000 {
+ 				snps,usb3_lpm_capable;
+ 			};
+ 		};
++
++		usb_2: usb@a8f8800 {
++			compatible = "qcom,qcs615-dwc3", "qcom,dwc3";
++			reg = <0 0x0a8f8800 0 0x400>;
++
++			clocks = <&gcc GCC_CFG_NOC_USB2_SEC_AXI_CLK>,
++				 <&gcc GCC_USB20_SEC_MASTER_CLK>,
++				 <&gcc GCC_AGGRE_USB2_SEC_AXI_CLK>,
++				 <&gcc GCC_USB20_SEC_SLEEP_CLK>,
++				 <&gcc GCC_USB20_SEC_MOCK_UTMI_CLK>,
++				 <&gcc GCC_USB2_PRIM_CLKREF_CLK>;
++			clock-names = "cfg_noc",
++				      "core",
++				      "iface",
++				      "sleep",
++				      "mock_utmi",
++				      "xo";
++
++			assigned-clocks = <&gcc GCC_USB20_SEC_MOCK_UTMI_CLK>,
++					  <&gcc GCC_USB20_SEC_MASTER_CLK>;
++			assigned-clock-rates = <19200000>, <200000000>;
++
++			interrupts-extended = <&intc GIC_SPI 663 IRQ_TYPE_LEVEL_HIGH>,
++					      <&intc GIC_SPI 662 IRQ_TYPE_LEVEL_HIGH>,
++					      <&pdc 11 IRQ_TYPE_EDGE_BOTH>,
++					      <&pdc 10 IRQ_TYPE_EDGE_BOTH>;
++			interrupt-names = "pwr_event",
++					  "hs_phy_irq",
++					  "dp_hs_phy_irq",
++					  "dm_hs_phy_irq";
++
++			power-domains = <&gcc USB20_SEC_GDSC>;
++			required-opps = <&rpmhpd_opp_nom>;
++
++			resets = <&gcc GCC_USB20_SEC_BCR>;
++
++			qcom,select-utmi-as-pipe-clk;
++
++			#address-cells = <2>;
++			#size-cells = <2>;
++			ranges;
++
++			status = "disabled";
++
++			usb_2_dwc3: usb@a800000 {
++				compatible = "snps,dwc3";
++				reg = <0 0x0a800000 0 0xcd00>;
++
++				iommus = <&apps_smmu 0xe0 0x0>;
++				interrupts = <GIC_SPI 664 IRQ_TYPE_LEVEL_HIGH>;
++
++				phys = <&usb_hsphy_2>;
++				phy-names = "usb2-phy";
++
++				snps,dis_u2_susphy_quirk;
++				snps,dis_enblslpm_quirk;
++				snps,has-lpm-erratum;
++				snps,hird-threshold = /bits/ 8 <0x10>;
++
++				maximum-speed = "high-speed";
++			};
++		};
+ 	};
+ 
+ 	arch_timer: timer {
 
----
-Krishna Kurapati (2):
-      arm64: dts: qcom: Add support for secondary usb node on QCS615
-      arm64: dts: qcom: Enable secondary USB controller on QCS615 Ride
-
- arch/arm64/boot/dts/qcom/qcs615-ride.dts | 28 ++++++++++++
- arch/arm64/boot/dts/qcom/qcs615.dtsi     | 76 ++++++++++++++++++++++++++++++++
- 2 files changed, 104 insertions(+)
----
-base-commit: f2b086fc9f039773445d2606dc65dc091ec1830f
-change-id: 20241211-add_usb_host_mode_for_qcs615-61feb12fabd0
-
-Best regards,
 -- 
-Song Xue <quic_songxue@quicinc.com>
+2.25.1
 
 
