@@ -1,63 +1,77 @@
-Return-Path: <linux-arm-msm+bounces-41482-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-41483-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id C8A5D9ECCDF
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2024 14:09:35 +0100 (CET)
-Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id B0338188ACA5
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2024 13:09:28 +0000 (UTC)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 29B6223FD14;
-	Wed, 11 Dec 2024 13:09:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="aiGlVvBn"
-X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8A8079ECCF3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2024 14:15:42 +0100 (CET)
+Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34CBC23FD26;
-	Wed, 11 Dec 2024 13:09:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6CFF32849DE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2024 13:15:34 +0000 (UTC)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A3A521BC077;
+	Wed, 11 Dec 2024 13:15:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="qjLT3ahG"
+X-Original-To: linux-arm-msm@vger.kernel.org
+Received: from mail-ed1-f47.google.com (mail-ed1-f47.google.com [209.85.208.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11D22211A26
+	for <linux-arm-msm@vger.kernel.org>; Wed, 11 Dec 2024 13:15:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733922564; cv=none; b=o64mZirXh4ci2o6HBGaMuf3nFT8wxYtZU0hNMZsG4O/SeYJ6ATXFL4j1LMXOCUzQQCoHBKalfL9eV+bAUZOt7JY6XCa8H9WwBkOerRHBJ6NS95THIPnM70cjae3k8isZAPZA8SP+HOVxu81BKC1vsE2Ha7vUfS6eW7hx7OHo1tw=
+	t=1733922933; cv=none; b=rvDH8RRg2XnlFUyl2XUwKMBn5uGtgnCNgGA5Xp0XVrT3ttoWRrob272Opt8Odh0XJBr5VI/lg+EmemnwNNYDfws/tgBmnUsuy3Fy0c5phIbc5Qbcmz67W5yKqpclESsceMKRADXL7+zWI2Mr7NQDVdSTMKV3LoegSJwRf/bUZdM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733922564; c=relaxed/simple;
-	bh=SXwxWPUxfjbFQeeE6nxx2F3ZpznqTytClHi08wiKhkA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=hvJg1b0oYH1zYWov9HGWOhhAhxRRl9uURSu/OiXB7wppHXpII5Q7FMAc/3ej6pZwlOEv0Jxt4/D+37GdROOIE7muB+rvUkJGF4ZpYwYcl50nvxvDgfuouGEld23at4tUetX9oiiwhjyBZr/DYQ41C6GinTd5vnUb3mlKuhFFuvg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=aiGlVvBn; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BB6xd3E032199;
-	Wed, 11 Dec 2024 13:09:14 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	MFr8bdJ6Lv/ycMxAcCO4jzHxLdWwsDYPRMFnbHTyqnY=; b=aiGlVvBnVNQLKTWf
-	tEWpCU+7NXBaUYbt+wH9sA099CmiDgjabfMkJDM0RZq76vQv4Z/mIZyQr4ZWvrMI
-	UkQPB7qZzeLO81CT4Hi+nMyi0a/9zTMsjm7nNvAbQxu1zSUYbb7gcDaXg9ZZLbIm
-	c4ZEAEbeMdRu+B67iN7Kp33OeyAArGr3YVIcr6+Hut6OYhk9F5ddCV/HJvNWSlUN
-	pCITtyEodF+SsEhIp14tlkblrNHHsxiUFeQ7vazTyO08s3SVhgVXLMZ907SPHx5f
-	j2Dk/Q/AxmjsCd/s52LpXQLCsVDOCTyHIyQCiyEPyusdm4uDj/P8T3jtGI+dSmut
-	ifxNGQ==
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43etn8tvw6-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 11 Dec 2024 13:09:14 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4BBD9DxH021759
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 11 Dec 2024 13:09:13 GMT
-Received: from [10.239.97.152] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 11 Dec
- 2024 05:09:07 -0800
-Message-ID: <3d0cac81-1ffe-4e7d-b009-78ec5241a3bf@quicinc.com>
-Date: Wed, 11 Dec 2024 21:09:04 +0800
+	s=arc-20240116; t=1733922933; c=relaxed/simple;
+	bh=jUViW32COeGoeYELh9LbBlj4465oJrhfN7e+K2CTTdY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Ku1KaeGh65QIIM9Uspc7L4CNWt2plCIo0SeZkX3nlA4vyR6cGFXMDUpiA3vRtx5ImMpQvaF6FPmTE5kwVNqs1CPHrEObWJuQaa6b1GYZpws0AfJjyCTlXNC7RcR2DHY1uNcLe2bE+ydosxaklp4E/thGT7ZPJd+Inbfd3c158E0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=qjLT3ahG; arc=none smtp.client-ip=209.85.208.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ed1-f47.google.com with SMTP id 4fb4d7f45d1cf-5d3ecae02beso5043533a12.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Dec 2024 05:15:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1733922930; x=1734527730; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=2wwyxsApnY4hDVPBOHJhItY5Jgr+I4T7A0sablhlGmg=;
+        b=qjLT3ahGjn3eV8pVibROAMaRsVIcgYOEdLyRb6jQWxEZuzTqhKUqQ42MvK64iG+kws
+         hRo1nTr2srA0QpZ/JdEp3u4inEkM7qQshpvWJCcbceQ49s2lQTsP0GYC4QlZ61SZ/bZB
+         0nGd1MIqB8l0vYEYrWhkEKZB+Qu5wGhOajHW4x7L+P5+ipaVMU0IV/SE5FdbsIhfgd8e
+         7eGTiFfUbVJkiKXx0NLs8A871P+07wF7ypis8275KaZx2nqHiUQOT5CY92uB5e5WfC5T
+         dbXZwtOL5WBGgZ/xeQ9dPtcRjqyY2c7krCOSxdxtMoNxEsOf2kBb+mgtG3JDewNFGT6M
+         GGSQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1733922930; x=1734527730;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=2wwyxsApnY4hDVPBOHJhItY5Jgr+I4T7A0sablhlGmg=;
+        b=j7wbxu8qbs1EkQtVZb40Yw4SlopNMf5vq2nhQoKc+2W3hwe4cFeG4luggmfuBS56sP
+         Xs94IsIq/Esi/pMPp+Mef6IRfp1Cwfd/j8EPpMnP6PTgHVERsEz85Tcgg/oK/AfRoXDQ
+         MfR8yJYuD2qkhCDPCvFIqCh0nVVtCkEziqF0FIJK5izfUehxhO10e+ig37etm5ulX3Em
+         y3Z3biqfJjUEX5bwnJO4+4WXP4xsItJxJxRQxIlBKK3aLfCUkGgkjQ5iFc0cDIXfZbq3
+         MK7N+EGqBcbFyvL4wb4S8SWN57hQkyUSwCQoyHyDCIUsF0JJiFmgfRWfC4h0q5ukCtls
+         u3Fw==
+X-Gm-Message-State: AOJu0YwpOzv0pjwcVyR26KHPg1TEmMbH0pXCbFihqDqy73oNdFZiacZN
+	h0w/CzFf1AzsqrRa0zP2cUvPlncEWcmWkGMnprEtpySlt9Aa6EyMt6ztSAs1UOk=
+X-Gm-Gg: ASbGnctOCttiaMmTfPZ7NBr/AbtOESQfqmUM9mqFnLKvkk2YjSoW7KnPHnf4zsi46qP
+	iSAbjPJ6ODsF7dUoWQ3kFXbG5Ez8LT9hN6aSPc3pRsgSXMyDCkBxwhP+vHCfqz7dL7Gk8005ww+
+	iroeIv4E6oqeQpNVl7m+o1eKT89rzgX9PXrf2v117b1xwDx2O2jZ9Tzrr9nUuKPwezxA/XLAG3w
+	dl7XAccRz1ixvPjD2TqnVt/AG8IJ4nMSru1LDvM1iuAduzUiD9lmjvDkq6w2jw7D3k=
+X-Google-Smtp-Source: AGHT+IEQ3VuB9AehLYFtF0JsGB2XRiyuFHW63nuUHnZmuZQ3vdkrpWWLByAocPF8PI57hfUSLB2v1Q==
+X-Received: by 2002:a05:6402:2553:b0:5d1:2534:57bf with SMTP id 4fb4d7f45d1cf-5d433170532mr2909736a12.32.1733922930525;
+        Wed, 11 Dec 2024 05:15:30 -0800 (PST)
+Received: from [192.168.0.40] ([176.61.106.227])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5d149a25ce7sm8914783a12.5.2024.12.11.05.15.29
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 11 Dec 2024 05:15:29 -0800 (PST)
+Message-ID: <19ac5167-017c-45a4-b9ef-9b9e11b216c2@linaro.org>
+Date: Wed, 11 Dec 2024 13:15:28 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,87 +79,28 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 08/16] media: qcom: camss: csid: Make TPG optional
-To: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>, <rfoss@kernel.org>,
-        <todor.too@gmail.com>, <bryan.odonoghue@linaro.org>,
-        <mchehab@kernel.org>, <robh@kernel.org>, <krzk+dt@kernel.org>,
-        <conor+dt@kernel.org>
-CC: <quic_eberman@quicinc.com>, <linux-media@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <kernel@quicinc.com>
-References: <20241205155538.250743-1-quic_depengs@quicinc.com>
- <20241205155538.250743-9-quic_depengs@quicinc.com>
- <124bb490-58d9-4c8c-a83f-7c3d45f61e43@linaro.org>
+Subject: Re: [PATCH v7 3/3] clk: qcom: Support attaching GDSCs to multiple
+ parents
+To: Bjorn Andersson <andersson@kernel.org>,
+ Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
+ <sboyd@kernel.org>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20241211-b4-linux-next-24-11-18-clock-multiple-power-domains-v7-0-7e302fd09488@linaro.org>
+ <20241211-b4-linux-next-24-11-18-clock-multiple-power-domains-v7-3-7e302fd09488@linaro.org>
 Content-Language: en-US
-From: Depeng Shao <quic_depengs@quicinc.com>
-In-Reply-To: <124bb490-58d9-4c8c-a83f-7c3d45f61e43@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: wUH3p6xSXKZ-jjipihOkLhNLBz8EXF9M
-X-Proofpoint-GUID: wUH3p6xSXKZ-jjipihOkLhNLBz8EXF9M
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015
- lowpriorityscore=0 spamscore=0 impostorscore=0 adultscore=0 suspectscore=0
- bulkscore=0 priorityscore=1501 malwarescore=0 phishscore=0 mlxscore=0
- mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2412110096
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <20241211-b4-linux-next-24-11-18-clock-multiple-power-domains-v7-3-7e302fd09488@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Hi Vladimir,
+On 11/12/2024 00:27, Bryan O'Donoghue wrote:
+>   takes care of hooking up the GDSC to the clock-controller.
 
+This should read "hooking up the power-domain to the clock-controller"
 
->> ---
->>   .../media/platform/qcom/camss/camss-csid.c    | 33 ++++++++++++-------
->>   1 file changed, 21 insertions(+), 12 deletions(-)
->>
->> diff --git a/drivers/media/platform/qcom/camss/camss-csid.c b/drivers/ 
->> media/platform/qcom/camss/camss-csid.c
->> index 6cf8e434dc05..2cb8c37982f8 100644
->> --- a/drivers/media/platform/qcom/camss/camss-csid.c
->> +++ b/drivers/media/platform/qcom/camss/camss-csid.c
->> @@ -838,7 +838,7 @@ static void csid_try_format(struct csid_device *csid,
->>           break;
->>       case MSM_CSID_PAD_SRC:
->> -        if (csid->testgen_mode->cur.val == 0) {
->> +        if (!csid->testgen_mode || csid->testgen_mode->cur.val == 0) {
->>               /* Test generator is disabled, */
->>               /* keep pad formats in sync */
->>               u32 code = fmt->code;
->> @@ -1042,6 +1042,7 @@ static int csid_init_formats(struct v4l2_subdev 
->> *sd, struct v4l2_subdev_fh *fh)
->>   static int csid_set_test_pattern(struct csid_device *csid, s32 value)
->>   {
->>       struct csid_testgen_config *tg = &csid->testgen;
->> +    const struct csid_hw_ops *hw_ops = csid->res->hw_ops;
->>       /* If CSID is linked to CSIPHY, do not allow to enable test 
->> generator */
->>       if (value && media_pad_remote_pad_first(&csid- 
->> >pads[MSM_CSID_PAD_SINK]))
->> @@ -1049,7 +1050,10 @@ static int csid_set_test_pattern(struct 
->> csid_device *csid, s32 value)
->>       tg->enabled = !!value;
->> -    return csid->res->hw_ops->configure_testgen_pattern(csid, value);
->> +    if (hw_ops->configure_testgen_pattern)
->> +        return -EOPNOTSUPP;
->> +    else
->> +        return hw_ops->configure_testgen_pattern(csid, value);
-> 
-> Last time I reported about the regression here, it is announced as fixed 
-> in the
-> changelog, but I see it is not, unfortunately.
-> 
+I will update the commit log.
 
-Sorry, I just picked Bryan's standalone change, then forget your 
-comments. Will update it in new version. Will set the tpg mode as 
-CSID_PAYLOAD_MODE_DISABLED in configure_testgen_pattern interface.
-
-
-Thanks,
-Depeng
-
+---
+bod
 
