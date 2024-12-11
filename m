@@ -1,163 +1,185 @@
-Return-Path: <linux-arm-msm+bounces-41397-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-41398-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id CE8D39EC3A8
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2024 04:47:39 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id BD2DC9EC3CD
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2024 04:57:07 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6F25F285EE2
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2024 03:47:38 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0C21A280F7E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2024 03:57:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C6E1B217705;
-	Wed, 11 Dec 2024 03:43:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E6A4520A5CC;
+	Wed, 11 Dec 2024 03:57:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kc2cuFuH"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="gLqM+lqP"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-il1-f181.google.com (mail-il1-f181.google.com [209.85.166.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26F15216606;
-	Wed, 11 Dec 2024 03:43:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E0A72451CC;
+	Wed, 11 Dec 2024 03:57:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733888613; cv=none; b=Lzi/Rlbwj10reobTn6gIyO5gwjICHNouG9E6ZeUpXpFRbvQrWdjLcDwB5DlAgwMbloMwQRiJjXQRMv4AYoZGw5LuPa8Lle4wQcN/NjZNpXYpnS/NzreOkHfmQ7y3RSpAl14CmzznSb377gxghrXJMtGDacZk4kVGeHNvWJ479Ps=
+	t=1733889422; cv=none; b=RMB4VC1D4ERCnLNMcHdsznhjlM2PiCd93bo+o+9XrN/eimgzIV9jg0p7nOqqlxWSYgk7yge0F+vDmG/aCR1Q9UnkvwlsGn/suj8XJSCofDcnk+ncDa4gUSJPZdW3YCBY3WZDd+0qyaHcn1Cfwyz8mCIqAcFcO+IgRfqnA7cbC6A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733888613; c=relaxed/simple;
-	bh=FvFYPTnLGoS3l29r5HECoJIln4Fn2udEW3QBykqJqx0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=VSeGFTr0CBvusb5T0o27kgQA9RfklFkJzPMxxXiYjDvEZ4qsBcfj/CHWc8rEp2ENBF92daDWCn/5g2/BcbhynUgN8Yld5P6cy046MjHy9vMmLOfDsVBDnVTs2/XkxVDYuAB+ylFXiRISMB+35mC3QozZUWTWRYTonyrU/b/OhMA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kc2cuFuH; arc=none smtp.client-ip=209.85.166.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-il1-f181.google.com with SMTP id e9e14a558f8ab-3a813899384so18927925ab.1;
-        Tue, 10 Dec 2024 19:43:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1733888611; x=1734493411; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=4cH1mM7zgDjQ29maw8yzbllsYQuAR43E0lxlHNTTv4o=;
-        b=kc2cuFuHUN1oNuSJZFpQLmrfqmyYRTLfPdtbD9PgFHxnQH35VNjji4+vKnk9beJ6rq
-         FUj8QlDce1Y5uAbMBJOSAhN2dd2p8enYfzX7q+Zdc7Yg3bBcwkt9aUh1r7qfujjq0leS
-         17ZJsqvudb1e/ajhRkO2EQtJeoAdJjbT8CVfFE7PutWdK5kgMqHiKoQTAhrC7HLGWebT
-         3of0fXMFbOo+7C0omXUNrZ1tW0hGT4oSir+2cqanQbj1M7vNr0hM56AgF3broXjwPGME
-         wTbIpbiFomrhYioQ/DjwUMt9tdecHd7HxDpAv0Ktk5CXAZcTknuXhz90mzqAW9ATLyaE
-         tgKw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733888611; x=1734493411;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=4cH1mM7zgDjQ29maw8yzbllsYQuAR43E0lxlHNTTv4o=;
-        b=vcneptcffBGAf+MG9RBQXqUl1oM0WCSdhXgAzl1QlYl0Ar4Dnhk3Na60fNTJye4caO
-         NntyHN4M9FbVLlvXYHYCYVNMtFLp0E8egERqo2LBAHlvtkB+qpmujWV6345H4QQliZti
-         jp3eZZth6xXjpaDbcjt6zgcw6an3wkxO26VpONv5V2hy9szZjynEoIJ0KTe7yITmqxD6
-         Ue1HmDhNNaEwkB9AKOgIIP1KDR+raF1ryOs7F+gqnsmurAK5kzrI3qgOYqs2pSaqx+P4
-         uPPfW04+I2YaUib+CLbOSceo6bOiB9/y7ePv3UWa3Y7t+QFjFizz7farWQr7G3G6XmWf
-         w6lw==
-X-Forwarded-Encrypted: i=1; AJvYcCUcBXdpNS1c3iRR75UinMkLT7u5espjdGIsWzUgCQg+ibPXM2O3dKnt3UsZFsDZJN+OaWjnkKKrs9ev2vf4@vger.kernel.org, AJvYcCUfoKU+EF5Lf+T2nJAam/ARkbis7WLhNP4cSsfPuH9/KDSeOghqGmW93lKpTZjVJEuwmtyruuOqnM5LEq38@vger.kernel.org
-X-Gm-Message-State: AOJu0YxH61F694lsp+fhvQ6RkTVVsPPK8mH7zM9+FQH2ibqQ2FT3b7WB
-	zVxpwYFpk87pjyc8MEVtIffNmtwuMwoUUf/uFHxLPfQDqQmzuEOKKEMYZ2aKgFYi1Y+UzTbg7UZ
-	zzWmkRRBQPta6DNRnfaSwAVWnP2qdrg==
-X-Gm-Gg: ASbGncuYkSah3jrLKyMzRmIKf6U8XTO53mrzcVuLFuuOIfgJUiGDsyNPWTGy7gAi7S2
-	mFD9KWAY57am8Cw/OiDc8Z4Q3YF6URrSMobc=
-X-Google-Smtp-Source: AGHT+IGyFs2ybV2TpGqUFfLsmDGPrsekx8uabC3DOBZW5+y8ecKLujGvlTe7kk+e78b8/IN04qEwyEGNin5DhKkcZs4=
-X-Received: by 2002:a05:6e02:1d8a:b0:3a7:1a65:2fbc with SMTP id
- e9e14a558f8ab-3aa0933d97dmr15169745ab.23.1733888611229; Tue, 10 Dec 2024
- 19:43:31 -0800 (PST)
+	s=arc-20240116; t=1733889422; c=relaxed/simple;
+	bh=3AlhQZkRXKO/RCJl/pWPDYap996INco2i4JazZXp0h0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=PP8TbxeEwfevzmwtnbbCZr8FdAyBmN/+5EkVskA3+71FxrROvtXmp1gn0otwtFnUb6lL52JzNPsVDR6UW+Jh2UDJvadFWGELn1AsxNi/V4cZ8Msz4sQ6tqVQgzN4StgHoksy6pMSk80xmLvsIC/DIQpe4UTmwWPcYjlJJ9Al2VA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=gLqM+lqP; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BALIw89018563;
+	Wed, 11 Dec 2024 03:56:58 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	bsonQYLjKLE9nrH7N4snGlC5yXO0RiS7svj5S7B7UJw=; b=gLqM+lqPKg+GrNl0
+	q/nDtSVkl8wgP/JxLDDdmlUMVdgG//P2XwOlwUg4DRST+GzYIEjAQIvlp/ft9X0c
+	mX/nboBmQdD2N4guinsKthPIIJR1m+AW5vC3Ci97MRbtmzLIh370MsjTECQ0JRag
+	2GT0Se7Ztpbj4ferhHvA/8Nja/M6gA/7F7MGnS3cYyZBkc1YTO4fqaBzI0y8JofK
+	E5GSL0nmPTLhKuHKlyKCz1sEe831Z5bKiLSMuk5fDaA5Y5Q0AI8JtnJBUcgG0NYz
+	6AGcgu4sLdI3Y4w59asv5aNHqKZfOoXF0rNYimWmJ94/cRXu81o4N142VeJS9T7y
+	ASvEVw==
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43eak3c5sv-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 11 Dec 2024 03:56:58 +0000 (GMT)
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4BB3uv8m030650
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 11 Dec 2024 03:56:57 GMT
+Received: from [10.50.34.16] (10.80.80.8) by nasanex01c.na.qualcomm.com
+ (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 10 Dec
+ 2024 19:56:56 -0800
+Message-ID: <50ebc5f1-967a-4aa7-a4c3-3304961d1f8b@quicinc.com>
+Date: Wed, 11 Dec 2024 09:26:53 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20241209-drm-msm-kvm-support-v1-1-1c983a8a8087@quicinc.com>
- <CAF6AEGtKfWOGpd1gMfJ96BjCqwERZzBVmj5GzmjKxw8_vmSrJg@mail.gmail.com>
- <f4813046-5952-4d16-bae6-37303f22ad1a@quicinc.com> <iyknardi445n4h74am22arpgc4vlchh6z6cvkbff2xg76pd655@nozwz7snt476>
- <1219b46d-2aea-4377-a8ca-024039ee1499@quicinc.com>
-In-Reply-To: <1219b46d-2aea-4377-a8ca-024039ee1499@quicinc.com>
-From: Rob Clark <robdclark@gmail.com>
-Date: Tue, 10 Dec 2024 19:43:19 -0800
-Message-ID: <CAF6AEGs4EebrwyQZviNXqB2=3h2wgZpmbrdGHuEU4z1D014GRA@mail.gmail.com>
-Subject: Re: [PATCH] drm/msm/a6xx: Skip gpu secure fw load in EL2 mode
-To: Akhil P Oommen <quic_akhilpo@quicinc.com>
-Cc: Bjorn Andersson <andersson@kernel.org>, Pavan Kondeti <quic_pkondeti@quicinc.com>, 
-	Sean Paul <sean@poorly.run>, Konrad Dybcio <konradybcio@kernel.org>, 
-	Abhinav Kumar <quic_abhinavk@quicinc.com>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
-	Simona Vetter <simona@ffwll.ch>, Elliot Berman <quic_eberman@quicinc.com>, 
-	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
-	freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
-	linux-arm-kernel@lists.infradead.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/2] i2c: qcom-geni: Simplify error handling in probe
+ function
+To: Andi Shyti <andi.shyti@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-i2c@vger.kernel.org>
+References: <20241210231054.2844202-1-andi.shyti@kernel.org>
+ <20241210231054.2844202-3-andi.shyti@kernel.org>
+Content-Language: en-US
+From: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
+In-Reply-To: <20241210231054.2844202-3-andi.shyti@kernel.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01c.na.qualcomm.com (10.45.79.139)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 5riXyfls0kxv72Z7fliai4wCxpSHhOtt
+X-Proofpoint-GUID: 5riXyfls0kxv72Z7fliai4wCxpSHhOtt
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
+ mlxlogscore=999 clxscore=1015 spamscore=0 mlxscore=0 impostorscore=0
+ malwarescore=0 lowpriorityscore=0 priorityscore=1501 adultscore=0
+ bulkscore=0 phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2412110027
 
-On Tue, Dec 10, 2024 at 7:08=E2=80=AFPM Akhil P Oommen <quic_akhilpo@quicin=
-c.com> wrote:
->
-> On 12/11/2024 6:43 AM, Bjorn Andersson wrote:
-> > On Tue, Dec 10, 2024 at 02:22:27AM +0530, Akhil P Oommen wrote:
-> >> On 12/10/2024 1:24 AM, Rob Clark wrote:
-> >>> On Mon, Dec 9, 2024 at 12:20=E2=80=AFAM Akhil P Oommen <quic_akhilpo@=
-quicinc.com> wrote:
-> >>>>
-> >>>> When kernel is booted in EL2, SECVID registers are accessible to the
-> >>>> KMD. So we can use that to switch GPU's secure mode to avoid depende=
-ncy
-> >>>> on Zap firmware. Also, we can't load a secure firmware without a
-> >>>> hypervisor that supports it.
-> >>>
-> >>> Shouldn't we do this based on whether zap node is in dtb (and not dis=
-abled)?
-> >>
-> >> This is better, isn't it? Otherwise, multiple overlays should be
-> >> maintained for each soc/board since EL2 can be toggled from bootloader=
-.
-> >> And this feature is likely going to be more widely available.
-> >>
-> >
-> > The DeviceTree passed to the OS needs to describe the world that said O=
-S
-> > is going to operate in. If you change the world you need to change the
-> > description.
-> > There are several other examples where this would be necessary
-> > (remoteproc and watchdog to name two examples from the Qualcomm upstrea=
-m
-> > world).
->
-> But basic things work without those changes, right? For eg: Desktop UI
+Thanks Andi for this change !
 
-It isn't really so much about whether certain use-cases can work with
-a sub-optimal description of the hw (where in this case "hw" really
-means "hw plus how the fw allows things to look to the HLOS").. It is
-more about the hw/fw/whatever providing an accurate description of
-what things look like to the HLOS.
+On 12/11/2024 4:40 AM, Andi Shyti wrote:
+> Avoid repeating the error handling pattern:
+> 
+>          geni_se_resources_off(&gi2c->se);
+>          clk_disable_unprepare(gi2c->core_clk);
+>          return;
+> 
+> Introduce a single 'goto' exit label for cleanup in case of
+> errors. While there are currently two distinct exit points, there
+> is no overlap in their handling, allowing both branches to
+> coexist cleanly.
+> 
+> Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+> ---
+>   drivers/i2c/busses/i2c-qcom-geni.c | 30 ++++++++++++++++--------------
+>   1 file changed, 16 insertions(+), 14 deletions(-)
+> 
+> diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-qcom-geni.c
+> index 01db24188e29..3fc85595a4aa 100644
+> --- a/drivers/i2c/busses/i2c-qcom-geni.c
+> +++ b/drivers/i2c/busses/i2c-qcom-geni.c
+> @@ -867,14 +867,13 @@ static int geni_i2c_probe(struct platform_device *pdev)
+>   
+>   	ret = geni_se_resources_on(&gi2c->se);
+>   	if (ret) {
+> -		clk_disable_unprepare(gi2c->core_clk);
+> -		return dev_err_probe(dev, ret, "Error turning on resources\n");
+> +		dev_err_probe(dev, ret, "Error turning on resources\n");
+> +		goto err_clk;
+>   	}
+>   	proto = geni_se_read_proto(&gi2c->se);
+>   	if (proto != GENI_SE_I2C) {
+> -		geni_se_resources_off(&gi2c->se);
+> -		clk_disable_unprepare(gi2c->core_clk);
+> -		return dev_err_probe(dev, -ENXIO, "Invalid proto %d\n", proto);
+> +		dev_err_probe(dev, -ENXIO, "Invalid proto %d\n", proto);
+Suggestive comment, can we make this second patch as first patch ? So 
+that we can have both above lines reduced in this patch.
+> +		goto err_off;
+>   	}
+>   
+>   	if (desc && desc->no_dma_support)
+> @@ -886,11 +885,8 @@ static int geni_i2c_probe(struct platform_device *pdev)
+>   		/* FIFO is disabled, so we can only use GPI DMA */
+>   		gi2c->gpi_mode = true;
+>   		ret = setup_gpi_dma(gi2c);
+> -		if (ret) {
+> -			geni_se_resources_off(&gi2c->se);
+> -			clk_disable_unprepare(gi2c->core_clk);
+> -			return ret;
+> -		}
+> +		if (ret)
+> +			goto err_off;
+>   
+>   		dev_dbg(dev, "Using GPI DMA mode for I2C\n");
+>   	} else {
+> @@ -902,10 +898,8 @@ static int geni_i2c_probe(struct platform_device *pdev)
+>   			tx_depth = desc->tx_fifo_depth;
+>   
+>   		if (!tx_depth) {
+> -			geni_se_resources_off(&gi2c->se);
+> -			clk_disable_unprepare(gi2c->core_clk);
+> -			return dev_err_probe(dev, -EINVAL,
+> -					     "Invalid TX FIFO depth\n");
+> +			dev_err_probe(dev, -EINVAL, "Invalid TX FIFO depth\n");
+> +			goto err_off;
+>   		}
+>   
+>   		gi2c->tx_wm = tx_depth - 1;
+> @@ -944,8 +938,16 @@ static int geni_i2c_probe(struct platform_device *pdev)
+>   
+>   	return 0;
+return ret here ? yes, we need to initialize ret = 0.
+>   
+> +err_off:
+can we rename as err_resources ?
+> +	geni_se_resources_off(&gi2c->se);
+> +err_clk:
+> +	clk_disable_unprepare(gi2c->core_clk);
+> +
+> +	return ret;
+> +
+>   err_dma:
+>   	release_gpi_dma(gi2c);
+> +
+>   	return ret;
+>   }
+>   
 
-I'm leaning more towards the hw+fw providing HLOS an accurate view...
-and the fact that that carries over into other areas of dtb (ie. it
-isn't the only thing that slbounce needs to patch, as I previously
-mentioned) reinforces my view there.  This seems like a thing to fix
-in fw/bootloader tbh.
-
-BR,
--R
-
-
->
-> >
-> > So, if we can cover this by zap-shader being enabled or disabled, that
-> > sounds like a clean and scaleable solution.
->
-> I think we are focusing too much on zap shader. If the driver can
-> determine itself about access to its register, shouldn't it be allowed
-> to use that?
->
-> -Akhil
->
-> >
-> > Regards,
-> > Bjorn
->
 
