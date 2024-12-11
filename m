@@ -1,214 +1,183 @@
-Return-Path: <linux-arm-msm+bounces-41476-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-41477-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id A2E419ECC92
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2024 13:50:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 5356F9ECCBC
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2024 14:04:40 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 964AC1610E2
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2024 12:50:35 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 81C881660CA
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2024 13:04:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E99C323FD16;
-	Wed, 11 Dec 2024 12:50:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0BBF223FD23;
+	Wed, 11 Dec 2024 13:04:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="bKHlB12J"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="H0OqHUZQ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F40A523FD03;
-	Wed, 11 Dec 2024 12:50:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D7D11C5F1C
+	for <linux-arm-msm@vger.kernel.org>; Wed, 11 Dec 2024 13:04:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733921434; cv=none; b=owB0k5y8nZLTEEDC6wV/Cx877PBcXBZkIwWGi7MrWQ/lXHlkT3UsfnixloxMf04wznWw4T6bRWt+CMcfa+sEHOLFArulvBH202/t8l+i7J87dOIAbsbzlzHr6IFUleNq2ePvx/x34fR2XxwOu2oGs39MO3gS0zygERYAX+SkjJk=
+	t=1733922271; cv=none; b=OFdArgZ9bVb0QXEyZNv/4kSJas6jKywhLX+spLlzI7Mr8kTLe3qeUxtprGwgzdOqYBbmiHDSTH3EqDr52zeJCBKiX8m6c9Er+lLGs9BFR1XXlZPgZiD/X1bS4tNzteMGRz2KZGKCEJf/wj8yJqELZJkleCmRCgcL8mpLSMxJvtc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733921434; c=relaxed/simple;
-	bh=DLZ8JtqP2Hut3FClq30R8h56SUydehouyNxY+A8+iZw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=q9307oVv9xT7lW43fTC/jKqaDMZcxe3EKhzhIAfwPhPOF1BM62V8suCfioDO3kx4M+nMHMcjmbzQrgEjwxSnrsosNbFzNLnr6hhNkyvkDglBjc3sIhWudhUmpD8zcmkb79phfIpWQmldphCPu0SGuk8JAi5P6FP0+crDUu4FUc0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=bKHlB12J; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BBAokM2006981;
-	Wed, 11 Dec 2024 12:50:13 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	zk4s7vhB2asnvEBnYuTFCimLlmm/nGDu1HLQOKCWzJw=; b=bKHlB12Jc8cR9Zp4
-	/EF33Rrz2D9AwqIyHOV5F1upJtrVWdK1NJn3tfowkFdhpPIj7/wGLCiGjgx7KchR
-	tHdxHg8Vt/dadt2UERt8XsQ1wpOEudK1WorLRGBu2l6EQb4U8avn0yxwThtrA+eN
-	XeNR8i2DeyOjPcQ8t1vNVl925MX25zjNjb/pVjitF8WQNyOaWQ12CobMMICCWgCT
-	OQIgvGu9ppiUGoMr9H/8nv26lrxm0qUYRME+Irxx0dpEEZSArssg0mSygxrYgdfT
-	DJkBAyM0Gh2mVkb2C6i51qmsUBHECMAlhZyGC8qOi4dHLo3SyAQYzQZXnlXt/i2s
-	RKsFhw==
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43f0r9swvp-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 11 Dec 2024 12:50:13 +0000 (GMT)
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-	by NASANPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4BBCoCuX026022
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 11 Dec 2024 12:50:12 GMT
-Received: from [10.64.16.135] (10.80.80.8) by nasanex01c.na.qualcomm.com
- (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 11 Dec
- 2024 04:50:05 -0800
-Message-ID: <d5151b82-5f05-4826-99b4-e925c20550b4@quicinc.com>
-Date: Wed, 11 Dec 2024 20:50:02 +0800
+	s=arc-20240116; t=1733922271; c=relaxed/simple;
+	bh=4SL3oSOYfNGgaeWhz9HDRuhRuGic1VpdSQb4rkQTyyA=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=GmXN3vRYyL1BQDEl1wzVQOPcG0HQx99f0aUoqqDH28dojCsmidORQCpeLG+ZsTjPKL4zdgwNxGEwfkuRByNUJ8L1kRjVA4NvU/CgUOqN+k1F1ID3SLdIjF1mdKpxtgSJo6jPUmnCQnfl2Asy5GUEAL9NDYOWu5BBMKtLEFS1+NM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=H0OqHUZQ; arc=none smtp.client-ip=209.85.128.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-4361d5dcf5bso7314195e9.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Dec 2024 05:04:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1733922269; x=1734527069; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=YpUlzLd4DTvOwWsmuqzajXz424W9CnL0q6rjmHsBkGw=;
+        b=H0OqHUZQvOuLRBgSTFGCu0yYJ2AWs6QmONkOJkBu/JW3l9efDZJ2KqvKvNSWm8D9KE
+         ErhoNuWQD/wWa72SMQvvdyiXlINr1KTmQTuodqKdHvpUUTOEKyImUdZ2Qh27IkeZrfV1
+         UXKCpT0pxdzbk/3x/lFzQWXi3B64qUnlVgIw1W2+AnEweygP5aWhGHbUiCTdblRNjU+M
+         Ww4hYdMuteP9mRSRHG6zOaumE81U0iV3Oy6s2nL4SHU3pRXtxCsypDS3avXwo6odN+jr
+         YH63xkVdt5RAE3Y+kwFi4btDIjwP/W0srFDZyn8R0rS/thajXflmtwsJZLvd5pt8bKIY
+         x2tQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1733922269; x=1734527069;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=YpUlzLd4DTvOwWsmuqzajXz424W9CnL0q6rjmHsBkGw=;
+        b=M3HFBW4cRvesoghQZKF5l5VlQoKcSvOJV6uiFllXQcbhKNcHvM/MuyJXSGOOePaB59
+         ANSd2WpmUYZXXDYDRe4Mur/a/2NzDBdMMJ5/Pzr4F6cwYPI7dd6s+yQcScJ7SMOG/Nz8
+         UMAvc3dQOp45VHRRNvKr2+cMt4KvRu8Ffb+d3nuDU8Hm7RJ8hvWAaoUV2QeY3lOL5B3K
+         hjzAFPLHD2e2jVNvuUIerVCvbr8moCDAVSGLeTyS3qjuZctR4edrU9a/Q6DQ6k+fg4sA
+         +aF059G0zBHlkYpIdIIPGmgfqFzTrluNz4y7CHJrXnk6LuCxKJVfOVo8y1hg+F05Pi85
+         ufFg==
+X-Forwarded-Encrypted: i=1; AJvYcCV9zdcforr4VV9Kl2XX6RhuKasVnFFDdBjtZo+4dpV6PI5Uot0Xxv2fUWQlm6QIKHWWxtxcz4Qt+GvsD2SM@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx+dR5N9K9BCov3p66RlOBEaafGJD3ePyHrtHWfTE6FBLhYtTVZ
+	Otc2jsivJXq4UT3RXU3RJ8XDLJltIGH+Iu3SpOfnL8q+9+ANLzmjsfM5DHokRvg=
+X-Gm-Gg: ASbGnctDuE3ih8yevDGaGBFv69nYrm3BUwLX2eFXtF21L45n6sRJZuAXaYYCRbGMQCo
+	GdsescvGgoWwn0hxuYZMNEo08t8n+TuDp/xEC38Wiy49hWWkREztF613fZUHrC95n2Cajx9HA5J
+	goPJdNC0vtfju7nraTqQTGYKU1mjHaDlmYRXnVgof21m7Pr0QecWvn+KHcDkPexKJ+aMrQwzF30
+	ZToHfdMhDIH2aXbccRXlRtYwP2tL816V0bxIwFqQWSmZ7OJl8Yqbg==
+X-Google-Smtp-Source: AGHT+IGPWcM8yhYn2nQJ26y7MGhayOqx4M0waL4G4OgaFUlHH0NcR4gyX+40Z605D2RCeHuL57tWCQ==
+X-Received: by 2002:a05:600c:5122:b0:436:1b96:7072 with SMTP id 5b1f17b1804b1-4361c393b80mr20312535e9.5.1733922268551;
+        Wed, 11 Dec 2024 05:04:28 -0800 (PST)
+Received: from [127.0.1.1] ([82.76.168.176])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3878248e633sm1288081f8f.4.2024.12.11.05.04.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 11 Dec 2024 05:04:27 -0800 (PST)
+From: Abel Vesa <abel.vesa@linaro.org>
+Subject: [PATCH v2 0/4] drm/dp: Rework LTTPR transparent mode handling and
+ add support to msm driver
+Date: Wed, 11 Dec 2024 15:04:11 +0200
+Message-Id: <20241211-drm-dp-msm-add-lttpr-transparent-mode-set-v2-0-d5906ed38b28@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/8] phy: qcom: qmp-usbc: Add DP phy mode support on
- QCS615
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC: Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar
-	<quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten
-	<marijn.suijten@somainline.org>,
-        Maarten Lankhorst
-	<maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        Rob Herring <robh@kernel.org>,
-        "Krzysztof
- Kozlowski" <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        "Kuogee
- Hsieh" <quic_khsieh@quicinc.com>,
-        Vinod Koul <vkoul@kernel.org>,
-        "Kishon
- Vijay Abraham I" <kishon@kernel.org>,
-        Linus Walleij
-	<linus.walleij@linaro.org>,
-        Bartosz Golaszewski <brgl@bgdev.pl>, <quic_lliu6@quicinc.com>,
-        <quic_fangez@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <dri-devel@lists.freedesktop.org>, <freedreno@lists.freedesktop.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-phy@lists.infradead.org>, <linux-gpio@vger.kernel.org>
-References: <20241129-add-displayport-support-for-qcs615-platform-v1-0-09a4338d93ef@quicinc.com>
- <20241129-add-displayport-support-for-qcs615-platform-v1-3-09a4338d93ef@quicinc.com>
- <CAA8EJppOR_UXoVpMt-dhfWdCz3UNfsXGdz8X9NqpaSmYj3AZDg@mail.gmail.com>
- <5ea14162-567b-462d-be02-b73b954b7507@quicinc.com>
- <5whv4z7u6fkfwlv5muox5dmv6fow4mga76ammapw7wph7vwv3f@xibcjdfqorgf>
- <iqcofcntirmlwcpyfr4yabymqfcgyrij57bibf337tmxpa73t6@npkt6wquenf6>
- <527baded-f348-48a8-81cd-3f84c0ff1077@quicinc.com>
- <t5vcjlf44fhae4f2h75cfs3f7r6tdstw4ysmkapvvawj6xp23x@xnxqnxvyhshe>
-From: Xiangxu Yin <quic_xiangxuy@quicinc.com>
-In-Reply-To: <t5vcjlf44fhae4f2h75cfs3f7r6tdstw4ysmkapvvawj6xp23x@xnxqnxvyhshe>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: YEcBUSMTawlFVl6QGG7shl_PtInvRli7
-X-Proofpoint-GUID: YEcBUSMTawlFVl6QGG7shl_PtInvRli7
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- impostorscore=0 phishscore=0 spamscore=0 clxscore=1015 mlxlogscore=999
- malwarescore=0 lowpriorityscore=0 mlxscore=0 bulkscore=0 suspectscore=0
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2412110093
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAMuNWWcC/53NOQ6DMBCF4asg15nIZslW5R4RhWHGYAkvGlsoE
+ eLucThCyv8V79tEIraUxKPaBNNqkw2+RH2qxDhrPxFYLC1qWbdKNgqQHWAElxxoRFhyjgyZtU9
+ RM/kMLiBBogyquYzYDQZJXkX5i0zGvg/r1ZeebcqBPwe9qt/6j7IqkDBqMwz3W9eZVj4X6zWHc
+ +BJ9Pu+fwHZAlYD4wAAAA==
+X-Change-ID: 20241031-drm-dp-msm-add-lttpr-transparent-mode-set-136cd5bfde07
+To: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
+ Karol Herbst <kherbst@redhat.com>, Lyude Paul <lyude@redhat.com>, 
+ Danilo Krummrich <dakr@redhat.com>, 
+ Jani Nikula <jani.nikula@linux.intel.com>, 
+ Rodrigo Vivi <rodrigo.vivi@intel.com>, 
+ Joonas Lahtinen <joonas.lahtinen@linux.intel.com>, 
+ Tvrtko Ursulin <tursulin@ursulin.net>, Rob Clark <robdclark@gmail.com>, 
+ Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Sean Paul <sean@poorly.run>, 
+ Marijn Suijten <marijn.suijten@somainline.org>
+Cc: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, Johan Hovold <johan@kernel.org>, 
+ dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
+ nouveau@lists.freedesktop.org, intel-gfx@lists.freedesktop.org, 
+ intel-xe@lists.freedesktop.org, linux-arm-msm@vger.kernel.org, 
+ freedreno@lists.freedesktop.org, Abel Vesa <abel.vesa@linaro.org>
+X-Mailer: b4 0.15-dev-dedf8
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2672; i=abel.vesa@linaro.org;
+ h=from:subject:message-id; bh=4SL3oSOYfNGgaeWhz9HDRuhRuGic1VpdSQb4rkQTyyA=;
+ b=owEBbQKS/ZANAwAKARtfRMkAlRVWAcsmYgBnWY3PEZV7dIYTv5NvvJXM3bZDVMPWNYimil7AK
+ wt2J3+5kbiJAjMEAAEKAB0WIQRO8+4RTnqPKsqn0bgbX0TJAJUVVgUCZ1mNzwAKCRAbX0TJAJUV
+ Vo+dD/4p2AWAAkQ6OSPj6dUqNsHrnpSa3jbwEi3CcIbbOwg6w5LxgpXI1osFK7ghd4bn6Ig6n5S
+ pkj3wHywKPBCxJWqi7jKnnXgs4PPIqNxpCHODl3GGC0ezCO/PxMQoWLEJk3U1iqzMAQ8s07ZYk8
+ eKoLR0VebD1mor9uLs/eXYrB29VgU0MNkN5fs+BEGX6nsuBgwbdM3GmYtUPTLkEfEOi22PHwVS4
+ gDPbedPBwC5WMRxSa8EdC7qa20EENKBjYe+FyaV6eeFmRvLeBfVTy9VPrkEHNz5LEsHtBwZHCPs
+ RxzQCDlf68mEMVviyJdoDZAW89YbVdYIzast2OTufD+bjaHiIVMe9jnCrJ66jiISmBR/YbtkC37
+ Xi3KfJgqkohhzIxprEkUZfWGQcz/OnGu5jWK1SvNA7gvBIFKoiLWEsBLqspRundFegj1qn9x1+u
+ kflAoK89iwBD29SohLCrpT7nZjXFMnav0IzlAYtHm8nkrLhgQyBa4OmzGf2In0itA2XPtPLZJHT
+ dLANf/svi+j8riF7VblBUUzP2+UWOrSR+NyFXKT+Doeo8vHdqHXYOpnh5u+ONAM2RYVy7fp+zEj
+ H+q2xUnOn+t8VXv+cYKRkUi4CNeG251xYVZBGERrDrq19e/P5l3Og1mTiByzs6/33xy/qkECKYM
+ ZLJitm6X2eAAmrA==
+X-Developer-Key: i=abel.vesa@linaro.org; a=openpgp;
+ fpr=6AFF162D57F4223A8770EF5AF7BF214136F41FAE
 
+Looking at both i915 and nouveau DP drivers, both are setting the first
+LTTPR (if found) in transparent mode first and then in non-transparent
+mode, just like the DP v2.0 specification mentions in section 3.6.6.1.
 
+Being part of the standard, setting the LTTPR in a specific operation mode
+can be easily moved in the generic framework. So do that by adding a new
+helper.
 
-On 12/11/2024 5:46 PM, Dmitry Baryshkov wrote:
-> On Wed, Dec 11, 2024 at 08:46:16AM +0800, Xiangxu Yin wrote:
->>
->>
->> On 12/10/2024 11:09 PM, Dmitry Baryshkov wrote:
->>> On Thu, Dec 05, 2024 at 08:31:24PM +0200, Dmitry Baryshkov wrote:
->>>> On Thu, Dec 05, 2024 at 09:26:47PM +0800, Xiangxu Yin wrote:
->>>>>
->>>>>
->>>>> On 11/29/2024 10:33 PM, Dmitry Baryshkov wrote:
->>>>>> On Fri, 29 Nov 2024 at 09:59, Xiangxu Yin <quic_xiangxuy@quicinc.com> wrote:
->>>>>>>
->>>>>>> Extended DP support for QCS615 USB or DP phy. Differentiated between
->>>>>>> USBC and DP PHY using the match table’s type, dynamically generating
->>>>>>> different types of cfg and layout attributes during initialization based
->>>>>>> on this type. Static variables are stored in cfg, while parsed values
->>>>>>> are organized into the layout structure.
->>>>>>
->>>>>> We didn't have an understanding / conclusion whether
->>>>>> qcom,usb-ssphy-qmp-usb3-or-dp PHYs are actually a single device / PHY
->>>>>> or two PHYs being placed next to each other. Could you please start
->>>>>> your commit message by explaining it? Or even better, make that a part
->>>>>> of the cover letter for a new series touching just the USBC PHY
->>>>>> driver. DP changes don't have anything in common with the PHY changes,
->>>>>> so you can split the series into two.
->>>>>>
->>>>> Before implement DP extension, we have discussed with abhinav and krishna about whether use combo, usbc or separate phy.
->>>>
->>>> What is "DP extension"?
->>>>
->> I'm sorry confusion casued by my description. It's means extend DP implemnt for USBC phy driver.
->>>>>
->>>>> We identified that DP and USB share some common controls for phy_mode and orientation.
->>>>> Specifically, 'TCSR_USB3_0_DP_PHYMODE' controls who must use the lanes - USB or DP,
->>>>> while PERIPH_SS_USB0_USB3PHY_PCS_MISC_TYPEC_CTRL controls the orientation.
->>>>> It would be more efficient for a single driver to manage these controls. 
->>>>
->>>> The question is about the hardware, not about the driver.
->>>>
->>>>> Additionally, this PHY does not support Alt Mode, and the two control registers are located in separate address spaces. 
->>>>> Therefore, even though the orientation for DP on this platform is always normal and connected to the video output board, 
->>>>> we still decided to base it on the USBC extension.
->>>>
->>>> Could you please clarify, do usb3-or-dp PHYs support DP-over-USB-C? I
->>>> thought that usbc-or-dp platforms support that, but they don't
->>>> support DP+USB pin configuration. Note, the question is broader than
->>>> just QCS615, it covers the PHY type itself.
->>>>
->>>> Also, is TCSR configuration read/write or read-only? Are we supposed to
->>>> set the register from OS or are we supposed to read it and thus detemine
->>>> the PHY mode?
->>>
->>> Any updates on these two topics?
->>>
->> Still confirming detail info with HW & design team.
->> I’ll update the information that has been confirmed so far.
->> This phy support DP-over-USB-C,but it's not support alt-mode which 2 lane work for DP, other 2 lane work for USB.
->> TCSR phy mode is read/write reg and we can read for determine phy mode.
-> 
-> Ok, thanks for the explanation. From my point of view:
-> 
-> - Implement the DP PHY to be a part of the same driver. Each device
->   supported by the usbc driver should get both PHYs.
-> 
-> - Make sure not to break the ABI: #phy-cells = <0> should still work and
->   return USB PHY, keeping backwards compatibility. Newer devices or
->   upgraded DT for old devices should return USB PHY for <... 0> and DP
->   PHY for <... 1>.
-> 
-Yes, currently we have implemented like your description,
-Each deivce shoud get both PHYs, DP PHY for <... 1> and USB PHY for <... 0>.
-> - I'm not shure how to handle the USB and DP coexistence, especially in
->   your case of the USB-or-DP PHY.
-> 
-For coexistence process:
+Then, the msm DP driver is lacking any kind of support for LTTPR handling,
+so add it by reading the LTTPR caps for figuring out the number of LTTPRs
+found on plug detect and then do exactly what the i915 and nouveau drivers
+do with respect to toggling through operating modes, just like the
+up-mentioned section from DP spec describes.
 
-When we start implement DP part, usb driver team said only need config TCSR phy mode and orientation during switch in USB-C port.
-Based on your previous comments avout SW_PWRDN, I'm confirming with the USB team whether SW_REST/SWPWRDN/START_CTRL registers might affect DP.
+At some point, link training per sub-segment will probably be needed, but
+for now, toggling the operating modes seems to be enough at least for the
+X Elite-based platforms that this patchset has been tested on.
 
-Anyway, even though the original SoC design supports DP or USB over Type-C，
-but on QCS615 ADP AIR platform, there are only four USB-A port which works with 'qcs615-qmp-usb3-phy' driver, and no USB-C port.
-DP port is mappped from usb pin to the video out sub-board.
-so we are unable to verify the switching case between DP and USB devices under USB-C.
+Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+---
+Changes in v2:
+- Added new wrapper over the set_transparent new helper in order to
+  move the non-transparent disable and the its enable->disable sequence
+  mentioned in the DP standard section 3.6.6.1 entirely in the generic
+  implemetation.
+- Switch all 3 drivers to use the new wrapper.
+- Fixed the return value of the helper to return 0 on success and
+  negative value on error.
+- Added explanation about the transparent/non-transparent modes into the
+  msm dp commit message.
+- Dropped the condition for non-eDP in msm DP driver since it is allowed
+  to try to get the number of LTTPRs even on eDP and it will be always
+  0 anyway.
+- Dropped the RFC prefix
+- Link to v1: https://lore.kernel.org/r/20241031-drm-dp-msm-add-lttpr-transparent-mode-set-v1-0-cafbb9855f40@linaro.org
 
-However, I'm also confirming whether anything other will affect USB and DP each other.
+---
+Abel Vesa (4):
+      drm/dp: Add helper to set LTTPRs in transparent mode
+      drm/nouveau/dp: Use the generic helper to control LTTPR transparent mode
+      drm/i915/dp: Use the generic helper to control LTTPR transparent mode
+      drm/msm/dp: Add support for LTTPR handling
 
+ drivers/gpu/drm/display/drm_dp_helper.c            | 50 ++++++++++++++++++++++
+ .../gpu/drm/i915/display/intel_dp_link_training.c  | 24 +++--------
+ drivers/gpu/drm/msm/dp/dp_display.c                | 17 ++++++++
+ drivers/gpu/drm/nouveau/nouveau_dp.c               | 17 +-------
+ include/drm/display/drm_dp_helper.h                |  2 +
+ 5 files changed, 76 insertions(+), 34 deletions(-)
+---
+base-commit: 91e71d606356e50f238d7a87aacdee4abc427f07
+change-id: 20241031-drm-dp-msm-add-lttpr-transparent-mode-set-136cd5bfde07
+
+Best regards,
+-- 
+Abel Vesa <abel.vesa@linaro.org>
 
 
