@@ -1,100 +1,174 @@
-Return-Path: <linux-arm-msm+bounces-41584-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-41585-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D11CB9EDA3D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2024 23:41:15 +0100 (CET)
-Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 388E39EDA41
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2024 23:41:48 +0100 (CET)
+Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CFC361677F6
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2024 22:41:11 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AFF4A2824B3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2024 22:41:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 797F51F63C3;
-	Wed, 11 Dec 2024 22:35:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C18341F238A;
+	Wed, 11 Dec 2024 22:38:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="d6S9nbdo"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="FsCDDLrl"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qt1-f180.google.com (mail-qt1-f180.google.com [209.85.160.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C639B1F2392
-	for <linux-arm-msm@vger.kernel.org>; Wed, 11 Dec 2024 22:35:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA1F51DE4F0;
+	Wed, 11 Dec 2024 22:38:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733956544; cv=none; b=HHaBoAmHw20V+PbopEPu/cPckMcAnvhmRXojn2pl4uK2X0moYC2Xb1KG+Qby34I1CdWmh7CAohV+hEm5iWSCGm25oPlCgW9D/hAiPMowbz6/1+aG6iK5BkDs7SWitrVZpM31HL/40gC9r6QUk444CWzoyn3K+rHGZHh/6HRPNO8=
+	t=1733956702; cv=none; b=tBel937Wk90FLC8EVGRQ/OnfbKjxpjjmmFKH7n31gsDtUMG5cJdIdWuMOQefcRvthabBZVvY3ccN25JwvBP2m6tyc/We/R3nMwMLe34ruqY8bkQ4c3p1hAHG1l98zsSkWa+/TD3Lq8pLiVDlI8EzfMLg8owZ+3BHySknTXviCY4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733956544; c=relaxed/simple;
-	bh=WkXMEqZ/gF/xnWJ/mhzzg/miOHHNVWajJShRngxnHGY=;
-	h=MIME-Version:In-Reply-To:References:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=T4loyrKCjVD5kImzhzG94Eo6YuZmV8/RAfi5ieVngCPi5lwiYfYXAS5vcRPJ2AIF7rZ1fl1MBVGL2IcY2JVPgltvePZVsa6OGgmc5p2xJ8LgFQ+o+2NQOIRXPqnVnQESpYUmLT3W4/CBsaqHI7bcibaiBEQiA2cEF4tQHdPPEsQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=d6S9nbdo; arc=none smtp.client-ip=209.85.160.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
-Received: by mail-qt1-f180.google.com with SMTP id d75a77b69052e-46677ef6910so65298101cf.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Dec 2024 14:35:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1733956542; x=1734561342; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:user-agent:from:references
-         :in-reply-to:mime-version:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=WkXMEqZ/gF/xnWJ/mhzzg/miOHHNVWajJShRngxnHGY=;
-        b=d6S9nbdoiEdi9fVG8d87uCvOSqbWjEz+a+2B76mwiV0Lu0YQfK0QZESqU2O4Is3unQ
-         Uhw8EMdhwQfex8Hbooa/zGMsqJ7aakt+UTGuvFeipo2uNpQ9ncWtp1DC05MHiiW+Ww7W
-         lngHBg8DqPcxtTz9wkaHoVeP3x7fV5XR8w20U=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733956542; x=1734561342;
-        h=cc:to:subject:message-id:date:user-agent:from:references
-         :in-reply-to:mime-version:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=WkXMEqZ/gF/xnWJ/mhzzg/miOHHNVWajJShRngxnHGY=;
-        b=BACF/Fhc2XND2Jhnkov9wTGrgGzOexaDOMWjhQxAaHr9Yo+Qjx7r6d0VW/NVD0M9sb
-         u/F2OJFNId0ODJzmBF8S/Obfgu1pbCfhGMOUUKVtlpjSc9q8Rywp/axnhxxpP0TCdlM8
-         IrmNzsJOw7nDyLdsnUZU0QJsfPMjte2t63MXLmWhMtbN08IaBd0Lbm/uh4RX/1DLuAh4
-         0dz8A+MojAnlZv7ifxvooBksvISuxUIdwmRSUIOhM+R5ZeIVP8xyDsoD5zghRyg+MXCu
-         rSaDaKMVMDz+E5KuwRxZuI1gwRFjqjc6W1exI2Dt6VQZddy2x35e70Ek9zuGFoEhroJP
-         zTLg==
-X-Forwarded-Encrypted: i=1; AJvYcCVVo+YUgMLZ0NBLf0rdy7VmmEgrW9kC101RXJloBpMRIlu8fFC7z4uPJNFhwzSM0U6mFd5VDQkgRYM5KUfl@vger.kernel.org
-X-Gm-Message-State: AOJu0YyEZSGbZiGo8cC7ztHVORgymVw8xuFh6D8ekBDDMC49DngrS1M0
-	xgAA2fUXRcjETykHL7fZ5H5MWg0rV4BJaPgtDlahHcNCloDRwM+39MTaRzVAhdzhX2LTen2TWXV
-	H3Q1+i1pj1te3IKwaKIuKtP0s6sWnB10OjlKl
-X-Gm-Gg: ASbGncsPgxOYg5FjeLHcvsoGhhhHYhNvfEssKAiUX2fA31RhCJhgKFLDJ205JB1UOQC
-	NKCNIhn15RGSxi4dHlSrBLIYBi2vMsFO1gKopvK043P/Kyj2nmg6ZO1+gv9BoxRQCBQ==
-X-Google-Smtp-Source: AGHT+IG9f7BHz8iDa6A37ISXD8md+OMJZHRpC/Cm+CFql7zV4E9ytytJpMb018vR23ZL3eujA5g0+FW3B1/RL8ezpns=
-X-Received: by 2002:ac8:5e54:0:b0:467:43c1:f0ea with SMTP id
- d75a77b69052e-467961786bbmr14756091cf.16.1733956541804; Wed, 11 Dec 2024
- 14:35:41 -0800 (PST)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 11 Dec 2024 14:35:41 -0800
+	s=arc-20240116; t=1733956702; c=relaxed/simple;
+	bh=+wtQa/0A7z74C8XMWedpqUoGa7FVGJnBex7iiMm6Yqg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=eLeO++yGPQhefLZNJi9HWw3BhTgqIpqzpKXLs5NtJTvSr7ZhKcyWpQQcQnpThrZkz3492YauzDGakUrzmhh6FB3RpoqayXuy3N/tFd6VxQNLF0GV4gAnXD/7pIZxBwbZjajPrJqliRrVVIplysBqNHnc8LsiTkiMF8wUhyNQoPI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=FsCDDLrl; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BBHD9So027303;
+	Wed, 11 Dec 2024 22:38:13 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	z2C7/fCtt5pTk0XOcT922hfBtdgDzW72cIzpyOZ/pDQ=; b=FsCDDLrlecHyhAW3
+	KyM1GjKYg0G2WSIri5NS1Jtxcy0g2jNItQ4hKN6OLoGRejx52ZnrK5zgjm6pPk9o
+	ZSyJhki4ahs+4iHDfDTGKQUNsqbOGktGJUmLG5Sta4jOfcStqrBu0pVSAUdQQK00
+	PxdilWh4ktFI09EIliHMdqq1U7ZlMwyS2w+Px9HIEmEOdOnoRwh3Hwu1IjQTrx/Q
+	5kzVvNSg7JF9BqvRZZ7iSnSm+L1dQTaNBRwqzp2jYP6Oxbqi2K8WO2CJFGi+oiCs
+	Z1DkkAttAt9bQSfSJRcB3q+SZhxve08X4gEKhl1TBCY1To8L+5CGEnDCeZ4wtIpX
+	Zj9+Wg==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43etn8v9w4-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 11 Dec 2024 22:38:12 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4BBMcCYu008305
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 11 Dec 2024 22:38:12 GMT
+Received: from [10.110.5.240] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 11 Dec
+ 2024 14:38:10 -0800
+Message-ID: <cfbadc5a-6de0-4081-948c-3542c615a992@quicinc.com>
+Date: Wed, 11 Dec 2024 14:38:09 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-In-Reply-To: <20241202-fd-dp-audio-fixup-v2-11-d9187ea96dad@linaro.org>
-References: <20241202-fd-dp-audio-fixup-v2-0-d9187ea96dad@linaro.org> <20241202-fd-dp-audio-fixup-v2-11-d9187ea96dad@linaro.org>
-From: Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.12.dev1+gaa8c22fdeedb
-Date: Wed, 11 Dec 2024 14:35:41 -0800
-Message-ID: <CAE-0n52kSzNeFazUpL0e1C-tTZHv7nzOCYinYCX72pKk-E9_XQ@mail.gmail.com>
-Subject: Re: [PATCH v2 11/14] drm/msm/dp: move/inline audio related functions
-To: Abhinav Kumar <quic_abhinavk@quicinc.com>, David Airlie <airlied@gmail.com>, 
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, Paloma Arellano <quic_parellan@quicinc.com>, 
-	Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, Simona Vetter <simona@ffwll.ch>
-Cc: Douglas Anderson <dianders@chromium.org>, linux-arm-msm@vger.kernel.org, 
-	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
-	linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v7 2/3] drm/msm/dpu: allow using two SSPP blocks for a
+ single plane
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Marijn
+ Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>
+References: <20241130-dpu-virtual-wide-v7-0-991053fcf63c@linaro.org>
+ <20241130-dpu-virtual-wide-v7-2-991053fcf63c@linaro.org>
+ <160151f0-9cc6-40f6-9f53-466185835e4d@quicinc.com>
+ <hpmxj7tjmvbo55izoxgygqmysbabnpb35mprvn6w53vbtehnwe@yxmiigoeuyf3>
+Content-Language: en-US
+From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <hpmxj7tjmvbo55izoxgygqmysbabnpb35mprvn6w53vbtehnwe@yxmiigoeuyf3>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 1Ceqt1n_9QUXArHlCDcs3zamBR8BFko0
+X-Proofpoint-GUID: 1Ceqt1n_9QUXArHlCDcs3zamBR8BFko0
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015
+ lowpriorityscore=0 spamscore=0 impostorscore=0 adultscore=0 suspectscore=0
+ bulkscore=0 priorityscore=1501 malwarescore=0 phishscore=0 mlxscore=0
+ mlxlogscore=946 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2412110158
 
-Quoting Dmitry Baryshkov (2024-12-02 02:06:41)
-> Move audio-related functions to dp_audio.c, following up the cleanup
-> done by the rest of the submodules. Inline functions with simple
-> register access patterns.
->
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
 
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+
+On 12/11/2024 2:24 PM, Dmitry Baryshkov wrote:
+> On Wed, Dec 11, 2024 at 01:51:51PM -0800, Abhinav Kumar wrote:
+>>
+>>
+>> On 11/29/2024 5:55 PM, Dmitry Baryshkov wrote:
+>>> Virtual wide planes give high amount of flexibility, but it is not
+>>> always enough:
+>>>
+>>> In parallel multirect case only the half of the usual width is supported
+>>> for tiled formats. Thus the whole width of two tiled multirect
+>>> rectangles can not be greater than max_linewidth, which is not enough
+>>> for some platforms/compositors.
+>>>
+>>> Another example is as simple as wide YUV plane. YUV planes can not use
+>>> multirect, so currently they are limited to max_linewidth too.
+>>>
+>>> Now that the planes are fully virtualized, add support for allocating
+>>> two SSPP blocks to drive a single DRM plane. This fixes both mentioned
+>>> cases and allows all planes to go up to 2*max_linewidth (at the cost of
+>>> making some of the planes unavailable to the user).
+>>>
+>>
+>> Overall looks so much cleaner after unification!
+>>
+>> One small nit below,
+>>
+>>
+>> You can still have,
+>>
+>> Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+>>
+>> Note: we have started testing this series with sc7180 CrOS, and will report
+>> our findings/ give tested-by this week.
+>>
+>>
+>> <snip>
+>>
+>>> +static bool dpu_plane_try_multirect_parallel(struct dpu_sw_pipe *pipe, struct dpu_sw_pipe_cfg *pipe_cfg,
+>>> +					     struct dpu_sw_pipe *r_pipe, struct dpu_sw_pipe_cfg *r_pipe_cfg,
+>>> +					     struct dpu_hw_sspp *sspp, const struct msm_format *fmt,
+>>> +					     uint32_t max_linewidth)
+>>> +{
+>>> +	r_pipe->sspp = NULL;
+>>> +
+>>> +	pipe->multirect_index = DPU_SSPP_RECT_SOLO;
+>>> +	pipe->multirect_mode = DPU_SSPP_MULTIRECT_NONE;
+>>> +
+>>> +	r_pipe->multirect_index = DPU_SSPP_RECT_SOLO;
+>>> +	r_pipe->multirect_mode = DPU_SSPP_MULTIRECT_NONE;
+>>> +
+>>
+>>
+>> There are two places where the multirect_index and multirect_mode are reset.
+>> Would it be better to just have a small api dpu_plane_reset_multirect() and
+>> do this there?
+> 
+> I'm not sure, what's the benefit. We can add an API to reset one pipe
+> (to also be able to use it in _dpu_plane_atomic_disable()), but then
+> it's just deduplication for the sake of deduplication.
+> 
+
+Yeah I was thinking something like
+
+dpu_plane_reset_multirect(pipe);
+dpu_plane_reset_multirect(r_pipe);
+
+But its only a minor benefit, hence as I wrote it as a nit. We can keep 
+things as it is, if its unnecessary in your opinion.
+
+
+> 
 
