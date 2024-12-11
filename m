@@ -1,201 +1,223 @@
-Return-Path: <linux-arm-msm+bounces-41466-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-41467-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0150F9ECA6C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2024 11:35:11 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 27A249ECA7F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2024 11:40:14 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6CC61188CF44
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2024 10:35:07 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8751F18813CF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2024 10:40:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8055E1FDE00;
-	Wed, 11 Dec 2024 10:35:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EBBF8239BA3;
+	Wed, 11 Dec 2024 10:40:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RUeGxr/m"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="noWAWngN"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 517831EC4FF;
-	Wed, 11 Dec 2024 10:35:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE79F239BA0;
+	Wed, 11 Dec 2024 10:40:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733913305; cv=none; b=D3pVx1RARRIToWYydE9h9YlbPnxi+9DoyduuIjC/Gy+4TJmL4EYqp2RkwlhtX8B44sbyBa/44ANB0jb2TULxvHqwquSJALipcuPPTS4y8rHF5x39RAz9pg7R87H5TlJHkMnoIGXv9dr6UZrcdlmb2CWfr4HKOqcEpCN7QE20y88=
+	t=1733913606; cv=none; b=jpi4zht3Hfzh67m08KCJS7lA8eUWuzhT/h2DWno5R0HkV9ddpifYMsljgsMdV3jj24cpr4QS38afVzap/EVXQhV/LCVuoXuLhl14Zvfs1Qjykp4vLVlkgkWXKw9aJ+M1ksoeKDjNMFqAo4+71xRovNyQZAQBzd3D78TOH8K1xek=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733913305; c=relaxed/simple;
-	bh=PifCWoxA41DNQhBe6905odZu+s/j0m25J2naw6/B7nQ=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=O0hF+6ZuKxKLKPv2C1T2bXw47qsAE7SA2wUek6pX/U+9BGwrluoTVXzQRn9bEd7siGclYadbKEaCG6UzlqdbGu4pnT/es6yS+u2+ib/Bgi1ejp8aM61q600U8ZlY18SFlF84oV6s5++ch4PLqNy8AYQkQregEj54CEWT/KEBuwI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RUeGxr/m; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02434C4CED2;
-	Wed, 11 Dec 2024 10:34:59 +0000 (UTC)
+	s=arc-20240116; t=1733913606; c=relaxed/simple;
+	bh=t82GYym6sYXkwYHFKbUNwczVpT4+Pzss6XRP9JPCUDE=;
+	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=pxrKVAsqYxHQKcLDXyVn79n+kviZvm6cACBKGWijlxDLoZ6Z8vhCkBfvqae2d4pt4b1PAdaKXKOoGm8r97icW8dmXU+4cGk+24HnSt8o2Lkbp6iYxDilHWRjdwNo4PImmxz/5ifijWd3fMAwcEy7m/OW9+K4wkHTUElJ834MzKE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=noWAWngN; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92C48C4CED2;
+	Wed, 11 Dec 2024 10:40:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1733913304;
-	bh=PifCWoxA41DNQhBe6905odZu+s/j0m25J2naw6/B7nQ=;
-	h=Date:Subject:From:To:Cc:References:In-Reply-To:From;
-	b=RUeGxr/m9s/dSkYW7+Ydh8aBk14fUAhaFmzWAA56kIv4TNuTkqqrCfF+n1aosk0ow
-	 FMmtfAHb8X1cYQSjMF65VBH23ymeTkjqBal0zhUxSuZuh0+iN0PGDZ6BIXNIfSFWjW
-	 hGydlTxJAeFX8jLYbN3W9z5CJAInMtQFiKiAFLJHeNFjTpbQleBjYfInsA4G0nGIy4
-	 9acT7zBhA3eC7/WCM6eqSHW+UIOmC/0TjdBz8bdyGC5G/zF105MhH2Rwtp70UMqBwi
-	 yuY8c42XebqdjCB3CYFjpQwYzeqWR1PdpXGlAsx9Ow0aoRM+/c3ocpmhAzPvmTa03G
-	 3MTi8HshPgjAQ==
-Message-ID: <4f722a25-65f3-49cd-9c45-8710e8242248@kernel.org>
-Date: Wed, 11 Dec 2024 11:34:56 +0100
+	s=k20201202; t=1733913606;
+	bh=t82GYym6sYXkwYHFKbUNwczVpT4+Pzss6XRP9JPCUDE=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+	b=noWAWngNql9dKYob5AyZaw+cnVxhtwRWgj7TNoC3MNkQsrMRf0Vbtn4h8dWUm74DS
+	 M7j4LakUfAzAMmoDNGrLUncUpWpLx0UvGrFfEeRBdfCZgaxFnzUeXt+KqMGGMWiOMp
+	 uWyyT/znJEgzytqre2pLme5qhFkeFR9SVT0GJnm72utdHL6i2yxO9ARzlw0uzsZ7KW
+	 96n60qZtP038+EwpjwmwaoShJFGu9HUl3WEMa+0Icq3UGhLPFMPUmG3QJpmaTI0FDD
+	 11yaeyZMCWZ1bjCOob1r0yCUXj/hHOzgGQrAfXmjBaLJ9DDI54qGcaimfTDKj683IS
+	 6xU9zsG00FZWQ==
+Received: from sofa.misterjones.org ([185.219.108.64] helo=goblin-girl.misterjones.org)
+	by disco-boy.misterjones.org with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.95)
+	(envelope-from <maz@kernel.org>)
+	id 1tLK8R-002dSW-Hv;
+	Wed, 11 Dec 2024 10:40:03 +0000
+Date: Wed, 11 Dec 2024 10:40:02 +0000
+Message-ID: <86sequsdtp.wl-maz@kernel.org>
+From: Marc Zyngier <maz@kernel.org>
+To: Pavan Kondeti <quic_pkondeti@quicinc.com>
+Cc: Akhil P Oommen <quic_akhilpo@quicinc.com>,
+	Rob Clark
+	<robdclark@gmail.com>,
+	Sean Paul <sean@poorly.run>,
+	Konrad Dybcio
+	<konradybcio@kernel.org>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	"Dmitry\
+ Baryshkov" <dmitry.baryshkov@linaro.org>,
+	Marijn Suijten
+	<marijn.suijten@somainline.org>,
+	David Airlie <airlied@gmail.com>,
+	"Simona\
+ Vetter" <simona@ffwll.ch>,
+	Elliot Berman <quic_eberman@quicinc.com>,
+	<linux-arm-msm@vger.kernel.org>,
+	<dri-devel@lists.freedesktop.org>,
+	<freedreno@lists.freedesktop.org>,
+	<linux-kernel@vger.kernel.org>,
+	<linux-arm-kernel@lists.infradead.org>
+Subject: Re: [PATCH] drm/msm/a6xx: Skip gpu secure fw load in EL2 mode
+In-Reply-To: <92cee905-a505-4ce9-9bbc-6fba4cea1d80@quicinc.com>
+References: <20241209-drm-msm-kvm-support-v1-1-1c983a8a8087@quicinc.com>
+	<87ed2fs03w.wl-maz@kernel.org>
+	<92cee905-a505-4ce9-9bbc-6fba4cea1d80@quicinc.com>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
+ FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/29.4
+ (aarch64-unknown-linux-gnu) MULE/6.0 (HANACHIRUSATO)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] dt-bindings: phy: qcom,qmp-pcie: add optional current
- load properties
-From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc: Ziyue Zhang <quic_ziyuzhan@quicinc.com>, vkoul@kernel.org,
- kishon@kernel.org, dmitry.baryshkov@linaro.org, abel.vesa@linaro.org,
- neil.armstrong@linaro.org, andersson@kernel.org, konradybcio@kernel.org,
- robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
- linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
- linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
-References: <20241204105249.3544114-1-quic_ziyuzhan@quicinc.com>
- <20241204105249.3544114-2-quic_ziyuzhan@quicinc.com>
- <qvjtwilukxbeaxnbyzfkdsfkktm6p4yv3sgx3rbugpb6qkcbjy@rohvixslizhh>
- <20241211062053.vxdpovlmetvyx3za@thinkpad>
- <33697bd9-02f4-4a9a-b8c0-4930d7fdaee2@kernel.org>
- <20241211082404.p7fbmhooikmipxvm@thinkpad>
- <3c7ddb08-38db-44b3-a7a7-ec7b270a408f@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <3c7ddb08-38db-44b3-a7a7-ec7b270a408f@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: quoted-printable
+X-SA-Exim-Connect-IP: 185.219.108.64
+X-SA-Exim-Rcpt-To: quic_pkondeti@quicinc.com, quic_akhilpo@quicinc.com, robdclark@gmail.com, sean@poorly.run, konradybcio@kernel.org, quic_abhinavk@quicinc.com, dmitry.baryshkov@linaro.org, marijn.suijten@somainline.org, airlied@gmail.com, simona@ffwll.ch, quic_eberman@quicinc.com, linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
 
-On 11/12/2024 10:52, Krzysztof Kozlowski wrote:
-> On 11/12/2024 09:24, Manivannan Sadhasivam wrote:
->> On Wed, Dec 11, 2024 at 09:09:18AM +0100, Krzysztof Kozlowski wrote:
->>> On 11/12/2024 07:20, Manivannan Sadhasivam wrote:
->>>> On Thu, Dec 05, 2024 at 11:23:11AM +0100, Krzysztof Kozlowski wrote:
->>>>> On Wed, Dec 04, 2024 at 06:52:47PM +0800, Ziyue Zhang wrote:
->>>>>> On some platforms, the power supply for PCIe PHY is not able to provide
->>>>>> enough current when it works in LPM mode. Hence, PCIe PHY driver needs to
->>>>>> set current load to vote the regulator to HPM mode.
->>>>>>
->>>>>> Document the current load as properties for each power supply PCIe PHY
->>>>>> required, namely vdda-phy-max-microamp, vdda-pll-max-microamp and
->>>>>> vdda-qref-max-microamp, respectively.PCIe PHY driver should parse them to
->>>>>> set appropriate current load during PHY power on.
->>>>>>
->>>>>> This three properties are optional and not mandatory for those platforms
->>>>>> that PCIe PHY can still work with power supply.
->>>>>
->>>>>
->>>>> Uh uh, so the downstream comes finally!
->>>>>
->>>>> No sorry guys, use existing regulator bindings for this.
->>>>>
->>>>
->>>> Maybe they got inspired by upstream UFS bindings?
->>>> Documentation/devicetree/bindings/ufs/ufs-common.yaml:
->>>>
->>>> vcc-max-microamp
->>>> vccq-max-microamp
->>>> vccq2-max-microamp
->>>
->>> And it is already an ABI, so we cannot do anything about it.
->>>
->>>>
->>>> Regulator binding only describes the min/max load for the regulators and not
->>>
->>> No, it exactly describes min/max consumers can use. Let's quote:
->>> "largest current consumers may set"
->>> It is all about consumers.
->>>
->>>> consumers. What if the consumers need to set variable load per platform? Should
->>>
->>> Then each platform uses regulator API or regulator bindings to set it? I
->>> don't see the problem here.
->>>
->>>> they hardcode the load in driver? (even so, the load should not vary for each
->>>> board).
->>>
->>> The load must vary per board, because regulators vary per board. Of
->>> course in practice most designs could be the same, but regulators and
->>> their limits are always properties of the board, not the SoC.
->>>
->>
->> How the consumer drivers are supposed to know the optimum load?
->>
->> I don't see how the consumer drivers can set the load without hardcoding the
->> values. And I could see from UFS properties that each board has different
->> values.
-> 
-> 
-> Drivers do not need to know, it's not the driver's responsibility. If
-> these are constraints per board, then regulator properties apply and
-> there is no difference between this "vdd-max-microamp = 10" and
-> "regulator-max-microamp".
-> 
-> If this varies runtime, then your property is already not suitable and
-> very limited and you should use OPP table.
-> 
-Plus let's recap the commit msg which is supposed to fully explain the
-hardware:
-"the power supply for PCIe PHY is not able to provide
-enough current"
+On Wed, 11 Dec 2024 00:37:34 +0000,
+Pavan Kondeti <quic_pkondeti@quicinc.com> wrote:
+>=20
+> On Tue, Dec 10, 2024 at 09:24:03PM +0000, Marc Zyngier wrote:
+> > > +static int a6xx_switch_secure_mode(struct msm_gpu *gpu)
+> > > +{
+> > > +	int ret;
+> > > +
+> > > +#ifdef CONFIG_ARM64
+> > > +	/*
+> > > +	 * We can access SECVID_TRUST_CNTL register when kernel is booted i=
+n EL2 mode. So, use it
+> > > +	 * to switch the secure mode to avoid the dependency on zap shader.
+> > > +	 */
+> > > +	if (is_kernel_in_hyp_mode())
+> > > +		goto direct_switch;
+> >=20
+> > No, please. To check whether you are *booted* at EL2, you need to
+> > check for is_hyp_available(). Whether the kernel runs at EL1 or EL2 is
+> > none of the driver's business, really. This is still absolutely
+> > disgusting from an abstraction perspective, but I guess we don't have
+> > much choice here.
+> >=20
+>=20
+> Thanks Marc. Any suggestions on how we can make is_hyp_mode_available()
+> available for modules? Do you prefer exporting
+> kvm_protected_mode_initialized and __boot_cpu_mode symbols directly or
+> try something like [1]?
 
-Well, that's 100% property of power supply - so the regulator node in
-PMIC, not the UFS device (consumer).
+Ideally, neither. These were bad ideas nine years ago, and they still
+are. The least ugly hack I can come up with is the patch below, and
+you'd write something like:
 
-With that commit msg it is clear the properties are placed wrongly.
-However maybe just commit msg is wrong, but then how could we possibly
-know what is the real hardware, right? :)
+	if (cpus_have_cap(ARM64_HAS_EL2_OWNERSHIP))
+		blah();
+
+This is obviously completely untested.
+
+It also doesn't solve the problem of the kernel booted on bare-metal
+at EL1, or with a hypervisor that doesn't change the programming
+interface of the device under the guest's feet. Eventually, someone
+will have to address these cases.
+
+Thanks,
+
+	M.
+
+=46rom 4823e7bb868d3ac2b938ecc4c3dbbdd460656af1 Mon Sep 17 00:00:00 2001
+From: Marc Zyngier <maz@kernel.org>
+Date: Wed, 11 Dec 2024 10:02:25 +0000
+Subject: [PATCH] arm64: Expose kernel ownership of EL2 via a capability
+
+It appears that some drivers have to jump through a lot of hoops
+to initialise correctly when running under a particular hypervisor,
+while they can directly do it when running bare-metal.
+
+Unfortunately, said hypervisor cannot be directly identified as it
+doesn't implement the correct SMCCC interface, leaving the driver
+with a certain amount of guesswork.
+
+Being booted at EL2 provides at least an indication that there is no
+non-nesting hypervisor, which is good enough to discriminate the
+humpy hypervisor.
+
+For this purpose, expose a new system-wide CPU capability aptly named
+ARM64_HAS_EL2_OWNERSHIP, which said driver can check.
+
+Note that this doesn't solve the problem of a kernel booted at EL1
+without a hypervisor, or with a hypervisor that doesn't break the
+device programming interface.
+
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+---
+ arch/arm64/kernel/cpufeature.c | 11 +++++++++++
+ arch/arm64/tools/cpucaps       |  1 +
+ 2 files changed, 12 insertions(+)
+
+diff --git a/arch/arm64/kernel/cpufeature.c b/arch/arm64/kernel/cpufeature.c
+index 36c7b29ddf9e8..8fdc3ef23d9dc 100644
+--- a/arch/arm64/kernel/cpufeature.c
++++ b/arch/arm64/kernel/cpufeature.c
+@@ -1868,6 +1868,11 @@ static bool has_nv1(const struct arm64_cpu_capabilit=
+ies *entry, int scope)
+ 		  is_midr_in_range_list(read_cpuid_id(), nv1_ni_list)));
+ }
+=20
++static bool has_el2_ownership(const struct arm64_cpu_capabilities *entry, =
+int scope)
++{
++	return is_hyp_mode_available();
++}
++
+ #if defined(ID_AA64MMFR0_EL1_TGRAN_LPA2) && defined(ID_AA64MMFR0_EL1_TGRAN=
+_2_SUPPORTED_LPA2)
+ static bool has_lpa2_at_stage1(u64 mmfr0)
+ {
+@@ -3012,6 +3017,12 @@ static const struct arm64_cpu_capabilities arm64_fea=
+tures[] =3D {
+ 		ARM64_CPUID_FIELDS(ID_AA64PFR1_EL1, GCS, IMP)
+ 	},
+ #endif
++	{
++		.desc =3D "Kernel owns EL2",
++		.capability =3D ARM64_HAS_EL2_OWNERSHIP,
++		.type =3D ARM64_CPUCAP_SYSTEM_FEATURE,
++		.matches =3D has_el2_ownership,
++	},
+ 	{},
+ };
+=20
+diff --git a/arch/arm64/tools/cpucaps b/arch/arm64/tools/cpucaps
+index 1e65f2fb45bd1..94ce3462e6298 100644
+--- a/arch/arm64/tools/cpucaps
++++ b/arch/arm64/tools/cpucaps
+@@ -24,6 +24,7 @@ HAS_DIT
+ HAS_E0PD
+ HAS_ECV
+ HAS_ECV_CNTPOFF
++HAS_EL2_OWNERSHIP
+ HAS_EPAN
+ HAS_EVT
+ HAS_FPMR
+--=20
+2.39.2
 
 
-Best regards,
-Krzysztof
+--=20
+Without deviation from the norm, progress is not possible.
 
