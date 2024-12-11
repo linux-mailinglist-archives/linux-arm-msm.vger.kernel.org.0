@@ -1,157 +1,87 @@
-Return-Path: <linux-arm-msm+bounces-41464-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-41465-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 729AB9ECA22
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2024 11:17:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 32EBC9ECA32
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2024 11:21:06 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 97D5E16058D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2024 10:17:05 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A64FD16080B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2024 10:20:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8FC4586330;
-	Wed, 11 Dec 2024 10:17:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="MxzPDs//"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 184531EC4D5;
+	Wed, 11 Dec 2024 10:20:57 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E67ECEAD2;
-	Wed, 11 Dec 2024 10:17:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0A45C236FA9;
+	Wed, 11 Dec 2024 10:20:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733912224; cv=none; b=V7sTmdfRsM+EHnCFG88hQPrurH9ObUFYizC9mvxO6FmuVguyK29x4TND8CfPSmNgXrttbncszNbfFw1qwNJUYwr2hRde/QvVCjKc4NGGCzjb4SaEoHfw8BuPAh+w67rRi4/IEmNBvwlHnRx6LZLiTBommrrE5U4y1wKfH6Y06UA=
+	t=1733912457; cv=none; b=RykjUlqTi+tuFCWO5IBqkpzopzoOk1ghEO2/Q1QwJVK5ZB0GDiLuJuytT1hzG/T3geY2KALU5+zJokQi8u0yM/7T/kTCB61KF8aTC4KYL5l6sI5P0uBSX8tRTXKlnO7qjgn8IQekdN3EKo7JEPlYHeNy985FjxJ5KQG4XoE8cGc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733912224; c=relaxed/simple;
-	bh=x1FTs1xWDJc7VR2ZOnvytG0Kyh4aPlcxoVsXrcLpuN8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=P8o4BTzQWm3K8hj/DvbugW4Idohw/9QqO2qgj9hQqYd7FL5g/0Jz3Ttxb8Ybe6vTNNX/vPEAsv1+ECkJ/Pve6DCIJE2XLBte/3/v3rslvyMnoqrUJ90R3MVWKBYo1VcbliXomYiLmrCVEpkHIUwDNgg4Ni/OrOSqCaDArw416pk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=MxzPDs//; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BB2PBl5001840;
-	Wed, 11 Dec 2024 10:16:57 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	aSOYcPIlM2oapkig9i0fVwu1C8Pt6fV3AVO943ZCJUo=; b=MxzPDs//ZkNrv8pC
-	rSCUagkvmhAcy2mkwLvQ80hnQ0T7ziL+opUMAbsRut1Xdfe1vJxlSvrCG0yBpTEK
-	tRvfActZkzBMoKac3MHbSRocG92KOgpToHkZYsaKkKgUzIWE1zsjyFBWH4iH1Sst
-	QVN5eQWcXQZe6tDdtq6Kp8+/UdX/NhW4Ud0YbGGfwjfa38rSrdYh2K6CmURmHSej
-	vPt00MB9NFS2dcneQuDVjHuSCShc+qoWul6o3Rt9aiEYhu8MlXeWf8fLIONPHscG
-	gdcBXzZ1Y5RMEUxCj9b99A0hTlr/w7IzXiwpbfeyyzX8rJtcK2+Y0V3uN1+cQwe5
-	ry85Zw==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43f1xd18rn-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 11 Dec 2024 10:16:56 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4BBAGrTG013491
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 11 Dec 2024 10:16:53 GMT
-Received: from [10.231.216.175] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 11 Dec
- 2024 02:16:47 -0800
-Message-ID: <65fd0932-4519-44ac-ba9d-55ee97b43233@quicinc.com>
-Date: Wed, 11 Dec 2024 18:16:44 +0800
+	s=arc-20240116; t=1733912457; c=relaxed/simple;
+	bh=2qrgK9+IAdcUz5AYRru8afY9lA0SYpB4HI5K88IxY+E=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=VSr1acub9G//0nHe4j5ke+QTprPU7UatN6snlAPzADs/qCiK+HpYsXm8aQncG71p7pwkX32eCpGe/LPEqyM8BKdl+/THIlT8BMo/g/8M/Vw16JO36ZdP0zle5uM83eWdi35G5FH+J0DccxYOFyPbrHCE4INOirF76lXUphY98ns=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 78E5E1063;
+	Wed, 11 Dec 2024 02:21:22 -0800 (PST)
+Received: from ewhatever.cambridge.arm.com (ewhatever.cambridge.arm.com [10.1.197.1])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPA id 81D223F720;
+	Wed, 11 Dec 2024 02:20:52 -0800 (PST)
+From: Suzuki K Poulose <suzuki.poulose@arm.com>
+To: Conor Dooley <conor+dt@kernel.org>,
+	Mao Jinlong <quic_jinlmao@quicinc.com>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Mike Leach <mike.leach@linaro.org>,
+	James Clark <james.clark@arm.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Rob Herring <robh@kernel.org>
+Cc: Suzuki K Poulose <suzuki.poulose@arm.com>,
+	linux-kernel@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	coresight@lists.linaro.org,
+	linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org
+Subject: Re: [PATCH v7 0/3] coresight: Add static trace id support
+Date: Wed, 11 Dec 2024 10:20:47 +0000
+Message-Id: <173391229097.561442.14812407436677697542.b4-ty@arm.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20241121062829.11571-1-quic_jinlmao@quicinc.com>
+References: <20241121062829.11571-1-quic_jinlmao@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 1/4] dt-bindings: net: bluetooth: qca: Expand
- firmware-name property
-To: Krzysztof Kozlowski <krzk@kernel.org>
-CC: Marcel Holtmann <marcel@holtmann.org>,
-        Luiz Augusto von Dentz
-	<luiz.dentz@gmail.com>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski
-	<krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Bjorn Andersson
-	<andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        "Balakrishna
- Godavarthi" <quic_bgodavar@quicinc.com>,
-        Rocky Liao
-	<quic_rjliao@quicinc.com>,
-        <linux-bluetooth@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <quic_jiaymao@quicinc.com>, <quic_shuaz@quicinc.com>,
-        <quic_zijuhu@quicinc.com>, <quic_mohamull@quicinc.com>
-References: <20241210151636.2474809-1-quic_chejiang@quicinc.com>
- <20241210151636.2474809-2-quic_chejiang@quicinc.com>
- <vbwg7djb4me6i4ow2q74ltqjxvkxeulhzyq4n6ak7aifhtf36f@x66pjje2iu6u>
- <62afbaea-67b1-4572-9e78-d1dbe5fae20a@quicinc.com>
- <f818f089-0490-42da-9aee-1a7006c11978@kernel.org>
-Content-Language: en-US
-From: "Cheng Jiang (IOE)" <quic_chejiang@quicinc.com>
-In-Reply-To: <f818f089-0490-42da-9aee-1a7006c11978@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: MLya7_taN2b8PUyOOJPm5vB5CMV0gSQs
-X-Proofpoint-GUID: MLya7_taN2b8PUyOOJPm5vB5CMV0gSQs
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 mlxlogscore=999
- priorityscore=1501 mlxscore=0 clxscore=1015 bulkscore=0 adultscore=0
- suspectscore=0 impostorscore=0 spamscore=0 lowpriorityscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2412110077
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 
-Hi Krzysztof,
-
-On 12/11/2024 5:48 PM, Krzysztof Kozlowski wrote:
-> On 11/12/2024 10:39, Cheng Jiang (IOE) wrote:
->>>>
->>>> diff --git a/Documentation/devicetree/bindings/net/bluetooth/qualcomm-bluetooth.yaml b/Documentation/devicetree/bindings/net/bluetooth/qualcomm-bluetooth.yaml
->>>> index 7bb68311c..2782d2325 100644
->>>> --- a/Documentation/devicetree/bindings/net/bluetooth/qualcomm-bluetooth.yaml
->>>> +++ b/Documentation/devicetree/bindings/net/bluetooth/qualcomm-bluetooth.yaml
->>>> @@ -101,7 +101,10 @@ properties:
->>>>    max-speed: true
->>>>  
->>>>    firmware-name:
->>>> -    description: specify the name of nvm firmware to load
->>>> +    description:
->>>> +      If one item is present, specify the name of the NVM firmware to load.
->>>> +      If two items are present, the first item specifies the name of the NVM,
->>>> +      and the second specifies the name of the rampatch firmware to load.
->>>
->>> Don't repeat constraints in free form text. Use proper constraints so
->>> you can validate your DTS. And then actually do validate your DTS...
->>>
->> It seems unnecessary to add this description, so I will drop this change. Is that okay?
+On Thu, 21 Nov 2024 14:28:26 +0800, Mao Jinlong wrote:
+> Some HW has static trace id which cannot be changed via
+> software programming. For this case, configure the trace id
+> in device tree with "arm,static-trace-id = <xxx>", and
+> call coresight_trace_id_get_static_system_id with the trace id value
+> in device probe function. The id will be reserved for the HW
+> all the time if the device is probed.
 > 
-> You need to list the items and describe them. See how all other bindings
-> do it.
-> 
-The firmware names are not fixed strings; they vary depending on the chip, board, or platform.
+> [...]
 
-How about the following description? Thank you!
+Applied, with minor fixups. thanks!
 
-  firmware-name:
-    $ref: /schemas/types.yaml#/definitions/string
-    description: |
-      List of firmware names. The first item is the name of the NVM firmware
-      to load. The second item is the name of the rampatch firmware to load,
-      if present.
-    minItems: 1
-    maxItems: 2
+[1/3] dt-bindings: arm: Add arm,static-trace-id for coresight dummy source
+      https://git.kernel.org/coresight/c/d0a10da78cbfabcbc2eda87ac238bc03bb2b2c81
+[2/3] coresight: Add support to get static id for system trace sources
+      https://git.kernel.org/coresight/c/fd9b7e8e9fbc23d69fa4accc881dea2cf13a2e2e
+[3/3] coresight: dummy: Add static trace id support for dummy source
+      https://git.kernel.org/coresight/c/f7d7454607cf863cc860e201636117e242d45fe0
 
-> Best regards,
-> Krzysztof
-
+Best regards,
+-- 
+Suzuki K Poulose <suzuki.poulose@arm.com>
 
