@@ -1,372 +1,236 @@
-Return-Path: <linux-arm-msm+bounces-41493-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-41494-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id BB2139ECDFC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2024 15:05:40 +0100 (CET)
-Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 395899ECE0D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2024 15:09:01 +0100 (CET)
+Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id DBB6A188D5EE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2024 14:05:23 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 24E1E28339D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2024 14:08:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1CCEC23691C;
-	Wed, 11 Dec 2024 14:05:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 936C5236915;
+	Wed, 11 Dec 2024 14:08:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="s8eFhFY0"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="giOYJBUC"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f171.google.com (mail-lj1-f171.google.com [209.85.208.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCE062368FB
-	for <linux-arm-msm@vger.kernel.org>; Wed, 11 Dec 2024 14:05:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD1BD1EC4ED;
+	Wed, 11 Dec 2024 14:08:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733925909; cv=none; b=phfnp/nG5krXyy5w1nF/0A/zAah7jRKjhnNGSNGim5CO5V+tM0faXD+MKXhRWz+TSDOj/vw1toBgS8aeVZk5qS0UZMO/bAkpNYCdKJuseWgmId58n+Fn+ufgxm1Xm0U+P4aFaWOdSW/kdu4RAY1gmExbkrgJIPor8TnR6PS9kjY=
+	t=1733926130; cv=none; b=ssiH6FQY6DflfjcVXqX0J8PrJiI8bAcgpx24QyDTbC/xUg22t2ZinaU+/uY4VjjL06+TvpTBQv3+ogJXr0R3ddPs8kcfiCPudhz4ptvg5JSfFfLCiygpXxRCKWZJYG5ao1dE3BFd9ejVjn5zz9Bww3o+RGc4JlwjCG2pmcvx4wU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733925909; c=relaxed/simple;
-	bh=8uxRDDa1ZrtEWRikgId2kWfLFhA3SOQppnPWVAk7eDY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ComejnrEYMZ33zjfDFMTEEWioAZyEeaAx12egEd+o1N8ZUdccyN4mpFRim4I/m2Rd0QXsgyg8cXcmNpxiKABEOVhLexWZfhxyL9ud/HJ9Hbo21/xQ4rGVqLZWMgVczvjeFr+C3DwCCien5E5VeVTRZfKv43v1H1Bi9UlUbWgDDs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=s8eFhFY0; arc=none smtp.client-ip=209.85.208.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f171.google.com with SMTP id 38308e7fff4ca-30227ccf803so29057261fa.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Dec 2024 06:05:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1733925904; x=1734530704; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=il8+9vjQz+0CNwk2YpjhN7coIV5zrH9Hso1s2Wky8S0=;
-        b=s8eFhFY06gE2wwFboJ9UdlEdhqKi6FHU7n3uW41JEgtF2pqOg3QIkZyOtYxzf0YhNe
-         6i20Nb4jN3EFehDcAYb9/7LKtTVAfneJVOFaEVNhpPjm/Ka2UDOGvJzuQZVFr1jny6UQ
-         a4jnKdrv6sa3E+S+yIHTmOWFwwpZlKMt+V+A2nsODtxrtcv/VC1n03EMflL33maXKf5+
-         woeRv8H1h6s9v04jyYhLnc/Oi0Q9xEusKfTZPdvwnAw6NSPgntc3j13zZhvb73RI73iv
-         xK5GlwOuMJYbtoX2icls0LlOBhOoJ5giEQ9YAGpeBQGveQHzNNcXXvvjWQO61OEKBt32
-         /tIg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733925904; x=1734530704;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=il8+9vjQz+0CNwk2YpjhN7coIV5zrH9Hso1s2Wky8S0=;
-        b=R4pKfWvXYy+a6MiN3raGF4sHYfBt/VcrqsqjO2ntzJCCPvO99btkv7GDNoEpPAZWtk
-         XEzpbT2ZQ/aF4nofWCWkzrslLNjENYV8Vn+0cCvyvF4+ImsSf6YZeMj9SkuMHy8eEzzO
-         RBea/+oJdYR4N2GBnlr5o4oBZWxcU57KcDT42b1EWPOcG+Qxg2vx5mvn5O/ElOojIG1e
-         nMH7bHeTfTdDtg6XIc2zjmSSJ7/hlUlyrE1b4MTdOiLis6P4M2jr4gHPByxYzVc7q1mK
-         sI1nWeJTzZAKCRLWTnUKjuYSe5Q0H9Er91e9c4qKytsN9XtymVOmiKHeL/C8HRnfnPLB
-         mNbw==
-X-Forwarded-Encrypted: i=1; AJvYcCXW8avAfW0GSAOMZ99gVeekevbhPFUjXF+wYTtLXVnk3TQMn/OHdjFfscgEk9Mlk32JeDEfy4jCEESXKtHC@vger.kernel.org
-X-Gm-Message-State: AOJu0YwrPGl/SeyNymaCf7EE0Dinqm6Nt+LHDw67cXRYQAHGXUS/GgZ0
-	jPsVzsekIOHKMZAviHl/u2hR79qtREY9z5xB2h16IedxJzvRePgdJ+kshziUFPM=
-X-Gm-Gg: ASbGnct9gGX5jcR54IBT/eG6JTEZnWFplhzZPF2sCVbiLYXCuzBLyWcaXa3qP5qDQ3f
-	eWrLFhGShjLU3JYr+JdFcxsIRZkLao7JfCHaL9i1/V70ef5+Ww48xV2NiC7rdFr4SKyLm4QuiGf
-	lNfRNzk1mWR8BDt6VlyV5KAH48YeaJBFt6O1czUAs9cLEWULnffRBZHTJ0rS4I6geZz7RsrT5gy
-	ArzHSP4mnguHYo2ledVd26ME7zaayjP032UO9JLpTqFyQllR3cx5Ehz0vcCbSkyP/FVs3kyf3Zk
-	5ULi+B9LkhNhPq21J01q
-X-Google-Smtp-Source: AGHT+IFRBij+feIMREHq2gXiREyAd6JxtEPmcIQ8OM73icqJN5D6gRtYHPA7dg913pOv8z8zgawRZg==
-X-Received: by 2002:a05:651c:154e:b0:300:160f:7c76 with SMTP id 38308e7fff4ca-30240d89514mr12681681fa.25.1733925903243;
-        Wed, 11 Dec 2024 06:05:03 -0800 (PST)
-Received: from rayden (h-98-128-140-123.A175.priv.bahnhof.se. [98.128.140.123])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-30041e2d03asm13756101fa.58.2024.12.11.06.05.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 11 Dec 2024 06:05:02 -0800 (PST)
-Date: Wed, 11 Dec 2024 15:04:59 +0100
-From: Jens Wiklander <jens.wiklander@linaro.org>
-To: Amirreza Zarrabi <quic_azarrabi@quicinc.com>
-Cc: Sumit Garg <sumit.garg@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-	linux-arm-msm@vger.kernel.org, op-tee@lists.trustedfirmware.org,
-	linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-doc@vger.kernel.org
-Subject: Re: [PATCH 08/10] tee: add Qualcomm TEE driver
-Message-ID: <20241211140459.GA471738@rayden>
-References: <20241202-qcom-tee-using-tee-ss-without-mem-obj-v1-0-f502ef01e016@quicinc.com>
- <20241202-qcom-tee-using-tee-ss-without-mem-obj-v1-8-f502ef01e016@quicinc.com>
- <CAHUa44GqyaouPquw+DE1ASRwVOBw5xDstcpaNpmLmQbXmp6CuQ@mail.gmail.com>
- <62f80fb7-ea13-4ae1-a438-8d6b2d5a2f15@quicinc.com>
+	s=arc-20240116; t=1733926130; c=relaxed/simple;
+	bh=TyKyQpmrpsgom8zJeIoaD3v8PbnUY4rPiNuAjvk87F8=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=F6lj7oJbRJEwOwUpRLVVTKJloQUeFWN3xR88B6yo5117Sn+/npwBzLhF4CbNPe4Aq4dKqFdZiVitIaR9OMlf0t+UFMTVjMJRP4W5BPshWCljng9wEOJ+ZBPTbZmUbYr7uAS2zIL8odyxYfblRT5Jc34kNAT01EQjfVm1EfLH7Zs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=giOYJBUC; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BB6Kmlg002777;
+	Wed, 11 Dec 2024 14:08:41 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=btkaeEES3jGnQ1QH4u5FXT
+	aMuAp3a+249D+o/lV8mXc=; b=giOYJBUCr3CKETKoQVbVAmZiCvvb9GAaGxM0dM
+	Ni7XSwTm6hgixDxmkgKbVOdfo2rEvch3TmhsPVLBVMHlwd9COZ9Na0XbxUYYotim
+	0ZrT9No3cbcAeBXzHxKQ3u0iVja+QRP0+XcKkOpcnM0KUb/iIvVbTtWNODwi9RKG
+	C2C2baHmAuVkQN28A1ERoadEgcB+zQZNwSSHLacXx38YYK9MeZgsV/rBXeWXYGsa
+	A3Hsy+Ydhsf64+h4juodVhQ+jnqpKTkDKtWzK1ZKT9uS+w9mvuUopzFjmYFHQgYZ
+	5AQQQ7UXrkhp/vQEMd6p4ZRJJa4Qc1XbMNjpGBGs5q/PHFlA==
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43dxw485u6-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 11 Dec 2024 14:08:41 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4BBE8efS018491
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 11 Dec 2024 14:08:40 GMT
+Received: from hu-depengs-sha.qualcomm.com (10.80.80.8) by
+ nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Wed, 11 Dec 2024 06:08:33 -0800
+From: Depeng Shao <quic_depengs@quicinc.com>
+To: <rfoss@kernel.org>, <todor.too@gmail.com>, <bryan.odonoghue@linaro.org>,
+        <mchehab@kernel.org>, <robh@kernel.org>, <krzk+dt@kernel.org>,
+        <conor+dt@kernel.org>, <vladimir.zapolskiy@linaro.org>
+CC: <quic_eberman@quicinc.com>, <quic_depengs@quicinc.com>,
+        <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <kernel@quicinc.com>
+Subject: [PATCH v6 00/16] media: qcom: camss: Add sm8550 support
+Date: Wed, 11 Dec 2024 19:37:22 +0530
+Message-ID: <20241211140738.3835588-1-quic_depengs@quicinc.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <62f80fb7-ea13-4ae1-a438-8d6b2d5a2f15@quicinc.com>
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: av4AUvW9i9-J4U_OxGdhBdlNjN09Kz5E
+X-Proofpoint-GUID: av4AUvW9i9-J4U_OxGdhBdlNjN09Kz5E
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 bulkscore=0
+ suspectscore=0 priorityscore=1501 adultscore=0 mlxlogscore=999
+ clxscore=1015 spamscore=0 mlxscore=0 lowpriorityscore=0 phishscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2412110102
 
-Hi Amirreza,
+v6:
+- Add bus type property in dt-binding which will be limited
+  by a latest change 
+  https://lore.kernel.org/all/20241209-camss-dphy-v1-0-5f1b6f25ed92@fairphone.com/
+- Add RB for "media: qcom: camss: Add sm8550 compatible" and
+  "media: qcom: camss: Add support for VFE 780"
+- Uppercase the hex in csiphy register list - Bryan
+- Add empty function for csid tpg - Vladimir
+- Set testgen mode to CSID_PAYLOAD_MODE_DISABLED in subdev init interface
+- encapsulate the guard __thus__ for new header - Bryan
+- Add a standalone patch for the platform which doesn't support CSID TPG
+  to make sure new platform driver can set CSID_PAYLOAD_MODE_DISABLED
+  to disable TPG
+- Update the csid for csid and vfe driver - Bryan
+- Link to v5: https://lore.kernel.org/all/20241205155538.250743-1-quic_depengs@quicinc.com/
 
-On Wed, Dec 11, 2024 at 01:30:22PM +1100, Amirreza Zarrabi wrote:
-[snip]
-> >> +/**
-> >> + * struct qcom_tee_context - Clients or supplicants context.
-> >> + * @tee_context: TEE context.
-> >> + * @qtee_objects_idr: QTEE objects in this context.
-> >> + * @reqs_idr: Requests currently being processed.
-> >> + * @lock: mutex for @reqs_idr and @qtee_objects_idr.
-> >> + * @req_srcu: srcu for exclusive access to requests.
-> >> + * @req_c: completion used when supplicant is waiting for requests.
-> >> + * @released: state of this context.
-> >> + * @ref_cnt: ref count.
-> >> + */
-> >> +struct qcom_tee_context {
-> > 
-> > Other drivers call their conterpart of this struct *_context_data.
-> > Using the same pattern here makes it easier to recognize the struct in
-> > the rest of the code.
-> > 
-> 
-> Ack.
-> 
-> >> +       struct tee_context *tee_context;
-> >> +
-> >> +       struct idr qtee_objects_idr;
-> >> +       struct idr reqs_idr;
-> >> +       /* Synchronize access to @reqs_idr, @qtee_objects_idr and updating requests state. */
-> >> +       struct mutex lock;
-> >> +       struct srcu_struct req_srcu;
-> > 
-> > Why do you use this synchronization primitive? I don't know enough
-> > about this primitive to tell if you use it for the right purpose so
-> > perhaps you can help me understand which properties you need.
-> > 
-> 
-> Sure, let me explain it bellow in the qcom_tee_user_object_dispatch,
-> where it is acually used.
-> 
-> >> +       struct completion req_c;
-> >> +
-> >> +       int released;
-> >> +
-> >> +       struct kref ref_cnt;
-> > 
-> > Why does this struct need a different lifetime than struct tee_context?
-> > 
-> 
-> This is a side effect of how QTEE objects and callback objects are released:
-> 
->   - When a tee_context is closed, we release all QTEE objects in that context.
->     QTEE specifies that object releases are asynchronous. So, we queue the
->     releases in a workqueue and immediately return from the release callback,
->     allowing the TEE subsystem to continue.
-> 
->   - When the workqueue sends a release for a QTEE object, QTEE may respond
->     by requesting the release of a callback object or an operation on a callback
->     object. This requires a valid struct qcom_tee_context. That's why we keep this
->     until all callback objects are gone.
-> 
-> The alternative is to keep a list of callback objects in this context and
-> flag them as orphans. The refcount seems easier :).
+v5:
+- Update dt-bindings required items order - Krzysztof
+- Sort the reg order based on the comments in sc7280 dt-binding - Vladimir
+- Change the irq type to IRQ_TYPE_EDGE_RISING - Vladimir
+- Remove the Krzysztof's RB tag from dt-binding patch due to above
+  updates in dt-binding patch
+- Move regulator from csid resource to csiphy resource - Bryan, Vladimir
+- Move the change to add default case in vfe_src_pad_code to a
+  standalone patch. - Bryan
+- Rename csid-gen3 as csid-780 - Bryan
+- use macros() to bury bit shifts - Bryan
+- Sort the macros by register offset order  -  Vladimir
+- Redefine a macro for rup_aup in csid driver - Vladimir
+- Remove the unused macros in vfe 780 driver - Vladimir
+- Add dummy function for unsupported hw_ops in vfe 780
+  driver - Vladimir, Bryan
+- Use a standalone patch for the callback API of RUP and buf done update
+- Use a standalone patch to make CSID TPG optional - Vladimir
+- Link to v4: https://lore.kernel.org/all/20240812144131.369378-1-quic_depengs@quicinc.com/
 
-It would be even easier if it was already dealt with by the TEE
-subsystem. :-)
+v4:
+- Update dt-bindings based on comments - Krzysztof, bod, Vladimir
+- Move common code into csid core and vfe core driver - bod
+- Remove *_relaxed in the csid and vfe drivers - Krzysztof
+- Reorganize patches in logical junks, make sure that new added
+structures have users in current patch - Krzysztof
+- Remove notify function  and add new functions in camss for buf done
+and reg update - bod
+- Remove custom code to get csid base - bod
+- Remove ISR function in vfe780 driver since it is never fired - bod
+- Move csid_top_base to camss structure since we only have one csid
+top block, and just need to get base once for csid top
+- Add Vladimir's RB
+- Remove prerequisite-patch-id in the cover letter since the changes
+have been merged
+- Add dtsi patch link for reference - Krzysztof
+https://lore.kernel.org/all/20240807123333.2056518-1-quic_depengs@quicinc.com/
+- Link to v3: https://lore.kernel.org/all/20240709160656.31146-1-quic_depengs@quicinc.com/
 
-It looks like we have the same problem as with the tee_shm objects when
-the tee_context should go away. Would it work to add another callback,
-close_contex(), to tee_driver_ops to be called from
-teedev_close_context()? The release() callback would still be called as
-usual when the last reference is gone, but the backend TEE driver would
-get a notification earlier with core_contex() that it's time to start
-releasing resources.
+v3:
+- Rebased the change based on below change which will be merged firstly.
+"Move camss version related defs in to resources"
+Link: https://lore.kernel.org/all/20240522154659.510-1-quic_grosikop@quicinc.com/
+- Rebased the change based on Bryan's csiphy optimization change and add
+these changes into this series, so that the new csiphy-3ph driver don't
+need to add duplicate code. This has got Bryan's permission to add his
+patches into this series.
+- Refactor some changes based on the comments to move the random code to
+patches where they are used.
+- Remove the vfe780 irq function since it isn't doing the actual work.
+- Add dt-binding for sm8550 camss driver.
+Link to V2: https://lore.kernel.org/all/20240320141136.26827-1-quic_depengs@quicinc.com/
 
-[snip]
-> >> +/**
-> >> + * qcom_tee_supp_pop_entry() - Pop the next request in a context.
-> > 
-> > When you pop something you'd expect it to be removed also.
-> >
-> 
-> I'll rename it to more apporpriate name.
-> 
-> >> + * @ctx: context from which to pop a request.
-> >> + * @ubuf_size: size of available buffer for MEMBUF parameters.
-> >> + * @num_params: number of entries for TEE parameter array.
-> >> + *
-> >> + * It does not remove the request from &qcom_tee_context.reqs_idr.
-> >> + * It checks if @num_params is large enough to fit the next request arguments.
-> >> + * It checks if @ubuf_size is large enough to fit IB buffer arguments from QTEE.
-> >> + * It updates request state to %QCOM_TEE_REQ_PROCESSING state.
-> >> + *
-> >> + * Return: On success return a request or NULL and ERR_PTR on failure.
-> >> + */
-> >> +static struct qcom_tee_user_req *qcom_tee_supp_pop_entry(struct qcom_tee_context *ctx,
-> >> +                                                        size_t ubuf_size, int num_params)
-> >> +{
-> >> +       struct qcom_tee_user_req *ureq;
-> >> +       struct qcom_tee_arg *u;
-> >> +       int i, id;
-> >> +
-> >> +       guard(mutex)(&ctx->lock);
-> >> +
-> >> +       /* Find the a QUEUED request. */
-> > 
-> > Is it _a_ or _the_?
-> > 
-> >> +       idr_for_each_entry(&ctx->reqs_idr, ureq, id)
-> >> +               if (ureq->state == QCOM_TEE_REQ_QUEUED)
-> >> +                       break;
-> > 
-> > Will this always result in a FIFO processing?
-> > 
-> 
-> It not a FIFO. I understand your concerns.
-> I'll replace it with a list.
-> 
-> >> +
-> >> +       if (!ureq)
-> >> +               return NULL;
-> >> +
-> >> +       u = ureq->args;
-> >> +       /* (1) Is there enough TEE parameters? */
-> >> +       if (num_params < qcom_tee_args_len(u))
-> >> +               return ERR_PTR(-EINVAL);
-> >> +
-> >> +       /* (2) Is there enough space to pass input buffers? */
-> >> +       qcom_tee_arg_for_each_input_buffer(i, u) {
-> >> +               ubuf_size = size_sub(ubuf_size, u[i].b.size);
-> >> +               if (ubuf_size == SIZE_MAX)
-> >> +                       return ERR_PTR(-EINVAL);
-> >> +
-> >> +               ubuf_size = round_down(ubuf_size, 8);
-> >> +       }
-> >> +
-> >> +       /* Ready to process request 'QUEUED -> PROCESSING'. */
-> >> +       ureq->state = QCOM_TEE_REQ_PROCESSING;
-> >> +
-> >> +       return ureq;
-> >> +}
-> >> +
-> >> +/* User object dispatcher. */
-> >> +static int qcom_tee_user_object_dispatch(struct qcom_tee_object_invoke_ctx *oic,
-> >> +                                        struct qcom_tee_object *object, u32 op,
-> >> +                                        struct qcom_tee_arg *args)
-> >> +{
-> >> +       struct qcom_tee_user_object *uo = to_qcom_tee_user_object(object);
-> >> +       struct qcom_tee_user_req *ureq __free(kfree);
-> >> +       struct qcom_tee_context *ctx = uo->ctx;
-> >> +       int errno;
-> >> +
-> >> +       ureq = kzalloc(sizeof(*ureq), GFP_KERNEL);
-> >> +       if (!ureq)
-> >> +               return -ENOMEM;
-> >> +
-> >> +       init_completion(&ureq->c);
-> >> +       ureq->object_id = uo->object_id;
-> >> +       ureq->op = op;
-> >> +       ureq->args = args;
-> >> +
-> >> +       /* Queue the request. */
-> >> +       if (qcom_tee_request_enqueue(ureq, ctx))
-> >> +               return -ENODEV;
-> >> +
-> >> +       /* Wakeup supplicant to process it. */
-> >> +       complete(&ctx->req_c);
-> >> +
-> >> +       /* Wait for supplicant to process the request. */
-> >> +       /* Supplicant is expected to process request in a timely manner. We wait as KILLABLE,
-> > 
-> > requests
-> > 
-> >> +        * in case supplicant and invoke thread both running from a same user process, otherwise
-> > 
-> > the same
-> > 
-> >> +        * the process stuck on fatal signal.
-> > 
-> > might get stuck on a fatal signal?
-> > 
-> >> +        */
-> > 
-> > Please combine into one comment.
-> > 
-> 
-> Ack.
-> 
-> >> +       if (!wait_for_completion_state(&ureq->c, TASK_KILLABLE | TASK_FREEZABLE)) {
-> >> +               errno = ureq->errno;
-> >> +               /* On SUCCESS, end_cb_notify frees the request. */
-> >> +               if (!errno)
-> >> +                       oic->data = no_free_ptr(ureq);
-> >> +       } else {
-> >> +               enum qcom_tee_req_state prev_state;
-> >> +
-> >> +               errno = -ENODEV;
-> >> +
-> >> +               scoped_guard(mutex, &ctx->lock) {
-> >> +                       prev_state = ureq->state;
-> >> +                       /* Replace ureq with '__empty_ureq' to keep req_id reserved. */
-> >> +                       if (prev_state == QCOM_TEE_REQ_PROCESSING)
-> >> +                               idr_replace(&ctx->reqs_idr, &__empty_ureq, ureq->req_id);
-> >> +                       /* Remove ureq as supplicant has never seen this request. */
-> >> +                       else if (prev_state == QCOM_TEE_REQ_QUEUED)
-> >> +                               idr_remove(&ctx->reqs_idr, ureq->req_id);
-> >> +               }
-> >> +
-> >> +               /* Wait for exclusive access to ureq. */
-> >> +               synchronize_srcu(&ctx->req_srcu);
-> > 
-> > I'm sorry, I don't follow.
-> >
-> 
-> I'll try to compare it to the optee.
-> 
-> In optee, clients and the supplicant run in two different contexts. If the
-> supplicant is available, the client will wait for it to finish processing
-> the queued request. The supplicant is guaranteed to be timely and responsive.
+v2:
+- Update some commit messages
+Link to V1: https://lore.kernel.org/all/20240320134227.16587-1-quic_depengs@quicinc.com/
 
-Yeah, or at least trusted to be timely and responsive.
+v1:
+SM8550 is a Qualcomm flagship SoC. This series adds support to
+bring up the CSIPHY, CSID, VFE/RDI interfaces in SM8550.
 
-> 
-> In QCOMTEE:
-> 
->   1. There are multiple supplicants. Any process that implements a callback
->      object is considered a supplicant. The general assumption of timeliness
->      or responsiveness may not apply. We allow the client to at least receive fatal
->      signals (this design can be extended later if a timeout is required).
-> 
->   2. A client can implement a callback object and act as both a client and
->      a supplicant simultaneously. To terminate such a process, we need to be
->      able to accept fatal signals.
+SM8550 provides
 
-We accept tee-supplicant to be killed so this is similar.
+- 3 x VFE, 3 RDI per VFE
+- 2 x VFE Lite, 4 RDI per VFE
+- 3 x CSID
+- 2 x CSID Lite
+- 8 x CSI PHY
 
-> 
-> srcu is specifically used to protect the args array. After returning from
-> qcom_tee_user_object_dispatch, the args array might not be valid. We need to
-> ensure no one is accessing the args array before the retun, hence synchronize_srcu.
-> Whenever we read the contents of args, we do it within an srcu read lock.
-> 
-> For example, qcomtee_user_object_pop, which picks a request for the supplicant
-> to process, will hold the srcu read lock when marshaling the args array
-> to the TEE subsystem's params array.
-> 
-> An alternative to the srcu would be to use "context lock" ctx->lock and
-> hold it throughout the qcomtee_user_object_pop function, even when marshaling
-> the args array to the TEE subsystem's params array.
-> 
-> Using ctx->lock is easier to follow, but since it's shared by everyone in
-> a context and marshaling can be heavy depending on the type of objects,
-> I thought srcu would be more performant.
-> 
-> In other words, srcu just moves the marshaling of objects outside of ctx->lock.
-> What do you think about keeping srcu or replacing it with ctx->lock?
+Bryan O'Donoghue (6):
+  media: qcom: camss: csiphy-3ph: Fix trivial indentation fault in
+    defines
+  media: qcom: camss: csiphy-3ph: Remove redundant PHY init sequence
+    control loop
+  media: qcom: camss: csiphy-3ph: Rename struct
+  media: qcom: camss: csiphy: Add an init callback to CSI PHY devices
+  media: qcom: camss: csiphy-3ph: Move CSIPHY variables to data field
+    inside csiphy struct
+  media: qcom: camss: csiphy-3ph: Use an offset variable to find common
+    control regs
 
-Let's continue the comparison with OP-TEE where struct optee_supp_req
-plays the role of struct qcom_tee_user_req in QCOMTEE. You can say that
-access rights to the optee_supp_req follows with the owner. The
-supp->mutex is in principle only held while changing owner. Couldn't the
-ctx->lock be used in a similar way, avoiding it while marshalling
-objects?
+Depeng Shao (10):
+  media: qcom: camss: csid: Move common code into csid core
+  media: qcom: camss: vfe: Move common code into vfe core
+  media: qcom: camss: Add callback API for RUP update and buf done
+  media: qcom: camss: Add default case in vfe_src_pad_code
+  media: qcom: camss: csid: Add v4l2 ctrl if TPG mode isn't disabled
+  dt-bindings: media: camss: Add qcom,sm8550-camss binding
+  media: qcom: camss: Add sm8550 compatible
+  media: qcom: camss: csiphy-3ph: Add Gen2 v2.1.2 two-phase MIPI CSI-2
+    DPHY support
+  media: qcom: camss: Add CSID 780 support
+  media: qcom: camss: Add support for VFE 780
 
-I'm open to be persuaded if you think that srcu is a better choice.
+ .../bindings/media/qcom,sm8550-camss.yaml     | 604 ++++++++++++++
+ drivers/media/platform/qcom/camss/Makefile    |   2 +
+ .../platform/qcom/camss/camss-csid-4-1.c      |  19 -
+ .../platform/qcom/camss/camss-csid-4-7.c      |  42 -
+ .../platform/qcom/camss/camss-csid-780.c      | 337 ++++++++
+ .../platform/qcom/camss/camss-csid-780.h      |  25 +
+ .../platform/qcom/camss/camss-csid-gen2.c     |  60 --
+ .../media/platform/qcom/camss/camss-csid.c    | 137 ++-
+ .../media/platform/qcom/camss/camss-csid.h    |  31 +
+ .../qcom/camss/camss-csiphy-2ph-1-0.c         |   6 +
+ .../qcom/camss/camss-csiphy-3ph-1-0.c         | 789 ++++++++++--------
+ .../media/platform/qcom/camss/camss-csiphy.c  |   4 +
+ .../media/platform/qcom/camss/camss-csiphy.h  |   8 +
+ .../media/platform/qcom/camss/camss-vfe-17x.c | 112 +--
+ .../media/platform/qcom/camss/camss-vfe-4-1.c |   9 -
+ .../media/platform/qcom/camss/camss-vfe-4-7.c |  11 -
+ .../media/platform/qcom/camss/camss-vfe-4-8.c |  11 -
+ .../media/platform/qcom/camss/camss-vfe-480.c | 301 +------
+ .../media/platform/qcom/camss/camss-vfe-780.c | 159 ++++
+ drivers/media/platform/qcom/camss/camss-vfe.c | 282 ++++++-
+ drivers/media/platform/qcom/camss/camss-vfe.h |  58 +-
+ drivers/media/platform/qcom/camss/camss.c     | 369 ++++++++
+ drivers/media/platform/qcom/camss/camss.h     |   4 +
+ 23 files changed, 2495 insertions(+), 885 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/media/qcom,sm8550-camss.yaml
+ create mode 100644 drivers/media/platform/qcom/camss/camss-csid-780.c
+ create mode 100644 drivers/media/platform/qcom/camss/camss-csid-780.h
+ create mode 100644 drivers/media/platform/qcom/camss/camss-vfe-780.c
 
-Cheers,
-Jens
+
+base-commit: bcf2acd8f64b0a5783deeeb5fd70c6163ec5acd7
+-- 
+2.34.1
+
 
