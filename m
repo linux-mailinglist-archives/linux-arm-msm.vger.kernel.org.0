@@ -1,308 +1,110 @@
-Return-Path: <linux-arm-msm+bounces-41562-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-41563-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8B06A9ED7E7
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2024 21:59:55 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 11FEC9ED826
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2024 22:09:32 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D06B9168772
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2024 20:59:33 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8B8B61884433
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2024 21:09:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 943AB22A81C;
-	Wed, 11 Dec 2024 20:56:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1A7E6259498;
+	Wed, 11 Dec 2024 21:09:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="lhokw8CP"
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="FLX8jkCF"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f176.google.com (mail-yw1-f176.google.com [209.85.128.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D300C22A7F3
-	for <linux-arm-msm@vger.kernel.org>; Wed, 11 Dec 2024 20:56:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A8B71DDC28
+	for <linux-arm-msm@vger.kernel.org>; Wed, 11 Dec 2024 21:09:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733950567; cv=none; b=Rt71srZvC/xM1kgCxHFDNR5uUX3VjjgXh5LbYkSKFwp76Jajz2SjhdESjpXkR+MMC19uUjg69IT4p6DVekxzSRtZi1wcMic9YwmZpo4jfdpc0bFzRLznKM3Vn7bDAUPDu+Xd8NJwX8NafTj2wbjuPeG3JIR21FeuSWx2wc/SWys=
+	t=1733951365; cv=none; b=OqwVVqx3qSfRYaVH8gyr2FfUTCF8xwRyZpHUoM7Xuc7ll3+u1JgLaZkMt8g7PTYWVm98iU9063b+vUIm2NL6g7x6y/riG8quhGK2YDfBqnIxUC/lJ6HvE2u2mtFGgbAcw5L4U7tapvs0D08wi16pzODJ9gPYhKPmxstIBm6Vfdg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733950567; c=relaxed/simple;
-	bh=0EPvJM1CidipSrEUVyRtwHDycmAWz7nKFmR2pFgN5Zc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=nq6VIufWqMxQ8cs3/gDTwhrCmbJfmpT5Pc1Vn21XJ8s220UHHLfOMMcZCmyczMg7Cp+uT5vC3QdrxZfUYZjTaxeEbZz0cUZaHYtnmvePKrgX657yK9fUs3+cosDtaAMWJwM7NN2hQyxuSv7YSwZxhi9o//YNXh2ZI6PwKoqK3Xs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=lhokw8CP; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BBHDEEp030187
-	for <linux-arm-msm@vger.kernel.org>; Wed, 11 Dec 2024 20:56:02 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=Cz0Ob+e6s3LgfOXxmCKJHUCu
-	Q2IRtNzVD04yQgOK3d8=; b=lhokw8CPbqlb3bVzAjavaFWKmFFyRBrxAyj9GGyB
-	+gRVE2wKM8L02V/IWPHR+1t1tQAVjkWxI1qDoW4gA+sUDdkHRP6Nx+5geg0gOJCO
-	Ot/1Ns20TA1sKdAQOf1sZXVTfUXKnLT2m1D7XwCenrsLk7PikSnNA7Ha24LoGujd
-	Q+VA13q09v/WFG5skxyGNtGyzEP8MZRFXv7W94O6/2tH3aO/WueJYVmD6X6tWaOZ
-	ZVQ60LZICtAhCZuMrJ41SoNZwj1TCGQqCJkBqr7Rr8sn+ldhmdpw1hdjRitoC0hU
-	eWXm3GxqC5F9Yz95HpxIahs/cFpR9T906qnUm3HLIYhjcw==
-Received: from mail-pg1-f199.google.com (mail-pg1-f199.google.com [209.85.215.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43dxw496wk-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 11 Dec 2024 20:56:02 +0000 (GMT)
-Received: by mail-pg1-f199.google.com with SMTP id 41be03b00d2f7-7fcd2430636so5184838a12.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Dec 2024 12:56:02 -0800 (PST)
+	s=arc-20240116; t=1733951365; c=relaxed/simple;
+	bh=Ca8kqVvAVdINGWA1VQnxrxlJaZR1N1d7Xc+tsgI0o3k=;
+	h=MIME-Version:In-Reply-To:References:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=fsnXLt9yf6rOBlJdem//99y/F1uJ7TqYbC7dMqFfrO7e2MX/0xqDWQZLJHtPAE8/4W1WeXVP2gOkt/YmK5yoSLoEml/C6DHeFLZZWJzawKixz2f46t1rKRqQ7iTHSEMEUE/ZR/XeHkHckC0IOCtFCi8up89jHkt8A6D51+wy9to=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=FLX8jkCF; arc=none smtp.client-ip=209.85.128.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
+Received: by mail-yw1-f176.google.com with SMTP id 00721157ae682-6ef0ef11aafso65792607b3.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Dec 2024 13:09:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google; t=1733951362; x=1734556162; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:user-agent:from:references
+         :in-reply-to:mime-version:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=pQDqVSakcr3mxA+wnwNeXmA0JdxuRMpWtJWg3CDfgIg=;
+        b=FLX8jkCFhRuXrU7QylKC97gLdnErAU2u5l++JsXFYXZMunPWKoN0aFIp3bPRnpnA6n
+         u8Q7LdYqHut0ejhn7GcCfv+psp8UJXikckcA3bi6HF8YD9BtFun0VSFvsyEG9MfApL5P
+         mxiTZBm6T6JEOxkN5AnhEiOfxtJHT8jDJxnXM=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733950560; x=1734555360;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+        d=1e100.net; s=20230601; t=1733951362; x=1734556162;
+        h=cc:to:subject:message-id:date:user-agent:from:references
+         :in-reply-to:mime-version:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Cz0Ob+e6s3LgfOXxmCKJHUCuQ2IRtNzVD04yQgOK3d8=;
-        b=rXUIE2UOOUgrMsZNAGNjbGhQPDK207CGW3OTUmJBear0jcjuImQ8G4mTE+oQf6KYkZ
-         dPD8VSLYSD16BXOZYXUTfdAGQpZBnnvnB6l/HRUCYT0AC1smc3zmoxyMMDHVJcyHXmR4
-         CeUzXxnmgVZgq8H4vBBZWr3yUJDixfmgrgVJ1QYf+u4uGpVLs6f5RfZitB9ggsSLKXlS
-         6ldjP/lwOoLPYk6t8rY1u8A6q3sAdWdN6531cxwirFODoY2AoYO/SpPUKWEPBPj9AsEd
-         OlzUVSxbM7Qtrh3QmejsPxCKykPUfYRdV7YQ6gQZw4JQ46WAE/gkzHdowS3cKmR9Pi6C
-         bLZQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWAY7F2JEtxPM0hkForRrbYPhsJjUAF1FBon5S42w6PbF89zocTqcHjcyWabu0wrgWb3iubx9LfCoyFX8bF@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx4AEGc9VJjxQesrl6ZGkw8NkoLCxWXujQs7zsyIXpbpyLAIzbK
-	0RjsvtB1fkEanyhZ9yfs80joqIQgGYgowxiWdfMskoPd6n/2JR6qxQfw934XLV7t/n+Fljtuzfu
-	hdTgM9FGauj7ow4lyLzVe8oqu8s7iJRB2DrFIBe2a3/+qmirTG3TXmfD4xU6Cna7c
-X-Gm-Gg: ASbGncv0CxKu1oebK0vrf7zMGRW5IUx/lix7FGhS6W8bx40JvR21WYbhfeTquONNtlL
-	a8PGfkLpLcvexfTMtmuSjP4jBSpv+VEoscisFtiJMJDtMzW2qSlaLIlp/yfAbv0vX8V/cloGoQn
-	ZNPeOteyLNuRPUJb/fSIlq9pTeCzvITa4MOwo3AwazAFf8GgYnIExX9EATLGTKF3dX1YVWIEVFx
-	MyGyOqDkkeaTvum2h7X7AqcIOqUVmM7ZV1+1r9GZrt+Nd/Gl7YpBWObyolYJG8otpUbJYLxkzF0
-	aoo3JUiUB/w6LXewuRKeDXdD4TiFv9c6cqTs7Q==
-X-Received: by 2002:a05:6a20:d80f:b0:1e1:a48f:1215 with SMTP id adf61e73a8af0-1e1cebca688mr1120423637.35.1733950560276;
-        Wed, 11 Dec 2024 12:56:00 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGH8f8D4wa4ldohT1wwki2Rnw5Aim3SbcBSFcaHp0PDLIC7xbjoVp1mVCyluwK6DuNmkpSfxA==
-X-Received: by 2002:a05:6a20:d80f:b0:1e1:a48f:1215 with SMTP id adf61e73a8af0-1e1cebca688mr1120400637.35.1733950559845;
-        Wed, 11 Dec 2024 12:55:59 -0800 (PST)
-Received: from hu-bjorande-lv.qualcomm.com (Global_NAT1.qualcomm.com. [129.46.96.20])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-725df830510sm7377447b3a.29.2024.12.11.12.55.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 11 Dec 2024 12:55:59 -0800 (PST)
-Date: Wed, 11 Dec 2024 12:55:57 -0800
-From: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
-To: Tingguo Cheng <quic_tingguoc@quicinc.com>
-Cc: tingweiz@qti.qualcomm.com, Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>, kernel@quicinc.com,
-        fenglinw@qti.qualcomm.com, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] arm64: dts: qcom: qcs615-ride: Fixing power issue in LPM
-Message-ID: <Z1n8XYj0gzh3Q0U3@hu-bjorande-lv.qualcomm.com>
-References: <20241211-bug-fix-qcs615-ride-dts-lpm-power-issue-v1-1-a08d12c415f0@quicinc.com>
+        bh=pQDqVSakcr3mxA+wnwNeXmA0JdxuRMpWtJWg3CDfgIg=;
+        b=h4NRkQTD/x7IrxboJrRpaaG+jiReXQ5jIZVMCgvJGd2cNdBkvvNNvIYE6afIiUX7Ft
+         Q/6Azb4QAumWhQuoDkH1ZjzMPjSm4IXcVhMFpn+EcaqaeYQOjbdfBKQf296ZO6p67sIw
+         TZC0g7I7IJoV79DlnQNL1zb0uNDfjaB5AvZNwty5TaRWuP9M4DE/DrDFG0CMgWSqgYBM
+         4Rd5lM81vS28zqw0LY2FV7l9sXIXG1C07x8Td9oJ6QvWiyIXjX2oaSHd2YRPMDX4R1IV
+         ZE9W1s7GO3yO6A3+w17kfbI6tqu0hGwFLrpZoC8DWBz1pxoAR+UR6F9by9QH0oq438Du
+         C/9g==
+X-Forwarded-Encrypted: i=1; AJvYcCXIABnJAmUp4TqyCRD8urOIpR4jeDlwgwnoJ/ESPtYC2eO61uE+DkolDqDbEyEyPlfBZ+H5lfP6Gbz43UN5@vger.kernel.org
+X-Gm-Message-State: AOJu0YxH9pL9xbwixdguSnbLnL5IC/irUZpCqVbuF53107ufq16bCPPX
+	rawzRUF3IDo9Bvt2QEXRtMmGtOrwOO8S8PE0DKnVWWkn0ArfIjasskrOIe/xuqzJgcF3N07ZJx/
+	4gHDagWJFXJwbL/n15gvjuTF19dwZn6QV0m8m
+X-Gm-Gg: ASbGncvHCXbv6DcdH9w302CP7r+moQiLrKuKCJp9OIkoB76Z22MDFJT40bA4SWRkvts
+	KSHb73x2RM2H4Dc/H86InyJTPLf+3NoFQbxTTBkT7uXc5BQMkJJ6jSd1te2PiwDg=
+X-Google-Smtp-Source: AGHT+IHQYD+rGSnTOhQP00f7jJc0s1qfCuYpNpAifu02eUFcwunSxMKsHSx1sXnfiWl+na08kVCW69bpJsghQkOvSbs=
+X-Received: by 2002:a05:690c:64c4:b0:6ef:70ae:ca16 with SMTP id
+ 00721157ae682-6f19e86a455mr10895707b3.39.1733951362509; Wed, 11 Dec 2024
+ 13:09:22 -0800 (PST)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Wed, 11 Dec 2024 13:09:21 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241211-bug-fix-qcs615-ride-dts-lpm-power-issue-v1-1-a08d12c415f0@quicinc.com>
-X-Proofpoint-ORIG-GUID: td4RPjktdrD36pNjERLhXNOxPRg94D2M
-X-Proofpoint-GUID: td4RPjktdrD36pNjERLhXNOxPRg94D2M
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 bulkscore=0
- suspectscore=0 priorityscore=1501 adultscore=0 mlxlogscore=999
- clxscore=1015 spamscore=0 mlxscore=0 lowpriorityscore=0 phishscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2412110145
+In-Reply-To: <20241202-fd-dp-audio-fixup-v2-5-d9187ea96dad@linaro.org>
+References: <20241202-fd-dp-audio-fixup-v2-0-d9187ea96dad@linaro.org> <20241202-fd-dp-audio-fixup-v2-5-d9187ea96dad@linaro.org>
+From: Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.12.dev1+gaa8c22fdeedb
+Date: Wed, 11 Dec 2024 13:09:21 -0800
+Message-ID: <CAE-0n53hKPr2WsGWTy24qfsSO4TbmtnY5bOQQ51UuW4RPUz0Dg@mail.gmail.com>
+Subject: Re: [PATCH v2 05/14] drm/msm/dp: move I/O functions to global header
+To: Abhinav Kumar <quic_abhinavk@quicinc.com>, David Airlie <airlied@gmail.com>, 
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, Paloma Arellano <quic_parellan@quicinc.com>, 
+	Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, Simona Vetter <simona@ffwll.ch>
+Cc: Douglas Anderson <dianders@chromium.org>, linux-arm-msm@vger.kernel.org, 
+	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
+	linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Wed, Dec 11, 2024 at 05:16:15PM +0800, Tingguo Cheng wrote:
-> Change all LPM to HPM for regulators init-mode and disallowed setting
-> mode. LPM mode provides at most 10/30mA current for consumers such as
-> UFS,eMMC,PCIe. That caused problems because consumers take much more
-> than that. At the same time, a lot of drivers didn't set load in code
-> that makes it impossible for regulator framework to know exaclty when
-> to switch mode.
-> 
+Quoting Dmitry Baryshkov (2024-12-02 02:06:35)
+> diff --git a/drivers/gpu/drm/msm/dp/dp_catalog.h b/drivers/gpu/drm/msm/dp/dp_catalog.h
+> index 13486c9c8703748e69e846be681951368df0a29e..2c500dc0898edfe1d6bdac2eedf3c1b78056cf6b 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_catalog.h
+> +++ b/drivers/gpu/drm/msm/dp/dp_catalog.h
+[...]
+> +
+> +static inline u32 msm_dp_read_p0(struct msm_dp_catalog *msm_dp_catalog,
+> +                              u32 offset)
+> +{
+> +       /*
+> +        * To make sure interface reg writes happens before any other operation,
+> +        * this function uses writel() instread of writel_relaxed()
 
-Per https://www.kernel.org/doc/html/latest/process/submitting-patches.html#describe-your-changes
-start with a problem description, then followed by the description of
-the technical solution.
+It's readl_relaxed() below.
 
-> Signed-off-by: Tingguo Cheng <quic_tingguoc@quicinc.com>
-> ---
-> At the beginning, The QCS615-ride device gets some power issues when 
-> enabling peripherals on the board as well as in the SoC. After figuring 
-> out the root cause which pointed to that drivers should tell the regula
-> tor framework the required current the devices need separately, so the 
-> regulator framework can get to know when to switch modes to satisfy the 
-> requirment. But a lot of drivers did not set load for peripherals. Some 
-> did setting and some did not, which sometimes caused problem when LPM 
-> of regulators is allowed. E.g. LDO12 supplies UFS and USB. UFS sets the 
-> load of AmA(HPM), while USB PHY does not set any(0mA LPM). In this case, 
-> USB can encounter insufficient power supply when UFS's going to sleep. 
-
-Why did you choose to describe your problem in the portion that isn't
-going to make it into the git history?
-
-Perhaps worth trying to reduce the "story telling" nature of this, but
-please do incorporate some of these things into the main commit message
-- so that we capture it for future readers of the git log.
-
-
-It would also be useful for that future reader to know that once there
-exist an implementation (i.e. when Linux supports it) that actually do
-manage load votes and there is power savings that can be shown, this
-should be introduced again.
-
-> 
-> There is some discussion about this:
-> https://lore.kernel.org/all/5tbevb5wv2s43pccytv4qol4yhq4s7iw2mmqp23vt3ujqd6xev@hkioqmwoitbd/
-
-It's okay to add this with a Link: tag.
-
-Regards,
-Bjorn
-
-> ---
->  arch/arm64/boot/dts/qcom/qcs615-ride.dts | 52 +++++---------------------------
->  1 file changed, 8 insertions(+), 44 deletions(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/qcs615-ride.dts b/arch/arm64/boot/dts/qcom/qcs615-ride.dts
-> index a25928933e2b66241258e418c6e5bc36c306101e..32db107dc660cff9d2ccbf19eceb5c5539c591a9 100644
-> --- a/arch/arm64/boot/dts/qcom/qcs615-ride.dts
-> +++ b/arch/arm64/boot/dts/qcom/qcs615-ride.dts
-> @@ -71,30 +71,21 @@ vreg_l1a: ldo1 {
->  			regulator-name = "vreg_l1a";
->  			regulator-min-microvolt = <488000>;
->  			regulator-max-microvolt = <852000>;
-> -			regulator-initial-mode = <RPMH_REGULATOR_MODE_LPM>;
-> -			regulator-allow-set-load;
-> -			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM
-> -						   RPMH_REGULATOR_MODE_HPM>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
->  		};
->  
->  		vreg_l2a: ldo2 {
->  			regulator-name = "vreg_l2a";
->  			regulator-min-microvolt = <1650000>;
->  			regulator-max-microvolt = <3100000>;
-> -			regulator-initial-mode = <RPMH_REGULATOR_MODE_LPM>;
-> -			regulator-allow-set-load;
-> -			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM
-> -						   RPMH_REGULATOR_MODE_HPM>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
->  		};
->  
->  		vreg_l3a: ldo3 {
->  			regulator-name = "vreg_l3a";
->  			regulator-min-microvolt = <1000000>;
->  			regulator-max-microvolt = <1248000>;
-> -			regulator-initial-mode = <RPMH_REGULATOR_MODE_LPM>;
-> -			regulator-allow-set-load;
-> -			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM
-> -						   RPMH_REGULATOR_MODE_HPM>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
->  		};
->  
->  		vreg_l5a: ldo5 {
-> @@ -102,9 +93,6 @@ vreg_l5a: ldo5 {
->  			regulator-min-microvolt = <875000>;
->  			regulator-max-microvolt = <975000>;
->  			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> -			regulator-allow-set-load;
-> -			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM
-> -						   RPMH_REGULATOR_MODE_HPM>;
->  		};
->  
->  		vreg_l7a: ldo7 {
-> @@ -112,9 +100,6 @@ vreg_l7a: ldo7 {
->  			regulator-min-microvolt = <1800000>;
->  			regulator-max-microvolt = <1900000>;
->  			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> -			regulator-allow-set-load;
-> -			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM
-> -						   RPMH_REGULATOR_MODE_HPM>;
->  		};
->  
->  		vreg_l8a: ldo8 {
-> @@ -122,9 +107,6 @@ vreg_l8a: ldo8 {
->  			regulator-min-microvolt = <1150000>;
->  			regulator-max-microvolt = <1350000>;
->  			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> -			regulator-allow-set-load;
-> -			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM
-> -						   RPMH_REGULATOR_MODE_HPM>;
->  		};
->  
->  		vreg_l10a: ldo10 {
-> @@ -132,59 +114,41 @@ vreg_l10a: ldo10 {
->  			regulator-min-microvolt = <2950000>;
->  			regulator-max-microvolt = <3312000>;
->  			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> -			regulator-allow-set-load;
-> -			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM
-> -						   RPMH_REGULATOR_MODE_HPM>;
->  		};
->  
->  		vreg_l11a: ldo11 {
->  			regulator-name = "vreg_l11a";
->  			regulator-min-microvolt = <1232000>;
->  			regulator-max-microvolt = <1260000>;
-> -			regulator-initial-mode = <RPMH_REGULATOR_MODE_LPM>;
-> -			regulator-allow-set-load;
-> -			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM
-> -						   RPMH_REGULATOR_MODE_HPM>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
->  		};
->  
->  		vreg_l12a: ldo12 {
->  			regulator-name = "vreg_l12a";
->  			regulator-min-microvolt = <1800000>;
->  			regulator-max-microvolt = <1890000>;
-> -			regulator-initial-mode = <RPMH_REGULATOR_MODE_LPM>;
-> -			regulator-allow-set-load;
-> -			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM
-> -						   RPMH_REGULATOR_MODE_HPM>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
->  		};
->  
->  		vreg_l13a: ldo13 {
->  			regulator-name = "vreg_l13a";
->  			regulator-min-microvolt = <3000000>;
->  			regulator-max-microvolt = <3230000>;
-> -			regulator-initial-mode = <RPMH_REGULATOR_MODE_LPM>;
-> -			regulator-allow-set-load;
-> -			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM
-> -						   RPMH_REGULATOR_MODE_HPM>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
->  		};
->  
->  		vreg_l15a: ldo15 {
->  			regulator-name = "vreg_l15a";
->  			regulator-min-microvolt = <1800000>;
->  			regulator-max-microvolt = <1904000>;
-> -			regulator-initial-mode = <RPMH_REGULATOR_MODE_LPM>;
-> -			regulator-allow-set-load;
-> -			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM
-> -						   RPMH_REGULATOR_MODE_HPM>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
->  		};
->  
->  		vreg_l16a: ldo16 {
->  			regulator-name = "vreg_l16a";
->  			regulator-min-microvolt = <3000000>;
->  			regulator-max-microvolt = <3312000>;
-> -			regulator-initial-mode = <RPMH_REGULATOR_MODE_LPM>;
-> -			regulator-allow-set-load;
-> -			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM
-> -						   RPMH_REGULATOR_MODE_HPM>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
->  		};
->  
->  		vreg_l17a: ldo17 {
-> 
-> ---
-> base-commit: 1b2ab8149928c1cea2d7eca30cd35bb7fe014053
-> change-id: 20241211-bug-fix-qcs615-ride-dts-lpm-power-issue-44e33c8dfd3d
-> 
-> Best regards,
-> -- 
-> Tingguo Cheng <quic_tingguoc@quicinc.com>
-> 
+> +        */
+> +       return readl_relaxed(msm_dp_catalog->p0_base + offset);
+> +}
 
