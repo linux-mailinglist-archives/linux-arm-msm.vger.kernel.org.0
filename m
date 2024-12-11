@@ -1,142 +1,100 @@
-Return-Path: <linux-arm-msm+bounces-41587-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-41588-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6A4309EDA65
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2024 23:51:14 +0100 (CET)
-Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6E8D59EDA6E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2024 23:53:59 +0100 (CET)
+Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7D4A11669E2
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2024 22:51:09 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 21F1D282E40
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2024 22:53:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6F7CD1BC085;
-	Wed, 11 Dec 2024 22:51:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 260D81F2383;
+	Wed, 11 Dec 2024 22:53:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="iU9Xxl49"
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="U+EA6ZcJ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f43.google.com (mail-lf1-f43.google.com [209.85.167.43])
+Received: from mail-qv1-f44.google.com (mail-qv1-f44.google.com [209.85.219.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 380A91DC9AB
-	for <linux-arm-msm@vger.kernel.org>; Wed, 11 Dec 2024 22:51:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9F5A1F2C25
+	for <linux-arm-msm@vger.kernel.org>; Wed, 11 Dec 2024 22:53:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733957470; cv=none; b=tDv51YIKEX3W5zYVkf3LxqIHtAt58ARHJEBx5TlVuxWI3/bqr3MPCIdNRia9nX2LrTxpGaFH9cYHVrjkDYz+C+M62LHlRsjVpcod7Z3yYCrIOCkvvbq7HrZijFx68hA5kA9K5AiT8xOYVsJLJvaDXbrAkkR8RRRUSaGawsmWHhs=
+	t=1733957634; cv=none; b=c2I9ZIBU9zJnT2643856XqDkFAcN8MUnkfdGID2NehmvtQv9ya/VLAd6KBWMROhzl3QlvEv470X/Sd9SYt8+iEFm1XmPM/tLn41ShG1AyTusNsdyUOSp/JSxBE1pgRndqKXD6EE4I8zn7s0i6aNfNxXl3aifystZwpZDTb+xt9k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733957470; c=relaxed/simple;
-	bh=FPSw2nF/lJm2UWC2sCJezAEzDmgl9FQYGt/yXj/bTk8=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=DAeCG4cS9USBx4Ep7bdRFvXjSntQ6ky+3ex+7TX3VrqZfllTQ1SM0S6zGPZrEd5tz5HbeEDOpNxhGRp2ek0jmhf2ozUTg09EgeK1lOe+6ABYbyDsnVPBkQmZiQjcM2F+uBh5ld5akyvF+kkrLRUS98hYJXJdVQM3KxDCM7QUEes=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=iU9Xxl49; arc=none smtp.client-ip=209.85.167.43
+	s=arc-20240116; t=1733957634; c=relaxed/simple;
+	bh=2egq6Dq3KjRKLgPQmABDsLel2na1tngRhhj74d6j2rc=;
+	h=MIME-Version:In-Reply-To:References:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=apmqrBEnM75e0WbptcVG20oQJoBg3SBM2QJfvKenqliFpiRdZ2Nt7CC3aVonXhfxzT8o3cOH3PiF5fi08s9zktIMp7Z+yAZtn8YXxCY13HXkm/1rmqdbYdQn4ivautXS8BIRGeg8LfTrz7VJXiiEDR2Qi8tSXFErR9FSa+azToc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=U+EA6ZcJ; arc=none smtp.client-ip=209.85.219.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
-Received: by mail-lf1-f43.google.com with SMTP id 2adb3069b0e04-53f757134cdso4619759e87.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Dec 2024 14:51:06 -0800 (PST)
+Received: by mail-qv1-f44.google.com with SMTP id 6a1803df08f44-6d842280932so98675496d6.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Dec 2024 14:53:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1733957464; x=1734562264; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=wKgmtaCixVS2eTp9TrZ+8kVzXwyvmutreSuRkttynvI=;
-        b=iU9Xxl493hysYPMVPysCY4wlvqY+HDMPazsuv+2v30qc1WJEHmCQE3KRq2R8xw2lF4
-         1PFNZNME3iSXOE7wAVOApZ5vbJckRkZng2eFhDLtRUYjv00s+P5g56db2xOJ0dxtxg7k
-         Jp39XJcBmzaF4CSNH4C4c9EyiKOovfkf6D4v4=
+        d=chromium.org; s=google; t=1733957630; x=1734562430; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:user-agent:from:references
+         :in-reply-to:mime-version:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=2egq6Dq3KjRKLgPQmABDsLel2na1tngRhhj74d6j2rc=;
+        b=U+EA6ZcJcegLMz/W/bRSHMX7M8MFIrPs4Fe9V1VxvN0/LYPo6V+YP4PuNUN7ViRjUG
+         HyPwYUJVBKHbxUOXcrDPI9LFcmuix+1hf4D2lTzgt8vUgTzGEExR5jdOTXfUxyXTzKxK
+         RHllCm0db1iMLvqX/OzIb6Be8KrXE0a4e31Gg=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733957464; x=1734562264;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=wKgmtaCixVS2eTp9TrZ+8kVzXwyvmutreSuRkttynvI=;
-        b=bgvsiKLyTu+UsyynNJy6po1bdBR7WgkIbaoWazeX/GvhUnVAaiRjIVSshBKBcLIyK6
-         ClzRVs3kO+vilfyHJCwz2dZtCNAUhreJvY7up5PXza97b3cDXVtElFLJOmtYU5GFxfbF
-         4ty0/0OV5KB5a9ARdlKLMFcOy43vZuBjvoxVPY7Zk5VcwqBGbWBZ6epaGo3z0JVJ73+K
-         bwi2GN8wLxjAeslK10GjN9ZM5yNpEsWDbmwYXcMJCjki7Kfkl0pqRadF67Zi3caTmrTD
-         k3oZuPhNOc+ZsOOI3Hr8a3seQzCLjbaITzQiaC16ozOxRN5V7sYOuduhDOaHn6Mu2HXP
-         KHkA==
-X-Forwarded-Encrypted: i=1; AJvYcCXpD8FfnR4Qo8H6c/Bhb5Y9zUfZpEkazhxYgyB3QfO8wdJ1NcHuIpCGor6/8eZQ2OsnMAgbpY5Me1UBb50H@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz7CCJZLl8hids/BHxpbMQMUHSbdV0EH8jyU1O6fkZh9tfqT/7K
-	0Wxz0tmLm4msZ6yACpzniOV/i1f53YIMw5SJ9+tIogJjS2/xhWdTssfkERp7Xn43irBhVIZkZ8D
-	zRcDU
-X-Gm-Gg: ASbGnctO2cKpIecgAdUEfLIMZYsIkC+ZUNxMsOtH9HIqxw42orb30uXKkbVGZcLoNVk
-	cpX1I1tShuyq+Ar8z1kfdqzXwwqeBJbrbY6zxc9nedfxAXtr0Vm1Y+w7Pgx7dA6imbL0vdD21qj
-	tz/0Fen7Ejsiv76Ml/gUACICSE357/E1/VspzcjlI2lo/PtHGBldpGrAZ4+dZPEPV85hinTjpyo
-	yPHexdqPWy/7thohHvwyMRSp8l+/0c+8fzkSfJ6k93DdnchtRXRZ3i8feI3JPiu0eJwLGl1SzFq
-	apbZMHQJjFIPtdI1xw==
-X-Google-Smtp-Source: AGHT+IEJFF4CpN8L0F57H1CYm26969MAPLJz/hL+oWayZlo9x2PpdKsqx0X9EFQnMAMtlsdxqycKyA==
-X-Received: by 2002:a05:6512:3990:b0:53e:38fd:750a with SMTP id 2adb3069b0e04-5402a605b3fmr1599521e87.47.1733957464198;
-        Wed, 11 Dec 2024 14:51:04 -0800 (PST)
-Received: from mail-lf1-f49.google.com (mail-lf1-f49.google.com. [209.85.167.49])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-54020269fdasm1036771e87.182.2024.12.11.14.51.03
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 11 Dec 2024 14:51:03 -0800 (PST)
-Received: by mail-lf1-f49.google.com with SMTP id 2adb3069b0e04-53e3a37ae07so5049524e87.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Dec 2024 14:51:03 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AJvYcCX4yc0wSA2O9vyScSSMXHfbGQfmh/LbzoltEAMxCpWGMnE8Vjq5zJBvWam/KjiGMhznibEl5B3EvPdqzuJ6@vger.kernel.org
-X-Received: by 2002:a05:6512:3d11:b0:540:17ac:b379 with SMTP id
- 2adb3069b0e04-5402a5e5682mr1002664e87.25.1733957462810; Wed, 11 Dec 2024
- 14:51:02 -0800 (PST)
+        d=1e100.net; s=20230601; t=1733957630; x=1734562430;
+        h=cc:to:subject:message-id:date:user-agent:from:references
+         :in-reply-to:mime-version:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=2egq6Dq3KjRKLgPQmABDsLel2na1tngRhhj74d6j2rc=;
+        b=GDLlCRRIL+oFcLTNqg7L85hXQi4UjcwWSBOfRmOsKRIj02f69Zso250EcxlbdOUxlI
+         BSvYljTQ+IvD8ondn4ftiN+VYsYzzwdbuijtU825gkq0Le1YdHAZxb7N0yhm+0uZ5PK/
+         cse2HFbAOv+gOG9XBRGw/Sdrs4J+32uhbVajZ3SNskx86vP8sQlcW3clEXYaUdA/dxV0
+         BiZ+EpIXZGWPnWe6sm/FY/W6gmhQ0WOFcRBcWRBeId5MV2Ul+ntlqbmKC+AWkuCoxCq9
+         f4+zBFPAaEkiSnGOVyoLU5seEj2jTn5jYuxI4MC+fVGf/cXoZru79HMUgaNKm75K7X3E
+         5Mcg==
+X-Forwarded-Encrypted: i=1; AJvYcCVMNqT4CM9k15AwcDUrA7E1Qw365lZqDb+sBQ6i+nFSA+zQV9t/Iw7mX0HWeeZSy8zQi1nVoJ5uYx5xFJBP@vger.kernel.org
+X-Gm-Message-State: AOJu0YzS897hrfYs+sm2AaxT5PM5MVUPs22gb8dK+re4joXvQ7bJctb+
+	csE2189dXjlF+M+dlCgJtsP1NGzwDx0dw9acAyIIDBftWSzEp3xySIX/UKI3IIOMF6+kK6Hfhbf
+	0xqGzV+AMtKNb2iNN5yxEVVgOZZFm0Gtyj2EOpX3EYAUR13I=
+X-Gm-Gg: ASbGnct58se2s7rxb+GfE/QvbtIX9f62fIqrmMLewTlAXOo/zB+IN13tiM4jCQXoa5Q
+	JSJNYLI9/2HCnIXz5v+4xMyJIho31X6OA2PV5+apM+v1iA7sNbm5LpGloN9LetgY=
+X-Google-Smtp-Source: AGHT+IHPYfu5RWwg4QjV5Ft9MAhO7VJZB9xFWbSMLRysOqfixDFuOnt9+09RHZcOWbxPXE1q+wf1OmiIJ0aIfFFsbn0=
+X-Received: by 2002:a05:6214:1d0e:b0:6d8:aa45:a8a2 with SMTP id
+ 6a1803df08f44-6dae38f441emr17981836d6.11.1733957630566; Wed, 11 Dec 2024
+ 14:53:50 -0800 (PST)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Wed, 11 Dec 2024 14:53:50 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20241211-check-state-before-dump-v2-1-62647a501e8c@quicinc.com>
-In-Reply-To: <20241211-check-state-before-dump-v2-1-62647a501e8c@quicinc.com>
-From: Doug Anderson <dianders@chromium.org>
-Date: Wed, 11 Dec 2024 14:50:51 -0800
-X-Gmail-Original-Message-ID: <CAD=FV=V33utY6rby5e+RkRfUQQ40g2Bq3xr=G9q3if8TNoq1kg@mail.gmail.com>
-X-Gm-Features: AZHOrDlpR97b9ybDcxqzZ165UcoKpL_oopMC2BgdmlXON_-hpEKkrEAlm1wccLg
-Message-ID: <CAD=FV=V33utY6rby5e+RkRfUQQ40g2Bq3xr=G9q3if8TNoq1kg@mail.gmail.com>
-Subject: Re: [PATCH v2] drm/msm/dpu: check dpu_plane_atomic_print_state() for
- valid sspp
-To: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc: Rob Clark <robdclark@gmail.com>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
-	Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, 
-	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, linux-arm-msm@vger.kernel.org, 
+In-Reply-To: <20241202-fd-dp-audio-fixup-v2-13-d9187ea96dad@linaro.org>
+References: <20241202-fd-dp-audio-fixup-v2-0-d9187ea96dad@linaro.org> <20241202-fd-dp-audio-fixup-v2-13-d9187ea96dad@linaro.org>
+From: Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.12.dev1+gaa8c22fdeedb
+Date: Wed, 11 Dec 2024 14:53:50 -0800
+Message-ID: <CAE-0n52NEHh6XnsWsg4XG0nS8cVpC-HW8snBLD86PO3-AV3jfg@mail.gmail.com>
+Subject: Re: [PATCH v2 13/14] drm/msm/dp: drop struct msm_dp_panel_in
+To: Abhinav Kumar <quic_abhinavk@quicinc.com>, David Airlie <airlied@gmail.com>, 
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, Paloma Arellano <quic_parellan@quicinc.com>, 
+	Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, Simona Vetter <simona@ffwll.ch>
+Cc: Douglas Anderson <dianders@chromium.org>, linux-arm-msm@vger.kernel.org, 
 	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
-	linux-kernel@vger.kernel.org, Stephen Boyd <swboyd@chromium.org>
+	linux-kernel@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-Hi,
-
-On Wed, Dec 11, 2024 at 11:51=E2=80=AFAM Abhinav Kumar
-<quic_abhinavk@quicinc.com> wrote:
+Quoting Dmitry Baryshkov (2024-12-02 02:06:43)
+> All other submodules pass arguments directly. Drop struct
+> msm_dp_panel_in that is used to wrap dp_panel's submodule args and pass
+> all data to msm_dp_panel_get() directly.
 >
-> Similar to the r_pipe sspp protect, add a check to protect
-> the pipe state prints to avoid NULL ptr dereference for cases when
-> the state is dumped without a corresponding atomic_check() where the
-> pipe->sspp is assigned.
->
-> Fixes: 31f7148fd370 ("drm/msm/dpu: move pstate->pipe initialization to dp=
-u_plane_atomic_check")
-> Reported-by: Stephen Boyd <swboyd@chromium.org>
-> Closes: https://gitlab.freedesktop.org/drm/msm/-/issues/67
-> Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
-> To: Rob Clark <robdclark@gmail.com>
-> To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> To: Sean Paul <sean@poorly.run>
-> To: Marijn Suijten <marijn.suijten@somainline.org>
-> To: David Airlie <airlied@gmail.com>
-> To: Simona Vetter <simona@ffwll.ch>
-> Cc: linux-arm-msm@vger.kernel.org
-> Cc: dri-devel@lists.freedesktop.org
-> Cc: freedreno@lists.freedesktop.org
-> Cc: linux-kernel@vger.kernel.org
-> Cc: Stephen Boyd <swboyd@chromium.org>
-> ---
-> Changes in v2:
-> - move pstate->stage out of the pipe->sspp check
-> - add reported-by credits for Stephen
-> - Link to v1: https://lore.kernel.org/r/20241209-check-state-before-dump-=
-v1-1-7a9d8bc6048f@quicinc.com
-> ---
->  drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 15 +++++++++------
->  1 file changed, 9 insertions(+), 6 deletions(-)
 
-Tested-by: Douglas Anderson <dianders@chromium.org>
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
 
