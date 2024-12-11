@@ -1,126 +1,183 @@
-Return-Path: <linux-arm-msm+bounces-41450-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-41451-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 786F09EC8D8
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2024 10:20:59 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 0D11B9EC8FF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2024 10:24:57 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id C3BF01881E4C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2024 09:20:19 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 28420188550E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2024 09:24:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D3AFF233682;
-	Wed, 11 Dec 2024 09:19:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D97111C5CD7;
+	Wed, 11 Dec 2024 09:22:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="cVhqyONZ"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="O/2NclRg"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f180.google.com (mail-pl1-f180.google.com [209.85.214.180])
+Received: from mail-ej1-f52.google.com (mail-ej1-f52.google.com [209.85.218.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35EBB233696
-	for <linux-arm-msm@vger.kernel.org>; Wed, 11 Dec 2024 09:19:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA2F41A8414
+	for <linux-arm-msm@vger.kernel.org>; Wed, 11 Dec 2024 09:22:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733908790; cv=none; b=qAi0dqlez9BOEwqpADTE0nesBKDIDVVkUMKJnWVpN51uxsm/foDdVaC8eglWSmZPwUR3Lr5y+yU60oE2rjQ0de+eiGPPXzA8B8O9qr1WbXrPVAvO4N9Bmnovx3YBKCVbXd4O5cI56sgb/uWc6deSI3UefBFloGbljhP7wcyL+3U=
+	t=1733908975; cv=none; b=LhE3l5FOw7UhVn+0ekD/p0954ea0PVMn9PVVO1Go8WZVJUlDAtt90JXg+gCiiNCZHsa3TJbe3k7tW+z4NCGWpj8FT7Ti38Pwc5goXqSMMOUOl9M+syKJzJMqIwWrej1vq01+C70V9xUe/IRpGLjkxda2x7bmvZKrKBgY179Js+Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733908790; c=relaxed/simple;
-	bh=Nrd4w96G4OwnKl7wub21+upzt6feQDyoodkaW5oT8e4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=I3VV2yMWICpYwPggLe4ItLNuOagWyKm13a3d7X/6gGH8uo9uOWvOIOo1QG+RG46HtOyrAWYCPw6AbcnD0gnokILrhEKi2rutH9UOzeswye1T7bCbX6VeP4Gl8V+93Svsd1SrzZ64di8nGSpFGYfu755hRh32tM2YRtlmszVzatw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=cVhqyONZ; arc=none smtp.client-ip=209.85.214.180
+	s=arc-20240116; t=1733908975; c=relaxed/simple;
+	bh=802xWoruFrM6UWvGPBXrZ6WkMGqrdJEknczsKo3UtXQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=n9rlMu4rilecg7kCtAsW9UtpFdrUEj7N4BIsAfLe6aYORJFgNdV1E1XPCJkSwn+vaxZYt02zRyRoLA2WGFvVLeos39DCVuYoBRHM8wszgj/xtkQhTrU+YD9Vat6qiubJ5JgPMhhoa9XcDhHt2lj/xQx6UiNLIBcCZxtnUFMlXuM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=O/2NclRg; arc=none smtp.client-ip=209.85.218.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pl1-f180.google.com with SMTP id d9443c01a7336-2165cb60719so23696495ad.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Dec 2024 01:19:49 -0800 (PST)
+Received: by mail-ej1-f52.google.com with SMTP id a640c23a62f3a-aa6935b4f35so43685866b.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Dec 2024 01:22:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1733908788; x=1734513588; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=jISlUnIukU8aqEXKm4JlMEvLu3G/mv0ZsNNCoy+yQUY=;
-        b=cVhqyONZMIs7MveC57Vq+ecu0QDs8ITWCS7ZO3z46R0leRmPZWQrWvVLWUtAE0l6PA
-         lHlz0ysTsONEgYVGYXtKiS48s3P7dgB4YfAB6qNx9L2uHdiaVc9zqp/tOaB61Qf7GcWP
-         uxyee5l2XtVrvgkY5fjalPSugXKVR1AqtKj7yW7A8w4LW1ckMjrEoZgM+ZEUw2tYQUBp
-         7/47/YjViodQDNCVsiVRRgwzLV5tcMluaLyWq7vmN4IJWAmjnS+0B5ue7EBtsfU7XGgf
-         uszvODrdvsZh+PETmcreSTZlbzum1rDIx714nuitpcEIz4n6HmqwtQJI90rnonhrGUvO
-         Z0rA==
+        d=linaro.org; s=google; t=1733908972; x=1734513772; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+         :from:references:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=cCZlxHkJ48nRwX6UP4cGsTA2zFjZ+gWGiw6Ko4V5V38=;
+        b=O/2NclRgJfIM0pfG2ctr/n/4YBvjjMXJUpbC+/R6G4EMwUzzD6CEZ7/vUnpQrrzWMj
+         sQvCxGhxvPnP3UEuc9ntaaKU2ABXvk+gg/M9oL7wq4zbvMidF0i+ckvvHGug7FfZOP6f
+         l69DkikUoP1dc9/IDr+edN2Z3mIWWNFqdz0nK6SdvuVQW6a+71CkmXvnW35Ol0HtZX1Q
+         PKyNjEFzwQ09Uuhfm3dyTJuhH2pVZPaFtnGC4MgVVSt+qkBB29hVb5WgtbvknoGRJUVF
+         eaFqnR9FMV47iuZlm32pyn7f/utcMZEKmou25kOUiYN2s9J277bt2gaha28ZUIwnG6tv
+         Iygw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733908788; x=1734513588;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
+        d=1e100.net; s=20230601; t=1733908972; x=1734513772;
+        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+         :from:references:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=jISlUnIukU8aqEXKm4JlMEvLu3G/mv0ZsNNCoy+yQUY=;
-        b=P7oMPcVKn0/PeGrlxAvHteGedaTiYeGcURUFECCXHBYqjqxeGEASxEIPlTn/5Prd1w
-         Mj07ZKYkj5Na+gj/xrimPs+3WroKNTplcYqwLl0++TetXac4nSsgCNmGqHOdbRDp6ShL
-         O50JpSmlY6795YtrrAfB8BPj/GabjLfjmCOwFyu4P4azP+zl0fnvjjLiUUUAfl5+1ULh
-         ex7l2HSKcCTFIdhyVzHm10VfUX5ExGdosM8zN+y8aSq7ug2XP0DBOXmqgMB6YD5vAfgU
-         /r4ExsAuCCDVgmYEIcWAF5K86+cY8qjiGE7F3/+wExynJBZlG7W0WBVuOec+pRS/up08
-         Z5Uw==
-X-Forwarded-Encrypted: i=1; AJvYcCVH/V5d44oZF0Y4SSGS3WW0bxjWo9IsK7Tkw7sF7KsfK6PeRAHQc5lzcDLE+oHE2n/TBCP53EJo+6AnYPkv@vger.kernel.org
-X-Gm-Message-State: AOJu0YxqOP6KKZg5hnejSX1gdlGDrY4K8C2l7zr3D8HKc59Pqw+5r8Zm
-	EP7WlDEyn1ND7GXk+9E1oIX2H0toPBQrwzSvxu9mjAJSD1XYyNj9A4/pmE/6fg==
-X-Gm-Gg: ASbGncto9LWzVOkEKV86JKgqjcu7CWLcLQeipWyGtpoISyYXUIQylf143L5Z2YnfqIk
-	FcKmmMSVkoF8BwK3KHALD1lTxjtdMrCiZQr4z89xrvifX7T62fVKP6DdUzT3/YkuuLcXW6+iCAs
-	50+/tsiF/0v2f5+5qShueQq4Q7IK1Ocpagp4CnZrdV6WDW8idwXt4GuJ9VrKTt9QhNKq4/rWXcl
-	WeXhaU/Xzjl8Ab9VVBr1FnFJFVZzVkeM1dc2nk7n5eIwOz6zzyzuIvkMStEt2o=
-X-Google-Smtp-Source: AGHT+IHNQVHiF588qQyFZaDiwyTWpgFF8Tpa2WNPRhsYDfHuOLogBW5IXrutQHmldSb3jSTjxMVKhg==
-X-Received: by 2002:a17:902:e848:b0:215:8809:b3b7 with SMTP id d9443c01a7336-21778397509mr29574975ad.7.1733908788591;
-        Wed, 11 Dec 2024 01:19:48 -0800 (PST)
-Received: from thinkpad ([120.60.55.53])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-216432f3809sm54411405ad.153.2024.12.11.01.19.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 11 Dec 2024 01:19:48 -0800 (PST)
-Date: Wed, 11 Dec 2024 14:49:43 +0530
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: Damien Le Moal <dlemoal@kernel.org>
-Cc: kw@linux.com, gregkh@linuxfoundation.org, arnd@arndb.de,
-	lpieralisi@kernel.org, shuah@kernel.org, kishon@kernel.org,
-	linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org,
-	bhelgaas@google.com, linux-arm-msm@vger.kernel.org, robh@kernel.org,
-	linux-kselftest@vger.kernel.org
-Subject: Re: [PATCH v3 2/4] misc: pci_endpoint_test: Fix the return value of
- IOCTL
-Message-ID: <20241211091943.iwgv5etrod7mc5fy@thinkpad>
-References: <20241211080105.11104-1-manivannan.sadhasivam@linaro.org>
- <20241211080105.11104-3-manivannan.sadhasivam@linaro.org>
- <1bd6ea1e-a5d7-400b-bed7-d9ff7163e960@kernel.org>
+        bh=cCZlxHkJ48nRwX6UP4cGsTA2zFjZ+gWGiw6Ko4V5V38=;
+        b=sRW1WEwQUQhh7oZhtgmnTqz/4ypd2f4hXUvOQa2o4kSj9oxRhOGUM/5JWxfGj5pvLt
+         CXvOIvMFLeDYeSQG7FxUtIBC2mmM+llCtCrnztWd/plCQ1VavhQ8AYQMQI4/415VBgHk
+         dgBOtdL+jSp9Ar5QvXw8VlXrsRP0y2HaWddj5612XCkbBJib+8V9KJgdtbvOb6aoisHU
+         SXLjHl3ki3YCeCFGRqOtfMjKx0G0Gk9T/3NItLQQevPb83vzKLwiRO236QuIyWwlDlN0
+         otUQ6IdBWrL4zIUKOV47u6aOSjTYsbZX546t9FG3tRuaXJgfNqre7eohUxZlLSuDpdKA
+         TOpA==
+X-Forwarded-Encrypted: i=1; AJvYcCWzPYXXO2Gt3Q+Nlbf/zpC78sXsL1QP3RBgrSzLd57k++RBvDheZH33Q1Kkma8tU3g9GV6lfBcgXt/vZC8b@vger.kernel.org
+X-Gm-Message-State: AOJu0YxYv5lZyCN0PpCEzGWDkbCYhXHgrwGApTNOCu+kKz+TzIE8heRm
+	BebprezaWk2O51G707ERpzKRypERlG+mS6AWLO32cLBZgSZ/nMQ5p/I/MywgYEc=
+X-Gm-Gg: ASbGncsCjiJDp5kISD2EF3cFuNmr4W4btgn5YK6tWXzPpfsZXhFdTAggHSr1KfkCrd4
+	Vd7lQQqjeg65aNPzkgasfDpbREPuyo7wuNRuoJpaOjm3Vxjowhid3aWfTHqwl9uBuejSQ5DPdEn
+	Ec6Y5Oy1M+9cMHBexlDxcbTYtdL7/4jmQeBq+p4YDwDGmB8eWQu6J7MV3HL3TeySl8DOV/eorfQ
+	Kd690+oLXl2ZsvjQcuMMBOU9By3eIquyUJs+h62FKxubPTucEd5YO6r6pcfGoX1aQRyjZscWg==
+X-Google-Smtp-Source: AGHT+IEQuNsj9SuHtQ71/9NIzH8ZUB3oh7ag7Bs+XXBHk+z2Fuj/DJfL+Mge7ob6PwV6gFWegJF3+w==
+X-Received: by 2002:a17:907:6094:b0:aa5:46ee:9545 with SMTP id a640c23a62f3a-aa6b11825a2mr68380066b.5.1733908972135;
+        Wed, 11 Dec 2024 01:22:52 -0800 (PST)
+Received: from [192.168.1.20] ([178.197.223.165])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-aa663334906sm627451066b.72.2024.12.11.01.22.49
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 11 Dec 2024 01:22:51 -0800 (PST)
+Message-ID: <357a8910-82cc-4401-b985-0d01cc7b9128@linaro.org>
+Date: Wed, 11 Dec 2024 10:22:48 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <1bd6ea1e-a5d7-400b-bed7-d9ff7163e960@kernel.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RESEND PATCH] media: dt-bindings: trivial white-space and
+ example cleanup
+To: Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring
+ <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Chen-Yu Tsai <wens@csie.org>,
+ Jernej Skrabec <jernej.skrabec@gmail.com>,
+ Samuel Holland <samuel@sholland.org>,
+ Neil Armstrong <neil.armstrong@linaro.org>,
+ Kevin Hilman <khilman@baylibre.com>, Jerome Brunet <jbrunet@baylibre.com>,
+ Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+ Ming Qian <ming.qian@nxp.com>, Zhou Peng <eagle.zhou@nxp.com>,
+ Shawn Guo <shawnguo@kernel.org>, Sascha Hauer <s.hauer@pengutronix.de>,
+ Pengutronix Kernel Team <kernel@pengutronix.de>,
+ Fabio Estevam <festevam@gmail.com>, Tiffany Lin <tiffany.lin@mediatek.com>,
+ Andrew-CT Chen <andrew-ct.chen@mediatek.com>,
+ Yunfei Dong <yunfei.dong@mediatek.com>,
+ Ezequiel Garcia <ezequiel@vanguardiasur.com.ar>,
+ Philipp Zabel <p.zabel@pengutronix.de>, Robert Foss <rfoss@kernel.org>,
+ Todor Tomov <todor.too@gmail.com>,
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+ Heiko Stuebner <heiko@sntech.de>, Matthias Brugger <matthias.bgg@gmail.com>,
+ AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+ Viktor Prutyanov <viktor.prutyanov@phystech.edu>,
+ Shijie Qin <shijie.qin@nxp.com>, Michael Tretter <m.tretter@pengutronix.de>,
+ Emil Velikov <emil.velikov@collabora.com>,
+ Del Regno <angelogioacchino.delregno@somainline.org>,
+ Nicolas Frattaroli <frattaroli.nicolas@gmail.com>,
+ linux-media@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org, linux-sunxi@lists.linux.dev,
+ linux-kernel@vger.kernel.org, linux-amlogic@lists.infradead.org,
+ imx@lists.linux.dev, linux-rockchip@lists.infradead.org,
+ linux-arm-msm@vger.kernel.org, linux-mediatek@lists.infradead.org
+References: <20241209113405.74226-1-krzysztof.kozlowski@linaro.org>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Content-Language: en-US
+Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
+ 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
+ D2GYIS41Kv4Isx2dEFh+/Q==
+In-Reply-To: <20241209113405.74226-1-krzysztof.kozlowski@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Wed, Dec 11, 2024 at 05:37:27PM +0900, Damien Le Moal wrote:
-> On 12/11/24 5:01 PM, Manivannan Sadhasivam wrote:
-> >  struct pci_test {
-> > @@ -52,63 +51,65 @@ static int run_test(struct pci_test *test)
-> >  		ret = ioctl(fd, PCITEST_BAR, test->barnum);
-> >  		fprintf(stdout, "BAR%d:\t\t", test->barnum);
-> >  		if (ret < 0)
-> > -			fprintf(stdout, "TEST FAILED\n");
-> > +			fprintf(stdout, "NOT OKAY\n");
-> >  		else
-> > -			fprintf(stdout, "%s\n", result[ret]);
-> > +			fprintf(stdout, "OKAY\n");
+On 09/12/2024 12:34, Krzysztof Kozlowski wrote:
+> Minor cleanups without funcitonal impact:
+>  - There should not be an empty blank line after SPDX tag,
+>  - Convention is to indent DTS examples in coding style with 2- or
+>    4-space indentation (4 is preferred),
+>  - Drop unused labels in DTS examples.
 > 
-> Why not simplify as I suggested to avoid all these repetitive (and ugly) "if ()
-> else" ?
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 > 
+> ---
+> 
+> No comments since August... Can it be applied?
 
-I've replied to your suggestion in v2:
-https://lore.kernel.org/linux-pci/20241211074757.byc5jqpgfe3otjh7@thinkpad/
+I think I missed here Rob's review.
 
-Since the test is migrated to Kselftest right after this patch, I see no
-incentive to simplify the code.
-
-- Mani
-
--- 
-மணிவண்ணன் சதாசிவம்
+Best regards,
+Krzysztof
 
