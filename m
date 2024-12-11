@@ -1,63 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-41393-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-41394-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9789C9EC1D9
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2024 03:00:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 552429EC227
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2024 03:31:31 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id A846C188AF91
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2024 02:00:46 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id EF32D188BB34
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2024 02:31:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B852C1FAC59;
-	Wed, 11 Dec 2024 02:00:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3FAA71FC7E8;
+	Wed, 11 Dec 2024 02:30:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="kYAjQvzM"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="htRfLcdH"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A0A31FA25D;
-	Wed, 11 Dec 2024 02:00:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 714671AAA1D;
+	Wed, 11 Dec 2024 02:30:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733882444; cv=none; b=F+3OLszZnE9sfYn3W8kVJ8DG/VIGi+6w+P7oywILGfCwQZxe3GCNPXvTiaAEYKXRNUJEGCgMb3HVWI/jC8FHMK47adQkGfi0Aw3hoqtJE4zZQPJchDJVH8hYEEr1NjQfd+cxKjLBfrJGQF0C6aLzMYGoyjzLdzuwEOm0kYVWIO0=
+	t=1733884242; cv=none; b=UHleWXKxUzrs8UQ2qN2tsZk0or2UYtxp+eH/8nA8L0NyIY5FXvohHjpcW/ZwHweyvrIMHiJcBn6NxJ/7XkqVaB0EgHPFwffbo5BYm/XGMXlP3bNmK+jKu8+ShAwUacjMtkK0lReHkCUUQE9m95/iCVwKWRpDGyD9jiQhQdQc0xA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733882444; c=relaxed/simple;
-	bh=tQmw66eR8RXYovE9PyXHz4mGVai1Hk1iAlAaPKqFXtw=;
+	s=arc-20240116; t=1733884242; c=relaxed/simple;
+	bh=LGFeotnlEDjkviWRUVoPPTxT5iK65L5R316bHP5GabA=;
 	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=laRK8jduT3Z3HDJGVDzG81wtM+eragb18z3jFkRvto64MFq4pecKhq0FbQHsl417cMvUFsvE9/U4oJapgOEs07pJGfSxlGetglXIMWCKifBJEb4uG9hXhd14ZH+GEdIienZJ89vK7JrCl4zVrD/lI2OlwH4Et4hpsLod2XNt1ig=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=kYAjQvzM; arc=none smtp.client-ip=205.220.168.131
+	 In-Reply-To:Content-Type; b=ouP5k+WNDThjYkSAAESwGWOz/XK3kDY20Hyy7aI1v7xjom++wDy59kKfJDOZBBlfNriODP4KKBuXvsq4+hE6zIvu/ype4wOwFh0u4sSXLt5acBDu8Cn/bnnry9c4WZW/NJXFi57OVffs1l0LmGiIDOvEjFyPO746WqH0gj89LG8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=htRfLcdH; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BADFXPt019472;
-	Wed, 11 Dec 2024 02:00:16 GMT
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BAEnEEn030690;
+	Wed, 11 Dec 2024 02:30:30 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	m1hIFjvV5WKQJt6B6MFLaU2NvCADjnnIFHht+ldnWM8=; b=kYAjQvzMcGcR6SK2
-	jCFDPomEV8fkaluWiDqqOmkDYmjO10sDtZSpTABncL+Y7/bceBCD8TiiekJ+393c
-	isP/zX7vOHv3fLnzW/n7mSZdB5axEOXRIl6dYjqg7EZxV2yX5mvpeBcVVqOuWaZT
-	l/iZmulsVs34+gbYR+Z53Hq0woRIPgwx0fhwVgQTao1g9LndiTWAdGpa6BnknBwr
-	+AQXDA85dZ091FD/IyXBQMdlDO++qxOQYpzEiX4dDFjGHbmjc7CUFxuDQP7byVnM
-	gOStLhiKuTJfVbXJkWqu9BRCREYl8qrMHTf+a9vkgTId5RfB2H7wowP9CL1J6ks5
-	dy8m9w==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43e341d55w-1
+	PVxf7HhGT75bLPGuf4nGbP85pnOsUrxNKQAAqjvLqhw=; b=htRfLcdHgelnUIRk
+	4FNler/waKV5XnY+pHbKbXaELLWvYSSViIIQbBOuK2NirTOs3gRhRhk0ElM1QilA
+	waw8iB7cOhnn9EHlGkFnmJxvNxUgvR55o4HiCqajKKaGK7nVoZF3z5rjcS/0jKuL
+	jSbl0vhuj6s11S76Hr4txMymqKxagCgS2ehy820jhgkDEzP71JYhJOQy7Z6GvlVv
+	zRvW+ZaUc8FDw3vCW9zPY+IzTKcWjAbv5ZLnbsuLMQgTIcOhdh+Zpi8hdqFDOeya
+	w7dd28zHwIyZVFnlVbjXSrk1oVrhyWUO3C6OwzMe1hu5zFQYh9VmritpSHvw2HMS
+	N2/2Vg==
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43eqr31prw-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 11 Dec 2024 02:00:15 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4BB20EVZ019497
+	Wed, 11 Dec 2024 02:30:29 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4BB2USa5005524
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 11 Dec 2024 02:00:14 GMT
-Received: from [10.110.54.253] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+	Wed, 11 Dec 2024 02:30:28 GMT
+Received: from [10.4.85.13] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 10 Dec
- 2024 18:00:14 -0800
-Message-ID: <03c79eca-f79b-4008-9037-ea96e18f093f@quicinc.com>
-Date: Tue, 10 Dec 2024 18:00:13 -0800
+ 2024 18:30:25 -0800
+Message-ID: <62f80fb7-ea13-4ae1-a438-8d6b2d5a2f15@quicinc.com>
+Date: Wed, 11 Dec 2024 13:30:22 +1100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,184 +65,1804 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v30 00/30] Introduce QC USB SND audio offloading support
-To: Takashi Iwai <tiwai@suse.de>
-CC: Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>,
-        Cezary Rojewski
-	<cezary.rojewski@intel.com>,
-        Greg KH <gregkh@linuxfoundation.org>, <srinivas.kandagatla@linaro.org>,
-        <mathias.nyman@intel.com>, <perex@perex.cz>, <conor+dt@kernel.org>,
-        <dmitry.torokhov@gmail.com>, <corbet@lwn.net>, <broonie@kernel.org>,
-        <lgirdwood@gmail.com>, <krzk+dt@kernel.org>,
-        <Thinh.Nguyen@synopsys.com>, <tiwai@suse.com>, <robh@kernel.org>,
-        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-sound@vger.kernel.org>, <linux-usb@vger.kernel.org>,
-        <linux-input@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-doc@vger.kernel.org>
-References: <20241106193413.1730413-1-quic_wcheng@quicinc.com>
- <edfeb642-297e-42bb-ad09-cbf74f995514@quicinc.com>
- <2024111655-approve-throwback-e7df@gregkh>
- <2f512d8d-e5f3-4bdd-8172-37114a382a69@quicinc.com>
- <875xoi3wqw.wl-tiwai@suse.de>
- <d0da6552-238a-41be-b596-58da6840efbb@quicinc.com>
- <CF49CA0A-4562-40BC-AA98-E550E39B366A@linux.dev>
- <65273bba-5ec1-44ea-865b-fb815afccc91@intel.com>
- <4C900353-B977-451C-B003-BAA51E458726@linux.dev>
- <e7b8f141-efd4-4933-b074-641638914905@intel.com>
- <4E9925AF-F297-42A5-9CB8-F8568F0A5EDF@linux.dev>
- <0a36814a-5818-493a-a9e3-b1a1e9559387@quicinc.com>
- <75e6516f-5cf5-4b0d-ade8-bfbc5632765f@quicinc.com>
- <87y10n3300.wl-tiwai@suse.de>
+Subject: Re: [PATCH 08/10] tee: add Qualcomm TEE driver
 Content-Language: en-US
-From: Wesley Cheng <quic_wcheng@quicinc.com>
-In-Reply-To: <87y10n3300.wl-tiwai@suse.de>
+To: Jens Wiklander <jens.wiklander@linaro.org>
+CC: Sumit Garg <sumit.garg@linaro.org>,
+        Bjorn Andersson
+	<andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring
+	<robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>,
+        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <op-tee@lists.trustedfirmware.org>,
+        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-doc@vger.kernel.org>
+References: <20241202-qcom-tee-using-tee-ss-without-mem-obj-v1-0-f502ef01e016@quicinc.com>
+ <20241202-qcom-tee-using-tee-ss-without-mem-obj-v1-8-f502ef01e016@quicinc.com>
+ <CAHUa44GqyaouPquw+DE1ASRwVOBw5xDstcpaNpmLmQbXmp6CuQ@mail.gmail.com>
+From: Amirreza Zarrabi <quic_azarrabi@quicinc.com>
+In-Reply-To: <CAHUa44GqyaouPquw+DE1ASRwVOBw5xDstcpaNpmLmQbXmp6CuQ@mail.gmail.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: BTnO5BhfzOONhA051ooUPB4oIf-4-_2p
-X-Proofpoint-ORIG-GUID: BTnO5BhfzOONhA051ooUPB4oIf-4-_2p
+X-Proofpoint-ORIG-GUID: biHm3vWbIiU8BaCsB4Dgj3adJ0XC7C46
+X-Proofpoint-GUID: biHm3vWbIiU8BaCsB4Dgj3adJ0XC7C46
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0
- priorityscore=1501 suspectscore=0 mlxlogscore=999 clxscore=1015 mlxscore=0
- spamscore=0 phishscore=0 malwarescore=0 adultscore=0 impostorscore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2412110014
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ impostorscore=0 malwarescore=0 bulkscore=0 clxscore=1015 mlxlogscore=999
+ suspectscore=0 mlxscore=0 adultscore=0 spamscore=0 lowpriorityscore=0
+ phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2412110018
 
+Hi Jens,
 
-On 12/10/2024 8:40 AM, Takashi Iwai wrote:
-> On Tue, 10 Dec 2024 01:59:10 +0100,
-> Wesley Cheng wrote:
->> On 12/5/2024 4:53 PM, Wesley Cheng wrote:
->>> On 12/4/2024 2:49 PM, Pierre-Louis Bossart wrote:
->>>>>>> UAOL is one of our priorities right now and some (e.g.: me) prefe=
-r to not pollute their mind with another approaches until what they have =
-in mind is crystalized. In short, I'd vote for a approach where USB devic=
-e has a ASoC representative in sound/soc/codecs/ just like it is the case=
- for HDAudio. Either that or at least a ASoC-component representative, a =
-dependency for UAOL-capable card to enumerate.
->>>>>> The main difference is that we don=E2=80=99t want the USB audio *c=
-ontrol* part to be seen in two places. The only requirement is to stream =
-data with an alternate optimized path, but all the volume control and wha=
-tnot is supposed to be done using the regular usb-audio card. It would be=
- complete chaos for userspace if the same volume can be represented diffe=
-rently.
->>>>>> The comparison with HDaudio is not quite right either. In the case=
- of HDaudio, it=E2=80=99s an all-or-nothing solution. The external device=
- is controlled by one entity, either legacy or ASoC based. That choice is=
- made at driver probe time. In the case of USB, the application needs to =
-have the choice of using either the legacy path, or the optimized path th=
-at goes through a DSP. I think the last thing you want given this context=
- is to make the USB audio device an ASoC codec.
->>>>>> I find it rather interesting that this architectural feedback come=
-s at the v30, it=E2=80=99s unfair to Wesley really...
->>>>> Hi Pierre,
->>>>>
->>>>> Obviously I'm late. After scanning the history of this one, indeed =
-it's been a while since v1 has been sent. And thus I posted no NACKs. At =
-the same time if I am to choose between: provide feedback vs provide no-f=
-eedback, I'd rather choose the former even if I'm to be ignored/overridde=
-n by a subsystem maintainer.
->>>>>
->>>>> The subsystem maintainers also hold the last word, and I have no pr=
-oblem with them merging the patches if they believe its existing shape is=
- good-enough. For example, my team could follow up this implementation ne=
-xt year with a patchset expanding/updating the functionality. I see this =
-as a viable option.
->>>> That=E2=80=99s what we had in mind before I left Intel. The interfac=
-es seen by userspace are PCM devices and kcontrols, it doesn=E2=80=99t ma=
-tter too much if there is one card, two cards, and if the implementation =
-relies on an ASoC codec, a library or something else.=C2=A0
->>>> The bulk of the work is to enable the USB offload from top to bottom=
-, by changing PipeWire/CRAS/HAL to select the new optimized path when ava=
-ilable and deal with plug/unplug events.
->>>> Improvements at the kernel level can be done later if required. It=E2=
-=80=99s hard to argue that the proposal in this series is fundamentally b=
-roken, but as usual it=E2=80=99s likely that some requirements are missin=
-g or not known yet. The same thing happened with compressed offload, none=
- one thought about gapless playback until Android made it a requirement. =
-Maybe what we=E2=80=99d need is a =E2=80=98protocol version=E2=80=99 for =
-USB offload so that changes can be tracked and handled?
->>> Thanks for chiming in, Pierre.=C2=A0 So for now, with the next revisi=
-on I have prepared, I'm currently adding:
->>>
->>> 1.=C2=A0 Some improvements to xHCI sideband to account for core seque=
-nces that need to be notified to the offload driver, ie transfer ring fre=
-e
->>>
->>> 2.=C2=A0 Moved the USB SND offload mixer driver into the QC vendor mo=
-dule for now, as instructed by Takashi:
->>>
->>> https://lore.kernel.org/linux-usb/87cyiiaxpc.wl-tiwai@suse.de/
->>>
->>> 3.=C2=A0 Added separate kcontrols for fetching mapped PCM device and =
-card indexes (versus one that returns a card and PCM device pair [array])=
-
->>>
->>> 4.=C2=A0 Removed some jack controls (enable/disable) from soc-usb
->>>
->>> 5.=C2=A0 Updated documentation for #3
->>>
->>>
->>> Those are the major changes that will come in the next revision.=C2=A0=
- I'm just trying to figure out who/where the "protocol version" should be=
- checked if we decided to add it.=C2=A0 (or if we need to check for it an=
-ywhere...)=C2=A0 From the userspace perspective, it should be agnostic to=
- how we've implemented offloading from the kernel, and I don't see any ma=
-jor shifts in how userspace implements things even if we make improvement=
-s from kernel.
+On 12/10/2024 10:58 PM, Jens Wiklander wrote:
+> Hi Amirreza,
+> 
+> On Tue, Dec 3, 2024 at 5:20 AM Amirreza Zarrabi
+> <quic_azarrabi@quicinc.com> wrote:
 >>
->> Hi Takashi,
+>> Introduce basic support for invoking objects hosted in QTEE and userspace
+>> through the TEE subsystem.
 >>
->> Could you possibly help share some direction on what you think of the =
-current design, and if you think its detrimental that we make modificatio=
-ns mentioned by Cezary?=C2=A0 I have the next revision ready for review, =
-but I wanted to get a better sense on the likeliness of this landing upst=
-ream w/o the major modifications.
-> Honestly speaking, I have no big preference about that design
-> question.  The most important thing is rather what's visible change to
-> users.  An advantage of the current design (sort of add-on to the
-> existing USB-audio driver) is that it's merely a few card controls
-> that are added and visible, and the rest is just as of now.  The
-> remaining design issue (two cards or single card) is rather
-> kernel-internal, and has nothing to do with users.  So I'm fine with
-> the current design.
+>> Signed-off-by: Amirreza Zarrabi <quic_azarrabi@quicinc.com>
+>> ---
+>>  drivers/tee/qcomtee/Makefile          |   2 +
+>>  drivers/tee/qcomtee/call.c            | 707 ++++++++++++++++++++++++++++++++++
+>>  drivers/tee/qcomtee/core.c            |   8 +
+>>  drivers/tee/qcomtee/qcomtee_private.h | 166 ++++++++
+>>  drivers/tee/qcomtee/user_obj.c        | 625 ++++++++++++++++++++++++++++++
+>>  include/uapi/linux/tee.h              |   1 +
+>>  6 files changed, 1509 insertions(+)
+>>
+>> diff --git a/drivers/tee/qcomtee/Makefile b/drivers/tee/qcomtee/Makefile
+>> index 108bc7fdabcb..6bf91481fde3 100644
+>> --- a/drivers/tee/qcomtee/Makefile
+>> +++ b/drivers/tee/qcomtee/Makefile
+>> @@ -1,7 +1,9 @@
+>>  # SPDX-License-Identifier: GPL-2.0-only
+>>  obj-$(CONFIG_QCOMTEE) += qcomtee.o
+>>  qcomtee-objs += async.o
+>> +qcomtee-objs += call.o
+>>  qcomtee-objs += core.o
+>>  qcomtee-objs += primordial_obj.o
+>>  qcomtee-objs += qcom_scm.o
+>>  qcomtee-objs += release.o
+>> +qcomtee-objs += user_obj.o
+>> diff --git a/drivers/tee/qcomtee/call.c b/drivers/tee/qcomtee/call.c
+>> new file mode 100644
+>> index 000000000000..11bb31836808
+>> --- /dev/null
+>> +++ b/drivers/tee/qcomtee/call.c
+>> @@ -0,0 +1,707 @@
+>> +// SPDX-License-Identifier: GPL-2.0-only
+>> +/*
+>> + * Copyright (c) 2024 Qualcomm Innovation Center, Inc. All rights reserved.
+>> + */
+>> +
+>> +#define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
+>> +
+>> +#include <linux/tee.h>
+>> +#include <linux/mm.h>
+>> +#include <linux/platform_device.h>
+>> +#include <linux/firmware/qcom/qcom_tzmem.h>
+>> +#include <linux/firmware/qcom/qcom_scm.h>
+>> +
+>> +#include "qcomtee_private.h"
+>> +
+>> +/**
+>> + * enum qcom_tee_object_host - Object host where it is managed.
+>> + * @QCOM_TEE_OBJECT_HOST_USER: objects in userspace.
+>> + * @QCOM_TEE_OBJECT_HOST_TEE: objects in QTEE.
+>> + *
+>> + * We refer to object hosted in userspace as 'Local Object' and objects hosted
+>> + * in QTEE as 'Remote Object'.
+>> + */
+>> +enum qcom_tee_object_host {
+>> +       QCOM_TEE_OBJECT_HOST_USER,      /* Object that is managed in userspace. */
+>> +       QCOM_TEE_OBJECT_HOST_TEE,       /* Object that is managed in QTEE. */
+>> +};
+>> +
+>> +/* Read object ID host information. */
+>> +static enum qcom_tee_object_host qcom_tee_object_host(struct tee_param *param)
+>> +{
+>> +       if (param->u.objref.flags & QCOM_TEE_OBJREF_FLAG_USER)
+>> +               return QCOM_TEE_OBJECT_HOST_USER;
+>> +       return QCOM_TEE_OBJECT_HOST_TEE;
+>> +}
+>> +
+>> +/* qcom_tee_context_add_qtee_object() - Add a QTEE object to the context.
+>> + * @param: TEE parameter represents @object.
+>> + * @object: QTEE object.
+>> + * @ctx: context to add the object.
+>> + *
+>> + * It assumes @object is %QCOM_TEE_OBJECT_TYPE_TEE and caller has already issued
+>> + * qcom_tee_object_get() for @object.
+>> + *
+>> + * Return: On success return 0 or <0 on failure.
+>> + */
+>> +int qcom_tee_context_add_qtee_object(struct tee_param *param, struct qcom_tee_object *object,
+>> +                                    struct qcom_tee_context *ctx)
+>> +{
+>> +       int ret;
+>> +
+>> +       guard(mutex)(&ctx->lock);
+>> +       ret = idr_alloc(&ctx->qtee_objects_idr, object, 0, 0, GFP_KERNEL);
+>> +       if (ret < 0)
+>> +               return ret;
+>> +
+>> +       param->u.objref.id = ret;
+>> +       /* QTEE Object: !QCOM_TEE_OBJREF_FLAG_USER. */
+>> +       param->u.objref.flags = 0;
+>> +
+>> +       return 0;
+>> +}
+>> +
+>> +static int find_qtee_object(struct qcom_tee_object **object, unsigned long id,
+>> +                           struct qcom_tee_context *ctx)
+>> +{
+>> +       int err = 0;
+>> +
+>> +       guard(rcu)();
+>> +       /* Object release is RCU protected. */
+>> +       *object = idr_find(&ctx->qtee_objects_idr, id);
+>> +       if (!qcom_tee_object_get(*object))
+>> +               err = -EINVAL;
+>> +
+>> +       return err;
+>> +}
+>> +
+>> +static void del_qtee_object(unsigned long id, struct qcom_tee_context *ctx)
+>> +{
+>> +       struct qcom_tee_object *object;
+>> +
+>> +       scoped_guard(mutex, &ctx->lock)
+>> +               object = idr_remove(&ctx->qtee_objects_idr, id);
+>> +       qcom_tee_object_put(object);
+>> +}
+>> +
+>> +/* Get the QTEE object added with qcom_tee_context_add_qtee_object(). */
+>> +int qcom_tee_context_find_qtee_object(struct qcom_tee_object **object, struct tee_param *param,
+>> +                                     struct qcom_tee_context *ctx)
+>> +{
+>> +       /* 'qtee_objects_idr' stores QTEE objects only. */
+>> +       if (qcom_tee_object_host(param) != QCOM_TEE_OBJECT_HOST_TEE)
+>> +               return -EINVAL;
+>> +       return find_qtee_object(object, param->u.objref.id, ctx);
+>> +}
+>> +
+>> +/**
+>> + * qcom_tee_context_del_qtee_object() - Delete a QTEE object from the context.
+>> + * @param: TEE parameter represents @object.
+>> + * @ctx: context to delete the object.
+>> + *
+>> + * @param returned by qcom_tee_context_add_qtee_object().
+>> + */
+>> +void qcom_tee_context_del_qtee_object(struct tee_param *param, struct qcom_tee_context *ctx)
+>> +{
+>> +       /* 'qtee_objects_idr' stores QTEE objects only. */
+>> +       if (qcom_tee_object_host(param) == QCOM_TEE_OBJECT_HOST_TEE)
+>> +               del_qtee_object(param->u.objref.id, ctx);
+>> +}
+>> +
+>> +/**
+>> + * qcom_tee_objref_to_arg() - Convert OBJREF parameter to QTEE argument in a context.
+>> + * @arg: QTEE argument.
+>> + * @param: TEE parameter.
+>> + * @ctx: context in which the conversion should happen.
+>> + *
+>> + * It assumes @param is OBJREF.
+>> + * It does not set @arg.type; caller should initialize it to a correct
+>> + * &enum qcom_tee_arg_type value.
+>> + *
+>> + * Return: On success return 0 or <0 on failure.
+>> + */
+>> +int qcom_tee_objref_to_arg(struct qcom_tee_arg *arg, struct tee_param *param,
+>> +                          struct qcom_tee_context *ctx)
+>> +{
+>> +       struct qcom_tee_object *object;
+>> +       int err;
+>> +
+>> +       if (arg->type != QCOM_TEE_ARG_TYPE_IO &&
+>> +           arg->type != QCOM_TEE_ARG_TYPE_OO)
+>> +               return -EINVAL;
+>> +
+>> +       /* It is a NULL object?! */
+>> +       if (param->u.objref.id == TEE_OBJREF_NULL) {
+>> +               arg->o = NULL_QCOM_TEE_OBJECT;
+>> +
+>> +               return 0;
+>> +       }
+>> +
+>> +       switch (qcom_tee_object_host(param)) {
+>> +       case QCOM_TEE_OBJECT_HOST_USER:
+>> +               err = qcom_tee_user_param_to_object(&object, param, ctx);
+>> +               if (err)
+>> +                       break;
+>> +
+>> +               /* Keep a copy for driver as QTEE may release it (e.g. using async msg). */
+>> +               qcom_tee_object_get(object);
+>> +
+>> +               break;
+>> +       case QCOM_TEE_OBJECT_HOST_TEE:
+>> +               err = qcom_tee_context_find_qtee_object(&object, param, ctx);
+>> +
+>> +               break;
+>> +       }
+>> +
+>> +       arg->o = err ? NULL_QCOM_TEE_OBJECT : object;
+>> +
+>> +       return err;
+>> +}
+>> +
+>> +/**
+>> + * qcom_tee_objref_from_arg() - Convert QTEE argument to OBJREF param in a context.
+>> + * @param: TEE parameter.
+>> + * @arg: QTEE argument.
+>> + * @ctx: context in which the conversion should happen.
+>> + *
+>> + * It assumes @arg is of %QCOM_TEE_ARG_TYPE_IO or %QCOM_TEE_ARG_TYPE_OO.
+>> + * It does not set @param.attr; caller should initialize it to a correct OBJREF type.
+>> + *
+>> + * Return: On success return 0 or <0 on failure.
+>> + */
+>> +int qcom_tee_objref_from_arg(struct tee_param *param, struct qcom_tee_arg *arg,
+>> +                            struct qcom_tee_context *ctx)
+>> +{
+>> +       struct qcom_tee_object *object;
+>> +       int err;
+>> +
+>> +       /* param should be of OBJREF. */
+>> +       if (param->attr != TEE_IOCTL_PARAM_ATTR_TYPE_OBJREF_INPUT &&
+>> +           param->attr != TEE_IOCTL_PARAM_ATTR_TYPE_OBJREF_OUTPUT &&
+>> +           param->attr != TEE_IOCTL_PARAM_ATTR_TYPE_OBJREF_INOUT)
+>> +               return -EINVAL;
+>> +
+>> +       object = arg->o;
+>> +
+>> +       switch (typeof_qcom_tee_object(object)) {
+>> +       case QCOM_TEE_OBJECT_TYPE_NULL:
+>> +               param->u.objref.id = TEE_OBJREF_NULL;
+>> +               err = 0;
+>> +
+>> +               break;
+>> +       case QCOM_TEE_OBJECT_TYPE_CB_OBJECT:
+>> +               err = qcom_tee_user_param_from_object(param, object, ctx);
+>> +
+>> +               break;
+>> +       case QCOM_TEE_OBJECT_TYPE_TEE:
+>> +               err = qcom_tee_context_add_qtee_object(param, object, ctx);
+>> +
+>> +               break;
+>> +       case QCOM_TEE_OBJECT_TYPE_ROOT:
+>> +       default:
+>> +               return -EINVAL;
+>> +       }
+>> +
+>> +       return err;
+>> +}
+>> +
+>> +/**
+>> + * qcom_tee_params_to_args() - Convert TEE parameters to QTEE arguments in a context.
+>> + * @u: QTEE arguments.
+>> + * @params: TEE parameters.
+>> + * @num_params: number of elements in the parameter array.
+>> + * @ctx: context in which the conversion should happen.
+>> + *
+>> + * It assumes @u has at least @num_param + 1 entries and has been initialized
+>> + * with %QCOM_TEE_ARG_TYPE_INV as &struct qcom_tee_arg.type.
+>> + *
+>> + * Return: On success return 0 or <0 on failure.
+>> + */
+>> +static int qcom_tee_params_to_args(struct qcom_tee_arg *u,
+>> +                                  struct tee_param *params, int num_params,
+>> +                                  struct qcom_tee_context *ctx)
+>> +{
+>> +       struct qcom_tee_object *object;
+>> +       int i;
+>> +
+>> +       for (i = 0; i < num_params; i++) {
+>> +               switch (params[i].attr) {
+>> +               case TEE_IOCTL_PARAM_ATTR_TYPE_MEMBUF_INPUT:
+>> +               case TEE_IOCTL_PARAM_ATTR_TYPE_MEMBUF_OUTPUT:
+>> +                       u[i].flags = QCOM_TEE_ARG_FLAGS_UADDR;
+>> +                       u[i].b.uaddr = params[i].u.membuf.uaddr;
+>> +                       u[i].b.size = params[i].u.membuf.size;
+>> +
+>> +                       if (params[i].attr == TEE_IOCTL_PARAM_ATTR_TYPE_MEMBUF_INPUT)
+>> +                               u[i].type = QCOM_TEE_ARG_TYPE_IB;
+>> +                       else /* TEE_IOCTL_PARAM_ATTR_TYPE_MEMBUF_OUTPUT */
+>> +                               u[i].type = QCOM_TEE_ARG_TYPE_OB;
+>> +
+>> +                       break;
+>> +               case TEE_IOCTL_PARAM_ATTR_TYPE_OBJREF_INPUT:
+>> +                       u[i].type = QCOM_TEE_ARG_TYPE_IO;
+>> +                       if (qcom_tee_objref_to_arg(&u[i], &params[i], ctx))
+>> +                               goto out_failed;
+>> +
+>> +                       break;
+>> +               case TEE_IOCTL_PARAM_ATTR_TYPE_OBJREF_OUTPUT:
+>> +                       u[i].type = QCOM_TEE_ARG_TYPE_OO;
+>> +                       u[i].o = NULL_QCOM_TEE_OBJECT;
+>> +                       break;
+>> +               default: /* Unsupported TEE parameters. */
+>> +                       goto out_failed;
+>> +               }
+>> +       }
+>> +
+>> +       return 0;
+>> +
+>> +out_failed:
+>> +
+>> +       /* On ERROR: */
+>> +       /* Put IO objects processed so far. */
+>> +       for (--i; i >= 0; i--) {
+>> +               if (u[i].type != QCOM_TEE_ARG_TYPE_IO)
+>> +                       continue;
+>> +
+>> +               object = u[i].o;
+>> +               qcom_tee_user_object_set_notify(object, false);
+>> +               /* For callback object, we hold a reference for the driver, put it. */
+>> +               if (typeof_qcom_tee_object(object) == QCOM_TEE_OBJECT_TYPE_CB_OBJECT)
+>> +                       qcom_tee_object_put(object);
+>> +               /* Put QTEE copy of object. */
+>> +               qcom_tee_object_put(object);
+>> +       }
+>> +
+>> +       return -EINVAL;
+>> +}
+>> +
+>> +/**
+>> + * qcom_tee_params_from_args() - Convert QTEE arguments to TEE parameters in a context.
+>> + * @params: TEE parameters.
+>> + * @u: QTEE arguments.
+>> + * @num_params: number of elements in the parameter array.
+>> + * @ctx: context in which the conversion should happen.
+>> + *
+>> + * @u should have been already initialized by qcom_tee_params_to_args().
+>> + * This also represents end of a QTEE invocation that started with qcom_tee_params_to_args()
+>> + * by releasing %QCOM_TEE_ARG_TYPE_IO objects.
+>> + *
+>> + * Return: On success return 0 or <0 on failure.
+>> + */
+>> +static int qcom_tee_params_from_args(struct tee_param *params,
+>> +                                    struct qcom_tee_arg *u, int num_params,
+>> +                                    struct qcom_tee_context *ctx)
+>> +{
+>> +       int i, np;
+>> +
+>> +       for (np = 0; u[np].type; np++) {
+>> +               enum qcom_tee_arg_type at = u[np].type;
+>> +
+>> +               if (at == QCOM_TEE_ARG_TYPE_OB) {
+>> +                       /* TEE_IOCTL_PARAM_ATTR_TYPE_MEMBUF_OUTPUT */
+>> +                       params[np].u.value.b = u[np].b.size;
+>> +
+>> +               } else if (at == QCOM_TEE_ARG_TYPE_IO) {
+>> +                       /* IEE_IOCTL_PARAM_ATTR_TYPE_OBJREF_INPUT */
+>> +                       qcom_tee_object_put(u[np].o);
+>> +
+>> +               } else if (at == QCOM_TEE_ARG_TYPE_OO) {
+>> +                       /* TEE_IOCTL_PARAM_ATTR_TYPE_OBJREF_OUTPUT */
+>> +                       if (qcom_tee_objref_from_arg(&params[np], &u[np], ctx))
+>> +                               goto out_failed;
+>> +               }
+>> +       }
+>> +
+>> +       return 0;
+>> +
+>> +out_failed:
+>> +
+>> +       /* On ERROR: */
+>> +       /*  - Release params associated to QTEE objects in this context so far. */
+>> +       for (i = 0; i < np; i++) {
+>> +               if (params[i].attr == TEE_IOCTL_PARAM_ATTR_TYPE_OBJREF_OUTPUT)
+>> +                       qcom_tee_context_del_qtee_object(&params[i], ctx);
+>> +       }
+>> +       /*  - Release any IO and OO objects not processed so far. */
+>> +       while (u[i].type) {
+>> +               if (u[i].type == QCOM_TEE_ARG_TYPE_OO ||
+>> +                   u[i].type == QCOM_TEE_ARG_TYPE_IO)
+>> +                       qcom_tee_object_put(u[i++].o);
+>> +       }
+>> +
+>> +       return -EINVAL;
+>> +}
+>> +
+>> +/* TEE Device Ops. */
+>> +
+>> +static int qcom_tee_params_check(struct tee_param *params, int num_params)
+>> +{
+>> +       int io = 0, oo = 0, ib = 0, ob = 0;
+>> +       int i;
+>> +
+>> +       /* QTEE accepts 64 arguments. */
+>> +       if (num_params > QCOM_TEE_ARGS_MAX)
+>> +               return -EINVAL;
+>> +
+>> +       /* Supported parameter types. */
+>> +       for (i = 0; i < num_params; i++) {
+>> +               switch (params[i].attr) {
+>> +               case TEE_IOCTL_PARAM_ATTR_TYPE_MEMBUF_INPUT:
+>> +                       ib++; break;
+>> +               case TEE_IOCTL_PARAM_ATTR_TYPE_MEMBUF_OUTPUT:
+>> +                       ob++; break;
+>> +               case TEE_IOCTL_PARAM_ATTR_TYPE_OBJREF_INPUT:
+>> +                       io++; break;
+>> +               case TEE_IOCTL_PARAM_ATTR_TYPE_OBJREF_OUTPUT:
+>> +                       oo++; break;
+>> +               default:
+>> +                       return -EINVAL;
+>> +               }
+>> +       }
+>> +
+>> +       /*  QTEE accepts 16 arguments of each supported types. */
+>> +       if (io > QCOM_TEE_ARGS_PER_TYPE || oo > QCOM_TEE_ARGS_PER_TYPE ||
+>> +           ib > QCOM_TEE_ARGS_PER_TYPE || ob > QCOM_TEE_ARGS_PER_TYPE)
+>> +               return -EINVAL;
+>> +
+>> +       return 0;
+>> +}
+>> +
+>> +/* Check if user issued a permitted operation on ROOT_QCOM_TEE_OBJECT from userspace. */
+>> +static int qcom_tee_root_object_check(u32 op, struct tee_param *params, int num_params)
+>> +{
+>> +       /* Some privileged operations recognized by QTEE. */
+>> +       if (op == 4 || op == 8 || op == 9)
+>> +               return -EINVAL;
+>> +
+>> +       /* OP 5 is to register with QTEE by passing credential object as input OBJREF. */
+>> +       /* TEE_OBJREF_NULL as credential object represents a privileged client for QTEE,
+>> +        * only kernel can pass TEE_OBJREF_NULL.
+>> +        */
+>> +       if (op == 5) {
+>> +               if (num_params != 2)
+>> +                       return -EINVAL;
+>> +
+>> +               if (params[0].attr == TEE_IOCTL_PARAM_ATTR_TYPE_OBJREF_INPUT &&
+>> +                   params[1].attr == TEE_IOCTL_PARAM_ATTR_TYPE_OBJREF_OUTPUT) {
+>> +                       if (params[0].u.objref.id == TEE_OBJREF_NULL)
+>> +                               return -EINVAL;
+>> +
+>> +               } else if (params[0].attr == TEE_IOCTL_PARAM_ATTR_TYPE_OBJREF_OUTPUT &&
+>> +                          params[1].attr == TEE_IOCTL_PARAM_ATTR_TYPE_OBJREF_INPUT) {
+>> +                       if (params[1].u.objref.id == TEE_OBJREF_NULL)
+>> +                               return -EINVAL;
+>> +               }
+>> +       }
+>> +
+>> +       return 0;
+>> +}
+>> +
+>> +/**
+>> + * qcom_tee_object_invoke() - Invoke a QTEE object.
+>> + * @tee_ctx: TEE context.
+>> + * @arg: ioctl arguments.
+>> + * @params: parameters for the object.
+>> + *
+>> + * Return: On success return 0 or <0 on failure.
+>> + */
+>> +static int qcom_tee_object_invoke(struct tee_context *tee_ctx,
+>> +                                 struct tee_ioctl_object_invoke_arg *arg,
+>> +                                 struct tee_param *params)
+>> +{
+>> +       struct qcom_tee_object_invoke_ctx *oic __free(kfree) = NULL;
+>> +       struct qcom_tee_context *ctx = tee_ctx->data;
+>> +       struct qcom_tee_arg *u __free(kfree) = NULL;
+>> +       struct qcom_tee_object *object;
+>> +       int i, ret, result;
+>> +
+>> +       if (qcom_tee_params_check(params, arg->num_params))
+>> +               return -EINVAL;
+>> +
+>> +       /* Handle OBJREF reserved operations. */
+>> +       if (arg->op == QCOM_TEE_OBJREF_OP_RELEASE) {
+>> +               del_qtee_object(arg->object, ctx);
+>> +
+>> +               return 0;
+>> +       }
+>> +
+>> +       /* Unsupported reserved operation. */
+>> +       if (arg->op > QCOM_TEE_OBJREF_OP_MIN)
+>> +               return -EINVAL;
+>> +
+>> +       oic = kzalloc(sizeof(*oic), GFP_KERNEL);
+>> +       if (!oic)
+>> +               return -ENOMEM;
+>> +
+>> +       /* +1 for ending QCOM_TEE_ARG_TYPE_INV. */
+>> +       u = kzalloc(sizeof(*u) * (arg->num_params + 1), GFP_KERNEL);
+> 
+> Please use kcalloc().
 >
-> OTOH, if we follow the pattern of HD-audio, at least there will be
-> more preliminary changes in USB-audio driver side like we've done for
-> HD-audio.  That is, make most of USB-audio code to be usable as (a
-> kind of) library code.  It's more work, but certainly doable.  And if
-> that can be achieved and there other similar use cases of this stuff
-> not only from Qualcomm, it might make sense to go in that way, too.
-> That said, it's rather a question about what's extended in future.
-> If Intel will need / want to move on that direction, too, that's a
-> good reason to reconsider the basic design.
+
+Ack.
+
+>> +       if (!u)
+>> +               return -ENOMEM;
+>> +
+>> +       if (arg->object == TEE_OBJREF_NULL &&
+>> +           !qcom_tee_root_object_check(arg->op, params, arg->num_params)) {
+>> +               /* Use ROOT if NULL is invoked. */
+>> +               object = ROOT_QCOM_TEE_OBJECT;
+>> +       } else {
+>> +               /* Get object being invoked. */
+>> +               ret = find_qtee_object(&object, arg->object, ctx);
+>> +               if (ret)
+>> +                       return ret;
+>> +       }
+>> +
+>> +       ret = qcom_tee_params_to_args(u, params, arg->num_params, ctx);
+>> +       if (ret)
+>> +               goto out;
+>> +
+>> +       ret = qcom_tee_object_do_invoke(oic, object, arg->op, u, &result);
+>> +       if (!ret) {
+>> +               if (!result) {
+>> +                       /* Only parse QTEE response on SUCCESS. */
+>> +                       ret = qcom_tee_params_from_args(params, u, arg->num_params, ctx);
+>> +               } else {
+>> +                       /* Put driver's IO objects copy; get in qcom_tee_params_to_args(). */
+>> +                       qcom_tee_arg_for_each_input_object(i, u)
+>> +                               qcom_tee_object_put(u[i++].o);
+>> +               }
+>> +       } else if (ret != -EAGAIN && ret != -ENODEV) {
+>> +               /* Unable to initiate a QTEE invocation; cleanup qcom_tee_params_to_args(). */
+>> +               qcom_tee_arg_for_each_input_object(i, u) {
+>> +                       qcom_tee_user_object_set_notify(u[i].o, false);
+>> +                       if (typeof_qcom_tee_object(u[i].o) == QCOM_TEE_OBJECT_TYPE_CB_OBJECT)
+>> +                               qcom_tee_object_put(u[i].o);
+>> +                       qcom_tee_object_put(u[i].o);
+>> +               }
+>> +       }
+>> +
+>> +       arg->ret = result;
+>> +out:
+>> +       qcom_tee_object_put(object);
+>> +
+>> +       return ret;
+>> +}
+>> +
+>> +/**
+>> + * qcom_tee_supp_recv() - Pick a request for the supplicant.
+>> + * @tee_ctx: TEE context.
+>> + * @op: requested operation on object.
+>> + * @num_params: number of elements in the parameter array, updated with number used.
+>> + * @params: parameters for @op.
+>> + *
+>> + * The first parameter is a %TEE_IOCTL_PARAM_ATTR_TYPE_VALUE_INOUT meta parameter.
+>> + * On input, it provides a user buffer. This buffer is used for parameters of type
+>> + * %TEE_IOCTL_PARAM_ATTR_TYPE_MEMBUF_INPUT in qcom_tee_cb_params_from_args().
+>> + * On output, object id and request id are stored in the meta parameter.
+>> + *
+>> + * Return: On success return 0 or <0 on failure.
+>> + */
+>> +static int qcom_tee_supp_recv(struct tee_context *tee_ctx, u32 *op, u32 *num_params,
+>> +                             struct tee_param *params)
+>> +{
+>> +       struct qcom_tee_user_object_request_data data;
+>> +       struct qcom_tee_context *ctx = tee_ctx->data;
+>> +       void __user *uaddr;
+>> +       size_t ubuf_size;
+>> +       int i, ret;
+>> +
+>> +       if (!*num_params)
+>> +               return -EINVAL;
+>> +
+>> +       /* We expect the first parameter to be an INOUT + meta parameter. */
+>> +       if (params->attr != (TEE_IOCTL_PARAM_ATTR_TYPE_VALUE_INOUT | TEE_IOCTL_PARAM_ATTR_META))
+>> +               return -EINVAL;
+>> +
+>> +       /* Others parameters are none. */
+>> +       for (i = 1; i < *num_params; i++)
+>> +               if (params[i].attr)
+>> +                       return -EINVAL;
+>> +
+>> +       if (IS_ALIGNED(params->u.value.a, 8))
+>> +               return -EINVAL;
+>> +
+>> +       /* User buffer and size from meta parameter. */
+>> +       uaddr = u64_to_user_ptr(params->u.value.a);
+>> +       ubuf_size = params->u.value.b;
+>> +       /* Process TEE parameters. +/-1 to ignore meta parameter. */
+>> +       ret = qcom_tee_user_object_pop(ctx, params + 1, *num_params - 1, uaddr, ubuf_size, &data);
+>> +       if (ret)
+>> +               return ret;
+>> +
+>> +       params->u.value.a = data.object_id;
+>> +       params->u.value.b = data.id;
+>> +       params->u.value.c = 0;
+>> +       *op = data.op;
+>> +       *num_params = data.np + 1;
+>> +
+>> +       return 0;
+>> +}
+>> +
+>> +/**
+>> + * qcom_tee_supp_send() - Pick a request for the supplicant.
+>> + * @tee_ctx: TEE context.
+>> + * @ret: return value of the request.
+>> + * @num_params: number of elements in the parameter array.
+>> + * @params: returned parameters.
+>> + *
+>> + * The first parameter is a %TEE_IOCTL_PARAM_ATTR_TYPE_VALUE_INPUT meta parameter.
+>> + * It specifies the request id this response is belong to.
+>> + *
+>> + * Return: On success return 0 or <0 on failure.
+>> + */
+>> +static int qcom_tee_supp_send(struct tee_context *tee_ctx, u32 errno, u32 num_params,
+>> +                             struct tee_param *params)
+>> +{
+>> +       struct qcom_tee_context *ctx = tee_ctx->data;
+>> +       int id;
+>> +
+>> +       if (!num_params)
+>> +               return -EINVAL;
+>> +
+>> +       /* We expect the first parameter to be an INPUT + meta parameter. */
+>> +       if (params->attr != (TEE_IOCTL_PARAM_ATTR_TYPE_VALUE_INPUT | TEE_IOCTL_PARAM_ATTR_META))
+>> +               return -EINVAL;
+>> +
+>> +       /* Get the req_id of response. */
+>> +       id = params->u.value.a;
+>> +
+>> +       /* Process TEE parameters. +/-1 to ignore meta parameter. */
+>> +       return qcom_tee_user_object_submit(ctx, params + 1, num_params - 1, id, errno);
+>> +}
+>> +
+>> +static int qcom_tee_open(struct tee_context *tee_context)
+>> +{
+>> +       struct qcom_tee_context *ctx __free(kfree) = NULL;
+>> +       int err;
+>> +
+>> +       ctx = kzalloc(sizeof(*ctx), GFP_KERNEL);
+>> +       if (!ctx)
+>> +               return -ENOMEM;
+>> +
+>> +       err = init_srcu_struct(&ctx->req_srcu);
+>> +       if (err)
+>> +               return err;
+>> +
+>> +       ctx->tee_context = tee_context;
+>> +       idr_init(&ctx->qtee_objects_idr);
+>> +       idr_init(&ctx->reqs_idr);
+>> +       mutex_init(&ctx->lock);
+>> +       init_completion(&ctx->req_c);
+>> +       kref_init(&ctx->ref_cnt);
+>> +
+>> +       tee_context->data = no_free_ptr(ctx);
+>> +
+>> +       return 0;
+>> +}
+>> +
+>> +static void qcom_tee_release(struct tee_context *tee_context)
+>> +{
+>> +       struct qcom_tee_context *ctx = tee_context->data;
+>> +       struct qcom_tee_object *object;
+>> +       int id;
+>> +
+>> +       /* Process QUEUED or PROCESSING requests. */
+>> +       qcom_tee_requests_destroy(ctx);
+>> +
+>> +       /* Release QTEE objects. */
+>> +       idr_for_each_entry(&ctx->qtee_objects_idr, object, id)
+>> +               qcom_tee_object_put(object);
+>> +
+>> +       /* Put the context; wait for all user objects to go away. */
+>> +       kref_put(&ctx->ref_cnt, __qcom_tee_context_destroy);
+>> +}
+>> +
+>> +void __qcom_tee_context_destroy(struct kref *ref_cnt)
+>> +{
+>> +       struct qcom_tee_context *ctx = container_of(ref_cnt, struct qcom_tee_context, ref_cnt);
+>> +
+>> +       idr_destroy(&ctx->qtee_objects_idr);
+>> +       idr_destroy(&ctx->reqs_idr);
+>> +       cleanup_srcu_struct(&ctx->req_srcu);
+>> +       kfree(ctx);
+>> +}
+>> +
+>> +static void qcom_tee_get_version(struct tee_device *teedev, struct tee_ioctl_version_data *vers)
+>> +{
+>> +       struct tee_ioctl_version_data v = {
+>> +               .impl_id = TEE_IMPL_ID_QTEE,
+>> +               .gen_caps = TEE_GEN_CAP_OBJREF,
+>> +       };
+>> +
+>> +       *vers = v;
+>> +}
+>> +
+>> +static const struct tee_driver_ops qcom_tee_ops = {
+>> +       .get_version = qcom_tee_get_version,
+>> +       .open = qcom_tee_open,
+>> +       .release = qcom_tee_release,
+>> +       .object_invoke_func = qcom_tee_object_invoke,
+>> +       .supp_recv = qcom_tee_supp_recv,
+>> +       .supp_send = qcom_tee_supp_send,
+>> +};
+>> +
+>> +static const struct tee_desc qcom_tee_desc = {
+>> +       .name = "qcom_tee",
+>> +       .ops = &qcom_tee_ops,
+>> +       .owner = THIS_MODULE,
+>> +};
+>> +
+>> +static int qcom_tee_probe(struct platform_device *pdev)
+>> +{
+>> +       struct tee_device *teedev;
+>> +       int err;
+>> +
+>> +       if (!qcom_scm_is_available())
+>> +               return -EPROBE_DEFER;
+>> +
+>> +       teedev = tee_device_alloc(&qcom_tee_desc, NULL, NULL, NULL);
+>> +       if (IS_ERR(teedev))
+>> +               return PTR_ERR(teedev);
+>> +
+>> +       err = tee_device_register(teedev);
+>> +       if (err)
+>> +               goto err_unreg_teedev;
+>> +
+>> +       platform_set_drvdata(pdev, teedev);
+>> +       return 0;
+>> +
+>> +err_unreg_teedev:
+>> +       tee_device_unregister(teedev);
+>> +
+>> +       return err;
+>> +}
+>> +
+>> +static void qcom_tee_remove(struct platform_device *pdev)
+>> +{
+>> +       struct tee_device *teedev = platform_get_drvdata(pdev);
+>> +
+>> +       /* Keep a copy, tee_device_unregister() sets it to NULL. */
+> teedev shouldn't be accessed after a call to tee_device_unregister()
+> 
+
+True, but I don't access teedev after unregistering.
+
+pdev holds a pointer to teedev, and teedev holds a pointer to the pool.
+Before calling unregister, I keep a copy of the pool address for cleaning up
+the pool after unregistering.
+
+I did it this way because we don't have a private struct like optee to
+hold the driver state. I'm adding struct qcomtee (following your comments
+in PATCH [5/10]), so this should be removed.
+
+
+>> +       struct tee_shm_pool *pool = teedev->pool;
+>> +
+>> +       /* Wait for users to go away. */
+>> +       tee_device_unregister(teedev);
+>> +       tee_shm_pool_free(pool);
+> Why? You supplied NULL when tee_device_alloc() was called.
+> 
+
+Sorry, this is my fault. We originally had support for TEE SHM IOCTLs.
+I removed it to reduce the size of this patchset and planned to send
+it later. I missed removing this part.
+
+>> +}
+>> +
+>> +static const struct of_device_id qcom_tee_dt_match[] = {
+>> +       { .compatible = "qcom,tee" },
+>> +       {},
+>> +};
+>> +MODULE_DEVICE_TABLE(of, qcom_tee_dt_match);
+>> +
+>> +static struct platform_driver qcom_tee_platform_driver = {
+>> +       .probe = qcom_tee_probe,
+>> +       .remove = qcom_tee_remove,
+>> +       .driver = {
+>> +               .name = "qcom_tee",
+>> +               .of_match_table = qcom_tee_dt_match,
+>> +       },
+>> +};
+>> +
+>> +int qcom_tee_driver_register(void)
+>> +{
+>> +       return platform_driver_register(&qcom_tee_platform_driver);
+>> +}
+>> +
+>> +void qcom_tee_driver_unregister(void)
+>> +{
+>> +       platform_driver_unregister(&qcom_tee_platform_driver);
+>> +}
+>> diff --git a/drivers/tee/qcomtee/core.c b/drivers/tee/qcomtee/core.c
+>> index 79f1181cf676..545857e117db 100644
+>> --- a/drivers/tee/qcomtee/core.c
+>> +++ b/drivers/tee/qcomtee/core.c
+>> @@ -904,8 +904,14 @@ static int __init qcom_tee_object_invoke_init(void)
+>>         if (ret)
+>>                 goto err_kobject_put;
+>>
+>> +       ret = qcom_tee_driver_register();
+>> +       if (ret)
+>> +               goto err_remove_group;
+>> +
+>>         return 0;
+>>
+>> +err_remove_group:
+>> +       sysfs_remove_group(qcom_tee_object_invoke_kobj, &attr_group);
+>>  err_kobject_put:
+>>         /* Remove '/sys/firmware/qcom_tee'. */
+>>         kobject_put(qcom_tee_object_invoke_kobj);
+>> @@ -920,6 +926,8 @@ module_init(qcom_tee_object_invoke_init);
+>>
+>>  static void __exit qcom_tee_object_invoke_deinit(void)
+>>  {
+>> +       qcom_tee_driver_unregister();
+>> +
+>>         /* Wait for RELEASE operations for QTEE objects. */
+>>         qcom_tee_release_destroy();
+>>         qcom_tee_msg_buffers_destroy();
+>> diff --git a/drivers/tee/qcomtee/qcomtee_private.h b/drivers/tee/qcomtee/qcomtee_private.h
+>> index c718cd2d8463..15f358260ed7 100644
+>> --- a/drivers/tee/qcomtee/qcomtee_private.h
+>> +++ b/drivers/tee/qcomtee/qcomtee_private.h
+>> @@ -10,6 +10,14 @@
+>>  #include <linux/kobject.h>
+>>  #include <linux/tee_core.h>
+>>
+>> +/* Flags relating to object reference. */
+>> +#define QCOM_TEE_OBJREF_FLAG_USER 1
+>> +
+>> +/* Reserved OBJREF operations. */
+>> +/* These operations are not sent to QTEE and handled in driver. */
+>> +#define QCOM_TEE_OBJREF_OP_MIN USHRT_MAX
+>> +#define QCOM_TEE_OBJREF_OP_RELEASE (QCOM_TEE_OBJREF_OP_MIN + 1)
+>> +
+>>  struct qcom_tee_object *qcom_tee_idx_erase(u32 idx);
+>>  void qcom_tee_object_free(struct qcom_tee_object *object);
+>>
+>> @@ -44,9 +52,167 @@ int __qcom_tee_object_do_invoke(struct qcom_tee_object_invoke_ctx *oic,
+>>                                 struct qcom_tee_object *object, u32 op, struct qcom_tee_arg *u,
+>>                                 int *result);
+>>
+>> +/**
+>> + * struct qcom_tee_context - Clients or supplicants context.
+>> + * @tee_context: TEE context.
+>> + * @qtee_objects_idr: QTEE objects in this context.
+>> + * @reqs_idr: Requests currently being processed.
+>> + * @lock: mutex for @reqs_idr and @qtee_objects_idr.
+>> + * @req_srcu: srcu for exclusive access to requests.
+>> + * @req_c: completion used when supplicant is waiting for requests.
+>> + * @released: state of this context.
+>> + * @ref_cnt: ref count.
+>> + */
+>> +struct qcom_tee_context {
+> 
+> Other drivers call their conterpart of this struct *_context_data.
+> Using the same pattern here makes it easier to recognize the struct in
+> the rest of the code.
+> 
+
+Ack.
+
+>> +       struct tee_context *tee_context;
+>> +
+>> +       struct idr qtee_objects_idr;
+>> +       struct idr reqs_idr;
+>> +       /* Synchronize access to @reqs_idr, @qtee_objects_idr and updating requests state. */
+>> +       struct mutex lock;
+>> +       struct srcu_struct req_srcu;
+> 
+> Why do you use this synchronization primitive? I don't know enough
+> about this primitive to tell if you use it for the right purpose so
+> perhaps you can help me understand which properties you need.
+> 
+
+Sure, let me explain it bellow in the qcom_tee_user_object_dispatch,
+where it is acually used.
+
+>> +       struct completion req_c;
+>> +
+>> +       int released;
+>> +
+>> +       struct kref ref_cnt;
+> 
+> Why does this struct need a different lifetime than struct tee_context?
+> 
+
+This is a side effect of how QTEE objects and callback objects are released:
+
+  - When a tee_context is closed, we release all QTEE objects in that context.
+    QTEE specifies that object releases are asynchronous. So, we queue the
+    releases in a workqueue and immediately return from the release callback,
+    allowing the TEE subsystem to continue.
+
+  - When the workqueue sends a release for a QTEE object, QTEE may respond
+    by requesting the release of a callback object or an operation on a callback
+    object. This requires a valid struct qcom_tee_context. That's why we keep this
+    until all callback objects are gone.
+
+The alternative is to keep a list of callback objects in this context and
+flag them as orphans. The refcount seems easier :).
+ 
+
+>> +};
+>> +
+>> +void __qcom_tee_context_destroy(struct kref *ref_cnt);
+>> +
+>> +/* qcom_tee_context_add_qtee_object() - Add a QTEE object to the context.
+>> + * @param: TEE parameter represents @object.
+>> + * @object: QTEE object.
+>> + * @ctx: context to add the object.
+>> + *
+>> + * It assumes @object is %QCOM_TEE_OBJECT_TYPE_TEE and caller has already issued
+>> + * qcom_tee_object_get() for @object.
+>> + *
+>> + * Return: On success return 0 or <0 on failure.
+>> + */
+>> +int qcom_tee_context_add_qtee_object(struct tee_param *param, struct qcom_tee_object *object,
+>> +                                    struct qcom_tee_context *ctx);
+>> +
+>> +/* Get the QTEE object added with qcom_tee_context_add_qtee_object(). */
+>> +int qcom_tee_context_find_qtee_object(struct qcom_tee_object **object, struct tee_param *param,
+>> +                                     struct qcom_tee_context *ctx);
+>> +
+>> +/**
+>> + * qcom_tee_context_del_qtee_object() - Delete a QTEE object from the context.
+>> + * @param: TEE parameter represents @object.
+>> + * @ctx: context to delete the object.
+>> + *
+>> + * @param returned by qcom_tee_context_add_qtee_object().
+>> + */
+>> +void qcom_tee_context_del_qtee_object(struct tee_param *param, struct qcom_tee_context *ctx);
+>> +
+>> +/**
+>> + * qcom_tee_objref_to_arg() - Convert OBJREF parameter to QTEE argument in a context.
+>> + * @arg: QTEE argument.
+>> + * @param: TEE parameter.
+>> + * @ctx: context in which the conversion should happen.
+>> + *
+>> + * It assumes @param is OBJREF.
+>> + * It does not set @arg.type; caller should initialize it to a correct
+>> + * &enum qcom_tee_arg_type value.
+>> + *
+>> + * Return: On success return 0 or <0 on failure.
+>> + */
+>> +int qcom_tee_objref_to_arg(struct qcom_tee_arg *arg, struct tee_param *param,
+>> +                          struct qcom_tee_context *ctx);
+>> +
+>> +/**
+>> + * qcom_tee_objref_from_arg() - Convert QTEE argument to OBJREF param in a context.
+>> + * @param: TEE parameter.
+>> + * @arg: QTEE argument.
+>> + * @ctx: context in which the conversion should happen.
+>> + *
+>> + * It assumes @arg is of %QCOM_TEE_ARG_TYPE_IO or %QCOM_TEE_ARG_TYPE_OO.
+>> + * It does not set @param.attr; caller should initialize it to a correct OBJREF type.
+>> + *
+>> + * Return: On success return 0 or <0 on failure.
+>> + */
+>> +int qcom_tee_objref_from_arg(struct tee_param *param, struct qcom_tee_arg *arg,
+>> +                            struct qcom_tee_context *ctx);
+>> +
+>> +int qcom_tee_driver_register(void);
+>> +void qcom_tee_driver_unregister(void);
+>> +
+>>  /* OBJECTS: */
+>>
+>>  /* (1) Primordial Object. */
+>>  extern struct qcom_tee_object qcom_tee_primordial_object;
+>>
+>> +/* (2) User Object API. */
+>> +
+>> +/* Is it a user object? */
+>> +int is_qcom_tee_user_object(struct qcom_tee_object *object);
+>> +
+>> +/* Set user object's 'notify on release' flag. */
+>> +void qcom_tee_user_object_set_notify(struct qcom_tee_object *object, bool notify);
+>> +
+>> +/**
+>> + * qcom_tee_user_param_to_object() - Convert OBJREF parameter to &struct qcom_tee_object.
+>> + * @object: object returned.
+>> + * @param: TEE parameter.
+>> + * @ctx: context in which the conversion should happen.
+>> + *
+>> + * @param is OBJREF with %TEE_IOCTL_OBJREF_USER flags.
+>> + *
+>> + * Return: On success return 0 or <0 on failure.
+>> + */
+>> +int qcom_tee_user_param_to_object(struct qcom_tee_object **object, struct tee_param *param,
+>> +                                 struct qcom_tee_context *ctx);
+>> +
+>> +/* Reverse what qcom_tee_user_param_to_object() does. */
+>> +int qcom_tee_user_param_from_object(struct tee_param *param, struct qcom_tee_object *object,
+>> +                                   struct qcom_tee_context *ctx);
+>> +
+>> +struct qcom_tee_user_object_request_data {
+>> +       int id;                         /* Id assigned to the request. */
+>> +       u64 object_id;                  /* Object id being invoked by QTEE. */
+>> +       u32 op;                         /* Requested operation on object. */
+>> +       int np;                         /* Number of parameters in the request.*/
+>> +};
+>> +
+>> +/**
+>> + * qcom_tee_user_object_pop() - Pop a request for a user object.
+>> + * @ctx: context to look for user object.
+>> + * @params: parameters for @op.
+>> + * @num_params: number of elements in the parameter array.
+>> + * @uaddr: user buffer for output MEMBUF parameters.
+>> + * @size: size of user buffer @uaddr.
+>> + * @data: information for the pop request.
+>> + *
+>> + * @params is filled along with @data for the picked request.
+>> + *
+>> + * Return: On success return 0 or <0 on failure.
+>> + */
+>> +int qcom_tee_user_object_pop(struct qcom_tee_context *ctx,
+>> +                            struct tee_param *params, int num_params,
+>> +                            void __user *uaddr, size_t size,
+>> +                            struct qcom_tee_user_object_request_data *data);
+>> +
+>> +/**
+>> + * qcom_tee_user_object_submit() - Submit a response for a user object.
+>> + * @ctx: context to look for user object.
+>> + * @params: returned parameters.
+>> + * @num_params: number of elements in the parameter array.
+>> + * @id: request id for the response.
+>> + * @errno: result of user object invocation.
+>> + *
+>> + * Return: On success return 0 or <0 on failure.
+>> + */
+>> +int qcom_tee_user_object_submit(struct qcom_tee_context *ctx,
+>> +                               struct tee_param *params, int num_params, int id, int errno);
+>> +
+>> +/**
+>> + * qcom_tee_requests_destroy() - Destroy requests in a context.
+>> + * @ctx: context for which to destroy requests.
+>> + *
+>> + * After calling qcom_tee_requests_destroy(), @ctx can not be reused.
+>> + * It should be called on @ctx cleanup path.
+>> + */
+>> +void qcom_tee_requests_destroy(struct qcom_tee_context *ctx);
+>> +
+>>  #endif /* QCOM_TEE_PRIVATE_H */
+>> diff --git a/drivers/tee/qcomtee/user_obj.c b/drivers/tee/qcomtee/user_obj.c
+>> new file mode 100644
+>> index 000000000000..4c671a3ae0de
+>> --- /dev/null
+>> +++ b/drivers/tee/qcomtee/user_obj.c
+>> @@ -0,0 +1,625 @@
+>> +// SPDX-License-Identifier: GPL-2.0-only
+>> +/*
+>> + * Copyright (c) 2024 Qualcomm Innovation Center, Inc. All rights reserved.
+>> + */
+>> +
+>> +#define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
+>> +
+>> +#include "qcomtee_private.h"
+>> +
+>> +/**
+>> + * DOC: User Objects aka Supplicants
+>> + *
+>> + * Any userspace process with access to the TEE device file can behave as a supplicant
+>> + * by creating a user object. Any TEE parameter of type OBJREF with %QCOM_TEE_OBJREF_FLAG_USER
+>> + * flag set is considered as user object.
+>> + *
+>> + * A supplicant uses qcom_tee_user_object_pick() (i.e. TEE_IOC_SUPPL_RECV) to receive a
+>> + * QTEE user object request and qcom_tee_user_object_submit() (i.e. TEE_IOC_SUPPL_SEND)
+>> + * to submit a response. QTEE expects to receive the response, including OB and OO in
+>> + * specific order in the message; parameters submitted with qcom_tee_user_object_submit()
+>> + * should maintain this order.
+>> + */
+>> +
+>> +/**
+>> + * struct qcom_tee_user_object - User object.
+>> + * @object: &struct qcom_tee_object representing this user object.
+>> + * @ctx: context for which user object is defined.
+>> + * @object_id: object ID in @ctx.
+>> + * @nor: notify userspace if object is released.
+>> + *
+>> + * Any object managed in userspace is represented with this struct.
+>> + * If @nor is set, on release a notification message is send back to the userspace.
+>> + */
+>> +struct qcom_tee_user_object {
+>> +       struct qcom_tee_object object;
+>> +       struct qcom_tee_context *ctx;
+>> +       u64 object_id;
+>> +
+>> +       bool nor;
+>> +};
+>> +
+>> +#define to_qcom_tee_user_object(o) container_of((o), struct qcom_tee_user_object, object)
+>> +
+>> +static struct qcom_tee_object_operations qcom_tee_user_object_ops;
+>> +
+>> +/* Is it a user object? */
+>> +int is_qcom_tee_user_object(struct qcom_tee_object *object)
+>> +{
+>> +       return object != NULL_QCOM_TEE_OBJECT &&
+>> +               typeof_qcom_tee_object(object) == QCOM_TEE_OBJECT_TYPE_CB_OBJECT &&
+>> +               object->ops == &qcom_tee_user_object_ops;
+>> +}
+>> +
+>> +/* Set user object's 'notify on release' flag. */
+>> +void qcom_tee_user_object_set_notify(struct qcom_tee_object *object, bool notify)
+>> +{
+>> +       if (is_qcom_tee_user_object(object))
+>> +               WRITE_ONCE(to_qcom_tee_user_object(object)->nor, notify);
+> 
+> It looks like this depends on some synchronization. Please add a
+> comment on how this works.
+> 
+
+Absolutely, I'll give detail.
+
+>> +}
+>> +
+>> +/**
+>> + * enum qcom_tee_req_state - Current state of request.
+>> + * @QCOM_TEE_REQ_QUEUED: Request is waiting for supplicant.
+>> + * @QCOM_TEE_REQ_PROCESSING: Request has been picked by the supplicant.
+>> + * @QCOM_TEE_REQ_PROCESSED: Response has been submitted for the request.
+>> + */
+>> +enum qcom_tee_req_state {
+>> +       QCOM_TEE_REQ_QUEUED = 1,
+>> +       QCOM_TEE_REQ_PROCESSING,
+>> +       QCOM_TEE_REQ_PROCESSED,
+>> +};
+>> +
+>> +/* User requests sent to supplicants. */
+>> +struct qcom_tee_user_req {
+>> +       enum qcom_tee_req_state state;
+>> +
+>> +       int req_id;                     /* Request ID. */
+>> +       u64 object_id;                  /* User object ID. */
+>> +       u32 op;                         /* Operation to perform on object. */
+>> +       struct qcom_tee_arg *args;      /* QTEE arguments for this operation. */
+>> +       int errno;                      /* Result of operation. */
+>> +
+>> +       struct completion c;            /* Completion for whoever wait for results. */
+>> +};
+>> +
+>> +/* Static placeholder for a request in PROCESSING state in qcom_tee_context.reqs_idr.
+>> + * If the thread initiated the QTEE call using qcom_tee_object_invoke() dies, and supplicant
+>> + * is processing the request, we replace the entry in qcom_tee_context.reqs_idr with
+>> + * __empty_ureq. So (1) the req_id remains busy and not reused, and (2) supplicant fails to
+>> + * submit response and does the necessary rollback.
+>> + */
+>> +static struct qcom_tee_user_req __empty_ureq = { .state = QCOM_TEE_REQ_PROCESSING };
+>> +
+>> +/* Enqueue a user request for a context. */
+>> +static int qcom_tee_request_enqueue(struct qcom_tee_user_req *ureq, struct qcom_tee_context *ctx)
+>> +{
+>> +       int ret;
+>> +
+>> +       guard(mutex)(&ctx->lock);
+>> +       /* Supplicant is dying. */
+>> +       if (ctx->released)
+>> +               return -ENODEV;
+>> +
+>> +       ret = idr_alloc(&ctx->reqs_idr, ureq, 0, 0, GFP_KERNEL);
+>> +       if (ret < 0)
+>> +               return ret;
+>> +
+>> +       ureq->req_id = ret;
+>> +       ureq->state = QCOM_TEE_REQ_QUEUED;
+>> +
+>> +       return 0;
+>> +}
+>> +
+>> +/**
+>> + * qcom_tee_requests_destroy() - Destroy requests in a context.
+>> + * @ctx: context for which to destroy requests.
+>> + */
+>> +void qcom_tee_requests_destroy(struct qcom_tee_context *ctx)
+>> +{
+>> +       struct qcom_tee_user_req *ureq;
+>> +       int id;
+>> +
+>> +       guard(mutex)(&ctx->lock);
+>> +
+>> +       /* So qcom_tee_request_enqueue() refuses new requests. */
+>> +       ctx->released = 1;
+>> +       idr_for_each_entry(&ctx->reqs_idr, ureq, id) {
+>> +               if (ureq == &__empty_ureq)
+>> +                       continue;
+>> +               /* ureq in QUEUED or PROCESSING state, terminate them. */
+>> +               if (ureq->op == QCOM_TEE_OBJREF_OP_RELEASE) {
+>> +                       kfree(ureq);
+>> +               } else {
+>> +                       ureq->state = QCOM_TEE_REQ_PROCESSED;
+>> +                       ureq->errno = -ENODEV;
+>> +                       complete(&ureq->c);
+>> +               }
+>> +       }
+>> +}
+>> +
+>> +/**
+>> + * qcom_tee_supp_pop_entry() - Pop the next request in a context.
+> 
+> When you pop something you'd expect it to be removed also.
 >
 
-So to clarify, what Cezary and I are proposing are actually two different=
- concepts to achieve some sort of offloading for audio data.=C2=A0 In my =
-use case, we're trying to leverage as much of the USB SND implementation =
-as possible, and only offloading the handling of audio transfers.=C2=A0 E=
-verything else is still handled by USB SND, hence the reason for it being=
- an add-on since most of it stays the same.=C2=A0 Unfortunately, I don't =
-have any details about the full HW offload design, as public material on =
-it is fairly minimal.=C2=A0 So it would be difficult for me to rework my =
-series to something I don't have a line of sight into.=C2=A0 Personally (=
-and as you can probably tell :)), I would prefer if we could do the refac=
-toring in stages (if actually required), since I've been pushing this met=
-hod for awhile now, and I'm not sure if I can take up that effort to do t=
-hat on my next submission.=C2=A0 At least from the QC perspective if we d=
-id move to the HDaudio-type implementation, I think I'd need to also
-change up the ASoC design we have currently implemented as well, so it wo=
-uldn't be a trivial change.
+I'll rename it to more apporpriate name.
+
+>> + * @ctx: context from which to pop a request.
+>> + * @ubuf_size: size of available buffer for MEMBUF parameters.
+>> + * @num_params: number of entries for TEE parameter array.
+>> + *
+>> + * It does not remove the request from &qcom_tee_context.reqs_idr.
+>> + * It checks if @num_params is large enough to fit the next request arguments.
+>> + * It checks if @ubuf_size is large enough to fit IB buffer arguments from QTEE.
+>> + * It updates request state to %QCOM_TEE_REQ_PROCESSING state.
+>> + *
+>> + * Return: On success return a request or NULL and ERR_PTR on failure.
+>> + */
+>> +static struct qcom_tee_user_req *qcom_tee_supp_pop_entry(struct qcom_tee_context *ctx,
+>> +                                                        size_t ubuf_size, int num_params)
+>> +{
+>> +       struct qcom_tee_user_req *ureq;
+>> +       struct qcom_tee_arg *u;
+>> +       int i, id;
+>> +
+>> +       guard(mutex)(&ctx->lock);
+>> +
+>> +       /* Find the a QUEUED request. */
+> 
+> Is it _a_ or _the_?
+> 
+>> +       idr_for_each_entry(&ctx->reqs_idr, ureq, id)
+>> +               if (ureq->state == QCOM_TEE_REQ_QUEUED)
+>> +                       break;
+> 
+> Will this always result in a FIFO processing?
+> 
+
+It not a FIFO. I understand your concerns.
+I'll replace it with a list.
+
+>> +
+>> +       if (!ureq)
+>> +               return NULL;
+>> +
+>> +       u = ureq->args;
+>> +       /* (1) Is there enough TEE parameters? */
+>> +       if (num_params < qcom_tee_args_len(u))
+>> +               return ERR_PTR(-EINVAL);
+>> +
+>> +       /* (2) Is there enough space to pass input buffers? */
+>> +       qcom_tee_arg_for_each_input_buffer(i, u) {
+>> +               ubuf_size = size_sub(ubuf_size, u[i].b.size);
+>> +               if (ubuf_size == SIZE_MAX)
+>> +                       return ERR_PTR(-EINVAL);
+>> +
+>> +               ubuf_size = round_down(ubuf_size, 8);
+>> +       }
+>> +
+>> +       /* Ready to process request 'QUEUED -> PROCESSING'. */
+>> +       ureq->state = QCOM_TEE_REQ_PROCESSING;
+>> +
+>> +       return ureq;
+>> +}
+>> +
+>> +/* User object dispatcher. */
+>> +static int qcom_tee_user_object_dispatch(struct qcom_tee_object_invoke_ctx *oic,
+>> +                                        struct qcom_tee_object *object, u32 op,
+>> +                                        struct qcom_tee_arg *args)
+>> +{
+>> +       struct qcom_tee_user_object *uo = to_qcom_tee_user_object(object);
+>> +       struct qcom_tee_user_req *ureq __free(kfree);
+>> +       struct qcom_tee_context *ctx = uo->ctx;
+>> +       int errno;
+>> +
+>> +       ureq = kzalloc(sizeof(*ureq), GFP_KERNEL);
+>> +       if (!ureq)
+>> +               return -ENOMEM;
+>> +
+>> +       init_completion(&ureq->c);
+>> +       ureq->object_id = uo->object_id;
+>> +       ureq->op = op;
+>> +       ureq->args = args;
+>> +
+>> +       /* Queue the request. */
+>> +       if (qcom_tee_request_enqueue(ureq, ctx))
+>> +               return -ENODEV;
+>> +
+>> +       /* Wakeup supplicant to process it. */
+>> +       complete(&ctx->req_c);
+>> +
+>> +       /* Wait for supplicant to process the request. */
+>> +       /* Supplicant is expected to process request in a timely manner. We wait as KILLABLE,
+> 
+> requests
+> 
+>> +        * in case supplicant and invoke thread both running from a same user process, otherwise
+> 
+> the same
+> 
+>> +        * the process stuck on fatal signal.
+> 
+> might get stuck on a fatal signal?
+> 
+>> +        */
+> 
+> Please combine into one comment.
+> 
+
+Ack.
+
+>> +       if (!wait_for_completion_state(&ureq->c, TASK_KILLABLE | TASK_FREEZABLE)) {
+>> +               errno = ureq->errno;
+>> +               /* On SUCCESS, end_cb_notify frees the request. */
+>> +               if (!errno)
+>> +                       oic->data = no_free_ptr(ureq);
+>> +       } else {
+>> +               enum qcom_tee_req_state prev_state;
+>> +
+>> +               errno = -ENODEV;
+>> +
+>> +               scoped_guard(mutex, &ctx->lock) {
+>> +                       prev_state = ureq->state;
+>> +                       /* Replace ureq with '__empty_ureq' to keep req_id reserved. */
+>> +                       if (prev_state == QCOM_TEE_REQ_PROCESSING)
+>> +                               idr_replace(&ctx->reqs_idr, &__empty_ureq, ureq->req_id);
+>> +                       /* Remove ureq as supplicant has never seen this request. */
+>> +                       else if (prev_state == QCOM_TEE_REQ_QUEUED)
+>> +                               idr_remove(&ctx->reqs_idr, ureq->req_id);
+>> +               }
+>> +
+>> +               /* Wait for exclusive access to ureq. */
+>> +               synchronize_srcu(&ctx->req_srcu);
+> 
+> I'm sorry, I don't follow.
+>
+
+I'll try to compare it to the optee.
+
+In optee, clients and the supplicant run in two different contexts. If the
+supplicant is available, the client will wait for it to finish processing
+the queued request. The supplicant is guaranteed to be timely and responsive.
+
+In QCOMTEE:
+
+  1. There are multiple supplicants. Any process that implements a callback
+     object is considered a supplicant. The general assumption of timeliness
+     or responsiveness may not apply. We allow the client to at least receive fatal
+     signals (this design can be extended later if a timeout is required).
+
+  2. A client can implement a callback object and act as both a client and
+     a supplicant simultaneously. To terminate such a process, we need to be
+     able to accept fatal signals.
+
+srcu is specifically used to protect the args array. After returning from
+qcom_tee_user_object_dispatch, the args array might not be valid. We need to
+ensure no one is accessing the args array before the retun, hence synchronize_srcu.
+Whenever we read the contents of args, we do it within an srcu read lock.
+
+For example, qcomtee_user_object_pop, which picks a request for the supplicant
+to process, will hold the srcu read lock when marshaling the args array
+to the TEE subsystem's params array.
+
+An alternative to the srcu would be to use "context lock" ctx->lock and
+hold it throughout the qcomtee_user_object_pop function, even when marshaling
+the args array to the TEE subsystem's params array.
+
+Using ctx->lock is easier to follow, but since it's shared by everyone in
+a context and marshaling can be heavy depending on the type of objects,
+I thought srcu would be more performant.
+
+In other words, srcu just moves the marshaling of objects outside of ctx->lock.
+What do you think about keeping srcu or replacing it with ctx->lock?
 
 
-Thanks
+Thank you so much Jens for the comments.
 
-Wesley Cheng
+Best Reagrds,
+Amir
 
+> Cheers,
+> Jens
+> 
+>> +
+>> +               /* Supplicant did some work for us, we should not discard it. */
+>> +               if (prev_state == QCOM_TEE_REQ_PROCESSED) {
+>> +                       errno = ureq->errno;
+>> +                       /* On SUCCESS, end_cb_notify frees the request. */
+>> +                       if (!errno)
+>> +                               oic->data = no_free_ptr(ureq);
+>> +               }
+>> +       }
+>> +
+>> +       return errno;
+>> +}
+>> +
+>> +/* Called after submitting the callback response. */
+>> +static void qcom_tee_user_object_end_cb_notify(struct qcom_tee_object_invoke_ctx *oic,
+>> +                                              struct qcom_tee_object *unused_object, int err)
+>> +{
+>> +       struct qcom_tee_user_req *ureq = oic->data;
+>> +       struct qcom_tee_arg *u = ureq->args;
+>> +       struct qcom_tee_object *object;
+>> +       int i;
+>> +
+>> +       qcom_tee_arg_for_each_output_object(i, u) {
+>> +               object = u[i].o;
+>> +               /* If err, drop QTEE copy otherwise just drop driver's copy. */
+>> +               if (err && (typeof_qcom_tee_object(object) == QCOM_TEE_OBJECT_TYPE_CB_OBJECT))
+>> +                       qcom_tee_object_put(object);
+>> +               qcom_tee_object_put(object);
+>> +       }
+>> +
+>> +       kfree(ureq);
+>> +}
+>> +
+>> +static void qcom_tee_user_object_release(struct qcom_tee_object *object)
+>> +{
+>> +       struct qcom_tee_user_object *uo = to_qcom_tee_user_object(object);
+>> +       struct qcom_tee_context *ctx = uo->ctx;
+>> +       struct qcom_tee_user_req *ureq;
+>> +
+>> +       static struct qcom_tee_arg args[] = { { .type = QCOM_TEE_ARG_TYPE_INV } };
+>> +
+>> +       if (READ_ONCE(uo->nor)) {
+>> +               ureq = kzalloc(sizeof(*ureq), GFP_KERNEL);
+>> +               if (ureq) {
+>> +                       ureq->object_id = uo->object_id;
+>> +                       ureq->op = QCOM_TEE_OBJREF_OP_RELEASE;
+>> +                       ureq->args = args;
+>> +
+>> +                       /* Queue the RELEASE request and wake supplicant to process it. */
+>> +                       qcom_tee_request_enqueue(ureq, ctx);
+>> +
+>> +                       complete(&ctx->req_c);
+>> +               } else {
+>> +                       pr_err("failed to notify user object (%s) release.\n",
+>> +                              qcom_tee_object_name(object));
+>> +               }
+>> +       }
+>> +
+>> +       /* Matching get is in qcom_tee_user_param_to_object(). */
+>> +       kref_put(&ctx->ref_cnt, __qcom_tee_context_destroy);
+>> +       kfree(uo);
+>> +}
+>> +
+>> +static struct qcom_tee_object_operations qcom_tee_user_object_ops = {
+>> +       .release = qcom_tee_user_object_release,
+>> +       .notify = qcom_tee_user_object_end_cb_notify,
+>> +       .dispatch = qcom_tee_user_object_dispatch,
+>> +};
+>> +
+>> +/**
+>> + * qcom_tee_user_param_to_object() - Convert OBJREF parameter to &struct qcom_tee_object.
+>> + * @object: object returned.
+>> + * @param: TEE parameter.
+>> + * @ctx: context in which the conversion should happen.
+>> + *
+>> + * @param is OBJREF with %QCOM_TEE_OBJREF_FLAG_USER flags.
+>> + *
+>> + * Return: On success return 0 or <0 on failure.
+>> + */
+>> +int qcom_tee_user_param_to_object(struct qcom_tee_object **object, struct tee_param *param,
+>> +                                 struct qcom_tee_context *ctx)
+>> +{
+>> +       struct qcom_tee_user_object *user_object __free(kfree) = NULL;
+>> +       struct qcom_tee_object *uo;
+>> +       int err;
+>> +
+>> +       user_object = kzalloc(sizeof(*user_object), GFP_KERNEL);
+>> +       if (!user_object)
+>> +               return -ENOMEM;
+>> +
+>> +       user_object->ctx = ctx;
+>> +       user_object->object_id = param->u.objref.id;
+>> +       /* By default, always notify userspace on release. */
+>> +       user_object->nor = true;
+>> +
+>> +       err = qcom_tee_object_user_init(&user_object->object, QCOM_TEE_OBJECT_TYPE_CB_OBJECT,
+>> +                                       &qcom_tee_user_object_ops, "uo-%lu", param->u.objref.id);
+>> +       if (err)
+>> +               return err;
+>> +
+>> +       uo = &no_free_ptr(user_object)->object;
+>> +       /* Keep context alive as user object is alive. */
+>> +       kref_get(&ctx->ref_cnt);
+>> +
+>> +       *object = uo;
+>> +
+>> +       return 0;
+>> +}
+>> +
+>> +/* Reverse what qcom_tee_user_param_to_object() does. */
+>> +int qcom_tee_user_param_from_object(struct tee_param *param, struct qcom_tee_object *object,
+>> +                                   struct qcom_tee_context *ctx)
+>> +{
+>> +       struct qcom_tee_user_object *uo;
+>> +
+>> +       if (!is_qcom_tee_user_object(object))
+>> +               return -EINVAL;
+>> +
+>> +       uo = to_qcom_tee_user_object(object);
+>> +       /* Sure if the object is in a same context as caller? */
+>> +       if (uo->ctx != ctx)
+>> +               return -EINVAL;
+>> +
+>> +       param->u.objref.id = uo->object_id;
+>> +       param->u.objref.flags = QCOM_TEE_OBJREF_FLAG_USER;
+>> +
+>> +       /* User objects are valid in the context of userspace; drop the driver copy. */
+>> +       qcom_tee_object_put(object);
+>> +
+>> +       return 0;
+>> +}
+>> +
+>> +/**
+>> + * qcom_tee_cb_params_from_args() - Convert QTEE arguments to TEE parameters in a context.
+>> + * @params: TEE parameters.
+>> + * @u: QTEE arguments.
+>> + * @num_params: number of elements in the parameter array.
+>> + * @ubuf_addr: user buffer for argument of type %QCOM_TEE_ARG_TYPE_IB.
+>> + * @ubuf_size: size of user buffer.
+>> + * @ctx: context in which the conversion should happen.
+>> + *
+>> + * It expects @params to have enough entries for @u. Entries in @params are of
+>> + * %TEE_IOCTL_PARAM_ATTR_TYPE_NONE. On failure, it puts IO objects.
+>> + *
+>> + * Return: On success return number of input parameters processed or <0 on failure.
+>> + */
+>> +static int qcom_tee_cb_params_from_args(struct tee_param *params,
+>> +                                       struct qcom_tee_arg *u, int num_params,
+>> +                                       void __user *ubuf_addr, size_t ubuf_size,
+>> +                                       struct qcom_tee_context *ctx)
+>> +{
+>> +       int i, np = 0;
+>> +
+>> +       qcom_tee_arg_for_each(i, u) {
+>> +               enum qcom_tee_arg_type at = u[i].type;
+>> +
+>> +               if (at == QCOM_TEE_ARG_TYPE_IB) {
+>> +                       params[np].attr = TEE_IOCTL_PARAM_ATTR_TYPE_MEMBUF_INPUT;
+>> +
+>> +                       /* Underflow already checked in qcom_tee_supp_pop_entry(). */
+>> +                       ubuf_size = round_down(ubuf_size - u[i].b.size, 8);
+>> +                       params[np].u.membuf.uaddr = (void * __user)(ubuf_addr + ubuf_size);
+>> +                       params[np].u.membuf.size = u[i].b.size;
+>> +                       if (copy_to_user(params[np].u.membuf.uaddr, u[i].b.addr, u[i].b.size))
+>> +                               goto out_failed;
+>> +
+>> +                       np++;
+>> +               } else if (at == QCOM_TEE_ARG_TYPE_IO) {
+>> +                       params[np].attr = TEE_IOCTL_PARAM_ATTR_TYPE_OBJREF_INPUT;
+>> +                       if (qcom_tee_objref_from_arg(&params[np], &u[i], ctx))
+>> +                               goto out_failed;
+>> +
+>> +                       np++;
+>> +               }
+>> +       }
+>> +
+>> +       return np;
+>> +
+>> +out_failed:
+>> +
+>> +       /* On ERROR: */
+>> +       /*  - Release params associated to QTEE objects in this context so far. */
+>> +       for (; np >= 0; np--) {
+>> +               if (params[np].attr == TEE_IOCTL_PARAM_ATTR_TYPE_OBJREF_INPUT)
+>> +                       qcom_tee_context_del_qtee_object(&params[np], ctx);
+>> +       }
+>> +       /*  - Release any IO objects not processed so far. */
+>> +       while (u[i].type) {
+>> +               if (u[i].type == QCOM_TEE_ARG_TYPE_IO)
+>> +                       qcom_tee_object_put(u[i++].o);
+>> +       }
+>> +
+>> +       return -EINVAL;
+>> +}
+>> +
+>> +/**
+>> + * qcom_tee_cb_params_to_args() - Convert TEE parameters to QTEE arguments in a context.
+>> + * @u: QTEE arguments.
+>> + * @params: TEE parameters.
+>> + * @num_params: number of elements in the parameter array.
+>> + * @ctx: context in which the conversion should happen.
+>> + *
+>> + * Return: On success return 0 or <0 on failure.
+>> + */
+>> +static int qcom_tee_cb_params_to_args(struct qcom_tee_arg *u,
+>> +                                     struct tee_param *params, int num_params,
+>> +                                     struct qcom_tee_context *ctx)
+>> +{
+>> +       struct qcom_tee_object *object;
+>> +       int i, np = 0;
+>> +
+>> +       qcom_tee_arg_for_each(i, u) {
+>> +               enum qcom_tee_arg_type at = u[i].type;
+>> +
+>> +               if (at == QCOM_TEE_ARG_TYPE_OB) {
+>> +                       if (params[np].attr != TEE_IOCTL_PARAM_ATTR_TYPE_MEMBUF_OUTPUT ||
+>> +                           params[np].u.membuf.size > u[i].b.size)
+>> +                               goto out_failed;
+>> +
+>> +                       if (copy_from_user(u[i].b.addr, params[np].u.membuf.uaddr, u[i].b.size))
+>> +                               goto out_failed;
+>> +
+>> +                       u[i].b.size = params[np].u.membuf.size;
+>> +
+>> +                       np++;
+>> +               } else if (at == QCOM_TEE_ARG_TYPE_OO) {
+>> +                       if (params[np].attr == TEE_IOCTL_PARAM_ATTR_TYPE_OBJREF_OUTPUT) {
+>> +                               if (qcom_tee_objref_to_arg(&u[i], &params[np], ctx))
+>> +                                       goto out_failed;
+>> +                       } else {
+>> +                               goto out_failed;
+>> +                       }
+>> +
+>> +                       np++;
+>> +               }
+>> +       }
+>> +
+>> +       return 0;
+>> +
+>> +out_failed:
+>> +
+>> +       /* On ERROR: */
+>> +       /* Put OO objects processed so far. */
+>> +       for (--i; i >= 0; i--) {
+>> +               if (u[i].type != QCOM_TEE_ARG_TYPE_OO)
+>> +                       continue;
+>> +
+>> +               object = u[i].o;
+>> +               qcom_tee_user_object_set_notify(object, false);
+>> +               /* For callback object, we hold a reference for the driver, put it. */
+>> +               if (typeof_qcom_tee_object(object) == QCOM_TEE_OBJECT_TYPE_CB_OBJECT)
+>> +                       qcom_tee_object_put(object);
+>> +               /* Put QTEE copy of object. */
+>> +               qcom_tee_object_put(object);
+>> +       }
+>> +
+>> +       return -EINVAL;
+>> +}
+>> +
+>> +/**
+>> + * qcom_tee_user_object_pop() - Pop a request for a user object.
+>> + * @ctx: context to look for user object.
+>> + * @params: parameters for @op.
+>> + * @num_params: number of elements in the parameter array.
+>> + * @uaddr: user buffer for output MEMBUF parameters.
+>> + * @size: size of user buffer @uaddr.
+>> + * @data: information for the pop request.
+>> + *
+>> + * @params is filled along with @data for the picked request.
+>> + *
+>> + * Return: On success return 0 or <0 on failure.
+>> + */
+>> +int qcom_tee_user_object_pop(struct qcom_tee_context *ctx,
+>> +                            struct tee_param *params, int num_params,
+>> +                            void __user *uaddr, size_t size,
+>> +                            struct qcom_tee_user_object_request_data *data)
+>> +{
+>> +       struct qcom_tee_user_req *ureq;
+>> +       struct qcom_tee_arg *req_args;
+>> +       u64 req_object_id;
+>> +       u32 req_op;
+>> +       int req_id;
+>> +       int ret;
+>> +
+>> +       while (1) {
+>> +               scoped_guard(srcu, &ctx->req_srcu) {
+>> +                       /* Pop a request 'QUEUED -> PROCESSING'. */
+>> +                       ureq = qcom_tee_supp_pop_entry(ctx, size, num_params);
+>> +                       if (!ureq)
+>> +                               goto wait_for_request;
+>> +
+>> +                       /* On failure, issue with params, e.g. not enough space in user buffer. */
+>> +                       if (IS_ERR(ureq))
+>> +                               return PTR_ERR(ureq);
+>> +
+>> +                       /* ''Prepare user request:'' */
+>> +                       req_id = ureq->req_id;
+>> +                       req_object_id = ureq->object_id;
+>> +                       req_op = ureq->op;
+>> +                       req_args = ureq->args;
+>> +                       ret = qcom_tee_cb_params_from_args(params, req_args,
+>> +                                                          num_params, uaddr,
+>> +                                                          size, ctx);
+>> +               }
+>> +
+>> +               if (ret >= 0)
+>> +                       break;
+>> +
+>> +               /* On failure, issue with req_args, e.g. invalid object. */
+>> +               scoped_guard(mutex, &ctx->lock) {
+>> +                       /* If (!= __empty_req) then 'PROCESSING -> PROCESSED'. */
+>> +                       if (idr_remove(&ctx->reqs_idr, req_id) == ureq) {
+>> +                               ureq->state = QCOM_TEE_REQ_PROCESSED;
+>> +                               ureq->errno = ret;
+>> +                               /* Send error to QTEE. */
+>> +                               complete(&ureq->c);
+>> +                       }
+>> +               }
+>> +
+>> +               /* Try next request. */
+>> +               continue;
+>> +
+>> +wait_for_request:
+>> +               /* Wait for a new QUEUED request. */
+>> +               if (wait_for_completion_interruptible(&ctx->req_c))
+>> +                       return -ERESTARTSYS;
+>> +       }
+>> +
+>> +       /* It is a RELEASE message; no one is waiting for result. */
+>> +       if (req_op == QCOM_TEE_OBJREF_OP_RELEASE) {
+>> +               scoped_guard(mutex, &ctx->lock)
+>> +                       idr_remove(&ctx->reqs_idr, req_id);
+>> +               kfree(ureq);
+>> +       }
+>> +
+>> +       /* ''Pick a pending request:'' */
+>> +       data->id = req_id;
+>> +       data->object_id = req_object_id;
+>> +       data->op = req_op;
+>> +       data->np = ret;
+>> +
+>> +       return 0;
+>> +}
+>> +
+>> +/**
+>> + * qcom_tee_user_object_submit() - Submit a response for a user object.
+>> + * @ctx: context to look for user object.
+>> + * @params: returned parameters.
+>> + * @num_params: number of elements in the parameter array.
+>> + * @id: request id for the response.
+>> + * @errno: result of user object invocation.
+>> + *
+>> + * Return: On success return 0 or <0 on failure.
+>> + */
+>> +int qcom_tee_user_object_submit(struct qcom_tee_context *ctx,
+>> +                               struct tee_param *params, int num_params, int id, int errno)
+>> +{
+>> +       struct qcom_tee_user_req *ureq;
+>> +
+>> +       scoped_guard(srcu, &ctx->req_srcu) {
+>> +               scoped_guard(mutex, &ctx->lock) {
+>> +                       ureq = idr_remove(&ctx->reqs_idr, id);
+>> +                       /* Is id invalid, or no one is waiting on response. */
+>> +                       if (ureq == &__empty_ureq || !ureq)
+>> +                               return -ENODEV;
+>> +
+>> +                       ureq->state = QCOM_TEE_REQ_PROCESSED;
+>> +               }
+>> +
+>> +               ureq->errno = errno;
+>> +               /* Process params only on SUCCESS. */
+>> +               if (!errno)
+>> +                       ureq->errno = qcom_tee_cb_params_to_args(ureq->args, params,
+>> +                                                                num_params, ctx);
+>> +
+>> +               errno = (!errno && ureq->errno) ? ureq->errno : 0;
+>> +               /* Send result to QTEE. */
+>> +               complete(&ureq->c);
+>> +       }
+>> +
+>> +       return errno;
+>> +}
+>> diff --git a/include/uapi/linux/tee.h b/include/uapi/linux/tee.h
+>> index 5d33a8009efb..00e599d1582d 100644
+>> --- a/include/uapi/linux/tee.h
+>> +++ b/include/uapi/linux/tee.h
+>> @@ -59,6 +59,7 @@
+>>  #define TEE_IMPL_ID_OPTEE      1
+>>  #define TEE_IMPL_ID_AMDTEE     2
+>>  #define TEE_IMPL_ID_TSTEE      3
+>> +#define TEE_IMPL_ID_QTEE       4
+>>
+>>  /*
+>>   * OP-TEE specific capabilities
+>>
+>> --
+>> 2.34.1
+>>
 
