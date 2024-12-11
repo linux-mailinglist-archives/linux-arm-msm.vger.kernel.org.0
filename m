@@ -1,167 +1,131 @@
-Return-Path: <linux-arm-msm+bounces-41513-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-41514-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 74A4F9ECED7
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2024 15:42:34 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5C9FE9ECF0A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2024 15:53:33 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9772218827A2
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2024 14:42:28 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 590E1167E77
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2024 14:53:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 11691187870;
-	Wed, 11 Dec 2024 14:42:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id ABE1418A6DE;
+	Wed, 11 Dec 2024 14:53:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Fkdcp6d2"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Z8Xwhc6X"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f173.google.com (mail-pf1-f173.google.com [209.85.210.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB58B18732B;
-	Wed, 11 Dec 2024 14:42:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DDD11494CC
+	for <linux-arm-msm@vger.kernel.org>; Wed, 11 Dec 2024 14:53:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733928145; cv=none; b=PqWSETQ388jwh7zyUjXwwaTmH8rCNzdYv85rjrwU9R0jXae4rFuyUCf/O0rI+CbSWpG7xjbBvy3cFny0FwBQuzpVcBzVpDlTb84VeBu/FxfbiLfDcjSXhsWVImXPhPm7qlI3Rlyx3d2fCroOMC5EEk2sE6WpFdTl1HsDu78ubX4=
+	t=1733928808; cv=none; b=c0KzWIflvjg+aAwSmF3fTHyiZICORPQv8CDTMYo0njx/pcgItp5wBVljjLfivUZhAkrx3MvO4fINYgJSdr7idYMy/iFYLinkBaSDESfobKexnuA3CPq5TkxsPf25RHjUN6otjU5akZhRydkBpIjLYLmm12RuHP18oCZe/8fcEdc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733928145; c=relaxed/simple;
-	bh=RJoGGBFcL+sQrgvZ8+9BKYWDJWcgBpREZ6n8Z69Zl9c=;
+	s=arc-20240116; t=1733928808; c=relaxed/simple;
+	bh=71rnSn7wFVoD21U48pjt1zEn20evixs1VxJ1eb4i9XA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=jjHAnXM32ncSVM5Wj+ztp0mQNKPIk/I+hz8oDcAuHBNH4pw6OLIsMI0pkyPg15ljETvQJYK9OGmN9HWGvvpPo43lXWPEDJN6cjpjoxN4+KIxDwookTMtpFwhgaQeJAgPnbrLac9qJ7Ot3W0QIHWrtDJcBmgk6IbNZKiatmdgNBo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Fkdcp6d2; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFCE4C4CED2;
-	Wed, 11 Dec 2024 14:42:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1733928144;
-	bh=RJoGGBFcL+sQrgvZ8+9BKYWDJWcgBpREZ6n8Z69Zl9c=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=Fkdcp6d25g6ET2VUFeJgANhn0OzBzTp74DQddva1BycAheDOFS1hA76M0cG8a1lco
-	 GiF+wGC8KuSSiiksMidE9H02hUmQ0Ey5QdFXdPFf/dIbCFM949pMOUVI4OnnJ/KY9z
-	 8ne5hNVbTCxbkBQAwhg+mUFZ37yOrf3Gohgeo83LhkXN32EFDm2ON53j5wwL4JXq6n
-	 Z1stje4hyUGIKnHj5mYVbgXf6JnmM/LPNeCzyHoc6gdVQZShSJ8zniEJ4+X8TfLaXo
-	 mkPA9cS0HTj/ohUY/+SOZBz5fvs2mPhGWcZ18xgISbMcx59BA7q+gkp55/d/vELH5k
-	 QqclZZ/0OfjVg==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan@kernel.org>)
-	id 1tLNv1-000000002rx-1zMb;
-	Wed, 11 Dec 2024 15:42:28 +0100
-Date: Wed, 11 Dec 2024 15:42:27 +0100
-From: Johan Hovold <johan@kernel.org>
-To: Abel Vesa <abel.vesa@linaro.org>
-Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-	Karol Herbst <kherbst@redhat.com>, Lyude Paul <lyude@redhat.com>,
-	Danilo Krummrich <dakr@redhat.com>,
-	Jani Nikula <jani.nikula@linux.intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
-	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
-	Tvrtko Ursulin <tursulin@ursulin.net>,
-	Rob Clark <robdclark@gmail.com>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Sean Paul <sean@poorly.run>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-	nouveau@lists.freedesktop.org, intel-gfx@lists.freedesktop.org,
-	intel-xe@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-	freedreno@lists.freedesktop.org
-Subject: Re: [PATCH v2 1/4] drm/dp: Add helper to set LTTPRs in transparent
- mode
-Message-ID: <Z1mk08SHEd5_vc99@hovoldconsulting.com>
-References: <20241211-drm-dp-msm-add-lttpr-transparent-mode-set-v2-0-d5906ed38b28@linaro.org>
- <20241211-drm-dp-msm-add-lttpr-transparent-mode-set-v2-1-d5906ed38b28@linaro.org>
+	 Content-Type:Content-Disposition:In-Reply-To; b=MjdNdjmuVyYqFgadTF4cHln3y5a1N78Z3Advt8x7rzpPXZ5fU6IMd8eYozPYNJrVI5ITHkOcwbIZWmyjt4wxWTazwrMpJkCdtfFlbxKW5ZbNJUvhLdkXU/ZBD7FefbMJkMUk0HmYhqwUOSL8iC/ipsbeAUnsSWeQsZBP2kt+2cY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Z8Xwhc6X; arc=none smtp.client-ip=209.85.210.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-pf1-f173.google.com with SMTP id d2e1a72fcca58-728eedfca37so805762b3a.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Dec 2024 06:53:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1733928806; x=1734533606; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=ymW0qBk2uaFHFENJ06sbcJsCW5UbRGhhuFjHIPKzUxM=;
+        b=Z8Xwhc6X+ORWsd1PyKMplb0d92snfxj6PPptVVhfmea0zGvD2n6gxMDxkWowoIXeJ6
+         qlPLSLimbO3AT34yyqNAyyTyuOrai2tLhGHZIn9sbh6/9LOFCdTstLqQgkxm9A62t842
+         XJDqlKq+Z/A6J1IKmK7KbmulBVVj7lmo/sadGJcOH5hRNkeowsjkn56Nj5aSgYgLwIUh
+         y/gCNj+TRnZpPIb0HT1+QIy2r937bdQLR/s91YdC8oTo/xdPfVwtrUjIJ9IW2ZJx8uw2
+         4Ej8B6T0h0uap5OeMSpvibuWCT7aZImfscHRJujE9RDdJg5FDGGfLdljzuYS2FHzR5f0
+         qT+A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1733928806; x=1734533606;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=ymW0qBk2uaFHFENJ06sbcJsCW5UbRGhhuFjHIPKzUxM=;
+        b=rmqLx7/IxdlrKxtckprfwmjETnHpGY7IrTjVFqsvgoSz8vV+LM81LfbcebNOGf6njf
+         GVpX1YorQv1Nx3T2i5q8LT+ARADQ3UjO3F5KxlkBJf7S9Wft/lXxb7RaZo5x/s8cShNb
+         VJxUegI4teNYP2XFUB6p7l0Ev/oDAHkl2OXkk/cJMe3Vh7Ion04TKRDD3kU77RrTwM8J
+         SzE7Rsc5ZNVR3tj1oJU0nE4DwOhbKDKUk8v3tlsU/oB04sSFBmbiLiqbK9/PXrdVW9Kg
+         o67JhWY/l8nkI4Y7WdgcTh9WwZKpi12L4uRnMTkYqbIfzimQQsDHf74UPoA1j2A65zM4
+         xX7A==
+X-Forwarded-Encrypted: i=1; AJvYcCXfFjxLlQ/Xo8a7AopPBM/JiUNl1knCYlKQqB5rOjT/93pSqFGlix4pGuG9epKYOxhX76qwJfQ9jB3j6AIi@vger.kernel.org
+X-Gm-Message-State: AOJu0YygmrF38WQC8GNjyPNwAO+hgm0ULiRYNa/cZulEI2IcS6/c3fJ7
+	WTBTEhj2O6Lq6SxDI63benYL5cScozW63mY3TjyyytSTtueKoI36YuZ0KbRdm1Ow6m4skcKQfHM
+	=
+X-Gm-Gg: ASbGncsAuDbf64u7oIRmGreetmMMaKfnbN//n9IMFDYhGvJn3lFyJgq/5+N/e0bb3Ui
+	FS6lPlKhElc+ElxEe0pV9C7loZqprrvg2Xlx958BEc2bPSRPWUCDeJ4OL4HTQgkI1XCuDv9tUf/
+	YMqy9w2TCjjLNzVatwOTJioPw7UaOKH7wErdZMw5Uc2TPeXnAnyiXCwlFp+iYYLDW8wsIv3NTRS
+	dkL4fMh0te+sB7fW38ZjeXXl8qJwaI0tG+4UbI2v1Qaqg0/HFfhcFXapLF606A=
+X-Google-Smtp-Source: AGHT+IFq2maYgX0r5WCfZcfI+e7jk/jBe+sBMf30hjHmbIonDMVLKoFqFD2DGiVukLa2oSKZQbvJiw==
+X-Received: by 2002:a05:6a00:c8a:b0:727:3b77:4174 with SMTP id d2e1a72fcca58-728ed4b9fa7mr5561458b3a.23.1733928806217;
+        Wed, 11 Dec 2024 06:53:26 -0800 (PST)
+Received: from thinkpad ([120.60.55.53])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-725f03a0ca4sm5205402b3a.113.2024.12.11.06.53.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 11 Dec 2024 06:53:25 -0800 (PST)
+Date: Wed, 11 Dec 2024 20:23:15 +0530
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To: Johan Hovold <johan@kernel.org>
+Cc: mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: mhi resume failure on reboot with 6.13-rc2
+Message-ID: <20241211145315.vaf7gbapieywcvau@thinkpad>
+References: <Z1me8iaK7cwgjL92@hovoldconsulting.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20241211-drm-dp-msm-add-lttpr-transparent-mode-set-v2-1-d5906ed38b28@linaro.org>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <Z1me8iaK7cwgjL92@hovoldconsulting.com>
 
-On Wed, Dec 11, 2024 at 03:04:12PM +0200, Abel Vesa wrote:
- 
-> +/**
-> + * drm_dp_lttpr_set_transparent_mode - set the LTTPR in transparent mode
-> + * @aux: DisplayPort AUX channel
-> + * @enable: Enable or disable transparent mode
-> + *
-> + * Returns 0 on success or a negative error code on failure.
-> + */
-> +int drm_dp_lttpr_set_transparent_mode(struct drm_dp_aux *aux, bool enable)
-> +{
-> +	u8 val = enable ? DP_PHY_REPEATER_MODE_TRANSPARENT :
-> +			  DP_PHY_REPEATER_MODE_NON_TRANSPARENT;
-> +	int ret = drm_dp_dpcd_writeb(aux, DP_PHY_REPEATER_MODE, val);
-> +
-> +	return ret == 1 ? 0 : ret;
+Hi,
 
-This looks correct, but I had to go look at drm_dp_dpcd_writeb() to make
-sure it never returns 0 (for short transfers).
+On Wed, Dec 11, 2024 at 03:17:22PM +0100, Johan Hovold wrote:
+> Hi Mani,
+> 
+> I just hit the following modem related error on reboot of the x1e80100
+> CRD for the second time with 6.13-rc2:
+> 
+> 	[  138.348724] shutdown[1]: Rebooting.
+>         [  138.545683] arm-smmu 3da0000.iommu: disabling translation
+>         [  138.582505] mhi mhi0: Resuming from non M3 state (SYS ERROR)
+>         [  138.588516] mhi-pci-generic 0005:01:00.0: failed to resume device: -22
+>         [  138.595375] mhi-pci-generic 0005:01:00.0: device recovery started
+>         [  138.603841] wwan wwan0: port wwan0qcdm0 disconnected
+>         [  138.609508] wwan wwan0: port wwan0mbim0 disconnected
+>         [  138.615137] wwan wwan0: port wwan0qmi0 disconnected
+>         [  138.702604] mhi mhi0: Requested to power ON
+>         [  139.027494] mhi mhi0: Power on setup success
+>         [  139.027640] mhi mhi0: Wait for device to enter SBL or Mission mode
+> 
+> and then the machine hangs.
+> 
+> Do you know if there are any changes since 6.12 that could cause this?
+> 
 
-> +}
-> +EXPORT_SYMBOL(drm_dp_lttpr_set_transparent_mode);
+Only 3 changes went in for 6.13-rc1 and they shouldn't cause any issues. One
+caused the regression with pcim_iomap_region(), but you submitted a fix for
+that and other two were trivial.
 
-This appears to be what the driver currently uses, but why not
-EXPORT_SYMBOL_GPL?
+From the log, 'mhi mhi0: Resuming from non M3 state (SYS ERROR)' indicates that
+the firmware got crashed while resuming. So maybe you should check with ath12k
+folks.
 
-> +
-> +/**
-> + * drm_dp_lttpr_init - init LTTPR transparency mode according to DP standard
-> + *
-> + * @aux: DisplayPort AUX channel
-> + * @lttpr_count: Number of LTTPRs
-> + *
-> + * Returns 0 on success or a negative error code on failure.
-> + */
-> +int drm_dp_lttpr_init(struct drm_dp_aux *aux, int lttpr_count)
-> +{
-> +	if (!lttpr_count)
-> +		return 0;
-> +
-> +	/*
-> +	 * See DP Standard v2.0 3.6.6.1 about the explicit disabling of
-> +	 * non-transparent mode and the disable->enable non-transparent mode
-> +	 * sequence.
-> +	 */
-> +	drm_dp_lttpr_set_transparent_mode(aux, true);
+- Mani
 
-Error handling?
-
-> +
-> +	if (lttpr_count > 0 && !drm_dp_lttpr_set_transparent_mode(aux, false))
-
-No need to check lttpr_count again here.
-
-> +		return 0;
-
-I'd check for errors instead of success here and do the rollback before
-returning -EINVAL.
-
-> +
-> +	/*
-> +	 * Roll-back to tranparent mode if setting non-tranparent mode failed or
-> +	 * the number of LTTPRs is invalid
-> +	 */
-> +	drm_dp_lttpr_set_transparent_mode(aux, true);
-> +
-> +	return -EINVAL;
-
-And return 0 explicitly here.
-
-> +}
-> +EXPORT_SYMBOL(drm_dp_lttpr_init);
-
-In any case this works well and is needed for external display on the
-Lenovo ThinkPad T14s, while not breaking the X13s which does not need
-it:
-
-Tested-by: Johan Hovold <johan+linaro@kernel.org>
-
-Johan
+-- 
+மணிவண்ணன் சதாசிவம்
 
