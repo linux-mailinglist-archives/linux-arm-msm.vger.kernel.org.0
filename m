@@ -1,79 +1,79 @@
-Return-Path: <linux-arm-msm+bounces-41419-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-41421-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id EBA8E9EC670
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2024 09:04:04 +0100 (CET)
-Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 03AC99EC677
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2024 09:04:38 +0100 (CET)
+Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0D6D12828FF
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2024 08:03:57 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0D39C1666FC
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2024 08:04:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C0C641CBE8C;
-	Wed, 11 Dec 2024 08:03:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 71C0E1CDA14;
+	Wed, 11 Dec 2024 08:03:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="sNmY+z6H"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="TUx7rkPH"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
+Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E42A21D6DB3
-	for <linux-arm-msm@vger.kernel.org>; Wed, 11 Dec 2024 08:03:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0FF11D88D4
+	for <linux-arm-msm@vger.kernel.org>; Wed, 11 Dec 2024 08:03:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733904206; cv=none; b=J94L4OXRX7vujLctXXdaeehmkIy/CEUI9aa3aGXdifJ5aT5I1F1VF0836hoiee0LJRQZ6dvXiM0ONIsqtfIkFR8Sf5ylfsDkE2SeW4USltZlyYhgDYI1V5WmbBrq9h09fr1uwOPOnIqTc5O++FicZt9039xOimSc4eXUu7uI1ic=
+	t=1733904209; cv=none; b=KyyV7M2rfQ6UZdwLJCQpKsqQUYj7CKJOqff9An3jrro1F1Alem51RI9yNkX0NDmPI8wMMWRulOcc5CLBY3JW9OLxXgOCSus7CxNXf2NJ12ugi+BZAtszaAlI3shuIf0et1BtJ3E81Fvq+Yc7CNp36S2kEqZgO0U0+ZKHplg5VuA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733904206; c=relaxed/simple;
-	bh=MjE+gCPtd3g9S1tORrv2JHiLOE0a8BYC25RRtAjy814=;
+	s=arc-20240116; t=1733904209; c=relaxed/simple;
+	bh=HHt/umcpRq+rs/P2wbiPKSdjqZ1QwYbx9ZVZDypcOTg=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=Y77q80RVxRM/rFjeL00A1ymhEosIUehbl0K0snSc+1EptztCibBvrOygB4/xSMSp/eNcVJx/jSDUydNrfkY4CAuDajWkVnhG/1Qo631+VajT3CftpIVDD+Z9yb4C0ev8MGeun7W4Qq1FkZBBWimzkCuBFauxWunKgzM8W9KMvH8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=sNmY+z6H; arc=none smtp.client-ip=209.85.128.42
+	 In-Reply-To:To:Cc; b=nPA7iZfjRmQza8xUjs2FwmPvqPzRBxSpc1r7TaKDWSEO1JG++glXpko7KqN4H2cDJdWcPS76CFRg1ZZRLTf63NBaJoHy9iC9fJoulXCEvtVc/wiLmNGHyle8+4wlV8GbZ9/y5nbAmEeusrm2vwN9U52OqFgVF2QZU6UjrkV8f+I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=TUx7rkPH; arc=none smtp.client-ip=209.85.128.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-434ab114753so42454835e9.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Dec 2024 00:03:24 -0800 (PST)
+Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-4361b6f9faeso2048445e9.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Dec 2024 00:03:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1733904203; x=1734509003; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1733904204; x=1734509004; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=IDLpHZqYoth1wOxgJJwZS3j1+oo/RlvEJVFdtpMBXi4=;
-        b=sNmY+z6HeT4QesELUN2UvMaXAQ4crCNh2CXJqMTtvpQrDqSMz7YnDv0aDS0Rsx+LkM
-         I3qTjPBfIDRFvtJG/Ikl7KcBLJuKY/V8ig6hyEYLv5+abPiXDaTxWCXvjJvjP0I2dmsL
-         ebkARQZU7v2ymgZrniajsU2bDIQ/THeJp2kXwsqT8F1Ru9D1MQ6MLr5HLbJrPnCYR0qf
-         g0tCaM/Fin/99G9NAkikY2vtvmxxIdRPpycRfQ0aqsW9iiFTONUg0KpO7gMkbwqC2/EB
-         IEDTxuXzbZ8LYTXxBzhUMBxPu1AFyuVd2SVMJC+5iaicKeP6V1gK88A/H0iQ7hW5rV5C
-         ymNA==
+        bh=FVKyCHkPbEDOof6AiuTgileClIawd2CAXyMde6tHgVA=;
+        b=TUx7rkPHOIsMZ1M2in+cRGCZFY67M5cwd/6xoXcMJR1jJfahredynf9l5yx4tJ2iIy
+         GxrVeqZL/zVEaf8D8WXplncdJAJ+yKSdEHP5hjCDzNjblQY+Pjk3uIZGqZ2Jm6Xy/7zC
+         emrt7vF+82HlD0lsC7X4KTrxFCLCLmxdOwqfC1PiV9KKBQfBA8FgYWbzDXfWelksUXE4
+         mk97K1fvkz6LCev7tAMUWcQDue8U0TIiDq7+L9976mA0RUZ1kPgsGWM43qVW0YnQi5hU
+         J3BaUhxXIb0yMe0LD//mDMR4C791B1Hu4U8FOtb0CGZNV755t/oM5XZdNgvFjwIl1ZXP
+         k7ww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733904203; x=1734509003;
+        d=1e100.net; s=20230601; t=1733904204; x=1734509004;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=IDLpHZqYoth1wOxgJJwZS3j1+oo/RlvEJVFdtpMBXi4=;
-        b=R8Rv0F/uz2paF4PWAfTZu7Seks4ZbM3QZrBRYH5iZFbjSEEfw10oDyLzErE+vAjM3a
-         7s9EwHjKFDvqNIRQQrl+dJxAZsHtGPHL5+p0O3GrVL0vYl+dmW4zGcGCQBw9lA6IMxWI
-         SU/VLzf/7qx9B7pki4uIUECXo4u2gj/eE1ioV/nmOU8Xf5J0i06m/ilZKvvL1TIEignB
-         qPrIKyb6s4ohghtdN556gwqxN+WuLKkK1aLsU+MefEE0LJ6+ZIUO3HOCgbZ7qTnmRmuk
-         174t+sr6TbiuonMWxd6pK9aIkhjUZsxLc2qrZCTcVgm/oofnRJoidgE4MtRIVYHjlcxx
-         bQew==
-X-Gm-Message-State: AOJu0YzWSq9fc6Wr4CVk0gIw1MWC1TZo7ZHWaeEjNTpiLtB16pBKo1Oy
-	/U0KuAzMeULxqlIqTRoGE9ALcVQsQdTnHdU9TYyPQqvWRJCGVVYyR1qtO/lGAE0=
-X-Gm-Gg: ASbGncuvqXdQR6ah+SLD3BKmd/SCZfQFRRSG4FNI2BatqUhbR8XTx4b4PXwZgE17NWK
-	LqHY9TIMA2VEhsJaRqeC0d8Zvu6xbA3v/yUelETn0d8MgauVkC1zv0VPXgdSAC8G7zURe6r08qB
-	edCRt35CBQlF94cCioK5rAZEUR4KNJUnle9YfFko4SG2x9j6cCi0D/aL7G8B8EDoUaeoBbQe+Pv
-	ITuy6mXRYu6dk8nUFR6uoS4zoyb9DMKwhOsx0NLVENNg37eNDEf3tTpbJGpsaMlwE726wQAf8Y=
-X-Google-Smtp-Source: AGHT+IHMX9b26V39pIn8+UNC9rmWDLmkYADSjVq/tbVMrYC09QU2FzrgKGswQwCW12k3jYanhUCrwg==
-X-Received: by 2002:a05:600c:4450:b0:434:a7e7:a1ca with SMTP id 5b1f17b1804b1-4361c3e1cfcmr10245555e9.20.1733904203396;
-        Wed, 11 Dec 2024 00:03:23 -0800 (PST)
+        bh=FVKyCHkPbEDOof6AiuTgileClIawd2CAXyMde6tHgVA=;
+        b=PFuoulFlBIqYOt3agg0MGacfY/Qru5G8ZOo23pSSUaJrtG+jG/weJGO9iZhG/6ntF7
+         0yt8a3J8KLj31HZjyFyeHrABc3QjYv7pskDUkI8D7I/OOUUXUGbih5Df6kGJurQ/L1Bk
+         AtAYLYFBRBxRQ6qqyt9+XUN2s9ImH5t5nQNo7gonICn1SAvifd1v5vzRuhzue7+wojev
+         P3lhKNuw3iQv1BSPUfa/1zsY8PCMtW5uM8tXgCR29SP+pmyokmd9bu8qTmsn7CEUmZJ6
+         MynltzoGJkmr1A54djdsL3P91b7McImR0FysubCqRsUAdc3fryOsMI3rJTpJK9g+UxNi
+         wGRA==
+X-Gm-Message-State: AOJu0YwhJ4yacHuXM5ibUsAtAJEJsp0LSEe60QsvZch4sjHWrhDDfVxo
+	DO2i6LvV2pNJrl2mRfjWX2+e17WFtr8vNc5IvNUkA284vOWelEZVI1asKKjzkb0=
+X-Gm-Gg: ASbGncvgQvhXS/9FZVp5pCCJ722DEvq71iyeaNSbkg1y/t29wzXdKRGIjxvjEfFpgfy
+	/aZ9PIZ3xdomZLe2XlnIgXHbWRqrdTaqjvvQQG2hEXEGB09dEfZciYvCAynEVspCTM99IUvdUpI
+	8zyBJ17RXrI3/M6RipLyDvKqJoJP7DTci2opXQ/B/2B+I6MySegDW3IjxMDxaDUa0jWvLnQM1hL
+	ZLpnmkfCJ9GE5b+zXK8GE3g+xoHzGMrnRsFatxYq503AZ6zOHeV/6iEEjf8nAanSL6Qk4d5bGc=
+X-Google-Smtp-Source: AGHT+IGhPwcuCgM3fPvm56eRExOf/eGd1h9nJdejhG+qEfznvHAVTOQvOL8XTI5wy2VQ1Bzpe1idhg==
+X-Received: by 2002:a7b:cd15:0:b0:434:ea1a:e30c with SMTP id 5b1f17b1804b1-4361c80b03fmr11062735e9.13.1733904204328;
+        Wed, 11 Dec 2024 00:03:24 -0800 (PST)
 Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:52eb:f6ff:feb3:451a])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4361b09fec0sm24205795e9.4.2024.12.11.00.03.22
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4361b09fec0sm24205795e9.4.2024.12.11.00.03.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 11 Dec 2024 00:03:22 -0800 (PST)
+        Wed, 11 Dec 2024 00:03:23 -0800 (PST)
 From: Neil Armstrong <neil.armstrong@linaro.org>
-Date: Wed, 11 Dec 2024 09:03:12 +0100
-Subject: [PATCH v3 4/6] arm64: dts: qcom: sc7180-trogdor-pompom: rename
- 5v-choke thermal zone
+Date: Wed, 11 Dec 2024 09:03:13 +0100
+Subject: [PATCH v3 5/6] arm64: dts: qcom: sc7180: fix psci power domain
+ node names
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -82,7 +82,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20241211-topic-misc-dt-fixes-v3-4-010ac10529b1@linaro.org>
+Message-Id: <20241211-topic-misc-dt-fixes-v3-5-010ac10529b1@linaro.org>
 References: <20241211-topic-misc-dt-fixes-v3-0-010ac10529b1@linaro.org>
 In-Reply-To: <20241211-topic-misc-dt-fixes-v3-0-010ac10529b1@linaro.org>
 To: Bjorn Andersson <andersson@kernel.org>, 
@@ -95,54 +95,104 @@ Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
  Douglas Anderson <dianders@chromium.org>, 
  Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1244;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2701;
  i=neil.armstrong@linaro.org; h=from:subject:message-id;
- bh=MjE+gCPtd3g9S1tORrv2JHiLOE0a8BYC25RRtAjy814=;
- b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBnWUdD3UC9CZtgoGQTC2/tEks5rLX1+Dt0swd2ZyU0
- jFYiYQSJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZ1lHQwAKCRB33NvayMhJ0VzMEA
- CprxmAVyahbKdnAtoKh2MzF1apys+BMFORDIn9lO58Y7qkNmj3ck/GZziIxCZTDtwx+r/BcKIUrgef
- c1G9q94neAbPy1C6tWh2E5y2PH+S1p3HUutabSvq9X4MnCK5SvjhIdhuZKsMjAYhs1VVil8qIi5nTj
- 9B256KuKePMI/zzmcAOj+64tw+D5YhonqxGuXU3RS9yljZicXKMWay+DmPTDFOfJv2Q7nNClkUk6mE
- phggazlAzozuoYYzkcjjfT/QsJuQsraAiB98aMKle1whs1DcsYGztwey7wzOZEnF7KMATSeyeiophf
- QQKLyEaKKEy+LzTcUjie+oiJlVXF8tTjjyfQ0l5R4VomVVEVvHp66hwB4CbPvbdYjYuOiJ8sv2CbYF
- 2rmg/EPtOwdJRbCpVl+l8piqHsug+fvJ9/r/HXU5fhpyOzcjeZ1S8tuC1B2b4V3t6sLXYRy/mVK/rY
- ngOeOvtzwPOo7q/cdQbstfUwRHzOeYoyj0uboC6pELVw0Q4Z7dQDamNimafQ/v9e4DSjR0j4tAnA/V
- GEenCEaFSB/YfVQ4xl1TM+kRlesCNSky3whKgtJjMrlxlniV1vWt48G/pJKNICVwIsYdozOrx7gCvz
- Vc5txMlSYUFogtmP6dJZBwm1un7cUedu0XxvbkvPHx6zlkiQwbb5ghcI0r/g==
+ bh=HHt/umcpRq+rs/P2wbiPKSdjqZ1QwYbx9ZVZDypcOTg=;
+ b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBnWUdEdSfG6gF/9m9deOQADrp4w5V+cGh3Ih26oQB5
+ /Moyab6JAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZ1lHRAAKCRB33NvayMhJ0eRhD/
+ wLQqDIb0dAOMtb60EDg1nuds2TSPJFoASZDzAkVE2w/r44bLaJ0HZLrPtEwaSJ/65BfBG4/bLcOSV4
+ IWvByVEzQ76AUURvZoGFmFyItgeRMoYN4cZzdfl5Z3YwBt78UU0hf7EKQ5vWYBR3WdFIKJwgvWUIPN
+ I6HbFPaNkZpB1OciARrDVO8tUwxxZ2jMq4Lh5NPS0DKVtOp2lxkuOD/ZCzKTWtlx13VxlI0kJEz2cF
+ qWSOCl2azitR551G0WNrUN/0KJ2bbLgjf5xYmvRbeCrlOBlMqt1c2EOMRq609rz3b9Q9x+0nKNTcK+
+ HVipnqcXuUQUqFXRmrkEX/g+QECgokZIphD6uB10A6Fe0ntXYq0g1m/w6CH9vA3e5RjB0CIySKJnX8
+ 3KhdzndOX0gR4JUNduIVgkvXZ36xGfZTmP0QDJX1alVI1087TpvinyFiDqQrgA7/lf4nYJa1PuV/F6
+ L1M/TOFhrk0b4uP7ERHxBjmlNgjgD5d03vTc1vSlmgfvoL2L2gGi9G5j3qhYmpOfPMGQ2N/BK/GGNz
+ 0QacTFuaGlcWtFDHw4CWdc1PizN+HcCLu4kQGjuG16tYeJ+3NqR9jMikTttcKqPHYSDHmqr0j+Fbxa
+ Pv43JgbYYldBha8MRCCt+9+p33gykrZPc8RQUQ3/oga9fc/7hQq8TFHVuYAQ==
 X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
  fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
 
-Rename the 5v-choke thermal zone to satisfy the bindings.
+Rename the psci power domain node names to match the bindings.
 
-This fixes:
-sc7180-trogdor-pompom-r2-lte.dts: thermal-zones: '5v-choke-thermal' does not match any of the regexes: '^[a-zA-Z][a-zA-Z0-9\\-]{1,10}-thermal$', 'pinctrl-[0-9]+'
-	from schema $id: http://devicetree.org/schemas/thermal/thermal-zones.yaml#
+This Fixes:
+sc7180-acer-aspire1.dts: psci: 'cpu-cluster0', 'cpu0', 'cpu1', 'cpu2', 'cpu3', 'cpu4', 'cpu5', 'cpu6', 'cpu7' do not match any of the regexes: '^power-domain-', 'pinctrl-[0-9]+'
 
 Reviewed-by: Douglas Anderson <dianders@chromium.org>
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom.dtsi | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/qcom/sc7180.dtsi | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom.dtsi
-index ac8d4589e3fb74b9d9105a8ca2b0cce72de22d86..f7300ffbb4519a7973c74198fc0f9ca2d770bc3e 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom.dtsi
-@@ -12,11 +12,11 @@
+diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+index 76fe314d2ad50d002ee6adf4659fa685ddae89de..e7773d215f34eba9a42808eb37fac7fa1fda87b1 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+@@ -580,55 +580,55 @@ psci {
+ 		compatible = "arm,psci-1.0";
+ 		method = "smc";
  
- / {
- 	thermal-zones {
--		5v-choke-thermal {
-+		choke-5v-thermal {
- 			thermal-sensors = <&pm6150_adc_tm 1>;
+-		cpu_pd0: cpu0 {
++		cpu_pd0: power-domain-cpu0 {
+ 			#power-domain-cells = <0>;
+ 			power-domains = <&cluster_pd>;
+ 			domain-idle-states = <&little_cpu_sleep_0 &little_cpu_sleep_1>;
+ 		};
  
- 			trips {
--				5v-choke-crit {
-+				choke-5v-crit {
- 					temperature = <125000>;
- 					hysteresis = <1000>;
- 					type = "critical";
+-		cpu_pd1: cpu1 {
++		cpu_pd1: power-domain-cpu1 {
+ 			#power-domain-cells = <0>;
+ 			power-domains = <&cluster_pd>;
+ 			domain-idle-states = <&little_cpu_sleep_0 &little_cpu_sleep_1>;
+ 		};
+ 
+-		cpu_pd2: cpu2 {
++		cpu_pd2: power-domain-cpu2 {
+ 			#power-domain-cells = <0>;
+ 			power-domains = <&cluster_pd>;
+ 			domain-idle-states = <&little_cpu_sleep_0 &little_cpu_sleep_1>;
+ 		};
+ 
+-		cpu_pd3: cpu3 {
++		cpu_pd3: power-domain-cpu3 {
+ 			#power-domain-cells = <0>;
+ 			power-domains = <&cluster_pd>;
+ 			domain-idle-states = <&little_cpu_sleep_0 &little_cpu_sleep_1>;
+ 		};
+ 
+-		cpu_pd4: cpu4 {
++		cpu_pd4: power-domain-cpu4 {
+ 			#power-domain-cells = <0>;
+ 			power-domains = <&cluster_pd>;
+ 			domain-idle-states = <&little_cpu_sleep_0 &little_cpu_sleep_1>;
+ 		};
+ 
+-		cpu_pd5: cpu5 {
++		cpu_pd5: power-domain-cpu5 {
+ 			#power-domain-cells = <0>;
+ 			power-domains = <&cluster_pd>;
+ 			domain-idle-states = <&little_cpu_sleep_0 &little_cpu_sleep_1>;
+ 		};
+ 
+-		cpu_pd6: cpu6 {
++		cpu_pd6: power-domain-cpu6 {
+ 			#power-domain-cells = <0>;
+ 			power-domains = <&cluster_pd>;
+ 			domain-idle-states = <&big_cpu_sleep_0 &big_cpu_sleep_1>;
+ 		};
+ 
+-		cpu_pd7: cpu7 {
++		cpu_pd7: power-domain-cpu7 {
+ 			#power-domain-cells = <0>;
+ 			power-domains = <&cluster_pd>;
+ 			domain-idle-states = <&big_cpu_sleep_0 &big_cpu_sleep_1>;
+ 		};
+ 
+-		cluster_pd: cpu-cluster0 {
++		cluster_pd: power-domain-cluster {
+ 			#power-domain-cells = <0>;
+ 			domain-idle-states = <&cluster_sleep_pc
+ 					      &cluster_sleep_cx_ret
 
 -- 
 2.34.1
