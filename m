@@ -1,141 +1,141 @@
-Return-Path: <linux-arm-msm+bounces-41550-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-41551-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A6FD59ED4BA
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2024 19:33:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 7D0E49ED4D9
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2024 19:46:43 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 999CB283D23
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2024 18:33:00 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 36659283E92
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2024 18:46:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1574E1FF1B8;
-	Wed, 11 Dec 2024 18:32:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 83562200BA9;
+	Wed, 11 Dec 2024 18:46:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="m2SDwYYe"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="VMpaOa/v"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f53.google.com (mail-lf1-f53.google.com [209.85.167.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3773424632F
-	for <linux-arm-msm@vger.kernel.org>; Wed, 11 Dec 2024 18:32:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8D1D1C3F27;
+	Wed, 11 Dec 2024 18:46:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733941978; cv=none; b=C5IAppozXAIknahde3dBKPxz9FtAQMDjvaftMZJbMiY7FPDUxEBabUBil6dZQ9BqLoTZLIipiMpZz/WY21I2gKgZ2isO3jCaAGX5C4QQyINiNDVAIxwlVooyk2iaGflu7Kec940oKj3qe/bQSmJFv46ApgdIZ55IFrv7TkKPQE8=
+	t=1733942795; cv=none; b=ib29hTdK7OJjDVyKn0XCZ7quxD2fH2O9+irFwG8/IMOxqlrFsuTANBXy52pGFcrQSezKsAaJng7XE+tZ3DUqdNE+4X73+MyF9zzxahv1iC04tvOI6wLLccSTEJSLxfrbZULFrbVDBJOucNBN2rNrSFEjcBSCynL07ySAVZwaxHQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733941978; c=relaxed/simple;
-	bh=JyMdFqQ5H7a+y8ZEgtz5H4pttRzC1chxkXLm88NSVNA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=WSLnvVr5382vlB2RgmR4C5YvbBLDxiYGAzinkSEXqM1nDsYL204ll0vPXeC9Lp57EXvtalAG1yfIUZAnTY+tMCVOhhP+pSRVfe2mswWoSw2rukH/Kkm7AkYkE1uhq1SMN7q7b6/3mTxZSwOITnnCFioCj+zPzR1FGjgsHJXDFIw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=m2SDwYYe; arc=none smtp.client-ip=209.85.167.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f53.google.com with SMTP id 2adb3069b0e04-53f22fd6887so4402573e87.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Dec 2024 10:32:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1733941974; x=1734546774; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=qwjqsNH/3nF2Q3XbWudExYhlk4EBq4Q9BHCqHdvdEaI=;
-        b=m2SDwYYeWD4JdE/vgvBEToHnM3qCJ0ziUxTHBlSEv4aWQsECsTww4wSKqpyVK2KUXD
-         bXfA/ubryDkZ7+XpdBOrm2LBtCP4OrG0TcfIggjeD8mRIRaNZ3rGHBt97E9SzGWmN50L
-         jca24gP0wWkS9UAXeVJ0YkzvIWxznoPTwdR09FSToPMVSLdN6T2cBxOeGo+iRwjs7rsW
-         XkferZnL+cilsS7PzterMuEMPY+4JEnuHWhnL+/VC1FFY5ZEdFLHdu0Jv+o2UvPlGEaF
-         gU7aJm9rcF9DeUFGNbXY/2EJF4yADt65sRIt9u5gdT3UdZwcYs1aKfxEBRYRUB277ThM
-         n7lg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733941974; x=1734546774;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=qwjqsNH/3nF2Q3XbWudExYhlk4EBq4Q9BHCqHdvdEaI=;
-        b=OzFZypraCZRQer7Nv3888EOtU4/fivQ5zMbPGkp48ypxMEvQzqhFSNFyigjhlm/LoK
-         fqYtdkHuf8jarwNZwCZkUl+V1KVzjLoaOtc1Sk6bT7Pe9BcyVUTEPb780eEVlST6WBAS
-         8w+BgeGPdVzJi3W/Y+DMrLSKV1Hx2PsMxETIQ7skP7OfvPKwHEIkGVVcyS+w+prhecq2
-         LE8h4ddv05xglcm1OYLL6eyUWpIB7JAv+U+8gzVz8scIiG6JOLCp6jGPKfSFOxW7F1U1
-         YUJeRsZgaujSRZwfDHe9mKGxspvbC+5MoRkk+I2OTBcoCbBFvOE6vaEzmjFPCJ6K2Ad0
-         ETGQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUGi8VmoGSo/JhR5sZIk4gK8r17XrEhl0YU2xmV7kr13HOcmeADlMyH8Sz2+VfUTgQb08FtaDMVv23GSaIX@vger.kernel.org
-X-Gm-Message-State: AOJu0YxD/Na4+f7hXmCT2mZeRlGEI7CUyY48GxepPZ21cW2Pwk/aDcSx
-	T+spfmKlZy9P1BKByudleV/TIbyIcg0U/PKbst3lgEG/j1hTBGpE0dfe1fVWrmQ=
-X-Gm-Gg: ASbGncvfJGXZ1Z9YT6wvu8D3YjoOAHAxq3Fn/CqD6Dt2//MMLFWM0odid+g0fGm3+6I
-	HZ9W6nQQRhn/Lv/Uu0eHTf31PCB/t5riEE7FdcRUIsVYvZuGgD7c/yPJ2P2Z88t7c6FD56jXIup
-	u23uYLW0uCXMmdDtfB/i4jnErTrVh2swbv1NZajq1LNiNFWQ+xEt1kNICVaG+3diixB56UtiKi5
-	Ai4wBDh3OBh5A74ehb0eSho56Njzrc4hVhgmIAukbRZYvm3B9bQ4T1JFou7SdMdvsLKWDPOcCbX
-	ltzxInpJd3y1c8ojXMdqLgvXUvrL+PfFLg==
-X-Google-Smtp-Source: AGHT+IFmZdkDf94Jsx8fCrALITW/9iPuUY5e7Ad8TDSKUOMmNblYCFB7l7IPRhIdF6tMpVRDpdpenQ==
-X-Received: by 2002:a05:6512:1329:b0:540:1dac:c03d with SMTP id 2adb3069b0e04-5402f04d0ffmr331050e87.57.1733941974289;
-        Wed, 11 Dec 2024 10:32:54 -0800 (PST)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5401d2aab5csm1134637e87.168.2024.12.11.10.32.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 11 Dec 2024 10:32:52 -0800 (PST)
-Date: Wed, 11 Dec 2024 20:32:51 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Johan Hovold <johan@kernel.org>
-Cc: Abel Vesa <abel.vesa@linaro.org>, 
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
-	Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>, 
-	Simona Vetter <simona@ffwll.ch>, Karol Herbst <kherbst@redhat.com>, Lyude Paul <lyude@redhat.com>, 
-	Danilo Krummrich <dakr@redhat.com>, Jani Nikula <jani.nikula@linux.intel.com>, 
-	Rodrigo Vivi <rodrigo.vivi@intel.com>, Joonas Lahtinen <joonas.lahtinen@linux.intel.com>, 
-	Tvrtko Ursulin <tursulin@ursulin.net>, Rob Clark <robdclark@gmail.com>, 
-	Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
-	nouveau@lists.freedesktop.org, intel-gfx@lists.freedesktop.org, intel-xe@lists.freedesktop.org, 
-	linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org
-Subject: Re: [PATCH v2 1/4] drm/dp: Add helper to set LTTPRs in transparent
- mode
-Message-ID: <3omcjrgfkdmw466ok7gej2jge25vtwzaiycwz2xgejwppyvkza@rhssgk7xz4hj>
-References: <20241211-drm-dp-msm-add-lttpr-transparent-mode-set-v2-0-d5906ed38b28@linaro.org>
- <20241211-drm-dp-msm-add-lttpr-transparent-mode-set-v2-1-d5906ed38b28@linaro.org>
- <Z1mk08SHEd5_vc99@hovoldconsulting.com>
+	s=arc-20240116; t=1733942795; c=relaxed/simple;
+	bh=8SEPiAG5/bZ3zubyts3IFkmbUAYRgHOi97EOjXc5kaI=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:CC:References:
+	 In-Reply-To:Content-Type; b=m3yVq9Q7QOATpkQ5Etx5f2yIzLdj7SZPiEBt8qo6iXeMpV651VUWWgq4f2kkuaY0VVq1g2yPDDrPbacEV3xpZbxnOKgj/kh01N/HoelAke4XazCT6wdy/eI9EPnwC7lEGNRj9L/AsZHbeVyPNCI2/d0qPYIspTq0WsUZsb7laOg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=VMpaOa/v; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BBHDGPu003065;
+	Wed, 11 Dec 2024 18:46:11 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	KKBF9MwwWdxtyhM/vZBDK5wtGQUQme8Sdv89LX9q3k4=; b=VMpaOa/v9X6ACdwL
+	WSIwXzqzOZAiz0No5IAwdkcsl/NUELLHv13Y+iDNo0DBlyRDlJ/d9b1D3WpBxz42
+	3j/Ll/6n1K5RNXJ3dHUfvFQhkVbcTr+HZ0zzlZxk7sl3BzoN1bPZDZccosxldwd9
+	XsUGXYIRPbw8wT4o3UmY2erS80vBspj7U7Nx/woMK3mypS3d0CeCyglgrYWGBlgc
+	WpZ7vOB92Z4PHHejAZJo65k6EwFa27BLNI5KQspL+t9nqXJg0MJIWMtPXjkH5TZm
+	CPPUkykdZi+uqtdCYwWQ1aL0NgvsgZTvnbwWld94Gwq80jkgwDpf+WseqiVKZv0T
+	pFCpgg==
+Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43f0r9txqv-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 11 Dec 2024 18:46:10 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4BBIk9WK017308
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 11 Dec 2024 18:46:10 GMT
+Received: from [10.71.111.113] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 11 Dec
+ 2024 10:46:09 -0800
+Message-ID: <f353a230-b9ab-4c25-846b-6e5f0e404ca0@quicinc.com>
+Date: Wed, 11 Dec 2024 10:46:09 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Z1mk08SHEd5_vc99@hovoldconsulting.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 6/7] arm64: dts: qcom: Add board dts files for SM8750
+ MTP and QRD
+From: Melody Olvera <quic_molvera@quicinc.com>
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+        Bjorn Andersson
+	<andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring
+	<robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon
+	<will@kernel.org>,
+        Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>
+CC: <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>
+References: <20241204-sm8750_master_dt-v3-0-4d5a8269950b@quicinc.com>
+ <20241204-sm8750_master_dt-v3-6-4d5a8269950b@quicinc.com>
+ <b9225284-7830-4aa4-aed2-7f58fb7320e8@oss.qualcomm.com>
+ <79e55e6e-e560-4f43-8d6e-bbaf7fcf157a@quicinc.com>
+Content-Language: en-US
+In-Reply-To: <79e55e6e-e560-4f43-8d6e-bbaf7fcf157a@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: Fn3miiM-g8wIKGJTEFmkh3ST2ifxULdN
+X-Proofpoint-GUID: Fn3miiM-g8wIKGJTEFmkh3ST2ifxULdN
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ impostorscore=0 phishscore=0 spamscore=0 clxscore=1015 mlxlogscore=889
+ malwarescore=0 lowpriorityscore=0 mlxscore=0 bulkscore=0 suspectscore=0
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2412110134
 
-On Wed, Dec 11, 2024 at 03:42:27PM +0100, Johan Hovold wrote:
-> On Wed, Dec 11, 2024 at 03:04:12PM +0200, Abel Vesa wrote:
->  
-> > +/**
-> > + * drm_dp_lttpr_set_transparent_mode - set the LTTPR in transparent mode
-> > + * @aux: DisplayPort AUX channel
-> > + * @enable: Enable or disable transparent mode
-> > + *
-> > + * Returns 0 on success or a negative error code on failure.
-> > + */
-> > +int drm_dp_lttpr_set_transparent_mode(struct drm_dp_aux *aux, bool enable)
-> > +{
-> > +	u8 val = enable ? DP_PHY_REPEATER_MODE_TRANSPARENT :
-> > +			  DP_PHY_REPEATER_MODE_NON_TRANSPARENT;
-> > +	int ret = drm_dp_dpcd_writeb(aux, DP_PHY_REPEATER_MODE, val);
-> > +
-> > +	return ret == 1 ? 0 : ret;
-> 
-> This looks correct, but I had to go look at drm_dp_dpcd_writeb() to make
-> sure it never returns 0 (for short transfers).
-> 
-> > +}
-> > +EXPORT_SYMBOL(drm_dp_lttpr_set_transparent_mode);
-> 
-> This appears to be what the driver currently uses, but why not
-> EXPORT_SYMBOL_GPL?
-
-$ git grep EXPORT_SYMBOL drivers/gpu/drm/*.c | wc -l
-962
-$ git grep EXPORT_SYMBOL_GPL drivers/gpu/drm/*.c | wc -l
-93
 
 
--- 
-With best wishes
-Dmitry
+On 12/5/2024 10:21 AM, Melody Olvera wrote:
+>
+>
+> On 12/5/2024 8:45 AM, Konrad Dybcio wrote:
+>> On 5.12.2024 12:18 AM, Melody Olvera wrote:
+>>> Add MTP and QRD dts files for SM8750 describing board clocks, 
+>>> regulators,
+>>> gpio keys, etc.
+>>>
+>>> Signed-off-by: Melody Olvera <quic_molvera@quicinc.com>
+>>> ---
+>> [...]
+>>
+>> Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+>>
+>>> +&tlmm {
+>>> +    /* reserved for secure world */
+>>> +    gpio-reserved-ranges = <36 4>, <74 1>;
+>>> +};
+>> Any chance you could describe what those specifically are?
+>>
+>
+> I'm not too certain, and even if I was, I'm not certain I'd be at 
+> liberty to say.
+
+Spoke w some folks; looks like we're suing these for NFC eSE. I can add 
+in next ps.
+
+Thanks,
+Melody
 
