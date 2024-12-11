@@ -1,115 +1,213 @@
-Return-Path: <linux-arm-msm+bounces-41557-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-41558-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id CD2849ED710
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2024 21:12:45 +0100 (CET)
-Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id CD24D9ED71D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2024 21:19:10 +0100 (CET)
+Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7C8D51887CAA
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2024 20:12:45 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 48C9E28358D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2024 20:19:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E93A8200BBB;
-	Wed, 11 Dec 2024 20:12:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 24EA81C5F3E;
+	Wed, 11 Dec 2024 20:19:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="FATNfFS1"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Mf0h5BmL"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D9C81D6DA4
-	for <linux-arm-msm@vger.kernel.org>; Wed, 11 Dec 2024 20:12:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 583FB2594BF;
+	Wed, 11 Dec 2024 20:19:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733947960; cv=none; b=GL1alhWOn9HXmMpX6RcPrqBDitTf1MrAHxqBerQp2vhAVqn9soAD2VvdIbzcMpefldMmp8fzzLUljnxcnxI0LzcAeLntAIlu16qWQUnomxnleDiXbRHTMmSsAwO3zdlIiuI3CPfNiX1HYETTBGLuJjjhsbJVzc3XXL+MYfRGyRs=
+	t=1733948347; cv=none; b=LhygRbP+ZIi0VUMkNC3h/GCa50A3Lzb72LIgnfii27F4QxpZet08mi2nG6kbYLYGv89qvsEOh5oKEoR+Tu8kMzjrreh5XpZFZM3aQYfdr22upYjvI0hAZ7tgcN9lhpNEokoXwwdKAmsgCdgJsb+T4ngvbcKdOmkoTlgGAizFKXU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733947960; c=relaxed/simple;
-	bh=/fVcvfI/nJgq0KL9QHFEEc3B//jpEClgu6sMbVc2hJE=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 References:In-Reply-To; b=ij/OydOoOz4khqG0+CIEks2lxwX2mS+/LseV1yN0rBtqbiMBRZr9PwCXBWen+xbkexxJj024Nr81pIgx+zEAi/m+ewF6b7HdvaHQHu2lO70T0YrHnuOKDHphqOwSQDQvBSStj/jptGerp/fEMrWFX2w33F9NoyJKq/5Lv+1kk30=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=FATNfFS1; arc=none smtp.client-ip=209.85.221.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-38637614567so2252605f8f.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Dec 2024 12:12:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1733947957; x=1734552757; darn=vger.kernel.org;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=TPN2+AhDq4P0SWNYP6pOLiBUFHEUMd0r1OKMpQRaBeY=;
-        b=FATNfFS18kvqaKIJKr/FAXZZq8pJ/DSe7M5/JRLICn/BMsu08fL3+FZjtQ8m4JgnMf
-         opTGKwMkj/aDAc5KoTV90802yFTRaaKVvfbnhqPtKXQcL5MgSBA0K4cNb08RJlVWMur9
-         Bo8EH0L1D0ez1LbfxXYS3zE78TJPNRw/CE5xVP/OvqtBTk4l2iHy0Qhmj2wGGnY1Jt9T
-         kMa9GWTIFfpM9YOnu4B5+7EbpePIh5tJ9DDb35Zes1aVxb4i4T0t3tQ51N1LKWXNMHi2
-         CKdhHQUxhz35Vckk+VlLIMgNUiQKrHd4oHbwGxjgBmYanNhAwg0skyxrGtZEWHBrVCe2
-         QhdQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733947957; x=1734552757;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=TPN2+AhDq4P0SWNYP6pOLiBUFHEUMd0r1OKMpQRaBeY=;
-        b=NGZUsRLKTNiSFODy8GqGkCDACeVeUhcTjcnXOwUsFJtSOzoDP8jcjBf0pjX1NhKD4K
-         ja3SyDeofwYDLD9xqatYJFFJdRWUwf+C7BFPpvdPh00LONl2tDCdk3BOSdy0fNzcH944
-         Z+Z+QJKUjO7Ri7bh20QTiYqMtXfVgoSutZves/OPeLb456dmyZuQGW+aRlVd3SHrdgke
-         hzWpuNXPZeTbnGraIgnawggeKDXR7FM/jczTqWyNxLKjyrnvMgn4gLegmN9u0Xsrlpv+
-         DUYQm7HcFW5+MTkkWx4wOlYYxl+IUwZP1uX3XmoWYW54vlJ2Pecxz+9Zfy0ByR17Oibz
-         Oq/A==
-X-Forwarded-Encrypted: i=1; AJvYcCWMy8DWv3a3rUQpX3op9FXBr/jeo/6eSNG4e5SpCSLvKTbdLARk6f+QJoQ5GQnklQSpRenxmAbkl7j2InSZ@vger.kernel.org
-X-Gm-Message-State: AOJu0Yxip4t8YwAicIAhVIHhktvJ+OBXWaWHLyzjD8JVOSEO+Tg2UM9E
-	5CDjRq8N+pFxQQ9GppPOAb64DN0BMbURlXFOOkOkxie77TphqZ5nGspcKCeNLjM=
-X-Gm-Gg: ASbGncvmVRY/BYUvpGqAJ7nkeVU1SGVdJ6/HfX3edUnG0Wt4lKlhiWnW7JdWWgElvjF
-	fFSuwmOKf9t+bB/+lDTXAr3XbTwgY1x2Xjqa9cKmlcRAgANkYrLVaEOhopxpILzhNKErlt6v2Di
-	kYI9dMTaV2xLVnyagt6VcFLQm8S10NLmhH5KfrfyiB5In4GshkqrR2x9D2K13OxUxPtM+6juce3
-	08aqb5HGPeR+3YFaOzcWUPOQQtmSuzU8nA1t3aWV0vviQJMVP3J8VfG
-X-Google-Smtp-Source: AGHT+IGhKdHf66Trsg0Xay3Wa/RqDWr8rS+2Oi6F9OIapryWlc50G8eqxXs0nor3X97sj8+KlZI9gA==
-X-Received: by 2002:a5d:5984:0:b0:385:edd1:2245 with SMTP id ffacd0b85a97d-3864cea45bbmr3619738f8f.30.1733947957412;
-        Wed, 11 Dec 2024 12:12:37 -0800 (PST)
-Received: from localhost ([2.222.231.247])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4361ee54736sm23968785e9.41.2024.12.11.12.12.36
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 11 Dec 2024 12:12:37 -0800 (PST)
+	s=arc-20240116; t=1733948347; c=relaxed/simple;
+	bh=IkwxHX00+wl47DROPOwkBU5hh7CAbNFRv0VQe5XsJqQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=kaefzEPe5x3vodZd5BNf3tBNiH8cnweEGjPuZit1NWY7HVMW+ulMJZJ8eIaKwzLemYU38TRaI5/rlSixIzYNSZF3rx84wOnkQPGYK4vETGlMqCmV2uEK7lZrhM+5PheMzsFOQ6ghREhgEe5K/gQVtsYGClfMJvFwY0K5AcF+Js4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Mf0h5BmL; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BBHD9M7027303;
+	Wed, 11 Dec 2024 20:18:51 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	eUHuOhpMT/oVqa7LQQkF5OqrsSb4kUNcxIjOf/Zljs0=; b=Mf0h5BmLohXGWvOg
+	mV0L8aOt95arxIOhNo3jUrixrU2kxbzlAuBU3DjwRXa94YTdoZ25JHtj1kv5qEc4
+	7vgFLMd1THYNdRTqV4xJng32xQdh7BvZgj71CPeOacR9YjkJMeFyyD8rJ5K+hOya
+	FfJIEe2q9+JiCCDI4O6I9XPW5Ib+N7v0kRSRdG8YDDFIMc3S5yUpz6p8F6V2Wiz9
+	Bf+aB5Sf8qIdqex+meJwzdGzAuSt36S7pGL11D28eXi4MypERtd95+Rx/VquEQWs
+	d54c/PAcejX3PkBplkUZSrpX3tGApq+v3I1Qnj1KaDKSu2pBsm8moaTeRChBq09+
+	BWrR4A==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43etn8v1y6-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 11 Dec 2024 20:18:51 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4BBKIofR027802
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 11 Dec 2024 20:18:50 GMT
+Received: from [10.110.5.240] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 11 Dec
+ 2024 12:18:47 -0800
+Message-ID: <a03ae7e8-391e-4303-91fc-15a59979fd2a@quicinc.com>
+Date: Wed, 11 Dec 2024 12:18:46 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Wed, 11 Dec 2024 20:12:36 +0000
-Message-Id: <D69592H3JKB6.21HDMPXX9Q6OF@linaro.org>
-Cc: <broonie@kernel.org>, <konradybcio@kernel.org>,
- <konrad.dybcio@oss.qualcomm.com>, <andersson@kernel.org>,
- <srinivas.kandagatla@linaro.org>, <tiwai@suse.com>, <lgirdwood@gmail.com>,
- <perex@perex.cz>, <robh@kernel.org>, <krzk+dt@kernel.org>,
- <conor+dt@kernel.org>, <dmitry.baryshkov@linaro.org>,
- <linux-sound@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
- <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v1 05/10] dt-bindings: arm: qcom-soc: extend pattern
- matching for QRB4210/QRB2210 SoCs
-From: "Alexey Klimov" <alexey.klimov@linaro.org>
-To: "Krzysztof Kozlowski" <krzk@kernel.org>
-X-Mailer: aerc 0.18.2
-References: <20241101053154.497550-1-alexey.klimov@linaro.org>
- <20241101053154.497550-6-alexey.klimov@linaro.org>
- <ghlkqehfs5sagxrcvyywixfkt6ie3pwwtqm2j3n3c3xytjl3sb@d435kwmo3nki>
-In-Reply-To: <ghlkqehfs5sagxrcvyywixfkt6ie3pwwtqm2j3n3c3xytjl3sb@d435kwmo3nki>
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] drm/ci: add kms_cursor_legacy@torture-bo to apq8016
+ flakes
+To: Helen Mae Koike Fornazier <helen.koike@collabora.com>,
+        Vignesh Raman
+	<vignesh.raman@collabora.com>
+CC: Rob Clark <robdclark@gmail.com>,
+        Dmitry Baryshkov
+	<dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten
+	<marijn.suijten@somainline.org>,
+        Maarten Lankhorst
+	<maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        linux-kernel <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        dri-devel
+	<dri-devel@lists.freedesktop.org>,
+        freedreno
+	<freedreno@lists.freedesktop.org>
+References: <20241204-cursor_tor_skip-v1-1-f5f0bba5df7b@quicinc.com>
+ <193931869a5.f923adf2270026.8321075661083367617@collabora.com>
+ <20a3955e-3d10-47c5-8e68-d70342805010@quicinc.com>
+ <19393604e18.f9b6fe7d298023.1937039548910081216@collabora.com>
+Content-Language: en-US
+From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <19393604e18.f9b6fe7d298023.1937039548910081216@collabora.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: XvBkvNKkeoxsjEiP7EBvXf-YaOqqwJpD
+X-Proofpoint-GUID: XvBkvNKkeoxsjEiP7EBvXf-YaOqqwJpD
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015
+ lowpriorityscore=0 spamscore=0 impostorscore=0 adultscore=0 suspectscore=0
+ bulkscore=0 priorityscore=1501 malwarescore=0 phishscore=0 mlxscore=0
+ mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2412110143
 
-On Fri Nov 1, 2024 at 7:54 AM GMT, Krzysztof Kozlowski wrote:
-> On Fri, Nov 01, 2024 at 05:31:49AM +0000, Alexey Klimov wrote:
-> > Add missing QRB platform name to the pattern matching Qualcomm compatib=
-les.
-> >=20
-> > Signed-off-by: Alexey Klimov <alexey.klimov@linaro.org>
-> > ---
-> >  Documentation/devicetree/bindings/arm/qcom-soc.yaml | 4 ++--
->
-> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Hi Helen / Vignesh
 
-Since I am not going to use "qrb" in this patches, should I resend
-it as a separate patch? Because we have platforms qrb4210 and etc.?
+On 12/4/2024 12:33 PM, Helen Mae Koike Fornazier wrote:
+> 
+> 
+> 
+> 
+> ---- On Wed, 04 Dec 2024 16:21:26 -0300 Abhinav Kumar  wrote ---
+> 
+>   > Hi Helen
+>   >
+>   > On 12/4/2024 11:14 AM, Helen Mae Koike Fornazier wrote:
+>   > > Hi Abhinav,
+>   > >
+>   > > Thanks for your patch.
+>   > >
+>   > >
+>   > >
+>   > > ---- On Wed, 04 Dec 2024 15:55:17 -0300 Abhinav Kumar  wrote ---
+>   > >
+>   > >   > From the jobs [1] and [2] of pipeline [3], its clear that
+>   > >   > kms_cursor_legacy@torture-bo is most certainly a flake and
+>   > >   > not a fail for apq8016. Mark the test accordingly to match the results.
+>   > >   >
+>   > >   > [1] : https://gitlab.freedesktop.org/drm/msm/-/jobs/67676481
+>   > >   > [2] : https://gitlab.freedesktop.org/drm/msm/-/jobs/67677430
+>   > >   > [3]: https://gitlab.freedesktop.org/drm/msm/-/pipelines/1322770
+>   > >   >
+>   > >   > Signed-off-by: Abhinav Kumar quic_abhinavk@quicinc.com>
+>   > >   > ---
+>   > >   >  drivers/gpu/drm/ci/xfails/msm-apq8016-flakes.txt | 5 +++++
+>   > >   >  1 file changed, 5 insertions(+)
+>   > >   >
+>   > >   > diff --git a/drivers/gpu/drm/ci/xfails/msm-apq8016-flakes.txt b/drivers/gpu/drm/ci/xfails/msm-apq8016-flakes.txt
+>   > >   > new file mode 100644
+>   > >   > index 000000000000..18639853f18f
+>   > >   > --- /dev/null
+>   > >   > +++ b/drivers/gpu/drm/ci/xfails/msm-apq8016-flakes.txt
+>   > >   > @@ -0,0 +1,5 @@
+>   > >   > +# Board Name: msm-apq8016-db410c
+>   > >   > +# Failure Rate: 100
+>   > >
+>   > > Is failure rate is 100%, isn't it a fail than?
+>   > > (I know we have other cases with Failure Rate: 100, maybe we should fix them as well)
+>   > >
+>   >
+>   > Maybe I misunderstood the meaning of "Failure rate" for a flake.
+>   >
+>   > I interpreted this as this test being flaky 100% of the time :)
+> 
+> Ah right, I see, inside deqp-runner (that auto-retries).
+> 
+> I'd like to hear Vignesh's opinion on this.
+> 
+> (In any case, we probably should document this better)
+> 
+> Regards,
+> Helen
+> 
 
+Can you let me know which way we need to go?
+
+Just in case I did post a v2 fixing this, 
+https://patchwork.freedesktop.org/patch/627276/
+
+If thats the way to go, can you pls take a look?
+
+Thanks
+
+Abhinav
+>   >
+>   > Out of the 3 runs of the test, it passed 2/3 times and failed 1/3.
+>   >
+>   > So its fail % actually is 33.33% in that case.
+>   >
+>   > I think I saw a Failure rate of 100% on msm-sm8350-hdk-flakes.txt and
+>   > mistook that as the rate at which flakes are seen.
+>   >
+>   > Let me fix this up as 33%
+>   >
+>   > > Regards,
+>   > > Helen
+>   > >
+>   > >   > +# IGT Version: 1.28-ga73311079
+>   > >   > +# Linux Version: 6.12.0-rc2
+>   > >   > +kms_cursor_legacy@torture-bo
+>   > >   >
+>   > >   > ---
+>   > >   > base-commit: 798bb342e0416d846cf67f4725a3428f39bfb96b
+>   > >   > change-id: 20241204-cursor_tor_skip-9d128dd62c4f
+>   > >   >
+>   > >   > Best regards,
+>   > >   > --
+>   > >   > Abhinav Kumar quic_abhinavk@quicinc.com>
+>   > >   >
+>   > >   >
+>   > >
+>   >
+> 
 
