@@ -1,157 +1,222 @@
-Return-Path: <linux-arm-msm+bounces-41649-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-41652-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7E3679EDE56
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Dec 2024 05:19:59 +0100 (CET)
-Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8BF6B188660C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Dec 2024 04:19:59 +0000 (UTC)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3896019F462;
-	Thu, 12 Dec 2024 04:18:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ABbh1Js/"
-X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id E8B669EDEB4
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Dec 2024 06:10:32 +0100 (CET)
+Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 883931632F2;
-	Thu, 12 Dec 2024 04:18:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 02CFA283A1A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Dec 2024 05:10:31 +0000 (UTC)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0603F14D719;
+	Thu, 12 Dec 2024 05:10:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="B6rdBSCP"
+X-Original-To: linux-arm-msm@vger.kernel.org
+Received: from bali.collaboradmins.com (bali.collaboradmins.com [148.251.105.195])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E4071DA4E;
+	Thu, 12 Dec 2024 05:10:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.251.105.195
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733977089; cv=none; b=PZ0uueYZatca6gC6etCvLop1Rbl22FBYzNGatmtO8tI7kHLiy0q3ahc4oWXb2qXUe+kxBJMg1x1ydtNVf3TT2aczuXegmSsGaq1q5wc6vfxXRFaqvqWdT5oHXHhwuYeEuZFYcrE7zegwU55xQ9twUYFjQuS8Ocp3j437vbQyf/A=
+	t=1733980229; cv=none; b=FNOkuOM+lWNWlBqn62NqIcqg4Mui30fK/NkXVrgCBLHvLbQ4MdCYHrfJ4o1Tnt57QOZwjgGE4O+yKUPNnyzF8EAP/Hacx1Vg+5YK3Vnxk6mlh+ExwGapslO5ZRhIAlgbSoRSj6k5Tq+0Zwh8COFHTwp0D+q/kvZOiIPJ9x7K7pQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733977089; c=relaxed/simple;
-	bh=4FpesxTI8tOH3zp2gSxBusHmUxtqqSkPfa1kfXduHDo=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=P5GWu1qF7V7DrYPa0BO7urR+153E0nNDYU9G0Smckg4EE2vmvmx/frg6TcyqKZg01TlhnfC098jcUvMJDyW8gcnHyd8rBnOzs6BzRtTXl5brB33wMWKfjtK1EcHYOdJnhb2uTks6ISxvimwdQgNZUdMznYY8u12zwhcUfKAcsps=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ABbh1Js/; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BBHD3Xg029041;
-	Thu, 12 Dec 2024 04:17:59 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	pgacSY7WI6i9IX/ZwASO2aCI/5fwyVKaX18gcY/m2Xc=; b=ABbh1Js/QGdh6GGr
-	WX2/yPa3DIn7dTLN8Pe0iRZSZy0TuudoiPUXaPZ1KLjHHiCKoX4W2Ipm9DOceCv8
-	ftpDgP6LAv3K+D/Xl5vq8a07N1E81GF30QGQT3NL3izejK2qD+ba/ue/qk9m7Hr9
-	W3AqakG471Vl4yg0AwauNfhtxyutqrvGCRMbrNUYu9ay8iSCT2glkMLQHlEJvhiH
-	3bbJkPiO4DROLKI9RMrL/Edd/jb9RITpw7kgBYsCSEGyDNXBZO1w75g2OiDJ81fg
-	a5x1y8pgs9bHMHIegZX+Zh/GtNU2swBHH84TnoJ2Z9iLNnjZokSM/gbL7ZCqFOEX
-	LuLyxg==
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43fd4xspt4-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 12 Dec 2024 04:17:59 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4BC4HwDA021655
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 12 Dec 2024 04:17:58 GMT
-Received: from hu-mdalam-blr.qualcomm.com (10.80.80.8) by
- nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Wed, 11 Dec 2024 20:17:53 -0800
-From: Md Sadre Alam <quic_mdalam@quicinc.com>
-To: <vkoul@kernel.org>, <corbet@lwn.net>, <thara.gopinath@gmail.com>,
-        <herbert@gondor.apana.org.au>, <davem@davemloft.net>,
-        <kees@kernel.org>, <dave.jiang@intel.com>, <dmaengine@vger.kernel.org>,
-        <linux-doc@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-crypto@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>
-CC: <quic_srichara@quicinc.com>, <quic_varada@quicinc.com>,
-        <quic_mdalam@quicinc.com>, <quic_utiwari@quicinc.com>
-Subject: [PATCH v5 12/12] crypto: qce - Add support for lock/unlock in aead
-Date: Thu, 12 Dec 2024 09:46:39 +0530
-Message-ID: <20241212041639.4109039-13-quic_mdalam@quicinc.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20241212041639.4109039-1-quic_mdalam@quicinc.com>
-References: <20241212041639.4109039-1-quic_mdalam@quicinc.com>
+	s=arc-20240116; t=1733980229; c=relaxed/simple;
+	bh=hI0EGDPmpP7XnD6A+7EcRF/bfUEgIBo0whGbTy18VlA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=dHH2tmnCDRgdKP7u7fKSSxNE4Pisi0+ZfYw8Irhk7iWYrwpN09ye4rcIqmhWetxcQI0yf66/hESVdgQmhlvLPZl+46pIoeRq+c44ALU7DiMoFF2Oc1eiMgf3JjcziEDku6lkLfUOlvuMXxLRCr9cpqR3LJl+2wiBzp3q+SSkDm0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=B6rdBSCP; arc=none smtp.client-ip=148.251.105.195
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+	s=mail; t=1733980224;
+	bh=hI0EGDPmpP7XnD6A+7EcRF/bfUEgIBo0whGbTy18VlA=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=B6rdBSCP9h676c8clZYZaXnW6OJAvCH9vRGJFhKXO/Pfac5/85AD5LzEd/+VtM2Hl
+	 VOKnKCwkyqxc2+mv9wejP1ZEJTBQ3mjtNEcpqCSr18v4xzbxhrMU7ylAwjJYcp8BUf
+	 IIQ/CoqUKzl/R4qvazwtrygEkb9X/xry3zXqJJ5HDFHhy4RZaSkJDPaR0QZwenlFi7
+	 X24ZVRiaPAWSswhD6GDwMnY9xIkVfRFeGsgoO1AFMbjEGn1cJJ4TcXrQVgYpo+gFjO
+	 e0K3dpOYe3Ero5WIvC7P2S8yV8n2D0L+UoxpoDmv6xch5D1HR0LfnQZ5BVc1wKLbXc
+	 quwAsMIgDbIbg==
+Received: from [192.168.50.250] (unknown [171.76.86.135])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: vignesh)
+	by bali.collaboradmins.com (Postfix) with ESMTPSA id BBA7917E1067;
+	Thu, 12 Dec 2024 06:10:19 +0100 (CET)
+Message-ID: <ed90ca8c-ed81-419f-a5db-a4e8bcd35835@collabora.com>
+Date: Thu, 12 Dec 2024 10:40:16 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] drm/ci: add kms_cursor_legacy@torture-bo to apq8016
+ flakes
+To: Abhinav Kumar <quic_abhinavk@quicinc.com>,
+ Helen Mae Koike Fornazier <helen.koike@collabora.com>
+Cc: Rob Clark <robdclark@gmail.com>,
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Sean Paul <sean@poorly.run>,
+ Marijn Suijten <marijn.suijten@somainline.org>,
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+ linux-kernel <linux-kernel@vger.kernel.org>,
+ linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+ dri-devel <dri-devel@lists.freedesktop.org>,
+ freedreno <freedreno@lists.freedesktop.org>
+References: <20241204-cursor_tor_skip-v1-1-f5f0bba5df7b@quicinc.com>
+ <193931869a5.f923adf2270026.8321075661083367617@collabora.com>
+ <20a3955e-3d10-47c5-8e68-d70342805010@quicinc.com>
+ <19393604e18.f9b6fe7d298023.1937039548910081216@collabora.com>
+ <a03ae7e8-391e-4303-91fc-15a59979fd2a@quicinc.com>
+Content-Language: en-US
+From: Vignesh Raman <vignesh.raman@collabora.com>
+In-Reply-To: <a03ae7e8-391e-4303-91fc-15a59979fd2a@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: tg7I3zflIy5owK1CYaIt_Pglbvszj0p_
-X-Proofpoint-GUID: tg7I3zflIy5owK1CYaIt_Pglbvszj0p_
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- priorityscore=1501 bulkscore=0 mlxlogscore=999 phishscore=0 adultscore=0
- suspectscore=0 spamscore=0 mlxscore=0 impostorscore=0 clxscore=1015
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2412120028
 
-Add support for lock/unlock on bam pipe in aead.
-If multiple EE's(Execution Environment) try to access
-the same crypto engine then before accessing the crypto
-engine EE's has to lock the bam pipe and then submit the
-request to crypto engine. Once request done then EE's has
-to unlock the bam pipe so that others EE's can access the
-crypto engine.
+Hi Abhinav / Helen,
 
-Signed-off-by: Md Sadre Alam <quic_mdalam@quicinc.com>
----
+On 12/12/24 01:48, Abhinav Kumar wrote:
+> Hi Helen / Vignesh
+> 
+> On 12/4/2024 12:33 PM, Helen Mae Koike Fornazier wrote:
+>>
+>>
+>>
+>>
+>> ---- On Wed, 04 Dec 2024 16:21:26 -0300 Abhinav Kumar  wrote ---
+>>
+>>   > Hi Helen
+>>   >
+>>   > On 12/4/2024 11:14 AM, Helen Mae Koike Fornazier wrote:
+>>   > > Hi Abhinav,
+>>   > >
+>>   > > Thanks for your patch.
+>>   > >
+>>   > >
+>>   > >
+>>   > > ---- On Wed, 04 Dec 2024 15:55:17 -0300 Abhinav Kumar  wrote ---
+>>   > >
+>>   > >   > From the jobs [1] and [2] of pipeline [3], its clear that
+>>   > >   > kms_cursor_legacy@torture-bo is most certainly a flake and
+>>   > >   > not a fail for apq8016. Mark the test accordingly to match 
+>> the results.
+>>   > >   >
+>>   > >   > [1] : https://gitlab.freedesktop.org/drm/msm/-/jobs/67676481
 
-Change in [v5]
+The test passes - kms_cursor_legacy@torture-bo,UnexpectedImprovement(Pass)
 
-* No change
+>>   > >   > [2] : https://gitlab.freedesktop.org/drm/msm/-/jobs/67677430
 
-Change in [v4]
+There are no test failures
 
-* No change
- 
-Change in [v3]
+>>   > >   > [3]: https://gitlab.freedesktop.org/drm/msm/-/pipelines/1322770
 
-* Move qce_bam_release_lock() after qca_dma_terminate_all()
-  api
+The job is same as 2
 
-Change in [v2]
+In this case, the test passes and deqp-runner does not report it as 
+flake. So we only need to remove it from fails file.
 
-* Added qce_bam_acquire_lock() and qce_bam_release_lock()
-  api for aead
 
-Change in [v1]
+>>   > >   >
+>>   > >   > Signed-off-by: Abhinav Kumar quic_abhinavk@quicinc.com>
+>>   > >   > ---
+>>   > >   >  drivers/gpu/drm/ci/xfails/msm-apq8016-flakes.txt | 5 +++++
+>>   > >   >  1 file changed, 5 insertions(+)
+>>   > >   >
+>>   > >   > diff --git 
+>> a/drivers/gpu/drm/ci/xfails/msm-apq8016-flakes.txt 
+>> b/drivers/gpu/drm/ci/xfails/msm-apq8016-flakes.txt
+>>   > >   > new file mode 100644
+>>   > >   > index 000000000000..18639853f18f
+>>   > >   > --- /dev/null
+>>   > >   > +++ b/drivers/gpu/drm/ci/xfails/msm-apq8016-flakes.txt
+>>   > >   > @@ -0,0 +1,5 @@
+>>   > >   > +# Board Name: msm-apq8016-db410c
+>>   > >   > +# Failure Rate: 100
+>>   > >
+>>   > > Is failure rate is 100%, isn't it a fail than?
+>>   > > (I know we have other cases with Failure Rate: 100, maybe we 
+>> should fix them as well)
+>>   > >
+>>   >
+>>   > Maybe I misunderstood the meaning of "Failure rate" for a flake.
+>>   >
+>>   > I interpreted this as this test being flaky 100% of the time :)
+>>
+>> Ah right, I see, inside deqp-runner (that auto-retries).
+>>
+>> I'd like to hear Vignesh's opinion on this.
+>>
+>> (In any case, we probably should document this better)
 
-* This patch was not included in [v1]
+deqp-runner reports new (not present in flakes file) or known (present 
+in flakes file) flakes
 
- drivers/crypto/qce/aead.c | 4 ++++
- 1 file changed, 4 insertions(+)
+2024-12-11 07:25:44.709666: Some new flakes found:
+2024-12-11 07:25:44.709676:   kms_lease@page-flip-implicit-plane
 
-diff --git a/drivers/crypto/qce/aead.c b/drivers/crypto/qce/aead.c
-index 7d811728f047..13fb7af69f54 100644
---- a/drivers/crypto/qce/aead.c
-+++ b/drivers/crypto/qce/aead.c
-@@ -63,6 +63,8 @@ static void qce_aead_done(void *data)
- 		sg_free_table(&rctx->dst_tbl);
- 	}
- 
-+	qce_bam_release_lock(qce);
-+
- 	error = qce_check_status(qce, &status);
- 	if (error < 0 && (error != -EBADMSG))
- 		dev_err(qce->dev, "aead operation error (%x)\n", status);
-@@ -433,6 +435,8 @@ qce_aead_async_req_handle(struct crypto_async_request *async_req)
- 	else
- 		rctx->assoclen = req->assoclen;
- 
-+	qce_bam_acquire_lock(qce);
-+
- 	diff_dst = (req->src != req->dst) ? true : false;
- 	dir_src = diff_dst ? DMA_TO_DEVICE : DMA_BIDIRECTIONAL;
- 	dir_dst = diff_dst ? DMA_FROM_DEVICE : DMA_BIDIRECTIONAL;
--- 
-2.34.1
+2024-12-11 13:15:16.482890: Some known flakes found:
+2024-12-11 13:15:16.482898: 
+kms_async_flips@async-flip-with-page-flip-events-atomic
 
+we add it to flakes file if deqp runner reports new flakes. Another case 
+where we update flake tests is when a test passes in one run but fails 
+in another, but deqp-runner does not report it as flake.
+
+Regards,
+Vignesh
+
+>>
+>> Regards,
+>> Helen
+>>
+> 
+> Can you let me know which way we need to go?
+> 
+> Just in case I did post a v2 fixing this, 
+> https://patchwork.freedesktop.org/patch/627276/
+> 
+> If thats the way to go, can you pls take a look?
+> 
+> Thanks
+> 
+> Abhinav
+>>   >
+>>   > Out of the 3 runs of the test, it passed 2/3 times and failed 1/3.
+>>   >
+>>   > So its fail % actually is 33.33% in that case.
+>>   >
+>>   > I think I saw a Failure rate of 100% on msm-sm8350-hdk-flakes.txt and
+>>   > mistook that as the rate at which flakes are seen.
+>>   >
+>>   > Let me fix this up as 33%
+>>   >
+>>   > > Regards,
+>>   > > Helen
+>>   > >
+>>   > >   > +# IGT Version: 1.28-ga73311079
+>>   > >   > +# Linux Version: 6.12.0-rc2
+>>   > >   > +kms_cursor_legacy@torture-bo
+>>   > >   >
+>>   > >   > ---
+>>   > >   > base-commit: 798bb342e0416d846cf67f4725a3428f39bfb96b
+>>   > >   > change-id: 20241204-cursor_tor_skip-9d128dd62c4f
+>>   > >   >
+>>   > >   > Best regards,
+>>   > >   > --
+>>   > >   > Abhinav Kumar quic_abhinavk@quicinc.com>
+>>   > >   >
+>>   > >   >
+>>   > >
+>>   >
+>>
 
