@@ -1,76 +1,76 @@
-Return-Path: <linux-arm-msm+bounces-41619-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-41621-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B094F9EDCBB
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Dec 2024 01:49:16 +0100 (CET)
-Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7BF4A9EDCBE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Dec 2024 01:49:31 +0100 (CET)
+Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C24FA2837FB
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Dec 2024 00:49:14 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E890616898B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Dec 2024 00:49:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1EDC2153BD9;
-	Thu, 12 Dec 2024 00:47:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E3A0514387B;
+	Thu, 12 Dec 2024 00:47:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="NkPNBuvd"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="By/vuAI/"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
+Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB5FE14AD20
-	for <linux-arm-msm@vger.kernel.org>; Thu, 12 Dec 2024 00:47:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C6FD152E02
+	for <linux-arm-msm@vger.kernel.org>; Thu, 12 Dec 2024 00:47:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733964470; cv=none; b=EezpOGYn3pHgVnzDnLEKfKbik4VrmgLjhsd+xNWkZbrzofge53E4VMMtLnBdjp6IpRps4WAHVdFeFZsADmqbFJE1pSVYrwMdtUGOxgZPfz7e85Bmi44AowBlBHAbjOmOx/ExT/TLKulkhfpzKxsTEP9PXUwm31yU9RB3Agd0ySQ=
+	t=1733964471; cv=none; b=tiQlE4glggoHfTqA0VaciCnisWEnl74imFSg5S0U7MlzYbyeVZ6weOtpecPBxcg3xB/VdPEDKvrGSIhfmhKbkIz+0bL56lbdLUMeDAQakjoZHiafNizSjk9IBLAmJt6MYPo5nvB5Nw1JlU4/2sMhCBui4pQq3uG+IxjJBF9Drs0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733964470; c=relaxed/simple;
-	bh=g17b3O9IJFRR5zRDTOnqHhNU2ufwtjxg8brt+E441NM=;
+	s=arc-20240116; t=1733964471; c=relaxed/simple;
+	bh=KxG2H3oHtPjIV+VhCiilLtiyhUfg1u1AKb3+JTgTrMs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oQwrDdzusAsrtZFAfbgKrq2gWbljvks9rugaU6ZXYwy2hgbJ4wvcx70CpUh5kEW2u55G8unq1Xxpf1fUZBsDbbefPbdr9Wv49kei9sJN1tMtnPsacSYfhQF8rCeMWa6+pYNONog/gA8U0bGn2xhT6EW2T5Y8z7OtowDzXDHW8A8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=NkPNBuvd; arc=none smtp.client-ip=209.85.128.46
+	 MIME-Version; b=b7aa3UxXQQyg8qu4oTViGYhCWXnbXIxJ3RolfW+2sqxnIy4BvO4V+M8Iqid26fmZVH3mp5LeIwlE6iJjlJ2BhgGoJGuAA5D8OvzichHnCq0WTnm5QYjSxIrTnpVIp+LfmDqIuAPpcK+jRDikkaUPBn54nYSs0TD4aEL5PWp+xew=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=By/vuAI/; arc=none smtp.client-ip=209.85.128.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-4361b0ec57aso465535e9.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Dec 2024 16:47:47 -0800 (PST)
+Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-434e3953b65so276245e9.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Dec 2024 16:47:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1733964466; x=1734569266; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1733964468; x=1734569268; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=qQQpmK66T3MqtBJyloGmYZGt9Ctq4U4XpvYTcWnQiLM=;
-        b=NkPNBuvdbLTxDo78CR62d4PkCVlBDmuq/swC/C4uJ+M4TkpZl0bJRBzJk+g9kXkJVf
-         Ul1gquHMFYBncmaIC2o1CpPticO9a7/8Ilg1Kg5zg0z0QhieTJEzLVgyrUa3a69FsxZ1
-         aqWiGk82XMRPAh3rYJORi/BRc7zFJbUFqlfLkcCcSYe/SW0jHRzS7evOf+z/YO1FKhfs
-         x5Pwb+ih1gSH1Lq/E4n/kstFY2YB/Mvybbl69v0pzTAW8/iET5AynoIt4lad/AC3uZK5
-         fjOzvCIdkWxOLYOyiNtLep/bfyg/B1JlGDEArtmUboN4tAghrKIDdFiMv+dmySaB3WTw
-         WRHA==
+        bh=vFHKgaQUdzL/Q4nPVhlEMPI+GbJNKf55IgIGl/KzjWA=;
+        b=By/vuAI/JvC4AssI7Y9TfppP+xN1c6D/OGqMvREbxE0HTIW3VGzWPXsfqybXwY0qhg
+         V/mP7eODc10OJUo9zpNNoUl+44rKbSupxUO0Ku67HwGWo21Q2yPMmc3LONPoagnQsU5k
+         NETlIEIWABQ6X3O1JwQ8SnpOKeIZBk/SoV9RL/3MwCf8oJD2YQgW1mGJcM3rMCaEdEVt
+         4l5Qm663xU1pQGy9H/Cp0yht5efyziuKcO98Y7UFtFrvTYmekfGF/c4XkyHU8tdux3r6
+         qmelpG04gYHlYq4EwHKliksPGGa4sT2xj6/GF3Mng3UNDbe53Zd1p6OtCTzBkARiD9NI
+         uMtA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733964466; x=1734569266;
+        d=1e100.net; s=20230601; t=1733964468; x=1734569268;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=qQQpmK66T3MqtBJyloGmYZGt9Ctq4U4XpvYTcWnQiLM=;
-        b=gOTpkdFcO+O1mxHYdglTc6oeX2ffGlcJn1HSJoK9QGVHyYHt0RurKuiohRWwkcAwLK
-         DtXF68yAEwvB/WPL8W/iUqVPJaIGqZxpFE9c1Y1eK7UGzk9EoOs+UExL5lCdgcSVgyTA
-         ZtjQgg3Fjvg+EOiFhTJC35M6eAXF6zpgIMJaJOTT9QSn9ot7uafFxkwehqK5HdXTUjOg
-         JPLuTIcDp9lQ4CTH264cVdPDkGqI8bjxZIpsg+mqzPHApVl5WD9n6X3/l6n5VTidL0Of
-         VpAkW6lYB/dGpFfLveH1LCuGCKRBzKyvHw/T0TdzVxsHri+OSQEFl5W/YA5xCRfG45Vb
-         fYYw==
-X-Forwarded-Encrypted: i=1; AJvYcCW6r37AkKGTg+pXBBixHJPe6w7AhmBOTsmzb++csiMHBhWY8mX9c2Hr9Z3R4jyNrv+ydbiE9EHwXgqGQAxI@vger.kernel.org
-X-Gm-Message-State: AOJu0YyZMMKmurKzgasN+5MLviZjmdW0vYIdx5MMkJew1by7bSWjIP2W
-	eh6inG2z4wqB6TniYNjDI1qRpppxxaC0rIVw583CaeILGtgZfwV/nPLaCewbSuQ=
-X-Gm-Gg: ASbGncs90xNUdIVWKQy05jIZCr4VO2tD9gL1A/wjc89gF3d5NCPko7kdnjCedODXWHg
-	/A4j47i3Tj4LA5eMNu2b03XKktC8l4H09+WcTYTPuEn5Ggkn0NzkFw5rgIv2uUTSOXxiLaHNSY6
-	EFQjWZi94XtB7RpoJza2/xBKYQe+gND5DX0ZsTVSr7dmn9ASSH6tXRnPubuhTXIurrZSjQvI6Bo
-	SdJFxmT6nll8v8GjskaRIxwl+TzKUTAMJ3Opt4dqifEMCvBk3CYCFV+sW/6H4rn+9JMszo2
-X-Google-Smtp-Source: AGHT+IHtzrN5lCLtEOpZ7wN6Vwiw74Jy/Nphl9EoXdDE0Dvq2P8eavVUVGJHmfyFsPMVjXn4QnbdqA==
-X-Received: by 2002:a05:6000:490a:b0:385:f996:1bb9 with SMTP id ffacd0b85a97d-3878768e743mr1113391f8f.23.1733964466297;
-        Wed, 11 Dec 2024 16:47:46 -0800 (PST)
+        bh=vFHKgaQUdzL/Q4nPVhlEMPI+GbJNKf55IgIGl/KzjWA=;
+        b=mqPagNnlkc+wCfznpxfKW5WYAak/ML3FTbJLUa1DZ+CP0qZjn0QfYiKJGHq3hHIjd/
+         3YYpOCmebO/6UxDknhIc1UJUc3n1Wv19BHXnqc26vXNND12rvr06Z9Q/+lfvQdfT1oVr
+         ip6aGzaZs3HDeEcJVBtJF2LNa8g6bl3lWTpDeqksDI69ecj8MV2JPIvo9MVdjujxDh7a
+         ddDFfhuLtY5NXLBugTgXoXIVSDGhz/iabClb3cYmolwouOwbsbvQyiL1/0gJh9WwJ2ES
+         O0bCM3pt0u93oEWRMUCq+hnhPvpZLj+as+b8cfy7OXKGSuSRIFMVSvfWMiNA6rhmoM6g
+         rZ3w==
+X-Forwarded-Encrypted: i=1; AJvYcCWBXqJtMEH4Gt5UTw61rYMGlJNIfDkNkR4UrwzQx9tbfCYO/qco0XZ3RS3d5TEzjyzpVICNX7vc/brpQn14@vger.kernel.org
+X-Gm-Message-State: AOJu0YztrWVio3sTC/a+mXMJuxbu5AsoQHEtgH7Tq5wMueR9I+Lzbz8O
+	amr5MEl7giBkCQgSNKl3/MQ027pqo6xeqT7dWCduIDe2Hf3XxLIPn6LClzS+giE=
+X-Gm-Gg: ASbGncvQ1DRzDffASro5UqltbQeCnEUtpUbhN7o0XVHeHv97FzjvbYWZZYMzMP/DXze
+	Dnlxot9aQtlKbEqFcjaNeZdciQcCy0Vz0lfMJfH8weFNLkhd+4cmdlB+Vko8uzg7vMV3r3iATLm
+	PIw/zEkgY6mp4K95h5IJUlZQKskUKbBzHdHLIY919/WwSWjlRxu0SyQK8Y1S0rhVuMc8+5c2NgR
+	AH6gDWpn0I4yT6pnnUQStjY9DKqHgJS8Zo6dkv4OVqtATIKt9lOzKpwehb2LnBxmZDOyT0w
+X-Google-Smtp-Source: AGHT+IGqJQuuqk4Vhp5TZjFSvgTAdQ/xv2AVt/O10VN20Uow3Ku4n2wjK3uOgIBOBh22buJzPhpm7A==
+X-Received: by 2002:a05:6000:1a85:b0:385:e1a8:e2a1 with SMTP id ffacd0b85a97d-3864ce86758mr3868050f8f.3.1733964468442;
+        Wed, 11 Dec 2024 16:47:48 -0800 (PST)
 Received: from localhost.localdomain ([2.222.231.247])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-387824a4ef4sm2459660f8f.39.2024.12.11.16.47.44
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-387824a4ef4sm2459660f8f.39.2024.12.11.16.47.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 11 Dec 2024 16:47:45 -0800 (PST)
+        Wed, 11 Dec 2024 16:47:47 -0800 (PST)
 From: Alexey Klimov <alexey.klimov@linaro.org>
 To: broonie@kernel.org,
 	konradybcio@kernel.org,
@@ -88,9 +88,9 @@ Cc: tiwai@suse.com,
 	linux-arm-msm@vger.kernel.org,
 	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH v2 08/14] dt-bindings: arm: qcom-soc: extend pattern matching to support qcom,wsa881x
-Date: Thu, 12 Dec 2024 00:47:21 +0000
-Message-ID: <20241212004727.2903846-9-alexey.klimov@linaro.org>
+Subject: [PATCH v2 09/14] ASoC: dt-bindings: qcom,wsa881x: extend description to analog mode
+Date: Thu, 12 Dec 2024 00:47:22 +0000
+Message-ID: <20241212004727.2903846-10-alexey.klimov@linaro.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20241212004727.2903846-1-alexey.klimov@linaro.org>
 References: <20241212004727.2903846-1-alexey.klimov@linaro.org>
@@ -102,35 +102,127 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Add support for qcom,wsa8815 and qcom,wsa8810 names to be recognised
-as a valid compatibles.
+WSA881X also supports analog mode when device is configured via i2c
+only. Document it, add properties, new compatibles and example.
 
+While at this, also adjust quotes.
+
+Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
 Signed-off-by: Alexey Klimov <alexey.klimov@linaro.org>
 ---
- Documentation/devicetree/bindings/arm/qcom-soc.yaml | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ .../bindings/sound/qcom,wsa881x.yaml          | 75 +++++++++++++++++--
+ 1 file changed, 67 insertions(+), 8 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/arm/qcom-soc.yaml b/Documentation/devicetree/bindings/arm/qcom-soc.yaml
-index 2ea6d3f65478..ebccafeb13e3 100644
---- a/Documentation/devicetree/bindings/arm/qcom-soc.yaml
-+++ b/Documentation/devicetree/bindings/arm/qcom-soc.yaml
-@@ -23,7 +23,7 @@ description: |
- select:
-   properties:
-     compatible:
--      pattern: "^qcom,.*(apq|ipq|mdm|msm|qcm|qcs|q[dr]u|sa|sar|sc|sd[amx]|sm|x1e)[0-9]+.*$"
-+      pattern: "^qcom,.*(apq|ipq|mdm|msm|qcm|qcs|q[dr]u|sa|sar|sc|sd[amx]|sm|wsa|x1e)[0-9]+.*$"
-   required:
-     - compatible
+diff --git a/Documentation/devicetree/bindings/sound/qcom,wsa881x.yaml b/Documentation/devicetree/bindings/sound/qcom,wsa881x.yaml
+index ac03672ebf6d..e482d9dc0de2 100644
+--- a/Documentation/devicetree/bindings/sound/qcom,wsa881x.yaml
++++ b/Documentation/devicetree/bindings/sound/qcom,wsa881x.yaml
+@@ -12,15 +12,17 @@ maintainers:
+ description: |
+   WSA8810 is a class-D smart speaker amplifier and WSA8815
+   is a high-output power class-D smart speaker amplifier.
+-  Their primary operating mode uses a SoundWire digital audio
+-  interface. This binding is for SoundWire interface.
+-
+-allOf:
+-  - $ref: dai-common.yaml#
++  This family of amplifiers support two operating modes:
++  SoundWire digital audio interface which is a primary mode
++  and analog mode when device is configured via i2c only.
++  This binding describes both modes.
  
-@@ -34,6 +34,7 @@ properties:
-       - pattern: "^qcom,(apq|ipq|mdm|msm|qcm|qcs|q[dr]u|sa|sc|sd[amx]|sm|x1e)[0-9]+(pro)?-.*$"
-       - pattern: "^qcom,sar[0-9]+[a-z]?-.*$"
-       - pattern: "^qcom,(sa|sc)8[0-9]+[a-z][a-z]?-.*$"
-+      - pattern: "^qcom,wsa[0-9]+.*$"
+ properties:
+   compatible:
+-    const: sdw10217201000
++    enum:
++      - qcom,wsa8810
++      - qcom,wsa8815
++      - sdw10217201000
  
-       # Legacy namings - variations of existing patterns/compatibles are OK,
-       # but do not add completely new entries to these:
+   reg:
+     maxItems: 1
+@@ -35,17 +37,60 @@ properties:
+   '#sound-dai-cells':
+     const: 0
+ 
++  clocks:
++    maxItems: 1
++
++  mclk-gpios:
++    description: GPIO spec for mclk
++    maxItems: 1
++
+ required:
+   - compatible
+   - reg
+   - powerdown-gpios
+-  - "#thermal-sensor-cells"
+-  - "#sound-dai-cells"
++  - '#thermal-sensor-cells'
++  - '#sound-dai-cells'
++
++allOf:
++  - $ref: dai-common.yaml#
++  - if:
++      properties:
++        compatible:
++          contains:
++            enum:
++              - qcom,wsa8810
++            const: qcom,wsa8815
++    then:
++      properties:
++        reg:
++          description:
++            In case of analog mode this should be I2C address of the digital
++            part of the device. The I2C address of analog part of an amplifier
++            is expected to be located at the fixed offset.
++          maxItems: 1
++          items:
++            minimum: 0x0e
++            maximum: 0x0f
++
++  - if:
++      properties:
++        compatible:
++          contains:
++            enum:
++              - qcom,wsa8810
++            const: qcom,wsa8815
++    then:
++      required:
++        - clocks
++        - mclk-gpios
+ 
+ unevaluatedProperties: false
+ 
+ examples:
+   - |
++    #include <dt-bindings/gpio/gpio.h>
++    #include <dt-bindings/sound/qcom,q6afe.h>
++
+     soundwire@c2d0000 {
+         #address-cells = <2>;
+         #size-cells = <0>;
+@@ -68,4 +113,18 @@ examples:
+         };
+     };
+ 
++    i2c0 {
++        #address-cells = <1>;
++        #size-cells = <0>;
++
++        amplifier@e {
++            compatible = "qcom,wsa8810";
++            reg = <0x0e>;
++            clocks = <&q6afecc LPASS_CLK_ID_MCLK_3 LPASS_CLK_ATTRIBUTE_COUPLE_NO>;
++            powerdown-gpios = <&lpass_tlmm 16 GPIO_ACTIVE_LOW>;
++            mclk-gpios = <&lpass_tlmm 18 GPIO_ACTIVE_HIGH>;
++            #sound-dai-cells = <0>;
++            #thermal-sensor-cells = <0>;
++       };
++    };
+ ...
 -- 
 2.45.2
 
