@@ -1,79 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-41674-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-41675-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 748E19EE0B6
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Dec 2024 08:57:30 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id CBD649EE0CE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Dec 2024 09:03:17 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id C32971889433
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Dec 2024 07:57:28 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 55A2D18895FC
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Dec 2024 08:03:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 964D420B7E6;
-	Thu, 12 Dec 2024 07:57:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 79F8A20C00C;
+	Thu, 12 Dec 2024 08:02:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="k+uVxJFQ"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dhLw/e/9"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f53.google.com (mail-lf1-f53.google.com [209.85.167.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3329202F9D
-	for <linux-arm-msm@vger.kernel.org>; Thu, 12 Dec 2024 07:57:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4575B20B7FE;
+	Thu, 12 Dec 2024 08:02:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733990243; cv=none; b=uojIWAuLgNQlsWWMhnaGwJTU1DmLBwPZxS6ZvC7uNZyY50OO75WEZwJASM0PlHVDwQfPkTAZN55PTGyNNVhqH5qeyH6JS4L7PxJkZ8npwOFC2yROdNp964Oo4OxBazn7T/KnGE/zEKP2UWcmZBIgjy4UdhFncBCLYaPrh3X7/iQ=
+	t=1733990579; cv=none; b=XWUow0T/+W+Aw6fjW/AkatVD+Rq5Qod0TpEPG6gxBexvXBmRLBpFl0jyz4XsVgwTHgT4/MrDolglkB6LrD0R+HrFWnEfYI1uLl5VivFRPu99P6LmhvSMFuoKEX9G4q5iijllInzBHkEIVB0fh/vYwgPIKKbNwsvfLiVtqic/CdA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733990243; c=relaxed/simple;
-	bh=gu43IItEc69wzb0eHVqTCGsohjjMs1ZP6cMcHAUHkC0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=YaElNxsDnR8Kk8e+xPi8ZQF4UuH/hGZHb5HZrWfEQ2D1zq8RUaJ1UVEYMWPdZD2RitSmJtztuT9JAkaaKHOrrdQ0nZt52jbrQwg9WzC7nW5rel93gIPolCOq/Io3M6gpq141Y8VdB5CJS5ZAp14y3o1RtoW7xhu/JK5Ls/NTKTs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=k+uVxJFQ; arc=none smtp.client-ip=209.85.167.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f53.google.com with SMTP id 2adb3069b0e04-53e3c3e38d0so57669e87.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Dec 2024 23:57:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1733990240; x=1734595040; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=HWqMXO8FKfgEyH0IhREvGbWFvHCKay6Tk9EoQBbE3f4=;
-        b=k+uVxJFQPzRynEVqBqVPTELlyJpwKDY/hahyfJd7h9splMnAczG1IekUlE71fQe61n
-         c5fUHBpgoVsrxh8Z9HMdkcQIjK0RaNk9ukZW63hrxitdITLlr03P6GJbb2GnrgRBMwPk
-         XKoS/8KITDhHwScTga5ftHCdsCq/w0MvuCFvdVt/Mc5nWExD7H9lsGbL6Ha3vUbuC0A2
-         ChzDjtzQOZk0qZ7Gpnoe27DG8o+jIjJwcUWGrtlFqxDkJvQ8umBjjbjba/mcmVsPezDd
-         DUwsUGul4cCpi4clYMkh/XZUV5faXvHOZhvVOMoRo6GhtjXu4YeszNrTymwu6rW6d4Cn
-         5lBg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733990240; x=1734595040;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=HWqMXO8FKfgEyH0IhREvGbWFvHCKay6Tk9EoQBbE3f4=;
-        b=LaF84ZOH6e9MwFLL6VPqiHZp2yiI8RRciWwZjdulYFSBHMEKJbF3NIzVmiVzv7LQJw
-         jp/S656QT/YXAeR46GD65J/89Iye4ZRq2AZcopsGktQWcz9C8Rlx0HMy2WKOzh/71kpG
-         E5aDK9nf56/xPSplcIfn8RQyy+bXh3cFcPNWJ1JgXzliE26A2FPWK5OO+0d+gDyVIbQw
-         pjX4BI6benryzx3NWHR2wwhHFid3QloeCE+CAxDVI/w64dd3ttWYp3t/pNNhfjNBAq4m
-         ZMHttvOlR1RcEq7wj7J7T1Fiav+/qvTrwaxRy2rmBNPCZcJqCFb1tPqc7a/GjwSNm7lo
-         N3ow==
-X-Forwarded-Encrypted: i=1; AJvYcCVXr9JbIVxZ02pshHXUiiOyVJadL8SCFYPowSxUfA57pe5+S6ixlImwkpb3t4Z2jaEJHcZ4d0hY5aObhHd6@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz7sSSOEa4qU9sXys6lv+p0JPKPjR2quqNOM/0oIhykzR1PjPb2
-	sHjWqTvQzZO3L+nQERfDZ/RTH0SFUjUCrVENL3rn3Ck6b8E1X3XKYLTIb8HooSU=
-X-Gm-Gg: ASbGnctY+Y8vaHqXh3WILGJU/jcuUa5TqCddn4iP8R0YZeGwuDxEFT+S5LC3SC86WPu
-	8Z1YWt7WPSrQc3LRMkFIs9CfmdVYCXzqsvc6Wy36/2L5fzMriItSd3gTnAN5/eudpaZKvvycodV
-	K71Rg8JQHDWNxa8cjWMD8iJcUY7GBU68RJxxLnsb2hZZhteUh70zcmVHZRnNrEgLh+N0FiHOVyD
-	+TkL+MzCcwHKuqpfMrCSaGSVnjdJUUaLDUpzs2Eef4Qa9bP5Ba80JajnWY5PJBNHRZ2QuVM/pUI
-	ylV0zeIXmA0saQ6VhakEIhn4YKhyy7KtUyk=
-X-Google-Smtp-Source: AGHT+IEnjc3IkzAwCkvxBgbpNXSCFVmUmB4AdseEra75anwcsLYJFFQWNYiHrup3ASijJku99aU/ew==
-X-Received: by 2002:a05:651c:b28:b0:302:27c6:fc7b with SMTP id 38308e7fff4ca-30249e053bcmr2855071fa.6.1733990240038;
-        Wed, 11 Dec 2024 23:57:20 -0800 (PST)
-Received: from [192.168.1.4] (88-112-131-206.elisa-laajakaista.fi. [88.112.131.206])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5401d670734sm1319306e87.220.2024.12.11.23.57.16
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 11 Dec 2024 23:57:18 -0800 (PST)
-Message-ID: <add63655-626e-482c-a309-f124f3b18115@linaro.org>
-Date: Thu, 12 Dec 2024 09:57:16 +0200
+	s=arc-20240116; t=1733990579; c=relaxed/simple;
+	bh=CWtn5BgZ5HrUO9L8nYeYqhWgqcEGi3rQP9EHOkI4FZ8=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=CBf1NH4sm3xzPufhEQWq8jmXJtLirEd7J1CquT/ceHnWy7USq5obvx/7NVbEUq/ElIsn/itH9NgOCHERAOajs/7KKnLu8jLMqPG73dSW3/0+bv+4PgdKoWote/YbOe+QW4VE5Cdo88QAljDtUaEb59WxhygSjdVZHgV4fE0LwOk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dhLw/e/9; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D8CAC4CECE;
+	Thu, 12 Dec 2024 08:02:53 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1733990578;
+	bh=CWtn5BgZ5HrUO9L8nYeYqhWgqcEGi3rQP9EHOkI4FZ8=;
+	h=Date:Subject:From:To:Cc:References:In-Reply-To:From;
+	b=dhLw/e/9Dq7Y06SuIyoUGloAFUNDYcQO9pmLyicGhAtEq26OuTP1POl7jSjG2amzU
+	 GxvxRNrS32iQ6o/ZNiuOp8+OOOCX/CLWRlYeYwUioTnxtZ4zyqS5GqiReL/1nJNwE8
+	 +2cNgIMwqOwdM6UL4JlOvohFxoQbQyKGS3oH2fiojJ8JDmOkNWDnEzFw6WuTG9VTSt
+	 6giJIuXbtK2eFiN8jZs23lKIrw2/AgzABJ32MfPNMAVbz4BuWZnVHHmSRkgwRl0wJ7
+	 HC2YmFGIOOtxQVWQBsCjh37+MGWziohhAAvAWVhg7b5tZ8mhnZkADgsDx7umgaenP8
+	 PRb+K1+qbudyg==
+Message-ID: <6573e429-69a3-4f42-81e9-bd305e0d7c25@kernel.org>
+Date: Thu, 12 Dec 2024 09:02:51 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -81,49 +50,81 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 08/16] media: qcom: camss: vfe: Move common code into vfe
- core
-Content-Language: ru-RU
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- Depeng Shao <quic_depengs@quicinc.com>, rfoss@kernel.org,
- todor.too@gmail.com, mchehab@kernel.org, robh@kernel.org,
- krzk+dt@kernel.org, conor+dt@kernel.org
-Cc: quic_eberman@quicinc.com, linux-media@vger.kernel.org,
+Subject: Re: [PATCH v2 08/14] dt-bindings: arm: qcom-soc: extend pattern
+ matching to support qcom,wsa881x
+From: Krzysztof Kozlowski <krzk@kernel.org>
+To: Alexey Klimov <alexey.klimov@linaro.org>
+Cc: broonie@kernel.org, konradybcio@kernel.org,
+ konrad.dybcio@oss.qualcomm.com, andersson@kernel.org,
+ srinivas.kandagatla@linaro.org, tiwai@suse.com, lgirdwood@gmail.com,
+ perex@perex.cz, robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
+ dmitry.baryshkov@linaro.org, linux-sound@vger.kernel.org,
  linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, kernel@quicinc.com
-References: <20241211140738.3835588-1-quic_depengs@quicinc.com>
- <20241211140738.3835588-9-quic_depengs@quicinc.com>
- <79fc669d-999f-42f3-948a-ee5f3a91ddfe@linaro.org>
- <ef9a65a6-339e-4428-8487-ead242b3b2d4@linaro.org>
-From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-In-Reply-To: <ef9a65a6-339e-4428-8487-ead242b3b2d4@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+ linux-kernel@vger.kernel.org
+References: <20241212004727.2903846-1-alexey.klimov@linaro.org>
+ <20241212004727.2903846-9-alexey.klimov@linaro.org>
+ <uafwpjsclos7tcykjgbru32yu34ncr7stn6v74jmyu65auszik@viadthjz6cm3>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 fv0=
+In-Reply-To: <uafwpjsclos7tcykjgbru32yu34ncr7stn6v74jmyu65auszik@viadthjz6cm3>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 12/12/24 03:35, Bryan O'Donoghue wrote:
-> On 12/12/2024 01:06, Vladimir Zapolskiy wrote:
->>
->> This is a massive and a functional change
+On 12/12/2024 08:46, Krzysztof Kozlowski wrote:
+> On Thu, Dec 12, 2024 at 12:47:21AM +0000, Alexey Klimov wrote:
+>> Add support for qcom,wsa8815 and qcom,wsa8810 names to be recognised
 > 
-> It shouldn't be a _functional_ change at all, just a refactoring and a
-> reduction.
+> What is WSA8815 that?
 
-I've just tested that this change breaks not only TPG on SM8250/RB5, but
-a regular image capturing from imx577 camera sensor is also broken.
+I guess I had some longer thought:
+"What is WSA8815 that it should be here?"
 
-Hope it helps.
-
-> I'll take a look too, see if I can spot a regression on rb3-gen1 and
-> replicate the breakage on rb5.
 > 
+>> as a valid compatibles.
 
-Thank you, very much appreciated. Splitting the change would be still
-welcome.
 
-> @Depeng we can probably get you remote access to an RB5 if you need it.
-> 
-
---
-Best wishes,
-Vladimir
+Best regards,
+Krzysztof
 
