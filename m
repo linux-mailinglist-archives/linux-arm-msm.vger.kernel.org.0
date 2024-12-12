@@ -1,100 +1,150 @@
-Return-Path: <linux-arm-msm+bounces-41694-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-41695-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0EA589EE2F2
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Dec 2024 10:27:20 +0100 (CET)
-Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 55D549EE317
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Dec 2024 10:31:58 +0100 (CET)
+Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2C87E2848DD
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Dec 2024 09:27:18 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 1AD1116267A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Dec 2024 09:31:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CB1FD2101B7;
-	Thu, 12 Dec 2024 09:25:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9AA0920E30C;
+	Thu, 12 Dec 2024 09:31:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gAQ34xxz"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="HahhefW4"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 987F320E337;
-	Thu, 12 Dec 2024 09:25:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05213187870;
+	Thu, 12 Dec 2024 09:31:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733995559; cv=none; b=skJKRfuUZMj3B0A98WCzXGQtthusD/m+WuS480/WWX8qKmL2H5B3KZhOAqFW2eQ26azzqEg7DsEsn5Ci0aWNJi1u8Ng3N+MJ214OOBWKvjOfsv37rtjGc+sX1wX0HCQPKpFRnOwJ4IHDVQJEBT9W7oFHUPBoZB9/C3Sg24vBmR8=
+	t=1733995915; cv=none; b=hN2LINvUSwHzmHqnnzf/vofSobQNOX3MW96knGSzGgh6qUyEbYr79nCETZSziyTy/3FYysBR0gJmqMimmlWt/Y6v1B03YXYf8jgSJwemFeo0Bcdhdkp9aJ1u5qWhFSaHPN7PfcRTWNxEicptJv7VOoyLg2jQNQtouphra8iy0Ws=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733995559; c=relaxed/simple;
-	bh=Bi5Hm1hKHqJlQUSQA4wsm321XMcO3ZElLnoKLUpFdUw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=o/23+G5mc22bPWAaBcIgIzf02kTumZIIZIXvBy0sy3KS3ArsIDYaHgYy2pbzSHG0mzoE4ASXsgt9OcpZwnLmo5kPQ1Bv3NR+7PAisYMKl/jGEg/Bj39EUwOGitpEdaND2sYlHe+jMJfDx87TIUG6b/m6MZDkQJ9EbqDucDO+mJc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gAQ34xxz; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D408C4CECE;
-	Thu, 12 Dec 2024 09:25:56 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1733995559;
-	bh=Bi5Hm1hKHqJlQUSQA4wsm321XMcO3ZElLnoKLUpFdUw=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=gAQ34xxzHYZQvQcYjwixMatdVbC+eGq5oOmqXyHtVY/kpxVipD76h2ilOCpKdnM/O
-	 EoyY6W2Jr77BJ7xUUm62bmOcYfK6dOCrFX2MqWZYq1TR3ovrhnrf1WsKHcrWt6HlbK
-	 tGsLAsBMT0R8jcRW5bO+UaYfMwoYdJUVSQs6iT0IebME6V6qVuLxKkW9SY54DfiXsn
-	 s0nlyEhnqD9HKvV6CgQO9kVGSp3bhgC4eJ8Izmuo8dwer4bnJniXAHKfzJRVR7uf81
-	 wDRl52Mnx7+QaD2YCpNHytRzJSIoQ45Z865Ivc5hwigHJcw1Fs6cWcGGB5m1g8jV+R
-	 ZF+dfj+WwDtvQ==
-Date: Thu, 12 Dec 2024 10:25:53 +0100
-From: Niklas Cassel <cassel@kernel.org>
-To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc: kw@linux.com, gregkh@linuxfoundation.org, arnd@arndb.de,
-	lpieralisi@kernel.org, shuah@kernel.org, kishon@kernel.org,
-	linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org,
-	bhelgaas@google.com, linux-arm-msm@vger.kernel.org, robh@kernel.org,
-	linux-kselftest@vger.kernel.org
-Subject: Re: [PATCH v3 0/4] Migrate PCI Endpoint Subsystem tests to Kselftest
-Message-ID: <Z1qsIREtdeR38fF6@ryzen>
-References: <20241211080105.11104-1-manivannan.sadhasivam@linaro.org>
+	s=arc-20240116; t=1733995915; c=relaxed/simple;
+	bh=srm9IRLq79hE4aMy9Jn4FuLsYt9ZM6FKBMwRd2Nj+uM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=gYXCsNwm1+/PAkK4sMQWwbOagRMMcRwSX0/5PA9xloTevkNoseVTxnDm7GaWClTaSVs/UQM4Yw9mHqctoBaLUQuxJFgwdVy33WDYELvvKv75DIMrrCoRZIr9S+l3KN4c5xU2R2g1bNaUrg06caIM61/VIXKa+305b8MgbRFsOkU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=HahhefW4; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BC7qNjt002529;
+	Thu, 12 Dec 2024 09:31:50 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	dfLzRkbbWjbIDD0l1aRS8trXE7dMUR71RudZ3Zd9IzE=; b=HahhefW4CCMMZuD9
+	sqHQ/8RePtZ+fXE/tdNAroviGfBpgDBJ9En+durPD2r2oOtDPuHJBlKtQv3SVpAc
+	msrw9K1xfuDEsIDA+7j8720qPi1qBWxYTROsLmshiIYaZHkWXXl6vo4s+l9iYWsJ
+	swO0Pw8kmQHm9h0I8AIeFqE6Bx0ueSNa3T7xrMafGml3jrCqa0KBVnbU42pzkezl
+	TiDOcd7E3vTpyARqZZWW0a+Xvd4IryKa5Z4f/psa1Syz+V7+fgJy3NZP1TZ8TOaF
+	aSUB0eSwvtu7vi4J1oJ5z84olCvlBDd9q+FBY9aUdgxT1o23y0zVbn/fDZ0BP1OR
+	KxSWOw==
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43eyg64x4x-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 12 Dec 2024 09:31:49 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4BC9Vmqj027585
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 12 Dec 2024 09:31:48 GMT
+Received: from [10.239.97.152] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 12 Dec
+ 2024 01:31:42 -0800
+Message-ID: <db0e505c-2583-45ec-b90e-cb0539b44ce4@quicinc.com>
+Date: Thu, 12 Dec 2024 17:31:40 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241211080105.11104-1-manivannan.sadhasivam@linaro.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 02/16] media: qcom: camss: csiphy-3ph: Remove redundant
+ PHY init sequence control loop
+To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>, <rfoss@kernel.org>,
+        <todor.too@gmail.com>, <mchehab@kernel.org>, <robh@kernel.org>,
+        <krzk+dt@kernel.org>, <conor+dt@kernel.org>,
+        <vladimir.zapolskiy@linaro.org>
+CC: <quic_eberman@quicinc.com>, <linux-media@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <kernel@quicinc.com>
+References: <20241211140738.3835588-1-quic_depengs@quicinc.com>
+ <20241211140738.3835588-3-quic_depengs@quicinc.com>
+ <37523d35-c569-4bef-97aa-46b71236b1eb@linaro.org>
+Content-Language: en-US
+From: Depeng Shao <quic_depengs@quicinc.com>
+In-Reply-To: <37523d35-c569-4bef-97aa-46b71236b1eb@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: XCPJhsINOk7lUzUnTLpdSpZwW2IDHpXh
+X-Proofpoint-ORIG-GUID: XCPJhsINOk7lUzUnTLpdSpZwW2IDHpXh
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 bulkscore=0
+ lowpriorityscore=0 priorityscore=1501 adultscore=0 impostorscore=0
+ mlxlogscore=999 phishscore=0 suspectscore=0 mlxscore=0 clxscore=1015
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2412120066
 
-Hello Mani,
+Hi Bryan,
 
-On Wed, Dec 11, 2024 at 01:31:01PM +0530, Manivannan Sadhasivam wrote:
-> Hi,
+On 12/11/2024 11:38 PM, Bryan O'Donoghue wrote:
+> On 11/12/2024 14:07, Depeng Shao wrote:
+>> From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+>>
+>> Adding a new CSIPHY init sequence using downstream as a reference 
+>> prompted
+>> me to look at why we are splitting up the init sequence into chunks.
+>>
+>> Right now we declare CSI PHY init sequences as an array of five equally
+>> sized writes with a hard-coded control loop to iterate through each of 
+>> the
+>> five indexes. One bug in this model is that if you don't have an even
+>> number of writes, you can't init the PHY as you wish.
+>>
+>> In downstream the original code has something of the character
+>> phy_init_seq[MAX_LANES][MAX_PARAMS] which in upstream we have translated
+>> into phy_init_seq[5][SOME_NUMBER_OF_EQUAL_WRITES];
+>>
+>> What the code does is take a pointer to the first index of the
+>> r = &phy_init_seq[0][0]; and then literally does write(r, value); r++;
+>>
+>> The controlling loop that hard-codes '5' in-lieu of MAX_LANES does no
+>> special sleep, fabric-coherence sync or even a printk() to justify its
+>> existence. Our compilers are optimising all of this away anyway so lets
+>> drop.
+>>
+>> Reduce the array declaration down to one flat aggregate init and let the
+>> code just step through. As a happy side-effect we can then also handle
+>> odd-number writes as the number of elements in the init sequence will no
+>> longer have to be evenly divisible.
+>>
+>> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+>> Signed-off-by: Depeng Shao <quic_depengs@quicinc.com>
+>> Reviewed-by: Elliot Berman <quic_eberman@quicinc.com>
+>> Reviewed-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+>> ---
 > 
-> This series carries forward the effort to add Kselftest for PCI Endpoint
-> Subsystem started by Aman Gupta [1] a while ago. I reworked the initial version
-> based on another patch that fixes the return values of IOCTLs in
-> pci_endpoint_test driver and did many cleanups. Since the resulting work
-> modified the initial version substantially, I took over the authorship.
+> A new version of this patch is required to ensure 7280 is handled
 > 
-> This series also incorporates the review comment by Shuah Khan [2] to move the
-> existing tests from 'tools/pci' to 'tools/testing/kselftest/pci_endpoint' before
-> migrating to Kselftest framework. I made sure that the tests are executable in
-> each commit and updated documentation accordingly.
+> https://git.codelinaro.org/bryan.odonoghue/kernel/-/ 
+> commit/4c831fd58aa7629f994b5f4d8533b154a74d35cc
 > 
-> NOTE: Patch 1 is strictly not related to this series, but necessary to execute
-> Kselftests with Qualcomm Endpoint devices. So this can be merged separately.
 
-Having to write a big NOTE is usually a hint that you should just have done
-things differently :)
+Sure, I will pick the latest version.
 
-If you need to respin this series, I strongly suggest that you send the
-Qcom fix separately. It is totally independent, and should be merged ASAP.
+Thanks,
+Depeng
 
-As you know, this series conflicts with:
-https://lore.kernel.org/linux-pci/20241116032045.2574168-2-cassel@kernel.org/
-
-I don't see any reason why the above patch has not been merged yet,
-but it would be really nice if the above could be picked up first,
-so this series could also add a kselftest testcase for the above.
-
-
-Kind regards,
-Niklas
 
