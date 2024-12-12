@@ -1,157 +1,224 @@
-Return-Path: <linux-arm-msm+bounces-41811-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-41812-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C341E9EF80F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Dec 2024 18:39:10 +0100 (CET)
-Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 195BD9EF979
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Dec 2024 18:51:09 +0100 (CET)
+Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id AD7CA17B5FF
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Dec 2024 17:43:48 +0000 (UTC)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4B2F822655E;
+	Thu, 12 Dec 2024 17:42:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="MVOnnz53"
+X-Original-To: linux-arm-msm@vger.kernel.org
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7A700292BF9
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Dec 2024 17:39:09 +0000 (UTC)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9C56C222D72;
-	Thu, 12 Dec 2024 17:39:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="nPore93d"
-X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE5C6215178
-	for <linux-arm-msm@vger.kernel.org>; Thu, 12 Dec 2024 17:39:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6A4D225404
+	for <linux-arm-msm@vger.kernel.org>; Thu, 12 Dec 2024 17:42:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734025146; cv=none; b=DyhlO4/fRZ9ntytN+vwtUIr/8LIMyg3E1F8pMgt32t06mzUEAgErIHYV+L6pAejdbFgcN7sT/F0x+ZgiAEPEbE9xB/fPQwc46994BxCaMIccpPNeD5Hm7GwyyHx6//tLhGnWazTSo45XgcVWAW6gERlhmTReU+YC6y869r1OO2I=
+	t=1734025374; cv=none; b=MpwXXeK8r9pLB8jxNAG/KG1YcnuRRXOY853FVt4Rko/1a9JjmIN6ASrhWhoeCHYVR7Rxb99Vv3cKCRLAbUS9fwjzuKZuHOacV5V8+fKVXb9DmAcu6l2AFl+oi3WYInu4rcKJ/nVpgkqGwsUGP7/utS/iXmPiowGOWe0v0mj6jIs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734025146; c=relaxed/simple;
-	bh=eMaa+1s6Oic+vVrJQSezrnGXV/UwpVx0e4bkfGVOXxY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ETfCjDRqvYDkBCa3h+PCMUbkQy+Mkd43SBIbPemG+2dDZyPxTlrBoRlPiFrxT0tn1rbi3gPUhkGPzQKu8obKapNM1XN8Rb3JQorQU2QVtltXt28enamO3J1PynJg001M5jFsU1sYe9kYS8je+qmfAkdAVMKDVuqWnPo3ghJbhcY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=nPore93d; arc=none smtp.client-ip=209.85.128.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-43624b2d453so11591665e9.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Dec 2024 09:39:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1734025143; x=1734629943; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=RdPPbRbtOCRVKhqUGeFsn5kZ9oH7JqJR4etx+rwghdA=;
-        b=nPore93dEANJsEg2OKBvSY3ymc8yyZlkD6KWRJof844YprztL46LhpnT4NcIn3Q9E9
-         UT2vIO9AIZRUiz6vDK83dCrs5fLm8DGriEAzc1fHlB2i6fhhBOqdWiLWlpkjo6FwBo+5
-         3hhT8X8CsJGv8yiYZhvhbGeo38KBglhRxjj7aYRWUyy+5kxmV3upcKwUkEZzO5ypNMz7
-         BYh4fDt0Uq5T/9HbPc4U2zWMlkqYhJ13zszw05X/vZXSqqv5xWBP7WaCQM/S+Onpx0Pv
-         flY/S5xFbjbeuIkGS94ttAZfILAJ85ny2S4UZskQCKPuz6SJ3fj6nEIZBLYWQRD4KJGX
-         aMaA==
+	s=arc-20240116; t=1734025374; c=relaxed/simple;
+	bh=wAlK88JYcV847qs8c3xWU3FbShcCq8K9khJzpevf8PA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=qmc9yu9H30uVJn45Fwf5l7ohBfVLUhxDLMIl12Fpao8LoLdNlpEI9Ha1ENsFgSxcnA+vsQLq0ImQXNSFW0RLoTwBkBMyOYusWx+i8mCxCsW5striADpiAMiv3mQFqLjgtsxXmsXcK/5SsLq3mKA9CGagi1wi3v6+velLP0SyjtY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=MVOnnz53; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BCGvbT3029911
+	for <linux-arm-msm@vger.kernel.org>; Thu, 12 Dec 2024 17:42:50 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	GJcjv/I4Z4KqAcVR7dqnPgSMnHijRfhBkwkSl80xYAM=; b=MVOnnz53VTZ3eoc+
+	bEqJR53zHYbDvqzlK8/PXkGz4PgEQw9fjLl/0xK0DZzdsqZ1Uj3ITXxkIKtJMd4/
+	5wPE33DdY05p9gK+ftPKD9bjTRTV0mBOjszpP8Id56KfC9q5dejUJK2mZUZ4xVD6
+	ndB2kz70TKJUtvORoq9UaAWFOQJilVyXHmEpwj8EGDpBAzYCg0NLTtiLoId3zg9O
+	riexURUUjyZlaNkZc9SRTncpe/2wOtUTBqTRAXPc+iNbllR66WqW+QQkC8kVChFO
+	NJ4zc+aAy6CuhcLW1DmgGv6mdkKtZkJ2Nvu4n0+CCG7sux5pa6JPiVcVyXgb+lyt
+	3RFb5Q==
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com [209.85.219.71])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43fd4xus7r-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 12 Dec 2024 17:42:50 +0000 (GMT)
+Received: by mail-qv1-f71.google.com with SMTP id 6a1803df08f44-6d8824c96cdso2393126d6.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Dec 2024 09:42:50 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734025143; x=1734629943;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=RdPPbRbtOCRVKhqUGeFsn5kZ9oH7JqJR4etx+rwghdA=;
-        b=SHJ2Tsw5IDD8GfdwfF0gm25mtvC3OLrxRMCbQlAXmKGwsi7cyqxU9C9+NXrNlap6ho
-         miwidCNZjduRq2pKR69IO059CVvZBTYGpAoakKuKglJ5ZQkYPfJDNhROBWKniHAgd1Bh
-         xZl6BjoUmE4grG5O+TIAK1pylgIzT5xs8eUCUVrPGnF+TcHXzYONHyVbRP9Gtdtdm5Dh
-         jkHbgnhFJb1nFM7blUMA5HF/iiyRzscdVVSM9rufXOxp+feVvSszc9Vp1scOsi/SSuAQ
-         Mp4G/VfG4MbMi7rw8Dw8dIzoDEtWGxtLwcheC7HwCwwW+PPI+XiykpF7rFRjDaaUPKHP
-         GpUg==
-X-Forwarded-Encrypted: i=1; AJvYcCVF52k8FeOPCIhtJ+VSdM6kYE5m6JNzichSbtkMDCI6/X+hJRSc7uin1f+ZJFvThiGwlrytQZbqgAha4cTz@vger.kernel.org
-X-Gm-Message-State: AOJu0YwXypZWpwJweSBXK7v4z+Np+dm3gnAr0IVvCMdAcxXl9ZRdHoNV
-	oSdRIj+6yqIDCVX7P1a6+4wLlINBPZpoJhYx0Hs2Kxr6wFMF6o7aBrtY1KUAOY8=
-X-Gm-Gg: ASbGncv326eu+SosTAJwPUowSRe+i/eSzISqz+q9mcIvFJWAeGyYuvDRyMlyzNBWdU0
-	FKAmDwKiPO+Yo3YaqUZuZlz7NkpDgrQlgZXRLdh6f/XQuHKkCHWBUs9Qt5SXI7tbORGga42aG3n
-	HaWMbd4ODWLp2zwiph62+LXm3CF9nXHhg1bP0ArqKbc3szva2G9uvqVw92ZVs/vafg0MpK6YgJ+
-	CzT2sGjeRP+Tp8q4MuH/5Gh0EgfzdsNvFjchoKpvZ5wSGWZx5SeU8k=
-X-Google-Smtp-Source: AGHT+IE7M7KWizuTlmdXgepOOA1ZHa8E1i/d7gI8YHUlTjMROy7G2A2HxSU/h0+zZY2Hehz8nbuVQQ==
-X-Received: by 2002:a05:600c:34cc:b0:434:fbe2:4f with SMTP id 5b1f17b1804b1-4361c430b5cmr72148245e9.23.1734025141596;
-        Thu, 12 Dec 2024 09:39:01 -0800 (PST)
-Received: from linaro.org ([82.76.168.176])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3878251bcabsm4731291f8f.87.2024.12.12.09.39.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 12 Dec 2024 09:39:01 -0800 (PST)
-Date: Thu, 12 Dec 2024 19:38:59 +0200
-From: Abel Vesa <abel.vesa@linaro.org>
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Cc: Ulf Hansson <ulf.hansson@linaro.org>, Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Johan Hovold <johan@kernel.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	linux-mmc@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v4 1/2] arm64: dts: qcom: x1e80100: Describe the SDHC
- controllers
-Message-ID: <Z1sfs2L49LqTtYSs@linaro.org>
-References: <20241212-x1e80100-qcp-sdhc-v4-0-a74c48ee68a3@linaro.org>
- <20241212-x1e80100-qcp-sdhc-v4-1-a74c48ee68a3@linaro.org>
- <f2964623-63e9-44cd-b328-d502b5fddcd2@oss.qualcomm.com>
+        d=1e100.net; s=20230601; t=1734025369; x=1734630169;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=GJcjv/I4Z4KqAcVR7dqnPgSMnHijRfhBkwkSl80xYAM=;
+        b=tGeWtgyJRzhV4z/WaH/J4T1880hF17QpbdxpsQMO8BUS47qIPdR360tRes9QNvVQF4
+         lvoDqhNETYh3JxPs1+LnU1nR76JCnod0uCEmZ3JFPThAhdav9UZM5vV27JHXPbk1L30j
+         mcFoDuNLMNNoyzPETIlniCDEWM8R9fjBFUsFiRZAHacJ8/FMJPFhoO07JXRIAVkVV3GS
+         atcwYIBoA0ZSYANKq8Zx7xPZcALKHcyr1ZqeZvdNKG/y8fjBg+I21lLSxHlLjRjJmX99
+         cwndMPoGBLE1VXZTx7Vofxuwkkl9iXcI3GQy+IOKHQ2kYUN73v3DPVU3XPRcFI2/UsUm
+         AruA==
+X-Gm-Message-State: AOJu0YwYTXP8oghQd9/EpVBK0HN6OYnXuf+tWl9gLTHQBIJoQzjwYmYv
+	Cr+3MK0bNnJYbqq2/hIcq1U0jub7IH1WREeu7uoODliXG4aFzRSPgzoC1uliugoQn64gadYGPYm
+	+QabYrt6VyknlCkAizPw7HsC8GzUikog9AI2SdiBf8sXCjGmBj+eTvOoC+FhQNI23Clw2wdXD
+X-Gm-Gg: ASbGncuSXDbw0tB7/KI/SOrKcFFZhEFQetdljrCUpKFT+dL2cH4QIYi8xTiG2blJFsJ
+	J7LQvV3yApzX26aj1liGyctr6WFcJD70XJ+IKVI1DN5FsdOXpgmdoIfi1Dv+RtwoZzrDy5qeyP+
+	lKg85Jvwr+sfG7SUIOSbKWAazrX1DNdE3FyMZy2zsdHfYu2xzzmooF/ARoPgOSFCsDo5AJjPZlt
+	4pVoRD63YmP//ZZsAVqtHI/B9Ai1UmKlCXCBu6CmWt0FnTxkoSfegbtIjaQo4NDnFr4YCGP9kYy
+	qLHD3ibdKM5hd4iyMaUQ2J8N10lt+/hlN9aPwA==
+X-Received: by 2002:a05:620a:4549:b0:7b6:d089:2749 with SMTP id af79cd13be357-7b6f8941a79mr61275985a.7.1734025369204;
+        Thu, 12 Dec 2024 09:42:49 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IE9TEKccAFcMcJnSB0aDrqPhs1h8Hp8GL+jIWcf0PYQWUlYIJEoIbGnr5TfFdrzIRCcorD5/g==
+X-Received: by 2002:a05:620a:4549:b0:7b6:d089:2749 with SMTP id af79cd13be357-7b6f8941a79mr61273585a.7.1734025368701;
+        Thu, 12 Dec 2024 09:42:48 -0800 (PST)
+Received: from [192.168.212.120] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-aa6707a5110sm731706166b.36.2024.12.12.09.42.47
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 12 Dec 2024 09:42:48 -0800 (PST)
+Message-ID: <efab0b18-f1f0-457a-b1d5-8734f178141d@oss.qualcomm.com>
+Date: Thu, 12 Dec 2024 18:42:46 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <f2964623-63e9-44cd-b328-d502b5fddcd2@oss.qualcomm.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 0/4] Enable Bluetooth on qcs6490-rb3gen2 board
+To: Janaki Ramaiah Thota <quic_janathot@quicinc.com>,
+        "Rob Herring (Arm)" <robh@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-bluetooth@vger.kernel.org,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, quic_anubhavg@quicinc.com,
+        Mark Brown <broonie@kernel.org>,
+        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+        linux-pm@vger.kernel.org, quic_mohamull@quicinc.com,
+        quic_hbandi@quicinc.com, devicetree@vger.kernel.org,
+        Marcel Holtmann <marcel@holtmann.org>,
+        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Conor Dooley <conor+dt@kernel.org>, linux-kernel@vger.kernel.org,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Bartosz Golaszewski <brgl@bgdev.pl>
+References: <20241209103455.9675-1-quic_janathot@quicinc.com>
+ <173386568587.497565.1413799827375300987.robh@kernel.org>
+ <3c313557-ca99-4e6f-9d71-641e8c256126@quicinc.com>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <3c313557-ca99-4e6f-9d71-641e8c256126@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-ORIG-GUID: QT5m5iktOxvuuYkcxPv7s5kebj8F8KFj
+X-Proofpoint-GUID: QT5m5iktOxvuuYkcxPv7s5kebj8F8KFj
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ priorityscore=1501 bulkscore=0 mlxlogscore=999 phishscore=0 adultscore=0
+ suspectscore=0 spamscore=0 mlxscore=0 impostorscore=0 clxscore=1015
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2412120127
 
-On 24-12-12 18:34:37, Konrad Dybcio wrote:
-> On 12.12.2024 5:50 PM, Abel Vesa wrote:
-> > The X Elite platform features two SDHC v5 controllers.
-> > 
-> > Describe the controllers along with the pin configuration in TLMM
-> > for the SDC2, since they are hardwired and cannot be muxed to any
-> > other function. The SDC4 pin configuration can be muxed to different
-> > functions, so leave those to board specific dts.
-> > 
-> > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-> > ---
-> >  arch/arm64/boot/dts/qcom/x1e80100.dtsi | 142 +++++++++++++++++++++++++++++++++
-> >  1 file changed, 142 insertions(+)
-> > 
-> > diff --git a/arch/arm64/boot/dts/qcom/x1e80100.dtsi b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-> > index c18b99765c25c901b3d0a3fbaddc320c0a8c1716..1584df66ea915230995f0cf662cde813f4ae02a1 100644
-> > --- a/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-> > +++ b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-> > @@ -4094,6 +4094,108 @@ lpass_lpicx_noc: interconnect@7430000 {
-> >  			#interconnect-cells = <2>;
-> >  		};
-> >  
-> > +		sdhc_2: mmc@8804000 {
-> > +			compatible = "qcom,x1e80100-sdhci", "qcom,sdhci-msm-v5";
-> > +			reg = <0 0x08804000 0 0x1000>;
-> > +
-> > +			interrupts = <GIC_SPI 207 IRQ_TYPE_LEVEL_HIGH>,
-> > +				     <GIC_SPI 223 IRQ_TYPE_LEVEL_HIGH>;
-> > +			interrupt-names = "hc_irq", "pwr_irq";
-> > +
-> > +			clocks = <&gcc GCC_SDCC2_AHB_CLK>,
-> > +				 <&gcc GCC_SDCC2_APPS_CLK>,
-> > +				 <&rpmhcc RPMH_CXO_CLK>;
-> > +			clock-names = "iface", "core", "xo";
-> > +			iommus = <&apps_smmu 0x520 0>;
-> > +			qcom,dll-config = <0x0007642c>;
-> > +			qcom,ddr-config = <0x80040868>;
-> > +			power-domains = <&rpmhpd RPMHPD_CX>;
-> > +			operating-points-v2 = <&sdhc2_opp_table>;
-> > +
-> > +			interconnects = <&aggre2_noc MASTER_SDCC_2 0 &mc_virt SLAVE_EBI1 0>,
-> > +					<&gem_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_SDCC_2 0>;
+On 12.12.2024 11:46 AM, Janaki Ramaiah Thota wrote:
 > 
-> The comment regarding ICC defines from v3 still stands
-
-Urgh, missed that one. Will respin next week with that addressed as
-well.
-
 > 
-> the rest of the patch looks good
+> On 12/11/2024 3:12 AM, Rob Herring (Arm) wrote:
+>>
+>> On Mon, 09 Dec 2024 16:04:51 +0530, Janaki Ramaiah Thota wrote:
+>>> - Patch 1/4 Add description of the PMU of the WCN6750 module.
+>>> - Patch 2/4 add and enable BT node for qcs6490-rb3gen board.
+>>> - Patch 3/4 use the power sequencer for wcn6750.
+>>> - Patch 4/4 add support for the WCN6750 PMU.
+>>>
+>>> ----
+>>> Changes from v4:
+>>> * Added reviewed tag by Krzysztof in p1
+>>> * Updated the p2 commit message with sw_ctrl and wifi-enable are
+>>>    handled in wifi FW.
+>>> * Added blank line between the nodes in p2
+>>> * Placed the structures in proper order in p4
+>>> * Link to v4: https://lore.kernel.org/all/20241204131706.20791-1-quic_janathot@quicinc.com/
+>>>
+>>> Changes from v3:
+>>> * Defined the PMU node and used the its output to power up BT
+>>> * Used power sequencer for wcn wcn6750 module
+>>> * Split the patch to multiple as per subtree
+>>> * Add description of the PMU of the WCN6750 module
+>>> * Include separate UART state node for sleep pin configuarion
+>>> * Link to v3: https://lore.kernel.org/linux-arm-msm/20241022104600.3228-1-quic_janathot@quicinc.com/
+>>>
+>>> Changes from v2:
+>>> * Sorted nodes alphabetically
+>>> * Link to v2: https://lore.kernel.org/linux-arm-msm/20241010105107.30118-1-quic_janathot@quicinc.com/
+>>>
+>>> Changes from v1:
+>>> * Corrected the board name in subject
+>>> * Link to v1: https://lore.kernel.org/linux-arm-msm/20241009111436.23473-1-quic_janathot@quicinc.com/
+>>>
+>>> Janaki Ramaiah Thota (4):
+>>>    regulator:·dt-bindings:·qcom,qca6390-pmu:·document wcn6750-pmu
+>>>    arm64: dts: qcom: qcs6490-rb3gen: add and enable BT node
+>>>    Bluetooth: hci_qca: use the power sequencer for wcn6750
+>>>    power: sequencing: qcom-wcn: add support for the WCN6750 PMU
+>>>
+>>>   .../bindings/regulator/qcom,qca6390-pmu.yaml  |  27 +++
+>>>   arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts  | 168 +++++++++++++++++-
+>>>   drivers/bluetooth/hci_qca.c                   |   2 +-
+>>>   drivers/power/sequencing/pwrseq-qcom-wcn.c    |  22 +++
+>>>   4 files changed, 217 insertions(+), 2 deletions(-)
+>>>
+>>> -- 
+>>>
+>>>
+>>>
+>>
+>>
+>> My bot found new DTB warnings on the .dts files added or changed in this
+>> series.
+>>
+>> Some warnings may be from an existing SoC .dtsi. Or perhaps the warnings
+>> are fixed by another series. Ultimately, it is up to the platform
+>> maintainer whether these warnings are acceptable or not. No need to reply
+>> unless the platform maintainer has comments.
+>>
+>> If you already ran DT checks and didn't see these error(s), then
+>> make sure dt-schema is up to date:
+>>
+>>    pip3 install dtschema --upgrade
+>>
+>>
+>> New warnings running 'make CHECK_DTBS=y qcom/qcs6490-rb3gen2.dtb' for 20241209103455.9675-1-quic_janathot@quicinc.com:
+>>
+>> arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dtb: bluetooth: 'enable-gpios' is a required property
+>>     from schema $id: http://devicetree.org/schemas/net/bluetooth/qualcomm-bluetooth.yaml#
+>> arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dtb: bluetooth: 'swctrl-gpios' is a required property
+>>     from schema $id: http://devicetree.org/schemas/net/bluetooth/qualcomm-bluetooth.yaml#
+>> arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dtb: bluetooth: 'vddio-supply' is a required property
+>>     from schema $id: http://devicetree.org/schemas/net/bluetooth/qualcomm-bluetooth.yaml#
+>> arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dtb: bluetooth: 'vddbtcxmx-supply' is a required property
+>>     from schema $id: http://devicetree.org/schemas/net/bluetooth/qualcomm-bluetooth.yaml#
+>> arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dtb: bluetooth: 'vddasd-supply' is a required property
+>>     from schema $id: http://devicetree.org/schemas/net/bluetooth/qualcomm-bluetooth.yaml#
+>> arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dtb: pinctrl@f100000: Unevaluated properties are not allowed ('qup_uart7_sleep' was unexpected)
+>>     from schema $id: http://devicetree.org/schemas/pinctrl/qcom,sc7280-pinctrl.yaml#
+>>
 > 
-> Konrad
+> Since the DTS files for all boards using the WCN6750 BT chip are not updated according to the PMU node, updating the bluetooth/qualcomm-bluetooth.yaml file will result in similar warnings for other boards.
 
-Thanks for reviewing!
+Oh I didn't forsee this.. You must fix up any bindings errors that
+result from your changes (i.e. binding errors are the same as compilation
+errors).
 
-Abel
+That means patch 2 can't be merged unless the bluetooth dt-bindings
+are adjusted. And for the bindings to be adjusted, you'll have to also
+add the PMU node to all boards implementing wcn6750.
+
+Fortunately, they are all based on some variants of the same SoC, so
+they should all have the same power plumbing.
+
+Konrad
 
