@@ -1,130 +1,145 @@
-Return-Path: <linux-arm-msm+bounces-41749-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-41750-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id BC6369EE7E0
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Dec 2024 14:41:04 +0100 (CET)
-Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 613DC162E80
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Dec 2024 13:40:59 +0000 (UTC)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9C910215782;
-	Thu, 12 Dec 2024 13:40:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="NtFPOP6i"
-X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B1ECF9EE800
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Dec 2024 14:45:41 +0100 (CET)
+Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B688A2153EC;
-	Thu, 12 Dec 2024 13:40:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3727B2831FE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Dec 2024 13:45:39 +0000 (UTC)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 659462063E6;
+	Thu, 12 Dec 2024 13:45:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SG97DJ6x"
+X-Original-To: linux-arm-msm@vger.kernel.org
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A35154720;
+	Thu, 12 Dec 2024 13:45:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734010817; cv=none; b=EPKUgBItwXmjsr9DdfgbOBRs56c5qHz1ZcdthtWsrpknBxZHMQ69lsG6Vbkwn6aPNCbnd/vTD8Pvvydy/ljBFTHmCWW5TwKnUoAuOAigGl6BWCocPP8umSDwYfboj7HbpumCvv+YKY1ep7K8d2wk3U6OgE3mKSyIflMLOKCCTYM=
+	t=1734011136; cv=none; b=Ab2FDMvL1/+5jMu2Pt1C718n+ZX8sV3Gv9Yox2F9tK1wohDCuD9wLexlu25YPILLUAIKlEZ5FBzgQYwWSfZ8gGcq2jitZuSOEpdU6aYhB2g44Nzl7eyKzAZAz87Z2IPCaB+B2rYHy4k/SilqvChFlV3Jid+Ehwd2CivfIRYXeJY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734010817; c=relaxed/simple;
-	bh=jVvhvxo08oMfxjmztohSudN71ehY7yU6sVeC/s1ugTY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=YFsjwDSLG3ipuW8gsQ6KlHWvUGnXT/p0Crab7q2Qa60dBRb6t+mC4GFUNLvAnMGWhM9KYHBl1i0DYdYuOJWEqH1LAXwZ26Bmw3pAfoVMa/JyRgGRppID/VgH6PAu0ngGLYGAvkpJZV/4xmpwMpfiU7LLKeNeKMbgbKUfSt0SFn8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=NtFPOP6i; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BC8K3CT028100;
-	Thu, 12 Dec 2024 13:40:11 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	no2kTIvkCui7mJdpXu4zGYtIWboKW1PAu+eHBL3uA5g=; b=NtFPOP6ivp7Eg4Dh
-	YfxESKt8qfcH87xk8CS1bNbAVD7TcfLWWri2zttIw2S29DQuaC9n3woZYQXnoJXR
-	2W3hXqM9CH+SKR91PZC4hR4bfCsNruSzsbJHtLpMFAl/agwLmbn3xPfvoxbYeLjL
-	RZJwjACx65YBCHL8UV52IlYg7WMFXmjB2zVREJ1600s6kEOyKbXbijFru9O9R3JE
-	d/VAwna9JnG2SrjVWzEr1i40/9iTKzGaQjTccW+EvovnE0K5qOCeNg+czKGOXOVD
-	yR2QoHp84vMDAuCCnY4t3gaP850riStRK9aCbQSy9LtoLxkpiSprS9OjwpG/Qvbh
-	TLzfPw==
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43fd4xu3rx-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 12 Dec 2024 13:40:10 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4BCDe9sK023928
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 12 Dec 2024 13:40:09 GMT
-Received: from [10.239.97.152] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 12 Dec
- 2024 05:40:02 -0800
-Message-ID: <82f61951-89c3-4793-82c9-581f737b5303@quicinc.com>
-Date: Thu, 12 Dec 2024 21:39:59 +0800
+	s=arc-20240116; t=1734011136; c=relaxed/simple;
+	bh=N/xB9jv77LySRrAbu2Yk7Cbgx2o0HIhjAMeMKxcxFls=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=jC+HuZkQYzVrpPNr7EJM6+a9+NMeEjcb5NaZzJC9T8x9LYuE4CNBao8TqcRT4eXvZqs7zj0zwt036F7WWIRlL2p1eGak074sJCeTRWHATd9JhpEMVyJa8H1kvbLExjDpkvlzMzC4WU0MGQ6p6XODCVuiVRr1KSeS8R+ZxTjwIxQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SG97DJ6x; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21CD4C4CECE;
+	Thu, 12 Dec 2024 13:45:34 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1734011135;
+	bh=N/xB9jv77LySRrAbu2Yk7Cbgx2o0HIhjAMeMKxcxFls=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=SG97DJ6xU1fP6+O5sk6LIgcW+s0XXwLsifGTaHW7gCxl2Cg3qNMpHyl6sPGA5UUO3
+	 phS498n5LIzCuhBEQFiPhXWFL8CneeJi10Y5jye0k3sflYaqcqIlahvnRTjQhhXV4w
+	 6f+zXQu3afNMvSVg2FhZikGu8kDIw3tSWFEMrq3KfxNr/E2v8mmLZHE93hs/a6fZNf
+	 j6DdMU+2urjt0QBq+qidWqGctY8UG7zdBVycVZt853Rz1PCsv0sVJekOLQ8m1Q6cu2
+	 D399M8Ia2zqf1Zq6aaducU4HDOel7bu7JVKEQcksALkhO3+PpNKhhYhm4pvU3ahPS8
+	 ANIaj55JCcCLw==
+Date: Thu, 12 Dec 2024 14:45:31 +0100
+From: Andi Shyti <andi.shyti@kernel.org>
+To: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
+Cc: linux-arm-msm@vger.kernel.org, linux-i2c@vger.kernel.org
+Subject: Re: [PATCH 2/2] i2c: qcom-geni: Simplify error handling in probe
+ function
+Message-ID: <fd45ts4bgcaaoydvvkq52c3r65dhrmbe4ig3oxp7pqtmrckdwd@wnyfmzlfhgs5>
+References: <20241210231054.2844202-1-andi.shyti@kernel.org>
+ <20241210231054.2844202-3-andi.shyti@kernel.org>
+ <50ebc5f1-967a-4aa7-a4c3-3304961d1f8b@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 12/16] dt-bindings: media: camss: Add qcom,sm8550-camss
- binding
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>, <rfoss@kernel.org>,
-        <todor.too@gmail.com>, <mchehab@kernel.org>, <robh@kernel.org>,
-        <krzk+dt@kernel.org>, <conor+dt@kernel.org>,
-        <vladimir.zapolskiy@linaro.org>
-CC: <quic_eberman@quicinc.com>, <linux-media@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <kernel@quicinc.com>,
-        Yongsheng Li
-	<quic_yon@quicinc.com>
-References: <20241211140738.3835588-1-quic_depengs@quicinc.com>
- <20241211140738.3835588-13-quic_depengs@quicinc.com>
- <d8b73275-a52a-4cfb-91d7-948686d3a5f1@linaro.org>
-Content-Language: en-US
-From: Depeng Shao <quic_depengs@quicinc.com>
-In-Reply-To: <d8b73275-a52a-4cfb-91d7-948686d3a5f1@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: jt-p3Edx7fpvv5crQjGHWS-CWpgPa3Pv
-X-Proofpoint-GUID: jt-p3Edx7fpvv5crQjGHWS-CWpgPa3Pv
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- priorityscore=1501 bulkscore=0 mlxlogscore=843 phishscore=0 adultscore=0
- suspectscore=0 spamscore=0 mlxscore=0 impostorscore=0 clxscore=1015
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2412120098
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <50ebc5f1-967a-4aa7-a4c3-3304961d1f8b@quicinc.com>
 
-Hi Bryan,
+Hi Mukesh,
 
-On 12/11/2024 11:17 PM, Bryan O'Donoghue wrote:
-> On 11/12/2024 14:07, Depeng Shao wrote:
->> +            interconnects = <&gem_noc MASTER_APPSS_PROC 0 &config_noc 
->> SLAVE_CAMERA_CFG 0>,
->> +                            <&mmss_noc MASTER_CAMNOC_HF 0 &mc_virt 
->> SLAVE_EBI1 0>,
->> +                            <&mmss_noc MASTER_CAMNOC_ICP 0 &mc_virt 
->> SLAVE_EBI1 0>,
->> +                            <&mmss_noc MASTER_CAMNOC_SF 0 &mc_virt 
->> SLAVE_EBI1 0>;
+> > diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-qcom-geni.c
+> > index 01db24188e29..3fc85595a4aa 100644
+> > --- a/drivers/i2c/busses/i2c-qcom-geni.c
+> > +++ b/drivers/i2c/busses/i2c-qcom-geni.c
+> > @@ -867,14 +867,13 @@ static int geni_i2c_probe(struct platform_device *pdev)
+> >   	ret = geni_se_resources_on(&gi2c->se);
+> >   	if (ret) {
+> > -		clk_disable_unprepare(gi2c->core_clk);
+> > -		return dev_err_probe(dev, ret, "Error turning on resources\n");
+> > +		dev_err_probe(dev, ret, "Error turning on resources\n");
+> > +		goto err_clk;
+> >   	}
+> >   	proto = geni_se_read_proto(&gi2c->se);
+> >   	if (proto != GENI_SE_I2C) {
+> > -		geni_se_resources_off(&gi2c->se);
+> > -		clk_disable_unprepare(gi2c->core_clk);
+> > -		return dev_err_probe(dev, -ENXIO, "Invalid proto %d\n", proto);
+> > +		dev_err_probe(dev, -ENXIO, "Invalid proto %d\n", proto);
+> Suggestive comment, can we make this second patch as first patch ? So that
+> we can have both above lines reduced in this patch.
+
+I'm sorry, I missed this comment. I tried to swap it and there is
+not much reduction in line changes[*].
+
+The reason I chose this order is to avoid changing the same line
+on both the patches, like here[**].
+
+If it's not binding for you, I would keep the ordering.
+
+Thanks again a lot for looking into this,
+Andi
+
+[*] https://paste.debian.net/1339486/
+[**] https://paste.debian.net/1339488/
+
+> > +		goto err_off;
+> >   	}
+> >   	if (desc && desc->no_dma_support)
+> > @@ -886,11 +885,8 @@ static int geni_i2c_probe(struct platform_device *pdev)
+> >   		/* FIFO is disabled, so we can only use GPI DMA */
+> >   		gi2c->gpi_mode = true;
+> >   		ret = setup_gpi_dma(gi2c);
+> > -		if (ret) {
+> > -			geni_se_resources_off(&gi2c->se);
+> > -			clk_disable_unprepare(gi2c->core_clk);
+> > -			return ret;
+> > -		}
+> > +		if (ret)
+> > +			goto err_off;
+> >   		dev_dbg(dev, "Using GPI DMA mode for I2C\n");
+> >   	} else {
+> > @@ -902,10 +898,8 @@ static int geni_i2c_probe(struct platform_device *pdev)
+> >   			tx_depth = desc->tx_fifo_depth;
+> >   		if (!tx_depth) {
+> > -			geni_se_resources_off(&gi2c->se);
+> > -			clk_disable_unprepare(gi2c->core_clk);
+> > -			return dev_err_probe(dev, -EINVAL,
+> > -					     "Invalid TX FIFO depth\n");
+> > +			dev_err_probe(dev, -EINVAL, "Invalid TX FIFO depth\n");
+> > +			goto err_off;
+> >   		}
+> >   		gi2c->tx_wm = tx_depth - 1;
+> > @@ -944,8 +938,16 @@ static int geni_i2c_probe(struct platform_device *pdev)
+> >   	return 0;
+> return ret here ? yes, we need to initialize ret = 0.
+> > +err_off:
+> can we rename as err_resources ?
+> > +	geni_se_resources_off(&gi2c->se);
+> > +err_clk:
+> > +	clk_disable_unprepare(gi2c->core_clk);
+> > +
+> > +	return ret;
+> > +
+> >   err_dma:
+> >   	release_gpi_dma(gi2c);
+> > +
+> >   	return ret;
+> >   }
 > 
-> Have a look at 7280.
-> 
-> The parameters to the NOC should be named.
-> 
-> https://lore.kernel.org/all/20241206191900.2545069-2- 
-> quic_vikramsa@quicinc.com
-> 
-
-Do you mean use QCOM_ICC_TAG_ACTIVE_ONLY and QCOM_ICC_TAG_ALWAYS?
-And, I will also remove the ICP and SF interconnects which are used by 
-offline HW, rather than real time VFE.
-
-Thanks,
-Depeng
-
 
