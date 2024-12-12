@@ -1,55 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-41656-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-41657-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 153FD9EDF37
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Dec 2024 07:06:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id A00B29EDF60
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Dec 2024 07:24:34 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0D7961661DF
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Dec 2024 06:06:46 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A3640163A88
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Dec 2024 06:24:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1791317E900;
-	Thu, 12 Dec 2024 06:06:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BA10218BBB0;
+	Thu, 12 Dec 2024 06:24:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="NpefOtj8"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="g26//coB"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from bali.collaboradmins.com (bali.collaboradmins.com [148.251.105.195])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EBFA5684;
-	Thu, 12 Dec 2024 06:06:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.251.105.195
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB4F0176AB7;
+	Thu, 12 Dec 2024 06:24:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733983605; cv=none; b=WaHIlhZD/i729oPYQs/OYdkg8zdcLCxSejseSPWKkXGVpnGLt0fj7N83756gbmCKyvwWvwexfHYb32zlZyrAvoyWfJ5dRtqaukHopYj8glHDqcfk4GhXVnQa5xnMrAjVYHogWs0sodEYBxc1o2q/6ciC5bDZQVIfurH5V9/ecIE=
+	t=1733984668; cv=none; b=ZOlId36FMTUkO0iUMR3XdfVKlhZZtQQreeSDn3jfrvyHfjIDIQmDtdqnMpM2TQXH7AMH3/WduWxvuMq7p9yJZgJUmPHM0XuDNywdvPNNqQ0/OTnIhpY3+VNyxM3v5jjX1IbEKLN8EnWcfYcLcXVHmql9f/WIHWVfPJxt4c/Z1AA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733983605; c=relaxed/simple;
-	bh=gQg/SM6BaV0O6607W1vHe3GKWdp7ZsBXFCJWNiK9SFw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=pkR/5X8mYxoJbuSO1Ho9edBI4SzJix0ivAJdGwhm7X0Sy1GSsZwRjVhXRGNmJiuOlJWMCJM5+dmnU9UOArWutc8rGxfbXhogPrJ4TlqIAWDXBTZU0q3V4S/+iL01JExwxOnWjKZw6or6ZQHYAWJgto9wokmNDy3s8XXlteXv0OU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=NpefOtj8; arc=none smtp.client-ip=148.251.105.195
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-	s=mail; t=1733983599;
-	bh=gQg/SM6BaV0O6607W1vHe3GKWdp7ZsBXFCJWNiK9SFw=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=NpefOtj8iRu+DwDxM1asoHnH6dziH2LfwLXKHmxJwjyTK2JN3w24yG15L61xz/p4E
-	 1Q1hNWZSfjRGmpsMMSTs9jLtwssefNOSG/RM9//dKBgGoAZsPgvidKcKcmYdqNDckT
-	 DvXj7srS8GjxNG82ITA2ZyObZDMr+FKJHnPXJ2eCGa/aPO9skbkJH1KUiy92L5TrrG
-	 xe21GkQQE1jht1xTcoxCHfDQkpM7JcmrU5YdJUw6tiO4zFjK2H8i7k5fb5KgqX2LQ0
-	 4RGQwkIzVXHI/rHmuP57LGp8g4Zw2YWtHmYQD+Vb8T5wcqhADpRO9HVMDW86ncn8wZ
-	 iSdqcwuU72+UQ==
-Received: from [192.168.50.250] (unknown [171.76.86.135])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: vignesh)
-	by bali.collaboradmins.com (Postfix) with ESMTPSA id B8F6917E11E2;
-	Thu, 12 Dec 2024 07:06:32 +0100 (CET)
-Message-ID: <3e719a95-5b84-4530-9afe-c742e5c6eff7@collabora.com>
-Date: Thu, 12 Dec 2024 11:36:29 +0530
+	s=arc-20240116; t=1733984668; c=relaxed/simple;
+	bh=Ud4pGrCLse3V/ff/8/nhe7TvIzqUA6HiX2Bg2957cR0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=eGABwcKIX0XpTKrtdWEpqYlRS6Mw4aUlMM3yy+geQ24/YYL7ODWBzAfg7MMYCp5w4R2VXXc3Qnnk1KA6oTYuFcyXcfh534+khWyH0IVQmh8QGck5CuAGw4MywUfMo/Qb+9pob0Ko5XJs10nMzEnR4mH02CUXrD0rvn6tM7te4lA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=g26//coB; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BC2rWfA000492;
+	Thu, 12 Dec 2024 06:24:21 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	+zpvmK7dAYod61iGUouuL00ruDUGzRAWRU6lPNQQMzU=; b=g26//coBd+gJ8HOg
+	EDYbO+uUlws9HqmfTf1ITj/FQw/IDbvuFMLfk/IDXGKYCtKl4HxPF/1fdJXMpv72
+	KkwoCXs8xQn3Pbvq3d453Lvq2RFoyvXWGU4GhPYosjEhk5qX9O4swffCF21gYp/K
+	9Qua7oeq0v+hXZfq2grAM70ey4W7v2qWyZ4AhDxBO1Wt7TX3vjwDr1uK/mGYiEk8
+	Fl9da/oeJhUd7uXhlGpHGzOAyQFUiAWD83qGdrlIlH3IUGEVHtt3ORbIpI6r6Fr5
+	Vvq/pKWNrJdG9jN9435nNpcHvwNFEknHEcZGjHf43eEs51Ko12gflsPfDqw96uTN
+	GzAEWQ==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43fqes0dqk-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 12 Dec 2024 06:24:21 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4BC6OKNw004677
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 12 Dec 2024 06:24:20 GMT
+Received: from [10.239.132.152] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 11 Dec
+ 2024 22:24:15 -0800
+Message-ID: <c0aa9b4a-5161-41af-8000-6b6392a53dfd@quicinc.com>
+Date: Thu, 12 Dec 2024 14:24:12 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -57,180 +65,246 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1] drm/ci: uprev IGT
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: dri-devel@lists.freedesktop.org, daniels@collabora.com,
- helen.koike@collabora.com, airlied@gmail.com, daniel@ffwll.ch,
- robdclark@gmail.com, guilherme.gallo@collabora.com,
- sergi.blanch.torne@collabora.com, linux-mediatek@lists.infradead.org,
- linux-amlogic@lists.infradead.org, linux-rockchip@lists.infradead.org,
- amd-gfx@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
- intel-gfx@lists.freedesktop.org, virtualization@lists.linux.dev,
- linux-kernel@vger.kernel.org
-References: <20241211142806.1824961-1-vignesh.raman@collabora.com>
- <f2dac4eatkajw633ksnnb3nfq7zop2l4ux2euj6jqg4hg3soqt@sv7p2r6xk7fz>
+Subject: Re: [PATCH v2] arm64: dts: qcom: Add coresight node for SM8650
+To: <neil.armstrong@linaro.org>, Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>
+CC: <kernel@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+References: <20241210-sm8650-cs-dt-v2-1-cf24c6c9bddc@quicinc.com>
+ <89bbf7cc-db04-4e1d-a1bb-570898eb3449@linaro.org>
 Content-Language: en-US
-From: Vignesh Raman <vignesh.raman@collabora.com>
-In-Reply-To: <f2dac4eatkajw633ksnnb3nfq7zop2l4ux2euj6jqg4hg3soqt@sv7p2r6xk7fz>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+From: Yuanfang Zhang <quic_yuanfang@quicinc.com>
+In-Reply-To: <89bbf7cc-db04-4e1d-a1bb-570898eb3449@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 5jkb5Guca0hteEPgG89sA7XB-1OMOMzy
+X-Proofpoint-ORIG-GUID: 5jkb5Guca0hteEPgG89sA7XB-1OMOMzy
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 adultscore=0
+ lowpriorityscore=0 impostorscore=0 clxscore=1011 malwarescore=0
+ mlxlogscore=999 priorityscore=1501 bulkscore=0 phishscore=0 mlxscore=0
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2412120041
 
-Hi Dmitry,
 
-On 12/12/24 03:09, Dmitry Baryshkov wrote:
-> On Wed, Dec 11, 2024 at 07:58:05PM +0530, Vignesh Raman wrote:
->> Uprev IGT to the latest version and update expectation files.
+
+On 12/11/2024 6:48 PM, neil.armstrong@linaro.org wrote:
+> Hi,
+> 
+> On 10/12/2024 09:23, Yuanfang Zhang wrote:
+>> Add coresight components: Funnel, ETE and ETF for SM8650.
+> 
+> Is there a way to validate those are working fine ?
+> 
+> Thanks,
+> Neil
+> 
+Yes, these can be verified on Snapdragon 8Gen3 platforms, after boot up,
+these nodes can be found under /sys/bus/coresight/devices/.
+
+thanks,
+yuanfang
+
 >>
->> Signed-off-by: Vignesh Raman <vignesh.raman@collabora.com>
+>> Signed-off-by: Yuanfang Zhang <quic_yuanfang@quicinc.com>
 >> ---
->>
->> v1:
->>    - Pipeline link - https://gitlab.freedesktop.org/vigneshraman/linux/-/pipelines/1327810
->>      Will update the flake bug report link after v1 is reviewed.
->>
+>> Changes in v2:
+>> - Update compatible for funnel and etf.
+>> - remove unnecessary property: reg-names and arm,primecell-periphid.
+>> - Link to v1: https://lore.kernel.org/r/20241210-sm8650-cs-dt-v1-1-269693451584@quicinc.com
 >> ---
->> diff --git a/drivers/gpu/drm/ci/xfails/msm-apq8016-fails.txt b/drivers/gpu/drm/ci/xfails/msm-apq8016-fails.txt
->> index 066d24ee3e08..7752adff05c1 100644
->> --- a/drivers/gpu/drm/ci/xfails/msm-apq8016-fails.txt
->> +++ b/drivers/gpu/drm/ci/xfails/msm-apq8016-fails.txt
->> @@ -1,4 +1,7 @@
->>   kms_3d,Fail
->> +kms_cursor_legacy@forked-bo,Fail
->> +kms_cursor_legacy@forked-move,Fail
->> +kms_cursor_legacy@single-bo,Fail
->>   kms_cursor_legacy@torture-bo,Fail
-> 
-> Interesting, DRM_MODE_CURSOR_BO tests fail
-> 
->>   kms_force_connector_basic@force-edid,Fail
->>   kms_hdmi_inject@inject-4k,Fail
->> diff --git a/drivers/gpu/drm/ci/xfails/msm-sc7180-trogdor-kingoftown-fails.txt b/drivers/gpu/drm/ci/xfails/msm-sc7180-trogdor-kingoftown-fails.txt
->> index 6dbc2080347d..581d0aa33b4f 100644
->> --- a/drivers/gpu/drm/ci/xfails/msm-sc7180-trogdor-kingoftown-fails.txt
->> +++ b/drivers/gpu/drm/ci/xfails/msm-sc7180-trogdor-kingoftown-fails.txt
->> @@ -8,6 +8,8 @@ kms_color@ctm-red-to-blue,Fail
->>   kms_color@ctm-signed,Fail
->>   kms_cursor_legacy@cursor-vs-flip-toggle,Fail
->>   kms_cursor_legacy@cursor-vs-flip-varying-size,Fail
->> +kms_display_modes@extended-mode-basic,Fail
->> +kms_display_modes@mst-extended-mode-negative,Fail
-> 
-> This is a bug in 5f7cde6a9878 ("tests/kms_display_modes: Skip test if
-> joiner display is connected"), the driver unconditionally calls
-> is_joiner_mode(), or in 88abc2d2c646 ("lib/igt_kms: Add is_joiner_mode
-> function"), the is_joiner_mode() should return false for non-Intel
-> hardware. Please fix it in the IGT instead.
-
-Can we add this in skips mentioning the IGT gitab issue link?
-
-> 
->>   kms_flip@flip-vs-modeset-vs-hang,Fail
->>   kms_flip@flip-vs-panning-vs-hang,Fail
->>   kms_lease@lease-uevent,Fail
->> @@ -15,4 +17,3 @@ kms_pipe_crc_basic@compare-crc-sanitycheck-nv12,Fail
->>   kms_plane_alpha_blend@alpha-7efc,Fail
->>   kms_plane_alpha_blend@coverage-7efc,Fail
->>   kms_plane_alpha_blend@coverage-vs-premult-vs-constant,Fail
->> -kms_rmfb@close-fd,Fail
->> diff --git a/drivers/gpu/drm/ci/xfails/msm-sc7180-trogdor-kingoftown-flakes.txt b/drivers/gpu/drm/ci/xfails/msm-sc7180-trogdor-kingoftown-flakes.txt
->> index d74e04405e65..5122233b9941 100644
->> --- a/drivers/gpu/drm/ci/xfails/msm-sc7180-trogdor-kingoftown-flakes.txt
->> +++ b/drivers/gpu/drm/ci/xfails/msm-sc7180-trogdor-kingoftown-flakes.txt
->> @@ -18,3 +18,10 @@ msm/msm_shrink@copy-gpu-oom-32
->>   # IGT Version: 1.28-g0df7b9b97
->>   # Linux Version: 6.9.0-rc7
->>   msm/msm_shrink@copy-gpu-oom-8
+>>   arch/arm64/boot/dts/qcom/sm8650.dtsi | 165 +++++++++++++++++++++++++++++++++++
+>>   1 file changed, 165 insertions(+)
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/sm8650.dtsi b/arch/arm64/boot/dts/qcom/sm8650.dtsi
+>> index 25e47505adcb790d09f1d2726386438487255824..76620d478e872a2b725693dc32364e2a183572b7 100644
+>> --- a/arch/arm64/boot/dts/qcom/sm8650.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/sm8650.dtsi
+>> @@ -5654,6 +5654,171 @@ compute-cb@12 {
+>>                   };
+>>               };
+>>           };
 >> +
->> +# Board Name: sc7180-trogdor-kingoftown
->> +# Bug Report:
->> +# Failure Rate: 50
->> +# IGT Version: 1.29-g33adea9eb
->> +# Linux Version: 6.13.0-rc2
->> +kms_lease@page-flip-implicit-plane
+>> +        ete0 {
+>> +            compatible = "arm,embedded-trace-extension";
+>> +
+>> +            cpu = <&cpu0>;
+>> +            qcom,skip-power-up;
+>> +
+>> +            out-ports {
+>> +                port {
+>> +                    ete0_out_funnel_ete: endpoint {
+>> +                        remote-endpoint = <&funnel_ete_in_ete0>;
+>> +                    };
+>> +                };
+>> +            };
+>> +        };
+>> +
+>> +        funnel_ete {
+>> +            compatible = "arm,coresight-static-funnel";
+>> +
+>> +            in-ports {
+>> +                port@0 {
+>> +                    reg = <0>;
+>> +
+>> +                    funnel_ete_in_ete0: endpoint {
+>> +                        remote-endpoint = <&ete0_out_funnel_ete>;
+>> +                    };
+>> +                };
+>> +            };
+>> +
+>> +            out-ports {
+>> +                port {
+>> +                    funnel_ete_out_funnel_apss: endpoint {
+>> +                        remote-endpoint = <&funnel_apss_in_funnel_ete>;
+>> +                    };
+>> +                };
+>> +            };
+>> +        };
+>> +
+>> +        funnel@13810000 {
+>> +            compatible = "arm,coresight-dynamic-funnel", "arm,primecell";
+>> +
+>> +            reg = <0x0 0x13810000 0x0 0x1000>;
+>> +
+>> +            clocks = <&aoss_qmp>;
+>> +            clock-names = "apb_pclk";
+>> +
+>> +            in-ports {
+>> +                port@0 {
+>> +                    reg = <0>;
+>> +
+>> +                    funnel_apss_in_funnel_ete: endpoint {
+>> +                        remote-endpoint = <&funnel_ete_out_funnel_apss>;
+>> +                    };
+>> +                };
+>> +            };
+>> +
+>> +            out-ports {
+>> +                port {
+>> +                    funnel_apss_out_funnel_in1: endpoint {
+>> +                        remote-endpoint = <&funnel_in1_in_funnel_apss>;
+>> +                    };
+>> +                };
+>> +            };
+>> +        };
+>> +
+>> +        funnel@10042000 {
+>> +            compatible = "arm,coresight-dynamic-funnel", "arm,primecell";
+>> +
+>> +            reg = <0x0 0x10042000 0x0 0x1000>;
+>> +
+>> +            clocks = <&aoss_qmp>;
+>> +            clock-names = "apb_pclk";
+>> +
+>> +            in-ports {
+>> +                port@4 {
+>> +                    reg = <4>;
+>> +
+>> +                    funnel_in1_in_funnel_apss: endpoint {
+>> +                        remote-endpoint = <&funnel_apss_out_funnel_in1>;
+>> +                    };
+>> +                };
+>> +            };
+>> +
+>> +            out-ports {
+>> +                port {
+>> +                    funnel_in1_out_funnel_qdss: endpoint {
+>> +                        remote-endpoint = <&funnel_qdss_in_funnel_in1>;
+>> +                    };
+>> +                };
+>> +            };
+>> +        };
+>> +
+>> +        funnel@10045000 {
+>> +            compatible = "arm,coresight-dynamic-funnel", "arm,primecell";
+>> +
+>> +            reg = <0x0 0x10045000 0x0 0x1000>;
+>> +
+>> +            clocks = <&aoss_qmp>;
+>> +            clock-names = "apb_pclk";
+>> +
+>> +            in-ports {
+>> +                #address-cells = <1>;
+>> +                #size-cells = <0>;
+>> +
+>> +                port@1 {
+>> +                    reg = <1>;
+>> +
+>> +                    funnel_qdss_in_funnel_in1: endpoint {
+>> +                        remote-endpoint = <&funnel_in1_out_funnel_qdss>;
+>> +                    };
+>> +                };
+>> +            };
+>> +
+>> +            out-ports {
+>> +                port {
+>> +                    funnel_qdss_out_funnel_aoss: endpoint {
+>> +                        remote-endpoint = <&funnel_aoss_in_funnel_qdss>;
+>> +                    };
+>> +                };
+>> +            };
+>> +        };
+>> +
+>> +        funnel@10b04000 {
+>> +            compatible = "arm,coresight-dynamic-funnel", "arm,primecell";
+>> +
+>> +            reg = <0x0 0x10b04000 0x0 0x1000>;
+>> +
+>> +            clocks = <&aoss_qmp>;
+>> +            clock-names = "apb_pclk";
+>> +
+>> +            in-ports {
+>> +                port@7 {
+>> +                    reg = <7>;
+>> +
+>> +                    funnel_aoss_in_funnel_qdss: endpoint {
+>> +                        remote-endpoint = <&funnel_qdss_out_funnel_aoss>;
+>> +                    };
+>> +                };
+>> +            };
+>> +
+>> +            out-ports {
+>> +                port {
+>> +                    funnel_aoss_out_tmc_etf: endpoint {
+>> +                        remote-endpoint = <&tmc_etf_in_funnel_aoss>;
+>> +                    };
+>> +                };
+>> +            };
+>> +        };
+>> +
+>> +        tmc@10b05000 {
+>> +            compatible = "arm,coresight-tmc", "arm,primecell";
+>> +
+>> +            reg = <0x0 0x10b05000 0x0 0x1000>;
+>> +
+>> +            clocks = <&aoss_qmp>;
+>> +            clock-names = "apb_pclk";
+>> +
+>> +            in-ports {
+>> +                port {
+>> +                    tmc_etf_in_funnel_aoss: endpoint {
+>> +                        remote-endpoint = <&funnel_aoss_out_tmc_etf>;
+>> +                    };
+>> +                };
+>> +            };
+>> +        };
+>>       };
+>>         thermal-zones {
+>>
+>> ---
+>> base-commit: fac04efc5c793dccbd07e2d59af9f90b7fc0dca4
+>> change-id: 20241209-sm8650-cs-dt-ad649dcfa5e8
+>>
+>> Best regards,
 > 
-> Do you have a failure log?
 
-
-https://gitlab.freedesktop.org/vigneshraman/linux/-/jobs/68026461#L3262
-
-Let me know if I can create a gitlab issue for this.
-
-Regards,
-Vginesh
-
-> 
->> diff --git a/drivers/gpu/drm/ci/xfails/msm-sc7180-trogdor-lazor-limozeen-fails.txt b/drivers/gpu/drm/ci/xfails/msm-sc7180-trogdor-lazor-limozeen-fails.txt
->> index 6dbc2080347d..581d0aa33b4f 100644
->> --- a/drivers/gpu/drm/ci/xfails/msm-sc7180-trogdor-lazor-limozeen-fails.txt
->> +++ b/drivers/gpu/drm/ci/xfails/msm-sc7180-trogdor-lazor-limozeen-fails.txt
->> @@ -8,6 +8,8 @@ kms_color@ctm-red-to-blue,Fail
->>   kms_color@ctm-signed,Fail
->>   kms_cursor_legacy@cursor-vs-flip-toggle,Fail
->>   kms_cursor_legacy@cursor-vs-flip-varying-size,Fail
->> +kms_display_modes@extended-mode-basic,Fail
->> +kms_display_modes@mst-extended-mode-negative,Fail
-> 
-> Again, the same IGT issue.
-> 
->>   kms_flip@flip-vs-modeset-vs-hang,Fail
->>   kms_flip@flip-vs-panning-vs-hang,Fail
->>   kms_lease@lease-uevent,Fail
->> @@ -15,4 +17,3 @@ kms_pipe_crc_basic@compare-crc-sanitycheck-nv12,Fail
->>   kms_plane_alpha_blend@alpha-7efc,Fail
->>   kms_plane_alpha_blend@coverage-7efc,Fail
->>   kms_plane_alpha_blend@coverage-vs-premult-vs-constant,Fail
->> -kms_rmfb@close-fd,Fail
->> diff --git a/drivers/gpu/drm/ci/xfails/msm-sdm845-fails.txt b/drivers/gpu/drm/ci/xfails/msm-sdm845-fails.txt
->> index fa8c7e663858..69076751af24 100644
->> --- a/drivers/gpu/drm/ci/xfails/msm-sdm845-fails.txt
->> +++ b/drivers/gpu/drm/ci/xfails/msm-sdm845-fails.txt
->> @@ -1,4 +1,3 @@
->> -drm_read@invalid-buffer,Fail
->>   kms_color@ctm-0-25,Fail
->>   kms_color@ctm-0-50,Fail
->>   kms_color@ctm-0-75,Fail
->> @@ -19,6 +18,8 @@ kms_cursor_legacy@flip-vs-cursor-atomic,Fail
->>   kms_cursor_legacy@flip-vs-cursor-crc-atomic,Fail
->>   kms_cursor_legacy@flip-vs-cursor-crc-legacy,Fail
->>   kms_cursor_legacy@flip-vs-cursor-legacy,Fail
->> +kms_display_modes@extended-mode-basic,Fail
->> +kms_display_modes@mst-extended-mode-negative,Fail
-> 
-> The same IGT error
-> 
->>   kms_flip@flip-vs-modeset-vs-hang,Fail
->>   kms_flip@flip-vs-panning-vs-hang,Fail
->>   kms_lease@lease-uevent,Fail
->> @@ -28,4 +29,3 @@ kms_plane_alpha_blend@coverage-7efc,Fail
->>   kms_plane_alpha_blend@coverage-vs-premult-vs-constant,Fail
->>   kms_plane_cursor@overlay,Fail
->>   kms_plane_cursor@viewport,Fail
->> -kms_rmfb@close-fd,Fail
->> diff --git a/drivers/gpu/drm/ci/xfails/msm-sm8350-hdk-fails.txt b/drivers/gpu/drm/ci/xfails/msm-sm8350-hdk-fails.txt
->> index 4892c0c70a6d..8d26b23133aa 100644
->> --- a/drivers/gpu/drm/ci/xfails/msm-sm8350-hdk-fails.txt
->> +++ b/drivers/gpu/drm/ci/xfails/msm-sm8350-hdk-fails.txt
->> @@ -7,9 +7,4 @@ kms_cursor_legacy@torture-bo,Fail
->>   kms_cursor_legacy@torture-move,Fail
->>   kms_hdmi_inject@inject-4k,Fail
->>   kms_lease@lease-uevent,Fail
->> -kms_plane_alpha_blend@alpha-7efc,Fail
->> -kms_plane_alpha_blend@alpha-basic,Fail
->> -kms_plane_alpha_blend@alpha-opaque-fb,Fail
->> -kms_plane_alpha_blend@alpha-transparent-fb,Fail
->> -kms_plane_alpha_blend@constant-alpha-max,Fail
->>   msm/msm_recovery@gpu-fault-parallel,Fail
->> diff --git a/drivers/gpu/drm/ci/xfails/msm-sm8350-hdk-flakes.txt b/drivers/gpu/drm/ci/xfails/msm-sm8350-hdk-flakes.txt
->> deleted file mode 100644
->> index c1859d9b165f..000000000000
->> --- a/drivers/gpu/drm/ci/xfails/msm-sm8350-hdk-flakes.txt
->> +++ /dev/null
->> @@ -1,6 +0,0 @@
->> -# Board Name: sm8350-hdk
->> -# Bug Report: https://gitlab.freedesktop.org/drm/msm/-/issues/65
->> -# Failure Rate: 100
->> -# IGT Version: 1.28-ga73311079
->> -# Linux Version: 6.12.0-rc1
->> -msm/msm_recovery@gpu-fault
-> 
 
