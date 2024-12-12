@@ -1,61 +1,61 @@
-Return-Path: <linux-arm-msm+bounces-41759-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-41760-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 70A739EE9C0
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Dec 2024 16:04:39 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0CC079EE9C6
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Dec 2024 16:04:52 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4865D1889E74
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Dec 2024 15:03:49 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id AE0DF1664DE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Dec 2024 15:04:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 04D9A21E086;
-	Thu, 12 Dec 2024 15:03:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 47A082210FE;
+	Thu, 12 Dec 2024 15:03:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="dn+AbNx/"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Ma0bQ1ZO"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E9B121B90B;
-	Thu, 12 Dec 2024 15:03:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0EC02210E8;
+	Thu, 12 Dec 2024 15:03:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734015791; cv=none; b=ICsy+aTr9g3pCmFaGXeBZOschEfCHcYtEcl9anIhNCVxJJFGXUIPzPDp1NJdPHOpMxv4/+MRyBfjxux3C/KkNS8unM18vpQUnTamFiynGT7WBDRlcsrA+2UTSg3G3eT5sGk4Wg2xOXBSBL8M9IATtqSbDMpFE8BQBKJFkOumLNA=
+	t=1734015795; cv=none; b=pTandrObinb+BJku9DIB7CsrZAjk5pxsJNjGm1GU5/aWqJFxQE80hl6w2mKPnekss5BkJYrr9LUX3IWcnDYd0/quKrzFodzK57fJRO4tvP642aiOdPDTcBzAcCDEaDOrivnbcs7RT0OPCOczzouEeStsvSdrIjmz0wPaGQrOyfI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734015791; c=relaxed/simple;
-	bh=87n7Ciwfuf+E6QL4TY3C4iM5hPcdPrNUCFGiday0KiQ=;
+	s=arc-20240116; t=1734015795; c=relaxed/simple;
+	bh=/PeGRqRFynm+jdz+IzuH3g5meFjWDE80+ziUXDeEDNA=;
 	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=HB1Fpl5Su2aBTEZXsZiBoahv1FWHl1pR7G0eR5oBbvGDOLm+FgzmHnrUdGNleZPDY2bDTz1LFoWVU5vj9N0OJIS3z5svg2QaUaLsQouibBVks1ZRsxhKMGAEeTMjnlccgrSRZ8j48iWTuEXDYKFxE38RPcOx/cr8CzjS8i/3cO0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=dn+AbNx/; arc=none smtp.client-ip=205.220.180.131
+	 MIME-Version:Content-Type; b=YoK51p0h6z15O51dULwmrH/VM1TxL0yS9JsuBWTnoNCE7fYUTK1FRWVHpPWGZDtKpD76vxi1BWNxYNd9N0TgtthqP0EP41/LcQQ2+2fVBfREYSaJmp8e7fhOm6PEVrvMdDR8oIt6Y02m8lRL+RE8pU2NjzIS+D5LP059ixlJ+NM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Ma0bQ1ZO; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
 Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BC7oP2t002038;
-	Thu, 12 Dec 2024 15:03:04 GMT
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BC7oLVo002411;
+	Thu, 12 Dec 2024 15:03:08 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	HUAJIPZI5aZWXGUlDRPwzc2C8DYkMrJOoPmPnb9J+Jk=; b=dn+AbNx/QVCtyQFo
-	TbqY9rXFIeRhx2dXAwvIVkyVcCIsl82ViR1betsSPVdUVUtdQPb+md+KPwEhu+Hc
-	uKxYFjoidMBHDwCFnWvpRE2wrgKYvnt+RoA1QjIGDZkPA9NdESHBxWKNkqkVJQMF
-	iQcF2j/1v7w/zV/A+IIhKQX/h4lFYUieIRvgAeCA47GI4oiPE24s0Ki5GYo0nouM
-	r7yDAfhpeAOF6zfbp5RTYSumeDkzcbH7nFADH82VEaHe7BWaTD1rNpc1+4t4l6jH
-	r72ku6/rpUm1MmoXvn4pQsNAP1bgGnFpY9yyndsZVkHO28BK+ae/XlCPXNYxMEvE
-	cKeKsw==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43eyg65vda-1
+	rlN1lGzUAwSQi/4asiMCnXvAR8eN6Qe35fSnB1yc1vQ=; b=Ma0bQ1ZOmRqSq6xD
+	KR4jNLDGGffx+kBVHmJNJJpZTmjpvY0YAdGKc6H/o4HZKRpRX52AGYF88a5wo+wH
+	hShXHEbO3eUd+biIDgX+io20Uq0p3DHm3+lbB6dnQNIdo8RVRMw0CWwLNqGqFT8O
+	9++ljAF802rfA3PUXlusYIbe4Q+IHGDYYlRa0ykWgliaBwyTk8JF/mD+YLA2tb8N
+	jHqt3tRSih5yeIxul9dXpxMvs0LxLu32weXDF9y2ayaugi/aWrX1abB4SRtzWP7p
+	zNpsHi88O8BWW/oWvwYH/5yXHt+WZkzVdE2wejLreYWVhOYBdry1iOLyiyDJwPoF
+	9v1kkg==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43eyg65vdn-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 12 Dec 2024 15:03:04 +0000 (GMT)
+	Thu, 12 Dec 2024 15:03:08 +0000 (GMT)
 Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4BCF33Nb000535
+	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4BCF37pY019211
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 12 Dec 2024 15:03:03 GMT
+	Thu, 12 Dec 2024 15:03:07 GMT
 Received: from bt-iot-sh01-lnx.qualcomm.com (10.80.80.8) by
  nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Thu, 12 Dec 2024 07:02:58 -0800
+ 15.2.1544.9; Thu, 12 Dec 2024 07:03:02 -0800
 From: Cheng Jiang <quic_chejiang@quicinc.com>
 To: Marcel Holtmann <marcel@holtmann.org>,
         Luiz Augusto von Dentz
@@ -75,9 +75,9 @@ CC: <linux-bluetooth@vger.kernel.org>, <devicetree@vger.kernel.org>,
         <quic_chejiang@quicinc.com>, <quic_jiaymao@quicinc.com>,
         <quic_shuaz@quicinc.com>, <quic_zijuhu@quicinc.com>,
         <quic_mohamull@quicinc.com>
-Subject: [PATCH v5 3/4] Bluetooth: qca: Expand firmware-name to load specific rampatch
-Date: Thu, 12 Dec 2024 23:02:31 +0800
-Message-ID: <20241212150232.3823088-4-quic_chejiang@quicinc.com>
+Subject: [PATCH v5 4/4] arm64: dts: qcom: sa8775p-ride: Add firmware-name in BT node
+Date: Thu, 12 Dec 2024 23:02:32 +0800
+Message-ID: <20241212150232.3823088-5-quic_chejiang@quicinc.com>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20241212150232.3823088-1-quic_chejiang@quicinc.com>
 References: <20241212150232.3823088-1-quic_chejiang@quicinc.com>
@@ -93,8 +93,8 @@ X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nalasex01b.na.qualcomm.com (10.47.209.197)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: T2KyfO4iOLx6kA8y5yR1lJu-tyqwRgun
-X-Proofpoint-ORIG-GUID: T2KyfO4iOLx6kA8y5yR1lJu-tyqwRgun
+X-Proofpoint-GUID: gIfoWB2T0E8dmst87k0Kp_BqLSgRKDvy
+X-Proofpoint-ORIG-GUID: gIfoWB2T0E8dmst87k0Kp_BqLSgRKDvy
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
@@ -104,208 +104,28 @@ X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamsco
  malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.19.0-2411120000 definitions=main-2412120108
 
-The firmware-name property has been expanded to specify the names of NVM
-and rampatch firmware for certain chips, such as the QCA6698 Bluetooth
-chip. Although it shares the same IP core as the WCN6855, the QCA6698
-has different RF components and RAM sizes, necessitating new firmware
-files. This change allows for the configuration of NVM and rampatch in
-DT.
-
-Possible configurations:
-firmware-name = QCA6698/hpnv21.bin, QCA6698/hpbtfw21.tlv;
-firmware-name = QCA6698/hpnv21, QCA6698/hpbtfw21.tlv;
+The sa8775p-ride platform uses the QCA6698 Bluetooth chip. While the
+QCA6698 shares the same IP core as the WCN6855, it has different RF
+components and RAM sizes, requiring new firmware files. Use the
+firmware-name property to specify the NVM and rampatch firmware to load.
 
 Signed-off-by: Cheng Jiang <quic_chejiang@quicinc.com>
 ---
- drivers/bluetooth/btqca.c   | 82 +++++++++++++++++++------------------
- drivers/bluetooth/btqca.h   |  5 ++-
- drivers/bluetooth/hci_qca.c | 22 +++++++---
- 3 files changed, 63 insertions(+), 46 deletions(-)
+ arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/bluetooth/btqca.c b/drivers/bluetooth/btqca.c
-index 4842f4335..709e872bc 100644
---- a/drivers/bluetooth/btqca.c
-+++ b/drivers/bluetooth/btqca.c
-@@ -781,7 +781,7 @@ static void qca_get_nvm_name_by_board(char *fwname, size_t max_size,
+diff --git a/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi b/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi
+index 3fc62e123..e7fe53d95 100644
+--- a/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi
++++ b/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi
+@@ -857,6 +857,7 @@ &uart17 {
  
- int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
- 		   enum qca_btsoc_type soc_type, struct qca_btsoc_version ver,
--		   const char *firmware_name)
-+		   const char *firmware_name, const char *rampatch_name)
- {
- 	struct qca_fw_config config = {};
- 	int err;
-@@ -810,44 +810,48 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
+ 	bluetooth {
+ 		compatible = "qcom,wcn6855-bt";
++		firmware-name = "QCA6698/hpnv21", "QCA6698/hpbtfw21.tlv";
  
- 	/* Download rampatch file */
- 	config.type = TLV_TYPE_PATCH;
--	switch (soc_type) {
--	case QCA_WCN3990:
--	case QCA_WCN3991:
--	case QCA_WCN3998:
--		snprintf(config.fwname, sizeof(config.fwname),
--			 "qca/crbtfw%02x.tlv", rom_ver);
--		break;
--	case QCA_WCN3988:
--		snprintf(config.fwname, sizeof(config.fwname),
--			 "qca/apbtfw%02x.tlv", rom_ver);
--		break;
--	case QCA_QCA2066:
--		snprintf(config.fwname, sizeof(config.fwname),
--			 "qca/hpbtfw%02x.tlv", rom_ver);
--		break;
--	case QCA_QCA6390:
--		snprintf(config.fwname, sizeof(config.fwname),
--			 "qca/htbtfw%02x.tlv", rom_ver);
--		break;
--	case QCA_WCN6750:
--		/* Choose mbn file by default.If mbn file is not found
--		 * then choose tlv file
--		 */
--		config.type = ELF_TYPE_PATCH;
--		snprintf(config.fwname, sizeof(config.fwname),
--			 "qca/msbtfw%02x.mbn", rom_ver);
--		break;
--	case QCA_WCN6855:
--		snprintf(config.fwname, sizeof(config.fwname),
--			 "qca/hpbtfw%02x.tlv", rom_ver);
--		break;
--	case QCA_WCN7850:
--		snprintf(config.fwname, sizeof(config.fwname),
--			 "qca/hmtbtfw%02x.tlv", rom_ver);
--		break;
--	default:
--		snprintf(config.fwname, sizeof(config.fwname),
--			 "qca/rampatch_%08x.bin", soc_ver);
-+	if (rampatch_name) {
-+		snprintf(config.fwname, sizeof(config.fwname), "qca/%s", rampatch_name);
-+	} else {
-+		switch (soc_type) {
-+		case QCA_WCN3990:
-+		case QCA_WCN3991:
-+		case QCA_WCN3998:
-+			snprintf(config.fwname, sizeof(config.fwname),
-+				 "qca/crbtfw%02x.tlv", rom_ver);
-+			break;
-+		case QCA_WCN3988:
-+			snprintf(config.fwname, sizeof(config.fwname),
-+				 "qca/apbtfw%02x.tlv", rom_ver);
-+			break;
-+		case QCA_QCA2066:
-+			snprintf(config.fwname, sizeof(config.fwname),
-+				 "qca/hpbtfw%02x.tlv", rom_ver);
-+			break;
-+		case QCA_QCA6390:
-+			snprintf(config.fwname, sizeof(config.fwname),
-+				 "qca/htbtfw%02x.tlv", rom_ver);
-+			break;
-+		case QCA_WCN6750:
-+			/* Choose mbn file by default.If mbn file is not found
-+			 * then choose tlv file
-+			 */
-+			config.type = ELF_TYPE_PATCH;
-+			snprintf(config.fwname, sizeof(config.fwname),
-+				 "qca/msbtfw%02x.mbn", rom_ver);
-+			break;
-+		case QCA_WCN6855:
-+			snprintf(config.fwname, sizeof(config.fwname),
-+				 "qca/hpbtfw%02x.tlv", rom_ver);
-+			break;
-+		case QCA_WCN7850:
-+			snprintf(config.fwname, sizeof(config.fwname),
-+				 "qca/hmtbtfw%02x.tlv", rom_ver);
-+			break;
-+		default:
-+			snprintf(config.fwname, sizeof(config.fwname),
-+				 "qca/rampatch_%08x.bin", soc_ver);
-+		}
- 	}
- 
- 	err = qca_download_firmware(hdev, &config, soc_type, rom_ver);
-diff --git a/drivers/bluetooth/btqca.h b/drivers/bluetooth/btqca.h
-index bb5207d7a..9d28c8800 100644
---- a/drivers/bluetooth/btqca.h
-+++ b/drivers/bluetooth/btqca.h
-@@ -161,7 +161,7 @@ enum qca_btsoc_type {
- int qca_set_bdaddr_rome(struct hci_dev *hdev, const bdaddr_t *bdaddr);
- int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
- 		   enum qca_btsoc_type soc_type, struct qca_btsoc_version ver,
--		   const char *firmware_name);
-+		   const char *firmware_name, const char *rampatch_name);
- int qca_read_soc_version(struct hci_dev *hdev, struct qca_btsoc_version *ver,
- 			 enum qca_btsoc_type);
- int qca_set_bdaddr(struct hci_dev *hdev, const bdaddr_t *bdaddr);
-@@ -176,7 +176,8 @@ static inline int qca_set_bdaddr_rome(struct hci_dev *hdev, const bdaddr_t *bdad
- static inline int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
- 				 enum qca_btsoc_type soc_type,
- 				 struct qca_btsoc_version ver,
--				 const char *firmware_name)
-+				 const char *firmware_name,
-+				 const char *rampatch_name)
- {
- 	return -EOPNOTSUPP;
- }
-diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
-index 37129e6cb..5d75087cc 100644
---- a/drivers/bluetooth/hci_qca.c
-+++ b/drivers/bluetooth/hci_qca.c
-@@ -228,7 +228,7 @@ struct qca_serdev {
- 	u32 init_speed;
- 	u32 oper_speed;
- 	bool bdaddr_property_broken;
--	const char *firmware_name;
-+	const char *firmware_name[2];
- };
- 
- static int qca_regulator_enable(struct qca_serdev *qcadev);
-@@ -258,7 +258,18 @@ static const char *qca_get_firmware_name(struct hci_uart *hu)
- 	if (hu->serdev) {
- 		struct qca_serdev *qsd = serdev_device_get_drvdata(hu->serdev);
- 
--		return qsd->firmware_name;
-+		return qsd->firmware_name[0];
-+	} else {
-+		return NULL;
-+	}
-+}
-+
-+static const char *qca_get_rampatch_name(struct hci_uart *hu)
-+{
-+	if (hu->serdev) {
-+		struct qca_serdev *qsd = serdev_device_get_drvdata(hu->serdev);
-+
-+		return qsd->firmware_name[1];
- 	} else {
- 		return NULL;
- 	}
-@@ -1855,6 +1866,7 @@ static int qca_setup(struct hci_uart *hu)
- 	unsigned int retries = 0;
- 	enum qca_btsoc_type soc_type = qca_soc_type(hu);
- 	const char *firmware_name = qca_get_firmware_name(hu);
-+	const char *rampatch_name = qca_get_rampatch_name(hu);
- 	int ret;
- 	struct qca_btsoc_version ver;
- 	struct qca_serdev *qcadev;
-@@ -1963,7 +1975,7 @@ static int qca_setup(struct hci_uart *hu)
- 
- 	/* Setup patch / NVM configurations */
- 	ret = qca_uart_setup(hdev, qca_baudrate, soc_type, ver,
--			firmware_name);
-+			firmware_name, rampatch_name);
- 	if (!ret) {
- 		clear_bit(QCA_IBS_DISABLED, &qca->flags);
- 		qca_debugfs_init(hdev);
-@@ -2309,8 +2321,8 @@ static int qca_serdev_probe(struct serdev_device *serdev)
- 	qcadev->serdev_hu.serdev = serdev;
- 	data = device_get_match_data(&serdev->dev);
- 	serdev_device_set_drvdata(serdev, qcadev);
--	device_property_read_string(&serdev->dev, "firmware-name",
--					 &qcadev->firmware_name);
-+	device_property_read_string_array(&serdev->dev, "firmware-name",
-+					 qcadev->firmware_name, ARRAY_SIZE(qcadev->firmware_name));
- 	device_property_read_u32(&serdev->dev, "max-speed",
- 				 &qcadev->oper_speed);
- 	if (!qcadev->oper_speed)
+ 		vddrfacmn-supply = <&vreg_pmu_rfa_cmn>;
+ 		vddaon-supply = <&vreg_pmu_aon_0p59>;
 -- 
 2.25.1
 
