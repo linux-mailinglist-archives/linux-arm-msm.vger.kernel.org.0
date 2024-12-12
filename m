@@ -1,94 +1,123 @@
-Return-Path: <linux-arm-msm+bounces-41669-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-41670-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 003459EE066
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Dec 2024 08:42:29 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5D4F99EE068
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Dec 2024 08:42:45 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 676A6167ADC
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Dec 2024 07:42:24 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 68CC118876A1
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Dec 2024 07:42:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 830F820B1E3;
-	Thu, 12 Dec 2024 07:42:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E6E0520B1EA;
+	Thu, 12 Dec 2024 07:42:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VmC93fNB"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="yf51mtGd"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f48.google.com (mail-lf1-f48.google.com [209.85.167.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52C6C25949C;
-	Thu, 12 Dec 2024 07:42:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A025207A23
+	for <linux-arm-msm@vger.kernel.org>; Thu, 12 Dec 2024 07:42:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733989345; cv=none; b=ZvuON0f4C7EjWa4FbciwsCDsJztb29xHYF+oe14rv6e1Ey7ijtzcmrZFOD6fd2iEoEYQguQxYjWpQ09Kew/PmNNGqTx8kOiiGo7EdbdIPCaDl8WMQdEZ0CH/yFcn/RmF9BEksj9/6RnBPi7uJQiXbkwILwzMR3OXyr/zmXcI8m8=
+	t=1733989353; cv=none; b=NFC7X0gOLu1MSu4DAkWPQPMMYFa3C6aOjOvtXvFtfq9wkY/JNER5cDv+BtV6r5UTeDit4tLYM7ey+7aqoCst1K8GCZtfRWzciHnzFCJqVzpUIxRuy0AbuFnlIqTjzujP33/p2MAh/GsbaJB0QUL5Aq105YVm/bGbQrA4P96Qc0U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733989345; c=relaxed/simple;
-	bh=rCD7HbWLUQrQgP4B3ceMrIwrMMTWI8JTtKwqYWB9aGY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=DeSWhgDy4MTRvWqN//FHM0Zy41iJdEurJwsVc1NU3rbKOXUkNTJ5r8dmhnTxM+Ynt9aymyEsnh2LTM34zdRRxLR7IIFOvBoX1zs+nEtm/k5y7aKPaA0XMAQ/VOUKlxjteinjj3L08LiInPQM7c0lN6WfVoQHYKatRHrkixX+O/I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VmC93fNB; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB21BC4CECE;
-	Thu, 12 Dec 2024 07:42:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1733989344;
-	bh=rCD7HbWLUQrQgP4B3ceMrIwrMMTWI8JTtKwqYWB9aGY=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=VmC93fNBcQka8l9FaqgvK9jOcUGbt1ANuF+A7Gjw9GX/O0E2TpVelHwUUCayYE9o+
-	 TNS30NKDZVkko8YTAMJ/XaC9MtzlfrTH/6ifuYGIZg3i8714ZdEI0TjUDqO+RCXpn8
-	 ClG1+mVbPXDCW7hCBs62Tc789FA3mg5m9tLOa316bNCFfctP5s5m1EV3aCtMroQbHp
-	 wA8V6lfRgF/sJhWDl8Nbqz0ow+d/BBuvqurtVPuD9rwYVLep/yW72yBgfB3YOhd6Uz
-	 hnqXwD+fx6Zft7WYSb/Rro6qW/nIsihGc04oFiGhjWnESSbhOpgxbxf6KQCiCiW7QR
-	 kdRnLWlcEtOYg==
-Date: Thu, 12 Dec 2024 08:42:21 +0100
-From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Alexey Klimov <alexey.klimov@linaro.org>
-Cc: broonie@kernel.org, konradybcio@kernel.org, 
-	konrad.dybcio@oss.qualcomm.com, andersson@kernel.org, srinivas.kandagatla@linaro.org, 
-	tiwai@suse.com, lgirdwood@gmail.com, perex@perex.cz, robh@kernel.org, 
-	krzk+dt@kernel.org, conor+dt@kernel.org, dmitry.baryshkov@linaro.org, 
-	linux-sound@vger.kernel.org, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 04/14] arm64: dts: qcom: sm6115: add LPASS devices
-Message-ID: <rl5c6nvo42o3ahqsspdv3aydro6gta6hxgkygnv5zhofschfr2@z7txze7ihizw>
-References: <20241212004727.2903846-1-alexey.klimov@linaro.org>
- <20241212004727.2903846-5-alexey.klimov@linaro.org>
+	s=arc-20240116; t=1733989353; c=relaxed/simple;
+	bh=lCCQie4pQ1F9vSOZNO0l3UQB38u97D8jap8/KM8tuB8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=NCXG/WE5gdguo2RLvGA0+JdMBXr1FWMxz7DRvMRNccTRHJyu9IU9m5rL6dfpBXo5UltUnths+71hZPAgpZyuT8b7TIcIANtdny+HxOuItVS7XGvZs1SyCu4cJzNlwTyDDaj/CUTMR/N130L4JX13R+LM5SfIVjzTdHRZIvcii0s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=yf51mtGd; arc=none smtp.client-ip=209.85.167.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f48.google.com with SMTP id 2adb3069b0e04-53e3641225dso45653e87.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Dec 2024 23:42:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1733989350; x=1734594150; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=fb6HVbCShRnjLJanLtEWXGGQsHuXVT1l5Vx7FnmvFko=;
+        b=yf51mtGdpgJqIoW1gLN0gt15FPracGC9CQ/kvx8r46KGzLBvfFtAOmaVNhiru1CGO9
+         XrsAC3WNQ5Ze7Z2VXfCCn7rA+lyytucPpFgXf0L6yMFCX5pu9gN62EKKiO+AcE5xI5Qc
+         iwCOqXUYKLH5MHraP3nLVZCNW+1Ln2UvlU4GPHtw8eUts8kLjI2jL8T3HXMwYzlMjfkd
+         WfnHRWVCvBPlA1r6Hepe8dcYMlcuEzSKf7/HJBUt9uftXjp9RMNy9jQx038Hdz8qXqup
+         IWTP0AdfP3GHiQsc1x0DJMefZDqXq518QGZyyUEnfLTPEZKFnohGWuM90O1VSRFIN5f7
+         fYLg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1733989350; x=1734594150;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=fb6HVbCShRnjLJanLtEWXGGQsHuXVT1l5Vx7FnmvFko=;
+        b=vnWhW2Bn8bBot09pSyEzZTupze5ZgJNL/hE7bhTrR3Q/91GTCkyyxPAaQqLDhsmAw1
+         I3t8XKPeG5f6ApO9e3p2VzXuwTZvMgvFb3uzchVCxsPcuiWDFutmJAD7R1p8hr1JABtD
+         RXuN2NBES29mxKaY+odwov2KuHPz3eGePVA8SFX/obGrZxy2IDYE3P+bKAqTghy7HX8Z
+         155IJHC3rc8lAC8yVnH8OKk3Ie0rhdfiGRFSYSZEbj90m4j+Ff+qCnOSF2TAo8LuBHUV
+         RgU2IUHIwqJwQiQAZf7fQsI/gqcpYu01ixUFj0YOKbMCIZoxDyLFQNZb6KYl8abbZlHz
+         bF0g==
+X-Forwarded-Encrypted: i=1; AJvYcCUj90EvgrkZ+hwU5+ZFyrJgEFgfNZNRYc9pc8hbU95Y0UlD0NuMxGcLL71TjaF8m5UQx+1VV6YUBwfr0DAQ@vger.kernel.org
+X-Gm-Message-State: AOJu0YxxuMDH0fXdC9nLiIBMNy4/bDH16OArH9MNxgFBDQ+7gyQbg2eO
+	Kf0H4e9TNc8jQQHv0/47Ycx2IVCA7TiD9YGX2A9IGFA9Vx6p5IHFf/aWglAWBpmWxn3vmL7J5Pc
+	z
+X-Gm-Gg: ASbGncvIW1KSnPr46DB9q0B68xnq+Ds+/bCBN5JFhZ/AJY4m5aoY+1ByFs2OSOo1j6w
+	zP2JS9tCIjhZYvKxSWU8mLDd4lEIeLqe5cNcFoNt2TOydaijSnSopx5s5tDSywgMQaQ/ONuzVOi
+	ww09y+gsLxftf6KioK/P6NPJ9Trraz8C6PCg3asdZQ2RXlRKuzeW0LmrQGyz2f34SXw0EmY93D3
+	4XwRwq/YBtfJw+jKEjsaN/cvc5KXoOAliJCyXTHdVT2vZNAwsTXhLn6bEJW8YV8J1lWjzlh/fHH
+	wlTT9moA2MHo47kzItgGjfTd6Hyr2OX/b1E=
+X-Google-Smtp-Source: AGHT+IHHF3eBrkcbLgZjV07jB++O6f1X9HXUZITRIyKBGz5tBzelSPFXBegqOWH9Yj6quetQS7N+aA==
+X-Received: by 2002:a05:6512:b01:b0:540:1b2d:8edf with SMTP id 2adb3069b0e04-54032c30272mr48070e87.1.1733989350220;
+        Wed, 11 Dec 2024 23:42:30 -0800 (PST)
+Received: from [192.168.1.4] (88-112-131-206.elisa-laajakaista.fi. [88.112.131.206])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5402042ad64sm1142957e87.178.2024.12.11.23.42.27
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 11 Dec 2024 23:42:28 -0800 (PST)
+Message-ID: <f5e2c304-c2b2-409b-9300-9b236c2e3354@linaro.org>
+Date: Thu, 12 Dec 2024 09:42:26 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20241212004727.2903846-5-alexey.klimov@linaro.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 09/16] media: qcom: camss: Add callback API for RUP update
+ and buf done
+Content-Language: ru-RU
+To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+ Depeng Shao <quic_depengs@quicinc.com>, rfoss@kernel.org,
+ todor.too@gmail.com, mchehab@kernel.org, robh@kernel.org,
+ krzk+dt@kernel.org, conor+dt@kernel.org
+Cc: quic_eberman@quicinc.com, linux-media@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, kernel@quicinc.com
+References: <20241211140738.3835588-1-quic_depengs@quicinc.com>
+ <20241211140738.3835588-10-quic_depengs@quicinc.com>
+ <1ac23fa1-fc35-45fb-9338-d5f304c869ba@linaro.org>
+ <dcfaf9ef-87bf-4ec5-bf86-5c432380ae9a@linaro.org>
+From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+In-Reply-To: <dcfaf9ef-87bf-4ec5-bf86-5c432380ae9a@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Thu, Dec 12, 2024 at 12:47:17AM +0000, Alexey Klimov wrote:
-> The rxmacro, txmacro, vamacro, soundwire nodes, lpass clock
-> controllers are required to support audio playback and
-> audio capture on sm6115 and its derivatives.
+On 12/12/24 03:32, Bryan O'Donoghue wrote:
+> On 12/12/2024 01:09, Vladimir Zapolskiy wrote:
+>>>
+>>> Signed-off-by: Depeng Shao <quic_depengs@quicinc.com>
+>>> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+>>
+>> It's unexpected to see two your Signed-off-by: tags, either one is invalid
+>> or the authorship of the change shall be changed appropriately.
 > 
-> Cc: Konrad Dybcio <konradybcio@kernel.org>
-> Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-> Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-> Co-developed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> Signed-off-by: Alexey Klimov <alexey.klimov@linaro.org>
-> ---
->  arch/arm64/boot/dts/qcom/sm6115.dtsi | 132 +++++++++++++++++++++++++++
->  1 file changed, 132 insertions(+)
+> TBH I thought nothing of this at all.
+> 
+> @Depeng for the record you can add Co-developed-by with my SOB.
 > 
 
-It does not look like you tested the DTS against bindings. Please run
-'make dtbs_check W=1' (see
-Documentation/devicetree/bindings/writing-schema.rst or
-https://www.linaro.org/blog/tips-and-tricks-for-validating-devicetree-sources-with-the-devicetree-schema/
-for instructions).
+Thank you, then this will become aligned with Documentation/process/5.Posting.rst
 
-See also Rob's report. Rest looks good, but you must check the DTS which
-did not happen here or happened insufficiently.
-
-Best regards,
-Krzysztof
-
+--
+Best wishes,
+Vladimir
 
