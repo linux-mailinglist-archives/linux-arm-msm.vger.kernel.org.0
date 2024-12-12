@@ -1,131 +1,152 @@
-Return-Path: <linux-arm-msm+bounces-41793-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-41794-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2C72B9EF2C1
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Dec 2024 17:52:38 +0100 (CET)
-Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 25461189AB3F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Dec 2024 16:40:56 +0000 (UTC)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 017022253F1;
-	Thu, 12 Dec 2024 16:32:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="G7EtNjJm"
-X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id E06069EF21B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Dec 2024 17:45:46 +0100 (CET)
+Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4DF6223C49;
-	Thu, 12 Dec 2024 16:32:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7A5E328D1D4
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Dec 2024 16:45:45 +0000 (UTC)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8DC6D23A57E;
+	Thu, 12 Dec 2024 16:36:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="i/ALE/zs"
+X-Original-To: linux-arm-msm@vger.kernel.org
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F3A223F9E1
+	for <linux-arm-msm@vger.kernel.org>; Thu, 12 Dec 2024 16:36:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734021151; cv=none; b=C2qZsQO/RA9x6NuvJRbL0CeZ7wviGG19sMb/ArYv7djSb7fo1AWJmcNjMZMm8VAXVo8N0DqiUUipxopKKaD3Cs+FabRk6CaHrMoRWhOv8pMX0Bzv3oyDlFlDDRZ3QAlJdGRVoljfUwi8whnQOQr9sABldpe5XSuAIrG5Pd97F5E=
+	t=1734021371; cv=none; b=WPl64da88kMpY1zYkOQLnJj5OLlVIkQEL4GxMlMsc6Amh/JEQuBbjdZG6OUWEitIm7tgLVHuoVn0rkGm6tWyl6xo/venaFufFRIMNXmL9hkrR0CPKD3UgiQ5/5AMOMst9xXvzTGL11iKUQQz0K6YAadZafR1G0wTfRdJlra1hnY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734021151; c=relaxed/simple;
-	bh=UnNsjVl9T8pR/QWF88dG0A0jiZl2JqShggpSz3fwk44=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=BpP0V7ZZOTaykJiTpwQaMJ1XlIbiJ2JI7DHrepfQrzYUD48P9HKcO9NM/rY1fUQxzHJ8hMjxx3z4p6lZB10zJlo+ftF24Bi7oAcqtVbjIiGTePvnbMUArvPJWNxIEDIMqpJNu+ZQhr9dlHmmjheRjNGR6+XJu23NwNBQQfsn0oY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=G7EtNjJm; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E082C4CED0;
-	Thu, 12 Dec 2024 16:32:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1734021151;
-	bh=UnNsjVl9T8pR/QWF88dG0A0jiZl2JqShggpSz3fwk44=;
-	h=From:Date:Subject:To:Cc:From;
-	b=G7EtNjJmHm7iQXwtQ7mmPU5ny8spzosyhU7ahYPT+sSQQ2HOSuPVhLOfTttb7lKB7
-	 dV3FkYIH1aoG4qz1pFykDABCPXpqxbJAJuqvXVOHsJJKspIAYRNSuEWTOVmd57NeY+
-	 SrjW7dg9I0b3AihPB+OdgBHu5ka8RWnYUvtzlMMQMe90+DBf2zRcPyu9eJbNGw/ZXT
-	 N8gy38GyPMyCL1HOZTfLP59Jf15qELYFWBq9yqLpL92so4WJ8F+/ZbfMK2JJQ1mn4l
-	 YJj+AJQDe87tvzg9xmyMezc23Yso+i6nFeTY7qHD6HzrRXuMaVMtvdscIFbVELInXm
-	 2Bzdm9NY9h+Nw==
-From: Konrad Dybcio <konradybcio@kernel.org>
-Date: Thu, 12 Dec 2024 17:32:24 +0100
-Subject: [PATCH v2] soc: qcom: llcc: Enable LLCC_WRCACHE at boot on X1
+	s=arc-20240116; t=1734021371; c=relaxed/simple;
+	bh=j0SxUnuDVYO2JZYCLop+naPFe4NlfD3BdegfyxmRTfQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=GXlnc0n0b2c22H8x23Zik0CCb/W4OSRDrR3ZKiXah9aNbTUPTSkemVII1PJK/boKWlnyCot1m586fEWeuAkdjCHBaR6MYcqqmMDjmPS7Urz6hBJcznbtn5C1nVx0ylo4+hKXF/5qPTW6BAhyEeN/DC0F5bPJTh3y6qlgW11TIjs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=i/ALE/zs; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BCBM0eC028137
+	for <linux-arm-msm@vger.kernel.org>; Thu, 12 Dec 2024 16:36:08 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	1YtoqDvIa9oxEwR79Z1UxYpdC9VmaaKCVP5CSY5CeXQ=; b=i/ALE/zsKE6LxvHh
+	SiGpY1A+2QBQsbkKzGAKRDEIwOy6qINRrSN7FY1FtcE78WOGVory08FoSqB+jWJz
+	qCCn90T5Efc2kIyQ3F6G37n1O03+KXIIDBWRiw962rlV9TthLvVT10wxu+undzkI
+	UTmsTm090cr1NABGTqHrEV0AKYNQQ9fy7dC94X2Fs3LTvpj+NlCeSQKpXlQfxOUe
+	yZKqpnZHQzbvamlteXRH6AldLAbwSWKLhfz6WgXCFlFdaNWOZASJeqhSrridr/IN
+	zDJZeDwzcYMk7MfRvEHXKgRN6QgI2DQL4L8/dyXI+qotiwyz/D3ORzavhwMMHemV
+	u9Y/mg==
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com [209.85.160.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43fxw4rwcu-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 12 Dec 2024 16:36:07 +0000 (GMT)
+Received: by mail-qt1-f198.google.com with SMTP id d75a77b69052e-467975f1b53so2098981cf.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Dec 2024 08:36:07 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1734021366; x=1734626166;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=1YtoqDvIa9oxEwR79Z1UxYpdC9VmaaKCVP5CSY5CeXQ=;
+        b=Q/uhhquyB2O2SLsapoeMfj1TCdGA3puwkhkfHEWIoZbvnSUSZgmGgqyv0YyP+vrzW+
+         499EV6RdH/BuIwTsYBryQ16KRTldtiMNtf5yawvRw1UwZRtMh094HdsVQl2M4terwcit
+         k+BOPnmUFUb4lJOm6XyrUxaE28aSf0mm7RbFYdYeIcrGwobOfXtQ5ZoXy1E/o6gZNiF3
+         3I+ZOwdNONnbd+gu2C+ZpKVvps0Z82lMqnXI1YgXJQ3szml1+aSHVOJxGhOULOZ5KPx2
+         4YU6luLIevd1aknVA2aDZggrx/82llWFz5DvE7hfr8AAPaSJiQ6sbMYDwXbs6RQhd6po
+         bR1A==
+X-Forwarded-Encrypted: i=1; AJvYcCVkqtni2sNAJ00vhrDXiqhI5PYNBMWfUlE0WoUfv5VlTj7RyVROjsFRBdmf+PO4z8D2ZOADmkWhI6ZIHObQ@vger.kernel.org
+X-Gm-Message-State: AOJu0YxgWqVDZwmpEdde590NgXZKqAEY5jjop70bJbwxsZUoFkzQX51R
+	5pphtXHlpxpqGZvAsDfbF6eIdIQCEbSuHBBK7hiFtNVH7RD8alXByRBFVypjAyQKJ3NzncLrylp
+	+baV8BqZUE/19fia4aCApNXKGHoEmF45fh3hqa8WvBjlXigGnCOtbqeicDRLzGGBo
+X-Gm-Gg: ASbGncvkiU26IYLTt3u8lqzyidFhKytGwWQEgzmfTP3SJ6jkCOFE2v+bUSEQTDfVVgE
+	OBDCz+4uACLAMblbqLm0OLPbZNuI/aVwwhPDKFlc1GIguRxofQAFPC1Ik9HEf5e03Zz0Tfcayc2
+	gJC5mHTCkshHoVRGZuI5/82H+3hqCzIyH1tMXjn808TSsqC5EqHcftwmNgFT/2okCz0bdabiQhr
+	slWBvvrfHXjztU5EEWaC5qypHoQ6KK8Iw7uW53oyIo+UVDbub/xsnQWiXPwHLoKeZLxZF/HyDrg
+	N8ckVcxSgBcieluglrsaaGJr37VGO66tbwjwzg==
+X-Received: by 2002:a05:622a:110a:b0:466:92d8:737f with SMTP id d75a77b69052e-467a15ce4camr6862961cf.8.1734021366622;
+        Thu, 12 Dec 2024 08:36:06 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEVd/vSE0n8cUZsCd5G+SQzCt7rdg82WYVr5UWrw6lLsq9BZLsKpztwlR6KttQvjAc1CxsH3Q==
+X-Received: by 2002:a05:622a:110a:b0:466:92d8:737f with SMTP id d75a77b69052e-467a15ce4camr6862751cf.8.1734021366287;
+        Thu, 12 Dec 2024 08:36:06 -0800 (PST)
+Received: from [192.168.212.120] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-aa68bae18cfsm577641266b.115.2024.12.12.08.36.03
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 12 Dec 2024 08:36:05 -0800 (PST)
+Message-ID: <d48f3064-be74-468e-8b7f-203eed33d238@oss.qualcomm.com>
+Date: Thu, 12 Dec 2024 17:36:03 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20241212-topic-llcc_x1e_wrcache-v2-1-e44d3058d06c@oss.qualcomm.com>
-X-B4-Tracking: v=1; b=H4sIABcQW2cC/4WNUQqDMBBEryL73UiyBqX96j2KSFjXuqCmTay1i
- Hdv6gX6M/AG5s0GkYNwhEu2QeBFovgpAZ4yoN5Nd1bSJgbUaA3qSs3+IaSGgahZDTfvQI56VqW
- tdKUZW1NoSONH4E7WQ3yrE/cSZx8+x89ifu1f5WKUUVggl67r7Jnt1ceYP19uID+OeQqo933/A
- s9lF9LDAAAA
-X-Change-ID: 20241207-topic-llcc_x1e_wrcache-647070e2d130
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, 
- Sibi Sankar <quic_sibis@quicinc.com>, 
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>, 
- Rajendra Nayak <quic_rjendra@quicinc.com>
-Cc: Marijn Suijten <marijn.suijten@somainline.org>, 
- linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
- Johan Hovold <johan@kernel.org>, 
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, stable@vger.kernel.org
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1734021148; l=1510;
- i=konrad.dybcio@oss.qualcomm.com; s=20230215; h=from:subject:message-id;
- bh=PPtrvo1XgcJOV3eG8wmUzEJEepR+DXELhYukjcb+8n8=;
- b=QGEDpHbQr2p5cgyEbnyDfAPVMdK0TpQl+oVWDa8q67GG6m6FtaLaCLD9B0nmVohBsi34L7wRY
- pwnTEUu6XoFDnxnrZYujOeL4Ot0azI+UAxgCSSqO4y1cAggXA3a+PXP
-X-Developer-Key: i=konrad.dybcio@oss.qualcomm.com; a=ed25519;
- pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
-
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 01/14] ASoC: dt-bindings: qcom: Add SM6115 LPASS
+ rxmacro and vamacro codecs
+To: Alexey Klimov <alexey.klimov@linaro.org>, broonie@kernel.org,
+        konradybcio@kernel.org, konrad.dybcio@oss.qualcomm.com,
+        andersson@kernel.org, srinivas.kandagatla@linaro.org
+Cc: tiwai@suse.com, lgirdwood@gmail.com, perex@perex.cz, robh@kernel.org,
+        krzk+dt@kernel.org, conor+dt@kernel.org, dmitry.baryshkov@linaro.org,
+        linux-sound@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20241212004727.2903846-1-alexey.klimov@linaro.org>
+ <20241212004727.2903846-2-alexey.klimov@linaro.org>
+Content-Language: en-US
 From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <20241212004727.2903846-2-alexey.klimov@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-ORIG-GUID: gk2_Csv6dXbkez7DhM29V2ndsuH1xzzQ
+X-Proofpoint-GUID: gk2_Csv6dXbkez7DhM29V2ndsuH1xzzQ
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
+ impostorscore=0 clxscore=1015 phishscore=0 spamscore=0 priorityscore=1501
+ malwarescore=0 mlxscore=0 bulkscore=0 lowpriorityscore=0 mlxlogscore=955
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2412120119
 
-Do so in accordance with the internal recommendations.
+On 12.12.2024 1:47 AM, Alexey Klimov wrote:
+> Document compatibles for Qualcomm SM6115 SoC macro digital codecs
+> (RX and VA).
+> 
+> Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+> Signed-off-by: Alexey Klimov <alexey.klimov@linaro.org>
+> ---
 
-Fixes: b3cf69a43502 ("soc: qcom: llcc: Add configuration data for X1E80100")
-Cc: stable@vger.kernel.org
-Reviewed-by: Rajendra Nayak <quic_rjendra@quicinc.com>
-Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
----
-Changes in v2:
-- Cc stable
-- Add more context lines
-- Pick up r-b
-- Link to v1: https://lore.kernel.org/r/20241207-topic-llcc_x1e_wrcache-v1-1-232e6aff49e4@oss.qualcomm.com
----
- drivers/soc/qcom/llcc-qcom.c | 1 +
- 1 file changed, 1 insertion(+)
+[...]
 
-diff --git a/drivers/soc/qcom/llcc-qcom.c b/drivers/soc/qcom/llcc-qcom.c
-index 32c3bc887cefb87c296e3ba67a730c87fa2fa346..1560db00a01248197e5c2936e785a5ea77f74ad8 100644
---- a/drivers/soc/qcom/llcc-qcom.c
-+++ b/drivers/soc/qcom/llcc-qcom.c
-@@ -2997,20 +2997,21 @@ static const struct llcc_slice_config x1e80100_data[] = {
- 		.bonus_ways = 0xfff,
- 		.cache_mode = 0,
- 	}, {
- 		.usecase_id = LLCC_WRCACHE,
- 		.slice_id = 31,
- 		.max_cap = 1024,
- 		.priority = 1,
- 		.fixed_size = true,
- 		.bonus_ways = 0xfff,
- 		.cache_mode = 0,
-+		.activate_on_init = true,
- 	}, {
- 		.usecase_id = LLCC_CAMEXP0,
- 		.slice_id = 4,
- 		.max_cap = 256,
- 		.priority = 4,
- 		.fixed_size = true,
- 		.bonus_ways = 0x3,
- 		.cache_mode = 0,
- 	}, {
- 		.usecase_id = LLCC_CAMEXP1,
+> --- a/Documentation/devicetree/bindings/sound/qcom,lpass-va-macro.yaml
+> +++ b/Documentation/devicetree/bindings/sound/qcom,lpass-va-macro.yaml
+> @@ -14,6 +14,7 @@ properties:
+>      oneOf:
+>        - enum:
+>            - qcom,sc7280-lpass-va-macro
+> +          - qcom,sm6115-lpass-va-macro
+>            - qcom,sm8250-lpass-va-macro
+>            - qcom,sm8450-lpass-va-macro
+>            - qcom,sm8550-lpass-va-macro
+> @@ -83,6 +84,22 @@ allOf:
+>            items:
+>              - const: mclk
+>  
+> +  - if:
+> +      properties:
+> +        compatible:
+> +          contains:
+> +            const: qcom,sm8250-lpass-va-macro
 
----
-base-commit: 3e42dc9229c5950e84b1ed705f94ed75ed208228
-change-id: 20241207-topic-llcc_x1e_wrcache-647070e2d130
+We all like pasta!
 
-Best regards,
--- 
-Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-
+Konrad
 
