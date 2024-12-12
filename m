@@ -1,63 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-41662-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-41663-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 52E2E9EE03D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Dec 2024 08:29:44 +0100 (CET)
-Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4AB6B1883F83
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Dec 2024 07:29:42 +0000 (UTC)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0477320ADFD;
-	Thu, 12 Dec 2024 07:29:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="J4NN+21D"
-X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 340299EE041
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Dec 2024 08:31:03 +0100 (CET)
+Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1669F45027;
-	Thu, 12 Dec 2024 07:29:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6025C281BB5
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Dec 2024 07:30:58 +0000 (UTC)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AC83F84A35;
+	Thu, 12 Dec 2024 07:30:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aZgcWHW7"
+X-Original-To: linux-arm-msm@vger.kernel.org
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AA6A25949C;
+	Thu, 12 Dec 2024 07:30:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733988576; cv=none; b=ApWp8sAEkXGqp0BJz9SUN5vLSeamZR6m9DKmkxqLS01NnjOvFB2bHWj1Q4Ij97Jfo+u/ECwDJvaSMzg4bOemovLRT05nPlT0Po/syCOJfpqeEvboPUTRMyXoI+Ts59NPxe1zDkLkoZGcZz6wsOa0eOb/fGMAfxKc7bSWCLpo6IA=
+	t=1733988655; cv=none; b=oVZDVa+Ofbv4cJOcxI7hQmwpuq3qF8M0OSFqfgHhaw55VXZyqW5SBX9ho/HRuM+QoCCGMwASO0aih/MF+L8vBNvqaMQytJXYyxce941tySbeFI4VBb1xgYX6VKSBNX8fWp6ikk5LMW/05wO8Nj2C3OkEhE+mt9FfqRwU4Mnxios=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733988576; c=relaxed/simple;
-	bh=5dLiOhUKaCVKsArGKXDPWzoqvg9T37jPkUsIDJWiRg8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=qD7GejuokevEGHjZT1KnjZ8tl/LwCzi5IQH3LPdDY+dbfH+gJuHYkko3QsHRWkynqEs0aaGGBvqfTQ4PRhdUQxav/c+uhGjYim9fExK2phut+1nWEzEkJ1Ebl4s84Ye5w7Bv5lCepF6Td0WFyynqNhE+RpbicoJ3K4kKqkzCRAA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=J4NN+21D; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BC2s8jn001463;
-	Thu, 12 Dec 2024 07:29:26 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	OybyDqhRyS7zewunA4/2FtQ2IjJn/DxV8X7ZYsb+0kA=; b=J4NN+21DBOJ/yViK
-	lCihi9bLjtZXqaPknnlYkZODfkKmxT5YOpkAYxcrISvpmIPTBHZRBRj3rM/8IGZN
-	KQ3wlMbmecoNM0E4eGOxafUY5BsnQMb0C+LEl9JuUF3j9hpqzqt62RM+FYACp/7A
-	rWT5bHdY4zXOHVlu0LoCEyfber9WEqLhqPz576QjqOg8lTUx31CamM5EIi1VDKmR
-	zBoje+ubA2ckM1+0uZ0jpWP+uopRZKzMBdma/sfRi6cOxUJ5d4O1Z5JJePEiXZ7O
-	fDk2xIcKMpkenTNTU2rWCiBbhcbUUdaJfSmI6KQnI9YyVmiy25qjqoF/W/+7Vqi7
-	lPMKSg==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43fqes0js7-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 12 Dec 2024 07:29:26 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4BC7TPrt001979
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 12 Dec 2024 07:29:25 GMT
-Received: from [10.253.8.225] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 11 Dec
- 2024 23:29:19 -0800
-Message-ID: <16d109d8-d1be-4ecb-ba25-8e21e9d48dad@quicinc.com>
-Date: Thu, 12 Dec 2024 15:29:16 +0800
+	s=arc-20240116; t=1733988655; c=relaxed/simple;
+	bh=02WbMay/6n5pohBRn8sk6qrHHfJNfrDwwyguwwmAKAw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=TC59AqXJ/vGK501Mb1qTrkmTq01rf6mmnpqLy0lxtgOpYqvV/QBKhIl4IQ7hiW9azfXZta3/aMOUGdEOMaQJGNTQ1yrT6TbBineC343Ekcq872SJBcJtiPQjEeZLWOiCAHStBniE36TMRcDNRuO0EWLuP8o+B0zPBdmmmtE3TkE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aZgcWHW7; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF9C5C4CECE;
+	Thu, 12 Dec 2024 07:30:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1733988655;
+	bh=02WbMay/6n5pohBRn8sk6qrHHfJNfrDwwyguwwmAKAw=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=aZgcWHW7Lkvf1rxORFRhk+WEP1WFSaMGKTWXUJH3hcjNCgtDC6/TKVsdy1li+T0l7
+	 GF0PHqs8U+07bPDWM1z0HhOLuAiiyokHVnsMjsdqpxly2MoxM5h5Usugk2TbNTncex
+	 Lwkmdbxc93zARixUd7vMeFRlM6uiH3hmD9zRwCursOGO4OU3RKUQ3z+bo1y2ku4QaD
+	 kYT0df8yZlhG5qqZ5oI1KWlQMgbMprxx2qi43SAuqCpiiylafLpcwhBJ3z/rxe+afC
+	 t//FPlai/oEEoy7+GixsITRgn6k+DgJmRl2iVYpIDIHh7iHu3AGrEvg22k9sXtMGgM
+	 sv9zQRltecDbQ==
+Message-ID: <6030c66b-b6fe-4a9f-a766-cbea8b3ad2d0@kernel.org>
+Date: Thu, 12 Dec 2024 08:30:46 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -67,16 +52,13 @@ MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH 1/3] dt-bindings: phy: qcom,qmp-pcie: add optional current
  load properties
-To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        "Krzysztof
- Kozlowski" <krzk@kernel.org>
-CC: <vkoul@kernel.org>, <kishon@kernel.org>, <dmitry.baryshkov@linaro.org>,
-        <abel.vesa@linaro.org>, <neil.armstrong@linaro.org>,
-        <andersson@kernel.org>, <konradybcio@kernel.org>, <robh@kernel.org>,
-        <krzk+dt@kernel.org>, <conor+dt@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-phy@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <quic_qianyu@quicinc.com>
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc: Ziyue Zhang <quic_ziyuzhan@quicinc.com>, vkoul@kernel.org,
+ kishon@kernel.org, dmitry.baryshkov@linaro.org, abel.vesa@linaro.org,
+ neil.armstrong@linaro.org, andersson@kernel.org, konradybcio@kernel.org,
+ robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
+ linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+ linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
 References: <20241204105249.3544114-1-quic_ziyuzhan@quicinc.com>
  <20241204105249.3544114-2-quic_ziyuzhan@quicinc.com>
  <qvjtwilukxbeaxnbyzfkdsfkktm6p4yv3sgx3rbugpb6qkcbjy@rohvixslizhh>
@@ -85,27 +67,56 @@ References: <20241204105249.3544114-1-quic_ziyuzhan@quicinc.com>
  <20241211082404.p7fbmhooikmipxvm@thinkpad>
  <3c7ddb08-38db-44b3-a7a7-ec7b270a408f@kernel.org>
  <20241211115034.4hrpmninbx5uryev@thinkpad>
-From: Ziyue Zhang <quic_ziyuzhan@quicinc.com>
+Content-Language: en-US
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 fv0=
 In-Reply-To: <20241211115034.4hrpmninbx5uryev@thinkpad>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: WpBSgAiqzoP_c1xrOTCrxXhE9a0ibP_a
-X-Proofpoint-ORIG-GUID: WpBSgAiqzoP_c1xrOTCrxXhE9a0ibP_a
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 adultscore=0
- lowpriorityscore=0 impostorscore=0 clxscore=1011 malwarescore=0
- mlxlogscore=999 priorityscore=1501 bulkscore=0 phishscore=0 mlxscore=0
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2412120050
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-
-在 12/11/2024 7:50 PM, Manivannan Sadhasivam 写道:
+On 11/12/2024 12:50, Manivannan Sadhasivam wrote:
 > On Wed, Dec 11, 2024 at 10:52:11AM +0100, Krzysztof Kozlowski wrote:
 >> On 11/12/2024 09:24, Manivannan Sadhasivam wrote:
 >>> On Wed, Dec 11, 2024 at 09:09:18AM +0100, Krzysztof Kozlowski wrote:
@@ -124,82 +135,114 @@ X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamsco
 >>>>>>> This three properties are optional and not mandatory for those platforms
 >>>>>>> that PCIe PHY can still work with power supply.
 >>>>>>
+>>>>>>
 >>>>>> Uh uh, so the downstream comes finally!
 >>>>>>
 >>>>>> No sorry guys, use existing regulator bindings for this.
 >>>>>>
+>>>>>
 >>>>> Maybe they got inspired by upstream UFS bindings?
 >>>>> Documentation/devicetree/bindings/ufs/ufs-common.yaml:
 >>>>>
 >>>>> vcc-max-microamp
 >>>>> vccq-max-microamp
 >>>>> vccq2-max-microamp
+>>>>
 >>>> And it is already an ABI, so we cannot do anything about it.
 >>>>
+>>>>>
 >>>>> Regulator binding only describes the min/max load for the regulators and not
+>>>>
 >>>> No, it exactly describes min/max consumers can use. Let's quote:
 >>>> "largest current consumers may set"
 >>>> It is all about consumers.
 >>>>
 >>>>> consumers. What if the consumers need to set variable load per platform? Should
+>>>>
 >>>> Then each platform uses regulator API or regulator bindings to set it? I
 >>>> don't see the problem here.
 >>>>
 >>>>> they hardcode the load in driver? (even so, the load should not vary for each
 >>>>> board).
+>>>>
 >>>> The load must vary per board, because regulators vary per board. Of
 >>>> course in practice most designs could be the same, but regulators and
 >>>> their limits are always properties of the board, not the SoC.
 >>>>
+>>>
 >>> How the consumer drivers are supposed to know the optimum load?
 >>>
 >>> I don't see how the consumer drivers can set the load without hardcoding the
 >>> values. And I could see from UFS properties that each board has different
 >>> values.
 >>
+>>
 >> Drivers do not need to know, it's not the driver's responsibility. If
+> 
 > What? I think there is a misunderstanding here. The intention of these proposed
 > properties is to allow the PHY driver to set the required load of the regulator
 > using regulator_set_load() API. As per the API description:
->
+
+This makes sense. I referred to property description to learn what it is
+really doing. I found nothing, because it is empty, so that's how we
+waste time...
+
+> 
 > 'Consumer devices notify their supply regulator of the maximum power they will
 > require (can be taken from device datasheet in the power consumption tables)
 > when they change operational status and hence power state'.
->
+> 
 > IIUC, your concern is that the devicetree shouldn't specify the load for each
+
+My concern is that Qualcomm put here regulator constraints and call them
+device load. And empty property name does not help me to think other way.
+
+How can I verify the number that it was taken from UFS device manual,
+not from PMIC?
+
 > consumer but just the min/max load of the regulator. And the consumer driver
 > should figure out the load and set it accordingly.
->
+
+With your above explanation I think the actual consumer load, if it is
+depending on the board, have place in DT. But:
+
+> 
 > Correct me if I'm wrong.
->
+> 
 > In that case, I was wondering if the load set by the driver is going to vary
 > between platforms (boards) or not (question to Ziyue Zhang). If it varies
 > between SoC, then we can hardcode the load in driver based on compatible.
 
-Hi Mani, Krzystof
+Yeah, maybe each  it is implied by compatible and not board dependent.
+Then just like everything implied by compatibles: should not be placed
+in DT.
 
-Now we set  the current to 165mA which is the max power supply the regulator
-can provide, so this is platform(boards) related. But we think PCIe PHY needs
-to set the current value we need, which is soc related.
+We already follow this approach for several other Qualcomm drivers, e.g.
+display.
 
-BRs
-Ziyue
-
+> 
 >> If
 >> these are constraints per board, then regulator properties apply and
 >> there is no difference between this "vdd-max-microamp = 10" and
 >> "regulator-max-microamp".
 >>
+> 
 > There is a difference. Regulator properties are just threshold. So unless the
 > consumer sets the load, they won't take effect. I think you got confused by the
 > 'max' wording in the proposed properties?
->
+
+Yes and confused by its description in the binding.
+
+> 
 >> If this varies runtime, then your property is already not suitable and
 >> very limited and you should use OPP table.
 >>
+> 
 > The consumer driver may request different loads based on their operational
 > state.
->
-> - Mani
->
+
+Then anyway maybe this should be OPP table (assuming it is board specific).
+
+Best regards,
+Krzysztof
 
