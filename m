@@ -1,76 +1,76 @@
-Return-Path: <linux-arm-msm+bounces-41625-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-41626-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 97A149EDCCC
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Dec 2024 01:50:25 +0100 (CET)
-Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id F13009EDCD0
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Dec 2024 01:50:44 +0100 (CET)
+Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 046881884374
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Dec 2024 00:50:25 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D3431283779
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Dec 2024 00:50:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9797F18801A;
-	Thu, 12 Dec 2024 00:47:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D583C18A6A1;
+	Thu, 12 Dec 2024 00:48:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="s4t6s1Nk"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Cf0yDtv6"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com [209.85.221.44])
+Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B7C0185923
-	for <linux-arm-msm@vger.kernel.org>; Thu, 12 Dec 2024 00:47:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C02118871D
+	for <linux-arm-msm@vger.kernel.org>; Thu, 12 Dec 2024 00:47:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733964479; cv=none; b=B9d1xpHH811LrO3OhmU8erQ4MHJ5YKkZNMwkVJxasYTtrTNnF0CG2NtrVbA69xzHQjTY2501F4KOSkb26FZNmjlbhOpPmvAsIYiN/Wlxe8jeI2KS+36gsNmFpMIJj6EUuE8kmxKc3bKO4MxdW5uT2MH6ODl8U12dIllHNfoGGa8=
+	t=1733964481; cv=none; b=jFj9HSzmj8ySutEsnxc0wad3ZLNOkuG9m/3bM0E35HLmcMAAYSWKaS4o7Ud/JgCYDY1okD/5rzAgYhgyQgTdQwtYiIoWezHm05+BPtkxbNOHpz6wyN3vDcFmM2NoUaq/1GDefE7Yb7VLwkggrPdP3inloO3tRwc3oFS4N1OwzSc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733964479; c=relaxed/simple;
-	bh=+qZJpWbsefzjYMujqUXhoz/g918GZzo/W+6ECps7Yyc=;
+	s=arc-20240116; t=1733964481; c=relaxed/simple;
+	bh=QzuIeMsbqn06WI5qhPV1wr/oyc12cKZ+XBOtXN5CYbk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b8BTPiMYK5wL56bB7gzR4TSs8N7DjieT8E3+NyFMyZmzdUyqOm0k/iLa5t69tzmwSbrRZY3/kaUhjcbYA3SHs5EqOn6sqMgLz0eKZdXN5c3C1WOBLt7GEIEOZWs64v0P9jZ6fmAr0UeLl9A3wAJ2Ff5PXh4Rl5kF7QPLrKb49y8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=s4t6s1Nk; arc=none smtp.client-ip=209.85.221.44
+	 MIME-Version; b=Oa7QQJ391tG/EDle3CLozGGEuygblzK/WSxzpmr814cdUNzgj21SnQj5/Le0QpNu/IZLzEt3M5k+rJr4lCPkJFN9Z26NBqUvt8DFG+Iy/jDp3oe9ygKcl3kX7IhrBUpLdYR1UCP2BNKXW4JksgoFSg6dQUxUhxA2ZtfhgtT3gHo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Cf0yDtv6; arc=none smtp.client-ip=209.85.221.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f44.google.com with SMTP id ffacd0b85a97d-385d7b4da2bso18102f8f.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Dec 2024 16:47:57 -0800 (PST)
+Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-385df53e559so15308f8f.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Dec 2024 16:47:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1733964476; x=1734569276; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1733964478; x=1734569278; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=We4dCFru12PZhRdi+XGfgBYzTvC/KMY3TA37oXXagX8=;
-        b=s4t6s1NkRb5oOeGlLmEFg0U7uGnIwNzK22C0lRJ50OwP/THpZ/ns/nGlJK5wqgU8y2
-         UaUVC+JDDPIM3PB0+7+/9mNoRk1Z64q1rrlKjGgu62g9DJh2pEAouqgmfLKwyMS+p4hA
-         qGeid48QTbZHdokN7L0yVlQFoQDnAZRf3y5J8nwFu4wsy4nWxQuaeye2TYfIhlKd6sZX
-         vGVbDi7vpt5bV05ad8snqZXR0wFhDp25ZdDt5FuUbpoIljsUw87oVwxaeWuL+Gv03ZMj
-         NUdwxCYEH6guHNHc7Ls+r9Y5Cpf3mXD+wDu1nTnwcvcW9vePFvMpMM+bw9EL9gkdVR0l
-         S4bA==
+        bh=8YUv9wXf1xeMulszUqTOEITp7UUlDCUgSWoOEuWnA1U=;
+        b=Cf0yDtv61ODSF0SdIoYHtgfcMmCSDWWtc/iE3ul6sPR6qU4XVCOI3tDDXgvhgF6SQG
+         n10ix4qfFx+qAvU4XHjm3zpvwLR9N/FqS1MsByQMCwwz4N1aKH6C81c66QDnQv9FKze/
+         cjfo+YgZsKg3mzhObTqbx8tYbOwDFY/2kRS7mvQQvA+RpeEyHujBB8AOuM88t661GzAu
+         JiUZwBW31X2g0Zfv7rZHUxRGz3QDWTPI51FZbn1uOM62LY+zWaFOKfRrr8wwtcLcTTIj
+         jS6plzepqGM15KRz3j9Vl4F4oyslsOCBZji7jeqx2SGjL0pF1qGg39EDnkTzHXwlYqY2
+         kPHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733964476; x=1734569276;
+        d=1e100.net; s=20230601; t=1733964478; x=1734569278;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=We4dCFru12PZhRdi+XGfgBYzTvC/KMY3TA37oXXagX8=;
-        b=u4CBvPYTtAUkU4QAgXGE2fVcoR6H0hwjeQmGVXs+dkBPOMaKK2ZEjxDzErifIQCv8u
-         49dwdR75dZrBDl6YAILGhCntbinukKZw6/FuVRym275xTBtfRqB8qqdnZ2UbqeWwYoHw
-         /nwuFZ7OSpSZYlDP83kSoHvEplkK2gLAe8nFPJXvI7b1O9C0slx/+IiLvMJEmncw4WFg
-         YH45uNdhT5elCEzEceRzi4jiTjj2Kuj+sM1udKbSAHhrv5wb1Bcmv/rV4ROd0a5IPgAI
-         mBbscIp6nw/OJ8KxAKJG3UnrdKKWb8FUMthRehCUyEz0XfudrI/VHExk9vm8qiZ/icrG
-         Gb0Q==
-X-Forwarded-Encrypted: i=1; AJvYcCULE7GRCPSt0pAyFgOkJKg16yY21kxV1aYclfgQtErQ7jR+d72f8NmB3HXXxQmX4cC6MFuZT5bkHonUImOs@vger.kernel.org
-X-Gm-Message-State: AOJu0YwmYxY0rQDGonflhOncVyn/5cieN1TGGoz8o+o/AHlNvaq+k2A/
-	DPRyYRUYt2gzrRCBq7LzMk6wkgldss6IqoQDLVY1SFTXKn3JSpvpI02mxEEKNeE=
-X-Gm-Gg: ASbGncsvacgXGMYIOo9aDreWtFI84aIk6qB52CHv3tIrMjupY6xOQHFZmu0Jtri1EaN
-	HAx9Y/fNscwGVaika9P7vnrM6Ol35GAREuZ/kxQH4WIH+3Wgi7rvmjDbk88Yf7WiXuhqFbRg53L
-	VisKQIvXe4ZXC+9JR2XjLRriCl+wHSqYxtBtlg2Cj+vTib6ZphszWRBTXtppoBFUm7Ejov+lWbU
-	km7Qi6fznt40O8CpoVgwN6Uuw6ifoH9mn62nj76FHm27EZcTOjqF4JeXCMqnmmdZtL28n9N
-X-Google-Smtp-Source: AGHT+IF8s8iPYKfTOUiE9XO1Gdow8KyJ8funy7efvpCgoqXHZtBpV46L9p6MtcxIFwCoVR2JiBVvug==
-X-Received: by 2002:a5d:5886:0:b0:385:ef2f:9278 with SMTP id ffacd0b85a97d-3864ce86941mr4710014f8f.2.1733964475832;
-        Wed, 11 Dec 2024 16:47:55 -0800 (PST)
+        bh=8YUv9wXf1xeMulszUqTOEITp7UUlDCUgSWoOEuWnA1U=;
+        b=Yot+jHgBWmTQhF/fSSeDWRh09T3VPHdTXm2NB0HY6CPFSIScjAQUHIlsX+YueeRzT5
+         2SxHLWvkcPY5GImCdYpsg/+bSuKtuFq69ymzVBT3xQQroJ77wHsbSJE/QkowODyVpv5U
+         SvDXNGGv14j4nEE4AnSm0oyzdZWUcCXZ2DFhUuCrcKDJM/df++atiVvjIzPiTU7/o1d2
+         uukO7Xw3COTpNEF+i0pO+lnef3NQNC4SSVlMSicVxmL6pQ5pcxAxZfz2hwwpcawF0h56
+         l9LZrROUUdcl6Qr/iwjpYPAYW30agIftaRNu8WosOAKN23i7jttJbd/INowbw07WIMHP
+         bqyQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXn8BXPcnzwySeXPxmMZyp90bMPjMZmBlK3HczTBbk7eBwssudODyeWd2bLuz55ckyA5/UZlH4WZlAEFu7M@vger.kernel.org
+X-Gm-Message-State: AOJu0YwZlc3Qy+eNua7fnaPxAYMcMmALQpX3Hujub6b0IcWmg5spP1m5
+	fXyJtz6O+x6JxgctM1EzSD2Dj3+Ps/vujq8x+ZCu+6YdnCjkW5UFsPK6lEDbms4=
+X-Gm-Gg: ASbGncuEw/VwJfn/mRVLqOQOtKg9cDtDtB3KPvovsiPefbm4KHHAPbBDQvOtEv8Vedu
+	NF7oO2zlk3SyQ7lT2dCEu5bJJ1dJVxVBGSlN0AlUdnCSMiAhy78EtUnfKvXk12Aj9NiJLuWMVWi
+	W4UTbthpscexRg1nz3Gj0mzihNPH51t3Qoyoqg14Zw0jkgf7pimGmyHyllMYPzZluTQPBbbCfKj
+	H5Klo+zJVXFaC4LJW0bTzsEl/c1sqgeXiq/wBq36aLOWwhiYwGL68AexbNo1fsDURHqNq+E
+X-Google-Smtp-Source: AGHT+IGJvDlNsdYx4DutxMjQy1pOyYpJ0oJ3EbMe3FkPnkQ/U4TLzzGqGgOOv0KPDA2qNTcXJbpfuQ==
+X-Received: by 2002:a5d:6f1e:0:b0:385:ea11:dd92 with SMTP id ffacd0b85a97d-3878768e6a0mr1224692f8f.15.1733964477946;
+        Wed, 11 Dec 2024 16:47:57 -0800 (PST)
 Received: from localhost.localdomain ([2.222.231.247])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-387824a4ef4sm2459660f8f.39.2024.12.11.16.47.54
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-387824a4ef4sm2459660f8f.39.2024.12.11.16.47.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 11 Dec 2024 16:47:55 -0800 (PST)
+        Wed, 11 Dec 2024 16:47:56 -0800 (PST)
 From: Alexey Klimov <alexey.klimov@linaro.org>
 To: broonie@kernel.org,
 	konradybcio@kernel.org,
@@ -88,9 +88,9 @@ Cc: tiwai@suse.com,
 	linux-arm-msm@vger.kernel.org,
 	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH v2 13/14] arm64: dts: qcom: qrb4210-rb2: add VA capture support
-Date: Thu, 12 Dec 2024 00:47:26 +0000
-Message-ID: <20241212004727.2903846-14-alexey.klimov@linaro.org>
+Subject: [PATCH v2 14/14] ASoC: qcom: sm8250: force single channel via RX_1 output for qrb4210
+Date: Thu, 12 Dec 2024 00:47:27 +0000
+Message-ID: <20241212004727.2903846-15-alexey.klimov@linaro.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20241212004727.2903846-1-alexey.klimov@linaro.org>
 References: <20241212004727.2903846-1-alexey.klimov@linaro.org>
@@ -102,89 +102,88 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Add support for audio capture using onboard DMIC. It is directly
-connected to vamacro and txmacro without any soundwire interfaces.
-
-The capture was verified using the following commands:
-
-amixer -c0 cset iface=MIXER,name='MultiMedia3 Mixer VA_CODEC_DMA_TX_0' 1
-amixer -c0 cset iface=MIXER,name='VA_AIF1_CAP Mixer DEC0' 1
-amixer -c0 cset iface=MIXER,name='VA_DEC0 Volume' 110
-amixer -c0 cset iface=MIXER,name='VA DMIC MUX0' 2
-
-arecord -D hw:0,2 -f S16_LE -c 2 -r 48000 -d 5 record.wav
+In case of mono configurations we need to enforce single channel
+output. This is required for audio playback on QRB4210 RB2 board
+since it has only one WSA8815 amplifier.
+Implement data variant for qrb4210-rb2-sndcard with
+sm8250_qrb4210_fixup_params() that does that.
 
 Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
 Signed-off-by: Alexey Klimov <alexey.klimov@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/qrb4210-rb2.dts | 33 +++++++++++++++++++++++-
- 1 file changed, 32 insertions(+), 1 deletion(-)
+ sound/soc/qcom/sm8250.c | 28 +++++++++++++++++++++++++---
+ 1 file changed, 25 insertions(+), 3 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts b/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
-index 34ba563d0d07..0b096bae74cb 100644
---- a/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
-+++ b/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
-@@ -114,7 +114,8 @@ sound {
- 		audio-routing = "IN3_AUX", "AUX_OUT",
- 				"SpkrMono WSA_IN", "AUX",
- 				"MM_DL1", "MultiMedia1 Playback",
--				"MM_DL2", "MultiMedia2 Playback";
-+				"MM_DL2", "MultiMedia2 Playback",
-+				"MultiMedia3 Capture", "MM_UL3";
- 
- 		mm1-dai-link {
- 			link-name = "MultiMedia1";
-@@ -132,6 +133,14 @@ cpu {
- 			};
- 		};
- 
-+		mm3-dai-link {
-+			link-name = "MultiMedia3";
-+
-+			cpu {
-+				sound-dai = <&q6asmdai MSM_FRONTEND_DAI_MULTIMEDIA3>;
-+			};
-+		};
-+
- 		hdmi-i2s-dai-link {
- 			link-name = "HDMI/I2S Playback";
- 
-@@ -163,6 +172,22 @@ codec {
- 				sound-dai = <&wsa881x>, <&wcd937x 0>, <&swr1 3>, <&rxmacro 1>;
- 			};
- 		};
-+
-+		va-dai-link {
-+			link-name = "VA Capture";
-+
-+			cpu {
-+				sound-dai = <&q6afedai VA_CODEC_DMA_TX_0>;
-+			};
-+
-+			platform {
-+				sound-dai = <&q6routing>;
-+			};
-+
-+			codec {
-+				sound-dai = <&vamacro 0>;
-+			};
-+		};
- 	};
- 
- 	wcd937x: codec {
-@@ -827,6 +852,12 @@ &usb_qmpphy_out {
- 	remote-endpoint = <&pmi632_ss_in>;
+diff --git a/sound/soc/qcom/sm8250.c b/sound/soc/qcom/sm8250.c
+index 45e0c33fc3f3..b54acaee8dd1 100644
+--- a/sound/soc/qcom/sm8250.c
++++ b/sound/soc/qcom/sm8250.c
+@@ -23,8 +23,23 @@ struct sm8250_snd_data {
+ 	struct sdw_stream_runtime *sruntime[AFE_PORT_MAX];
+ 	struct snd_soc_jack jack;
+ 	bool jack_setup;
++	void (*sndcard_fixup_params)(struct snd_interval *channels,
++				     struct snd_soc_dai *cpu_dai);
  };
  
-+&vamacro {
-+	pinctrl-0 = <&lpass_dmic01_active>;
-+	pinctrl-names = "default";
-+	qcom,dmic-sample-rate = <2400000>;
-+};
++static void sm8250_qrb4210_fixup_params(struct snd_interval *channels,
++					struct snd_soc_dai *cpu_dai)
++{
++	/* QRB410 RB2 board has only one WSA8815 amplifier */
++	switch (cpu_dai->id) {
++	case RX_CODEC_DMA_RX_1:
++		channels->min = channels->max = 1;
++		break;
++	default:
++		break;
++	}
++}
 +
- &wifi {
- 	vdd-0.8-cx-mx-supply = <&vreg_l8a_0p664>;
- 	vdd-1.8-xo-supply = <&vreg_l16a_1p3>;
+ static int sm8250_snd_init(struct snd_soc_pcm_runtime *rtd)
+ {
+ 	struct sm8250_snd_data *data = snd_soc_card_get_drvdata(rtd->card);
+@@ -35,14 +50,19 @@ static int sm8250_snd_init(struct snd_soc_pcm_runtime *rtd)
+ static int sm8250_be_hw_params_fixup(struct snd_soc_pcm_runtime *rtd,
+ 				     struct snd_pcm_hw_params *params)
+ {
++	struct sm8250_snd_data *data = snd_soc_card_get_drvdata(rtd->card);
+ 	struct snd_interval *rate = hw_param_interval(params,
+ 					SNDRV_PCM_HW_PARAM_RATE);
+ 	struct snd_interval *channels = hw_param_interval(params,
+ 					SNDRV_PCM_HW_PARAM_CHANNELS);
++	struct snd_soc_dai *cpu_dai = snd_soc_rtd_to_cpu(rtd, 0);
+ 
+ 	rate->min = rate->max = 48000;
+ 	channels->min = channels->max = 2;
+ 
++	if (data->sndcard_fixup_params)
++		data->sndcard_fixup_params(channels, cpu_dai);
++
+ 	return 0;
+ }
+ 
+@@ -168,6 +188,7 @@ static int sm8250_platform_probe(struct platform_device *pdev)
+ 	if (!data)
+ 		return -ENOMEM;
+ 
++	data->sndcard_fixup_params = device_get_match_data(&pdev->dev);
+ 	card->dev = dev;
+ 	dev_set_drvdata(dev, card);
+ 	snd_soc_card_set_drvdata(card, data);
+@@ -181,9 +202,10 @@ static int sm8250_platform_probe(struct platform_device *pdev)
+ }
+ 
+ static const struct of_device_id snd_sm8250_dt_match[] = {
+-	{.compatible = "qcom,sm8250-sndcard"},
+-	{.compatible = "qcom,qrb4210-rb2-sndcard"},
+-	{.compatible = "qcom,qrb5165-rb5-sndcard"},
++	{.compatible = "qcom,sm8250-sndcard", .data = NULL },
++	{.compatible = "qcom,qrb4210-rb2-sndcard",
++	 .data = sm8250_qrb4210_fixup_params },
++	{.compatible = "qcom,qrb5165-rb5-sndcard", .data = NULL },
+ 	{}
+ };
+ 
 -- 
 2.45.2
 
