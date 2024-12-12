@@ -1,109 +1,103 @@
-Return-Path: <linux-arm-msm+bounces-41814-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-41815-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B59789EF8E9
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Dec 2024 18:46:42 +0100 (CET)
-Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id B40FC9EFA15
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Dec 2024 18:57:07 +0100 (CET)
+Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7645528B77F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Dec 2024 17:46:41 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 658941899C8E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Dec 2024 17:52:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CD80722687A;
-	Thu, 12 Dec 2024 17:44:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BA601215798;
+	Thu, 12 Dec 2024 17:51:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nulGjpnD"
+	dkim=pass (2048-bit key) header.d=acm.org header.i=@acm.org header.b="DRcEbENb"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from 009.lax.mailroute.net (009.lax.mailroute.net [199.89.1.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98752226553;
-	Thu, 12 Dec 2024 17:44:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F05212080D9;
+	Thu, 12 Dec 2024 17:51:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=199.89.1.12
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734025449; cv=none; b=NCI6Xmrtn6APUr77YuCsu8XP7IAj1iu8w4a28ByFtdfI0LWlraVtrFpOkSiEhmRQJ8bwzNqdipsmhh+Kf+7ag+O5GrCeMwTN7vLjfffv83aDgaT0RSLCo/SkixBlupN/1Haz6TE3WwrGm95fQ3Gm2qJ+dsk2e2TioWiWbqX2kPE=
+	t=1734025918; cv=none; b=eQ32JYlflhVZ2jtRGS8h5LB3OfHxhBanEUMSoen2XuvHL4A7XfjObnsvPtrQukmjfSFj+i6yuQae2W7kyH2hnLidLZaatwQKyGTKzJ99G5k3gntzyKPZUv73LyFg4/2DGlblsXuijdhE9hPZxym5Ztpg1CbIemYUsTQXeuFWFWg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734025449; c=relaxed/simple;
-	bh=cFMOz22sOiQyouMW+74HETQ+kS9MQ985jtqNxbPZeNM=;
-	h=Date:Content-Type:MIME-Version:From:Cc:To:In-Reply-To:References:
-	 Message-Id:Subject; b=JfikDtmMSqiaPI2ijcItyu2e3PJ9rKebBzcpTS3ELtLVhNHJdjFeULvplUuzCgolDymUBfnkWh1z1mPDk+Uowd5Q2x3i4gHHzx1Zo9Yr2/05NU8P432RVQ+92XSf8h9UEQ3X8wmTV2OU9pKBzcSWkzdAoauCwpVKlGs7TxA/kYc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nulGjpnD; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FB30C4CED0;
-	Thu, 12 Dec 2024 17:44:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1734025449;
-	bh=cFMOz22sOiQyouMW+74HETQ+kS9MQ985jtqNxbPZeNM=;
-	h=Date:From:Cc:To:In-Reply-To:References:Subject:From;
-	b=nulGjpnDUff/djHrFoAol9oxQzm1LdBsrf6iD/cz4tYWMex8KaiJaaXiyrNrJwILM
-	 fHkZBOri0g4XxumvHqw0BiH+6ww8sNWA0TsS3WGjukujlbzgXOpljU/GrDjxBugLK/
-	 njdhGmI50lwXHKbssAX2B/988r+dlQyAGyCBPuDjRIVi4rOM1517lCwQm93CyBNw0B
-	 nwOD4WYgMMqZsn9835qYvTn/2sMcfgC9NgQVP9x5o5iCVU88HJlM1NdbCv9wU7IR2F
-	 CIauAx/Ug37XNGhujoCSVNmAzJHxXbTxX66OxABgiUxGIdKIGIwTCBanBB19C//I/F
-	 Pvig786WmFfrg==
-Date: Thu, 12 Dec 2024 11:44:07 -0600
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+	s=arc-20240116; t=1734025918; c=relaxed/simple;
+	bh=37De6D9LQ7LcziRlzSJ395yH/xzhUwZrp0FvITUNjDA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=pUKgLmr3abN2Lz5Wnk+S86UjiBSquBVxjASNfBiiJ0c98CMEZLZumARd5aNFr28l4/PwW6PP9tw92X5gCWxdR1XxaUCj+Val9yi1PH/IUVajPl3xaK6FpEcPFtOmhMkFhruPo4O1LmQr9K4QthshIVmvevDGgmb+hAjV95n00nY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=acm.org; spf=pass smtp.mailfrom=acm.org; dkim=pass (2048-bit key) header.d=acm.org header.i=@acm.org header.b=DRcEbENb; arc=none smtp.client-ip=199.89.1.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=acm.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=acm.org
+Received: from localhost (localhost [127.0.0.1])
+	by 009.lax.mailroute.net (Postfix) with ESMTP id 4Y8KmD1sVDzlff0N;
+	Thu, 12 Dec 2024 17:51:56 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=acm.org; h=
+	content-transfer-encoding:content-type:content-type:in-reply-to
+	:from:from:content-language:references:subject:subject
+	:user-agent:mime-version:date:date:message-id:received:received;
+	 s=mr01; t=1734025910; x=1736617911; bh=tds9zeWQEmz0GeQ0VraJwgrh
+	HE7qE6Q6NGyFq0XBSbQ=; b=DRcEbENbmFV3uTHubYjJOW1PrBdr/4BGwbQtxuXY
+	IqTlJBXgvQhJMSpWMMvg4PrjEo3kF44Nmhv2OYXYMBSEJMliPV294y0rfeNIFBKQ
+	CmEuak5SV8hSpRDz9s61SqRMDrqFW2kEj9winVTXAKlZblbKMZbc38l69UUkvbJN
+	0b2rFT7l3nsOcTVYWaijVO4OwiBGHJAGdmZlg2cF606ihWuLUjufhrxprVSSMiYY
+	LZRUQgHUQRS5AecSAmXPKZ8ddPv5BVFdxVRwALIJc5P2YauAm/RuhCtiDUIwQaIo
+	r2S/XZeP4XLbrJhrt5MvXR40gHOZ78i5j0YdCie4v9xerQ==
+X-Virus-Scanned: by MailRoute
+Received: from 009.lax.mailroute.net ([127.0.0.1])
+ by localhost (009.lax [127.0.0.1]) (mroute_mailscanner, port 10029) with LMTP
+ id 8EDkbcjNz0Ah; Thu, 12 Dec 2024 17:51:50 +0000 (UTC)
+Received: from [100.118.141.249] (unknown [104.135.204.81])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: bvanassche@acm.org)
+	by 009.lax.mailroute.net (Postfix) with ESMTPSA id 4Y8Klz1Z48zlff0D;
+	Thu, 12 Dec 2024 17:51:42 +0000 (UTC)
+Message-ID: <8511253c-d496-4c87-9625-bcaefa440c64@acm.org>
+Date: Thu, 12 Dec 2024 09:51:40 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: "Rob Herring (Arm)" <robh@kernel.org>
-Cc: linux-iio@vger.kernel.org, Imran Shaik <quic_imrashai@quicinc.com>, 
- Amit Kucheria <amitk@kernel.org>, quic_kamalw@quicinc.com, 
- Thara Gopinath <thara.gopinath@gmail.com>, linux-arm-msm@vger.kernel.org, 
- Jonathan Cameron <jic23@kernel.org>, devicetree@vger.kernel.org, 
- Konrad Dybcio <konradybcio@kernel.org>, linux-pm@vger.kernel.org, 
- Stephen Boyd <sboyd@kernel.org>, "Rafael J. Wysocki" <rafael@kernel.org>, 
- Jagadeesh Kona <quic_jkona@quicinc.com>, 
- Ajit Pandey <quic_ajipan@quicinc.com>, Taniya Das <quic_tdas@quicinc.com>, 
- quic_jprakash@quicinc.com, linux-kernel@vger.kernel.org, 
- Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
- Lars-Peter Clausen <lars@metafoo.de>, Lukasz Luba <lukasz.luba@arm.com>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Zhang Rui <rui.zhang@intel.com>, 
- Lee Jones <lee@kernel.org>, Daniel Lezcano <daniel.lezcano@linaro.org>
-To: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
-In-Reply-To: <20241212-mbg-v2-support-v2-2-3249a4339b6e@quicinc.com>
-References: <20241212-mbg-v2-support-v2-0-3249a4339b6e@quicinc.com>
- <20241212-mbg-v2-support-v2-2-3249a4339b6e@quicinc.com>
-Message-Id: <173402544564.2846212.8371517817699165963.robh@kernel.org>
-Subject: Re: [PATCH RFC v2 2/5] dt-bindings: mfd: qcom,spmi-pmic: Add MBG
- thermal monitor ref
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/3] scsi: ufs: qcom: Suspend fixes
+To: manivannan.sadhasivam@linaro.org, Alim Akhtar <alim.akhtar@samsung.com>,
+ Avri Altman <avri.altman@wdc.com>,
+ "James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>,
+ "Martin K. Petersen" <martin.petersen@oracle.com>,
+ Abel Vesa <abel.vesa@linaro.org>, Bjorn Andersson <andersson@kernel.org>,
+ Neil Armstrong <neil.armstrong@linaro.org>,
+ Konrad Dybcio <konradybcio@kernel.org>
+Cc: linux-scsi@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, Amit Pundir <amit.pundir@linaro.org>,
+ Nitin Rawat <quic_nitirawa@quicinc.com>, stable@vger.kernel.org,
+ Ram Kumar Dwivedi <quic_rdwivedi@quicinc.com>
+References: <20241211-ufs-qcom-suspend-fix-v1-0-83ebbde76b1c@linaro.org>
+Content-Language: en-US
+From: Bart Van Assche <bvanassche@acm.org>
+In-Reply-To: <20241211-ufs-qcom-suspend-fix-v1-0-83ebbde76b1c@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-
-On Thu, 12 Dec 2024 21:41:21 +0530, Satya Priya Kakitapalli wrote:
-> Add reference to the newly added MBG thermal monitor bindings.
+On 12/11/24 9:40 AM, Manivannan Sadhasivam via B4 Relay wrote:
+> This series fixes the several suspend issues on Qcom platforms. Patch 1 fixes
+> the resume failure with spm_lvl=5 suspend on most of the Qcom platforms. For
+> this patch, I couldn't figure out the exact commit that caused the issue. So I
+> used the commit that introduced reinit support as a placeholder.
 > 
-> Signed-off-by: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
-> ---
->  Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml | 4 ++++
->  1 file changed, 4 insertions(+)
-> 
+> Patch 3 fixes the suspend issue on SM8550 and SM8650 platforms where UFS
+> PHY retention is not supported. Hence the default spm_lvl=3 suspend fails. So
+> this patch configures spm_lvl=5 as the default suspend level to force UFSHC/
+> device powerdown during suspend. This supersedes the previous series [1] that
+> tried to fix the issue in clock drivers.
 
-My bot found errors running 'make dt_binding_check' on your patch:
+If Avri's comment is addressed, feel free to add my reviewed-by to this
+series.
 
-yamllint warnings/errors:
-
-dtschema/dtc warnings/errors:
-
-
-doc reference errors (make refcheckdocs):
-
-See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20241212-mbg-v2-support-v2-2-3249a4339b6e@quicinc.com
-
-The base for the series is generally the latest rc1. A different dependency
-should be noted in *this* patch.
-
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
-
-pip3 install dtschema --upgrade
-
-Please check and re-submit after running the above command yourself. Note
-that DT_SCHEMA_FILES can be set to your schema file to speed up checking
-your schema. However, it must be unset to test all examples with your schema.
-
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
 
