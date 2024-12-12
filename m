@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-41663-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-41664-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 340299EE041
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Dec 2024 08:31:03 +0100 (CET)
-Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4924A9EE044
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Dec 2024 08:32:14 +0100 (CET)
+Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6025C281BB5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Dec 2024 07:30:58 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 827241670D2
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Dec 2024 07:32:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AC83F84A35;
-	Thu, 12 Dec 2024 07:30:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AB9AF13B7AE;
+	Thu, 12 Dec 2024 07:32:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aZgcWHW7"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="C+K6a9CS"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AA6A25949C;
-	Thu, 12 Dec 2024 07:30:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B3EC25949C;
+	Thu, 12 Dec 2024 07:32:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733988655; cv=none; b=oVZDVa+Ofbv4cJOcxI7hQmwpuq3qF8M0OSFqfgHhaw55VXZyqW5SBX9ho/HRuM+QoCCGMwASO0aih/MF+L8vBNvqaMQytJXYyxce941tySbeFI4VBb1xgYX6VKSBNX8fWp6ikk5LMW/05wO8Nj2C3OkEhE+mt9FfqRwU4Mnxios=
+	t=1733988726; cv=none; b=Xgx38pvYr8Ua2VFGXgV1PJp6XrJpTHMwWcAFcYn1CBtO6Qv3dSYJkgV+Ynu7OuHUd/xJTZerEQeTBG4cHhcPa9iqDXjjDHke4JRLr9mUYtJ48/qNjPN86Dyia7Mhq3EzcBGd4SdxeJjAiR5uet4a/bQp3FKqAhMVhWrFYfDSyyM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733988655; c=relaxed/simple;
-	bh=02WbMay/6n5pohBRn8sk6qrHHfJNfrDwwyguwwmAKAw=;
+	s=arc-20240116; t=1733988726; c=relaxed/simple;
+	bh=2FGnnWS3Ex5N+GpBLva4y8IY2r8xTzbM3LdEMhOI6Rg=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=TC59AqXJ/vGK501Mb1qTrkmTq01rf6mmnpqLy0lxtgOpYqvV/QBKhIl4IQ7hiW9azfXZta3/aMOUGdEOMaQJGNTQ1yrT6TbBineC343Ekcq872SJBcJtiPQjEeZLWOiCAHStBniE36TMRcDNRuO0EWLuP8o+B0zPBdmmmtE3TkE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aZgcWHW7; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF9C5C4CECE;
-	Thu, 12 Dec 2024 07:30:49 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=iKo6aQgDgFnKJDBJT3gbOGGanRD+gNRUmfWVlrwDxLzeaI0HY+mCJMi7l0jWeE6vCxMlRzbFOO3rpDleIPocF6sv4bDB51FGycilS9sdFtmzv0SJcSa0jGudGxRJdHjSr0QJFvKnQEISKtWf5bZbK5kkagpIgeJS1VmgKbFa0R8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=C+K6a9CS; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 841B6C4CECE;
+	Thu, 12 Dec 2024 07:32:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1733988655;
-	bh=02WbMay/6n5pohBRn8sk6qrHHfJNfrDwwyguwwmAKAw=;
+	s=k20201202; t=1733988725;
+	bh=2FGnnWS3Ex5N+GpBLva4y8IY2r8xTzbM3LdEMhOI6Rg=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=aZgcWHW7Lkvf1rxORFRhk+WEP1WFSaMGKTWXUJH3hcjNCgtDC6/TKVsdy1li+T0l7
-	 GF0PHqs8U+07bPDWM1z0HhOLuAiiyokHVnsMjsdqpxly2MoxM5h5Usugk2TbNTncex
-	 Lwkmdbxc93zARixUd7vMeFRlM6uiH3hmD9zRwCursOGO4OU3RKUQ3z+bo1y2ku4QaD
-	 kYT0df8yZlhG5qqZ5oI1KWlQMgbMprxx2qi43SAuqCpiiylafLpcwhBJ3z/rxe+afC
-	 t//FPlai/oEEoy7+GixsITRgn6k+DgJmRl2iVYpIDIHh7iHu3AGrEvg22k9sXtMGgM
-	 sv9zQRltecDbQ==
-Message-ID: <6030c66b-b6fe-4a9f-a766-cbea8b3ad2d0@kernel.org>
-Date: Thu, 12 Dec 2024 08:30:46 +0100
+	b=C+K6a9CSV5FS9+70UATIeWvMSRZfAMiO3+DjQ0DVX/mA9bzcoyNhEi6Gn9yPia5wV
+	 eoP6lhMxlhgxLHl7BofhNwoU8qQE5RNwTgxWkM2/H8BVQypp254iYsbEGI2gwHXfVx
+	 4rhrxxRPiZxU3Aa7LH4dfyUF09cajJ6EFsGdpjwtx2PMjlIUWN0y9KmVuir7h/F48C
+	 MZzDV8I7sEZw79Cr/pEpwkiIlCPAI97Cm14n8lLjatfiEmy4c5E8pYDmXNxK/HyNuf
+	 QTpcDphzodEZTwKKovZRdlkajIdiTpNw4UAf0JrBAHW0wizD7y8X0OxfQ6+VdeZ0ZB
+	 snAtZ5zwZVqqw==
+Message-ID: <d803ead8-af3d-438a-9d9f-6194a7a5431a@kernel.org>
+Date: Thu, 12 Dec 2024 08:31:58 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -52,13 +52,14 @@ MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH 1/3] dt-bindings: phy: qcom,qmp-pcie: add optional current
  load properties
-To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc: Ziyue Zhang <quic_ziyuzhan@quicinc.com>, vkoul@kernel.org,
- kishon@kernel.org, dmitry.baryshkov@linaro.org, abel.vesa@linaro.org,
- neil.armstrong@linaro.org, andersson@kernel.org, konradybcio@kernel.org,
- robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
- linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
- linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
+To: Ziyue Zhang <quic_ziyuzhan@quicinc.com>,
+ Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc: vkoul@kernel.org, kishon@kernel.org, dmitry.baryshkov@linaro.org,
+ abel.vesa@linaro.org, neil.armstrong@linaro.org, andersson@kernel.org,
+ konradybcio@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
+ conor+dt@kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-phy@lists.infradead.org, linux-kernel@vger.kernel.org,
+ devicetree@vger.kernel.org, quic_qianyu@quicinc.com
 References: <20241204105249.3544114-1-quic_ziyuzhan@quicinc.com>
  <20241204105249.3544114-2-quic_ziyuzhan@quicinc.com>
  <qvjtwilukxbeaxnbyzfkdsfkktm6p4yv3sgx3rbugpb6qkcbjy@rohvixslizhh>
@@ -67,8 +68,9 @@ References: <20241204105249.3544114-1-quic_ziyuzhan@quicinc.com>
  <20241211082404.p7fbmhooikmipxvm@thinkpad>
  <3c7ddb08-38db-44b3-a7a7-ec7b270a408f@kernel.org>
  <20241211115034.4hrpmninbx5uryev@thinkpad>
-Content-Language: en-US
+ <16d109d8-d1be-4ecb-ba25-8e21e9d48dad@quicinc.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
  cFgcqTTuNHjAvxtUG8pQgGTHAObYs6xeYJtjUH0ZX6ndJ33FJYf5V3yXqqjcZ30FgHzJCFUu
@@ -112,136 +114,28 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20241211115034.4hrpmninbx5uryev@thinkpad>
+In-Reply-To: <16d109d8-d1be-4ecb-ba25-8e21e9d48dad@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 11/12/2024 12:50, Manivannan Sadhasivam wrote:
-> On Wed, Dec 11, 2024 at 10:52:11AM +0100, Krzysztof Kozlowski wrote:
->> On 11/12/2024 09:24, Manivannan Sadhasivam wrote:
->>> On Wed, Dec 11, 2024 at 09:09:18AM +0100, Krzysztof Kozlowski wrote:
->>>> On 11/12/2024 07:20, Manivannan Sadhasivam wrote:
->>>>> On Thu, Dec 05, 2024 at 11:23:11AM +0100, Krzysztof Kozlowski wrote:
->>>>>> On Wed, Dec 04, 2024 at 06:52:47PM +0800, Ziyue Zhang wrote:
->>>>>>> On some platforms, the power supply for PCIe PHY is not able to provide
->>>>>>> enough current when it works in LPM mode. Hence, PCIe PHY driver needs to
->>>>>>> set current load to vote the regulator to HPM mode.
->>>>>>>
->>>>>>> Document the current load as properties for each power supply PCIe PHY
->>>>>>> required, namely vdda-phy-max-microamp, vdda-pll-max-microamp and
->>>>>>> vdda-qref-max-microamp, respectively.PCIe PHY driver should parse them to
->>>>>>> set appropriate current load during PHY power on.
->>>>>>>
->>>>>>> This three properties are optional and not mandatory for those platforms
->>>>>>> that PCIe PHY can still work with power supply.
->>>>>>
->>>>>>
->>>>>> Uh uh, so the downstream comes finally!
->>>>>>
->>>>>> No sorry guys, use existing regulator bindings for this.
->>>>>>
->>>>>
->>>>> Maybe they got inspired by upstream UFS bindings?
->>>>> Documentation/devicetree/bindings/ufs/ufs-common.yaml:
->>>>>
->>>>> vcc-max-microamp
->>>>> vccq-max-microamp
->>>>> vccq2-max-microamp
->>>>
->>>> And it is already an ABI, so we cannot do anything about it.
->>>>
->>>>>
->>>>> Regulator binding only describes the min/max load for the regulators and not
->>>>
->>>> No, it exactly describes min/max consumers can use. Let's quote:
->>>> "largest current consumers may set"
->>>> It is all about consumers.
->>>>
->>>>> consumers. What if the consumers need to set variable load per platform? Should
->>>>
->>>> Then each platform uses regulator API or regulator bindings to set it? I
->>>> don't see the problem here.
->>>>
->>>>> they hardcode the load in driver? (even so, the load should not vary for each
->>>>> board).
->>>>
->>>> The load must vary per board, because regulators vary per board. Of
->>>> course in practice most designs could be the same, but regulators and
->>>> their limits are always properties of the board, not the SoC.
->>>>
->>>
->>> How the consumer drivers are supposed to know the optimum load?
->>>
->>> I don't see how the consumer drivers can set the load without hardcoding the
->>> values. And I could see from UFS properties that each board has different
->>> values.
->>
->>
->> Drivers do not need to know, it's not the driver's responsibility. If
+On 12/12/2024 08:29, Ziyue Zhang wrote:
+>
+>> In that case, I was wondering if the load set by the driver is going to vary
+>> between platforms (boards) or not (question to Ziyue Zhang). If it varies
+>> between SoC, then we can hardcode the load in driver based on compatible.
 > 
-> What? I think there is a misunderstanding here. The intention of these proposed
-> properties is to allow the PHY driver to set the required load of the regulator
-> using regulator_set_load() API. As per the API description:
-
-This makes sense. I referred to property description to learn what it is
-really doing. I found nothing, because it is empty, so that's how we
-waste time...
-
+> Hi Mani, Krzystof
 > 
-> 'Consumer devices notify their supply regulator of the maximum power they will
-> require (can be taken from device datasheet in the power consumption tables)
-> when they change operational status and hence power state'.
-> 
-> IIUC, your concern is that the devicetree shouldn't specify the load for each
+> Now we set  the current to 165mA which is the max power supply the regulator
+> can provide, so this is platform(boards) related. But we think PCIe PHY needs
 
-My concern is that Qualcomm put here regulator constraints and call them
-device load. And empty property name does not help me to think other way.
+Yeah, so that's the answer to what I asked just a second ago - you do
+not put there device load. You put there regulator constraints.
 
-How can I verify the number that it was taken from UFS device manual,
-not from PMIC?
+> to set the current value we need, which is soc related.
 
-> consumer but just the min/max load of the regulator. And the consumer driver
-> should figure out the load and set it accordingly.
-
-With your above explanation I think the actual consumer load, if it is
-depending on the board, have place in DT. But:
-
-> 
-> Correct me if I'm wrong.
-> 
-> In that case, I was wondering if the load set by the driver is going to vary
-> between platforms (boards) or not (question to Ziyue Zhang). If it varies
-> between SoC, then we can hardcode the load in driver based on compatible.
-
-Yeah, maybe each  it is implied by compatible and not board dependent.
-Then just like everything implied by compatibles: should not be placed
-in DT.
-
-We already follow this approach for several other Qualcomm drivers, e.g.
-display.
-
-> 
->> If
->> these are constraints per board, then regulator properties apply and
->> there is no difference between this "vdd-max-microamp = 10" and
->> "regulator-max-microamp".
->>
-> 
-> There is a difference. Regulator properties are just threshold. So unless the
-> consumer sets the load, they won't take effect. I think you got confused by the
-> 'max' wording in the proposed properties?
-
-Yes and confused by its description in the binding.
-
-> 
->> If this varies runtime, then your property is already not suitable and
->> very limited and you should use OPP table.
->>
-> 
-> The consumer driver may request different loads based on their operational
-> state.
-
-Then anyway maybe this should be OPP table (assuming it is board specific).
+So move it away from DT. I don't care what's in the driver, so you can
+put there whatever fake value.
 
 Best regards,
 Krzysztof
