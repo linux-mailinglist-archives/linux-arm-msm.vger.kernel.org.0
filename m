@@ -1,140 +1,123 @@
-Return-Path: <linux-arm-msm+bounces-41696-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-41697-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9B9C79EE31E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Dec 2024 10:34:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 9EC4F9EE34C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Dec 2024 10:42:12 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 945E21887472
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Dec 2024 09:34:51 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0990A188B073
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Dec 2024 09:42:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 967B620E31C;
-	Thu, 12 Dec 2024 09:34:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B37652101AF;
+	Thu, 12 Dec 2024 09:41:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="RQXHOvsN"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ImlmS5sT"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f180.google.com (mail-lj1-f180.google.com [209.85.208.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B6C020E03B
-	for <linux-arm-msm@vger.kernel.org>; Thu, 12 Dec 2024 09:34:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C30E2101A2;
+	Thu, 12 Dec 2024 09:41:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733996086; cv=none; b=I568zzWEPCYFTi31+m8InBnTzmLElK6kDpcUnXpTfL8WnLJYvfOaNE0WshrDu/Gjj/Vjdkjqtvb5Y3OPycmZSrzSyrG2j3R+I6rpFhCmUc0h8oIMZKHk80ZL0GgrqYgh9fy6x1jzcMFVdi8kZ9ipF+lFElnCmyyyxIDwblyNK+A=
+	t=1733996514; cv=none; b=NGsP5zU9ldBJzkES6ikxygvR7giAGyf0I/G3bUrjYgPNsw0z+THs17bTDsse9THHmH6TZqNHPd2E76BqIvX3DWi5UJStaaZAvseXAdFO9xFQScTNtflyaV7KkQdassc9e9LUVbuCSS12dbJmprSzSHUwU23g2CxZ2Wr9Nduhcsg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733996086; c=relaxed/simple;
-	bh=VppiEC71iSiVaMU4csmiMBmKCcacxPVxHFurn9yQxl0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Gpn0ceSEca/zAZYgFqG95QnnO7euRzS5GMnwm9oJvvELhb7Ty9HJHv/ICNb7/UYyaXhpBdaKIuwXtUsoWCvJXLM/njdwDrMwvS5frE2feIg2Enx2NvgmtSo+ORSif+9aa38gM5EmNwArnNqbCA9gfzsmkR0JpsjzYZIXOYIb7lw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=RQXHOvsN; arc=none smtp.client-ip=209.85.208.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f180.google.com with SMTP id 38308e7fff4ca-30229d5b229so2956271fa.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Dec 2024 01:34:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1733996083; x=1734600883; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=xpy/CwxbVse7VurY2aJqzrYBxP3zeCul6ZdOEgv8Rdw=;
-        b=RQXHOvsNslQl1jpCD/RJH+wazhJnF9vY1KB3VfhK1xRwXp01NTj27Qgd6EDiQa0lqJ
-         7YXLjSu1LX3AGUzsIsAT59rxfYBe8dkEdBlhfpRlq3YRXSlui3HXJGFa3Vco+Edu6o2o
-         j4ItZeTmlaSsNmVXicNcCG7RERPFe/QXakscyUbHbXT9QhhZzSCB63t+N0cKsaFBWPit
-         k1PLspP+Shc6iMZRkMNRZ/iHhrbLd18joJ1YZQEbac81ORU3bMZfw7v36XFWjalFCvRT
-         T8BaXC2AuhLJeRTXMUaIlWpMtXRfmzxdHf8DRw0Xt1T9/Z3lCFYetLnrKjCIYl1oL4eU
-         vEkg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733996083; x=1734600883;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=xpy/CwxbVse7VurY2aJqzrYBxP3zeCul6ZdOEgv8Rdw=;
-        b=aaOxndzmLUc8F3piiFRBU5go+bLQX7EL0Nh43bFH7s1h0wsg9hjM+ltECCv2+iOu0d
-         BRpZO5gGp7zG07pvcqFSI25uSd92wrab5ouXd+wZKCzySAteLsu3hEK9ZKClyGzXeziW
-         VfBAMHyHb4VMVJlw3orEcQQ1EsjXjPPm4zdpdx7nDMzfaAYjMt3PBQ0D9HyvN6vGaQS9
-         E/edbpTZcRU8W7Q+mXu3MmdRvfmWvoAxtzcMmwv7OhC44jYPxNU7IgDKl/f2auBZnqZq
-         QvL8Aj43yydeEdZu6OctUG1QAhLk6Yje2HBNGgk++uJd5GI9M2C+GdqlvPdILBU6mSXK
-         k30Q==
-X-Forwarded-Encrypted: i=1; AJvYcCXqA0b/0OgyVVLRt3r3Df0sdUb0GB9cW0oO7Q+9u89D0q4wv6jWsEo5AohbMwVqho2uDmE2+bi2dT69j7Jy@vger.kernel.org
-X-Gm-Message-State: AOJu0YyanJ3Q4trSxH7sQmT60EuZ/ez9N8MW94nXdtW7qz30U7GK+MKT
-	T7TpgvlNfGEzzgmHaNKUs/KtHdfHuYSV2tMEntpcCAjtf1Ygw11VTZ/KBth2zbw=
-X-Gm-Gg: ASbGncu5eaO/krDdCizO3od1nRFT1uyH1FbIB5QeIv6yXtcVYo7FU0PTBTUu75PVJJg
-	wRPntWKNlLYSGEg4cSrflL9zaUOfQhoTiCQVhpZp+o0cYSDzdrBSPNK34mVwBAjn1kHTGRqsIQ/
-	wLTBWaMXem3CDveYipBkCz9WfAxUb1cgp5eemD9pg9OPoefHynzUQooFdP78qP0INTXv1iAx9vJ
-	6GTxfkT1pe/qAwbSjbLSLpDxtkrzZrBSho3ij/B9OpfMsqqQFE60hI0l8PlZd2ht1zIimk8CR8x
-	85qOkMCRSqnSqD+iRVoeA3E4pOz4bE9jXuUa
-X-Google-Smtp-Source: AGHT+IG5e9iODeyp5V5+1N/IJ6G9IYepmGYw4xB3atGT4gGgPPoEAvSwa4ZeH2rdPZSRW31u77cZEA==
-X-Received: by 2002:a2e:bcc2:0:b0:302:17e7:e17e with SMTP id 38308e7fff4ca-30249d15d89mr8746231fa.0.1733996082664;
-        Thu, 12 Dec 2024 01:34:42 -0800 (PST)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-302254022aasm11565491fa.109.2024.12.12.01.34.41
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 12 Dec 2024 01:34:42 -0800 (PST)
-Date: Thu, 12 Dec 2024 11:34:39 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Lijuan Gao <quic_lijuang@quicinc.com>
-Cc: Bjorn Andersson <andersson@kernel.org>, 
-	Linus Walleij <linus.walleij@linaro.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Jingyi Wang <quic_jingyw@quicinc.com>, Konrad Dybcio <konradybcio@kernel.org>, kernel@quicinc.com, 
-	linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: Re: [PATCH 0/6] Correct the number of GPIOs in gpio-ranges for
- QCS615 and QCS8300
-Message-ID: <ccsuwijfrspm2a2irycsicqepjhwai5pfvgkd5dcaf3nhmqwui@hels74qjkiva>
-References: <20241212-correct_gpio_ranges-v1-0-c5f20d61882f@quicinc.com>
+	s=arc-20240116; t=1733996514; c=relaxed/simple;
+	bh=P4x70ZGm++1hRMsj6Htrcow4CvLTL9GRHvSCtADYFY8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=rr7ROCz7fev9MmszAkfvffV+OxfBzg2XxLnZ5DcLfAVZHbcLEKPwlelEQ0FvHZNO9iMghIAC/0eXjoc/J78Tw23dh+9zUxZZ41Buputjlaym7S4wOqrTfCEMlxVQ6UgLw66GpRcOBd38Air0buI7NCB59U8KRB6FNVSwnx/ohd8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ImlmS5sT; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BC81FsI003601;
+	Thu, 12 Dec 2024 09:41:48 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	IAJYMGceS7Gj1MhSVuVPvmJIGMepzo4iLHRILK3EzNk=; b=ImlmS5sT66eRLmgF
+	+4TiAl3ceZLX45j3wsPSbc40Iy8aDL5BlIbFmz9G+OiBeQpsTZFi+hQIUZBm9aeP
+	v+bE0/9NWfNTeIJh5DHUJLGxy6/xGMmMbEaNWwdYN1T2ytMVGBBEjXohA0pOCWev
+	SLZQqZaF1Mks6FbjO5MauFc/X1ofdyDgErHo9lGgSngVLBkGI+PXwMiwq4cN7o1A
+	M8aW243qM3zIY+fXe/YegdNWI5uDXQHwbgTGcHvu9Rzy1Ut457/9PpREhNqSvHf+
+	lE7vBTShsVdhLh0OF23Ei/M+93FAZoebCGHyb6zNApkhy/yqdDQA37Vnbd7EzInz
+	L1owMg==
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43ee3nfyta-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 12 Dec 2024 09:41:47 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4BC9flIC006313
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 12 Dec 2024 09:41:47 GMT
+Received: from [10.239.97.152] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 12 Dec
+ 2024 01:41:41 -0800
+Message-ID: <8f2aa73c-f9d3-4523-8595-c35d5ca6f4f7@quicinc.com>
+Date: Thu, 12 Dec 2024 17:41:38 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241212-correct_gpio_ranges-v1-0-c5f20d61882f@quicinc.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 09/16] media: qcom: camss: Add callback API for RUP update
+ and buf done
+To: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>, <rfoss@kernel.org>,
+        <todor.too@gmail.com>, <bryan.odonoghue@linaro.org>,
+        <mchehab@kernel.org>, <robh@kernel.org>, <krzk+dt@kernel.org>,
+        <conor+dt@kernel.org>
+CC: <quic_eberman@quicinc.com>, <linux-media@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <kernel@quicinc.com>
+References: <20241211140738.3835588-1-quic_depengs@quicinc.com>
+ <20241211140738.3835588-10-quic_depengs@quicinc.com>
+ <1ac23fa1-fc35-45fb-9338-d5f304c869ba@linaro.org>
+Content-Language: en-US
+From: Depeng Shao <quic_depengs@quicinc.com>
+In-Reply-To: <1ac23fa1-fc35-45fb-9338-d5f304c869ba@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: v6MpkaUc7-_dadEUCvG1mu0SIyanfY62
+X-Proofpoint-ORIG-GUID: v6MpkaUc7-_dadEUCvG1mu0SIyanfY62
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 suspectscore=0
+ malwarescore=0 spamscore=0 priorityscore=1501 mlxscore=0 impostorscore=0
+ mlxlogscore=939 lowpriorityscore=0 adultscore=0 clxscore=1015 phishscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2411120000
+ definitions=main-2412120068
 
-On Thu, Dec 12, 2024 at 05:23:59PM +0800, Lijuan Gao wrote:
-> The UFS_RESET pin is expected to be wired to the reset pin of the
-> primary UFS memory, it's a general purpose output pin. Reorder it and
-> expose it as a gpio, so that the UFS driver can toggle it.
+Hi Vladimir,
 
-I don't see pins being reordered. Please correct your commit messages.
-
+On 12/12/2024 9:09 AM, Vladimir Zapolskiy wrote:
+> Hi Depeng and Bryan.
 > 
-> The QCS615 TLMM pin controller has GPIOs 0-122, so correct the
-> gpio-rangs to 124.
+> On 12/11/24 16:07, Depeng Shao wrote:
+>> The RUP registers and buf done irq are moved from the IFE to CSID 
+>> register
+>> block on recent CAMSS implementations. Add callbacks structure to wrapper
+>> the location change with minimum logic disruption.
+>>
+>> Signed-off-by: Depeng Shao <quic_depengs@quicinc.com>
+>> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 > 
-> The QCS8300 TLMM pin controller has GPIOs 0-132, so correct the
-> gpio-rangs to 134.
-> 
-> Signed-off-by: Lijuan Gao <quic_lijuang@quicinc.com>
-> ---
-> Lijuan Gao (6):
->       dt-bindings: pinctrl: qcom: correct gpio-ranges in examples for qcs615
->       dt-bindings: pinctrl: qcom: correct gpio-ranges in examples for qcs8300
->       pinctrl: qcom: correct the number of ngpios for QCS615
->       pinctrl: qcom: correct the number of ngpios for QCS8300
->       arm64: dts: qcom: correct gpio-ranges for QCS615
->       arm64: dts: qcom: correct gpio-ranges for QCS8300
-> 
->  Documentation/devicetree/bindings/pinctrl/qcom,qcs615-tlmm.yaml  | 2 +-
->  Documentation/devicetree/bindings/pinctrl/qcom,qcs8300-tlmm.yaml | 2 +-
->  arch/arm64/boot/dts/qcom/qcs615.dtsi                             | 2 +-
->  arch/arm64/boot/dts/qcom/qcs8300.dtsi                            | 2 +-
->  drivers/pinctrl/qcom/pinctrl-qcs615.c                            | 2 +-
->  drivers/pinctrl/qcom/pinctrl-qcs8300.c                           | 2 +-
->  6 files changed, 6 insertions(+), 6 deletions(-)
-> ---
-> base-commit: 91e71d606356e50f238d7a87aacdee4abc427f07
-> change-id: 20241211-correct_gpio_ranges-ed8a25ad22e7
-> 
-> Best regards,
-> -- 
-> Lijuan Gao <quic_lijuang@quicinc.com>
+> It's unexpected to see two your Signed-off-by: tags, either one is invalid
+> or the authorship of the change shall be changed appropriately.
 > 
 
--- 
-With best wishes
-Dmitry
+Thanks for pointing out this, I will update it based on Bryan's suggestion.
+
+Thanks,
+Depeng
+
 
