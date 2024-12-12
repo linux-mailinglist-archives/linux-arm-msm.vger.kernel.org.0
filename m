@@ -1,104 +1,165 @@
-Return-Path: <linux-arm-msm+bounces-41680-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-41681-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id D22E69EE181
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Dec 2024 09:41:38 +0100 (CET)
-Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B3CA59EE1D5
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Dec 2024 09:50:23 +0100 (CET)
+Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id BA3C51663ED
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Dec 2024 08:41:31 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1492628402B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Dec 2024 08:50:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8B0A820DD6B;
-	Thu, 12 Dec 2024 08:41:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0FDA420C499;
+	Thu, 12 Dec 2024 08:50:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="t1549Ovb"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kYVVMFy4"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6163920DD62;
-	Thu, 12 Dec 2024 08:41:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D98D7148FED;
+	Thu, 12 Dec 2024 08:50:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733992885; cv=none; b=LqcWCaGQ4qeaJLWLwbQpunKK146m40unT/87xyT0oKLSofzDm5HzFlOC+Yff4wQQzAXjZX+ld2vpQEgsseNpKstTQlFpdEZFiUZFhWvm5tYsQOK7WdPAoj3WZu/YkKWwr+lowzZn/WFroDtaE8Mok7cDs7wN2foMWyqN7GbuOLg=
+	t=1733993419; cv=none; b=hMKVHzgueDzGZ8PP6pkZsRlFq44QIadcz5YtcPD3vBQ906K7eJDb+ZSbpp3bHag569kTbTSJAdXlfkynqHviVb5eoD4ZEnItd5QLTt0v5oeQphNB1AJKbiM7I9XlNbTM0Nct9EdgyHGEs/QtDEiH/Ji+4ijkYCZIwzBcFajfyyY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733992885; c=relaxed/simple;
-	bh=V9ZgLYGS9V5D6sBRuPJglgqlae/xhudICyCZ7OL/n2E=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=q5FMsSbfZd418A/q/Q6ru6hdYqbp7xbpnG/v5dNKFWQRVzd7iL/ic82pw3PvKw0o4wyuUpm/rQS0yMVBV1wVZ2XuuTO4NX2XZtBKSJXksjWGcRTAEuHxKDjFIq8tkzK7m4EsgbebVQL9GkhcagBsMU3EfodcogVpQiaq/RhBvT8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=t1549Ovb; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31A90C4CECE;
-	Thu, 12 Dec 2024 08:41:25 +0000 (UTC)
+	s=arc-20240116; t=1733993419; c=relaxed/simple;
+	bh=zgsaiFELnog4Xiom7qwaEuaJS+Gl1kORV0fiEphdXaM=;
+	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=O/0ExCJ4u6qFBUhSRbIur7mCWTT3Eit+XSvYXntbNrJ6Wycgkki5XBbKm2/n6LK/BZPJKs7uoO04WEqZ55bEAXS/JudMT33TBOvx9722udlcA7s7P9HEgX99acuK9DHuXCfIQ98ze6U/cW5MxELuHgCDodfy7vlUncTa1pHxuDc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kYVVMFy4; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 659C3C4CECE;
+	Thu, 12 Dec 2024 08:50:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1733992885;
-	bh=V9ZgLYGS9V5D6sBRuPJglgqlae/xhudICyCZ7OL/n2E=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=t1549Ovbr5zL06yJKspZfmXMo8dUwEMV8eT3j8RWWpS608U5NPB76hbmWFa1Y06M7
-	 T2sMOwViHk6hKi5SIZN258drWGkyeHHAUEzeRBA8K/pwwcEXKSmqQ+pd7z34FJE6NX
-	 Nqe0kOzdi45/n4a41fz9y9QECic4KnIzaHYVmdHbt2GGryPin7eCGUlQyDptlJNN/Y
-	 XxNBuunkR5hgYcUkzWEo5xfLdsk5xS1G7FU10x1eIjcB5k5v5uy0QD+bpZ5znv2YPU
-	 HQREUJPPOzLwS1qO2HCk25kr81GKC65lL8PjMWo5DEFbIRkdD64qW8v6TebmUAKGKC
-	 XpEorO1fIO/tQ==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan@kernel.org>)
-	id 1tLelD-000000006Rn-36L4;
-	Thu, 12 Dec 2024 09:41:28 +0100
-Date: Thu, 12 Dec 2024 09:41:27 +0100
-From: Johan Hovold <johan@kernel.org>
-To: neil.armstrong@linaro.org
-Cc: Abel Vesa <abel.vesa@linaro.org>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-	Karol Herbst <kherbst@redhat.com>, Lyude Paul <lyude@redhat.com>,
-	Danilo Krummrich <dakr@redhat.com>,
-	Jani Nikula <jani.nikula@linux.intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
-	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
-	Tvrtko Ursulin <tursulin@ursulin.net>,
+	s=k20201202; t=1733993417;
+	bh=zgsaiFELnog4Xiom7qwaEuaJS+Gl1kORV0fiEphdXaM=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+	b=kYVVMFy4ufIN76e6GyVm6iB4f5LjG16IcfW7uVpQr6sgVxpXo41AW/xv5wEGLB9Ve
+	 b/B8sqnCvpDo0VwF8awAng/J8PQjLv7faesdgiqmRYautwSfLo2QQ0S9FVXDNOegUl
+	 zB0J4Gc6M4WDyLtuCyQCstGVOFbYfUk1GIc+hgn1Ba+FzxsARTJaCB3AeAjBbHn5j2
+	 4yeZBiJIo9UgxbSVrp3h2w1QNHupelqwWAUHGwFp+273tckBBucRgM6FfWlglCC/7g
+	 ddsvv0O0AGpvpEfaQGF3zZYNxoZ9EjjmllHH+NA1h2j2du970W2wXSoju5otbMd4s+
+	 6klzlx38+EWyQ==
+Received: from 82-132-221-83.dab.02.net ([82.132.221.83] helo=wait-a-minute.misterjones.org)
+	by disco-boy.misterjones.org with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.95)
+	(envelope-from <maz@kernel.org>)
+	id 1tLeti-0030Yi-Rd;
+	Thu, 12 Dec 2024 08:50:15 +0000
+Date: Thu, 12 Dec 2024 08:50:12 +0000
+Message-ID: <87bjxhs2t7.wl-maz@kernel.org>
+From: Marc Zyngier <maz@kernel.org>
+To: Pavan Kondeti <quic_pkondeti@quicinc.com>
+Cc: Akhil P Oommen
+	<quic_akhilpo@quicinc.com>,
 	Rob Clark <robdclark@gmail.com>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Sean Paul <sean@poorly.run>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Sean Paul
+	<sean@poorly.run>,
 	Konrad Dybcio <konradybcio@kernel.org>,
-	dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-	nouveau@lists.freedesktop.org, intel-gfx@lists.freedesktop.org,
-	intel-xe@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-	freedreno@lists.freedesktop.org
-Subject: Re: [PATCH v2 1/4] drm/dp: Add helper to set LTTPRs in transparent
- mode
-Message-ID: <Z1qht5W66I1-3RLL@hovoldconsulting.com>
-References: <20241211-drm-dp-msm-add-lttpr-transparent-mode-set-v2-0-d5906ed38b28@linaro.org>
- <20241211-drm-dp-msm-add-lttpr-transparent-mode-set-v2-1-d5906ed38b28@linaro.org>
- <Z1mk08SHEd5_vc99@hovoldconsulting.com>
- <0d0a8157-32a4-4e8e-92cd-dac9a4471641@linaro.org>
+	Abhinav Kumar
+	<quic_abhinavk@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	David Airlie
+	<airlied@gmail.com>,
+	Simona Vetter <simona@ffwll.ch>,
+	Elliot Berman
+	<quic_eberman@quicinc.com>,
+	<linux-arm-msm@vger.kernel.org>,
+	<dri-devel@lists.freedesktop.org>,
+	<freedreno@lists.freedesktop.org>,
+	<linux-kernel@vger.kernel.org>,
+	<linux-arm-kernel@lists.infradead.org>
+Subject: Re: [PATCH] drm/msm/a6xx: Skip gpu secure fw load in EL2 mode
+In-Reply-To: <c197264b-3791-493a-b717-3dfd844de922@quicinc.com>
+References: <20241209-drm-msm-kvm-support-v1-1-1c983a8a8087@quicinc.com>
+	<87ed2fs03w.wl-maz@kernel.org>
+	<92cee905-a505-4ce9-9bbc-6fba4cea1d80@quicinc.com>
+	<86sequsdtp.wl-maz@kernel.org>
+	<c197264b-3791-493a-b717-3dfd844de922@quicinc.com>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
+ FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/29.4
+ (x86_64-pc-linux-gnu) MULE/6.0 (HANACHIRUSATO)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <0d0a8157-32a4-4e8e-92cd-dac9a4471641@linaro.org>
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+Content-Type: text/plain; charset=US-ASCII
+X-SA-Exim-Connect-IP: 82.132.221.83
+X-SA-Exim-Rcpt-To: quic_pkondeti@quicinc.com, quic_akhilpo@quicinc.com, robdclark@gmail.com, sean@poorly.run, konradybcio@kernel.org, quic_abhinavk@quicinc.com, dmitry.baryshkov@linaro.org, marijn.suijten@somainline.org, airlied@gmail.com, simona@ffwll.ch, quic_eberman@quicinc.com, linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
 
-On Thu, Dec 12, 2024 at 09:31:09AM +0100, neil.armstrong@linaro.org wrote:
-> On 11/12/2024 15:42, Johan Hovold wrote:
-
-> >> +EXPORT_SYMBOL(drm_dp_lttpr_set_transparent_mode);
-> > 
-> > This appears to be what the driver currently uses, but why not
-> > EXPORT_SYMBOL_GPL?
+On Thu, 12 Dec 2024 05:31:00 +0000,
+Pavan Kondeti <quic_pkondeti@quicinc.com> wrote:
 > 
-> drivers/gpu/drm/display/drm_dp_helper.c is not GPL licenced, so
-> this is the right macro to use.
+> On Wed, Dec 11, 2024 at 10:40:02AM +0000, Marc Zyngier wrote:
+> > On Wed, 11 Dec 2024 00:37:34 +0000,
+> > Pavan Kondeti <quic_pkondeti@quicinc.com> wrote:
+> > > 
+> > > On Tue, Dec 10, 2024 at 09:24:03PM +0000, Marc Zyngier wrote:
+> > > > > +static int a6xx_switch_secure_mode(struct msm_gpu *gpu)
+> > > > > +{
+> > > > > +	int ret;
+> > > > > +
+> > > > > +#ifdef CONFIG_ARM64
+> > > > > +	/*
+> > > > > +	 * We can access SECVID_TRUST_CNTL register when kernel is booted in EL2 mode. So, use it
+> > > > > +	 * to switch the secure mode to avoid the dependency on zap shader.
+> > > > > +	 */
+> > > > > +	if (is_kernel_in_hyp_mode())
+> > > > > +		goto direct_switch;
+> > > > 
+> > > > No, please. To check whether you are *booted* at EL2, you need to
+> > > > check for is_hyp_available(). Whether the kernel runs at EL1 or EL2 is
+> > > > none of the driver's business, really. This is still absolutely
+> > > > disgusting from an abstraction perspective, but I guess we don't have
+> > > > much choice here.
+> > > > 
+> > > 
+> > > Thanks Marc. Any suggestions on how we can make is_hyp_mode_available()
+> > > available for modules? Do you prefer exporting
+> > > kvm_protected_mode_initialized and __boot_cpu_mode symbols directly or
+> > > try something like [1]?
+> > 
+> > Ideally, neither. These were bad ideas nine years ago, and they still
+> > are. The least ugly hack I can come up with is the patch below, and
+> > you'd write something like:
+> > 
+> > 	if (cpus_have_cap(ARM64_HAS_EL2_OWNERSHIP))
+> > 		blah();
+> > 
+> > This is obviously completely untested.
+> > 
+> 
+> I have tested your patch. It works as intended. Thanks Marc.
 
-Wow. I should have checked the header. Thanks for explaining.
+Note that you will probably get some push-back from the arm64
+maintainers on this front, because this is a fairly incomplete (and
+fragile) solution.
 
-Johan
+It would be much better if the discriminant came from the device tree.
+After all, the hypervisor is fscking-up^W^Wchanging the programming
+model of the GPU, and that should be reflected in the DT. Because for
+all intent and purposes, this is not the same hardware anymore.
+
+The GPU isn't the only device that needs fixing in that way: the
+SMMUv3 needs to be exposed to the OS, and the PCIe ports need to be
+linked to it and the ITS. So at the end of the day, detecting EL2 only
+serves a limited purpose. You need to handle these cases, and might as
+well put the GPU in the same bag.
+
+Which means that you'd either have a pair of static DTs (one that
+exposes the brokenness of the firmware, and one that doesn't), or you
+go the dtbhack route to compose the DT at boot time.
+
+Thanks,
+
+	M.
+
+-- 
+Without deviation from the norm, progress is not possible.
 
