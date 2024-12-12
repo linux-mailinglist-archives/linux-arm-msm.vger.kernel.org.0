@@ -1,147 +1,160 @@
-Return-Path: <linux-arm-msm+bounces-41797-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-41798-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id E7B0D9EF4D1
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Dec 2024 18:11:25 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id CB96B9EF49F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Dec 2024 18:09:55 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 63CF017BAB2
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Dec 2024 16:55:06 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2DDA217505B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Dec 2024 16:57:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9D3CB239BC8;
-	Thu, 12 Dec 2024 16:47:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 013B1225403;
+	Thu, 12 Dec 2024 16:50:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="lHgFMnCa"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="RisfHKDb"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C5DA2253E0
-	for <linux-arm-msm@vger.kernel.org>; Thu, 12 Dec 2024 16:47:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03D182253EE
+	for <linux-arm-msm@vger.kernel.org>; Thu, 12 Dec 2024 16:50:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734022027; cv=none; b=SewDsDsttT6Con/5QM/BfMnmtUH0DXQz09DrEHzlj0nqrpHSbFqv20wjGSnrbi5BHHbrQgiX+Wtkj1yOVPW4neoQMlm5/RXPoEt5DjGqtO5X9swuk7eUsPxR+QDd2Bxl2SA9ugSQwkoxgsluFTDg3ukGwPUY2rjHljsL4sQddLk=
+	t=1734022253; cv=none; b=HlvHiGQuBU8G2ZyuI0mdqQl97BdwuznZ27AR/nLYhfkQg7Rtxt/5bwabwMX/3PO4SaWL7uU8tK3VP8qukKkKBxzhRHIFokNYtNGJRx+mVpyYChbtzpZgmky6W8NrJGuYTsac7Dn1N7bY1UqLWd3Z1SdSYlXbk4QIKb6SvxSzz4o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734022027; c=relaxed/simple;
-	bh=gakp5Aj3FEv816mtcgel/jdY/v/jGPkhjk+8fdyuKqE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=cIy5o4LEB1sJR+bt2mqMmJSVsPN7nxdeOT4s+lib0X5QG6budfP//h5WssbFe/KHdpgheNv6nnY0Hx0Nrgl/VfgFdp4Lc3lJYx3arXVTEYv5goOTDpM8gPy2Vg83582n/y7nXiTtsVWNhC4l3trFv7ZBAgbaiU5lie3FNWTmGZU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=lHgFMnCa; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BC7kx0a014909
-	for <linux-arm-msm@vger.kernel.org>; Thu, 12 Dec 2024 16:47:05 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	Z4OtdDfHtUd2K5YuFPJH9FsYSx7IvdHrXF4yoTvVqjQ=; b=lHgFMnCaTEpWxUcT
-	nc+bvY+Y6RoafPPoduGjjTFdoLoXzZHh4Iy7caYmn0uGPuFZ79woF07U9ANdioi4
-	tvcTIQrcztcZCof6X6yVDA5HbAlf1sT55m8PyDBLSWHFnsJX2hAVQqS6+kOXZGck
-	ThsqK1HmdJBjgJbh4wbUTqYxIAxhmI70y6qxOahsKF89L8qAJwYaqWbBDN8pHhCs
-	E33Dm7QMfxKLwW7VccjlIalndkM7CxbNLW+vjbcjCRey0DAHcyBT5ovRG04AgnPL
-	bLbm0llXi0Vy+Nur4boAi3HnF0B6MOTwc5TWfqfg3ujAVd2+RgATNk+/BzB0+tQp
-	tJjgCA==
-Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com [209.85.160.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43f7dpmwg7-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 12 Dec 2024 16:47:04 +0000 (GMT)
-Received: by mail-qt1-f199.google.com with SMTP id d75a77b69052e-4679d6f9587so1541041cf.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Dec 2024 08:47:04 -0800 (PST)
+	s=arc-20240116; t=1734022253; c=relaxed/simple;
+	bh=BBhhYc6WiR9lrxb02YxPKhDO0cLFxCtxBdQvIJoPBZM=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=smfaLZ3281tAg8hZkiVOc/6d72iLuJtRMFXtuqSapl9DIqlmMOurbeYVNzSOZxppyZ02cFayXGixWmmhYkWVfXrPz6BnZ1M373ehWvroo2MVtKw7T1Lh6DOCZ14rUEyLBZtiWR3d4FW+Ow0xWHdQdoVx3VQ0NthPK3glnQYC+9k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=RisfHKDb; arc=none smtp.client-ip=209.85.221.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-3862a921123so591421f8f.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Dec 2024 08:50:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1734022250; x=1734627050; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=qPR/U5M933Efza0Sv+7ys+dvo2ugrwOUgeWtNHtA3sY=;
+        b=RisfHKDbgWpAHwnFsKRGpKvft4Y/R4Tsc/mdkBsBGMhPZ5fy/XVK1XrJQ4TSpiMa1m
+         X29sC0L51VM59G9saZU8bUalIOYJFT22pVXsGb7HbUYCuTmfqeRfsvInkhoFiuHwnGVu
+         2YgyCgUWsD4Gm8IFajR+qi0c36koKtcJfQv/439Gxw1SqshNv1ZLzuSLI0DHnetxSO9H
+         XjQQG+HYthfq/u2GP+ZsbfcvSg3NPaqG/otMnPhNcWKYndc2q38sQTNJq4VeZUarbCeo
+         cnj/swtHkaajSz1RuWy/fF2Vk4Z18+FJrQm2YDeLhd5Em4E0qMngDFBxXzL2xuqOmjKW
+         Yx9g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734022024; x=1734626824;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Z4OtdDfHtUd2K5YuFPJH9FsYSx7IvdHrXF4yoTvVqjQ=;
-        b=VrpdrDFqZ4TI+uu7HzpiQAaFuKVjF33vbyBkpece4ps4/+FDEsDuF97d5x7tetViEc
-         W4LMRK6a9KVELfKr6WQ8zaiT+CyBM9NpfmmGuAnEPC0Kwyy7FGKRiSckoLTVsuMTXZy/
-         QYX+Irh7JZD+FIeubvJJd4HZSAVV1xwxynIyUbFpNBcO5fPTCF6YvsyiT2mN1s9lGINf
-         luJnFJjsiYumRzcRoR9ZSBAKc+KoFZ50RzR1PqOhx1M8KcqR2cKotw8PHS6TjqHx99VP
-         IeMz48Sjexb2qfgDdXqXFdSV4nOUyGecx8824qIhRzmDyY08xrJZs8eqkAxIW2jvheKI
-         aE8A==
-X-Gm-Message-State: AOJu0YzmuKegpiWlztxRFsNLyn4+NZwNgA9oTU9cvGLlMwfuc0fugfCl
-	RfoePfp/OTkq7XXh2KyoGffVoErTpb6XmG4HWO+cNsmlnFhwt/wI+sTGNspIryFiBhJriMKlB2g
-	j7liXdx/iG6KpRC6Mg8iHYgReQPbwxmuLpRoASuuhD0WsfzjfNGb0cbYwK0WJLz1F
-X-Gm-Gg: ASbGncuExHfrbInNBir6QUsZVvsZifNMzx9TabGNuLXh4/+0gJVJ2l6GKSvC5sLtjEs
-	PgsCjF09awQgfzDbx5v5ppawKRPvdjIFCFlPOTCOVPZFAtTvuHXOo35ton9vH6qTVZ2dBL7spcy
-	NZz7QRmQEH6p6mmoY9pCrVn448bi3/WLBnBi5ycDzhik467w377i34CkHxpQVNLIWEdyIX8Epb+
-	z/DpWeZWRFKMfrNCpgsaid4Z1bFLDMp843OCy80H7BKtSMHKETZ4NCVi8Qdxb67ObVKbKOOTLfe
-	NwO/Bdy38Fq2XzhdUICA5ROQQ4N0pFx+7hZw0w==
-X-Received: by 2002:a05:622a:110a:b0:461:1fc9:61a3 with SMTP id d75a77b69052e-467a1556cdcmr6368821cf.9.1734022024031;
-        Thu, 12 Dec 2024 08:47:04 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGbmP4pXDhW5EBpXexeneOeQ1H0OIhDr8GB0bZnmXl6AR8XFHt2k4+lrHiAsVPutnSuge9M8A==
-X-Received: by 2002:a05:622a:110a:b0:461:1fc9:61a3 with SMTP id d75a77b69052e-467a1556cdcmr6368521cf.9.1734022023575;
-        Thu, 12 Dec 2024 08:47:03 -0800 (PST)
-Received: from [192.168.212.120] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-aa6ab7fe8bdsm311763466b.160.2024.12.12.08.47.01
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 12 Dec 2024 08:47:03 -0800 (PST)
-Message-ID: <1777f0c7-7cea-43d6-a7c0-4777bfb3f1f1@oss.qualcomm.com>
-Date: Thu, 12 Dec 2024 17:47:01 +0100
+        d=1e100.net; s=20230601; t=1734022250; x=1734627050;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=qPR/U5M933Efza0Sv+7ys+dvo2ugrwOUgeWtNHtA3sY=;
+        b=TXH5tLugKH60kLuz0k2AkWPXvkp+apXub79TYtdjFGIdJNTI0iGRmSatjoKzSm+v59
+         a7NGGW7s6tLFQrG1cyZbwIcdAv5YSB2czJ/PvMp2chzo6ZlisLcn4RGvVE3hd+5BWTUK
+         SM6LFji7mGIcbp4j0HwafXBLBM17Ru5R22mLYp4mGJnFq3T2KXtQWJ9yWlKQbnsSkiIA
+         A5D9ijVDKVN+KH5dFaK9xrJylZG4qaTrPV0MBZFwCMJHOzpyFPBM8XmFzIB5CfpcXAMq
+         zgpC/EVI9Ry1UqGoG3rkikJCRy8eR6C+vLQLWfgx0EmsAavXUPXvzcPFL/w/sJs9p4y6
+         JJOw==
+X-Forwarded-Encrypted: i=1; AJvYcCUgDlFNAOrd0s4+bIEUT1pen8c8mnxe4aU+MzX1MEzgI0aEdEqQ8JzRiIhWDhxJjCtfdJ9sSrlUNAicdkRf@vger.kernel.org
+X-Gm-Message-State: AOJu0YzzL6M6hZJMUxTV5yitHlxRyxgZXZEAEnt1OwPMf8Jsk7h3dNDk
+	e+/RnaBDIU8q0WidJgcK7SJQ2d2se0srr12muvmtxwy2fNSNQpr1LyNhhI4VhG4=
+X-Gm-Gg: ASbGnctjC4FDKAjLIXj+OANp7jf5Xpu+oitWmBkulCnrzCG0VPMd86nQ7XnzyH+7W1X
+	FNiOzKYTz1JpM21wejSM6tO+gLV4dkQ4Ln0QId8qkMVgrOop4P2ANtrT7312jksGs3LC1vWwtaC
+	jYSn/DUr+VNTnDoGukp5cL7Gtzrblm93oRIzK0eo4fbFgMuLwH/SvyLv/6akvcmDDt25akuI7Pn
+	AOtnUsi6hr9oELnsqnaI92LzHMnoJNQl/pUZvpi0GWKUws7zeGSL2n3
+X-Google-Smtp-Source: AGHT+IHqsOvfkm0NoySLQIwm20PgIu1++eFjQglP2vu3YdstNmTRycFfmHYYlymuN6Ezcto2U0UR6A==
+X-Received: by 2002:a05:6000:1543:b0:385:e1e8:40db with SMTP id ffacd0b85a97d-387876914c8mr3724631f8f.24.1734022250298;
+        Thu, 12 Dec 2024 08:50:50 -0800 (PST)
+Received: from [127.0.1.1] ([82.76.168.176])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-387824a4a25sm4518264f8f.27.2024.12.12.08.50.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 12 Dec 2024 08:50:49 -0800 (PST)
+From: Abel Vesa <abel.vesa@linaro.org>
+Subject: [PATCH v4 0/2] arm64: dts: qcom: x1e80100: Describe SDCs and
+ enable support on QCP
+Date: Thu, 12 Dec 2024 18:50:38 +0200
+Message-Id: <20241212-x1e80100-qcp-sdhc-v4-0-a74c48ee68a3@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 2/6] arm64: dts: qcom:
- sdm845-db845c-navigation-mezzanine: remove disabled ov7251 camera
-To: Neil Armstrong <neil.armstrong@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
- <conor+dt@kernel.org>,
-        cros-qcom-dts-watchers@chromium.org,
-        Felipe Balbi <felipe.balbi@microsoft.com>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20241211-topic-misc-dt-fixes-v3-0-010ac10529b1@linaro.org>
- <20241211-topic-misc-dt-fixes-v3-2-010ac10529b1@linaro.org>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <20241211-topic-misc-dt-fixes-v3-2-010ac10529b1@linaro.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: xS3gZs3_SDs1scRhguPjvVXqKuM--2kN
-X-Proofpoint-ORIG-GUID: xS3gZs3_SDs1scRhguPjvVXqKuM--2kN
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 spamscore=0
- priorityscore=1501 lowpriorityscore=0 phishscore=0 clxscore=1015
- mlxlogscore=964 mlxscore=0 adultscore=0 bulkscore=0 malwarescore=0
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2412120120
+X-B4-Tracking: v=1; b=H4sIAF4UW2cC/23NwQqDMAyA4VcZPa+jiVXrTnuPsUPXRi0Mde0oD
+ vHdV4WBY97yB/JlYoG8o8DOh4l5ii64vkshjwdmWt01xJ1NzVCgBCFKPgIpkSb+NAMPtjUcclN
+ CYbWtZMHS3eCpduNqXm+pWxdevX+vLyIs26+mdrQIXHBbUy1NhZoyuDxcp31/6n3DFi7ihgC5R
+ 2AiVKGoFFphTuKPyDYE4h6RJUIWRgqgDM29/iHmef4ADdtXqTkBAAA=
+X-Change-ID: 20241007-x1e80100-qcp-sdhc-15c716dad946
+To: Ulf Hansson <ulf.hansson@linaro.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>
+Cc: Johan Hovold <johan@kernel.org>, 
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, linux-mmc@vger.kernel.org, 
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ linux-arm-msm@vger.kernel.org, Abel Vesa <abel.vesa@linaro.org>, 
+ Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+X-Mailer: b4 0.15-dev-dedf8
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1577; i=abel.vesa@linaro.org;
+ h=from:subject:message-id; bh=BBhhYc6WiR9lrxb02YxPKhDO0cLFxCtxBdQvIJoPBZM=;
+ b=owEBbQKS/ZANAwAKARtfRMkAlRVWAcsmYgBnWxRiNIn+O0vKaFBYIqig8fVqQg6iFcWFAi7Qb
+ MsKtTzGbraJAjMEAAEKAB0WIQRO8+4RTnqPKsqn0bgbX0TJAJUVVgUCZ1sUYgAKCRAbX0TJAJUV
+ VrA4D/9FjCuVtCYWL1NzbPmJ4SG5pwpxiXXPAYzUkBijxiM4nzDEN19c0Gz75XJkIaZnGbv5ezF
+ b7bKJRjOU3PxvvE4eMJVLmDq8LYjxaQF6Z16+V6qlb1EHSl9wnD3xie0w303b2ZvAN1FkROdjMw
+ UFaj4KRw28IFfh2P+US6So9kLg7S2rlbu19JOaOlKtg/d4Dq6fQ1gfdcFCSyGY0kX9TXxyoYmbn
+ ma8RAVr9CWOMoYCsOgoYMPEG97V2Su8XIe9QWnMB6gKNFFkJB4zQclSgjWH4Y5QtN+/vgS4ysaN
+ N6Ac2GDcpOZwydpC7xOjzEvkecSN3TjWtTG1+r738XmfTwyGOpC4slYzRlwA4zepOOz6feyd7BH
+ JpFZB6rgDWGViAHn1I5gwFvzlXh50vKUYJfx4RWExebvjulYZau7IHrYMnCCkniw786X2QZWIEz
+ IuZr+vHU1Ar1o6HOp961K2memMkuQ8yE4vj9Yj5xmNm9ygMW5dAJj+3lEorat+tbxTjV83vbRpb
+ yJ85AfCzYd4ysX/Z7PLq/c/pjB3muI2L0KWPwUl6+v517JXvBtiAB88awxOVv83TN614M6RCO7+
+ qUzhU6AiIafM0DYUEsRA7V2OT+mc479u638ZIiEnMGIWr3gdZnrAHyZBYShsqtNAB1vnfALWYBh
+ GTAlHF/eJOvCQ3w==
+X-Developer-Key: i=abel.vesa@linaro.org; a=openpgp;
+ fpr=6AFF162D57F4223A8770EF5AF7BF214136F41FAE
 
-On 11.12.2024 9:03 AM, Neil Armstrong wrote:
-> The ov7251node has bindings check errors in the endpoint, and the
-> camera node was disabled since the beginning. Even when switching the
-> node to okay, the endpoint description to the csiphy is missing along
-> with the csiphy parameters.
-> 
-> Drop the ov7251 camera entirely until it's properly described.
-> 
-> This obviously fixes:
-> sdm845-db845c-navigation-mezzanine.dtso: camera@60: port:endpoint:data-lanes: [0, 1] is too long
-> 	from schema $id: http://devicetree.org/schemas/media/i2c/ovti,ov7251.yaml#
-> 
-> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-> ---
+The X1E80100 has two SDHC controllers (called SDC2 and SDC4).
+Describe both of them and enable the SDC2 on QCP. This brings
+SD card support for the microSD port on QCP.
 
-Since:
+The SDC4 is described but there is no device outthere yet that makes
+use of it, AFAIK.
 
-* nobody cared for so many years
-* there don't seem to be (m)any active users of DB845c left
-* /\, even less with this specific mezz and usecase
+Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+---
+Changes in v4:
+- Squashed the pinconf for SDC2 into the patch that describes the
+  controllers.
+- Reworded the commit messages a bit.
+- Link to v3: https://lore.kernel.org/r/20241022-x1e80100-qcp-sdhc-v3-0-46c401e32cbf@linaro.org
 
-I'm happy to see it gone
+Changes in v3:
+- Reordered the default and sleep pinconfs. Also the bias and
+  drive-strength properties. As per Konrad's suggestion.
+- Link to v2: https://lore.kernel.org/r/20241014-x1e80100-qcp-sdhc-v2-0-868e70a825e0@linaro.org
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Changes in v2:
+- rebased on next-20241011
+- dropped the bindings schema update patch
+- dropped the sdhci-caps-mask properties from both
+  controllers as SDR104/SDR50 are actually supported
+- Link to v1: https://lore.kernel.org/r/20241008-x1e80100-qcp-sdhc-v1-0-dfef4c92ae31@linaro.org
 
-Konrad
+---
+Abel Vesa (2):
+      arm64: dts: qcom: x1e80100: Describe the SDHC controllers
+      arm64: dts: qcom: x1e80100-qcp: Enable SD card support
+
+ arch/arm64/boot/dts/qcom/x1e80100-qcp.dts |  20 +++++
+ arch/arm64/boot/dts/qcom/x1e80100.dtsi    | 142 ++++++++++++++++++++++++++++++
+ 2 files changed, 162 insertions(+)
+---
+base-commit: 91e71d606356e50f238d7a87aacdee4abc427f07
+change-id: 20241007-x1e80100-qcp-sdhc-15c716dad946
+
+Best regards,
+-- 
+Abel Vesa <abel.vesa@linaro.org>
+
 
