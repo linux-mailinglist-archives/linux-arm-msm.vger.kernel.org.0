@@ -1,139 +1,100 @@
-Return-Path: <linux-arm-msm+bounces-41693-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-41694-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7D4F69EE2F5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Dec 2024 10:27:22 +0100 (CET)
-Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id D975E188B867
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Dec 2024 09:26:55 +0000 (UTC)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A6652213245;
-	Thu, 12 Dec 2024 09:24:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="jHMnIMmy"
-X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0EA589EE2F2
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Dec 2024 10:27:20 +0100 (CET)
+Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C732210188;
-	Thu, 12 Dec 2024 09:24:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2C87E2848DD
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Dec 2024 09:27:18 +0000 (UTC)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CB1FD2101B7;
+	Thu, 12 Dec 2024 09:25:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gAQ34xxz"
+X-Original-To: linux-arm-msm@vger.kernel.org
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 987F320E337;
+	Thu, 12 Dec 2024 09:25:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733995485; cv=none; b=giuv7UGc0Vi7oLLgdtneC+ha5PhUUaaE7SkEPsVfSuqWuOx1pnzBz0iQUPcL2GgPpULT40oSK0515RJ5vcg8+e/en0lGq4PaWbeU94+2oxo2F7/7HZL6SI4kyC9OQY4hXX3Ustq0w9NrMf5sVlVSGWlR2oo7/gLE05+1D0JlXxU=
+	t=1733995559; cv=none; b=skJKRfuUZMj3B0A98WCzXGQtthusD/m+WuS480/WWX8qKmL2H5B3KZhOAqFW2eQ26azzqEg7DsEsn5Ci0aWNJi1u8Ng3N+MJ214OOBWKvjOfsv37rtjGc+sX1wX0HCQPKpFRnOwJ4IHDVQJEBT9W7oFHUPBoZB9/C3Sg24vBmR8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733995485; c=relaxed/simple;
-	bh=vCwIhGCjXmjCA1Ma9uLFUEilpiYAlaITDHBCZV3B3xU=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:References:
-	 In-Reply-To:To:CC; b=YMazuY86gFivVBSZCnoFpGSjc+8V6yWLz7xkd/h65EWMEBoWZSffdXsT3HQuL5jrGgf6DRcijjU4jkYQNCLIbWHnuEH8B5CDnB1A91jJA8OgEADGIYJ6cK7JRxbx54FEzO12M9z0ibTgDQd0liWkhseAbNiKrO5XRYxMP0QVPoY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=jHMnIMmy; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BC7qAXk032186;
-	Thu, 12 Dec 2024 09:24:41 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	H5LtfJQ/X6iDOog7zMSQfkIHxNYMjH3TDsbDmW8i4gs=; b=jHMnIMmy3brPRvkH
-	SKoEZGuTIaUzUJaRmbMFu+TMr2DT/xxeNp9NdOb+ivnOUGp/4Ba8RBrrpBE/0wCs
-	vhIu+S51EkzrFBKnE87E23m2Nb7PzC/CIsn7KqmXHphOfYhFUcMJMUlaWtG9yAIP
-	RVi4aqstYxWEJtsZFOu06sGU4If2xt3blbaGeFd+Glu+ospYrwAi6JSePunbiGf/
-	/+U8IaPTj/tuDcFORUkhuxVCdOKf1eJP2q+MYH7zqEC/1y/0OzhPTWgDKoQXi2/9
-	3CLQGhP0/MFpl2k82JVqExyZKwYX9OtwjHlFCu2sed0jilqT9rqQoQBTdMaUvFQ2
-	WmJ2LQ==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43f6tfbnju-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 12 Dec 2024 09:24:40 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4BC9OeTi031749
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 12 Dec 2024 09:24:40 GMT
-Received: from lijuang2-gv.ap.qualcomm.com (10.80.80.8) by
- nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Thu, 12 Dec 2024 01:24:34 -0800
-From: Lijuan Gao <quic_lijuang@quicinc.com>
-Date: Thu, 12 Dec 2024 17:24:05 +0800
-Subject: [PATCH 6/6] arm64: dts: qcom: correct gpio-ranges for QCS8300
+	s=arc-20240116; t=1733995559; c=relaxed/simple;
+	bh=Bi5Hm1hKHqJlQUSQA4wsm321XMcO3ZElLnoKLUpFdUw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=o/23+G5mc22bPWAaBcIgIzf02kTumZIIZIXvBy0sy3KS3ArsIDYaHgYy2pbzSHG0mzoE4ASXsgt9OcpZwnLmo5kPQ1Bv3NR+7PAisYMKl/jGEg/Bj39EUwOGitpEdaND2sYlHe+jMJfDx87TIUG6b/m6MZDkQJ9EbqDucDO+mJc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gAQ34xxz; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D408C4CECE;
+	Thu, 12 Dec 2024 09:25:56 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1733995559;
+	bh=Bi5Hm1hKHqJlQUSQA4wsm321XMcO3ZElLnoKLUpFdUw=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=gAQ34xxzHYZQvQcYjwixMatdVbC+eGq5oOmqXyHtVY/kpxVipD76h2ilOCpKdnM/O
+	 EoyY6W2Jr77BJ7xUUm62bmOcYfK6dOCrFX2MqWZYq1TR3ovrhnrf1WsKHcrWt6HlbK
+	 tGsLAsBMT0R8jcRW5bO+UaYfMwoYdJUVSQs6iT0IebME6V6qVuLxKkW9SY54DfiXsn
+	 s0nlyEhnqD9HKvV6CgQO9kVGSp3bhgC4eJ8Izmuo8dwer4bnJniXAHKfzJRVR7uf81
+	 wDRl52Mnx7+QaD2YCpNHytRzJSIoQ45Z865Ivc5hwigHJcw1Fs6cWcGGB5m1g8jV+R
+	 ZF+dfj+WwDtvQ==
+Date: Thu, 12 Dec 2024 10:25:53 +0100
+From: Niklas Cassel <cassel@kernel.org>
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc: kw@linux.com, gregkh@linuxfoundation.org, arnd@arndb.de,
+	lpieralisi@kernel.org, shuah@kernel.org, kishon@kernel.org,
+	linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org,
+	bhelgaas@google.com, linux-arm-msm@vger.kernel.org, robh@kernel.org,
+	linux-kselftest@vger.kernel.org
+Subject: Re: [PATCH v3 0/4] Migrate PCI Endpoint Subsystem tests to Kselftest
+Message-ID: <Z1qsIREtdeR38fF6@ryzen>
+References: <20241211080105.11104-1-manivannan.sadhasivam@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-ID: <20241212-correct_gpio_ranges-v1-6-c5f20d61882f@quicinc.com>
-References: <20241212-correct_gpio_ranges-v1-0-c5f20d61882f@quicinc.com>
-In-Reply-To: <20241212-correct_gpio_ranges-v1-0-c5f20d61882f@quicinc.com>
-To: Bjorn Andersson <andersson@kernel.org>,
-        Linus Walleij
-	<linus.walleij@linaro.org>,
-        Rob Herring <robh@kernel.org>,
-        "Krzysztof
- Kozlowski" <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        "Jingyi
- Wang" <quic_jingyw@quicinc.com>,
-        Konrad Dybcio <konradybcio@kernel.org>
-CC: <kernel@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <linux-gpio@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>,
-        Krzysztof Kozlowski
-	<krzysztof.kozlowski@linaro.org>,
-        Lijuan Gao <quic_lijuang@quicinc.com>
-X-Mailer: b4 0.15-dev-99b12
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1733995452; l=930;
- i=quic_lijuang@quicinc.com; s=20240827; h=from:subject:message-id;
- bh=vCwIhGCjXmjCA1Ma9uLFUEilpiYAlaITDHBCZV3B3xU=;
- b=w+W3WF3kQoLwjmYrXjKI7sLkJeHlHrk4L8f6KD8OKjfbHaV9uUUStyVrVouwmAzvhNOcoxPTx
- OdugC6s5BqjAbEbsFC4EIZLPLlHyElUNJ9sKUZqQ7eSbjloN5rCYd+O
-X-Developer-Key: i=quic_lijuang@quicinc.com; a=ed25519;
- pk=1zeM8FpQK/J1jSFHn8iXHeb3xt7F/3GvHv7ET2RNJxE=
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: DC4x-V6h9tQ5jBP2VdOtxJdGGvJ1rLiJ
-X-Proofpoint-ORIG-GUID: DC4x-V6h9tQ5jBP2VdOtxJdGGvJ1rLiJ
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 suspectscore=0
- mlxlogscore=470 malwarescore=0 spamscore=0 lowpriorityscore=0
- impostorscore=0 adultscore=0 bulkscore=0 phishscore=0 priorityscore=1501
- clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2412120065
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241211080105.11104-1-manivannan.sadhasivam@linaro.org>
 
-The QCS8300 TLMM pin controller has GPIOs 0-132, it also has UFS_RESET
-pin for primary UFS memory reset, so correct the gpio-ranges for the UFS
-driver can toggle it.
+Hello Mani,
 
-Fixes: 7be190e4bdd2 ("arm64: dts: qcom: add QCS8300 platform")
-Signed-off-by: Lijuan Gao <quic_lijuang@quicinc.com>
----
- arch/arm64/boot/dts/qcom/qcs8300.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+On Wed, Dec 11, 2024 at 01:31:01PM +0530, Manivannan Sadhasivam wrote:
+> Hi,
+> 
+> This series carries forward the effort to add Kselftest for PCI Endpoint
+> Subsystem started by Aman Gupta [1] a while ago. I reworked the initial version
+> based on another patch that fixes the return values of IOCTLs in
+> pci_endpoint_test driver and did many cleanups. Since the resulting work
+> modified the initial version substantially, I took over the authorship.
+> 
+> This series also incorporates the review comment by Shuah Khan [2] to move the
+> existing tests from 'tools/pci' to 'tools/testing/kselftest/pci_endpoint' before
+> migrating to Kselftest framework. I made sure that the tests are executable in
+> each commit and updated documentation accordingly.
+> 
+> NOTE: Patch 1 is strictly not related to this series, but necessary to execute
+> Kselftests with Qualcomm Endpoint devices. So this can be merged separately.
 
-diff --git a/arch/arm64/boot/dts/qcom/qcs8300.dtsi b/arch/arm64/boot/dts/qcom/qcs8300.dtsi
-index 73abf2ef9c9f..07d6d3ff4365 100644
---- a/arch/arm64/boot/dts/qcom/qcs8300.dtsi
-+++ b/arch/arm64/boot/dts/qcom/qcs8300.dtsi
-@@ -971,7 +971,7 @@ tlmm: pinctrl@f100000 {
- 			interrupts = <GIC_SPI 208 IRQ_TYPE_LEVEL_HIGH>;
- 			gpio-controller;
- 			#gpio-cells = <2>;
--			gpio-ranges = <&tlmm 0 0 133>;
-+			gpio-ranges = <&tlmm 0 0 134>;
- 			interrupt-controller;
- 			#interrupt-cells = <2>;
- 			wakeup-parent = <&pdc>;
+Having to write a big NOTE is usually a hint that you should just have done
+things differently :)
 
--- 
-2.46.0
+If you need to respin this series, I strongly suggest that you send the
+Qcom fix separately. It is totally independent, and should be merged ASAP.
 
+As you know, this series conflicts with:
+https://lore.kernel.org/linux-pci/20241116032045.2574168-2-cassel@kernel.org/
+
+I don't see any reason why the above patch has not been merged yet,
+but it would be really nice if the above could be picked up first,
+so this series could also add a kselftest testcase for the above.
+
+
+Kind regards,
+Niklas
 
