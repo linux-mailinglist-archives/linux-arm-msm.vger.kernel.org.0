@@ -1,193 +1,182 @@
-Return-Path: <linux-arm-msm+bounces-41791-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-41792-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id AF38F9EF206
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Dec 2024 17:44:58 +0100 (CET)
-Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1F183189EDB5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Dec 2024 16:36:41 +0000 (UTC)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CF28C23DE82;
-	Thu, 12 Dec 2024 16:25:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="VGgmxxLH"
-X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id B3E7F9EF1BE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Dec 2024 17:40:46 +0100 (CET)
+Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AB9922A1C0;
-	Thu, 12 Dec 2024 16:25:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6EDE4288FDD
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Dec 2024 16:40:45 +0000 (UTC)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 00B19235887;
+	Thu, 12 Dec 2024 16:32:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="QGi5zYHd"
+X-Original-To: linux-arm-msm@vger.kernel.org
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CA1F223E71;
+	Thu, 12 Dec 2024 16:32:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734020742; cv=none; b=a1uDBUUQsSjW2AdCcuigPyrsNnGowPv5tLN9vrisAMNgqVUbDyitGwjjSp99icTpz2l6xg23s+CgZ6JiJpdSFMB7liEYyfSnRTH+h8mhMEhlzifEmAt7MjFHY6jTNTallPXi9tPXMfZdcPk4jGLbXmuf40RokHXYpkXehClzd0I=
+	t=1734021131; cv=none; b=qAoGrNFEKeaXEDW2g+zl7qvNO7exrLZxzEpgEIGR/E0jGphtYSJuWYlz6XfwoOENAJHpQQltgRZNkgY2M5sjWNFB535kXI5JPGVLdlD4kgm4TtBQMZkV1idCvry+W6IKLsUdzjfGQIIs8GNlAwHeDKbwnrlF2JZo8wv39qeH5IE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734020742; c=relaxed/simple;
-	bh=/80D6SSlGn7n1xvUC5voFQwABZp0R2C/r631Sf2IRfQ=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=oWQ4t1IZy9eaYqEdgMnbnb5VZtTGYY+BnEpB2S1b/VPzLIoquzoW/uVown5N2TS/IFdVNI4u/uc/nhAA0h4hfDUPUXyYnfSye2z7so0dDzyy6M8/E71Oi8CSthcJK7P0axBk3b5ocbpW6dfwTYsm+juPdxoOovgr3TGtkbgh+sM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=VGgmxxLH; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1734021131; c=relaxed/simple;
+	bh=BWISh9/YM0tfqbQeLcg9PE7M66MOqPekX13FRb4PjxA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=C3yFcXJre+HYFu085dSqywwMZvrVycBi4TuKiTesPnS56GIGJkCXcYkmIGFbLHs4s57HlhjSB2pu0+g+SoPeMCmYd17T/PhxBc+f6AzKrfPWcbyK69IA0y9yPVC8s0cOQ173c5nFa5p7nFHQi4z2bg4QyL4qkaTAxw/suL2l0ss=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=QGi5zYHd; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BC7wX6T030073;
-	Thu, 12 Dec 2024 16:25:30 GMT
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BC9kdca030156;
+	Thu, 12 Dec 2024 16:32:07 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	l/1hRtL88eL8s2U9Di8ClmmpZhI+xqSo8rdmBhnrAjc=; b=VGgmxxLHRhTgBPwy
-	kQzOKPGCTEe9BwccXSYWlHgU0xwjRNq1MZ408UopA8jJt/fAvGjji2w+jcyV6bW6
-	0C7gghUksGBPkGMmxVBvpvsaYrtJzzkZpunD4Gn8ik4kaW6GN9wuWiNB2vMsigw/
-	3rFOZ+xpe8O3wmfDIKYYcsn89YZsD1Z1y+pPpCwGbk2WHtw+YiJ/096qQ1ywOONl
-	VVp3kbiJ51pkBXdww+FRKHTEeAS94PQApgZ74KvvwrnBFGoTUKAsZ5GSV7tqr+m6
-	fS7RJmYkDbkbcnIdaxFazFJBlgWvKrGuYKhDd7M8mf+3FelZBEAKiDM+l9gSPjlU
-	m9q5gw==
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43dxw4byye-1
+	07UFKydAPBRtSd3wupb1d4fAByuHRcDkCfT6XA2HGiM=; b=QGi5zYHd24RA7jqS
+	R2gIUevkuHM2v2MhY1Rqbo/8e+kU8KgSBpqUVBOBEjCsSqiICkY5bt21tlDi5fmr
+	uwYVcW+Z1IqMleSZiqwmIOr9/0OPBsl9hLme9GKysT19NsZX7Iosi4dToEwK7QAh
+	/Wdz10sb1LxRIfYnaaM67Lj1jE3tdBf3NzTQay7zfWcqLEZKxmydbhk865GGTTfC
+	tXt1INLLpAck3t7bTeyZBUdQiTEIQXVcsW1A6kMiALF+BwQ62KrM9MP0zoA6C7M2
+	ps68AsRXTB152WKF3L9B9XtVlZJ9IRnzw9s151HyQVYEcZ/zxwgFvEKItonMWo5t
+	WU+udg==
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43fwgeh43f-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 12 Dec 2024 16:25:29 +0000 (GMT)
+	Thu, 12 Dec 2024 16:32:07 +0000 (GMT)
 Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-	by NASANPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4BCGPSk8014761
+	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4BCGW7cY013976
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 12 Dec 2024 16:25:28 GMT
-Received: from hu-mohs-hyd.qualcomm.com (10.80.80.8) by
- nasanex01c.na.qualcomm.com (10.45.79.139) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Thu, 12 Dec 2024 08:25:21 -0800
-From: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
-To: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Liam Girdwood
-	<lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
-        Rob Herring
-	<robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>, Vinod Koul <vkoul@kernel.org>,
-        Bard Liao
-	<yung-chuan.liao@linux.intel.com>,
-        Jaroslav Kysela <perex@perex.cz>, "Takashi
- Iwai" <tiwai@suse.com>
-CC: Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>,
-        Sanyog Kale
-	<sanyog.r.kale@intel.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-sound@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <quic_pkumpatl@quicinc.com>, <kernel@quicinc.com>,
-        Mohammad Rafi Shaik <quic_mohs@quicinc.com>
-Subject: [PATCH v5 4/4] ASoC: qcom: sdw: Add get and set channel maps support from codec to cpu dais
-Date: Thu, 12 Dec 2024 21:53:34 +0530
-Message-ID: <20241212162334.36739-5-quic_mohs@quicinc.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20241212162334.36739-1-quic_mohs@quicinc.com>
-References: <20241212162334.36739-1-quic_mohs@quicinc.com>
+	Thu, 12 Dec 2024 16:32:07 GMT
+Received: from [10.216.33.158] (10.80.80.8) by nasanex01c.na.qualcomm.com
+ (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 12 Dec
+ 2024 08:32:05 -0800
+Message-ID: <c4a8393c-37f5-4115-a67f-2a4e98b6648a@quicinc.com>
+Date: Thu, 12 Dec 2024 22:02:01 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/2] i2c: qcom-geni: Simplify error handling in probe
+ function
+To: Andi Shyti <andi.shyti@kernel.org>
+CC: <linux-arm-msm@vger.kernel.org>, <linux-i2c@vger.kernel.org>
+References: <20241210231054.2844202-1-andi.shyti@kernel.org>
+ <20241210231054.2844202-3-andi.shyti@kernel.org>
+ <50ebc5f1-967a-4aa7-a4c3-3304961d1f8b@quicinc.com>
+ <fd45ts4bgcaaoydvvkq52c3r65dhrmbe4ig3oxp7pqtmrckdwd@wnyfmzlfhgs5>
+Content-Language: en-US
+From: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
+In-Reply-To: <fd45ts4bgcaaoydvvkq52c3r65dhrmbe4ig3oxp7pqtmrckdwd@wnyfmzlfhgs5>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nasanex01c.na.qualcomm.com (10.45.79.139)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: CbMJFmKfZ1pk65Ju96SOug-iGSAyq2jh
-X-Proofpoint-GUID: CbMJFmKfZ1pk65Ju96SOug-iGSAyq2jh
+X-Proofpoint-GUID: SaiSFJD04dkvBmnEAnsENO7Ch0JfCISp
+X-Proofpoint-ORIG-GUID: SaiSFJD04dkvBmnEAnsENO7Ch0JfCISp
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 bulkscore=0
- suspectscore=0 priorityscore=1501 adultscore=0 mlxlogscore=999
- clxscore=1015 spamscore=0 mlxscore=0 lowpriorityscore=0 phishscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2412120118
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ suspectscore=0 bulkscore=0 mlxlogscore=999 spamscore=0 clxscore=1015
+ impostorscore=0 mlxscore=0 lowpriorityscore=0 malwarescore=0 phishscore=0
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2412120119
 
-Add get and set channel maps support from codec to cpu dais.
+Thanks Andi !
 
-Implemented logic to get the channel map in case of only sdw stream and
-set channel map only for specific cpu dais.
-
-Signed-off-by: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
----
- drivers/soundwire/qcom.c |  5 ++---
- sound/soc/qcom/sdw.c     | 34 +++++++++++++++++++++++++++++++---
- 2 files changed, 33 insertions(+), 6 deletions(-)
-
-diff --git a/drivers/soundwire/qcom.c b/drivers/soundwire/qcom.c
-index 86763ba3a3b2..eb0cf725872e 100644
---- a/drivers/soundwire/qcom.c
-+++ b/drivers/soundwire/qcom.c
-@@ -1276,11 +1276,10 @@ static void *qcom_swrm_get_sdw_stream(struct snd_soc_dai *dai, int direction)
- }
- 
- static int qcom_swrm_set_channel_map(struct snd_soc_dai *dai,
--				     unsigned int tx_num, unsigned int *tx_slot,
--				     unsigned int rx_num, unsigned int *rx_slot)
-+				     unsigned int tx_num, const unsigned int *tx_slot,
-+				     unsigned int rx_num, const unsigned int *rx_slot)
- {
- 	struct qcom_swrm_ctrl *ctrl = dev_get_drvdata(dai->dev);
--	struct sdw_stream_runtime *sruntime = ctrl->sruntime[dai->id];
- 	int i;
- 
- 	if (tx_slot) {
-diff --git a/sound/soc/qcom/sdw.c b/sound/soc/qcom/sdw.c
-index f2eda2ff46c0..d4d8ed46e6ff 100644
---- a/sound/soc/qcom/sdw.c
-+++ b/sound/soc/qcom/sdw.c
-@@ -25,7 +25,9 @@ int qcom_snd_sdw_startup(struct snd_pcm_substream *substream)
- 	struct snd_soc_dai *cpu_dai = snd_soc_rtd_to_cpu(rtd, 0);
- 	struct sdw_stream_runtime *sruntime;
- 	struct snd_soc_dai *codec_dai;
--	int ret, i;
-+	int ret, i, j;
-+	u32 rx_ch[SDW_MAX_PORTS], tx_ch[SDW_MAX_PORTS];
-+	u32 rx_ch_cnt = 0, tx_ch_cnt = 0;
- 
- 	sruntime = sdw_alloc_stream(cpu_dai->name);
- 	if (!sruntime)
-@@ -35,9 +37,35 @@ int qcom_snd_sdw_startup(struct snd_pcm_substream *substream)
- 		ret = snd_soc_dai_set_stream(codec_dai, sruntime,
- 					     substream->stream);
- 		if (ret < 0 && ret != -ENOTSUPP) {
--			dev_err(rtd->dev, "Failed to set sdw stream on %s\n",
--				codec_dai->name);
-+			dev_err(rtd->dev, "Failed to set sdw stream on %s\n", codec_dai->name);
- 			goto err_set_stream;
-+		} else if (ret == -ENOTSUPP) {
-+			/* Ignore unsupported */
-+			continue;
-+		}
-+
-+		ret = snd_soc_dai_get_channel_map(codec_dai, &tx_ch_cnt, tx_ch,
-+						  &rx_ch_cnt, rx_ch);
-+		if (ret != 0 && ret != -ENOTSUPP) {
-+			dev_err(rtd->dev, "Failed to get codec chan map %s\n", codec_dai->name);
-+			goto err_set_stream;
-+		} else if (ret == -ENOTSUPP) {
-+			/* Ignore unsupported */
-+			continue;
-+		}
-+	}
-+
-+	switch (cpu_dai->id) {
-+	case RX_CODEC_DMA_RX_0:
-+	case TX_CODEC_DMA_TX_3:
-+		if (tx_ch_cnt || rx_ch_cnt) {
-+			for_each_rtd_codec_dais(rtd, j, codec_dai) {
-+				ret = snd_soc_dai_set_channel_map(codec_dai,
-+								  tx_ch_cnt, tx_ch,
-+								  rx_ch_cnt, rx_ch);
-+				if (ret != 0 && ret != -ENOTSUPP)
-+					goto err_set_stream;
-+			}
- 		}
- 	}
- 
--- 
-2.34.1
+On 12/12/2024 7:15 PM, Andi Shyti wrote:
+> Hi Mukesh,
+> 
+>>> diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-qcom-geni.c
+>>> index 01db24188e29..3fc85595a4aa 100644
+>>> --- a/drivers/i2c/busses/i2c-qcom-geni.c
+>>> +++ b/drivers/i2c/busses/i2c-qcom-geni.c
+>>> @@ -867,14 +867,13 @@ static int geni_i2c_probe(struct platform_device *pdev)
+>>>    	ret = geni_se_resources_on(&gi2c->se);
+>>>    	if (ret) {
+>>> -		clk_disable_unprepare(gi2c->core_clk);
+>>> -		return dev_err_probe(dev, ret, "Error turning on resources\n");
+>>> +		dev_err_probe(dev, ret, "Error turning on resources\n");
+>>> +		goto err_clk;
+>>>    	}
+>>>    	proto = geni_se_read_proto(&gi2c->se);
+>>>    	if (proto != GENI_SE_I2C) {
+>>> -		geni_se_resources_off(&gi2c->se);
+>>> -		clk_disable_unprepare(gi2c->core_clk);
+>>> -		return dev_err_probe(dev, -ENXIO, "Invalid proto %d\n", proto);
+>>> +		dev_err_probe(dev, -ENXIO, "Invalid proto %d\n", proto);
+>> Suggestive comment, can we make this second patch as first patch ? So that
+>> we can have both above lines reduced in this patch.
+> 
+> I'm sorry, I missed this comment. I tried to swap it and there is
+> not much reduction in line changes[*].
+> 
+> The reason I chose this order is to avoid changing the same line
+> on both the patches, like here[**].
+> 
+> If it's not binding for you, I would keep the ordering.
+> 
+Sure, it's perfectly fine to me. No worries.
+> Thanks again a lot for looking into this,
+> Andi
+> 
+> [*] https://paste.debian.net/1339486/
+> [**] https://paste.debian.net/1339488/
+> 
+>>> +		goto err_off;
+>>>    	}
+>>>    	if (desc && desc->no_dma_support)
+>>> @@ -886,11 +885,8 @@ static int geni_i2c_probe(struct platform_device *pdev)
+>>>    		/* FIFO is disabled, so we can only use GPI DMA */
+>>>    		gi2c->gpi_mode = true;
+>>>    		ret = setup_gpi_dma(gi2c);
+>>> -		if (ret) {
+>>> -			geni_se_resources_off(&gi2c->se);
+>>> -			clk_disable_unprepare(gi2c->core_clk);
+>>> -			return ret;
+>>> -		}
+>>> +		if (ret)
+>>> +			goto err_off;
+>>>    		dev_dbg(dev, "Using GPI DMA mode for I2C\n");
+>>>    	} else {
+>>> @@ -902,10 +898,8 @@ static int geni_i2c_probe(struct platform_device *pdev)
+>>>    			tx_depth = desc->tx_fifo_depth;
+>>>    		if (!tx_depth) {
+>>> -			geni_se_resources_off(&gi2c->se);
+>>> -			clk_disable_unprepare(gi2c->core_clk);
+>>> -			return dev_err_probe(dev, -EINVAL,
+>>> -					     "Invalid TX FIFO depth\n");
+>>> +			dev_err_probe(dev, -EINVAL, "Invalid TX FIFO depth\n");
+>>> +			goto err_off;
+>>>    		}
+>>>    		gi2c->tx_wm = tx_depth - 1;
+>>> @@ -944,8 +938,16 @@ static int geni_i2c_probe(struct platform_device *pdev)
+>>>    	return 0;
+>> return ret here ? yes, we need to initialize ret = 0.
+>>> +err_off:
+>> can we rename as err_resources ?
+>>> +	geni_se_resources_off(&gi2c->se);
+>>> +err_clk:
+>>> +	clk_disable_unprepare(gi2c->core_clk);
+>>> +
+>>> +	return ret;
+>>> +
+>>>    err_dma:
+>>>    	release_gpi_dma(gi2c);
+>>> +
+>>>    	return ret;
+>>>    }
+>>
 
 
