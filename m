@@ -1,145 +1,97 @@
-Return-Path: <linux-arm-msm+bounces-41750-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-41754-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B1ECF9EE800
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Dec 2024 14:45:41 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 399999EE881
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Dec 2024 15:12:17 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3727B2831FE
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Dec 2024 13:45:39 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0552D2822F9
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Dec 2024 14:12:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 659462063E6;
-	Thu, 12 Dec 2024 13:45:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SG97DJ6x"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CA5D32139C9;
+	Thu, 12 Dec 2024 14:12:08 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from 13.mo584.mail-out.ovh.net (13.mo584.mail-out.ovh.net [178.33.251.8])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A35154720;
-	Thu, 12 Dec 2024 13:45:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3339211A0E
+	for <linux-arm-msm@vger.kernel.org>; Thu, 12 Dec 2024 14:12:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=178.33.251.8
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734011136; cv=none; b=Ab2FDMvL1/+5jMu2Pt1C718n+ZX8sV3Gv9Yox2F9tK1wohDCuD9wLexlu25YPILLUAIKlEZ5FBzgQYwWSfZ8gGcq2jitZuSOEpdU6aYhB2g44Nzl7eyKzAZAz87Z2IPCaB+B2rYHy4k/SilqvChFlV3Jid+Ehwd2CivfIRYXeJY=
+	t=1734012728; cv=none; b=EftdXjmt6202OVt3CGgQF0nHp2HdlalvzsBr2Jy0AEtP+GuAb4mMmx1mc6aJh1nCtmfsMPXaQy525HZABQxvm9tIXGY4gRRSMhpI4DDhYFad3NrP4qQXehK52tGJXvGUseFyKkzsdm84twofg7ysimUjBfwfHPsAV84tDCidYTI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734011136; c=relaxed/simple;
-	bh=N/xB9jv77LySRrAbu2Yk7Cbgx2o0HIhjAMeMKxcxFls=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=jC+HuZkQYzVrpPNr7EJM6+a9+NMeEjcb5NaZzJC9T8x9LYuE4CNBao8TqcRT4eXvZqs7zj0zwt036F7WWIRlL2p1eGak074sJCeTRWHATd9JhpEMVyJa8H1kvbLExjDpkvlzMzC4WU0MGQ6p6XODCVuiVRr1KSeS8R+ZxTjwIxQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SG97DJ6x; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21CD4C4CECE;
-	Thu, 12 Dec 2024 13:45:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1734011135;
-	bh=N/xB9jv77LySRrAbu2Yk7Cbgx2o0HIhjAMeMKxcxFls=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=SG97DJ6xU1fP6+O5sk6LIgcW+s0XXwLsifGTaHW7gCxl2Cg3qNMpHyl6sPGA5UUO3
-	 phS498n5LIzCuhBEQFiPhXWFL8CneeJi10Y5jye0k3sflYaqcqIlahvnRTjQhhXV4w
-	 6f+zXQu3afNMvSVg2FhZikGu8kDIw3tSWFEMrq3KfxNr/E2v8mmLZHE93hs/a6fZNf
-	 j6DdMU+2urjt0QBq+qidWqGctY8UG7zdBVycVZt853Rz1PCsv0sVJekOLQ8m1Q6cu2
-	 D399M8Ia2zqf1Zq6aaducU4HDOel7bu7JVKEQcksALkhO3+PpNKhhYhm4pvU3ahPS8
-	 ANIaj55JCcCLw==
-Date: Thu, 12 Dec 2024 14:45:31 +0100
+	s=arc-20240116; t=1734012728; c=relaxed/simple;
+	bh=ZpKue6r4eSqHb+2lWRYfZYYoTjy7HSoiuGKtYVz9IMA=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=O7+/4j+aKhc7ibdTYHycZOFfinsB2VFaGSzCYvWxxb5BraWYT86vDhm9F6TEcRkp0+Ky4kd72qglzRZHac0UdzFwtqTvkx34+K59MQ/P92tPynrGcUvGL+a9HN1YRU4ECSmVBzDJKNOqtTVq7fUCYLH/1XJn8396Hg0CU8ny6Vo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=quarantine dis=none) header.from=kernel.org; spf=pass smtp.mailfrom=etezian.org; arc=none smtp.client-ip=178.33.251.8
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=quarantine dis=none) header.from=kernel.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=etezian.org
+Received: from director5.ghost.mail-out.ovh.net (unknown [10.108.9.3])
+	by mo584.mail-out.ovh.net (Postfix) with ESMTP id 4Y8DVN4qmfz1TD8
+	for <linux-arm-msm@vger.kernel.org>; Thu, 12 Dec 2024 13:54:36 +0000 (UTC)
+Received: from ghost-submission-5b5ff79f4f-ks6hw (unknown [10.110.178.25])
+	by director5.ghost.mail-out.ovh.net (Postfix) with ESMTPS id B94391FD4F;
+	Thu, 12 Dec 2024 13:54:35 +0000 (UTC)
+Received: from etezian.org ([37.59.142.110])
+	by ghost-submission-5b5ff79f4f-ks6hw with ESMTPSA
+	id gDzDGBvrWmfP8QcAwrclww
+	(envelope-from <andi@etezian.org>); Thu, 12 Dec 2024 13:54:35 +0000
+Authentication-Results:garm.ovh; auth=pass (GARM-110S0045e79d698-0c10-4535-8aa3-c02f7cae5ccf,
+                    7E8E14E11F102121CE247F47C6B4DBC0808239E0) smtp.auth=andi@etezian.org
+X-OVh-ClientIp:178.39.90.92
 From: Andi Shyti <andi.shyti@kernel.org>
-To: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
-Cc: linux-arm-msm@vger.kernel.org, linux-i2c@vger.kernel.org
-Subject: Re: [PATCH 2/2] i2c: qcom-geni: Simplify error handling in probe
- function
-Message-ID: <fd45ts4bgcaaoydvvkq52c3r65dhrmbe4ig3oxp7pqtmrckdwd@wnyfmzlfhgs5>
-References: <20241210231054.2844202-1-andi.shyti@kernel.org>
- <20241210231054.2844202-3-andi.shyti@kernel.org>
- <50ebc5f1-967a-4aa7-a4c3-3304961d1f8b@quicinc.com>
+To: linux-arm-msm@vger.kernel.org,
+	linux-i2c@vger.kernel.org
+Cc: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>,
+	Andi Shyti <andi.shyti@kernel.org>
+Subject: [PATCH v2 0/2] Qcom Geni exit path cleanups
+Date: Thu, 12 Dec 2024 14:54:14 +0100
+Message-ID: <20241212135416.244504-1-andi.shyti@kernel.org>
+X-Mailer: git-send-email 2.45.2
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <50ebc5f1-967a-4aa7-a4c3-3304961d1f8b@quicinc.com>
+Content-Transfer-Encoding: 8bit
+X-Ovh-Tracer-Id: 16941415900673673799
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: 0
+X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgeefuddrkeehgdehiecutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfqggfjpdevjffgvefmvefgnecuuegrihhlohhuthemucehtddtnecunecujfgurhephffvvefufffkofgggfestdekredtredttdenucfhrhhomheptehnughiucfuhhihthhiuceorghnughirdhshhihthhisehkvghrnhgvlhdrohhrgheqnecuggftrfgrthhtvghrnheptdevueeiheeftedujefhheelieejvdevteelfefhheeutdelkedtveejudejgfdvnecukfhppeduvdejrddtrddtrddupddujeekrdefledrledtrdelvddpfeejrdehledrudegvddruddutdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepihhnvghtpeduvdejrddtrddtrddupdhmrghilhhfrhhomheprghnughisegvthgviihirghnrdhorhhgpdhnsggprhgtphhtthhopedupdhrtghpthhtoheplhhinhhugidqrghrmhdqmhhsmhesvhhgvghrrdhkvghrnhgvlhdrohhrghdpoffvtefjohhsthepmhhoheekgegmpdhmohguvgepshhmthhpohhuth
 
-Hi Mukesh,
+Hi,
 
-> > diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-qcom-geni.c
-> > index 01db24188e29..3fc85595a4aa 100644
-> > --- a/drivers/i2c/busses/i2c-qcom-geni.c
-> > +++ b/drivers/i2c/busses/i2c-qcom-geni.c
-> > @@ -867,14 +867,13 @@ static int geni_i2c_probe(struct platform_device *pdev)
-> >   	ret = geni_se_resources_on(&gi2c->se);
-> >   	if (ret) {
-> > -		clk_disable_unprepare(gi2c->core_clk);
-> > -		return dev_err_probe(dev, ret, "Error turning on resources\n");
-> > +		dev_err_probe(dev, ret, "Error turning on resources\n");
-> > +		goto err_clk;
-> >   	}
-> >   	proto = geni_se_read_proto(&gi2c->se);
-> >   	if (proto != GENI_SE_I2C) {
-> > -		geni_se_resources_off(&gi2c->se);
-> > -		clk_disable_unprepare(gi2c->core_clk);
-> > -		return dev_err_probe(dev, -ENXIO, "Invalid proto %d\n", proto);
-> > +		dev_err_probe(dev, -ENXIO, "Invalid proto %d\n", proto);
-> Suggestive comment, can we make this second patch as first patch ? So that
-> we can have both above lines reduced in this patch.
+I am submitting two trivial cleanups in this series. The first
+replaces all instances of dev_err with dev_err_probe throughout
+the probe function for consistency. The second improves the error
+exit path by introducing a single 'goto' label for better
+maintainability.
 
-I'm sorry, I missed this comment. I tried to swap it and there is
-not much reduction in line changes[*].
+Thank you Mukesh for your reviews.
 
-The reason I chose this order is to avoid changing the same line
-on both the patches, like here[**].
-
-If it's not binding for you, I would keep the ordering.
-
-Thanks again a lot for looking into this,
+Thank you,
 Andi
 
-[*] https://paste.debian.net/1339486/
-[**] https://paste.debian.net/1339488/
+Changelog:
+==========
+v1 -> v2:
+ - Updated the final return statement to return 'ret' instead of
+   '0' for consistency. Since 'ret' already holds the value '0',
+   this change is purely aesthetic.
+ - Renamed the exit label from 'err_off' to 'err_resources' for
+   improved clarity and alignment with its purpose.
 
-> > +		goto err_off;
-> >   	}
-> >   	if (desc && desc->no_dma_support)
-> > @@ -886,11 +885,8 @@ static int geni_i2c_probe(struct platform_device *pdev)
-> >   		/* FIFO is disabled, so we can only use GPI DMA */
-> >   		gi2c->gpi_mode = true;
-> >   		ret = setup_gpi_dma(gi2c);
-> > -		if (ret) {
-> > -			geni_se_resources_off(&gi2c->se);
-> > -			clk_disable_unprepare(gi2c->core_clk);
-> > -			return ret;
-> > -		}
-> > +		if (ret)
-> > +			goto err_off;
-> >   		dev_dbg(dev, "Using GPI DMA mode for I2C\n");
-> >   	} else {
-> > @@ -902,10 +898,8 @@ static int geni_i2c_probe(struct platform_device *pdev)
-> >   			tx_depth = desc->tx_fifo_depth;
-> >   		if (!tx_depth) {
-> > -			geni_se_resources_off(&gi2c->se);
-> > -			clk_disable_unprepare(gi2c->core_clk);
-> > -			return dev_err_probe(dev, -EINVAL,
-> > -					     "Invalid TX FIFO depth\n");
-> > +			dev_err_probe(dev, -EINVAL, "Invalid TX FIFO depth\n");
-> > +			goto err_off;
-> >   		}
-> >   		gi2c->tx_wm = tx_depth - 1;
-> > @@ -944,8 +938,16 @@ static int geni_i2c_probe(struct platform_device *pdev)
-> >   	return 0;
-> return ret here ? yes, we need to initialize ret = 0.
-> > +err_off:
-> can we rename as err_resources ?
-> > +	geni_se_resources_off(&gi2c->se);
-> > +err_clk:
-> > +	clk_disable_unprepare(gi2c->core_clk);
-> > +
-> > +	return ret;
-> > +
-> >   err_dma:
-> >   	release_gpi_dma(gi2c);
-> > +
-> >   	return ret;
-> >   }
-> 
+Andi Shyti (2):
+  i2c: qcom-geni: Use dev_err_probe in the probe function
+  i2c: qcom-geni: Simplify error handling in probe function
+
+ drivers/i2c/busses/i2c-qcom-geni.c | 55 ++++++++++++++----------------
+ 1 file changed, 26 insertions(+), 29 deletions(-)
+
+-- 
+2.45.2
+
 
