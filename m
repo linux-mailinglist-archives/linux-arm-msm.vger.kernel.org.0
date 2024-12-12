@@ -1,147 +1,184 @@
-Return-Path: <linux-arm-msm+bounces-41611-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-41612-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 380A79EDCA3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Dec 2024 01:46:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 9BE969EDCA6
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Dec 2024 01:47:44 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 728C31889C1E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Dec 2024 00:46:47 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 096C11889CC6
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Dec 2024 00:47:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D2D861096F;
-	Thu, 12 Dec 2024 00:46:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BF6491CABA;
+	Thu, 12 Dec 2024 00:47:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="JXfSUy6P"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="WoLnSKYN"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
+Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEA008460
-	for <linux-arm-msm@vger.kernel.org>; Thu, 12 Dec 2024 00:46:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7685F3201
+	for <linux-arm-msm@vger.kernel.org>; Thu, 12 Dec 2024 00:47:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733964401; cv=none; b=BIlqpMb4SQt28gbvTn80goYa4M6Vd/9xzlIWks4rcs5Qw2HabvobaCYT6+q03UgQU3p0Ujwx0ybI7TOrfKUkIH2PsSGcMpk0zMYSrFFcCCzqLOf8LAV2yuVZZ4Gipx3z1bSF49+CGZk4fABg6puqtGv2XnHts/tLipwlybjkEVo=
+	t=1733964454; cv=none; b=C8+KgqlugyNUXrK7B99xrorUrBBUocFypi/80yGIaIH1/Pdv5ogmXeCtA3n8JgXNDV/fYHd6ZRp1y6gtaQAgWAyxl5MnFupVFd663BrvzjA8oLFIBJ3MlybKUoNNn6wuAAfHLv+1DmTcgVypTr5c1SuCrV96IfqXCxYZE0IoOBY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733964401; c=relaxed/simple;
-	bh=YS324n3d0zCyweuCVOsAXOrw2hHW8jnoR0Fe0uJwpIU=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 References:In-Reply-To; b=BUVsvu544wF7ipEV9nf2Z0uhk42qUSxVi8U5EyYtFhR3qHE0ZoEiuNo3k/+a6JGVn4AjSQ8M62ZIb3JYD+N3t/+7A+b+fucXGSxepIyN5my37mXxbGvjnynfCjYXcLhHtufjndyBVoe4lNPRoKhBVJzxt5B5WYwXulWMVaPPtU0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=JXfSUy6P; arc=none smtp.client-ip=209.85.221.49
+	s=arc-20240116; t=1733964454; c=relaxed/simple;
+	bh=u898HNuc/K7hFwQQGL+EvvHfte2KLKC60+utw98E/KE=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Oe/QY26FQ16pdWH9sO2nDnJL+FFsCS+olCzCia90iuIoRX4o6QUJq4uUJ6HRSFxE3ejsOeEqGUUkTeWDZigDPGY0he0Bb7AyuOfoHFwpzMVKiBkHi0zSkLTk0isgZldhOwSQi/TmTb36tfqPzrHFMTnkiuxExI42GD9ky8virAg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=WoLnSKYN; arc=none smtp.client-ip=209.85.128.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-38634c35129so12347f8f.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Dec 2024 16:46:39 -0800 (PST)
+Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-4361dc6322fso224475e9.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Dec 2024 16:47:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1733964398; x=1734569198; darn=vger.kernel.org;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=W17CG2GTV8JKUXeGnJwgV9wPZYIX0+hpf6sa4ld+5Nk=;
-        b=JXfSUy6POPURyLBLq37slshbvFeWN4dfVrp8XL494JzIJB/ZRtK39JSd4SWXihhtn1
-         pYEr4ooRev87nJwsa79Kix8vaVY/ANxIc1hxzsR4BCR03+MKCWtCUCjabOM/3FqaBw9J
-         vasjUr431y+GyFc9np7sjc+bnpMjiLKv5fOEVEDOrWFswTAiR9oem485ax+OE2lq6I23
-         yaJyKAIR6I8xG41I5yTMOsfyBVqCX5L7bJTndlUXYMNR67oJmAGJMPa09vK+K7e945XN
-         kuy7yB9J132nXR4kDJPEpLI0ltdw7pbdLS8BY2y9f7GfiFwgzz5mVEnyHOCzEhrel+vp
-         DjCg==
+        d=linaro.org; s=google; t=1733964450; x=1734569250; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=Y5l/l7iG742JLVKp0vJqekUsAPOA4worydu3RY2wX3E=;
+        b=WoLnSKYN1ihH08nxzVQBTy9+Ydi79QFSDVzdhdKAKM8uRDD510RlYBm2pBQvYBSVFp
+         fnW4qcjhA69HD2wJEf+ocBjNAqhOM1m2kJ3e2U/G5vCwCdGVv78sZZpxtM1Gn8LR5jQV
+         ldYUCmXJXShCpCicXNc+KYyVteEuLDFGv/+n7x+R8af+crPEb3uBfWm2e1rlu9WfpfEz
+         4lgwpE3FW+bXusyLoPpu7J6fXjznwFA9Hf7LuQVM1bSgYGFCll3kGzlpXJjAS6L5ah5r
+         HfkYYILUfqxBKNPVwShWPz7dtPSo89xFYm2LH+fFlm0lyueXUD6QpHMJI/21wzVMfNTI
+         qX3A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733964398; x=1734569198;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=W17CG2GTV8JKUXeGnJwgV9wPZYIX0+hpf6sa4ld+5Nk=;
-        b=Z2Lvwe9D8DThQGcI+QyhaPdsz8rIEemMhqnNida21/pkiRa5qTD2oxsODRlX3yE/bO
-         bT20ZFAO0r3l0DhLvWAomV8q256uX1/DdcMy/fQ1VbRJlXVb9rKZy34eekkbAsMk5ilX
-         aLvzlP8RDF6MKwBd0gFBlZtrWB1ZtGT0AWor4sYLjaMCH9LtssKFv4RWCBH6jaCjfVbs
-         46eqqZJ5fb/xV1OPOqQ4pAoatRHsZNGYRe8q4loTOVpWXyM897FBDGGHfEBEK0lBtb4k
-         Ti1pxaoVd3Br/GdSs6v6sH/3+gjzo5X83plP+8YRfO66caqSUq+ttcnD89chYrXXdCsf
-         Jy8g==
-X-Forwarded-Encrypted: i=1; AJvYcCXb1mGzDontL1TTdfeRI5GxUyy5iSu6vYutSBwWVIEKOP4++2gsnxPEWbzR/RJtYxljZ358WxaF+T/cQg+3@vger.kernel.org
-X-Gm-Message-State: AOJu0YxGni0S/Aj/xju0Bc7M77zqpXz7VAz0lSyeHkXd0UzLwiS6Tw9k
-	hO0/9tkBIfrjirtuLL/pwGaPyrXFYEe7RCZ3BstdAqmytrTMJjwtakubY0KxDyw=
-X-Gm-Gg: ASbGnct+roVNQOIYxpMfWq93dXP/oZLARzpkNfrZ9NDMG30j1cHtpeLpovoW7PCovPb
-	sRzlrhtwn607QkcGeaIhlqahcaVr+jcfEkUCYWAeBS3ibWfOOV8cWcP6343JWBUzwd5VVdOUdnW
-	1E1z0UfmJENYSh7YhjVy54Lwe35oQQj4e9yZVyMqncqqBXZAJbaffCYonC2YxI4s90B6k3JSrxD
-	ftBJ7AnYCUhdSZAGpoPvkmIFb3wH9UH1OXvXofG5wmZJWk/0i2sEVbI
-X-Google-Smtp-Source: AGHT+IG/oETOt4H+tqPxItW6KT0fnyooyBtrlajq83xl8GbCXw88vPt0o39pURb6dfsB5qsKrcBpKw==
-X-Received: by 2002:a05:6000:1a86:b0:385:e4a7:df07 with SMTP id ffacd0b85a97d-3864cec38ddmr4347181f8f.42.1733964397937;
-        Wed, 11 Dec 2024 16:46:37 -0800 (PST)
-Received: from localhost ([2.222.231.247])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38782514e54sm2494722f8f.85.2024.12.11.16.46.35
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 11 Dec 2024 16:46:36 -0800 (PST)
+        d=1e100.net; s=20230601; t=1733964450; x=1734569250;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Y5l/l7iG742JLVKp0vJqekUsAPOA4worydu3RY2wX3E=;
+        b=bFqFqXruETX7IjALW1sKG9A4xW9AmRVmpsyvwIu0t+rRGdR2QUgpoaKJwT1dCF0Wif
+         E5i++OIEOCHecNAw3Ml2sZBEbBow9SQaZyLNSpYz0HVNA88cl+VRnFqtxqR/Sim4iy46
+         jKOVptDDAT6BArSk6+NbrEaehHuVmeq3cOAtBUp1phS/s0Q06epLZevU5KRd5lBNUgUy
+         weDfytVl33q7InNNGa/zGKhSAtRldND1mVOnepLxmfu54dpb6i1X8Ldwfy7FnU0V40lr
+         GFlelFQS3MqZK+nxZtnX+iv93sxsfKNLPgqbyLhtX1OCgo/FvatSdQRu24wGcwmva2/m
+         qkuQ==
+X-Forwarded-Encrypted: i=1; AJvYcCX2bLpk+Ah29+wuwZqS79PQprRqu5efS+7ZnlPrpJx0lY5OSOxXs45I+hHbMRIrPrtKuy2gO0oq2Xgz7bIl@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx+47nV8PBW/ThYErS7A65gXsOgks4STB18Z1U66zWUk4saP+YS
+	CoMTUkApmWvkhLKOqJJxQgc/W/+ABN3JCgd7GKWTXDlPyLtGgA5YmyoZo7xUbcU=
+X-Gm-Gg: ASbGncvrMEeJstmK4avJTgzwP7wSPTOc5J558AkTQMK5JE5I2dCGvUKS0eZgqbvyXVX
+	wSHHBsl9hhSasEju4xHVwMuB13zXo/nCHGRh5pagpwZPAwQsWr5PPpxA3c2YWbOyyYdWJW4RVYa
+	YBQ7asy5DOX6a/B8/4gVz53yyo+bYmyjVcnIl/NKHuPRoKimKjKXu+sSKi64CcplIwfIM9Vzs1z
+	Nf0lpKy0KAScLUDdohOMyc/7hmgJv64s9v+2DkzktpJPzJ687/JdPJTHwWpsvtizkldk0QN
+X-Google-Smtp-Source: AGHT+IFaSvB80LMIRhJfPUgXzGzChRp6atkQc01wtRMPtU4/xf5ktaw4y00amu4hB9OYaIG7Ryvh3g==
+X-Received: by 2002:a05:6000:4405:b0:385:f13c:570f with SMTP id ffacd0b85a97d-3864ce5fbcemr3040782f8f.33.1733964449908;
+        Wed, 11 Dec 2024 16:47:29 -0800 (PST)
+Received: from localhost.localdomain ([2.222.231.247])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-387824a4ef4sm2459660f8f.39.2024.12.11.16.47.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 11 Dec 2024 16:47:28 -0800 (PST)
+From: Alexey Klimov <alexey.klimov@linaro.org>
+To: broonie@kernel.org,
+	konradybcio@kernel.org,
+	konrad.dybcio@oss.qualcomm.com,
+	andersson@kernel.org,
+	srinivas.kandagatla@linaro.org
+Cc: tiwai@suse.com,
+	lgirdwood@gmail.com,
+	perex@perex.cz,
+	robh@kernel.org,
+	krzk+dt@kernel.org,
+	conor+dt@kernel.org,
+	dmitry.baryshkov@linaro.org,
+	linux-sound@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH v2 00/14] qrb4210-rb2: add wsa audio playback and capture support
+Date: Thu, 12 Dec 2024 00:47:13 +0000
+Message-ID: <20241212004727.2903846-1-alexey.klimov@linaro.org>
+X-Mailer: git-send-email 2.45.2
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Thu, 12 Dec 2024 00:46:35 +0000
-Message-Id: <D69B2UDQELCR.2HEVIK3QO8W0G@linaro.org>
-Cc: <broonie@kernel.org>, <konradybcio@kernel.org>,
- <konrad.dybcio@oss.qualcomm.com>, <andersson@kernel.org>,
- <srinivas.kandagatla@linaro.org>, <tiwai@suse.com>, <lgirdwood@gmail.com>,
- <perex@perex.cz>, <robh@kernel.org>, <krzk+dt@kernel.org>,
- <conor+dt@kernel.org>, <dmitry.baryshkov@linaro.org>,
- <linux-sound@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
- <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v1 08/10] arm64: dts: qcom: qrb4210-rb2: enable wsa881x
- amplifier
-From: "Alexey Klimov" <alexey.klimov@linaro.org>
-To: "Krzysztof Kozlowski" <krzk@kernel.org>
-X-Mailer: aerc 0.18.2
-References: <20241101053154.497550-1-alexey.klimov@linaro.org>
- <20241101053154.497550-9-alexey.klimov@linaro.org>
- <5zkslmf7m5vphs2wjcdg3536eo7tuh3stjthh3ulkr7oic5i25@qtnsog5ladsb>
-In-Reply-To: <5zkslmf7m5vphs2wjcdg3536eo7tuh3stjthh3ulkr7oic5i25@qtnsog5ladsb>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-On Fri Nov 1, 2024 at 8:14 AM GMT, Krzysztof Kozlowski wrote:
-> On Fri, Nov 01, 2024 at 05:31:52AM +0000, Alexey Klimov wrote:
-> > One WSA881X amplifier is connected on QRB4210 RB2 board
-> > hence only mono speaker is supported. This amplifier is set
-> > to work in analog mode only. Also add required powerdown
-> > pins/gpios.
-> >=20
-> > Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-> > Signed-off-by: Alexey Klimov <alexey.klimov@linaro.org>
-> > ---
-> >  arch/arm64/boot/dts/qcom/qrb4210-rb2.dts | 45 ++++++++++++++++++++++++
-> >  1 file changed, 45 insertions(+)
-> >=20
-> > diff --git a/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts b/arch/arm64/boot=
-/dts/qcom/qrb4210-rb2.dts
-> > index fc71f5930688..76b9ae1b0ebc 100644
-> > --- a/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
-> > +++ b/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
-> > @@ -63,6 +63,16 @@ hdmi_con: endpoint {
+Issues with distorted sound and unstable volume on playback were resolved
+and this patchset also includes support for onboard DMIC and thus
+capturing feature.
 
-[..]
+This implements the playback via the following path:
+RX1 from DSP is connected to rxmacro which communicates with wcd codec
+using soundwire. This goes into AUX input of wcd.
+wcd codec outputs analog audio into wsa8815 amplifier.
+Capturing works through vamacro using one onboard DMIC which is
+directly connected to vamacro codec.
 
-> > +	wsa_en_sleep: wsa-en-sleep-state {
-> > +		pins =3D "gpio106";
-> > +		function =3D "gpio";
-> > +		drive-strength =3D <2>;
-> > +		bias-pull-down;
-> > +		input-enable;
->
-> Are you sure this passes dtbs_check? I think this was not allowed since
-> 1.5 years.
+Special thanks to Srini. Without his help and support this patchset
+wouldn't be here.
 
-I guess you were referring to thing that input-enable is not allowed
-and output-disable must be used instead introduced by:
-c4a48b0df8bf dt-bindings: pinctrl: qcom: tlmm should use output-disable, no=
-t input-enable
+Previous version:
+https://lore.kernel.org/linux-sound/20241101053154.497550-1-alexey.klimov@linaro.org/
 
-Noted.
-This sleep state seems to be unused hence I will remove it.
+Changes since v2:
 
-Also, I am going to use Konrad's suggestion about i2c gpio for now. Hope it
-is okay.
+-- forcing single channel output for RX_1 channel is moved into drv variant;
+-- added capture feature support hence some new patches and
+   updates to pins description;
+-- sorted headers in wsa881x-i2c driver, removed excessive ones;
+-- removed of_gpio.h as suggested by Rob;
+-- removed wrong bindings and updated already existing
+   qcom,wsa881x.yaml as suggested by Krzysztof;
+-- removed unused pins state description as suggested by Krzysztof;
+-- reworked wsa881x-i2c driver
+   (initialisation, pm, consts, some functions, etc);
+-- usage of devm_kmemdup() in wsa881x-i2c probe() as a hint from Krzysztof;
+-- updated commit messages where required;
+-- not using i2c gpio bit-banging for wsa881x i2c;
+-- made dtbs_check and dt_binding_check happy.
 
-Thanks,
-Alexey
+
+This series depends on:
+ -- HDMI audio playback
+https://lore.kernel.org/linux-arm-msm/20241204140027.2198763-1-alexey.klimov@linaro.org/
+-- and LPASS clock controller
+https://lore.kernel.org/linux-clk/20241212002551.2902954-1-alexey.klimov@linaro.org/
+
+
+Alexey Klimov (14):
+  ASoC: dt-bindings: qcom: Add SM6115 LPASS rxmacro and vamacro codecs
+  ASoC: codecs: va-macro: add sm6115 compatible
+  ASoC: codecs: lpass-rx-macro: add sm6115 compatible
+  arm64: dts: qcom: sm6115: add LPASS devices
+  arm64: dts: qcom: sm4250: add description of soundwire and dmic pins
+  arm64: dts: qcom: qrb4210-rb2: add wcd937x codec support
+  ASoC: codecs: wsa881x: split into common and soundwire drivers
+  dt-bindings: arm: qcom-soc: extend pattern matching to support
+    qcom,wsa881x
+  ASoC: dt-bindings: qcom,wsa881x: extend description to analog mode
+  arm64: dts: qcom: qrb4210-rb2: enable wsa881x amplifier
+  ASoC: codecs: add wsa881x-i2c amplifier codec driver
+  arm64: dts: qcom: qrb4210-rb2: add WSA audio playback support
+  arm64: dts: qcom: qrb4210-rb2: add VA capture support
+  ASoC: qcom: sm8250: force single channel via RX_1 output for qrb4210
+
+ .../devicetree/bindings/arm/qcom-soc.yaml     |    3 +-
+ .../bindings/sound/qcom,lpass-rx-macro.yaml   |   19 +
+ .../bindings/sound/qcom,lpass-va-macro.yaml   |   17 +
+ .../bindings/sound/qcom,wsa881x.yaml          |   75 +-
+ arch/arm64/boot/dts/qcom/qrb4210-rb2.dts      |  126 +-
+ arch/arm64/boot/dts/qcom/sm4250.dtsi          |   62 +
+ arch/arm64/boot/dts/qcom/sm6115.dtsi          |  132 ++
+ sound/soc/codecs/Kconfig                      |   15 +
+ sound/soc/codecs/Makefile                     |    4 +
+ sound/soc/codecs/lpass-rx-macro.c             |    4 +-
+ sound/soc/codecs/lpass-va-macro.c             |    1 +
+ sound/soc/codecs/wsa881x-common.c             |  123 ++
+ sound/soc/codecs/wsa881x-common.h             |  426 ++++++
+ sound/soc/codecs/wsa881x-i2c.c                | 1352 +++++++++++++++++
+ sound/soc/codecs/wsa881x.c                    |  493 +-----
+ sound/soc/qcom/sm8250.c                       |   28 +-
+ 16 files changed, 2384 insertions(+), 496 deletions(-)
+ create mode 100644 sound/soc/codecs/wsa881x-common.c
+ create mode 100644 sound/soc/codecs/wsa881x-common.h
+ create mode 100644 sound/soc/codecs/wsa881x-i2c.c
+
+-- 
+2.45.2
 
 
