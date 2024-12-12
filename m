@@ -1,234 +1,220 @@
-Return-Path: <linux-arm-msm+bounces-41842-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-41843-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id BCE0A9EFC19
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Dec 2024 20:12:33 +0100 (CET)
-Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id E1EB818845A4
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Dec 2024 19:12:33 +0000 (UTC)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A9B2B193084;
-	Thu, 12 Dec 2024 19:12:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="SPODvFpf"
-X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id F1AF69EFC2C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Dec 2024 20:16:02 +0100 (CET)
+Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B51C618FDC9;
-	Thu, 12 Dec 2024 19:12:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AC1EB28A3FA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Dec 2024 19:16:01 +0000 (UTC)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 45D1D18C035;
+	Thu, 12 Dec 2024 19:16:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="cvPMGS5S"
+X-Original-To: linux-arm-msm@vger.kernel.org
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55DF6189B8B;
+	Thu, 12 Dec 2024 19:15:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734030739; cv=none; b=G2qecStrtyVXAy9GED7g9bwyTA1vT+e1W0yWSEnzIIHTALsJVN9bgOU4DJ0ve0ADctoZDi5gQAb9juSH2s14VDjOBlfU+4Uw/+BuCAwNXDXyigD3X3vAtqKc/rXpCEUFtaYdiu5ezD9hEXc8cncIDcEzKs8WCw+bvu1Wf3K3aek=
+	t=1734030961; cv=none; b=dJR3kir8o1UOzmPkU0YHyZdYGD2yzlXfsAs61Fr1HbR9eXTr/4uvOh/tBBhCeIrDEQS7hEUzy5wffEWYbaRMFgihAzmReWVDeTgHsaAT8SuAXs4W14ya0GYpf3a975GKMrVAGhvJ/5Tv2+RpsoFsg4kFdzA6fGA4lspQMucPKpM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734030739; c=relaxed/simple;
-	bh=EcbOV0s5NkPGBlJ6bf2+qtaCaWHaRvTPaID4wWfUs38=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:To:CC; b=IELFQbKp67GcS+6/skIAikeKriXeKydwbCw93EnVrT3nMl2alsrrJkTiJwAzWTI4+OGd/2OKOt0Ja6WAnvn4agPSZODWFstZD6jZcYofS21tDMPp17jNbtGoiW5sDvBIacF8hMzZP/0+Kh2zCorVubUPkJpGE39cH6OPpTFVWR8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=SPODvFpf; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1734030961; c=relaxed/simple;
+	bh=LGfX5ZgX2lsQWXfVjlgNlPppx3VLClAQOW8XBHOQHLI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=U6VNcRR2oASes8pZezO5wGqLt5ekq9s4uM/HoElzM/CudhFB8oWuGVXQWrfWqoZsvORyT35W+MejhO8BgauwsMC9pBTWpjMMM1kwt2vzb2aQBB3Sg6QDJuimDPQb+lIOwIhXQXSxAsCJPctAJoKVCUcwe2QxkzgJcuO2dQY3+zY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=cvPMGS5S; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BCH1Cde032195;
-	Thu, 12 Dec 2024 19:12:10 GMT
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BCCwqYX000445;
+	Thu, 12 Dec 2024 19:15:52 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:message-id
-	:mime-version:subject:to; s=qcppdkim1; bh=IZJGZji0n5Hg7/QDH3Jah+
-	hYEpDhXrfXmcIulQaQNJk=; b=SPODvFpflXm8BisM8oIA9kNmLOzp7rYt90D/Be
-	4ZoD1pTlBKlvNeVtH7npKu+d0LZKBOafAW4+rndnJ/OSjzeRugnIiEkyLu3xNrTR
-	H8pS9M8r2gQuO1fGj9Jd7IO2mo/MVBapXS1GF54Iv8Pf6knFbmCJIlcQPqENNxOv
-	qn58gCJEWsB39kk3CTvrY5QRNYJS3GT4v6ZUnzcNcT7bBsNcIyDQWK1rEvKR3WCE
-	BPcPaVZBxBsvVlYKW/ZoqqN/4xIXDJSGSDeSgTUe+b4rcN1wDj2kiTuV8CqoUsTt
-	L6cbXYLyKpZmEnLMBE8x5rttnW10x6NPoth/3BvKdC9YkW0A==
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43f6tfd8d2-1
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	si5rphHa4Zkvnkh6M8fFKZ5yl3Cn3vMgEo7wPFfWRo8=; b=cvPMGS5SpoG9fjFF
+	XMI1NUHYPt9jdACaimDjswf8GD4xRdbDr5hVVYhHVm1NBF/7XqchCuGXpB+Z+uAu
+	z3jpfDfOgMvAHRV0lV5gS/zmJCQwczGRF04xsiQBjUYMS5kgZApsybQ/CC6C602h
+	jxQ6pK1Vs9U9/2bJpZn5hKRZNJ4qXGgCp8eOdT5f1ios7bXm9lZr6oA55955CmC3
+	eVr0MdSLgiTS1dwd0EagoELqO162Dz2b44Pc9Hx11FJmw6OEej7WLq39iNE8EMGv
+	fvJx7k4h9jla6s5fggnpwkAuGW9+ubOHnnl/73XH6+cHhcQlIZxg7ix6izET/RL2
+	rPZWQA==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43fqes2grh-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 12 Dec 2024 19:12:10 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4BCJC9xR006023
+	Thu, 12 Dec 2024 19:15:51 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4BCJFo8j027764
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 12 Dec 2024 19:12:09 GMT
-Received: from jesszhan-linux.qualcomm.com (10.80.80.8) by
- nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Thu, 12 Dec 2024 11:12:09 -0800
-From: Jessica Zhang <quic_jesszhan@quicinc.com>
-Date: Thu, 12 Dec 2024 11:11:54 -0800
-Subject: [PATCH] drm/msm/dpu: Filter modes based on adjusted mode clock
+	Thu, 12 Dec 2024 19:15:50 GMT
+Received: from [10.134.71.247] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 12 Dec
+ 2024 11:15:49 -0800
+Message-ID: <5cb7b1b1-5596-4704-bd01-beaadf8bba51@quicinc.com>
+Date: Thu, 12 Dec 2024 11:15:48 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-ID: <20241212-filter-mode-clock-v1-1-f4441988d6aa@quicinc.com>
-X-B4-Tracking: v=1; b=H4sIAHk1W2cC/x3MSQqAMAxA0atI1gZscL6KuNCaanCotCKC9O4Wl
- 2/x/wuenbCHNnnB8S1e7BGh0gT0Mhwzo0zRQBnlihShke1ih7udGPVm9Yq1HomrsjFZMULsTsd
- Gnv/Z9SF8MxBgNmMAAAA=
-X-Change-ID: 20241212-filter-mode-clock-8cb2e769f05b
-To: Rob Clark <robdclark@gmail.com>,
-        Dmitry Baryshkov
-	<dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten
-	<marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, "Simona
- Vetter" <simona@ffwll.ch>
-CC: <quic_abhinavk@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 04/14] drm/msm/dp: pull I/O data out of
+ msm_dp_catalog_private()
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        "Marijn
+ Suijten" <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        Paloma Arellano <quic_parellan@quicinc.com>,
+        Douglas Anderson <dianders@chromium.org>,
+        Stephen Boyd <swboyd@chromium.org>, <linux-arm-msm@vger.kernel.org>,
         <dri-devel@lists.freedesktop.org>, <freedreno@lists.freedesktop.org>,
-        <linux-kernel@vger.kernel.org>,
-        Jessica Zhang <quic_jesszhan@quicinc.com>
-X-Mailer: b4 0.15-dev-355e8
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1734030729; l=4582;
- i=quic_jesszhan@quicinc.com; s=20230329; h=from:subject:message-id;
- bh=EcbOV0s5NkPGBlJ6bf2+qtaCaWHaRvTPaID4wWfUs38=;
- b=//CeavGe+5m8ZKtTTkXsuYJvlFaPm3n08epl96aLYEXOZPXyRgKSmQpSv8XTyhKdYgsofqedk
- n8JLvF2F0mMDq0yMMIXPPnw2RogzA7CCuslkkv2aTiGEyjz4AxpG//3
-X-Developer-Key: i=quic_jesszhan@quicinc.com; a=ed25519;
- pk=gAUCgHZ6wTJOzQa3U0GfeCDH7iZLlqIEPo4rrjfDpWE=
+        <linux-kernel@vger.kernel.org>
+References: <20241212-fd-dp-audio-fixup-v3-0-0b1c65e7dba3@linaro.org>
+ <20241212-fd-dp-audio-fixup-v3-4-0b1c65e7dba3@linaro.org>
+ <c5090fcc-d7ec-4d49-aa21-8d1aa7f6a1c7@quicinc.com>
+ <CAA8EJppOjAjFVUFSEXJMbJ4aV_MvzpeTuKDkL7P+t_Mw47YECw@mail.gmail.com>
+Content-Language: en-US
+From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <CAA8EJppOjAjFVUFSEXJMbJ4aV_MvzpeTuKDkL7P+t_Mw47YECw@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
 X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: AEHBiz-qRpy-DjdKVNYTUd9uVfxcgvLW
-X-Proofpoint-ORIG-GUID: AEHBiz-qRpy-DjdKVNYTUd9uVfxcgvLW
+X-Proofpoint-GUID: eLEz5zxPoOm2eDuCCX5cE5IukOzJBz05
+X-Proofpoint-ORIG-GUID: eLEz5zxPoOm2eDuCCX5cE5IukOzJBz05
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 suspectscore=0
- mlxlogscore=999 malwarescore=0 spamscore=0 lowpriorityscore=0
- impostorscore=0 adultscore=0 bulkscore=0 phishscore=0 priorityscore=1501
- clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 adultscore=0
+ lowpriorityscore=0 impostorscore=0 clxscore=1015 malwarescore=0
+ mlxlogscore=999 priorityscore=1501 bulkscore=0 phishscore=0 mlxscore=0
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.19.0-2411120000 definitions=main-2412120139
 
-Filter out modes that have a clock rate greater than the max core clock
-rate when adjusted for the perf clock factor
 
-This is especially important for chipsets such as QCS615 that have lower
-limits for the MDP max core clock.
 
-Since the core CRTC clock is at least the mode clock (adjusted for the
-perf clock factor) [1], the modes supported by the driver should be less
-than the max core clock rate.
+On 12/12/2024 12:52 AM, Dmitry Baryshkov wrote:
+> On Thu, 12 Dec 2024 at 04:59, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
+>>
+>>
+>>
+>> On 12/11/2024 3:41 PM, Dmitry Baryshkov wrote:
+>>> Having I/O regions inside a msm_dp_catalog_private() results in extra
+>>> layers of one-line wrappers for accessing the data. Move I/O region base
+>>> and size to the globally visible struct msm_dp_catalog.
+>>>
+>>> Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+>>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>>> ---
+>>>    drivers/gpu/drm/msm/dp/dp_catalog.c | 457 +++++++++++++++---------------------
+>>>    drivers/gpu/drm/msm/dp/dp_catalog.h |  12 +
+>>>    2 files changed, 197 insertions(+), 272 deletions(-)
+>>>
+>>
+>>
+>> Fundamentally, the whole point of catalog was that it needs to be the
+>> only place where we want to access the registers. Thats how this really
+>> started.
+>>
+>> This pre-dates my time with the DP driver but as I understand thats what
+>> it was for.
+>>
+>> Basically separating out the logical abstraction vs actual register writes .
+>>
+>> If there are hardware sequence differences within the controller reset
+>> OR any other register offsets which moved around, catalog should have
+>> been able to absorb it without that spilling over to all the layers.
+>>
+>> So for example, if we call dp_ctrl_reset() --> ctrl->catalog->reset_ctrl()
+>>
+>> Then the reset_ctrl op of the catalog should manage any controller
+>> version differences within the reset sequence.
+> 
+> The problem is that the register-level writes are usually not the best
+> abstraction. So, instead of designing the code around dp_catalog I'd
+> prefer to see actual hw / programming changes first.
+> 
 
-[1] https://elixir.bootlin.com/linux/v6.12.4/source/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c#L83
+So thats the issue here. If we did end up with registers and sequences 
+different for controller versions, the ctrl layer was expected to just 
+call a reset() op for example similar to the DPU example you gave. And 
+as you rightly noted, the dpu_hw_xxx files only expose the ops based on 
+version and the upper layers were supposed to just call into the ops 
+without knowing the register level details. Thats pretty much what 
+dp_ctrl tried to do here. We did not want to expose all the register 
+defines in those layers. This series is doing exactly opposite of that.
 
-Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
----
- drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c | 29 +++++++++++++++++++--------
- drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h |  3 +++
- drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c      | 12 +++++++++++
- 3 files changed, 36 insertions(+), 8 deletions(-)
+>>
+>> We do not use or have catalog ops today so it looks redundant as we just
+>> call the dp_catalog APIs directly but that was really the intention.
+>>
+>> Another reason which was behind this split but not applicable to current
+>> upstream driver is that the AUX is part of the PHY driver in upstream
+>> but in downstream, that remains a part of catalog and as we know the AUX
+>> component keeps changing with chipsets especially the settings. That was
+>> the reason of keeping catalog separate and the only place which should
+>> deal with registers and not the entire DP driver.
+>>
+>> The second point seems not applicable to this driver but first point
+>> still is. I do admit there is re-direction like ctrl->catalog
+>> instead of just writing it within dp_ctrl itself but the redirection was
+>> only because ctrl layers were not really meant to deal with the register
+>> programming. So for example, now with patch 7 of this series every
+>> register being written to i exposed in dp_ctrl.c and likewise for other
+>> files. That seems unnecessary. Because if we do end up with some
+>> variants which need separate registers written, then we will now have to
+>> end up touching every file as opposed to only touching dp_catalog.
+> 
+> Yes. I think that it's a bonus, not a problem. We end up touching the
+> files that are actually changed, so we see what is happening. Quite
+> frequently register changes are paired with the functionality changes.
+> 
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
-index 6f0a37f954fe8797a4e3a34e7876a93d5e477642..0afd7c81981c722a1a9176062250c418255fe6d0 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
-@@ -31,6 +31,26 @@ enum dpu_perf_mode {
- 	DPU_PERF_MODE_MAX
- };
- 
-+/**
-+ * dpu_core_perf_adjusted_crtc_clk - Adjust given crtc clock rate according to
-+ *   the perf clock factor.
-+ * @crtc_clk_rate - Unadjusted crtc clock rate
-+ * @perf_cfg: performance configuration
-+ */
-+u64 dpu_core_perf_adjusted_crtc_clk(u64 crtc_clk_rate,
-+				    const struct dpu_perf_cfg *perf_cfg)
-+{
-+	u32 clk_factor;
-+
-+	clk_factor = perf_cfg->clk_inefficiency_factor;
-+	if (clk_factor) {
-+		crtc_clk_rate *= clk_factor;
-+		do_div(crtc_clk_rate, 100);
-+	}
-+
-+	return crtc_clk_rate;
-+}
-+
- /**
-  * _dpu_core_perf_calc_bw() - to calculate BW per crtc
-  * @perf_cfg: performance configuration
-@@ -76,7 +96,6 @@ static u64 _dpu_core_perf_calc_clk(const struct dpu_perf_cfg *perf_cfg,
- 	struct dpu_plane_state *pstate;
- 	struct drm_display_mode *mode;
- 	u64 crtc_clk;
--	u32 clk_factor;
- 
- 	mode = &state->adjusted_mode;
- 
-@@ -90,13 +109,7 @@ static u64 _dpu_core_perf_calc_clk(const struct dpu_perf_cfg *perf_cfg,
- 		crtc_clk = max(pstate->plane_clk, crtc_clk);
- 	}
- 
--	clk_factor = perf_cfg->clk_inefficiency_factor;
--	if (clk_factor) {
--		crtc_clk *= clk_factor;
--		do_div(crtc_clk, 100);
--	}
--
--	return crtc_clk;
-+	return dpu_core_perf_adjusted_crtc_clk(crtc_clk, perf_cfg);
- }
- 
- static struct dpu_kms *_dpu_crtc_get_kms(struct drm_crtc *crtc)
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h
-index 451bf8021114d9d4a2dfdbb81ed4150fc559c681..c3bcd567cdfb66647c83682d1feedd69e33f0680 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h
-@@ -54,6 +54,9 @@ struct dpu_core_perf {
- 	u64 fix_core_ab_vote;
- };
- 
-+u64 dpu_core_perf_adjusted_crtc_clk(u64 clk_rate,
-+				    const struct dpu_perf_cfg *perf_cfg);
-+
- int dpu_core_perf_crtc_check(struct drm_crtc *crtc,
- 		struct drm_crtc_state *state);
- 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-index ad3462476a143ec01a3b8817a2c85b0f50435a9e..cd7b84ab57a7526948c2beb7c5cefdddcbe4f6d9 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-@@ -1257,6 +1257,7 @@ static enum drm_mode_status dpu_crtc_mode_valid(struct drm_crtc *crtc,
- 						const struct drm_display_mode *mode)
- {
- 	struct dpu_kms *dpu_kms = _dpu_crtc_get_kms(crtc);
-+	u64 adjusted_mode_clk;
- 
- 	/* if there is no 3d_mux block we cannot merge LMs so we cannot
- 	 * split the large layer into 2 LMs, filter out such modes
-@@ -1264,6 +1265,17 @@ static enum drm_mode_status dpu_crtc_mode_valid(struct drm_crtc *crtc,
- 	if (!dpu_kms->catalog->caps->has_3d_merge &&
- 	    mode->hdisplay > dpu_kms->catalog->caps->max_mixer_width)
- 		return MODE_BAD_HVALUE;
-+
-+	adjusted_mode_clk = dpu_core_perf_adjusted_crtc_clk(mode->clock,
-+							    dpu_kms->perf.perf_cfg);
-+
-+	/*
-+	 * The given mode, adjusted for the perf clock factor, should not exceed
-+	 * the max core clock rate
-+	 */
-+	if (adjusted_mode_clk > dpu_kms->perf.max_core_clk_rate / 1000)
-+		return MODE_CLOCK_HIGH;
-+
- 	/*
- 	 * max crtc width is equal to the max mixer width * 2 and max height is 4K
- 	 */
+Not exactly. Why should dp_ctrl really know that some register offset or 
+some block shift happened for example. It only needs to know when to 
+reset the hardware and not how. Thats the separation getting broken with 
+this.
 
----
-base-commit: 423c1c96d6b2d3bb35072e33a5fdd8db6d2c0a74
-change-id: 20241212-filter-mode-clock-8cb2e769f05b
+> For example (a very simple and dumb one), when designing code around
+> dp_catalog you ended up adding separate _p1 handlers.
+> Doing that from the data source point of view demands adding a stream_id param.
+> 
 
-Best regards,
--- 
-Jessica Zhang <quic_jesszhan@quicinc.com>
+I have not checked your comment on that series here but if your concern 
+is stream_id should not be stored in the catalog but just passed, thats 
+fine, we can change it. stream_id as a param is needed anyway because 
+the register programming layer needs to know which offset to use. This 
+series is not mitigating that fact.
 
+> In the DPU driver we also have version-related conditionals in the HW
+> modules rather than pushing all data access to dpu_hw_catalog.c &
+> counterparts.
+
+The dpu_hw_catalog.c and the dp_catalog.c are not the right files to 
+compare with each other. dp_catalog.c should be compared with 
+dpu_hw_xxx.c and as you noted, DPU version dependencies are handled in 
+those files only and not all over the files like what this series is doing.
+
+> I think it's better to make DP driver reflect DPU rather than keeping
+> a separate wrapper for no particular reason (note, DPU has hardware
+> abstractions, but on a block level, not on a register level).
+> 
+
+Thats the issue here. DPU hardware blocks are arranged according to the 
+sub-blocks both in the software interface document and hence the code 
+matches it file-by-file. DP registers are grouped by clock domains and 
+the file separation we have today does not match that anyway. Hence 
+grouping link registers writes or pixel clock register writes into 
+dp_ctrl is also not correct that way. Let catalog handle that separation 
+internally which it already does.
 
