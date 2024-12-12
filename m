@@ -1,63 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-41697-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-41698-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9EC4F9EE34C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Dec 2024 10:42:12 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id A20279EE3E9
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Dec 2024 11:16:32 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0990A188B073
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Dec 2024 09:42:09 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 05EDD167BDE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Dec 2024 10:16:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B37652101AF;
-	Thu, 12 Dec 2024 09:41:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BFA7220C00E;
+	Thu, 12 Dec 2024 10:16:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ImlmS5sT"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="JK/i3slw"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C30E2101A2;
-	Thu, 12 Dec 2024 09:41:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1971545027;
+	Thu, 12 Dec 2024 10:16:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733996514; cv=none; b=NGsP5zU9ldBJzkES6ikxygvR7giAGyf0I/G3bUrjYgPNsw0z+THs17bTDsse9THHmH6TZqNHPd2E76BqIvX3DWi5UJStaaZAvseXAdFO9xFQScTNtflyaV7KkQdassc9e9LUVbuCSS12dbJmprSzSHUwU23g2CxZ2Wr9Nduhcsg=
+	t=1733998587; cv=none; b=SlAZZaodYK62hqHk7eSkRtloCVik/yDf4wsO5iFuI7jHjLpiuEa2B5DexEp6WFT8/zw7+5TkQs1Qm4e5KF6ySCb69ZiuivX7G64kf24Oxxbl+d3gUOcDMDNThu6RUylSv67hAWYGirr3XlvsR9XPpCCV0gtks6CDd3At0E6nD5Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733996514; c=relaxed/simple;
-	bh=P4x70ZGm++1hRMsj6Htrcow4CvLTL9GRHvSCtADYFY8=;
+	s=arc-20240116; t=1733998587; c=relaxed/simple;
+	bh=qo3Rv5arEF3Bj2lIGlIG/vss34EB5qy39uBtzPHP6Js=;
 	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=rr7ROCz7fev9MmszAkfvffV+OxfBzg2XxLnZ5DcLfAVZHbcLEKPwlelEQ0FvHZNO9iMghIAC/0eXjoc/J78Tw23dh+9zUxZZ41Buputjlaym7S4wOqrTfCEMlxVQ6UgLw66GpRcOBd38Air0buI7NCB59U8KRB6FNVSwnx/ohd8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ImlmS5sT; arc=none smtp.client-ip=205.220.168.131
+	 In-Reply-To:Content-Type; b=bfqfLDGRf1cUJmGcWpi6Puut/6REUbpcUpcCXHbCm5dEcV6zqEUPu1TGrqS3Eh9q5kSVQXteT+ArYT+y+p62zQoRPYpOUFr4MxxsdbbTfJzJiP7AFMcaO+d4w9GVTI/jl5o/oRduSmBxGugyeE/4mePwkFTpo57J/Eg21iVS+vE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=JK/i3slw; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BC81FsI003601;
-	Thu, 12 Dec 2024 09:41:48 GMT
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BC7gVva029034;
+	Thu, 12 Dec 2024 10:16:19 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	IAJYMGceS7Gj1MhSVuVPvmJIGMepzo4iLHRILK3EzNk=; b=ImlmS5sT66eRLmgF
-	+4TiAl3ceZLX45j3wsPSbc40Iy8aDL5BlIbFmz9G+OiBeQpsTZFi+hQIUZBm9aeP
-	v+bE0/9NWfNTeIJh5DHUJLGxy6/xGMmMbEaNWwdYN1T2ytMVGBBEjXohA0pOCWev
-	SLZQqZaF1Mks6FbjO5MauFc/X1ofdyDgErHo9lGgSngVLBkGI+PXwMiwq4cN7o1A
-	M8aW243qM3zIY+fXe/YegdNWI5uDXQHwbgTGcHvu9Rzy1Ut457/9PpREhNqSvHf+
-	lE7vBTShsVdhLh0OF23Ei/M+93FAZoebCGHyb6zNApkhy/yqdDQA37Vnbd7EzInz
-	L1owMg==
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43ee3nfyta-1
+	YYYW2nbLGoQmKqk5fl+o+ckY9lAaIAA/oyPAHuafN1M=; b=JK/i3slw16jkUlh4
+	Wet47N+GP5osyqMP/N9hspmtl6S+7KAn9ixHmaydJ7t67RaIcyP/QoGr0S8x1wdV
+	DY0wS6oqaqEg5hYGo/XrrkEBwX4r4Gf+CtSXyOJNRSIdSmhZhn9+vqbOtPYEhmy3
+	eZiZkCTQrVH+x7JsBFKeGB99fq9IG/EKpVYbZOT5oldG+Suwt/VkRuN71kp5/cNM
+	s5z5kUGX4vmdfpYghv22dgYXkAZCC7OO3bZvNhtNsbh3dEhpuFQho8aUPSTbYbr6
+	lfWANzBZ4DzjkFX91gnZQvYHyr/CdNEMMMS/EqTz28Bg502SBgXrSSaepzT1XfmM
+	b2Ezng==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43fd4xthm7-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 12 Dec 2024 09:41:47 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4BC9flIC006313
+	Thu, 12 Dec 2024 10:16:19 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4BCAGIFP016708
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 12 Dec 2024 09:41:47 GMT
-Received: from [10.239.97.152] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+	Thu, 12 Dec 2024 10:16:18 GMT
+Received: from [10.231.216.175] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 12 Dec
- 2024 01:41:41 -0800
-Message-ID: <8f2aa73c-f9d3-4523-8595-c35d5ca6f4f7@quicinc.com>
-Date: Thu, 12 Dec 2024 17:41:38 +0800
+ 2024 02:16:13 -0800
+Message-ID: <06566196-f87a-4d66-bea5-83b640651489@quicinc.com>
+Date: Thu, 12 Dec 2024 18:16:05 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,59 +65,93 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 09/16] media: qcom: camss: Add callback API for RUP update
- and buf done
-To: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>, <rfoss@kernel.org>,
-        <todor.too@gmail.com>, <bryan.odonoghue@linaro.org>,
-        <mchehab@kernel.org>, <robh@kernel.org>, <krzk+dt@kernel.org>,
-        <conor+dt@kernel.org>
-CC: <quic_eberman@quicinc.com>, <linux-media@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <kernel@quicinc.com>
-References: <20241211140738.3835588-1-quic_depengs@quicinc.com>
- <20241211140738.3835588-10-quic_depengs@quicinc.com>
- <1ac23fa1-fc35-45fb-9338-d5f304c869ba@linaro.org>
+Subject: Re: [PATCH v4 1/4] dt-bindings: net: bluetooth: qca: Expand
+ firmware-name property
+To: Krzysztof Kozlowski <krzk@kernel.org>
+CC: Marcel Holtmann <marcel@holtmann.org>,
+        Luiz Augusto von Dentz
+	<luiz.dentz@gmail.com>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski
+	<krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Bjorn Andersson
+	<andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        "Balakrishna
+ Godavarthi" <quic_bgodavar@quicinc.com>,
+        Rocky Liao
+	<quic_rjliao@quicinc.com>,
+        <linux-bluetooth@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <quic_jiaymao@quicinc.com>, <quic_shuaz@quicinc.com>,
+        <quic_zijuhu@quicinc.com>, <quic_mohamull@quicinc.com>
+References: <20241210151636.2474809-1-quic_chejiang@quicinc.com>
+ <20241210151636.2474809-2-quic_chejiang@quicinc.com>
+ <vbwg7djb4me6i4ow2q74ltqjxvkxeulhzyq4n6ak7aifhtf36f@x66pjje2iu6u>
+ <62afbaea-67b1-4572-9e78-d1dbe5fae20a@quicinc.com>
+ <f818f089-0490-42da-9aee-1a7006c11978@kernel.org>
+ <65fd0932-4519-44ac-ba9d-55ee97b43233@quicinc.com>
+ <ecb8535a-d421-4774-88d3-e904bb08a0e4@kernel.org>
 Content-Language: en-US
-From: Depeng Shao <quic_depengs@quicinc.com>
-In-Reply-To: <1ac23fa1-fc35-45fb-9338-d5f304c869ba@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+From: "Cheng Jiang (IOE)" <quic_chejiang@quicinc.com>
+In-Reply-To: <ecb8535a-d421-4774-88d3-e904bb08a0e4@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: v6MpkaUc7-_dadEUCvG1mu0SIyanfY62
-X-Proofpoint-ORIG-GUID: v6MpkaUc7-_dadEUCvG1mu0SIyanfY62
+X-Proofpoint-ORIG-GUID: F_uqG9jF01yQDUbVHmxyw8m919_J5m4k
+X-Proofpoint-GUID: F_uqG9jF01yQDUbVHmxyw8m919_J5m4k
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 suspectscore=0
- malwarescore=0 spamscore=0 priorityscore=1501 mlxscore=0 impostorscore=0
- mlxlogscore=939 lowpriorityscore=0 adultscore=0 clxscore=1015 phishscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2411120000
- definitions=main-2412120068
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ priorityscore=1501 bulkscore=0 mlxlogscore=999 phishscore=0 adultscore=0
+ suspectscore=0 spamscore=0 mlxscore=0 impostorscore=0 clxscore=1015
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2412120072
 
-Hi Vladimir,
+Hi Krzysztof,
 
-On 12/12/2024 9:09 AM, Vladimir Zapolskiy wrote:
-> Hi Depeng and Bryan.
-> 
-> On 12/11/24 16:07, Depeng Shao wrote:
->> The RUP registers and buf done irq are moved from the IFE to CSID 
->> register
->> block on recent CAMSS implementations. Add callbacks structure to wrapper
->> the location change with minimum logic disruption.
+On 12/12/2024 3:16 PM, Krzysztof Kozlowski wrote:
+> On 11/12/2024 11:16, Cheng Jiang (IOE) wrote:
+>> Hi Krzysztof,
 >>
->> Signed-off-by: Depeng Shao <quic_depengs@quicinc.com>
->> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+>> On 12/11/2024 5:48 PM, Krzysztof Kozlowski wrote:
+>>> On 11/12/2024 10:39, Cheng Jiang (IOE) wrote:
+>>>>>>
+>>>>>> diff --git a/Documentation/devicetree/bindings/net/bluetooth/qualcomm-bluetooth.yaml b/Documentation/devicetree/bindings/net/bluetooth/qualcomm-bluetooth.yaml
+>>>>>> index 7bb68311c..2782d2325 100644
+>>>>>> --- a/Documentation/devicetree/bindings/net/bluetooth/qualcomm-bluetooth.yaml
+>>>>>> +++ b/Documentation/devicetree/bindings/net/bluetooth/qualcomm-bluetooth.yaml
+>>>>>> @@ -101,7 +101,10 @@ properties:
+>>>>>>    max-speed: true
+>>>>>>  
+>>>>>>    firmware-name:
+>>>>>> -    description: specify the name of nvm firmware to load
+>>>>>> +    description:
+>>>>>> +      If one item is present, specify the name of the NVM firmware to load.
+>>>>>> +      If two items are present, the first item specifies the name of the NVM,
+>>>>>> +      and the second specifies the name of the rampatch firmware to load.
+>>>>>
+>>>>> Don't repeat constraints in free form text. Use proper constraints so
+>>>>> you can validate your DTS. And then actually do validate your DTS...
+>>>>>
+>>>> It seems unnecessary to add this description, so I will drop this change. Is that okay?
+>>>
+>>> You need to list the items and describe them. See how all other bindings
+>>> do it.
+>>>
+>> The firmware names are not fixed strings; they vary depending on the chip, board, or platform.
 > 
-> It's unexpected to see two your Signed-off-by: tags, either one is invalid
-> or the authorship of the change shall be changed appropriately.
+> Instead of replying immediately and pushing this back again on us, read
+> other bindings. There are nowhere "fixed strings".
 > 
-
-Thanks for pointing out this, I will update it based on Bryan's suggestion.
-
-Thanks,
-Depeng
+Ack. I will take care of it next time. Thank you!
+> 
+> Best regards,
+> Krzysztof
 
 
