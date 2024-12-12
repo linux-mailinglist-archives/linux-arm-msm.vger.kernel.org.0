@@ -1,142 +1,200 @@
-Return-Path: <linux-arm-msm+bounces-41705-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-41706-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4619A9EE45E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Dec 2024 11:41:16 +0100 (CET)
-Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9011D9EE475
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Dec 2024 11:47:03 +0100 (CET)
+Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id F0F6A160E6A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Dec 2024 10:46:59 +0000 (UTC)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5595321146B;
+	Thu, 12 Dec 2024 10:46:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ID6nVJSB"
+X-Original-To: linux-arm-msm@vger.kernel.org
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 441D1280F66
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Dec 2024 10:41:14 +0000 (UTC)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3A7FF210190;
-	Thu, 12 Dec 2024 10:41:00 +0000 (UTC)
-X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 108EE10F2;
-	Thu, 12 Dec 2024 10:40:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93826210F6A;
+	Thu, 12 Dec 2024 10:46:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734000060; cv=none; b=T0Fjqi5j1iDMyl0Qf4Y3PCyKVf9CafenszS66FaErqy9Di0HWwjtoTAjAMznLRUSmz0B4krUzGa3/m2yYQody1EE/CUA2o3JOt7mS0tD7vwANMmBwSYSlTI8jm/5yzeHvM4kPoEps+6vmNBWwjE4Wtz9+pELooB8h5bq7Vebs/M=
+	t=1734000418; cv=none; b=ixf/XU9HmnOl9cq2JR6gTJCKkF7N/f4eCqw+G958OZvMgB0b+n1Kw/TbY9i2TOEkbyJJP4hnT63d57gg7s9v1Nv7YM2fF8IaTlqIP2RST2YL4/OJZ+0fC1ZsG8P10RYaqyKNSfjQPWlK2LCQ9tUG511jwWEl9KnNeTAHXNpJr0s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734000060; c=relaxed/simple;
-	bh=vGlExwmxZcW3eZ2MdG0oaOnLiSi5C480ajsfsL6G6zg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=hR/2nhsUxnwyS2TFAhmWNHG1JRqFtaqOYWfLm5oSVz0XgEJlj8MJU8N92cZnvXa3cVpkMbcqgHL9IC1e5vQpOIavTAiNRuu1bzc/NbHWpxlWq7+VFBOePc4NaOVBLJIAet7A8jhZST1pW6YsnfJNcCShLkf8uolVuWKgcWSIXHg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 79EF9169E;
-	Thu, 12 Dec 2024 02:41:25 -0800 (PST)
-Received: from J2N7QTR9R3 (usa-sjc-imap-foss1.foss.arm.com [10.121.207.14])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 77F7F3F58B;
-	Thu, 12 Dec 2024 02:40:54 -0800 (PST)
-Date: Thu, 12 Dec 2024 10:40:46 +0000
-From: Mark Rutland <mark.rutland@arm.com>
-To: Marc Zyngier <maz@kernel.org>
-Cc: Pavan Kondeti <quic_pkondeti@quicinc.com>,
-	Akhil P Oommen <quic_akhilpo@quicinc.com>,
-	Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-	Elliot Berman <quic_eberman@quicinc.com>,
-	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-	freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org
-Subject: Re: [PATCH] drm/msm/a6xx: Skip gpu secure fw load in EL2 mode
-Message-ID: <Z1q9rnzOlB9J5dXb@J2N7QTR9R3>
-References: <20241209-drm-msm-kvm-support-v1-1-1c983a8a8087@quicinc.com>
- <87ed2fs03w.wl-maz@kernel.org>
- <92cee905-a505-4ce9-9bbc-6fba4cea1d80@quicinc.com>
- <86sequsdtp.wl-maz@kernel.org>
- <c197264b-3791-493a-b717-3dfd844de922@quicinc.com>
- <87bjxhs2t7.wl-maz@kernel.org>
+	s=arc-20240116; t=1734000418; c=relaxed/simple;
+	bh=cB1uUmAhU+aHRtpBwlueGez8aRvqoT36e/Nk75OuHkY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=Vj9mh3Y5W4qT723Se+FDwIVtAmH29VLmpOTgdwkVmHeptW2bb48NPXqglpRPb6os6P3JX8lCAmmiw5AOghNbQlmM2LNBJvXYuz2UQuL6AIX9k0I91O0R+MwqS49zY22cSDk0RvMDPMcb1k0QqbXj+jd1kGXvLfQ9leRHAR3YxC4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ID6nVJSB; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BC7KleG015124;
+	Thu, 12 Dec 2024 10:46:49 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	jEIIHkgbMQKsYOwH4G4GkI9cirdEanSGZxZwk+xUnvg=; b=ID6nVJSBLfY7ECAb
+	W4q9KKKp3UUseUMBlTyhHVkWATqNr23vmvkWiayS7a0ArUMKbMe6xhZ1r36KnEZO
+	Zx2yJC4iNJnng5DH9/jb9KIWIu5y3nm1p9ASRVUQiPUoKiaXA98PyjhBArOZfAug
+	7Ecg5EyeExEvhr2Om9OfGpDdbLGHeNd17H9E9EYM2T6llNJOtCKdFp27/PYAKhKE
+	LjvcULXJZA6rZqqf/q6xqInAuJvsn+p2NGfTOKNBXaFdSQvhZ0RsmbsJ2+/Gxo99
+	Cl3AiOjuUnlm5sCBSSL2ANCitqiEG9S7riMUwhihjklR956V3V3K3M3ioTq6TOjG
+	e6WiBA==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43f7dpkuqm-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 12 Dec 2024 10:46:49 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4BCAkirx023600
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 12 Dec 2024 10:46:45 GMT
+Received: from [10.216.23.48] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 12 Dec
+ 2024 02:46:37 -0800
+Message-ID: <3c313557-ca99-4e6f-9d71-641e8c256126@quicinc.com>
+Date: Thu, 12 Dec 2024 16:16:33 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <87bjxhs2t7.wl-maz@kernel.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 0/4] Enable Bluetooth on qcs6490-rb3gen2 board
+To: "Rob Herring (Arm)" <robh@kernel.org>
+CC: <linux-arm-msm@vger.kernel.org>, <linux-bluetooth@vger.kernel.org>,
+        "Bjorn
+ Andersson" <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, <quic_anubhavg@quicinc.com>,
+        Mark Brown <broonie@kernel.org>,
+        "Bartosz
+ Golaszewski" <bartosz.golaszewski@linaro.org>,
+        <linux-pm@vger.kernel.org>, <quic_mohamull@quicinc.com>,
+        <quic_hbandi@quicinc.com>, <devicetree@vger.kernel.org>,
+        Marcel Holtmann <marcel@holtmann.org>,
+        "Luiz
+ Augusto von Dentz" <luiz.dentz@gmail.com>,
+        Liam Girdwood
+	<lgirdwood@gmail.com>,
+        Conor Dooley <conor+dt@kernel.org>, <linux-kernel@vger.kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Bartosz Golaszewski <brgl@bgdev.pl>
+References: <20241209103455.9675-1-quic_janathot@quicinc.com>
+ <173386568587.497565.1413799827375300987.robh@kernel.org>
+Content-Language: en-US
+From: Janaki Ramaiah Thota <quic_janathot@quicinc.com>
+In-Reply-To: <173386568587.497565.1413799827375300987.robh@kernel.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: ZFQ2FmKDgk_xdmQS2RW5CYLrDTAF7MM-
+X-Proofpoint-ORIG-GUID: ZFQ2FmKDgk_xdmQS2RW5CYLrDTAF7MM-
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 spamscore=0
+ priorityscore=1501 lowpriorityscore=0 phishscore=0 clxscore=1015
+ mlxlogscore=999 mlxscore=0 adultscore=0 bulkscore=0 malwarescore=0
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2412120076
 
-On Thu, Dec 12, 2024 at 08:50:12AM +0000, Marc Zyngier wrote:
-> On Thu, 12 Dec 2024 05:31:00 +0000,
-> Pavan Kondeti <quic_pkondeti@quicinc.com> wrote:
-> > 
-> > On Wed, Dec 11, 2024 at 10:40:02AM +0000, Marc Zyngier wrote:
-> > > On Wed, 11 Dec 2024 00:37:34 +0000,
-> > > Pavan Kondeti <quic_pkondeti@quicinc.com> wrote:
-> > > > 
-> > > > On Tue, Dec 10, 2024 at 09:24:03PM +0000, Marc Zyngier wrote:
-> > > > > > +static int a6xx_switch_secure_mode(struct msm_gpu *gpu)
-> > > > > > +{
-> > > > > > +	int ret;
-> > > > > > +
-> > > > > > +#ifdef CONFIG_ARM64
-> > > > > > +	/*
-> > > > > > +	 * We can access SECVID_TRUST_CNTL register when kernel is booted in EL2 mode. So, use it
-> > > > > > +	 * to switch the secure mode to avoid the dependency on zap shader.
-> > > > > > +	 */
-> > > > > > +	if (is_kernel_in_hyp_mode())
-> > > > > > +		goto direct_switch;
-> > > > > 
-> > > > > No, please. To check whether you are *booted* at EL2, you need to
-> > > > > check for is_hyp_available(). Whether the kernel runs at EL1 or EL2 is
-> > > > > none of the driver's business, really. This is still absolutely
-> > > > > disgusting from an abstraction perspective, but I guess we don't have
-> > > > > much choice here.
-> > > > > 
-> > > > 
-> > > > Thanks Marc. Any suggestions on how we can make is_hyp_mode_available()
-> > > > available for modules? Do you prefer exporting
-> > > > kvm_protected_mode_initialized and __boot_cpu_mode symbols directly or
-> > > > try something like [1]?
-> > > 
-> > > Ideally, neither. These were bad ideas nine years ago, and they still
-> > > are. The least ugly hack I can come up with is the patch below, and
-> > > you'd write something like:
-> > > 
-> > > 	if (cpus_have_cap(ARM64_HAS_EL2_OWNERSHIP))
-> > > 		blah();
-> > > 
-> > > This is obviously completely untested.
-> > > 
-> > 
-> > I have tested your patch. It works as intended. Thanks Marc.
+
+
+On 12/11/2024 3:12 AM, Rob Herring (Arm) wrote:
 > 
-> Note that you will probably get some push-back from the arm64
-> maintainers on this front, because this is a fairly incomplete (and
-> fragile) solution.
+> On Mon, 09 Dec 2024 16:04:51 +0530, Janaki Ramaiah Thota wrote:
+>> - Patch 1/4 Add description of the PMU of the WCN6750 module.
+>> - Patch 2/4 add and enable BT node for qcs6490-rb3gen board.
+>> - Patch 3/4 use the power sequencer for wcn6750.
+>> - Patch 4/4 add support for the WCN6750 PMU.
+>>
+>> ----
+>> Changes from v4:
+>> * Added reviewed tag by Krzysztof in p1
+>> * Updated the p2 commit message with sw_ctrl and wifi-enable are
+>>    handled in wifi FW.
+>> * Added blank line between the nodes in p2
+>> * Placed the structures in proper order in p4
+>> * Link to v4: https://lore.kernel.org/all/20241204131706.20791-1-quic_janathot@quicinc.com/
+>>
+>> Changes from v3:
+>> * Defined the PMU node and used the its output to power up BT
+>> * Used power sequencer for wcn wcn6750 module
+>> * Split the patch to multiple as per subtree
+>> * Add description of the PMU of the WCN6750 module
+>> * Include separate UART state node for sleep pin configuarion
+>> * Link to v3: https://lore.kernel.org/linux-arm-msm/20241022104600.3228-1-quic_janathot@quicinc.com/
+>>
+>> Changes from v2:
+>> * Sorted nodes alphabetically
+>> * Link to v2: https://lore.kernel.org/linux-arm-msm/20241010105107.30118-1-quic_janathot@quicinc.com/
+>>
+>> Changes from v1:
+>> * Corrected the board name in subject
+>> * Link to v1: https://lore.kernel.org/linux-arm-msm/20241009111436.23473-1-quic_janathot@quicinc.com/
+>>
+>> Janaki Ramaiah Thota (4):
+>>    regulator:·dt-bindings:·qcom,qca6390-pmu:·document wcn6750-pmu
+>>    arm64: dts: qcom: qcs6490-rb3gen: add and enable BT node
+>>    Bluetooth: hci_qca: use the power sequencer for wcn6750
+>>    power: sequencing: qcom-wcn: add support for the WCN6750 PMU
+>>
+>>   .../bindings/regulator/qcom,qca6390-pmu.yaml  |  27 +++
+>>   arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts  | 168 +++++++++++++++++-
+>>   drivers/bluetooth/hci_qca.c                   |   2 +-
+>>   drivers/power/sequencing/pwrseq-qcom-wcn.c    |  22 +++
+>>   4 files changed, 217 insertions(+), 2 deletions(-)
+>>
+>> --
+>>
+>>
+>>
 > 
-> It would be much better if the discriminant came from the device tree.
-> After all, the hypervisor is fscking-up^W^Wchanging the programming
-> model of the GPU, and that should be reflected in the DT. Because for
-> all intent and purposes, this is not the same hardware anymore.
-
-FWIW I agree 100%, this should be described in DT.
-
-The cpucap doesn't describe the actual property we care about, and it
-cannot in general (e.g. for nested virt). I would strongly prefer to not
-have that as it's setting ourselves up for failure.
-
-> The GPU isn't the only device that needs fixing in that way: the
-> SMMUv3 needs to be exposed to the OS, and the PCIe ports need to be
-> linked to it and the ITS. So at the end of the day, detecting EL2 only
-> serves a limited purpose. You need to handle these cases, and might as
-> well put the GPU in the same bag.
 > 
-> Which means that you'd either have a pair of static DTs (one that
-> exposes the brokenness of the firmware, and one that doesn't), or you
-> go the dtbhack route to compose the DT at boot time.
+> My bot found new DTB warnings on the .dts files added or changed in this
+> series.
+> 
+> Some warnings may be from an existing SoC .dtsi. Or perhaps the warnings
+> are fixed by another series. Ultimately, it is up to the platform
+> maintainer whether these warnings are acceptable or not. No need to reply
+> unless the platform maintainer has comments.
+> 
+> If you already ran DT checks and didn't see these error(s), then
+> make sure dt-schema is up to date:
+> 
+>    pip3 install dtschema --upgrade
+> 
+> 
+> New warnings running 'make CHECK_DTBS=y qcom/qcs6490-rb3gen2.dtb' for 20241209103455.9675-1-quic_janathot@quicinc.com:
+> 
+> arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dtb: bluetooth: 'enable-gpios' is a required property
+> 	from schema $id: http://devicetree.org/schemas/net/bluetooth/qualcomm-bluetooth.yaml#
+> arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dtb: bluetooth: 'swctrl-gpios' is a required property
+> 	from schema $id: http://devicetree.org/schemas/net/bluetooth/qualcomm-bluetooth.yaml#
+> arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dtb: bluetooth: 'vddio-supply' is a required property
+> 	from schema $id: http://devicetree.org/schemas/net/bluetooth/qualcomm-bluetooth.yaml#
+> arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dtb: bluetooth: 'vddbtcxmx-supply' is a required property
+> 	from schema $id: http://devicetree.org/schemas/net/bluetooth/qualcomm-bluetooth.yaml#
+> arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dtb: bluetooth: 'vddasd-supply' is a required property
+> 	from schema $id: http://devicetree.org/schemas/net/bluetooth/qualcomm-bluetooth.yaml#
+> arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dtb: pinctrl@f100000: Unevaluated properties are not allowed ('qup_uart7_sleep' was unexpected)
+> 	from schema $id: http://devicetree.org/schemas/pinctrl/qcom,sc7280-pinctrl.yaml#
+> 
 
-Liekwise, agreed on all of this.
+Since the DTS files for all boards using the WCN6750 BT chip are not 
+updated according to the PMU node, updating the 
+bluetooth/qualcomm-bluetooth.yaml file will result in similar warnings 
+for other boards.
 
-Mark.
+Thanks,
+Janakiram
+
 
