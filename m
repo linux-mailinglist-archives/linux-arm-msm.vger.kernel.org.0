@@ -1,371 +1,167 @@
-Return-Path: <linux-arm-msm+bounces-41786-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-41788-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4BDE59EF03B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Dec 2024 17:26:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 54F6E9EF131
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Dec 2024 17:35:42 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4340E28FC21
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Dec 2024 16:25:44 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1021729F36B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Dec 2024 16:35:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5287C23F9E6;
-	Thu, 12 Dec 2024 16:15:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 23CAD23A185;
+	Thu, 12 Dec 2024 16:25:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nm+blYb8"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="BPUYpORk"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f44.google.com (mail-ed1-f44.google.com [209.85.208.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27854229691;
-	Thu, 12 Dec 2024 16:15:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69B59229678;
+	Thu, 12 Dec 2024 16:25:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734020103; cv=none; b=pSCFq6dhbAJdp9OXj4jsRcqm6TLVSugqgRrQyyUboblgm9iNuMnaV8INH0uxkIwA1Nc2U4duzHTm4TgjvTjJHCBGGkbXDa+ErSbgQwTXGyWCXDAeIUNOsrZMDUPREodOICFepNUF3el3ivo+a0xqAxEbU6Zg/wFIZY9c18oVBTo=
+	t=1734020732; cv=none; b=ALXRBjtCJjq46RP6jb2QXgNeAEm+EdOf7ygKcSH9Fsv5X3WWX7InZ7A/M53rBZ8rFo9kxSvcbbW34gcfDA8Nxf5BmDH1nokE69L6WoAu6xx0kRf2+H+O0w2TigwZe2NztHzTK3kM3IZ8Y6T7RYBtn7txBDSgAeaw/klFjXog0SQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734020103; c=relaxed/simple;
-	bh=xvm8WTEVJbtjV35JOyw/OnGZ2/zRrgpJ7ldAlziPeTs=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=FS2npu6jHzJgAllDUkeRSgvJPtxR9fnDY4cadD4LvPYgiISDLamGaNX0aMCmfRVy1poEJU2jCtqxLgcXaPHv5eb9KcqWKEZDLPk9KzrY+Cc9Ocda0//X48R3RjNVZGEtZ2YwGlFfvinB134B+C1lRhEA+U1zM7eFojoOLV3uZk4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nm+blYb8; arc=none smtp.client-ip=209.85.208.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ed1-f44.google.com with SMTP id 4fb4d7f45d1cf-5d3dce16a3dso1438069a12.1;
-        Thu, 12 Dec 2024 08:15:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1734020099; x=1734624899; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=jMUdVIB3AtcFCaaGIkOJI69lVFENlEwSIjeKiRPfszE=;
-        b=nm+blYb84QMeZSn0Z1iyVpDs0S+7EK15bXvAPctVpYISNCQlth5tLSo//eEweTvUib
-         g/W00d9SUt9d5BT7oRxhiepjHld8RIsT8KO3Vjd4fQV8PKvQC4fP+XuvIupTBMrnoBVO
-         FjYKOjxq2EwNdwW8aWm2HSsyox7A7AcxE91OoaWu9ZnS1DK7vF+Zol+Q+j8hlDTH5Ipe
-         IpBh8t0+Ukfjwl3okYuhFMgc+3g8FtgCKY/GFuiv1EczlBMqIU8l26SgeLBZtcLSWaCb
-         byOi76PDzMBXj5tgirkRuPhQ8KddyWQThPtCpG0ZODqWKsXXe3IEPR5D3NEY4QgIxcoq
-         ZlNw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734020099; x=1734624899;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=jMUdVIB3AtcFCaaGIkOJI69lVFENlEwSIjeKiRPfszE=;
-        b=qZiEC3FFCaXuQpL4NT981IsgUd9W5f+r+EnneP7VCjbnOeJsXw6Vr1E8W+2eKRn1j9
-         iAi6SOXxS/gpwR1lzlGAKWcQrwbTCvbnpHuQlDfb7C4xhmGNtAlVk0GyVia7NZTAG9PN
-         XDPF0WMFEb6Rom8LAecW4pZ9+UuMZvbmPzNYydWTKXPwDGIz4ttzI53U1L27fIhm9qg+
-         m0zT8XjYooZ8xL6CDXycnn+HOurfdMAVo0o4rT9j0yCh0i7AQFk0y2Ut7LMDJwABEL4c
-         laEZrudNtir62sHFUuunvS3O+612ZMCYKzcEDvzMt+Z2el168FDjC8SfAtD+CaXBnxEX
-         YmAQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXVK23UfWfS731Xj4jHKa9aH7HvffdvDqpNZmOipOs5Rt5MFF5OxvoD7q5YeQRocpR1LMlbikdUGViSmBY=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzKPbqHvk24dzW0HX5kYihdT9vV5zvAaaonS3QTbuifHfXk0aXq
-	azFhno9Z/auQUZ4tIKajsM29fassT1ui79YLzBKHANyJqH8lTsS4
-X-Gm-Gg: ASbGncsqTqQFa5Z2RwSB6A2l3ej9dv++DwzDkF3wdKcTxDJX3dT/w74ZGRhuw4huPfU
-	S3xuiPqlFpOVJ3fsDs8YOriaL6vmi4auj9WREa5b68s7WF3JgW9qfcz60Bx90E+BhUa5tL65KUy
-	gQ7SC+sM+n+mmIZUhCRT8YO0S6iduR6LT3gQtqb36HAD51wkhq9c2h7vhSm7UyW9dtoOhqxUx2n
-	FBBLFnQjsKMMAzsirsTwlHj2T7zzAC+xkkkQKjDmH39mipn5tDH3TzzkYgcZCIkBoFEgft7Qpr5
-	W0DZ5GWlegYhc8p+l9V3CynmJfDkq00o9w==
-X-Google-Smtp-Source: AGHT+IHM6XB+NK/56Od2+MsZ/v5P1u5lWdb4RkRk+r1oDjsBuk6MSDLp9BjCs7i6WF3LHC+MEEMX8A==
-X-Received: by 2002:a05:6402:3709:b0:5d3:d2d0:12c9 with SMTP id 4fb4d7f45d1cf-5d635791f35mr991927a12.8.1734020098890;
-        Thu, 12 Dec 2024 08:14:58 -0800 (PST)
-Received: from [192.168.1.17] (host-87-20-169-101.retail.telecomitalia.it. [87.20.169.101])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5d3e86c14ffsm7401135a12.84.2024.12.12.08.14.57
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 12 Dec 2024 08:14:58 -0800 (PST)
-Message-ID: <de6cfac6-84a0-4160-b279-c23e10f96872@gmail.com>
-Date: Thu, 12 Dec 2024 17:14:56 +0100
+	s=arc-20240116; t=1734020732; c=relaxed/simple;
+	bh=vGAEDmrrxJR67HcmDsQm9Ej3F9JoAnhDptOHqFy3E6w=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=Py6trTGGzjSQZo7zCRhp7C6f/33mI3Qf9NbidmN3ffiYOQQgrL/qbj9Fa4e9BQkcvtmMJdLKXwO3iKI3/MQG+xlrixlVK+WVsiglfno3pFBBCxE2O5SD4OhIbCClfXGZlZbgOO5yeCLFG1LlOZZ0VHBTJ3mS5sB2QZ24vG4tUVI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=BPUYpORk; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BC7pCd3002061;
+	Thu, 12 Dec 2024 16:25:09 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=VdNbqiA/jWA5zUEQ0a0xj5
+	sMueOUmzcP5KTmWF4092c=; b=BPUYpORkiAN3KNTFLS7stKUadprQi14kCkaR6N
+	5mK+Fqw0n5FdUmhKTaGNnZRzMqkxbT+Wm2LwUA2NSmEpfuZj06wlB753o5Txnb3+
+	gpa9qyVkVOKwDPYyM5gDx4E6cEgbCUezJKq7HLAKlCQFZnFcxPF8THzQsby+YOyB
+	Z2lPefX85O4Zi+P/dukweTdUf4hKAwe1u+kFEQCsI0rmQbfnu9gBSqkOVuxvIkwf
+	hNljXYac3HnSDeZEQrVEFtIsheKHZt2tDY5o+ucNjehgVV6YRRY76QRteRMV0lV8
+	JwBiwCfmfSYZgGS6yNLf6v7PhXFm+GuFUUaXsOm5ZgpMonBA==
+Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43eyg663qg-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 12 Dec 2024 16:25:08 +0000 (GMT)
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+	by NASANPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4BCGP7KW004935
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 12 Dec 2024 16:25:07 GMT
+Received: from hu-mohs-hyd.qualcomm.com (10.80.80.8) by
+ nasanex01c.na.qualcomm.com (10.45.79.139) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Thu, 12 Dec 2024 08:24:59 -0800
+From: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
+To: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Liam Girdwood
+	<lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
+        Rob Herring
+	<robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>, Vinod Koul <vkoul@kernel.org>,
+        Bard Liao
+	<yung-chuan.liao@linux.intel.com>,
+        Jaroslav Kysela <perex@perex.cz>, "Takashi
+ Iwai" <tiwai@suse.com>
+CC: Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>,
+        Sanyog Kale
+	<sanyog.r.kale@intel.com>,
+        <linux-arm-msm@vger.kernel.org>, <linux-sound@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <quic_pkumpatl@quicinc.com>, <kernel@quicinc.com>,
+        Mohammad Rafi Shaik <quic_mohs@quicinc.com>
+Subject: [PATCH v5 0/4] Add static channel mapping between soundwire master and slave
+Date: Thu, 12 Dec 2024 21:53:30 +0530
+Message-ID: <20241212162334.36739-1-quic_mohs@quicinc.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC] drm/msm: Add UABI to request perfcntr usage
-To: Akhil P Oommen <quic_akhilpo@quicinc.com>, Rob Clark
- <robdclark@gmail.com>, dri-devel@lists.freedesktop.org
-Cc: linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
- Rob Clark <robdclark@chromium.org>, Sean Paul <sean@poorly.run>,
- Konrad Dybcio <konradybcio@kernel.org>,
- Abhinav Kumar <quic_abhinavk@quicinc.com>,
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Marijn Suijten <marijn.suijten@somainline.org>,
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
- open list <linux-kernel@vger.kernel.org>
-References: <20241205165419.54080-1-robdclark@gmail.com>
- <eca60b8e-8a8a-41c4-816a-d084822646f1@quicinc.com>
-Content-Language: en-US
-From: Antonino Maniscalco <antomani103@gmail.com>
-In-Reply-To: <eca60b8e-8a8a-41c4-816a-d084822646f1@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01c.na.qualcomm.com (10.45.79.139)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: QTGaPIH4OGNnX62KYaGeXgMvSpvKw8y3
+X-Proofpoint-ORIG-GUID: QTGaPIH4OGNnX62KYaGeXgMvSpvKw8y3
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 bulkscore=0
+ lowpriorityscore=0 priorityscore=1501 adultscore=0 impostorscore=0
+ mlxlogscore=999 phishscore=0 suspectscore=0 mlxscore=0 clxscore=1015
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2412120118
 
-On 12/12/24 4:58 PM, Akhil P Oommen wrote:
-> On 12/5/2024 10:24 PM, Rob Clark wrote:
->> From: Rob Clark <robdclark@chromium.org>
->>
->> Performance counter usage falls into two categories:
->>
->> 1. Local usage, where the counter configuration, start, and end read
->>     happen within (locally to) a single SUBMIT.  In this case, there is
->>     no dependency on counter configuration or values between submits, and
->>     in fact counters are normally cleared on context switches, making it
->>     impossible to rely on cross-submit state.
->>
->> 2. Global usage, where a single privilaged daemon/process is sampling
->>     counter values across all processes for profiling.
->>
->> The two categories are mutually exclusive.  While you can have many
->> processes making local counter usage, you cannot combine global and
->> local usage without the two stepping on each others feet (by changing
->> counter configuration).
->>
->> For global counter usage, there is already a SYSPROF param (since global
->> counter usage requires disabling counter clearing on context switch).
->> This patch adds a REQ_CNTRS param to request local counter usage.  If
->> one or more processes has requested counter usage, then a SYSPROF
->> request will fail with -EBUSY.  And if SYSPROF is active, then REQ_CNTRS
->> will fail with -EBUSY, maintaining the mutual exclusivity.
->>
->> This is purely an advisory interface to help coordinate userspace.
->> There is no real means of enforcement, but the worst that can happen if
->> userspace ignores a REQ_CNTRS failure is that you'll get nonsense
->> profiling data.
->>
->> Signed-off-by: Rob Clark <robdclark@chromium.org>
->> ---
->> kgsl takes a different approach, which involves a lot more UABI for
->> assigning counters to different processes.  But I think by taking
->> advantage of the fact that mesa (freedreno+turnip) reconfigure the
->> counters they need in each SUBMIT, for their respective gl/vk perf-
->> counter extensions, we can take this simpler approach.
-> 
-> KGSL's approach is preemption and ifpc safe (also whatever HW changes
-> that will come up in future generations). How will we ensure that here?
-> 
-> I have plans to bring up IFPC support in near future. Also, I brought up
-> this point during preemption series. But from the responses, I felt that
-> profiling was not considered a serious usecase. Still I wonder how the
-> perfcounter extensions work accurately with preemption.
+Add static channel map support between soundwire master and slave.
 
-So back then I implemented the postamble IB to clear perf counters and 
-that gets disabled when sysprof (so global usage) is happening. The 
-kernel is oblivious to "Local isage" of profiling but in that case 
-really what we want to do is disable preemption which in my 
-understanding can be done from userspace with a PKT. In my understanding 
-this had us covered for all usecases.
+Currently, the channel value for each soundwire port is hardcoded in the
+wcd937x-sdw driver and the same channel  value is configured in the
+soundwire master.
 
-So what would you expect instead we should do kernel side to make 
-profiling preemption safe?
+The Qualcomm board like the QCM6490-IDP require static channel map
+settings for the soundwire master and slave ports.
 
-> 
-> -Akhil
-> 
->>
->>   drivers/gpu/drm/msm/adreno/adreno_gpu.c |  2 +
->>   drivers/gpu/drm/msm/msm_drv.c           |  5 ++-
->>   drivers/gpu/drm/msm/msm_gpu.c           |  1 +
->>   drivers/gpu/drm/msm/msm_gpu.h           | 29 +++++++++++++-
->>   drivers/gpu/drm/msm/msm_submitqueue.c   | 52 ++++++++++++++++++++++++-
->>   include/uapi/drm/msm_drm.h              |  1 +
->>   6 files changed, 85 insertions(+), 5 deletions(-)
->>
->> diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
->> index 31bbf2c83de4..f688e37059b8 100644
->> --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
->> +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
->> @@ -441,6 +441,8 @@ int adreno_set_param(struct msm_gpu *gpu, struct msm_file_private *ctx,
->>   		if (!capable(CAP_SYS_ADMIN))
->>   			return UERR(EPERM, drm, "invalid permissions");
->>   		return msm_file_private_set_sysprof(ctx, gpu, value);
->> +	case MSM_PARAM_REQ_CNTRS:
->> +		return msm_file_private_request_counters(ctx, gpu, value);
->>   	default:
->>   		return UERR(EINVAL, drm, "%s: invalid param: %u", gpu->name, param);
->>   	}
->> diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
->> index 6416d2cb4efc..bf8314ff4a25 100644
->> --- a/drivers/gpu/drm/msm/msm_drv.c
->> +++ b/drivers/gpu/drm/msm/msm_drv.c
->> @@ -377,9 +377,12 @@ static void msm_postclose(struct drm_device *dev, struct drm_file *file)
->>   	 * It is not possible to set sysprof param to non-zero if gpu
->>   	 * is not initialized:
->>   	 */
->> -	if (priv->gpu)
->> +	if (ctx->sysprof)
->>   		msm_file_private_set_sysprof(ctx, priv->gpu, 0);
->>   
->> +	if (ctx->counters_requested)
->> +		msm_file_private_request_counters(ctx, priv->gpu, 0);
->> +
->>   	context_close(ctx);
->>   }
->>   
->> diff --git a/drivers/gpu/drm/msm/msm_gpu.c b/drivers/gpu/drm/msm/msm_gpu.c
->> index 82f204f3bb8f..013b59ca3bb1 100644
->> --- a/drivers/gpu/drm/msm/msm_gpu.c
->> +++ b/drivers/gpu/drm/msm/msm_gpu.c
->> @@ -991,6 +991,7 @@ int msm_gpu_init(struct drm_device *drm, struct platform_device *pdev,
->>   	gpu->nr_rings = nr_rings;
->>   
->>   	refcount_set(&gpu->sysprof_active, 1);
->> +	refcount_set(&gpu->local_counters_active, 1);
->>   
->>   	return 0;
->>   
->> diff --git a/drivers/gpu/drm/msm/msm_gpu.h b/drivers/gpu/drm/msm/msm_gpu.h
->> index e25009150579..83c61e523b1b 100644
->> --- a/drivers/gpu/drm/msm/msm_gpu.h
->> +++ b/drivers/gpu/drm/msm/msm_gpu.h
->> @@ -195,12 +195,28 @@ struct msm_gpu {
->>   	int nr_rings;
->>   
->>   	/**
->> -	 * sysprof_active:
->> +	 * @sysprof_active:
->>   	 *
->> -	 * The count of contexts that have enabled system profiling.
->> +	 * The count of contexts that have enabled system profiling plus one.
->> +	 *
->> +	 * Note: refcount_t does not like 0->1 transitions.. we want to keep
->> +	 * the under/overflow checks that refcount_t provides, but allow
->> +	 * multiple on/off transitions so we track the logical value plus one.)
->>   	 */
->>   	refcount_t sysprof_active;
->>   
->> +	/**
->> +	 * @local_counters_active:
->> +	 *
->> +	 * The count of contexts that have requested local (intra-submit)
->> +	 * performance counter usage plus one.
->> +	 *
->> +	 * Note: refcount_t does not like 0->1 transitions.. we want to keep
->> +	 * the under/overflow checks that refcount_t provides, but allow
->> +	 * multiple on/off transitions so we track the logical value plus one.)
->> +	 */
->> +	refcount_t local_counters_active;
->> +
->>   	/**
->>   	 * lock:
->>   	 *
->> @@ -383,6 +399,13 @@ struct msm_file_private {
->>   	 */
->>   	int sysprof;
->>   
->> +	/**
->> +	 * @counters_requested:
->> +	 *
->> +	 * Has the context requested local perfcntr usage.
->> +	 */
->> +	bool counters_requested;
->> +
->>   	/**
->>   	 * comm: Overridden task comm, see MSM_PARAM_COMM
->>   	 *
->> @@ -626,6 +649,8 @@ void msm_submitqueue_destroy(struct kref *kref);
->>   
->>   int msm_file_private_set_sysprof(struct msm_file_private *ctx,
->>   				 struct msm_gpu *gpu, int sysprof);
->> +int msm_file_private_request_counters(struct msm_file_private *ctx,
->> +				      struct msm_gpu *gpu, int reqcntrs);
->>   void __msm_file_private_destroy(struct kref *kref);
->>   
->>   static inline void msm_file_private_put(struct msm_file_private *ctx)
->> diff --git a/drivers/gpu/drm/msm/msm_submitqueue.c b/drivers/gpu/drm/msm/msm_submitqueue.c
->> index 7fed1de63b5d..1e1e21e6f7ae 100644
->> --- a/drivers/gpu/drm/msm/msm_submitqueue.c
->> +++ b/drivers/gpu/drm/msm/msm_submitqueue.c
->> @@ -10,6 +10,15 @@
->>   int msm_file_private_set_sysprof(struct msm_file_private *ctx,
->>   				 struct msm_gpu *gpu, int sysprof)
->>   {
->> +	int ret = 0;
->> +
->> +	mutex_lock(&gpu->lock);
->> +
->> +	if (sysprof && (refcount_read(&gpu->local_counters_active) > 1)) {
->> +		ret = UERR(EBUSY, gpu->dev, "Local counter usage active");
->> +		goto out_unlock;
->> +	}
->> +
->>   	/*
->>   	 * Since pm_runtime and sysprof_active are both refcounts, we
->>   	 * call apply the new value first, and then unwind the previous
->> @@ -18,7 +27,8 @@ int msm_file_private_set_sysprof(struct msm_file_private *ctx,
->>   
->>   	switch (sysprof) {
->>   	default:
->> -		return UERR(EINVAL, gpu->dev, "Invalid sysprof: %d", sysprof);
->> +		ret = UERR(EINVAL, gpu->dev, "Invalid sysprof: %d", sysprof);
->> +		goto out_unlock;
->>   	case 2:
->>   		pm_runtime_get_sync(&gpu->pdev->dev);
->>   		fallthrough;
->> @@ -43,7 +53,45 @@ int msm_file_private_set_sysprof(struct msm_file_private *ctx,
->>   
->>   	ctx->sysprof = sysprof;
->>   
->> -	return 0;
->> +out_unlock:
->> +	mutex_unlock(&gpu->lock);
->> +
->> +	return ret;
->> +}
->> +
->> +int msm_file_private_request_counters(struct msm_file_private *ctx,
->> +				      struct msm_gpu *gpu, int reqctrs)
->> +{
->> +	int ret = 0;
->> +
->> +	mutex_lock(&gpu->lock);
->> +
->> +	if (reqctrs && (refcount_read(&gpu->sysprof_active) > 1)) {
->> +		ret = UERR(EBUSY, gpu->dev, "System profiling active");
->> +		goto out_unlock;
->> +	}
->> +
->> +	if (reqctrs) {
->> +		if (ctx->counters_requested) {
->> +			ret = UERR(EINVAL, gpu->dev, "Already requested");
->> +			goto out_unlock;
->> +		}
->> +
->> +		ctx->counters_requested = true;
->> +		refcount_inc(&gpu->local_counters_active);
->> +	} else {
->> +		if (!ctx->counters_requested) {
->> +			ret = UERR(EINVAL, gpu->dev, "Not requested");
->> +			goto out_unlock;
->> +		}
->> +		refcount_dec(&gpu->local_counters_active);
->> +		ctx->counters_requested = false;
->> +	}
->> +
->> +out_unlock:
->> +	mutex_unlock(&gpu->lock);
->> +
->> +	return ret;
->>   }
->>   
->>   void __msm_file_private_destroy(struct kref *kref)
->> diff --git a/include/uapi/drm/msm_drm.h b/include/uapi/drm/msm_drm.h
->> index 2342cb90857e..ae7fb355e4a1 100644
->> --- a/include/uapi/drm/msm_drm.h
->> +++ b/include/uapi/drm/msm_drm.h
->> @@ -91,6 +91,7 @@ struct drm_msm_timespec {
->>   #define MSM_PARAM_UBWC_SWIZZLE 0x12 /* RO */
->>   #define MSM_PARAM_MACROTILE_MODE 0x13 /* RO */
->>   #define MSM_PARAM_UCHE_TRAP_BASE 0x14 /* RO */
->> +#define MSM_PARAM_REQ_CNTRS  0x15 /* WO: request "local" (intra-submit) perfcntr usage  */
->>   
->>   /* For backwards compat.  The original support for preemption was based on
->>    * a single ring per priority level so # of priority levels equals the #
-> 
+If another boards which are using enable wcd937x, the channel mapping
+index values between master and slave may be different depending on the
+board hw design and requirements. If the above properties are not used
+in a SoC specific device tree, the channel mapping index values are set
+to default.
+
+With the introduction of the following channel mapping properties, it is
+now possible to configure the master channel mapping directly from the
+device tree.
+
+Added qcom_swrm_set_channel_map api to set the master channel values
+which allows more flexible to configure channel values in runtime for
+specific active soundwire ports.
+
+Add get and set channel maps support from codec to cpu dais in common
+Qualcomm sdw driver.
+
+Changes since v4:
+ - Update the order of channel map index values in v4-0001 dt-bindings patch as suggested by Krzysztof.
+ 
+Changes since v3:
+ - Change the order of channel map index values in v3-0002 dt-bindings patch as suggested by Krzysztof.
+ - Dropped V3-0001 patch which is not required.
+
+Changes since v2:
+ - Rephrase commit description v2-0001 dt-bindings patch as suggested by Krzysztof.
+
+Changes since v1:
+ - Modified the design and followed new approach to setting the master channel mask.
+ - Used existing set_channel_map api as suggested by Pierre-Louis
+ - Fixed the typo mistake in v1-0001 dt-bindings patch.
+ - Rephrase the commit description for all v1 patches.
+
+Mohammad Rafi Shaik (2):
+  ASoC: dt-bindings: wcd937x-sdw: Add static channel mapping support
+  ASoC: codecs: wcd937x: Add static channel mapping support in
+    wcd937x-sdw
+  soundwire: qcom: Add set_channel_map api support
+  ASoC: qcom: sdw: Add get and set channel maps support from codec to
+    cpu dais
+
+ .../bindings/sound/qcom,wcd937x-sdw.yaml      | 36 +++++++++++++
+ drivers/soundwire/qcom.c                      | 26 +++++++++
+ sound/soc/codecs/wcd937x-sdw.c                | 39 ++++++++++++--
+ sound/soc/codecs/wcd937x.c                    | 53 ++++++++++++++++++-
+ sound/soc/codecs/wcd937x.h                    |  7 ++-
+ sound/soc/qcom/sdw.c                          | 34 ++++++++++--
+ 6 files changed, 185 insertions(+), 10 deletions(-)
 
 
-Best regards,
+base-commit: 3e42dc9229c5950e84b1ed705f94ed75ed208228
 -- 
-Antonino Maniscalco <antomani103@gmail.com>
+2.34.1
+
 
