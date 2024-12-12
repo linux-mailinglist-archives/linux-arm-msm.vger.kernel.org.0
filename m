@@ -1,48 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-41664-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-41665-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4924A9EE044
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Dec 2024 08:32:14 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id D558A9EE047
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Dec 2024 08:32:46 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 827241670D2
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Dec 2024 07:32:08 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id BCE991886ACE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Dec 2024 07:32:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AB9AF13B7AE;
-	Thu, 12 Dec 2024 07:32:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 75C4313BADF;
+	Thu, 12 Dec 2024 07:32:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="C+K6a9CS"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="oJHx7D44"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B3EC25949C;
-	Thu, 12 Dec 2024 07:32:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D40AF25949C;
+	Thu, 12 Dec 2024 07:32:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733988726; cv=none; b=Xgx38pvYr8Ua2VFGXgV1PJp6XrJpTHMwWcAFcYn1CBtO6Qv3dSYJkgV+Ynu7OuHUd/xJTZerEQeTBG4cHhcPa9iqDXjjDHke4JRLr9mUYtJ48/qNjPN86Dyia7Mhq3EzcBGd4SdxeJjAiR5uet4a/bQp3FKqAhMVhWrFYfDSyyM=
+	t=1733988760; cv=none; b=fcRh87e6SESjNOnwLWLyBeue/u+DncMw5GZjBe/WEDPJ/nYGH1bwl5wAB57CiQUI8eFmZgqcnPvYtEdIRbdz6V2pCLAgT+qCeOM36HmQ/aNmpDYcuexZS7oJF+yrs/XHmxYrIyLVGbBEPJ2A7NWaHXneyEMIUUVv/mcCi6qFqaE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733988726; c=relaxed/simple;
-	bh=2FGnnWS3Ex5N+GpBLva4y8IY2r8xTzbM3LdEMhOI6Rg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=iKo6aQgDgFnKJDBJT3gbOGGanRD+gNRUmfWVlrwDxLzeaI0HY+mCJMi7l0jWeE6vCxMlRzbFOO3rpDleIPocF6sv4bDB51FGycilS9sdFtmzv0SJcSa0jGudGxRJdHjSr0QJFvKnQEISKtWf5bZbK5kkagpIgeJS1VmgKbFa0R8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=C+K6a9CS; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 841B6C4CECE;
-	Thu, 12 Dec 2024 07:32:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1733988725;
-	bh=2FGnnWS3Ex5N+GpBLva4y8IY2r8xTzbM3LdEMhOI6Rg=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=C+K6a9CSV5FS9+70UATIeWvMSRZfAMiO3+DjQ0DVX/mA9bzcoyNhEi6Gn9yPia5wV
-	 eoP6lhMxlhgxLHl7BofhNwoU8qQE5RNwTgxWkM2/H8BVQypp254iYsbEGI2gwHXfVx
-	 4rhrxxRPiZxU3Aa7LH4dfyUF09cajJ6EFsGdpjwtx2PMjlIUWN0y9KmVuir7h/F48C
-	 MZzDV8I7sEZw79Cr/pEpwkiIlCPAI97Cm14n8lLjatfiEmy4c5E8pYDmXNxK/HyNuf
-	 QTpcDphzodEZTwKKovZRdlkajIdiTpNw4UAf0JrBAHW0wizD7y8X0OxfQ6+VdeZ0ZB
-	 snAtZ5zwZVqqw==
-Message-ID: <d803ead8-af3d-438a-9d9f-6194a7a5431a@kernel.org>
-Date: Thu, 12 Dec 2024 08:31:58 +0100
+	s=arc-20240116; t=1733988760; c=relaxed/simple;
+	bh=oDmEwOA7NnlTYU3w/OUVCU8Azx5QSIL2S65+a4MxZeg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=dUAWTbo6VjEOT3apZ2s6GzOAncwc6x/ETrrU0hC6c/b2JCoKJSoGsnZAwHt/AHC88q1dJXieBQ/47XqW5+kzyBCiWnIH1zhGCv0CvCQrzey8I9Dkqdt8PUEUfCX7rlrxrpuu4+0nWIj4yNon1SNkuHrvBVAWxt9McwELY00Blxk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=oJHx7D44; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BBHD0WY028100;
+	Thu, 12 Dec 2024 07:32:32 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	n3UoYyua5pcw40DVZlwapk0NVIYn4sDifJJJMf9sbKc=; b=oJHx7D44zrwOZrM9
+	J8lbtIL3LbjnfBuRJQvEMw02542Ui6+vmdFiL5i+3CrvHNM6hktHNjdw/3r3Z6le
+	V3oDf8EkfF+esQRlPwmdrAlLY1L9LtHyxF/d4Rw/Ii6HnmGf/wuuOtzXlgaeDiut
+	OmPrpOBJUHHbSFEIyV4lHeGoyF2jRHjmjdLbDPjXbKanlXoXvtfxy7MPwPEhxsMN
+	z9mU/jWDinQgigWBcVmFko3EDY2Dg0RU6HMeZImN69nY1cXSBUJFim4s+CJqh/PO
+	h39feqra+2/aKFGyXywmNKXl8SJI7Lwp9tOm5jpF1B/v2tzUoAgf2YRQYCP6FUwa
+	18G0TQ==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43fd4xt484-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 12 Dec 2024 07:32:32 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4BC7WVVe019439
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 12 Dec 2024 07:32:31 GMT
+Received: from [10.253.8.225] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 11 Dec
+ 2024 23:32:26 -0800
+Message-ID: <89bc05c4-dc84-4e1b-892e-87a959c72556@quicinc.com>
+Date: Thu, 12 Dec 2024 15:32:23 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,93 +65,72 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] dt-bindings: phy: qcom,qmp-pcie: add optional current
- load properties
-To: Ziyue Zhang <quic_ziyuzhan@quicinc.com>,
- Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc: vkoul@kernel.org, kishon@kernel.org, dmitry.baryshkov@linaro.org,
- abel.vesa@linaro.org, neil.armstrong@linaro.org, andersson@kernel.org,
- konradybcio@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
- conor+dt@kernel.org, linux-arm-msm@vger.kernel.org,
- linux-phy@lists.infradead.org, linux-kernel@vger.kernel.org,
- devicetree@vger.kernel.org, quic_qianyu@quicinc.com
+Subject: Re: [PATCH 3/3] arm64: dts: qcom: qcs615: add pcie phy max current
+ property
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+CC: <vkoul@kernel.org>, <kishon@kernel.org>, <dmitry.baryshkov@linaro.org>,
+        <abel.vesa@linaro.org>, <neil.armstrong@linaro.org>,
+        <andersson@kernel.org>, <konradybcio@kernel.org>, <robh@kernel.org>,
+        <krzk+dt@kernel.org>, <conor+dt@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-phy@lists.infradead.org>,
+        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <quic_qianyu@quicinc.com>
 References: <20241204105249.3544114-1-quic_ziyuzhan@quicinc.com>
- <20241204105249.3544114-2-quic_ziyuzhan@quicinc.com>
- <qvjtwilukxbeaxnbyzfkdsfkktm6p4yv3sgx3rbugpb6qkcbjy@rohvixslizhh>
- <20241211062053.vxdpovlmetvyx3za@thinkpad>
- <33697bd9-02f4-4a9a-b8c0-4930d7fdaee2@kernel.org>
- <20241211082404.p7fbmhooikmipxvm@thinkpad>
- <3c7ddb08-38db-44b3-a7a7-ec7b270a408f@kernel.org>
- <20241211115034.4hrpmninbx5uryev@thinkpad>
- <16d109d8-d1be-4ecb-ba25-8e21e9d48dad@quicinc.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <16d109d8-d1be-4ecb-ba25-8e21e9d48dad@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+ <20241204105249.3544114-4-quic_ziyuzhan@quicinc.com>
+ <20241211062645.3eut7ibjqymm6ayt@thinkpad>
+From: Ziyue Zhang <quic_ziyuzhan@quicinc.com>
+In-Reply-To: <20241211062645.3eut7ibjqymm6ayt@thinkpad>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: EN54WgX6_ZLXk-e3PsC4QFIX0HtBGR_b
+X-Proofpoint-GUID: EN54WgX6_ZLXk-e3PsC4QFIX0HtBGR_b
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ priorityscore=1501 bulkscore=0 mlxlogscore=999 phishscore=0 adultscore=0
+ suspectscore=0 spamscore=0 mlxscore=0 impostorscore=0 clxscore=1011
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2412120050
 
-On 12/12/2024 08:29, Ziyue Zhang wrote:
+
+在 12/11/2024 2:26 PM, Manivannan Sadhasivam 写道:
+> On Wed, Dec 04, 2024 at 06:52:49PM +0800, Ziyue Zhang wrote:
+>> Add vdda-pll-max-microamp for vdda-pll-supply. The value of this property
+>> is from the power grid guide. It is the maximum current the regulator can
+>> provide. The property will be parsed by PCIe PHY driver to set the current
+>> load.
+>>
+>> Signed-off-by: Ziyue Zhang <quic_ziyuzhan@quicinc.com>
+>> ---
+>>   arch/arm64/boot/dts/qcom/qcs615-ride.dts | 1 +
+>>   1 file changed, 1 insertion(+)
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/qcs615-ride.dts b/arch/arm64/boot/dts/qcom/qcs615-ride.dts
+>> index 18f131ae9e07..6d93ef0d886b 100644
+>> --- a/arch/arm64/boot/dts/qcom/qcs615-ride.dts
+>> +++ b/arch/arm64/boot/dts/qcom/qcs615-ride.dts
+>> @@ -215,6 +215,7 @@ &pcie {
+>>   &pcie_phy {
+>>   	vdda-phy-supply = <&vreg_l5a>;
+>>   	vdda-pll-supply = <&vreg_l12a>;
+>> +	vdda-pll-max-microamp = <165000>;
+>>   
+> Min uV of this regulator is 1800000:
+> https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git/tree/arch/arm64/boot/dts/qcom/qcs615-ride.dts?h=for-next#n151
 >
->> In that case, I was wondering if the load set by the driver is going to vary
->> between platforms (boards) or not (question to Ziyue Zhang). If it varies
->> between SoC, then we can hardcode the load in driver based on compatible.
-> 
-> Hi Mani, Krzystof
-> 
-> Now we set  the current to 165mA which is the max power supply the regulator
-> can provide, so this is platform(boards) related. But we think PCIe PHY needs
+> How can you set 165000?
+>
+> - Mani
 
-Yeah, so that's the answer to what I asked just a second ago - you do
-not put there device load. You put there regulator constraints.
+Hi Mani
+the 165000 cames from the power grid guide, and it is 165000uA not uV
+BRs
+Ziyue
 
-> to set the current value we need, which is soc related.
-
-So move it away from DT. I don't care what's in the driver, so you can
-put there whatever fake value.
-
-Best regards,
-Krzysztof
+>
 
