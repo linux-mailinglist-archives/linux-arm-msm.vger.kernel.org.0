@@ -1,53 +1,53 @@
-Return-Path: <linux-arm-msm+bounces-42033-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-42036-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 695539F0E11
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Dec 2024 14:56:49 +0100 (CET)
-Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 085239F0E06
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Dec 2024 14:55:54 +0100 (CET)
+Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 57C6B166A1F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Dec 2024 13:55:39 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AE1DA28475E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Dec 2024 13:55:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EFB181E0B86;
-	Fri, 13 Dec 2024 13:53:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 849891E1A2D;
+	Fri, 13 Dec 2024 13:53:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="t6T4QING"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XXNAEqTQ"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9A6E43166;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 436D91E1021;
 	Fri, 13 Dec 2024 13:53:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734098016; cv=none; b=n4cRcB6U0Ir8JIt2at9w84ysTqn1nxGXQd1vGpWlxolibSLbpTbr/nALJIKPgYNlpnWCE7ug9EyXid0bVgpSEdtYHiB3qZzFbY5h1iBdvWMDuhzNGqb/nrXN1yqHMxGKHDDLCaUR9GXa1fXYFYBNuJbpqPmeEQIl9rlTYUANJmM=
+	t=1734098017; cv=none; b=przH49Ugaq/i/Rahsil4x3uTBGMIumzihSE9A5K+USlGdiK1+2zh+zrrmlY/BDDwSOCreR2Y1OIU5WyKPrk2dB+PwYsgcWJ5kRj/tkXslxe7WDY3ClPn2u4N52HiPWuRLc9Xf2Hj1bDQn9faXKtWSD82YKOigPde85EqNL2zAlo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734098016; c=relaxed/simple;
-	bh=mdHii9nRNOur98TYJL9W/B0MjRM9s+5aXB/CNs8G4jU=;
+	s=arc-20240116; t=1734098017; c=relaxed/simple;
+	bh=RLrPP1UOgG1fZPu3wenA1ItNRecGsfpipjwJK5Rn8So=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=EOC9JgIXSA9QO4gfAi6WXJebrvOLOBF3psGHW4AhMboAzaKLpWXyIfaxwdu2yI1X3ONc00HMBs29KI6cuKi+tGcdlN3CpKeyQLyYj4x0fhwq0zdVT0gFz2MI7Z1xPKdL0YH1AxeuSr555VELbrMypTd1ecD0L4+uSfZ/Dy5E3Jo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=t6T4QING; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 92E0EC4CED7;
+	 In-Reply-To:To:Cc; b=ZtDCqE1YNaYKVxAMYC5orGnfbot/1YocrE+73e05qOtMjUxl2y4vl74bi1z9MsZcZuUN1lHipEwcHZ0os9xA7AI5dWi/oa7vonBzCzgqXo5sK0NsLF2q4/6RwXcmRbrgJRWZtUCf6nRaQq3WkVZihIpiAphel4PHyGxf+6Z1eNA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XXNAEqTQ; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id B11A3C4AF0B;
 	Fri, 13 Dec 2024 13:53:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1734098016;
-	bh=mdHii9nRNOur98TYJL9W/B0MjRM9s+5aXB/CNs8G4jU=;
+	bh=RLrPP1UOgG1fZPu3wenA1ItNRecGsfpipjwJK5Rn8So=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=t6T4QINGnsbV7YalJZg23vvtlgJC+vFpBtwEdX6EB7fDhBjNo+bFcBQZhWERZFEbf
-	 HcuY/a5edj0r/F27CJbqEyAkLqD30U/5ov321csqpRNEvVPmauQ8XQIRrWwJgiHSuW
-	 rTvmRbkk1Lr/OLT66pvmSu/sINLp/015dnWufH9zpTruI2QByyD72LsLN02AP1Ffth
-	 nlRBP7R6OaE1yeq/8RJDjS7wCdX2kgXWSxaxjNmMbblGybzO5SBvoB1vHxPHiMe289
-	 2fhnOCWFykGTogNxQvSNKKcHdTc/mV14jHbvTG2/eC43NSiD8DP36ZYw8AMJKmoKVI
-	 4JPI8oCyVkaBQ==
+	b=XXNAEqTQ92uJ4veGQ6SqqDIhvdN2aBWbk8/iULZqM5iMgy5XWi7+b5/wBH/WYs8q4
+	 NQlikAdOn22ZzZMVYfOxRnIiuHkvVB+VJrMky65yRv2lLRagDNE/KDSGXsjuH8NdyH
+	 3jndUqkUS/HUA1RJTS1nu8nRUBC9Vhdr5Z8Tmtrc6HyR9S9++kWWAW229pTTbNE3ur
+	 9G6CitFRMEyKTpVI/OwOh+zBgVW44UypXhbrqiIUO1GKqDMD0RL0JkdOlmdzU+Rs0U
+	 VH7ZV1yXVU8TBbdPpIedLc3+qmhiJlLi+i0K2Nq3H1X+GL/aQgmgf6X7mrQrnmJpyf
+	 btHzdqpoLSzMg==
 Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7F6EDE77182;
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 937C8E7717D;
 	Fri, 13 Dec 2024 13:53:36 +0000 (UTC)
 From: Manivannan Sadhasivam via B4 Relay <devnull+manivannan.sadhasivam.linaro.org@kernel.org>
-Date: Fri, 13 Dec 2024 19:23:30 +0530
-Subject: [PATCH v2 2/3] scsi: ufs: qcom: Allow passing platform specific OF
- data
+Date: Fri, 13 Dec 2024 19:23:31 +0530
+Subject: [PATCH v2 3/3] scsi: ufs: qcom: Power down the controller/device
+ during system suspend for SM8550/SM8650 SoCs
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -56,7 +56,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20241213-ufs-qcom-suspend-fix-v2-2-1de6cd2d6146@linaro.org>
+Message-Id: <20241213-ufs-qcom-suspend-fix-v2-3-1de6cd2d6146@linaro.org>
 References: <20241213-ufs-qcom-suspend-fix-v2-0-1de6cd2d6146@linaro.org>
 In-Reply-To: <20241213-ufs-qcom-suspend-fix-v2-0-1de6cd2d6146@linaro.org>
 To: Alim Akhtar <alim.akhtar@samsung.com>, 
@@ -69,18 +69,19 @@ To: Alim Akhtar <alim.akhtar@samsung.com>,
 Cc: linux-scsi@vger.kernel.org, linux-kernel@vger.kernel.org, 
  linux-arm-msm@vger.kernel.org, Amit Pundir <amit.pundir@linaro.org>, 
  Nitin Rawat <quic_nitirawa@quicinc.com>, 
- Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+ Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, 
+ stable@vger.kernel.org
 X-Mailer: b4 0.14.1
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2709;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3153;
  i=manivannan.sadhasivam@linaro.org; h=from:subject:message-id;
- bh=qqrxdC5u7a2vZfs8QFNpeAZBHqn1+eO7J3Xdho8U5SY=;
- b=owEBbQGS/pANAwAKAVWfEeb+kc71AcsmYgBnXDxc+9/I1Jb3eWtP2983AMBHpbG+joy36Ntck
- aqYAwgqzuGJATMEAAEKAB0WIQRnpUMqgUjL2KRYJ5dVnxHm/pHO9QUCZ1w8XAAKCRBVnxHm/pHO
- 9aJeB/4jtWCKxXc9qwEo64zElXLbEEQqNkPs8ZnFmOG3ENGVzDQ2g+83YJ8nG/1g8wSuEOBu62N
- qUDUwnTp4Ts14JmWMiJXz3Wa+lewGZqnxCBupsDRuUZ81AL/z+2e3Z8xj5qiiAbYGGaiuyu+zKJ
- BrJny0V8yHUkbCsqF3Tg2X8oFBS5TM1IRvPSyZp9yzRK/1ODd/lolElkJ8QBDWS2fzzGyqrMtbU
- tsmMKYCDb1i8f4dXhs2FmxvxIbzGKARMqpCNTRLWmjecOsIGUYrbNsc+JzGzlvfvmsBIDGaUt2O
- E81DEi3LOH/iNxMpxb+pXg/MTiRrUiHW8RmuphVT4X46R0km
+ bh=dm+C1IineBDRJt5UyRNTw/yDrjuto+TzGCEuC82e76E=;
+ b=owGbwMvMwMUYOl/w2b+J574ynlZLYkiPsYk5XdcQFOSdlJb88sca9c9lF9+/U52kUZDiuavBQ
+ jI1S0Ctk9GYhYGRi0FWTJElfamzVqPH6RtLItSnwwxiZQKZwsDFKQATWSPP/s9a+p95776Zt1rF
+ kqQX+kyw0jFp1D954eYuWx4+VgHViTseKmY/c3hR9+i3dN3ZNo1eLo6T/3bVBn5mTJRg0v214/E
+ 27+0zQrnfG5j5h8+QDy8q7dKqc/TOqV7NKebmLVkvuuID/5ED3NOn/N3W32zgFLHK5V69vNUUCf
+ 2VxbV26VJO0kcYZJ7yqGQY6HKWsMTO3pGfujD72vRv9VXdl1udnH6/W6AavC5Z1ox7gckzt9XuM
+ plhFiprrGYHWWxNqZl2a/arq1bfdbp+T6t+lmls+rKH1zEppLl0tW/n4Vs/d9aIhK/98nea6O41
+ trNsMlz3N4Qr/3z7O4Vtj1iP2aZ37poTr2Q9Fkz14nsIAA==
 X-Developer-Key: i=manivannan.sadhasivam@linaro.org; a=openpgp;
  fpr=C668AEC3C3188E4C611465E7488550E901166008
 X-Endpoint-Received: by B4 Relay for
@@ -90,75 +91,80 @@ Reply-To: manivannan.sadhasivam@linaro.org
 
 From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-In order to allow platform specific flags and configurations, introduce
-the platform specific OF data and move the existing quirk
-UFSHCD_QUIRK_BROKEN_LSDBS_CAP for SM8550 and SM8650 SoCs.
+SM8550 and SM8650 SoCs doesn't support UFS PHY retention. So once these
+SoCs reaches the low power state (CX power collapse) during system suspend,
+all the PHY hardware state gets lost. This leads to the UFS resume failure:
 
-Reviewed-by: Avri Altman <avri.altman@wdc.com>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+ufshcd-qcom 1d84000.ufs: ufshcd_uic_hibern8_exit: hibern8 exit failed. ret = 5
+ufshcd-qcom 1d84000.ufs: __ufshcd_wl_resume: hibern8 exit failed 5
+ufs_device_wlun 0:0:0:49488: ufshcd_wl_resume failed: 5
+ufs_device_wlun 0:0:0:49488: PM: dpm_run_callback(): scsi_bus_resume+0x0/0x84 returns 5
+ufs_device_wlun 0:0:0:49488: PM: failed to resume async: error 5
+
+With the default system suspend level of UFS_PM_LVL_3, the power domain for
+UFS PHY needs to be kept always ON to retain the state. But this would
+prevent these SoCs from reaching the CX power collapse state, leading to
+poor power saving during system suspend.
+
+So to fix this issue without affecting the power saving, set
+'ufs_qcom_drvdata::no_phy_retention' to true which sets 'hba->spm_lvl' to
+UFS_PM_LVL_5 to allow both the controller and device (in turn the PHY) to
+be powered down during system suspend for these SoCs by default.
+
+Cc: stable@vger.kernel.org # 6.3
+Fixes: 35cf1aaab169 ("arm64: dts: qcom: sm8550: Add UFS host controller and phy nodes")
+Fixes: 10e024671295 ("arm64: dts: qcom: sm8650: add interconnect dependent device nodes")
+Reported-by: Neil Armstrong <neil.armstrong@linaro.org>
 Tested-by: Amit Pundir <amit.pundir@linaro.org> # on SM8550-HDK
 Reviewed-by: Bart Van Assche <bvanassche@acm.org>
 Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 ---
- drivers/ufs/host/ufs-qcom.c | 13 +++++++++----
- drivers/ufs/host/ufs-qcom.h |  4 ++++
- 2 files changed, 13 insertions(+), 4 deletions(-)
+ drivers/ufs/host/ufs-qcom.c | 5 +++++
+ drivers/ufs/host/ufs-qcom.h | 1 +
+ 2 files changed, 6 insertions(+)
 
 diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
-index 32b0c74437de..35ae8c8fc301 100644
+index 35ae8c8fc301..edf62430cabe 100644
 --- a/drivers/ufs/host/ufs-qcom.c
 +++ b/drivers/ufs/host/ufs-qcom.c
-@@ -871,6 +871,7 @@ static u32 ufs_qcom_get_ufs_hci_version(struct ufs_hba *hba)
-  */
- static void ufs_qcom_advertise_quirks(struct ufs_hba *hba)
- {
+@@ -1069,6 +1069,7 @@ static int ufs_qcom_init(struct ufs_hba *hba)
+ 	struct device *dev = hba->dev;
+ 	struct ufs_qcom_host *host;
+ 	struct ufs_clk_info *clki;
 +	const struct ufs_qcom_drvdata *drvdata = of_device_get_match_data(hba->dev);
- 	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
  
- 	if (host->hw_ver.major == 0x2)
-@@ -879,9 +880,8 @@ static void ufs_qcom_advertise_quirks(struct ufs_hba *hba)
- 	if (host->hw_ver.major > 0x3)
- 		hba->quirks |= UFSHCD_QUIRK_REINIT_AFTER_MAX_GEAR_SWITCH;
+ 	host = devm_kzalloc(dev, sizeof(*host), GFP_KERNEL);
+ 	if (!host)
+@@ -1148,6 +1149,9 @@ static int ufs_qcom_init(struct ufs_hba *hba)
+ 		dev_warn(dev, "%s: failed to configure the testbus %d\n",
+ 				__func__, err);
  
--	if (of_device_is_compatible(hba->dev->of_node, "qcom,sm8550-ufshc") ||
--	    of_device_is_compatible(hba->dev->of_node, "qcom,sm8650-ufshc"))
--		hba->quirks |= UFSHCD_QUIRK_BROKEN_LSDBS_CAP;
-+	if (drvdata && drvdata->quirks)
-+		hba->quirks |= drvdata->quirks;
- }
- 
- static void ufs_qcom_set_phy_gear(struct ufs_qcom_host *host)
-@@ -1864,9 +1864,14 @@ static void ufs_qcom_remove(struct platform_device *pdev)
- 	platform_device_msi_free_irqs_all(hba->dev);
- }
- 
-+static const struct ufs_qcom_drvdata ufs_qcom_sm8550_drvdata = {
-+	.quirks = UFSHCD_QUIRK_BROKEN_LSDBS_CAP,
-+};
++	if (drvdata && drvdata->no_phy_retention)
++		hba->spm_lvl = UFS_PM_LVL_5;
 +
- static const struct of_device_id ufs_qcom_of_match[] __maybe_unused = {
- 	{ .compatible = "qcom,ufshc" },
--	{ .compatible = "qcom,sm8550-ufshc" },
-+	{ .compatible = "qcom,sm8550-ufshc", .data = &ufs_qcom_sm8550_drvdata },
-+	{ .compatible = "qcom,sm8650-ufshc", .data = &ufs_qcom_sm8550_drvdata },
- 	{},
+ 	return 0;
+ 
+ out_variant_clear:
+@@ -1866,6 +1870,7 @@ static void ufs_qcom_remove(struct platform_device *pdev)
+ 
+ static const struct ufs_qcom_drvdata ufs_qcom_sm8550_drvdata = {
+ 	.quirks = UFSHCD_QUIRK_BROKEN_LSDBS_CAP,
++	.no_phy_retention = true,
  };
- MODULE_DEVICE_TABLE(of, ufs_qcom_of_match);
+ 
+ static const struct of_device_id ufs_qcom_of_match[] __maybe_unused = {
 diff --git a/drivers/ufs/host/ufs-qcom.h b/drivers/ufs/host/ufs-qcom.h
-index b9de170983c9..15f6dad8b27f 100644
+index 15f6dad8b27f..919f53682beb 100644
 --- a/drivers/ufs/host/ufs-qcom.h
 +++ b/drivers/ufs/host/ufs-qcom.h
-@@ -217,6 +217,10 @@ struct ufs_qcom_host {
- 	bool esi_enabled;
+@@ -219,6 +219,7 @@ struct ufs_qcom_host {
+ 
+ struct ufs_qcom_drvdata {
+ 	enum ufshcd_quirks quirks;
++	bool no_phy_retention;
  };
  
-+struct ufs_qcom_drvdata {
-+	enum ufshcd_quirks quirks;
-+};
-+
  static inline u32
- ufs_qcom_get_debug_reg_offset(struct ufs_qcom_host *host, u32 reg)
- {
 
 -- 
 2.25.1
