@@ -1,141 +1,116 @@
-Return-Path: <linux-arm-msm+bounces-41919-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-41920-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 06EE39F06FC
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Dec 2024 09:54:05 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 31CED9F070F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Dec 2024 10:00:48 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BB650281B01
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Dec 2024 08:54:03 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AFA4D280D51
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Dec 2024 09:00:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8252E1AC8AE;
-	Fri, 13 Dec 2024 08:54:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 790F419AA58;
+	Fri, 13 Dec 2024 09:00:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hYGQdt7g"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tu3CVgZ7"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F3A11AB6FF;
-	Fri, 13 Dec 2024 08:53:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 498CA185B78;
+	Fri, 13 Dec 2024 09:00:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734080040; cv=none; b=jZk7Lpv+ifhSUMeGuDAJlB0pIeTrztmR5s8m6NpW5WoUYISOfSidLHrkC84Fvht8LGBARp6evmCYxjIOyYOxbzi6+9v6nHOEneq8YQCH8w+Zu1ypncs/x1/IOvM+Qfyj4zdnBG7FbgFp5dFGo6htHg/BwHfx1w9WsboTCGBHftA=
+	t=1734080442; cv=none; b=LsHZR/MHiQNzDXlaDqtxQyDW5baC6UZVJp/xHXbnpijsPsCFDX8QvldiIZlCjtFLhmHSP4aFHKIA/q0s+BqZ25WpMzKjh1G9qK6Yd9jeni3pcooYSZnLOapy5zZCY1PQRqtCIQV5GpKkRN4Co4tsGuXDSRCCAdnCGgeLtL034iA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734080040; c=relaxed/simple;
-	bh=xx1YCCc7x74d5prYar4rNsVjFMi0KmmH2/WshxrFgFA=;
+	s=arc-20240116; t=1734080442; c=relaxed/simple;
+	bh=UZNnvkExZ7zuNWaU7B62b6NVp5W1UDxqMDFQPWrdMNE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=rLGO+7TzOksW8KsNxZ0p9O9+QVvovqSK7dBLJ1ts62u9LWTnv0PhhZ06DpsXqTjqr4Wc6b0Ea4FQznOtSNFofLzxicWNZchqeh5DnG98V5iUIeV8Myc1AgMjRA5262WapfvSV9/Qm3fhUdBiPd4nDIEX0vrUqjca9zwHl08/nlk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hYGQdt7g; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25961C4CED0;
-	Fri, 13 Dec 2024 08:53:57 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=cZTjuowjZU362wbcoCpMowSnmdZq5FnZTf0cWY9R3ilqHmjyxAXuHrC1RKjCgHcX0J+HyJnASSPzeIk16er0JPkh+KXzyQDGEw+c+hTkToSi11gvIMEiS9LQ+H+SIUgXaC9Ww/Ib71Az0Gw4CAdvHTQ3UPxwwjZbFbRVZM/xnAg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tu3CVgZ7; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1483BC4CED0;
+	Fri, 13 Dec 2024 09:00:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1734080038;
-	bh=xx1YCCc7x74d5prYar4rNsVjFMi0KmmH2/WshxrFgFA=;
+	s=k20201202; t=1734080442;
+	bh=UZNnvkExZ7zuNWaU7B62b6NVp5W1UDxqMDFQPWrdMNE=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=hYGQdt7gMOzrSpI2pNvkeXUp63YP6uhlskMyBMkZVNFKgWgsVIyWBme/cUxadA0P2
-	 QwQJMAxd353bmBC1yYj2NNPg3aY1RTUH5JekxE2QK6vlVDVO6s6d4mHnXQOUZgw5zH
-	 kWoeHYjZCxVVeRlSyM0vPJ7zdRiuRFKKZNzJ3UdakMoJk8TZKJQEPYefhLwJdErvxC
-	 S3Ghxtu7ICi/SOuCiNHjO/JPe/uFAYnLewlvKXgqadhEsynLJp+ifi0glwr3Z7jpuQ
-	 zjHnT4xACKJrovXHjHG1m/6wTW7tcqySsI7Vvu+TUbvLTLKyYzEKBFzbdKnUPo48lJ
-	 uEozC60hv/zTw==
-Date: Fri, 13 Dec 2024 09:53:55 +0100
-From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
-Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>, 
-	Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Vinod Koul <vkoul@kernel.org>, Bard Liao <yung-chuan.liao@linux.intel.com>, 
-	Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>, 
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>, Sanyog Kale <sanyog.r.kale@intel.com>, 
-	linux-arm-msm@vger.kernel.org, linux-sound@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, quic_pkumpatl@quicinc.com, kernel@quicinc.com
-Subject: Re: [PATCH v5 1/4] ASoC: dt-bindings: wcd937x-sdw: Add static
- channel mapping support
-Message-ID: <iuuxejlzes23ju4oy2m27oen2bhrenyuouq37ktvmiheoy7ow6@w6oqzh4bj4v6>
-References: <20241212162334.36739-1-quic_mohs@quicinc.com>
- <20241212162334.36739-2-quic_mohs@quicinc.com>
+	b=tu3CVgZ7Evx65zdlJIl6G5/MMh2qarRbd3z04tzbrsCpbGdLQa1u6fA03CqtffY5W
+	 M7DHizrDUsVE+I5SWcKYFXNU8WreOHFHHlhme/EPcRvxgKyXwfc6qJEQi7rUQ6yUg5
+	 qKsU7sxtmvLZwl4ok5Usp55BQjpilrE3ScCVzRJapMqWTBX5nOBW9JV6Wedic77X97
+	 Recwh/XqSqLhnvDKEKHWLCjrrKPyXn/r+wI7Ci3zEv2UUcQ1c+GX1kQKoq5t5K674l
+	 cOvtmFpm3hYZVoO2RE65Z5Q57F39i+K5G9iTTZHqFacYKFOgCJgWsW1XjDT8vhbK+J
+	 cvmFlVsNO8LgQ==
+Received: from johan by xi.lan with local (Exim 4.97.1)
+	(envelope-from <johan@kernel.org>)
+	id 1tM1XR-000000000mJ-2S3o;
+	Fri, 13 Dec 2024 10:00:46 +0100
+Date: Fri, 13 Dec 2024 10:00:45 +0100
+From: Johan Hovold <johan@kernel.org>
+To: Abel Vesa <abel.vesa@linaro.org>
+Cc: Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, stable@vger.kernel.org,
+	Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Subject: Re: [PATCH v2] usb: typec: ucsi: Set orientation as none when
+ connector is unplugged
+Message-ID: <Z1v3ve3M3s8cmGhA@hovoldconsulting.com>
+References: <20241212-usb-typec-ucsi-glink-add-orientation-none-v2-1-db5a50498a77@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20241212162334.36739-2-quic_mohs@quicinc.com>
+In-Reply-To: <20241212-usb-typec-ucsi-glink-add-orientation-none-v2-1-db5a50498a77@linaro.org>
 
-On Thu, Dec 12, 2024 at 09:53:31PM +0530, Mohammad Rafi Shaik wrote:
-> Add static channel mapping between master and slave rx/tx ports for
-> Qualcomm wcd937x soundwire codec.
+On Thu, Dec 12, 2024 at 07:37:43PM +0200, Abel Vesa wrote:
+> The current implementation of the ucsi glink client connector_status()
+> callback is only relying on the state of the gpio. This means that even
+> when the cable is unplugged, the orientation propagated to the switches
+> along the graph is "orientation normal", instead of "orientation none",
+> which would be the correct one in this case.
 > 
-> Currently, the channel map index value for each soundwire port is
-> hardcoded in the wcd937x-sdw driver, and the same channel map index
-> value is configured in the soundwire master.
+> One of the Qualcomm DP-USB PHY combo drivers, which needs to be aware of
+> the orientation change, is relying on the "orientation none" to skip
+> the reinitialization of the entire PHY. Since the ucsi glink client
+> advertises "orientation normal" even when the cable is unplugged, the
+> mentioned PHY is taken down and reinitialized when in fact it should be
+> left as-is. This triggers a crash within the displayport controller driver
+> in turn, which brings the whole system down on some Qualcomm platforms.
+> Propagating "orientation none" from the ucsi glink client on the
+> connector_status() callback hides the problem of the mentioned PHY driver
+> away for now. But the "orientation none" is nonetheless the correct one
+> to be used in this case.
 > 
-> The Qualcomm board like the QCM6490-IDP require static channel map
-> settings for the soundwire master and slave ports.
+> So propagate the "orientation none" instead when the connector status
+> flags says cable is disconnected.
 > 
-> If another boards which are using enable wcd937x, the channel mapping
-> index values between master and slave may be different depending on the
-> board hw design and requirements. If the above properties are not used
-> in a SoC specific device tree, the channel mapping index values are set
-> to default.
-> 
-> With the introduction of the following channel mapping properties, it is
-> now possible to configure the master channel mapping directly from the
-> device tree.
-> 
-> The qcom,tx-channel-mapping property specifies the static channel mapping
-> between the slave and master tx ports in the order of slave port channels
-> which is adc1, adc2, adc3, adc4, dmic0, dmic1, mbhc, dmic2, dmic3, dmci4,
-> dmic5, dmic6, dmic7.
-> 
-> The qcom,rx-channel-mapping property specifies the static channel mapping
-> between the slave and master rx ports in the order of slave port channels
-> which is hph_l, hph_r, clsh, comp_l, comp_r, lo, dsd_r, dsd_l.
-> 
-> Signed-off-by: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
+> Fixes: 76716fd5bf09 ("usb: typec: ucsi: glink: move GPIO reading into connector_status callback")
+> Cc: stable@vger.kernel.org # 6.10
+> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+> Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
 > ---
->  .../bindings/sound/qcom,wcd937x-sdw.yaml      | 36 +++++++++++++++++++
->  1 file changed, 36 insertions(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/sound/qcom,wcd937x-sdw.yaml b/Documentation/devicetree/bindings/sound/qcom,wcd937x-sdw.yaml
-> index d3cf8f59cb23..c8543f969ebb 100644
-> --- a/Documentation/devicetree/bindings/sound/qcom,wcd937x-sdw.yaml
-> +++ b/Documentation/devicetree/bindings/sound/qcom,wcd937x-sdw.yaml
-> @@ -58,6 +58,40 @@ properties:
->      items:
->        enum: [1, 2, 3, 4, 5]
->  
-> +  qcom,tx-channel-mapping:
-> +    description: |
-> +      Specifies static channel mapping between slave and master tx port
-> +      channels.
-> +      In the order of slave port channels which is adc1, adc2, adc3,
-> +      dmic0, dmic1, mbhc, dmic2, dmic3, dmci4, dmic5, dmic6, dmic7.
-> +    $ref: /schemas/types.yaml#/definitions/uint8-array
-> +    minItems: 12
-> +    maxItems: 12
-> +    additionalItems: false
-> +    items:
-> +      enum:
-> +        - 1  # WCD9370_SWRM_CH1
-> +        - 2  # WCD9370_SWRM_CH2
-> +        - 3  # WCD9370_SWRM_CH3
-> +        - 4  # WCD9370_SWRM_CH4
+> Changes in v2:
+> - Re-worded the commit message to explain a bit more what is happening.
+> - Added Fixes tag and CC'ed stable.
+> - Dropped the RFC prefix.
+> - Used the new UCSI_CONSTAT macro which did not exist when v1 was sent.
+> - Link to v1: https://lore.kernel.org/r/20241017-usb-typec-ucsi-glink-add-orientation-none-v1-1-0fdc7e49a7e7@linaro.org
 
-I asked to drop the comments, because now they are obvious. 1 is channel
-1, obviously. Your description should say what are the values here:
-channels on the WCD9370 or Soundwire master device side.
+Thanks for the update.
 
-Anyway, if it is understable to Mark, then I am happy as well:
+Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
+Tested-by: Johan Hovold <johan+linaro@kernel.org>
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-
-Best regards,
-Krzysztof
-
+Johan
 
