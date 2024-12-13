@@ -1,78 +1,78 @@
-Return-Path: <linux-arm-msm+bounces-42154-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-42155-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 518CD9F18E0
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Dec 2024 23:23:20 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id E38699F18E2
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Dec 2024 23:23:45 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9F9D0188EF79
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Dec 2024 22:23:20 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 03385163CDC
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Dec 2024 22:23:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2BA071F7572;
-	Fri, 13 Dec 2024 22:15:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5F9801F759C;
+	Fri, 13 Dec 2024 22:15:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ye4fYTwC"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="VaFnYVZf"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f180.google.com (mail-lj1-f180.google.com [209.85.208.180])
+Received: from mail-lj1-f178.google.com (mail-lj1-f178.google.com [209.85.208.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D7FF1F709C
-	for <linux-arm-msm@vger.kernel.org>; Fri, 13 Dec 2024 22:15:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CF6A1F757E
+	for <linux-arm-msm@vger.kernel.org>; Fri, 13 Dec 2024 22:15:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734128144; cv=none; b=C8oaveWYYFc7Nb4l5ASFckRNiW8ozIDT3unFY1d02n5gdw+9ByOYDbqomCVJHnkVLM0y3a5WJ3FwaV3b/YN6jw+zq5lcNjPPH1+9Jy+gYE8PVrmE0Dzu6h0JLBceUnoo09noG0NFArOTIEsDdV527yzcKts4RYysR3H9liIx5Lc=
+	t=1734128146; cv=none; b=iV1puN3LYoLxOUxudd10eyXFrDOc/1YOVLaXCMltzdOAeyQizkayE/OCJhfcuCFlak7yIlfxfzcnFjbjJJZ2+2NlZNBIB0IoOwLfLr+0HiJcZ/sSpmpuGT8499/rfryBi7dk2LmTHyk0OfRv4T/Rt4Rz7rLdaetIDFyNouOCbUg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734128144; c=relaxed/simple;
-	bh=HDBIFP7lmEfohLRdZta0STJnvjaOfr4EoK+lXYqD0Wg=;
+	s=arc-20240116; t=1734128146; c=relaxed/simple;
+	bh=tPpDxtHO5xmaStginATMqoo8E/aoUokLFeBXLrsaQRY=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=CAK5mpCtwHm3WVVj9Cq4e+j15e44iWfo3t7uAcgyV/R+ulgCeF2dBDSuwuRxduofgYmo70km9NRl4VWn9xWvwM0RZH/AmbpcsPM4PdLWXs8PfKgY6HQ3g07NFoytM9XAiJaCe7/I5uqZeEIo8MAd+GSF6nMao1siW2pia/UVy+k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ye4fYTwC; arc=none smtp.client-ip=209.85.208.180
+	 In-Reply-To:To:Cc; b=mg9PxWZQFOq80LERllfGcTvnoa0rssJpq6hetz8frUhaX0+TtZ7KDFdZL7nWLMdVl7euwktNrtqFYc6t/S3SIhBR1HcUssQIixEJGtXJaDDpFdljWl0oBDcLNwh4Lyt7bA9L+qwLkugJ/HTBVS5OKQbNnRN22+BNPIGre/tuXbU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=VaFnYVZf; arc=none smtp.client-ip=209.85.208.178
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f180.google.com with SMTP id 38308e7fff4ca-3022598e213so19697921fa.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Dec 2024 14:15:41 -0800 (PST)
+Received: by mail-lj1-f178.google.com with SMTP id 38308e7fff4ca-3002c324e7eso23637131fa.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Dec 2024 14:15:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1734128140; x=1734732940; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1734128143; x=1734732943; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=iLTQAtyScYm9lTcEQEHyFIdSvtVlHP7Xvdj3O1ACY4U=;
-        b=ye4fYTwC8wWumOBuuvz5nkmNJTLWfxiADsw1paPf2F9JH5HDiUt2T9mI4+ASuOqhsr
-         8h1zRa9/+6IavbIt+gPybgQzMX7NqWXocTF0zceONz4/JH+Yf1FxtYF2rKJwiMlMtUGJ
-         QQiKTpbOiy9buEjeQSH4jbFp3omrEeZ8voMIJ5GtjOSyxEmq096b5VoOG7ALix8brDFG
-         J3qUBFnbuZawE4gylqN69qk+UbkhlLz19b4LzV+UosTkuINZjsnKkjs7xzgtKUNzlzoZ
-         G4kEp+1gf4RlHqDq15z93wfPhoui7lpCA91ztPD0xgs6Ag+GCK4MGiQQjX+oyFsaJ/cE
-         DTUQ==
+        bh=WRIxn4/iOOppm9kbxU+lpuaS0hiTeQ2NsHK0Y4FVJCw=;
+        b=VaFnYVZfWGvRsv/1iCUuLV7TcGB2f6CpLyxVWpNcICCvBMB1wMx9DE6q9LiJA+TZht
+         l9a8ob5U+V+aRZOJqC5ezUaHIw/3V1dSC2Pbq7BJXAGQpFd3u7Q7epi475xfu6/iZ1jE
+         JO88tu33cBmZZt5szZIdZxq6M8uuw5Bpvs3pxFDSXNwi04GO/NPaLBGr3OKs0jEEyYdR
+         q2VHMwUWzjClgoMa//dhyevDzG/rF97T6qsl1Ts7PBZVD6/VHLdILa0baGRvYmOUYfRQ
+         /pFyIg5Q913m8vQLsV7CB//aNzMMOQ3paRoq4ThUCz9Pww7M/J8RY16VF4DTiRQYr29/
+         YJoA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734128140; x=1734732940;
+        d=1e100.net; s=20230601; t=1734128143; x=1734732943;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=iLTQAtyScYm9lTcEQEHyFIdSvtVlHP7Xvdj3O1ACY4U=;
-        b=VFw+9kY3BdFXbCOLPXfgDCb6TmWlKHmEg+jch6IjCYYXdUs/la+CkM1hc7st26kvMV
-         xE8Rol7A38VyN8gO6Scj0pwUou20COloZa0XldoXSHouMBsu662umL8mzKZgQyiDxY8u
-         nwm4I8oTPzKuBPOM205U8qIzE6zms+JUEALwcB4WiMbzYJvVclx3/xhzJEWtDJqGw/3t
-         W/ShHvXb97PKXAdkCo0Ej5gTKTgDQqIqEQa25ie4a8swyfs/AC4Nlx92OAIoEJCXKviG
-         DRoSsbqCqaTQ2y+U5JwXmMz7wglT4jElRRv3WJz1dM3d1BNTyQVwSkqzBPgxXuG1BWYp
-         2IAg==
-X-Gm-Message-State: AOJu0Yza2AeRtzzP9pxWwSuHsQIfEOyyIMR+sbSSAcYGtQcQmgwJR8HH
-	P4avUeh0dQy0CayApHYXoa+vAu1J2Ron5gEKZAdit1jYFanV5dqcKHU3dENKkeE=
-X-Gm-Gg: ASbGncvuzwXnGyaR16+nsTuKzALBsXtod2bwB9fC2brZQ6gUlm3W/ZM2muTLcLnZ9Ln
-	JjN8TlWKKrVssVMM92LlGYNTxZNUy/BMWYixXrwFEPG3HY/iD2YZ0hv5mXWLJH/FkWwq3itdFiK
-	qTPBgX48OUBzdxxlXPMB51RfDfaF/qEkcUPFsoGHFb0whChVx22YJblXFHr7NOQcSX4XktA1eum
-	iUaiM7r52EOwBs6gRU2C0VEvivKQR9RrFIHHYaFZcllzChavmQefS64xjVEpLZg
-X-Google-Smtp-Source: AGHT+IFcdnbaRwnw06KHXDrNDHefSXSslwZ6gIr92B7I01M2tDG8CS5kzToAHIMwe2uXJZg+G96CWg==
-X-Received: by 2002:a05:651c:b0a:b0:300:324e:3504 with SMTP id 38308e7fff4ca-302544b10famr14181241fa.27.1734128140349;
-        Fri, 13 Dec 2024 14:15:40 -0800 (PST)
+        bh=WRIxn4/iOOppm9kbxU+lpuaS0hiTeQ2NsHK0Y4FVJCw=;
+        b=LB/8lzAqJ7dml0Ql0maBar8KI5N/+752XQeclKkZRkqyxnnWYhTuVxgax3TnHVbS7Q
+         VLgiZ79Djld114qy0j+eImAn2i60X1Ksp2jQnkftbCCN8dWhvJiIWjeYBv0GrWdFOiQP
+         d6sO3wMFxLz9uHfmST6hB9yg5uK2aaQ+uDX6rFxgaDQt80YAHTbwyqzrGS7ubRvGO2D8
+         R1anvgm6gRX8e/g2smfdan+0+oxyFq5Yo6Sg9OQrJ7lNxYasAVo9+hhP8OYT4bZjOVKu
+         VQV+3HHzuSEG6Uhb8yvj//o6d5JJ4nKkZV1lSKFwdW29GhJ1+xg/LCMxsQCR8NMj3jTh
+         2fEA==
+X-Gm-Message-State: AOJu0YymUGkVOixWIm8RukD82gMqwnOXlLP77JS5gK4DCoGf6s+XNLhf
+	sOg0lOE77Tnbw3XfN+98AfQ44l+4O3BQnXv3UE/MhRXeGiSjqlDgjXhwjx6vNmo=
+X-Gm-Gg: ASbGncvDu8hV1Nzj4q2W+UJg1l4Y895ex2RzqIi6f+vuwdmBSzv8PX/WCmddtFj5noi
+	9jovcNTFo+wd/iLsbSfi97ucOEX2eEypnXUkdjCPMcoLg3yfpou3Z0VZC+Suf62d9RroHrywpXh
+	FqQoBIjAe+Vzhto+FnE8EofjjpNIBrvO1O1xAtHLIlaYw39E50WitPI3kVuMVaaE2a7T4i/eBGQ
+	6lQpR9dTF93WdEOPNdgd7TqbIS6ixjC9pn57JbiIu/4z51MPvXEvrvbaYd1gvDg
+X-Google-Smtp-Source: AGHT+IEv90YSml1vB3yVi1kVPvZNguaRuGgjlQIsfKSFuZ5C43ynmhkX1erwdxz3oWCyU7cEsZn6Pg==
+X-Received: by 2002:a05:651c:555:b0:302:4130:e0c8 with SMTP id 38308e7fff4ca-3025452fd41mr14481201fa.9.1734128142715;
+        Fri, 13 Dec 2024 14:15:42 -0800 (PST)
 Received: from umbar.lan ([192.130.178.90])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-303441e0f43sm413451fa.125.2024.12.13.14.15.38
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-303441e0f43sm413451fa.125.2024.12.13.14.15.40
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 13 Dec 2024 14:15:39 -0800 (PST)
+        Fri, 13 Dec 2024 14:15:41 -0800 (PST)
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Sat, 14 Dec 2024 00:14:44 +0200
-Subject: [PATCH 28/35] drm/msm/dpu: get rid of DPU_SSPP_QOS_8LVL
+Date: Sat, 14 Dec 2024 00:14:45 +0200
+Subject: [PATCH 29/35] drm/msm/dpu: drop unused MDP TOP features
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -81,7 +81,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20241214-dpu-drop-features-v1-28-988f0662cb7e@linaro.org>
+Message-Id: <20241214-dpu-drop-features-v1-29-988f0662cb7e@linaro.org>
 References: <20241214-dpu-drop-features-v1-0-988f0662cb7e@linaro.org>
 In-Reply-To: <20241214-dpu-drop-features-v1-0-988f0662cb7e@linaro.org>
 To: Rob Clark <robdclark@gmail.com>, 
@@ -92,114 +92,50 @@ To: Rob Clark <robdclark@gmail.com>,
 Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
  freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3942;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1025;
  i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
- bh=HDBIFP7lmEfohLRdZta0STJnvjaOfr4EoK+lXYqD0Wg=;
- b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBnXLHIlv4aya34bmsQu0LbX/0HpWJVj5ThCnma/
- 1TdbRItCBGJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZ1yxyAAKCRCLPIo+Aiko
- 1WRaB/4pnAW3brf4JPJfhdjbTwLCg9DaJSGmKWFZkYDkffxlD1HiJSQXH5b2BIkFDBL8nUF6KgT
- Dr4RTirbZ5jSmPLS4qcoHObGuQoSRQF6vvfeyW/oO2QfyJ308+xeA3MD+cN6BJrfcJ517EqhNeq
- nuJGK4aKZEO/+FaFkiiz4vVUjEFuzB9EVmJJudSEvWeFe6yXtQ/xn6+DBnG7VhfbYbIj/9DP3dK
- xBtkybDfFsG5yeHjWVJ88FyBbuFDtR+7S89dlqsbFE706/Dgt6TxFRWR9RO/7a0qXuKitTF28Ad
- o+PRJkzERJQpUIQAkBm3DSzqxbVdr1zkx4RtttWQStAXjCYZ
+ bh=tPpDxtHO5xmaStginATMqoo8E/aoUokLFeBXLrsaQRY=;
+ b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBnXLHI1qqRYU/devWX2LGbgi3Y5RR0YCZei/GMW
+ xIk9YP0h5WJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZ1yxyAAKCRCLPIo+Aiko
+ 1QqxB/wMEhSpPsB5KZxkaGmeszgOBFKq7akQyCwt4+s/C9G59XsH4gEnwwcd1ADifNpNtvSdRkH
+ 2IixA74GQphgxKIuvyMewHXsDwGLRT8cP+xInrKcJ/RKalBN0ngqVPBOWmTBYAVXS9a8lWL/wXC
+ Efyo1znRYHKyLLC52N9vsmg+N5CP4gemxvIt7fpg6DjjYPKxBxzJvT9xdNSKevNTm6LrL7mZusI
+ LSNNdnHYFe4GX2p7LlPONgFtUPaPEORakAT6AUMA7M6syyWJcSc9dkjtFxpiLZfpNPZWuQi92Kk
+ jfwhx/OhhDAy0HWOWyEh/T1yvpw6JaCifZ6zi7C7UXJ4PBV/
 X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
  fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
 
-Continue migration to the MDSS-revision based checks and replace
-DPU_SSPP_QOS_8LVL feature bit with the core_major_ver >= 4 check.
+Drop unused MDP TOP features from the current codebase.
 
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c | 6 +++---
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h | 2 --
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c    | 5 ++++-
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h    | 2 ++
- 4 files changed, 9 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h | 13 -------------
+ 1 file changed, 13 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-index c23afdbad7b08abed2740e374be5bd89de206bf1..77187b6f5caa8c69498502d7b7e9c06b8d01fcb6 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-@@ -35,12 +35,12 @@
- 	(VIG_MASK | BIT(DPU_SSPP_SCALER_QSEED3_COMPATIBLE))
- 
- #define VIG_SDM845_MASK \
--	(VIG_MASK | BIT(DPU_SSPP_QOS_8LVL) | BIT(DPU_SSPP_SCALER_QSEED3_COMPATIBLE))
-+	(VIG_MASK | BIT(DPU_SSPP_SCALER_QSEED3_COMPATIBLE))
- 
- #define VIG_SDM845_MASK_SDMA \
- 	(VIG_SDM845_MASK | BIT(DPU_SSPP_SMART_DMA_V2))
- 
--#define VIG_QCM2290_MASK (VIG_BASE_MASK | BIT(DPU_SSPP_QOS_8LVL))
-+#define VIG_QCM2290_MASK (VIG_BASE_MASK)
- 
- #define DMA_MSM8953_MASK \
- 	(BIT(DPU_SSPP_QOS))
-@@ -60,7 +60,7 @@
- 	(VIG_SC7280_MASK | BIT(DPU_SSPP_SMART_DMA_V2))
- 
- #define DMA_SDM845_MASK \
--	(BIT(DPU_SSPP_QOS) | BIT(DPU_SSPP_QOS_8LVL) |\
-+	(BIT(DPU_SSPP_QOS) | \
- 	BIT(DPU_SSPP_TS_PREFILL) | BIT(DPU_SSPP_TS_PREFILL_REC1) |\
- 	BIT(DPU_SSPP_CDP) | BIT(DPU_SSPP_EXCL_RECT))
- 
 diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-index 06d1a467921ad53828fc4613d09e4fd766d10339..e1039b731604ef49958ff158d36e0aef97258ca4 100644
+index e1039b731604ef49958ff158d36e0aef97258ca4..2d7e4bdd84705707198c3b265a003630cbccd28a 100644
 --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
 +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-@@ -50,7 +50,6 @@ enum {
-  * @DPU_SSPP_CSC_10BIT,      Support of 10-bit Color space conversion
-  * @DPU_SSPP_CURSOR,         SSPP can be used as a cursor layer
-  * @DPU_SSPP_QOS,            SSPP support QoS control, danger/safe/creq
-- * @DPU_SSPP_QOS_8LVL,       SSPP support 8-level QoS control
-  * @DPU_SSPP_EXCL_RECT,      SSPP supports exclusion rect
-  * @DPU_SSPP_SMART_DMA_V1,   SmartDMA 1.0 support
-  * @DPU_SSPP_SMART_DMA_V2,   SmartDMA 2.0 support
-@@ -68,7 +67,6 @@ enum {
- 	DPU_SSPP_CSC_10BIT,
- 	DPU_SSPP_CURSOR,
- 	DPU_SSPP_QOS,
--	DPU_SSPP_QOS_8LVL,
- 	DPU_SSPP_EXCL_RECT,
- 	DPU_SSPP_SMART_DMA_V1,
- 	DPU_SSPP_SMART_DMA_V2,
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c
-index 32c7c80845533d720683dbcde3978d98f4972cce..7dfd0e0a779535e1f6b003f48188bc90d29d6853 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c
-@@ -543,7 +543,7 @@ static void dpu_hw_sspp_setup_qos_lut(struct dpu_hw_sspp *ctx,
- 		return;
+@@ -28,19 +28,6 @@
  
- 	_dpu_hw_setup_qos_lut(&ctx->hw, SSPP_DANGER_LUT,
--			      test_bit(DPU_SSPP_QOS_8LVL, &ctx->cap->features),
-+			      ctx->mdss_ver->core_major_ver >= 4,
- 			      cfg);
- }
+ #define MAX_XIN_COUNT 16
  
-@@ -703,6 +703,9 @@ struct dpu_hw_sspp *dpu_hw_sspp_init(struct drm_device *dev,
- 	hw_pipe->ubwc = mdss_data;
- 	hw_pipe->idx = cfg->id;
- 	hw_pipe->cap = cfg;
-+
-+	hw_pipe->mdss_ver = mdss_rev;
-+
- 	_setup_layer_ops(hw_pipe, hw_pipe->cap->features, mdss_rev);
- 
- 	return hw_pipe;
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h
-index 56a0edf2a57c6dcef7cddf4a1bcd6f6df5ad60f6..ed90e78d178a497ae7e2dc12b09a37c8a3f79621 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h
-@@ -314,6 +314,8 @@ struct dpu_hw_sspp {
- 	enum dpu_sspp idx;
- 	const struct dpu_sspp_cfg *cap;
- 
-+	const struct dpu_mdss_version *mdss_ver;
-+
- 	/* Ops */
- 	struct dpu_hw_sspp_ops ops;
- };
+-/**
+- * MDP TOP BLOCK features
+- * @DPU_MDP_PANIC_PER_PIPE Panic configuration needs to be done per pipe
+- * @DPU_MDP_10BIT_SUPPORT, Chipset supports 10 bit pixel formats
+- * @DPU_MDP_MAX            Maximum value
+-
+- */
+-enum {
+-	DPU_MDP_PANIC_PER_PIPE = 0x1,
+-	DPU_MDP_10BIT_SUPPORT,
+-	DPU_MDP_MAX
+-};
+-
+ /**
+  * SSPP sub-blocks/features
+  * @DPU_SSPP_SCALER_QSEED2,  QSEED2 algorithm support
 
 -- 
 2.39.5
