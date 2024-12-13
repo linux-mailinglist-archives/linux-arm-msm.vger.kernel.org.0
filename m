@@ -1,258 +1,214 @@
-Return-Path: <linux-arm-msm+bounces-42116-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-42117-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 680F69F1775
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Dec 2024 21:38:30 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 63B1E9F1777
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Dec 2024 21:39:15 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1A72D1882339
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Dec 2024 20:38:28 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 76427165E1D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Dec 2024 20:39:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F1EED1917CD;
-	Fri, 13 Dec 2024 20:38:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A9BED1917CD;
+	Fri, 13 Dec 2024 20:39:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="gnbYkzGT"
+	dkim=pass (2048-bit key) header.d=hotmail.com header.i=@hotmail.com header.b="cEKOpBii"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f182.google.com (mail-yw1-f182.google.com [209.85.128.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from EUR05-DB8-obe.outbound.protection.outlook.com (mail-db8eur05olkn2042.outbound.protection.outlook.com [40.92.89.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F382175AB
-	for <linux-arm-msm@vger.kernel.org>; Fri, 13 Dec 2024 20:38:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.182
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734122300; cv=none; b=ch4aKPYjYvvGBWEXC+AiBh31rZ8PBZpXkHXF61HsYo4xaA65NcthM2AONghlSPpOnt7n/WZAHU86pP9ZE5dxw3rF7LFjGU1O1tcpm0ON2zxKCohGfTFfusVJcImSmak2Y5KzCjDiPvwX3Fo+kLx/d8mDxIpLC0dHdRjf1Wupf+k=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734122300; c=relaxed/simple;
-	bh=2RgIBbWgHVCKLHsj8nqNKNT5O0lXAjsfp8Hgz26Cjek=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=GgvyihcX7cSuz+5hu8ufAmHHshGEjOMEqqngl7ZWdwDo7PLVIyUe6Nu5eK4cUPBvosf3pR/QlttbNH07zOpj7GPVnaLTpeuico2VsLam4SvEJt0fblFQJRebL1qOv4g+O2jFhYX/h1ryEvtqVLu4a73adwQ+k9EJ3wiNT4Buo/Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=gnbYkzGT; arc=none smtp.client-ip=209.85.128.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yw1-f182.google.com with SMTP id 00721157ae682-6ef81222be7so21517807b3.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Dec 2024 12:38:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1734122298; x=1734727098; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=K+k5fKdkj/4CuPycJ1siIOzYtXibL2hQFpVwz2mgPAk=;
-        b=gnbYkzGTZwn5Tg2YQ9ls9Z2WZnzdys6RpN7H+61FuLdDYPz1kmdiXfsV9aF32yCSSz
-         vpEJd/gh+31hZ1MT9QyZKdxNVnyxlMvmYnuXqnCzRxrMdOZK08v6wKY+sWR8YpzMxJty
-         Gd7WmnDV1jTdYu60u52nT97iAsmA8biH5ylXfq2T77ftzw1u/tLPUgPjlKr5s+4zZa7D
-         yxrgTjpUH9n39LFDW+V3xh5JCyDbH8mgoeC8ZVcy+pkhauPBnUZnl69VDJAlQnSbK+xD
-         rEdtHeV70KcNUbvNMFy4sKGf5lQS+DZt4aUEsKIuZOxewmt/drls8eDn47Vr2zRHW0Ao
-         lVog==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734122298; x=1734727098;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=K+k5fKdkj/4CuPycJ1siIOzYtXibL2hQFpVwz2mgPAk=;
-        b=Cu4tf2Sp1T7pCXkvUbqBU87t+fL6iUzrCzm4tQOrm1SPFxhF7EGZe/X/55omkSRd4o
-         OEW9c/KhR2jzqfTKio7Q+PsoTPXqsVPQFDg2pBPycRPa8qMdsLoNWDmTx3EGETpocgbw
-         01cbN/tdsQQmOejVWCuUlOTACy2diGFF52bMttwooKB24rAWfFEnH1izGnF52jOTlzsR
-         ObOifFGdO0r+okWVCWK1y8DKQTlsbf5UqLDxncF2ma7e+fEz17cWRVDBA5s51mVB3B8r
-         tWvmIZzzy4jY2nT1B9l/xSQn3HYvFVCzptqjrgOFgsuE+U8IfaKDDtCEIEwSev/w/J0R
-         p37g==
-X-Forwarded-Encrypted: i=1; AJvYcCWboEkufh2Yt3gIMDHOODFRVVMK79whhEHgMhIBziNtszAeOL84vgT/NItyJWK4WegOL0jGuaWbGOZ7GzxM@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx/vSKXU6suxNwY3rHIeBgZRhGT6dQVoTintrXs2I1mT2nsGWjy
-	tVbSKXNC8DqpzklGaTkW7tUvBs9y+urP7Hny3e+BY2oEZni+zanIqbjMOyTUDpEFTJPTgo/PZ9m
-	2poHlLJBUtRp1prVx0FrJfd6orodVemIe2TGQgQ==
-X-Gm-Gg: ASbGncuNMQAVWcTGBhY5mkDNemPpLRvb5d9d95pskBG1HC+ENKc7AydoIuvpdAKuXvX
-	gtmr3Xf2dG+GmjwvNSHSJt/RHABlO9g8Z6aQv650lvPVmdwH+1f3T
-X-Google-Smtp-Source: AGHT+IFOHxgqNg+sN7EOtBunHW1em5TfmLksd63iIdUybzrhYuWy5ZpRnCEphZhMbq+wQyfFBmYaHhDNrvmwOqtTc9M=
-X-Received: by 2002:a05:690c:fd5:b0:6ef:4a1f:36d6 with SMTP id
- 00721157ae682-6f279b23db1mr35730337b3.23.1734122297673; Fri, 13 Dec 2024
- 12:38:17 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E573C175AB;
+	Fri, 13 Dec 2024 20:39:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.92.89.42
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1734122351; cv=fail; b=H/kCvcS1MDhfayIUoSjxG/TFSDka1iVN5ANX8k6DiHI+Dttk07KRv8v8oDw/wShvShOtv0Vh4J70XSOZvP4u+f/Roa/vo9cEFFsoO1OJmig/syB48v5Ecmmh0yVIIO0HN60xo5Wnos1oeuONy+6X0OVe3ksmBaU1kNCCjGFALxc=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1734122351; c=relaxed/simple;
+	bh=2cs2QBHG/a8zQ/w7rQnfe19y59P1yCMMqy9Is8mPKPY=;
+	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=QuAD5qT63A5I285dvJw/7qhsjT1g2ULcDEh9bZDIXVbVVpcunWO2iQZWumeO0eaTOmpA0GY9abZYii660L2efO7rxl1a7WvAN6BO9+EJ2FeE8ex3eUCX4Dah+JXWj3qlZElG7sZZb10+OYuf12fKiFsX6M+p/If8E9ZV52Xjgsg=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=hotmail.com; spf=pass smtp.mailfrom=hotmail.com; dkim=pass (2048-bit key) header.d=hotmail.com header.i=@hotmail.com header.b=cEKOpBii; arc=fail smtp.client-ip=40.92.89.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=hotmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hotmail.com
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=Ch7QwjIzHm5ejuVynlV60jhB1YcY+7O4rikytBl+n8BKnyBIP8+TYnMm7Brw/0H5Q2oWPfl6UAE7dNF9H3ZqDah0LBtfSB1BH8ZM9bXk8slGLgN1Wf+zY67oR2i5rmEhX9/9kPZtYu9lmYz9YEAqqHRHgmF3Gj67o0RVkuNHgOuBc1olyrU8AbTc8P1Wy4l+VSEBYw4o8+K72qw78gTkgXaPRoW3vWLBDDFTEs1sYKyapB6Swc5Qw2TvOFTBdlUpMrD/YENUL+CRHTBj+nh6m2SIXB/FKKvWJLTYeeEZalZCv+r/YBudvZNKD/OZXddiB1RyHhc78LblnHMhq9eodA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=LswwHOJzRT9hEAItEKqcKTr9TO6qDPQi3qewMByfSyo=;
+ b=W1X14LR6widimzcbwsApCG2C7ys1l7i9rftvQ9CMsPSny2mT9pq7N93rkhyyIDaHzG/zEjUq2cE8WnmDi29ttinefmhb44LOg6LVnTkLccWA4ODHdlw5y/mUDEsKb3On+yM2uLuRJdT7hB6SvZL0+EFvBTQCz+5Cnhi6nyaTvM7p2WQbkdB+bd0Nsg4qWum2NvVYApniof/8OfT4G0KZ/zXNrICfG1WpTDVTNWhgvLTKoPIVaEg8TkE52MbY0ZEMfl594AqhQ5qyNhTDa/DcO/JUdNC/ACU3z/njQUl3/bGR7heNluDgCRTvXfnqhDGkIDIow0ug6cE/iKioIqDZlA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hotmail.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=LswwHOJzRT9hEAItEKqcKTr9TO6qDPQi3qewMByfSyo=;
+ b=cEKOpBiiFkEmQpET4Laz71Nnj7jyaKagWsuBAJc6uSrkZJROav8ab9nSqAxL30JGnP9BTzTsEoPVpM9C3HldsDNDEdNgCPB6Kr/rJMeG/zAVUEqSDHQ1b5cQGCpnUIN8gL9Nz9aJJHFeT/bvWQL7GK98+s4zI2CYtU1VX5G9n7LA35xXSKWXn79ZPXPa2h7Gh16xJ/bJHwAY/U1p5CcthbdidixZYD0zszLpaFofX9nDSlSWQj50ugkRAv1WbDV6E8E31dUTb7ha8i08RK1SQUj8bZisOpYWFkzkgHDa9vPthhu6T+dBNiycIy34PJNMJ3Qa5vlIo1bszqURcxaZcg==
+Received: from AM7P189MB1009.EURP189.PROD.OUTLOOK.COM (2603:10a6:20b:175::17)
+ by AM7P189MB1121.EURP189.PROD.OUTLOOK.COM (2603:10a6:20b:173::14) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8251.19; Fri, 13 Dec
+ 2024 20:39:07 +0000
+Received: from AM7P189MB1009.EURP189.PROD.OUTLOOK.COM
+ ([fe80::e9f1:a878:e797:ee1a]) by AM7P189MB1009.EURP189.PROD.OUTLOOK.COM
+ ([fe80::e9f1:a878:e797:ee1a%5]) with mapi id 15.20.8251.015; Fri, 13 Dec 2024
+ 20:39:07 +0000
+Message-ID:
+ <AM7P189MB1009F7FB7D074522E0641BC7E3382@AM7P189MB1009.EURP189.PROD.OUTLOOK.COM>
+Date: Fri, 13 Dec 2024 21:39:06 +0100
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 3/8] arm64: dts: qcom: x1e80100-asus-vivobook-s15: Fix USB
+ QMP PHY supplies
+To: Stephan Gerhold <stephan.gerhold@linaro.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>
+Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Sibi Sankar <quic_sibis@quicinc.com>,
+ Marc Zyngier <maz@kernel.org>, Xilin Wu <wuxilin123@gmail.com>,
+ Abel Vesa <abel.vesa@linaro.org>,
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Aleksandrs Vinarskis <alex.vinarskis@gmail.com>,
+ Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, Johan Hovold <johan@kernel.org>
+References: <20241210-x1e80100-usb-qmp-supply-fix-v1-0-0adda5d30bbd@linaro.org>
+ <20241210-x1e80100-usb-qmp-supply-fix-v1-3-0adda5d30bbd@linaro.org>
+Content-Language: en-US
+From: Maud Spierings <maud_spierings@hotmail.com>
+In-Reply-To: <20241210-x1e80100-usb-qmp-supply-fix-v1-3-0adda5d30bbd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: AM0PR01CA0166.eurprd01.prod.exchangelabs.com
+ (2603:10a6:208:aa::35) To AM7P189MB1009.EURP189.PROD.OUTLOOK.COM
+ (2603:10a6:20b:175::17)
+X-Microsoft-Original-Message-ID:
+ <f2932135-995b-4e68-abf0-5a31413af03e@hotmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20241212-filter-mode-clock-v1-1-f4441988d6aa@quicinc.com>
- <onavg2s7uamgwh34ozhbt56c74ktj5chp3jnn4bw5m22y5sdjr@fktyn5yt4gmw> <1f71a352-ab8a-47fb-a4ed-ae0a4767aec6@quicinc.com>
-In-Reply-To: <1f71a352-ab8a-47fb-a4ed-ae0a4767aec6@quicinc.com>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Fri, 13 Dec 2024 22:38:07 +0200
-Message-ID: <CAA8EJprwE-zV1cX4OUJJfJ1en1+riHZVCQNGNYHxnPe_S=2cwA@mail.gmail.com>
-Subject: Re: [PATCH] drm/msm/dpu: Filter modes based on adjusted mode clock
-To: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc: Jessica Zhang <quic_jesszhan@quicinc.com>, Rob Clark <robdclark@gmail.com>, 
-	Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, 
-	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, linux-arm-msm@vger.kernel.org, 
-	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
-	linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+X-MS-Exchange-MessageSentRepresentingType: 1
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: AM7P189MB1009:EE_|AM7P189MB1121:EE_
+X-MS-Office365-Filtering-Correlation-Id: 1cb0d7d9-6732-46ee-42b1-08dd1bb630da
+X-Microsoft-Antispam:
+	BCL:0;ARA:14566002|15080799006|6090799003|19110799003|5072599009|8060799006|461199028|3412199025|440099028;
+X-Microsoft-Antispam-Message-Info:
+	=?utf-8?B?aG1NQndvS2p4VElSMUdETjJTcjdFcXNrY1J0QXVkZTdXSUI5VTNFeEo4OVJE?=
+ =?utf-8?B?YzlZS05BWFE2Z0lDTG83RTN4SVhmVUc1QnB1Q3dpZVVTcTM4Uk9TQUUvWGx4?=
+ =?utf-8?B?OXBuLzY0MmR4S0JPL2RoakJCTDRYemVNTWkzenNic1RMU2pMUHVLSFJFRlRK?=
+ =?utf-8?B?SUh6WnhIeTVZaExPOXhsVUJ4TE4vNUUvVVU0ZTJOQnVlK1dvVXFjQWIwdFNT?=
+ =?utf-8?B?d3EvSWRvUkhRTWRnTzdMTWZ6RjdiV2ZVWGpEc2RSTTdFRXNPeWx0UldRSTFK?=
+ =?utf-8?B?NVFzaDY3ZFZPUjZMWUhNZlExM1dFUVQ1TjdMMWhKakZCZmlFYTRpdFJHVmdx?=
+ =?utf-8?B?Y1VsN2oxbStMOEg4dVNQV1k3akpteVNselhab2JHNmswa2VYUGRMbW82ZTZS?=
+ =?utf-8?B?WEJqY1E1WElzWEJiVXhqSnozREc1TnRIWTFIYVJIR21vL2U2dXFkcFRYTnpK?=
+ =?utf-8?B?dkl3dkZEUlFML2FnTkZXcDlPcWwxazgvdzJ6Yll2dUZ2VDVUb1dSYTczTlZC?=
+ =?utf-8?B?OUJLMUtWa2Jyb2Q1ZVRwY0cvT2JxUzVPa0tmblIrWWUzN3pIK1ZGaWpZaEFE?=
+ =?utf-8?B?SStyZXVrM3l0Tm91S2tDb1JYSWZFa01nTjZJNlZCSHpDY1RITERHU0d1WkpV?=
+ =?utf-8?B?Zyt0M1I1OEhWMHI5QjdoNG00T3NHNTJqeTZEclhDdVQwUGV4RnBEOWlHSmJT?=
+ =?utf-8?B?VXZKNVFtMGc1RHFFM2lLQldyR1pFdVFydUFOY3NSdWVOb2pzL1VTdkRCRy9a?=
+ =?utf-8?B?aEZwaHVZd1h1WFE1YlJzQzYyVTgxcGhNNTVWaHMwb0FrMmRucXV5OEJBREN1?=
+ =?utf-8?B?YVNzOFBHTDc4enVES21lOUpvamlTazJhZXVDNlJvREMrOGNPS3ZWSUQrbXds?=
+ =?utf-8?B?NENCdFMxNlFRR1NpRmVuZHVUcmRQWEFoVXJlanh5QXNIN0ttRGtGVEkvQVNU?=
+ =?utf-8?B?ajM3RzdaMlg4d1YwM1B4eVk2cHRZWU5za0Yzb3lTV0hyTk1SbFBhQ0lkWGxv?=
+ =?utf-8?B?YUFZblI1S2Y5eW1aUC92MElEL3QvZndlcG5ZRXBxaElvYldoWkMwYWVpZXZa?=
+ =?utf-8?B?YkUxUU1zVU13WWlDWEkwT081RFdIMVV0VkZQMWZxbWxBL1BiYXBhWCsxVkRB?=
+ =?utf-8?B?c2hSbVduVnlRelVzYllyR3Y5ZHFjNzJ5SEs5dk5WZmhzN2JVaTk0NElFSnQv?=
+ =?utf-8?B?VHVVSy9qN2Vsd0krWldsNlIveGhBaE5wSUJRaTBIN0Ztc283VTFoRGlTT2FH?=
+ =?utf-8?B?bEkyREs4eTdNbVFBbkRFVmJiVDcxMTVheWkzUUdFWmdhWHN0QUlTOXNpMXFj?=
+ =?utf-8?B?Yk5jMWFNMDI2RnVaSXUvbFJVckEvZGlHNUZHZHBmbUZ1eUsxVkw0NlNsRDJ1?=
+ =?utf-8?Q?cYe+IkCQOWVzr32FlDNJODA+zVjszAEU=3D?=
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?SWZHRnh5MUFzMFduelVabnRFVm9zZHJnVW1WVGxVT0hZZytFTVMyOTFRZVhI?=
+ =?utf-8?B?elZjbFpzcEFGRHRUVExuTHE1YmxJY2ZzVkFlT0FLc242UkYvOUNkdlVxRm9r?=
+ =?utf-8?B?U3BBZ2U5L2N6MXVDTDRXNGpTa3hyT2RrZzNFcEJlWitucGlLdkVOOVFtNVJs?=
+ =?utf-8?B?L1lsdnZUTWJuL1BjcEJMWExWaE9vUWIzZTVKdFdGQVd1MTIxd2dNdWNRa1V6?=
+ =?utf-8?B?aHFkNGN4UytCN05XS0VNUE9ETHVpanpvUHB2bU9OK0VHT3I4OENwdVU1dXd0?=
+ =?utf-8?B?cmhJWjcxcXZ5UGtqSUhzRmlWYmx6a2xUKy95LzQzaExqdFZ6NnpscFU0cWl4?=
+ =?utf-8?B?TkhjOVpiVC9rTmEzMFZNSVExTlFDWGgraXljVVYwbC80NFBHSmIvcXVSOTUw?=
+ =?utf-8?B?em5tRVdSQnIyblBFU3dmUkdXVFNwZWR1aVhZRHUxaFZNcDVBUmpIOTZhSW1R?=
+ =?utf-8?B?NmFpM2dHbWxKU0lkTlJkTHcvbTVvWlVFQmZML20wNm1jeGlvMktFb0hXd1Zr?=
+ =?utf-8?B?UUVTRTRocmNCZkNRMkk4NEJINnJQRmlvTGQ3cnpRYXVJTm9nSkhYWU92Nk9h?=
+ =?utf-8?B?VjlZK1dpMGdkZk1RVktVa1pVN1JkUzI5bzVnY3EveXozSGx3a3ZGaitsTTdZ?=
+ =?utf-8?B?eWVxbDNyMDlhY0IzNmY2WlQrMU0zaElocGdjYnR5NFEvcDZrRkJIcGV3NUhW?=
+ =?utf-8?B?K2NGaTU0UEpEd0E3THUwTGMzUXc0TktaY0VkcXlSR3RZMG1ZbnBDY0J1SDZo?=
+ =?utf-8?B?citSeExQN3AvL2dkWW9LVm5Bak1RK2FvdU9YcjU0dldFb0YxKzJsV0hUbHZo?=
+ =?utf-8?B?YVVUVVRHVjZ4UmlCWlVPeUNac012UHBpUTdwZXg3SG1WZnZnVjVZTS9zM1NX?=
+ =?utf-8?B?ZS9KSDRmNzdoU3Y4aHd3aWRraU5Ka2hRM2NQemVUL3B6dEJvYUtDRURLWmtH?=
+ =?utf-8?B?a2FIak56T0VSQ3BxYU1lS0wrcGdRRmFMSDFGZ3NBMmZqSU51c1dOUForZ21u?=
+ =?utf-8?B?QlJvUm5sbDBjdEw2azBoWHUxMnRiQXIwQlRldXpsUkdIdWhtMWY5UTJaSWxm?=
+ =?utf-8?B?WFRZbVBaanZ6M1J2SzFqaXFjdmFjUlR6Mnp3akt3RlRUY3ZEL0NYQ1hoa0d0?=
+ =?utf-8?B?OGNWbmxJb0lFN1JLY1drZUc5REZNTkM3UHo5eHF0T2RTT3IyUTRyQ01NNmwz?=
+ =?utf-8?B?MERqQnpCSzRMWTQ4MUtBZzhxaElBaEVoaWRwZjZ6NGpIZFRSVWl1ajdlZVhz?=
+ =?utf-8?B?SnFZem1WdnZ3VHJIaU45ekFGQUtlenVmb0I3WFdWcXBHNnhHeFZsYk5aMVdy?=
+ =?utf-8?B?V0JTRnd0YXA4YnhWUUF5ZTE4SWxtTzdtc2FUcHN5VDl2Nllqcnhqd1FQVVk2?=
+ =?utf-8?B?dWt1K3cvWERJSklFRWtGekdRYXQ3b3duRG9ON2dTeEhhSTFLKzd0MFB2dEpX?=
+ =?utf-8?B?cXNMbXFOWDFZWmNab3lrYytBV0grZVFTc2FkS0ZTZGZFSzRMN244cjRVZnI4?=
+ =?utf-8?B?WnlYVW56bXNpOUd6bzFEMTdsYjZXQUU3ZlhucjZjaWNRSzFJZ01yazEraDBQ?=
+ =?utf-8?B?SHF2ekJZMUU5VXRCQW5ySjBBcHhGdlNZN2NDbVV4WWhMNHF0Q3RiWEtvT0xL?=
+ =?utf-8?B?UXNramZXZlNOblhjanZxck9IV09qVWZpZVAwalJJZ0RnUGNLbjR5c25STktm?=
+ =?utf-8?B?bXVaYVphRFZaSXpjUktNdUlxUFc1SU56bStqcDBTalV4VDRpRlFheG16Q3kx?=
+ =?utf-8?Q?IWV+y5Atd/zD0J2b2nnF3I26SE2aJulbZ6xurLz?=
+X-OriginatorOrg: sct-15-20-4734-24-msonline-outlook-c54b5.templateTenant
+X-MS-Exchange-CrossTenant-Network-Message-Id: 1cb0d7d9-6732-46ee-42b1-08dd1bb630da
+X-MS-Exchange-CrossTenant-AuthSource: AM7P189MB1009.EURP189.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Dec 2024 20:39:07.6552
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
+	00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AM7P189MB1121
 
-On Fri, 13 Dec 2024 at 21:15, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
+
+On 12/10/24 10:07, Stephan Gerhold wrote:
+> On the X1E80100 CRD, &vreg_l3e_1p2 only powers &usb_mp_qmpphy0/1
+> (i.e. USBSS_3 and USBSS_4). The QMP PHYs for USB_0, USB_1 and USB_2
+> are actually powered by &vreg_l2j_1p2.
 >
+> Since x1e80100-asus-vivobook-s15 mostly just mirrors the power supplies
+> from the x1e80100-crd device tree, assume that the fix also applies here.
 >
+> Cc: stable@vger.kernel.org
+> Fixes: d0e2f8f62dff ("arm64: dts: qcom: Add device tree for ASUS Vivobook S 15")
+> Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
+> ---
+>   arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dts | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
 >
-> On 12/12/2024 5:05 PM, Dmitry Baryshkov wrote:
-> > On Thu, Dec 12, 2024 at 11:11:54AM -0800, Jessica Zhang wrote:
-> >> Filter out modes that have a clock rate greater than the max core clock
-> >> rate when adjusted for the perf clock factor
-> >>
-> >> This is especially important for chipsets such as QCS615 that have lower
-> >> limits for the MDP max core clock.
-> >>
-> >> Since the core CRTC clock is at least the mode clock (adjusted for the
-> >> perf clock factor) [1], the modes supported by the driver should be less
-> >> than the max core clock rate.
-> >>
-> >> [1] https://elixir.bootlin.com/linux/v6.12.4/source/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c#L83
-> >>
-> >> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
-> >> ---
-> >>   drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c | 29 +++++++++++++++++++--------
-> >>   drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h |  3 +++
-> >>   drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c      | 12 +++++++++++
-> >>   3 files changed, 36 insertions(+), 8 deletions(-)
-> >>
-> >> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
-> >> index 6f0a37f954fe8797a4e3a34e7876a93d5e477642..0afd7c81981c722a1a9176062250c418255fe6d0 100644
-> >> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
-> >> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
-> >> @@ -31,6 +31,26 @@ enum dpu_perf_mode {
-> >>      DPU_PERF_MODE_MAX
-> >>   };
-> >>
-> >> +/**
-> >> + * dpu_core_perf_adjusted_crtc_clk - Adjust given crtc clock rate according to
-> >
-> > Nit: CRTC (here and further)
-> >
-> >> + *   the perf clock factor.
-> >> + * @crtc_clk_rate - Unadjusted crtc clock rate
-> >> + * @perf_cfg: performance configuration
-> >> + */
-> >> +u64 dpu_core_perf_adjusted_crtc_clk(u64 crtc_clk_rate,
-> >> +                                const struct dpu_perf_cfg *perf_cfg)
-> >
-> > It's not just the CRTC clocks
-> >
+> diff --git a/arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dts b/arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dts
+> index f25991b887de3fca0092c5f81c881c5d8bd71aac..bcb25782d541f43166229695ea1b83ee7b94a6c8 100644
+> --- a/arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dts
+> +++ b/arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dts
+> @@ -599,7 +599,7 @@ &usb_1_ss0_hsphy {
+>   };
+>   
+>   &usb_1_ss0_qmpphy {
+> -	vdda-phy-supply = <&vreg_l3e_1p2>;
+> +	vdda-phy-supply = <&vreg_l2j_1p2>;
+>   	vdda-pll-supply = <&vreg_l1j_0p8>;
+>   
+>   	status = "okay";
+> @@ -631,7 +631,7 @@ &usb_1_ss1_hsphy {
+>   };
+>   
+>   &usb_1_ss1_qmpphy {
+> -	vdda-phy-supply = <&vreg_l3e_1p2>;
+> +	vdda-phy-supply = <&vreg_l2j_1p2>;
+>   	vdda-pll-supply = <&vreg_l2d_0p9>;
+>   
+>   	status = "okay";
 >
-> Do you mean we should use adjusted mode clock here?
+I can't really verify with documentation if it is actually correct but 
+given the similarities in all these systems I have no reason to assume not.
 
-This also applies, etc. But my point was that you can not name it just
-"adjusted CRTC clock" if you also add the plane clocks handling.
-
->
-> >> +{
-> >> +    u32 clk_factor;
-> >> +
-> >> +    clk_factor = perf_cfg->clk_inefficiency_factor;
-> >> +    if (clk_factor) {
-> >> +            crtc_clk_rate *= clk_factor;
-> >> +            do_div(crtc_clk_rate, 100);
-> >> +    }
-> >> +
-> >> +    return crtc_clk_rate;
-> >> +}
-> >> +
-> >>   /**
-> >>    * _dpu_core_perf_calc_bw() - to calculate BW per crtc
-> >>    * @perf_cfg: performance configuration
-> >> @@ -76,7 +96,6 @@ static u64 _dpu_core_perf_calc_clk(const struct dpu_perf_cfg *perf_cfg,
-> >>      struct dpu_plane_state *pstate;
-> >>      struct drm_display_mode *mode;
-> >>      u64 crtc_clk;
-> >
-> > While you are at it, could you please also add a patch, replacing height
-> > * vidth * vrefresh with mode->clock * 1000? The former one has limited
-> > precision.
-> >
-> >> -    u32 clk_factor;
-> >>
-> >>      mode = &state->adjusted_mode;
-> >>
-> >> @@ -90,13 +109,7 @@ static u64 _dpu_core_perf_calc_clk(const struct dpu_perf_cfg *perf_cfg,
-> >>              crtc_clk = max(pstate->plane_clk, crtc_clk);
-> >>      }
-> >
-> > This function calculates crtc_clk as max(plane_clk, crtc_clk). Shouldn't
-> > we also reject the atomic_state if for any of the planes the corrected
-> > clock is lower than max_core_clk_rate
-> >
->
-> You mean higher than max_core_clk_rate? If so, yes we can fix that up.
-
-Yes
-
->
-> >>
-> >> -    clk_factor = perf_cfg->clk_inefficiency_factor;
-> >> -    if (clk_factor) {
-> >> -            crtc_clk *= clk_factor;
-> >> -            do_div(crtc_clk, 100);
-> >> -    }
-> >> -
-> >> -    return crtc_clk;
-> >> +    return dpu_core_perf_adjusted_crtc_clk(crtc_clk, perf_cfg);
-> >>   }
-> >>
-> >>   static struct dpu_kms *_dpu_crtc_get_kms(struct drm_crtc *crtc)
-> >> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h
-> >> index 451bf8021114d9d4a2dfdbb81ed4150fc559c681..c3bcd567cdfb66647c83682d1feedd69e33f0680 100644
-> >> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h
-> >> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h
-> >> @@ -54,6 +54,9 @@ struct dpu_core_perf {
-> >>      u64 fix_core_ab_vote;
-> >>   };
-> >>
-> >> +u64 dpu_core_perf_adjusted_crtc_clk(u64 clk_rate,
-> >> +                                const struct dpu_perf_cfg *perf_cfg);
-> >> +
-> >>   int dpu_core_perf_crtc_check(struct drm_crtc *crtc,
-> >>              struct drm_crtc_state *state);
-> >>
-> >> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> >> index ad3462476a143ec01a3b8817a2c85b0f50435a9e..cd7b84ab57a7526948c2beb7c5cefdddcbe4f6d9 100644
-> >> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> >> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> >> @@ -1257,6 +1257,7 @@ static enum drm_mode_status dpu_crtc_mode_valid(struct drm_crtc *crtc,
-> >>                                              const struct drm_display_mode *mode)
-> >>   {
-> >>      struct dpu_kms *dpu_kms = _dpu_crtc_get_kms(crtc);
-> >> +    u64 adjusted_mode_clk;
-> >>
-> >>      /* if there is no 3d_mux block we cannot merge LMs so we cannot
-> >>       * split the large layer into 2 LMs, filter out such modes
-> >> @@ -1264,6 +1265,17 @@ static enum drm_mode_status dpu_crtc_mode_valid(struct drm_crtc *crtc,
-> >>      if (!dpu_kms->catalog->caps->has_3d_merge &&
-> >>          mode->hdisplay > dpu_kms->catalog->caps->max_mixer_width)
-> >>              return MODE_BAD_HVALUE;
-> >> +
-> >> +    adjusted_mode_clk = dpu_core_perf_adjusted_crtc_clk(mode->clock,
-> >> +                                                        dpu_kms->perf.perf_cfg);
-> >> +
-> >> +    /*
-> >> +     * The given mode, adjusted for the perf clock factor, should not exceed
-> >> +     * the max core clock rate
-> >> +     */
-> >> +    if (adjusted_mode_clk > dpu_kms->perf.max_core_clk_rate / 1000)
-> >> +            return MODE_CLOCK_HIGH;
-> >> +
-> >>      /*
-> >>       * max crtc width is equal to the max mixer width * 2 and max height is 4K
-> >>       */
-> >>
-> >> ---
-> >> base-commit: 423c1c96d6b2d3bb35072e33a5fdd8db6d2c0a74
-> >> change-id: 20241212-filter-mode-clock-8cb2e769f05b
-> >>
-> >> Best regards,
-> >> --
-> >> Jessica Zhang <quic_jesszhan@quicinc.com>
-> >>
-> >
+It doesn't seem to cause any weird errors or anything, so
 
 
-
--- 
-With best wishes
-Dmitry
+Tested-by: Maud Spierings <maud_spierings@hotmail.com>
 
