@@ -1,157 +1,209 @@
-Return-Path: <linux-arm-msm+bounces-42162-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-42163-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A84B19F1951
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Dec 2024 23:46:47 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id B29969F1A43
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 14 Dec 2024 00:43:34 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 4A9AB164372
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Dec 2024 22:46:40 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C4CC6162543
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Dec 2024 23:43:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1760E198A05;
-	Fri, 13 Dec 2024 22:46:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 471DC1B87EA;
+	Fri, 13 Dec 2024 23:43:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="u1C6JoOz"
+	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="lnKxZX9d"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from NAM11-DM6-obe.outbound.protection.outlook.com (mail-dm6nam11on2065.outbound.protection.outlook.com [40.107.223.65])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33C7C1990CE
-	for <linux-arm-msm@vger.kernel.org>; Fri, 13 Dec 2024 22:46:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734130001; cv=none; b=Mj+zMjUg8+klIrcsOwSiA7LEYb7O08Kh67MpJxFj/rRBXK8osxFXDJccQqbyi/EEs3Vtk+MVIINGmySSYLFDd20wVgiezkY4D5O3X1a4/dz950RuNLpqw1gs0K6Lcu4avFVMUHJF6skE8ZajyhLNOScsGoRxHNXSJs5IvVLUtcs=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734130001; c=relaxed/simple;
-	bh=40UdhAIFkNpCWAKbO0Y7oEN+u3yqHZKe340TjJTE2Pg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=NVHCHmGFiSTg0AvgguSYRbu6Tr4iR23Ugm0uPctXNzK2i0aJ67Zw4kHa+F8FDIRKkje4dWefH5KW/seAG98RR8gqGmag6U+wFRc+jX93BvlTa3WO/VHd8jzfM1oQYlzB0CNJSyDeLoxQx/zJY25aIipqKQPgGyLOgypYRUeFm7g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=u1C6JoOz; arc=none smtp.client-ip=209.85.128.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-43635796b48so2222135e9.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Dec 2024 14:46:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1734129997; x=1734734797; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=KTuOD6icErcsFYaW9j21xu4YdtqCIv9gqicrizfjG+A=;
-        b=u1C6JoOzkQJPC3UQZDOR4MvJw28UOvYZGDM57yLagGpDp8kI9tIPdAGfegoiGkiVaE
-         8M/MZwHxbXq+GlHTWOghP20oYfSj4Bl+KWDL17cCUXn6XSUBYSRsB2zEBtx5K0mZNrH5
-         ZytIBuQQVDDm1pgYnfgSLkiuKr1xgqpV4kWAIU2TsoxbgWXqpqCAi4LzuQmEcm3ZRF+N
-         +w4+WXCBJK0v+Ha4C2h8Fd7CJto+bYteYgvbnAhtCEZDRGyAeMysKZzljEQxtO7BW/TU
-         x0PlqUQi5ua089j0S8bF6WzA04xyllyy4csPc5Gn4LTf+xg9sCzV9eDU6xVbE9e/eMIt
-         AopQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734129997; x=1734734797;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=KTuOD6icErcsFYaW9j21xu4YdtqCIv9gqicrizfjG+A=;
-        b=uAc20m9BCc7A2B3W+6LcvowqASrCTIjtV4CG0K1brAwaLX55ewF5E/w/6Iwnphw38k
-         joEE/gZ5nXlhT+JR78M/Kbcb/0eCgs3nt50JgKQLIyYBfuOAKPyBgoKm7ItlIQt3S8sY
-         +54LrY86TY4juM82MKL7qswxu8+SzzOIfvIlFGAJWk+TIrJNBo2WOvsbKTHu8XvqtP6g
-         ZkfNdnOgFsDlTrGA6nqI5yC1JxQPq+nD5z8bGXnyrIl0CvKTy06rOHzxBn67nVUa3HSB
-         /tbH0a6RRyyXyIZOQRNq0fSKUPdVEzbWIPNlv4qH2SJha/SB2wAPCDI5wyA3i2tJBmOC
-         uQnQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWelyaZUOZWVjSyRZesTxELN0y+TrL51GywMawcoA85SkIoNvnv7Zu9ToQ/H0a94ViD+9rRy1eIW8QE3vmL@vger.kernel.org
-X-Gm-Message-State: AOJu0YxJPfCLt+ADTeP9Idw8dAPCRxKcjktltuPi5EaSN/SwDg4AUEke
-	Q5aWnsVUu6Ar9BxknRufkALuYDjmtlfyCjMFwpx4iDXmqDbPPEGxSYZYr77s6Ek=
-X-Gm-Gg: ASbGncsCihZcpFWLMe1xuCwss9FPzOC4TpO/YTj0mMZAstqNQcATGNJkOpJ1704HU1f
-	QwI34WgmGsgyg7YDppDcxO9I5hX6/Byk8IK/Syb1TxrySWon2FQJPh4f3yfnEjQuoPX3prwKoxN
-	BCgXvteSYPdztVVyd8usDIbWngfy/4cKblatVmQH1PQCptVnoeVuaZhqtwKncWDrRBV3WmF8A3F
-	LGxyAQ/D8LgBe8aGn6f0nkJ1ildPfoXhZOegX9CIahr2UPH6q+RKC8ozEKIpV8iijX/mg==
-X-Google-Smtp-Source: AGHT+IF8LUTsKZXa8frqGxeBxZl582Ej5d81AFeE5NCeWffygpOwWGp+rL8WjqRfyLO0969GF07PDw==
-X-Received: by 2002:a05:600c:c8c:b0:42c:b8c9:16c8 with SMTP id 5b1f17b1804b1-4362b14bbe0mr32131525e9.10.1734129997407;
-        Fri, 13 Dec 2024 14:46:37 -0800 (PST)
-Received: from [192.168.0.40] ([176.61.106.227])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-436255531b1sm63871835e9.2.2024.12.13.14.46.35
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 13 Dec 2024 14:46:36 -0800 (PST)
-Message-ID: <47d81240-2717-48f6-89c5-f64f7bbd7505@linaro.org>
-Date: Fri, 13 Dec 2024 22:46:35 +0000
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 962831A8F94
+	for <linux-arm-msm@vger.kernel.org>; Fri, 13 Dec 2024 23:43:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.223.65
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1734133413; cv=fail; b=ohVGMnwzUQMR2n3Ktm+/gu0qvWwUhrZZV9sPHOduNu2MT92NXxQcCYwPFYPIy3O5m2Fba2ZuWAW52kAwpaA8EmOErm4fBQ9Lw7ouGfLNOcjc6cgVm5/WOve+fQzxPtb9ndVn1eEWcNPH8UVrxGydnPZt+/32HypZLSWKFWBMuOc=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1734133413; c=relaxed/simple;
+	bh=Fo9srETBzlnfRPh7Q6bUh9mRFgFYVrSfj3dwmubY2OM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=rNoRVulh7nS6r4ukvSYss1C7R3L3asHfO1/LBhUZbU+YgAGOMNbPZ8xzjkt6+rD5ofm4YTxK4SwpqXXiF2hph3U4RqNI802Pyl7IHVthy2YdJIrZGSWqybozZMdxGzz2Im20khq/gz2NfbThlLznNsJEhYSnvJtRCoWSLnlPgUI=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=lnKxZX9d; arc=fail smtp.client-ip=40.107.223.65
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=uY6RPR47xEnq8RvZ7pch5QQGkq1ZVZ7/9phel97r92rc3Utyc87yWRR3QAzJsfU2wBQtV4DCXHGmSRaiW7wmSTt0yopdlrDkZ6DHR+ESveH69OO8da0zGxhVYnEtmupUyd6qQQUilyNwBLSN4pshEwzgL/HR3K+CjMU4ozyq2Wb1AWTtGCBbSt3Pm/1cn354PCii71z/ASib0dyDyKCKNI8AlWTSpacAAZaJTXm3nAFb5TgyDSJcB8w8t2WEZFK+ou9/Enqtf1xzQCsdQ45xvEQ2EjYLTiQahHEfeeEpoL7dnl2hMTNXKXSaXiZ4IDXybhF9QFkKDQdD02wR2LNXfw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=FG8JmJv8Y/hQ7KXnJIgm28Sf43galGuhUYMjnRaOge8=;
+ b=qyrJYnXY7Ygx4K573go6SQmY0zfZuOay9uG63TLjYun5x7HgHCUWd44Q4RjPpl2hkQbRMu7g4UWa7DGLKucqZ9LhH6Qny1NpmfcNkQW7rbnxVkPlRckTTvZ1Z+z+4PzmwPFr/ZbLdIXJJxs0mlb1QRLg8PZvgta4sZaDYywg/7P4fmI23flGJX2U57fSo0tZtYYsHjg/arehrHavc+HnAmlEzNu/mYSJrFGG3AebPEPtnh8VUvdopnhZ//VVI1DY51MjZpn6VHxX9+RBgM/yiI64tqymb/I/gaYgQxohuMzKova+7xnjNaFw8ibV2CWDL5+UchzXzgoC8VnhP+n3bA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=quicinc.com smtp.mailfrom=amd.com;
+ dmarc=pass (p=quarantine sp=quarantine pct=100) action=none
+ header.from=amd.com; dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=FG8JmJv8Y/hQ7KXnJIgm28Sf43galGuhUYMjnRaOge8=;
+ b=lnKxZX9daz8xjuoKdsqSfVdqgoOSLaZC0j6nrxHMFNe9buxtoq7XGrt37zwWaUlhfSKo5VtGedSgJfGRv9sg5+K5qHLzYINtXSDij0+vqc9xhlBoH7HypOLEbp4YJi6u6JcUQ+4PHFjyfjiSX/OmX8Ga3mDWthlJbyRo1nA6Tkg=
+Received: from DS7PR03CA0013.namprd03.prod.outlook.com (2603:10b6:5:3b8::18)
+ by DM3PR12MB9288.namprd12.prod.outlook.com (2603:10b6:0:4a::18) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8251.15; Fri, 13 Dec
+ 2024 23:43:27 +0000
+Received: from CH3PEPF00000017.namprd21.prod.outlook.com
+ (2603:10b6:5:3b8:cafe::4e) by DS7PR03CA0013.outlook.office365.com
+ (2603:10b6:5:3b8::18) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.8251.17 via Frontend Transport; Fri,
+ 13 Dec 2024 23:43:27 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=SATLEXMB04.amd.com; pr=C
+Received: from SATLEXMB04.amd.com (165.204.84.17) by
+ CH3PEPF00000017.mail.protection.outlook.com (10.167.244.122) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.20.8272.0 via Frontend Transport; Fri, 13 Dec 2024 23:43:27 +0000
+Received: from SATLEXMB06.amd.com (10.181.40.147) by SATLEXMB04.amd.com
+ (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Fri, 13 Dec
+ 2024 17:43:26 -0600
+Received: from SATLEXMB03.amd.com (10.181.40.144) by SATLEXMB06.amd.com
+ (10.181.40.147) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Fri, 13 Dec
+ 2024 17:43:26 -0600
+Received: from [172.19.71.207] (10.180.168.240) by SATLEXMB03.amd.com
+ (10.181.40.144) with Microsoft SMTP Server id 15.1.2507.39 via Frontend
+ Transport; Fri, 13 Dec 2024 17:43:25 -0600
+Message-ID: <6c866fe1-8d25-aceb-8f5b-0f2d40abcf6d@amd.com>
+Date: Fri, 13 Dec 2024 15:43:20 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 2/3] media: venus: Populate video encoder/decoder
- nodename entries
-To: Nicolas Dufresne <nicolas@ndufresne.ca>,
- Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
- Vikash Garodia <quic_vgarodia@quicinc.com>,
- Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: quic_renjiang@quicinc.com, quic_vnagar@quicinc.com,
- quic_dikshita@quicinc.com, konradybcio@kernel.org,
- linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
- Stanimir Varbanov <stanimir.varbanov@linaro.org>
-References: <20241209-media-staging-24-11-25-rb3-hw-compat-string-v5-0-ef7e5f85f302@linaro.org>
- <20241209-media-staging-24-11-25-rb3-hw-compat-string-v5-2-ef7e5f85f302@linaro.org>
- <e159b61f620eea520b06e20a294bf84be781fe19.camel@ndufresne.ca>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.11.0
+Subject: Re: [PATCH 3/7] accel/qaic: Allocate an exact number of MSIs
 Content-Language: en-US
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <e159b61f620eea520b06e20a294bf84be781fe19.camel@ndufresne.ca>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+To: Jeffrey Hugo <quic_jhugo@quicinc.com>, <quic_carlv@quicinc.com>,
+	<manivannan.sadhasivam@linaro.org>, <quic_yabdulra@quicinc.com>,
+	<quic_mattleun@quicinc.com>, <quic_thanson@quicinc.com>
+CC: <ogabbay@kernel.org>, <jacek.lawrynowicz@linux.intel.com>,
+	<linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+	<mhi@lists.linux.dev>
+References: <20241213213340.2551697-1-quic_jhugo@quicinc.com>
+ <20241213213340.2551697-4-quic_jhugo@quicinc.com>
+From: Lizhi Hou <lizhi.hou@amd.com>
+In-Reply-To: <20241213213340.2551697-4-quic_jhugo@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CH3PEPF00000017:EE_|DM3PR12MB9288:EE_
+X-MS-Office365-Filtering-Correlation-Id: c6afd317-45ab-4415-e5ba-08dd1bcff0fe
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|82310400026|1800799024|36860700013|7416014|376014|7053199007;
+X-Microsoft-Antispam-Message-Info:
+	=?utf-8?B?V0NwOFJzVDZoRFVtTVJzenBOaFUzY21GdGFzVi9qcTJvTS9lQUw1aFMzRVV6?=
+ =?utf-8?B?Y1ZMWGh3cmlyR0NnMzNFR1NtUktrZldnZUZnSzZEU1hOMlMxaUdwdlVKeXdo?=
+ =?utf-8?B?a255UUgxR0x5RU1RR2xiK3Zna2JLUlJTNmNyUm1TdTRkUUxhNWo4OWUvakh2?=
+ =?utf-8?B?bUhJSEk3UlhCcVBDUnNHVnE5WTB2emVKMDlnNU40dit2NmxIS1M3eXd5QmxQ?=
+ =?utf-8?B?aUswVDNEOFE5ZmZEblhlOFNsR25RSFJIeXVsbnNYU3kya2tPL2dCaE4zaDZl?=
+ =?utf-8?B?QTJqSnVkdVBQMWtDWHgrbkdsMU5kZmE1Q2dSM3dIS0l1QVNjUGVlVnNEYnhS?=
+ =?utf-8?B?aEhoMzdRNXlkNCsyTXNLNzFZc1dVTEltTlkvRnk5M3E3RXVqT1lVVitqS3ZG?=
+ =?utf-8?B?YUpzNk1oVGZVaG9raTZqUWNpWUNyQ2RIVjhBV3UvQmcrSml5MXNLWlBtOUh6?=
+ =?utf-8?B?TUNyeGtsbk54WDA4UFROREptZEpBTHR3RndYc2JWUkJzaHpGMllvMWRxTS82?=
+ =?utf-8?B?Wk82Z0tGVG90T3FBZVU3Wkx1MkpuZkQ0ZVVNTjNoS1c2cUZibUpGWmRGSnFy?=
+ =?utf-8?B?Umh3ZnQ1MnVTQWxwWm9pbTh2aFNkeUlwL2FHQ1VWRWxiZTN5RUV2QTF2RGls?=
+ =?utf-8?B?UGFoSWlVWkRyZm5xUjZPQWRwWWZlWVJYNmJpaVpvdHJkWHFOL2g4QTJ3NlJy?=
+ =?utf-8?B?MC9PeWg0SnFDVTQyRklySEV1dVBrTDJWdVk4VzdvV05Gb2NRMkc1OENGS3pw?=
+ =?utf-8?B?K0lPTnZDcGhWazdmbWp0ZExJcXM5OUl6dno3SEVqWXVlb1F5VmdNd2d3WEMx?=
+ =?utf-8?B?dFJwNVh1NS83bk1pblNZOGdtazQ5SExNQXVWU1VhNlFrRWpBR044dWUxaUhp?=
+ =?utf-8?B?UnNjcnBpTkFtSUNMR3JNOEIrdjZ5eC8reXJlR0UzU3JaMWV1YWJsZlA2aTk0?=
+ =?utf-8?B?cENaTk5FVnJIbENDVWZ1by9BMlYzb3VXQllwWFNIWVI5eXpFVG5CTHl3Zm51?=
+ =?utf-8?B?WnFhbmpkdXQxTzY5SlljM0RaUjJSSlAyZHBSTU9VcTJYRXRHdkF0dWRKTzA2?=
+ =?utf-8?B?YVV0blRPN0h6L05VUHZaMzQyMDR4MU10SWhrYXRRaWFUZzJFTklVRGNJZDVk?=
+ =?utf-8?B?ZHE5UjMzR2MyR09rUk9LMVg3QjFuVTVGbmQvWG1Bb0t6UmFJcG8rcS9UZDh3?=
+ =?utf-8?B?ZitOQzU5dWVHQUxSNjR4NWlXUVArWXNMcEpZVll6cUduc05LdU56TmFEdmox?=
+ =?utf-8?B?YTRBeS85d1JsUmJsNUpRUldLWUlWY0ZRbDR1dDNOSkkyamlFd1pQQ3NqU2Qv?=
+ =?utf-8?B?VmFuVTFhNGhUN2hmaitnZC9QOVlBdzZWaGZDSGdNTGRSYXlVSER0UXN0UkJE?=
+ =?utf-8?B?bzZzVWlFYUI3M2tScFFlZ0FYWmd1eVI5amVHWGljVXRLdGxhbkRBSnpWUEhB?=
+ =?utf-8?B?QytZakNVS3BoQktZOENtc2RyVnFXcDJlSW9NSndPL0Q3UXFpZ3R1bVZxUDd4?=
+ =?utf-8?B?c2dsb1BNbE9Bcm02SVF0WXk1cHJKbmNMcm9CUjI0U2RtMHNXREk2REEyVkxP?=
+ =?utf-8?B?VTIrMkJFWTBMc1pKQVNURlp3T0txemJHRXRJL1ZObE5lWXgvNTFUaW9DN1BT?=
+ =?utf-8?B?bFpWY2NpOHpvV0Q4Z3lIdmR4ZEhRVDIzRlVWcStENDRIMGRuQmczbEtnbVRR?=
+ =?utf-8?B?QUdtZy94Z1JUQmJscndabHdXd3VZTjdRRnFjL2s2SW56d0hUK0s2M3dzazc3?=
+ =?utf-8?B?UGxqNlpjVm9pVndqYmVhTVMrdlVmMTZiWlRYRzlZQjMxWFozOHBxS3ZkMFJH?=
+ =?utf-8?B?SC95NFgzRHMvUzNubVhPVXM1TjNBdVlqVGlsczQ3ekRPRUhEUTZMNzRVSXNO?=
+ =?utf-8?B?dm9rYnhyS3l0TFBzd0lwK2dUYlNjOUZFWnJLSmxEcVBFSnRwVjFTQ2x3Znl4?=
+ =?utf-8?Q?KzfutjeA9H9dKgAU93Tw3X0lfB+s+Ttq?=
+X-Forefront-Antispam-Report:
+	CIP:165.204.84.17;CTRY:US;LANG:en;SCL:1;SRV:;IPV:CAL;SFV:NSPM;H:SATLEXMB04.amd.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(82310400026)(1800799024)(36860700013)(7416014)(376014)(7053199007);DIR:OUT;SFP:1101;
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Dec 2024 23:43:27.0957
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: c6afd317-45ab-4415-e5ba-08dd1bcff0fe
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d;Ip=[165.204.84.17];Helo=[SATLEXMB04.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	CH3PEPF00000017.namprd21.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM3PR12MB9288
 
-On 13/12/2024 20:00, Nicolas Dufresne wrote:
-> Hope this hardcoding of node name is historical ? 
 
-Hardcoding is historical in dts.
-
-We need to add two more chips into venus before iris is merged and at 
-feature parity for HFI_6XX and above - HFI_GEN2
-
-Something like this.
-
-enum {
-	HFI_1XX
-	..
-	HFI_6XX
-	HFI_GEN2
-	..
-};
-
- > And not done for newer chips ?
-
-HFI_6XX and above will be fully supported in "iris" with encoder/decoder 
-selection done at session creation time.
-
-Iris is being added phased. Basic decoder with one format, followed by 
-decoder and additional formats.
-
-Once we get to feature parity HFI_6XX and above will be supported in 
-Iris and removed from venus.
-
-Leaving HFI_4XX and below.
-
-That's a long winded way of saying new chips minted from the fab will 
-either be HFI_GEN2+ or HFI_6XX.
-
-> We discourage userspace on relying on node names cause it always leads to
-> complication and non-portable code.
-
-Writing this driver from scratch - basically what HFI_6XX in Iris does, 
-you'd select encoder/decoder when you create the initial session - the 
-initial state.
-
-For venus that's an unknown amount of work to do.
-
-What we _could_ certainly do is make the static assignment in this 
-series assignable via a kernel parameter.
-
-I'd say though that's an additional series on top of this.
-
-First pass here is just to fix up the original sin, not to improve 
-selectivity, just yet.
-
----
-bod
+On 12/13/24 13:33, Jeffrey Hugo wrote:
+> From: Youssef Samir <quic_yabdulra@quicinc.com>
+>
+> Devices use 1 MSI vector for the MHI controller and as many vectors as
+> the DMA bridge channels on the device. During the probing of the
+> device, the driver allocates 32 MSI vectors, which is usually more
+> than what is needed for AIC100 devices, which is wasting resources.
+>
+> Allocate only the needed number of MSI vectors per device.
+>
+> Signed-off-by: Youssef Samir <quic_yabdulra@quicinc.com>
+> Reviewed-by: Troy Hanson <quic_thanson@quicinc.com>
+> Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+> Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+> ---
+>   drivers/accel/qaic/qaic_drv.c | 6 ++++--
+>   1 file changed, 4 insertions(+), 2 deletions(-)
+>
+> diff --git a/drivers/accel/qaic/qaic_drv.c b/drivers/accel/qaic/qaic_drv.c
+> index 81819b9ef8d4..6e9bed17b3f1 100644
+> --- a/drivers/accel/qaic/qaic_drv.c
+> +++ b/drivers/accel/qaic/qaic_drv.c
+> @@ -465,12 +465,13 @@ static int init_pci(struct qaic_device *qdev, struct pci_dev *pdev)
+>   
+>   static int init_msi(struct qaic_device *qdev, struct pci_dev *pdev)
+>   {
+> +	int irq_count = qdev->num_dbc + 1;
+>   	int mhi_irq;
+>   	int ret;
+>   	int i;
+>   
+>   	/* Managed release since we use pcim_enable_device */
+> -	ret = pci_alloc_irq_vectors(pdev, 32, 32, PCI_IRQ_MSI);
+> +	ret = pci_alloc_irq_vectors(pdev, irq_count, irq_count, PCI_IRQ_MSI);
+>   	if (ret == -ENOSPC) {
+>   		ret = pci_alloc_irq_vectors(pdev, 1, 1, PCI_IRQ_MSI);
+>   		if (ret < 0)
+> @@ -485,7 +486,8 @@ static int init_msi(struct qaic_device *qdev, struct pci_dev *pdev)
+>   		 * interrupted, it shouldn't race with itself.
+>   		 */
+>   		qdev->single_msi = true;
+> -		pci_info(pdev, "Allocating 32 MSIs failed, operating in 1 MSI mode. Performance may be impacted.\n");
+> +		pci_info(pdev, "Allocating %d MSIs failed, operating in 1 MSI mode. Performance may be impacted.\n",
+> +			 irq_count);
+>   	} else if (ret < 0) {
+>   		return ret;
+>   	}
+Reviewed-by: Lizhi Hou <lizhi.hou@amd.com>
 
