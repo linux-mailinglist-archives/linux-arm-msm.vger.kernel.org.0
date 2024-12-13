@@ -1,147 +1,143 @@
-Return-Path: <linux-arm-msm+bounces-41983-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-41984-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A51629F0AB8
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Dec 2024 12:19:00 +0100 (CET)
-Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id F196F9F0AC1
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Dec 2024 12:19:30 +0100 (CET)
+Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 616AD282FC0
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Dec 2024 11:18:59 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 270AE1884F9C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Dec 2024 11:19:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A68981DDC32;
-	Fri, 13 Dec 2024 11:18:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B5B021DEFE1;
+	Fri, 13 Dec 2024 11:19:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="FHRzpVjj"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="oA1q7Z7H"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f67.google.com (mail-ej1-f67.google.com [209.85.218.67])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BA8A1DDA39
-	for <linux-arm-msm@vger.kernel.org>; Fri, 13 Dec 2024 11:18:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC0721DE3BA
+	for <linux-arm-msm@vger.kernel.org>; Fri, 13 Dec 2024 11:18:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.67
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734088737; cv=none; b=JMb1egiM+ldgOia18UvcAn/EX49aPgzzQBZsA7d09vpR7oOORMrI91DVIBHzQHluXb3rzDfxLC5sPqumvu3IC0uEVqsz4qGCfYYNFu0QQAmahM1K8NtCwt99U6qH7QOAx8i4fzl4PC2sSNPnOw6FcUn98rn9thG4FJ8o8TYHCUs=
+	t=1734088740; cv=none; b=qtK5hfGsgMhdk9GEmo2ak+9jjz1LLIviOcJitn3yLIMpuIOEiLHNtX9rrc6S5w5XzOQhPdLi8cg4FhBgIgxqSQGSmWJzkuJ+nr2Lik1W4B1buRv/uKIcPvfVQRmgrx6IqC6VN1eekW7YaJ16nW4ZyYps0bTrrS/a4x+b/NEUP/M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734088737; c=relaxed/simple;
-	bh=auNuVg+Uq01zi1bIh+gO7UoyVpAIBt6Xmw3RIjeDju0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=cWgMxNi0ejT6fxsTUbuOg+eduIkOsAuaPyMDMzUwALVTnAlMC3esQh0lTqs5XJO5JVGjVxvwhRH6sJP1Xz0p23onYap4oVFFkCvkGZfYt54Q/ntxtijGQb7sP08BwP1dqom3OY09vt4Qf+nehGbt2onP2UqVIK7LYPhahB3bO5I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=FHRzpVjj; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BD2kt3n000477
-	for <linux-arm-msm@vger.kernel.org>; Fri, 13 Dec 2024 11:18:55 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	s/TQKENLvmprGOW1/Wu3SkBKRJf47l5oWgnMdRrCuEI=; b=FHRzpVjjz7wcMkwZ
-	W27T6yxjzvmsYuiPzmedpeP4fEPqXr6E8enQCfNUhY4r6nSV2kcTJr7RhBt/QpOf
-	XPwzkq1E4DQzdNH68VWyfT66rjvG1ns0/bS729Gca1mYJ6TcrmovRQcUkCTYrhkp
-	WYvZEWlTuDym7+K19apfTZoHxejNVlDKG2s7sZWJbE20KWTknV6R1NhoTVHmVDI6
-	lQg1xzYmwvGlx9r8oM/b79Tb7ehQkCej9xGeeswx5NtAg1NCsf1uXTc+6yXJXqA0
-	9uXJiWzyZCJSmtlzm6ChMHl7RP6S4M5ZHMT098GGtDJG855QmqCAcUjTM5sh0qsd
-	TV6weQ==
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com [209.85.219.72])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43fqes4mhc-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 13 Dec 2024 11:18:54 +0000 (GMT)
-Received: by mail-qv1-f72.google.com with SMTP id 6a1803df08f44-6db1009a608so2921966d6.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Dec 2024 03:18:54 -0800 (PST)
+	s=arc-20240116; t=1734088740; c=relaxed/simple;
+	bh=4sWUtOjeYmhgS7vSba/RGHfcehHVoBrgsxjqxs2uKZ8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=KIuG0mYTbjiEjbuuo+OichNi/WKTudcoCtMpY4PNYFq6TqRasOksqSlX5rhslrKn4Xb3PS6gsegCkj4S1KxOlsT1Afe7JOF5MWfXNUCRuQfK2Xw9Kea/1T8CB/SnZs5uwgIuNkJSoWLz7RzunN56OMApoBk2ZfZlJWelWk07/H4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=oA1q7Z7H; arc=none smtp.client-ip=209.85.218.67
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ej1-f67.google.com with SMTP id a640c23a62f3a-aa68b513abcso269742066b.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Dec 2024 03:18:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1734088736; x=1734693536; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=SOH0ZpkdRhKcY2RdyrG5izzazJLX5YhFQ9ww5KfiGzQ=;
+        b=oA1q7Z7HKz9YyAS7uruOze5DV4+jvXINhKSNu65w3rVRRjJuYzZbD2r3b5kT8fMlwN
+         b+LPqWrS8LBv28jfLuMP6KvifDHAtWpBUumYigybBHdFWTTn2pz3KzZnsCpsYCppHNxL
+         YSJy0pPH+9v+CMxwk+jmlgGCJFGHCdjO2WK6tymuwRhCHhfQ1oV0vTz77pkKBX6PUie9
+         ZXEwDEyTdQEcG6Qttx8+2znTpZLAuvW+wJqZwADfqzWVLOf13l3TBzR1v3RjhXJes7+t
+         kDyraGzZ7a6ttUOKHQTE59M3nEUWtnt65C2Y26VAsNe0AvbitRWyljgk5i6c+PITcLlC
+         MJUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734088734; x=1734693534;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=s/TQKENLvmprGOW1/Wu3SkBKRJf47l5oWgnMdRrCuEI=;
-        b=K/3Clkl0CCTwWzeN2bcMKHH5mMduydIgmAFI35wX/1r06F/aAg+AxVn/jxtLLIkmeA
-         26Ufc4MqddYvFqp/2mQVmzUeQQ8ClDcyd0DzcDbqm8wpE3eHbTfP12k0fIG/I8wBbspS
-         isr8Fombyxbyjx7lucANhSJvXbqoGz3D7ZDf6eosY8PzF/WrLm4iU/bXh7iQwynmdalG
-         oNvBZ+Y3mm6OosKa78M+QLfz2HUy5jLZ30NqUTAdeKNgcnLN+8tFMXnNK3hczXk/ncy5
-         5KxV+Td1FIHT9v3eibqFRP61MBbF1NeNSpclcui6lWj8xWpc5Y5yM2Ag1DkO2TrSwBms
-         poyQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVraW9pnNio0MjNEJW6qcA9WrTCWz/9f4m2SvOUxvhFClDftmAsUfRs7g8yylSD+osBSpTOsrMQ7A1fO75W@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx4uu2xDgGtnanh47sAUFCzOSpjUx/L/ZfwoS1T/zY/UomMty+e
-	Uqpeepm6s7uquST7Up9msH5xfbnF/r9cI4qaRlopmxbH0s32qx6ei59Tb4COsW6yxYixucoIQPm
-	IqPH2/vlVdmFELXO9l9agQLOVsn6qyIOuZjHkU633RvfiwHG03X1m1+pZEISroc7u
-X-Gm-Gg: ASbGncsmVusZYmgXJ//FGTSEeaOnZclk6G1PY2YFByZ9qdJhueSwdGvisH4I/qCxq1L
-	K4c1x1zr/fotMqIKpuNnA+2IY72dCL4sO9UynMPc1qOxGCr03F3Y9MOeGQz/9orOpFgtNFnCqUr
-	jCFRXYKXEHav6GUBbtmQins2lQtAj1kjT4H5j9FObYO9apQcgDO8ytAcPJNMC7Fj5XoxBTkxIiM
-	DgSVKHJlHCDVvvrfUbQ9GZhrGAHgz+dIIHXbpw2pzqc+Oi60xA7qZGj9nSbu/Gi5riSZISivUXb
-	kXJUpQ0Wt8Hqs6aw3hF5U2geXD2xCF7MRLTb
-X-Received: by 2002:a05:620a:19a1:b0:7b6:c6f8:1d28 with SMTP id af79cd13be357-7b6fbce2263mr128315085a.0.1734088734245;
-        Fri, 13 Dec 2024 03:18:54 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHBR+cUBdvb74XuOejNI9mYSykpjh49aeXCJst5j85GNfPlE4TY4ja3JXn/U1G43w2NwwSbUA==
-X-Received: by 2002:a05:620a:19a1:b0:7b6:c6f8:1d28 with SMTP id af79cd13be357-7b6fbce2263mr128313785a.0.1734088733880;
-        Fri, 13 Dec 2024 03:18:53 -0800 (PST)
-Received: from [192.168.58.241] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5d149a48ab4sm11339660a12.27.2024.12.13.03.18.51
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 13 Dec 2024 03:18:52 -0800 (PST)
-Message-ID: <d397065d-80fb-467e-bf41-0f5aad882a15@oss.qualcomm.com>
-Date: Fri, 13 Dec 2024 12:18:50 +0100
+        d=1e100.net; s=20230601; t=1734088736; x=1734693536;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=SOH0ZpkdRhKcY2RdyrG5izzazJLX5YhFQ9ww5KfiGzQ=;
+        b=Etk33B3YKfKFnnJK55QQQqmGNwtW29J0iwo9Jr+rUV/KgW66VZF3v0bTKKVjIpU2w6
+         e8W9ZcBhhhvEaF7HVWAm1N2yZh25jFgM96g0nexnLcyhaeY5z3Uodh3X2QIeDekkjkR9
+         bQghbWYpOTE39THdbxKvmVVjg1IfEnnlKDypJQI1NUc1JuzpLcwy18luubt10vafmUkQ
+         hOjp+pfEAlRGDNWW6xhozgycnTYcn+c7S5xUGxSkzlDlA0YjwEYx69gGlME9Qmd+70kM
+         th7AySlOJgDocBcxywdY8oyb+p0PCj/2+OK2MvqLv3N4pQ460BYlodWyxHfKUkmzu7LV
+         naNQ==
+X-Forwarded-Encrypted: i=1; AJvYcCW4i7tApTqBytgDawEvq9G+u9+L/WdsCk8gXnSocO5pHqQM+JbeiMn9jfbIFdVJzFABr0jChpuhtOx3bXkm@vger.kernel.org
+X-Gm-Message-State: AOJu0YxPLLxrfTdGD53eGo5nN36KEuj4S/Ncz2yIDAVDdUPrZESeJwK+
+	qG30YJ8w+iVi/QxYfzVkBG8KyTffPrzB5XLIFFOYhLdn24jwdAZjjw+T68ArFWw=
+X-Gm-Gg: ASbGncvZZh/fLJCGOu1adeAL0pAK+l0bq3EyMyW+7c+GjG6UyXn9vFpFO4lGJCiq/qz
+	ZPOJld0EEz6yS40th6/uYLxJUJ+cl0xSMcbetAwznIlwnm3LFXNKRMNgKAxLI3QuT1jBdfeHoFf
+	2HdMnbrwKCuGFYDV2rBMbN6sWf0BgqKPiaSa3N8A5KA9P+BlA2s4VDbDLR4/RickgujUlxpXEiV
+	CEzNpWH8qOoWBi55javETfg6vvsN1VOcSJ5adTXQAY4oOxMcYdqDsEAMUnDznUwBg==
+X-Google-Smtp-Source: AGHT+IHCNFIusKuDoVAQrVy2w3RyEGZxyWlRUmcQIBaYG0LZ5xafYNpj5fwC5H5p5Q6bHAeD7wm9rw==
+X-Received: by 2002:a17:906:32ce:b0:aa6:b5d8:d5c2 with SMTP id a640c23a62f3a-aab77e821e9mr229783666b.41.1734088736131;
+        Fri, 13 Dec 2024 03:18:56 -0800 (PST)
+Received: from linaro.org ([2a02:2454:ff21:ef80:998:492:1e8d:6193])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-aa6705a566dsm824777366b.162.2024.12.13.03.18.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 13 Dec 2024 03:18:55 -0800 (PST)
+Date: Fri, 13 Dec 2024 12:18:51 +0100
+From: Stephan Gerhold <stephan.gerhold@linaro.org>
+To: Krzysztof Kozlowski <krzk@kernel.org>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, linux-usb@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, Abel Vesa <abel.vesa@linaro.org>,
+	Johan Hovold <johan@kernel.org>
+Subject: Re: [PATCH 1/3] dt-bindings: usb: gpio-sbu-mux: Add an entry for
+ FSUSB42
+Message-ID: <Z1wYG8gpdFEvHCI3@linaro.org>
+References: <20241212-x1e80100-qcp-dp-v1-0-37cb362a0dfe@linaro.org>
+ <20241212-x1e80100-qcp-dp-v1-1-37cb362a0dfe@linaro.org>
+ <kq6qjrynlbqgz2ltdap67lsbehmzuudjhbhyjymy26wlffol6o@kggtwtbujilf>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 5/5] arm64: dts: qcom:
- qcs6490-rb3gen2-vision-mezzanine: Add vision mezzanine
-To: Vikram Sharma <quic_vikramsa@quicinc.com>, rfoss@kernel.org,
-        todor.too@gmail.com, bryan.odonoghue@linaro.org, mchehab@kernel.org,
-        robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
-        akapatra@quicinc.com, hariramp@quicinc.com, andersson@kernel.org,
-        konradybcio@kernel.org, hverkuil-cisco@xs4all.nl,
-        cros-qcom-dts-watchers@chromium.org, catalin.marinas@arm.com,
-        will@kernel.org
-Cc: linux-arm-kernel@lists.infradead.org, linux-media@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, kernel@quicinc.com
-References: <20241206191900.2545069-1-quic_vikramsa@quicinc.com>
- <20241206191900.2545069-6-quic_vikramsa@quicinc.com>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <20241206191900.2545069-6-quic_vikramsa@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: _bxvE5SYxLgIjSM-eUdhuBlN0oIlkpYe
-X-Proofpoint-ORIG-GUID: _bxvE5SYxLgIjSM-eUdhuBlN0oIlkpYe
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 adultscore=0
- lowpriorityscore=0 impostorscore=0 clxscore=1015 malwarescore=0
- mlxlogscore=808 priorityscore=1501 bulkscore=0 phishscore=0 mlxscore=0
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2412130078
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <kq6qjrynlbqgz2ltdap67lsbehmzuudjhbhyjymy26wlffol6o@kggtwtbujilf>
 
-On 6.12.2024 8:19 PM, Vikram Sharma wrote:
-> The Vision Mezzanine for the RB3 ships with an imx577 camera sensor.
-> Enable the IMX577 on the vision mezzanine.
+On Fri, Dec 13, 2024 at 12:07:35PM +0100, Krzysztof Kozlowski wrote:
+> On Thu, Dec 12, 2024 at 02:08:23PM +0100, Stephan Gerhold wrote:
+> > Add a compatible entry for the onsemi FSUSB42 USB switch, which can be used
+> > for switching orientation of the SBU lines in USB Type-C applications.
+> > 
+> > Drivers work as-is with the existing fallback compatible.
+> > 
+> > Link to datasheet: https://www.onsemi.com/pdf/datasheet/fsusb42-d.pdf
+> > 
+> > Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
+> > ---
+> >  Documentation/devicetree/bindings/usb/gpio-sbu-mux.yaml | 1 +
+> >  1 file changed, 1 insertion(+)
+> > 
+> > diff --git a/Documentation/devicetree/bindings/usb/gpio-sbu-mux.yaml b/Documentation/devicetree/bindings/usb/gpio-sbu-mux.yaml
+> > index 8a5f837eff94b27bbd55bfe45f8d1156e3d183eb..e588514fab2d8c9d0d3717865fe2e733664fc28b 100644
+> > --- a/Documentation/devicetree/bindings/usb/gpio-sbu-mux.yaml
+> > +++ b/Documentation/devicetree/bindings/usb/gpio-sbu-mux.yaml
+> > @@ -20,6 +20,7 @@ properties:
+> >      items:
+> >        - enum:
+> >            - nxp,cbdtu02043
+> > +          - onnn,fsusb42
+> >            - onnn,fsusb43l10x
 > 
-> An example media-ctl pipeline for the imx577 is:
+> Is it different from onnn,fsusb43l10x?
 > 
-> media-ctl --reset
-> media-ctl -v -V '"imx577 '19-001a'":0[fmt:SRGGB10/4056x3040 field:none]'
-> media-ctl -V '"msm_csiphy3":0[fmt:SRGGB10/4056x3040]'
-> media-ctl -V '"msm_csid0":0[fmt:SRGGB10/4056x3040]'
-> media-ctl -V '"msm_vfe0_rdi0":0[fmt:SRGGB10/4056x3040]'
-> media-ctl -l '"msm_csiphy3":1->"msm_csid0":0[1]'
-> media-ctl -l '"msm_csid0":1->"msm_vfe0_rdi0":0[1]'
-> 
-> yavta -B capture-mplane -c -I -n 5 -f SRGGB10P -s 4056x3040 -F /dev/video0
-> 
-> Signed-off-by: Hariram Purushothaman <quic_hariramp@quicinc.com>
-> Signed-off-by: Vikram Sharma <quic_vikramsa@quicinc.com>
-> Signed-off-by: Trishansh Bhardwaj <quic_tbhardwa@quicinc.com>
-> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> ---
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Yes, it's a different chip:
 
-Konrad
+https://www.onsemi.com/pdf/datasheet/fsusb42-d.pdf
+
+vs
+
+https://www.onsemi.com/download/data-sheet/pdf/fsusb43-d.pdf
+
+They are probably quite similar, but the fact that the usage/programming
+model is compatible is already represented by the fallback
+"gpio-sbu-mux" compatible. So I think my patch adds it correctly?
+
+Thanks,
+Stephan
 
