@@ -1,177 +1,200 @@
-Return-Path: <linux-arm-msm+bounces-41878-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-41879-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2A33C9F02E5
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Dec 2024 04:05:59 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 64B639F0374
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Dec 2024 05:20:24 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B1307281539
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Dec 2024 03:05:57 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B843B283937
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Dec 2024 04:20:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 88D7D13D246;
-	Fri, 13 Dec 2024 03:05:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CCFBC149C53;
+	Fri, 13 Dec 2024 04:20:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="D00ONeSX"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="O5pQ0l6L"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B70022AD14;
-	Fri, 13 Dec 2024 03:05:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FB3853804;
+	Fri, 13 Dec 2024 04:20:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734059154; cv=none; b=fn/1lI80JXwNJkTuQJiot3r7hgk/46YG5ojZ51ldnULSc+5ir5tbUz5XFpkKwY5AOdh81sW0y6h31TbWgF+4goL6ul3aYmE5bs7y3xHRIg2XsxVA/lRXc/2rI/1YKNqVFnJgWHWRiN/7bhSnFJBVBaPHpvB2bHler5m3qo3gmkA=
+	t=1734063621; cv=none; b=f336IvhGHRvFzLq86bJeSsLrpqnCScJWac2YIRAMt+aeaxHTkolhksL276L5Baj2H6sqcyTb6yVr5CU1uL9+zOuMXCHSXe70mpg+FF+g7wpI0MnPZtrErn0BfFT+pTBVN5uTRl6Rq9fuPsDZX3odHsbN9W1eF9uWiVyNOqzxAFM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734059154; c=relaxed/simple;
-	bh=OLQG4WLA6+0h312mnxc/bRrFpXFgP1B1ifPDM/gfcKI=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=WMH8ELidlbzvob252nQ9N+oAsFX2q/aHXTX/JZiHQvy2jLHjIQMd7MidlGkvkdirbYhITA53V+1AYrbPQISJtxaTiRQqZ3JGb3uWfEuomRTiTTwnTA0oWWadqqwbkvpPDKKRgH7AO9dkAIWda+Fty+M6HD5Kd2VgIn7eX/b+P/E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=D00ONeSX; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BCKpm2l030100;
-	Fri, 13 Dec 2024 03:05:37 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=Xb6eCXHuesyabFIl/WlILqji
-	0wRnUDU75m+XOpTvLxw=; b=D00ONeSXSFaCFljGXmK+LJBTFuaHOMIGifYyc7te
-	+unwx1c5w4YGNom07met5f/QA3NTDRc+GlMt0K1i+dEPr7zJ9Oj/TNrmxgeLY2wL
-	SbOzNehc7ldtgipGJKJixnNcazczbAQ/wtPgPlWGuKOeaIY+NLP7l0ntR0e4zllt
-	qhR5nfkf/3kWu8UTVx4LsKYnt2CJxZu1Arv+U9ZV5t73cLIzUhSW9VjOE/gHrWHj
-	PB2GgQ/ZTW13gfLza+Yo5I4JGQQmeHIR8Svik8appvaKJkAnEPes26z1tF8TWIvm
-	2rzVFvpb0jJLu2BpggydN1G1Cq1awVIdCjpElC4WapiKcA==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43fwgejcvg-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 13 Dec 2024 03:05:36 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4BD35aJ3007215
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 13 Dec 2024 03:05:36 GMT
-Received: from hu-pkondeti-hyd (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 12 Dec
- 2024 19:05:30 -0800
-Date: Fri, 13 Dec 2024 08:35:27 +0530
-From: Pavan Kondeti <quic_pkondeti@quicinc.com>
-To: Mark Rutland <mark.rutland@arm.com>
-CC: Marc Zyngier <maz@kernel.org>, Pavan Kondeti <quic_pkondeti@quicinc.com>,
-        Akhil P Oommen <quic_akhilpo@quicinc.com>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        "Abhinav
- Kumar" <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov
-	<dmitry.baryshkov@linaro.org>,
-        Marijn Suijten
-	<marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, "Simona
- Vetter" <simona@ffwll.ch>,
-        Elliot Berman <quic_eberman@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>
-Subject: Re: [PATCH] drm/msm/a6xx: Skip gpu secure fw load in EL2 mode
-Message-ID: <b71d89f9-fb72-405a-b5bf-a09a796561bb@quicinc.com>
-References: <20241209-drm-msm-kvm-support-v1-1-1c983a8a8087@quicinc.com>
- <87ed2fs03w.wl-maz@kernel.org>
- <92cee905-a505-4ce9-9bbc-6fba4cea1d80@quicinc.com>
- <86sequsdtp.wl-maz@kernel.org>
- <c197264b-3791-493a-b717-3dfd844de922@quicinc.com>
- <87bjxhs2t7.wl-maz@kernel.org>
- <Z1q9rnzOlB9J5dXb@J2N7QTR9R3>
+	s=arc-20240116; t=1734063621; c=relaxed/simple;
+	bh=vALIOL9+d8VQ7Yzr+SZm3s62VffHG/aGVC+9grri8xE=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Cf/ry/BdKbv9PYnSaHThPM1OFVIu5zyZCEtidK5X1aQabffRCr1Y/6eMJc542PaxkQ8XVH+AhQ83DfBWg3R/Gpci5VCXOqmrpH31knCk188GosgAdmcrNdizXqA+NimrKcnyjl0IqLHyrAJ+JQLnvrleDggE08wUHiAL4Vhlbrk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=O5pQ0l6L; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BAAEC4CED7;
+	Fri, 13 Dec 2024 04:20:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1734063621;
+	bh=vALIOL9+d8VQ7Yzr+SZm3s62VffHG/aGVC+9grri8xE=;
+	h=From:To:Cc:Subject:Date:From;
+	b=O5pQ0l6L2ia4t2QI8U5q2UrgUQbBqzcETBpy+tZi4zR04I33dmURRdh5haOFdC4G8
+	 vazLUON7miszGMklmCW0TXXfG8ZqiQFKmPbUBTS8gSmFqhYfxe378CQUR4wcJQ/5Ia
+	 mo10A2a7DdqJxfl61Vcm8dXBMcsE/EkH1/TnJe/BKN8jcRaOpu2d3rGMLIC0JliMdu
+	 YRGTDeDrDeq1qrBJ+h+gx4FT1+h6VYpP43YV/fzQFDrFsmL4DY8HRHr6l/b5em+FP/
+	 QgD77wG00KIvoMk0p6zweSnCTnKhWpYOIEQZJU+DtlqangJQHHPX8YIDXBkiTATIf0
+	 bnN9F+bZznOlw==
+From: Eric Biggers <ebiggers@kernel.org>
+To: linux-block@vger.kernel.org,
+	linux-fscrypt@vger.kernel.org,
+	linux-mmc@vger.kernel.org,
+	linux-scsi@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	Bartosz Golaszewski <brgl@bgdev.pl>,
+	Gaurav Kashyap <quic_gaurkash@quicinc.com>
+Cc: Adrian Hunter <adrian.hunter@intel.com>,
+	Alim Akhtar <alim.akhtar@samsung.com>,
+	Avri Altman <avri.altman@wdc.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	"James E . J . Bottomley" <James.Bottomley@HansenPartnership.com>,
+	Jens Axboe <axboe@kernel.dk>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	"Martin K . Petersen" <martin.petersen@oracle.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH v10 00/15] Support for hardware-wrapped inline encryption keys
+Date: Thu, 12 Dec 2024 20:19:43 -0800
+Message-ID: <20241213041958.202565-1-ebiggers@kernel.org>
+X-Mailer: git-send-email 2.47.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <Z1q9rnzOlB9J5dXb@J2N7QTR9R3>
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: dOH1GB_cEQesfUdqXmPeq8eFmXp0QQAP
-X-Proofpoint-ORIG-GUID: dOH1GB_cEQesfUdqXmPeq8eFmXp0QQAP
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- suspectscore=0 bulkscore=0 mlxlogscore=999 spamscore=0 clxscore=1011
- impostorscore=0 mlxscore=0 lowpriorityscore=0 malwarescore=0 phishscore=0
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2412130022
+Content-Transfer-Encoding: 8bit
 
-On Thu, Dec 12, 2024 at 10:40:46AM +0000, Mark Rutland wrote:
-> On Thu, Dec 12, 2024 at 08:50:12AM +0000, Marc Zyngier wrote:
-> > On Thu, 12 Dec 2024 05:31:00 +0000,
-> > Pavan Kondeti <quic_pkondeti@quicinc.com> wrote:
-> > > 
-> > > On Wed, Dec 11, 2024 at 10:40:02AM +0000, Marc Zyngier wrote:
-> > > > On Wed, 11 Dec 2024 00:37:34 +0000,
-> > > > Pavan Kondeti <quic_pkondeti@quicinc.com> wrote:
-> > > > > 
-> > > > > On Tue, Dec 10, 2024 at 09:24:03PM +0000, Marc Zyngier wrote:
-> > > > > > > +static int a6xx_switch_secure_mode(struct msm_gpu *gpu)
-> > > > > > > +{
-> > > > > > > +	int ret;
-> > > > > > > +
-> > > > > > > +#ifdef CONFIG_ARM64
-> > > > > > > +	/*
-> > > > > > > +	 * We can access SECVID_TRUST_CNTL register when kernel is booted in EL2 mode. So, use it
-> > > > > > > +	 * to switch the secure mode to avoid the dependency on zap shader.
-> > > > > > > +	 */
-> > > > > > > +	if (is_kernel_in_hyp_mode())
-> > > > > > > +		goto direct_switch;
-> > > > > > 
-> > > > > > No, please. To check whether you are *booted* at EL2, you need to
-> > > > > > check for is_hyp_available(). Whether the kernel runs at EL1 or EL2 is
-> > > > > > none of the driver's business, really. This is still absolutely
-> > > > > > disgusting from an abstraction perspective, but I guess we don't have
-> > > > > > much choice here.
-> > > > > > 
-> > > > > 
-> > > > > Thanks Marc. Any suggestions on how we can make is_hyp_mode_available()
-> > > > > available for modules? Do you prefer exporting
-> > > > > kvm_protected_mode_initialized and __boot_cpu_mode symbols directly or
-> > > > > try something like [1]?
-> > > > 
-> > > > Ideally, neither. These were bad ideas nine years ago, and they still
-> > > > are. The least ugly hack I can come up with is the patch below, and
-> > > > you'd write something like:
-> > > > 
-> > > > 	if (cpus_have_cap(ARM64_HAS_EL2_OWNERSHIP))
-> > > > 		blah();
-> > > > 
-> > > > This is obviously completely untested.
-> > > > 
-> > > 
-> > > I have tested your patch. It works as intended. Thanks Marc.
-> > 
-> > Note that you will probably get some push-back from the arm64
-> > maintainers on this front, because this is a fairly incomplete (and
-> > fragile) solution.
-> > 
-> > It would be much better if the discriminant came from the device tree.
-> > After all, the hypervisor is fscking-up^W^Wchanging the programming
-> > model of the GPU, and that should be reflected in the DT. Because for
-> > all intent and purposes, this is not the same hardware anymore.
-> 
-> FWIW I agree 100%, this should be described in DT.
-> 
-> The cpucap doesn't describe the actual property we care about, and it
-> cannot in general (e.g. for nested virt). I would strongly prefer to not
-> have that as it's setting ourselves up for failure.
-> 
-Thanks for the feedback. I understand that EL2 detection in kernel is
-not going to cover cases like bare metal EL1, nested virtualization. We
-plan to take the DT approach. 
+This patchset is based on next-20241212 and is also available in git via:
 
-Thanks,
-Pavan
+    git fetch https://git.kernel.org/pub/scm/fs/fscrypt/linux.git wrapped-keys-v10
+
+This patchset adds support for hardware-wrapped inline encryption keys, a
+security feature supported by some SoCs.  It adds the block and fscrypt
+framework for the feature as well as support for it with UFS on Qualcomm SoCs.
+
+This feature is described in full detail in the included Documentation changes.
+But to summarize, hardware-wrapped keys are inline encryption keys that are
+wrapped (encrypted) by a key internal to the hardware so that they can only be
+unwrapped (decrypted) by the hardware.  Initially keys are wrapped with a
+permanent hardware key, but during actual use they are re-wrapped with a
+per-boot ephemeral key for improved security.  The hardware supports importing
+keys as well as generating keys itself.
+
+This differs from the existing support for hardware-wrapped keys in the kernel
+crypto API (also called "hardware-bound keys" in some places) in the same way
+that the crypto API differs from blk-crypto: the crypto API is for general
+crypto operations, whereas blk-crypto is for inline storage encryption.
+
+This feature is already being used by Android downstream for several years
+(https://source.android.com/docs/security/features/encryption/hw-wrapped-keys),
+but on other platforms userspace support will be provided via fscryptctl and
+tests via xfstests (I have some old patches for this that need to be updated).
+
+Maintainers, please consider merging the following preparatory patches for 6.14:
+
+  - UFS / SCSI tree: patches 1-4
+  - MMC tree: patches 5-7
+  - Qualcomm / MSM tree: patch 8
+
+Changed in v10:
+  - Fixed bugs in qcom_scm_derive_sw_secret() and cqhci_crypto_init().
+  - Added "ufs: qcom: fix crypto key eviction" and
+    "mmc: sdhci-msm: fix crypto key eviction".
+  - Split removing ufs_hba_variant_ops::program_key into its own patch.
+  - Minor cleanups.
+  - Added Tested-by.
+
+Changed in v9 (relative to v7 patchset from Bartosz Golaszewski):
+  - ufs-qcom and sdhci-msm now just initialize the blk_crypto_profile
+    themselves, like what ufs-exynos was doing.  This avoids needing to add all
+    the host-specific hooks for wrapped key support to the MMC and UFS core
+    drivers.
+  - When passing the blk_crypto_key further down the stack, it now replaces
+    parameters like the algorithm ID, to avoid creating two sources of truth.
+  - The module parameter qcom_ice.use_wrapped_keys should work correctly now.
+  - The fscrypt support no longer uses a policy flag to indicate when a file is
+    protected by a HW-wrapped key, since it was already implied by the file's
+    key identifier being that of a HW-wrapped key.  Originally there was an
+    issue where raw and HW-wrapped keys could share key identifiers, but I had
+    fixed that earlier by introducing a new HKDF context byte.
+  - The term "standard keys" is no longer used.  Now "raw keys" is consistently
+    used instead.  I've found that people find the term "raw keys" to be more
+    intuitive.  Also HW-wrapped keys could in principle be standardized.
+  - I've reordered the patchset to place preparatory patches that don't depend
+    on the actual HW-wrapped key support first.
+
+For older changelogs, see
+https://lore.kernel.org/r/20241202-wrapped-keys-v7-0-67c3ca3f3282@linaro.org and
+https://lore.kernel.org/r/20231104211259.17448-1-ebiggers@kernel.org
+
+Eric Biggers (13):
+  ufs: qcom: fix crypto key eviction
+  ufs: crypto: add ufs_hba_from_crypto_profile()
+  ufs: qcom: convert to use UFSHCD_QUIRK_CUSTOM_CRYPTO_PROFILE
+  ufs: crypto: remove ufs_hba_variant_ops::program_key
+  mmc: sdhci-msm: fix crypto key eviction
+  mmc: crypto: add mmc_from_crypto_profile()
+  mmc: sdhci-msm: convert to use custom crypto profile
+  soc: qcom: ice: make qcom_ice_program_key() take struct blk_crypto_key
+  blk-crypto: add basic hardware-wrapped key support
+  blk-crypto: show supported key types in sysfs
+  blk-crypto: add ioctls to create and prepare hardware-wrapped keys
+  fscrypt: add support for hardware-wrapped keys
+  ufs: qcom: add support for wrapped keys
+
+Gaurav Kashyap (2):
+  firmware: qcom: scm: add calls for wrapped key support
+  soc: qcom: ice: add HWKM support to the ICE driver
+
+ Documentation/ABI/stable/sysfs-block          |  18 +
+ Documentation/block/inline-encryption.rst     | 251 +++++++++++-
+ Documentation/filesystems/fscrypt.rst         | 201 +++++++--
+ .../userspace-api/ioctl/ioctl-number.rst      |   2 +
+ block/blk-crypto-fallback.c                   |   7 +-
+ block/blk-crypto-internal.h                   |  10 +
+ block/blk-crypto-profile.c                    | 103 +++++
+ block/blk-crypto-sysfs.c                      |  35 ++
+ block/blk-crypto.c                            | 196 ++++++++-
+ block/ioctl.c                                 |   5 +
+ drivers/firmware/qcom/qcom_scm.c              | 214 ++++++++++
+ drivers/firmware/qcom/qcom_scm.h              |   4 +
+ drivers/md/dm-table.c                         |   1 +
+ drivers/mmc/host/cqhci-crypto.c               |  46 +--
+ drivers/mmc/host/cqhci.h                      |   8 +-
+ drivers/mmc/host/sdhci-msm.c                  | 101 +++--
+ drivers/soc/qcom/ice.c                        | 383 +++++++++++++++++-
+ drivers/ufs/core/ufshcd-crypto.c              |  33 +-
+ drivers/ufs/host/ufs-exynos.c                 |   3 +-
+ drivers/ufs/host/ufs-qcom.c                   | 136 +++++--
+ fs/crypto/fscrypt_private.h                   |  75 +++-
+ fs/crypto/hkdf.c                              |   4 +-
+ fs/crypto/inline_crypt.c                      |  42 +-
+ fs/crypto/keyring.c                           | 157 +++++--
+ fs/crypto/keysetup.c                          |  63 ++-
+ fs/crypto/keysetup_v1.c                       |   4 +-
+ include/linux/blk-crypto-profile.h            |  73 ++++
+ include/linux/blk-crypto.h                    |  73 +++-
+ include/linux/firmware/qcom/qcom_scm.h        |   8 +
+ include/linux/mmc/host.h                      |   8 +
+ include/soc/qcom/ice.h                        |  34 +-
+ include/uapi/linux/blk-crypto.h               |  44 ++
+ include/uapi/linux/fs.h                       |   6 +-
+ include/uapi/linux/fscrypt.h                  |   7 +-
+ include/ufs/ufshcd.h                          |  11 +-
+ 35 files changed, 2092 insertions(+), 274 deletions(-)
+ create mode 100644 include/uapi/linux/blk-crypto.h
+
+
+base-commit: 3e42dc9229c5950e84b1ed705f94ed75ed208228
+-- 
+2.47.1
+
 
