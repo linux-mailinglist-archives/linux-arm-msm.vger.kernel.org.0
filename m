@@ -1,164 +1,191 @@
-Return-Path: <linux-arm-msm+bounces-41945-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-41948-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id E66FD9F08C6
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Dec 2024 10:57:02 +0100 (CET)
-Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 166629F08E1
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Dec 2024 10:59:04 +0100 (CET)
+Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A7CC3281993
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Dec 2024 09:57:01 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 258B21694D3
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Dec 2024 09:59:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0E5521BD01D;
-	Fri, 13 Dec 2024 09:54:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EBE1D1BD000;
+	Fri, 13 Dec 2024 09:57:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="mL5Qbrip"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="WIaSOAkt"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E2C51BC9F0;
-	Fri, 13 Dec 2024 09:54:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D81B1B412E;
+	Fri, 13 Dec 2024 09:57:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734083652; cv=none; b=Hoou/58piGCiIR9VTNhy5gRd/9eyCbQXoZhka+w2LSybm+NI8qhxhzGKCftP3ze06Z969NC5udhSfGb3mRu/ux58ig0cMhk6NlkEG7Kdge0daMZTMb9kOZLODEwaHx3z+SQBx8sTiHJ/Sf1n3JGPniusGpMRxUJmQPpr5whZvEM=
+	t=1734083858; cv=none; b=un0JrLOnVirCvNM4XfLD/0cGN/0sM0w3AiAsv6cP6XyJWTUY919S0PrVVAfSGnaWAjovfmxZe3g+aRQAXi6dQvLcUwQLzXIbFKNEgthsSCP3JXxBjszLhwnYrvBCmC4SLpDCEMXt49tRxAlOFZ5qH2MOWlg8haQI4Jo8hLrjafI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734083652; c=relaxed/simple;
-	bh=aKG4i07kiCddb1xwUz+PztNo/8/oFF8l0nSWciEoALo=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=upV6DaB6YyDWn8Chk3SAyak2e1jEQOaxchhONzmorYCj2L1dJSz8tg8hoLklLiX6fhcSxYfX8PxBHb6FawQeCS3TL6Hb6Q/iAmDcRruMtTPcA1mgorjzl/0mgmi4kmSFx34Q3LCeYUc9Ss53ae52VD8k+h0k26EBcWlomfq3/ug=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=mL5Qbrip; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1734083858; c=relaxed/simple;
+	bh=NzeK0LaOIVOS9o7nvm+oV6GyyHcmg5zDiCsBPiSyd3Y=;
+	h=From:Subject:Date:Message-ID:MIME-Version:Content-Type:To:CC; b=pj4ciQEEK0WIaYh2lllPmEl571JsuijXx4NScHzJn5kk6HhxLsrG8yZ7EbH3p+J9XWD6LjCsMAm4sdLyz632t0ZFYgl8nmh8jLlmARjt7afvymw+BFhkTSdY9Zgx9QTPtnFSQ2MwPbJS/GH1FqTdcA5jF21+ETZK0CMxgAVQcYE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=WIaSOAkt; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BD8I4Gl026835;
-	Fri, 13 Dec 2024 09:54:07 GMT
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BD7IO7J029994;
+	Fri, 13 Dec 2024 09:57:30 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	wAmn3DosKvgeBaH3Y7+6qa9IT0ctg4ChW3co3TKAT8g=; b=mL5Qbripm92EDfjL
-	ncuTzuYNvozuo43KLxlEaAvbTV8dmiqGGs3vddXdJW7A5cOh0W1yCYKxgUukTZMJ
-	1omKTgRk5G/yY++XquvDadbWdcRa6WkwOn4BIN/Y4twSw+wk3WcA+vle1rCpQwmp
-	vZErGEMFBeWTxYwP5xtyvdn7+Y5ZRP6O/7FWa7GJA7RYXf0sQFW3wLOA/FbpsgSX
-	G7pNNT9asRPA3RYTWQOTxuphy1bjs23NzNnabuuB8wjZvEWIr+vZ+mhZA15egh3B
-	J9qTlkx/3BVRpjJBOh59sp9794gVqfoIaCWLx6tC/uRF8dzJtAH+wKh5spMUwJMJ
-	Qw9QAA==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43fd40nvqu-1
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=+4rfkbwPSpZNUNhB1iNR3k
+	naVXg/NN3F08CxFDEtCIY=; b=WIaSOAktAhdf2avzetj2LJd88w6txvwuii5kMt
+	Km8gVYFAzcIbHWhwufV3BF/YvwVuzYmm81+ep6YBweNkn/8qXj4rPJDZ4jZwqF95
+	2or3b0FcS1/2L4Eb6G9PNvQySWf5CCaTfhVgd44WXAMk8DNN9gMxRcdBkvDi+zhW
+	MMK7lqUuMdcMD2zTuJzhszZQKOqP8Lgz5YNr8Q/C//8ESKUlJQ85FpZTOHIlK1Ns
+	gnkocK/CZnHj5kFe1zvbBAC1VaaO1pxEIvufCJ+vPo38QZ+ILSsXQeQ+uutEg9+2
+	JEcaUYFFMsk/uivElEYR0vUu23c99dJnR2rfRZK7TCjIgnqA==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43dxw4e98t-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 13 Dec 2024 09:54:07 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4BD9s6vl024380
+	Fri, 13 Dec 2024 09:57:29 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4BD9vOKa025948
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 13 Dec 2024 09:54:06 GMT
-Received: from hu-prashk-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+	Fri, 13 Dec 2024 09:57:24 GMT
+Received: from hu-renjiang-sha.qualcomm.com (10.80.80.8) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Fri, 13 Dec 2024 01:54:02 -0800
-From: Prashanth K <quic_prashk@quicinc.com>
-To: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski
-	<krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Krishna Kurapati
-	<krishna.kurapati@oss.qualcomm.com>
-CC: <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <cros-qcom-dts-watchers@chromium.org>,
-        Prashanth K <quic_prashk@quicinc.com>
-Subject: [PATCH v2 19/19] arm64: dts: qcom: Disable USB U1/U2 entry for SC8180X
-Date: Fri, 13 Dec 2024 15:22:37 +0530
-Message-ID: <20241213095237.1409174-20-quic_prashk@quicinc.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20241213095237.1409174-1-quic_prashk@quicinc.com>
-References: <20241213095237.1409174-1-quic_prashk@quicinc.com>
+ 15.2.1544.9; Fri, 13 Dec 2024 01:57:19 -0800
+From: Renjiang Han <quic_renjiang@quicinc.com>
+Subject: [PATCH v4 0/4] media: venus: enable venus on qcs615
+Date: Fri, 13 Dec 2024 15:26:45 +0530
+Message-ID: <20241213-add-venus-for-qcs615-v4-0-7e2c9a72d309@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+X-B4-Tracking: v=1; b=H4sIAN0EXGcC/4XQ7UrDMBQG4Fsp+W0kOflqhoj3ITLa5ESDa+OSr
+ ihj9266Ck6m+Cu8B/Ik7zmSgjliIZvmSDLOscQ01iBvGuJeuvEZafQ1E2AgOXBBO+/pjOOh0JA
+ y3buiuaKWG20t8NaiIvXqW8YQ38/s41PNL7FMKX+cX5n5Ml1BxtoF3K7Mdo4eE505ZVQK7ZCZP
+ jgtHvaH6OLobl0ayMLN8E1wDr//aYbKoDZWmmCV6cI1Iy4YUH8wojKqE0b31nS6xZ/MaW2bsU5
+ LnNbKZMBSuvPuNs3d6temX+IwUD/RMXksa9cetLauc0yDvNTvl1X+R7ldcq8ujVNOux3m9b/Gi
+ x48CBV8uBL7riCtYYjTphEowTsLYJ2yimEre47eMBWsrKdCD6wFaGvT0ycEa5HaLQIAAA==
+X-Change-ID: 20241213-add-venus-for-qcs615-9176992189e5
+To: Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+        Vikash Garodia
+	<quic_vgarodia@quicinc.com>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio
+	<konradybcio@kernel.org>
+CC: Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        Renjiang Han
+	<quic_renjiang@quicinc.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1734083839; l=3773;
+ i=quic_renjiang@quicinc.com; s=20241001; h=from:subject:message-id;
+ bh=NzeK0LaOIVOS9o7nvm+oV6GyyHcmg5zDiCsBPiSyd3Y=;
+ b=iv96TDRMM4yYpVP3zYnCYi+knWzKX00twY+n5A03PI9YA9bRYeFJsproMioWhweBStBRxJZE8
+ /ckKWL5QTn6D5s57ZPOnQ43HFl7tQUBB43/VQgnLoNcu3I/fsEuj4hr
+X-Developer-Key: i=quic_renjiang@quicinc.com; a=ed25519;
+ pk=8N59kMJUiVH++5QxJzTyHB/wh/kG5LxQ44j9zhUvZmw=
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: MeGZY4hikj39LEubDm0k-bFSeZyWq8fx
-X-Proofpoint-ORIG-GUID: MeGZY4hikj39LEubDm0k-bFSeZyWq8fx
+X-Proofpoint-ORIG-GUID: 5hts7Fdu--nIWDtdzHdSuqED7jssbx6S
+X-Proofpoint-GUID: 5hts7Fdu--nIWDtdzHdSuqED7jssbx6S
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 spamscore=0
- suspectscore=0 impostorscore=0 phishscore=0 clxscore=1015 bulkscore=0
- lowpriorityscore=0 mlxlogscore=462 priorityscore=1501 mlxscore=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 bulkscore=0
+ suspectscore=0 priorityscore=1501 adultscore=0 mlxlogscore=999
+ clxscore=1011 spamscore=0 mlxscore=0 lowpriorityscore=0 phishscore=0
  malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.19.0-2411120000 definitions=main-2412130067
 
-Disable U1 and U2 power-saving states to improve stability of USB.
-These low-power link states, designed to reduce power consumption
-during idle periods, can cause issues in latency-sensitive or high
-throughput use cases. Over the years, some of the issues seen are
-as follows:
+QCS615 uses the same video core as SC7180, so reuse the same resource
+data of SC7180 for QCS615 to enable video functionality.
 
-1. In device mode of operation, when UVC is active, enabling U1/U2
-is sometimes causing packets drops due to delay in entry/exit of
-intermittent these low power states. These packet drops are often
-reflected as missed isochronous transfers, as the controller wasn't
-able to send packet in that microframe interval and hence glitches
-are seen on the final transmitted video output.
+Validated this series on QCS615 and SC7180.
 
-2. On QCS6490-Rb3Gen2 Vision kit, ADB connection is heavily unstable
-when U1/U2 is enabled. Often when link enters U2, there is a re-
-enumeration seen and device is unusable for many use cases.
-
-3. On QCS8300/QCS9100, it is observed that when Link enters U2, when
-the cable is disconnected and reconnected to host PC in HS, there
-is no link status change interrupt seen and the plug-in in HS doesn't
-show up a bus reset and enumeration failure happens.
-
-Disabling these intermittent power states enhances device stability
-without affecting power usage.
-
-Signed-off-by: Prashanth K <quic_prashk@quicinc.com>
+Signed-off-by: Renjiang Han <quic_renjiang@quicinc.com>
 ---
- arch/arm64/boot/dts/qcom/sc8180x.dtsi | 6 ++++++
- 1 file changed, 6 insertions(+)
+Changes in v4:
+- 1. Remove qcom,qcs615-venus.yaml and use qcom,sc7180-venus.yaml for
+qcs615 dt-bindings.
+- 2. Add "qcom,qcs615-venus" compatible into qcom,sc7180-venus.yaml.
+- 3. Remove qcs615 resource from the driver and use sc7180 resource for
+the qcs615.
+- 4. Use the frequency in the opp-table in devicetree for the driver.
+For compatibility, if getting data from the opp table fails, the data
+in the frequency table will be used.
+- 5. Keep the reverse Christmas tree order coding style.
+- 6. Add "qcom,sc7180-venus" compatible in devicetree.
+- 7. Update cover letter message.
+- Link to v3: https://lore.kernel.org/r/20241125-add-venus-for-qcs615-v3-0-5a376b97a68e@quicinc.com
 
-diff --git a/arch/arm64/boot/dts/qcom/sc8180x.dtsi b/arch/arm64/boot/dts/qcom/sc8180x.dtsi
-index 745a7d0b8381..28693a3bfc7f 100644
---- a/arch/arm64/boot/dts/qcom/sc8180x.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc8180x.dtsi
-@@ -2762,6 +2762,8 @@ usb_mp_dwc3: usb@a400000 {
- 				iommus = <&apps_smmu 0x60 0>;
- 				snps,dis_u2_susphy_quirk;
- 				snps,dis_enblslpm_quirk;
-+				snps,dis-u1-entry-quirk;
-+				snps,dis-u2-entry-quirk;
- 				phys = <&usb_mp_hsphy0>,
- 				       <&usb_mp_qmpphy0>,
- 				       <&usb_mp_hsphy1>,
-@@ -2825,6 +2827,8 @@ usb_prim_dwc3: usb@a600000 {
- 				iommus = <&apps_smmu 0x140 0>;
- 				snps,dis_u2_susphy_quirk;
- 				snps,dis_enblslpm_quirk;
-+				snps,dis-u1-entry-quirk;
-+				snps,dis-u2-entry-quirk;
- 				phys = <&usb_prim_hsphy>, <&usb_prim_qmpphy QMP_USB43DP_USB3_PHY>;
- 				phy-names = "usb2-phy", "usb3-phy";
- 
-@@ -2902,6 +2906,8 @@ usb_sec_dwc3: usb@a800000 {
- 				iommus = <&apps_smmu 0x160 0>;
- 				snps,dis_u2_susphy_quirk;
- 				snps,dis_enblslpm_quirk;
-+				snps,dis-u1-entry-quirk;
-+				snps,dis-u2-entry-quirk;
- 				phys = <&usb_sec_hsphy>, <&usb_sec_qmpphy QMP_USB43DP_USB3_PHY>;
- 				phy-names = "usb2-phy", "usb3-phy";
- 
+Changes in v3:
+- 1. Remove the ‘|’ after 'description' in the qcom,qcs615-venus.yaml.
+- 2. Add a blank line before 'opp-table' in the qcom,qcs615-venus.yaml.
+- 3. Put ‘additionalProperties’ before ‘properties’ in the
+qcom,qcs615-venus.yaml.
+- 4. Update the subject of qcom,qcs615-venus.yaml patch.
+- Link to v2: https://lore.kernel.org/r/20241112-add-venus-for-qcs615-v2-0-e67947f957af@quicinc.com
+
+Changes in v2:
+- 1. The change-id of DT and driver are removed.
+- 2. Add qcom,qcs615-venus.yaml files to explain DT.
+- 3. The order of driver's commit and DT's commit is adjusted. Place the
+driver's commit before the DT's commit.
+- 4. Extends driver's commit message.
+- 5. Split DT's commit into two commits. Add the venus node to the
+qcs615.dtsi file. Then in the qcs615-ride.dts file enable the venus node.
+- 6. Modify alignment, sort, upper and lower case letters issue.
+- 7. Update cover letter message description.
+- Link to v1: https://lore.kernel.org/r/20241008-add_qcs615_video-v1-0-436ce07bfc63@quicinc.com
+
+---
+Renjiang Han (4):
+      dt-bindings: media: add support for video hardware
+      media: venus: core: use opp-table for the frequency
+      arm64: dts: qcom: add venus node for the qcs615
+      arm64: dts: qcom: qcs615-ride: enable venus node
+
+ .../bindings/media/qcom,sc7180-venus.yaml          |  8 +-
+ arch/arm64/boot/dts/qcom/qcs615-ride.dts           |  4 +
+ arch/arm64/boot/dts/qcom/qcs615.dtsi               | 86 ++++++++++++++++++++++
+ drivers/media/platform/qcom/venus/pm_helpers.c     | 67 +++++++++++------
+ 4 files changed, 143 insertions(+), 22 deletions(-)
+---
+base-commit: 3e42dc9229c5950e84b1ed705f94ed75ed208228
+change-id: 20241213-add-venus-for-qcs615-9176992189e5
+prerequisite-message-id: <20241108-qcs615-mm-dt-nodes-v1-0-b2669cac0624@quicinc.com>
+prerequisite-patch-id: bcb1328b70868bb9c87c0e4c48e5c9d38853bc60
+prerequisite-patch-id: 8844a4661902eb44406639a3b7344416a0c88ed9
+prerequisite-message-id: <20241108-qcs615-mm-clockcontroller-v3-0-7d3b2d235fdf@quicinc.com>
+prerequisite-patch-id: 748a4e51bbedae9c6ebdbd642b2fd1badf958788
+prerequisite-patch-id: 72a894a3b19fdbd431e1cec9397365bc5b27abfe
+prerequisite-patch-id: da2b7a74f1afd58833c6a9a4544a0e271720641f
+prerequisite-patch-id: 40b79fe0b9101f5db3bddad23551c1123572aee5
+prerequisite-patch-id: cb93e5798f6bfe8cc3044c4ce973e3ae5f20dc6b
+prerequisite-patch-id: 13b0dbf97ac1865d241791afb4b46a28ca499523
+prerequisite-patch-id: 807019bedabd47c04f7ac78e9461d0b5a6e9131b
+prerequisite-patch-id: 8e2e841401fefbd96d78dd4a7c47514058c83bf2
+prerequisite-patch-id: 125bb8cb367109ba22cededf6e78754579e1ed03
+prerequisite-patch-id: b3cc42570d5826a4704f7702e7b26af9a0fe57b0
+prerequisite-patch-id: df8e2fdd997cbf6c0a107f1871ed9e2caaa97582
+
+Best regards,
 -- 
-2.25.1
+Renjiang Han <quic_renjiang@quicinc.com>
 
 
