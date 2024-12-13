@@ -1,79 +1,78 @@
-Return-Path: <linux-arm-msm+bounces-42127-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-42128-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D49E39F1869
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Dec 2024 23:14:59 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2EB059F1877
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Dec 2024 23:15:22 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 2A8E87A05F4
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Dec 2024 22:14:54 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id AA29B188EBF1
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Dec 2024 22:15:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9E5201990D9;
-	Fri, 13 Dec 2024 22:14:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C9C1E1A8F83;
+	Fri, 13 Dec 2024 22:14:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="UXYDb01w"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Uj5eXEhO"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f180.google.com (mail-lj1-f180.google.com [209.85.208.180])
+Received: from mail-lj1-f169.google.com (mail-lj1-f169.google.com [209.85.208.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B71E1196D90
-	for <linux-arm-msm@vger.kernel.org>; Fri, 13 Dec 2024 22:14:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFD27199E80
+	for <linux-arm-msm@vger.kernel.org>; Fri, 13 Dec 2024 22:14:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734128082; cv=none; b=D/Xlovs1jMHEWpf4/U4FUO6Q1xffPSOLdpVkkd1A9BdomDxb8wddVcjaMlJFB10nIRc3DWe8gQgFJrs9TfXyZR2jGE7RIgKGXiq8dVA5b+bBDkn/0xUZ2StHDoA1m4rLMRO9PU74jR7NuzmV9WE1nd2daZ+L93yTqGzmGxGW8U8=
+	t=1734128084; cv=none; b=YXNayDpDrkgHyB931aJcH7BQU8vl1VsKOBP2h5DwKlvO6DXGeBEnme8+EfshlRaOF8vW4/E/D3BpnKJvel/VLKX8XUTzCGRQZMUqmXbYsFMJMyBArgAR38xknHScHfoOvrqVXJT89evcQVIR1yznwTqdOdg1ehKLCYbS01KSTwc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734128082; c=relaxed/simple;
-	bh=SSoEgRXQqPTu5p08nib3mD4yIJvnsbCBVcW8GugolsA=;
+	s=arc-20240116; t=1734128084; c=relaxed/simple;
+	bh=GNnQV1MNYWFcAq1qZORvvRE/j1G3voHyTrPAyGRaLUk=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=lUqjjGzTfh0N13yFvqiubADfhGzgyIn8bwRHwQQHMjTNwI16WDeKboqUU+dTBSbWiqv9Y0PThEiU/S8HKfdoCI+O8gwXkQ+deFZs0wWp8G9eSYnBJfrGEm45ap5o5unMwOzZE8PEni4+CkBJQqE4s69cHpbEz6/KLeKTK88pfSk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=UXYDb01w; arc=none smtp.client-ip=209.85.208.180
+	 In-Reply-To:To:Cc; b=BroKWt94lfnODPc/NPqqE2a+FQdqLjCsMZ1Lm6dqHue+qaUu88eNBQ8512BWiPFLTEWbcmLkhiba7bzh2mEviShsyjeqZRnpLVsVQqR7dG4bDqqE/mONVffZVhNavk2dssw6WG1ta+9BcafYCIR/H1JNi21n+QZaAgbN/A7O7sA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Uj5eXEhO; arc=none smtp.client-ip=209.85.208.169
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f180.google.com with SMTP id 38308e7fff4ca-3011c7b39c7so22161121fa.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Dec 2024 14:14:40 -0800 (PST)
+Received: by mail-lj1-f169.google.com with SMTP id 38308e7fff4ca-3003d7ca01cso21278811fa.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Dec 2024 14:14:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1734128079; x=1734732879; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1734128081; x=1734732881; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=bVFn/1aPfVa0xohd3oPORN+C+aZ2lVwC2QbDNFvd/gM=;
-        b=UXYDb01wYZeUKg3uI1DLoZMGmKBTGrRc+ucroujJh+HbrGLxy1usU/gZdyKV4lCD6v
-         K2xGdnUhpRCY6PKwRFpfXp0OHpohGQa6ve98mD2jgAAhdai/xk0y0TWt/fBclwuyICXS
-         nV+AVY5k6p0W4jpTASfFAau45B61UxLuZR6mMz+2nZonZWapX6LGUOjl9c5WSYYKTJav
-         cDUi1MYcfX9ff9ooYWqaLW8Ba0m4e9xbvrj+WKFwWvrA1I+SC3CMVFNLhiz7VKSMsmiw
-         v+VTsh7OvbZHnmycOWRUB0g+xZnlI4awdGPOYozmrEBZ1a5it7yAFU+9i+kNXH2jwYVk
-         /scQ==
+        bh=SS2q6SbMj1ZTbJ13IzwKMNH0i4lebEKtIyHTzThKnfU=;
+        b=Uj5eXEhOz9ZpdN+ug8zgypUhFvoPbILrlNWgzoHf8mI0sCa014LZDZrAcC0/fQpVQO
+         Kuww6JFcqZw8ltEZtMvLN0R6nDVC2RXconMVS/kXfUWe6nKr24YtoEZKK6/n5KtY2Gzc
+         rR1FNoxsBnkCx6/CDo9hZE6SQahPOME8kb9bYxMMJepjres/qWZTiLTlaA0OxGe/juqt
+         kZayf0po/6IJXkDoGpv3vPs/845UDhzOF8tudgzAkHBngJSf+JwU7Q+uYPpvLW5wct3v
+         TfPA2tWL+NaRiall73vrGPb7g18rSf7yVz6EAqewo7Lba/M0gy3w9wIhM98UM2r5m7oH
+         zijQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734128079; x=1734732879;
+        d=1e100.net; s=20230601; t=1734128081; x=1734732881;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=bVFn/1aPfVa0xohd3oPORN+C+aZ2lVwC2QbDNFvd/gM=;
-        b=DtfnzfgzX20hi55pBK9eZOfI2PoMa8m/tNBGB/LuKZ/GpD4W0rChYPqbrdSuJnnNVK
-         TYYEeWh4bmvAEMfr0ZzuhAAiIBZ70G+jWBKUY1WrmlLF7qyEPqq7jASRa7rX0Wfy1bdw
-         Ms8W+aTrPQTUnPfNeEKhhSlqW6qWz3mHwOVCDDCNzkt5vLmBV9b2rxa9rjvbNE3XmCVx
-         BpCW5KMngNhXNP57lPJRonRADnF75wCxv8XhJik3cnXpmxqqF6y0vEas51TmNJjggZwv
-         gH9iz/Gt7RK/GZtCluG5GQvKdj7OZOAtCLgTv1YXEq+zKXwKYR0J3+LOtSWATzoGy8zX
-         synA==
-X-Gm-Message-State: AOJu0YwOwP6lO1i5GJnf2Aqi/Goe3MCMH57s2yJLzZFEEiqiAWY7GEsC
-	j/gUW7v1PYzMnzERM5gRWpg/t5Vn/pU9Q/rE7NY2IXfrLTRh7ohjshvmHfHfWpM=
-X-Gm-Gg: ASbGncuTHkJhtzNyeVmP1sUlD5/sLjxEEryuRarVMFlcti7XtSDpXxlXyAaM2tJh9NK
-	K7uE5949eYVlv+A2x6GHsVQzn2Z9YIvW+j3g2M5UuYl89X2tQAs/uygOYCUXUecA6GZIRoBcQpy
-	LHFT/CGJSAxFnBawwQRHFihUyCylhFlLPinRjzrHaMICQtGG9yeuAMfhB46BFTE8dpMPBpWZYzQ
-	l3jNSnBEJeC2yvQQHBz77G+g7s9SBeYwhVYVW4dKpZvDNuc+Nxz0vkNwBnO8BIs
-X-Google-Smtp-Source: AGHT+IG8lJ+VBbBY5aElheNBUlAYaHKjDoU3TNCRY+zalc99ZsPdgyXW7wc5QMb+m4C+7pM7pxP3jQ==
-X-Received: by 2002:a05:651c:2122:b0:300:1de5:59e3 with SMTP id 38308e7fff4ca-30254521ed0mr15390361fa.2.1734128078843;
-        Fri, 13 Dec 2024 14:14:38 -0800 (PST)
+        bh=SS2q6SbMj1ZTbJ13IzwKMNH0i4lebEKtIyHTzThKnfU=;
+        b=OhslNflObipDBBuNCO6fL6bQUqQXT/eImmEQ0AozUNvuQTEjN2t1MdRXJeszQwgpZH
+         90i5VENNlvKBfoCVPRzu2xjXBXUwxMU4az17mUIMm2epWt3SFPYsyQyC+bsXED0W6P/F
+         59VMeJQr1gArw4mpipiBfbU8DlHQzd/SHeYh7xGsqtB9PrmeTTkDZqykqSi6H4BkAnhh
+         DpVUUdzR1ylti+Emi2dFz+gGHe4R+0ua79gpU9L8U+vs+bjTBFoA/pQ/xZ6O2uCKqkJ3
+         ZWoNdT4UNRnq7ndAs67Xlv7dwtG5ZdmV0LTO6gg22kuZDXhgAxf2smnNuU9R3yRSLWl8
+         jwnA==
+X-Gm-Message-State: AOJu0YyPcOqdIVldE9m7MTNDsKnF5Y0rqtCKBbWlPV8i+vW3vBWsEJGR
+	q3xGflwT0QUDf1XGs6+f53CgJC5PshhLL5wR6toe/mXPv6dvkZflhXQolpbI4zY=
+X-Gm-Gg: ASbGncuLfFIWtOzaQPBzj8vfGuQeRu8Tr3LQDkUHTWX8V5020EsaxnlSozsibmmJsga
+	u2N9kcQqJOgdvN0CrRFbaBxMp5dsXD5X+x3dsGwPSv2eRiUhG0ht9IwqhMO2su/MZO1QEZul7d7
+	DG/Nav4xlwUV9HeZZW6qXszoBYj3HxckxoQ54BxgL8c0jCkDjKma5jKYmxCQGyAbhBjbXIYZAJd
+	pobzpto0QtdBOjT6I5fcjvChNKc4RS5BzKQITLaHtcO8Qj7Mmy3ycML+oCmFJOr
+X-Google-Smtp-Source: AGHT+IGBrrmVvJpDS9YnfpMnSUZIzb0HQpXo8t39QqwgdvfxCK+0fGZtdWs7xkbeRDeRZbC/luGPuQ==
+X-Received: by 2002:a05:651c:54f:b0:300:3bcd:8d05 with SMTP id 38308e7fff4ca-3025443fe17mr12039131fa.15.1734128081219;
+        Fri, 13 Dec 2024 14:14:41 -0800 (PST)
 Received: from umbar.lan ([192.130.178.90])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-303441e0f43sm413451fa.125.2024.12.13.14.14.36
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-303441e0f43sm413451fa.125.2024.12.13.14.14.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 13 Dec 2024 14:14:37 -0800 (PST)
+        Fri, 13 Dec 2024 14:14:40 -0800 (PST)
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Sat, 14 Dec 2024 00:14:17 +0200
-Subject: [PATCH 01/35] drm/msm/dpu: skip watchdog timer programming through
- TOP on >= SM8450
+Date: Sat, 14 Dec 2024 00:14:18 +0200
+Subject: [PATCH 02/35] drm/msm/dpu: enable DPU_WB_INPUT_CTRL for DPU 5.x
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -82,7 +81,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20241214-dpu-drop-features-v1-1-988f0662cb7e@linaro.org>
+Message-Id: <20241214-dpu-drop-features-v1-2-988f0662cb7e@linaro.org>
 References: <20241214-dpu-drop-features-v1-0-988f0662cb7e@linaro.org>
 In-Reply-To: <20241214-dpu-drop-features-v1-0-988f0662cb7e@linaro.org>
 To: Rob Clark <robdclark@gmail.com>, 
@@ -93,43 +92,72 @@ To: Rob Clark <robdclark@gmail.com>,
 Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
  freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1135;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2734;
  i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
- bh=SSoEgRXQqPTu5p08nib3mD4yIJvnsbCBVcW8GugolsA=;
- b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBnXLHDuG2EjdhHOBPkHxC0zhd1zmAgAkeMlsl0y
- HEIxujd9LmJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZ1yxwwAKCRCLPIo+Aiko
- 1ca6B/0QhUWfX4o6FGB6/wC8f9qD66NrrbygcsESqL3hkFzoHj7UTCsyHbRFtOWSfdS0hfyZuX1
- GfTtmJhYsXRWpL4tunRfumHAQzjMHmSh9yMTJhYp5pp6B7HNyrrqsUXNXA3fz72VuLuM/H9EKIK
- 0tOWkaHD/GkP98ElSLtlARGjp22KldlJaxUMs8c2BazBAQTqc/1QnBiGCvA+PGcUqCanFBdQcDu
- JVkajnKxrnO6NwA2yNPp7hlx6CqKii6KHVEoZRNNlSp7UMC/Nxv2e0vccjJIMGVG61WeJG0BgTQ
- t1fH8QxxhsTfgBqSakPERtMLor/slUcv+jHYHY0xZv9+O161
+ bh=GNnQV1MNYWFcAq1qZORvvRE/j1G3voHyTrPAyGRaLUk=;
+ b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBnXLHEA5DUeYaLc+ey3XyG98NY4C1Mfo1wxlQDX
+ Kh+ikM4mTGJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZ1yxxAAKCRCLPIo+Aiko
+ 1df0B/9jBfU+GAj7fHZZuu5Uzn7j6A+6HyeGnzQgDgIKMA3DCJ4VPiPdQrLzqbkY6ZVlCak1PgZ
+ E8G3WR7iRTXyTZV5IItcHihX52E53KqKnlyulREA8n8O5e8yWJw6EOgKyMcYdakKDuN9MXnH6N0
+ 6eHYue6PB8/IBNjXAJ6kEoG6SYGNE5Xw/fm8B7ecSm5HGXSO61ATOSKyFwyTcBTkORx+bwhY0/N
+ GM27xVBM96M+LSM59Gzr8rX9cHve+5DC8CY2+rSz1EKNsbeoSWkioMZ+x9SC7k7qWnzFpW6iWeU
+ VuMpVJvY1mZbQcKjZM5piAmUpFCtz1CwCfjkzo5u0fRpWMKs
 X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
  fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
 
-The SM8450 and later chips have DPU_MDP_PERIPH_0_REMOVED feature bit
-set, which means that those platforms have dropped some of the
-registers, including the WD TIMER-related ones. Stop providing the
-callback to program WD timer on those platforms.
+Several DPU 5.x platforms are supposed to be using DPU_WB_INPUT_CTRL,
+to bind WB and PINGPONG blocks, but they do not. Change those platforms
+to use WB_SM8250_MASK, which includes that bit.
 
-Fixes: 100d7ef6995d ("drm/msm/dpu: add support for SM8450")
+Fixes: 1f5bcc4316b3 ("drm/msm/dpu: enable writeback on SC8108X")
+Fixes: ab2b03d73a66 ("drm/msm/dpu: enable writeback on SM6125")
+Fixes: 47cebb740a83 ("drm/msm/dpu: enable writeback on SM8150")
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h  | 2 +-
+ drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h | 2 +-
+ drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_4_sm6125.h  | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.c
-index ad19330de61abd66762671cf253276695b303b32..562a3f4c5238a3ad6c8c1fa4d285b9165ada3cfd 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.c
-@@ -272,7 +272,7 @@ static void _setup_mdp_ops(struct dpu_hw_mdp_ops *ops,
- 
- 	if (cap & BIT(DPU_MDP_VSYNC_SEL))
- 		ops->setup_vsync_source = dpu_hw_setup_vsync_sel;
--	else
-+	else if (!(cap & BIT(DPU_MDP_PERIPH_0_REMOVED)))
- 		ops->setup_vsync_source = dpu_hw_setup_wd_timer;
- 
- 	ops->get_safe_status = dpu_hw_get_safe_status;
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h
+index 6ccfde82fecdb4e3612df161814b16f7af40ca5f..6d413cefbcc1edaa5fe73bacff4ca708f0e04902 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h
+@@ -295,7 +295,7 @@ static const struct dpu_wb_cfg sm8150_wb[] = {
+ 	{
+ 		.name = "wb_2", .id = WB_2,
+ 		.base = 0x65000, .len = 0x2c8,
+-		.features = WB_SDM845_MASK,
++		.features = WB_SM8250_MASK,
+ 		.format_list = wb2_formats_rgb,
+ 		.num_formats = ARRAY_SIZE(wb2_formats_rgb),
+ 		.clk_ctrl = DPU_CLK_CTRL_WB2,
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h
+index bab19ddd1d4f97805c1bfba8ba6e117ae77c6c2e..2e833e638a0bf9ffa6ad1ae16466e1963f26af1f 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h
+@@ -302,7 +302,7 @@ static const struct dpu_wb_cfg sc8180x_wb[] = {
+ 	{
+ 		.name = "wb_2", .id = WB_2,
+ 		.base = 0x65000, .len = 0x2c8,
+-		.features = WB_SDM845_MASK,
++		.features = WB_SM8250_MASK,
+ 		.format_list = wb2_formats_rgb,
+ 		.num_formats = ARRAY_SIZE(wb2_formats_rgb),
+ 		.clk_ctrl = DPU_CLK_CTRL_WB2,
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_4_sm6125.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_4_sm6125.h
+index d039b96beb97cfeda629ef2546902f7281c53543..76f60a2df7a890c5346fe248d67d646ade574fe4 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_4_sm6125.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_4_sm6125.h
+@@ -144,7 +144,7 @@ static const struct dpu_wb_cfg sm6125_wb[] = {
+ 	{
+ 		.name = "wb_2", .id = WB_2,
+ 		.base = 0x65000, .len = 0x2c8,
+-		.features = WB_SDM845_MASK,
++		.features = WB_SM8250_MASK,
+ 		.format_list = wb2_formats_rgb,
+ 		.num_formats = ARRAY_SIZE(wb2_formats_rgb),
+ 		.clk_ctrl = DPU_CLK_CTRL_WB2,
 
 -- 
 2.39.5
