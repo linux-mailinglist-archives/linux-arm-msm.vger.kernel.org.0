@@ -1,202 +1,251 @@
-Return-Path: <linux-arm-msm+bounces-41957-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-41958-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id BB0ED9F0933
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Dec 2024 11:13:53 +0100 (CET)
-Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id ED4C6188BCAE
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Dec 2024 10:13:53 +0000 (UTC)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 990DB1B415F;
-	Fri, 13 Dec 2024 10:13:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="B+Ajp6lA"
-X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id ACBE69F0944
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Dec 2024 11:19:27 +0100 (CET)
+Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5B241420A8
-	for <linux-arm-msm@vger.kernel.org>; Fri, 13 Dec 2024 10:13:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 68B84284975
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Dec 2024 10:19:26 +0000 (UTC)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1A6901B81DC;
+	Fri, 13 Dec 2024 10:19:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="PxUjYaHS"
+X-Original-To: linux-arm-msm@vger.kernel.org
+Received: from mail-yw1-f169.google.com (mail-yw1-f169.google.com [209.85.128.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B8061B0F27
+	for <linux-arm-msm@vger.kernel.org>; Fri, 13 Dec 2024 10:19:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734084830; cv=none; b=Ou9vmKDY3hS4Cz2zhsKxmSdxhnWTjvleeQMgGw6qqPpj+4N4p78yzu8vXopj4g2zX8Eiqi44qFd7+5tsJTQLGJDaDl07TKJovXfzw0YpfgjcI241rRs8Xji/KqlR5vl87jkTnI6PBuU7BaOxMMNPK8rxh9kk1ENNvCNcB79Foj4=
+	t=1734085161; cv=none; b=guKvuvevMZnKFXh2lEOp8RK8aOpoj5WEu5kDAVTOe2bhbNPv8YBv5HQYk6hOLMaPjg7wd2kXfXE6wRSExH/cS1YRFe+Ap/oeTx86qofDf1IEkQYKU2GDKy0fnUz0ZlJABP7gbIpCBHwTfdY3/mi7kTAwyUoTcRQW8XhcObp+L20=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734084830; c=relaxed/simple;
-	bh=jV0gUiWcMRsqOoOIjT1olcLqeVtC9DuU+58/yi8Z9qg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=q2uMf1EgPxZr7Fi9gJj+YOUuQ6APyk8i3QaXvSreG34QkTD8ToUTjhQe+OHltDG28VT4LGQnkuFtKcZOuPJnVldJL1t9cKoyMjIajFHChc+FI/ZV9pq3igqLQREKkumuxe/olPb7mGSmIwBF7YqsZmPIQUgHt/wADkuJe4VXKKo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=B+Ajp6lA; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BD8I4K8026835
-	for <linux-arm-msm@vger.kernel.org>; Fri, 13 Dec 2024 10:13:48 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	3nUm8oLabsV1qJq3TKFmlTydmFh/ikxL/g0ApgTD594=; b=B+Ajp6lAxCMjxbbG
-	U6dnQcdqF/0wMvfDVE3GICHQCaWqGVbm890xstYz4dknGd3d5T5W0gf//CX1o6aU
-	ko7C8/x4O2MKFBirxaltctj02Mw4RHfJGsdugL8NL6M4/KSite1CI/czvdd3Sve5
-	AUQMSbB97z4lX2GNmzkf6RenR5VppFtr2nCdNQgBiZJnpCtpo5esZ+5d9IyMxCdZ
-	GFVeZCTftE/0UwySVLPM/2bm69U+5LG3iN/pVw/VuXzaiSoIjT1SHTwr0ugW1ilc
-	qHh9QpIveHqYPW1cjMy1OvJfTlZjdtqAbOrQ61ae7uo1tAXJNBdAZf8M0T4t8Ss2
-	qPaZag==
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com [209.85.160.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43fd40nxmn-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 13 Dec 2024 10:13:47 +0000 (GMT)
-Received: by mail-qt1-f200.google.com with SMTP id d75a77b69052e-46748e53285so3209061cf.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Dec 2024 02:13:47 -0800 (PST)
+	s=arc-20240116; t=1734085161; c=relaxed/simple;
+	bh=TaUoGs+F2ddGLGp0nhoiaf0yEcbeooEJX6cg/YCJu3o=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=qyFuSxXNY0pJU4sfLbp+BXdcKekHMhjFQ4mson3uB9da1rGhFJtD392vE+0i2A2RuhYoT/EI1g63cZI5OQilLPm4f4RdNhfiFYBki4DDf8Fvym/UyB9kM2JDDoPCaNu9ZgO8fodXMXKeKKb9/ZKHu7Wno3hjd1rTliPMErVgupA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=PxUjYaHS; arc=none smtp.client-ip=209.85.128.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yw1-f169.google.com with SMTP id 00721157ae682-6f277a1ecfdso7025887b3.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Dec 2024 02:19:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1734085157; x=1734689957; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=JzubTKIrCCyJH0pfnEBHBmZCTtcP1wgY3Y2naNN0eVk=;
+        b=PxUjYaHSiCNuuwdT/edTmGrQGw0WfbXhWDgvMDPsSGmVNl1z65MiB9JfDSM9bOprJZ
+         RuLYjq4aub3FRQcVNBE6ymB6ARYyiY5QXW4beK5U/YJUh2/iTxqDqcTl+a828iklriMB
+         H6WpmGLEE7eUd7dF+T4vuEK5BKb1nxBgFRFUGAxKO/gOaMgOevFRx0KrKHjj3cOuBjnC
+         BjW/Rjlhsk51Cx/eAipnrUG6q+/TeLjWQsIaKoINKbto49O89jdaGERBzDxE7PwxisTf
+         eViAcY8mSI2vpJIzkRtyeK8zdL8RNznlr3Ebof2s9M/kE7J/HkiC6GVgdZDBjqC/3p1b
+         6khw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734084827; x=1734689627;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=3nUm8oLabsV1qJq3TKFmlTydmFh/ikxL/g0ApgTD594=;
-        b=IjadBYj33nYLiNuqjyfBZAN6S8f/OekXGdzipbRgrZRtIlDiEo0dc07GCRn2eutDlw
-         KUtiiKLt1CCEW07a5qyd2XGUjPSQN8KcLd+2Xggvzo2IhSXYbQJQjalsnJ2NBcStr2gp
-         tKeI90keGfTlFYLrBwXyMz5r/nkuKr1+GRlkulLpE4yY23LNZmlTpJ79+ZI2WuRP0UDe
-         cf0GtRD8Y1YjsHqBAhNOac172a9/0vKXPRV3pX1FEwDa2YTsaoN/Yw5ZwaNc7AwWZIRc
-         kAj91s1hi8sC8TldJX01su4iFpLlFEsWgDDdHugiXoY1VAXCXRJ2miAn1J0Vwm9fTuMg
-         fhIg==
-X-Gm-Message-State: AOJu0YzNP3y3Nct7HDZVb4efpUV2C7+Fyj58PgudB4ASgcYvdMPfq7Vk
-	G0YmjkKQWp7o4bKnWOacFtsoj8buwR1l+htZDl2KWQFb0dFUHwF7rox5RvjqGBPKhakCWjItrVw
-	cknKtX7KKUGRN5cMr5IPKzOxqxKjEc9bDGbvziR3VjYmNpQlrGBSgXonipZAjoExd
-X-Gm-Gg: ASbGncvLWpMss/eKlCSMmw5smjY0SYFmpn/aG9YrZ5r7po5+kjxF3wOeukN3h6pI6Q1
-	QPezjMw7sRUIJpQpt/FQAvuzTxU19h2Gc7QWA48XG1CFL5PoIAVAoNLUIWhKfhy3GgmzoJ8iQNL
-	SgDcJs9VtLX01El3MriysSR3KzvtIDnfo3DRTumwArSt3TATwOhj2LebZRRwz1EdcBrTfnYvSPG
-	VkCi4joJk/weduCz/t9MKmQEGm6sUmQI9O1KKpXTS/TF72OuD0kxA8aDVzsjJtKA4Y2LV2aAOYn
-	VZHA2SWxOBznog8C3YzEji4grJa8KaIilNo6
-X-Received: by 2002:ac8:5dc7:0:b0:467:885e:2c6e with SMTP id d75a77b69052e-467a573441bmr13879101cf.1.1734084826600;
-        Fri, 13 Dec 2024 02:13:46 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHxaOjgUy1JAarpLCgxQumw40uPOCXOrWpCd82fp9aJ58XJJIwUpHLC31vejPCEBWaDxiXvnQ==
-X-Received: by 2002:ac8:5dc7:0:b0:467:885e:2c6e with SMTP id d75a77b69052e-467a573441bmr13878971cf.1.1734084826219;
-        Fri, 13 Dec 2024 02:13:46 -0800 (PST)
-Received: from [192.168.58.219] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-aa68c4e3749sm662769566b.154.2024.12.13.02.13.44
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 13 Dec 2024 02:13:45 -0800 (PST)
-Message-ID: <93c75fdd-c09e-4fe3-b79f-fea8cd08ec0b@oss.qualcomm.com>
-Date: Fri, 13 Dec 2024 11:13:44 +0100
+        d=1e100.net; s=20230601; t=1734085157; x=1734689957;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=JzubTKIrCCyJH0pfnEBHBmZCTtcP1wgY3Y2naNN0eVk=;
+        b=tp7e+qYx8D4GVCx4N05tQwVsgarF8w/0WrWjVn8VzpXJCGfMDyFW9zD/QaZlOUTfDv
+         DsYS9bNncgNoBYn7eFLtvShIjD7ywIt/mih/yKEmf9Z9Le6jUNYIpMk7qDzR9+YuCXRw
+         LRyskWKFt6ZXcUzcvgd9yKdn9xbzc80jT2hBvomqvxol4xiezbXKcPD/shw28xDtQjWs
+         gW8C6A39mZkvc0SQBIzBs6u/mcDgTjOSYXW/vN1MY+lBWaxC1brs0dpGKYCN2twqnCtw
+         h9/ujTzyafjsffIaYGWXd3tJlbZntUgoLqbS6jXJ6lRdHqwZH6CH9jj+jZ318KErgp9E
+         XRdQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXVUfUUAIaGSVe7TsyS85FugiKK1P428zP9Um1nZ4GHPjfdofhRSdGQS0YnM2jdiA2MKfImIGx+UYzd+o1q@vger.kernel.org
+X-Gm-Message-State: AOJu0YzC4lLSo87K6U37RwRfkTvYLzphZ6WzOEdE8btN/O8T4XlbBmdq
+	WO1fP64xfhiMFST02ZlG6gmWY4U2rIfhk0hM7lkQDvUqT4BGQf3mIOgHfCliDe+uGvYlsU44GoR
+	RpWGGrJY0xPKnTcwckpx7e65dwPWgPi5oX8y0Tg==
+X-Gm-Gg: ASbGncsrFTbjrKOg6ytZnQiPKC90zEUnMHNgryvnknq6oRrjy6LEjj/wiCnOz9zeLFX
+	M3byhejAXoNiRNDeqGbcJNLMXoEm6RdkJDvIVYA==
+X-Google-Smtp-Source: AGHT+IE+V0UDCOAU5QBdFhu4vGa18K/4xyOW5PpbJKOBiXTh72LOzIvfBG+05zrZNP3V7nBvigfrJ7wDyZaG9B3yK7Y=
+X-Received: by 2002:a05:6902:2484:b0:e3a:3a3d:40c9 with SMTP id
+ 3f1490d57ef6-e4352f57b49mr1567063276.39.1734085157123; Fri, 13 Dec 2024
+ 02:19:17 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] arm64: dts: qcom: Add coresight nodes for QCS8300
-To: Jie Gan <quic_jiegan@quicinc.com>,
-        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-        "Aiqun Yu (Maria)" <quic_aiquny@quicinc.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20241205084418.671631-1-quic_jiegan@quicinc.com>
- <16efb6a8-ecaf-4097-ac5f-368ebab177a8@quicinc.com>
- <25a410a7-2418-45bd-be06-3672a9fb1928@quicinc.com>
- <04d23c55-9167-4e8a-9e5b-6dcf66b02b8f@oss.qualcomm.com>
- <409678b0-339e-4d93-86f1-117d358a2d33@quicinc.com>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <409678b0-339e-4d93-86f1-117d358a2d33@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: qbaK8SDaiF6GQRa_vKcNVpf0Rq9hPjTq
-X-Proofpoint-ORIG-GUID: qbaK8SDaiF6GQRa_vKcNVpf0Rq9hPjTq
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 spamscore=0
- suspectscore=0 impostorscore=0 phishscore=0 clxscore=1015 bulkscore=0
- lowpriorityscore=0 mlxlogscore=999 priorityscore=1501 mlxscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2412130069
+References: <20241210-add-display-support-for-qcs615-platform-v4-0-2d875a67602d@quicinc.com>
+ <20241210-add-display-support-for-qcs615-platform-v4-9-2d875a67602d@quicinc.com>
+ <cfdyvcxdkmf4sv5f75koflayyx74wd3tuscdl7byp5peaag5ty@yhr3275jhftn> <92b6335e-a303-49d3-9b77-f951663fc10c@quicinc.com>
+In-Reply-To: <92b6335e-a303-49d3-9b77-f951663fc10c@quicinc.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Fri, 13 Dec 2024 12:19:05 +0200
+Message-ID: <CAA8EJpqyM-r3jvY7sTpG-KKRHP9K7c3q0xfoLb_f0th7vunPYw@mail.gmail.com>
+Subject: Re: [PATCH v4 9/9] arm64: dts: qcom: Add display support for QCS615
+ RIDE board
+To: fange zhang <quic_fangez@quicinc.com>
+Cc: Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+	Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, 
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
+	Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Krishna Manikandan <quic_mkrishn@quicinc.com>, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Liu Li <quic_lliu6@quicinc.com>, 
+	Xiangxu Yin <quic_xiangxuy@quicinc.com>, linux-arm-msm@vger.kernel.org, 
+	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On 13.12.2024 2:42 AM, Jie Gan wrote:
-> 
-> 
-> On 12/13/2024 8:35 AM, Konrad Dybcio wrote:
->> On 9.12.2024 3:01 AM, Jie Gan wrote:
->>>
->>>
->>> On 12/8/2024 12:28 AM, Aiqun Yu (Maria) wrote:
->>>>
->>>>
->>>> On 12/5/2024 4:44 PM, Jie Gan wrote:
->>>>> Add following coresight components for QCS8300 platform.
->>>>> It includes CTI, dummy sink, dynamic Funnel, Replicator, STM,
->>>>> TPDM, TPDA and TMC ETF.
->>>>>
->>>>> Signed-off-by: Jie Gan <quic_jiegan@quicinc.com>
->>>>> ---
->>>>> Changes in V2:
->>>>> 1. Rebased on tag next-20241204.
->>>>> 2. Padding the register address to 8 bits.
->>>>> Link to V1 - https://lore.kernel.org/linux-arm-msm/20240929-add_coresight_devices_for_qcs8300-v1-1-4f14e8cb8955@quicinc.com/
->>>>> ---
->>>>>    arch/arm64/boot/dts/qcom/qcs8300.dtsi | 2150 +++++++++++++++++++++++++
->>>>>    1 file changed, 2150 insertions(+)
->>>>>
->>>>> diff --git a/arch/arm64/boot/dts/qcom/qcs8300.dtsi b/arch/arm64/boot/dts/qcom/qcs8300.dtsi
->>>>> index 73abf2ef9c9f..eaec674950d8 100644
->>>>> --- a/arch/arm64/boot/dts/qcom/qcs8300.dtsi
->>>>> +++ b/arch/arm64/boot/dts/qcom/qcs8300.dtsi
->>>>> @@ -293,6 +293,18 @@ system_sleep: domain-sleep {
->>>>>            };
->>>>>        };
->>>>>    +    dummy_eud: dummy-sink {
->>>>> +        compatible = "arm,coresight-dummy-sink";
->>>>> +
->>>>> +        in-ports {
->>>>> +            port {
->>>>> +                eud_in: endpoint {
->>>>> +                    remote-endpoint = <&swao_rep_out1>;
->>>>> +                };
->>>>> +            };
->>>>> +        };
->>>>> +    };
->>>>> +
->>>
->>> [...]
->>>
->>>>> +
->>>>> +        tpdm@482c000 {
->>>>> +            compatible = "qcom,coresight-tpdm", "arm,primecell";
->>>>> +            reg = <0x0 0x0482c000 0x0 0x1000>;
->>>>> +
->>>>> +            clocks = <&aoss_qmp>;
->>>>> +            clock-names = "apb_pclk";
->>>>> +
->>>>> +            qcom,dsb-element-bits = <32>;
->>>>> +            qcom,dsb-msrs-num = <32>;
->>>>> +            status = "disabled";
->>>>
->>>> Could you please provide more detailed information on why some TPDM
->>>> nodes are disabled by default while others are not?
->>> Some of TPDM nodes are disabled by default because the one of the following reasons:
->>> 1. TPDM device are designed to generate HW events, it needs a clock source to read&write its registers. Coresight driver cannot control the clock source ouside AP core, so those TPDM devices without enabled clock source will crash device in probe.
->>> 2. Some of TPDM devices can't bootup with fused devices.
->>> 3. Some of TPDM devices have known hardware issues that not resolved.
->>>
->>> I put those disabled TPDM devices in DT in case some of them may be "fixed" in future.
->>
->> Please mark them as
->>
->> /* Hardware issues */
->> status = "fail";
->>
-> 
-> Maybe I should remove these devices, to avoid confusion. Is that ok?
+On Fri, 13 Dec 2024 at 11:21, fange zhang <quic_fangez@quicinc.com> wrote:
+>
+>
+>
+> On 2024/12/10 19:02, Dmitry Baryshkov wrote:
+> > On Tue, Dec 10, 2024 at 02:54:00PM +0800, Fange Zhang wrote:
+> >> From: Li Liu <quic_lliu6@quicinc.com>
+> >>
+> >> Add display MDSS and DSI configuration for QCS615 RIDE board.
+> >> QCS615 has a DP port, and DP support will be added in a later patch.
+> >>
+> >> Signed-off-by: Li Liu <quic_lliu6@quicinc.com>
+> >> Signed-off-by: Fange Zhang <quic_fangez@quicinc.com>
+> >> ---
+> >>   arch/arm64/boot/dts/qcom/qcs615-ride.dts | 89 ++++++++++++++++++++++++++++++++
+> >>   1 file changed, 89 insertions(+)
+> >>
+> >> diff --git a/arch/arm64/boot/dts/qcom/qcs615-ride.dts b/arch/arm64/boot/dts/qcom/qcs615-ride.dts
+> >> index a25928933e2b66241258e418c6e5bc36c306101e..694719a09ac46bfa2fe34f1883c0970b9d0902be 100644
+> >> --- a/arch/arm64/boot/dts/qcom/qcs615-ride.dts
+> >> +++ b/arch/arm64/boot/dts/qcom/qcs615-ride.dts
+> >> @@ -32,6 +32,18 @@ xo_board_clk: xo-board-clk {
+> >>                      #clock-cells = <0>;
+> >>              };
+> >>      };
+> >> +
+> >> +    dp-connector {
+> >> +            compatible = "dp-connector";
+> >> +            label = "DP";
+> >> +            type = "mini";
+> >> +
+> >> +            port {
+> >> +                    dp_connector_out: endpoint {
+> >> +                            remote-endpoint = <&anx_7625_out>;
+> >> +                    };
+> >> +            };
+> >> +    };
+> >>   };
+> >>
+> >>   &apps_rsc {
+> >> @@ -202,6 +214,83 @@ &gcc {
+> >>               <&sleep_clk>;
+> >>   };
+> >>
+> >> +&i2c2 {
+> >> +    clock-frequency = <400000>;
+> >> +    status = "okay";
+> >> +
+> >> +    ioexp: gpio@3e {
+> >> +            compatible = "semtech,sx1509q";
+> >> +            reg = <0x3e>;
+> >> +            interrupt-parent = <&tlmm>;
+> >> +            interrupts = <58 0>;
+> >
+> > Use IRQ flags instead of just 0 (here and further on). Also it might be
+> > better to use interrupts-extended instead.
+> Got it, will use interrupts-extended instead
+> -               interrupt-parent = <&tlmm>;
+> -               interrupts = <58 0>;
+> +               interrupts-extended = <&tlmm 58 IRQ_TYPE_NONE>;
+> >
+> >> +            gpio-controller;
+> >> +            #gpio-cells = <2>;
+> >> +            interrupt-controller;
+> >> +            #interrupt-cells = <2>;
+> >> +            semtech,probe-reset;
+> >> +    };
+> >> +
+> >> +    i2c-mux@77 {
+> >> +            compatible = "nxp,pca9542";
+> >> +            reg = <0x77>;
+> >> +            #address-cells = <1>;
+> >> +            #size-cells = <0>;
+> >
+> > Add empty line before device nodes (here and furher on).
+> Sorry, will add it in next patch.
+> >
+> >> +            i2c@0 {
+> >> +                    reg = <0>;
+> >> +                    #address-cells = <1>;
+> >> +                    #size-cells = <0>;
+> >> +
+> >> +                    anx7625@58 {
+> >> +                            compatible = "analogix,anx7625";
+> >> +                            reg = <0x58>;
+> >> +                            interrupt-parent = <&ioexp>;
+> >> +                            interrupts = <0 0>;
+> will change it to interrupts-extended in next patch
+> -               interrupt-parent = <&ioexp>;
+> -               interrupts = <0 0>;
+> +               interrupts-extended = <&ioexp 0 IRQ_TYPE_NONE>;
 
-That works as well
+Yes, much better. BTW: are you sure that it's really IRQ_TYPE_NONE?
 
-Konrad
+> >> +                            enable-gpios = <&tlmm 4 GPIO_ACTIVE_HIGH>;
+> >> +                            reset-gpios = <&tlmm 5 GPIO_ACTIVE_HIGH>;
+> >> +                            wakeup-source;
+> >> +
+> >> +                            ports {
+> >> +                                    #address-cells = <1>;
+> >> +                                    #size-cells = <0>;
+> >> +
+> >> +                                    port@0 {
+> >> +                                            reg = <0>;
+> >> +                                            anx_7625_in: endpoint {
+> >> +                                                    remote-endpoint = <&mdss_dsi0_out>;
+> >> +                                            };
+> >> +                                    };
+> >> +
+> >> +                                    port@1 {
+> >> +                                            reg = <1>;
+> >> +                                            anx_7625_out: endpoint {
+> >> +                                                    remote-endpoint = <&dp_connector_out>;
+> >> +                                            };
+> >> +                                    };
+> >> +                            };
+> >> +                    };
+> >> +            };
+> >> +    };
+> >> +};
+> >> +
+> >> +&mdss {
+> >> +    status = "okay";
+> >> +};
+> >> +
+> >> +&mdss_dsi0 {
+> >> +    vdda-supply = <&vreg_l11a>;
+> >> +    status = "okay";
+> >> +};
+> >> +
+> >> +&mdss_dsi0_out {
+> >> +    remote-endpoint = <&anx_7625_in>;
+> >> +    data-lanes = <0 1 2 3>;
+> >> +};
+> >> +
+> >> +&mdss_dsi0_phy {
+> >> +    vdds-supply = <&vreg_l5a>;
+> >> +    status = "okay";
+> >> +};
+> >> +
+> >>   &qupv3_id_0 {
+> >>      status = "okay";
+> >>   };
+> >>
+> >> --
+> >> 2.34.1
+> >>
+> >
+>
 
+
+-- 
+With best wishes
+Dmitry
 
