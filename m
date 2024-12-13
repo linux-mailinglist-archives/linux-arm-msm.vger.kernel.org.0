@@ -1,63 +1,78 @@
-Return-Path: <linux-arm-msm+bounces-41996-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-41997-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id B058B9F0B42
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Dec 2024 12:35:05 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 218179F0B5E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Dec 2024 12:37:10 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1579B188ABFB
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Dec 2024 11:34:30 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2E355188D05B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Dec 2024 11:36:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 647D31DFDA3;
-	Fri, 13 Dec 2024 11:33:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2F3441DFD80;
+	Fri, 13 Dec 2024 11:34:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="khzazzgB"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="t8yg3K4H"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 873DC1DF73E;
-	Fri, 13 Dec 2024 11:33:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C88561DF723
+	for <linux-arm-msm@vger.kernel.org>; Fri, 13 Dec 2024 11:34:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734089604; cv=none; b=h1sxRl3O8CjiHTL5kdGiCagSdm1Nlf40zKAhVSk1XxdHcCMeVDeaJcE2fCxkRiuO7dRnhiLPW4q0R3cBy9pwDX7cpINw0ma49mvaeI3MfSSW4335/zLPRZPbP4E3gqaCmGEeqsDwgwIKB0xuAvOlT2mK3bCdCVez0qTcz0M+37E=
+	t=1734089671; cv=none; b=Opf/0OkujSm0IEoSiro9e+hLCfVqKv4WRYeSSzhtZCglugY7n/P+U/82bQyESD1Pw6n4UkFReGEhN7MNRKzGCjQ0pQk7YgR+Si1JEpHGEKdnYKZPL1ezkBa+31hwweo160DFhv2V+mMXLFdopDR1TvKVDoOrD1ojH/P23uUHThI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734089604; c=relaxed/simple;
-	bh=MLMEOAeqD8IEUkGSEWY7TkOiucHmzMnYso5eUsbRofA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=Ys/uxJQHPS4n3LH0zMdBuSe4glcPl3CfOpeY+6Kl+yxZB0RZ83LBkRbkKcmxWV/kNjAa6yZ2NybBpo/q1LYckdUE/WAlKnZbvTYukRx3DdveMhmszG612sYtvksYp+wqwO/RS0tyfVr4v88bkxUkLBv+0Knur6lNeYVFwFCWcUc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=khzazzgB; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BDBThRr001370;
-	Fri, 13 Dec 2024 11:33:07 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	BIgbwr4YWRO5BTx9mcS9BRDtQqI3IxHVQ2bwLnBizJU=; b=khzazzgBeT6/lgTn
-	ZivKMMSC6/GGRf0PhcxMAQUXiw8jApy/VWBZtXQx97/RsRRgqDZi5ygcH7OL0NS5
-	Jc8QrM2W3FvDK5c7kof9Sav80QMMvO6u/E5Ia1t4jo27XHgYA5xD6rmVKfvrMdGu
-	e3EvYkpUyhl+6IYbDLrY/peLenzREXvWujwVROK2XEd/6SEUNkTL5cNmwbaYg5LZ
-	DxGzLNMaaGmA2f8HdwijKyhdHQVIvUVz1rzvF9EYaovQiV7UIcJ5505Ec6S3Aic1
-	fpyFKiOEutDb4U/WbnTP+2E6YdbSwc95vMe/mMXJT47Hpw75LEQZYivv4Zyitzdj
-	21y3FQ==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43gm3s00d0-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 13 Dec 2024 11:33:07 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4BDBX6W8018120
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 13 Dec 2024 11:33:06 GMT
-Received: from [10.204.101.130] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 13 Dec
- 2024 03:33:00 -0800
-Message-ID: <db8f433c-1a2e-4a46-8b46-3a8e09c080bd@quicinc.com>
-Date: Fri, 13 Dec 2024 17:02:56 +0530
+	s=arc-20240116; t=1734089671; c=relaxed/simple;
+	bh=4XfO9sgRR89Q+W9l3UVT/d7WgRINh0RFlj7iisUzSSY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=O5t0Z6v/YVuMlxoHNmI+s1nbdIbgKVxU+VXPcNPu3lLsw5aEEM9KLAoc26KY5kHszMSrVSSDlRuHqGMKv9L5+PZsUBmvh6JhsJTsUlHGF3Ij4oJ87YxWaYFp/Qul+6DosLeMXCZi2BglFYJ9Wu9+0oeTpnf54OQ/4htOUifDj0k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=t8yg3K4H; arc=none smtp.client-ip=209.85.128.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-4361b0ec57aso15582515e9.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Dec 2024 03:34:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1734089666; x=1734694466; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=VoLSaqzOSgXTHhnrnBIXiVWZQerMmrmkF4OQm6gfaXQ=;
+        b=t8yg3K4HuJOQUWWwhafEpqBrJaKiZKZmA5y1s36J0W4dUmZmLI6y0nzF0S3u5eBbyU
+         thHcVU5L+OdrrnXZft4OTJK6APLOMrD7jaWmsFZvZZiPKuCTFXsk9h6NiezLuJej3QYj
+         fTrLxnSXOFrlgQGNxRbrA3KuUWmqK9Y6lx64vnsvFfEuZ6aGYDwNZ0YJGQyfi/0dtdVS
+         6fGEyGW7vBg3j/yLwMHqZjiRs2PIIU4wUQ+qjAR6irmZU/EowyNM7Ph7/KEky7hXLM2L
+         ZkiKZldsU9dpj2bvjOPaPHH5jYUF5dd15Lv/1UzXWDk1w458WwHAQfhAXRL3DZaBJL+D
+         v0/Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1734089666; x=1734694466;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=VoLSaqzOSgXTHhnrnBIXiVWZQerMmrmkF4OQm6gfaXQ=;
+        b=XxksxjZaAnWXHdOjEsbBi0d7IlYdg0uMnjhZkL9xWDqpWq7fNAudvhRRh2TrffFnug
+         M2jOmVajrwNXYRZIk6F0a+fxl6nybeWB/1F1ZVmxlLc+LsL6Fa1QoqLeiXrMt3Vvoxuu
+         zV2gc3knBcubko+UeYVje0I8KgKArYGQN7BVFYPt8f5UaXgqP102vOYiFN88Sdfu93Gp
+         bzzJCygkG03L41dUIX2X8HGoO8PJ5ZyYgfq8Yjwt55FnqnaBfZwxMRPswod6+KAmG44+
+         uMEDhG8hMipOJ9OaIFP/EXaBnfLbYxDvAxWqMA8OA5CtmrbVmlZHyqR8uTeE5afivxlT
+         AoAg==
+X-Forwarded-Encrypted: i=1; AJvYcCVg4fZktUp0+BhlWlWsdZBTPKLuFtmfmCErVkGeJaRoJqMPQ2OZeJ4A66+87I6na2dpOJWKvD04bv1cnh/n@vger.kernel.org
+X-Gm-Message-State: AOJu0Yxo83uoiBCyeSSDnC8hz9w0eGy46AS93bnDtJitgSb4NB1bdkHg
+	dCy5/FlF2hqp0m+xYmzWpIFP1MYQlU55KNYVbakslEx0w6LG+jzWUsbbHTw3FYY=
+X-Gm-Gg: ASbGncsoEZdn2weaYGzQRmYQzRExe4iHaOS6D6HxOTYYKzAwMJCmnMBpeA8ahkMhJpm
+	hKWz3e9oR7uaDoncWnBXW7Wmt785D/o0jp3FzU7NgJIiFSL3WxSlISn+E5KKX139UKa9w8Wmqyj
+	q3pjrYCeAWFvi4caZ03Xkf3UgfqF8ZHrP0CkFSGtYNHKMsmEX+qKaNZgDUcDv30/sRyOOzgVP8x
+	6ltfUlbk8SrgFNc4YTaOwiRUiCXzIOyOpwRJX1g3Gf8+CvuEJngME4xPwrBCgi0jbCVew==
+X-Google-Smtp-Source: AGHT+IFa8ec15w1W+mCJa8qiRjb8wSbVwQDAXu4RYHaXXbcgV53ag8xsVJvsFwXS3y/+5di8npaPTQ==
+X-Received: by 2002:a05:600c:384e:b0:431:12a8:7f1a with SMTP id 5b1f17b1804b1-4362aa52e39mr20921645e9.16.1734089666146;
+        Fri, 13 Dec 2024 03:34:26 -0800 (PST)
+Received: from [192.168.0.40] ([176.61.106.227])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-387824ca9absm6818336f8f.61.2024.12.13.03.34.25
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 13 Dec 2024 03:34:25 -0800 (PST)
+Message-ID: <d7e3076e-5b32-4ab8-afe8-f52458769f23@linaro.org>
+Date: Fri, 13 Dec 2024 11:34:24 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,79 +80,96 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RESEND v2 01/26] dt-bindings: qcom,pdc: document QCS615
- Power Domain Controller
-To: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        "Konrad
- Dybcio" <konradybcio@kernel.org>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Marijn Suijten
-	<marijn.suijten@somainline.org>,
-        Maarten Lankhorst
-	<maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        Rob Herring <robh@kernel.org>,
-        "Krzysztof
- Kozlowski" <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        "Bjorn
- Andersson" <andersson@kernel.org>
-CC: <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, Lijuan Gao <quic_lijuang@quicinc.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-References: <20241213-qcs615-gpu-dt-v2-0-64751d9c3748@quicinc.com>
- <20241213-qcs615-gpu-dt-v2-1-64751d9c3748@quicinc.com>
+Subject: Re: [PATCH 1/2] media: dt-bindings: media: camss: Restrict bus-type
+ property
+To: Luca Weiss <luca.weiss@fairphone.com>,
+ Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+ Krzysztof Kozlowski <krzk@kernel.org>
+Cc: Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Barnabas Czeman <barnabas.czeman@mainlining.org>,
+ AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>,
+ Caleb Connolly <caleb.connolly@linaro.org>, David Heidelberg
+ <david@ixit.cz>, ~postmarketos/upstreaming@lists.sr.ht,
+ phone-devel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-media@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20241209-camss-dphy-v1-0-5f1b6f25ed92@fairphone.com>
+ <20241209-camss-dphy-v1-1-5f1b6f25ed92@fairphone.com>
+ <nqggstwkytqxpxy3iuhkl6tup5elf45lqi3qlgyv6eaizvnfdr@2uy57umdzqfa>
+ <e4bd515a-eb98-4ea1-8d73-4ba5e7c9b66e@linaro.org>
+ <D6AJ9U23ANWI.1DLHNPU5A6HQ4@fairphone.com>
 Content-Language: en-US
-From: Akhil P Oommen <quic_akhilpo@quicinc.com>
-In-Reply-To: <20241213-qcs615-gpu-dt-v2-1-64751d9c3748@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <D6AJ9U23ANWI.1DLHNPU5A6HQ4@fairphone.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: pWkbnSZTquiH9fP4kc8J36NSkjJOD3z0
-X-Proofpoint-GUID: pWkbnSZTquiH9fP4kc8J36NSkjJOD3z0
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- adultscore=0 impostorscore=0 phishscore=0 mlxscore=0 bulkscore=0
- spamscore=0 clxscore=1015 suspectscore=0 priorityscore=1501 malwarescore=0
- mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2412130080
 
-On 12/13/2024 4:54 PM, Akhil P Oommen wrote:
-> From: Lijuan Gao <quic_lijuang@quicinc.com>
+On 13/12/2024 11:24, Luca Weiss wrote:
+> On Fri Dec 13, 2024 at 11:50 AM CET, Vladimir Zapolskiy wrote:
+>> On 12/13/24 11:34, Krzysztof Kozlowski wrote:
+>>> On Mon, Dec 09, 2024 at 01:01:05PM +0100, Luca Weiss wrote:
+>>>> The CSIPHY of Qualcomm SoCs support both D-PHY and C-PHY standards for
+>>>> CSI-2, but not any others so restrict the bus-type property describing
+>>>> this to the supported values.
+>>>>
+>>>> The only exception here is MSM8916 which only supports D-PHY. C-PHY was
+>>>> introduced with newer SoCs.
+>>>>
+>>>> Do note, that currently the Linux driver only supports D-PHY.
+>>>>
+>>>> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+>>>> ---
+>>>>    .../bindings/media/qcom,msm8916-camss.yaml         |  8 ++++++
+>>>>    .../bindings/media/qcom,msm8953-camss.yaml         | 15 +++++++++++
+>>>>    .../bindings/media/qcom,msm8996-camss.yaml         | 20 +++++++++++++++
+>>>>    .../bindings/media/qcom,sc8280xp-camss.yaml        | 20 +++++++++++++++
+>>>>    .../bindings/media/qcom,sdm660-camss.yaml          | 20 +++++++++++++++
+>>>>    .../bindings/media/qcom,sdm845-camss.yaml          | 20 +++++++++++++++
+>>>>    .../bindings/media/qcom,sm8250-camss.yaml          | 30 ++++++++++++++++++++++
+>>>>    7 files changed, 133 insertions(+)
+>>>>
+>>>> diff --git a/Documentation/devicetree/bindings/media/qcom,msm8916-camss.yaml b/Documentation/devicetree/bindings/media/qcom,msm8916-camss.yaml
+>>>> index 9cc0a968a401836814560c1af3ee84d946500b4f..3de2a3d2b5b761106975aab65ff614b2ef579ef5 100644
+>>>> --- a/Documentation/devicetree/bindings/media/qcom,msm8916-camss.yaml
+>>>> +++ b/Documentation/devicetree/bindings/media/qcom,msm8916-camss.yaml
+>>>> @@ -94,6 +94,10 @@ properties:
+>>>>                    minItems: 1
+>>>>                    maxItems: 4
+>>>>    
+>>>> +              bus-type:
+>>>> +                enum:
+>>>> +                  - 4 # MEDIA_BUS_TYPE_CSI2_DPHY
+>>>> +
+>>>>                required:
+>>>>                  - data-lanes
+>>>>    
+>>>> @@ -113,6 +117,10 @@ properties:
+>>>>                    minItems: 1
+>>>>                    maxItems: 4
+>>>>    
+>>>> +              bus-type:
+>>>> +                enum:
+>>>> +                  - 4 # MEDIA_BUS_TYPE_CSI2_DPHY
+>>>> +
+>>
+>> But is it really needed to specify the single supported bus-type?
+>>
+>> I believe it is not, at least it's not ever done for other media devices
+>> like sensors.
 > 
-> Add a compatible for the Power Domain Controller on QCS615 platform.
-> 
-> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> Signed-off-by: Lijuan Gao <quic_lijuang@quicinc.com>
-> ---
->  Documentation/devicetree/bindings/interrupt-controller/qcom,pdc.yaml | 1 +
->  1 file changed, 1 insertion(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/interrupt-controller/qcom,pdc.yaml b/Documentation/devicetree/bindings/interrupt-controller/qcom,pdc.yaml
-> index b1ea08a41bb0c369985c5f2d5b4c4644367a88dd..ac7ccd98944157d2b914b04753ed7e4ab08c5187 100644
-> --- a/Documentation/devicetree/bindings/interrupt-controller/qcom,pdc.yaml
-> +++ b/Documentation/devicetree/bindings/interrupt-controller/qcom,pdc.yaml
-> @@ -26,6 +26,7 @@ properties:
->    compatible:
->      items:
->        - enum:
-> +          - qcom,qcs615-pdc
->            - qcom,qdu1000-pdc
->            - qcom,sa8255p-pdc
->            - qcom,sa8775p-pdc
-> 
+> Through video-interfaces.yaml 'bus-type' is already allowed but not
+> restricted to the values that actually make any sense on such hardware,
+> so in my opinion this makes sense to have here.
+This is additive not prescriptive.
 
-Please ignore this mail.
+New additions should include this bus-type number as we will need it 
+when we add CPHY support and the subsequently move to the PHY API for 
+CAMSS PHYs.
 
--Akhil.
+So still in favour of this amendment.
 
+---
+bod
 
