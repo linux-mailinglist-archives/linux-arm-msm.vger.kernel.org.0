@@ -1,184 +1,195 @@
-Return-Path: <linux-arm-msm+bounces-41987-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-41988-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 264DC9F0AD7
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Dec 2024 12:24:42 +0100 (CET)
-Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id A7B109F0AE2
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Dec 2024 12:25:50 +0100 (CET)
+Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B638716A920
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Dec 2024 11:25:47 +0000 (UTC)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 654091DE4D0;
+	Fri, 13 Dec 2024 11:25:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="OUhiPqi7"
+X-Original-To: linux-arm-msm@vger.kernel.org
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D5C1A283480
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Dec 2024 11:24:40 +0000 (UTC)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2B75E1DE4EB;
-	Fri, 13 Dec 2024 11:24:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="XC08qcs/"
-X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f41.google.com (mail-ed1-f41.google.com [209.85.208.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 131151DE3C8
-	for <linux-arm-msm@vger.kernel.org>; Fri, 13 Dec 2024 11:24:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B961F1D0E20;
+	Fri, 13 Dec 2024 11:25:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734089077; cv=none; b=EUABK2nWgs0JWekUUKw6p51bZlzR/q82JJz8jB92R747fObCCPFA+bFegds6ZE32cuyZcMQFZTQIqV7d7jKAxxMUJuQYNP3fP5PVOiBuwX2o9GFr+KbXJxZo82bwasuIUo7KC+ktvtBS7QyN82tDcyqoJnMu0SXXPH7jgMH1mUI=
+	t=1734089148; cv=none; b=dGcx6z7Ter+VhBrmgVfMF2p2Lrsiuq3ojjsYF1QCWZh/3dw0Hf2ORUJjDJqa20sHvMX0MGJzbtFcETFHNdG4FsUKShHH4tUN9jkH0z/NqyNyszHdxGKbaEYDw527yeQgKbKe4MUwZwk5eu+hNTsIw0Lo8kXn/nc7NesTZe2VFNg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734089077; c=relaxed/simple;
-	bh=snnh96pafNFzlEpT/qqdrFsTpjfx5iGzHzQONIqPb+E=;
-	h=Mime-Version:Content-Type:Date:Message-Id:To:Cc:Subject:From:
-	 References:In-Reply-To; b=uogofFLdmIp3FoClgkyhB1k9jSfua5IhKMUaMpBsPSuhG6d34NXLFJ888cWw7Do1trAVSrDuW2wdP37UpoeD07jreotDNrwpndcW+wqPeuOySrzHclKrSqjyQunGUitl9OzsYkoLHFcXyJV8IUT8ITfIthP7lB0kTcbWBsBOK9E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=XC08qcs/; arc=none smtp.client-ip=209.85.208.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
-Received: by mail-ed1-f41.google.com with SMTP id 4fb4d7f45d1cf-5d27243ba8bso2986918a12.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Dec 2024 03:24:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1734089073; x=1734693873; darn=vger.kernel.org;
-        h=in-reply-to:references:from:subject:cc:to:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Cnpyzu6lv8YqeO3d0+ja8kODHWMWdakay6mWzpL+xrc=;
-        b=XC08qcs/GnkR6q930WQaHaIhGb0T6vC357d9JhitFZj0PPNRuVvLwMIXZr51ZiXlPl
-         Yww46o/PxEenLWZ0S9Tkx/mgK/jk2carse48+LjINOZ5OVgDU7OAw96FpAdlZn9bVEIk
-         Wixlx4SvS9J8IepeeShU98+UCnDhDD0pxaC87ThFpCPsIZ32M/yU0zm/g5s20q1aRbH1
-         ih0VdN6k7ktxyp6rHgdYGBPxIaBqESHOrhQxOFSqHYB+c+iST6crJaDY9wtpPrMz6Dfp
-         6cXn7Wfkee6xjYK9jaNCH//tXvY7e2zGSDd/ozFf2WTRrWRTNBTy+HzEJBE8TafoUv4b
-         LmOQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734089073; x=1734693873;
-        h=in-reply-to:references:from:subject:cc:to:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=Cnpyzu6lv8YqeO3d0+ja8kODHWMWdakay6mWzpL+xrc=;
-        b=ohOl9wQp0Aa8KASY4zZxRgoIfKndnQdKioiWaW06zfDLH0Go+H1NtcaS2E2MzKwk8+
-         e0ID1ZQFH1N6GohDm+iJbc+kqU9N9J/3RSaNGucccYIZi2488IUIoJiK+4QT/Swd5IVN
-         WTIAfyae+oRpd5uAitR0yrxqd51dyri+ViD87ZwX3X17J0g7gKQJAaZfIYZ+QKjrdU8c
-         o7pxwJQ3zjDL8j9taTccgCD376E4O3+NujIKs36KDHhavD/8RGAv8nAaGHsDREO+L9Qb
-         Vbc2PQOcsim9hz+QxMSYUdl1T9h4irS2K9cEBUwN+kE7bKLyU2pfSMgZqo7zCKK2AJd5
-         MDeg==
-X-Forwarded-Encrypted: i=1; AJvYcCWqb84UcDtwhcnrHGbVqU/eUhjLQMNs4s+Mrlf4nkxhS0rTw+m6ogZV1O/L25q973x42+HwKALn1ktbeFqC@vger.kernel.org
-X-Gm-Message-State: AOJu0YxNkxzde/BKa65dM2DaXU6jxQJoA9qVEMo69VeUNsskbdOwsaQd
-	5XlFRq37udJJv6Za7TB1saOMDUPrszv5J8RJ0LoHC59EGDXapArgkOAmBoIbXUE=
-X-Gm-Gg: ASbGncugi0Zc4CGQ6ryn+eKfhedQB/1BLqeiSdtxtRduZEMMJi7wb9dCuVh0zcRr+WB
-	t2WKkSSxHf0g/rxZe7Zx9NKfadGTQkMB6ci3UxleMk9ceyvdnuTVyG4w7UAH69mqztOsEmNWbEP
-	FO1h0EM9pL1X2NcU2vpyhDBf/jWhYm7VclWGKaG/z+fB//zRQoX/OwcsZKYnyvQRiJwChgE2cff
-	bysaYhBivU/+lzfC1ygZUaZY6JPAn1Z79bPfWPDcWQ1eEixc/pcilD0ALdJf5PwVIRHgXf6M1jX
-	n53JI9y3NP8W0V4L1rvT+SIQ9A==
-X-Google-Smtp-Source: AGHT+IGeg0s4qNRaUPzwDALdquV88wvtgMDBcH6o5c3axPun64tbEAiTsdkSUr1tnrXedXMx3+v/Kw==
-X-Received: by 2002:a05:6402:3551:b0:5cf:f42f:de82 with SMTP id 4fb4d7f45d1cf-5d63c2e51b6mr1610106a12.7.1734089073267;
-        Fri, 13 Dec 2024 03:24:33 -0800 (PST)
-Received: from localhost (144-178-202-138.static.ef-service.nl. [144.178.202.138])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5d14c74c3d5sm11349614a12.52.2024.12.13.03.24.32
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 13 Dec 2024 03:24:32 -0800 (PST)
+	s=arc-20240116; t=1734089148; c=relaxed/simple;
+	bh=AAySlqWRU7tneaj1wMOloOL1qA7eTfg3gG+BsQ+phnw=;
+	h=From:Subject:Date:Message-ID:MIME-Version:Content-Type:To:CC; b=L+gcAzwdAYKNxYXD2TBb3NNeypersdvHXtyhSf6WuDyXRaN/oIz216F1ShW14IO5HlhPTUpTS1/LzZfTSqrqGpak2m6eISqVVgIfmxQoGl35LN57nY0CT5/P6dsiAArcxocVLiN2AOTI6vICe7oszkastcUfvCom7M4o6TVutjs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=OUhiPqi7; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BD9p3tV018631;
+	Fri, 13 Dec 2024 11:25:34 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=KzcnJU/yNMnn7D6lBfjSk1
+	CYG5+7awuwww2XHLNxjWc=; b=OUhiPqi73GugeSwGZSYExbBeYQT+//vH5mfHt2
+	rlvyLt0tIEv8+ekRctYdYEfuiA4wruiSrV1neE4/764SiQJFWSFP5KX9iQtYvt0O
+	hik1AWS/fInraqRr66n8APr6t5Ymo3YkaGPAteXzVoLmwhdOUARRNCXoweQhMe2L
+	LUA4cv6ZvZ/A+0fI1mgZ+5+vlHBHU3uZRUOHtTt58p0otC0Sb1u7QOpmv5Rt37H5
+	IAyOQZ5ts2PLAp/DniAteo7zHnAi2oVDH5jaoK8oUCfaGh3jHThIUF8rnnK4dL34
+	D7cQlbVKb3zLAw2W7rGOBejviTlIAiJSyfvFyEtcArc136Rg==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43gjnb09g5-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 13 Dec 2024 11:25:34 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4BDBPXhl000719
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 13 Dec 2024 11:25:33 GMT
+Received: from [10.213.111.143] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 13 Dec
+ 2024 03:25:25 -0800
+From: Akhil P Oommen <quic_akhilpo@quicinc.com>
+Subject: [PATCH RESEND v2 00/26] Devicetree changes for QCS615's GPU
+Date: Fri, 13 Dec 2024 16:54:56 +0530
+Message-ID: <20241213-qcs615-gpu-dt-v2-0-64751d9c3748@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Fri, 13 Dec 2024 12:24:31 +0100
-Message-Id: <D6AJ9U23ANWI.1DLHNPU5A6HQ4@fairphone.com>
-To: "Vladimir Zapolskiy" <vladimir.zapolskiy@linaro.org>, "Krzysztof
- Kozlowski" <krzk@kernel.org>
-Cc: "Robert Foss" <rfoss@kernel.org>, "Todor Tomov" <todor.too@gmail.com>,
- "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>, "Mauro Carvalho Chehab"
- <mchehab@kernel.org>, "Rob Herring" <robh@kernel.org>, "Krzysztof
- Kozlowski" <krzk+dt@kernel.org>, "Conor Dooley" <conor+dt@kernel.org>,
- "Barnabas Czeman" <barnabas.czeman@mainlining.org>, "AngeloGioacchino Del
- Regno" <angelogioacchino.delregno@somainline.org>, "Caleb Connolly"
- <caleb.connolly@linaro.org>, "David Heidelberg" <david@ixit.cz>,
- <~postmarketos/upstreaming@lists.sr.ht>, <phone-devel@vger.kernel.org>,
- <linux-arm-msm@vger.kernel.org>, <linux-media@vger.kernel.org>,
- <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH 1/2] media: dt-bindings: media: camss: Restrict bus-type
- property
-From: "Luca Weiss" <luca.weiss@fairphone.com>
-X-Mailer: aerc 0.18.2-0-ge037c095a049
-References: <20241209-camss-dphy-v1-0-5f1b6f25ed92@fairphone.com>
- <20241209-camss-dphy-v1-1-5f1b6f25ed92@fairphone.com>
- <nqggstwkytqxpxy3iuhkl6tup5elf45lqi3qlgyv6eaizvnfdr@2uy57umdzqfa>
- <e4bd515a-eb98-4ea1-8d73-4ba5e7c9b66e@linaro.org>
-In-Reply-To: <e4bd515a-eb98-4ea1-8d73-4ba5e7c9b66e@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+To: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        "Konrad
+ Dybcio" <konradybcio@kernel.org>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Marijn Suijten
+	<marijn.suijten@somainline.org>,
+        Maarten Lankhorst
+	<maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        Rob Herring <robh@kernel.org>,
+        "Krzysztof
+ Kozlowski" <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        "Bjorn
+ Andersson" <andersson@kernel.org>
+CC: <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>,
+        Akhil P Oommen <quic_akhilpo@quicinc.com>,
+        Lijuan Gao <quic_lijuang@quicinc.com>,
+        Krzysztof Kozlowski
+	<krzysztof.kozlowski@linaro.org>,
+        Taniya Das <quic_tdas@quicinc.com>,
+        Raviteja Laggyshetty <quic_rlaggysh@quicinc.com>,
+        Krzysztof Kozlowski
+	<krzk@kernel.org>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        "Qingqing
+ Zhou" <quic_qqzhou@quicinc.com>,
+        Imran Shaik <quic_imrashai@quicinc.com>,
+        "Jie Zhang" <quic_jiezh@quicinc.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1734089124; l=3591;
+ i=quic_akhilpo@quicinc.com; s=20240726; h=from:subject:message-id;
+ bh=AAySlqWRU7tneaj1wMOloOL1qA7eTfg3gG+BsQ+phnw=;
+ b=bMZFKFmg26NUBS+pYVxgFmPOL3DhHhE86SoPClG9/JMRKRMNoEuzcWsMJlyVgNoQR5X+2n/hy
+ yN9AQzrC7w7BXyIZqOX4+Szl/JEtEEiKE72QmdQ04syLWPpJ2U/Qa8t
+X-Developer-Key: i=quic_akhilpo@quicinc.com; a=ed25519;
+ pk=lmVtttSHmAUYFnJsQHX80IIRmYmXA4+CzpGcWOOsfKA=
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: SOXcy6brp1HZUj8htpvzdJKCsJ2m5C2G
+X-Proofpoint-GUID: SOXcy6brp1HZUj8htpvzdJKCsJ2m5C2G
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0
+ lowpriorityscore=0 bulkscore=0 clxscore=1011 phishscore=0
+ priorityscore=1501 impostorscore=0 adultscore=0 malwarescore=0 mlxscore=0
+ suspectscore=0 mlxlogscore=999 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2411120000 definitions=main-2412130079
 
-On Fri Dec 13, 2024 at 11:50 AM CET, Vladimir Zapolskiy wrote:
-> On 12/13/24 11:34, Krzysztof Kozlowski wrote:
-> > On Mon, Dec 09, 2024 at 01:01:05PM +0100, Luca Weiss wrote:
-> >> The CSIPHY of Qualcomm SoCs support both D-PHY and C-PHY standards for
-> >> CSI-2, but not any others so restrict the bus-type property describing
-> >> this to the supported values.
-> >>
-> >> The only exception here is MSM8916 which only supports D-PHY. C-PHY wa=
-s
-> >> introduced with newer SoCs.
-> >>
-> >> Do note, that currently the Linux driver only supports D-PHY.
-> >>
-> >> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
-> >> ---
-> >>   .../bindings/media/qcom,msm8916-camss.yaml         |  8 ++++++
-> >>   .../bindings/media/qcom,msm8953-camss.yaml         | 15 +++++++++++
-> >>   .../bindings/media/qcom,msm8996-camss.yaml         | 20 ++++++++++++=
-+++
-> >>   .../bindings/media/qcom,sc8280xp-camss.yaml        | 20 ++++++++++++=
-+++
-> >>   .../bindings/media/qcom,sdm660-camss.yaml          | 20 ++++++++++++=
-+++
-> >>   .../bindings/media/qcom,sdm845-camss.yaml          | 20 ++++++++++++=
-+++
-> >>   .../bindings/media/qcom,sm8250-camss.yaml          | 30 ++++++++++++=
-++++++++++
-> >>   7 files changed, 133 insertions(+)
-> >>
-> >> diff --git a/Documentation/devicetree/bindings/media/qcom,msm8916-cams=
-s.yaml b/Documentation/devicetree/bindings/media/qcom,msm8916-camss.yaml
-> >> index 9cc0a968a401836814560c1af3ee84d946500b4f..3de2a3d2b5b761106975aa=
-b65ff614b2ef579ef5 100644
-> >> --- a/Documentation/devicetree/bindings/media/qcom,msm8916-camss.yaml
-> >> +++ b/Documentation/devicetree/bindings/media/qcom,msm8916-camss.yaml
-> >> @@ -94,6 +94,10 @@ properties:
-> >>                   minItems: 1
-> >>                   maxItems: 4
-> >>  =20
-> >> +              bus-type:
-> >> +                enum:
-> >> +                  - 4 # MEDIA_BUS_TYPE_CSI2_DPHY
-> >> +
-> >>               required:
-> >>                 - data-lanes
-> >>  =20
-> >> @@ -113,6 +117,10 @@ properties:
-> >>                   minItems: 1
-> >>                   maxItems: 4
-> >>  =20
-> >> +              bus-type:
-> >> +                enum:
-> >> +                  - 4 # MEDIA_BUS_TYPE_CSI2_DPHY
-> >> +
->
-> But is it really needed to specify the single supported bus-type?
->
-> I believe it is not, at least it's not ever done for other media devices
-> like sensors.
+This series adds support for Adreno 612 to QCS615 chipset's devicetree.
+DRM driver's support was posted earlier and can be found here:
+	https://patchwork.freedesktop.org/patch/626066/
 
-Through video-interfaces.yaml 'bus-type' is already allowed but not
-restricted to the values that actually make any sense on such hardware,
-so in my opinion this makes sense to have here.
+Patch#1 & #2 are for Rob Clark and the other 2 for Bjorn
 
->
-> Here I would prefer to get a comment from Linux Media and/or DTB experts.
+Signed-off-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
+---
+Changes in v2:
+- Completely describe RGMU in devicetree and also add necessary binding
+documentation (Konrad, feedback on the driver patch)
+- Remove smmu_vote clk from clock list (Konrad)
+- Add R-b from Dmitry
+- Link to v1: https://lore.kernel.org/r/20241126-qcs615-gpu-dt-v1-0-a87782976dad@quicinc.com
 
-I'm far from either, so happy to get more comments on this!
+---
+Akhil P Oommen (2):
+      dt-bindings: display/msm: gpu: Document A612 GPU
+      dt-bindings: display/msm/gmu: Document RGMU
 
-Regards
-Luca
+Jie Zhang (2):
+      arm64: dts: qcom: qcs615: Add gpu and gmu nodes
+      arm64: dts: qcom: qcs615-ride: Enable Adreno 612 GPU
 
->
-> --
-> Best wishes,
-> Vladimir
+ .../devicetree/bindings/display/msm/gmu.yaml       |  7 +-
+ .../devicetree/bindings/display/msm/gpu.yaml       | 36 +++++++++
+ arch/arm64/boot/dts/qcom/qcs615-ride.dts           |  8 ++
+ arch/arm64/boot/dts/qcom/qcs615.dtsi               | 88 ++++++++++++++++++++++
+ 4 files changed, 137 insertions(+), 2 deletions(-)
+---
+base-commit: 30eb6f0b08b13fd25ea12a3a6fa0a85915190c1c
+change-id: 20241125-qcs615-gpu-dt-facbd8ac318f
+prerequisite-message-id: <20241104-add_initial_support_for_qcs615-v5-4-9dde8d7b80b0@quicinc.com>
+prerequisite-patch-id: 82481c82a20345548e2cb292d3098ed51843b809
+prerequisite-patch-id: fc1cfec4ecd56e669c161c4d2c3797fc0abff0ae
+prerequisite-patch-id: 04ca722967256efddc402b7bab94136a5174b0b9
+prerequisite-patch-id: 3bd8edd83297815fcb1b81fcd891d3c14908442f
+prerequisite-patch-id: 09782474af7eecf1013425fd34f9d2f082fb3616
+prerequisite-message-id: <20241022-qcs615-clock-driver-v4-3-3d716ad0d987@quicinc.com>
+prerequisite-patch-id: a57054b890d767b45cca87e71b4a0f6bf6914c2f
+prerequisite-patch-id: 07f2c7378c7bbd560f26b61785b6814270647f1b
+prerequisite-patch-id: cd9fc0a399ab430e293764d0911a38109664ca91
+prerequisite-patch-id: 5a8e9ea15a2c3d60b4dbdf11b4e2695742d6333c
+prerequisite-message-id: <20240924143958.25-2-quic_rlaggysh@quicinc.com>
+prerequisite-patch-id: 0e224a7310d36e9a633d57c4a177ff24c1e8e767
+prerequisite-patch-id: 3c73bafb074ea339d387a6aa39e5362c8775596d
+prerequisite-message-id: <20241108-qcs615-mm-clockcontroller-v3-7-7d3b2d235fdf@quicinc.com>
+prerequisite-patch-id: df8e2fdd997cbf6c0a107f1871ed9e2caaa97582
+prerequisite-patch-id: b3cc42570d5826a4704f7702e7b26af9a0fe57b0
+prerequisite-patch-id: 125bb8cb367109ba22cededf6e78754579e1ed03
+prerequisite-patch-id: 8e2e841401fefbd96d78dd4a7c47514058c83bf2
+prerequisite-patch-id: 807019bedabd47c04f7ac78e9461d0b5a6e9131b
+prerequisite-patch-id: 13b0dbf97ac1865d241791afb4b46a28ca499523
+prerequisite-patch-id: 40b79fe0b9101f5db3bddad23551c1123572aee5
+prerequisite-patch-id: cb93e5798f6bfe8cc3044c4ce973e3ae5f20dc6b
+prerequisite-patch-id: da2b7a74f1afd58833c6a9a4544a0e271720641f
+prerequisite-patch-id: 72a894a3b19fdbd431e1cec9397365bc5b27abfe
+prerequisite-patch-id: 748a4e51bbedae9c6ebdbd642b2fd1badf958788
+prerequisite-message-id: <20241108-qcs615-mm-dt-nodes-v1-1-b2669cac0624@quicinc.com>
+prerequisite-patch-id: 8844a4661902eb44406639a3b7344416a0c88ed9
+prerequisite-patch-id: bcb1328b70868bb9c87c0e4c48e5c9d38853bc60
+prerequisite-message-id: <20241122074922.28153-1-quic_qqzhou@quicinc.com>
+prerequisite-patch-id: c71c7897d6f250b381f7a9ac66ec58f4a10d49d6
+prerequisite-patch-id: 50223f2370a7ae8053b164fa5219a1690d7e4567
+
+Best regards,
+-- 
+Akhil P Oommen <quic_akhilpo@quicinc.com>
 
 
