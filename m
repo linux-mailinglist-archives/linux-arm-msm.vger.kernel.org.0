@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-41904-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-41905-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6281C9F061A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Dec 2024 09:12:14 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 840C99F061C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Dec 2024 09:12:22 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E8EB61693EE
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Dec 2024 08:12:01 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id EA3D11889BE3
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Dec 2024 08:12:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A45D419F40E;
-	Fri, 13 Dec 2024 08:11:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 45C9F19F40E;
+	Fri, 13 Dec 2024 08:12:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="n9bFY9w4"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ecu6C6tH"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C8FA18DF7C;
-	Fri, 13 Dec 2024 08:11:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17C6E19E982;
+	Fri, 13 Dec 2024 08:12:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734077504; cv=none; b=EiLmzMpcKFb07XevAOwXLDePgHtzGyCWJhEkY7rUfbiGdWsWnESPzVqHu4Q0C+/TCH+psR87Q0phZK6zTZctkdvFCIzMo7NcSRXx4NU6gAsqJDJOMWcGXa4ITdXvSfTuUPVzZVDTx++Vh2U9mrg1lszbd5tO4XW2p/iObRbxrGs=
+	t=1734077538; cv=none; b=JC7FaLYGfl7KEgOrVhq9rusSSHFz8psiBGVgzgnr4ekHmXsReXPwnWFwiXKtG4/Cw//1gMsCWsOvhXBevXgBKiIz0KW3YvGhcU74yrl3XRbnKzaSeOGF49ogscCF65cBeNbQqWUuNifPwKrR1qW5qz0UDt683aRPOmmMaGGwpbc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734077504; c=relaxed/simple;
-	bh=73yssdc/MzCCDCGuBlGtQz44+gJujDCm4GUS3pL7pI0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=npdg/+DGnrAOtoDcStwuNj4iXtWCCc0XgWlp/QWXm60yoxBBY7zSsN+SamIXt0PhbNB1BmVKTQxkCKfboNWs7VSE42DctfN5m1wrRXCUyr6d6ICnzCO+gMQl49FgTXCydDY1L8DpcNLnP2lIkT0JCEn4fD4pQAH4tKGe56G/PtM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=n9bFY9w4; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AA0BC4CED6;
-	Fri, 13 Dec 2024 08:11:38 +0000 (UTC)
+	s=arc-20240116; t=1734077538; c=relaxed/simple;
+	bh=NYJMAbPSuP69SJgTfmwj0roJOpkRyTlpZYYcXkAVxO0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=UkbrcqWf+bo3o+JZTVu8Yqaui0t2iDnDS0XzpYJ6kXjec4Cwk3iSL2HgNZG66f3DwJ8T4Y9eQnXxsZ1AMhD/FOj3eJ8Ymt0bILsbzD4zmFFBPwptxkj8BHB62rgq2iWSX5Ofy866zk77eiYNKNpgkxD+57KmoonF2QXzohoi5bs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ecu6C6tH; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43BD9C4CED0;
+	Fri, 13 Dec 2024 08:12:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1734077504;
-	bh=73yssdc/MzCCDCGuBlGtQz44+gJujDCm4GUS3pL7pI0=;
-	h=Date:Subject:To:References:From:In-Reply-To:From;
-	b=n9bFY9w4XJtuaFzXXvdV9D8RBjC4kqZruNWX9sF4LNhe+Z9WsZ/CyL6HXJy3vLfQz
-	 GQMX7hzNx8yKb5nodXZY4LWIJ/o7LRIbxoSa7YcEU6akbk4tPQUOiq6mQiBOQWwt6j
-	 0xzJmH/oCx1pot3YVF/vyJtUZHlmSUZqVwagyX0uMOWJUhLix82xW1pcBszTjYyzJY
-	 fyFLQVNoWMavSKuAODcHPlY1RAdw+nzq+nYmSDqTjXBgFgTrOM4ZgG/9f6M8C76mrS
-	 di1zrk3Lkpw8H+hOSuxLBZJ2/TCbPFkkNjmU9y/ZFHPkcJEH817/C6NEp9ckwRf8sO
-	 XbRLWqigiPyRw==
-Message-ID: <d6f6d82d-2a0b-4b43-87bc-f6e88f0ef973@kernel.org>
-Date: Fri, 13 Dec 2024 09:11:37 +0100
+	s=k20201202; t=1734077537;
+	bh=NYJMAbPSuP69SJgTfmwj0roJOpkRyTlpZYYcXkAVxO0=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=Ecu6C6tHTabNyKH+zor1cj6eBmvgMSi1CML5BMJ6jPvUVN6Oq9QZ0Uoe+leMm5Dt3
+	 KHOK6RnPwNSs+Vdw3ITKgbUeH/ytqsb08zJ/lxd4h+jN2+9js2agyz13JfvhzD2K8f
+	 1DDoD+zPm55hbmnqeCBIlF+wC+9B7Co+A1FsBtRRhPeiel1UeQvEzAruPTk/Ng/+ZY
+	 TwBoFE39m8589IXvXmabDTeVwjSzoPo0O401O8ayRdGLI12tValMxO3czuU40GwdXs
+	 NMJmCtfoEUSSpcAOPVnLFJReZYu+s75dfbh06v0doMfjxpkKMR1aGazl3XKtdjTBF/
+	 rnWvUxD7/5U4Q==
+Message-ID: <fc8b83dc-067a-4d9a-8f8b-31e3f8f4bd91@kernel.org>
+Date: Fri, 13 Dec 2024 09:12:11 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,16 +50,14 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] arm64: dts: qcom: qcs6490-rb3gen2-industrial-mezzanine:
- Add industrial mezzanine
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
- Sahil Chandna <quic_chandna@quicinc.com>, kernel@quicinc.com,
- andersson@kernel.org, konradybcio@kernel.org, robh@kernel.org,
- krzk+dt@kernel.org, conor+dt@kernel.org, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, quic_nkumarsi@quicinc.com,
- quic_akdwived@quicinc.com, quic_kkotecha@quicinc.com
-References: <20241206065156.2573-1-quic_chandna@quicinc.com>
- <7abec959-3987-412d-97ce-92cd3e501dc1@oss.qualcomm.com>
+Subject: Re: [PATCH RESEND] arm64: dts: qcom: Add coresight node for SM8650
+To: Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
+Cc: kernel@quicinc.com, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20241210-sm8650-cs-dt-v1-1-6640ebe0c6cf@quicinc.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -105,52 +103,25 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <7abec959-3987-412d-97ce-92cd3e501dc1@oss.qualcomm.com>
+In-Reply-To: <20241210-sm8650-cs-dt-v1-1-6640ebe0c6cf@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 13/12/2024 01:31, Konrad Dybcio wrote:
-> On 6.12.2024 7:51 AM, Sahil Chandna wrote:
->> The industrial mezzanine kit enhances the capabilities of QCS6490
->> rb3gen2 core kit. Add support for industrial mezzanine board.
->>
->> Signed-off-by: Sahil Chandna <quic_chandna@quicinc.com>
->> ---
->>  arch/arm64/boot/dts/qcom/Makefile             |  3 ++
->>  .../qcs6490-rb3gen2-industrial-mezzanine.dtso | 44 +++++++++++++++++++
->>  2 files changed, 47 insertions(+)
->>  create mode 100644 arch/arm64/boot/dts/qcom/qcs6490-rb3gen2-industrial-mezzanine.dtso
->>
->> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
->> index 6ca8db4b8afe..6fe5a5ccd950 100644
->> --- a/arch/arm64/boot/dts/qcom/Makefile
->> +++ b/arch/arm64/boot/dts/qcom/Makefile
->> @@ -111,6 +111,9 @@ dtb-$(CONFIG_ARCH_QCOM)     += qcm6490-shift-otter.dtb
->>  dtb-$(CONFIG_ARCH_QCOM)        += qcs404-evb-1000.dtb
->>  dtb-$(CONFIG_ARCH_QCOM)        += qcs404-evb-4000.dtb
->>  dtb-$(CONFIG_ARCH_QCOM)        += qcs6490-rb3gen2.dtb
->> +
->> +qcs6490-rb3gen2-industrial-mezzanine-dtbs := qcs6490-rb3gen2.dtb qcs6490-rb3gen2-industrial-mezzanine.dtbo
->> +
->>  dtb-$(CONFIG_ARCH_QCOM)        += qcs8550-aim300-aiot.dtb
->>  dtb-$(CONFIG_ARCH_QCOM)        += qcs9100-ride.dtb
->>  dtb-$(CONFIG_ARCH_QCOM)        += qcs9100-ride-r3.dtb
->> diff --git a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2-industrial-mezzanine.dtso b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2-industrial-mezzanine.dtso
->> new file mode 100644
->> index 000000000000..74f2f782d166
->> --- /dev/null
->> +++ b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2-industrial-mezzanine.dtso
->> @@ -0,0 +1,44 @@
->> +// SPDX-License-Identifier: BSD-3-Clause
->> +/*
->> + * Copyright (c) 2024, Qualcomm Innovation Center, Inc. All rights reserved.
->> + */
->> +/*
+On 10/12/2024 07:51, Yuanfang Zhang wrote:
+> Add coresight components: Funnel, ETE and ETF for SM8650.
 > 
-> Err.. does this even compile? Is this a whole-file-as-a-comment?
+> Signed-off-by: Yuanfang Zhang <quic_yuanfang@quicinc.com>
+> ---
+>  arch/arm64/boot/dts/qcom/sm8650.dtsi | 187 +++++++++++++++++++++++++++++++++++
+>  1 file changed, 187 insertions(+)
+It does not look like you tested the DTS against bindings. Please run
+`make dtbs_check W=1` (see
+Documentation/devicetree/bindings/writing-schema.rst or
+https://www.linaro.org/blog/tips-and-tricks-for-validating-devicetree-sources-with-the-devicetree-schema/
+for instructions).
 
-That's why this passes all the tests, all the checks and even works
-runtime - simply empty overlay :).
+Please read carefully DTS coding style and follow it in your DTS
+submissions.
 
 Best regards,
 Krzysztof
