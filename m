@@ -1,87 +1,87 @@
-Return-Path: <linux-arm-msm+bounces-41868-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-41869-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B3AED9F0099
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Dec 2024 00:57:00 +0100 (CET)
-Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 25CE79F00B7
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Dec 2024 01:17:32 +0100 (CET)
+Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 74ED9285906
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Dec 2024 23:56:59 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 30CF216A38B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Dec 2024 00:17:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AEED11DEFD0;
-	Thu, 12 Dec 2024 23:56:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 88B251373;
+	Fri, 13 Dec 2024 00:17:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="BtxJPCZq"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="MBImFEvZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 342DB1DEFC1
-	for <linux-arm-msm@vger.kernel.org>; Thu, 12 Dec 2024 23:56:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A99B510F9
+	for <linux-arm-msm@vger.kernel.org>; Fri, 13 Dec 2024 00:17:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734047818; cv=none; b=fYd6h8LCSZVrTKo1SwwUbdakRvB3H6bIN7ZASGQUp78g5ZRCfnDN0RXbktKF8VQV2xaBx6lxX0rLi/yHPrtLMs5Ucc2HG7Q4wiV2qB/CWdimdQk6L5TajT3fJojv1XPmWPW5Z5OO64+hQrlHZ/dOUG3dboG8MzSuJlRGo50TEm4=
+	t=1734049047; cv=none; b=A7XZfswmtap94xAtXmifXshGOB2sDFMlsKnK7IXSnMn9drn0P3aHdAIPxnndGwKdAtkOuOd+ykpVKvhLvUWUeWpx7MIZ/cJv/mMCqKN665vxIP60PWCKoDuiHGUfXnPJLzwDxgGJj5U9hLzLZhDil+ACvWTk+6nFY3BvwU3gDSI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734047818; c=relaxed/simple;
-	bh=aypqBEDo7cxiaQTVJnF2pXmioUjFcR+5fj45JQdYhgk=;
+	s=arc-20240116; t=1734049047; c=relaxed/simple;
+	bh=SrxXmCH+v0QxUaizKqemgaUdx3DE/X8P/ujBSccAkV0=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=mrRONvyk9Jkmx1bDFF/SKCVxBY/IjwnqM7TwOW3HsALNyVQpyLVFKpFb8XUV1wMEktRgfwjYWeRc+OTBWPO7lJgkAoOUVKRXTqJ8pWR5F0eMBPksV9G1fptPA9MCuRKbf6fxinswokgp8bJamMI8ntqgZC52o6tsA/+dJboFJLk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=BtxJPCZq; arc=none smtp.client-ip=205.220.168.131
+	 In-Reply-To:Content-Type; b=ucsSwOft63aGHecW9uYX+xdz6FeBJIXPRhW1rrQi0XZmBgwsbJcfF8ilyH5Pr3idGn+ffm4to2JC5ZdUcPy7bmQ1bjMzP6GGr531+QwkwjvFMaO5Yg1pS4+WmUiepTmnNz9DO8D+bd5KgnG1JnlHaqHql5ouGpnhhzoh81u53u0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=MBImFEvZ; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BCGktfj032358
-	for <linux-arm-msm@vger.kernel.org>; Thu, 12 Dec 2024 23:56:56 GMT
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BCHaj7o002411
+	for <linux-arm-msm@vger.kernel.org>; Fri, 13 Dec 2024 00:17:24 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	igkze4eNvMlgvzpqcEPf2X9VDFsvbmDI+1YMKHbfq4A=; b=BtxJPCZq328LwSdu
-	+HOEKW+BHMKvUkpMRZu4bo0yu0dUqfHn6m5Z9hWE6GZtKgZ1YG9TnYSKfOAaJZUQ
-	jQcZ/2rhDxTT12cJ55KIT0LoHjyUHcxk7cXehZbWul8+mOS6ij42bZTDKc9Hr+nz
-	+PWX/kRFdMOGVbYjMsezxNB5THPdLh+28+ezZi8xOWkGjR8kqk3EjcxvofPxtq02
-	OuAko0+T1AI6A4gvdh5+rmgGleg4r5wrUCKIXlMUFRkSCHj0auXsn2Cwuqlglk5j
-	LOSrXQaY6YHnvb9duE5e3myaZfVgRaGC44rjrylI4Oy8RWOxMP4bMIxjztAVOa5L
-	vny8Og==
-Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com [209.85.160.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43f6tfdskf-1
+	A4FGY2FCz++6gIonHBSqZEO3eSKMy5sJo/16rWS0kSQ=; b=MBImFEvZtmLProm4
+	OYThpJRoeKbkyK2xi1YKZmm0thirllahSn9ryJLfelTeXpU8YKD0YZ/rPgzjVd4F
+	B/AV8oI1+y5w4xe5Rrj/vTPyVZqXHEkmQQIZVyFsX3r3Lw8GcmoNuhPnK7MwZazl
+	Nj5OVCzcwrn2Tf/FH1jrYA6lpQ3x7f9noqN+kze5tL4D2hCv7gw1JiFGoUsVHZBO
+	OJ8EcHncSEpVu01sa5MszL6pINryHrsZAr2HiIn/SS46Nq9ndUsmIiuptboE1QO1
+	ASNY/EoTtjehdw7471/w6+zEJvQlW5nljaeIEJXubjwGKY9fE/iZdzkvL9BBGLap
+	JI5lOQ==
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com [209.85.222.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43eyg6734w-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 12 Dec 2024 23:56:56 +0000 (GMT)
-Received: by mail-qt1-f199.google.com with SMTP id d75a77b69052e-46792962c90so1804051cf.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Dec 2024 15:56:56 -0800 (PST)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 13 Dec 2024 00:17:24 +0000 (GMT)
+Received: by mail-qk1-f197.google.com with SMTP id af79cd13be357-7b6f134dac1so12879085a.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Dec 2024 16:17:24 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734047815; x=1734652615;
+        d=1e100.net; s=20230601; t=1734049043; x=1734653843;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=igkze4eNvMlgvzpqcEPf2X9VDFsvbmDI+1YMKHbfq4A=;
-        b=Pgn6AYGq7PKgphJcTUMdebK36q5/+4irP6UIVZYpeobNI8Ez7qiSm57w91gMfNi5pm
-         o8+YbA50pXubfW4oMQZJ14AswT7u2XY5tt5cL5elZFYawHJ9ytJZCx0mh0LuUOYzuUO3
-         NAFVN1hSZAFw7bv6aS8VXLfuztsMzGIo3myCsu7L6tiLSRhrOwHnaoN3meb7SQE2u0jx
-         /5ksgZ3Ot2pSEOCIs8VWNw0Dicid+JQO/dAYKtFyU1PZc4HHiDi8E4oQyDk0P/0TKXIz
-         vvXXNtVby1lYOPCSM8ONYWaHBarcsOpVOCDHXlkPbjl8Ws60bS9cG0pN6Vxh2hdH0Yyr
-         GoPg==
-X-Forwarded-Encrypted: i=1; AJvYcCUT9pTrFBujqplVPaZGTdapTg6au9DBoojLnCaZHXbqWxV9yDyiFiI3ZxnkiVrFJW1HRF97sO9GAItQmD9F@vger.kernel.org
-X-Gm-Message-State: AOJu0YybbzxYRQaTo9gEUpBhzM2Mkts7XN4Uss8wU33VwQ51M+5WcFcZ
-	3rSnjvOQqBwxjpRry4hCZ+j346rGvqlfQj2Bed+Pvl2BdZngSQOyLHz8Bra0IWEgahS8qksyzeA
-	ZR/Q4m582dDvJj2qf1Ry5mEOuj6gmQ3e0y90QAS2qOr4iQXXF1bdcUnv9NrdTDzfB
-X-Gm-Gg: ASbGnctu0y37/5u4tbLqa2U74dBbDBawnPvG1uRuc10Fv6GypcYyGfdo6Oh4/cvhFtQ
-	W2jklqJQ57RLivYsVp+H6HsCgELHENX9h2Vo/xWTxAeFmO/90g+KthQ6LC48D5ur/wNxSu9ed11
-	Tf9nC+3+YFG0s8NXMFnl12KrdlhKqLpBndA1eQdXDdgd0LKcn/9HhHJZHF1aboxSkasOrz5oWwB
-	Ot7fCWAds/6j5IFwD+MwoKNUtY9KlP7s8npqmXW0hK1xIZasOBkeCUmKBU0DaFD+1rV1jN0Mhez
-	7bICrdygJPqPE+dxUgsvmKKmnVaClJf9ykaQ
-X-Received: by 2002:a05:622a:48f:b0:467:95c2:d8a3 with SMTP id d75a77b69052e-467a575541bmr4033651cf.6.1734047815114;
-        Thu, 12 Dec 2024 15:56:55 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEVdy+xBxzqm0XQW/NYiBLzG2Pc2PWxSKMVl5eSX5gu4+DsOJ6TJe0k3mLn1vWEbfRN0MJg9w==
-X-Received: by 2002:a05:622a:48f:b0:467:95c2:d8a3 with SMTP id d75a77b69052e-467a575541bmr4033481cf.6.1734047814774;
-        Thu, 12 Dec 2024 15:56:54 -0800 (PST)
+        bh=A4FGY2FCz++6gIonHBSqZEO3eSKMy5sJo/16rWS0kSQ=;
+        b=f2utd++p0SDeR74m+nwDeCb0LA8g8mx1DQVSoZ+pva1ATGz14mWvgX+Y1beZ5q/3BJ
+         /GSQbsjvjOdJQgSDzaU1tjs+BlQEo0exofTLd6k2FadQ+q5oumdzxMa+uNecQyDUDGgj
+         GNwT5YRUyLVIPk/jFzUrCaBxqRcNIvbb9uv/lnl/mDMa9W0HhHsB1I1tTgdm020z4kQk
+         2l/kcwdHA19JUrMbFh8mGgfyWU30Xu2xAfx/zIbITRnsoumlWMEBy1Ezan7LvRT267e7
+         9ZfNW9dC3VaKN1gvQ0pY/IUp5Njx62VBPzK6s2UJWtz5cZDF3qaskzRvzzK+ku44G8e7
+         G00w==
+X-Forwarded-Encrypted: i=1; AJvYcCUmT5oED+ZARrNsNyNAMC4tA9aSfpiCZGwVnJTr5Uc7D3UdZGZE+RMs9yg/CSLKI7B3qQwGIoqiIPj200RJ@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw29hx8rQkid7ek1zPH/uIHLpXa8BOz8z+9c+2E6eLva3OwBf7H
+	QBBsYOwJ1L4ZQTs4MEnJE03iokgOTR6xKRt5FU+/x0RmDo9QxoqLQTd5eIR4b53RgjnkKdeeBGM
+	Zap9WOWjNcFfumT99AWmmqdyx7uP5KUiV3cGo0rSQO2zErQzZsqM1dak1qNfdh+h8
+X-Gm-Gg: ASbGncuVmlQnif4xY1MbZqJIr9v4C8SMYXpW1UXe6yrEd6AUVkRMB6P/LxNkQE1gc6K
+	CE8PQ/SDq9bHfv3PVIf7OQxZgn1RjtkOPt0Cd0FhDZ5ZGRXX2KFWm4ddx2/65UpUPXetbxjKFZM
+	m1vNTAj01c1ws2hecw0GQ7kPH5ijHNFN+naZvG1wFpLQFtCzU8bzZdvVLxPNDf8WUaSzMWUHw+M
+	PnLlPQPN4hs6GLhzImooELFOjbbSR/DWq/OlYV7ipTw0AtWBAuQcb/qib5nJM7+LlH8GNZN4Mzo
+	NGZ2Wmvw1rD0O9y5yos2Oztb6EeWidoqwsa9
+X-Received: by 2002:a05:620a:2408:b0:7b6:d252:b4f1 with SMTP id af79cd13be357-7b6fbf331afmr29994285a.11.1734049043548;
+        Thu, 12 Dec 2024 16:17:23 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGxY4djN7MarljvVzpS9K6J5/bSMD5GkzCk0jj+nReVZgsL4CH6vk2AmGSFs0ThXyFvJRDjCA==
+X-Received: by 2002:a05:620a:2408:b0:7b6:d252:b4f1 with SMTP id af79cd13be357-7b6fbf331afmr29991585a.11.1734049043071;
+        Thu, 12 Dec 2024 16:17:23 -0800 (PST)
 Received: from [192.168.58.241] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5d3d00a0370sm9142689a12.6.2024.12.12.15.56.53
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-aa6761d0ab3sm749107466b.201.2024.12.12.16.17.21
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 12 Dec 2024 15:56:54 -0800 (PST)
-Message-ID: <553d1727-18bd-4e8f-8e05-80818dc50284@oss.qualcomm.com>
-Date: Fri, 13 Dec 2024 00:56:52 +0100
+        Thu, 12 Dec 2024 16:17:22 -0800 (PST)
+Message-ID: <94eae703-ed9e-4f57-9786-99db7aaa07d1@oss.qualcomm.com>
+Date: Fri, 13 Dec 2024 01:17:20 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -89,37 +89,173 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] arm64: dts: qcom: ipq5424: Add TRNG node
-To: Md Sadre Alam <quic_mdalam@quicinc.com>, andersson@kernel.org,
-        konradybcio@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
-        conor+dt@kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc: quic_srichara@quicinc.com, quic_varada@quicinc.com
-References: <20241206072057.1508459-1-quic_mdalam@quicinc.com>
- <20241206072057.1508459-2-quic_mdalam@quicinc.com>
+Subject: Re: [PATCH v5 2/4] Bluetooth: qca: Update firmware-name to support
+ board specific nvm
+To: Cheng Jiang <quic_chejiang@quicinc.com>,
+        Marcel Holtmann <marcel@holtmann.org>,
+        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+        Rob Herring
+ <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        Balakrishna Godavarthi <quic_bgodavar@quicinc.com>,
+        Rocky Liao <quic_rjliao@quicinc.com>
+Cc: linux-bluetooth@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        quic_jiaymao@quicinc.com, quic_shuaz@quicinc.com,
+        quic_zijuhu@quicinc.com, quic_mohamull@quicinc.com
+References: <20241212150232.3823088-1-quic_chejiang@quicinc.com>
+ <20241212150232.3823088-3-quic_chejiang@quicinc.com>
 Content-Language: en-US
 From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <20241206072057.1508459-2-quic_mdalam@quicinc.com>
+In-Reply-To: <20241212150232.3823088-3-quic_chejiang@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: MWGKahd4Su7TQbL8lqoD9TRdzaparApO
-X-Proofpoint-ORIG-GUID: MWGKahd4Su7TQbL8lqoD9TRdzaparApO
+X-Proofpoint-GUID: r_tcgl3sdIUTtpqG_DqDXrkwitPldGR-
+X-Proofpoint-ORIG-GUID: r_tcgl3sdIUTtpqG_DqDXrkwitPldGR-
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 suspectscore=0
- mlxlogscore=764 malwarescore=0 spamscore=0 lowpriorityscore=0
- impostorscore=0 adultscore=0 bulkscore=0 phishscore=0 priorityscore=1501
- clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2412120173
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 bulkscore=0
+ lowpriorityscore=0 priorityscore=1501 adultscore=0 impostorscore=0
+ mlxlogscore=999 phishscore=0 suspectscore=0 mlxscore=0 clxscore=1015
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2412130001
 
-On 6.12.2024 8:20 AM, Md Sadre Alam wrote:
-> add TRNG (Truly Random Number Generator) node for ipq5424
+On 12.12.2024 4:02 PM, Cheng Jiang wrote:
+> Different connectivity boards may be attached to the same platform. For
+> example, QCA6698-based boards can support either a two-antenna or
+> three-antenna solution, both of which work on the sa8775p-ride platform.
+> Due to differences in connectivity boards and variations in RF
+> performance from different foundries, different NVM configurations are
+> used based on the board ID.
 > 
-> Signed-off-by: Md Sadre Alam <quic_mdalam@quicinc.com>
-> ---
+> Therefore, in the firmware-name property, if the NVM file has an
+> extension, the NVM file will be used. Otherwise, the system will first
+> try the .bNN (board ID) file, and if that fails, it will fall back to
+> the .bin file.
+> 
+> Possible configurations:
+> firmware-name = "QCA6698/hpnv21";
+> firmware-name = "QCA6698/hpnv21.bin";
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+I think we should agree on one and then do some magic to look up
+the other variants.
+
+> 
+> Signed-off-by: Cheng Jiang <quic_chejiang@quicinc.com>
+> ---
+>  drivers/bluetooth/btqca.c | 112 ++++++++++++++++++++++++++++----------
+>  1 file changed, 84 insertions(+), 28 deletions(-)
+> 
+> diff --git a/drivers/bluetooth/btqca.c b/drivers/bluetooth/btqca.c
+> index dfbbac922..4842f4335 100644
+> --- a/drivers/bluetooth/btqca.c
+> +++ b/drivers/bluetooth/btqca.c
+> @@ -272,6 +272,38 @@ int qca_send_pre_shutdown_cmd(struct hci_dev *hdev)
+>  }
+>  EXPORT_SYMBOL_GPL(qca_send_pre_shutdown_cmd);
+>  
+> +static bool qca_filename_has_extension(const char *filename)
+> +{
+> +	const char *suffix;
+> +
+> +	suffix = strrchr(filename, '.');
+> +	if (suffix && suffix != filename && *(suffix + 1) != '\0' && strchr(suffix, '/') == NULL)
+> +		return true;
+> +	else
+> +		return false;
+
+How about:
+
+const char *suffix = strrchr(filename, '.');
+
+/* File extensions require a dot, but not as the last character */
+if (!suffix || *(suffix + 1) == NULL)
+	return false;
+
+/* Avoid matching directories with names that look like files with extensions */
+return !(suffix, '/');
+
+
+> +		}
+> +		/* For nvm, if desired nvm file is not present and it's not the
+> +		 * default nvm file(ends with .bin), try to load the default nvm.
+
+nvm appears 4 times in two lines, how about:
+
+/*
+ * If the board-specific file is missing, try loading the default
+ * one, unless that was attempted already
+ */
+
+But, even more importantly:
+
+a) do we want to load the "incorrect" file?
+b) why would we want to specify the .bin file if it's the default anyway?
+
+> +		 */
+> +		else if (config->type == TLV_TYPE_NVM &&
+> +			 qca_get_alt_nvm_file(config->fwname, sizeof(config->fwname))) {
+> +			bt_dev_info(hdev, "QCA Downloading %s", config->fwname);
+> +			ret = request_firmware(&fw, config->fwname, &hdev->dev);
+> +			if (ret) {
+> +				bt_dev_err(hdev, "QCA Failed to request file: %s (%d)",
+> +					   config->fwname, ret);
+> +				return ret;
+> +			}
+>  		} else {
+>  			bt_dev_err(hdev, "QCA Failed to request file: %s (%d)",
+>  				   config->fwname, ret);
+> @@ -700,34 +745,38 @@ static int qca_check_bdaddr(struct hci_dev *hdev, const struct qca_fw_config *co
+>  	return 0;
+>  }
+>  
+> -static void qca_generate_hsp_nvm_name(char *fwname, size_t max_size,
+> +static void qca_get_nvm_name_by_board(char *fwname, size_t max_size,
+> +		const char *stem, enum qca_btsoc_type soc_type,
+>  		struct qca_btsoc_version ver, u8 rom_ver, u16 bid)
+>  {
+>  	const char *variant;
+> +	const char *prefix;
+>  
+> -	/* hsp gf chip */
+> -	if ((le32_to_cpu(ver.soc_id) & QCA_HSP_GF_SOC_MASK) == QCA_HSP_GF_SOC_ID)
+> -		variant = "g";
+> -	else
+> -		variant = "";
+> +	/* Set the defalut value to variant and prefixt */
+
+typos: default, prefix
+
+> +	variant = "";
+> +	prefix = "b";
+>  
+> -	if (bid == 0x0)
+> -		snprintf(fwname, max_size, "qca/hpnv%02x%s.bin", rom_ver, variant);
+> -	else
+> -		snprintf(fwname, max_size, "qca/hpnv%02x%s.%x", rom_ver, variant, bid);
+> -}
+> +	if (soc_type == QCA_QCA2066)
+> +		prefix = "";
+>  
+> -static inline void qca_get_nvm_name_generic(struct qca_fw_config *cfg,
+> -					    const char *stem, u8 rom_ver, u16 bid)
+> -{
+> -	if (bid == 0x0)
+> -		snprintf(cfg->fwname, sizeof(cfg->fwname), "qca/%snv%02x.bin", stem, rom_ver);
+> -	else if (bid & 0xff00)
+> -		snprintf(cfg->fwname, sizeof(cfg->fwname),
+> -			 "qca/%snv%02x.b%x", stem, rom_ver, bid);
+> -	else
+> -		snprintf(cfg->fwname, sizeof(cfg->fwname),
+> -			 "qca/%snv%02x.b%02x", stem, rom_ver, bid);
+> +	if (soc_type == QCA_WCN6855 || soc_type == QCA_QCA2066) {
+> +		/* hsp gf chip */
+
+This is a good opportunity to explain what that means
 
 Konrad
 
