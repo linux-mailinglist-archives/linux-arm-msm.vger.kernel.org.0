@@ -1,175 +1,191 @@
-Return-Path: <linux-arm-msm+bounces-41985-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-41986-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6CBB39F0ACC
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Dec 2024 12:23:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 6DBFA9F0AD3
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Dec 2024 12:24:24 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id AD8FC18849E8
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Dec 2024 11:23:02 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id AC2C51885447
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Dec 2024 11:24:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CF6A81DE3C8;
-	Fri, 13 Dec 2024 11:22:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 29A0F1DE2C1;
+	Fri, 13 Dec 2024 11:24:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="QU0FsxaP"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="jBq1CSN5"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 916CA1DDC26
-	for <linux-arm-msm@vger.kernel.org>; Fri, 13 Dec 2024 11:22:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D13D1A7273;
+	Fri, 13 Dec 2024 11:24:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734088978; cv=none; b=au2AX1NVRIbz2hSO1ignhrXGlCzpxj80EOkUSmfIvsptnOwlbAPNniPs64gKnFJf51HoI/N84WUJDslNh+K+zK2X/YNfzWSsFw3/y+uOh4tfMWA30KAEIh9KMTRrYgypepB2rpsi+H5xINR674CkLkCrsmSoF7fYRbyQqtDMxSU=
+	t=1734089059; cv=none; b=CAnvGNqKTpFrftODFDS4dcHpRvwE5bxm/gMl/lPZ9fdbICM8i1r3D3sahWDiCqLbD/BEo50pc1xri4qqU2obm7OlGp9w7OtXo3RIFYOByNU+9HAT+EWRPUKL7RHNemcRCZ96FW/5Sirg42LazyQ0v9/jvKMD8HUcQPIQOOmA5g0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734088978; c=relaxed/simple;
-	bh=N6v1cyR9J/zI+Q0ORnKRS/ZchvHrsmRuEczw3AxZGk4=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 References:In-Reply-To; b=Z183mTDbqyEM20geb61WGCqW1VVuOCemBcqTEF+AUwGsBRX8CeH2IU3IQRc/cXLwRFHq/FQ2utNQqGloTvVh7aUu9zZdvWADSavJzhwE2+6eu4waO+v2j2kDtxoLwva2DiZ9W09tZcqPXajBuqg+BiIuApWQ3AKfRJNgMjesrQc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=QU0FsxaP; arc=none smtp.client-ip=209.85.128.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
-Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-4361d5dcf5bso17110735e9.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Dec 2024 03:22:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1734088974; x=1734693774; darn=vger.kernel.org;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=R0x+W2FV8c0fNb2FM/fYmcZMsw9cp5lY0mr2d1TA5uY=;
-        b=QU0FsxaPM1rSU+dSnUlkvl5AuKgamgDMRrxAkzpTgG+J3r9c8DW0drUNK45o5kvPQa
-         OIG1ZcAfX69XqfudCTx6Der3tgT2YDYYC01ZFviPa6N9xfQvP5X/PhHd76NqBjsxUx85
-         L4qtFIzYvvFwTJtNbngCGC8uTehv0ZeqHQ07W2+QptLjqvdRqx/XzqVHCfVwk6u6E4+M
-         DvpEB0hk+pOarK4kuXLVz7Zl6fsTnwl2Z10oqpQkHsl2V+alHK8qGssrO/q6PU819f6n
-         RtTtWrWJLqbRgJzQxHwgH4ZweDyMYqnZHLuVWeQMGsFUJnVQHkx/AgrbpEGwzUJwSRYi
-         HdQQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734088974; x=1734693774;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=R0x+W2FV8c0fNb2FM/fYmcZMsw9cp5lY0mr2d1TA5uY=;
-        b=FdCWM7bz4W8nXJhI9EzB0tvm7N1RyKcYrlOX6SNoHVFzB5UCzuD+zmf4205AzKs5xi
-         ZUn+j4aqTdYdRZu3tKD1WWAYqr6l2cllBltmr8sctkpTNWOfR2tBvMfFkYdtHBpYBZ7R
-         sXVtPmqhtzxCyY566iTF10//KuZUSNlTWzlDf/M93bsqnaIX6tT4BwdlSqutofYEQJs7
-         OUS8dLi3PWX95gtEZejNwe0pFfF6xmDCX/cfDH0b+Rf4hxbZxRTi+pg/ibssUwoDSQvt
-         P+Gy7ttbSFV6PkH8xcDOVEC7z6agh0YbaLPsfpffijzxtBwFcWmaYL3aPRjfdK05gp0j
-         3FLw==
-X-Forwarded-Encrypted: i=1; AJvYcCUY3fGFQTTD66pG83hCqltSICt2VCYxonJS+7mAaHeHvmxYBVGD8wh0SI87taalCyoTLsPbwTCFOldp2P3S@vger.kernel.org
-X-Gm-Message-State: AOJu0YydFStl78gN1NI7EK5gGc40kCE3aXxNh+rYKmru+US9fnVIcKIm
-	hs6oeylB15fg+Qxfuw3b90JSE8iwILYOXDRMV2WHrTfU8n+vSQt1ebsAUSyVKhIE8sPGi+dWQbp
-	uPeA=
-X-Gm-Gg: ASbGnctDaT30HLQQQLw3scSKdHe/pqQihsOJEsSxiplC7aeK0cHgtAwcAE/YuPXVSaq
-	nEIXOW4vaNtu7RnC5s33FDY4VfyoGYveelAo0PMLOr3o9jy3E9H3x6H+wwqDls1bHSqqV34CB02
-	4RZcQ3lK+w4mwjHOUrgAjzt/GhJvBA0yrAW4AMmwxypxnWvEaPhZYutmBHRhrXdiA1HxxzjJJ4k
-	42NLRHE6no1X5pwzAw759QVtuzRgHkPU22cWy678cozw1Oll+0zovMuwsAV3W998qQgydLJFna3
-	Vl4V8RCCNXN2Yi7zm1yW9cjaSg==
-X-Google-Smtp-Source: AGHT+IGX5tUiDSBzaO6MT7A0xWnpvOc0YW7KrOiuYx1f0SQxj+bIuIxBHtCdFRMgkKA6+olSdAlgFQ==
-X-Received: by 2002:a05:6000:79e:b0:385:e0d6:fb6e with SMTP id ffacd0b85a97d-3888e0ac4c1mr1337773f8f.37.1734088973848;
-        Fri, 13 Dec 2024 03:22:53 -0800 (PST)
-Received: from localhost (144-178-202-138.static.ef-service.nl. [144.178.202.138])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3878251c3a7sm6710697f8f.94.2024.12.13.03.22.53
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 13 Dec 2024 03:22:53 -0800 (PST)
+	s=arc-20240116; t=1734089059; c=relaxed/simple;
+	bh=g8jAz4FrksKsPQHRgmbgS+SytX9Cyttxargzh5+YGP4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=LLPX0Dg+8IPhXfL2EYsWo1QHvGKXy9o5b6r2orfpA7jJFzcXMIEkaJMAvqqTLjRuDen1Zv8PQQSz/U1x6XndzK43qaGSqJEZ/dYgzpkQQE1qC1Tw30dd6mfzgBKFQE0IJUDbgNUgASPlUjt3lV4vC7Xme8JyxSxMsgDkf1QQFZ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=jBq1CSN5; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BDA3mLZ012935;
+	Fri, 13 Dec 2024 11:24:04 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	ZSNtKdMhcHAkXHjoz3fGRfQJ/kHDaePgfEeRdF9SdDM=; b=jBq1CSN5Y/NW6+Bl
+	3tZCtjpEzckhQ9nqiHRvNr2HS9Y7qsfbVq5YJctQEAxPH5rd0pKko3ReX8zv8zSy
+	OyDOwiqhmLkyB++z1aQjM0wUggBM6f4/eePGlLWcM7//UvMrKuVeRa+exHyoiWH0
+	uaQaem3xiBDrOJt205PUOKpu7WwWBDJAKEb/vPdlsAsjUk2N9wESd/ujNl1T66bc
+	XugvuF/YW4e7pDiatkMt42ZkV57Ws4gxDPqKkv1BNEu17ZoncSyRm2vuNlAiloH/
+	AAIagkQQslJaB80WNHLNACiMRgx+RklO7xb2jAXPk79rHS0qvmuFCJBiSl1r1WUK
+	EmnCbw==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43gjudg83a-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 13 Dec 2024 11:24:03 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4BDBO25g031339
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 13 Dec 2024 11:24:02 GMT
+Received: from [10.204.101.130] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 13 Dec
+ 2024 03:23:54 -0800
+Message-ID: <2cbb15b1-c89a-4cc6-b425-a7fe7a2a5994@quicinc.com>
+Date: Fri, 13 Dec 2024 16:53:52 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Fri, 13 Dec 2024 12:22:53 +0100
-Message-Id: <D6AJ8KNRUHB7.1EC9O3WSCSNIP@fairphone.com>
-Cc: <~postmarketos/upstreaming@lists.sr.ht>, <phone-devel@vger.kernel.org>,
- <linux-arm-msm@vger.kernel.org>, <linux-media@vger.kernel.org>,
- <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH 2/2] media: qcom: camss: Restrict endpoint bus-type to
- D-PHY
-From: "Luca Weiss" <luca.weiss@fairphone.com>
-To: "Vladimir Zapolskiy" <vladimir.zapolskiy@linaro.org>, "Bryan O'Donoghue"
- <bryan.odonoghue@linaro.org>, "Robert Foss" <rfoss@kernel.org>, "Todor
- Tomov" <todor.too@gmail.com>, "Mauro Carvalho Chehab" <mchehab@kernel.org>,
- "Rob Herring" <robh@kernel.org>, "Krzysztof Kozlowski"
- <krzk+dt@kernel.org>, "Conor Dooley" <conor+dt@kernel.org>, "Barnabas
- Czeman" <barnabas.czeman@mainlining.org>, "AngeloGioacchino Del Regno"
- <angelogioacchino.delregno@somainline.org>, "Caleb Connolly"
- <caleb.connolly@linaro.org>, "David Heidelberg" <david@ixit.cz>
-X-Mailer: aerc 0.18.2-0-ge037c095a049
-References: <20241209-camss-dphy-v1-0-5f1b6f25ed92@fairphone.com>
- <20241209-camss-dphy-v1-2-5f1b6f25ed92@fairphone.com>
- <9c89e6f4-a9af-4270-b266-537f3464ee32@linaro.org>
- <a047e4b8-c2d6-4486-8037-e7b854660cb1@linaro.org>
-In-Reply-To: <a047e4b8-c2d6-4486-8037-e7b854660cb1@linaro.org>
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 0/4] Devicetree changes for QCS615's GPU
+To: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        "Konrad
+ Dybcio" <konradybcio@kernel.org>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Marijn Suijten
+	<marijn.suijten@somainline.org>,
+        Maarten Lankhorst
+	<maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        Rob Herring <robh@kernel.org>,
+        "Krzysztof
+ Kozlowski" <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        "Bjorn
+ Andersson" <andersson@kernel.org>
+CC: <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>,
+        <20241104-add_initial_support_for_qcs615-v5-4-9dde8d7b80b0@quicinc.com>,
+        <20241022-qcs615-clock-driver-v4-3-3d716ad0d987@quicinc.com>,
+        <20240924143958.25-2-quic_rlaggysh@quicinc.com>,
+        <20241108-qcs615-mm-clockcontroller-v3-7-7d3b2d235fdf@quicinc.com>,
+        <20241108-qcs615-mm-dt-nodes-v1-1-b2669cac0624@quicinc.com>,
+        <20241122074922.28153-1-quic_qqzhou@quicinc.com>,
+        Jie Zhang
+	<quic_jiezh@quicinc.com>
+References: <20241213-qcs615-gpu-dt-v2-0-6606c64f03b5@quicinc.com>
+Content-Language: en-US
+From: Akhil P Oommen <quic_akhilpo@quicinc.com>
+In-Reply-To: <20241213-qcs615-gpu-dt-v2-0-6606c64f03b5@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: xraMIKSN6BELrGJ4Clf72NGNKtQzBw8p
+X-Proofpoint-ORIG-GUID: xraMIKSN6BELrGJ4Clf72NGNKtQzBw8p
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 clxscore=1015
+ impostorscore=0 bulkscore=0 phishscore=0 mlxlogscore=999 suspectscore=0
+ priorityscore=1501 lowpriorityscore=0 malwarescore=0 spamscore=0
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2412130079
 
-On Fri Dec 13, 2024 at 12:02 PM CET, Vladimir Zapolskiy wrote:
-> On 12/9/24 14:32, Bryan O'Donoghue wrote:
-> > On 09/12/2024 12:01, Luca Weiss wrote:
-> >> Currently the Qualcomm CAMSS driver only supports D-PHY while the
-> >> hardware on most SoCs also supports C-PHY. Until this support is added=
-,
-> >> check for D-PHY to make it somewhat explicit that C-PHY won't work.
-> >>
-> >> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
-> >> ---
-> >>    drivers/media/platform/qcom/camss/camss.c | 9 +++++++++
-> >>    1 file changed, 9 insertions(+)
-> >>
-> >> diff --git a/drivers/media/platform/qcom/camss/camss.c b/drivers/media=
-/platform/qcom/camss/camss.c
-> >> index 9fb31f4c18adee886cd0bcf84438a8f27635e07f..b99af35074cdf6fa794a0d=
-2f0d54ecf12ac354d9 100644
-> >> --- a/drivers/media/platform/qcom/camss/camss.c
-> >> +++ b/drivers/media/platform/qcom/camss/camss.c
-> >> @@ -1855,6 +1855,15 @@ static int camss_of_parse_endpoint_node(struct =
-device *dev,
-> >>    	if (ret)
-> >>    		return ret;
-> >>   =20
-> >> +	/*
-> >> +	 * Most SoCs support both D-PHY and C-PHY standards, but currently o=
-nly
-> >> +	 * D-PHY is supported in the driver.
-> >> +	 */
-> >> +	if (vep.bus_type !=3D V4L2_MBUS_CSI2_DPHY) {
-> >> +		dev_err(dev, "Unsupported bus type %d\n", vep.bus_type);
-> >> +		return -EINVAL;
-> >> +	}
-> >> +
->
-> Looks like it would break all old board dtbs, which is not just bad, but =
-NAK.
->
-> V4L2_MBUS_UNKNOWN shall be properly handled without the risk of regressio=
-ns.
+On 12/13/2024 4:05 PM, Akhil P Oommen wrote:
+> This series adds support for Adreno 612 to QCS615 chipset's devicetree.
+> DRM driver's support was posted earlier and can be found here:
+> 	https://patchwork.freedesktop.org/patch/626066/
+> 
+> Patch#1 & #2 are for Rob Clark and the other 2 for Bjorn
+> 
+> Signed-off-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
+> ---
+> Changes in v2:
+> - Completely describe RGMU in devicetree and also add necessary binding
+> documentation (Konrad, feedback on the driver patch)
+> - Remove smmu_vote clk from clock list (Konrad)
+> - Add R-b from Dmitry
+> - Link to v1: https://lore.kernel.org/r/20241126-qcs615-gpu-dt-v1-0-a87782976dad@quicinc.com
+> 
+> ---
+> Akhil P Oommen (2):
+>       dt-bindings: display/msm: gpu: Document A612 GPU
+>       dt-bindings: display/msm/gmu: Document RGMU
+> 
+> Jie Zhang (2):
+>       arm64: dts: qcom: qcs615: Add gpu and gmu nodes
+>       arm64: dts: qcom: qcs615-ride: Enable Adreno 612 GPU
+> 
+>  .../devicetree/bindings/display/msm/gmu.yaml       |  7 +-
+>  .../devicetree/bindings/display/msm/gpu.yaml       | 36 +++++++++
+>  arch/arm64/boot/dts/qcom/qcs615-ride.dts           |  8 ++
+>  arch/arm64/boot/dts/qcom/qcs615.dtsi               | 88 ++++++++++++++++++++++
+>  4 files changed, 137 insertions(+), 2 deletions(-)
+> ---
+> base-commit: 30eb6f0b08b13fd25ea12a3a6fa0a85915190c1c
+> change-id: 20241125-qcs615-gpu-dt-facbd8ac318f
+> prerequisite-message-id: <20241104-add_initial_support_for_qcs615-v5-4-9dde8d7b80b0@quicinc.com>
+> prerequisite-patch-id: 82481c82a20345548e2cb292d3098ed51843b809
+> prerequisite-patch-id: fc1cfec4ecd56e669c161c4d2c3797fc0abff0ae
+> prerequisite-patch-id: 04ca722967256efddc402b7bab94136a5174b0b9
+> prerequisite-patch-id: 3bd8edd83297815fcb1b81fcd891d3c14908442f
+> prerequisite-patch-id: 09782474af7eecf1013425fd34f9d2f082fb3616
+> prerequisite-message-id: <20241022-qcs615-clock-driver-v4-3-3d716ad0d987@quicinc.com>
+> prerequisite-patch-id: a57054b890d767b45cca87e71b4a0f6bf6914c2f
+> prerequisite-patch-id: 07f2c7378c7bbd560f26b61785b6814270647f1b
+> prerequisite-patch-id: cd9fc0a399ab430e293764d0911a38109664ca91
+> prerequisite-patch-id: 5a8e9ea15a2c3d60b4dbdf11b4e2695742d6333c
+> prerequisite-message-id: <20240924143958.25-2-quic_rlaggysh@quicinc.com>
+> prerequisite-patch-id: 0e224a7310d36e9a633d57c4a177ff24c1e8e767
+> prerequisite-patch-id: 3c73bafb074ea339d387a6aa39e5362c8775596d
+> prerequisite-message-id: <20241108-qcs615-mm-clockcontroller-v3-7-7d3b2d235fdf@quicinc.com>
+> prerequisite-patch-id: df8e2fdd997cbf6c0a107f1871ed9e2caaa97582
+> prerequisite-patch-id: b3cc42570d5826a4704f7702e7b26af9a0fe57b0
+> prerequisite-patch-id: 125bb8cb367109ba22cededf6e78754579e1ed03
+> prerequisite-patch-id: 8e2e841401fefbd96d78dd4a7c47514058c83bf2
+> prerequisite-patch-id: 807019bedabd47c04f7ac78e9461d0b5a6e9131b
+> prerequisite-patch-id: 13b0dbf97ac1865d241791afb4b46a28ca499523
+> prerequisite-patch-id: 40b79fe0b9101f5db3bddad23551c1123572aee5
+> prerequisite-patch-id: cb93e5798f6bfe8cc3044c4ce973e3ae5f20dc6b
+> prerequisite-patch-id: da2b7a74f1afd58833c6a9a4544a0e271720641f
+> prerequisite-patch-id: 72a894a3b19fdbd431e1cec9397365bc5b27abfe
+> prerequisite-patch-id: 748a4e51bbedae9c6ebdbd642b2fd1badf958788
+> prerequisite-message-id: <20241108-qcs615-mm-dt-nodes-v1-1-b2669cac0624@quicinc.com>
+> prerequisite-patch-id: 8844a4661902eb44406639a3b7344416a0c88ed9
+> prerequisite-patch-id: bcb1328b70868bb9c87c0e4c48e5c9d38853bc60
+> prerequisite-message-id: <20241122074922.28153-1-quic_qqzhou@quicinc.com>
+> prerequisite-patch-id: c71c7897d6f250b381f7a9ac66ec58f4a10d49d6
+> prerequisite-patch-id: 50223f2370a7ae8053b164fa5219a1690d7e4567
+> 
+> Best regards,
 
-Please see drivers/media/v4l2-core/v4l2-fwnode.c around line 218.
-The code there sets bus_type if it's UNKNOWN
+A bad version of B4 tool CC'ed a few bogus email addresses. I will
+resend this series after fixing that.
 
-    if (bus_type =3D=3D V4L2_MBUS_UNKNOWN)
-        vep->bus_type =3D V4L2_MBUS_CSI2_DPHY;
-
-So setting "bus-type" in dt is not necessary, even if it makes things
-more explicit from dt side. I don't think we'll ever get UNKNOWN here in
-camss.
-
-Regards
-Luca
-
-
->
-> >>    	csd->interface.csiphy_id =3D vep.base.port;
-> >>   =20
-> >>    	mipi_csi2 =3D &vep.bus.mipi_csi2;
-> >>
-> >=20
-> > Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> >=20
->
-> --
-> Best wishes,
-> Vladimir
-
+-Akhil.
 
