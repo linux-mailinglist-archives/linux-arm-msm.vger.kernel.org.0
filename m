@@ -1,147 +1,123 @@
-Return-Path: <linux-arm-msm+bounces-42026-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-42027-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6DC6F9F0D68
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Dec 2024 14:37:44 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id EFFD49F0DDF
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Dec 2024 14:53:05 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id B3C40188BD6E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Dec 2024 13:37:44 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B06091690E9
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Dec 2024 13:52:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7A1BF1E00A0;
-	Fri, 13 Dec 2024 13:37:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E01311E2847;
+	Fri, 13 Dec 2024 13:51:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="WR9W7c00"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="l9F57L+u"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA95338DE1;
-	Fri, 13 Dec 2024 13:37:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E505C1E0E11;
+	Fri, 13 Dec 2024 13:51:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734097060; cv=none; b=Q4KQPoUI1bP9/x8W/wkTnuy+d3KdelLiIZU32GSSv8E1AgiegPb94IdTtupwBU8Yxd9ebIpZbGxFZKgImLRNMDsP1VbWh8/BwM22nD+bYDf2GQNfFIzdLoP19DyekyTTuXKYAW+XnbQjWz2DHQCpNzu//iqm6oB0SCQ9c9aCmr4=
+	t=1734097864; cv=none; b=KcbxW/6xMMfFd3FgIaE1dArsLhZdJyyDaYg1E625GYyq/RcA0PWRUHWxOoU6c6RP8XrPxLlFwdVuD2kbBTTMGUiO7eDteVltu8MSAdJkvubTF7P5rO8IfAHXP4shL7zjYSOf7TRLUQn/jCmAojhL8X5NFfDIT0fx4/J/XpIU55Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734097060; c=relaxed/simple;
-	bh=qoFk5BHIQXYDzLpPruQaqO0fOwCLOUhE6gz5VlyFQPI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=oTanHOY9/nlIURupLtfTTVmriaLZF7Nr11HJbkom/xvi7KuQbqz7hhS/VHM2eL9phw8a89vOE5boh0TvKs9joX4e4d0VF4skke27fRj1rLDojVIGDg61vNJdp9BUWoiSOoVPxylUDM6hLjWvBoLwEhribRLTz787L5LTWCxSsMk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=WR9W7c00; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1734097864; c=relaxed/simple;
+	bh=+pt97p/V0tj8vTmjacL+OERmsbqFH/R1gdECrEcJbpE=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=BzXxDW3m+1q/lujgPXx7CQhnHdGa93pSKLHFeFPmlRUnm5DyXOGAsGi3SMwIFHL+LPD4zOqSt8xny5a5cVXrs6sS1jk2ECJ+IiT2qlMHaxQLmSd8CH0cW1yy8caqX2qGagd9GdqomRD15S87TrPS2/SgPWXjIMHHMO0oo+u27n4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=l9F57L+u; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BDBhkrg017764;
-	Fri, 13 Dec 2024 13:37:26 GMT
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BD81XTY022106;
+	Fri, 13 Dec 2024 13:50:51 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	6oSf14VYTD1Dy2OgN5EQWQcU/iRtkhJhW3V9nmUxeNA=; b=WR9W7c00T3eeYcq6
-	mlqzuu3xjHe8Pzrh8EjGXhoEFmXXPiefxmVSsUCQ6g2F1Ge7KavuyDpe8M33ZWQZ
-	9wZT0YSP+BffhqT/wMenfdfogsYKZ6ikHyCPR8CrwcTfSp64mfvotA55AxH4ytTb
-	lcamLdaBpvNjl2yJaiaRkFcNQjIVZtuVW5Pe2xjXPROmcLd42PFZO6wdoe+dhFa6
-	OO4MBb9u1n1ObmArd1DomysBl8GMzh4xtCWEfKOMo6NUfcUnBdh28p02LI9Eizd6
-	AStpW4FYSWZk7eocJJBQIshixd6sFg+LrvFeTLtkUeu0v29r62sDKvrhSMw1wrpc
-	Rq2c+A==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43gmac09hu-1
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=jOC9nOhDr9jq4AtuIBHj+8
+	zR/D+ZeUbHj/hHK/7AGvU=; b=l9F57L+uQz/Dkc6XkGG3delsj1IpuaWxs7r2WQ
+	k3MZxB7/MKbf0xL07tdoF2jIesdgMdfm5W95myFxsKLl/605oEuErxPkc8p8PH0L
+	C7BvTDSKhqUu7PttbxdK3FkqJ9OJVq/PRmiWc0Gkm41o0kXsdiFOAnu/OwEhBfwd
+	SjKdd0GZeepddVkB9GU1FsPSsBXJHKbqR4ij/K4X6XyEd8MEDCr5VbrQhYGx54XT
+	X3d6uXNOXr6RipGUxumKtiLnENAnrmb6LIiInMAW8lUC4hS9xl/yUWjwydTFXZrJ
+	t9kZjARnkytr2QY9wbhIbwCWjogh18cbkALbrfij/uNhzchA==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43gh271043-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 13 Dec 2024 13:37:26 +0000 (GMT)
+	Fri, 13 Dec 2024 13:50:50 +0000 (GMT)
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4BDDbOnQ017995
+	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4BDDonZU014540
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 13 Dec 2024 13:37:24 GMT
-Received: from [10.204.101.130] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 13 Dec
- 2024 05:37:17 -0800
-Message-ID: <e2ae139a-0285-455a-a2b1-520deeeacc0b@quicinc.com>
-Date: Fri, 13 Dec 2024 19:07:14 +0530
+	Fri, 13 Dec 2024 13:50:49 GMT
+Received: from hu-mmanikan-blr.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Fri, 13 Dec 2024 05:50:44 -0800
+From: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
+To: <bhelgaas@google.com>, <lpieralisi@kernel.org>, <kw@linux.com>,
+        <manivannan.sadhasivam@linaro.org>, <robh@kernel.org>,
+        <krzk+dt@kernel.org>, <conor+dt@kernel.org>, <vkoul@kernel.org>,
+        <kishon@kernel.org>, <andersson@kernel.org>, <konradybcio@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-pci@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-phy@lists.infradead.org>
+CC: <quic_srichara@quicinc.com>, <quic_varada@quicinc.com>
+Subject: [PATCH 0/4] Add PCIe support for IPQ5424
+Date: Fri, 13 Dec 2024 19:19:46 +0530
+Message-ID: <20241213134950.234946-1-quic_mmanikan@quicinc.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/4] dt-bindings: display/msm/gmu: Document RGMU
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-        Rob Clark
-	<robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Konrad Dybcio
-	<konradybcio@kernel.org>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        "Dmitry
- Baryshkov" <dmitry.baryshkov@linaro.org>,
-        Marijn Suijten
-	<marijn.suijten@somainline.org>,
-        Maarten Lankhorst
-	<maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        Rob Herring <robh@kernel.org>,
-        "Krzysztof
- Kozlowski" <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        "Bjorn
- Andersson" <andersson@kernel.org>
-CC: <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>,
-        <20241104-add_initial_support_for_qcs615-v5-4-9dde8d7b80b0@quicinc.com>,
-        <20241022-qcs615-clock-driver-v4-3-3d716ad0d987@quicinc.com>,
-        <20240924143958.25-2-quic_rlaggysh@quicinc.com>,
-        <20241108-qcs615-mm-clockcontroller-v3-7-7d3b2d235fdf@quicinc.com>,
-        <20241108-qcs615-mm-dt-nodes-v1-1-b2669cac0624@quicinc.com>,
-        <20241122074922.28153-1-quic_qqzhou@quicinc.com>
-References: <20241213-qcs615-gpu-dt-v2-0-6606c64f03b5@quicinc.com>
- <20241213-qcs615-gpu-dt-v2-2-6606c64f03b5@quicinc.com>
- <28bf46a5-dedb-4491-b9be-23fdfb99035f@oss.qualcomm.com>
-Content-Language: en-US
-From: Akhil P Oommen <quic_akhilpo@quicinc.com>
-In-Reply-To: <28bf46a5-dedb-4491-b9be-23fdfb99035f@oss.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: F2-cLpN7sj4SRHwnUinA5cU8tO6xNmBd
-X-Proofpoint-GUID: F2-cLpN7sj4SRHwnUinA5cU8tO6xNmBd
+X-Proofpoint-ORIG-GUID: nbneuj_EhbWNdlFAkyiJQC1rtLKTGG4P
+X-Proofpoint-GUID: nbneuj_EhbWNdlFAkyiJQC1rtLKTGG4P
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 mlxscore=0
- phishscore=0 impostorscore=0 priorityscore=1501 malwarescore=0
- suspectscore=0 spamscore=0 adultscore=0 mlxlogscore=999 lowpriorityscore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2412130096
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 malwarescore=0
+ priorityscore=1501 spamscore=0 mlxlogscore=719 impostorscore=0
+ suspectscore=0 phishscore=0 lowpriorityscore=0 bulkscore=0 adultscore=0
+ clxscore=1011 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2412130097
 
-On 12/13/2024 4:23 PM, Konrad Dybcio wrote:
-> On 13.12.2024 11:35 AM, Akhil P Oommen wrote:
->> RGMU a.k.a Reduced Graphics Management Unit is a small state machine
->> with the sole purpose of providing IFPC support. Compared to GMU, it
->> doesn't manage GPU clock, voltage scaling, bw voting or any other
->> functionalities. All it does is detect an idle GPU and toggle the
->> GDSC switch. So it doesn't require iommu & opp table.
->>
->> Signed-off-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
->> ---
-> 
-> The bindings file exists so that people that are not in the know, can
-> reference it and learn about the hardware. Please spell out IFPC, as
-> that's a non-obvious, hw-specific  acronym.
-> 
-> Otherwise looks ok
+This series adds support for enabling the PCIe host devices (PCIe0,
+PCIe1, PCIe2, PCIe3) found on IPQ5424 platform. The PCIe0 & PCIe1
+are 1-lane Gen3 host and PCIe2 & PCIe3 are 2-lane Gen3 host.
 
-Ah right. Krzysztof schooled me that a while ago.
-Will update.
+Depends On:
+https://lore.kernel.org/linux-arm-msm/20241205064037.1960323-1-quic_mmanikan@quicinc.com/
+https://lore.kernel.org/linux-arm-msm/20241213105808.674620-1-quic_varada@quicinc.com/
 
--Akhil.
+Manikanta Mylavarapu (4):
+  dt-bindings: PCI: qcom: Document the IPQ5424 PCIe controller
+  dt-bindings: phy: qcom,ipq8074-qmp-pcie: Document the IPQ5424 QMP PCIe
+    PHYs
+  arm64: dts: qcom: ipq5424: Add PCIe PHYs and controller nodes
+  arm64: dts: qcom: ipq5424: Enable PCIe PHYs and controllers
 
-> 
-> Konrad
+ .../devicetree/bindings/pci/qcom,pcie.yaml    |   4 +
+ .../phy/qcom,ipq8074-qmp-pcie-phy.yaml        |  21 +-
+ arch/arm64/boot/dts/qcom/ipq5424-rdp466.dts   |  43 ++
+ arch/arm64/boot/dts/qcom/ipq5424.dtsi         | 482 +++++++++++++++++-
+ 4 files changed, 539 insertions(+), 11 deletions(-)
+
+
+base-commit: 3e42dc9229c5950e84b1ed705f94ed75ed208228
+prerequisite-patch-id: 8ca651806ea679db4420e18aaa9f43aea27a519d
+prerequisite-patch-id: 3c4107e3b3a47df73db7ae672b55fa5d995c1f30
+prerequisite-patch-id: 56470ae6a75766d02d7db8f04c03a028de0c901a
+prerequisite-patch-id: abf79dda8233d882c345774ca693e48dafaeadaa
+-- 
+2.34.1
 
 
