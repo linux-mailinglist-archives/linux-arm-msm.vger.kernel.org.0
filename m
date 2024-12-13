@@ -1,134 +1,119 @@
-Return-Path: <linux-arm-msm+bounces-41908-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-41909-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id B54599F063F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Dec 2024 09:22:51 +0100 (CET)
-Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 932A09F0680
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Dec 2024 09:38:25 +0100 (CET)
+Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7775F281AFB
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Dec 2024 08:22:50 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id EDE271881DE7
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Dec 2024 08:38:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 636F21A8F79;
-	Fri, 13 Dec 2024 08:22:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EEEC41AA1DF;
+	Fri, 13 Dec 2024 08:38:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="CLm2AnAF"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Y4KqoqS4"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE8B619993E;
-	Fri, 13 Dec 2024 08:22:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6B9119992D;
+	Fri, 13 Dec 2024 08:38:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734078163; cv=none; b=rJhYdQ5H1qS0b0pZgxoeOMgjB4dEjZhvRh3FYDg+uHm648olWOIkAddvN+vecqHo7cGKBi453cQ9Z8gMXigRCqvlNxrOKc0j5cChGHPTrIxclnE9zNSs3/vmeatv8VpB8DV6uLAkPHfLoKeburraVC4/ekiTVAcNMITkOx6MVoc=
+	t=1734079100; cv=none; b=qz4ZOfg0tImA9hl6/jfgEVsSICeS3mwg5hzD+TtiuJzwQh95UXS5L200x9BaGiChPy9XQpwsXTJBns+Ua5jLIx7K7CaBJpjmlW1/+lxPJrNPIq4LlL8ABSmVXR5MbhXsbtZ4ExKDmHJyIlD5O/EZVh3E2fgIbtwRM11KT9+XFrI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734078163; c=relaxed/simple;
-	bh=9+mtr1FbR4lFF1BHbpaxuyw0l5k/bfu6BVCTbLKrS2I=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=U6ZAjSnl0uBuVZGPolf+IvXZRWDalFfLzOr7oxql2CQw6LWYcAyIKodSwtaNn8Ui1bFjoOlwHGTomBhYLvZVC4b66HaCIrniKvODfwLWME0f/WYejn4a6dALEkXy+F2oOeBr5Qy2MqCwujwJNcTn7jhEsFNehaLaxh/9agSqnXw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=CLm2AnAF; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BCKe4xf031415;
-	Fri, 13 Dec 2024 08:22:39 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	qhB1rfra3QW06FFZ0hHDMb2euq+i2W3Q6ykFpHn8BH0=; b=CLm2AnAF4DMRJ6VR
-	Sun8Z0wbaLCKsxu1xoZlbrXZ5tUqi0i6v60T2JYqYyPcuXRvhJhMHq40PYwoeUm3
-	tJcKtdjOVmWtwEdQdyib4gIugRBev1PjQiIFnlFaq+S8JigQO7EmMN5QUc3CA4ac
-	3BoqCl8l7NsjKkLvmGuxq4xAfKZahI71yW2cCok6Rxuqsxv3oKrDSy1bv64mfgPD
-	QBwx9rgWB+kcPbfdjUIstW8S52brWe0avt6goqXNwigBUckTn1KPJren1PWU0GXU
-	vHjUUuo4I0LlFQ+Ila4aQsBRyWV36eQPCtCVoK5QvwU0AocsHGQgQ7Akki6xASky
-	LGRd5Q==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43fwgek36b-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 13 Dec 2024 08:22:38 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4BD8Mc47032576
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 13 Dec 2024 08:22:38 GMT
-Received: from [10.64.68.153] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 13 Dec
- 2024 00:22:34 -0800
-Message-ID: <51fd15b5-70f9-4a23-a871-a40dde4a5b77@quicinc.com>
-Date: Fri, 13 Dec 2024 16:22:32 +0800
+	s=arc-20240116; t=1734079100; c=relaxed/simple;
+	bh=w6MUQGWEEz6VoZhHPa11WOx3I8GjlyTQVtPw/HadabI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=PiprpDkS4pQeNK4VbShyRJAmN3AH+Lb2lp+rnuMOIh/e0r3gPt6jYRCmZACYc/iVPDiv2p8IggAKWNGsJOx6ACgph3amyK3P+uVtb4gCzBmyGsOro5px+G/opyH6YnHUDGt943qURGATbt4t1u/MBfWqcbRv8GAvM7CSDzCkjdY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Y4KqoqS4; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFDC4C4CED0;
+	Fri, 13 Dec 2024 08:38:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1734079100;
+	bh=w6MUQGWEEz6VoZhHPa11WOx3I8GjlyTQVtPw/HadabI=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=Y4KqoqS43ghZ9tDYnoPe7wpfUq86+4NJ+R2o5c/dPDlkyKxBorth/myMdqCf9vQud
+	 CUDLLymwDlumlHHEXf0fMrCqFArGLmKgkzkFnFUvrnRfsA9zl1b6B5MaKKgaS8menY
+	 XaGdGf+dp7fQ2a0PbM1YkkWCoQajj5h8SzYVMSZdZZyHQ+76T/R+Yf2yeUB4G9xmrS
+	 LvcXb2bUAvwbkT52B9tRlPkyUKtBONrcOM5Am9eP/veHNHr/38vOlAXK0T5cyJ68rA
+	 9v5l2AsrgO5wGKvJbsBYmWYmNOoUHknZ6l2tcF8m9CYGVIa+EjwHronfmhHD7KhZJO
+	 jq6x54o5Y2Pcg==
+Date: Fri, 13 Dec 2024 09:38:17 +0100
+From: Krzysztof Kozlowski <krzk@kernel.org>
+To: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
+Cc: "Rafael J. Wysocki" <rafael@kernel.org>, 
+	Daniel Lezcano <daniel.lezcano@linaro.org>, Zhang Rui <rui.zhang@intel.com>, 
+	Lukasz Luba <lukasz.luba@arm.com>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Jonathan Cameron <jic23@kernel.org>, Lars-Peter Clausen <lars@metafoo.de>, Lee Jones <lee@kernel.org>, 
+	Stephen Boyd <sboyd@kernel.org>, Amit Kucheria <amitk@kernel.org>, 
+	Thara Gopinath <thara.gopinath@gmail.com>, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Ajit Pandey <quic_ajipan@quicinc.com>, 
+	Imran Shaik <quic_imrashai@quicinc.com>, Taniya Das <quic_tdas@quicinc.com>, 
+	Jagadeesh Kona <quic_jkona@quicinc.com>, quic_kamalw@quicinc.com, quic_jprakash@quicinc.com, 
+	linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-iio@vger.kernel.org
+Subject: Re: [PATCH RFC v2 1/5] dt-bindings: thermal: Add MBG thermal monitor
+ support
+Message-ID: <ojukpywkhu72cimujmijzidf26654g5vkjaj477imcf4suz2o6@cmow62jcqsfz>
+References: <20241212-mbg-v2-support-v2-0-3249a4339b6e@quicinc.com>
+ <20241212-mbg-v2-support-v2-1-3249a4339b6e@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] arm64: dts: qcom: Add coresight nodes for QCS8300
-To: Krzysztof Kozlowski <krzk@kernel.org>,
-        Bjorn Andersson
-	<andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring
-	<robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>
-CC: <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <20241205084418.671631-1-quic_jiegan@quicinc.com>
- <47154b48-8393-423d-bd4b-4d56fc18400c@kernel.org>
-Content-Language: en-US
-From: Jie Gan <quic_jiegan@quicinc.com>
-In-Reply-To: <47154b48-8393-423d-bd4b-4d56fc18400c@kernel.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: -sKGnQXxHWsyhBWi9HRLpUdJAtMfHGWQ
-X-Proofpoint-ORIG-GUID: -sKGnQXxHWsyhBWi9HRLpUdJAtMfHGWQ
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- suspectscore=0 bulkscore=0 mlxlogscore=857 spamscore=0 clxscore=1015
- impostorscore=0 mlxscore=0 lowpriorityscore=0 malwarescore=0 phishscore=0
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2412130056
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20241212-mbg-v2-support-v2-1-3249a4339b6e@quicinc.com>
 
+On Thu, Dec 12, 2024 at 09:41:20PM +0530, Satya Priya Kakitapalli wrote:
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +  - interrupts
+> +  - io-channels
+> +  - io-channel-names
 
+Binding looks ok, but this wasn't tested due to unneeded dependency.
+Please decouple from dependency, so automation can properly test it.
 
-On 12/13/2024 4:09 PM, Krzysztof Kozlowski wrote:
-> On 05/12/2024 09:44, Jie Gan wrote:
->> Add following coresight components for QCS8300 platform.
->> It includes CTI, dummy sink, dynamic Funnel, Replicator, STM,
->> TPDM, TPDA and TMC ETF.
->>
->> Signed-off-by: Jie Gan <quic_jiegan@quicinc.com>
->> ---
->> Changes in V2:
->> 1. Rebased on tag next-20241204.
->> 2. Padding the register address to 8 bits.
->> Link to V1 - https://lore.kernel.org/linux-arm-msm/20240929-add_coresight_devices_for_qcs8300-v1-1-4f14e8cb8955@quicinc.com/
->> ---
->>   arch/arm64/boot/dts/qcom/qcs8300.dtsi | 2150 +++++++++++++++++++++++++
->>   1 file changed, 2150 insertions(+)
->>
-> Please use subject prefixes matching the subsystem. You can get them for
-> example with `git log --oneline -- DIRECTORY_OR_FILE` on the directory
-> your patch is touching. For bindings, the preferred subjects are
-> explained here:
-> https://www.kernel.org/doc/html/latest/devicetree/bindings/submitting-patches.html#i-for-patch-submitters
-> 
-Sure, I will update the subject prefix to "arm64: dts: qcom: qcs8300:"
+> +
+> +unevaluatedProperties: false
+> +
+> +examples:
+> +  - |
+> +    #include <dt-bindings/interrupt-controller/irq.h>
+> +    #include <dt-bindings/iio/adc/qcom,spmi-adc5-gen3-pm8775.h>
+> +
+> +    pmic {
+> +        #address-cells = <1>;
+> +        #size-cells = <0>;
+> +
+> +        pmm8654au_0_tz: temperature-sensor@d700 {
 
+Drop label.
 
-> Best regards,
-> Krzysztof
+> +            compatible = "qcom,spmi-pm8775-mbg-tm";
+> +            reg = <0xd700>;
+> +            interrupts = <0x1 0xd7 0x0 IRQ_TYPE_EDGE_RISING>;
+> +            io-channels = <&pm8775_1_adc PM8775_ADC5_GEN3_DIE_TEMP(1)>;
+> +            io-channel-names = "thermal";
+> +            #thermal-sensor-cells = <0>;
+> +        };
+> +    };
+> +
+> +    thermal-zones {
+> +        pm8775-mbg0-thermal {
 
-Thanks,
-Jie
+Drop the nodes, not related.
+
+Best regards,
+Krzysztof
 
 
