@@ -1,127 +1,355 @@
-Return-Path: <linux-arm-msm+bounces-42245-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-42246-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 837C49F214A
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 14 Dec 2024 23:34:53 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1CC609F2158
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 14 Dec 2024 23:52:16 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 8CDBC7A0FBA
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 14 Dec 2024 22:34:47 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2D8AE166002
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 14 Dec 2024 22:52:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DCE8C1AB531;
-	Sat, 14 Dec 2024 22:34:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DB95C29CEF;
+	Sat, 14 Dec 2024 22:52:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="FGwVLHAx"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="YgOz3rFe"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C2E419993D
-	for <linux-arm-msm@vger.kernel.org>; Sat, 14 Dec 2024 22:34:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB2F41AF0A1
+	for <linux-arm-msm@vger.kernel.org>; Sat, 14 Dec 2024 22:52:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734215687; cv=none; b=baa/fGxlyw41byP+JSR3gjWCUIPM1p51RyuAihwCtq4H5FL/j0cUlSmxPmFsqAjhRkQs+acRRUrXKW6vxsISakJ2C1KPtLOAbScb+q/eyvouihcegzj4NuLZXFAbEBjiIjTIDGNVE2jB5A0pfkot2NCQ91uHPJ6iJ72Tx+7uItA=
+	t=1734216732; cv=none; b=oc5WH1iyXhr/JSDR6fpX0qWucM+NzvlAq4VFxU6h42W8EiXCFCle45AnW2blBHYSaDs+RMWsL5GNZ2gHP+XXPIBgX5UyHSKyHOCoK2sp73+rCUCSPLY8d9qDMUTwI3kT11MhY+S+WTNwlX9nGy/4sR70qjMs0kSIQmowzGeLpH8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734215687; c=relaxed/simple;
-	bh=eoKXfq6Hj5SW8j+wkA/iHI2/OaarWoeU1Zy5vKlID1w=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=KPc+7WmW8Qz/FV7F2kpxkC+bPZZcnXZJ3v9qMt847GtuoxDLjf/5y2KoaWFiiAGl/+cG9antaZIjymrRmrvOz9ud2taOhefUeC2L9ewdSjP991SOXPhFsCv7+9KDD9O08ZaTy3x/BRkybmEcTxNp5Rl/Nkb92gwKP6rYdAVQOrA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=FGwVLHAx; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BEMXEha005210
-	for <linux-arm-msm@vger.kernel.org>; Sat, 14 Dec 2024 22:34:45 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	zoT/6Ve4wQjNE7DzpC+6ucI6/tFmHxfuNE9Av90lsj4=; b=FGwVLHAxwHE79fiU
-	fJiTlSRTOOwPetAh1rhqbQ48tydFNGPNY74nlVFhlrBtQPAMR8Ve4DscBZznadiT
-	wlW/PdJXylbs1Q4w9h0eQYAMBXqCgm9aGCcukHH3AOfxGL6IF2q7VDCcQw72TZtr
-	FNUIZc2WN/wXwRuJGvhxb4bT9J9bk3NNMCH5o8fMXjjXA7UIzF30vGxG1PTSsDaH
-	lE80w5jryLvPeeoOp5fB4fDsEmHKLMWjN2ykYiEnB7033kKcenrZRZFsdttfndcM
-	WRZcgKKr+AlPcndUrXcTgK9ugCyZpRMf2ltD26pNvcLDmPQGuZXT0BGrlbOY/25F
-	nwk4KQ==
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com [209.85.160.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43h30ks3qq-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Sat, 14 Dec 2024 22:34:45 +0000 (GMT)
-Received: by mail-qt1-f200.google.com with SMTP id d75a77b69052e-4678aa83043so7659501cf.1
-        for <linux-arm-msm@vger.kernel.org>; Sat, 14 Dec 2024 14:34:45 -0800 (PST)
+	s=arc-20240116; t=1734216732; c=relaxed/simple;
+	bh=/D/vj4XanEKHzbb5zMRfqXPQ8+ADXufv99FkOEAVtx0=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=rzxjFdLxgxGwAM/qQIXhSaOBsMV6OrYTmUWZln+on6sXH9RCMh8WXYfqlK5SlxbT1BEQXdEfOl9EeQWF7wOZTImAzhSbOlbG3pIpOKdpSLhSKyvsX3dhRtsyzTzoPRlj9xg0c+q2iTeRC/kp+4IfzT5WCGNy5713XZva8wRV/5Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=YgOz3rFe; arc=none smtp.client-ip=209.85.128.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-4362bae4d7dso12396905e9.1
+        for <linux-arm-msm@vger.kernel.org>; Sat, 14 Dec 2024 14:52:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1734216729; x=1734821529; darn=vger.kernel.org;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=L02UQRlh3qmNnFOiOhKbVlklLsrwrslECaPK4JYFGvM=;
+        b=YgOz3rFe3Ln/pzB3VB3sP/waS0avRJUBhaioFDi3yAx90A5X28+7zg+kio8YJqx+nH
+         QvckLiKIehS/fSBmhQgvFa8q2pn/D8+WdWb6ONMjd6rFX34tilaqIgrCe1qSXfqHkQg4
+         hdblp9ebFL/3kW21d8u+yLBReop0yKVqbsD5rIhBeJh6XAv1gL5G8Ae3QlVyoh4H83gh
+         78HpHpVZJi7hJxx5g4pGEuF8/E4qAtnTzZkXjvcwjLHURL4dSdsneInPIUZqjsmiCCYd
+         9sq4+KUQ2p4vGvQymsZ6QSsppaovvvqt+Bi/UCBtRw0d2uk3/yFI4SN5L0Lt0chH32fq
+         nH1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734215684; x=1734820484;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=zoT/6Ve4wQjNE7DzpC+6ucI6/tFmHxfuNE9Av90lsj4=;
-        b=hXG/lvpGQ2yzzs1uhP0DojDjfgHcjmYa5f3XGHDy/7pVn0KEep4IML3f/C9BNgje7/
-         y/1gmIesWwqQUWPPHMYeeDQzbmTKmwne5n14oU7i1UkfoBqkvNywQzUJWZGVvytUmtym
-         G1q4zKkPX9xSgswXCf66B8C8ClgRO0q5bVahhVHX/c1vSuTm6QH60B5xLOpB+2mSpr38
-         /Ygr1fsIMASyfMIgtoHQ+bG4XUmx0f/zEUiFN9Snko10BGK8DLoq7L7LxIBnUW++DKnW
-         L2L1kviPpOW4gQOEj1CUt8/P5PCdo6BVh61m4tKfKTkYYcyo59mH04mleV0UXHsFG53f
-         +gPg==
-X-Gm-Message-State: AOJu0YyVXXgMnRIDmqU+Qnl2ydIyVvifvobfjdGhhzeMnZ7qGP7uYxhA
-	G0kjBPTVvL9qL9p4/JTEwN12sSBl1O9v0GptB+fu220ws/uHev8HpsGEAvP8ShkomSo5Mf8eRzL
-	T/1rUJdMdWctrAmxlQ0KLWm0jRUMCU1E2xdX4/OfL/MeS3J6LyZkFaz/cFfJtBT1Y
-X-Gm-Gg: ASbGncuGhVOXCkeBBbajq0nUg363cGPvLCZBA/ETdGhOE1tZGTHbqPC2XyaKdlOFJzn
-	b1hM8J232h5njEyBnFYi6orZnRllP9zWx49fW9hk7hxx9/oPv/bYwQrKb3ltaehNjxZYxQ6qFAp
-	PF2mB5He1oj8ROxH1tcRWKqOrKqfGfEgXtkFf9A7IW1Yf+yjKxEwua8mW12ib+EV3SxZuAFRlk2
-	yALoqjPa/YxU8cdENw000Hy1Ae5pVAJrFuD86J6oQvW+wSdB6JeZE744XmMBVbelEXrlMoee91c
-	4UCjBA1hLEQxGqCYeHEcSwoU0EWOGt2z/Ko=
-X-Received: by 2002:a05:622a:606:b0:460:9026:6861 with SMTP id d75a77b69052e-467a578e2cemr51306821cf.9.1734215684488;
-        Sat, 14 Dec 2024 14:34:44 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEGQIFK1+HGT44yFDj67IL1tLQqfEsu3uldzYeFqe8AIQ8wuuDnknJYfqn8obcdvMjeSrZ+OA==
-X-Received: by 2002:a05:622a:606:b0:460:9026:6861 with SMTP id d75a77b69052e-467a578e2cemr51306641cf.9.1734215684091;
-        Sat, 14 Dec 2024 14:34:44 -0800 (PST)
-Received: from [192.168.65.90] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5d652ad17d7sm1396571a12.25.2024.12.14.14.34.42
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 14 Dec 2024 14:34:43 -0800 (PST)
-Message-ID: <cf9e3fcd-052c-4ccf-b3fe-a63a95bb2a2c@oss.qualcomm.com>
-Date: Sat, 14 Dec 2024 23:34:42 +0100
+        d=1e100.net; s=20230601; t=1734216729; x=1734821529;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=L02UQRlh3qmNnFOiOhKbVlklLsrwrslECaPK4JYFGvM=;
+        b=l85RKIejKjvO/CHh7UwvbQUjOtF0U2LUlm0f4+4zsbmdIiKp9gR0127qsaMFRR3I/T
+         C315gsgagGKgxJhlHX1R3ZS2hrTDUzmffZsFhqkirPJ4bPRE+8wDkHopOccWaw0bpWIl
+         PUWHOj3wiEFUYHh48TOFfUyrp4B7hxMbbV6u/Fnqf4FwGVtQJrPVUPxPwgHH2y4sVlQc
+         jyXAC/UF4bImXoRQQbgK1XAYKZoXYzksMVx3UirD+CV0QgEjI1eSe84qH8XJnq+tkIjl
+         hU4WQ5BiMQEtBOuqqsSil5Pk2rB14Gj3FUV5lsPMJ0p0qjKukK10qaTZL1cfNPzGi4oe
+         NvIg==
+X-Forwarded-Encrypted: i=1; AJvYcCXK8RRLfbSY5xvEgUWQVWG8XY/z2ZD2JN5z3zIiEDvKnwpyQv5HKGSWYzTwjS0vUtsT1rYs34IkA+2tKorc@vger.kernel.org
+X-Gm-Message-State: AOJu0Yzsns9ItyoMmrnImnk6Af3EB8Od58u2Qk+yeGbbRk8OzTKEZLMy
+	N/j5bwV5Zev4euh1WPuVasRQ9yu9xKMpZ6hPLzCf7SOmWI4pwnXSAfFYDhX7NNrqlAt2UkmDhfq
+	B
+X-Gm-Gg: ASbGncuo+aJc5e93TeiYX8NC2sBfKv/RxVI6JM4Nx6sNeYlQdwt0I5qOmWLx5ydAg8k
+	J68i9hPbJyHDUeNjp4PQpNpHve//zJSUtjxfhlSQgQrssOasc9znFd7HwrU0w0Fn8eYnLyuQl+k
+	IsMQHqznANJhYilqenrVN4JZanPmHYwo60thlMZk3FkC8A6m4tBqKKR1wQ39n/bNh1uN9T7d5SS
+	gucaKnEZme5NN6H3Ays9FQ/4oz/6tcupWZHoj56+xU+Wpfb8pohL9m4DF0xU2kRAg==
+X-Google-Smtp-Source: AGHT+IG7fJzmsRfOAoWZ0xtBW1irRd+OIJaddSdUEg+7EScA+wo3w5PtT+D0S/aXRhqHYmUjFI8g4w==
+X-Received: by 2002:a05:600c:b9b:b0:434:fdf3:2c26 with SMTP id 5b1f17b1804b1-4362aa6805bmr62263685e9.19.1734216729211;
+        Sat, 14 Dec 2024 14:52:09 -0800 (PST)
+Received: from [127.0.0.1] ([176.61.106.227])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4362557c457sm92719445e9.15.2024.12.14.14.52.07
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 14 Dec 2024 14:52:08 -0800 (PST)
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Date: Sat, 14 Dec 2024 22:52:07 +0000
+Subject: [PATCH] Revert "media: qcom: camss: Restructure
+ camss_link_entities"
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 2/2] arm64: dts: qcom: sa8775p-ride: Enable Display
- Port
-To: Soutrik Mukhopadhyay <quic_mukhopad@quicinc.com>, andersson@kernel.org,
-        konradybcio@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
-        conor+dt@kernel.org
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_riteshk@quicinc.com,
-        quic_vproddut@quicinc.com, quic_abhinavk@quicinc.com
-References: <20241114095500.18616-1-quic_mukhopad@quicinc.com>
- <20241114095500.18616-3-quic_mukhopad@quicinc.com>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <20241114095500.18616-3-quic_mukhopad@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: TrnAxblM9CSAgG4sJU5DESEyb9CM5Apk
-X-Proofpoint-ORIG-GUID: TrnAxblM9CSAgG4sJU5DESEyb9CM5Apk
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 mlxscore=0
- bulkscore=0 clxscore=1015 adultscore=0 spamscore=0 suspectscore=0
- priorityscore=1501 phishscore=0 malwarescore=0 mlxlogscore=945
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2412140186
+Message-Id: <20241214-b4-linux-next-revert-link-freq-v1-1-5e970d05dfcd@linaro.org>
+X-B4-Tracking: v=1; b=H4sIABYMXmcC/x2N0QrCMAxFf2XkeYE2Rgr+iuxh1VSDUjXtRmHs3
+ 60+ngvnng2KmEqB07CByapFX7mDHwe43Od8E9RrZyBH7MkzRsan5qVhllaxK2L1tzwwmXww8By
+ PiVI4OIJ+8jZJ2v6B87TvX2Lfg6lwAAAA
+X-Change-ID: 20241214-b4-linux-next-revert-link-freq-74ab5f2f7302
+To: Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>, 
+ Mauro Carvalho Chehab <mchehab@kernel.org>, 
+ Hans Verkuil <hverkuil@xs4all.nl>, 
+ Suresh Vankadara <quic_svankada@quicinc.com>, 
+ Vikram Sharma <quic_vikramsa@quicinc.com>, 
+ Trishansh Bhardwaj <quic_tbhardwa@quicinc.com>
+Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+X-Mailer: b4 0.15-dev-dedf8
 
-On 14.11.2024 10:55 AM, Soutrik Mukhopadhyay wrote:
-> Enable DPTX0 and DPTX1 along with their corresponding PHYs for
-> sa8775p-ride platform.
-> 
-> Signed-off-by: Soutrik Mukhopadhyay <quic_mukhopad@quicinc.com>
-> ---
+This reverts commit cc1ecabe67d92a2da0b0402f715598e8dbdc3b9e.
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+This commit has a basic flaw in that it relies on camss->res->csid_num as a
+control to index the array camss->vfe[i].
 
-Konrad
+Testing on a platform where csid_num > vfe_num showed this bug up.
+
+camss->vfe should only be indexed by camss->res->vfe_num. Since this commit
+is meant to make the code be more readable reverting will simply restore
+the previous correct bounds checking.
+
+We can make another pass at making camss_link_entities look prettier but,
+for now we should zap the bug introduced.
+
+Fixes: cc1ecabe67d9 ("media: qcom: camss: Restructure camss_link_entities")
+---
+Testing this commit out as I was adding in more CSID devices to my working
+x1e tree I noticed a NULL pointer dereference in camss_link_entities.
+
+Investigating I discovered the following indexing error:
+
+> +    for (i = 0; i < camss->res->csid_num; i++) {
+> +        if (camss->ispif)
+> +            line_num = camss->ispif->line_num;
+> +        else
+> +            line_num = camss->vfe[i].res->line_num;
+
+This statement is incorrect, you are indexing vfe[] with a control derived
+from csid_num.
+
+Below is the statement removed.
+
+> -        for (i = 0; i < camss->res->csid_num; i++)
+> -            for (k = 0; k < camss->res->vfe_num; k++)
+> -                for (j = 0; j < camss->vfe[k].res->line_num; j++) {
+
+As soon as csid_num > ARRAY_SIZE(vfe) the code breaks.
+
+The commit is in linux-next but not yet in linux-stable so I'm not quite
+sure what to do with a Fixes: tag nothing I think.
+
+In any case we should revert this one before it hits stable.
+
+Link: https://lore.kernel.org/linux-arm-msm/1a570c17-c501-4a29-a4f7-020f41563f3d@linaro.org
+Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+---
+ drivers/media/platform/qcom/camss/camss.c | 155 ++++++++++--------------------
+ 1 file changed, 52 insertions(+), 103 deletions(-)
+
+diff --git a/drivers/media/platform/qcom/camss/camss.c b/drivers/media/platform/qcom/camss/camss.c
+index 004a74f6b2f6ce7eef15765ad1eadc14a08a3908..a85e9df0f301a933d7e47e07b9fec535819aeb14 100644
+--- a/drivers/media/platform/qcom/camss/camss.c
++++ b/drivers/media/platform/qcom/camss/camss.c
+@@ -2298,6 +2298,7 @@ static int camss_init_subdevices(struct camss *camss)
+ }
+ 
+ /*
++ * camss_link_entities - Register subdev nodes and create links
+  * camss_link_err - print error in case link creation fails
+  * @src_name: name for source of the link
+  * @sink_name: name for sink of the link
+@@ -2315,64 +2316,14 @@ inline void camss_link_err(struct camss *camss,
+ }
+ 
+ /*
+- * camss_link_entities_csid - Register subdev nodes and create links
+- * @camss: CAMSS device
+- *
+- * Return 0 on success or a negative error code on failure
+- */
+-static int camss_link_entities_csid(struct camss *camss)
+-{
+-	struct media_entity *src_entity;
+-	struct media_entity *sink_entity;
+-	int ret, line_num;
+-	u16 sink_pad;
+-	u16 src_pad;
+-	int i, j;
+-
+-	for (i = 0; i < camss->res->csid_num; i++) {
+-		if (camss->ispif)
+-			line_num = camss->ispif->line_num;
+-		else
+-			line_num = camss->vfe[i].res->line_num;
+-
+-		src_entity = &camss->csid[i].subdev.entity;
+-		for (j = 0; j < line_num; j++) {
+-			if (camss->ispif) {
+-				sink_entity = &camss->ispif->line[j].subdev.entity;
+-				src_pad = MSM_CSID_PAD_SRC;
+-				sink_pad = MSM_ISPIF_PAD_SINK;
+-			} else {
+-				sink_entity = &camss->vfe[i].line[j].subdev.entity;
+-				src_pad = MSM_CSID_PAD_FIRST_SRC + j;
+-				sink_pad = MSM_VFE_PAD_SINK;
+-			}
+-
+-			ret = media_create_pad_link(src_entity,
+-						    src_pad,
+-						    sink_entity,
+-						    sink_pad,
+-						    0);
+-			if (ret < 0) {
+-				camss_link_err(camss, src_entity->name,
+-					       sink_entity->name,
+-					       ret);
+-				return ret;
+-			}
+-		}
+-	}
+-
+-	return 0;
+-}
+-
+-/*
+- * camss_link_entities_csiphy - Register subdev nodes and create links
++ * camss_link_entities - Register subdev nodes and create links
+  * @camss: CAMSS device
+  *
+  * Return 0 on success or a negative error code on failure
+  */
+-static int camss_link_entities_csiphy(struct camss *camss)
++static int camss_link_entities(struct camss *camss)
+ {
+-	int i, j;
++	int i, j, k;
+ 	int ret;
+ 
+ 	for (i = 0; i < camss->res->csiphy_num; i++) {
+@@ -2392,68 +2343,66 @@ static int camss_link_entities_csiphy(struct camss *camss)
+ 		}
+ 	}
+ 
+-	return 0;
+-}
+-
+-/*
+- * camss_link_entities_ispif - Register subdev nodes and create links
+- * @camss: CAMSS device
+- *
+- * Return 0 on success or a negative error code on failure
+- */
+-static int camss_link_entities_ispif(struct camss *camss)
+-{
+-	int i, j, k;
+-	int ret;
+-
+-	for (i = 0; i < camss->ispif->line_num; i++) {
+-		for (k = 0; k < camss->res->vfe_num; k++) {
+-			for (j = 0; j < camss->vfe[k].res->line_num; j++) {
+-				struct v4l2_subdev *ispif = &camss->ispif->line[i].subdev;
+-				struct v4l2_subdev *vfe = &camss->vfe[k].line[j].subdev;
+-
+-				ret = media_create_pad_link(&ispif->entity,
+-							    MSM_ISPIF_PAD_SRC,
+-							    &vfe->entity,
+-							    MSM_VFE_PAD_SINK,
++	if (camss->ispif) {
++		for (i = 0; i < camss->res->csid_num; i++) {
++			for (j = 0; j < camss->ispif->line_num; j++) {
++				ret = media_create_pad_link(&camss->csid[i].subdev.entity,
++							    MSM_CSID_PAD_SRC,
++							    &camss->ispif->line[j].subdev.entity,
++							    MSM_ISPIF_PAD_SINK,
+ 							    0);
+ 				if (ret < 0) {
+-					camss_link_err(camss, ispif->entity.name,
+-						       vfe->entity.name,
++					camss_link_err(camss,
++						       camss->csid[i].subdev.entity.name,
++						       camss->ispif->line[j].subdev.entity.name,
+ 						       ret);
+ 					return ret;
+ 				}
+ 			}
+ 		}
++
++		for (i = 0; i < camss->ispif->line_num; i++)
++			for (k = 0; k < camss->res->vfe_num; k++)
++				for (j = 0; j < camss->vfe[k].res->line_num; j++) {
++					struct v4l2_subdev *ispif = &camss->ispif->line[i].subdev;
++					struct v4l2_subdev *vfe = &camss->vfe[k].line[j].subdev;
++
++					ret = media_create_pad_link(&ispif->entity,
++								    MSM_ISPIF_PAD_SRC,
++								    &vfe->entity,
++								    MSM_VFE_PAD_SINK,
++								    0);
++					if (ret < 0) {
++						camss_link_err(camss, ispif->entity.name,
++							       vfe->entity.name,
++							       ret);
++						return ret;
++					}
++				}
++	} else {
++		for (i = 0; i < camss->res->csid_num; i++)
++			for (k = 0; k < camss->res->vfe_num; k++)
++				for (j = 0; j < camss->vfe[k].res->line_num; j++) {
++					struct v4l2_subdev *csid = &camss->csid[i].subdev;
++					struct v4l2_subdev *vfe = &camss->vfe[k].line[j].subdev;
++
++					ret = media_create_pad_link(&csid->entity,
++								    MSM_CSID_PAD_FIRST_SRC + j,
++								    &vfe->entity,
++								    MSM_VFE_PAD_SINK,
++								    0);
++					if (ret < 0) {
++						camss_link_err(camss, csid->entity.name,
++							       vfe->entity.name,
++							       ret);
++						return ret;
++					}
++				}
+ 	}
+ 
+ 	return 0;
+ }
+ 
+-/*
+- * camss_link_entities - Register subdev nodes and create links
+- * @camss: CAMSS device
+- *
+- * Return 0 on success or a negative error code on failure
+- */
+-static int camss_link_entities(struct camss *camss)
+-{
+-	int ret;
+-
+-	ret = camss_link_entities_csiphy(camss);
+-	if (ret < 0)
+-		return ret;
+-
+-	ret = camss_link_entities_csid(camss);
+-	if (ret < 0)
+-		return ret;
+-
+-	if (camss->ispif)
+-		ret = camss_link_entities_ispif(camss);
+-
+-	return ret;
+-}
+-
+ /*
+  * camss_register_entities - Register subdev nodes and create links
+  * @camss: CAMSS device
+
+---
+base-commit: 4176cf5c5651c33769de83bb61b0287f4ec7719f
+change-id: 20241214-b4-linux-next-revert-link-freq-74ab5f2f7302
+
+Best regards,
+-- 
+Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+
 
