@@ -1,80 +1,80 @@
-Return-Path: <linux-arm-msm+bounces-42229-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-42230-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4C6529F1EF3
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 14 Dec 2024 14:37:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id B4FE79F1EF8
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 14 Dec 2024 14:38:08 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9B3531889892
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 14 Dec 2024 13:37:46 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id E73F5188997C
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 14 Dec 2024 13:38:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5AD6B195B18;
-	Sat, 14 Dec 2024 13:37:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7FF8019D8B2;
+	Sat, 14 Dec 2024 13:37:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="OY3pCGyS"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="cdPGpyY8"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f171.google.com (mail-lj1-f171.google.com [209.85.208.171])
+Received: from mail-lf1-f49.google.com (mail-lf1-f49.google.com [209.85.167.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 655BC194096
-	for <linux-arm-msm@vger.kernel.org>; Sat, 14 Dec 2024 13:37:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6474C195F0D
+	for <linux-arm-msm@vger.kernel.org>; Sat, 14 Dec 2024 13:37:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734183440; cv=none; b=sU3Q4+XICos0bAzJseaIhCFcxWrS+kjHElM3/lfthyOoqrniWHzvY+wsy1BN98i9Hn+HMmRf9KKzbhTrrxrz2KqdZmZDhYJx+RZwOA8oeDO7dPGNhRdyFIql/dXaYGCbJxCqWLxeFSP/f4kR4Y5HZMY8DKQyx7lvDLApJ6qW5q8=
+	t=1734183442; cv=none; b=fhVXAVvzHuTQoOmgW1Jfr/ySAFWSlO86B+xH6Nn5XIq7aR+SHKiTwlpEfjDE7ovGcM/VmMkjWTStIFhSS64YDrrosr5t0y8xNyPuPxuKaBgtRkdAW9pEu6llp1a0robIN8LE6BfyWGN4Gysw2Mm1akbCpRe6UlolR9+TrWCMqgw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734183440; c=relaxed/simple;
-	bh=ZBQ31V6liiRq6vidYEbRih6I4hmj1n9WetjDV7X3pNY=;
+	s=arc-20240116; t=1734183442; c=relaxed/simple;
+	bh=E7JeGNI7sqGcWqcAailaiFOGnnaUQ0FrCYoy+ca8RpM=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=KZQELmp0EhhZwKYb2/vDIrzNrnjKFyKN5zW9U1Qzt6+0+20BONDGAXT3xemuKqUZU1SQ5kS0pfA28uED4OevvyPbk3JQIGUixZ/nppgySD7AemZ7+Tg1hgz/QS9FAYBG4SSN0lgRvJwjUqN+LndRssJPEbvBiFLxZv4hBB7vQiA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=OY3pCGyS; arc=none smtp.client-ip=209.85.208.171
+	 In-Reply-To:To:Cc; b=bdyLl+3GbXfzkCoE5mEam1ACmHa9Uw8LVC6GKHx1EvzypTxxlJD/rOlKWdZffbzMxcivROcrJHo5TKsDV0EurIoisP/fb0sNk4HiMDg02NooK3fMHp+6vSNp749klza38SBjU4IHRkkh0J7SrYxd+h0e0dIAeTDmSI0W9PGxHv8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=cdPGpyY8; arc=none smtp.client-ip=209.85.167.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f171.google.com with SMTP id 38308e7fff4ca-30225b2586cso38407191fa.0
-        for <linux-arm-msm@vger.kernel.org>; Sat, 14 Dec 2024 05:37:18 -0800 (PST)
+Received: by mail-lf1-f49.google.com with SMTP id 2adb3069b0e04-53df19bf6a9so3762918e87.1
+        for <linux-arm-msm@vger.kernel.org>; Sat, 14 Dec 2024 05:37:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1734183437; x=1734788237; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1734183439; x=1734788239; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=wdwpibg0RRPk6EpwAQK84EDSpk8VUe5onS1+M5umUds=;
-        b=OY3pCGySGBDFuNifo0BULnr0GzMejSUdm/FBcMmIdw/uG2dlkc7SURt/+OKNGx63h7
-         JZZpwcWk+LXdH3Q2WcpHJ9tEfWknaONzAE0b9ScB93urBzZRLqaVKbiVv1EqOwRyIeBA
-         4e5TM/x5alXlU8VLdUNTOMIVBOWUcp6zGhSPEQe/XjCgsd4lxah011X2Yryqcrshl8RS
-         u4xM6IeKCZ91KnLGrOJmYJRQVnltdJ4aDTLc/gROeclDOYohJgncP+Oh0AHCDyTCjgp1
-         1r/1xctOToXcYn8aBYNCB7LJDuooeNIQpSEyM95OgqoEg8cqlK9+xwT4p5QV2HBGXYBj
-         PT1A==
+        bh=6YJ4q6tadgk1hWcoorHO9q9AcqKR3C+KJI1u0hIFBaE=;
+        b=cdPGpyY8kpWHQeR+br0KiiqVLmv6xtTuP3qOO5h/7qHtrMjjtmHZhbRUohsZU0n1D0
+         qrtDrWMpCscbA/fezeEnwCD7cciCW+h8v59xMrGN4Scrzg00wM+3k5NEZCzCSXm1dVAH
+         XxvokM0L/7tBf0mZ5BRf2jv5lNwh/VeHCFGokpwkixzmrWxv5ggCkIVR3ujHAAreVsbm
+         bQbkoffDN+lTE1bjJX4nP60UsUgtJw6ThqWAlIgNaCKRmHcnv7YOXymefiZ5vKYOBUmk
+         CiUJ6ND0gr+NxROPE+k6qIYMxZihT75FQU4C4PuD48PmnC4eTs7APlLtF84TjfbdJ97d
+         BrEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734183437; x=1734788237;
+        d=1e100.net; s=20230601; t=1734183439; x=1734788239;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=wdwpibg0RRPk6EpwAQK84EDSpk8VUe5onS1+M5umUds=;
-        b=BPOxlOL2SXYtImH4Ykn3E2KddCmPAQOB6lObpQzPAVmm6cyM30Tv8mdnPNkrlfYTjO
-         UpQcrCoEltFJfJzr5tiZrwrCDLtNSJxYZIapYeLguv7Ftrs8cTXDjixIG2tbDVg5NWd9
-         3ftEQWB6geGliJrp/ztiYoUgUoadlnKHgCbCPehP9BIMGjyTzCgBz5Z31I+a7EK9n+zK
-         EC8O+Td5wTO+jhDZi1IogUXxxT6A9ve5Q9HYlZ+yq1Zd7MH9D9qDJgtZxsotV0anuFY3
-         1MjohWormqAi4LZU56+pX+afpRAbcv6BzWAO5aI7B30jg6VGJYVcDGNziGYd08r8jBDf
-         L/6A==
-X-Forwarded-Encrypted: i=1; AJvYcCVxxt0yM7wqcidTnW9PBgzPWHhVB0fJrMQ3laGECJtiUrHmhrIlvxF3nDIHh48HVEd92/iQUCnuKmRC6OJ7@vger.kernel.org
-X-Gm-Message-State: AOJu0YwzsG6+gf6Q4h1rVt2r1uL41tXfnM7sAJY+wLdCzHcO/1ro3zUJ
-	IWqCIqJxuZpjPb5LbAOFtHmqgI/GRQcUZSA5WsYoKhYLZSetLLuO6HFP4HqwvFw=
-X-Gm-Gg: ASbGncv/LQTT/LXjcV7VokCT8yYawXWPvh7CcntGITu1UOE/V5KtSJHC4IQBSF1z6fU
-	YcFFEV2tNWK66sF//H8VVBSiHdFOgNEwVFqifAD+aEER5IoLzq6+n/fvFHPdmosuvXmTryXO6/d
-	Y5yZeLeblcnu0N8Mu9NjzHzZzt+2MdGK6uuu+r6eCk+yWTlywM1WDca3n0V8x9oTSFPvLUkOhqm
-	DZDc7eOylVi5a9cJMSb2yCn3XtT8vPCf8Jh5hqEPB2jzPkDiww+d++4GcY9cCBN
-X-Google-Smtp-Source: AGHT+IFDFHsf0YSq3F9U24ZzRaZqLHjwAZuUnskSeXvaHoyC4Tfjr1H/Oi+lGDIZJQoDaEfr8W2dtQ==
-X-Received: by 2002:a05:6512:1591:b0:540:20c5:f847 with SMTP id 2adb3069b0e04-5408ad76276mr1606863e87.22.1734183436550;
-        Sat, 14 Dec 2024 05:37:16 -0800 (PST)
+        bh=6YJ4q6tadgk1hWcoorHO9q9AcqKR3C+KJI1u0hIFBaE=;
+        b=jIROn9iBdNjViNwQ+QkE8k8/ZSRgiQveKdX4evlIdYfA55TB5A+AJGg+D1tDOQ5hB0
+         dNcceylYKf5uhAx/ztN4U2DE1Q/AFnctiJQHC2dzKR7RcrMZ8TdUAvNdnqSkMGa4+i16
+         gF0WCKGmXszzqIRrKPgsQWZR08c4kxtggZIY8mjZ5IWrcAJCoQ53FGXzmrbPkwIimf8m
+         RhtuSFrLXzfI829ofx8oKSKxWQR+rqz3vjmcH/WZa9b/pqeEsO4bw4pxhvZRcnGiCexH
+         Uk31p8nvz72wYT5Loy2cnxI1J3xpioAY9NSxq1/lR8NwYtOAKzr+vkzFkdLvuTE5SZw7
+         0wtg==
+X-Forwarded-Encrypted: i=1; AJvYcCV772pwMR7Vjejo+ZRh04HzsMWzLVPRtBZjh16XKWWOgZb0l0jJU1Boi8Wc+Yxs8uvGNJImnJQH56sriME9@vger.kernel.org
+X-Gm-Message-State: AOJu0YxUCSJE7tmvXeeQWg0UOsc/SL0GPDKy/qLMb+PCdXbJVF/+EaDI
+	2E0kDRcfzDkqdTB+f4AtZ1LPLVGzOM9PzLhdOe70kxe8DYy6Y9fRmEANp/U+eeo=
+X-Gm-Gg: ASbGncs+f9SawqHn/Oqo/06aFK87qWA+iypqmojLJ5IvyW9QKa9YnHDoVRCMLeIVB/+
+	jLerqVvNjGabaIIEgfyerS0pxtlcz91dMTxtxdpAz2lN242qh1XY/y1kW2zZtCW9aOWn6X9QZOg
+	mTG6EUYvKM2sFg7Qahr0eD4aS0K+QFy+kWkkQTczgKNLG95H112qpzkW+8yNKlXyLJJeeeyBiDV
+	ShZIGlZQzqoRRbocONw8Nhztq1ioeLrFBixl7rwaFyHEUYzCChkX+wpyvFZ/2kk
+X-Google-Smtp-Source: AGHT+IFG9LRiCAbslkgJdWcTp68iI2gM9sr2Y/E6t/loWfDlKNLZ1XwCQ4KNA8IB5rjHj0E0zPcgUQ==
+X-Received: by 2002:a05:6512:b27:b0:53e:1b34:fed2 with SMTP id 2adb3069b0e04-54090268d4cmr1991538e87.8.1734183438535;
+        Sat, 14 Dec 2024 05:37:18 -0800 (PST)
 Received: from umbar.lan ([192.130.178.90])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-54120baa474sm220131e87.90.2024.12.14.05.37.14
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-54120baa474sm220131e87.90.2024.12.14.05.37.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 14 Dec 2024 05:37:16 -0800 (PST)
+        Sat, 14 Dec 2024 05:37:17 -0800 (PST)
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Sat, 14 Dec 2024 15:37:06 +0200
-Subject: [PATCH v2 2/5] drm/amdgpu: don't change mode in
- amdgpu_dm_connector_mode_valid()
+Date: Sat, 14 Dec 2024 15:37:07 +0200
+Subject: [PATCH v2 3/5] drm/sti: hda: pass const struct drm_display_mode*
+ to hda_get_mode_idx()
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -83,7 +83,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20241214-drm-connector-mode-valid-const-v2-2-4f9498a4c822@linaro.org>
+Message-Id: <20241214-drm-connector-mode-valid-const-v2-3-4f9498a4c822@linaro.org>
 References: <20241214-drm-connector-mode-valid-const-v2-0-4f9498a4c822@linaro.org>
 In-Reply-To: <20241214-drm-connector-mode-valid-const-v2-0-4f9498a4c822@linaro.org>
 To: Jani Nikula <jani.nikula@linux.intel.com>, 
@@ -142,61 +142,77 @@ Cc: intel-gfx@lists.freedesktop.org, intel-xe@lists.freedesktop.org,
  linux-sunxi@lists.linux.dev, linux-tegra@vger.kernel.org, 
  Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1822;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2281;
  i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
- bh=ZBQ31V6liiRq6vidYEbRih6I4hmj1n9WetjDV7X3pNY=;
- b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBnXYoEN8DdEbQT15+majQu+ePNp1xNEKgZhouhG
- e8cSSkRWPuJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZ12KBAAKCRCLPIo+Aiko
- 1bo9CACKI34mpGW7I5SEIWTnqccfI1E5Dtim4SK/n6/h7bhcZ4fIdi1jPZNDeFfoInJlcQC8kND
- J2yGE2Waz+dJVLeD9HrrAIss+FWiq5KGvzYWgYBmjLuJJCE3PKkqoV+6+sFD44LUIBLxdTRdh6F
- 1T4gKfvqmlDPQFnUhlG3DwphgtSkVOEHHExB8YC0ysIBaeNXz7rClOEu0mGlIZuDjJS/sjgrall
- atWiYOaDofYW+7dTZ9u0SDpxMVllsbKKomyCy6kf/BSVOIp9veKIrgbybIWQXyNIZgk95KFTa4/
- BfCF2//Diwl9V4b6EJ2CMV1tWTpGoVbvzyIZV/xfq0Bc89tB
+ bh=E7JeGNI7sqGcWqcAailaiFOGnnaUQ0FrCYoy+ca8RpM=;
+ b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBnXYoE85Irlub5li3EqAJENRTB+KxenTAd7iEfb
+ h6El8rjAnuJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZ12KBAAKCRCLPIo+Aiko
+ 1YUwB/48isvULWH0ldXb5Wl+P18s81zhuaBxagjYhXRzhD89tkMOOIDFKQ5NnpCsrx5cVD0yKjv
+ kMohag3LXNjhoSb6V1QEjYKbs8lQb0k42nsTdNs7eAuj6nHqn4wLZtHrpJiY5LKtehsRL1dRH8O
+ iK/UZnrOwyGKvuf1mJVxIEU5MCDqbZdSzcv6yfe/JQzyxz9wOMxr7r+/JMucbAHlMS9KNgFDAiB
+ zaFXJ8heSm1wtZf1Lk7kysjtHakzIjmO2In9a50drym8tv9jTHOWts9OrYlWCTUVDWQtfxI2NO4
+ XH8jKKBoyNjNCIHW2L3fgP2rD2Ch5f0VTLJDze5kmlwAxr8U
 X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
  fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
 
-Make amdgpu_dm_connector_mode_valid() duplicate the mode during the
-test rather than modifying the passed mode. This is a preparation to
+Make hda_get_mode_idx() take a const struct drm_display_mode pointer
+instead of just raw struct drm_display_mode. This is a preparation to
 converting the mode_valid() callback of drm_connector to take a const
 struct drm_display_mode argument.
 
+Acked-by: Raphael Gallais-Pou <rgallaispou@gmail.com>
 Reviewed-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/sti/sti_hda.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-index 5a503104e38d1514103914a4d012969105877e52..0d9d2e1c4b4fd48baa19f16fb832a9ce5ed09108 100644
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -7420,6 +7420,7 @@ enum drm_mode_status amdgpu_dm_connector_mode_valid(struct drm_connector *connec
+diff --git a/drivers/gpu/drm/sti/sti_hda.c b/drivers/gpu/drm/sti/sti_hda.c
+index b12863bea95559c4f874eb94cea8938609d435d4..57aa260d1e4620a85d10e80a84111be885bd0842 100644
+--- a/drivers/gpu/drm/sti/sti_hda.c
++++ b/drivers/gpu/drm/sti/sti_hda.c
+@@ -280,12 +280,12 @@ static void hda_write(struct sti_hda *hda, u32 val, int offset)
+  *
+  * Return true if mode is found
+  */
+-static bool hda_get_mode_idx(struct drm_display_mode mode, int *idx)
++static bool hda_get_mode_idx(const struct drm_display_mode *mode, int *idx)
  {
- 	int result = MODE_ERROR;
- 	struct dc_sink *dc_sink;
-+	struct drm_display_mode *test_mode;
- 	/* TODO: Unhardcode stream count */
- 	struct dc_stream_state *stream;
- 	struct amdgpu_dm_connector *aconnector = to_amdgpu_dm_connector(connector);
-@@ -7444,11 +7445,16 @@ enum drm_mode_status amdgpu_dm_connector_mode_valid(struct drm_connector *connec
- 		goto fail;
+ 	unsigned int i;
+ 
+ 	for (i = 0; i < ARRAY_SIZE(hda_supported_modes); i++)
+-		if (drm_mode_equal(&hda_supported_modes[i].mode, &mode)) {
++		if (drm_mode_equal(&hda_supported_modes[i].mode, mode)) {
+ 			*idx = i;
+ 			return true;
+ 		}
+@@ -443,7 +443,7 @@ static void sti_hda_pre_enable(struct drm_bridge *bridge)
+ 	if (clk_prepare_enable(hda->clk_hddac))
+ 		DRM_ERROR("Failed to prepare/enable hda_hddac clk\n");
+ 
+-	if (!hda_get_mode_idx(hda->mode, &mode_idx)) {
++	if (!hda_get_mode_idx(&hda->mode, &mode_idx)) {
+ 		DRM_ERROR("Undefined mode\n");
+ 		return;
  	}
+@@ -526,7 +526,7 @@ static void sti_hda_set_mode(struct drm_bridge *bridge,
  
--	drm_mode_set_crtcinfo(mode, 0);
-+	test_mode = drm_mode_duplicate(connector->dev, mode);
-+	if (!test_mode)
-+		goto fail;
-+
-+	drm_mode_set_crtcinfo(test_mode, 0);
+ 	drm_mode_copy(&hda->mode, mode);
  
--	stream = create_validate_stream_for_sink(aconnector, mode,
-+	stream = create_validate_stream_for_sink(aconnector, test_mode,
- 						 to_dm_connector_state(connector->state),
- 						 NULL);
-+	drm_mode_destroy(connector->dev, test_mode);
- 	if (stream) {
- 		dc_stream_release(stream);
- 		result = MODE_OK;
+-	if (!hda_get_mode_idx(hda->mode, &mode_idx)) {
++	if (!hda_get_mode_idx(&hda->mode, &mode_idx)) {
+ 		DRM_ERROR("Undefined mode\n");
+ 		return;
+ 	}
+@@ -614,7 +614,7 @@ sti_hda_connector_mode_valid(struct drm_connector *connector,
+ 		= to_sti_hda_connector(connector);
+ 	struct sti_hda *hda = hda_connector->hda;
+ 
+-	if (!hda_get_mode_idx(*mode, &idx)) {
++	if (!hda_get_mode_idx(mode, &idx)) {
+ 		return MODE_BAD;
+ 	} else {
+ 		result = clk_round_rate(hda->clk_pix, target);
 
 -- 
 2.39.5
