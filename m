@@ -1,63 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-42237-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-42238-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 883029F2037
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 14 Dec 2024 19:02:25 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 3D7FE9F20CC
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 14 Dec 2024 21:54:49 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9C5EA166319
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 14 Dec 2024 18:02:22 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5C6081649D0
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 14 Dec 2024 20:54:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D4D58194AD5;
-	Sat, 14 Dec 2024 18:02:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9CFF91B6CF6;
+	Sat, 14 Dec 2024 20:53:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="aBj8I1ql"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="p5yrRaiP"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F27B28F1;
-	Sat, 14 Dec 2024 18:02:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA63B1B652C;
+	Sat, 14 Dec 2024 20:53:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734199342; cv=none; b=rNmdfFheDfnT0m+/jvhb1E28EMmZdriVqpkkNYjYi0+A7qUnwaDJIO6FSawhCcYoM6bIjyXmtqJOo+kpR214vp+J60/FZLeyto9i1ttFr9laBni2mihEj2LSd8V6F4kbZcrYZguJRJNBcr+kvN62Ct7/VDAP2J/ts8unRpry1MI=
+	t=1734209610; cv=none; b=W3iDx4HpmYQyKvoFe0P58pH79ab5u6u08dPo/gSKuhptgCeLtwR4FM0CavJAv/Zwx7Zv8dd7Yfp/Tk3gXUlXEijvvWJUhOZTV1uGJC0no2eYv1Pum8lQwoLRA+QO76TO1oj2qjlRnLLwrupjW/X1KtgtkCjBZeaLt5+n56e23/U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734199342; c=relaxed/simple;
-	bh=nX/jwf9QRnA6uEjBls2jg0GjS0s9+tUj4IHXWwl5/jY=;
+	s=arc-20240116; t=1734209610; c=relaxed/simple;
+	bh=mLW5LdJnBow/2KINYs7aSsw7oQsumjWrkTu+6JL6vQQ=;
 	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=G728DkaVSQQXUHGnoB8ScKfWvouovlQQJMJU0yIJvXOQpuZEs1YrRwActgVam0fYRbaLn1jBMijBa+SYzAjii0X3PtzA1dM7QTs8/SxXaY9VBCsqRB7LMf4uhwK4aP4hXscnEmoo6I7svHC44efLU2TKS9IuPK47YOcEHmzZ9XU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=aBj8I1ql; arc=none smtp.client-ip=205.220.180.131
+	 In-Reply-To:Content-Type; b=VxciRcC6UFJQVKub/RVdUZhlwmEumPK1RSv2JyE6IGBJE1g4o21HHNBDKsvkuVi1V++a2+ihoFMAq/A8bmAE6YayuSfbWmhGFOvAPP4OOICTGOiWOPfP3Xhq22TqThiPt3xAyBE4ACrQ91DWeKqnL62TqP2iYaF5UF8afWbJJSU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=p5yrRaiP; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BEGraha021075;
-	Sat, 14 Dec 2024 18:02:09 GMT
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BEHxq08004633;
+	Sat, 14 Dec 2024 20:53:13 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	v1Ybzk84uGSlfDJpnE733yrjYmvH6mTSTeC/J2oKaT4=; b=aBj8I1ql4tKlCk0A
-	QSrBEfRCDGJyD8WDcVXJYYaDjaOGHUlTLg2Oz3PGQSWNgH3oxqnwdlrUZDmgHApV
-	gs1mJgafoiENN0mkGF2CImeyuAKPTWsumTzUZKHUAAssUQVy3WEtLLzz1OimqYm6
-	TG8xr8R5IJWwumsQvhXOHHlptz9YNOm7elu2ePD81bb3EldUtI1rZDJIFIMFm2V/
-	lTh+DiC/lGYlHWUhKyuIk7Z8Df6Gbd/Jgxz1Tc24Uboc8AaFNKADcrK6C0qLP0JC
-	dnfeGcQjAQcdsgJeCWI3HsL5+ukQVwy9I6coPh91kE3Jw7Ivj4ipo04/w4G1s79E
-	hZ6sxg==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43h30x0v3n-1
+	+0j2WPR1fgo4kDMEwCIvzm1eEJihjRw6FoiPxikWkPY=; b=p5yrRaiPExlbbw0s
+	fR6wIbECBHIlpjZPMs3e9F0rfVHXgeRbVs8CTVtFywJwQS4zzmdNYlgh/i/EF9ow
+	CVYS5ZSgX2HVS6X8i5pMRtqTVKitqfFxLuoUc6ztjCGqGXm3VWV1WqjQsYvdMiZN
+	8WICMTY+Ldth6ozm5PloKvqTbZAF5Pp61qwIAzlsDHNcsOH9l8dYU9cre1gDMliF
+	90m9G5MXL0fR5SRvKLED0nAC5jzkg4zFXwWSQr35cm8OsUbOyPK6wPN5C9DcQCtC
+	uAaEWKyGcEiFpHj23uFf0NXBt6njolaKDIdSNnkGNmmP0SXtolWXlBhTJOjx9yEa
+	IEPinw==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43h30ks0xt-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Sat, 14 Dec 2024 18:02:08 +0000 (GMT)
+	Sat, 14 Dec 2024 20:53:12 +0000 (GMT)
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4BEI27bS021591
+	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4BEKrB4C030904
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Sat, 14 Dec 2024 18:02:07 GMT
+	Sat, 14 Dec 2024 20:53:11 GMT
 Received: from [10.110.102.127] (10.80.80.8) by nalasex01a.na.qualcomm.com
  (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Sat, 14 Dec
- 2024 10:02:03 -0800
-Message-ID: <8cce980f-758e-493c-b646-ee62a298da8d@quicinc.com>
-Date: Sat, 14 Dec 2024 10:02:01 -0800
+ 2024 12:53:09 -0800
+Message-ID: <459e59b1-1212-4a93-89cd-f5a2e062543e@quicinc.com>
+Date: Sat, 14 Dec 2024 12:53:07 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,8 +65,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 09/14] drm/msm/dp: use msm_dp_utils_pack_sdp_header()
- for audio packets
+Subject: Re: [PATCH v3 04/14] drm/msm/dp: pull I/O data out of
+ msm_dp_catalog_private()
 To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 CC: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         "Marijn
@@ -78,519 +78,282 @@ CC: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         <dri-devel@lists.freedesktop.org>, <freedreno@lists.freedesktop.org>,
         <linux-kernel@vger.kernel.org>
 References: <20241212-fd-dp-audio-fixup-v3-0-0b1c65e7dba3@linaro.org>
- <20241212-fd-dp-audio-fixup-v3-9-0b1c65e7dba3@linaro.org>
- <070dea1a-c300-4968-ba24-011625e4c133@quicinc.com>
- <CAA8EJpqO=AjVGEnZHNbM5+Mnu2gMN96kABBLM5XHh3NMMGFtjw@mail.gmail.com>
- <9a9ff3a5-5c01-45fd-a89a-b8305baac5bd@quicinc.com>
- <CAA8EJpoF1B4mARmSmEhq9qUfMFxCF-+W1AVDnOLniM6F67=yvw@mail.gmail.com>
+ <20241212-fd-dp-audio-fixup-v3-4-0b1c65e7dba3@linaro.org>
+ <c5090fcc-d7ec-4d49-aa21-8d1aa7f6a1c7@quicinc.com>
+ <CAA8EJppOjAjFVUFSEXJMbJ4aV_MvzpeTuKDkL7P+t_Mw47YECw@mail.gmail.com>
+ <5cb7b1b1-5596-4704-bd01-beaadf8bba51@quicinc.com>
+ <CAA8EJppyNceC+t-2MKqq1QhCj2cYb+jprc++cFEen8Cqhhbo0w@mail.gmail.com>
 Content-Language: en-US
 From: Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <CAA8EJpoF1B4mARmSmEhq9qUfMFxCF-+W1AVDnOLniM6F67=yvw@mail.gmail.com>
+In-Reply-To: <CAA8EJppyNceC+t-2MKqq1QhCj2cYb+jprc++cFEen8Cqhhbo0w@mail.gmail.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
 X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: U6nGTMSTqAS9PKulgQRqW2BJMzILPIW4
-X-Proofpoint-GUID: U6nGTMSTqAS9PKulgQRqW2BJMzILPIW4
+X-Proofpoint-GUID: iNfxBK57fisQLbS1oURPlszvC3Pb7C_c
+X-Proofpoint-ORIG-GUID: iNfxBK57fisQLbS1oURPlszvC3Pb7C_c
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 spamscore=0
- malwarescore=0 phishscore=0 impostorscore=0 adultscore=0
- priorityscore=1501 bulkscore=0 clxscore=1015 lowpriorityscore=0 mlxscore=0
- mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2412140149
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 mlxscore=0
+ bulkscore=0 clxscore=1015 adultscore=0 spamscore=0 suspectscore=0
+ priorityscore=1501 phishscore=0 malwarescore=0 mlxlogscore=999
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2412140171
 
+Hi Dmitry
 
-
-On 12/12/2024 4:28 PM, Dmitry Baryshkov wrote:
-> On Fri, 13 Dec 2024 at 01:53, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
+On 12/12/2024 3:09 PM, Dmitry Baryshkov wrote:
+> On Thu, 12 Dec 2024 at 21:15, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
 >>
 >>
 >>
->> On 12/12/2024 2:28 PM, Dmitry Baryshkov wrote:
->>> On Thu, 12 Dec 2024 at 23:41, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
+>> On 12/12/2024 12:52 AM, Dmitry Baryshkov wrote:
+>>> On Thu, 12 Dec 2024 at 04:59, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
 >>>>
 >>>>
 >>>>
 >>>> On 12/11/2024 3:41 PM, Dmitry Baryshkov wrote:
->>>>> Use msm_dp_utils_pack_sdp_header() and call msm_dp_write_link() directly
->>>>> to program audio packet data. Use 0 as Packet ID, as it was not
->>>>> programmed earlier.
+>>>>> Having I/O regions inside a msm_dp_catalog_private() results in extra
+>>>>> layers of one-line wrappers for accessing the data. Move I/O region base
+>>>>> and size to the globally visible struct msm_dp_catalog.
 >>>>>
 >>>>> Reviewed-by: Stephen Boyd <swboyd@chromium.org>
 >>>>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 >>>>> ---
->>>>>     drivers/gpu/drm/msm/dp/dp_audio.c | 288 +++++++++-----------------------------
->>>>>     1 file changed, 66 insertions(+), 222 deletions(-)
+>>>>>     drivers/gpu/drm/msm/dp/dp_catalog.c | 457 +++++++++++++++---------------------
+>>>>>     drivers/gpu/drm/msm/dp/dp_catalog.h |  12 +
+>>>>>     2 files changed, 197 insertions(+), 272 deletions(-)
 >>>>>
->>>>> diff --git a/drivers/gpu/drm/msm/dp/dp_audio.c b/drivers/gpu/drm/msm/dp/dp_audio.c
->>>>> index 5cbb11986460d1e4ed1890bdf66d0913e013083c..1aa52d5cc08684a49102e45ed6e40ac2b13497c7 100644
->>>>> --- a/drivers/gpu/drm/msm/dp/dp_audio.c
->>>>> +++ b/drivers/gpu/drm/msm/dp/dp_audio.c
->>>>> @@ -14,6 +14,7 @@
->>>>>     #include "dp_catalog.h"
->>>>>     #include "dp_audio.h"
->>>>>     #include "dp_panel.h"
->>>>> +#include "dp_reg.h"
->>>>>     #include "dp_display.h"
->>>>>     #include "dp_utils.h"
->>>>>
->>>>> @@ -28,251 +29,94 @@ struct msm_dp_audio_private {
->>>>>         struct msm_dp_audio msm_dp_audio;
->>>>>     };
->>>>>
->>>>> -static u32 msm_dp_audio_get_header(struct msm_dp_catalog *catalog,
->>>>> -             enum msm_dp_catalog_audio_sdp_type sdp,
->>>>> -             enum msm_dp_catalog_audio_header_type header)
->>>>> -{
->>>>> -     return msm_dp_catalog_audio_get_header(catalog, sdp, header);
->>>>> -}
->>>>> -
->>>>> -static void msm_dp_audio_set_header(struct msm_dp_catalog *catalog,
->>>>> -             u32 data,
->>>>> -             enum msm_dp_catalog_audio_sdp_type sdp,
->>>>> -             enum msm_dp_catalog_audio_header_type header)
->>>>> -{
->>>>> -     msm_dp_catalog_audio_set_header(catalog, sdp, header, data);
->>>>> -}
->>>>> -
->>>>>     static void msm_dp_audio_stream_sdp(struct msm_dp_audio_private *audio)
->>>>>     {
->>>>>         struct msm_dp_catalog *catalog = audio->catalog;
->>>>> -     u32 value, new_value;
->>>>> -     u8 parity_byte;
->>>>> -
->>>>> -     /* Config header and parity byte 1 */
->>>>> -     value = msm_dp_audio_get_header(catalog,
->>>>> -                     DP_AUDIO_SDP_STREAM, DP_AUDIO_SDP_HEADER_1);
->>>>> -
->>>>> -     new_value = 0x02;
->>>>> -     parity_byte = msm_dp_utils_calculate_parity(new_value);
->>>>> -     value |= ((new_value << HEADER_BYTE_1_BIT)
->>>>> -                     | (parity_byte << PARITY_BYTE_1_BIT));
->>>>> -     drm_dbg_dp(audio->drm_dev,
->>>>> -                     "Header Byte 1: value = 0x%x, parity_byte = 0x%x\n",
->>>>> -                     value, parity_byte);
->>>>> -     msm_dp_audio_set_header(catalog, value,
->>>>> -             DP_AUDIO_SDP_STREAM, DP_AUDIO_SDP_HEADER_1);
->>>>> -
->>>>> -     /* Config header and parity byte 2 */
->>>>> -     value = msm_dp_audio_get_header(catalog,
->>>>> -                     DP_AUDIO_SDP_STREAM, DP_AUDIO_SDP_HEADER_2);
->>>>> -     new_value = value;
->>>>> -     parity_byte = msm_dp_utils_calculate_parity(new_value);
->>>>> -     value |= ((new_value << HEADER_BYTE_2_BIT)
->>>>> -                     | (parity_byte << PARITY_BYTE_2_BIT));
->>>>> -     drm_dbg_dp(audio->drm_dev,
->>>>> -                     "Header Byte 2: value = 0x%x, parity_byte = 0x%x\n",
->>>>> -                     value, parity_byte);
->>>>> -
->>>>> -     msm_dp_audio_set_header(catalog, value,
->>>>> -             DP_AUDIO_SDP_STREAM, DP_AUDIO_SDP_HEADER_2);
->>>>> -
->>>>> -     /* Config header and parity byte 3 */
->>>>> -     value = msm_dp_audio_get_header(catalog,
->>>>> -                     DP_AUDIO_SDP_STREAM, DP_AUDIO_SDP_HEADER_3);
->>>>> -
->>>>> -     new_value = audio->channels - 1;
->>>>> -     parity_byte = msm_dp_utils_calculate_parity(new_value);
->>>>> -     value |= ((new_value << HEADER_BYTE_3_BIT)
->>>>> -                     | (parity_byte << PARITY_BYTE_3_BIT));
->>>>> -     drm_dbg_dp(audio->drm_dev,
->>>>> -                     "Header Byte 3: value = 0x%x, parity_byte = 0x%x\n",
->>>>> -             value, parity_byte);
->>>>> -
->>>>> -     msm_dp_audio_set_header(catalog, value,
->>>>> -             DP_AUDIO_SDP_STREAM, DP_AUDIO_SDP_HEADER_3);
->>>>> +     struct dp_sdp_header sdp_hdr = {
->>>>> +             .HB0 = 0x00,
->>>>> +             .HB1 = 0x02,
->>>>> +             .HB2 = 0x00,
->>>>> +             .HB3 = audio->channels - 1,
->>>>> +     };
->>>>> +     u32 header[2];
->>>>> +
->>>>> +     msm_dp_utils_pack_sdp_header(&sdp_hdr, header);
->>>>> +
->>>>> +     msm_dp_write_link(catalog, MMSS_DP_AUDIO_STREAM_0, header[0]);
->>>>> +     msm_dp_write_link(catalog, MMSS_DP_AUDIO_STREAM_1, header[1]);
->>>>>     }
 >>>>
->>>> This patch is changing the programming behavior.
 >>>>
->>>> Earlier it was using a read/modify/write on each register. Now, its just
->>>>     a write. I checked a few chipsets, the reset value of registers was 0,
->>>> so that part is okay.
->>>
->>> Except that it was not a correct RMW, it was read, OR new data without
->>> clearing the bitfield, write. So it has been working mostly by a
->>> miracle,
->>>
-
-Yes, we should have added the bitfield clearing long ago and not waited 
-for this cleanup. Could have even gone as a separate fix.
-
+>>>> Fundamentally, the whole point of catalog was that it needs to be the
+>>>> only place where we want to access the registers. Thats how this really
+>>>> started.
 >>>>
->>>> But, for the MMSS_DP_AUDIO_STREAM_0 register, earlier we were writing
->>>> only the upper nibble, that is bits 15:0 of DP_AUDIO_SDP_HEADER_0 was
->>>> kept as-it-is, but now this patch is changing that to 0. What was the
->>>> reason for that change?
+>>>> This pre-dates my time with the DP driver but as I understand thats what
+>>>> it was for.
+>>>>
+>>>> Basically separating out the logical abstraction vs actual register writes .
+>>>>
+>>>> If there are hardware sequence differences within the controller reset
+>>>> OR any other register offsets which moved around, catalog should have
+>>>> been able to absorb it without that spilling over to all the layers.
+>>>>
+>>>> So for example, if we call dp_ctrl_reset() --> ctrl->catalog->reset_ctrl()
+>>>>
+>>>> Then the reset_ctrl op of the catalog should manage any controller
+>>>> version differences within the reset sequence.
 >>>
->>> It is described in the commit message: "Use 0 as Packet ID, as it was not
->>> programmed earlier."
+>>> The problem is that the register-level writes are usually not the best
+>>> abstraction. So, instead of designing the code around dp_catalog I'd
+>>> prefer to see actual hw / programming changes first.
 >>>
 >>
->> The part of using 0 as Packet ID is but not the behavior of changing the
->> RMW which is also pretty significant. That was all happening under the hood.
+>> So thats the issue here. If we did end up with registers and sequences
+>> different for controller versions, the ctrl layer was expected to just
+>> call a reset() op for example similar to the DPU example you gave. And
+>> as you rightly noted, the dpu_hw_xxx files only expose the ops based on
+>> version and the upper layers were supposed to just call into the ops
+>> without knowing the register level details. Thats pretty much what
+>> dp_ctrl tried to do here. We did not want to expose all the register
+>> defines in those layers. This series is doing exactly opposite of that.
 > 
-> No. It is explicitly mentioned in the commit message. It's not under the hood.
+> We don't have the issue up to now, even though we support DP
+> controllers since SDM845 up to SM8650 and X1E80100. The SDE driver has
+> v200 vs v420 catalog files for PHY programming, the rest of the
+> functions are common. So, for me it looks like a preparation for the
+> imaginary case that didn't come to existence up to now.
+> So, yes. I want to get rid of extra useless indirection and I want to
+> expose register sequences in those layers.
 > 
 
-Which part? "Use msm_dp_utils_pack_sdp_header() and call 
-msm_dp_write_link() directly
-to program audio packet data" .. this one?
+Yes because PHY programming is managed in the PHY driver today and does 
+not go through catalog whereas in SDE driver it does, I do not have any 
+other concrete example to give you which exists in the current code 
+where sequence changes across chipset variants for DP controller and 
+since I certainly cannot discuss how things can evolve moving forward, 
+as usual, I have to accept it as one of those things which is not used 
+today. So yes, I guess the register sequencing point changing across 
+chipset variants, does not have a good example which I can really share.
 
-I would prefer to be more explicit.
+But exposing register sequences within the same file, I am not too sure 
+about that. For example, you can take a look at 
+dp_catalog_panel_config_hdr in the SDE code OR even 
+msm_dp_catalog_panel_enable_vsc_sdp in the current upstream code. Why 
+should this entire sequence be exposed to the dp_panel layer?
 
-I would have preferred something like "and drop the existing behavior to 
-read every header and write it and write the whole register at once to 
-drop the catalog audio map"
+For smaller functions which are one-liners the redirection seems 
+redundant but when the sequence is bigger like in the examples I gave, 
+the logical Vs register sequence separation grows. Thats where the 
+dp_catalog came from.
 
 
 >>
 >>>>
->>>> This is true for all the APIs being touched in this file.
+>>>> We do not use or have catalog ops today so it looks redundant as we just
+>>>> call the dp_catalog APIs directly but that was really the intention.
 >>>>
->>>> I guess the whole point of having that audio map in the catalog was to
->>>> preserve the read values of these registers. I have to check what was
->>>> the reason behind that as once again this was before I worked on this
->>>> driver as well.
+>>>> Another reason which was behind this split but not applicable to current
+>>>> upstream driver is that the AUX is part of the PHY driver in upstream
+>>>> but in downstream, that remains a part of catalog and as we know the AUX
+>>>> component keeps changing with chipsets especially the settings. That was
+>>>> the reason of keeping catalog separate and the only place which should
+>>>> deal with registers and not the entire DP driver.
 >>>>
->>>> So technically there are two parts to this change:
->>>>
->>>> 1) dropping read for each header and directly just writing it
->>>> 2) Writing the registers directly instead of going through catalog
->>>>
->>>> It seems like (1) and (2) are independent. I hope (1) was not the reason
->>>> to have started this whole rework.
+>>>> The second point seems not applicable to this driver but first point
+>>>> still is. I do admit there is re-direction like ctrl->catalog
+>>>> instead of just writing it within dp_ctrl itself but the redirection was
+>>>> only because ctrl layers were not really meant to deal with the register
+>>>> programming. So for example, now with patch 7 of this series every
+>>>> register being written to i exposed in dp_ctrl.c and likewise for other
+>>>> files. That seems unnecessary. Because if we do end up with some
+>>>> variants which need separate registers written, then we will now have to
+>>>> end up touching every file as opposed to only touching dp_catalog.
 >>>
->>> Yes, the driver spends a lot of effort to preserve the data that will
->>> be rewritten when the function is called to write the next header
->>> byte. So it is useless. Only HB0 has been preserved, PacketID. If for
->>> some reason we are generating a stream with the non-zero ID, it should
->>> be explicit, not implicitly 'preserved'.
+>>> Yes. I think that it's a bonus, not a problem. We end up touching the
+>>> files that are actually changed, so we see what is happening. Quite
+>>> frequently register changes are paired with the functionality changes.
 >>>
 >>
->> I am trying to understand why this was being preserved. Audio
->> programming is half in DP driver and half in ADSP. I dont know if the
->> expectation was that packet ID will be programmed elsewhere and not in
->> HLOS code hence it was preserved.
->>
->>> So, the reasons were:
->>> - fix the RMW cycles to drop old values from the registers
->>> - use new msm_dp_utils_pack_sdp_header()
-
-This could have been one change by itself rather than an under the 
-umbrella of misc cleanups. All you had to do was do the same cleanup, 
-but rather than dp audio directly writing the register, it would have 
-gone through catalog maybe perhaps with another API.
-
-Then the catalog cleanup could have just replaced that API if required.
-
-Easier to review , easier to land by iself and easier to bisect as well 
-if some regression had happened.
-
->>> - get rid of the useless indirection through the catalog and enum
->>> msm_dp_catalog_audio_header_type
->>> - write registers in an efficient way.
-
-Yes, agreed to this point. It does certainly reduce the number of 
-register reads/writes for each DP audio register and yes if we had known 
-earlier that this was not needed, would have done it the same way.
-
->>> - if we ever have a set of functions to handle DP infoframes (like we
->>> do for HDMI), make the MSM DP driver ready to be converted to such
->>> functions.
->>
-
-Yes I get where this change came from. For any infoframe, we have 
-similar logic of doing a pack and then writing at once. So I was never 
-opposed to this part. I was trying to mostly figure out where the 
-read-modify-write came from in the first place and whether there is any 
-impact of dropping that.
-
->>
->> The only reason the current driver needed to go through the catalog map
->> was that it was trying to write one header at a time. And in the
->> registers, 2 headers are mapped to one register. So a map was needed. I
->> do not know the reason for breaking up the writes into one header at a
->> time like I already mentioned so I am trying to gather that info.
->> Without knowing the reason it might seem useless but its my duty to make
->> sure nothing was overlooked.
+>> Not exactly. Why should dp_ctrl really know that some register offset or
+>> some block shift happened for example. It only needs to know when to
+>> reset the hardware and not how. Thats the separation getting broken with
+>> this.
 > 
-> Sure!
+> Yes. And I'm removing that separation very intentionally. If one is
+> looking for AUX programming, they should be looking into dp_aux only,
+> not dp_aux & dp_catalog. Likewise all audio code should be in
+> dp_audio. By using dp_catalog we ended up with a very very very bad
+> abstraction of msm_dp_catalog_audio_get_header() /
+> msm_dp_catalog_audio_set_header() / enum
+> msm_dp_catalog_audio_sdp_type. Just because reads & writes should go
+> through the catalog.
+
+No, I think this is where there is some correction needed. the 
+get_header() / set_header() was done not because all writes need to go 
+through catalog but because the audio headers were thought to be written 
+only one header at a time and we had thought that read-modify-write had 
+to be done to preserve the bytes. And when we have to do only one header 
+at a time and because two headers map to one register, catalog had to 
+end up managing an audio_map. Now, after checking where it came from as 
+I commented on that patch, this requirement was not a functional one but 
+was just trying to preserve the pre-silicon validation scripts sequence, 
+this part of it can be dropped. So no need of get_header() / 
+set_header() and an audio_map. Now all registers going through catalog 
+is another thing which we are still discussing here.
+
+> For dp_panel likewise there is no need to look into some other source
+> file to follow the register sequences. It can all be contained within
+> dp_panel.c, helping one to understand the code.
 > 
 
-Ok, so I was finally able to trace down the history of why we did it 
-this way and it goes back almost 6 years so took me a while. Its just 
-that the pre-silicon validation sequences had a read-modify-write (which 
-they do even today) so the current software was just reflecting that.
-
-Functionally however, I have confirmed that we do not need to do that. 
-So, I am fine with this change but will first close the discussion on 
-patch 5 as this patch tried to do multiple things, so have to close one 
-topic and then get to the other to finally ack this change.
-
->>
->>
->>
->>>
->>>>
->>>>>
->>>>>     static void msm_dp_audio_timestamp_sdp(struct msm_dp_audio_private *audio)
->>>>>     {
->>>>>         struct msm_dp_catalog *catalog = audio->catalog;
->>>>> -     u32 value, new_value;
->>>>> -     u8 parity_byte;
->>>>> -
->>>>> -     /* Config header and parity byte 1 */
->>>>> -     value = msm_dp_audio_get_header(catalog,
->>>>> -                     DP_AUDIO_SDP_TIMESTAMP, DP_AUDIO_SDP_HEADER_1);
->>>>> -
->>>>> -     new_value = 0x1;
->>>>> -     parity_byte = msm_dp_utils_calculate_parity(new_value);
->>>>> -     value |= ((new_value << HEADER_BYTE_1_BIT)
->>>>> -                     | (parity_byte << PARITY_BYTE_1_BIT));
->>>>> -     drm_dbg_dp(audio->drm_dev,
->>>>> -                     "Header Byte 1: value = 0x%x, parity_byte = 0x%x\n",
->>>>> -                     value, parity_byte);
->>>>> -     msm_dp_audio_set_header(catalog, value,
->>>>> -             DP_AUDIO_SDP_TIMESTAMP, DP_AUDIO_SDP_HEADER_1);
->>>>> -
->>>>> -     /* Config header and parity byte 2 */
->>>>> -     value = msm_dp_audio_get_header(catalog,
->>>>> -                     DP_AUDIO_SDP_TIMESTAMP, DP_AUDIO_SDP_HEADER_2);
->>>>> -
->>>>> -     new_value = 0x17;
->>>>> -     parity_byte = msm_dp_utils_calculate_parity(new_value);
->>>>> -     value |= ((new_value << HEADER_BYTE_2_BIT)
->>>>> -                     | (parity_byte << PARITY_BYTE_2_BIT));
->>>>> -     drm_dbg_dp(audio->drm_dev,
->>>>> -                     "Header Byte 2: value = 0x%x, parity_byte = 0x%x\n",
->>>>> -                     value, parity_byte);
->>>>> -     msm_dp_audio_set_header(catalog, value,
->>>>> -             DP_AUDIO_SDP_TIMESTAMP, DP_AUDIO_SDP_HEADER_2);
->>>>> -
->>>>> -     /* Config header and parity byte 3 */
->>>>> -     value = msm_dp_audio_get_header(catalog,
->>>>> -                     DP_AUDIO_SDP_TIMESTAMP, DP_AUDIO_SDP_HEADER_3);
->>>>> -
->>>>> -     new_value = (0x0 | (0x11 << 2));
->>>>> -     parity_byte = msm_dp_utils_calculate_parity(new_value);
->>>>> -     value |= ((new_value << HEADER_BYTE_3_BIT)
->>>>> -                     | (parity_byte << PARITY_BYTE_3_BIT));
->>>>> -     drm_dbg_dp(audio->drm_dev,
->>>>> -                     "Header Byte 3: value = 0x%x, parity_byte = 0x%x\n",
->>>>> -                     value, parity_byte);
->>>>> -     msm_dp_audio_set_header(catalog, value,
->>>>> -             DP_AUDIO_SDP_TIMESTAMP, DP_AUDIO_SDP_HEADER_3);
->>>>> +     struct dp_sdp_header sdp_hdr = {
->>>>> +             .HB0 = 0x00,
->>>>> +             .HB1 = 0x01,
->>>>> +             .HB2 = 0x17,
->>>>> +             .HB3 = 0x0 | (0x11 << 2),
->>>>> +     };
->>>>> +     u32 header[2];
->>>>> +
->>>>> +     msm_dp_utils_pack_sdp_header(&sdp_hdr, header);
->>>>> +
->>>>> +     msm_dp_write_link(catalog, MMSS_DP_AUDIO_TIMESTAMP_0, header[0]);
->>>>> +     msm_dp_write_link(catalog, MMSS_DP_AUDIO_TIMESTAMP_1, header[1]);
->>>>>     }
->>>>>
->>>>>     static void msm_dp_audio_infoframe_sdp(struct msm_dp_audio_private *audio)
->>>>>     {
->>>>>         struct msm_dp_catalog *catalog = audio->catalog;
->>>>> -     u32 value, new_value;
->>>>> -     u8 parity_byte;
->>>>> -
->>>>> -     /* Config header and parity byte 1 */
->>>>> -     value = msm_dp_audio_get_header(catalog,
->>>>> -                     DP_AUDIO_SDP_INFOFRAME, DP_AUDIO_SDP_HEADER_1);
->>>>> -
->>>>> -     new_value = 0x84;
->>>>> -     parity_byte = msm_dp_utils_calculate_parity(new_value);
->>>>> -     value |= ((new_value << HEADER_BYTE_1_BIT)
->>>>> -                     | (parity_byte << PARITY_BYTE_1_BIT));
->>>>> -     drm_dbg_dp(audio->drm_dev,
->>>>> -                     "Header Byte 1: value = 0x%x, parity_byte = 0x%x\n",
->>>>> -                     value, parity_byte);
->>>>> -     msm_dp_audio_set_header(catalog, value,
->>>>> -             DP_AUDIO_SDP_INFOFRAME, DP_AUDIO_SDP_HEADER_1);
->>>>> -
->>>>> -     /* Config header and parity byte 2 */
->>>>> -     value = msm_dp_audio_get_header(catalog,
->>>>> -                     DP_AUDIO_SDP_INFOFRAME, DP_AUDIO_SDP_HEADER_2);
->>>>> -
->>>>> -     new_value = 0x1b;
->>>>> -     parity_byte = msm_dp_utils_calculate_parity(new_value);
->>>>> -     value |= ((new_value << HEADER_BYTE_2_BIT)
->>>>> -                     | (parity_byte << PARITY_BYTE_2_BIT));
->>>>> -     drm_dbg_dp(audio->drm_dev,
->>>>> -                     "Header Byte 2: value = 0x%x, parity_byte = 0x%x\n",
->>>>> -                     value, parity_byte);
->>>>> -     msm_dp_audio_set_header(catalog, value,
->>>>> -             DP_AUDIO_SDP_INFOFRAME, DP_AUDIO_SDP_HEADER_2);
->>>>> -
->>>>> -     /* Config header and parity byte 3 */
->>>>> -     value = msm_dp_audio_get_header(catalog,
->>>>> -                     DP_AUDIO_SDP_INFOFRAME, DP_AUDIO_SDP_HEADER_3);
->>>>> -
->>>>> -     new_value = (0x0 | (0x11 << 2));
->>>>> -     parity_byte = msm_dp_utils_calculate_parity(new_value);
->>>>> -     value |= ((new_value << HEADER_BYTE_3_BIT)
->>>>> -                     | (parity_byte << PARITY_BYTE_3_BIT));
->>>>> -     drm_dbg_dp(audio->drm_dev,
->>>>> -                     "Header Byte 3: value = 0x%x, parity_byte = 0x%x\n",
->>>>> -                     new_value, parity_byte);
->>>>> -     msm_dp_audio_set_header(catalog, value,
->>>>> -             DP_AUDIO_SDP_INFOFRAME, DP_AUDIO_SDP_HEADER_3);
->>>>> +     struct dp_sdp_header sdp_hdr = {
->>>>> +             .HB0 = 0x00,
->>>>> +             .HB1 = 0x84,
->>>>> +             .HB2 = 0x1b,
->>>>> +             .HB3 = 0x0 | (0x11 << 2),
->>>>> +     };
->>>>> +     u32 header[2];
->>>>> +
->>>>> +     msm_dp_utils_pack_sdp_header(&sdp_hdr, header);
->>>>> +
->>>>> +     msm_dp_write_link(catalog, MMSS_DP_AUDIO_INFOFRAME_0, header[0]);
->>>>> +     msm_dp_write_link(catalog, MMSS_DP_AUDIO_INFOFRAME_1, header[1]);
->>>>>     }
->>>>>
->>>>>     static void msm_dp_audio_copy_management_sdp(struct msm_dp_audio_private *audio)
->>>>>     {
->>>>>         struct msm_dp_catalog *catalog = audio->catalog;
->>>>> -     u32 value, new_value;
->>>>> -     u8 parity_byte;
->>>>> -
->>>>> -     /* Config header and parity byte 1 */
->>>>> -     value = msm_dp_audio_get_header(catalog,
->>>>> -                     DP_AUDIO_SDP_COPYMANAGEMENT, DP_AUDIO_SDP_HEADER_1);
->>>>> -
->>>>> -     new_value = 0x05;
->>>>> -     parity_byte = msm_dp_utils_calculate_parity(new_value);
->>>>> -     value |= ((new_value << HEADER_BYTE_1_BIT)
->>>>> -                     | (parity_byte << PARITY_BYTE_1_BIT));
->>>>> -     drm_dbg_dp(audio->drm_dev,
->>>>> -                     "Header Byte 1: value = 0x%x, parity_byte = 0x%x\n",
->>>>> -                     value, parity_byte);
->>>>> -     msm_dp_audio_set_header(catalog, value,
->>>>> -             DP_AUDIO_SDP_COPYMANAGEMENT, DP_AUDIO_SDP_HEADER_1);
->>>>> -
->>>>> -     /* Config header and parity byte 2 */
->>>>> -     value = msm_dp_audio_get_header(catalog,
->>>>> -                     DP_AUDIO_SDP_COPYMANAGEMENT, DP_AUDIO_SDP_HEADER_2);
->>>>> -
->>>>> -     new_value = 0x0F;
->>>>> -     parity_byte = msm_dp_utils_calculate_parity(new_value);
->>>>> -     value |= ((new_value << HEADER_BYTE_2_BIT)
->>>>> -                     | (parity_byte << PARITY_BYTE_2_BIT));
->>>>> -     drm_dbg_dp(audio->drm_dev,
->>>>> -                     "Header Byte 2: value = 0x%x, parity_byte = 0x%x\n",
->>>>> -                     value, parity_byte);
->>>>> -     msm_dp_audio_set_header(catalog, value,
->>>>> -             DP_AUDIO_SDP_COPYMANAGEMENT, DP_AUDIO_SDP_HEADER_2);
->>>>> -
->>>>> -     /* Config header and parity byte 3 */
->>>>> -     value = msm_dp_audio_get_header(catalog,
->>>>> -                     DP_AUDIO_SDP_COPYMANAGEMENT, DP_AUDIO_SDP_HEADER_3);
->>>>> -
->>>>> -     new_value = 0x0;
->>>>> -     parity_byte = msm_dp_utils_calculate_parity(new_value);
->>>>> -     value |= ((new_value << HEADER_BYTE_3_BIT)
->>>>> -                     | (parity_byte << PARITY_BYTE_3_BIT));
->>>>> -     drm_dbg_dp(audio->drm_dev,
->>>>> -                     "Header Byte 3: value = 0x%x, parity_byte = 0x%x\n",
->>>>> -                     value, parity_byte);
->>>>> -     msm_dp_audio_set_header(catalog, value,
->>>>> -             DP_AUDIO_SDP_COPYMANAGEMENT, DP_AUDIO_SDP_HEADER_3);
->>>>> +     struct dp_sdp_header sdp_hdr = {
->>>>> +             .HB0 = 0x00,
->>>>> +             .HB1 = 0x05,
->>>>> +             .HB2 = 0x0f,
->>>>> +             .HB3 = 0x00,
->>>>> +     };
->>>>> +     u32 header[2];
->>>>> +
->>>>> +     msm_dp_utils_pack_sdp_header(&sdp_hdr, header);
->>>>> +
->>>>> +     msm_dp_write_link(catalog, MMSS_DP_AUDIO_COPYMANAGEMENT_0, header[0]);
->>>>> +     msm_dp_write_link(catalog, MMSS_DP_AUDIO_COPYMANAGEMENT_1, header[1]);
->>>>>     }
->>>>>
->>>>>     static void msm_dp_audio_isrc_sdp(struct msm_dp_audio_private *audio)
->>>>>     {
->>>>>         struct msm_dp_catalog *catalog = audio->catalog;
->>>>> -     u32 value, new_value;
->>>>> -     u8 parity_byte;
->>>>> -
->>>>> -     /* Config header and parity byte 1 */
->>>>> -     value = msm_dp_audio_get_header(catalog,
->>>>> -                     DP_AUDIO_SDP_ISRC, DP_AUDIO_SDP_HEADER_1);
->>>>> -
->>>>> -     new_value = 0x06;
->>>>> -     parity_byte = msm_dp_utils_calculate_parity(new_value);
->>>>> -     value |= ((new_value << HEADER_BYTE_1_BIT)
->>>>> -                     | (parity_byte << PARITY_BYTE_1_BIT));
->>>>> -     drm_dbg_dp(audio->drm_dev,
->>>>> -                     "Header Byte 1: value = 0x%x, parity_byte = 0x%x\n",
->>>>> -                     value, parity_byte);
->>>>> -     msm_dp_audio_set_header(catalog, value,
->>>>> -             DP_AUDIO_SDP_ISRC, DP_AUDIO_SDP_HEADER_1);
->>>>> -
->>>>> -     /* Config header and parity byte 2 */
->>>>> -     value = msm_dp_audio_get_header(catalog,
->>>>> -                     DP_AUDIO_SDP_ISRC, DP_AUDIO_SDP_HEADER_2);
->>>>> -
->>>>> -     new_value = 0x0F;
->>>>> -     parity_byte = msm_dp_utils_calculate_parity(new_value);
->>>>> -     value |= ((new_value << HEADER_BYTE_2_BIT)
->>>>> -                     | (parity_byte << PARITY_BYTE_2_BIT));
->>>>> -     drm_dbg_dp(audio->drm_dev,
->>>>> -                     "Header Byte 2: value = 0x%x, parity_byte = 0x%x\n",
->>>>> -                     value, parity_byte);
->>>>> -     msm_dp_audio_set_header(catalog, value,
->>>>> -             DP_AUDIO_SDP_ISRC, DP_AUDIO_SDP_HEADER_2);
->>>>> +     struct dp_sdp_header sdp_hdr = {
->>>>> +             .HB0 = 0x00,
->>>>> +             .HB1 = 0x06,
->>>>> +             .HB2 = 0x0f,
->>>>> +             .HB3 = 0x00,
->>>>> +     };
->>>>> +     u32 header[2];
->>>>> +     u32 reg;
->>>>> +
->>>>> +     /* XXX: is it necessary to preserve this field? */
->>>>> +     reg = msm_dp_read_link(catalog, MMSS_DP_AUDIO_ISRC_1);
->>>>> +     sdp_hdr.HB3 = FIELD_GET(HEADER_3_MASK, reg);
->>>>> +
->>>>> +     msm_dp_utils_pack_sdp_header(&sdp_hdr, header);
->>>>> +
->>>>> +     msm_dp_write_link(catalog, MMSS_DP_AUDIO_ISRC_0, header[0]);
->>>>> +     msm_dp_write_link(catalog, MMSS_DP_AUDIO_ISRC_1, header[1]);
->>>>>     }
->>>>>
->>>>>     static void msm_dp_audio_setup_sdp(struct msm_dp_audio_private *audio)
->>>>>
->>>
->>>
->>>
+> Last, but not least. Code complexity. dp_catalog.c consists of 1340
+> lines, covering different submodules. It is hard to follow it in this
+> way.
 > 
+
+Its just a question of spreading up the functions all over, not reducing 
+code complexity. So yes, it reduces the file size of dp_catalog whereas 
+increases that of others. Code complexity impact due to that is subjective.
+
+>>
+>>> For example (a very simple and dumb one), when designing code around
+>>> dp_catalog you ended up adding separate _p1 handlers.
+>>> Doing that from the data source point of view demands adding a stream_id param.
+>>>
+>>
+>> I have not checked your comment on that series here but if your concern
 > 
+> This is really a bad cadence. I have provided most of the feedback
+> almost a week ago.
+> 
+
+Yes, was a very tight week trying to enable upstream developers to land 
+their platforms such as QCS615 by fixing platform specific dpu things 
+and had the fixes cycle this week too so as a result my own feature took 
+a bit of a hit this week :(
+
+>> is stream_id should not be stored in the catalog but just passed, thats
+>> fine, we can change it. stream_id as a param is needed anyway because
+>> the register programming layer needs to know which offset to use. This
+>> series is not mitigating that fact.
+> 
+> No, my concern was that you have been adding separate _p1() functions
+> which are a duplicate of _p0() counterparts. When one looks at the
+> dp_catalog.c it is logical: there are two different register areas, so
+> there are two distinct sets of functions. If one starts looking from
+> the dp_panel point of view, it's obvious that there should be a single
+> msm_dp_write_stream() function which accepts stream_id and then
+> multiplexes it to go to p0 or p1.
+> 
+
+Your multiplexing suggestion of adding a msm_dp_read_pn/msm_dp_write_pn 
+by passing a stream_id can be done even with current dp_catalog intact 
+as it will help reduce storing the stream_id in the dp_catalog. So its a 
+valid suggestion and can be implemented even in the current code and not 
+tied to the fact that register writing is done in dp_catalog or dp_panel.
+
+>>
+>>> In the DPU driver we also have version-related conditionals in the HW
+>>> modules rather than pushing all data access to dpu_hw_catalog.c &
+>>> counterparts.
+>>
+>> The dpu_hw_catalog.c and the dp_catalog.c are not the right files to
+>> compare with each other. dp_catalog.c should be compared with
+>> dpu_hw_xxx.c and as you noted, DPU version dependencies are handled in
+>> those files only and not all over the files like what this series is doing.
+> 
+> Not really. dpu_encoder_phys_cmd_init() checks for the core_major_ver.
+> Let me see if other files check for the version under the hood.
+> 
+
+Well, thats because only cmd mode panel cares about TE. No other files 
+from what I checked.
+
+> Also as you wrote, there are multiple dpu_hw_xxx.c files, each
+> handling register issues on its own. We don't have a single file which
+> keeps all such differences in one place.
+> 
+
+Thats because of the way the registers are laid our in the SW interface 
+document aligns nicely with the file split we have in the DPU even when 
+the first DPU post happened.
+
+But I still dont think its a fair comparison.
+
+If you really had to go deeper into this thought, then even dp_reg.h 
+should be broken down into smaller headers because the offsets in 
+dpu_hw_*** files are relevant only to those files but after this change 
+all DP files must include dp_reg.h even though they will not be using 
+all of the offsets. Since current code was already doing that, which it 
+didnt have to as dp_Catalog was the only one writing all registers, this 
+went unnoticed.
+
+
+> Last, but not least, in the DPU driver there are actual differences
+> between generations, which require different code paths. In the DP
+> driver there are none.
+> 
+>>
+>>> I think it's better to make DP driver reflect DPU rather than keeping
+>>> a separate wrapper for no particular reason (note, DPU has hardware
+>>> abstractions, but on a block level, not on a register level).
+>>>
+>>
+>> Thats the issue here. DPU hardware blocks are arranged according to the
+>> sub-blocks both in the software interface document and hence the code
+>> matches it file-by-file. DP registers are grouped by clock domains and
+>> the file separation we have today does not match that anyway. Hence
+>> grouping link registers writes or pixel clock register writes into
+>> dp_ctrl is also not correct that way. Let catalog handle that separation
+>> internally which it already does.
+> 
+> I'd say, dp_panel, dp_audio and dp_link are already pretty
+> self-contained. I was hoping to look at dp_display vs dp_drm later on,
+> once the HPD issue gets resolved. Only dp_ctrl is not that logical
+> from my point of view.
 > 
 
