@@ -1,118 +1,160 @@
-Return-Path: <linux-arm-msm+bounces-42234-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-42235-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6FB7A9F1F37
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 14 Dec 2024 15:17:58 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id A4ADD9F1F70
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 14 Dec 2024 15:49:57 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id E5FF11889B81
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 14 Dec 2024 14:17:58 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id CD7167A061C
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 14 Dec 2024 14:49:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C994E1922E0;
-	Sat, 14 Dec 2024 14:17:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 31F441922E9;
+	Sat, 14 Dec 2024 14:49:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WAsIehzk"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Z/YGapCg"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f180.google.com (mail-pl1-f180.google.com [209.85.214.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 908D6653;
-	Sat, 14 Dec 2024 14:17:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E087946C;
+	Sat, 14 Dec 2024 14:49:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734185871; cv=none; b=VFyvwfEWW+qQKdywgKt689FepAhpGUcqgMVqyK5Fwuew2aazIDvmAXUsWmU/4fuL8mQ6v6v8q91WDltQXAk+KKpwHgBAg97jGLGv14lOs40smOu5tSB3Y2TEH/MFnR7W8556yLkU/RIlqLZBOmTTr7RlW5K4Fff4QcwTHbWjc6Q=
+	t=1734187788; cv=none; b=tx5cxxsZmiDYvgpx1b5PpaMiPygtKPCYWr4ett8c3qD/IFJGsPZHIZryo1FbtpgLyVN4Z6bopiO1Kqg/z/qq1kXOuaHbQT7pz43uUtMupqy+2+macZgZ59v96FwT1qxeyh9cDwsuBbepVULVrqfgigicp6TY0XwJAG/FafIYnqk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734185871; c=relaxed/simple;
-	bh=QO3n4VP0ZVPU7aLYGFfEVVIxCLvXX1E3ymy4xvCKQ9E=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ZX2RUT8H9zCKf4bMATPi2vvJ8oncJ4dEVQ5dhhpllvTIYAD+zhOG0oI6hs4s40zbPCEtZUgaBGVZtyVaVmAOaXzVUo5iNjyhTnzLqUW5EAQ+bYpKe8kCMk4aKTWTv6XEpBjLnCzgN5kSLYUytkRhfdHZngDIuX3ATdMaABKcp7Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WAsIehzk; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2385BC4CED1;
-	Sat, 14 Dec 2024 14:17:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1734185871;
-	bh=QO3n4VP0ZVPU7aLYGFfEVVIxCLvXX1E3ymy4xvCKQ9E=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=WAsIehzkr7Vrpt+MWeba4fCvbWVgiUhrTq80W/iIq4Y4NUYiU2WUwZ87VFMQRA0XX
-	 8kb4uYYM4v/CM4jvQteW8VEC945/P7NVUZ+y85SqkZ/elrxi3qx/L5aDFsAJPxndfU
-	 KmrqCk/hnsbe0GuiYcc7xfGO7YW0zu/lUiIez9Ig/vxBRV9CZGgEOALMI9ey1Ulkx2
-	 kX28OjeHFwmlNTk8Z7TI/lI78WR9W4BcfweyocmY97an5lkTIbYy5XKMspw42YjsbM
-	 TuAGLh2IUh5BjtM8FJ7+dxJcoMXAcazCUMRZaorhauFiuopsXm8oYyb3AUgCQhgE+n
-	 Eygv395A5BSIA==
-Date: Sat, 14 Dec 2024 14:17:37 +0000
-From: Jonathan Cameron <jic23@kernel.org>
-To: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
-Cc: "Rafael J. Wysocki" <rafael@kernel.org>, Daniel Lezcano
- <daniel.lezcano@linaro.org>, Zhang Rui <rui.zhang@intel.com>, Lukasz Luba
- <lukasz.luba@arm.com>, Rob Herring <robh@kernel.org>, Krzysztof Kozlowski
- <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Lars-Peter
- Clausen <lars@metafoo.de>, Lee Jones <lee@kernel.org>, Stephen Boyd
- <sboyd@kernel.org>, Amit Kucheria <amitk@kernel.org>, Thara Gopinath
- <thara.gopinath@gmail.com>, "Bjorn Andersson" <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Ajit Pandey
- <quic_ajipan@quicinc.com>, Imran Shaik <quic_imrashai@quicinc.com>, Taniya
- Das <quic_tdas@quicinc.com>, "Jagadeesh Kona" <quic_jkona@quicinc.com>,
- <quic_kamalw@quicinc.com>, <quic_jprakash@quicinc.com>,
- <linux-arm-msm@vger.kernel.org>, <linux-pm@vger.kernel.org>,
- <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
- <linux-iio@vger.kernel.org>
-Subject: Re: [PATCH RFC v2 3/5] thermal: qcom: Add support for MBG thermal
- monitoring
-Message-ID: <20241214141737.1c3a305e@jic23-huawei>
-In-Reply-To: <20241212-mbg-v2-support-v2-3-3249a4339b6e@quicinc.com>
-References: <20241212-mbg-v2-support-v2-0-3249a4339b6e@quicinc.com>
-	<20241212-mbg-v2-support-v2-3-3249a4339b6e@quicinc.com>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-pc-linux-gnu)
+	s=arc-20240116; t=1734187788; c=relaxed/simple;
+	bh=2WaOYimtK41GSXhFP1ibELg/fvUgx8ajc/IeCENQOCk=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=YQLXYJKm9ifo5RFosNXmAuba+b5xLgC5zC8Ug1jqadhaX+eWFP9OEr0hD4i9IA0j1nWnaEifYIrDVlu/83+yr9eSerX3sbiqOHJds9O2R/pWI8ejM0RiMIa/EAOsDSAsPUYgcjCUZVe36e5kzCXvj6apZQFUk5Ad4CnRwbdchMw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Z/YGapCg; arc=none smtp.client-ip=209.85.214.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pl1-f180.google.com with SMTP id d9443c01a7336-216426b0865so23928285ad.0;
+        Sat, 14 Dec 2024 06:49:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1734187786; x=1734792586; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=LGwPyBPLakV/q2dhnntsvhl1W5GFqJD9tkWsyFepuM4=;
+        b=Z/YGapCgZZrKcmsh3Ac7HO1qQ2yMIV3H0V/3k0dzLW3cHmvz2Bo6wHgxLnrnGPYEbr
+         iB65EtvGs0wvXqwDP9GYa+AHcWM/VLFUWI7YRpnuKKke9TgmDqbxq1hC0gfJWFPW/eI7
+         ETeZgO7l/wC62QSF+rDo9HaF2+kH1k0lJJdEFBJ7ecVP+76WMcI3U2qoBGZlWum33v22
+         SEdM11X0oWLL8t053zZL+/Gv7ejGZ7ldv7hk2CIhrMNeubadzoXf8Zucgw14RMcPJOfi
+         ZmUdmw3ThuneX6ud1ROdXVAeo8wkHn/Crd1LD6wdEEMSrPhsdly5mqOwgSc1P0M17PoB
+         p6uw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1734187786; x=1734792586;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=LGwPyBPLakV/q2dhnntsvhl1W5GFqJD9tkWsyFepuM4=;
+        b=CwAzB96CZOudxwRmpRpsECwXqDvEAB+6VrgALN2m8bTozXBk5i01i3HyExvomRpK/L
+         ysNJojmY3vZT9sTFnL8EG/rZs0AEfTeyPmsFLFD4Jh2E4sAk4RKyc3Ew1A0iXNtA1qn0
+         ePeoDvgbkfajff/7G1u/DRT3aIkJ2vzEAj2ris5nUQpRRJnotBQrX9qNd9oKAk05OJr6
+         vHYqRW7dNY/Gyl0ASMj30GuJjxbPAxtTCBBVtXo+Zy/tteyLYYW1DqbEC2vOyPNzbkVM
+         WrQNGSafIqdd0FyQm81Mo8zdfcUxAk8xudMBdbeV+SZDrR2mZ7ZF/TW2bAcoKo6IDFYJ
+         VFbg==
+X-Forwarded-Encrypted: i=1; AJvYcCUxSfeDQ6l5Uq0GMnrrhRTult/U9bQb6cxwgVx+YCOlKFL9PivZI3egvQdKbLOCz3wfCvBYkF673bzY@vger.kernel.org, AJvYcCWRRLozrN7F2M1sC8Yr9+C9NfzfPyilFUAB6xA8IZMTnTfGgQb8paSEAbL51MCp+fwrnEi33nXkX07aezkQsw==@vger.kernel.org, AJvYcCWyVT473X2n9WTxVIYOZv7fLLVd53QUG3dkceBjybCbj3ZR0di0lkgQmqjyKg2heQUR1QIZexb46oXwts2f@vger.kernel.org
+X-Gm-Message-State: AOJu0YxAPY00FnBSUKLZTuoSBmpCfoA/VCLK37EPMdB12FaV4uNUYLqT
+	GAD54h2MR7Ntno9F4jkDPeT2F8ttfmSK156AGBbb8W4+1h0dzVaK
+X-Gm-Gg: ASbGncu5gI9FLJOT5fn/j9yUxWZslcVdUqCT7UzuS+cFgtzOXy8u/1duq8pqVzb+mnv
+	EdKEHM8aBh6JTaFd99FEOPW/sLtMajgwvSZPsIuTKflv3Y6G5OwGOeJ5TpSKkaKl3MK23QdmkvG
+	MYwSzLkbsboU/wci8HKwKiDP1ozYkK50o9lsEidVH/vgAk/ndoGrPHUTddXdvqZ4D4P/n58pkan
+	fGIOd5VGbWnebfkQeUJD5dprxI3mC8Fs9FKnq1+QG710TaAW7+WWq0=
+X-Google-Smtp-Source: AGHT+IEj9AsOKg+OhCsNjJ9wrzFf+uxH+yOJp8F53v9YGwrVjjxrWCX4ART8JnNDqIawKSyQ0SwXLg==
+X-Received: by 2002:a17:902:f60f:b0:216:3889:6f6f with SMTP id d9443c01a7336-218929b7895mr101243285ad.17.1734187785845;
+        Sat, 14 Dec 2024 06:49:45 -0800 (PST)
+Received: from nuvole.. ([144.202.86.13])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2f142db5b0esm4877221a91.22.2024.12.14.06.49.36
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 14 Dec 2024 06:49:44 -0800 (PST)
+From: Pengyu Luo <mitltlatltl@gmail.com>
+To: dmitry.baryshkov@linaro.org
+Cc: andersson@kernel.org,
+	chenxuecong2009@outlook.com,
+	conor+dt@kernel.org,
+	devicetree@vger.kernel.org,
+	gty0622@gmail.com,
+	johan+linaro@kernel.org,
+	konrad.dybcio@oss.qualcomm.com,
+	konradybcio@kernel.org,
+	krzk+dt@kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	mitltlatltl@gmail.com,
+	robh@kernel.org
+Subject: Re: [PATCH 3/3] arm64: dts: qcom: sc8280xp: Add Huawei Matebook E Go (sc8280xp)
+Date: Sat, 14 Dec 2024 22:48:28 +0800
+Message-ID: <20241214144829.670851-1-mitltlatltl@gmail.com>
+X-Mailer: git-send-email 2.47.1
+In-Reply-To: <lwhell4z72srw67gj6gpt2uyqzx4k5dzjw5xs7dab6lbya7soi@tsoh2bcn2gwc>
+References: <lwhell4z72srw67gj6gpt2uyqzx4k5dzjw5xs7dab6lbya7soi@tsoh2bcn2gwc>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Thu, 12 Dec 2024 21:41:22 +0530
-Satya Priya Kakitapalli <quic_skakitap@quicinc.com> wrote:
+On Sat, Dec 14, 2024 at 9:39 PM Dmitry Baryshkov <dmitry.baryshkov@linaro.org> wrote:
 
-> Add driver for the MBG thermal monitoring device. It monitors
-> the die temperature, and when there is a level 1 upper threshold
-> violation, it receives an interrupt over spmi. The driver reads
-> the fault status register and notifies thermal accordingly.
+> On Sat, Dec 14, 2024 at 08:23:00PM +0800, Pengyu Luo wrote:
+>> On Fri, Dec 13, 2024 at 1:13 AM Konrad Dybcio <konrad.dybcio@oss.qualcomm.com> wrote:
+>>
+>> [...]
+>>
+>> >> +
+>> >> +          /* /lib/firmware/ath11k/WCN6855/hw2.1/board-2.bin
+>> >> +           * there is no calibrate data for huawei,
+>> >> +           * but they have the same subsystem-device id
+>> >> +           */
+>> >> +          qcom,ath11k-calibration-variant = "LE_X13S";
+>> >
+>> > Oh, this can be taken care of! See [2], [3].
+>>
+>> [...]
+>>
+>> Hi, Konrad
+>>
+>> I want to distrub you again.
+>>
+>> Finally, I found something, after I enabled ath11k boot dbg, I got my
+>> id_string='bus=pci,vendor=17cb,device=1103,subsystem-vendor=17cb,subsystem-device=0108,qmi-chip-id=2,qmi-board-id=255`
+>>
+>> With qca-swiss-army-knife (see [1])
+>>
+>> $ ./ath11k-bdencoder -e board-2.bin | grep -i "$id_string"
+>> bus=pci,vendor=17cb,device=1103,subsystem-vendor=17cb,subsystem-device=0108,qmi-chip-id=2,qmi-board-id=255.bin created size: 60048
+>>
+>> It have already been here. So that means I don't need to extract from
+>> Windows. I just extract it from linux-firmware then give it a variant
+>> name and send patches to ath11k, right?
 > 
-> Signed-off-by: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
-Just a quick comment on consistency of formatting.
+> No. Usually 255 is an ID that is used by a variety of boards. So,
+> basically, you have to extract board data from Windows, add a proper
+> calibration variant that is specific to your board and then send the
+> resulting data to the ath11k mailing list.
+> 
 
-> +static int mbg_tm_set_trip_temp(struct thermal_zone_device *tz, int low_temp,
-> +						int temp)
-> +{
-> +	struct mbg_tm_chip *chip = thermal_zone_device_priv(tz);
-> +	int ret = 0;
-> +
-> +	guard(mutex)(&chip->lock);
-> +
-> +	/* The HW has a limitation that the trip set must be above 25C */
-> +	if (temp > MBG_MIN_TRIP_TEMP && temp < MBG_MAX_SUPPORTED_TEMP) {
-> +		regmap_set_bits(chip->map,
-> +			chip->base + MBG_TEMP_MON2_MISC_CFG, MON2_UP_THRESH_EN);
-> +		ret = regmap_write(chip->map, chip->base + MON2_LVL1_UP_THRESH,
-> +						temp_to_vtemp(temp));
-Alignment in this driver should be consistent / tidied up.
+But how? Is it possible that some boards have no  calibration data?
+I tried to track the access time of files, the result shows that these
+bdwlan* are never touched. According to my observation, these files
+should have been accessed, (like BT firmware on windows).
 
-I'm not sure on style preferred in thermal, but I'd always default to align
-after the opening bracket + wrap at 80 chars unless readability is hurt.
+>>
+>> Pengyu
+>>
+>> [1] https://github.com/qca/qca-swiss-army-knife
+>
+> --
+> With best wishes
+> Dmitry
 
 
-> +		if (ret < 0)
-> +			return ret;
-> +	} else {
-> +		dev_dbg(chip->dev, "Set trip b/w 25C and 160C\n");
-> +		regmap_clear_bits(chip->map,
-> +			chip->base + MBG_TEMP_MON2_MISC_CFG, MON2_UP_THRESH_EN);
-> +	}
-
-
-
+Pengyu
 
