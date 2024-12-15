@@ -1,452 +1,126 @@
-Return-Path: <linux-arm-msm+bounces-42254-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-42258-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D24F19F2363
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 15 Dec 2024 12:17:18 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id AD4869F2389
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 15 Dec 2024 12:58:40 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6A7BE16211B
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 15 Dec 2024 11:17:13 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 40EE91885E88
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 15 Dec 2024 11:58:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AE5941922E9;
-	Sun, 15 Dec 2024 11:15:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D9296161302;
+	Sun, 15 Dec 2024 11:58:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="PItXHmQm"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="w+loVucR"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail.mainlining.org (mail.mainlining.org [5.75.144.95])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f51.google.com (mail-lf1-f51.google.com [209.85.167.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 192C718A943;
-	Sun, 15 Dec 2024 11:15:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.75.144.95
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 178E81487F6
+	for <linux-arm-msm@vger.kernel.org>; Sun, 15 Dec 2024 11:58:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734261346; cv=none; b=PzWm/P/hnb9nJLDZ0eUKwswgR2SyEtdjkHSjmUtUCyH6f6S7O48PSmCsvmT2oPFjBcjFPqLZ9kr0Yk+LSAXwkLXIOAKp/xFbc9yFjF7gnLttNZ8NJ97sQrA7juQkibUO3Zh5pMw1fxQMrK52i5ygrp5ekSXwRjI5IqoLZOV+ZpA=
+	t=1734263917; cv=none; b=GxzCYgEVlgdVL+sJezXdHhPtv60jiakqRB/ykmZdTEX5Ckp0dDukVGZOyzonMEjpcBRLmA4EcrV2tFndwrv6iJVQ/unUw8t+yVruIAE+c1JV7COCFSEQhb0GwLvn2J50g4Olr7cN+Z5DEyCDk0VJAWhCK4240lxl1Zkp6xhr1BQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734261346; c=relaxed/simple;
-	bh=yRrTth08180QfeHsiXKzN5bNhMrXGVQ/EVyPD3V4GyQ=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=FDRKzknfQtO71F0aPF2C2a3advC+KCm86ovVITu4jhZjCNQLbTXsQU4S1r3A8VdBuna5A7W/SFp1oqaysCU9WpfaRsn6vfqGFSK63Lafr+ncYlsOKIOkUqjDVI4nchriX/3TJmFGXYDnCLV7OkJP/I6soD/AgFvL5SaTJfQIt2E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mainlining.org; spf=pass smtp.mailfrom=mainlining.org; dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=PItXHmQm; arc=none smtp.client-ip=5.75.144.95
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mainlining.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mainlining.org
-Received: from [192.168.0.220] (catv-176-63-31-221.catv.fixed.vodafone.hu [176.63.31.221])
-	by mail.mainlining.org (Postfix) with ESMTPSA id 01CC6E4834;
-	Sun, 15 Dec 2024 11:15:39 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mainlining.org;
-	s=psm; t=1734261340;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=hQcWQj/wwnb5q+l0OdYD5VX4MPg+1aI9rfTFTUBDwbY=;
-	b=PItXHmQmiDM7UH3NlDq+RXkZSKen4gAtjsZ8mT47SF2KZKqgTdlTWpwwiT/VzuI3kQpR6+
-	nF12Coh80x8j9EktoLgm+Q6xhQdS7SkX25u1a8qSbrl4birGH3SYrfW15pVZhQDFJ7HVC9
-	71Sc2nGlIVp2DZO2HUqfOjd1rttFBxqLMxOcG+Hu3p5rAWe6xX8gdasUqtFZgpuQ4IMxml
-	Cn/vUUFluousLCpTh5BzrfsKYeBwGGe1AYkvspkiTK46/gAx7qDjB3Kidl494mTlz+ta34
-	EAT1I3VZep4kal2YVB+HfrClQbxUPnOr7F7I2m7xGAhihzXM9iXNzetapp9+IA==
-From: =?utf-8?q?Barnab=C3=A1s_Cz=C3=A9m=C3=A1n?= <barnabas.czeman@mainlining.org>
-Date: Sun, 15 Dec 2024 12:15:03 +0100
-Subject: [PATCH v9 8/8] arm64: dts: qcom: Add Xiaomi Redmi 5A
+	s=arc-20240116; t=1734263917; c=relaxed/simple;
+	bh=d+pfu1XROrpeafS1eYKpAbT78e7jb/FH6/Nsca/bRPU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=K43lQVSJS0w2uWz/qfFB+Ur19odUh3iK2Ea9k/0q5q8TjYMhBKIC3vSlHoNCG85qJ5X+01hrMSyyW6YltS2CvP5XGvVn+Sb7Hyp3Q2NGfnOVPH9fl4XjueK5LMCHFH7A3Z/dJwryrwjwFrEzsaernQq6e6cy8AH0vTMHN7Ic/EU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=w+loVucR; arc=none smtp.client-ip=209.85.167.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f51.google.com with SMTP id 2adb3069b0e04-53e38838026so468162e87.3
+        for <linux-arm-msm@vger.kernel.org>; Sun, 15 Dec 2024 03:58:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1734263914; x=1734868714; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=W/kPa7EZggbMZnJnKi8Z8wUeoKFvdbp7AEN/NzD7/uM=;
+        b=w+loVucRhsmWiDbf82U+klvnYYUpP0/qVvu+HehD3bfOy0Q+273ILHDXzUePgZCOw0
+         Jx0FB0E0ZISQesSqMQxhGM+a53/0VAIyZfIt98Tz9p+hTjigbBNnj7X9dH+AC/LTYXwj
+         OQiyFgsp2mSoE8SN+Jkdf7aJRT1V/GEwG+1oiTQxNNRQwxZxzE9DVnNXoWOlM4R3DwLq
+         t1C4SyPLBQDL5ZPRFgdu1WvaulBCDtzWqFIzLV329gMIu8exyasAI/N9Zva2ko/bxTvf
+         twKRHr3MBml0vlOsQlyslRz7QOasBRr+/ihV1/AzBggkNs7WcVjeMBUZBlA3JqXVKmdl
+         cKZA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1734263914; x=1734868714;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=W/kPa7EZggbMZnJnKi8Z8wUeoKFvdbp7AEN/NzD7/uM=;
+        b=fw+fLj7VV17FFmvB/XVldOVcyvKoLwKXm+BrsETZkX1HevCE6KphqHXZwIFtlhKWLm
+         psTwQRZpzX/wxwz2/JKxHVeSDrL5C1QqBSG1JHpNbDOrTDltoI+vxJvBDVV33ZdDN8cV
+         /kZZOEFW5y0apNqCsOBVnfmJf2asYp7d87tH2H6WpEitJIwx7ZSdHI5w7VoPYln4eLHw
+         3yCmub+z7b6/cb9rgOW2GSXbFxGjqxgHCffjfTwXSq095jA+9x/xuF9eqDZWAl8MK/Ic
+         3xocxUDcEnBLOzbrJUTtwj1OttGOEhMjl3ZpU1JIGameI8C8R8/NXAe6npC9OMDArIfd
+         9Jhg==
+X-Forwarded-Encrypted: i=1; AJvYcCVs+x32RTKmSmkyP6ZLgdhh9hlO3hApcyEo6I6WI9MfgMupMJz2RmPwi9wX+VxUXD0h+wkSmnPzuMZrINBe@vger.kernel.org
+X-Gm-Message-State: AOJu0YzkFKLCcpJUBRYKb0wfGs55R9nmaqSV4epTTVZbDkqXVhNV1fLK
+	HUMv7GFK0uSVVhoEsVWYh7awmYYURJ965If7WOBbx9g0FgRE0mWGq/acqVOPz1E=
+X-Gm-Gg: ASbGncsjL4jGbgoJ3XDl6ZhZfIkGU1+ti4HvSZZ5z48U+v3V2/Tu94ys5oTdxTOwN0B
+	wjGhJ92k9QsnAbIOGVHsO6Akh82bz2AuLt3M6hupDnmukF5puwbTjp3hySuunhnBrey9bK3mDeS
+	g1DUPbQjRvSLo8HOjfmsFq62DZBVZ7ZSxc+FN1lFJQzP1E1T3dJhNCK2hohZXFh1FXaW38Z1xXB
+	G2K6DteaK+ok/bDw6P1Qk1IH/Jz6pa5645l/V4jAbO3hz3Ekt+YrCiopmnVBnJw4Bwdy8vsYgtd
+	cyMFtCWhGpElavS0eRdip6RR34ztPGDbWQ0=
+X-Google-Smtp-Source: AGHT+IFTUZ3GMs7Nz8u9GUpy5ovc0Jqqr01QOzyL8po2NQJCJYBql7UOXcPOqTrAeb9lNKlyvbQa2g==
+X-Received: by 2002:a2e:be9e:0:b0:302:3d74:a18b with SMTP id 38308e7fff4ca-3025450026fmr10348671fa.9.1734263914271;
+        Sun, 15 Dec 2024 03:58:34 -0800 (PST)
+Received: from [192.168.1.4] (88-112-131-206.elisa-laajakaista.fi. [88.112.131.206])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-30344045358sm5491911fa.35.2024.12.15.03.58.31
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 15 Dec 2024 03:58:32 -0800 (PST)
+Message-ID: <60bfe389-cea9-4aea-9175-fc80f1e9f594@linaro.org>
+Date: Sun, 15 Dec 2024 13:58:30 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20241215-msm8917-v9-8-bacaa26f3eef@mainlining.org>
-References: <20241215-msm8917-v9-0-bacaa26f3eef@mainlining.org>
-In-Reply-To: <20241215-msm8917-v9-0-bacaa26f3eef@mainlining.org>
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, 
- Linus Walleij <linus.walleij@linaro.org>, Amit Kucheria <amitk@kernel.org>, 
- Thara Gopinath <thara.gopinath@gmail.com>, 
- "Rafael J. Wysocki" <rafael@kernel.org>, 
- Daniel Lezcano <daniel.lezcano@linaro.org>, Zhang Rui <rui.zhang@intel.com>, 
- Lukasz Luba <lukasz.luba@arm.com>, Joerg Roedel <joro@8bytes.org>, 
- Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>, 
- Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org, 
- linux-pm@vger.kernel.org, iommu@lists.linux.dev, 
- =?utf-8?q?Barnab=C3=A1s_Cz=C3=A9m=C3=A1n?= <barnabas.czeman@mainlining.org>, 
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1734261329; l=8999;
- i=barnabas.czeman@mainlining.org; s=20240730; h=from:subject:message-id;
- bh=yRrTth08180QfeHsiXKzN5bNhMrXGVQ/EVyPD3V4GyQ=;
- b=nSPGEtZ0JUY1PSepDZWUUIJQmMb7h64wSizBqNyjUxWHUkLWg9p9oCjNPIQrzz9JEuw678P0J
- avrrnfytBxnAGdTrPixEOYUrJMKKHPhX3HeCTFC24a9wKhlusEc0Zwa
-X-Developer-Key: i=barnabas.czeman@mainlining.org; a=ed25519;
- pk=TWUSIGgwW/Sn4xnX25nw+lszj1AT/A3bzkahn7EhOFc=
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] Revert "media: qcom: camss: Restructure
+ camss_link_entities"
+Content-Language: ru-RU
+To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+ Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>, Hans Verkuil
+ <hverkuil@xs4all.nl>, Suresh Vankadara <quic_svankada@quicinc.com>,
+ Vikram Sharma <quic_vikramsa@quicinc.com>,
+ Trishansh Bhardwaj <quic_tbhardwa@quicinc.com>
+Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20241215-b4-linux-next-revert-link-freq-v2-1-62d5660004ea@linaro.org>
+From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+In-Reply-To: <20241215-b4-linux-next-revert-link-freq-v2-1-62d5660004ea@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Add initial support for Xiaomi Redmi 5A (riva).
+On 12/15/24 02:33, Bryan O'Donoghue wrote:
+> This reverts commit cc1ecabe67d92a2da0b0402f715598e8dbdc3b9e.
+> 
+> This commit has a basic flaw in that it relies on camss->res->csid_num as a
+> control to index the array camss->vfe[i].
+> 
+> Testing on a platform where csid_num > vfe_num showed this bug up.
+> 
+> camss->vfe should only be indexed by camss->res->vfe_num. Since this commit
+> is meant to make the code be more readable reverting will simply restore
+> the previous correct bounds checking.
+> 
+> We can make another pass at making camss_link_entities look prettier but,
+> for now we should zap the bug introduced.
+> 
+> Fixes: cc1ecabe67d9 ("media: qcom: camss: Restructure camss_link_entities")
+> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Barnabás Czémán <barnabas.czeman@mainlining.org>
----
- arch/arm64/boot/dts/qcom/Makefile                |   1 +
- arch/arm64/boot/dts/qcom/msm8917-xiaomi-riva.dts | 333 +++++++++++++++++++++++
- 2 files changed, 334 insertions(+)
+This change is very welcome.
 
-diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-index 4686f2a8ddd897227360b4de48a0618499ad463e..ee9b262b0e0fc3ec9d6515174c33f8b69b524842 100644
---- a/arch/arm64/boot/dts/qcom/Makefile
-+++ b/arch/arm64/boot/dts/qcom/Makefile
-@@ -62,6 +62,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-wingtech-wt86518.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-wingtech-wt86528.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-wingtech-wt88047.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-yiming-uz801v3.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= msm8917-xiaomi-riva.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8929-wingtech-wt82918hd.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8939-huawei-kiwi.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8939-longcheer-l9100.dtb
-diff --git a/arch/arm64/boot/dts/qcom/msm8917-xiaomi-riva.dts b/arch/arm64/boot/dts/qcom/msm8917-xiaomi-riva.dts
-new file mode 100644
-index 0000000000000000000000000000000000000000..f1d22535fedd94467ba3f0a88b2110ce5360e7e1
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/msm8917-xiaomi-riva.dts
-@@ -0,0 +1,333 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+/*
-+ * Copyright (c) 2023, Barnabas Czeman
-+ */
-+
-+/dts-v1/;
-+
-+#include <dt-bindings/arm/qcom,ids.h>
-+#include <dt-bindings/gpio/gpio.h>
-+#include "msm8917.dtsi"
-+#include "pm8937.dtsi"
-+
-+/delete-node/ &qseecom_mem;
-+
-+/ {
-+	model = "Xiaomi Redmi 5A (riva)";
-+	compatible = "xiaomi,riva", "qcom,msm8917";
-+	chassis-type = "handset";
-+
-+	qcom,msm-id = <QCOM_ID_MSM8917 0>;
-+	qcom,board-id = <0x1000b 2>, <0x2000b 2>;
-+
-+	battery: battery {
-+		compatible = "simple-battery";
-+		charge-full-design-microamp-hours = <3000000>;
-+		energy-full-design-microwatt-hours = <11500000>;
-+		constant-charge-current-max-microamp = <1000000>;
-+		constant-charge-voltage-max-microvolt = <4400000>;
-+		precharge-current-microamp = <256000>;
-+		charge-term-current-microamp = <60000>;
-+		voltage-min-design-microvolt = <3400000>;
-+	};
-+
-+	chosen {
-+		#address-cells = <2>;
-+		#size-cells = <2>;
-+		ranges;
-+
-+		stdout-path = "framebuffer0";
-+
-+		framebuffer0: framebuffer@90001000 {
-+			compatible = "simple-framebuffer";
-+			reg = <0x0 0x90001000 0x0 (720 * 1280 * 3)>;
-+			width = <720>;
-+			height = <1280>;
-+			stride = <(720 * 3)>;
-+			format = "r8g8b8";
-+
-+			clocks = <&gcc GCC_MDSS_AHB_CLK>,
-+				 <&gcc GCC_MDSS_AXI_CLK>,
-+				 <&gcc GCC_MDSS_VSYNC_CLK>,
-+				 <&gcc GCC_MDSS_MDP_CLK>,
-+				 <&gcc GCC_MDSS_BYTE0_CLK>,
-+				 <&gcc GCC_MDSS_PCLK0_CLK>,
-+				 <&gcc GCC_MDSS_ESC0_CLK>;
-+			power-domains = <&gcc MDSS_GDSC>;
-+		};
-+	};
-+
-+	gpio-keys {
-+		compatible = "gpio-keys";
-+
-+		pinctrl-0 = <&gpio_keys_default>;
-+		pinctrl-names = "default";
-+
-+		key-volup {
-+			label = "Volume Up";
-+			linux,code = <KEY_VOLUMEUP>;
-+			gpios = <&tlmm 91 GPIO_ACTIVE_LOW>;
-+			debounce-interval = <15>;
-+		};
-+	};
-+
-+	vph_pwr: regulator-vph-pwr {
-+		compatible = "regulator-fixed";
-+		regulator-name = "vph_pwr";
-+		regulator-min-microvolt = <3700000>;
-+		regulator-max-microvolt = <3700000>;
-+		regulator-always-on;
-+		regulator-boot-on;
-+	};
-+
-+	reserved-memory {
-+		qseecom_mem: qseecom@84a00000 {
-+			reg = <0x0 0x84a00000 0x0 0x1900000>;
-+			no-map;
-+		};
-+
-+		framebuffer_mem: memory@90001000 {
-+			reg = <0x0 0x90001000 0x0 (720 * 1280 * 3)>;
-+			no-map;
-+		};
-+	};
-+};
-+
-+&blsp1_i2c3 {
-+	status = "okay";
-+
-+	touchscreen@38 {
-+		compatible = "edt,edt-ft5306";
-+		reg = <0x38>;
-+		interrupts-extended = <&tlmm 65 IRQ_TYPE_LEVEL_LOW>;
-+		reset-gpios = <&tlmm 64 GPIO_ACTIVE_LOW>;
-+		pinctrl-0 = <&tsp_int_rst_default>;
-+		pinctrl-names = "default";
-+		vcc-supply = <&pm8937_l10>;
-+		iovcc-supply = <&pm8937_l5>;
-+		touchscreen-size-x = <720>;
-+		touchscreen-size-y = <1280>;
-+	};
-+};
-+
-+&blsp2_i2c1 {
-+	status = "okay";
-+
-+	bq27426@55 {
-+		compatible = "ti,bq27426";
-+		reg = <0x55>;
-+		monitored-battery = <&battery>;
-+	};
-+
-+	bq25601@6b{
-+		compatible = "ti,bq25601";
-+		reg = <0x6b>;
-+		interrupts-extended = <&tlmm 61 IRQ_TYPE_EDGE_FALLING>;
-+		pinctrl-0 = <&bq25601_int_default>;
-+		pinctrl-names = "default";
-+		input-voltage-limit-microvolt = <4400000>;
-+		input-current-limit-microamp = <1000000>;
-+		monitored-battery = <&battery>;
-+	};
-+};
-+
-+&pm8937_resin {
-+	linux,code = <KEY_VOLUMEDOWN>;
-+
-+	status = "okay";
-+};
-+
-+&rpm_requests {
-+	regulators-0 {
-+		compatible = "qcom,rpm-pm8937-regulators";
-+
-+		vdd_s1-supply = <&vph_pwr>;
-+		vdd_s2-supply = <&vph_pwr>;
-+		vdd_s3-supply = <&vph_pwr>;
-+		vdd_s4-supply = <&vph_pwr>;
-+
-+		vdd_l1_l19-supply = <&pm8937_s3>;
-+		vdd_l2_l23-supply = <&pm8937_s3>;
-+		vdd_l3-supply = <&pm8937_s3>;
-+		vdd_l4_l5_l6_l7_l16-supply = <&pm8937_s4>;
-+		vdd_l8_l11_l12_l17_l22-supply = <&vph_pwr>;
-+		vdd_l9_l10_l13_l14_l15_l18-supply = <&vph_pwr>;
-+
-+		pm8937_s1: s1 {
-+			regulator-min-microvolt = <1000000>;
-+			regulator-max-microvolt = <1225000>;
-+		};
-+
-+		pm8937_s3: s3 {
-+			regulator-min-microvolt = <1300000>;
-+			regulator-max-microvolt = <1300000>;
-+		};
-+
-+		pm8937_s4: s4 {
-+			regulator-min-microvolt = <2050000>;
-+			regulator-max-microvolt = <2050000>;
-+		};
-+
-+		pm8937_l2: l2 {
-+			regulator-min-microvolt = <1200000>;
-+			regulator-max-microvolt = <1200000>;
-+		};
-+
-+		pm8937_l5: l5 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+		};
-+
-+		pm8937_l6: l6 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+		};
-+
-+		pm8937_l7: l7 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+		};
-+
-+		pm8937_l8: l8 {
-+			regulator-min-microvolt = <2850000>;
-+			regulator-max-microvolt = <2900000>;
-+		};
-+
-+		pm8937_l9: l9 {
-+			regulator-min-microvolt = <3000000>;
-+			regulator-max-microvolt = <3300000>;
-+		};
-+
-+		pm8937_l10: l10 {
-+			regulator-min-microvolt = <2800000>;
-+			regulator-max-microvolt = <3000000>;
-+		};
-+
-+		pm8937_l11: l11 {
-+			regulator-min-microvolt = <2950000>;
-+			regulator-max-microvolt = <2950000>;
-+			regulator-allow-set-load;
-+			regulator-system-load = <200000>;
-+		};
-+
-+		pm8937_l12: l12 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <2950000>;
-+		};
-+
-+		pm8937_l13: l13 {
-+			regulator-min-microvolt = <3075000>;
-+			regulator-max-microvolt = <3075000>;
-+		};
-+
-+		pm8937_l14: l14 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <3300000>;
-+		};
-+
-+		pm8937_l15: l15 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <3300000>;
-+		};
-+
-+		pm8937_l16: l16 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+		};
-+
-+		pm8937_l17: l17 {
-+			regulator-min-microvolt = <2800000>;
-+			regulator-max-microvolt = <2900000>;
-+		};
-+
-+		pm8937_l19: l19 {
-+			regulator-min-microvolt = <1225000>;
-+			regulator-max-microvolt = <1350000>;
-+		};
-+
-+		pm8937_l22: l22 {
-+			regulator-min-microvolt = <2800000>;
-+			regulator-max-microvolt = <2800000>;
-+		};
-+
-+		pm8937_l23: l23 {
-+			regulator-min-microvolt = <1200000>;
-+			regulator-max-microvolt = <1200000>;
-+		};
-+	};
-+
-+};
-+
-+&sdhc_1 {
-+	vmmc-supply = <&pm8937_l8>;
-+	vqmmc-supply = <&pm8937_l5>;
-+
-+	status = "okay";
-+};
-+
-+&sdhc_2 {
-+	cd-gpios = <&tlmm 67 GPIO_ACTIVE_LOW>;
-+	vmmc-supply = <&pm8937_l11>;
-+	vqmmc-supply = <&pm8937_l12>;
-+	pinctrl-0 = <&sdc2_default &sdc2_cd_default>;
-+	pinctrl-1 = <&sdc2_sleep &sdc2_cd_default>;
-+	pinctrl-names = "default", "sleep";
-+
-+	status = "okay";
-+};
-+
-+&sleep_clk {
-+	clock-frequency = <32768>;
-+};
-+
-+&tlmm {
-+	bq25601_int_default: bq25601-int-default-state {
-+		pins = "gpio61";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-pull-up;
-+	};
-+
-+	gpio_keys_default: gpio-keys-default-state {
-+		pins = "gpio91";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-pull-up;
-+	};
-+
-+	sdc2_cd_default: sdc2-cd-default-state {
-+		pins = "gpio67";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
-+
-+	tsp_int_rst_default: tsp-int-rst-default-state {
-+		pins = "gpio64", "gpio65";
-+		function = "gpio";
-+		drive-strength = <8>;
-+		bias-pull-up;
-+	};
-+};
-+
-+&wcnss {
-+	vddpx-supply = <&pm8937_l5>;
-+
-+	status = "okay";
-+};
-+
-+&wcnss_iris {
-+	compatible = "qcom,wcn3620";
-+	vddxo-supply = <&pm8937_l7>;
-+	vddrfa-supply = <&pm8937_l19>;
-+	vddpa-supply = <&pm8937_l9>;
-+	vdddig-supply = <&pm8937_l5>;
-+};
-+
-+&wcnss_mem {
-+	status = "okay";
-+};
-+
-+&xo_board {
-+	clock-frequency = <19200000>;
-+};
+Reviewed-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
 
--- 
-2.47.1
-
+--
+Best wishes,
+Vladimir
 
