@@ -1,79 +1,78 @@
-Return-Path: <linux-arm-msm+bounces-42258-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-42259-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id AD4869F2389
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 15 Dec 2024 12:58:40 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id D079B9F238F
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 15 Dec 2024 13:04:07 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 40EE91885E88
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 15 Dec 2024 11:58:41 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id EBCB21885F1A
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 15 Dec 2024 12:04:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D9296161302;
-	Sun, 15 Dec 2024 11:58:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C76AD178395;
+	Sun, 15 Dec 2024 12:03:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="w+loVucR"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="eA+2/hjk"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f51.google.com (mail-lf1-f51.google.com [209.85.167.51])
+Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 178E81487F6
-	for <linux-arm-msm@vger.kernel.org>; Sun, 15 Dec 2024 11:58:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4CCF15D1
+	for <linux-arm-msm@vger.kernel.org>; Sun, 15 Dec 2024 12:03:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734263917; cv=none; b=GxzCYgEVlgdVL+sJezXdHhPtv60jiakqRB/ykmZdTEX5Ckp0dDukVGZOyzonMEjpcBRLmA4EcrV2tFndwrv6iJVQ/unUw8t+yVruIAE+c1JV7COCFSEQhb0GwLvn2J50g4Olr7cN+Z5DEyCDk0VJAWhCK4240lxl1Zkp6xhr1BQ=
+	t=1734264233; cv=none; b=KFphi7rSKZXDjiE5pBStpPVibW2P1rB4ehZrfYKE0+y/7HodlXteBRN3kA5ejVI7YY0xhrMJF2Aq4x7e0xet25POG6T3VmehebxCSagfZQsfL3xGn30LGyijh2ryuz9DUUvCwxwzgF1WQ6/toCXszh9riEQPdA48C3oY5+svscQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734263917; c=relaxed/simple;
-	bh=d+pfu1XROrpeafS1eYKpAbT78e7jb/FH6/Nsca/bRPU=;
+	s=arc-20240116; t=1734264233; c=relaxed/simple;
+	bh=aGpiOGREIUcShpcp8ShVC5e2TvYuN9RPLMTv9UtamMo=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=K43lQVSJS0w2uWz/qfFB+Ur19odUh3iK2Ea9k/0q5q8TjYMhBKIC3vSlHoNCG85qJ5X+01hrMSyyW6YltS2CvP5XGvVn+Sb7Hyp3Q2NGfnOVPH9fl4XjueK5LMCHFH7A3Z/dJwryrwjwFrEzsaernQq6e6cy8AH0vTMHN7Ic/EU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=w+loVucR; arc=none smtp.client-ip=209.85.167.51
+	 In-Reply-To:Content-Type; b=HfPsg7Ud0N6nDwE8KKNye/G+KPj3LAsgu8lsQ8UoTgcCpjZu36zr+ApoWRY7odC9PrbcnTUgEQrdNHgR7j4vTnweSDCi68qGVr7C84y1fK+LVQOkS4bhczn9wJKL3vaWmTmWv7a9y6QBNpNUgXWMootDkqgT9h6FTE60q0mT6g4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=eA+2/hjk; arc=none smtp.client-ip=209.85.221.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f51.google.com with SMTP id 2adb3069b0e04-53e38838026so468162e87.3
-        for <linux-arm-msm@vger.kernel.org>; Sun, 15 Dec 2024 03:58:35 -0800 (PST)
+Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-385f07cd1a4so2136869f8f.1
+        for <linux-arm-msm@vger.kernel.org>; Sun, 15 Dec 2024 04:03:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1734263914; x=1734868714; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=linaro.org; s=google; t=1734264229; x=1734869029; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=W/kPa7EZggbMZnJnKi8Z8wUeoKFvdbp7AEN/NzD7/uM=;
-        b=w+loVucRhsmWiDbf82U+klvnYYUpP0/qVvu+HehD3bfOy0Q+273ILHDXzUePgZCOw0
-         Jx0FB0E0ZISQesSqMQxhGM+a53/0VAIyZfIt98Tz9p+hTjigbBNnj7X9dH+AC/LTYXwj
-         OQiyFgsp2mSoE8SN+Jkdf7aJRT1V/GEwG+1oiTQxNNRQwxZxzE9DVnNXoWOlM4R3DwLq
-         t1C4SyPLBQDL5ZPRFgdu1WvaulBCDtzWqFIzLV329gMIu8exyasAI/N9Zva2ko/bxTvf
-         twKRHr3MBml0vlOsQlyslRz7QOasBRr+/ihV1/AzBggkNs7WcVjeMBUZBlA3JqXVKmdl
-         cKZA==
+        bh=MS0JrlD/MIP9EaVqJjdQNvfB2tn7DETWLm6kEprczwQ=;
+        b=eA+2/hjkzWvPwpHMu1ip6KzFEc70WIAPC5jR73P4uzT9MLBQq47MPZqIQlw1QEL1b/
+         ptrRAMOPK0ZBl/rG15iro7vHULH24jmoA+7yqqH7XrCCWc774GUKoHEeauCnwTlx0xBh
+         PbsKn9+x1LH17YbDeIaUZ+nIjlAumI3CnDwQaAG+FrwOhMYRCzEAuqqZjtgGjI1/liW9
+         McFkCMFxCMVHEw83Sk0T672fl10vUynG/ABPJ629M8VcPKfj7ORb4d1cH7c5tVWPYMaz
+         Ifj5IoaNIXvbwYx0h7P5MLWOnqjXeV0SGbF2xapKngPs3XdW3KJjuci0ZRMKN1Ck460a
+         W2iQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734263914; x=1734868714;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20230601; t=1734264229; x=1734869029;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=W/kPa7EZggbMZnJnKi8Z8wUeoKFvdbp7AEN/NzD7/uM=;
-        b=fw+fLj7VV17FFmvB/XVldOVcyvKoLwKXm+BrsETZkX1HevCE6KphqHXZwIFtlhKWLm
-         psTwQRZpzX/wxwz2/JKxHVeSDrL5C1QqBSG1JHpNbDOrTDltoI+vxJvBDVV33ZdDN8cV
-         /kZZOEFW5y0apNqCsOBVnfmJf2asYp7d87tH2H6WpEitJIwx7ZSdHI5w7VoPYln4eLHw
-         3yCmub+z7b6/cb9rgOW2GSXbFxGjqxgHCffjfTwXSq095jA+9x/xuF9eqDZWAl8MK/Ic
-         3xocxUDcEnBLOzbrJUTtwj1OttGOEhMjl3ZpU1JIGameI8C8R8/NXAe6npC9OMDArIfd
-         9Jhg==
-X-Forwarded-Encrypted: i=1; AJvYcCVs+x32RTKmSmkyP6ZLgdhh9hlO3hApcyEo6I6WI9MfgMupMJz2RmPwi9wX+VxUXD0h+wkSmnPzuMZrINBe@vger.kernel.org
-X-Gm-Message-State: AOJu0YzkFKLCcpJUBRYKb0wfGs55R9nmaqSV4epTTVZbDkqXVhNV1fLK
-	HUMv7GFK0uSVVhoEsVWYh7awmYYURJ965If7WOBbx9g0FgRE0mWGq/acqVOPz1E=
-X-Gm-Gg: ASbGncsjL4jGbgoJ3XDl6ZhZfIkGU1+ti4HvSZZ5z48U+v3V2/Tu94ys5oTdxTOwN0B
-	wjGhJ92k9QsnAbIOGVHsO6Akh82bz2AuLt3M6hupDnmukF5puwbTjp3hySuunhnBrey9bK3mDeS
-	g1DUPbQjRvSLo8HOjfmsFq62DZBVZ7ZSxc+FN1lFJQzP1E1T3dJhNCK2hohZXFh1FXaW38Z1xXB
-	G2K6DteaK+ok/bDw6P1Qk1IH/Jz6pa5645l/V4jAbO3hz3Ekt+YrCiopmnVBnJw4Bwdy8vsYgtd
-	cyMFtCWhGpElavS0eRdip6RR34ztPGDbWQ0=
-X-Google-Smtp-Source: AGHT+IFTUZ3GMs7Nz8u9GUpy5ovc0Jqqr01QOzyL8po2NQJCJYBql7UOXcPOqTrAeb9lNKlyvbQa2g==
-X-Received: by 2002:a2e:be9e:0:b0:302:3d74:a18b with SMTP id 38308e7fff4ca-3025450026fmr10348671fa.9.1734263914271;
-        Sun, 15 Dec 2024 03:58:34 -0800 (PST)
-Received: from [192.168.1.4] (88-112-131-206.elisa-laajakaista.fi. [88.112.131.206])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-30344045358sm5491911fa.35.2024.12.15.03.58.31
+        bh=MS0JrlD/MIP9EaVqJjdQNvfB2tn7DETWLm6kEprczwQ=;
+        b=dg9C8jatK/+FfHk9iMX5bhbzE1lVpAQ0tMcZaIda9OvL4Kj7UodNxTAsxUjqVKb/bt
+         FYuIWnTk2RiOtYEEK73TA4nXDek/fHD+LhyvNuLX/Eec1Wv+hGtdHWBZrHO2uOlgdwZ/
+         Q+IvUR99lMV5doHUDYAPt+cd7Bpcf5YybeSURMZwf0fcy/ZMYrkJ7e4GERQ+k3z3FKNp
+         ysjnlENOK1KuIoSVPT5ASwWZmS0py58+be7W7lKHCQCyUa8wiVuFy5ZW179qetwLudAi
+         abfO1mS8Lg/XhbISK9p4JeuDL6hYaU+vPWpdnTnJ0whaip9k86IvzzJDgYdyyqQ34plK
+         rFHg==
+X-Forwarded-Encrypted: i=1; AJvYcCXKti8OFBZI8Nw89LNLNPkpyWID6nvIMrBJSP5I1k5QJCHyqc6pRLEgvL8MVqlJck9I3kNZvqtuuXVCMVH5@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy+tfylwil8VVLCWHA804kpY7OhdSpE01kRYnma+zOzTXgQXjXy
+	2tPDgWETcIcYWv/tlj3iPZMHMKTLBF62X8M52daVg09srwVrDZjYJHElySsdqJI=
+X-Gm-Gg: ASbGncuZbslMg85bndfqhP24dZCYGrKSBFy6l/qo6drD12wzOhuIVDc7UyRBy8LNTkx
+	mmdvgxuBvkbO5VyF2ieo6MB9NVKnXdsaDFLJySD9QR47OYfxL63/YqriqIAZRlYqYinZPl86kOx
+	s8X+u0exHkJEn3M9dEHrxsZ3osghYhFJTVgtV3AXe92ecw1hiPiVtlnbhlqnXDVc/QhjizuAlgR
+	hP2H15TKbGPZ5oqfDRYtdIv+Q9GFjWB22gBvkVwBTzpoLfD3J9yzzC+mz/oUkGBH7tNVQ==
+X-Google-Smtp-Source: AGHT+IHdf+axtUaBvNo+jZg5gVqNEZh7fpsNxrZqvb0qpatqR6zQGoIT4kFiRZ3VvH03TdccPTyjiA==
+X-Received: by 2002:a5d:47ae:0:b0:382:3754:38fa with SMTP id ffacd0b85a97d-3888e0ba9a7mr7465978f8f.51.1734264229096;
+        Sun, 15 Dec 2024 04:03:49 -0800 (PST)
+Received: from [192.168.0.40] ([176.61.106.227])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-388c80120dcsm5216297f8f.8.2024.12.15.04.03.48
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 15 Dec 2024 03:58:32 -0800 (PST)
-Message-ID: <60bfe389-cea9-4aea-9175-fc80f1e9f594@linaro.org>
-Date: Sun, 15 Dec 2024 13:58:30 +0200
+        Sun, 15 Dec 2024 04:03:48 -0800 (PST)
+Message-ID: <ee6bbbb3-f91b-4568-aeec-11d773ae4df3@linaro.org>
+Date: Sun, 15 Dec 2024 12:03:47 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -83,8 +82,7 @@ MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v2] Revert "media: qcom: camss: Restructure
  camss_link_entities"
-Content-Language: ru-RU
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+To: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
  Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
  Mauro Carvalho Chehab <mchehab@kernel.org>, Hans Verkuil
  <hverkuil@xs4all.nl>, Suresh Vankadara <quic_svankada@quicinc.com>,
@@ -93,34 +91,49 @@ To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
 Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
  linux-kernel@vger.kernel.org
 References: <20241215-b4-linux-next-revert-link-freq-v2-1-62d5660004ea@linaro.org>
-From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-In-Reply-To: <20241215-b4-linux-next-revert-link-freq-v2-1-62d5660004ea@linaro.org>
+ <60bfe389-cea9-4aea-9175-fc80f1e9f594@linaro.org>
+Content-Language: en-US
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <60bfe389-cea9-4aea-9175-fc80f1e9f594@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 12/15/24 02:33, Bryan O'Donoghue wrote:
-> This reverts commit cc1ecabe67d92a2da0b0402f715598e8dbdc3b9e.
+On 15/12/2024 11:58, Vladimir Zapolskiy wrote:
+> On 12/15/24 02:33, Bryan O'Donoghue wrote:
+>> This reverts commit cc1ecabe67d92a2da0b0402f715598e8dbdc3b9e.
+>>
+>> This commit has a basic flaw in that it relies on camss->res->csid_num 
+>> as a
+>> control to index the array camss->vfe[i].
+>>
+>> Testing on a platform where csid_num > vfe_num showed this bug up.
+>>
+>> camss->vfe should only be indexed by camss->res->vfe_num. Since this 
+>> commit
+>> is meant to make the code be more readable reverting will simply restore
+>> the previous correct bounds checking.
+>>
+>> We can make another pass at making camss_link_entities look prettier but,
+>> for now we should zap the bug introduced.
+>>
+>> Fixes: cc1ecabe67d9 ("media: qcom: camss: Restructure 
+>> camss_link_entities")
+>> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 > 
-> This commit has a basic flaw in that it relies on camss->res->csid_num as a
-> control to index the array camss->vfe[i].
+> This change is very welcome.
 > 
-> Testing on a platform where csid_num > vfe_num showed this bug up.
+> Reviewed-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
 > 
-> camss->vfe should only be indexed by camss->res->vfe_num. Since this commit
-> is meant to make the code be more readable reverting will simply restore
-> the previous correct bounds checking.
-> 
-> We can make another pass at making camss_link_entities look prettier but,
-> for now we should zap the bug introduced.
-> 
-> Fixes: cc1ecabe67d9 ("media: qcom: camss: Restructure camss_link_entities")
-> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> -- 
+> Best wishes,
+> Vladimir
 
-This change is very welcome.
+Mauro.
 
-Reviewed-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+Hans would normally merge for us in CAMSS but, he's on Xmas holidays.
 
---
-Best wishes,
-Vladimir
+Could I impose upon you to pick this one up directly ?
+
+---
+bod
 
