@@ -1,145 +1,348 @@
-Return-Path: <linux-arm-msm+bounces-42291-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-42292-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0FD969F29CD
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Dec 2024 07:04:06 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6617B9F29E0
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Dec 2024 07:10:23 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E30A6166BB7
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Dec 2024 06:03:56 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id DB04318852A9
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Dec 2024 06:10:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7222F1C54AC;
-	Mon, 16 Dec 2024 06:03:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0EC281C8FBA;
+	Mon, 16 Dec 2024 06:10:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="gkfYUpBq"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="FcJeMfTy"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pf1-f172.google.com (mail-pf1-f172.google.com [209.85.210.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCD4F194141
-	for <linux-arm-msm@vger.kernel.org>; Mon, 16 Dec 2024 06:03:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01C834C7C;
+	Mon, 16 Dec 2024 06:10:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734329037; cv=none; b=kq5kwBxpuff6DE83O2mES1UM5g0SmZBWT3KzueLjSfqLzLU4Lsp1e3SXG6LybR4TG3CP7Ko5izU82NLVktgiXcsgEatvVfHbl8j1/zmf4U/7b4mDah0YH0yeyCM1bsHzqQniJTjTm8mCica+dWH0hcDZn4xr8nV5S3UHTju6amU=
+	t=1734329416; cv=none; b=GBpPRMYOuyQwgUA+pAp9VxclGC+cKqyYjYgbjUc+Cv/vb8BxPmsQCdL6+Wl20ZJz7RaJ1JhekiE3XLrCiid6B0CtGzgjZX8Zt5+OzalUH8cofLtNQrDf6k0yuF/6/juZmi+GB9+uPqLx6TiEScMbUpTOPUQ27akffjmBZebO8JI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734329037; c=relaxed/simple;
-	bh=yOIMDtITdjwU8dGlUR5f1kxRPPSJQcdRUFbDxwRHrkg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=P7+oha7+bFSAIlN+tjmbhXCN6as+jj3w8XnQtdahRvMCadi9zL4x5vRd8ODbu2RsF/Sv9nCEOYTRGnG4vAe4rI4PDCapOmJiDbO/LUlH8VLbReQuRmKL46BQM0GSkVKpfOQIQbyY0Zlfr9PkqtrQDe/ddBrNwyF3UrYpJZj2gUY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=gkfYUpBq; arc=none smtp.client-ip=209.85.210.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pf1-f172.google.com with SMTP id d2e1a72fcca58-728eedfca37so3838948b3a.2
-        for <linux-arm-msm@vger.kernel.org>; Sun, 15 Dec 2024 22:03:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1734329035; x=1734933835; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=8l56HNoVKCWoq3UFQbYWo8NhPQGEBKhUZs3vIB/kw4s=;
-        b=gkfYUpBqvyEiXJARbueaiqOtQ6w/MIK9IUxJduIfjPEbNcd+YnqmTgjTbIJwNJTRBf
-         Ilc7AAd4WuZ0oid+ofouRJ/0Op10+R5UuS9d4fV9oguvaZ7I4SZL+IyAkJkeTaTS7Haa
-         Rge5w27OiYdJRnAVffmoER6TFQq+dGqZw/Kg12pRRqQ19n3pZcL+B4biRbP4bg0/oDua
-         CUNPmDGMZiQy3aQjQvIM4KCX3/T6E+99r62UVpQTp4OUPXGS0Zmk135ImWd74dgRDbkt
-         3B1lB4pdnhDKUFjk9kkZQZaBlftvJBNPUTzOzwost+Zlm3n48+rP4ZewRGNeclihIH/a
-         xV7Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734329035; x=1734933835;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=8l56HNoVKCWoq3UFQbYWo8NhPQGEBKhUZs3vIB/kw4s=;
-        b=eT+6LMP8PrJQdYo0Mhq61cn/OFnYlvfIoRvU/vf+xvEC1ubGKjB/e2yXVN2SlJsqde
-         SVgZvKQenxk3QuyWjVTJ7v4iU4L3NzVEtqBB/KfiSfAkbUwEFf5LayVMtncaMNbfZOk3
-         1mANuxHCP1GDgghd87L97h0FFNKXsQfCaSA1HWHZI2E+Wu5i4MCT+pVaYhkC1UvPek7J
-         qzgGvTNLYcy8jUpW6se4Zcie7Al3MvRjc87s2Tvo8rJP1dNKLRLgs6SHTg9ZJXJ9Pho/
-         CBWeYYi2X+v6qMLwSGAtWjseBGY3zzKrwP5ikhUQsoAYHILY8BTD8IIbh2pQMCZXYx6t
-         EcXw==
-X-Forwarded-Encrypted: i=1; AJvYcCWabZxc/HErxraG9ds9kfKGlEE2fKJU3buM5k8PENEg3b1c4P+uVHRMbnuG+aR5/FZKp28O3BRLXm2/yYa+@vger.kernel.org
-X-Gm-Message-State: AOJu0YzeXG/wXqfVQrihLrLmEQa6cUOzBAmU07zKdo8yBHQETxHsSVnk
-	M4cG84ujdI/yPj3ocPrzBoj4YGKwjEdEwGREImourG6eeaHM5zY0ZiJvtLoPDA==
-X-Gm-Gg: ASbGncs5uO4Aq61SfKdCX1cXf8ony4LZwCtkciZI/8P2KvVDYfLsIpM14asEDoWscCV
-	7/BVNxrQh2j7r50WfOj/WPizIaSVJTVIXW1SmvmvMIvifyEh2qKOdkaBhhwXTXPo7M6vnT5VcQv
-	SiuMqk47j4F+z8YUg6OiLTVIsRJ+jYUY+c/YQ8f5KajN9jn0CFryUYE+gMq1TI7qpNH+4j6YpA+
-	7E/eH3/icjb3wKxt3u9ANRKeBnyNFmkhKeM9xyxGSlnnzq8jrDCALOnTDUZUDoc7Bo=
-X-Google-Smtp-Source: AGHT+IE89dTdzc53pbTNLiYWQP76UGO9avKXTxiixxWoLDIUfwYBcA6Og+5vQuX+VCSfds7qpcJuug==
-X-Received: by 2002:a05:6a00:17a1:b0:725:e05a:c975 with SMTP id d2e1a72fcca58-7290c264e09mr16165494b3a.19.1734329035071;
-        Sun, 15 Dec 2024 22:03:55 -0800 (PST)
-Received: from thinkpad ([120.60.56.176])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-72918ad5664sm3936114b3a.73.2024.12.15.22.03.50
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 15 Dec 2024 22:03:54 -0800 (PST)
-Date: Mon, 16 Dec 2024 11:33:37 +0530
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: Niklas Cassel <cassel@kernel.org>
-Cc: kw@linux.com, gregkh@linuxfoundation.org, arnd@arndb.de,
-	lpieralisi@kernel.org, shuah@kernel.org, kishon@kernel.org,
-	linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org,
-	bhelgaas@google.com, linux-arm-msm@vger.kernel.org, robh@kernel.org,
-	linux-kselftest@vger.kernel.org
-Subject: Re: [PATCH v3 0/4] Migrate PCI Endpoint Subsystem tests to Kselftest
-Message-ID: <20241216060337.cvhwvdzt34ocg2uf@thinkpad>
-References: <20241211080105.11104-1-manivannan.sadhasivam@linaro.org>
- <Z1qsIREtdeR38fF6@ryzen>
+	s=arc-20240116; t=1734329416; c=relaxed/simple;
+	bh=95QyHWNYaUl9xnOix3oR0yCZTaSsy3PA2taSJbhzGeo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=M4ehKT/mATsUJ2z3V15WL5epLUnUtiI+hKN6r+G4zKxnCtuxFpvPwUOSiCk72t2ZashGTBuUXecN+n5VQQQaEIrKZ5C6E2S3a3WfHbwr4DdsPtFjuMKdYv8SIU2NoDqBLcoBIPY+Hcc8jlO/Ce9vlrOC2rC+lyewsbeUxJcBJjA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=FcJeMfTy; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BFNecwI008209;
+	Mon, 16 Dec 2024 06:09:57 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	AcvzuNPngltImk5uUcCBRUKmFK2+eqam7+P2bDzqP/I=; b=FcJeMfTy4uKQL7im
+	IpDU47Iqcsm4eaWhtbBoIZBp7Tv7FdnzVlXqgHGPmRHHL8QnZ6c8ksngWIlb8Fm7
+	THkchv+Ju9CCoXQ7Tt2fsRyqA5+EucSx32fydXxfXT2bEuczXiALer6dQsXKpPOM
+	rx8iyHq6nhSI104Ett1gVg8u0dXZF4irx8bCsCq13ZmbldgL5gYFfrSk4oP7wPty
+	4RKWD979oIrvcCy1gQcwC4f8BPUhHNGmnTEYqL2nHhBti8PxTQ+HeeL4qH44PmU+
+	F2C0kJFTc6dJw2AFvr1petljFvH0UJRYbWUAWg4MUL/eydKmTYlKn0zu48EWsE3b
+	ya856g==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43hjc2a9b2-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 16 Dec 2024 06:09:57 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4BG69tgl016995
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 16 Dec 2024 06:09:55 GMT
+Received: from [10.110.102.127] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Sun, 15 Dec
+ 2024 22:09:53 -0800
+Message-ID: <adea523d-df80-413c-97c1-92cf3923f4e3@quicinc.com>
+Date: Sun, 15 Dec 2024 22:09:46 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] drm/ci: add kms_cursor_legacy@torture-bo to apq8016
+ flakes
+To: Vignesh Raman <vignesh.raman@collabora.com>,
+        Helen Mae Koike Fornazier
+	<helen.koike@collabora.com>
+CC: Rob Clark <robdclark@gmail.com>,
+        Dmitry Baryshkov
+	<dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten
+	<marijn.suijten@somainline.org>,
+        Maarten Lankhorst
+	<maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        linux-kernel <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        dri-devel
+	<dri-devel@lists.freedesktop.org>,
+        freedreno
+	<freedreno@lists.freedesktop.org>
+References: <20241204-cursor_tor_skip-v1-1-f5f0bba5df7b@quicinc.com>
+ <193931869a5.f923adf2270026.8321075661083367617@collabora.com>
+ <20a3955e-3d10-47c5-8e68-d70342805010@quicinc.com>
+ <19393604e18.f9b6fe7d298023.1937039548910081216@collabora.com>
+ <a03ae7e8-391e-4303-91fc-15a59979fd2a@quicinc.com>
+ <ed90ca8c-ed81-419f-a5db-a4e8bcd35835@collabora.com>
+ <ac13139d-1cbf-47dd-b200-1a511ffc9453@quicinc.com>
+ <8edba6c9-cf7d-4616-8791-65abd108f538@collabora.com>
+Content-Language: en-US
+From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <8edba6c9-cf7d-4616-8791-65abd108f538@collabora.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <Z1qsIREtdeR38fF6@ryzen>
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: pzcRdAR_iPmV3mebmygfZ2V_1rLR5iNu
+X-Proofpoint-ORIG-GUID: pzcRdAR_iPmV3mebmygfZ2V_1rLR5iNu
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 mlxscore=0
+ adultscore=0 bulkscore=0 mlxlogscore=999 malwarescore=0 impostorscore=0
+ priorityscore=1501 suspectscore=0 lowpriorityscore=0 phishscore=0
+ clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2412160048
 
-On Thu, Dec 12, 2024 at 10:25:53AM +0100, Niklas Cassel wrote:
-> Hello Mani,
+
+
+On 12/15/2024 9:45 PM, Vignesh Raman wrote:
+> Hi Abhinav,
 > 
-> On Wed, Dec 11, 2024 at 01:31:01PM +0530, Manivannan Sadhasivam wrote:
-> > Hi,
-> > 
-> > This series carries forward the effort to add Kselftest for PCI Endpoint
-> > Subsystem started by Aman Gupta [1] a while ago. I reworked the initial version
-> > based on another patch that fixes the return values of IOCTLs in
-> > pci_endpoint_test driver and did many cleanups. Since the resulting work
-> > modified the initial version substantially, I took over the authorship.
-> > 
-> > This series also incorporates the review comment by Shuah Khan [2] to move the
-> > existing tests from 'tools/pci' to 'tools/testing/kselftest/pci_endpoint' before
-> > migrating to Kselftest framework. I made sure that the tests are executable in
-> > each commit and updated documentation accordingly.
-> > 
-> > NOTE: Patch 1 is strictly not related to this series, but necessary to execute
-> > Kselftests with Qualcomm Endpoint devices. So this can be merged separately.
+> On 14/12/24 01:09, Abhinav Kumar wrote:
+>> Hi Vignesh
+>>
+>> On 12/11/2024 9:10 PM, Vignesh Raman wrote:
+>>> Hi Abhinav / Helen,
+>>>
+>>> On 12/12/24 01:48, Abhinav Kumar wrote:
+>>>> Hi Helen / Vignesh
+>>>>
+>>>> On 12/4/2024 12:33 PM, Helen Mae Koike Fornazier wrote:
+>>>>>
+>>>>>
+>>>>>
+>>>>>
+>>>>> ---- On Wed, 04 Dec 2024 16:21:26 -0300 Abhinav Kumar  wrote ---
+>>>>>
+>>>>>   > Hi Helen
+>>>>>   >
+>>>>>   > On 12/4/2024 11:14 AM, Helen Mae Koike Fornazier wrote:
+>>>>>   > > Hi Abhinav,
+>>>>>   > >
+>>>>>   > > Thanks for your patch.
+>>>>>   > >
+>>>>>   > >
+>>>>>   > >
+>>>>>   > > ---- On Wed, 04 Dec 2024 15:55:17 -0300 Abhinav Kumar  wrote ---
+>>>>>   > >
+>>>>>   > >   > From the jobs [1] and [2] of pipeline [3], its clear that
+>>>>>   > >   > kms_cursor_legacy@torture-bo is most certainly a flake and
+>>>>>   > >   > not a fail for apq8016. Mark the test accordingly to 
+>>>>> match the results.
+>>>>>   > >   >
+>>>>>   > >   > [1] : https://gitlab.freedesktop.org/drm/msm/-/jobs/67676481
+>>>
+>>> The test passes - 
+>>> kms_cursor_legacy@torture-bo,UnexpectedImprovement(Pass)
+>>>
+>>
+>> Yes, thats the problem
+>>
+>> https://gitlab.freedesktop.org/drm/msm/-/jobs/67676481/viewer#L2696
+>>
+>> 24-12-04 03:51:55 R SERIAL> [  179.241309] [IGT] kms_cursor_legacy: 
+>> finished subtest all-pipes, SUCCESS
+>> 24-12-04 03:51:55 R SERIAL> [  179.241812] [IGT] kms_cursor_legacy: 
+>> finished subtest torture-bo, SUCCESS
+>>
+>> Here it passes whereas it was marked a failure. Hence pipeline fails.
 > 
-> Having to write a big NOTE is usually a hint that you should just have done
-> things differently :)
+> Yes it fails due to,
 > 
-> If you need to respin this series, I strongly suggest that you send the
-> Qcom fix separately. It is totally independent, and should be merged ASAP.
+> Unexpected results:
+>   kms_cursor_legacy@torture-bo,UnexpectedImprovement(Pass)
+> 
+> In this case, we need to remove this test from fails.txt
+> 
+>>
+>>>>>   > >   > [2] : https://gitlab.freedesktop.org/drm/msm/-/jobs/67677430
+>>>
+>>> There are no test failures
+>>>
+>>
+>> No, thats not true
+>>
+>> https://gitlab.freedesktop.org/drm/msm/-/jobs/67677430/viewer#L2694
+>>
+>> 24-12-04 04:18:38 R SERIAL> [  170.379649] Console: switching to 
+>> colour dummy device 80x25
+>> 24-12-04 04:18:38 R SERIAL> [  170.379938] [IGT] kms_cursor_legacy: 
+>> executing
+>> 24-12-04 04:18:38 R SERIAL> [  170.393868] [IGT] kms_cursor_legacy: 
+>> starting subtest torture-bo
+>> 24-12-04 04:18:38 R SERIAL> [  170.394186] [IGT] kms_cursor_legacy: 
+>> starting dynamic subtest pipe-A
+>> 24-12-04 04:18:38 R SERIAL> [  170.661749] [IGT] kms_cursor_legacy: 
+>> finished subtest pipe-A, FAIL
+>> 24-12-04 04:18:38 R SERIAL> [  170.662060] [IGT] kms_cursor_legacy: 
+>> starting dynamic subtest all-pipes
+>> 24-12-04 04:18:38 R SERIAL> [  170.713237] [IGT] kms_cursor_legacy: 
+>> finished subtest all-pipes, FAIL
+>> 24-12-04 04:18:38 R SERIAL> [  170.713513] [IGT] kms_cursor_legacy: 
+>> finished subtest torture-bo, FAIL
+>> 24-12-04 04:18:38 R SERIAL> [  170.721263] [IGT] kms_cursor_legacy: 
+>> exiting, ret=98
+>> 24-12-04 04:18:38 R SERIAL> [  170.737857] Console: switching to 
+>> colour frame buffer device 128x48
+>>
+>> Please check these logs, the torture-bo test-case did fail. The 
+>> pipeline was marked pass because it was an expected fail.
+>>
+>> So we have two pipelines, where one failed and the other passed. So 
+>> thats a flake for me.
+> 
+> Yes agree. So if we had removed the test from fails, deqp-runner would 
+> have reported this as flake.
+> 
+> deqp-runner runs the test and if it fails, it retries. If the test 
+> passes on retry, it is reported as a flake.
+> 
+>>
+>>>>>   > >   > [3]: 
+>>>>> https://gitlab.freedesktop.org/drm/msm/-/pipelines/1322770
+>>>
+>>> The job is same as 2
+>>>
+>>> In this case, the test passes and deqp-runner does not report it as 
+>>> flake. So we only need to remove it from fails file.
+>>>
+>>
+>> No, like I mentioned above we have a pass and a fail.
+>>
+>>>
+>>>>>   > >   >
+>>>>>   > >   > Signed-off-by: Abhinav Kumar quic_abhinavk@quicinc.com>
+>>>>>   > >   > ---
+>>>>>   > >   >  drivers/gpu/drm/ci/xfails/msm-apq8016-flakes.txt | 5 +++++
+>>>>>   > >   >  1 file changed, 5 insertions(+)
+>>>>>   > >   >
+>>>>>   > >   > diff --git 
+>>>>> a/drivers/gpu/drm/ci/xfails/msm-apq8016-flakes.txt 
+>>>>> b/drivers/gpu/drm/ci/xfails/msm-apq8016-flakes.txt
+>>>>>   > >   > new file mode 100644
+>>>>>   > >   > index 000000000000..18639853f18f
+>>>>>   > >   > --- /dev/null
+>>>>>   > >   > +++ b/drivers/gpu/drm/ci/xfails/msm-apq8016-flakes.txt
+>>>>>   > >   > @@ -0,0 +1,5 @@
+>>>>>   > >   > +# Board Name: msm-apq8016-db410c
+>>>>>   > >   > +# Failure Rate: 100
+>>>>>   > >
+>>>>>   > > Is failure rate is 100%, isn't it a fail than?
+>>>>>   > > (I know we have other cases with Failure Rate: 100, maybe we 
+>>>>> should fix them as well)
+>>>>>   > >
+>>>>>   >
+>>>>>   > Maybe I misunderstood the meaning of "Failure rate" for a flake.
+>>>>>   >
+>>>>>   > I interpreted this as this test being flaky 100% of the time :)
+>>>>>
+>>>>> Ah right, I see, inside deqp-runner (that auto-retries).
+>>>>>
+>>>>> I'd like to hear Vignesh's opinion on this.
+>>>>>
+>>>>> (In any case, we probably should document this better)
+>>>
+>>> deqp-runner reports new (not present in flakes file) or known 
+>>> (present in flakes file) flakes
+>>>
+>>> 2024-12-11 07:25:44.709666: Some new flakes found:
+>>> 2024-12-11 07:25:44.709676:   kms_lease@page-flip-implicit-plane
+>>>
+>>> 2024-12-11 13:15:16.482890: Some known flakes found:
+>>> 2024-12-11 13:15:16.482898: 
+>>> kms_async_flips@async-flip-with-page-flip-events-atomic
+>>>
+>>> we add it to flakes file if deqp runner reports new flakes. Another 
+>>> case where we update flake tests is when a test passes in one run but 
+>>> fails in another, but deqp-runner does not report it as flake.
+>>>
+>>> Regards,
+>>> Vignesh
+>>>
+>>
+>> The confusion here i guess is about what to mention as a "Failure rate"
+>>
+>> Failure rate means how many times it fails (like normally) ? In that 
+>> case 100% which I used is wrong and I used 33% instead for which I 
+>> have pushed v2.
+> 
+> Yes, 33% is correct and please remove this test from fails.txt
+> 
+> Regards,
+> Vignesh
 > 
 
-Even though it is an independent fix, it is needed to get Kselftests (also the
-legacy ones) passing without failures. That's why I kept it as patch 1.
-Otherwise, someone may test it and report failures.
+Ack, let me remove this test from fails and keep it only in flakes.
 
-> As you know, this series conflicts with:
-> https://lore.kernel.org/linux-pci/20241116032045.2574168-2-cassel@kernel.org/
-> 
-> I don't see any reason why the above patch has not been merged yet,
-> but it would be really nice if the above could be picked up first,
-> so this series could also add a kselftest testcase for the above.
-> 
+Thanks
 
-I was hoping that Greg would pick misc driver changes, but looking at the git
-log of this driver I got to know that the changes were picked by PCI folks only.
-
-@kw: Could you please pick the patch from Niklas?
-
-- Mani
-
--- 
-மணிவண்ணன் சதாசிவம்
+Abhinav
+>>
+>>>>>
+>>>>> Regards,
+>>>>> Helen
+>>>>>
+>>>>
+>>>> Can you let me know which way we need to go?
+>>>>
+>>>> Just in case I did post a v2 fixing this, 
+>>>> https://patchwork.freedesktop.org/patch/627276/
+>>>>
+>>>> If thats the way to go, can you pls take a look?
+>>>>
+>>>> Thanks
+>>>>
+>>>> Abhinav
+>>>>>   >
+>>>>>   > Out of the 3 runs of the test, it passed 2/3 times and failed 1/3.
+>>>>>   >
+>>>>>   > So its fail % actually is 33.33% in that case.
+>>>>>   >
+>>>>>   > I think I saw a Failure rate of 100% on 
+>>>>> msm-sm8350-hdk-flakes.txt and
+>>>>>   > mistook that as the rate at which flakes are seen.
+>>>>>   >
+>>>>>   > Let me fix this up as 33%
+>>>>>   >
+>>>>>   > > Regards,
+>>>>>   > > Helen
+>>>>>   > >
+>>>>>   > >   > +# IGT Version: 1.28-ga73311079
+>>>>>   > >   > +# Linux Version: 6.12.0-rc2
+>>>>>   > >   > +kms_cursor_legacy@torture-bo
+>>>>>   > >   >
+>>>>>   > >   > ---
+>>>>>   > >   > base-commit: 798bb342e0416d846cf67f4725a3428f39bfb96b
+>>>>>   > >   > change-id: 20241204-cursor_tor_skip-9d128dd62c4f
+>>>>>   > >   >
+>>>>>   > >   > Best regards,
+>>>>>   > >   > --
+>>>>>   > >   > Abhinav Kumar quic_abhinavk@quicinc.com>
+>>>>>   > >   >
+>>>>>   > >   >
+>>>>>   > >
+>>>>>   >
+>>>>>
 
