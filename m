@@ -1,59 +1,61 @@
-Return-Path: <linux-arm-msm+bounces-42322-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-42324-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B1EA89F2D6E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Dec 2024 10:55:45 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 48C359F2D75
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Dec 2024 10:56:23 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id EF9D21649ED
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Dec 2024 09:55:42 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id BB4511884AFB
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Dec 2024 09:56:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4F8BD202C50;
-	Mon, 16 Dec 2024 09:55:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DB931203D43;
+	Mon, 16 Dec 2024 09:55:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="VothdvFK"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="pxZL/8jn"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 911B1201005;
-	Mon, 16 Dec 2024 09:55:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 007F820370D;
+	Mon, 16 Dec 2024 09:55:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734342931; cv=none; b=KQPrvEAET+vlGpMb6rsk3zfYORSsD0j9P67ZfWlL/rV4xsv2IQhV8MXrqoNLtCJDS+1rFHDqciyUEbmz2tuRFAxPmjEUFO4SCWztWO3/ABHJE/8lmFa3Vh+C9fmdt2X63N+eKemUyDA+Nyps7zgkAFA2KmZ3REIWW5GamXyZnhY=
+	t=1734342937; cv=none; b=GojIU0JdlxR4JMgzO484h83NY29E8SkgKDoglIdaW/h+WdG2FMryc8DxwO6kWWjCAhAPKt940YwJVdcVQVXTn1Iz719jPU2HcIIwL+X1OI+ik0Ywl4ai6sfnZh/C1DHWJ6IvJABEg4rKIgNzHYib/ueDgJbMP+pDS+m7f4/3xUk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734342931; c=relaxed/simple;
-	bh=2SQUxAGMYg8gZdlgLiTWgACaK+mzlJ1LmOPz6MBCMCg=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=r9gVtlEVBqX3mPYNtHao+DNzqrLBT6xJpny9PdanaywmK+e/7QYsYO9upgGkZ0YEiKYBCLKey4Z2j05700MAp9ug9ETUmNClHoxRbPFdcDbBN/2xg7pqIJ2E178nz6XGbrRhBK9UpDV0+XpXPmfi741WlIt36CXzfpRNuWYf0ME=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=VothdvFK; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1734342937; c=relaxed/simple;
+	bh=q0DqRoxk5DAPdyAE9yBbq07oG2n9WALTTQ1bfOY26/8=;
+	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=sYK5xfG0b7fRnPeG6yIFr3Z3i+Ul1j08ECjAhYvUp3xMoZkQ40bd78xGZjkyF18kAnWytyGrPsrseC3iYRBv7697EYwe0wB3cisAIgUY45L3iSKs2Atoc2I4vKCn2CCk11+ejMCK/n7BtZCQC3uQ2e/C1IJXgPh7d7QifHQxfog=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=pxZL/8jn; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BG6XT7D022877;
-	Mon, 16 Dec 2024 09:55:07 GMT
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BG5Rhte017398;
+	Mon, 16 Dec 2024 09:55:14 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:message-id
-	:mime-version:subject:to; s=qcppdkim1; bh=MzpkExzkjO+Oe4+XXqlID5
-	yMitTzocLEHs0r0MEFaGE=; b=VothdvFKFDYGVdp/gVMvlwjnNyNf+E6Z+KvrV5
-	YoH5HANRg70nqK82ZcaSfpWqwHm4Hdgsao5MLp0/zAhCx5pSelIgu3qrekk/b3eM
-	CwTIeIIhu6AYwAXH7Yzvr0BcBoXMQShqWjr/p9rXcLWnsFiO+Kkp8RnXNRPDiwDA
-	5MR/ciSrscsggWB72d3EcG9hUpOnOn54CyrrxQOEfwKxcdp9xHEPJg9PEDBX0D2P
-	KOES7+MJ8Bn+IolZzkymrHx9XCbNu0gtAuuZaUkct067FVLHqv2bPUCIV6i2BP6T
-	EfEL7HiG7mMj29R/7Q8PdgFW21KTsCajrB4M8h4lwLAdj/rA==
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	uUE3tRB9XophDfLLN1/bhuNeRGbIsPz+qQHLVwmY5oU=; b=pxZL/8jnRDCqJ6KH
+	qA/kxR3Hp5mJDpH6c0y5VQFU+YgKaJ7cN+qWK4EXTZewhSy4ya+5LnHstacXH8vQ
+	jg4MZzCtoD2/1JFggGP4OLuT+M0aMd+v3wV3ejSHrrtWzNjTY62XQ6nDrcZb8suA
+	cfj4Etfeic0zOaaVpCxcvlUkT+4oq8fXW0NfAp01xQxe2djZHcPa5YVBNkpgXd/L
+	Lb+bMVULJbyAxRf7mTJlTqg1lLPMFOULZ0DdU6lgIHkqzonaKY71Y1gk7v2XmMEy
+	HaPRIuQ0eWcGstSFl/7JMZip8Op5BblSQXMogzIlOT+Uvm8yCkcKACAqvCbutpqF
+	oAaHGw==
 Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43jf1w8kfg-1
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43je300t5e-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 16 Dec 2024 09:55:07 +0000 (GMT)
+	Mon, 16 Dec 2024 09:55:13 +0000 (GMT)
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4BG9t6vE011979
+	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4BG9tCGe012101
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 16 Dec 2024 09:55:06 GMT
+	Mon, 16 Dec 2024 09:55:12 GMT
 Received: from liuxin-gv.qualcomm.com (10.80.80.8) by
  nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Mon, 16 Dec 2024 01:55:00 -0800
+ 15.2.1544.9; Mon, 16 Dec 2024 01:55:06 -0800
 From: Xin Liu <quic_liuxin@quicinc.com>
 To: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
         Conor Dooley <conor+dt@kernel.org>,
@@ -69,11 +71,15 @@ CC: Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I <kishon@kernel.org>,
         <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
         <linux-scsi@vger.kernel.org>, <quic_jiegan@quicinc.com>,
         <quic_aiquny@quicinc.com>, <quic_tingweiz@quicinc.com>,
-        <quic_sayalil@quicinc.com>
-Subject: [PATCH v4 0/3] Enable UFS on QCS615
-Date: Mon, 16 Dec 2024 17:54:36 +0800
-Message-ID: <20241216095439.531357-1-quic_liuxin@quicinc.com>
+        <quic_sayalil@quicinc.com>,
+        Krzysztof Kozlowski
+	<krzysztof.kozlowski@linaro.org>
+Subject: [PATCH v4 1/3] dt-bindings: ufs: qcom: Add UFS Host Controller for QCS615
+Date: Mon, 16 Dec 2024 17:54:37 +0800
+Message-ID: <20241216095439.531357-2-quic_liuxin@quicinc.com>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20241216095439.531357-1-quic_liuxin@quicinc.com>
+References: <20241216095439.531357-1-quic_liuxin@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -86,60 +92,51 @@ X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: UJ3m837BFsi87YY_BteA56BSe0QvotcA
-X-Proofpoint-ORIG-GUID: UJ3m837BFsi87YY_BteA56BSe0QvotcA
+X-Proofpoint-ORIG-GUID: QAoNSTYPXuyvy4FujDjU82gM-olcaWFA
+X-Proofpoint-GUID: QAoNSTYPXuyvy4FujDjU82gM-olcaWFA
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 mlxscore=0
- impostorscore=0 suspectscore=0 phishscore=0 adultscore=0 bulkscore=0
- lowpriorityscore=0 spamscore=0 mlxlogscore=999 priorityscore=1501
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2412160082
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 adultscore=0
+ priorityscore=1501 mlxscore=0 bulkscore=0 clxscore=1015 mlxlogscore=942
+ spamscore=0 suspectscore=0 phishscore=0 lowpriorityscore=0 impostorscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2411120000
+ definitions=main-2412160082
 
 From: Sayali Lokhande <quic_sayalil@quicinc.com>
 
-Add UFS support to the QCS615 Ride platform. The UFS host controller and
-QMP UFS PHY hardware of QCS615 are derived from SM6115. Include the
-relevant binding documents accordingly. Additionally, configure UFS-related
-clock, power, and interconnect settings in the device tree.
+Document the Universal Flash Storage(UFS) Host Controller on the Qualcomm
+QCS615 Platform.
 
-This patch series depends on below patch series:
-https://lore.kernel.org/all/20241104-add_initial_support_for_qcs615-v5-0-9dde8d7b80b0@quicinc.com/
-https://lore.kernel.org/all/20241105032107.9552-1-quic_qqzhou@quicinc.com/
-https://lore.kernel.org/all/20241212-correct_gpio_ranges-v1-0-c5f20d61882f@quicinc.com/
-
+Signed-off-by: Sayali Lokhande <quic_sayalil@quicinc.com>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Acked-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Co-developed-by: Xin Liu <quic_liuxin@quicinc.com>
 Signed-off-by: Xin Liu <quic_liuxin@quicinc.com>
 ---
-Changes in v4:
-- PATCH 2/3: Modify ICC(cpu to ufs); delete redundant required-opps.
-- PATCH 3/3: Add ufs reset-gpios.
-- Link to v3: https://lore.kernel.org/all/20241122064428.278752-1-quic_liuxin@quicinc.com/
-Changes in v3:
-- PATCH 1/3: Adjust the order of SOB.
-- PATCH 2/3: Modify some formatting issues: Wrong indentation, 
-  split into one entry per line.
-- Link to v2: https://lore.kernel.org/all/20241119022050.2995511-1-quic_liuxin@quicinc.com/
-Changes in v2:
-- PATCH 1/3:Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-  Acked-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-- PATCH 2/3: Use an OPP table instead of freq-table-hz.And modify
-  some formatting issues.
-- PATCH 3/3: Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-- Link to v1: https://lore.kernel.org/all/20241017042300.872963-1-quic_liuxin@quicinc.com/
+ Documentation/devicetree/bindings/ufs/qcom,ufs.yaml | 2 ++
+ 1 file changed, 2 insertions(+)
 
-Xin Liu (3):
-  dt-bindings: ufs: qcom: Add UFS Host Controller for QCS615
-  arm64: dts: qcom: qcs615: add UFS node
-  arm64: dts: qcom: qcs615-ride: Enable UFS node
-
- .../devicetree/bindings/ufs/qcom,ufs.yaml     |   2 +
- arch/arm64/boot/dts/qcom/qcs615-ride.dts      |  17 +++
- arch/arm64/boot/dts/qcom/qcs615.dtsi          | 113 ++++++++++++++++++
- 3 files changed, 132 insertions(+)
----
-base-commit: ec29543c01b3dbfcb9a2daa4e0cd33afb3c30c39
-
+diff --git a/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml b/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
+index cde334e3206b..a03fff5df5ef 100644
+--- a/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
++++ b/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
+@@ -26,6 +26,7 @@ properties:
+           - qcom,msm8994-ufshc
+           - qcom,msm8996-ufshc
+           - qcom,msm8998-ufshc
++          - qcom,qcs615-ufshc
+           - qcom,qcs8300-ufshc
+           - qcom,sa8775p-ufshc
+           - qcom,sc7180-ufshc
+@@ -243,6 +244,7 @@ allOf:
+         compatible:
+           contains:
+             enum:
++              - qcom,qcs615-ufshc
+               - qcom,sm6115-ufshc
+               - qcom,sm6125-ufshc
+     then:
 -- 
 2.34.1
 
