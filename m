@@ -1,124 +1,130 @@
-Return-Path: <linux-arm-msm+bounces-42315-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-42316-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0D9589F2C22
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Dec 2024 09:43:10 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 872A69F2C30
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Dec 2024 09:47:37 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 4AD48164F27
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Dec 2024 08:43:07 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 300351888DC4
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Dec 2024 08:47:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A1BAA1FFC61;
-	Mon, 16 Dec 2024 08:43:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BFD111FFC46;
+	Mon, 16 Dec 2024 08:47:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="tV8LoLne"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="a7WrOtIX"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f47.google.com (mail-lf1-f47.google.com [209.85.167.47])
+Received: from mail-lf1-f43.google.com (mail-lf1-f43.google.com [209.85.167.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00F571FFC41
-	for <linux-arm-msm@vger.kernel.org>; Mon, 16 Dec 2024 08:43:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B93E322619
+	for <linux-arm-msm@vger.kernel.org>; Mon, 16 Dec 2024 08:47:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734338584; cv=none; b=Cp8Vq8tKoSCSISoZnz2qPw5gLablR8pNoTN+OKK6GEN6U75ciYXpxv5e5BP5pPN4XsYUNEnwlNzR2ZOK1HdbKeKUXNeG8l3Auchf0G8Cck6/tHrfhMU2KHrIB+OszwH2rIOAIiglaSt2os67eVYrv9ZB5Bar2PQUAwXIt+yqfLw=
+	t=1734338853; cv=none; b=T3hmC5u6ohQNhnkEBIJl2RBaK1LY5nZWzKmJemL2wO5hakAEYoFZCuzAbjmUxPfEf0jD4oDnaNCVsWN9gbExTBeWaNpFxdsV/EYylZBN1xebsRy9HKpUgnGOTtNcHHHat59UYkgMxTEMwElrsTrr1aiXRxhDaeR3GtutYTpbYYc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734338584; c=relaxed/simple;
-	bh=6AhQFzxXrbWEhDNEdghzKF89RHERU3ypIVR6AiCVvJQ=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=tDN7O7DQ1RHJ3R+x/gYxENqCLI3Bska1tNKeRrNoWTGAREiI3/O/tfLk14f14Ez53Ql9JOJ8Eu5tNZbIvyAJ+xoyxuZEYwwFD7NT+meA9C/wbHVzhg35SuIBG9jNT2o02IXbRMiYcx9UgTOka6+tyDDIB77R14G5ocqkKyfMH3k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=tV8LoLne; arc=none smtp.client-ip=209.85.167.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
-Received: by mail-lf1-f47.google.com with SMTP id 2adb3069b0e04-540215984f0so4411901e87.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Dec 2024 00:43:02 -0800 (PST)
+	s=arc-20240116; t=1734338853; c=relaxed/simple;
+	bh=MecjR+hYpVLq58Mi2oX0DvVkh8q27KHPXWlvQw6z7Ss=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=hkDMT+3vCPxwQtQt+8D0Qz7zywLpz07l06npyaozhUKzkGHIJu36j1MyYZoUCh2r089SuDn45qiZaXedaOQsHYLVkXt+awe/2RMPRrgfVBXeWOKSPtE8DuFn9VTLG+shEUtsc2LbNs3XBGffchfYdQkcvhueKGKuDcmJGuxaXJA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=a7WrOtIX; arc=none smtp.client-ip=209.85.167.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f43.google.com with SMTP id 2adb3069b0e04-5401bd6cdb7so3903373e87.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Dec 2024 00:47:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1734338581; x=1734943381; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=7ESVbK/QGYyy+mXv8GIEzCsLxto0hs5j5kMmDAMrMjQ=;
-        b=tV8LoLne/pjHt8QELU7Ac6awsUwFz9Ji3qKB5QebU7Pol7c6NHN/qvY/s7ZuNkYsx9
-         kXsJZrSqsKtkDYpFe33X3WPqtWSbzhPezJZrYlTYWKAlcwJG4d3RJtQXG6hCyoQHMGei
-         Ln3buwQWVektLqts7l7AIbUdSFK0EAhFU8rgX83PfLUb7iU78HD0eo742xsz7doF1Zhh
-         rmNviVLGxObJlsiLLkXIK50+UFktwB6nclX0UJM/GzAHiXXMZdquaiL1X0GyIml+a3tL
-         A9SEKNsxywe/sH7lvQyAbs/ZO4bpEzNsENbVxaRWl6WUY3O2DTC7lNrirHLj0wmVLM0G
-         fHtQ==
+        d=linaro.org; s=google; t=1734338850; x=1734943650; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=zzeD8yx+TMqcm5gDE+gRIinKwvYdm3w/pVg+Fc5PpMU=;
+        b=a7WrOtIXvP9hRaAAjt8FSEcCCQNLl+nkNRJp3ZCtg++aMpXMJW1TFCgHAQFcIC8+jV
+         gt8llwe7OQvxnEVF86gOWh1fRTzno8HaADeXmK3arvSYTr8eMj8fl/vxaTmHKi7HzFHc
+         mdycrtb9OCwNWDjxXVXcn+cXfpIyYFG591sU5xd/Ns8dZE+sav9aclmH1RwWvjvGxMRU
+         thLxMmWjPTsSL0p94POWEa0orYIukztYBw/6dcgEWSmS6zbIpzVED2H03q3rmlfL0pqe
+         Mssg+FNqVn2Dz6bHMx97JK0sTC7ULh7PNGVYGX5CSLE1i8xKMy8wwCP1oq3lAa5r2BP4
+         HQEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734338581; x=1734943381;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=7ESVbK/QGYyy+mXv8GIEzCsLxto0hs5j5kMmDAMrMjQ=;
-        b=tn8zI09V78nGJCffuwXXVtyrzTRoUiIeIr272EEe6nGfFGM9gHiqnLtHB+Q9KITdGY
-         J+uwczcItAnHRAP1KVtXwXn4A9ZvQuVFJPcwoMVfoJDCuaJgnHodE4tFJlIcFG/hAFt8
-         nej4uZaVcoh3BSmFgjumPQpRDMnAiTqjYUXLEZ6nsdluVFbV4zEvReJKCVZNXTijfw6o
-         JDA3HZPub67dcBQ+5kn9RchXHvRPyfUsNT4HivMBrdy9qD8uo4VBu0s1FpR16+zMUxN5
-         DnRclM8JFNnfm18mQtQ1B82xRZbJUPqq3EFEBkRgMPVtqkSia36ChOD8LxH7TB8M0bEw
-         Z8Zg==
-X-Gm-Message-State: AOJu0YyzEtiWsUkDHR0MyvGefzdvbOi4oGtMkr4kLV5LngttU+Z0/exf
-	C0SeJVmw3x2NTSlxB7t4KYIbuTpunH0Gt7FlPyBPdi9OC7WCozxsyQuaZjpxav4DlS4NPh9N7oL
-	EBpB1ji0SqxD20txJs3J54qyEvMBNEVz0K9P81hFd7Gkm8vyG
-X-Gm-Gg: ASbGncuF6zDX5MDHj0AFol4ZF+EvEpc7TUqP2H2gYx4ykPI/kntvzJDL62EBdpQn2/M
-	C4QvFTfyEB9AI2qLi5ahRZtKjugQij2r87rbiA4+dMoJcYCGlytrsHETa9Qk9mPicgFezBw==
-X-Google-Smtp-Source: AGHT+IGn4xA40nF8STOCkYbc5tmOp9UWOQNm06xrEtaIXFJmc7D+X5p16HTNyzUm5pQIidN72lQxmYOEHOyZCkLFBZQ=
-X-Received: by 2002:a05:6512:1296:b0:540:3566:5b37 with SMTP id
- 2adb3069b0e04-54099b6a827mr3801067e87.57.1734338581092; Mon, 16 Dec 2024
- 00:43:01 -0800 (PST)
+        d=1e100.net; s=20230601; t=1734338850; x=1734943650;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=zzeD8yx+TMqcm5gDE+gRIinKwvYdm3w/pVg+Fc5PpMU=;
+        b=d7icJz2LI00h9IVAuGGYEpXL63uL8XmXYne5E8yUY+Zwf3Ij8mTBZ7c72slaw44gPE
+         dWqVwYQGYdwSPVYYG6aCXV4jNQUZS1yE+HJ5fvVp5TNTrTIxiewPWNTZLtQzZaBFlkZ8
+         UTxtlmtTe7gEbZaQp9WbqvFQsPkZPL7rUgdtko3yqjVuaDNTTWy2xFsY4NRm8fCj2qKs
+         X3omvLkkh/NTCftpCkKX2zbfEX2EfaCrFwVft6sQhWbwkwpHTARTaHGe165vSOFT8CSZ
+         2FGYnmOEARmR7GHUlZxDd+h5B4qj9moNVxDSCa8dUCk0FPpQIT4VxQO5+IGm+vonYoB8
+         +S1g==
+X-Forwarded-Encrypted: i=1; AJvYcCUr/WcdNB+Zvm2u0RAA1dVw52Xlgarx4lh7Adp2ipfYMR2+U+Ya+UN/ALhAZFDd3TfCrx9yLNRai7UNRIEd@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz36bTk5Tenl2A++LVlvzkrmhUlSKNlAM671Z3LOwRfueKoexJL
+	fHKiocCGs+bPTeoj/QbA3Xbn/zpTtE78Mx7cp+NVApxNLGyYPKHCYJMX9qL4oMI=
+X-Gm-Gg: ASbGncvFIlk/1DtKB4m7hobHV492Cbsc8hmg797lIuo+k7ywG6h6DFU5cw5MEaT3keY
+	AarN7I58XrScXJ4YhkRa54wi9jPovCepdx+E01wvtP/Q0gXbZywZAjuRtKrSoI7tnqdZPQH9JgI
+	KyFmj5PAtVRyhdZK1XcO8uDATbj1SznQoSGzzCe1qY57+xhas1MeHpxb9Dymp6Dzz+iJEkdHGRc
+	IhcinC3z3oI8cdozKSRhXZ/OveSz7CQIYrefGCQhdK4Urmbhk0YqfsYqzAAtBOk0trYu1Hgw2k2
+	NTdFEPuy/dSMVrDaSXmxvKZ+3c0VJR06T4Z/
+X-Google-Smtp-Source: AGHT+IEJ5sTe3G9+gTy1m1ue9pwhxg6TL/Rf2dQWkQ9/Vzvc3a6UV9wPa7hVqJ6GvzWOli/HF0b54w==
+X-Received: by 2002:a05:6512:3088:b0:540:2111:db71 with SMTP id 2adb3069b0e04-540905a6fd4mr3379358e87.42.1734338849696;
+        Mon, 16 Dec 2024 00:47:29 -0800 (PST)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-54120b9f4cesm751665e87.14.2024.12.16.00.47.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 16 Dec 2024 00:47:29 -0800 (PST)
+Date: Mon, 16 Dec 2024 10:47:26 +0200
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Arnd Bergmann <arnd@kernel.org>
+Cc: Rob Clark <robdclark@gmail.com>, 
+	Abhinav Kumar <quic_abhinavk@quicinc.com>, David Airlie <airlied@gmail.com>, 
+	Simona Vetter <simona@ffwll.ch>, Jessica Zhang <quic_jesszhan@quicinc.com>, 
+	Arnd Bergmann <arnd@arndb.de>, Sean Paul <sean@poorly.run>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Marijn Suijten <marijn.suijten@somainline.org>, 
+	Akhil P Oommen <quic_akhilpo@quicinc.com>, Neil Armstrong <neil.armstrong@linaro.org>, 
+	Jinjie Ruan <ruanjinjie@huawei.com>, 
+	=?utf-8?B?QmFybmFiw6FzIEN6w6ltw6Fu?= <barnabas.czeman@mainlining.org>, linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+	freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] drm/msm: fix -Wformat-security warnings
+Message-ID: <4lyhh4ayevevk5nkyjo7kbn3r5vk66f4j34dgncycwprxs5dsa@pnkjgxstlfng>
+References: <20241216083319.1838449-1-arnd@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20241202094903.18388-1-brgl@bgdev.pl>
-In-Reply-To: <20241202094903.18388-1-brgl@bgdev.pl>
-From: Bartosz Golaszewski <brgl@bgdev.pl>
-Date: Mon, 16 Dec 2024 09:42:50 +0100
-Message-ID: <CAMRc=MeEQT2aB_taL2FYUx3czA=a22mPYDgFyKt2W7jfKg6zBQ@mail.gmail.com>
-Subject: Re: [RESEND PATCH 1/2] soc: qcom: rmtfs: allow building the module
- with COMPILE_TEST=y
-To: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, 
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241216083319.1838449-1-arnd@kernel.org>
 
-On Mon, Dec 2, 2024 at 10:49=E2=80=AFAM Bartosz Golaszewski <brgl@bgdev.pl>=
- wrote:
->
-> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
->
-> Make it possible to build the module when COMPILE_TEST is enabled for
-> better build coverage.
->
-> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+On Mon, Dec 16, 2024 at 09:33:13AM +0100, Arnd Bergmann wrote:
+> From: Arnd Bergmann <arnd@arndb.de>
+> 
+> Passing a variable string as a printf style format is potentially
+> dangerous that -Wformat-security can warn about if enabled. A new
+> instance just got added:
+> 
+> drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c: In function 'dpu_kms_mdp_snapshot':
+> drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c:1046:49: error: format not a string literal and no format arguments [-Werror=format-security]
+>  1046 |                                             vbif->name);
+>       |                                             ~~~~^~~~~~
+> 
+> Fix this one and the preexisting -Wformat-security warnings the in the
+> DRM code for snapdragon.
+> 
+> Fixes: 1a40bb31fcf1 ("drm/msm/dpu: Add VBIF to DPU snapshot") # and others
+> Signed-off-by: Arnd Bergmann <arnd@arndb.de>
 > ---
->  drivers/soc/qcom/Kconfig | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/drivers/soc/qcom/Kconfig b/drivers/soc/qcom/Kconfig
-> index 74b9121240f89..58e63cf0036ba 100644
-> --- a/drivers/soc/qcom/Kconfig
-> +++ b/drivers/soc/qcom/Kconfig
-> @@ -139,7 +139,7 @@ config QCOM_RAMP_CTRL
->
->  config QCOM_RMTFS_MEM
->         tristate "Qualcomm Remote Filesystem memory driver"
-> -       depends on ARCH_QCOM
-> +       depends on ARCH_QCOM || COMPILE_TEST
->         select QCOM_SCM
->         help
->           The Qualcomm remote filesystem memory driver is used for alloca=
-ting
-> --
-> 2.45.2
->
+> I have a larger series that I still plan to send eventually, sending this
+> one now as I just saw another one get added. The warning is enabled by
+> default because there are still over 100 other files with the same problem.
+> ---
+>  drivers/gpu/drm/msm/adreno/a6xx_gmu.c   |  2 +-
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c | 28 ++++++++++++++++---------
+>  2 files changed, 19 insertions(+), 11 deletions(-)
 
-Gentle ping.
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-Bart
+-- 
+With best wishes
+Dmitry
 
