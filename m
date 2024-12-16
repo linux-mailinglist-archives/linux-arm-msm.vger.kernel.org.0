@@ -1,74 +1,77 @@
-Return-Path: <linux-arm-msm+bounces-42293-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-42294-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6685E9F29EA
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Dec 2024 07:20:21 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0358A9F2A2F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Dec 2024 07:31:48 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 55F111668A1
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Dec 2024 06:20:18 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 316941885750
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Dec 2024 06:31:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6899A1C54AA;
-	Mon, 16 Dec 2024 06:20:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4C5401CCEEC;
+	Mon, 16 Dec 2024 06:31:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="kArt6tXc"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="BmOjfsjV"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7AAB1509A0;
-	Mon, 16 Dec 2024 06:20:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8ED051C878E;
+	Mon, 16 Dec 2024 06:31:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734330014; cv=none; b=PtoJdiDITr4QzV4YsE9voWO0LDhHcUEBULe18mLS1FkRzEVTAo2dkymOHo7Ara1ImvIJu1/L4w5umUU0fcWzHpgemU5dc7EbKeGwo1zp5wnVW96i1VRTHN08pKmlLES8+K9Pjp3tsX+X/hNwtuN9hxKWf7LX+QN0p5eVOzFwR7k=
+	t=1734330683; cv=none; b=IezupvUXW/k08501a7fIYcWy1IghXK6Poj3F+qA6st1ev+kYaFnWx1WA9ZTWeoA4QU2sec1paU6lUQOk1p9+rVRWhOQfVch2Iqk5nxEy7+yle6M/vj+mlUx0kUma7+NpvDoOMIwo9FU8RQ5hTk1NEjVgb2H9HKfceP7bHqc4r18=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734330014; c=relaxed/simple;
-	bh=pkyvtopd8Y1EAVHDdlqMb8aBQcGcAMsF3ndTQyJzBPY=;
+	s=arc-20240116; t=1734330683; c=relaxed/simple;
+	bh=ZuLWWhM6BgTAVQR7VgGSwyys8SX1T5E1Hhc5P84eUzc=;
 	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=gP1xqVGmNftveS3CGJfsIS5fntjkB2UwM5Lf6A8V/VYhS++nJMWfz4qFBr0bqGlxequkIDrn52G4qCoYgQcARWWWT6B2PvoEtJmyt7t10ILOd+mlvSxnTqykwsbdXa5Sh1Ju2IReT1YhnDOGM0iQSPPQ/FQTQ3uY1OppHkD7wrQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=kArt6tXc; arc=none smtp.client-ip=205.220.180.131
+	 Content-Type:Content-Disposition:In-Reply-To; b=gVoprW4D6HYPuvMXK3XetzgWorzox6ZjSz+6+/bCID/P+VoepMsaVOqyKOwL223AE+N3FVDAZsyZS+h4clBLmaFTslGQtjT04vWr+UWe7cBy6ZxA+Wy7xdh210sTeeCR9KYXdqgFnZD4WrL8Qoq69+UfmH8YXvDlOiB9HVzZkuI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=BmOjfsjV; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BG5ZR9g024089;
-	Mon, 16 Dec 2024 06:19:55 GMT
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BG3HGhr021637;
+	Mon, 16 Dec 2024 06:31:06 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=epIePoMAiXerde7OcGYbNWm8
-	N5lo+1DxyIPb5Ys38WY=; b=kArt6tXcUScygQnGbDvKmp9kbAwAad5IywPAP/Bz
-	BajVk3ARInYvAHlA7PCXkJAhg6Na7as5XeR8Of8RNEzB30O2o+TwskrZf4pMky4g
-	N+EFsfWSAHOU7wwl/g27tXbAGcYR1TzzhbMiXivOu4sZ/UWkLopIn087N2moA9lt
-	XkvvLEOXQHg0IpekSzvhJz95nOTkYJk7EF3MSNLrM0LT5hkhcoLo1GM5aB6yXtrN
-	Whj9uJIdHusIjeA/xUIA02PQ+6weTQQFMnwXhY25gMUutD6tBuHOD3V67H2CpdFO
-	3MynLLo66m9RMkqtzGZ5HrVIfa16+cdHo9vbBYElE6by7Q==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43je69838w-1
+	:references:subject:to; s=qcppdkim1; bh=/vSVfCXOF4iVZRrIFkv7hhmD
+	VMvNpOocSjbRo9mQITU=; b=BmOjfsjVHLp1M9R8BSW27K9xTZbzK3OjEAF0y8l2
+	YF5gLVqmzbwd2wsYe6a+6NWwcv8RAvsoDb3nmEjgJMz0lI6GajPUvxo5sRDHCqfD
+	QyqRi3b7pAD6KkXCZ7dnemjtXL1ktnHpCyEixbT3TKX35nv/stc5AkdUpIb29+3+
+	qDzQmzrAMDEp8Ruft1kRoe3pLv8n105OOv9zx0C0HkjhF6yFZLMCzBXQw/WEfj/k
+	AlarKoDKNyHRusI8olN2XIQN+g2VGnn00XzorqJpHYI3fG4n++CYC22Z6nuuJ+u5
+	UgVON49lnbTbxKNVZ3y/mKOeBbnlG6rKLoeyEE2RFPCkPg==
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43jc5kgdjc-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 16 Dec 2024 06:19:55 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4BG6JsEh028720
+	Mon, 16 Dec 2024 06:31:05 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4BG6V44g021652
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 16 Dec 2024 06:19:54 GMT
-Received: from cse-cd02-lnx.ap.qualcomm.com (10.80.80.8) by
- nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
+	Mon, 16 Dec 2024 06:31:04 GMT
+Received: from hu-varada-blr.qualcomm.com (10.80.80.8) by
+ nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Sun, 15 Dec 2024 22:19:50 -0800
-Date: Mon, 16 Dec 2024 14:19:46 +0800
-From: Yuanjie Yang <quic_yuanjiey@quicinc.com>
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, <ulf.hansson@linaro.org>,
-        <robh@kernel.org>, <krzk+dt@kernel.org>, <conor+dt@kernel.org>,
-        <bhupesh.sharma@linaro.org>, <andersson@kernel.org>,
-        <konradybcio@kernel.org>
-CC: <linux-mmc@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <quic_tingweiz@quicinc.com>, <quic_yuanjiey@quicinc.com>
-Subject: Re: [PATCH v4 1/2] arm64: dts: qcom: qcs615: add SDHC1 and SDHC2
-Message-ID: <Z1/Ggklt4x0D/CoD@cse-cd02-lnx.ap.qualcomm.com>
-References: <20241206023711.2541716-1-quic_yuanjiey@quicinc.com>
- <20241206023711.2541716-2-quic_yuanjiey@quicinc.com>
- <dac91ee1-4e1c-47d2-ba7b-6ab47582731f@oss.qualcomm.com>
+ 15.2.1544.9; Sun, 15 Dec 2024 22:30:58 -0800
+Date: Mon, 16 Dec 2024 12:00:51 +0530
+From: Varadarajan Narayanan <quic_varada@quicinc.com>
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+CC: <lpieralisi@kernel.org>, <kw@linux.com>,
+        <manivannan.sadhasivam@linaro.org>, <robh@kernel.org>,
+        <bhelgaas@google.com>, <krzk+dt@kernel.org>, <conor+dt@kernel.org>,
+        <vkoul@kernel.org>, <kishon@kernel.org>, <andersson@kernel.org>,
+        <konradybcio@kernel.org>, <p.zabel@pengutronix.de>,
+        <quic_nsekar@quicinc.com>, <dmitry.baryshkov@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-pci@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-phy@lists.infradead.org>
+Subject: Re: [PATCH v2 2/6] phy: qcom: Introduce PCIe UNIPHY 28LP driver
+Message-ID: <Z1/JG+RkTBW9JuMO@hu-varada-blr.qualcomm.com>
+References: <20241204113329.3195627-1-quic_varada@quicinc.com>
+ <20241204113329.3195627-3-quic_varada@quicinc.com>
+ <710aa948-d27f-49f6-a4a8-73f6208502c3@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -77,92 +80,172 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="us-ascii"
 Content-Disposition: inline
-In-Reply-To: <dac91ee1-4e1c-47d2-ba7b-6ab47582731f@oss.qualcomm.com>
+In-Reply-To: <710aa948-d27f-49f6-a4a8-73f6208502c3@oss.qualcomm.com>
 X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
+ nasanex01b.na.qualcomm.com (10.46.141.250)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: wK_5kkYM0373_DNMUynYso8GRqRt3TFd
-X-Proofpoint-ORIG-GUID: wK_5kkYM0373_DNMUynYso8GRqRt3TFd
+X-Proofpoint-ORIG-GUID: j_eREXnaHXyx9uLLkPXB50WXUkT3bRAy
+X-Proofpoint-GUID: j_eREXnaHXyx9uLLkPXB50WXUkT3bRAy
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0
- priorityscore=1501 suspectscore=0 adultscore=0 spamscore=0 clxscore=1015
- lowpriorityscore=0 phishscore=0 mlxlogscore=999 impostorscore=0 mlxscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2412160049
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 adultscore=0
+ impostorscore=0 clxscore=1015 mlxlogscore=924 priorityscore=1501
+ mlxscore=0 phishscore=0 suspectscore=0 lowpriorityscore=0 bulkscore=0
+ spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2412160051
 
-On Fri, Dec 13, 2024 at 01:56:04PM +0100, Konrad Dybcio wrote:
-> On 6.12.2024 3:37 AM, Yuanjie Yang wrote:
-> > Add SDHC1 and SDHC2 support to the QCS615 Ride platform.
-> > 
-> > Signed-off-by: Yuanjie Yang <quic_yuanjiey@quicinc.com>
+On Thu, Dec 05, 2024 at 05:40:15PM +0100, Konrad Dybcio wrote:
+> On 4.12.2024 12:33 PM, Varadarajan Narayanan wrote:
+> > From: Nitheesh Sekar <quic_nsekar@quicinc.com>
+> >
+> > Add Qualcomm PCIe UNIPHY 28LP driver support present
+> > in Qualcomm IPQ5332 SoC and the phy init sequence.
+> >
+> > Signed-off-by: Nitheesh Sekar <quic_nsekar@quicinc.com>
+> > Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
 > > ---
-> >  arch/arm64/boot/dts/qcom/qcs615.dtsi | 209 +++++++++++++++++++++++++++
-> >  1 file changed, 209 insertions(+)
-> > 
-> > diff --git a/arch/arm64/boot/dts/qcom/qcs615.dtsi b/arch/arm64/boot/dts/qcom/qcs615.dtsi
-> > index 590beb37f441..e52bf8c77884 100644
-> > --- a/arch/arm64/boot/dts/qcom/qcs615.dtsi
-> > +++ b/arch/arm64/boot/dts/qcom/qcs615.dtsi
-> > @@ -399,6 +399,72 @@ qfprom: efuse@780000 {
-> >  			#size-cells = <1>;
-> >  		};
-> >  
-> > +		sdhc_1: mmc@7c4000 {
-> > +			compatible = "qcom,qcs615-sdhci", "qcom,sdhci-msm-v5";
-> > +			reg = <0x0 0x007c4000 0x0 0x1000>,
-> > +			      <0x0 0x007c5000 0x0 0x1000>,
-> > +			      <0x0 0x007c8000 0x0 0x8000>;
-> > +			reg-names = "hc",
-> > +				    "cqhci",
-> > +				    "ice";
-> > +
-> > +			interrupts = <GIC_SPI 641 IRQ_TYPE_LEVEL_HIGH>,
-> > +				     <GIC_SPI 644 IRQ_TYPE_LEVEL_HIGH>;
-> > +			interrupt-names = "hc_irq",
-> > +					  "pwr_irq";
-> > +
-> > +			clocks = <&gcc GCC_SDCC1_AHB_CLK>,
-> > +				 <&gcc GCC_SDCC1_APPS_CLK>,
-> > +				 <&rpmhcc RPMH_CXO_CLK>,
-> > +				 <&gcc GCC_SDCC1_ICE_CORE_CLK>;
-> > +			clock-names = "iface",
-> > +				      "core",
-> > +				      "xo",
-> > +				      "ice";
-> > +
-> > +			resets = <&gcc GCC_SDCC1_BCR>;
-> > +
-> > +			power-domains = <&rpmhpd RPMHPD_CX>;
-> > +			operating-points-v2 = <&sdhc1_opp_table>;
-> > +			iommus = <&apps_smmu 0x02c0 0x0>;
-> > +			interconnects = <&aggre1_noc MASTER_SDCC_1 QCOM_ICC_TAG_ALWAYS
-> > +					 &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>,
-> > +					<&gem_noc MASTER_APPSS_PROC QCOM_ICC_TAG_ALWAYS
-> > +					 &config_noc SLAVE_SDCC_1 QCOM_ICC_TAG_ALWAYS>;
-> 
-> QCOM_ICC_TAG_ACTIVE_ONLY for the CPU path
-OK, I will fix it in next patch.
+>
+> [...]
+>
+> > +struct qcom_uniphy_pcie_regs {
+> > +	unsigned int offset;
+> > +	unsigned int val;
+>
+> u32
 
-> > +			interconnect-names = "sdhc-ddr",
-> > +					     "cpu-sdhc";
+ok.
+
+> > +};
 > > +
-> > +			qcom,dll-config = <0x000f642c>;
-> > +			qcom,ddr-config = <0x80040868>;
-> > +			supports-cqe;
-> > +			dma-coherent;
-> > +			status = "disabled";
-> 
-> Nit: please add a newline before status for consistency
-I will add a newline before status in next patch.
+> > +struct qcom_uniphy_pcie_data {
+> > +	int lanes;
+> > +	/* 2nd lane offset */
+> > +	int lane_offset;
+>
+> 'lanes', 'lane_offset' and '2nd lane' together imply one of:
+>
+> - there can be more lines, all at an equal offset
+> - there can only ever be two lines
+>
+> Please specify which one is the case
 
-> (both comments apply to both controllers)
-OK I will fix both controllers(SDHC_1 and SDHC_2).
+There can be more lines all at an equal offset. However, it is
+just 2 lines in this SoC's case. Will remove the "2nd lane offset"
+comment.
 
-> Konrad
+> > +	unsigned int phy_type;
+> > +	const struct qcom_uniphy_pcie_regs *init_seq;
+> > +	unsigned int init_seq_num;
+> > +	unsigned int pipe_clk_rate;
+> > +};
+> > +
+> > +struct qcom_uniphy_pcie {
+> > +	struct phy phy;
+> > +	struct device *dev;
+> > +	const struct qcom_uniphy_pcie_data *data;
+> > +	struct clk_bulk_data *clks;
+> > +	int num_clks;
+> > +	struct reset_control *resets;
+> > +	void __iomem *base;
+> > +};
+> > +
+> > +#define	phy_to_dw_phy(x)	container_of((x), struct qca_uni_pcie_phy, phy)
+>
+> A space after #define, please
 
-Thanks,
-yuanjie
+ok
+
+> > +
+> > +static const struct qcom_uniphy_pcie_regs ipq5332_regs[] = {
+> > +	{
+> > +		.offset = PHY_CFG_PLLCFG,
+> > +		.val = 0x30,
+> > +	}, {
+> > +		.offset = PHY_CFG_EIOS_DTCT_REG,
+> > +		.val = 0x53ef,
+> > +	}, {
+> > +		.offset = PHY_CFG_GEN3_ALIGN_HOLDOFF_TIME,
+> > +		.val = 0xCf,
+>
+> mixed case hex.. please make it lowercase
+
+ok
+
+> > +	},
+> > +};
+> > +
+> > +static const struct qcom_uniphy_pcie_data ipq5332_x1_data = {
+> > +	.lanes		= 1,
+> > +	.phy_type	= PHY_TYPE_PCIE_GEN3,
+> > +	.init_seq	= ipq5332_regs,
+> > +	.init_seq_num	= ARRAY_SIZE(ipq5332_regs),
+> > +	.pipe_clk_rate	= 250000000,
+> > +};
+> > +
+> > +static const struct qcom_uniphy_pcie_data ipq5332_x2_data = {
+> > +	.lanes		= 2,
+> > +	.lane_offset	= 0x800,
+> > +	.phy_type	= PHY_TYPE_PCIE_GEN3,
+> > +	.init_seq	= ipq5332_regs,
+> > +	.init_seq_num	= ARRAY_SIZE(ipq5332_regs),
+> > +	.pipe_clk_rate	= 250000000,
+> > +};
+>
+> Are there going to be more UNIPHY-equipped SoCs?
+
+Not sure. Since this driver was initially posted for ipq5018 and
+ipq5332 suport was added later, there are two sets of data one
+for 5018 and one for 5332.
+
+> > +static void qcom_uniphy_pcie_init(struct qcom_uniphy_pcie *phy)
+> > +{
+> > +	const struct qcom_uniphy_pcie_data *data = phy->data;
+> > +	const struct qcom_uniphy_pcie_regs *init_seq;
+> > +	void __iomem *base = phy->base;
+> > +	int lane, i;
+> > +
+> > +	for (lane = 0; lane != data->lanes; lane++) {
+>
+> while effectively the same, < would be less eyebrow-raising
+
+ok.
+
+> > +		init_seq = data->init_seq;
+> > +
+> > +		for (i = 0; i < data->init_seq_num; i++, init_seq++)
+> > +			writel(init_seq->val, base + init_seq->offset);
+>
+> writel(init_seq[i].val, ...)
+
+ok.
+
+> > +
+> > +		base += data->lane_offset;
+> > +	}
+> > +}
+> > +
+> > +static int qcom_uniphy_pcie_power_off(struct phy *x)
+> > +{
+> > +	struct qcom_uniphy_pcie *phy = phy_get_drvdata(x);
+> > +
+> > +	clk_bulk_disable_unprepare(phy->num_clks, phy->clks);
+> > +
+> > +	reset_control_assert(phy->resets);
+>
+> This can fail, return it instead of zero
+
+ok.
+
+> [...]
+>
+> > +MODULE_LICENSE("Dual BSD/GPL");
+>
+> I think this is too vague, there are many BSD variants
+
+Will change it to "GPL v2"
+
+Thanks
+Varada
 
