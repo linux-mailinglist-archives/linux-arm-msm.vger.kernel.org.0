@@ -1,149 +1,230 @@
-Return-Path: <linux-arm-msm+bounces-42393-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-42392-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E27279F3C31
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Dec 2024 22:07:46 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 52AE89F3C3F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Dec 2024 22:09:25 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A300F167444
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Dec 2024 21:07:36 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 638731883B05
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Dec 2024 21:07:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3EE501D8E12;
-	Mon, 16 Dec 2024 20:54:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2FD301D95B4;
+	Mon, 16 Dec 2024 20:52:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cT2xG2cM"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="O1R3Tvw6"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-io1-f50.google.com (mail-io1-f50.google.com [209.85.166.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACF2A1D5165;
-	Mon, 16 Dec 2024 20:54:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FB2A1D9595;
+	Mon, 16 Dec 2024 20:52:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734382498; cv=none; b=noQsqA7ZwfWy8fEZl/ZygRYar58nTOB6wZIjqLtZzrLwcqu3mEi6At8MGw4OoK4hwkSRGDzOpSuCNzQHts0h9c9W9k7dQuuoMIuXDJwFNsaJv5EcMm1XPUDY4KED7ZKJJWxBvfG1q/+gRy83lF72X94Um2u58p0gN1I8F84QyUw=
+	t=1734382344; cv=none; b=BnjJpD6hYxzJIkiuAqM4fRIZ3j9xdjeQ77pIMsY8xTWhMdDSmpHzPFlZqU+GEiC2006Cmololu3kN1MxJ7JDIrr04o0LVnHaGUcJix7Zc8SsZ/5v/ezWsWTGXaC1yC11NB1N+dU8u4sVR7cCLvVZwTPb0FFX2ovsl9DP25uAj6w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734382498; c=relaxed/simple;
-	bh=geG/YKx27V/zlwg0MEi0DPulSqUKvqAC78Zqn7duPTs=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=YrI7XrFBPtYQnDORpxpvcEUtJTjmjFiIIbUFS8BY3AlPgOy6gNGE9FFWkwZh+2ZdEw+Bjje9EmdtLb6xubPphEY9AqI2C83Se91rXzOZJLTchdho/oEH+DzRLt61lj+2xAPFouWv2jNDf33iQEihxfDAWoujzmEVq6d82ohRtoI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cT2xG2cM; arc=none smtp.client-ip=209.85.166.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-io1-f50.google.com with SMTP id ca18e2360f4ac-844e39439abso115703039f.1;
-        Mon, 16 Dec 2024 12:54:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1734382496; x=1734987296; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=pGu56YKO1XlSS7wwJkm05qsGyYVWIdWmEMISHyf2DmA=;
-        b=cT2xG2cMY7DVo+jtWcwjK+FsO6SB6xoolBOa/k33QmYvCAk07DOZzHLauNmyEO1XA5
-         03Fr95tpAXMB2EmxgeLSGTlZP2KECbVIQ/ThKXoJm6b+q473EhWSPAts/7gigNAkd8cC
-         lPcSe6M0euqfJ5Pj2L5gk0ENfkG60kp1WnHLNg4LtYO7PjmZcXC2j10UTpp8RLLlw/00
-         WmLOAUfHS3KA1lNECPfhdbslmuQ+H269PprwwSxVnsekjTk+pN7I4BECQFDi45O6tB6r
-         PFwNU6I5I1MIcFUpR0VuSCE2axalfATWNimnFLVOszcdQtOzXgeq7SX9qw4E9PWE5qgA
-         AaWg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734382496; x=1734987296;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=pGu56YKO1XlSS7wwJkm05qsGyYVWIdWmEMISHyf2DmA=;
-        b=Nv2NekdpkganyIOJ/LSiB/DtCUl3PaOVFzhlqTAGkt3tVW64+gBXC9wVPouYdklC3h
-         O6P+NZ13vFW9LixiSOiNuRhAVaw26pV/BNL+xGDwFr4IdmMvCdUdZJ914A0lwj4AYifu
-         LgbaO9YGpGAulTTTC84mHw77Se+7HEAE2qAiTk8i42OGnEbOvu/DkQlNF7+rGk6kZsj6
-         I83Jem1sS/d9LyXpKtaVk/Fuc6s7H0z3LlNu81ut6Ffg0NDiydsuUC1EL7azmv060nS9
-         NoOomdhZPX/FTuOZEVcrrgBrCYuN1QWjdeEaYeAs/w58CjQFSOotidKgDrdqj6/p6jAM
-         +nCQ==
-X-Forwarded-Encrypted: i=1; AJvYcCX2Ga6hil3ebkrz1RsdCrb4Dkax6gS1kwclba09aZCZEBZzWch0PV+Uk+1SMll6xqrS7wez10bDpxFSptPT@vger.kernel.org, AJvYcCXij+URv/6CAvVyDoqpArFLbn6Gn2Ggy7B8U6XQLwB58HjU39GQCtmvz+ga+rrm8G6PvnIDgWAGwECdUt7e@vger.kernel.org
-X-Gm-Message-State: AOJu0YxCwK+tBesApzhUyRMpipPgSgugwk0i1j54NhLRHtFlFk8lSpCf
-	7eYkhLBfyM89U31ALIW+BO8ezL2gFJv1/CsAI8fzUKt8fzgbbavoFvepCyXtCqKjsGYFHbe4Xyc
-	lY9DTCWvma3xMjjtbt8X8LiLvQos=
-X-Gm-Gg: ASbGnctl+fhw78DKsQxNxZv1NR2BRaOsQ1ivLQtMWmOoSv6zETn/ATMUT1VBQauit+z
-	d1PeorWzOPojnOhhdA09uSDoW3SyzSfDscYwRZ+0BfgLpcKU3D+4QaLl7Y5u1TR81fsQ1
-X-Google-Smtp-Source: AGHT+IE6NSDPDfv/Nr17YFiwuwQ8NV0QFzK1yfUD5+dRWkpGvLeKWKyM4SsI5zKJl53NjUsanNs56HL6Xdim8pgvJWw=
-X-Received: by 2002:a05:6e02:1a07:b0:3ab:4bea:df97 with SMTP id
- e9e14a558f8ab-3affbbb656fmr160374485ab.23.1734382495871; Mon, 16 Dec 2024
- 12:54:55 -0800 (PST)
+	s=arc-20240116; t=1734382344; c=relaxed/simple;
+	bh=Z8phgwoaNiU7bL15KsnNZNkdYTf7NzvjvDW4bkCnj4Y=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=CMA3Nfus/Irk45YWncbFePiQ2fKin3XOhSLCUREEfNIwsZJ2DWxAZ8gR+nXT34khB7c0UzFe1kiJRAHmvwF7+1tDMVGn6lCQfZYUGtXC7zQgU4p6GTyW3KuqjWQ9ojkBKkY7MkfxVrysSL8zUKHdfcQFi4pnBeCfRjU3SOQGdSc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=O1R3Tvw6; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BGIwdNl010436;
+	Mon, 16 Dec 2024 20:52:13 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	JeHhNvzCpbNEp1a2ew77ggNizxztZaVSKeqIIBHvoYU=; b=O1R3Tvw624bdw5j4
+	xeqVNy11fQ1c3RKDsuinxXFZyE8M5xxTHk2OXQhx9WbdeuMBneJpGseFJs9EcWQj
+	/J9rmRMMqdTIFpy82GacY59jpCQZgR46dlcy0IlHFkJ0ARIBaMaXlXZtQZ9iMFai
+	EKNfMzjgth3ab8Ny7aKtSH9YIThPfaa11U/D+ajMWRFUgAVB79RVxnO1fAo+W9Bl
+	OTfv2uiMzOkH01i63qf4Rfl2UNY8yykDnfNJl3ONAd+A3eEQegjDE9+bTvRwGfsN
+	5w0yYygqRVzGda8P+5zedI4yhGM51ms093+Qg5tHGw8brxT77WdtAw6QMMRbbriE
+	7vb8Pg==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43jsy707ep-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 16 Dec 2024 20:52:12 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4BGKqCZg011299
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 16 Dec 2024 20:52:12 GMT
+Received: from [10.110.88.253] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 16 Dec
+ 2024 12:52:10 -0800
+Message-ID: <5a3f1bd2-436f-4886-90b5-bec205692fb1@quicinc.com>
+Date: Mon, 16 Dec 2024 12:52:09 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20241216171017.4881-1-robdclark@gmail.com> <a15a7594-8793-478b-a86e-81a06812e4ff@quicinc.com>
-In-Reply-To: <a15a7594-8793-478b-a86e-81a06812e4ff@quicinc.com>
-From: Rob Clark <robdclark@gmail.com>
-Date: Mon, 16 Dec 2024 12:54:43 -0800
-Message-ID: <CAF6AEGsFeibyH5_a7m=9PMKReD4Xb+c=dEGsbCN0_UHiJK1vbA@mail.gmail.com>
-Subject: Re: [PATCH] iommu/arm-smmu-qcom: Only enable stall on smmu-v2
-To: Akhil P Oommen <quic_akhilpo@quicinc.com>
-Cc: iommu@lists.linux.dev, linux-arm-msm@vger.kernel.org, 
-	freedreno@lists.freedesktop.org, Rob Clark <robdclark@chromium.org>, 
-	Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>, Joerg Roedel <joro@8bytes.org>, 
-	"moderated list:ARM SMMU DRIVERS" <linux-arm-kernel@lists.infradead.org>, 
-	open list <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 15/16] drm/msm/dp: read hw revision only once
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark
+	<robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Marijn Suijten
+	<marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, "Simona
+ Vetter" <simona@ffwll.ch>,
+        Paloma Arellano <quic_parellan@quicinc.com>
+CC: Douglas Anderson <dianders@chromium.org>,
+        Stephen Boyd
+	<swboyd@chromium.org>, <linux-arm-msm@vger.kernel.org>,
+        <dri-devel@lists.freedesktop.org>, <freedreno@lists.freedesktop.org>,
+        <linux-kernel@vger.kernel.org>
+References: <20241216-fd-dp-audio-fixup-v4-0-f8d1961cf22f@linaro.org>
+ <20241216-fd-dp-audio-fixup-v4-15-f8d1961cf22f@linaro.org>
+Content-Language: en-US
+From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <20241216-fd-dp-audio-fixup-v4-15-f8d1961cf22f@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: krWvG6pfq1uq6wWLboM1mtjGHZw6vEom
+X-Proofpoint-GUID: krWvG6pfq1uq6wWLboM1mtjGHZw6vEom
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 malwarescore=0
+ phishscore=0 spamscore=0 suspectscore=0 mlxlogscore=999 clxscore=1015
+ impostorscore=0 mlxscore=0 lowpriorityscore=0 priorityscore=1501
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2412160172
 
-On Mon, Dec 16, 2024 at 12:28=E2=80=AFPM Akhil P Oommen
-<quic_akhilpo@quicinc.com> wrote:
->
-> On 12/16/2024 10:40 PM, Rob Clark wrote:
-> > From: Rob Clark <robdclark@chromium.org>
-> >
-> > On mmu-500, stall-on-fault seems to stall all context banks, causing th=
-e
-> > GMU to misbehave.  So limit this feature to smmu-v2 for now.
-> >
-> > This fixes an issue with an older mesa bug taking outo the system
-> > because of GMU going off into the year.
-> >
-> > Signed-off-by: Rob Clark <robdclark@chromium.org>
-> > ---
-> >  drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 6 ++++--
-> >  1 file changed, 4 insertions(+), 2 deletions(-)
-> >
-> > diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu=
-/arm/arm-smmu/arm-smmu-qcom.c
-> > index c4c52f7bd09a..1c881e88fc4d 100644
-> > --- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-> > +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-> > @@ -331,8 +331,10 @@ static int qcom_adreno_smmu_init_context(struct ar=
-m_smmu_domain *smmu_domain,
-> >       priv->get_ttbr1_cfg =3D qcom_adreno_smmu_get_ttbr1_cfg;
-> >       priv->set_ttbr0_cfg =3D qcom_adreno_smmu_set_ttbr0_cfg;
-> >       priv->get_fault_info =3D qcom_adreno_smmu_get_fault_info;
-> > -     priv->set_stall =3D qcom_adreno_smmu_set_stall;
-> > -     priv->resume_translation =3D qcom_adreno_smmu_resume_translation;
-> > +     if (of_device_is_compatible(np, "qcom,smmu-v2")) {
-> > +             priv->set_stall =3D qcom_adreno_smmu_set_stall;
-> > +             priv->resume_translation =3D qcom_adreno_smmu_resume_tran=
-slation;
-> > +     }
->
-> Shall we disable this from the driver instead? A debugfs knob to trigger
-> coredump after a pagefault is very convenient.
 
-It would require the driver to find the compatible for the smmu, so it
-could differentiate btwn smmu-v2 and mmu-500, which seemed like it
-might be a bit uglier.
 
-Ideally/hopefully we could figure out how to make GMU a bit more
-resilient in the face of stalled translations, because it is useful to
-get accurate devcore dumps on smmu faults.  At that point we could
-revert this change.
+On 12/15/2024 2:44 PM, Dmitry Baryshkov wrote:
+> There is little point in rereading DP controller revision over and over
+> again. Read it once, after the first software reset and propagate it to
+> the dp_panel module.
+> 
 
-BR,
--R
+Good idea, can be posted even separately in front of the catalog rework 
+as it fits in nicely even with current model.
 
->
-> -Akhil
->
-> >       priv->set_prr_bit =3D NULL;
-> >       priv->set_prr_addr =3D NULL;
-> >
->
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>   drivers/gpu/drm/msm/dp/dp_catalog.c | 13 -------------
+>   drivers/gpu/drm/msm/dp/dp_catalog.h |  3 ---
+>   drivers/gpu/drm/msm/dp/dp_ctrl.c    | 12 +++++++++---
+>   drivers/gpu/drm/msm/dp/dp_panel.c   |  3 +--
+>   drivers/gpu/drm/msm/dp/dp_panel.h   |  1 +
+>   5 files changed, 11 insertions(+), 21 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/dp/dp_catalog.c b/drivers/gpu/drm/msm/dp/dp_catalog.c
+> index 2992a0df262e9ab167a21a270d1aa8fd1383033d..84adf3a38e4cf0619b15850c31416f1e67049a42 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_catalog.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_catalog.c
+> @@ -42,19 +42,6 @@ void msm_dp_catalog_snapshot(struct msm_dp_catalog *msm_dp_catalog, struct msm_d
+>   				    msm_dp_catalog->p0_len, msm_dp_catalog->p0_base, "dp_p0");
+>   }
+>   
+> -/**
+> - * msm_dp_catalog_hw_revision() - retrieve DP hw revision
+> - *
+> - * @msm_dp_catalog: DP catalog structure
+> - *
+> - * Return: DP controller hw revision
+> - *
+> - */
+> -u32 msm_dp_catalog_hw_revision(const struct msm_dp_catalog *msm_dp_catalog)
+> -{
+> -	return msm_dp_read_ahb(msm_dp_catalog, REG_DP_HW_VERSION);
+> -}
+> -
+>   static void __iomem *msm_dp_ioremap(struct platform_device *pdev, int idx, size_t *len)
+>   {
+>   	struct resource *res;
+> diff --git a/drivers/gpu/drm/msm/dp/dp_catalog.h b/drivers/gpu/drm/msm/dp/dp_catalog.h
+> index 310319619242df5fa0d91c89fbcc477f16c130ea..ddbae0fcf5fc428b2d37cd1eab1d5860a2f11a50 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_catalog.h
+> +++ b/drivers/gpu/drm/msm/dp/dp_catalog.h
+> @@ -95,9 +95,6 @@ static inline void msm_dp_write_link(struct msm_dp_catalog *msm_dp_catalog,
+>   /* Debug module */
+>   void msm_dp_catalog_snapshot(struct msm_dp_catalog *msm_dp_catalog, struct msm_disp_state *disp_state);
+>   
+> -/* DP Controller APIs */
+> -u32 msm_dp_catalog_hw_revision(const struct msm_dp_catalog *msm_dp_catalog);
+> -
+>   struct msm_dp_catalog *msm_dp_catalog_get(struct device *dev);
+>   
+>   #endif /* _DP_CATALOG_H_ */
+> diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c b/drivers/gpu/drm/msm/dp/dp_ctrl.c
+> index b15b7ba599e29c4edd746e9c2a8bf2f4a8eedf15..60dbf7eab3fd184bc12035d267abb3758cce9f89 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
+> @@ -131,6 +131,8 @@ struct msm_dp_ctrl_private {
+>   	struct completion psr_op_comp;
+>   	struct completion video_comp;
+>   
+> +	u32 hw_revision;
+> +
+>   	bool core_clks_on;
+>   	bool link_clks_on;
+>   	bool stream_clks_on;
+> @@ -173,6 +175,11 @@ void msm_dp_ctrl_reset(struct msm_dp_ctrl *msm_dp_ctrl)
+>   
+>   	sw_reset &= ~DP_SW_RESET;
+>   	msm_dp_write_ahb(msm_dp_catalog, REG_DP_SW_RESET, sw_reset);
+> +
+> +	if (!ctrl->hw_revision) {
+> +		ctrl->hw_revision = msm_dp_read_ahb(msm_dp_catalog, REG_DP_HW_VERSION);
+> +		ctrl->panel->hw_revision = ctrl->hw_revision;
+> +	}
+>   }
+>   
+>   static u32 msm_dp_ctrl_get_aux_interrupt(struct msm_dp_ctrl_private *ctrl)
+> @@ -307,12 +314,11 @@ static void msm_dp_ctrl_mainlink_disable(struct msm_dp_ctrl_private *ctrl)
+>   static void msm_dp_setup_peripheral_flush(struct msm_dp_ctrl_private *ctrl)
+>   {
+>   	struct msm_dp_catalog *msm_dp_catalog = ctrl->catalog;
+> -	u32 mainlink_ctrl, hw_revision;
+> +	u32 mainlink_ctrl;
+>   
+>   	mainlink_ctrl = msm_dp_read_link(msm_dp_catalog, REG_DP_MAINLINK_CTRL);
+>   
+> -	hw_revision = msm_dp_catalog_hw_revision(msm_dp_catalog);
+> -	if (hw_revision >= DP_HW_VERSION_1_2)
+> +	if (ctrl->hw_revision >= DP_HW_VERSION_1_2)
+>   		mainlink_ctrl |= DP_MAINLINK_FLUSH_MODE_SDE_PERIPH_UPDATE;
+>   	else
+>   		mainlink_ctrl |= DP_MAINLINK_FLUSH_MODE_UPDATE_SDP;
+> diff --git a/drivers/gpu/drm/msm/dp/dp_panel.c b/drivers/gpu/drm/msm/dp/dp_panel.c
+> index 3441c28e3ce332bfe932d7adee7f0ecbaa486c2e..969d618c909876fd7a13aeb6e6c9e117071bc682 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_panel.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_panel.c
+> @@ -380,9 +380,8 @@ static void msm_dp_panel_send_vsc_sdp(struct msm_dp_panel_private *panel, struct
+>   
+>   static void msm_dp_panel_update_sdp(struct msm_dp_panel_private *panel)
+>   {
+> -	u32 hw_revision;
+> +	u32 hw_revision = panel->msm_dp_panel.hw_revision;
+>   
+> -	hw_revision = msm_dp_catalog_hw_revision(panel->catalog);
+>   	if (hw_revision >= DP_HW_VERSION_1_0 &&
+>   	    hw_revision < DP_HW_VERSION_1_2) {
+>   		msm_dp_write_link(panel->catalog, MMSS_DP_SDP_CFG3, UPDATE_SDP);
+> diff --git a/drivers/gpu/drm/msm/dp/dp_panel.h b/drivers/gpu/drm/msm/dp/dp_panel.h
+> index 8dde55b3a5ab64c0c12d69cb2dd5b5c733c83432..c348417bb07f33efdf1402a73c27ff99e394e5a3 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_panel.h
+> +++ b/drivers/gpu/drm/msm/dp/dp_panel.h
+> @@ -38,6 +38,7 @@ struct msm_dp_panel {
+>   	struct msm_dp_panel_psr psr_cap;
+>   	bool video_test;
+>   	bool vsc_sdp_supported;
+> +	u32 hw_revision;
+>   
+>   	u32 max_dp_lanes;
+>   	u32 max_dp_link_rate;
+> 
 
