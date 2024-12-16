@@ -1,173 +1,177 @@
-Return-Path: <linux-arm-msm+bounces-42407-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-42408-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 570D79F3D6D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Dec 2024 23:25:01 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9CAFF9F3D80
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Dec 2024 23:30:40 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id E3350188F36D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Dec 2024 22:25:01 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 13C1018809FC
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Dec 2024 22:30:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BB40B1D6188;
-	Mon, 16 Dec 2024 22:24:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D94521D54F4;
+	Mon, 16 Dec 2024 22:30:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ki6o7Y22"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RpOTDJ+D"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f53.google.com (mail-lf1-f53.google.com [209.85.167.53])
+Received: from mail-io1-f47.google.com (mail-io1-f47.google.com [209.85.166.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6F221D618E
-	for <linux-arm-msm@vger.kernel.org>; Mon, 16 Dec 2024 22:24:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44FB15D8F0;
+	Mon, 16 Dec 2024 22:30:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734387897; cv=none; b=noIaS9a80S//WHxYd/XUQeNGtWG7rVQAR6y/PSdkkaVBobscRl2XkT1EwjKl0l+R155M3XfTSgRdexLNABhfLYeDT889WJ/49JpmsbIXWPXgIdqT/EYhdJBZ4oD+3ilTjjbfTpRlteo1HBjS6a+JHzDM0T8/mfhIFyyu0chmw9A=
+	t=1734388236; cv=none; b=ln6sGlp5JJDURhkuLj3jSZmwKFg9qATyIsMNJMsLTU7vKzVp0nPn/CLXZY+sWkh/z1AYThetyCnMvf9ioflTeJqle/aPiL0BxcgsWjoE02vWvDEwPclbtM5YHb0Tx4TlsJLvbelHT+Ggb2m3SRyYDW4tiDYlfAkC+rgx26XqL+4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734387897; c=relaxed/simple;
-	bh=Gigplh9uNnG2VybEpHpX1m/kbyDyOv21lQUSjXfIiGg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=LmBqA8i7IoYqmWrVIsemZdWYCV7QbId7/WHFIWHtRmv52mPt2AyHB+wlbF0ow1xq3R0U1UQm9U14KPBd4GQ21bY2tV/WOdIv+4/O4jL+wyF8/qzvDmE1yEw+wNCbWIOJmTPBq6RahpvK7zJn2bd/tXHLB7TX9LZv6DtsLNyt800=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ki6o7Y22; arc=none smtp.client-ip=209.85.167.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f53.google.com with SMTP id 2adb3069b0e04-53e3a227b82so4473915e87.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Dec 2024 14:24:55 -0800 (PST)
+	s=arc-20240116; t=1734388236; c=relaxed/simple;
+	bh=4bO1EjdSvXJ62M8ayQUFJJHF+pCdEsE6nbS2VHUOgYA=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=NhNBMix5HuPQT244pDrMke6DWI6FvTjENJtCxwk2YJ2qh20CiMQh6LSFiL+HyfMBOmTAmOlDawflEHHemb9jggZedSW69EXvZg7wuGkx9g6W+QLgFiUp8QaDdO2247wfEStju8vVX4Dt+encon3Bx1OC9deXg8JOKa2I7H8A7l8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RpOTDJ+D; arc=none smtp.client-ip=209.85.166.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-io1-f47.google.com with SMTP id ca18e2360f4ac-844cd85f5ebso386748739f.3;
+        Mon, 16 Dec 2024 14:30:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1734387894; x=1734992694; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=4lUKNdC2kAAGBCwC8ulcU+ZnvIc3yXrgdr0jrnZTuug=;
-        b=ki6o7Y22vheRHceEJn+jysciejPloQ95plf5J+9O8L5QLPpYbS7g44AH6Cp6GhF343
-         n/V6/Svx3awplh5uV7Kz5N8MNQ4APd1BWEE0ZLvlj+shM8C9N4eHFiNOL8GklKn9JFys
-         gJmPASwwbI4SWM+19dPV0kubGAnvF77LmQm1p0Nhg6xjB7THk1BtdzDw8W0obQl/Vd3x
-         k3Lvm5O2TFv4ABhPlWDjp4zPYIgp/+DG7k7U0gHKMALb1QD60Xjbi1/6ExkQxHTG6YsZ
-         kuiCcgTEyektOK/C8EQp9Bt6Ret0SKzNj8pA1XXYGE5XUCpQgquJoZB7OfGmmfBlkj0R
-         k2sQ==
+        d=gmail.com; s=20230601; t=1734388234; x=1734993034; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=Vu/gd+Psmkd9LrXVKDf+sMo8Wju/Lil3/T06jKFEacA=;
+        b=RpOTDJ+D/WRPJu7ijO42fb02uNlTKiOKdfJtYOd18KjymYg4k7zCB/aQ5rCESzq/Up
+         4wUuXj65HSQNdu6ImVXI4J/xLd2yvUqtZ/JDaRuMnNxoaS04UTaXZZSDaI7BIt/3ywWS
+         1XCn63ZpbXr1bydgWZLO6a3RG4wXhhAVsN0RFRx2+AlqjOsleRIi6JuFtuwXbEfPDeBr
+         o7GIsRxGrCxCLqwdNQnepcSYxhtpPntq0urAh/lt2s0TN32YC2PrbtsEbYJDMZd5fSkB
+         9e4d2jJtGmk7JfdnELtX7pDcol1UIf6QLc03CPiUvKs+Q6fIXDceMBybLsxdEqUkFWMO
+         ocRg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734387894; x=1734992694;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=4lUKNdC2kAAGBCwC8ulcU+ZnvIc3yXrgdr0jrnZTuug=;
-        b=Qbl1baBH1xJfD1dG+ZcKWuAgjVuW6yNmbtYi4jEjUqEag3fsScmW2wOmRyqwzrs720
-         uatLM2lh/7TGXTnqHtB8k0cAhyje4bP7j3idrtbAuH9ePofRDa+69KYXuKE4e+0rbfHz
-         NYqihGERWuKqjV6sSKy+OtP3ew4rBLEbw3tI3Fq1grLq2mn9GviohOF0ElKdwUYlAdK2
-         M5D7CqQJOoLimFQBCZrneuwKZEh8fWk92NLzGuiYJfHIokp1FBnezO6C0eWQZcRQTwp8
-         FvTeASSb4wQcYZtyOJYPoi63Q4tUTRAsnp5RHw5NP9kyb4DQYsESqoMtHeIAsOL6pBMT
-         wfTQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVntYELLGSAuwe3Bmqy+WA8iP8SyeoLiTTMl5NZVdmjlXBiOMK7DE6FnJ/v+ghL9OiWJT+Tuxp6LPQd3CrN@vger.kernel.org
-X-Gm-Message-State: AOJu0YyI0BmcpI/okdLrxK0Reit3rGnJK2IKMhd2PrqjE4+AVc3TTom7
-	mwaOoc02O8xkYCykEF1EriUXiquUJUrc4y6fwKsB/bhvmSiJQctCHtifSTjgvVM=
-X-Gm-Gg: ASbGncvPs58uP4xsSTfC7vcnhL/OAozRgr4pVL23daJHCyCFhZyfKC18lb5vRId8jyx
-	QqM3SenTzjViakHrXqYjH3kd18Uk3tZdg4o1WAO/uVgSNsEKUuwJZGhlByKBZfxWIzz1+5MiTxv
-	mLlqP/Ecnr1CisEZx5dgajtWm0hsMqcE8nmlV+uy2CPANmO5mN1dgnZumllOfZ70pUJD5j9O11Y
-	kFOt1HbzRnyeHsYkh7mArH6p6EhYQKFp1gYvXOD1b+yoIh50ignkZIy9eZezICGL4Vf78RH+wyB
-	stzBwI9r317uanhIKzyMmm/6cBERVfJyvyb7
-X-Google-Smtp-Source: AGHT+IGeM80+qzSI85ogwxR7TJc35MFGjDldBmFT9FD2cLdQVLMDcDnI76ZKZkotwpop5fLoExBoFw==
-X-Received: by 2002:a05:6512:3b89:b0:53f:afae:7364 with SMTP id 2adb3069b0e04-540905a6f62mr4232404e87.40.1734387893905;
-        Mon, 16 Dec 2024 14:24:53 -0800 (PST)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-54120bffd77sm972047e87.136.2024.12.16.14.24.51
+        d=1e100.net; s=20230601; t=1734388234; x=1734993034;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Vu/gd+Psmkd9LrXVKDf+sMo8Wju/Lil3/T06jKFEacA=;
+        b=FcdQ0n6/5BZnYDX8MgIGS5T70RhsKhbUR1oeJBLg5tgHJ+dElNDJ9k+GEMfC31fZNR
+         y66HPKsUYA9jkYUbzK14IigepKzmd60IlCpJeW4pkFmEsyx9t1tdk3mmT7NCupHQsbP2
+         Ofs3CPxM2SO4QwjDT1Jol4PVl+UHIdECPaSI7LKjKPwt28bx1pU0GegUuDxGBBGpyOiN
+         VX88Avx7lQWltqzRbqqRV+WWimzQ7JX8bPwSEdUUmjYm700fSYCqW6yTyWXGxN0y/BRS
+         wPdpqPBWx8M1IHAzW6mS9vIoc2CQiF+ucfkib83cHTKpNnKHghS7qD8o6uLpvKHCbH5i
+         d5Rg==
+X-Forwarded-Encrypted: i=1; AJvYcCUAcGPEKCFMfG6LV+oOF73w3LZ+3AIGKiZf3E5Qzo4WAP3WTeyo++LCaRI2vhRLhoBVoFEbp84pkM9L0Ss89g==@vger.kernel.org, AJvYcCVmTsn4cbrkreIzGJjNHGuTQ1qytPbfTp8UVnQ+w3l58Hgyp/RQ7o+MJCzUmw5Ox5d0YHbuNyJDq7r4@vger.kernel.org, AJvYcCWFBVx/KdNh3JyAZM+hnyqR8Gf2C0G4RmG8M85qZjMdxgSO9PwUrMnNmuqWyDE5W3aFXnQLm+buDaWpmvo=@vger.kernel.org, AJvYcCXK1mQIthkT3xD+eAh6nNT1HF/WcIpMaAjR9ZVEGeyYUgbey97m8iaA4hfqIHaBb9DQMmBVZN4S9nSJ@vger.kernel.org
+X-Gm-Message-State: AOJu0Yyfx8REioceALkqWvvA2XbRWwe3cB4MjSFGJGFPqx1JdV5cYqVz
+	zS/JHNBehokDX3Mj9FOECSp7vEvZ5/oKRH3BDAlLXP4iFPA3XNk4
+X-Gm-Gg: ASbGncsnC3x34aghyxcV8usYR+79rG7zFSDqyp1pC72WkfJiiCe7DqSM/FQHVSMsXt4
+	OZWeOjmcO8LmDc4s0B7x7tcObxwAtKfl74pPFIGVB8whiadNb6US+BM2KVeTQliiwCw0PEBa+lm
+	1AjDr62icvOsN3imSrBQscaFEKdOHDnM37R9lti5JnEWKRcSmebDbwqq5Fxc+1oIswi22CHgjTc
+	cOZ9x6OvZQKrk/WYE8b0d3yKoV1I04SG1vFeSRjZGda
+X-Google-Smtp-Source: AGHT+IGnLLpyZCuEg0pqJ311+yDQplg1f+LNm4Cj153Us2EyDvB5emkRG3xn/iF0kl9t7QhMyMUsSg==
+X-Received: by 2002:a05:6e02:1a83:b0:3a7:7ec0:a3dc with SMTP id e9e14a558f8ab-3bad384bea9mr14518105ab.14.1734388234328;
+        Mon, 16 Dec 2024 14:30:34 -0800 (PST)
+Received: from localhost ([2607:fea8:52a3:d200::d916])
+        by smtp.gmail.com with ESMTPSA id e9e14a558f8ab-3b248228cb3sm17990695ab.22.2024.12.16.14.30.31
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 16 Dec 2024 14:24:52 -0800 (PST)
-Date: Tue, 17 Dec 2024 00:24:50 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
-	Simona Vetter <simona@ffwll.ch>, Paloma Arellano <quic_parellan@quicinc.com>, 
-	Douglas Anderson <dianders@chromium.org>, Stephen Boyd <swboyd@chromium.org>, 
-	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v4 06/16] drm/msm/dp: split MMSS_DP_DSC_DTO register
- write to a separate function
-Message-ID: <6nt7cacoik4nxbjpgpidmovzilxf7q2gld64ch2p7ltatkzl4p@sg4ltm7jt47c>
-References: <20241216-fd-dp-audio-fixup-v4-0-f8d1961cf22f@linaro.org>
- <20241216-fd-dp-audio-fixup-v4-6-f8d1961cf22f@linaro.org>
- <9fb5986b-f375-4300-b50c-92bb9c0b4399@quicinc.com>
+        Mon, 16 Dec 2024 14:30:32 -0800 (PST)
+From: Richard Acayan <mailingradian@gmail.com>
+To: Bjorn Andersson <andersson@kernel.org>,
+	Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Robert Foss <rfoss@kernel.org>,
+	Todor Tomov <todor.too@gmail.com>,
+	"Bryan O'Donoghue" <bryan.odonoghue@linaro.org>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	linux-arm-msm@vger.kernel.org,
+	linux-clk@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-media@vger.kernel.org
+Cc: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+	Richard Acayan <mailingradian@gmail.com>
+Subject: [PATCH v8 0/5] Add SDM670 camera subsystem
+Date: Mon, 16 Dec 2024 17:30:21 -0500
+Message-ID: <20241216223019.70155-8-mailingradian@gmail.com>
+X-Mailer: git-send-email 2.47.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <9fb5986b-f375-4300-b50c-92bb9c0b4399@quicinc.com>
+Content-Transfer-Encoding: 8bit
 
-On Mon, Dec 16, 2024 at 11:46:21AM -0800, Abhinav Kumar wrote:
-> 
-> 
-> On 12/15/2024 2:44 PM, Dmitry Baryshkov wrote:
-> > It's the dp_panel's duty to clear the MMSS_DP_DSC_DTO register. Once DP
-> > driver gets DSC support, it will handle that register in other places
-> > too. Split a call to write 0x0 to that register to a separate function.
-> > 
-> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > ---
-> >   drivers/gpu/drm/msm/dp/dp_catalog.c | 8 ++++++++
-> >   drivers/gpu/drm/msm/dp/dp_catalog.h | 2 ++
-> >   drivers/gpu/drm/msm/dp/dp_ctrl.c    | 2 ++
-> >   3 files changed, 12 insertions(+)
-> > 
-> > diff --git a/drivers/gpu/drm/msm/dp/dp_catalog.c b/drivers/gpu/drm/msm/dp/dp_catalog.c
-> > index 7b7eadb2f83b169d8df27ee93589abe05b38f3ae..354ec834f9357c4797fc08a4532e69acc67b4317 100644
-> > --- a/drivers/gpu/drm/msm/dp/dp_catalog.c
-> > +++ b/drivers/gpu/drm/msm/dp/dp_catalog.c
-> > @@ -1039,6 +1039,14 @@ void msm_dp_catalog_panel_tpg_disable(struct msm_dp_catalog *msm_dp_catalog)
-> >   	msm_dp_write_p0(catalog, MMSS_DP_TIMING_ENGINE_EN, 0x0);
-> >   }
-> > +void msm_dp_catalog_panel_clear_dsc_dto(struct msm_dp_catalog *msm_dp_catalog)
-> > +{
-> > +	struct msm_dp_catalog_private *catalog = container_of(msm_dp_catalog,
-> > +				struct msm_dp_catalog_private, msm_dp_catalog);
-> > +
-> > +	msm_dp_write_p0(catalog, MMSS_DP_DSC_DTO, 0x0);
-> > +}
-> 
-> This is already done msm_dp_catalog_ctrl_config_msa(), this is either a
-> duplicate or redundant.
-> 
-> void msm_dp_catalog_ctrl_config_msa(..........)
-> {
-> 	**********
->         msm_dp_write_link(catalog, REG_DP_SOFTWARE_NVID, nvid);
->         msm_dp_write_p0(catalog, MMSS_DP_DSC_DTO, 0x0);
-> }
+This adds support for the camera subsystem on the Snapdragon 670.
 
-The chunk to remove it got squashed into a different patch.
+Changes since v7 (20241210233534.614520-7-mailingradian@gmail.com):
+- move regulators to CSIPHY blocks (3/5)
+- move clocks before interrupts (2/5, 5/5)
+- sort clocks alphanumerically (2/5, 5/5)
+- rename example node to generic node name (2/5)
 
-> 
-> > +
-> >   static void __iomem *msm_dp_ioremap(struct platform_device *pdev, int idx, size_t *len)
-> >   {
-> >   	struct resource *res;
-> > diff --git a/drivers/gpu/drm/msm/dp/dp_catalog.h b/drivers/gpu/drm/msm/dp/dp_catalog.h
-> > index 6678b0ac9a67881244884d59487fa288d33d1be7..08bb42e91b779633875dbeb4130bc55a6571cfb1 100644
-> > --- a/drivers/gpu/drm/msm/dp/dp_catalog.h
-> > +++ b/drivers/gpu/drm/msm/dp/dp_catalog.h
-> > @@ -92,6 +92,8 @@ void msm_dp_catalog_panel_tpg_enable(struct msm_dp_catalog *msm_dp_catalog,
-> >   				struct drm_display_mode *drm_mode);
-> >   void msm_dp_catalog_panel_tpg_disable(struct msm_dp_catalog *msm_dp_catalog);
-> > +void msm_dp_catalog_panel_clear_dsc_dto(struct msm_dp_catalog *msm_dp_catalog);
-> > +
-> >   struct msm_dp_catalog *msm_dp_catalog_get(struct device *dev);
-> >   /* DP Audio APIs */
-> > diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-> > index 9c463ae2f8fae916661fef1c7e225f55c1026478..b9c461fee96f8fae9259ce03a32e1155b42d17bb 100644
-> > --- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
-> > +++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-> > @@ -2011,6 +2011,8 @@ int msm_dp_ctrl_on_stream(struct msm_dp_ctrl *msm_dp_ctrl, bool force_link_train
-> >   		pixel_rate_orig,
-> >   		ctrl->panel->msm_dp_mode.out_fmt_is_yuv_420);
-> > +	msm_dp_catalog_panel_clear_dsc_dto(ctrl->catalog);
-> > +
-> >   	msm_dp_ctrl_setup_tr_unit(ctrl);
-> >   	msm_dp_catalog_ctrl_state_ctrl(ctrl->catalog, DP_STATE_CTRL_SEND_VIDEO);
-> > 
+Changes since v6 (20241011023724.614584-7-mailingradian@gmail.com):
+- set unit address in node name to first address in regs (2/5, 5/5)
+
+Changes since v5 (20241001023520.547271-9-mailingradian@gmail.com):
+- sort reg and reg-names alphabetically (2/5, 5/5)
+- drop CCI I2C patches since they are applied (formerly 2/7, 3/7)
+
+Changes since v4 (20240904020448.52035-9-mailingradian@gmail.com):
+- change camss interrupts to rising edge in dts (7/7)
+- change IRQs to rising edge in camss dt-bindings example (4/7)
+- move gcc and ahb clocks in camss dt-bindings example (4/7)
+- add reviewed-by for camcc dt-bindings patch (1/7)
+
+Changes since v3 (20240819221051.31489-7-mailingradian@gmail.com):
+- add specific sdm670 compatible for camcc to dt schema and dts (1/7, 6/7)
+- pick up patch from Bryan for CCI driver (3/7)
+- stop assigning CCI frequency in dts (7/7)
+- add maxItems for sdm670 cci clocks (2/7)
+- remove empty line at top of camss dt schema (4/7)
+- move regs and reg-names up in camss dt schema (4/7)
+- move gcc and ahb clocks up in dts and dt schema (4/7, 7/7)
+- add reviewed-by from Vladimir for CCI dt-bindings patch (2/7)
+- add reviewed-by from Bryan for dts patch (7/7)
+- add reviewed-by from Krzysztof for camss dt-bindings patch (4/7)
+- add rewiew tags for camss driver patch (5/7)
+
+Changes since v2 (20240813230037.84004-8-mailingradian@gmail.com):
+- drop unnecessary assigned AXI clock frequency (5/5)
+- drop src clocks from cci (5/5)
+- add unit name, remove mmio properties from port in example dts (2/5)
+- correct the reg-names order (2/5)
+- add parent_dev_ops to csid (3/5)
+- remove CSID clocks from VFE (3/5)
+- remove AXI clock from CSIPHY (3/5)
+- change subsystem part of the commit message summary (3/5)
+- add reviewed-by (4/5)
+
+Changes since v1 (20240806224219.71623-7-mailingradian@gmail.com):
+- define dedicated resource structs/arrays for sdm670 (3/5)
+- separate camcc device tree node into its own patch (4/5)
+- specify correct dual license (2/5)
+- add include directives in dt-bindings camss example (2/5)
+- remove src clocks from dt-bindings (2/5)
+- remove src clocks from dtsi (5/5)
+- add power-domain-names to camss (5/5)
+- specify power domain names (3/5)
+- restrict cci-i2c clocks (1/5)
+- populate a commit message with hw info (2/5)
+- reword commit message (3/5)
+
+Richard Acayan (5):
+  dt-bindings: clock: qcom,sdm845-camcc: add sdm670 compatible
+  dt-bindings: media: camss: Add qcom,sdm670-camss
+  media: qcom: camss: add support for SDM670 camss
+  arm64: dts: qcom: sdm670: add camcc
+  arm64: dts: qcom: sdm670: add camss and cci
+
+ .../bindings/clock/qcom,sdm845-camcc.yaml     |   6 +-
+ .../bindings/media/qcom,sdm670-camss.yaml     | 318 ++++++++++++++++++
+ arch/arm64/boot/dts/qcom/sdm670.dtsi          | 195 +++++++++++
+ drivers/media/platform/qcom/camss/camss.c     | 191 +++++++++++
+ 4 files changed, 709 insertions(+), 1 deletion(-)
+ create mode 100644 Documentation/devicetree/bindings/media/qcom,sdm670-camss.yaml
 
 -- 
-With best wishes
-Dmitry
+2.47.1
+
 
