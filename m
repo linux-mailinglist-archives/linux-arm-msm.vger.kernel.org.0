@@ -1,152 +1,193 @@
-Return-Path: <linux-arm-msm+bounces-42330-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-42331-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0A9FE9F2F11
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Dec 2024 12:24:45 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0C2449F2F22
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Dec 2024 12:27:39 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id F204E7A1666
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Dec 2024 11:24:38 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 91FEF188590A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Dec 2024 11:27:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A81062040BA;
-	Mon, 16 Dec 2024 11:24:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9D120204569;
+	Mon, 16 Dec 2024 11:27:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="qrK+pQAe"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="deP/Zqj7"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f50.google.com (mail-lf1-f50.google.com [209.85.167.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC59820409A
-	for <linux-arm-msm@vger.kernel.org>; Mon, 16 Dec 2024 11:24:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA2FB4C7C;
+	Mon, 16 Dec 2024 11:27:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734348276; cv=none; b=N6n1pO4gQ2zcwXU3pPVtpImcL0RXy7GS2mp+TwBCcH/Jxqz2KxqhWFkSJJm+92mwaM9U9kGrmso7chhzBvucXTGNKHJY8ltfMFf6rgpG/VXvP0FBMOGyf4WhCqqzZelsUWOxN55Xt4m2KWT4MBH7h44fDI4R1JuarN3yVUwZiJg=
+	t=1734348451; cv=none; b=Hy0Zi4iu0ZOSC2yW7fOvGTFfzkseKPA0eJc1bStFSiKYGOyLkQZADu/YLh3U67A2GtoNeZP9dAgF8rj4VCmiRdY6UmjTpYP9q+RaHVaLetKcWVQz9NMFRZLAFGTDnf7wvW2EwVZ1CFhXtwapmSySvB1uroGgUyls9YGnFPBpRDw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734348276; c=relaxed/simple;
-	bh=jq98laTSDdK6EMsgM/2lFfGtgYg99v5inkJlY/nCBlA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=MF/yKQXgvTX2DnC73d5Ep7fnMtSMoniGAZjOjSV7LGVgQ0BvBbHbq1puuTYVOEo0S+brsIaCB2/aKydyCA/Sux7byJS0ETfLDYuonT2f7gjuht4P1rZozHklSXj009UI4LbF5JSqp0PU+OOpThYC0DMn4klezGB3D6JO+fDBKEY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=qrK+pQAe; arc=none smtp.client-ip=209.85.167.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-5401e6efffcso4669131e87.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Dec 2024 03:24:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1734348273; x=1734953073; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=gty21mjzYgvbYsbhfcrs7XMj7b14Ja6LtCdRiQMw9IQ=;
-        b=qrK+pQAe+c9kkL/vzhkIxhIDevT08waFBhNaaRGLHHsIvL7XqZ/A6Fh+LR/xnlPZBU
-         wF7vjOYg5m3pfspDIyfIa9KxTLs4/NBK+utvxAsyTr9pkMqbJSQlpAstnkesIIYiBQbt
-         lewRwjDJyG8pdBCFX+YqFd9fKvlPCeCUlPKG+bFLP5l79yQ7jaowwgWQ+ENe+9LGJWSL
-         PnfbrPep7+m5c4Wiit+eTcit75X4O6hWi4cVmsYTdaZPJrih1rSyYixANlEoPEuCVRtz
-         i2ZRGy0xsd3SCo4+6eU/tDARDWp7dDAwYFc6pEUC6Pykh7mMJ6ibBKkUHI27US2SvURN
-         CzQA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734348273; x=1734953073;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=gty21mjzYgvbYsbhfcrs7XMj7b14Ja6LtCdRiQMw9IQ=;
-        b=V/8dK5gwlnbPPSlcmpp00lFOcmhcpsCMP4evvdixhTPP7GOZXbOhZcTe5+WTf+lOfi
-         5DPARMHqBvtTIvF1mIQJtWeCzDFypTe2AMreWwZVVM6EeWcfaffksaeH1MzaK1O6i4tj
-         kccwnh6M5CxJcUgOaB63Hd0jPxVjh8bx6ZZqId8YTaxmmcq5spny6bs+IG5aJcfB84uh
-         nLW/DQz0+mhAOUGiYkUriK7pMjjjjAnIbh32FWUdEHXwKEw38EhIKKJypvK9p0LrVHvj
-         E+jDD3fEDfOPTO5NPnDxUUipuknX02UKrbP5TO6YxDw/4N/plDY//grayYbaS1w5H5mq
-         Fv4w==
-X-Forwarded-Encrypted: i=1; AJvYcCXTG3besT2ENndIzBamo2mdU01L7iN9qcGoJykzfKgB/+LKrZpxjephkIZ6Z8UXZQg7k81er/wSXchNMVFI@vger.kernel.org
-X-Gm-Message-State: AOJu0YygLy2acbBCwIdmiLVsmNDy47ycN1eeFQ1rqK1rfgj7GZcjTuF2
-	OoDaw2n9rNYouhlCCo2WkOeQNnPWlG21daQFinIVc81qqRXqbhBTSZf5VVCIKJE=
-X-Gm-Gg: ASbGnctGR3za8xgrXU5ZFhF9jAv2KvO7akUGflF0CFcsRuIPtjF1k+L8ZrBRnIrVaUj
-	QOuLdXo6OWrV9Z0dSe5qpJ5MasPtDciFy1Ajus7n8iZVEvCi80ib1APScE0lqi+e7F7zpJ8gXrm
-	24RGVATrXOaFX5YcU0zW30OrdLPj39cywoK1z2SSKnKDmuy22S+YZV/3CzAujp5J9sRnwCte9Jm
-	BmPXxT63FdQ1sY8Azyzl21POST8PWdAAku1YDPGDy6WwGfgdS9NHiP98JsDWSbf5ape+Acy4k2f
-	4K4j3ljQcqMBdEYgrUOF6RFF2NyGwtX6C1Yx
-X-Google-Smtp-Source: AGHT+IHzioRjGIPfaVwEFSX3By+G0bPm5p1y4IolLwPf7YBpM4LUQ/QUZx/r1EiqpYtLRC9+8oUd8Q==
-X-Received: by 2002:a05:6512:2212:b0:540:1a3f:e848 with SMTP id 2adb3069b0e04-5409054bce1mr3948864e87.15.1734348273018;
-        Mon, 16 Dec 2024 03:24:33 -0800 (PST)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-54120c1612asm817266e87.222.2024.12.16.03.24.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 16 Dec 2024 03:24:31 -0800 (PST)
-Date: Mon, 16 Dec 2024 13:24:29 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
-	Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
-	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
-	Harry Wentland <harry.wentland@amd.com>, Leo Li <sunpeng.li@amd.com>, 
-	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>, Alex Deucher <alexander.deucher@amd.com>, 
-	Christian =?utf-8?B?S8O2bmln?= <christian.koenig@amd.com>, Xinhui Pan <Xinhui.Pan@amd.com>, 
-	Andrzej Hajda <andrzej.hajda@intel.com>, Neil Armstrong <neil.armstrong@linaro.org>, 
-	Robert Foss <rfoss@kernel.org>, Laurent Pinchart <Laurent.pinchart@ideasonboard.com>, 
-	Jonas Karlman <jonas@kwiboo.se>, Jernej Skrabec <jernej.skrabec@gmail.com>, 
-	Phong LE <ple@baylibre.com>, Inki Dae <inki.dae@samsung.com>, 
-	Seung-Woo Kim <sw0312.kim@samsung.com>, Kyungmin Park <kyungmin.park@samsung.com>, 
-	Krzysztof Kozlowski <krzk@kernel.org>, Alim Akhtar <alim.akhtar@samsung.com>, 
-	Jani Nikula <jani.nikula@linux.intel.com>, Rodrigo Vivi <rodrigo.vivi@intel.com>, 
-	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>, Tvrtko Ursulin <tursulin@ursulin.net>, 
-	Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
-	Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, 
-	Alain Volmat <alain.volmat@foss.st.com>, Raphael Gallais-Pou <rgallaispou@gmail.com>, 
-	Dave Stevenson <dave.stevenson@raspberrypi.com>, =?utf-8?B?TWHDrXJh?= Canal <mcanal@igalia.com>, 
-	Raspberry Pi Kernel Maintenance <kernel-list@raspberrypi.com>
-Cc: dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
-	amd-gfx@lists.freedesktop.org, linux-arm-kernel@lists.infradead.org, 
-	linux-samsung-soc@vger.kernel.org, intel-gfx@lists.freedesktop.org, intel-xe@lists.freedesktop.org, 
-	linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org, 
-	Jani Nikula <jani.nikula@intel.com>
-Subject: Re: [PATCH v2 00/10] drm/connector: add eld_mutex to protect
- connector->eld
-Message-ID: <xchjpeykkqwlpniaspbzitaozuoltoq7aturtu7jq6z4lcxh77@y7t5ge2sa4er>
-References: <20241206-drm-connector-eld-mutex-v2-0-c9bce1ee8bea@linaro.org>
+	s=arc-20240116; t=1734348451; c=relaxed/simple;
+	bh=yS0zVlxHlLTD8tI0J1H03O10KE6qBhEOdmvDHwX9Rfc=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=K4Ec879E81j75yJfA/uSia60MLqXDjglwMufzOxl/9MvzcDCp34pzzgdHgMrMzjXPVQ5ZYGCz4JK6tlD3NThhkP2h13k38RbWaSfMOOS81oqMtWp/wOuWBEzfPoxNjUvvtBWruPVWVzOeISMOxjX98moPY4mXdjJBK2rAgiZMG0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=deP/Zqj7; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BG8URqh022389;
+	Mon, 16 Dec 2024 11:27:17 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=/hdgHoRUHpcpPGI4AsqT8ARw
+	fAjor4xIfdr+yncp2dw=; b=deP/Zqj7zEmYwapc7pGT9Re9svKv6xIE26WbBeEE
+	SEAEDQT9wmkfew65YQce6hSbe6OKeAfaCR5TLZx9bNPZFdjXIlQ3cnBGnW5FZaUi
+	7n+DlYzoDg4C575Ppk/d7X0UBsTODWb8HP4Nz9CzmSEuirF6qRvbvZl9NoMfiYwG
+	y/2KEpIEG9e6c731asjm0FkOAy0mrrrwwo3YNsGbEMJMMDRSC0Y7/ylIRNpCbQaJ
+	H2rI+wpJwvmW0xVZBNSL9LCHejjJUEs1w+KdkESVJgDf16jPsriZNTokfRcsY+tz
+	CQoH5qCFkWxpbMUTblTv+Wc1P82EHjkV9FQhKYLo/LHalQ==
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43jgrr8fdu-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 16 Dec 2024 11:27:16 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4BGBRG9D005554
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 16 Dec 2024 11:27:16 GMT
+Received: from hu-varada-blr.qualcomm.com (10.80.80.8) by
+ nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Mon, 16 Dec 2024 03:27:09 -0800
+Date: Mon, 16 Dec 2024 16:57:06 +0530
+From: Varadarajan Narayanan <quic_varada@quicinc.com>
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+CC: <lpieralisi@kernel.org>, <kw@linux.com>,
+        <manivannan.sadhasivam@linaro.org>, <robh@kernel.org>,
+        <bhelgaas@google.com>, <krzk+dt@kernel.org>, <conor+dt@kernel.org>,
+        <vkoul@kernel.org>, <kishon@kernel.org>, <andersson@kernel.org>,
+        <konradybcio@kernel.org>, <p.zabel@pengutronix.de>,
+        <quic_nsekar@quicinc.com>, <dmitry.baryshkov@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-pci@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-phy@lists.infradead.org>,
+        "Praveenkumar I" <quic_ipkumar@quicinc.com>
+Subject: Re: [PATCH v2 6/6] arm64: dts: qcom: ipq5332: Enable PCIe phys and
+ controllers
+Message-ID: <Z2AOimZhQWrU+1jy@hu-varada-blr.qualcomm.com>
+References: <20241204113329.3195627-1-quic_varada@quicinc.com>
+ <20241204113329.3195627-7-quic_varada@quicinc.com>
+ <8a8cdb54-93b9-4093-8e85-f3d698d66e22@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset="us-ascii"
 Content-Disposition: inline
-In-Reply-To: <20241206-drm-connector-eld-mutex-v2-0-c9bce1ee8bea@linaro.org>
+In-Reply-To: <8a8cdb54-93b9-4093-8e85-f3d698d66e22@oss.qualcomm.com>
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: ZM-DAk2_nqbMaDvi25VcnfaS-Yg7SVxe
+X-Proofpoint-GUID: ZM-DAk2_nqbMaDvi25VcnfaS-Yg7SVxe
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ suspectscore=0 impostorscore=0 adultscore=0 spamscore=0 mlxscore=0
+ mlxlogscore=945 clxscore=1015 priorityscore=1501 bulkscore=0 phishscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2412160096
 
-On Fri, Dec 06, 2024 at 11:43:03AM +0200, Dmitry Baryshkov wrote:
-> The connector->eld is accessed by the .get_eld() callback. This access
-> can collide with the drm_edid_to_eld() updating the data at the same
-> time. Add drm_connector.eld_mutex to protect the data from concurrenct
-> access.
-> 
-> The individual drivers were just compile tested. I propose to merge the
-> drm_connector and bridge drivers through drm-misc, allowing other
-> maintainers either to ack merging through drm-misc or merging the
-> drm-misc into their tree and then picking up correcponding patch.
-> 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
-> Changes in v2:
-> - Also take the mutex in clear_eld() (Jani)
-> - Rebased on top of linux-next + drm-misc-next to solve build error
-> - Link to v1: https://lore.kernel.org/r/20241201-drm-connector-eld-mutex-v1-0-ba56a6545c03@linaro.org
-> 
-> ---
-> Dmitry Baryshkov (10):
->       drm/connector: add mutex to protect ELD from concurrent access
->       drm/bridge: anx7625: use eld_mutex to protect access to connector->eld
->       drm/bridge: ite-it66121: use eld_mutex to protect access to connector->eld
->       drm/amd/display: use eld_mutex to protect access to connector->eld
->       drm/exynos: hdmi: use eld_mutex to protect access to connector->eld
->       drm/i915/audio: use eld_mutex to protect access to connector->eld
->       drm/msm/dp: use eld_mutex to protect access to connector->eld
->       drm/radeon: use eld_mutex to protect access to connector->eld
->       drm/sti: hdmi: use eld_mutex to protect access to connector->eld
->       drm/vc4: hdmi: use eld_mutex to protect access to connector->eld
+On Thu, Dec 05, 2024 at 05:58:19PM +0100, Konrad Dybcio wrote:
+> On 4.12.2024 12:33 PM, Varadarajan Narayanan wrote:
+> > From: Praveenkumar I <quic_ipkumar@quicinc.com>
+> >
+> > Enable the PCIe controller and PHY nodes for RDP 441.
+> >
+> > Signed-off-by: Praveenkumar I <quic_ipkumar@quicinc.com>
+> > Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
+> > ---
+> >  arch/arm64/boot/dts/qcom/ipq5332-rdp441.dts | 74 +++++++++++++++++++++
+> >  1 file changed, 74 insertions(+)
+> >
+> > diff --git a/arch/arm64/boot/dts/qcom/ipq5332-rdp441.dts b/arch/arm64/boot/dts/qcom/ipq5332-rdp441.dts
+> > index 846413817e9a..83eca8435cff 100644
+> > --- a/arch/arm64/boot/dts/qcom/ipq5332-rdp441.dts
+> > +++ b/arch/arm64/boot/dts/qcom/ipq5332-rdp441.dts
+> > @@ -62,4 +62,78 @@ data-pins {
+> >  			bias-pull-up;
+> >  		};
+> >  	};
+> > +
+> > +	pcie0_default: pcie0-default-state {
+> > +		clkreq-n-pins {
+> > +			pins = "gpio37";
+> > +			function = "pcie0_clk";
+> > +			drive-strength = <8>;
+> > +			bias-pull-up;
+> > +		};
+> > +
+> > +		perst-n-pins {
+> > +			pins = "gpio38";
+> > +			function = "gpio";
+> > +			drive-strength = <8>;
+> > +			bias-pull-up;
+> > +			output-low;
+> > +		};
+> > +
+> > +		wake-n-pins {
+> > +			pins = "gpio39";
+> > +			function = "pcie0_wake";
+> > +			drive-strength = <8>;
+> > +			bias-pull-up;
+> > +		};
+> > +	};
+> > +
+> > +	pcie1_default: pcie1-default-state {
+> > +		clkreq-n-pins {
+> > +			pins = "gpio46";
+> > +			function = "pcie1_clk";
+> > +			drive-strength = <8>;
+> > +			bias-pull-up;
+> > +		};
+> > +
+> > +		perst-n-pins {
+> > +			pins = "gpio47";
+> > +			function = "gpio";
+> > +			drive-strength = <8>;
+> > +			bias-pull-up;
+> > +			output-low;
+> > +		};
+> > +
+> > +		wake-n-pins {
+> > +			pins = "gpio48";
+> > +			function = "pcie1_wake";
+> > +			drive-strength = <8>;
+> > +			bias-pull-up;
+> > +		};
+> > +	};
+> > +};
+> > +
+> > +&pcie0_phy {
+> > +	status = "okay";
+> > +};
+>
+> 'p' < 't', please put this before &tlmm
+>
+> Also, would this be something to put into rdp-common?
+>
+> Do we still use all of these variants?
+>
+> $ ls arch/arm64/boot/dts/qcom/ipq5332-rdp*.dts
+>   arch/arm64/boot/dts/qcom/ipq5332-rdp441.dts
+>   arch/arm64/boot/dts/qcom/ipq5332-rdp442.dts
+>   arch/arm64/boot/dts/qcom/ipq5332-rdp468.dts
+>   arch/arm64/boot/dts/qcom/ipq5332-rdp474.dts
 
-Granted the lack of reviews from AMD maintainers and granted that the
-rest of the series was reviewed and acked, is it suitable to leave those
-two patches out and merge the rest through drm-misc-next?
+Yes.
 
--- 
-With best wishes
-Dmitry
+Will fix the comments (here and other patches) and post a new version.
+
+Thanks
+Varada
 
