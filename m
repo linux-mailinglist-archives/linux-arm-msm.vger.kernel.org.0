@@ -1,84 +1,84 @@
-Return-Path: <linux-arm-msm+bounces-42373-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-42374-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6F22D9F38F9
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Dec 2024 19:30:07 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id DB4469F3900
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Dec 2024 19:30:53 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B02EC168FF6
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Dec 2024 18:30:04 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 35095188F405
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Dec 2024 18:30:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8D608206F0B;
-	Mon, 16 Dec 2024 18:30:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4F4D21CB31D;
+	Mon, 16 Dec 2024 18:30:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="hzIXKspo"
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="FOimZLih"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f177.google.com (mail-yw1-f177.google.com [209.85.128.177])
+Received: from mail-yw1-f182.google.com (mail-yw1-f182.google.com [209.85.128.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00DCA20629F
-	for <linux-arm-msm@vger.kernel.org>; Mon, 16 Dec 2024 18:29:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0ADB43AA9
+	for <linux-arm-msm@vger.kernel.org>; Mon, 16 Dec 2024 18:30:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734373801; cv=none; b=Z52hPMw5q5Yr2ZJU+NQzWsLmjLMllkv3ZADQtg2qZ8C4dUrV+Pfgdrm6emIf7lNkeomwik0ayfOpRWnHSZ0KSOMjrG0aLKbCf1y+671ERQ6lKnwFhoa114r1yOio66F+fOltg3IQ/1UcxD3vX7X190E1lvCDdLaZJ1WJQKrdM+c=
+	t=1734373823; cv=none; b=ubE/Wj2T+KMHdbV2Uk0UzfQC8PbqLjtVnu/PMZcWP5O8Z+9WQYwL0HqGFA+2aAcnXVVOEk7hIP/PCkFRGzNh/6OnusxBti1Jxw+gAgIoGTvxVbOaaL4tdTz6cqd26P3O8g+rt2zwj1sOgkRzjxqLtR1FyLiPtc9CBOPi9WaJld4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734373801; c=relaxed/simple;
-	bh=D6BkjH67J+jGm+KB+qtNt47cbbPwybjknONYRIcntzc=;
+	s=arc-20240116; t=1734373823; c=relaxed/simple;
+	bh=jnwuGVyAOEKZ320Va8tOKK5N6yh3orOqh3vNUx1y0RM=;
 	h=MIME-Version:In-Reply-To:References:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=qsFbI1wLU5AjYzzGqe1pi77+XMDzWTIlbHMRC31N5SRaELADjpl6tQWJdhFPBDLVk4oET3sSkUUuBc6+Y4Fu8kcuXO080U+u8alC+o8eBabFQ9uwPrswUfEvXgDoZ7V4YL9kZaGmvVkngWKDPNKda4eCW7Zby/uiq6rGTVLkLn8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=hzIXKspo; arc=none smtp.client-ip=209.85.128.177
+	 To:Cc:Content-Type; b=jYCWQXZ3iut+M9aWp4RcCbKbbZ3GnYaRx+gy7b4q7FTsgBcBh6rdcPS9n11QL2mMcSj+udZjbgOBEGzu5+33pX7GPHJR2YdDSLno+o7fhXcfiV5U/VLac8XrwdLzDaxSIYFXZTeMoS+EkgXr7yovPxZQj9zIY81HCdNFW/EOyPU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=FOimZLih; arc=none smtp.client-ip=209.85.128.182
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
-Received: by mail-yw1-f177.google.com with SMTP id 00721157ae682-6f0054cb797so35490307b3.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Dec 2024 10:29:59 -0800 (PST)
+Received: by mail-yw1-f182.google.com with SMTP id 00721157ae682-6f29aa612fbso12789437b3.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Dec 2024 10:30:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1734373799; x=1734978599; darn=vger.kernel.org;
+        d=chromium.org; s=google; t=1734373821; x=1734978621; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:user-agent:from:references
          :in-reply-to:mime-version:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=D6BkjH67J+jGm+KB+qtNt47cbbPwybjknONYRIcntzc=;
-        b=hzIXKspoPr8yLJl/ZlJNV7fnBIGtdlFUDvTBuMQ8ELR6LffTieTAahyjqzRl54BQFk
-         /NryktWVmYlKOTV/Wkn1AugP7dwKIUErOzTgRdE7+xN5higb/ij3YU/jmxO10vFyTorj
-         ThuL57tTEB2FLO8Oc1k124WWyeoLw7bxmid0w=
+        bh=jnwuGVyAOEKZ320Va8tOKK5N6yh3orOqh3vNUx1y0RM=;
+        b=FOimZLihMFU0RA3VpJizyaVIYF1wr5euRkKrCErAI8kUAusYTLOyZj2FpMUoij9uJy
+         gaGFpV46+so935UaQLQm3OcuLSUIWqR3rbjlTsNlIXME/I/ipvpITgn9JwXJ8LZcjssE
+         UITwvkYVQ6bYbC1jPjuvKjhyyyp0PysYCv5Jo=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734373799; x=1734978599;
+        d=1e100.net; s=20230601; t=1734373821; x=1734978621;
         h=cc:to:subject:message-id:date:user-agent:from:references
          :in-reply-to:mime-version:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=D6BkjH67J+jGm+KB+qtNt47cbbPwybjknONYRIcntzc=;
-        b=W/I7qKVGAol9ANOGywxF0Q7a4jao7/HErMoOLIYu42/nIwRcxtgaivp5JTqY85J/D2
-         198bDXOGyJ3Rq0C1DAkXRZLOwBuEUYcGQkfxjATzhpwYR5hHcJXMFRnasiEeRWXgIYlJ
-         ZljbjGOHM15AvauVeqm5jww5SKNYTFwZWgos1PiGOgZQPw/LilbPMNtITVgXdcfLlSj2
-         7Wz8RW5i0LOwpcOGcP3Fm+D+3Zc7TYRXzjuZgyxhI1dQ6R2pZxa639EqtxOr8yCg47eX
-         7DdqGWcpjEsto74/2/QY3fwpMas3GC3olR1aEaDBuSWk/TY/JTHRFfFoIXCJMvkvE9lo
-         LMNw==
-X-Forwarded-Encrypted: i=1; AJvYcCW/Clgv21BCLJ6ci3ab2v41qoEcixQm4JsPgUMufUlZub8utBA2tPOViIfNG2jhbzTx2xZu9AAqCNKKB/TQ@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy3d73IrpsLHx3EIfHQX3JeJOjNL/0FIvsWoYD3iGO9xEUUIWd3
-	FBgZ0nT3auCWdILg0OhD8O7g/y+f8yxOj6EUs9c6kDPGvkd4CkdgrDPJA4wzF2v9rOhRQNYZfzn
-	Hk9QITkgS9lhw9zakxBJIk5WlRLnhljJxNfTL
-X-Gm-Gg: ASbGncvmzyz88ru+Jw/S2sUjgMo9XXOltgKgguGbUkol226i5muHj0CFve5vv/a6Eag
-	0w2n02tODMLGgiEekXhsgWSsi5KXVGq8sE/5whGN6cXXwvVHL1P8Yadh1fERENYn3HA==
-X-Google-Smtp-Source: AGHT+IFec3otTchyFxbDJfKFBz47WzGfI8yjCwnobgW8mFZyVIcbwLvFYT+D1W5djrG5rBzv+7Jo60SR7JxAagJAj/U=
-X-Received: by 2002:a05:690c:6005:b0:6ef:4ed2:7dec with SMTP id
- 00721157ae682-6f279adac53mr117919057b3.8.1734373799003; Mon, 16 Dec 2024
- 10:29:59 -0800 (PST)
+        bh=jnwuGVyAOEKZ320Va8tOKK5N6yh3orOqh3vNUx1y0RM=;
+        b=gkc6Dzftywr0nUkOGebaX5goEVvwXzhFraFyiU/fBrMo65F+FkCoCpeHzcHEwik2wg
+         A4ZGbNreNcOoSqdJ4Q3eOOMydAvAqyVnAwAS3Dl0okGSAgspKmUJJoDgmknr44eAQVPq
+         rMU/exglYfKB+QJdq8J1eUTJu+oRq5D846T7wB0Nx8gygeh7Iccdv3NBTInjuvG/QoeU
+         3ivpmp4wp3qKMX1KxZFDPYW95beHpW+c3+emikwiTkVU2/RqZr/cyNK8GUJh2xX/IhjT
+         etRrqSaoGHIKB+NS653DzJCMVTqV0RtBQ2dLNRuOBWYmzAzvxAefeh9LtVz6rfT4y1vz
+         Sg/g==
+X-Forwarded-Encrypted: i=1; AJvYcCWVL8MMsyOhHxA8EpxXiKUdj+1MslhaPMF9xGEn2Bjk6QM4U8TX/wWCbhrARpmaFXMOHKZcBGlZuNvLwV6m@vger.kernel.org
+X-Gm-Message-State: AOJu0YwoTX1xswcpOfTxjUPaYShmGl2z0+m2vkQeyLa5a2I8VeRNsCmk
+	64ZERyg/bjsCT7V394oDb4J17XUqItOZgpgFGdFQk0MA5cQVEg5BKn4k+mkdPqpt3a0dMqWcqRU
+	Wm9z8JWNKOZsaCE9zrBcVKETbCQcqxlsNG+HB
+X-Gm-Gg: ASbGnctFdEfq1DzVi9HVDg1td4Mw7sEbDuygZt/2/oDQFTALYmQmqPkmRYkSxilUNqC
+	Q4HUcEIzNZJGtd9/PQ+xcOXTWY+RKxN8GgYmihyjQlwW1nrTbCBX8YQJeLmEQ+Xulwg==
+X-Google-Smtp-Source: AGHT+IGAZ9GP/e8joq93AJgn9vGXh5Tq52Geg2Bjs8/hq7LhWnPC5AAAAbSev0Vk3ryNjuoLA19eOKXVMbQsxPH64mI=
+X-Received: by 2002:a05:690c:d95:b0:6ef:58f9:4c0d with SMTP id
+ 00721157ae682-6f279b9e06amr99061537b3.39.1734373820988; Mon, 16 Dec 2024
+ 10:30:20 -0800 (PST)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 16 Dec 2024 10:29:58 -0800
+ HTTPREST; Mon, 16 Dec 2024 12:30:20 -0600
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-In-Reply-To: <20241216-fd-dp-audio-fixup-v4-15-f8d1961cf22f@linaro.org>
-References: <20241216-fd-dp-audio-fixup-v4-0-f8d1961cf22f@linaro.org> <20241216-fd-dp-audio-fixup-v4-15-f8d1961cf22f@linaro.org>
+In-Reply-To: <20241216-fd-dp-audio-fixup-v4-16-f8d1961cf22f@linaro.org>
+References: <20241216-fd-dp-audio-fixup-v4-0-f8d1961cf22f@linaro.org> <20241216-fd-dp-audio-fixup-v4-16-f8d1961cf22f@linaro.org>
 From: Stephen Boyd <swboyd@chromium.org>
 User-Agent: alot/0.12.dev1+gaa8c22fdeedb
-Date: Mon, 16 Dec 2024 10:29:58 -0800
-Message-ID: <CAE-0n52Uj6h=X2PqZcPBnPDR_vVfi4_Y_miG-dTPP6FzH8rtag@mail.gmail.com>
-Subject: Re: [PATCH v4 15/16] drm/msm/dp: read hw revision only once
+Date: Mon, 16 Dec 2024 12:30:20 -0600
+Message-ID: <CAE-0n50i1nLrBAgOdcc4aW40O1Bxd_N7fgrK2jCZqOFbMosAug@mail.gmail.com>
+Subject: Re: [PATCH v4 16/16] drm/msm/dp: drop the msm_dp_catalog module
 To: Abhinav Kumar <quic_abhinavk@quicinc.com>, David Airlie <airlied@gmail.com>, 
 	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
 	Marijn Suijten <marijn.suijten@somainline.org>, Paloma Arellano <quic_parellan@quicinc.com>, 
@@ -88,10 +88,9 @@ Cc: Douglas Anderson <dianders@chromium.org>, linux-arm-msm@vger.kernel.org,
 	linux-kernel@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 
-Quoting Dmitry Baryshkov (2024-12-15 14:44:20)
-> There is little point in rereading DP controller revision over and over
-> again. Read it once, after the first software reset and propagate it to
-> the dp_panel module.
+Quoting Dmitry Baryshkov (2024-12-15 14:44:21)
+> Now as the msm_dp_catalog module became nearly empty, drop it, accessing
+> registers directly from the corresponding submodules.
 >
 > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
