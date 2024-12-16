@@ -1,78 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-42414-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-42415-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 31B909F3DAC
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Dec 2024 23:42:06 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 31CA19F3DB1
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Dec 2024 23:43:16 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 74C1A16980C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Dec 2024 22:42:03 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 702981693FE
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Dec 2024 22:43:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DB8851D89F8;
-	Mon, 16 Dec 2024 22:41:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 97ACD1D88D0;
+	Mon, 16 Dec 2024 22:43:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="OGSMpGgc"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Km8BpZP8"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2688E1D88D0
-	for <linux-arm-msm@vger.kernel.org>; Mon, 16 Dec 2024 22:41:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A9AF1D5AC6;
+	Mon, 16 Dec 2024 22:43:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734388918; cv=none; b=tT2Wn+yOx179DAqNiWzZHhm5dwhoRnpPCruP+27E8PQYFYrqOxiiAVeBWlwz7jDKM772m+tI8JuxrG9M2KwR4xyRWko0uHdoVJ/snpas7Re6DCcIyzZqhr5aYDhzWA0H53CG/DU9P2pVjyTk9tCBS3gmrXVjPCy3EYW/Wg4Qm2E=
+	t=1734388989; cv=none; b=HjF+ElpRudUi4wwpDA8S6qq94zVYke45osuJzt1izXwe4fVkW9cOwnv5XvGilpF4OFh4Bj4McWd7+GTjELxi21UOEOeabEGs2vUjpldXiM514Px8Nd+gmAoTNESHW5cmlAUTvbQFfJ7VeWIWW/Qf67wwyMHKWv88wnwvbS8CLvI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734388918; c=relaxed/simple;
-	bh=VvwhMEH8kUe66+qw0Kg+jfPOcaLaStC6shKRZDsBkeM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=U+TlkeCCme9cr/Gas9x7czt0sR0SkDXwIM1vvSYZaqdqJ6TbdA5mu+BYJBzU8gGKO8pJ7pI+kWQ8rVmKqzJ9zNlrqCy11ncoDWNYQyfO5myGzYvU9POsY3bvwsN68jf3fBZXfeT2bYvBzOSmyOJ7lXyshXgHiJvPt7w59mO6tbE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=OGSMpGgc; arc=none smtp.client-ip=209.85.221.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-3862f32a33eso2259204f8f.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Dec 2024 14:41:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1734388915; x=1734993715; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=cgHEGOs3zRnlIJDFA130oT6k9XjZTGA0yhruWXfFN4o=;
-        b=OGSMpGgchuPODsKfOcoonTqeww+nA1zSDPN/yel6xCPgB2tT+DXNsxgJDxs5pYK/7V
-         6dhcCdQgyiMfuT4Nu0V1DhaMZ6G3qRLyba7UIVb/4CnKxWK18n0uoZX5hZQjS47e+vz0
-         092iPrVRGdATGWis7PimB6e1wdRAQ1AY2yvLbtVDbpWNgVDf4Yo6I54bIEZH1fiQrYch
-         uFn1RiTTyMnJcxeNC/TLN+KeTHXT01ma8pW2vLnHg3mAhk0rTKYuJUE5pysoa1tkq5jI
-         WAElUgck1HUnYxYSlSNDR5VwIiV7inxgR9mgxmyOSK8vRWMFCAn64MsOoxpr2MgtWlzj
-         jC9w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734388915; x=1734993715;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=cgHEGOs3zRnlIJDFA130oT6k9XjZTGA0yhruWXfFN4o=;
-        b=NQ2dFwbLhSOIhLFsjhTF0aCmR0LcNFBm3TOlmHEZF0dQCPjV2olCWGO83siglSZeKl
-         Nu2wb3sbpvVVlYZpSH7FeNHEjasXjZMCFz3XF4czXHXsC89Qnvd1r2zHiCk4M/2ICOnj
-         LlDNA0jDt7HuZ+vzN1h7gTyqLB4N8E2WuheCq4V2Q6bqdFhTqt0j+RI4wdcvyQ3Dlm0R
-         l5i+UDtfDTrg7ttN0dKwsoc0euYxLzWhLsphxt5SitZpFEQTPouz4yxb4UMLjsjB0F9J
-         Aqmh++XkW2Fir7LbAfj1amV2amekLAzmzqSlg0XaESYL5j/PKivyLKStBDadAn3CyVZQ
-         07Cw==
-X-Forwarded-Encrypted: i=1; AJvYcCXoFX+zC60TVI5mAsTT5l5Y4GUY61UYMMr52s4I1JH/cvVF/haywRkm8OMRAMNWHtGmJ/3Oovqfyx62epmO@vger.kernel.org
-X-Gm-Message-State: AOJu0YzAp1k/qDO589oj00d5keIV3hxaS7zokb4u8uXuC57Li4ZOvZhh
-	vF8beT9zl1Jzo5a0zd+Q3a5Fg13pcn+BnbnDNNNxActBoxWkTtb1akmzMnhF2w4=
-X-Gm-Gg: ASbGnculJpqmBCINFo5B1IwWms+hGiq2xf3uHyHiZMm9FBUtM5GAXVPKH0Orh1drXFl
-	8vbOMlXGC8fGuk+w9R1GX4cQqHls3cjpHez1w+kJgPQAqoOtCoE3q13MWgdnU9bzl3wkPfHXbA+
-	l4uDPviOFh/xCaUsdzrR1jevAz5jrbFoW/7YJi3UZ2S2nfpE+ezxDsIraK97A+14CUfs7apEe27
-	hovdL54BHngldHEJqT9ei0nfED6rDBeKmwWlcBJRpLEF9+CkdX7Z+IvbjT0LcbftmQTUQ==
-X-Google-Smtp-Source: AGHT+IERxSebFar5uEuhs3YGXdu/HdonjGhSKASUlK+LCSz+kd4iODulYlgl5ClEwq5A1hDOA8kHew==
-X-Received: by 2002:a5d:47a7:0:b0:385:f2a2:50df with SMTP id ffacd0b85a97d-3888e0ae608mr11291437f8f.27.1734388915425;
-        Mon, 16 Dec 2024 14:41:55 -0800 (PST)
-Received: from [192.168.0.27] ([176.61.106.227])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-388c8047151sm9190330f8f.66.2024.12.16.14.41.53
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 16 Dec 2024 14:41:54 -0800 (PST)
-Message-ID: <56f606b8-35cc-4bbd-af39-106277530928@linaro.org>
-Date: Mon, 16 Dec 2024 22:41:52 +0000
+	s=arc-20240116; t=1734388989; c=relaxed/simple;
+	bh=lGM80qH8pnV5C/dirqqgdp+OaWvFZgQ1uxawsXFyY1k=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=jmfbegi31xy8GLI00gYjgZpiE9zCypamRuGWZrStha5NXFU/prBYiB9jVQQRiAQUYWlfQ9++VsNGmVaB2v2zA6wadyh7SGIgMoHR6vGWqGb00Y7MjXrIBeVOMsVlGvx0iXcxtLxzF2wCkSikLt8Lys3M78IcZmW+a9cVLK2Klec=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Km8BpZP8; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BGH9U2P016945;
+	Mon, 16 Dec 2024 22:42:58 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	H2L8uVyKd4qvBkJbrYXcMZ2oODeoHo/p2so9JSQLiHU=; b=Km8BpZP87w8cOaeD
+	lKNUocOIKw585GAP3iMvcP0klGWDTepIqVYgedxH475QJbvtarzIVuxCQ2ljimr8
+	kPFlf6eXRKQNCH6ZrvpbEJ5TPIM5dD7CXgm14+fAt7TRO+na6tQqTWzAv6F9t6Nl
+	Fo7fm2wU/WxJovo6wHxPdFmSvNbhwpZsy15mHLXT6cOdEvy0hx6cIu0xB4/oo5aG
+	58zRYlzrcyWjQovBJhLCWu8o0vZ6jPK9yAf8yg2Y0yosnq+lya90tRjhTEzi9qnH
+	174Jsj2tESdNYMjv2cjsEZweeFSqbdfmGyvx9Nna7x/9zXYLpgijP6PYPkn9VCzL
+	kkP3Pg==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43jrc1rqcu-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 16 Dec 2024 22:42:58 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4BGMgvIL001796
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 16 Dec 2024 22:42:57 GMT
+Received: from [10.110.119.169] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 16 Dec
+ 2024 14:42:56 -0800
+Message-ID: <dadf64ae-348c-49bf-b5cd-6b37a81ecf20@quicinc.com>
+Date: Mon, 16 Dec 2024 14:42:55 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -80,44 +65,56 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 3/5] media: qcom: camss: add support for SDM670 camss
-To: Richard Acayan <mailingradian@gmail.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
- <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Robert Foss <rfoss@kernel.org>,
- Todor Tomov <todor.too@gmail.com>, Mauro Carvalho Chehab
- <mchehab@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>,
- linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
- devicetree@vger.kernel.org, linux-media@vger.kernel.org
-Cc: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-References: <20241216223019.70155-8-mailingradian@gmail.com>
- <20241216223019.70155-11-mailingradian@gmail.com>
+Subject: Re: [PATCH 7/8] drm/msm/dpu: link DSPP_2/_3 blocks on X1E80100
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark
+	<robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Marijn Suijten
+	<marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Simona
+ Vetter <simona@ffwll.ch>,
+        Robert Foss <rfoss@kernel.org>,
+        Neil Armstrong
+	<neil.armstrong@linaro.org>,
+        Abel Vesa <abel.vesa@linaro.org>,
+        Richard Acayan
+	<mailingradian@gmail.com>
+CC: Rob Clark <robdclark@chromium.org>, <linux-arm-msm@vger.kernel.org>,
+        <dri-devel@lists.freedesktop.org>, <freedreno@lists.freedesktop.org>,
+        <linux-kernel@vger.kernel.org>
+References: <20241216-dpu-fix-catalog-v1-0-15bf0807dba1@linaro.org>
+ <20241216-dpu-fix-catalog-v1-7-15bf0807dba1@linaro.org>
 Content-Language: en-US
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <20241216223019.70155-11-mailingradian@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <20241216-dpu-fix-catalog-v1-7-15bf0807dba1@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: dK4aoDXc8E2edzBaK6_YWLW8j7Og53v0
+X-Proofpoint-ORIG-GUID: dK4aoDXc8E2edzBaK6_YWLW8j7Og53v0
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 suspectscore=0
+ spamscore=0 clxscore=1015 lowpriorityscore=0 phishscore=0 bulkscore=0
+ mlxlogscore=881 mlxscore=0 adultscore=0 impostorscore=0 priorityscore=1501
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2411120000
+ definitions=main-2412160186
 
-On 16/12/2024 22:30, Richard Acayan wrote:
->   .../bindings/media/qcom,sdm670-camss.yaml     |  72 +++----
->   drivers/media/platform/qcom/camss/camss.c     | 191 ++++++++++++++++++
->   2 files changed, 227 insertions(+), 36 deletions(-)
+
+
+On 12/16/2024 12:27 AM, Dmitry Baryshkov wrote:
+> Link DSPP_2 to the LM_2 and DSPP_3 to the LM_3 mixer blocks.
 > 
-> diff --git a/Documentation/devicetree/bindings/media/qcom,sdm670-camss.yaml b/Documentation/devicetree/bindings/media/qcom,sdm670-camss.yaml
-> index f8701a8d27fe..892412fb68a9 100644
-> --- a/Documentation/devicetree/bindings/media/qcom,sdm670-camss.yaml
-> +++ b/Documentation/devicetree/bindings/media/qcom,sdm670-camss.yaml
-> @@ -31,21 +31,6 @@ properties:
->         - const: vfe1
->         - const: vfe_lite
->   
-> -  interrupts:
-> -    maxItems: 9
+> Fixes: e3b1f369db5a ("drm/msm/dpu: Add X1E80100 support")
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>   drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_2_x1e80100.h | 2 ++
+>   1 file changed, 2 insertions(+)
+> 
 
-I think you've had an error squashing some patches.
-
----
-bod
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 
