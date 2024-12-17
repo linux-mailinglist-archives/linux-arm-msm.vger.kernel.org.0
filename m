@@ -1,162 +1,291 @@
-Return-Path: <linux-arm-msm+bounces-42460-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-42461-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 27DB09F4170
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Dec 2024 05:00:16 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id D06249F42EE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Dec 2024 06:33:52 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6C346168BFA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Dec 2024 04:00:13 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 49D31188BF59
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Dec 2024 05:33:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 323AB146D76;
-	Tue, 17 Dec 2024 03:59:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E8B9F1714B2;
+	Tue, 17 Dec 2024 05:32:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="leUTkEwJ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from verein.lst.de (verein.lst.de [213.95.11.211])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A116714601C;
-	Tue, 17 Dec 2024 03:59:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.95.11.211
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1BCA15CD41;
+	Tue, 17 Dec 2024 05:32:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734407999; cv=none; b=P33K3vy44PjuY1YCruAHsYMuxBECvbr/nn2PI/uJmIaideXIX/LZ58frXMQGf17pbFYkT+SfEyfm0jsYrK2gkvRiTTe0+y9BD5i7FRftrUnN1J9ZB6dS/tYBdLGgQji8gxLwhuWbofgN3/b+x2g/9QKKZ1Pzw/95fJfEzWRrsdE=
+	t=1734413554; cv=none; b=C9/HkYmGejBDbKSjvq59C16HlABrZfN17+jVCgAYv1P0kRWL8qGdO7IUAXR1lnFlxH4AxiI8Ixxg3HNCcAboFKYknxuyhehHtTLXuUzJjR7yzPv4ppb58DeNqaWDhgrWS/gcrJQ4coSj1qM0tuKm2s56/T9mx5r0UUzeJcTJi6U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734407999; c=relaxed/simple;
-	bh=GXKY4ibAqf+fScHyj3FgJPIYI3um2k9fkI7luLsdvHI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=nkaaLAM/nzdoysZ/sJkmrmdr8zjYjiFbZ070p48GQNcbh+YQ4UOGvi6IS8QoHD/Jb2szDqKDo38X00RMYNPjtaR9Drsye42aTmAiLsSUUzFP3riYmdJxd6EnppCFt70VhQwK5IhQ2wscER1gf7PIsyTkd+HkPrNna+igjGCFvQ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=lst.de; spf=pass smtp.mailfrom=lst.de; arc=none smtp.client-ip=213.95.11.211
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=lst.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lst.de
-Received: by verein.lst.de (Postfix, from userid 2407)
-	id 8E68768C4E; Tue, 17 Dec 2024 04:59:43 +0100 (CET)
-Date: Tue, 17 Dec 2024 04:59:43 +0100
-From: Christoph Hellwig <hch@lst.de>
-To: Kees Cook <kees@kernel.org>
-Cc: Jakub Kicinski <kuba@kernel.org>, Cheng Xu <chengyou@linux.alibaba.com>,
-	Kai Shen <kaishen@linux.alibaba.com>,
-	Jason Gunthorpe <jgg@ziepe.ca>, Leon Romanovsky <leon@kernel.org>,
-	Christian Benvenuti <benve@cisco.com>,
-	Nelson Escobar <neescoba@cisco.com>,
-	Bernard Metzler <bmt@zurich.ibm.com>,
-	Karsten Keil <isdn@linux-pingi.de>,
-	Michal Ostrowski <mostrows@earthlink.net>,
-	Andrew Lunn <andrew+netdev@lunn.ch>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>, Paolo Abeni <pabeni@redhat.com>,
-	Keith Busch <kbusch@kernel.org>, Jens Axboe <axboe@kernel.dk>,
-	Christoph Hellwig <hch@lst.de>, Sagi Grimberg <sagi@grimberg.me>,
-	Chaitanya Kulkarni <kch@nvidia.com>, Lee Duncan <lduncan@suse.com>,
-	Chris Leech <cleech@redhat.com>,
-	Mike Christie <michael.christie@oracle.com>,
-	"James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Alexander Aring <aahringo@redhat.com>,
-	David Teigland <teigland@redhat.com>,
-	Trond Myklebust <trondmy@kernel.org>,
-	Anna Schumaker <anna@kernel.org>, Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <sfrench@samba.org>,
-	Sergey Senozhatsky <senozhatsky@chromium.org>,
-	Tom Talpey <tom@talpey.com>, Simon Horman <horms@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>,
-	Jeff Layton <jlayton@kernel.org>, Neil Brown <neilb@suse.de>,
-	Olga Kornievskaia <okorniev@redhat.com>,
-	Dai Ngo <Dai.Ngo@oracle.com>, David Ahern <dsahern@kernel.org>,
-	Joerg Reuter <jreuter@yaina.de>,
-	Marcel Holtmann <marcel@holtmann.org>,
-	Johan Hedberg <johan.hedberg@gmail.com>,
-	Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-	Oliver Hartkopp <socketcan@hartkopp.net>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
-	Robin van der Gracht <robin@protonic.nl>,
-	Oleksij Rempel <o.rempel@pengutronix.de>,
-	Alexandra Winter <wintera@linux.ibm.com>,
-	Thorsten Winkler <twinkler@linux.ibm.com>,
-	James Chapman <jchapman@katalix.com>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
-	Willem de Bruijn <willemdebruijn.kernel@gmail.com>,
-	Remi Denis-Courmont <courmisch@gmail.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Allison Henderson <allison.henderson@oracle.com>,
-	Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>,
-	Xin Long <lucien.xin@gmail.com>,
-	Wenjia Zhang <wenjia@linux.ibm.com>,
-	Jan Karcher <jaka@linux.ibm.com>,
-	"D. Wythe" <alibuda@linux.alibaba.com>,
-	Tony Lu <tonylu@linux.alibaba.com>,
-	Wen Gu <guwen@linux.alibaba.com>, Jon Maloy <jmaloy@redhat.com>,
-	Ying Xue <ying.xue@windriver.com>,
-	Stefano Garzarella <sgarzare@redhat.com>,
-	Martin Schiller <ms@dev.tdt.de>,
-	Kentaro Takeda <takedakn@nttdata.co.jp>,
-	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
-	Paul Moore <paul@paul-moore.com>, James Morris <jmorris@namei.org>,
-	"Serge E. Hallyn" <serge@hallyn.com>,
-	Guillaume Nault <gnault@redhat.com>,
-	Ahelenia =?utf-8?Q?Ziemia=C5=84ska?= <nabijaczleweli@nabijaczleweli.xyz>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Wu Yunchuan <yunchuan@nfschina.com>,
-	Max Gurtovoy <mgurtovoy@nvidia.com>,
-	Maurizio Lombardi <mlombard@redhat.com>,
-	David Howells <dhowells@redhat.com>,
-	Atte =?iso-8859-1?Q?Heikkil=E4?= <atteh.mailbox@gmail.com>,
-	Vincent Duvert <vincent.ldev@duvert.net>,
-	Denis Kirjanov <kirjanov@gmail.com>,
-	Lukas Bulwahn <lukas.bulwahn@gmail.com>,
-	Arnd Bergmann <arnd@arndb.de>, Thomas Huth <thuth@redhat.com>,
-	Andrew Waterman <waterman@eecs.berkeley.edu>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Andrej Shadura <andrew.shadura@collabora.co.uk>,
-	Ying Hsu <yinghsu@chromium.org>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Tom Parkin <tparkin@katalix.com>,
-	Jason Xing <kernelxing@tencent.com>,
-	Dan Carpenter <error27@gmail.com>, Hyunwoo Kim <v4bel@theori.io>,
-	Bernard Pidoux <f6bvp@free.fr>,
-	Sangsoo Lee <constant.lee@samsung.com>,
-	Doug Brown <doug@schmorgal.com>,
-	Ignat Korchagin <ignat@cloudflare.com>,
-	Gou Hao <gouhao@uniontech.com>,
-	Mina Almasry <almasrymina@google.com>,
-	Abhishek Chauhan <quic_abchauha@quicinc.com>,
-	Yajun Deng <yajun.deng@linux.dev>, Michal Luczaj <mhal@rbox.co>,
-	Jiri Pirko <jiri@resnulli.us>, syzbot <syzkaller@googlegroups.com>,
-	linux-kernel@vger.kernel.org, kernel@pengutronix.de,
-	linux-rdma@vger.kernel.org, netdev@vger.kernel.org,
-	linux-nvme@lists.infradead.org, open-iscsi@googlegroups.com,
-	linux-scsi@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	target-devel@vger.kernel.org, gfs2@lists.linux.dev,
-	linux-nfs@vger.kernel.org, ocfs2-devel@lists.linux.dev,
-	linux-cifs@vger.kernel.org, linux-hams@vger.kernel.org,
-	linux-bluetooth@vger.kernel.org, linux-can@vger.kernel.org,
-	linux-s390@vger.kernel.org, rds-devel@oss.oracle.com,
-	linux-sctp@vger.kernel.org, tipc-discussion@lists.sourceforge.net,
-	virtualization@lists.linux.dev, linux-x25@vger.kernel.org,
-	linux-security-module@vger.kernel.org,
-	syzbot+d7ce59b06b3eb14fd218@syzkaller.appspotmail.com,
-	linux-hardening@vger.kernel.org
-Subject: Re: [PATCH] net: Convert proto_ops::getname to sockaddr_storage
-Message-ID: <20241217035943.GB14719@lst.de>
-References: <20241217023417.work.145-kees@kernel.org>
+	s=arc-20240116; t=1734413554; c=relaxed/simple;
+	bh=XW8Gtseza8SSscN8pqqeDGmBBJP1e+xvDh1zucD+FJo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=YlBaKv+4jymGjLbELiCv2zRcj9WPggDbO0qR4hu+a3uwT6Gr5PNRazYbcb4syjaOKrCt6aoXm3zvWHC2VwrttQK4on4jV23YQ4N8vrpsdQEjJ0i3LTGCS/7aWmyOFXhweKXjUhzXvBLlYOBWSIhyG9BJS/nyHxRaF/w8XCyToB4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=leUTkEwJ; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BGKt270011894;
+	Tue, 17 Dec 2024 05:32:27 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	ko/YZva7cHyZuDSFXCFLRiqJoa/wOi4lnzRHTAZruuU=; b=leUTkEwJ5WiP2Pec
+	vwZdTmFLjXKGXuvbsyeZ04WVpuN9PwUKYmi8OD9vK5Yh7gP1XLs1xHpILd35NsvX
+	K1d1B/BoZqYErgPB3YoAbD+FCRKwO4q+ClR4o7w3KQ8x3U1cDmqvu/a+EnezBEVY
+	yO4xFXB9maedkug9UumNw4LwxYQ59lNwLFhndz+Uplou1pCG1l6epAcDXiW0vjdl
+	kFHWRjfD7HibAHIjzv4cg4xa6ZQb+MKJ93r6idp7toArHxnZX2wOqx/ZO5YOxxTT
+	p3aUmqNaeI6XOV4T4N42qAOFnWk6PWY2Ec3FhREWZ9S6Ys3gVXt0xpnVGbR7MMAD
+	V4LwPA==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43junjgwwb-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 17 Dec 2024 05:32:27 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4BH5WQmh002522
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 17 Dec 2024 05:32:26 GMT
+Received: from [10.231.216.103] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 16 Dec
+ 2024 21:32:22 -0800
+Message-ID: <70714bd9-e6a1-4104-b200-38f0019a107b@quicinc.com>
+Date: Tue, 17 Dec 2024 13:32:19 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241217023417.work.145-kees@kernel.org>
-User-Agent: Mutt/1.5.17 (2007-11-01)
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 2/4] media: venus: core: use opp-table for the
+ frequency
+To: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
+CC: Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+        Vikash Garodia
+	<quic_vgarodia@quicinc.com>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio
+	<konradybcio@kernel.org>,
+        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+References: <20241213-add-venus-for-qcs615-v4-0-7e2c9a72d309@quicinc.com>
+ <20241213-add-venus-for-qcs615-v4-2-7e2c9a72d309@quicinc.com>
+ <Z2BvrfYEaIqFcjwg@hu-bjorande-lv.qualcomm.com>
+Content-Language: en-US
+From: Renjiang Han <quic_renjiang@quicinc.com>
+In-Reply-To: <Z2BvrfYEaIqFcjwg@hu-bjorande-lv.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: x1qNujOq4FmitByvM-qVKZfGbAZ4O6GE
+X-Proofpoint-GUID: x1qNujOq4FmitByvM-qVKZfGbAZ4O6GE
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ phishscore=0 mlxlogscore=999 clxscore=1015 suspectscore=0 malwarescore=0
+ mlxscore=0 adultscore=0 spamscore=0 bulkscore=0 priorityscore=1501
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2412170044
 
-Would be nice to avoid a bunch of the overly long lines, but the
-fundamental changes looks good:
 
-Reviewed-by: Christoph Hellwig <hch@lst.de>
+On 12/17/2024 2:21 AM, Bjorn Andersson wrote:
+> On Fri, Dec 13, 2024 at 03:26:47PM +0530, Renjiang Han wrote:
+>> Get frequency value from the opp-table of devicetree for the v4 core.
+>> For compatibility, if getting data from the opp table fails, the data
+>> in the frequency table will be used.
+>>
+>> The order of variable definitions is adjusted only to keep the reverse
+>> Christmas tree order coding style.
+>>
+> 1) Do the best you can to add your variables while trying to maintain
+> the order, but if it's not possible better leave it than making it hard
+> to parse logical change from shuffling of code.
+OK, thanks for pointing it out.
+>
+> 2) This comment is useful during review, but not necessarily so in the
+> git history, so I'd suggest to keep it below the '---' line.
+
+  Do you mean that the message about my code style changes only needs
+
+  to be added to the cover letter?
+>
+>> Signed-off-by: Renjiang Han <quic_renjiang@quicinc.com>
+>> ---
+>>   drivers/media/platform/qcom/venus/pm_helpers.c | 67 ++++++++++++++++++--------
+>>   1 file changed, 46 insertions(+), 21 deletions(-)
+>>
+>> diff --git a/drivers/media/platform/qcom/venus/pm_helpers.c b/drivers/media/platform/qcom/venus/pm_helpers.c
+>> index 33a5a659c0ada0ca97eebb5522c5f349f95c49c7..a5c3f9ad2088d8c80247b52d5c1b8e053f499bfe 100644
+>> --- a/drivers/media/platform/qcom/venus/pm_helpers.c
+>> +++ b/drivers/media/platform/qcom/venus/pm_helpers.c
+>> @@ -40,17 +40,23 @@ static int core_clks_get(struct venus_core *core)
+>>   
+>>   static int core_clks_enable(struct venus_core *core)
+>>   {
+>> -	const struct venus_resources *res = core->res;
+>>   	const struct freq_tbl *freq_tbl = core->res->freq_tbl;
+>>   	unsigned int freq_tbl_size = core->res->freq_tbl_size;
+>> -	unsigned long freq;
+>> +	const struct venus_resources *res = core->res;
+>> +	struct device *dev = core->dev;
+>> +	unsigned long freq = 0;
+> Is it really necessary to initialize this? I'd expect that
+> dev_pm_opp_find_freq_ceil() would either initialize freq or return a
+> failure, in which case you assign freq.
+
+  Thanks for your review. There is really no need to initialize freq.
+
+  The default value of freq is 0 here. dev_pm_opp_find_freq_ceil() will
+
+  query the matching value from the opp table based on this default value.
+>
+> Perhaps the compiler isn't clever enough to see this?
+>
+>> +	struct dev_pm_opp *opp;
+>>   	unsigned int i;
+>>   	int ret;
+>>   
+>> -	if (!freq_tbl)
+>> -		return -EINVAL;
+>> -
+>> -	freq = freq_tbl[freq_tbl_size - 1].freq;
+>> +	opp = dev_pm_opp_find_freq_ceil(dev, &freq);
+>> +	if (IS_ERR(opp)) {
+>> +		if (!freq_tbl)
+>> +			return -EINVAL;
+>> +		freq = freq_tbl[freq_tbl_size - 1].freq;
+>> +	} else {
+>> +		dev_pm_opp_put(opp);
+>> +	}
+>>   
+>>   	for (i = 0; i < res->clks_num; i++) {
+>>   		if (IS_V6(core)) {
+>> @@ -627,12 +633,15 @@ min_loaded_core(struct venus_inst *inst, u32 *min_coreid, u32 *min_load, bool lo
+>>   
+>>   static int decide_core(struct venus_inst *inst)
+>>   {
+>> +	const struct freq_tbl *freq_tbl = inst->core->res->freq_tbl;
+>>   	const u32 ptype = HFI_PROPERTY_CONFIG_VIDEOCORES_USAGE;
+>> -	struct venus_core *core = inst->core;
+>> -	u32 min_coreid, min_load, cur_inst_load;
+>>   	u32 min_lp_coreid, min_lp_load, cur_inst_lp_load;
+>> +	u32 min_coreid, min_load, cur_inst_load;
+>> +	struct venus_core *core = inst->core;
+>>   	struct hfi_videocores_usage_type cu;
+>> -	unsigned long max_freq;
+>> +	unsigned long max_freq = ULONG_MAX;
+>> +	struct device *dev = core->dev;
+>> +	struct dev_pm_opp *opp;
+> Here the line shuffling makes it hard to determine what is part of the
+> logical change and what is just style changes...
+>
+> Regards,
+> Bjorn
+
+  You mean I only need to add variable definitions basing on the original
+
+  order of variable definitions, and I don't need to modify the order of
+
+  variable definitions specifically for the reverse Christmas tree code
+
+  style. Is that right?
+>
+>>   	int ret = 0;
+>>   
+>>   	if (legacy_binding) {
+>> @@ -655,7 +664,11 @@ static int decide_core(struct venus_inst *inst)
+>>   	cur_inst_lp_load *= inst->clk_data.low_power_freq;
+>>   	/*TODO : divide this inst->load by work_route */
+>>   
+>> -	max_freq = core->res->freq_tbl[0].freq;
+>> +	opp = dev_pm_opp_find_freq_floor(dev, &max_freq);
+>> +	if (IS_ERR(opp))
+>> +		max_freq = freq_tbl[0].freq;
+>> +	else
+>> +		dev_pm_opp_put(opp);
+>>   
+>>   	min_loaded_core(inst, &min_coreid, &min_load, false);
+>>   	min_loaded_core(inst, &min_lp_coreid, &min_lp_load, true);
+>> @@ -1073,12 +1086,14 @@ static unsigned long calculate_inst_freq(struct venus_inst *inst,
+>>   
+>>   static int load_scale_v4(struct venus_inst *inst)
+>>   {
+>> +	const struct freq_tbl *table = inst->core->res->freq_tbl;
+>> +	unsigned int num_rows = inst->core->res->freq_tbl_size;
+>> +	unsigned long freq = 0, freq_core1 = 0, freq_core2 = 0;
+>>   	struct venus_core *core = inst->core;
+>> -	const struct freq_tbl *table = core->res->freq_tbl;
+>> -	unsigned int num_rows = core->res->freq_tbl_size;
+>> +	unsigned long max_freq = ULONG_MAX;
+>>   	struct device *dev = core->dev;
+>> -	unsigned long freq = 0, freq_core1 = 0, freq_core2 = 0;
+>>   	unsigned long filled_len = 0;
+>> +	struct dev_pm_opp *opp;
+>>   	int i, ret = 0;
+>>   
+>>   	for (i = 0; i < inst->num_input_bufs; i++)
+>> @@ -1104,19 +1119,29 @@ static int load_scale_v4(struct venus_inst *inst)
+>>   
+>>   	freq = max(freq_core1, freq_core2);
+>>   
+>> -	if (freq > table[0].freq) {
+>> -		dev_dbg(dev, VDBGL "requested clock rate: %lu scaling clock rate : %lu\n",
+>> -			freq, table[0].freq);
+>> +	opp = dev_pm_opp_find_freq_floor(dev, &max_freq);
+>> +	if (IS_ERR(opp))
+>> +		max_freq = table[0].freq;
+>> +	else
+>> +		dev_pm_opp_put(opp);
+>>   
+>> -		freq = table[0].freq;
+>> +	if (freq > max_freq) {
+>> +		dev_dbg(dev, VDBGL "requested clock rate: %lu scaling clock rate : %lu\n",
+>> +			freq, max_freq);
+>> +		freq = max_freq;
+>>   		goto set_freq;
+>>   	}
+>>   
+>> -	for (i = num_rows - 1 ; i >= 0; i--) {
+>> -		if (freq <= table[i].freq) {
+>> -			freq = table[i].freq;
+>> -			break;
+>> +	opp = dev_pm_opp_find_freq_ceil(dev, &freq);
+>> +	if (IS_ERR(opp)) {
+>> +		for (i = num_rows - 1 ; i >= 0; i--) {
+>> +			if (freq <= table[i].freq) {
+>> +				freq = table[i].freq;
+>> +				break;
+>> +			}
+>>   		}
+>> +	} else {
+>> +		dev_pm_opp_put(opp);
+>>   	}
+>>   
+>>   set_freq:
+>>
+>> -- 
+>> 2.34.1
+>>
+-- 
+Best Regards,
+Renjiang
+
 
