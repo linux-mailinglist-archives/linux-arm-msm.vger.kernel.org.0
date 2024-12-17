@@ -1,146 +1,162 @@
-Return-Path: <linux-arm-msm+bounces-42459-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-42460-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 51F369F4165
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Dec 2024 04:58:00 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 27DB09F4170
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Dec 2024 05:00:16 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 34249169506
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Dec 2024 03:57:53 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6C346168BFA
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Dec 2024 04:00:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B26E714658B;
-	Tue, 17 Dec 2024 03:57:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Cjxth1a8"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 323AB146D76;
+	Tue, 17 Dec 2024 03:59:59 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from verein.lst.de (verein.lst.de [213.95.11.211])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D50861459FD;
-	Tue, 17 Dec 2024 03:57:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A116714601C;
+	Tue, 17 Dec 2024 03:59:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.95.11.211
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734407871; cv=none; b=icWMK0RXKiPHwD/SSEepPUBhILIbKb/dcLfuKE9G28oOTBmdyVKaiwpn/YqtgiRWZYndIYqqhr4VrV668YIzOm9r4+7SWf15UCPCAGDTEnrSLdqu9uGnAGA/g+OKHs1VYEvy/zPu/KHPkGHpOX6cbiIhQUgKDIERXT2ND+5I8YQ=
+	t=1734407999; cv=none; b=P33K3vy44PjuY1YCruAHsYMuxBECvbr/nn2PI/uJmIaideXIX/LZ58frXMQGf17pbFYkT+SfEyfm0jsYrK2gkvRiTTe0+y9BD5i7FRftrUnN1J9ZB6dS/tYBdLGgQji8gxLwhuWbofgN3/b+x2g/9QKKZ1Pzw/95fJfEzWRrsdE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734407871; c=relaxed/simple;
-	bh=kfS5d+YjRa+GpXwxvHuyz5VdYtDL6nCSWTPY+ZsU1Ak=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=DxvjuGKTeej05VLZXcEXisWK4xcKwdiQ7M/QXhzOJnv54a4w9Irck/vHNev5eE2SBdCUJZ+H9xTqbpF0YDv3X16RjSLVOE3TXacMUhjj0eS5h1z00umxNYNkgvdj/nKkrTTFRNuF4NXV6V4pcEZAB0SIxPOd7XK9O5TFGr0MZzU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Cjxth1a8; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BGIx7kd010841;
-	Tue, 17 Dec 2024 03:57:34 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	23N5wbmg89kmLl5F+mm3ElpkBd5Fu2Q4ftAfKKMgiNs=; b=Cjxth1a8ByIp7DGL
-	0UmMlBVBU5XKSkzFErstphwcmoHcpRYNGGx5Ro9sJX5aFgnGsOefnFWMpm1tIX95
-	pdomW3iqm4zluQXOgeK8rSOP64oIi+MpRa3mWg0pyyo33lbC6mNgCLFX6X+zlv+s
-	Iplzw90x2i7BYCoDeCvKjf3qN5wU504wfFO+LqDZ5aIIANwQMfs1stRm9B27vSTT
-	Un/1AH0dDiETe2h7tYQA4xAQ/zEb1LUJ58Qvc9hQklIm6KpJW39zLnvmd29Jdben
-	dgG9s5NMxdDyYFFMGzjmqZghd0OZ8KDwXeNW4vNj+3cDYGusFRQnh4zymdgkAva2
-	/5oRWw==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43jsy71196-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 17 Dec 2024 03:57:33 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4BH3vXLh007858
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 17 Dec 2024 03:57:33 GMT
-Received: from [10.231.216.103] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 16 Dec
- 2024 19:57:29 -0800
-Message-ID: <488e3bfa-c66f-4523-a74f-e39ad67f5145@quicinc.com>
-Date: Tue, 17 Dec 2024 11:57:26 +0800
+	s=arc-20240116; t=1734407999; c=relaxed/simple;
+	bh=GXKY4ibAqf+fScHyj3FgJPIYI3um2k9fkI7luLsdvHI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=nkaaLAM/nzdoysZ/sJkmrmdr8zjYjiFbZ070p48GQNcbh+YQ4UOGvi6IS8QoHD/Jb2szDqKDo38X00RMYNPjtaR9Drsye42aTmAiLsSUUzFP3riYmdJxd6EnppCFt70VhQwK5IhQ2wscER1gf7PIsyTkd+HkPrNna+igjGCFvQ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=lst.de; spf=pass smtp.mailfrom=lst.de; arc=none smtp.client-ip=213.95.11.211
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=lst.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lst.de
+Received: by verein.lst.de (Postfix, from userid 2407)
+	id 8E68768C4E; Tue, 17 Dec 2024 04:59:43 +0100 (CET)
+Date: Tue, 17 Dec 2024 04:59:43 +0100
+From: Christoph Hellwig <hch@lst.de>
+To: Kees Cook <kees@kernel.org>
+Cc: Jakub Kicinski <kuba@kernel.org>, Cheng Xu <chengyou@linux.alibaba.com>,
+	Kai Shen <kaishen@linux.alibaba.com>,
+	Jason Gunthorpe <jgg@ziepe.ca>, Leon Romanovsky <leon@kernel.org>,
+	Christian Benvenuti <benve@cisco.com>,
+	Nelson Escobar <neescoba@cisco.com>,
+	Bernard Metzler <bmt@zurich.ibm.com>,
+	Karsten Keil <isdn@linux-pingi.de>,
+	Michal Ostrowski <mostrows@earthlink.net>,
+	Andrew Lunn <andrew+netdev@lunn.ch>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>, Paolo Abeni <pabeni@redhat.com>,
+	Keith Busch <kbusch@kernel.org>, Jens Axboe <axboe@kernel.dk>,
+	Christoph Hellwig <hch@lst.de>, Sagi Grimberg <sagi@grimberg.me>,
+	Chaitanya Kulkarni <kch@nvidia.com>, Lee Duncan <lduncan@suse.com>,
+	Chris Leech <cleech@redhat.com>,
+	Mike Christie <michael.christie@oracle.com>,
+	"James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Alexander Aring <aahringo@redhat.com>,
+	David Teigland <teigland@redhat.com>,
+	Trond Myklebust <trondmy@kernel.org>,
+	Anna Schumaker <anna@kernel.org>, Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <sfrench@samba.org>,
+	Sergey Senozhatsky <senozhatsky@chromium.org>,
+	Tom Talpey <tom@talpey.com>, Simon Horman <horms@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>,
+	Jeff Layton <jlayton@kernel.org>, Neil Brown <neilb@suse.de>,
+	Olga Kornievskaia <okorniev@redhat.com>,
+	Dai Ngo <Dai.Ngo@oracle.com>, David Ahern <dsahern@kernel.org>,
+	Joerg Reuter <jreuter@yaina.de>,
+	Marcel Holtmann <marcel@holtmann.org>,
+	Johan Hedberg <johan.hedberg@gmail.com>,
+	Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+	Oliver Hartkopp <socketcan@hartkopp.net>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Robin van der Gracht <robin@protonic.nl>,
+	Oleksij Rempel <o.rempel@pengutronix.de>,
+	Alexandra Winter <wintera@linux.ibm.com>,
+	Thorsten Winkler <twinkler@linux.ibm.com>,
+	James Chapman <jchapman@katalix.com>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
+	Willem de Bruijn <willemdebruijn.kernel@gmail.com>,
+	Remi Denis-Courmont <courmisch@gmail.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Allison Henderson <allison.henderson@oracle.com>,
+	Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>,
+	Xin Long <lucien.xin@gmail.com>,
+	Wenjia Zhang <wenjia@linux.ibm.com>,
+	Jan Karcher <jaka@linux.ibm.com>,
+	"D. Wythe" <alibuda@linux.alibaba.com>,
+	Tony Lu <tonylu@linux.alibaba.com>,
+	Wen Gu <guwen@linux.alibaba.com>, Jon Maloy <jmaloy@redhat.com>,
+	Ying Xue <ying.xue@windriver.com>,
+	Stefano Garzarella <sgarzare@redhat.com>,
+	Martin Schiller <ms@dev.tdt.de>,
+	Kentaro Takeda <takedakn@nttdata.co.jp>,
+	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
+	Paul Moore <paul@paul-moore.com>, James Morris <jmorris@namei.org>,
+	"Serge E. Hallyn" <serge@hallyn.com>,
+	Guillaume Nault <gnault@redhat.com>,
+	Ahelenia =?utf-8?Q?Ziemia=C5=84ska?= <nabijaczleweli@nabijaczleweli.xyz>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Wu Yunchuan <yunchuan@nfschina.com>,
+	Max Gurtovoy <mgurtovoy@nvidia.com>,
+	Maurizio Lombardi <mlombard@redhat.com>,
+	David Howells <dhowells@redhat.com>,
+	Atte =?iso-8859-1?Q?Heikkil=E4?= <atteh.mailbox@gmail.com>,
+	Vincent Duvert <vincent.ldev@duvert.net>,
+	Denis Kirjanov <kirjanov@gmail.com>,
+	Lukas Bulwahn <lukas.bulwahn@gmail.com>,
+	Arnd Bergmann <arnd@arndb.de>, Thomas Huth <thuth@redhat.com>,
+	Andrew Waterman <waterman@eecs.berkeley.edu>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Andrej Shadura <andrew.shadura@collabora.co.uk>,
+	Ying Hsu <yinghsu@chromium.org>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Tom Parkin <tparkin@katalix.com>,
+	Jason Xing <kernelxing@tencent.com>,
+	Dan Carpenter <error27@gmail.com>, Hyunwoo Kim <v4bel@theori.io>,
+	Bernard Pidoux <f6bvp@free.fr>,
+	Sangsoo Lee <constant.lee@samsung.com>,
+	Doug Brown <doug@schmorgal.com>,
+	Ignat Korchagin <ignat@cloudflare.com>,
+	Gou Hao <gouhao@uniontech.com>,
+	Mina Almasry <almasrymina@google.com>,
+	Abhishek Chauhan <quic_abchauha@quicinc.com>,
+	Yajun Deng <yajun.deng@linux.dev>, Michal Luczaj <mhal@rbox.co>,
+	Jiri Pirko <jiri@resnulli.us>, syzbot <syzkaller@googlegroups.com>,
+	linux-kernel@vger.kernel.org, kernel@pengutronix.de,
+	linux-rdma@vger.kernel.org, netdev@vger.kernel.org,
+	linux-nvme@lists.infradead.org, open-iscsi@googlegroups.com,
+	linux-scsi@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	target-devel@vger.kernel.org, gfs2@lists.linux.dev,
+	linux-nfs@vger.kernel.org, ocfs2-devel@lists.linux.dev,
+	linux-cifs@vger.kernel.org, linux-hams@vger.kernel.org,
+	linux-bluetooth@vger.kernel.org, linux-can@vger.kernel.org,
+	linux-s390@vger.kernel.org, rds-devel@oss.oracle.com,
+	linux-sctp@vger.kernel.org, tipc-discussion@lists.sourceforge.net,
+	virtualization@lists.linux.dev, linux-x25@vger.kernel.org,
+	linux-security-module@vger.kernel.org,
+	syzbot+d7ce59b06b3eb14fd218@syzkaller.appspotmail.com,
+	linux-hardening@vger.kernel.org
+Subject: Re: [PATCH] net: Convert proto_ops::getname to sockaddr_storage
+Message-ID: <20241217035943.GB14719@lst.de>
+References: <20241217023417.work.145-kees@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 1/4] dt-bindings: media: add support for video hardware
-To: Krzysztof Kozlowski <krzk@kernel.org>
-CC: Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
-        Vikash Garodia
-	<quic_vgarodia@quicinc.com>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konradybcio@kernel.org>,
-        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-References: <20241213-add-venus-for-qcs615-v4-0-7e2c9a72d309@quicinc.com>
- <20241213-add-venus-for-qcs615-v4-1-7e2c9a72d309@quicinc.com>
- <avsiopdobpukz4ngqfakvghvswwrwopr4cn764mnuc76q4m3wh@axpup5fypxsu>
-Content-Language: en-US
-From: Renjiang Han <quic_renjiang@quicinc.com>
-In-Reply-To: <avsiopdobpukz4ngqfakvghvswwrwopr4cn764mnuc76q4m3wh@axpup5fypxsu>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: E6OSO1LYFE-_bbczgUMlsqubMCkW8sa3
-X-Proofpoint-GUID: E6OSO1LYFE-_bbczgUMlsqubMCkW8sa3
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 malwarescore=0
- phishscore=0 spamscore=0 suspectscore=0 mlxlogscore=999 clxscore=1015
- impostorscore=0 mlxscore=0 lowpriorityscore=0 priorityscore=1501
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2412170030
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241217023417.work.145-kees@kernel.org>
+User-Agent: Mutt/1.5.17 (2007-11-01)
 
+Would be nice to avoid a bunch of the overly long lines, but the
+fundamental changes looks good:
 
-On 12/16/2024 3:52 PM, Krzysztof Kozlowski wrote:
-> On Fri, Dec 13, 2024 at 03:26:46PM +0530, Renjiang Han wrote:
->> Add qcom,qcs615-venus compatible into qcom,sc7180-venus.yaml for the
->> video, and let qcom,qcs615-venus fallback to qcom,sc7180-venus on
->> QCS615 platform.
->>
->> Signed-off-by: Renjiang Han <quic_renjiang@quicinc.com>
->> ---
->>   Documentation/devicetree/bindings/media/qcom,sc7180-venus.yaml | 8 +++++++-
->>   1 file changed, 7 insertions(+), 1 deletion(-)
->>
->> diff --git a/Documentation/devicetree/bindings/media/qcom,sc7180-venus.yaml b/Documentation/devicetree/bindings/media/qcom,sc7180-venus.yaml
->> index 5cec1d077cda77817f6d876109defcb0abbfeb2c..6dee45b7366578e51319b575e5dd2587dc84baeb 100644
->> --- a/Documentation/devicetree/bindings/media/qcom,sc7180-venus.yaml
->> +++ b/Documentation/devicetree/bindings/media/qcom,sc7180-venus.yaml
->> @@ -18,7 +18,13 @@ allOf:
->>   
->>   properties:
->>     compatible:
->> -    const: qcom,sc7180-venus
->> +    oneOf:
->> +      - items:
->> +          - enum:
->> +              - qcom,qcs615-venus
->> +          - const: qcom,sc7180-venus
->> +
-> Drop blank line.
-OK, thanks for pointing it out.
->
-> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->
-> Best regards,
-> Krzysztof
->
--- 
-Best Regards,
-Renjiang
-
+Reviewed-by: Christoph Hellwig <hch@lst.de>
 
