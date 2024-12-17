@@ -1,152 +1,145 @@
-Return-Path: <linux-arm-msm+bounces-42533-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-42534-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 442229F4B09
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Dec 2024 13:35:55 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 908059F4B1C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Dec 2024 13:40:31 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7CF6716E0C5
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Dec 2024 12:35:52 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id A87387A17D4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Dec 2024 12:40:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 292971F1312;
-	Tue, 17 Dec 2024 12:35:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9CDFC1F37DE;
+	Tue, 17 Dec 2024 12:40:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="KT0HcRjg"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="u7v/dRQU"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f51.google.com (mail-lf1-f51.google.com [209.85.167.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7AD51EB9E3
-	for <linux-arm-msm@vger.kernel.org>; Tue, 17 Dec 2024 12:35:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 697CA1D47D9;
+	Tue, 17 Dec 2024 12:40:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734438948; cv=none; b=botL3PFRBGl3g1jItK757Jr7sQHICFqGhN2RMyDmNz8kFfTrovMy0ZzW0gOlBalgzWMpq6JKlmhMKP+eAwyAMIE7VipxaP+0ia26Z1KUGKeVlQ8lWcxMUiyJar6tXufIZe/ZagmffO2mV5/O+ErAquKzZcjqFy/vbXWZva+Q5Ns=
+	t=1734439219; cv=none; b=gTS6Tq73RwbeFIgxsez96sJwVzr6LcMY/3UUr3iCRLwpgWekOeZTZphW2RLuyaM964jb+Szv6Zk98wd4iImRHtVfpxwWUJJsHl72GpIsFzFtbSAQ5zdVDZWKkD1y+NZXrzzoOCrAJ/xpEClrISlaneJWNpSfyt28REKuDCtFlMA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734438948; c=relaxed/simple;
-	bh=P72G89o/YCMWCzZLIM5D+qksevbQkKdaRlhBYiPrFaw=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=W426q2wAy/UzFsS08qLUzhGSp8Xq41qdd1o9yG0OkdYsX99G10+eYjX6BAnSd4n0+3R4okP08DuYy2rb/PfTQWqSCfjW4Kn/A0qfvDvEln5lQPHsVVu7rXPsOAFbMfmcuPw4Ljn/5zDsJHbFLW+eu4gsgyL0a5jSRx1PQLjPoew=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=KT0HcRjg; arc=none smtp.client-ip=209.85.167.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f51.google.com with SMTP id 2adb3069b0e04-53e3a227b82so4991708e87.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Dec 2024 04:35:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1734438944; x=1735043744; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=EqFVcsq/1P38IrP8o1pPFwny5Xr5j1nP95SEUyFOxg4=;
-        b=KT0HcRjg0/lRZnqfdPDXJywYbz644SaV6pZeTj+rlc6sAEihGi3YxQb1Vt4xR6A6Bn
-         07tAbUvYY6VDvryIzhJJZiFFEKYWg0JuKx3eGTu3+NjAkQLKlQ4CwfrqoRqctnTD3HMe
-         brO2Abl5/jzCE89DiFuuZe1h2xd7ERatpD42tqypGUO+gi88xhbNX9y+v07sJtk5iCmF
-         2Ql1QlNEv3IGIjKCwDrIPPH9yiKtoI8rkPk3D+iEHkqOIi8MCQ725UVW8wHog9OPUOmd
-         bJnQLXz7TnGQ+hsd4Fu7f4emsgpkjXS9rqgxUEN6D4ruIkVu1gQAnUj3JG74A0MuaERQ
-         xI2Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734438944; x=1735043744;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=EqFVcsq/1P38IrP8o1pPFwny5Xr5j1nP95SEUyFOxg4=;
-        b=RMsKUT2N2A9OkCXI8S+B0AYw3zx9NglH8JsUcwkeAZi3/LkolVrFFgN3GH0osvv3ft
-         6jigVrHZwkVSDe1bJhDwKDf2bMPQKOOv8JwK2C1yVX2a6nRP8j1IGShfxGoo58Fej5CO
-         Y7wyGDfezPKFRkEXY3cdSkCJ1VQOj1ASgBCzufdyd8tA+fbfIcSq6iLFhMCVQLWcePcH
-         5lS+bMq5k1xnqBGG9gtPv0AK8E+wTL/T1p6ipctWHCiuE/W64K9gQVOOdhnyFk87IBhb
-         5jx1vdG8vs7dIITtU/ZMTsdxnP5i6ieoIUvn3wvYX4ryuR58ESWaTOfHmFuBZ1VonJct
-         1qFA==
-X-Forwarded-Encrypted: i=1; AJvYcCV4Po4FId39nhikJ2QdQfQ0HMAHYKgXPoHsYM4+XZwBw0kg6FLVUF68YBa2owMBrJ74TxIhJKaAEnibbSBw@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx8SYMFEEapdg1VNXKoYWkJWvi0MYF6jcKtqb6KHwEmf+RJo1FJ
-	8ygHfqbQXSfA3YtRz4VCBnw1b6doEdb/UBAcNFcfapYjmOArlH/PF64EAuanACo=
-X-Gm-Gg: ASbGncs2ABnrc59zn6ijef+zamWQmJlk56yVuckzJoAMyBZL1O8eEjcgfdAuszbHVa+
-	EQXq9QQvXHULrzLwra1vD42KjGkg3Q0DCH8zoRW9JDcfNzqfcyUhuSRarOL8sKO0XarK6ajFZdy
-	Xga46iyz/S0WQNKaCIsFJBswzY2mVijQUmztoROACjxUvJsYwfreQnDjp2MkpciTAYJri9nE19n
-	vuaWmiY/TcWCWQRK8FS3COAE/5RgRnaLWTJTgjnx6pJphuBi7WL35uTteXYhwQn
-X-Google-Smtp-Source: AGHT+IGwO6ExXNEcA0R2FoxKWS83ev2naGxk2+ZyD+jgIUG5jEqO7Ox1e2tGWV3q6r+L5CxjhdwD1g==
-X-Received: by 2002:a05:6512:158e:b0:540:3566:5397 with SMTP id 2adb3069b0e04-5409054f33fmr4655941e87.22.1734438943729;
-        Tue, 17 Dec 2024 04:35:43 -0800 (PST)
-Received: from umbar.lan ([192.130.178.90])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-54120c164b1sm1137065e87.223.2024.12.17.04.35.41
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 17 Dec 2024 04:35:42 -0800 (PST)
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Tue, 17 Dec 2024 14:35:40 +0200
-Subject: [PATCH v2] drm/msm/dpu: correct LM pairing for SM6150
+	s=arc-20240116; t=1734439219; c=relaxed/simple;
+	bh=c+2nN11SpmwykfvNiTZxUP+tdaucBAgLnhj7stWOeYE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=u867xxEN4B/wBFMqZSdHAdoPh4/c2gD9LoaFJ8SMlBN8T4hykYtTH5NkSu6SlkpWgzqrjdz2WcqVdVyPmi+Dc2cFU9k2jEyl+ZQqqAJbZeECyLlELwfJl1XNehcCiE7bRiCb04cxyxlX09kEyZctYzbKhK6YOm3OMhH6n/elWn8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=u7v/dRQU; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E930DC4CED3;
+	Tue, 17 Dec 2024 12:40:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1734439219;
+	bh=c+2nN11SpmwykfvNiTZxUP+tdaucBAgLnhj7stWOeYE=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=u7v/dRQUutWCPYwwMw0y475GC80aZsD9ByturV+TE4FIIR+vl6uJYkrbmctSSYPK3
+	 pKC1hQnxmJrucXGVV0ZCRQv3eJXEJOqgfAKUeCrmcYHBeomPL7jRNXJIDWb6AmKTVL
+	 5oPBAle1eTelk7cg/PJRDfKkCM4wwAXH+4D0KPRts5c0qIluutpnJLDoYYOI6zw/wc
+	 tU5P1QfDNGWkZmzy1PUTNMHea6rNykM/Crj+g7JfEhyoby0pO3EohWzRV7GTkrmEaW
+	 5QPuo1p/BB5aMkNpEZvExRNrdGvePZt0LYwlJRWa0xzkhaOM5NoLNU6Uim6zVpjlr8
+	 H5rtxRAsvCJIA==
+Message-ID: <aa4400bd-b838-42d6-a58e-1eb1c99af218@kernel.org>
+Date: Tue, 17 Dec 2024 13:40:13 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 1/4] dt-bindings: media: add support for video hardware
+To: Renjiang Han <quic_renjiang@quicinc.com>,
+ Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+ Vikash Garodia <quic_vgarodia@quicinc.com>,
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>
+Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ Stanimir Varbanov <stanimir.varbanov@linaro.org>
+References: <20241217-add-venus-for-qcs615-v5-0-747395d9e630@quicinc.com>
+ <20241217-add-venus-for-qcs615-v5-1-747395d9e630@quicinc.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 fv0=
+In-Reply-To: <20241217-add-venus-for-qcs615-v5-1-747395d9e630@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Message-Id: <20241217-dpu-fix-sm6150-v2-1-9acc8f5addf3@linaro.org>
-X-B4-Tracking: v=1; b=H4sIABtwYWcC/3WMQQ6CMBBFr0Jm7ZhO1VZceQ/DgtAZmEQpaZVoC
- He3snf5/s97C2ROyhku1QKJZ80axwJ2V0E3tGPPqKEwWGOPZMlhmF4o+sb8cHQySF6MP9RyFjZ
- QpClxebfgrSk8aH7G9Nn6M/3Wv6mZkLCW4Du2Is64613HNsV9TD0067p+AYimqTetAAAA
-X-Change-ID: 20241216-dpu-fix-sm6150-17f0739f8fe0
-To: Rob Clark <robdclark@gmail.com>, 
- Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>, 
- Marijn Suijten <marijn.suijten@somainline.org>, 
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>
-Cc: Li Liu <quic_lliu6@quicinc.com>, Fange Zhang <quic_fangez@quicinc.com>, 
- linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
- freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1582;
- i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
- bh=P72G89o/YCMWCzZLIM5D+qksevbQkKdaRlhBYiPrFaw=;
- b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBnYXAdGjNdaXabT0YqQhED4A+ccplPzuyiib3mB
- 0PMvSkpahGJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZ2FwHQAKCRCLPIo+Aiko
- 1ePjCACAduQzUrmv2UvoKsCLEFcnmXD4PjXKpskER7W/cYTmm1XdZPXFmTk5RY0EqzMl5GaIMEW
- VRMx14YUs0iTTFUk9ihEWyZ+bg2+N9wownr+WOw57pwuHLR0/0BWQJ/9rK5oDGsIn0Vvj6ZnpGn
- X+ufNaMY5tVD6tGqy7oX5g7wD3VOQ6Z28aIYIW6bNu3dtC1VCIEs5mmqBsx2TJ2kfF/XHekHG94
- /CzLIy973QNfb2sk7/f4rwsq5LuyOOmMuTBrzu5L4VoPRVYj1CJcwCxjlyHBASAZviWPlTPBkQP
- b+cqywM+uIjO4zlF1MYJMPvdy47FqhyjBc7UFU7g0/8qTOaF
-X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
- fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
 
-The SM6150 platform doesn't have 3DMux (MERGE_3D) block, so it can not
-split the screen between two LMs. Drop lm_pair fields as they don't make
-sense for this platform.
+On 17/12/2024 10:17, Renjiang Han wrote:
+> Add qcom,qcs615-venus compatible into qcom,sc7180-venus.yaml for the
+> video, and let qcom,qcs615-venus fallback to qcom,sc7180-venus on
+> QCS615 platform.
+> 
+> Signed-off-by: Renjiang Han <quic_renjiang@quicinc.com>
+> ---
+Read that message fully.
 
-Suggested-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Fixes: cb2f9144693b ("drm/msm/dpu: Add SM6150 support")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
-Changes in v2:
-- Dropped lm_pair field as recommended by Abhinav.
-- Link to v1: https://lore.kernel.org/r/20241216-dpu-fix-sm6150-v1-1-9fd7ce2ff606@linaro.org
----
- drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_3_sm6150.h | 2 --
- 1 file changed, 2 deletions(-)
+<form letter>
+This is a friendly reminder during the review process.
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_3_sm6150.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_3_sm6150.h
-index 621a2140f675fa28b3a7fcd8573e59b306cd6832..d761ed705bac30d9ffef3c0c9140e5e8a5e930ad 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_3_sm6150.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_3_sm6150.h
-@@ -116,14 +116,12 @@ static const struct dpu_lm_cfg sm6150_lm[] = {
- 		.sblk = &sdm845_lm_sblk,
- 		.pingpong = PINGPONG_0,
- 		.dspp = DSPP_0,
--		.lm_pair = LM_1,
- 	}, {
- 		.name = "lm_1", .id = LM_1,
- 		.base = 0x45000, .len = 0x320,
- 		.features = MIXER_QCM2290_MASK,
- 		.sblk = &sdm845_lm_sblk,
- 		.pingpong = PINGPONG_1,
--		.lm_pair = LM_0,
- 	}, {
- 		.name = "lm_2", .id = LM_2,
- 		.base = 0x46000, .len = 0x320,
+It looks like you received a tag and forgot to add it.
 
----
-base-commit: a3d570eace66b4016f2692a6f1045742ee70c6b1
-change-id: 20241216-dpu-fix-sm6150-17f0739f8fe0
+If you do not know the process, here is a short explanation:
+Please add Acked-by/Reviewed-by/Tested-by tags when posting new
+versions, under or above your Signed-off-by tag. Tag is "received", when
+provided in a message replied to you on the mailing list. Tools like b4
+can help here. However, there's no need to repost patches *only* to add
+the tags. The upstream maintainer will do that for tags received on the
+version they apply.
+
+https://elixir.bootlin.com/linux/v6.5-rc3/source/Documentation/process/submitting-patches.rst#L577
+
+If a tag was not added on purpose, please state why and what changed.
+</form letter>
 
 Best regards,
--- 
-Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-
+Krzysztof
 
