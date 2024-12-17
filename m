@@ -1,151 +1,129 @@
-Return-Path: <linux-arm-msm+bounces-42549-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-42550-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id C79E59F4D56
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Dec 2024 15:14:14 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6D3869F4DE9
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Dec 2024 15:36:56 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id D7F63188B5C5
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Dec 2024 14:13:25 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id ACAE7169510
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Dec 2024 14:36:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B41EE1F63F6;
-	Tue, 17 Dec 2024 14:11:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eoRPkl5t"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4A9351F5402;
+	Tue, 17 Dec 2024 14:36:38 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FA5D1F63DE;
-	Tue, 17 Dec 2024 14:11:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C80B01F4E3E;
+	Tue, 17 Dec 2024 14:36:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734444705; cv=none; b=Twi9ARIXL9IsoBUORQg+CdWwPuuTFpaDFTRZrXczGpVYgDxGALbafDkcoHtkgo5J7lZwxQU60OmHtEwAROO19+rqUpmBZ9IZJcoQB8INpRxl599CyLKzGHE0dkUMWoB8We667S68OB6m8QspgfZy3k8OeqwFXH7TIois2YIUano=
+	t=1734446198; cv=none; b=puZnPdZySNT6p8VNegc03ffGuqyYUaHwS2lqalDKpTqFO2vUfKMkUJiZ3kM92S9toPDC6EyrI6kCMFURTmbM4yToUqWEKyrnBABgqdWHwh+0UMjqd8N6P2hCwyJ1T8XAIqHs27XtLPbzMzEf4fkV9+NVSh7umrAtQlmsN16hF/4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734444705; c=relaxed/simple;
-	bh=+dprW4zFTCcIz53pVj73e4JZAt3bSbTy3ZmUnv6jlxI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=O/P0v7SCjdc6ZCWNbNgUggOLwNeTTGAx2mAeo//2/VPM1ZOgMflG2ZS/sy5bypEioAp/8UVljFTBBrITqIf64uFFGx+hreoyS3Q42akHDhrdoOUNBIGpUuNTLy9QYZdpg7VrG5DN9oPnGurRGiPbMsJo2xX5SPxmLgCk4vC6YC0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eoRPkl5t; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95D05C4CED3;
-	Tue, 17 Dec 2024 14:11:39 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1734444705;
-	bh=+dprW4zFTCcIz53pVj73e4JZAt3bSbTy3ZmUnv6jlxI=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=eoRPkl5txePVLj9wR8JHQhrGKskOVm7bD1x1yLB2NqSNushBlTRAt5Zs/mrYuMMuB
-	 8FyjuxxDN1DOmI8qAy/h+L061c3kmg9S8EttyVs5+rYY4mmnKFXULsZyMZXulI7ECi
-	 Y8nc+B8AgjAbBH3w/HoAeg7kzWSRt3g34aVt+WN29a+rCyyyJapquNXoGGb0hVR6Qy
-	 +m8PlJ0AqKbocd3ItZOhTXH5yuLmORf76X/d3R9AKddS7lminn93bMSuvmQMEAqOFD
-	 GyXPcjVC0/8jalNnYtOGAtI4og6J1IoL36GB+DQbQO03VESzvLIjFgXkMtpQ34jfiL
-	 /qBihfOOObeHA==
-Message-ID: <ae6db654-c19a-4fde-a649-48c63f4e6394@kernel.org>
-Date: Tue, 17 Dec 2024 15:11:37 +0100
+	s=arc-20240116; t=1734446198; c=relaxed/simple;
+	bh=3nulv3yKN2RES20s6LiSVXCCu4z/W/uaKoXdhKsgh+k=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=TDG4r4Kmt2frmogf8+esJsfWLXteFC1RPGDXC97Sc9v5ViWP9Q1c/+pFPOyQ+Z5fzxvWJPmwRd33WaJp3UM4QwNIr1wV0TBgyqD4VudaX4fddfSRB90I93q+BLLoI40iRnodQpfvi6TJpAnmku8JHogGfv84PkUwYZBk1yBBx2g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 44EE5113E;
+	Tue, 17 Dec 2024 06:37:03 -0800 (PST)
+Received: from ewhatever.cambridge.arm.com (ewhatever.cambridge.arm.com [10.1.197.1])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPA id EC5B93F58B;
+	Tue, 17 Dec 2024 06:36:32 -0800 (PST)
+From: Suzuki K Poulose <suzuki.poulose@arm.com>
+To: Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Leo Yan <leo.yan@linux.dev>,
+	Tao Zhang <quic_taozha@quicinc.com>,
+	Mike Leach <mike.leach@linaro.org>,
+	James Clark <james.clark@arm.com>,
+	Mathieu Poirier <mathieu.poirier@linaro.org>
+Cc: Suzuki K Poulose <suzuki.poulose@arm.com>,
+	linux-arm-kernel@lists.infradead.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	coresight@lists.linaro.org
+Subject: Re: [PATCH v7 0/4] source filtering for multi-port output
+Date: Tue, 17 Dec 2024 14:36:25 +0000
+Message-Id: <173444598114.864570.18416527651218850484.b4-ty@arm.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20241213100731.25914-1-quic_taozha@quicinc.com>
+References: <20241213100731.25914-1-quic_taozha@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v10 2/4] media: qcom: camss: update clock names for sc7280
-To: Vikram Sharma <quic_vikramsa@quicinc.com>, rfoss@kernel.org,
- todor.too@gmail.com, bryan.odonoghue@linaro.org, mchehab@kernel.org,
- robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
- akapatra@quicinc.com, hariramp@quicinc.com, andersson@kernel.org,
- konradybcio@kernel.org, hverkuil-cisco@xs4all.nl,
- cros-qcom-dts-watchers@chromium.org, catalin.marinas@arm.com, will@kernel.org
-Cc: linux-arm-kernel@lists.infradead.org, linux-media@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, kernel@quicinc.com
-References: <20241217140656.965235-1-quic_vikramsa@quicinc.com>
- <20241217140656.965235-3-quic_vikramsa@quicinc.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <20241217140656.965235-3-quic_vikramsa@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 
-On 17/12/2024 15:06, Vikram Sharma wrote:
-> This patch changes gcc_cam_hf_axi clock name to make consistent
-
-Please do not use "This commit/patch/change", but imperative mood. See
-longer explanation here:
-https://elixir.bootlin.com/linux/v5.17.1/source/Documentation/process/submitting-patches.rst#L95
-
-> with existing platforms and add gcc_axi_sf clock too.
-> gcc_cam_hf_axi changed to gcc_axi_hf.
-> added gcc_axi_sf.
-
-Explain ABI impact and don't mix new features with some sort of refactoring.
-
+On Fri, 13 Dec 2024 18:07:27 +0800, Tao Zhang wrote:
+> In our hardware design, by combining a funnel and a replicator, it
+> implement a hardware device with one-to-one correspondence between
+> output ports and input ports. The programming usage on this device
+> is the same as funnel. The software uses a funnel and a static
+> replicator to implement the driver of this device. Since original
+> funnels only support a single output connection and original
+> replicator only support a single input connection, the code needs
+> to be modified to support this new feature. The following is a
+> typical topology diagram of multi-port output mechanism.
+> |----------|     |---------|     |----------|   |---------|
+> |  TPDM 0  |     | Source0 |     | Source 1 |   | TPDM 1  |
+> |----------|     |---------|     |----------|   |---------|
+>       |                |                |             |
+>       |                |                |             |
+>       |      --------- |                |             |
+>       |      |                          |             |
+>       |      |                          |             |
+>       |      |                          |             |
+>    \-------------/ ----------------------             |
+>     \  Funnel 0 /  |                                  |
+>      -----------   |     ------------------------------
+>           |        |     |
+>           |        |     |
+>         \------------------/
+>          \    Funnel 1    /     ----|
+>           \--------------/          |
+>                   |                 |----> Combine a funnel and a
+>                   |                 |      static replicator
+>           /-----------------\       |
+>          /    replicator 0   \  ----|
+>         /---------------------\
+>              |     |      |
+>              |     |      |-----------|
+>              |     |---------|        |
+>              |               |TPDM0   |TPDM1
+>              |            \-----------------/
+>              |             \   TPDA 0      /
+>              |              \-------------/
+>              |                    |
+>              |                    |
+>              |Source0/1           |
+>           \-------------------------------/
+>            \           Funnel 2          /
+>             \---------------------------/
 > 
-> Signed-off-by: Vikram Sharma <quic_vikramsa@quicinc.com>
-> ---
->  drivers/media/platform/qcom/camss/camss.c | 15 ++++++++++-----
->  1 file changed, 10 insertions(+), 5 deletions(-)
-> 
-> diff --git a/drivers/media/platform/qcom/camss/camss.c b/drivers/media/platform/qcom/camss/camss.c
-> index 004a74f6b2f6..1d992dc74877 100644
-> --- a/drivers/media/platform/qcom/camss/camss.c
-> +++ b/drivers/media/platform/qcom/camss/camss.c
-> @@ -1443,12 +1443,13 @@ static const struct camss_subdev_resources vfe_res_7280[] = {
->  		.regulators = {},
->  
->  		.clock = { "camnoc_axi", "cpas_ahb", "icp_ahb", "vfe0",
-> -			   "vfe0_axi", "gcc_cam_hf_axi" },
-> +			   "vfe0_axi", "gcc_axi_hf", "gcc_axi_sf" },
+> [...]
 
+Applied, thanks!
 
-I don't get how this works with old DTS.
-
-This looks like pure ABI break without any explanation.
+[1/4] dt-bindings: arm: qcom,coresight-static-replicator: Add property for source filtering
+      https://git.kernel.org/coresight/c/2a0bc219272b
+[2/4] coresight: Add a helper to check if a device is source
+      https://git.kernel.org/coresight/c/62374ce1876b
+[3/4] coresight: Add support for trace filtering by source
+      https://git.kernel.org/coresight/c/ec9903d6cc34
+[4/4] coresight-tpda: Optimize the function of reading element size
+      https://git.kernel.org/coresight/c/56e14a21cee4
 
 Best regards,
-Krzysztof
+-- 
+Suzuki K Poulose <suzuki.poulose@arm.com>
 
