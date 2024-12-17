@@ -1,71 +1,121 @@
-Return-Path: <linux-arm-msm+bounces-42512-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-42513-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id AF9039F48BF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Dec 2024 11:20:05 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 958B09F4903
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Dec 2024 11:37:36 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E3EBC16A2A3
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Dec 2024 10:19:55 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id A20E67A1276
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Dec 2024 10:37:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 149131E3DC3;
-	Tue, 17 Dec 2024 10:19:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EFF3A1E22FB;
+	Tue, 17 Dec 2024 10:37:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="dLiR97cQ"
+	dkim=pass (2048-bit key) header.d=cirrus.com header.i=@cirrus.com header.b="JHyqdCnA"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0b-001ae601.pphosted.com (mx0a-001ae601.pphosted.com [67.231.149.25])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25E841E2607;
-	Tue, 17 Dec 2024 10:19:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55B4F1DDC3F;
+	Tue, 17 Dec 2024 10:37:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=67.231.149.25
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734430770; cv=none; b=u7T2Pc3aqE/HhR1jfolTOxn9S8CYby1U9uRBwiakwv0i46S0qEYFBbmcYK0vA2dnAlE6DQgxMamF3xiy9JHWMCZ0hxBwDLGVSe01ABRzdoBK528fcByjJUrwZaapSQf+WA1So1dktGEZPBXRd2h4X5qloch41fxryRUp25/EnC0=
+	t=1734431847; cv=none; b=XE5VpPFqZW5U2Cc9LLEhdQe9X17IqZn9LXxnfQY5vbHZrqrJzQSsUt11lq8V6HnqMTGDuRdreNTvVPs4WS4Tq7F0DYYdUdrKaaFL872AFnMdaVDFIzlGJuo7hv44NQl9//uCZpja6oy/VvqYFZ7HWA/2LoREoFmY4zpdDiywG8k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734430770; c=relaxed/simple;
-	bh=UEptcp5tU8de3p6vaM3drmHNttcrpLSfkG2TaLiBuYM=;
+	s=arc-20240116; t=1734431847; c=relaxed/simple;
+	bh=O8dKluOujhFZHtu4NC9kbCIEXTbQRJR5JMVk02v4L/I=;
 	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=UV8eXmlX/eMi38h6uSqWus/AaUHEIvT1kbACyrsZxnl6ISJZMUgzxAf0RDSedQJ7NBkEnzLR1H1kiteXRjnNtvBgVjtm6oK8w5vz0y2ZqJfgqTdTRSJuEx3hY02svlnCEQeV1zVPohV4zgz/TC1DC64ppdrkCluSyntOJUGQhs8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=dLiR97cQ; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BH95efE023901;
-	Tue, 17 Dec 2024 10:19:24 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=Vjsiep5ZRr98Ed5cctG12xE+
-	Kw6m+dJm4BgkndjpywM=; b=dLiR97cQc/lzQ11H1TZrowBPM+OSwXr+4RTsdAl/
-	NcdqgjGSzk24r3I4NPa5YjuaKUs+bYPuZkrKJ7mogfAX9gvSs0xbMJsnas9XrfdP
-	bPd0Pt1MdoQ7ae16tD1Fs4lcxXVLk6IcAPspa2sVFCCxnEPKs6mLx5N4CzlgzvnG
-	zfoIHlhptqeGkSzZDZ/2JDX/7pvtRzQ16626pRj1vPmCXn6i5M9zWgS5fTRKIDaa
-	2EYY/Tr3EyTtZsQrmdv6pxHpxjvk8imr2l5fMUvpFFSKcrbCi+CGpUJRcLMosViX
-	Mb7IZL/LQUe+KkXNXu32/FqE/swWQx+IJY479P44dzFJWQ==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43k6c8g7ev-1
+	 Content-Type:Content-Disposition:In-Reply-To; b=Z/jwIWvUVUaTkLsiUrmv6OgEqJAXV6aCxckwf/qjRoUCbfjP6maqGhsXswQzweinkrwfx6sq9usiFZpw9J31MGMrzau2HRT8FD7bp9JnKpUOeQ8C5MNx/XnzfpwylqT+X1wEjhfFucDBeD6AZNyuUlGDvrrrkU5jCqIr7PbbCEk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=opensource.cirrus.com; spf=pass smtp.mailfrom=opensource.cirrus.com; dkim=pass (2048-bit key) header.d=cirrus.com header.i=@cirrus.com header.b=JHyqdCnA; arc=none smtp.client-ip=67.231.149.25
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=opensource.cirrus.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=opensource.cirrus.com
+Received: from pps.filterd (m0077473.ppops.net [127.0.0.1])
+	by mx0a-001ae601.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BH4pZxb025779;
+	Tue, 17 Dec 2024 04:36:26 -0600
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cirrus.com; h=cc
+	:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=PODMain02222019; bh=DncSMB8awaOalGRsmX
+	KLNqehj2Q8AYTF94wrCAJZets=; b=JHyqdCnAmk49Rks7tVDdl3Y0WoutMvr9mB
+	x3iG4Gih0mGgeaQ7b7y6YZuqiBWOeWqniSGkkhacOVcylwjh8Ais2tnzOBK/LMn4
+	L0mw7++y/sEhaKUgqkptQ2STbN8qQslOWHFUNPyAGAbUW95HpYe45bEj6R2MacLE
+	dr3Wr5bd/vBehFbMarGrAwhRCuKkSl17WHMrxdePJ6CkIqY7VVHogsI1yu/xu+jW
+	Wa2jZzHOPe9mMk1J+kcKIRKz7s9P5ZOc7MRlf0NKePCETF34apari5BqsJ3qElvv
+	wKRhesX/OXcQJ4j4tQh4kn7cFQdc5GKOyJmpynrAUNV3yzmMWYUg==
+Received: from ediex02.ad.cirrus.com ([84.19.233.68])
+	by mx0a-001ae601.pphosted.com (PPS) with ESMTPS id 43h8a237vd-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 17 Dec 2024 10:19:24 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4BHAJNO9026529
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 17 Dec 2024 10:19:23 GMT
-Received: from cse-cd02-lnx.ap.qualcomm.com (10.80.80.8) by
- nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Tue, 17 Dec 2024 02:19:18 -0800
-Date: Tue, 17 Dec 2024 18:19:15 +0800
-From: Yuanjie Yang <quic_yuanjiey@quicinc.com>
-To: <ulf.hansson@linaro.org>, <robh@kernel.org>, <krzk+dt@kernel.org>,
-        <conor+dt@kernel.org>, <bhupesh.sharma@linaro.org>,
-        <andersson@kernel.org>, <konradybcio@kernel.org>
-CC: <linux-mmc@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <quic_tingweiz@quicinc.com>, <quic_yuanjiey@quicinc.com>
-Subject: Re: [PATCH 0/2] Enable SDHC1 and SDHC2 on QCS615
-Message-ID: <Z2FQI+8A8U7dhqhQ@cse-cd02-lnx.ap.qualcomm.com>
-References: <20241217100237.2932895-1-quic_yuanjiey@quicinc.com>
+	Tue, 17 Dec 2024 04:36:26 -0600 (CST)
+Received: from ediex02.ad.cirrus.com (198.61.84.81) by ediex02.ad.cirrus.com
+ (198.61.84.81) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.13; Tue, 17 Dec
+ 2024 10:36:23 +0000
+Received: from ediswmail9.ad.cirrus.com (198.61.86.93) by
+ anon-ediex02.ad.cirrus.com (198.61.84.81) with Microsoft SMTP Server id
+ 15.2.1544.13 via Frontend Transport; Tue, 17 Dec 2024 10:36:23 +0000
+Received: from opensource.cirrus.com (ediswmail9.ad.cirrus.com [198.61.86.93])
+	by ediswmail9.ad.cirrus.com (Postfix) with ESMTPS id B0265820248;
+	Tue, 17 Dec 2024 10:36:23 +0000 (UTC)
+Date: Tue, 17 Dec 2024 10:36:22 +0000
+From: Charles Keepax <ckeepax@opensource.cirrus.com>
+To: Wolfram Sang <wsa+renesas@sang-engineering.com>
+CC: <linux-rtc@vger.kernel.org>,
+        Alexandre Belloni
+	<alexandre.belloni@bootlin.com>,
+        Yiting Deng <yiting.deng@amlogic.com>,
+        Xianwei Zhao <xianwei.zhao@amlogic.com>, Andrew Lunn <andrew@lunn.ch>,
+        Gregory Clement <gregory.clement@bootlin.com>,
+        Sebastian Hesselbarth
+	<sebastian.hesselbarth@gmail.com>,
+        Nicolas Ferre
+	<nicolas.ferre@microchip.com>,
+        Claudiu Beznea <claudiu.beznea@tuxon.dev>,
+        Benson Leung <bleung@chromium.org>,
+        Guenter Roeck <groeck@chromium.org>,
+        Support Opensource <support.opensource@diasemi.com>,
+        Paul Cercueil
+	<paul@crapouillou.net>,
+        Vladimir Zapolskiy <vz@mleia.com>,
+        Piotr Wojtaszczyk
+	<piotr.wojtaszczyk@timesys.com>,
+        Chanwoo Choi <cw00.choi@samsung.com>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Neil Armstrong
+	<neil.armstrong@linaro.org>,
+        Kevin Hilman <khilman@baylibre.com>,
+        "Jerome
+ Brunet" <jbrunet@baylibre.com>,
+        Martin Blumenstingl
+	<martin.blumenstingl@googlemail.com>,
+        Eddie Huang <eddie.huang@mediatek.com>,
+        Sean Wang <sean.wang@mediatek.com>,
+        Matthias Brugger
+	<matthias.bgg@gmail.com>,
+        AngeloGioacchino Del Regno
+	<angelogioacchino.delregno@collabora.com>,
+        Orson Zhai <orsonzhai@gmail.com>,
+        Baolin Wang <baolin.wang@linux.alibaba.com>,
+        Chunyan Zhang
+	<zhang.lyra@gmail.com>, Chen-Yu Tsai <wens@csie.org>,
+        Jernej Skrabec
+	<jernej.skrabec@gmail.com>,
+        Samuel Holland <samuel@sholland.org>,
+        "Vincent
+ Shih" <vincent.sunplus@gmail.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Michal Simek <michal.simek@amd.com>,
+        <linux-amlogic@lists.infradead.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <chrome-platform@lists.linux.dev>, <linux-mips@vger.kernel.org>,
+        <linux-mediatek@lists.infradead.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-renesas-soc@vger.kernel.org>,
+        <linux-samsung-soc@vger.kernel.org>, <linux-sunxi@lists.linux.dev>,
+        <linux-tegra@vger.kernel.org>, <patches@opensource.cirrus.com>
+Subject: Re: [PATCH] rtc: use boolean values with device_init_wakeup()
+Message-ID: <Z2FUJhC1Iq5mmkEg@opensource.cirrus.com>
+References: <20241217071331.3607-2-wsa+renesas@sang-engineering.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -74,77 +124,23 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="us-ascii"
 Content-Disposition: inline
-In-Reply-To: <20241217100237.2932895-1-quic_yuanjiey@quicinc.com>
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: wo2X3sbkGQtjiTARDXhB1jOAPgWDpJxk
-X-Proofpoint-ORIG-GUID: wo2X3sbkGQtjiTARDXhB1jOAPgWDpJxk
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 spamscore=0
- mlxscore=0 lowpriorityscore=0 priorityscore=1501 adultscore=0
- suspectscore=0 mlxlogscore=999 malwarescore=0 clxscore=1015
- impostorscore=0 phishscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2411120000 definitions=main-2412170085
+In-Reply-To: <20241217071331.3607-2-wsa+renesas@sang-engineering.com>
+X-Proofpoint-ORIG-GUID: ZFiaGqpxjixZfdP0EJY2r8mb04vfd9VM
+X-Proofpoint-GUID: ZFiaGqpxjixZfdP0EJY2r8mb04vfd9VM
+X-Proofpoint-Spam-Reason: safe
 
-On Tue, Dec 17, 2024 at 06:02:35PM +0800, Yuanjie Yang wrote:
-> Add SDHC1 and SDHC2 support to the QCS615 Ride platform. The
-> SDHC1 and SDHC2 of QCS615 are derived from SM6115. Include
-> the configuration of SDHC1-related and SDHC2-related opp,
-> power, and interconnect settings in the device tree.
+On Tue, Dec 17, 2024 at 08:13:26AM +0100, Wolfram Sang wrote:
+> device_init_wakeup() second argument is a bool type. Use proper boolean
+> values when calling it to match the type and to produce unambiguous code
+> which is easier to understand.
 > 
-> Signed-off-by: Yuanjie Yang <quic_yuanjiey@quicinc.com>
-> 
+> Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
 > ---
-> This patch series depends on below patch series:
-> - gcc: https://lore.kernel.org/all/20241022-qcs615-clock-driver-v4-0-3d716ad0d987@quicinc.com/
-> 
-> Changes in v5:
-> - Modify SDHC1 and SDHC2 interconnects, for the cpu path, use
-> QCOM_ICC_TAG_ACTIVE_ONLY to replace QCOM_ICC_TAG_ALWAYS
-> - For SDHC1 and SDHC2, Add a newline before status
-> - Rebase Change on tag: next-20241217
-> - Modify dependency changes
-> - Link to v4: https://lore.kernel.org/all/20241206023711.2541716-1-quic_yuanjiey@quicinc.com/
-> 
-> Changes in v4:
-> - Move properties which are not properties of the SoC to board DTS
-> - Add ice region to SDHC1 Node reg
-> - Add 50Mhz 200Mhz to SDHC1 opp table, add 50Mhz to SDHC2 opp table 
-> - fix SDHC2 Node compatible space
-> - Link to v3: https://lore.kernel.org/all/20241122065101.1918470-1-quic_yuanjiey@quicinc.com/
-> 
-> Changes in v3:
-> - Improve the commit messages and cover letter
-> - Link to v2: https://lore.kernel.org/all/20241106072343.2070933-1-quic_yuanjiey@quicinc.com/
-> 
-> Changes in v2:
-> - Improve the commit messages and cover letter
-> - Remove applied patches 1
-> - Pad sdhc_1 node and sdhc_2 node register addresses to 8 hex digits
-> - Adjust sdhc_1 node and sdhc_2 node register addresses to hexadecimal
-> - Modify sdhc_2 vqmmc-supply incorrect power configuration
-> - Link to v1: https://lore.kernel.org/all/20241023092708.604195-1-quic_yuanjiey@quicinc.com/
-> 
-> ---
-> Yuanjie Yang (2):
->   arm64: dts: qcom: qcs615: add SDHC1 and SDHC2
->   arm64: dts: qcom: qcs615-ride: enable SDHC1 and SDHC2
-> 
->  arch/arm64/boot/dts/qcom/qcs615-ride.dts |  37 ++++
->  arch/arm64/boot/dts/qcom/qcs615.dtsi     | 211 +++++++++++++++++++++++
->  2 files changed, 248 insertions(+)
-> 
-> -- 
-> 2.34.1
 
-Sent by mistake, please ignore this patch. I have sent a correct patch.
-https://lore.kernel.org/all/20241217101017.2933587-1-quic_yuanjiey@quicinc.com/
+For the old Wolfson parts:
+
+Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
 
 Thanks,
-yuanjie
-
+Charles
 
