@@ -1,68 +1,68 @@
-Return-Path: <linux-arm-msm+bounces-42472-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-42469-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4C89F9F4478
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Dec 2024 07:55:05 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 39AFD9F446B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Dec 2024 07:54:03 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 167C9188EB3B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Dec 2024 06:55:06 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 57B271689B6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Dec 2024 06:54:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E54951E00BE;
-	Tue, 17 Dec 2024 06:49:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 93931189F42;
+	Tue, 17 Dec 2024 06:49:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="D1hA4CML"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="jvm/X0Tg"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 605C61990CD;
-	Tue, 17 Dec 2024 06:49:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEB0F1714BE;
+	Tue, 17 Dec 2024 06:49:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734418163; cv=none; b=tL5l5hPk0s7vWRrHF0In+sPyr49+TkMu2pRN3TRK/UbO9X2BccSdxZYcimdOWKuduUuNs3cBJQ1ETGb6Zbm45GI+J6NK7UYfHHkliP/WYqtg6F+agGFZ0gpZHnM7ZUN8Z2KMso3AqsAI2u3RUtaVh0C5xW/kZgaYY4ayeo1NVH8=
+	t=1734418155; cv=none; b=GnvfxY1xJDsdQTdp2e8gXtWTp7mUPu2Lor85yLTkUsgCi+R4Yg0jjN8GWUnsd4dcjO4ikU/6lRrhSHrm2lsZY2Mu4y9nundvi/wzQQNrfpHKUUpwB/bK83sX7G95xuSxNborQZTuF6PXJ61ZbrUrwJeIGiy69dYtGI4jJzHS2Ow=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734418163; c=relaxed/simple;
-	bh=DlM31QpFRDoiQX/MKare8OBofU8mu50iw5DgWQKsDGk=;
+	s=arc-20240116; t=1734418155; c=relaxed/simple;
+	bh=9zuZopH3r+D+4Cl0PzGGGb3akQv0Kjdgrpy8dTT5pn0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pti6NIAqqc63v+Nx/N3LYiytnMpZtUzfYuVH3tasP5G9G74hu1NZQPyeEvCCIbXZqmN89iOE1nYcTxa+4Ca+i6uaExnBKRX8Y76gzdFWoXnRs4arBHT6xfIa0j0lrHL/Fr4RB5RCZ+lUdfK7YZc9f6Pd8LBEwu/7QyYZxPxGSSA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=D1hA4CML; arc=none smtp.client-ip=205.220.168.131
+	 MIME-Version; b=K7tnayRWF6OUZrY4LIF9nbeowL4O18QSyCbEmVH4uKMk0FsbK/8iat/RkVx22/njNQ2FlHQYjTLPs9+uWlV9wX8Hvf5c4TxkjdO3tTYT7zMY58h9d4IfP6tP6l3Lvh2fM8DQ54aIqW0vrM9oIMW67td6Gko7w/xI6BqmngEdpFs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=jvm/X0Tg; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BH5flUb001374;
-	Tue, 17 Dec 2024 06:49:03 GMT
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BH4mK1G014621;
+	Tue, 17 Dec 2024 06:49:05 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:date:from:in-reply-to:message-id
-	:mime-version:references:subject:to; s=qcppdkim1; bh=D7VrQHP03Ko
-	sO8TfO9a1+cRPMeJr8Z2/vRw7wFVMcEA=; b=D1hA4CML+wPL+LoAmNW5iwaUAfA
-	IK0ioXSLWAFJSC4XNwjLwG3Apxl1h/Zfp9vs6IIG4EU944vp2vgoOxoUWAheJyTy
-	VLbn3D3N3iv901gkd6T5UNVqwnFA/3fpoaTNcvUCbPx/WnCkN0aSnq2rToTSyiym
-	cdfeiobeZD6+x10NbMw8HJJOlIOPZ8qcXcuQsogIqKrvCzlXs47wUjElqsRwxihJ
-	FQezx4s8yDIN3GWbbTm+4ZJimtNG5xBw2BEqSYhTMvCzKYoth0BKzK1trjx27Ujr
-	NIHP4IBpVFb3wE5XAZ9uk5fCW9tOlKivQ6ioeQmJeBkT0TgvlT0lYJ5lKtA==
+	:mime-version:references:subject:to; s=qcppdkim1; bh=qg6D3yLLGiN
+	TUxSB1QTkkIlSVxfycpCncW6B1/Y/JfQ=; b=jvm/X0Tg5Q1wFjR0U7mBYxyI8Hs
+	tzP/0D/zuy5tHV6QdR+/DQVTlgQoAASC8bWcx/LR/nrU5/3hFbg2roiRTtcRMt0A
+	B00NCAzyQmh5xhir2GuJ7iePf+2jd3H0SPex1b5pTXS52p0EwfWFjn9y+30okzRc
+	Kxg9UEfJXCS1Gye8kSjMihNCNRt0M30yUrIQRj7lhr8ATUDIbppK5jpfBFx1Gv68
+	qtiUpk8VMVfpmEvNz3OCgQ2VycfDd9pJXpTq0CZ+KXLizRq4l417WbRGXrxNgh6P
+	K3pe9x96IFCNZxxm2pvlUKkdnKzRcmvIAlGFHBuPnRIQuhsdaXZVAh+jsUg==
 Received: from apblrppmta01.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43k3cgr5e3-1
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43k2k7g8w3-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 17 Dec 2024 06:49:03 +0000 (GMT)
+	Tue, 17 Dec 2024 06:49:04 +0000 (GMT)
 Received: from pps.filterd (APBLRPPMTA01.qualcomm.com [127.0.0.1])
-	by APBLRPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 4BH6n0oq014906;
+	by APBLRPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 4BH6n0Je014904;
 	Tue, 17 Dec 2024 06:49:00 GMT
 Received: from pps.reinject (localhost [127.0.0.1])
-	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTPS id 43h33kx8y0-1
+	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTPS id 43h33kx8y1-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
 	Tue, 17 Dec 2024 06:49:00 +0000
 Received: from APBLRPPMTA01.qualcomm.com (APBLRPPMTA01.qualcomm.com [127.0.0.1])
-	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 4BH6n025014873;
+	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 4BH6n0W6014874;
 	Tue, 17 Dec 2024 06:49:00 GMT
 Received: from hu-devc-hyd-u22-c.qualcomm.com (hu-wasimn-hyd.qualcomm.com [10.147.246.180])
-	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTPS id 4BH6mxUt014867
+	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTPS id 4BH6mx4F014868
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
 	Tue, 17 Dec 2024 06:49:00 +0000
 Received: by hu-devc-hyd-u22-c.qualcomm.com (Postfix, from userid 3944840)
-	id F20185AB; Tue, 17 Dec 2024 12:18:58 +0530 (+0530)
+	id 022885AC; Tue, 17 Dec 2024 12:18:59 +0530 (+0530)
 From: Wasim Nazir <quic_wasimn@quicinc.com>
 To: Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
@@ -72,11 +72,10 @@ To: Bjorn Andersson <andersson@kernel.org>,
         Will Deacon <will@kernel.org>
 Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        kernel@quicinc.com, Wasim Nazir <quic_wasimn@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Subject: [PATCH v4 2/7] soc: qcom: socinfo: add QCS9075 SoC ID
-Date: Tue, 17 Dec 2024 12:18:51 +0530
-Message-ID: <20241217064856.2772305-3-quic_wasimn@quicinc.com>
+        kernel@quicinc.com, Wasim Nazir <quic_wasimn@quicinc.com>
+Subject: [PATCH v4 3/7] dt-bindings: arm: qcom: Document rb8/ride/ride-r3 on QCS9075
+Date: Tue, 17 Dec 2024 12:18:52 +0530
+Message-ID: <20241217064856.2772305-4-quic_wasimn@quicinc.com>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241217064856.2772305-1-quic_wasimn@quicinc.com>
 References: <20241217064856.2772305-1-quic_wasimn@quicinc.com>
@@ -91,38 +90,56 @@ X-QCInternal: smtphost
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: kVO4_xVpEukHpjaCZBqlKPg5nk_9pZM6
-X-Proofpoint-ORIG-GUID: kVO4_xVpEukHpjaCZBqlKPg5nk_9pZM6
+X-Proofpoint-ORIG-GUID: fbSOpYA5qwIx-RmqLrpS9Olq0FkjauyT
+X-Proofpoint-GUID: fbSOpYA5qwIx-RmqLrpS9Olq0FkjauyT
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 adultscore=0
- impostorscore=0 spamscore=0 mlxscore=0 phishscore=0 mlxlogscore=999
- clxscore=1011 bulkscore=0 lowpriorityscore=0 malwarescore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2412170054
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501 mlxscore=0
+ lowpriorityscore=0 malwarescore=0 phishscore=0 mlxlogscore=999 spamscore=0
+ clxscore=1015 adultscore=0 suspectscore=0 impostorscore=0 bulkscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2411120000
+ definitions=main-2412170054
 
-Update soc_id table for the Qualcomm QCS9075 SoC
-to represent qcs9075 machine.
+qcs9075 rb8, ride & ride-r3 boards are based on QCS9075 SoC.
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+QCS9075 is compatible IoT-industrial grade variant of SA8775p SoC.
+Unlike QCS9100, it doesn't have safety monitoring feature of
+Safety-Island(SAIL) subsystem, which affects thermal management.
+
+Acked-by: Rob Herring (Arm) <robh@kernel.org>
 Signed-off-by: Wasim Nazir <quic_wasimn@quicinc.com>
 ---
- drivers/soc/qcom/socinfo.c | 1 +
- 1 file changed, 1 insertion(+)
+ Documentation/devicetree/bindings/arm/qcom.yaml | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/drivers/soc/qcom/socinfo.c b/drivers/soc/qcom/socinfo.c
-index 62fadfe44a09..174210f3467b 100644
---- a/drivers/soc/qcom/socinfo.c
-+++ b/drivers/soc/qcom/socinfo.c
-@@ -451,6 +451,7 @@ static const struct soc_id soc_id[] = {
- 	{ qcom_board_id(QCS9100) },
- 	{ qcom_board_id(QCS8300) },
- 	{ qcom_board_id(QCS8275) },
-+	{ qcom_board_id(QCS9075) },
- 	{ qcom_board_id(QCS615) },
- };
+diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
+index d394dffe3fba..8cee92a804c4 100644
+--- a/Documentation/devicetree/bindings/arm/qcom.yaml
++++ b/Documentation/devicetree/bindings/arm/qcom.yaml
+@@ -57,6 +57,7 @@ description: |
+         qcs8550
+         qcm2290
+         qcm6490
++        qcs9075
+         qcs9100
+         qdu1000
+         qrb2210
+@@ -950,6 +951,14 @@ properties:
+               - qcom,sa8775p-ride-r3
+           - const: qcom,sa8775p
 
++      - items:
++          - enum:
++              - qcom,qcs9075-rb8
++              - qcom,qcs9075-ride
++              - qcom,qcs9075-ride-r3
++          - const: qcom,qcs9075
++          - const: qcom,sa8775p
++
+       - items:
+           - enum:
+               - qcom,qcs9100-ride
 --
 2.47.0
 
