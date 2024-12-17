@@ -1,150 +1,166 @@
-Return-Path: <linux-arm-msm+bounces-42535-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-42536-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 86E849F4B20
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Dec 2024 13:41:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id A61459F4C51
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Dec 2024 14:33:05 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C4E3616E15B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Dec 2024 12:40:58 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C5D2916F19B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Dec 2024 13:25:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C0A901F1912;
-	Tue, 17 Dec 2024 12:40:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 938F61F426B;
+	Tue, 17 Dec 2024 13:25:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="E8cuT/F6"
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="fgaT1Tki"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f171.google.com (mail-qt1-f171.google.com [209.85.160.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92BBD1D47D9;
-	Tue, 17 Dec 2024 12:40:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE7581F3D44
+	for <linux-arm-msm@vger.kernel.org>; Tue, 17 Dec 2024 13:25:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734439254; cv=none; b=ukeuEYtRrPwBVeRAUEmiuUQJPMl3n9bExQvbA1YaMvLS+DNjMcKG/LnZQvMOwlRH3EeRRj4XNq68Fr6QTCZY85JXDMe1MybykO2WhfD3694hz8WCR7OwKSOAarm0BUiOhrzqhCV0SwSPhEQMgH4IvUZwbpU8sz7NLtBdNPD8v8Q=
+	t=1734441944; cv=none; b=rFssu2EasGpNVGIj3B6DpxAvCNRu9E8iJ9SPqdYmKFU19zn0V3zyysIDyp7Gz8lOgaMxRYmhoyNQ2c78qmllyI+5cpTH8+QF5nA1s/qIyQdcdTMSP1rOmBaf3eAF9FipR4k1UrIkV1z4BypYXox5N8bmLWOAzD8vqzQ/2utq4wY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734439254; c=relaxed/simple;
-	bh=C6DBk8Bx1ZkvBkjdBwFOR8MukUMLI9VfaOAdqdxA9VM=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=bRfMc4ULgH4frQY03+5uQcggea2tprKc/imlURaS/BHJzag2inMtk6e0/YPJ1A7TDfRMh/6cJYpZgdjLPNqxHE0pJNsVDlBbBpPQi0KfWWRP+b4cvZcdRYUclMn+d0Otmic66Cx6lgTHYyz/znVtOtmARGX+t97JbpPwcwqJfqU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=E8cuT/F6; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19C09C4CED3;
-	Tue, 17 Dec 2024 12:40:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1734439254;
-	bh=C6DBk8Bx1ZkvBkjdBwFOR8MukUMLI9VfaOAdqdxA9VM=;
-	h=Date:Subject:From:To:Cc:References:In-Reply-To:From;
-	b=E8cuT/F6046bLgDwqS8JKRpdJBeLzPHrVzWk/rfp3VvB216v9TaWTCIIVCfX+Xrhd
-	 nWHJFaudkm84uFa+eNkEJaIaaFqpfLmhcmH9GwX04hllv9yRFVJfIzJv145gHmLPmb
-	 qrwtUcgPCuDBEO57h2UAuJF6BdP9OQvlQhJbkdx2VppuXnqT1P2+9y0xz/5dlO2k8q
-	 oKwrf7kBVuT3t7iixeOnEyV8vY5fPC6UjZbEq4LPOXUQRHifnYwfpG6HItlaswWmhy
-	 MTmnkPDSC4PPHT3H9z1O2GRXDDYF4LgsblhqBJfyL9XiNbeR216+NlsbydtsY5u2mi
-	 5KnyFzLGrnNAw==
-Message-ID: <f263bf9b-3227-46ef-b94b-25a7ddec68ca@kernel.org>
-Date: Tue, 17 Dec 2024 13:40:47 +0100
+	s=arc-20240116; t=1734441944; c=relaxed/simple;
+	bh=H51U4YGf/B8HFpwpmbxRVfwUHVnxk/+GoC49FtzGj+E=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=nFJgo359o2/1ipLj5Q1PZt1yB8s9Yf/vMBbTO9Ivu/6ANDUkhQgVtB8zZP/3eXEWREte5OGDdSfsOFbOrynLgf6i9L8oMP3PLoj4vEdylmgdEHF9AAX8UhSxQ5I964EHlmo5Qfkz8kszJLgPlnmAshq2VUeFdwP0al3jrQLA1qc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=google.com; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=fgaT1Tki; arc=none smtp.client-ip=209.85.160.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+Received: by mail-qt1-f171.google.com with SMTP id d75a77b69052e-467abce2ef9so277381cf.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Dec 2024 05:25:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google; t=1734441941; x=1735046741; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=H51U4YGf/B8HFpwpmbxRVfwUHVnxk/+GoC49FtzGj+E=;
+        b=fgaT1Tki7LfUtSCyzIDSO8O+up4yVeY2oBPpR/QJ8nebZZmEC8HGvVuoehcUOeQ/vM
+         UN1JLm5v05byaMo4IlcmJcbJusj4U/HJkOaa9ECXxUgk4UAyjEGmSCeekoJRn5+r2Cu4
+         N+N0m2bEGTVCGvmU/dE1IcRSFbxf8+wlM1YDM=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1734441941; x=1735046741;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=H51U4YGf/B8HFpwpmbxRVfwUHVnxk/+GoC49FtzGj+E=;
+        b=KMVG9dV/pSj02KbWZeaN/NLMPIG8pwrUz8xzTbaMT0IMTWpg3QptAhcvL/YCbn2dgq
+         n35XjMaMIOzBEzg39PHLfiSi7cGfy6OmvkR/a5+BomDHnPfoQ8skjH45VLCEHIU8wEkn
+         QvQuUzHRPHQ03bs0dNUPCryCped5RR5h67Kh+nAIPr2Htztn0PREQqdDX4+wszXlI8E1
+         mlel2zJbNMg0l5BMWcBGW307TZ26CYg1ZXEFZunnc3pGwabvfeGx8ZBJOdD0Uqt7RxmR
+         GwXKjn1/yuK3ZATGZ4H8lfQ16vdXGchCrnzcESWZ5I3lV81a3brkVlv2bvvkD2AUobaz
+         1h/A==
+X-Forwarded-Encrypted: i=1; AJvYcCU3PbNZbBmAYeMe77Zuu7f/t9YZFHl8l0PWYcxU7Fu7XF31FYs7TFq4HKBKXgvHVhD1Wajsofc82vwNLOuF@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx4UsIkag6OzwGgRFx/vAa9DIqQ10j1/yBldt/QhHiJcVM1xg1m
+	ka4ynObHsXAQ7AUuamsRjjS0vzoCTcxXJtC4RsuWRsByp6Zfwl1S6iQHih1AFFkGSBAWm4SUDIJ
+	yI6lXoEN0qF6lnf3W7Pe8hwlNrYZbwIScbhZX
+X-Gm-Gg: ASbGncvMMbbPBZMvzpR6hd/vKj5zoDkEK+ryEOA2MfCHt5zcSYvS3rbI0jgO/YiRNa3
+	1FylnwbdxY8307rDpjn+6jYZme6EHzQUen5kkZn9PctY+/Z7gRdtwOI9MQipgvFXGaQYy
+X-Google-Smtp-Source: AGHT+IGJW+l9zXfMUaeo40XK+7bPUSnqauK+Az+lGUzluD+yQ/VlTXkwH2X6x8KUeaEMIrTECPFcD4EfU3yVGGK8l9A=
+X-Received: by 2002:a05:622a:20b:b0:466:8a29:9de7 with SMTP id
+ d75a77b69052e-468f96fac57mr3950571cf.12.1734441940466; Tue, 17 Dec 2024
+ 05:25:40 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 1/4] dt-bindings: media: add support for video hardware
-From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Renjiang Han <quic_renjiang@quicinc.com>,
- Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
- Vikash Garodia <quic_vgarodia@quicinc.com>,
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>
-Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- Stanimir Varbanov <stanimir.varbanov@linaro.org>
-References: <20241217-add-venus-for-qcs615-v5-0-747395d9e630@quicinc.com>
- <20241217-add-venus-for-qcs615-v5-1-747395d9e630@quicinc.com>
- <aa4400bd-b838-42d6-a58e-1eb1c99af218@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <aa4400bd-b838-42d6-a58e-1eb1c99af218@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+References: <20241214005248.198803-1-dianders@chromium.org>
+ <20241213165201.v2.1.I2040fa004dafe196243f67ebcc647cbedbb516e6@changeid>
+ <CAODwPW_c+Ycu_zhiDOKN-fH2FEWf2pxr+FcugpqEjLX-nVjQrg@mail.gmail.com> <CAD=FV=UHBA7zXZEw3K6TRpZEN-ApOkmymhRCOkz7h+yrAkR_Dw@mail.gmail.com>
+In-Reply-To: <CAD=FV=UHBA7zXZEw3K6TRpZEN-ApOkmymhRCOkz7h+yrAkR_Dw@mail.gmail.com>
+From: Julius Werner <jwerner@chromium.org>
+Date: Tue, 17 Dec 2024 14:25:27 +0100
+Message-ID: <CAODwPW8s4GhWGuZMUbWVNLYw_EVJe=EeMDacy1hxDLmnthwoFg@mail.gmail.com>
+Subject: Re: [PATCH v2 1/6] arm64: errata: Assume that unknown CPUs _are_
+ vulnerable to Spectre BHB
+To: Doug Anderson <dianders@chromium.org>
+Cc: Julius Werner <jwerner@chromium.org>, Catalin Marinas <catalin.marinas@arm.com>, 
+	Will Deacon <will@kernel.org>, Mark Rutland <mark.rutland@arm.com>, linux-arm-msm@vger.kernel.org, 
+	Jeffrey Hugo <quic_jhugo@quicinc.com>, linux-arm-kernel@lists.infradead.org, 
+	Roxana Bradescu <roxabee@google.com>, Trilok Soni <quic_tsoni@quicinc.com>, 
+	bjorn.andersson@oss.qualcomm.com, stable@vger.kernel.org, 
+	James Morse <james.morse@arm.com>, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On 17/12/2024 13:40, Krzysztof Kozlowski wrote:
-> On 17/12/2024 10:17, Renjiang Han wrote:
->> Add qcom,qcs615-venus compatible into qcom,sc7180-venus.yaml for the
->> video, and let qcom,qcs615-venus fallback to qcom,sc7180-venus on
->> QCS615 platform.
->>
->> Signed-off-by: Renjiang Han <quic_renjiang@quicinc.com>
->> ---
-> Read that message fully.
+> > - Refactor max_bhb_k in spectre_bhb_loop_affected() to be a global
+> > instead, which starts out as zero, is updated by
+> > spectre_bhb_loop_affected(), and is directly read by
+> > spectre_bhb_patch_loop_iter() (could probably remove the `scope`
+> > argument from spectre_bhb_loop_affected() then).
+>
+> Refactoring "max_bhb_k" would be a general cleanup and not related to
+> anything else here, right?
+>
+> ...but the function is_spectre_bhb_affected() is called from
+> "cpu_errata.c" and has a scope. Can we guarantee that it's always
+> "SCOPE_LOCAL_CPU"? I tried reading through the code and it's
+> _probably_ SCOPE_LOCAL_CPU most of the time, but it doesn't seem worth
+> it to add an assumption here for a small cleanup.
+>
+> I'm not going to do this, though I will move "max_bhb_k" to be a
+> global for the suggestion below.
 
-I meant, message in our previous discussion.
+If you make max_bhb_k a global, then whether you change all
+`spectre_bhb_loop_affected(SCOPE_SYSTEM)` calls to read the global
+directly or whether you keep it such that
+`spectre_bhb_loop_affected()` simply returns that global for
+SCOPE_SYSTEM makes no difference. I just think reading the global
+directly would look a bit cleaner. Calling a function that's called
+"...affected()" when you're really just trying to find out the K-value
+feels a bit odd.
 
-> 
-> <form letter>
-> This is a friendly reminder during the review process.
-> 
-> It looks like you received a tag and forgot to add it.
-> 
-> If you do not know the process, here is a short explanation:
-> Please add Acked-by/Reviewed-by/Tested-by tags when posting new
-> versions, under or above your Signed-off-by tag. Tag is "received", when
-> provided in a message replied to you on the mailing list. Tools like b4
-> can help here. However, there's no need to repost patches *only* to add
-> the tags. The upstream maintainer will do that for tags received on the
-> version they apply.
-> 
-> https://elixir.bootlin.com/linux/v6.5-rc3/source/Documentation/process/submitting-patches.rst#L577
-> 
-> If a tag was not added on purpose, please state why and what changed.
-> </form letter>
+For is_spectre_bhb_affected(), I was assuming the change below where
+you combine all the `return true` paths, so the scope question
+wouldn't matter there.
 
-Best regards,
-Krzysztof
+> > - Change the `return false` into `return true` at the end of
+> > is_spectre_bhb_affected (in fact, you can probably take out some of
+> > the other calls that result in returning true as well then)
+>
+> I'm not sure you can take out the other calls. Specifically, both
+> spectre_bhb_loop_affected() and is_spectre_bhb_fw_affected() _need_ to
+> be called for each CPU so that they update static globals, right?
+> Maybe we could get rid of the call to supports_clearbhb(), but that
+> _would_ change things in ways that are not obvious. Specifically I
+> could believe that someone could have backported "clear BHB" to their
+> core but their core is otherwise listed as "loop affected". That would
+> affect "max_bhb_k". Maybe (?) it doesn't matter in this case, but I'd
+> rather not mess with it unless someone really wants me to and is sure
+> it's safe.
+
+Yes, but spectre_bhb_enable_mitigation() already calls all those
+functions on its own again anyway, so I'm pretty sure the "must be
+called once for each CPU" part of spectre_bhb_loop_affected() is
+covered by that. (Besides, it would be really awful if they had made a
+function whose name starts with is_... have critical side-effects that
+break things when it doesn't get called.)
+
+> > - In spectre_bhb_enable_mitigations(), at the end of the long if-else
+> > chain, put a last else block that prints your WARN_ONCE(), sets the
+> > max_bhb_k global to 32, and then does the same stuff that the `if
+> > (spectre_bhb_loop_affected())` block would have installed (maybe
+> > factoring that out into a helper function called from both cases).
+>
+> ...or just reorder it so that the spectre_bhb_loop_affected() code is
+> last and it can be the "else". Then I can WARN_ONCE() if
+> spectre_bhb_loop_affected(). ...or I could just do the WARN_ONCE()
+> when I get to the end of is_spectre_bhb_affected() and set "max_bhb_k"
+> to 32 there. I'd actually rather do that so that "max_bhb_k" is
+> consistently set after is_spectre_bhb_affected() is called on all
+> cores regardless of whether or not some cores are unknown.
+
+Yeah, you can reorder the loops too. I don't feel like moving this
+into is_spectre_bhb_affected() would be a good idea. Functions with a
+predicate name like that really shouldn't have such side effects.
+Besides, I think is_spectre_bhb_affected() is probably called more
+often per CPU, both once from spectre_bhb_enable_mitigation() and by
+whatever calls the `matches` pointer in the cpu_errata struct.
+spectre_bhb_enable_mitigation() seems to be the function that's called
+once for each CPU on boot to install the correct mitigation, so that
+feels like the best spot to put the fallback logic to me.
 
