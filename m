@@ -1,158 +1,177 @@
-Return-Path: <linux-arm-msm+bounces-42519-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-42520-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 13F549F4978
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Dec 2024 12:02:07 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1829F9F497F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Dec 2024 12:02:51 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id F3F927A065C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Dec 2024 11:02:00 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5E61216BC54
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Dec 2024 11:02:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4B1031E22F0;
-	Tue, 17 Dec 2024 11:01:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3CC491DFE0C;
+	Tue, 17 Dec 2024 11:02:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Y75yTFa/"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 161FD1DCB3F;
-	Tue, 17 Dec 2024 11:01:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89F941CD215;
+	Tue, 17 Dec 2024 11:02:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734433318; cv=none; b=WHRgqJ1tg8fsekoAAVVWgclAAEr64mrZpdOy2YtqxzefYJd8eyzOClJ/FzBRQwsziA+kRUPJvpPSe9Rnvbb0LwTBQlQUjORZKRtXExyF5G0m83HjfTC44PBMwTk4ymJCVi2z8p+mYos3lECk5G/UtdF3uvTqczJcCOjy9byjZMw=
+	t=1734433364; cv=none; b=jzgNZBHxrrbwOfgBLQT4WB3t2zpq3trDma6mg2qCjtsA6EWJQ4/BmxkpPfMRRku1Nj20DZagPUFtCQDcSFCUhso2tXVws/eRoKhPn4ygnOeGA/+NnF06UEQbWQ6vtDMU4I8gi+7ywcO0MxjPwTFXhnAYox9QwxlDzBUEYLhsO48=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734433318; c=relaxed/simple;
-	bh=NrqjMZ+J+2WHaZCrdfnIKMWsZCnqh8duGYd7H0hLNEo=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=YAiUzT+SFmY3SDJT+UQ+wJfyvdS+jOLGq18rlCqbiOS+w6py3ZIUJbU/cx3aCPEzOnvJAP8pMD8J265+0WS0GqnItrT+3ZJt4RFv5wpaGydizARiZAqV4J1HYT7N/M6c969rfyBKUnaCCjtNdLinh3y2pa2g37mnIHovLm2Aag8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 6FFEA1063;
-	Tue, 17 Dec 2024 03:02:23 -0800 (PST)
-Received: from donnerap.manchester.arm.com (usa-sjc-imap-foss1.foss.arm.com [10.121.207.14])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id CE4E93F528;
-	Tue, 17 Dec 2024 03:01:47 -0800 (PST)
-Date: Tue, 17 Dec 2024 11:01:40 +0000
-From: Andre Przywara <andre.przywara@arm.com>
-To: Wolfram Sang <wsa+renesas@sang-engineering.com>
-Cc: linux-rtc@vger.kernel.org, Alexandre Belloni
- <alexandre.belloni@bootlin.com>, Yiting Deng <yiting.deng@amlogic.com>,
- Xianwei Zhao <xianwei.zhao@amlogic.com>, Andrew Lunn <andrew@lunn.ch>,
- Gregory Clement <gregory.clement@bootlin.com>, Sebastian Hesselbarth
- <sebastian.hesselbarth@gmail.com>, Nicolas Ferre
- <nicolas.ferre@microchip.com>, Claudiu Beznea <claudiu.beznea@tuxon.dev>,
- Benson Leung <bleung@chromium.org>, Guenter Roeck <groeck@chromium.org>,
- Support Opensource <support.opensource@diasemi.com>, Paul Cercueil
- <paul@crapouillou.net>, Vladimir Zapolskiy <vz@mleia.com>, Piotr
- Wojtaszczyk <piotr.wojtaszczyk@timesys.com>, Chanwoo Choi
- <cw00.choi@samsung.com>, Krzysztof Kozlowski <krzk@kernel.org>, Neil
- Armstrong <neil.armstrong@linaro.org>, Kevin Hilman <khilman@baylibre.com>,
- Jerome Brunet <jbrunet@baylibre.com>, Martin Blumenstingl
- <martin.blumenstingl@googlemail.com>, Eddie Huang
- <eddie.huang@mediatek.com>, Sean Wang <sean.wang@mediatek.com>, Matthias
- Brugger <matthias.bgg@gmail.com>, AngeloGioacchino Del Regno
- <angelogioacchino.delregno@collabora.com>, Orson Zhai
- <orsonzhai@gmail.com>, Baolin Wang <baolin.wang@linux.alibaba.com>, Chunyan
- Zhang <zhang.lyra@gmail.com>, Chen-Yu Tsai <wens@csie.org>, Jernej Skrabec
- <jernej.skrabec@gmail.com>, Samuel Holland <samuel@sholland.org>, Vincent
- Shih <vincent.sunplus@gmail.com>, Thierry Reding
- <thierry.reding@gmail.com>, Jonathan Hunter <jonathanh@nvidia.com>, Michal
- Simek <michal.simek@amd.com>, linux-amlogic@lists.infradead.org,
- linux-arm-kernel@lists.infradead.org, chrome-platform@lists.linux.dev,
- linux-mips@vger.kernel.org, linux-mediatek@lists.infradead.org,
- linux-arm-msm@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
- linux-samsung-soc@vger.kernel.org, linux-sunxi@lists.linux.dev,
- linux-tegra@vger.kernel.org, patches@opensource.cirrus.com
-Subject: Re: [PATCH] rtc: use boolean values with device_init_wakeup()
-Message-ID: <20241217110140.22c92138@donnerap.manchester.arm.com>
-In-Reply-To: <20241217071331.3607-2-wsa+renesas@sang-engineering.com>
-References: <20241217071331.3607-2-wsa+renesas@sang-engineering.com>
-Organization: ARM
-X-Mailer: Claws Mail 3.18.0 (GTK+ 2.24.32; aarch64-unknown-linux-gnu)
+	s=arc-20240116; t=1734433364; c=relaxed/simple;
+	bh=k9jRpF1FSyMwNj7gw2vTBuoN2nYoDwzY+sH5IIwClb0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=gLyDuIeq50HZVx9b8En8DAfDV02adJmGS1o5+qmJwvQhGIMOQw5UeY8Id/zDu2hJshu8VOQsHfdxjjD5E+NCITsl2XP1sFSpD8f6Nk+12k8PZzChgdi9NggnqTGiRyEGieR5sOvWNRaIYpKYekt68wkMEKxDoggTT76mLlswNVc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Y75yTFa/; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BH6RaNc002735;
+	Tue, 17 Dec 2024 11:02:26 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	N/UEEKnJSCLAcig2TeX2+ECErL1789cyoyRocGA+Rig=; b=Y75yTFa/dYF1upt/
+	Q0LI/rEHDtjgszW/ZPzllrbj5bE7c958dVxOryT6iCUhAzordd3tiMH+n3ivg7QV
+	cqqMF4krSYLQ3EYicj/TaTSUg6AKbZYWlc2Qd1TUVO8KE2wvMxARt+K8a/JbS5ex
+	AtkXNZs9P43bp/4GTnkgctJvwsref2Zr3I/SpraLNe/3oEHszjneIAYTTVH65ZVc
+	TM+Sw/LHVQN5SLs59ZeCd9tzUp/RcRWIekaCmOSlBzFjEPqVv+oq8QbbwtDkPNV4
+	zFrySocOCE+/ACKExZqQz6uBRi9vq46hHQzrcFjWiuXEt/Q2R5ZKeP9VoQlYV36C
+	tHbmYA==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43k424gs37-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 17 Dec 2024 11:02:25 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4BHB2OTI031577
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 17 Dec 2024 11:02:24 GMT
+Received: from [10.64.16.151] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 17 Dec
+ 2024 03:02:17 -0800
+Message-ID: <ba59f164-2ccd-4cf9-9426-9b6a2c199224@quicinc.com>
+Date: Tue, 17 Dec 2024 19:02:14 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 5/9] drm/msm/dpu: Add SM6150 support
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC: Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar
+	<quic_abhinavk@quicinc.com>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten
+	<marijn.suijten@somainline.org>,
+        Maarten Lankhorst
+	<maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        Rob Herring <robh@kernel.org>,
+        "Krzysztof
+ Kozlowski" <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        "Krishna
+ Manikandan" <quic_mkrishn@quicinc.com>,
+        Bjorn Andersson
+	<andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        Liu Li
+	<quic_lliu6@quicinc.com>,
+        Xiangxu Yin <quic_xiangxuy@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+References: <20241210-add-display-support-for-qcs615-platform-v4-0-2d875a67602d@quicinc.com>
+ <20241210-add-display-support-for-qcs615-platform-v4-5-2d875a67602d@quicinc.com>
+ <ntffm2jwr44m77z2bvuifv3itkpywco3cemgzkizzdp7e2ekdv@htfktmyyoe3k>
+Content-Language: en-US
+From: fange zhang <quic_fangez@quicinc.com>
+In-Reply-To: <ntffm2jwr44m77z2bvuifv3itkpywco3cemgzkizzdp7e2ekdv@htfktmyyoe3k>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: zhQzBUp5kvAn7wY0sTvHo4kcdgYHBDui
+X-Proofpoint-ORIG-GUID: zhQzBUp5kvAn7wY0sTvHo4kcdgYHBDui
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
+ mlxlogscore=999 spamscore=0 bulkscore=0 clxscore=1015 adultscore=0
+ priorityscore=1501 lowpriorityscore=0 malwarescore=0 suspectscore=0
+ mlxscore=0 phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2412170091
 
-On Tue, 17 Dec 2024 08:13:26 +0100
-Wolfram Sang <wsa+renesas@sang-engineering.com> wrote:
 
-> device_init_wakeup() second argument is a bool type. Use proper boolean
-> values when calling it to match the type and to produce unambiguous code
-> which is easier to understand.
+
+On 2024/12/17 18:54, Dmitry Baryshkov wrote:
+> On Tue, Dec 10, 2024 at 02:53:56PM +0800, Fange Zhang wrote:
+>> From: Li Liu <quic_lliu6@quicinc.com>
+>>
+>> Add definitions for the display hardware used on the Qualcomm SM6150
+>> platform.
+>>
+>> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>> Signed-off-by: Li Liu <quic_lliu6@quicinc.com>
+>> Signed-off-by: Fange Zhang <quic_fangez@quicinc.com>
+>> ---
+>>   .../gpu/drm/msm/disp/dpu1/catalog/dpu_5_3_sm6150.h | 254 +++++++++++++++++++++
+>>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c     |   1 +
+>>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h     |   1 +
+>>   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c            |   1 +
+>>   4 files changed, 257 insertions(+)
+>>
+>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_3_sm6150.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_3_sm6150.h
+>> new file mode 100644
+>> index 0000000000000000000000000000000000000000..621a2140f675fa28b3a7fcd8573e59b306cd6832
+>> --- /dev/null
+>> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_3_sm6150.h
 > 
-> Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
-
-Verified via regexps that it's indeed this pattern: 1 => true, 0 => false.
-
-Reviewed-by: Andre Przywara <andre.przywara@arm.com>
-
-Cheers,
-Andre
-
-> ---
-> Created with a coccinelle script. I opted for a single patch because the change
-> is rather trivial. I can break out per driver if this is desired. If you
-> like the change at all, that is.
+> [...]
 > 
->  drivers/rtc/rtc-88pm80x.c       | 2 +-
->  drivers/rtc/rtc-88pm860x.c      | 2 +-
->  drivers/rtc/rtc-amlogic-a4.c    | 6 +++---
->  drivers/rtc/rtc-armada38x.c     | 2 +-
->  drivers/rtc/rtc-as3722.c        | 2 +-
->  drivers/rtc/rtc-at91rm9200.c    | 2 +-
->  drivers/rtc/rtc-at91sam9.c      | 2 +-
->  drivers/rtc/rtc-cadence.c       | 2 +-
->  drivers/rtc/rtc-cmos.c          | 2 +-
->  drivers/rtc/rtc-cpcap.c         | 2 +-
->  drivers/rtc/rtc-cros-ec.c       | 2 +-
->  drivers/rtc/rtc-da9055.c        | 2 +-
->  drivers/rtc/rtc-ds3232.c        | 2 +-
->  drivers/rtc/rtc-isl1208.c       | 2 +-
->  drivers/rtc/rtc-jz4740.c        | 2 +-
->  drivers/rtc/rtc-loongson.c      | 4 ++--
->  drivers/rtc/rtc-lp8788.c        | 2 +-
->  drivers/rtc/rtc-lpc32xx.c       | 2 +-
->  drivers/rtc/rtc-max77686.c      | 2 +-
->  drivers/rtc/rtc-max8925.c       | 2 +-
->  drivers/rtc/rtc-max8997.c       | 2 +-
->  drivers/rtc/rtc-meson-vrtc.c    | 2 +-
->  drivers/rtc/rtc-mpc5121.c       | 2 +-
->  drivers/rtc/rtc-mt6397.c        | 2 +-
->  drivers/rtc/rtc-mv.c            | 4 ++--
->  drivers/rtc/rtc-mxc.c           | 2 +-
->  drivers/rtc/rtc-mxc_v2.c        | 2 +-
->  drivers/rtc/rtc-omap.c          | 2 +-
->  drivers/rtc/rtc-palmas.c        | 2 +-
->  drivers/rtc/rtc-pic32.c         | 2 +-
->  drivers/rtc/rtc-pm8xxx.c        | 2 +-
->  drivers/rtc/rtc-pxa.c           | 2 +-
->  drivers/rtc/rtc-rc5t583.c       | 2 +-
->  drivers/rtc/rtc-rc5t619.c       | 2 +-
->  drivers/rtc/rtc-renesas-rtca3.c | 2 +-
->  drivers/rtc/rtc-rk808.c         | 2 +-
->  drivers/rtc/rtc-s3c.c           | 2 +-
->  drivers/rtc/rtc-s5m.c           | 2 +-
->  drivers/rtc/rtc-sa1100.c        | 2 +-
->  drivers/rtc/rtc-sc27xx.c        | 4 ++--
->  drivers/rtc/rtc-sh.c            | 2 +-
->  drivers/rtc/rtc-spear.c         | 4 ++--
->  drivers/rtc/rtc-sun6i.c         | 2 +-
->  drivers/rtc/rtc-sunplus.c       | 4 ++--
->  drivers/rtc/rtc-tegra.c         | 2 +-
->  drivers/rtc/rtc-test.c          | 2 +-
->  drivers/rtc/rtc-tps6586x.c      | 2 +-
->  drivers/rtc/rtc-tps65910.c      | 2 +-
->  drivers/rtc/rtc-twl.c           | 2 +-
->  drivers/rtc/rtc-wm831x.c        | 2 +-
->  drivers/rtc/rtc-wm8350.c        | 2 +-
->  drivers/rtc/rtc-xgene.c         | 4 ++--
->  drivers/rtc/rtc-zynqmp.c        | 4 ++--
->  53 files changed, 62 insertions(+), 62 deletions(-)
+>> +
+>> +const struct dpu_mdss_cfg dpu_sm6150_cfg = {
+>> +	.mdss_ver = &sm6150_mdss_ver,
+>> +	.caps = &sm6150_dpu_caps,
+>> +	.mdp = &sm6150_mdp,
+>> +	.ctl_count = ARRAY_SIZE(sm6150_ctl),
+>> +	.ctl = sm6150_ctl,
+>> +	.sspp_count = ARRAY_SIZE(sm6150_sspp),
+>> +	.sspp = sm6150_sspp,
+>> +	.mixer_count = ARRAY_SIZE(sm6150_lm),
+>> +	.mixer = sm6150_lm,
+>> +	.dspp_count = ARRAY_SIZE(sm6150_dspp),
+>> +	.dspp = sm6150_dspp,
+>> +	.pingpong_count = ARRAY_SIZE(sm6150_pp),
+>> +	.pingpong = sm6150_pp,
+>> +	.intf_count = ARRAY_SIZE(sm6150_intf),
+>> +	.intf = sm6150_intf,
+>> +	.vbif_count = ARRAY_SIZE(sdm845_vbif),
+>> +	.vbif = sdm845_vbif,
+>> +	.perf = &sm6150_perf_data,
 > 
+> I noticed that the catalog entry doesn't provide writeback configuration
+> although the vendor DTSi specified that there is WB_2 on this platform.
+> Please send a followup patch enabling writeback on this platform.
+ok, will update it in next update
+> 
+>> +};
+>> +
+>> +#endif
+> 
+
 
