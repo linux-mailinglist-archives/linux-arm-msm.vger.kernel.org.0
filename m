@@ -1,63 +1,64 @@
-Return-Path: <linux-arm-msm+bounces-42555-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-42556-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 286D89F4E5E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Dec 2024 15:51:44 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7FB1E9F4E51
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Dec 2024 15:51:30 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1206E18898A7
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Dec 2024 14:51:13 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C494916876E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Dec 2024 14:51:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9C0D61F7566;
-	Tue, 17 Dec 2024 14:50:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 957C01F76B7;
+	Tue, 17 Dec 2024 14:50:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ai94OeF6"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TdLeOTsv"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 674FE1F543A;
-	Tue, 17 Dec 2024 14:50:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6596A1F543A;
+	Tue, 17 Dec 2024 14:50:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734447003; cv=none; b=m7LCgRus0r9jzhCLq/0WUqIoe6IiCJUVpmn/h0oqr16Xk+T4IrJZ4W0LRw4JeFm6aQzkZ3tEAO+4x8ZTT+Y3IDwTx7OKpZjvdqVwFzOv8tsh6fyUy2/dgL+2vqpAqc0jCaYxbO8sCoPU3UiX847ngZ5g38m/zYhND81Ar/mhS04=
+	t=1734447009; cv=none; b=bfS62tjUw5UvETPuD7XS5mZHcooH9bhKBj954UejwM8Dq4FqIK2E9/apJw2D6AIraCYYvSIB60UqiCHWsuYi6ulbkYW319KQLcJwS8i+GwYzRDFODoGpG3VNxOoObRkj5lOdO4xiN2LxN5+lX/HI8oG+cwZurbjZt5Kd4NEYzB8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734447003; c=relaxed/simple;
-	bh=zXQZiLk9rpyX+BgoMRHWBbS2cq7bp8vnbhDeCpGUFzg=;
+	s=arc-20240116; t=1734447009; c=relaxed/simple;
+	bh=9NGVuPAtpr/g0B3E7esC9slTop2iEDfvwQjSq6UBTj8=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=C9Kz2crzcQbHhHYx2E4bCMwdClxJs1ouvleNeFXWQ0i9zVMmEUHC4r6ahyMoENLKrwpAf/j6lSnDbDWWEvr19JE/SlS6nZkN+q2GTN4wQY2IjetUFi6WqRKazPzTJpB0/rdWf/e3cnWsafhbbfU4q0KA/Jz3lvSrETs6cX4pDtM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ai94OeF6; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8732FC4CED3;
-	Tue, 17 Dec 2024 14:50:02 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=QqH7yTiPVtbkSmLXzcNsyd8sl9gidqPW+IjunX1B4nfuex35rKCq7rUho9kyQc3iYCg/F5gKJMpkbLJIIUs0Zy+hOsl2JtlATv9ZZX7A1Jg2UbaML4Ef9jscPYvI9v3XQS+hWTrlIzeq/jc+6uXacSj+Ql0ZXPxUXbUXediaj3w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TdLeOTsv; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C0E2C4CED3;
+	Tue, 17 Dec 2024 14:50:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1734447002;
-	bh=zXQZiLk9rpyX+BgoMRHWBbS2cq7bp8vnbhDeCpGUFzg=;
+	s=k20201202; t=1734447009;
+	bh=9NGVuPAtpr/g0B3E7esC9slTop2iEDfvwQjSq6UBTj8=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=ai94OeF6nClKEEded2NPplsfTlJtGXjqWNqKEY6xLl7Pt6AvDpuhaMJvFW7t1738/
-	 0rsCutnU/tM9mdveFfzKzZIYzRMcnfzlAwjU1rxmIxtUNbidKKogEMWg8uN+CqJcJm
-	 RCvlv+mwmap87wjt+P3lXGoeJ2qsh5N0EMHApTL02cvXMNkeFMJmpkOH4fLqxJCLv1
-	 atmb/Eo78ON1PAnetr0OwcB8O2STIjK6wuEHXLqUBt9HU8HHqPUNs/Jls3+C7b+Mwh
-	 OwW0cLdzPYx/61YH54pB7eOibJ1xSel0w/kkDt2JIgbE7S/RXiij9m8HvIO1adM9x7
-	 Hkxjifk/p91IA==
-Date: Tue, 17 Dec 2024 08:50:01 -0600
+	b=TdLeOTsv2LMa1fox4cLQlpHIsi3VZIW18kv04jC0XcrDsIsG+sAKZFtoyKvJiPWDZ
+	 Tq7CEl9lgrFODQUPirKCyvKEDj+QFGkqqszrvls/MGhZt5wR1wp6jLV7qVcVqU9bx0
+	 lWC/U8h5ZT3+aCUOQkgAVDW4kLJYmKfWMzOabdi+IPMb8FodPQnAc0IlQTd0iTMv77
+	 FSQ+c73lnMt0v5UvaQgs07QPn+ofWD0GfY5QSzVLdI77rbB1HtrS3YqewlM08o3DtR
+	 bP0QvFDhuAOFxz1Z3ZJ3DWPpvB3+gsg4C8d8lvZdLxZqbE2Bk7C2vbSSvKB867Eg2j
+	 au4rHupxQggPg==
+Date: Tue, 17 Dec 2024 08:50:07 -0600
 From: "Rob Herring (Arm)" <robh@kernel.org>
 To: Lijuan Gao <quic_lijuang@quicinc.com>
-Cc: Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+Cc: linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org,
 	Linus Walleij <linus.walleij@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>, kernel@quicinc.com,
+	Jingyi Wang <quic_jingyw@quicinc.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	linux-arm-msm@vger.kernel.org,
 	Konrad Dybcio <konradybcio@kernel.org>,
-	Jingyi Wang <quic_jingyw@quicinc.com>, kernel@quicinc.com,
-	linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-gpio@vger.kernel.org
-Subject: Re: [PATCH 1/6] dt-bindings: pinctrl: qcom: correct gpio-ranges in
- examples for qcs615
-Message-ID: <173444700008.1651738.973727201688707789.robh@kernel.org>
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	devicetree@vger.kernel.org
+Subject: Re: [PATCH 2/6] dt-bindings: pinctrl: qcom: correct gpio-ranges in
+ examples for qcs8300
+Message-ID: <173444700721.1652050.16277960371479734740.robh@kernel.org>
 References: <20241212-correct_gpio_ranges-v1-0-c5f20d61882f@quicinc.com>
- <20241212-correct_gpio_ranges-v1-1-c5f20d61882f@quicinc.com>
+ <20241212-correct_gpio_ranges-v1-2-c5f20d61882f@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -66,18 +67,18 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20241212-correct_gpio_ranges-v1-1-c5f20d61882f@quicinc.com>
+In-Reply-To: <20241212-correct_gpio_ranges-v1-2-c5f20d61882f@quicinc.com>
 
 
-On Thu, 12 Dec 2024 17:24:00 +0800, Lijuan Gao wrote:
-> The QCS615 TLMM pin controller have the UFS_RESET pin, which is expected
+On Thu, 12 Dec 2024 17:24:01 +0800, Lijuan Gao wrote:
+> The QCS8300 TLMM pin controller have the UFS_RESET pin, which is expected
 > to be wired to the reset pin of the primary UFS memory. Include it in
 > gpio-ranges so that the UFS driver can toggle it.
 > 
-> Fixes: 55c487ea6084 ("dt-bindings: pinctrl: document the QCS615 Top Level Mode Multiplexer")
+> Fixes: 5778535972e2 ("dt-bindings: pinctrl: describe qcs8300-tlmm")
 > Signed-off-by: Lijuan Gao <quic_lijuang@quicinc.com>
 > ---
->  Documentation/devicetree/bindings/pinctrl/qcom,qcs615-tlmm.yaml | 2 +-
+>  Documentation/devicetree/bindings/pinctrl/qcom,qcs8300-tlmm.yaml | 2 +-
 >  1 file changed, 1 insertion(+), 1 deletion(-)
 > 
 
