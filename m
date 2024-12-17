@@ -1,193 +1,289 @@
-Return-Path: <linux-arm-msm+bounces-42424-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-42430-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id AB0A49F3E81
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Dec 2024 00:55:46 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 57C269F3F56
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Dec 2024 01:46:54 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 42E30188C9E9
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Dec 2024 23:55:47 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CF82B165206
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Dec 2024 00:45:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9AE9D1DACBF;
-	Mon, 16 Dec 2024 23:55:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2ACBE146D55;
+	Tue, 17 Dec 2024 00:43:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Yr8B3m0H"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="jpJ/lzgo"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2A5C42A9B;
-	Mon, 16 Dec 2024 23:55:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E53D313DBB6;
+	Tue, 17 Dec 2024 00:43:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734393335; cv=none; b=Xi8kjLycrpJvH3yWuK/8Am/bikpjQ1J/tqGNrCSl8sLMCnMVEPIVSANufnOpHkuHbY4pcVn+5kmv96RlMyVpj0mV/Fjq+HWFphh1aBGU4jseTW1jS0YsJLByDctvBCci1tPvjP6GQekWa48dr1D4OJMwaA+qh+Y2h7TV/7Be6Rs=
+	t=1734396224; cv=none; b=FQX/JDbWkLrNWtHFNUB8SwL4pHje9vS4i3SEfJFVEfwHAlo7iE49dl11YQAXxB1kecP2b8t8ZRd+jTaBVRSSqxEoTiyRW+i3jKHdQSFKp/VLTbxd9YObq1zOvV5C569zfUMtf6GnlyoI8TbMbKjXF1iIfC1JSn0lZjgssJo/Lrw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734393335; c=relaxed/simple;
-	bh=yY+H3IZ27kbq70Ic6mEqbgJLSSIcvv7qUvfpK4iVHV0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=El1jGnOYVfEsmXUGUm4e/z/z+Q14u17SZAg3EEEay7LKavoc2wJbq2kB9HTmaHUe7IVxyYvIQLd/ufiaST8SE9GXR2rtR3Bdc6lXzgRmSfu8ad0I8Lgn5tgoZIsWuDe+HbqpMl4pSFNisiklLhEVbTlssQgsScNXFzaUT4sCBeY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Yr8B3m0H; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1734396224; c=relaxed/simple;
+	bh=5WazUoY/HAWbihJ6jOLhCGPdLl+B2auVNNA2QwN2kxg=;
+	h=From:Subject:Date:Message-ID:MIME-Version:Content-Type:To:CC; b=sKL4P+y7UksoPpK1nkKm0+D5WhrcAtTYHZISc16gr6TnwqvBqHCRkgCgmSNMLFqLpdNZ+GLWMTtCwGYkKFcgaSvv3Bz2IVCT0uUOIrQ6ISD8Wl+0faFCqFF3jtkZRJpCh+8bY7l3abW04iJK5YnA+1NdukuJtKQemZBbkbu9eAE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=jpJ/lzgo; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BGI0MZF022402;
-	Mon, 16 Dec 2024 23:55:27 GMT
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BGIcCan011185;
+	Tue, 17 Dec 2024 00:43:26 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	w6PlaskUebzUlUBlgTkvIOZxMomq8R/80Ab8NqGyejU=; b=Yr8B3m0HTef0iPcZ
-	LuTQJeAVCQdBXO/4uf9J4GHEdOkrxE+J8PZ0xXYUW0ONv7CGVEgiU4aSn1AMK1eq
-	ul9kwYXn1uekDWVoTSfcK/OWk/JZQ4qTcmpau5Z0wHY5MZLyYfVo9esInKNghyYa
-	RMakNdtNqt5FTusOQMaHVSD3M3cFkl8f8vxe66MdZzSWJ2hYtO4eTtDXIt9BScLU
-	74FIeZx3ZVNO7STwUdD6XJC47IB3xYXBVVadk86Fd84nIqoiD59T8LxwReVsKUnm
-	W7lIvRg6w2oU1YV5Yc5unFaavOue2dzDM+0YTIav1zIRNQ8+M6YtFEeHdY9tBclq
-	v5GSOg==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43jgrra8w9-1
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=ZrunSga6t5rPRGuxhlCyFj
+	SLD/RgDOJIMp4/qT4pYO8=; b=jpJ/lzgoF9MPny8hiP00fIn93/N2gKbnjEuPKp
+	5V433kIkqtWWUkf5coHhEFJAEtmst0MAg3RtchkvFnTffC7V8+wIOz0c5AKRjbLF
+	KiIeVaTbahJXUOiiiUUiDN8zQyAWawS7Sj3jJqAS6CPwFvvVsiH2K/O/WD+iIhZC
+	r6Jsfvuc9MESR/EwisQEwHnortHfCXu0JP678gcCvwufEG6I4VTC+xJbdequxwFJ
+	vzryuAuJhq9mipw2IS4881Bk5vwfRTcYpJmaHdxjTvF74FQjDqHViGhzrAAa3R6w
+	BpPvZQHcUptGZxIAeUaLD4+7yS4R9SWLEt1MVm+xzmxVX9VQ==
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43jsn9gph2-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 16 Dec 2024 23:55:27 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4BGNtQm2016591
+	Tue, 17 Dec 2024 00:43:26 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4BH0hPVE030579
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 16 Dec 2024 23:55:26 GMT
-Received: from [10.110.119.169] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 16 Dec
- 2024 15:55:25 -0800
-Message-ID: <8c5aaa04-3209-40f2-9ba4-a1d6ae00fbf7@quicinc.com>
-Date: Mon, 16 Dec 2024 15:55:24 -0800
+	Tue, 17 Dec 2024 00:43:25 GMT
+Received: from jesszhan-linux.qualcomm.com (10.80.80.8) by
+ nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Mon, 16 Dec 2024 16:43:25 -0800
+From: Jessica Zhang <quic_jesszhan@quicinc.com>
+Subject: [PATCH v4 00/25] drm/msm/dpu: Add Concurrent Writeback Support for
+ DPU 10.x+
+Date: Mon, 16 Dec 2024 16:43:11 -0800
+Message-ID: <20241216-concurrent-wb-v4-0-fe220297a7f0@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] drm/msm/dpu: correct LM pairing for SM6150
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        "Marijn
- Suijten" <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        Li Liu <quic_lliu6@quicinc.com>,
-        Fange Zhang
-	<quic_fangez@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>
-References: <20241216-dpu-fix-sm6150-v1-1-9fd7ce2ff606@linaro.org>
- <54edef24-b27a-4d79-aff1-672d4e65b5a3@quicinc.com>
- <55dalo6ecncyceb6wmu7nm6hco4vixxox5grelykkdw5q6yjys@tac57c5nowsd>
-Content-Language: en-US
-From: Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <55dalo6ecncyceb6wmu7nm6hco4vixxox5grelykkdw5q6yjys@tac57c5nowsd>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+X-B4-Tracking: v=1; b=H4sIAB/JYGcC/2WQy07DMBBFfyXyGiO/4thZ8R+oCz8m1EJxip0GU
+ JV/Z5pIVITlHekc3bk3UqEkqKRvbqTAkmqaMgb11JBwdvkNaIqYiWBCMc0NDVMO11Igz/TTU9t
+ FLaTpBtsKgsylwJC+Nt/rCfM51Xkq35t+4ffrbjLCHkwLp4y2THiuHQjw/uXjmkLK4TlMI7m7F
+ vHgrVBHXiDfGWUHyxgYLf/z8pfnjOsjL5F3UobBeiuNbP/y6/5cAbzWNO8fPibqm00rmKXOn1N
+ 2yzsdpwgVZoqD0E4ZrQYegZnYYxG0eVcBO4xjmvsG+3LpbIgcdzyt6w8Y1upJmAEAAA==
+X-Change-ID: 20240618-concurrent-wb-97d62387f952
+To: Rob Clark <robdclark@gmail.com>,
+        Dmitry Baryshkov
+	<dmitry.baryshkov@linaro.org>,
+        <quic_abhinavk@quicinc.com>, Sean Paul
+	<sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        "David
+ Airlie" <airlied@gmail.com>,
+        Maarten Lankhorst
+	<maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        Simona Vetter <simona@ffwll.ch>,
+        Simona Vetter <simona.vetter@ffwll.ch>
+CC: <quic_ebharadw@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
+        <dri-devel@lists.freedesktop.org>, <freedreno@lists.freedesktop.org>,
+        <linux-kernel@vger.kernel.org>, Rob Clark <robdclark@chromium.org>,
+        =?utf-8?q?Ville_Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+        "Jessica
+ Zhang" <quic_jesszhan@quicinc.com>
+X-Mailer: b4 0.15-dev-355e8
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1734396205; l=8496;
+ i=quic_jesszhan@quicinc.com; s=20230329; h=from:subject:message-id;
+ bh=5WazUoY/HAWbihJ6jOLhCGPdLl+B2auVNNA2QwN2kxg=;
+ b=XSUzlAJR1sJk7XYjQoqSJfhRs1NyYuqf6DWk7lg6zcXiLS8Py8XnMUoa0bUExbTbPWn6ayXHO
+ 60MNzGzjYjLAYJ8mD5HtNtvR1MWjPj63O10l9tjpccaDW9cfAfjuodH
+X-Developer-Key: i=quic_jesszhan@quicinc.com; a=ed25519;
+ pk=gAUCgHZ6wTJOzQa3U0GfeCDH7iZLlqIEPo4rrjfDpWE=
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: byDHheK6OIT6RwUC3YdGiBI52V0FNrcR
-X-Proofpoint-GUID: byDHheK6OIT6RwUC3YdGiBI52V0FNrcR
+X-Proofpoint-GUID: 4qwCxy3l6BnJMTcOLAkgCHi8GtV9F7D7
+X-Proofpoint-ORIG-GUID: 4qwCxy3l6BnJMTcOLAkgCHi8GtV9F7D7
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- suspectscore=0 impostorscore=0 adultscore=0 spamscore=0 mlxscore=0
- mlxlogscore=999 clxscore=1015 priorityscore=1501 bulkscore=0 phishscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2412160195
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0
+ priorityscore=1501 spamscore=0 malwarescore=0 mlxscore=0 clxscore=1015
+ suspectscore=0 mlxlogscore=999 impostorscore=0 adultscore=0 phishscore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2412170004
 
+DPU supports a single writeback session running concurrently with primary
+display when the CWB mux is configured properly. This series enables
+clone mode for DPU driver and adds support for programming the CWB mux
+in cases where the hardware has dedicated CWB pingpong blocks. Currently,
+the CWB hardware blocks have only been added to the SM8650
+hardware catalog and only DSI has been exposed as a possible_clone of WB.
 
+This changes are split into two parts:
 
-On 12/16/2024 2:23 PM, Dmitry Baryshkov wrote:
-> On Mon, Dec 16, 2024 at 11:26:37AM -0800, Abhinav Kumar wrote:
->>
->>
->> On 12/16/2024 12:20 AM, Dmitry Baryshkov wrote:
->>> According to the vendor devicetree on SM6150 LM_0 is paired with LM_2
->>> rather than LM_1. Correct pairing indices.
->>>
->>> Fixes: cb2f9144693b ("drm/msm/dpu: Add SM6150 support")
->>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->>> ---
->>>    drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_3_sm6150.h | 4 ++--
->>>    1 file changed, 2 insertions(+), 2 deletions(-)
->>>
->>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_3_sm6150.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_3_sm6150.h
->>> index 621a2140f675fa28b3a7fcd8573e59b306cd6832..81eb274cc7000a3b70b0f6650088ddcd24648eab 100644
->>> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_3_sm6150.h
->>> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_3_sm6150.h
->>> @@ -116,20 +116,20 @@ static const struct dpu_lm_cfg sm6150_lm[] = {
->>>    		.sblk = &sdm845_lm_sblk,
->>>    		.pingpong = PINGPONG_0,
->>>    		.dspp = DSPP_0,
->>> -		.lm_pair = LM_1,
->>> +		.lm_pair = LM_2,
->>>    	}, {
->>>    		.name = "lm_1", .id = LM_1,
->>>    		.base = 0x45000, .len = 0x320,
->>>    		.features = MIXER_QCM2290_MASK,
->>>    		.sblk = &sdm845_lm_sblk,
->>>    		.pingpong = PINGPONG_1,
->>> -		.lm_pair = LM_0,
->>>    	}, {
->>>    		.name = "lm_2", .id = LM_2,
->>>    		.base = 0x46000, .len = 0x320,
->>>    		.features = MIXER_QCM2290_MASK,
->>>    		.sblk = &sdm845_lm_sblk,
->>>    		.pingpong = PINGPONG_2,
->>> +		.lm_pair = LM_0,
->>>    	},
->>>    };
->>
->> Have a basic question here. We check the peer only if we will have more than
->> one LM needed in the topology but sm6150 does not have 3dmux, so the number
->> of LMs will not go beyond one.
->>
->> 318 		/* Valid primary mixer found, find matching peers */
->> 319 		if (lm_count < reqs->topology.num_lm) {
->>
->> It seems like this fix will be unused or does not really matter.
->>
->> Downstream has a different implementation for lm_pair, its used even to
->> decide the LM pair for CWB mux. Upstream has a simpler implementation of
->> just doing that in the code of using ODD LMs for ODD CWB muxes and even LMs
->> for even CWB muxes. So fix is okay but not needed.
-> 
-> So which topology is supposed to work with LM_0 / LM_2 pair?
-> 
+The first part of the series will pull in Dmitry's patches to refactor
+the DPU resource manager to be based off of CRTC instead of encoder.
+This includes some changes (noted in the relevant commits) by me and
+Abhinav to fix some issues with getting the global state and refactoring
+the CDM allocation to work with Dmitry's changes.
 
-Since there is no 3dmux, none of the LMs can really have a "pair" in 
-this chipset.
+The second part of the series will add support for CWB by doing the
+following:
 
-This chipset has one DSI, one DP controller (which supports MST). So I 
-think the only possibility is single LM case for DSI and single LM case 
-for DP SST OR single LM case for DSI and 2 stream DP MST (which will use 
-2 LMs - one for each stream) . But even that can only do low resolutions 
-as even the MAX mdp clk is low on these.
+1) Add a DRM helper to detect if the current CRTC state is in clone mode
+   and add an "in_clone_mode" entry to the atomic state print
+2) Add the CWB mux to the hardware catalog and clarify the pingpong
+   block index enum to specifiy which pingpong blocks are dedicated to
+   CWB only and which ones are general use pingpong blocks
+3) Add CWB as part of the devcoredump
+4) Add support for configuring the CWB mux via dpu_hw_cwb ops
+5) Add pending flush support for CWB
+6) Add support for validating clone mode in the DPU CRTC and setting up
+   CWB within the encoder
+7) Adjust the encoder trigger flush, trigger start, and kickoff order to
+   accomodate clone mode
+8) Adjust when the frame done timer is started for clone mode
+9) Define the possible clones for DPU encoders so that 
 
-> I'd still prefer to land the fix for the sake of catalog having the
-> correct data.
-> 
+The feature was tested on SM8650 using IGT's kms_writeback test with the
+following change [1] and dumping the writeback framebuffer when in clone
+mode. I haven't gotten the chance to test it on DP yet, but I've
+validated both single and dual LM on DSI.
 
-the lm_pair left over in the downstream DT is for CWB mux because even 
-LMs can goto even CWBs. So only LM_0 and LM_2 can goto CWB_0 and are 
-hence a pair for CWB_0. But this has no relevance to upstream code.
+To test CWB with IGT, you'll need to apply this series [1] and this
+driver patch [2]. Run the following command to dump the writeback buffer:
 
-Dropping lm_pair would be more accurate for this chipset since it will 
-always goto single lm case.
+IGT_FRAME_DUMP_PATH=<dump path> FRAME_PNG_FILE_NAME=<file name> \
+./build/tests/kms_writeback -d [--run-subtest dump-valid-clones] \
 
-         else if (!dpu_kms->catalog->caps->has_3d_merge)
-                 topology.num_lm = 1;
+You can also do CRC validation by running this command:
 
->>
->>>
->>> ---
->>> base-commit: a3d570eace66b4016f2692a6f1045742ee70c6b1
->>> change-id: 20241216-dpu-fix-sm6150-17f0739f8fe0
->>>
->>> Best regards,
-> 
+./build/tests/kms_writeback [--run-subtest dump-valid-clones]
+
+[1] https://patchwork.freedesktop.org/series/137933/
+[2] https://patchwork.freedesktop.org/series/138284/
+
+---
+Changes in v4:
+- Rebased onto latest msm-next
+- Added kunit tests for framework changes
+- Skip valid clone check for encoders that don't have any possible clones set
+  (this is to avoid failing kunit tests, specifically the HDMI state helper tests)
+- Link to v3: https://lore.kernel.org/r/20241016-concurrent-wb-v3-0-a33cf9b93835@quicinc.com
+
+Changes in v3:
+- Dropped support for CWB on DP connectors for now
+- Dropped unnecessary PINGPONG array in *_setup_cwb()
+- Add a check to make sure CWB and CDM aren't supported simultaneously
+  (Dmitry)
+- Document cwb_enabled checks in dpu_crtc_get_topology() (Dmitry)
+- Moved implementation of drm_crtc_in_clone_mode() to drm_crtc.c (Jani)
+- Dropped duplicate error message for reserving CWB resources (Dmitry)
+- Added notes in framework changes about posting a separate series to
+  add proper KUnit tests (Maxime)
+- Added commit message note addressing Sima's comment on handling
+  mode_changed (Dmitry)
+- Formatting fixes (Dmitry)
+- Added proper kerneldocs (Dmitry)
+- Renamed dpu_encoder_helper_get_cwb() -> *_get_cwb_mask() (Dmitry)
+- Capitalize all instances of "pingpong" in comments (Dmitry)
+- Link to v2: https://lore.kernel.org/r/20240924-concurrent-wb-v2-0-7849f900e863@quicinc.com
+
+Changes in v2:
+- Moved CWB hardware programming to its own dpu_hw_cwb abstraction
+  (Dmitry)
+- Reserve and get assigned CWB muxes using RM API and KMS global state
+  (Dmitry)
+- Dropped requirement to have only one CWB session at a time
+- Moved valid clone mode check to DRM framework (Dmitry and Ville)
+- Switch to default CWB tap point to LM as the DSPP
+- Dropped printing clone mode status in atomic state (Dmitry)
+- Call dpu_vbif_clear_errors() before dpu_encoder_kickoff() (Dmitry)
+- Squashed setup_input_ctrl() and setup_input_mode() into a single
+  dpu_hw_cwb op (Dmitry)
+- Moved function comment docs to correct place and fixed wording of
+  comments/commit messages (Dmitry)
+- Grabbed old CRTC state using proper drm_atomic_state API in
+  dpu_crtc_atomic_check() (Dmitry)
+- Split HW catalog changes of adding the CWB mux block and changing the
+  dedicated CWB pingpong indices into 2 separate commits (Dmitry)
+- Moved clearing the dpu_crtc_state.num_mixers to "drm/msm/dpu: fill
+  CRTC resources in dpu_crtc.c" (Dmitry)
+- Fixed alignment and other formatting issues (Dmitry)
+- Link to v1: https://lore.kernel.org/r/20240829-concurrent-wb-v1-0-502b16ae2ebb@quicinc.com
+
+---
+Dmitry Baryshkov (4):
+      drm/msm/dpu: get rid of struct dpu_rm_requirements
+      drm/msm/dpu: switch RM to use crtc_id rather than enc_id for allocation
+      drm/msm/dpu: move resource allocation to CRTC
+      drm/msm/dpu: fill CRTC resources in dpu_crtc.c
+
+Esha Bharadwaj (3):
+      drm/msm/dpu: Add CWB entry to catalog for SM8650
+      drm/msm/dpu: add devcoredumps for cwb registers
+      drm/msm/dpu: add CWB support to dpu_hw_wb
+
+Jessica Zhang (18):
+      drm: add clone mode check for CRTC
+      drm/tests: Add test for drm_crtc_in_clone_mode()
+      drm: Add valid clones check
+      drm/tests: Add test for drm_atomic_helper_check_modeset()
+      drm/msm/dpu: Specify dedicated CWB pingpong blocks
+      drm/msm/dpu: Add dpu_hw_cwb abstraction for CWB block
+      drm/msm/dpu: Add RM support for allocating CWB
+      drm/msm/dpu: Add CWB to msm_display_topology
+      drm/msm/dpu: Require modeset if clone mode status changes
+      drm/msm/dpu: Fail atomic_check if CWB and CDM are enabled
+      drm/msm/dpu: Reserve resources for CWB
+      drm/msm/dpu: Configure CWB in writeback encoder
+      drm/msm/dpu: Support CWB in dpu_hw_ctl
+      drm/msm/dpu: Adjust writeback phys encoder setup for CWB
+      drm/msm/dpu: Start frame done timer after encoder kickoff
+      drm/msm/dpu: Skip trigger flush and start for CWB
+      drm/msm/dpu: Reorder encoder kickoff for CWB
+      drm/msm/dpu: Set possible clones for all encoders
+
+ drivers/gpu/drm/drm_atomic_helper.c                |  28 ++
+ drivers/gpu/drm/drm_crtc.c                         |  20 +
+ drivers/gpu/drm/msm/Makefile                       |   1 +
+ .../drm/msm/disp/dpu1/catalog/dpu_10_0_sm8650.h    |  29 +-
+ .../gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h |   4 +-
+ .../drm/msm/disp/dpu1/catalog/dpu_8_4_sa8775p.h    |   4 +-
+ .../gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h |   4 +-
+ .../drm/msm/disp/dpu1/catalog/dpu_9_2_x1e80100.h   |   4 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c           | 208 ++++++++-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c        | 463 ++++++++++++---------
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h        |  14 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h   |   7 +-
+ .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c    |  16 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h     |  13 +
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c         |  30 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h         |  15 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_cwb.c         |  73 ++++
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_cwb.h         |  70 ++++
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h        |  15 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_wb.c          |   4 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c            |  12 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h            |  13 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c             | 361 +++++++++-------
+ drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h             |  13 +-
+ drivers/gpu/drm/tests/drm_atomic_state_test.c      | 133 +++++-
+ include/drm/drm_crtc.h                             |   2 +-
+ 26 files changed, 1172 insertions(+), 384 deletions(-)
+---
+base-commit: 86313a9cd152330c634b25d826a281c6a002eb77
+change-id: 20240618-concurrent-wb-97d62387f952
+prerequisite-change-id: 20241209-abhinavk-modeset-fix-74864f1de08d:v3
+prerequisite-patch-id: a197a0cd4647cb189ea20a96583ea78d0c98b638
+prerequisite-patch-id: 112c8f1795cbed989beb02b72561854c0ccd59dd
+
+Best regards,
+-- 
+Jessica Zhang <quic_jesszhan@quicinc.com>
+
 
