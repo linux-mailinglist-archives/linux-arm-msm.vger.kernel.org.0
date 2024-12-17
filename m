@@ -1,66 +1,64 @@
-Return-Path: <linux-arm-msm+bounces-42573-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-42574-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6234C9F5140
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Dec 2024 17:39:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 73ABF9F5143
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Dec 2024 17:40:02 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id E2A3F1891D26
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Dec 2024 16:39:05 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7452A189301E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Dec 2024 16:39:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id ECD00156F20;
-	Tue, 17 Dec 2024 16:38:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B27CD1F7562;
+	Tue, 17 Dec 2024 16:39:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bbtGxK+L"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rBDX3RB9"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5250142E77;
-	Tue, 17 Dec 2024 16:38:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 839691459FD;
+	Tue, 17 Dec 2024 16:39:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734453539; cv=none; b=hXwT4Luv3xf0PAAtqF6b30U2dhxIiVEjh3jeNvbuve4NCK2A9tuhjI+DHfD4jq2+6QAp34jbr5bpjDXPJtbN8MiMvpECesvBtzDHdLc3uwUoPX9ld/r6ILS4XFP7FBR4lY4u96UqU7bmCV8EP5k3xgcHFM54KRzydQPVNTrgJg8=
+	t=1734453540; cv=none; b=RDLR+LccTOlk+iVPeybsv2HfONRjzrorK00Jy+p5g6UrmoSOvPQsRN3x+zkcuzryl46I1uw8YnEY6rE8XYQ0BE+H0UUKKvMiVe+QuOVK5vgMZg9H8b3o9dKg+eMRn5yMBhnp802HUtuxrODqNAF70wHBlTHe3qJ1K9TnrGtL3p0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734453539; c=relaxed/simple;
-	bh=69+55AMwxYgC7yebAzKAof5dQbloZSQVUEf583Fd7BI=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=pF+k+SauQ1fO3DOU49mxRDLVeAKhjZs3clzzfsYXGYQwny82cxvtG6y0yE2M2L+gmzNGjZ8ar7Ov0Yocbqv5L7JCVeyhIVQI/o4NUbYcwhDXGLMO9lFaKSUAR35xte0LPuqBHZI885pYCcBrSxNgN5u8nE1cdUt8x2tEYEw9+yc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bbtGxK+L; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A006C4CED3;
-	Tue, 17 Dec 2024 16:38:58 +0000 (UTC)
+	s=arc-20240116; t=1734453540; c=relaxed/simple;
+	bh=3EVg1+Zu1P76l+wUDuDNGuylZNMWDKzjADira60wV4g=;
+	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=T/+7ZrEwqH2qNbYm8FgbEq/sRo/mKnc3LmaIgKWM6IOPsy3ub/REyy+2sOHTTA3ZXY4Vt+bCZ2uykNzsU86kXjtgS5Ws6dS6ylPEAaApaKM3n+Ie6MTcbGeTFGDuNOpDKtZ4Z5+xrVWSe+JSB07NM9z+KnWOMtuEHWcxQ2cWR6M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rBDX3RB9; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79556C4CEDF;
+	Tue, 17 Dec 2024 16:38:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1734453539;
-	bh=69+55AMwxYgC7yebAzKAof5dQbloZSQVUEf583Fd7BI=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bbtGxK+Ls3Vi6642CXh6vu08U03HjZDjb9claMlC+XGubm5qhwAel3Us/H4zBnMkO
-	 m4ZdIyMimlHAEGIh/Hk7KQoLitJC9z1ttR43kj0uZE5BTy3Zayw1GY0SxStRdCk6a9
-	 kgE0PYmT7z5KbWsVzpYiY4/orjyMixSaQARir97TiTSs0MqHr5Lq3xrOYKJTdQMtmP
-	 PF5bpDh8ReAcxzzH95KhTi/E28clTcXQQPeLAJ1ShvRnwd/cScvD4aSNR/J+ImZ8Eg
-	 m2Ber9m7kOok/USkXNGGjDPYCAQf7rhPpBEkobqQfEMpvQl5AZS5x9vkC2iqcUDo/7
-	 nxpvW6wJvlnfw==
+	s=k20201202; t=1734453540;
+	bh=3EVg1+Zu1P76l+wUDuDNGuylZNMWDKzjADira60wV4g=;
+	h=From:To:Subject:Date:In-Reply-To:References:From;
+	b=rBDX3RB9bcYZgm2gRY8/8Cyf6c30ntilys8RuToiugulpIgF1lh6RkvyqJ/vqYuMd
+	 R/GpBplXzEdIYETLOYlzeCEG/OGu8j6GCaoa8NOf6/Q/gNbLfreUVTIyEMT+V4GCAR
+	 UbavcJI19K8agBxOjfoXGaXIgyGLTLfOixIMtPPi5woDma8vFGeHPMyz+SacIz5hLb
+	 Rf+GptszkFt2GSfJlcWK8VFPEwN8wo1u+/3KiOZBSjS2dItX1ctfso0i/sm2Za2DNE
+	 0nbHhJVoydbs7iJIEmgCcr3LTmUazivyLOJskPV8JWYBPNiULpb44YkjNVbbnks04D
+	 XBDuRsO+bAMFQ==
 From: Bjorn Andersson <andersson@kernel.org>
-To: Konrad Dybcio <konradybcio@kernel.org>,
-	Johan Hovold <johan+linaro@kernel.org>
-Cc: Rob Herring <robh@kernel.org>,
+To: Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>,
+	Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Jonathan Marek <jonathan@marek.ca>,
-	Stephan Gerhold <stephan.gerhold@linaro.org>,
-	Abel Vesa <abel.vesa@linaro.org>,
+	Taniya Das <quic_tdas@quicinc.com>,
 	linux-arm-msm@vger.kernel.org,
+	linux-clk@vger.kernel.org,
 	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	regressions@lists.linux.dev
-Subject: Re: [PATCH] Revert "arm64: dts: qcom: x1e78100-t14s: enable otg on usb-c ports"
-Date: Tue, 17 Dec 2024 10:38:51 -0600
-Message-ID: <173445353301.470882.1221462093815662513.b4-ty@kernel.org>
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: Re: (subset) [PATCH 1/2] dt-bindings: clock: qcom,sc7280-lpasscorecc: order properties to match convention
+Date: Tue, 17 Dec 2024 10:38:52 -0600
+Message-ID: <173445353299.470882.2185588952896722099.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20241206172402.20724-1-johan+linaro@kernel.org>
-References: <20241206172402.20724-1-johan+linaro@kernel.org>
+In-Reply-To: <20240817094605.27185-1-krzysztof.kozlowski@linaro.org>
+References: <20240817094605.27185-1-krzysztof.kozlowski@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -71,31 +69,18 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Fri, 06 Dec 2024 18:24:02 +0100, Johan Hovold wrote:
-> This reverts commit 1a48dd7b9ac809d1bd0fd2fef509abba83433846.
+On Sat, 17 Aug 2024 11:46:04 +0200, Krzysztof Kozlowski wrote:
+> By convention we expect first "compatible", then "reg" and then rest.
+> Order properties to match convention and what is in "required:" block.
 > 
-> A recent change enabling OTG mode on the Lenovo ThinkPad T14s USB-C
-> ports can break SuperSpeed device hotplugging. The host controller is
-> enumerated, but the device is not:
 > 
-> 	xhci-hcd xhci-hcd.5.auto: xHCI Host Controller
-> 	xhci-hcd xhci-hcd.5.auto: new USB bus registered, assigned bus number 3
-> 	xhci-hcd xhci-hcd.5.auto: hcc params 0x0110ffc5 hci version 0x110 quirks 0x000080a000000810
-> 	xhci-hcd xhci-hcd.5.auto: irq 247, io mem 0x0a800000
-> 	xhci-hcd xhci-hcd.5.auto: xHCI Host Controller
-> 	xhci-hcd xhci-hcd.5.auto: new USB bus registered, assigned bus number 4
-> 	xhci-hcd xhci-hcd.5.auto: Host supports USB 3.1 Enhanced SuperSpeed
-> 	hub 3-0:1.0: USB hub found
-> 	hub 3-0:1.0: 1 port detected
-> 	hub 4-0:1.0: USB hub found
-> 	hub 4-0:1.0: 1 port detected
-> 
-> [...]
 
 Applied, thanks!
 
-[1/1] Revert "arm64: dts: qcom: x1e78100-t14s: enable otg on usb-c ports"
-      commit: 1fb5cf0d165afc3be76ec754d1b1013515c3896a
+[1/2] dt-bindings: clock: qcom,sc7280-lpasscorecc: order properties to match convention
+      commit: 2a5711c7dc6f20e132f99b13731952bdb3530acf
+[2/2] dt-bindings: clock: qcom,sc7280-lpasscorecc: add top-level constraints
+      commit: 9d40c5a698de6ba629f2abc8dd43b8a2db469307
 
 Best regards,
 -- 
