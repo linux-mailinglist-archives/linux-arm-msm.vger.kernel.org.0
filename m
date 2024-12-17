@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-42534-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-42535-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 908059F4B1C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Dec 2024 13:40:31 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 86E849F4B20
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Dec 2024 13:41:01 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id A87387A17D4
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Dec 2024 12:40:25 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C4E3616E15B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Dec 2024 12:40:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9CDFC1F37DE;
-	Tue, 17 Dec 2024 12:40:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C0A901F1912;
+	Tue, 17 Dec 2024 12:40:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="u7v/dRQU"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="E8cuT/F6"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 697CA1D47D9;
-	Tue, 17 Dec 2024 12:40:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92BBD1D47D9;
+	Tue, 17 Dec 2024 12:40:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734439219; cv=none; b=gTS6Tq73RwbeFIgxsez96sJwVzr6LcMY/3UUr3iCRLwpgWekOeZTZphW2RLuyaM964jb+Szv6Zk98wd4iImRHtVfpxwWUJJsHl72GpIsFzFtbSAQ5zdVDZWKkD1y+NZXrzzoOCrAJ/xpEClrISlaneJWNpSfyt28REKuDCtFlMA=
+	t=1734439254; cv=none; b=ukeuEYtRrPwBVeRAUEmiuUQJPMl3n9bExQvbA1YaMvLS+DNjMcKG/LnZQvMOwlRH3EeRRj4XNq68Fr6QTCZY85JXDMe1MybykO2WhfD3694hz8WCR7OwKSOAarm0BUiOhrzqhCV0SwSPhEQMgH4IvUZwbpU8sz7NLtBdNPD8v8Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734439219; c=relaxed/simple;
-	bh=c+2nN11SpmwykfvNiTZxUP+tdaucBAgLnhj7stWOeYE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=u867xxEN4B/wBFMqZSdHAdoPh4/c2gD9LoaFJ8SMlBN8T4hykYtTH5NkSu6SlkpWgzqrjdz2WcqVdVyPmi+Dc2cFU9k2jEyl+ZQqqAJbZeECyLlELwfJl1XNehcCiE7bRiCb04cxyxlX09kEyZctYzbKhK6YOm3OMhH6n/elWn8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=u7v/dRQU; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E930DC4CED3;
-	Tue, 17 Dec 2024 12:40:14 +0000 (UTC)
+	s=arc-20240116; t=1734439254; c=relaxed/simple;
+	bh=C6DBk8Bx1ZkvBkjdBwFOR8MukUMLI9VfaOAdqdxA9VM=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=bRfMc4ULgH4frQY03+5uQcggea2tprKc/imlURaS/BHJzag2inMtk6e0/YPJ1A7TDfRMh/6cJYpZgdjLPNqxHE0pJNsVDlBbBpPQi0KfWWRP+b4cvZcdRYUclMn+d0Otmic66Cx6lgTHYyz/znVtOtmARGX+t97JbpPwcwqJfqU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=E8cuT/F6; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19C09C4CED3;
+	Tue, 17 Dec 2024 12:40:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1734439219;
-	bh=c+2nN11SpmwykfvNiTZxUP+tdaucBAgLnhj7stWOeYE=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=u7v/dRQUutWCPYwwMw0y475GC80aZsD9ByturV+TE4FIIR+vl6uJYkrbmctSSYPK3
-	 pKC1hQnxmJrucXGVV0ZCRQv3eJXEJOqgfAKUeCrmcYHBeomPL7jRNXJIDWb6AmKTVL
-	 5oPBAle1eTelk7cg/PJRDfKkCM4wwAXH+4D0KPRts5c0qIluutpnJLDoYYOI6zw/wc
-	 tU5P1QfDNGWkZmzy1PUTNMHea6rNykM/Crj+g7JfEhyoby0pO3EohWzRV7GTkrmEaW
-	 5QPuo1p/BB5aMkNpEZvExRNrdGvePZt0LYwlJRWa0xzkhaOM5NoLNU6Uim6zVpjlr8
-	 H5rtxRAsvCJIA==
-Message-ID: <aa4400bd-b838-42d6-a58e-1eb1c99af218@kernel.org>
-Date: Tue, 17 Dec 2024 13:40:13 +0100
+	s=k20201202; t=1734439254;
+	bh=C6DBk8Bx1ZkvBkjdBwFOR8MukUMLI9VfaOAdqdxA9VM=;
+	h=Date:Subject:From:To:Cc:References:In-Reply-To:From;
+	b=E8cuT/F6046bLgDwqS8JKRpdJBeLzPHrVzWk/rfp3VvB216v9TaWTCIIVCfX+Xrhd
+	 nWHJFaudkm84uFa+eNkEJaIaaFqpfLmhcmH9GwX04hllv9yRFVJfIzJv145gHmLPmb
+	 qrwtUcgPCuDBEO57h2UAuJF6BdP9OQvlQhJbkdx2VppuXnqT1P2+9y0xz/5dlO2k8q
+	 oKwrf7kBVuT3t7iixeOnEyV8vY5fPC6UjZbEq4LPOXUQRHifnYwfpG6HItlaswWmhy
+	 MTmnkPDSC4PPHT3H9z1O2GRXDDYF4LgsblhqBJfyL9XiNbeR216+NlsbydtsY5u2mi
+	 5KnyFzLGrnNAw==
+Message-ID: <f263bf9b-3227-46ef-b94b-25a7ddec68ca@kernel.org>
+Date: Tue, 17 Dec 2024 13:40:47 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -51,6 +51,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v5 1/4] dt-bindings: media: add support for video hardware
+From: Krzysztof Kozlowski <krzk@kernel.org>
 To: Renjiang Han <quic_renjiang@quicinc.com>,
  Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
  Vikash Garodia <quic_vgarodia@quicinc.com>,
@@ -64,7 +65,7 @@ Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
  Stanimir Varbanov <stanimir.varbanov@linaro.org>
 References: <20241217-add-venus-for-qcs615-v5-0-747395d9e630@quicinc.com>
  <20241217-add-venus-for-qcs615-v5-1-747395d9e630@quicinc.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
+ <aa4400bd-b838-42d6-a58e-1eb1c99af218@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -109,36 +110,40 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20241217-add-venus-for-qcs615-v5-1-747395d9e630@quicinc.com>
+In-Reply-To: <aa4400bd-b838-42d6-a58e-1eb1c99af218@kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 17/12/2024 10:17, Renjiang Han wrote:
-> Add qcom,qcs615-venus compatible into qcom,sc7180-venus.yaml for the
-> video, and let qcom,qcs615-venus fallback to qcom,sc7180-venus on
-> QCS615 platform.
+On 17/12/2024 13:40, Krzysztof Kozlowski wrote:
+> On 17/12/2024 10:17, Renjiang Han wrote:
+>> Add qcom,qcs615-venus compatible into qcom,sc7180-venus.yaml for the
+>> video, and let qcom,qcs615-venus fallback to qcom,sc7180-venus on
+>> QCS615 platform.
+>>
+>> Signed-off-by: Renjiang Han <quic_renjiang@quicinc.com>
+>> ---
+> Read that message fully.
+
+I meant, message in our previous discussion.
+
 > 
-> Signed-off-by: Renjiang Han <quic_renjiang@quicinc.com>
-> ---
-Read that message fully.
-
-<form letter>
-This is a friendly reminder during the review process.
-
-It looks like you received a tag and forgot to add it.
-
-If you do not know the process, here is a short explanation:
-Please add Acked-by/Reviewed-by/Tested-by tags when posting new
-versions, under or above your Signed-off-by tag. Tag is "received", when
-provided in a message replied to you on the mailing list. Tools like b4
-can help here. However, there's no need to repost patches *only* to add
-the tags. The upstream maintainer will do that for tags received on the
-version they apply.
-
-https://elixir.bootlin.com/linux/v6.5-rc3/source/Documentation/process/submitting-patches.rst#L577
-
-If a tag was not added on purpose, please state why and what changed.
-</form letter>
+> <form letter>
+> This is a friendly reminder during the review process.
+> 
+> It looks like you received a tag and forgot to add it.
+> 
+> If you do not know the process, here is a short explanation:
+> Please add Acked-by/Reviewed-by/Tested-by tags when posting new
+> versions, under or above your Signed-off-by tag. Tag is "received", when
+> provided in a message replied to you on the mailing list. Tools like b4
+> can help here. However, there's no need to repost patches *only* to add
+> the tags. The upstream maintainer will do that for tags received on the
+> version they apply.
+> 
+> https://elixir.bootlin.com/linux/v6.5-rc3/source/Documentation/process/submitting-patches.rst#L577
+> 
+> If a tag was not added on purpose, please state why and what changed.
+> </form letter>
 
 Best regards,
 Krzysztof
