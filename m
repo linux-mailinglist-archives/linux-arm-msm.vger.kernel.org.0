@@ -1,64 +1,64 @@
-Return-Path: <linux-arm-msm+bounces-42425-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-42431-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3529D9F3F51
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Dec 2024 01:46:37 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id D88769F3F59
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Dec 2024 01:47:12 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1F74C1891811
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Dec 2024 00:45:36 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id C70001891ACA
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Dec 2024 00:46:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6573184D3E;
-	Tue, 17 Dec 2024 00:43:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F097814A098;
+	Tue, 17 Dec 2024 00:43:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="o+NasEhR"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="dKwmBmRW"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8988973451;
-	Tue, 17 Dec 2024 00:43:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DA0E13DBB1;
+	Tue, 17 Dec 2024 00:43:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734396222; cv=none; b=I7NGa/2Y+Sz5ssOVY5zToRKvOas1g2Glc/z4BNSLYzJUOmWZjzAo6a/t7LAFYgOAGMz/5MYky+QwwL7i7yoqHXyFsZDYIpDeD4r0sVXIbLJTsoXl42O9mCDdXGu7UlJfZq87khoSTU290bk2YYnk2LiGy2l6PCeAEMP4CCre8zU=
+	t=1734396224; cv=none; b=rbfsnrNP21bFLiga12zxpRw2XCaT+Cu1LIBfDIkP7wc3VnoV/NP/AXQCyfaQ87XguLPj29g+brg4IOxIt5synWtasDy2S9F49RrrGlK1L+Qdmvuupx3b4/02j1b6ejZNdrirpMqZiFeUEYEApI59guMommHgrp2ZRe1wOe857Q4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734396222; c=relaxed/simple;
-	bh=AeBq4h/GHY8tFhhkFXpKhdg8Aq9jZPVE9sWoFfNT+JM=;
+	s=arc-20240116; t=1734396224; c=relaxed/simple;
+	bh=H9Hz3OL2stn6blXsSKb6fwop+x0lLIgsxCuNFiSuYgk=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:References:
-	 In-Reply-To:To:CC; b=ZZdRJbtW+vHlZ39ae63toB0PPpxPi4fv2HmPNnTh0Y38AYy3SgCstlPV1ieFDSv63hvNkOzmp+R4HPyTlOS+MakbX6iuyTYc1Eh+HcOJmKJDJ/ikHKHIs/PNJcuvXtOoRL8l2bhddqKWitu7ywY202sXaRxQZsnqdlZ44TuBm9s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=o+NasEhR; arc=none smtp.client-ip=205.220.180.131
+	 In-Reply-To:To:CC; b=kHa77xAKAdSAAvNFMFQiPbzpX9RV7pEraRUI5cgg3qjGBUdkQXbxTBc0pZHWCwp5q/siBjEi2xc2NX+D/VT2F6wNB/Tzfo+QvSPP+vfQZHLUpptbulbVkC31lizLLTTW4L4LJd+RXkwA5ndG6GLHuDtglk/hqWYbUzmE3E/X8Rc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=dKwmBmRW; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
 Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BGMsBS1008448;
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BGMriRb007420;
 	Tue, 17 Dec 2024 00:43:27 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	nYSIOetJs6YdmhLewOLmculnnd8ueBB4wuveIJ5mNSA=; b=o+NasEhRhRYhK15x
-	7LvNZesT3UPUvr2wf5yrm+JB94520HY5gOUAuYZ/FWxgDl2kXR5b6J1BOBIjR8WL
-	ZDTo9vgmvDuVS9aKdYcMHKxOAQItxGtycMiERNy0DXkpKKDIOXg7Nftt+iearrWY
-	mGjEIcJ1J2jPhZOUBnP0arprBIg7zQFw01hotCOaCrMEZ4uk1Fzvyj04LuX8v2qh
-	o/XjgiohctzY2spJpMdapsFPhVTI87bYAXfgRNQ9zF74pCcNbplK/v55cXZuKEj3
-	A5sRWJoGJU3/z7NF7qkBGsMibJQ3ILn6/oTZ2Mq5Tx+FQ/I2mg3qGL6scY+4i9O8
-	ok8pFA==
+	yIh/Fq9AIwoar0TggucAwZhvKQhyWmJL0PUKVL/B4PA=; b=dKwmBmRWaSTpnu8V
+	fu3R3D0C/b4E5uDphr5d2EgZPE3YntBas9wKNtjS1j+/6OKu6dbVNBjJ7kLmsQOb
+	LadVizPq1C5n1zLTbfQHPVl2E4P2JKpDlJ72dkgbw5r2JjvqGdTUPeKbm4K8vhb1
+	6G7JwpF0fC7NxxyIml4kK+IOTPQYydbE80Wupb9Cx2oaMzaZJp7PoXqwl4cHRCMq
+	draliEtCQcLJ12SX5z1uKuIrzsugISvVvH9OPycpd4Eu4iuT+u9w+oVPQxDFkSsy
+	F+A+g6gKv+OZ9hfM1pQmzF4Qm+9qU7BIT/xol252pIZRZlq5EEsXiFwKjk9B8cgi
+	rT9bhw==
 Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43jwda062b-1
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43jwda062c-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 17 Dec 2024 00:43:26 +0000 (GMT)
+	Tue, 17 Dec 2024 00:43:27 +0000 (GMT)
 Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4BH0hPYl018351
+	by NASANPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4BH0hQRh018354
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 17 Dec 2024 00:43:25 GMT
+	Tue, 17 Dec 2024 00:43:26 GMT
 Received: from jesszhan-linux.qualcomm.com (10.80.80.8) by
  nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
  15.2.1544.9; Mon, 16 Dec 2024 16:43:25 -0800
 From: Jessica Zhang <quic_jesszhan@quicinc.com>
-Date: Mon, 16 Dec 2024 16:43:12 -0800
-Subject: [PATCH v4 01/25] drm: add clone mode check for CRTC
+Date: Mon, 16 Dec 2024 16:43:13 -0800
+Subject: [PATCH v4 02/25] drm/tests: Add test for drm_crtc_in_clone_mode()
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -67,7 +67,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-ID: <20241216-concurrent-wb-v4-1-fe220297a7f0@quicinc.com>
+Message-ID: <20241216-concurrent-wb-v4-2-fe220297a7f0@quicinc.com>
 References: <20241216-concurrent-wb-v4-0-fe220297a7f0@quicinc.com>
 In-Reply-To: <20241216-concurrent-wb-v4-0-fe220297a7f0@quicinc.com>
 To: Rob Clark <robdclark@gmail.com>,
@@ -91,77 +91,125 @@ CC: <quic_ebharadw@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
         "Jessica
  Zhang" <quic_jesszhan@quicinc.com>
 X-Mailer: b4 0.15-dev-355e8
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1734396205; l=1838;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1734396205; l=3128;
  i=quic_jesszhan@quicinc.com; s=20230329; h=from:subject:message-id;
- bh=AeBq4h/GHY8tFhhkFXpKhdg8Aq9jZPVE9sWoFfNT+JM=;
- b=WaS2LQgk9w/JdX4PZF1o+TFLrXvpMtH0f4FoGCH7XS4fYFRcJ4J29wq2u/nZfMaG4DpZVRIe2
- 1RBXjMlPFwTDnFgK/WoosbCbYSXdwPSjD+hc2PuaSa2TlwIWi/TFcQa
+ bh=H9Hz3OL2stn6blXsSKb6fwop+x0lLIgsxCuNFiSuYgk=;
+ b=/GHC24oZe4q58nuhuwdaVIlJYBU6a3eZf8y5vQn0CUeW1rprymXMVzq0Ch1JHYtuNNBtJR1Hv
+ 0oJgzzjI0GYC6si6tZIQs/vjVkEyuGbQckOcqvCOzYwkDCoyMQJuzL7
 X-Developer-Key: i=quic_jesszhan@quicinc.com; a=ed25519;
  pk=gAUCgHZ6wTJOzQa3U0GfeCDH7iZLlqIEPo4rrjfDpWE=
 X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nasanex01b.na.qualcomm.com (10.46.141.250)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: TXHcPwy7VNXDORtMsZtU83PAd7HaYZys
-X-Proofpoint-ORIG-GUID: TXHcPwy7VNXDORtMsZtU83PAd7HaYZys
+X-Proofpoint-GUID: _xOJOu_pX48vkAsE5TAGQK0ByEVCMTK1
+X-Proofpoint-ORIG-GUID: _xOJOu_pX48vkAsE5TAGQK0ByEVCMTK1
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 bulkscore=0
  mlxscore=0 phishscore=0 priorityscore=1501 spamscore=0 adultscore=0
- malwarescore=0 impostorscore=0 mlxlogscore=968 suspectscore=0
+ malwarescore=0 impostorscore=0 mlxlogscore=999 suspectscore=0
  lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.19.0-2411120000 definitions=main-2412170004
 
-Add a common helper to check if the given CRTC state is in clone mode.
-This can be used by drivers to help detect if a CRTC is being shared by
-multiple encoders
+Add kunit test to validate drm_crtc_in_clone_mode() helper
 
 Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
 ---
- drivers/gpu/drm/drm_crtc.c | 20 ++++++++++++++++++++
- include/drm/drm_crtc.h     |  2 +-
- 2 files changed, 21 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/tests/drm_atomic_state_test.c | 62 ++++++++++++++++++++++++++-
+ 1 file changed, 61 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/drm_crtc.c b/drivers/gpu/drm/drm_crtc.c
-index 3488ff067c69bb820b36177c97bc9fe5d5cbfea1..46655339003db2a1b43441434839e26f61d79b4e 100644
---- a/drivers/gpu/drm/drm_crtc.c
-+++ b/drivers/gpu/drm/drm_crtc.c
-@@ -939,3 +939,23 @@ int drm_crtc_create_scaling_filter_property(struct drm_crtc *crtc,
- 	return 0;
- }
- EXPORT_SYMBOL(drm_crtc_create_scaling_filter_property);
-+
-+/**
-+ * drm_crtc_in_clone_mode - check if the given CRTC state is in clone mode
-+ *
-+ * @crtc_state: CRTC state to check
-+ *
-+ * This function determines if the given CRTC state is being cloned by multiple
-+ * encoders.
-+ *
-+ * RETURNS:
-+ * True if the CRTC state is in clone mode. False otherwise
-+ */
-+bool drm_crtc_in_clone_mode(struct drm_crtc_state *crtc_state)
-+{
-+	if (!crtc_state)
-+		return false;
-+
-+	return hweight32(crtc_state->encoder_mask) > 1;
-+}
-+EXPORT_SYMBOL(drm_crtc_in_clone_mode);
-diff --git a/include/drm/drm_crtc.h b/include/drm/drm_crtc.h
-index 8b48a1974da3143c7de176e6fe3e01da9c8fc9d8..caa56e039da2a748cf40ebf45b37158acda439d9 100644
---- a/include/drm/drm_crtc.h
-+++ b/include/drm/drm_crtc.h
-@@ -1323,5 +1323,5 @@ static inline struct drm_crtc *drm_crtc_find(struct drm_device *dev,
+diff --git a/drivers/gpu/drm/tests/drm_atomic_state_test.c b/drivers/gpu/drm/tests/drm_atomic_state_test.c
+index be1f780249450ead7fbfd19ea98c96b442a94478..79bc5a9aedbf77aaf4b369a5fe62b6344e6859cf 100644
+--- a/drivers/gpu/drm/tests/drm_atomic_state_test.c
++++ b/drivers/gpu/drm/tests/drm_atomic_state_test.c
+@@ -17,6 +17,12 @@
  
- int drm_crtc_create_scaling_filter_property(struct drm_crtc *crtc,
- 					    unsigned int supported_filters);
--
-+bool drm_crtc_in_clone_mode(struct drm_crtc_state *crtc_state);
- #endif /* __DRM_CRTC_H__ */
+ #define DRM_TEST_CONN_0 BIT(0)
+ 
++struct drm_clone_mode_test {
++	const char *name;
++	u32 encoder_mask;
++	int expected_result;
++};
++
+ static const struct drm_display_mode drm_atomic_test_mode = {
+ 	DRM_MODE("1024x768", 0, 65000, 1024, 1048,
+ 		 1184, 1344, 0, 768, 771, 777, 806, 0,
+@@ -227,17 +233,71 @@ static void drm_test_check_connector_changed_modeset(struct kunit *test)
+ 	KUNIT_ASSERT_EQ(test, modeset_counter, initial_modeset_count + 1);
+ }
+ 
++/*
++ * Test that the drm_crtc_in_clone_mode() helper can detect if a given CRTC
++ * state is in clone mode
++ */
++static void drm_test_check_in_clone_mode(struct kunit *test)
++{
++	bool ret;
++	const struct drm_clone_mode_test *param = test->param_value;
++	struct drm_crtc_state *crtc_state;
++
++	crtc_state = kunit_kzalloc(test, sizeof(*crtc_state), GFP_KERNEL);
++	KUNIT_ASSERT_NOT_NULL(test, crtc_state);
++
++	crtc_state->encoder_mask = param->encoder_mask;
++
++	ret = drm_crtc_in_clone_mode(crtc_state);
++
++	KUNIT_ASSERT_EQ(test, ret, param->expected_result);
++}
++
++static void drm_check_in_clone_mode_desc(const struct drm_clone_mode_test *t,
++				      char *desc)
++{
++	sprintf(desc, "%s", t->name);
++}
++
++static const struct drm_clone_mode_test drm_clone_mode_tests[] = {
++	{
++		.name = "in_clone_mode",
++		.encoder_mask = DRM_TEST_ENC_0 | DRM_TEST_ENC_1,
++		.expected_result = true,
++	},
++	{
++		.name = "not_in_clone_mode",
++		.encoder_mask = DRM_TEST_ENC_0,
++		.expected_result = false,
++	},
++};
++
++KUNIT_ARRAY_PARAM(drm_check_in_clone_mode, drm_clone_mode_tests,
++		  drm_check_in_clone_mode_desc);
++
+ static struct kunit_case drm_test_check_modeset_test[] = {
+ 	KUNIT_CASE(drm_test_check_connector_changed_modeset),
+ 	{}
+ };
+ 
++static struct kunit_case drm_in_clone_mode_check_test[] = {
++	KUNIT_CASE_PARAM(drm_test_check_in_clone_mode,
++			 drm_check_in_clone_mode_gen_params),
++	{}
++};
++
+ static struct kunit_suite drm_test_check_modeset_test_suite = {
+ 	.name = "drm_validate_modeset",
+ 	.test_cases = drm_test_check_modeset_test,
+ };
+ 
+-kunit_test_suite(drm_test_check_modeset_test_suite);
++static struct kunit_suite drm_in_clone_mode_check_test_suite = {
++	.name = "drm_validate_clone_mode",
++	.test_cases = drm_in_clone_mode_check_test,
++};
++
++kunit_test_suites(&drm_in_clone_mode_check_test_suite,
++		  &drm_test_check_modeset_test_suite);
+ 
+ MODULE_AUTHOR("Jessica Zhang <quic_jesszhan@quicinc.com");
+ MODULE_DESCRIPTION("Test cases for the drm_atomic_helper functions");
 
 -- 
 2.34.1
