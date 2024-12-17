@@ -1,63 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-42587-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-42588-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3078C9F554C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Dec 2024 19:00:41 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 84E619F556A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Dec 2024 19:03:52 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id AB971189505D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Dec 2024 17:56:27 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 487B81726A4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Dec 2024 17:58:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DCD3D1F8923;
-	Tue, 17 Dec 2024 17:49:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 38F441F6661;
+	Tue, 17 Dec 2024 17:52:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="nHI5CiiR"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Lk+mI58y"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C9CD1F7563;
-	Tue, 17 Dec 2024 17:49:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9305A442F;
+	Tue, 17 Dec 2024 17:52:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734457777; cv=none; b=sjOSSL/pGUf6rhF8DD+wDMogDCOQoFsfYn/Y89PJVzFDTgr1EDt89LSWzrQt8U0q179k9c5Ht1WMkWIRPjcCHqkP6UZTPxrSuxRe1gj0Y8x7sFNaVeXkSsIr3erSrJtQ4ltx6yLCWOZ+RppfW+kzJcWKklMCUP96GYUHUOlLgys=
+	t=1734457968; cv=none; b=kKZa2PHr6JvGznNd0/6oWbLEEpcwK3nAEZ2CCOfLe0f7JgPa8ylX2K3LH4Lc0F8zaxVMBTx+yzKD690z2c0Wya3oREp6D2H0aHAfm6a2vJCytQkQmQ/34X+O9Q9srUTdfKMmxl6Uo3hB26e5Jz6akSU9ZdeDUmaO/mUzlK/YtB0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734457777; c=relaxed/simple;
-	bh=zUY66eqgOltY8wKdpZHvKq/45XjgqeVNpER/TcFe6KM=;
+	s=arc-20240116; t=1734457968; c=relaxed/simple;
+	bh=rxNmGYj0cm7vKEkNLss+ezOoW5pNuuLmVUQeMHt4HNw=;
 	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=DibWXB0XGfWLYgQQA5C6K2l69lkSafSPT/P1zixR4h41IbJhiNtNz1TAm2YjAn5dKZGM6tA7cgDrTS0cNi5w3KSDSuuExFTO3NRe8UU23ZGs4n4MVwv1J9l1YyMd4coh3a73OsIWOSg5dLs1wGq+VyC5w+eynSDV9AFEYNXLZWo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=nHI5CiiR; arc=none smtp.client-ip=205.220.168.131
+	 In-Reply-To:Content-Type; b=W1EI3Rncn6FV8p1/B/QR2uxMxWq89blHb9jqyHeikG/XHMflUsZ75BIyzeTIqh9Wolx3Yhtk710ykPR2IGE+b9Hrz+7s6U85KzTtEpTTZaPNv0hJsACcjt4Iwn+KWZQVorJJ4mDAqiQJw5YRdr/Sk64SLhqAthyjjkR2el7Kdfo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Lk+mI58y; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BHEpfEQ003754;
-	Tue, 17 Dec 2024 17:49:24 GMT
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BHFlfp1002919;
+	Tue, 17 Dec 2024 17:52:36 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	O9Plx0bNtmhuCufstSEhSAO/gEk2mv9F+4PnW9ec0Z0=; b=nHI5CiiRmzFe/BbZ
-	qb9ufp4rpgFDeuvZsDsnPrPAB2BXqneScgQKxYEwvwEb6lEh+pd9mjWB8pSAx+vb
-	bmeZ4b4AJ8zF1gJfhQQDPMCuwZMsJuzHdnl2GuBnreryycnwZVYAFs8Q4H+Uhp3f
-	Q9eltaMyaKCt2NlHG81ol8AbYC5V7Kgbfl09rmTZlY7gtrVieMInNGtWV3OArJYR
-	zBgnBrYvyaKDwMyQfEowEpk0I9pYtzHLnuUIcuAedCSpHGZ026CwIALFhf+V+ljU
-	95jENX7qERLKVfc3aERFvznl5w3E9H2cAfO7h34roUV+NuliW5gGyzfOw26FzUw0
-	ed78LA==
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43kbedrgsv-1
+	X7hlMd/FaZ0PUinVQ7uhLnPJtp3fAZlrCPqFWnHaizs=; b=Lk+mI58yDwLy+t7l
+	u7gmMzXVXCCPuTblH+fCg0iWfBfiA1qCek3IT5mAAxx+OO5qc8oTggOIsNKZi8AM
+	fo0npBnXmp7ba0OULhYXtmjpds9k4trnHTBA0fGu4WaGy85awicX+oWfm79qNds9
+	S9AsxQQXv5KLNA0bzgqBsJkxJFwa45Jn6nqPaJvxzpmOweauzHZdBWDQuhAYGvSX
+	1eg3gAP5zwdtv2CdyQfxnJ1/n1TGFhPA1RWhheeuET+hOooGMjG9HWMuPpE27ZsC
+	ttOtmOz069I2gHaZk0ICQ3pyi2KXhAXpXUPuShxtQU8X5+Qx6Vz3hSEkejgiZqTf
+	mSIAkA==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43kc8m8bgg-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 17 Dec 2024 17:49:23 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4BHHnNU6014832
+	Tue, 17 Dec 2024 17:52:36 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4BHHqaNN028967
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 17 Dec 2024 17:49:23 GMT
-Received: from [10.50.34.207] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+	Tue, 17 Dec 2024 17:52:36 GMT
+Received: from [10.216.20.10] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 17 Dec
- 2024 09:49:13 -0800
-Message-ID: <3e6ab7aa-c606-49bc-8cc5-24c8a1edc081@quicinc.com>
-Date: Tue, 17 Dec 2024 23:19:11 +0530
+ 2024 09:52:30 -0800
+Message-ID: <44f0bdee-5d85-4544-a91f-23804073237f@quicinc.com>
+Date: Tue, 17 Dec 2024 23:22:27 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,243 +65,154 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v10 4/4] arm64: dts: qcom:
- qcs6490-rb3gen2-vision-mezzanine: Add vision mezzanine
-To: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>, <rfoss@kernel.org>,
-        <todor.too@gmail.com>, <bryan.odonoghue@linaro.org>,
-        <mchehab@kernel.org>, <robh@kernel.org>, <krzk+dt@kernel.org>,
-        <conor+dt@kernel.org>, <akapatra@quicinc.com>, <hariramp@quicinc.com>,
-        <andersson@kernel.org>, <konradybcio@kernel.org>,
-        <hverkuil-cisco@xs4all.nl>, <cros-qcom-dts-watchers@chromium.org>,
-        <catalin.marinas@arm.com>, <will@kernel.org>
-CC: <linux-arm-kernel@lists.infradead.org>, <linux-media@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <kernel@quicinc.com>,
+Subject: Re: [PATCH v6 3/7] drm/msm: adreno: dynamically generate GMU bw table
+To: Neil Armstrong <neil.armstrong@linaro.org>,
+        Rob Clark
+	<robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         Konrad Dybcio
-	<konrad.dybcio@oss.qualcomm.com>
-References: <20241217140656.965235-1-quic_vikramsa@quicinc.com>
- <20241217140656.965235-5-quic_vikramsa@quicinc.com>
- <22479c27-9265-4994-8974-9739ecbae5ee@linaro.org>
+	<konradybcio@kernel.org>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        "Dmitry
+ Baryshkov" <dmitry.baryshkov@linaro.org>,
+        Marijn Suijten
+	<marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, "Simona
+ Vetter" <simona@ffwll.ch>,
+        Bjorn Andersson <andersson@kernel.org>, Rob
+ Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor
+ Dooley <conor+dt@kernel.org>
+CC: <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
+        <devicetree@vger.kernel.org>
+References: <20241217-topic-sm8x50-gpu-bw-vote-v6-0-1adaf97e7310@linaro.org>
+ <20241217-topic-sm8x50-gpu-bw-vote-v6-3-1adaf97e7310@linaro.org>
 Content-Language: en-US
-From: Vikram Sharma <quic_vikramsa@quicinc.com>
-In-Reply-To: <22479c27-9265-4994-8974-9739ecbae5ee@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
+From: Akhil P Oommen <quic_akhilpo@quicinc.com>
+In-Reply-To: <20241217-topic-sm8x50-gpu-bw-vote-v6-3-1adaf97e7310@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: LIEX0_8K3eKu5wFpoMUkSDZCo6_8Oee2
-X-Proofpoint-ORIG-GUID: LIEX0_8K3eKu5wFpoMUkSDZCo6_8Oee2
+X-Proofpoint-ORIG-GUID: Hf9Xvo-hgUZr1ATiwos_YVRuf9ofXIvW
+X-Proofpoint-GUID: Hf9Xvo-hgUZr1ATiwos_YVRuf9ofXIvW
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 mlxscore=0
- clxscore=1015 bulkscore=0 adultscore=0 priorityscore=1501 malwarescore=0
- lowpriorityscore=0 phishscore=0 mlxlogscore=999 impostorscore=0
- spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 spamscore=0
+ mlxlogscore=999 bulkscore=0 phishscore=0 mlxscore=0 impostorscore=0
+ malwarescore=0 suspectscore=0 adultscore=0 lowpriorityscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.19.0-2411120000 definitions=main-2412170137
 
-On 12/17/2024 8:10 PM, Vladimir Zapolskiy wrote:
-> On 12/17/24 16:06, Vikram Sharma wrote:
->> The Vision Mezzanine for the RB3 ships with an imx577 camera sensor.
->> Enable the IMX577 on the vision mezzanine.
->>
->> An example media-ctl pipeline for the imx577 is:
->>
->> media-ctl --reset
->> media-ctl -v -V '"imx577 '19-001a'":0[fmt:SRGGB10/4056x3040 field:none]'
->> media-ctl -V '"msm_csiphy3":0[fmt:SRGGB10/4056x3040]'
->> media-ctl -V '"msm_csid0":0[fmt:SRGGB10/4056x3040]'
->> media-ctl -V '"msm_vfe0_rdi0":0[fmt:SRGGB10/4056x3040]'
->> media-ctl -l '"msm_csiphy3":1->"msm_csid0":0[1]'
->> media-ctl -l '"msm_csid0":1->"msm_vfe0_rdi0":0[1]'
->>
->> yavta -B capture-mplane -c -I -n 5 -f SRGGB10P -s 4056x3040 -F 
->> /dev/video0
->>
->> Signed-off-by: Hariram Purushothaman <quic_hariramp@quicinc.com>
->> Signed-off-by: Vikram Sharma <quic_vikramsa@quicinc.com>
->> Signed-off-by: Trishansh Bhardwaj <quic_tbhardwa@quicinc.com>
->> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
->> Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
->> ---
->>   arch/arm64/boot/dts/qcom/Makefile             |   4 +
->>   .../qcs6490-rb3gen2-vision-mezzanine.dtso     | 109 ++++++++++++++++++
->>   2 files changed, 113 insertions(+)
->>   create mode 100644 
->> arch/arm64/boot/dts/qcom/qcs6490-rb3gen2-vision-mezzanine.dtso
->>
->> diff --git a/arch/arm64/boot/dts/qcom/Makefile 
->> b/arch/arm64/boot/dts/qcom/Makefile
->> index 4686f2a8ddd8..a7e88fcabded 100644
->> --- a/arch/arm64/boot/dts/qcom/Makefile
->> +++ b/arch/arm64/boot/dts/qcom/Makefile
->> @@ -115,6 +115,10 @@ dtb-$(CONFIG_ARCH_QCOM)    += qcs404-evb-1000.dtb
->>   dtb-$(CONFIG_ARCH_QCOM)    += qcs404-evb-4000.dtb
->>   dtb-$(CONFIG_ARCH_QCOM)    += qcs615-ride.dtb
->>   dtb-$(CONFIG_ARCH_QCOM)    += qcs6490-rb3gen2.dtb
->> +
->> +qcs6490-rb3gen2-vision-mezzanine-dtbs := qcs6490-rb3gen2.dtb 
->> qcs6490-rb3gen2-vision-mezzanine.dtbo
->> +
->> +dtb-$(CONFIG_ARCH_QCOM)    += qcs6490-rb3gen2-vision-mezzanine.dtb
->>   dtb-$(CONFIG_ARCH_QCOM)    += qcs8300-ride.dtb
->>   dtb-$(CONFIG_ARCH_QCOM)    += qcs8550-aim300-aiot.dtb
->>   dtb-$(CONFIG_ARCH_QCOM)    += qcs9100-ride.dtb
->> diff --git 
->> a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2-vision-mezzanine.dtso 
->> b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2-vision-mezzanine.dtso
->> new file mode 100644
->> index 000000000000..7782c4aee576
->> --- /dev/null
->> +++ b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2-vision-mezzanine.dtso
->> @@ -0,0 +1,109 @@
->> +// SPDX-License-Identifier: BSD-3-Clause
->> +/*
->> + * Copyright (c) 2024, Qualcomm Innovation Center, Inc. All rights 
->> reserved.
->> + */
->> +
->> +/*
->> + * Camera Sensor overlay on top of rb3gen2 core kit.
->> + */
->> +
->> +#include <dt-bindings/gpio/gpio.h>
->> +#include <dt-bindings/clock/qcom,camcc-sc7280.h>
->
-> Please sort the header files alphabetically.
-Thanks for your comments Vladimir.
-Will take care in next version.
->
->> +
->> +/dts-v1/;
->> +/plugin/;
->> +
->
-> Please put these two lines right after the comments header.
-ACK.
->
->> +&camss {
->> +    vdda-phy-supply = <&vreg_l10c_0p88>;
->> +    vdda-pll-supply = <&vreg_l6b_1p2>;
->> +
->> +    status = "okay";
->> +
->> +    ports {
->> +        #address-cells = <1>;
->> +        #size-cells = <0>;
->> +
->> +        /* The port index denotes CSIPHY id i.e. csiphy3 */
->> +        port@3 {
->> +            reg = <3>;
->> +
->> +            csiphy3_ep: endpoint {
->> +                clock-lanes = <7>;
->> +                data-lanes = <0 1 2 3>;
->> +                remote-endpoint = <&imx577_ep>;
->> +            };
->> +        };
->> +    };
->> +};
->> +
->> +&cci1 {
->> +    status = "okay";
->> +};
->> +
->> +&cci1_i2c1 {
->> +    #address-cells = <1>;
->> +    #size-cells = <0>;
->> +
->> +    camera@1a {
->> +        compatible = "sony,imx577";
->> +
->> +        reg = <0x1a>;
->> +
->> +        reset-gpios = <&tlmm 78 GPIO_ACTIVE_LOW>;
->> +        pinctrl-names = "default", "suspend";
->> +        pinctrl-0 = <&cam2_default>;
->> +        pinctrl-1 = <&cam2_suspend>;
->> +
->> +        clocks = <&camcc CAM_CC_MCLK3_CLK>;
->> +        assigned-clocks = <&camcc CAM_CC_MCLK3_CLK>;
->> +        assigned-clock-rates = <24000000>;
->> +
->> +        dovdd-supply  = <&vreg_l18b_1p8>;
->
-> Please remove double space before '='.
-Sure.
->
->> +        avdd-supply = <&vph_pwr>;
->> +        dvdd-supply = <&vph_pwr>;
->> +
->> +        port {
->> +            imx577_ep: endpoint {
->> +                clock-lanes = <7>;
->
-> It is an invalid property/value of the sensor, please remove it.
-Will check more on this internally and respond back.
->
->> +                link-frequencies = /bits/ 64 <600000000>;
->> +                data-lanes = <0 1 2 3>;
->
-> data-lanes = <1 2 3 4>;
-Will check more on this internally and respond back
->
->> +                remote-endpoint = <&csiphy3_ep>;
->> +            };
->> +        };
->> +    };
->> +};
->> +
->> +&tlmm {
->> +    cam2_default: cam2-default-state {
->> +        mclk-pins {
->> +            pins = "gpio67";
->> +            function = "cam_mclk";
->> +            drive-strength = <2>;
->> +            bias-disable;
->> +        };
->> +
->> +        rst-pins {
->> +            pins = "gpio78";
->> +            function = "gpio";
->> +            drive-strength = <2>;
->> +            bias-disable;
->> +        };
->> +    };
->> +
->> +    cam2_suspend: cam2-suspend-state {
->> +        mclk-pins {
->> +            pins = "gpio67";
->> +            function = "cam_mclk";
->> +            drive-strength = <2>;
->> +            bias-pull-down;
->> +        };
->> +
->> +        rst-pins {
->> +            pins = "gpio78";
->> +            function = "gpio";
->> +            drive-strength = <2>;
->> +            bias-pull-down;
->> +            output-low;
->> +        };
->
-> I have doubts that it's proper to embed a reset gpio into driver's
-> pinctrl suspend/resume power management.
->
-> Konrad, can you please confirm that it's really accepted?
->
-> I'd rather ask to remove this reset pin control.
-Will discuss this with Konrad and respond.
->> +    };
->> +};
->
-> -- 
-> Best wishes,
-> Vladimir
+On 12/17/2024 8:21 PM, Neil Armstrong wrote:
+> The Adreno GPU Management Unit (GMU) can also scale the ddr
+> bandwidth along the frequency and power domain level, but for
+> now we statically fill the bw_table with values from the
+> downstream driver.
+> 
+> Only the first entry is used, which is a disable vote, so we
+> currently rely on scaling via the linux interconnect paths.
+> 
+> Let's dynamically generate the bw_table with the vote values
+> previously calculated from the OPPs.
+> 
+> Those entries will then be used by the GMU when passing the
+> appropriate bandwidth level while voting for a gpu frequency.
+> 
+> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 
-Best Regards,
-Vikram
+Reviewed-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
+
+-Akhil
+
+> ---
+>  drivers/gpu/drm/msm/adreno/a6xx_hfi.c | 48 ++++++++++++++++++++++++++++++++++-
+>  1 file changed, 47 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_hfi.c b/drivers/gpu/drm/msm/adreno/a6xx_hfi.c
+> index cb8844ed46b29c4569d05eb7a24f7b27e173190f..995526620d678cd05020315f771213e4a6943bec 100644
+> --- a/drivers/gpu/drm/msm/adreno/a6xx_hfi.c
+> +++ b/drivers/gpu/drm/msm/adreno/a6xx_hfi.c
+> @@ -6,6 +6,7 @@
+>  #include <linux/list.h>
+>  
+>  #include <soc/qcom/cmd-db.h>
+> +#include <soc/qcom/tcs.h>
+>  
+>  #include "a6xx_gmu.h"
+>  #include "a6xx_gmu.xml.h"
+> @@ -259,6 +260,48 @@ static int a6xx_hfi_send_perf_table(struct a6xx_gmu *gmu)
+>  		NULL, 0);
+>  }
+>  
+> +static void a6xx_generate_bw_table(const struct a6xx_info *info, struct a6xx_gmu *gmu,
+> +				   struct a6xx_hfi_msg_bw_table *msg)
+> +{
+> +	unsigned int i, j;
+> +
+> +	for (i = 0; i < GMU_MAX_BCMS; i++) {
+> +		if (!info->bcms[i].name)
+> +			break;
+> +		msg->ddr_cmds_addrs[i] = cmd_db_read_addr(info->bcms[i].name);
+> +	}
+> +	msg->ddr_cmds_num = i;
+> +
+> +	for (i = 0; i < gmu->nr_gpu_bws; ++i)
+> +		for (j = 0; j < msg->ddr_cmds_num; j++)
+> +			msg->ddr_cmds_data[i][j] = gmu->gpu_ib_votes[i][j];
+> +	msg->bw_level_num = gmu->nr_gpu_bws;
+> +
+> +	/* Compute the wait bitmask with each BCM having the commit bit */
+> +	msg->ddr_wait_bitmask = 0;
+> +	for (j = 0; j < msg->ddr_cmds_num; j++)
+> +		if (msg->ddr_cmds_data[0][j] & BCM_TCS_CMD_COMMIT_MASK)
+> +			msg->ddr_wait_bitmask |= BIT(j);
+> +
+> +	/*
+> +	 * These are the CX (CNOC) votes - these are used by the GMU
+> +	 * The 'CN0' BCM is used on all targets, and votes are basically
+> +	 * 'off' and 'on' states with first bit to enable the path.
+> +	 */
+> +
+> +	msg->cnoc_cmds_addrs[0] = cmd_db_read_addr("CN0");
+> +	msg->cnoc_cmds_num = 1;
+> +
+> +	msg->cnoc_cmds_data[0][0] = BCM_TCS_CMD(true, false, 0, 0);
+> +	msg->cnoc_cmds_data[1][0] = BCM_TCS_CMD(true, true, 0, BIT(0));
+> +
+> +	/* Compute the wait bitmask with each BCM having the commit bit */
+> +	msg->cnoc_wait_bitmask = 0;
+> +	for (j = 0; j < msg->cnoc_cmds_num; j++)
+> +		if (msg->cnoc_cmds_data[0][j] & BCM_TCS_CMD_COMMIT_MASK)
+> +			msg->cnoc_wait_bitmask |= BIT(j);
+> +}
+> +
+>  static void a618_build_bw_table(struct a6xx_hfi_msg_bw_table *msg)
+>  {
+>  	/* Send a single "off" entry since the 618 GMU doesn't do bus scaling */
+> @@ -664,6 +707,7 @@ static int a6xx_hfi_send_bw_table(struct a6xx_gmu *gmu)
+>  	struct a6xx_hfi_msg_bw_table *msg;
+>  	struct a6xx_gpu *a6xx_gpu = container_of(gmu, struct a6xx_gpu, gmu);
+>  	struct adreno_gpu *adreno_gpu = &a6xx_gpu->base;
+> +	const struct a6xx_info *info = adreno_gpu->info->a6xx;
+>  
+>  	if (gmu->bw_table)
+>  		goto send;
+> @@ -672,7 +716,9 @@ static int a6xx_hfi_send_bw_table(struct a6xx_gmu *gmu)
+>  	if (!msg)
+>  		return -ENOMEM;
+>  
+> -	if (adreno_is_a618(adreno_gpu))
+> +	if (info->bcms && gmu->nr_gpu_bws > 1)
+> +		a6xx_generate_bw_table(info, gmu, msg);
+> +	else if (adreno_is_a618(adreno_gpu))
+>  		a618_build_bw_table(msg);
+>  	else if (adreno_is_a619(adreno_gpu))
+>  		a619_build_bw_table(msg);
+> 
 
 
