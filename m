@@ -1,64 +1,65 @@
-Return-Path: <linux-arm-msm+bounces-42429-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-42433-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7D2159F3F4F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Dec 2024 01:46:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 2E0319F3F5A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Dec 2024 01:47:14 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 392297A537B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Dec 2024 00:45:51 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 368BB7A63FE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Dec 2024 00:46:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B2AF014600D;
-	Tue, 17 Dec 2024 00:43:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id ED7C41537CB;
+	Tue, 17 Dec 2024 00:43:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="L5y0nw38"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="XLpYSCaM"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E527A13DB9F;
-	Tue, 17 Dec 2024 00:43:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5619F1448C7;
+	Tue, 17 Dec 2024 00:43:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734396223; cv=none; b=n6ILPjPo4yWleX91QBkrSPHiNT5ISGosjU5Ko8zfm2neRgPzNnJ/sxXKpOq6ASKDjVRM3vGfmuC8MAMUnNgV/yzMs1h9aj2WDcP0fHW7WnmvipDJhud+39B9M2HoFKQMYCzUXtlpkYJ6hr39jmzgEi9vZuw2iyssNIQoLEe0aX4=
+	t=1734396225; cv=none; b=CD67tF/w9jQCfwkFjtoHMDF+gpKXyfaKpM4RGcAbxnUoA4hs3fquV1k4My1Vqo1HAR61qLY78ATWWHewI/OaYNIj76O1UcDl5XsN2kNzw70VFi+2FSLZhrXW9b4ySu6br8YzlpND8icf1JAS9l/TUlBRPaSozf6r31ylIHJTMVE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734396223; c=relaxed/simple;
-	bh=fQoeJAmdtUieZtElCAFXuvFdy/3cYLqDORejl6pqdOk=;
+	s=arc-20240116; t=1734396225; c=relaxed/simple;
+	bh=j4IJY3KO5wwBAYVRyxw5gBsk81tk/SupCpMLRG6iubI=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:References:
-	 In-Reply-To:To:CC; b=OX5Bq+joVU/LdJEQoxyknLekZZJ0XQHFh4jXBWFg4hoeS/rE5BWgdBkKxRvguTGeIyKY03+h09goxgIMEtl5WmQjTHAP9HgkpvrJ5ZHoflUL7ythiPxLSePyVgmXuytkQgZqHZr83+QRHX9MC1EU+grAUz6dE3T6o03TwQhKDLM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=L5y0nw38; arc=none smtp.client-ip=205.220.168.131
+	 In-Reply-To:To:CC; b=Gl6IYzmIriofLodPHVAvvMlT7JgJ3HULyMEvZevE5mQsQSteiXHEkymjirXbh3we+4lHcCuRlolBT6sk4l5vtGxwy42Dr9E8EsXmUO+M1iJop7n7cukE+GZwi8SVGBqp80OQeEe90AYnb/HaqN8mCraWhN0OjAA3PWFqqQfguWk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=XLpYSCaM; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BGIwf4f010450;
-	Tue, 17 Dec 2024 00:43:29 GMT
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BGMrXXx006694;
+	Tue, 17 Dec 2024 00:43:30 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	6LVBtcgbUQMnv9mkTAcNLuEUMTWQhy/BM0/Ryu7dG0U=; b=L5y0nw38kGRjT500
-	ajGvV0RVD4P4EHCR0XZjD6wHtq2XDupniimgVwG8qt2moOxIPI700wNvezo1oVYA
-	uGFMQvpVGMOmTbMUY0uEUYLsbvFHxmgTOuXOiL1a/pmNpNAgE0UXPCzRvhv1dw2K
-	UUZk2yhy4x9XeUqPgInbHXRtUDA+0mtQH/ZNrVGC4K4l8uKKS9eMNXtxpVHRfIir
-	L4DB+dhIZOqgWsMUfKXwzUIFzIZn1gdkN73IQnslZqPNts/Jc1zJKEAO+1utJZM7
-	cza4s9rtnqIsnZ2pTUF+JUfZBaS0hFZ28mFsYo3vUsvFpfzv7SEBAvwhIF6fjV3z
-	aUvK0g==
+	I9zAdE04gNxlGVFSMdFm3T0V5WTsLrvzSIex60IiB6A=; b=XLpYSCaMeRYwg0m+
+	akITGC7AYu3r1cgK0I/V9RCGB/npo2k2jCdCr1zYKr+FzIxBmSuf1jhEP9wX9ptm
+	y3EsbTHjIi+E5hSFGYY4Di70J2qUCRmDzwYii+9CYA8lJK0/QWkuWoP3SQAbW6o1
+	9TNEP6qhvJFO0Ls0s1nnyXkvQPsra86LYk3mkd3wjvT6SzGN60dJN/eun4DAY1Id
+	dNeEb+TGKrhbUul3LwFmvpSVjVx6PjA9vSqattcFXw+hr099Pi1gBnzTeI2pZ208
+	fYkMPuY5B9pCDCBkYsA/z4PS72Y+fXJz7RaARq0z+bYnQZzaBW4ZWk4dE1d//d/3
+	jWfXdQ==
 Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43jsy70mna-1
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43jwda062g-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 17 Dec 2024 00:43:29 +0000 (GMT)
+	Tue, 17 Dec 2024 00:43:30 +0000 (GMT)
 Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4BH0hSTf030638
+	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4BH0hTqQ030643
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 17 Dec 2024 00:43:28 GMT
+	Tue, 17 Dec 2024 00:43:29 GMT
 Received: from jesszhan-linux.qualcomm.com (10.80.80.8) by
  nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
  15.2.1544.9; Mon, 16 Dec 2024 16:43:28 -0800
 From: Jessica Zhang <quic_jesszhan@quicinc.com>
-Date: Mon, 16 Dec 2024 16:43:22 -0800
-Subject: [PATCH v4 11/25] drm/msm/dpu: add devcoredumps for cwb registers
+Date: Mon, 16 Dec 2024 16:43:23 -0800
+Subject: [PATCH v4 12/25] drm/msm/dpu: Add dpu_hw_cwb abstraction for CWB
+ block
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -67,7 +68,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-ID: <20241216-concurrent-wb-v4-11-fe220297a7f0@quicinc.com>
+Message-ID: <20241216-concurrent-wb-v4-12-fe220297a7f0@quicinc.com>
 References: <20241216-concurrent-wb-v4-0-fe220297a7f0@quicinc.com>
 In-Reply-To: <20241216-concurrent-wb-v4-0-fe220297a7f0@quicinc.com>
 To: Rob Clark <robdclark@gmail.com>,
@@ -91,56 +92,228 @@ CC: <quic_ebharadw@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
         "Jessica
  Zhang" <quic_jesszhan@quicinc.com>
 X-Mailer: b4 0.15-dev-355e8
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1734396205; l=1152;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1734396205; l=6259;
  i=quic_jesszhan@quicinc.com; s=20230329; h=from:subject:message-id;
- bh=LxzrziOUpwJfJtDAq2HiMmQAabxSbeVJ8LIaJq22Fyc=;
- b=6ejAMX07c1NawxF1bHuzrF7waS+ff+H/HgLgL6+StLtQOXp6MaBcG6RerzoucW1r1StuM829O
- GGELg/HwibTA6JbTYsRGoEUH2PQA89BYwXE/r7t5LgyQd635lNyuCRm
+ bh=j4IJY3KO5wwBAYVRyxw5gBsk81tk/SupCpMLRG6iubI=;
+ b=/zUquXXrH+YV6R3SS33R1Q0iZx5tKUxruFEron88gzeVRCBL28qXuszhhdBVpK5S+dsKY/uxw
+ j2PERmlYcOvC0BPbMF6t58FFzoDMAJWKM6XyJCB4snA1WeMD5kVlGey
 X-Developer-Key: i=quic_jesszhan@quicinc.com; a=ed25519;
  pk=gAUCgHZ6wTJOzQa3U0GfeCDH7iZLlqIEPo4rrjfDpWE=
 X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nasanex01b.na.qualcomm.com (10.46.141.250)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: ysug0TppJ6NZJreVe3wJIUcLTimIDihW
-X-Proofpoint-GUID: ysug0TppJ6NZJreVe3wJIUcLTimIDihW
+X-Proofpoint-GUID: WACVEJprtd2PldAu6Qux-m0UTfGd9ISQ
+X-Proofpoint-ORIG-GUID: WACVEJprtd2PldAu6Qux-m0UTfGd9ISQ
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 malwarescore=0
- phishscore=0 spamscore=0 suspectscore=0 mlxlogscore=975 clxscore=1015
- impostorscore=0 mlxscore=0 lowpriorityscore=0 priorityscore=1501
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 bulkscore=0
+ mlxscore=0 phishscore=0 priorityscore=1501 spamscore=0 adultscore=0
+ malwarescore=0 impostorscore=0 mlxlogscore=999 suspectscore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.19.0-2411120000 definitions=main-2412170004
 
-From: Esha Bharadwaj <quic_ebharadw@quicinc.com>
-
-Implement instance of snapshot function to dump new registers used
-for cwb
+The CWB mux has its own registers and set of operations. Add dpu_hw_cwb
+abstraction to allow driver to configure the CWB mux.
 
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Esha Bharadwaj <quic_ebharadw@quicinc.com>
 Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
 ---
- drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/gpu/drm/msm/Makefile                |  1 +
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_cwb.c  | 73 +++++++++++++++++++++++++++++
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_cwb.h  | 70 +++++++++++++++++++++++++++
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h |  5 +-
+ 4 files changed, 148 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-index ca4847b2b73876c59dedff1e3ec4188ea70860a7..d244bee94162cef97e2ae6f7ff5203640903f41d 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-@@ -1004,6 +1004,11 @@ static void dpu_kms_mdp_snapshot(struct msm_disp_state *disp_state, struct msm_k
- 				dpu_kms->mmio + cat->mdp[0].base, "top");
- 	}
- 
-+	/* dump CWB sub-blocks HW regs info */
-+	for (i = 0; i < cat->cwb_count; i++)
-+		msm_disp_snapshot_add_block(disp_state, cat->cwb[i].len,
-+					    dpu_kms->mmio + cat->cwb[i].base, cat->cwb[i].name);
+diff --git a/drivers/gpu/drm/msm/Makefile b/drivers/gpu/drm/msm/Makefile
+index f274d9430cc311405f890074c1466ffe2ec45ac9..5df20cbeafb8bf07c825a1fd72719d5a56c38613 100644
+--- a/drivers/gpu/drm/msm/Makefile
++++ b/drivers/gpu/drm/msm/Makefile
+@@ -78,6 +78,7 @@ msm-display-$(CONFIG_DRM_MSM_DPU) += \
+ 	disp/dpu1/dpu_hw_catalog.o \
+ 	disp/dpu1/dpu_hw_cdm.o \
+ 	disp/dpu1/dpu_hw_ctl.o \
++	disp/dpu1/dpu_hw_cwb.o \
+ 	disp/dpu1/dpu_hw_dsc.o \
+ 	disp/dpu1/dpu_hw_dsc_1_2.o \
+ 	disp/dpu1/dpu_hw_interrupts.o \
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_cwb.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_cwb.c
+new file mode 100644
+index 0000000000000000000000000000000000000000..5fbf52906ea94847a8eb3fcaa372e582dce2357c
+--- /dev/null
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_cwb.c
+@@ -0,0 +1,73 @@
++// SPDX-License-Identifier: GPL-2.0-only
++/*
++ * Copyright (c) 2024 Qualcomm Innovation Center, Inc. All rights reserved
++ */
 +
- 	/* dump DSC sub-blocks HW regs info */
- 	for (i = 0; i < cat->dsc_count; i++) {
- 		base = dpu_kms->mmio + cat->dsc[i].base;
++#include <drm/drm_managed.h>
++#include "dpu_hw_cwb.h"
++
++#define CWB_MUX              0x000
++#define CWB_MODE             0x004
++
++/* CWB mux block bit definitions */
++#define CWB_MUX_MASK         GENMASK(3, 0)
++#define CWB_MODE_MASK        GENMASK(2, 0)
++
++static void dpu_hw_cwb_config(struct dpu_hw_cwb *ctx,
++			      struct dpu_hw_cwb_setup_cfg *cwb_cfg)
++{
++	struct dpu_hw_blk_reg_map *c = &ctx->hw;
++	int cwb_mux_cfg = 0xF;
++	enum dpu_pingpong pp;
++	enum cwb_mode_input input;
++
++	if (!cwb_cfg)
++		return;
++
++	input = cwb_cfg->input;
++	pp = cwb_cfg->pp_idx;
++
++	if (input >= INPUT_MODE_MAX)
++		return;
++
++	/*
++	 * The CWB_MUX register takes the pingpong index for the real-time
++	 * display
++	 */
++	if ((pp != PINGPONG_NONE) && (pp < PINGPONG_MAX))
++		cwb_mux_cfg = FIELD_PREP(CWB_MUX_MASK, pp - PINGPONG_0);
++
++	input = FIELD_PREP(CWB_MODE_MASK, input);
++
++	DPU_REG_WRITE(c, CWB_MUX, cwb_mux_cfg);
++	DPU_REG_WRITE(c, CWB_MODE, input);
++}
++
++/**
++ * dpu_hw_cwb_init() - Initializes the writeback hw driver object with cwb.
++ * @dev:  Corresponding device for devres management
++ * @cfg:  wb_path catalog entry for which driver object is required
++ * @addr: mapped register io address of MDP
++ * Return: Error code or allocated dpu_hw_wb context
++ */
++struct dpu_hw_cwb *dpu_hw_cwb_init(struct drm_device *dev,
++				   const struct dpu_cwb_cfg *cfg,
++				   void __iomem *addr)
++{
++	struct dpu_hw_cwb *c;
++
++	if (!addr)
++		return ERR_PTR(-EINVAL);
++
++	c = drmm_kzalloc(dev, sizeof(*c), GFP_KERNEL);
++	if (!c)
++		return ERR_PTR(-ENOMEM);
++
++	c->hw.blk_addr = addr + cfg->base;
++	c->hw.log_mask = DPU_DBG_MASK_CWB;
++
++	c->idx = cfg->id;
++	c->ops.config_cwb = dpu_hw_cwb_config;
++
++	return c;
++}
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_cwb.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_cwb.h
+new file mode 100644
+index 0000000000000000000000000000000000000000..96b6edf6b2bbf7d270ac08f76af06fcd3c431527
+--- /dev/null
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_cwb.h
+@@ -0,0 +1,70 @@
++/* SPDX-License-Identifier: GPL-2.0-only */
++/*
++ * Copyright (c) 2024 Qualcomm Innovation Center, Inc. All rights reserved
++ */
++
++#ifndef _DPU_HW_CWB_H
++#define _DPU_HW_CWB_H
++
++#include "dpu_hw_util.h"
++
++struct dpu_hw_cwb;
++
++enum cwb_mode_input {
++	INPUT_MODE_LM_OUT,
++	INPUT_MODE_DSPP_OUT,
++	INPUT_MODE_MAX
++};
++
++/**
++ * struct dpu_hw_cwb_setup_cfg : Describes configuration for CWB mux
++ * @pp_idx:        Index of the real-time pinpong that the CWB mux will
++ *                 feed the CWB mux
++ * @input:         Input tap point
++ */
++struct dpu_hw_cwb_setup_cfg {
++	enum dpu_pingpong pp_idx;
++	enum cwb_mode_input input;
++};
++
++/**
++ *
++ * struct dpu_hw_cwb_ops : Interface to the cwb hw driver functions
++ * @config_cwb: configure CWB mux
++ */
++struct dpu_hw_cwb_ops {
++	void (*config_cwb)(struct dpu_hw_cwb *ctx,
++			   struct dpu_hw_cwb_setup_cfg *cwb_cfg);
++};
++
++/**
++ * struct dpu_hw_cwb : CWB mux driver object
++ * @base: Hardware block base structure
++ * @hw: Block hardware details
++ * @idx: CWB index
++ * @ops: handle to operations possible for this CWB
++ */
++struct dpu_hw_cwb {
++	struct dpu_hw_blk base;
++	struct dpu_hw_blk_reg_map hw;
++
++	enum dpu_cwb idx;
++
++	struct dpu_hw_cwb_ops ops;
++};
++
++/**
++ * dpu_hw_cwb - convert base object dpu_hw_base to container
++ * @hw: Pointer to base hardware block
++ * return: Pointer to hardware block container
++ */
++static inline struct dpu_hw_cwb *to_dpu_hw_cwb(struct dpu_hw_blk *hw)
++{
++	return container_of(hw, struct dpu_hw_cwb, base);
++}
++
++struct dpu_hw_cwb *dpu_hw_cwb_init(struct drm_device *dev,
++				   const struct dpu_cwb_cfg *cfg,
++				   void __iomem *addr);
++
++#endif /*_DPU_HW_CWB_H */
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h
+index fb3b6db8112f567f23ddab474d777182abb86033..ba7bb05efe9b8cac01a908e53121117e130f91ec 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h
+@@ -1,5 +1,7 @@
+ /* SPDX-License-Identifier: GPL-2.0-only */
+-/* Copyright (c) 2015-2018, The Linux Foundation. All rights reserved.
++/*
++ * Copyright (c) 2024 Qualcomm Innovation Center, Inc. All rights reserved.
++ * Copyright (c) 2015-2018, The Linux Foundation. All rights reserved.
+  */
+ 
+ #ifndef _DPU_HW_MDSS_H
+@@ -350,6 +352,7 @@ struct dpu_mdss_color {
+ #define DPU_DBG_MASK_DSPP     (1 << 10)
+ #define DPU_DBG_MASK_DSC      (1 << 11)
+ #define DPU_DBG_MASK_CDM      (1 << 12)
++#define DPU_DBG_MASK_CWB      (1 << 13)
+ 
+ /**
+  * struct dpu_hw_tear_check - Struct contains parameters to configure
 
 -- 
 2.34.1
