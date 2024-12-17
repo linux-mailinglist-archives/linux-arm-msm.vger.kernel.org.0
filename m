@@ -1,216 +1,309 @@
-Return-Path: <linux-arm-msm+bounces-42564-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-42565-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id F2B2A9F4E86
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Dec 2024 15:56:21 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2661E9F4E85
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Dec 2024 15:56:01 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id B7014188D86D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Dec 2024 14:54:28 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 07CF47A4260
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Dec 2024 14:55:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 73DCE1F76BC;
-	Tue, 17 Dec 2024 14:51:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="JkcTx9eB"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B46841F428F;
+	Tue, 17 Dec 2024 14:52:25 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FBCE1F8932
-	for <linux-arm-msm@vger.kernel.org>; Tue, 17 Dec 2024 14:51:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A66CB1F4E3A;
+	Tue, 17 Dec 2024 14:52:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734447093; cv=none; b=bXuHsZhmlpNWeZWmy+XkT7wAz1cgrYsl2wWdPQBGEgmrJNbDZ0g7X3CVxadX9pZPWu0c3XOCPeMMQZ3a8bGRqwOztCr7W6fY6Klzyzg/mPzwl5vjVZw8P8tIWFdnDMexd5Z1qKkFfslrctbz4jsywoHSzWnJJlCzeFtZkvsuGI8=
+	t=1734447145; cv=none; b=b15hiPQjwHJbwC/EaEakYk8XZybGpWmVGDY1F0NwlVYjw8D0WjVX/+1FF5XmubhBLwNRdTi+9tB+YGCUGhnD6oQ4zfpf1hOTxfiWIfYsSj2l5MP+QPX5TTJW1VinnukdGLZwi7t1S2kNttiBF112VlYC/zca8MACQUn5QELVFz8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734447093; c=relaxed/simple;
-	bh=mRmcybJomrA8DtYq9fiyqS6rR7q297sl5lRf/i/VlGk=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=Zz/PpFnNdNr7HI1bLJ4+n3KsXhIQ5xou1sLTWjUdDBpNSmENOaPtngNgZHOS/r7nxwmf0hL0LSgrbQ9w9Mmv1g6tT4B9AjRwA2jc/6IdE4b3R94y2yW/EiNvXJSObncTkTbaCj/Mm/asBA5XHfoP9uej/4WcQV9qHUFvHoFbsdg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=JkcTx9eB; arc=none smtp.client-ip=209.85.128.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-43622267b2eso57222425e9.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Dec 2024 06:51:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1734447090; x=1735051890; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=B4/tn0+NaXoZvCxd7DO6dwQt1/7UILyIFVNQSPfY62g=;
-        b=JkcTx9eB7LbW2fZ+UpWG1Lq2HbaANHFAMorJmRbh3Od2LPwcbPrwpQ4k3Gg8d14Ps9
-         StgvvH52ydLqEFVQDhnNHcjIvwUcnX00hoVBIDadVq2OkDevgYnv8uqb0o5DMblWpJcz
-         BF99Rw9VlvnrdXZvoaMtMjZToFI+BBw8BOjtQHo+Et3tLiHGVbQh/Zp7tIQlASwdp2ww
-         Nq/QK1hobw3qccW/U3X+UzPpYFJyoAnNb9ExlSfZpUWjeENC7PCLNi3tPbi9mNz9MRsZ
-         0xBXBFbXORW+Btmm/ImkpA/ygd5pBO2NuowZe4IVvs/rXvNRtFa8UAxqu5wxkuOeDSCK
-         S0Kw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734447090; x=1735051890;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=B4/tn0+NaXoZvCxd7DO6dwQt1/7UILyIFVNQSPfY62g=;
-        b=t2hNvLFHPKyG5atmy/tqyFKZfZWiVzFSIBOqOkZKkDNZFl6eXGCJ2TdMV8mOJKnfPW
-         1kJjgMVIdrvryEhRGEMmULIxb0oIRPNYwhgDMHBgPetarWgc4uUH/x/0eaDChw/U94zh
-         OVP8O8bZdj5c8KIrjiDavMxrxYaX1Sbr/A1ZtE5HpmJK605l41MKfxCPIalJ2GNhWfPS
-         Mxfr2b5aPKC68m7snJlbk1xFbX4H7/eQRS1cpugzq5oZm+Q372O9rbf2Mt0JV23ByBEy
-         oCoh3XjJ5BDkKOJWcywSg1kFoAk0tLN469fmmVpqqD02cImjqsuUP1X1vlKngxwaOp7B
-         m/Og==
-X-Gm-Message-State: AOJu0YxZdUDnzZsQ0U62RNpJmKy7gqlex4hr3fk7jDBGnlVQUdEtLW8J
-	ryqoNPckfDT2UTnhULj0j2aVdVQbJHIApnfWlIb7K9Hx87LoTQHoKOez9wwNXehyJkKdRKDXqnw
-	4kWA=
-X-Gm-Gg: ASbGncsJKLGIbJ1vP8GkB/zYJVxArVTeYe+J+J1j6lXzb6S5uKtKT5aBo6Y9dz0zhSy
-	YZ69bL38Ej/3mxr/OF/BbnwOZVwJ+vQ0aWnv9ysQgDCtZ9pyyomQBueuh8h1W7fkrN1ynZFvymz
-	D++yvZ4QBBerLk4Q7YC3DSy3CWc4npfwHoyf6J+dmZ4xn2kEWEJ2AEYzz1icQ1Wj6BvUNddVBq1
-	dLJGokoIN6FyET9EEcvnMWK5cL8SdXwZtJBwZTYB2/oWFUy9IiMunNMwsXO1cewOfxrTFIfEpN7
-	/Q==
-X-Google-Smtp-Source: AGHT+IH/5sriNzAD6IaFFPEiS4CWanvVfWJxtccBMyLLxpopN0MCzfz2fRQvDKyhFZ41uHBFsZ98Mw==
-X-Received: by 2002:a05:600c:1f0b:b0:434:a94f:f8a9 with SMTP id 5b1f17b1804b1-4362aaa495emr130893345e9.28.1734447089987;
-        Tue, 17 Dec 2024 06:51:29 -0800 (PST)
-Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:8261:5fff:fe11:bdda])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43636066f51sm118417375e9.22.2024.12.17.06.51.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 17 Dec 2024 06:51:29 -0800 (PST)
-From: Neil Armstrong <neil.armstrong@linaro.org>
-Date: Tue, 17 Dec 2024 15:51:20 +0100
-Subject: [PATCH v6 7/7] arm64: qcom: dts: sm8650: add interconnect and
- opp-peak-kBps for GPU
+	s=arc-20240116; t=1734447145; c=relaxed/simple;
+	bh=HxBm0VKYt56BYQPamI5DUBpPW9jCoTQSAp4pWa3e7Nk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=or/j/Vx1EN87xDUp1MIGZWcmi3+phzza6QK6Wst8ZQXNq+WkYkz0XPfiSOF2kYFVx77CeCjGfsAfmPjm5k3zKf3baEutluMixV1SaEM2RXY6bWV6cV4mh0zXIgfyRruQWdB4aR8JIqkm3W6yRG+ZoHwxjaKi0Tg9Mxvkl1LYfr8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 9F0ED1063;
+	Tue, 17 Dec 2024 06:52:49 -0800 (PST)
+Received: from [10.57.71.247] (unknown [10.57.71.247])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPA id 5CA4B3F528;
+	Tue, 17 Dec 2024 06:52:20 -0800 (PST)
+Message-ID: <065b4ad2-db39-42ed-91d1-d818f82ece79@arm.com>
+Date: Tue, 17 Dec 2024 14:52:19 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/3] coresight-tpdm: Add MCMB dataset support
+Content-Language: en-GB
+To: Mao Jinlong <quic_jinlmao@quicinc.com>, Mike Leach
+ <mike.leach@linaro.org>, James Clark <james.clark@linaro.org>,
+ Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
+ linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ Tao Zhang <quic_taozha@quicinc.com>
+References: <20241105123940.39602-1-quic_jinlmao@quicinc.com>
+ <20241105123940.39602-2-quic_jinlmao@quicinc.com>
+From: Suzuki K Poulose <suzuki.poulose@arm.com>
+In-Reply-To: <20241105123940.39602-2-quic_jinlmao@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Message-Id: <20241217-topic-sm8x50-gpu-bw-vote-v6-7-1adaf97e7310@linaro.org>
-References: <20241217-topic-sm8x50-gpu-bw-vote-v6-0-1adaf97e7310@linaro.org>
-In-Reply-To: <20241217-topic-sm8x50-gpu-bw-vote-v6-0-1adaf97e7310@linaro.org>
-To: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, 
- Konrad Dybcio <konradybcio@kernel.org>, 
- Abhinav Kumar <quic_abhinavk@quicinc.com>, 
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
- Marijn Suijten <marijn.suijten@somainline.org>, 
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
- Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, 
- Akhil P Oommen <quic_akhilpo@quicinc.com>
-Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
- freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
- devicetree@vger.kernel.org, Neil Armstrong <neil.armstrong@linaro.org>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2681;
- i=neil.armstrong@linaro.org; h=from:subject:message-id;
- bh=mRmcybJomrA8DtYq9fiyqS6rR7q297sl5lRf/i/VlGk=;
- b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBnYY/obfz13xZbRrotrGQIw50hlz2scCvq+FWxJcUZ
- 9RBFiZeJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZ2GP6AAKCRB33NvayMhJ0TEbD/
- 9LdU33QP0qcYGWuG7UuVR7KT5vp8m/DQImoa/Hpl51HouhcVrZshNZwY4bSn1uMlj2v8iCcI8lQ006
- UnDSdei+wedcHwZdYM5t4ME6EPDaIBWI0PDVozWIUy4jbDaCp6G/0zWgJIoY4nCRCnA7RGaeusFVXa
- 9rVGS0aCsmF2uiYynvpqgrsc5Z6FHtKVNTb9lCIXBpfzIXlDsFGTKQzKRjJvOHBmEKJB3APvjextbd
- EOw0N6KiAsCHqysZgpIW1BpjcwEfW3Sh2ko4kYiBBzl0Qbz20wAbg8HAMj/LGQQ747ajKjICqZzZTd
- 1FS3N4LWO59SmtPLRImaDO14GFniJkLyhtptdiT/R/7RY9i6gDHdBe1ZZoiBN9AHHt3qyc2rvMxxxE
- Ml5iK0AkBQZYdGUR6moLrQlAybVFqlOAdikPA7bXQpsNiAIME3tQXBZFQtK0gzhMQd5HBkgNU+o5it
- sbrod/DJiHI1NFK7+U0XA8+/lEr3xvurM5EWKsdh6W4vYBU73vGogyNpDNfg6SH2GFk20qSIrRD9Gq
- 6pLjhanFozPRudSjnyN5HBmvBsNeGKv8LBNsmicf24Yq33zlyKFFC21DcjTbEscCyjaoR3zK9/k/eo
- vpF8hw9h9kDloT50VlK1fAuWdBaf/CjJgQq1B93WyYgl87GZe1X9OmlTiyLA==
-X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
- fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
 
-Each GPU OPP requires a specific peak DDR bandwidth, let's add
-those to each OPP and also the related interconnect path.
+On 05/11/2024 12:39, Mao Jinlong wrote:
+> MCMB (Multi-lane CMB) is a special form of CMB dataset type. MCMB
+> subunit TPDM has the same number and usage of registers as CMB
+> subunit TPDM. MCMB subunit can be enabled for data collection by
+> writing 1 to the first bit of CMB_CR register. The difference is
+> that MCMB subunit TPDM needs to select the lane and enable it in
+> using it.
+> 
+> Signed-off-by: Tao Zhang <quic_taozha@quicinc.com>
+> Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
+> ---
+>   drivers/hwtracing/coresight/coresight-tpda.c |  7 ++--
+>   drivers/hwtracing/coresight/coresight-tpdm.c | 44 +++++++++++++++++---
+>   drivers/hwtracing/coresight/coresight-tpdm.h | 27 ++++++------
+>   3 files changed, 57 insertions(+), 21 deletions(-)
+> 
+> diff --git a/drivers/hwtracing/coresight/coresight-tpda.c b/drivers/hwtracing/coresight/coresight-tpda.c
+> index bfca103f9f84..4b61b9840740 100644
+> --- a/drivers/hwtracing/coresight/coresight-tpda.c
+> +++ b/drivers/hwtracing/coresight/coresight-tpda.c
+> @@ -1,6 +1,6 @@
+>   // SPDX-License-Identifier: GPL-2.0
+>   /*
+> - * Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
+> + * Copyright (c) 2023-2024 Qualcomm Innovation Center, Inc. All rights reserved.
+>    */
+>   
+>   #include <linux/amba/bus.h>
+> @@ -68,11 +68,12 @@ static int tpdm_read_element_size(struct tpda_drvdata *drvdata,
+>   	int rc = -EINVAL;
+>   	struct tpdm_drvdata *tpdm_data = dev_get_drvdata(csdev->dev.parent);
+>   
+> -	if (tpdm_has_dsb_dataset(tpdm_data)) {
+> +	if (tpdm_data->dsb) {
+>   		rc = fwnode_property_read_u32(dev_fwnode(csdev->dev.parent),
+>   				"qcom,dsb-element-bits", &drvdata->dsb_esize);
+>   	}
+> -	if (tpdm_has_cmb_dataset(tpdm_data)) {
+> +
+> +	if (tpdm_data->cmb) {
+>   		rc = fwnode_property_read_u32(dev_fwnode(csdev->dev.parent),
+>   				"qcom,cmb-element-bits", &drvdata->cmb_esize);
+>   	}
+> diff --git a/drivers/hwtracing/coresight/coresight-tpdm.c b/drivers/hwtracing/coresight/coresight-tpdm.c
+> index b7d99e91ab84..0529858586c1 100644
+> --- a/drivers/hwtracing/coresight/coresight-tpdm.c
+> +++ b/drivers/hwtracing/coresight/coresight-tpdm.c
+> @@ -1,6 +1,6 @@
+>   // SPDX-License-Identifier: GPL-2.0
+>   /*
+> - * Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
+> + * Copyright (c) 2023-2024 Qualcomm Innovation Center, Inc. All rights reserved.
+>    */
+>   
+>   #include <linux/amba/bus.h>
+> @@ -21,6 +21,21 @@
+>   
+>   DEFINE_CORESIGHT_DEVLIST(tpdm_devs, "tpdm");
+>   
+> +static bool tpdm_has_dsb_dataset(struct tpdm_drvdata *drvdata)
+> +{
+> +	return (drvdata->datasets & TPDM_PIDR0_DS_DSB);
+> +}
+> +
+> +static bool tpdm_has_cmb_dataset(struct tpdm_drvdata *drvdata)
+> +{
+> +	return (drvdata->datasets & TPDM_PIDR0_DS_CMB);
+> +}
+> +
+> +static bool tpdm_has_mcmb_dataset(struct tpdm_drvdata *drvdata)
+> +{
+> +	return (drvdata->datasets & TPDM_PIDR0_DS_MCMB);
+> +}
+> +
+>   /* Read dataset array member with the index number */
+>   static ssize_t tpdm_simple_dataset_show(struct device *dev,
+>   					struct device_attribute *attr,
+> @@ -198,7 +213,7 @@ static umode_t tpdm_cmb_is_visible(struct kobject *kobj,
+>   	struct device *dev = kobj_to_dev(kobj);
+>   	struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
+>   
+> -	if (drvdata && tpdm_has_cmb_dataset(drvdata))
+> +	if (drvdata && drvdata->cmb)
+>   		return attr->mode;
+>   
+>   	return 0;
+> @@ -246,8 +261,10 @@ static void tpdm_reset_datasets(struct tpdm_drvdata *drvdata)
+>   		drvdata->dsb->trig_type = false;
+>   	}
+>   
+> -	if (drvdata->cmb)
+> +	if (drvdata->cmb) {
+>   		memset(drvdata->cmb, 0, sizeof(struct cmb_dataset));
+> +		drvdata->cmb->trig_ts = true;
 
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
----
- arch/arm64/boot/dts/qcom/sm8650.dtsi | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+This looks like an unrelated change from the MCMB dataset. Is there an 
+explanation ? Is this a mistake ? If it is intended, please make it a
+separate patch.
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8650.dtsi b/arch/arm64/boot/dts/qcom/sm8650.dtsi
-index 25e47505adcb790d09f1d2726386438487255824..c76c0038c35ab048c88be9870b14c3a0b24b4183 100644
---- a/arch/arm64/boot/dts/qcom/sm8650.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8650.dtsi
-@@ -2636,6 +2636,10 @@ gpu: gpu@3d00000 {
- 			qcom,gmu = <&gmu>;
- 			#cooling-cells = <2>;
- 
-+			interconnects = <&gem_noc MASTER_GFX3D QCOM_ICC_TAG_ALWAYS
-+					 &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>;
-+			interconnect-names = "gfx-mem";
-+
- 			status = "disabled";
- 
- 			zap-shader {
-@@ -2649,56 +2653,67 @@ gpu_opp_table: opp-table {
- 				opp-231000000 {
- 					opp-hz = /bits/ 64 <231000000>;
- 					opp-level = <RPMH_REGULATOR_LEVEL_LOW_SVS_D2>;
-+					opp-peak-kBps = <2136718>;
- 				};
- 
- 				opp-310000000 {
- 					opp-hz = /bits/ 64 <310000000>;
- 					opp-level = <RPMH_REGULATOR_LEVEL_LOW_SVS_D1>;
-+					opp-peak-kBps = <2136718>;
- 				};
- 
- 				opp-366000000 {
- 					opp-hz = /bits/ 64 <366000000>;
- 					opp-level = <RPMH_REGULATOR_LEVEL_LOW_SVS_D0>;
-+					opp-peak-kBps = <6074218>;
- 				};
- 
- 				opp-422000000 {
- 					opp-hz = /bits/ 64 <422000000>;
- 					opp-level = <RPMH_REGULATOR_LEVEL_LOW_SVS>;
-+					opp-peak-kBps = <8171875>;
- 				};
- 
- 				opp-500000000 {
- 					opp-hz = /bits/ 64 <500000000>;
- 					opp-level = <RPMH_REGULATOR_LEVEL_LOW_SVS_L1>;
-+					opp-peak-kBps = <8171875>;
- 				};
- 
- 				opp-578000000 {
- 					opp-hz = /bits/ 64 <578000000>;
- 					opp-level = <RPMH_REGULATOR_LEVEL_SVS>;
-+					opp-peak-kBps = <8171875>;
- 				};
- 
- 				opp-629000000 {
- 					opp-hz = /bits/ 64 <629000000>;
- 					opp-level = <RPMH_REGULATOR_LEVEL_SVS_L0>;
-+					opp-peak-kBps = <10687500>;
- 				};
- 
- 				opp-680000000 {
- 					opp-hz = /bits/ 64 <680000000>;
- 					opp-level = <RPMH_REGULATOR_LEVEL_SVS_L1>;
-+					opp-peak-kBps = <12449218>;
- 				};
- 
- 				opp-720000000 {
- 					opp-hz = /bits/ 64 <720000000>;
- 					opp-level = <RPMH_REGULATOR_LEVEL_SVS_L2>;
-+					opp-peak-kBps = <12449218>;
- 				};
- 
- 				opp-770000000 {
- 					opp-hz = /bits/ 64 <770000000>;
- 					opp-level = <RPMH_REGULATOR_LEVEL_NOM>;
-+					opp-peak-kBps = <12449218>;
- 				};
- 
- 				opp-834000000 {
- 					opp-hz = /bits/ 64 <834000000>;
- 					opp-level = <RPMH_REGULATOR_LEVEL_NOM_L1>;
-+					opp-peak-kBps = <14398437>;
- 				};
- 			};
- 		};
+> +	}
+>   }
+>   
+>   static void set_dsb_mode(struct tpdm_drvdata *drvdata, u32 *val)
+> @@ -388,7 +405,7 @@ static void tpdm_enable_cmb(struct tpdm_drvdata *drvdata)
+>   {
+>   	u32 val, i;
+>   
+> -	if (!tpdm_has_cmb_dataset(drvdata))
+> +	if (!drvdata->cmb)
+>   		return;
+>   
+>   	/* Configure pattern registers */
+> @@ -415,6 +432,19 @@ static void tpdm_enable_cmb(struct tpdm_drvdata *drvdata)
+>   		val |= TPDM_CMB_CR_MODE;
+>   	else
+>   		val &= ~TPDM_CMB_CR_MODE;
+> +
+> +	if (tpdm_has_mcmb_dataset(drvdata)) {
+> +		val &= ~TPDM_CMB_CR_XTRIG_LNSEL;
+> +		/* Set the lane participates in tghe output pattern */
 
--- 
-2.34.1
+minor nit: typo "tghe" => "the"
+
+> +		val |= FIELD_PREP(TPDM_CMB_CR_XTRIG_LNSEL,
+> +			drvdata->cmb->mcmb.trig_lane);
+> +
+> +		/* Set the enablement of the lane */
+> +		val &= ~TPDM_CMB_CR_E_LN;
+> +		val |= FIELD_PREP(TPDM_CMB_CR_E_LN,
+> +			drvdata->cmb->mcmb.lane_select);
+> +	}
+> +
+>   	/* Set the enable bit of CMB control register to 1 */
+>   	val |= TPDM_CMB_CR_ENA;
+>   	writel_relaxed(val, drvdata->base + TPDM_CMB_CR);
+> @@ -480,7 +510,7 @@ static void tpdm_disable_cmb(struct tpdm_drvdata *drvdata)
+>   {
+>   	u32 val;
+>   
+> -	if (!tpdm_has_cmb_dataset(drvdata))
+> +	if (!drvdata->cmb)
+>   		return;
+>   
+>   	val = readl_relaxed(drvdata->base + TPDM_CMB_CR);
+> @@ -542,12 +572,14 @@ static int tpdm_datasets_setup(struct tpdm_drvdata *drvdata)
+>   		if (!drvdata->dsb)
+>   			return -ENOMEM;
+>   	}
+> -	if (tpdm_has_cmb_dataset(drvdata) && (!drvdata->cmb)) {
+> +	if ((tpdm_has_cmb_dataset(drvdata) || tpdm_has_mcmb_dataset(drvdata))
+> +			&& (!drvdata->cmb)) {
+>   		drvdata->cmb = devm_kzalloc(drvdata->dev,
+>   						sizeof(*drvdata->cmb), GFP_KERNEL);
+>   		if (!drvdata->cmb)
+>   			return -ENOMEM;
+>   	}
+> +
+>   	tpdm_reset_datasets(drvdata);
+>   
+>   	return 0;
+> diff --git a/drivers/hwtracing/coresight/coresight-tpdm.h b/drivers/hwtracing/coresight/coresight-tpdm.h
+> index e08d212642e3..fd9153b92335 100644
+> --- a/drivers/hwtracing/coresight/coresight-tpdm.h
+> +++ b/drivers/hwtracing/coresight/coresight-tpdm.h
+> @@ -1,6 +1,6 @@
+>   /* SPDX-License-Identifier: GPL-2.0 */
+>   /*
+> - * Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
+> + * Copyright (c) 2023-2024 Qualcomm Innovation Center, Inc. All rights reserved.
+>    */
+>   
+>   #ifndef _CORESIGHT_CORESIGHT_TPDM_H
+> @@ -9,7 +9,7 @@
+>   /* The max number of the datasets that TPDM supports */
+>   #define TPDM_DATASETS       7
+>   
+> -/* CMB Subunit Registers */
+> +/* CMB/MCMB Subunit Registers */
+>   #define TPDM_CMB_CR		(0xA00)
+>   /* CMB subunit timestamp insertion enable register */
+>   #define TPDM_CMB_TIER		(0xA04)
+> @@ -34,6 +34,10 @@
+>   #define TPDM_CMB_TIER_XTRIG_TSENAB	BIT(1)
+>   /* For timestamp fo all trace */
+>   #define TPDM_CMB_TIER_TS_ALL		BIT(2)
+> +/* MCMB trigger lane select */
+> +#define TPDM_CMB_CR_XTRIG_LNSEL		GENMASK(20, 18)
+> +/* MCMB lane enablement */
+> +#define TPDM_CMB_CR_E_LN		GENMASK(17, 10)
+
+Please could you move the CMB_CR related defintions together ?
+i.e., closer to TPDM_CMB_CR_MODE
+
+Suzuki
+
+>   
+>   /* Patten register number */
+>   #define TPDM_CMB_MAX_PATT		2
+> @@ -112,11 +116,13 @@
+>    * PERIPHIDR0[0] : Fix to 1 if ImplDef subunit present, else 0
+>    * PERIPHIDR0[1] : Fix to 1 if DSB subunit present, else 0
+>    * PERIPHIDR0[2] : Fix to 1 if CMB subunit present, else 0
+> + * PERIPHIDR0[6] : Fix to 1 if MCMB subunit present, else 0
+>    */
+>   
+>   #define TPDM_PIDR0_DS_IMPDEF	BIT(0)
+>   #define TPDM_PIDR0_DS_DSB	BIT(1)
+>   #define TPDM_PIDR0_DS_CMB	BIT(2)
+> +#define TPDM_PIDR0_DS_MCMB	BIT(6)
+>   
+>   #define TPDM_DSB_MAX_LINES	256
+>   /* MAX number of EDCR registers */
+> @@ -256,6 +262,9 @@ struct dsb_dataset {
+>    * @patt_ts:          Indicates if pattern match for timestamp is enabled.
+>    * @trig_ts:          Indicates if CTI trigger for timestamp is enabled.
+>    * @ts_all:           Indicates if timestamp is enabled for all packets.
+> + * struct mcmb_dataset
+> + * @mcmb_trig_lane:       Save data for trigger lane
+> + * @mcmb_lane_select:     Save data for lane enablement
+>    */
+>   struct cmb_dataset {
+>   	u32			trace_mode;
+> @@ -267,6 +276,10 @@ struct cmb_dataset {
+>   	bool			patt_ts;
+>   	bool			trig_ts;
+>   	bool			ts_all;
+> +	struct {
+> +		u8		trig_lane;
+> +		u8		lane_select;
+> +	} mcmb;
+>   };
+>   
+>   /**
+> @@ -324,14 +337,4 @@ struct tpdm_dataset_attribute {
+>   	enum dataset_mem mem;
+>   	u32 idx;
+>   };
+> -
+> -static bool tpdm_has_dsb_dataset(struct tpdm_drvdata *drvdata)
+> -{
+> -	return (drvdata->datasets & TPDM_PIDR0_DS_DSB);
+> -}
+> -
+> -static bool tpdm_has_cmb_dataset(struct tpdm_drvdata *drvdata)
+> -{
+> -	return (drvdata->datasets & TPDM_PIDR0_DS_CMB);
+> -}
+>   #endif  /* _CORESIGHT_CORESIGHT_TPDM_H */
 
 
