@@ -1,225 +1,307 @@
-Return-Path: <linux-arm-msm+bounces-42586-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-42587-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id C0C849F552A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Dec 2024 18:55:54 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3078C9F554C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Dec 2024 19:00:41 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9E6DA18916D6
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Dec 2024 17:51:24 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id AB971189505D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Dec 2024 17:56:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 525261F6661;
-	Tue, 17 Dec 2024 17:44:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DCD3D1F8923;
+	Tue, 17 Dec 2024 17:49:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="i1UODlnJ"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="nHI5CiiR"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f52.google.com (mail-lf1-f52.google.com [209.85.167.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3831E1FAC4E
-	for <linux-arm-msm@vger.kernel.org>; Tue, 17 Dec 2024 17:44:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C9CD1F7563;
+	Tue, 17 Dec 2024 17:49:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734457475; cv=none; b=kSGbl/YR7ZpfTVcomqAZNCeendDqQKDSwZgzW/7/wd0kR3SBkqdCVh794g0DkPUhHoChFhL/iZYyisCgKmxfbKryqDxjaaoPrzevP84b4qy7+hU0xuFFt+qMQshbyctsg0cJX4KTpdkGsOXzJ82xJ63FLddKu6GoC573q83+6As=
+	t=1734457777; cv=none; b=sjOSSL/pGUf6rhF8DD+wDMogDCOQoFsfYn/Y89PJVzFDTgr1EDt89LSWzrQt8U0q179k9c5Ht1WMkWIRPjcCHqkP6UZTPxrSuxRe1gj0Y8x7sFNaVeXkSsIr3erSrJtQ4ltx6yLCWOZ+RppfW+kzJcWKklMCUP96GYUHUOlLgys=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734457475; c=relaxed/simple;
-	bh=JLQtj3Z+YBvoe66gPP5jwG3nfGAR0rbHbfqZsmiV4Zk=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=kNBvkyKPlOiIowki/F9lnyhiD2AHGDvNKYmuWV0xWpKNjT7oo6H5q0r/ZR9cnCawiC2sHr954RtHmcXhB7oHjezlidOFiEeHfEvTRn8SgHDkY7VnFg2imITtpFYYlM99ZEKpdHWMueA7zOhMghgqaKUyzytjtkK9U+QithOobWs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=i1UODlnJ; arc=none smtp.client-ip=209.85.167.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
-Received: by mail-lf1-f52.google.com with SMTP id 2adb3069b0e04-5401be44b58so5608967e87.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Dec 2024 09:44:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1734457469; x=1735062269; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=JLQtj3Z+YBvoe66gPP5jwG3nfGAR0rbHbfqZsmiV4Zk=;
-        b=i1UODlnJ0KIsogvPyL4C1wg95eOJ2EanpTavhmVjTQBTUQUwTa2xeTt487NUhnmJd1
-         NGXDYO7Nw1UAkkQo9kwFzw9OUtXS1k6AGBjDUBqhc4oAKk6eM8O/nZ6YJr4rUOqChabu
-         BAlQ8jvN4Ir1FufryAd2iYBZNm6bAdCQEpr+c=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734457469; x=1735062269;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=JLQtj3Z+YBvoe66gPP5jwG3nfGAR0rbHbfqZsmiV4Zk=;
-        b=mORTpfsxmyA8dtpoi4tw07foijjT0oIKwhpMGxADqcMjwB4TFY02HRp0OCkiqmFg0J
-         RROEgp/XG5w6zhjBi4d5u3dcqvEms+dSJam3E9gi3Cv0sjubQKi8dV2Deoekw2f/zGfG
-         7pyzyk8VfhOE8NOdDWl2LoqXYx01jNSw8tat961Dn6YlTxyzydy0vkp+oTd4QzdxL/nh
-         Z882OCcFRGJs2nJqimscAwtFGEmmID2zxAQ/M7nx9H/o2dv6J0slCllTTR8ZzF1JTl70
-         e/SOWucRACcxMp1M+nmCyafIuRvFWVRGWyl3fLz+AcY9gI3pwxoCU9G8Z9ilJSkOLrAJ
-         bOaQ==
-X-Forwarded-Encrypted: i=1; AJvYcCV+62jSG1T2X1qSFmjlW2HsGka87DGhh51msmraxO+O2xtNbcGoI8BeJmuLWtDun9epLFsANxBPOIDzYHkM@vger.kernel.org
-X-Gm-Message-State: AOJu0YyiI7jsjfsUPYUy9KP+fRWG2gAorSMo1RJYfvCXJKlDuYIG6+Qm
-	a/E9j2Oh+JcjgNqSMvAbSHm3JBgrO5N+yJRug1NUptuwHXqlFkF/qsr2Rlmp18HRJZB0ZbelZ0H
-	GRg==
-X-Gm-Gg: ASbGncvxS9FVDLumqV7+Si4Y82wO5ap0xx5a4zcGnriEXdoHPJnkmDW2D+hhbM9ihZy
-	HdWYZj2pHqsYdvZR0GqlBpaZhJPutWqbwwIYuKCqADZPPmpVvMjTsm6yB1KVj4DuTA8FgCs+P3f
-	j4TJzIrDOH3/NuuXFiNkA9YZ4MREWt2D5syrtqQhMgcsly3DhiKmpJbz2wK1xp8JXJVEPKn9sZk
-	SBgr6K2AcbxN5/3Uws6R4gu/ONK9QNeQJZrZitGweT5gMQ1Ya+pZzoiYPK1oV6U0IjB//hJwfGU
-	UZjn471G7Vep5ljmILY/vewd
-X-Google-Smtp-Source: AGHT+IGw0c7jtAfEHSKb+MPwV/FSrKW7mWcd+CqWdcG9D++Ia53DLY4FiHb2CuWpVmQTNOoeXjc06g==
-X-Received: by 2002:a05:6512:3d8f:b0:540:2339:3761 with SMTP id 2adb3069b0e04-5409056adfemr7127765e87.31.1734457468569;
-        Tue, 17 Dec 2024 09:44:28 -0800 (PST)
-Received: from mail-lj1-f178.google.com (mail-lj1-f178.google.com. [209.85.208.178])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-54120c1f422sm1220760e87.227.2024.12.17.09.44.25
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 17 Dec 2024 09:44:26 -0800 (PST)
-Received: by mail-lj1-f178.google.com with SMTP id 38308e7fff4ca-30037784fceso55119241fa.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Dec 2024 09:44:25 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AJvYcCWYJaud/lCWVZO7U+ebOBfONIEDYRilJSk2O/EGOT6xLSC5zsi6APKJFPFA7EpBvds+oBtpvcp+ROj6mnO0@vger.kernel.org
-X-Received: by 2002:a05:651c:2108:b0:302:3de5:b039 with SMTP id
- 38308e7fff4ca-30254566a55mr66069711fa.8.1734457465327; Tue, 17 Dec 2024
- 09:44:25 -0800 (PST)
+	s=arc-20240116; t=1734457777; c=relaxed/simple;
+	bh=zUY66eqgOltY8wKdpZHvKq/45XjgqeVNpER/TcFe6KM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=DibWXB0XGfWLYgQQA5C6K2l69lkSafSPT/P1zixR4h41IbJhiNtNz1TAm2YjAn5dKZGM6tA7cgDrTS0cNi5w3KSDSuuExFTO3NRe8UU23ZGs4n4MVwv1J9l1YyMd4coh3a73OsIWOSg5dLs1wGq+VyC5w+eynSDV9AFEYNXLZWo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=nHI5CiiR; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BHEpfEQ003754;
+	Tue, 17 Dec 2024 17:49:24 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	O9Plx0bNtmhuCufstSEhSAO/gEk2mv9F+4PnW9ec0Z0=; b=nHI5CiiRmzFe/BbZ
+	qb9ufp4rpgFDeuvZsDsnPrPAB2BXqneScgQKxYEwvwEb6lEh+pd9mjWB8pSAx+vb
+	bmeZ4b4AJ8zF1gJfhQQDPMCuwZMsJuzHdnl2GuBnreryycnwZVYAFs8Q4H+Uhp3f
+	Q9eltaMyaKCt2NlHG81ol8AbYC5V7Kgbfl09rmTZlY7gtrVieMInNGtWV3OArJYR
+	zBgnBrYvyaKDwMyQfEowEpk0I9pYtzHLnuUIcuAedCSpHGZ026CwIALFhf+V+ljU
+	95jENX7qERLKVfc3aERFvznl5w3E9H2cAfO7h34roUV+NuliW5gGyzfOw26FzUw0
+	ed78LA==
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43kbedrgsv-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 17 Dec 2024 17:49:23 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4BHHnNU6014832
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 17 Dec 2024 17:49:23 GMT
+Received: from [10.50.34.207] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 17 Dec
+ 2024 09:49:13 -0800
+Message-ID: <3e6ab7aa-c606-49bc-8cc5-24c8a1edc081@quicinc.com>
+Date: Tue, 17 Dec 2024 23:19:11 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20241214005248.198803-1-dianders@chromium.org>
- <20241213165201.v2.1.I2040fa004dafe196243f67ebcc647cbedbb516e6@changeid>
- <CAODwPW_c+Ycu_zhiDOKN-fH2FEWf2pxr+FcugpqEjLX-nVjQrg@mail.gmail.com>
- <CAD=FV=UHBA7zXZEw3K6TRpZEN-ApOkmymhRCOkz7h+yrAkR_Dw@mail.gmail.com> <CAODwPW8s4GhWGuZMUbWVNLYw_EVJe=EeMDacy1hxDLmnthwoFg@mail.gmail.com>
-In-Reply-To: <CAODwPW8s4GhWGuZMUbWVNLYw_EVJe=EeMDacy1hxDLmnthwoFg@mail.gmail.com>
-From: Doug Anderson <dianders@chromium.org>
-Date: Tue, 17 Dec 2024 09:44:13 -0800
-X-Gmail-Original-Message-ID: <CAD=FV=X61y+RmbWCiZut_HHVS4jPdv_ZB8F+_Hs0R-1aKHdK4w@mail.gmail.com>
-X-Gm-Features: AbW1kvbAgvCz7vA_yFdhIVykkakAa4L6Lz2IE9DR-f5ZjOd70MgEn8kxRtbYbd0
-Message-ID: <CAD=FV=X61y+RmbWCiZut_HHVS4jPdv_ZB8F+_Hs0R-1aKHdK4w@mail.gmail.com>
-Subject: Re: [PATCH v2 1/6] arm64: errata: Assume that unknown CPUs _are_
- vulnerable to Spectre BHB
-To: Julius Werner <jwerner@chromium.org>
-Cc: Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>, 
-	Mark Rutland <mark.rutland@arm.com>, linux-arm-msm@vger.kernel.org, 
-	Jeffrey Hugo <quic_jhugo@quicinc.com>, linux-arm-kernel@lists.infradead.org, 
-	Roxana Bradescu <roxabee@google.com>, Trilok Soni <quic_tsoni@quicinc.com>, 
-	bjorn.andersson@oss.qualcomm.com, stable@vger.kernel.org, 
-	James Morse <james.morse@arm.com>, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v10 4/4] arm64: dts: qcom:
+ qcs6490-rb3gen2-vision-mezzanine: Add vision mezzanine
+To: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>, <rfoss@kernel.org>,
+        <todor.too@gmail.com>, <bryan.odonoghue@linaro.org>,
+        <mchehab@kernel.org>, <robh@kernel.org>, <krzk+dt@kernel.org>,
+        <conor+dt@kernel.org>, <akapatra@quicinc.com>, <hariramp@quicinc.com>,
+        <andersson@kernel.org>, <konradybcio@kernel.org>,
+        <hverkuil-cisco@xs4all.nl>, <cros-qcom-dts-watchers@chromium.org>,
+        <catalin.marinas@arm.com>, <will@kernel.org>
+CC: <linux-arm-kernel@lists.infradead.org>, <linux-media@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <kernel@quicinc.com>,
+        Konrad Dybcio
+	<konrad.dybcio@oss.qualcomm.com>
+References: <20241217140656.965235-1-quic_vikramsa@quicinc.com>
+ <20241217140656.965235-5-quic_vikramsa@quicinc.com>
+ <22479c27-9265-4994-8974-9739ecbae5ee@linaro.org>
+Content-Language: en-US
+From: Vikram Sharma <quic_vikramsa@quicinc.com>
+In-Reply-To: <22479c27-9265-4994-8974-9739ecbae5ee@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: LIEX0_8K3eKu5wFpoMUkSDZCo6_8Oee2
+X-Proofpoint-ORIG-GUID: LIEX0_8K3eKu5wFpoMUkSDZCo6_8Oee2
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 mlxscore=0
+ clxscore=1015 bulkscore=0 adultscore=0 priorityscore=1501 malwarescore=0
+ lowpriorityscore=0 phishscore=0 mlxlogscore=999 impostorscore=0
+ spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2412170137
 
-Hi,
-
-On Tue, Dec 17, 2024 at 5:25=E2=80=AFAM Julius Werner <jwerner@chromium.org=
-> wrote:
+On 12/17/2024 8:10 PM, Vladimir Zapolskiy wrote:
+> On 12/17/24 16:06, Vikram Sharma wrote:
+>> The Vision Mezzanine for the RB3 ships with an imx577 camera sensor.
+>> Enable the IMX577 on the vision mezzanine.
+>>
+>> An example media-ctl pipeline for the imx577 is:
+>>
+>> media-ctl --reset
+>> media-ctl -v -V '"imx577 '19-001a'":0[fmt:SRGGB10/4056x3040 field:none]'
+>> media-ctl -V '"msm_csiphy3":0[fmt:SRGGB10/4056x3040]'
+>> media-ctl -V '"msm_csid0":0[fmt:SRGGB10/4056x3040]'
+>> media-ctl -V '"msm_vfe0_rdi0":0[fmt:SRGGB10/4056x3040]'
+>> media-ctl -l '"msm_csiphy3":1->"msm_csid0":0[1]'
+>> media-ctl -l '"msm_csid0":1->"msm_vfe0_rdi0":0[1]'
+>>
+>> yavta -B capture-mplane -c -I -n 5 -f SRGGB10P -s 4056x3040 -F 
+>> /dev/video0
+>>
+>> Signed-off-by: Hariram Purushothaman <quic_hariramp@quicinc.com>
+>> Signed-off-by: Vikram Sharma <quic_vikramsa@quicinc.com>
+>> Signed-off-by: Trishansh Bhardwaj <quic_tbhardwa@quicinc.com>
+>> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+>> Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+>> ---
+>>   arch/arm64/boot/dts/qcom/Makefile             |   4 +
+>>   .../qcs6490-rb3gen2-vision-mezzanine.dtso     | 109 ++++++++++++++++++
+>>   2 files changed, 113 insertions(+)
+>>   create mode 100644 
+>> arch/arm64/boot/dts/qcom/qcs6490-rb3gen2-vision-mezzanine.dtso
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/Makefile 
+>> b/arch/arm64/boot/dts/qcom/Makefile
+>> index 4686f2a8ddd8..a7e88fcabded 100644
+>> --- a/arch/arm64/boot/dts/qcom/Makefile
+>> +++ b/arch/arm64/boot/dts/qcom/Makefile
+>> @@ -115,6 +115,10 @@ dtb-$(CONFIG_ARCH_QCOM)    += qcs404-evb-1000.dtb
+>>   dtb-$(CONFIG_ARCH_QCOM)    += qcs404-evb-4000.dtb
+>>   dtb-$(CONFIG_ARCH_QCOM)    += qcs615-ride.dtb
+>>   dtb-$(CONFIG_ARCH_QCOM)    += qcs6490-rb3gen2.dtb
+>> +
+>> +qcs6490-rb3gen2-vision-mezzanine-dtbs := qcs6490-rb3gen2.dtb 
+>> qcs6490-rb3gen2-vision-mezzanine.dtbo
+>> +
+>> +dtb-$(CONFIG_ARCH_QCOM)    += qcs6490-rb3gen2-vision-mezzanine.dtb
+>>   dtb-$(CONFIG_ARCH_QCOM)    += qcs8300-ride.dtb
+>>   dtb-$(CONFIG_ARCH_QCOM)    += qcs8550-aim300-aiot.dtb
+>>   dtb-$(CONFIG_ARCH_QCOM)    += qcs9100-ride.dtb
+>> diff --git 
+>> a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2-vision-mezzanine.dtso 
+>> b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2-vision-mezzanine.dtso
+>> new file mode 100644
+>> index 000000000000..7782c4aee576
+>> --- /dev/null
+>> +++ b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2-vision-mezzanine.dtso
+>> @@ -0,0 +1,109 @@
+>> +// SPDX-License-Identifier: BSD-3-Clause
+>> +/*
+>> + * Copyright (c) 2024, Qualcomm Innovation Center, Inc. All rights 
+>> reserved.
+>> + */
+>> +
+>> +/*
+>> + * Camera Sensor overlay on top of rb3gen2 core kit.
+>> + */
+>> +
+>> +#include <dt-bindings/gpio/gpio.h>
+>> +#include <dt-bindings/clock/qcom,camcc-sc7280.h>
 >
-> > > - Refactor max_bhb_k in spectre_bhb_loop_affected() to be a global
-> > > instead, which starts out as zero, is updated by
-> > > spectre_bhb_loop_affected(), and is directly read by
-> > > spectre_bhb_patch_loop_iter() (could probably remove the `scope`
-> > > argument from spectre_bhb_loop_affected() then).
-> >
-> > Refactoring "max_bhb_k" would be a general cleanup and not related to
-> > anything else here, right?
-> >
-> > ...but the function is_spectre_bhb_affected() is called from
-> > "cpu_errata.c" and has a scope. Can we guarantee that it's always
-> > "SCOPE_LOCAL_CPU"? I tried reading through the code and it's
-> > _probably_ SCOPE_LOCAL_CPU most of the time, but it doesn't seem worth
-> > it to add an assumption here for a small cleanup.
-> >
-> > I'm not going to do this, though I will move "max_bhb_k" to be a
-> > global for the suggestion below.
+> Please sort the header files alphabetically.
+Thanks for your comments Vladimir.
+Will take care in next version.
 >
-> If you make max_bhb_k a global, then whether you change all
-> `spectre_bhb_loop_affected(SCOPE_SYSTEM)` calls to read the global
-> directly or whether you keep it such that
-> `spectre_bhb_loop_affected()` simply returns that global for
-> SCOPE_SYSTEM makes no difference. I just think reading the global
-> directly would look a bit cleaner. Calling a function that's called
-> "...affected()" when you're really just trying to find out the K-value
-> feels a bit odd.
+>> +
+>> +/dts-v1/;
+>> +/plugin/;
+>> +
 >
-> For is_spectre_bhb_affected(), I was assuming the change below where
-> you combine all the `return true` paths, so the scope question
-> wouldn't matter there.
-
-Ah, right. OK.
-
-
-> > > - Change the `return false` into `return true` at the end of
-> > > is_spectre_bhb_affected (in fact, you can probably take out some of
-> > > the other calls that result in returning true as well then)
-> >
-> > I'm not sure you can take out the other calls. Specifically, both
-> > spectre_bhb_loop_affected() and is_spectre_bhb_fw_affected() _need_ to
-> > be called for each CPU so that they update static globals, right?
-> > Maybe we could get rid of the call to supports_clearbhb(), but that
-> > _would_ change things in ways that are not obvious. Specifically I
-> > could believe that someone could have backported "clear BHB" to their
-> > core but their core is otherwise listed as "loop affected". That would
-> > affect "max_bhb_k". Maybe (?) it doesn't matter in this case, but I'd
-> > rather not mess with it unless someone really wants me to and is sure
-> > it's safe.
+> Please put these two lines right after the comments header.
+ACK.
 >
-> Yes, but spectre_bhb_enable_mitigation() already calls all those
-> functions on its own again anyway, so I'm pretty sure the "must be
-> called once for each CPU" part of spectre_bhb_loop_affected() is
-> covered by that. (Besides, it would be really awful if they had made a
-> function whose name starts with is_... have critical side-effects that
-> break things when it doesn't get called.)
-
-The existing predicates already do change globals before my patch and
-changing that is outside of the scope of what I'm willing to entertain
-with my patchset
-
-Given that I'm not going to change the way the existing predicates
-work, if I move the "fallback" setting `max_bhb_k` to 32 to
-spectre_bhb_enable_mitigation() then when we set `max_bhb_k` becomes
-inconsistent between recognized and unrecognized CPUs. One gets set in
-the predicate and one doesn't. Even if it works, this inconsistency
-feels like bad design to me. Also, setting `max_bhb_k` to the max at
-the end of is_spectre_bhb_affected() would perhaps _help_ someone
-realize that the predicate has side effects because they'd see it in
-the function itself and not have to dig down.
-
-I would also say that having `max_bhb_k` get set in an inconsistent
-place opens us up for bugs in the future. Even if it works today, I
-imagine someone could change things in the future such that
-spectre_bhb_enable_mitigation() reads `max_bhb_k` and essentially
-caches it (maybe it constructs an instruction based on it). If that
-happened things could be subtly broken for the "unrecognized CPU" case
-because the first CPU would "cache" the value without it having been
-called on all CPUs.
-
-In case you can't tell, I'm still not convinced and will plan to keep
-setting `max_bhb_k =3D 32` in is_spectre_bhb_affected().
-
-
-> > > - In spectre_bhb_enable_mitigations(), at the end of the long if-else
-> > > chain, put a last else block that prints your WARN_ONCE(), sets the
-> > > max_bhb_k global to 32, and then does the same stuff that the `if
-> > > (spectre_bhb_loop_affected())` block would have installed (maybe
-> > > factoring that out into a helper function called from both cases).
-> >
-> > ...or just reorder it so that the spectre_bhb_loop_affected() code is
-> > last and it can be the "else". Then I can WARN_ONCE() if
-> > spectre_bhb_loop_affected(). ...or I could just do the WARN_ONCE()
-> > when I get to the end of is_spectre_bhb_affected() and set "max_bhb_k"
-> > to 32 there. I'd actually rather do that so that "max_bhb_k" is
-> > consistently set after is_spectre_bhb_affected() is called on all
-> > cores regardless of whether or not some cores are unknown.
+>> +&camss {
+>> +    vdda-phy-supply = <&vreg_l10c_0p88>;
+>> +    vdda-pll-supply = <&vreg_l6b_1p2>;
+>> +
+>> +    status = "okay";
+>> +
+>> +    ports {
+>> +        #address-cells = <1>;
+>> +        #size-cells = <0>;
+>> +
+>> +        /* The port index denotes CSIPHY id i.e. csiphy3 */
+>> +        port@3 {
+>> +            reg = <3>;
+>> +
+>> +            csiphy3_ep: endpoint {
+>> +                clock-lanes = <7>;
+>> +                data-lanes = <0 1 2 3>;
+>> +                remote-endpoint = <&imx577_ep>;
+>> +            };
+>> +        };
+>> +    };
+>> +};
+>> +
+>> +&cci1 {
+>> +    status = "okay";
+>> +};
+>> +
+>> +&cci1_i2c1 {
+>> +    #address-cells = <1>;
+>> +    #size-cells = <0>;
+>> +
+>> +    camera@1a {
+>> +        compatible = "sony,imx577";
+>> +
+>> +        reg = <0x1a>;
+>> +
+>> +        reset-gpios = <&tlmm 78 GPIO_ACTIVE_LOW>;
+>> +        pinctrl-names = "default", "suspend";
+>> +        pinctrl-0 = <&cam2_default>;
+>> +        pinctrl-1 = <&cam2_suspend>;
+>> +
+>> +        clocks = <&camcc CAM_CC_MCLK3_CLK>;
+>> +        assigned-clocks = <&camcc CAM_CC_MCLK3_CLK>;
+>> +        assigned-clock-rates = <24000000>;
+>> +
+>> +        dovdd-supply  = <&vreg_l18b_1p8>;
 >
-> Yeah, you can reorder the loops too. I don't feel like moving this
-> into is_spectre_bhb_affected() would be a good idea. Functions with a
-> predicate name like that really shouldn't have such side effects.
-> Besides, I think is_spectre_bhb_affected() is probably called more
-> often per CPU, both once from spectre_bhb_enable_mitigation() and by
-> whatever calls the `matches` pointer in the cpu_errata struct.
-> spectre_bhb_enable_mitigation() seems to be the function that's called
-> once for each CPU on boot to install the correct mitigation, so that
-> feels like the best spot to put the fallback logic to me.
+> Please remove double space before '='.
+Sure.
+>
+>> +        avdd-supply = <&vph_pwr>;
+>> +        dvdd-supply = <&vph_pwr>;
+>> +
+>> +        port {
+>> +            imx577_ep: endpoint {
+>> +                clock-lanes = <7>;
+>
+> It is an invalid property/value of the sensor, please remove it.
+Will check more on this internally and respond back.
+>
+>> +                link-frequencies = /bits/ 64 <600000000>;
+>> +                data-lanes = <0 1 2 3>;
+>
+> data-lanes = <1 2 3 4>;
+Will check more on this internally and respond back
+>
+>> +                remote-endpoint = <&csiphy3_ep>;
+>> +            };
+>> +        };
+>> +    };
+>> +};
+>> +
+>> +&tlmm {
+>> +    cam2_default: cam2-default-state {
+>> +        mclk-pins {
+>> +            pins = "gpio67";
+>> +            function = "cam_mclk";
+>> +            drive-strength = <2>;
+>> +            bias-disable;
+>> +        };
+>> +
+>> +        rst-pins {
+>> +            pins = "gpio78";
+>> +            function = "gpio";
+>> +            drive-strength = <2>;
+>> +            bias-disable;
+>> +        };
+>> +    };
+>> +
+>> +    cam2_suspend: cam2-suspend-state {
+>> +        mclk-pins {
+>> +            pins = "gpio67";
+>> +            function = "cam_mclk";
+>> +            drive-strength = <2>;
+>> +            bias-pull-down;
+>> +        };
+>> +
+>> +        rst-pins {
+>> +            pins = "gpio78";
+>> +            function = "gpio";
+>> +            drive-strength = <2>;
+>> +            bias-pull-down;
+>> +            output-low;
+>> +        };
+>
+> I have doubts that it's proper to embed a reset gpio into driver's
+> pinctrl suspend/resume power management.
+>
+> Konrad, can you please confirm that it's really accepted?
+>
+> I'd rather ask to remove this reset pin control.
+Will discuss this with Konrad and respond.
+>> +    };
+>> +};
+>
+> -- 
+> Best wishes,
+> Vladimir
 
-As per above, while I agree that having predicate functions w/ side
-effects is not ideal, that predates my patch series and I'd rather
-things work consistently.
+Best Regards,
+Vikram
 
--Doug
 
