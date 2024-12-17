@@ -1,146 +1,103 @@
-Return-Path: <linux-arm-msm+bounces-42572-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-42573-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id BD9019F510A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Dec 2024 17:30:59 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6234C9F5140
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Dec 2024 17:39:54 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 02B8A164B84
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Dec 2024 16:30:57 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id E2A3F1891D26
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Dec 2024 16:39:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 37DE21F757B;
-	Tue, 17 Dec 2024 16:30:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id ECD00156F20;
+	Tue, 17 Dec 2024 16:38:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="sfuLWT+v"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bbtGxK+L"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E72414D6F6
-	for <linux-arm-msm@vger.kernel.org>; Tue, 17 Dec 2024 16:30:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5250142E77;
+	Tue, 17 Dec 2024 16:38:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734453042; cv=none; b=sBFvxPzUfBSlI6oD0ztoJ5P5pPjwFYjKxY+XBzbZKUjhDB2wR4tQQ+aIx8USc63bgVwq3dzQ7g+IC9X/J/BXYv1WaZ2hHdXj+vxThaQ4Ryn6rCPhnp3rtqzRqHZnB4Ys8aPjGWnqHstuLk0WF/aHr8Z99jueI8D/dXKYoWwrZFw=
+	t=1734453539; cv=none; b=hXwT4Luv3xf0PAAtqF6b30U2dhxIiVEjh3jeNvbuve4NCK2A9tuhjI+DHfD4jq2+6QAp34jbr5bpjDXPJtbN8MiMvpECesvBtzDHdLc3uwUoPX9ld/r6ILS4XFP7FBR4lY4u96UqU7bmCV8EP5k3xgcHFM54KRzydQPVNTrgJg8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734453042; c=relaxed/simple;
-	bh=3yUGsXykP4CEUVJYDf68Q5yPu96ItmlSIIbvKOIPhgs=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=mnkEsfsVcwMPvHVOLo8wnn4OuxxuIAih+L9iU7/dTGtfzgdEXgiFuexQahirkQU24eF8S5tkCs1ySNCBiES++nmgLOMRXQQFWV4N1jR5l+H3hxyvvWjHuFqg5Er7xscTm5IVmd0C8s6Iheh3tZDw+uCLH1col0y5xJwO1yMGqSw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=sfuLWT+v; arc=none smtp.client-ip=209.85.128.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-436341f575fso42803555e9.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Dec 2024 08:30:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1734453039; x=1735057839; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Vo1L5JuECv1Uk0Zo3Q9bH/rFDrzzlC7TTsvCSw2yzfo=;
-        b=sfuLWT+viRJhprl+vmlKyMgOPRKCF3JKrsEBPno5ABjEz7WKDlNU6CXrlOjW2xK9uY
-         PnLIpIYn8UgUgO03g2GqkaoAmirfmW3s6hMZ205m6rbH5kS7ZkRMQY5xtCGJZ1G46SDs
-         4yv91z17ZDZMYTMTReeKhtrgNV2z3qxdRYPP37s5cFgKJtHdhk6vRAC44537s7KWlido
-         mSOH7omt87DMKf5Wi4Lb11HAG7743uJ5/3MZsf6Rj7Zks1XpepPyUa7zrEpmVqhw9jYK
-         EIt1E7Ss35yz/ldjGqqnHJBLkeSVjndDHJqR3YgHSxEjQy5z/PTaJ2tjK7GgixT+s7aD
-         ijpQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734453039; x=1735057839;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Vo1L5JuECv1Uk0Zo3Q9bH/rFDrzzlC7TTsvCSw2yzfo=;
-        b=LmXnC5azo79DklZHRJQ+4+GsX/COBvHW/nffydCqDYbyJKFlh8Whk135x74681KpYX
-         B3vMRv00c7/905xN/Ni1ESS6e1e3bTgR0J1OfBpIu43YcPBoQr//3rPMd82fLBiSGdqb
-         nzSKR31kXb1RE6CRFop2ErvehgVNPtqxd9LBz56QVpVnbM70RD+YlVjXkCU+yatRq4bM
-         YpNiS6a9DEMWOhA+hPCZFNcgaL9+AkBDZBFHVERxV2x9Er4yJAttvRBtn8kfHISgAgOc
-         7Tmh7gtmN4RfiySZvRom9DZASbGI+RDXLQYWKyJatFwr9OoCgXgoDtcL/oeX9Xif75iE
-         +XSQ==
-X-Forwarded-Encrypted: i=1; AJvYcCU8anxjD6KJlmkgK6Be2tRVlIyjfHQ6aDv4AyxSILFfHKeqOR+nmDfh0umb7xcT/u1zBaGB0Xn7rmEWPDGd@vger.kernel.org
-X-Gm-Message-State: AOJu0YzTO4DY9DsYRnCzh+kFH+HpGqjFlSlcU2NA1e56Zm+VmQymLKdX
-	WH6B3pmIWwcEP17UrzIzAYsFLE7eCV7VryJUAp/aljIlRq8hZUtXpVqOEZer+uY=
-X-Gm-Gg: ASbGncs/Sy2rZYSus11atxywPhj1Pdzxq2qMMmI7wT10WCnhx5dgenM3jUYzgYrZUjt
-	f2YbP/RKNNiIj/VqDbvQuzx6oNcp13/n6vfqsqASyhJvENZXt5hnVh4St1ADLL5jKZBIKHHC8Zx
-	KTyvKthJ3LXeQo9ZTZjLcD0k3vTQFO2/YMLrFq4DTqHkdmb6neF9twXk+uvDYXt2wy0jiZgZyq8
-	8svj+tBlcvt7u062RKs3WNclc+J7Y5uo2hmeS9+OxegJhQMy5xHwXkXbguTELX8j2rZ2A==
-X-Google-Smtp-Source: AGHT+IHre5NvSx2IdV/8gwVovs+16AluV6QFXnZjAFtO+QYQtO+O8LnhPh+fayg3f36vlzOpV5Blfg==
-X-Received: by 2002:a05:600c:468b:b0:434:a706:c0fb with SMTP id 5b1f17b1804b1-4362aa369ffmr207567515e9.10.1734453038713;
-        Tue, 17 Dec 2024 08:30:38 -0800 (PST)
-Received: from [192.168.0.40] ([176.61.106.227])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4362527ecc3sm182435335e9.0.2024.12.17.08.30.37
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 17 Dec 2024 08:30:38 -0800 (PST)
-Message-ID: <a1032d53-6f3e-48f6-a2e9-1315bb1a3232@linaro.org>
-Date: Tue, 17 Dec 2024 16:30:37 +0000
+	s=arc-20240116; t=1734453539; c=relaxed/simple;
+	bh=69+55AMwxYgC7yebAzKAof5dQbloZSQVUEf583Fd7BI=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=pF+k+SauQ1fO3DOU49mxRDLVeAKhjZs3clzzfsYXGYQwny82cxvtG6y0yE2M2L+gmzNGjZ8ar7Ov0Yocbqv5L7JCVeyhIVQI/o4NUbYcwhDXGLMO9lFaKSUAR35xte0LPuqBHZI885pYCcBrSxNgN5u8nE1cdUt8x2tEYEw9+yc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bbtGxK+L; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A006C4CED3;
+	Tue, 17 Dec 2024 16:38:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1734453539;
+	bh=69+55AMwxYgC7yebAzKAof5dQbloZSQVUEf583Fd7BI=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=bbtGxK+Ls3Vi6642CXh6vu08U03HjZDjb9claMlC+XGubm5qhwAel3Us/H4zBnMkO
+	 m4ZdIyMimlHAEGIh/Hk7KQoLitJC9z1ttR43kj0uZE5BTy3Zayw1GY0SxStRdCk6a9
+	 kgE0PYmT7z5KbWsVzpYiY4/orjyMixSaQARir97TiTSs0MqHr5Lq3xrOYKJTdQMtmP
+	 PF5bpDh8ReAcxzzH95KhTi/E28clTcXQQPeLAJ1ShvRnwd/cScvD4aSNR/J+ImZ8Eg
+	 m2Ber9m7kOok/USkXNGGjDPYCAQf7rhPpBEkobqQfEMpvQl5AZS5x9vkC2iqcUDo/7
+	 nxpvW6wJvlnfw==
+From: Bjorn Andersson <andersson@kernel.org>
+To: Konrad Dybcio <konradybcio@kernel.org>,
+	Johan Hovold <johan+linaro@kernel.org>
+Cc: Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Jonathan Marek <jonathan@marek.ca>,
+	Stephan Gerhold <stephan.gerhold@linaro.org>,
+	Abel Vesa <abel.vesa@linaro.org>,
+	linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	regressions@lists.linux.dev
+Subject: Re: [PATCH] Revert "arm64: dts: qcom: x1e78100-t14s: enable otg on usb-c ports"
+Date: Tue, 17 Dec 2024 10:38:51 -0600
+Message-ID: <173445353301.470882.1221462093815662513.b4-ty@kernel.org>
+X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20241206172402.20724-1-johan+linaro@kernel.org>
+References: <20241206172402.20724-1-johan+linaro@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v10 1/4] media: dt-bindings: update clocks for
- sc7280-camss
-To: Krzysztof Kozlowski <krzk@kernel.org>,
- Vikram Sharma <quic_vikramsa@quicinc.com>, rfoss@kernel.org,
- todor.too@gmail.com, mchehab@kernel.org, robh@kernel.org,
- krzk+dt@kernel.org, conor+dt@kernel.org, akapatra@quicinc.com,
- hariramp@quicinc.com, andersson@kernel.org, konradybcio@kernel.org,
- hverkuil-cisco@xs4all.nl, cros-qcom-dts-watchers@chromium.org,
- catalin.marinas@arm.com, will@kernel.org
-Cc: linux-arm-kernel@lists.infradead.org, linux-media@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, kernel@quicinc.com
-References: <20241217140656.965235-1-quic_vikramsa@quicinc.com>
- <20241217140656.965235-2-quic_vikramsa@quicinc.com>
- <02da691b-1f5d-41a6-847c-c7e9b8239919@kernel.org>
- <c14493b0-c9d3-4e1c-9f86-991b4cb25c98@linaro.org>
- <fe28a9bc-82ef-4fef-af50-9d9261ed9b39@kernel.org>
-Content-Language: en-US
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <fe28a9bc-82ef-4fef-af50-9d9261ed9b39@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 
-On 17/12/2024 16:23, Krzysztof Kozlowski wrote:
-> On 17/12/2024 17:12, Bryan O'Donoghue wrote:
->> On 17/12/2024 14:10, Krzysztof Kozlowski wrote:
->>> On 17/12/2024 15:06, Vikram Sharma wrote:
->>>> This patch change clock names to make it consistent with
->>>> existing platforms as gcc_cam_hf_axi -> gcc_axi_hf.
->>>> This also adds gcc_axi_sf and remove gcc_camera_ahb.
->>>
->>> Don't combine ABI changes with some less important things.
->>>
->>> You miss here explanation why doing the ABI change in the first place.
->>> Without that explanation I find it rather churn. But anyway, reason for
->>> ABI break and impact should be documented in commit msg.
->>>
->>>>
->>>> Signed-off-by: Vikram Sharma <quic_vikramsa@quicinc.com>
->>>> ---
->>>
->>> Best regards,
->>> Krzysztof
->>
->> This change should be fine since we haven't committed and upstream dtsi,
->> so there's no ABI to break yet.
->>
->> Agree the cover letter should have been explicit in explaining.
+
+On Fri, 06 Dec 2024 18:24:02 +0100, Johan Hovold wrote:
+> This reverts commit 1a48dd7b9ac809d1bd0fd2fef509abba83433846.
 > 
-> So these are recently added bindings (sc7280 is not particularly new)?
-> If so mention in the commit msg that no users are affected because of this.
+> A recent change enabling OTG mode on the Lenovo ThinkPad T14s USB-C
+> ports can break SuperSpeed device hotplugging. The host controller is
+> enumerated, but the device is not:
 > 
-> Best regards,
-> Krzysztof
+> 	xhci-hcd xhci-hcd.5.auto: xHCI Host Controller
+> 	xhci-hcd xhci-hcd.5.auto: new USB bus registered, assigned bus number 3
+> 	xhci-hcd xhci-hcd.5.auto: hcc params 0x0110ffc5 hci version 0x110 quirks 0x000080a000000810
+> 	xhci-hcd xhci-hcd.5.auto: irq 247, io mem 0x0a800000
+> 	xhci-hcd xhci-hcd.5.auto: xHCI Host Controller
+> 	xhci-hcd xhci-hcd.5.auto: new USB bus registered, assigned bus number 4
+> 	xhci-hcd xhci-hcd.5.auto: Host supports USB 3.1 Enhanced SuperSpeed
+> 	hub 3-0:1.0: USB hub found
+> 	hub 3-0:1.0: 1 port detected
+> 	hub 4-0:1.0: USB hub found
+> 	hub 4-0:1.0: 1 port detected
+> 
+> [...]
 
-Agreed.
+Applied, thanks!
 
-The commit log should make clear that the ABI hasn't been cemented yet.
+[1/1] Revert "arm64: dts: qcom: x1e78100-t14s: enable otg on usb-c ports"
+      commit: 1fb5cf0d165afc3be76ec754d1b1013515c3896a
 
-20241217140656.965235-4-quic_vikramsa@quicinc.com <- is still pending
-
----
-bod
+Best regards,
+-- 
+Bjorn Andersson <andersson@kernel.org>
 
