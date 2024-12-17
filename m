@@ -1,185 +1,483 @@
-Return-Path: <linux-arm-msm+bounces-42589-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-42590-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 817379F5591
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Dec 2024 19:07:19 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id D37DC9F56A1
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Dec 2024 19:58:34 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id BCC3D18862EE
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Dec 2024 18:03:08 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7502818874DD
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Dec 2024 18:58:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C8FB71F8ADD;
-	Tue, 17 Dec 2024 17:59:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1985B1F8ADF;
+	Tue, 17 Dec 2024 18:58:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ZLNhWZDV"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4F2D01F890F;
-	Tue, 17 Dec 2024 17:59:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA63215DBBA;
+	Tue, 17 Dec 2024 18:58:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734458398; cv=none; b=gjcXioMC+/9iHmuqjGJKcqxP5c6R/ePi3I7RaT9HGg1HwFsXTBeBKFm1P+2RKbPoMtRS9e/TwA++p7/jCgd6WkjdiD6rNdMGAxRy7AGQwOt1dD6W06nfdlQtoUZLOsDGYXRhzkn1vy6CiJJwi+5PW8ZENWAGnZYTO+D4pTYDr+Y=
+	t=1734461911; cv=none; b=VPdDRueBVXSPDaVnR3OILVbmAy+8msRf8Hs5SZCeNLnduj7Ms/m71QdX2zX6kJezAim0yBhYjWL5ZOlucXJN0g+bSiguWEmBgHZcUxXz/gkGfIJdyhUrsQhokpvw4JiBpxa2+1ShItg6ZbP1I7FSyoXjyG056ALFT47MEAllNY0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734458398; c=relaxed/simple;
-	bh=q1wnIV+XUCsIOA06WG9udBt0E7fj0Mo8pgtgHjlTPKs=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=eGIA8AS1Paf+MVvsZH+Szrhw64ttoSxE2loCoaOSNuCUv9JjfgctT+los13pREgHokzFp0nDjnHBdunpmpXzBOR47TWAoNCux7ftzrEgdzulHY5hdXrodFOgFFKVzguq2F6WWWbiUSI646VjjZEm1X8t4Ewxb0uCOSBKxm1JKbQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id B0A4BFEC;
-	Tue, 17 Dec 2024 10:00:22 -0800 (PST)
-Received: from bogus (unknown [10.57.92.83])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 1A6C13F7B4;
-	Tue, 17 Dec 2024 09:59:50 -0800 (PST)
-Date: Tue, 17 Dec 2024 17:59:34 +0000
-From: Sudeep Holla <sudeep.holla@arm.com>
-To: Sibi Sankar <quic_sibis@quicinc.com>
-Cc: Johan Hovold <johan@kernel.org>, Sudeep Holla <sudeep.holla@arm.com>,
-	Cristian Marussi <cristian.marussi@arm.com>, andersson@kernel.org,
-	konrad.dybcio@linaro.org, robh+dt@kernel.org,
-	krzysztof.kozlowski+dt@linaro.org, linux-kernel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org, quic_rgottimu@quicinc.com,
-	quic_kshivnan@quicinc.com, conor+dt@kernel.org,
-	arm-scmi@vger.kernel.org
-Subject: Re: [PATCH V4 0/5] arm_scmi: vendors: Qualcomm Generic Vendor
- Extensions
-Message-ID: <20241217175934.GC2016149@bogus>
-References: <20241007061023.1978380-1-quic_sibis@quicinc.com>
- <ZytnRc94iKUfMYH0@hovoldconsulting.com>
- <ZyvLktLUZOGP-LH5@pluto>
- <Zy4qvedrmkRdPR3x@hovoldconsulting.com>
- <8d42682b-0fa7-3962-da12-728cfe64903b@quicinc.com>
- <Z0BC203BhGEmXcJi@hovoldconsulting.com>
- <Z1HceQegfMl07qj_@bogus>
- <d313e40b-fa8f-a534-5037-98536ee25044@quicinc.com>
+	s=arc-20240116; t=1734461911; c=relaxed/simple;
+	bh=7jj9+hD/gEf43k4P++5/VYrolEA/Oos+ECqlA2sUOPA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=e3RDzZadsEo4HYByf34JGQuzO1CPxonFoV+3OGRdS7ci4+rSWFHKWXWOFQQ4ys0kJTEDymqz644WfWysjTEIkematUy//+3bgZOhHYUM0FD7LFHOmws6/fFOSnU7I0c6nYmqhMH+CrrxXhKKFIZWoR8m8mMxAix5yLXezk+nl54=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ZLNhWZDV; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BHAmBrb026306;
+	Tue, 17 Dec 2024 18:58:12 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	6EB902R1SCU5aTam+grDN3ROEgB0woaesK/WyArIS5M=; b=ZLNhWZDVfwpmOJ04
+	UIisRmtMrNyE4Dt+Dj1OdQQ0Fj7UFARxh3K9PtG6kjTNhKqVD9LPOKpzzFZUzsJH
+	b1YL/pWL82hmtheDjQAn+kMAdz98J0hK1j7cJzbRL5b3VC1l+cma+ygH6b6YEpUl
+	380f1uopAJ4sbPPa3O0d82L6d15+rOX9UL1DmSiU4trBaCgMOL3jglm/9NADgFHf
+	2oZFPU2/X3g1912uNPTpXMM9PCXfKQBYDAPOJy9ItmLZ6kkZV921qgUIp32m82KL
+	mAdWBCisq3ihn8BQhFPsVCft0ijGxuSRNJAtg9mUflhLKDBdQRy7ZepOVwXaDjRD
+	La2T1A==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43k7v099sk-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 17 Dec 2024 18:58:12 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4BHIwBEF024934
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 17 Dec 2024 18:58:11 GMT
+Received: from [10.216.20.10] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 17 Dec
+ 2024 10:58:05 -0800
+Message-ID: <8798a66b-0c07-4713-8966-5bac7bd4aae1@quicinc.com>
+Date: Wed, 18 Dec 2024 00:28:02 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <d313e40b-fa8f-a534-5037-98536ee25044@quicinc.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC] drm/msm: Add UABI to request perfcntr usage
+To: Rob Clark <robdclark@gmail.com>
+CC: Connor Abbott <cwabbott0@gmail.com>,
+        Antonino Maniscalco
+	<antomani103@gmail.com>,
+        <dri-devel@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
+        <freedreno@lists.freedesktop.org>, Rob Clark
+	<robdclark@chromium.org>,
+        Sean Paul <sean@poorly.run>, Konrad Dybcio
+	<konradybcio@kernel.org>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        "Dmitry
+ Baryshkov" <dmitry.baryshkov@linaro.org>,
+        Marijn Suijten
+	<marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, "Simona
+ Vetter" <simona@ffwll.ch>,
+        Maarten Lankhorst
+	<maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        open list
+	<linux-kernel@vger.kernel.org>
+References: <20241205165419.54080-1-robdclark@gmail.com>
+ <eca60b8e-8a8a-41c4-816a-d084822646f1@quicinc.com>
+ <de6cfac6-84a0-4160-b279-c23e10f96872@gmail.com>
+ <96e918d7-6e29-4d0a-8e9d-b77232c37ef0@quicinc.com>
+ <30fadc96-d531-4cde-a717-c5983908ea04@gmail.com>
+ <ae351364-7590-4080-baea-80133c79c86f@quicinc.com>
+ <CACu1E7E4Ege0VgsSmjzqPDYg7eWwRWQOjPyyCT-ty5tEYKP-bg@mail.gmail.com>
+ <2d41a6b3-dc6c-4bad-82e8-7bed1a561d42@quicinc.com>
+ <CAF6AEGsKyQAYPxLTGdJ0mW6_ZMHiRhNgAtXFDaNicHQ_4Y3AmQ@mail.gmail.com>
+Content-Language: en-US
+From: Akhil P Oommen <quic_akhilpo@quicinc.com>
+In-Reply-To: <CAF6AEGsKyQAYPxLTGdJ0mW6_ZMHiRhNgAtXFDaNicHQ_4Y3AmQ@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: oW-UGmsAcX5j9x3Fy7mAk-hW8O5APli-
+X-Proofpoint-ORIG-GUID: oW-UGmsAcX5j9x3Fy7mAk-hW8O5APli-
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ adultscore=0 mlxlogscore=999 clxscore=1015 mlxscore=0 bulkscore=0
+ impostorscore=0 phishscore=0 malwarescore=0 lowpriorityscore=0 spamscore=0
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2412170144
 
-On Tue, Dec 17, 2024 at 05:55:35PM +0530, Sibi Sankar wrote:
+On 12/17/2024 2:21 AM, Rob Clark wrote:
+> On Mon, Dec 16, 2024 at 12:25 PM Akhil P Oommen
+> <quic_akhilpo@quicinc.com> wrote:
+>>
+>> On 12/16/2024 10:28 PM, Connor Abbott wrote:
+>>> On Mon, Dec 16, 2024 at 11:55 AM Akhil P Oommen
+>>> <quic_akhilpo@quicinc.com> wrote:
+>>>>
+>>>> On 12/13/2024 10:40 PM, Antonino Maniscalco wrote:
+>>>>> On 12/13/24 5:50 PM, Akhil P Oommen wrote:
+>>>>>> On 12/12/2024 9:44 PM, Antonino Maniscalco wrote:
+>>>>>>> On 12/12/24 4:58 PM, Akhil P Oommen wrote:
+>>>>>>>> On 12/5/2024 10:24 PM, Rob Clark wrote:
+>>>>>>>>> From: Rob Clark <robdclark@chromium.org>
+>>>>>>>>>
+>>>>>>>>> Performance counter usage falls into two categories:
+>>>>>>>>>
+>>>>>>>>> 1. Local usage, where the counter configuration, start, and end read
+>>>>>>>>>      happen within (locally to) a single SUBMIT.  In this case,
+>>>>>>>>> there is
+>>>>>>>>>      no dependency on counter configuration or values between submits,
+>>>>>>>>> and
+>>>>>>>>>      in fact counters are normally cleared on context switches,
+>>>>>>>>> making it
+>>>>>>>>>      impossible to rely on cross-submit state.
+>>>>>>>>>
+>>>>>>>>> 2. Global usage, where a single privilaged daemon/process is sampling
+>>>>>>>>>      counter values across all processes for profiling.
+>>>>>>>>>
+>>>>>>>>> The two categories are mutually exclusive.  While you can have many
+>>>>>>>>> processes making local counter usage, you cannot combine global and
+>>>>>>>>> local usage without the two stepping on each others feet (by changing
+>>>>>>>>> counter configuration).
+>>>>>>>>>
+>>>>>>>>> For global counter usage, there is already a SYSPROF param (since
+>>>>>>>>> global
+>>>>>>>>> counter usage requires disabling counter clearing on context switch).
+>>>>>>>>> This patch adds a REQ_CNTRS param to request local counter usage.  If
+>>>>>>>>> one or more processes has requested counter usage, then a SYSPROF
+>>>>>>>>> request will fail with -EBUSY.  And if SYSPROF is active, then
+>>>>>>>>> REQ_CNTRS
+>>>>>>>>> will fail with -EBUSY, maintaining the mutual exclusivity.
+>>>>>>>>>
+>>>>>>>>> This is purely an advisory interface to help coordinate userspace.
+>>>>>>>>> There is no real means of enforcement, but the worst that can
+>>>>>>>>> happen if
+>>>>>>>>> userspace ignores a REQ_CNTRS failure is that you'll get nonsense
+>>>>>>>>> profiling data.
+>>>>>>>>>
+>>>>>>>>> Signed-off-by: Rob Clark <robdclark@chromium.org>
+>>>>>>>>> ---
+>>>>>>>>> kgsl takes a different approach, which involves a lot more UABI for
+>>>>>>>>> assigning counters to different processes.  But I think by taking
+>>>>>>>>> advantage of the fact that mesa (freedreno+turnip) reconfigure the
+>>>>>>>>> counters they need in each SUBMIT, for their respective gl/vk perf-
+>>>>>>>>> counter extensions, we can take this simpler approach.
+>>>>>>>>
+>>>>>>>> KGSL's approach is preemption and ifpc safe (also whatever HW changes
+>>>>>>>> that will come up in future generations). How will we ensure that here?
+>>>>>>>>
+>>>>>>>> I have plans to bring up IFPC support in near future. Also, I
+>>>>>>>> brought up
+>>>>>>>> this point during preemption series. But from the responses, I felt
+>>>>>>>> that
+>>>>>>>> profiling was not considered a serious usecase. Still I wonder how the
+>>>>>>>> perfcounter extensions work accurately with preemption.
+>>>>>>>
+>>>>>>> So back then I implemented the postamble IB to clear perf counters and
+>>>>>>> that gets disabled when sysprof (so global usage) is happening. The
+>>>>>>> kernel is oblivious to "Local isage" of profiling but in that case
+>>>>>>> really what we want to do is disable preemption which in my
+>>>>>>> understanding can be done from userspace with a PKT. In my understanding
+>>>>>>> this had us covered for all usecases.
+>>>>>>
+>>>>>> I think this wasn't mentioned at that time. Which UMD PKT in a6x+ did
+>>>>>> you mean?
+>>>>>
+>>>>> Ah, I thought it wasmentioned, sorry.
+>>>>> The packet I was referring to is:
+>>>>>     <doc> Make next dword 1 to disable preemption, 0 to re-enable it. </
+>>>>> doc>
+>>>>>     <value name="CP_PREEMPT_DISABLE" value="0x6c" variants="A6XX"/>
+>>>>
+>>>> Ah! Okay. I think this packet is not used by the downstream blob. IMO,
+>>>> disabling preemption is still a suboptimal solution.
+>>>
+>>> Downstream doesn't expose userspace perfcounters (i.e.
+>>> VK_KHR_performance_query) at all. My understanding is that Android
+>>> requires you not to expose them for security reasons, but I could be
+>>> wrong there. In any case, Qualcomm clearly hasn't really thought
+>>> through what it would take to make everything work well with userspace
+>>> perfcounters and hasn't implemented the necessary firmware bits for
+>>> that, so we're left muddling through and doing what we can.
+>>>
+>>
+>> Honestly, I don't know what you meant by the missing support.
 > 
+> GMU support to save/restore SEL regs on IFPC when SYSPROF is enabled ;-)
 > 
-> On 12/5/24 22:31, Sudeep Holla wrote:
-> > On Fri, Nov 22, 2024 at 09:37:47AM +0100, Johan Hovold wrote:
-> > > On Thu, Nov 14, 2024 at 09:52:12AM +0530, Sibi Sankar wrote:
-> > > > On 11/8/24 20:44, Johan Hovold wrote:
-> > > 
-> > > > > > On Wed, Nov 06, 2024 at 01:55:33PM +0100, Johan Hovold wrote:
-> > > 
-> > > > > > > Second, after loading the protocol and client drivers manually (in that
-> > > > > > > order, shouldn't the client driver pull in the protocol?), I got:
-> > > > > > > 
-> > > > > > > 	scmi_module: Loaded SCMI Vendor Protocol 0x80 - Qualcomm  20000
-> > > > > > > 	arm-scmi arm-scmi.0.auto: QCOM Generic Vendor Version 1.0
-> > > > > > > 	scmi-qcom-generic-ext-memlat scmi_dev.5: error -EOPNOTSUPP: failed to configure common events
-> > > > > > > 	scmi-qcom-generic-ext-memlat scmi_dev.5: probe with driver scmi-qcom-generic-ext-memlat failed with error -95
-> > > > > > > 
-> > > > > > > which seems to suggest that the firmware on my CRD does not support this
-> > > > > > > feature. Is that the way this should be interpreted? And does that mean
-> > > > > > > that non of the commercial laptops supports this either?
-> > > 
-> > > > > Yeah, hopefully Sibi can shed some light on this. I'm using the DT
-> > > > > patch (5/5) from this series, which according to the commit message is
-> > > > > supposed to enable bus scaling on the x1e80100 platform. So I guess
-> > > > > something is missing in my firmware.
-> > > > 
-> > > > Nah, it's probably just because of the algo string used.
-> > > > The past few series used caps MEMLAT string instead of
-> > > > memlat to pass the tuneables, looks like all the laptops
-> > > > havn't really switched to it yet. Will revert back to
-> > > > using to lower case memlat so that all devices are
-> > > > supported. Thanks for trying the series out!
-> > > 
-> > > I have a Lenovo ThinkPad T14s set up now so I gave this series a spin
-> > > there too, and there I do *not* see the above mentioned -EOPNOSUPP error
-> > > and the memlat driver probes successfully.
-> > > 
-> > > On the other hand, this series seems to have no effect on a kernel
-> > > compilation benchmark. Is that expected?
-> > > 
-> > 
-> > Hijacking this thread to rant about state of firmware implementation on
-> > this platform that gives me zero confidence in merging any of these without
-> > examining each of the interface details in depth and at lengths.
-> > 
+
+That won't solve the case of reading counters via devmem. That still
+would require disabling ifpc.
+
+> If we had that, we wouldn't need ioclts to assign+configure counters,
+> everything else could be done in userspace (modulo trying to do both
+> local and global profiling at the same time.. but I'm not convinced
+> that is a valid use-case, as I mentioned earlier)
 > 
-> Hey Sudeep,
+Lets ignore this use-case then. We can revisit if it becomes a thing in
+upstream.
+
+-Akhil.
+
+> BR,
+> -R
 > 
-> Thanks for taking time to review the series.
-> 
-> > Also I see the standard protocol like PERF seem to have so many issues which
-> > adds to my no confidence. I can't comment on that thread for specific reasons.
-> 
-> ^^ is largely untrue, a lot of finger pointing and a gross
-> misrepresentation of reality :/
->
+>> -Akhil.
+>>
+>>> Connor
+>>>
+>>>>
+>>>>>
+>>>>> BTW you mentioned wanting to look into IFPC. Since I too wanted to look
+>>>>> into implementing it wonder if you could let me know when you planned on
+>>>>> working on it.
+>>>>
+>>>> I have few patches in progress. Nothing final yet and need verification
+>>>> on the hw side. Also, I need to do some housekeeping here to debug gmu
+>>>> issues since IFPC increases the probability of those a lot.
+>>>>
+>>>> I will try to send out the patches very soon.
+>>>>
+>>>> -Akhil.
+>>>>
+>>>>>
+>>>>>>
+>>>>>> -Akhil.
+>>>>>>
+>>>>>>>
+>>>>>>> So what would you expect instead we should do kernel side to make
+>>>>>>> profiling preemption safe?
+>>>>>>>
+>>>>>>>>
+>>>>>>>> -Akhil
+>>>>>>>>
+>>>>>>>>>
+>>>>>>>>>    drivers/gpu/drm/msm/adreno/adreno_gpu.c |  2 +
+>>>>>>>>>    drivers/gpu/drm/msm/msm_drv.c           |  5 ++-
+>>>>>>>>>    drivers/gpu/drm/msm/msm_gpu.c           |  1 +
+>>>>>>>>>    drivers/gpu/drm/msm/msm_gpu.h           | 29 +++++++++++++-
+>>>>>>>>>    drivers/gpu/drm/msm/msm_submitqueue.c   | 52 +++++++++++++++++++
+>>>>>>>>> +++++-
+>>>>>>>>>    include/uapi/drm/msm_drm.h              |  1 +
+>>>>>>>>>    6 files changed, 85 insertions(+), 5 deletions(-)
+>>>>>>>>>
+>>>>>>>>> diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/
+>>>>>>>>> drm/msm/adreno/adreno_gpu.c
+>>>>>>>>> index 31bbf2c83de4..f688e37059b8 100644
+>>>>>>>>> --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+>>>>>>>>> +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+>>>>>>>>> @@ -441,6 +441,8 @@ int adreno_set_param(struct msm_gpu *gpu, struct
+>>>>>>>>> msm_file_private *ctx,
+>>>>>>>>>            if (!capable(CAP_SYS_ADMIN))
+>>>>>>>>>                return UERR(EPERM, drm, "invalid permissions");
+>>>>>>>>>            return msm_file_private_set_sysprof(ctx, gpu, value);
+>>>>>>>>> +    case MSM_PARAM_REQ_CNTRS:
+>>>>>>>>> +        return msm_file_private_request_counters(ctx, gpu, value);
+>>>>>>>>>        default:
+>>>>>>>>>            return UERR(EINVAL, drm, "%s: invalid param: %u", gpu-
+>>>>>>>>>> name, param);
+>>>>>>>>>        }
+>>>>>>>>> diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/
+>>>>>>>>> msm_drv.c
+>>>>>>>>> index 6416d2cb4efc..bf8314ff4a25 100644
+>>>>>>>>> --- a/drivers/gpu/drm/msm/msm_drv.c
+>>>>>>>>> +++ b/drivers/gpu/drm/msm/msm_drv.c
+>>>>>>>>> @@ -377,9 +377,12 @@ static void msm_postclose(struct drm_device
+>>>>>>>>> *dev, struct drm_file *file)
+>>>>>>>>>         * It is not possible to set sysprof param to non-zero if gpu
+>>>>>>>>>         * is not initialized:
+>>>>>>>>>         */
+>>>>>>>>> -    if (priv->gpu)
+>>>>>>>>> +    if (ctx->sysprof)
+>>>>>>>>>            msm_file_private_set_sysprof(ctx, priv->gpu, 0);
+>>>>>>>>>    +    if (ctx->counters_requested)
+>>>>>>>>> +        msm_file_private_request_counters(ctx, priv->gpu, 0);
+>>>>>>>>> +
+>>>>>>>>>        context_close(ctx);
+>>>>>>>>>    }
+>>>>>>>>>    diff --git a/drivers/gpu/drm/msm/msm_gpu.c b/drivers/gpu/drm/msm/
+>>>>>>>>> msm_gpu.c
+>>>>>>>>> index 82f204f3bb8f..013b59ca3bb1 100644
+>>>>>>>>> --- a/drivers/gpu/drm/msm/msm_gpu.c
+>>>>>>>>> +++ b/drivers/gpu/drm/msm/msm_gpu.c
+>>>>>>>>> @@ -991,6 +991,7 @@ int msm_gpu_init(struct drm_device *drm, struct
+>>>>>>>>> platform_device *pdev,
+>>>>>>>>>        gpu->nr_rings = nr_rings;
+>>>>>>>>>          refcount_set(&gpu->sysprof_active, 1);
+>>>>>>>>> +    refcount_set(&gpu->local_counters_active, 1);
+>>>>>>>>>          return 0;
+>>>>>>>>>    diff --git a/drivers/gpu/drm/msm/msm_gpu.h b/drivers/gpu/drm/msm/
+>>>>>>>>> msm_gpu.h
+>>>>>>>>> index e25009150579..83c61e523b1b 100644
+>>>>>>>>> --- a/drivers/gpu/drm/msm/msm_gpu.h
+>>>>>>>>> +++ b/drivers/gpu/drm/msm/msm_gpu.h
+>>>>>>>>> @@ -195,12 +195,28 @@ struct msm_gpu {
+>>>>>>>>>        int nr_rings;
+>>>>>>>>>          /**
+>>>>>>>>> -     * sysprof_active:
+>>>>>>>>> +     * @sysprof_active:
+>>>>>>>>>         *
+>>>>>>>>> -     * The count of contexts that have enabled system profiling.
+>>>>>>>>> +     * The count of contexts that have enabled system profiling plus
+>>>>>>>>> one.
+>>>>>>>>> +     *
+>>>>>>>>> +     * Note: refcount_t does not like 0->1 transitions.. we want to
+>>>>>>>>> keep
+>>>>>>>>> +     * the under/overflow checks that refcount_t provides, but allow
+>>>>>>>>> +     * multiple on/off transitions so we track the logical value
+>>>>>>>>> plus one.)
+>>>>>>>>>         */
+>>>>>>>>>        refcount_t sysprof_active;
+>>>>>>>>>    +    /**
+>>>>>>>>> +     * @local_counters_active:
+>>>>>>>>> +     *
+>>>>>>>>> +     * The count of contexts that have requested local (intra-submit)
+>>>>>>>>> +     * performance counter usage plus one.
+>>>>>>>>> +     *
+>>>>>>>>> +     * Note: refcount_t does not like 0->1 transitions.. we want to
+>>>>>>>>> keep
+>>>>>>>>> +     * the under/overflow checks that refcount_t provides, but allow
+>>>>>>>>> +     * multiple on/off transitions so we track the logical value
+>>>>>>>>> plus one.)
+>>>>>>>>> +     */
+>>>>>>>>> +    refcount_t local_counters_active;
+>>>>>>>>> +
+>>>>>>>>>        /**
+>>>>>>>>>         * lock:
+>>>>>>>>>         *
+>>>>>>>>> @@ -383,6 +399,13 @@ struct msm_file_private {
+>>>>>>>>>         */
+>>>>>>>>>        int sysprof;
+>>>>>>>>>    +    /**
+>>>>>>>>> +     * @counters_requested:
+>>>>>>>>> +     *
+>>>>>>>>> +     * Has the context requested local perfcntr usage.
+>>>>>>>>> +     */
+>>>>>>>>> +    bool counters_requested;
+>>>>>>>>> +
+>>>>>>>>>        /**
+>>>>>>>>>         * comm: Overridden task comm, see MSM_PARAM_COMM
+>>>>>>>>>         *
+>>>>>>>>> @@ -626,6 +649,8 @@ void msm_submitqueue_destroy(struct kref *kref);
+>>>>>>>>>      int msm_file_private_set_sysprof(struct msm_file_private *ctx,
+>>>>>>>>>                     struct msm_gpu *gpu, int sysprof);
+>>>>>>>>> +int msm_file_private_request_counters(struct msm_file_private *ctx,
+>>>>>>>>> +                      struct msm_gpu *gpu, int reqcntrs);
+>>>>>>>>>    void __msm_file_private_destroy(struct kref *kref);
+>>>>>>>>>      static inline void msm_file_private_put(struct msm_file_private
+>>>>>>>>> *ctx)
+>>>>>>>>> diff --git a/drivers/gpu/drm/msm/msm_submitqueue.c b/drivers/gpu/drm/
+>>>>>>>>> msm/msm_submitqueue.c
+>>>>>>>>> index 7fed1de63b5d..1e1e21e6f7ae 100644
+>>>>>>>>> --- a/drivers/gpu/drm/msm/msm_submitqueue.c
+>>>>>>>>> +++ b/drivers/gpu/drm/msm/msm_submitqueue.c
+>>>>>>>>> @@ -10,6 +10,15 @@
+>>>>>>>>>    int msm_file_private_set_sysprof(struct msm_file_private *ctx,
+>>>>>>>>>                     struct msm_gpu *gpu, int sysprof)
+>>>>>>>>>    {
+>>>>>>>>> +    int ret = 0;
+>>>>>>>>> +
+>>>>>>>>> +    mutex_lock(&gpu->lock);
+>>>>>>>>> +
+>>>>>>>>> +    if (sysprof && (refcount_read(&gpu->local_counters_active) >
+>>>>>>>>> 1)) {
+>>>>>>>>> +        ret = UERR(EBUSY, gpu->dev, "Local counter usage active");
+>>>>>>>>> +        goto out_unlock;
+>>>>>>>>> +    }
+>>>>>>>>> +
+>>>>>>>>>        /*
+>>>>>>>>>         * Since pm_runtime and sysprof_active are both refcounts, we
+>>>>>>>>>         * call apply the new value first, and then unwind the previous
+>>>>>>>>> @@ -18,7 +27,8 @@ int msm_file_private_set_sysprof(struct
+>>>>>>>>> msm_file_private *ctx,
+>>>>>>>>>          switch (sysprof) {
+>>>>>>>>>        default:
+>>>>>>>>> -        return UERR(EINVAL, gpu->dev, "Invalid sysprof: %d",
+>>>>>>>>> sysprof);
+>>>>>>>>> +        ret = UERR(EINVAL, gpu->dev, "Invalid sysprof: %d", sysprof);
+>>>>>>>>> +        goto out_unlock;
+>>>>>>>>>        case 2:
+>>>>>>>>>            pm_runtime_get_sync(&gpu->pdev->dev);
+>>>>>>>>>            fallthrough;
+>>>>>>>>> @@ -43,7 +53,45 @@ int msm_file_private_set_sysprof(struct
+>>>>>>>>> msm_file_private *ctx,
+>>>>>>>>>          ctx->sysprof = sysprof;
+>>>>>>>>>    -    return 0;
+>>>>>>>>> +out_unlock:
+>>>>>>>>> +    mutex_unlock(&gpu->lock);
+>>>>>>>>> +
+>>>>>>>>> +    return ret;
+>>>>>>>>> +}
+>>>>>>>>> +
+>>>>>>>>> +int msm_file_private_request_counters(struct msm_file_private *ctx,
+>>>>>>>>> +                      struct msm_gpu *gpu, int reqctrs)
+>>>>>>>>> +{
+>>>>>>>>> +    int ret = 0;
+>>>>>>>>> +
+>>>>>>>>> +    mutex_lock(&gpu->lock);
+>>>>>>>>> +
+>>>>>>>>> +    if (reqctrs && (refcount_read(&gpu->sysprof_active) > 1)) {
+>>>>>>>>> +        ret = UERR(EBUSY, gpu->dev, "System profiling active");
+>>>>>>>>> +        goto out_unlock;
+>>>>>>>>> +    }
+>>>>>>>>> +
+>>>>>>>>> +    if (reqctrs) {
+>>>>>>>>> +        if (ctx->counters_requested) {
+>>>>>>>>> +            ret = UERR(EINVAL, gpu->dev, "Already requested");
+>>>>>>>>> +            goto out_unlock;
+>>>>>>>>> +        }
+>>>>>>>>> +
+>>>>>>>>> +        ctx->counters_requested = true;
+>>>>>>>>> +        refcount_inc(&gpu->local_counters_active);
+>>>>>>>>> +    } else {
+>>>>>>>>> +        if (!ctx->counters_requested) {
+>>>>>>>>> +            ret = UERR(EINVAL, gpu->dev, "Not requested");
+>>>>>>>>> +            goto out_unlock;
+>>>>>>>>> +        }
+>>>>>>>>> +        refcount_dec(&gpu->local_counters_active);
+>>>>>>>>> +        ctx->counters_requested = false;
+>>>>>>>>> +    }
+>>>>>>>>> +
+>>>>>>>>> +out_unlock:
+>>>>>>>>> +    mutex_unlock(&gpu->lock);
+>>>>>>>>> +
+>>>>>>>>> +    return ret;
+>>>>>>>>>    }
+>>>>>>>>>      void __msm_file_private_destroy(struct kref *kref)
+>>>>>>>>> diff --git a/include/uapi/drm/msm_drm.h b/include/uapi/drm/msm_drm.h
+>>>>>>>>> index 2342cb90857e..ae7fb355e4a1 100644
+>>>>>>>>> --- a/include/uapi/drm/msm_drm.h
+>>>>>>>>> +++ b/include/uapi/drm/msm_drm.h
+>>>>>>>>> @@ -91,6 +91,7 @@ struct drm_msm_timespec {
+>>>>>>>>>    #define MSM_PARAM_UBWC_SWIZZLE 0x12 /* RO */
+>>>>>>>>>    #define MSM_PARAM_MACROTILE_MODE 0x13 /* RO */
+>>>>>>>>>    #define MSM_PARAM_UCHE_TRAP_BASE 0x14 /* RO */
+>>>>>>>>> +#define MSM_PARAM_REQ_CNTRS  0x15 /* WO: request "local" (intra-
+>>>>>>>>> submit) perfcntr usage  */
+>>>>>>>>>      /* For backwards compat.  The original support for preemption was
+>>>>>>>>> based on
+>>>>>>>>>     * a single ring per priority level so # of priority levels equals
+>>>>>>>>> the #
+>>>>>>>>
+>>>>>>>
+>>>>>>>
+>>>>>>> Best regards,
+>>>>>>
+>>>>>
+>>>>>
+>>>>> Best regards,
+>>>>
+>>
 
-Sorry if I was not clear, I just said I don't have confidence yet and if
-the firmware is stable, then it is just the impression I have arrived based
-on the discussions.
-
-> crash in the LEVEL_GET regular message implementation. This
-> pretty much went unnoticed because of messaging in perf implementation
-> in kernel.
-
-OK, is there any scope to improve in your opinion ? Please suggest and
-discuss or post a patch to have separate discussion.
-
-> Given the fastchannel implementation isn't mandatory
-> according to spec, the kernel clearly says it switches to
-> regular messaging when it clearly doesn't do that and uses
-> stale data structures instead.
-
-Interesting, it sounds like a bug. Please provide details or patch to
-fix the bug. That would probably fix it on whatever platform we are
-concerned here.
-
-> This ensured that level get regular messaging never got tested.
->
-
-You seem to point at this bug several time now, we need to get it fixed,
-but we need to understand it first if you want us to fix it or as mentioned
-before you can as well post the patch.
-
-> We pretty much have been good upstream citizens, finding bugs and
-> sending fixes wherever we can. We clearly don't deserve such a hostile
-> stance.
->
-
-Not sure what made you think we are hostile towards your contributions.
-We just need a maintainable solution merged upstream and we are working
-towards the same. The documents written as part of this series is not
-there yet to help me understand the protocol yet. I have asked questions
-and answer to those can be made part of the next version to improve it
-IMO.
-
-> > I will briefly mention my suspicion here. This Lenovo ThinkPad T14s being
-> > primarily targeting other OS using ACPI might have just implemented what is
-> > required for ACPI CPPC which conveniently doesn't have to discover lot of
-> > fastchannel details since they are supplied in the tables straight away.
-> > But that also would mean it could be not fully compliant to SCMI spec.
->
-> Not fully compliant to the spec? I am pretty sure this series would
-> have been shot down completely and NAKd on the list by you if that
-> was the case lol.
->
-
-Honestly I am still trying to make any sense out of this vendor protocols.
-The documents produced as part of this series doesn't help me understand
-the same and that is my main feedback so far on this thread. I haven't
-looked at the code yet so I can't comment on the same as I first need
-to understand the vendor protocol document/specification.
-
--- 
-Regards,
-Sudeep
 
