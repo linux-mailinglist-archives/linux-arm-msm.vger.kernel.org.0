@@ -1,74 +1,75 @@
-Return-Path: <linux-arm-msm+bounces-42627-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-42628-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 54A939F62CD
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Dec 2024 11:25:23 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 92E6E9F62DB
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Dec 2024 11:27:51 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id CB1BD188D52F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Dec 2024 10:25:23 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 434F11894F4B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Dec 2024 10:27:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 255F219ADB0;
-	Wed, 18 Dec 2024 10:24:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 06BD11991BB;
+	Wed, 18 Dec 2024 10:27:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="OjiZyUYT"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ZUlEgLGf"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EA1E1991BB;
-	Wed, 18 Dec 2024 10:24:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B05A18DF62;
+	Wed, 18 Dec 2024 10:27:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734517497; cv=none; b=S16UyXsSBLO1I8jVO++2z5C7Liqw7wjjTHogAGxA08FQvxmzzRISnrY27tAhCeDNdBSAyf2EBLk5sjZqnz/FbB22CHkdQR7Dx3LZhgn1yF1/VGgplcliaZQakKxiBxu2XbVGiliz6qJSWVjj8XFqE511yxaHRFYOTrhtiCTZFXk=
+	t=1734517665; cv=none; b=szLZKuQK1cpguID5uqR0zIgn9EQ9lO751NNglguAcP4AN7ackRTGycRFwacUu23XoJ5503yqj8cZt/ZVYQQLMnmf/mPebNSd0AvzboRVS4Pzi+fWBHwUTbEMLUjZN+QkL368+E+XR8L31FRaGAYvYT+CC8Ns2cDq/MUXYmw9eFc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734517497; c=relaxed/simple;
-	bh=J44f7iiuUcvWH9MkPGA7E7J9HQhC6iIsugCq9zTl038=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=KaOCr/IuvyfGnbMb+N0QmSI9kQTY7e9gJIOZ2F4FRW0WtGLxUKyzuZ7OBZ0LCFtJnZ8i0oJHYrrL+OMDEvPcV5Ubz9td3zbSLnkz1gYPGGiySsld4p4uHflHwt0w3qXnb9bnOGAuxhM94pyhYdMUIRjKck5Vt2JA4LclpjrGOUI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=OjiZyUYT; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1734517665; c=relaxed/simple;
+	bh=+TSibuY6ziHutsEsrjuM4q/R6RBns2xedfBiBgSpX8k=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=OMvZssLp8K3RMJspmVeqOl4tX27OhRLNZrKWwGQQ+ZudZmulhXzmYrpZBed+K2cHS3s92BTjBGroLP6gPkAAUViI1OjxRN6DOu+jLDeZtAF2bhlHJYRQk9Bs70hsnMN7MXk6rk3+oTh+THPQL6h9SeOT7lHBDE/hB7/QDNYMzAY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ZUlEgLGf; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BI7VFnC025340;
-	Wed, 18 Dec 2024 10:24:49 GMT
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BI4Xwbd003831;
+	Wed, 18 Dec 2024 10:27:39 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	UHIYAF85rq/TeCRMlyXiRbcrGSTje36p68Xvnfz4i5w=; b=OjiZyUYTfO0EMG/T
-	a78AmQjFOCkHzwaGcfu7C8HOKE2PZi2krgVAUFcC/Mu8mRH1JPJt4uvduK/czAjO
-	/sG7CXEZ4fhGYj3/Yo3+GPMbD8UxCuM5F9I+6+RTfr9/Xtfx7x/8RzrKzdzHqTed
-	oXlpE7CA9MDVFCDGJ6ArNU2U9ZsEy2ANX+XGrVd52kbuNwbvZKOY8AzUKO6/u1LR
-	7Y4rS39TjEqN3VqYelkegHo14Gz0MMbZAYf8pCR7eSTQ5Qd2GAHFCRuStxRvD+Cq
-	7xGHaVJlp6QxEF5YB3aPD6wzTGg3jnRpnxd0fjnd8QQdK551JuRQvtw2CUokHlSp
-	5PVDFQ==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43kt2w8dsa-1
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=Dh48K8qgICMwnlTDu0x0L7
+	XHn+Xw38dZbuOPBDZX1vw=; b=ZUlEgLGf1kDE3jNVO+davJiX/Yl/NjVDMvTdE3
+	Vd0YM4vuLzll7r/6qlPBkaBKYq5ZWOln1VaoJtj6q1B/d5LgX172RItDq6iImLG9
+	5nMLctUaajAux6L2Bt7zok2QEoZWcIpRU2QA3EOt95YJwvWOcDC5egHKGLRP97va
+	m/eeS1imzopXiKKksQ2qiAKFWevpytMAuRTcA+B5n6JBS18t2OOUC26GJjeYpNsS
+	MUNk0UZdkACM6migw0pEufcWeIXM/+wypsIuleNrZvvLSWxgjgtDWpgBwJu3WX9K
+	2JZrv/elWozdMLk7jTwnxAg96E+dbkxsaIo14u+8p6sy4MPA==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43kqfsrt3g-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 18 Dec 2024 10:24:49 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4BIAOluA019936
+	Wed, 18 Dec 2024 10:27:38 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4BIARbvd011870
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 18 Dec 2024 10:24:47 GMT
-Received: from hu-ekangupt-hyd.qualcomm.com (10.80.80.8) by
- nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
+	Wed, 18 Dec 2024 10:27:37 GMT
+Received: from hu-prashk-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Wed, 18 Dec 2024 02:24:43 -0800
-From: Ekansh Gupta <quic_ekangupt@quicinc.com>
-To: <srinivas.kandagatla@linaro.org>, <linux-arm-msm@vger.kernel.org>
-CC: <gregkh@linuxfoundation.org>, <quic_bkumar@quicinc.com>,
-        <linux-kernel@vger.kernel.org>, <quic_chennak@quicinc.com>,
-        <dri-devel@lists.freedesktop.org>, <arnd@arndb.de>,
-        stable
-	<stable@kernel.org>
-Subject: [PATCH v1 2/2] misc: fastrpc: Fix copy buffer page size
-Date: Wed, 18 Dec 2024 15:54:29 +0530
-Message-ID: <20241218102429.2026460-3-quic_ekangupt@quicinc.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20241218102429.2026460-1-quic_ekangupt@quicinc.com>
-References: <20241218102429.2026460-1-quic_ekangupt@quicinc.com>
+ 15.2.1544.9; Wed, 18 Dec 2024 02:27:34 -0800
+From: Prashanth K <quic_prashk@quicinc.com>
+To: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio
+	<konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski
+	<krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Krishna Kurapati
+	<krishna.kurapati@oss.qualcomm.com>
+CC: <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <cros-qcom-dts-watchers@chromium.org>,
+        Prashanth K <quic_prashk@quicinc.com>
+Subject: [PATCH v3 00/19] Disable USB U1/U2 entry for QC targets
+Date: Wed, 18 Dec 2024 15:56:48 +0530
+Message-ID: <20241218102707.76272-1-quic_prashk@quicinc.com>
+X-Mailer: git-send-email 2.25.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -77,52 +78,113 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: g-mZVrGucD8XID9gQrJKe39b9RC2NQBL
-X-Proofpoint-ORIG-GUID: g-mZVrGucD8XID9gQrJKe39b9RC2NQBL
+X-Proofpoint-GUID: RWqRfUzHt9rXde2H_1hnsbobOSbC3i73
+X-Proofpoint-ORIG-GUID: RWqRfUzHt9rXde2H_1hnsbobOSbC3i73
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 spamscore=0
- mlxlogscore=999 priorityscore=1501 malwarescore=0 clxscore=1015
- suspectscore=0 adultscore=0 lowpriorityscore=0 bulkscore=0 mlxscore=0
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2412180083
+X-Proofpoint-Spam-Details: rule=outbound_spam policy=outbound score=70 mlxlogscore=-36 bulkscore=0
+ lowpriorityscore=0 spamscore=70 clxscore=1015 malwarescore=0 phishscore=0
+ impostorscore=0 adultscore=0 mlxscore=70 suspectscore=0 priorityscore=1501
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2411120000
+ definitions=main-2412180084
 
-For non-registered buffer, fastrpc driver copies the buffer and
-pass it to the remote subsystem. There is a problem with current
-implementation of page size calculation which is not considering
-the offset in the calculation. This might lead to passing of
-improper and out-of-bounds page size which could result in
-memory issue. Calculate page start and page end using the offset
-adjusted address instead of absolute address.
+Enabling U1 and U2 power-saving states can lead to stability and
+performance issues, particularly for latency-sensitive or high-
+throughput applications. These low-power link states are intended
+to reduce power consumption by allowing the device to enter partial
+low-power modes during idle periods. However, they can sometimes
+result in unexpected behavior. Over the years, some of the issues
+seen are as follows:
 
-Fixes: 02b45b47fbe8 ("misc: fastrpc: fix remote page size calculation")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
----
- drivers/misc/fastrpc.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+1. In device mode of operation, when UVC is active, enabling U1/U2
+is sometimes causing packets drops due to delay in entry/exit of
+intermittent low power states. These packet drops are often reflected
+as Missed Isochronous transfers as the controller was not able to
+send the packet in that microframe interval and hence glitches are
+seen on the final transmitted video output.
 
-diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
-index cfa1546c9e3f..00154c888c45 100644
---- a/drivers/misc/fastrpc.c
-+++ b/drivers/misc/fastrpc.c
-@@ -1019,8 +1019,8 @@ static int fastrpc_get_args(u32 kernel, struct fastrpc_invoke_ctx *ctx)
- 					(pkt_size - rlen);
- 			pages[i].addr = pages[i].addr &	PAGE_MASK;
- 
--			pg_start = (args & PAGE_MASK) >> PAGE_SHIFT;
--			pg_end = ((args + len - 1) & PAGE_MASK) >> PAGE_SHIFT;
-+			pg_start = (rpra[i].buf.pv & PAGE_MASK) >> PAGE_SHIFT;
-+			pg_end = ((rpra[i].buf.pv + len - 1) & PAGE_MASK) >> PAGE_SHIFT;
- 			pages[i].size = (pg_end - pg_start + 1) * PAGE_SIZE;
- 			args = args + mlen;
- 			rlen -= mlen;
+2. On QCS6490-Rb3Gen2 Vision kit, ADB connection is heavily unstable
+when U1/U2 is enabled. Often when link enters U2, there is a re-
+enumeration seen and device is unusable for many use cases.
+
+3. On QCS8300/QCS9100, it is observed that when Link enters U2, when
+the cable is disconnected and reconnected to host PC in HS, there
+is no link status change interrupt seen and the plug-in in HS doesn't
+show up a bus reset and enumeration failure happens.
+
+4. On older targets like SM8150/SM8250/SM8350, there have been
+throughput issues seen during tethering use cases.
+
+5. On targets like SDX75, intermittent disconnects were observed
+with certain cables due to impedence variations.
+
+To avoid such issues, the USB team at Qualcomm added these quirks
+to all targets in the past 4-5 years and extensive testing was done.
+Although these are intermittent power states, disabling them didn't
+cause any major increase in power numbers.
+
+This series was earlier started by Krishna Kurapati where he disabled
+U1/U2 on some SM targets. I'm extending this to more devices including
+Auto, Compute and IOT platforms. On a side note, this quirk has been
+already included on some mobile targets like SM8550/8650.
+
+Changes in v2:
+- Removed the wrongly added quirks from tcsr_mutex node.
+- Link to v2: https://lore.kernel.org/all/20241213095237.1409174-1-quic_prashk@quicinc.com/
+
+Link to RFC:
+https://lore.kernel.org/all/20241107073650.13473-1-quic_kriskura@quicinc.com/#Z31arch:arm64:boot:dts:qcom:sm8250.dtsi
+
+Krishna Kurapati (8):
+  arm64: dts: qcom: Disable USB U1/U2 entry for SM8350
+  arm64: dts: qcom: Disable USB U1/U2 entry for SM8450
+  arm64: dts: qcom: Disable USB U1/U2 entry for SM8150
+  arm64: dts: qcom: Disable USB U1/U2 entry for SM6125
+  arm64: dts: qcom: Disable USB U1/U2 entry for SM8250
+  arm64: dts: qcom: Disable USB U1/U2 entry for SM6350
+  arm64: dts: qcom: Disable USB U1/U2 entry for SC7280
+  arm64: dts: qcom: Disable USB U1/U2 entry for SA8775P
+
+Prashanth K (11):
+  arm64: dts: qcom: Disable USB U1/U2 entry for SDM630
+  arm64: dts: qcom: Disable USB U1/U2 entry for SDM845
+  arm64: dts: qcom: Disable USB U1/U2 entry for SDX75
+  ARM: dts: qcom: Disable USB U1/U2 entry for SDX65
+  ARM: dts: qcom: Disable USB U1/U2 entry for SDX55
+  arm64: dts: qcom: Disable USB U1/U2 entry for QCS404
+  arm64: dts: qcom: Disable USB U1/U2 entry for SC7180
+  arm64: dts: qcom: Disable USB U1/U2 entry for X1E80100
+  arm64: dts: qcom: Disable USB U1/U2 entry for QDU1000
+  arm64: dts: qcom: Disable USB U1/U2 entry for SC8280XP
+  arm64: dts: qcom: Disable USB U1/U2 entry for SC8180X
+
+ arch/arm/boot/dts/qcom/qcom-sdx55.dtsi |  2 ++
+ arch/arm/boot/dts/qcom/qcom-sdx65.dtsi |  2 ++
+ arch/arm64/boot/dts/qcom/qcs404.dtsi   |  4 ++++
+ arch/arm64/boot/dts/qcom/qdu1000.dtsi  |  2 ++
+ arch/arm64/boot/dts/qcom/sa8775p.dtsi  |  6 ++++++
+ arch/arm64/boot/dts/qcom/sc7180.dtsi   |  2 ++
+ arch/arm64/boot/dts/qcom/sc7280.dtsi   |  4 ++++
+ arch/arm64/boot/dts/qcom/sc8180x.dtsi  |  6 ++++++
+ arch/arm64/boot/dts/qcom/sc8280xp.dtsi |  6 ++++++
+ arch/arm64/boot/dts/qcom/sdm630.dtsi   |  4 ++++
+ arch/arm64/boot/dts/qcom/sdm845.dtsi   |  4 ++++
+ arch/arm64/boot/dts/qcom/sdx75.dtsi    |  2 ++
+ arch/arm64/boot/dts/qcom/sm6125.dtsi   |  2 ++
+ arch/arm64/boot/dts/qcom/sm6350.dtsi   |  2 ++
+ arch/arm64/boot/dts/qcom/sm8150.dtsi   |  4 ++++
+ arch/arm64/boot/dts/qcom/sm8250.dtsi   |  4 ++++
+ arch/arm64/boot/dts/qcom/sm8350.dtsi   |  4 ++++
+ arch/arm64/boot/dts/qcom/sm8450.dtsi   |  2 ++
+ arch/arm64/boot/dts/qcom/x1e80100.dtsi | 10 ++++++++++
+ 19 files changed, 72 insertions(+)
+
 -- 
-2.34.1
+2.25.1
 
 
