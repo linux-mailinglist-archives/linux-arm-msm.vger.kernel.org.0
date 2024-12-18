@@ -1,123 +1,119 @@
-Return-Path: <linux-arm-msm+bounces-42657-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-42658-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 563D89F6457
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Dec 2024 12:10:02 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4AF139F6463
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Dec 2024 12:11:43 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A3EA61681B5
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Dec 2024 11:09:59 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9E63B160647
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Dec 2024 11:11:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CBB0719CD01;
-	Wed, 18 Dec 2024 11:09:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9713B19D091;
+	Wed, 18 Dec 2024 11:11:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="S9S3VUrD"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="JBZF9b9d"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pg1-f179.google.com (mail-pg1-f179.google.com [209.85.215.179])
+Received: from mail-lf1-f47.google.com (mail-lf1-f47.google.com [209.85.167.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 416ED1990C1
-	for <linux-arm-msm@vger.kernel.org>; Wed, 18 Dec 2024 11:09:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11EB917C219
+	for <linux-arm-msm@vger.kernel.org>; Wed, 18 Dec 2024 11:11:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734520194; cv=none; b=kFBGnZ9uEFFNxWKebJGxnnsoVhJEdrnvVLmkYuyIAwLYiye9Dhy2rqsdNdSHrtUJKHWxkFFjkX5iQYbhRGfNqVUraMLC6JEA3zgi3ZSTu5bfWMy3bev67Unm/clwLkCn/EoQ1RdWxx6LJ3XlIpi+CRhbGa2jd4GHkWoOnCpSADg=
+	t=1734520292; cv=none; b=Lfq6IBye0OPVoIZYdNKaZezOxRdCfWoRXvAPsie5Zl5DHwMkiWpWr/+2LjKPhXs0t4bBN30F1Q6UVVF46S3gcRmkfynpBcE0BL4kDktZbhn4XB/PRicDcDXrR+EDIE+gYy2Xogm/FsRn5F4Lf3xnsd84uHTB+mgO6PVnRGgrDGk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734520194; c=relaxed/simple;
-	bh=9kgCYAPxYpAMRx9QsazTQfcEmFpIR6tF9E+jVSWI+ys=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=fQI7pbuY7xnbhpspwr1GxhUihZAAoPEDWN28mTVaMfUYolfucK6eJazZV/XIvNWNcyDbf25rt+B/XkT+m1qrUMZ9ItrOmabJgmjT7CyY0xzuqd8p7UueK3Rt8doPV99GoORgg+G5EYUHAgF/Mle17IjprgahEZAMvRnGSK5C+pE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=S9S3VUrD; arc=none smtp.client-ip=209.85.215.179
+	s=arc-20240116; t=1734520292; c=relaxed/simple;
+	bh=E4eyQxSDFEqYz1navGDvOWptnaJ7+aM9eWeu4P9K/zk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=HamKPe0a/I1DcVYX2M3l2r0MDeEI9pj5y0QNMJ6ebn9AAGyIZoOXlvL0YvBY8b+KBw2s0hNxPB7LJdRiWQ+uF9mpvUjsXQtW0logedIuEIrXv1CTL3SA3TD0dSWqhuC2obVYkIfJVmzH7Tv+y9LQqrkKpnYA/v+dSZEc1G8QkKA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=JBZF9b9d; arc=none smtp.client-ip=209.85.167.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pg1-f179.google.com with SMTP id 41be03b00d2f7-7fbd9be84bdso5957208a12.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Dec 2024 03:09:52 -0800 (PST)
+Received: by mail-lf1-f47.google.com with SMTP id 2adb3069b0e04-53df19bf6a9so8758515e87.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Dec 2024 03:11:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1734520192; x=1735124992; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=cysivQMCAup5VX6VRdjk63p3UWGwFhZcVxFfx15JYQQ=;
-        b=S9S3VUrD67QypJQ2cTI1sO/9pV28sPhP4fE3pzbkuA7sOjV3w8rFpd0zWwRsmGrQMI
-         kzLLclyNw7iJn5JwxKBsXVRmxVuLWahgWimdOua4olAcc8b/eJUxaIzODVQhV8Q5vuZl
-         t4UncVCm0QQcsjbwXG7G/Y30ya7U0AX2ZoCzUtkwaYmXRIfyQbjLM9Rq+U57poQvotqs
-         2p1t4vmniyfjmCUGEg86sawWbZGN0i8x5ENzRYZyjnm1zTF1B7hcjG6w3cIPQw9cVVTd
-         LvAvUD1nAHpGZQnz05SjuA4kK9QMnIB38tmfzoF+08KfKEIovdonDa6sH1fzBe04Z5cr
-         j5eA==
+        d=linaro.org; s=google; t=1734520288; x=1735125088; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=l1vBtYt51jNW1b+jxORD8K2hfreZX1fSorQB5nRIglI=;
+        b=JBZF9b9dF6qcVuHdBHOzfFHm2RBmpZn+g4ldzEEn834HNJSkBY33AsUSCMPHF5zyY7
+         kKMoVU9AlEpKlR3zPJg04rfGuvtx/Bga5VXgc5qPjTLHOPgCojWC3hd0e1vivI79WH0G
+         SrxiFIuWZ799bXKmTldIzJbAhBrByFjRtpk4rme2JslzDzfH/wG3whfd42Za9qntB9Cr
+         dzP4EV2xwnDMaubOlQaHdl1ZqK9lJ6DaUcsx+/8LxskTbVwyJZAIvS3znkib+xNi6wZa
+         F/df01C/lRs4vlR62UNO0IVLAzXy3YVI4HkT6jL4LihxfTvMuSjvrh/3JCMemEG2ouU8
+         +sEA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734520192; x=1735124992;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=cysivQMCAup5VX6VRdjk63p3UWGwFhZcVxFfx15JYQQ=;
-        b=se2sc6CbeEOGqPkh41SzX06BMcS+BYO23+NxvCvIS6CXKNcL7YCV1NYOzILAVh0dhc
-         k5Hlg4i44DCjOzeoNmWe/UORUIN4F6kcppokafYfUiV4z6zp7BaTU4LPoMx0QAImE/st
-         pCPkwIjuVwgFNhENyriAwmalokViNU72aMOKKN3bhyl414N59ZLBistjHUb6vMxUUIVx
-         vHvLOBpBSQebvM4XwHZq23lT/DuyAk0eA73l8zJuJaftCMQIvdwKr75avJcbiyGpvlP6
-         SCeFGGrsj8B7inrTJ8Xl7sbohca+za7dFx/qvGyrPWF/1JqKB9DXkTSftFasrv0lyang
-         ZO/A==
-X-Forwarded-Encrypted: i=1; AJvYcCUWvXYV8NplQpmtyRJl4NXF806XE7xy3iDiZD/iVE+w1EpRSH4olVvQ00WqvUnl4KP6lOcnFCI8S69e3rVz@vger.kernel.org
-X-Gm-Message-State: AOJu0YzF+19Bh70Vka25T9EYffN0WkLmMZTlMfc+R3qx6rVoattNFHqY
-	tCrzGQ/gPeTHGV+GLiUaoNG+T+WRcTIWdB+VekgGhjuCjHat6UInSPVuVR8+6Dc+fAJPmYWwGz/
-	MA2d7QRDFzC2ew7fJv7cCtj53XEGJc9+mWBDz4g==
-X-Gm-Gg: ASbGncsFQj8PSzgNHCx1uREvpL+6jVvxg3t3v8AiTAfAuKMOwSmo7bzCWrFBN08Xdkn
-	32yXCCR210DugVyyz+hRfduoJjPhhJJw86MVOqck=
-X-Google-Smtp-Source: AGHT+IEz+SwthpfmpijWHlgsc9by0AenGHkniwWORMm8lFz8mYBsn+oM1BmwW233q1MPW5LUjOnDSoaOOI/dEW+oQtw=
-X-Received: by 2002:a17:90b:2642:b0:2ee:b26c:10a0 with SMTP id
- 98e67ed59e1d1-2f2e9339c2amr3609913a91.24.1734520192464; Wed, 18 Dec 2024
- 03:09:52 -0800 (PST)
+        d=1e100.net; s=20230601; t=1734520288; x=1735125088;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=l1vBtYt51jNW1b+jxORD8K2hfreZX1fSorQB5nRIglI=;
+        b=sUDy7qcNIX92tOUYK9GZGLhYMhWjiFG7odIit3KUw9fC0Fkd+Excm2FrNPFt8Mt3eZ
+         PXXMKiUtHhz622jGIqpsRPlZJX1fyaL4eO17/436hWDXXhR57PkGzjhg1Oa8HQS3JiIn
+         BR3KE+zyEoK34SBwt1C3xAO4fHL+AFbOM5Rs7msnS1l4cDezC5XhfIxUOn6nocvVW7mE
+         0qHscGBMbKc9b82dHmYhmhZXRppSWEMcNyjx2TMg02N4Z5XLxRWD5q13Su0NHhOKE8GA
+         VQl6S1QmALUQBBnTfxVw2fAYgXbNbLi/yFWK96kQEBVXcXFrrA7APAQwqs2r5XSH/jdI
+         Kf/Q==
+X-Forwarded-Encrypted: i=1; AJvYcCXFd0yd3MQJQ9DC9G/fcBi+kjbGoMTg7Phv/q/OzP7Mk+RUziBbC4QfnB4VlWvb6mTX5BVd7fAnrrtyGjf7@vger.kernel.org
+X-Gm-Message-State: AOJu0YyEuHctAd4kqr1Oa8s0+zCoVPvG884JB43RyRdPDhRR1xE1Dobp
+	kYJMJwwvJ63tC2T8l7Tsq2gtZREz8g8YprcxBg0yJ3FLci3A2MduVFMqyoqGv3I=
+X-Gm-Gg: ASbGncvmbawT0Kty1T5+4GXBbYeDmqTYCaQ00gFh0L9JhR/rHYhtLGac8pmEEopBIcP
+	0CD5MJrqQx5hnQgm0p4zOsARi082Swp826WaoArC0GxMSag0Q48bNE7zlMO+dDIo4F929o4LSA9
+	XkwT8Ib3Bsqc8lp+5ruI6zdrYhmy4lTWe+BxLUca+vxYGcuOOg7hX/Eoo0+JvwN27QQAL386mtm
+	52XzW7SpgrAehE+DYaLZRykTTg19BDUF3uR9Re8yzMXyrPNzcgcdCe3qdCkVLBh/qXToFAuMzwg
+	aNvbmF+0JzIfae5cGszz4o/1LAgvun1lXNnN
+X-Google-Smtp-Source: AGHT+IFKDFwLbzNb+6y5h6AOCmoJ6d959430sCJ0CNhXDfR1u2zuzoAYdckeGZsJoSPcXNOEy0WBPg==
+X-Received: by 2002:a05:6512:114a:b0:540:2fe6:6a3a with SMTP id 2adb3069b0e04-541ed913250mr979841e87.57.1734520288077;
+        Wed, 18 Dec 2024 03:11:28 -0800 (PST)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-54120c13ecesm1382042e87.204.2024.12.18.03.11.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 18 Dec 2024 03:11:26 -0800 (PST)
+Date: Wed, 18 Dec 2024 13:11:24 +0200
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Ekansh Gupta <quic_ekangupt@quicinc.com>
+Cc: srinivas.kandagatla@linaro.org, linux-arm-msm@vger.kernel.org, 
+	gregkh@linuxfoundation.org, quic_bkumar@quicinc.com, linux-kernel@vger.kernel.org, 
+	quic_chennak@quicinc.com, dri-devel@lists.freedesktop.org, arnd@arndb.de
+Subject: Re: [PATCH v1 0/2] Add missing fixes in fastrpc_get_args
+Message-ID: <pyq5je56m5cxu73zxcsrboxoy3nhdf4pgulqbl2j4qiifacvyz@frlsjlb3jgoz>
+References: <20241218102429.2026460-1-quic_ekangupt@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20241217063324.33781-1-quic_jinlmao@quicinc.com>
- <20241217063324.33781-2-quic_jinlmao@quicinc.com> <tida22chffj2znikeotmo52aqnzvmedn3aa7a2coarz2dwjc7w@duw5fby4hexk>
-In-Reply-To: <tida22chffj2znikeotmo52aqnzvmedn3aa7a2coarz2dwjc7w@duw5fby4hexk>
-From: Mike Leach <mike.leach@linaro.org>
-Date: Wed, 18 Dec 2024 11:09:41 +0000
-Message-ID: <CAJ9a7VhR5AX9QD3fHiT_aU5yHShcZFaHLEDDcBJbu2xcRbWGVA@mail.gmail.com>
-Subject: Re: [PATCH v6 1/2] dt-bindings: arm: Add label in the coresight components
-To: Krzysztof Kozlowski <krzk@kernel.org>
-Cc: Mao Jinlong <quic_jinlmao@quicinc.com>, Suzuki K Poulose <suzuki.poulose@arm.com>, 
-	James Clark <james.clark@arm.com>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Mathieu Poirier <mathieu.poirier@linaro.org>, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, coresight@lists.linaro.org, 
-	linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241218102429.2026460-1-quic_ekangupt@quicinc.com>
 
-On Wed, 18 Dec 2024 at 09:21, Krzysztof Kozlowski <krzk@kernel.org> wrote:
->
-> On Tue, Dec 17, 2024 at 02:33:23PM +0800, Mao Jinlong wrote:
-> > Current name of coresight component's folder consists of prefix of
-> > the device and the id in the device list. When run 'ls' command,
-> > we can get the register address of the device. Take CTI for example,
-> > if we want to set the config for modem CTI, but we can't know which
-> > CTI is modem CTI from all current information.
-> >
-> > cti_sys0 -> ../../../devices/platform/soc@0/138f0000.cti/cti_sys0
-> > cti_sys1 -> ../../../devices/platform/soc@0/13900000.cti/cti_sys1
-> >
-> > Add label to show hardware context information of each coresight
-> > device. There will be a sysfs node label in each device folder.
-> >
-> > cat /sys/bus/coresight/devices/cti_sys0/label
-> >
-> > Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
->
-> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->
-> Best regards,
-> Krzysztof
->
+On Wed, Dec 18, 2024 at 03:54:27PM +0530, Ekansh Gupta wrote:
+> This patch series adds the listed bug fixes that have been missing
+> in upstream fastRPC driver:
+> - Page address for registered buffer(with fd) is not calculated
+>   properly.
+> - Page size calculation for non-registered buffer(copy buffer) is
+>   incorrect.
 
-Reviewed-by: Mike Leach <mike.leach@linaro.org>
+Please describe something non-obvious here. You are basically repeating
+the list of patches that comes in the next line.
+
+> 
+> Ekansh Gupta (2):
+>   misc: fastrpc: Fix registered buffer page address
+>   misc: fastrpc: Fix copy buffer page size
+> 
+>  drivers/misc/fastrpc.c | 6 +++---
+>  1 file changed, 3 insertions(+), 3 deletions(-)
+> 
+> -- 
+> 2.34.1
+> 
 
 -- 
-Mike Leach
-Principal Engineer, ARM Ltd.
-Manchester Design Centre. UK
+With best wishes
+Dmitry
 
