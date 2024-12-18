@@ -1,166 +1,148 @@
-Return-Path: <linux-arm-msm+bounces-42597-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-42601-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 30A0F9F5AC9
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Dec 2024 00:54:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id E65A89F5B6E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Dec 2024 01:28:45 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6D047166C99
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Dec 2024 23:54:25 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3C69A16F260
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Dec 2024 00:28:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0D85C1E2617;
-	Tue, 17 Dec 2024 23:54:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D10C51F931;
+	Wed, 18 Dec 2024 00:28:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="Pza1AoRc"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="fhTp/YGm"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from out-175.mta1.migadu.com (out-175.mta1.migadu.com [95.215.58.175])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A80451FA254
-	for <linux-arm-msm@vger.kernel.org>; Tue, 17 Dec 2024 23:54:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 414B217C91;
+	Wed, 18 Dec 2024 00:28:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734479656; cv=none; b=UrYI+4HwfzFCGmgvXW4Jl8UTNAFxJgg122Ny700VUS6s7vlTl/Pp0+xlzQzjnhHW4DqqUmdx+dK6IpE+T2CiqoDoGIydv0u4FvkwM43nWnxnZqAPF5raGsS1e1n1DHPqFGmCqhS7GPpxn0GWcAz6s+FzjpnU7dNBRPqc1ThYx3g=
+	t=1734481713; cv=none; b=QvOOw9ula+IAZVFljAD1Wj1oP2uNgg76hijpCiLHU1dA4oATGVPKoveFaAA/Bem9VJfrIVwMelsFSNLPgWXjqoxSsJVqRLzm49PrP1P/kJFAmnetiHfa11RgwRD9kmM/oVHr3q6jb66pbFSbL3U/TlAhAZWIJ9md1OAWx49nt1g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734479656; c=relaxed/simple;
-	bh=HoP1fsRzZzqsyElQl9cEKdqmIR33GjcpZFNUL3iDwRk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=BJK8UbsWVCgEKacwVfQaZprGQtYUPFYrEyROkmYUa8qcRuoxSXbpR/ug2ANu1AZOnw5vjNQ8LjphhtvcVO+Dd9QxzalLtfThx2nm+4FONvtsTX+dIX9uOXnJilpy88zvJ9S+B4Yp2RqNHclIxba4QInJmzHNbAOb9xO6AsE92hQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=Pza1AoRc; arc=none smtp.client-ip=95.215.58.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
-Message-ID: <51d07520-a60b-43d0-b7f2-7584c629caa0@linux.dev>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1734479649;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=/3irPPV2xZzk0hZTyS9bEZnS31ak7XYMG6B7SkGJ0gM=;
-	b=Pza1AoRciFPA9pyurLJ2KhpbmlRUAOOYTIvkbvQRo3SM16D8ntRINTZ//7ZCj6iKGEbmEh
-	fqen9C2y1tO5+UmkVRh6frpFENYQgjWpo8ALiD5/hcXewnzcIjxN8NWLXoNsyNeFD9crc4
-	rfc5Ke7Ju6nCpjRJE6EWyHVfSf88OQc=
-Date: Tue, 17 Dec 2024 17:20:13 -0600
+	s=arc-20240116; t=1734481713; c=relaxed/simple;
+	bh=8v8tVxwIEalWudvsQhTGI/+8TbyqYgg05+y8nly2gSg=;
+	h=From:Subject:Date:Message-ID:MIME-Version:Content-Type:To:CC; b=sPvIaxbQu4WOusw1ElH1EviOx5L0rm/R99DU2Q6FnO3Wsd6odHfalluq9VbWXrpjmLZUktdYzXwOhjhTgkV2mR5Dv8uglyNCTCMIGl+KNUhAYwB/3N5l/XyoAHZeRVEqQpqYsqbYulU1GR92X7yFoTcBGk1Fwu43izL5dGKZ8s8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=fhTp/YGm; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BHKrYhP013630;
+	Wed, 18 Dec 2024 00:28:23 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=bLKMfP728/tBS9278o0oEg
+	mLp67j8qDmpi5nITFL0J8=; b=fhTp/YGmn1sHJODHji8N9iFivfk9FTQAoj+osE
+	EKEfrubPOM1FeFIOLqWD8ecvMov/EZhIqn/hQpTP4TxWhPJFGaku+EVNbGTQEJ6w
+	CVAcao0H1O78Og1hjSUWu5BPpyZ04R6GnfEKBFVXHgqFCDRtal5B+3hHNaJedv/Y
+	uwG85E8xBF1gStDQTr5AVeWCYfcs66/E7LbgjsQiC1kC6APleXe3j378oSUBpNU2
+	F3bCJUGtwCi/ZaP5lVlSeaz8ZB2hCEz+nuSPKQXRyxC0SIErg6n0ah0iXSCE091I
+	djjp0AhCtc4cvtRbFFoUmMok9lMC8+Zpb6+mb3hkRyuwzOvg==
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43kgr10bhp-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 18 Dec 2024 00:28:23 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4BI0SMwT026413
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 18 Dec 2024 00:28:22 GMT
+Received: from jesszhan-linux.qualcomm.com (10.80.80.8) by
+ nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Tue, 17 Dec 2024 16:28:21 -0800
+From: Jessica Zhang <quic_jesszhan@quicinc.com>
+Subject: [PATCH v2 0/5] drm/msm: add a display mmu fault handler
+Date: Tue, 17 Dec 2024 16:27:52 -0800
+Message-ID: <20241217-abhinavk-smmu-fault-handler-v2-0-451377666cad@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Subject: Re: [PATCH v30 00/30] Introduce QC USB SND audio offloading support
-To: Cezary Rojewski <cezary.rojewski@intel.com>,
- Wesley Cheng <quic_wcheng@quicinc.com>
-Cc: Takashi Iwai <tiwai@suse.de>, Greg KH <gregkh@linuxfoundation.org>,
- srinivas.kandagatla@linaro.org, mathias.nyman@intel.com, perex@perex.cz,
- conor+dt@kernel.org, dmitry.torokhov@gmail.com, corbet@lwn.net,
- broonie@kernel.org, lgirdwood@gmail.com, krzk+dt@kernel.org,
- Thinh.Nguyen@synopsys.com, tiwai@suse.com, robh@kernel.org,
- linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
- linux-sound@vger.kernel.org, linux-usb@vger.kernel.org,
- linux-input@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- linux-doc@vger.kernel.org
-References: <20241106193413.1730413-1-quic_wcheng@quicinc.com>
- <edfeb642-297e-42bb-ad09-cbf74f995514@quicinc.com>
- <2024111655-approve-throwback-e7df@gregkh>
- <2f512d8d-e5f3-4bdd-8172-37114a382a69@quicinc.com>
- <875xoi3wqw.wl-tiwai@suse.de>
- <d0da6552-238a-41be-b596-58da6840efbb@quicinc.com>
- <CF49CA0A-4562-40BC-AA98-E550E39B366A@linux.dev>
- <65273bba-5ec1-44ea-865b-fb815afccc91@intel.com>
- <fbc04c06-c210-416b-9b77-a6bd8a71a637@quicinc.com>
- <9d95e6fa-afcb-4445-9fe3-e0eed95ec953@intel.com>
- <d7c52a11-bd2b-4cce-a0c2-6dc2dadfeaa3@quicinc.com>
- <3d9932fa-dbc3-4393-862f-92916e6e821c@intel.com>
-Content-Language: en-US
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>
-In-Reply-To: <3d9932fa-dbc3-4393-862f-92916e6e821c@intel.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Migadu-Flow: FLOW_OUT
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAAgXYmcC/z3N0QqCMBTG8VeRXXdkG1NnV75HRKx5lofcrE0lE
+ N+9FdTlDz7+38YSRsLEjsXGIq6UaAoZ8lAwO5hwQ6A+m0kulZCiAXMdKJj1Dsn7BZxZxhnysB8
+ xgumxqRy6VvOW5cIjoqPXt346Z7s4eZiHiObf5LXUUiitdKl4U9WVAAHPhezld9R9RMGWdvJs3
+ 9+W7bspsgAAAA==
+X-Change-ID: 20241217-abhinavk-smmu-fault-handler-ade75fef9809
+To: Rob Clark <robdclark@gmail.com>,
+        Dmitry Baryshkov
+	<dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten
+	<marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, "Simona
+ Vetter" <simona@ffwll.ch>
+CC: <quic_abhinavk@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
+        <dri-devel@lists.freedesktop.org>, <freedreno@lists.freedesktop.org>,
+        <linux-kernel@vger.kernel.org>,
+        Jessica Zhang <quic_jesszhan@quicinc.com>
+X-Mailer: b4 0.15-dev-1b0d6
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1734481701; l=1480;
+ i=quic_jesszhan@quicinc.com; s=20230329; h=from:subject:message-id;
+ bh=8v8tVxwIEalWudvsQhTGI/+8TbyqYgg05+y8nly2gSg=;
+ b=/WNx18im+refjr6pFDOMLybuorQGq7tRR04sAQisWReZEojEv6fUoZYR4Eh+2lIzp9VGpfqfQ
+ N5N5Zf/K3OaDZfhf9R6lF2V27aFeIRNOFUx0gMZN1ad8xRL3MRMVime
+X-Developer-Key: i=quic_jesszhan@quicinc.com; a=ed25519;
+ pk=gAUCgHZ6wTJOzQa3U0GfeCDH7iZLlqIEPo4rrjfDpWE=
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: sdJ1SLXlnfa2jvPRQfKWQCwyvFl7FPGM
+X-Proofpoint-ORIG-GUID: sdJ1SLXlnfa2jvPRQfKWQCwyvFl7FPGM
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
+ lowpriorityscore=0 malwarescore=0 mlxlogscore=868 clxscore=1015
+ priorityscore=1501 mlxscore=0 spamscore=0 bulkscore=0 adultscore=0
+ phishscore=0 impostorscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2411120000 definitions=main-2412180001
 
-On 12/10/24 9:18 AM, Cezary Rojewski wrote:
-> On 2024-12-06 1:28 AM, Wesley Cheng wrote:
->>
->> On 12/4/2024 2:01 PM, Cezary Rojewski wrote:
->>> On 2024-12-03 9:38 PM, Wesley Cheng wrote:
->>>> Hi Cezary,
->>>>
->>>> On 12/3/2024 8:17 AM, Cezary Rojewski wrote:
-> 
-> ...
-> 
->>>>> UAOL is one of our priorities right now and some (e.g.: me) prefer to not pollute their mind with another approaches until what they have in mind is crystalized. In short, I'd vote for a approach where USB device has a ASoC representative in sound/soc/codecs/ just like it is the case for HDAudio. Either that or at least a ASoC-component representative, a dependency for UAOL-capable card to enumerate.
->>>>>
->>>>
->>>> Just to clarify, "struct snd_soc_usb" does have some correlation with our "codec" entity within the QCOM ASoC design.  This would be the q6usb driver.
->>>>
->>>>
->>>>> Currently struct snd_soc_usb does not represent any component at all. Lack of codec representative, component representative and, given my current understanding, mixed dependency of sound/usb on sound/soc/soc-usb does lead to hard-to-understand ASoC solution.
->>>>
->>>>
->>>> IMO the dependency on USB SND is necessary, so that we can leverage all the pre-existing sequences used to identify USB audio devices, and have some ability to utilize USB HCD APIs as well within the offload driver.
->>>
->>> So, while I do not have patches in shape good enough to be shared, what we have in mind is closer to existing HDAudio solution and how it is covered in both ALSA and ASoC.
->>>
->>> A ASoC sound card is effectively a combination of instances of struct snd_soc_component. Think of it as an MFD device. Typically at least two components are needed:
->>>
->>> - platform component, e.g.: for representing DSP-capable device
->>> - codec component, e.g.: for representing the codec device
->>>
->>> USB could be represented by such a component, listed as a dependency of a sound card. By component I literally mean it extending the base struct:
->>>
->>> stuct snd_soc_usb {
->>>      struct snd_soc_component base;
->>>      (...)
->>> };
->>>
->>> In my opinion HDAudio is a good example of how to mesh existing ALSA-based implementation with ASoC. Full, well implemented behaviour of HDAudio codec device drivers is present at sound/pci/hda/patch_*.c and friends. That part of devoid of any ASoC members. At the same time, an ASoC wrapper is present at sound/soc/codecs/hda.c. It will represent each and every HDAudio codec device on the HDAudio bus as a ASoC-component. This follows the ASoC design and thus is easy understand for any daily ASoC user, at least in my opinion.
->>>
->>> Next, the USB Audio Offload streams are a limited resource but I do not see a reason to not treat it as a pool. Again, HDAudio comes into picture. The HDAudio streams are assigned and released with help of HDAudio library, code found in sound/hda/hdac_stream.c. In essence, as long as UAOL-capable streaming is allowed, a pcm->open() could approach a UAOL-lib (? component perhaps?) and perform ->assign(). If no resources available, fallback to the non-offloaded case.
->>>
->>> While I have not commented on the kcontrol part, the above means that our current design does go into a different direction. We'd like to avoid stream-assignment hardcoding i.e.: predefining who owns a UAOL-capable stream if possible.
->>>
->>>
->>
->> Thanks for sharing the implementation for HDA.  I did take a look to the best of my ability on how the HDAudio library was built, and I see the differences that are there with the current proposal.  However, I think modifying the current design to something like that would also require the QCOM ASoC side to change a bit too.  As mentioned by Pierre, I think its worthwhile to see if we can get the initial changes in, which is the major part of the challenge.  For the most part, I think we could eventually refactor soc-usb to behave similarly to what hda_bind.c is doing.  Both entities are the ones that handle linking (or creation in case of HDA) of ASoC components.  The one major factor I can see is that within the HDA implementation vs USB SND is that, for USB, hot plugging is a common practice, and that's a scenario that will probably need more discussion if we do make that shift.
->>
->>
->> Anyway, I just wanted to acknowledge the technical details that are utilized by HDAudio, and that we could potentially get there with USB SoC as well.
-> 
-> Hello,
-> 
-> 
-> After analyzing the USB for some time to get an even better understanding of what's present in this series, I arrived at a conclusion that indeed, the approach present here clearly differs from what I would call _by the book_ approach for hardware-based USB Audio offloading.
-> 
-> All sections below refer to the public xHCI spec [1].
-> A high-level bullets for the probing procedure:
-> 
-> 1. xHCI root and resources probe() as they do today
-> 2. xHCI reads HCCPARAMS2 (section 5.3.9) and checks GSC bit
-> 2a. If GSC==0, the UAOL enumeration halts
-> 
-> 3. xHCI sends GET_EXTPROP_TRB with ECI=1 to retrieve capabilities supported (section 4.6.17 and Table 4-3)
-> 3a. If AUDIO_SIDEBAND bit is not set, the UAOL enumeration halts
-> 
-> 4. Create a platform_device instance. This instance will act as a bridge between USB and ASoC world. For simplicity, let's call it usb-component, a representative of USB in struct snd_soc_component.
-> 
-> 5. On the platform_device->probe() the device requests information about resources available from xHCI (section 7.9.1.1), ECI=1, SubType=001
-> 6. Allocate a list of streams per device or list per endpoint supported based on the data retrieved with the followup TRB of SubType=010.
-> 
-> (things get more complicated here, stopping)
-> 
-> Now, any time a sound card with bound usb-component would begin PCM operation, starting with substream->open(), the component would first check if the device and/or the endpoint has resources necessary to support offloading. If not, it would fallback to the non-offloaded case.
+To debug display mmu faults, this series introduces a display fault
+handler similar to the gpu one.
 
-It's not really a fallback in the mutually exclusion sense. Even if the resources are present, the non-offloaded path shall always be usable.
+This series has been tested on sc7280 chromebook by using triggering
+a smmu fault by forcing an incorrect stride on the planes.
 
-> I do not see implementation for any TRBs I mentioned above here. The HCCPARAMS2 seem to be ignored too. At the same time, I'm unsure about the "interrupters" piece. I believe they make the approach present here somehow work, yet may not be required by the _by the book_ approach at all.
+---
+Changes in v2:
+- Reset fault_snapshot_capture flag in atomic commit tail (Rob)
 
-There are clearly platform-specific differences in the way the offloaded resources are exposed. The public xHCI spec may not be enough to describe all cases, and the interrupt mechanism is different as well. 
+changes since RFC:
+	- move msm_mmu_set_fault_handler() to msm_kms_init_aspace
+	- make msm_kms_fault_handler return -ENOSYS
+	- use msm_disp_snapshot_state() instead of msm_disp_snapshot_state_sync()
+	  because smmu fault handler should not sleep
+	- add a rate limiter for the snapshot to avoid spam
 
-The xHCI spec also only tells whether offloaded is possible at a high-level, but there are additional dependencies on DSP firmware/topology to expose those streams. In other words, when those extended bits are not set then offload if not possible, but if they are there's still a number of dependencies that need to be checked.
+---
+Abhinav Kumar (5):
+      drm/msm: register a fault handler for display mmu faults
+      drm/msm/iommu: rename msm_fault_handler to msm_gpu_fault_handler
+      drm/msm/iommu: introduce msm_iommu_disp_new() for msm_kms
+      drm/msm: switch msm_kms to use msm_iommu_disp_new()
+      drm/msm/dpu: rate limit snapshot capture for mmu faults
 
+ drivers/gpu/drm/msm/msm_atomic.c |  2 ++
+ drivers/gpu/drm/msm/msm_iommu.c  | 32 +++++++++++++++++++++++++++++---
+ drivers/gpu/drm/msm/msm_kms.c    | 18 +++++++++++++++++-
+ drivers/gpu/drm/msm/msm_kms.h    |  3 +++
+ drivers/gpu/drm/msm/msm_mmu.h    |  1 +
+ 5 files changed, 52 insertions(+), 4 deletions(-)
+---
+base-commit: 86313a9cd152330c634b25d826a281c6a002eb77
+change-id: 20241217-abhinavk-smmu-fault-handler-ade75fef9809
+
+Best regards,
+-- 
+Jessica Zhang <quic_jesszhan@quicinc.com>
 
 
