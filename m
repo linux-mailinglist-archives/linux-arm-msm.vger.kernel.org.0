@@ -1,204 +1,122 @@
-Return-Path: <linux-arm-msm+bounces-42689-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-42690-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 685399F6A55
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Dec 2024 16:46:49 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id E60FA9F6B4B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Dec 2024 17:36:45 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9FBA8160959
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Dec 2024 15:46:39 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id CE54B7A4097
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Dec 2024 16:36:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 223EA1DB363;
-	Wed, 18 Dec 2024 15:46:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 869F21F668A;
+	Wed, 18 Dec 2024 16:35:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="DSJog4uP"
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="F/VdIRsY"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
+Received: from mail-qt1-f182.google.com (mail-qt1-f182.google.com [209.85.160.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26F4F1591EA
-	for <linux-arm-msm@vger.kernel.org>; Wed, 18 Dec 2024 15:46:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC9C11F63C0
+	for <linux-arm-msm@vger.kernel.org>; Wed, 18 Dec 2024 16:35:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734536797; cv=none; b=Z4L1tum4S8Z36lDGvitNb8SAwCxB5klCTzEt43bfLTm+hm7unTYIZYFHPBuPSbfnD1HzjaW8hcfava/l4pMt/K4eT3MQLzAqfxbM5jPH0/6dHTTDMzry9W0TjBu+3W9BQasaAfT4AfleBLGab0ovgclYSS0v/WOIH0PN56bQwgo=
+	t=1734539759; cv=none; b=YOEwsJ0ka9xcmPJ99yFFC6bfQySPi10gFnBxqOQSxgJJK/hBkZxvoCgcnUbBN3gK7dmkQd7yWCSdsEnzMZPtniDyBfqGBDZsMzc6/BaJsy0Ij8lNQz8Ba4mizwGHQWoyqFc8x6biOOEkNDtM+lSSgFPPSRqiNlsHKtR6hjBPUhQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734536797; c=relaxed/simple;
-	bh=xZf5lDO6YWOldIM2b2LrsHZ1Z40MqjFt89oMQDqpyWw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=To7LoSFj6HGVvjpL9cKRFPWUQwbHK89PnIPfPTw1fgnymHNHwjKlUYZsRM4N43C45zZwkO37fttm5PQxu6kRIyutTX1AvKb9sG8xOUuzkJ5IYfdL6QYGjlLQTjoGqTjBREBhezcXOiaEA516ZPCZXUx5chY+XsWlIvIdOZB/oGQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=DSJog4uP; arc=none smtp.client-ip=209.85.221.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-385eed29d17so3412042f8f.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Dec 2024 07:46:34 -0800 (PST)
+	s=arc-20240116; t=1734539759; c=relaxed/simple;
+	bh=hU1Z8+lcg+ptXSveEoYze+mbRwLw9U4+cd4zYPlrev0=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=GCWTYapzUOkU8o3lDXTgtVdjy4yFehg+BoaLX4k3HcIjXv6eYZIK9Qo0lc144GFq/2WNZOjTo6SuXZ9VdQHPba0Ieax20MCxnNX9CA+z+D2Qhs348n2pI0phJcepXaul1GkGcwYhBES8iMfSaqfLNE5W1dj1nKDp0lwGrtDnIzk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=google.com; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=F/VdIRsY; arc=none smtp.client-ip=209.85.160.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+Received: by mail-qt1-f182.google.com with SMTP id d75a77b69052e-4678c9310afso272171cf.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Dec 2024 08:35:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1734536793; x=1735141593; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Z2EgEzFAv05oHHf42SmQUCrTJ+zJjNHp/i0ikqKZxNY=;
-        b=DSJog4uPNsF97xi+f5muWVzJxmIEwKlV/qm1U0UE4XfvNLKF6Cq7+zIK7JuqPlaKnA
-         QO4LcslgoiXMn72L2I53NOQWMkABFwx3epx3InqX3SEyVdbcM9PKXjlvqXOSJ9mP3dlo
-         +rmOScDukXEUBd+ZOa8HdhGXhFoNW+I6nEI+RWR1ojJMDTBEf8fZ0lkX71/RTjkWtmwM
-         AYfcnqOzpDk8EWWpUi3AVNzMNeWtS5LsSakOEWX44KQMCldKsd5mOQCkVeT9fycxYhwl
-         ASMjYTPT+ArIL97nq01W2rONtWEQXr/6wxUX/89/DnpsmtqTO3KMLOWbB+VBqQ2F+XM/
-         5M7Q==
+        d=chromium.org; s=google; t=1734539757; x=1735144557; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=hU1Z8+lcg+ptXSveEoYze+mbRwLw9U4+cd4zYPlrev0=;
+        b=F/VdIRsYwXK1dQbrUcbPT/flAVPHZxisaN0oKSmxc+lqigThPZZVjTORDu+AitL0wX
+         0N7+jOX3xMmtkxvBzgt8onR//WtGJtqs8UZCXShPCZw85SvxdcHtv5m9K5EBw8kZGuFp
+         +iPG8Tfo4+rd5vycz6MtFxZ9RnwUgiuzguHTU=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734536793; x=1735141593;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Z2EgEzFAv05oHHf42SmQUCrTJ+zJjNHp/i0ikqKZxNY=;
-        b=aNgAnAn9DgrrH1lNCahC/7EzG2EP3odZPcRpdUsASsBI1IoCSsrussRDp5gpKxKdcH
-         mYmtxzKeMK/3LAPc5O9PYaSzvM14v7M8sSuCCbvoieWtaNsZchQzRLd3TExWnFOerfPX
-         DZV67NarbDWg4Xd8g1VbcHRt07uipLDAxpzCKBCkwb69d6qkRZY9DQViGvolezJB12eL
-         IwTv+0doo1LqkeBMJvaELCRVDdVvlWqhixfAGXUZzoo+ajQtaI5jPDJdIWcrZHd6oWUU
-         x0UZ28I7NHHJ4QmMblfoJcuUMdsjMYR0XBPUxL405dDnrr1L2MbCUfJunVzSbo7Hzw20
-         wOWg==
-X-Forwarded-Encrypted: i=1; AJvYcCUZQ1nabD+dzkc7wywAoSWNjE8JKQIT+MC1IfnomdHifU6mGAvfakVOBNxbVYkhViSoiuwfUjDgfkBo2gbK@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx36kGiRSVyHReutuokh72KqRJMIckpvwRnc9bD1S4yUhFjaQwG
-	IOANmo8duC1CfoABH7rOABSc6RO4YV/5ELlYVWjbxVfWY7DhBQFrQaDvqsC4fDs=
-X-Gm-Gg: ASbGncvnz0SMwAauvuFOq1bIULKRRCpNUepjVi/XomMrSHsvE68iPoRQOkKwFrSwhYO
-	d2gu+mQvsgvydTWz2gWsRV24Xv31re+D89LgX/BfCsny+11sO3FR1nYdWLWLbu7QWlrdQx9r0LJ
-	78o0o9YQV+SgSD2TWgWCuiO0T9kmeUJgLx7QIc0BsvQ/ZHJuaRdSJVC+U+Bhgm4+8Kg2aJ/5stc
-	KATyskdNHq6EZgSXgybnneO0/YFIqVqzDdJWjBkFW5OwZMTTrY0zaj9aC66uUwlLWhWzg==
-X-Google-Smtp-Source: AGHT+IG94GoRiVcfFjPeUr2RpQNhCg6SxCkgVbLJvvqBnNPFRTM2uJUi3bA+OHTMbyjY6cjgVGYoIA==
-X-Received: by 2002:a05:6000:4014:b0:385:d7f9:f15d with SMTP id ffacd0b85a97d-388e4d4b616mr3100855f8f.11.1734536793336;
-        Wed, 18 Dec 2024 07:46:33 -0800 (PST)
-Received: from [192.168.0.10] ([176.61.106.227])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-388c8011feesm14235843f8f.21.2024.12.18.07.46.32
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 18 Dec 2024 07:46:32 -0800 (PST)
-Message-ID: <2d5a519c-deb1-486a-9453-7f2131e162cc@linaro.org>
-Date: Wed, 18 Dec 2024 15:46:30 +0000
+        d=1e100.net; s=20230601; t=1734539757; x=1735144557;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=hU1Z8+lcg+ptXSveEoYze+mbRwLw9U4+cd4zYPlrev0=;
+        b=ULqoX+Nmd6G0O0js8Apsp0ocLB9nUv+7trsXjd7zUtt0FhY4K9uPTgK3wgogkTjNKJ
+         7qxL0MMHExmLwyyQ9CfE/dayYKyO45fmGCky4eqJc+JGhE777W0Vw1hmg6r+xCPnD2GL
+         bUnSj7FqoKGHqZLSx4cAcut+NRXy0a8/OqioB/7tavQJx9vu+fp2nQtmhHgcYgU+Z30k
+         jzzqXEfXGU6RFU6CSlrEl5J3RaqjzpK6d7zUn7BGvSFx2fuzx79g2jp2Ptr9saXM7RNm
+         Esb05RDYFQApybSaXjkkiY5HlrJmx97Gdl1fpS/6VOibDLkbcf7yf0xl0MpUJajvPFDK
+         9XNg==
+X-Forwarded-Encrypted: i=1; AJvYcCX9463sGHZuNgpPRpLCMzveWBjZesTWolZbqDP1mVTalPLs2odWo4w0L71F3Qg40dj1wHAW/YKx77niT2sV@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx7v3XgHTSdb177YMXF5w+VIJqrllOreYeMItzjFFklbHN9Hakf
+	McCnOr67VjqOPT4U+ntz7oB0QJvFleGjy4TEeg1PfC60yMETF5DsRn7WyvsxJL8F1NcJUdnplxj
+	K9lj3n+Av0FUIhWdBGj3lW+MfZpRNrWZj3aqN
+X-Gm-Gg: ASbGncs6ddj0RWmSd3NHWvmeiIgsNOYC6UVTMl/nSOTDa7Z/sQzYmkYz72zFyEha4PI
+	aiOW+Iw9RoKondzHRJRNfItBJu2QBmfpFT58yk1YP/nq1ZNz+bAZwwTv4atOCRdVJ2x0lGw==
+X-Google-Smtp-Source: AGHT+IGlf+Wlv9h2+51DeY+YpWsJpttrKLiQ4T5hKVUT5e2IblIuVjyaICps4zat75Zd9spNCR9Zv3byB1374eRD8gw=
+X-Received: by 2002:ac8:5f49:0:b0:467:7ef7:88a3 with SMTP id
+ d75a77b69052e-469090dc683mr4277431cf.16.1734539756443; Wed, 18 Dec 2024
+ 08:35:56 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] media: venus: Remove unused hfi_core_ping()
-To: linux@treblig.org, stanimir.k.varbanov@gmail.com,
- quic_vgarodia@quicinc.com, mchehab@kernel.org
-Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20241216220628.1018633-1-linux@treblig.org>
-Content-Language: en-US
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <20241216220628.1018633-1-linux@treblig.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <20241214005248.198803-1-dianders@chromium.org>
+ <20241213165201.v2.1.I2040fa004dafe196243f67ebcc647cbedbb516e6@changeid>
+ <CAODwPW_c+Ycu_zhiDOKN-fH2FEWf2pxr+FcugpqEjLX-nVjQrg@mail.gmail.com>
+ <CAD=FV=UHBA7zXZEw3K6TRpZEN-ApOkmymhRCOkz7h+yrAkR_Dw@mail.gmail.com>
+ <CAODwPW8s4GhWGuZMUbWVNLYw_EVJe=EeMDacy1hxDLmnthwoFg@mail.gmail.com> <CAD=FV=X61y+RmbWCiZut_HHVS4jPdv_ZB8F+_Hs0R-1aKHdK4w@mail.gmail.com>
+In-Reply-To: <CAD=FV=X61y+RmbWCiZut_HHVS4jPdv_ZB8F+_Hs0R-1aKHdK4w@mail.gmail.com>
+From: Julius Werner <jwerner@chromium.org>
+Date: Wed, 18 Dec 2024 17:35:45 +0100
+Message-ID: <CAODwPW_UNVkyXKxyhZv830bhzsy5idu6GiuR9mut+-qGOtv1pw@mail.gmail.com>
+Subject: Re: [PATCH v2 1/6] arm64: errata: Assume that unknown CPUs _are_
+ vulnerable to Spectre BHB
+To: Doug Anderson <dianders@chromium.org>
+Cc: Julius Werner <jwerner@chromium.org>, Catalin Marinas <catalin.marinas@arm.com>, 
+	Will Deacon <will@kernel.org>, Mark Rutland <mark.rutland@arm.com>, linux-arm-msm@vger.kernel.org, 
+	Jeffrey Hugo <quic_jhugo@quicinc.com>, linux-arm-kernel@lists.infradead.org, 
+	Roxana Bradescu <roxabee@google.com>, Trilok Soni <quic_tsoni@quicinc.com>, 
+	bjorn.andersson@oss.qualcomm.com, stable@vger.kernel.org, 
+	James Morse <james.morse@arm.com>, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On 16/12/2024 22:06, linux@treblig.org wrote:
-> From: "Dr. David Alan Gilbert" <linux@treblig.org>
-> 
-> hfi_core_ping() was added by 2017's
-> commit 09c2845e8fe4 ("[media] media: venus: hfi: add Host Firmware
-> Interface (HFI)")
-> 
-> but has remained unused.
-> 
-> Remove it.
-> 
-> It was the only caller of the ->core_ping member of hfi_ops,
-> so remove it, and the venus_core_ping that it pointed to.
-> 
-> Note I've left pky_sys_ping which seems to be the lowest level
-> definition of the command.
-> 
-> Signed-off-by: Dr. David Alan Gilbert <linux@treblig.org>
-> ---
->   drivers/media/platform/qcom/venus/hfi.c       | 23 -------------------
->   drivers/media/platform/qcom/venus/hfi.h       |  2 --
->   drivers/media/platform/qcom/venus/hfi_venus.c | 11 ---------
->   3 files changed, 36 deletions(-)
-> 
-> diff --git a/drivers/media/platform/qcom/venus/hfi.c b/drivers/media/platform/qcom/venus/hfi.c
-> index e00aedb41d16..675e6fd1e9fa 100644
-> --- a/drivers/media/platform/qcom/venus/hfi.c
-> +++ b/drivers/media/platform/qcom/venus/hfi.c
-> @@ -138,29 +138,6 @@ int hfi_core_trigger_ssr(struct venus_core *core, u32 type)
->   	return core->ops->core_trigger_ssr(core, type);
->   }
->   
-> -int hfi_core_ping(struct venus_core *core)
-> -{
-> -	int ret;
-> -
-> -	mutex_lock(&core->lock);
-> -
-> -	ret = core->ops->core_ping(core, 0xbeef);
-> -	if (ret)
-> -		goto unlock;
-> -
-> -	ret = wait_for_completion_timeout(&core->done, TIMEOUT);
-> -	if (!ret) {
-> -		ret = -ETIMEDOUT;
-> -		goto unlock;
-> -	}
-> -	ret = 0;
-> -	if (core->error != HFI_ERR_NONE)
-> -		ret = -ENODEV;
-> -unlock:
-> -	mutex_unlock(&core->lock);
-> -	return ret;
-> -}
-> -
->   static int wait_session_msg(struct venus_inst *inst)
->   {
->   	int ret;
-> diff --git a/drivers/media/platform/qcom/venus/hfi.h b/drivers/media/platform/qcom/venus/hfi.h
-> index f25d412d6553..0338841d5992 100644
-> --- a/drivers/media/platform/qcom/venus/hfi.h
-> +++ b/drivers/media/platform/qcom/venus/hfi.h
-> @@ -108,7 +108,6 @@ struct hfi_inst_ops {
->   struct hfi_ops {
->   	int (*core_init)(struct venus_core *core);
->   	int (*core_deinit)(struct venus_core *core);
-> -	int (*core_ping)(struct venus_core *core, u32 cookie);
->   	int (*core_trigger_ssr)(struct venus_core *core, u32 trigger_type);
->   
->   	int (*session_init)(struct venus_inst *inst, u32 session_type,
-> @@ -152,7 +151,6 @@ int hfi_core_deinit(struct venus_core *core, bool blocking);
->   int hfi_core_suspend(struct venus_core *core);
->   int hfi_core_resume(struct venus_core *core, bool force);
->   int hfi_core_trigger_ssr(struct venus_core *core, u32 type);
-> -int hfi_core_ping(struct venus_core *core);
->   int hfi_session_create(struct venus_inst *inst, const struct hfi_inst_ops *ops);
->   void hfi_session_destroy(struct venus_inst *inst);
->   int hfi_session_init(struct venus_inst *inst, u32 pixfmt);
-> diff --git a/drivers/media/platform/qcom/venus/hfi_venus.c b/drivers/media/platform/qcom/venus/hfi_venus.c
-> index f9437b6412b9..a9167867063c 100644
-> --- a/drivers/media/platform/qcom/venus/hfi_venus.c
-> +++ b/drivers/media/platform/qcom/venus/hfi_venus.c
-> @@ -1178,16 +1178,6 @@ static int venus_core_deinit(struct venus_core *core)
->   	return 0;
->   }
->   
-> -static int venus_core_ping(struct venus_core *core, u32 cookie)
-> -{
-> -	struct venus_hfi_device *hdev = to_hfi_priv(core);
-> -	struct hfi_sys_ping_pkt pkt;
-> -
-> -	pkt_sys_ping(&pkt, cookie);
-> -
-> -	return venus_iface_cmdq_write(hdev, &pkt, false);
-> -}
-> -
->   static int venus_core_trigger_ssr(struct venus_core *core, u32 trigger_type)
->   {
->   	struct venus_hfi_device *hdev = to_hfi_priv(core);
-> @@ -1639,7 +1629,6 @@ static int venus_suspend(struct venus_core *core)
->   static const struct hfi_ops venus_hfi_ops = {
->   	.core_init			= venus_core_init,
->   	.core_deinit			= venus_core_deinit,
-> -	.core_ping			= venus_core_ping,
->   	.core_trigger_ssr		= venus_core_trigger_ssr,
->   
->   	.session_init			= venus_session_init,
+> Given that I'm not going to change the way the existing predicates
+> work, if I move the "fallback" setting `max_bhb_k` to 32 to
+> spectre_bhb_enable_mitigation() then when we set `max_bhb_k` becomes
+> inconsistent between recognized and unrecognized CPUs.
 
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+A clean way to fix that could be to change spectre_bhb_loop_affected()
+to just return the K-value (rather than change max_bhb_k directly),
+and then set max_bhb_k to the max() of that return value and the
+existing value when it is called from spectre_bhb_enable_mitigation().
+That way, max_bhb_k would only be updated from
+spectre_bhb_enable_mitigation().
+
+> I would also say that having `max_bhb_k` get set in an inconsistent
+> place opens us up for bugs in the future. Even if it works today, I
+> imagine someone could change things in the future such that
+> spectre_bhb_enable_mitigation() reads `max_bhb_k` and essentially
+> caches it (maybe it constructs an instruction based on it). If that
+> happened things could be subtly broken for the "unrecognized CPU" case
+> because the first CPU would "cache" the value without it having been
+> called on all CPUs.
+
+This would likely already be a problem with the current code, since
+spectre_bhb_enable_mitigations() is called one at a time for each CPU
+and the max_bhb_k value is only valid once it has been called on all
+CPUs. If someone tried to just immediately use the value inside the
+function that would just be a bug either way. (Right now this should
+not be a problem because max_bhb_k is only used by
+spectre_bhb_patch_loop_iter() which ends up being called through
+apply_alternatives_all(), which should only run after all those CPU
+errata cpu_enable callbacks have been called.)
 
