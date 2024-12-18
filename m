@@ -1,141 +1,176 @@
-Return-Path: <linux-arm-msm+bounces-42678-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-42679-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5BAAB9F65EB
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Dec 2024 13:30:30 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C04EB9F65FA
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Dec 2024 13:34:33 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id AA89C168B17
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Dec 2024 12:30:27 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0C5B816CACF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Dec 2024 12:34:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BB1D61A23B6;
-	Wed, 18 Dec 2024 12:30:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D86A31A2383;
+	Wed, 18 Dec 2024 12:34:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="zDktpP0G"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="mSOvVslc"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pf1-f169.google.com (mail-pf1-f169.google.com [209.85.210.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C7A219995D
-	for <linux-arm-msm@vger.kernel.org>; Wed, 18 Dec 2024 12:30:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E90A8199FC5;
+	Wed, 18 Dec 2024 12:34:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734525028; cv=none; b=UGCbxBphcPyCeR2Sbp5WatI8k/sPpHTnvvsKVo5x4wdSXywEF3SoJkx/DmvmGrhKF1aBM/XtX8p0MZlJ+/tfIj4wFzzr91ffYs04xvCIyV0MeY6O+MI5ki/bG1kI2+OMBZzBMmaJ2W+H+v3p4qP0vC3UKovX5pRNKV4rhorKvGg=
+	t=1734525267; cv=none; b=rkK2EStyM4Jw239EK/JGHkAtwduhts3e/8XosUwPS+clcXnu6BX8Jm9WFMZeNGpHYIDIusIYCmZcgJ9qmZq4P9e+0MRRS5Tyarotxz3Xi3doHqlMmvp7QmyCnHJLZwTSZHXn9gaYLqDbYgXIQtfySiZ44hSUkhvgAuJ5fueSTBQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734525028; c=relaxed/simple;
-	bh=sIokGkGvk5wEoau7cfzmPpCeUIVZzmYqS6W9pDT1pms=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=b3BOwAB5Hzwj534fVd3+YNGJoSVTfgtXTqqc4SeMYO30yFx1n7B+CIJPmh8xV+5/aT/pueWk+1BagPQuGdPFcDcTyedmeRHU+HhBcD0sSlS2440L7dDChsJ4n/zJGbh3/9eNuxFU36GlHTE5zuhzPzJMFQaVZmDshAbGm4zakZ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=zDktpP0G; arc=none smtp.client-ip=209.85.210.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pf1-f169.google.com with SMTP id d2e1a72fcca58-728ea1573c0so5576807b3a.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Dec 2024 04:30:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1734525026; x=1735129826; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=6F5mcTldZa7iY872IZQ2vfT0jCbEuXcj2mSPu9gsXzc=;
-        b=zDktpP0Go5OVh4src2sJrpL5ub+hg6myILqxFYWCRCVRXH9QIIvuyHMUKearGGjuke
-         Ynj25rhN8dp0yR9eDkcFX8w7DlohUBsjGFnZJLC3ie4xfAmCkJtr2+JQOBZj04vKNC0+
-         P7vAPGpHHfBhsAlC0vfx37i4P17dZAbHum6LADDljKbjx2LpsYVC7EwTWPXVgvg43xBZ
-         vMPPCaxy+V/9F6b3ju10SLKWeYFoRmVthOpcm+JJkd2IHp/FOYr7jAWZF9qUgynuxAun
-         gE6i8xWkR6YNrm6arMNWJQQ1SlmvifRaDGsBM5jbKMmp0GAs3OIwHnAvwBP88nfFaXuP
-         t5yQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734525026; x=1735129826;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=6F5mcTldZa7iY872IZQ2vfT0jCbEuXcj2mSPu9gsXzc=;
-        b=ZZOeBnZTr6+enip+kyPNCHqxaqMD9T6ttmoLlYHx/+2yfqiqupADI4RQPlzRWfCFBE
-         nFlckfkKJ3TtH/1MfYFUscnIzI9AbLIOUgh0eQ1BLKmnTTmh5EWL1Cx65NNDrQ7KyioG
-         pUBTsABXHjoAX0JcH7Q7lGEZF5S32rqO6A63AmGFHPMfsWPEmTfWKYmpJ72Ax2aoirpq
-         YxcSW9noCOtxC7ZdX2hQCQbRqKFD0NZ+njdQsBjtYDbXnB4tPS/IeMAN6lpaSVEMTQkb
-         d3paq++IUn41VlmyAESXCLCR6rseyh6T/qhb0xL9imlRvr+3B7eueXIZbKekkun7YxWB
-         5LhQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWux7acv8oHHbxX6DBN5hhJe372TLHDc8SJ2fN0jCMgvxdEOk4pVQaTVs2Fp7DaebIS3xj9kmpKfXEvJeG7@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz8t2etElrSw5vSmisSXIgqeZbsIxe04npnjLd2ZS+kTWpDBFk8
-	P0GH/3PzVCQkBdbuql76fa/tOjWfci72sAhU2iWyTRgq9h9sKs6RbgiiCsGtrQ==
-X-Gm-Gg: ASbGncspop1EtCOJ+Xvt1JkT3RHu86k2wIIHqLs579IHX1luSkEsh03zq2I0dIEsU5k
-	qIITCWhaCokYDOzwZSjCUuMwVdN4e4kLJIEOh99bEyUv6d97+fr61Vzyme/VdRAzV/c7o8kDuDC
-	ESUrNrhWBHi86jgWYlmAvQJrl27Y5+sl33bjv3zLN5YFHJ71PZlpaBFcExE6jtBijJZtIPmi8IW
-	vluMS9fPGgi916HlzxMMqmI2+OldKn3UKt5WGC5WECBsAphkQdF8KyYx8VzMqRyjRHG
-X-Google-Smtp-Source: AGHT+IEVCTF8u4ejkks/VblnJMBrY/RN2wVeVg8W2IFUErI8HUe0PMrVjMwp1C2jnmKDGR2tk1cBMA==
-X-Received: by 2002:a05:6a00:180b:b0:728:e27c:a9bc with SMTP id d2e1a72fcca58-72a8d237723mr3199997b3a.7.1734525026308;
-        Wed, 18 Dec 2024 04:30:26 -0800 (PST)
-Received: from thinkpad ([117.213.97.217])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-801d5ae9fe6sm7377693a12.49.2024.12.18.04.30.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 18 Dec 2024 04:30:25 -0800 (PST)
-Date: Wed, 18 Dec 2024 18:00:19 +0530
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: Johan Hovold <johan@kernel.org>
-Cc: mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Loic Poulain <loic.poulain@linaro.org>
-Subject: Re: mhi resume failure on reboot with 6.13-rc2
-Message-ID: <20241218123019.py57s4r3takm2fs6@thinkpad>
-References: <Z1me8iaK7cwgjL92@hovoldconsulting.com>
- <20241211145315.vaf7gbapieywcvau@thinkpad>
- <Z1mp3_ArzL-GLr3D@hovoldconsulting.com>
- <20241216074021.kwoid2747o7piquv@thinkpad>
- <Z2ApCU3DAxKS7Y9k@hovoldconsulting.com>
- <20241216141303.2zr5klbgua55agkx@thinkpad>
- <Z2KKjWY2mPen6GPL@hovoldconsulting.com>
- <20241218113830.efflnkxz7qu24xux@thinkpad>
- <Z2K53-As8w4IH06U@hovoldconsulting.com>
+	s=arc-20240116; t=1734525267; c=relaxed/simple;
+	bh=QYc4xY8AeNSgge56dJ3MvqzLhT/3x0EYFavC+ntvJs4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=SB2KYOYMmaUp/wjs0U0KlPSgQc/5kHiGnc/im3LaSLxk5jEobgEZXnSxrXPZb4j1MwlxlKsBdBl5mYeQzpNKLi4B6Gm+M0/Bx9KDht3qIBYZ3G4BfrsANDLCumzt0C+wSzaScltWZbuPOlLFaXtlqsTapgF3ipib4n7hTs8lUGE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=mSOvVslc; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BI7V5iF025318;
+	Wed, 18 Dec 2024 12:34:16 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	0C94w/0C+OzA0oXh9i7IsC80vig3DOMsP0LguORAZO0=; b=mSOvVslcyvPQhTRD
+	gigAf8Q4B6nwZf/50MXI+c5hf/9FiRxsEekzgMpnWnktYh4e3QPSfbyY5v9O2obK
+	bjm0PuAdYsxsREvAIwlOwsC4ynrM5D12GxGlEpYeBQPoTiZQ2zPKHqxwzaJUhltF
+	ElZuC8FaEan4N+VIxXiiJGLR8Q8rw7m+XlKoSZNh/DWmDODuPnsFOB0GwTDhF1kb
+	tDsaLg5GZ1uEALRk4XlZWskr80PSt13WGPF+yQ66RDbXAfbv/4knblD/tJ5DVKLO
+	fzDVFIo/GhvSdhs6VXA8YxjR3rBpGMKNpMGBA5Vkccg8K8eAJ4LCFU/CXr/b0d4k
+	UzpZpg==
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43kt2w8rm0-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 18 Dec 2024 12:34:16 +0000 (GMT)
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4BICYEZQ011739
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 18 Dec 2024 12:34:14 GMT
+Received: from [10.216.12.179] (10.80.80.8) by nasanex01c.na.qualcomm.com
+ (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 18 Dec
+ 2024 04:34:08 -0800
+Message-ID: <5ef44277-6739-4e1e-af62-0f40ae081ec1@quicinc.com>
+Date: Wed, 18 Dec 2024 18:04:04 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <Z2K53-As8w4IH06U@hovoldconsulting.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 2/4] dmaengine: gpi: Add Lock and Unlock TRE support to
+ access I2C exclusively
+To: Vinod Koul <vkoul@kernel.org>
+CC: <konrad.dybcio@linaro.org>, <andersson@kernel.org>,
+        <andi.shyti@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <dmaengine@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-i2c@vger.kernel.org>, <conor+dt@kernel.org>,
+        <agross@kernel.org>, <devicetree@vger.kernel.org>, <linux@treblig.org>,
+        <dan.carpenter@linaro.org>, <Frank.Li@nxp.com>,
+        <konradybcio@kernel.org>, <bryan.odonoghue@linaro.org>,
+        <krzk+dt@kernel.org>, <robh@kernel.org>, <quic_vdadhani@quicinc.com>
+References: <20241129144357.2008465-1-quic_msavaliy@quicinc.com>
+ <20241129144357.2008465-3-quic_msavaliy@quicinc.com> <Z01YBLcxDXI2UwXR@vaman>
+ <d49b16b2-95e5-42b4-9bc1-40cb0bfa15b1@quicinc.com> <Z1BJSbf+1G8ojTib@vaman>
+Content-Language: en-US
+From: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
+In-Reply-To: <Z1BJSbf+1G8ojTib@vaman>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01c.na.qualcomm.com (10.45.79.139)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: fLj0LppQqDwBIQBoNr_scSKpO1tWPoNJ
+X-Proofpoint-ORIG-GUID: fLj0LppQqDwBIQBoNr_scSKpO1tWPoNJ
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 spamscore=0
+ mlxlogscore=999 priorityscore=1501 malwarescore=0 clxscore=1015
+ suspectscore=0 adultscore=0 lowpriorityscore=0 bulkscore=0 mlxscore=0
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2412180101
 
-On Wed, Dec 18, 2024 at 01:02:39PM +0100, Johan Hovold wrote:
-> On Wed, Dec 18, 2024 at 05:08:30PM +0530, Manivannan Sadhasivam wrote:
-> > On Wed, Dec 18, 2024 at 09:40:45AM +0100, Johan Hovold wrote:
+Hi Vinod, Thanks !  I just saw your comments now as somehow it was going 
+in some other folder and didn't realize.
+
+On 12/4/2024 5:51 PM, Vinod Koul wrote:
+> On 02-12-24, 16:13, Mukesh Kumar Savaliya wrote:
+>> Thanks for the review comments Vinod !
+>>
+>> On 12/2/2024 12:17 PM, Vinod Koul wrote:
+>>> On 29-11-24, 20:13, Mukesh Kumar Savaliya wrote:
+>>>> GSI DMA provides specific TREs(Transfer ring element) namely Lock and
+>>>> Unlock TRE. It provides mutually exclusive access to I2C controller from
+>>>> any of the processor(Apps,ADSP). Lock prevents other subsystems from
+>>>> concurrently performing DMA transfers and avoids disturbance to data path.
+>>>> Basically for shared I2C usecase, lock the SE(Serial Engine) for one of
+>>>> the processor, complete the transfer, unlock the SE.
+>>>>
+>>>> Apply Lock TRE for the first transfer of shared SE and Apply Unlock
+>>>> TRE for the last transfer.
+>>>>
+>>>> Also change MAX_TRE macro to 5 from 3 because of the two additional TREs.
+>>>>
+>>>
+>>> ...
+>>>
+>>>> @@ -65,6 +65,9 @@ enum i2c_op {
+>>>>     * @rx_len: receive length for buffer
+>>>>     * @op: i2c cmd
+>>>>     * @muli-msg: is part of multi i2c r-w msgs
+>>>> + * @shared_se: bus is shared between subsystems
+>>>> + * @bool first_msg: use it for tracking multimessage xfer
+>>>> + * @bool last_msg: use it for tracking multimessage xfer
+>>>>     */
+>>>>    struct gpi_i2c_config {
+>>>>    	u8 set_config;
+>>>> @@ -78,6 +81,9 @@ struct gpi_i2c_config {
+>>>>    	u32 rx_len;
+>>>>    	enum i2c_op op;
+>>>>    	bool multi_msg;
+>>>> +	bool shared_se;
+>>>
+>>> Looking at this why do you need this field? It can be internal to your
+>>> i2c driver... Why not just set an enum for lock and use the values as
+>>> lock/unlock/dont care and make the interface simpler. I see no reason to
+>>> use three variables to communicate the info which can be handled in
+>>> simpler way..?
+>>>
+>> Below was earlier reply to [PATCH V3, 2/4], please let me know if you have
+>> any additional comment and need further clarifications.
 > 
-> > > I've tracked down the hang to a deadlock on the parent device lock.
-> > > 
-> > > Driver core takes the parent device lock before calling shutdown(), and
-> > > then mhi_pci_shutdown() waits indefinitely for the recovery thread to
-> > > finish.
-> 
-> > Thanks for tracking the deadlock. I think we should use pci_try_reset_function()
-> > instead of pci_reset_function() in mhi_pci_recovery_work().
-> > 
-> > If the pci_dev_lock() is already taken, it will return with -EAGAIN and we do
-> > not need to worry in that case since the host is going to be powered off anyway
-> > (and so the device).
-> 
-> That may work. But note that I've now also seen this deadlock during
-> suspend (i.e. when the device is not going away). The
-> pci_try_reset_function() should avoid the deadlock here too, but we'll
-> end up in funny state.
-> 
+> Looks like you misunderstood, the question is why do you need three
+> variables to convey this info..? Use a single variable please
+Yes, I think so. Please let me clarify.
+First variable is a feature flag and it's required to be explicitly 
+mentioned by client (i2c/spi/etc) to GSI driver.
 
-Hopefully, recovery_work() started by mhi_pci_runtime_resume() would be able to
-reset the device.
+Second and third, can be optimized to boolean so either first or last 
+can be passed.
 
-> Now I'd also like to know why I'm suddenly seeing these runtime PM
-> resume errors of this modem. Haven't seen them before 6.13-rc, and I'm
-> not sure that it's really the firmware that is crashing left and right
-> all of a sudden.
+Please correct me or add simple change where you would like to make, i 
+can add that.
+> 
+>> --
+>>> Looking at the usage in following patches, why cant this be handled
+>>> internally as part of prep call?
+>>>
+>> As per design, i2c driver iterates over each message and submits to GPI
+>> where it creates TRE. Since it's per transfer, we need to create Lock and
+>> Unlock TRE based on first or last message.
+>> --
+>>>> +	bool first_msg;
+>>>> +	bool last_msg;
+>>>
 > 
 
-Yeah, that's worth the effort. I'll go ahead with the patch since the issue is
-present anyway.
-
-- Mani
-
--- 
-மணிவண்ணன் சதாசிவம்
 
