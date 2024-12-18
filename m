@@ -1,40 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-42620-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-42621-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 613A79F61E9
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Dec 2024 10:38:33 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1FFEF9F620D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Dec 2024 10:45:02 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 43AAE1885857
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Dec 2024 09:38:32 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8C5DA1886920
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Dec 2024 09:44:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BB72418A6A8;
-	Wed, 18 Dec 2024 09:38:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 287E7193079;
+	Wed, 18 Dec 2024 09:44:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="bRXCD00x"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 677F3156669;
-	Wed, 18 Dec 2024 09:38:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C1531791F4;
+	Wed, 18 Dec 2024 09:44:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734514705; cv=none; b=dta/UrJQcZNygPv2JM2HVBgIkhfiYVkOS0qT1/YVF4UIGFuUwJvogIrEyZZ+E/pCbIFgnyYWAmCOhtVesyfNR6H79u1crTavwIv4ivJpyVueUl98g0QTnvwRg/a/hZAFtSJg5LzgdMj2kbMqTqtF3HzKt1Erfsox2i+GrRIE8iI=
+	t=1734515058; cv=none; b=cF9FgEkQ4OqErL+fmOJtArhQuKJl8kTLqXQK1IOJBWGpMEYUB130SOfk54+zclv5l2bSzGcHec0HdxG3gdHuF2Zc/B/tqz1NIbKL3svai1u5LkWtAZvqGbLbhQcyxN1t586Rb9EdcDYTiyJ/hxllRXJehiy/G9KTcGFsM29kl1M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734514705; c=relaxed/simple;
-	bh=8wdapoSvKHbD5adllNTqBd271Est7vwVAQTHDiEvbI8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=lWNW1M1RjYvWxEyrTCwHhgt4G/Rtx1lZMRPCS/m3VhmR0ZX2HcivafWfGCvDC4JsHPK9lJwipjjObKc4WE8vFH+hylccr1hL5Rjvx54MjigqffbtRQnPf1TdXvg4o0gmu5tOi20UD9uug7T1vVC54aoIbKhZlxFrCLiwYkA+7UI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id B05FAFEC;
-	Wed, 18 Dec 2024 01:38:50 -0800 (PST)
-Received: from [10.57.71.247] (unknown [10.57.71.247])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPA id BD0E53F7B4;
-	Wed, 18 Dec 2024 01:38:20 -0800 (PST)
-Message-ID: <985d234c-e088-469d-b9dc-7904fcf5a91c@arm.com>
-Date: Wed, 18 Dec 2024 09:38:19 +0000
+	s=arc-20240116; t=1734515058; c=relaxed/simple;
+	bh=A0Zj9+0LGObPkEo7xOVd01Y1b2SolCeVf5mJz/rMvU8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=jaguBpNnAYXZ+N23gi20YoY8Gld6PE92DOrKCBWbbPWaM/ciOJgdTQNum0oak45IQwZ6g6xsjoqSQfSznTMGkIGxrDTWgdkGRvtyfKKSPwmHuYYxj+Rkj/Oqz7PVCU80vAl4jk3EYJQX+D0A1n2HYe+00vdqHYOp5gMKGh3aCf4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=bRXCD00x; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BI8W6fQ015624;
+	Wed, 18 Dec 2024 09:44:08 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	eTfbfQ7i0+fCOjXR2GpGf7ZFv7MCLISP7zu5S/m4hrk=; b=bRXCD00xrjX3nb8y
+	ubRpKGu3QbYRuKJGE4wiN1ZsKoPbWZm0if/LATRe4U1m1++Pe0uzzPVhqAuUFbEt
+	wfK3ORdru8yFPlnSHe93Fvr8IemuECXVgGM6hIYrPpHEr9IeOLeAajYZUkoc4r6r
+	OuFWPTe7Jet8Y3/o8OvHgkJ25cpxzPuEjTi4tv9ZMxDNqTeBTp7bpG6rDR7pGH4P
+	v/25D1OA+Fcjig2XLHI3ucOTDPUlQXUVYXiR3JpgmDqaPd1y+4I0Pws66eFmYsO+
+	tvRhdgeau+YG8UvOczp+FsP+nesCwsMF+VJGBcD0C56Dy33ssbYJ5vxchx1uVhu/
+	G/j0uA==
+Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43kty6r5ys-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 18 Dec 2024 09:44:07 +0000 (GMT)
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4BI9i7V7018468
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 18 Dec 2024 09:44:07 GMT
+Received: from [10.239.132.150] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 18 Dec
+ 2024 01:44:04 -0800
+Message-ID: <4b17cb4a-d4da-4328-8370-c2e4f17b4fd0@quicinc.com>
+Date: Wed, 18 Dec 2024 17:44:02 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -42,164 +65,82 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 2/2] coresight: Add label sysfs node support
-Content-Language: en-GB
-To: Mao Jinlong <quic_jinlmao@quicinc.com>, Mike Leach
- <mike.leach@linaro.org>, James Clark <james.clark@arm.com>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>,
- Mathieu Poirier <mathieu.poirier@linaro.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>
-Cc: coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-arm-msm@vger.kernel.org
-References: <20241217063324.33781-1-quic_jinlmao@quicinc.com>
- <20241217063324.33781-3-quic_jinlmao@quicinc.com>
-From: Suzuki K Poulose <suzuki.poulose@arm.com>
-In-Reply-To: <20241217063324.33781-3-quic_jinlmao@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Subject: Re: [PATCH] arm64: dts: qcom: Remove unused and undocumented
+ properties
+To: Rob Herring <robh@kernel.org>,
+        Konrad Dybcio
+	<konrad.dybcio@oss.qualcomm.com>
+CC: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio
+	<konradybcio@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        "Conor
+ Dooley" <conor+dt@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+References: <20241115193435.3618831-1-robh@kernel.org>
+ <68c079b0-defe-4cb0-9f6f-ce9e3645e2ba@oss.qualcomm.com>
+ <d3d9dd62-e0cb-4c12-91d1-17ae52688654@quicinc.com>
+ <2b866563-1328-484a-bfee-f41190ce856c@oss.qualcomm.com>
+ <CAL_JsqKZb6X+XVr+yWbzbi6FhgJkcd9k1ai=y6U4eujz4Tfqng@mail.gmail.com>
+From: "Aiqun Yu (Maria)" <quic_aiquny@quicinc.com>
+Content-Language: en-US
+In-Reply-To: <CAL_JsqKZb6X+XVr+yWbzbi6FhgJkcd9k1ai=y6U4eujz4Tfqng@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: fv0p72ktwOBQhqBtwL8A6IrSlIBuTMoH
+X-Proofpoint-GUID: fv0p72ktwOBQhqBtwL8A6IrSlIBuTMoH
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
+ mlxlogscore=999 lowpriorityscore=0 clxscore=1015 adultscore=0
+ priorityscore=1501 malwarescore=0 bulkscore=0 impostorscore=0 spamscore=0
+ mlxscore=0 phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2412180078
 
-On 17/12/2024 06:33, Mao Jinlong wrote:
-> For some coresight components like CTI and TPDM, there could be
-> numerous of them. From the node name, we can only get the type and
-> register address of the component. We can't identify the HW or the
-> system the component belongs to. Add label sysfs node support for
-> showing the intuitive name of the device.
+On 12/16/2024 10:00 PM, Rob Herring wrote:
+> On Mon, Dec 16, 2024 at 6:42 AM Konrad Dybcio
+> <konrad.dybcio@oss.qualcomm.com> wrote:
+>>
+>> On 16.12.2024 4:42 AM, Aiqun Yu (Maria) wrote:
+>>> On 11/16/2024 3:36 AM, Konrad Dybcio wrote:
+>>>> On 15.11.2024 8:34 PM, Rob Herring (Arm) wrote:
+>>>>> Remove properties which are both unused in the kernel and undocumented.
+>>>>> Most likely they are leftovers from downstream.
+>>>>>
+>>>>> Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
+>>>>> ---
+>>>>
+>>>> Funny, the sideinteraction compatible is undocumented and the touchscreen
+>>>> driver is not upstream
+>>>
+>>> Does the compatible also need to be fixed to "focaltech,ft8719"? Refer
+>>> to the info from [1].
+>>
+>> +Alexander, Caleb - would you like to look into this on axolotl?
+>>
+>>> Confirmed, the compatible "focaltech,fts8719" is not even in any merged
+>>> bindings or drivers. Instead, "focaltech,ft8719" is in the current
+>>> driver and bindings.
+>>>
+>>> By the way, I am curious about how Rob finds the unused properties.
+>>> Could you share some steps?
+>>
+>> make ARCH=arm64 LLVM=1 -j24 CHECK_DTBS=1 dtbs
+>>
+>> returns all kinds of errors, including "undocumented property"
 > 
-> Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
-> ---
->   .../testing/sysfs-bus-coresight-devices-cti   |  6 ++++
->   .../sysfs-bus-coresight-devices-funnel        |  6 ++++
->   .../testing/sysfs-bus-coresight-devices-tpdm  |  6 ++++
->   drivers/hwtracing/coresight/coresight-sysfs.c | 32 +++++++++++++++++++
->   4 files changed, 50 insertions(+)
+> This case however was a dtschema change I have not yet committed.
+> Plenty of other things to fix still with the above command though. :(
 
-Do you think we need to name the devices using the label ? Or is this 
-enough ?
+Thanks, Rob and Konrad, for the clarification. That answers my question
+about the intention behind the current change.
 
-Suzuki
-
-
-> 
-> diff --git a/Documentation/ABI/testing/sysfs-bus-coresight-devices-cti b/Documentation/ABI/testing/sysfs-bus-coresight-devices-cti
-> index bf2869c413e7..909670e0451a 100644
-> --- a/Documentation/ABI/testing/sysfs-bus-coresight-devices-cti
-> +++ b/Documentation/ABI/testing/sysfs-bus-coresight-devices-cti
-> @@ -239,3 +239,9 @@ Date:		March 2020
->   KernelVersion	5.7
->   Contact:	Mike Leach or Mathieu Poirier
->   Description:	(Write) Clear all channel / trigger programming.
-> +
-> +What:           /sys/bus/coresight/devices/<cti-name>/label
-> +Date:           Dec 2024
-> +KernelVersion   6.14
-> +Contact:        Mao Jinlong <quic_jinlmao@quicinc.com>
-> +Description:    (Read) Show hardware context information of device.
-> diff --git a/Documentation/ABI/testing/sysfs-bus-coresight-devices-funnel b/Documentation/ABI/testing/sysfs-bus-coresight-devices-funnel
-> index d75acda5e1b3..944aad879aeb 100644
-> --- a/Documentation/ABI/testing/sysfs-bus-coresight-devices-funnel
-> +++ b/Documentation/ABI/testing/sysfs-bus-coresight-devices-funnel
-> @@ -10,3 +10,9 @@ Date:		November 2014
->   KernelVersion:	3.19
->   Contact:	Mathieu Poirier <mathieu.poirier@linaro.org>
->   Description:	(RW) Defines input port priority order.
-> +
-> +What:           /sys/bus/coresight/devices/<memory_map>.funnel/label
-> +Date:           Dec 2024
-> +KernelVersion   6.14
-> +Contact:        Mao Jinlong <quic_jinlmao@quicinc.com>
-> +Description:    (Read) Show hardware context information of device.
-> diff --git a/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm b/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
-> index bf710ea6e0ef..309802246398 100644
-> --- a/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
-> +++ b/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
-> @@ -257,3 +257,9 @@ Contact:	Jinlong Mao (QUIC) <quic_jinlmao@quicinc.com>, Tao Zhang (QUIC) <quic_t
->   Description:
->   		(RW) Set/Get the MSR(mux select register) for the CMB subunit
->   		TPDM.
-> +
-> +What:           /sys/bus/coresight/devices/<tpdm-name>/label
-> +Date:           Dec 2024
-> +KernelVersion   6.14
-> +Contact:        Mao Jinlong <quic_jinlmao@quicinc.com>
-> +Description:    (Read) Show hardware context information of device.
-> diff --git a/drivers/hwtracing/coresight/coresight-sysfs.c b/drivers/hwtracing/coresight/coresight-sysfs.c
-> index a01c9e54e2ed..4af40cd7d75a 100644
-> --- a/drivers/hwtracing/coresight/coresight-sysfs.c
-> +++ b/drivers/hwtracing/coresight/coresight-sysfs.c
-> @@ -7,6 +7,7 @@
->   #include <linux/device.h>
->   #include <linux/idr.h>
->   #include <linux/kernel.h>
-> +#include <linux/property.h>
->   
->   #include "coresight-priv.h"
->   #include "coresight-trace-id.h"
-> @@ -366,18 +367,47 @@ static ssize_t enable_source_store(struct device *dev,
->   }
->   static DEVICE_ATTR_RW(enable_source);
->   
-> +static ssize_t label_show(struct device *dev,
-> +		struct device_attribute *attr, char *buf)
-> +{
-> +
-> +	const char *str;
-> +	int ret = 0;
-> +
-> +	ret = fwnode_property_read_string(dev_fwnode(dev), "label", &str);
-> +	if (ret == 0)
-> +		return scnprintf(buf, PAGE_SIZE, "%s\n", str);
-> +	else
-> +		return ret;
-> +}
-> +static DEVICE_ATTR_RO(label);
-> +
->   static struct attribute *coresight_sink_attrs[] = {
->   	&dev_attr_enable_sink.attr,
-> +	&dev_attr_label.attr,
->   	NULL,
->   };
->   ATTRIBUTE_GROUPS(coresight_sink);
->   
->   static struct attribute *coresight_source_attrs[] = {
->   	&dev_attr_enable_source.attr,
-> +	&dev_attr_label.attr,
->   	NULL,
->   };
->   ATTRIBUTE_GROUPS(coresight_source);
->   
-> +static struct attribute *coresight_link_attrs[] = {
-> +	&dev_attr_label.attr,
-> +	NULL,
-> +};
-> +ATTRIBUTE_GROUPS(coresight_link);
-> +
-> +static struct attribute *coresight_helper_attrs[] = {
-> +	&dev_attr_label.attr,
-> +	NULL,
-> +};
-> +ATTRIBUTE_GROUPS(coresight_helper);
-> +
->   const struct device_type coresight_dev_type[] = {
->   	[CORESIGHT_DEV_TYPE_SINK] = {
->   		.name = "sink",
-> @@ -385,6 +415,7 @@ const struct device_type coresight_dev_type[] = {
->   	},
->   	[CORESIGHT_DEV_TYPE_LINK] = {
->   		.name = "link",
-> +		.groups = coresight_link_groups,
->   	},
->   	[CORESIGHT_DEV_TYPE_LINKSINK] = {
->   		.name = "linksink",
-> @@ -396,6 +427,7 @@ const struct device_type coresight_dev_type[] = {
->   	},
->   	[CORESIGHT_DEV_TYPE_HELPER] = {
->   		.name = "helper",
-> +		.groups = coresight_helper_groups,
->   	}
->   };
->   /* Ensure the enum matches the names and groups */
-
+-- 
+Thx and BRs,
+Aiqun(Maria) Yu
 
