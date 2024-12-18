@@ -1,143 +1,198 @@
-Return-Path: <linux-arm-msm+bounces-42684-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-42685-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6E4C09F67FF
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Dec 2024 15:09:27 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 75CB99F685D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Dec 2024 15:26:57 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 4C6A77A032A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Dec 2024 14:09:21 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id EF2197A11B7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Dec 2024 14:26:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D4C051B0405;
-	Wed, 18 Dec 2024 14:09:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C77F61B423B;
+	Wed, 18 Dec 2024 14:26:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="pHinmipk"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="JNgQx+Xw"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pg1-f174.google.com (mail-pg1-f174.google.com [209.85.215.174])
+Received: from mail-vs1-f44.google.com (mail-vs1-f44.google.com [209.85.217.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F8CF15853C
-	for <linux-arm-msm@vger.kernel.org>; Wed, 18 Dec 2024 14:09:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D42591A23B6
+	for <linux-arm-msm@vger.kernel.org>; Wed, 18 Dec 2024 14:26:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734530958; cv=none; b=qs5NmG6fMveEX1hUMJvLTnBX0gZoF8+a7U48A6R5Op4Om8af0tVvIr1doZwmrMD3cXKBtp23BKvEvAovHLphjVQnDVRbp73E/AUD5FB8E0xNjmGj/27WCooeRY0m/qNHA6dMSHrrmEeGionxw9eu+AsS2fDg0tj1GWY4lrLQhz8=
+	t=1734531971; cv=none; b=aK1I2Z5uGnwc65ISUNRpU4Q39/V8/6nQp5VGx0cP5fTR4tMLLxjePheSCQdYjoKP4fdEa838XszgCQs0gSPWkLITSsfS9/Wm5gzsCjRrYT6RA6SRB+TY26bdIe26j2ao2UYtFYokdLXzesUDRxPS5rSIIKOtj6Msr7pMpskbGIY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734530958; c=relaxed/simple;
-	bh=ab/BzWY6jox/poZbbozr+CLHkFTcOIWwb6vP6tJ3K78=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=a/HPv7p+6xxvZZ/AZ/7UUicKTUU0xdQZ+ofBxPZ1ltkxQco2qhcPmcwFtVSHiGtJJBXOLK3h8P76QnJ/hv77ZLjHreDXGZSmIRXGrFv2p1RFi/hkPR7Qvjh2tbAbPBTPoywLi+v8sY/BpE3CRt+Giz+f1S/ajFZe+Ry9vNWP4No=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=pHinmipk; arc=none smtp.client-ip=209.85.215.174
+	s=arc-20240116; t=1734531971; c=relaxed/simple;
+	bh=oQJlOO10JOYWC6Lqu2aCp43hXfw4dXZVHbxIFY+FHmw=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=VikHVE51fHXi3+2BzqI8lVsTxg4JirtwcBwxLS6JZbrNOKxZKHqw+P2wRHxmm5oqo7+8fKGBPwY2qdT64jo2wRfiReDAs7l+Z037BOajCm3X24AKrGVpaleQeTLPgPGIRO0sqUyVMqVi2MtzYsMkgrrpze/w7yNl8imldsLMiqU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=JNgQx+Xw; arc=none smtp.client-ip=209.85.217.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pg1-f174.google.com with SMTP id 41be03b00d2f7-7ea9739647bso4001959a12.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Dec 2024 06:09:16 -0800 (PST)
+Received: by mail-vs1-f44.google.com with SMTP id ada2fe7eead31-4afdd15db60so1700724137.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Dec 2024 06:26:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1734530956; x=1735135756; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=X/Mv6Gl1ZnKmi5pkQYAmxfhejMR6LdMzdSDhbu9FQsw=;
-        b=pHinmipkL5SgPKohwvTbfU0SSvZ17ZSvEPmHI7AIObBcGxpmwVjkwyPkNMjqedeYmh
-         N0COgfCdg8yPEP0Q0Rat2T7mSYYFBS8FZ84arM51M8QAqHAcWyM7AUi61FIY51U5YOHr
-         jTvkuP+Gt9cGSLOw/JAF4UD3jWS3WXjPQGqoIlbGzMc3xsQTU/UqImr2bRixoM5qH6PS
-         MvoW9spsYan9G8FPVN6HAvj9iUmqL7E2UuEIYITWlcq8bYjp0Bh8m6ehi5UiljSf/22T
-         QT5kHXb7XrgpXPWjLqZ5GaWdsmegqsHrBPo4X1U65esUagT3sZ3lrIk0R2MFhfszkQ6f
-         ozWQ==
+        d=linaro.org; s=google; t=1734531968; x=1735136768; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=V5Wt61ODIx6B1h8kD4uZvow1+HXs8Ji77hcMjnjVf2M=;
+        b=JNgQx+Xwi30ipHNRO0o/3sy8m/P40ilWdgY6MPQq8SGphEOxSYVXkpjf4FaFeDIMqf
+         O+iH5r9GEH98cJ/aerepJ7667pa0EnQMjEz2Gi1714wXmJk96mL9ESE3Ca+Vwu0ziOLV
+         m6yY0d6c2w4D0STGR/2QNRmThTLEOeTrpAZKKbQI+D8FYscg+phaSjUmclaRMhNjMbxP
+         LDNNlx6MTBWeq7gQdDA6G6m1pUQjt4488q8k4OcXIfssdJp5i08bUQkE5DDMvQKyO1IR
+         tzwzGbK8LgekjdjGi9c97fmdxVQmuFfsiHwez4V8fk28tKF2FOm0ODFrOPGSMbFSKDdw
+         BZmQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734530956; x=1735135756;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=X/Mv6Gl1ZnKmi5pkQYAmxfhejMR6LdMzdSDhbu9FQsw=;
-        b=m28P8eIuAPGjVJyBo8/a5ix+9o6Iy/np79vlPc4eyZ+9a6xu7CvUXttjx0mr77+TEK
-         q/r3NMMy3gXwr9KcP041nq0I9ap9obeBBKbz3OafEMv+TMin2iyGkkuYNCf8+9ymVdmn
-         jow8/nGsXkvxUVcJmxR9SHyQbGH204MKdUMegnP0fJs3z6LWbjCzdEAHdKZ4tWXbgKGN
-         M9RAnkE9pCgaEznmqe0lvO0yeu6yfbNxWBCNZb4Z7a+4fXJDzH27j/miUF/Xl2A0S3EP
-         Ue9jbCgnLHTX2ndGZZ2m9BCpvZqNEdvPRpyue960AtDh/DWQBGnOfZEGzgNcfVAPNZB5
-         vHoA==
-X-Forwarded-Encrypted: i=1; AJvYcCUN1+SPqUK8LBH++yzk/5P3Dt+QHIHfmFI6tZpWfztM6O4PghgbufQOZGi46BSovAaS9J1KoOx+nvBwzfcR@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy+06+pTiz+PmruhHNVOXmCd4wJILK6HQ9aJxmvhEmV2RWX9qlQ
-	wHg4PiWQ2jc3tADH66dwHLy8kKmw/IxVWX9fk3pAriulq0O6rH+Cdi48bIc/EA==
-X-Gm-Gg: ASbGncv4aC2cyBhwT/mqgSVPkcrcfIKfRlRogIvQv1dJ1ERktkYFGa+hyEmABLxTGR9
-	zEYRgqV7NtacUP9y025XC3HIfMtOuWvWDP4TMNCV1cQlJc2sw2/4PdZ4LWbKbt9Uhmfymtk1u1N
-	onqZhqaKpfQnuiceuX+ZHcpt5BYKXcuD6NGCha3e0FgW+/wMic2NKvCoQaa22zPS303TC6ELVeW
-	9o6OkdE2N129eC2z4PeOknsoJjvwC0C5HMYCzLAN+t6BB9jYR+fV1yYzfeOY45/NPWK
-X-Google-Smtp-Source: AGHT+IH5xzquXkfFb3lF+nm5lz7tueo/hHvx4LOhJ/KLOsglCvaRpW0x6iDimmd/UdbW7dAmaOMPGQ==
-X-Received: by 2002:a17:90b:3508:b0:2ea:2a8d:dd2a with SMTP id 98e67ed59e1d1-2f2e935559cmr4099678a91.27.1734530956490;
-        Wed, 18 Dec 2024 06:09:16 -0800 (PST)
-Received: from thinkpad ([117.213.97.217])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2f2eda27344sm1446032a91.34.2024.12.18.06.09.14
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 18 Dec 2024 06:09:16 -0800 (PST)
-Date: Wed, 18 Dec 2024 19:39:10 +0530
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: Johan Hovold <johan@kernel.org>
-Cc: mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Loic Poulain <loic.poulain@linaro.org>
-Subject: Re: mhi resume failure on reboot with 6.13-rc2
-Message-ID: <20241218140910.ysovysnvns26vbmd@thinkpad>
-References: <20241211145315.vaf7gbapieywcvau@thinkpad>
- <Z1mp3_ArzL-GLr3D@hovoldconsulting.com>
- <20241216074021.kwoid2747o7piquv@thinkpad>
- <Z2ApCU3DAxKS7Y9k@hovoldconsulting.com>
- <20241216141303.2zr5klbgua55agkx@thinkpad>
- <Z2KKjWY2mPen6GPL@hovoldconsulting.com>
- <20241218113830.efflnkxz7qu24xux@thinkpad>
- <Z2K53-As8w4IH06U@hovoldconsulting.com>
- <20241218123019.py57s4r3takm2fs6@thinkpad>
- <Z2LUNo--8YpLO6kD@hovoldconsulting.com>
+        d=1e100.net; s=20230601; t=1734531968; x=1735136768;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=V5Wt61ODIx6B1h8kD4uZvow1+HXs8Ji77hcMjnjVf2M=;
+        b=jMhrrj4wnfsOgK5X/ALpFwpA6fxvxzjoVjrc7tt230r1OTWFAS92JJsyEBrw1IurRc
+         jojX8E4zKynITZ+s5ZUTAsJtGf/rUxN1RkgVpvAzCCXHpj9nApLjEJZjvs7fPEb5wdLv
+         XadtnQQb0WtrbRg9PC5nmHYodwn4S59rt44Uspt63e3wblcxha8RTMUW7c6iRMsZhjLN
+         us3gYrC9yNo5TOmllu7/2+8LZubN349dS8kp4djeB56kUxJ7Bk97v3e97jImS9IvwHI2
+         ZdgtWQVrgSv7+F8TDrmie2JAQz5a7iEejgcJVdVcJaLIVofYzcAjDCu+wKiDnKYTEFM+
+         myKA==
+X-Forwarded-Encrypted: i=1; AJvYcCUwOGcPoxelSNJ/O/i3kQd2nMyZcLf9StNn7fYfnX4nsvpzO19zpZYa+R9TmiqoMddntttZ80e+1OkXQsC0@vger.kernel.org
+X-Gm-Message-State: AOJu0YyjXWbV9iDED4/wDk8PWnuibJEMvtVZOsI+czPMB4ZiyXn/CsrZ
+	2cmnjCanD6M/h6fUbPPTDX5pFikTe5ck5c0LeJDZ+9Awotwe+KIDlHT89glpPFIOVSjCmvQxPqe
+	OSRsbGo8Ixw7XhqjE6fSGSl34L5OjkNIcZgKqrg==
+X-Gm-Gg: ASbGnct7QPscOszs/oG4VTzXTd9b1pctAjUJYc4yIiJKQNhg2eU1dO9f4gOv1L2qG2T
+	wEVz4J2I5H4JA5M/TJxRTCmVd/wH8P+qbQRRPYn0=
+X-Google-Smtp-Source: AGHT+IHhXmp1oLpn05T1jwNDGZudSP2TrdWjhIpZLR5npDAeXO5zpJZTGOUCB/SClyyeCwmKQYes1CtcAvHgcT0VH0A=
+X-Received: by 2002:a05:6102:8001:b0:4b0:4d6:bff1 with SMTP id
+ ada2fe7eead31-4b2ae7824ecmr2291144137.14.1734531966256; Wed, 18 Dec 2024
+ 06:26:06 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <Z2LUNo--8YpLO6kD@hovoldconsulting.com>
+References: <20241202-qcom-tee-using-tee-ss-without-mem-obj-v1-0-f502ef01e016@quicinc.com>
+In-Reply-To: <20241202-qcom-tee-using-tee-ss-without-mem-obj-v1-0-f502ef01e016@quicinc.com>
+From: Sumit Garg <sumit.garg@linaro.org>
+Date: Wed, 18 Dec 2024 19:55:55 +0530
+Message-ID: <CAFA6WYMbDExfCD4PAPQCF1HKKxjDH5FcLpnnBBrwayCiY0SkTg@mail.gmail.com>
+Subject: Re: [PATCH 00/10] Trusted Execution Environment (TEE) driver for
+ Qualcomm TEE (QTEE)
+To: Amirreza Zarrabi <quic_azarrabi@quicinc.com>
+Cc: Jens Wiklander <jens.wiklander@linaro.org>, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, 
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>, linux-arm-msm@vger.kernel.org, 
+	op-tee@lists.trustedfirmware.org, linux-kernel@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-doc@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Wed, Dec 18, 2024 at 02:55:02PM +0100, Johan Hovold wrote:
-> On Wed, Dec 18, 2024 at 06:00:19PM +0530, Manivannan Sadhasivam wrote:
-> > On Wed, Dec 18, 2024 at 01:02:39PM +0100, Johan Hovold wrote:
-> > > On Wed, Dec 18, 2024 at 05:08:30PM +0530, Manivannan Sadhasivam wrote:
-> > > > On Wed, Dec 18, 2024 at 09:40:45AM +0100, Johan Hovold wrote:
-> > > 
-> > > > > I've tracked down the hang to a deadlock on the parent device lock.
-> > > > > 
-> > > > > Driver core takes the parent device lock before calling shutdown(), and
-> > > > > then mhi_pci_shutdown() waits indefinitely for the recovery thread to
-> > > > > finish.
-> > > 
-> > > > Thanks for tracking the deadlock. I think we should use pci_try_reset_function()
-> > > > instead of pci_reset_function() in mhi_pci_recovery_work().
-> > > > 
-> > > > If the pci_dev_lock() is already taken, it will return with -EAGAIN and we do
-> > > > not need to worry in that case since the host is going to be powered off anyway
-> > > > (and so the device).
-> > > 
-> > > That may work. But note that I've now also seen this deadlock during
-> > > suspend (i.e. when the device is not going away). The
-> > > pci_try_reset_function() should avoid the deadlock here too, but we'll
-> > > end up in funny state.
-> > 
-> > Hopefully, recovery_work() started by mhi_pci_runtime_resume() would be able to
-> > reset the device.
-> 
-> But that's not going to happen as that reset is what is currently
-> causing the deadlock and which would simply be skipped if you switch to
-> pci_try_reset_function().
-> 
+Hi Amirreza,
 
-mhi_pci_runtime_resume() will queue the recovery_work() and return. So I was
-hoping that by the time pci_try_reset_function() is called, the lock would be
-available.
+On Tue, 3 Dec 2024 at 09:50, Amirreza Zarrabi <quic_azarrabi@quicinc.com> wrote:
+>
+> This patch series introduces a Trusted Execution Environment (TEE)
+> driver for Qualcomm TEE (QTEE). QTEE enables Trusted Applications (TAs)
+> and services to run securely. It uses an object-based interface, where
+> each service is an object with sets of operations. Clients can invoke
+> these operations on objects, which can generate results, including other
+> objects. For example, an object can load a TA and return another object
+> that represents the loaded TA, allowing access to its services.
+>
+> Kernel and userspace services are also available to QTEE through a
+> similar approach. QTEE makes callback requests that are converted into
+> object invocations. These objects can represent services within the
+> kernel or userspace process.
+>
+> Note: This patch series focuses on QTEE objects and userspace services.
+>
+> Linux already provides a TEE subsystem, which is described in [1]. The
+> tee subsystem provides a generic ioctl interface, TEE_IOC_INVOKE, which
+> can be used by userspace to talk to a TEE backend driver. We extend the
+> Linux TEE subsystem to understand object parameters and an ioctl call so
+> client can invoke objects in QTEE:
+>
+>   - TEE_IOCTL_PARAM_ATTR_TYPE_OBJREF_*
+>   - TEE_IOC_OBJECT_INVOKE
+>
 
-- Mani
+Thanks for proposing to extend the TEE subsystem. However, I couldn't
+see any user-space library or test application(s) to test this new
+IOCTL. Say for example how will someone with a board based on sm8650
+will be able to test the QTEE interface? IIRC, last time we agreed off
+list that you will be pushing that alongside this patch-set.
 
--- 
-மணிவண்ணன் சதாசிவம்
+-Sumit
+
+> The existing ioctl calls TEE_IOC_SUPPL_RECV and TEE_IOC_SUPPL_SEND are
+> used for invoking services in the userspace process by QTEE.
+>
+> The TEE backend driver uses the QTEE Transport Message to communicate
+> with QTEE. Interactions through the object INVOKE interface are
+> translated into QTEE messages. Likewise, object invocations from QTEE
+> for userspace objects are converted into SEND/RECV ioctl calls to
+> supplicants.
+>
+> The details of QTEE Transport Message to communicate with QTEE is
+> available in [PATCH 10/10] Documentation: tee: Add Qualcomm TEE driver.
+>
+> This patch series has been tested for basic QTEE object invocations and
+> callback requests, including loading a TA and requesting services form
+> the TA. However, the test platform is currently being prepared for
+> upstream availability and will soon be accessible to the community for
+> further validation. I will share updates as the platform become
+> available.
+>
+> [1] https://www.kernel.org/doc/Documentation/tee.txt
+>
+> Signed-off-by: Amirreza Zarrabi <quic_azarrabi@quicinc.com>
+> ---
+> Amirreza Zarrabi (10):
+>       tee: allow a driver to allocate a tee_device without a pool
+>       tee: add TEE_IOCTL_PARAM_ATTR_TYPE_MEMBUF
+>       tee: add TEE_IOCTL_PARAM_ATTR_TYPE_OBJREF
+>       firmware: qcom: scm: add support for object invocation
+>       qcomtee: implement object invoke support
+>       qcomtee: add primordial object
+>       dt-bindings: arm: qcomtee: add QTEE driver devicetree binding for TEE subsystem
+>       tee: add Qualcomm TEE driver
+>       arm64: dts: qcom: sm8650: add support for QTEE
+>       Documentation: tee: Add Qualcomm TEE driver
+>
+>  .../devicetree/bindings/arm/firmware/qcom,tee.yaml |  34 +
+>  Documentation/tee/index.rst                        |   1 +
+>  Documentation/tee/qtee.rst                         | 143 ++++
+>  arch/arm64/boot/dts/qcom/sm8650.dtsi               |   4 +
+>  drivers/firmware/qcom/qcom_scm.c                   |  60 ++
+>  drivers/firmware/qcom/qcom_scm.h                   |   7 +
+>  drivers/tee/Kconfig                                |   1 +
+>  drivers/tee/Makefile                               |   1 +
+>  drivers/tee/qcomtee/Kconfig                        |  10 +
+>  drivers/tee/qcomtee/Makefile                       |   9 +
+>  drivers/tee/qcomtee/async.c                        | 153 ++++
+>  drivers/tee/qcomtee/call.c                         | 707 ++++++++++++++++
+>  drivers/tee/qcomtee/core.c                         | 942 +++++++++++++++++++++
+>  drivers/tee/qcomtee/primordial_obj.c               |  63 ++
+>  drivers/tee/qcomtee/qcom_scm.c                     |  36 +
+>  drivers/tee/qcomtee/qcomtee_msg.h                  | 217 +++++
+>  drivers/tee/qcomtee/qcomtee_private.h              | 218 +++++
+>  drivers/tee/qcomtee/release.c                      |  66 ++
+>  drivers/tee/qcomtee/user_obj.c                     | 625 ++++++++++++++
+>  drivers/tee/tee_core.c                             | 113 ++-
+>  include/linux/firmware/qcom/qcom_scm.h             |   9 +
+>  include/linux/firmware/qcom/qcom_tee.h             | 284 +++++++
+>  include/linux/tee_core.h                           |   4 +
+>  include/linux/tee_drv.h                            |  12 +
+>  include/uapi/linux/tee.h                           |  54 +-
+>  25 files changed, 3765 insertions(+), 8 deletions(-)
+> ---
+> base-commit: f486c8aa16b8172f63bddc70116a0c897a7f3f02
+> change-id: 20241202-qcom-tee-using-tee-ss-without-mem-obj-362c66340527
+>
+> Best regards,
+> --
+> Amirreza Zarrabi <quic_azarrabi@quicinc.com>
+>
 
