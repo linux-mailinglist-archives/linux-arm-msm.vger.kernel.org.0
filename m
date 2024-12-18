@@ -1,132 +1,110 @@
-Return-Path: <linux-arm-msm+bounces-42606-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-42607-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id AB5339F5E73
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Dec 2024 07:10:18 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5D21D9F5E76
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Dec 2024 07:12:31 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8A731188977B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Dec 2024 06:10:19 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9C5F016B881
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Dec 2024 06:12:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 049C115539A;
-	Wed, 18 Dec 2024 06:10:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 601E115539A;
+	Wed, 18 Dec 2024 06:12:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="RtqJrMMr"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="gZf+BsCE"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 086EC13BAEE;
-	Wed, 18 Dec 2024 06:10:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4A3C1531E2;
+	Wed, 18 Dec 2024 06:12:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734502211; cv=none; b=YnymmSIeOJs41J7KlXMl6CWv78OvYM+PQEF0ItKfaxDqTbhSxmjqa2fYlzPry/iytfSMij3aqrJDBZXr/5PnBk9EOx90eO84Lf6TotFlDFbynibByhq1m9KDvTBDeULHrLFuava0hQ0/xPVrInohUnAt+Vh9aHxeQVyOr3PoILs=
+	t=1734502344; cv=none; b=e+Z4DFTUHTN5XVFML9yJZpnWPDrWnMOl189mn29DwJoDiWdl9SYoevf51eAP8q9c2YOrBTXd2fFqzzDurJvFFGwqPf/XJzKyKqgmlHhZQlq+PoUVB7Zh5YKWegk0NUPL3xLD+ofB+vs1Y5JhRW+xu+kb+TuXDNNNVT43qBWsEnI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734502211; c=relaxed/simple;
-	bh=Sbr5u6zG/rY9yVsxzYw6oU+8eUVqBaBcnXVCmBuMOCs=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=AE4CeIS0CEgk5CigiezkBpliutoHvO+F7+BeGtRlVK4dSTclnUvLCQNbo9TYpbqKOg/0d8qIlyESNIPGHdYzwr3HMAR6auUjd7R9a2Z5KnLz/brKZmtLE4Z7NqaHonV43c7ipWAIVhNtjqWW5wnUgApVFlMJ1faEmVZeD1S6h2s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=RtqJrMMr; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1734502344; c=relaxed/simple;
+	bh=RgAYK47uqxTVpW1woiu3TRxS30EKFiMnkAbdmC5cttU=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=A7NW6DZjNEXEn2r0WP4ZUUBbaQ5Sezz8xYlp2tbOLrtP+HmAStrORTsT+MMG56fMDX4n4dYcOCLAxhT9lFLT6RqoySvQTjdzMdukHQvoGnWHfPUsQ+INwy5WQqWcLZx+WKlDCsnaClEA8NVljqrK1h8qTrFa5xc6xLGBUejMWbc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=gZf+BsCE; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BI4rbo8000558;
-	Wed, 18 Dec 2024 06:10:04 GMT
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BHKrXZD013626;
+	Wed, 18 Dec 2024 06:12:20 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	nFMIsQIrpJjV3q83MpFde18Gx2MP/KDbDHgu9L+PDjs=; b=RtqJrMMrJD8jQHHt
-	Jd0Hy8LjpaHhmFCF+Hm+a4Xt4+Jd+QkK/LkUyGWBMwLeYrgLON3Cf89Xok27diII
-	4Q7C/t/J+/jEVB9KZFImEcPj2qW94NtVIhlsjr0pV1E073xdIXShkCKLG0Ha9qBo
-	+ViKTJhBWQS3tfzJHYjJ7/ksoyTtoysIU4k7BRzCK1uNUQMEA3wjt6edUAZWvgap
-	GzGayhku1vbjqVHuQ1EHpog5E+EcmpwnJw0UpgJpDlI82Ryvc7P/wQxyoeaGJzEY
-	DBgEzn0BvYd0ehywm40NtUM3AZJe+iQXCJEnhjCFMIFL9T7wZ7CNQHhmNQPFqRcX
-	g/gqWg==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43kqs3g4pf-1
+	cc:content-type:date:from:message-id:mime-version:subject:to; s=
+	qcppdkim1; bh=gFihPdfA1m0jqpMuemrCpyZt8YsBJ4lR/8NI2zC6vts=; b=gZ
+	f+BsCEHShdm6FD8i/iNoAGd8/1f0zU/2002+474p81Goe1NaCaZRMeDltcLjqGdH
+	tdN2c07MPNkUG1CXZsmtxBN7rMSWwAWNP8ne3f/PmnTNUBsjyLnMM38pMqAzLmgt
+	sWOHFDnLIhm8YkOuB3HJyj+TPZLB5Qraxh4rTuu14xjfjIb3mckuuOZsZa/Z9SQW
+	HpSYFVZOgmkaLs/nXTL2ko/JnK2mBvf7KoL8By8MIpHHygNaVnPyoLNVUbZZrdlW
+	5La0YjxpxLtwCDJ+/OHhanIjB8mAYSJjRwqV/bgCsQmg5hwH3itdXP1txNP6xmSv
+	CkmjA7zxQ/hzHEz2eBcg==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43kgr111sv-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 18 Dec 2024 06:10:04 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4BI6A3xr025962
+	Wed, 18 Dec 2024 06:12:20 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4BI6CJT9011679
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 18 Dec 2024 06:10:03 GMT
-Received: from [10.231.216.103] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 17 Dec
- 2024 22:09:59 -0800
-Message-ID: <0adb64e9-2394-4057-bd75-0ce83158550f@quicinc.com>
-Date: Wed, 18 Dec 2024 14:09:57 +0800
+	Wed, 18 Dec 2024 06:12:19 GMT
+Received: from hu-sachgupt-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Tue, 17 Dec 2024 22:12:15 -0800
+From: Sachin Gupta <quic_sachgupt@quicinc.com>
+To: Adrian Hunter <adrian.hunter@intel.com>,
+        Ulf Hansson
+	<ulf.hansson@linaro.org>
+CC: <linux-mmc@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <quic_cang@quicinc.com>,
+        <quic_nguyenb@quicinc.com>, <quic_bhaskarv@quicinc.com>,
+        <quic_mapa@quicinc.com>, <quic_narepall@quicinc.com>,
+        <quic_nitirawa@quicinc.com>, <quic_rampraka@quicinc.com>,
+        <quic_sachgupt@quicinc.com>, <quic_sartgarg@quicinc.com>
+Subject: [PATCH 0/2] mmc: sdhci-msm: Rectify DLL programming sequence for SDCC
+Date: Wed, 18 Dec 2024 11:41:58 +0530
+Message-ID: <20241218061200.3362-1-quic_sachgupt@quicinc.com>
+X-Mailer: git-send-email 2.17.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 3/4] arm64: dts: qcom: qcs615: add venus node
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Stanimir Varbanov
-	<stanimir.k.varbanov@gmail.com>,
-        Vikash Garodia <quic_vgarodia@quicinc.com>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konradybcio@kernel.org>
-CC: <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        "Stanimir
- Varbanov" <stanimir.varbanov@linaro.org>
-References: <20241217-add-venus-for-qcs615-v5-0-747395d9e630@quicinc.com>
- <20241217-add-venus-for-qcs615-v5-3-747395d9e630@quicinc.com>
- <83fcb683-d610-4e47-bcce-128453a0afef@linaro.org>
- <3cb0d715-3756-4cef-bcc0-3bb550811c73@quicinc.com>
- <236d41cf-ddc7-46e9-91b2-190c165461b2@linaro.org>
-Content-Language: en-US
-From: Renjiang Han <quic_renjiang@quicinc.com>
-In-Reply-To: <236d41cf-ddc7-46e9-91b2-190c165461b2@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: t78QPXo6DW55NngLHi5LI5OjjLKz8cwd
-X-Proofpoint-GUID: t78QPXo6DW55NngLHi5LI5OjjLKz8cwd
+X-Proofpoint-GUID: e3QWlPSbZI07A1clAY0IKzV2fu3L8aQP
+X-Proofpoint-ORIG-GUID: e3QWlPSbZI07A1clAY0IKzV2fu3L8aQP
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
- mlxlogscore=870 bulkscore=0 mlxscore=0 spamscore=0 lowpriorityscore=0
- adultscore=0 impostorscore=0 malwarescore=0 priorityscore=1501
- clxscore=1015 phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2412180047
+ lowpriorityscore=0 malwarescore=0 mlxlogscore=834 clxscore=1015
+ priorityscore=1501 mlxscore=0 spamscore=0 bulkscore=0 adultscore=0
+ phishscore=0 impostorscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2411120000 definitions=main-2412180048
 
+With the current DLL sequence stability issues are seen in
+HS400 and HS200 mode for data transfers.
 
-On 12/17/2024 7:01 PM, Bryan O'Donoghue wrote:
-> On 17/12/2024 09:54, Renjiang Han wrote:
->>
->>   I think when your change review passes, we only need to remove the
->>
->>   video-decoder and video-encoder nodes in the device tree.
->
-> Yes but the _point_ is we shouldn't be adding in driver configuration 
-> to dts.
->
-> Which means I don't think your patch can be applied until we resolve 
-> in impasse in venus.
->
-> ---
-> bod
-OK! Thanks. I'll try this patch with your patch and update it with next 
-patch version.
+Rectify the DLL programming sequence as per latest hardware
+programming guide and also incorporate support for HS200 and
+HS400 DLL settings using the device tree.
+
+Sachin Gupta (2):
+  mmc: sdhci-msm: Move core_major and core_minor to msm_host structure
+  mmc: sdhci-msm: Rectify DLL programming sequence for SDCC
+
+ drivers/mmc/host/sdhci-msm.c | 378 +++++++++++++++++++++++++++++++++--
+ 1 file changed, 359 insertions(+), 19 deletions(-)
 
 -- 
-Best Regards,
-Renjiang
+2.17.1
 
 
