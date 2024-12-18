@@ -1,135 +1,141 @@
-Return-Path: <linux-arm-msm+bounces-42677-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-42678-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id A72F29F65C5
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Dec 2024 13:20:56 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 5BAAB9F65EB
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Dec 2024 13:30:30 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 18AA416A1C1
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Dec 2024 12:20:53 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id AA89C168B17
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Dec 2024 12:30:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 23E051A23B7;
-	Wed, 18 Dec 2024 12:18:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BB1D61A23B6;
+	Wed, 18 Dec 2024 12:30:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="qssT0F6I"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="zDktpP0G"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
+Received: from mail-pf1-f169.google.com (mail-pf1-f169.google.com [209.85.210.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6955619F111
-	for <linux-arm-msm@vger.kernel.org>; Wed, 18 Dec 2024 12:18:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C7A219995D
+	for <linux-arm-msm@vger.kernel.org>; Wed, 18 Dec 2024 12:30:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734524322; cv=none; b=IwS1ezlBJE+aecUvXYtK+T7FJbSGvf7lGQ7rLNJ3DRril+88aeZLnVWd/nkyQNt2u0HRSvuSGgw8HQaUxRjOe1KXYM41NUivYAVsRjQ/HaBjCkv91jWfWRZ+PqXLTms0c8ziARNHSB9QZoadlf4k7UQGh0Zwv5uajilYZx4WPPE=
+	t=1734525028; cv=none; b=UGCbxBphcPyCeR2Sbp5WatI8k/sPpHTnvvsKVo5x4wdSXywEF3SoJkx/DmvmGrhKF1aBM/XtX8p0MZlJ+/tfIj4wFzzr91ffYs04xvCIyV0MeY6O+MI5ki/bG1kI2+OMBZzBMmaJ2W+H+v3p4qP0vC3UKovX5pRNKV4rhorKvGg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734524322; c=relaxed/simple;
-	bh=DxkvBZJ9a+tzEif7MWgdulVGEFYgbAwj69xF2eda1cM=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=U/gJ+T65FFSFhe1R0nazXmA+QD5Llswrnu4ceycf33SeJ8WtE8oDRxW1n8R1epNxfcYlF7HHU1+Kaqg9rb6NmDw/Clb0Nx1MQVVIM3BWZgYOfWtOqUJOLRL4xCBOFYNWWCeTzcoKekHwIVMCGggw/ewPRxVMqIOPHEm+TadRVpM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=qssT0F6I; arc=none smtp.client-ip=209.85.128.51
+	s=arc-20240116; t=1734525028; c=relaxed/simple;
+	bh=sIokGkGvk5wEoau7cfzmPpCeUIVZzmYqS6W9pDT1pms=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=b3BOwAB5Hzwj534fVd3+YNGJoSVTfgtXTqqc4SeMYO30yFx1n7B+CIJPmh8xV+5/aT/pueWk+1BagPQuGdPFcDcTyedmeRHU+HhBcD0sSlS2440L7dDChsJ4n/zJGbh3/9eNuxFU36GlHTE5zuhzPzJMFQaVZmDshAbGm4zakZ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=zDktpP0G; arc=none smtp.client-ip=209.85.210.169
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-4361815b96cso42817725e9.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Dec 2024 04:18:40 -0800 (PST)
+Received: by mail-pf1-f169.google.com with SMTP id d2e1a72fcca58-728ea1573c0so5576807b3a.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Dec 2024 04:30:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1734524319; x=1735129119; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
+        d=linaro.org; s=google; t=1734525026; x=1735129826; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=8iGiz2wtN6cQxaer0WsA2mvybwMcelhlrvEDD3oLxkQ=;
-        b=qssT0F6INhosQsbD7MARu9KvBfgmxPvXA6a6WW9FaM/iC5OLhPv4dxyDWHalUd1Gdf
-         09j7GckkBdld+GS97P9eylK1Qsab4KmafLu3SLgGGVN+eF10zpfF08JcgezynMfNuHsM
-         je88i70P7OJY0BkHoqiH7uY+pGDwBUlQRXHVc75xhgIrv4rMFFW2KgaEpdyrMdcRRoVk
-         3yrU4LJr7OQ18Hufcb/UvZYcVXmx+vuU/Hj8k9BI22tTmgS+VaXb2IIcdGl74XIT7TOt
-         5x9X48kXvodCQCe91SRhnMjtJanLx57YO/GRJSWafg0kfTcDm+pQJV8UL27VF4mHdYUy
-         y+NA==
+        bh=6F5mcTldZa7iY872IZQ2vfT0jCbEuXcj2mSPu9gsXzc=;
+        b=zDktpP0Go5OVh4src2sJrpL5ub+hg6myILqxFYWCRCVRXH9QIIvuyHMUKearGGjuke
+         Ynj25rhN8dp0yR9eDkcFX8w7DlohUBsjGFnZJLC3ie4xfAmCkJtr2+JQOBZj04vKNC0+
+         P7vAPGpHHfBhsAlC0vfx37i4P17dZAbHum6LADDljKbjx2LpsYVC7EwTWPXVgvg43xBZ
+         vMPPCaxy+V/9F6b3ju10SLKWeYFoRmVthOpcm+JJkd2IHp/FOYr7jAWZF9qUgynuxAun
+         gE6i8xWkR6YNrm6arMNWJQQ1SlmvifRaDGsBM5jbKMmp0GAs3OIwHnAvwBP88nfFaXuP
+         t5yQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734524319; x=1735129119;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:from:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20230601; t=1734525026; x=1735129826;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=8iGiz2wtN6cQxaer0WsA2mvybwMcelhlrvEDD3oLxkQ=;
-        b=qq5vI/SDhk/HPEFma556zxx8Zlxf5eHxhaYiDuS7ge6bzjZF1XeeOSscEwCZS8uUAX
-         fdven3rQaOgdV8uZ8XoWwAGfZoBr2T936l/AvZNQDGTA1ca4Ntfo/R3pLwRIbbezVX+p
-         GYH2hZ3II3Mi+k4XZ3TH0gopApKUG5U/IncmVGLXfEfVR1106XAOpVIrfB+FYGFCMlS8
-         UVo15qCnGU/QYanQtBkx8ZF8r2biLhezPhDJGTEk9qPy+YiDSGYFEWQgNNwYKLULReXN
-         PQqdm1juAAiqye6F5sZJPEgAngDPinss0uYhTUPMhqM07fLEIsaeZaldhlnfh4us41Op
-         2VpQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXcddcIyGdC0DdFHEqJ7ttCD8UDQwmE1AO6SSTWPYSSlxZEtVmkNeOSupTO/rUao/V+iXemVDZ9IoVNucvV@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz/nBLfHDZ/ES0ZYIAdW7ExhYZ07TK0jNEXPNyNJnpUOPvqoa1V
-	IjfvCOOYgce30vNSGcqfLjCk8SX5FgQj0+3G+jbdHS2ku9hrVgCUlmqrjovGyKc=
-X-Gm-Gg: ASbGncuQubE31muS/j6EDrO0xt/OJs3yYVKQomSTZT+0p9BZEF1H6eRByU/47EJ4jtM
-	+gFmDu9AO1jNs5qUB44xlBPSNVjhmnysKDn375Q//xfDfsu3tnwMPRRoDNN1OVvtYYrE8C2+vgZ
-	yO9qJwCLsubmwveVxWR04HNUlAE6kmyb1tKKZhxcBE4NyA3sjjRzCqGdsl9MgYwv8y3GVZ6hOnZ
-	OEw29JKiCWaM+zFU5fuy5oF57RhuMLtiXCqqWIZNFyeKW0y7FnOmU8p7eGEdROzjGG2sg==
-X-Google-Smtp-Source: AGHT+IEcMnXSi7UDywqFLxWjgZ5pGPzgn8E2LkOV2zMI5Kyif7I2RM5iM7av/dsEhBaDUJWGgdltzQ==
-X-Received: by 2002:a05:600c:1c0d:b0:434:a4fe:cd71 with SMTP id 5b1f17b1804b1-43655360de5mr23073915e9.12.1734524318825;
-        Wed, 18 Dec 2024 04:18:38 -0800 (PST)
-Received: from [192.168.0.40] ([176.61.106.227])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-388c8061038sm13761708f8f.104.2024.12.18.04.18.37
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 18 Dec 2024 04:18:38 -0800 (PST)
-Message-ID: <f7bccde8-80d9-4be7-b280-7d171059b4b4@linaro.org>
-Date: Wed, 18 Dec 2024 12:18:37 +0000
+        bh=6F5mcTldZa7iY872IZQ2vfT0jCbEuXcj2mSPu9gsXzc=;
+        b=ZZOeBnZTr6+enip+kyPNCHqxaqMD9T6ttmoLlYHx/+2yfqiqupADI4RQPlzRWfCFBE
+         nFlckfkKJ3TtH/1MfYFUscnIzI9AbLIOUgh0eQ1BLKmnTTmh5EWL1Cx65NNDrQ7KyioG
+         pUBTsABXHjoAX0JcH7Q7lGEZF5S32rqO6A63AmGFHPMfsWPEmTfWKYmpJ72Ax2aoirpq
+         YxcSW9noCOtxC7ZdX2hQCQbRqKFD0NZ+njdQsBjtYDbXnB4tPS/IeMAN6lpaSVEMTQkb
+         d3paq++IUn41VlmyAESXCLCR6rseyh6T/qhb0xL9imlRvr+3B7eueXIZbKekkun7YxWB
+         5LhQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWux7acv8oHHbxX6DBN5hhJe372TLHDc8SJ2fN0jCMgvxdEOk4pVQaTVs2Fp7DaebIS3xj9kmpKfXEvJeG7@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz8t2etElrSw5vSmisSXIgqeZbsIxe04npnjLd2ZS+kTWpDBFk8
+	P0GH/3PzVCQkBdbuql76fa/tOjWfci72sAhU2iWyTRgq9h9sKs6RbgiiCsGtrQ==
+X-Gm-Gg: ASbGncspop1EtCOJ+Xvt1JkT3RHu86k2wIIHqLs579IHX1luSkEsh03zq2I0dIEsU5k
+	qIITCWhaCokYDOzwZSjCUuMwVdN4e4kLJIEOh99bEyUv6d97+fr61Vzyme/VdRAzV/c7o8kDuDC
+	ESUrNrhWBHi86jgWYlmAvQJrl27Y5+sl33bjv3zLN5YFHJ71PZlpaBFcExE6jtBijJZtIPmi8IW
+	vluMS9fPGgi916HlzxMMqmI2+OldKn3UKt5WGC5WECBsAphkQdF8KyYx8VzMqRyjRHG
+X-Google-Smtp-Source: AGHT+IEVCTF8u4ejkks/VblnJMBrY/RN2wVeVg8W2IFUErI8HUe0PMrVjMwp1C2jnmKDGR2tk1cBMA==
+X-Received: by 2002:a05:6a00:180b:b0:728:e27c:a9bc with SMTP id d2e1a72fcca58-72a8d237723mr3199997b3a.7.1734525026308;
+        Wed, 18 Dec 2024 04:30:26 -0800 (PST)
+Received: from thinkpad ([117.213.97.217])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-801d5ae9fe6sm7377693a12.49.2024.12.18.04.30.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 18 Dec 2024 04:30:25 -0800 (PST)
+Date: Wed, 18 Dec 2024 18:00:19 +0530
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To: Johan Hovold <johan@kernel.org>
+Cc: mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Loic Poulain <loic.poulain@linaro.org>
+Subject: Re: mhi resume failure on reboot with 6.13-rc2
+Message-ID: <20241218123019.py57s4r3takm2fs6@thinkpad>
+References: <Z1me8iaK7cwgjL92@hovoldconsulting.com>
+ <20241211145315.vaf7gbapieywcvau@thinkpad>
+ <Z1mp3_ArzL-GLr3D@hovoldconsulting.com>
+ <20241216074021.kwoid2747o7piquv@thinkpad>
+ <Z2ApCU3DAxKS7Y9k@hovoldconsulting.com>
+ <20241216141303.2zr5klbgua55agkx@thinkpad>
+ <Z2KKjWY2mPen6GPL@hovoldconsulting.com>
+ <20241218113830.efflnkxz7qu24xux@thinkpad>
+ <Z2K53-As8w4IH06U@hovoldconsulting.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v10 1/4] media: dt-bindings: update clocks for
- sc7280-camss
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Krzysztof Kozlowski <krzk@kernel.org>,
- Vikram Sharma <quic_vikramsa@quicinc.com>, rfoss@kernel.org,
- todor.too@gmail.com, mchehab@kernel.org, robh@kernel.org,
- krzk+dt@kernel.org, conor+dt@kernel.org, akapatra@quicinc.com,
- hariramp@quicinc.com, andersson@kernel.org, konradybcio@kernel.org,
- hverkuil-cisco@xs4all.nl, cros-qcom-dts-watchers@chromium.org,
- catalin.marinas@arm.com, will@kernel.org,
- linux-arm-kernel@lists.infradead.org, linux-media@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, kernel@quicinc.com
-References: <20241217140656.965235-1-quic_vikramsa@quicinc.com>
- <20241217140656.965235-2-quic_vikramsa@quicinc.com>
- <02da691b-1f5d-41a6-847c-c7e9b8239919@kernel.org>
- <c14493b0-c9d3-4e1c-9f86-991b4cb25c98@linaro.org>
- <fe28a9bc-82ef-4fef-af50-9d9261ed9b39@kernel.org>
- <a1032d53-6f3e-48f6-a2e9-1315bb1a3232@linaro.org>
- <hevfx4sgsatohz4ndgrlidj5kqxaiizmakjqjghlkbmguluzi5@ezxa36uasb32>
- <23ae6fb9-2c66-4d16-83e7-d53c1a6685c2@linaro.org>
-Content-Language: en-US
-In-Reply-To: <23ae6fb9-2c66-4d16-83e7-d53c1a6685c2@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <Z2K53-As8w4IH06U@hovoldconsulting.com>
 
-On 18/12/2024 12:17, Bryan O'Donoghue wrote:
-> On 18/12/2024 11:36, Dmitry Baryshkov wrote:
->>> Agreed.
->>>
->>> The commit log should make clear that the ABI hasn't been cemented yet.
->>>
->>> 20241217140656.965235-4-quic_vikramsa@quicinc.com <- is still pending
->> If it hasn't been comitted yet, isn't it better to post a fixed version
->> rather than committing a version which has known issues?
+On Wed, Dec 18, 2024 at 01:02:39PM +0100, Johan Hovold wrote:
+> On Wed, Dec 18, 2024 at 05:08:30PM +0530, Manivannan Sadhasivam wrote:
+> > On Wed, Dec 18, 2024 at 09:40:45AM +0100, Johan Hovold wrote:
 > 
-> Yes.
+> > > I've tracked down the hang to a deadlock on the parent device lock.
+> > > 
+> > > Driver core takes the parent device lock before calling shutdown(), and
+> > > then mhi_pci_shutdown() waits indefinitely for the recovery thread to
+> > > finish.
 > 
-> - yaml
-> - driver
+> > Thanks for tracking the deadlock. I think we should use pci_try_reset_function()
+> > instead of pci_reset_function() in mhi_pci_recovery_work().
+> > 
+> > If the pci_dev_lock() is already taken, it will return with -EAGAIN and we do
+> > not need to worry in that case since the host is going to be powered off anyway
+> > (and so the device).
 > 
-> are merged but
+> That may work. But note that I've now also seen this deadlock during
+> suspend (i.e. when the device is not going away). The
+> pci_try_reset_function() should avoid the deadlock here too, but we'll
+> end up in funny state.
 > 
-> - dtsi is not
-> 
-> So we can still change yaml and driver prior to fixing dtsi.
-> 
-> ---
-> bod
 
-Excuse me; prior to _committing_ the dtsi
+Hopefully, recovery_work() started by mhi_pci_runtime_resume() would be able to
+reset the device.
+
+> Now I'd also like to know why I'm suddenly seeing these runtime PM
+> resume errors of this modem. Haven't seen them before 6.13-rc, and I'm
+> not sure that it's really the firmware that is crashing left and right
+> all of a sudden.
+> 
+
+Yeah, that's worth the effort. I'll go ahead with the patch since the issue is
+present anyway.
+
+- Mani
+
+-- 
+மணிவண்ணன் சதாசிவம்
 
