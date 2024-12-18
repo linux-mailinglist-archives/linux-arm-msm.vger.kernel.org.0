@@ -1,136 +1,155 @@
-Return-Path: <linux-arm-msm+bounces-42660-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-42661-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 992709F6487
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Dec 2024 12:15:02 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 42DB59F648C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Dec 2024 12:15:44 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id A30537A050C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Dec 2024 11:14:56 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 116691892812
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Dec 2024 11:15:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AE6EE19CD01;
-	Wed, 18 Dec 2024 11:14:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E312419E960;
+	Wed, 18 Dec 2024 11:15:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="bUW23PSp"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="iuN25KoO"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f178.google.com (mail-lj1-f178.google.com [209.85.208.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAC92161310
-	for <linux-arm-msm@vger.kernel.org>; Wed, 18 Dec 2024 11:14:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60EF919D07B;
+	Wed, 18 Dec 2024 11:15:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734520495; cv=none; b=C9bAlOXNH2eH1vh1mSijVDEVUuXi8MwpxVVVvWUMjimaQA0BVSa+CvEsmUkiZgN9zapm3a7Ano2VgbvvJpP3pOi8TeblL+rknNvF6k4p7vxeVe0fRriApmyOyG8pfVSnQyFNSxv0MMAK8+ldQg19ZBD7PQjsu3M90R8is6qYlsI=
+	t=1734520537; cv=none; b=Yn0Gw25Mk9N73+XUGb6PF8R0GzY6FjxPu8lxVqOBBt61GP0m4MTD6iB8860cHL1mCrTy5Y707EcjtSUs8u8/URRDS7NYdcF9tmPeDKebMHz8PbFIae+Sljsrw7qujrHWZxKjMfstUvxTxMjpkLJBGW1e/EhipKlpbNTD4WxS8HY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734520495; c=relaxed/simple;
-	bh=Z0Y+xmKwMBhiGRxSlSSmYU0vK6v0yPXFCLdMyYi8iAU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=rx/SEGrXMcnv0Af5zztI0APvfxheNZsN179rUnzQu6XiIvn+CL1Cr/xpbkSmc8pumxw8YrNrDW4jEZpatF+17NvFiB6b5VlyW86gOayn8jjArntdbAe5jJz8RU9qTuH7obmrYz/RQhPsVARbF9W1JNou8iaQWdsRu7zpIhe2WZw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=bUW23PSp; arc=none smtp.client-ip=209.85.208.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f178.google.com with SMTP id 38308e7fff4ca-30034ad2ca3so53733681fa.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Dec 2024 03:14:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1734520492; x=1735125292; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=CQXGzcBLUuhgC9zgbmH7cd1iWvRUarAb5IMePyYysIc=;
-        b=bUW23PSppFtMu4iagUPR6eOk0CUF0S1TVOBHYe3TQJ6jh1ONXDC2ZtCXUM4TqbmcBN
-         IIyurnW0+ZgoBjz4lKIwCw+D574SU9E/qgwy5Zov4Nm5nTKB0uZub9k60DA9S2zcwdLC
-         tdRSOenJhjPbHMdpFxrJUmfQaksx0vKDTbdWXEs1sVo5Xe5sfqTZD0z+nRu9CKYNNiVu
-         gwf3XEq9z0UbyRlyUALG6I2JyzkbeA/VLLW+nIUs/utt6osQChDYmEd6zWGhoNqPTu2w
-         hk3hJ0BAchiy1GVGyW23ymjeeJ3AK5NKaMpJKKD4kqPzI2loMRmVvav90QtXO3aSjjjf
-         gdGw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734520492; x=1735125292;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=CQXGzcBLUuhgC9zgbmH7cd1iWvRUarAb5IMePyYysIc=;
-        b=blHKk/9EZxQqvETszhtBVGpTOybB6UN+my1BeiTTvtb2rWErUXTmayl797K4PEKOf9
-         l+xQ00G/ltG7u/hXI6fz3Ne9C3nWB9vDTJNTKTucsAa+/fDFr23icsc1dYslAzKEAS8P
-         WxB7sAmYcN10OrTaiR4dLNcKX/o97g4LQ08OfmrJsokQOOV/ElhzEqc87JlKdhfEtL7F
-         PJ9Pk9KeIhH0N6TM2No5Rfy5J674sFpKek6QhWcDzEatDK/A4dxgCyQ6iJFt/W/Q1td0
-         NpVRc9xx6Jm36x1LKy6wzvNyyVQt0WrW6K7KvyY9hcWg836M5XiK72YJYz4PnwfL37iF
-         vC+w==
-X-Forwarded-Encrypted: i=1; AJvYcCXuW878s2QxODRF/xAYXxVJcQpV4XmWwjwZl+sTwNyyMgtWUMw8XzN+f/cVvhk2cnHStBpuYJOa8i70lZvx@vger.kernel.org
-X-Gm-Message-State: AOJu0YxmbNO+WGuTXd00jJ9uGFEexcYNpsdB5qXUx6AnjxeFSOqK0auB
-	Kk2Y9SpWPoInSEccb2N5IxRKvsTunLBbCh6XNllUNmZefJG2rrfqH4myXapCuG8=
-X-Gm-Gg: ASbGncsY8+QM2ufOVG7V7JROajxugh2wL4wQhMTpaHDi/5FJVlOcU0wA5nLZF7BvPqG
-	C9sh6xRq/ONO+hwQiyPoWsdp+wWDM6q3dPegdZaIo8V0T8lvqrIHfP9EA7K1j0odjFKcpNeA+5c
-	jkq8i+otEM1VqEsfdQyLVPjIWkXv8KCrvCsPS4kbHbQ31WpVAr8yF8D3dYWYb+yrMpShQFhorat
-	whtqQQFUAIpRVihak4a4cQftWRvc7+53/K4ChH5Qaifq0RP7UDG4o/txOpADVGSiJ6ycXc9CWT/
-	lvKT45qBB76OQSIevFGHxwMZVeVNUqVVp3i7
-X-Google-Smtp-Source: AGHT+IF35Qn0v9SRDK1fTSpGFNEC2eNTW/0l9pru1MmKVrUdfP4sXGIPiEDLn5BpGB8GYjkaJSJaaQ==
-X-Received: by 2002:a05:6512:3193:b0:540:353a:5b13 with SMTP id 2adb3069b0e04-541e674d6e6mr1018964e87.22.1734520491990;
-        Wed, 18 Dec 2024 03:14:51 -0800 (PST)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-54120bffc8csm1414480e87.146.2024.12.18.03.14.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 18 Dec 2024 03:14:51 -0800 (PST)
-Date: Wed, 18 Dec 2024 13:14:50 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Ekansh Gupta <quic_ekangupt@quicinc.com>
-Cc: srinivas.kandagatla@linaro.org, linux-arm-msm@vger.kernel.org, 
-	gregkh@linuxfoundation.org, quic_bkumar@quicinc.com, linux-kernel@vger.kernel.org, 
-	quic_chennak@quicinc.com, dri-devel@lists.freedesktop.org, arnd@arndb.de, 
-	stable <stable@kernel.org>
-Subject: Re: [PATCH v1 2/2] misc: fastrpc: Fix copy buffer page size
-Message-ID: <f47spqrlkrwotgt3ibu6rn6bt4lfkrblh37yubrvsbeo6j7svl@44amfzlpor62>
-References: <20241218102429.2026460-1-quic_ekangupt@quicinc.com>
- <20241218102429.2026460-3-quic_ekangupt@quicinc.com>
+	s=arc-20240116; t=1734520537; c=relaxed/simple;
+	bh=inctAiqk9Y9aXPwPxEb2n0GmKc7SIVdc2U5HmGGED98=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=U4XT4rvtwXXsQTu6g1wQ/nnhuVaTpWfnrj/PbJD1Ub2itoxU4/1AOsWN8HSaXMzWDYmVQ5QS5vgIjFlZmXPgkIUbBKWcJVWZFfUXIWnouiE6VnZrcK5GhvabpPXoUimOHWKjimJIMNDDeJ0rKSkVh2NUGTJL8ifX8qandmTL5aM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=iuN25KoO; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BI6VXL8024603;
+	Wed, 18 Dec 2024 11:15:28 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	DtDXbLrwZmGApG6b1RUBCdgE7duW8uEJPL4iYKXLNDw=; b=iuN25KoODTIomfsb
+	KCdQxdelnecN+Wyje3tTTztKQvFg1Ps6NofDm2SGWm6HTQ297W7kE7am4eh25a27
+	/Mc9NL12f7DpMNxgXJsI7wAUDTWYCo87df2lRE8KD0qD/vuAST+yixBCA2HX1A+6
+	Fky4cO3ABP85EXPOw3zWgQsG8+EvQ+q0khcJZStxtVAfcF9ar9L0HwqRh7e6tLI1
+	lrLD3M2f1KwUChDJdmKgUJd+djalZtLnKRKW3LJV8s6Tf9gilTAQMNnkvaEucmko
+	6nI1ve/rKlrrB7QkdjGLASk33VfxpyxAyULpODji/W4DHA12gvGLmGSBpyvupB4r
+	Y8Rsjg==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43ks6ygpgk-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 18 Dec 2024 11:15:27 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4BIBFQ4M019687
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 18 Dec 2024 11:15:26 GMT
+Received: from [10.152.195.140] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 18 Dec
+ 2024 03:15:21 -0800
+Message-ID: <f6527df3-feb9-4d3b-93d7-84f4f255d23c@quicinc.com>
+Date: Wed, 18 Dec 2024 16:45:18 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241218102429.2026460-3-quic_ekangupt@quicinc.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v9 4/7] arm64: dts: qcom: ipq5332: Add tsens node
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+        <srinivas.kandagatla@linaro.org>, <robh@kernel.org>,
+        <krzk+dt@kernel.org>, <conor+dt@kernel.org>, <amitk@kernel.org>,
+        <thara.gopinath@gmail.com>, <rafael@kernel.org>,
+        <daniel.lezcano@linaro.org>, <rui.zhang@intel.com>,
+        <lukasz.luba@arm.com>, <andersson@kernel.org>,
+        <konradybcio@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-pm@vger.kernel.org>
+CC: <quic_srichara@quicinc.com>, <quic_varada@quicinc.com>
+References: <20241125050728.3699241-1-quic_mmanikan@quicinc.com>
+ <20241125050728.3699241-5-quic_mmanikan@quicinc.com>
+ <556ff23c-8b2c-4ea3-99dc-84196e3f0651@oss.qualcomm.com>
+Content-Language: en-US
+From: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
+In-Reply-To: <556ff23c-8b2c-4ea3-99dc-84196e3f0651@oss.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 60ueWvLQ1Wb5YcztH2AhwK-lExXkdW36
+X-Proofpoint-GUID: 60ueWvLQ1Wb5YcztH2AhwK-lExXkdW36
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=897 mlxscore=0
+ priorityscore=1501 spamscore=0 adultscore=0 clxscore=1015
+ lowpriorityscore=0 phishscore=0 suspectscore=0 impostorscore=0
+ malwarescore=0 bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2412180090
 
-On Wed, Dec 18, 2024 at 03:54:29PM +0530, Ekansh Gupta wrote:
-> For non-registered buffer, fastrpc driver copies the buffer and
-> pass it to the remote subsystem. There is a problem with current
-> implementation of page size calculation which is not considering
-> the offset in the calculation. This might lead to passing of
-> improper and out-of-bounds page size which could result in
-> memory issue. Calculate page start and page end using the offset
-> adjusted address instead of absolute address.
 
-Which offset?
 
+On 12/13/2024 6:29 PM, Konrad Dybcio wrote:
+> On 25.11.2024 6:07 AM, Manikanta Mylavarapu wrote:
+>> From: Praveenkumar I <quic_ipkumar@quicinc.com>
+>>
+>> IPQ5332 has tsens v2.3.3 peripheral. This patch adds the tsens
+>> node with nvmem cells for calibration data.
+>>
+>> Signed-off-by: Praveenkumar I <quic_ipkumar@quicinc.com>
+>> Signed-off-by: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
+>> ---
 > 
-> Fixes: 02b45b47fbe8 ("misc: fastrpc: fix remote page size calculation")
-> Cc: stable <stable@kernel.org>
-> Signed-off-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
-> ---
->  drivers/misc/fastrpc.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
+> [...]
 > 
-> diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
-> index cfa1546c9e3f..00154c888c45 100644
-> --- a/drivers/misc/fastrpc.c
-> +++ b/drivers/misc/fastrpc.c
-> @@ -1019,8 +1019,8 @@ static int fastrpc_get_args(u32 kernel, struct fastrpc_invoke_ctx *ctx)
->  					(pkt_size - rlen);
->  			pages[i].addr = pages[i].addr &	PAGE_MASK;
->  
-> -			pg_start = (args & PAGE_MASK) >> PAGE_SHIFT;
-> -			pg_end = ((args + len - 1) & PAGE_MASK) >> PAGE_SHIFT;
-> +			pg_start = (rpra[i].buf.pv & PAGE_MASK) >> PAGE_SHIFT;
-> +			pg_end = ((rpra[i].buf.pv + len - 1) & PAGE_MASK) >> PAGE_SHIFT;
->  			pages[i].size = (pg_end - pg_start + 1) * PAGE_SIZE;
->  			args = args + mlen;
->  			rlen -= mlen;
-> -- 
-> 2.34.1
+>>  
+>> +		tsens: thermal-sensor@4a9000 {
+>> +			compatible = "qcom,ipq5332-tsens";
+>> +			reg = <0x004a9000 0x1000>,
+>> +			      <0x004a8000 0x1000>;
+>> +			nvmem-cells = <&tsens_mode>,
+>> +				      <&tsens_base0>,
+>> +				      <&tsens_base1>,
+>> +				      <&tsens_sens11_off>,
+>> +				      <&tsens_sens12_off>,
+>> +				      <&tsens_sens13_off>,
+>> +				      <&tsens_sens14_off>,
+>> +				      <&tsens_sens15_off>;
+>> +			nvmem-cell-names = "mode",
+>> +					   "base0",
+>> +					   "base1",
+>> +					   "tsens_sens11_off",
+>> +					   "tsens_sens12_off",
+>> +					   "tsens_sens13_off",
+>> +					   "tsens_sens14_off",
+>> +					   "tsens_sens15_off";
+>> +			interrupts = <GIC_SPI 320 IRQ_TYPE_LEVEL_HIGH>;
+>> +			interrupt-names = "combined";
+> 
+> Please move interrupts properties above nvmem
 > 
 
--- 
-With best wishes
-Dmitry
+Sure, i will move in next version.
+
+Thanks & Regards,
+Manikanta.
+
+> with that:
+> 
+> Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+> 
+> Konrad
+
 
