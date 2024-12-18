@@ -1,122 +1,108 @@
-Return-Path: <linux-arm-msm+bounces-42690-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-42691-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E60FA9F6B4B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Dec 2024 17:36:45 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id C86A99F6BA0
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Dec 2024 17:58:03 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id CE54B7A4097
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Dec 2024 16:36:39 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 82A06189108C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Dec 2024 16:58:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 869F21F668A;
-	Wed, 18 Dec 2024 16:35:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 288311F8909;
+	Wed, 18 Dec 2024 16:57:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="F/VdIRsY"
+	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="DjJl4g8W"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qt1-f182.google.com (mail-qt1-f182.google.com [209.85.160.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC9C11F63C0
-	for <linux-arm-msm@vger.kernel.org>; Wed, 18 Dec 2024 16:35:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BC4E1F76C4;
+	Wed, 18 Dec 2024 16:57:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=156.67.10.101
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734539759; cv=none; b=YOEwsJ0ka9xcmPJ99yFFC6bfQySPi10gFnBxqOQSxgJJK/hBkZxvoCgcnUbBN3gK7dmkQd7yWCSdsEnzMZPtniDyBfqGBDZsMzc6/BaJsy0Ij8lNQz8Ba4mizwGHQWoyqFc8x6biOOEkNDtM+lSSgFPPSRqiNlsHKtR6hjBPUhQ=
+	t=1734541076; cv=none; b=Ug8K+XleqTHDehPji2rPuRhIx0zOJKINnwXZ4L3g5gENB1YMqQh4NoEsulGjL8h9AJ6dm9mUZnElNdM61X1TPBBGl6N/VWJvFZwto/xxRQZysy3T9Xz9RIzhlhJmdpiwS4n5N8oZOjLkxpjakUBJusSbSbTez71Z8FBAznT6z2E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734539759; c=relaxed/simple;
-	bh=hU1Z8+lcg+ptXSveEoYze+mbRwLw9U4+cd4zYPlrev0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=GCWTYapzUOkU8o3lDXTgtVdjy4yFehg+BoaLX4k3HcIjXv6eYZIK9Qo0lc144GFq/2WNZOjTo6SuXZ9VdQHPba0Ieax20MCxnNX9CA+z+D2Qhs348n2pI0phJcepXaul1GkGcwYhBES8iMfSaqfLNE5W1dj1nKDp0lwGrtDnIzk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=google.com; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=F/VdIRsY; arc=none smtp.client-ip=209.85.160.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
-Received: by mail-qt1-f182.google.com with SMTP id d75a77b69052e-4678c9310afso272171cf.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Dec 2024 08:35:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1734539757; x=1735144557; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=hU1Z8+lcg+ptXSveEoYze+mbRwLw9U4+cd4zYPlrev0=;
-        b=F/VdIRsYwXK1dQbrUcbPT/flAVPHZxisaN0oKSmxc+lqigThPZZVjTORDu+AitL0wX
-         0N7+jOX3xMmtkxvBzgt8onR//WtGJtqs8UZCXShPCZw85SvxdcHtv5m9K5EBw8kZGuFp
-         +iPG8Tfo4+rd5vycz6MtFxZ9RnwUgiuzguHTU=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734539757; x=1735144557;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=hU1Z8+lcg+ptXSveEoYze+mbRwLw9U4+cd4zYPlrev0=;
-        b=ULqoX+Nmd6G0O0js8Apsp0ocLB9nUv+7trsXjd7zUtt0FhY4K9uPTgK3wgogkTjNKJ
-         7qxL0MMHExmLwyyQ9CfE/dayYKyO45fmGCky4eqJc+JGhE777W0Vw1hmg6r+xCPnD2GL
-         bUnSj7FqoKGHqZLSx4cAcut+NRXy0a8/OqioB/7tavQJx9vu+fp2nQtmhHgcYgU+Z30k
-         jzzqXEfXGU6RFU6CSlrEl5J3RaqjzpK6d7zUn7BGvSFx2fuzx79g2jp2Ptr9saXM7RNm
-         Esb05RDYFQApybSaXjkkiY5HlrJmx97Gdl1fpS/6VOibDLkbcf7yf0xl0MpUJajvPFDK
-         9XNg==
-X-Forwarded-Encrypted: i=1; AJvYcCX9463sGHZuNgpPRpLCMzveWBjZesTWolZbqDP1mVTalPLs2odWo4w0L71F3Qg40dj1wHAW/YKx77niT2sV@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx7v3XgHTSdb177YMXF5w+VIJqrllOreYeMItzjFFklbHN9Hakf
-	McCnOr67VjqOPT4U+ntz7oB0QJvFleGjy4TEeg1PfC60yMETF5DsRn7WyvsxJL8F1NcJUdnplxj
-	K9lj3n+Av0FUIhWdBGj3lW+MfZpRNrWZj3aqN
-X-Gm-Gg: ASbGncs6ddj0RWmSd3NHWvmeiIgsNOYC6UVTMl/nSOTDa7Z/sQzYmkYz72zFyEha4PI
-	aiOW+Iw9RoKondzHRJRNfItBJu2QBmfpFT58yk1YP/nq1ZNz+bAZwwTv4atOCRdVJ2x0lGw==
-X-Google-Smtp-Source: AGHT+IGlf+Wlv9h2+51DeY+YpWsJpttrKLiQ4T5hKVUT5e2IblIuVjyaICps4zat75Zd9spNCR9Zv3byB1374eRD8gw=
-X-Received: by 2002:ac8:5f49:0:b0:467:7ef7:88a3 with SMTP id
- d75a77b69052e-469090dc683mr4277431cf.16.1734539756443; Wed, 18 Dec 2024
- 08:35:56 -0800 (PST)
+	s=arc-20240116; t=1734541076; c=relaxed/simple;
+	bh=KV8ou//Sa6v3jLTAYIJ9bJcbxMO3+EDoGYPwxAHxI/w=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=njqsi56Vw0uL3KX6+pqGC3kTg/1UpvwpPPuTrh8kbaY7jdn+csVtHmXNUWRMeceC96byLHT4IIRGICQgPHrukBXCk+0uHjiSL11VPOIc6b0IjJJQ6yeMpHKC9nYB/mtCEIOg0sCb7Z76Mv77ZtI0rAiT3tmG2nnJ25Py4yMysx8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch; spf=pass smtp.mailfrom=lunn.ch; dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b=DjJl4g8W; arc=none smtp.client-ip=156.67.10.101
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lunn.ch
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
+	s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
+	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
+	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
+	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
+	bh=/4crNdIxVVaUUjGou9fiNxKR1h+u/fftUOeCRlzjhXo=; b=DjJl4g8WqzlEX8kt+gIn+DeK1o
+	k2ynJY9DxnnNia07FbZuXcsgYXTZfWDd/9RNJ45aZESIqeK2xmJsl4bsjRubIMBO0o6TEiGiTItTV
+	E3RTaHpW4uDWXbCsDjA3If2p2LcRGvH69nEnJaJrBf89fq9y+UlxC+NoLyrmZwsQU+Sg=;
+Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
+	(envelope-from <andrew@lunn.ch>)
+	id 1tNxMo-001L2B-IE; Wed, 18 Dec 2024 17:57:46 +0100
+Date: Wed, 18 Dec 2024 17:57:46 +0100
+From: Andrew Lunn <andrew@lunn.ch>
+To: Yijie Yang <quic_yijiyang@quicinc.com>
+Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Richard Cochran <richardcochran@gmail.com>,
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org, netdev@vger.kernel.org
+Subject: Re: [PATCH v2 2/2] arm64: dts: qcom: qcs615-ride: Enable ethernet
+ node
+Message-ID: <2b6cd2b8-1738-4131-abfe-4ab35de70c8d@lunn.ch>
+References: <4a6a6697-a476-40f4-b700-09ef18e4ba22@lunn.ch>
+ <441f37f5-3c33-4c62-b3fe-728b43669e29@quicinc.com>
+ <4287c838-35b2-45bb-b4a2-e128b55ddbaf@lunn.ch>
+ <2e518360-be24-45d8-914d-1045c6771620@quicinc.com>
+ <31a87bd9-4ffb-4d5a-a77b-7411234f1a03@lunn.ch>
+ <581776bc-f3bc-44c1-b7c0-4c2e637fcd67@quicinc.com>
+ <174bd1a3-9faf-4850-b341-4a4cce1811cb@lunn.ch>
+ <d711ee4b-b315-4d34-86a6-1f1e2d39fc8d@quicinc.com>
+ <8acf4557-ac10-43f1-b1ab-7ae63f64401f@lunn.ch>
+ <aa1dcdf6-94a0-4922-83f0-3cf49516ac4f@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20241214005248.198803-1-dianders@chromium.org>
- <20241213165201.v2.1.I2040fa004dafe196243f67ebcc647cbedbb516e6@changeid>
- <CAODwPW_c+Ycu_zhiDOKN-fH2FEWf2pxr+FcugpqEjLX-nVjQrg@mail.gmail.com>
- <CAD=FV=UHBA7zXZEw3K6TRpZEN-ApOkmymhRCOkz7h+yrAkR_Dw@mail.gmail.com>
- <CAODwPW8s4GhWGuZMUbWVNLYw_EVJe=EeMDacy1hxDLmnthwoFg@mail.gmail.com> <CAD=FV=X61y+RmbWCiZut_HHVS4jPdv_ZB8F+_Hs0R-1aKHdK4w@mail.gmail.com>
-In-Reply-To: <CAD=FV=X61y+RmbWCiZut_HHVS4jPdv_ZB8F+_Hs0R-1aKHdK4w@mail.gmail.com>
-From: Julius Werner <jwerner@chromium.org>
-Date: Wed, 18 Dec 2024 17:35:45 +0100
-Message-ID: <CAODwPW_UNVkyXKxyhZv830bhzsy5idu6GiuR9mut+-qGOtv1pw@mail.gmail.com>
-Subject: Re: [PATCH v2 1/6] arm64: errata: Assume that unknown CPUs _are_
- vulnerable to Spectre BHB
-To: Doug Anderson <dianders@chromium.org>
-Cc: Julius Werner <jwerner@chromium.org>, Catalin Marinas <catalin.marinas@arm.com>, 
-	Will Deacon <will@kernel.org>, Mark Rutland <mark.rutland@arm.com>, linux-arm-msm@vger.kernel.org, 
-	Jeffrey Hugo <quic_jhugo@quicinc.com>, linux-arm-kernel@lists.infradead.org, 
-	Roxana Bradescu <roxabee@google.com>, Trilok Soni <quic_tsoni@quicinc.com>, 
-	bjorn.andersson@oss.qualcomm.com, stable@vger.kernel.org, 
-	James Morse <james.morse@arm.com>, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <aa1dcdf6-94a0-4922-83f0-3cf49516ac4f@quicinc.com>
 
-> Given that I'm not going to change the way the existing predicates
-> work, if I move the "fallback" setting `max_bhb_k` to 32 to
-> spectre_bhb_enable_mitigation() then when we set `max_bhb_k` becomes
-> inconsistent between recognized and unrecognized CPUs.
+> Okay, I will follow your instructions:
+> 1. Change the phy-mode to 'rgmii-id'.
+> 2. Add the delay in the MAC driver.
+> 3. Mask the phy-mode before passing it to the PHY.
 
-A clean way to fix that could be to change spectre_bhb_loop_affected()
-to just return the K-value (rather than change max_bhb_k directly),
-and then set max_bhb_k to the max() of that return value and the
-existing value when it is called from spectre_bhb_enable_mitigation().
-That way, max_bhb_k would only be updated from
-spectre_bhb_enable_mitigation().
+Good.
 
-> I would also say that having `max_bhb_k` get set in an inconsistent
-> place opens us up for bugs in the future. Even if it works today, I
-> imagine someone could change things in the future such that
-> spectre_bhb_enable_mitigation() reads `max_bhb_k` and essentially
-> caches it (maybe it constructs an instruction based on it). If that
-> happened things could be subtly broken for the "unrecognized CPU" case
-> because the first CPU would "cache" the value without it having been
-> called on all CPUs.
+> 
+> > 
+> > But i assume Qualcomm RDKs always make use of a Qualcomm PHY, there is
+> > special pricing if you use the combination, so there is probably
+> > little incentive to use somebody elses PHY. And i assume you can
+> > quickly check all Qualcomm PHYs support RGMII delays. PHYs which don't
+> > support RGMII delays are very rare, it just happened that one vendors
+> > RDK happened to use one, so they ended up with delays in the MAC being
+> > standard for their boards.
+> > 
+> 
+> Most Qualcomm MAC applications are actually paired with a third-party PHY.
 
-This would likely already be a problem with the current code, since
-spectre_bhb_enable_mitigations() is called one at a time for each CPU
-and the max_bhb_k value is only valid once it has been called on all
-CPUs. If someone tried to just immediately use the value inside the
-function that would just be a bug either way. (Right now this should
-not be a problem because max_bhb_k is only used by
-spectre_bhb_patch_loop_iter() which ends up being called through
-apply_alternatives_all(), which should only run after all those CPU
-errata cpu_enable callbacks have been called.)
+I'm not sure the QCA8K, IPC and old Atheros people would agree with
+you.
+
+But since you don't have any behaviour change, you are not asking the
+PHY to insert the delays, you should be safe in your part of the
+Qualcomm world.
+
+	Andrew
 
