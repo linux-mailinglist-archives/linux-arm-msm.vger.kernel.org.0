@@ -1,264 +1,162 @@
-Return-Path: <linux-arm-msm+bounces-42694-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-42695-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 801249F6CFA
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Dec 2024 19:17:01 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 95CC49F6D74
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Dec 2024 19:36:10 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 4CD567A3719
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Dec 2024 18:16:55 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 684361889F19
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Dec 2024 18:36:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1691D1F2395;
-	Wed, 18 Dec 2024 18:16:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 147271F75B2;
+	Wed, 18 Dec 2024 18:36:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="BopyAYXa"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 15DFF85C5E;
-	Wed, 18 Dec 2024 18:16:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
+Received: from mail-pl1-f175.google.com (mail-pl1-f175.google.com [209.85.214.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70C501591EA
+	for <linux-arm-msm@vger.kernel.org>; Wed, 18 Dec 2024 18:36:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734545813; cv=none; b=ttyAmvcHG+FZCcqVHLIVkk1HJQ9kFPqLdtnhmkJ4YNcr7YLP1k/M1NpMBatuNWUFRQ4M9JyNSOfCoi0HGkBtm5zCE0kqxi1L1p6D91vvSn3No8eqNliX1/PdB/Yn4n6TgxHS+xRFoY5ylk5HARN9tiP/PL0IfSb4YuURJpPutM8=
+	t=1734546963; cv=none; b=VXWTTPhdz2h8FFZSmkdA+oJCGtUDxyPMPzZlo/pj4/RQkerere5UHoKudrjsScarwcE9SMYdPeBZ0++CNkQ5Oy1Nv7tpOH47IhR0LwQtWQI7n0E2a9K/kjIuZzhaRqoL8WrvwWGenE+OqSrWk5CnnNaH9aRdkGrBWPW4PaZlAJk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734545813; c=relaxed/simple;
-	bh=H3YxSj0UPKl17MY8c3fzDropAq2uHPLB2CEYh56DFlY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=JX0KfoGM+/cIKdPMV8KZ3nej6PUsclEoZDmD3ARWIS+5tTWrdhN6/0X82MwK1Z+ZBWW7mrLWCg/6coYkDhNqkH2u2R/AqDw97bKlh+qEjTiQHS2FPRqk17kqGqKrw+04TkAs6LYZ1HYtw06VylY/L1H7HMmqZX2rrkvUwayT4wo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 450DF1063;
-	Wed, 18 Dec 2024 10:17:17 -0800 (PST)
-Received: from [10.57.71.247] (unknown [10.57.71.247])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPA id 2E8903F7B4;
-	Wed, 18 Dec 2024 10:16:47 -0800 (PST)
-Message-ID: <53354e84-73c0-403b-bbc0-af619196596d@arm.com>
-Date: Wed, 18 Dec 2024 18:16:45 +0000
+	s=arc-20240116; t=1734546963; c=relaxed/simple;
+	bh=H1Aai/I3cMUgqmRzeGvI0h98A1euYUjcp5CSf43av30=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=EGIqAo/Smd/ex/lGFYAH5I73A0PHhOJ1OvNBDUFrWbjJMTWvmiY2TeVbdcvAobc6r7P1KJGRtvVO0HtD1ClQaHdinI/8LW/kcwd9vWTOVKggsDrM9VLxT0Dp7yWoHkn8HModF/lHfI029KJ3FSDOksNRAgWwGw243qIAy2VR4Fo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=BopyAYXa; arc=none smtp.client-ip=209.85.214.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-pl1-f175.google.com with SMTP id d9443c01a7336-216728b1836so143885ad.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Dec 2024 10:36:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1734546961; x=1735151761; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=9QoqmFThgpYYfz6z8XdmslArNzKFpNPLkZLyt30Nm9Q=;
+        b=BopyAYXa5flXY36wutb9MFjvR1YSsg28H2FYk/gGdkZJrGinS+9dps2gJwQLq9SZNn
+         9XErACO/VDmDT+cQD2sjk+usFmvy9DFTMItkqob9dzxF01wUY/1TlBxWlAC51BPgwWqr
+         1lnYhB0oD2J1pkhvjSNpRaWwH2eosGz0+Tx+XOchyPwmeImSTj8uD2WAkTOQh1fsMhO3
+         r0ap/WIRoVDVQeXSqThVohdYpJ6TSXVzPQctbolLY6uoXOoVqcdnMGoBDN0PF/S+Hp+Z
+         DY7tDhs2F8XgfeZjcknuWdXeS2TtjYAZO4BudQJo4ZEZUoxDAjIInEcL9eQv5Pmff1Xu
+         Qs/A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1734546961; x=1735151761;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=9QoqmFThgpYYfz6z8XdmslArNzKFpNPLkZLyt30Nm9Q=;
+        b=EljJATmZFDqyZWCDGiAiUgFA4VkUJkYDMwHqMN3FAXcHQzIx/sCotsr8b9+EKd9lzt
+         xzEH92zhwkOkO6QwjijyyDWsUCqNoXrbKsO+szz9x0rg7U0lAq8aOl7FkIwIUTOpgf10
+         FHcZvDERwTRk2XwcbdaLTfd9I7yv1K0p7EnYOJDS3HCYgynXHHP99HL3fdFeGAW+vcmc
+         NEOpWU6pTJ4EQjhrtqRtVr+HDhLYNrdf541o5++zBm7xK2SJzDMgUYo2HRkEx0QegWi5
+         aLXf4Wwox4zbJC1nphELZD1yMLGVHlzZZGQTZRe/Y39fUw1sgg1Jp4WVdOdtDNo+2Ujy
+         vaHA==
+X-Forwarded-Encrypted: i=1; AJvYcCV0ytYHq1OHsnp7BOSaw89GoK7kFQb9JF1IX49iAeQP/hyB7xDYVKprPNSgQZD5y9sEDA0KZ8y7us4gaZxa@vger.kernel.org
+X-Gm-Message-State: AOJu0YybfO8qJs3jxlmvfJopopq4q2Q9OKNjr9+KYjVaRwt1nd1ooiE0
+	OGthcmjZps14eVIImBZTxUxSIag0nuUUbwxRETtOSQa77CNRNJQwqhawtb8Xbw==
+X-Gm-Gg: ASbGncs2HovN1RWcAyATtajwTLxP7fD2E5zmGPkZqXDruB/M8idl+fGFWoXpODTSpL6
+	bMetvR7IADMgdk/p8bfwv9G/ooMcJcAh8i4/yAThkW6Y52ZeXKTtwzVGS9obMAA8LI07h7MelyK
+	N02QaxjsDxnnUzuWbBouU+lbe8geO701L347HTDv3etoR1dXAxgN338R9RFPk12ooVgX8UpHd+Z
+	Wvj/EENrmm19ysK/OheX2s/EV5Z8AH3RSJlMPIs0xuoC1pivvKh/zdd8E5KoQHMAyaB
+X-Google-Smtp-Source: AGHT+IFx0Y0NES4XTZAx/Y6m34o9Df/LrhxXriUYjPamGfrz7/WYfDVESUdiB5qH/olNqFvYxmIpFw==
+X-Received: by 2002:a17:902:f64b:b0:215:9f5a:a236 with SMTP id d9443c01a7336-218d6fc3a62mr57682555ad.6.1734546960758;
+        Wed, 18 Dec 2024 10:36:00 -0800 (PST)
+Received: from thinkpad ([117.213.97.217])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-218a1d000d9sm79253785ad.0.2024.12.18.10.35.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 18 Dec 2024 10:36:00 -0800 (PST)
+Date: Thu, 19 Dec 2024 00:05:55 +0530
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To: Johan Hovold <johan@kernel.org>
+Cc: mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Loic Poulain <loic.poulain@linaro.org>
+Subject: Re: mhi resume failure on reboot with 6.13-rc2
+Message-ID: <20241218183555.qste4gve7vnvdml2@thinkpad>
+References: <20241216074021.kwoid2747o7piquv@thinkpad>
+ <Z2ApCU3DAxKS7Y9k@hovoldconsulting.com>
+ <20241216141303.2zr5klbgua55agkx@thinkpad>
+ <Z2KKjWY2mPen6GPL@hovoldconsulting.com>
+ <20241218113830.efflnkxz7qu24xux@thinkpad>
+ <Z2K53-As8w4IH06U@hovoldconsulting.com>
+ <20241218123019.py57s4r3takm2fs6@thinkpad>
+ <Z2LUNo--8YpLO6kD@hovoldconsulting.com>
+ <20241218140910.ysovysnvns26vbmd@thinkpad>
+ <Z2LbnoSplfVNmNaa@hovoldconsulting.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 2/2] coresight: Add label sysfs node support
-Content-Language: en-GB
-To: Mike Leach <Mike.Leach@arm.com>, Mao Jinlong <quic_jinlmao@quicinc.com>,
- Mike Leach <mike.leach@linaro.org>, James Clark <James.Clark@arm.com>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>,
- Mathieu Poirier <mathieu.poirier@linaro.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>
-Cc: "coresight@lists.linaro.org" <coresight@lists.linaro.org>,
- "linux-arm-kernel@lists.infradead.org"
- <linux-arm-kernel@lists.infradead.org>,
- "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
- "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
- "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>
-References: <20241217063324.33781-1-quic_jinlmao@quicinc.com>
- <20241217063324.33781-3-quic_jinlmao@quicinc.com>
- <985d234c-e088-469d-b9dc-7904fcf5a91c@arm.com>
- <PAVPR08MB967401DC65384CBA26B6829C8C052@PAVPR08MB9674.eurprd08.prod.outlook.com>
-From: Suzuki K Poulose <suzuki.poulose@arm.com>
-In-Reply-To: <PAVPR08MB967401DC65384CBA26B6829C8C052@PAVPR08MB9674.eurprd08.prod.outlook.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <Z2LbnoSplfVNmNaa@hovoldconsulting.com>
 
-Hi Mike
-
-On 18/12/2024 09:56, Mike Leach wrote:
-> Hi
+On Wed, Dec 18, 2024 at 03:26:38PM +0100, Johan Hovold wrote:
+> On Wed, Dec 18, 2024 at 07:39:10PM +0530, Manivannan Sadhasivam wrote:
+> > On Wed, Dec 18, 2024 at 02:55:02PM +0100, Johan Hovold wrote:
+> > > On Wed, Dec 18, 2024 at 06:00:19PM +0530, Manivannan Sadhasivam wrote:
+> > > > On Wed, Dec 18, 2024 at 01:02:39PM +0100, Johan Hovold wrote:
+> > > > > On Wed, Dec 18, 2024 at 05:08:30PM +0530, Manivannan Sadhasivam wrote:
+> > > > > > On Wed, Dec 18, 2024 at 09:40:45AM +0100, Johan Hovold wrote:
+> > > > > 
+> > > > > > > I've tracked down the hang to a deadlock on the parent device lock.
+> > > > > > > 
+> > > > > > > Driver core takes the parent device lock before calling shutdown(), and
+> > > > > > > then mhi_pci_shutdown() waits indefinitely for the recovery thread to
+> > > > > > > finish.
+> > > > > 
+> > > > > > Thanks for tracking the deadlock. I think we should use pci_try_reset_function()
+> > > > > > instead of pci_reset_function() in mhi_pci_recovery_work().
+> > > > > > 
+> > > > > > If the pci_dev_lock() is already taken, it will return with -EAGAIN and we do
+> > > > > > not need to worry in that case since the host is going to be powered off anyway
+> > > > > > (and so the device).
+> > > > > 
+> > > > > That may work. But note that I've now also seen this deadlock during
+> > > > > suspend (i.e. when the device is not going away). The
+> > > > > pci_try_reset_function() should avoid the deadlock here too, but we'll
+> > > > > end up in funny state.
+> > > > 
+> > > > Hopefully, recovery_work() started by mhi_pci_runtime_resume() would be able to
+> > > > reset the device.
+> > > 
+> > > But that's not going to happen as that reset is what is currently
+> > > causing the deadlock and which would simply be skipped if you switch to
+> > > pci_try_reset_function().
+> > > 
+> > 
+> > mhi_pci_runtime_resume() will queue the recovery_work() and return. So I was
+> > hoping that by the time pci_try_reset_function() is called, the lock would be
+> > available.
 > 
->> -----Original Message-----
->> From: Suzuki K Poulose <suzuki.poulose@arm.com>
->> Sent: Wednesday, December 18, 2024 9:38 AM
->> To: Mao Jinlong <quic_jinlmao@quicinc.com>; Mike Leach
->> <mike.leach@linaro.org>; James Clark <James.Clark@arm.com>; Rob Herring
->> <robh@kernel.org>; Krzysztof Kozlowski <krzk+dt@kernel.org>; Conor Dooley
->> <conor+dt@kernel.org>; Mathieu Poirier <mathieu.poirier@linaro.org>; Bjorn
->> Andersson <andersson@kernel.org>; Konrad Dybcio
->> <konradybcio@kernel.org>
->> Cc: coresight@lists.linaro.org; linux-arm-kernel@lists.infradead.org;
->> devicetree@vger.kernel.org; linux-kernel@vger.kernel.org; linux-arm-
->> msm@vger.kernel.org
->> Subject: Re: [PATCH v6 2/2] coresight: Add label sysfs node support
->>
->> On 17/12/2024 06:33, Mao Jinlong wrote:
->>> For some coresight components like CTI and TPDM, there could be
->>> numerous of them. From the node name, we can only get the type and
->>> register address of the component. We can't identify the HW or the
->>> system the component belongs to. Add label sysfs node support for
->>> showing the intuitive name of the device.
->>>
->>> Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
->>> ---
->>>    .../testing/sysfs-bus-coresight-devices-cti   |  6 ++++
->>>    .../sysfs-bus-coresight-devices-funnel        |  6 ++++
->>>    .../testing/sysfs-bus-coresight-devices-tpdm  |  6 ++++
->>>    drivers/hwtracing/coresight/coresight-sysfs.c | 32
->> +++++++++++++++++++
->>>    4 files changed, 50 insertions(+)
->>
->> Do you think we need to name the devices using the label ?
->>
+> We can't rely on luck with timings, and this is the very reason for the
+> deadlock I'm currently seeing (i.e. the recovery thread is still running
+> when another thread grabs the lock and waits for the recovery thread to
+> finish).
 > 
-> No - absolutely not. If we use label to name devices then we have to validate that the string is a correctly formed device name and that it has not been previously used.
-
-Anything that doesn't contain '/' can be a device name ? And it is very 
-easy to find if the device name has been used in the coresight bus, 
-after all these devices only appear there.
-
-It is as good as :
-
-bus_find_device_by_name(coresight_bus_type, NULL, name) == NULL
-
-Of course with coresight_mutex() held.
-
-Suzuki
-
-
+> Perhaps the recovery work should be done synchronously in the resume
+> handler to avoid such issues.
 > 
-> Using the canonical driver selected names works best as we are guaranteed a unique name and the information label can be used to provide flexible context information that best matches the users requirements.
-> 
-> Mike
-> 
->> Or is this enough ?
-> 
->> Suzuki
->>
->>
->>>
->>> diff --git a/Documentation/ABI/testing/sysfs-bus-coresight-devices-cti
->>> b/Documentation/ABI/testing/sysfs-bus-coresight-devices-cti
->>> index bf2869c413e7..909670e0451a 100644
->>> --- a/Documentation/ABI/testing/sysfs-bus-coresight-devices-cti
->>> +++ b/Documentation/ABI/testing/sysfs-bus-coresight-devices-cti
->>> @@ -239,3 +239,9 @@ Date:		March 2020
->>>    KernelVersion	5.7
->>>    Contact:	Mike Leach or Mathieu Poirier
->>>    Description:	(Write) Clear all channel / trigger programming.
->>> +
->>> +What:           /sys/bus/coresight/devices/<cti-name>/label
->>> +Date:           Dec 2024
->>> +KernelVersion   6.14
->>> +Contact:        Mao Jinlong <quic_jinlmao@quicinc.com>
->>> +Description:    (Read) Show hardware context information of device.
->>> diff --git
->>> a/Documentation/ABI/testing/sysfs-bus-coresight-devices-funnel
->>> b/Documentation/ABI/testing/sysfs-bus-coresight-devices-funnel
->>> index d75acda5e1b3..944aad879aeb 100644
->>> --- a/Documentation/ABI/testing/sysfs-bus-coresight-devices-funnel
->>> +++ b/Documentation/ABI/testing/sysfs-bus-coresight-devices-funnel
->>> @@ -10,3 +10,9 @@ Date:		November 2014
->>>    KernelVersion:	3.19
->>>    Contact:	Mathieu Poirier <mathieu.poirier@linaro.org>
->>>    Description:	(RW) Defines input port priority order.
->>> +
->>> +What:           /sys/bus/coresight/devices/<memory_map>.funnel/label
->>> +Date:           Dec 2024
->>> +KernelVersion   6.14
->>> +Contact:        Mao Jinlong <quic_jinlmao@quicinc.com>
->>> +Description:    (Read) Show hardware context information of device.
->>> diff --git
->>> a/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
->>> b/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
->>> index bf710ea6e0ef..309802246398 100644
->>> --- a/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
->>> +++ b/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
->>> @@ -257,3 +257,9 @@ Contact:	Jinlong Mao (QUIC)
->> <quic_jinlmao@quicinc.com>, Tao Zhang (QUIC) <quic_t
->>>    Description:
->>>    		(RW) Set/Get the MSR(mux select register) for the CMB
->> subunit
->>>    		TPDM.
->>> +
->>> +What:           /sys/bus/coresight/devices/<tpdm-name>/label
->>> +Date:           Dec 2024
->>> +KernelVersion   6.14
->>> +Contact:        Mao Jinlong <quic_jinlmao@quicinc.com>
->>> +Description:    (Read) Show hardware context information of device.
->>> diff --git a/drivers/hwtracing/coresight/coresight-sysfs.c
->>> b/drivers/hwtracing/coresight/coresight-sysfs.c
->>> index a01c9e54e2ed..4af40cd7d75a 100644
->>> --- a/drivers/hwtracing/coresight/coresight-sysfs.c
->>> +++ b/drivers/hwtracing/coresight/coresight-sysfs.c
->>> @@ -7,6 +7,7 @@
->>>    #include <linux/device.h>
->>>    #include <linux/idr.h>
->>>    #include <linux/kernel.h>
->>> +#include <linux/property.h>
->>>
->>>    #include "coresight-priv.h"
->>>    #include "coresight-trace-id.h"
->>> @@ -366,18 +367,47 @@ static ssize_t enable_source_store(struct device
->> *dev,
->>>    }
->>>    static DEVICE_ATTR_RW(enable_source);
->>>
->>> +static ssize_t label_show(struct device *dev,
->>> +		struct device_attribute *attr, char *buf) {
->>> +
->>> +	const char *str;
->>> +	int ret = 0;
->>> +
->>> +	ret = fwnode_property_read_string(dev_fwnode(dev), "label", &str);
->>> +	if (ret == 0)
->>> +		return scnprintf(buf, PAGE_SIZE, "%s\n", str);
->>> +	else
->>> +		return ret;
->>> +}
->>> +static DEVICE_ATTR_RO(label);
->>> +
->>>    static struct attribute *coresight_sink_attrs[] = {
->>>    	&dev_attr_enable_sink.attr,
->>> +	&dev_attr_label.attr,
->>>    	NULL,
->>>    };
->>>    ATTRIBUTE_GROUPS(coresight_sink);
->>>
->>>    static struct attribute *coresight_source_attrs[] = {
->>>    	&dev_attr_enable_source.attr,
->>> +	&dev_attr_label.attr,
->>>    	NULL,
->>>    };
->>>    ATTRIBUTE_GROUPS(coresight_source);
->>>
->>> +static struct attribute *coresight_link_attrs[] = {
->>> +	&dev_attr_label.attr,
->>> +	NULL,
->>> +};
->>> +ATTRIBUTE_GROUPS(coresight_link);
->>> +
->>> +static struct attribute *coresight_helper_attrs[] = {
->>> +	&dev_attr_label.attr,
->>> +	NULL,
->>> +};
->>> +ATTRIBUTE_GROUPS(coresight_helper);
->>> +
->>>    const struct device_type coresight_dev_type[] = {
->>>    	[CORESIGHT_DEV_TYPE_SINK] = {
->>>    		.name = "sink",
->>> @@ -385,6 +415,7 @@ const struct device_type coresight_dev_type[] = {
->>>    	},
->>>    	[CORESIGHT_DEV_TYPE_LINK] = {
->>>    		.name = "link",
->>> +		.groups = coresight_link_groups,
->>>    	},
->>>    	[CORESIGHT_DEV_TYPE_LINKSINK] = {
->>>    		.name = "linksink",
->>> @@ -396,6 +427,7 @@ const struct device_type coresight_dev_type[] = {
->>>    	},
->>>    	[CORESIGHT_DEV_TYPE_HELPER] = {
->>>    		.name = "helper",
->>> +		.groups = coresight_helper_groups,
->>>    	}
->>>    };
->>>    /* Ensure the enum matches the names and groups */
->>
->> _______________________________________________
->> CoreSight mailing list -- coresight@lists.linaro.org To unsubscribe send an
->> email to coresight-leave@lists.linaro.org
 
+Synchronously? How can that help when the recovery_work() cannot acquire the
+lock?
+
+Anyhow, even if the lock is not available during resume (worst case), PCI core
+should reset the device when it tries to change the state.
+
+I don't know if there is any better solution available.
+
+- Mani
+
+-- 
+மணிவண்ணன் சதாசிவம்
 
