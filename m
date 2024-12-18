@@ -1,98 +1,90 @@
-Return-Path: <linux-arm-msm+bounces-42618-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-42619-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A0D9C9F6149
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Dec 2024 10:19:53 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id EF5D09F614C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Dec 2024 10:21:11 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id F3C8116A40F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Dec 2024 09:19:43 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id D588C7A15A7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Dec 2024 09:21:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 42D6F1990C8;
-	Wed, 18 Dec 2024 09:19:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7BCC41925A2;
+	Wed, 18 Dec 2024 09:21:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bSavLOVH"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="B5hcSH8o"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1283A1990AF;
-	Wed, 18 Dec 2024 09:19:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DF771547FF;
+	Wed, 18 Dec 2024 09:21:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734513566; cv=none; b=qVUfaA9pSgn7sMJyP7vdqoS0DibzEyfDcRhgx1+rdkNPBCVlb7dkl0GWrcRlyP9p6xSvbVbX4UoDD41QCnHg/86YP9yuskkp0poya1L/npm9n5R3rwCy4jrYxpMPKFnsk6qPqZw2jXwp734A6upytAlESzs5pSLssV44K/AwO30=
+	t=1734513664; cv=none; b=XhXRG2XcLgLWQLp/nan5v/vhJVhofbf7csy/KrHHt9P2/irHH7YYE4JE71g70FAECjLPBL4SjEEe0XSVEwQKsXcYBsG/DJ8J7oHbGhvoRbliLWonF4adXH3NiRfXOoNj725ITfmLmrX9PT6+9IH/qSnX0N4+q2JgCneCupCm+zE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734513566; c=relaxed/simple;
-	bh=XTLIOHxUqyXug0V3m3wdVWkNSyqhrDwpS2lvo1q2VfE=;
+	s=arc-20240116; t=1734513664; c=relaxed/simple;
+	bh=Joxf91zRAXiTP8nr5vRtQiFgbbbWcdv7Yamp7pB847Y=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=e1kLxX4gw8r/QJcVO3uvJeHgLDC6M0zp7/V5IB0PrM6V0/rAwj/nkGS2XAVdi+svONkn62cjPZ+0L2szK57/hthKcW1GSvxHQplzI1EUOwNJRInIYmrfXxkyjA7/BDGiPueDz1Flch9EEMhFlZ6hFfJpQOxnZuwxNJcyX+bxfBc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bSavLOVH; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E16EC4CED0;
-	Wed, 18 Dec 2024 09:19:22 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=Z+NBrZHredsFZy/y0xujR7YEOdk3bVY2r54ozwLrKAS8xpim1v3rLONFys2QE3rTbtXcx+hWWOZLFMqL3adfv5EkNOoMekLw5OyFBdwibT76HR9HMqkQkAq7ZtAWTW/ojsgIAKh3lkiazNHWiUFbYYdl3HFNOUy9iCCSFU6QdO0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=B5hcSH8o; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64B80C4CECE;
+	Wed, 18 Dec 2024 09:21:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1734513565;
-	bh=XTLIOHxUqyXug0V3m3wdVWkNSyqhrDwpS2lvo1q2VfE=;
+	s=k20201202; t=1734513664;
+	bh=Joxf91zRAXiTP8nr5vRtQiFgbbbWcdv7Yamp7pB847Y=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=bSavLOVH5DIbKaU+nW9OA1MY/kWn5fZrXc1XDKhfnZ1pcdunthoYWcAgQP9orrWPr
-	 e0GFO9xHVGJvsfRdMhTJeW2tP4ZNIZGGUGN8kGPEh6Zfl4UTyC2GGEBGqDi9Sd/aRH
-	 Zq8z3XHhRc9L+f0yDPFV+j+T9VOtfp+OBaWUf1/IhPrwOUcQZ3nBnKhFpKCsX5jHcM
-	 BRDBRcelN+QelQnfajL88XBLwh6ruQqpJ1hIUW8krttG3LVcImCx9p0tDxxIJHkxUC
-	 Igskn+085k7a+bzHMMYLtwdqmlOM+EApgOQ2tpb7tUlm5sXvlx9gEFlxVXodQ8Bxay
-	 ZTpJrU3izGpWA==
-Date: Wed, 18 Dec 2024 10:19:20 +0100
-From: Niklas Cassel <cassel@kernel.org>
-To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc: kw@linux.com, gregkh@linuxfoundation.org, arnd@arndb.de,
-	lpieralisi@kernel.org, shuah@kernel.org, kishon@kernel.org,
-	linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org,
-	bhelgaas@google.com, linux-arm-msm@vger.kernel.org, robh@kernel.org,
-	linux-kselftest@vger.kernel.org
-Subject: Re: [PATCH v3 0/4] Migrate PCI Endpoint Subsystem tests to Kselftest
-Message-ID: <Z2KTmMjzRPIFdvfo@ryzen>
-References: <20241211080105.11104-1-manivannan.sadhasivam@linaro.org>
- <Z1qsIREtdeR38fF6@ryzen>
- <20241216060337.cvhwvdzt34ocg2uf@thinkpad>
+	b=B5hcSH8ooPBhGZqErclxci8uP7prhV1ZdwaqcTB+bwAa8GRfLCDVFVe4n+c32yMZg
+	 C1CzkV4AShBwXnis3lHCbJON9oPNXwYn2OxPwEgE8m3m5otfywd0VpmxTZbMiwOXqr
+	 iySj9gFsSen2kDRuIpPknWBwniotQc+sD0Stj1tRt+21kiqTcO3xGEUODEHsrpyuJt
+	 9LsjggR28XZBVM5CSAogRyADPtcTZ0tujnIVE7x5siHAz0IJljl8DwTFBU2TFeuXtk
+	 2BgMnJ6h09sq9rv015mVdI91oJHu12K0a7HyVq4luK2cA8jC65V7yFEN18kFYTe4N+
+	 oeOZ89RmKjenw==
+Date: Wed, 18 Dec 2024 10:21:00 +0100
+From: Krzysztof Kozlowski <krzk@kernel.org>
+To: Mao Jinlong <quic_jinlmao@quicinc.com>
+Cc: Suzuki K Poulose <suzuki.poulose@arm.com>, 
+	Mike Leach <mike.leach@linaro.org>, James Clark <james.clark@arm.com>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Mathieu Poirier <mathieu.poirier@linaro.org>, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v6 1/2] dt-bindings: arm: Add label in the coresight
+ components
+Message-ID: <tida22chffj2znikeotmo52aqnzvmedn3aa7a2coarz2dwjc7w@duw5fby4hexk>
+References: <20241217063324.33781-1-quic_jinlmao@quicinc.com>
+ <20241217063324.33781-2-quic_jinlmao@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20241216060337.cvhwvdzt34ocg2uf@thinkpad>
+In-Reply-To: <20241217063324.33781-2-quic_jinlmao@quicinc.com>
 
-On Mon, Dec 16, 2024 at 11:33:37AM +0530, Manivannan Sadhasivam wrote:
-> On Thu, Dec 12, 2024 at 10:25:53AM +0100, Niklas Cassel wrote:
-> > 
-> > If you need to respin this series, I strongly suggest that you send the
-> > Qcom fix separately. It is totally independent, and should be merged ASAP.
-> > 
+On Tue, Dec 17, 2024 at 02:33:23PM +0800, Mao Jinlong wrote:
+> Current name of coresight component's folder consists of prefix of
+> the device and the id in the device list. When run 'ls' command,
+> we can get the register address of the device. Take CTI for example,
+> if we want to set the config for modem CTI, but we can't know which
+> CTI is modem CTI from all current information.
 > 
-> Even though it is an independent fix, it is needed to get Kselftests (also the
-> legacy ones) passing without failures. That's why I kept it as patch 1.
-> Otherwise, someone may test it and report failures.
+> cti_sys0 -> ../../../devices/platform/soc@0/138f0000.cti/cti_sys0
+> cti_sys1 -> ../../../devices/platform/soc@0/13900000.cti/cti_sys1
+> 
+> Add label to show hardware context information of each coresight
+> device. There will be a sysfs node label in each device folder.
+> 
+> cat /sys/bus/coresight/devices/cti_sys0/label
+> 
+> Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
 
-If qcom needs this fix, then surely pcitest.sh is already failing for the
-BAR test for BAR 1 and BAR 3, for all qcom SoCs, and must have been doing
-so since the introduction of the introduction of the qcom-pcie-ep driver.
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-That should be fixed of course, but I do not see why converting the tests
-to kselftests is related in any way.
+Best regards,
+Krzysztof
 
-It seems cleaner if this series just converts the tests cases to
-kselftests, and nothing else. EPC drivers that was passing before should
-still pass after this conversion.
-
-I understand that the qcom fix is important though, which is even bigger
-reason that it should be sent separately, so that it can go in ASAP, and
-not be blocked on this series landing. Because, AFAICT, you need that qcom
-fix to make the pcitest.sh test cases (even without converting to
-kselftests).
-
-
-Kind regards,
-Niklas
 
