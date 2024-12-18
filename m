@@ -1,79 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-42680-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-42681-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5F23C9F660E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Dec 2024 13:38:55 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id ECBBE9F6643
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Dec 2024 13:56:35 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 885E01888A9A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Dec 2024 12:38:54 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id A67377A38B9
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Dec 2024 12:56:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 70B591ACED3;
-	Wed, 18 Dec 2024 12:38:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D80C61ACEA9;
+	Wed, 18 Dec 2024 12:56:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ORVQckdG"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="R2IMnZh0"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BA141ACEB4
-	for <linux-arm-msm@vger.kernel.org>; Wed, 18 Dec 2024 12:38:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B26C1150980;
+	Wed, 18 Dec 2024 12:56:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734525516; cv=none; b=NapPe/CBDrrI+TTwOAHU6kEJgCBop3tLnaaciVb0JCWcRlVk90KdrO05Cne0UASp7qTHJS9g3js0xyW9u2nhxfxxef16hjpxCHXFSL1zvbjMsmn9gHk5nGfvkzFR7oUB+IymFwtlHtKcVmyIB0Styvai1L9uP3Pv674fIKRf7WA=
+	t=1734526586; cv=none; b=EaVq+G2Rx+guFW1jJK9VLHfvu2e+upSCNlyVAw6Zxmr3MrmuP5jt3PgmgdkKBR9hDIKmxn1lpZQduirFw3C/LICSyl9ODDGOEzZJMHptVM+ajzCQZe9gQotLjY+y/a2+PUwM0z7OyuPCSNAsVgM/PmN20RMc40iZdO1GpV2UfXw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734525516; c=relaxed/simple;
-	bh=ny8AZFxGArSK4lKyOaV5lQtUZhTpx9qpDZsMP3LtNtg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=piwxfUjUTgRyl3ywWbxWKZ36W0NVWyzVC9LE0Y6EwK6IyV8rgoJSl5VZGFTtwGHZDijh8eSegFJk+TSr5OqjiAH75yAKLBuncGDJrPvUD+gEef0lp1McdRqwmbah4FUpy62WLW3I4yE7MjLhPkyYCOGpWMHoOOkPUznR1QPQNNU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ORVQckdG; arc=none smtp.client-ip=209.85.221.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-38625aa01b3so629976f8f.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Dec 2024 04:38:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1734525513; x=1735130313; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
-         :from:references:cc:to:subject:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=3DZgOSN0lNpblvMz9+E1HszL54oJNT4pvL2gUwIgVEE=;
-        b=ORVQckdGQnxoax6CTBl2wsTmSnNAxJ67f2Jig1bqFzOoaKmOnQf9qhp5wOA8Z4UbXC
-         /98FWnTzkQOiA4ftppDEK8VLd2KUNoBpm8wfluW6OqV9qqDHXQEscxVwfNSCxU5olarT
-         osGMYGAj6hbYiu2pW+KTQ3q4l3kQr5s6W9zR7Hvxx2LNxZQLIRCYrjdhlQIkhKzKDfWC
-         s7XfwZ6pXoMFFFHexLQVwTPBSZp8Y2zffj2cNqkIyj7/bBLujJsEpQr2W65NBDxboI5Z
-         CiX4DqwNmkiWmAzxSF7GZtA2tP2gRXvKVa3LfP8bf8hdhD/Uuifj9EIzTtzZBoA5GWI4
-         DhhA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734525513; x=1735130313;
-        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
-         :from:references:cc:to:subject:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=3DZgOSN0lNpblvMz9+E1HszL54oJNT4pvL2gUwIgVEE=;
-        b=dlB4bfMI0Ha72n57MvucpTcQrr44eTqeL+Ck2Ax3HFXkHa1/u3nuilWuyvGKAGN3C9
-         AtdBqaqZEqCgr8kWS2/rZD2BIZymtrWkXHn3e7GvoU1ov6Dz0/Zk+urT9V4Zs3XApZxf
-         ouJ/DtRI563ukrGwb7XhNLsoZ6z9nRkn2HgNOW73TJiP3R1/LGgL6/7f1rFlqI2R9MYd
-         o61z0Nx0UhDaj1LAYDIYvbXZ7OUwu+1aH7MFzo6kuCKSO8tg6nBJ6sDggCUO4JpVfKZX
-         4qtrDYCxn6Ubx1rvegRK2LX0yKxMFiqX2aaDP8lO+dgFjCuBua7JzuC0UGffg/HQmEzu
-         p7TA==
-X-Forwarded-Encrypted: i=1; AJvYcCUxVNQpjliYlOuVn2/BBMB7QfQltOI2cg5CMIVDaz8xn2tubbPVD3WNOsYiEE1xVYSZCKEWVze1CPXKh5gE@vger.kernel.org
-X-Gm-Message-State: AOJu0YwDWcEIjyPuDjXVTJ0tR69j8ia39DXDkKFylRhOvFQANzeTHtw0
-	aEGmd4LAAttX9OWBPoWeQx+G+iDJHVwJVY/sGAigrjTp4SqEO/U30NpRNQrHFS8=
-X-Gm-Gg: ASbGncuTR0CRWmXkREDQZykzfgaUElaDzwusN/dSwsr642SEId9v78iBNR8GnQqNQ0z
-	SIC5NrUcksX7QF9wDGGCBsYyT+KmUdn3EzyMfCKlCuJEl2hHEORyahWlpYSFybI9Spw8fm2ViOB
-	dVEIAhIC12BiEcbfo3liqA58aD2TCWyiXONkCkykUOtMmGLXgtTbUs7bG6EKLDp76s2mcO28bWJ
-	Lr9b5sIMchF7FzvMWoMK/2hrGrdosaEE0ObAIOZ8DZgJtx+nroHRJBFPtf+jDDIUXiife2AXU3A
-X-Google-Smtp-Source: AGHT+IGZ2XfCQIns+N5v5d09KDbIQcXMqvYrvtPujRqrDjoUz23a369nVmkZdoEpblXux47osJXWjw==
-X-Received: by 2002:a05:600c:1396:b0:435:1243:c542 with SMTP id 5b1f17b1804b1-43655341cfbmr9293905e9.1.1734525512845;
-        Wed, 18 Dec 2024 04:38:32 -0800 (PST)
-Received: from [192.168.1.20] ([178.197.223.165])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43656b3b2a4sm18841915e9.27.2024.12.18.04.38.31
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 18 Dec 2024 04:38:32 -0800 (PST)
-Message-ID: <0a265953-0c6a-4b8b-a972-a59ec4755474@linaro.org>
-Date: Wed, 18 Dec 2024 13:38:30 +0100
+	s=arc-20240116; t=1734526586; c=relaxed/simple;
+	bh=mHp390HvuXsRP7wpYa9B4FKeCalkTIkjNJzZMfTQSx8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=I/JtzRY1niL4RUGH5dLgDdUMQToqjvd7054OIunusYqx1UQX6mvltM+4QrFCeLcuXFOo01OV/DnHiXNRUvqhr7Xrjn0IBotpFqyelJbujgcPsw08CN7JbKUcXkR1fyl2fE/Inm+lo4XOCdCV/KWQL4zrJj/w6cGJ5binpnXtMbk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=R2IMnZh0; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BI5D5hK014164;
+	Wed, 18 Dec 2024 12:56:06 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	5EFi+D8L1sliDzm+pZs/Y3qUJhXMvOXHIkiSpJAY964=; b=R2IMnZh0orlzs4SL
+	eW0O4wZHHWPWVDijHIoLvsYcMV2tLz8i+62up42gexTgKbj+K1RUlKSu+6vydKgJ
+	caMaBIamhC4QeJVyKSMhIgPUgQuFMUNlwOFvE+syE72WUCb/OaXv2m3jxr97oaOu
+	wu4KzAsAsVrU7CDyDOXFKl0Xk2i1rmoold72Lipioy14pEJ4Xbvh5P0nil6iJJGu
+	AnQxNpjvfjyn7L/w/TdlO9cOzG1fvM5wc1N+OZD3c/zLmmA8v45UKo/aHHSWmICd
+	42VA1nU/fFZ9/VGrfbyuAauYW5X+DxMyZQ7kTYMebu0nL1zzpOWSes1o2q+Nzd4H
+	RKxq4Q==
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43kr1xs4jd-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 18 Dec 2024 12:56:05 +0000 (GMT)
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4BICu438019784
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 18 Dec 2024 12:56:04 GMT
+Received: from [10.64.16.135] (10.80.80.8) by nasanex01c.na.qualcomm.com
+ (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 18 Dec
+ 2024 04:55:57 -0800
+Message-ID: <df1a4457-129e-452c-8089-ee1e6f9a3e12@quicinc.com>
+Date: Wed, 18 Dec 2024 20:55:54 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -81,112 +65,200 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 3/3] media: dt-bindings: qcom-venus: Deprecate
- video-decoder and video-encoder where applicable
-To: Renjiang Han <quic_renjiang@quicinc.com>,
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
- Vikash Garodia <quic_vgarodia@quicinc.com>,
- Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: quic_vnagar@quicinc.com, quic_dikshita@quicinc.com,
- konradybcio@kernel.org, linux-media@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
- devicetree@vger.kernel.org, Stanimir Varbanov <stanimir.varbanov@linaro.org>
-References: <20241209-media-staging-24-11-25-rb3-hw-compat-string-v5-0-ef7e5f85f302@linaro.org>
- <20241209-media-staging-24-11-25-rb3-hw-compat-string-v5-3-ef7e5f85f302@linaro.org>
- <283a54b2-6e00-4d3a-95a3-df4a06bc1292@quicinc.com>
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Content-Language: en-US
-Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
- 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
- D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <283a54b2-6e00-4d3a-95a3-df4a06bc1292@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Subject: Re: [PATCH 3/8] phy: qcom: qmp-usbc: Add DP phy mode support on
+ QCS615
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC: Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar
+	<quic_abhinavk@quicinc.com>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten
+	<marijn.suijten@somainline.org>,
+        Maarten Lankhorst
+	<maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        Rob Herring <robh@kernel.org>,
+        "Krzysztof
+ Kozlowski" <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        "Kuogee
+ Hsieh" <quic_khsieh@quicinc.com>,
+        Vinod Koul <vkoul@kernel.org>,
+        "Kishon
+ Vijay Abraham I" <kishon@kernel.org>,
+        Linus Walleij
+	<linus.walleij@linaro.org>,
+        Bartosz Golaszewski <brgl@bgdev.pl>, <quic_lliu6@quicinc.com>,
+        <quic_fangez@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
+        <dri-devel@lists.freedesktop.org>, <freedreno@lists.freedesktop.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-phy@lists.infradead.org>, <linux-gpio@vger.kernel.org>
+References: <20241129-add-displayport-support-for-qcs615-platform-v1-0-09a4338d93ef@quicinc.com>
+ <20241129-add-displayport-support-for-qcs615-platform-v1-3-09a4338d93ef@quicinc.com>
+ <CAA8EJppOR_UXoVpMt-dhfWdCz3UNfsXGdz8X9NqpaSmYj3AZDg@mail.gmail.com>
+ <5ea14162-567b-462d-be02-b73b954b7507@quicinc.com>
+ <5whv4z7u6fkfwlv5muox5dmv6fow4mga76ammapw7wph7vwv3f@xibcjdfqorgf>
+ <iqcofcntirmlwcpyfr4yabymqfcgyrij57bibf337tmxpa73t6@npkt6wquenf6>
+ <527baded-f348-48a8-81cd-3f84c0ff1077@quicinc.com>
+ <t5vcjlf44fhae4f2h75cfs3f7r6tdstw4ysmkapvvawj6xp23x@xnxqnxvyhshe>
+ <d5151b82-5f05-4826-99b4-e925c20550b4@quicinc.com>
+ <7vdaasc3flhpabnorjty5qjorlbp22honuscgpbteakgagg2tq@frqa6flk2mmv>
+From: Xiangxu Yin <quic_xiangxuy@quicinc.com>
+In-Reply-To: <7vdaasc3flhpabnorjty5qjorlbp22honuscgpbteakgagg2tq@frqa6flk2mmv>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01c.na.qualcomm.com (10.45.79.139)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: -kPUvlmlGHd-fDfNQ53Dseg79wQrHHl1
+X-Proofpoint-ORIG-GUID: -kPUvlmlGHd-fDfNQ53Dseg79wQrHHl1
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
+ suspectscore=0 malwarescore=0 adultscore=0 bulkscore=0 mlxlogscore=999
+ lowpriorityscore=0 clxscore=1015 spamscore=0 mlxscore=0 priorityscore=1501
+ phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2412180103
 
-On 18/12/2024 11:46, Renjiang Han wrote:
-> 
-> On 12/9/2024 7:52 PM, Bryan O'Donoghue wrote:
->> For the list of yaml files here the video-decoder and video-encoder nodes
->> provide nothing more than configuration input for the driver. These entries
->> do not in fact impart hardware specific data and should be deprecated.
+
+
+On 12/12/2024 3:15 AM, Dmitry Baryshkov wrote:
+> On Wed, Dec 11, 2024 at 08:50:02PM +0800, Xiangxu Yin wrote:
 >>
->> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
->> ---
+>>
+>> On 12/11/2024 5:46 PM, Dmitry Baryshkov wrote:
+>>> On Wed, Dec 11, 2024 at 08:46:16AM +0800, Xiangxu Yin wrote:
+>>>>
+>>>>
+>>>> On 12/10/2024 11:09 PM, Dmitry Baryshkov wrote:
+>>>>> On Thu, Dec 05, 2024 at 08:31:24PM +0200, Dmitry Baryshkov wrote:
+>>>>>> On Thu, Dec 05, 2024 at 09:26:47PM +0800, Xiangxu Yin wrote:
+>>>>>>>
+>>>>>>>
+>>>>>>> On 11/29/2024 10:33 PM, Dmitry Baryshkov wrote:
+>>>>>>>> On Fri, 29 Nov 2024 at 09:59, Xiangxu Yin <quic_xiangxuy@quicinc.com> wrote:
+>>>>>>>>>
+>>>>>>>>> Extended DP support for QCS615 USB or DP phy. Differentiated between
+>>>>>>>>> USBC and DP PHY using the match table’s type, dynamically generating
+>>>>>>>>> different types of cfg and layout attributes during initialization based
+>>>>>>>>> on this type. Static variables are stored in cfg, while parsed values
+>>>>>>>>> are organized into the layout structure.
+>>>>>>>>
+>>>>>>>> We didn't have an understanding / conclusion whether
+>>>>>>>> qcom,usb-ssphy-qmp-usb3-or-dp PHYs are actually a single device / PHY
+>>>>>>>> or two PHYs being placed next to each other. Could you please start
+>>>>>>>> your commit message by explaining it? Or even better, make that a part
+>>>>>>>> of the cover letter for a new series touching just the USBC PHY
+>>>>>>>> driver. DP changes don't have anything in common with the PHY changes,
+>>>>>>>> so you can split the series into two.
+>>>>>>>>
+>>>>>>> Before implement DP extension, we have discussed with abhinav and krishna about whether use combo, usbc or separate phy.
+>>>>>>
+>>>>>> What is "DP extension"?
+>>>>>>
+>>>> I'm sorry confusion casued by my description. It's means extend DP implemnt for USBC phy driver.
+>>>>>>>
+>>>>>>> We identified that DP and USB share some common controls for phy_mode and orientation.
+>>>>>>> Specifically, 'TCSR_USB3_0_DP_PHYMODE' controls who must use the lanes - USB or DP,
+>>>>>>> while PERIPH_SS_USB0_USB3PHY_PCS_MISC_TYPEC_CTRL controls the orientation.
+>>>>>>> It would be more efficient for a single driver to manage these controls. 
+>>>>>>
+>>>>>> The question is about the hardware, not about the driver.
+>>>>>>
+>>>>>>> Additionally, this PHY does not support Alt Mode, and the two control registers are located in separate address spaces. 
+>>>>>>> Therefore, even though the orientation for DP on this platform is always normal and connected to the video output board, 
+>>>>>>> we still decided to base it on the USBC extension.
+>>>>>>
+>>>>>> Could you please clarify, do usb3-or-dp PHYs support DP-over-USB-C? I
+>>>>>> thought that usbc-or-dp platforms support that, but they don't
+>>>>>> support DP+USB pin configuration. Note, the question is broader than
+>>>>>> just QCS615, it covers the PHY type itself.
+>>>>>>
+>>>>>> Also, is TCSR configuration read/write or read-only? Are we supposed to
+>>>>>> set the register from OS or are we supposed to read it and thus detemine
+>>>>>> the PHY mode?
+>>>>>
+>>>>> Any updates on these two topics?
+>>>>>
+>>>> Still confirming detail info with HW & design team.
+>>>> I’ll update the information that has been confirmed so far.
+>>>> This phy support DP-over-USB-C,but it's not support alt-mode which 2 lane work for DP, other 2 lane work for USB.
+>>>> TCSR phy mode is read/write reg and we can read for determine phy mode.
+>>>
+>>> Ok, thanks for the explanation. From my point of view:
+>>>
+>>> - Implement the DP PHY to be a part of the same driver. Each device
+>>>   supported by the usbc driver should get both PHYs.
+>>>
+>>> - Make sure not to break the ABI: #phy-cells = <0> should still work and
+>>>   return USB PHY, keeping backwards compatibility. Newer devices or
+>>>   upgraded DT for old devices should return USB PHY for <... 0> and DP
+>>>   PHY for <... 1>.
+>>>
+>> Yes, currently we have implemented like your description,
+>> Each deivce shoud get both PHYs, DP PHY for <... 1> and USB PHY for <... 0>.
+> 
+> Please note the backwards compatibility clause.
+> 
+For the USB node, we kept the same implementation as the original function interface, and the devicetree node definition also remains unchanged.
+In subsequent patches, I will follow Krzysztof’s suggestion to use a separate DT-binding to describe the DP PHY configuration, 
+without making changes to the USB devicetree and DT-binding implementation.
+>>> - I'm not shure how to handle the USB and DP coexistence, especially in
+>>>   your case of the USB-or-DP PHY.
+>>>
+>> For coexistence process:
+>>
+>> When we start implement DP part, usb driver team said only need config TCSR phy mode and orientation during switch in USB-C port.
+>> Based on your previous comments avout SW_PWRDN, I'm confirming with the USB team whether SW_REST/SWPWRDN/START_CTRL registers might affect DP.
+> 
+> Thanks!
+> 
+>> Anyway, even though the original SoC design supports DP or USB over Type-C，
+>> but on QCS615 ADP AIR platform, there are only four USB-A port which works with 'qcs615-qmp-usb3-phy' driver, and no USB-C port.
+>> DP port is mappped from usb pin to the video out sub-board.
+>> so we are unable to verify the switching case between DP and USB devices under USB-C.
+> 
+> That's also fine. We will get to that point once MSM8998 / SDM660
+> get USB-C support (the only current blocker is the support for the
+> TYPEC block of the PMI8998).
+> 
+I can't access MSM8998 / SDM660 documents now, but I have confirmed detail info about USB & DP phy design for sm6150.
 
+The 'usb-ssphy-qmp-usb3-or-dp PHY' on the current platform is essentially composed of three sub-PHYs, 
+which can even be considered as three separate PHYs: USB3 primary PHY, USB3 secondary PHY, and USB3 DP PHY.
 
-Please kindly trim the replies from unnecessary context. It makes it
-much easier to find new content.
+On the QCS615, the USB primary PHY is currently used to handle USB 3.0 communication for the previously mentioned four USB Type-A ports, 
+while the USB3 secondary PHY and USB3 DP PHY are used for the output of the Type-C port,
+but since the Type-C port is forcibly pin-to-pin configured to the video out board, the Type-C port will always configure as DP PHY.
 
->> @@ -132,12 +132,4 @@ examples:
->>           resets = <&gcc GCC_VIDEO_AXI0_CLK_ARES>,
->>                    <&videocc VIDEO_CC_MVS0C_CLK_ARES>;
->>           reset-names = "bus", "core";
->> -
->> -        video-decoder {
->> -            compatible = "venus-decoder";
->> -        };
->> -
->> -        video-encoder {
->> -            compatible = "venus-encoder";
->> -        };
->>       };
-> It is working fine on QCS615.
-> Tested-by: Renjiang Han <quic_renjiang@quicinc.com>
+The internal registers of these three PHYs are independent of each other, Neither their respective SWPWR_DN nor SWRST will affect the other two PHYs.
+Additionally, there was a misunderstanding about the orientation previously.
+The USB orientation setting only affects the current PHY and does not impact the DP PHY. The DP PHY is configured in the DP_PHY_CFG_1.
 
+TSCR_PHY_MODE can specify which PHY outputs to the Type-C port, and the global reset will simultaneously reset the two associated PHYs. 
+Therefore, the correct switching process is as follows.
+When switching the inserted device:
+	1.Identify the PHY type.
+	2.Enable the regulator.
+	3.Trigger a reset.
+	4.Enable the clock.
+	5.Configure PHY type related orientation
+	6.switch the TCSR PHY mode.
+	7.Configure the registers of PHY.
+During release:
+	1.Reset.
+	2.Disable the clock.
+	3.Disable the regulator.
 
-How? How is it possible to test a binding on real hardware? To my
-knowledge it is impossible, so I really would like to see explanation of
-this tag.
+Our current design overall complies with this process, but it lacks the configuration for DP_PHY_CFG_1.
 
-I recently voiced my concerns that I really dislike tested-by tags on
-bindings, because they are fake or not accurate. Story continues...
+Shall we continue the discussion to clarify remain comments of the USBC driver?
 
+>> However, I'm also confirming whether anything other will affect USB and DP each other.
+> 
 
-
-Best regards,
-Krzysztof
 
