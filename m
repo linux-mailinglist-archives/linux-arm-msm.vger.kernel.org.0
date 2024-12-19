@@ -1,136 +1,170 @@
-Return-Path: <linux-arm-msm+bounces-42726-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-42727-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id BE6F19F7361
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Dec 2024 04:34:02 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 814A89F73A9
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Dec 2024 05:17:38 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0E8AF163B8D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Dec 2024 03:34:00 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6A14A1891C58
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Dec 2024 04:17:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2B45386336;
-	Thu, 19 Dec 2024 03:33:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5D76B8634D;
+	Thu, 19 Dec 2024 04:17:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="KxecruQX"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="lPfTzq3M"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pg1-f169.google.com (mail-pg1-f169.google.com [209.85.215.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7606012B169
-	for <linux-arm-msm@vger.kernel.org>; Thu, 19 Dec 2024 03:33:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F0883C0C;
+	Thu, 19 Dec 2024 04:17:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734579237; cv=none; b=jG0CfDqxDHfZ5MsAZq7rvzXoKf7yEbcc2yuV6zAEV11sn0qYL9cCqguzpR6bn1iv7k4+uwpsaH+rPOtwTMl8kNRFeyW4lPqljVtr4kffZtSsaYT7IyZaBJQQjYR0vPo/U8hgR6P+2oqyD60n+c8yRsmZ6UZ8jDXfLi8hetUOZIQ=
+	t=1734581852; cv=none; b=bqb0znZaDG20AVFUCG4tTib2FrbpgRjvB+btNzZfFRsXxBtwNMfv7/+ilWfGUCbP+fcrDrDdZWSocOO7LviJzYCwcfgkV+pDdDmqKm20f9FzCIHWhP+JW2o9dqO8mIK3DYH5OYbvBblJ8xLyHWXfGq2spp12mZd2egHpGc8Eenc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734579237; c=relaxed/simple;
-	bh=qdYu2BzMyzhgJhPqn1EdSg3rwRAPDPj53HneVzzCGaI=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=KDIrLEn3tKEFi2cvS3ywAmAbXPeBG/IAsxYBLeDqRcF0D1AHbvdxePiMD7CNbl8yZSsas3OF4RQoFpvPLB6B+rzBfNyfaJL3PTOOLqJmi6eRfb+BVho8IZ6NaNKkQcCQdFPkpbIl3OQZdle/LPL9s+ay28nb8nDb0gyLAGzrnsA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=KxecruQX; arc=none smtp.client-ip=209.85.215.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
-Received: by mail-pg1-f169.google.com with SMTP id 41be03b00d2f7-7f46d5d1ad5so164494a12.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Dec 2024 19:33:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1734579234; x=1735184034; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=o3AwYnmz6MD7Ja4YJt8URQU0bT2UyVpGcn4xu/YwQmw=;
-        b=KxecruQX+6HqQSDMcKNcSyHUwJWV17moFqHH1gYjX6B5Xsof9qdb/p+KKauwCVk5TF
-         7+MjUwfbLIS8rrbt2ErONvqEHqwm+w6GvTmXtBoBCph+RiYI5wQJfayFs9J1OERnFtcF
-         4zKAv9v1Hx0BLOgBo56xllplwtBhTWgg75t1w=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734579234; x=1735184034;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=o3AwYnmz6MD7Ja4YJt8URQU0bT2UyVpGcn4xu/YwQmw=;
-        b=AldopSZ+imnmPG51unCpk2wTVbpj16P1h38PXrD1NTCnfA4ce1ZHIM8Ez9Un/Ju9nI
-         pDmIqluJJmDunTAI2NV5nIjmEPj9cn9KWFr9bysqBVfusefZcE0HlAZ9kLgh+qbhV1UG
-         bIg8cLI372VTkrT8GqNrK+GVuoa8L8ziAeFHeJ1tysQ5TmvfMw0LxowVkxFKLFm0diCZ
-         +Cnne3yDsXsW34xKg0W57NfIMcDMPRaLER2mtaU6Pev7f3ArvjdjZtJ6q/+xChcHaWUm
-         34Ab0GD72UUP6V3TmTbkNZkvAlp4C0VLed1rxNRAbGTUzP6ZG9GOQ4O9gFPbhlMdVC4A
-         hVOg==
-X-Forwarded-Encrypted: i=1; AJvYcCUlJo4vWc5wutYcL1r0BxaQ5poqAan7TH3p22eZwOfg/Am5EjfOtTmZuDKgJrCHPezfwmzzKkk66baYagvK@vger.kernel.org
-X-Gm-Message-State: AOJu0Yzp11BPSQGhu40jdiOYQd588/Cy44GDkNl9gOtBE1hN5QA1/dnB
-	moSf+eMJYmgjOylI2JQcJZS1MUWASokygpSdgsnYrpI3XiWL0xWZaf8D1SrWMg==
-X-Gm-Gg: ASbGncsPCFh24+Hp2lloc5U5ytEnGKd8J1r7cXekjEmAkmqajXrEjw+0OXAUykLca7X
-	pbGY8mk2/sYoizm6I0/UNQ6lKMDbN1T0WEUkC07eRBn3/luOtjV4MEIRaQ5J2Q9i7YEAWFzVtqt
-	/MS1PphaxTkBImLrCDk6Z6/LNRlYykk7kpt9JFjFiBI11hsmS+WamCJjiUzkZdjdgB4MU76wEjk
-	v0bjR7hbk6VCJiWQ8zHa/6p67rMz5rR8Kcx3msAaUG7Z5XZnWvWUz7QeGU=
-X-Google-Smtp-Source: AGHT+IGqFWc3fvzI/39Qa+QVM5tyy0L+HrHcLRtJpADNMNZKdEBBWgu/m2pG1W+XhQe+ganDTFzQag==
-X-Received: by 2002:a17:902:e74f:b0:215:e98c:c5d9 with SMTP id d9443c01a7336-219d9671736mr23960605ad.18.1734579234562;
-        Wed, 18 Dec 2024 19:33:54 -0800 (PST)
-Received: from localhost ([2401:fa00:8f:203:5479:11c3:e91d:de6b])
-        by smtp.gmail.com with UTF8SMTPSA id d9443c01a7336-219dca0238bsm2712795ad.251.2024.12.18.19.33.52
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 18 Dec 2024 19:33:54 -0800 (PST)
-From: Sergey Senozhatsky <senozhatsky@chromium.org>
-To: Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
-	Vikash Garodia <quic_vgarodia@quicinc.com>,
-	"Bryan O'Donoghue" <bryan.odonoghue@linaro.org>
-Cc: Hans Verkuil <hverkuil@xs4all.nl>,
-	linux-media@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Sergey Senozhatsky <senozhatsky@chromium.org>
-Subject: [PATCH] media: venc: destroy hfi session after m2m_ctx release
-Date: Thu, 19 Dec 2024 12:32:56 +0900
-Message-ID: <20241219033345.559196-1-senozhatsky@chromium.org>
-X-Mailer: git-send-email 2.47.1.613.gc27f4b7a9f-goog
+	s=arc-20240116; t=1734581852; c=relaxed/simple;
+	bh=rzzLbuaL+gCEDUAbTrM40bSx9TxAQ79DwjvRS+XTg/w=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=eeYZ+A6tqmdE4RgSjHCIvfU1lQOWTUXecUAgp6elz8gFyENojNH7XekSTajFNk/EBpWfw00itEg5SJAuwAL0S+phXlJLB8U2lMfrabgTj0ZOjUofFAxMd3Lkuy+SI7hiMQ6vNY7OWznd1JjMlL8tY2/ayCLqA6u7Yc+Q4x4IQ4I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=lPfTzq3M; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BIKLMqp025887;
+	Thu, 19 Dec 2024 04:17:20 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	WhpWDSEzTrABOoyXKFChvh9K2H5zC9PcxIMY5CQV0YE=; b=lPfTzq3MJtbUUdYj
+	guRgWnwu+cbFata3q1mvhZhMY3Tx+mbjw2jHr0FVzzg0ClkZj9ClluLgdNrJHG6/
+	FPHrNLX971UPYm4Q+GuGhSetLvmWnlj0I26+prZaC2sKOPRCDVZYVI/gUF93DVW5
+	l68G9mjks+Gq2IYpMDp1nRn4QYbAINXix63UA2vqG7COhVKkABi/szP1GqqueCMX
+	aJeqwd97qIprTY25cmPHuLjLYWMjv93U0c7pRXrIMvjTDxU4K6svH18HwaBiSNDe
+	ZPC/GqRZoxGDnThWGjZ2xr0rsZ5ZylF79fJY+xEQqhf04+knYmOWyL0XPS0IvX64
+	Iz/o8A==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43m5bnrv83-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 19 Dec 2024 04:17:19 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4BJ4HJCa001170
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 19 Dec 2024 04:17:19 GMT
+Received: from [10.218.35.239] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 18 Dec
+ 2024 20:17:15 -0800
+Message-ID: <d6d176ac-e08a-4877-a5de-83e8b070fe47@quicinc.com>
+Date: Thu, 19 Dec 2024 09:47:12 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 00/19] Disable USB U1/U2 entry for QC targets
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio
+	<konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski
+	<krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Krishna Kurapati
+	<krishna.kurapati@oss.qualcomm.com>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <cros-qcom-dts-watchers@chromium.org>
+References: <20241218102707.76272-1-quic_prashk@quicinc.com>
+ <nvhrhnfls2i4sb6rrlax2dh3hf5thfttrq54bgug2jc7ol26rj@cnk5dtampfes>
+ <e15bc97d-eef3-4e49-badf-5b3afbc113d9@quicinc.com>
+ <3h2ur3wv3tso3qxv4ws2af4vmvdjdpvhax5smngszaaaotvgku@bo2q5cmhds2z>
+Content-Language: en-US
+From: Prashanth K <quic_prashk@quicinc.com>
+In-Reply-To: <3h2ur3wv3tso3qxv4ws2af4vmvdjdpvhax5smngszaaaotvgku@bo2q5cmhds2z>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: fwQZ68ebbxroM1avTkCrJ02w6iRmzmCY
+X-Proofpoint-ORIG-GUID: fwQZ68ebbxroM1avTkCrJ02w6iRmzmCY
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=1 mlxscore=1 lowpriorityscore=0
+ bulkscore=0 adultscore=0 phishscore=0 priorityscore=1501 spamscore=1
+ suspectscore=0 malwarescore=0 mlxlogscore=206 clxscore=1015
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2412190030
 
-This partially reverts commit that made hfi_session_destroy()
-the first step of vdec/venc close().  The reason being is a
-regression report when, supposedly, encode/decoder is closed
-with still active streaming (no ->stop_streaming() call before
-close()) and pending pkts, so isr_thread cannot find instance
-and fails to process those pending pkts.  This was the idea
-behind the original patch - make it impossible to use instance
-under destruction, because this is racy, but apparently there
-are uses cases that depend on that unsafe pattern.  Return to
-the old (unsafe) behaviour for the time being (until a better
-fix is found).
 
-Fixes: 45b1a1b348ec1 ("media: venus: sync with threaded IRQ during inst destruction")
-Signed-off-by: Sergey Senozhatsky <senozhatsky@chromium.org>
----
- drivers/media/platform/qcom/venus/core.c | 8 ++------
- 1 file changed, 2 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/media/platform/qcom/venus/core.c b/drivers/media/platform/qcom/venus/core.c
-index 2d27c5167246..807487a1f536 100644
---- a/drivers/media/platform/qcom/venus/core.c
-+++ b/drivers/media/platform/qcom/venus/core.c
-@@ -506,18 +506,14 @@ static __maybe_unused int venus_runtime_suspend(struct device *dev)
- void venus_close_common(struct venus_inst *inst)
- {
- 	/*
--	 * First, remove the inst from the ->instances list, so that
--	 * to_instance() will return NULL.
--	 */
--	hfi_session_destroy(inst);
--	/*
--	 * Second, make sure we don't have IRQ/IRQ-thread currently running
-+	 * Make sure we don't have IRQ/IRQ-thread currently running
- 	 * or pending execution, which would race with the inst destruction.
- 	 */
- 	synchronize_irq(inst->core->irq);
- 
- 	v4l2_m2m_ctx_release(inst->m2m_ctx);
- 	v4l2_m2m_release(inst->m2m_dev);
-+	hfi_session_destroy(inst);
- 	v4l2_fh_del(&inst->fh);
- 	v4l2_fh_exit(&inst->fh);
- 	v4l2_ctrl_handler_free(&inst->ctrl_handler);
--- 
-2.47.1.613.gc27f4b7a9f-goog
+On 19-12-24 08:37 am, Dmitry Baryshkov wrote:
+> On Wed, Dec 18, 2024 at 05:18:50PM +0530, Prashanth K wrote:
+>>
+>>
+>> On 18-12-24 04:57 pm, Dmitry Baryshkov wrote:
+>>> On Wed, Dec 18, 2024 at 03:56:48PM +0530, Prashanth K wrote:
+>>>> Enabling U1 and U2 power-saving states can lead to stability and
+>>>> performance issues, particularly for latency-sensitive or high-
+>>>> throughput applications. These low-power link states are intended
+>>>> to reduce power consumption by allowing the device to enter partial
+>>>> low-power modes during idle periods. However, they can sometimes
+>>>> result in unexpected behavior. Over the years, some of the issues
+>>>> seen are as follows:
+>>>>
+>>>
+>>> [..]
+>>>
+>>>>
+>>>> This series was earlier started by Krishna Kurapati where he disabled
+>>>> U1/U2 on some SM targets. I'm extending this to more devices including
+>>>> Auto, Compute and IOT platforms. On a side note, this quirk has been
+>>>> already included on some mobile targets like SM8550/8650.
+>>>
+>>> Why are you resending previous patches rather than adding another series
+>>> on top of it?
+>>>
+>> Hi Dmitry,
+>>
+>> RFC had only one patch with quirks (to disable u1/u2) only for few
+>> targets (SM8150, 8250, 8350, 8450). It was later decided to split it
+>> into per-file commits as per the review comments. Hence I clubbed
+>> Krishna's changes along with few more targets. Let me know if this needs
+>> to be changed.
+> 
+> No, it's fine. The text in the commit message lead me to a wrong
+> conclusion.
+> 
+Ok sure.
+>>
+>>>>
+>>>> Changes in v2:
+>>>> - Removed the wrongly added quirks from tcsr_mutex node.
+>>>> - Link to v2: https://lore.kernel.org/all/20241213095237.1409174-1-quic_prashk@quicinc.com/
+>>>
+>>> What was changed in v3?
+>> It was supposed to be "Changes in v3" instead of v2.
+> 
+> Then where is a changelog between RFC and v2?
+> 
+> Please consider switching to the b4 tool, it handles such issues for
+> you.
+> 
+Ok, Should I send a new version updating the cover letter?
+>>>
+>>>>
+>>>> Link to RFC:
+>>>> https://lore.kernel.org/all/20241107073650.13473-1-quic_kriskura@quicinc.com/#Z31arch:arm64:boot:dts:qcom:sm8250.dtsi
+>>>>
+>>>
+>> Regards,
+>> Prashanth K
+>>
+> 
 
 
