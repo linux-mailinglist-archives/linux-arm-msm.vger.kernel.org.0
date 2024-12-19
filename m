@@ -1,86 +1,77 @@
-Return-Path: <linux-arm-msm+bounces-42844-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-42845-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 287079F8611
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Dec 2024 21:40:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id ECB809F862F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Dec 2024 21:45:31 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id E8BFB188EE6F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Dec 2024 20:40:18 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id B55F91893C0F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Dec 2024 20:44:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B7EDC1A01B0;
-	Thu, 19 Dec 2024 20:40:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8D68E1E3DF7;
+	Thu, 19 Dec 2024 20:43:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="jMTAk0Ev"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="wYe+43E+"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36A543FD1
-	for <linux-arm-msm@vger.kernel.org>; Thu, 19 Dec 2024 20:40:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A1641D6DB8
+	for <linux-arm-msm@vger.kernel.org>; Thu, 19 Dec 2024 20:43:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734640814; cv=none; b=gMu2vP/jIowbFnrLTqDG5EcOBUnFhWPkZaRtYqnCiiWmQKappHgXk6jNpOVh9nMdGO+I9M9bcwFfSHLaWDOIRYESKkfDNJKiO4tkNxt6kXQfxtz+DIh09rS9A7FReBA+fPciiMdvhtw4q5fLRPcO4DYwligeAQmXlTSb1dCXq+I=
+	t=1734641004; cv=none; b=LUQ3BUCMRtFVvZK9+yFSfXH+NdxXVB+d0dVN19NoO6ZEgy2LLmvjZsRrvcBFQXQx1S+q/F/4zPXmikNMZ1VLZsncYalP1nioglUOgd0EpucVdjfRVeU/wUWEjbXpamW0pnHrM9BQthit9XDahTBr+WcTmIqKO0ayfwoarM9YTVQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734640814; c=relaxed/simple;
-	bh=oXoKgxgpqOwW1DspA9ni539p070dODkQb2hZMPHMNGM=;
+	s=arc-20240116; t=1734641004; c=relaxed/simple;
+	bh=H9CWREEr2/wWECFnaBN7QwzgYs+nYVPhVSsT+Z2MZIw=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=e5kSBV0fC/+ITJqyXn2aVMaiClpmkTU542Poi280DSnxZbkrvJH6dFhceDzyw6M+7Wmco8o9AsTAqEN/BjHUCPB/W/65VLy93Z/H2wINKtm1PTxUxklDpcbRXfQRSw9mjtZM6/X1HfqkoO5MxlOK4jw4hwErgW98VkiBZj7ousg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=jMTAk0Ev; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BJBjlJ0016767
-	for <linux-arm-msm@vger.kernel.org>; Thu, 19 Dec 2024 20:40:12 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	p5NWRIQfeR5uRYlt7SIJyR/Ac7CiT7vLsI21kdeQ2RI=; b=jMTAk0Evpjj7SyEp
-	/C87zx1VbQaWog4Nj0O0+VQnHDC+mmIE2l0gsvs8vNxy2ClYTr7QeK5IiU6IVvU4
-	9YPxlXfSW6ZHi7k2rjvxfiHHPcrEKb7CUbYUgGP/B+LHHbhi+11er5AwBGWyS6Wc
-	5Gy0y3quv8jhxcrR/iivQ0df4qUNmRa1/0yrn2K+7+ZqVMgsYfGgxMKO7jDcACB/
-	AikZ7UGW04bHfUwi/2SvTurfieFRgdsQZEvt/LpzaeJiI6dqNLHqQAhiv/OQUNDg
-	X+0Ah9BZhwwV2EejH1UqUMEF/tWW8GYtgjzVW+G9Rj1vc0YtPZ9tB4oDiCfReTFF
-	SHd11g==
-Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com [209.85.219.70])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43mjw81c2q-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 19 Dec 2024 20:40:12 +0000 (GMT)
-Received: by mail-qv1-f70.google.com with SMTP id 6a1803df08f44-6d88fe63f21so2785966d6.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Dec 2024 12:40:11 -0800 (PST)
+	 In-Reply-To:Content-Type; b=FJoyzRvYHu4gm1FA0RCiLo7DRtroyD/wXbIpauqJwoeEscIYSh0MNP/9YRYMAbc/5YZFeU5DmfmvG/iAKk2mxlsUdd/v9xei20Z4wiRq34X/B4rWqpSRtAhQmvBGOXfGMsojeAIoK1swBuuvrke44qJ21mGGuQCqX8bN6aa/SPM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=wYe+43E+; arc=none smtp.client-ip=209.85.128.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-434b3e32e9dso13643015e9.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Dec 2024 12:43:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1734640999; x=1735245799; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Ybfejc6eCvRqum4cuszxm/+3pd1Ax4pDuaNueiRGuko=;
+        b=wYe+43E+TqVNQMxljcOHrYEtLyyPA4QqJOMSVBYaeAxRZb8kZc4DCtW29f7QVDpIzf
+         2Oi78ytj8BQGalzU7Fkxmtevgec51uDPyIRlLjR1gKRdrTpRRL5OWxwON1ZAZjOke1zk
+         /TKLgZ5FYM2ykNBr0Vo5bQAqyhyoj7Es1ufd+LMnJEcRVO6xI2B8+kLSgKjCyJ1m+H3y
+         OEpT6chtEdDvvEfCGWRF0TBeWFNZgoWFFErGxyZwXQo/wqgjMBQe/dvY2AEwjGsTMRQ2
+         ufcgSwlNpDN2aTcWzSak1ehoxciOarJ5BrKVEmph9HMLuW0Jxzuc0P76EWiCk7mOpl8u
+         co0g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734640811; x=1735245611;
+        d=1e100.net; s=20230601; t=1734640999; x=1735245799;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=p5NWRIQfeR5uRYlt7SIJyR/Ac7CiT7vLsI21kdeQ2RI=;
-        b=L9q6Ugb6+p2vLlclThrJT2yv1mSOplDU9P/UMZG7GzKHG5MFOm/IbFphgTUrpMhXpV
-         Hd3GDII+dl6qnaPe0gb6s8ARE4sY4qqXZiehApLnFxARMIZu8C/7Ev1HygMbFFn1y8Kt
-         M2uKksxJzIiG313xj155ILctxObE1QPYBE2EVadAW4ZCN7beSVMivJ/ga9mRiI2K6E/b
-         fXLSQCP0gSeAGdmKPl2o0L60NJVzvYexxBPNakkd2q+PId3lyvSc0lDOBSLSqPenot0+
-         mYINzj3dr7fUimwORwYQ7yYH8KtFaknGPG3lNWOHRx0haRzFY9Ku+TE9exOStJvRTIvK
-         40Kg==
-X-Gm-Message-State: AOJu0Yw4dyCVH6k9zHbpa+vvuJhAbGAvRoUPFmXpLn7eAYozPf6QD1aq
-	cDsdtlgqEuLh8OxUDE+LJtOUXY4U75d8GKR5cbrwN3wp1DRjaY/54H6EIS3dx7P5MbUYk/418Sm
-	toKZFTv9YtzGAjvfkEFtXC2JAykjH/mCtnhRDq6+kaL0zAJqLGsDaNYi/sPlRhDEM
-X-Gm-Gg: ASbGncufiMBtHiY2Xh2oPhW84dFw47LSGxPCKuVuk92JIBXjoDk3d3UCNHOB4Nfbawr
-	FT9yCcwXxV+K5xRSB8h+JHgjLCpMxwyLv+1Hy5Y9iQBJCjoAMWD7LtEH1liYh+Ge1lQjtfch7xU
-	m2M5yrnLpCrFJkrEvaKPMDzkVFjBRmb8HjkpOtRUtAimqg0Yyd2KNJlNErqf/fKR5hTSgsCMfm9
-	EwjcVYINylm95bH1772FKwrG5sTSjHODrtFTzkUYqaC32GHWg2/+v1BWqz1ixs4056hYQ0g6E8b
-	6HfWDMjfoE5r1D+qTUGOSvreR0XgsjRh/24=
-X-Received: by 2002:a05:620a:2454:b0:7b6:c8a4:ba09 with SMTP id af79cd13be357-7b9ba7be496mr16113785a.9.1734640811299;
-        Thu, 19 Dec 2024 12:40:11 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IECbXaSdAF5+fSjgcoJAnwOWsONIWCmKaulWyJL9LxVnAm0NaXEpeGr3VOpWbCwFT0KYhm+Xg==
-X-Received: by 2002:a05:620a:2454:b0:7b6:c8a4:ba09 with SMTP id af79cd13be357-7b9ba7be496mr16111285a.9.1734640810912;
-        Thu, 19 Dec 2024 12:40:10 -0800 (PST)
-Received: from [192.168.65.90] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-aac0e894d8csm101230966b.53.2024.12.19.12.40.09
+        bh=Ybfejc6eCvRqum4cuszxm/+3pd1Ax4pDuaNueiRGuko=;
+        b=tq+zA/slTjBUsok3NFf6KCi9B/PEYtDD85pMKb2LtTG1wMoDPh2hgMoa7sTxKSR4Qn
+         jD/FT0pdLMcTfMajZVW7WhxaJiPe09dXIN3CxjEJBbKJC6UFAQMTJTSGefqjjdwC+8/M
+         Dnq5X0Udz36+H4c5P1ACuedBJLmflZoqN6SWA6eNfO8OBeOs1CAgTWgneu3Gwb9mq1wW
+         iulwVpRvjxqW6DGJUEWHo8MslgHvDW5VGC+tpYTkr0/I544n/xa15uq1prPTPbcAha09
+         8VTwIHMS9fXA1e9mc7rpyWpMuRDIN73O9aBoQxDlU8VBz5rkuqIGAmi18BYtqYVye9Xx
+         sKDA==
+X-Gm-Message-State: AOJu0YxTBqWKOxXQxtKy2am0qr2ZcVeLQMNU5VT8duvpXmV9CMlIXENQ
+	y4HhTxX0+m00MiQn8IiN6t0GADVs4aX3fJeiCrzGLEZP9XMH89xcRrXSUo97jEQ=
+X-Gm-Gg: ASbGncs/NTkliPlsLsBIkMzRpnuM2ReCEVr1pQHVsEAND/GKoquNzUHy8rBywHdb/gt
+	Gl5h2+/37fUvEydBcOQrJPYXqHP62z5he5QLawUBoT2PTpP4XHedNElo3n1e2hMUhIS0un3jBKL
+	0/fS0S8MeToqQCWGhQIkELKn7XlXnEHUcqLrkn+77wKyN1dT2vvqjisuCCeZIyC7nE/N5c/W88q
+	zNh4SS7ij7mNEid8XnbaeI0mljFNLBqjbcWuJI9I8Ho2MOEhN8OOZT5d1mhEdz4emCE3A==
+X-Google-Smtp-Source: AGHT+IFKhLZNXUJlh0eq6oK26ukCLmUEvISiQSqgEWiiAQXasyBiX9z9wBDVbl6+woC2mWPAUkF3Dw==
+X-Received: by 2002:a05:600c:3ca4:b0:436:6460:e680 with SMTP id 5b1f17b1804b1-43668646b20mr2825975e9.16.1734640999365;
+        Thu, 19 Dec 2024 12:43:19 -0800 (PST)
+Received: from [192.168.0.10] ([176.61.106.227])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38a1c89e375sm2368057f8f.73.2024.12.19.12.43.17
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 19 Dec 2024 12:40:10 -0800 (PST)
-Message-ID: <d3428aa0-c662-4e16-9675-18f53a7fbd73@oss.qualcomm.com>
-Date: Thu, 19 Dec 2024 21:40:08 +0100
+        Thu, 19 Dec 2024 12:43:18 -0800 (PST)
+Message-ID: <a2310cf8-5e00-4233-8c56-f04d3f692b13@linaro.org>
+Date: Thu, 19 Dec 2024 20:43:16 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -88,65 +79,268 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 3/3] arm64: dts: qcom: x1e80100-hp-x14: dt for HP
- Omnibook X Laptop 14
-To: jens.glathe@oldschoolsolutions.biz,
-        Bjorn Andersson
- <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>, Kalle Valo <kvalo@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20241202-hp-omnibook-x14-v3-0-0fcd96483723@oldschoolsolutions.biz>
- <20241202-hp-omnibook-x14-v3-3-0fcd96483723@oldschoolsolutions.biz>
+Subject: Re: [PATCH v2 2/3] platform: arm64: Add driver for EC found in most
+ X1E laptops
+To: Maya Matuszczyk <maccraft123mc@gmail.com>,
+ Hans de Goede <hdegoede@redhat.com>,
+ =?UTF-8?Q?Ilpo_J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+ Miguel Ojeda <ojeda@kernel.org>, Alex Gaynor <alex.gaynor@gmail.com>,
+ Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>,
+ =?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>,
+ Benno Lossin <benno.lossin@proton.me>,
+ Andreas Hindborg <a.hindborg@kernel.org>, Alice Ryhl <aliceryhl@google.com>,
+ Trevor Gross <tmgross@umich.edu>
+Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+ platform-driver-x86@vger.kernel.org, rust-for-linux@vger.kernel.org
+References: <20241219200821.8328-1-maccraft123mc@gmail.com>
+ <20241219200821.8328-2-maccraft123mc@gmail.com>
 Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <20241202-hp-omnibook-x14-v3-3-0fcd96483723@oldschoolsolutions.biz>
-Content-Type: text/plain; charset=UTF-8
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <20241219200821.8328-2-maccraft123mc@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: IkUl1x94IAySWwLFutu54AvsAbyqLYeb
-X-Proofpoint-ORIG-GUID: IkUl1x94IAySWwLFutu54AvsAbyqLYeb
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 clxscore=1015
- mlxscore=0 phishscore=0 adultscore=0 priorityscore=1501 bulkscore=0
- spamscore=0 lowpriorityscore=0 suspectscore=0 mlxlogscore=767
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2412190163
 
-On 2.12.2024 8:41 PM, Jens Glathe via B4 Relay wrote:
-> From: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
+On 19/12/2024 20:08, Maya Matuszczyk wrote:
+> Currently it features only reporting that the AP is going to suspend,
+> which results in keyboard backlight turning off and the power LED
+> slowly blinking on the Lenovo Yoga Slim 7x.
 > 
-> Introduce device tree for the HP Omnibook X Laptop 14-fe0750ng
-> (hp-omnibook-x14). It is a Laptop based on the Qualcomm Snapdragon
-> X Elite SoC. There seem to be other SKUs, some with Wifi-7 (WCN7850)
-> instead of Wifi-6E (WCN6855). This dt explicitly supports WCN6855,
-> I haven't found a good way yet to describe both.
+> Honor Magicbook Art 14 and Lenovo Yoga Slim 7x are known to have
+> firmware with extensions which would need appropriate handling.
+> For reverse engineering the firmware on them I have written a Rust
+> utility:
 > 
-> PDF link: https://www8.hp.com/h20195/V2/GetPDF.aspx/c08989140
+> https://github.com/Maccraft123/it8987-qcom-tool.git
 > 
-> Supported features:
-> 
-> - Keyboard (no function keys though)
-> - Display
-> - PWM brightness control (works via brightnessctl)
-> - Touchpad
-> - Touchscreen
-> - PCIe ports (pcie4, pcie6a)
-> - USB type-c, type-a
-> - WCN6855 Wifi-6E
-> - WCN6855 Bluetooth
-> - ADSP and CDSP
-> - X1 GPU
-> - GPIO Keys (Lid switch)
-> - Audio definition (works via USB)
-> 
-> Signed-off-by: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
+> Signed-off-by: Maya Matuszczyk <maccraft123mc@gmail.com>
 > ---
+>   MAINTAINERS                              |   6 +
+>   drivers/platform/arm64/Kconfig           |   8 ++
+>   drivers/platform/arm64/Makefile          |   1 +
+>   drivers/platform/arm64/qcom-x1e-it8987.c | 158 +++++++++++++++++++++++
+>   4 files changed, 173 insertions(+)
+>   create mode 100644 drivers/platform/arm64/qcom-x1e-it8987.c
+> 
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index b878ddc99f94..08d170e2e1e3 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -12890,6 +12890,12 @@ S:	Maintained
+>   W:	http://legousb.sourceforge.net/
+>   F:	drivers/usb/misc/legousbtower.c
+>   
+> +QCOM IT8987 EC DRIVER
+> +M:	Maya Matuszczyk <maccraft123mc@gmail.com>
+> +S:	Maintained
+> +F:	Documentation/devicetree/bindings/platform/qcom,x1e-it8987-ec.yaml
+> +F:	drivers/platform/arm64/qcom-x1e-it8987.c
+> +
+>   LETSKETCH HID TABLET DRIVER
+>   M:	Hans de Goede <hdegoede@redhat.com>
+>   L:	linux-input@vger.kernel.org
+> diff --git a/drivers/platform/arm64/Kconfig b/drivers/platform/arm64/Kconfig
+> index f88395ea3376..ebb7b4f70ca0 100644
+> --- a/drivers/platform/arm64/Kconfig
+> +++ b/drivers/platform/arm64/Kconfig
+> @@ -49,4 +49,12 @@ config EC_LENOVO_YOGA_C630
+>   
+>   	  Say M or Y here to include this support.
+>   
+> +config EC_QCOM_X1E_IT8987
+> +	tristate "Embedded Controller driver for most X1E80100 laptops"
+> +	depends on ARCH_QCOM || COMPILE_TEST
+> +	depends on I2C
+> +	help
+> +	  This driver currently supports reporting device suspend to the EC so it
+> +	  can take appropriate actions.
+> +
+>   endif # ARM64_PLATFORM_DEVICES
+> diff --git a/drivers/platform/arm64/Makefile b/drivers/platform/arm64/Makefile
+> index b2ae9114fdd8..b9aa195bc1e6 100644
+> --- a/drivers/platform/arm64/Makefile
+> +++ b/drivers/platform/arm64/Makefile
+> @@ -7,3 +7,4 @@
+>   
+>   obj-$(CONFIG_EC_ACER_ASPIRE1)	+= acer-aspire1-ec.o
+>   obj-$(CONFIG_EC_LENOVO_YOGA_C630) += lenovo-yoga-c630.o
+> +obj-$(CONFIG_EC_QCOM_X1E_IT8987) += qcom-x1e-it8987.o
+> diff --git a/drivers/platform/arm64/qcom-x1e-it8987.c b/drivers/platform/arm64/qcom-x1e-it8987.c
+> new file mode 100644
+> index 000000000000..d27067d6326a
+> --- /dev/null
+> +++ b/drivers/platform/arm64/qcom-x1e-it8987.c
+> @@ -0,0 +1,158 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
+> +/*
+> + * Copyright (c) 2024 Maya Matuszczyk <maccraft123mc@gmail.com>
+> + */
+> +#include <linux/i2c.h>
+> +#include <linux/module.h>
+> +#include <linux/input.h>
+> +#include <linux/input/sparse-keymap.h>
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Your includes should be alphabetised.
 
-Konrad
+> +
+> +#define EC_IRQ_REASON_REG 0x05
+> +#define EC_SUSPEND_RESUME_REG 0x23
+> +#define EC_IRQ_ENABLE_REG 0x35
+> +
+> +#define EC_NOTIFY_SUSPEND_ENTER 0x01
+> +#define EC_NOTIFY_SUSPEND_EXIT 0x00
+> +#define EC_NOTIFY_SCREEN_OFF 0x03
+> +#define EC_NOTIFY_SCREEN_ON 0x04
+> +
+> +#define EC_IRQ_MICMUTE_BUTTON 0x04
+> +#define EC_IRQ_FAN1_STATUS_CHANGE 0x30
+> +#define EC_IRQ_FAN2_STATUS_CHANGE 0x31
+> +#define EC_IRQ_FAN1_SPEED_CHANGE 0x32
+> +#define EC_IRQ_FAN2_SPEED_CHANGE 0x33
+> +#define EC_IRQ_COMPLETED_LUT_UPDATE 0x34
+> +#define EC_IRQ_COMPLETED_FAN_PROFILE_SWITCH 0x35
+> +#define EC_IRQ_THERMISTOR_1_TEMP_THRESHOLD_CROSS 0x36
+> +#define EC_IRQ_THERMISTOR_2_TEMP_THRESHOLD_CROSS 0x37
+> +#define EC_IRQ_THERMISTOR_3_TEMP_THRESHOLD_CROSS 0x38
+> +#define EC_IRQ_THERMISTOR_4_TEMP_THRESHOLD_CROSS 0x39
+> +#define EC_IRQ_THERMISTOR_5_TEMP_THRESHOLD_CROSS 0x3a
+> +#define EC_IRQ_THERMISTOR_6_TEMP_THRESHOLD_CROSS 0x3b
+> +#define EC_IRQ_THERMISTOR_7_TEMP_THRESHOLD_CROSS 0x3c
+> +#define EC_IRQ_RECOVERED_FROM_RESET 0x3d
+> +
+> +struct qcom_x1e_it8987_ec {
+> +	struct i2c_client *client;
+> +	struct input_dev *idev;
+> +	struct mutex lock;
+> +};
+> +
+> +static irqreturn_t qcom_x1e_it8987_ec_irq(int irq, void *data)
+> +{
+> +	struct qcom_x1e_it8987_ec *ec = data;
+> +	struct device *dev = &ec->client->dev;
+> +	int val;
+> +
+> +	guard(mutex)(&ec->lock);
+
+What's the thing that can execute at the same time as this procedure - 
+there doesn't appear to be any concurrent candidate in this patch.
+> +
+> +	val = i2c_smbus_read_byte_data(ec->client, EC_IRQ_REASON_REG);
+> +	if (val < 0) {
+> +		dev_err(dev, "Failed to get EC IRQ reason: %d\n", val);
+> +		return IRQ_HANDLED;
+> +	}
+> +
+> +	dev_info(dev, "Unhandled EC IRQ reason: %d\n", val);
+
+Should an unhandled IRQ be an info or an err ?
+
+> +
+> +	return IRQ_HANDLED;
+> +}
+> +
+> +static int qcom_x1e_it8987_ec_probe(struct i2c_client *client)
+> +{
+> +	struct device *dev = &client->dev;
+> +	struct qcom_x1e_it8987_ec *ec;
+> +	int ret;
+> +
+> +	ec = devm_kzalloc(dev, sizeof(*ec), GFP_KERNEL);
+> +	if (!ec)
+> +		return -ENOMEM;
+> +
+> +	mutex_init(&ec->lock);
+> +	ec->client = client;
+> +
+> +	ret = devm_request_threaded_irq(dev, client->irq,
+> +					NULL, qcom_x1e_it8987_ec_irq,
+> +					IRQF_ONESHOT, "qcom_x1e_it8987_ec", ec);
+> +	if (ret < 0)
+> +		return dev_err_probe(dev, ret, "Unable to request irq\n");
+> +
+> +	ret = i2c_smbus_write_byte_data(client, EC_IRQ_ENABLE_REG, 0x01);
+> +	if (ret < 0)
+> +		return dev_err_probe(dev, ret, "Failed to enable interrupts\n");
+> +
+> +	return 0;
+> +}
+> +
+> +static void qcom_x1e_it8987_ec_remove(struct i2c_client *client)
+> +{
+> +	struct device *dev = &client->dev;
+> +	int ret;
+> +
+> +	ret = i2c_smbus_write_byte_data(client, EC_IRQ_ENABLE_REG, 0x00);
+> +	if (ret < 0)
+> +		dev_err(dev, "Failed to disable interrupts: %d\n", ret);
+> +}
+> +
+> +static int qcom_x1e_it8987_ec_suspend(struct device *dev)
+> +{
+> +	struct i2c_client *client = to_i2c_client(dev);
+> +	int ret;
+> +
+> +	ret = i2c_smbus_write_byte_data(client, EC_SUSPEND_RESUME_REG, EC_NOTIFY_SCREEN_OFF);
+> +	if (ret)
+> +		return ret;
+> +
+> +	ret = i2c_smbus_write_byte_data(client, EC_SUSPEND_RESUME_REG, EC_NOTIFY_SUSPEND_ENTER);
+> +	if (ret)
+> +		return ret;
+> +
+> +	return 0;
+> +}
+> +
+> +static int qcom_x1e_it8987_ec_resume(struct device *dev)
+> +{
+> +	struct i2c_client *client = to_i2c_client(dev);
+> +	int ret;
+> +
+> +	ret = i2c_smbus_write_byte_data(client, EC_SUSPEND_RESUME_REG, EC_NOTIFY_SUSPEND_EXIT);
+> +	if (ret)
+> +		return ret;
+> +
+> +	ret = i2c_smbus_write_byte_data(client, EC_SUSPEND_RESUME_REG, EC_NOTIFY_SCREEN_ON);
+> +	if (ret)
+> +		return ret;
+> +
+> +	return 0;
+> +}
+> +
+> +static const struct of_device_id qcom_x1e_it8987_ec_of_match[] = {
+> +	{ .compatible = "lenovo,yoga-slim7x-ec" },
+> +	{ .compatible = "qcom,x1e-it9897-ec" },
+> +	{}
+> +};
+> +MODULE_DEVICE_TABLE(of, qcom_x1e_it8987_ec_of_match);
+> +
+> +static const struct i2c_device_id qcom_x1e_it8987_ec_i2c_id_table[] = {
+> +	{ "qcom-x1e-it8987-ec", },
+> +	{}
+> +};
+> +MODULE_DEVICE_TABLE(i2c, qcom_x1e_it8987_ec_i2c_id_table);
+> +
+> +static DEFINE_SIMPLE_DEV_PM_OPS(qcom_x1e_it8987_ec_pm_ops,
+> +		qcom_x1e_it8987_ec_suspend,
+> +		qcom_x1e_it8987_ec_resume);
+> +
+> +static struct i2c_driver qcom_x1e_it8987_ec_i2c_driver = {
+> +	.driver = {
+> +		.name = "yoga-slim7x-ec",
+> +		.of_match_table = qcom_x1e_it8987_ec_of_match,
+> +		.pm = &qcom_x1e_it8987_ec_pm_ops
+> +	},
+> +	.probe = qcom_x1e_it8987_ec_probe,
+> +	.remove = qcom_x1e_it8987_ec_remove,
+> +	.id_table = qcom_x1e_it8987_ec_i2c_id_table,
+> +};
+> +module_i2c_driver(qcom_x1e_it8987_ec_i2c_driver);
+> +
+> +MODULE_DESCRIPTION("Lenovo Yoga Slim 7x Embedded Controller");
+> +MODULE_LICENSE("GPL");
+
+Otherwise looks pretty good to me, nice hacking :)
+
+---
+bod
+
 
