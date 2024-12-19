@@ -1,175 +1,290 @@
-Return-Path: <linux-arm-msm+bounces-42783-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-42781-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id DFD359F79BE
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Dec 2024 11:41:06 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0849F9F79AB
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Dec 2024 11:37:19 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2AA8916BF39
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Dec 2024 10:41:04 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id CBF63189203D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Dec 2024 10:37:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EA68C222572;
-	Thu, 19 Dec 2024 10:41:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DC2B2221DB2;
+	Thu, 19 Dec 2024 10:37:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b="v8tKGaBc"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="KA+4sjqq"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mout-p-201.mailbox.org (mout-p-201.mailbox.org [80.241.56.171])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10E007082B;
-	Thu, 19 Dec 2024 10:40:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.241.56.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6885221478;
+	Thu, 19 Dec 2024 10:37:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734604860; cv=none; b=NJ+evKJV7GJ3Ew9gfxJgW8370XZJ7rdulEm91uDsITJlB+KBXWfmVALpyMvfSksXNotqZ7sW6gC5SD3LZP6+mr04lJbbJvMsAQI7UzUn6rX/hTlc3zrnpM6mUE4TT8zR0DUK80moN6n56ECMlm0liFzrXY6JtA4AsSGZdDKPdYI=
+	t=1734604632; cv=none; b=tBBrBrtKuVUZjLDpcXHFispCoX+YyknBf3AHSARrp6VJdFITSmP7QswyG5dM64Wh8Ur00WuFNyc/toyO6a3u5iTTFPS2gz9/+Jxlez5xcxU5ZeyY8ooeB5BxtKHNYAoK5V5hSEzt+iumvds0FAxtG5OjCHVz50TP1Vfbrv2OeFs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734604860; c=relaxed/simple;
-	bh=sMmdXymz7YBaKYiiSjGtpcZAn3DO2EPLGhJWt9/xVHs=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Ino2gqbp3nqaq46Q2pG3wXeJ++8ZnNM9KCBFlAoqCH3vEWF4zvBP8s5pE0uIUR8k941NCG2u0DJ76chKmtDeGRM31AgMwbX3FhURMwItior3GO9FqrCwZ0NjKy1gDqA6lrvS/DVWWZCWmhlLhH01+8Qr6RPsvzvghu7EEFRKPUc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mailbox.org; spf=pass smtp.mailfrom=mailbox.org; dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b=v8tKGaBc; arc=none smtp.client-ip=80.241.56.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mailbox.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mailbox.org
-Received: from smtp2.mailbox.org (smtp2.mailbox.org [IPv6:2001:67c:2050:b231:465::2])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by mout-p-201.mailbox.org (Postfix) with ESMTPS id 4YDRkY6zxgz9tR2;
-	Thu, 19 Dec 2024 11:34:45 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mailbox.org; s=mail20150812;
-	t=1734604486;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=78YyZL7HwCmFSfKx6pbGoLu1tuKjrws9Qj/TkgO1sZw=;
-	b=v8tKGaBcZjnrQdikmO5urFf9XX0JUnKPbRV101dEp7+Mwn287U1QrCIpwCs4ks4Qato16d
-	bD1zAIJ3gIFV+Zs5tFMKAUCU+2kxjdNKUxVK2JGt8wOi/TM/2SxjKsdKRmWKjXxhm5Diiu
-	9wuwY97yw60KmWrKP/Obr0bj7Ou6EH3HclwX6op7dKeCFEr7LiDh588kJeL6UJcvlzZ7iT
-	YlTn8EIFrjkXN4N7Ek6Mifdq04a3LK38Va+FcOGlE+0fPeTcJH5Eh9tIFKqcc0XeIKU//F
-	LvG1ZL7/v1WmCIMNrMFjYP3uv8/Ajgr0QmmzUgquC1Pj/GFCwDmawgcV6Fs1MQ==
-Message-ID: <1b163b6b-3c33-4361-94be-6b8a6d0febe8@mailbox.org>
-Date: Thu, 19 Dec 2024 11:34:43 +0100
+	s=arc-20240116; t=1734604632; c=relaxed/simple;
+	bh=yDgBUq1kOkuqwHef+wa7wdUTWFQme/U3UCyr/bdFV60=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=BVCaRZ2w7AcYMBvApOlWPxxbdmMfBJehVSDaBn4OzF15NYUQVsVfLYDTElJ2DE5NIyYqX39PzzoXebJdAPqT8DbFcD7NUzLkqm+VJrJw8pJyfIZC1winrKX0OT2oP7YiPkkmKfuhTIN+MX+MZswuAhKKr+uRMnGcYEuX8xpqnw0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=KA+4sjqq; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BJ8eudY012641;
+	Thu, 19 Dec 2024 10:36:50 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	pCrif/Wig+0ouaXxxKWwhGq+PeMSEo0hXVQU6kifTJU=; b=KA+4sjqqUw/LncAL
+	8GfLTZzvUwDmSLAZDpjiGqlk8JksbvRQSX9MREg0yTVPyjJaUT4D4elk1omvrEv+
+	uXaD7MjqGtgX1vx5BGVdzp7P7T+WrYMMs/gCPeAxw2bvSvbd6iEQU4CGHA0bM3f+
+	IicV23B01u6P+LF9tlsD/JJkDIL0rOBpKwyQz7LS1kd8em34SlCPbv3k2M3+YBIz
+	g9J7UAyEWIpJ1pM+pDKJOXQv5P/HGDnFNmUfA9kJx6dbuKozJPiataP1hIN6oLT/
+	r7i/GhMMC2qQAqQ1BaMLhdgLMw8fT00PJQG45+fpjNq5EmVzemj0nAJO7VYIsIDm
+	irCMVg==
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43mg6hr9tq-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 19 Dec 2024 10:36:49 +0000 (GMT)
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+	by NASANPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4BJAam1B004914
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 19 Dec 2024 10:36:48 GMT
+Received: from [10.64.16.135] (10.80.80.8) by nasanex01c.na.qualcomm.com
+ (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 19 Dec
+ 2024 02:36:41 -0800
+Message-ID: <e647d143-dc6e-483d-ac81-2733fb526fc3@quicinc.com>
+Date: Thu, 19 Dec 2024 18:36:38 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Subject: Re: [PATCH] arm64: dts: qcom: x1e80100-lenovo-yoga-slim7x: Add lid
- switch
-To: Maya Matuszczyk <maccraft123mc@gmail.com>
-Cc: andersson@kernel.org, konradybcio@kernel.org, robh@kernel.org,
- krzk+dt@kernel.org, conor+dt@kernel.org, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <cae52ea6-e86a-4b86-af06-01a8a93d2ca0@mailbox.org>
- <CAO_MupKCUk-w4=-0yDWo4m9XC1-iEuF6YHYnYw4T0oF2aKFxvQ@mail.gmail.com>
-Content-Language: en-US
-From: Anthony Ruhier <aruhier@mailbox.org>
-In-Reply-To: <CAO_MupKCUk-w4=-0yDWo4m9XC1-iEuF6YHYnYw4T0oF2aKFxvQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 5/8] drm/msm/dp: Add support for lane mapping
+ configuration
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC: Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar
+	<quic_abhinavk@quicinc.com>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten
+	<marijn.suijten@somainline.org>,
+        Maarten Lankhorst
+	<maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        Rob Herring <robh@kernel.org>,
+        "Krzysztof
+ Kozlowski" <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        "Kuogee
+ Hsieh" <quic_khsieh@quicinc.com>,
+        Vinod Koul <vkoul@kernel.org>,
+        "Kishon
+ Vijay Abraham I" <kishon@kernel.org>,
+        Linus Walleij
+	<linus.walleij@linaro.org>,
+        Bartosz Golaszewski <brgl@bgdev.pl>, <quic_lliu6@quicinc.com>,
+        <quic_fangez@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
+        <dri-devel@lists.freedesktop.org>, <freedreno@lists.freedesktop.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-phy@lists.infradead.org>, <linux-gpio@vger.kernel.org>
+References: <20241129-add-displayport-support-for-qcs615-platform-v1-0-09a4338d93ef@quicinc.com>
+ <20241129-add-displayport-support-for-qcs615-platform-v1-5-09a4338d93ef@quicinc.com>
+ <CAA8EJpoY8hySQd00yODGeHjSpVZpEBLjF3aBiKGJPUhpr-2mgw@mail.gmail.com>
+ <d2a3cd6f-1077-4edb-9f0c-0c940a639050@quicinc.com>
+ <zvapsvfftai4fp6vwrn33edqsyuuprq2pxz6spij6j7t4y6xmn@zzgp7gbsivbk>
+ <93ddb63c-42da-43c8-9a77-c517ca5d6432@quicinc.com>
+ <CAA8EJprAFYD6ykN10-r=JwHM4A4XeDDcZVcVWYp_5A5FP-=RyA@mail.gmail.com>
+From: Xiangxu Yin <quic_xiangxuy@quicinc.com>
+In-Reply-To: <CAA8EJprAFYD6ykN10-r=JwHM4A4XeDDcZVcVWYp_5A5FP-=RyA@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
-X-MBO-RS-ID: 6b20eb1586719c0b27b
-X-MBO-RS-META: y4b7ubqimznr7ji8ukj83ewm17i74cgy
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01c.na.qualcomm.com (10.45.79.139)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: wxzrlFx43WZNn-Zm0bSs9-eoV8Sr55IG
+X-Proofpoint-GUID: wxzrlFx43WZNn-Zm0bSs9-eoV8Sr55IG
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 spamscore=0
+ malwarescore=0 priorityscore=1501 suspectscore=0 phishscore=0
+ mlxlogscore=999 clxscore=1015 impostorscore=0 adultscore=0
+ lowpriorityscore=0 mlxscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2411120000 definitions=main-2412190086
 
-Thank you Maya!
-I'm sorry, I realized that the patch format is wrong due to a 
-misconfiguration of my mail client. Tell me if I should send a v2 of 
-this patch fixing it.
 
-On 12/18/24 10:36 PM, Maya Matuszczyk wrote:
-> Nice to see it finally working!
+
+On 12/5/2024 7:40 PM, Dmitry Baryshkov wrote:
+> On Thu, 5 Dec 2024 at 13:28, Xiangxu Yin <quic_xiangxuy@quicinc.com> wrote:
+>>
+>>
+>>
+>> On 12/2/2024 6:46 PM, Dmitry Baryshkov wrote:
+>>> On Mon, Dec 02, 2024 at 04:40:05PM +0800, Xiangxu Yin wrote:
+>>>>
+>>>>
+>>>> On 11/29/2024 9:50 PM, Dmitry Baryshkov wrote:
+>>>>> On Fri, 29 Nov 2024 at 09:59, Xiangxu Yin <quic_xiangxuy@quicinc.com> wrote:
+>>>>>>
+>>>>>> Add the ability to configure lane mapping for the DP controller. This is
+>>>>>> required when the platform's lane mapping does not follow the default
+>>>>>> order (0, 1, 2, 3). The mapping rules are now configurable via the
+>>>>>> `data-lane` property in the devicetree. This property defines the
+>>>>>> logical-to-physical lane mapping sequence, ensuring correct lane
+>>>>>> assignment for non-default configurations.
+>>>>>>
+>>>>>> Signed-off-by: Xiangxu Yin <quic_xiangxuy@quicinc.com>
+>>>>>> ---
+>>>>>>  drivers/gpu/drm/msm/dp/dp_catalog.c | 11 +++++------
+>>>>>>  drivers/gpu/drm/msm/dp/dp_catalog.h |  2 +-
+>>>>>>  drivers/gpu/drm/msm/dp/dp_ctrl.c    |  2 +-
+>>>>>>  drivers/gpu/drm/msm/dp/dp_panel.c   | 13 ++++++++++---
+>>>>>>  drivers/gpu/drm/msm/dp/dp_panel.h   |  3 +++
+>>>>>>  5 files changed, 20 insertions(+), 11 deletions(-)
+>>>>>>
+>>>
+>>>>>> @@ -461,6 +460,7 @@ static int msm_dp_panel_parse_dt(struct msm_dp_panel *msm_dp_panel)
+>>>>>>         struct msm_dp_panel_private *panel;
+>>>>>>         struct device_node *of_node;
+>>>>>>         int cnt;
+>>>>>> +       u32 lane_map[DP_MAX_NUM_DP_LANES] = {0, 1, 2, 3};
+>>>>>>
+>>>>>>         panel = container_of(msm_dp_panel, struct msm_dp_panel_private, msm_dp_panel);
+>>>>>>         of_node = panel->dev->of_node;
+>>>>>> @@ -474,10 +474,17 @@ static int msm_dp_panel_parse_dt(struct msm_dp_panel *msm_dp_panel)
+>>>>>>                 cnt = drm_of_get_data_lanes_count(of_node, 1, DP_MAX_NUM_DP_LANES);
+>>>>>>         }
+>>>>>>
+>>>>>> -       if (cnt > 0)
+>>>>>> +       if (cnt > 0) {
+>>>>>> +               struct device_node *endpoint;
+>>>>>> +
+>>>>>>                 msm_dp_panel->max_dp_lanes = cnt;
+>>>>>> -       else
+>>>>>> +               endpoint = of_graph_get_endpoint_by_regs(of_node, 1, -1);
+>>>>>> +               of_property_read_u32_array(endpoint, "data-lanes", lane_map, cnt);
+>>>>>> +       } else {
+>>>>>>                 msm_dp_panel->max_dp_lanes = DP_MAX_NUM_DP_LANES; /* 4 lanes */
+>>>>>> +       }
+>>>>>
+>>>>> Why? This sounds more like dp_catalog or (after the refactoring at
+>>>>> [1]) dp_ctrl. But not the dp_panel.
+>>>>>
+>>>>> [1] https://patchwork.freedesktop.org/project/freedreno/series/?ordering=-last_updated
+>>>>>
+>>>> We are used the same prop 'data-lanes = <3 2 0 1>' in mdss_dp_out to keep similar behaviour with dsi_host_parse_lane_data.
+>>>> From the modules used, catalog seems more appropriate, but since the max_dp_lanes is parsed at dp_panel, it has been placed here.
+>>>> Should lane_map parsing in msm_dp_catalog_get, and keep max_dp_lanes parsing at the dp_panel?
+>>>
+>>> msm_dp_catalog_get() is going to be removed. Since the functions that
+>>> are going to use it are in dp_ctrl module, I thought that dp_ctrl.c is
+>>> the best place. A better option might be to move max_dp_lanes and
+>>> max_dp_link_rate to dp_link.c as those are link params. Then
+>>> lane_mapping also logically becomes a part of dp_link module.
+>>>
+>>> But now I have a more important question (triggered by Krishna's email
+>>> about SAR2130P's USB): if the lanes are swapped, does USB 3 work on that
+>>> platform? Or is it being demoted to USB 2 with nobody noticing that?
+>>>
+>>> If lanes 0/1 and 2/3 are swapped, shouldn't it be handled in the QMP
+>>> PHY, where we handle lanes and orientation switching?
+>>>
+>> I have checked the DP hardware programming guide and also discussed it with Krishna.
+>>
+>> According to the HPG section '3.4.2 PN and Lane Swap: PHY supports PN swap for mainlink and AUX, but it doesn't support lane swap feature.'
+>>
+>> The lane swap mainly refers to the logical to physical mapping between the DP controller and the DP PHY. The PHY handles polarity inversion, and the lane map does not affect USB behavior.
+>>
+>> On the QCS615 platform, we have also tested when DP works with lane swap, other USB 3.0 ports can works normally at super speed.
 > 
-> Tested-by: Maya Matuszczyk <maccraft123mc@gmail.com>
+> "Other USB 3.0 ports"? What does that mean? Please correct me if I'm
+> wrong, you should have a USB+DP combo port that is being managed with
+> combo PHY. Does USB 3 work on that port?
 > 
-> śr., 18 gru 2024 o 20:02 Anthony Ruhier <aruhier@mailbox.org> napisał(a):
+> In other words, where the order of lanes is actually inverted? Between
+> DP and combo PHY? Within combo PHY? Between the PHY and the pinout?
+> Granted that SM6150 was supported in msm-4.14 could you possibly point
+> out a corresponding commit or a set of commits from that kernel?
+> 
+For "Other USB 3.0 ports", as replied in USBC driver, USB3 primary phy works for other four USB type-A port.
+
+The REG_DP_LOGICAL2PHYSICAL_LANE_MAPPING mapping determines how logical lanes (0, 1, 2, 3) map to physical lanes sent to the PHY.
+This ensures alignment with hardware requirements.
+The PHY’s polarity inversion only adjusts signal polarity and doesn’t affect lane mapping.
+Both DP ctrl and PHY lane related config will not affect USB phy.
+
+Without extra Type-C mapping, the DP controller’s mapping indirectly decides how signals are transmitted through Type-C.
+Mapping ensures proper data transmission and compatibility across interfaces.
+
+We only found sm6150 need this lane mapping config, 
+For msm 4.14, please refer these links,
+https://android.googlesource.com/kernel/msm/+/af03eef7d4c3cbd1fe26c67d4f1915b05d0c1488/arch/arm64/boot/dts/qcom/sm6150-sde.dtsi (qcom,logical2physical-lane-map)
+https://android.googlesource.com/kernel/msm/+/af03eef7d4c3cbd1fe26c67d4f1915b05d0c1488/drivers/gpu/drm/msm/dp/dp_parser.c (dp_parser_misc)
+https://android.googlesource.com/kernel/msm/+/af03eef7d4c3cbd1fe26c67d4f1915b05d0c1488/drivers/gpu/drm/msm/dp/dp_catalog_v200.c (dp_catalog_ctrl_lane_mapping_v200)
+
+If need process orientation info like dp_catalog_ctrl_lane_mapping_v200, 
+then 
+if implement in DP phy, then we need config dp_link register in PHY,
+if implement in DP link, then we need pass orientation info to DP driver, perhaps we could add a new attribute to the phy_configure_opts_dp structure to pass this.
+Do you have any suggestions?
+
 >>
->> Add the lid switch for the Lenovo Yoga Slim 7x.
+>> Additionally, if it were placed on the PHY side, the PHY would need access to dp_link’s domain which can access REG_DP_LOGICAL2PHYSICAL_LANE_MAPPING.
+> 
+> I was thinking about inverting the SW_PORTSEL_VAL bit.
+> 
+>> Therefore, we believe that the  max_dp_link_rate,max_dp_lanes and lane_map move to dp_link side is better.
 >>
->> Other x1e80100 laptops use the GPIO pin 92 only, however on the Yoga
->> Slim 7x this pin seems to be bridged with the pin 71. By default, the
->> pin 71 is set as output-high, which blocks any event on pin 92.
+>>>>>> +
+>>>>>> +       memcpy(msm_dp_panel->lane_map, lane_map, msm_dp_panel->max_dp_lanes * sizeof(u32));
+>>>>>>
+>>>>>>         msm_dp_panel->max_dp_link_rate = msm_dp_panel_link_frequencies(of_node);
+>>>>>>         if (!msm_dp_panel->max_dp_link_rate)
+>>>>>> diff --git a/drivers/gpu/drm/msm/dp/dp_panel.h b/drivers/gpu/drm/msm/dp/dp_panel.h
+>>>>>> index 0e944db3adf2f187f313664fe80cf540ec7a19f2..7603b92c32902bd3d4485539bd6308537ff75a2c 100644
+>>>>>> --- a/drivers/gpu/drm/msm/dp/dp_panel.h
+>>>>>> +++ b/drivers/gpu/drm/msm/dp/dp_panel.h
+>>>>>> @@ -11,6 +11,8 @@
+>>>>>>  #include "dp_aux.h"
+>>>>>>  #include "dp_link.h"
+>>>>>>
+>>>>>> +#define DP_MAX_NUM_DP_LANES    4
+>>>>>> +
+>>>>>>  struct edid;
+>>>>>>
+>>>>>>  struct msm_dp_display_mode {
+>>>>>> @@ -46,6 +48,7 @@ struct msm_dp_panel {
+>>>>>>         bool video_test;
+>>>>>>         bool vsc_sdp_supported;
+>>>>>>
+>>>>>> +       u32 lane_map[DP_MAX_NUM_DP_LANES];
+>>>>>>         u32 max_dp_lanes;
+>>>>>>         u32 max_dp_link_rate;
+>>>>>>
+>>>>>>
+>>>>>> --
+>>>>>> 2.25.1
+>>>>>>
+>>>>>
+>>>>>
+>>>>
+>>>>
+>>>> --
+>>>> linux-phy mailing list
+>>>> linux-phy@lists.infradead.org
+>>>> https://lists.infradead.org/mailman/listinfo/linux-phy
+>>>
 >>
->> This patch sets the pin 71 as output-disable and sets the LID switch on
->> pin 92. This is aligned with how they're configured on Windows:
->>       GPIO  71 | 0xf147000 | in | func0 | hi | pull up   | 16 mA |
->> ctl=0x000001c3 io=0x00000003
->>       GPIO  92 | 0xf15c000 | in | func0 | lo | no pull   |  2 mA |
->> ctl=0x00000000 io=0x00000001
->>
->> Signed-off-by: Anthony Ruhier <aruhier@mailbox.org>
->> ---
->>    .../dts/qcom/x1e80100-lenovo-yoga-slim7x.dts  | 38 +++++++++++++++++++
->>    1 file changed, 38 insertions(+)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts
->> b/arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts
->> index ca5a808f2c7d..311202aa9015 100644
->> --- a/arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts
->> +++ b/arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts
->> @@ -6,6 +6,7 @@
->>    /dts-v1/;
->>
->>    #include <dt-bindings/gpio/gpio.h>
->> +#include <dt-bindings/input/gpio-keys.h>
->>    #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
->>
->>    #include "x1e80100.dtsi"
->> @@ -19,6 +20,21 @@ aliases {
->>                  serial0 = &uart21;
->>          };
->>
->> +       gpio-keys {
->> +               compatible = "gpio-keys";
->> +
->> +               pinctrl-0 = <&hall_int_n_default>;
->> +               pinctrl-names = "default";
->> +
->> +               switch-lid {
->> +                       gpios = <&tlmm 92 GPIO_ACTIVE_LOW>;
->> +                       linux,input-type = <EV_SW>;
->> +                       linux,code = <SW_LID>;
->> +                       wakeup-source;
->> +                       wakeup-event-action = <EV_ACT_DEASSERTED>;
->> +               };
->> +       };
->> +
->>          chosen {
->>                  stdout-path = "serial0:115200n8";
->>          };
->> @@ -811,6 +827,28 @@ edp_reg_en: edp-reg-en-state {
->>                  bias-disable;
->>          };
->>
->> +       hall_int_n_default: hall-int-n-state {
->> +               lid-n-pins {
->> +                       pins = "gpio92";
->> +                       function = "gpio";
->> +                       bias-disable;
->> +               };
->> +
->> +               /*
->> +                * Pins 71 and 92 seem to be bridged together (pin 71 and 92 show the
->> same
->> +                * events). By default, pin 71 is set as output-high, which blocks any
->> +                * event on pin 92. Output-disable on pin 71 is necessary to get
->> events on
->> +                * pin 92.
->> +                * The purpose of pin 71 is not yet known; lid-pull is a supposition.
->> +                */
->> +               lid-pull-n-pins {
->> +                       pins = "gpio71";
->> +                       function = "gpio";
->> +                       bias-pull-up;
->> +                       output-disable;
->> +               };
->> +       };
->> +
->>          kybd_default: kybd-default-state {
->>                  pins = "gpio67";
->>                  function = "gpio";
->> --
->> 2.47.1
->>
+> 
+> 
+
 
