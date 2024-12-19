@@ -1,87 +1,82 @@
-Return-Path: <linux-arm-msm+bounces-42799-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-42800-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 943C89F7DCC
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Dec 2024 16:15:35 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id F318A9F7E0B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Dec 2024 16:28:40 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 22344170655
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Dec 2024 15:13:58 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 83AFA16EC5C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Dec 2024 15:27:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 585FD225A37;
-	Thu, 19 Dec 2024 15:13:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EB17C22579E;
+	Thu, 19 Dec 2024 15:26:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="beiL9eXT"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="LgvlmS/X"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8425225A23
-	for <linux-arm-msm@vger.kernel.org>; Thu, 19 Dec 2024 15:13:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 006E422653F
+	for <linux-arm-msm@vger.kernel.org>; Thu, 19 Dec 2024 15:26:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734621237; cv=none; b=onHycQiS2xPb1h75PQZ6TPX/Ere9qM/8xw+0w6d7poGDMetTGm0KkBMRh+0BJ//AUxnkkAQFCstJU10w7dPg+vWLlcUsKWTPG1jg64wiMzeAR7UEhhFTS1T6WDudtfM37VLrAbsxz2QyAvyfOxQQ89ZlvIAIwVKNRklCV5Vkh24=
+	t=1734621990; cv=none; b=NCq9/wAiTO8ST8xG7oXCfqRuKAcgjevnNxwnIzHdaqOgmVuZzQoHlAARESOqn72Sgfn/n7Ibggus4LmxmifQbjawjZmgOLDtzs25+CK6Ffh80UsOUOQBUlogJXReltAQhD/mzPb3Igq40Iw0MFVqAWgikqlrtmoNdSYjjlr1QFU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734621237; c=relaxed/simple;
-	bh=Ibr8qPMjlg3GtzyOwjhDNzKtC83QC8l0CBEiz057yes=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Y5bE/JxX2DIQx3v4dipvL/25gw5RryAP5Et1//K4RfXvJ1BhblTVYysFZAWrwUVEepmrc/bktlXHis1zkRkC5TuuNcRiYmiIoh+pAtmSNXUTpY++ORSbitznNE5hmIw1WicwktIskoruSF7oLSIiqVMs0RLeDDQFDaknaWQ8Y/A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=beiL9eXT; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BJE6M4Q015107
-	for <linux-arm-msm@vger.kernel.org>; Thu, 19 Dec 2024 15:13:55 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	Ibr8qPMjlg3GtzyOwjhDNzKtC83QC8l0CBEiz057yes=; b=beiL9eXTfw8HMcrQ
-	eWhphKp0AtS+bFWfg8L5ZlHvyPfqUWUqLjl8sh6IlHH904MqGIZdVvr4nm1OTkPC
-	FnyDvqagcR6M3OG/YwzsGbWk7Yepu35LM7af4TG2eOI+JrrB+RsdEzyKEGmXya3J
-	5ciPHdVA2IVSwlBZxRE/MGCWCrg8coHDdnh7HHT0gut3Xgjv1KmqSJD2Ge0Nfx2B
-	b96JXEys8RxSYAmCdi1w9Q9Ig8R7efyG90rLwELOK9bqw9ATseH+lKc7uaWtpzVF
-	Srw8mHeSH37itiUqlktqC+ZrzdMnzGmv22/lg8J3VL4VOkMSsKSvzIE4NaCToJBC
-	pF+mpg==
-Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com [209.85.219.70])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43mmxvr533-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 19 Dec 2024 15:13:54 +0000 (GMT)
-Received: by mail-qv1-f70.google.com with SMTP id 6a1803df08f44-6d887d2f283so2318736d6.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Dec 2024 07:13:54 -0800 (PST)
+	s=arc-20240116; t=1734621990; c=relaxed/simple;
+	bh=15RrTWKQpHCq/hvcLugkHfHdil5oe73YrQ2pQ1CJlL0=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=fGoDc0MGyfnHBLxvZIa85WQt9P3WySbAxDiEsRqhPYroAqasWgRzHSGU5J0sHyIbh7uJtJuFQfkXQmWxrhPy8kWZQ+kK46qEtfek1Y+rzaX+vOkFQfWi9l+jKfh0kssfdrnINCR9HJVA0toXlHX9DPNpIH416vsTGykNZ4zrAcg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=LgvlmS/X; arc=none smtp.client-ip=209.85.128.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-43618283d48so7078835e9.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Dec 2024 07:26:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1734621987; x=1735226787; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=VQ7HZmEeCGMgy0e+vPaSllNgD7jxFlhgiuqO+Gf6oic=;
+        b=LgvlmS/Xe1DbBaOh2EqvwcEOO6YusRBXskAlnyEyADAINemZ4uoxyNdQRgHQtKqsNT
+         MV6oZniWv4Kq9XUVQ8YwoGWrtsswxPn6+MOTDj44owNPi9LB/B/tVBjxmKDvyLmAWXtb
+         obtY7syLHbEiJoZOjODqNq/ULJ4Jpb69CcQaTCCHGCVFusiAU5aeJnvaijslrJk3+9k0
+         PltVSi3U3mAUkoOgfT6OaDlzviRbcpLf782u36qxGjdr6UDU4IeECcmkRh03Yx1lwVqn
+         JG9ZSu2hT2yOM8Gnft0y4aC/3fLu7iejd+ymrtxNefdVegnZ1gBzRZTXv0zlACkpBI8A
+         +Ebg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734621233; x=1735226033;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Ibr8qPMjlg3GtzyOwjhDNzKtC83QC8l0CBEiz057yes=;
-        b=WIZt8HtLQluU85fXVqMVnVytesXEZUYe+ZAPRf9uIQoyWJN1cHBT6srg5mg1ErIQge
-         AEQK4Wxyg9XltprARvxHlj2+iWWuz3F93kkAXZw15iNN+gGUZWUrLdOUAAmaK+6ZKXGl
-         AhRa90uDjIm6WYPlHbF2DowOIe+qDtqTwD8ZcRMu6P1rNIOMq22jYgshaZoV3X72Ujnt
-         FMSsbMi0VU3J1OZPZhKWm5RTl0xRHuJ2JDBVnvl3ZGiynZi6rEmEpPOc9mf6m7W566on
-         q9/Ise1bUd1XVUvkGhxpVpSex10DhQZ05hEa0KZoTixpfLfKd72O5uex+myY+IYxD4hi
-         OP5w==
-X-Forwarded-Encrypted: i=1; AJvYcCUZa5/aSW+X+5qKvSKqeYR6gF1cnz7SeQ1ShuSnj8sONAe+V+ncDJ77kwcN4dlcEKdORh0IdJ1wmtLU5F5h@vger.kernel.org
-X-Gm-Message-State: AOJu0YzSdMQ9xiGi/Wfc0qjLPrefojoan7dMP34QAY+2knkXHaJBXnxs
-	eLsDCWu67ud3cfivwkfMsNkXoPESH8JNUhL13tnv2kiJ0eBjCRhOkNkGmg5bePMGwWBIYinUjwj
-	HT2pye9zYZz1TP6UZtdWtTpKc/UWoV4eovInsfvoQLpGRoRVPchpaUkorQzEb4cHX
-X-Gm-Gg: ASbGncvkE7aybrh4WiIp2gkS4kW9g0a8zFXkXNir8svOBtB1RHO/b2iMDxXqGKaLMg4
-	diIfoNrKaNlTPYrg5Drg0gc/JRPhI0Y5CfG7MZnPvBY3Opdr5J3ERq2/2AJiLQ5Jc0XGTPHKjq2
-	LLyfkebFTHSpm2BSgeDsbUD0oLfAcXqz9eDiD/UOCRFa7Vd1j/QHSqBcr/stj/ze/hQR37U+3Dh
-	LiG41Br4VzS4xSePtq0H2lhX0ct7N9teohcnd8ie3+jI3UU8Ip64XaxVor/bl7uTmH0UYifbVDP
-	0XSNBTiAh4MXRWgkwGr/cIgNLPyuymZEbRc=
-X-Received: by 2002:a05:620a:4141:b0:7af:cac7:5017 with SMTP id af79cd13be357-7b86372323fmr383527185a.4.1734621233641;
-        Thu, 19 Dec 2024 07:13:53 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEfu6esVWQ0ConGDER8nonSqLdGD0StFPOhuICpqOzvsERQj+euyE04T5hXTE0xGSRRS+HadA==
-X-Received: by 2002:a05:620a:4141:b0:7af:cac7:5017 with SMTP id af79cd13be357-7b86372323fmr383525285a.4.1734621233276;
-        Thu, 19 Dec 2024 07:13:53 -0800 (PST)
-Received: from [192.168.65.90] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-aac0f080c1asm73554866b.205.2024.12.19.07.13.51
+        d=1e100.net; s=20230601; t=1734621987; x=1735226787;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=VQ7HZmEeCGMgy0e+vPaSllNgD7jxFlhgiuqO+Gf6oic=;
+        b=hHqxxKkUlT6KX518RGYpHgHOHREOSPXzFzhRfgspcIo7IQf2kkK1J49zRXiOUWO76k
+         tP01ckE1VgNAge/yO13mDkM6xSAw4e5fAJ+sE71Rj+GqHiluwiRgL0RnQxLH9KHbQzIQ
+         +IOIMO4hiaEEdzSGWXZUhL8tkK1F1LvssAJGqCx2WkqeHIeFoIFu12Ek5zJkT+VymOnm
+         zqM6rLwWWiZsg+AcDw6wODQzvsQo53zEQ92xszimCAMOO5W5He8faa4zqkCfRTwTjCye
+         I5uhid6BUY/ftuQfey8XBZ414DCDcY6yRMTQDlKF2Ydr3P7eE0AlC/xEPVDjSZaQ1c6V
+         6sqg==
+X-Forwarded-Encrypted: i=1; AJvYcCWhGHpPKgCcAFukPfJFEroMkp1hUmq6Ueyj372yEuT5BWGJ3fSUdhwPBB8lNArHSjYOHH2rHCKQjkhRLLo0@vger.kernel.org
+X-Gm-Message-State: AOJu0YzSF6DoFkxNkafHC5RfMMYN0D/nNl046dYyDXfi6RzNX28tJ05K
+	Yph6BJtkIFNPNwMtppwmmFl87RBfU4Dc8vINowUESibtb2U61PiucGY0SDOk0OLXis8vNKfkBEY
+	egcE=
+X-Gm-Gg: ASbGncs0WfBerhMxRDmGoE/Tsgaz5hVQ7BopVh/Fdc3dwkBhAtL4+L/y79l4CeiGy8U
+	YjEImUSg3OBMi90qyLcyIPYoWErNtHYScwuy30w52lQ7dn4eLEMYt6HAYNB9jt17KrQTt8yFxUp
+	iLR5+k0TM0pvsNEM/le2cZ12N3fbCBz98klaGE2iP3cHB7zhb3AdhyVMMRBXuHGetfJIRuPtwJo
+	OQZZ1Cvg6wV2Yc0YO7uMxgZ8e5kmWD4UPc62VfEq/zjSO1bUCI2o5mlsleSY/nsj8Glt4VCkGA5
+	3W6iEhSu+SU52pt+AdP+IkkTb+zgNx9CKg==
+X-Google-Smtp-Source: AGHT+IEy1xHzK9K7OC7FPc2fyDm4x3L6AUfcIgdgbQdf1FCaNr7K1xPzw5OtAxsv5OKQ4c4RA4lwuA==
+X-Received: by 2002:a05:600c:4fd3:b0:434:a929:42bb with SMTP id 5b1f17b1804b1-4365536f6camr66630715e9.18.1734621985918;
+        Thu, 19 Dec 2024 07:26:25 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:982:cbb0:a0fd:4342:76af:7533? ([2a01:e0a:982:cbb0:a0fd:4342:76af:7533])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38a1c829235sm1779437f8f.15.2024.12.19.07.26.25
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 19 Dec 2024 07:13:52 -0800 (PST)
-Message-ID: <37e5ecd7-a1ed-4aca-9ad9-7d601a0f31c5@oss.qualcomm.com>
-Date: Thu, 19 Dec 2024 16:13:50 +0100
+        Thu, 19 Dec 2024 07:26:25 -0800 (PST)
+Message-ID: <145dd6ae-be08-4f19-9e9d-abc238b35b8c@linaro.org>
+Date: Thu, 19 Dec 2024 16:26:24 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -89,39 +84,93 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] arm64: dts: qcom: x1e80100-lenovo-yoga-slim7x: Add lid
- switch
-To: Anthony Ruhier <aruhier@mailbox.org>,
-        Maya Matuszczyk <maccraft123mc@gmail.com>
-Cc: andersson@kernel.org, konradybcio@kernel.org, robh@kernel.org,
-        krzk+dt@kernel.org, conor+dt@kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <cae52ea6-e86a-4b86-af06-01a8a93d2ca0@mailbox.org>
- <CAO_MupKCUk-w4=-0yDWo4m9XC1-iEuF6YHYnYw4T0oF2aKFxvQ@mail.gmail.com>
- <1b163b6b-3c33-4361-94be-6b8a6d0febe8@mailbox.org>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <1b163b6b-3c33-4361-94be-6b8a6d0febe8@mailbox.org>
-Content-Type: text/plain; charset=UTF-8
+From: Neil Armstrong <neil.armstrong@linaro.org>
+Reply-To: neil.armstrong@linaro.org
+Subject: Re: [PATCH v2 0/3] scsi: ufs: qcom: Suspend fixes
+To: manivannan.sadhasivam@linaro.org, Alim Akhtar <alim.akhtar@samsung.com>,
+ Avri Altman <avri.altman@wdc.com>, Bart Van Assche <bvanassche@acm.org>,
+ "James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>,
+ "Martin K. Petersen" <martin.petersen@oracle.com>,
+ Abel Vesa <abel.vesa@linaro.org>, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>
+Cc: linux-scsi@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, Amit Pundir <amit.pundir@linaro.org>,
+ Nitin Rawat <quic_nitirawa@quicinc.com>, stable@vger.kernel.org,
+ Ram Kumar Dwivedi <quic_rdwivedi@quicinc.com>
+References: <20241213-ufs-qcom-suspend-fix-v2-0-1de6cd2d6146@linaro.org>
+Content-Language: en-US, fr
+Autocrypt: addr=neil.armstrong@linaro.org; keydata=
+ xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
+ GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
+ BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
+ qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
+ 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
+ AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
+ OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
+ Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
+ YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
+ GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
+ UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
+ GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
+ yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
+ QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
+ SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
+ 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
+ Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
+ oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
+ M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
+ 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
+ KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
+ 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
+ QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
+Organization: Linaro
+In-Reply-To: <20241213-ufs-qcom-suspend-fix-v2-0-1de6cd2d6146@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-ORIG-GUID: EPer8ucF-Kl4GmL9f7z0DY8esOCrkNwh
-X-Proofpoint-GUID: EPer8ucF-Kl4GmL9f7z0DY8esOCrkNwh
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 clxscore=1015
- mlxscore=0 priorityscore=1501 phishscore=0 mlxlogscore=893 malwarescore=0
- suspectscore=0 lowpriorityscore=0 spamscore=0 adultscore=0 bulkscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2411120000
- definitions=main-2412190122
 
-On 19.12.2024 11:34 AM, Anthony Ruhier wrote:
-> Thank you Maya!
-> I'm sorry, I realized that the patch format is wrong due to a misconfiguration of my mail client. Tell me if I should send a v2 of this patch fixing it.
+On 13/12/2024 14:53, Manivannan Sadhasivam via B4 Relay wrote:
+> Hi,
+> 
+> This series fixes the several suspend issues on Qcom platforms. Patch 1 fixes
+> the resume failure with spm_lvl=5 suspend on most of the Qcom platforms. For
+> this patch, I couldn't figure out the exact commit that caused the issue. So I
+> used the commit that introduced reinit support as a placeholder.
+> 
+> Patch 3 fixes the suspend issue on SM8550 and SM8650 platforms where UFS
+> PHY retention is not supported. Hence the default spm_lvl=3 suspend fails. So
+> this patch configures spm_lvl=5 as the default suspend level to force UFSHC/
+> device powerdown during suspend. This supersedes the previous series [1] that
+> tried to fix the issue in clock drivers.
+> 
+> This series is tested on Qcom SM8550 MTP and Qcom RB5 boards.
+> 
+> [1] https://lore.kernel.org/linux-arm-msm/20241107-ufs-clk-fix-v1-0-6032ff22a052@linaro.org
+> 
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> ---
+> Changes in v2:
+> - Changed 'ufs_qcom_drvdata::quirks' type to 'enum ufshcd_quirks'
+> - Collected tags
+> - Link to v1: https://lore.kernel.org/r/20241211-ufs-qcom-suspend-fix-v1-0-83ebbde76b1c@linaro.org
+> 
+> ---
+> Manivannan Sadhasivam (3):
+>        scsi: ufs: qcom: Power off the PHY if it was already powered on in ufs_qcom_power_up_sequence()
+>        scsi: ufs: qcom: Allow passing platform specific OF data
+>        scsi: ufs: qcom: Power down the controller/device during system suspend for SM8550/SM8650 SoCs
+> 
+>   drivers/ufs/core/ufshcd-priv.h |  6 ------
+>   drivers/ufs/core/ufshcd.c      |  1 -
+>   drivers/ufs/host/ufs-qcom.c    | 31 +++++++++++++++++++------------
+>   drivers/ufs/host/ufs-qcom.h    |  5 +++++
+>   include/ufs/ufshcd.h           |  2 --
+>   5 files changed, 24 insertions(+), 21 deletions(-)
+> ---
+> base-commit: 40384c840ea1944d7c5a392e8975ed088ecf0b37
+> change-id: 20241211-ufs-qcom-suspend-fix-5618e9c56d93
+> 
+> Best regards,
 
-Git throws an error here when applying, please resend
-
-Konrad
-
-
+Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8550-QRD
+Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8650-QRD
 
