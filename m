@@ -1,147 +1,297 @@
-Return-Path: <linux-arm-msm+bounces-42724-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-42725-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 76C299F733C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Dec 2024 04:09:18 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9F4999F734F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Dec 2024 04:25:30 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5D9AE189315E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Dec 2024 03:09:19 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9725D164781
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Dec 2024 03:25:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F312886336;
-	Thu, 19 Dec 2024 03:09:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 06D9386325;
+	Thu, 19 Dec 2024 03:25:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="VG5U5OBA"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="fPQ1Ce3Z"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f45.google.com (mail-lf1-f45.google.com [209.85.167.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1009870824
-	for <linux-arm-msm@vger.kernel.org>; Thu, 19 Dec 2024 03:09:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53BB73D3B8;
+	Thu, 19 Dec 2024 03:25:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734577752; cv=none; b=FvRQ28sq5dJtMd5Fw7CxT8tJ2u42B+Hzd15+d5FLBClhcYPED0ws3UGyhvjwPo4DRehXmq6fdgOE6SyoBH8ql0Y4P+27rvq6ciIOQLpm8SSQZeKZ/qNZ5qvZ4ITkerweQnZRQZq+1YMS4TpVnIM8slX0ZPDj00TvJio/iriZQCU=
+	t=1734578721; cv=none; b=TIcTebns7rtAd2Aj+qFlJdDfbp2HSM29Mo8+SjcfX2aenXCQJYf7LdaDzF8nlxhv4TBOJA/S6TRvmROb7N+ybfcktmHsI3507C7Zsw9PiCxW90bhDvn1Ic380HjcHlsaKYxx1qOzZ6yv8d2VmF260aArHzZDWXV64/a09MzOcuU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734577752; c=relaxed/simple;
-	bh=h6rtXx6E/Ub/8ntDL7SsxJGNcDe7moZzv+DgjbG2H/A=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=h8riIotVcvHvJVkeC+TgogGt6N8sKq0tBOFjub4YY8MLTzaxB/nZui7zv/PvdyYcylm336su8rNI8EXHqQZQk5oqTBToBMyWvRs7/t6BA0ZunKnnGLNPJ4RIQSU88k42G7I+c2cOImbA8YoemHOhquVUZILkJmGIgDQh3iC09Po=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=VG5U5OBA; arc=none smtp.client-ip=209.85.167.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-53e28cf55cdso178950e87.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Dec 2024 19:09:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1734577749; x=1735182549; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=iAWj/RXMsp39rYtlPFugVfFgIik5mQ56vTtEiy6K898=;
-        b=VG5U5OBAO1/0c2NoAS8EgOPyS//UMo4tfFgffo+3ZP81uSqnaGfj5+TqUJN4sQ9MlY
-         cWtrJ6dZwZ9oHy6P97/OnLK7klSPmTfz7QYyzp2+/lzzVPGBk1VJ7OWeVU/LInw76jUV
-         m1yazrzBQEphZks3dvcr8NiKcFAttpR8y9OTkdZ/JVPeSPyVQJyLcCK1sKFkYBBONyYx
-         b7hqkLVj+uVo2odihWXh+g2AeYZCjRrPpSNnqWJJSxf4Xfpj8xY70fl0ynaGxtMRGKD8
-         UeCGkpvAj2vjeIrAMkv/yjnn2YlC8+snVeM18UlFWFVmkXeN3Et32qzPwt/BXalTBAv1
-         /7qQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734577749; x=1735182549;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=iAWj/RXMsp39rYtlPFugVfFgIik5mQ56vTtEiy6K898=;
-        b=R7qULu6PrGQV+LHsJMGE7WbHv+rqyK6nU0xfL9m1TEBY5KR0cAh8xBCo7hJoD4h/Ke
-         MsgJR+YkCHIWMGnr4q4jQoJOgw7ef6mKIkuRlG5qfVBKddgH0HlUJMh6T3rSq92n/V2n
-         kV3Y3+ee+0l2gpxneCq2vE+0CmlqY4BFG53c8TsSlEwmSNIYjDJ0SrkrsN2Q10XqRWD6
-         FF+2D5fFqegk9Xd7ihglEMsLZOzJFsSc7xxVIXvSgXmZ43z53O7z7TnrEw6h92HCht0e
-         va9d3dpDmFs8ybTp53jiAGzHgcBfEMez0V4mD4Tah4DDEZYXUU4louYZM+uTyiequES3
-         FZqQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVk+vJfikN/kLyPbuurs/Xbrf43DupRXk2gaX1cOUU5FCVtdOFD6O5XO5oT7AlOiPh9Jq4xMlqbX9skK+PG@vger.kernel.org
-X-Gm-Message-State: AOJu0YyC6SsknR5Runvu2sYypWBdIIzaACO4Is/UmBN6VkXqCcZ/XF/9
-	heQgu1jGv2wAbAVcFCT2KxTKYJr//+scv7zZ0cVTb7CZdzyiD+dvXxjmGb+8eWQ=
-X-Gm-Gg: ASbGnctOwCCDYadfdtkjf9fX+E3D12P4op0RL/Ke6BKGo1cpZl9RLCnQb37yNMUzzsa
-	rfhtGs5ZZxMwRoyJ8xt/xjfoqsGjvd+2xXv2w/5Jex9bGT/MZFK6e15W8XCZ2G09+nBsC6JuKsv
-	mMmtWDzCtyVOCLSxnNC9/zs4vie1wyfNgTb54GWeLGk4+/oYGJ0CrUoOriGYQILa/2UASd7gwkN
-	D5u30nzrhUGnLjRSknRgkgYCE1/ItWvjpHjm5GsXwqBdz5CZZURgXjAPSpXVrJUNb+gsLE6H0d2
-	ldbxE/CLbgrFgsJJ3aMvuyB6rqj96OKyzk/C
-X-Google-Smtp-Source: AGHT+IHy+maYGCy3dtwKHO7L044QpVaiEZ8uB8NFDb7ONkLj7lNRSAMbMHNVrRm+1ULsyRJjtFsZuA==
-X-Received: by 2002:a05:6512:3190:b0:540:30df:b3ea with SMTP id 2adb3069b0e04-541e6747036mr1574039e87.15.1734577749125;
-        Wed, 18 Dec 2024 19:09:09 -0800 (PST)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-542238215ccsm47821e87.215.2024.12.18.19.09.07
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 18 Dec 2024 19:09:08 -0800 (PST)
-Date: Thu, 19 Dec 2024 05:09:06 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Sachin Gupta <quic_sachgupt@quicinc.com>
-Cc: Adrian Hunter <adrian.hunter@intel.com>, 
-	Ulf Hansson <ulf.hansson@linaro.org>, linux-arm-msm@vger.kernel.org, linux-mmc@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, quic_cang@quicinc.com, quic_nguyenb@quicinc.com, 
-	quic_bhaskarv@quicinc.com, quic_mapa@quicinc.com, quic_narepall@quicinc.com, 
-	quic_nitirawa@quicinc.com, quic_rampraka@quicinc.com, quic_sartgarg@quicinc.com
-Subject: Re: [PATCH V2 1/2] mmc: sdhci-msm: Add core_major, minor to msm_host
- structure
-Message-ID: <emdc6nq3z7z2zimkbut4hknhksoyzsemnna7iyrdvkfxpvbkvb@7vxdyoams4ky>
-References: <20241218091057.15625-1-quic_sachgupt@quicinc.com>
- <20241218091057.15625-2-quic_sachgupt@quicinc.com>
+	s=arc-20240116; t=1734578721; c=relaxed/simple;
+	bh=porEPczi67MnU8utZU92dIGIY6HD8GQJSMVzWv14uk8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=bEsrYY72VPtbfEXLkd7iktrbP3RdSdsueztBZn27Fvohsyhwl2A2upaSUdpubgr2fB6qsLV+sWVEOTYw1gFkhCjhCoHLiCOm15sVrG+DzITwZ2ILp/hgypAppuspJH96dP1nUifIQsODumUfYHALS6whUYzcOpNU2yPjAAfnKxM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=fPQ1Ce3Z; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BIICbA7030090;
+	Thu, 19 Dec 2024 03:24:55 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	mTKstjkSA8BTortv7dXvF8pKroH7V24PZ/uN8TShCjw=; b=fPQ1Ce3Z4rKyvLvE
+	2TAe3P5qjROyfPRgztTIuXG22vtukWLxTd6EPMY2kKBZwtOch3aD2vTtomWs6cL7
+	34gyd3KW6l21/JKTAfvNQnKiJXRmLb0NW5epftlnkcNKmO54MtjiucAvzYNqQdHl
+	lr8TVJJ2b0czahe6MD1SRJGCE9C03XZccBZDI8SElxl8uJw6sLHUJk7edKQ5zjgA
+	9Nsf9jQFFvQB/3OuNvNrUS9YcKSuByZlIrPQbxUlM4cRJQwlX8rQZVbYOuDqjQni
+	xpgKxVQUWia6yqTCwwTtcRaeJf1egieYintbClVomid3mls0dqAApqB2BqHdaOpm
+	oEcJFw==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43m3fk925j-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 19 Dec 2024 03:24:55 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4BJ3OsO5005948
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 19 Dec 2024 03:24:54 GMT
+Received: from [10.64.68.153] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 18 Dec
+ 2024 19:24:23 -0800
+Message-ID: <a6de450f-792d-429e-925e-850d11163907@quicinc.com>
+Date: Thu, 19 Dec 2024 11:24:12 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241218091057.15625-2-quic_sachgupt@quicinc.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v7 4/5] Coresight: Add Coresight TMC Control Unit driver
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+        Suzuki K Poulose
+	<suzuki.poulose@arm.com>,
+        Mike Leach <mike.leach@linaro.org>,
+        James Clark
+	<james.clark@linaro.org>,
+        Alexander Shishkin
+	<alexander.shishkin@linux.intel.com>,
+        Maxime Coquelin
+	<mcoquelin.stm32@gmail.com>,
+        Alexandre Torgue <alexandre.torgue@foss.st.com>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>
+CC: Jinlong Mao <quic_jinlmao@quicinc.com>, <coresight@lists.linaro.org>,
+        <linux-arm-kernel@lists.infradead.org>, <linux-kernel@vger.kernel.org>,
+        <devicetree@vger.kernel.org>,
+        Tingwei Zhang <quic_tingweiz@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>,
+        <linux-stm32@st-md-mailman.stormreply.com>
+References: <20241210031545.3468561-1-quic_jiegan@quicinc.com>
+ <20241210031545.3468561-5-quic_jiegan@quicinc.com>
+ <d09097da-a07a-4dfa-9c0d-567b329b64ac@oss.qualcomm.com>
+Content-Language: en-US
+From: Jie Gan <quic_jiegan@quicinc.com>
+In-Reply-To: <d09097da-a07a-4dfa-9c0d-567b329b64ac@oss.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: EN8MsNzd0MooXx_vM2kwTn_ShE_yQR1S
+X-Proofpoint-ORIG-GUID: EN8MsNzd0MooXx_vM2kwTn_ShE_yQR1S
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 mlxscore=0
+ impostorscore=0 spamscore=0 adultscore=0 bulkscore=0 clxscore=1015
+ suspectscore=0 mlxlogscore=999 malwarescore=0 priorityscore=1501
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2412190023
 
-On Wed, Dec 18, 2024 at 02:40:56PM +0530, Sachin Gupta wrote:
-> Add the core_major and core_minor variables from local
-> scope to the msm_host structure. This change improves
-> the organization of the code and allows these variables
-> to be accessed more easily throughout the msm_host context.
 
-It doesn't improve anything, it is necessary for the followup patch.
+
+On 12/15/2024 6:21 AM, Konrad Dybcio wrote:
+> On 10.12.2024 4:15 AM, Jie Gan wrote:
+>> The Coresight TMC Control Unit hosts miscellaneous configuration registers
+>> which control various features related to TMC ETR sink.
+>>
+>> Based on the trace ID, which is programmed in the related CTCU ATID
+>> register of a specific ETR, trace data with that trace ID gets into
+>> the ETR buffer, while other trace data gets dropped.
+>>
+>> Enabling source device sets one bit of the ATID register based on
+>> source device's trace ID.
+>> Disabling source device resets the bit according to the source
+>> device's trace ID.
+>>
+>> Signed-off-by: Jie Gan <quic_jiegan@quicinc.com>
+>> ---
+> 
+> [...]
+> 
+>> +static int __ctcu_set_etr_traceid(struct coresight_device *csdev,
+>> +				  u8 traceid,
+>> +				  int port_num,
+>> +				  bool enable)
+>> +{
+>> +	uint32_t atid_offset;
+>> +	struct ctcu_drvdata *drvdata;
+>> +	unsigned long flags;
+>> +	uint32_t reg_offset;
+>> +	int bit;
+>> +	uint32_t val;
+>> +
+>> +	if (!IS_VALID_CS_TRACE_ID(traceid) || port_num < 0)
+>> +		return -EINVAL;
+>> +
+>> +	drvdata = dev_get_drvdata(csdev->dev.parent);
+>> +	if (IS_ERR_OR_NULL(drvdata))
+>> +		return -EINVAL;
+>> +
+>> +	atid_offset = drvdata->atid_offset[port_num];
+>> +	if (atid_offset == 0)
+>> +		return -EINVAL;
+>> +
+>> +	spin_lock_irqsave(&drvdata->spin_lock, flags);
+> 
+> guard(raw_spinlock_irqsave)(&drvdata->spin_lock);
+> 
+> and drop the unlocks
+> 
+Sure, will fix in next version.
+
+>> +	CS_UNLOCK(drvdata->base);
+>> +
+>> +	reg_offset = CTCU_ATID_REG_OFFSET(traceid, atid_offset);
+>> +	bit = CTCU_ATID_REG_BIT(traceid);
+>> +	if (reg_offset - atid_offset >= CTCU_ATID_REG_SIZE ||
+>> +	    bit >= CORESIGHT_TRACE_IDS_MAX) {
+>> +		CS_LOCK(drvdata);
+>> +		spin_unlock_irqrestore(&drvdata->spin_lock, flags);
+>> +		return -EINVAL;
+>> +	}
+>> +
+>> +	val = ctcu_readl(drvdata, reg_offset);
+>> +	if (enable)
+>> +		val = val | BIT(bit);
+>> +	else
+>> +		val = val & ~BIT(bit);
+>> +	ctcu_writel(drvdata, val, reg_offset);
+>> +
+>> +	CS_LOCK(drvdata->base);
+>> +	spin_unlock_irqrestore(&drvdata->spin_lock, flags);
+>> +
+>> +	return 0;
+>> +}
+>> +
+>> +static int ctcu_get_active_port(struct coresight_device *sink, struct coresight_device *helper)
+>> +{
+>> +	int port, i;
+>> +
+>> +	for (i = 0; i < sink->pdata->nr_outconns; ++i) {
+>> +		if (sink->pdata->out_conns[i]->dest_dev) {
+>> +			port = sink->pdata->out_conns[i]->dest_port;
+>> +			return port;
+> 
+> Return sink->....
+Sure, will fix in next version.
 
 > 
-> core_major will have information related to sdcc controller
-> major version number.
-> core_minor will have information related to sdcc controller
-> minor version number.
+>> +		}
+>> +	}
+>> +
+>> +	return -EINVAL;
+>> +}
+>> +
+>> +/*
+>> + * ctcu_set_etr_traceid: Retrieve the ATID offset and trace ID.
+>> + *
+>> + * Returns 0 indicates success. None-zero result means failure.
+>> + */
+>> +static int ctcu_set_etr_traceid(struct coresight_device *csdev,
+>> +				struct cs_sink_data *sink_data,
+>> +				bool enable)
+>> +{
+>> +	int port_num;
+>> +
+>> +	if (!IS_VALID_CS_TRACE_ID(sink_data->traceid) ||
+>> +	    (csdev == NULL) ||
 > 
-> Signed-off-by: Sachin Gupta <quic_sachgupt@quicinc.com>
-> ---
->  drivers/mmc/host/sdhci-msm.c | 6 ++++++
->  1 file changed, 6 insertions(+)
-> 
-> diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
-> index e00208535bd1..2a5e588779fc 100644
-> --- a/drivers/mmc/host/sdhci-msm.c
-> +++ b/drivers/mmc/host/sdhci-msm.c
-> @@ -273,6 +273,8 @@ struct sdhci_msm_host {
->  	bool tuning_done;
->  	bool calibration_done;
->  	u8 saved_tuning_phase;
-> +	u8 core_major;
-> +	u16 core_minor;
->  	bool use_cdclp533;
->  	u32 curr_pwr_state;
->  	u32 curr_io_level;
-> @@ -2557,6 +2559,10 @@ static int sdhci_msm_probe(struct platform_device *pdev)
->  	core_major = (core_version & CORE_VERSION_MAJOR_MASK) >>
->  		      CORE_VERSION_MAJOR_SHIFT;
->  	core_minor = core_version & CORE_VERSION_MINOR_MASK;
-> +
-> +	msm_host->core_major = core_major;
-> +	msm_host->core_minor = core_minor;
-> +
->  	dev_dbg(&pdev->dev, "MCI Version: 0x%08x, major: 0x%04x, minor: 0x%02x\n",
->  		core_version, core_major, core_minor);
->  
-> -- 
-> 2.17.1
-> 
+> I'm not sure this can be null by the time it reaches this function
+Will check.
 
--- 
-With best wishes
-Dmitry
+> 
+>> +	    (sink_data->sink == NULL)) {
+>> +		dev_dbg(&csdev->dev, "Invalid parameters\n");
+> 
+> dev_err?
+It's better with dev_err, will fix.
+
+> 
+>> +		return -EINVAL;
+>> +	}
+>> +
+>> +	port_num = ctcu_get_active_port(sink_data->sink, csdev);
+>> +	if (port_num < 0)
+>> +		return -EINVAL;
+>> +
+>> +	dev_dbg(&csdev->dev, "traceid is %d\n", sink_data->traceid);
+>> +
+>> +	return __ctcu_set_etr_traceid(csdev, sink_data->traceid, port_num, enable);
+>> +}
+>> +
+>> +static int ctcu_enable(struct coresight_device *csdev, enum cs_mode mode,
+>> +		       void *data)
+>> +{
+>> +	int ret = 0;
+> 
+> Unnecessary initialization (you instantly overwrite it), also below
+> 
+>> +	struct cs_sink_data *sink_data = (struct cs_sink_data *)data;
+>> +
+>> +	ret = ctcu_set_etr_traceid(csdev, sink_data, true);
+>> +	if (ret)
+>> +		dev_dbg(&csdev->dev, "enable data filter failed\n");
+> 
+> Since the this function returns an int, maybe return ctcu_set_etr_traceid()
+> and let the upper layer throw an error (also for some other functions in this
+> file)
+> 
+Sure, will check.
+
+>> +
+>> +	return 0;
+>> +}
+>> +
+>> +static int ctcu_disable(struct coresight_device *csdev, void *data)
+>> +{> +	int ret = 0;
+>> +	struct cs_sink_data *sink_data = (struct cs_sink_data *)data;
+>> +
+>> +	ret = ctcu_set_etr_traceid(csdev, sink_data, false);
+>> +	if (ret)
+>> +		dev_dbg(&csdev->dev, "disable data filter failed\n");
+>> +
+>> +	return 0;
+>> +}
+> 
+> [...]
+> 
+>>   enum coresight_dev_subtype_helper {
+>>   	CORESIGHT_DEV_SUBTYPE_HELPER_CATU,
+>> -	CORESIGHT_DEV_SUBTYPE_HELPER_ECT_CTI
+>> +	CORESIGHT_DEV_SUBTYPE_HELPER_ECT_CTI,
+>> +	CORESIGHT_DEV_SUBTYPE_HELPER_CTCU
+> 
+> Please add a comma here too, so that future additions will be
+> less noisy
+Sure, will add a comma after CORESIGHT_DEV_SUBTYPE_HELPER_CTCU.
+
+
+Thanks,
+Jie
+
+
 
