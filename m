@@ -1,48 +1,78 @@
-Return-Path: <linux-arm-msm+bounces-42786-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-42787-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2F4D29F7A77
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Dec 2024 12:35:56 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5F9AE9F7AF3
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Dec 2024 13:07:34 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1EE9F18944EE
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Dec 2024 11:35:57 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B6D2D167ED3
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Dec 2024 12:07:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 42DD92236E9;
-	Thu, 19 Dec 2024 11:35:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 38BF9223C75;
+	Thu, 19 Dec 2024 12:07:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="S0lTBxqS"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="QnFvLD/o"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 133A78632A;
-	Thu, 19 Dec 2024 11:35:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 630AF223705
+	for <linux-arm-msm@vger.kernel.org>; Thu, 19 Dec 2024 12:07:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734608151; cv=none; b=qvbYb0HD/xrWYDm6vvdVdngBFWcJGoA05vkK8AmcuTDyow6vu1vj3PusM3uNaRPcmOk8TtqDB5dFU98G6/ip4j+JEAIsvMhlHLYR9Z2DmbTqQYyZHYAVKJb1SIY93VMIjVG9TtXCBaGxtygr1OtkrNKVQlxhk9+zvCOTgIwTnHo=
+	t=1734610043; cv=none; b=hqALm3VPp9SJXmMQyEW4mHksSsdwPxwldyNVW1nSpqajF5Cm1CdwkN0ShhpRXjVq8GuTebPvyPWeIgbXHlx6dNgR49dI5IlmHnyAPraxM0H0BZ7QYGLe0zmsNDpejCuONrB82OUHUrs3XBy1zMT/xxmrEjBanZUfMcN+0ecc7XA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734608151; c=relaxed/simple;
-	bh=7Bf8FukrWOX7iakz2zyDaB6+PLWUvkQAW1pv19GUuP4=;
+	s=arc-20240116; t=1734610043; c=relaxed/simple;
+	bh=TQ2k0hDSEioqe4OJkjemYr7Wajz2gW6QOuogE6HFEH4=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=KVIR6eszuPVORh1sZt8oXWqvUO7vwVNdDLjupCFu0afIl3Ldd1Zj7t+dWJvTAj71ObqZiWX6KK2h98snBYzeMGL0RvRHVsyNoyr3fZBrsTeYaOqta2Y5ZZ8Yqhlv+rxoItmpNcEFVV1duVzbZ4VlAq6Dsvj1JskRRLRG5kDsD9c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=S0lTBxqS; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0D73C4CED4;
-	Thu, 19 Dec 2024 11:35:45 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1734608150;
-	bh=7Bf8FukrWOX7iakz2zyDaB6+PLWUvkQAW1pv19GUuP4=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=S0lTBxqSH4dk8Jaxu6bmLsvrjFGS0RSyoPYmUspwj4JHI8eZKXOaOG59neGG/SQwd
-	 0GpiM1BoSligsS6mQlHgQ26crS9UJXjqiN050jOVWfFBjO3a/ME1OyyioRXjFeLtZp
-	 rwFQ2JKinfkM6iDUy37yZctI4Qh6/APqgRh8sF5reJsPOrxkbMpclVIeBxkY7A/xH9
-	 b58LkCYHiFOR6kDTzHKaiujXyCeDICsCCWRlNl6n5tuvqJ+c2mlWL3mbxCGeoizt8s
-	 yLMHYMFdmAZdfYWxUfXFkQ6eYNmI/4gjgjIBEaBKaFsKhL/AYGZj8OpJRIbd37HYdt
-	 UH0Dcj7TZf8+g==
-Message-ID: <15f4ebe2-a148-4927-8f01-2fcd414d480f@kernel.org>
-Date: Thu, 19 Dec 2024 12:35:43 +0100
+	 In-Reply-To:Content-Type; b=nAg3Xc8DehErXZGuYUMafNUeRPWZ63w0TKWIk8Vx55S5SiIVtrp+Gz/4YgVjvJ3iJxQ5W1OGZmab2A49OTI/angTef3hNm6sKFCedVYn6gi7/dmonhAQ3WvzVZOePDWZxIkvCnFE70c39AFx2/o9+jPCk2W7pouSN/d2q9kiFNw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=QnFvLD/o; arc=none smtp.client-ip=209.85.221.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-3862d161947so328851f8f.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Dec 2024 04:07:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1734610039; x=1735214839; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=8YmmN8nkKjrK99ISGjRqnOlBNpvXQaOLxV6iv9YKRvQ=;
+        b=QnFvLD/oE3b2PNktW0Znxw+G9fJ8vD833CaWnWQWZVd4lkXJPhNvQ01atxkpuLVgFf
+         +W7lCQJSjYzyXVrEMZeXY2G0V4dB4+EguoJNlPXeRX3al+hHLpZ9rllUXWoi9+SqR5t+
+         iGpqmgGxqX46OajhxUvlDC24wcRQrsQibn6pJMLA0bltCNPGXOO1FpLP1E6O7wRanuup
+         KTiYwpvU1AOOTLGttCZ+UQ/F+lIkDC8inLw0uVXgI/lecEs74o4HhdfJYnVB9YQcxjGW
+         BkTfzHJCEN1ZR2yQE90F2xviJyoR/6Bi91WfJf1zPKCeNWapkU96Jo9TB/CefH+SvaRU
+         omzg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1734610039; x=1735214839;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=8YmmN8nkKjrK99ISGjRqnOlBNpvXQaOLxV6iv9YKRvQ=;
+        b=O6N115e7dstESw0L6q5hiqZEmZBmOuLN5UWt0kIbShfd5j2Mr0IY8KZTozwhlB9qka
+         HmCbwZbWyM8ZmSof90Nwvfyrd2mgMBJxy4f/5Y4gJLbPi6By9rF3Fg2rsSF5QbEMUFL5
+         a2cCAw11u7V1OS/6pqw8ujKgcWnOCYNZw7n4iYOr2XdAM+YhlMr88rn39/kQc/60TIm8
+         GkBs3hZfzy1EclF10bCtPQFZxmN1U8hBqBDUoGb24I8nDcRQgyQlXgPK31Vs17SkgPZJ
+         Pddx+FSl7kZVGhvw5qcq5l1nobk3jfLeiOqJ/tXkm1PjVAf5jyamTg2gjQhYKTdN00QE
+         NMaw==
+X-Forwarded-Encrypted: i=1; AJvYcCUhgq/H7spcyBnPjms3UaToI7sItkPCOPKnYBxzWk8rUupZ54sXm4VAQV0L3UlapnUrFDnMm8y/E/CjSVlv@vger.kernel.org
+X-Gm-Message-State: AOJu0YzAYDnRwCIbcZxB4zyJlwoR0iTHs2IMCuLBXSTohkhm+QxJW4sG
+	1zhY/ObjC+vqlCK13F7NZYZiAy/AvVUkBcN3yMgrpVvhWGTifH96IaQ0uWrnqWY=
+X-Gm-Gg: ASbGncv9ex5HPYjKbrCPBECSH2IV6wOw3R8M0HkaZfh/svk2IAAFO8EzOfmI7fSMJSz
+	E3lvIvqteyn0gsq+lUbQEOc/Qc4q0s1a7E9TpC0gWaphZ/YfaEj1FfDZISTJKo4vj5G6+3PwAMA
+	ftWqaqPOqagavF2MsQLgqVupw+DsimwyrGsC22chDmyxwXBnjx12N6k7GvzOZgdusf9Q34fer65
+	iAkDCu8XZMg+NRNiMCxLK4NZNeghkzGOw0WdYPnMy6TS7lCy1edNOK0qjBnJhzMe46waQ==
+X-Google-Smtp-Source: AGHT+IHz+r3tOTq8K22KGT7iziw6NLDUZNcFTL4o5oiT1OGLu5RtR/FnRqLm817TU0hdrBOo//KULQ==
+X-Received: by 2002:a5d:6da9:0:b0:388:da10:ff13 with SMTP id ffacd0b85a97d-388e4d65ba7mr6286145f8f.21.1734610038756;
+        Thu, 19 Dec 2024 04:07:18 -0800 (PST)
+Received: from [192.168.0.10] ([176.61.106.227])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43656b4432dsm49706455e9.41.2024.12.19.04.07.17
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 19 Dec 2024 04:07:18 -0800 (PST)
+Message-ID: <1e1c190d-b897-4d6b-bbaf-7b82b0935c14@linaro.org>
+Date: Thu, 19 Dec 2024 12:07:16 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,103 +80,36 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 2/2] coresight: Add label sysfs node support
-To: Jinlong Mao <quic_jinlmao@quicinc.com>,
- Suzuki K Poulose <suzuki.poulose@arm.com>, Mike Leach
- <mike.leach@linaro.org>, James Clark <james.clark@arm.com>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>,
- Mathieu Poirier <mathieu.poirier@linaro.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>
-Cc: coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-arm-msm@vger.kernel.org
-References: <20241217063324.33781-1-quic_jinlmao@quicinc.com>
- <20241217063324.33781-3-quic_jinlmao@quicinc.com>
- <985d234c-e088-469d-b9dc-7904fcf5a91c@arm.com>
- <f1c6da16-fbfd-40aa-a158-36ab713ce541@quicinc.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
+Subject: Re: [PATCH v5 0/3] media: venus: Provide support for selecting
+ encoder/decoder from in-driver
+To: Vikash Garodia <quic_vgarodia@quicinc.com>,
+ Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
+Cc: quic_renjiang@quicinc.com, quic_vnagar@quicinc.com,
+ quic_dikshita@quicinc.com, konradybcio@kernel.org,
+ linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+ Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+References: <20241209-media-staging-24-11-25-rb3-hw-compat-string-v5-0-ef7e5f85f302@linaro.org>
+ <d8cff621-3e19-da49-0a20-8df74123ac91@quicinc.com>
 Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <f1c6da16-fbfd-40aa-a158-36ab713ce541@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <d8cff621-3e19-da49-0a20-8df74123ac91@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On 18/12/2024 10:57, Jinlong Mao wrote:
+On 19/12/2024 07:37, Vikash Garodia wrote:
+>> Signed-off-by: Bryan O'Donoghue<bryan.odonoghue@linaro.org>
+> Thank you for the changes, looks good to me. Let me come back with some
+> validation on few SOCs and update here.
 > 
-> 
-> On 2024/12/18 17:38, Suzuki K Poulose wrote:
->> On 17/12/2024 06:33, Mao Jinlong wrote:
->>> For some coresight components like CTI and TPDM, there could be
->>> numerous of them. From the node name, we can only get the type and
->>> register address of the component. We can't identify the HW or the
->>> system the component belongs to. Add label sysfs node support for
->>> showing the intuitive name of the device.
->>>
->>> Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
->>> ---
->>>   .../testing/sysfs-bus-coresight-devices-cti   |  6 ++++
->>>   .../sysfs-bus-coresight-devices-funnel        |  6 ++++
->>>   .../testing/sysfs-bus-coresight-devices-tpdm  |  6 ++++
->>>   drivers/hwtracing/coresight/coresight-sysfs.c | 32 +++++++++++++++++++
->>>   4 files changed, 50 insertions(+)
->>
->> Do you think we need to name the devices using the label ? Or is this 
->> enough ?
->>
->> Suzuki
-> Hi Suzuki,
-> 
-> In my opinion, we should use label as the device name.
+> Regards,
+> Vikash
 
-As Linux device driver name?
+ACK, appreciated.
 
-No, that's not the point of label. We don't do such stuff, nowhere.
-
-
-Best regards,
-Krzysztof
+---
+bod
 
