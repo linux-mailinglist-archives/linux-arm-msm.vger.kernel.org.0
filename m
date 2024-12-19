@@ -1,160 +1,101 @@
-Return-Path: <linux-arm-msm+bounces-42871-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-42872-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 59AC39F87DE
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Dec 2024 23:29:44 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 05C579F87F1
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Dec 2024 23:37:16 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A4986166C2C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Dec 2024 22:29:41 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 07C761898630
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Dec 2024 22:37:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 503A11C5CC5;
-	Thu, 19 Dec 2024 22:29:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 333551BDABE;
+	Thu, 19 Dec 2024 22:37:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="TGZrZsZv"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fKw5uTiL"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f47.google.com (mail-lf1-f47.google.com [209.85.167.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51F8C1BEF81
-	for <linux-arm-msm@vger.kernel.org>; Thu, 19 Dec 2024 22:29:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 088E286337;
+	Thu, 19 Dec 2024 22:37:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734647378; cv=none; b=fZZvEZYv6oUlJ/ERZZsVKH/y4qfZpQn161BjAAS462L25Zvze76zwC4R8I/mALdhPnjYIx+AoFlHgNeJ1KUgS3W/SSaf8EtDhQPs7NwYYijJjI40835uxCNycp2moIqKhPRaUGElwsGAjtjayRXOq7Mn5R0321OGtY1UGpW/1DY=
+	t=1734647833; cv=none; b=q0qMic8Qb3aQPWCg3GPaBAFh7Df3IsJ+nu1vBWIwmFqVC8Ir3zPgeDwfx50GVblAegCyWzZzZ7M7Vvr1ZqXS/g+LQMJGpbf1M/kRCajac3vanW8y3x7TbgXoM4z9U0Nu4A8XMIvdQs4jErG+7lvWG4O1AMZUaNIRvu5FzamxW44=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734647378; c=relaxed/simple;
-	bh=H+whKh8UyV1F6BNhGKhlJKuI3hjdjUsm6IfN0FtKsFY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=NRak+pX5Z/puLp4YPJAhNrEuja6O9I83EktleRB2RRu3GI7RNowNUVO5S7IVTy1/wlIKSRC5f3A8tMORosIAhonLSa5LN6jV/cKmILaziwLhvvNgVwPm+jrEoZ/Ou9f8Xxs0fi5UT1vJx+SQR9aAnVWaOoRDwaT+WSbWF4JfVgc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=TGZrZsZv; arc=none smtp.client-ip=209.85.167.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f47.google.com with SMTP id 2adb3069b0e04-53e389d8dc7so1273311e87.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Dec 2024 14:29:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1734647374; x=1735252174; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Ktf00blgG2REd1F7A4BFFcm/g9cGAbuNL5IjQ8xXSgo=;
-        b=TGZrZsZvmfuIBzOylVJytLrgN/246bj/V4fvQw6pnqdZ+Z6Lxgfi27xOj++pqUyBF5
-         ReTNoDOpjg/1GkZwpsGMByh4NiwsUBVO3rQaNBdK/oI9hQkrjuoK4nv/efoeU4zJ5PGh
-         OeIW3wg9fKGj4CNJAfNtIXcKR9bdUXvzAeRWM/i17a2rCbBlym+MyLCc2MO+ZnE/09l0
-         4dwndH8P909nZxSGQuoTCD9ZNblAiV5Gp7m/PaC+uYcD5hfewm+Lb7nuk60d/azUEESS
-         Td+fBaOgbbFyjFmLYZ/sPMEsk5O0bx70SEblde7TEKfUjGhXB475//DZxugVR+xJnvcq
-         62Gg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734647374; x=1735252174;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Ktf00blgG2REd1F7A4BFFcm/g9cGAbuNL5IjQ8xXSgo=;
-        b=uyepjdw3ZW4XBYN5BwCg5/B9cZmL4mj/Ays2V1aA7WdIVycrJj/iKFGQ9O1Hln+V9k
-         G13T680Q9WzYZuty0Jeq8/Hfyx/uunlNEoEC1MaFy0Bj2PUxQDkGIoBtrlXkqSrywFaD
-         T6CtvXtuvCSwCTNPo11NH5fGY/fphL40dP76Lj+Hc1r91xvoZutOExztCQKtXqWdPSRc
-         VyYIoR3gyTxrw3B3OleS+dqIipyglEZDSA6cQhqr3PgmlAbW9mJBBXBV7PbfzvK12Crh
-         r4+ZAAh+Rxh/DqhRXjCKLVo3XUH/jDaBdSOqkHTKVOQ+TinRn/wEVGHrWVlv66lNTfCn
-         mbCQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVUYp/CbcP18IErMgEV/9d2f49dK10zzu3VSzR4BvnkanFNc3yuo/nFpJIY1V78m5qiyW3vOjIGSnChPapv@vger.kernel.org
-X-Gm-Message-State: AOJu0YxYs0BHAHMs83CkX7IAN+UN5trZMG0px/lrkczXTSN5At7GMNVd
-	K4k/XNPuY/Pzpoo+fFkt1wlcjVwHfPrJiEqQIUdWONfxR8kHnsG3gKi3WSI1lJs=
-X-Gm-Gg: ASbGnctBQ89J9sC6wNRT83iw1/AkZy/PmR9W50YTRgrL29duKc0oplakL7L9q9BeXmc
-	DdBvCgrKiDeCU3nOnNvei6pGTyWLqZUlcjHj6YPmzlVinxCK//XkwbWV3vikeS1bgN+ZvTl4+/R
-	xvJn+V+gcJtEvSC9T1PQDzJfFVPoRx3avIK2pTslRm9KtiODV2K2pKjrIKcULBFmVeRGcjeUnQk
-	znQ9+leuCmh6dlvtKpHjnKDHoYKQsMk/otu5MUaVaRrfHbWh3JY77iYJZcSkJg77AQv7vruYP8T
-	XQVDBU86AEIfrX7XIJEoSBsO6GtWZZPWxDGG
-X-Google-Smtp-Source: AGHT+IFMM7IxIREim+tWSsfHbYnZXp42QWfaJbZuCEzIN329HrV4/pAlBkqpNqL2/3JQwCfAxNPnzw==
-X-Received: by 2002:a05:6512:3087:b0:540:1a33:dede with SMTP id 2adb3069b0e04-54229533383mr60123e87.21.1734647374424;
-        Thu, 19 Dec 2024 14:29:34 -0800 (PST)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-542235f66fbsm291938e87.21.2024.12.19.14.29.33
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 19 Dec 2024 14:29:34 -0800 (PST)
-Date: Fri, 20 Dec 2024 00:29:31 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Jun Nie <jun.nie@linaro.org>
-Cc: Rob Clark <robdclark@gmail.com>, 
-	Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
-	Simona Vetter <simona@ffwll.ch>, linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
-	freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3 10/15] drm/msm/dpu: Add pipe as trace argument
-Message-ID: <zaz73zvyczdvrhwdo32el5seefuo2ocgst2jnh2rjsfz42vyy3@pkebgkbo5xd3>
-References: <20241219-sm8650-v6-13-hmd-deckard-mdss-quad-upstream-32-v3-0-92c7c0a228e3@linaro.org>
- <20241219-sm8650-v6-13-hmd-deckard-mdss-quad-upstream-32-v3-10-92c7c0a228e3@linaro.org>
+	s=arc-20240116; t=1734647833; c=relaxed/simple;
+	bh=v5hV4AcXGyzngmHLzfcNY3dZttHo/6M+Ma5Nsjria24=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=D+lIeIqAIuNbXTbrqTLiYXxEL1Tbia5truTeX5jXwbEVCl84GV446hA3TnXqpp6XPsip2UmB/kdlg7F6+KQ5/+bYIfnF7rQnIRxdjddVAY4O/gQ+Trt9LKCXaH/tEloNUNTtPjtySpAEg60uDy68axHYcUY9Dtnrgxdr48XEgoE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fKw5uTiL; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28DFCC4CECE;
+	Thu, 19 Dec 2024 22:37:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1734647832;
+	bh=v5hV4AcXGyzngmHLzfcNY3dZttHo/6M+Ma5Nsjria24=;
+	h=From:Subject:Date:To:Cc:From;
+	b=fKw5uTiLj5/xOqtpCdQEvbxCswysTb6fGxGd3jBT3XKFXEDToTO3JY7rsfbfTE4pi
+	 hs6krl1LuYqc9/ffLHjbfyL9Prpa6bJs7Bvadbgd4I1MklLBtEAXv7IRm4RWsnb+xP
+	 3eu6+xoz+xo8WqGAmdWAJKXsoik0wy+q8FRdo6XZX7Sc01PG7dPEEGvPzy9UPbnG9C
+	 YmBn1S1w8Hll4HOQZUClNzXKXbvEYBNZrtz9dDbrobmBoFdL4g44HKRr43csm0bmXy
+	 mRhqnLT6cwpPVp16T8RdyYY//a2HLY3Iu0VfdMzNzKMS6qYdMXVtMRCPD3jhANjWp2
+	 FsrMA7nPTM9RQ==
+From: Konrad Dybcio <konradybcio@kernel.org>
+Subject: [PATCH 0/2] Print GMU version at boot on >A630
+Date: Thu, 19 Dec 2024 23:36:54 +0100
+Message-Id: <20241219-topic-gmu_fw_ver-v1-0-d403a70052d8@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241219-sm8650-v6-13-hmd-deckard-mdss-quad-upstream-32-v3-10-92c7c0a228e3@linaro.org>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAAagZGcC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDIxNDI0NL3ZL8gsxk3fTc0vi08viy1CJdMwPLVIskCzNzCwMjJaC2gqLUtMw
+ KsJHRsbW1AAwvlU1iAAAA
+X-Change-ID: 20241219-topic-gmu_fw_ver-609e8b867802
+To: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, 
+ Konrad Dybcio <konradybcio@kernel.org>, 
+ Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>
+Cc: Marijn Suijten <marijn.suijten@somainline.org>, 
+ linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+ freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
+ Akhil P Oommen <quic_akhilpo@quicinc.com>, 
+ Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1734647828; l=747;
+ i=konrad.dybcio@oss.qualcomm.com; s=20230215; h=from:subject:message-id;
+ bh=v5hV4AcXGyzngmHLzfcNY3dZttHo/6M+Ma5Nsjria24=;
+ b=C6vOiblShlvGe2gARR+WhlpSno5NovLTuEY8kb7WEXR/FbLJcVGteu2UgmXqnGTQctVdgakH3
+ Pq0xODxI4otBfH6YfncXhiZigTP7ZlL7tN1LUr5/Bue2n07wEMkKInG
+X-Developer-Key: i=konrad.dybcio@oss.qualcomm.com; a=ed25519;
+ pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 
-On Thu, Dec 19, 2024 at 03:49:28PM +0800, Jun Nie wrote:
-> Add pipe as trace argument to ease converting pipe into
-> pipe array later.
+Might come in useful to try and track down otherwise inexplicable
+failures in e.g. old CI logs. A630 uses a different mechanism that is
+not implemented in this series.
 
-Isn't it already converted in on of the previous patches? Also you are
-adding it to a particular trace function, trace_dpu_crtc_setup_mixer().
+Tested on 8280 and X1
 
-> 
-> Signed-off-by: Jun Nie <jun.nie@linaro.org>
-> ---
->  drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c  |  2 +-
->  drivers/gpu/drm/msm/disp/dpu1/dpu_trace.h | 10 +++++-----
->  2 files changed, 6 insertions(+), 6 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> index 72ed8749cd716..6841d0504d450 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> @@ -411,7 +411,7 @@ static void _dpu_crtc_blend_setup_pipe(struct drm_crtc *crtc,
->  
->  	trace_dpu_crtc_setup_mixer(DRMID(crtc), DRMID(plane),
->  				   state, to_dpu_plane_state(state), stage_idx,
-> -				   format->pixel_format,
-> +				   format->pixel_format, pipe,
->  				   modifier);
->  
->  	DRM_DEBUG_ATOMIC("crtc %d stage:%d - plane %d sspp %d fb %d multirect_idx %d\n",
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_trace.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_trace.h
-> index 5307cbc2007c5..cb24ad2a6d8d3 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_trace.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_trace.h
-> @@ -651,9 +651,9 @@ TRACE_EVENT(dpu_crtc_setup_mixer,
->  	TP_PROTO(uint32_t crtc_id, uint32_t plane_id,
->  		 struct drm_plane_state *state, struct dpu_plane_state *pstate,
->  		 uint32_t stage_idx, uint32_t pixel_format,
-> -		 uint64_t modifier),
-> +		 struct dpu_sw_pipe *pipe, uint64_t modifier),
->  	TP_ARGS(crtc_id, plane_id, state, pstate, stage_idx,
-> -		pixel_format, modifier),
-> +		pixel_format, pipe, modifier),
->  	TP_STRUCT__entry(
->  		__field(	uint32_t,		crtc_id		)
->  		__field(	uint32_t,		plane_id	)
-> @@ -676,9 +676,9 @@ TRACE_EVENT(dpu_crtc_setup_mixer,
->  		__entry->dst_rect = drm_plane_state_dest(state);
->  		__entry->stage_idx = stage_idx;
->  		__entry->stage = pstate->stage;
-> -		__entry->sspp = pstate->pipe.sspp->idx;
-> -		__entry->multirect_idx = pstate->pipe.multirect_index;
-> -		__entry->multirect_mode = pstate->pipe.multirect_mode;
-> +		__entry->sspp = pipe->sspp->idx;
-> +		__entry->multirect_idx = pipe->multirect_index;
-> +		__entry->multirect_mode = pipe->multirect_mode;
->  		__entry->pixel_format = pixel_format;
->  		__entry->modifier = modifier;
->  	),
-> 
-> -- 
-> 2.34.1
-> 
+Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+---
+Konrad Dybcio (2):
+      drm/msm: registers: Add GMU FW version register
+      drm/msm/a6xx: Print GMU core firmware version at boot
 
+ drivers/gpu/drm/msm/adreno/a6xx_gmu.c             | 7 +++++++
+ drivers/gpu/drm/msm/registers/adreno/a6xx_gmu.xml | 5 +++++
+ 2 files changed, 12 insertions(+)
+---
+base-commit: 8503810115fbff903f626adc0788daa048302bc0
+change-id: 20241219-topic-gmu_fw_ver-609e8b867802
+
+Best regards,
 -- 
-With best wishes
-Dmitry
+Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+
 
