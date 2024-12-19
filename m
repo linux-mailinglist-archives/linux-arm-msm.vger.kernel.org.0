@@ -1,174 +1,154 @@
-Return-Path: <linux-arm-msm+bounces-42814-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-42815-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5E8C59F80AB
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Dec 2024 17:51:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 099099F80D8
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Dec 2024 18:00:24 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 419541693A5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Dec 2024 16:51:08 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 62BEC164C07
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Dec 2024 17:00:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D04AA18C33C;
-	Thu, 19 Dec 2024 16:50:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9C9D31922F1;
+	Thu, 19 Dec 2024 17:00:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ow4Z81/s"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Eu6peO3Q"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f170.google.com (mail-pf1-f170.google.com [209.85.210.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E730154BF5;
-	Thu, 19 Dec 2024 16:50:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6DED19993B
+	for <linux-arm-msm@vger.kernel.org>; Thu, 19 Dec 2024 17:00:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734627057; cv=none; b=Z6CLRg8nopnqI9SL6MD1wK6IemcOHNq51UXXYn0hU+hNuZyrZOFObhQY2rWt4ftIXX+Akyw96UwsbVB1Ugr4CWz4jRLNLq2nrExu6wcShcLYUiIrwhsJx5THaGmjXb2vNqyw3Tm8eQnvilzS4GNJfi944sGAX422YxnHxjj6ZHs=
+	t=1734627622; cv=none; b=Lz53uw/rryXV0V8Vhor0QfNBlMxO3lmERNTXhe78pAyfiTTwh/tdF3CAyAmRMsBE8fQddwJKifTz7pRZavOiwd9wZH3sIkTXBgqvT3RqVAUTjutH1uNAjj32f2tkNMAY0LLGsCF8KmbetirUx1DLTXAX8XK6luyDBhA4AATm9qQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734627057; c=relaxed/simple;
-	bh=xhZ3vbZu7Y9dsCMdrsbQzd8dviR1JmdwpAGj7iavs5U=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=AfqJqDtgYge26I9WBqSZCFIb3ZIkaKM1TewH49wBR2RqQlixfPuSH5XqcuRugUxs4xCU2Mh0kmod0BHyiV7e5cLOoJCaSJhC0TLiIsBc9OEuaNTytDCLjRi9dx/46KQxfC0HkWBqblN9TvjZpddy/Pfej/aOvaBhJ9XzCE2bIUo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ow4Z81/s; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 5CC14C4CEDF;
-	Thu, 19 Dec 2024 16:50:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1734627057;
-	bh=xhZ3vbZu7Y9dsCMdrsbQzd8dviR1JmdwpAGj7iavs5U=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=ow4Z81/szGsTeu6NrD3b7Is6zI120yJsUtPRk27wRmBAu9z9qxsNmbYF4ecFXJYVK
-	 ciN6RBQllNZH3DMAOUbku6A+C499YkTkLBOMkA8oM/C95RVMxV5ye7WNIVr4ZJG2vh
-	 t0V9QwWDGwgWkASOdGV4N0Sa9zsZGIJpcY4rq3naIq9KwL5wlof/hUa9VvsFl0KDHh
-	 ZpFqNv3eiXnlXs9DajZQHZIaG+CQMVQBoPHiVZBrPf3BOiNTDAGWP+ZgVd5REpEk01
-	 CBFKRH4QgTaS6Ct+MdeFd82qC8MhpPrsBtgBgCGmW6Qf4Cl0XYSedKKYiaXt+cqurg
-	 jIKMnqlTksseg==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 54C4BE7718A;
-	Thu, 19 Dec 2024 16:50:57 +0000 (UTC)
-From: Manivannan Sadhasivam via B4 Relay <devnull+manivannan.sadhasivam.linaro.org@kernel.org>
-Date: Thu, 19 Dec 2024 22:20:44 +0530
-Subject: [PATCH v3 4/4] scsi: ufs: qcom: Power down the controller/device
- during system suspend for SM8550/SM8650 SoCs
+	s=arc-20240116; t=1734627622; c=relaxed/simple;
+	bh=n21HfpMoJR9WFr9CibdW8Aomhh2HE90cnrVbP2qH+uw=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=bCAwtnD8LIpIEh+djG8B0gjMHGTXEPFk9QyqUKusSFIkIjm/uzPdprVSWQhdlYb96C4GQq/lF5nqf+brsCkdTBXmutcxRN9BFH64pvk/HbOdvAmTMmCOsmm53ka0x8vLTDylrDxtBphy9iwpZp0VXBHFBR6zSamnwzgtnu2nu0s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Eu6peO3Q; arc=none smtp.client-ip=209.85.210.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-pf1-f170.google.com with SMTP id d2e1a72fcca58-725abf74334so942356b3a.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Dec 2024 09:00:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1734627620; x=1735232420; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=rvVuqV2GwLcaDiXbUpyro9fRhixYRjVVrUaD/WrniM8=;
+        b=Eu6peO3QwujW1CstEXgtd8W0wR9s4Uwn49ObYpeL5prJu3rbvGe8/GA2AxQOj7HhMh
+         eIdA8AiMFXF0+hL3X5a2YaX9BZAJLozhk0HF81uKnatTgNHS5p2SDlXAbz4I7oG/fqA1
+         oxrEh4HXcHttwZHDlcdu9WOaMAprLX0bVQlyiGyzpjRYx8ekLcRa8/uvLhtAqzIgrB/i
+         SvrMJWQVcy6znyx93XjUkzByAn+jU6VL/jItkmCivmzdwnOnbZrh1Cvq5fSqyMjdwaCO
+         bmL+/9mREu28UtaW9KYJMkqXd9+SWQ2CG7ydn3ixu8j36pkE3fD29+IIiDKGiQIedMWt
+         N31g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1734627620; x=1735232420;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=rvVuqV2GwLcaDiXbUpyro9fRhixYRjVVrUaD/WrniM8=;
+        b=uRpGvORBGXroZLcs3ushH3VAzZ6lBysrGEW7xmcPPEx3M63YVhRb4RbqMyaYHUrZc4
+         BI/TyuFL+Yy5Lb7yMbDUgYntvp2agDlV8+HuJelh23wEW722+qCE9XU7dy/kIDBj2GAG
+         DAjOM6pfPovVniyozgXQw7EYv73HQOMEPIu2pPApM1TO68ZQvGAIQn7QWzo7fZarB8AK
+         5C471w0zZ1IgazbTupQyS13H4rIjZlh+pEdI0zDmYEf4DvwVhvGNiypr8Y843yTDN/vg
+         RN8vNfKaxUXyQm+MIDXGM4zdNLcmPaY8EOPCYa+6gWxmRQFaAi1nDpci4RuDa9qKnSX2
+         VKnw==
+X-Gm-Message-State: AOJu0YwqwoqKHIw4osgoQYrQw+xbOMe8fX2tNnsSEqFEtVUAFSeExLx/
+	VFKwSG/esRRvS/KRKdmgYJuWQ2R+REz8WNdYGzU5Vp3fytGBPh+o1lZCJ1+O5Q==
+X-Gm-Gg: ASbGncuLXDvTbQH+QbmP09yj4AyE5gOPcAQ8ALppMmLUbaZi3OQ4izxyiTibD40kyQL
+	kgAkxDQP5hwV9yrvGdgpfm8qmQyTRQkQv6RMvy62foMzfyiiQFr+CjQyBY915JRMbt/i1A0VLfc
+	/8glRmLdgYWkCQnUetRGCHabhseK6BdNuNjizSWXjWG/SEY+28htSpn7Qc2rHRRxRpzwYIGDSnw
+	pdgUtrMLgaeQ1FKNEczteSM0kQbzosuE2IQrVp5ut0zJOqdd8rMy89NUc7D6m19Xagzy0Nzqxod
+	0GEZMfDofQ==
+X-Google-Smtp-Source: AGHT+IFImDDOw38L2ODnRhpuOHiWBYDqi99QKYqqIgqlfkownksNYxRi6bh3dnJUpEOexYrDEBwdQA==
+X-Received: by 2002:a05:6a00:430d:b0:725:df1a:281 with SMTP id d2e1a72fcca58-72abb50eebamr395776b3a.10.1734627619539;
+        Thu, 19 Dec 2024 09:00:19 -0800 (PST)
+Received: from localhost.localdomain ([117.193.209.56])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-842e32f5f00sm1407655a12.72.2024.12.19.09.00.16
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 19 Dec 2024 09:00:18 -0800 (PST)
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To: andersson@kernel.org,
+	mturquette@baylibre.com,
+	sboyd@kernel.org
+Cc: linux-arm-msm@vger.kernel.org,
+	linux-clk@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	stable@vger.kernel.org,
+	Neil Armstrong <neil.armstrong@linaro.org>
+Subject: [PATCH 1/2] clk: qcom: gcc-sm8550: Do not turn off PCIe GDSCs during gdsc_disable()
+Date: Thu, 19 Dec 2024 22:30:10 +0530
+Message-Id: <20241219170011.70140-1-manivannan.sadhasivam@linaro.org>
+X-Mailer: git-send-email 2.25.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20241219-ufs-qcom-suspend-fix-v3-4-63c4b95a70b9@linaro.org>
-References: <20241219-ufs-qcom-suspend-fix-v3-0-63c4b95a70b9@linaro.org>
-In-Reply-To: <20241219-ufs-qcom-suspend-fix-v3-0-63c4b95a70b9@linaro.org>
-To: Alim Akhtar <alim.akhtar@samsung.com>, 
- Avri Altman <avri.altman@wdc.com>, Bart Van Assche <bvanassche@acm.org>, 
- "James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>, 
- "Martin K. Petersen" <martin.petersen@oracle.com>, 
- Abel Vesa <abel.vesa@linaro.org>, Bjorn Andersson <andersson@kernel.org>, 
- Neil Armstrong <neil.armstrong@linaro.org>, 
- Konrad Dybcio <konradybcio@kernel.org>
-Cc: linux-scsi@vger.kernel.org, linux-kernel@vger.kernel.org, 
- linux-arm-msm@vger.kernel.org, Amit Pundir <amit.pundir@linaro.org>, 
- Nitin Rawat <quic_nitirawa@quicinc.com>, 
- Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, 
- stable@vger.kernel.org
-X-Mailer: b4 0.14.1
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3224;
- i=manivannan.sadhasivam@linaro.org; h=from:subject:message-id;
- bh=mjTpMlts3P/2Gnsk4AM2DfwHRnHsA+PpvKMlx+U/vXM=;
- b=owEBbQGS/pANAwAKAVWfEeb+kc71AcsmYgBnZE7ultmuMuoV8d6A40y4A/puAVjWb2xcROdkq
- uvrOBrjcteJATMEAAEKAB0WIQRnpUMqgUjL2KRYJ5dVnxHm/pHO9QUCZ2RO7gAKCRBVnxHm/pHO
- 9UURB/wI4GCFYQOvq0IJMZfRS6mWQ8ZP/+OSW9oce4f1P9o9r+Mwj2mTLA5snlbq9epTAuAyo75
- T3+xFg5SM2G3k8wQ54PCtGupla9sVbOZk2DehuJEDNX4Ei7IIi+U1rmtU0iJkx/cqzQfZohkmkF
- +stpLVb0CT0VHDkHCylq8r4iuM81z8ZjFdlSlh+xqJvbUoBTQ5r7czBy2yzIiBhIkMo2jUrUTSX
- zX8WHLjz2WjKc8h08VUFR3SsCkMemJa0z1mWEn1jL5S1FLpepHGe7B/+Hk3nxVuYXqHirczbL6B
- T2Jt6Lz4zw6a68zKEcmIVFghffO4tFmYcThnRJFqeULrMxaE
-X-Developer-Key: i=manivannan.sadhasivam@linaro.org; a=openpgp;
- fpr=C668AEC3C3188E4C611465E7488550E901166008
-X-Endpoint-Received: by B4 Relay for
- manivannan.sadhasivam@linaro.org/default with auth_id=185
-X-Original-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Reply-To: manivannan.sadhasivam@linaro.org
+Content-Transfer-Encoding: 8bit
 
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+With PWRSTS_OFF_ON, PCIe GDSCs are turned off during gdsc_disable(). This
+can happen during scenarios such as system suspend and breaks the resume
+of PCIe controllers from suspend.
 
-SM8550 and SM8650 SoCs doesn't support UFS PHY retention. So once these
-SoCs reaches the low power state (CX power collapse) during system suspend,
-all the PHY hardware state gets lost. This leads to the UFS resume failure:
+So use PWRSTS_RET_ON to indicate the GDSC driver to not turn off the GDSCs
+during gdsc_disable() and allow the hardware to transition the GDSCs to
+retention when the parent domain enters low power state during system
+suspend.
 
-ufshcd-qcom 1d84000.ufs: ufshcd_uic_hibern8_exit: hibern8 exit failed. ret = 5
-ufshcd-qcom 1d84000.ufs: __ufshcd_wl_resume: hibern8 exit failed 5
-ufs_device_wlun 0:0:0:49488: ufshcd_wl_resume failed: 5
-ufs_device_wlun 0:0:0:49488: PM: dpm_run_callback(): scsi_bus_resume+0x0/0x84 returns 5
-ufs_device_wlun 0:0:0:49488: PM: failed to resume async: error 5
-
-With the default system suspend level of UFS_PM_LVL_3, the power domain for
-UFS PHY needs to be kept always ON to retain the state. But this would
-prevent these SoCs from reaching the CX power collapse state, leading to
-poor power saving during system suspend.
-
-So to fix this issue without affecting the power saving, set
-'ufs_qcom_drvdata::no_phy_retention' to true which sets 'hba->spm_lvl' to
-UFS_PM_LVL_5 to allow both the controller and device (in turn the PHY) to
-be powered down during system suspend for these SoCs by default.
-
-Cc: stable@vger.kernel.org # 6.3
-Fixes: 35cf1aaab169 ("arm64: dts: qcom: sm8550: Add UFS host controller and phy nodes")
-Fixes: 10e024671295 ("arm64: dts: qcom: sm8650: add interconnect dependent device nodes")
+Cc: stable@vger.kernel.org # 6.2
+Fixes: 955f2ea3b9e9 ("clk: qcom: Add GCC driver for SM8550")
 Reported-by: Neil Armstrong <neil.armstrong@linaro.org>
-Tested-by: Amit Pundir <amit.pundir@linaro.org> # on SM8550-HDK
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8550-QRD
 Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 ---
- drivers/ufs/host/ufs-qcom.c | 5 +++++
- drivers/ufs/host/ufs-qcom.h | 1 +
- 2 files changed, 6 insertions(+)
+ drivers/clk/qcom/gcc-sm8550.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
-index 35ae8c8fc301..edf62430cabe 100644
---- a/drivers/ufs/host/ufs-qcom.c
-+++ b/drivers/ufs/host/ufs-qcom.c
-@@ -1069,6 +1069,7 @@ static int ufs_qcom_init(struct ufs_hba *hba)
- 	struct device *dev = hba->dev;
- 	struct ufs_qcom_host *host;
- 	struct ufs_clk_info *clki;
-+	const struct ufs_qcom_drvdata *drvdata = of_device_get_match_data(hba->dev);
- 
- 	host = devm_kzalloc(dev, sizeof(*host), GFP_KERNEL);
- 	if (!host)
-@@ -1148,6 +1149,9 @@ static int ufs_qcom_init(struct ufs_hba *hba)
- 		dev_warn(dev, "%s: failed to configure the testbus %d\n",
- 				__func__, err);
- 
-+	if (drvdata && drvdata->no_phy_retention)
-+		hba->spm_lvl = UFS_PM_LVL_5;
-+
- 	return 0;
- 
- out_variant_clear:
-@@ -1866,6 +1870,7 @@ static void ufs_qcom_remove(struct platform_device *pdev)
- 
- static const struct ufs_qcom_drvdata ufs_qcom_sm8550_drvdata = {
- 	.quirks = UFSHCD_QUIRK_BROKEN_LSDBS_CAP,
-+	.no_phy_retention = true,
+diff --git a/drivers/clk/qcom/gcc-sm8550.c b/drivers/clk/qcom/gcc-sm8550.c
+index 5abaeddd6afc..862a9bf73bcb 100644
+--- a/drivers/clk/qcom/gcc-sm8550.c
++++ b/drivers/clk/qcom/gcc-sm8550.c
+@@ -3003,7 +3003,7 @@ static struct gdsc pcie_0_gdsc = {
+ 	.pd = {
+ 		.name = "pcie_0_gdsc",
+ 	},
+-	.pwrsts = PWRSTS_OFF_ON,
++	.pwrsts = PWRSTS_RET_ON,
+ 	.flags = VOTABLE | POLL_CFG_GDSCR | RETAIN_FF_ENABLE,
  };
  
- static const struct of_device_id ufs_qcom_of_match[] __maybe_unused = {
-diff --git a/drivers/ufs/host/ufs-qcom.h b/drivers/ufs/host/ufs-qcom.h
-index 15f6dad8b27f..919f53682beb 100644
---- a/drivers/ufs/host/ufs-qcom.h
-+++ b/drivers/ufs/host/ufs-qcom.h
-@@ -219,6 +219,7 @@ struct ufs_qcom_host {
- 
- struct ufs_qcom_drvdata {
- 	enum ufshcd_quirks quirks;
-+	bool no_phy_retention;
+@@ -3014,7 +3014,7 @@ static struct gdsc pcie_0_phy_gdsc = {
+ 	.pd = {
+ 		.name = "pcie_0_phy_gdsc",
+ 	},
+-	.pwrsts = PWRSTS_OFF_ON,
++	.pwrsts = PWRSTS_RET_ON,
+ 	.flags = VOTABLE | POLL_CFG_GDSCR | RETAIN_FF_ENABLE,
  };
  
- static inline u32
-
+@@ -3025,7 +3025,7 @@ static struct gdsc pcie_1_gdsc = {
+ 	.pd = {
+ 		.name = "pcie_1_gdsc",
+ 	},
+-	.pwrsts = PWRSTS_OFF_ON,
++	.pwrsts = PWRSTS_RET_ON,
+ 	.flags = VOTABLE | POLL_CFG_GDSCR | RETAIN_FF_ENABLE,
+ };
+ 
+@@ -3036,7 +3036,7 @@ static struct gdsc pcie_1_phy_gdsc = {
+ 	.pd = {
+ 		.name = "pcie_1_phy_gdsc",
+ 	},
+-	.pwrsts = PWRSTS_OFF_ON,
++	.pwrsts = PWRSTS_RET_ON,
+ 	.flags = VOTABLE | POLL_CFG_GDSCR | RETAIN_FF_ENABLE,
+ };
+ 
 -- 
 2.25.1
-
 
 
