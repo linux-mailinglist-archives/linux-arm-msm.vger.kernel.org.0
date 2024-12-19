@@ -1,74 +1,76 @@
-Return-Path: <linux-arm-msm+bounces-42815-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-42816-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 099099F80D8
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Dec 2024 18:00:24 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D70419F80DC
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Dec 2024 18:00:42 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 62BEC164C07
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Dec 2024 17:00:21 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id A4C827A07D4
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Dec 2024 17:00:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9C9D31922F1;
-	Thu, 19 Dec 2024 17:00:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 55A2219D8BE;
+	Thu, 19 Dec 2024 17:00:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Eu6peO3Q"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="QE/QoBta"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pf1-f170.google.com (mail-pf1-f170.google.com [209.85.210.170])
+Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6DED19993B
-	for <linux-arm-msm@vger.kernel.org>; Thu, 19 Dec 2024 17:00:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DE1919D08F
+	for <linux-arm-msm@vger.kernel.org>; Thu, 19 Dec 2024 17:00:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734627622; cv=none; b=Lz53uw/rryXV0V8Vhor0QfNBlMxO3lmERNTXhe78pAyfiTTwh/tdF3CAyAmRMsBE8fQddwJKifTz7pRZavOiwd9wZH3sIkTXBgqvT3RqVAUTjutH1uNAjj32f2tkNMAY0LLGsCF8KmbetirUx1DLTXAX8XK6luyDBhA4AATm9qQ=
+	t=1734627625; cv=none; b=bnc6LK/FVPV2WDHdderZrhYRy01rjiqrG9qOqVbUZwXVx09pFxKQpAn5+AgJ5PvLiLAbyR9mcjlzvFrr1DrFlOTaV2iCYSZIp/bW0N13Byl+7+sJhB5bDwB4ps/odwDnMOVrbvldlJpRlAM1jiBGjYiuhzAjitoNU4jmNthdEwA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734627622; c=relaxed/simple;
-	bh=n21HfpMoJR9WFr9CibdW8Aomhh2HE90cnrVbP2qH+uw=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=bCAwtnD8LIpIEh+djG8B0gjMHGTXEPFk9QyqUKusSFIkIjm/uzPdprVSWQhdlYb96C4GQq/lF5nqf+brsCkdTBXmutcxRN9BFH64pvk/HbOdvAmTMmCOsmm53ka0x8vLTDylrDxtBphy9iwpZp0VXBHFBR6zSamnwzgtnu2nu0s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Eu6peO3Q; arc=none smtp.client-ip=209.85.210.170
+	s=arc-20240116; t=1734627625; c=relaxed/simple;
+	bh=wckcOULVs/VpNyLdFrIVHSAJAEPzlkpkYIhbXxO9Efs=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=OkBOP/k7YtB6GqRiWPAlNQqv94s+qjh2G/3Be4zhM5VfoFLEzoUrQuus2UBqzI89eEhXT+Jgyr+uhEUrFstTro1vJJLQlJbWKeR2eYCo8VZsIQSVrfGv3plfIQeTiGXg+iAxWjY7N1KsJoUa3EwabSlfwFb7GG/ZqOOkzYpNL8A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=QE/QoBta; arc=none smtp.client-ip=209.85.214.182
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pf1-f170.google.com with SMTP id d2e1a72fcca58-725abf74334so942356b3a.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Dec 2024 09:00:20 -0800 (PST)
+Received: by mail-pl1-f182.google.com with SMTP id d9443c01a7336-21619108a6bso8869145ad.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Dec 2024 09:00:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1734627620; x=1735232420; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=rvVuqV2GwLcaDiXbUpyro9fRhixYRjVVrUaD/WrniM8=;
-        b=Eu6peO3QwujW1CstEXgtd8W0wR9s4Uwn49ObYpeL5prJu3rbvGe8/GA2AxQOj7HhMh
-         eIdA8AiMFXF0+hL3X5a2YaX9BZAJLozhk0HF81uKnatTgNHS5p2SDlXAbz4I7oG/fqA1
-         oxrEh4HXcHttwZHDlcdu9WOaMAprLX0bVQlyiGyzpjRYx8ekLcRa8/uvLhtAqzIgrB/i
-         SvrMJWQVcy6znyx93XjUkzByAn+jU6VL/jItkmCivmzdwnOnbZrh1Cvq5fSqyMjdwaCO
-         bmL+/9mREu28UtaW9KYJMkqXd9+SWQ2CG7ydn3ixu8j36pkE3fD29+IIiDKGiQIedMWt
-         N31g==
+        d=linaro.org; s=google; t=1734627623; x=1735232423; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=CY48cM88V/hoEtiU2jZWM2+6ic5R8sHZknBHQXdoTnM=;
+        b=QE/QoBtaVd95p9Pxb/cfG/krrjY42NDUCYg2AMYR/h3qMWXi+0zi+jS9FcD8KzQqOC
+         xjayYrR5NTs3ljakmwMhkGw/ddMQG2DkwpMg097wQ+GhJOasbLty+LDk2/mtqMz2U8wC
+         c8giu9qnyswGIfGWHEyp4IcerPdSQZZF8tW6RekacpSl8hBszsrsgWPXuyl6Sfy7rMEf
+         iYJkIA826jcF9BuVKBBHZ1SNjN5QrgFEmnCX2dFwpmhV5WWclwgYRxMiKs2h8U/AZNXX
+         wmWQ5VLFuVhM7pAxy0iY8XOHBLKRUGB4i7EjfQexzAuxYiKymQ86ET6mJczoJFXHDmod
+         yw3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734627620; x=1735232420;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=rvVuqV2GwLcaDiXbUpyro9fRhixYRjVVrUaD/WrniM8=;
-        b=uRpGvORBGXroZLcs3ushH3VAzZ6lBysrGEW7xmcPPEx3M63YVhRb4RbqMyaYHUrZc4
-         BI/TyuFL+Yy5Lb7yMbDUgYntvp2agDlV8+HuJelh23wEW722+qCE9XU7dy/kIDBj2GAG
-         DAjOM6pfPovVniyozgXQw7EYv73HQOMEPIu2pPApM1TO68ZQvGAIQn7QWzo7fZarB8AK
-         5C471w0zZ1IgazbTupQyS13H4rIjZlh+pEdI0zDmYEf4DvwVhvGNiypr8Y843yTDN/vg
-         RN8vNfKaxUXyQm+MIDXGM4zdNLcmPaY8EOPCYa+6gWxmRQFaAi1nDpci4RuDa9qKnSX2
-         VKnw==
-X-Gm-Message-State: AOJu0YwqwoqKHIw4osgoQYrQw+xbOMe8fX2tNnsSEqFEtVUAFSeExLx/
-	VFKwSG/esRRvS/KRKdmgYJuWQ2R+REz8WNdYGzU5Vp3fytGBPh+o1lZCJ1+O5Q==
-X-Gm-Gg: ASbGncuLXDvTbQH+QbmP09yj4AyE5gOPcAQ8ALppMmLUbaZi3OQ4izxyiTibD40kyQL
-	kgAkxDQP5hwV9yrvGdgpfm8qmQyTRQkQv6RMvy62foMzfyiiQFr+CjQyBY915JRMbt/i1A0VLfc
-	/8glRmLdgYWkCQnUetRGCHabhseK6BdNuNjizSWXjWG/SEY+28htSpn7Qc2rHRRxRpzwYIGDSnw
-	pdgUtrMLgaeQ1FKNEczteSM0kQbzosuE2IQrVp5ut0zJOqdd8rMy89NUc7D6m19Xagzy0Nzqxod
-	0GEZMfDofQ==
-X-Google-Smtp-Source: AGHT+IFImDDOw38L2ODnRhpuOHiWBYDqi99QKYqqIgqlfkownksNYxRi6bh3dnJUpEOexYrDEBwdQA==
-X-Received: by 2002:a05:6a00:430d:b0:725:df1a:281 with SMTP id d2e1a72fcca58-72abb50eebamr395776b3a.10.1734627619539;
-        Thu, 19 Dec 2024 09:00:19 -0800 (PST)
+        d=1e100.net; s=20230601; t=1734627623; x=1735232423;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=CY48cM88V/hoEtiU2jZWM2+6ic5R8sHZknBHQXdoTnM=;
+        b=V2ORrHsSisZN8qvr8SD39GiAsLW7AmqR5ZHLyLk8CclLaLWDB86/xcahXBHkgL760a
+         NWoNedd9g8kf6QRX+B/EkikMRjTOv1AylK8e5adDmDnt9w0wF1y+9Hs7TR4Ow0ubyPnN
+         vn3hhyNFSg8prgmxPH3kFzmzGQCTliZgSSAYpdXCTl9VazEfPQe7PMSvbaqs21VQ0awA
+         okuq5jNl4xTcUpelNz+R6vO7vXgLlOwBuNlTM/G3oVQymZzz2mj3m5mazVXfxULOX+yG
+         RwRHgs+Sf8gTsX0l5qmlUHZFF0eYjMfnJn4B4VMESfeZufiJkGIFFPn5YWP3BwVpLz07
+         /csg==
+X-Gm-Message-State: AOJu0YwglZFk7stYwf1W+QWLcZ0gLm02MfY7NTQ2Od2e69ePJQl+q3WB
+	v4lCyjVmhQGa8NBsGh2RU6Xy8Uhxn/+xHiq4OwbGG+AcAUMqRx1v3wCfakr0Pg==
+X-Gm-Gg: ASbGncueSD1vrryeXfYkJoPm9cBKdOxseieJ8OS4H1Ivd8sXVX3IsaZoZN8MeEmb3vr
+	5d51/P3qLtLbWUHZKuCIApsaUpPlVvrOyVipJEo/LdnK5DWeh6/gYTP2IiZgZEXoe9sG4VGFgN2
+	zPY7jJPjBsXwJjFRW1XurH/YQSyYCOcOblDxgQ2HKDagYBLoC6SJXAo27TFk2ON92weECRjFH0n
+	0tQHSJakMij5r84lsdYiWR7CZ6HffVzWpTpSsbgOIbC+QbjWtsy5kvnUsPVTkiuj/ih8h/u1UEr
+	g4Rqtg7uiQ==
+X-Google-Smtp-Source: AGHT+IF61HYlBzOFtWSOXFDjQ6xXqIF+VEUhsruBuhPEigas2YyUqvrel2CTtb8tVYlJgL/VkknJUA==
+X-Received: by 2002:a17:903:2342:b0:216:4e9f:4ebe with SMTP id d9443c01a7336-219d9692d58mr57695015ad.42.1734627622843;
+        Thu, 19 Dec 2024 09:00:22 -0800 (PST)
 Received: from localhost.localdomain ([117.193.209.56])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-842e32f5f00sm1407655a12.72.2024.12.19.09.00.16
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-842e32f5f00sm1407655a12.72.2024.12.19.09.00.19
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 19 Dec 2024 09:00:18 -0800 (PST)
+        Thu, 19 Dec 2024 09:00:22 -0800 (PST)
 From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 To: andersson@kernel.org,
 	mturquette@baylibre.com,
@@ -79,10 +81,12 @@ Cc: linux-arm-msm@vger.kernel.org,
 	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
 	stable@vger.kernel.org,
 	Neil Armstrong <neil.armstrong@linaro.org>
-Subject: [PATCH 1/2] clk: qcom: gcc-sm8550: Do not turn off PCIe GDSCs during gdsc_disable()
-Date: Thu, 19 Dec 2024 22:30:10 +0530
-Message-Id: <20241219170011.70140-1-manivannan.sadhasivam@linaro.org>
+Subject: [PATCH 2/2] clk: qcom: gcc-sm8650: Do not turn off PCIe GDSCs during gdsc_disable()
+Date: Thu, 19 Dec 2024 22:30:11 +0530
+Message-Id: <20241219170011.70140-2-manivannan.sadhasivam@linaro.org>
 X-Mailer: git-send-email 2.25.1
+In-Reply-To: <20241219170011.70140-1-manivannan.sadhasivam@linaro.org>
+References: <20241219170011.70140-1-manivannan.sadhasivam@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -100,52 +104,52 @@ during gdsc_disable() and allow the hardware to transition the GDSCs to
 retention when the parent domain enters low power state during system
 suspend.
 
-Cc: stable@vger.kernel.org # 6.2
-Fixes: 955f2ea3b9e9 ("clk: qcom: Add GCC driver for SM8550")
+Cc: stable@vger.kernel.org # 6.8
+Fixes: c58225b7e3d7 ("clk: qcom: add the SM8650 Global Clock Controller driver, part 1")
 Reported-by: Neil Armstrong <neil.armstrong@linaro.org>
 Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 ---
- drivers/clk/qcom/gcc-sm8550.c | 8 ++++----
+ drivers/clk/qcom/gcc-sm8650.c | 8 ++++----
  1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/clk/qcom/gcc-sm8550.c b/drivers/clk/qcom/gcc-sm8550.c
-index 5abaeddd6afc..862a9bf73bcb 100644
---- a/drivers/clk/qcom/gcc-sm8550.c
-+++ b/drivers/clk/qcom/gcc-sm8550.c
-@@ -3003,7 +3003,7 @@ static struct gdsc pcie_0_gdsc = {
+diff --git a/drivers/clk/qcom/gcc-sm8650.c b/drivers/clk/qcom/gcc-sm8650.c
+index fd9d6544bdd5..9dd5c48f33be 100644
+--- a/drivers/clk/qcom/gcc-sm8650.c
++++ b/drivers/clk/qcom/gcc-sm8650.c
+@@ -3437,7 +3437,7 @@ static struct gdsc pcie_0_gdsc = {
  	.pd = {
  		.name = "pcie_0_gdsc",
  	},
 -	.pwrsts = PWRSTS_OFF_ON,
 +	.pwrsts = PWRSTS_RET_ON,
- 	.flags = VOTABLE | POLL_CFG_GDSCR | RETAIN_FF_ENABLE,
+ 	.flags = POLL_CFG_GDSCR | RETAIN_FF_ENABLE | VOTABLE,
  };
  
-@@ -3014,7 +3014,7 @@ static struct gdsc pcie_0_phy_gdsc = {
+@@ -3448,7 +3448,7 @@ static struct gdsc pcie_0_phy_gdsc = {
  	.pd = {
  		.name = "pcie_0_phy_gdsc",
  	},
 -	.pwrsts = PWRSTS_OFF_ON,
 +	.pwrsts = PWRSTS_RET_ON,
- 	.flags = VOTABLE | POLL_CFG_GDSCR | RETAIN_FF_ENABLE,
+ 	.flags = POLL_CFG_GDSCR | RETAIN_FF_ENABLE | VOTABLE,
  };
  
-@@ -3025,7 +3025,7 @@ static struct gdsc pcie_1_gdsc = {
+@@ -3459,7 +3459,7 @@ static struct gdsc pcie_1_gdsc = {
  	.pd = {
  		.name = "pcie_1_gdsc",
  	},
 -	.pwrsts = PWRSTS_OFF_ON,
 +	.pwrsts = PWRSTS_RET_ON,
- 	.flags = VOTABLE | POLL_CFG_GDSCR | RETAIN_FF_ENABLE,
+ 	.flags = POLL_CFG_GDSCR | RETAIN_FF_ENABLE | VOTABLE,
  };
  
-@@ -3036,7 +3036,7 @@ static struct gdsc pcie_1_phy_gdsc = {
+@@ -3470,7 +3470,7 @@ static struct gdsc pcie_1_phy_gdsc = {
  	.pd = {
  		.name = "pcie_1_phy_gdsc",
  	},
 -	.pwrsts = PWRSTS_OFF_ON,
 +	.pwrsts = PWRSTS_RET_ON,
- 	.flags = VOTABLE | POLL_CFG_GDSCR | RETAIN_FF_ENABLE,
+ 	.flags = POLL_CFG_GDSCR | RETAIN_FF_ENABLE | VOTABLE,
  };
  
 -- 
