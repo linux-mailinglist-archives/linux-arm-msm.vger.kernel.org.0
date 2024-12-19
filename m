@@ -1,175 +1,159 @@
-Return-Path: <linux-arm-msm+bounces-42792-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-42793-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id C682D9F7C20
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Dec 2024 14:14:43 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0CB829F7C99
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Dec 2024 14:48:53 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3765B188C998
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Dec 2024 13:14:44 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id BCB107A19B3
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Dec 2024 13:48:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DF7DE224887;
-	Thu, 19 Dec 2024 13:14:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 552FF224AEA;
+	Thu, 19 Dec 2024 13:48:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="qSpLqMu8"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="REjNZR6B"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f179.google.com (mail-lj1-f179.google.com [209.85.208.179])
+Received: from mail-yw1-f177.google.com (mail-yw1-f177.google.com [209.85.128.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3BAD3596F
-	for <linux-arm-msm@vger.kernel.org>; Thu, 19 Dec 2024 13:14:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 728EF1F8682
+	for <linux-arm-msm@vger.kernel.org>; Thu, 19 Dec 2024 13:48:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734614075; cv=none; b=ighWy2N+PyZ37p6z/tgjokh1nebLSy20sVaYDrpxAYLDHmrkqalcIQhGd1hXqTAvH82uJthlBvZrtNtllCkk8CqfnnUgJa37ofwCTSoVbj/dnx0M8W+vNEUGGhiSLDUAfvLRXipa8SxYJcIc/rX9h/zQfFSfnjmLVR/q5URi6OQ=
+	t=1734616124; cv=none; b=tNYc0WIhZxlRlIrB4MOYoDH6esVx2uOy/sGa/gIZIvUVdxlPVBFBuxbqjcEd5HRAh9mW84o3F6AXDxC+B6vRyuzR148HPUyTu9VuXBaS18VnVkZfxTlVctw3Tqm8OPvdO+S+b+tRLnDU93ypsKxtEYv4KPWKiNtR+C1R1r64/EA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734614075; c=relaxed/simple;
-	bh=GW2/KJjN04w8khdOlzLuwqCJRH59oP9AEwB8kVbiqqQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=hTr2hsZBqJ00J8ESBkCZLm5FYXtz3RKCtUqxfZQDnBqPSh8u3bvP6WtVPGM5Q05vi7aYuuFhkT/aIbPatC43IbB5HyQG/sek9kfHJJPFPru5iIiRaqgEpI5ij7CgK3HS73IlUW7sUJgvPVKFMIg+j1KzWsLyxRcXpjgHFZpLNH0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=qSpLqMu8; arc=none smtp.client-ip=209.85.208.179
+	s=arc-20240116; t=1734616124; c=relaxed/simple;
+	bh=XO81+Jcc5NmcuuvImCT+riJpdk47c6EberFwhgQPnN0=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=O+wtw5NYOu3F4fsanZ7W+/IropM2Q6fE0sbgrxZGNPoaTCsK1NSzTe3XROintL2ioz37SVAmfqgmW2MLTkIrSMuxUANA7bJdEvwWqFtOS+bOkbhiqvXZrewiEANLcJwT0MI9vy5CRH50qkSyBfgoGansuoGv0Ja62JJt7TfXLVM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=REjNZR6B; arc=none smtp.client-ip=209.85.128.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f179.google.com with SMTP id 38308e7fff4ca-3043e84c687so7268161fa.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Dec 2024 05:14:33 -0800 (PST)
+Received: by mail-yw1-f177.google.com with SMTP id 00721157ae682-6ef60e500d7so6479657b3.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Dec 2024 05:48:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1734614072; x=1735218872; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=wDxskw9f45RUSU86hbyjLbbAWKLThzhhQcb+B0wtv7M=;
-        b=qSpLqMu8K4IG49Cq9tmONZQmOXmc0VEzoFZ64LDz+k9QI2YtWIz1sAABaBYnEfggNH
-         65hWNmxd9NQ6LTN6U5pIh3LFMu3F5vLGu8+YhkWLmX/Wbv6gnXj4g13jOWLuyvJf2LtY
-         9ikj031oAUHyY+2phUM94wxKAxSN7DhgZJWc73cpoLsoRck5Bc+BMv7/a//UuAex0CAb
-         HyemzHzxNpW4Y493bW1IAr2QG3dAPjRcAFvIxIbSpMaO6yRp524WaEbzCbt3BUOhSl78
-         aPTXk6Fk+7QHRyVJoY13XDV7eAwHdCCDkW/kHG5hzTdekjNTLCdtaaJKOG0l1hVs0v3D
-         rZMQ==
+        d=linaro.org; s=google; t=1734616121; x=1735220921; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=In5HoeH7y9Mw3MBgtXCixaUYWromv5oJ1tBlMI+S7Q8=;
+        b=REjNZR6BGRCN2DgSdk0QfEuduSImCWkihNMRBtywBWw0e70c4Eu9aDUJoa6smjlXwl
+         jYZzloAdbI/oQOZsCcHamifcT5NCOCSnxdiwa2tcd97T9gXxmSNyQosX1qRxXVl6y+90
+         A9RXitzUlLTnSaZT+1N3GxXLFS54mERtWLwb2KxCzpM2+SeL2BAkaCRMs4TVe6vAnE3j
+         2A28PScdKwRgqJUIc/rl0NVzLKdHZnFnqO+SteJwoxPfXkX5SpD9bqH1LJupzevO65X2
+         mwlPi6bwdPd0sqRzcZAG9VkHVEcqJ6SACvdkXDmRLs72VudubIc/L6WNlHRKtUIsBBGP
+         KSNg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734614072; x=1735218872;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=wDxskw9f45RUSU86hbyjLbbAWKLThzhhQcb+B0wtv7M=;
-        b=dwH0wGqMxF1yasI79/tNQyP7X7Ba0J48Ze0sdGzGhPdkQRLF0gkzoLg7v5k4FxtSho
-         2XHnFVkCWMydpyMc2jrEJ3ZswTIUYFfQIv/s1OHJ1BURShNvh3/VyilK+FWK9iwZYQ9e
-         H/8EwGLpqWuAw8rcii3GqlbIr9wgXCZdc67ePQzPduei2MNj3S5v1g7HoazwLuivhASH
-         02gme5nPOAujXl6PQtBokipJW6UBU+2Udgvpu9NWcubNfObnmJpsvvHzWLmSZxZ/LfOT
-         TDaBBRRzH/9cuLEaBbukotLFaZX3KlN2wPD5veGaRzlXdLklgXweKmSR2gHQ5bZxE8Ne
-         6bpQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVMCqqasfd823XGk2HA9gjL9JGLwXXQNoLSJrwLf7c6NWOzf4fSMRwmQx/KrvbIFDPVcOs3g3fGbN1U+19A@vger.kernel.org
-X-Gm-Message-State: AOJu0YxzNZ3zSAjnmK0CELJZ0RlMLntnosIGtHWG3VyTZuAGyQ4Yqa1x
-	hZdu3yU4dQ3Kw/cAoi324S5tdA16jgqGjr+6+oeAI8oFmr+9X9vAKRidY0l3X9c=
-X-Gm-Gg: ASbGncuqpvAWMmJFqW6sjJNh2gVS5e6v6NcaYwSQa118Go5fTWrXot8Of8FqjjD0Ybl
-	I/cf8WZgi6+TcIOk3afnhIAOryw9FQahxotGhNUDhHl+nsoo7xOySnh0iV72FO2GJA7Rj29sV58
-	HCSqecaoBxJOJSggpOP3MDSRt/S6I1CZ0YMMkEhaPsrpCiG/YulZeukxpt85DwcGI7tFRppcf45
-	QbUMkDiVWbKb1JdlAiVnlPusipMarj0gMQCQq41mt67XBx7UvhoepKda5fLIliJHIZVyknie6b7
-	/12KOFJud8JhKjrYqb94VFfsoafYp8f/njZm
-X-Google-Smtp-Source: AGHT+IF8AisnJgwFnkXU6DRymHTDSjq7pbCiGElXFGrbjnm7/GAEX/1jFZfMnRkeNxN9xRJqY8ZIsg==
-X-Received: by 2002:a05:6512:1281:b0:540:3566:9744 with SMTP id 2adb3069b0e04-541e674c7f4mr2120568e87.21.1734614072005;
-        Thu, 19 Dec 2024 05:14:32 -0800 (PST)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-542238216b5sm168924e87.182.2024.12.19.05.14.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 19 Dec 2024 05:14:30 -0800 (PST)
-Date: Thu, 19 Dec 2024 15:14:28 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Prashanth K <quic_prashk@quicinc.com>
-Cc: Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>, linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	devicetree@vger.kernel.org, cros-qcom-dts-watchers@chromium.org
-Subject: Re: [PATCH v3 00/19] Disable USB U1/U2 entry for QC targets
-Message-ID: <h4e5jmbglic5aa5e3fyqr3elvso2lotekafqhu7v3h56nbfwf2@qq7lqpptyrai>
-References: <20241218102707.76272-1-quic_prashk@quicinc.com>
- <nvhrhnfls2i4sb6rrlax2dh3hf5thfttrq54bgug2jc7ol26rj@cnk5dtampfes>
- <e15bc97d-eef3-4e49-badf-5b3afbc113d9@quicinc.com>
- <3h2ur3wv3tso3qxv4ws2af4vmvdjdpvhax5smngszaaaotvgku@bo2q5cmhds2z>
- <d6d176ac-e08a-4877-a5de-83e8b070fe47@quicinc.com>
+        d=1e100.net; s=20230601; t=1734616121; x=1735220921;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=In5HoeH7y9Mw3MBgtXCixaUYWromv5oJ1tBlMI+S7Q8=;
+        b=qz4NbHolwkDWifQTtPawZiOuIygYTaVXTSfDtstr4haKpG8FV5HbrP3oAUWvcAT1mf
+         fFO6jocO3kvo8851KES0LxurGIPYTxEqDGH4cFSpf7HFOtyFApQ46nIDXxRhmAQdt3gh
+         2Xe0hfNiGFBKUv/pEMoe6KLRU4POA12C7XN0f5sH9rSnAVLX3F5Poelf2UWxQL/3muGm
+         JhAY9TNshCiCHlhe2pN5X+AxlnwwDvLqJxDtg0cprltqKGkOs79ovpsCFfPHAf6VfLxP
+         wFizu9w75gGTzTbDY7h4k4HuJd6DcoeM8Q9Ke25QGsv0GFrtDslaNV4gqd7byhibjm2M
+         Ba6w==
+X-Forwarded-Encrypted: i=1; AJvYcCVBtr4D6ehItsNOZLA8z7dcrIwxJkhzsnM4wMeatUgT9bfVWPu0gohmelMvoySpreqU3758DtbRvTd6Vx0N@vger.kernel.org
+X-Gm-Message-State: AOJu0YxuuXgztzv178OKPxqhpLrnnXHFSaahjfu0wjk7C7TlxyuySnYP
+	b5fpWITTvnr0H3LdC9YtpVqmzigSHA61W4TxvaWwJKTtbB1p6+GW+7g+9yHxRdOauCnCCjaVlMm
+	PRU2uwZZvuGinEdNrDVuOXFOaPd/czpJiQ0LAnoSC1s+/iPp8
+X-Gm-Gg: ASbGncv4VuS9WKupGa6Ln6JoDIlymuFHPqAsP/u2y5LscpGIeEcvW0vS01dycpVcNmt
+	gQ2/to/yugTlRopml1jDEP+viZywz1BpPl5ts0pc=
+X-Google-Smtp-Source: AGHT+IHAgTWL75NXrM2GBK4SDn0t2shp+CeG7oHDnfNd5GjPl4y15Kf6WPYgbK4lJLVly6G4hcWHSkGBI5QdeqgJhdo=
+X-Received: by 2002:a05:690c:708b:b0:6ef:94db:b208 with SMTP id
+ 00721157ae682-6f3d263a814mr55382397b3.24.1734616121516; Thu, 19 Dec 2024
+ 05:48:41 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <d6d176ac-e08a-4877-a5de-83e8b070fe47@quicinc.com>
+References: <20241213041958.202565-1-ebiggers@kernel.org> <20241213041958.202565-6-ebiggers@kernel.org>
+In-Reply-To: <20241213041958.202565-6-ebiggers@kernel.org>
+From: Ulf Hansson <ulf.hansson@linaro.org>
+Date: Thu, 19 Dec 2024 14:48:05 +0100
+Message-ID: <CAPDyKFp01751khZ7xKC0QFtsoqxVifTH4im6_2yq4heurdONRw@mail.gmail.com>
+Subject: Re: [PATCH v10 05/15] mmc: sdhci-msm: fix crypto key eviction
+To: Eric Biggers <ebiggers@kernel.org>
+Cc: linux-block@vger.kernel.org, linux-fscrypt@vger.kernel.org, 
+	linux-mmc@vger.kernel.org, linux-scsi@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, Bartosz Golaszewski <brgl@bgdev.pl>, 
+	Gaurav Kashyap <quic_gaurkash@quicinc.com>, Adrian Hunter <adrian.hunter@intel.com>, 
+	Alim Akhtar <alim.akhtar@samsung.com>, Avri Altman <avri.altman@wdc.com>, 
+	Bart Van Assche <bvanassche@acm.org>, Bjorn Andersson <andersson@kernel.org>, 
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
+	"James E . J . Bottomley" <James.Bottomley@hansenpartnership.com>, Jens Axboe <axboe@kernel.dk>, 
+	Konrad Dybcio <konradybcio@kernel.org>, 
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, 
+	"Martin K . Petersen" <martin.petersen@oracle.com>, stable@vger.kernel.org, 
+	Abel Vesa <abel.vesa@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
 
-On Thu, Dec 19, 2024 at 09:47:12AM +0530, Prashanth K wrote:
-> 
-> 
-> On 19-12-24 08:37 am, Dmitry Baryshkov wrote:
-> > On Wed, Dec 18, 2024 at 05:18:50PM +0530, Prashanth K wrote:
-> >>
-> >>
-> >> On 18-12-24 04:57 pm, Dmitry Baryshkov wrote:
-> >>> On Wed, Dec 18, 2024 at 03:56:48PM +0530, Prashanth K wrote:
-> >>>> Enabling U1 and U2 power-saving states can lead to stability and
-> >>>> performance issues, particularly for latency-sensitive or high-
-> >>>> throughput applications. These low-power link states are intended
-> >>>> to reduce power consumption by allowing the device to enter partial
-> >>>> low-power modes during idle periods. However, they can sometimes
-> >>>> result in unexpected behavior. Over the years, some of the issues
-> >>>> seen are as follows:
-> >>>>
-> >>>
-> >>> [..]
-> >>>
-> >>>>
-> >>>> This series was earlier started by Krishna Kurapati where he disabled
-> >>>> U1/U2 on some SM targets. I'm extending this to more devices including
-> >>>> Auto, Compute and IOT platforms. On a side note, this quirk has been
-> >>>> already included on some mobile targets like SM8550/8650.
-> >>>
-> >>> Why are you resending previous patches rather than adding another series
-> >>> on top of it?
-> >>>
-> >> Hi Dmitry,
-> >>
-> >> RFC had only one patch with quirks (to disable u1/u2) only for few
-> >> targets (SM8150, 8250, 8350, 8450). It was later decided to split it
-> >> into per-file commits as per the review comments. Hence I clubbed
-> >> Krishna's changes along with few more targets. Let me know if this needs
-> >> to be changed.
-> > 
-> > No, it's fine. The text in the commit message lead me to a wrong
-> > conclusion.
-> > 
-> Ok sure.
-> >>
-> >>>>
-> >>>> Changes in v2:
-> >>>> - Removed the wrongly added quirks from tcsr_mutex node.
-> >>>> - Link to v2: https://lore.kernel.org/all/20241213095237.1409174-1-quic_prashk@quicinc.com/
-> >>>
-> >>> What was changed in v3?
-> >> It was supposed to be "Changes in v3" instead of v2.
-> > 
-> > Then where is a changelog between RFC and v2?
-> > 
-> > Please consider switching to the b4 tool, it handles such issues for
-> > you.
-> > 
-> Ok, Should I send a new version updating the cover letter?
+On Fri, 13 Dec 2024 at 05:20, Eric Biggers <ebiggers@kernel.org> wrote:
+>
+> From: Eric Biggers <ebiggers@google.com>
+>
+> Commit c7eed31e235c ("mmc: sdhci-msm: Switch to the new ICE API")
+> introduced an incorrect check of the algorithm ID into the key eviction
+> path, and thus qcom_ice_evict_key() is no longer ever called.  Fix it.
+>
+> Fixes: c7eed31e235c ("mmc: sdhci-msm: Switch to the new ICE API")
+> Cc: stable@vger.kernel.org
+> Cc: Abel Vesa <abel.vesa@linaro.org>
+> Signed-off-by: Eric Biggers <ebiggers@google.com>
+
+Applied for fixes, thanks!
+
+Kind regards
+Uffe
 
 
-For now you can provide data in the reply. Just make sure to include it
-in the cover letter if the patchset gets reposted.
-
-> >>>
-> >>>>
-> >>>> Link to RFC:
-> >>>> https://lore.kernel.org/all/20241107073650.13473-1-quic_kriskura@quicinc.com/#Z31arch:arm64:boot:dts:qcom:sm8250.dtsi
-> >>>>
-> >>>
-> >> Regards,
-> >> Prashanth K
-> >>
-> > 
-> 
-
--- 
-With best wishes
-Dmitry
+> ---
+>  drivers/mmc/host/sdhci-msm.c | 16 ++++++++--------
+>  1 file changed, 8 insertions(+), 8 deletions(-)
+>
+> diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
+> index e00208535bd1..319f0ebbe652 100644
+> --- a/drivers/mmc/host/sdhci-msm.c
+> +++ b/drivers/mmc/host/sdhci-msm.c
+> @@ -1865,24 +1865,24 @@ static int sdhci_msm_program_key(struct cqhci_host *cq_host,
+>         struct sdhci_host *host = mmc_priv(cq_host->mmc);
+>         struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
+>         struct sdhci_msm_host *msm_host = sdhci_pltfm_priv(pltfm_host);
+>         union cqhci_crypto_cap_entry cap;
+>
+> +       if (!(cfg->config_enable & CQHCI_CRYPTO_CONFIGURATION_ENABLE))
+> +               return qcom_ice_evict_key(msm_host->ice, slot);
+> +
+>         /* Only AES-256-XTS has been tested so far. */
+>         cap = cq_host->crypto_cap_array[cfg->crypto_cap_idx];
+>         if (cap.algorithm_id != CQHCI_CRYPTO_ALG_AES_XTS ||
+>                 cap.key_size != CQHCI_CRYPTO_KEY_SIZE_256)
+>                 return -EINVAL;
+>
+> -       if (cfg->config_enable & CQHCI_CRYPTO_CONFIGURATION_ENABLE)
+> -               return qcom_ice_program_key(msm_host->ice,
+> -                                           QCOM_ICE_CRYPTO_ALG_AES_XTS,
+> -                                           QCOM_ICE_CRYPTO_KEY_SIZE_256,
+> -                                           cfg->crypto_key,
+> -                                           cfg->data_unit_size, slot);
+> -       else
+> -               return qcom_ice_evict_key(msm_host->ice, slot);
+> +       return qcom_ice_program_key(msm_host->ice,
+> +                                   QCOM_ICE_CRYPTO_ALG_AES_XTS,
+> +                                   QCOM_ICE_CRYPTO_KEY_SIZE_256,
+> +                                   cfg->crypto_key,
+> +                                   cfg->data_unit_size, slot);
+>  }
+>
+>  #else /* CONFIG_MMC_CRYPTO */
+>
+>  static inline int sdhci_msm_ice_init(struct sdhci_msm_host *msm_host,
+> --
+> 2.47.1
+>
 
