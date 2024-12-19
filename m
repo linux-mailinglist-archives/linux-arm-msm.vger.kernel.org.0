@@ -1,73 +1,87 @@
-Return-Path: <linux-arm-msm+bounces-42790-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-42791-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id D4C379F7BEE
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Dec 2024 14:03:31 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id EFDDF9F7C1C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Dec 2024 14:13:00 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 288D7164AC2
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Dec 2024 13:03:29 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id C48A718929DB
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Dec 2024 13:13:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AE4931BC5C;
-	Thu, 19 Dec 2024 13:03:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C2B722248B6;
+	Thu, 19 Dec 2024 13:12:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="giABaITE"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="jcdX2DiG"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f45.google.com (mail-lf1-f45.google.com [209.85.167.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 703E4801;
-	Thu, 19 Dec 2024 13:03:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFF5B21D58E
+	for <linux-arm-msm@vger.kernel.org>; Thu, 19 Dec 2024 13:12:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734613405; cv=none; b=FGOQaAcqe4ddQMXe9ZmKtV/3CM8XagXTFHwxHc9neyphLHVPObnY4vB4QbQbaZj8a7eIe/n/olV1ggC95h+Mi9K1zXAGzU4r77cyggwU80413+rC9pehTyYc2ViZ+7kqNyhgpb7Z1jdPuky3QCZzu8jNhiHCHKKVzvMdJ3X0xTU=
+	t=1734613971; cv=none; b=MAxf0P1hXA8koxTkbyIUqPU2oI9ZQUeMCCNCcfilrHntb8I/ih0IEvdsUGWbwFv71as/+3j1ed9C6c3D+Zqm2iaIobN9cveYiSckQL2Uy17t5o9Lb7lXcv8TOwxxWFgDHmdvqdVyT4kW/G+tJKRjKV1tKLc/ErE2db9Tkxcki2A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734613405; c=relaxed/simple;
-	bh=5+x3QZVCzTq1Hf1gpxeuJv6OeqlteL217qDNjwEWRlo=;
+	s=arc-20240116; t=1734613971; c=relaxed/simple;
+	bh=iK05DBAeu0Y3YAscJ8+7IXxgZrL60dLlnGJ2hM2DOTM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=tkgQ9fVHTGnwR0CExm+0qjGgkZ4rH1L23NemYC6CZaIrQ7ycuNGr2uyAKa4B797aelhTBi3fZUnzuM+DgeyT8FixaPDH9s+TMT7qJF9Lvdovvd95/fhLVREN3loRp2Pe3shWHlgRIvmtib69esjgJOwdZi0A6/7je8ap1ZOFjRQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=giABaITE; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0B42C4CECE;
-	Thu, 19 Dec 2024 13:03:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1734613405;
-	bh=5+x3QZVCzTq1Hf1gpxeuJv6OeqlteL217qDNjwEWRlo=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=giABaITEctE/wbnCg/2MLICDl1W+b+PAc1GAZkOjAmMAJuCMa81xyg99GcWrf3p3b
-	 euH2NWPqYluq8TxZlN2C8M/Jn2DoK8Wv3LENzgIFj29Dq3TvpjLzU7XHlBUXxasGkK
-	 9IKFSrEZOawhPRZ/gsh7htS0dkMHKZ6/csDgbQ8s5aTY+Uuxjrq448w5ZuHvBxleA5
-	 VOXCfP7tKmb41Guc35Fw187V49JZymlT+kWxAYqoVrOEQOUot5zozYSbTuN+EQZEi3
-	 H8dPIXmgJL+REFqc+uO2o0w7XJZ75r3VsU2xmsen8i0XovdiHLasPCqS1GkK5I+E8l
-	 k6YgbeI8ImwRg==
-Date: Thu, 19 Dec 2024 07:03:23 -0600
-From: Rob Herring <robh@kernel.org>
-To: Fabien Parent <parent.f@gmail.com>
-Cc: Saravana Kannan <saravanak@google.com>, Miguel Ojeda <ojeda@kernel.org>,
-	Alex Gaynor <alex.gaynor@gmail.com>,
-	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>,
-	=?iso-8859-1?Q?Bj=F6rn?= Roy Baron <bjorn3_gh@protonmail.com>,
-	Benno Lossin <benno.lossin@proton.me>,
-	Andreas Hindborg <a.hindborg@kernel.org>,
-	Alice Ryhl <aliceryhl@google.com>, Trevor Gross <tmgross@umich.edu>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
-	Wolfram Sang <wsa+renesas@sang-engineering.com>,
-	Mark Brown <broonie@kernel.org>,
-	Liam Girdwood <lgirdwood@gmail.com>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>, devicetree@vger.kernel.org,
-	rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-i2c@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	vinod.koul@linaro.org, Fabien Parent <fabien.parent@linaro.org>,
-	Fiona Behrens <me@kloenk.dev>
-Subject: Re: [PATCH 1/9] rust: i2c: add basic I2C client abstraction
-Message-ID: <20241219130323.GA4049504-robh@kernel.org>
-References: <20241218-ncv6336-v1-0-b8d973747f7a@gmail.com>
- <20241218-ncv6336-v1-1-b8d973747f7a@gmail.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=Dj0GyncIZhlldZmtOAPFFfVj3mb7l1/0itVuC2T/taGFc+oMNp4KHeKoC+kYs4tG/k3oErAs7MES0+U5bbYVfE0SiGcfZqAlea4WbusiLkPadTu3fSI02/KcQwlHUdLzVRre9qyTsP4s3IltXAL5IVGlQWB+NJz8/gYA6Y90Qno=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=jcdX2DiG; arc=none smtp.client-ip=209.85.167.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-540201cfedbso625013e87.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Dec 2024 05:12:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1734613968; x=1735218768; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=eY6Z0S57em9vHgQR4I6gVcXbF/PuYBYPSAnvDRTKdQM=;
+        b=jcdX2DiGHb/JUk4vFR5JtlKpynwrzBr3EnWyivB3S6678gOPuhi9ZnB2rX8nIf4/Fr
+         tSrtkcC2R72jlxDdbxji140pRees0/gJ7UaEdDonAe9lqhgJCVdiw8ZPwjnxezxmZMC6
+         CgVsGWjypJ8u2H/lGbPILXhArxF6eADyNVTYpXmNAbY8q5hd/BLcuNhlVHdzP8uxNHiz
+         0V+0wuxDyICLERIAaL0s9DxESOyB4wk3OXSIE6eHjQZF7CGgUPU15ozLe0Kh+t9ICldx
+         cw6wbImb9g9TF2VovZxYRVKcvN8YyDOxlsHznJamVnxjM8YA6HkEf094+dCid0MuUdDQ
+         WEAw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1734613968; x=1735218768;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=eY6Z0S57em9vHgQR4I6gVcXbF/PuYBYPSAnvDRTKdQM=;
+        b=AN0L1m+Ml/ri0EdJztlhS6WlQIpMgDA/QGuP72tRUH7liEx62K8zwyPkKQwHFRmtnp
+         8P5gk+xROO8avCbu/UItFi+kmK6xQ9KpmEGKk3PfFkiKJ1FGcdF5hdM0FgfVhSAdngE+
+         /lBZ8hoctK2m7S5O5q7gMzeuNIA8kc0b98m1aW8M8PRdidiwM5RXCtLHDS2xszhyKRx7
+         Kal4ANpuZ5T/K4nB8Rs6egidIedfoZnOHudDLFoSb5AH1mJtZ5PQ9cquSCqXbuuN7GLB
+         lvurttGR0VMh0PrQZ6jnbTG+XnMQd9MOYjor80r3d79xcFt8UC2ZyCFmgJPdap2xWQeF
+         GvlQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWLlAqnTTJgME9ukiwQuIAbR49AdR14glitKW8rk8mxc1hqQN68b4zCrq9AH7pmKXkk+1GPJxNSVDId5GGd@vger.kernel.org
+X-Gm-Message-State: AOJu0YxWdujU1dtgeAbKFgwz37tdcyzAQwpN9aLaTFh4e/M2W2Q49UZm
+	cGCTgbTsdXrZVbcm3qBlbWj5C02ZzAty6ShXFODmPQsMZyUOQRff1NFrBC0eCU0=
+X-Gm-Gg: ASbGncvCtn1Rsg2m5COWucgcfyG0f5tjXE3fu/InfYMl9vTYlWnDev6UmyCH/ZLU+7P
+	+NdzuWWkgksNKSjTKHg20Lc8ybBZRe2jumrn58KX9dXM0V+dSjL2uJ0CI6TwyFln658x05e3GL0
+	G2b/oZMtfBBsjuAwyOOdxvyeCHMAv8Azvxu+PfkPvINv+IS/FGFvTugPDR7xf74XARIBiN2a+RX
+	ZTUUdSeqhciq+5F+L8l4yasNyaI5eHZkZ5btJDXuS2ewvF/8TbTBMbfjzgZ5wqaAnx+4Z+Pzrmr
+	Guz7t8Yu4M3kMgbY6xBb5nne1Xz6H5++wg5W
+X-Google-Smtp-Source: AGHT+IEVea9+vCQvrRgr9ejnNTBStIWfOUMmqzn46gKB6ilihrcG/FQySdfgi2BmIkYFBlgtwj4z7A==
+X-Received: by 2002:a05:6512:b97:b0:541:d287:a53b with SMTP id 2adb3069b0e04-541e67473c6mr2166847e87.19.1734613967889;
+        Thu, 19 Dec 2024 05:12:47 -0800 (PST)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-54223600125sm173459e87.101.2024.12.19.05.12.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 19 Dec 2024 05:12:46 -0800 (PST)
+Date: Thu, 19 Dec 2024 15:12:45 +0200
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Sergey Senozhatsky <senozhatsky@chromium.org>
+Cc: Stanimir Varbanov <stanimir.k.varbanov@gmail.com>, 
+	Vikash Garodia <quic_vgarodia@quicinc.com>, Bryan O'Donoghue <bryan.odonoghue@linaro.org>, 
+	Hans Verkuil <hverkuil@xs4all.nl>, linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, stable@vger.kernel.org
+Subject: Re: [PATCHv2] media: venc: destroy hfi session after m2m_ctx release
+Message-ID: <yp3nafi4blvtqmr6vqsso2cwrjwb5gdzakzal7ftr2ty66uh46@n42c4q7m6elm>
+References: <20241219033345.559196-1-senozhatsky@chromium.org>
+ <20241219053734.588145-1-senozhatsky@chromium.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -76,205 +90,68 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20241218-ncv6336-v1-1-b8d973747f7a@gmail.com>
+In-Reply-To: <20241219053734.588145-1-senozhatsky@chromium.org>
 
-On Wed, Dec 18, 2024 at 03:36:31PM -0800, Fabien Parent wrote:
-> From: Fiona Behrens <me@kloenk.dev>
+On Thu, Dec 19, 2024 at 02:37:08PM +0900, Sergey Senozhatsky wrote:
+> This partially reverts commit that made hfi_session_destroy()
+> the first step of vdec/venc close().  The reason being is a
+> regression report when, supposedly, encode/decoder is closed
+> with still active streaming (no ->stop_streaming() call before
+> close()) and pending pkts, so isr_thread cannot find instance
+> and fails to process those pending pkts.  This was the idea
+> behind the original patch - make it impossible to use instance
+> under destruction, because this is racy, but apparently there
+> are uses cases that depend on that unsafe pattern.  Return to
+> the old (unsafe) behaviour for the time being (until a better
+> fix is found).
+
+You are describing a regression. Could you please add corresponding
+Reported-by and Closes tags (for now you can post them in a reply to
+your patch, in future please include them in your commit message).
+
 > 
-> Implement an abstraction to write I2C device drivers. The abstraction
-> is pretty basic and provides just the infrastructure to probe
-> a device from I2C/OF device_id and abstract `i2c_client`.
-> The client will be used by the Regmap abstraction to perform
-> I/O on the I2C bus.
-> 
-> Signed-off-by: Fiona Behrens <me@kloenk.dev>
-> Co-developed-by: Fabien Parent <fabien.parent@linaro.org>
-> Signed-off-by: Fabien Parent <fabien.parent@linaro.org>
+> Fixes: 45b1a1b348ec ("media: venus: sync with threaded IRQ during inst destruction")
+> Cc: stable@vger.kernel.org
+> Signed-off-by: Sergey Senozhatsky <senozhatsky@chromium.org>
+
+This is v2, but there is no changelog. Please provide one.
+
+Also please don't post your patches as replies to the previous versions.
+
 > ---
->  MAINTAINERS                     |   1 +
->  rust/bindings/bindings_helper.h |   1 +
->  rust/helpers/helpers.c          |   1 +
->  rust/helpers/i2c.c              |  13 ++
->  rust/kernel/i2c.rs              | 288 ++++++++++++++++++++++++++++++++++++++++
->  rust/kernel/lib.rs              |   2 +
->  6 files changed, 306 insertions(+)
+>  drivers/media/platform/qcom/venus/core.c | 8 ++------
+>  1 file changed, 2 insertions(+), 6 deletions(-)
 > 
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 6b9e10551392c185b9314c9f94edeaf6e85af58f..961fe4ed39605bf489d1d9e473f47bccb692ff14 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -10796,6 +10796,7 @@ F:	include/linux/i2c-smbus.h
->  F:	include/linux/i2c.h
->  F:	include/uapi/linux/i2c-*.h
->  F:	include/uapi/linux/i2c.h
-> +F:	rust/kernel/i2c.rs
+> diff --git a/drivers/media/platform/qcom/venus/core.c b/drivers/media/platform/qcom/venus/core.c
+> index 2d27c5167246..807487a1f536 100644
+> --- a/drivers/media/platform/qcom/venus/core.c
+> +++ b/drivers/media/platform/qcom/venus/core.c
+> @@ -506,18 +506,14 @@ static __maybe_unused int venus_runtime_suspend(struct device *dev)
+>  void venus_close_common(struct venus_inst *inst)
+>  {
+>  	/*
+> -	 * First, remove the inst from the ->instances list, so that
+> -	 * to_instance() will return NULL.
+> -	 */
+> -	hfi_session_destroy(inst);
+> -	/*
+> -	 * Second, make sure we don't have IRQ/IRQ-thread currently running
+> +	 * Make sure we don't have IRQ/IRQ-thread currently running
+>  	 * or pending execution, which would race with the inst destruction.
+>  	 */
+>  	synchronize_irq(inst->core->irq);
 >  
->  I2C SUBSYSTEM HOST DRIVERS
->  M:	Andi Shyti <andi.shyti@kernel.org>
-> diff --git a/rust/bindings/bindings_helper.h b/rust/bindings/bindings_helper.h
-> index e9fdceb568b8f94e602ee498323e5768a40a6cba..a882efb90bfc27960ef1fd5f2dc8cc40533a1c27 100644
-> --- a/rust/bindings/bindings_helper.h
-> +++ b/rust/bindings/bindings_helper.h
-> @@ -16,6 +16,7 @@
->  #include <linux/file.h>
->  #include <linux/firmware.h>
->  #include <linux/fs.h>
-> +#include <linux/i2c.h>
->  #include <linux/jiffies.h>
->  #include <linux/jump_label.h>
->  #include <linux/mdio.h>
-> diff --git a/rust/helpers/helpers.c b/rust/helpers/helpers.c
-> index 0640b7e115be1553549312dcfdf842bcae3bde1b..630e903f516ee14a51f46ff0bcc68e8f9a64021a 100644
-> --- a/rust/helpers/helpers.c
-> +++ b/rust/helpers/helpers.c
-> @@ -15,6 +15,7 @@
->  #include "device.c"
->  #include "err.c"
->  #include "fs.c"
-> +#include "i2c.c"
->  #include "io.c"
->  #include "jump_label.c"
->  #include "kunit.c"
-> diff --git a/rust/helpers/i2c.c b/rust/helpers/i2c.c
-> new file mode 100644
-> index 0000000000000000000000000000000000000000..8ffdc454e7597cc61909da5b3597057aeb5f7299
-> --- /dev/null
-> +++ b/rust/helpers/i2c.c
-> @@ -0,0 +1,13 @@
-> +// SPDX-License-Identifier: GPL-2.0
-> +
-> +#include <linux/i2c.h>
-> +
-> +void *rust_helper_i2c_get_clientdata(const struct i2c_client *client)
-> +{
-> +	return i2c_get_clientdata(client);
-> +}
-> +
-> +void rust_helper_i2c_set_clientdata(struct i2c_client *client, void *data)
-> +{
-> +	i2c_set_clientdata(client, data);
-> +}
-> diff --git a/rust/kernel/i2c.rs b/rust/kernel/i2c.rs
-> new file mode 100644
-> index 0000000000000000000000000000000000000000..efa03335e5b59e72738380e94213976b2464c25b
-> --- /dev/null
-> +++ b/rust/kernel/i2c.rs
-> @@ -0,0 +1,288 @@
-> +// SPDX-License-Identifier: GPL-2.0
-> +
-> +//! Abstractions for the I2C bus.
-> +//!
-> +//! C header: [`include/linux/i2c.h`](srctree/include/linux/i2c.h)
-> +
-> +use crate::{
-> +    bindings, container_of,
-> +    device::Device,
-> +    device_id::{self, RawDeviceId},
-> +    driver,
-> +    error::{to_result, Result},
-> +    of,
-> +    prelude::*,
-> +    str::CStr,
-> +    types::{ARef, ForeignOwnable, Opaque},
-> +    ThisModule,
-> +};
-> +
-> +/// Abstraction for `bindings::i2c_device_id`.
-> +#[repr(transparent)]
-> +#[derive(Clone, Copy)]
-> +pub struct DeviceId(bindings::i2c_device_id);
-> +
-> +impl DeviceId {
-> +    /// Create a new device id from an I2C name.
-> +    pub const fn new(name: &CStr) -> Self {
-> +        let src = name.as_bytes_with_nul();
-> +        // TODO: Replace with `bindings::i2c_device_id::default()` once stabilized for `const`.
-> +        // SAFETY: FFI type is valid to be zero-initialized.
-> +        let mut i2c: bindings::i2c_device_id = unsafe { core::mem::zeroed() };
-> +
-> +        let mut i = 0;
-> +        while i < src.len() {
-> +            i2c.name[i] = src[i] as _;
-> +            i += 1;
-> +        }
+>  	v4l2_m2m_ctx_release(inst->m2m_ctx);
+>  	v4l2_m2m_release(inst->m2m_dev);
+> +	hfi_session_destroy(inst);
+>  	v4l2_fh_del(&inst->fh);
+>  	v4l2_fh_exit(&inst->fh);
+>  	v4l2_ctrl_handler_free(&inst->ctrl_handler);
+> -- 
+> 2.47.1.613.gc27f4b7a9f-goog
+> 
 
-You can simplify this now that char maps to u8 (in rust next).
-
-> +
-> +        Self(i2c)
-> +    }
-> +}
-> +
-> +// SAFETY:
-> +// * `DeviceId` is a `#[repr(transparent)` wrapper of `i2c_device_id` and does not add
-> +//   additional invariants, so it's safe to transmute to `RawType`.
-> +// * `DRIVER_DATA_OFFSET` is the offset to the `data` field.
-> +unsafe impl RawDeviceId for DeviceId {
-> +    type RawType = bindings::i2c_device_id;
-> +
-> +    const DRIVER_DATA_OFFSET: usize = core::mem::offset_of!(bindings::i2c_device_id, driver_data);
-> +
-> +    fn index(&self) -> usize {
-> +        self.0.driver_data as _
-> +    }
-> +}
-> +
-> +/// I2C [`DeviceId`] table.
-> +pub type IdTable<T> = &'static dyn device_id::IdTable<DeviceId, T>;
-> +
-> +/// An adapter for the registration of I2C drivers.
-> +#[doc(hidden)]
-> +pub struct Adapter<T: Driver + 'static>(T);
-> +
-> +impl<T: Driver + 'static> driver::RegistrationOps for Adapter<T> {
-> +    type RegType = bindings::i2c_driver;
-> +
-> +    fn register(
-> +        i2cdrv: &Opaque<Self::RegType>,
-> +        name: &'static CStr,
-> +        module: &'static ThisModule,
-> +    ) -> Result {
-> +        // SAFETY: It's safe to set the fields of `struct i2c_driver` on initialization.
-> +        unsafe {
-> +            (*i2cdrv.get()).driver.name = name.as_char_ptr();
-> +            (*i2cdrv.get()).probe = Some(Self::probe_callback);
-> +            (*i2cdrv.get()).remove = Some(Self::remove_callback);
-> +            if let Some(t) = T::I2C_ID_TABLE {
-> +                (*i2cdrv.get()).id_table = t.as_ptr();
-> +            }
-> +            if let Some(t) = T::OF_ID_TABLE {
-> +                (*i2cdrv.get()).driver.of_match_table = t.as_ptr();
-> +            }
-> +        }
-> +
-> +        // SAFETY: `i2cdrv` is guaranteed to be a valid `RegType`.
-> +        to_result(unsafe { bindings::i2c_register_driver(module.0, i2cdrv.get()) })
-> +    }
-> +
-> +    fn unregister(i2cdrv: &Opaque<Self::RegType>) {
-> +        // SAFETY: `i2cdrv` is guaranteed to be a valid `RegType`.
-> +        unsafe { bindings::i2c_del_driver(i2cdrv.get()) };
-> +    }
-> +}
-> +
-> +impl<T: Driver> Adapter<T> {
-> +    /// Get the [`Self::IdInfo`] that matched during probe.
-> +    fn id_info(client: &mut Client) -> Option<&'static T::IdInfo> {
-> +        let id = <Self as driver::Adapter>::id_info(client.as_ref());
-> +        if id.is_some() {
-> +            return id;
-> +        }
-> +
-> +        // SAFETY: `client` and `client.as_raw()` are guaranteed to be valid.
-> +        let id = unsafe { bindings::i2c_client_get_device_id(client.as_raw()) };
-> +        if !id.is_null() {
-> +            // SAFETY: `DeviceId` is a `#[repr(transparent)` wrapper of `struct i2c_device_id` and
-> +            // does not add additional invariants, so it's safe to transmute.
-> +            let id = unsafe { &*id.cast::<DeviceId>() };
-> +            return Some(T::I2C_ID_TABLE?.info(id.index()));
-> +        }
-
-You aren't handling the DT based matching.
-
-Rob
+-- 
+With best wishes
+Dmitry
 
