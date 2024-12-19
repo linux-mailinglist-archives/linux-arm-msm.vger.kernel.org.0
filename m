@@ -1,79 +1,79 @@
-Return-Path: <linux-arm-msm+bounces-42770-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-42771-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 363689F770C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Dec 2024 09:15:58 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8BB0C9F7712
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Dec 2024 09:17:16 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7410116206C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Dec 2024 08:15:55 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CEDD116692F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Dec 2024 08:16:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5CD6F216E3D;
-	Thu, 19 Dec 2024 08:15:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1A399217647;
+	Thu, 19 Dec 2024 08:16:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="YF8O/PCe"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="hOxiT3qZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
+Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 589BC1BD01D
-	for <linux-arm-msm@vger.kernel.org>; Thu, 19 Dec 2024 08:15:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36C9F1BD01D
+	for <linux-arm-msm@vger.kernel.org>; Thu, 19 Dec 2024 08:16:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734596152; cv=none; b=qURAmEUea+oEMGkcYEfEfYs3rZQmMm6HUeFvRN875E98QiQ2qYGn3Ej3FLMFmbMdo6wQASsEAdlwLU2fDbcghxYZFHcKeRgBX8QCaDgOaOVuUJ4AS0Za0ZnKjAfzdvsAKfzS+elIfDTTrLNjXtFaqbuAYKP1tw2BdMKaRKqNndY=
+	t=1734596204; cv=none; b=GSPk4DEvUuGncjNbWyphmFMt3TkHXsgtx4lqK5we0fQEdRKHfQVT2oJHFQQ8XjI7aP7zmQWHCCGLNIIZPPzaqhIc/HHMeCmfWzlbICE0eZrBeNZy4GVXypRe/QXK8CZ6V7sQFtZaywbeAEOVerRdSVLCF/SRbssydeDKTYYU3e8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734596152; c=relaxed/simple;
-	bh=1Pa7ZqK8jBJ9o6HDfo2fK6P6onPvi8M5AseR46YM6Rw=;
+	s=arc-20240116; t=1734596204; c=relaxed/simple;
+	bh=+6RSFXCZrKB0507GEU0Lxqzo/UBl3GwLgaSsOqt0Ppw=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=lDV5Fqfp9Nfb3O07Gg8pkWqiRI1lFOz6Un4ICvWxbCP+XroqSxliMMmSB7fDVOWtW/G/AbO45isVcRxe39DMtE7KQRAddnaCSIO5bLWpCgFNPwktdSXfw98XeHsxJ+D9GngfV1qCZpwUlWmtSlG0OD7HbfouSr1QL4XcEm8s57c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=YF8O/PCe; arc=none smtp.client-ip=209.85.221.53
+	 In-Reply-To:Content-Type; b=Z0PGg8/gvQw/sw7uaS0Id9qz2NdBDB7QuNExno58isx/VqH/q8Cuoeb3Tc5RS+xqGlMzkbyZqlX3oZT5Vof+aK96K05PV+/hGTzGK2TVfK+SsTFQ4Gr7HXdeLMPDGvL56BTwSGWjH2gJM0w2f4htBAZYyjGqQRPdTKxoHO7tzjk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=hOxiT3qZ; arc=none smtp.client-ip=209.85.128.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-385d851e7c3so7252f8f.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Dec 2024 00:15:50 -0800 (PST)
+Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-43620a5f81bso805155e9.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Dec 2024 00:16:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1734596148; x=1735200948; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=R8nkKPNVeuZfDWhVmISypup3R+4qveiv6WjtfKLomVM=;
-        b=YF8O/PCelwIgGTUoekeovDGYmBUfJZLYHgzHI8k3vB76+oG/NLCgV901xfQKkBlrsf
-         j54cv2zdUSuYUOgQQt59X22ivV7g5qBjkuWxIMqv23EVRb/FKHWolLgsfwruB1Il25Rc
-         fN9DhT95aJ+UAVZBonm30W4wF3U/kug/7paneADsQeaCmABJrcfld/O2BO2UiUOY2jKP
-         wXUcoC3O1lJDUWXrKCoi/Q9fe35iBX7976nRdZgvSBqLa087qyjhaRTv46ij/Gzyu8me
-         zVrbzliWd9mDFq/s3CDkkHpDG7wk+e80GM60e89lk8euXKu55+fvYs+o6Z2voyEwOajG
-         6zFQ==
+        d=linaro.org; s=google; t=1734596200; x=1735201000; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+         :from:references:cc:to:subject:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=yfCE2lBm3AGxDzeNkGrdgeE2MZ445obqvQgA9hms4ho=;
+        b=hOxiT3qZyy4rcvIUmctJlhiRYVRM4Tukcjww7zFxZK6QSwG362xFOYn31jXiukkHzj
+         ZA7+i6NQyuOGfBQTzpyqUPygqBShW1aHB5vkap9DEvkl2W7F+/NT3YFCuN/iOeTIYM6f
+         Ktw2Bhn36SXYMucXrbl7wm4eAGgTd7nJMX+QWiF7TcArQ8cKW9OBqpRSAJ0vRJKc2OcC
+         X+DqD42G0DliP3lK9S3sYTQPU/+qiwMEmBWbcYUZZMikKJVH6J2Zber1DkOgwloGuBCu
+         5EaG7sH4sXYN9qFd8L94aLSAHVfE0fUFzwEbg+2JkxOQeM2TuL9DaRtfCVneJhub4wcA
+         +o2w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734596148; x=1735200948;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=R8nkKPNVeuZfDWhVmISypup3R+4qveiv6WjtfKLomVM=;
-        b=ryDhEp8mhtK9OiodlBrU/Xn8W+OUEtnFUQdNfdGMJQorNT4Ph9IYtyLo011SgzVTLW
-         65LdP6PNWybP7VfN/2/62Fho8r7tmFjEUlFo+uZ99kUk+0DbA8RWjvSxakxxFe7k8NSF
-         vPx54mqX/A+msyrxpkyN+efJ+b0CB0zIDjSZ7fhm1gXhEiZRKwS+t5AW3oyWDKqnvTx8
-         QHW7BdeGiaDPeKg2oQk79a8kXQSnX1YdMY2YtH7LOA7gjx0XlXb6ArMsK+DJSiOPwBbR
-         rwvn8XL84bCWa1UgAqUdLSfpHeqy4NvjOrfxlJp2Rw5tel1u8yyEi0L4R1tQANtGflks
-         I3Qg==
-X-Forwarded-Encrypted: i=1; AJvYcCWa8CAvUwWNDsFd28dq/wy4QT5USxM5G4v9QLNEogru0KcfwwJH3V/i3A6mIWzROWDFV4MyrkKG+mEgrhfa@vger.kernel.org
-X-Gm-Message-State: AOJu0YykHeuQh4fvLXf2PWqK0vQZyMriYRGTF7QgEy97TrSIBfJctkg0
-	nPpnZKOUK+28pmJa3/AQy1JiimNnafXf4Kb1qkBfx3v9MEjm52yJPXLGj/TIAZw=
-X-Gm-Gg: ASbGncsU/J/7aItxaAysi3RMGJHs3pu3a3odgQ0PrffdArhjPr34F6Ls8jPBGoc7+U1
-	ugkTaZWs3ffbpyiBmeXrSB9gmBwuMiO7PK9fXa4oGRfbtgsadC4me7Wd2PUY2oq4NtY8DuGSc0D
-	xtN60//2BNjRBEodDPCcdUtiXxxvfFsgdKJXcuiRQlAX8p1bYzw4cgNqU9Drdj2bcePE5OtY2tr
-	4lssKcJh4ZV8va/iva6zoAwjjvaBw7K3P5j6/IFM8VNcV4Tr107pEFq+T0hZ7c3fP3795DPLYSi
-X-Google-Smtp-Source: AGHT+IG20Dvi1Dz67p3T/a6LyvS1PnaCCT3e57rdfQ3NKuFlKzLHvMEgrF9Ihf72tkGDhtPx/hc0BQ==
-X-Received: by 2002:a5d:59ab:0:b0:385:ed78:e188 with SMTP id ffacd0b85a97d-388e4d4f60dmr1851988f8f.5.1734596148550;
-        Thu, 19 Dec 2024 00:15:48 -0800 (PST)
+        d=1e100.net; s=20230601; t=1734596200; x=1735201000;
+        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+         :from:references:cc:to:subject:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=yfCE2lBm3AGxDzeNkGrdgeE2MZ445obqvQgA9hms4ho=;
+        b=AEkPUTVJlqe+NOu4nkk8uVyGsZQkrOS+AoVuLH0j6otrJ6Gl89SfQ23CO3BycdFp66
+         uM/TIiXeTrKSTHh/A6lfyx8jBsRFjN9isscr4CJBmyUpHifofjST1oz4nY+0yb3ePgrc
+         4+/oCZLby5qq62B80qR/8DOXXN4foHHQBi2hmzaNev18wlogiLTNGVvjHXwmtKjbZFFT
+         /smG+losOI08SBy2IKDgjey2dT+LjWXf7IUYH8P6ZHCglvH5CaV+TJoy8PW4T/z6DWps
+         QKhFnzLQldxWAFmR7FkD73w5MkhvMbS0le55knEf2kKbJ4V4mU7H+oN++or1fFRmIYkk
+         n6Bg==
+X-Forwarded-Encrypted: i=1; AJvYcCVmrRBJ2FFFdX2dAYf18dL+LGo54NaeaWeZj7bChNAYWsjI+i6JWmeA+x4jm9NwNOAO/0GxW8C34zb0ZnWw@vger.kernel.org
+X-Gm-Message-State: AOJu0YzPye5abgBEexIgRRJ48XVIZgmrtPl5GhqQe2V0s5QCHOT3GIO1
+	+YWdmvEQjciazjK67iNs+sBxEanYSFMCudXyxGEJS++FU4jF/ghUUrByPnQC1jE=
+X-Gm-Gg: ASbGncuMnmx1AKgHrUinkp5Q47OIOnwSG1c7eUfXFmpP+9jaNwzf5D8Tr8D6QRM8OIs
+	DSdFl4GUsTtUYLirG5+NR9ouob7PeroKNPmxqHY/+FyWpz6Pn0mpeiKV5zk3Zgr65t383G6ROW7
+	f5qY5jMB4xX2BNHF7IRwVWtBK8OeiwsjxKjrpKKVBCKX0kNfDYAzx6nynoGtO4W3ZJwGKbXl1ba
+	sEJniCZiI2TafmOt52v1aPeegX5ySXAk+WmOAxcR++k8uxdSL59zngNmfaRiQOKk7Q5FIqtnBed
+X-Google-Smtp-Source: AGHT+IGQ/hluryhzJy9pGLW52XrHS6g1bEUuWyR9c+ALG48g7EontSdRWWEVm7T37MkJ03ufIgv/Vg==
+X-Received: by 2002:a5d:47a2:0:b0:385:de67:229e with SMTP id ffacd0b85a97d-388e4d8e917mr1675008f8f.11.1734596200492;
+        Thu, 19 Dec 2024 00:16:40 -0800 (PST)
 Received: from [192.168.1.20] ([178.197.223.165])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38a1c8330e0sm931348f8f.34.2024.12.19.00.15.47
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38a1c828ba0sm940021f8f.14.2024.12.19.00.16.38
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 19 Dec 2024 00:15:47 -0800 (PST)
-Message-ID: <2867cd9e-4de9-47dd-b4e8-c88f78b1113d@linaro.org>
-Date: Thu, 19 Dec 2024 09:15:46 +0100
+        Thu, 19 Dec 2024 00:16:39 -0800 (PST)
+Message-ID: <5d0b06b7-1fed-43cc-93e2-9a5f7cd14ffb@linaro.org>
+Date: Thu, 19 Dec 2024 09:16:38 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -81,21 +81,25 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/6] dt-bindings: pinctrl: qcom: correct gpio-ranges in
- examples for qcs615
-To: Lijuan Gao <quic_lijuang@quicinc.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Linus Walleij <linus.walleij@linaro.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Jingyi Wang <quic_jingyw@quicinc.com>,
- Konrad Dybcio <konradybcio@kernel.org>
-Cc: kernel@quicinc.com, linux-arm-msm@vger.kernel.org,
- linux-gpio@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20241219-correct_gpio_ranges-v2-0-19af8588dbd0@quicinc.com>
- <20241219-correct_gpio_ranges-v2-1-19af8588dbd0@quicinc.com>
-Content-Language: en-US
+Subject: Re: [PATCH v5 3/3] media: dt-bindings: qcom-venus: Deprecate
+ video-decoder and video-encoder where applicable
+To: Renjiang Han <quic_renjiang@quicinc.com>,
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+ Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+ Vikash Garodia <quic_vgarodia@quicinc.com>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
+Cc: quic_vnagar@quicinc.com, quic_dikshita@quicinc.com,
+ konradybcio@kernel.org, linux-media@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+ devicetree@vger.kernel.org, Stanimir Varbanov <stanimir.varbanov@linaro.org>
+References: <20241209-media-staging-24-11-25-rb3-hw-compat-string-v5-0-ef7e5f85f302@linaro.org>
+ <20241209-media-staging-24-11-25-rb3-hw-compat-string-v5-3-ef7e5f85f302@linaro.org>
+ <283a54b2-6e00-4d3a-95a3-df4a06bc1292@quicinc.com>
+ <0a265953-0c6a-4b8b-a972-a59ec4755474@linaro.org>
+ <61c27010-c49f-48df-b6d3-029b15c71bd3@quicinc.com>
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Content-Language: en-US
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
  cFgcqTTuNHjAvxtUG8pQgGTHAObYs6xeYJtjUH0ZX6ndJ33FJYf5V3yXqqjcZ30FgHzJCFUu
@@ -140,36 +144,37 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20241219-correct_gpio_ranges-v2-1-19af8588dbd0@quicinc.com>
+In-Reply-To: <61c27010-c49f-48df-b6d3-029b15c71bd3@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 19/12/2024 08:59, Lijuan Gao wrote:
-> Correct the gpio-ranges in the QCS615 TLMM pin controller example to
-> include the UFS_RESET pin, which is expected to be wired to the reset
-> pin of the primary UFS memory. This allows the UFS driver to toggle it.
+On 19/12/2024 03:45, Renjiang Han wrote:
 > 
-> Fixes: 55c487ea6084 ("dt-bindings: pinctrl: document the QCS615 Top Level Mode Multiplexer")
-> Signed-off-by: Lijuan Gao <quic_lijuang@quicinc.com>
-> ---
+> On 12/18/2024 8:38 PM, Krzysztof Kozlowski wrote:
+>>>> @@ -132,12 +132,4 @@ examples:
+>>>>            resets = <&gcc GCC_VIDEO_AXI0_CLK_ARES>,
+>>>>                     <&videocc VIDEO_CC_MVS0C_CLK_ARES>;
+>>>>            reset-names = "bus", "core";
+>>>> -
+>>>> -        video-decoder {
+>>>> -            compatible = "venus-decoder";
+>>>> -        };
+>>>> -
+>>>> -        video-encoder {
+>>>> -            compatible = "venus-encoder";
+>>>> -        };
+>>>>        };
+>>> It is working fine on QCS615.
+>>> Tested-by: Renjiang Han<quic_renjiang@quicinc.com>
+>> How? How is it possible to test a binding on real hardware? To my
+>> knowledge it is impossible, so I really would like to see explanation of
+>> this tag.
+>   I used this binding and modified the driver to verify the video
+>   function, and the result was fine. Also, I used this binding to
+>   verify the dtb, and there was no related error, so I added
+>   Tested-by.
 
-<form letter>
-This is a friendly reminder during the review process.
-
-It looks like you received a tag and forgot to add it.
-
-If you do not know the process, here is a short explanation:
-Please add Acked-by/Reviewed-by/Tested-by tags when posting new
-versions, under or above your Signed-off-by tag. Tag is "received", when
-provided in a message replied to you on the mailing list. Tools like b4
-can help here. However, there's no need to repost patches *only* to add
-the tags. The upstream maintainer will do that for tags received on the
-version they apply.
-
-https://elixir.bootlin.com/linux/v6.5-rc3/source/Documentation/process/submitting-patches.rst#L577
-
-If a tag was not added on purpose, please state why and what changed.
-</form letter>
+This is not a testing of binding. You tested driver. Don't add fake tags.
 
 Best regards,
 Krzysztof
