@@ -1,188 +1,213 @@
-Return-Path: <linux-arm-msm+bounces-42807-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-42808-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3F0E89F7ED7
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Dec 2024 17:05:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 9DA6F9F7F23
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Dec 2024 17:15:32 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id EF8701883A15
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Dec 2024 16:05:51 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id C457A18921A5
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Dec 2024 16:14:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5DA16226883;
-	Thu, 19 Dec 2024 16:05:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CD2CA227B88;
+	Thu, 19 Dec 2024 16:13:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KRn/LzPq"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gRZ3a/Ct"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f53.google.com (mail-ej1-f53.google.com [209.85.218.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FC602165F7;
-	Thu, 19 Dec 2024 16:05:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF635226870;
+	Thu, 19 Dec 2024 16:13:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734624336; cv=none; b=VzoPoVMzQoosr7Xu52BKokJJA4g20jmpbrRqSnaMt4FVwi19W2N7GGjVPK3qFGi7WaJx6jyRlwLfyFdmWeX0lhgJ6FezH0tcFRvqdv9wgjfvmPk/TRF9TFWVWFqWYdo9sSVGABusl98Uug1yLK+SiKM7ytuD7FBg59yhUDl6tpM=
+	t=1734624825; cv=none; b=ShLviAI2MfbkxQtZLgIiAFJ7dBTuyNe5+rtpTkPrdT0ouTqLDP3rvjIr0rOAfo8QsdPRdkA42NMU21wVhJNHcUaA/zF9YtEGwUtSM9MNkXwOmGVCEyeemrrbSXtHQCUMKHKzxJJOWGZA53PtiOlvUAyX7sUscuzeSobceCa5fHw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734624336; c=relaxed/simple;
-	bh=30HQjXPL9CwszPeQJkg6tvnIAkzcATAQF6HEPZrhWKc=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=eSrgbQxQvViC4tCMtVHfbGg5SmPnqQqGhUxJr9HDVeSkVyJZiJwAHeyj0UrQeZqrlD1ZYibGtO5vKaryD9VyY+8UlvbcKftbNuQj8a1n5c/0VciI6B8EMZIRxZv7e24Ma9bpiUBQZFntY1exZwAZe8ZayOncUAvDIHkeJi/Uogs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KRn/LzPq; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id AD144C4CECE;
-	Thu, 19 Dec 2024 16:05:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1734624335;
-	bh=30HQjXPL9CwszPeQJkg6tvnIAkzcATAQF6HEPZrhWKc=;
-	h=From:Date:Subject:To:Cc:Reply-To:From;
-	b=KRn/LzPqr7BDjw7uiCbS7U9rpSW61rErqt594Otp33I56LibegVAFhqdu3/MEJBH+
-	 1zvLG1LPCbfPXhgRYVgJVhyVQlfdPvUetdas0XvrhWpgLINLPu2tdFiMYnzSqMUy7v
-	 wO4dsOr1uRHZnAPZZM2waMYiAlxUGfg7x4/Ty23G619z/TYRS6uPOi197qH8oDRCIK
-	 mYwzd6nludSA7aLM+gdbuTNeNI+4cMKj8Qayfqidl/lFao13DWfYa7PSZzLGD1I961
-	 E9DrjtHvKIKgC7oJ0xbg2i0eBTEEaGDFpG3QZvVh7g7ygRvCz3+TOFhXfAu0MVBKjC
-	 WygvJn8349jNQ==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9A854E77184;
-	Thu, 19 Dec 2024 16:05:35 +0000 (UTC)
-From: Anthony Ruhier via B4 Relay <devnull+aruhier.mailbox.org@kernel.org>
-Date: Thu, 19 Dec 2024 17:05:08 +0100
-Subject: [PATCH v3] arm64: dts: qcom: x1e80100-lenovo-yoga-slim7x: Add lid
- switch
+	s=arc-20240116; t=1734624825; c=relaxed/simple;
+	bh=3ZslwSsDt0ZrevpyxJOwc9u5jivjryjPqkkjqbFu1x8=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=fwf+URgcfuBu+wg/hGJM9PyBN5E26jPvihz6LFtCprmrdfVA/9FvP8pI4OvZQFlucD8LbWSrxJ9reYK2xq3wfEuTwMqlzsXOgBxXuMnrhoiQgehfWZJu65EK6OQIMzuwH7phSQ8hwaPeIs3wzCZs1gwmgPu2F6ca9xAZaZ+vRxA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gRZ3a/Ct; arc=none smtp.client-ip=209.85.218.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-ej1-f53.google.com with SMTP id a640c23a62f3a-aa66e4d1d5aso149989066b.2;
+        Thu, 19 Dec 2024 08:13:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1734624822; x=1735229622; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=3N+saF3O8ciaGMcz5UMikE+GnYspkuI5iWB6DK4vON0=;
+        b=gRZ3a/CtvPoVGjNSQBWAhBEcx2sr9/V1QICBiuawU4D9yo45NxxEusgsmRit5+huEZ
+         nRgmzjURNgEWHIEQ44l53X/r8NM5QClT6hZb57iUYvyW3k51Tcpt8gN+e07FhifJRA+v
+         uPVzGdn2m/LRGcLSi+prlt83hOsBnfIAOaG9jrPcrM237B9m5/t363dnECTVkjVEQRPL
+         4zvfjuuuDYxEjjvJsAXSpsgfWAFvisjgtiE136GgVc1HSVQmfAU2CtEzScUv45fG6w0s
+         IYo2P0E5doDB4obpuH7HGWinKiL9G9pRPvU1I21DRYADG6s65VhqXzzslRU1W4zD5YZG
+         tGSA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1734624822; x=1735229622;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=3N+saF3O8ciaGMcz5UMikE+GnYspkuI5iWB6DK4vON0=;
+        b=vRzu1SiKgtp9ztUW4WQgUpFj1+ONnYxfKfBpeF2w2cT+RO5QoqDzvJ7i8U2YzcZh5V
+         TD/WoHA3OeLaZucBaTOFAMf9vJBohfp7uq8UeLxnqak7aYmAi2LXANEKHjGeeQ9RDVZc
+         qBZY+6U0xZ4AuSATKt33yHYTD4n1R8+3GoVqSNNQGcix/ETPbVYAG1MaRSjOQkMM9Bqb
+         D7x5BUkPsZsRPoiXJ8CyrvPOP2EvMSLc50P88GADLQzJcQizuxgYtojV0DvbYdxd/xQS
+         YyEYDg08pu/rNs0gyZc8eq+IgzBwGzd4e7CxX/cb/eFV1HJT3yeV95SayfYDcGIgGJVN
+         8Htw==
+X-Forwarded-Encrypted: i=1; AJvYcCU7RimTUme1EdiGV0gMWLkJdu4+Yieesww/z79JlphW8fwvPlg3WcR+TAMu3uQq0uHNyR6ZiDZpAj7AsHZK@vger.kernel.org, AJvYcCUBuAbCqw2wy9KcPTh4ZKLVDfw7A8+ECEKrb99s58/OgCulrBM3K/HNKpDWUJDQXzR0D8QZ1igW7NQQaU0/7w==@vger.kernel.org, AJvYcCXbsmSXwXOrM7ENkWIe2RrSepWnhXav2MHvAifH9JbqqjknQ+Fy9DLKTogS5ypB/vNPbjg3pti9GVguNif61Xc=@vger.kernel.org, AJvYcCXgfwdXL2KJWtnnSEPi+Uz36PtpueL11aMzwBgG6g/usF2x6l874nvf+b/Nx/RPXv+mV3ilzlqgaGhE@vger.kernel.org, AJvYcCXj1rkJnljwNvKJyzEQGvGJP30GKIPQT9m+dfMrtYYxOk5TxXEL16JVGcO3ayy3Gno/Rvap4QlCjGrq@vger.kernel.org
+X-Gm-Message-State: AOJu0YyeZCMG050TwBDMTfBAtUnmh1eOhp80lB3jQVMBag8n7jRdYOyf
+	wnsWU4vw8iZkPCumtojom9F6JtrKiekcAQeZnvI2aAHb8+ZC7OtAqL12VHB2SrDz2/tudPeuwzc
+	EZf8eqCHgSp8JYxruNkPbT4bazOE=
+X-Gm-Gg: ASbGnct98byZstMyUQmk3xOAo+W25IL5gIlPGqV3RJ0k39QigcpqtpgbxOInE9MYGEV
+	7ui+ce/p6h5nBh63mAg9tGRoTxqWNIAPjx8RvRFRNfo2CLr7VHtYz9Eikwp/0l/BOb5k0fQ==
+X-Google-Smtp-Source: AGHT+IFMZheT4vIS61kxIEYkmlO7h7QA29FiOWtC6wSuYpKEtK5DwRwpulJDIUJetxuXjbdb9BCz6RurcxYEa1nfi5Q=
+X-Received: by 2002:a17:907:d1d:b0:aa6:74a9:ce6e with SMTP id
+ a640c23a62f3a-aac07901ef7mr418032566b.16.1734624821904; Thu, 19 Dec 2024
+ 08:13:41 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20241219-patch-lenovo-yoga-v3-1-9c4a79068141@mailbox.org>
-X-B4-Tracking: v=1; b=H4sIADNEZGcC/32NQQ6CMBBFr2Jm7Rg61CiuvIdhUeoAkyBDWtJAC
- He3cgCX7yX//Q0iB+EIj9MGgZNE0TFDeT6B793YMco7M1BB1pCpcHKz73HgUZPiqp1Dc7P26gt
- XeCbIuylwK8vRfNWZe4mzhvW4SPSz/2qJ0KCtSnLc+qby9+fHydDoctHQQb3v+xfSqW6etAAAA
- A==
-X-Change-ID: 20241219-patch-lenovo-yoga-17445c0a0ce2
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, 
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
- Maya Matuszczyk <maccraft123mc@gmail.com>, 
- Anthony Ruhier <aruhier@mailbox.org>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3018;
- i=aruhier@mailbox.org; h=from:subject:message-id;
- bh=uDmiSiifdArMxe2Gtww5z4PcJOuwqHEtKieS1LFlNuY=;
- b=owGbwMvMwCVW2Nrw47jsO3/G02pJDOkpLn7zm43WOgV3svQqGMy+rPPzzKMNskGXmjrD3AvOT
- K2/bZjYUcrCIMbFICumyFKyP0r4tkrHfYe1y1lg5rAygQxh4OIUgIncrWH4HxTdtC4xnPNX6rUp
- AoVp6XNePJ8Wc3Pu5xWHGR2ZbFP9+hl+MatPvlCitOz1OpmFc00NJ+1xtujYLTBx8qm51c8PCGR
- f5wUA
-X-Developer-Key: i=aruhier@mailbox.org; a=openpgp;
- fpr=F4A378DD8D494AE48EBA554CB00FBC7D08D231D9
-X-Endpoint-Received: by B4 Relay for aruhier@mailbox.org/default with
- auth_id=302
-X-Original-From: Anthony Ruhier <aruhier@mailbox.org>
-Reply-To: aruhier@mailbox.org
+References: <20241218-ncv6336-v1-0-b8d973747f7a@gmail.com> <20241218-ncv6336-v1-7-b8d973747f7a@gmail.com>
+ <kb2ejk6c4uvazuumuezsd24qhjwh3k5bw76k2shywdugjqlf6e@lrghxcxxmnrm>
+In-Reply-To: <kb2ejk6c4uvazuumuezsd24qhjwh3k5bw76k2shywdugjqlf6e@lrghxcxxmnrm>
+From: Fabien Parent <parent.f@gmail.com>
+Date: Thu, 19 Dec 2024 08:13:30 -0800
+Message-ID: <CAL6vTrjD308v-Rzu1Sb7GCuLAb94Qt7BuZgrOgrnDCXm820P3Q@mail.gmail.com>
+Subject: Re: [PATCH 7/9] dt-bindings: regulator: add binding for ncv6336 regulator
+To: Krzysztof Kozlowski <krzk@kernel.org>
+Cc: Rob Herring <robh@kernel.org>, Saravana Kannan <saravanak@google.com>, 
+	Miguel Ojeda <ojeda@kernel.org>, Alex Gaynor <alex.gaynor@gmail.com>, 
+	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
+	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
+	Benno Lossin <benno.lossin@proton.me>, Andreas Hindborg <a.hindborg@kernel.org>, 
+	Alice Ryhl <aliceryhl@google.com>, Trevor Gross <tmgross@umich.edu>, 
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, "Rafael J. Wysocki" <rafael@kernel.org>, 
+	Wolfram Sang <wsa+renesas@sang-engineering.com>, Mark Brown <broonie@kernel.org>, 
+	Liam Girdwood <lgirdwood@gmail.com>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+	Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, devicetree@vger.kernel.org, 
+	rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-i2c@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	vinod.koul@linaro.org, Fabien Parent <fabien.parent@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-From: Anthony Ruhier <aruhier@mailbox.org>
+On Thu, Dec 19, 2024 at 1:28=E2=80=AFAM Krzysztof Kozlowski <krzk@kernel.or=
+g> wrote:
+>
+> On Wed, Dec 18, 2024 at 03:36:37PM -0800, Fabien Parent wrote:
+> > From: Fabien Parent <fabien.parent@linaro.org>
+> >
+> > Add binding documentation for the Onsemi NCV6336 regulator.
+> >
+> > Signed-off-by: Fabien Parent <fabien.parent@linaro.org>
+> > ---
+> >  .../bindings/regulator/onnn,ncv6336.yaml           | 54 ++++++++++++++=
+++++++++
+> >  1 file changed, 54 insertions(+)
+> >
+>
+> subject: regulator first, then dt-bindings.
+>
+> Please use subject prefixes matching the subsystem. You can get them for
+> example with 'git log --oneline -- DIRECTORY_OR_FILE' on the directory
+> your patch is touching. For bindings, the preferred subjects are
+> explained here:
+> https://www.kernel.org/doc/html/latest/devicetree/bindings/submitting-pat=
+ches.html#i-for-patch-submitters
+>
+>
+> > diff --git a/Documentation/devicetree/bindings/regulator/onnn,ncv6336.y=
+aml b/Documentation/devicetree/bindings/regulator/onnn,ncv6336.yaml
+> > new file mode 100644
+> > index 0000000000000000000000000000000000000000..c69d126cab33668febe18e7=
+7bb34bd4bef52c993
+> > --- /dev/null
+> > +++ b/Documentation/devicetree/bindings/regulator/onnn,ncv6336.yaml
+> > @@ -0,0 +1,54 @@
+> > +# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
+> > +%YAML 1.2
+> > +---
+> > +$id: http://devicetree.org/schemas/regulator/onnn,ncv6336.yaml#
+> > +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> > +
+> > +title: Onsemi NCV6336 Buck converter
+> > +
+> > +maintainers:
+> > +  - Fabien Parent <fabien.parent@linaro.org>
+> > +
+> > +description: |
+>
+> Do not need '|' unless you need to preserve formatting.
+>
+> > +  The NCV6336 is an I2C programmable BUCK (step-down) converter.
+> > +  It is designed for mobile power applications.
+> > +
+> > +properties:
+> > +  $nodename:
+> > +    pattern: "regulator@[0-9a-f]{2}"
+>
+> Drop nodename, not really needed in device schema.
+>
+> > +
+> > +  compatible:
+> > +    const: onnn,ncv6336
+> > +
+> > +  reg:
+> > +    maxItems: 1
+> > +
+> > +  buck:
+> > +    description: buck regulator description
+>
+> Why do you need "buck" node? Just merge the properties into this device
+> node.
 
-Add the lid switch for the Lenovo Yoga Slim 7x.
+I decided to move the properties into a "buck" node to make the
+upstream process of the driver
+a little bit simpler. The driver is written in Rust, and if I want to
+move the properties to the device
+node I will need to provide a Rust abstraction for "struct
+device_node". I decided to avoid this
+to keep the patch series simpler by having one less abstraction to review.
+If you think that's a problem, let me know and I will implement it the
+way you are suggesting for v2.
 
-Other x1e80100 laptops use the GPIO pin 92 only, however on the Yoga
-Slim 7x this pin seems to be bridged with the pin 71. By default, the
-pin 71 is set as output-high, which blocks any event on pin 92.
-
-This patch sets the pin 71 as output-disable and sets the LID switch on
-pin 92. This is aligned with how they're configured on Windows:
-    GPIO  71 | 0xf147000 | in | func0 | hi | pull up   | 16 mA
-    GPIO  92 | 0xf15c000 | in | func0 | lo | no pull   |  2 mA
-
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Tested-by: Maya Matuszczyk <maccraft123mc@gmail.com>
-Signed-off-by: Anthony Ruhier <aruhier@mailbox.org>
----
-Changes in v3:
-- Changes the key order to respect the DTS coding style.
-- Link to v2: https://lore.kernel.org/r/20241219-patch-lenovo-yoga-v2-1-4932aefcb9c8@mailbox.org
-
-Changes in v2:
-- Fixes patch format.
----
- .../boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts  | 38 ++++++++++++++++++++++
- 1 file changed, 38 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts b/arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts
-index ca5a808f2c7df66a861a933df407fd4bdaea3fe1..0beec4b0f3cc843d7d508e23d5037140a8d96ef6 100644
---- a/arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts
-+++ b/arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts
-@@ -6,6 +6,7 @@
- /dts-v1/;
- 
- #include <dt-bindings/gpio/gpio.h>
-+#include <dt-bindings/input/gpio-keys.h>
- #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
- 
- #include "x1e80100.dtsi"
-@@ -23,6 +24,21 @@ chosen {
- 		stdout-path = "serial0:115200n8";
- 	};
- 
-+	gpio-keys {
-+		compatible = "gpio-keys";
-+
-+		pinctrl-0 = <&hall_int_n_default>;
-+		pinctrl-names = "default";
-+
-+		switch-lid {
-+			gpios = <&tlmm 92 GPIO_ACTIVE_LOW>;
-+			linux,input-type = <EV_SW>;
-+			linux,code = <SW_LID>;
-+			wakeup-source;
-+			wakeup-event-action = <EV_ACT_DEASSERTED>;
-+		};
-+	};
-+
- 	pmic-glink {
- 		compatible = "qcom,x1e80100-pmic-glink",
- 			     "qcom,sm8550-pmic-glink",
-@@ -811,6 +827,28 @@ edp_reg_en: edp-reg-en-state {
- 		bias-disable;
- 	};
- 
-+	hall_int_n_default: hall-int-n-state {
-+		lid-n-pins {
-+			pins = "gpio92";
-+			function = "gpio";
-+			bias-disable;
-+		};
-+
-+		/*
-+		 * Pins 71 and 92 seem to be bridged together (pin 71 and 92 show the same
-+		 * events). By default, pin 71 is set as output-high, which blocks any
-+		 * event on pin 92. Output-disable on pin 71 is necessary to get events on
-+		 * pin 92.
-+		 * The purpose of pin 71 is not yet known; lid-pull is a supposition.
-+		 */
-+		lid-pull-n-pins {
-+			pins = "gpio71";
-+			function = "gpio";
-+			bias-pull-up;
-+			output-disable;
-+		};
-+	};
-+
- 	kybd_default: kybd-default-state {
- 		pins = "gpio67";
- 		function = "gpio";
-
----
-base-commit: 78d4f34e2115b517bcbfe7ec0d018bbbb6f9b0b8
-change-id: 20241219-patch-lenovo-yoga-17445c0a0ce2
-
-Best regards,
--- 
-Anthony Ruhier <aruhier@mailbox.org>
-
-
+>
+> > +    type: object
+> > +    $ref: regulator.yaml#
+> > +    unevaluatedProperties: false
+> > +
+> > +required:
+> > +  - compatible
+> > +  - reg
+> > +  - buck
+> > +
+> > +additionalProperties: false
+> > +
+> > +examples:
+> > +  - |
+> > +    i2c {
+> > +        #address-cells =3D <1>;
+> > +        #size-cells =3D <0>;
+> > +
+> > +        regulator@1c {
+> > +            compatible =3D "onnn,ncv6336";
+> > +            reg =3D <0x1c>;
+> > +
+> > +            buck {
+> > +                regulator-name =3D "ncv6336,buck";
+> > +            };
+> > +       };
+>
+> Messed indentation.
+>
+> Best regards,
+> Krzysztof
+>
 
