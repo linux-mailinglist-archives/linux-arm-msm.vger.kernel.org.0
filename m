@@ -1,185 +1,113 @@
-Return-Path: <linux-arm-msm+bounces-42718-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-42719-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id C6BBC9F7103
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Dec 2024 00:41:31 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 03D7D9F7127
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Dec 2024 01:01:22 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 240B016D9FA
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Dec 2024 23:41:27 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 56C1B167740
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Dec 2024 00:01:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 04E972063FA;
-	Wed, 18 Dec 2024 23:37:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ILJ/EcO2"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 244372582;
+	Thu, 19 Dec 2024 00:01:16 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
+Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47FA7204F66;
-	Wed, 18 Dec 2024 23:37:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8113A17C;
+	Thu, 19 Dec 2024 00:01:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734565058; cv=none; b=ZWa72RSFlEdiEhe140nQl4v2e1LyOk72wSIA4q6JFaqJZ21udtWmUK20Ad4XV6znfjcvqeZ4sLKYL/uSSdAmTfiip/23hhBEohnj1H66PgAYqegQFosSfYjO+Beumh//oki5wjpxGthew4qzFlMc2jJ3vHa68Xq1H/dLsZN3JS8=
+	t=1734566476; cv=none; b=hQQQJiu0uPG9ovYsFdpQFXhScKdFGbs6fZnJMzTNbd6DmUWqhmsrswMPQ0Xc5f2V6uneQY6Avt/EsXbeLUmI9EN5/L1/cVVTRyRkbNAvDmQR25kcASdJ9KI67ikHkIWVLVhrhEft+wXFjg2UR4LznyQc9l0Cr90kGLaVi4mk0Zs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734565058; c=relaxed/simple;
-	bh=eZUgIXh4Dafp5SjQXe3JmOhBWmOQQGNy2uNWoRlXbQc=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=rU/wkFqQtKl75dIr+9FhGMeRqfhYayfBEgozfNFHl59qVxvdO0A748aCjiar9eXjya9y3iZJTIhDoixzwmgZ9csZ//ZTTyzqctneQ6kgJfLxlMX9Tbzlqr9g75e4Y8kfvNOOipxKBErjQn04r9TwUgJyeKGSfe+hHmtpchk4rho=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ILJ/EcO2; arc=none smtp.client-ip=209.85.214.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+	s=arc-20240116; t=1734566476; c=relaxed/simple;
+	bh=wUsZsoTKw74ZT+K7l6LOXmPYeFTWo3CXD2jruq/rv/4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=YZfssB6Y5bbbpZ58T9/zzGhO41kkiKSGQ5PDM6f/OWKgQj/YYfCqpZ/O8nUhk6nHJp+IjkwuCheS68+FHonBoTt+TBS51EgN5yBlyZQ6OdhuKFEM1zSpfpkVGfm0o1oG2N1ZvZBYF0JSgNddkH55cFop7R7qdhM68s/IP+qFHKo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=linux.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.214.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=linux.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pl1-f174.google.com with SMTP id d9443c01a7336-216426b0865so2170875ad.0;
-        Wed, 18 Dec 2024 15:37:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1734565056; x=1735169856; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=h2p+Bn+O63LERCuE6dGd6gVg3sXhL98osLDUQM697Sg=;
-        b=ILJ/EcO2Y5BLl/RoAUabqnW76Ct7JSvRn2V3/vehQG4PjmkgQTWdf6DdJF6XxzfmR9
-         qT7RPXeNgzWQkYiLpJ9pYruUWaY0geFTeM7lSgCNzM/r8HAnrJcdVUHQ7cvFFch6mBZa
-         xezxNvDVrrfrQhhht1rRtkxrky40Vb1dmoc5g6Bzl0zOru20sl/oJnHFPyMEbGXbEg+K
-         gwarLydx7iQcjKtzgVqK8TVPF71D5eOSXRi8SwGPIkoJ+s4ZCRPi3ukdW0Ogtc2a0j1x
-         NaXUoiqDNGVkWs2hUPCQEd3pUTValJTfdVqxmksXiSzlbXJEf7deBGAIa4OuoRY7Vs7+
-         SsMA==
+Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-2165cb60719so2304255ad.0;
+        Wed, 18 Dec 2024 16:01:14 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734565056; x=1735169856;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=h2p+Bn+O63LERCuE6dGd6gVg3sXhL98osLDUQM697Sg=;
-        b=fdAuEvP1arumZpBLatz42WK+HTadRAE9nIIoZ2gx34pUTwZV11Ndg+Fib9ieDq+0G0
-         1gUySxSDaEwNiBy5BPJZW2AybXSpPFqaN9pkoxKKr74Dot5WfozlGDzptiM21SkGY8ho
-         +S3bfHcN2x7mE4l6PtOHdpKM3KGa4N8SevNXHW3S0IlyJ11SYFpd99jo6Dm7RjQ3hJfR
-         jziy8sxT5PmBrXaC2mTZXb4DwdQQ4RtT+HCpfsmA1q2z5C+wwFKqz0ItWthUl1ssWZo+
-         blxwwCGT03IDElSnWUlgf3JfPrZ41WgNVoqMWG7BoDxqMHyTWx3hoF3PrJnaA9H1N+3A
-         5iQw==
-X-Forwarded-Encrypted: i=1; AJvYcCVGHVLolDKSD5NdC/OpM9sRmxiVXom6Zrsju9N9b9aWtA2ckm9DKK0Tvx6ckJAwzx/W23RI+gARevKu@vger.kernel.org, AJvYcCVjB50JSG8sMbrb9/IEGHOczSIsoOG4iZwuEQrwg97mnt3Ig9l64wT+GvHKT3UkP5vqVaFkWZsJLobheCiA@vger.kernel.org, AJvYcCVsF12TcgniougzEi4j78W6NhPf9hlpl7q29+6+VDfvSThrH/sMSTI8fdzFPCupeerTy3JV6sZDPBXbafEbxBU=@vger.kernel.org, AJvYcCXDDwqF0XJBKHxqzMi8TI3AzO9yKPr/fgzVR/LCv0ECgwFPqBS1TPBI9R3qZ2AoNXXBlkm5fgLxvtng4yer@vger.kernel.org
-X-Gm-Message-State: AOJu0YwpGY5P92PqDCxiOeWTeyMHMMTmSwvLnXU5PYpzhgZK+oeec66J
-	zBHtKorh/rRXuC/ncY7rNfZ0tI9eeEJPCjEQbabuxq8fT+MdWRaA
-X-Gm-Gg: ASbGncvr0mLow9apz2RJDUx6efyMEsfIFLERdNfhdZkvf46nBUCCfErUYxge70NZJFn
-	vggZJ+QQMPQc2AzP9xcPxJFqKV+4xvqpOTQs2NDKSYRJ/IpRp+tgEfr0ysw73hlfCje0jv4JVOm
-	tW6QAOpcr7H6zFfreXyJynvrK10S3czeUjcjRonO1iPJm/B9BbjmTVbZdO1E9pm9Q9Y9pEEKbba
-	dyPErxyfb+pmsvljk9OT0Wge4xb8PRzoDNUqymc00E2sMzhcG50d9Lb
-X-Google-Smtp-Source: AGHT+IHSZdbhBBo2sF8tqN4LT+Oi0B4GGcc3Vh9M1Y2KXAp+XnvVO/Rtbaui7owIt/uIhqw2619amg==
-X-Received: by 2002:a17:902:ea11:b0:216:2f7f:ff69 with SMTP id d9443c01a7336-219d966ea2bmr21730945ad.5.1734565056516;
-        Wed, 18 Dec 2024 15:37:36 -0800 (PST)
-Received: from [127.0.1.1] ([2001:569:fcea:600:2e06:283e:5daa:4d0f])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-219dc9f6967sm802335ad.214.2024.12.18.15.37.34
+        d=1e100.net; s=20230601; t=1734566474; x=1735171274;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Up/Rr7n4EANj9bJXyIXJdEYoDQoHUZwlTzYX06DAtSE=;
+        b=WVL9mVyiO3098jDBb+Daw3v46r6SGX1Ja/kdVDgdFb1bQvJF5e9aRYQ2wiXwDoAUZj
+         jCHVOpyjvHRRiogczNLb0c5tGz8hcm2gmdhASon5Wzy7GalSP7/DEOh86FosUdFo1zk0
+         hFvFcb13/I+AtVsPImFxSs9VzrfAPNNk3ks/4MQio+xkZB1KXpd57o7AMuwDmIGvQsmg
+         D470NvlWjd7jLUz3pWr21CD0FxGxTmOnIGX1Bb4CIIdr7TgLqR/uSrfdiYB1S210J9Q0
+         FSHaKPqQG5jxQKEWxN5RNKxHoNcv184Yz9fF2X3qPW/VHeBRv4ozNF9DJRf2dZw0DcTs
+         XVdg==
+X-Forwarded-Encrypted: i=1; AJvYcCV3Jo6LlFQuPbcvTDSwl3EolQIS53sHjo/8hAgm9EhGVuM/bDSoQR56W2oopuTfxraLlufGCIsZfwxA@vger.kernel.org, AJvYcCVnZc/XiUnVkGcDaLJt8K+sHjGmOhcPE/WOGUCEVGPKzsyGSFsgPvTXyz2G5n0rX7aVIb00nVKZXVYEv5I/@vger.kernel.org, AJvYcCXO6cBjMotZxi3qX6XOzEFZdLpwDxPLTKAlN48MChV/kuk08+KxoWDns/jpwDSKwMbCvdyx6wMl7EvgK4MW@vger.kernel.org, AJvYcCXZgZQIJP9Z8ZXwDoNfbtOwwsG2TpqBeWyhCSTuD+rq+omvoKPiLzCmbBSJxonnJsGb5fLON7TCXnqapah23Rc7@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx/JcHtyb+0lBfgdgiCpGHVjvtiIVeGW45s70oiI8JjKmJFFhJP
+	eaUYAmJyT7u65/X3T91Bqp6rSPqEjPzpskrWpSK++vibHnwg3qkHwPvYbow+
+X-Gm-Gg: ASbGncuury/IPlkjC7xGycuVrSi/I9mXJulfehV/K8flxFxap0V4sfpsRLopwFqAHZA
+	C5YxRgEQmG374DXM/j8HA2HXwEayIjNrt7CuLyqUZDtzMNb8VHNsthq+mw6sk2oA4C/VQo40VKA
+	ghy51uputorcXIhgO8Ww8LE7F5ZksTxCzRZUlM8bvuf+nJfNxJOitQ7WWfRHkoP9M2a91lGUbKa
+	WMq+1errBFBiXIsJw/UW4XDbp5mzGGMx4QYqDoy+K63OiFa4SdAXKdJ7WtX+nzzVT0AHGl19BSu
+	jVKkfUMfn1vFxvY=
+X-Google-Smtp-Source: AGHT+IFeMHhCj7d1DIOUSl82Q6mpQs6HKNYAmMHRy+B6N2e9piBfiIhw3wHAUP5Ayy8o7ch/aMh54w==
+X-Received: by 2002:a17:902:d483:b0:216:6fbc:3904 with SMTP id d9443c01a7336-219d9625d6emr21076805ad.13.1734566473716;
+        Wed, 18 Dec 2024 16:01:13 -0800 (PST)
+Received: from localhost (fpd11144dd.ap.nuro.jp. [209.17.68.221])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-219dc9f51a0sm986735ad.187.2024.12.18.16.01.12
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 18 Dec 2024 15:37:35 -0800 (PST)
-From: Fabien Parent <parent.f@gmail.com>
-Date: Wed, 18 Dec 2024 15:36:39 -0800
-Subject: [PATCH 9/9] arm64: dts: qcom: apq8039-t2: add node for ncv6336
- regulator
+        Wed, 18 Dec 2024 16:01:13 -0800 (PST)
+Date: Thu, 19 Dec 2024 09:01:12 +0900
+From: Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc: gregkh@linuxfoundation.org, arnd@arndb.de, lpieralisi@kernel.org,
+	shuah@kernel.org, kishon@kernel.org, linux-pci@vger.kernel.org,
+	linux-kernel@vger.kernel.org, bhelgaas@google.com,
+	linux-arm-msm@vger.kernel.org, robh@kernel.org,
+	linux-kselftest@vger.kernel.org
+Subject: Re: [PATCH v3 0/4] Migrate PCI Endpoint Subsystem tests to Kselftest
+Message-ID: <20241219000112.GE1444967@rocinante>
+References: <20241211080105.11104-1-manivannan.sadhasivam@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20241218-ncv6336-v1-9-b8d973747f7a@gmail.com>
-References: <20241218-ncv6336-v1-0-b8d973747f7a@gmail.com>
-In-Reply-To: <20241218-ncv6336-v1-0-b8d973747f7a@gmail.com>
-To: Rob Herring <robh@kernel.org>, Saravana Kannan <saravanak@google.com>, 
- Miguel Ojeda <ojeda@kernel.org>, Alex Gaynor <alex.gaynor@gmail.com>, 
- Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
- =?utf-8?q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
- Benno Lossin <benno.lossin@proton.me>, 
- Andreas Hindborg <a.hindborg@kernel.org>, Alice Ryhl <aliceryhl@google.com>, 
- Trevor Gross <tmgross@umich.edu>, 
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
- "Rafael J. Wysocki" <rafael@kernel.org>, 
- Wolfram Sang <wsa+renesas@sang-engineering.com>, 
- Mark Brown <broonie@kernel.org>, Liam Girdwood <lgirdwood@gmail.com>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, Fabien Parent <parent.f@gmail.com>
-Cc: devicetree@vger.kernel.org, rust-for-linux@vger.kernel.org, 
- linux-kernel@vger.kernel.org, linux-i2c@vger.kernel.org, 
- linux-arm-msm@vger.kernel.org, vinod.koul@linaro.org, 
- Fabien Parent <fabien.parent@linaro.org>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1251; i=parent.f@gmail.com;
- h=from:subject:message-id; bh=HWjtZtg1pmveHn6OiavIms18l8HI9Sa8dLce2gBDllY=;
- b=LS0tLS1CRUdJTiBQR1AgTUVTU0FHRS0tLS0tCgpvd0o0bkFGdEFwTDlrQTBEQUFvQmlKc2d4Q
- kw5cktRQnl5WmlBR2RqWEtwQTJvQ0gvSmYydG1KWGZDWGx2SGo2CkY1VnJSNWNRbG56NFV0NGJw
- TU5PWTRrQ013UUFBUW9BSFJZaEJONk0wZElMeXpzd3JmRnNxWWliSU1RUy9heWsKQlFKblkxeXF
- BQW9KRUlpYklNUVMvYXlrdHQwUC9SWG1lTHU1L29wcHNxWHR1blJXUFVQeVpFZlBYVnlmbDRNaw
- paQnRFRzBDcU1RZTdqMk5qVVAxS25hWHFtQTgvVS9mMzRKSGNwSjBKTVhxV2ZxY3Z6dmxNRXh0c
- jZIK3BKM045CnFuUmt5KzBpUFNiL0lNUUZQVktWMVUwSHN6VWl3MVVtbTNNWlVTenBWQjBPSm9U
- OC9MODlEdHNzUVFCenZxaWsKanJLc2ZSV1MwNzlpL1NJdm9uc1JqOFZFY2lpY3FrbW5maERLYWo
- 2a1d0MFE2aTcvY0daQ2QvWVZndWFyYlNKOQpFcm8zbndrVEI0SVkrSWpGWWtQbkFhUGJUaVJpV1
- lSYlQ4TjhIaDRjdEFKa2hSM1pzOFNkZ05jRUtwWEFjN1ZlCmFjelNXSC80VXNCby9mQ0U5d0szV
- mgvclZSTDlxdndBbWRCY2ZYMWVNZ2tMZWYrQWt6ZXNiWFpVUVR1L21aanoKZThNTk1IS0JYYytl
- d3pzYnlDd2UrWVJEcE8reEt0SVRpcFFvRFpPS1pQbEptaURJZ2RSRkMzeHJDaHROdy9mdwphNnB
- ReUFBS0RLWVl1QktrMjk3M1JmOFRQM0xPS1FJZ0NLRU1haXRQV2NzWWFKdjgrSkRhVU5aOWEzSj
- A3VDVnCjc2eXRvOS9qYW02dVNreWlqckpSYW11YUVRRjYwUTNvUzlQSTd5NnVWREFEdXEwZFZTe
- GZkb2ZBM0NCN1pyOTMKSDY3REVZWHErNG9CY2kwdlVmUTV5Mm5WVG10bDZuN080UHRJRTltNFk1
- RHRXT2lOTXhCS05jdFVPSjlvRG1mNQo1bTRXUHJVWkEyQjI5TUZpVDU0dEhKb05yR1ZKUHBBVWh
- HZWNHcVBPQ0tFeXJvL2FWZm41UHhQS3ZZdXBPN3pkCmoySWIzSjMvZU9BbHRnPT0KPWNkTDkKLS
- 0tLS1FTkQgUEdQIE1FU1NBR0UtLS0tLQo=
-X-Developer-Key: i=parent.f@gmail.com; a=openpgp;
- fpr=07BB034F9E8E3AF0DF4CF7607AE864A1E16FA383
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241211080105.11104-1-manivannan.sadhasivam@linaro.org>
 
-From: Fabien Parent <fabien.parent@linaro.org>
+Hello,
 
-CPR is using the power rail provided by the ncv6336 buck regulator
-on the apq8039 t2 board. This commit adds the required regulator.
+> This series carries forward the effort to add Kselftest for PCI Endpoint
+> Subsystem started by Aman Gupta [1] a while ago. I reworked the initial version
+> based on another patch that fixes the return values of IOCTLs in
+> pci_endpoint_test driver and did many cleanups. Since the resulting work
+> modified the initial version substantially, I took over the authorship.
+> 
+> This series also incorporates the review comment by Shuah Khan [2] to move the
+> existing tests from 'tools/pci' to 'tools/testing/kselftest/pci_endpoint' before
+> migrating to Kselftest framework. I made sure that the tests are executable in
+> each commit and updated documentation accordingly.
+> 
+> NOTE: Patch 1 is strictly not related to this series, but necessary to execute
+> Kselftests with Qualcomm Endpoint devices. So this can be merged separately.
 
-Signed-off-by: Fabien Parent <fabien.parent@linaro.org>
----
- arch/arm64/boot/dts/qcom/apq8039-t2.dts | 23 +++++++++++++++++++++++
- 1 file changed, 23 insertions(+)
+Applied to selftests, thank you!
 
-diff --git a/arch/arm64/boot/dts/qcom/apq8039-t2.dts b/arch/arm64/boot/dts/qcom/apq8039-t2.dts
-index 4f82bb668616f942d65f59a6f418cf38f404df32..2da5b7d01521520a6814b76c02329be3bdedb4fd 100644
---- a/arch/arm64/boot/dts/qcom/apq8039-t2.dts
-+++ b/arch/arm64/boot/dts/qcom/apq8039-t2.dts
-@@ -111,6 +111,23 @@ typec_ep: endpoint {
- 	};
- };
- 
-+&blsp_i2c4 {
-+	status = "okay";
-+
-+	regulator@1c {
-+		compatible = "onnn,ncv6336";
-+		reg = <0x1c>;
-+		pinctrl-0 = <&ncv6336_vsel>;
-+		pinctrl-names = "default";
-+
-+		buck {
-+			regulator-name = "ncv6336,buck";
-+			regulator-min-microvolt = <600000>;
-+			regulator-max-microvolt = <1393750>;
-+		};
-+	};
-+};
-+
- &blsp_i2c5 {
- 	status = "okay";
- };
-@@ -371,6 +388,12 @@ typec_irq: typec-irq-state {
- 		pins = "gpio107";
- 		bias-pull-up;
- 	};
-+
-+	ncv6336_vsel: ncv6336-state  {
-+		function = "gpio";
-+		pins = "gpio111";
-+		output-low;
-+	};
- };
- 
- &usb {
+[01/04] PCI: qcom-ep: Mark BAR0/BAR2 as 64bit BARs and BAR1/BAR3 as RESERVED
+        https://git.kernel.org/pci/pci/c/71ae1c3a342c
 
--- 
-2.45.2
+[02/04] misc: pci_endpoint_test: Fix the return value of IOCTL
+        https://git.kernel.org/pci/pci/c/7908208a2f6a
 
+[03/04] selftests: Move PCI Endpoint tests from tools/pci to Kselftests
+        https://git.kernel.org/pci/pci/c/5c892b60e4c6
+
+[04/04] selftests: pci_endpoint: Migrate to Kselftest framework
+        https://git.kernel.org/pci/pci/c/62f966e676b5
+
+	Krzysztof
 
