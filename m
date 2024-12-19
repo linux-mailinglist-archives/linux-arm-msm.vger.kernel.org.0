@@ -1,49 +1,49 @@
-Return-Path: <linux-arm-msm+bounces-42872-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-42873-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 05C579F87F1
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Dec 2024 23:37:16 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 863999F87F9
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Dec 2024 23:37:37 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 07C761898630
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Dec 2024 22:37:17 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 7CDBE7A1D1F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Dec 2024 22:37:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 333551BDABE;
-	Thu, 19 Dec 2024 22:37:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7268A1DC9B2;
+	Thu, 19 Dec 2024 22:37:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fKw5uTiL"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gme6LWei"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 088E286337;
-	Thu, 19 Dec 2024 22:37:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AA3386337;
+	Thu, 19 Dec 2024 22:37:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734647833; cv=none; b=q0qMic8Qb3aQPWCg3GPaBAFh7Df3IsJ+nu1vBWIwmFqVC8Ir3zPgeDwfx50GVblAegCyWzZzZ7M7Vvr1ZqXS/g+LQMJGpbf1M/kRCajac3vanW8y3x7TbgXoM4z9U0Nu4A8XMIvdQs4jErG+7lvWG4O1AMZUaNIRvu5FzamxW44=
+	t=1734647837; cv=none; b=HwkXYIvMK6xX/N6PclxJ97q+fy00P+I6yhAFfDfntOQ15GulccGCksX6iqRcdK93ksKN17yl0y1CwpIQpwm3hOh1F6zNhJGs512d2kWS1PlkYxH2ebd5cfiJbj4xwTIbOs7JBsh9a5yIW0uke8cjfW0kZU29DU1EmTy5ai+VhRk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734647833; c=relaxed/simple;
-	bh=v5hV4AcXGyzngmHLzfcNY3dZttHo/6M+Ma5Nsjria24=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=D+lIeIqAIuNbXTbrqTLiYXxEL1Tbia5truTeX5jXwbEVCl84GV446hA3TnXqpp6XPsip2UmB/kdlg7F6+KQ5/+bYIfnF7rQnIRxdjddVAY4O/gQ+Trt9LKCXaH/tEloNUNTtPjtySpAEg60uDy68axHYcUY9Dtnrgxdr48XEgoE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fKw5uTiL; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28DFCC4CECE;
-	Thu, 19 Dec 2024 22:37:08 +0000 (UTC)
+	s=arc-20240116; t=1734647837; c=relaxed/simple;
+	bh=5JceoXzU5Yg3ouAA1PCndCQY5/QheWRZBh69JeWleiE=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=aDL3uBy+EDgzE/yo77FtDkFgVy3onmBidxFFsFZjM5fk1/1NZ4hI2hr6kcLrtLzN1pB3jHPnckal93WmMO4lY70lvETWjuDAiw4JVVmGFN/30dl/jNJ5RKtmvAw7TQAuTa2CnK387U7SNxd1xZhb3NFLRJL8y1qEV8XXjfTzvAw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gme6LWei; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C8E9C4CED0;
+	Thu, 19 Dec 2024 22:37:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1734647832;
-	bh=v5hV4AcXGyzngmHLzfcNY3dZttHo/6M+Ma5Nsjria24=;
-	h=From:Subject:Date:To:Cc:From;
-	b=fKw5uTiLj5/xOqtpCdQEvbxCswysTb6fGxGd3jBT3XKFXEDToTO3JY7rsfbfTE4pi
-	 hs6krl1LuYqc9/ffLHjbfyL9Prpa6bJs7Bvadbgd4I1MklLBtEAXv7IRm4RWsnb+xP
-	 3eu6+xoz+xo8WqGAmdWAJKXsoik0wy+q8FRdo6XZX7Sc01PG7dPEEGvPzy9UPbnG9C
-	 YmBn1S1w8Hll4HOQZUClNzXKXbvEYBNZrtz9dDbrobmBoFdL4g44HKRr43csm0bmXy
-	 mRhqnLT6cwpPVp16T8RdyYY//a2HLY3Iu0VfdMzNzKMS6qYdMXVtMRCPD3jhANjWp2
-	 FsrMA7nPTM9RQ==
+	s=k20201202; t=1734647836;
+	bh=5JceoXzU5Yg3ouAA1PCndCQY5/QheWRZBh69JeWleiE=;
+	h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
+	b=gme6LWeigl6oKT1DbN5uIBwUrSPRg+JQRfygKX30wVuFp2ZxgrUdVyHfQAzmXi9NI
+	 oZj96dkAoJQ0JQYAxsecJ4ZT+OmbBqdo/xxAIZ/oIthOts91EsOc0CqQ9NfwtbNN7W
+	 DXy53N99DAtPzljliM0p2EDaWtN+UiDeTUC9i+IRdI3cNKsh3SBDW4+lFuYc2igQNF
+	 M0TvXkSkekAaJwuVO6rKA4VxDrG1UYwxtrkVnQc5cItgoejDZbGp/ZZJcJ+NLh/SKT
+	 vvytchuba6fUK91+OpJ7H0pI69hXxzs8Qu71juf2rjXolDsw3m1YUIyj+/ZnuOffaK
+	 Uo13WuDXVKBMg==
 From: Konrad Dybcio <konradybcio@kernel.org>
-Subject: [PATCH 0/2] Print GMU version at boot on >A630
-Date: Thu, 19 Dec 2024 23:36:54 +0100
-Message-Id: <20241219-topic-gmu_fw_ver-v1-0-d403a70052d8@oss.qualcomm.com>
+Date: Thu, 19 Dec 2024 23:36:55 +0100
+Subject: [PATCH 1/2] drm/msm: registers: Add GMU FW version register
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -52,10 +52,9 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAAagZGcC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
- vPSU3UzU4B8JSMDIxNDI0NL3ZL8gsxk3fTc0vi08viy1CJdMwPLVIskCzNzCwMjJaC2gqLUtMw
- KsJHRsbW1AAwvlU1iAAAA
-X-Change-ID: 20241219-topic-gmu_fw_ver-609e8b867802
+Message-Id: <20241219-topic-gmu_fw_ver-v1-1-d403a70052d8@oss.qualcomm.com>
+References: <20241219-topic-gmu_fw_ver-v1-0-d403a70052d8@oss.qualcomm.com>
+In-Reply-To: <20241219-topic-gmu_fw_ver-v1-0-d403a70052d8@oss.qualcomm.com>
 To: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, 
  Konrad Dybcio <konradybcio@kernel.org>, 
  Abhinav Kumar <quic_abhinavk@quicinc.com>, 
@@ -67,35 +66,45 @@ Cc: Marijn Suijten <marijn.suijten@somainline.org>,
  Akhil P Oommen <quic_akhilpo@quicinc.com>, 
  Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1734647828; l=747;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1734647828; l=1317;
  i=konrad.dybcio@oss.qualcomm.com; s=20230215; h=from:subject:message-id;
- bh=v5hV4AcXGyzngmHLzfcNY3dZttHo/6M+Ma5Nsjria24=;
- b=C6vOiblShlvGe2gARR+WhlpSno5NovLTuEY8kb7WEXR/FbLJcVGteu2UgmXqnGTQctVdgakH3
- Pq0xODxI4otBfH6YfncXhiZigTP7ZlL7tN1LUr5/Bue2n07wEMkKInG
+ bh=l8e6hgJJ3wHD0AXLfem9C5MHVdg/XyBRaZCNsfY8mx0=;
+ b=9otI/+RG58QIZQbBtuTG0HG3syXLlaXSrcCpwvglXgvY2gy8+JAcKWIyIXowYNskOkPkqGfZy
+ nZ45p1a6bFrCe6mUHvMRRHqfks7CGWxH1mUBBBU0T18NpqSxwsbJxB8
 X-Developer-Key: i=konrad.dybcio@oss.qualcomm.com; a=ed25519;
  pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 
-Might come in useful to try and track down otherwise inexplicable
-failures in e.g. old CI logs. A630 uses a different mechanism that is
-not implemented in this series.
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 
-Tested on 8280 and X1
+Add a register that contains the GMU core firmware version on non-
+legacy (non-sdm845-family) SoCs.
+
+The name is guesstimated based on what it does downstream, but it'll
+do.
 
 Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 ---
-Konrad Dybcio (2):
-      drm/msm: registers: Add GMU FW version register
-      drm/msm/a6xx: Print GMU core firmware version at boot
-
- drivers/gpu/drm/msm/adreno/a6xx_gmu.c             | 7 +++++++
  drivers/gpu/drm/msm/registers/adreno/a6xx_gmu.xml | 5 +++++
- 2 files changed, 12 insertions(+)
----
-base-commit: 8503810115fbff903f626adc0788daa048302bc0
-change-id: 20241219-topic-gmu_fw_ver-609e8b867802
+ 1 file changed, 5 insertions(+)
 
-Best regards,
+diff --git a/drivers/gpu/drm/msm/registers/adreno/a6xx_gmu.xml b/drivers/gpu/drm/msm/registers/adreno/a6xx_gmu.xml
+index 6531749d30f4e4e57ca4f7b43a28b7829504a9f3..3d2cc339b8f19c8d24b2c9144569b2364afc5ebc 100644
+--- a/drivers/gpu/drm/msm/registers/adreno/a6xx_gmu.xml
++++ b/drivers/gpu/drm/msm/registers/adreno/a6xx_gmu.xml
+@@ -52,6 +52,11 @@ xsi:schemaLocation="https://gitlab.freedesktop.org/freedreno/ rules-fd.xsd">
+ 	<reg32 offset="0x23fd" name="GMU_DCVS_PERF_SETTING"/>
+ 	<reg32 offset="0x23fe" name="GMU_DCVS_BW_SETTING"/>
+ 	<reg32 offset="0x23ff" name="GMU_DCVS_RETURN"/>
++	<reg32 offset="0x2bf8" name="GMU_CORE_FW_VERSION">
++		<bitfield name="MAJOR" low="28" high="31"/>
++		<bitfield name="MINOR" low="16" high="27"/>
++		<bitfield name="STEP" low="0" high="15"/>
++	</reg32>
+ 	<reg32 offset="0x4c00" name="GMU_ICACHE_CONFIG"/>
+ 	<reg32 offset="0x4c01" name="GMU_DCACHE_CONFIG"/>
+ 	<reg32 offset="0x4c0f" name="GMU_SYS_BUS_CONFIG"/>
+
 -- 
-Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+2.47.1
 
 
