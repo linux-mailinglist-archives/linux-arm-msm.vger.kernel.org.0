@@ -1,197 +1,154 @@
-Return-Path: <linux-arm-msm+bounces-42761-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-42762-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id DBC509F7660
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Dec 2024 08:55:37 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6A5789F767B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Dec 2024 09:00:16 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2F704169FCC
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Dec 2024 07:55:35 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B59D616408F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Dec 2024 08:00:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F28DD217F3A;
-	Thu, 19 Dec 2024 07:53:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7D6EE217710;
+	Thu, 19 Dec 2024 08:00:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="gofrs9+o"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="N3At1zcZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f180.google.com (mail-yw1-f180.google.com [209.85.128.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CA29216E34
-	for <linux-arm-msm@vger.kernel.org>; Thu, 19 Dec 2024 07:53:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAADB216E3E;
+	Thu, 19 Dec 2024 08:00:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734594832; cv=none; b=UacEdQJ8mkH/PnY2iNVroo+bQerUMEiGvalasRAtZcyYZoevJ3WFN7DdpBkAN+Z/c9VDUGfCzyigwJRMeXO/nf137TRDbz6rkY0nyz+EUUjtCnQppY+Ev/OHULqF1fUnHBzQ9dtfrAS9w0iRH1MNseFdEY9UkwF15j1aP9Ed4Ag=
+	t=1734595211; cv=none; b=W52u5gFtVH+cF5Xf16JEPeMUA95itEsMUNDRIl3KburJhFbNNW60dgK/0LZFPFcCodZiiHlVp8xHBKb9xbx3U9Bn/OsvvPifmgYSvCFDTdYJt/99IqSakU2Sz5JBjuY0AndA4tI0WnStL3T26IBWJ23Qw9Q7SRLkFDkYDvJQNEY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734594832; c=relaxed/simple;
-	bh=IhMQnUDLDr5heZ61EmLxlYZ9KRx/+za22q0Bk0JUr1M=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=X3aTGcg+ZQdf5pv/erGg0HzqxDZdHwFNc15rcQO0/wE8Ff8r/hm7lJcWsJPXIdm0pGfUmdEg71skljTEbIKamnxyr7rS9bSnnjutBwJ+z3FeEhCRbjitJK3Wi4NA5Wn2cbMqFMMheeaosTUhlz2RNf2wveMm21Am7zgyufLDU78=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=gofrs9+o; arc=none smtp.client-ip=209.85.128.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yw1-f180.google.com with SMTP id 00721157ae682-6efea3c9e6eso3766627b3.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Dec 2024 23:53:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1734594830; x=1735199630; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=tZhKlO/IptDE5jyqk3Xmfuu5iUOAfV8BaMvi98b0zJY=;
-        b=gofrs9+oGQq3iQdtAbapasVfJBVdA+sHMenw6BvB4EGWexFRWTq5jMiQhe6GLnF2ws
-         UqGVioxtD15oxdOit1AKQUVFRLXMkZn8/OxBgll1DK5cDencT/pyalvNlEM/cgF0RI6G
-         BcR/73f+wxfuJ5NOz3fCfVdnMryhO06mhW8OoGTrQA106KXfglWNzd4xO+CxhUDN4sAo
-         RSwdfGGw9Fjc+ML2rhc6Gma1VDiOiOYs+zjWUVsZCYw1spni2U3VU1X28JEsR4K31gAf
-         v0lxRRirTX3wBbyDikRGbnqr8RBvCAEqHPhUwlxsxVw58cLlA7Pwo/RbVno83MkaUNRZ
-         CeWg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734594830; x=1735199630;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=tZhKlO/IptDE5jyqk3Xmfuu5iUOAfV8BaMvi98b0zJY=;
-        b=Tm3s7NsAXiRTntalwcdLVjQWUOnmQsEFGem4iSfnJqcAC6xn0hVJOXfHoj6HMJWeNm
-         3U59/Dw0h/1cg98QPOXhVG1OHSvkyyxSwhMaRq7BbWbY5qcl0c8CL2ONtMX372GTgN/9
-         kwvXsMslFeO/zzNaPwq38XuaKJR2I6aDflwcxeNKex94WLKGVwlW0uoGfTVFJKOo7r2C
-         TQWn0t9xrKkT1OozL6unhFrPdQVCs94yOqTBIHoFG0ZvdZeuR7gJiOsqUZIiLMQlxPln
-         g0P5O45kFTjkeJh1CJWPX2RoUVH+f00hsMQ/vjTtbD7qsqCflLB92dDLA5G4cpVlldru
-         I7NA==
-X-Gm-Message-State: AOJu0YyZH69rzY8LvXMxk9UHiSue4dtjGe0/AptwgfyW4GUavtOu/A2+
-	oTech7hcKm/+tl+cgZhix1ElSJMbbTtX1XGZrxpcZtcDthbBlQ9fjZogqvZghYzb+uG/kPtjMUw
-	4U3SPgDCz9qLC4PoV5/0o7WDzD1gMlwIrR0eYEg==
-X-Gm-Gg: ASbGncuQBqEtMLvW1gua6m9TETFVKYa+wDVupdxofWVyBotwrvuw6X8hJ/Kxs9i3wdl
-	ZZlttr2rgjMHfN/Hw2KV+EOu4Ikrlr49KMG9D+Js=
-X-Google-Smtp-Source: AGHT+IHWrLjcvkgONZ+j/BKJ3YumZP/eZvJ2y2xElKYDKii2UHE9RCFq3yxovVi3IZ6O2JaUt8yiyGK5pHM15WJDTq8=
-X-Received: by 2002:a05:690c:6404:b0:6ee:a81e:6191 with SMTP id
- 00721157ae682-6f3d11239d9mr51702047b3.22.1734594829867; Wed, 18 Dec 2024
- 23:53:49 -0800 (PST)
+	s=arc-20240116; t=1734595211; c=relaxed/simple;
+	bh=9hMaY7zGJKWVO0FsdZlpwBnef8Ifg8aPHP5wKx9m1AQ=;
+	h=From:Subject:Date:Message-ID:MIME-Version:Content-Type:To:CC; b=As+tuChuD82ntazy6QFGdWdSWvo+RQj0aGomr/ORzFX0ITQ8oZQdpE7vA5RX/H3x9p1pLzwgCzLkANs+e4AZhR4V842uHRf9Q322x+BT+DAVNPaKCtHToqPB2es1CJwiPg1RLYqty4W3aF3RvmwGzZRAZqGuH6FKUGSmWwV/UCc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=N3At1zcZ; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BJ3rujM021183;
+	Thu, 19 Dec 2024 08:00:04 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=O+/klrTIid4fWHj04DPaNE
+	vcMscn5pW3JBpPCYV39mE=; b=N3At1zcZxRDtkarafreB46px61XMCa22jUrtDX
+	RShGvsQAslyE57WRJ5JOduu0BDLnWMJQ4QHlgyazfxUgFkdRW6t4fdL9VYxrFLtV
+	tpBf2eEE9FPwIDHD04MYx1/R2Myq8ivSFHmdyxlQphLwa1+UIJ6VHkwFKlFicqdl
+	sx8CMfHNwByyNibfV73ZpAGAejpmlxZBWywyfZkcVSLTOCA2MAXiPlA8vpmACfLP
+	UqOafHlHXYxM563+3N4OF3OkiW+AgarmSkaYniK2KzV4D3b5vKofUOGMYx//SMeD
+	yAmH7H3lwfQdCDgKaQlTrVjUsJFno86tQYmpQFBn5EsPYvVw==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43mbyxrgph-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 19 Dec 2024 08:00:04 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4BJ803C8007347
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 19 Dec 2024 08:00:03 GMT
+Received: from lijuang2-gv.ap.qualcomm.com (10.80.80.8) by
+ nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Wed, 18 Dec 2024 23:59:55 -0800
+From: Lijuan Gao <quic_lijuang@quicinc.com>
+Subject: [PATCH v2 0/6] Correct the number of GPIOs in gpio-ranges for
+ QCS615 and QCS8300
+Date: Thu, 19 Dec 2024 15:59:42 +0800
+Message-ID: <20241219-correct_gpio_ranges-v2-0-19af8588dbd0@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20241219-sm8650-v6-13-hmd-deckard-mdss-quad-upstream-32-v3-0-92c7c0a228e3@linaro.org>
-In-Reply-To: <20241219-sm8650-v6-13-hmd-deckard-mdss-quad-upstream-32-v3-0-92c7c0a228e3@linaro.org>
-From: Jun Nie <jun.nie@linaro.org>
-Date: Thu, 19 Dec 2024 15:53:39 +0800
-Message-ID: <CABymUCN_17o7xpvv1DjfAe+o07-Ns85G+d4W-8bmz=t9hWS6NA@mail.gmail.com>
-Subject: [PATCH v3 00/15] drm/msm/dpu: Support quad pipe with dual-DSI
-To: Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Sean Paul <sean@poorly.run>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
-	Simona Vetter <simona@ffwll.ch>
-Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
-	freedreno@lists.freedesktop.org, 
-	Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAG7SY2cC/22NwQ6CMBBEf4Xs2Rq6ESWe/A9DCNluYQ9S3GKjI
+ fy7hcSbxzeZebNAZBWOcC0WUE4SJYwZ8FAADd3YsxGXGbDEk0VrDQVVprntJwmtbo1o2NUdVp1
+ D5Avk5aTs5b1b703mQeIc9LOfJLulPx/+9SVrSkOVx9KdbV2jvz1fQjLSkcIDmnVdv5c6pkm4A
+ AAA
+To: Bjorn Andersson <andersson@kernel.org>,
+        Linus Walleij
+	<linus.walleij@linaro.org>,
+        Rob Herring <robh@kernel.org>,
+        "Krzysztof
+ Kozlowski" <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        "Jingyi
+ Wang" <quic_jingyw@quicinc.com>,
+        Konrad Dybcio <konradybcio@kernel.org>
+CC: <kernel@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
+        <linux-gpio@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>,
+        Krzysztof Kozlowski
+	<krzysztof.kozlowski@linaro.org>,
+        Lijuan Gao <quic_lijuang@quicinc.com>
+X-Mailer: b4 0.15-dev-99b12
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1734595195; l=1842;
+ i=quic_lijuang@quicinc.com; s=20240827; h=from:subject:message-id;
+ bh=9hMaY7zGJKWVO0FsdZlpwBnef8Ifg8aPHP5wKx9m1AQ=;
+ b=7czlYe3kV8MlwL/C9MLNu01JpVkWPae4rTjaX43XuX0WQh/Z0OGFK6/eM6p/AA+R5NlqT1QQo
+ gWqfrhrAqEJDmV25w0wKN+W5aVdqcvBFJyHg3NUAjn/SgOwsGfQCLb3
+X-Developer-Key: i=quic_lijuang@quicinc.com; a=ed25519;
+ pk=1zeM8FpQK/J1jSFHn8iXHeb3xt7F/3GvHv7ET2RNJxE=
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: vPy4d1m2SowILF2JBF01FX6BKMPyxFHM
+X-Proofpoint-ORIG-GUID: vPy4d1m2SowILF2JBF01FX6BKMPyxFHM
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 malwarescore=0
+ adultscore=0 mlxscore=0 spamscore=0 priorityscore=1501 phishscore=0
+ impostorscore=0 lowpriorityscore=0 suspectscore=0 bulkscore=0
+ mlxlogscore=634 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2412190062
 
-Jun Nie <jun.nie@linaro.org> =E4=BA=8E2024=E5=B9=B412=E6=9C=8819=E6=97=A5=
-=E5=91=A8=E5=9B=9B 15:49=E5=86=99=E9=81=93=EF=BC=9A
->
-> To: Rob Clark <robdclark@gmail.com>
-> To: Abhinav Kumar <quic_abhinavk@quicinc.com>
-> To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> To: Sean Paul <sean@poorly.run>
-> To: Marijn Suijten <marijn.suijten@somainline.org>
-> To: David Airlie <airlied@gmail.com>
-> To: Simona Vetter <simona@ffwll.ch>
-> Cc: linux-arm-msm@vger.kernel.org
-> Cc: dri-devel@lists.freedesktop.org
-> Cc: freedreno@lists.freedesktop.org
-> Cc: linux-kernel@vger.kernel.org
-> drm/msm/dpu: Support quad pipe with dual-DSI
->
-> 2 or more SSPPs and dual-DSI interface are need for super wide DSI panel.
-> And 4 DSC are preferred for power optimal in this case. This patch set
-> extend number of pipes to 4 and revise related mixer blending logic
-> to support quad pipe.  All these changes depends on the virtual plane
-> feature to split a super wide drm plane horizontally into 2 or more sub
-> clip. Thus DMA of multiple SSPPs can share the effort of fetching the
-> whole drm plane.
->
-> The first pipe pair co-work with the first mixer pair to cover the left
-> half of screen and 2nd pair of pipes and mixers are for the right half
-> of screen. If a plane is only for the right half of screen, only one
-> or two of pipes in the 2nd pipe pair are valid, and no SSPP or mixer is
-> assinged for invalid pipe.
->
-> For those panel that does not require quad-pipe, only 1 or 2 pipes in
-> the 1st pipe pair will be used. There is no concept of right half of
-> screen.
->
-> For legacy non virtual plane mode, the first 1 or 2 pipes are used for
-> the single SSPP and its multi-rect mode.
->
-> This patch set depends on virtual plane patch set v7:
-> https://lore.kernel.org/all/20241130-dpu-virtual-wide-v7-0-991053fcf63c@l=
-inaro.org/
->
-> Changes in v3:
-> - Split change in trace into a separate patch.
-> - Rebase to latest msm-next branch.
-> - Reorder patch sequence to make sure valid flag is set in earlier patch
-> - Rectify rewrite patch to move logic change into other patch
-> - Polish commit messages and code comments.
-> - Link to v2: https://lore.kernel.org/dri-devel/20241009-sm8650-v6-11-hmd=
--pocf-mdss-quad-upstream-21-v2-0-76d4f5d413bf@linaro.org/
->
-> Changes in v2:
-> - Revise the patch sequence with changing to 2 pipes topology first. Then
->   prepare for quad-pipe setup, then enable quad-pipe at last.
-> - Split DSI patches into other patch set.
-> - Link to v1: https://lore.kernel.org/all/20240829-sm8650-v6-11-hmd-pocf-=
-mdss-quad-upstream-8-v1-0-bdb05b4b5a2e@linaro.org/
->
-> Signed-off-by: Jun Nie <jun.nie@linaro.org>
-> ---
-> Jun Nie (15):
->       drm/msm/dpu: Do not fix number of DSC
->       drm/msm/dpu: configure DSC per number in use
->       drm/msm/dpu: polish log for resource allocation
->       drm/msm/dpu: decide right side per last bit
->       drm/msm/dpu: fix mixer number counter on allocation
->       drm/msm/dpu: switch RM to use crtc_id rather than enc_id for alloca=
-tion
->       drm/msm/dpu: bind correct pingpong for quad pipe
->       drm/msm/dpu: handle pipes as array
->       drm/msm/dpu: split PIPES_PER_STAGE definition per plane and mixer
->       drm/msm/dpu: Add pipe as trace argument
->       drm/msm/dpu: blend pipes per mixer pairs config
->       drm/msm/dpu: support plane splitting in quad-pipe case
->       drm/msm/dpu: Support quad-pipe in SSPP checking
->       drm/msm/dpu: support SSPP assignment for quad-pipe case
->       drm/msm/dpu: Enable quad-pipe for DSC and dual-DSI case
->
->  drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c         |  77 +++--
->  drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h         |  12 +-
->  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c      |  74 +++--
->  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h |   3 +-
->  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h   |   1 +
->  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h      |   2 +
->  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h      |   2 +
->  drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h          |  12 +-
->  drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c        | 403 ++++++++++++++---=
-------
->  drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h        |  12 +-
->  drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c           | 219 ++++++------
->  drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h           |  32 +-
->  drivers/gpu/drm/msm/disp/dpu1/dpu_trace.h        |  10 +-
->  13 files changed, 511 insertions(+), 348 deletions(-)
-> ---
-> base-commit: a9b9ea7b45d661fff0f3fd2937703a536f528cd2
-> change-id: 20241219-sm8650-v6-13-hmd-deckard-mdss-quad-upstream-32-2bdbc2=
-2f5131
->
-> Best regards,
-> --
-> Jun Nie <jun.nie@linaro.org>
->
+The UFS_RESET pin on Qualcomm SoCs are controlled by TLMM and exposed
+through the GPIO framework. It is expected to be wired to the reset pin
+of the primary UFS memory so that the UFS driver can toggle it.
 
-Sorry to have no title for cover due to miss handling the b4 tool . So
-reply to this thread with the title in it.
+The UFS_RESET pin is exported as GPIOs in addtion to the real GPIOs. The
+QCS615 TLMM pin controller has GPIOs 0-122, so correct the gpio-rangs to
+124. The QCS8300 TLMM pin controller has GPIOs 0-132, so correct the
+gpio-rangs to 134.
 
-- Jun
+Signed-off-by: Lijuan Gao <quic_lijuang@quicinc.com>
+---
+Changes in v2:
+- Update the introductory information in the cover letter
+- Update the commit message
+- Update the title of the TLMM driver patch
+- Link to v1: https://lore.kernel.org/r/20241212-correct_gpio_ranges-v1-0-c5f20d61882f@quicinc.com
+
+---
+Lijuan Gao (6):
+      dt-bindings: pinctrl: qcom: correct gpio-ranges in examples for qcs615
+      dt-bindings: pinctrl: qcom: correct gpio-ranges in examples for qcs8300
+      pinctrl: qcom: correct the ngpios entry for QCS615
+      pinctrl: qcom: correct the ngpios entry for QCS8300
+      arm64: dts: qcom: correct gpio-ranges for QCS615
+      arm64: dts: qcom: correct gpio-ranges for QCS8300
+
+ Documentation/devicetree/bindings/pinctrl/qcom,qcs615-tlmm.yaml  | 2 +-
+ Documentation/devicetree/bindings/pinctrl/qcom,qcs8300-tlmm.yaml | 2 +-
+ arch/arm64/boot/dts/qcom/qcs615.dtsi                             | 2 +-
+ arch/arm64/boot/dts/qcom/qcs8300.dtsi                            | 2 +-
+ drivers/pinctrl/qcom/pinctrl-qcs615.c                            | 2 +-
+ drivers/pinctrl/qcom/pinctrl-qcs8300.c                           | 2 +-
+ 6 files changed, 6 insertions(+), 6 deletions(-)
+---
+base-commit: 91e71d606356e50f238d7a87aacdee4abc427f07
+change-id: 20241211-correct_gpio_ranges-ed8a25ad22e7
+
+Best regards,
+-- 
+Lijuan Gao <quic_lijuang@quicinc.com>
+
 
