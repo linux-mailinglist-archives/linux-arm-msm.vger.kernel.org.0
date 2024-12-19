@@ -1,146 +1,106 @@
-Return-Path: <linux-arm-msm+bounces-42777-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-42778-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id B39139F7889
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Dec 2024 10:30:55 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id F20329F794C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Dec 2024 11:14:25 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 06E77164322
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Dec 2024 09:30:53 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 543CF168C81
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Dec 2024 10:14:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 27E1A221459;
-	Thu, 19 Dec 2024 09:30:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6910D221DBC;
+	Thu, 19 Dec 2024 10:14:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="evgjuFG6"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="l+5u/pRy"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3130C221D98;
-	Thu, 19 Dec 2024 09:30:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F4241FAC29;
+	Thu, 19 Dec 2024 10:14:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734600649; cv=none; b=sZWkq1Btf6dknErm5FgswWlUOHDKYtP58aKl65j5vAgvhB7MtYIh/NydH14C9LTVaiTGChYR98WIFgIxGFGlgCrvvPsIxug5VzzdtBOXQ7YEqPPNDfJXuGCKA4LRg+A4bKfelgIiwnWEvkp3RbUgiIuiYMykGLIw9WHvO3JjZw8=
+	t=1734603261; cv=none; b=fYgN5Dtj09nji9mkZiL6eu2G4uHF2WItuqtAwZVRM8Gq/5w8xeUtulCcy8dLOACgqcLUNUXL9tWmV4jH1ibzGQsZLa2CQIlXSODdyq2fRcWMn/HXDijRUAZG7zWPqgBrtqKlVUPYoRdrSHclNT299+Vf4jO3Ver0aIqtg/ZDSj4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734600649; c=relaxed/simple;
-	bh=tXVo7Q2Dgptk7YoHRTIly2DZZi36JzNVknejIxi9PgA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=qU7I39j7YtGVO+9oaVm9jbIQt9605mCKR3z7uOlL9Twr1oSRaAtZ+MQgeVB39bTsVnBfvHUd3nBgEtEpMUMyys7K2yUUcQWs3+Xf12pLtgzAMnlsHSSW+wlUOey8OhhvlIvXKdjBMkZsD1WTKoqkQp/0SlpbXYj4+XESfRCNKn8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=evgjuFG6; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BJ6HgMA013515;
-	Thu, 19 Dec 2024 09:30:43 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	klksmNswTWrYXc2YyXcFVCA2i64WA7STAqzcHE5wCmQ=; b=evgjuFG6+B4qqBW3
-	+71SsBfNY+mSZL+wD6Wl9puzGusXl1qAcKI0rBk9IZjwr6AKqmrZC6XbpOslx0Db
-	22c0yqO+rZbxlu5EeGceWoIm+wPn5wlSQ8hSyz6RmzdusuMkFRZNl9mVk0ycV2Lg
-	cCb6QGDDbF0M+OcHDQAXQ1WBGMZt5jmHy8PGUMQm/88Fw8fCMvqFohCMgzhopflG
-	mNQyS5D8SuinyfaxUTHkYJWNDwFvziYuAOZegE7i9mQeXrvcVJ6kXfYlwFK9FJrw
-	LhMYRXrjyNlZT157Ia9fdNxNgyqO5sBT9dUZbZFTYnwGf+9S0XO9eisrx5ESH5gK
-	RI2n8Q==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43me3g0g0f-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 19 Dec 2024 09:30:42 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4BJ9UfGP014730
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 19 Dec 2024 09:30:41 GMT
-Received: from [10.239.132.205] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 19 Dec
- 2024 01:30:34 -0800
-Message-ID: <236fcae1-0632-4691-861a-51a5aeff2ea3@quicinc.com>
-Date: Thu, 19 Dec 2024 17:30:31 +0800
+	s=arc-20240116; t=1734603261; c=relaxed/simple;
+	bh=41LpMb62D3EpqckyjmkYsBIfTP+Hk6XNyWVa6ZEbiys=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=RRQ5X7IKPst6g0ePMhGliPUuYaZErdVc7v/7dRBdU9nmMI1PmnPV4tEvJ7yAioCgjgdgWX6Fgd0lSXe86MZH41j/AZ9PjyHNn4YXOfxqQALMCSpWvBq3JrxHvMpg+rLhECtqckOEEqMi0LgduXVnDcc2r7rzttnOztTxkpL+G1k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=l+5u/pRy; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADBF2C4CECE;
+	Thu, 19 Dec 2024 10:14:19 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1734603259;
+	bh=41LpMb62D3EpqckyjmkYsBIfTP+Hk6XNyWVa6ZEbiys=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=l+5u/pRy82YXfAkLjmmEojOkPElis9GSEoF6cikqIAzgS3v/RSgP1Bg2qZNLsDncG
+	 C6hJKhGZMSdgpXMSTKYhoLz57JSzDTgrrDJvriWuGA2F7nFnvQREuAmMqUnaxEnIrt
+	 qvX8Ya8YTW3D7H1SoesBWLH61aHDEFpAQTdFf6T0nGXGFpg8u2uWsq2qSPo3YDYpmv
+	 ozuRv+LMGWsnvxPLbguxDHzBC2JNaQQfBV0MbCJqerTH1g0C0LwVLwBNvuMf3SeEiu
+	 0YwoyVloSe/jawLsKBF/slX3sHYcjJgHbIuPwo93+Hwtl3fFnrC5zibC17iT/yaPGL
+	 GZBEzBHJyZOzg==
+Received: from johan by xi.lan with local (Exim 4.97.1)
+	(envelope-from <johan@kernel.org>)
+	id 1tODY0-000000001C0-23L8;
+	Thu, 19 Dec 2024 11:14:24 +0100
+Date: Thu, 19 Dec 2024 11:14:24 +0100
+From: Johan Hovold <johan@kernel.org>
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Rob Clark <robdclark@gmail.com>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Sean Paul <sean@poorly.run>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+	Robert Foss <rfoss@kernel.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Abel Vesa <abel.vesa@linaro.org>,
+	Richard Acayan <mailingradian@gmail.com>,
+	Rob Clark <robdclark@chromium.org>, linux-arm-msm@vger.kernel.org,
+	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 7/8] drm/msm/dpu: link DSPP_2/_3 blocks on X1E80100
+Message-ID: <Z2PyANZAL1PkNWc4@hovoldconsulting.com>
+References: <20241216-dpu-fix-catalog-v1-0-15bf0807dba1@linaro.org>
+ <20241216-dpu-fix-catalog-v1-7-15bf0807dba1@linaro.org>
+ <Z2E5SGIfAaKugNTP@hovoldconsulting.com>
+ <2e7ijil4v3wxzi7y2gsbyhh4o3vrhcbydcpzfcniij6cack3yf@wb2s2m7xet6a>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/6] dt-bindings: pinctrl: qcom: correct gpio-ranges in
- examples for qcs615
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Bjorn Andersson
-	<andersson@kernel.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Rob Herring
-	<robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>,
-        Jingyi Wang <quic_jingyw@quicinc.com>,
-        Konrad Dybcio
-	<konradybcio@kernel.org>
-CC: <kernel@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <linux-gpio@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <20241219-correct_gpio_ranges-v2-0-19af8588dbd0@quicinc.com>
- <20241219-correct_gpio_ranges-v2-1-19af8588dbd0@quicinc.com>
- <2867cd9e-4de9-47dd-b4e8-c88f78b1113d@linaro.org>
-From: Lijuan Gao <quic_lijuang@quicinc.com>
-In-Reply-To: <2867cd9e-4de9-47dd-b4e8-c88f78b1113d@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: r2z9SuBPTnu4DTkHdo90j6VxL0H3CIry
-X-Proofpoint-GUID: r2z9SuBPTnu4DTkHdo90j6VxL0H3CIry
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0
- priorityscore=1501 mlxlogscore=999 spamscore=0 malwarescore=0
- suspectscore=0 impostorscore=0 clxscore=1015 mlxscore=0 lowpriorityscore=0
- adultscore=0 bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2412190075
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <2e7ijil4v3wxzi7y2gsbyhh4o3vrhcbydcpzfcniij6cack3yf@wb2s2m7xet6a>
 
+On Tue, Dec 17, 2024 at 12:38:17PM +0200, Dmitry Baryshkov wrote:
+> On Tue, Dec 17, 2024 at 09:41:44AM +0100, Johan Hovold wrote:
+> > On Mon, Dec 16, 2024 at 10:27:28AM +0200, Dmitry Baryshkov wrote:
+> > > Link DSPP_2 to the LM_2 and DSPP_3 to the LM_3 mixer blocks.
+> > 
+> > Please say something about why you're doing this and what the expected
+> > outcome of doing so is.
+> > 
+> > There is currently no way for a third party (e.g. stable or distro
+> > maintainer) to determine what this patch does, if it needs to be
+> > backported or if it's essentially just a clean up like Abhinav indicated
+> > in one of his replies.
+> 
+> These patches allow using colour transformation matrix (aka night mode)
+> with more outputs at the same time. I think at this point only CrOS
+> compositor actually uses CTM, so these changes do not need to be
+> backported.
 
+Ok, thanks for clarifying. Can you put something like this in the commit
+messages so that we have a record of it?
 
-在 12/19/2024 4:15 PM, Krzysztof Kozlowski 写道:
-> On 19/12/2024 08:59, Lijuan Gao wrote:
->> Correct the gpio-ranges in the QCS615 TLMM pin controller example to
->> include the UFS_RESET pin, which is expected to be wired to the reset
->> pin of the primary UFS memory. This allows the UFS driver to toggle it.
->>
->> Fixes: 55c487ea6084 ("dt-bindings: pinctrl: document the QCS615 Top Level Mode Multiplexer")
->> Signed-off-by: Lijuan Gao <quic_lijuang@quicinc.com>
->> ---
-> 
-> <form letter>
-> This is a friendly reminder during the review process.
-> 
-> It looks like you received a tag and forgot to add it.
-> 
-> If you do not know the process, here is a short explanation:
-> Please add Acked-by/Reviewed-by/Tested-by tags when posting new
-> versions, under or above your Signed-off-by tag. Tag is "received", when
-> provided in a message replied to you on the mailing list. Tools like b4
-> can help here. However, there's no need to repost patches *only* to add
-> the tags. The upstream maintainer will do that for tags received on the
-> version they apply.
-> 
-> https://elixir.bootlin.com/linux/v6.5-rc3/source/Documentation/process/submitting-patches.rst#L577
-> 
-> If a tag was not added on purpose, please state why and what changed.
-> </form letter>
-Sorry, my mistake. I didn't realize that Rob Herring had already given 
-me an "Acked-by." I updated the commit message in this patch.
-> 
-> Best regards,
-> Krzysztof
+> However they are not cleanups, it was a feedback for the
+> SM6150 patch for the reasons expressed in the Abhinav's email.
 
--- 
-Thx and BRs
-Lijuan Gao
+I don't see any SM6150 patch in the thread. Do you have a pointer?
 
+Johan
 
