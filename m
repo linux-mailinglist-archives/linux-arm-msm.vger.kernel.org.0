@@ -1,285 +1,280 @@
-Return-Path: <linux-arm-msm+bounces-42789-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-42790-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2AED99F7B7A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Dec 2024 13:37:06 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id D4C379F7BEE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Dec 2024 14:03:31 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id BAA4616ECA8
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Dec 2024 12:35:29 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 288D7164AC2
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Dec 2024 13:03:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 23A54223E6C;
-	Thu, 19 Dec 2024 12:34:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AE4931BC5C;
+	Thu, 19 Dec 2024 13:03:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="FTlLcliA"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="giABaITE"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 373051FCFCB;
-	Thu, 19 Dec 2024 12:34:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 703E4801;
+	Thu, 19 Dec 2024 13:03:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734611675; cv=none; b=e2pes/JWaphEFpHUmA2uCzhPxyMaloDFB3oenEQ+McUgFVhl3wc+oA5mZrJMvPXsX9v7d5uDxpl+9qFV72aFqI/hlZ/keGXo0go/fj1Fzujzo3fBWDaEz1cDzhuFIlXV9hkqI9O0JSruS6A3y1kHYlqFsVDocfM8tsj1KosWNKA=
+	t=1734613405; cv=none; b=FGOQaAcqe4ddQMXe9ZmKtV/3CM8XagXTFHwxHc9neyphLHVPObnY4vB4QbQbaZj8a7eIe/n/olV1ggC95h+Mi9K1zXAGzU4r77cyggwU80413+rC9pehTyYc2ViZ+7kqNyhgpb7Z1jdPuky3QCZzu8jNhiHCHKKVzvMdJ3X0xTU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734611675; c=relaxed/simple;
-	bh=YhN8rCKh45VFdAN+heVgV8CUvSlmJRjPr4Y5yDTU/W8=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=ChEEEG13KcaIqEJmj6yiSDxmlgpVa7F5ObilAUxhpDlLS5FKOP4S8IbU5GEHKhBWeqPzIFPs0prannQ6Mbe7eIv9vb8t1MTZD9pCAjamEbn6NA7WG+oMFOgyr9jyFOyAvly+dW71UbVbnwkcOgSGt/xa3+7dH4Txmxt+46GQkW4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=FTlLcliA; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BJBWH86026543;
-	Thu, 19 Dec 2024 12:34:24 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:message-id
-	:mime-version:subject:to; s=qcppdkim1; bh=0RPTDiRlFgojWhDJMCt5PK
-	vFAOjfqLqAHyLIfIABREo=; b=FTlLcliA03m0JBXKKLHyB5eTxRjgVoDS+nXoxp
-	yoqeBUgUuwNW05mEJTmGjDdSNAxYSRTRVufIJJd0yhpiEuyq9PlaPQoUnVU0xq0E
-	khTA3mQIFAm0cythkqdaFlXCVWcRCAMy4RsrqlZtOL/e1iZ0v4ensLWsngJmMXEc
-	uk3atmuP/dYzPRtNcPDlVRqVDAal58uXEOihtC4WmBd7Sdwa6b1WofKRiZPkssf4
-	114odyQHFfIyc6r34nu/rV53tftuP2X/G+/tR3MWziIq9Kzj/K0AL99aNiN60viR
-	HORuYlzRNPy70o/3lAbbJeFoJuWcwWELTSMrq0+G1QeKRlxA==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43mjpyg5hv-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 19 Dec 2024 12:34:23 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4BJCYMS6014051
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 19 Dec 2024 12:34:22 GMT
-Received: from hu-rdwivedi-hyd.qualcomm.com (10.80.80.8) by
- nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Thu, 19 Dec 2024 04:34:19 -0800
-From: Ram Kumar Dwivedi <quic_rdwivedi@quicinc.com>
-To: <manivannan.sadhasivam@linaro.org>,
-        <James.Bottomley@HansenPartnership.com>, <martin.petersen@oracle.com>,
-        <andersson@kernel.org>
-CC: <linux-arm-msm@vger.kernel.org>, <linux-scsi@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>,
-        Naveen Kumar Goud Arepalli
-	<quic_narepall@quicinc.com>,
-        Nitin Rawat <quic_nitirawa@quicinc.com>
-Subject: [PATCH V5] scsi: ufs: qcom: Enable UFS Shared ICE Feature
-Date: Thu, 19 Dec 2024 18:04:06 +0530
-Message-ID: <20241219123406.5531-1-quic_rdwivedi@quicinc.com>
-X-Mailer: git-send-email 2.47.1
+	s=arc-20240116; t=1734613405; c=relaxed/simple;
+	bh=5+x3QZVCzTq1Hf1gpxeuJv6OeqlteL217qDNjwEWRlo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=tkgQ9fVHTGnwR0CExm+0qjGgkZ4rH1L23NemYC6CZaIrQ7ycuNGr2uyAKa4B797aelhTBi3fZUnzuM+DgeyT8FixaPDH9s+TMT7qJF9Lvdovvd95/fhLVREN3loRp2Pe3shWHlgRIvmtib69esjgJOwdZi0A6/7je8ap1ZOFjRQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=giABaITE; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0B42C4CECE;
+	Thu, 19 Dec 2024 13:03:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1734613405;
+	bh=5+x3QZVCzTq1Hf1gpxeuJv6OeqlteL217qDNjwEWRlo=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=giABaITEctE/wbnCg/2MLICDl1W+b+PAc1GAZkOjAmMAJuCMa81xyg99GcWrf3p3b
+	 euH2NWPqYluq8TxZlN2C8M/Jn2DoK8Wv3LENzgIFj29Dq3TvpjLzU7XHlBUXxasGkK
+	 9IKFSrEZOawhPRZ/gsh7htS0dkMHKZ6/csDgbQ8s5aTY+Uuxjrq448w5ZuHvBxleA5
+	 VOXCfP7tKmb41Guc35Fw187V49JZymlT+kWxAYqoVrOEQOUot5zozYSbTuN+EQZEi3
+	 H8dPIXmgJL+REFqc+uO2o0w7XJZ75r3VsU2xmsen8i0XovdiHLasPCqS1GkK5I+E8l
+	 k6YgbeI8ImwRg==
+Date: Thu, 19 Dec 2024 07:03:23 -0600
+From: Rob Herring <robh@kernel.org>
+To: Fabien Parent <parent.f@gmail.com>
+Cc: Saravana Kannan <saravanak@google.com>, Miguel Ojeda <ojeda@kernel.org>,
+	Alex Gaynor <alex.gaynor@gmail.com>,
+	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>,
+	=?iso-8859-1?Q?Bj=F6rn?= Roy Baron <bjorn3_gh@protonmail.com>,
+	Benno Lossin <benno.lossin@proton.me>,
+	Andreas Hindborg <a.hindborg@kernel.org>,
+	Alice Ryhl <aliceryhl@google.com>, Trevor Gross <tmgross@umich.edu>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	Mark Brown <broonie@kernel.org>,
+	Liam Girdwood <lgirdwood@gmail.com>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>, devicetree@vger.kernel.org,
+	rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-i2c@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	vinod.koul@linaro.org, Fabien Parent <fabien.parent@linaro.org>,
+	Fiona Behrens <me@kloenk.dev>
+Subject: Re: [PATCH 1/9] rust: i2c: add basic I2C client abstraction
+Message-ID: <20241219130323.GA4049504-robh@kernel.org>
+References: <20241218-ncv6336-v1-0-b8d973747f7a@gmail.com>
+ <20241218-ncv6336-v1-1-b8d973747f7a@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: Utwv8NhaLVzW2Ebwu_y4qWs6dHh-ZfjM
-X-Proofpoint-GUID: Utwv8NhaLVzW2Ebwu_y4qWs6dHh-ZfjM
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0
- lowpriorityscore=0 spamscore=0 clxscore=1015 impostorscore=0
- suspectscore=0 bulkscore=0 mlxlogscore=999 adultscore=0 priorityscore=1501
- mlxscore=0 phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2412190100
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241218-ncv6336-v1-1-b8d973747f7a@gmail.com>
 
-By default, the UFS controller allocates a fixed number of RX
-and TX engines statically. Consequently, when UFS reads are in
-progress, the TX ICE engines remain idle, and vice versa.
-This leads to inefficient utilization of RX and TX engines.
+On Wed, Dec 18, 2024 at 03:36:31PM -0800, Fabien Parent wrote:
+> From: Fiona Behrens <me@kloenk.dev>
+> 
+> Implement an abstraction to write I2C device drivers. The abstraction
+> is pretty basic and provides just the infrastructure to probe
+> a device from I2C/OF device_id and abstract `i2c_client`.
+> The client will be used by the Regmap abstraction to perform
+> I/O on the I2C bus.
+> 
+> Signed-off-by: Fiona Behrens <me@kloenk.dev>
+> Co-developed-by: Fabien Parent <fabien.parent@linaro.org>
+> Signed-off-by: Fabien Parent <fabien.parent@linaro.org>
+> ---
+>  MAINTAINERS                     |   1 +
+>  rust/bindings/bindings_helper.h |   1 +
+>  rust/helpers/helpers.c          |   1 +
+>  rust/helpers/i2c.c              |  13 ++
+>  rust/kernel/i2c.rs              | 288 ++++++++++++++++++++++++++++++++++++++++
+>  rust/kernel/lib.rs              |   2 +
+>  6 files changed, 306 insertions(+)
+> 
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index 6b9e10551392c185b9314c9f94edeaf6e85af58f..961fe4ed39605bf489d1d9e473f47bccb692ff14 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -10796,6 +10796,7 @@ F:	include/linux/i2c-smbus.h
+>  F:	include/linux/i2c.h
+>  F:	include/uapi/linux/i2c-*.h
+>  F:	include/uapi/linux/i2c.h
+> +F:	rust/kernel/i2c.rs
+>  
+>  I2C SUBSYSTEM HOST DRIVERS
+>  M:	Andi Shyti <andi.shyti@kernel.org>
+> diff --git a/rust/bindings/bindings_helper.h b/rust/bindings/bindings_helper.h
+> index e9fdceb568b8f94e602ee498323e5768a40a6cba..a882efb90bfc27960ef1fd5f2dc8cc40533a1c27 100644
+> --- a/rust/bindings/bindings_helper.h
+> +++ b/rust/bindings/bindings_helper.h
+> @@ -16,6 +16,7 @@
+>  #include <linux/file.h>
+>  #include <linux/firmware.h>
+>  #include <linux/fs.h>
+> +#include <linux/i2c.h>
+>  #include <linux/jiffies.h>
+>  #include <linux/jump_label.h>
+>  #include <linux/mdio.h>
+> diff --git a/rust/helpers/helpers.c b/rust/helpers/helpers.c
+> index 0640b7e115be1553549312dcfdf842bcae3bde1b..630e903f516ee14a51f46ff0bcc68e8f9a64021a 100644
+> --- a/rust/helpers/helpers.c
+> +++ b/rust/helpers/helpers.c
+> @@ -15,6 +15,7 @@
+>  #include "device.c"
+>  #include "err.c"
+>  #include "fs.c"
+> +#include "i2c.c"
+>  #include "io.c"
+>  #include "jump_label.c"
+>  #include "kunit.c"
+> diff --git a/rust/helpers/i2c.c b/rust/helpers/i2c.c
+> new file mode 100644
+> index 0000000000000000000000000000000000000000..8ffdc454e7597cc61909da5b3597057aeb5f7299
+> --- /dev/null
+> +++ b/rust/helpers/i2c.c
+> @@ -0,0 +1,13 @@
+> +// SPDX-License-Identifier: GPL-2.0
+> +
+> +#include <linux/i2c.h>
+> +
+> +void *rust_helper_i2c_get_clientdata(const struct i2c_client *client)
+> +{
+> +	return i2c_get_clientdata(client);
+> +}
+> +
+> +void rust_helper_i2c_set_clientdata(struct i2c_client *client, void *data)
+> +{
+> +	i2c_set_clientdata(client, data);
+> +}
+> diff --git a/rust/kernel/i2c.rs b/rust/kernel/i2c.rs
+> new file mode 100644
+> index 0000000000000000000000000000000000000000..efa03335e5b59e72738380e94213976b2464c25b
+> --- /dev/null
+> +++ b/rust/kernel/i2c.rs
+> @@ -0,0 +1,288 @@
+> +// SPDX-License-Identifier: GPL-2.0
+> +
+> +//! Abstractions for the I2C bus.
+> +//!
+> +//! C header: [`include/linux/i2c.h`](srctree/include/linux/i2c.h)
+> +
+> +use crate::{
+> +    bindings, container_of,
+> +    device::Device,
+> +    device_id::{self, RawDeviceId},
+> +    driver,
+> +    error::{to_result, Result},
+> +    of,
+> +    prelude::*,
+> +    str::CStr,
+> +    types::{ARef, ForeignOwnable, Opaque},
+> +    ThisModule,
+> +};
+> +
+> +/// Abstraction for `bindings::i2c_device_id`.
+> +#[repr(transparent)]
+> +#[derive(Clone, Copy)]
+> +pub struct DeviceId(bindings::i2c_device_id);
+> +
+> +impl DeviceId {
+> +    /// Create a new device id from an I2C name.
+> +    pub const fn new(name: &CStr) -> Self {
+> +        let src = name.as_bytes_with_nul();
+> +        // TODO: Replace with `bindings::i2c_device_id::default()` once stabilized for `const`.
+> +        // SAFETY: FFI type is valid to be zero-initialized.
+> +        let mut i2c: bindings::i2c_device_id = unsafe { core::mem::zeroed() };
+> +
+> +        let mut i = 0;
+> +        while i < src.len() {
+> +            i2c.name[i] = src[i] as _;
+> +            i += 1;
+> +        }
 
-To address this limitation, enable the UFS shared ICE feature for
-Qualcomm UFS V5.0 and above. This feature utilizes a pool of crypto
-cores for both TX streams (UFS Write – Encryption) and RX streams
-(UFS Read – Decryption). With this approach, crypto cores are
-dynamically allocated to either the RX or TX stream as needed.
+You can simplify this now that char maps to u8 (in rust next).
 
-Co-developed-by: Naveen Kumar Goud Arepalli <quic_narepall@quicinc.com>
-Signed-off-by: Naveen Kumar Goud Arepalli <quic_narepall@quicinc.com>
-Co-developed-by: Nitin Rawat <quic_nitirawa@quicinc.com>
-Signed-off-by: Nitin Rawat <quic_nitirawa@quicinc.com>
-Signed-off-by: Ram Kumar Dwivedi <quic_rdwivedi@quicinc.com>
----
-Changes from v4: 
-1. Addressed Bart's comment to use get_unaligned_le32() instead of
-bit shifting and to declare val with the const keyword.
+> +
+> +        Self(i2c)
+> +    }
+> +}
+> +
+> +// SAFETY:
+> +// * `DeviceId` is a `#[repr(transparent)` wrapper of `i2c_device_id` and does not add
+> +//   additional invariants, so it's safe to transmute to `RawType`.
+> +// * `DRIVER_DATA_OFFSET` is the offset to the `data` field.
+> +unsafe impl RawDeviceId for DeviceId {
+> +    type RawType = bindings::i2c_device_id;
+> +
+> +    const DRIVER_DATA_OFFSET: usize = core::mem::offset_of!(bindings::i2c_device_id, driver_data);
+> +
+> +    fn index(&self) -> usize {
+> +        self.0.driver_data as _
+> +    }
+> +}
+> +
+> +/// I2C [`DeviceId`] table.
+> +pub type IdTable<T> = &'static dyn device_id::IdTable<DeviceId, T>;
+> +
+> +/// An adapter for the registration of I2C drivers.
+> +#[doc(hidden)]
+> +pub struct Adapter<T: Driver + 'static>(T);
+> +
+> +impl<T: Driver + 'static> driver::RegistrationOps for Adapter<T> {
+> +    type RegType = bindings::i2c_driver;
+> +
+> +    fn register(
+> +        i2cdrv: &Opaque<Self::RegType>,
+> +        name: &'static CStr,
+> +        module: &'static ThisModule,
+> +    ) -> Result {
+> +        // SAFETY: It's safe to set the fields of `struct i2c_driver` on initialization.
+> +        unsafe {
+> +            (*i2cdrv.get()).driver.name = name.as_char_ptr();
+> +            (*i2cdrv.get()).probe = Some(Self::probe_callback);
+> +            (*i2cdrv.get()).remove = Some(Self::remove_callback);
+> +            if let Some(t) = T::I2C_ID_TABLE {
+> +                (*i2cdrv.get()).id_table = t.as_ptr();
+> +            }
+> +            if let Some(t) = T::OF_ID_TABLE {
+> +                (*i2cdrv.get()).driver.of_match_table = t.as_ptr();
+> +            }
+> +        }
+> +
+> +        // SAFETY: `i2cdrv` is guaranteed to be a valid `RegType`.
+> +        to_result(unsafe { bindings::i2c_register_driver(module.0, i2cdrv.get()) })
+> +    }
+> +
+> +    fn unregister(i2cdrv: &Opaque<Self::RegType>) {
+> +        // SAFETY: `i2cdrv` is guaranteed to be a valid `RegType`.
+> +        unsafe { bindings::i2c_del_driver(i2cdrv.get()) };
+> +    }
+> +}
+> +
+> +impl<T: Driver> Adapter<T> {
+> +    /// Get the [`Self::IdInfo`] that matched during probe.
+> +    fn id_info(client: &mut Client) -> Option<&'static T::IdInfo> {
+> +        let id = <Self as driver::Adapter>::id_info(client.as_ref());
+> +        if id.is_some() {
+> +            return id;
+> +        }
+> +
+> +        // SAFETY: `client` and `client.as_raw()` are guaranteed to be valid.
+> +        let id = unsafe { bindings::i2c_client_get_device_id(client.as_raw()) };
+> +        if !id.is_null() {
+> +            // SAFETY: `DeviceId` is a `#[repr(transparent)` wrapper of `struct i2c_device_id` and
+> +            // does not add additional invariants, so it's safe to transmute.
+> +            let id = unsafe { &*id.cast::<DeviceId>() };
+> +            return Some(T::I2C_ID_TABLE?.info(id.index()));
+> +        }
 
-Changes from v3: 
-1. Addressed Bart's comment to change the data type of "config" to u32 
-   and "val" to uint8_t.
+You aren't handling the DT based matching.
 
-Changes from v2: 
-1. Refactored the code to have a single algorithm in the code and 
-enabled by default.
-2. Revised the commit message to incorporate the refactored change.
-3. Qcom host capabilities are now enabled in a separate function.
-
-Changes from v1: 
-1. Addressed Rob's and Krzysztof's comment to fix dt binding compilation 
-   issue.
-2. Addressed Rob's comment to enable the nodes in example.
-3. Addressed Eric's comment to rephrase patch commit description.
-   Used terminology as ICE allocator instead of ICE algorithm.
-4. Addressed Christophe's comment to align the comment as per kernel doc.
----
- drivers/ufs/host/ufs-qcom.c | 37 ++++++++++++++++++++++++++++++
- drivers/ufs/host/ufs-qcom.h | 45 ++++++++++++++++++++++++++++++++++++-
- 2 files changed, 81 insertions(+), 1 deletion(-)
-
-diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
-index 68040b2ab5f8..3f70231efe7f 100644
---- a/drivers/ufs/host/ufs-qcom.c
-+++ b/drivers/ufs/host/ufs-qcom.c
-@@ -15,6 +15,7 @@
- #include <linux/platform_device.h>
- #include <linux/reset-controller.h>
- #include <linux/time.h>
-+#include <linux/unaligned.h>
- 
- #include <soc/qcom/ice.h>
- 
-@@ -105,6 +106,25 @@ static struct ufs_qcom_host *rcdev_to_ufs_host(struct reset_controller_dev *rcd)
- }
- 
- #ifdef CONFIG_SCSI_UFS_CRYPTO
-+/**
-+ * ufs_qcom_config_ice_allocator() - ICE core allocator configuration
-+ *
-+ * @host: pointer to qcom specific variant structure.
-+ */
-+static void ufs_qcom_config_ice_allocator(struct ufs_qcom_host *host)
-+{
-+	struct ufs_hba *hba = host->hba;
-+	const uint8_t val[4] = { NUM_RX_R1W0, NUM_TX_R0W1, NUM_RX_R1W1, NUM_TX_R1W1 };
-+	u32 config;
-+
-+	if (!is_ice_config_supported(host))
-+		return;
-+
-+	config = get_unaligned_le32(val);
-+
-+	ufshcd_writel(hba, ICE_ALLOCATOR_TYPE, REG_UFS_MEM_ICE_CONFIG);
-+	ufshcd_writel(hba, config, REG_UFS_MEM_ICE_NUM_CORE);
-+}
- 
- static inline void ufs_qcom_ice_enable(struct ufs_qcom_host *host)
- {
-@@ -196,6 +216,11 @@ static inline int ufs_qcom_ice_suspend(struct ufs_qcom_host *host)
- {
- 	return 0;
- }
-+
-+static void ufs_qcom_config_ice_allocator(struct ufs_qcom_host *host)
-+{
-+}
-+
- #endif
- 
- static void ufs_qcom_disable_lane_clks(struct ufs_qcom_host *host)
-@@ -435,6 +460,8 @@ static int ufs_qcom_hce_enable_notify(struct ufs_hba *hba,
- 		err = ufs_qcom_enable_lane_clks(host);
- 		break;
- 	case POST_CHANGE:
-+		ufs_qcom_config_ice_allocator(host);
-+
- 		/* check if UFS PHY moved from DISABLED to HIBERN8 */
- 		err = ufs_qcom_check_hibern8(hba);
- 		ufs_qcom_enable_hw_clk_gating(hba);
-@@ -932,6 +959,14 @@ static void ufs_qcom_set_host_params(struct ufs_hba *hba)
- 	host_params->hs_tx_gear = host_params->hs_rx_gear = ufs_qcom_get_hs_gear(hba);
- }
- 
-+static void ufs_qcom_set_host_caps(struct ufs_hba *hba)
-+{
-+	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
-+
-+	if (host->hw_ver.major >= 0x5)
-+		host->caps |= UFS_QCOM_CAP_ICE_CONFIG;
-+}
-+
- static void ufs_qcom_set_caps(struct ufs_hba *hba)
- {
- 	hba->caps |= UFSHCD_CAP_CLK_GATING | UFSHCD_CAP_HIBERN8_WITH_CLK_GATING;
-@@ -940,6 +975,8 @@ static void ufs_qcom_set_caps(struct ufs_hba *hba)
- 	hba->caps |= UFSHCD_CAP_WB_EN;
- 	hba->caps |= UFSHCD_CAP_AGGR_POWER_COLLAPSE;
- 	hba->caps |= UFSHCD_CAP_RPM_AUTOSUSPEND;
-+
-+	ufs_qcom_set_host_caps(hba);
- }
- 
- /**
-diff --git a/drivers/ufs/host/ufs-qcom.h b/drivers/ufs/host/ufs-qcom.h
-index b9de170983c9..b59d18bebd00 100644
---- a/drivers/ufs/host/ufs-qcom.h
-+++ b/drivers/ufs/host/ufs-qcom.h
-@@ -196,7 +196,8 @@ struct ufs_qcom_host {
- #ifdef CONFIG_SCSI_UFS_CRYPTO
- 	struct qcom_ice *ice;
- #endif
--
-+	#define UFS_QCOM_CAP_ICE_CONFIG BIT(0)
-+	u32 caps;
- 	void __iomem *dev_ref_clk_ctrl_mmio;
- 	bool is_dev_ref_clk_enabled;
- 	struct ufs_hw_version hw_ver;
-@@ -226,6 +227,48 @@ ufs_qcom_get_debug_reg_offset(struct ufs_qcom_host *host, u32 reg)
- 	return UFS_CNTLR_3_x_x_VEN_REGS_OFFSET(reg);
- };
- 
-+#ifdef CONFIG_SCSI_UFS_CRYPTO
-+static inline bool is_ice_config_supported(struct ufs_qcom_host *host)
-+{
-+	return (host->caps & UFS_QCOM_CAP_ICE_CONFIG);
-+}
-+
-+/* ICE configuration to share AES engines among TX stream and RX stream */
-+#define ICE_ALLOCATOR_TYPE 2
-+#define REG_UFS_MEM_ICE_CONFIG 0x260C
-+#define REG_UFS_MEM_ICE_NUM_CORE  0x2664
-+
-+
-+/*
-+ * Number of cores allocated for RX stream when Read data block received and
-+ * Write data block is not in progress
-+ */
-+#define NUM_RX_R1W0 28
-+
-+/*
-+ * Number of cores allocated for TX stream when Device asked to send write
-+ * data block and Read data block is not in progress
-+ */
-+#define NUM_TX_R0W1 28
-+
-+/*
-+ * Number of cores allocated for RX stream when Read data block received and
-+ * Write data block is in progress
-+ * OR
-+ * Device asked to send write data block and Read data block is in progress
-+ */
-+#define NUM_RX_R1W1 15
-+
-+/*
-+ * Number of cores allocated for TX stream (UFS write) when Read data block
-+ * received and Write data block is in progress
-+ * OR
-+ * Device asked to send write data block and Read data block is in progress
-+ */
-+#define NUM_TX_R1W1 13
-+
-+#endif /* UFS_CRYPTO */
-+
- #define ufs_qcom_is_link_off(hba) ufshcd_is_link_off(hba)
- #define ufs_qcom_is_link_active(hba) ufshcd_is_link_active(hba)
- #define ufs_qcom_is_link_hibern8(hba) ufshcd_is_link_hibern8(hba)
--- 
-2.47.1
-
+Rob
 
