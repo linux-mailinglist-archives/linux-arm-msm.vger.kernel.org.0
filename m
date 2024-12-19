@@ -1,136 +1,127 @@
-Return-Path: <linux-arm-msm+bounces-42798-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-42799-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8D2799F7D82
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Dec 2024 16:01:08 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 943C89F7DCC
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Dec 2024 16:15:35 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 879EF18956EE
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Dec 2024 15:01:09 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 22344170655
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Dec 2024 15:13:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 378C6762EF;
-	Thu, 19 Dec 2024 15:01:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 585FD225A37;
+	Thu, 19 Dec 2024 15:13:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WLrMFzEy"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="beiL9eXT"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-il1-f172.google.com (mail-il1-f172.google.com [209.85.166.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A40F641C64;
-	Thu, 19 Dec 2024 15:01:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8425225A23
+	for <linux-arm-msm@vger.kernel.org>; Thu, 19 Dec 2024 15:13:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734620463; cv=none; b=J1dEsTrWD/GxG9CIYahrTGlXuWKtkJY2paNpa0PuC1uA8o9tka8ALEVfNboyi08+54MV712k4aqT+02kRlr+vySS4YjbAMJmcQ2Sz+/+HIVRyNrQwKTvQxEQKIZrzP8wuDeZO9CjIlYQCYTcDQ8whv4tAIsYYxedXSbQ5Deemvg=
+	t=1734621237; cv=none; b=onHycQiS2xPb1h75PQZ6TPX/Ere9qM/8xw+0w6d7poGDMetTGm0KkBMRh+0BJ//AUxnkkAQFCstJU10w7dPg+vWLlcUsKWTPG1jg64wiMzeAR7UEhhFTS1T6WDudtfM37VLrAbsxz2QyAvyfOxQQ89ZlvIAIwVKNRklCV5Vkh24=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734620463; c=relaxed/simple;
-	bh=sUdALHFj74gKLRdps43bCPFw5VQP45qJykCrkheTLss=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Slrk1vFReWIeLelzJtul2WwSQzkJdOeeh50ZzNfuAmKf6laJAF9CooieL7ZqYjHumMAnP+M5H+ELeiP7YhTFQYzCrBpouzgRzoKffz+os1ypDZJnrSthTsU1m1UJx1CKp9++tzSqZk1NsJzBT3++/OO+Sf26gLQYM6C6fCGHgiU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WLrMFzEy; arc=none smtp.client-ip=209.85.166.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-il1-f172.google.com with SMTP id e9e14a558f8ab-3a9caa3726fso3027505ab.1;
-        Thu, 19 Dec 2024 07:01:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1734620461; x=1735225261; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=kGSpD3+3yxS9yz0CYWixS3C/FoBfovGzSM7W4jlHvCA=;
-        b=WLrMFzEy1jEMMRKrm1WlGF5X2Dk9znyknuAoWJE5vm5QHH9JjBkeTQSNQxfDyPkxY8
-         iA5HXf5vwziqrbK337fbYT1rfGFLDV+UKbGure7UxolXhZnsidnS2eez0rXYg5OhgyY7
-         9E7/p7CKwFdp2jrFvN26mujAHxyv5JJwc8xZoo7jZI+SfYQPFKfpS7lSlPqMDaW2ZWTV
-         uYM3Y+HNVDI4OfnKbXYpLraVkqwxvzAqYUjiCzZS/LTkDaRIIhoyes89q7/Qocmtmx1X
-         hgBKpOAwcooZ9sCDxhf1BJcskfr5Uuxd+IuVUYVMK7PtyMsBBgGVBwSoS4b1aiIdM/yF
-         MvCg==
+	s=arc-20240116; t=1734621237; c=relaxed/simple;
+	bh=Ibr8qPMjlg3GtzyOwjhDNzKtC83QC8l0CBEiz057yes=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Y5bE/JxX2DIQx3v4dipvL/25gw5RryAP5Et1//K4RfXvJ1BhblTVYysFZAWrwUVEepmrc/bktlXHis1zkRkC5TuuNcRiYmiIoh+pAtmSNXUTpY++ORSbitznNE5hmIw1WicwktIskoruSF7oLSIiqVMs0RLeDDQFDaknaWQ8Y/A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=beiL9eXT; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BJE6M4Q015107
+	for <linux-arm-msm@vger.kernel.org>; Thu, 19 Dec 2024 15:13:55 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	Ibr8qPMjlg3GtzyOwjhDNzKtC83QC8l0CBEiz057yes=; b=beiL9eXTfw8HMcrQ
+	eWhphKp0AtS+bFWfg8L5ZlHvyPfqUWUqLjl8sh6IlHH904MqGIZdVvr4nm1OTkPC
+	FnyDvqagcR6M3OG/YwzsGbWk7Yepu35LM7af4TG2eOI+JrrB+RsdEzyKEGmXya3J
+	5ciPHdVA2IVSwlBZxRE/MGCWCrg8coHDdnh7HHT0gut3Xgjv1KmqSJD2Ge0Nfx2B
+	b96JXEys8RxSYAmCdi1w9Q9Ig8R7efyG90rLwELOK9bqw9ATseH+lKc7uaWtpzVF
+	Srw8mHeSH37itiUqlktqC+ZrzdMnzGmv22/lg8J3VL4VOkMSsKSvzIE4NaCToJBC
+	pF+mpg==
+Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com [209.85.219.70])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43mmxvr533-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 19 Dec 2024 15:13:54 +0000 (GMT)
+Received: by mail-qv1-f70.google.com with SMTP id 6a1803df08f44-6d887d2f283so2318736d6.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Dec 2024 07:13:54 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734620461; x=1735225261;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=kGSpD3+3yxS9yz0CYWixS3C/FoBfovGzSM7W4jlHvCA=;
-        b=huP1lmCFENprC2MsJrdQ8KK5f7K2GK+6uRHuAuIrfsRIiuIPR8Mujwwu0qq/GCYsM6
-         MgqttLC7RvOvt7YZI1OYwdnBvMmZg1NCGv6lorLz9IsmdYcri65nVCLesMChbd83r7RH
-         /vwjlfknqNUdU/xA1L1zWawcvLWyMYmOmo5BnQ9/Oz17hvvTv9Bp2QxryxPFL8VZfRB+
-         9y8wjE7zGQsOQtRGY/3niLk6PEMYIgJr7T/QgxJFSc+lwElc3rA+R7nFz/NxrrhT0kLg
-         Klc5Sk5JwJPtAwu0QR1gvA24qzNYI3rCsV1g1YeN12t9LlsfXT0c9ikO8eqNbGUCFcX3
-         M6sQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUITpAM4iQSIf4HKAeE4rGMdJ8VbrjYxd9CMIm5SwnSxgRcnzkUeF00l00CjCCrVE9h0OZDHTojzvgG3MZn@vger.kernel.org, AJvYcCW+Rp97MVQz51SyJKOuY5L/ykrv4H3JQ8N0gPyqSL25oDkZlJWNjKQmOiL3s1ZZZk2Qn1JyYBOyv9iYXzOo@vger.kernel.org
-X-Gm-Message-State: AOJu0YzlTE2aNfzLPtgzzJtEGESfWSXdhdw2YtiowdlD3TF4A4GH6ix+
-	EQN+RANmkjRnBXk6MoFQCY4I6XKqP8lmov0bXrc+koXZN0qfnExTQLC1+51Xmwx/BV1KQzvtXe7
-	gG7/UM6vcsYpVAjj1RIFj8U9soDisdW59
-X-Gm-Gg: ASbGncupn7SIkCSMYm+UiquwN7QIu+6rYoRDcNe0WAZI3K49ZbXKw5X+p8Ag3RFlw9s
-	Q18+lFO5zg0xGQdz6Od3apDLRi69eTDq9TRkwhg==
-X-Google-Smtp-Source: AGHT+IHp8ABABtvQh+2yyPlFSULZ37QjpTpYXLauYn/rtYNis49Ni4sKHQpdMdeMDdPO+HGJ2/oxRYIljcvIQuXYhZ4=
-X-Received: by 2002:a05:6e02:1649:b0:3a7:c81e:825f with SMTP id
- e9e14a558f8ab-3c02e1e9aa7mr36636045ab.9.1734620460446; Thu, 19 Dec 2024
- 07:01:00 -0800 (PST)
+        d=1e100.net; s=20230601; t=1734621233; x=1735226033;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Ibr8qPMjlg3GtzyOwjhDNzKtC83QC8l0CBEiz057yes=;
+        b=WIZt8HtLQluU85fXVqMVnVytesXEZUYe+ZAPRf9uIQoyWJN1cHBT6srg5mg1ErIQge
+         AEQK4Wxyg9XltprARvxHlj2+iWWuz3F93kkAXZw15iNN+gGUZWUrLdOUAAmaK+6ZKXGl
+         AhRa90uDjIm6WYPlHbF2DowOIe+qDtqTwD8ZcRMu6P1rNIOMq22jYgshaZoV3X72Ujnt
+         FMSsbMi0VU3J1OZPZhKWm5RTl0xRHuJ2JDBVnvl3ZGiynZi6rEmEpPOc9mf6m7W566on
+         q9/Ise1bUd1XVUvkGhxpVpSex10DhQZ05hEa0KZoTixpfLfKd72O5uex+myY+IYxD4hi
+         OP5w==
+X-Forwarded-Encrypted: i=1; AJvYcCUZa5/aSW+X+5qKvSKqeYR6gF1cnz7SeQ1ShuSnj8sONAe+V+ncDJ77kwcN4dlcEKdORh0IdJ1wmtLU5F5h@vger.kernel.org
+X-Gm-Message-State: AOJu0YzSdMQ9xiGi/Wfc0qjLPrefojoan7dMP34QAY+2knkXHaJBXnxs
+	eLsDCWu67ud3cfivwkfMsNkXoPESH8JNUhL13tnv2kiJ0eBjCRhOkNkGmg5bePMGwWBIYinUjwj
+	HT2pye9zYZz1TP6UZtdWtTpKc/UWoV4eovInsfvoQLpGRoRVPchpaUkorQzEb4cHX
+X-Gm-Gg: ASbGncvkE7aybrh4WiIp2gkS4kW9g0a8zFXkXNir8svOBtB1RHO/b2iMDxXqGKaLMg4
+	diIfoNrKaNlTPYrg5Drg0gc/JRPhI0Y5CfG7MZnPvBY3Opdr5J3ERq2/2AJiLQ5Jc0XGTPHKjq2
+	LLyfkebFTHSpm2BSgeDsbUD0oLfAcXqz9eDiD/UOCRFa7Vd1j/QHSqBcr/stj/ze/hQR37U+3Dh
+	LiG41Br4VzS4xSePtq0H2lhX0ct7N9teohcnd8ie3+jI3UU8Ip64XaxVor/bl7uTmH0UYifbVDP
+	0XSNBTiAh4MXRWgkwGr/cIgNLPyuymZEbRc=
+X-Received: by 2002:a05:620a:4141:b0:7af:cac7:5017 with SMTP id af79cd13be357-7b86372323fmr383527185a.4.1734621233641;
+        Thu, 19 Dec 2024 07:13:53 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEfu6esVWQ0ConGDER8nonSqLdGD0StFPOhuICpqOzvsERQj+euyE04T5hXTE0xGSRRS+HadA==
+X-Received: by 2002:a05:620a:4141:b0:7af:cac7:5017 with SMTP id af79cd13be357-7b86372323fmr383525285a.4.1734621233276;
+        Thu, 19 Dec 2024 07:13:53 -0800 (PST)
+Received: from [192.168.65.90] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-aac0f080c1asm73554866b.205.2024.12.19.07.13.51
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 19 Dec 2024 07:13:52 -0800 (PST)
+Message-ID: <37e5ecd7-a1ed-4aca-9ad9-7d601a0f31c5@oss.qualcomm.com>
+Date: Thu, 19 Dec 2024 16:13:50 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20241216171017.4881-1-robdclark@gmail.com> <20241219113019.GA23640@willie-the-truck>
- <41d93dac-4ef1-4cc7-a7b2-24c8289f905f@arm.com>
-In-Reply-To: <41d93dac-4ef1-4cc7-a7b2-24c8289f905f@arm.com>
-From: Rob Clark <robdclark@gmail.com>
-Date: Thu, 19 Dec 2024 07:00:48 -0800
-Message-ID: <CAF6AEGshSjOr1DE63WiXwAyH39-Tz9B3MEkKUo6sg1jpQPYZcA@mail.gmail.com>
-Subject: Re: [PATCH] iommu/arm-smmu-qcom: Only enable stall on smmu-v2
-To: Robin Murphy <robin.murphy@arm.com>
-Cc: Will Deacon <will@kernel.org>, iommu@lists.linux.dev, linux-arm-msm@vger.kernel.org, 
-	freedreno@lists.freedesktop.org, Akhil P Oommen <quic_akhilpo@quicinc.com>, 
-	Rob Clark <robdclark@chromium.org>, Joerg Roedel <joro@8bytes.org>, 
-	"moderated list:ARM SMMU DRIVERS" <linux-arm-kernel@lists.infradead.org>, 
-	open list <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] arm64: dts: qcom: x1e80100-lenovo-yoga-slim7x: Add lid
+ switch
+To: Anthony Ruhier <aruhier@mailbox.org>,
+        Maya Matuszczyk <maccraft123mc@gmail.com>
+Cc: andersson@kernel.org, konradybcio@kernel.org, robh@kernel.org,
+        krzk+dt@kernel.org, conor+dt@kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <cae52ea6-e86a-4b86-af06-01a8a93d2ca0@mailbox.org>
+ <CAO_MupKCUk-w4=-0yDWo4m9XC1-iEuF6YHYnYw4T0oF2aKFxvQ@mail.gmail.com>
+ <1b163b6b-3c33-4361-94be-6b8a6d0febe8@mailbox.org>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <1b163b6b-3c33-4361-94be-6b8a6d0febe8@mailbox.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-ORIG-GUID: EPer8ucF-Kl4GmL9f7z0DY8esOCrkNwh
+X-Proofpoint-GUID: EPer8ucF-Kl4GmL9f7z0DY8esOCrkNwh
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 clxscore=1015
+ mlxscore=0 priorityscore=1501 phishscore=0 mlxlogscore=893 malwarescore=0
+ suspectscore=0 lowpriorityscore=0 spamscore=0 adultscore=0 bulkscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2411120000
+ definitions=main-2412190122
 
-On Thu, Dec 19, 2024 at 4:08=E2=80=AFAM Robin Murphy <robin.murphy@arm.com>=
- wrote:
->
-> On 2024-12-19 11:30 am, Will Deacon wrote:
-> > On Mon, Dec 16, 2024 at 09:10:17AM -0800, Rob Clark wrote:
-> >> From: Rob Clark <robdclark@chromium.org>
-> >>
-> >> On mmu-500, stall-on-fault seems to stall all context banks, causing t=
-he
-> >> GMU to misbehave.  So limit this feature to smmu-v2 for now.
-> >
-> > MMU-500 has public documentation so please can you dig up what the
-> > actual behaviour is rather than guess?
->
-> Yeah, I'm pretty sure that's not true as stated, especially with
-> SCTLR.HUPCF set as qcom_adreno_smmu_write_sctlr() does. However it is
-> plausible that at the system interconnect level, a sufficient number of
-> stalled transactions might backpressure other transactions from entering
-> the same TBU, even if they are destined for a different context. That's
-> more about the configuration and integration of individual SoCs than the
-> SMMU IP used.
+On 19.12.2024 11:34 AM, Anthony Ruhier wrote:
+> Thank you Maya!
+> I'm sorry, I realized that the patch format is wrong due to a misconfiguration of my mail client. Tell me if I should send a v2 of this patch fixing it.
 
-I am aware of the docs and I've spent most of the last couple days
-going thru them, as well as the errata, since it would be unfortunate
-for debugging to disable this ;-)
+Git throws an error here when applying, please resend
 
-The scenario where things lock up involves at least a few thousand
-faults in rapid succession.  Disabling CFIE in the irq handler and
-re-enabling when I resume translation does stop the flood of irq's but
-not the lockup.  It might well be something about how the smmu is
-integrated with the interconnect.
+Konrad
 
-BR,
--R
 
-> Robin.
->
-> >> This fixes an issue with an older mesa bug taking outo the system
-> >> because of GMU going off into the year.
-> >
-> > Sorry, but I don't understand this sentence.
-> >
-> > Will
->
 
