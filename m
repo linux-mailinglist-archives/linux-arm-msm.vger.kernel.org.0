@@ -1,146 +1,186 @@
-Return-Path: <linux-arm-msm+bounces-42890-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-42891-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7B58C9F898C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Dec 2024 02:30:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id D81D69F8A21
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Dec 2024 03:32:55 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id A71941886B40
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Dec 2024 01:30:41 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id F06D6188D4EB
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Dec 2024 02:32:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A3CAB143744;
-	Fri, 20 Dec 2024 01:28:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 079F4273F9;
+	Fri, 20 Dec 2024 02:32:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="TGx19XRV"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="S0HXH/Rf"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f52.google.com (mail-lf1-f52.google.com [209.85.167.52])
+Received: from mail-lj1-f172.google.com (mail-lj1-f172.google.com [209.85.208.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C99AD86334
-	for <linux-arm-msm@vger.kernel.org>; Fri, 20 Dec 2024 01:28:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8BD04A08
+	for <linux-arm-msm@vger.kernel.org>; Fri, 20 Dec 2024 02:32:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734658132; cv=none; b=r/EPUh3BgSu4O+MKEY04gbai65at+qX8A79kdYclnicJbu9X8FkJ7+/CgdadtL7BXO4fwiL9SW2ZPSXvGsjdlyK/9H3PX27lif0ewBp2h9GgWV8FxgRWi0+BniarZfJaeZI/nIFekgWoMMtB2UVTvOtnWyAxqKVd0dzL1FYFt30=
+	t=1734661962; cv=none; b=hCPy6tGJtsG6lxmMmhasTJnON+E9U9EQ3EkbKUWSexcincYZVc6/oQjwSSSoIXmDj6MrOdBF3AMHihaFco9ySxLwtX6LQiVVfAU9WFX8krtxOKwyLfPOyp8TX4UZC21M9wFt/AK5ne6fIIoliuBctxp4DEwtBXItyHHMXKtQBHY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734658132; c=relaxed/simple;
-	bh=5058CHEvuHi6y1shjj/7LSsaLqFOGpH0zSafsGTeHak=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=H2k8RFCuKZu4X2VLSvILnlO/f5SJPz5OortRPtmnK4NLErM8cuiQE7/MDPgeFPcy9Q1Z0J9CCfXtrZxGThvPI2/klZyAwtF56Y9NjPUfQ3C4+jQCQh2OXexr2YF/QpkHt1+q6ukDm2++YSHtTSJf0j0kZYgXiUxJ1NUnpmrssZU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=TGx19XRV; arc=none smtp.client-ip=209.85.167.52
+	s=arc-20240116; t=1734661962; c=relaxed/simple;
+	bh=EhbLzKXfkij6tfReQMHYW4V6qZ4LXRGvUxdOTxgcd/E=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=TFJVFYzyQF86Ghg+S1YdWOEYX7oWL4TQ/uJlq4aC+971e10ZrGeP1x7+suRVBrwwjrW4/UYNKEs1YwejEm1bxqZ0XtYmsNaPQOsnIX5jnA1w969LmkBHPcg5GJcCvefQ1Yflt581L6Rpo8dXIT6+SJUBRm1uqUZ3cjCsGo/N1Gw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=S0HXH/Rf; arc=none smtp.client-ip=209.85.208.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f52.google.com with SMTP id 2adb3069b0e04-54021daa6cbso1414776e87.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Dec 2024 17:28:50 -0800 (PST)
+Received: by mail-lj1-f172.google.com with SMTP id 38308e7fff4ca-3043e84c687so12893021fa.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Dec 2024 18:32:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1734658129; x=1735262929; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=g+UxLeMEKZ0drgg5vIKf6D6FbqGDQrxrvZvv2J0cYAE=;
-        b=TGx19XRVlEHchzn1valKhCMRQtPTCC0JjYSZtdjU9kLEaCKzLyddPjvrMFvZiHsUAO
-         grUo4aO/hNwwGc3oVShvC0XLqyyyASHv3VjsNKPkBVRYot0f1ENiC6cX61KhzuTWtezB
-         dpLLYlwN3HHV6ZNZ0KsRfJpPzeO7LEzIomNQk/ozNpKaG9voFDXZ1YsWOp01pwg3+T/a
-         FF3JGb7JBk5CTjVBAyAVUjWF5Ic5uPUHv22mlmwIC/g+EaaHpT0uvs/xKx7psna1Sy5G
-         bnM6KYvG7Wx3cx+ggiNdwFLSuYLhmvO5sFtdhL4ssxVic8Z9w/uGH3l1PTyVB3z2eCmj
-         hj2w==
+        d=linaro.org; s=google; t=1734661958; x=1735266758; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=wikVcC8YwP43NyawYqahXbzGX/uRVSr7BgXqLVuUyoI=;
+        b=S0HXH/Rf7VipnLnEoAFOMKf2oKE6fXZ8858+3Y6qr4QuWz9NBrQwbGMRhx8Lqkvae+
+         6MVjXVy/7qwB/cIpntTpzYEwUn9iHMMpcXoQYkg6L4WE1P7bKnPQ6D2ncjeTqezHe+IR
+         0LgcmpQ+LBRiToz8004Kx+7XFpkU0O5Yx67HnM0eETILdXVgP53WmvcuKQ0dAXotalRu
+         ArRZ9Z/XVAGdm/1gbJVqYhFs/siE3yGHHX+7tSvzZ21lkJ4XgM9T21cNnrGbXN3Trt8l
+         Ir0MAhjlj6pkMTrWOhyAN1NxwrqF8ey6quU3dSjQL7V79eaG9pak4vbXo4ousl/RJXt+
+         KhBw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734658129; x=1735262929;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=g+UxLeMEKZ0drgg5vIKf6D6FbqGDQrxrvZvv2J0cYAE=;
-        b=fA+ZnTOsD+WtrgZVG5n3sHL+CQC+L/YDK+R1S16L+u+sI0smaMIMu3BXGEUVdGbkG9
-         WfBiKF3EBWVvfveGJAxZP+Obag2cMLAYnR9c8S7Uedn/mlK+d00hd/rFpO8lt3RKpnNf
-         mZHhT8ATMvbh8tNea/LvxPaYl9NvQKvLLqP8p6g3rugQY/LEzYFDXm4f0rcb41DbXqRk
-         ENXFeqPYNFHuaDzEheKdf/1D9ocg42d4I1Mdueewd7uDMxrXbAfUvL7pQ1LYvxjRkPMa
-         cTLQx+Y0Umegte7DXpcO/HABaJVJv8/EdXBK8WJzsrJSvdq19L3UdNVoMW0idizLUVQj
-         5Sag==
-X-Forwarded-Encrypted: i=1; AJvYcCXLE9VSlgiEhUW+KBHdZnUNPsatKorHpBcCI/mZwEFFTnEY0EOaFoCHRTdBfaDAvGkN9PlnTihotuD/yvjw@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz87SASS6Sfcw7dNbE3Y9rP7K6lwPdGGmG0klULojUDi38aR1g5
-	tyIJxMZkDfG/Vv7oZz4Gk+HCAbU7Fh9rVvj3PESbCi3Av8hnTbhATJRNgyM2XWQ=
-X-Gm-Gg: ASbGncvG8DnyZgt9njw9wN7od+D1zyS+DFDlBPzpSw+TPswBzWu81p8sFQ7YPvybjb3
-	vGmIrqfr3IQCovzsCiQnEgzJIAPz9ZYQuhVKcjruZOQXIbdG5Ra8MzshdgFu6FAZhDBYiBqzgkd
-	c5xdP/g/VikMMpM/Pt9lPjjZIBARXrEbDf2RFjnxuXp2LgGmHzVe/jgunSgNAIil0TehiD7adrf
-	vdVWtiQJPCN/GXvXMAYEbzoqwpUNswq8c4rbYInVTUNRUmNfAp+ASXnqFe9rBxB
-X-Google-Smtp-Source: AGHT+IH5Icut19CrQRKgtDSzCRG8qNy2m4CTSKGxVWKKTUEhiYw6FKBa1WmLIGAIiUsb9ae8mcxHFQ==
-X-Received: by 2002:a05:6512:1055:b0:53e:39e6:a1c1 with SMTP id 2adb3069b0e04-54229560360mr232733e87.43.1734658129064;
-        Thu, 19 Dec 2024 17:28:49 -0800 (PST)
-Received: from umbar.lan ([192.130.178.90])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-54227a89c2csm170540e87.71.2024.12.19.17.28.47
+        d=1e100.net; s=20230601; t=1734661958; x=1735266758;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=wikVcC8YwP43NyawYqahXbzGX/uRVSr7BgXqLVuUyoI=;
+        b=rZnc32O9LJDiJmYzULIRNQQA7KhUL5bcV29i7CsLNmlqe4FZSCFFjaTu1kWduLxbCd
+         tZnkEIoQM9NRa+LX4GR4l9tRFvuwYIERr59LFDnRBs/E7kmeR2LfKDDq1tZAzHUK8nIm
+         ldFahrN4MBjq/Rh6ugOwinK3nrWLB+eq+aNfWv6xLodUwdywRRPVRbfOvN2s3ePpZxPf
+         t7xgJzCMGn6bLnQhP7ooU/LOi/QHWRI2vFUbcsRpZHcPWx+fazzPXMOw5FnWZKEk443W
+         QhqD4SSD0Fvt+SS+HU5MXWqLJyJFlp/4A1nUewjOBIW4/1QlV1IxeRmDwIIbRkaPLk5p
+         /TAQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXYSV6cFkJCgsSaWLutQ9Gzsw5EK/6zK8c2Qo0hygTGGRWlsYrgsBV3sYLxSkquZ9FYOPiri9JBo8UXB5iN@vger.kernel.org
+X-Gm-Message-State: AOJu0YzkTs+cG8Si5/JCaN8+zN/wzRzhXt4Y5e/f1X7DgwqcnSuZ+l9D
+	rc+IcMAeQ81EPR5hWV3DgFW7Zs/UEi4GbxfnKfnmVo0ousEgdLLrcLHdUlZqcNY=
+X-Gm-Gg: ASbGncv/EBuppw3Q60+JaJWSUfV3STge6hCZtsEeX5t7DyedfkA2G6covxNEmC//RXx
+	MzYeR4e581nN3Q7x+qxu62mZt1YG9EfoKaayo8mvsPMQuT768im/f5IEkXXufvTBbxwO3SGwIAQ
+	UslztRChYBlIsQJaQkSgFWPkBKCj0HOAcba/K3HwA066v8fY/KEXrRch9CY6Pjd0tb4u3+qcXl/
+	Jp+fF5/4eaEp0HmHwY3yIXy37o4NqaDNuFf/f5ThpL8JsLUc8F9CrrR/ODKrzE8TgOGr5sh7sie
+	K4QrsQ/gfIXS6jbW1eeQo4NHBfP7Xb7bt+wK
+X-Google-Smtp-Source: AGHT+IHeePIRvRlTa0WzSJOEaRbNYDGB0kZScBMguM6RwOqMwsGDgUW7Iqn7n7S3fRfyoGyLByO5pA==
+X-Received: by 2002:a2e:be8e:0:b0:300:3a15:8f23 with SMTP id 38308e7fff4ca-304685198eemr3702051fa.7.1734661957805;
+        Thu, 19 Dec 2024 18:32:37 -0800 (PST)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-3045ad6cad7sm3857071fa.9.2024.12.19.18.32.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 19 Dec 2024 17:28:47 -0800 (PST)
+        Thu, 19 Dec 2024 18:32:36 -0800 (PST)
+Date: Fri, 20 Dec 2024 04:32:34 +0200
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Fri, 20 Dec 2024 03:28:36 +0200
-Subject: [PATCH v2 8/8] drm/msm/dpu: link DSPP_2/_3 blocks on X1E80100
+To: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc: Jessica Zhang <quic_jesszhan@quicinc.com>, 
+	Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
+	Thomas Zimmermann <tzimmermann@suse.de>, Simona Vetter <simona@ffwll.ch>, 
+	Simona Vetter <simona.vetter@ffwll.ch>, quic_ebharadw@quicinc.com, linux-arm-msm@vger.kernel.org, 
+	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
+	Rob Clark <robdclark@chromium.org>, Ville =?utf-8?B?U3lyasOkbMOk?= <ville.syrjala@linux.intel.com>
+Subject: Re: [PATCH v4 07/25] drm/msm/dpu: move resource allocation to CRTC
+Message-ID: <y2qtp2avw7hjkweh3svfwr6ytvg54lmhqiowfjeiufnyhxiryw@vb4mwnyi2ict>
+References: <20241216-concurrent-wb-v4-0-fe220297a7f0@quicinc.com>
+ <20241216-concurrent-wb-v4-7-fe220297a7f0@quicinc.com>
+ <b329e872-3e1e-45e3-bff6-bf6ad2c11144@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20241220-dpu-fix-catalog-v2-8-38fa961ea992@linaro.org>
-References: <20241220-dpu-fix-catalog-v2-0-38fa961ea992@linaro.org>
-In-Reply-To: <20241220-dpu-fix-catalog-v2-0-38fa961ea992@linaro.org>
-To: Rob Clark <robdclark@gmail.com>, 
- Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>, 
- Marijn Suijten <marijn.suijten@somainline.org>, 
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
- Robert Foss <rfoss@kernel.org>, Neil Armstrong <neil.armstrong@linaro.org>, 
- Abel Vesa <abel.vesa@linaro.org>, Richard Acayan <mailingradian@gmail.com>
-Cc: Rob Clark <robdclark@chromium.org>, linux-arm-msm@vger.kernel.org, 
- dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
- linux-kernel@vger.kernel.org, Johan Hovold <johan@kernel.org>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1307;
- i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
- bh=5058CHEvuHi6y1shjj/7LSsaLqFOGpH0zSafsGTeHak=;
- b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBnZMg/RB+Fi7NOIgUKpxxiaLrBsE7s80wm6VMMl
- UTR4BMn15uJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZ2TIPwAKCRCLPIo+Aiko
- 1QbaB/9MRXkpbzcxPF0Rcp5LR396dEkAkPli7KvHNg1toaDhWPRd5C5qR8G8fog0tXC0vQP8SLm
- zqaHgaRd+nheWQRf69qtmv5FXJoNt0oiyjgtNcxeokyocr3GYy07Y3hR592MYN5EJwu6aE9X+5+
- HCHKAZDNf2apKR+GPHPXPoZZ1UVJLScMigOzkAX72Sq5+kUzu2XB3OvlVhrXMQPBb0BTbvEtPCp
- rkHncfnva1A2cFkxmw5imydwNGwSq4yiGLKiiaW+cOf/jdDMnCs9KdR7a/28KDRO1a4ZxiD+oEp
- pAcUn1XMmvDK83Iy5U4XmQGl8eaE4EtvxRff50IJWybEfSH3
-X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
- fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <b329e872-3e1e-45e3-bff6-bf6ad2c11144@quicinc.com>
 
-Link DSPP_2 to the LM_2 and DSPP_3 to the LM_3 mixer blocks. This allows
-using colour transformation matrix (aka night mode) with more outputs at
-the same time.
+On Mon, Dec 16, 2024 at 05:47:50PM -0800, Abhinav Kumar wrote:
+> 
+> 
+> On 12/16/2024 4:43 PM, Jessica Zhang wrote:
+> > From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > 
+> > All resource allocation is centered around the LMs. Then other blocks
+> > (except DSCs) are allocated basing on the LMs that was selected, and LM
+> > powers up the CRTC rather than the encoder.
+> > 
+> > Moreover if at some point the driver supports encoder cloning,
+> > allocating resources from the encoder will be incorrect, as all clones
+> > will have different encoder IDs, while LMs are to be shared by these
+> > encoders.
+> > 
+> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > [quic_abhinavk@quicinc.com: Refactored resource allocation for CDM]
+> > Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+> > [quic_jesszhan@quicinc.com: Changed to grabbing exising global state]
+> > Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+> > ---
+> >   drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c    |  86 ++++++++++
+> >   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 256 ++++++++++------------------
+> >   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h |   8 +
+> >   3 files changed, 181 insertions(+), 169 deletions(-)
+> > 
+> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+> > index 9f6ffd344693ecfb633095772a31ada5613345dc..186ed84f59f16997716fe216e635b8dce07a63a1 100644
+> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+> > @@ -1182,6 +1182,78 @@ static bool dpu_crtc_needs_dirtyfb(struct drm_crtc_state *cstate)
+> >   	return false;
+> >   }
+> 
+> <snip>
+> 
+> > +static bool dpu_encoder_needs_dsc_merge(struct drm_encoder *drm_enc)
+> >   {
+> > -	struct dpu_crtc_state *cstate;
+> > -	struct dpu_hw_blk *hw_ctl[MAX_CHANNELS_PER_ENC];
+> > -	struct dpu_hw_blk *hw_lm[MAX_CHANNELS_PER_ENC];
+> > -	struct dpu_hw_blk *hw_dspp[MAX_CHANNELS_PER_ENC];
+> > -	int num_lm, num_ctl, num_dspp, i;
+> > -
+> > -	cstate = to_dpu_crtc_state(crtc_state);
+> > -
+> > -	memset(cstate->mixers, 0, sizeof(cstate->mixers));
+> > -
+> > -	num_ctl = dpu_rm_get_assigned_resources(&dpu_kms->rm, global_state,
+> > -		drm_enc->crtc, DPU_HW_BLK_CTL, hw_ctl, ARRAY_SIZE(hw_ctl));
+> > -	num_lm = dpu_rm_get_assigned_resources(&dpu_kms->rm, global_state,
+> > -		drm_enc->crtc, DPU_HW_BLK_LM, hw_lm, ARRAY_SIZE(hw_lm));
+> > -	num_dspp = dpu_rm_get_assigned_resources(&dpu_kms->rm, global_state,
+> > -		drm_enc->crtc, DPU_HW_BLK_DSPP, hw_dspp,
+> > -		ARRAY_SIZE(hw_dspp));
+> > +	struct dpu_encoder_virt *dpu_enc = to_dpu_encoder_virt(drm_enc);
+> > +	u32 num_intf = 0;
+> > +	u32 num_dsc = 0;
+> > +	int i;
+> > -	for (i = 0; i < num_lm; i++) {
+> > -		int ctl_idx = (i < num_ctl) ? i : (num_ctl-1);
+> > +	for (i = 0; i < MAX_PHYS_ENCODERS_PER_VIRTUAL; i++)
+> > +		if (dpu_enc->phys_encs[i])
+> > +			num_intf++;
+> > -		cstate->mixers[i].hw_lm = to_dpu_hw_mixer(hw_lm[i]);
+> > -		cstate->mixers[i].lm_ctl = to_dpu_hw_ctl(hw_ctl[ctl_idx]);
+> > -		cstate->mixers[i].hw_dspp = i < num_dspp ? to_dpu_hw_dspp(hw_dspp[i]) : NULL;
+> > -	}
+> > +	/* We only support 2 DSC mode (with 2 LM and 1 INTF) */
+> > +	if (dpu_enc->dsc)
+> > +		num_dsc += 2;
+> 
+> As we requested in v3, can you please explain why we have num_dsc +=2
+> instead of just num_dsc = 2? If we are hard-coding 2:2:1, this should be
+> just num_dsc = 2.
 
-Fixes: e3b1f369db5a ("drm/msm/dpu: Add X1E80100 support")
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_2_x1e80100.h | 2 ++
- 1 file changed, 2 insertions(+)
+I'll drop it while applying a first part of the series. Granted that
+num_dsc is initialized to 0 few lines above, it should be fine.
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_2_x1e80100.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_2_x1e80100.h
-index d61895bb396fb4287e9b41807a3bb0cdb25d4e25..4f110be6b750d30e158d517aaa507c7b4eda0af4 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_2_x1e80100.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_2_x1e80100.h
-@@ -159,6 +159,7 @@ static const struct dpu_lm_cfg x1e80100_lm[] = {
- 		.sblk = &sdm845_lm_sblk,
- 		.lm_pair = LM_3,
- 		.pingpong = PINGPONG_2,
-+		.dspp = DSPP_2,
- 	}, {
- 		.name = "lm_3", .id = LM_3,
- 		.base = 0x47000, .len = 0x320,
-@@ -166,6 +167,7 @@ static const struct dpu_lm_cfg x1e80100_lm[] = {
- 		.sblk = &sdm845_lm_sblk,
- 		.lm_pair = LM_2,
- 		.pingpong = PINGPONG_3,
-+		.dspp = DSPP_3,
- 	}, {
- 		.name = "lm_4", .id = LM_4,
- 		.base = 0x48000, .len = 0x320,
+If later there is a need to change the lane, it can be done in a
+consequent patch.
+
 
 -- 
-2.39.5
-
+With best wishes
+Dmitry
 
