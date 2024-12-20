@@ -1,151 +1,178 @@
-Return-Path: <linux-arm-msm+bounces-42980-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-42981-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 212CA9F921A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Dec 2024 13:22:51 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id D16DF9F92F0
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Dec 2024 14:17:00 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 788EA16A63D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Dec 2024 12:22:40 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2605C1898BC9
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Dec 2024 13:16:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3D1A2204698;
-	Fri, 20 Dec 2024 12:22:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 01370207A20;
+	Fri, 20 Dec 2024 13:16:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="yNe1M87h"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VJA8JWcW"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f43.google.com (mail-ej1-f43.google.com [209.85.218.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E97D1204596
-	for <linux-arm-msm@vger.kernel.org>; Fri, 20 Dec 2024 12:22:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCFA086349;
+	Fri, 20 Dec 2024 13:16:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734697338; cv=none; b=oDHNPDkI/uzG20srtnj20JKgcWM3nBJQAemazi82LqSgvzWB7r1sAhUAzKhtv15FHxt4rQveDhgEL3NMyURfrviSoDj7pk/ELBdjNcKqM3fnTYjUwsBoKkiI6sNAAMvpb4map2wpMu0Igctyw2Rc0SK28Q2Q8aLj2QYcrqMUcws=
+	t=1734700589; cv=none; b=DD9uIJsvQVtpF3bpAvfjlHsRuNvCgJveLNvtNOGYjH/2vDw4tLS18C33yRz49z664oCyjg+Yu3iBLvKGR67wfkk7Wxd4gfv+1URNS/V62sJVGeA90kX4tYA4N+Dk3qJW0Y48jirtV0OY034OZHKKqoODGfpB6sjZqnt9BnbBTOI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734697338; c=relaxed/simple;
-	bh=qx5p/hDbUkuDZtzddbNWpM0QTt2rSGt/pmcZqagYCts=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=pTbt8PSqmmnI4u5iHVjiW2TQi39r2H0CT7XJdCgI0nUVZse3WwR4ZWfF+KUi5RV26FH08nn44YW3PO/tEHUMh8seh3HwcQ4PcNPpLFuOhj4bDRYfqIFUWYPVxm+oNt+5gCcTMmF6s+M8cZGGvg7RUK7NtI431byks/o+D+KNBBI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=yNe1M87h; arc=none smtp.client-ip=209.85.218.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
-Received: by mail-ej1-f43.google.com with SMTP id a640c23a62f3a-aa696d3901bso333539066b.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Dec 2024 04:22:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1734697333; x=1735302133; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=dVIs/A5zO1lF6Hvf56Jf96I1JylRoUAYB/UjCgUI+Ws=;
-        b=yNe1M87hI4shQl5xbvB5lfiFPX8AzZmee9d8Y/Qjy2JqC1Ws+mK3zlWN5TEW7NuYkr
-         MfHh5/GpW0ET11M3A/9CO9GevuavAJlWy+H46RjyU0kOpuO+LCiaT1HT32pXIowmrMEt
-         5ibW/d6SA+j1srgNYxGclQzDQtDufNO8GuNLjh4u8wE+xG6HcTBa4+toGaFmrTt+g/x6
-         uxFpTLtXIkJ0ipoAwgYC+OJjAfzmlBdfy0LF3fW+WTjTiCvDG3F8RfNj0wnMInu77edQ
-         Q1Utfk1POeg0y1Yc5V5d00b1Oontqwwvi5wYjTcXxKfL/zi8e6DKbRzCiri0FnzikYHL
-         oTsA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734697333; x=1735302133;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=dVIs/A5zO1lF6Hvf56Jf96I1JylRoUAYB/UjCgUI+Ws=;
-        b=O0acaLiMJ1KhDhrg0pcfQJpgfS3BmBw0EcNJaPeFGkWoZdoYI9nSLmm8+hNPS+PL0R
-         eN5RzCaqBdi55iTHFG7J0Y9MZJKwoHHXjEY6RfF2RzAJlUiVWvaa0EKs1hQ3MmOrArpx
-         VEwPHTztYbbF5wtYhgUl/Sr6CFZF/574bjFR0sHJB1ig/0Fl6fYYo2vLSgGB2HIP1Jd0
-         keVtlj/jxYhM5+K9iic2MHV/2PTkY6gTFu5P7PqWpW7MrTepdIejmaayv0ITMEYpC3Tq
-         2y5PD9OW5fhXiqLw5EnHfhRaVM6akjeDd2AxFIzjY1MqxTmSyFA19KiVOOE1vhCYOmK8
-         qvOg==
-X-Forwarded-Encrypted: i=1; AJvYcCWScvF9gmDuzQhnLU+S8K6NN/VAs8jMiXZhOfWlA7vJCODg7QVxwIfgXxrkHJ1d/BAF7vR1dlvcNj1t27Yv@vger.kernel.org
-X-Gm-Message-State: AOJu0YwmSEotWMQHt3kbrjYMieQrnE2VSVw93hY5B8ysH2AY7f040tFo
-	0Oda+Grio/aJ5dj8g+Y2mC6wMwo8FLQT4H33v9I1D4YfMunowBceixKmOn61CL8=
-X-Gm-Gg: ASbGnctWuAt9vpP7IP33rurEP6qZsB7Qtt6/qRb/BOXKGgUuEGfNFLj3fpwsO1kiz3i
-	B92eKjFT1POkIDOHleXjESvGD1dww3fl79FipKATApXlGCdcPVRE1f5Ay5CcdRcL7MvDrESOavl
-	kdISoOwSACCA2AJE8MtExy764sxyHC8q5FpIb+G3Dqqk2U1f+zBqE0Mdr3vUwTWNCXPMHaOU10p
-	0vCa3qNSeKgIG1U5UrUOj6zff+zcZktHLkWN0KZYY+vHfazFqyrFjSNfk1c+qPXYpGNB+rm6sA9
-	DaAahF/tGEuH8lOU7uN1gxt+ly1WCw==
-X-Google-Smtp-Source: AGHT+IFPG5xPXCwcvvE2JWaV4HcrHvc6W3DgQ5ZikyH58crfIMJ8TJhxYQjOiX6A2Ig+f3m0RqS6HQ==
-X-Received: by 2002:a17:907:7e86:b0:aac:4ef:36de with SMTP id a640c23a62f3a-aac2b19a851mr241107266b.17.1734697333203;
-        Fri, 20 Dec 2024 04:22:13 -0800 (PST)
-Received: from [100.64.0.4] (144-178-202-138.static.ef-service.nl. [144.178.202.138])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-aac0e82f5f4sm171403166b.6.2024.12.20.04.22.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 20 Dec 2024 04:22:12 -0800 (PST)
-From: Luca Weiss <luca.weiss@fairphone.com>
-Date: Fri, 20 Dec 2024 13:22:07 +0100
-Subject: [PATCH] nvmem: qcom-spmi-sdam: Set size in struct nvmem_config
+	s=arc-20240116; t=1734700589; c=relaxed/simple;
+	bh=fcbMFdWZ9oZ+6cASJ3ukH0vsKnGZwM2cLwN4nCdwGB0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=qf1yy9szqyupVMUAfWsf3LTaAk2feBIRZdmtgY5Y0rbElUGnZVuogQRciYZwuo0ZUorVUxUaMvOD+3JJ5NdyevR8Le3DnTHkg123BJ+mycY6I9HUtCrVbiUZCQo4VPahiStBHhG2v/3lO4gibi57eaP9qQef6893jHydl72UrxE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VJA8JWcW; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21130C4CECD;
+	Fri, 20 Dec 2024 13:16:23 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1734700589;
+	bh=fcbMFdWZ9oZ+6cASJ3ukH0vsKnGZwM2cLwN4nCdwGB0=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=VJA8JWcW6wj/aeYHmdpmoU1S4cbHBPdj8dAQO9dWuZm8JVl4XxeMF8qzfC9Vsrwil
+	 vygkmIBFN5FCILk4U4vx/luokf/YaYks3puux9yXw5NNmdiRYoF35opgsFbaD61Zex
+	 gGQwv7GmVS+/R77b8xvjJrCyWeUD4fvt58zWJYzSyglEHpZClCx2SFsW0Zd5k3j36v
+	 lLR+mMemkmpN0kZytjiNBBQZy+P24BEOBjIc54PI4wc7XqoEru9EGJT43Svm855SEX
+	 VSqQLZHzAGRN9S/Y/Qo62seOYhx4vHfVSVgG8qBe5ikXVaXzFxj+4VPsWWwzEkNW8V
+	 036lDY6x4svjA==
+Date: Fri, 20 Dec 2024 13:16:21 +0000
+From: Mark Brown <broonie@kernel.org>
+To: Fabien Parent <parent.f@gmail.com>
+Cc: Rob Herring <robh@kernel.org>, Saravana Kannan <saravanak@google.com>,
+	Miguel Ojeda <ojeda@kernel.org>,
+	Alex Gaynor <alex.gaynor@gmail.com>,
+	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>,
+	=?iso-8859-1?Q?Bj=F6rn?= Roy Baron <bjorn3_gh@protonmail.com>,
+	Benno Lossin <benno.lossin@proton.me>,
+	Andreas Hindborg <a.hindborg@kernel.org>,
+	Alice Ryhl <aliceryhl@google.com>, Trevor Gross <tmgross@umich.edu>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	Liam Girdwood <lgirdwood@gmail.com>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>, devicetree@vger.kernel.org,
+	rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-i2c@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	vinod.koul@linaro.org, Fabien Parent <fabien.parent@linaro.org>
+Subject: Re: [PATCH 2/9] rust: add abstraction for regmap
+Message-ID: <8b85fbfa-ffb5-48d0-ba7b-0e26001ab3ae@sirena.org.uk>
+References: <20241218-ncv6336-v1-0-b8d973747f7a@gmail.com>
+ <20241218-ncv6336-v1-2-b8d973747f7a@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20241220-sdam-size-v1-1-17868a8744d3@fairphone.com>
-X-B4-Tracking: v=1; b=H4sIAG5hZWcC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
- vPSU3UzU4B8JSMDIxNDIyMD3eKUxFzd4syqVN2URLPElNRks7SkxEQloPqCotS0zAqwWdGxtbU
- Aju9aLlsAAAA=
-X-Change-ID: 20241220-sdam-size-da6adec6fbaa
-To: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>, 
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
- Shyam Kumar Thella <sthella@codeaurora.org>, 
- Anirudh Ghayal <quic_aghayal@quicinc.com>, 
- Guru Das Srinagesh <quic_gurus@quicinc.com>
-Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, 
- linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
- stable@vger.kernel.org, Luca Weiss <luca.weiss@fairphone.com>
-X-Mailer: b4 0.14.2
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="lAMR5aRUK7y3jhHD"
+Content-Disposition: inline
+In-Reply-To: <20241218-ncv6336-v1-2-b8d973747f7a@gmail.com>
+X-Cookie: Body by Nautilus, Brain by Mattel.
 
-Let the nvmem core know what size the SDAM is, most notably this fixes
-the size of /sys/bus/nvmem/devices/spmi_sdam*/nvmem being '0' and makes
-user space work with that file.
 
-  ~ # hexdump -C -s 64 /sys/bus/nvmem/devices/spmi_sdam2/nvmem
-  00000040  02 01 00 00 04 00 00 00  00 00 00 00 00 00 00 00  |................|
-  00000050  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
-  *
-  00000080
+--lAMR5aRUK7y3jhHD
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-Fixes: 40ce9798794f ("nvmem: add QTI SDAM driver")
-Cc: stable@vger.kernel.org
-Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
----
-Related, it would be nice to set sdam->sdam_config.type to an
-appropriate value, the ones currently upstream are:
+On Wed, Dec 18, 2024 at 03:36:32PM -0800, Fabien Parent wrote:
 
-  enum nvmem_type {
-      NVMEM_TYPE_UNKNOWN = 0,
-      NVMEM_TYPE_EEPROM,
-      NVMEM_TYPE_OTP,
-      NVMEM_TYPE_BATTERY_BACKED,
-      NVMEM_TYPE_FRAM,
-  };
+> The abstraction is bringing only a small subset of all the features
+> provided by regmap by only supporting the most vital field from
+> `struct regmap_config`.
 
-I don't know what would fit for SDAM and I couldn't find any info on
-createpoint either, not even what the abbreviation SDAM stands for.
----
- drivers/nvmem/qcom-spmi-sdam.c | 1 +
- 1 file changed, 1 insertion(+)
+I'm not so sure about that...
 
-diff --git a/drivers/nvmem/qcom-spmi-sdam.c b/drivers/nvmem/qcom-spmi-sdam.c
-index 9aa8f42faa4c93532cf8c70ea992a4fbb005d006..4f1cca6eab71e1efc5328448f69f863e6db57c5a 100644
---- a/drivers/nvmem/qcom-spmi-sdam.c
-+++ b/drivers/nvmem/qcom-spmi-sdam.c
-@@ -144,6 +144,7 @@ static int sdam_probe(struct platform_device *pdev)
- 	sdam->sdam_config.owner = THIS_MODULE;
- 	sdam->sdam_config.add_legacy_fixed_of_cells = true;
- 	sdam->sdam_config.stride = 1;
-+	sdam->sdam_config.size = sdam->size;
- 	sdam->sdam_config.word_size = 1;
- 	sdam->sdam_config.reg_read = sdam_read;
- 	sdam->sdam_config.reg_write = sdam_write;
+> +int rust_helper_regmap_field_write(struct regmap_field *field, unsigned int val)
+> +{
+> +	return regmap_field_write(field, val);
+> +}
 
----
-base-commit: 8155b4ef3466f0e289e8fcc9e6e62f3f4dceeac2
-change-id: 20241220-sdam-size-da6adec6fbaa
+...this is wrapping the field API.  That's not very widely used at all,
+and all the usages are in leaf drivers rather than frameworks.  Given
+this and that the code is basically simple syntactic sugar rather than
+any substantial logic I would suggest not wrapping this for Rust but
+instead writing native Rust abstractions that do the same thing.  That
+seems likely to be less work and give something that is more pleasant to
+use in the Rust environment.
 
-Best regards,
--- 
-Luca Weiss <luca.weiss@fairphone.com>
+Indeed, it looks like the actual core regmap APIs aren't wrapped at all,
+only the field ones?
 
+> +//! ```ignore
+> +//! regmap::define_regmap_field_descs!(FIELD_DESCS, {
+> +//!     (pid, 0x3, READ, { value => raw([7:0], ro) }),
+> +//!     (limconf, 0x16, RW, {
+> +//!         rearm     => bit(0, rw),
+> +//!         rststatus => bit(1, rw),
+> +//!         tpwth     => enum([5:4], rw, {
+> +//!             Temp83C  = 0x0,
+> +//!             Temp94C  = 0x1,
+> +//!             Temp105C  = 0x2,
+> +//!             Temp116C  = 0x3,
+> +//!         }),
+> +//!     })
+> +//! });
+
+You might want to include some explanation as to what this does because
+it's quite unclear.
+
+> +//! fn probe(client: &mut i2c::Client) -> Result {
+> +//!     let config = regmap::Config::<AccessOps>::new(8, 8)
+> +//!         .with_max_register(0x16)
+> +//!         .with_cache_type(regmap::CacheType::RbTree);
+
+New code should use maple tree unless it's got a good reason.
+
+> +    /// Use RbTree caching
+> +    RbTree = bindings::regcache_type_REGCACHE_RBTREE,
+> +    /// Use Flat caching
+> +    Flat = bindings::regcache_type_REGCACHE_FLAT,
+> +    /// Use Maple caching
+> +    Maple = bindings::regcache_type_REGCACHE_MAPLE,
+
+Maple Tree.
+
+> +impl Regmap {
+> +    #[cfg(CONFIG_REGMAP_I2C = "y")]
+
+Built in only?
+
+> +/// `raw` should be used when bits cannot be represented by any other field types. It provides
+> +/// raw access to the register bits.
+> +///
+> +/// # Syntax
+> +///
+> +/// `raw(bits_range, access)`
+
+Given how many register fields are just a number I'm not sure calling
+them "raw" fields really conveys the right message, it sounds like this
+is bypassing things that should be there rather than a perfectly normal
+thing to do.
+
+--lAMR5aRUK7y3jhHD
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmdlbiQACgkQJNaLcl1U
+h9BZYQf/YWG6Ra0eYK7OmmDmcOPVNpFJekn/pwMDeRk0IqTqww4wjrKoT6K728BZ
+RLor6g+fPM18bqUNbgqoJa2vDsTzv5PKrp3YPQ0cYfGKPABXm25fwvBup7nx+VML
+cmi9Lm/h5ojqMPvFMDQf+ElF80JqWLC4mLPgMCd/ZST87Pg+qaMk+IPolTe8f1f7
+qOiQJ35oxDMqKD4JBUeQfXTFKh3Qx7VeMXS4b7PZaec1ZbaAjnsA9Nue8T4boRnp
+jivFsszBtu5KflBtVX04N8BzMw0KvA6dVE2Lx3ijsBXkwihIHldXjKg/RayRkScJ
+k5RA2Br+WX+KDnU+xk5sR+ExExzQGg==
+=k8x4
+-----END PGP SIGNATURE-----
+
+--lAMR5aRUK7y3jhHD--
 
