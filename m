@@ -1,166 +1,239 @@
-Return-Path: <linux-arm-msm+bounces-42918-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-42919-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C537F9F8C8B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Dec 2024 07:19:54 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id E35309F8CA1
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Dec 2024 07:24:58 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2E4361684A4
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Dec 2024 06:19:52 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8B79B16DD41
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Dec 2024 06:24:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6A0AA1990BA;
-	Fri, 20 Dec 2024 06:19:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 70F6A1C07E4;
+	Fri, 20 Dec 2024 06:21:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="oQ7a5feR"
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="mOafRf8c"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f173.google.com (mail-pf1-f173.google.com [209.85.210.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C699819F436;
-	Fri, 20 Dec 2024 06:19:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 544641C07D6
+	for <linux-arm-msm@vger.kernel.org>; Fri, 20 Dec 2024 06:21:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734675566; cv=none; b=NGfqB1KHIpVm9zmJ0NILmSnIZxryKN/QolXLF1wrVxU9ziIo2j2oLZe4Z4I89XpSa5m6PmfyCeG08qc/74hXlF42QXyjWUhanJz3PzkPfjieH/zmsxybghdiwg07UKOYzHPQEdxqb1dVBr1o3/gxmB5qDTPbWgQTaJXGWVun8EI=
+	t=1734675684; cv=none; b=DzvWyCY1Ehq43f/o7ZEFmBrCwv1VJ5iR/phf2s6+UeerzhKwSIN5LDQC7TLQID3u/WHVN/OZ9sxohG9G4K/JiVJOujGDB+HhYmXsdj2mR740Y8NyJDnWFaKsup2UjdZWMpVkt4+ecEu9rCVuzbT5/uT1gsJ8izRuJ+maiib53Yc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734675566; c=relaxed/simple;
-	bh=B0ypnI9/MIGMB296zfia2QKOpfgiAYmwpdySSAQ/yCc=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Xh37w1Vm0DjbTaFKFM2TLxmMrgYjIVOERYJd6HbmoMuZ1xdQ4y6XZMdV+VBZxNDBWFDwbgNM9IhA4Iv7xehT+1qtR4WJvz9Zl4sUjXbD4gxE7P4UJ5nszddILjviiLQM8M0rnA0voQf1+od1K68KCObPfyT0adQfVcm9c1cJdhs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=oQ7a5feR; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BK5jupg012404;
-	Fri, 20 Dec 2024 06:19:20 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=TiaJVVDXXBmo9GKVqpoGQWaR
-	v2/hiVCCLa59jbXalwc=; b=oQ7a5feRshrvnZnX16qJm+vhPnu9QxukqV0FZ2gB
-	N0X30WNiPmQ/XBACturxh7gD5ZjcrihrIoovtqOy2qKrwH/gp9XJS/GFO3NB7gUz
-	TnHnSe3DWr0kDNnZmfyCkqOIbTpWjtT9MOKZ392oEezT5HjHXbpc51acUxXzOcd/
-	LI5ws20t2Irj8HQVveI3EGKhRe2Q7jN9e+4c451KzjFyM9bKX8OhHhGmPJ4nUAYH
-	w33IMlGT/bqauOFROTDbVURWt1B1sJH7n1ba18wHDHEPR3r41SAtrvYY+/KNd44x
-	RHKPFWj/jLebhn60q1PcW95aqf+m5LI2y0Y8HIneiqoGkw==
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43n2qgg2c1-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 20 Dec 2024 06:19:20 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4BK6JHSv018955
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 20 Dec 2024 06:19:17 GMT
-Received: from hu-anane-hyd.qualcomm.com (10.80.80.8) by
- nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Thu, 19 Dec 2024 22:19:14 -0800
-From: ANANDU KRISHNAN E <quic_anane@quicinc.com>
-To: <srinivas.kandagatla@linaro.org>, <linux-arm-msm@vger.kernel.org>
-CC: <gregkh@linuxfoundation.org>, <quic_bkumar@quicinc.com>,
-        <linux-kernel@vger.kernel.org>, <quic_chennak@quicinc.com>,
-        <dri-devel@lists.freedesktop.org>, <arnd@arndb.de>
-Subject: [PATCH v1 2/2] misc: fastrpc: Add meaningful labels for exit paths
-Date: Fri, 20 Dec 2024 11:48:54 +0530
-Message-ID: <20241220061854.24428-3-quic_anane@quicinc.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20241220061854.24428-1-quic_anane@quicinc.com>
-References: <20241220061854.24428-1-quic_anane@quicinc.com>
+	s=arc-20240116; t=1734675684; c=relaxed/simple;
+	bh=AUIpkjYlokg6+zWgmU+PFChYT2vUanC69W9X19gb9Iw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=aW4ve3BL25e95v5gCBxx/+nCkOqu6DdeLFoO9fBZ/0FZPZhR7rYRUthybFYcrmCMJJVbH39PoUmtuXYseBb5v1ZSbBDuUNuuyj6FxdQkN9Ojo58AZxnyW/FCHtPOPDR/hwRxkQWNMmTv9E2LKJaZzRJutWOSp8nYJwc5540n4VA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=mOafRf8c; arc=none smtp.client-ip=209.85.210.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
+Received: by mail-pf1-f173.google.com with SMTP id d2e1a72fcca58-725f4025e25so1302501b3a.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Dec 2024 22:21:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google; t=1734675680; x=1735280480; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=jOGdsmjkf/ZsaDTg5QmeQIHE5bE9RT/o4cYwTbhD1UY=;
+        b=mOafRf8cNpbJ9HOblwOAlEk/cEqDhzKn3FfP/a5ACPfjl07wQvGxr/5wcDEJHgfK5j
+         iLgcMGhhVNAe+lj3DtdAKnJrU8KGmNll2PtCG7+MVi3xgIg3pj4JFhnB4v9nlJ93QqqM
+         NrKLNzhw2SnrovEAOCdQhYD00aijNtidp9Cj0=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1734675680; x=1735280480;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=jOGdsmjkf/ZsaDTg5QmeQIHE5bE9RT/o4cYwTbhD1UY=;
+        b=CDmfCg9CdtbIXudrhVH0IYyXqR530dXEmNtcMOSu+eJJEkMMJ+y4ek1PuwMRc4wZQN
+         nPT+Bc6OVqlrQ1Jaf8rkvdnfpLAeXCPMqh013ksXDLKfRd7oV02+JLXE50BVNjCGBzU6
+         tBD3fZSh1w6o7jv5QobjItcm7jgejrIODRAvi4oPfFczhK6oXeXhfRu8bgC59ap+DyWy
+         GdnTWOKLI1vWG/yi+50R0vGIQ2g5ZX16w2utvDSQB0biLKKq0UY9Dl7SqJ+xPmnYlym3
+         pCW324Sor+S/XCqhcKdOKeIJCRkXyT0ok7DIlX6nePXv630J7NBggO8ia7Du3Yc9tNr9
+         pZDQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUWnvYnsH7vldoVSX9Vxy2rTMCKT8+fwp5QoVJhTpG6nCfv4VdUc9HLE2+Amq5/VtxKxhIUhZordydxqJcb@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx6lIGliJos9y2mG/tYGE7B522OVeVaiiI+HPpXyJmn33vXlvNu
+	4LMdDLDVMQnno3Gd+/fXOw64qBTIsaufkdCxCIEyzdJElUUXUK8cjZc3UsaLHA==
+X-Gm-Gg: ASbGnctFbZGyVAdUsmvlJehnm0wN4/PkhIzbM3g7ZngVBCQWepPBr6uQI+04F/NwXcF
+	rM4WHwBcy/pQTzVDQa3SSHpbsjqFjeAbVD1bInkrCurx+2RonvKCEyYNtMtSwaJfj+PWzpA60lf
+	YSeCtK5PnkUs6CHqF06ooA7qKctWTmS2qwkXP2Hz+J5sdbMPqgzEeIO80SIuUplqxh7fnbGbH9t
+	HfsoFHCNdN5wnBxNoQquwhksIhfLzVPlKxBEjUvHjF2hnyZJ4E27kYxvfdc
+X-Google-Smtp-Source: AGHT+IHmG4ABMEGyZD2Dg0KCz13DkbEKInc19TG97D4oO89Vky6w7HZ9nnlRXfw6AebtuVSxi6sUhw==
+X-Received: by 2002:a05:6a21:3994:b0:1e1:afa9:d39b with SMTP id adf61e73a8af0-1e5e044fcbfmr3154550637.7.1734675680623;
+        Thu, 19 Dec 2024 22:21:20 -0800 (PST)
+Received: from google.com ([2401:fa00:8f:203:8e99:8969:ed54:b6c2])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-72aad816540sm2426026b3a.22.2024.12.19.22.21.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 19 Dec 2024 22:21:20 -0800 (PST)
+Date: Fri, 20 Dec 2024 15:21:15 +0900
+From: Sergey Senozhatsky <senozhatsky@chromium.org>
+To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Cc: Sergey Senozhatsky <senozhatsky@chromium.org>, 
+	Stanimir Varbanov <stanimir.k.varbanov@gmail.com>, Vikash Garodia <quic_vgarodia@quicinc.com>, 
+	Hans Verkuil <hverkuil@xs4all.nl>, linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, stable@vger.kernel.org
+Subject: Re: [PATCHv2] media: venc: destroy hfi session after m2m_ctx release
+Message-ID: <ltiok5ryos2yh6bvd2md3p7k73rd6eu6fwagn2b4ij7tuljntn@dx6o5ralryui>
+References: <20241219033345.559196-1-senozhatsky@chromium.org>
+ <20241219053734.588145-1-senozhatsky@chromium.org>
+ <1153ebfe-eb98-4b8c-8fd4-914e7a3e063b@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: QyCTCEh5THJXwbsF8QqjRNP1xkBYdwui
-X-Proofpoint-GUID: QyCTCEh5THJXwbsF8QqjRNP1xkBYdwui
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 phishscore=0
- mlxlogscore=999 priorityscore=1501 malwarescore=0 suspectscore=0
- lowpriorityscore=0 bulkscore=0 spamscore=0 adultscore=0 clxscore=1011
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2412200051
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1153ebfe-eb98-4b8c-8fd4-914e7a3e063b@linaro.org>
 
-In fastrpc_rpmsg_probe function, exit path labels are not intuitive.
-It does not metion what the goto does or why the goto exists. Rename
-goto labels to make it more intuitive and to align with labels of
-other functions.
+On (24/12/19 14:03), Bryan O'Donoghue wrote:
+> On 19/12/2024 05:37, Sergey Senozhatsky wrote:
+> > This partially reverts commit that made hfi_session_destroy()
+> > the first step of vdec/venc close().  The reason being is a
+> > regression report when, supposedly, encode/decoder is closed
+> > with still active streaming (no ->stop_streaming() call before
+> > close()) and pending pkts, so isr_thread cannot find instance
+> > and fails to process those pending pkts.  This was the idea
+> > behind the original patch - make it impossible to use instance
+> > under destruction, because this is racy, but apparently there
+> > are uses cases that depend on that unsafe pattern.  Return to
+> > the old (unsafe) behaviour for the time being (until a better
+> > fix is found).
 
-Signed-off-by: ANANDU KRISHNAN E <quic_anane@quicinc.com>
+[..]
+
+> Two questions:
+> 
+> 1: Will this revert re-instantiate the original bug @
+
+I'm afraid pretty much so, yes.  isr_thread runs concurrently
+with close(), the instance is still in the streaming mode and
+there are pending pkts.  As far as I understand it, stop_streaming()
+is called from
+
+close()
+ v4l2_m2m_ctx_release()
+  vb2_queue_release()        // ->cap_q_ctx.q  ->out_q_ctx.q
+   vb2_core_queue_release()
+    __vb2_cleanup_fileio()
+	 vb2_core_streamoff()
+
+At least this is how I understand the test that is failing.
+
+I don't have a fix (nor even an idea) at this point.
+
+> 2: Why not balanced out the ordering of calls by moving
+>    hfi_session_create() in vdec_open_common() ? to match
+>    the ordering in venus_close_common();
+
+
+Something like this?
+
 ---
- drivers/misc/fastrpc.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
-index ff144f0aa337..fe0e40a06b8a 100644
---- a/drivers/misc/fastrpc.c
-+++ b/drivers/misc/fastrpc.c
-@@ -2311,7 +2311,7 @@ static int fastrpc_rpmsg_probe(struct rpmsg_device *rpdev)
- 		rmem = of_reserved_mem_lookup(rmem_node);
- 		if (!rmem) {
- 			err = -EINVAL;
--			goto fdev_error;
-+			goto err_free_data;
- 		}
+diff --git a/drivers/media/platform/qcom/venus/vdec.c b/drivers/media/platform/qcom/venus/vdec.c
+index 98c22b9f9372..9f82882b77bc 100644
+--- a/drivers/media/platform/qcom/venus/vdec.c
++++ b/drivers/media/platform/qcom/venus/vdec.c
+@@ -1697,10 +1697,6 @@ static int vdec_open(struct file *file)
+ 	if (ret)
+ 		goto err_free;
  
- 		src_perms = BIT(QCOM_SCM_VMID_HLOS);
-@@ -2332,7 +2332,7 @@ static int fastrpc_rpmsg_probe(struct rpmsg_device *rpdev)
- 		data->unsigned_support = false;
- 		err = fastrpc_device_register(rdev, data, secure_dsp, domains[domain_id]);
- 		if (err)
--			goto fdev_error;
-+			goto err_free_data;
- 		break;
- 	case CDSP_DOMAIN_ID:
- 	case CDSP1_DOMAIN_ID:
-@@ -2340,15 +2340,15 @@ static int fastrpc_rpmsg_probe(struct rpmsg_device *rpdev)
- 		/* Create both device nodes so that we can allow both Signed and Unsigned PD */
- 		err = fastrpc_device_register(rdev, data, true, domains[domain_id]);
- 		if (err)
--			goto fdev_error;
-+			goto err_free_data;
+-	ret = hfi_session_create(inst, &vdec_hfi_ops);
+-	if (ret)
+-		goto err_ctrl_deinit;
+-
+ 	vdec_inst_init(inst);
  
- 		err = fastrpc_device_register(rdev, data, false, domains[domain_id]);
- 		if (err)
--			goto populate_error;
-+			goto err_deregister_fdev;
- 		break;
- 	default:
- 		err = -EINVAL;
--		goto fdev_error;
-+		goto err_free_data;
+ 	ida_init(&inst->dpb_ids);
+@@ -1712,15 +1708,19 @@ static int vdec_open(struct file *file)
+ 	inst->m2m_dev = v4l2_m2m_init(&vdec_m2m_ops);
+ 	if (IS_ERR(inst->m2m_dev)) {
+ 		ret = PTR_ERR(inst->m2m_dev);
+-		goto err_session_destroy;
++		goto err_ctrl_deinit;
  	}
  
- 	kref_init(&data->refcount);
-@@ -2365,17 +2365,17 @@ static int fastrpc_rpmsg_probe(struct rpmsg_device *rpdev)
+ 	inst->m2m_ctx = v4l2_m2m_ctx_init(inst->m2m_dev, inst, m2m_queue_init);
+ 	if (IS_ERR(inst->m2m_ctx)) {
+ 		ret = PTR_ERR(inst->m2m_ctx);
+-		goto err_m2m_release;
++		goto err_m2m_dev_release;
+ 	}
  
- 	err = of_platform_populate(rdev->of_node, NULL, NULL, rdev);
- 	if (err)
--		goto populate_error;
-+		goto err_deregister_fdev;
++	ret = hfi_session_create(inst, &vdec_hfi_ops);
++	if (ret)
++		goto err_m2m_ctx_release;
++
+ 	v4l2_fh_init(&inst->fh, core->vdev_dec);
+ 
+ 	inst->fh.ctrl_handler = &inst->ctrl_handler;
+@@ -1730,10 +1730,10 @@ static int vdec_open(struct file *file)
  
  	return 0;
  
--populate_error:
-+err_deregister_fdev:
- 	if (data->fdevice)
- 		misc_deregister(&data->fdevice->miscdev);
- 	if (data->secure_fdevice)
- 		misc_deregister(&data->secure_fdevice->miscdev);
+-err_m2m_release:
++err_m2m_ctx_release:
++	v4l2_m2m_ctx_release(inst->m2m_ctx);
++err_m2m_dev_release:
+ 	v4l2_m2m_release(inst->m2m_dev);
+-err_session_destroy:
+-	hfi_session_destroy(inst);
+ err_ctrl_deinit:
+ 	v4l2_ctrl_handler_free(&inst->ctrl_handler);
+ err_free:
+diff --git a/drivers/media/platform/qcom/venus/venc.c b/drivers/media/platform/qcom/venus/venc.c
+index c1c543535aaf..c7f8e37dba9b 100644
+--- a/drivers/media/platform/qcom/venus/venc.c
++++ b/drivers/media/platform/qcom/venus/venc.c
+@@ -1492,10 +1492,6 @@ static int venc_open(struct file *file)
+ 	if (ret)
+ 		goto err_free;
  
--fdev_error:
-+err_free_data:
- 	kfree(data);
- 	return err;
- }
--- 
-2.17.1
-
+-	ret = hfi_session_create(inst, &venc_hfi_ops);
+-	if (ret)
+-		goto err_ctrl_deinit;
+-
+ 	venc_inst_init(inst);
+ 
+ 	/*
+@@ -1505,15 +1501,19 @@ static int venc_open(struct file *file)
+ 	inst->m2m_dev = v4l2_m2m_init(&venc_m2m_ops);
+ 	if (IS_ERR(inst->m2m_dev)) {
+ 		ret = PTR_ERR(inst->m2m_dev);
+-		goto err_session_destroy;
++		goto err_ctrl_deinit;
+ 	}
+ 
+ 	inst->m2m_ctx = v4l2_m2m_ctx_init(inst->m2m_dev, inst, m2m_queue_init);
+ 	if (IS_ERR(inst->m2m_ctx)) {
+ 		ret = PTR_ERR(inst->m2m_ctx);
+-		goto err_m2m_release;
++		goto err_m2m_dev_release;
+ 	}
+ 
++	ret = hfi_session_create(inst, &venc_hfi_ops);
++	if (ret)
++		goto err_m2m_ctx_release;
++
+ 	v4l2_fh_init(&inst->fh, core->vdev_enc);
+ 
+ 	inst->fh.ctrl_handler = &inst->ctrl_handler;
+@@ -1523,10 +1523,10 @@ static int venc_open(struct file *file)
+ 
+ 	return 0;
+ 
+-err_m2m_release:
++err_m2m_ctx_release:
++	v4l2_m2m_ctx_release(inst->m2m_ctx);
++err_m2m_dev_release:
+ 	v4l2_m2m_release(inst->m2m_dev);
+-err_session_destroy:
+-	hfi_session_destroy(inst);
+ err_ctrl_deinit:
+ 	v4l2_ctrl_handler_free(&inst->ctrl_handler);
+ err_free:
 
