@@ -1,301 +1,257 @@
-Return-Path: <linux-arm-msm+bounces-43015-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-43016-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6BF149F99C1
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Dec 2024 19:50:33 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 602059F99C3
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Dec 2024 19:50:41 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7D0BD18870BC
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Dec 2024 18:46:55 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4DEE21887C51
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Dec 2024 18:47:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 83155219EB8;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A55D021D009;
 	Fri, 20 Dec 2024 18:46:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Eq5GpUu8"
+	dkim=pass (2048-bit key) header.d=hotmail.com header.i=@hotmail.com header.b="DJj/h1Yo"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from EUR05-DB8-obe.outbound.protection.outlook.com (mail-db8eur05olkn2038.outbound.protection.outlook.com [40.92.89.38])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 159AC21D5A8;
-	Fri, 20 Dec 2024 18:46:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734720411; cv=none; b=Jb+MHQk2AT7Hm18vDQhcywfl5bsK8y8kwy8XAiHXjqXBg7dktcsJBt1lsuhKF9ZTRwzJwUc1GxUCRkTQZC9BZSnVt+rrS4eO9+C86KLtXoqC+fEjwwmfmX93l8a/z+BJDauerMNJn4UUVzH4NuGITktOtjj9d0vTFJsLib/I12k=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8797221D5BF;
+	Fri, 20 Dec 2024 18:46:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.92.89.38
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1734720411; cv=fail; b=ibMfae4yuOZCAW9WWNvRatvqQ2m6hH455g+XhHWJ3u7ZrKJMHK0Kle5dV+gZo4tAvOK8LlpffVg+fnDci+10WTeYBXzSp05qQkaZUX10TrhEb4rmSRgRGtuoZXC55WPIJdv1hn6YMiZAMPHCxoWmt6o2cYTytnvZa/pIP/AXkPc=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1734720411; c=relaxed/simple;
-	bh=b+EYGvgN6KaGLfdgBQvlGjXgni/Aa0pin16PxbON17o=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=gZSPUYZS3TrLQ2UoJBu+QArxljSeZNNUkPJwLkm5QHqZWy2/Akcjwp7ZjN54aBv5bqo4F81QdMzl8D7D+9oeXq2dtpt/2fx/g0sYVQuF9nXmeMwBL0u+91jay2j9fPM2yXn0NnUq0Qp/SuwvBzq8GuwyeCGLL/Slv09ul/jdOcQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Eq5GpUu8; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BKEftbF004119;
-	Fri, 20 Dec 2024 18:46:33 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	wH9sjjTLNsednl9KvYJYyboXzZHS5O4rpgDhve2StH0=; b=Eq5GpUu8wjbYV9ms
-	o+PhSkCrSwHe5Q7v4KjPDQzpGHUrhzDnbQuCe+TJvelSkv5V681Pqi32XP0cb7Cj
-	5nzcFAPBGvvoloqD1pjuA58TITCkdmpZX7z4+6kuT5AZB0HCD5dnnzJLrmtnf7cO
-	uiOK4gXiWWS9WuMJOYwlRvL29GuL0z/rU366/wiQoxRAnG7e+N6Cm7XSjQnhyUwz
-	3IOnlbqYTFaXgc8y1V08v5qvOl+q7eJ5AWiFB4uOJOCD25HclhhyDusk8dVXxk/h
-	QFomQtdjguDVdtFqSuqKgugMpuVa36du3mZOXSgHbobISRa2sCNxAfwfGzlgA44a
-	S9HnpQ==
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43najt0pa8-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 20 Dec 2024 18:46:32 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4BKIkWmI003227
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 20 Dec 2024 18:46:32 GMT
-Received: from [10.134.70.212] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 20 Dec
- 2024 10:46:30 -0800
-Message-ID: <07fbc2c9-900a-4a88-8af0-cbe95fa2469e@quicinc.com>
-Date: Fri, 20 Dec 2024 10:46:29 -0800
+	bh=5rMPAFkZWt3tSUhak09Rht+ozM/DEXkuYZl2o8CXIh8=;
+	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=XCKlW6JFHfoO3E2Ombgo2iTazw5sIu5bm2oUGjFvf1nXpmYY/Qb5aW+SCcOb+ia89UWxIcTUWpfamnXXYZC8zRBMQRiqaHbtoyAOI78Z6/eGpqbOTsfFUFnm+Qz/Ltg0mkCVRgJKiO16OBrf0krzl1nrqTK6dXg5EtHpb5lxgus=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=hotmail.com; spf=pass smtp.mailfrom=hotmail.com; dkim=pass (2048-bit key) header.d=hotmail.com header.i=@hotmail.com header.b=DJj/h1Yo; arc=fail smtp.client-ip=40.92.89.38
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=hotmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hotmail.com
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=rGftPnT32TvKzb8SzgyMjNCEx41MyG08NbP2AzKUOH7wqhyc5O7FsDqvf/wwZGAb6d2Yvg1R+ANDEZeJd8tMMGj5h4COlRvnLy9SsNUb6VoHYqncP0b8E1t8hny+Hmxuljb+ghGjagGoRZXvqSPv+ldo+kNKpPhK3S7woHZJgu5zj1ZlLXTnK+pRDG2PTX1nvu0XOckaCM4YXSfZxRqnRav7TYJbtg+JB7gAke00z+h6lTd65rWdekfMJk9xq5M3qPbTdkgI5JyuCdidFBaAHtqQlQJaYQu3mum8odgqKQePlmO4AsA3qU5Z6RCvRXBmBCPhRERhts+M/3oaIPenmQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=wlecf5lFFk1JI5+b6l3UMuxfolumPO5UUkV8w5C+Dww=;
+ b=wpj7T9JqXmd0tXZd2iDygEWMPRDV7OIwQE7tJA4B7DSeAC/Y/KwlsHy+OptxINYYKsR9wb2VvN8uH9ooIYZr5o07HMgE3XcUIObUGCJH+OBOyQbtIPJSEdGxK2gW4oA8rBm8ZadFSvdZrIbGipNaVCR5O7qmJr9K6UTZ28TPt4pph5IvTdQY1+vtgi9w72Ss6Ogm4WkMGyOzh8KCXpzvpobsLDeiiE3e3t7uO98b0GBIwx90wG8GZT0j2XYLCouweV40Q+WFRVKcBpfWC5i77pauC+M4Byz8vUiwvcyCRJINBggYNbVr71JYM9e+GcWCEwg9Ck+f6zxYBCKyXZI4tA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hotmail.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=wlecf5lFFk1JI5+b6l3UMuxfolumPO5UUkV8w5C+Dww=;
+ b=DJj/h1Yo+QkX2Gqgzr12PtG3nW39i8LxxcsCrqJR+n17qq+RokymAPE/MsYFgDl/3hcissCiiAI4ay2g8AGrkrqV+9YGb4wV0jVCOhW/6eLtP5M8x/reYWiXFr55ZNMuHQeUFX6N1Unz2RX3cJh9OuMUq4uzKWz6QF4D/+oeEm9hjywDKXPksPoAO2K/Ji2Lyim+PsbjFHj+UY/IA0zj4nypwJCOBHXLkg2Vu22eAlp0sB4GiFcVJZEqZhyoK1GluaxK/Q0SmMXS6npMpGCk8j6GuDSvec76HPWdoncPLVcnRPdHpIhB0jOHnaDpBMv6bwnrVvdc+N9K/RB5D5MH0g==
+Received: from AM7P189MB1009.EURP189.PROD.OUTLOOK.COM (2603:10a6:20b:175::17)
+ by AS8P189MB2420.EURP189.PROD.OUTLOOK.COM (2603:10a6:20b:5a0::21) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8272.16; Fri, 20 Dec
+ 2024 18:46:46 +0000
+Received: from AM7P189MB1009.EURP189.PROD.OUTLOOK.COM
+ ([fe80::e9f1:a878:e797:ee1a]) by AM7P189MB1009.EURP189.PROD.OUTLOOK.COM
+ ([fe80::e9f1:a878:e797:ee1a%5]) with mapi id 15.20.8272.013; Fri, 20 Dec 2024
+ 18:46:46 +0000
+Message-ID:
+ <AM7P189MB1009DBCC9F40EDC3852E14D2E3072@AM7P189MB1009.EURP189.PROD.OUTLOOK.COM>
+Date: Fri, 20 Dec 2024 19:46:39 +0100
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 3/3] arm64: dts: qcom: x1e80100-vivobook-s15: Add
+ bluetooth
+To: Stephan Gerhold <stephan.gerhold@linaro.org>
+Cc: Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Johan Hovold <johan@kernel.org>,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+References: <20241204-asus_qcom_display-v6-0-91079cd8234e@hotmail.com>
+ <20241204-asus_qcom_display-v6-3-91079cd8234e@hotmail.com>
+ <Z2WucXuxJ5bKzifa@linaro.org>
+Content-Language: en-US
+From: Maud Spierings <maud_spierings@hotmail.com>
+In-Reply-To: <Z2WucXuxJ5bKzifa@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: AS4P251CA0019.EURP251.PROD.OUTLOOK.COM
+ (2603:10a6:20b:5d3::7) To AM7P189MB1009.EURP189.PROD.OUTLOOK.COM
+ (2603:10a6:20b:175::17)
+X-Microsoft-Original-Message-ID:
+ <a832e8f1-4ca7-4f68-a70a-39fe1e84fec4@hotmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 00/25] drm/msm/dpu: Add Concurrent Writeback Support
- for DPU 10.x+
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC: Rob Clark <robdclark@gmail.com>, <quic_abhinavk@quicinc.com>,
-        Sean Paul
-	<sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        "David
- Airlie" <airlied@gmail.com>,
-        Maarten Lankhorst
-	<maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        Simona Vetter <simona@ffwll.ch>,
-        Simona Vetter <simona.vetter@ffwll.ch>, <quic_ebharadw@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
-        Rob Clark
-	<robdclark@chromium.org>,
-        =?UTF-8?B?VmlsbGUgU3lyasOkbMOk?=
-	<ville.syrjala@linux.intel.com>
-References: <20241216-concurrent-wb-v4-0-fe220297a7f0@quicinc.com>
- <kx22rzwg5464f4m24u6ybnv3wcey2hffueg5pwd6t523lpjdsp@b4wj6qgcgvmk>
-Content-Language: en-US
-From: Jessica Zhang <quic_jesszhan@quicinc.com>
-In-Reply-To: <kx22rzwg5464f4m24u6ybnv3wcey2hffueg5pwd6t523lpjdsp@b4wj6qgcgvmk>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: NNU6YpNTKzr0T8iAySDZkKyWFADho3UK
-X-Proofpoint-ORIG-GUID: NNU6YpNTKzr0T8iAySDZkKyWFADho3UK
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 mlxscore=0
- lowpriorityscore=0 adultscore=0 priorityscore=1501 malwarescore=0
- clxscore=1015 suspectscore=0 phishscore=0 spamscore=0 bulkscore=0
- mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2412200151
+X-MS-Exchange-MessageSentRepresentingType: 1
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: AM7P189MB1009:EE_|AS8P189MB2420:EE_
+X-MS-Office365-Filtering-Correlation-Id: ad1cf28d-ee12-4ae9-bd64-08dd2126a407
+X-Microsoft-Antispam:
+	BCL:0;ARA:14566002|6090799003|19110799003|461199028|15080799006|5072599009|8060799006|10035399004|440099028|3412199025;
+X-Microsoft-Antispam-Message-Info:
+	=?utf-8?B?cTRXaXowTy9NQWVjKzZsQWVHWGlicEs3cVNITlpjeDRZYlJQdEY0VmFPTDkw?=
+ =?utf-8?B?b3BqVUYyQXltMXJuK2JITlcybTRxWW5nWE5GQmV0THNSSjNQVGhqQmZ4MmZl?=
+ =?utf-8?B?bnFlVzhjUW1ibFRyN1MyY3BnV0ZFQ3BJZ3k5R1NPak1peXFHQ0JwTFVrVk1T?=
+ =?utf-8?B?VXBZcUxRUThSUUFUaW54UlRyUWhhd1NMbEMvUVdNK0h0NGNJVGJsSC80YVZM?=
+ =?utf-8?B?UTdTZVIxTm1FVG1SWW9JOUc5OXg3TUpRYnlGVXpFanFidUhIUFlHR3R3c05h?=
+ =?utf-8?B?WUZVRjRRV0xKNkNpWUxiWXQrdElUeTRvdFo1Tm95MXpaZDZ1M1BzTFU5dXpJ?=
+ =?utf-8?B?NlVQMW8xUXRJWnJvbWp2eUJuN0RuUGdmZXJnNDVmcElKMnI4ejhLS2ErUEcz?=
+ =?utf-8?B?NHNRMDJ3b2QvenEyZXNuRWNHcGxzVjMvZ3crS0JwbmdKeXJTUDM5dkpaZmVY?=
+ =?utf-8?B?empYZkR4a1ZHeHJKRmlzblZuNmgzQldzK016clo0RnpoTDNaU1ZRNnl6UnRG?=
+ =?utf-8?B?N3VraGpTcVF2VGdHcTNRaFgwdnJOYVBVWGxON3FFMTNkVHhGNXZmWVltNFRQ?=
+ =?utf-8?B?SFVEdmVvQ3BBNWh5dmc0MlU1VTg1eS9UcnhqOVNycGR6bURqb0tITVV1R280?=
+ =?utf-8?B?NHBIQ2tDeEViU1h2SGtLLzllQ0Y1ZjkyYjc5UXlUQXlJa3hYOFlMTE1yRnBn?=
+ =?utf-8?B?dC8zSzFKUncxV0w1NW45Z1dqNS9icGpBTkdpZ24vOHAwZlVSOTZQaG9XcmVr?=
+ =?utf-8?B?ZXI2aHl6WDhVZVZsNUdPOVUrNTZmRzZ4aGRrV2x0L0l4ODFZWU5iTi9GQjZS?=
+ =?utf-8?B?c0hrUENVQ0UyeFNSdmRvRVl2NElVSVhsL1Z0WW5qQ2dmQ0xWZExrWi82SnZS?=
+ =?utf-8?B?M0xiaUlQQ1k3OVlQOWQvL3I2NFhzNG1KWHdmZ1FkRDVCb1JqTjJxWWRMa3hV?=
+ =?utf-8?B?WGkvQ0JkNCtUTnQyT0JMVW1nYktLdyt4aFFIRWJBWXhvL2VtU3VXMVRKUnBt?=
+ =?utf-8?B?UkRDQVRZTWxQOXBmdHluTHV3cTJQZjNkQ2ZoUWFBcS8raHFTUlMxNXhpcFNt?=
+ =?utf-8?B?QjlpWkl3dnYzMjZYSnNEUHROZ1BhRXdtTVMrWnhsU1J4V2RXWW9Xc3laZWxr?=
+ =?utf-8?B?cjliNHljNjlReTc5cldFbVowR3R2QTFpOFgwMUhNU09NanFtMVJZV0oySkFC?=
+ =?utf-8?B?RUovT0FvVkVqMTNhWmVyU3FjSHdQdGFDVHkzWkE4SjBPNnJjUE9MeE5DVTBV?=
+ =?utf-8?B?QzNPRTh1K3U3MXJrcVU0bDhuWWdRVnBKSk12WW1tMm1SQ0JLam1ITTkrVXJs?=
+ =?utf-8?B?eDRiRXE3VC84RHQ1MTFmdmh4QjREdUFpdHJ2VmUyWmZCejlVR0pmUkhDSGVK?=
+ =?utf-8?B?RkFDK1ZjNSsvVlR1QmNjdmxESXRYSXZ0VG1pa2g0R3l5Rk5tOWtXSHl2UC9O?=
+ =?utf-8?B?VmxZZCtWM2xSSDJwbkluVkVJcFRlOEg0WHdUcmlQNTJFOTZ1Ti85L3R6TmI0?=
+ =?utf-8?B?WmhTT2V1bVZROUN0dkdBV3pWc0hPL1hCR0hob0ZCRXpwZTVLbTZ6T1M1RldH?=
+ =?utf-8?B?aTlCdz09?=
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?V3IyL01obWRPWkV4ZnVwVEVCNEdFOUxiUWhuZFB5c3NYdXNCSkM1VUJlMTlB?=
+ =?utf-8?B?VldKUjRCdElzNTRTa3FtanR3Y2g4TW02bHl3VGV4Q3VPL1prdGtpS29hU2dY?=
+ =?utf-8?B?eXhRaEppd1diRE9XWENTcFg1WlBycmp1MnZla1BGd3k1VkszUEtXbStFYlpP?=
+ =?utf-8?B?eVNjRzR2b2NrN2p3TVovdUloTGFkN00wNC9KRGliLzNoeURaTHRkWjBoK2E1?=
+ =?utf-8?B?Q0RkYThGVlNubW1tc2FTWVR0bG4vc3RQYmx6eDJrWisxbW1EWEwxY0lGRXk0?=
+ =?utf-8?B?a0dsQzBaS2tDY1ZWR2ZCZ0FObWVHTWVmUlM3cll1WHJZaGtMdFk1VWFDQnBH?=
+ =?utf-8?B?L1J0cWlzT2F0eE9vT2xoL3RRT0xQWHRvZi8yMStaRFk0TVZOZmFtS3hnaUJT?=
+ =?utf-8?B?ZGRGdlZCRmFZS092SE9nbWdvNnVYZ1gzRHlINUFhR2M2M09Xb3ZXQ24vQkdh?=
+ =?utf-8?B?UlFGNHpXTll1RUhKUzlEU0RGWlM0UmluUlkvYzFwZ1FUNTRkYWhWYmZwcGRj?=
+ =?utf-8?B?SXEvbVlXcUJ1S3hSZ3FnZDhDRXJENVZpRFZWV3BmTmJLUldRRmoyTFp6K0hy?=
+ =?utf-8?B?Ym1WSFZtU0o4Rk93RkR1N2pnTEhGbUlDdUlnclIzTmx1SmtWcitjSTQ0NHJo?=
+ =?utf-8?B?dzVPY1NubnpCUThhRnJkaWFOSktidkFFeTFxbmttU08xeDdDK2NjdzRRcnhi?=
+ =?utf-8?B?WnhKMnNCQSs0RGQ3ZjBFVVhpRjEwT0c5OEwrL2lOT0dTK3NBNktWSFJKbkJV?=
+ =?utf-8?B?dTUyaDAwenBMNWdpK3BjOWMwQjZUb24wQkRTVGdjUzYyd2R4ZXZ5TjRXdHJC?=
+ =?utf-8?B?UXNJOGprbnFhY3Z1UkNySWIvbVdMTmZsRDIyVE5sWjVJeEdUWnd4aWdsTmhp?=
+ =?utf-8?B?ay9XUFY4NjhYTVpxQ28wYUFydnhmUU5HUlZvN0Y3Q3V1UkhZTG1IRlVoMXZL?=
+ =?utf-8?B?ZlpETlU4VVMva2ZjMU1ZTGNPcm1IYmVrVkU3Q09vaDdpcEdPN0JDUEJ0NzBX?=
+ =?utf-8?B?QUswYys2ZFRBTk8wZlRYMVYwVEZWN1Zsa214SmlUUEFTaDltdm44M2I1ci9u?=
+ =?utf-8?B?bmdtVjAwNDEvQm1hN2xZalc1ZGNvdktadnRpSE12ZDA1ZTcyWUJIK2Z4ZDZV?=
+ =?utf-8?B?Nmt2dWoySkhBRFR4UzJPRFltTEQveWVvUmJIdTZpZm8vcWQxbXdQQ3VYRWdm?=
+ =?utf-8?B?RkJ1eHFrd3dSekdDU1dpWW1ERTBaemRKa2RJUUtqMGxqbW5ySWx6Y1N4SUxV?=
+ =?utf-8?B?LzRZWkdBVFpZQkpyU0pjNmZ4c2lJR3NFRU5qMmpMeHZRSmx3Um05OU02UzF2?=
+ =?utf-8?B?QXhWcDQvalBSN1N2ZjdIQ2RmbC9SZkR3U09TM3VWRXJiLzU5NkExYUREbTRB?=
+ =?utf-8?B?V1Q1b3haWFhoZmhIOWRVZzdNcUpKTjFBaWZMVnFiNUptWkZjcUVVZ3c5OGNw?=
+ =?utf-8?B?Rm5tNnJjcXRGOGRjcUZNb2tEMmw5NVdRYkNJK2tUYndSTkFhS25xUisyQldB?=
+ =?utf-8?B?UDdiZnBLZ3R5TnRXTUg1b25YdXdQNDJPM1ZGSm9OeS91bWNCQmE3OEVIQURU?=
+ =?utf-8?B?akNuU2U1OENqT1JqMXRyTTFLdDFodkp0MjBWTUJzYjY1Vk10cENYZTFjaElD?=
+ =?utf-8?B?azZ2QXFjaFVPd1F6QndsU25MaFdKQVZ3bU4zSmJ4Ui93WEdibE9ubFNIQ0RE?=
+ =?utf-8?B?OVBQRDRwaGZacVFDNWQyOVIxcmo2NzNMVURsU2RTczhKUEh2eDZYSWdmK1Fi?=
+ =?utf-8?Q?L83b5GElSHpQBNn7SWbNkJLLyhESXtH1AJuEl19?=
+X-OriginatorOrg: sct-15-20-7719-19-msonline-outlook-3b3e0.templateTenant
+X-MS-Exchange-CrossTenant-Network-Message-Id: ad1cf28d-ee12-4ae9-bd64-08dd2126a407
+X-MS-Exchange-CrossTenant-AuthSource: AM7P189MB1009.EURP189.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Dec 2024 18:46:46.5983
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
+	00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AS8P189MB2420
 
-
-
-On 12/19/2024 9:11 PM, Dmitry Baryshkov wrote:
-> On Mon, Dec 16, 2024 at 04:43:11PM -0800, Jessica Zhang wrote:
->> DPU supports a single writeback session running concurrently with primary
->> display when the CWB mux is configured properly. This series enables
->> clone mode for DPU driver and adds support for programming the CWB mux
->> in cases where the hardware has dedicated CWB pingpong blocks. Currently,
->> the CWB hardware blocks have only been added to the SM8650
->> hardware catalog and only DSI has been exposed as a possible_clone of WB.
+On 12/20/24 6:50 PM, Stephan Gerhold wrote:
+> On Wed, Dec 04, 2024 at 01:26:39PM +0100, Maud Spierings via B4 Relay wrote:
+>> From: Maud Spierings <maud_spierings@hotmail.com>
 >>
->> This changes are split into two parts:
+>> Add bluetooth for the asus vivobook s15
+>> Describe wlan configuration
 >>
->> The first part of the series will pull in Dmitry's patches to refactor
->> the DPU resource manager to be based off of CRTC instead of encoder.
->> This includes some changes (noted in the relevant commits) by me and
->> Abhinav to fix some issues with getting the global state and refactoring
->> the CDM allocation to work with Dmitry's changes.
-> 
-> To provide a sensible baseline for both CWB and Quad-Pipe changes I'm
-> going to pull patches 5-14 (those which refactor the resource allocation
-> and also those adding support for the CWB hardware block). The core DRM
-> patches should probably go in through drm-misc-next.
-
-Ack, thanks for all the help with reviews!
-
-- Jessica Zhang
-
-> 
->>
->> The second part of the series will add support for CWB by doing the
->> following:
->>
->> 1) Add a DRM helper to detect if the current CRTC state is in clone mode
->>     and add an "in_clone_mode" entry to the atomic state print
->> 2) Add the CWB mux to the hardware catalog and clarify the pingpong
->>     block index enum to specifiy which pingpong blocks are dedicated to
->>     CWB only and which ones are general use pingpong blocks
->> 3) Add CWB as part of the devcoredump
->> 4) Add support for configuring the CWB mux via dpu_hw_cwb ops
->> 5) Add pending flush support for CWB
->> 6) Add support for validating clone mode in the DPU CRTC and setting up
->>     CWB within the encoder
->> 7) Adjust the encoder trigger flush, trigger start, and kickoff order to
->>     accomodate clone mode
->> 8) Adjust when the frame done timer is started for clone mode
->> 9) Define the possible clones for DPU encoders so that
->>
->> The feature was tested on SM8650 using IGT's kms_writeback test with the
->> following change [1] and dumping the writeback framebuffer when in clone
->> mode. I haven't gotten the chance to test it on DP yet, but I've
->> validated both single and dual LM on DSI.
->>
->> To test CWB with IGT, you'll need to apply this series [1] and this
->> driver patch [2]. Run the following command to dump the writeback buffer:
->>
->> IGT_FRAME_DUMP_PATH=<dump path> FRAME_PNG_FILE_NAME=<file name> \
->> ./build/tests/kms_writeback -d [--run-subtest dump-valid-clones] \
->>
->> You can also do CRC validation by running this command:
->>
->> ./build/tests/kms_writeback [--run-subtest dump-valid-clones]
->>
->> [1] https://patchwork.freedesktop.org/series/137933/
->> [2] https://patchwork.freedesktop.org/series/138284/
->>
+>> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>> Signed-off-by: Maud Spierings <maud_spierings@hotmail.com>
 >> ---
->> Changes in v4:
->> - Rebased onto latest msm-next
->> - Added kunit tests for framework changes
->> - Skip valid clone check for encoders that don't have any possible clones set
->>    (this is to avoid failing kunit tests, specifically the HDMI state helper tests)
->> - Link to v3: https://lore.kernel.org/r/20241016-concurrent-wb-v3-0-a33cf9b93835@quicinc.com
+>>   .../boot/dts/qcom/x1e80100-asus-vivobook-s15.dts   | 161 +++++++++++++++++++++
+>>   1 file changed, 161 insertions(+)
 >>
->> Changes in v3:
->> - Dropped support for CWB on DP connectors for now
->> - Dropped unnecessary PINGPONG array in *_setup_cwb()
->> - Add a check to make sure CWB and CDM aren't supported simultaneously
->>    (Dmitry)
->> - Document cwb_enabled checks in dpu_crtc_get_topology() (Dmitry)
->> - Moved implementation of drm_crtc_in_clone_mode() to drm_crtc.c (Jani)
->> - Dropped duplicate error message for reserving CWB resources (Dmitry)
->> - Added notes in framework changes about posting a separate series to
->>    add proper KUnit tests (Maxime)
->> - Added commit message note addressing Sima's comment on handling
->>    mode_changed (Dmitry)
->> - Formatting fixes (Dmitry)
->> - Added proper kerneldocs (Dmitry)
->> - Renamed dpu_encoder_helper_get_cwb() -> *_get_cwb_mask() (Dmitry)
->> - Capitalize all instances of "pingpong" in comments (Dmitry)
->> - Link to v2: https://lore.kernel.org/r/20240924-concurrent-wb-v2-0-7849f900e863@quicinc.com
->>
->> Changes in v2:
->> - Moved CWB hardware programming to its own dpu_hw_cwb abstraction
->>    (Dmitry)
->> - Reserve and get assigned CWB muxes using RM API and KMS global state
->>    (Dmitry)
->> - Dropped requirement to have only one CWB session at a time
->> - Moved valid clone mode check to DRM framework (Dmitry and Ville)
->> - Switch to default CWB tap point to LM as the DSPP
->> - Dropped printing clone mode status in atomic state (Dmitry)
->> - Call dpu_vbif_clear_errors() before dpu_encoder_kickoff() (Dmitry)
->> - Squashed setup_input_ctrl() and setup_input_mode() into a single
->>    dpu_hw_cwb op (Dmitry)
->> - Moved function comment docs to correct place and fixed wording of
->>    comments/commit messages (Dmitry)
->> - Grabbed old CRTC state using proper drm_atomic_state API in
->>    dpu_crtc_atomic_check() (Dmitry)
->> - Split HW catalog changes of adding the CWB mux block and changing the
->>    dedicated CWB pingpong indices into 2 separate commits (Dmitry)
->> - Moved clearing the dpu_crtc_state.num_mixers to "drm/msm/dpu: fill
->>    CRTC resources in dpu_crtc.c" (Dmitry)
->> - Fixed alignment and other formatting issues (Dmitry)
->> - Link to v1: https://lore.kernel.org/r/20240829-concurrent-wb-v1-0-502b16ae2ebb@quicinc.com
->>
->> ---
->> Dmitry Baryshkov (4):
->>        drm/msm/dpu: get rid of struct dpu_rm_requirements
->>        drm/msm/dpu: switch RM to use crtc_id rather than enc_id for allocation
->>        drm/msm/dpu: move resource allocation to CRTC
->>        drm/msm/dpu: fill CRTC resources in dpu_crtc.c
->>
->> Esha Bharadwaj (3):
->>        drm/msm/dpu: Add CWB entry to catalog for SM8650
->>        drm/msm/dpu: add devcoredumps for cwb registers
->>        drm/msm/dpu: add CWB support to dpu_hw_wb
->>
->> Jessica Zhang (18):
->>        drm: add clone mode check for CRTC
->>        drm/tests: Add test for drm_crtc_in_clone_mode()
->>        drm: Add valid clones check
->>        drm/tests: Add test for drm_atomic_helper_check_modeset()
->>        drm/msm/dpu: Specify dedicated CWB pingpong blocks
->>        drm/msm/dpu: Add dpu_hw_cwb abstraction for CWB block
->>        drm/msm/dpu: Add RM support for allocating CWB
->>        drm/msm/dpu: Add CWB to msm_display_topology
->>        drm/msm/dpu: Require modeset if clone mode status changes
->>        drm/msm/dpu: Fail atomic_check if CWB and CDM are enabled
->>        drm/msm/dpu: Reserve resources for CWB
->>        drm/msm/dpu: Configure CWB in writeback encoder
->>        drm/msm/dpu: Support CWB in dpu_hw_ctl
->>        drm/msm/dpu: Adjust writeback phys encoder setup for CWB
->>        drm/msm/dpu: Start frame done timer after encoder kickoff
->>        drm/msm/dpu: Skip trigger flush and start for CWB
->>        drm/msm/dpu: Reorder encoder kickoff for CWB
->>        drm/msm/dpu: Set possible clones for all encoders
->>
->>   drivers/gpu/drm/drm_atomic_helper.c                |  28 ++
->>   drivers/gpu/drm/drm_crtc.c                         |  20 +
->>   drivers/gpu/drm/msm/Makefile                       |   1 +
->>   .../drm/msm/disp/dpu1/catalog/dpu_10_0_sm8650.h    |  29 +-
->>   .../gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h |   4 +-
->>   .../drm/msm/disp/dpu1/catalog/dpu_8_4_sa8775p.h    |   4 +-
->>   .../gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h |   4 +-
->>   .../drm/msm/disp/dpu1/catalog/dpu_9_2_x1e80100.h   |   4 +-
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c           | 208 ++++++++-
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c        | 463 ++++++++++++---------
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h        |  14 +-
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h   |   7 +-
->>   .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c    |  16 +-
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h     |  13 +
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c         |  30 +-
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h         |  15 +-
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_cwb.c         |  73 ++++
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_cwb.h         |  70 ++++
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h        |  15 +-
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_wb.c          |   4 +-
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c            |  12 +-
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h            |  13 +-
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c             | 361 +++++++++-------
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h             |  13 +-
->>   drivers/gpu/drm/tests/drm_atomic_state_test.c      | 133 +++++-
->>   include/drm/drm_crtc.h                             |   2 +-
->>   26 files changed, 1172 insertions(+), 384 deletions(-)
->> ---
->> base-commit: 86313a9cd152330c634b25d826a281c6a002eb77
->> change-id: 20240618-concurrent-wb-97d62387f952
->> prerequisite-change-id: 20241209-abhinavk-modeset-fix-74864f1de08d:v3
->> prerequisite-patch-id: a197a0cd4647cb189ea20a96583ea78d0c98b638
->> prerequisite-patch-id: 112c8f1795cbed989beb02b72561854c0ccd59dd
->>
->> Best regards,
->> -- 
->> Jessica Zhang <quic_jesszhan@quicinc.com>
->>
-> 
-> -- 
-> With best wishes
-> Dmitry
+>> diff --git a/arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dts b/arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dts
+>> index ba52c0eef4e32019f6eb7c7ae3c4cd727df23490..6564386e92e5c8c08ae2807ba512f83537358cf5 100644
+>> --- a/arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dts
+>> +++ b/arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dts
+>> @@ -19,6 +19,10 @@ / {
+>>   	compatible = "asus,vivobook-s15", "qcom,x1e80100";
+>>   	chassis-type = "laptop";
+>>   
+>> +	aliases {
+>> +		serial1 = &uart14;
+>> +	};
+>> +
+>>   	gpio-keys {
+>>   		compatible = "gpio-keys";
+>>   		pinctrl-0 = <&hall_int_n_default>;
+>> @@ -153,6 +157,101 @@ vph_pwr: regulator-vph-pwr {
+>>   		regulator-always-on;
+>>   		regulator-boot-on;
+>>   	};
+>> +
+>> +	vreg_wcn_0p95: regulator-wcn-0p95 {
+>> +		compatible = "regulator-fixed";
+>> +
+>> +		regulator-name = "VREG_WCN_0P95";
+>> +		regulator-min-microvolt = <950000>;
+>> +		regulator-max-microvolt = <950000>;
+>> +
+>> +		vin-supply = <&vreg_wcn_3p3>;
+>> +	};
+>> +
+>> +	vreg_wcn_1p9: regulator-wcn-1p9 {
+>> +		compatible = "regulator-fixed";
+>> +
+>> +		regulator-name = "VREG_WCN_1P9";
+>> +		regulator-min-microvolt = <1900000>;
+>> +		regulator-max-microvolt = <1900000>;
+>> +
+>> +		vin-supply = <&vreg_wcn_3p3>;
+>> +	};
+> The reason we haven't pushed these patches for CRD, T14s etc is that
+> unlike for QCP these two regulators are not actually present on the
+> mainboard, they are part of a soldered or removable M.2 card. You can
+> find this TODO in the commit message/patch on Johan's kernel tree:
+>
+> https://github.com/jhovold/linux/commit/32cfeff737b0f9a2f8787d21a875e549a22e9e8b
+> https://github.com/jhovold/linux/commit/2a7fee4007670e2f0f7696eb9e992e74d3be460f
+>
+> We haven't come to a conclusion yet how to model these M.2 cards
+> properly. Perhaps we should stop blocking this and merge this for all
+> the laptops as temporary solution to get Bluetooth running, but then we
+> should at least preserve the TODO comment block to make that clear:
+>
+> 	/*
+> 	 * TODO: These two regulators are actually part of the removable M.2
+> 	 * card and not the CRD mainboard. Need to describe this differently.
+> 	 * Functionally it works correctly, because all we need to do is to
+> 	 * turn on the actual 3.3V supply above.
+> 	 */
+>
+> @Konrad: Given that you acked this patch, do you have any opinion if we
+> should merge these with this open question?
+>
+> Thanks,
+> Stephan
+It is soldered down in the case of the asus vivobook s15 see:
+https://laptopmedia.com/wp-content/uploads/2024/06/IMG_20240618_161453_1-scaled.jpg
 
+I don't know if this regulator is underneath this metal shield or if it 
+is actually separate on the board in this case.
+
+But given that it is not a replaceable m.2 module isn't it kind of part 
+of the mainboard anyway?
+
+Anyways if it does come to having to add the TODO comment I'll fix it up 
+in a v7
+
+kind regards,
+Maud Spierings
 
