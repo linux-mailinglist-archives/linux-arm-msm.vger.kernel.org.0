@@ -1,180 +1,125 @@
-Return-Path: <linux-arm-msm+bounces-42991-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-42992-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 757689F94DD
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Dec 2024 15:50:44 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3C3269F95FD
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Dec 2024 17:07:00 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CBDB6163B56
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Dec 2024 14:50:41 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id F336E7A4324
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Dec 2024 16:06:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 58472216382;
-	Fri, 20 Dec 2024 14:50:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B4F51215713;
+	Fri, 20 Dec 2024 16:06:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lH89QGYO"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IotxdJ3a"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f47.google.com (mail-pj1-f47.google.com [209.85.216.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 171271A83ED;
-	Fri, 20 Dec 2024 14:50:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4107739FF3;
+	Fri, 20 Dec 2024 16:06:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734706238; cv=none; b=iKKpMIkz7VabMGxIQjsPxjaAdq1EFYYyzSDkJC/TazYjyKf2oSR/GR6nfJBxlc8mgUkeXqVA71HfSQlEGJheXymHENWx9zgqyLtMBxfQg/P6HnsSyiZDCMZURquE5vLhCRpqwgJkqEc5BHAJcXsVtLykJDcpWx/T3gf3fSRjoWA=
+	t=1734710810; cv=none; b=iNDZ+drFGHRAJnGPPKTHKtMH9fIZRVPiL754wHlvk0EqgstE15LlhSGytcwoae2QUkhz9MtwsrgvNn6dRsv5rCraIiNdMl3Yp9YrT0g8oN/ZqYTB9iPWt5A5yBJ0QBSQZ48tJTt17ojEPr7BGtVfvKNw7AeDPSVn7COvLE2RE/g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734706238; c=relaxed/simple;
-	bh=r4c9d0v9wioCTU7ey9H7aITQFI6J4PXM19WbW0iAJRk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=sBBRfU7UZeiLHH/yo4Vxye2ClbJoTjUx+jcReTj9ZIsEvh8ompQ7X+99aikELr4VMmgQxQw3cqPMUEUwwrmNfYi5m2qw0r7nkXfB2OOKpYiZZWziAq5iSYJ0jfbhBe7WVLAkoTvwjP6dh6BbDHx6PvIi28jTCfp8qBjQHQCkVWQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lH89QGYO; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92934C4CECD;
-	Fri, 20 Dec 2024 14:50:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1734706237;
-	bh=r4c9d0v9wioCTU7ey9H7aITQFI6J4PXM19WbW0iAJRk=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=lH89QGYON78vWWKew3aBc6aS76RBHQ6Eo55t6gNL8zMlXuiiekw5166maaKt/BY3o
-	 qc358gsjbRmvCTg2k3s+uLizOntidV3nSYUw30xUh19xCE+B+XHRt1g4kJbmzaMlpU
-	 sD61Fer7f433UMA0txVKBGki5PT5kcg0dbTow57qrFwABUGOJCPTmFQaDaUZxrMdRo
-	 p0qcYkjsmQDEmc+GD/ndMzbP9hF/f2qb7UnkQCR9Swc+j8tT3UnRs+m6LEHGfS7bfC
-	 V47kg3qPCgYOltXp/WQ36/oNEUAdrGM35rJTf11Q+VpIZy0tQEnhjmIWj8eoVzFGT4
-	 4s++K1uw+o3QA==
-Date: Fri, 20 Dec 2024 14:50:29 +0000
-From: Mark Brown <broonie@kernel.org>
-To: Fabien Parent <parent.f@gmail.com>
-Cc: Rob Herring <robh@kernel.org>, Saravana Kannan <saravanak@google.com>,
-	Miguel Ojeda <ojeda@kernel.org>,
-	Alex Gaynor <alex.gaynor@gmail.com>,
-	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>,
-	=?iso-8859-1?Q?Bj=F6rn?= Roy Baron <bjorn3_gh@protonmail.com>,
-	Benno Lossin <benno.lossin@proton.me>,
-	Andreas Hindborg <a.hindborg@kernel.org>,
-	Alice Ryhl <aliceryhl@google.com>, Trevor Gross <tmgross@umich.edu>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
-	Wolfram Sang <wsa+renesas@sang-engineering.com>,
-	Liam Girdwood <lgirdwood@gmail.com>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>, devicetree@vger.kernel.org,
-	rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-i2c@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	vinod.koul@linaro.org, Fabien Parent <fabien.parent@linaro.org>
-Subject: Re: [PATCH 8/9] regulator: add driver for ncv6336 regulator
-Message-ID: <32b34f2d-21eb-48e6-9383-f2090ad05900@sirena.org.uk>
-References: <20241218-ncv6336-v1-0-b8d973747f7a@gmail.com>
- <20241218-ncv6336-v1-8-b8d973747f7a@gmail.com>
+	s=arc-20240116; t=1734710810; c=relaxed/simple;
+	bh=chMdNm/Q5KLgechMxKPNtyrQw5ShEV7Z2Gkq+62QFIc=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=jNhCsIaYYuyetEGM+qt5TJqzsNISXBLEX5B2WprVXXwNhLC+hbd7Q25ex6lmJVWThW9BwG9rmxx/eEQhDVSKTIZa7/+aOqPPYGPs5fQyI2eOI9XtSWJKogiqlPLsKIt+nMgxPmnpi0feVMnj9AfBu/2ZO8nE+6/A4ofLCy9BaD0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IotxdJ3a; arc=none smtp.client-ip=209.85.216.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pj1-f47.google.com with SMTP id 98e67ed59e1d1-2f441791e40so1689744a91.3;
+        Fri, 20 Dec 2024 08:06:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1734710808; x=1735315608; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=SqzkneedjFpkKrbm/77u/4WbXSRIbYzZ5pp4s+HER/o=;
+        b=IotxdJ3aIPy1TtpnKCYLBUwJGFMZX6kpYNA8WoBVEoYa3Wj/TW5kTzZk4fG51hPcFn
+         z7BIlGBqV8WP1vWWsqjadWcoXQQgmvZXxN/z237/AbLVTs2HHacM9RdqR/XeX44Vtnub
+         JMuJds8YMCW+5mxynduhRK8glr0qWRMTgkWBfv0mbj2ftXQYW5E3tpjWeDaAJTqT8NzE
+         az7rT9w/otXF7sWnErDvgVpf6a2CsWDzFd++ZdqkkyKvL77IWFa7nB4roYpA82WQ70yp
+         fRjNn9bJk8cO7eYCnZA7WPkE2xf4uIAZG44b1T3DTyqTEBSkf2j1wNb/sOX4bY1Rzz6m
+         IByw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1734710808; x=1735315608;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=SqzkneedjFpkKrbm/77u/4WbXSRIbYzZ5pp4s+HER/o=;
+        b=ueZy+sivBmvVSfpODsrTHqhkupnENAJLNyYdMhCXiURKKkX0mkvl7Oy5AyoNkIjNHJ
+         OhCbUsEJSx2qZfyr6B+gXCTY7BTLUBzmXuAVuVOYQ9uQKKyoIu/APe4xrCYzuYGJ1heB
+         kee0ilt3Bb7PKrEDOitIdMcJVoPG5PI/xS/bvSIzWrbhBytXV61EyX81NiJoQbcNUwWJ
+         vJHynLd3v65gq/Sg29ZW14XCO7O/JxORcfNTljmYn9JvAEu17G6LygK/EBKv7CsbZKGo
+         6zLlqdQF5SKwO7kcObmxhvdJSVm2MNg21DgG54keTwDKxw41aZ+xn1ZOVPW2PBIVOwKp
+         HE+Q==
+X-Forwarded-Encrypted: i=1; AJvYcCUclp/1u1MEwuIJJMMWf4eks5WP/7UR8IhlQX0NC0kbBQ9df1u2Nr5T5QhAQwaqJtZ8itTn6COsKVNMqTujXA==@vger.kernel.org, AJvYcCW4/Mvsh+4sPQxOCGGuZWyBWf/3wP56eZJeWiBUpfqZdQmJNFCKWaHHLxE0cSp7KZqlbgidDgjEXpJn4/gR@vger.kernel.org, AJvYcCWau6ojeT0nFR1ULkWRArWM1FlHNMb4F38HyHU8HMOREazcMCi7xduGFDsiqj4iej2iDbi1xvSByXKZ@vger.kernel.org
+X-Gm-Message-State: AOJu0YxiX7McQrP0HNXhsc36aOu8IqzxJAZRIzMPr0ZCZms9B0WxeHwd
+	62eTHRbZMwDJ3xcqBVHpRuK1bIIh/SrOeCocUE2r8Z9tv+PLUNnE
+X-Gm-Gg: ASbGnctkT1oauI28QX4cZ2P0ZIERGnCaQbf8IYiH6Rp9V4UU9LgTm+MYqbR1EmlpiS7
+	oK1jW0+eVP/tTBfGZJfcS60U1ovba/rLXyP5W80SsWrFQx6o/gHi+EBWjNmqK7ALoAPlUMqODVM
+	hCgDUyn6VV8NfyCD3FgBoPr4n+8MOEi94rZnVXAbNaeJHdu1uT6j9N9ELlyDMNId96wfLgC377f
+	4GLadB7ag6loeWAw1aJ5uuhzMFEojwR8CyETKGscRxyfrTBw3kLN3Q=
+X-Google-Smtp-Source: AGHT+IESaLSHzyGt0jMI3iXNk2wEyI/+br7s3QbEkDb1UV0Njw2E43YUAaGmhJnAPGpAVc2DkepdiQ==
+X-Received: by 2002:a17:90a:da88:b0:2f1:4715:5987 with SMTP id 98e67ed59e1d1-2f452e1e7b4mr5403559a91.9.1734710808471;
+        Fri, 20 Dec 2024 08:06:48 -0800 (PST)
+Received: from nuvole.. ([144.202.86.13])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2f4478a92absm3518771a91.44.2024.12.20.08.06.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 20 Dec 2024 08:06:48 -0800 (PST)
+From: Pengyu Luo <mitltlatltl@gmail.com>
+To: andersson@kernel.org,
+	conor+dt@kernel.org,
+	konradybcio@kernel.org,
+	krzk+dt@kernel.org,
+	robh@kernel.org
+Cc: chenxuecong2009@outlook.com,
+	devicetree@vger.kernel.org,
+	gty0622@gmail.com,
+	linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Pengyu Luo <mitltlatltl@gmail.com>
+Subject: [PATCH v2 0/3] arm64: dts: qcom: Introduce Huawei Matebook E Go
+Date: Sat, 21 Dec 2024 00:05:27 +0800
+Message-ID: <20241220160530.444864-1-mitltlatltl@gmail.com>
+X-Mailer: git-send-email 2.47.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="Heke4tG6+xlLnnGL"
-Content-Disposition: inline
-In-Reply-To: <20241218-ncv6336-v1-8-b8d973747f7a@gmail.com>
-X-Cookie: Body by Nautilus, Brain by Mattel.
+Content-Transfer-Encoding: 8bit
 
+Add support for the SC8280XP-based Huawei Matebook E Go (sc8280xp)
 
---Heke4tG6+xlLnnGL
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Signed-off-by: Pengyu Luo <mitltlatltl@gmail.com>
+---
+Changes in v2:
+- use Co-developed-by: tag (Konrad)
+- follow this order (property-n property-names) (Konrad)
+- add a label for tablet mode switch (Konrad)
+- handle line breaks properly (Konrad)
+- remove the wlan calibration variant (Konrad)
+- drop the venus node, as upstream has not supported it now
+- Link to v1: https://lore.kernel.org/linux-arm-msm/20241211153754.356476-1-mitltlatltl@gmail.com
 
-On Wed, Dec 18, 2024 at 03:36:38PM -0800, Fabien Parent wrote:
+---
+Pengyu Luo (3):
+  dt-bindings: arm: qcom: Document Huawei Matebook E Go (sc8280xp)
+  firmware: qcom: scm: Allow QSEECOM on Huawei Matebook E Go (sc8280xp)
+  arm64: dts: qcom: sc8280xp: Add Huawei Matebook E Go (sc8280xp)
 
-> +regmap::define_regmap_field_descs!(FIELD_DESCS, {
-> +    (pid, 0x3, READ, { value => raw([7:0], ro) }),
+ .../devicetree/bindings/arm/qcom.yaml         |    1 +
+ arch/arm64/boot/dts/qcom/Makefile             |    1 +
+ .../boot/dts/qcom/sc8280xp-huawei-gaokun3.dts | 1318 +++++++++++++++++
+ drivers/firmware/qcom/qcom_scm.c              |    1 +
+ 4 files changed, 1321 insertions(+)
+ create mode 100644 arch/arm64/boot/dts/qcom/sc8280xp-huawei-gaokun3.dts
 
-Looking at this it appears that the whole thing with only exposing
-regmap fields is actually a deliberate attempt to elide whole register
-access.  This doesn't seem like a good idea, it's quite common to want
-to operate on a register as a whole.  For example there's the very
-common case where we're updating multiple fields at once, we don't want
-to do a separate read/modify/write cycle for each field.
+-- 
+2.47.1
 
-As I mentioned in review of the regmap patch I'd expect that fields
-would be layered on the underlying register access interface, and I'd
-expect that we'd always be able to work with the registers.
-
-> +static NCV6336_DESC: Desc = Desc::new::<Ncv6336>(c_str!("ncv6336"), Type::Voltage)
-> +    .with_owner(&THIS_MODULE)
-> +    .with_of_match(c_str!("buck"))
-> +    .with_active_discharge(
-> +        pgood::addr(),
-> +        pgood::dischg::mask(),
-> +        pgood::dischg::mask(),
-> +        0,
-> +    )
-
-I'm not sure these sequences of unnamed arguments are great for
-legibility.
-
-> +#[vtable]
-> +impl Driver for Ncv6336 {
-> +    type Data = Arc<Mutex<Ncv6336RegulatorData>>;
-> +
-> +    fn list_voltage(reg: &mut Device<Self::Data>, selector: u32) -> Result<i32> {
-> +        reg.list_voltage_linear(selector)
-> +    }
-> +
-> +    fn enable(reg: &mut Device<Self::Data>) -> Result {
-> +        reg.enable_regmap()
-> +    }
-> +
-> +    fn disable(reg: &mut Device<Self::Data>) -> Result {
-> +        reg.disable_regmap()
-> +    }
-> +
-> +    fn is_enabled(reg: &mut Device<Self::Data>) -> Result<bool> {
-> +        reg.is_enabled_regmap()
-> +    }
-
-I can't help but feel that this isn't a great way to deal with the ops
-table - AIUI we're mapping the C functions to rust, then bouncing those
-wrapped functions back to the C API.  All of this with no abstraction of
-the whole fact that this is a data driven way of specifying the regmap.
-It feels like we're loosing a lot of the point of having these data
-driven helpers, for most devices where we're data driven it looks like
-it would be actively worse to write in rust.
-
-As with the regmap fields I'd really expect to see this handled in a
-much more directly rust native manner for drivers, in this case I'd
-expect that to wind up with us reusing the C ops but handled by the
-support code rather than directly by each driver.  Drivers doing
-complicated things might want to peer in and work with the ops (eg, some
-devices need a special write sequence but the read side uses helpers)
-but it shouldn't be the default.
-
-> +    fn get_status(reg: &mut Device<Self::Data>) -> Result<Status> {
-> +        if !Self::is_enabled(reg)? {
-> +            return Ok(Status::Off);
-> +        }
-> +
-> +        Ok(Self::get_mode(reg).into())
-> +    }
-
-This is buggy, it's just returning the values configured by the driver
-not status from the hardware.  If the hardware doesn't report status
-don't implement this operation.
-
---Heke4tG6+xlLnnGL
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmdlhDQACgkQJNaLcl1U
-h9BJpgf9GSdV5m3bch32XmJ/oBqT7jdpUNJo/k4LTiDybvbwHAm9jC9UFqITlbqc
-RF77c4F+MKX+pXO946MFThkUY/W/mXUyl6msByX+K45DRullW/J3SZtXSE8KsrRo
-aPPhKrgEO6zISqr4a8LqaW9oZBiIVXzhElp1ScS8z8VvwVd9McYJmx/D8lIQ/oCj
-8Bvm81jj8gyifw0cbOdoNG8HMD1ZD4MuODP+qIQ2+ijKsFynNFNhMP1UbCFN/ISg
-00kWhzzBBuMpECh0cuyvR8hpumPizWQcY5N/91NyG6dL0D80TXZUHww4M+d/o19y
-lfsZZ/YVRkXBkCe4KO+xmll3BUGrtw==
-=b36A
------END PGP SIGNATURE-----
-
---Heke4tG6+xlLnnGL--
 
