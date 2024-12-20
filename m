@@ -1,86 +1,88 @@
-Return-Path: <linux-arm-msm+bounces-42920-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-42921-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id D55779F8CB2
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Dec 2024 07:28:13 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6777C9F8CD8
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Dec 2024 07:40:46 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id B50791897FD3
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Dec 2024 06:26:24 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C5008163DA0
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Dec 2024 06:40:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0C0A119D06A;
-	Fri, 20 Dec 2024 06:22:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 781B97081B;
+	Fri, 20 Dec 2024 06:40:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="GJYQDfLX"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="c/sSn5/e"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pf1-f171.google.com (mail-pf1-f171.google.com [209.85.210.171])
+Received: from mail-pf1-f182.google.com (mail-pf1-f182.google.com [209.85.210.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B85718628F
-	for <linux-arm-msm@vger.kernel.org>; Fri, 20 Dec 2024 06:22:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC094175D29
+	for <linux-arm-msm@vger.kernel.org>; Fri, 20 Dec 2024 06:40:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734675749; cv=none; b=jJ4aKRyMiLV+qN9a90WipeRL3fl4itsKu1fGi4BbbSlezyK3c7iubt3iGDx4yk3qrfiZdOMc673UHQsEz2JVn29egap1pGoWSaudav4agcqUVeXealOWWmu7QugyiBfY8tsjzi5qweblhbPHR+WWt+FEtFVFoQoAOuUQ47/BWjQ=
+	t=1734676836; cv=none; b=i/ZKd30tTHwP3GE5TJemIGFZiBT9nan/ASlSoGx8Gf9KhpG0/cgEah8xOQbeRl/NI57+mEr9MQ36FgYeZZB9LqBtvzWGD3TXMRgaJaUYjqs2/ouBVKwxntB+0BsuWzNeU6hg0+qr0yy2RJx6g6ek925vAMChJNHsgDWeSLw7D8k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734675749; c=relaxed/simple;
-	bh=yTxtHlpZhJaWLrNGQktrEe47fUy0ci77cALAMbauTGs=;
+	s=arc-20240116; t=1734676836; c=relaxed/simple;
+	bh=y9JHwmsgJykn5Vuz5DPHZlgGFgCSKQIm9DCJUV+dnAo=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=HYjS/mzRvganWnJ9xcogAUxLvgN8bUCYg6LJQF/B9IytJFMioawT9mqEXI7Bpvnd1vnC7j2BBOdVfeUQH84rD8qd8zac2KTF/0ljIHPKFmWdzU4OJMGC9iTz8I8pQvvdQLktIi7/gDZtJjuhjIljDe62gHhIMn+/xOgInsM/+ls=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=GJYQDfLX; arc=none smtp.client-ip=209.85.210.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
-Received: by mail-pf1-f171.google.com with SMTP id d2e1a72fcca58-728e1799d95so1850904b3a.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Dec 2024 22:22:28 -0800 (PST)
+	 Content-Type:Content-Disposition:In-Reply-To; b=E5JtLYjG4LD/5gm6npeGsNchxdzP432PgmGpvV4VrcTE0f/e6LDa91YR7sTN0Fj8LByAF6E+HqZm2oqtfI2Zjk7j2uJYDIMPlk/MHCIC0iqI3VrFk/hXjxAYEO7ThFay3bXWlxJupmEHfSL5Fk95gG4WwXNxJMUJWedpOlCBVD0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=c/sSn5/e; arc=none smtp.client-ip=209.85.210.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-pf1-f182.google.com with SMTP id d2e1a72fcca58-728e3826211so1353734b3a.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Dec 2024 22:40:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1734675748; x=1735280548; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1734676834; x=1735281634; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=hENRJeDL2zrkFH/JRQSrNdsVu5tnCmHT7uSM0w/i5Kc=;
-        b=GJYQDfLXfDqwTYjAV0XaGCgvIqBwhp0H1Z/gfuppK7LLCA9MI1FzPdzkR62WNlauLb
-         9QdSGJ6rSOJ17jR4Ml2xJWKIZSdqFR5d9bnnxQJ89MfxPLXr1YRn/dWWK16XYSlzM9CI
-         7pfz1ZA5Ok+IRYXk8j7irPI076eAOhyM+Q+nQ=
+        bh=oAR6EL4b1dcR37cH4D1lnXYbRYlW9ts5uPuKUPE4Krk=;
+        b=c/sSn5/ecqqiQAgWvjLfwuDZd1R5AVnM498/3A8HYJKLgjo02JJSTAjI0T3v9IHNHO
+         VrxgNhwinAfoTZoOmwluJaL4YC3tyif61gljPqqU2eZVC4G8KR2MPRlYSPZVtdJKv6mZ
+         T7n6Ofl59ONEijcvD5ATw6bbHitylNLpHWoMd0v4Hjaehys04OIcVUGtzDQPDO+ju7tF
+         3f1KiGtYG3LZG4tyqBK3ERRRBS4MDhl64bNgjNRcE8SfIcnkF0LHkLrEPdWjidCMKxCF
+         wZOQKqS2oba7UeUg8adUO8qmKZVFcPko0oWm1EA+axgYr1lYX2rDNA52q+hewu7y9y8U
+         T4Qg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734675748; x=1735280548;
+        d=1e100.net; s=20230601; t=1734676834; x=1735281634;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=hENRJeDL2zrkFH/JRQSrNdsVu5tnCmHT7uSM0w/i5Kc=;
-        b=skhXX1DeHDxhy+2GO6zj34kK1gk9oj3+pX3UltSOs/280nI/TotnY1IgKv/py+dHac
-         UhUK6mONoKvnOayKWakP0iKJtB/YRL2Mk/Onb3b2Gfm35+80t4mKx7NaYheC2K/f9VmY
-         +Rk4BWzu0inl4k/ftuDz236M4JD6Z3lpRYORqGNT7wMAONBni1RN9jOsq3oTRp+NvHgc
-         9UEvm7KNuGsvI+pYp3RV1wsJIbIO8bLPh1YcXf7Msx7E8wRU6DceKSgf3jsYxJn4sj6T
-         us7eLtMNDELteY8UtvkooAcig8ub+BWzW4NR34XuyZCdMnk9lCCZzXbc6vZeAixcX3vk
-         tYMw==
-X-Forwarded-Encrypted: i=1; AJvYcCWCKGnij0XDlUoRVe0HcIgwEqfnbaa40nGfU6yktNUSLnaSuPkdrPSNcntDFTOxcVFXE8sZSJLjXYAC/MmB@vger.kernel.org
-X-Gm-Message-State: AOJu0YyAb0kmYjLsb5NGnCBKjykq91s5acOzcISJa+ZBF2i3TlF+a8z0
-	XTCXG1lH9rB5ywhtWP/61v6vV3b+fgfV+I27AG30KuriHdOHdaS5oNtdQFLqzg==
-X-Gm-Gg: ASbGncveIf/G3j7jMWIyic167ezOj7SWwYpM9J2BQsfGebXT/et+B10k7CZZKT3TWTO
-	nCkGaBCh8xo1q33zyKWfG5WY1QeXVBMQTM4gB+tD+8VIPIsVQ9fUT+o3PhQGrfQJznDld6sZGvO
-	6tMDLTUCvZaALYUZeNOfsdwWFth8JfC5iJ9QUNIQzxrTbkc3ScLJ0oxzErn0Iy9Au5eJ73P+Jdw
-	AZETO+LipeyOHK/4joTqCJn81tL1hDouQPpts2DVvAhelJZ5TLPD2I6WueP
-X-Google-Smtp-Source: AGHT+IE9RQtbpm0MmqI0gbDVgr7DDJO6/SI2ZeXyHFwwSh9QSDTdaNOMl2YtA5pMMEZot8nSPSy9Nw==
-X-Received: by 2002:a05:6a20:1596:b0:1db:e0d7:675c with SMTP id adf61e73a8af0-1e5e045a0b9mr3334587637.13.1734675747746;
-        Thu, 19 Dec 2024 22:22:27 -0800 (PST)
-Received: from google.com ([2401:fa00:8f:203:8e99:8969:ed54:b6c2])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-72aad836d0fsm2358036b3a.73.2024.12.19.22.22.25
+        bh=oAR6EL4b1dcR37cH4D1lnXYbRYlW9ts5uPuKUPE4Krk=;
+        b=rzBG/mqBaOhBWWnoWfHMalXeE/qL2UTKOY/6dU9/3Rxzn/iEmycRxYXjABbOsJqJKJ
+         i8LxJkt+HnItdSguHtVl8TV8BVyW9eBAO5XM6+1C9rGv8Is6sA/bWa3fyqqFM41N9qra
+         OYLBl/n88Nq7Lfjls045vwyQ+u86pj+86YAXHN89y/5CaweBU2g146okspg4JAQBiXn+
+         gi5pS2aEQpgdlbrus3mDcuPWPjjYoP0FjrnAp4tAoKUNJJAwKROAmaQ0RmL+jQlqLumW
+         XewER2xTZuNPzsDOTjQ/M9c6socqvQfrf+0x7hJtS1kp5k/EgxCaFp6OJAfVHuGtJdAs
+         jMug==
+X-Forwarded-Encrypted: i=1; AJvYcCUzOqp1MIrZoiIiHRCaoehdUv6tt9QsqsjX5bq5Dddf8jnkCq5cSZ9dOEjJ9aDz6GaWDm3RT77+A3KRkgkJ@vger.kernel.org
+X-Gm-Message-State: AOJu0YzU3rbvW0fz65/d4sq8lz53HVhUEm0Nps3RjcxgdpPtbMehv+B8
+	JxYb4zs4aBYcIerXW+VjREYtUJ7MSZ1YWsoret6my9aie8ywgd4KbFLCveFwFI7nkYBkGJVpW9d
+	s
+X-Gm-Gg: ASbGncv7E+irysbhl8K/LOjTNm88f5XWd9YgfzfkRAVCWYIugvIxfxPMEuvyGyb8VRD
+	sE1UPK/AYOnWG7alJ3eZFzBJq9/8hjM5W7AMcHtkubsVMo0ZBmi4HESQW0HMHnnbjjQFOhWDXfe
+	xeFO3mTx06ayAIKWFJazNrXNxdcLcrgpsgBP/q7cx15Kvl0tghlyO1me0safax8LWlW+D6J4Ejc
+	C4vcbXcDonqH++MXCJcHY++IaLrHWTj8VADCXzVge5WxQpsICNZgqzlDi4=
+X-Google-Smtp-Source: AGHT+IG+SV0wvhd/C/3SUzB6URLeBHUlw0VzafbKosxxw6sZbA2+f4EkHrtw3uo6TK73xskXOue4og==
+X-Received: by 2002:a05:6a21:7108:b0:1d9:fbc:457c with SMTP id adf61e73a8af0-1e5e08028ebmr3084396637.36.1734676834228;
+        Thu, 19 Dec 2024 22:40:34 -0800 (PST)
+Received: from localhost ([122.172.83.132])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-842aba7325csm2198123a12.7.2024.12.19.22.40.33
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 19 Dec 2024 22:22:27 -0800 (PST)
-Date: Fri, 20 Dec 2024 15:22:22 +0900
-From: Sergey Senozhatsky <senozhatsky@chromium.org>
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Sergey Senozhatsky <senozhatsky@chromium.org>, 
-	Stanimir Varbanov <stanimir.k.varbanov@gmail.com>, Vikash Garodia <quic_vgarodia@quicinc.com>, 
-	Bryan O'Donoghue <bryan.odonoghue@linaro.org>, Hans Verkuil <hverkuil@xs4all.nl>, linux-media@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Subject: Re: [PATCHv2] media: venc: destroy hfi session after m2m_ctx release
-Message-ID: <36jk74quu6pg6q6fw3u6k62uzupcjtiwrvbnn2gpwp4iolxeao@lykirrx4j7mn>
-References: <20241219033345.559196-1-senozhatsky@chromium.org>
- <20241219053734.588145-1-senozhatsky@chromium.org>
- <yp3nafi4blvtqmr6vqsso2cwrjwb5gdzakzal7ftr2ty66uh46@n42c4q7m6elm>
- <xkmtptaqzvwe2px7q7ypnkltpx6jnnjeh5mgbirajzbomtsjyz@gefwjgfsjnv7>
- <ga4g3k7j6hx3qs243lcsfyzpuonh3wvxjareaurlg6e246xf7i@xdlg4l42fnuc>
+        Thu, 19 Dec 2024 22:40:33 -0800 (PST)
+Date: Fri, 20 Dec 2024 12:10:31 +0530
+From: Viresh Kumar <viresh.kumar@linaro.org>
+To: manivannan.sadhasivam@linaro.org
+Cc: "Rafael J. Wysocki" <rafael@kernel.org>,
+	Xiu Jianfeng <xiujianfeng@huawei.com>,
+	linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+	linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Stephen Boyd <sboyd@kernel.org>
+Subject: Re: [PATCH 0/2] cpufreq: qcom: Clock provider fixes
+Message-ID: <20241220064031.qgbfndt5ijlksnf6@vireshk-i7>
+References: <20241205-qcom-cpufreq-clk-fix-v1-0-de46c82e0fe5@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -89,47 +91,34 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <ga4g3k7j6hx3qs243lcsfyzpuonh3wvxjareaurlg6e246xf7i@xdlg4l42fnuc>
+In-Reply-To: <20241205-qcom-cpufreq-clk-fix-v1-0-de46c82e0fe5@linaro.org>
 
-On (24/12/20 08:03), Dmitry Baryshkov wrote:
-> On Fri, Dec 20, 2024 at 01:32:48PM +0900, Sergey Senozhatsky wrote:
-> > On (24/12/19 15:12), Dmitry Baryshkov wrote:
-> > > On Thu, Dec 19, 2024 at 02:37:08PM +0900, Sergey Senozhatsky wrote:
-> > > > This partially reverts commit that made hfi_session_destroy()
-> > > > the first step of vdec/venc close().  The reason being is a
-> > > > regression report when, supposedly, encode/decoder is closed
-> > > > with still active streaming (no ->stop_streaming() call before
-> > > > close()) and pending pkts, so isr_thread cannot find instance
-> > > > and fails to process those pending pkts.  This was the idea
-> > > > behind the original patch - make it impossible to use instance
-> > > > under destruction, because this is racy, but apparently there
-> > > > are uses cases that depend on that unsafe pattern.  Return to
-> > > > the old (unsafe) behaviour for the time being (until a better
-> > > > fix is found).
-> > > 
-> > > You are describing a regression. Could you please add corresponding
-> > > Reported-by and Closes tags (for now you can post them in a reply to
-> > > your patch, in future please include them in your commit message).
-> > 
-> > The regression report is internal, I don't have anything public.
-> > One of the teams found out that some of their tests started to
-> > fail.
+On 05-12-24, 22:20, Manivannan Sadhasivam via B4 Relay wrote:
+> Hi,
 > 
-> Still you probably can have a Repored-by, unless it's anonymous report.
-
-Sure.
-
-> > > > Fixes: 45b1a1b348ec ("media: venus: sync with threaded IRQ during inst destruction")
-> > > > Cc: stable@vger.kernel.org
-> > > > Signed-off-by: Sergey Senozhatsky <senozhatsky@chromium.org>
-> > > 
-> > > This is v2, but there is no changelog. Please provide one.
-> > 
-> > The code is obviously the same, I only added Cc: stable and removed
-> > one extra character in commit id "45b1a1b348ec".
+> This series has a couple of fixes for the Qcom CPUFreq clock provider.
+> Patch 1 fixes an issue where incorrect rate might be reported if LMh IRQ is not
+> available for a platform (issue identified based on code inspection). Patch 2
+> fixes a regression reported for v6.13-rc1 [1]. The regression was triggered by
+> commit 25f1c96a0e84 ("clk: Fix invalid execution of clk_set_rate"), which fixed
+> the behavior of the clk_set_rate() API. Even though the commit got reverted now,
+> patch 2 fixes the issue in the clock provider code.
 > 
-> This is the changelog. It helps reviewers to understand that there were
-> no code changes between versions.
+> This series is tested on Qcom RB5 development board.
+> 
+> [1] https://lore.kernel.org/all/20241202100621.29209-1-johan+linaro@kernel.org
+> 
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> ---
+> Manivannan Sadhasivam (2):
+>       cpufreq: qcom: Fix qcom_cpufreq_hw_recalc_rate() to query LUT if LMh IRQ is not available
+>       cpufreq: qcom: Implement clk_ops::determine_rate() for qcom_cpufreq* clocks
+> 
+>  drivers/cpufreq/qcom-cpufreq-hw.c | 34 ++++++++++++++++++++++++----------
+>  1 file changed, 24 insertions(+), 10 deletions(-)
 
-Sure.
+Applied. Thanks.
+
+-- 
+viresh
 
