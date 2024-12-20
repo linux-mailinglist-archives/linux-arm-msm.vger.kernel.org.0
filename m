@@ -1,138 +1,289 @@
-Return-Path: <linux-arm-msm+bounces-42914-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-42915-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E2A809F8C51
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Dec 2024 07:04:09 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id EA0C79F8C62
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Dec 2024 07:10:14 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 4AEE216A064
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Dec 2024 06:04:07 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id CDBC018969B8
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Dec 2024 06:10:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E778186349;
-	Fri, 20 Dec 2024 06:04:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 49CB7189BB5;
+	Fri, 20 Dec 2024 06:10:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="jZZ0wlMq"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Of4RG8Jx"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f179.google.com (mail-lj1-f179.google.com [209.85.208.179])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 028E12594AC
-	for <linux-arm-msm@vger.kernel.org>; Fri, 20 Dec 2024 06:04:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65EFE17B401;
+	Fri, 20 Dec 2024 06:09:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734674643; cv=none; b=oLhqmLGlLG4lxc2w28PfoTWPO0e/pGB/6aMo7I9vFfJSaZMBPOrUtcJE4wt7B0ddlBe3K8ui30d5e+oC2Xp581DhUUyDNCORMozE1BLvT9jPyw646pzTfD/cfIT38aiEh44/dVjfT6Q7UW9K2fxYF2Z4EnmOlJpte9/AjgfxgCw=
+	t=1734675000; cv=none; b=mJEFMdRwFMFVzGhZXs+JqNbd8MBAN74WrLW+TB75lVgiZTadvMJlAJyzE0v7ab2NDlmRnwO6+7gCaIbeGzLklaQgro2vew98ZlpOKxvOigm/xax95dFQauMq3Ij2QZlTnOUMnP6v+/CJgQ1eDHf1+CLx3TYMn6t/klqOFVlMQxQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734674643; c=relaxed/simple;
-	bh=K+63evmhKPcaJDy3TNR5bLmXF6anEPRB9JG+PC+Z9n8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=AdYDiplcbqfcQ85LH9BapU5AJe4O9HHE0vT2lBsyez9FY+QnG1l7YrV3dQNSC/KPcLKtNnm51D2X+NCz15+oMffDHI3Cwol2CGcksj/uafghi45UyILW8XYJqYMjSrqDLXR1Qxz51fBhOYsHIwR7DwYcBGklW8DXc2UZBWdtZWc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=jZZ0wlMq; arc=none smtp.client-ip=209.85.208.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f179.google.com with SMTP id 38308e7fff4ca-3011c7b39c7so18578681fa.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Dec 2024 22:04:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1734674640; x=1735279440; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=s9bqHJQ5tzHFq8ZTn6AtQRtfBjdvfIRt6uscTcnldow=;
-        b=jZZ0wlMqjsFgTlujUQnTuUq+PEroT3uRIWkfszJfMK9tp+NvVAri6ziUz5+XgSfsH8
-         BSplNh0fjTqv/8/+27ptPGs0fb7yMYbUVmFPMYnW7uiuTbhcipFbR+RfhljWH6iLin5M
-         yxhVAi9JtCcBjE33IUHaOHQ8SuFfX2RnQowbVXTXEaxg9ZELlVWOqHlGTLZMfEYaH6ND
-         OK12gGBwIrqirEGyJYsfc7haJXwz9kECV7/2zF9AQYSwjHyLOCtFn8URPUk03R/PKUge
-         V53ocilJCXUVdPWtSjubuwTbbA/E0xox17TzdxMTnDGLS+4rLz97sYYqsoKHTefOhLLh
-         zkNA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734674640; x=1735279440;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=s9bqHJQ5tzHFq8ZTn6AtQRtfBjdvfIRt6uscTcnldow=;
-        b=Ox/Mg3xGFmWExIeIXKd62gG/7iAWqm0CEZsQyhBlVyC9zZZcqFDadnA0dGL8uAmzy7
-         npGPUSjSFOvJd8hyfMx0+sxO877bJn1ENHmmFfhLq8KLk0y2Hz1x+YobOzKs6kVChauh
-         d+VjxaPWmt1rry6LDs8PRDDseFYSm0kwpmc+dQT5KbTgbh4XLT0jdF08I8eFxfNd9lIT
-         DU1dPt0gVKDc/nRVK76OIeKSCQYv3GW9iNOEZCnDmzpyJ1ARXtDxBo6yemGDViK14njW
-         qDNj14OT9QbiM0C+/u3A2ss4bmu6Srvzo6waBqnrtDI9vO/lx2G+r+cwSMSziz6haOzM
-         ImAg==
-X-Forwarded-Encrypted: i=1; AJvYcCWMjw8h9lX2Z5F/PWg65W7bbopdBaXydlCay5isq8i822uvy1+2ORcZxseysHDOtiEBZwB6anZ4LMlZJtGe@vger.kernel.org
-X-Gm-Message-State: AOJu0YwkgdX/VHHY18MtEchJfbbCyd6hzfk/5tUvNlkCnbbN0mRi3shx
-	ZRsTOssApJqCIYCljwmWLS1X+DrieiifO+YN96KuwUP5Zv0xTHNjpaYhjMp0BfU=
-X-Gm-Gg: ASbGnct7VtvQmb2m6FzIB8HAi9OCzI4z8/p/cJzDawd9zrNt920Ra1PhrGl/bjmeN2Z
-	2ZxLz6pQtB2q8OiW2Oiu5cqKbh5ESO9yYbDUakuP0O9prhH+u7CL0uGaFsmv+guiPHsU8mXqW6c
-	Oc7M4WRptwXHKxAZ+XfVBtpvmwNIDE4UxCmE3JkwMvQOb5A6IUM8FTw02aDx1BmO/oRvKFFwfa1
-	3zbl/YKm78ksl3iRYAK+8Z7OXkV8IdCTVG5sx+oYNsykDazNoeUtnUicfeoy0GpfDHVontUNOjI
-	RFG6PDHwSfXK2Afht+FRWOdKQ6QGqy/xOfVl
-X-Google-Smtp-Source: AGHT+IHKZeImslFcbVUJpHmK8DIG6VFZrKf6PiTgPTPO2VSOU9Xx30flk+6qLwRpIrb79Uec0dN5qA==
-X-Received: by 2002:a05:651c:4cb:b0:302:264e:29e4 with SMTP id 38308e7fff4ca-30468630c1amr4194721fa.39.1734674640209;
-        Thu, 19 Dec 2024 22:04:00 -0800 (PST)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-3045ad6cb7fsm4286001fa.19.2024.12.19.22.03.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 19 Dec 2024 22:03:58 -0800 (PST)
-Date: Fri, 20 Dec 2024 08:03:56 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Sergey Senozhatsky <senozhatsky@chromium.org>
-Cc: Stanimir Varbanov <stanimir.k.varbanov@gmail.com>, 
-	Vikash Garodia <quic_vgarodia@quicinc.com>, Bryan O'Donoghue <bryan.odonoghue@linaro.org>, 
-	Hans Verkuil <hverkuil@xs4all.nl>, linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Subject: Re: [PATCHv2] media: venc: destroy hfi session after m2m_ctx release
-Message-ID: <ga4g3k7j6hx3qs243lcsfyzpuonh3wvxjareaurlg6e246xf7i@xdlg4l42fnuc>
-References: <20241219033345.559196-1-senozhatsky@chromium.org>
- <20241219053734.588145-1-senozhatsky@chromium.org>
- <yp3nafi4blvtqmr6vqsso2cwrjwb5gdzakzal7ftr2ty66uh46@n42c4q7m6elm>
- <xkmtptaqzvwe2px7q7ypnkltpx6jnnjeh5mgbirajzbomtsjyz@gefwjgfsjnv7>
+	s=arc-20240116; t=1734675000; c=relaxed/simple;
+	bh=4UvwxWO96i6Wb1aOhPmhcQZTOGZCX7MV9jRqHCmvkYA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=o4eh1TgxqoNgYct7FsohIe2KbX/BSZOMES4JvtPqbXoj7AaHWBOB9lMDL6rx0HqwbfcFWisVovhwDAbEqJwrLnlOCGkAwvXEu8PB4+XvMTGR8Xx6V+ZOi6QBkH/uCXJvQjW9vNRA76zKqPNC2FK2T+xl+QLwQrQIoYa1c+u5ei4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Of4RG8Jx; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BK45a5j028900;
+	Fri, 20 Dec 2024 06:09:44 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	8U7tneMvbmJGLnzZtcRMnfor+X1SskoicqA/MrREYr8=; b=Of4RG8Jx0tTTPPBU
+	z8KGWKOAlAtCZS2ZzZj28cF0FZtquY/cuaRDEJ+DusvEBYPfXEHCFUxTb86sCmbA
+	87LrYFh+HKBOHnyojVFAxqT1S/rusMwzt2XXhMaN7+Gf/Z4FlWrjIZN+nyw4t82m
+	BnJ5fZawW/gapa44ceJ08+5kBhtQ9XcHFwI2+amr1eDcNSr/U/+ldwLqZ0UzNwYX
+	l9Xxa25Hht0DDyXCgEEMhj1DRWjQkU7k0NDBKwV0PBv4qSMuL8Da8EAQIm0C7R95
+	bMez9ID5lvynWiv78B562M/RtFdL5Mtk044z/a3quZyPYLHuPP9eNA7cExM3TBbr
+	qqfurg==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43mntf1w6n-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 20 Dec 2024 06:09:44 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4BK69hH4017136
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 20 Dec 2024 06:09:43 GMT
+Received: from [10.152.195.140] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 19 Dec
+ 2024 22:09:37 -0800
+Message-ID: <3ac003e7-7a3c-4769-8a3f-462bb7389b23@quicinc.com>
+Date: Fri, 20 Dec 2024 11:39:34 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xkmtptaqzvwe2px7q7ypnkltpx6jnnjeh5mgbirajzbomtsjyz@gefwjgfsjnv7>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 3/4] arm64: dts: qcom: ipq5424: Add PCIe PHYs and
+ controller nodes
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, <bhelgaas@google.com>,
+        <lpieralisi@kernel.org>, <kw@linux.com>,
+        <manivannan.sadhasivam@linaro.org>, <robh@kernel.org>,
+        <krzk+dt@kernel.org>, <conor+dt@kernel.org>, <vkoul@kernel.org>,
+        <kishon@kernel.org>, <andersson@kernel.org>, <konradybcio@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-pci@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-phy@lists.infradead.org>
+CC: <quic_srichara@quicinc.com>, <quic_varada@quicinc.com>
+References: <20241213134950.234946-1-quic_mmanikan@quicinc.com>
+ <20241213134950.234946-4-quic_mmanikan@quicinc.com>
+ <69dffe54-939d-47c3-b951-4a4dea11eae0@oss.qualcomm.com>
+Content-Language: en-US
+From: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
+In-Reply-To: <69dffe54-939d-47c3-b951-4a4dea11eae0@oss.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: N3rM-ti90XKfeauLnvSnhujJtDIwYB4n
+X-Proofpoint-ORIG-GUID: N3rM-ti90XKfeauLnvSnhujJtDIwYB4n
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 suspectscore=0
+ impostorscore=0 adultscore=0 priorityscore=1501 bulkscore=0
+ lowpriorityscore=0 clxscore=1015 mlxscore=0 malwarescore=0 mlxlogscore=999
+ phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2412200050
 
-On Fri, Dec 20, 2024 at 01:32:48PM +0900, Sergey Senozhatsky wrote:
-> On (24/12/19 15:12), Dmitry Baryshkov wrote:
-> > On Thu, Dec 19, 2024 at 02:37:08PM +0900, Sergey Senozhatsky wrote:
-> > > This partially reverts commit that made hfi_session_destroy()
-> > > the first step of vdec/venc close().  The reason being is a
-> > > regression report when, supposedly, encode/decoder is closed
-> > > with still active streaming (no ->stop_streaming() call before
-> > > close()) and pending pkts, so isr_thread cannot find instance
-> > > and fails to process those pending pkts.  This was the idea
-> > > behind the original patch - make it impossible to use instance
-> > > under destruction, because this is racy, but apparently there
-> > > are uses cases that depend on that unsafe pattern.  Return to
-> > > the old (unsafe) behaviour for the time being (until a better
-> > > fix is found).
-> > 
-> > You are describing a regression. Could you please add corresponding
-> > Reported-by and Closes tags (for now you can post them in a reply to
-> > your patch, in future please include them in your commit message).
+
+
+On 12/13/2024 8:36 PM, Konrad Dybcio wrote:
+> On 13.12.2024 2:49 PM, Manikanta Mylavarapu wrote:
+>> Add PCIe0, PCIe1, PCIe2, PCIe3 (and corresponding PHY) devices
+>> found on IPQ5424 platform. The PCIe0 & PCIe1 are 1-lane Gen3
+>> host whereas PCIe2 & PCIe3 are 2-lane Gen3 host.
+>>
+>> Signed-off-by: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
+>> ---
+>>  arch/arm64/boot/dts/qcom/ipq5424.dtsi | 482 +++++++++++++++++++++++++-
+>>  1 file changed, 477 insertions(+), 5 deletions(-)
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/ipq5424.dtsi b/arch/arm64/boot/dts/qcom/ipq5424.dtsi
+>> index 5e219f900412..ade512bcb180 100644
+>> --- a/arch/arm64/boot/dts/qcom/ipq5424.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/ipq5424.dtsi
+>> @@ -9,6 +9,7 @@
+>>  #include <dt-bindings/interrupt-controller/arm-gic.h>
+>>  #include <dt-bindings/clock/qcom,ipq5424-gcc.h>
+>>  #include <dt-bindings/reset/qcom,ipq5424-gcc.h>
+>> +#include <dt-bindings/interconnect/qcom,ipq5424.h>
+>>  #include <dt-bindings/gpio/gpio.h>
+>>  
+>>  / {
+>> @@ -143,7 +144,99 @@ soc@0 {
+>>  		compatible = "simple-bus";
+>>  		#address-cells = <2>;
+>>  		#size-cells = <2>;
+>> -		ranges = <0 0 0 0 0x10 0>;
+>> +		ranges = <0 0 0 0 0x0 0xffffffff>;
 > 
-> The regression report is internal, I don't have anything public.
-> One of the teams found out that some of their tests started to
-> fail.
-
-Still you probably can have a Repored-by, unless it's anonymous report.
-
+> This must be a separate change, with a clear explanation
 > 
-> > > Fixes: 45b1a1b348ec ("media: venus: sync with threaded IRQ during inst destruction")
-> > > Cc: stable@vger.kernel.org
-> > > Signed-off-by: Sergey Senozhatsky <senozhatsky@chromium.org>
-> > 
-> > This is v2, but there is no changelog. Please provide one.
+
+Thank you for reviewing the patch.
+Okay, sure.
+
+>> +
+>> +		pcie0_phy: phy@84000 {
+>> +			compatible = "qcom,ipq5424-qmp-gen3x1-pcie-phy",
+>> +				     "qcom,ipq9574-qmp-gen3x1-pcie-phy";
+>> +			reg = <0 0x00084000 0 0x2000>;
+>> +			clocks = <&gcc GCC_PCIE0_AUX_CLK>,
+>> +				 <&gcc GCC_PCIE0_AHB_CLK>,
+>> +				 <&gcc GCC_PCIE0_PIPE_CLK>;
+>> +			clock-names = "aux", "cfg_ahb", "pipe";
+>> +
+>> +			assigned-clocks = <&gcc GCC_PCIE0_AUX_CLK>;
+>> +			assigned-clock-rates = <20000000>;
+>> +
+>> +			resets = <&gcc GCC_PCIE0_PHY_BCR>,
+>> +				 <&gcc GCC_PCIE0PHY_PHY_BCR>;
+>> +			reset-names = "phy", "common";
+>> +
+>> +			#clock-cells = <0>;
+>> +			clock-output-names = "gcc_pcie0_pipe_clk_src";
+>> +
+>> +			#phy-cells = <0>;
+>> +			status = "disabled";
+>> +		};
+>> +
+>> +		pcie1_phy: phy@8c000 {
+>> +			compatible = "qcom,ipq5424-qmp-gen3x1-pcie-phy",
+>> +				     "qcom,ipq9574-qmp-gen3x1-pcie-phy";
+>> +			reg = <0 0x0008c000 0 0x2000>;
+>> +			clocks = <&gcc GCC_PCIE1_AUX_CLK>,
+>> +				 <&gcc GCC_PCIE1_AHB_CLK>,
+>> +				 <&gcc GCC_PCIE1_PIPE_CLK>;
+>> +			clock-names = "aux", "cfg_ahb", "pipe";
+>> +
+>> +			assigned-clocks = <&gcc GCC_PCIE1_AUX_CLK>;
+>> +			assigned-clock-rates = <20000000>;
+>> +
+>> +			resets = <&gcc GCC_PCIE1_PHY_BCR>,
+>> +				 <&gcc GCC_PCIE1PHY_PHY_BCR>;
+>> +			reset-names = "phy", "common";
+>> +
+>> +			#clock-cells = <0>;
+>> +			clock-output-names = "gcc_pcie1_pipe_clk_src";
+>> +
+>> +			#phy-cells = <0>;
+>> +			status = "disabled";
+>> +		};
+>> +
+>> +		pcie2_phy: phy@f4000 {
+>> +			compatible = "qcom,ipq5424-qmp-gen3x2-pcie-phy",
+>> +				     "qcom,ipq9574-qmp-gen3x2-pcie-phy";
+>> +			reg = <0 0x000f4000 0 0x2000>;
+>> +			clocks = <&gcc GCC_PCIE2_AUX_CLK>,
+>> +				 <&gcc GCC_PCIE2_AHB_CLK>,
+>> +				 <&gcc GCC_PCIE2_PIPE_CLK>;
+>> +			clock-names = "aux", "cfg_ahb", "pipe";
+>> +
+>> +			assigned-clocks = <&gcc GCC_PCIE2_AUX_CLK>;
+>> +			assigned-clock-rates = <20000000>;
+>> +
+>> +			resets = <&gcc GCC_PCIE2_PHY_BCR>,
+>> +				 <&gcc GCC_PCIE2PHY_PHY_BCR>;
+>> +			reset-names = "phy", "common";
+>> +
+>> +			#clock-cells = <0>;
+>> +			clock-output-names = "gcc_pcie2_pipe_clk_src";
+>> +
+>> +			#phy-cells = <0>;
+>> +			status = "disabled";
+>> +		};
+>> +
+>> +		pcie3_phy: phy@fc000 {
+>> +			compatible = "qcom,ipq5424-qmp-gen3x2-pcie-phy",
+>> +				     "qcom,ipq9574-qmp-gen3x2-pcie-phy";
+>> +			reg = <0 0x000fc000 0 0x2000>;
+>> +			clocks = <&gcc GCC_PCIE3_AUX_CLK>,
+>> +				 <&gcc GCC_PCIE3_AHB_CLK>,
+>> +				 <&gcc GCC_PCIE3_PIPE_CLK>;
+>> +			clock-names = "aux", "cfg_ahb", "pipe";
+>> +
+>> +			assigned-clocks = <&gcc GCC_PCIE3_AUX_CLK>;
+>> +			assigned-clock-rates = <20000000>;
+>> +
+>> +			resets = <&gcc GCC_PCIE3_PHY_BCR>,
+>> +				 <&gcc GCC_PCIE3PHY_PHY_BCR>;
+>> +			reset-names = "phy", "common";
+>> +
+>> +			#clock-cells = <0>;
+>> +			clock-output-names = "gcc_pcie3_pipe_clk_src";
+>> +
+>> +			#phy-cells = <0>;
+>> +			status = "disabled";
+>> +		};
+>>  
+>>  		tlmm: pinctrl@1000000 {
+>>  			compatible = "qcom,ipq5424-tlmm";
+>> @@ -168,11 +261,11 @@ gcc: clock-controller@1800000 {
+>>  			reg = <0 0x01800000 0 0x40000>;
+>>  			clocks = <&xo_board>,
+>>  				 <&sleep_clk>,
+>> +				 <&pcie0_phy>,
+>> +				 <&pcie1_phy>,
+>>  				 <0>,
 > 
-> The code is obviously the same, I only added Cc: stable and removed
-> one extra character in commit id "45b1a1b348ec".
+> This leftover zero needs to be removed too, currently the wrong
+> clocks are used as parents
+> 
+>> -				 <0>,
+>> -				 <0>,
+>> -				 <0>,
+>> -				 <0>;
+>> +				 <&pcie2_phy>,
+>> +				 <&pcie3_phy>;
+>>  			#clock-cells = <1>;
+>>  			#reset-cells = <1>;
+>>  			#interconnect-cells = <1>;
+>> @@ -292,6 +385,385 @@ frame@f42d000 {
+>>  			};
+>>  		};
+>>  
+>> +		pcie3: pcie@40000000 {
+>> +			compatible = "qcom,pcie-ipq5424",
+>> +				     "qcom,pcie-ipq9574";
+>> +			reg = <0 0x40000000 0 0xf1d>,
+>> +			      <0 0x40000f20 0 0xa8>,
+>> +			      <0 0x40001000 0 0x1000>,
+>> +			      <0 0x000f8000 0 0x3000>,
+>> +			      <0 0x40100000 0 0x1000>;
+>> +			reg-names = "dbi", "elbi", "atu", "parf", "config";
+> 
+> Please make this a vertical list, in all nodes
+> 
 
-This is the changelog. It helps reviewers to understand that there were
-no code changes between versions.
+Okay, sure.
 
--- 
-With best wishes
-Dmitry
+> [...]
+> 
+>> +			phys = <&pcie3_phy>;
+>> +			phy-names = "pciephy";
+>> +			interconnects = <&gcc MASTER_ANOC_PCIE3 &gcc SLAVE_ANOC_PCIE3>,
+>> +					<&gcc MASTER_CNOC_PCIE3 &gcc SLAVE_CNOC_PCIE3>;
+>> +			interconnect-names = "pcie-mem", "cpu-pcie";
+>> +			status = "disabled";
+> 
+> And add a newline above status
+
+Okay, sure.
+
+Thanks & Regards,
+Manikanta.
 
