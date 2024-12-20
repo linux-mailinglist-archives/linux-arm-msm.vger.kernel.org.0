@@ -1,80 +1,81 @@
-Return-Path: <linux-arm-msm+bounces-42939-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-42940-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 77B7F9F8E88
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Dec 2024 10:04:09 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3EAC29F8E86
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Dec 2024 10:04:02 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id BD11C18902B9
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Dec 2024 09:03:55 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 35919160639
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Dec 2024 09:03:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D7C691AA1F1;
-	Fri, 20 Dec 2024 09:03:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AAB8B1AAA10;
+	Fri, 20 Dec 2024 09:03:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="vuWkiM2X"
+	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="Gi6PNfsb"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E5B91A0732
-	for <linux-arm-msm@vger.kernel.org>; Fri, 20 Dec 2024 09:03:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5E811A83F7
+	for <linux-arm-msm@vger.kernel.org>; Fri, 20 Dec 2024 09:03:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734685428; cv=none; b=JFsx1qffdmUcqnkOi8pRmZX1pmPK0ME8Da02IqNEysvAoblkqcrEyHx8pNYE3Q5pk+2LjVis09Yq/zYJ9AuDNJ4NHj7a98ZEIjJBOpUEAMX/Rxr7Kjs1G0YVsPWlXCLdZH4bCR5wf0E7v4wTLt3Beg9G3FC+iS1N2AsB1U5Cq3o=
+	t=1734685429; cv=none; b=P3zUnDCQGmkHvvsuM7GzMkzryyun7lH/ULDMtP1IwIeG9ZRl6pdhXYhGZOTYlZDizAvgHaVBImZa1x/X81EuXTdNEMispIf2iXmsf7kYtPDKw8MgWMVaKGzI0T4963CI4EYnRxx4DavA7DqnvG7HEpWjvgoxx4PyiniZu/h6CJ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734685428; c=relaxed/simple;
-	bh=DbfIVgwdPOtjGyPYp3zFC8cSx0e4NRwlmaO+ILtD/1s=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=NxsmIWEs3Z9lE09tIExKA6s3ELE8v/UFp/QUPOqy9UIRaY/ce0zWkV7hEq+GauJHJpAC7cDYQo5W1w01ytIyh0/RGvlRs6elQ8t1B3t+yee3p5VvpIY4PnNPLcCzVgCEvxCHmOzRvmHOaZsTNCvJujSdy4YpS48+wnkjEfzxRWc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=vuWkiM2X; arc=none smtp.client-ip=209.85.128.54
+	s=arc-20240116; t=1734685429; c=relaxed/simple;
+	bh=rUGZF8yKmy+p1+ThFeCkZ6lSsu656MxTdFk1QCg9Tts=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=fS/me3VxLbVCxqYYm2mXwmdMutecekjTfPYdHNIP+sCZPa6AwM4nddtntEZBcUmALRD4trO6CiqXSPbPypON1TCafTq9exdq7XCyhHXfA+XCuwPWEn4znhqqmr6/IZWc1sJFJXFsecy9khNsE+swRe8mRgjBaJ+tkd7OwOMsEi4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=Gi6PNfsb; arc=none smtp.client-ip=209.85.128.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
-Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-4361e89b6daso11190665e9.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Dec 2024 01:03:46 -0800 (PST)
+Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-43624b2d453so17473435e9.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Dec 2024 01:03:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1734685425; x=1735290225; darn=vger.kernel.org;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=TKQF6v9mjJTHAGrz+anbwJhJc4N1fYhnSvoLIwg6Hw4=;
-        b=vuWkiM2X2LurHfl3/g+Jj7uFleBh8ZZDzDqFryqzDp9kC5QIc8gZ2WbFhc/TTsyN5x
-         IZs3kh9hl0UccvbDEYBOQlMdhXagX4bHcRRIIpbJXJTN7sFNvQdDSmtaXQhTOYRfeOOz
-         M4ZKV9qzuxEcw3FGFo4lOazlVpYOIrfLPFZBui5clscZelSHKo2L/PXSSuIa1Qknaf6K
-         UG5DwwVxu45S4zgKRNtr7m7EfpT5X8/rjvxsgFYATcKobrG2D+935LQAUH5+Adufgl6o
-         OTEuaH51tfS6q5fjpO1mnZTTH6XBgcHK3oKjQB5mT4ylM/e6BD8ldfwIbiri9Qp7VUDh
-         tE0w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734685425; x=1735290225;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=fairphone.com; s=fair; t=1734685426; x=1735290226; darn=vger.kernel.org;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=TKQF6v9mjJTHAGrz+anbwJhJc4N1fYhnSvoLIwg6Hw4=;
-        b=w7w00PbTsk0u1xtVbUFwQX3CMlmtiDFwHtZUaJZ0Tesmao5vwHVP1nhzBLZc2gsPLr
-         emJoEhTGBvcx8eY1eFWPv6ZahoQrv+QxxY7kDVA+ryUh9atXK8PeaR2QL8vCUlPA5WLG
-         AU16qEU5SCtfDxROdkUIokHBpyS0o9YIKolQ1A4wm3Mnum2D2hLdwFkmog3VduLaX7j5
-         4epmdt7XujAonJGNKCw5zIcEMTTIJ519/G3vbv3wWeInLwrolKC190gImYw+iPMep7Di
-         ml6k2Roe8MeOANkpc77bQGIpwQf4Jnbo8okHeyAEWGR0/jwL6nSRBZfTdDefdp9m/efq
-         j8fg==
-X-Forwarded-Encrypted: i=1; AJvYcCXn+0l+N4F75W8f1vupIhLEc/RKNLnmfUOg2wxotMB09o+1GvrU6sVrKKpAI+0hqkVKgOIhc6jYGyXjkTJx@vger.kernel.org
-X-Gm-Message-State: AOJu0YzVhIKoBTjkIjYUUabFKh+3T5bTq150SXE6BYb5U0CachmsF96z
-	xIYNiiyw+qm9l98cMXHZuunpTEbM96kKA7+EgKq17uNApMq0yITCwvajhUICiag=
-X-Gm-Gg: ASbGncvrXAU9SmNM9cx0yzxVu+C4/ps8hRvgEXEtfjY05dkgw+tCxZYRPaVvh+tq2YX
-	wyGAHMW170vcqG8CgOLuVUoIUB4DYUQQVAuxWUumUT6lWp3NFfTVpwpMdSiB+sJyY+PmDPika4J
-	V1PVUg/T4JEVdh1nyE117RhAqPo7lhUIbq81uo6x7jAThtmKyJrCIMEahH1Tr9xGQIwCS7dw5l2
-	Tun/7WQaLj3ohiOsXgWotJr6iRjFJ6CRDzvEFP8oDrX57yv5z7Uat2sJMZV+uddhqbLQPai2Sym
-	HceRcZmUwTPfOKWYyYVIhIVA8O/opg==
-X-Google-Smtp-Source: AGHT+IGSHfVV7ZgeNmbzBWx67alIxQ8s1vI3ArjQYk5K4x5dU5OensPI2MOkBdI3RPTXPnjlqYDKeg==
-X-Received: by 2002:a05:600c:4f51:b0:436:1b7a:c0b4 with SMTP id 5b1f17b1804b1-4366854850emr12697055e9.1.1734685425468;
+        bh=pq1bmVOour8kC/0ODYFkalnMVivKoV+qKdeFNxm3Yvc=;
+        b=Gi6PNfsbXt7l5F8zvhLxhSTEC633XvQzbCbOogMNRT5Ny3VsT+DkfjWo3mS9fB5KV4
+         mTsQJtYpqizT+mJQUDFucLHFuIY7zonLfwY/2488VezyMzMbXpcIIQ89eroDhRmvPHpg
+         O+IzqpYEhFjz3laTe6OyWrBYzIlR8e5NoYwCvQhNdJacHt7JJvfhls1hCTfBj5nPVFsG
+         uxFeNrClGYMGrEygfEgExALVwtmKTm6yClH/j6+Ro+f9Xmwj6VpT0U6kcme3b5hslHPC
+         ohiFJfP0fgojMWNd8ISvKPQq+u5sS7AaePBrhTN5kXFBVhKReMeEb93Uus8z08dfsElG
+         yFmA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1734685426; x=1735290226;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=pq1bmVOour8kC/0ODYFkalnMVivKoV+qKdeFNxm3Yvc=;
+        b=mHoyIzrOS/hvaWJzR+tSYqjM5pKzY6Q74fT6PZFqutrbpSXpPAGXbfZYaPX15X/Xyn
+         hZj/swYDlaE6PDdfwcUE15FWAt+Ot44/BlFhepEXVTFPPhNtE1vSj4IdpudA1ubk7b9B
+         QFSCP0TVU2R1+4FN8LgOtS9/Y1zvp7Z9AwoW9bV4xYl45YUaehH5fFHnu1ye8uy4PamX
+         cwA2IMsxBoUts8cqubEQYABxVwggKEK7GGNoT1S+IwLvfWz10aavczTKeOKE9ovpHmvF
+         jU01EozHnX+fvgZhKFPa2W90UpK+GO+2hNu9/POqRMds7njTiW0HaDtYZXFwlOUfTkuz
+         JGKQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUuiH/xh5/5zzpX35A2xVJylcpGTAf/BVgUtgW6Dn/btpElQd8q7BgWFaVHwhwyip60ttJ0LTIBMRq6V9ID@vger.kernel.org
+X-Gm-Message-State: AOJu0Yyg3CIqrW/KZ+P8yVF0I6x/L5P6vhfYZskCFAQBg1Ek5yGNmg8j
+	39/SmIaZd/+/DC4bYecMPyKIdAa/ROuO71hnZm9gyxjFPEHXpBa1GaCfEvJxdD8=
+X-Gm-Gg: ASbGnctJR+V9kUchKgavA3kWhvRT5Gprt349I2GWwi6mxGtm9UZtLFSDQlXqMuibhKp
+	DSMpAS7doTEuSn+NL2IXGycU+nX9yu4hw2dxxbbwLthj69sXtT2PkKoSeQwd5rOMlcb4EQGNo7x
+	1f1yUR9Ql4y/ewuRcvA6MCqmLlQMZ33KrWhkMDx6ECNZR06yy3WcbQxciLe1Jy+2VDXEmwCPIt5
+	vQ4Rhdkp3B2k0sVOy95640lx2BUo6BLliWJ5XhvFTSrbfWu+tRXHCu9ZWz6VjcKzjENJyFQm5OA
+	UJtVnLQh67j+r0e1gkiG84MUcI5jnQ==
+X-Google-Smtp-Source: AGHT+IHgsh5xJuAMq4qoVNA6TBwXpF2ZHhv/viApIXc0e7PnnUdfQR1REEbtj0sPbgIGdKOKXJ+NIQ==
+X-Received: by 2002:a05:600c:154b:b0:434:a734:d279 with SMTP id 5b1f17b1804b1-43668644104mr17730505e9.16.1734685425998;
         Fri, 20 Dec 2024 01:03:45 -0800 (PST)
 Received: from [100.64.0.4] (144-178-202-138.static.ef-service.nl. [144.178.202.138])
         by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-436611ea3e0sm40610375e9.7.2024.12.20.01.03.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Fri, 20 Dec 2024 01:03:45 -0800 (PST)
 From: Luca Weiss <luca.weiss@fairphone.com>
-Subject: [PATCH 0/2] Add missing parent_map to clocks in SM6350 clock
- drivers
-Date: Fri, 20 Dec 2024 10:03:29 +0100
-Message-Id: <20241220-sm6350-parent_map-v1-0-64f3d04cb2eb@fairphone.com>
+Date: Fri, 20 Dec 2024 10:03:30 +0100
+Subject: [PATCH 1/2] clk: qcom: gcc-sm6350: Add missing parent_map for two
+ clocks
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -83,10 +84,9 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAOEyZWcC/x3MSQqAMAxA0atI1hY6OF9FRKpGzcJaGhFBeneLy
- 7f4/wXGQMjQZS8EvInpdAkqz2DerdtQ0JIMWupCaS0FH5UppfA2oLvGw3oxS4PtVClbqwZS5wO
- u9PzPfojxA5EIHo1jAAAA
-X-Change-ID: 20241220-sm6350-parent_map-c03e9b61a718
+Message-Id: <20241220-sm6350-parent_map-v1-1-64f3d04cb2eb@fairphone.com>
+References: <20241220-sm6350-parent_map-v1-0-64f3d04cb2eb@fairphone.com>
+In-Reply-To: <20241220-sm6350-parent_map-v1-0-64f3d04cb2eb@fairphone.com>
 To: Bjorn Andersson <andersson@kernel.org>, 
  Michael Turquette <mturquette@baylibre.com>, 
  Stephen Boyd <sboyd@kernel.org>, 
@@ -100,25 +100,85 @@ X-Mailer: b4 0.14.2
 
 If a clk_rcg2 has a parent, it should also have parent_map defined,
 otherwise we'll get a NULL pointer dereference when calling clk_set_rate
-on those clocks.
+like the following:
 
-Correct this on clocks in both gcc-sm6350 and dispcc-sm6350.
+  [    3.388105] Call trace:
+  [    3.390664]  qcom_find_src_index+0x3c/0x70 (P)
+  [    3.395301]  qcom_find_src_index+0x1c/0x70 (L)
+  [    3.399934]  _freq_tbl_determine_rate+0x48/0x100
+  [    3.404753]  clk_rcg2_determine_rate+0x1c/0x28
+  [    3.409387]  clk_core_determine_round_nolock+0x58/0xe4
+  [    3.421414]  clk_core_round_rate_nolock+0x48/0xfc
+  [    3.432974]  clk_core_round_rate_nolock+0xd0/0xfc
+  [    3.444483]  clk_core_set_rate_nolock+0x8c/0x300
+  [    3.455886]  clk_set_rate+0x38/0x14c
 
+Add the parent_map property for two clocks where it's missing and also
+un-inline the parent_data as well to keep the matching parent_map and
+parent_data together.
+
+Fixes: 131abae905df ("clk: qcom: Add SM6350 GCC driver")
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
 ---
-Luca Weiss (2):
-      clk: qcom: gcc-sm6350: Add missing parent_map for two clocks
-      clk: qcom: dispcc-sm6350: Add missing parent_map for a clock
+ drivers/clk/qcom/gcc-sm6350.c | 22 ++++++++++++++--------
+ 1 file changed, 14 insertions(+), 8 deletions(-)
 
- drivers/clk/qcom/dispcc-sm6350.c |  7 +++----
- drivers/clk/qcom/gcc-sm6350.c    | 22 ++++++++++++++--------
- 2 files changed, 17 insertions(+), 12 deletions(-)
----
-base-commit: 8155b4ef3466f0e289e8fcc9e6e62f3f4dceeac2
-change-id: 20241220-sm6350-parent_map-c03e9b61a718
+diff --git a/drivers/clk/qcom/gcc-sm6350.c b/drivers/clk/qcom/gcc-sm6350.c
+index a811fad2aa2785fffbdee0d4bd3cd1133e4d0906..74346dc026068a224e173fdc0472fbaf878052c4 100644
+--- a/drivers/clk/qcom/gcc-sm6350.c
++++ b/drivers/clk/qcom/gcc-sm6350.c
+@@ -182,6 +182,14 @@ static const struct clk_parent_data gcc_parent_data_2_ao[] = {
+ 	{ .hw = &gpll0_out_odd.clkr.hw },
+ };
+ 
++static const struct parent_map gcc_parent_map_3[] = {
++	{ P_BI_TCXO, 0 },
++};
++
++static const struct clk_parent_data gcc_parent_data_3[] = {
++	{ .fw_name = "bi_tcxo" },
++};
++
+ static const struct parent_map gcc_parent_map_4[] = {
+ 	{ P_BI_TCXO, 0 },
+ 	{ P_GPLL0_OUT_MAIN, 1 },
+@@ -701,13 +709,12 @@ static struct clk_rcg2 gcc_ufs_phy_phy_aux_clk_src = {
+ 	.cmd_rcgr = 0x3a0b0,
+ 	.mnd_width = 0,
+ 	.hid_width = 5,
++	.parent_map = gcc_parent_map_3,
+ 	.freq_tbl = ftbl_gcc_ufs_phy_phy_aux_clk_src,
+ 	.clkr.hw.init = &(struct clk_init_data){
+ 		.name = "gcc_ufs_phy_phy_aux_clk_src",
+-		.parent_data = &(const struct clk_parent_data){
+-			.fw_name = "bi_tcxo",
+-		},
+-		.num_parents = 1,
++		.parent_data = gcc_parent_data_3,
++		.num_parents = ARRAY_SIZE(gcc_parent_data_3),
+ 		.ops = &clk_rcg2_ops,
+ 	},
+ };
+@@ -764,13 +771,12 @@ static struct clk_rcg2 gcc_usb30_prim_mock_utmi_clk_src = {
+ 	.cmd_rcgr = 0x1a034,
+ 	.mnd_width = 0,
+ 	.hid_width = 5,
++	.parent_map = gcc_parent_map_3,
+ 	.freq_tbl = ftbl_gcc_usb30_prim_mock_utmi_clk_src,
+ 	.clkr.hw.init = &(struct clk_init_data){
+ 		.name = "gcc_usb30_prim_mock_utmi_clk_src",
+-		.parent_data = &(const struct clk_parent_data){
+-			.fw_name = "bi_tcxo",
+-		},
+-		.num_parents = 1,
++		.parent_data = gcc_parent_data_3,
++		.num_parents = ARRAY_SIZE(gcc_parent_data_3),
+ 		.ops = &clk_rcg2_ops,
+ 	},
+ };
 
-Best regards,
 -- 
-Luca Weiss <luca.weiss@fairphone.com>
+2.47.1
 
 
