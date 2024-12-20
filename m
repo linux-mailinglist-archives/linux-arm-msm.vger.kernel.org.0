@@ -1,140 +1,139 @@
-Return-Path: <linux-arm-msm+bounces-42900-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-42901-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 12C9F9F8BF1
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Dec 2024 06:44:20 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 95D3E9F8C01
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Dec 2024 06:51:42 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 12FEA1892349
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Dec 2024 05:44:21 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 3CD7D7A3F84
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Dec 2024 05:51:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 12FB78634F;
-	Fri, 20 Dec 2024 05:44:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 723A713D8A4;
+	Fri, 20 Dec 2024 05:51:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="wDQmR4DA"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="F3aOkKoS"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f42.google.com (mail-lf1-f42.google.com [209.85.167.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 361247083C
-	for <linux-arm-msm@vger.kernel.org>; Fri, 20 Dec 2024 05:44:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95793259487;
+	Fri, 20 Dec 2024 05:51:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734673454; cv=none; b=VrEaK31sQdbJ46yFjmXwNxvjqeoCivwCrTs4Z1puTbveE6lqLhXfjIjMrlY6SCfIPXcaNCTg6qvK/i5QG1bDUvCJeo+UfMdPEbkJ/BtEaKPmpFn0Crsc8P4uziAID46YuWkvmaoQk+CgdeI6CGpVrOPJDVUBhrXz69jz7ZiwlZw=
+	t=1734673896; cv=none; b=RJQZ8clb0r0JdoEiOQ/solWZclGjNLJWChniudQ6ovzENLV0Jo9GOOIaNQyrLFKGPgig29zsghewXtqHV80DGq++sdcmh5ouwHKyk41kfpHV0htoAGTR5dzTEjLZPsMooR/JZAzjUiwF5s0VPbFGwkxFXgYyFiwaorCVx+5qnvc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734673454; c=relaxed/simple;
-	bh=gDUm49D0wRprqo4eRC5Baf3VgFsH+qRupsmHs2Mrc2U=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Wlaa2JeU/Ts2iHX8QLkFQN2VGskWLYzXv61g5MUSjLiiXSsOQRxFfnrnzbUwxGTyuChvLev0hqRCqy1Xh1LnOP8j+RWRNecpzBAfEQN1kRabLU9/qeqgUG+Ncr57rDqflEvbhiDuKs85yJBlaqOxQHx6Vzbb/iPDtFHZar7s+7g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=wDQmR4DA; arc=none smtp.client-ip=209.85.167.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f42.google.com with SMTP id 2adb3069b0e04-5401ab97206so1459175e87.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Dec 2024 21:44:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1734673450; x=1735278250; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=SFCI50HxO0YjIkrdRDdASpuN36VkzFYj3QrjgcaAwJg=;
-        b=wDQmR4DAvxrLbsO2Z3KIztUX/dwcG4zEfcAJZVLMUV4VsEXtAp51IZPGuCykrQQhTc
-         7utGRKZHT8Nx5t+koZlAavz5K6IKOvQnMENx2GyWY2ep+N6Bpv36deGQsj3rX5mw/5sq
-         X663ZlZ8X/cYAVqIOwwezks0lC3ZBQc9frVHsIPg2c96Yl0TXiU4jAN14ExeOsSl2QrS
-         S6QpurtvLyUH0bb8/REQblxBz1ekDdn0K4xG2iHgmHd3yV1FKnT1KZRY3x7L3t6BLsex
-         6VJH4wrWb9xJHWOjzVtT/XFzS10yvdFppefdvVBJ/pzlXxgVw6bEvOd8WFljaKhqOU64
-         WicA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734673450; x=1735278250;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=SFCI50HxO0YjIkrdRDdASpuN36VkzFYj3QrjgcaAwJg=;
-        b=o0vfWNGC6rEESA0ALRpZcPlSMilN6Vc/bp6AJJ496dcdmnfBgDtjra040gIj1IYMBt
-         c0cSEuMKoaETL55lD4i404sfIETE19poFOrT2uyU1ayhWUWRFelnYQxHGf04OftmrGP5
-         cNABG1MHhxKvV1HpJQ49mZF7jHEkSoJ8Ht/ze+9Do2fcskjGezLhivfRiSJ7qkrGGeMO
-         pGQWCtvPQSVy6RZCBP52h491WdpGhKB8pDcxeRjpzX4CARJ5arcZPE1KuyGqzzKJVpvc
-         JAsTyTiqBI/rYQyDqjdRNLbpxccoISlJzF1gXq73A+tHtk/d/oo8Ar7RBILLk0znq4U7
-         z1SQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWHiJrSofOusjBPRqQWaGFyDXYbECSd5fF/SKXoQ39Fhlx4onBlRXN6NchSlP21rNt6RJTe8vqaMHELNJTR@vger.kernel.org
-X-Gm-Message-State: AOJu0YxAiugukpe1sKtWHPdrjztp+cPSXMdLeA5nW7pI8RB3iKsQDH/g
-	YIWHJlLe2Lvv91RTn/Q8AI8DAZUf54IrDnEq8Hv+j/5z4H3Ci+ja2M1KSLM/mjc=
-X-Gm-Gg: ASbGncuKvSKYfw13PZeT4S60CUrHQx83/xf8CqFRa3Zer4RW3CnQ8f187iKvTr0SdAA
-	6smOeWdhxGNSpM+qqC3qbHNf3dZCZOv4i+mvgQNFdrmf5ccEAgjhiuvQf9i7093YAzcLnreMYmM
-	o4bi/bO9Snuc+OZIRKsSg6OHx3SfVhMN9ab6a0PGJGrGzhkJSN8Oo4BSaRwfA79491lUozQZ9P2
-	Q4aFJbiBAbvRZ7ih0cvbyiiepqU5YrVrMIwloxqkuRTSBJhGsLGUGkiloapQFWQirgwfrP9QYN8
-	GppowCyCaHL3PipCXP5DkA7Xso8aOCM43oHc
-X-Google-Smtp-Source: AGHT+IG1bm19MGRUcfrW96Z6d6TtKC4b/8GqwGpE6HtAltw9S1z+lUZCzMntZDup7UjIvLEdtD1Wjw==
-X-Received: by 2002:a05:6512:334e:b0:542:218a:343 with SMTP id 2adb3069b0e04-542295989femr303192e87.52.1734673450312;
-        Thu, 19 Dec 2024 21:44:10 -0800 (PST)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-542238215f2sm377633e87.199.2024.12.19.21.44.08
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 19 Dec 2024 21:44:09 -0800 (PST)
-Date: Fri, 20 Dec 2024 07:44:07 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Jessica Zhang <quic_jesszhan@quicinc.com>
-Cc: Rob Clark <robdclark@gmail.com>, quic_abhinavk@quicinc.com, 
-	Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, 
-	David Airlie <airlied@gmail.com>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
-	Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
-	Simona Vetter <simona@ffwll.ch>, Simona Vetter <simona.vetter@ffwll.ch>, 
-	quic_ebharadw@quicinc.com, linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
-	freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, Rob Clark <robdclark@chromium.org>, 
-	Ville =?utf-8?B?U3lyasOkbMOk?= <ville.syrjala@linux.intel.com>
-Subject: Re: [PATCH v4 17/25] drm/msm/dpu: Fail atomic_check if CWB and CDM
- are enabled
-Message-ID: <qpy3yjnrq7ljsj7a2b2avbnd6cptyfr6vzxhm733dyaiso5lwg@txhr5zwjqtt7>
-References: <20241216-concurrent-wb-v4-0-fe220297a7f0@quicinc.com>
- <20241216-concurrent-wb-v4-17-fe220297a7f0@quicinc.com>
+	s=arc-20240116; t=1734673896; c=relaxed/simple;
+	bh=YgMqTjyDSEgMrokUdiDXbuor2wCx7vOLBZiqsoRKfgc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=sAFehWvsXl9Gxawfztd3RkVVZ7gG63/YZfcWV7wvy5kqZTB2ozovpPJdCyfm9gQYirGnAFHRUWKC+ZHD3H3ru2i8w2XMgx4S+oMAQ+A5/9ThxSYhThB/bR501+nfwuLILnLcDj3djEUESZtCB6mxyPEbwIJvjrWc6BPBjf6Mu2s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=F3aOkKoS; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BK47Z9e007358;
+	Fri, 20 Dec 2024 05:51:30 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	qAAUTlNjLkzkeQi+I5004MD/s1Twq7DehlXUUKAYiV4=; b=F3aOkKoSdZN6b1kS
+	2o2kLJd7K0kIY4auq8guZ1sNEAwsVEZtpfcYPNX13E9zLPug5joxBSUnijb5VY2x
+	OEWYXUiYtK/98qGTx4+5hqTp/0aDpJdFmG1OHNdJsiOoTrWMKJE8Axlg5/NqkjK9
+	hnFhFtsGul7KnXks0Am5Jesel8d7DuKwKwfxOyYsJYFRM9JTrdwtfQYjbZZ6wAPE
+	9kQvaQxsQRqBH07iULm4jcIYogGqVnWW5blWLCKe/8AhFLxfr7+dVyFdNq8msSlG
+	oeFPxjKS1uSsEviIoged2CXX5hM/ESlwQoMc9Pyrom9d46YQS+ZVvEpiAHWKbyrk
+	MBoWTw==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43n19gr632-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 20 Dec 2024 05:51:30 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4BK5pTQ6008364
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 20 Dec 2024 05:51:29 GMT
+Received: from [10.64.68.153] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 19 Dec
+ 2024 21:51:26 -0800
+Message-ID: <6d91567b-0cbc-4d85-be38-2467e873e91c@quicinc.com>
+Date: Fri, 20 Dec 2024 13:51:23 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241216-concurrent-wb-v4-17-fe220297a7f0@quicinc.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] arm64: dts: qcom: sa8775p: fix the secure device bootup
+ issue
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+        Bjorn Andersson
+	<andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring
+	<robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>
+CC: <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>,
+        Tingwei Zhang <quic_tingweiz@quicinc.com>,
+        Jinlong Mao <quic_jinlmao@quicinc.com>
+References: <20241219025216.3463527-1-quic_jiegan@quicinc.com>
+ <2b4adb2d-29f5-459b-bd85-d5d12876f7eb@oss.qualcomm.com>
+Content-Language: en-US
+From: Jie Gan <quic_jiegan@quicinc.com>
+In-Reply-To: <2b4adb2d-29f5-459b-bd85-d5d12876f7eb@oss.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 0E8jCB2TuRa5ANwl6YuxCmAK2oYAB8iQ
+X-Proofpoint-ORIG-GUID: 0E8jCB2TuRa5ANwl6YuxCmAK2oYAB8iQ
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ bulkscore=0 priorityscore=1501 malwarescore=0 mlxscore=0 clxscore=1015
+ phishscore=0 impostorscore=0 adultscore=0 spamscore=0 suspectscore=0
+ mlxlogscore=754 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2412200048
 
-On Mon, Dec 16, 2024 at 04:43:28PM -0800, Jessica Zhang wrote:
-> We cannot support both CWB and CDM simultaneously as this would require
-> 2 CDM blocks and currently our hardware only supports 1 CDM block at
-> most.
 
-Why would CWB require a second CDM block? I think that YUV output over
-DP (needs_cdm = true) and RGB output over WB (cwb_enabled = true) should
-work. Am I wrong?
 
+On 12/20/2024 5:25 AM, Konrad Dybcio wrote:
+> On 19.12.2024 3:52 AM, Jie Gan wrote:
+>> The secure device(fused) cannot bootup with TPDM_DCC device. So
+>> disable it in DT.
+>>
+>> Fixes: 6596118ccdcd ("arm64: dts: qcom: Add coresight nodes for SA8775p")
+>> Signed-off-by: Jie Gan <quic_jiegan@quicinc.com>
+>> ---
 > 
-> Thus return an error if both CWB and CDM are enabled.
+> I was thinking, is there a QFPROM fuse we could read on both
+> secure and non-secure devices to determine whether all coresight
+> components will be accessible, and enable them based on that
+> information?
 > 
-> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
-> ---
->  drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c | 4 ++++
->  1 file changed, 4 insertions(+)
-> 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> index 9bb920d28bae2706b3892c167fe2bec3fd8857f4..a6372eee916e8aba702bbefc3615d8882ddcaad9 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> @@ -1261,6 +1261,10 @@ static int dpu_crtc_assign_resources(struct drm_crtc *crtc, struct drm_crtc_stat
->  		return 0;
->  
->  	topology = dpu_crtc_get_topology(crtc, dpu_kms, crtc_state);
-> +
-> +	if (topology.cwb_enabled && topology.needs_cdm)
-> +		return -EINVAL;
-> +
->  	ret = dpu_rm_reserve(&dpu_kms->rm, global_state,
->  			     crtc, &topology);
->  	if (ret)
-> 
-> -- 
-> 2.34.1
-> 
+There are two known TPDM devices had been disabled on secure device. One 
+of these devices is TPDM_DCC. In downstream code, we have an API to 
+check the secure status of the device in TPDM's probe function, to avoid 
+unintentional enable. The downstream API will check the register that 
+controls crash dump functionality in TZ and the crash dump functionality 
+is disabled by default on secure devices.
 
--- 
-With best wishes
-Dmitry
+We need to verify if the downstream API is supported by the upstream 
+kernel. We plan to upstream a patch to implement this functionality in 
+the TPDM driver or any other device's driver that needed the functionality.
+
+For the time being, we need to disable this TPDM device in DT because 
+the TPDM_DCC will break the bootup process on secure devices.
+
+> Konrad
+
+Thanks,
+Jie
+
 
