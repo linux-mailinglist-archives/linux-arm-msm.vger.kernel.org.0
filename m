@@ -1,78 +1,77 @@
-Return-Path: <linux-arm-msm+bounces-42912-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-42913-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id CC6E59F8C2E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Dec 2024 06:57:26 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 879129F8C4C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Dec 2024 07:02:54 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id C050D7A2946
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Dec 2024 05:57:20 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E4D601693BB
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Dec 2024 06:02:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2A3CB1304B0;
-	Fri, 20 Dec 2024 05:55:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4C16015853B;
+	Fri, 20 Dec 2024 06:00:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="b0+P3io+"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="L5oFwPBw"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f43.google.com (mail-lf1-f43.google.com [209.85.167.43])
+Received: from mail-lf1-f54.google.com (mail-lf1-f54.google.com [209.85.167.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47DCC15B554
-	for <linux-arm-msm@vger.kernel.org>; Fri, 20 Dec 2024 05:55:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 549A019F40B
+	for <linux-arm-msm@vger.kernel.org>; Fri, 20 Dec 2024 06:00:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734674145; cv=none; b=ubo7LiCN1ts5nowFAiazvqdC+fouIFEwlfgFhWabxCDsLjptJg4ZTfwXG4QMNEKEBuKy6USoRACHfIZ8/ikhL5U1wpPDsT8AJ6kkCNgEwQKiK/oCZIhv+UqkUXEIz2IDv9cDhkzOWp/ug0LKpF7JqwMpugfrRcbkgo2ahxr7kbE=
+	t=1734674434; cv=none; b=qjpLRYD3R3yZad8JGjsf/rvRsf6XvSqgC5mR6Qn4rz/zi36MELXaJbSsNaoOFKqikkWapXrhnOGI2BbIXdtYUedHgCSJpdzgSHVJizeW329QnrBtZFRuBSYr/FFjJm9D2XOGFx/u6FbCHegWIyz2jTgaMEf4//soMwrLv9RN3v0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734674145; c=relaxed/simple;
-	bh=Cy9OqtQuGNGkEQgo1hco0Ctu78QBqh27qxQ356tuEDU=;
+	s=arc-20240116; t=1734674434; c=relaxed/simple;
+	bh=xLTdYIKYNY4VdvGFp8UWFG34/ADTdU3S7cf0JjO14/s=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=vD3PkGEU4KR432pbB3pbHaa+8wS/DntV1fIJ9wICpCU+wSjc1AxpcC30aNlcDilibZvOTjEE6fwm8Em6yCx4g28bI3kK1PI0rz23PInC2Duny2vHQ285D05xSdlJK3XcWGWiPrFqtVjIcklyPFUvlfZC1JhX1PXCzvPHiCN7mes=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=b0+P3io+; arc=none smtp.client-ip=209.85.167.43
+	 Content-Type:Content-Disposition:In-Reply-To; b=hWVLiFg8QtLlVjUzRqNkTSkTXe60I/bvi/C3gVRWJniNxSkI05rClDwfRVec2GE4DS9LcNy3odGRPJxf1ex06ZxE1XXnvLrCoh6gHmqbjnw7pNxA2dKvda4QZavSLWYnnQwS9TIS7C+TKGSVi+Qmtnw9YBSILzaB8dQqqxbDk3E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=L5oFwPBw; arc=none smtp.client-ip=209.85.167.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f43.google.com with SMTP id 2adb3069b0e04-54024ecc33dso1755764e87.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Dec 2024 21:55:42 -0800 (PST)
+Received: by mail-lf1-f54.google.com with SMTP id 2adb3069b0e04-54021daa6cbso1579164e87.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Dec 2024 22:00:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1734674141; x=1735278941; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1734674430; x=1735279230; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=OJhpuoBbKLElyofoNozRR7fNdcqH/mOd7wB7B78IPAU=;
-        b=b0+P3io+xPK5GJOjb0CrBVvltNAcqesaYRUIpKF7+8sSSB4YhUodFP1+RWtDDplKMS
-         4wgTcGhECSl69z5XCkEet4rltA8AXcN86+ljxxGhuBS1t1WhA6quj4t5VP9RyygCTmXt
-         2wRQDPAhkkGBLWBFt1sLH2B9NS2kUUoo7QWqmqDs+7mtYHmskrJPki7OucDB+jh3c93w
-         8vFiiNSW1DuuxKxkJ9wUJPihU2Vve1abeZ8FVzlAswpLiO2p2U+zA6uYxXVpQvOehQa/
-         uHKeQNr8wSJPm4sPgwrAz9rvgiMWKsr3cmTNPh7NFN+TqMwW4df8Iu+iFtPpGo9PL1IT
-         S5+g==
+        bh=lztogWLUolK8A0gjuG8auzrWDWfVBR792pZiblADSI0=;
+        b=L5oFwPBwqRcV/+19oaW1bP0TDluO5aNRDvul9jmQdVbxhJWU0FgLx/rEvDkWHnCHzZ
+         RCRK897WwxUcOAtoVoSwTDJO5EsP849L2F4FktX4a9nDGZz6KeuKwXjqfvSzMuZlAu68
+         wrxU3MghMBVP53Oe61QG0NcG6OKGLSFzaD1RVvdAUMs/BlHPvdiYr3q5Q4Ui28bcQHRv
+         ZZGNtLeE8gdIGQix1iZsGZ4UzsT4U4vw5f95pk4l1YNejom/Hg4JwOxb+lqH2dnLj7Rg
+         sWx3zI7T9UB8pV7R87+3dxR8Fh/0AsxaEu2UGKfErbPjyqqeqhcOF27cJyI7GOOPv/ER
+         ZvNg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734674141; x=1735278941;
+        d=1e100.net; s=20230601; t=1734674430; x=1735279230;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=OJhpuoBbKLElyofoNozRR7fNdcqH/mOd7wB7B78IPAU=;
-        b=NrjYyZAr8tnl5/M/PBai84wPRhZgxOxAN2aBCbaoHpF/XlajPJXBOlrlq0RcJw8nyc
-         M0EYrlRbNEqESPFUeTAnL/6vGqrWTLzpvFPmUQlwLwatxTZtsEjnND2AEKCBtB6Vl5hv
-         jm6PVz+tyDlHeIytKqdmhbI/6kLuHkzIKWZKXz7nIxzWsvwrZ4LR9ImSdVwgpb2AQbe9
-         IgHO4DDmBQaD3b4/cgzIVJ0DhexELpO/KSKrhFS/bhysdUCsWcuDooqqdjTJIqSXtvOW
-         70asPbPihqt5ALoxi9MS+qqRr+jFw5vwj6lNJSloQhnO5hw39kKcwSVEZRaul9URmpQX
-         C/4Q==
-X-Forwarded-Encrypted: i=1; AJvYcCXdJ/xRDwqfEN520aLKQ0GpUjqYegwAmagPZyCC5CFJywTPuRdOGsi3nFQ6iHfyQ8mluwSGILU7n21nl/dc@vger.kernel.org
-X-Gm-Message-State: AOJu0YwiA+28VhGAHbrubulb7AMJa4oHpEDok7HBdrOqtQLWmwj2BCLZ
-	cCdLC1me4An0fQxUBI8P1Ly+JHI/WQZexprJTzLeUY1+srP/LyZDf2acslCg/eMGz9HrM8muUhW
-	i
-X-Gm-Gg: ASbGncvQnh0M9sy4o9vSGOqCk+7Bhg/r8Oi5xEvTmpVSJ5U1RddpVvFV1pqPOyupLnX
-	rtBNZIXWclPgEE3iYDfQCEXnQzHOx8neBJOmBN+yQFMv9V5Jvy+2BmEcZnxkZfbRz17yD2WXubp
-	qic0LD956mSZg4n3gszr7j0MS+PtSgCb/+TLzGAE00SWbFtqcJ0i2VlL1/Q2eXDoZ1+dUUEesho
-	eihsnlUiKUJi/zfABIyjfbvn+5I6MmioTTIHNnCrj0Hd1DVAWJrDjPY6InRtzPBIKV+i09UqXjL
-	nZ1hwb2BHKfepw2+VlkHzl/9BVxG3CHRz5aK
-X-Google-Smtp-Source: AGHT+IETemAVTmQyZ9rbwPDBncgy1nlOXafMgvgGBZDfwJJZOMq7B3fJHMrkOYNfkHSOT4TqKqybDw==
-X-Received: by 2002:a05:6512:350e:b0:542:2991:e984 with SMTP id 2adb3069b0e04-5422991e989mr241894e87.9.1734674141403;
-        Thu, 19 Dec 2024 21:55:41 -0800 (PST)
+        bh=lztogWLUolK8A0gjuG8auzrWDWfVBR792pZiblADSI0=;
+        b=A8exiUjUMZDvWRgcvEqtYOVU2+CIO5uRf0nb521hZ+abAAKnTQlHczrKgYxU1f2Stm
+         CDa3hBphnjMUii5YTCYN1859L12N4GARIZjXrS8ThcSiOPk+16FnF/FhZo/zBk8hL7cs
+         0Roh8s1Ghr12P5LmvkuVmcqg0+x0PgJ5PPXzCnFlhBdzhiRXQpJiT+oTI7LXv3ftwDKw
+         Kiwl8ezC9B8hHdEr05AQ39YNSJsfhy32FudQVWcVMAftofmjyRM4HCrXlg6UX7aMYewD
+         sT/TV/yfI/f7e/gB9Zr78yTNW4sBrFQ/Ko7Q2oPe8zyrHiikIowJKuPaEmB0Vq2Pektl
+         ++WA==
+X-Forwarded-Encrypted: i=1; AJvYcCXxQovkF5hJcJBca26+9DL925MHAl+dmf7w31/hozlnRpRpkXz20C4ON2jP0IKhAggc6m+mq1wi/fqbXvcj@vger.kernel.org
+X-Gm-Message-State: AOJu0YwIChw8yAilEdhT3UFOYQXmux1c0dBTTjYvzNbJ+esBkBRclxgn
+	jMat29WTkcCmi7NxayoXh/Ta3RquowTyRISTb5AEalCpa9YoBIq3+t7c7nzPC8E=
+X-Gm-Gg: ASbGncvN7GKJeXccjFR6dts3+SCGwtl6UE2NuN1q7UkhTZDxPZ33TTUQZ2TNxTrqSvY
+	u/x+6wnfQ1+jLMtlyf5J0moAwAHowBTQo05z05GlBTqdiQHVvQzsRgJSz2Znq7wtH5ijqSD7uAM
+	NkXd2PIPdjEhcImqeLdcaDjlewLLD6KufElq2ssemPw9HjC0R34cqE7QlmG9iwZsM/uDidvejr2
+	Mq+iQW1VtK+7Rwjyw/c1MO1spFTUsmI6hJpIYjpqrjYKygFQKsJhLM/7eUII3zwRB9Ob4iQn6pf
+	H9bUSRSQ9j2eraL9/OMd1tgWWf4pMhIrQDMd
+X-Google-Smtp-Source: AGHT+IFiEdq38m3N3tZdESWDddegsXGp5KSA4zDLDiDMTHVXrl2c04WWztsil1xL9Q1eYop5O6E+PA==
+X-Received: by 2002:a05:6512:3405:b0:542:2a8b:d56f with SMTP id 2adb3069b0e04-5422a8bd614mr136330e87.4.1734674430475;
+        Thu, 19 Dec 2024 22:00:30 -0800 (PST)
 Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-542235f5f57sm386381e87.33.2024.12.19.21.55.39
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-54223835779sm379307e87.282.2024.12.19.22.00.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 19 Dec 2024 21:55:41 -0800 (PST)
-Date: Fri, 20 Dec 2024 07:55:38 +0200
+        Thu, 19 Dec 2024 22:00:29 -0800 (PST)
+Date: Fri, 20 Dec 2024 08:00:26 +0200
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To: Jessica Zhang <quic_jesszhan@quicinc.com>
 Cc: Rob Clark <robdclark@gmail.com>, quic_abhinavk@quicinc.com, 
@@ -83,10 +82,10 @@ Cc: Rob Clark <robdclark@gmail.com>, quic_abhinavk@quicinc.com,
 	quic_ebharadw@quicinc.com, linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
 	freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, Rob Clark <robdclark@chromium.org>, 
 	Ville =?utf-8?B?U3lyasOkbMOk?= <ville.syrjala@linux.intel.com>
-Subject: Re: [PATCH v4 19/25] drm/msm/dpu: Configure CWB in writeback encoder
-Message-ID: <i6xj5p5jbn6hdu6uip5q3k4umz4b4daqmbwsgfuaw2guf23kjj@lkq42furh3sh>
+Subject: Re: [PATCH v4 24/25] drm/msm/dpu: Reorder encoder kickoff for CWB
+Message-ID: <dszctcu5mm4hudc53gqpjklcugah5lisvvfkbmejeywgceqyl5@dqzopvt2lb7s>
 References: <20241216-concurrent-wb-v4-0-fe220297a7f0@quicinc.com>
- <20241216-concurrent-wb-v4-19-fe220297a7f0@quicinc.com>
+ <20241216-concurrent-wb-v4-24-fe220297a7f0@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -95,19 +94,35 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20241216-concurrent-wb-v4-19-fe220297a7f0@quicinc.com>
+In-Reply-To: <20241216-concurrent-wb-v4-24-fe220297a7f0@quicinc.com>
 
-On Mon, Dec 16, 2024 at 04:43:30PM -0800, Jessica Zhang wrote:
-> Cache the CWB block mask in the DPU virtual encoder and configure CWB
-> according to the CWB block mask within the writeback phys encoder
+On Mon, Dec 16, 2024 at 04:43:35PM -0800, Jessica Zhang wrote:
+> Add a helper that will handle the correct order of the encoder kickoffs
+> for concurrent writeback.
+> 
+> For concurrent writeback, the realtime encoder must always kickoff last
+> as it will call the trigger flush and start.
+> 
+> This avoids the following scenario where the writeback encoder
+> increments the pending kickoff count after the WB_DONE interrupt is
+> fired:
+> 
+> If the realtime encoder is kicked off first, the encoder kickoff will
+> flush/start the encoder and increment the pending kickoff count. The
+> WB_DONE interrupt then fires (before the writeback encoder is kicked
+> off). When the writeback encoder enters its kickoff, it will skip the
+> flush/start (due to CWB being enabled) and hit a frame done timeout
+> as the frame was kicked off (and the WB_DONE interrupt fired) without
+> the pending kickoff count being incremented.
+> 
+> In addition, the writeback timer should only start after the realtime
+> encoder is kicked off to ensure that we don't get timeouts when the
+> system has a heavy load (ex. when debug logs are enabled)
 > 
 > Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
 > ---
->  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c        | 75 +++++++++++++++++++++-
->  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h   |  7 +-
->  .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c    |  4 +-
->  3 files changed, 83 insertions(+), 3 deletions(-)
-> 
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c | 74 ++++++++++++++++++++++++++------
+>  1 file changed, 60 insertions(+), 14 deletions(-)
 
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
