@@ -1,77 +1,77 @@
-Return-Path: <linux-arm-msm+bounces-42931-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-42932-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id EEFB49F8D57
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Dec 2024 08:36:52 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4F69E9F8D5B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Dec 2024 08:37:07 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 64A2B168781
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Dec 2024 07:36:42 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2AB4D18872B7
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Dec 2024 07:37:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 648F81A83E1;
-	Fri, 20 Dec 2024 07:36:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AD0AF1A8416;
+	Fri, 20 Dec 2024 07:36:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BycwL1zE"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OxCUzdBm"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f44.google.com (mail-ed1-f44.google.com [209.85.208.44])
+Received: from mail-ed1-f47.google.com (mail-ed1-f47.google.com [209.85.208.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADEAD1A704B;
-	Fri, 20 Dec 2024 07:36:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1C941A8404;
+	Fri, 20 Dec 2024 07:36:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734680182; cv=none; b=XWPFjaInbKw2rL4W6ACHh1pQalmU0O9Jcvv2u04AVavLDSPicAOJnWvnwKdwTUwfN8int8iS1wwmSso7MVpz1JB9qIQO7rDKhjNhwoR56dhAGjrRzw04MmaC0/Yu4+39KwRYliq798W66f2F2MTViJVYXPmLuUizKHp3OCvoMHA=
+	t=1734680185; cv=none; b=Zy8v3hyuYs4Y1nMPNwAGYHfu6hi3WpGR6nGo3vvhZBkvFIuGQHMSew8XT6GbZC2V2VopL8wiXZs1WCiKgvgtIEFd4qfYecLwJGAGvgpJc3csFlI86Tc69B25wyu1tlnoastqtBkQoeJviz3vF8iiblhMPdPCnUALnrAo5NQI3MI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734680182; c=relaxed/simple;
-	bh=K9RRQydJrqjZlGMV24FwvjEUIFLCbX0QrTNS4P9FBo8=;
+	s=arc-20240116; t=1734680185; c=relaxed/simple;
+	bh=bB/cH1BkAsnNPyV0OvXZ7kfOHU9q1gs/7zfd18lXTe4=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=cKu/qHxOC5bmn+Ys7w2MrHCaelaaeEVrCIUsRq8oIzR1AIPHG9XNkkf9Lv2+79TJOAFYy15QPAY6JiS88zPIfhu0wd8PyOxBbryUBZpI4lC+M5LABAoET7Y3ae2cPqF5tqO7x0KVjXi02+VyZJIJ0VzRos05ju4ZBrr67PCdPxk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BycwL1zE; arc=none smtp.client-ip=209.85.208.44
+	 MIME-Version; b=lGj7U3kgu8xCi2SUfCcSWea1mFnqPTETeNAgMdYtD5A0DlrFWbL7XaDZjWa+h1soQ84LO2pFvEYTLcYQv6USNCWQZ3w88MAlQlcALEe8kMr6AljWRN2xlYeIm20TSe3lmv/B8HA3AGNr283T8Xu5zmi1qZX9TusAzrLFwAgzNtE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OxCUzdBm; arc=none smtp.client-ip=209.85.208.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ed1-f44.google.com with SMTP id 4fb4d7f45d1cf-5d3e6f6cf69so2315913a12.1;
-        Thu, 19 Dec 2024 23:36:20 -0800 (PST)
+Received: by mail-ed1-f47.google.com with SMTP id 4fb4d7f45d1cf-5d3dce16a3dso2951134a12.1;
+        Thu, 19 Dec 2024 23:36:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1734680179; x=1735284979; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1734680182; x=1735284982; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=CmnOKXARNh/mVdEdTbXXZMVtjsBlY2Qn2Jk3T3H/f4I=;
-        b=BycwL1zE891tch07sC3ZmwgCpQW8W0jTeykZwNKuSF/EgZC55+uQHkyNipRnlqiUeZ
-         LnqJSyhPvmiYvSTcDH73WKK0nN01uVK89GaBuIXakm6bSJImgsTKpwVP4k/nBvTjNWvP
-         PbWMhMaU6y/OH5LUfnQMUoZy76+lyEFHb8tzdPBXqoYyCENsN/9DwMWA6wn+Q6399yhU
-         F4wf9ZuKwn7G39QrY0dKnchzaxktgFRGa+QkJkGCt1iCkjrTDjfJDWE55wjdQyUT5ezN
-         NOiAwLVWvKihEmwpJ7Mw9Lv/wGo5a8pNmFazyjlzjX/vYrMoP4K9cmTIQpOHLWOdviT6
-         y3ZA==
+        bh=BjvoTnLajbhK8stDtq3vTnpcqmR1DBp3TItoZOoWAbk=;
+        b=OxCUzdBmD8108UaAYBCn/3ZIrCypdVjoaXL85Vitw6V4KArcGvfmz0LP9po9btKeqg
+         JofTIu7aT1fegIH+kkPzwuuvEHTr5xD1KK4YFuEk3EnZH+pDEPn4bhjonB8a700i9zWd
+         pa9UhAGhk9bbKI42YdoOhDC0mFPOLr2r7dm0fzBE/Xb7wSBB2Dlla2mVq52z415wJY0w
+         mord6fFbwT676/7e82e5+9KUBaFIys2USW7NmhI9r+QLcuelzbFxOTLRH0Xgbv6suxIw
+         /1QWET31JwRZTfEfe2/C/UegRRure2d3y02laY6T8Y7s3Smb7n12IWwoyL0goXUdPznq
+         XhNQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734680179; x=1735284979;
+        d=1e100.net; s=20230601; t=1734680182; x=1735284982;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=CmnOKXARNh/mVdEdTbXXZMVtjsBlY2Qn2Jk3T3H/f4I=;
-        b=FhxJRlFp2te8kEzTBucdViSwjoHrc17BJT1pLjLJcypuirjcCBDiGoW2FFa5pf+wwv
-         USdDdHsIlRid1DbSdNR3KWUtm9pDqGlXJ7QoDFyZMwiK168l2o34sI7TZT4SwvlBfZjW
-         PHJIbYBjYTlKC0hELFGYqqDmnAQpWaoUGqIOmUvMdjQYafjQKWM1B6kAheFtndeLhNXB
-         vIOMwYckqV9ObB3KLXwG+m7OmAElW0E2SZNHaFAJ7yw6NeAZibvo2ceENfZR6r2PEdjF
-         i3OehY54NN4JM3I2sTvtc1WLcMpEpkP+v8cgD/xXsDfV++c6cGddhuCESlk3zjP0tQop
-         2jeA==
-X-Forwarded-Encrypted: i=1; AJvYcCUEjtC/YxEQVSU8ISB7LeON0C3E+XlMe64J49/VbCDgiAvPz9+eDUXvWz2S8FdQAHbX9S+41Y5FDou5/5Lp@vger.kernel.org, AJvYcCVNkB+2hFjYsmrvwha9hqXGKUl+6YmKa+ouqBUEMusxUpyxy/4yTw4OSFY/sNlbbkRO6q+yj2BC@vger.kernel.org, AJvYcCWkvPeIwzqdca5seRMHYsdmTR5nCloJDjaLsYFP/is+j4mwcN47YLmP5aCwRk+apDJye3cak0vZ+Yeh@vger.kernel.org
-X-Gm-Message-State: AOJu0YyXiUHsHbzWHGk8poNivV+2Kn8qTMv+MaB3sJWoP0U7ZYywaR5u
-	OGy9qNfgvnovGn9AMGCQPec1IcR3Vjjylqbi4yi9tzTnuMUyuQd5
-X-Gm-Gg: ASbGncsNEFxlsqWNAG9Bb22hlyRbAgnMN88wZtNBqNPk1E5OH42eH132dEy/lXBEiEo
-	W3+DpBl6xFfU7gaJLNR9Nj6qQnNm8QmlSw6JKFp6IgzrMuOrfeuLZ2+itMQiJfHVbzoFoL541hB
-	e7Tvb0btbUVbPs7JThl0d6I/QraPnHQT7Ois4jMvssuEK5jVO94oxSkxuXUb2l6MasLKofdV2QT
-	MZKHIFrohvy+y28zz8emxB4lBCfvjxFHzj9dYVLEW5pVeciXp6Nn3ViDrEVFjK/7QA5XaawBdxB
-	EtEIo0jXix8gwg==
-X-Google-Smtp-Source: AGHT+IHjZciKiUdpTO/xWIvnoTuKFYsAoSczMvs6vwLWyP+7VtPWXYzg3tXV5vGIWEL0fHMgdbllnQ==
-X-Received: by 2002:a05:6402:321a:b0:5d2:7270:6124 with SMTP id 4fb4d7f45d1cf-5d81de2311dmr1420892a12.23.1734680178729;
-        Thu, 19 Dec 2024 23:36:18 -0800 (PST)
+        bh=BjvoTnLajbhK8stDtq3vTnpcqmR1DBp3TItoZOoWAbk=;
+        b=ekVoy6TNc+GtJauhsCD5/Qh7s/gDkvO3BEg0BGSW420AgTdLIYg0PFiTPs99cdfsk5
+         /ELqRjTc9jyGvVap45r4patXSlNBNgea3lWrQSGhJRb724yYsGxdjuCvh+fyHYreAJdR
+         HvK7lL2D8HaksArDghalsrX0NiaNPCbtYFY+NjxtH4VMaBskHRTEAmgr+drJ1LhLfwwP
+         s3RjCNz8/BHcxwMJu6s/63k0ODfnuTLL/fAISn6ewe1p3/rg9y/XFfxQgj7h3nWh1NTZ
+         JNRKSJPT9nZ+117nGJevoTmFduQF7R/wyhv352AR2cNRO2MoNdVFYXcjJ6ZiHp8e66ir
+         OcTA==
+X-Forwarded-Encrypted: i=1; AJvYcCX/kyDX6egmMeoFEzHgWIeTjzIEMcqMhGUp3dm7yqBf6/m6OqVAaFUYBs7QyHE/y4P7fpL2J9c8@vger.kernel.org, AJvYcCXKwpoNfAdn8MTfU5MIe0PQe/VD1AtyRcJYnlcV4n8TTUbSfz8QFr5d+iv61eZ7H2mrwdEsdM1/czm2dtWR@vger.kernel.org, AJvYcCXimdoiIo+1mc+fLqN5PZlZDPhyMCzj+DwOyI1vM6fdF+LynR0wOgLMnQR2nFU8baWdUkMrjIHNcXcq@vger.kernel.org
+X-Gm-Message-State: AOJu0YzpFCgmyAIKFLKyk1ZSuILz+zxYtimZXBLjZz03xoWoqMq0xkQf
+	7p7Ur5+8iD8zcQ5DumAq0ZT5fEk7WS8q8og3V3DQZRkwG2faGJqyOFcg425v
+X-Gm-Gg: ASbGnctSqjTRQn0O8KYG83PMosaDDA199Tq6CGHSmTcWT7lYBH5HLfwSdN6NdllbWim
+	PgiM6d8atyzyc63nfVjyOgFfmRv+nuaR32nkAep58cMrd+nK8iOOmsn2fNvYD7sdDQH4FjruvZU
+	UbwE1yFxStKMJydyD0gMFNAG9UZ6mOBkXmI/+jvepwwe5W8JYWzkzq4daX847whM/D3IiTj9Srt
+	vOSYRDsH+o2HKORcIGPuFohvNWfZEErq7EW5NTKDEBEby0AFMdEUS9wVEZC9n2ck6V2pWAaP+K8
+	diW3o7iK9qfPMw==
+X-Google-Smtp-Source: AGHT+IF5hFtXwu90C8+PKA1Z+lLcJXUlxYVeoE8KY7FRpA8mHLqCsPWY6ZHEBkBJbGLKh8x3+jVFeA==
+X-Received: by 2002:a05:6402:3585:b0:5d0:d845:2882 with SMTP id 4fb4d7f45d1cf-5d81e8c134fmr1090627a12.13.1734680182121;
+        Thu, 19 Dec 2024 23:36:22 -0800 (PST)
 Received: from T15.. (wireless-nat-94.ip4.greenlan.pl. [185.56.211.94])
-        by smtp.googlemail.com with ESMTPSA id 4fb4d7f45d1cf-5d80675a375sm1509229a12.2.2024.12.19.23.36.15
+        by smtp.googlemail.com with ESMTPSA id 4fb4d7f45d1cf-5d80675a375sm1509229a12.2.2024.12.19.23.36.19
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 19 Dec 2024 23:36:17 -0800 (PST)
+        Thu, 19 Dec 2024 23:36:21 -0800 (PST)
 From: Wojciech Slenska <wojciech.slenska@gmail.com>
 To: Andrew Lunn <andrew+netdev@lunn.ch>,
 	"David S . Miller" <davem@davemloft.net>,
@@ -89,9 +89,9 @@ Cc: linux-arm-msm@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	netdev@vger.kernel.org,
 	Wojciech Slenska <wojciech.slenska@gmail.com>
-Subject: [PATCH 1/2] dt-bindings: net: qcom,ipa: document qcm2290 compatible
-Date: Fri, 20 Dec 2024 08:35:39 +0100
-Message-Id: <20241220073540.37631-2-wojciech.slenska@gmail.com>
+Subject: [PATCH 2/2] arm64: dts: qcom: qcm2290: Add IPA nodes
+Date: Fri, 20 Dec 2024 08:35:40 +0100
+Message-Id: <20241220073540.37631-3-wojciech.slenska@gmail.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20241220073540.37631-1-wojciech.slenska@gmail.com>
 References: <20241220073540.37631-1-wojciech.slenska@gmail.com>
@@ -103,29 +103,83 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Document that ipa on qcm2290 uses version 4.2, the same
-as sc7180.
+Added IPA nodes and definitions.
 
 Signed-off-by: Wojciech Slenska <wojciech.slenska@gmail.com>
 ---
- Documentation/devicetree/bindings/net/qcom,ipa.yaml | 4 ++++
- 1 file changed, 4 insertions(+)
+ arch/arm64/boot/dts/qcom/qcm2290.dtsi | 52 +++++++++++++++++++++++++++
+ 1 file changed, 52 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/net/qcom,ipa.yaml b/Documentation/devicetree/bindings/net/qcom,ipa.yaml
-index 53cae71d9957..ea44d02d1e5c 100644
---- a/Documentation/devicetree/bindings/net/qcom,ipa.yaml
-+++ b/Documentation/devicetree/bindings/net/qcom,ipa.yaml
-@@ -58,6 +58,10 @@ properties:
-           - enum:
-               - qcom,sm8650-ipa
-           - const: qcom,sm8550-ipa
-+      - items:
-+          - enum:
-+              - qcom,qcm2290-ipa
-+          - const: qcom,sc7180-ipa
+diff --git a/arch/arm64/boot/dts/qcom/qcm2290.dtsi b/arch/arm64/boot/dts/qcom/qcm2290.dtsi
+index 79bc42ffb6a1..0d39fd73888a 100644
+--- a/arch/arm64/boot/dts/qcom/qcm2290.dtsi
++++ b/arch/arm64/boot/dts/qcom/qcm2290.dtsi
+@@ -428,6 +428,17 @@ wlan_smp2p_in: wlan-wpss-to-ap {
+ 			interrupt-controller;
+ 			#interrupt-cells = <2>;
+ 		};
++
++		ipa_smp2p_out: ipa-ap-to-modem {
++			qcom,entry-name = "ipa";
++			#qcom,smem-state-cells = <1>;
++		};
++
++		ipa_smp2p_in: ipa-modem-to-ap {
++			qcom,entry-name = "ipa";
++			interrupt-controller;
++			#interrupt-cells = <2>;
++		};
+ 	};
  
-   reg:
-     items:
+ 	soc: soc@0 {
+@@ -1431,6 +1442,47 @@ usb_dwc3_ss: endpoint {
+ 			};
+ 		};
+ 
++		ipa: ipa@5840000 {
++			compatible = "qcom,qcm2290-ipa", "qcom,sc7180-ipa";
++
++			iommus = <&apps_smmu 0x140 0x0>;
++			reg = <0x0 0x5840000 0x0 0x7000>,
++			      <0x0 0x5847000 0x0 0x2000>,
++			      <0x0 0x5804000 0x0 0x2c000>;
++			reg-names = "ipa-reg",
++				    "ipa-shared",
++				    "gsi";
++
++			interrupts-extended = <&intc GIC_SPI 257 IRQ_TYPE_EDGE_RISING>,
++					      <&intc GIC_SPI 259 IRQ_TYPE_LEVEL_HIGH>,
++					      <&ipa_smp2p_in 0 IRQ_TYPE_EDGE_RISING>,
++					      <&ipa_smp2p_in 1 IRQ_TYPE_EDGE_RISING>;
++			interrupt-names = "ipa",
++					  "gsi",
++					  "ipa-clock-query",
++					  "ipa-setup-ready";
++
++			clocks = <&rpmcc RPM_SMD_IPA_CLK>;
++			clock-names = "core";
++
++			interconnects = <&system_noc MASTER_IPA RPM_ALWAYS_TAG
++					 &bimc SLAVE_EBI1 RPM_ALWAYS_TAG>,
++					<&system_noc MASTER_IPA RPM_ALWAYS_TAG
++					 &system_noc SLAVE_IMEM RPM_ALWAYS_TAG>,
++					<&bimc MASTER_APPSS_PROC RPM_ALWAYS_TAG
++					 &config_noc SLAVE_IPA_CFG RPM_ALWAYS_TAG>;
++			interconnect-names = "memory",
++					     "imem",
++					     "config";
++
++			qcom,smem-states = <&ipa_smp2p_out 0>,
++					   <&ipa_smp2p_out 1>;
++			qcom,smem-state-names = "ipa-clock-enabled-valid",
++						"ipa-clock-enabled";
++
++			status = "disabled";
++		};
++
+ 		gpu: gpu@5900000 {
+ 			compatible = "qcom,adreno-07000200", "qcom,adreno";
+ 			reg = <0x0 0x05900000 0x0 0x40000>;
 -- 
 2.34.1
 
