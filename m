@@ -1,144 +1,206 @@
-Return-Path: <linux-arm-msm+bounces-43011-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-43012-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0A5099F9970
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Dec 2024 19:26:37 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id F329B9F9927
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Dec 2024 19:11:18 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 63441196135D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Dec 2024 18:10:39 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 9ADE97A0123
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Dec 2024 18:11:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C3C5E2206BB;
-	Fri, 20 Dec 2024 18:05:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 559CA215195;
+	Fri, 20 Dec 2024 18:07:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="bbgEylPG"
+	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="SP5iT7Zx"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f43.google.com (mail-ed1-f43.google.com [209.85.208.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from NAM12-BN8-obe.outbound.protection.outlook.com (mail-bn8nam12on2057.outbound.protection.outlook.com [40.107.237.57])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F209E225793
-	for <linux-arm-msm@vger.kernel.org>; Fri, 20 Dec 2024 18:05:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.43
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734717911; cv=none; b=PvrGVu+GbSGMLC9iyMN5R8CgB4zDiN+SVe/Fd9S/izTWUlz0yLKVajVWDhEtwNK4TUXFGvreZPvbHA2KJSGHnmBMZfWcUIfDkSVwrrhuaCu6v+4zsT3FM6IxzmzVO1p6tbiqHslFvAIIJf7BLJXcwQ3oQU5xmH26oyVwnGn0cbs=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734717911; c=relaxed/simple;
-	bh=e93gnd+HNMY37U/5lpNe4iPYbXAu8F+qckDxbB7DMSU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=AlzUUqe/IeaDX4qYWRdYqUlEzxaEYW1H4N8oAake/WxFgdD75wqCxmha625CAoAVqnxK+Tv/iZgoXsAcs+VqLMSEcfMK++IjQkrQfXsvTfRDuzMbIFLS9oap34wtDdMenfS9aQCH+2tNzBrYCT8gTNT53bxex49UDdLIDQjU/0M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=bbgEylPG; arc=none smtp.client-ip=209.85.208.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f43.google.com with SMTP id 4fb4d7f45d1cf-5d3f65844deso3297966a12.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Dec 2024 10:05:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1734717907; x=1735322707; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=ha8GqgZXmMH7R06nfVWYy2HAs9IqUsEUGcLXeArf4II=;
-        b=bbgEylPG6Mj2BxXzZc2aG9jJjRn/tM0JeJEeWeIvRecOd9/mhRJKPRneykFk/v+uOk
-         69AGceNQZQ5EczregpkByl7UyM2LaIoyLaAIdxIHcwomN2xcW86RNF+E252gFXEzYr5v
-         YGpQkbdq2CMX2/KTfsPyRoohwIl14T4NTyfyan3W4tBN7TqUmmH3VRn5COWEkhYUSrE1
-         vBvxo1+3WsY7xvDa68MNd2YotQ6rBe1I3O3nwMHvIkIWW4jD9RfKksgf0FebCeE1ox0P
-         SWzw8AwwDrEhfAq+IYEXxph1YxshjZ5Ee5bFPgj/6yPH2m8jT/WD0v6qgirmAknE1ah/
-         Wjgg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734717907; x=1735322707;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ha8GqgZXmMH7R06nfVWYy2HAs9IqUsEUGcLXeArf4II=;
-        b=CU7VGGd7y1gG7qQi3D4Il3l4Q4rqm2lMi77EzReFqp/ClLo0vK3Qyh+kcbT++SEShc
-         wzHEOl1VH3UoFXtTxP1MEIhtgY0O8GNeWdWWOBScpI3X8fbhtyObRvDb4Tt+ipakmKkL
-         dN4UL+ZTuvAXgb/VeI9VEHOIcyI2jWEip6K746Ns1heijJLbvp9lExnUI33d4pJjWrNR
-         n0+a1jEah8vQFUGR0sbemCHxlmt+nzo76wqqPpk5PMjFwJvB2fJ1frd2kU8bIhygCwLq
-         MfedrUqHakzHIyc+KnFIYRLOcxwpXcEz1Tk+9lNRURzhccfVhJEnrjrTl7e5b/mzFe88
-         dKgw==
-X-Forwarded-Encrypted: i=1; AJvYcCXQMFI3CqKcuUnCac8V7zFCc6MnpjknJnjnsGiVwIyXM400yeBETEd2uwd1zs/jU3f4Z1QCuTh8fiGu6Cgq@vger.kernel.org
-X-Gm-Message-State: AOJu0YzzsvaCDJ02yCV/188mdNiz9Fw37tASV9gggIB7hCSnM6D98etU
-	8yFJ8P8aQAiKHyUI/Dl6XVj+jYokzsmG5cMH9Uyx2g006fE2JK3Td/VqD6++TwE=
-X-Gm-Gg: ASbGncvyc7gDwHyPtgcZJjhiSmAbjj7zxyuqveMc9SLhB+N//4QiwDWffn5aabFerSN
-	spLSdWOVSnMwIyem1iGXLtFk6B2IqrB2fgfhAHywt5OqKQaPzSOyGn8Vrrti3zS2DwMgd+tIk+o
-	IUXB8jWZzwGFXP0xuDFfgIZzZLgfHr7Swq+fLVhros3rh0bKt+FvKcjEWqiTxRtuiHZFkiO9fBY
-	DGMzHt+mYSYAbzT+zSvNcfAXC7JdFs84vRyRQTOyKQmgzA502/7OhOKu3otMjlMBG47
-X-Google-Smtp-Source: AGHT+IFUqR7T4/3vVfrawc/1bS3gPuhZ4shoLWlGJR8JJ6/HT2ykKjWMqBNHlAHudkeEgxEbBlSprw==
-X-Received: by 2002:a05:6402:5255:b0:5d3:cfd0:8d4b with SMTP id 4fb4d7f45d1cf-5d81de38c45mr3212851a12.33.1734717907246;
-        Fri, 20 Dec 2024 10:05:07 -0800 (PST)
-Received: from linaro.org ([2a02:2454:ff21:ef80:6d2c:6f87:64ef:2237])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5d80678c8dbsm1935723a12.40.2024.12.20.10.05.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 20 Dec 2024 10:05:06 -0800 (PST)
-Date: Fri, 20 Dec 2024 19:05:02 +0100
-From: Stephan Gerhold <stephan.gerhold@linaro.org>
-To: Maya Matuszczyk <maccraft123mc@gmail.com>
-Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 1/3] dt-bindings: platform: Add bindings for Qcom's EC
- on IT8987
-Message-ID: <Z2WxzvKRVcOz5d2V@linaro.org>
-References: <20241219200821.8328-1-maccraft123mc@gmail.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2671219A8F
+	for <linux-arm-msm@vger.kernel.org>; Fri, 20 Dec 2024 18:07:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.237.57
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1734718046; cv=fail; b=J0dj2nhN+QG7gdFj5LROacIEpoZVduRcX3ATnqwSAeCMJVejQBM9CtxdeObbD3SjUn7DpaC+oBGSN3ZK/z5/XwCBju93KIABW8Pimbvso/847EbtdW91gzxXofn1sMFF+sbi0OWpnlU392CGHXzbY82YYVljKo02pMqiKmOS9KM=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1734718046; c=relaxed/simple;
+	bh=HoVrkg6/fsP27tGNj+alJ8GyAVokqn2ohQtevgod+oU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=AnTigAriOjdH5aYA0765Tao+MGGzw+1VuBbXsCn9/ZWLKORjcG9A2qfAR5tXbCEMhj0DPPd7n0B4jQ9bjra9RRvmRc6+4dAyqynsKeWfdnbskknIR+ZCTjX27kp9KTV44snpf7+rgXNQLLmiX91QBHbRps+SaHYkGVom8G7+s7Q=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=SP5iT7Zx; arc=fail smtp.client-ip=40.107.237.57
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=RhAvDrp5o9uBb+ztvuTIk2ENyE7G1B0CQ50s9mFq3CL1IoHak6jdqzpajcVqwlfaIfFn9Xu401qgcIkvJjk1PG4QBuocwoVFR9e6remIueVorZ7iyTwZupx3w68V9HqteQ8mbmtz2pq10C8BpiQl0B7TM+Wz83mlosqztx3mjKK9fPtV0K9i1t2cJSVbml+cUKla2JyaYB8muNOf3BHE+JgiVKjgf52r5bPKDZFlpnRjo+qMWrrW9Rv2/7I658a6pqnxnrPr09EE/Q5GrVVWgkIg2GlIupAy5OUcy/Heyhtjr8YGqZTLgzzOyckesPFpauVq2x/V5/lBi9Kk1ORubQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=Hk1DPUxb5VpOJRhExIA2DLyEWgeMEHC6LOtcMYNZ0G4=;
+ b=TLoU2Cj7V/OaO2u9Q79qucT/5qi5bOuUIDmtsg6e7Gy8eQLxp1Rr7RBdfokWJ0QjbjIZfIqGDaqjxgpiJA5B2De4PpUDCJqylVdbQ5fuOIa3sFZrmn83XiNNgijkT1Pu3u/35KvwXAD//uDIerTMNggv/UEfEMs9mBS2E0SJb114fWG+IZN26q5xHDl6nD75xu1+HJ1lI3WN6XHpAZ5j7BA9pTqpShXcJo5sA18IrM8QO2ImRdoRYd6Hig52C370VynlYRumVycvuYNxHJSfWx2F41GUaqNjF7230la9CFXVCvjIpHoZZ8HyCpS1Hl4QoobnF4tF4vGdOdZdKrKORg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=quicinc.com smtp.mailfrom=amd.com;
+ dmarc=pass (p=quarantine sp=quarantine pct=100) action=none
+ header.from=amd.com; dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=Hk1DPUxb5VpOJRhExIA2DLyEWgeMEHC6LOtcMYNZ0G4=;
+ b=SP5iT7ZxE+dLaQ211CpWmK+JPTFlmbFmCiuhlgiAXiKKR9TM5QWN6LXvOtWfrspBDS/o79kBWtsqblNJpdIHvhb11M1Thpq6TlLUIFiaimuNbD1H/SHXxVct4VfPIpdTuS19EVlqzKmts2MIjuNXthVf8LHHfk8fRBqmyeUFJZ0=
+Received: from MW4PR04CA0038.namprd04.prod.outlook.com (2603:10b6:303:6a::13)
+ by BN5PR12MB9511.namprd12.prod.outlook.com (2603:10b6:408:2a9::14) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8272.16; Fri, 20 Dec
+ 2024 18:07:19 +0000
+Received: from MWH0EPF000971E5.namprd02.prod.outlook.com
+ (2603:10b6:303:6a:cafe::6a) by MW4PR04CA0038.outlook.office365.com
+ (2603:10b6:303:6a::13) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.8272.16 via Frontend Transport; Fri,
+ 20 Dec 2024 18:07:19 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=SATLEXMB03.amd.com; pr=C
+Received: from SATLEXMB03.amd.com (165.204.84.17) by
+ MWH0EPF000971E5.mail.protection.outlook.com (10.167.243.73) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.20.8251.15 via Frontend Transport; Fri, 20 Dec 2024 18:07:19 +0000
+Received: from SATLEXMB05.amd.com (10.181.40.146) by SATLEXMB03.amd.com
+ (10.181.40.144) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Fri, 20 Dec
+ 2024 12:07:17 -0600
+Received: from SATLEXMB03.amd.com (10.181.40.144) by SATLEXMB05.amd.com
+ (10.181.40.146) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Fri, 20 Dec
+ 2024 12:07:17 -0600
+Received: from [172.19.71.207] (10.180.168.240) by SATLEXMB03.amd.com
+ (10.181.40.144) with Microsoft SMTP Server id 15.1.2507.39 via Frontend
+ Transport; Fri, 20 Dec 2024 12:07:16 -0600
+Message-ID: <fb92e217-8f0f-3bf2-1b81-ab0705e47732@amd.com>
+Date: Fri, 20 Dec 2024 10:07:11 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241219200821.8328-1-maccraft123mc@gmail.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.11.0
+Subject: Re: [PATCH 7/7] accel/qaic: Add AIC200 support
+Content-Language: en-US
+To: Jeffrey Hugo <quic_jhugo@quicinc.com>, <quic_carlv@quicinc.com>,
+	<manivannan.sadhasivam@linaro.org>, <quic_yabdulra@quicinc.com>,
+	<quic_mattleun@quicinc.com>, <quic_thanson@quicinc.com>
+CC: <ogabbay@kernel.org>, <jacek.lawrynowicz@linux.intel.com>,
+	<linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+	<mhi@lists.linux.dev>
+References: <20241213213340.2551697-1-quic_jhugo@quicinc.com>
+ <20241213213340.2551697-8-quic_jhugo@quicinc.com>
+ <65a59247-f028-28f9-1a65-5e4dd62dadec@amd.com>
+ <dd83ba8c-0b37-7d1e-39a7-4b25ef7e5faf@quicinc.com>
+ <ce41ab48-a923-7a29-1c50-3338fed39ea6@amd.com>
+ <ed88797f-9094-ed93-5036-0af42767dbe3@quicinc.com>
+From: Lizhi Hou <lizhi.hou@amd.com>
+In-Reply-To: <ed88797f-9094-ed93-5036-0af42767dbe3@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: None (SATLEXMB05.amd.com: lizhi.hou@amd.com does not designate
+ permitted sender hosts)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: MWH0EPF000971E5:EE_|BN5PR12MB9511:EE_
+X-MS-Office365-Filtering-Correlation-Id: 58a9b5ad-9f7b-478a-516b-08dd21212508
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|7416014|376014|82310400026|1800799024|36860700013;
+X-Microsoft-Antispam-Message-Info:
+	=?utf-8?B?cnRZOG45NDkzeHlRc2JOYklGb1FRZ3c5RDhUdDlZejRmakZFekdZcWFMZ3g4?=
+ =?utf-8?B?Mlhrb05veDc3RDBVSFZqMUtWbjduQWJXVlZrZW4vcDgySmhUd0VrZjdLK0V0?=
+ =?utf-8?B?WmF0SHpFam5SRFA5VkhTTllxWWppb3NtZjJYRy9zMFcvRHozNVV0MDVBbWp3?=
+ =?utf-8?B?eUlzcXJwaXlqaHFzYVBuY2tKSlF5cW05eXR5QkU1UjJEVUZ0RjRVUlUzVjJt?=
+ =?utf-8?B?U2NQM1ZkcEI3aW5WNVJSakRubHlHZXZoKzNOLzlIWTQyOVBXVzBNYzZEeEpK?=
+ =?utf-8?B?NTVLeWIzenBwU2U0QXhBWWl1NHIvOWtUd1BnT1BUTmFxeC80Ty84NGpjOG51?=
+ =?utf-8?B?bS9jNXc0MkIrZFlwLzJPRHI2Um1RQkJzSmxrZ2JBUWwwMTJNUnRPZmdqa0Vx?=
+ =?utf-8?B?TUtsbDVLUnRsSjlycnZQc3YwbXpBMGkydGN1Z2Z4VEdSVld0dGdzWERnRWJ4?=
+ =?utf-8?B?Y3JRejhLMmVDY2txSkRkZjdEQXpLdEpiMG0vd2xRUWQyQTV4TlgyOGVnNWdm?=
+ =?utf-8?B?NitwOGZ1RUVtT0p3UUlnY3lPZFVSUTNyMzdONUcrZE84bmNJL0x6MWkwSktU?=
+ =?utf-8?B?VWtXTTRaYkh0dFRhWEc0MDR5dlRzRzk2WERnT1ZJOTl0K0M0eU01YnhIeWh2?=
+ =?utf-8?B?eEtvRVVpcTEvSmsyOFRHZ0lPaDVVTE50cG9OZy8yNUcrS2hLQ0VKYXlCZFBG?=
+ =?utf-8?B?NUNLOVcrU2ZlcXpxK21iTEhLdVFyS1QzVWZmbmQ3ZndpWHVXTlMrdEVBOXBM?=
+ =?utf-8?B?S2VpY1JUWmdQLzBJNTRLREpacm5WbVRDMUYwalZ3MmgwbUt0NkhTOHllaXN1?=
+ =?utf-8?B?bG1Fb1I0Mk0wcmVFR3huMC9maUg4T0lqYXUyTExKRUNiZllwbVRBTnVkU21G?=
+ =?utf-8?B?QWIydjN2RHdWbit3VndCa3Q5eWtxNjhmWkZLcXRhR2VWRnNKR2wvbXEvUENV?=
+ =?utf-8?B?WXdHWGh3bHhrblMzRGVuQjV0UDRiTVpZZ3NhMnBYTGl3QlpxdkowNFBNekwy?=
+ =?utf-8?B?N3hwY3ppY1YzM3oyK1VlcVhlTmlwRUpEQmduWlVuUlo5NUM1UHB0T1lEeHo1?=
+ =?utf-8?B?MThTdXVRSlB1ZFB1TTJWSmMzN1pTUFdqaTFMK2hGL3lRN2NleWFDcjBZUU5v?=
+ =?utf-8?B?dzRPT3FNRE4zRXZrZW9Rdk82UHd0b0crYW56OHk0cWp2VXFaRUh2cUxtd2FF?=
+ =?utf-8?B?LzJqMnVWU0xrMFd3Ni9OQ20vL0xueXg5QkZFd1hxUDY1M1QvbVlJOWdnZk9h?=
+ =?utf-8?B?alRRNGQ4eDYvRi83cGpmY2xLQ1NNZUg1cTdlbXovM1NUUEFMVHRZTkpuMmRD?=
+ =?utf-8?B?NmN5Tkt0OTUwVzFGc3p4RFh0Rm1TZXB5VjhJS1AvVG5zZ1JHOEx3Zk8vRmhY?=
+ =?utf-8?B?Uy9vdHlBRVVHQmM3ZFpLQ2ZEaDltaEVCbnBnTGx2Y09BazFKLzVvU0h2dWFN?=
+ =?utf-8?B?SE9xK1RSWWJuUWhQZkQwTTNEWXhXT01KMU1haW10QlBxT0R0bHMxQjlLOXZG?=
+ =?utf-8?B?WWliWE5xT0x3YWkyakFScUQzNC9kM0dlYzdaTWRmV3Jsc2lDYXNwaUd4WkpX?=
+ =?utf-8?B?Zzg0bUVkaFNqZ0JkTXR3MURiMTcwb1BtVElJRDhKYTY1UFRIQmtWRjcvb29X?=
+ =?utf-8?B?YzJtRHhXQndENHhOOHMyTno4UU01MzJNMisvZ1hidW1xT0hIaTluVE9KdjJE?=
+ =?utf-8?B?K3NPdDJYVlYzaDlJOUtGTFQ1VXdqOEkzYldWd2hXSzdndkVuUThLWXQ0elRX?=
+ =?utf-8?B?UTgxT055M3puUnpxNGVPT2FnVVZwaHJwbnJnL1N2N3JpKzdMYzlwQWxzZnZp?=
+ =?utf-8?B?L0F0Z0ZVRVN0eDRJaE9QL2lYSERlQ2pmbG5BMjV4bmVmSllHRnBGbnJTZEYx?=
+ =?utf-8?B?ZFVmYVJEYVo5SGRtZ0RLZzl1d0FuY2YrZkkvMG1wWWtYNUpuUnZtNlBEWFFH?=
+ =?utf-8?B?QVRSTURkdERUR3hqWWhpbFlwZkhRcXBzdzM4U0NQSmJDNmJHOWhuOXhGa01R?=
+ =?utf-8?Q?lbfyYxAu32jt2QdB7w6C1jgMEGxz98=3D?=
+X-Forefront-Antispam-Report:
+	CIP:165.204.84.17;CTRY:US;LANG:en;SCL:1;SRV:;IPV:CAL;SFV:NSPM;H:SATLEXMB03.amd.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(7416014)(376014)(82310400026)(1800799024)(36860700013);DIR:OUT;SFP:1101;
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Dec 2024 18:07:19.3699
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 58a9b5ad-9f7b-478a-516b-08dd21212508
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d;Ip=[165.204.84.17];Helo=[SATLEXMB03.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	MWH0EPF000971E5.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BN5PR12MB9511
 
-On Thu, Dec 19, 2024 at 09:08:18PM +0100, Maya Matuszczyk wrote:
-> This patch adds bindings for the EC firmware running on IT8987 present
-> on most of X1E80100 devices
-> 
-> Signed-off-by: Maya Matuszczyk <maccraft123mc@gmail.com>
-> ---
->  .../bindings/platform/qcom,x1e-it8987-ec.yaml | 52 +++++++++++++++++++
->  1 file changed, 52 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/platform/qcom,x1e-it8987-ec.yaml
-> 
-> diff --git a/Documentation/devicetree/bindings/platform/qcom,x1e-it8987-ec.yaml b/Documentation/devicetree/bindings/platform/qcom,x1e-it8987-ec.yaml
-> new file mode 100644
-> index 000000000000..4a4f6eb63072
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/platform/qcom,x1e-it8987-ec.yaml
-> @@ -0,0 +1,52 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/platform/qcom,x1e-it8987-ec.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Qualcomm Embedded Controller on IT8987 chip.
-> +
-> +maintainers:
-> +  - Maya Matuszczyk <maccraft123mc@gmail.com>
-> +
-> +description:
-> +  Most x1e80100 laptops have an EC running on IT8987 MCU chip. The EC controls
-> +  minor functions, like fans, power LED, and on some laptops it also handles
-> +  keyboard hotkeys.
-> +
-> +properties:
-> +  compatible:
-> +    oneOf:
-> +      - const: qcom,x1e-it8987-ec
 
-Given that ECs tend to be somewhat device-specific and many vendors
-might have slightly customized the EC firmware(?), I think it would be
-better to disallow using this generic compatible without a more specific
-one. In other words, I would drop this line and just keep the case
-below:
-
-> +      - items:
-> +        - const: lenovo,yoga-slim7x-ec
-> +        - const: qcom,x1e-it8987-ec
-
-People can add compatible entries for other devices as needed.
-
-Thanks,
-Stephan
+On 12/20/24 09:50, Jeffrey Hugo wrote:
+> On 12/20/2024 10:33 AM, Lizhi Hou wrote:
+>>
+>> On 12/20/24 09:26, Jeffrey Hugo wrote:
+>>> On 12/13/2024 5:49 PM, Lizhi Hou wrote:
+>>>>
+>>>> On 12/13/24 13:33, Jeffrey Hugo wrote:
+>>>>> +static const struct qaic_device_config aic200_config = {
+>>>>> +    .family = FAMILY_AIC200,
+>>>>> +    .bar_mask = BIT(0) | BIT(1) | BIT(2) | BIT(4),
+>>>>
+>>>> Will this pass the BAR mask check in init_pci()?
+>>>
+>>> Yes, BITs 0, 1, 2, 4 would be 0x17 and that value is & with 0x3f 
+>>> (masking off upper bits).  The result would be 0x17.
+>>
+>> It seems BIT(1) is not expected in init_pci?
+>>
+>>      if (bars != (BIT(0) | BIT(2) | BIT(4))) {
+>
+> I think you are only referencing patch 5, when you should also 
+> reference patch 6.  This check gets modified in patch 6 -
+>
+> -    if (bars != (BIT(0) | BIT(2) | BIT(4))) {
+> -        pci_dbg(pdev, "%s: expected BARs 0, 2, and 4 not found in 
+> device. Found 0x%x\n",
+> -            __func__, bars);
+> +    if (bars != config->bar_mask) {
+> +        pci_dbg(pdev, "%s: expected BARs %#x not found in device. 
+> Found %#x\n",
+> +            __func__, config->bar_mask, bars);
+>          return -EINVAL;
+>      }
+>
+>
+> Do you still see an issue?
+No. :)
+Reviewed-by: Lizhi Hou <lizhi.hou@amd.com>
 
