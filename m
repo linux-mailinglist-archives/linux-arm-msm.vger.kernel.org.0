@@ -1,452 +1,156 @@
-Return-Path: <linux-arm-msm+bounces-42973-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-42974-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0098C9F913D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Dec 2024 12:29:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id CAA9C9F9158
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Dec 2024 12:31:59 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3C9F2188799B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Dec 2024 11:29:04 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id D9635188A00E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Dec 2024 11:32:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6B3E91D63E5;
-	Fri, 20 Dec 2024 11:27:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6C4761C3039;
+	Fri, 20 Dec 2024 11:29:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="GxaTRtkk"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="lARRes2y"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail.mainlining.org (mail.mainlining.org [5.75.144.95])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 568B41D5162;
-	Fri, 20 Dec 2024 11:27:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.75.144.95
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A0731C5496;
+	Fri, 20 Dec 2024 11:29:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734694037; cv=none; b=GBkdyodjJfoD1H6QMDyQ2rMAoMF0tL1yOoBvRc4UNVNvZ9YtHBYGEYNiWWMTCz8ddZFt13EDW72D7l4VZ4tuZH+Shl3b4WHWsNaa3JUnRbf7cejUuULUhilNKT0Zh5+L1xb4qpFI/19pkd18tThfIf1M9yrLG7jf9WTeOm73AmQ=
+	t=1734694159; cv=none; b=iLPtKH6yFrzTVQppZJYcWAjeo08t7atx9vdFsy9MrYpjL1wnc7G61h0f1JWjhcpg1Prxr2Gb2PVA+GEKh2YOyzpy5I+HIr+FwmwwP5YKYlsSl5U8fmkjIolUYbELphETluXsiGX3MBe3je7g3c0xWbTkaS0oPsgUMchlvZfYoFQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734694037; c=relaxed/simple;
-	bh=yRrTth08180QfeHsiXKzN5bNhMrXGVQ/EVyPD3V4GyQ=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=tPiKzpppU0Ga3KcGgK+aC3nadHzaRkoxHJh5FyU7mrUCK0NiYxHwSz/+c7doj1GY57e8oYbuhtQlg48QhK25csCfihITkm6m3efibc2CPBlHSZZpOOGdjZrsuegvGA5LYvHcVVMYwyHspGn8HkVrZvkPSc0Md72/m/xk7DCYSy4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mainlining.org; spf=pass smtp.mailfrom=mainlining.org; dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=GxaTRtkk; arc=none smtp.client-ip=5.75.144.95
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mainlining.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mainlining.org
-Received: from [192.168.30.162] (254C1A66.nat.pool.telekom.hu [37.76.26.102])
-	by mail.mainlining.org (Postfix) with ESMTPSA id 1AC23E4839;
-	Fri, 20 Dec 2024 11:27:12 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mainlining.org;
-	s=psm; t=1734694033;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=hQcWQj/wwnb5q+l0OdYD5VX4MPg+1aI9rfTFTUBDwbY=;
-	b=GxaTRtkkg1jUcu64IZaxl5UxWtlrYSX8lfekZbEstcCf0sGFVgjOitiD8e4j02Jd+O0kMs
-	hmZUdOFi2nwSIQoGFStXQ4Le5si3GYTBtk9sxNxqrO6F0m5mUPhZkGN+xsoSFpG+sxkStU
-	/WiHB8MVv1FXmd12fzgN6ZebPjoocVZLjaUU5UV7tIVkP66awrkJka9fWev7zeAu70lsvl
-	Q4x7oeEq1Ra5K1wSSO1swE+P32oh5QHHJxuV+FqcO9Nx9rl3njhoH1ZW5io5ZmLdVh3//Y
-	1be/I626dgLUtu9rJnOwu7Uba1l+BrBqpq9iRz93KU5yr88yckDnMkQbrpxrnA==
-From: =?utf-8?q?Barnab=C3=A1s_Cz=C3=A9m=C3=A1n?= <barnabas.czeman@mainlining.org>
-Date: Fri, 20 Dec 2024 12:26:57 +0100
-Subject: [PATCH v10 5/5] arm64: dts: qcom: Add Xiaomi Redmi 5A
+	s=arc-20240116; t=1734694159; c=relaxed/simple;
+	bh=e6RRTNZKSVTO862lwIFBvL5ei0oT+HVqaOxrltcfMNA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=J5jR+4S/4pNFjam69uV6IkPY//HVBUc/23hCN0i8cLH//xaZD54nBpZcHmWpSgNl4xY6nEkylNgdkO8nkRaMKiG6qkQe0XpAWMUlTfug39cXNTPh4nrAa7vJg5w55bAA4v7I6UGrFtfqwRncC9NbCPZ9SAOA+izOHUUGB9A3+ls=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=lARRes2y; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BK6n0EH028591;
+	Fri, 20 Dec 2024 11:29:05 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	MPWkcTcIYJFDpVK5XdmX72WZWvyJATmGLKiYjjvUxyk=; b=lARRes2yO1cckMn/
+	aRJcXX9jFE0TYkSR2jsIi3ipcd3yWcOs8FnTtucriIVxt/YDdnzYrbb2q7yQZqim
+	3OiEVBH0zAOspaKs9M+Yj+XDZfoSRCpYLv4X8tnZZOvQ3dUL9n0+nj5VffpyV3zV
+	IGv0KlYE1NmCR1/OqouguBN68Gr9BBNCMvjybpaV96gkpa9THUFhCMSTKohqmcK2
+	iJQD9SNCkM+cm5rvUVp8rdzkBHSpNYf6EckYIIORC51/cPqOTRTHf5u8Lf/4dJvy
+	sRDHLCT1ir8WP2Osn6zQGyCCAQRnhgq7MBiJnA3ZmLbgZqbtI3fwQeRqclX6lnXK
+	08aMrQ==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43n3mxrr0p-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 20 Dec 2024 11:29:05 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4BKBT46d028128
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 20 Dec 2024 11:29:04 GMT
+Received: from [10.152.195.140] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 20 Dec
+ 2024 03:28:56 -0800
+Message-ID: <0c7c1979-6fc3-4059-bf08-c94f6424b1dd@quicinc.com>
+Date: Fri, 20 Dec 2024 16:58:53 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20241220-msm8917-v10-5-3d5734e8c3a6@mainlining.org>
-References: <20241220-msm8917-v10-0-3d5734e8c3a6@mainlining.org>
-In-Reply-To: <20241220-msm8917-v10-0-3d5734e8c3a6@mainlining.org>
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, 
- Linus Walleij <linus.walleij@linaro.org>, Amit Kucheria <amitk@kernel.org>, 
- Thara Gopinath <thara.gopinath@gmail.com>, 
- "Rafael J. Wysocki" <rafael@kernel.org>, 
- Daniel Lezcano <daniel.lezcano@linaro.org>, Zhang Rui <rui.zhang@intel.com>, 
- Lukasz Luba <lukasz.luba@arm.com>, Joerg Roedel <joro@8bytes.org>, 
- Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>, 
- Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org, 
- linux-pm@vger.kernel.org, iommu@lists.linux.dev, 
- =?utf-8?q?Barnab=C3=A1s_Cz=C3=A9m=C3=A1n?= <barnabas.czeman@mainlining.org>, 
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1734694023; l=8999;
- i=barnabas.czeman@mainlining.org; s=20240730; h=from:subject:message-id;
- bh=yRrTth08180QfeHsiXKzN5bNhMrXGVQ/EVyPD3V4GyQ=;
- b=NlxDViR2rcnhawRV29Ta+4eC19P5ZsmaidSh/+2GiMx5HvncIEtLY4MfzubUq36BFB4q99VGD
- KA6MeoquEaaAPG51ArP4BDOiH6KVoYeoyhaX/HnyHUfpuCFeYmHNTF3
-X-Developer-Key: i=barnabas.czeman@mainlining.org; a=ed25519;
- pk=TWUSIGgwW/Sn4xnX25nw+lszj1AT/A3bzkahn7EhOFc=
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 3/4] arm64: dts: qcom: ipq5424: Add PCIe PHYs and
+ controller nodes
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, <bhelgaas@google.com>,
+        <lpieralisi@kernel.org>, <kw@linux.com>,
+        <manivannan.sadhasivam@linaro.org>, <robh@kernel.org>,
+        <krzk+dt@kernel.org>, <conor+dt@kernel.org>, <vkoul@kernel.org>,
+        <kishon@kernel.org>, <andersson@kernel.org>, <konradybcio@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-pci@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-phy@lists.infradead.org>
+CC: <quic_srichara@quicinc.com>, <quic_varada@quicinc.com>
+References: <20241213134950.234946-1-quic_mmanikan@quicinc.com>
+ <20241213134950.234946-4-quic_mmanikan@quicinc.com>
+ <69dffe54-939d-47c3-b951-4a4dea11eae0@oss.qualcomm.com>
+ <08fbde92-a827-4270-a143-cca56a274e6c@quicinc.com>
+ <71d2135f-664a-465d-bc1f-051cc07c8537@oss.qualcomm.com>
+Content-Language: en-US
+From: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
+In-Reply-To: <71d2135f-664a-465d-bc1f-051cc07c8537@oss.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: ZzBnjh2nN8OwLgERvuK6_pJLmUbpRQ1g
+X-Proofpoint-ORIG-GUID: ZzBnjh2nN8OwLgERvuK6_pJLmUbpRQ1g
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999 mlxscore=0
+ spamscore=0 suspectscore=0 malwarescore=0 phishscore=0 priorityscore=1501
+ lowpriorityscore=0 impostorscore=0 clxscore=1015 adultscore=0 bulkscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2411120000
+ definitions=main-2412200095
 
-Add initial support for Xiaomi Redmi 5A (riva).
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Barnabás Czémán <barnabas.czeman@mainlining.org>
----
- arch/arm64/boot/dts/qcom/Makefile                |   1 +
- arch/arm64/boot/dts/qcom/msm8917-xiaomi-riva.dts | 333 +++++++++++++++++++++++
- 2 files changed, 334 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-index 4686f2a8ddd897227360b4de48a0618499ad463e..ee9b262b0e0fc3ec9d6515174c33f8b69b524842 100644
---- a/arch/arm64/boot/dts/qcom/Makefile
-+++ b/arch/arm64/boot/dts/qcom/Makefile
-@@ -62,6 +62,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-wingtech-wt86518.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-wingtech-wt86528.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-wingtech-wt88047.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-yiming-uz801v3.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= msm8917-xiaomi-riva.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8929-wingtech-wt82918hd.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8939-huawei-kiwi.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8939-longcheer-l9100.dtb
-diff --git a/arch/arm64/boot/dts/qcom/msm8917-xiaomi-riva.dts b/arch/arm64/boot/dts/qcom/msm8917-xiaomi-riva.dts
-new file mode 100644
-index 0000000000000000000000000000000000000000..f1d22535fedd94467ba3f0a88b2110ce5360e7e1
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/msm8917-xiaomi-riva.dts
-@@ -0,0 +1,333 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+/*
-+ * Copyright (c) 2023, Barnabas Czeman
-+ */
-+
-+/dts-v1/;
-+
-+#include <dt-bindings/arm/qcom,ids.h>
-+#include <dt-bindings/gpio/gpio.h>
-+#include "msm8917.dtsi"
-+#include "pm8937.dtsi"
-+
-+/delete-node/ &qseecom_mem;
-+
-+/ {
-+	model = "Xiaomi Redmi 5A (riva)";
-+	compatible = "xiaomi,riva", "qcom,msm8917";
-+	chassis-type = "handset";
-+
-+	qcom,msm-id = <QCOM_ID_MSM8917 0>;
-+	qcom,board-id = <0x1000b 2>, <0x2000b 2>;
-+
-+	battery: battery {
-+		compatible = "simple-battery";
-+		charge-full-design-microamp-hours = <3000000>;
-+		energy-full-design-microwatt-hours = <11500000>;
-+		constant-charge-current-max-microamp = <1000000>;
-+		constant-charge-voltage-max-microvolt = <4400000>;
-+		precharge-current-microamp = <256000>;
-+		charge-term-current-microamp = <60000>;
-+		voltage-min-design-microvolt = <3400000>;
-+	};
-+
-+	chosen {
-+		#address-cells = <2>;
-+		#size-cells = <2>;
-+		ranges;
-+
-+		stdout-path = "framebuffer0";
-+
-+		framebuffer0: framebuffer@90001000 {
-+			compatible = "simple-framebuffer";
-+			reg = <0x0 0x90001000 0x0 (720 * 1280 * 3)>;
-+			width = <720>;
-+			height = <1280>;
-+			stride = <(720 * 3)>;
-+			format = "r8g8b8";
-+
-+			clocks = <&gcc GCC_MDSS_AHB_CLK>,
-+				 <&gcc GCC_MDSS_AXI_CLK>,
-+				 <&gcc GCC_MDSS_VSYNC_CLK>,
-+				 <&gcc GCC_MDSS_MDP_CLK>,
-+				 <&gcc GCC_MDSS_BYTE0_CLK>,
-+				 <&gcc GCC_MDSS_PCLK0_CLK>,
-+				 <&gcc GCC_MDSS_ESC0_CLK>;
-+			power-domains = <&gcc MDSS_GDSC>;
-+		};
-+	};
-+
-+	gpio-keys {
-+		compatible = "gpio-keys";
-+
-+		pinctrl-0 = <&gpio_keys_default>;
-+		pinctrl-names = "default";
-+
-+		key-volup {
-+			label = "Volume Up";
-+			linux,code = <KEY_VOLUMEUP>;
-+			gpios = <&tlmm 91 GPIO_ACTIVE_LOW>;
-+			debounce-interval = <15>;
-+		};
-+	};
-+
-+	vph_pwr: regulator-vph-pwr {
-+		compatible = "regulator-fixed";
-+		regulator-name = "vph_pwr";
-+		regulator-min-microvolt = <3700000>;
-+		regulator-max-microvolt = <3700000>;
-+		regulator-always-on;
-+		regulator-boot-on;
-+	};
-+
-+	reserved-memory {
-+		qseecom_mem: qseecom@84a00000 {
-+			reg = <0x0 0x84a00000 0x0 0x1900000>;
-+			no-map;
-+		};
-+
-+		framebuffer_mem: memory@90001000 {
-+			reg = <0x0 0x90001000 0x0 (720 * 1280 * 3)>;
-+			no-map;
-+		};
-+	};
-+};
-+
-+&blsp1_i2c3 {
-+	status = "okay";
-+
-+	touchscreen@38 {
-+		compatible = "edt,edt-ft5306";
-+		reg = <0x38>;
-+		interrupts-extended = <&tlmm 65 IRQ_TYPE_LEVEL_LOW>;
-+		reset-gpios = <&tlmm 64 GPIO_ACTIVE_LOW>;
-+		pinctrl-0 = <&tsp_int_rst_default>;
-+		pinctrl-names = "default";
-+		vcc-supply = <&pm8937_l10>;
-+		iovcc-supply = <&pm8937_l5>;
-+		touchscreen-size-x = <720>;
-+		touchscreen-size-y = <1280>;
-+	};
-+};
-+
-+&blsp2_i2c1 {
-+	status = "okay";
-+
-+	bq27426@55 {
-+		compatible = "ti,bq27426";
-+		reg = <0x55>;
-+		monitored-battery = <&battery>;
-+	};
-+
-+	bq25601@6b{
-+		compatible = "ti,bq25601";
-+		reg = <0x6b>;
-+		interrupts-extended = <&tlmm 61 IRQ_TYPE_EDGE_FALLING>;
-+		pinctrl-0 = <&bq25601_int_default>;
-+		pinctrl-names = "default";
-+		input-voltage-limit-microvolt = <4400000>;
-+		input-current-limit-microamp = <1000000>;
-+		monitored-battery = <&battery>;
-+	};
-+};
-+
-+&pm8937_resin {
-+	linux,code = <KEY_VOLUMEDOWN>;
-+
-+	status = "okay";
-+};
-+
-+&rpm_requests {
-+	regulators-0 {
-+		compatible = "qcom,rpm-pm8937-regulators";
-+
-+		vdd_s1-supply = <&vph_pwr>;
-+		vdd_s2-supply = <&vph_pwr>;
-+		vdd_s3-supply = <&vph_pwr>;
-+		vdd_s4-supply = <&vph_pwr>;
-+
-+		vdd_l1_l19-supply = <&pm8937_s3>;
-+		vdd_l2_l23-supply = <&pm8937_s3>;
-+		vdd_l3-supply = <&pm8937_s3>;
-+		vdd_l4_l5_l6_l7_l16-supply = <&pm8937_s4>;
-+		vdd_l8_l11_l12_l17_l22-supply = <&vph_pwr>;
-+		vdd_l9_l10_l13_l14_l15_l18-supply = <&vph_pwr>;
-+
-+		pm8937_s1: s1 {
-+			regulator-min-microvolt = <1000000>;
-+			regulator-max-microvolt = <1225000>;
-+		};
-+
-+		pm8937_s3: s3 {
-+			regulator-min-microvolt = <1300000>;
-+			regulator-max-microvolt = <1300000>;
-+		};
-+
-+		pm8937_s4: s4 {
-+			regulator-min-microvolt = <2050000>;
-+			regulator-max-microvolt = <2050000>;
-+		};
-+
-+		pm8937_l2: l2 {
-+			regulator-min-microvolt = <1200000>;
-+			regulator-max-microvolt = <1200000>;
-+		};
-+
-+		pm8937_l5: l5 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+		};
-+
-+		pm8937_l6: l6 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+		};
-+
-+		pm8937_l7: l7 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+		};
-+
-+		pm8937_l8: l8 {
-+			regulator-min-microvolt = <2850000>;
-+			regulator-max-microvolt = <2900000>;
-+		};
-+
-+		pm8937_l9: l9 {
-+			regulator-min-microvolt = <3000000>;
-+			regulator-max-microvolt = <3300000>;
-+		};
-+
-+		pm8937_l10: l10 {
-+			regulator-min-microvolt = <2800000>;
-+			regulator-max-microvolt = <3000000>;
-+		};
-+
-+		pm8937_l11: l11 {
-+			regulator-min-microvolt = <2950000>;
-+			regulator-max-microvolt = <2950000>;
-+			regulator-allow-set-load;
-+			regulator-system-load = <200000>;
-+		};
-+
-+		pm8937_l12: l12 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <2950000>;
-+		};
-+
-+		pm8937_l13: l13 {
-+			regulator-min-microvolt = <3075000>;
-+			regulator-max-microvolt = <3075000>;
-+		};
-+
-+		pm8937_l14: l14 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <3300000>;
-+		};
-+
-+		pm8937_l15: l15 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <3300000>;
-+		};
-+
-+		pm8937_l16: l16 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+		};
-+
-+		pm8937_l17: l17 {
-+			regulator-min-microvolt = <2800000>;
-+			regulator-max-microvolt = <2900000>;
-+		};
-+
-+		pm8937_l19: l19 {
-+			regulator-min-microvolt = <1225000>;
-+			regulator-max-microvolt = <1350000>;
-+		};
-+
-+		pm8937_l22: l22 {
-+			regulator-min-microvolt = <2800000>;
-+			regulator-max-microvolt = <2800000>;
-+		};
-+
-+		pm8937_l23: l23 {
-+			regulator-min-microvolt = <1200000>;
-+			regulator-max-microvolt = <1200000>;
-+		};
-+	};
-+
-+};
-+
-+&sdhc_1 {
-+	vmmc-supply = <&pm8937_l8>;
-+	vqmmc-supply = <&pm8937_l5>;
-+
-+	status = "okay";
-+};
-+
-+&sdhc_2 {
-+	cd-gpios = <&tlmm 67 GPIO_ACTIVE_LOW>;
-+	vmmc-supply = <&pm8937_l11>;
-+	vqmmc-supply = <&pm8937_l12>;
-+	pinctrl-0 = <&sdc2_default &sdc2_cd_default>;
-+	pinctrl-1 = <&sdc2_sleep &sdc2_cd_default>;
-+	pinctrl-names = "default", "sleep";
-+
-+	status = "okay";
-+};
-+
-+&sleep_clk {
-+	clock-frequency = <32768>;
-+};
-+
-+&tlmm {
-+	bq25601_int_default: bq25601-int-default-state {
-+		pins = "gpio61";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-pull-up;
-+	};
-+
-+	gpio_keys_default: gpio-keys-default-state {
-+		pins = "gpio91";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-pull-up;
-+	};
-+
-+	sdc2_cd_default: sdc2-cd-default-state {
-+		pins = "gpio67";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
-+
-+	tsp_int_rst_default: tsp-int-rst-default-state {
-+		pins = "gpio64", "gpio65";
-+		function = "gpio";
-+		drive-strength = <8>;
-+		bias-pull-up;
-+	};
-+};
-+
-+&wcnss {
-+	vddpx-supply = <&pm8937_l5>;
-+
-+	status = "okay";
-+};
-+
-+&wcnss_iris {
-+	compatible = "qcom,wcn3620";
-+	vddxo-supply = <&pm8937_l7>;
-+	vddrfa-supply = <&pm8937_l19>;
-+	vddpa-supply = <&pm8937_l9>;
-+	vdddig-supply = <&pm8937_l5>;
-+};
-+
-+&wcnss_mem {
-+	status = "okay";
-+};
-+
-+&xo_board {
-+	clock-frequency = <19200000>;
-+};
+On 12/20/2024 3:18 PM, Konrad Dybcio wrote:
+> On 20.12.2024 7:42 AM, Manikanta Mylavarapu wrote:
+>>
+>>
+>> On 12/13/2024 8:36 PM, Konrad Dybcio wrote:
+>>> On 13.12.2024 2:49 PM, Manikanta Mylavarapu wrote:
+>>>> Add PCIe0, PCIe1, PCIe2, PCIe3 (and corresponding PHY) devices
+>>>> found on IPQ5424 platform. The PCIe0 & PCIe1 are 1-lane Gen3
+>>>> host whereas PCIe2 & PCIe3 are 2-lane Gen3 host.
+>>>>
+>>>> Signed-off-by: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
+>>>> ---
+> 
+> [...]
+> 
+>>>>  		tlmm: pinctrl@1000000 {
+>>>>  			compatible = "qcom,ipq5424-tlmm";
+>>>> @@ -168,11 +261,11 @@ gcc: clock-controller@1800000 {
+>>>>  			reg = <0 0x01800000 0 0x40000>;
+>>>>  			clocks = <&xo_board>,
+>>>>  				 <&sleep_clk>,
+>>>> +				 <&pcie0_phy>,
+>>>> +				 <&pcie1_phy>,
+>>>>  				 <0>,
+>>>
+>>> This leftover zero needs to be removed too, currently the wrong
+>>> clocks are used as parents
+>>>
+>>
+>> Hi Konrad,
+>>
+>> The '<0>' entry is for "USB PCIE wrapper pipe clock source".
+>> And, will update the pcie entries as follows
+>> 	<&pcie0_phy GCC_PCIE0_PIPE_CLK>
+>> 	<&pcie1_phy GCC_PCIE1_PIPE_CLK>
+>> 	<&pcie2_phy GCC_PCIE2_PIPE_CLK>
+>> 	<&pcie3_phy GCC_PCIE3_PIPE_CLK>
+>>
+>> Please correct me if i am wrong.
+> 
+> The order of these is fixed by the first enum in
+> drivers/clk/qcom/gcc-ipq5424.c. The <0> entry must be at the end of
+> the clocks list for it to do what you want it to.
+> 
 
--- 
-2.47.1
+I understand your point. I will move the <0> entry to the end and 
+incorporate this change in the next version.
 
+Thanks & Regards,
+Manikanta.
 
