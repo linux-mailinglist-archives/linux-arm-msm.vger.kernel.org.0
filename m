@@ -1,152 +1,130 @@
-Return-Path: <linux-arm-msm+bounces-42941-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-42942-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9C83C9F8E8E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Dec 2024 10:04:21 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6F00C9F8F00
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Dec 2024 10:30:41 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 933621604B6
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Dec 2024 09:04:14 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9A57E168324
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Dec 2024 09:30:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8C5FB1A8415;
-	Fri, 20 Dec 2024 09:03:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C04351B85F8;
+	Fri, 20 Dec 2024 09:30:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="46Dm2X6z"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="QMh5KgqQ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
+Received: from mail-pf1-f172.google.com (mail-pf1-f172.google.com [209.85.210.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 931D71A840F
-	for <linux-arm-msm@vger.kernel.org>; Fri, 20 Dec 2024 09:03:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1596D1A726B
+	for <linux-arm-msm@vger.kernel.org>; Fri, 20 Dec 2024 09:30:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734685430; cv=none; b=rrQYBXkN3VSvshoRUItHBJYgfXhVXWuxydD01IPTfc1b81IWcgfcustWLVcFzekkCQAWnuvw/aYebehMBcJ4l2AtMsfQgSQEQa0wNMfQ2WwxXjW/6aarttdCSXRY1rfYClN4C2A5vNW3nhLTePxyzg9SNTkuJqD4Pc8EPFuG46w=
+	t=1734687039; cv=none; b=eZsP+isMcU0SpmtU5i+WqzIp8tUIWAxXLikNW56eVLg45YZMrfiyD0Y5DWtleEM5wQowXOG1eupClYqK7RrWXrc2JpTT7wvtwyeRMk7NgR5wUcdigY/esx3U2/P8YK/uVceJ/p91IlFw0KpTmdal7b6+9zQD/1P7GE9e1K80XyI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734685430; c=relaxed/simple;
-	bh=sYfJ8wnk7ijxOCPLQlV1R18oROlrwY0cZtyJnzBm9UA=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=TvSHU3OTyZMWdy9I+gKiHY/vV5vOqtbZcKp5fG3bxAW0395Y13M6QIlZz4SqbgDsXItTBgMaYfxZ0Lf4EUIlnhNz9hSxLubCduQbEvxvBvYX//EFhiZJXlz9iRDzHYVWVZSR/kkBtjrZrpADVZ/Z33ZwACQiGU6hEfu1wds9h8A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=46Dm2X6z; arc=none smtp.client-ip=209.85.128.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
-Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-43618283dedso15927665e9.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Dec 2024 01:03:48 -0800 (PST)
+	s=arc-20240116; t=1734687039; c=relaxed/simple;
+	bh=j7OVgCHRHC1fGXt5U4HJtYavOVk0sa3NXJU53Xfjs8Y=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=IAnm2eNMAbvj2q6Ma2rkgX6xb04vpmsNcVOJStsoh0mk/lTZ6KNpFVAjoAMQAQjnFTNeAO5SiAMQrsSm6YU6R/Rr3Uin9GRil/oRjXt0IWpPgv7SLGjchpVALrlGrmxGgFvvwPVpyr8RdSHHtmKfsHvhse1oepsc5d0jTNenV6A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=QMh5KgqQ; arc=none smtp.client-ip=209.85.210.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-pf1-f172.google.com with SMTP id d2e1a72fcca58-72739105e02so1831726b3a.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Dec 2024 01:30:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1734685427; x=1735290227; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=qTCVs5hxfcVP47+ZWc/YNDn2g1Drj1Yq7gW/RQstCeY=;
-        b=46Dm2X6zMEwBR1jAcACns7FPs83thyYHMYhfvg9jmPQ7R4FYcAaAhMYHdo7TMUmAZ8
-         oDHiGQ+fUJlo2lodqLX8sgv+1jP0xof2QhzVTAI0ReguUACnPoUJOEnzFAmPlxakkXGK
-         K1o+fx9xFQBWBTzcTqfTccatBYc2gvakRTeIRguVHkQpz76sIlPlS5jPZmbCjfVGTjoO
-         wkw3mDSjV5JKKDDeeTg37wzkzbSwTd6I4a6vDiDgC0iaxrp41H2doGWtA2jWPNuqhEUQ
-         JMePRl7hhX1Appl3PKDTU2pvP9hFQBqX+zX7zhaod/HGNp6q2BHTAsZB6l75Pk073eUb
-         ztHw==
+        d=linaro.org; s=google; t=1734687037; x=1735291837; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=ByXi/X5ENmiNNt5+6rwHFixmOfwBVaDYK2KBq4o/HRw=;
+        b=QMh5KgqQkxgQ84eedYlE9BhwK1aY0YLbcrFvfMMnU1UDZY95dZjufMFuuJYER3Q8by
+         EWbGtrTBT6n2fU1MGXGgPXhfuLuDytvcyWrVoPiK29SauUlCv7HKaEWbYF/mhAAY591V
+         nEnIz+oXkXvsSeR3lNXsgIpKU/7PPpX/b+fj/jLHd66DMKowz/zMoD2O/3kH9+oNC9d1
+         eSCewNoDWsWXa9LGFtXOtyblc6d7trkHydmxUFrTcenFwscsop0Q83UUIacJp7MyufY/
+         qfQ5764nwINCVZ+nAf5PG0wrqmj/umg/oBc5n0QdvKye/zBK0IyZffXnyEjDhZo2FFU/
+         oB7w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734685427; x=1735290227;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=qTCVs5hxfcVP47+ZWc/YNDn2g1Drj1Yq7gW/RQstCeY=;
-        b=fDkGteHE+WoRTfzF+Jb2wKXHH25Z7CcmS5Zyxfn/XsCcodaMG8nh9OkJVMR2i521Oz
-         6ycbhQDgYzv7t7+E1lGXWCyEHNZ1oNUoj8h/bGjKyE8Zmq0yw2lkpGhuDXjbOhFLke1y
-         4n2yze+xKebvsczaQivfvRtLP5SeKQfLZBJS3r2iHpZdqwokPjM6kPEwGm6xI9TUBWSB
-         0LlrouJAzu/x8WkJFooPPnG9FJFaAZ9tP0meC5Fq1vuB12jV4xwyEWRHVJ+lbV5rlsEI
-         ls64N2zZFRGeMcJg6rtL+GkVdwl2JoV1sLTWrNbzOhliImU2l4ye5y6P/173D39EayXg
-         6vxg==
-X-Forwarded-Encrypted: i=1; AJvYcCWsAtqLrPSnIXF7tXL8R4SpDxg8KULKoaRO/7/XYp1MrWTxa56jb0enUvvyVyAp5TQAs6y1OsYduFQGGwor@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx2yBnuk6M4xsFWVklB2vw/vg/cToxQCs3jbIU1Jf8tNy77rfIo
-	FnbnM8pY87Pd3V+vrQlT/7+QvmOLPwpa40O/RFnDe5gXseRKcqNXCPMQ49COAXI=
-X-Gm-Gg: ASbGncuXg+feUbjpM5cd2JB4ihzRPUd14NXfsU9i5rqoGj1V/hb7GJgH8F5m+bXkbyB
-	Rn2LrSOgR4Wbu12Danf2EOWFRge9nVhAV/NIv4Bi8wdDGOJlIssna1WDRF0VOd4uSxjb00EwiIG
-	hVwoSa/rtVT91eYrECW981+joO8AmFgRdCctkIb8SZND6EnlMm5GNR1PytX3LYxX6kaXVRkbtIP
-	6YUM6kS+zG1VDtuWIZxEmbYXXmxTNMGfIfZFTitZg08yOBWVrnB+z1gbIm6R6xNAFzf0n8zNpyb
-	zu3EltznzhcnfgqBiI4meL8fKk1aUg==
-X-Google-Smtp-Source: AGHT+IGHpITziEb0AqGEPqXQ3d/Kd1ljvCdDAf6rDGr2ZBgcyCuqixvJ/Icbd0mED7HVr/rTukylng==
-X-Received: by 2002:a7b:c3c7:0:b0:434:a90b:94fe with SMTP id 5b1f17b1804b1-4366fb89a04mr358955e9.10.1734685426814;
-        Fri, 20 Dec 2024 01:03:46 -0800 (PST)
-Received: from [100.64.0.4] (144-178-202-138.static.ef-service.nl. [144.178.202.138])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-436611ea3e0sm40610375e9.7.2024.12.20.01.03.46
+        d=1e100.net; s=20230601; t=1734687037; x=1735291837;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=ByXi/X5ENmiNNt5+6rwHFixmOfwBVaDYK2KBq4o/HRw=;
+        b=FtxCBDyGnawmSNKwq/oMFGnOqJAYI9qoYyyy1HGQMyhzOLff6PtTX958d8l+ie+Wht
+         CSmnm+xn6m7Oc7659EikO90Tr2Ena3e7uFSl5zeZquWtNApK7pbVtBoP9myd0hEE0Mfc
+         T1iJTqcXxoJWtjvs+MY/Fz92nYPLbJ4WNlb/qrWGkJXmStENNhRzYe03SVYrFiOdih36
+         OzVrnfsL3kbPe0HHCZzwUDmKtXl+kD/8s9CenuPLtYL7NSOSNfnqJ2jOGEN8JbVN77OZ
+         hsmbUk1CG4wTrzCLxCI8K/x1O5Y9lmecq5RyU2LuFVMjUGSTxNu4jKqfREwPmjcOB+Xv
+         Ou6w==
+X-Forwarded-Encrypted: i=1; AJvYcCX+hli8O7YZ0thyVTvzC/dwrD2yNqKxUVwqzdxzQgxPskigUHjokvsJTlHKGbBjJm1e9Fbu09kHx68/8IM/@vger.kernel.org
+X-Gm-Message-State: AOJu0YzA3fvgM5WrD2YZLjsotd3X1r+qnZ/mpHFkEGpnExZZ+G0BLuw/
+	RCbtSYPUiLQFcIIjzzkn7zhttE5/CC6Z+N9e1gAR2JeA34BP+eMGBDTwlPfTxQ==
+X-Gm-Gg: ASbGncsP/mInHpsi2RKTEb1mq4TJJkksFAUNE7mC4k2k11ePPQCMcY9Xw9Xh77HQjZo
+	SVi/e3FZrYQp/z/y+jK9yjpBCg6+fPAQxS4r+LcU1+Ti0PzvY+5t0+CST6JTzMwhifPczPgTG1M
+	9WJNv3ZwTa4H69brhlJDfcqbX1O/GSOJpVfgJkII1YGDRqliQw0ByJUM+w7cdxckyP2xwFjCPZQ
+	yITqZ8tSPThpcTSiVsF7Ld21F2OzfYHdG9lPaK4XICpxZRDZtrgyQsNA6cIOqaO0arg
+X-Google-Smtp-Source: AGHT+IF/Nb2ERdvtlBhMiFXyGT0KhA8msdwfPAqL4vPVA2znS47Bj667IM2h2pVbccmBK1in6s1Ncg==
+X-Received: by 2002:a05:6a00:4098:b0:725:c8ea:b30a with SMTP id d2e1a72fcca58-72abde2ab0emr3170686b3a.14.1734687037472;
+        Fri, 20 Dec 2024 01:30:37 -0800 (PST)
+Received: from thinkpad ([117.193.209.56])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-72aad8dbad9sm2768017b3a.103.2024.12.20.01.30.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 20 Dec 2024 01:03:46 -0800 (PST)
-From: Luca Weiss <luca.weiss@fairphone.com>
-Date: Fri, 20 Dec 2024 10:03:31 +0100
-Subject: [PATCH 2/2] clk: qcom: dispcc-sm6350: Add missing parent_map for a
- clock
+        Fri, 20 Dec 2024 01:30:37 -0800 (PST)
+Date: Fri, 20 Dec 2024 15:00:29 +0530
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To: Md Sadre Alam <quic_mdalam@quicinc.com>
+Cc: miquel.raynal@bootlin.com, richard@nod.at, vigneshr@ti.com,
+	bbrezillon@kernel.org, linux-mtd@lists.infradead.org,
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+	quic_srichara@quicinc.com, quic_varada@quicinc.com,
+	quic_nainmeht@quicinc.com, quic_laksd@quicinc.com
+Subject: Re: [PATCH v2 0/3] QPIC v2 fixes for SDX75
+Message-ID: <20241220093029.z4zsr3owdnqll2vg@thinkpad>
+References: <20241122085933.2663927-1-quic_mdalam@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20241220-sm6350-parent_map-v1-2-64f3d04cb2eb@fairphone.com>
-References: <20241220-sm6350-parent_map-v1-0-64f3d04cb2eb@fairphone.com>
-In-Reply-To: <20241220-sm6350-parent_map-v1-0-64f3d04cb2eb@fairphone.com>
-To: Bjorn Andersson <andersson@kernel.org>, 
- Michael Turquette <mturquette@baylibre.com>, 
- Stephen Boyd <sboyd@kernel.org>, 
- AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>, 
- Konrad Dybcio <konradybcio@kernel.org>
-Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, 
- linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Luca Weiss <luca.weiss@fairphone.com>, 
- stable@vger.kernel.org
-X-Mailer: b4 0.14.2
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20241122085933.2663927-1-quic_mdalam@quicinc.com>
 
-If a clk_rcg2 has a parent, it should also have parent_map defined,
-otherwise we'll get a NULL pointer dereference when calling clk_set_rate
-like the following:
+On Fri, Nov 22, 2024 at 02:29:30PM +0530, Md Sadre Alam wrote:
+> v2:
+>  * Updated commit message
+>  * Added stable kernel tag
+>  * Added Fixes tag
+>  * Renamed the variable from offset_from_qpic to nandc_offset
+>  * Set buf_count to 512 in the parameter page read
+>  * Replaced the buf_count value of 512 with the len in bytes 
+> 
+> v1:
+>  * These patches will fix the following:
+>  * 1) onfi param page read which was broken by exec_op() patch.
+>  * 2) Fixed offset passed to BAM from QPIC base
+> 
+> Md Sadre Alam (3):
+>   mtd: rawnand: qcom: Pass 18 bit offset from QPIC base address to BAM
+>   mtd: rawnand: qcom: Fix onfi param page read
+>   mtd: rawnand: qcom: Fix read len for onfi param page
+> 
 
-  [    3.388105] Call trace:
-  [    3.390664]  qcom_find_src_index+0x3c/0x70 (P)
-  [    3.395301]  qcom_find_src_index+0x1c/0x70 (L)
-  [    3.399934]  _freq_tbl_determine_rate+0x48/0x100
-  [    3.404753]  clk_rcg2_determine_rate+0x1c/0x28
-  [    3.409387]  clk_core_determine_round_nolock+0x58/0xe4
-  [    3.421414]  clk_core_round_rate_nolock+0x48/0xfc
-  [    3.432974]  clk_core_round_rate_nolock+0xd0/0xfc
-  [    3.444483]  clk_core_set_rate_nolock+0x8c/0x300
-  [    3.455886]  clk_set_rate+0x38/0x14c
+Do you plan to respin this series? FYI, these are regressions, so should go in
+early as possible.
 
-Add the parent_map property for the clock where it's missing and also
-un-inline the parent_data as well to keep the matching parent_map and
-parent_data together.
+- Mani
 
-Fixes: 837519775f1d ("clk: qcom: Add display clock controller driver for SM6350")
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
----
- drivers/clk/qcom/dispcc-sm6350.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
-
-diff --git a/drivers/clk/qcom/dispcc-sm6350.c b/drivers/clk/qcom/dispcc-sm6350.c
-index 50facb36701af99923584f1ca1549df6a70f06d9..2bc6b5f99f5725bf56c63623c3d5c16c25879d9e 100644
---- a/drivers/clk/qcom/dispcc-sm6350.c
-+++ b/drivers/clk/qcom/dispcc-sm6350.c
-@@ -187,13 +187,12 @@ static struct clk_rcg2 disp_cc_mdss_dp_aux_clk_src = {
- 	.cmd_rcgr = 0x1144,
- 	.mnd_width = 0,
- 	.hid_width = 5,
-+	.parent_map = disp_cc_parent_map_6,
- 	.freq_tbl = ftbl_disp_cc_mdss_dp_aux_clk_src,
- 	.clkr.hw.init = &(struct clk_init_data){
- 		.name = "disp_cc_mdss_dp_aux_clk_src",
--		.parent_data = &(const struct clk_parent_data){
--			.fw_name = "bi_tcxo",
--		},
--		.num_parents = 1,
-+		.parent_data = disp_cc_parent_data_6,
-+		.num_parents = ARRAY_SIZE(disp_cc_parent_data_6),
- 		.ops = &clk_rcg2_ops,
- 	},
- };
+>  drivers/mtd/nand/raw/qcom_nandc.c | 23 ++++++++++++++++++-----
+>  1 file changed, 18 insertions(+), 5 deletions(-)
+> 
+> -- 
+> 2.34.1
+> 
 
 -- 
-2.47.1
-
+மணிவண்ணன் சதாசிவம்
 
