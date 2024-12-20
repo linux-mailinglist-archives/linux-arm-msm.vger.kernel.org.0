@@ -1,149 +1,136 @@
-Return-Path: <linux-arm-msm+bounces-43019-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-43020-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 38D089F9AE6
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Dec 2024 21:03:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 1ACC49F9B45
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Dec 2024 21:59:11 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E050016A358
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Dec 2024 20:03:42 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9BB4E16B900
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Dec 2024 20:59:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 10BD7223E9D;
-	Fri, 20 Dec 2024 20:03:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 34D3C19F43B;
+	Fri, 20 Dec 2024 20:59:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="oGWLRAl5"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="wcAHw7xz"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f42.google.com (mail-lf1-f42.google.com [209.85.167.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59D5A21CA02
-	for <linux-arm-msm@vger.kernel.org>; Fri, 20 Dec 2024 20:03:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4933D22259D
+	for <linux-arm-msm@vger.kernel.org>; Fri, 20 Dec 2024 20:59:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734725010; cv=none; b=Mo/dP1LDdPAS6xJtqnQb5zEzLuHFPeK55+Llc/f5BBdUnRM87zBzn7HIE7QL7ObBMi2uVydiGJuipu5R/r+5yiKzrBqbzSmi0/ytI78G0ss53uCBT8Z/cOa5+8LyBEXf73fA6jJFZ9ylL1gVvwG7fnoTtqCHwKQitru4BS+ax8c=
+	t=1734728345; cv=none; b=BQ3vqaDWWlvFnoVCMBTmFTbSsHom7IfDfuBc9PEAempILTIprqTu0yy0UwuQ7+EvNowM7LYawZaaoqtKXyjOvXH2O5GUCS+eEO+mbbLig4a1o3TnG30Ck+UzsHCWXIzbl1j+njaUxDj02GCMzqBYmeMk4A20KDQDXGC2/IiLcOg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734725010; c=relaxed/simple;
-	bh=Zs4JlprWkRWYL9R6G/5v6VnIua89C6vTZlubdjcHDVk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ZdrtxQdPMFVv6NtoO5c6XKn5j8Q45vY7dkjhb2xv40/tqf3q84DBBJBo8zgunNRaXnxcJxzWgxtB5U6Y/qba+HThsNLGlHQLYrn1r0//ots4QNSpvn6wXCTYEcsIBEXdfHWcXyAdG0rQmgwDRGH0/uUUT2Eqhc6GAg0Yy5t27Kw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=oGWLRAl5; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BKCj5hL003582
-	for <linux-arm-msm@vger.kernel.org>; Fri, 20 Dec 2024 20:03:26 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	jjz4Sq36hjRrUju32Ul73yf+4eJ4TQw8j+POxAHkw6U=; b=oGWLRAl5+IHXStqi
-	BuIYkO6QcmyJtbmJirgCxxb4AGmWJTSYFDq4KQx/ItAD00CgQbz0qv5OQbBdbwJ/
-	YACVnW+5UhSxvf11eDzIq8Mo5sa0hvThJ1LQ5ZfenD8ynbmMSUWcUgM/kE7247nj
-	/fn/em1aSY4IQTVzFxpNUraO/a21l10ZW9VVEz9vuupoKaszp43miFHvUtrDLA2c
-	zYC6YIXLanddOZZ15+VzhAKwEJzUAMcG0JW7iSExoK/MEFb4e3djHpK4/ul7PZvZ
-	je+OMzU3WdU4r6sIOVELA9HKSZ4r19PE+46qWH9Zi997E4mqH4IYWf6TKSRRBKG6
-	cRa1og==
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com [209.85.160.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43n8uw955t-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 20 Dec 2024 20:03:26 +0000 (GMT)
-Received: by mail-qt1-f198.google.com with SMTP id d75a77b69052e-4679fb949e8so5447331cf.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Dec 2024 12:03:25 -0800 (PST)
+	s=arc-20240116; t=1734728345; c=relaxed/simple;
+	bh=1lN8Gw4DvM9w9NYMIxUi/G1rojvijwzgdaIXg4dQPdU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=nsLaA7Ltyuvte9EVNGiMdqdzKPsewDP4RMEZ+gXRHCWWh1KAZtTOK79OR8F4Ht9v5+TyBchewfchWSH7s0bjVB3KiJdXQIc72eV7jSzqTBL7hOr1odBzHWi737k7ruZ5nnttvMQQWhQSaYwDbdHXoK8wu5evznik9zqeOcwXS4g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=wcAHw7xz; arc=none smtp.client-ip=209.85.167.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f42.google.com with SMTP id 2adb3069b0e04-53ff1f7caaeso2397839e87.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Dec 2024 12:59:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1734728341; x=1735333141; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=eTXfmCPQpqaSsnBYjJTKGEssZ1+MNZ8axMaFGfX2txw=;
+        b=wcAHw7xzw/Mvg2aDipLE8lIeUJ72ajOwSyQt03KwFZ79Nf6gAv1JjWr5XAvWuI68c/
+         FXh515PCBATR6cFiqtN7MbnQymtaN6zL/LZQRgLBIoqDwiabqRqbeb2W5H/0QoLVrs1F
+         T+MpxFQ3d/2sDMUVc874xTnVRDnLbTfvLFV2Z4M7PFdN9gMLe4V1x+Hp4yT6BQ8opI8T
+         //6FcelWaNQjcIiWZZ7px16aFwsDU5FRTQkgsQ6fvfFkH1iDVEBWMooFS+C9YvORByrG
+         4sn4isj6GnzyMxK3a5vN/9IfM5VLOJ3GMiQz+qiAIsO/wPHvsIiS8m/NtRdNw4FBBXqY
+         1mHg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734725005; x=1735329805;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=jjz4Sq36hjRrUju32Ul73yf+4eJ4TQw8j+POxAHkw6U=;
-        b=YQ5ORYVwZKvPvVYxJLNqN/6eCzHoQBlYOf9DAVIm7go43pxvink2QEwmkvXY5fDf3P
-         ou6rMktuK9FWNyk7nipCEjpFl7onOBv1IZHwi40uwc1CIpnSyBsqjZmo5zLz83t0Mv/k
-         BIjkUXoEUPPFbt7DLmL5Qk+qz4bxuTNhWzVmO60S+dxaxpw1N3msDv+mx9jwmcHdr1d3
-         hI41REujpvVcPT3PhGCnrvx+UB+ol2WQ4Un0ooX+tgO4T6KrN1j8uSHppL8EiYZuzEEb
-         J5i3Co0VPmFAzvZyH2kUerlXJ/FPXTeDR8GsQRfA3ox6z4mWAeuSQBctOlrI2aJVBvZk
-         sy0A==
-X-Forwarded-Encrypted: i=1; AJvYcCXmH+EpDSovxL+QGuQyHeBzJwF9/co0qDsQ8h93EIgdjhIiXvk+J1hbwGkBko0kNVT5VIgHUeSFd4ce5Jju@vger.kernel.org
-X-Gm-Message-State: AOJu0Yzb5MlCE7WU0dpCkYnhP88XtU0CfXQ82scx8LRyE9iWRK0M9W1K
-	pusU73tu8e22ow9NF5c+hiHye8RgeH04KY9072VwnMy5foika5VCEwWXXTMcu57DInE6yMiVXis
-	hmGz9DtTyPb0/5QMSQrJdb+vrr8gi6TiYpuXOdYhIgonrUbMg7Tm4kV6/8mWuu8D7
-X-Gm-Gg: ASbGncuIZLkUy2c6ypEiNV7Xs85ynuFm044pkT74XCgRD4+XhVzRhlG7ynKsF5sh67i
-	p8vDgeYuFRXB4h5OWt1oLdT0FC+XIgk6BsPiW2h+yvzXw84GuVNytP+meMOFWLlbCjzFTC8Gepm
-	4s+9V7vYFn69Hhi0+H8d5hCnve7z6vx2l6+zGTDiOge1mdIVPvmfTO23IaxWW/PWazPgCJ/GmhW
-	fPuWSOrDYZxGzbZX75vTHICMaUg6uw3ZDA6UFFp5EZNhM3jol+D5p2wFGNVvaMwU4ZJuhf9vX5B
-	BQXUPo+JPm5psYL0sAMGh4nmu2SBXMeOBVo=
-X-Received: by 2002:a05:620a:2496:b0:7b6:e61b:3e60 with SMTP id af79cd13be357-7b9ba742c0cmr237021485a.7.1734725005274;
-        Fri, 20 Dec 2024 12:03:25 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGGOU1M+QO2EF012zHKw00KoR9fn6Wc1NfhNg0vW4QRfK/giOH6H62ekNUf3K/h976xQT1AJw==
-X-Received: by 2002:a05:620a:2496:b0:7b6:e61b:3e60 with SMTP id af79cd13be357-7b9ba742c0cmr237019085a.7.1734725004858;
-        Fri, 20 Dec 2024 12:03:24 -0800 (PST)
-Received: from [192.168.65.90] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-aac0e830b2dsm206705966b.8.2024.12.20.12.03.22
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 20 Dec 2024 12:03:24 -0800 (PST)
-Message-ID: <9cbdca90-e76c-4ebb-a236-a0edbd94a629@oss.qualcomm.com>
-Date: Fri, 20 Dec 2024 21:03:21 +0100
+        d=1e100.net; s=20230601; t=1734728341; x=1735333141;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=eTXfmCPQpqaSsnBYjJTKGEssZ1+MNZ8axMaFGfX2txw=;
+        b=wOB6fxPuMK+IT9n7Xqjc+Ke6q8k70aZ7MblVjDfWTJYFVUOSid6zhrEYhfyqhpXM86
+         V4C4np5Oby9/pPoGTfvE2JICQUbT0ETuzZqvi1F2NG/4TT6IWbknqSKc8ehPMCGG9QKS
+         ZFDhXuP9PK9G3tAAbzH8qw0777AU1ozL1YaaJDpMESAnZZ5zlbGNQkuBW7vVlQdnjFoi
+         8C3QXsDKscD8Zgzkych4exyLiPDtAQtB8TEu3RmOoQ04KI4niZLVTJm2Z1p+T8G6jlgG
+         0/EEX+brf4oaltTyEZkEcGxPQQvmGToK9dgUh6+KzSM2s5L89VrNuXXY/nZ7B5DySYft
+         NUrw==
+X-Forwarded-Encrypted: i=1; AJvYcCWaBG5epfTody9XosbpFKdJ4sCWLDHbfDBSY/1krUGE2kIcLmn9RRhTgZI+U3lja2lYl8P9x6VXMhHgd1bE@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw1X+ex8Wo0XKljPBgZPZaNKAbQXVcqjHMBbeE58V+TmMduEhS/
+	vZTYWpVN055l7TgS6X8XrPrhSQjMohYJlS3mTQlQ7e9gnMdvJ7/GD/d3ip0zHGk=
+X-Gm-Gg: ASbGncuNiiceW9VlEl+aiidLM3RsgG16rAezG2W4MCqVgZzlHOAiLOdaZgOMRXwNxnI
+	giZqEmt+LEPbDvqE3u8pGinQrkYhHAtMmI1hhXSNLq1nyoEq3Sx9yHD2F9Q9jCfZ7Usaz54h/Sd
+	cfkGGOCZJsxipVnRrU66GZiqh6zEpv/R0H1kDK4dtQqefL6nXcnyLzIDT7NQ7Cxrw60dRGsZA/+
+	pv7+N/6ouDcMwxdUm6e+BLEj59pDVY3o5VlI74gqnGJJbHMMmxk886dEWi+k8u5BE4T+vonI2oo
+	WuV2SqNfAstWe4hvVMoRIm3kYLggx2qpW/2M
+X-Google-Smtp-Source: AGHT+IF06lbDnsdPix2JuyrjcK+9hqCW/H2TA06DYnRKwBgBAUcigA0Qx8udGG+5W57u8WPQftM6JQ==
+X-Received: by 2002:a05:6512:128f:b0:542:214c:533 with SMTP id 2adb3069b0e04-5422953c131mr1457338e87.30.1734728341318;
+        Fri, 20 Dec 2024 12:59:01 -0800 (PST)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5422382fa84sm563119e87.233.2024.12.20.12.58.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 20 Dec 2024 12:59:00 -0800 (PST)
+Date: Fri, 20 Dec 2024 22:58:58 +0200
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Cc: Akhil P Oommen <quic_akhilpo@quicinc.com>, 
+	Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
+	Simona Vetter <simona@ffwll.ch>, linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+	freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, Jie Zhang <quic_jiezh@quicinc.com>
+Subject: Re: [PATCH v3] drm/msm/a6xx: Add support for Adreno 612
+Message-ID: <jsuzytkpcs7xmsaaedypz6w5d4ia6rckxjqg2x7mp4sidxxtqk@t5ukbn3sv6oa>
+References: <20241213-a612-gpu-support-v3-1-0e9b25570a69@quicinc.com>
+ <df25ffe5-b20c-41a7-b178-b191d332cb19@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v3 1/5] dt-bindings: net: wireless: Describe ath12k
- PCI module with WSI
-To: Raj Kumar Bhagat <quic_rajkbhag@quicinc.com>, ath12k@lists.infradead.org
-Cc: linux-wireless@vger.kernel.org, Kalle Valo <kvalo@kernel.org>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>, Jeff Johnson <jjohnson@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-References: <20241105180444.770951-1-quic_rajkbhag@quicinc.com>
- <20241105180444.770951-2-quic_rajkbhag@quicinc.com>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <20241105180444.770951-2-quic_rajkbhag@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-ORIG-GUID: tIn-AOAncNEGV4btsbm49-MXEJsM_2MB
-X-Proofpoint-GUID: tIn-AOAncNEGV4btsbm49-MXEJsM_2MB
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 lowpriorityscore=0
- bulkscore=0 clxscore=1015 malwarescore=0 priorityscore=1501 phishscore=0
- adultscore=0 suspectscore=0 mlxlogscore=999 spamscore=0 impostorscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2411120000
- definitions=main-2412200161
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <df25ffe5-b20c-41a7-b178-b191d332cb19@oss.qualcomm.com>
 
-On 5.11.2024 7:04 PM, Raj Kumar Bhagat wrote:
-> The QCN9274 WiFi device supports WSI (WLAN Serial Interface). WSI is used
-> to exchange specific control information across radios using a doorbell
-> mechanism. This WSI connection is essential for exchanging control
-> information among these devices. The WSI interface in the QCN9274 includes
-> TX and RX ports, which are used to connect multiple WSI-supported devices
-> together, forming a WSI group.
+On Fri, Dec 20, 2024 at 08:56:31PM +0100, Konrad Dybcio wrote:
+> On 13.12.2024 12:46 PM, Akhil P Oommen wrote:
+> > From: Jie Zhang <quic_jiezh@quicinc.com>
+> > 
+> > Add support for Adreno 612 GPU found in SM6150/QCS615 chipsets.
+> > A612 falls under ADRENO_6XX_GEN1 family and is a cut down version
+> > of A615 GPU.
+> > 
+> > A612 has a new IP called Reduced Graphics Management Unit or RGMU
+> > which is a small state machine which helps to toggle GX GDSC
+> > (connected to CX rail) to implement IFPC feature. It doesn't support
+> > any other features of a full fledged GMU like clock control, resource
+> > voting to rpmh etc. So we need linux clock driver support like other
+> > gmu-wrapper implementations to control gpu core clock and gpu GX gdsc.
+> > Since there is no benefit with enabling RGMU at the moment, RGMU is
+> > entirely skipped in this patch.
+> > 
+> > Signed-off-by: Jie Zhang <quic_jiezh@quicinc.com>
+> > Signed-off-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
+> > Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+> > ---
 > 
-> Describe QCN9274 PCI wifi device with WSI interface.
+> So we talked offline a bit, and the RGMU requires a piece of firmware.
 > 
-> Signed-off-by: Raj Kumar Bhagat <quic_rajkbhag@quicinc.com>
-> ---
+> We concluded it's best to describe that from the get-go, so that the
+> user doesn't get surprised when a new kernel update brings new firmware
+> requirements for previously-working hardware.
 
-I think this description is missing the key points:
+I'd say, please make sure that the RGMU firmware is also a part of the
+linux-firmware from the beginning.
 
-* what is that control information (power, data, radio stuff?)
-* what happens when the OS is unaware of all of this (i.e. what happens when
-  we don't send any configuration)
-* is this configurable, or does this describe a physical wiring topology
-  (what/who decides which of the group configurations detailed below take
-   effect)
+> 
+> Please wait for the new revision.
+> 
+> Konrad
 
-And the ultimate question:
-* can the devices not just talk among themselves and negotiate that?
-
-Though AFAICU PCIe P2P communication is a shaky topic, so perhaps the answer
-to the last question is 'no'
-
-Konrad
+-- 
+With best wishes
+Dmitry
 
