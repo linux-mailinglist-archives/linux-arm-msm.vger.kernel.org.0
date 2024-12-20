@@ -1,136 +1,137 @@
-Return-Path: <linux-arm-msm+bounces-42935-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-42936-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 314089F8DD1
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Dec 2024 09:17:39 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id F08559F8E14
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Dec 2024 09:40:39 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3D66818932CE
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Dec 2024 08:17:40 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9039B18895C8
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Dec 2024 08:40:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7A1F019F43A;
-	Fri, 20 Dec 2024 08:17:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 28EFE1A7AD0;
+	Fri, 20 Dec 2024 08:40:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="FVrEUV99"
+	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="XAZh3p8v"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f49.google.com (mail-ej1-f49.google.com [209.85.218.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 848501804A;
-	Fri, 20 Dec 2024 08:17:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BA301AA1F1
+	for <linux-arm-msm@vger.kernel.org>; Fri, 20 Dec 2024 08:40:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734682653; cv=none; b=IYGON/iL588XX11pY83YJSCiuKN7f0VxGBwL/6QjlTdaS5d3ColUmApo3tka8L3RQGxwY8JaYOuUSu8XZ69p8wVGIXNRIFMcYt3CvafCZJhz13d1ThlfXJwTpCIxldPasH2+owid711RAiYEGtKj/ewA6rne4TzUdFNNb3Wievc=
+	t=1734684006; cv=none; b=Ccj+7jeCB4Lf2q/qk5Shh2W7QsM3KQ674LK6bd5k09Du5gqraBUOwNUyFX9kCEqCXh3iB6+SBXfVM+nKgzuMi6TIULk+lqCbJX0uYDkWYVgYvWMrDADz30QRZAAgbSGS0++qfO+yhVpdunsFF0YRd9TzyUkuRMTc1qPcXWvIc9k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734682653; c=relaxed/simple;
-	bh=zTxPnwWb00tyx5IV3P7ou5G7Z7FrzvbiLd7SdiiiJ2o=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=tLXe3acbmNirK8WlPzkXELdkWy8I7SAo1nSGY0X0s0D+92ebA8cQOqtC4OBQSod0ySDheq5FgMlpQiNFYIv7Q/q4xkF1/9tM3HarKwK2wa98y750QikefpCY/fZfygvAr8yCemF2iSRYzTqo5qVAEnBeTSZFAZ8uL7nNHO5/ppM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=FVrEUV99; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BK6me3k002947;
-	Fri, 20 Dec 2024 08:17:27 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	zffLWLUSCtFkXCaFxksO/9w2Cv27+Onxk0TFVbWZn7g=; b=FVrEUV99SN1XpoA5
-	CknxSjKaQtUO7h7VcVti86s3c8U4OBgt5ZCZsnycSMtKQmsW5G+08d2xl6dQf1mx
-	YJj8eyMxqn2d1EguRxU3wIUGiT9/ra1epN/IODM1UhN5r/hnAz20JMtCoOGQvZSG
-	LlMQEEaCVOf0+LvoVdhgFSt+r/BTGvemmuImq2StVQwzBbYadJqbY+3V03susqhg
-	9cxFvz7B19EAAlGod+ENDQSviwzXuBflAD6q+jJsRx625KsGpZyn7I4Sxs677gxK
-	uGyGciY8IittjjrFR+L45FSPgyhxJ1ZZGWrFIvFKg8jDhoJ+CqUo6hOTEXFVCiBc
-	Lz/yQQ==
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43n3my07nf-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 20 Dec 2024 08:17:27 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4BK8HQL7017649
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 20 Dec 2024 08:17:26 GMT
-Received: from [10.239.132.150] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 20 Dec
- 2024 00:17:20 -0800
-Message-ID: <37606da1-66ca-4134-a78e-ec9befc0285a@quicinc.com>
-Date: Fri, 20 Dec 2024 16:17:18 +0800
+	s=arc-20240116; t=1734684006; c=relaxed/simple;
+	bh=z2MmtHXffncpgQV5SGtuXpmxrIzxSUW5JKjS/Vk7hbw=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=NhntfbnRNGbA/hWAiLHFkQ46Xs6YMEyYv+eOfY1sQVZU/SF13LwpFrycimgO2+11AnQUDvUz/IxswQYnWT/rJus6mR8zkGuFHoNWmRwjm2JqDP8cGGdoYvZ50eHwQfjP/GnFbdW1WemD/KGIyZU0m2np4HwijYcdLh9ecC8yxwE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=XAZh3p8v; arc=none smtp.client-ip=209.85.218.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
+Received: by mail-ej1-f49.google.com with SMTP id a640c23a62f3a-aa68b513abcso322686966b.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Dec 2024 00:40:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=fairphone.com; s=fair; t=1734684002; x=1735288802; darn=vger.kernel.org;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=DU8qnxu3omGz0KQc/BKrW4isuAYnH4fQJBdHmtp6/ZM=;
+        b=XAZh3p8vEbeNR7/s0XXEEN5Q0tF9EEyUOEc36l1+VLqp4coWaxCvIOov6/Z+14oRUs
+         jrrwGr8Pr7bWQC+FAvXDH8AhSTt/qF4+H1OuHhMHuk/5IuwqZbYE56XtIE/gRkYu126O
+         59SVrom8tTGHU8i9bbmnEtXehWXYzDI3TAYNXe9A4WI6MXo5e7jhuBeQVCnbJxYP3jlz
+         AadagYtRWXbDK0kLojQWM96rSZHLwg+WbbF+prK4gw3ORdKgoYzEX63L83UGh0ZgaLjq
+         gHs8y+zigq8ZS2BbvtuUiR/S/lo52/dyk7WJrqa/vvsO0CtoV3bswDtifIhT3sB9E47w
+         k2Kw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1734684002; x=1735288802;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=DU8qnxu3omGz0KQc/BKrW4isuAYnH4fQJBdHmtp6/ZM=;
+        b=nXJYpSof/eV45acHzf2zlwOU2HgwSoGP1AzH32OxsVeKafFkXzCdNMwZPKpCLWc500
+         mAsohZlGrX5Qp2cuytbaKm+td8GNFp1W46o/vzI0IRePAKHsKGk/9rgaIfft+6vAHJK6
+         n3M3HoBu1lXD8iEwZ+dgbPIQc0mBypFDbwtj4sL68MEIqPOMUlb/niSGKjTdv+AgBSmp
+         1ztrN/QJgDDXR8874Dbff1l4UppUYoCxfMKqwQ7shEf1b4dII0u/p2eyNdzBKOrMTO+a
+         93xVX4uggv6VO1myaO5N+zI9eWX+ErEelwrjs663jc1cGwn/Rpg6mbgZmKUV2/oYNTIX
+         pH4Q==
+X-Forwarded-Encrypted: i=1; AJvYcCVguDO6Z7wX/cLHLKoiDqkQupFL78zD5jbXP63xmKmh/LuAtlLsob+RytnWAcNOJftjvai+fYQXFHOBJQE8@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz9o9KzlpCwwfSyOVVYiA9E+2OMd/I2YJX+yu0YAB259F1b+F4a
+	z4rKbD6hGAeaW4KBIlIn4P52rpaZ5j9m1RIs3fmIGWdq9GItE3ZK2SEuwe1W+Oo=
+X-Gm-Gg: ASbGnct/3FNPzi9RgupE+mlTK8wADL+wSUCRuvqIK+DQ9jkw6IEkNWaslPpyo99PenX
+	6h4De1LhUbXEmSSuawsj24+1aM3WxD0QpcgEec6QtY0wSNKBcBOAnOdgDgwPsfLBj37lXkxwBRY
+	sMK+Y4lOdq+5vB/IVwJF2WcL6EltvqzEdNpPPaGv5CilYsczWhh8ILg2hRVKIM/A/lHuAAlDNVu
+	Oxppqlkc4OqUWJfc/m3aoHUdvKD+5qsj8UtWgLxCdL+OD8F+grWxPb37TxgLmJjrwvDqaAHrZ17
+	A8fpDYG4na0F1vUVj5mFRwPDQNP44w==
+X-Google-Smtp-Source: AGHT+IGB7HjxSdBTc/JxWWcal5m/SrHGgIfiH6YzvfBAk3Tw2A74/nQX/OQ2p0tJ66arvtQwzZGeOg==
+X-Received: by 2002:a17:906:c115:b0:aa6:6d2b:cbeb with SMTP id a640c23a62f3a-aac2d446f89mr151128766b.28.1734684001634;
+        Fri, 20 Dec 2024 00:40:01 -0800 (PST)
+Received: from [100.64.0.4] (144-178-202-138.static.ef-service.nl. [144.178.202.138])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-aac0e82ede9sm151802466b.2.2024.12.20.00.40.01
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 20 Dec 2024 00:40:01 -0800 (PST)
+From: Luca Weiss <luca.weiss@fairphone.com>
+Date: Fri, 20 Dec 2024 09:39:44 +0100
+Subject: [PATCH] soc: qcom: pd_mapper: Add SM7225 compatible
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] arm64: dts: qcom: sdx75: Correct IRQ number of EL2
- non-secure physical timer
-To: Cong Zhang <quic_congzhan@quicinc.com>,
-        Bjorn Andersson
-	<andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring
-	<robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>
-CC: <kernel@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-References: <20241205-correct_timer_irq-v2-1-7db282a5e475@quicinc.com>
-Content-Language: en-US
-From: "Aiqun(Maria) Yu" <quic_aiquny@quicinc.com>
-In-Reply-To: <20241205-correct_timer_irq-v2-1-7db282a5e475@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: z14EsJ8OY7KfSbULeYJH-5LzBLH7-WE8
-X-Proofpoint-ORIG-GUID: z14EsJ8OY7KfSbULeYJH-5LzBLH7-WE8
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 impostorscore=0
- lowpriorityscore=0 malwarescore=0 phishscore=0 bulkscore=0 mlxlogscore=910
- spamscore=0 clxscore=1015 mlxscore=0 suspectscore=0 priorityscore=1501
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2411120000
- definitions=main-2412200068
+Message-Id: <20241220-pd-mapper-sm7225-v1-1-68f85a87288d@fairphone.com>
+X-B4-Tracking: v=1; b=H4sIAE8tZWcC/x3MPQqAMAxA4atIZgMx/uJVxKG2UTOopQURpHe3O
+ H7Dey9ECSoRxuKFILdGvc6MqizA7ubcBNVlAxM3FTOhd3gY7yVgPHrmFofF1bSazi7UQ858kFW
+ ffznNKX3FT9OeYgAAAA==
+X-Change-ID: 20241220-pd-mapper-sm7225-8bd30fa6cb07
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, 
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, 
+ linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ Luca Weiss <luca.weiss@fairphone.com>
+X-Mailer: b4 0.14.2
 
-On 12/5/2024 6:28 PM, Cong Zhang wrote:
-> The INTID of EL2 non-secure physical timer is 26. In linux, the IRQ
-> number has a fixed 16 offset for PPIs. Therefore, the linux IRQ number
-> of EL2 non-secure physical timer should be 10 (26 - 16).
-> 
+The Qualcomm SM7225 is practically identical to SM6350, so add an entry
+using that data.
 
-Please add a 'Fixed' tag, as it is indeed a fix.
-> Signed-off-by: Cong Zhang <quic_congzhan@quicinc.com>
-> ---
->  arch/arm64/boot/dts/qcom/sdx75.dtsi | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sdx75.dtsi b/arch/arm64/boot/dts/qcom/sdx75.dtsi
-> index 5f7e59ecf1ca6298cb252ee0654bc7eaeefbd303..b0775173278f3eed0f301b40dfba0f2680d7b0d0 100644
-> --- a/arch/arm64/boot/dts/qcom/sdx75.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sdx75.dtsi
-> @@ -1548,6 +1548,6 @@ timer {
->  		interrupts = <GIC_PPI 13 (GIC_CPU_MASK_SIMPLE(8) | IRQ_TYPE_LEVEL_LOW)>,
->  			     <GIC_PPI 14 (GIC_CPU_MASK_SIMPLE(8) | IRQ_TYPE_LEVEL_LOW)>,
->  			     <GIC_PPI 11 (GIC_CPU_MASK_SIMPLE(8) | IRQ_TYPE_LEVEL_LOW)>,
-> -			     <GIC_PPI 12 (GIC_CPU_MASK_SIMPLE(8) | IRQ_TYPE_LEVEL_LOW)>;
-> +			     <GIC_PPI 10 (GIC_CPU_MASK_SIMPLE(8) | IRQ_TYPE_LEVEL_LOW)>;
->  	};
->  };
-> 
-> ---
-> base-commit: bcf2acd8f64b0a5783deeeb5fd70c6163ec5acd7
-> change-id: 20241205-correct_timer_irq-d7e6fc4c616d
-> 
-> Best regards,
+Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+---
+I double checked and the Android builds for this platform also have a
+.jsn file for the equivalent of &mpss_root_pd_gps but this is not part
+of sm6350_domains upstream.
 
+But I actually can't find any evidence of this actually being used in
+the AMSS sources. Just some Android proprietary user space seems to try
+and find 'gps/gps_service' but nothing relevant for 'msm/modem/root_pd'
 
+Should we still correct this? Everything appears to work as expected and
+"#define DEBUG" in the driver also doesn't show anything being wrong.
+---
+ drivers/soc/qcom/qcom_pd_mapper.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/drivers/soc/qcom/qcom_pd_mapper.c b/drivers/soc/qcom/qcom_pd_mapper.c
+index 6e30f08761aa43da131a00885b2cc5e95960bc7c..d98738fd7c6456eb6c4ae265437363d2b8fb952a 100644
+--- a/drivers/soc/qcom/qcom_pd_mapper.c
++++ b/drivers/soc/qcom/qcom_pd_mapper.c
+@@ -553,6 +553,7 @@ static const struct of_device_id qcom_pdm_domains[] __maybe_unused = {
+ 	{ .compatible = "qcom,sm4250", .data = sm6115_domains, },
+ 	{ .compatible = "qcom,sm6115", .data = sm6115_domains, },
+ 	{ .compatible = "qcom,sm6350", .data = sm6350_domains, },
++	{ .compatible = "qcom,sm7225", .data = sm6350_domains, },
+ 	{ .compatible = "qcom,sm7325", .data = sc7280_domains, },
+ 	{ .compatible = "qcom,sm8150", .data = sm8150_domains, },
+ 	{ .compatible = "qcom,sm8250", .data = sm8250_domains, },
+
+---
+base-commit: 8155b4ef3466f0e289e8fcc9e6e62f3f4dceeac2
+change-id: 20241220-pd-mapper-sm7225-8bd30fa6cb07
+
+Best regards,
 -- 
-Thx and BRs,
-Aiqun(Maria) Yu
+Luca Weiss <luca.weiss@fairphone.com>
+
 
