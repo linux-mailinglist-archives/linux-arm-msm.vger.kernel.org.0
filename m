@@ -1,130 +1,131 @@
-Return-Path: <linux-arm-msm+bounces-42942-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-42943-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6F00C9F8F00
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Dec 2024 10:30:41 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 152CA9F8F12
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Dec 2024 10:35:47 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9A57E168324
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Dec 2024 09:30:38 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B750B7A28F2
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Dec 2024 09:35:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C04351B85F8;
-	Fri, 20 Dec 2024 09:30:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 49A9B1ABEA8;
+	Fri, 20 Dec 2024 09:35:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="QMh5KgqQ"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="XuxScu8t"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pf1-f172.google.com (mail-pf1-f172.google.com [209.85.210.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1596D1A726B
-	for <linux-arm-msm@vger.kernel.org>; Fri, 20 Dec 2024 09:30:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB0891A83E7
+	for <linux-arm-msm@vger.kernel.org>; Fri, 20 Dec 2024 09:35:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734687039; cv=none; b=eZsP+isMcU0SpmtU5i+WqzIp8tUIWAxXLikNW56eVLg45YZMrfiyD0Y5DWtleEM5wQowXOG1eupClYqK7RrWXrc2JpTT7wvtwyeRMk7NgR5wUcdigY/esx3U2/P8YK/uVceJ/p91IlFw0KpTmdal7b6+9zQD/1P7GE9e1K80XyI=
+	t=1734687341; cv=none; b=qqqr4CwZzfLTjU7+1TvhX/UZ5jiMCqPjtqXSLMYFZHxVy14921ISRcLNCITagE1zKVJ+IJEHPTFNH1nwx3Gvbm/D8u4+zZuZ87cdahYQsd9wnXnsKUWtYTX5zA0ypO6OcULBTxe4NtHL/3S8Q/zCeV8tiCqa3v+T6FfaJ86jLtA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734687039; c=relaxed/simple;
-	bh=j7OVgCHRHC1fGXt5U4HJtYavOVk0sa3NXJU53Xfjs8Y=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=IAnm2eNMAbvj2q6Ma2rkgX6xb04vpmsNcVOJStsoh0mk/lTZ6KNpFVAjoAMQAQjnFTNeAO5SiAMQrsSm6YU6R/Rr3Uin9GRil/oRjXt0IWpPgv7SLGjchpVALrlGrmxGgFvvwPVpyr8RdSHHtmKfsHvhse1oepsc5d0jTNenV6A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=QMh5KgqQ; arc=none smtp.client-ip=209.85.210.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pf1-f172.google.com with SMTP id d2e1a72fcca58-72739105e02so1831726b3a.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Dec 2024 01:30:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1734687037; x=1735291837; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=ByXi/X5ENmiNNt5+6rwHFixmOfwBVaDYK2KBq4o/HRw=;
-        b=QMh5KgqQkxgQ84eedYlE9BhwK1aY0YLbcrFvfMMnU1UDZY95dZjufMFuuJYER3Q8by
-         EWbGtrTBT6n2fU1MGXGgPXhfuLuDytvcyWrVoPiK29SauUlCv7HKaEWbYF/mhAAY591V
-         nEnIz+oXkXvsSeR3lNXsgIpKU/7PPpX/b+fj/jLHd66DMKowz/zMoD2O/3kH9+oNC9d1
-         eSCewNoDWsWXa9LGFtXOtyblc6d7trkHydmxUFrTcenFwscsop0Q83UUIacJp7MyufY/
-         qfQ5764nwINCVZ+nAf5PG0wrqmj/umg/oBc5n0QdvKye/zBK0IyZffXnyEjDhZo2FFU/
-         oB7w==
+	s=arc-20240116; t=1734687341; c=relaxed/simple;
+	bh=zedFkMBUmq0Nn3VJdZuR2Lhi3SZTkWV7cImbJYQqa5s=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=kXkZzfwuHb92hQd/kbbHGuZOxgPY87/NVYDre8xjZQzHz2gOXq0KuaF7qXyS8QYMNoYhiZWlAagkt6pb+LiCn6FZC4vyduEPoJP6I/dVzLZriQ6I7nLC6vDah0SnNpOKgsj0wcTIEyDlbYzVfmTUneRd/HmDLJJdDBayo93WjsY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=XuxScu8t; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BK6nJht004127
+	for <linux-arm-msm@vger.kernel.org>; Fri, 20 Dec 2024 09:35:33 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	2wvf4m/+8J1wY5OlIjVcb1V6YaBDy+XK0fLMoqV0tlg=; b=XuxScu8tfOWRW09K
+	0qjLVUZiGDW75uPfsYzamvC+rrdhgI3PuS+vDBLuJPEyV/Ru1OdPzgiOgpEFCmoZ
+	BtofhpQpr2Olc9HOg0FU4LZwYHHImzprO3TAhr4OnO1ZQl9tu2glBZXxmTxFRG4b
+	Pyr6PIc211JFtaEeEZQ3cVqIUqg6Ba/sb80T8+oEmRP9Hk3OO1Bc9k1TSwE3bP1g
+	vqvkUgyhzQyuWEg16k2RQn/5h9BSgsR4rDoKVSFizWOwmzdwkC83fm9eTrOMEYNd
+	oIkeD3Vd6++krCmm9jZcPG4EEiGN7LPLH+FVEL+QPJAcEsOxHUu8cEIjurLtPm7k
+	x76G8Q==
+Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com [209.85.160.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43n3my0exf-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 20 Dec 2024 09:35:33 +0000 (GMT)
+Received: by mail-qt1-f200.google.com with SMTP id d75a77b69052e-4679d6f9587so4511481cf.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Dec 2024 01:35:33 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734687037; x=1735291837;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
+        d=1e100.net; s=20230601; t=1734687332; x=1735292132;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ByXi/X5ENmiNNt5+6rwHFixmOfwBVaDYK2KBq4o/HRw=;
-        b=FtxCBDyGnawmSNKwq/oMFGnOqJAYI9qoYyyy1HGQMyhzOLff6PtTX958d8l+ie+Wht
-         CSmnm+xn6m7Oc7659EikO90Tr2Ena3e7uFSl5zeZquWtNApK7pbVtBoP9myd0hEE0Mfc
-         T1iJTqcXxoJWtjvs+MY/Fz92nYPLbJ4WNlb/qrWGkJXmStENNhRzYe03SVYrFiOdih36
-         OzVrnfsL3kbPe0HHCZzwUDmKtXl+kD/8s9CenuPLtYL7NSOSNfnqJ2jOGEN8JbVN77OZ
-         hsmbUk1CG4wTrzCLxCI8K/x1O5Y9lmecq5RyU2LuFVMjUGSTxNu4jKqfREwPmjcOB+Xv
-         Ou6w==
-X-Forwarded-Encrypted: i=1; AJvYcCX+hli8O7YZ0thyVTvzC/dwrD2yNqKxUVwqzdxzQgxPskigUHjokvsJTlHKGbBjJm1e9Fbu09kHx68/8IM/@vger.kernel.org
-X-Gm-Message-State: AOJu0YzA3fvgM5WrD2YZLjsotd3X1r+qnZ/mpHFkEGpnExZZ+G0BLuw/
-	RCbtSYPUiLQFcIIjzzkn7zhttE5/CC6Z+N9e1gAR2JeA34BP+eMGBDTwlPfTxQ==
-X-Gm-Gg: ASbGncsP/mInHpsi2RKTEb1mq4TJJkksFAUNE7mC4k2k11ePPQCMcY9Xw9Xh77HQjZo
-	SVi/e3FZrYQp/z/y+jK9yjpBCg6+fPAQxS4r+LcU1+Ti0PzvY+5t0+CST6JTzMwhifPczPgTG1M
-	9WJNv3ZwTa4H69brhlJDfcqbX1O/GSOJpVfgJkII1YGDRqliQw0ByJUM+w7cdxckyP2xwFjCPZQ
-	yITqZ8tSPThpcTSiVsF7Ld21F2OzfYHdG9lPaK4XICpxZRDZtrgyQsNA6cIOqaO0arg
-X-Google-Smtp-Source: AGHT+IF/Nb2ERdvtlBhMiFXyGT0KhA8msdwfPAqL4vPVA2znS47Bj667IM2h2pVbccmBK1in6s1Ncg==
-X-Received: by 2002:a05:6a00:4098:b0:725:c8ea:b30a with SMTP id d2e1a72fcca58-72abde2ab0emr3170686b3a.14.1734687037472;
-        Fri, 20 Dec 2024 01:30:37 -0800 (PST)
-Received: from thinkpad ([117.193.209.56])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-72aad8dbad9sm2768017b3a.103.2024.12.20.01.30.34
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 20 Dec 2024 01:30:37 -0800 (PST)
-Date: Fri, 20 Dec 2024 15:00:29 +0530
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: Md Sadre Alam <quic_mdalam@quicinc.com>
-Cc: miquel.raynal@bootlin.com, richard@nod.at, vigneshr@ti.com,
-	bbrezillon@kernel.org, linux-mtd@lists.infradead.org,
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-	quic_srichara@quicinc.com, quic_varada@quicinc.com,
-	quic_nainmeht@quicinc.com, quic_laksd@quicinc.com
-Subject: Re: [PATCH v2 0/3] QPIC v2 fixes for SDX75
-Message-ID: <20241220093029.z4zsr3owdnqll2vg@thinkpad>
-References: <20241122085933.2663927-1-quic_mdalam@quicinc.com>
+        bh=2wvf4m/+8J1wY5OlIjVcb1V6YaBDy+XK0fLMoqV0tlg=;
+        b=vjPvA61kHefAy0WOYF+yX7pcGcPYyElGANLgVjfBPj6X3jLUYvYAePAMCrqE6oUAYe
+         4rC6dqFIrOzwDATGoKMXJ2pMQdj7rY8e1lt5ogwHJF7a5h8MFUbFe/bm9uLrGl8a0vt5
+         twvzFzKewquGuGvcXqYNfgNOBTikZZI6khMa5TRetfdaAnjvA4XULrV+0BzZPYRdYKBO
+         Jt//OL92UZ0RDCpamoqzBweTi1j501hkqJUYAI43/IpCPA6PoxQsH6p7Gwr8MmBBoYb3
+         GZIcjSt0AkWGfINzF3N3HQbPwWXMB2xD+LZzzhvFclYKBibV03NgoPTeJ9WBkudDvejR
+         yP2g==
+X-Forwarded-Encrypted: i=1; AJvYcCWEdpxsmVuGyYwuC/E+ueqIQIRmBB96dhSudniLGHaUuqcYv947eUEW0nLc9Rotwpv5Q5FNV1lUQ/bBeM78@vger.kernel.org
+X-Gm-Message-State: AOJu0YzrXZloOUqbOp50eVCVsPLgcWjrDwPV5zYYJFWOqA0tGv14ylOh
+	V0ftisYXXcW5ZjxaNpCzb3Ot2Z/0rAZ7bgpwmYcqmZlqAsarzyXwjzjqqqR1yEVf2J4jvRLHwDU
+	Xlz0CJ5MjX9+fB77XxlADf+QN9tNWqC2VnWVxW5lhoHuH9YL65E9UgMUleMre9aqM
+X-Gm-Gg: ASbGnctpqKCpGcpQ0bQffJJ82yDM6nuPpJX0ObjAK8VGhtVwtb33dOOVzawV373YK9X
+	pfiX4aBAzkEvcyFDPl6f5ZZKqd0uZv6Ipp16LgD2kc6cMiBG3ZYW4vdcHefFsJw0KM8qb9+opB3
+	dVlsJiZIIXC0qX1i1tedCfiJFvKY4dZAMZAipkF2JmikYlakbnYReGzpOsjKtpuz9rYc0+HbbEA
+	owHn0IU3OUd9XadOzrQ7dQoNt5rnh2hNaI1Snlz46bCmtaKUZnl8TVCRxvSxma+xIgQv8B8NuAc
+	HDf/egXSrWIjE/5QMyDgPBEDWbCWNOw9UTU=
+X-Received: by 2002:ac8:7d0e:0:b0:467:7472:7acd with SMTP id d75a77b69052e-46a4a8b7e3amr15981871cf.3.1734687332278;
+        Fri, 20 Dec 2024 01:35:32 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGw19IDdykvlP7lz/VRK0vXRTUP0NYRGCinJslG+yp1jJUp8nxDB71kZfGUwkbxCXHvfdoZyg==
+X-Received: by 2002:ac8:7d0e:0:b0:467:7472:7acd with SMTP id d75a77b69052e-46a4a8b7e3amr15981761cf.3.1734687331900;
+        Fri, 20 Dec 2024 01:35:31 -0800 (PST)
+Received: from [192.168.65.90] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-aac0f06f942sm156285066b.200.2024.12.20.01.35.29
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 20 Dec 2024 01:35:31 -0800 (PST)
+Message-ID: <756178c6-20a4-4ec7-9a2f-6d756097cc84@oss.qualcomm.com>
+Date: Fri, 20 Dec 2024 10:35:28 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20241122085933.2663927-1-quic_mdalam@quicinc.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] arm64: dts: qcom: sm6350: Fix uart1 interconnect path
+To: Luca Weiss <luca.weiss@fairphone.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, stable@vger.kernel.org
+References: <20241220-sm6350-uart1-icc-v1-1-f4f10fd91adf@fairphone.com>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <20241220-sm6350-uart1-icc-v1-1-f4f10fd91adf@fairphone.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-GUID: TJxxblJXT596vu8vmhvvk9t2KtC70xGa
+X-Proofpoint-ORIG-GUID: TJxxblJXT596vu8vmhvvk9t2KtC70xGa
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 impostorscore=0
+ lowpriorityscore=0 malwarescore=0 phishscore=0 bulkscore=0 mlxlogscore=870
+ spamscore=0 clxscore=1015 mlxscore=0 suspectscore=0 priorityscore=1501
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2411120000
+ definitions=main-2412200079
 
-On Fri, Nov 22, 2024 at 02:29:30PM +0530, Md Sadre Alam wrote:
-> v2:
->  * Updated commit message
->  * Added stable kernel tag
->  * Added Fixes tag
->  * Renamed the variable from offset_from_qpic to nandc_offset
->  * Set buf_count to 512 in the parameter page read
->  * Replaced the buf_count value of 512 with the len in bytes 
+On 20.12.2024 9:59 AM, Luca Weiss wrote:
+> The path MASTER_QUP_0 to SLAVE_EBI_CH0 would be qup-memory path and not
+> qup-config. Since the qup-memory path is not part of the qcom,geni-uart
+> bindings, just replace that path with the correct path for qup-config.
 > 
-> v1:
->  * These patches will fix the following:
->  * 1) onfi param page read which was broken by exec_op() patch.
->  * 2) Fixed offset passed to BAM from QPIC base
-> 
-> Md Sadre Alam (3):
->   mtd: rawnand: qcom: Pass 18 bit offset from QPIC base address to BAM
->   mtd: rawnand: qcom: Fix onfi param page read
->   mtd: rawnand: qcom: Fix read len for onfi param page
-> 
+> Fixes: b179f35b887b ("arm64: dts: qcom: sm6350: add uart1 node")
+> Cc: stable@vger.kernel.org
+> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+> ---
 
-Do you plan to respin this series? FYI, these are regressions, so should go in
-early as possible.
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 
-- Mani
-
->  drivers/mtd/nand/raw/qcom_nandc.c | 23 ++++++++++++++++++-----
->  1 file changed, 18 insertions(+), 5 deletions(-)
-> 
-> -- 
-> 2.34.1
-> 
-
--- 
-மணிவண்ணன் சதாசிவம்
+Konrad
 
