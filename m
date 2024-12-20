@@ -1,203 +1,174 @@
-Return-Path: <linux-arm-msm+bounces-43013-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-43014-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7FCFA9F992E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Dec 2024 19:11:46 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 72C259F9987
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Dec 2024 19:30:51 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 224A3167CC1
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Dec 2024 18:11:21 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id C60A0188B43A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Dec 2024 18:24:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id ABED745948;
-	Fri, 20 Dec 2024 18:08:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 000D821D011;
+	Fri, 20 Dec 2024 18:24:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="wvSZ/8gw"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="fn6nDAXn"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from NAM11-CO1-obe.outbound.protection.outlook.com (mail-co1nam11on2085.outbound.protection.outlook.com [40.107.220.85])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f41.google.com (mail-ej1-f41.google.com [209.85.218.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 264F32163A6
-	for <linux-arm-msm@vger.kernel.org>; Fri, 20 Dec 2024 18:08:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.220.85
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734718129; cv=fail; b=nUDx/9yGfImIb82iVLoHSgyba6DdoNC2ibeEMBXwkA/eI/0ByniFFxeGlBnNr7mRkDFT8Og/5hJOE/GcBvHOjjOH0wP5us90yCk4kMmPNlVWO31rsYfHTj83zzfX2QuHevzsXUvEr/emOHHOIXwmwseTKz+RTT4akslFM7ZqVzo=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734718129; c=relaxed/simple;
-	bh=Y1j1LeUyJ7safYnXdJLZrPGUt0uK2n8ddiaO/Ne3LL8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=Y+MYPNVgz6YQ3r57QNlQ+8xP+7SZcCh87xD1vmbhn44jh1p2mwkNNduWsPze4sNWV5+4YOLdALPEpzQYff6u0tOXzwO5BiwwIL0ntgh5ZXDlHoHOqFmVwECBSFADklIs9XkihL4nCLBo8NZmlWDITKBHCZbOAXEpb8hI+ffP9rA=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=wvSZ/8gw; arc=fail smtp.client-ip=40.107.220.85
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=u8doWQP+MzAdTpp70DczvT2Qfg0EitT6aMcZnYsgmS8Zer8StpxZ27TTKNvObgUwt+pN9KEOEKMfzMoNZUHNrbSElto6D11P0eb+c12PxzxAEXvEn7B5YNwE97dPnhs5aM1uJnnZgzemgeUlQ12WuQogqKE+lffpKoJtRSiYpyuS83nj7hDtWhMac/I3nkP+QZQsrCtnbnqr4/V5Wybk2dpj/jCa+zOiUbWpo7+Tb3rkz7I9cR1r951a4Diocn8oT7aHz0DG1WFwe29ITgsjnSXJvn0ffcKGcFMdpGmSpZqLyRPUGpqkZqINIjZ+l50/VLAwYBD92Qd5MePU2fVDHg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=1fbxS/JUp8RexRkw5nr5R5y9lTopazc/X+vgmXs2bd4=;
- b=Cc20I2Syj1aDJbnBPohdxLADRd8fMvFfV7scR+ejZwg0fMbyPmXXwkfaTtQpYhxz8xkL8GNYMNbWK6AGG7Lv1XjvNY3WXWdtat41efKbmNMtYVw9lZoN/M/o7AL6lFAhezdT8noV+LTa2YhAs0oTDeqZKMuH21iD9/NI3N50ynFs+XPz/0C4meBpJNcG2KOHfNfNAQPGPXgtTCPBGioByCZH5tOV1m+073WUnSOjR5jh3RXnR2bYW+/PGCfaUgjNL0Kbv9dm3F7VRLH+m0tkhrCXj/xINF5yHRFZgI2Vq9uUZmLGmaoz4dScy5lWWZw7CZXMzfcewqDK8vF8bibDww==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=quicinc.com smtp.mailfrom=amd.com;
- dmarc=pass (p=quarantine sp=quarantine pct=100) action=none
- header.from=amd.com; dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=1fbxS/JUp8RexRkw5nr5R5y9lTopazc/X+vgmXs2bd4=;
- b=wvSZ/8gwMkN6qLHrbvyGTCnGfafvC+Doy5tzA6IaY/MgDVSIcJ6nOzfgPC6Md9zlT5bBdvsb6KYchyLWyxskE196yCjNxFJRjw1lQK9vslBvQsIoveFJWEw6Zf01qVpILoF/n+7/0hAuREMp5zPN4LdNlIycnFW8Eg+z0eeFTc4=
-Received: from BYAPR02CA0061.namprd02.prod.outlook.com (2603:10b6:a03:54::38)
- by PH8PR12MB6769.namprd12.prod.outlook.com (2603:10b6:510:1c4::17) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8272.13; Fri, 20 Dec
- 2024 18:08:44 +0000
-Received: from MWH0EPF000971E8.namprd02.prod.outlook.com
- (2603:10b6:a03:54:cafe::5f) by BYAPR02CA0061.outlook.office365.com
- (2603:10b6:a03:54::38) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.8251.23 via Frontend Transport; Fri,
- 20 Dec 2024 18:08:44 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
- smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=SATLEXMB03.amd.com; pr=C
-Received: from SATLEXMB03.amd.com (165.204.84.17) by
- MWH0EPF000971E8.mail.protection.outlook.com (10.167.243.68) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.20.8251.15 via Frontend Transport; Fri, 20 Dec 2024 18:08:43 +0000
-Received: from SATLEXMB03.amd.com (10.181.40.144) by SATLEXMB03.amd.com
- (10.181.40.144) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Fri, 20 Dec
- 2024 12:08:42 -0600
-Received: from [172.19.71.207] (10.180.168.240) by SATLEXMB03.amd.com
- (10.181.40.144) with Microsoft SMTP Server id 15.1.2507.39 via Frontend
- Transport; Fri, 20 Dec 2024 12:08:41 -0600
-Message-ID: <d0a2059e-7c81-1eb8-6c59-0f72c0688ef5@amd.com>
-Date: Fri, 20 Dec 2024 10:08:36 -0800
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9D001C5CBC
+	for <linux-arm-msm@vger.kernel.org>; Fri, 20 Dec 2024 18:24:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.41
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1734719067; cv=none; b=sBeEZJz++ixBrVO2GXu2bkOWR/hEWccXnQpVNEG5pnptoqzvcW0+6f4nYfqUTK56QsNpoAr9kfpJxsJJieZDpyD+FuL+Q82puu+UTH2aLMQu6ull/N889q42dyLQ/wMF1oMvFJyTXBauMLt4tH4ObabonIGU4bHbEO+LVGNqlQI=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1734719067; c=relaxed/simple;
+	bh=ujvByBIf+SIpGxd1kcUbVbVrtbm1//MuEyOkgZt99Qo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=lx6Hn5No3nXKvTLYq7vAUHixKpKKe3ggISJjPyOAS8X5dfqfrlK85QVEdeiUxk7CI2xf2H2QudfRwpHa+rSE4CtcK3td48J+6Kz6skr5TunQv1o2Sas2wrtuT8h3YthMvMHXIlmVXvYGNttXMRSceN026Z5rvqV/H4coC9OXLOE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=fn6nDAXn; arc=none smtp.client-ip=209.85.218.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ej1-f41.google.com with SMTP id a640c23a62f3a-aa66c1345caso193882566b.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Dec 2024 10:24:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1734719064; x=1735323864; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=aus59Gxg2/yMBvmOvs1IHzky98/DpuWtdpoS4UfXRYk=;
+        b=fn6nDAXnAPjEiDsNFzOrOIiV0xYd9ju15/BhgykS2WzI/6dwlOef1t3cRgfBuFvR+f
+         XI/CPpE2ulIkxlxnRh6x0810mg54ag9zatZoVcDNKSpWnWh3ehnqeCTdlO6y7c33OJDw
+         kAq8NNdjpG0dCh03tpg0ViUJnw9s4EkdbVN70fxTaQitwQDqK3S+v/V0/lkBI+UyPqHF
+         Eate8j1RJ8bAsS3SU9Jfo1u8cwh6kLneCdQg3TdBvlDjPWcyldjMZsjdE3CqanfPWc1K
+         pxZ8SdPOmUk7w4J4bAYBIg+XToEUYXYZlfklI15h7Es2a8Yj6/XuXrsSgWDS/ZwC4/0L
+         sx9g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1734719064; x=1735323864;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=aus59Gxg2/yMBvmOvs1IHzky98/DpuWtdpoS4UfXRYk=;
+        b=mkh/J4iinHodSZofZ1bBge0eMnLk3G48/d7K3QEhyHzVBkh2ZruSNEoxkdB9dnusBg
+         ub5tCS+OUSMQBQq9DcEuVQh3G9gOiqWdBM8t8rpPzsKvMek9gneTpCDZLxKWRwgyHbGT
+         v827TMFi46ZE5ZrjC0ZnLYsQRIQAoj2Sf8CMM50G04n3+hQmUoZFpKMbxfbyfoABCB7X
+         A6bQZMe7Nbb6IdxW/57rm3lHUFgPs+bTLC0uVftJYWBXZaqSGpzh20EJmuvB2Hp5QkYW
+         ABdqOekPib3nmy/IPe4K6D1XEbeX9epyAJFxD4/XOY1RmWcX+83wN6xzsAjy1BWkTXlY
+         96QQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXUU/IOqcK7PDcoi6XIyphX6sMrHrxla7ck5joqBcupjLfsdXf7eCk7Gi7bnqayRF2Wg3XMX20aWrkQrcel@vger.kernel.org
+X-Gm-Message-State: AOJu0YwSYghHWWPzDhSgXh8jVz5ahAn8svINudTnkxptd5rna/1DGf1S
+	0K5mXK6fq7hBOzsphCe8TzziFEm45gg2Ozsy/DvHyXbex7aJdHeluYmLxPv0b3s=
+X-Gm-Gg: ASbGncvS5HsPkcXgVUGBP2EMXdxYKL1WKVvqN5vdqsP6zuHeaNF06PjqcmUTCDjxjyY
+	K/CIju/IYPp7S8bU7Cazsn/wAIlU8+AIv2H5PvONgdvk5ELNM91vsC3ibPtORY5MjtbebZF46xs
+	I2pieKXkcHAOoX0n4r/4GffmD8FlGQuvYhtUo00vE+HgRx/a7TBePQ1Z+AN9zoCcC3eXkLmv/uM
+	3mThs1w1TaNXto7H4eaVZJaOA94cNKgL4BglX0N2to/CmcVr23TTRIYq/phLMbfL/lp
+X-Google-Smtp-Source: AGHT+IHKvNvtCKuu1gx89ORFlt8GPNF0Ymh5ZK83WS1KOIcTDXyXw95yzBQFAq1SjDWRfMXY+mc31A==
+X-Received: by 2002:a17:907:78b:b0:aa6:7cf3:c6f5 with SMTP id a640c23a62f3a-aac2d447172mr324419066b.9.1734719064110;
+        Fri, 20 Dec 2024 10:24:24 -0800 (PST)
+Received: from linaro.org ([2a02:2454:ff21:ef80:6d2c:6f87:64ef:2237])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-aac0f015b0fsm200488666b.156.2024.12.20.10.24.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 20 Dec 2024 10:24:23 -0800 (PST)
+Date: Fri, 20 Dec 2024 19:24:18 +0100
+From: Stephan Gerhold <stephan.gerhold@linaro.org>
+To: Maya Matuszczyk <maccraft123mc@gmail.com>
+Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+	devicetree <devicetree@vger.kernel.org>,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 1/3] dt-bindings: platform: Add bindings for Qcom's EC
+ on IT8987
+Message-ID: <Z2W2UhspMZNT1TRU@linaro.org>
+References: <20241219200821.8328-1-maccraft123mc@gmail.com>
+ <Z2WxzvKRVcOz5d2V@linaro.org>
+ <CAO_MupJ7JtXNgGyXcxGa+EGAvsu-yG0O6MgneGUBdCEgKNG+MA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.11.0
-Subject: Re: [PATCH 6/7] accel/qaic: Add config structs for supported cards
-Content-Language: en-US
-To: Jeffrey Hugo <quic_jhugo@quicinc.com>, <quic_carlv@quicinc.com>,
-	<manivannan.sadhasivam@linaro.org>, <quic_yabdulra@quicinc.com>,
-	<quic_mattleun@quicinc.com>, <quic_thanson@quicinc.com>
-CC: <ogabbay@kernel.org>, <jacek.lawrynowicz@linux.intel.com>,
-	<linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-	<mhi@lists.linux.dev>
-References: <20241213213340.2551697-1-quic_jhugo@quicinc.com>
- <20241213213340.2551697-7-quic_jhugo@quicinc.com>
- <cd442cee-a37d-7d3b-8acf-59a3b5138bf4@amd.com>
- <c24e081b-7e2a-4bb0-9445-458e21e964f3@quicinc.com>
-From: Lizhi Hou <lizhi.hou@amd.com>
-In-Reply-To: <c24e081b-7e2a-4bb0-9445-458e21e964f3@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: None (SATLEXMB03.amd.com: lizhi.hou@amd.com does not designate
- permitted sender hosts)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: MWH0EPF000971E8:EE_|PH8PR12MB6769:EE_
-X-MS-Office365-Filtering-Correlation-Id: 67545e91-df36-41fc-0230-08dd21215737
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|1800799024|376014|7416014|36860700013|82310400026;
-X-Microsoft-Antispam-Message-Info:
-	=?utf-8?B?QWp4OW5GNEJ6RWlJeCtpczhuNVNDQTV6VzZ1QVRFYUxaRVlOYUVnaVg1a2Jx?=
- =?utf-8?B?OXZVQ0JYVVRBM1VIM2Jsbm5hMVZ5TmZTeWxpM0dlUll6NTArcWZ5RWEyclhS?=
- =?utf-8?B?K0x3TEFTbEdKRWprUVhVRTdpaDBhK3ZRaXZpREg3VTVBeE5PYU1hK3NXYmlI?=
- =?utf-8?B?NktjazYwVlhWOVNqSXdTcVB1TGF1Zm9iaU9wWXg0Q2VqQVRtNzFRWTQvR1pO?=
- =?utf-8?B?dmtBaXN3SXFQVmdSZHhWbllpZEhJZGs1RVhveTB6ZVFmZmZLQmNmRnJyL3lB?=
- =?utf-8?B?ejJIZVlNZHVuMU1sZjR1Y3doZXNXNE1ZZEVmL2F6TjFGSnhLMnplS0ZmWnNx?=
- =?utf-8?B?WU1FalpLZTIvdk14eEM2QTdoSFBtZW9wYlQramZVK3dlR2pvaVdsS0k2dlhP?=
- =?utf-8?B?SUlYOG5KWDB3WlU1QkQ4K0xuYThvRlM5MjM5UXo3OVFlaTI1ZDBMSG90dHBP?=
- =?utf-8?B?TTR4S1B2TGZnUk1UNGVoRG5nVkMyT0NvMW84WXFKZ0xVNk96YU40bzVFWE5u?=
- =?utf-8?B?aGlPS3RxVE1PQlM1V2JWSEd5VmFreXdqVHhZR2p4dk13MEZsSEdQbnBrSFUv?=
- =?utf-8?B?U1hUYVdFc1dRZjFjK0d5bnNka010YllGUDhBL1ZHTnRHc3MyaGlhOU5PUGVr?=
- =?utf-8?B?VldDKzBHV1IwMEJFclVpVHVlSWdkRllaaVE1WFl5TmlhQ1IwTWtMc0c5aXJU?=
- =?utf-8?B?NUhZY25vV0FFTGFqTnlOQnZGT1JYeThsS1ZQeFpGbks3ajlYckFVK0xWSkFu?=
- =?utf-8?B?K1dwZ0FBZXduc2dmeUdZK3ZObkx6dzBGNllwdVZKRG5PZFhZOUVrRFRhNjFv?=
- =?utf-8?B?QjFXek4wNlJvVkQ4Yndza3hYWWtaUWgwMy9xYWE0NU5ITE90ZGxOUjJnK0g4?=
- =?utf-8?B?K2VRYktqYys4cnFhMXZnVEd4WXVOOEEzQnVwcmo1M0VsL2p6WUxLdlJpeVZu?=
- =?utf-8?B?YTEreDZ4RFhpVG9NTk9pVnVHb1l6SndVbnhGR0RXbGE3R29XSFFCN2RoS0Rh?=
- =?utf-8?B?c2J6bmdiN2ErY3RvNktZOHd4Ry9LWTdhRUtKLytFd1BVRGFwYnVISy96alBs?=
- =?utf-8?B?S0dIaGhoTVp6cFhJano3Q2VKMUViSlRDdTIzSnBFUmVhWXlxY09HZ2wyK0F0?=
- =?utf-8?B?YVIybGxKUEpRWnhZQzMxUVVHeVVRK3UzM3FIb0cvWS9hN0ZHUXU1b0NPWW5G?=
- =?utf-8?B?UTM5YTRITDhyVGxXNFdDbzBrNlE0dVp3UmhoWWE0b2FXdk9uR0laVmNSWSs5?=
- =?utf-8?B?dm1iYmtOd1R2enJPU3FWaER5SHFIM1o1Yk1hMERrQy9RQUErQzJUcE1hWGRX?=
- =?utf-8?B?UjdoQ3ZISU5Lb3RjN0RNWWMxNXY5RTIzYXdqTkFPM2xvRDRBa1hDYU5LZVJU?=
- =?utf-8?B?L0Y3UnlHQXFkZE1QbVBITkN5VjliN3M0ZGJVMkpGK0lDZUd5VEZtaVNrWUFP?=
- =?utf-8?B?Zkx0L21pSmUzTENibExiMDdyOEpiaWVnVHRMOUUvSExkOE1TM1FqMjYrVm9u?=
- =?utf-8?B?M3phNkdWbm1kWjZ3dzVwbmdlU2pwT3ZFSWJQK2JPK25nNENtMHZHS3lhMXFP?=
- =?utf-8?B?T1RZemZ5TzRxWWdFRDJVNUUwWGtyQ01qcW1FWTdLdHF6a3lnSC9UeFAreUp6?=
- =?utf-8?B?RGZyMFdPYWdhWCtjUUVsUUYrVDhtZVdLeG8rSjRZNUpHTnA1QkVQayt6aXVl?=
- =?utf-8?B?L1hoYU5DNWVQblFucTFhTS9tN2NrSk12WSs1MVI4TndLS1JnSmFWa1hUbVIv?=
- =?utf-8?B?c0VLbURNbHgyS1puTEU1RG4zTHJxeVBnVTE5M21meDZ0NTcyYVk0U3BkV29u?=
- =?utf-8?B?ZGNHOUVXSjI0N2VWR2M2NEExYmV6a2tMa1pqZUxORUtRNDFHT013OFR3ZEhv?=
- =?utf-8?B?SzhlU2ltbFRpYWxxVVoraVBhUTIzTDgwbUJPb3RHUXBQQk1DdEZYbDFhcFdi?=
- =?utf-8?B?cTk3Q3ViTFRLbnhkdWQ4a21lK3JuN2ZXdlM2UkRUY0NhcVFmNFVvVUxJbENq?=
- =?utf-8?Q?oSQLFEcCc3Cw2SFsrH6FN1vABC5Q0s=3D?=
-X-Forefront-Antispam-Report:
-	CIP:165.204.84.17;CTRY:US;LANG:en;SCL:1;SRV:;IPV:CAL;SFV:NSPM;H:SATLEXMB03.amd.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(1800799024)(376014)(7416014)(36860700013)(82310400026);DIR:OUT;SFP:1101;
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Dec 2024 18:08:43.5463
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 67545e91-df36-41fc-0230-08dd21215737
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d;Ip=[165.204.84.17];Helo=[SATLEXMB03.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource:
-	MWH0EPF000971E8.namprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH8PR12MB6769
+In-Reply-To: <CAO_MupJ7JtXNgGyXcxGa+EGAvsu-yG0O6MgneGUBdCEgKNG+MA@mail.gmail.com>
 
+On Fri, Dec 20, 2024 at 07:16:34PM +0100, Maya Matuszczyk wrote:
+> Excuse the formatting, I've typed this reply from my phone
+> 
+> pt., 20 gru 2024, 19:05 użytkownik Stephan Gerhold <
+> stephan.gerhold@linaro.org> napisał:
+> 
+> > On Thu, Dec 19, 2024 at 09:08:18PM +0100, Maya Matuszczyk wrote:
+> > > This patch adds bindings for the EC firmware running on IT8987 present
+> > > on most of X1E80100 devices
+> > >
+> > > Signed-off-by: Maya Matuszczyk <maccraft123mc@gmail.com>
+> > > ---
+> > >  .../bindings/platform/qcom,x1e-it8987-ec.yaml | 52 +++++++++++++++++++
+> > >  1 file changed, 52 insertions(+)
+> > >  create mode 100644
+> > Documentation/devicetree/bindings/platform/qcom,x1e-it8987-ec.yaml
+> > >
+> > > diff --git
+> > a/Documentation/devicetree/bindings/platform/qcom,x1e-it8987-ec.yaml
+> > b/Documentation/devicetree/bindings/platform/qcom,x1e-it8987-ec.yaml
+> > > new file mode 100644
+> > > index 000000000000..4a4f6eb63072
+> > > --- /dev/null
+> > > +++ b/Documentation/devicetree/bindings/platform/qcom,x1e-it8987-ec.yaml
+> > > @@ -0,0 +1,52 @@
+> > > +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> > > +%YAML 1.2
+> > > +---
+> > > +$id: http://devicetree.org/schemas/platform/qcom,x1e-it8987-ec.yaml#
+> > > +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> > > +
+> > > +title: Qualcomm Embedded Controller on IT8987 chip.
+> > > +
+> > > +maintainers:
+> > > +  - Maya Matuszczyk <maccraft123mc@gmail.com>
+> > > +
+> > > +description:
+> > > +  Most x1e80100 laptops have an EC running on IT8987 MCU chip. The EC
+> > controls
+> > > +  minor functions, like fans, power LED, and on some laptops it also
+> > handles
+> > > +  keyboard hotkeys.
+> > > +
+> > > +properties:
+> > > +  compatible:
+> > > +    oneOf:
+> > > +      - const: qcom,x1e-it8987-ec
+> >
+> > Given that ECs tend to be somewhat device-specific and many vendors
+> > might have slightly customized the EC firmware(?), I think it would be
+> > better to disallow using this generic compatible without a more specific
+> > one. In other words, I would drop this line and just keep the case
+> > below:
+> >
+> I've looked at DSDT of other devices and they look to be compatible with
+> what's on the devkit, with differences being extra features on magicbook
+> art 14 and yoga slim 7x. Though this isn't a hill I'm willing to die on.
+> 
 
-On 12/20/24 09:15, Jeffrey Hugo wrote:
-> On 12/13/2024 5:35 PM, Lizhi Hou wrote:
->>
->> On 12/13/24 13:33, Jeffrey Hugo wrote:
->>> -static struct qaic_device *create_qdev(struct pci_dev *pdev, const 
->>> struct pci_device_id *id)
->>> +static struct qaic_device *create_qdev(struct pci_dev *pdev,
->>> +                       const struct qaic_device_config *config)
->>>   {
->>>       struct device *dev = &pdev->dev;
->>>       struct qaic_drm_device *qddev;
->>> @@ -365,12 +391,10 @@ static struct qaic_device *create_qdev(struct 
->>> pci_dev *pdev, const struct pci_de
->>>           return NULL;
->>>       qdev->dev_state = QAIC_OFFLINE;
->>> -    if (id->device == PCI_DEV_AIC080 || id->device == 
->>> PCI_DEV_AIC100) {
->>> -        qdev->num_dbc = 16;
->>> -        qdev->dbc = devm_kcalloc(dev, qdev->num_dbc, 
->>> sizeof(*qdev->dbc), GFP_KERNEL);
->>> -        if (!qdev->dbc)
->>> -            return NULL;
->>> -    }
->>> +    qdev->num_dbc = 16;
->>
->> Is it better to put num_dbc in qaic_device_config?
->
-> I think there is no clear "right answer".  All known devices use 16. 
-> There may be a future device which has a different value, at which 
-> point I think this needs to be in qaic_device_config.  For this patch, 
-> I was conservative and only included items in qaic_device_config which 
-> do vary between the known devices.
->
-> I'll think in this a bit more.
-Reviewed-by: Lizhi Hou <lizhi.hou@amd.com>
->
->>
->> Thanks,
->>
->> Lizhi
->>
+I think it's fine to keep qcom,x1e-it8987-ec as second compatible.
+However, without a more specific compatible, there is a risk we have
+nothing to match on in case device-specific handling becomes necessary
+in the driver at some point.
+
+It's certainly subjective, but it might be better to play it safe here
+and have a specific compatible that one can match, even if the behavior
+is 99% the same. There will often be subtly different behavior across
+devices, you mentioned the "keyboard backlight turning off and the power
+LED slowly blinking", who knows what else exists.
+
+I suppose worst case we could also use of_machine_is_compatible() to
+just match the device the EC is running on, but I'm not sure if that
+would be frowned upon.
+
+Thanks,
+Stephan
 
