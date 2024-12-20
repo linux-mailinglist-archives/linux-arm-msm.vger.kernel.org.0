@@ -1,156 +1,136 @@
-Return-Path: <linux-arm-msm+bounces-42974-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-42975-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id CAA9C9F9158
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Dec 2024 12:31:59 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id DBC9D9F917B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Dec 2024 12:39:23 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id D9635188A00E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Dec 2024 11:32:00 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id AB7F47A1637
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Dec 2024 11:39:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6C4761C3039;
-	Fri, 20 Dec 2024 11:29:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 86ED31BEF60;
+	Fri, 20 Dec 2024 11:39:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="lARRes2y"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="g6ZpuQE2"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A0731C5496;
-	Fri, 20 Dec 2024 11:29:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB03B182B4;
+	Fri, 20 Dec 2024 11:39:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734694159; cv=none; b=iLPtKH6yFrzTVQppZJYcWAjeo08t7atx9vdFsy9MrYpjL1wnc7G61h0f1JWjhcpg1Prxr2Gb2PVA+GEKh2YOyzpy5I+HIr+FwmwwP5YKYlsSl5U8fmkjIolUYbELphETluXsiGX3MBe3je7g3c0xWbTkaS0oPsgUMchlvZfYoFQ=
+	t=1734694755; cv=none; b=MwW0Os/LsnImOBvd0dt1KroiFFPpMc+sdOeLZcyJko0+7uelYS2e+EqJOMVr+RtrLHrfsJQIcfY97sNHvYFYSTk/o3tUL+cU9LfAtvzMlEf0UhQvX0nyTa1p8GBrRjUL5cSpEBozslcG3mxvHwwhfYYdBePQB8yMHjU00lgIHBA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734694159; c=relaxed/simple;
-	bh=e6RRTNZKSVTO862lwIFBvL5ei0oT+HVqaOxrltcfMNA=;
+	s=arc-20240116; t=1734694755; c=relaxed/simple;
+	bh=3Y5P2iLDMHV7TelN3lbxVpnLBetdICzsuCgDHCvVsw8=;
 	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=J5jR+4S/4pNFjam69uV6IkPY//HVBUc/23hCN0i8cLH//xaZD54nBpZcHmWpSgNl4xY6nEkylNgdkO8nkRaMKiG6qkQe0XpAWMUlTfug39cXNTPh4nrAa7vJg5w55bAA4v7I6UGrFtfqwRncC9NbCPZ9SAOA+izOHUUGB9A3+ls=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=lARRes2y; arc=none smtp.client-ip=205.220.180.131
+	 In-Reply-To:Content-Type; b=T02zpvmIacqQxJK02QoU8TK3ioR8rL77PFiqXWoNfr5yU/fGj/9ePljY46P4XUqw5v1EBP/XgBuRD34jtnfvgmhwvaD3Mko+CQ1renLTKtN0em9rgs3pu+l4O4MDPmWtrNQVofCk6F3OfjpvzUD9Cmy2STKmd6oaJD2xdhhlQOE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=g6ZpuQE2; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BK6n0EH028591;
-	Fri, 20 Dec 2024 11:29:05 GMT
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BKA4WXe016197;
+	Fri, 20 Dec 2024 11:39:05 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	MPWkcTcIYJFDpVK5XdmX72WZWvyJATmGLKiYjjvUxyk=; b=lARRes2yO1cckMn/
-	aRJcXX9jFE0TYkSR2jsIi3ipcd3yWcOs8FnTtucriIVxt/YDdnzYrbb2q7yQZqim
-	3OiEVBH0zAOspaKs9M+Yj+XDZfoSRCpYLv4X8tnZZOvQ3dUL9n0+nj5VffpyV3zV
-	IGv0KlYE1NmCR1/OqouguBN68Gr9BBNCMvjybpaV96gkpa9THUFhCMSTKohqmcK2
-	iJQD9SNCkM+cm5rvUVp8rdzkBHSpNYf6EckYIIORC51/cPqOTRTHf5u8Lf/4dJvy
-	sRDHLCT1ir8WP2Osn6zQGyCCAQRnhgq7MBiJnA3ZmLbgZqbtI3fwQeRqclX6lnXK
-	08aMrQ==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43n3mxrr0p-1
+	2reHl71yPviop2jw11dCLzSPN7jxrfNGGXDev2cP5SQ=; b=g6ZpuQE2NxWe7h5H
+	CTRvMDxIY0U1YtDKYlekTwkiVjmwAV9HwgPkJ7OsRgOjrVB/iHMerqRvALdiQC20
+	wQF3oOaVei35Pq/SCShMmll+CTrd0WjecEFao/64JNS6L3abteyDiEH25clmu0lN
+	ZQYPrEWPM/F5H2Vq9J2EoMKe9VRVc2Y2QJjOy3DUTOf05jdn8VRGq6NeqcSG7d5h
+	4N18hoPU1L+kwYC6vnFkqi47WMXaJZw4wsDkM9q3C+jKRFVX6HfNlIDHs7itz/vg
+	h5/XniQgnKsoWHbQNT3tMQUMXabP9bzyi7wKU4hqnYWb7VuV3Tdi/9K/skLdWNex
+	FllvxA==
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43n6gug7jd-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 20 Dec 2024 11:29:05 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4BKBT46d028128
+	Fri, 20 Dec 2024 11:39:05 +0000 (GMT)
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+	by NASANPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4BKBd4ag007308
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 20 Dec 2024 11:29:04 GMT
-Received: from [10.152.195.140] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+	Fri, 20 Dec 2024 11:39:04 GMT
+Received: from [10.216.16.88] (10.80.80.8) by nasanex01c.na.qualcomm.com
+ (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 20 Dec
- 2024 03:28:56 -0800
-Message-ID: <0c7c1979-6fc3-4059-bf08-c94f6424b1dd@quicinc.com>
-Date: Fri, 20 Dec 2024 16:58:53 +0530
+ 2024 03:38:57 -0800
+Message-ID: <b98cc6ea-d215-2200-1537-1a53c2587c81@quicinc.com>
+Date: Fri, 20 Dec 2024 17:08:38 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/4] arm64: dts: qcom: ipq5424: Add PCIe PHYs and
- controller nodes
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, <bhelgaas@google.com>,
-        <lpieralisi@kernel.org>, <kw@linux.com>,
-        <manivannan.sadhasivam@linaro.org>, <robh@kernel.org>,
-        <krzk+dt@kernel.org>, <conor+dt@kernel.org>, <vkoul@kernel.org>,
-        <kishon@kernel.org>, <andersson@kernel.org>, <konradybcio@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-pci@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-phy@lists.infradead.org>
-CC: <quic_srichara@quicinc.com>, <quic_varada@quicinc.com>
-References: <20241213134950.234946-1-quic_mmanikan@quicinc.com>
- <20241213134950.234946-4-quic_mmanikan@quicinc.com>
- <69dffe54-939d-47c3-b951-4a4dea11eae0@oss.qualcomm.com>
- <08fbde92-a827-4270-a143-cca56a274e6c@quicinc.com>
- <71d2135f-664a-465d-bc1f-051cc07c8537@oss.qualcomm.com>
-Content-Language: en-US
-From: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
-In-Reply-To: <71d2135f-664a-465d-bc1f-051cc07c8537@oss.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH v4 6/7] arm64: defconfig: enable cpu idle injection and
+ cpu idle cooling device
+To: Krzysztof Kozlowski <krzk@kernel.org>,
+        Wasim Nazir
+	<quic_wasimn@quicinc.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        "Konrad
+ Dybcio" <konradybcio@kernel.org>,
+        Rob Herring <robh@kernel.org>,
+        "Krzysztof
+ Kozlowski" <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        "Catalin
+ Marinas" <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>
+CC: <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
+        <kernel@quicinc.com>
+References: <20241217064856.2772305-1-quic_wasimn@quicinc.com>
+ <20241217064856.2772305-7-quic_wasimn@quicinc.com>
+ <59e96784-9efc-4958-baf0-a51e766e47e8@kernel.org>
+From: Manaf Meethalavalappu Pallikunhi <quic_manafm@quicinc.com>
+In-Reply-To: <59e96784-9efc-4958-baf0-a51e766e47e8@kernel.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
 X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+ nasanex01c.na.qualcomm.com (10.45.79.139)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: ZzBnjh2nN8OwLgERvuK6_pJLmUbpRQ1g
-X-Proofpoint-ORIG-GUID: ZzBnjh2nN8OwLgERvuK6_pJLmUbpRQ1g
+X-Proofpoint-ORIG-GUID: UMBrxD59iLYTlJhHSVNlXpfTRgB4c2cW
+X-Proofpoint-GUID: UMBrxD59iLYTlJhHSVNlXpfTRgB4c2cW
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999 mlxscore=0
- spamscore=0 suspectscore=0 malwarescore=0 phishscore=0 priorityscore=1501
- lowpriorityscore=0 impostorscore=0 clxscore=1015 adultscore=0 bulkscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2411120000
- definitions=main-2412200095
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 phishscore=0
+ spamscore=0 impostorscore=0 lowpriorityscore=0 priorityscore=1501
+ bulkscore=0 clxscore=1011 adultscore=0 mlxlogscore=999 malwarescore=0
+ mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2412200096
 
 
+Hi Krzysztof,
 
-On 12/20/2024 3:18 PM, Konrad Dybcio wrote:
-> On 20.12.2024 7:42 AM, Manikanta Mylavarapu wrote:
->>
->>
->> On 12/13/2024 8:36 PM, Konrad Dybcio wrote:
->>> On 13.12.2024 2:49 PM, Manikanta Mylavarapu wrote:
->>>> Add PCIe0, PCIe1, PCIe2, PCIe3 (and corresponding PHY) devices
->>>> found on IPQ5424 platform. The PCIe0 & PCIe1 are 1-lane Gen3
->>>> host whereas PCIe2 & PCIe3 are 2-lane Gen3 host.
->>>>
->>>> Signed-off-by: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
->>>> ---
-> 
-> [...]
-> 
->>>>  		tlmm: pinctrl@1000000 {
->>>>  			compatible = "qcom,ipq5424-tlmm";
->>>> @@ -168,11 +261,11 @@ gcc: clock-controller@1800000 {
->>>>  			reg = <0 0x01800000 0 0x40000>;
->>>>  			clocks = <&xo_board>,
->>>>  				 <&sleep_clk>,
->>>> +				 <&pcie0_phy>,
->>>> +				 <&pcie1_phy>,
->>>>  				 <0>,
->>>
->>> This leftover zero needs to be removed too, currently the wrong
->>> clocks are used as parents
->>>
->>
->> Hi Konrad,
->>
->> The '<0>' entry is for "USB PCIE wrapper pipe clock source".
->> And, will update the pcie entries as follows
->> 	<&pcie0_phy GCC_PCIE0_PIPE_CLK>
->> 	<&pcie1_phy GCC_PCIE1_PIPE_CLK>
->> 	<&pcie2_phy GCC_PCIE2_PIPE_CLK>
->> 	<&pcie3_phy GCC_PCIE3_PIPE_CLK>
->>
->> Please correct me if i am wrong.
-> 
-> The order of these is fixed by the first enum in
-> drivers/clk/qcom/gcc-ipq5424.c. The <0> entry must be at the end of
-> the clocks list for it to do what you want it to.
-> 
+Thank you for reviewing this patch.
 
-I understand your point. I will move the <0> entry to the end and 
-incorporate this change in the next version.
+On 12/18/2024 1:32 PM, Krzysztof Kozlowski wrote:
+> On 17/12/2024 07:48, Wasim Nazir wrote:
+>> From: Manaf Meethalavalappu Pallikunhi <quic_manafm@quicinc.com>
+>>
+>> Enable cpu idle injection framework and thermal cpu idle cooling device
+>> to throttle the cpu by injecting idle cycle during high thermal condition.
+> I know what they do, but why do we need it in the defconfig? This is not
+> a product defconfig, just in case you mirrored downstream patches.
 
-Thanks & Regards,
-Manikanta.
+We believe these defconfigs serve as a generic framework rather than 
+being tied to specific product features. Therefore, we have enabled them 
+in the defconfig to ensure the end-to-end feature is available in the 
+pristine upstream build. However, if you think this would introduce 
+overhead for other products, we will exclude this patch in the next 
+revision.
+
+Best regards,
+
+Manaf
+
+> Best regards,
+> Krzysztofthe
 
