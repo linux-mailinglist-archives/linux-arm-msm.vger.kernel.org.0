@@ -1,297 +1,261 @@
-Return-Path: <linux-arm-msm+bounces-42880-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-42881-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5B0CF9F88A4
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Dec 2024 00:46:49 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 72BE49F88C7
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Dec 2024 01:01:16 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A7593169873
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Dec 2024 23:46:46 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id BE26D163C9B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Dec 2024 00:01:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4B92A1D6DAD;
-	Thu, 19 Dec 2024 23:46:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CDA773214;
+	Fri, 20 Dec 2024 00:01:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="zGr8uLZ2"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="c0sln8wE"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f50.google.com (mail-lf1-f50.google.com [209.85.167.50])
+Received: from mail-lf1-f41.google.com (mail-lf1-f41.google.com [209.85.167.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09A411D433B
-	for <linux-arm-msm@vger.kernel.org>; Thu, 19 Dec 2024 23:46:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 933F9EC4
+	for <linux-arm-msm@vger.kernel.org>; Fri, 20 Dec 2024 00:01:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734652006; cv=none; b=dGMdjOU6srfnktRwJLguDg7y6h0IKkHQ5HL2aMlQ7PV47WssnBYSNJ4+7x83Zzx5bcYgMnaiP89s8WhoRiLaLD3eGHmx1vqf5I7Gp/OPZOu2f3re4g4+tdIJ6kiU06NNB1mU3amXAYsOu/IH4gE3dOz9JHCr+XwICjFS/ICtjxg=
+	t=1734652873; cv=none; b=NF5Mbs7pajLSckIgXykBOKQpXqGqJnF/FPqy7LdNrONqaZeil5A6mPuO+zzMnp4oXrPXZDahHpyF5hlEXIBQmWSxLufDrAtWITp+z1Ocrd6Uz1+NMa1oqHP4NoxWnm+nM6RNPUILa9LKIuWQXjLZuX+dx2kM724IC+lQHiHS97g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734652006; c=relaxed/simple;
-	bh=fWql8KRfov7IPSmXKtMBSyG+mJ9wi1tPmehVo+WHrhE=;
+	s=arc-20240116; t=1734652873; c=relaxed/simple;
+	bh=QvSPUHtrcUEPxAoOWaSdZ6uYV9l0BR6/yvae71Rabg4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=MrG7SWDsxQMHeqPsLRNZbRfsEwbSNeWKZL4Jjb0pC1YD1eI0Srkz5asBYNJjccjjr3LQHfe1v2iRe81zDHE+L4HLbdKK3tdcGb8QTIqKYmWK2ntABnkw5VlBJzgxKsk6YxggYS66qca3YTUpkxqznDPTFzegcfXXY/Ycqhmotq4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=zGr8uLZ2; arc=none smtp.client-ip=209.85.167.50
+	 Content-Type:Content-Disposition:In-Reply-To; b=gnEM+OAbJnyZwjB0rvylc7T5Zae7cs1xFwzMTF0xTIJevrAtqiD8KUB6nuyYfCC5Zp9li/5f64TC3W9U/65tjwwpwiCkc6FHt4j26Njx3CUYIM6Zm/PhLRKB9CB78aOA5p8kV1/knVJ3EDhsl4LJxWQgoyAOU5iXEuBYg+lfb0I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=c0sln8wE; arc=none smtp.client-ip=209.85.167.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-53ffaaeeb76so1352614e87.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Dec 2024 15:46:43 -0800 (PST)
+Received: by mail-lf1-f41.google.com with SMTP id 2adb3069b0e04-53e3a227b82so1175136e87.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Dec 2024 16:01:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1734652002; x=1735256802; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=RVr8VxD2pcxwgmwMDWGN/YB6MB4xQo2dMxkaSNKw++4=;
-        b=zGr8uLZ2HFGoPPUUqNnmkksAbZy2FLkU3LO13klEdadBXdnUGxsEEW3iKLkiShoHRk
-         vaOogpOQQFstIwkitmxXIgtinR9x3sm1Dr9eg+EljQ7jUt95oUy0nx6yK4vuv1OtKgYy
-         lyw4UHOTsx9eMeWjepyo8kWQ3Z1Mu52Zgaq9gyEk6Lg6JBYeI/iKefVgInG9BjLKEb+x
-         IP0RLw23LPLYrLW8VVJqK8UzfbnXs0sFF1kCpdQPB4CWJGA5D9d37a5xJcAOo4RqQK/q
-         ijnCxTzanIkgBhMiCvdG9QgLpIL+zI6t699WeeOIHXcFo6AyBZ1Ny1Eq2T6Lo9b8Vyv6
-         SqGA==
+        d=linaro.org; s=google; t=1734652870; x=1735257670; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=9ppd25HBqmFfv+IJcOohEbU7bcq5SdHXRRHwWFqlHX4=;
+        b=c0sln8wExxTdBchzrC5bdWHbJcXIUkIlgw2b2C8tn09zfwZcniT/PX9XCs5nYOuW9B
+         YU91qhE0Evf4WmM/2sjQAT1S1PstHeWe6obB+1wQ/XGHOceJIHYuWnmce+2F+3azS4hL
+         HBl7L54XsiaGCtsAIUgjKiiwRN2xm73Gt/abG7HujniNxSjIA34eDcP+uIbvOjLZYF2G
+         zTYB84FvZuxIwzPtQrqrG1s/CyVj4ZSeRvq2+BWKXnFypxpodr3C3JmIfgWo7qflbh7b
+         YOX8fgWLJw2miDuF7NhG7bG+5WshH3FHjNZr5YHtL+HTJzepwnd1RbyA2hHHc9amu3WC
+         20mA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734652002; x=1735256802;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=RVr8VxD2pcxwgmwMDWGN/YB6MB4xQo2dMxkaSNKw++4=;
-        b=sRx7/QYsrGDkh0jNY9fkdgKgjvWQSzxmeC1EvgfRZxu1Y5IaP6Tb/Gtzeejd6XNIay
-         viltSEWQVMqxUgis6782UfP9YAPJSTyWb5Pyzz4yqy0haHIQdV9jY20q0msLq1s6lZFy
-         H4eeNv6bGFrkjUiSAZorcTCOyS/kizjcaZUCJgsYouVww5WDYRvOpq4vOUJ1nUzljOiM
-         bkC/Fb7z6y8A93xAzcWpWXinUGDyT8WmnVDb7q3QA0gXWE+L3hhoxQ5ScQkdNcsfDJSg
-         4+hJ7nJLgp2D0UZ4Tc6uC53yor6rXJ6qfVTD8god+CQw5zqmu0lo+cD8wQzEZaIaPBig
-         P+cQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXpRRV9SlntF96OzBAr6uPI32MBy9XjMmz31I88eJ0gcmvz+K5+vRWfUOeR8UyRyKv0RFlLpBIzuipJ1YCS@vger.kernel.org
-X-Gm-Message-State: AOJu0Yyl0ECgg08uWJnPaQsF0glsQnSyP9GAiYrbJL/jJTufVgxCLCL5
-	9U37N2jbNBnj8Muu4Psl5y6jB3Jfr7hQgImmLj2kydDEnrp37rwC+FnqyHLh/Jk=
-X-Gm-Gg: ASbGncujmsMFodcXaWyXQFhFkgrKXsID28QDPTosUhQCaz2ltD7jXBIOED8MUhDrxE1
-	Qr/thcnvzu3CgKe22Xh94zwxX+KKcrRVq9+i+2IPyARYZatMnPl8JmhNhf08ZS7a16p+wOmdLk6
-	SWXVbGbB08iuh6sTDZaXV8HvwzRR0bGKnwv0OWz7zUW8Lgsdaw0weda9m4iqVBoyc+nqOjwrE/r
-	oHBbVbmALcYPp+NvwwBPPxbDxPbpjdG+NzET2FzuxgOHV5Zvp4Heyhv+HFUjYtPR2wIOlFr+FTE
-	KlNqUt+WS2FLgWhON+5HLrnEoIrMdnnCRp5B
-X-Google-Smtp-Source: AGHT+IH/+oseyR/T/CfJg4IAhC4J8FNVL3lP/XAKLkUKPfNBt0T5dQ36i8WzkNZ2cS9DJyhvWtaTdA==
-X-Received: by 2002:a05:6512:128f:b0:540:251b:fe09 with SMTP id 2adb3069b0e04-54229533e70mr129311e87.19.1734652002018;
-        Thu, 19 Dec 2024 15:46:42 -0800 (PST)
+        d=1e100.net; s=20230601; t=1734652870; x=1735257670;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=9ppd25HBqmFfv+IJcOohEbU7bcq5SdHXRRHwWFqlHX4=;
+        b=q00vAY5taMYAr2EiTxqVG7Qy77jW9yKq4hKSIDxEkVHK56EtYW81wwMJtQ5/tjXLdG
+         /b0sm9G6BgCDE5v340U1i8p7n86ym1pwg3ifGEM3OGnTrL4GRswODb2IUhGodDbe00SX
+         y3SD4zUQaLMT56zPRc61kRuZKCJs3mBOtDs5KnF0vXUnX59FbIBOF3+C4+9PNFYobiuu
+         J+WBUlX4cQoiH741cA4fuuaWtMNVFUA0XsE6jpeadc60CiMw1Czcj+jQmjR4cDhrXTHp
+         VzlBGVktmOeeWIs37M6OkQs7Ovjeirr1Z9dxuS4sLX63Gz4WOtiTuXp8BuCDlCLHvXXy
+         C8wA==
+X-Forwarded-Encrypted: i=1; AJvYcCXaH5PSeDOud3IJiijP6NHhWFmbqWm1izCNvGPkGzKxb/7Rod1U8uC28/pS91dMn2MVLEjjw20olfOMOrnC@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw5eXkBXX3jFCZB2fG7pXvSDZIbJRl7dwoxjK0ykRlJ0kaX2pnG
+	pc2xmbReG+T0GO/MM79wJLqWtx+VGiHD4WA0zAWBKdbZz2g2/r2A4hCsKbIMrlI=
+X-Gm-Gg: ASbGncu6AjNSv6MlpdoFmdwRXGhojFgxcG8ToygQHnWNA4SArOPsKhjB9ZIBCi73oOn
+	wczxf6H5YUL4IIhkiu9mzNzxVtqHGb6Hp6cTEpIl5PL3OCOaKvrpKe3YC2uPeKOqX2uq1k9zZ4W
+	lAGga8cDsD+VsW1XHdYVwEz6wpVONRE7wEopfb8mpeImE/T8tjy4kvtD5nJSEWdUzp2J5zolEdE
+	35e3yV7TCJFxUsyN2P8R/PML30+nRYeGh4UsjLIV3b5ANY/CPQTlyWP0xpL7lk2gusqo8phCg4G
+	yRGhApXlZt+NBh3QB1qMA392SD6gWcJPfF0P
+X-Google-Smtp-Source: AGHT+IFJZHpp+D2sUVziZMo4UnuT3wO/G1Gyc0+v1xRTJrpIryyxy3e70N2DN7WfTVrywrSUzo0eOg==
+X-Received: by 2002:a05:6512:2356:b0:53e:df2b:df25 with SMTP id 2adb3069b0e04-542295300c0mr141127e87.16.1734652869635;
+        Thu, 19 Dec 2024 16:01:09 -0800 (PST)
 Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-54223600724sm316981e87.90.2024.12.19.15.46.40
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-542238138fbsm306948e87.159.2024.12.19.16.01.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 19 Dec 2024 15:46:41 -0800 (PST)
-Date: Fri, 20 Dec 2024 01:46:39 +0200
+        Thu, 19 Dec 2024 16:01:08 -0800 (PST)
+Date: Fri, 20 Dec 2024 02:01:06 +0200
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Jun Nie <jun.nie@linaro.org>
+To: Xiangxu Yin <quic_xiangxuy@quicinc.com>
 Cc: Rob Clark <robdclark@gmail.com>, 
 	Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
-	Simona Vetter <simona@ffwll.ch>, linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
-	freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3 15/15] drm/msm/dpu: Enable quad-pipe for DSC and
- dual-DSI case
-Message-ID: <etci547cjykqlqfswhkzdbdfx7cuyrszzswxv2qaghzu2fnu3y@fgitftlhe3oh>
-References: <20241219-sm8650-v6-13-hmd-deckard-mdss-quad-upstream-32-v3-0-92c7c0a228e3@linaro.org>
- <20241219-sm8650-v6-13-hmd-deckard-mdss-quad-upstream-32-v3-15-92c7c0a228e3@linaro.org>
+	Marijn Suijten <marijn.suijten@somainline.org>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+	Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
+	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Kuogee Hsieh <quic_khsieh@quicinc.com>, Vinod Koul <vkoul@kernel.org>, 
+	Kishon Vijay Abraham I <kishon@kernel.org>, Linus Walleij <linus.walleij@linaro.org>, 
+	Bartosz Golaszewski <brgl@bgdev.pl>, quic_lliu6@quicinc.com, quic_fangez@quicinc.com, 
+	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org, 
+	linux-gpio@vger.kernel.org
+Subject: Re: [PATCH 3/8] phy: qcom: qmp-usbc: Add DP phy mode support on
+ QCS615
+Message-ID: <jdw3xuknq2atcowl5xboimp3fol56t5nilefrxzpbdpwdoo5oc@pggif3lysjhh>
+References: <20241129-add-displayport-support-for-qcs615-platform-v1-3-09a4338d93ef@quicinc.com>
+ <CAA8EJppOR_UXoVpMt-dhfWdCz3UNfsXGdz8X9NqpaSmYj3AZDg@mail.gmail.com>
+ <5ea14162-567b-462d-be02-b73b954b7507@quicinc.com>
+ <5whv4z7u6fkfwlv5muox5dmv6fow4mga76ammapw7wph7vwv3f@xibcjdfqorgf>
+ <iqcofcntirmlwcpyfr4yabymqfcgyrij57bibf337tmxpa73t6@npkt6wquenf6>
+ <527baded-f348-48a8-81cd-3f84c0ff1077@quicinc.com>
+ <t5vcjlf44fhae4f2h75cfs3f7r6tdstw4ysmkapvvawj6xp23x@xnxqnxvyhshe>
+ <d5151b82-5f05-4826-99b4-e925c20550b4@quicinc.com>
+ <7vdaasc3flhpabnorjty5qjorlbp22honuscgpbteakgagg2tq@frqa6flk2mmv>
+ <df1a4457-129e-452c-8089-ee1e6f9a3e12@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20241219-sm8650-v6-13-hmd-deckard-mdss-quad-upstream-32-v3-15-92c7c0a228e3@linaro.org>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <df1a4457-129e-452c-8089-ee1e6f9a3e12@quicinc.com>
 
-On Thu, Dec 19, 2024 at 03:49:33PM +0800, Jun Nie wrote:
-> Request 4 mixers and 4 DSC for the case that both dual-DSI and DSC are
-> enabled. We prefer to use 4 pipes for dual DSI case for it is power optimal
-> for DSC.
+On Wed, Dec 18, 2024 at 08:55:54PM +0800, Xiangxu Yin wrote:
 > 
-> Signed-off-by: Jun Nie <jun.nie@linaro.org>
-> ---
->  drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c         |  2 +-
->  drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h         |  6 ++---
->  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c      | 28 ++++++++++++++++++------
->  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h |  3 ++-
->  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h   |  1 +
->  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h      |  2 +-
->  drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c        |  2 +-
->  7 files changed, 30 insertions(+), 14 deletions(-)
 > 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> index bad75af4e50ab..3c51c199f3e05 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> @@ -200,7 +200,7 @@ static int dpu_crtc_get_lm_crc(struct drm_crtc *crtc,
->  		struct dpu_crtc_state *crtc_state)
->  {
->  	struct dpu_crtc_mixer *m;
-> -	u32 crcs[CRTC_DUAL_MIXERS];
-> +	u32 crcs[CRTC_QUAD_MIXERS];
->  
->  	int rc = 0;
->  	int i;
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h
-> index d1bb3f84fe440..ce41fb364f3db 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h
-> @@ -210,7 +210,7 @@ struct dpu_crtc_state {
->  
->  	bool bw_control;
->  	bool bw_split_vote;
-> -	struct drm_rect lm_bounds[CRTC_DUAL_MIXERS];
-> +	struct drm_rect lm_bounds[CRTC_QUAD_MIXERS];
->  
->  	uint64_t input_fence_timeout_ns;
->  
-> @@ -218,10 +218,10 @@ struct dpu_crtc_state {
->  
->  	/* HW Resources reserved for the crtc */
->  	u32 num_mixers;
-> -	struct dpu_crtc_mixer mixers[CRTC_DUAL_MIXERS];
-> +	struct dpu_crtc_mixer mixers[CRTC_QUAD_MIXERS];
->  
->  	u32 num_ctls;
-> -	struct dpu_hw_ctl *hw_ctls[CRTC_DUAL_MIXERS];
-> +	struct dpu_hw_ctl *hw_ctls[CRTC_QUAD_MIXERS];
->  
->  	enum dpu_crtc_crc_source crc_source;
->  	int crc_frame_skip_count;
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> index 96d06db3e4be5..6e54ddeaffacd 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> @@ -54,7 +54,7 @@
->  #define MAX_PHYS_ENCODERS_PER_VIRTUAL \
->  	(MAX_H_TILES_PER_DISPLAY * NUM_PHYS_ENCODER_TYPES)
->  
-> -#define MAX_CHANNELS_PER_ENC 2
-> +#define MAX_CHANNELS_PER_ENC 4
->  
->  #define IDLE_SHORT_TIMEOUT	1
->  
-> @@ -664,15 +664,19 @@ static struct msm_display_topology dpu_encoder_get_topology(
->  
->  	/* Datapath topology selection
->  	 *
-> -	 * Dual display
-> +	 * Dual display without DSC
->  	 * 2 LM, 2 INTF ( Split display using 2 interfaces)
->  	 *
-> +	 * Dual display with DSC
-> +	 * 4 LM, 2 INTF ( Split display using 2 interfaces)
-> +	 *
->  	 * Single display
->  	 * 1 LM, 1 INTF
->  	 * 2 LM, 1 INTF (stream merge to support high resolution interfaces)
->  	 *
->  	 * Add dspps to the reservation requirements if ctm is requested
->  	 */
-> +
->  	if (intf_count == 2)
->  		topology.num_lm = 2;
->  	else if (!dpu_kms->catalog->caps->has_3d_merge)
-> @@ -691,10 +695,20 @@ static struct msm_display_topology dpu_encoder_get_topology(
->  		 * 2 DSC encoders, 2 layer mixers and 1 interface
->  		 * this is power optimal and can drive up to (including) 4k
->  		 * screens
-> +		 * But for dual display case, we prefer 4 layer mixers. Because
-> +		 * the resolution is always high in the case and 4 DSCs are more
-> +		 * power optimal.
->  		 */
-> -		topology.num_dsc = 2;
-> -		topology.num_lm = 2;
-> -		topology.num_intf = 1;
-> +
-> +		if (intf_count == 2) {
-> +			topology.num_dsc = 4;
-> +			topology.num_lm = 4;
-> +			topology.num_intf = 2;
-> +		} else {
-> +			topology.num_dsc = 2;
-> +			topology.num_lm = 2;
-> +			topology.num_intf = 1;
-
-Why is it only enabled for the DSC case? Also I'd like to point out
-platforms like sm7150 or msm8998 which have only 2 DSC blocks. The
-condition here needs more work to work with those platforms too.
-
-> +		}
->  	}
->  
->  	return topology;
-> @@ -2195,8 +2209,8 @@ static void dpu_encoder_helper_reset_mixers(struct dpu_encoder_phys *phys_enc)
->  	struct dpu_hw_mixer_cfg mixer;
->  	int i, num_lm;
->  	struct dpu_global_state *global_state;
-> -	struct dpu_hw_blk *hw_lm[2];
-> -	struct dpu_hw_mixer *hw_mixer[2];
-> +	struct dpu_hw_blk *hw_lm[MAX_CHANNELS_PER_ENC];
-> +	struct dpu_hw_mixer *hw_mixer[MAX_CHANNELS_PER_ENC];
->  	struct dpu_hw_ctl *ctl = phys_enc->hw_ctl;
->  
->  	memset(&mixer, 0, sizeof(mixer));
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h
-> index 63f09857025c2..d378a990cc0fb 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h
-> @@ -302,7 +302,8 @@ static inline enum dpu_3d_blend_mode dpu_encoder_helper_get_3d_blend_mode(
->  
->  	/* Use merge_3d unless DSC MERGE topology is used */
->  	if (phys_enc->split_role == ENC_ROLE_SOLO &&
-> -	    dpu_cstate->num_mixers == CRTC_DUAL_MIXERS &&
-> +	    (dpu_cstate->num_mixers == CRTC_DUAL_MIXERS ||
-> +		dpu_cstate->num_mixers == CRTC_QUAD_MIXERS) &&
-
-Misaligned. Also isn't it enough to check that num_mixers != 1?
-
->  	    !dpu_encoder_use_dsc_merge(phys_enc->parent))
->  		return BLEND_3D_H_ROW_INT;
->  
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-> index 3ab79092a7f25..d9cc84b081b1f 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-> @@ -25,6 +25,7 @@
->  #define DPU_MAX_IMG_HEIGHT 0x3fff
->  
->  #define CRTC_DUAL_MIXERS	2
-
-Do we still need this define?
-
-> +#define CRTC_QUAD_MIXERS	4
->  
->  #define MAX_XIN_COUNT 16
->  
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h
-> index 27ef0771da5d2..1fe21087a141a 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h
-> @@ -33,8 +33,8 @@
->  #endif
->  
->  #define STAGES_PER_PLANE		2
-> -#define PIPES_PER_PLANE			2
->  #define PIPES_PER_STAGE			2
-> +#define PIPES_PER_PLANE			(STAGES_PER_PLANE * STAGES_PER_PLANE)
-
-This is incorrect.
-
->  #ifndef DPU_MAX_DE_CURVES
->  #define DPU_MAX_DE_CURVES		3
->  #endif
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> index 57ccb73c45683..b5c1ad2a75594 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> @@ -1474,7 +1474,7 @@ static void _dpu_plane_atomic_disable(struct drm_plane *plane)
->  		trace_dpu_plane_disable(DRMID(plane), false,
->  					pstate->pipe[i].multirect_mode);
->  
-> -		if (pipe->sspp && i == 1) {
-> +		if (pipe->sspp && pipe->multirect_index == DPU_SSPP_RECT_1) {
-
-Separate change, please. Also I'm not sure how does that work with the
-shared SSPP case that I pointed to in one of the previous replies.
-
->  			pipe->multirect_index = DPU_SSPP_RECT_SOLO;
->  			pipe->multirect_mode = DPU_SSPP_MULTIRECT_NONE;
->  
+> On 12/12/2024 3:15 AM, Dmitry Baryshkov wrote:
+> > On Wed, Dec 11, 2024 at 08:50:02PM +0800, Xiangxu Yin wrote:
+> >>
+> >>
+> >> On 12/11/2024 5:46 PM, Dmitry Baryshkov wrote:
+> >>> On Wed, Dec 11, 2024 at 08:46:16AM +0800, Xiangxu Yin wrote:
+> >>>>
+> >>>>
+> >>>> On 12/10/2024 11:09 PM, Dmitry Baryshkov wrote:
+> >>>>> On Thu, Dec 05, 2024 at 08:31:24PM +0200, Dmitry Baryshkov wrote:
+> >>>>>> On Thu, Dec 05, 2024 at 09:26:47PM +0800, Xiangxu Yin wrote:
+> >>>>>>>
+> >>>>>>>
+> >>>>>>> On 11/29/2024 10:33 PM, Dmitry Baryshkov wrote:
+> >>>>>>>> On Fri, 29 Nov 2024 at 09:59, Xiangxu Yin <quic_xiangxuy@quicinc.com> wrote:
+> >>>>>>>>>
+> >>>>>>>>> Extended DP support for QCS615 USB or DP phy. Differentiated between
+> >>>>>>>>> USBC and DP PHY using the match table’s type, dynamically generating
+> >>>>>>>>> different types of cfg and layout attributes during initialization based
+> >>>>>>>>> on this type. Static variables are stored in cfg, while parsed values
+> >>>>>>>>> are organized into the layout structure.
+> >>>>>>>>
+> >>>>>>>> We didn't have an understanding / conclusion whether
+> >>>>>>>> qcom,usb-ssphy-qmp-usb3-or-dp PHYs are actually a single device / PHY
+> >>>>>>>> or two PHYs being placed next to each other. Could you please start
+> >>>>>>>> your commit message by explaining it? Or even better, make that a part
+> >>>>>>>> of the cover letter for a new series touching just the USBC PHY
+> >>>>>>>> driver. DP changes don't have anything in common with the PHY changes,
+> >>>>>>>> so you can split the series into two.
+> >>>>>>>>
+> >>>>>>> Before implement DP extension, we have discussed with abhinav and krishna about whether use combo, usbc or separate phy.
+> >>>>>>
+> >>>>>> What is "DP extension"?
+> >>>>>>
+> >>>> I'm sorry confusion casued by my description. It's means extend DP implemnt for USBC phy driver.
+> >>>>>>>
+> >>>>>>> We identified that DP and USB share some common controls for phy_mode and orientation.
+> >>>>>>> Specifically, 'TCSR_USB3_0_DP_PHYMODE' controls who must use the lanes - USB or DP,
+> >>>>>>> while PERIPH_SS_USB0_USB3PHY_PCS_MISC_TYPEC_CTRL controls the orientation.
+> >>>>>>> It would be more efficient for a single driver to manage these controls. 
+> >>>>>>
+> >>>>>> The question is about the hardware, not about the driver.
+> >>>>>>
+> >>>>>>> Additionally, this PHY does not support Alt Mode, and the two control registers are located in separate address spaces. 
+> >>>>>>> Therefore, even though the orientation for DP on this platform is always normal and connected to the video output board, 
+> >>>>>>> we still decided to base it on the USBC extension.
+> >>>>>>
+> >>>>>> Could you please clarify, do usb3-or-dp PHYs support DP-over-USB-C? I
+> >>>>>> thought that usbc-or-dp platforms support that, but they don't
+> >>>>>> support DP+USB pin configuration. Note, the question is broader than
+> >>>>>> just QCS615, it covers the PHY type itself.
+> >>>>>>
+> >>>>>> Also, is TCSR configuration read/write or read-only? Are we supposed to
+> >>>>>> set the register from OS or are we supposed to read it and thus detemine
+> >>>>>> the PHY mode?
+> >>>>>
+> >>>>> Any updates on these two topics?
+> >>>>>
+> >>>> Still confirming detail info with HW & design team.
+> >>>> I’ll update the information that has been confirmed so far.
+> >>>> This phy support DP-over-USB-C,but it's not support alt-mode which 2 lane work for DP, other 2 lane work for USB.
+> >>>> TCSR phy mode is read/write reg and we can read for determine phy mode.
+> >>>
+> >>> Ok, thanks for the explanation. From my point of view:
+> >>>
+> >>> - Implement the DP PHY to be a part of the same driver. Each device
+> >>>   supported by the usbc driver should get both PHYs.
+> >>>
+> >>> - Make sure not to break the ABI: #phy-cells = <0> should still work and
+> >>>   return USB PHY, keeping backwards compatibility. Newer devices or
+> >>>   upgraded DT for old devices should return USB PHY for <... 0> and DP
+> >>>   PHY for <... 1>.
+> >>>
+> >> Yes, currently we have implemented like your description,
+> >> Each deivce shoud get both PHYs, DP PHY for <... 1> and USB PHY for <... 0>.
+> > 
+> > Please note the backwards compatibility clause.
+> > 
+> For the USB node, we kept the same implementation as the original function interface, and the devicetree node definition also remains unchanged.
+> In subsequent patches, I will follow Krzysztof’s suggestion to use a separate DT-binding to describe the DP PHY configuration, 
+> without making changes to the USB devicetree and DT-binding implementation.
+> >>> - I'm not shure how to handle the USB and DP coexistence, especially in
+> >>>   your case of the USB-or-DP PHY.
+> >>>
+> >> For coexistence process:
+> >>
+> >> When we start implement DP part, usb driver team said only need config TCSR phy mode and orientation during switch in USB-C port.
+> >> Based on your previous comments avout SW_PWRDN, I'm confirming with the USB team whether SW_REST/SWPWRDN/START_CTRL registers might affect DP.
+> > 
+> > Thanks!
+> > 
+> >> Anyway, even though the original SoC design supports DP or USB over Type-C，
+> >> but on QCS615 ADP AIR platform, there are only four USB-A port which works with 'qcs615-qmp-usb3-phy' driver, and no USB-C port.
+> >> DP port is mappped from usb pin to the video out sub-board.
+> >> so we are unable to verify the switching case between DP and USB devices under USB-C.
+> > 
+> > That's also fine. We will get to that point once MSM8998 / SDM660
+> > get USB-C support (the only current blocker is the support for the
+> > TYPEC block of the PMI8998).
+> > 
+> I can't access MSM8998 / SDM660 documents now, but I have confirmed detail info about USB & DP phy design for sm6150.
 > 
-> -- 
-> 2.34.1
+> The 'usb-ssphy-qmp-usb3-or-dp PHY' on the current platform is essentially composed of three sub-PHYs, 
+> which can even be considered as three separate PHYs: USB3 primary PHY, USB3 secondary PHY, and USB3 DP PHY.
+
+I've looked at sm6150-usb.dtsi and now I'm completely puzzled by your
+answer. The msm-4.14 kernel lists a single USB QMP PHY at 0x88e6000,
+used for the primary USB3 host. It it defined as
+qcom,usb-ssphy-qmp-usb3-or-dp. Secondary USB host is listed as USB 2.0
+only. So what do you mean by the USB3 secondary PHY? Which PHY and which
+pins are connected to your video-out board?
+
+> 
+> On the QCS615, the USB primary PHY is currently used to handle USB 3.0 communication for the previously mentioned four USB Type-A ports, 
+> while the USB3 secondary PHY and USB3 DP PHY are used for the output of the Type-C port,
+> but since the Type-C port is forcibly pin-to-pin configured to the video out board, the Type-C port will always configure as DP PHY.
+> 
+> The internal registers of these three PHYs are independent of each other, Neither their respective SWPWR_DN nor SWRST will affect the other two PHYs.
+> Additionally, there was a misunderstanding about the orientation previously.
+> The USB orientation setting only affects the current PHY and does not impact the DP PHY. The DP PHY is configured in the DP_PHY_CFG_1.
+> 
+> TSCR_PHY_MODE can specify which PHY outputs to the Type-C port, and the global reset will simultaneously reset the two associated PHYs. 
+> Therefore, the correct switching process is as follows.
+> When switching the inserted device:
+> 	1.Identify the PHY type.
+> 	2.Enable the regulator.
+> 	3.Trigger a reset.
+> 	4.Enable the clock.
+> 	5.Configure PHY type related orientation
+> 	6.switch the TCSR PHY mode.
+> 	7.Configure the registers of PHY.
+> During release:
+> 	1.Reset.
+> 	2.Disable the clock.
+> 	3.Disable the regulator.
+> 
+> Our current design overall complies with this process, but it lacks the configuration for DP_PHY_CFG_1.
+> 
+> Shall we continue the discussion to clarify remain comments of the USBC driver?
+> 
+> >> However, I'm also confirming whether anything other will affect USB and DP each other.
+> > 
 > 
 
 -- 
