@@ -1,173 +1,195 @@
-Return-Path: <linux-arm-msm+bounces-43025-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-43026-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 35AED9F9C90
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Dec 2024 23:06:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 906309F9D1E
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Dec 2024 00:41:17 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8A398169362
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Dec 2024 22:06:08 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E5A7B16B697
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Dec 2024 23:41:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 08FE922687C;
-	Fri, 20 Dec 2024 22:06:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DDB35227B89;
+	Fri, 20 Dec 2024 23:41:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="OX6qF5HN"
+	dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="h6A/XROA"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mail.mainlining.org (mail.mainlining.org [5.75.144.95])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93B45226529
-	for <linux-arm-msm@vger.kernel.org>; Fri, 20 Dec 2024 22:06:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0256F2253EE;
+	Fri, 20 Dec 2024 23:41:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.75.144.95
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734732363; cv=none; b=JsIGhh8LplzpRSdACwk8G+NVxn02x5+qexhXcVp6cPqofTvYGlxP3JzcBw91+wCQytDoPLyT2Ygc+a8OXmN+F/46Tgtmc2vaAqVna4IhJAw9N9gee9S0I9Y687OB7/0Mr4Qi/u7vUBPKmFOpXlOt4iU/fHljJajizozDYm3S7DI=
+	t=1734738071; cv=none; b=scidBKcAYhaQQT7gOQG1oZMwiAIsnkG8HwFv+CvmnC64k9LMDx0NLZerhtdhTJoksZKSLdvxBa8mxUraOWAzam+qozJ7AF2IIhenuUDJjDLLTSbjz/HDmIUUSg4ZITh0PBII0ZWfsuo0VZTFP+R26JSxkaM25z34D91gE0Gh3UA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734732363; c=relaxed/simple;
-	bh=PYfMyDqg17kslvPPraNVn6LtPqttUcrIdvQB0jDY3cE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=suRX6qoLw9PXV9cYYmHV8dolLP2y55T33Isfb9wpaXUqkf5bXT9rzG1I/7axu8sw1vv02J+AfvrTL2wMcW6+Ky3qpJAgX/LrusgfFx5WaEhCErkU9saOUuvo7E4u7yYWUF5B+3KACb7xGaPvd+agIZ216NUExrsHO9jdkFKW34s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=OX6qF5HN; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BKAF0fT010120
-	for <linux-arm-msm@vger.kernel.org>; Fri, 20 Dec 2024 22:06:02 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	9LkFprxiUsD1tk8g3pSzxnZakkpVhYTWUC5dUvvw9cU=; b=OX6qF5HNDalc8WsU
-	j1l+fCGALZntBY47aJJj/THHl+B7bxzD94dCk8um1GMoOrr92fRm9RLRh/nsGZNN
-	x6zNnGIhaQjZC1Rfvg6TFDqHZgejTEHTtdhD2eHIf4X4c8qTpYwRAD8hvq2Cr9d0
-	W2huSD4ejU53l7/ToTzgNE/1VfoAuR30ZbK2T6G5XCwuhZwjqqqEwtVa74xOuAfk
-	DAXqXsVf4fXjRm8iL44FPC0eOiFPiADkmyLTOEJoIP6DeZEAhus6lCameWkKP22x
-	i3BQOYf9JISQPokSXU0dqGglf/wJHUSXHGbhdv3eb4xcZr1mh2QCePY5Xcqwu3QL
-	yr1Ldw==
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com [209.85.222.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43n6n4hnjc-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 20 Dec 2024 22:06:01 +0000 (GMT)
-Received: by mail-qk1-f199.google.com with SMTP id af79cd13be357-7b6f134dac1so10993085a.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Dec 2024 14:06:01 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734732360; x=1735337160;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=9LkFprxiUsD1tk8g3pSzxnZakkpVhYTWUC5dUvvw9cU=;
-        b=BZir/nQ1N8tYg2kRdYY3G6223sc67a3EIwAxqOC10N2hAeTFosXcCY3hbNdhaa5SJe
-         /D9Kd8Bk8l4obCC0Rt5R5nXhfyj/P2MJoOY6acssO5RhsLVhT8yT4gIAddoPSsHp+Mnv
-         /1BzN6x2Tc72TW40Wfbmp0gnsRcpageLfIIbZ3DsKE28o/FmVyZGtWUt6OhIbK/xaAza
-         FYZ8A0Otaxt2x9fVHGnNL3dNdEL8FOM5f3sAmbsJLLZjPiemz5L6KPBt3wepDW+Uepf3
-         wlX7k8Ily08X3B5xAVMQq0Z+cORiMuK2QF4OWxZgHdiuLtsnRsRSjhQ3mwbkcnDd5ANF
-         ZscA==
-X-Forwarded-Encrypted: i=1; AJvYcCVNKoxb1czqX6RUbLdc4GjUKWkxcmovIrwS59GsKPncOZNnZOQ0xAEAnOxFMs5mGPsKxKapXx/q719WL2LP@vger.kernel.org
-X-Gm-Message-State: AOJu0YzGwIUvuBWrY6aULUPX5XAqTSDh+1KOOX/5ikVSxSSRtnno28Wk
-	yu/ztUZ4C1huX+3MaDNnWNwdJzLJHfigxP3RogmD8aoh+om02AXsbRFufgKszE5pxaBcMMFzDcW
-	ehcHc8L5V6HLt6qiJVgLa0GLoN0Vir+041iXGggToNvCaWOuNtkytbLSBzLdDcCrH
-X-Gm-Gg: ASbGnct8kcpFhvjB+Xb1aTyL1TjSgfj97P4HpTCSIZo6DTiBqBdJUlVYOJ0wZ2A8RJv
-	V415AUU/gjuMs7Y9Y+LZYqKGOJlLjmkjsuDg8of6T/S1xLGMFgufc2fc6UbdGuPeMTbx+a3SZB8
-	o+vyqlU0rKwrbXvNQKcVlsnHum0fk463y/Ek9Au+1T1M27HsiYdRMVYxjpCDHy91/+cf5heHJfK
-	9TdcSQUX/paRssO5i/iaep84dQxN19x04LpPvMgSQadAWpUdyjbOljTkqHigGpnOPrsrCst0+FA
-	f786Yo6rCSxO8OzQIxEBDi0Jstg7pNQNCOU=
-X-Received: by 2002:a05:620a:17a0:b0:7b6:e126:3dee with SMTP id af79cd13be357-7b9ba71292cmr244461385a.3.1734732360443;
-        Fri, 20 Dec 2024 14:06:00 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEHDi1i1hytvqYgiaDYCCC63bgwu6iKUJ6GlNcbQHn3uxugwlsISW/jSe1exPxzhd8K+GSWew==
-X-Received: by 2002:a05:620a:17a0:b0:7b6:e126:3dee with SMTP id af79cd13be357-7b9ba71292cmr244459385a.3.1734732360111;
-        Fri, 20 Dec 2024 14:06:00 -0800 (PST)
-Received: from [192.168.65.90] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5d80675a3ebsm2100297a12.7.2024.12.20.14.05.57
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 20 Dec 2024 14:05:58 -0800 (PST)
-Message-ID: <2d1570a2-511a-4200-b4cc-60f56cfe4423@oss.qualcomm.com>
-Date: Fri, 20 Dec 2024 23:05:56 +0100
+	s=arc-20240116; t=1734738071; c=relaxed/simple;
+	bh=sCXu2gmOdDmbBFG2lCJY1mdmHIob9H6tgLAI1ct5784=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=OjyP11OMfIytwW0z3lvFpmNiF1fnwjYx8qXheWN+6dbXaQyzMOObu7Ck1l39KtZUchPNkwOSZtcicPw72LwJtxK3gh/82oHaK633zoXvvC59y/Dz9MOGOIJezbwz6jgTnITNQnv9ibWD3rvB9LbtTukFBwaG7KA8q/JHPI5QBxw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mainlining.org; spf=pass smtp.mailfrom=mainlining.org; dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=h6A/XROA; arc=none smtp.client-ip=5.75.144.95
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mainlining.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mainlining.org
+Received: from [192.168.30.162] (254C14D2.nat.pool.telekom.hu [37.76.20.210])
+	by mail.mainlining.org (Postfix) with ESMTPSA id ECF22E450C;
+	Fri, 20 Dec 2024 23:41:04 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mainlining.org;
+	s=psm; t=1734738066;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=ppnPh7QXZxj5t1x0IJTETaaoJaoVwNkQB1J6Xh3LMLA=;
+	b=h6A/XROApXQH93eEbOYiw3GxRCkH9rNMLv8bK4++Z5kuMsKX6UPoq99CWH3X+dyveaTL41
+	K2v7fVf+o8pcLqRQ9xR+I94YtAZ+hTSU3k6VPxCQosFRS8ZVyAw1i27tG3onRwdK8PTrcU
+	H+F7rcn9u+T51h1S1vBcgEaXo3reWiCSWYGHNQJVnjxq9Upo2HI/TVSzvGCoPe4qgemyTr
+	VZsX2GDG4Vised+UdNCuIm04bMeMvJKSA8QQg19MKA4+TzZZ672Z8y4TvThnqHuNmXk/vA
+	ptpgYE2u2raHA1196VftZBbrfUlB8EaVchZYJER3oOMjkKjK9RgO9pa/PM5mPQ==
+From: =?utf-8?q?Barnab=C3=A1s_Cz=C3=A9m=C3=A1n?= <barnabas.czeman@mainlining.org>
+Subject: [PATCH v11 0/4] Add MSM8917/PM8937/Redmi 5A
+Date: Sat, 21 Dec 2024 00:40:47 +0100
+Message-Id: <20241221-msm8917-v11-0-901a74db4805@mainlining.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v3 1/5] dt-bindings: net: wireless: Describe ath12k
- PCI module with WSI
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-        Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
-        Raj Kumar Bhagat <quic_rajkbhag@quicinc.com>,
-        ath12k@lists.infradead.org
-Cc: linux-wireless@vger.kernel.org, Kalle Valo <kvalo@kernel.org>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>, Jeff Johnson <jjohnson@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-References: <20241105180444.770951-1-quic_rajkbhag@quicinc.com>
- <20241105180444.770951-2-quic_rajkbhag@quicinc.com>
- <9cbdca90-e76c-4ebb-a236-a0edbd94a629@oss.qualcomm.com>
- <62c599b5-20b2-4e1e-810d-e4502abbc682@oss.qualcomm.com>
- <768ef22a-855b-472d-9432-49db7daaf2df@oss.qualcomm.com>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <768ef22a-855b-472d-9432-49db7daaf2df@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: KKoCF6pUlu6nBjs3IKL96uoQjiMC5uF0
-X-Proofpoint-ORIG-GUID: KKoCF6pUlu6nBjs3IKL96uoQjiMC5uF0
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 phishscore=0
- suspectscore=0 bulkscore=0 priorityscore=1501 malwarescore=0 adultscore=0
- clxscore=1015 mlxlogscore=999 lowpriorityscore=0 mlxscore=0 spamscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2411120000
- definitions=main-2412200178
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-B4-Tracking: v=1; b=H4sIAH8AZmcC/3XSzW7DIAwA4FepOC8TtiHATnuPaQeHnxZpTatki
+ jZVffeRXkAqO9ri85+4iTUuOa7i7XATS9zymi9zCQBeDsKfeD7GIYeSEChRgQQ3nNezdWAGMJ6
+ CTEmxRlFeX5eY8s+j1MdniU95/b4sv4/KG+zZ5xobDHJIkMgzBGujfj9znr/ynOfj62U5ir3Qh
+ g0mqBgLtiyNTszWTdDFVDFIUzEVPIbgNfvgjJ26WLW4GVvtnafonFTGIfexbjBgxbrgsjCpQAQ
+ O+nhsMVU8FuxJ2TRp51JMXWwajKpis+8MaNBZUqMeu9hWjNBc2xYMzrD3UqGkPnYt1hW7gif2z
+ Dgmiv+MDbLRKJtfIveTBW1IReuJn3vf7/c/QL8kSssCAAA=
+X-Change-ID: 20241019-msm8917-17c3d0ff4a52
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, 
+ Linus Walleij <linus.walleij@linaro.org>, Amit Kucheria <amitk@kernel.org>, 
+ Thara Gopinath <thara.gopinath@gmail.com>, 
+ "Rafael J. Wysocki" <rafael@kernel.org>, 
+ Daniel Lezcano <daniel.lezcano@linaro.org>, Zhang Rui <rui.zhang@intel.com>, 
+ Lukasz Luba <lukasz.luba@arm.com>, Joerg Roedel <joro@8bytes.org>, 
+ Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>, 
+ Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org, 
+ linux-pm@vger.kernel.org, iommu@lists.linux.dev, 
+ =?utf-8?q?Barnab=C3=A1s_Cz=C3=A9m=C3=A1n?= <barnabas.czeman@mainlining.org>, 
+ Dang Huynh <danct12@riseup.net>, 
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
+ =?utf-8?q?Otto_Pfl=C3=BCger?= <otto.pflueger@abscue.de>, 
+ Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
+ Stephan Gerhold <stephan.gerhold@linaro.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1734738064; l=3702;
+ i=barnabas.czeman@mainlining.org; s=20240730; h=from:subject:message-id;
+ bh=sCXu2gmOdDmbBFG2lCJY1mdmHIob9H6tgLAI1ct5784=;
+ b=QCWVBYLdt3QvrsE5+KfOkicwOiW0qnMskDZ0SiAZ2/8EcVKyDkMh4BnJydOaWPqobK7F/tbeH
+ 3G9875JKZfZCSgJAgq41T3ZucCKBt8rM9uqjfiJrJQ8kw8yb7klMZ5S
+X-Developer-Key: i=barnabas.czeman@mainlining.org; a=ed25519;
+ pk=TWUSIGgwW/Sn4xnX25nw+lszj1AT/A3bzkahn7EhOFc=
 
-On 20.12.2024 11:05 PM, Konrad Dybcio wrote:
-> On 20.12.2024 10:47 PM, Jeff Johnson wrote:
->> On 12/20/2024 12:03 PM, Konrad Dybcio wrote:
->>> On 5.11.2024 7:04 PM, Raj Kumar Bhagat wrote:
->>>> The QCN9274 WiFi device supports WSI (WLAN Serial Interface). WSI is used
->>>> to exchange specific control information across radios using a doorbell
->>>> mechanism. This WSI connection is essential for exchanging control
->>>> information among these devices. The WSI interface in the QCN9274 includes
->>>> TX and RX ports, which are used to connect multiple WSI-supported devices
->>>> together, forming a WSI group.
->>>>
->>>> Describe QCN9274 PCI wifi device with WSI interface.
->>>>
->>>> Signed-off-by: Raj Kumar Bhagat <quic_rajkbhag@quicinc.com>
->>>> ---
->>>
->>> I think this description is missing the key points:
->>>
->>> * what is that control information (power, data, radio stuff?)
->>> * what happens when the OS is unaware of all of this (i.e. what happens when
->>>   we don't send any configuration)
->>> * is this configurable, or does this describe a physical wiring topology
->>>   (what/who decides which of the group configurations detailed below take
->>>    effect)
->>>
->>> And the ultimate question:
->>> * can the devices not just talk among themselves and negotiate that?
->>>
->>> Though AFAICU PCIe P2P communication is a shaky topic, so perhaps the answer
->>> to the last question is 'no'
->>>
->>> Konrad
->>
->> We already pushed the non-RFC version to our -next tree so we cannot update
->> the commit description without a forced push.
->>
->> https://lore.kernel.org/all/20241211153432.775335-2-kvalo@kernel.org/
->>
->> However, Raj Kumar can submit an update to the description in the file, which
->> is probably the better place to have this information anyway.
-> 
-> Sounds good
+This patch series add support for MSM8917 soc with PM8937 and
+Xiaomi Redmi 5A (riva).
 
-(although bindings usually land with Krzysztof's or Rob's review tags,
-but that's between you and them to talk about now)
+Signed-off-by: Barnabás Czémán <barnabas.czeman@mainlining.org>
+---
+Changes in v11:
+- msm8917:
+  - pll_opp_table: fix indentation
+  - gpu_opp_table: change to ascending order
+- Remove applied patches.
+- Link to v10: https://lore.kernel.org/r/20241220-msm8917-v10-0-3d5734e8c3a6@mainlining.org
 
-Konrad
+Changes in v10:
+- msm8917: sdc1 cmd_on, cmd_off change bias-disable to bias-pull-up
+- Remove applied patches.
+- Link to v9: https://lore.kernel.org/r/20241215-msm8917-v9-0-bacaa26f3eef@mainlining.org
+
+Changes in v9:
+- msm8917:
+ - add some empty lines for separating pins more
+ - order compatible, reg, ranges properties
+- Link to v8: https://lore.kernel.org/r/20241211-msm8917-v8-0-197acc042036@mainlining.org
+
+Changes in v8:
+- pm8937, msm8917, msm8917-xiaomi-riva: remove unused includes
+- Link to v7: https://lore.kernel.org/r/20241124-msm8917-v7-0-612729834656@mainlining.org
+
+Changes in v7:
+- msm8917-xiaomi-riva:
+  - Add pinctrls for used GPIO pins.
+  - Use interrupts-extend for charger.
+  - Order properies.
+- Link to v6: https://lore.kernel.org/r/20241113-msm8917-v6-0-c348fb599fef@mainlining.org
+
+Changes in v6:
+- msm8917:
+  - Consolidate SDC pins, remove sdc2-cd-on/off pins.
+  - Remove cluster-sleep-0 and cluster-sleep-1
+  and rename cluster-sleep-2 to cluster-sleep-0.
+  - Fix spi, i2c and related pinctrl namings.
+- msm8917-xiaomi-riva: follow i2c name changes.
+- Link to v5: https://lore.kernel.org/r/20241112-msm8917-v5-0-3ca34d33191b@mainlining.org
+
+Changes in v5:
+- msm8917:
+  - Remove aliases.
+  - Rename spi, i2c labels and pins.
+  - Remove clock-frequency from timers
+  - Remove unused mpss_mem region.
+  - Use mboxes where it can be used, only smd-edge uses qcom,ipc.
+- msm8917-xiaomi-riva: Follow i2c label changes.
+- Link to v4: https://lore.kernel.org/r/20241109-msm8917-v4-0-8be9904792ab@mainlining.org
+
+Changes in v4:
+- msm8917 pinctrl: Fix gpio regexp in the schema.
+- msm8937 tsens: Rename ops_msm8976 to ops_common and use it for msm8937.
+- msm8917: fix address padding, naming and ordering, remove polling-delays.
+- Remove applied patches from the series.
+- Link to v3: https://lore.kernel.org/r/20241107-msm8917-v3-0-6ddc5acd978b@mainlining.org
+
+Changes in v3:
+- msm8917-xiaomi-riva: Fix issues addressed by Konrad.
+- msm8917: Fix node addresses, orders of some properties.
+- pm8937: simplify vadc channels.
+- msm8917 pinctrl: Fix schema issues addressed by Krzysztof. 
+- Remove applied tcsr patch from this series.
+- Reword some commit title.
+- Link to v2: https://lore.kernel.org/r/20241031-msm8917-v2-0-8a075faa89b1@mainlining.org
+
+Changes in v2:
+- Add msm8937 tsens support.
+- Fix issues addressed by reviews.
+- Link to v1: https://lore.kernel.org/r/20241019-msm8917-v1-0-f1f3ca1d88e5@mainlining.org
+
+---
+Barnabás Czémán (2):
+      dt-bindings: arm: qcom: Add Xiaomi Redmi 5A
+      arm64: dts: qcom: Add Xiaomi Redmi 5A
+
+Dang Huynh (1):
+      arm64: dts: qcom: Add PM8937 PMIC
+
+Otto Pflüger (1):
+      arm64: dts: qcom: Add initial support for MSM8917
+
+ Documentation/devicetree/bindings/arm/qcom.yaml  |    7 +
+ arch/arm64/boot/dts/qcom/Makefile                |    1 +
+ arch/arm64/boot/dts/qcom/msm8917-xiaomi-riva.dts |  333 ++++
+ arch/arm64/boot/dts/qcom/msm8917.dtsi            | 1954 ++++++++++++++++++++++
+ arch/arm64/boot/dts/qcom/pm8937.dtsi             |  150 ++
+ 5 files changed, 2445 insertions(+)
+---
+base-commit: 8503810115fbff903f626adc0788daa048302bc0
+change-id: 20241019-msm8917-17c3d0ff4a52
+
+Best regards,
+-- 
+Barnabás Czémán <barnabas.czeman@mainlining.org>
+
 
