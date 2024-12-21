@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-43050-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-43051-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id BF5379FA285
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Dec 2024 21:39:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 183319FA28B
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Dec 2024 21:45:11 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7EABB164D98
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Dec 2024 20:39:27 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6B1B5164F7C
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Dec 2024 20:45:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 02C391CC899;
-	Sat, 21 Dec 2024 20:39:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 80FCB1CEE8E;
+	Sat, 21 Dec 2024 20:45:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bhvgn2bj"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aZ+GB0lV"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA8461C9B97;
-	Sat, 21 Dec 2024 20:39:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B2A51CCEE2;
+	Sat, 21 Dec 2024 20:45:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734813567; cv=none; b=QLgOwF+MnT8Awmnk8u4aQN5nQdhEcBkwF+ji/SZcDDFmY9og9TGpLgf5Hrn0NpQ4D9LKEv53VUvHCzZWOcwCRpaMeuww+4y6MRvCzKH/K7/1GQXqm1cqww5LGS/eBt+VdJCtFnGhSujFxhSJ3xweobhHum0CZ4N2HbEy5jhOvJI=
+	t=1734813906; cv=none; b=Ckex46mIf3yviCIf5pouW8svPO7JW2UwEGDw/aghlfK9Bx5BR2nRJvK0dNPZ1RnBO5Y/KZnf5e5sHcL5IP2ButlGgtBQe95NEEFW5rgs48j2ONEL0J613zWCg+NInUK6DCeprGtnVARq8xVQEEbpC6bKi9ioU20xq7w0MCU1QMo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734813567; c=relaxed/simple;
-	bh=AHM8gjeKa+yfM45KrunBgIRRHm20VyLVmRF88TUx+LQ=;
+	s=arc-20240116; t=1734813906; c=relaxed/simple;
+	bh=xm2W8++bGngccNNJh9nv8FxyJSfAhKzVk74T8Qo4sjo=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=IBSlN2KbMORs055h0H2p2qC8uygPGhdbCTqAoOa6Mr6yAk5e0F+p5zP16Bi/UiOtX2QpnzCYbi0I24NOj6mbfAhXdGbWveau7MHtTFrbTPdpiXD3/tvrHeoCkriQIBtowI+uk59LjDMYb7q1qkUe3Ng7xb1ehPWw46J+mNnKBAc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bhvgn2bj; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C09A2C4CECE;
-	Sat, 21 Dec 2024 20:39:23 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=hisPZ06bCnBHI6l9YgLIsdGWx7GjdHHcGY059aPGvgUZIW8bNn/bS1bhxCefH4rR9blcZ3ACS06Kjam3ygOknknfHcE0dl6AR0yQeE4SGGEp2kkpeqoB5Sa//TM7NH6MSzn8sIut3S7G3sYytYFyHbTWmoEspoZ59LvuXHSJGHE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aZ+GB0lV; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E356C4CECE;
+	Sat, 21 Dec 2024 20:45:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1734813567;
-	bh=AHM8gjeKa+yfM45KrunBgIRRHm20VyLVmRF88TUx+LQ=;
+	s=k20201202; t=1734813905;
+	bh=xm2W8++bGngccNNJh9nv8FxyJSfAhKzVk74T8Qo4sjo=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=bhvgn2bjhecxPprOsVkSS//41tK1tzWUYEaQvRJSrrIxAuXawBwNA6OC51pp6ZyRr
-	 0QrFSCGnhXlJjKkqjJLgJuaS1ePU+Y05mpi+I87SqVUhnBVZSToroYKo8YTPdL9bWY
-	 cpuxyQ6uHqgRofYkP1hKhx8vgoznqC1UynAdaEeeS5bIzT6Q7Az8Q33fJrUqoNed0k
-	 1ggn+hOAxyelAhAXax4FLjCBTam/e40Gz3j8dw8mqQal5qJb0LQZN32ZDyIBuC3rLv
-	 26htt1JyOFcniQoVocKrXrHmyA63/gLuGOt73yPl7VcdLzftpKk3/fB2on4pXc9Rv1
-	 UOyIH6dX8b2TQ==
-Message-ID: <9acd8157-ee87-45a3-9c78-ef1728ab553d@kernel.org>
-Date: Sat, 21 Dec 2024 21:39:21 +0100
+	b=aZ+GB0lVe7mxUAKD2+PoxbcE4J7gcEPgjlEhjR0AiEnC75O7dgYjVbM+zqrZHj0KR
+	 ShJ2NM8EaqQfZskaFmg57COcYfL624JAhw1IQSq/Kfzlu/KaF3lTWevMQ1CDH3XPkD
+	 F5RbhrKWZm/iRVCStIFuGW95HaTuCynjadcFTubZNlNpDm38bCV5fsi66hKn94slHC
+	 iDej3jQF+jh9NM/WbbhkRxLWts+9lXr1oPR9DcbQUFPwtXPl1u7heSfD4PFU0aI/NW
+	 z/3GUgCob0Uuj8HPevOSw4Lsox1y1ytGwMkvbNofcEdXFu/zqVY0QV6xX/FHhSAX6x
+	 BizosiA4U/Azg==
+Message-ID: <5bba973b-73fd-4e54-a7c9-6166ab7ed1f0@kernel.org>
+Date: Sat, 21 Dec 2024 21:44:59 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,15 +50,20 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/4] dt-bindings: arm: qcom: Add X1P42100 SoC & CRD
-To: Konrad Dybcio <konradybcio@kernel.org>,
- Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: Marijn Suijten <marijn.suijten@somainline.org>,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-References: <20241221-topic-x1p4_soc-v1-0-55347831d73c@oss.qualcomm.com>
- <20241221-topic-x1p4_soc-v1-2-55347831d73c@oss.qualcomm.com>
+Subject: Re: [PATCH 1/2] dt-bindings: net: qcom,ipa: document qcm2290
+ compatible
+To: Wojciech Slenska <wojciech.slenska@gmail.com>,
+ Andrew Lunn <andrew+netdev@lunn.ch>, "David S . Miller"
+ <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>,
+ Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Alex Elder <elder@kernel.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, netdev@vger.kernel.org
+References: <20241220073540.37631-1-wojciech.slenska@gmail.com>
+ <20241220073540.37631-2-wojciech.slenska@gmail.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -104,28 +109,38 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20241221-topic-x1p4_soc-v1-2-55347831d73c@oss.qualcomm.com>
+In-Reply-To: <20241220073540.37631-2-wojciech.slenska@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 21/12/2024 13:36, Konrad Dybcio wrote:
-> From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+On 20/12/2024 08:35, Wojciech Slenska wrote:
+> Document that ipa on qcm2290 uses version 4.2, the same
+> as sc7180.
 > 
-> The X1 family is split into two parts: the 10- and 12-core parts are
-> variants of the same silicon with different fusing, whereas the 8-core
-> ones are a separate design. Thankfully, the software interface is only
-> barely different, letting us reuse much of the existing X1 work.
-> 
-> Add X1P42100 SoC (and the CRD based on it) as a representative of the
-> 8-core series.
-> 
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+> Signed-off-by: Wojciech Slenska <wojciech.slenska@gmail.com>
 > ---
->  Documentation/devicetree/bindings/arm/qcom.yaml | 6 ++++++
->  1 file changed, 6 insertions(+)
+>  Documentation/devicetree/bindings/net/qcom,ipa.yaml | 4 ++++
+>  1 file changed, 4 insertions(+)
 > 
+> diff --git a/Documentation/devicetree/bindings/net/qcom,ipa.yaml b/Documentation/devicetree/bindings/net/qcom,ipa.yaml
+> index 53cae71d9957..ea44d02d1e5c 100644
+> --- a/Documentation/devicetree/bindings/net/qcom,ipa.yaml
+> +++ b/Documentation/devicetree/bindings/net/qcom,ipa.yaml
+> @@ -58,6 +58,10 @@ properties:
+>            - enum:
+>                - qcom,sm8650-ipa
+>            - const: qcom,sm8550-ipa
+> +      - items:
+> +          - enum:
+> +              - qcom,qcm2290-ipa
+> +          - const: qcom,sc7180-ipa
+>  
+We usually keep such lists between each other ordered by fallback, so
+this should go before sm8550-fallback-list.
 
-Reviewed-by: Krzysztof Kozlowski <krzk@kernel.org>
+With that change:
+
+Acked-by: Krzysztof Kozlowski <krzk@kernel.org>
 
 Best regards,
 Krzysztof
