@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-43049-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-43050-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9CC549FA283
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Dec 2024 21:39:17 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id BF5379FA285
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Dec 2024 21:39:30 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 6A5B97A25E3
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Dec 2024 20:39:11 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7EABB164D98
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Dec 2024 20:39:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AC2F51CBE96;
-	Sat, 21 Dec 2024 20:39:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 02C391CC899;
+	Sat, 21 Dec 2024 20:39:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="U9mpFS00"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bhvgn2bj"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F99B1C9B97;
-	Sat, 21 Dec 2024 20:39:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA8461C9B97;
+	Sat, 21 Dec 2024 20:39:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734813549; cv=none; b=X4ED+2yfC+gWzsSKJuUq8dOv0+dSuw0T60ZsgQAQsvdpFkNZgmDo+o7IXGRk3nLM3kKb6JZvNBJS7UVtwdJr6488aR8weT0fBSBbkSAq8vcY5N/kU6/RscAYWsrvBqvAMixW0rLc8AgjHGptkyl/kIHVk97ZX5ck6AybG7A/A68=
+	t=1734813567; cv=none; b=QLgOwF+MnT8Awmnk8u4aQN5nQdhEcBkwF+ji/SZcDDFmY9og9TGpLgf5Hrn0NpQ4D9LKEv53VUvHCzZWOcwCRpaMeuww+4y6MRvCzKH/K7/1GQXqm1cqww5LGS/eBt+VdJCtFnGhSujFxhSJ3xweobhHum0CZ4N2HbEy5jhOvJI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734813549; c=relaxed/simple;
-	bh=dmERGegZ7dsGSRdD/2wWLUBMPao8eO1+h0rBZPkhzlM=;
+	s=arc-20240116; t=1734813567; c=relaxed/simple;
+	bh=AHM8gjeKa+yfM45KrunBgIRRHm20VyLVmRF88TUx+LQ=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=foFD1UK77J+n3gnEQY98/twvf4FB3S7Gn6pU7J0D8FPlRt4PXwOANws8WXY3AljiWjzv87qmQHE8NA0pvvG0Ivr05Nip+1PJ4fL6IWZsAiJYN40kYslrzHxWpyRoSvzxBUs0gQX+On0SOOhgBelZEP+9ljnT6NYVQkt/x/qD/nA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=U9mpFS00; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EE70C4CECE;
-	Sat, 21 Dec 2024 20:39:05 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=IBSlN2KbMORs055h0H2p2qC8uygPGhdbCTqAoOa6Mr6yAk5e0F+p5zP16Bi/UiOtX2QpnzCYbi0I24NOj6mbfAhXdGbWveau7MHtTFrbTPdpiXD3/tvrHeoCkriQIBtowI+uk59LjDMYb7q1qkUe3Ng7xb1ehPWw46J+mNnKBAc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bhvgn2bj; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C09A2C4CECE;
+	Sat, 21 Dec 2024 20:39:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1734813549;
-	bh=dmERGegZ7dsGSRdD/2wWLUBMPao8eO1+h0rBZPkhzlM=;
+	s=k20201202; t=1734813567;
+	bh=AHM8gjeKa+yfM45KrunBgIRRHm20VyLVmRF88TUx+LQ=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=U9mpFS00o6xL2ffP13MyRzosjwghEYrgyvxaxtz7AtTkEnS/tno0uTXSyfzsU4BMZ
-	 yXHUN9pUYgMoRTW82UEImN8/mI31a1LpcCcE+HJyfYtQ87qZvTvYM5pOqhFC3526JB
-	 hFrpkhJh9XkY1S/xGuB2KzLYkxensGM5pNo1+KXgu0JdAy5W4+QeCf+k/ijAkvY3SH
-	 xJw+UDZyNR37xs+3slpin4LNOtYfXdIP+nB4IuxTyXJtc9HVtEDlVIzve0AufnDWpO
-	 H4Mc8SV7saRpLPsqD+GJJVhq6GV9/DogEkXdXD6dLSxr2KKbBwadNZJnoRgEsImxmp
-	 FhWfln2GtBvnw==
-Message-ID: <9080f2ca-e350-4ac5-9021-3d277145dc0c@kernel.org>
-Date: Sat, 21 Dec 2024 21:39:03 +0100
+	b=bhvgn2bjhecxPprOsVkSS//41tK1tzWUYEaQvRJSrrIxAuXawBwNA6OC51pp6ZyRr
+	 0QrFSCGnhXlJjKkqjJLgJuaS1ePU+Y05mpi+I87SqVUhnBVZSToroYKo8YTPdL9bWY
+	 cpuxyQ6uHqgRofYkP1hKhx8vgoznqC1UynAdaEeeS5bIzT6Q7Az8Q33fJrUqoNed0k
+	 1ggn+hOAxyelAhAXax4FLjCBTam/e40Gz3j8dw8mqQal5qJb0LQZN32ZDyIBuC3rLv
+	 26htt1JyOFcniQoVocKrXrHmyA63/gLuGOt73yPl7VcdLzftpKk3/fB2on4pXc9Rv1
+	 UOyIH6dX8b2TQ==
+Message-ID: <9acd8157-ee87-45a3-9c78-ef1728ab553d@kernel.org>
+Date: Sat, 21 Dec 2024 21:39:21 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,8 +50,7 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/4] dt-bindings: arm: qcom-soc: Extend X1E prefix match
- for X1P
+Subject: Re: [PATCH 2/4] dt-bindings: arm: qcom: Add X1P42100 SoC & CRD
 To: Konrad Dybcio <konradybcio@kernel.org>,
  Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
  Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
@@ -59,7 +58,7 @@ Cc: Marijn Suijten <marijn.suijten@somainline.org>,
  linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
  linux-kernel@vger.kernel.org, Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 References: <20241221-topic-x1p4_soc-v1-0-55347831d73c@oss.qualcomm.com>
- <20241221-topic-x1p4_soc-v1-1-55347831d73c@oss.qualcomm.com>
+ <20241221-topic-x1p4_soc-v1-2-55347831d73c@oss.qualcomm.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -105,18 +104,26 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20241221-topic-x1p4_soc-v1-1-55347831d73c@oss.qualcomm.com>
+In-Reply-To: <20241221-topic-x1p4_soc-v1-2-55347831d73c@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 21/12/2024 13:36, Konrad Dybcio wrote:
 > From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 > 
-> The X1 series includes SoCs like X1P42100. Extend the pattern x1e match
-> to x1[ep] to also include these.
+> The X1 family is split into two parts: the 10- and 12-core parts are
+> variants of the same silicon with different fusing, whereas the 8-core
+> ones are a separate design. Thankfully, the software interface is only
+> barely different, letting us reuse much of the existing X1 work.
+> 
+> Add X1P42100 SoC (and the CRD based on it) as a representative of the
+> 8-core series.
 > 
 > Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 > ---
+>  Documentation/devicetree/bindings/arm/qcom.yaml | 6 ++++++
+>  1 file changed, 6 insertions(+)
+> 
 
 Reviewed-by: Krzysztof Kozlowski <krzk@kernel.org>
 
