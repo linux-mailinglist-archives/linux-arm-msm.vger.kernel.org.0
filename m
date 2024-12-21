@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-43048-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-43049-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3B74F9FA26D
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Dec 2024 21:21:11 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9CC549FA283
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Dec 2024 21:39:17 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 97EE5161765
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Dec 2024 20:21:08 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 6A5B97A25E3
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Dec 2024 20:39:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E9729189913;
-	Sat, 21 Dec 2024 20:21:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AC2F51CBE96;
+	Sat, 21 Dec 2024 20:39:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eW4syNRe"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="U9mpFS00"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DBEB2746C;
-	Sat, 21 Dec 2024 20:21:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F99B1C9B97;
+	Sat, 21 Dec 2024 20:39:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734812464; cv=none; b=DhYz0bX43N+F1vOdkGMB+19epKtHjJfN94hYuG07uFy/xJgCcYz4eHe3hq//vmqBaZIJlhXzmOUNMVqf+FtQ9N9POLKBsgm484eHs3YUImvxl9UNmmtD2NPyoLDSPcYa1EyL+ClaN/G9zE5omlCEKqDH1/vdgTOrDG3b1qxmWKc=
+	t=1734813549; cv=none; b=X4ED+2yfC+gWzsSKJuUq8dOv0+dSuw0T60ZsgQAQsvdpFkNZgmDo+o7IXGRk3nLM3kKb6JZvNBJS7UVtwdJr6488aR8weT0fBSBbkSAq8vcY5N/kU6/RscAYWsrvBqvAMixW0rLc8AgjHGptkyl/kIHVk97ZX5ck6AybG7A/A68=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734812464; c=relaxed/simple;
-	bh=RwBQN4V18lBMwT0DKjlzAMtnW0sHWey9FzPwlM9BKUE=;
+	s=arc-20240116; t=1734813549; c=relaxed/simple;
+	bh=dmERGegZ7dsGSRdD/2wWLUBMPao8eO1+h0rBZPkhzlM=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=CR9HCJ2GaLg/goanJD4Sj4bZcTSB/MQ+MQX5ebjRysS/fZx3HiK9k6jkkdmVAm6h7r114a4JW0hI2Eppdd1bJFa0lHe6AVO92EIFeh+nNGljhED2PKydYxc7OiR+545sVd2E7LCHsgLb8qVUfV8FiAyFIAHtaLIYgSAupOeRutM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eW4syNRe; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13B1EC4CED4;
-	Sat, 21 Dec 2024 20:20:54 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=foFD1UK77J+n3gnEQY98/twvf4FB3S7Gn6pU7J0D8FPlRt4PXwOANws8WXY3AljiWjzv87qmQHE8NA0pvvG0Ivr05Nip+1PJ4fL6IWZsAiJYN40kYslrzHxWpyRoSvzxBUs0gQX+On0SOOhgBelZEP+9ljnT6NYVQkt/x/qD/nA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=U9mpFS00; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EE70C4CECE;
+	Sat, 21 Dec 2024 20:39:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1734812463;
-	bh=RwBQN4V18lBMwT0DKjlzAMtnW0sHWey9FzPwlM9BKUE=;
+	s=k20201202; t=1734813549;
+	bh=dmERGegZ7dsGSRdD/2wWLUBMPao8eO1+h0rBZPkhzlM=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=eW4syNRexYwHBXAZ7KLB91qmfiuMQ7V8UPUolEEJqtANI5WRyI3DQrefN7x5uVtCG
-	 EMXslzfA7WxeT3XPK0SvFH1cu34EIh7jddR9ZLahVz4ySVT1f3x/iNoffVjnav5iq/
-	 BSVS/7U6hOlG2aGdCDB/IE5HZaNrKKGwnd35qRt6SWYbALQ8BXQT914OPnhS/8W+TG
-	 NN1rSFaKectgkh26x8+aU4W/PrhUsSiK047XAWA+98ue7W7xpE+hOUZ+dRq8Ok6bh1
-	 ZqVFtk4QK1wcBVZuHXtZWlY1gYdNsYfiQc8I7dD+2uqBnrfOxxcbRJBhIhs7KpDGV0
-	 0UW8ptWik+VtQ==
-Message-ID: <da90b2ee-20fa-43fe-9518-25f8cf6afd52@kernel.org>
-Date: Sat, 21 Dec 2024 21:20:52 +0100
+	b=U9mpFS00o6xL2ffP13MyRzosjwghEYrgyvxaxtz7AtTkEnS/tno0uTXSyfzsU4BMZ
+	 yXHUN9pUYgMoRTW82UEImN8/mI31a1LpcCcE+HJyfYtQ87qZvTvYM5pOqhFC3526JB
+	 hFrpkhJh9XkY1S/xGuB2KzLYkxensGM5pNo1+KXgu0JdAy5W4+QeCf+k/ijAkvY3SH
+	 xJw+UDZyNR37xs+3slpin4LNOtYfXdIP+nB4IuxTyXJtc9HVtEDlVIzve0AufnDWpO
+	 H4Mc8SV7saRpLPsqD+GJJVhq6GV9/DogEkXdXD6dLSxr2KKbBwadNZJnoRgEsImxmp
+	 FhWfln2GtBvnw==
+Message-ID: <9080f2ca-e350-4ac5-9021-3d277145dc0c@kernel.org>
+Date: Sat, 21 Dec 2024 21:39:03 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,30 +50,16 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 7/9] dt-bindings: regulator: add binding for ncv6336
- regulator
-To: Fabien Parent <parent.f@gmail.com>
-Cc: Rob Herring <robh@kernel.org>, Saravana Kannan <saravanak@google.com>,
- Miguel Ojeda <ojeda@kernel.org>, Alex Gaynor <alex.gaynor@gmail.com>,
- Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>,
- =?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>,
- Benno Lossin <benno.lossin@proton.me>,
- Andreas Hindborg <a.hindborg@kernel.org>, Alice Ryhl <aliceryhl@google.com>,
- Trevor Gross <tmgross@umich.edu>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- "Rafael J. Wysocki" <rafael@kernel.org>,
- Wolfram Sang <wsa+renesas@sang-engineering.com>,
- Mark Brown <broonie@kernel.org>, Liam Girdwood <lgirdwood@gmail.com>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, devicetree@vger.kernel.org,
- rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-i2c@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- vinod.koul@linaro.org, Fabien Parent <fabien.parent@linaro.org>
-References: <20241218-ncv6336-v1-0-b8d973747f7a@gmail.com>
- <20241218-ncv6336-v1-7-b8d973747f7a@gmail.com>
- <kb2ejk6c4uvazuumuezsd24qhjwh3k5bw76k2shywdugjqlf6e@lrghxcxxmnrm>
- <CAL6vTrjD308v-Rzu1Sb7GCuLAb94Qt7BuZgrOgrnDCXm820P3Q@mail.gmail.com>
+Subject: Re: [PATCH 1/4] dt-bindings: arm: qcom-soc: Extend X1E prefix match
+ for X1P
+To: Konrad Dybcio <konradybcio@kernel.org>,
+ Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
+Cc: Marijn Suijten <marijn.suijten@somainline.org>,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+References: <20241221-topic-x1p4_soc-v1-0-55347831d73c@oss.qualcomm.com>
+ <20241221-topic-x1p4_soc-v1-1-55347831d73c@oss.qualcomm.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -119,40 +105,21 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <CAL6vTrjD308v-Rzu1Sb7GCuLAb94Qt7BuZgrOgrnDCXm820P3Q@mail.gmail.com>
+In-Reply-To: <20241221-topic-x1p4_soc-v1-1-55347831d73c@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 19/12/2024 17:13, Fabien Parent wrote:
->>
->>> +
->>> +  compatible:
->>> +    const: onnn,ncv6336
->>> +
->>> +  reg:
->>> +    maxItems: 1
->>> +
->>> +  buck:
->>> +    description: buck regulator description
->>
->> Why do you need "buck" node? Just merge the properties into this device
->> node.
+On 21/12/2024 13:36, Konrad Dybcio wrote:
+> From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 > 
-> I decided to move the properties into a "buck" node to make the
-> upstream process of the driver
-> a little bit simpler. The driver is written in Rust, and if I want to
-> move the properties to the device
-> node I will need to provide a Rust abstraction for "struct
-> device_node". I decided to avoid this
-
-buck is already a device node, so I don't quite get how this design
-avoids such abstraction, but anyway driver design choices like this do
-not shape DT.
-
-> to keep the patch series simpler by having one less abstraction to review.
-> If you think that's a problem, let me know and I will implement it the
-> way you are suggesting for v2.
+> The X1 series includes SoCs like X1P42100. Extend the pattern x1e match
+> to x1[ep] to also include these.
 > 
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+> ---
+
+Reviewed-by: Krzysztof Kozlowski <krzk@kernel.org>
+
 Best regards,
 Krzysztof
 
