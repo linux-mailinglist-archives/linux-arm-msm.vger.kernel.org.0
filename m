@@ -1,112 +1,155 @@
-Return-Path: <linux-arm-msm+bounces-43046-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-43047-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 413749FA18F
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Dec 2024 17:05:06 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 575E29FA25B
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Dec 2024 21:11:45 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A9F54167038
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Dec 2024 16:05:03 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 316491889D94
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Dec 2024 20:11:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 22E3A146013;
-	Sat, 21 Dec 2024 16:04:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DCB2C19C578;
+	Sat, 21 Dec 2024 20:11:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Cz1L/YfL"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ccnf6px3"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f179.google.com (mail-lj1-f179.google.com [209.85.208.179])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B5FF55897
-	for <linux-arm-msm@vger.kernel.org>; Sat, 21 Dec 2024 16:04:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD1CC187870;
+	Sat, 21 Dec 2024 20:11:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734797095; cv=none; b=W33+SjTI0FJj4r1RJB+Jx5jMWkGsLBMxsdX3qqUpLWbF8Tkq9cadVNjuqKIQdOL/VAyvMv9pI38pAcPhVSxY4tjwrJGc6Ey6PIEEiH0k7uAiExIIyGwBOo3e5JYInx8AeZOJnZtB3TtLgy7ixuAFZsdkycwZDB63Oayh94lwb6Q=
+	t=1734811887; cv=none; b=QPhHabW2vKtxKfqzt6Ag7nnmn9p3R4moblEP4Pd3qTvx07dGtLFI90cqNRWLbAnqntqqz1KDQ8GO1ayZQnoUaEDBLJeQYcfJxZkxklY9AsvmcQM2CGVH0SsEtkc13W5UreXUHS4sVSME6DFbjrqrCn4B9950ZoBT0rHff0EfG+I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734797095; c=relaxed/simple;
-	bh=XprkMDbQVHB7HHnSWENBhj2WANzn+uQp8Is/IQD88PE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=RJPVD5pajL67GKyK6XQD0uBU1TJswoUo8Bafxltjq934ViL/DpTuZ3OgFVLkwFQ3O7aT7J13P6WVZn7Fz8lkxFmuXrjMY0szjwXnDtMtKGtfidjLAUTDMYi8I71AeHs57U2D5I1q93xz+76JFoB0SW2wpQniXwK9EeZuVk0DrDk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Cz1L/YfL; arc=none smtp.client-ip=209.85.208.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f179.google.com with SMTP id 38308e7fff4ca-30036310158so26293401fa.0
-        for <linux-arm-msm@vger.kernel.org>; Sat, 21 Dec 2024 08:04:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1734797091; x=1735401891; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=YNN+KzKb+y822BYZ4quule9WMgNPlKOzcu4nY8Sav+A=;
-        b=Cz1L/YfLDR5GPwgQgkWNsScfj5Y2o9hBwSWR2rdqR9DqJO5BAfUx9gK3YLO9ldZNE6
-         1UAxr19LxBFXK/MZWF930xh1WW/qkFKXKnRP0ntYj0HOMqHby4MirU7l3flEVsjpAxo8
-         WhmkO8fmskaiSx8ZvxIMNf+NK6RgCcGtimstyFpTAASlnModc++VtQIL0AN3U910gU1U
-         lKo/nlndEKY6CbssmlIcl+HYw6MtMNmjUu/KyDeMnw9eUKUjqISufwYIjyJP3JP2ZBxi
-         Ex6R3vgpbSwQ9MzB0HuJA8adAMWx73yS0H6USLFSQ3XfHDBagGwVB+KhSzzViWkKSFcR
-         LIzg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734797091; x=1735401891;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=YNN+KzKb+y822BYZ4quule9WMgNPlKOzcu4nY8Sav+A=;
-        b=O1SGc7Ht++L4H7y2m9xr6/Tf+9fsuGExgYJR1RqpydyCwcSPqXgVYwGIvOWoT1Zvls
-         1ycZXOtlXoLeQJcHOQymiznL7huOEmPr1telKAfcPB/W6NNQkafA+++oiKybq9py4/dy
-         ZBX6A3oslQjYBCi0Z5/4tbff82vseFjhqI9lT3J5mpm8norKIbt8NjUCSC3zZe943Nhc
-         9cUsddlhHJgNtLDsYkqCrC0kQNGOoLVnowIKtVqaFP007SUkQNOqnC6uitqTxAjeA8Ny
-         AYLMlJalogyS/9tFh07ef7tz/B5zfjXI3688uUDIq4az1uLkQKJZ+8NOnNS5DDJU1QJU
-         37EA==
-X-Forwarded-Encrypted: i=1; AJvYcCWrVNd29oiuNour4lu5engFbTXuON9d/9zcsggTSh3GiWjlyNUEHDaZAW51wiheZT7ow4IwRAn/FoDhfrLR@vger.kernel.org
-X-Gm-Message-State: AOJu0YzzxBPS0zvHXpf+z3bTwnDlURTIaWV5557JfH60UOP9fQgaHvU+
-	ol2Uf+sgb5kJFApoD5xrjYKeoXz0dIMdlSkSZl50K2iUn9JLK9kYW3wDX2Cmx34=
-X-Gm-Gg: ASbGnctujE524y+6Y2PIZa31eXXiABsagR35ew4agC6bstQvdCI31jCEM2icM8o9pL6
-	cANBv6epf8mOzUxcwI7TrbcIAxqPhrl1lpgqqXvuhVuAI8GDgo68dR5AY+xaU759luC7Fc8TdY+
-	0atz4rhvLPj5/zwTkhVSkh2cAdFcZNk32t2HbqCuJCoSJpHbmO6RyUOPRbay9WHcT4X1OIXaA+3
-	UXyi+O+0bdkd9JyRNZXCkZIw9VtGX/eaC0rKF7bQYEkSnoWc0ATFTxY64aL7sj5nSMtKRur/ghe
-	gZ/NwoSThtERc7triQ3v3yg/Z40LWZ4VjZP1
-X-Google-Smtp-Source: AGHT+IH//aDjXNbR0mGsQ0JGNuZxSXVKCn/a6qPh41FbBA3dmcjSII54QdsRwpfOXPqNzMHYHc9c0A==
-X-Received: by 2002:ac2:4c48:0:b0:542:2906:786 with SMTP id 2adb3069b0e04-5422953c28amr2351592e87.31.1734797091129;
-        Sat, 21 Dec 2024 08:04:51 -0800 (PST)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-54223832c26sm762223e87.279.2024.12.21.08.04.48
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 21 Dec 2024 08:04:49 -0800 (PST)
-Date: Sat, 21 Dec 2024 18:04:47 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Konrad Dybcio <konradybcio@kernel.org>
-Cc: Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Subject: Re: [PATCH 3/4] soc: qcom: pd-mapper: Add X1P42100
-Message-ID: <uarbtdd5t5nufdzsddv57eu67bogj45zqmpnhzl42z2sslgm4g@ahqunjasrauh>
-References: <20241221-topic-x1p4_soc-v1-0-55347831d73c@oss.qualcomm.com>
- <20241221-topic-x1p4_soc-v1-3-55347831d73c@oss.qualcomm.com>
+	s=arc-20240116; t=1734811887; c=relaxed/simple;
+	bh=AoiVOptiYVf3sXc6Wc3zef23U6V9pmhLL3rDLQSzFWw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=e+7pktciy+MnqdO49aLje4Ovk1fRgEbgku7gdbLm1aGHl88tHvDgg+NegeOi/o7SaYSd+2Sxxh66vyJsiSuTwBfz3had5kVutj+TxJxqzeEPGGxQSFIihIbAQjJPvvh6XleZBiqD53N53S3Gx67W+YtN6J/EHvJnBaKl82jKdaA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ccnf6px3; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD9BAC4CED4;
+	Sat, 21 Dec 2024 20:11:23 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1734811887;
+	bh=AoiVOptiYVf3sXc6Wc3zef23U6V9pmhLL3rDLQSzFWw=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=ccnf6px3FpX6+kFq3Vh6WPLH8zAYR7lEH7uaMC+3FEdIBzGV2KFo/huiEqb2EfZWN
+	 oxvT9qTxj4HcIWefa7nJIvK/g5AllWUviOKlpXtUOUfXn0WqKntWQGhbiea7ZHATA1
+	 zakO01K6x8DX5sDxsvaBWbbPupksbyopwyphZGgUv5w3+KsDRYgtDJeUIyDgI05sOT
+	 OMIeSwVvzBQdhvW01l9ydyEyTYSskjWZr4V814uMDXEOTNcJvPVsEIpbo3UUxPtPxu
+	 0lxuTgRjrLIkF/LTbeGkO6rPT2xUriGwRiQ9c5aMUWqPUAwWQUdsQFreYT1asz7We0
+	 SuWHfxqK41SOA==
+Message-ID: <0af81029-0f68-4034-899f-4294d249f6a4@kernel.org>
+Date: Sat, 21 Dec 2024 21:11:21 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241221-topic-x1p4_soc-v1-3-55347831d73c@oss.qualcomm.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 6/7] arm64: defconfig: enable cpu idle injection and
+ cpu idle cooling device
+To: Manaf Meethalavalappu Pallikunhi <quic_manafm@quicinc.com>,
+ Wasim Nazir <quic_wasimn@quicinc.com>, Bjorn Andersson
+ <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Catalin Marinas
+ <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+ kernel@quicinc.com
+References: <20241217064856.2772305-1-quic_wasimn@quicinc.com>
+ <20241217064856.2772305-7-quic_wasimn@quicinc.com>
+ <59e96784-9efc-4958-baf0-a51e766e47e8@kernel.org>
+ <b98cc6ea-d215-2200-1537-1a53c2587c81@quicinc.com>
+Content-Language: en-US
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 fv0=
+In-Reply-To: <b98cc6ea-d215-2200-1537-1a53c2587c81@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Sat, Dec 21, 2024 at 01:36:02PM +0100, Konrad Dybcio wrote:
-> From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+On 20/12/2024 12:38, Manaf Meethalavalappu Pallikunhi wrote:
 > 
-> X1P42100 is a cousin of X1E80100, and hence can make use of the
-> latter's configuration. Do so.
+> Hi Krzysztof,
 > 
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-> ---
->  drivers/soc/qcom/qcom_pd_mapper.c | 1 +
->  1 file changed, 1 insertion(+)
+> Thank you for reviewing this patch.
 > 
+> On 12/18/2024 1:32 PM, Krzysztof Kozlowski wrote:
+>> On 17/12/2024 07:48, Wasim Nazir wrote:
+>>> From: Manaf Meethalavalappu Pallikunhi <quic_manafm@quicinc.com>
+>>>
+>>> Enable cpu idle injection framework and thermal cpu idle cooling device
+>>> to throttle the cpu by injecting idle cycle during high thermal condition.
+>> I know what they do, but why do we need it in the defconfig? This is not
+>> a product defconfig, just in case you mirrored downstream patches.
+> 
+> We believe these defconfigs serve as a generic framework rather than 
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+No...
 
--- 
-With best wishes
-Dmitry
+> being tied to specific product features. Therefore, we have enabled them 
+
+They are tied to specific products.
+
+> in the defconfig to ensure the end-to-end feature is available in the 
+> pristine upstream build. However, if you think this would introduce 
+
+Why would we care about this end-to-end feature?
+
+> overhead for other products, we will exclude this patch in the next 
+> revision.
+
+I just did not see here any explanation why this should be added. I
+don't need to come with extensive disagreement, because by default we do
+not enable everything. We enable only some things because of some
+reason. And that's why you have commit msg...
+
+Best regards,
+Krzysztof
 
