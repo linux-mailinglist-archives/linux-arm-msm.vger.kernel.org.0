@@ -1,161 +1,148 @@
-Return-Path: <linux-arm-msm+bounces-43035-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-43036-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 19EFD9F9EB8
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Dec 2024 07:14:16 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id A8BA29F9F24
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Dec 2024 08:58:43 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 17E95188C433
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Dec 2024 06:14:17 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0C81A16AA44
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Dec 2024 07:58:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 71FE3191F88;
-	Sat, 21 Dec 2024 06:14:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 999D51EC4D5;
+	Sat, 21 Dec 2024 07:58:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="GNkLTrFo"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FRdEhwaW"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.17])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f175.google.com (mail-pf1-f175.google.com [209.85.210.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CF553594C;
-	Sat, 21 Dec 2024 06:14:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.17
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2026E8837;
+	Sat, 21 Dec 2024 07:58:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734761649; cv=none; b=Chy7LUpGZv44iMD96miKLIov7Ms5NDCaV9RYDa+HVGKBvaYPxQAyVVIEiPG1Iv2l2H5yqOvCAyChrzuEAz0oOp/HMrWDW12LfHdoLjgpJ7EfGLLIJ/3Eo9LRuTrlLVUXJiMcFKXi+FMjplOGICAoAfjiKeWeXdGgxbQmKYbRIVA=
+	t=1734767918; cv=none; b=kgLWtPDDj+oMxnSgpa0q/nVM1xJXICL4IGwDzarKIkpqS6+XbjFkxs/YMRld4G7cHUv+MkYvy4sfLHlLFgrZKRs4Y7xeQRi7w9CY1p9YjYwNanTkajytHCMx0ZG3DERmV7+Ltg3u63Z7Dhpe17qAaC9jD9kLn9tzb78wfb7wFmA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734761649; c=relaxed/simple;
-	bh=JjY37SxMSkdhtyrhtTKrP4oq+y277V+a81pZHzt3KNs=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=mKikJCONJOmeUhsxXlNKI5RZWBdnHO8RldGgUw6HQUSN5FrEHmsa3oHcB8YXCJdKa8+uaQkP5D5xVUvT8bCk464av7RMwk7QmSilgztrWb0wYUBlmlXB35OOgwRIt3+S1GyZqgh4lakEuqsdM5G3eB/3jyKocPbkhdpDn8uR2VA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=GNkLTrFo; arc=none smtp.client-ip=192.198.163.17
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1734761647; x=1766297647;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=JjY37SxMSkdhtyrhtTKrP4oq+y277V+a81pZHzt3KNs=;
-  b=GNkLTrFo5cCoRAsgNPalBUD1yXoITqywbShmDJEANs6Z3VOpofJW2z9c
-   wB1coyPz9L+eB7RJUVYFUeJ2Lxdp80Uf1dfAtg12auGbaW8s2a0Q+Urwa
-   jdWTqvwKMOFJohjoRCfAR5u81R70OcptQjLS5JjdiPYUxHwltzXSTlSPb
-   S56TVAN+twFJjQrB8lIb13hZozZhk/rTo67g2V7rGf9OS/iNVLX9IEtIo
-   yOpbRmn2nheNO2COueC3QQOkAV1brsrAnT47GTBoR2vLPGbirT12VvsHo
-   u47UPCKw671rjdjmb9NFOM5yavZwBFIa5RN2WswE7O7FPaGHyaZaooVJU
-   Q==;
-X-CSE-ConnectionGUID: iR15W2nqQH+hSoUlaYJw4w==
-X-CSE-MsgGUID: Ur7qqs8eQrW+l3OFbtPWJg==
-X-IronPort-AV: E=McAfee;i="6700,10204,11292"; a="35202142"
-X-IronPort-AV: E=Sophos;i="6.12,253,1728975600"; 
-   d="scan'208";a="35202142"
-Received: from orviesa002.jf.intel.com ([10.64.159.142])
-  by fmvoesa111.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Dec 2024 22:14:05 -0800
-X-CSE-ConnectionGUID: GBtUTgiERLmNzgFa33UeTQ==
-X-CSE-MsgGUID: FFtxWLWrTGaxb2gCb7B1vw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,253,1728975600"; 
-   d="scan'208";a="129529030"
-Received: from lkp-server01.sh.intel.com (HELO a46f226878e0) ([10.239.97.150])
-  by orviesa002.jf.intel.com with ESMTP; 20 Dec 2024 22:13:59 -0800
-Received: from kbuild by a46f226878e0 with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1tOskP-0001xb-1y;
-	Sat, 21 Dec 2024 06:13:57 +0000
-Date: Sat, 21 Dec 2024 14:13:27 +0800
-From: kernel test robot <lkp@intel.com>
-To: Ziyue Zhang <quic_ziyuzhan@quicinc.com>, vkoul@kernel.org,
-	kishon@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
-	conor+dt@kernel.org, dmitry.baryshkov@linaro.org,
-	neil.armstrong@linaro.org, abel.vesa@linaro.org,
-	manivannan.sadhasivam@linaro.org, lpieralisi@kernel.org,
-	kw@linux.com, bhelgaas@google.com, andersson@kernel.org,
-	konradybcio@kernel.org
-Cc: oe-kbuild-all@lists.linux.dev, linux-phy@lists.infradead.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-	quic_qianyu@quicinc.com, quic_krichai@quicinc.com,
-	quic_vbadigan@quicinc.com, Ziyue Zhang <quic_ziyuzhan@quicinc.com>
-Subject: Re: [PATCH v3 2/8] phy: qcom-qmp-pcie: add dual lane PHY support for
- QCS8300
-Message-ID: <202412211301.bQO6vXpo-lkp@intel.com>
-References: <20241220055239.2744024-3-quic_ziyuzhan@quicinc.com>
+	s=arc-20240116; t=1734767918; c=relaxed/simple;
+	bh=wYmMsWyt/+ngt9SyrGGZcO8m+JTh2JpGL6sMgEF5SUo=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=WorhYvRmHnjmWWA0or2t0vGWHaKKQ8rUbqVs7zdfu1eIDdPYoaGou68y0x4NEmeHkjFyMQd8KR9Da/STDhYue0ZdRPN7Uqj/1sLjlD/veJfXPL7CV/rWk81eZxgNB6ad8PlUJt8kEEL3fu6dacyspomW0a+6o2PA1AD6MmU3vbU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FRdEhwaW; arc=none smtp.client-ip=209.85.210.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pf1-f175.google.com with SMTP id d2e1a72fcca58-728e729562fso2357689b3a.0;
+        Fri, 20 Dec 2024 23:58:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1734767916; x=1735372716; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=WGIYBfSfZLjtj/EgE2O68jF8wEqNoJxGNUW9IUSfjRs=;
+        b=FRdEhwaW9m7H1ni3o2mxjaqNAQVxdZgliJxC/vCHUHph8wFbHr0+pFN38IgOTIrlPC
+         h7tQ9IrrESwsV9frDnx0blVdHrQfmDkK8LjQ48FRbjuBYAIv32HbJ2Zj5qtIZaWI1Qdg
+         gRMs65t3KGt7vosyMP9TPYRDLNac92N5dsGfbAKA/ocRwRvf+2JWUc83ke8BkybFVR0d
+         6LGWbXDkXmfHU5PiIJMeZMc2KvrtcSRAYn20C24i3fCCKGboWZ5cHCk/QXwU/F0cvbK8
+         9TGeVJkCA82OHfi/kEHY5UIStBTzcAVoBGd9PVqdhJ/FedM7aSnx4qewgUfbx+X8i3dh
+         pQRQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1734767916; x=1735372716;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=WGIYBfSfZLjtj/EgE2O68jF8wEqNoJxGNUW9IUSfjRs=;
+        b=kZhQ/lWM4vS8xZPjfSMeOT8lQBFPHl5FAZmpB1evOMmqmSekzw6hSJxxcyucDI2C7t
+         kLPjnCMzhQIcNGgkzCX1HF2xCcgWDEe5Mek/ijJ5GE5LuDW15/5BTo6KO3PNk6nGhmGi
+         98gwWQioco5B+tdBRnIi+mbuzUx21OFq5pH5CnADZLiuBO6VI51GTHaXw8mu+nuJ6kkF
+         U4xRG5msb23/TJvwhokh00OEFVzDdMxL85Adbxhzt6sFoZU22YSgxkKdhDxyelZAUaC6
+         Eo9ZerYThYe2ENmdnnYHM+fcCCxn0KhWupRyALioNM/5fFPpB2PGvaDxI9R/CQ2qE5Jy
+         Gb1Q==
+X-Forwarded-Encrypted: i=1; AJvYcCUnUVPYKRku5DT8ymL6H0JrZI7t6YwFz/jDUooFUW/j8ZT/DvUBX5sxxzHWhkuqyTmM/uCLuN0Mlxflq5RZbQ==@vger.kernel.org, AJvYcCVTnDcUQrWHnXHtaIxBt3q9fW5xFd1aYFhJzQf2QiogypICKeHLLw2Ij2kHxGsK9M9mtg7M3lxEiP+s@vger.kernel.org, AJvYcCWR1ObTqQ4/HMMJldXp8/RxbbHQca95qdHrhlHhtgI5vtYQq9E4olV8wbwEnEytgXYFv1XCXmJUWyIP49JH@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz73Bw4sl1k1POogZ3GwvZVLn/aaNI+ELlc2TRW253sHM/wsIKF
+	iEa+cLmpq3yxrXLER5Wo3K9+xfPBn5+k4QlwoIynkxbJUjWlMw/wyl0NmzQ5fFSjPg==
+X-Gm-Gg: ASbGncvcPoFZcC2OtW59PnQdCv83Kv8P8HR5rxfnO5FN9fsF4/TGdW1iLs58oErlVlB
+	SFkVyu7QlQabHPoDT4PaZ0k3iGnS4+YcTackB20KeVRTAzXU6rXRFQDXaWTqKPuhcCHqDRORKXU
+	UbSC5mye8YUb0sGO5I9EqZAnHHfu/bw3cgdlP8f6Shm+Jm3CgwImJFaV4qqNF9/31EVgVESA3eJ
+	bDTshnhp3DLgHDmPwmZzGp4pTrS1EgPco22ztZ5PREPRho8+WQaLcM=
+X-Google-Smtp-Source: AGHT+IHesNqn4ntgvacOsGaQUKmFZ7Jl18ru0JwABapiXHuOjzjJbAqQ89WrqvpnEaqluAGV+KOCfw==
+X-Received: by 2002:a05:6a00:23c1:b0:72a:bc54:be9e with SMTP id d2e1a72fcca58-72abde30d9dmr6744470b3a.15.1734767916379;
+        Fri, 20 Dec 2024 23:58:36 -0800 (PST)
+Received: from nuvole.. ([144.202.86.13])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-72aad8164d3sm4263858b3a.15.2024.12.20.23.58.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 20 Dec 2024 23:58:35 -0800 (PST)
+From: Pengyu Luo <mitltlatltl@gmail.com>
+To: johan+linaro@kernel.org,
+	konrad.dybcio@oss.qualcomm.com
+Cc: andersson@kernel.org,
+	chenxuecong2009@outlook.com,
+	conor+dt@kernel.org,
+	devicetree@vger.kernel.org,
+	gty0622@gmail.com,
+	konradybcio@kernel.org,
+	krzk+dt@kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	mitltlatltl@gmail.com,
+	robh@kernel.org
+Subject: Re: [PATCH v2 3/3] arm64: dts: qcom: sc8280xp: Add Huawei Matebook E Go (sc8280xp)
+Date: Sat, 21 Dec 2024 15:57:12 +0800
+Message-ID: <20241221075718.466570-1-mitltlatltl@gmail.com>
+X-Mailer: git-send-email 2.47.1
+In-Reply-To: <d46f0ad4-4319-496f-9093-54bb5a000875@oss.qualcomm.com>
+References: <d46f0ad4-4319-496f-9093-54bb5a000875@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241220055239.2744024-3-quic_ziyuzhan@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-Hi Ziyue,
+Messing up, reply again to fix thread.
 
-kernel test robot noticed the following build errors:
+On Sat, Dec 21, 2024 at 5:14 AM Konrad Dybcio <konrad.dybcio@oss.qualcomm.com> wrote:
+> On 20.12.2024 5:05 PM, Pengyu Luo wrote:
+>
 
-[auto build test ERROR on 4176cf5c5651c33769de83bb61b0287f4ec7719f]
+[...]
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Ziyue-Zhang/dt-bindings-phy-qcom-sc8280xp-qmp-pcie-phy-Document-the-QCS8300-QMP-PCIe-PHY-Gen4-x2/20241220-135722
-base:   4176cf5c5651c33769de83bb61b0287f4ec7719f
-patch link:    https://lore.kernel.org/r/20241220055239.2744024-3-quic_ziyuzhan%40quicinc.com
-patch subject: [PATCH v3 2/8] phy: qcom-qmp-pcie: add dual lane PHY support for QCS8300
-config: arm64-randconfig-004-20241221 (https://download.01.org/0day-ci/archive/20241221/202412211301.bQO6vXpo-lkp@intel.com/config)
-compiler: aarch64-linux-gcc (GCC) 14.2.0
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20241221/202412211301.bQO6vXpo-lkp@intel.com/reproduce)
+> > +     chosen {
+> > +             #address-cells = <2>;
+> > +             #size-cells = <2>;
+> > +             ranges;
+> > +
+> > +             framebuffer0: framebuffer@c6200000 {
+> > +                     compatible = "simple-framebuffer";
+> > +                     reg = <0x0 0xc6200000 0x0 0x02400000>;
+> > +                     width = <1600>;
+> > +                     height = <2560>;
+> > +                     stride = <(1600 * 4)>;
+> > +                     format = "a8r8g8b8";
+> > +             };
+> > +     };
+>
+> I still don't understand why efifb doesn't work for you.
+>
 
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202412211301.bQO6vXpo-lkp@intel.com/
+In v1, you asked me
 
-All errors (new ones prefixed by >>):
+> Very very weird. Are you booting with clk_ignore_unused pd_ignore_unused
+> in kernel cmdline?
 
->> drivers/phy/qualcomm/phy-qcom-qmp-pcie.c:3419:35: error: 'pciephy_v5_20_regs_layout' undeclared here (not in a function); did you mean 'pciephy_v5_regs_layout'?
-    3419 |         .regs                   = pciephy_v5_20_regs_layout,
-         |                                   ^~~~~~~~~~~~~~~~~~~~~~~~~
-         |                                   pciephy_v5_regs_layout
+I said yes, as Johan suggested in here (see [1]). I am adding Johan.
 
+> Could you share your .config file?
 
-vim +3419 drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+Here please, https://pastebin.com/UKew61ZC
 
-  3390	
-  3391	static const struct qmp_phy_cfg qcs8300_qmp_gen4x2_pciephy_cfg = {
-  3392		.lanes			= 2,
-  3393		.offsets		= &qmp_pcie_offsets_v5_20,
-  3394	
-  3395		.tbls = {
-  3396			.serdes		= sa8775p_qmp_gen4x2_pcie_serdes_alt_tbl,
-  3397			.serdes_num		= ARRAY_SIZE(sa8775p_qmp_gen4x2_pcie_serdes_alt_tbl),
-  3398			.tx		= sa8775p_qmp_gen4_pcie_tx_tbl,
-  3399			.tx_num		= ARRAY_SIZE(sa8775p_qmp_gen4_pcie_tx_tbl),
-  3400			.rx		= qcs8300_qmp_gen4x2_pcie_rx_alt_tbl,
-  3401			.rx_num		= ARRAY_SIZE(qcs8300_qmp_gen4x2_pcie_rx_alt_tbl),
-  3402			.pcs		= sa8775p_qmp_gen4x2_pcie_pcs_alt_tbl,
-  3403			.pcs_num		= ARRAY_SIZE(sa8775p_qmp_gen4x2_pcie_pcs_alt_tbl),
-  3404			.pcs_misc		= sa8775p_qmp_gen4_pcie_pcs_misc_tbl,
-  3405			.pcs_misc_num	= ARRAY_SIZE(sa8775p_qmp_gen4_pcie_pcs_misc_tbl),
-  3406		},
-  3407	
-  3408		.tbls_rc = &(const struct qmp_phy_cfg_tbls) {
-  3409			.serdes		= sa8775p_qmp_gen4x2_pcie_rc_serdes_alt_tbl,
-  3410			.serdes_num	= ARRAY_SIZE(sa8775p_qmp_gen4x2_pcie_rc_serdes_alt_tbl),
-  3411			.pcs_misc	= sa8775p_qmp_gen4_pcie_rc_pcs_misc_tbl,
-  3412			.pcs_misc_num	= ARRAY_SIZE(sa8775p_qmp_gen4_pcie_rc_pcs_misc_tbl),
-  3413		},
-  3414	
-  3415		.reset_list		= sdm845_pciephy_reset_l,
-  3416		.num_resets		= ARRAY_SIZE(sdm845_pciephy_reset_l),
-  3417		.vreg_list		= qmp_phy_vreg_l,
-  3418		.num_vregs		= ARRAY_SIZE(qmp_phy_vreg_l),
-> 3419		.regs			= pciephy_v5_20_regs_layout,
-  3420	
-  3421		.pwrdn_ctrl		= SW_PWRDN | REFCLK_DRV_DSBL,
-  3422		.phy_status		= PHYSTATUS_4_20,
-  3423	};
-  3424	
+>
+> Konrad
+>
 
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+Best wishes,
+Pengyu
+
+[1] https://github.com/jhovold/linux/wiki/X13s#kernel-command-line
 
