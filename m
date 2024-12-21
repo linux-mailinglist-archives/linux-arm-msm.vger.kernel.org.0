@@ -1,452 +1,419 @@
-Return-Path: <linux-arm-msm+bounces-43030-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-43031-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id D247E9F9D33
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Dec 2024 00:42:37 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3E6B29F9D5E
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Dec 2024 01:12:55 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id BD8B4188EB6D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Dec 2024 23:42:38 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 93298163EE4
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Dec 2024 00:12:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DE9C8229B21;
-	Fri, 20 Dec 2024 23:41:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 25677817;
+	Sat, 21 Dec 2024 00:12:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="XDcfCn/z"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="RoGC/foP"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail.mainlining.org (mail.mainlining.org [5.75.144.95])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C748229156;
-	Fri, 20 Dec 2024 23:41:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.75.144.95
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22DDF17E;
+	Sat, 21 Dec 2024 00:12:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734738079; cv=none; b=HeZsfijMkm7cMJ2f6Ih6FxC9E/rg3TiSR1yAN6PWUvOje7TNfmKD7ngPobHtvdef9eKQAwiAHCq7ziedTeWVa4uABZ4CYlVNWV9ODH84J/fMjRZk23uOb9GuR8TMRBirV0ltrfqbaoa6V/tRNnSrzMMWwdLm4bJHyaaOHMPaPiI=
+	t=1734739972; cv=none; b=ZIboOyLiEoytbNW/FeIU0Rffniw4wj0Lh8Qn1R5RdmzECCTjhITnX3+zgOs5u6Y0jFQrsWXCtrXCDd+YVBr3p+WyKDD+iq4AC2RppCLZ1Qo25GkZpLkLQnX5gZhN1/t7HPB/i1PHacYwjiAAWXD/VMl7W9d3oLpVn5tEMKvfrto=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734738079; c=relaxed/simple;
-	bh=yRrTth08180QfeHsiXKzN5bNhMrXGVQ/EVyPD3V4GyQ=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=bkW/ygQq2ue3fHa3K10QWcEC43Z55acxirQA/ORpZ9+pyIt7BYnzqxzFIlgfpAFRztxqBki8P3uyrcHaqxm4Era8lnsXLnayrQubt/vmrpr8BkuF7i0wHQNTX1oj07x57sBLdVX8jGlfXTHfFkzI0iz5Mx43M/WEl8pt5Y7sJsI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mainlining.org; spf=pass smtp.mailfrom=mainlining.org; dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=XDcfCn/z; arc=none smtp.client-ip=5.75.144.95
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mainlining.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mainlining.org
-Received: from [192.168.30.162] (254C14D2.nat.pool.telekom.hu [37.76.20.210])
-	by mail.mainlining.org (Postfix) with ESMTPSA id 10B38E483B;
-	Fri, 20 Dec 2024 23:41:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mainlining.org;
-	s=psm; t=1734738074;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=hQcWQj/wwnb5q+l0OdYD5VX4MPg+1aI9rfTFTUBDwbY=;
-	b=XDcfCn/zhRf9cww5tgo6wOD8MoZu594eUeFUEiOrf5t6D7nGm3cRULMHScXt3ip30kOiKh
-	CkipudUxj0uvL0xz/zw1UAF0mkRVkkbY7/XfM2q03aRJR6WOaeES5dqKPNdzN0fFeCbZiw
-	a9u0jVPwp6s640DQEAMa/FX4VVTnKdrPYD+chaG/Ini4241swWADkhKSeSLpHo6+co+1Hi
-	vUvqzLecD6R3WTU4hJ02lYnm8jkPOTSQbdlo3mtIIzNZkJeYATRHMdLDzw+FikHsKHfGEr
-	ds+vOSczDOadhFZ/mpFI69g54ImEdutgGTVWmg5Kpxl4Xzn9b2Ax3gzlXQEv0Q==
-From: =?utf-8?q?Barnab=C3=A1s_Cz=C3=A9m=C3=A1n?= <barnabas.czeman@mainlining.org>
-Date: Sat, 21 Dec 2024 00:40:51 +0100
-Subject: [PATCH v11 4/4] arm64: dts: qcom: Add Xiaomi Redmi 5A
+	s=arc-20240116; t=1734739972; c=relaxed/simple;
+	bh=OX2Iv7EYxk9B8n95FMI/YlULFBnjv/uji3vReG6IwnM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=TsWTgCT2OCgvdCdzZUSp6xc5n2Q4dLUDoOc9suH2lktNrgcvumcdLEcFt6X7xikqy4u3ruBq6BsJc1h2GgdYCcU5Zpa1X3A0XjVYvJhpT9jzu768VPWkyK21izcbYGJh478q/f/m0/BsfuuB94rN2W1S/Glpjlpmx31NyumIRuc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=RoGC/foP; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BKEfjjP003448;
+	Sat, 21 Dec 2024 00:12:34 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	nHWB9VKbkRRAQ/ehdJKAAVvfDKqpKsAR9uKddDX47E8=; b=RoGC/foPvk2WRMIW
+	Ksa7BwB6SwB0ZzvZzhOamwCiU9K4CNCOhQWqcnjyz6Ph0jwI624IZeSpxsyX3H6q
+	4Xhy22XdlYIykK4jw/ITOxJfrq8YvWQhBfRHB/wa/e4NssNCxYGVsE8fL7l5XPFO
+	WAxIaWIjxMvEiXq1CjC0QmxD406nBhNnphEy1CAoBZj6TjkO+cRarLIO+cnV3zRU
+	Kpx88B8TZiw+4d0FOiXjneasWzGzsVz4qdQixtR2kxwSHr7niui/xAsKZ+Zvuo5F
+	rmQ2RZeeRzcUL3t93XFDlfMFiMGjrOUC3Km/TWtKPEiBwO+kxVeOq+4EIALlqUYl
+	Lcp8UA==
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43najt17m2-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sat, 21 Dec 2024 00:12:34 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4BL0CX1u003828
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sat, 21 Dec 2024 00:12:33 GMT
+Received: from [10.134.70.212] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 20 Dec
+ 2024 16:12:30 -0800
+Message-ID: <ddd1db49-39d8-44b6-b658-b30fe8ba4428@quicinc.com>
+Date: Fri, 20 Dec 2024 16:12:29 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20241221-msm8917-v11-4-901a74db4805@mainlining.org>
-References: <20241221-msm8917-v11-0-901a74db4805@mainlining.org>
-In-Reply-To: <20241221-msm8917-v11-0-901a74db4805@mainlining.org>
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, 
- Linus Walleij <linus.walleij@linaro.org>, Amit Kucheria <amitk@kernel.org>, 
- Thara Gopinath <thara.gopinath@gmail.com>, 
- "Rafael J. Wysocki" <rafael@kernel.org>, 
- Daniel Lezcano <daniel.lezcano@linaro.org>, Zhang Rui <rui.zhang@intel.com>, 
- Lukasz Luba <lukasz.luba@arm.com>, Joerg Roedel <joro@8bytes.org>, 
- Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>, 
- Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org, 
- linux-pm@vger.kernel.org, iommu@lists.linux.dev, 
- =?utf-8?q?Barnab=C3=A1s_Cz=C3=A9m=C3=A1n?= <barnabas.czeman@mainlining.org>, 
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1734738064; l=8999;
- i=barnabas.czeman@mainlining.org; s=20240730; h=from:subject:message-id;
- bh=yRrTth08180QfeHsiXKzN5bNhMrXGVQ/EVyPD3V4GyQ=;
- b=EjGVw7i57I2qFGqVemyh80alnIt+SNxyism+iCPXYvjWLAOZurJpkyyOVkMmoT6boYAtMhmBI
- FggN3ddemfrCawfoGWe5cEvhO7nwl0q1LNi0ZDqZ4wFq8pyloT8CfFl
-X-Developer-Key: i=barnabas.czeman@mainlining.org; a=ed25519;
- pk=TWUSIGgwW/Sn4xnX25nw+lszj1AT/A3bzkahn7EhOFc=
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 18/25] drm/msm/dpu: Reserve resources for CWB
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC: Rob Clark <robdclark@gmail.com>, <quic_abhinavk@quicinc.com>,
+        Sean Paul
+	<sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        "David
+ Airlie" <airlied@gmail.com>,
+        Maarten Lankhorst
+	<maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        Simona Vetter <simona@ffwll.ch>,
+        Simona Vetter <simona.vetter@ffwll.ch>, <quic_ebharadw@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
+        Rob Clark
+	<robdclark@chromium.org>,
+        =?UTF-8?B?VmlsbGUgU3lyasOkbMOk?=
+	<ville.syrjala@linux.intel.com>
+References: <20241216-concurrent-wb-v4-0-fe220297a7f0@quicinc.com>
+ <20241216-concurrent-wb-v4-18-fe220297a7f0@quicinc.com>
+ <z6pebzm5yxaqqmktu4jjjy4rojkdarrqrwo4ikmv6jzku7foyf@cc325q3dfgif>
+Content-Language: en-US
+From: Jessica Zhang <quic_jesszhan@quicinc.com>
+In-Reply-To: <z6pebzm5yxaqqmktu4jjjy4rojkdarrqrwo4ikmv6jzku7foyf@cc325q3dfgif>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: Nndv8IL_DNWZ9u5OGe8zinjVdYHjuT3z
+X-Proofpoint-ORIG-GUID: Nndv8IL_DNWZ9u5OGe8zinjVdYHjuT3z
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 mlxscore=0
+ lowpriorityscore=0 adultscore=0 priorityscore=1501 malwarescore=0
+ clxscore=1015 suspectscore=0 phishscore=0 spamscore=0 bulkscore=0
+ mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2412200197
 
-Add initial support for Xiaomi Redmi 5A (riva).
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Barnabás Czémán <barnabas.czeman@mainlining.org>
----
- arch/arm64/boot/dts/qcom/Makefile                |   1 +
- arch/arm64/boot/dts/qcom/msm8917-xiaomi-riva.dts | 333 +++++++++++++++++++++++
- 2 files changed, 334 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-index 4686f2a8ddd897227360b4de48a0618499ad463e..ee9b262b0e0fc3ec9d6515174c33f8b69b524842 100644
---- a/arch/arm64/boot/dts/qcom/Makefile
-+++ b/arch/arm64/boot/dts/qcom/Makefile
-@@ -62,6 +62,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-wingtech-wt86518.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-wingtech-wt86528.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-wingtech-wt88047.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-yiming-uz801v3.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= msm8917-xiaomi-riva.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8929-wingtech-wt82918hd.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8939-huawei-kiwi.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8939-longcheer-l9100.dtb
-diff --git a/arch/arm64/boot/dts/qcom/msm8917-xiaomi-riva.dts b/arch/arm64/boot/dts/qcom/msm8917-xiaomi-riva.dts
-new file mode 100644
-index 0000000000000000000000000000000000000000..f1d22535fedd94467ba3f0a88b2110ce5360e7e1
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/msm8917-xiaomi-riva.dts
-@@ -0,0 +1,333 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+/*
-+ * Copyright (c) 2023, Barnabas Czeman
-+ */
-+
-+/dts-v1/;
-+
-+#include <dt-bindings/arm/qcom,ids.h>
-+#include <dt-bindings/gpio/gpio.h>
-+#include "msm8917.dtsi"
-+#include "pm8937.dtsi"
-+
-+/delete-node/ &qseecom_mem;
-+
-+/ {
-+	model = "Xiaomi Redmi 5A (riva)";
-+	compatible = "xiaomi,riva", "qcom,msm8917";
-+	chassis-type = "handset";
-+
-+	qcom,msm-id = <QCOM_ID_MSM8917 0>;
-+	qcom,board-id = <0x1000b 2>, <0x2000b 2>;
-+
-+	battery: battery {
-+		compatible = "simple-battery";
-+		charge-full-design-microamp-hours = <3000000>;
-+		energy-full-design-microwatt-hours = <11500000>;
-+		constant-charge-current-max-microamp = <1000000>;
-+		constant-charge-voltage-max-microvolt = <4400000>;
-+		precharge-current-microamp = <256000>;
-+		charge-term-current-microamp = <60000>;
-+		voltage-min-design-microvolt = <3400000>;
-+	};
-+
-+	chosen {
-+		#address-cells = <2>;
-+		#size-cells = <2>;
-+		ranges;
-+
-+		stdout-path = "framebuffer0";
-+
-+		framebuffer0: framebuffer@90001000 {
-+			compatible = "simple-framebuffer";
-+			reg = <0x0 0x90001000 0x0 (720 * 1280 * 3)>;
-+			width = <720>;
-+			height = <1280>;
-+			stride = <(720 * 3)>;
-+			format = "r8g8b8";
-+
-+			clocks = <&gcc GCC_MDSS_AHB_CLK>,
-+				 <&gcc GCC_MDSS_AXI_CLK>,
-+				 <&gcc GCC_MDSS_VSYNC_CLK>,
-+				 <&gcc GCC_MDSS_MDP_CLK>,
-+				 <&gcc GCC_MDSS_BYTE0_CLK>,
-+				 <&gcc GCC_MDSS_PCLK0_CLK>,
-+				 <&gcc GCC_MDSS_ESC0_CLK>;
-+			power-domains = <&gcc MDSS_GDSC>;
-+		};
-+	};
-+
-+	gpio-keys {
-+		compatible = "gpio-keys";
-+
-+		pinctrl-0 = <&gpio_keys_default>;
-+		pinctrl-names = "default";
-+
-+		key-volup {
-+			label = "Volume Up";
-+			linux,code = <KEY_VOLUMEUP>;
-+			gpios = <&tlmm 91 GPIO_ACTIVE_LOW>;
-+			debounce-interval = <15>;
-+		};
-+	};
-+
-+	vph_pwr: regulator-vph-pwr {
-+		compatible = "regulator-fixed";
-+		regulator-name = "vph_pwr";
-+		regulator-min-microvolt = <3700000>;
-+		regulator-max-microvolt = <3700000>;
-+		regulator-always-on;
-+		regulator-boot-on;
-+	};
-+
-+	reserved-memory {
-+		qseecom_mem: qseecom@84a00000 {
-+			reg = <0x0 0x84a00000 0x0 0x1900000>;
-+			no-map;
-+		};
-+
-+		framebuffer_mem: memory@90001000 {
-+			reg = <0x0 0x90001000 0x0 (720 * 1280 * 3)>;
-+			no-map;
-+		};
-+	};
-+};
-+
-+&blsp1_i2c3 {
-+	status = "okay";
-+
-+	touchscreen@38 {
-+		compatible = "edt,edt-ft5306";
-+		reg = <0x38>;
-+		interrupts-extended = <&tlmm 65 IRQ_TYPE_LEVEL_LOW>;
-+		reset-gpios = <&tlmm 64 GPIO_ACTIVE_LOW>;
-+		pinctrl-0 = <&tsp_int_rst_default>;
-+		pinctrl-names = "default";
-+		vcc-supply = <&pm8937_l10>;
-+		iovcc-supply = <&pm8937_l5>;
-+		touchscreen-size-x = <720>;
-+		touchscreen-size-y = <1280>;
-+	};
-+};
-+
-+&blsp2_i2c1 {
-+	status = "okay";
-+
-+	bq27426@55 {
-+		compatible = "ti,bq27426";
-+		reg = <0x55>;
-+		monitored-battery = <&battery>;
-+	};
-+
-+	bq25601@6b{
-+		compatible = "ti,bq25601";
-+		reg = <0x6b>;
-+		interrupts-extended = <&tlmm 61 IRQ_TYPE_EDGE_FALLING>;
-+		pinctrl-0 = <&bq25601_int_default>;
-+		pinctrl-names = "default";
-+		input-voltage-limit-microvolt = <4400000>;
-+		input-current-limit-microamp = <1000000>;
-+		monitored-battery = <&battery>;
-+	};
-+};
-+
-+&pm8937_resin {
-+	linux,code = <KEY_VOLUMEDOWN>;
-+
-+	status = "okay";
-+};
-+
-+&rpm_requests {
-+	regulators-0 {
-+		compatible = "qcom,rpm-pm8937-regulators";
-+
-+		vdd_s1-supply = <&vph_pwr>;
-+		vdd_s2-supply = <&vph_pwr>;
-+		vdd_s3-supply = <&vph_pwr>;
-+		vdd_s4-supply = <&vph_pwr>;
-+
-+		vdd_l1_l19-supply = <&pm8937_s3>;
-+		vdd_l2_l23-supply = <&pm8937_s3>;
-+		vdd_l3-supply = <&pm8937_s3>;
-+		vdd_l4_l5_l6_l7_l16-supply = <&pm8937_s4>;
-+		vdd_l8_l11_l12_l17_l22-supply = <&vph_pwr>;
-+		vdd_l9_l10_l13_l14_l15_l18-supply = <&vph_pwr>;
-+
-+		pm8937_s1: s1 {
-+			regulator-min-microvolt = <1000000>;
-+			regulator-max-microvolt = <1225000>;
-+		};
-+
-+		pm8937_s3: s3 {
-+			regulator-min-microvolt = <1300000>;
-+			regulator-max-microvolt = <1300000>;
-+		};
-+
-+		pm8937_s4: s4 {
-+			regulator-min-microvolt = <2050000>;
-+			regulator-max-microvolt = <2050000>;
-+		};
-+
-+		pm8937_l2: l2 {
-+			regulator-min-microvolt = <1200000>;
-+			regulator-max-microvolt = <1200000>;
-+		};
-+
-+		pm8937_l5: l5 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+		};
-+
-+		pm8937_l6: l6 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+		};
-+
-+		pm8937_l7: l7 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+		};
-+
-+		pm8937_l8: l8 {
-+			regulator-min-microvolt = <2850000>;
-+			regulator-max-microvolt = <2900000>;
-+		};
-+
-+		pm8937_l9: l9 {
-+			regulator-min-microvolt = <3000000>;
-+			regulator-max-microvolt = <3300000>;
-+		};
-+
-+		pm8937_l10: l10 {
-+			regulator-min-microvolt = <2800000>;
-+			regulator-max-microvolt = <3000000>;
-+		};
-+
-+		pm8937_l11: l11 {
-+			regulator-min-microvolt = <2950000>;
-+			regulator-max-microvolt = <2950000>;
-+			regulator-allow-set-load;
-+			regulator-system-load = <200000>;
-+		};
-+
-+		pm8937_l12: l12 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <2950000>;
-+		};
-+
-+		pm8937_l13: l13 {
-+			regulator-min-microvolt = <3075000>;
-+			regulator-max-microvolt = <3075000>;
-+		};
-+
-+		pm8937_l14: l14 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <3300000>;
-+		};
-+
-+		pm8937_l15: l15 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <3300000>;
-+		};
-+
-+		pm8937_l16: l16 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+		};
-+
-+		pm8937_l17: l17 {
-+			regulator-min-microvolt = <2800000>;
-+			regulator-max-microvolt = <2900000>;
-+		};
-+
-+		pm8937_l19: l19 {
-+			regulator-min-microvolt = <1225000>;
-+			regulator-max-microvolt = <1350000>;
-+		};
-+
-+		pm8937_l22: l22 {
-+			regulator-min-microvolt = <2800000>;
-+			regulator-max-microvolt = <2800000>;
-+		};
-+
-+		pm8937_l23: l23 {
-+			regulator-min-microvolt = <1200000>;
-+			regulator-max-microvolt = <1200000>;
-+		};
-+	};
-+
-+};
-+
-+&sdhc_1 {
-+	vmmc-supply = <&pm8937_l8>;
-+	vqmmc-supply = <&pm8937_l5>;
-+
-+	status = "okay";
-+};
-+
-+&sdhc_2 {
-+	cd-gpios = <&tlmm 67 GPIO_ACTIVE_LOW>;
-+	vmmc-supply = <&pm8937_l11>;
-+	vqmmc-supply = <&pm8937_l12>;
-+	pinctrl-0 = <&sdc2_default &sdc2_cd_default>;
-+	pinctrl-1 = <&sdc2_sleep &sdc2_cd_default>;
-+	pinctrl-names = "default", "sleep";
-+
-+	status = "okay";
-+};
-+
-+&sleep_clk {
-+	clock-frequency = <32768>;
-+};
-+
-+&tlmm {
-+	bq25601_int_default: bq25601-int-default-state {
-+		pins = "gpio61";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-pull-up;
-+	};
-+
-+	gpio_keys_default: gpio-keys-default-state {
-+		pins = "gpio91";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-pull-up;
-+	};
-+
-+	sdc2_cd_default: sdc2-cd-default-state {
-+		pins = "gpio67";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
-+
-+	tsp_int_rst_default: tsp-int-rst-default-state {
-+		pins = "gpio64", "gpio65";
-+		function = "gpio";
-+		drive-strength = <8>;
-+		bias-pull-up;
-+	};
-+};
-+
-+&wcnss {
-+	vddpx-supply = <&pm8937_l5>;
-+
-+	status = "okay";
-+};
-+
-+&wcnss_iris {
-+	compatible = "qcom,wcn3620";
-+	vddxo-supply = <&pm8937_l7>;
-+	vddrfa-supply = <&pm8937_l19>;
-+	vddpa-supply = <&pm8937_l9>;
-+	vdddig-supply = <&pm8937_l5>;
-+};
-+
-+&wcnss_mem {
-+	status = "okay";
-+};
-+
-+&xo_board {
-+	clock-frequency = <19200000>;
-+};
+On 12/19/2024 9:52 PM, Dmitry Baryshkov wrote:
+> On Mon, Dec 16, 2024 at 04:43:29PM -0800, Jessica Zhang wrote:
+>> Add support for RM to reserve dedicated CWB PINGPONGs and CWB muxes
+>>
+>> For concurrent writeback, even-indexed CWB muxes must be assigned to
+>> even-indexed LMs and odd-indexed CWB muxes for odd-indexed LMs. The same
+>> even/odd rule applies for dedicated CWB PINGPONGs.
+>>
+>> Track the CWB muxes in the global state and add a CWB-specific helper to
+>> reserve the correct CWB muxes and dedicated PINGPONGs following the
+>> even/odd rule.
+>>
+>> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+>> ---
+>>   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 34 ++++++++++--
+>>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h |  2 +
+>>   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h     |  1 +
+>>   drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c      | 83 +++++++++++++++++++++++++++++
+>>   4 files changed, 116 insertions(+), 4 deletions(-)
+>>
+>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+>> index a895d48fe81ccc71d265e089992786e8b6268b1b..a95dc1f0c6a422485c7ba98743e944e1a4f43539 100644
+>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+>> @@ -2,7 +2,7 @@
+>>   /*
+>>    * Copyright (C) 2013 Red Hat
+>>    * Copyright (c) 2014-2018, 2020-2021 The Linux Foundation. All rights reserved.
+>> - * Copyright (c) 2022-2023 Qualcomm Innovation Center, Inc. All rights reserved.
+>> + * Copyright (c) 2022-2024 Qualcomm Innovation Center, Inc. All rights reserved.
+>>    *
+>>    * Author: Rob Clark <robdclark@gmail.com>
+>>    */
+>> @@ -28,6 +28,7 @@
+>>   #include "dpu_hw_dsc.h"
+>>   #include "dpu_hw_merge3d.h"
+>>   #include "dpu_hw_cdm.h"
+>> +#include "dpu_hw_cwb.h"
+>>   #include "dpu_formats.h"
+>>   #include "dpu_encoder_phys.h"
+>>   #include "dpu_crtc.h"
+>> @@ -133,6 +134,9 @@ enum dpu_enc_rc_states {
+>>    * @cur_slave:		As above but for the slave encoder.
+>>    * @hw_pp:		Handle to the pingpong blocks used for the display. No.
+>>    *			pingpong blocks can be different than num_phys_encs.
+>> + * @hw_cwb:		Handle to the CWB muxes used for concurrent writeback
+>> + *			display. Number of CWB muxes can be different than
+>> + *			num_phys_encs.
+>>    * @hw_dsc:		Handle to the DSC blocks used for the display.
+>>    * @dsc_mask:		Bitmask of used DSC blocks.
+>>    * @intfs_swapped:	Whether or not the phys_enc interfaces have been swapped
+>> @@ -177,6 +181,7 @@ struct dpu_encoder_virt {
+>>   	struct dpu_encoder_phys *cur_master;
+>>   	struct dpu_encoder_phys *cur_slave;
+>>   	struct dpu_hw_pingpong *hw_pp[MAX_CHANNELS_PER_ENC];
+>> +	struct dpu_hw_cwb *hw_cwb[MAX_CHANNELS_PER_ENC];
+>>   	struct dpu_hw_dsc *hw_dsc[MAX_CHANNELS_PER_ENC];
+>>   
+>>   	unsigned int dsc_mask;
+>> @@ -1138,7 +1143,10 @@ static void dpu_encoder_virt_atomic_mode_set(struct drm_encoder *drm_enc,
+>>   	struct dpu_hw_blk *hw_pp[MAX_CHANNELS_PER_ENC];
+>>   	struct dpu_hw_blk *hw_ctl[MAX_CHANNELS_PER_ENC];
+>>   	struct dpu_hw_blk *hw_dsc[MAX_CHANNELS_PER_ENC];
+>> +	struct dpu_hw_blk *hw_cwb[MAX_CHANNELS_PER_ENC];
+>>   	int num_pp, num_dsc, num_ctl;
+>> +	int num_cwb = 0;
+>> +	bool is_cwb_encoder;
+>>   	unsigned int dsc_mask = 0;
+>>   	int i;
+>>   
+>> @@ -1152,6 +1160,8 @@ static void dpu_encoder_virt_atomic_mode_set(struct drm_encoder *drm_enc,
+>>   
+>>   	priv = drm_enc->dev->dev_private;
+>>   	dpu_kms = to_dpu_kms(priv->kms);
+>> +	is_cwb_encoder = drm_crtc_in_clone_mode(crtc_state) &&
+>> +			dpu_enc->disp_info.intf_type == INTF_WB;
+>>   
+>>   	global_state = dpu_kms_get_existing_global_state(dpu_kms);
+>>   	if (IS_ERR_OR_NULL(global_state)) {
+>> @@ -1162,9 +1172,25 @@ static void dpu_encoder_virt_atomic_mode_set(struct drm_encoder *drm_enc,
+>>   	trace_dpu_enc_mode_set(DRMID(drm_enc));
+>>   
+>>   	/* Query resource that have been reserved in atomic check step. */
+>> -	num_pp = dpu_rm_get_assigned_resources(&dpu_kms->rm, global_state,
+>> -		drm_enc->crtc, DPU_HW_BLK_PINGPONG, hw_pp,
+>> -		ARRAY_SIZE(hw_pp));
+>> +	if (is_cwb_encoder) {
+>> +		num_pp = dpu_rm_get_assigned_resources(&dpu_kms->rm, global_state,
+>> +						       drm_enc->crtc,
+>> +						       DPU_HW_BLK_DCWB_PINGPONG,
+>> +						       hw_pp, ARRAY_SIZE(hw_pp));
+>> +		num_cwb = dpu_rm_get_assigned_resources(&dpu_kms->rm, global_state,
+>> +						       drm_enc->crtc,
+>> +						       DPU_HW_BLK_CWB,
+>> +						       hw_cwb, ARRAY_SIZE(hw_cwb));
+>> +	} else {
+>> +		num_pp = dpu_rm_get_assigned_resources(&dpu_kms->rm, global_state,
+>> +						       drm_enc->crtc,
+>> +						       DPU_HW_BLK_PINGPONG, hw_pp,
+>> +						       ARRAY_SIZE(hw_pp));
+>> +	}
+>> +
+>> +	for (i = 0; i < num_cwb; i++)
+>> +		dpu_enc->hw_cwb[i] = to_dpu_hw_cwb(hw_cwb[i]);
+>> +
+>>   	num_ctl = dpu_rm_get_assigned_resources(&dpu_kms->rm, global_state,
+>>   			drm_enc->crtc, DPU_HW_BLK_CTL, hw_ctl, ARRAY_SIZE(hw_ctl));
+>>   
+>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h
+>> index ba7bb05efe9b8cac01a908e53121117e130f91ec..8d820cd1b5545d247515763039b341184e814e32 100644
+>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h
+>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h
+>> @@ -77,12 +77,14 @@ enum dpu_hw_blk_type {
+>>   	DPU_HW_BLK_LM,
+>>   	DPU_HW_BLK_CTL,
+>>   	DPU_HW_BLK_PINGPONG,
+>> +	DPU_HW_BLK_DCWB_PINGPONG,
+>>   	DPU_HW_BLK_INTF,
+>>   	DPU_HW_BLK_WB,
+>>   	DPU_HW_BLK_DSPP,
+>>   	DPU_HW_BLK_MERGE_3D,
+>>   	DPU_HW_BLK_DSC,
+>>   	DPU_HW_BLK_CDM,
+>> +	DPU_HW_BLK_CWB,
+>>   	DPU_HW_BLK_MAX,
+>>   };
+>>   
+>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
+>> index 48d756d8f8c6e4ab94b72bac0418320f7dc8cda8..1fc8abda927fc094b369e0d1efc795b71d6a7fcb 100644
+>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
+>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
+>> @@ -128,6 +128,7 @@ struct dpu_global_state {
+>>   	uint32_t dspp_to_crtc_id[DSPP_MAX - DSPP_0];
+>>   	uint32_t dsc_to_crtc_id[DSC_MAX - DSC_0];
+>>   	uint32_t cdm_to_crtc_id;
+>> +	uint32_t cwb_to_crtc_id[CWB_MAX - CWB_0];
+>>   };
+>>   
+>>   struct dpu_global_state
+>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
+>> index 85adaf256b2c705d2d7df378b6ffc0e578f52bc3..ead24bb0ceb5d8ec4705f0d32330294d0b45b216 100644
+>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
+>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
+>> @@ -234,6 +234,55 @@ static int _dpu_rm_get_lm_peer(struct dpu_rm *rm, int primary_idx)
+>>   	return -EINVAL;
+>>   }
+>>   
+>> +static int _dpu_rm_reserve_cwb_mux_and_pingpongs(struct dpu_rm *rm,
+>> +						 struct dpu_global_state *global_state,
+>> +						 uint32_t crtc_id,
+>> +						 struct msm_display_topology *topology)
+>> +{
+>> +	int num_cwb_pp = topology->num_lm, cwb_pp_count = 0;
+>> +	int cwb_pp_start_idx = PINGPONG_CWB_0 - PINGPONG_0;
+>> +	int cwb_pp_idx[MAX_BLOCKS];
+>> +	int cwb_mux_idx[MAX_BLOCKS];
+>> +
+>> +	/*
+>> +	 * Reserve additional dedicated CWB PINGPONG blocks and muxes for each
+>> +	 * mixer
+>> +	 *
+>> +	 * TODO: add support reserving resources for platforms with no
+>> +	 *       PINGPONG_CWB
+> 
+> What about doing it other way around: allocate CWBs first as required
+> (even/odd, proper count, etc). Then for each of CWBs allocate a PP block
+> (I think it's enough to simply make CWB blocks have a corresponding PP
+> index as a property). This way the driver can handle both legacy and
+> current platforms.
 
--- 
-2.47.1
+Hi Dmitry,
+
+Sorry if I'm misunderstanding your suggestion, but the main change 
+needed to support platforms with no dedicated PINGPONG_CWB is where in 
+the rm->pingpong_blks list to start assigning pingpong blocks for the 
+CWB mux. I'm not sure how changing the order in which CWBs and the 
+pingpong blocks are assigned will address that.
+
+(FWIW, the only change necessary to add support for non-dedicated 
+PINGPONG_CWBs platforms for this function should just be changing the 
+initialization value of cwb_pp_start_idx)
+
+Thanks,
+
+Jessica Zhang
+
+> 
+>> +	 */
+>> +	for (int i = 0; i < ARRAY_SIZE(rm->mixer_blks) &&
+>> +	     cwb_pp_count < num_cwb_pp; i++) {
+>> +		for (int j = cwb_pp_start_idx;
+>> +		     j < ARRAY_SIZE(rm->pingpong_blks); j++) {
+>> +			/*
+>> +			 * Odd LMs must be assigned to odd PINGPONGs and even
+>> +			 * LMs with even PINGPONGs
+>> +			 */
+>> +			if (reserved_by_other(global_state->pingpong_to_crtc_id, j, crtc_id) ||
+>> +			    i % 2 != j % 2)
+>> +				continue;
+>> +
+>> +			cwb_pp_idx[cwb_pp_count] = j;
+>> +			cwb_mux_idx[cwb_pp_count] = j - cwb_pp_start_idx;
+>> +			cwb_pp_count++;
+>> +			break;
+>> +		}
+>> +	}
+>> +
+>> +	if (cwb_pp_count != num_cwb_pp) {
+>> +		DPU_ERROR("Unable to reserve all CWB PINGPONGs\n");
+>> +		return -ENAVAIL;
+>> +	}
+>> +
+>> +	for (int i = 0; i < cwb_pp_count; i++) {
+>> +		global_state->pingpong_to_crtc_id[cwb_pp_idx[i]] = crtc_id;
+>> +		global_state->cwb_to_crtc_id[cwb_mux_idx[i]] = crtc_id;
+>> +	}
+>> +
+>> +	return 0;
+>> +}
+>> +
+>>   /**
+>>    * _dpu_rm_check_lm_and_get_connected_blks - check if proposed layer mixer meets
+>>    *	proposed use case requirements, incl. hardwired dependent blocks like
+>> @@ -614,6 +663,12 @@ static int _dpu_rm_make_reservation(
+>>   		return ret;
+>>   	}
+>>   
+>> +	if (topology->cwb_enabled) {
+>> +		ret = _dpu_rm_reserve_cwb_mux_and_pingpongs(rm, global_state,
+>> +							    crtc_id, topology);
+>> +		if (ret)
+>> +			return ret;
+>> +	}
+>>   
+>>   	ret = _dpu_rm_reserve_ctls(rm, global_state, crtc_id,
+>>   			topology);
+>> @@ -671,6 +726,8 @@ void dpu_rm_release(struct dpu_global_state *global_state,
+>>   	_dpu_rm_clear_mapping(global_state->dspp_to_crtc_id,
+>>   			ARRAY_SIZE(global_state->dspp_to_crtc_id), crtc_id);
+>>   	_dpu_rm_clear_mapping(&global_state->cdm_to_crtc_id, 1, crtc_id);
+>> +	_dpu_rm_clear_mapping(global_state->cwb_to_crtc_id,
+>> +			ARRAY_SIZE(global_state->cwb_to_crtc_id), crtc_id);
+>>   }
+>>   
+>>   /**
+>> @@ -733,6 +790,7 @@ int dpu_rm_get_assigned_resources(struct dpu_rm *rm,
+>>   
+>>   	switch (type) {
+>>   	case DPU_HW_BLK_PINGPONG:
+>> +	case DPU_HW_BLK_DCWB_PINGPONG:
+>>   		hw_blks = rm->pingpong_blks;
+>>   		hw_to_crtc_id = global_state->pingpong_to_crtc_id;
+>>   		max_blks = ARRAY_SIZE(rm->pingpong_blks);
+>> @@ -762,6 +820,11 @@ int dpu_rm_get_assigned_resources(struct dpu_rm *rm,
+>>   		hw_to_crtc_id = &global_state->cdm_to_crtc_id;
+>>   		max_blks = 1;
+>>   		break;
+>> +	case DPU_HW_BLK_CWB:
+>> +		hw_blks = rm->cwb_blks;
+>> +		hw_to_crtc_id = global_state->cwb_to_crtc_id;
+>> +		max_blks = ARRAY_SIZE(rm->cwb_blks);
+>> +		break;
+>>   	default:
+>>   		DPU_ERROR("blk type %d not managed by rm\n", type);
+>>   		return 0;
+>> @@ -772,6 +835,20 @@ int dpu_rm_get_assigned_resources(struct dpu_rm *rm,
+>>   		if (hw_to_crtc_id[i] != crtc_id)
+>>   			continue;
+>>   
+>> +		if (type == DPU_HW_BLK_PINGPONG) {
+>> +			struct dpu_hw_pingpong *pp = to_dpu_hw_pingpong(hw_blks[i]);
+>> +
+>> +			if (pp->idx >= PINGPONG_CWB_0)
+>> +				continue;
+>> +		}
+>> +
+>> +		if (type == DPU_HW_BLK_DCWB_PINGPONG) {
+>> +			struct dpu_hw_pingpong *pp = to_dpu_hw_pingpong(hw_blks[i]);
+>> +
+>> +			if (pp->idx < PINGPONG_CWB_0)
+>> +				continue;
+>> +		}
+>> +
+>>   		if (num_blks == blks_size) {
+>>   			DPU_ERROR("More than %d resources assigned to crtc %d\n",
+>>   				  blks_size, crtc_id);
+>> @@ -847,4 +924,10 @@ void dpu_rm_print_state(struct drm_printer *p,
+>>   	dpu_rm_print_state_helper(p, rm->cdm_blk,
+>>   				  global_state->cdm_to_crtc_id);
+>>   	drm_puts(p, "\n");
+>> +
+>> +	drm_puts(p, "\tcwb=");
+>> +	for (i = 0; i < ARRAY_SIZE(global_state->cwb_to_crtc_id); i++)
+>> +		dpu_rm_print_state_helper(p, rm->cwb_blks[i],
+>> +					  global_state->cwb_to_crtc_id[i]);
+>> +	drm_puts(p, "\n");
+>>   }
+>>
+>> -- 
+>> 2.34.1
+>>
+> 
+> -- 
+> With best wishes
+> Dmitry
 
 
