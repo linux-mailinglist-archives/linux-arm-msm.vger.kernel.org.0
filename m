@@ -1,152 +1,161 @@
-Return-Path: <linux-arm-msm+bounces-43034-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-43035-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2DC2B9F9E85
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Dec 2024 06:27:53 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 19EFD9F9EB8
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Dec 2024 07:14:16 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 439E21882397
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Dec 2024 05:27:54 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 17E95188C433
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Dec 2024 06:14:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 479F81DF246;
-	Sat, 21 Dec 2024 05:27:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 71FE3191F88;
+	Sat, 21 Dec 2024 06:14:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LhaqwRoM"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="GNkLTrFo"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.17])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE710163;
-	Sat, 21 Dec 2024 05:27:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CF553594C;
+	Sat, 21 Dec 2024 06:14:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.17
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734758867; cv=none; b=PCbBbB7zoOs+9UkyzL6LARUz/w3AkdnLIKsHPYSjWL6nCGtoQuNpaXswnVKOuG7WWo/8KRYaMrIRdQACL4WX2KMNPWRhX9cWSqRFk8p5WzOGqjW2vi9a4A9yeA7K6quvbA1hEi5stSoi408l862tZ8boWh/D/Egz/ZQNb7wsRjs=
+	t=1734761649; cv=none; b=Chy7LUpGZv44iMD96miKLIov7Ms5NDCaV9RYDa+HVGKBvaYPxQAyVVIEiPG1Iv2l2H5yqOvCAyChrzuEAz0oOp/HMrWDW12LfHdoLjgpJ7EfGLLIJ/3Eo9LRuTrlLVUXJiMcFKXi+FMjplOGICAoAfjiKeWeXdGgxbQmKYbRIVA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734758867; c=relaxed/simple;
-	bh=U4gLcbEPg+CsyVBxB+R3ZX39WFaQqjYIDvIlNaIVkO4=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=BolprmcT1jsxxkSysH7JYcdox0bKH7wATJHwu2BkZjEnaH+u8P/+R43T8YeP0kuB786ULC35syYoWZfEcQeopmYM/hNfK+CrSk6QdywwL0VsEXVAJ7cOLjgiOv07FbK71+mAFh3NZOFnToEYdk9kNQpYLbdhfD3c4bgZo0Q/sac=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LhaqwRoM; arc=none smtp.client-ip=209.85.214.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-21670dce0a7so31286035ad.1;
-        Fri, 20 Dec 2024 21:27:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1734758865; x=1735363665; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=6GYQGP1j9I3brZhGo+KMbkCCuGXTUOAxoafewXwsJuk=;
-        b=LhaqwRoMoBocWGCPVwzYSU4bYI+CEJlEz1/s9bVretujv1lqHOZSi0SPrHzXsOi2zf
-         Cy5x9CoxDOxY3WHg191MZgesgckdkWxLVPSoKOLMWm8QGM5eGOnzBrxjXkZ4GTX+FxE7
-         N7ynqrwfZg1/XrPNy5afY8hNUMxWocvuhq15SuZsT5JyOmT6CBQuq/oBV9F1rTAoaUln
-         Dnxya9BAcCScjaWUgtElWgYNH7g4uXP8J8d7NJqTR9NGHqEGPRdshYKZEcPCDt77O6JV
-         OH7eLrDGjGLg3GFyLCda5wQYrBeJEQRZ+Zg/ZFexrbcmxgYdYu3cRGaiSmVEnsu+a0BU
-         ls7g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734758865; x=1735363665;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=6GYQGP1j9I3brZhGo+KMbkCCuGXTUOAxoafewXwsJuk=;
-        b=YkbBmVgAitou35yWdwhYGS/uak0F8A4cQzMJVN6RwZDrO+QDgsYVoTvnu8vhpzQD9E
-         0WxeqzxaoPXzpo2c1QecMRg2XROVnhNQmkyPqgfRguxO06T5DDusv5m+v93wo6Y49yHU
-         pSRjX5AKBriIra7AMfyDLJWcFjEcUsgOp5qQWXfcJAEUORiOS3YgNFNa5zdTThv8jaLX
-         sIYbNjcXGC8I8+qywzkZglfjqwwizphh585GM+17tA3+XUC09XlWH8YG4aWSY1cSKcwG
-         93ncGhdFiaEu+c2aLP2k/afr/MAM0ozdkfamKaN0z/q9OmDCNKnYY+UMJSM/oZL8X/sI
-         B3pg==
-X-Forwarded-Encrypted: i=1; AJvYcCUD9ViGLILxgoo1Uni2OrQ3GZKPg1uRhjNVqno3cJeJO/q+Q1HWuN809azftQZFLM/z6ktrycq+kYjLkhiFQA==@vger.kernel.org, AJvYcCVbG7MeE/D4IseSJnEQ6r6jhcKZ9zoXG3gR/7dFWMSAIA4lKZ9YyEqeBUQ2lWrLEk2AcwBvlPknLTX1@vger.kernel.org, AJvYcCX5TM5hReXHl4m2vTj6n0ko0nSs4Q2mnkOxS4bXthdRL2uA0u6AqKLlLz/y0j1guXQQJrmhlCwL0nDxFo1g@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz7YEuGCaSCZE/jv8xKYmeYSWfsJRGIk92RCImIX9gNYv7KAfJA
-	HeGrMsQJfQCtM/0J6fz/zsTFmNS3mG8iT9NYJ5H8p10ptcRCso2n
-X-Gm-Gg: ASbGnctbQP21gAj7hoQXZGJI3XQ32r5m0xbxa+SSu47h1I86MrPW74mKW6Mn5cufvXD
-	GDJ/88ztkblbC1x0S1qAaqeQRujc7n2gnbu4Fa3zNHFzecKVfXHQmm2AN1lNlcZgva1bWNjW9rq
-	mQ6o4Cm+4RWlp7f8+uPKWHTaLI3CkFywb8k8KzI4hSM9xr0Km+Bi7QbiTSFl9Nuyuj/wg56wkhP
-	/+I3Pt3hqYw3/Abbhz2i3eR0+xRJLKa1iOmSg/NzI4z2XXAVKmBFs4=
-X-Google-Smtp-Source: AGHT+IE0mDToVQEh6rb+yQjn3LLT6AXsC5V9WsWrcjIhsUdDquXA4+lnSsOX+8qg2iLEQHoi4fHfFQ==
-X-Received: by 2002:a17:902:ef12:b0:216:52a5:dd41 with SMTP id d9443c01a7336-219e6ec13bcmr88159075ad.31.1734758865024;
-        Fri, 20 Dec 2024 21:27:45 -0800 (PST)
-Received: from nuvole.. ([144.202.86.13])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-219dc9f51c2sm37390825ad.190.2024.12.20.21.27.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 20 Dec 2024 21:27:44 -0800 (PST)
-From: Pengyu Luo <mitltlatltl@gmail.com>
-To: johan@kernel.org
-Cc: andersson@kernel.org,
-	chenxuecong2009@outlook.com,
-	conor+dt@kernel.org,
-	devicetree@vger.kernel.org,
-	dmitry.baryshkov@linaro.org,
-	gty0622@gmail.com,
-	johan+linaro@kernel.org,
-	konrad.dybcio@oss.qualcomm.com,
-	konradybcio@kernel.org,
-	krzk+dt@kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	mitltlatltl@gmail.com,
-	robh@kernel.org
-Subject: Re: [PATCH 3/3] arm64: dts: qcom: sc8280xp: Add Huawei Matebook E Go (sc8280xp)
-Date: Sat, 21 Dec 2024 13:26:25 +0800
-Message-ID: <20241221052626.451989-1-mitltlatltl@gmail.com>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <Z2WZbX2NajDFAgBk@hovoldconsulting.com>
-References: <Z2WZbX2NajDFAgBk@hovoldconsulting.com>
+	s=arc-20240116; t=1734761649; c=relaxed/simple;
+	bh=JjY37SxMSkdhtyrhtTKrP4oq+y277V+a81pZHzt3KNs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=mKikJCONJOmeUhsxXlNKI5RZWBdnHO8RldGgUw6HQUSN5FrEHmsa3oHcB8YXCJdKa8+uaQkP5D5xVUvT8bCk464av7RMwk7QmSilgztrWb0wYUBlmlXB35OOgwRIt3+S1GyZqgh4lakEuqsdM5G3eB/3jyKocPbkhdpDn8uR2VA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=GNkLTrFo; arc=none smtp.client-ip=192.198.163.17
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1734761647; x=1766297647;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=JjY37SxMSkdhtyrhtTKrP4oq+y277V+a81pZHzt3KNs=;
+  b=GNkLTrFo5cCoRAsgNPalBUD1yXoITqywbShmDJEANs6Z3VOpofJW2z9c
+   wB1coyPz9L+eB7RJUVYFUeJ2Lxdp80Uf1dfAtg12auGbaW8s2a0Q+Urwa
+   jdWTqvwKMOFJohjoRCfAR5u81R70OcptQjLS5JjdiPYUxHwltzXSTlSPb
+   S56TVAN+twFJjQrB8lIb13hZozZhk/rTo67g2V7rGf9OS/iNVLX9IEtIo
+   yOpbRmn2nheNO2COueC3QQOkAV1brsrAnT47GTBoR2vLPGbirT12VvsHo
+   u47UPCKw671rjdjmb9NFOM5yavZwBFIa5RN2WswE7O7FPaGHyaZaooVJU
+   Q==;
+X-CSE-ConnectionGUID: iR15W2nqQH+hSoUlaYJw4w==
+X-CSE-MsgGUID: Ur7qqs8eQrW+l3OFbtPWJg==
+X-IronPort-AV: E=McAfee;i="6700,10204,11292"; a="35202142"
+X-IronPort-AV: E=Sophos;i="6.12,253,1728975600"; 
+   d="scan'208";a="35202142"
+Received: from orviesa002.jf.intel.com ([10.64.159.142])
+  by fmvoesa111.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Dec 2024 22:14:05 -0800
+X-CSE-ConnectionGUID: GBtUTgiERLmNzgFa33UeTQ==
+X-CSE-MsgGUID: FFtxWLWrTGaxb2gCb7B1vw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.12,253,1728975600"; 
+   d="scan'208";a="129529030"
+Received: from lkp-server01.sh.intel.com (HELO a46f226878e0) ([10.239.97.150])
+  by orviesa002.jf.intel.com with ESMTP; 20 Dec 2024 22:13:59 -0800
+Received: from kbuild by a46f226878e0 with local (Exim 4.96)
+	(envelope-from <lkp@intel.com>)
+	id 1tOskP-0001xb-1y;
+	Sat, 21 Dec 2024 06:13:57 +0000
+Date: Sat, 21 Dec 2024 14:13:27 +0800
+From: kernel test robot <lkp@intel.com>
+To: Ziyue Zhang <quic_ziyuzhan@quicinc.com>, vkoul@kernel.org,
+	kishon@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
+	conor+dt@kernel.org, dmitry.baryshkov@linaro.org,
+	neil.armstrong@linaro.org, abel.vesa@linaro.org,
+	manivannan.sadhasivam@linaro.org, lpieralisi@kernel.org,
+	kw@linux.com, bhelgaas@google.com, andersson@kernel.org,
+	konradybcio@kernel.org
+Cc: oe-kbuild-all@lists.linux.dev, linux-phy@lists.infradead.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+	quic_qianyu@quicinc.com, quic_krichai@quicinc.com,
+	quic_vbadigan@quicinc.com, Ziyue Zhang <quic_ziyuzhan@quicinc.com>
+Subject: Re: [PATCH v3 2/8] phy: qcom-qmp-pcie: add dual lane PHY support for
+ QCS8300
+Message-ID: <202412211301.bQO6vXpo-lkp@intel.com>
+References: <20241220055239.2744024-3-quic_ziyuzhan@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241220055239.2744024-3-quic_ziyuzhan@quicinc.com>
 
-On Sat, Dec 21, 2024 at 12:20 AM Johan Hovold <johan@kernel.org> wrote:
+Hi Ziyue,
 
-> On Sat, Dec 14, 2024 at 03:39:27PM +0200, Dmitry Baryshkov wrote:
-> > On Sat, Dec 14, 2024 at 08:23:00PM +0800, Pengyu Luo wrote:
-> 
-> > > >> +
-> > > >> +                /* /lib/firmware/ath11k/WCN6855/hw2.1/board-2.bin
-> > > >> +                 * there is no calibrate data for huawei,
-> > > >> +                 * but they have the same subsystem-device id
-> > > >> +                 */
-> > > >> +                qcom,ath11k-calibration-variant = "LE_X13S";
-> 
-> > > Finally, I found something, after I enabled ath11k boot dbg, I got my
-> > > id_string='bus=pci,vendor=17cb,device=1103,subsystem-vendor=17cb,subsystem-device=0108,qmi-chip-id=2,qmi-board-id=255`
-> > >
-> > > With qca-swiss-army-knife (see [1])
-> > >
-> > > $ ./ath11k-bdencoder -e board-2.bin | grep -i "$id_string"
-> > > bus=pci,vendor=17cb,device=1103,subsystem-vendor=17cb,subsystem-device=0108,qmi-chip-id=2,qmi-board-id=255.bin created size: 60048
-> > >
-> > > It have already been here. So that means I don't need to extract from
-> > > Windows. I just extract it from linux-firmware then give it a variant
-> > > name and send patches to ath11k, right?
-> >
-> > No. Usually 255 is an ID that is used by a variety of boards. So,
-> > basically, you have to extract board data from Windows, add a proper
-> > calibration variant that is specific to your board and then send the
-> > resulting data to the ath11k mailing list.
-> 
-> The board files used by Windows are not compatible with the Linux
-> firmware, so the calibration data needs to come from Qualcomm.
-> 
+kernel test robot noticed the following build errors:
 
-Then I don't understand why those bdwlan.* files would be in the
-firmware tree.
+[auto build test ERROR on 4176cf5c5651c33769de83bb61b0287f4ec7719f]
 
-> Try filing a request in the bugzilla:
-> 
-> 	https://bugzilla.kernel.org/buglist.cgi?quicksearch=ath11k&list_id=1147229
-> 
+url:    https://github.com/intel-lab-lkp/linux/commits/Ziyue-Zhang/dt-bindings-phy-qcom-sc8280xp-qmp-pcie-phy-Document-the-QCS8300-QMP-PCIe-PHY-Gen4-x2/20241220-135722
+base:   4176cf5c5651c33769de83bb61b0287f4ec7719f
+patch link:    https://lore.kernel.org/r/20241220055239.2744024-3-quic_ziyuzhan%40quicinc.com
+patch subject: [PATCH v3 2/8] phy: qcom-qmp-pcie: add dual lane PHY support for QCS8300
+config: arm64-randconfig-004-20241221 (https://download.01.org/0day-ci/archive/20241221/202412211301.bQO6vXpo-lkp@intel.com/config)
+compiler: aarch64-linux-gcc (GCC) 14.2.0
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20241221/202412211301.bQO6vXpo-lkp@intel.com/reproduce)
 
-Thanks, I will try it.
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202412211301.bQO6vXpo-lkp@intel.com/
 
-> Johan
+All errors (new ones prefixed by >>):
 
-Best wishes,
-Pengyu
+>> drivers/phy/qualcomm/phy-qcom-qmp-pcie.c:3419:35: error: 'pciephy_v5_20_regs_layout' undeclared here (not in a function); did you mean 'pciephy_v5_regs_layout'?
+    3419 |         .regs                   = pciephy_v5_20_regs_layout,
+         |                                   ^~~~~~~~~~~~~~~~~~~~~~~~~
+         |                                   pciephy_v5_regs_layout
+
+
+vim +3419 drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+
+  3390	
+  3391	static const struct qmp_phy_cfg qcs8300_qmp_gen4x2_pciephy_cfg = {
+  3392		.lanes			= 2,
+  3393		.offsets		= &qmp_pcie_offsets_v5_20,
+  3394	
+  3395		.tbls = {
+  3396			.serdes		= sa8775p_qmp_gen4x2_pcie_serdes_alt_tbl,
+  3397			.serdes_num		= ARRAY_SIZE(sa8775p_qmp_gen4x2_pcie_serdes_alt_tbl),
+  3398			.tx		= sa8775p_qmp_gen4_pcie_tx_tbl,
+  3399			.tx_num		= ARRAY_SIZE(sa8775p_qmp_gen4_pcie_tx_tbl),
+  3400			.rx		= qcs8300_qmp_gen4x2_pcie_rx_alt_tbl,
+  3401			.rx_num		= ARRAY_SIZE(qcs8300_qmp_gen4x2_pcie_rx_alt_tbl),
+  3402			.pcs		= sa8775p_qmp_gen4x2_pcie_pcs_alt_tbl,
+  3403			.pcs_num		= ARRAY_SIZE(sa8775p_qmp_gen4x2_pcie_pcs_alt_tbl),
+  3404			.pcs_misc		= sa8775p_qmp_gen4_pcie_pcs_misc_tbl,
+  3405			.pcs_misc_num	= ARRAY_SIZE(sa8775p_qmp_gen4_pcie_pcs_misc_tbl),
+  3406		},
+  3407	
+  3408		.tbls_rc = &(const struct qmp_phy_cfg_tbls) {
+  3409			.serdes		= sa8775p_qmp_gen4x2_pcie_rc_serdes_alt_tbl,
+  3410			.serdes_num	= ARRAY_SIZE(sa8775p_qmp_gen4x2_pcie_rc_serdes_alt_tbl),
+  3411			.pcs_misc	= sa8775p_qmp_gen4_pcie_rc_pcs_misc_tbl,
+  3412			.pcs_misc_num	= ARRAY_SIZE(sa8775p_qmp_gen4_pcie_rc_pcs_misc_tbl),
+  3413		},
+  3414	
+  3415		.reset_list		= sdm845_pciephy_reset_l,
+  3416		.num_resets		= ARRAY_SIZE(sdm845_pciephy_reset_l),
+  3417		.vreg_list		= qmp_phy_vreg_l,
+  3418		.num_vregs		= ARRAY_SIZE(qmp_phy_vreg_l),
+> 3419		.regs			= pciephy_v5_20_regs_layout,
+  3420	
+  3421		.pwrdn_ctrl		= SW_PWRDN | REFCLK_DRV_DSBL,
+  3422		.phy_status		= PHYSTATUS_4_20,
+  3423	};
+  3424	
+
+-- 
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
 
