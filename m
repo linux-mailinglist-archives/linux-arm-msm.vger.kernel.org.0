@@ -1,90 +1,98 @@
-Return-Path: <linux-arm-msm+bounces-43033-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-43034-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2BE2C9F9E74
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Dec 2024 06:17:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 2DC2B9F9E85
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Dec 2024 06:27:53 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 50A4D189203C
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Dec 2024 05:17:25 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 439E21882397
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Dec 2024 05:27:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6EB411DE2C8;
-	Sat, 21 Dec 2024 05:17:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 479F81DF246;
+	Sat, 21 Dec 2024 05:27:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JF5fEbBO"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LhaqwRoM"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pj1-f41.google.com (mail-pj1-f41.google.com [209.85.216.41])
+Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00E1A1FC3;
-	Sat, 21 Dec 2024 05:17:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE710163;
+	Sat, 21 Dec 2024 05:27:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734758238; cv=none; b=gm7DQDfquQT3KvVkjI2ftEyxQFep7v6WaTrYs1/cmDySINIutx71fJ9GBd2OL4LvkfLrqbYm5DLIRGbXHDrL64u1Z6D2mDhRxB5Tb4rxBRTI/ItJuAfQCNwvwaPoPGijqM7RXnQ10pAd8lwTJfNX86ditZDFt1cPJf0gwgqk3Fc=
+	t=1734758867; cv=none; b=PCbBbB7zoOs+9UkyzL6LARUz/w3AkdnLIKsHPYSjWL6nCGtoQuNpaXswnVKOuG7WWo/8KRYaMrIRdQACL4WX2KMNPWRhX9cWSqRFk8p5WzOGqjW2vi9a4A9yeA7K6quvbA1hEi5stSoi408l862tZ8boWh/D/Egz/ZQNb7wsRjs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734758238; c=relaxed/simple;
-	bh=V+8LK71GuHOIxNIIWAX8mRFCH3CWG2D/PuFBhElkwpU=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=Y3OvuHn8SmY+a+UFnZd3l+CKv1nvHP5nFbHl++RKU7qr04jlKSxUtXTqOkI+ZNTCQ847yANEE+Sb7DKnaDU7dNufr1FNxNZV9Y3kOnvm1A+o0QhVfkiAQlyNf5+Nj3XXUQotZ8oKTQdk1N8j0lqb/quwUrbTmexZNjhxznEHQUU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JF5fEbBO; arc=none smtp.client-ip=209.85.216.41
+	s=arc-20240116; t=1734758867; c=relaxed/simple;
+	bh=U4gLcbEPg+CsyVBxB+R3ZX39WFaQqjYIDvIlNaIVkO4=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=BolprmcT1jsxxkSysH7JYcdox0bKH7wATJHwu2BkZjEnaH+u8P/+R43T8YeP0kuB786ULC35syYoWZfEcQeopmYM/hNfK+CrSk6QdywwL0VsEXVAJ7cOLjgiOv07FbK71+mAFh3NZOFnToEYdk9kNQpYLbdhfD3c4bgZo0Q/sac=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LhaqwRoM; arc=none smtp.client-ip=209.85.214.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pj1-f41.google.com with SMTP id 98e67ed59e1d1-2ef760a1001so2235322a91.0;
-        Fri, 20 Dec 2024 21:17:16 -0800 (PST)
+Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-21670dce0a7so31286035ad.1;
+        Fri, 20 Dec 2024 21:27:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1734758236; x=1735363036; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=KJuig2DmpBBntDut655C4jp/lt/DyD+Pyx7q/GcSfcM=;
-        b=JF5fEbBOD5mNvCH7GWrAbkbCGSymo+larcYIYV+0iEJeeH72uNztz0TTNx5gjPJKcc
-         CPalzDYKz/NKb1OdIx+ESJEw0L2wT9eI5LsXfQyfP3s/FCGGMwXezdqTKxg96BHn5RPh
-         YJVKAGIe9a9tvU82TZZ27DTw0C0p8CqgKJ2GkGFnTzE19fTKlWdqmlPLMb4QaFxUKDto
-         jItWVBRIYG9dKIZTgAMWqrWyDhhGjm/Vps3XNTSUg/NoK4xjnnYSrcKP1ys90qiqEaUw
-         8PNKzwiQIlaBueSKjMBZpU04w2Hc6zMFTi349T+/DUVJg1RxX8egZmD6v796it403QJ2
-         C2qg==
+        d=gmail.com; s=20230601; t=1734758865; x=1735363665; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=6GYQGP1j9I3brZhGo+KMbkCCuGXTUOAxoafewXwsJuk=;
+        b=LhaqwRoMoBocWGCPVwzYSU4bYI+CEJlEz1/s9bVretujv1lqHOZSi0SPrHzXsOi2zf
+         Cy5x9CoxDOxY3WHg191MZgesgckdkWxLVPSoKOLMWm8QGM5eGOnzBrxjXkZ4GTX+FxE7
+         N7ynqrwfZg1/XrPNy5afY8hNUMxWocvuhq15SuZsT5JyOmT6CBQuq/oBV9F1rTAoaUln
+         Dnxya9BAcCScjaWUgtElWgYNH7g4uXP8J8d7NJqTR9NGHqEGPRdshYKZEcPCDt77O6JV
+         OH7eLrDGjGLg3GFyLCda5wQYrBeJEQRZ+Zg/ZFexrbcmxgYdYu3cRGaiSmVEnsu+a0BU
+         ls7g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734758236; x=1735363036;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=KJuig2DmpBBntDut655C4jp/lt/DyD+Pyx7q/GcSfcM=;
-        b=eu/dX8aH4CWXWQIXPYirgrSuvdWOsfKL2Lt0gxPd7SagUV3o3fhBheqM1nAnBA3zDH
-         Nk62tk9Ga+/zIu0HzPzBGCdw27FG7FsR9vN4Xr40uL6tyhG3d+b804AqUqb9GwtpBYRP
-         MtZttYBOF62AXloQRerlShxm/cSmG0dRnGNvxiQx6bZ2+fYk6zDhD2KeJTNsdCLHBUor
-         mdTeFUQsaeXpMelRMyS5WOcyukngmExbHcL0131ShU1fx+KVtbOYE0U3PTyD9MFaitKz
-         anMu5AvzjmlzrNolM0vYs7lgQYSCm6btKlBkjATffZlAUxXwnwwmHdURCfnKtA3voTI3
-         m5hg==
-X-Forwarded-Encrypted: i=1; AJvYcCW1u6x5jXIB2oR8Wb0VaaLdpatwPPvqn/B8vdQ1pK2z6TgO8P4jkgRELJGI8nQ7fTbqrGm+Z42GrSRUcXDg@vger.kernel.org, AJvYcCX/FONf7ur7hT0Qn1DJxk+BPtUtUr/XWc2jOZzHX0Hckf0waFnI0iCbWlONtu7qtWC7r3M8plidSUtUOzF5mw==@vger.kernel.org, AJvYcCXgNsFswr/4OQlq/Sk+/nXrnoSiDCq8u9RKYvzdhANg/7/N8mV4Pa9SCLiUa5VSDK/bsglmSFJWt1Ar@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx4cX0ua7Nuz+eVmykYtp2s3BKgFNOQxz2SzoP05Rs2ItMwEyaL
-	z0ez0mUu65o4ITbE8Ti3FltW7JmsLc/uNRl9R5a0mv3P+Exn3N8a
-X-Gm-Gg: ASbGncuwUeUAM9ph8tMXujEJskT4Yl9QY8B9DxSddYvyyNg8f1eAtzpOCbWn3xtC5/T
-	8yI2tVathJyyxunGqUAYYdCKnnJsRrV3ysq8Bj9svDNLuzF4ywfyK0+0PFfY5q06KqLvaajP7xa
-	G11KfahoTiL7C48YSqr1MmlpOfNUC8lTEgxEdBh3O+0PJsllaeEjz8Z+V8OvO2oaYrwsAI2t4YA
-	1NCxCBpr+kqgtiuyWixEJJV1QiqnAv4x1LT1tB+Mro7p+93AjlEgtE=
-X-Google-Smtp-Source: AGHT+IHo7rNzTyTM4UUN8dpQfT3ymojGTEzbN0D23GVqZ0kQv7Ut6oOxYKKGBrP/2jALr+3Rqr8O0g==
-X-Received: by 2002:a17:90a:d88f:b0:2ef:31a9:95af with SMTP id 98e67ed59e1d1-2f452ec6fc7mr8191899a91.27.1734758236255;
-        Fri, 20 Dec 2024 21:17:16 -0800 (PST)
+        d=1e100.net; s=20230601; t=1734758865; x=1735363665;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=6GYQGP1j9I3brZhGo+KMbkCCuGXTUOAxoafewXwsJuk=;
+        b=YkbBmVgAitou35yWdwhYGS/uak0F8A4cQzMJVN6RwZDrO+QDgsYVoTvnu8vhpzQD9E
+         0WxeqzxaoPXzpo2c1QecMRg2XROVnhNQmkyPqgfRguxO06T5DDusv5m+v93wo6Y49yHU
+         pSRjX5AKBriIra7AMfyDLJWcFjEcUsgOp5qQWXfcJAEUORiOS3YgNFNa5zdTThv8jaLX
+         sIYbNjcXGC8I8+qywzkZglfjqwwizphh585GM+17tA3+XUC09XlWH8YG4aWSY1cSKcwG
+         93ncGhdFiaEu+c2aLP2k/afr/MAM0ozdkfamKaN0z/q9OmDCNKnYY+UMJSM/oZL8X/sI
+         B3pg==
+X-Forwarded-Encrypted: i=1; AJvYcCUD9ViGLILxgoo1Uni2OrQ3GZKPg1uRhjNVqno3cJeJO/q+Q1HWuN809azftQZFLM/z6ktrycq+kYjLkhiFQA==@vger.kernel.org, AJvYcCVbG7MeE/D4IseSJnEQ6r6jhcKZ9zoXG3gR/7dFWMSAIA4lKZ9YyEqeBUQ2lWrLEk2AcwBvlPknLTX1@vger.kernel.org, AJvYcCX5TM5hReXHl4m2vTj6n0ko0nSs4Q2mnkOxS4bXthdRL2uA0u6AqKLlLz/y0j1guXQQJrmhlCwL0nDxFo1g@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz7YEuGCaSCZE/jv8xKYmeYSWfsJRGIk92RCImIX9gNYv7KAfJA
+	HeGrMsQJfQCtM/0J6fz/zsTFmNS3mG8iT9NYJ5H8p10ptcRCso2n
+X-Gm-Gg: ASbGnctbQP21gAj7hoQXZGJI3XQ32r5m0xbxa+SSu47h1I86MrPW74mKW6Mn5cufvXD
+	GDJ/88ztkblbC1x0S1qAaqeQRujc7n2gnbu4Fa3zNHFzecKVfXHQmm2AN1lNlcZgva1bWNjW9rq
+	mQ6o4Cm+4RWlp7f8+uPKWHTaLI3CkFywb8k8KzI4hSM9xr0Km+Bi7QbiTSFl9Nuyuj/wg56wkhP
+	/+I3Pt3hqYw3/Abbhz2i3eR0+xRJLKa1iOmSg/NzI4z2XXAVKmBFs4=
+X-Google-Smtp-Source: AGHT+IE0mDToVQEh6rb+yQjn3LLT6AXsC5V9WsWrcjIhsUdDquXA4+lnSsOX+8qg2iLEQHoi4fHfFQ==
+X-Received: by 2002:a17:902:ef12:b0:216:52a5:dd41 with SMTP id d9443c01a7336-219e6ec13bcmr88159075ad.31.1734758865024;
+        Fri, 20 Dec 2024 21:27:45 -0800 (PST)
 Received: from nuvole.. ([144.202.86.13])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2f2ee26b125sm6747298a91.43.2024.12.20.21.17.09
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-219dc9f51c2sm37390825ad.190.2024.12.20.21.27.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 20 Dec 2024 21:17:15 -0800 (PST)
+        Fri, 20 Dec 2024 21:27:44 -0800 (PST)
 From: Pengyu Luo <mitltlatltl@gmail.com>
-To: andersson@kernel.org,
+To: johan@kernel.org
+Cc: andersson@kernel.org,
+	chenxuecong2009@outlook.com,
 	conor+dt@kernel.org,
+	devicetree@vger.kernel.org,
+	dmitry.baryshkov@linaro.org,
+	gty0622@gmail.com,
 	johan+linaro@kernel.org,
+	konrad.dybcio@oss.qualcomm.com,
 	konradybcio@kernel.org,
 	krzk+dt@kernel.org,
-	robh@kernel.org
-Cc: chenxuecong2009@outlook.com,
-	devicetree@vger.kernel.org,
-	gty0622@gmail.com,
 	linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 3/3] arm64: dts: qcom: sc8280xp: Add Huawei Matebook E Go (sc8280xp)
-Date: Sat, 21 Dec 2024 13:15:56 +0800
-Message-ID: <20241221051558.450550-1-mitltlatltl@gmail.com>
+	linux-kernel@vger.kernel.org,
+	mitltlatltl@gmail.com,
+	robh@kernel.org
+Subject: Re: [PATCH 3/3] arm64: dts: qcom: sc8280xp: Add Huawei Matebook E Go (sc8280xp)
+Date: Sat, 21 Dec 2024 13:26:25 +0800
+Message-ID: <20241221052626.451989-1-mitltlatltl@gmail.com>
 X-Mailer: git-send-email 2.47.1
+In-Reply-To: <Z2WZbX2NajDFAgBk@hovoldconsulting.com>
+References: <Z2WZbX2NajDFAgBk@hovoldconsulting.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -94,47 +102,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-On Sat, Dec 21, 2024 at 5:14 AM Konrad Dybcio <konrad.dybcio@oss.qualcomm.com> wrote:
-> On 20.12.2024 5:05 PM, Pengyu Luo wrote:
+On Sat, Dec 21, 2024 at 12:20 AM Johan Hovold <johan@kernel.org> wrote:
+
+> On Sat, Dec 14, 2024 at 03:39:27PM +0200, Dmitry Baryshkov wrote:
+> > On Sat, Dec 14, 2024 at 08:23:00PM +0800, Pengyu Luo wrote:
+> 
+> > > >> +
+> > > >> +                /* /lib/firmware/ath11k/WCN6855/hw2.1/board-2.bin
+> > > >> +                 * there is no calibrate data for huawei,
+> > > >> +                 * but they have the same subsystem-device id
+> > > >> +                 */
+> > > >> +                qcom,ath11k-calibration-variant = "LE_X13S";
+> 
+> > > Finally, I found something, after I enabled ath11k boot dbg, I got my
+> > > id_string='bus=pci,vendor=17cb,device=1103,subsystem-vendor=17cb,subsystem-device=0108,qmi-chip-id=2,qmi-board-id=255`
+> > >
+> > > With qca-swiss-army-knife (see [1])
+> > >
+> > > $ ./ath11k-bdencoder -e board-2.bin | grep -i "$id_string"
+> > > bus=pci,vendor=17cb,device=1103,subsystem-vendor=17cb,subsystem-device=0108,qmi-chip-id=2,qmi-board-id=255.bin created size: 60048
+> > >
+> > > It have already been here. So that means I don't need to extract from
+> > > Windows. I just extract it from linux-firmware then give it a variant
+> > > name and send patches to ath11k, right?
+> >
+> > No. Usually 255 is an ID that is used by a variety of boards. So,
+> > basically, you have to extract board data from Windows, add a proper
+> > calibration variant that is specific to your board and then send the
+> > resulting data to the ath11k mailing list.
+> 
+> The board files used by Windows are not compatible with the Linux
+> firmware, so the calibration data needs to come from Qualcomm.
 > 
 
-[...]
+Then I don't understand why those bdwlan.* files would be in the
+firmware tree.
 
-> > +     chosen {
-> > +             #address-cells = <2>;
-> > +             #size-cells = <2>;
-> > +             ranges;
-> > +
-> > +             framebuffer0: framebuffer@c6200000 {
-> > +                     compatible = "simple-framebuffer";
-> > +                     reg = <0x0 0xc6200000 0x0 0x02400000>;
-> > +                     width = <1600>;
-> > +                     height = <2560>;
-> > +                     stride = <(1600 * 4)>;
-> > +                     format = "a8r8g8b8";
-> > +             };
-> > +     };
+> Try filing a request in the bugzilla:
 > 
-> I still don't understand why efifb doesn't work for you.
+> 	https://bugzilla.kernel.org/buglist.cgi?quicksearch=ath11k&list_id=1147229
 > 
 
-In v1, you asked me 
+Thanks, I will try it.
 
-> Very very weird. Are you booting with clk_ignore_unused pd_ignore_unused
-> in kernel cmdline?
-
-I said yes, as Johan suggested in here (see [1]). I am adding Johan.
-
-> Could you share your .config file?
-
-Here please, https://pastebin.com/UKew61ZC
-
-> 
-> Konrad
-> 
+> Johan
 
 Best wishes,
 Pengyu
-
-[1] https://github.com/jhovold/linux/wiki/X13s#kernel-command-line
 
