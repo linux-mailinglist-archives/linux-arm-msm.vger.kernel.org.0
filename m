@@ -1,79 +1,80 @@
-Return-Path: <linux-arm-msm+bounces-43085-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-43086-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 599279FA80E
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 22 Dec 2024 21:15:46 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 511D69FA811
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 22 Dec 2024 21:16:09 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4CC03188667A
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 22 Dec 2024 20:15:47 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B50A9165C54
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 22 Dec 2024 20:16:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 322CB1A4AAA;
-	Sun, 22 Dec 2024 20:14:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 861A51A8F8A;
+	Sun, 22 Dec 2024 20:14:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="eiV9BzbM"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="LkpIECo7"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f48.google.com (mail-lf1-f48.google.com [209.85.167.48])
+Received: from mail-lj1-f178.google.com (mail-lj1-f178.google.com [209.85.208.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9013219F49E
-	for <linux-arm-msm@vger.kernel.org>; Sun, 22 Dec 2024 20:14:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 201071A83E3
+	for <linux-arm-msm@vger.kernel.org>; Sun, 22 Dec 2024 20:14:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734898467; cv=none; b=Q4QfBGDh674UKpUMiFq57K2vA42KoOyWGsap8XIxn0X4v7e3q6U4DL1VlRNlWiZAOuPy3QNO3GZfJEJl7Nqc/6pZUR9Y1tAU+keGNEN6KNXnU1tLt1zZueC/CgtuZaY6nRRR+YD6o6Zci0JlQZ0Cbf7b3210WjgUESSbezrlAIg=
+	t=1734898470; cv=none; b=rJ/chP5f4rTvGwOq+GfRQCmPpbTodo7qyeXhoRgehqHgUlj8h2TA53iEyXs1bhz+eJmkO0oa3m2Cmw1D+jedHlGfP+n3YCQxCkwOR9zFUIA5mx7hW//BJ42II0yzkZF5z33EotnYXiaz8KwrzlmtTCVI1hPUx3F31hbS72Asda0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734898467; c=relaxed/simple;
-	bh=QaeFA19YS2jfxVx09K9jWa8V49SVXU29ySDEDp6kdTU=;
+	s=arc-20240116; t=1734898470; c=relaxed/simple;
+	bh=qIhxSu00rW2paqTbMkjcxg3yZsqhJapbbH9jI5PUDS0=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=ej0SzzKW1s3onDzo1ImCjoT+bAPRVr8EEtVxcqRcPZD+zv0OQ3nWErJ9WElAHqwQ+uBdWTRS9ERAW0TENfxTUhAZt6+w0LbZxe50XYvkW03jDtGepIDqcxYn4JrTGfe9TMO4bFIoHf1QievLmzrJWs1DMM/L5p1oO9coA4Pqugo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=eiV9BzbM; arc=none smtp.client-ip=209.85.167.48
+	 In-Reply-To:To:Cc; b=ZOVBRz8yYklgBXABFpCHBXW/IBhjO7bLfFjC8UWf3Zx6pL484z3L7pf/lay+zg4b4YWAO0i3Q4B3b9ZiNRU9SPBu2lvDbrvdsvYQyVMvipYjrX2pVhNckmcqnTqh04yVZuqMD38eMPIaZ/Yj2+HatR1zQcQoF5lOSoPWPnv41sM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=LkpIECo7; arc=none smtp.client-ip=209.85.208.178
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f48.google.com with SMTP id 2adb3069b0e04-54024ecc33dso4357524e87.0
-        for <linux-arm-msm@vger.kernel.org>; Sun, 22 Dec 2024 12:14:24 -0800 (PST)
+Received: by mail-lj1-f178.google.com with SMTP id 38308e7fff4ca-3022484d4e4so42093051fa.1
+        for <linux-arm-msm@vger.kernel.org>; Sun, 22 Dec 2024 12:14:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1734898463; x=1735503263; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1734898465; x=1735503265; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=zNnNt1jvOPv1nK8CzBlUaOPEaWgU6dkT1XhtNjPmq5w=;
-        b=eiV9BzbMmJVhIqXXXBYrtimvhgn4vfZb4JE8jeuwX8yk+e0iPBQj9fQOLIJ28wrNvT
-         y47CSMJcPPgSHqI8W3EbCvTUF8LDFBblCN0lrULChxn1jovwwdPKTWXwrkeNWc4p5Nsu
-         DmPd0OTsZOKaAo3fVTzdZGThg9qwATf2DuU28klt7gC9eMK4EXFky3u5oz/lZzd6dcQr
-         9eC/t0w/oKZAyQuR5lgU4FF/n+VYWmDItc7mc7mwmWXqMkydCDU18PV4XtUsf2PIsIzO
-         H/dolwUXGUeU4ZIOWf8t8+dcUc1eLuCyDYt4pdxrgUabLRY6LkEjjMo3JsACHxbYvkLw
-         X5MA==
+        bh=uv6pAEXMlb2D1Xni7Zr0BSfncxDb823MKd8hn8RFu94=;
+        b=LkpIECo70//0O3iVY8btI4nQw0SYjHwORUt+W1eQ1qEsaIdMMr24rJtZulE34OLEDw
+         t70kHjnrO3W7MhDZNcSugdHYIxRbaURP7SUuWqPylvwjiGC5IuIdZbkcPT7oxYIgFcbw
+         c5Z6NxpRabIbB3sDtNwUZaLLOC6lPq2388xwaUk6KjAgJoTSmyFIiiP1k1ajpAqjEgou
+         IKaXWdx3svmO39xbymlreQl+6IHgVU0tYNLEPz7I8qLMOJdg355boi5h7tueN2vTZecQ
+         zGvcJvQitz8BhwF99CNaeTGuinRwu4uiEEhms1DzZIoLIJKCvI/KzyvRUPxB23MjqA4j
+         DXfg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734898463; x=1735503263;
+        d=1e100.net; s=20230601; t=1734898465; x=1735503265;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=zNnNt1jvOPv1nK8CzBlUaOPEaWgU6dkT1XhtNjPmq5w=;
-        b=tLf1ReXkNgNttr5Guz59IrwARnwO99Ab/0PgUcQYME1vihRyxpnZ69SdUX5THq67iy
-         6ACAAlxej6uerBq6P+JLmVBJHmUTONh16lRBvrL8uk0ySpwLIgI+AIeJ5s/OXq93Ul0H
-         ZuP1Cm5eExwyRLDFBeTkvP7iuc2wVErnDh/okfxlJs0qI3r5nHEPBNwKxxPqghMa7RM+
-         hpxIml+Vsf9R+0D3j/Qc7oH3cRl9WDzNVJoQTaeePbDBz3iem6HI8G32w/4ylDhr+prP
-         3YvIyT47r2fwO2oiwnzSrIsNm1sf/1wu6MJtsY+jpK54QaXN5D/aPzvG4B2qIuHLFhOx
-         DIRg==
-X-Forwarded-Encrypted: i=1; AJvYcCXyI70+ILc7Z1//pxd1iF2meIOJ4UxG+dXly+qQ+cxBL57rx1/Oy/m90qamvzeLHve/Bv78g+2rG8DEPdav@vger.kernel.org
-X-Gm-Message-State: AOJu0YzdBL9sDLzw3SqMkyToNerIxOcVMhc/gmzzuOpNhDkEvRs4C3R/
-	nBR1744WD+m6Op/s8E3rgtW5txBrkfRTro731/tfaPz1NeuJkoEur9VGKOFkMuc=
-X-Gm-Gg: ASbGnct50GMHX+8nUpbfHFGfKLLzyuY57/fOb2kRz/RXqnQv4nJKC2CFP/5eFh/isfa
-	YDUT2Z7lo9WclyIzJZjLyD0hu5BUrYv9jur1o2NXZvMDbzqWHeFGAoJGNaEJp3MRlTVOb61jl7M
-	HFOY2ClgYxg6xGCJCt+oQDTFKAupS2EczrpN/ePts0mwX1ObunJJf14Q/h6q/OBSOzuwwFALuYl
-	LKBzNXCmsBjsApHxvDeQCF87vHJZrK8qD7zSAj6ouh5P6hoMgfaVr0Uvaa+7hcL
-X-Google-Smtp-Source: AGHT+IGk2U9e99w2p8Z7e9I8d8y0d4yqXgn7TeX6L4bswmtnThIoUdMwRsekI9w+dQ9bq3YuyK+Nfw==
-X-Received: by 2002:a05:6512:12d1:b0:540:1b41:c765 with SMTP id 2adb3069b0e04-54229598b36mr3284542e87.56.1734898462691;
-        Sun, 22 Dec 2024 12:14:22 -0800 (PST)
+        bh=uv6pAEXMlb2D1Xni7Zr0BSfncxDb823MKd8hn8RFu94=;
+        b=U/YY9k+UpibHP0ZEgL2m+d2/RkM0kQc/NhV7THEziNBxpkbFKGTOZmTIoJldhIpGJj
+         AxND/446mbf62SrzxwtpDI19qDC07wCNKnhki+vJYs2nkisMfSBSpWMCF9VYF4ebj4+J
+         DaTw7CGTRQdv4dMINNJp6Rxh+mbfyTpdE5qc4A+9KC7xquR4YYs/c2zVY36Xw02BztUC
+         unPJ0LF3jtO0ZKymo8aQE+suycoJylMGfyByHkxyX2IQ2tbBilvs6Djfya90370gzXxe
+         KPZ5Cd0pmZFmv8LbzLJqNBFuRb7sJFcFJCDE5U71/KelSshCrdL4Vul5Yjju3r20d9zv
+         wppQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWgazDpunORnZ9dKUv49oiX1qOvx1/QKU+oOfPAsNHkr9ayktZvJ9PZPk49cBVDmBJ5K2jhBMyROmC1MbXA@vger.kernel.org
+X-Gm-Message-State: AOJu0YzJGVw8KzdGgpGFK8hKhSjuIu+M7zpfA5ac1MSLNTkDNlIDeS9m
+	h1XjhrzL6X5wcXQgafxZOGtvv/eJlnKtgmxIbD2MBbKGaYx/ACkBFxeiwEenmytPS/UxssnbYdv
+	1
+X-Gm-Gg: ASbGnctcnBvhKGkZWsE6Qj1kvQ7oehX9a2ThA/SOZf1mUsvOHRpkhlRcvuSkY2HpUz1
+	PuLKEjWSfAEgqIVP8gT6Ty4W5a1ccsHE59DMM/ucmjSwR+Qz0rsF+8Xp4TXDffQd3Z36smzZXcT
+	T0jJKVugvkmbCrVzPbNdSxnepGnIR1W1rB3lHF0VxMBnp98w1KSwhRexAR1Sry+fk+eFq+0vsDS
+	9sL72gNppiTXyPnoK0Bb7tdcCIrBvWDByLzY83ftGPyOpd9JITlCARimwBIBh54
+X-Google-Smtp-Source: AGHT+IFvMx9oUwYidZpjcFuW+f3GeJqEmVbBHnXKNz+ui04Y7l2GY734lcVTnwUw6IhW9wDL3e0uHg==
+X-Received: by 2002:a2e:b888:0:b0:301:12:1ed6 with SMTP id 38308e7fff4ca-30468545dc2mr38358141fa.11.1734898465205;
+        Sun, 22 Dec 2024 12:14:25 -0800 (PST)
 Received: from umbar.lan ([192.130.178.90])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-542235f7765sm1034331e87.13.2024.12.22.12.14.20
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-542235f7765sm1034331e87.13.2024.12.22.12.14.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 22 Dec 2024 12:14:21 -0800 (PST)
+        Sun, 22 Dec 2024 12:14:23 -0800 (PST)
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Sun, 22 Dec 2024 22:14:09 +0200
-Subject: [PATCH v5 06/11] drm/msm/dp: move/inline panel related functions
+Date: Sun, 22 Dec 2024 22:14:10 +0200
+Subject: [PATCH v5 07/11] drm/msm/dp: move/inline audio related functions
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -82,7 +83,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20241222-fd-dp-audio-fixup-v5-6-370f09492cf6@linaro.org>
+Message-Id: <20241222-fd-dp-audio-fixup-v5-7-370f09492cf6@linaro.org>
 References: <20241222-fd-dp-audio-fixup-v5-0-370f09492cf6@linaro.org>
 In-Reply-To: <20241222-fd-dp-audio-fixup-v5-0-370f09492cf6@linaro.org>
 To: Rob Clark <robdclark@gmail.com>, 
@@ -95,600 +96,439 @@ Cc: Douglas Anderson <dianders@chromium.org>,
  dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
  linux-kernel@vger.kernel.org
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=22430;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=14086;
  i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
- bh=QaeFA19YS2jfxVx09K9jWa8V49SVXU29ySDEDp6kdTU=;
- b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBnaHMOBkUA6lXZS+FBF9H+A2LnfiRi7ku2MRg6r
- 8ghFEvCDjiJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZ2hzDgAKCRCLPIo+Aiko
- 1XRZB/4zvtWd3jL3pjj9cjk/sdI2dyF49oaQRmzGE1s/addk5zfESxs/QXfVIc8NzBlX1gq9mfl
- TcP/jKBDxdEszH8jr815WVeyswTGb+RjZKF77EiptE/S0pxO6fYNlXzunnsZnbwhfDTEufW4s/g
- 1HMmUPPMGc8uiVWw9ScWdr9siiJ3b284yAGwquzHQptuMmUl/bIb1ihu0bdPSBynx+/Hao4FH33
- 4Bfmk+eqCBr3QQsSrq/a55cq9H1PeZAtyIq/spdMD4z79aJAA4pj56xuNDBwgdlMu4mZ7qYk6CF
- le/u2wyUqhEkiOzwZYVAhOTr8UdF7p9UQWFIBQaURI8PNfbu
+ bh=qIhxSu00rW2paqTbMkjcxg3yZsqhJapbbH9jI5PUDS0=;
+ b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBnaHMOs89FyfUzs5h7aZBJe9LHkyOV6wBlfAB2n
+ 0ho1BawizOJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZ2hzDgAKCRCLPIo+Aiko
+ 1fJ1B/9D/WW0K3+8cNBlIeIIYw7w3VJN+uwDm8FIOywmqXJ7BtuUQNGWlEEHwXJl/nYgsqaDxUq
+ f414PLXnlnqiZV94ikjAjxSo5OxD8VYqg9ld/KP2P8eyLmlxC9Rev657UBz19LPCEiq53ATxXbu
+ zZDwL/kIx0JjnHu6nTAmp2TppTdy1s8mGPtMMkSBj90+PqCx3Yj1pmWTv6JnixCJUGBZB3ILxx4
+ 40rR4rK1HK3pn1E/YjSZK88AA9QMdNccQw7qx2i6y6bUWl/MBu70qLMF8rAs2/P6Xgkz/LNeBO1
+ mXNQeP5z/yAMWf590Nw8XMnWXmr7ZZPYLChfenl37g+/Zac8
 X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
  fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
 
-Move panel-related functions to dp_panel.c, following up the cleanup
-done by the rest of the submodules.
+Move audio-related functions to dp_audio.c, following up the cleanup
+done by the rest of the submodules. Inline functions with simple
+register access patterns.
 
 Reviewed-by: Stephen Boyd <swboyd@chromium.org>
 Tested-by: Stephen Boyd <swboyd@chromium.org> # sc7180-trogdor
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/gpu/drm/msm/dp/dp_catalog.c | 195 ---------------------------------
- drivers/gpu/drm/msm/dp/dp_catalog.h |  11 --
- drivers/gpu/drm/msm/dp/dp_ctrl.c    |   6 +-
- drivers/gpu/drm/msm/dp/dp_panel.c   | 209 ++++++++++++++++++++++++++++++++++--
- drivers/gpu/drm/msm/dp/dp_panel.h   |   5 +
- 5 files changed, 206 insertions(+), 220 deletions(-)
+ drivers/gpu/drm/msm/dp/dp_audio.c   | 112 +++++++++++++++++++++---
+ drivers/gpu/drm/msm/dp/dp_catalog.c | 166 ------------------------------------
+ drivers/gpu/drm/msm/dp/dp_catalog.h |  16 ----
+ 3 files changed, 98 insertions(+), 196 deletions(-)
 
+diff --git a/drivers/gpu/drm/msm/dp/dp_audio.c b/drivers/gpu/drm/msm/dp/dp_audio.c
+index a4b792624ccc444f8912eb967d722cb94f6d4087..6a6b4032548cf3298e7fa75795401ec0925d48d4 100644
+--- a/drivers/gpu/drm/msm/dp/dp_audio.c
++++ b/drivers/gpu/drm/msm/dp/dp_audio.c
+@@ -31,67 +31,129 @@ struct msm_dp_audio_private {
+ 
+ static void msm_dp_audio_stream_sdp(struct msm_dp_audio_private *audio)
+ {
++	struct msm_dp_catalog *catalog = audio->catalog;
+ 	struct dp_sdp_header sdp_hdr = {
+ 		.HB0 = 0x00,
+ 		.HB1 = 0x02,
+ 		.HB2 = 0x00,
+ 		.HB3 = audio->channels - 1,
+ 	};
++	u32 header[2];
++
++	msm_dp_utils_pack_sdp_header(&sdp_hdr, header);
+ 
+-	msm_dp_catalog_write_audio_stream(audio->catalog, &sdp_hdr);
++	msm_dp_write_link(catalog, MMSS_DP_AUDIO_STREAM_0, header[0]);
++	msm_dp_write_link(catalog, MMSS_DP_AUDIO_STREAM_1, header[1]);
+ }
+ 
+ static void msm_dp_audio_timestamp_sdp(struct msm_dp_audio_private *audio)
+ {
++	struct msm_dp_catalog *catalog = audio->catalog;
+ 	struct dp_sdp_header sdp_hdr = {
+ 		.HB0 = 0x00,
+ 		.HB1 = 0x01,
+ 		.HB2 = 0x17,
+ 		.HB3 = 0x0 | (0x11 << 2),
+ 	};
++	u32 header[2];
+ 
+-	msm_dp_catalog_write_audio_timestamp(audio->catalog, &sdp_hdr);
++	msm_dp_utils_pack_sdp_header(&sdp_hdr, header);
++
++	msm_dp_write_link(catalog, MMSS_DP_AUDIO_TIMESTAMP_0, header[0]);
++	msm_dp_write_link(catalog, MMSS_DP_AUDIO_TIMESTAMP_1, header[1]);
+ }
+ 
+ static void msm_dp_audio_infoframe_sdp(struct msm_dp_audio_private *audio)
+ {
++	struct msm_dp_catalog *catalog = audio->catalog;
+ 	struct dp_sdp_header sdp_hdr = {
+ 		.HB0 = 0x00,
+ 		.HB1 = 0x84,
+ 		.HB2 = 0x1b,
+ 		.HB3 = 0x0 | (0x11 << 2),
+ 	};
++	u32 header[2];
++
++	msm_dp_utils_pack_sdp_header(&sdp_hdr, header);
+ 
+-	msm_dp_catalog_write_audio_infoframe(audio->catalog, &sdp_hdr);
++	msm_dp_write_link(catalog, MMSS_DP_AUDIO_INFOFRAME_0, header[0]);
++	msm_dp_write_link(catalog, MMSS_DP_AUDIO_INFOFRAME_1, header[1]);
+ }
+ 
+ static void msm_dp_audio_copy_management_sdp(struct msm_dp_audio_private *audio)
+ {
++	struct msm_dp_catalog *catalog = audio->catalog;
+ 	struct dp_sdp_header sdp_hdr = {
+ 		.HB0 = 0x00,
+ 		.HB1 = 0x05,
+ 		.HB2 = 0x0f,
+ 		.HB3 = 0x00,
+ 	};
++	u32 header[2];
++
++	msm_dp_utils_pack_sdp_header(&sdp_hdr, header);
+ 
+-	msm_dp_catalog_write_audio_copy_mgmt(audio->catalog, &sdp_hdr);
++	msm_dp_write_link(catalog, MMSS_DP_AUDIO_COPYMANAGEMENT_0, header[0]);
++	msm_dp_write_link(catalog, MMSS_DP_AUDIO_COPYMANAGEMENT_1, header[1]);
+ }
+ 
+ static void msm_dp_audio_isrc_sdp(struct msm_dp_audio_private *audio)
+ {
++	struct msm_dp_catalog *catalog = audio->catalog;
+ 	struct dp_sdp_header sdp_hdr = {
+ 		.HB0 = 0x00,
+ 		.HB1 = 0x06,
+ 		.HB2 = 0x0f,
+ 		.HB3 = 0x00,
+ 	};
++	u32 header[2];
++	u32 reg;
++
++	/* XXX: is it necessary to preserve this field? */
++	reg = msm_dp_read_link(catalog, MMSS_DP_AUDIO_ISRC_1);
++	sdp_hdr.HB3 = FIELD_GET(HEADER_3_MASK, reg);
++
++	msm_dp_utils_pack_sdp_header(&sdp_hdr, header);
++
++	msm_dp_write_link(catalog, MMSS_DP_AUDIO_ISRC_0, header[0]);
++	msm_dp_write_link(catalog, MMSS_DP_AUDIO_ISRC_1, header[1]);
++}
+ 
+-	msm_dp_catalog_write_audio_isrc(audio->catalog, &sdp_hdr);
++static void msm_dp_audio_config_sdp(struct msm_dp_audio_private *audio)
++{
++	struct msm_dp_catalog *msm_dp_catalog = audio->catalog;
++	u32 sdp_cfg, sdp_cfg2;
++
++	sdp_cfg = msm_dp_read_link(msm_dp_catalog, MMSS_DP_SDP_CFG);
++	/* AUDIO_TIMESTAMP_SDP_EN */
++	sdp_cfg |= BIT(1);
++	/* AUDIO_STREAM_SDP_EN */
++	sdp_cfg |= BIT(2);
++	/* AUDIO_COPY_MANAGEMENT_SDP_EN */
++	sdp_cfg |= BIT(5);
++	/* AUDIO_ISRC_SDP_EN  */
++	sdp_cfg |= BIT(6);
++	/* AUDIO_INFOFRAME_SDP_EN  */
++	sdp_cfg |= BIT(20);
++
++	drm_dbg_dp(audio->drm_dev, "sdp_cfg = 0x%x\n", sdp_cfg);
++
++	msm_dp_write_link(msm_dp_catalog, MMSS_DP_SDP_CFG, sdp_cfg);
++
++	sdp_cfg2 = msm_dp_read_link(msm_dp_catalog, MMSS_DP_SDP_CFG2);
++	/* IFRM_REGSRC -> Do not use reg values */
++	sdp_cfg2 &= ~BIT(0);
++	/* AUDIO_STREAM_HB3_REGSRC-> Do not use reg values */
++	sdp_cfg2 &= ~BIT(1);
++
++	drm_dbg_dp(audio->drm_dev, "sdp_cfg2 = 0x%x\n", sdp_cfg2);
++
++	msm_dp_write_link(msm_dp_catalog, MMSS_DP_SDP_CFG2, sdp_cfg2);
+ }
+ 
+ static void msm_dp_audio_setup_sdp(struct msm_dp_audio_private *audio)
+ {
+-	msm_dp_catalog_audio_config_sdp(audio->catalog);
++	msm_dp_audio_config_sdp(audio);
+ 
+ 	msm_dp_audio_stream_sdp(audio);
+ 	msm_dp_audio_timestamp_sdp(audio);
+@@ -102,8 +164,7 @@ static void msm_dp_audio_setup_sdp(struct msm_dp_audio_private *audio)
+ 
+ static void msm_dp_audio_setup_acr(struct msm_dp_audio_private *audio)
+ {
+-	u32 select = 0;
+-	struct msm_dp_catalog *catalog = audio->catalog;
++	u32 select, acr_ctrl;
+ 
+ 	switch (audio->msm_dp_audio.bw_code) {
+ 	case DP_LINK_BW_1_62:
+@@ -124,13 +185,17 @@ static void msm_dp_audio_setup_acr(struct msm_dp_audio_private *audio)
+ 		break;
+ 	}
+ 
+-	msm_dp_catalog_audio_config_acr(catalog, select);
++	acr_ctrl = select << 4 | BIT(31) | BIT(8) | BIT(14);
++
++	drm_dbg_dp(audio->drm_dev, "select: %#x, acr_ctrl: %#x\n",
++		   select, acr_ctrl);
++
++	msm_dp_write_link(audio->catalog, MMSS_DP_AUDIO_ACR_CTRL, acr_ctrl);
+ }
+ 
+ static void msm_dp_audio_safe_to_exit_level(struct msm_dp_audio_private *audio)
+ {
+-	struct msm_dp_catalog *catalog = audio->catalog;
+-	u32 safe_to_exit_level = 0;
++	u32 safe_to_exit_level, mainlink_levels;
+ 
+ 	switch (audio->msm_dp_audio.lane_count) {
+ 	case 1:
+@@ -150,14 +215,33 @@ static void msm_dp_audio_safe_to_exit_level(struct msm_dp_audio_private *audio)
+ 		break;
+ 	}
+ 
+-	msm_dp_catalog_audio_sfe_level(catalog, safe_to_exit_level);
++	mainlink_levels = msm_dp_read_link(audio->catalog, REG_DP_MAINLINK_LEVELS);
++	mainlink_levels &= 0xFE0;
++	mainlink_levels |= safe_to_exit_level;
++
++	drm_dbg_dp(audio->drm_dev,
++		   "mainlink_level = 0x%x, safe_to_exit_level = 0x%x\n",
++		   mainlink_levels, safe_to_exit_level);
++
++	msm_dp_write_link(audio->catalog, REG_DP_MAINLINK_LEVELS, mainlink_levels);
+ }
+ 
+ static void msm_dp_audio_enable(struct msm_dp_audio_private *audio, bool enable)
+ {
+-	struct msm_dp_catalog *catalog = audio->catalog;
++	u32 audio_ctrl;
++
++	audio_ctrl = msm_dp_read_link(audio->catalog, MMSS_DP_AUDIO_CFG);
++
++	if (enable)
++		audio_ctrl |= BIT(0);
++	else
++		audio_ctrl &= ~BIT(0);
++
++	drm_dbg_dp(audio->drm_dev, "dp_audio_cfg = 0x%x\n", audio_ctrl);
+ 
+-	msm_dp_catalog_audio_enable(catalog, enable);
++	msm_dp_write_link(audio->catalog, MMSS_DP_AUDIO_CFG, audio_ctrl);
++	/* make sure audio engine is disabled */
++	wmb();
+ }
+ 
+ static struct msm_dp_audio_private *msm_dp_audio_get_data(struct platform_device *pdev)
 diff --git a/drivers/gpu/drm/msm/dp/dp_catalog.c b/drivers/gpu/drm/msm/dp/dp_catalog.c
-index 10dfbe94b627855b5a0e3cd4a3d77498d8d43ab8..e9db5585c1325fe5e067526f567e39387d5a4f47 100644
+index e9db5585c1325fe5e067526f567e39387d5a4f47..332d168811c28f5c54069db9754ecf69904d5b24 100644
 --- a/drivers/gpu/drm/msm/dp/dp_catalog.c
 +++ b/drivers/gpu/drm/msm/dp/dp_catalog.c
-@@ -23,8 +23,6 @@
- #define DP_INTERRUPT_STATUS_ACK_SHIFT	1
- #define DP_INTERRUPT_STATUS_MASK_SHIFT	2
+@@ -670,169 +670,3 @@ struct msm_dp_catalog *msm_dp_catalog_get(struct device *dev)
  
--#define DP_INTF_CONFIG_DATABUS_WIDEN     BIT(4)
--
- #define DP_INTERRUPT_STATUS1 \
- 	(DP_INTR_AUX_XFER_DONE| \
- 	DP_INTR_WRONG_ADDR | DP_INTR_TIMEOUT | \
-@@ -590,199 +588,6 @@ u32 msm_dp_catalog_ctrl_read_phy_pattern(struct msm_dp_catalog *msm_dp_catalog)
- 	return msm_dp_read_link(msm_dp_catalog, REG_DP_MAINLINK_READY);
+ 	return &catalog->msm_dp_catalog;
  }
- 
--/* panel related catalog functions */
--int msm_dp_catalog_panel_timing_cfg(struct msm_dp_catalog *msm_dp_catalog, u32 total,
--				u32 sync_start, u32 width_blanking, u32 msm_dp_active)
--{
--	u32 reg;
 -
--	msm_dp_write_link(msm_dp_catalog, REG_DP_TOTAL_HOR_VER, total);
--	msm_dp_write_link(msm_dp_catalog, REG_DP_START_HOR_VER_FROM_SYNC, sync_start);
--	msm_dp_write_link(msm_dp_catalog, REG_DP_HSYNC_VSYNC_WIDTH_POLARITY, width_blanking);
--	msm_dp_write_link(msm_dp_catalog, REG_DP_ACTIVE_HOR_VER, msm_dp_active);
--
--	reg = msm_dp_read_p0(msm_dp_catalog, MMSS_DP_INTF_CONFIG);
--
--	if (msm_dp_catalog->wide_bus_en)
--		reg |= DP_INTF_CONFIG_DATABUS_WIDEN;
--	else
--		reg &= ~DP_INTF_CONFIG_DATABUS_WIDEN;
--
--
--	DRM_DEBUG_DP("wide_bus_en=%d reg=%#x\n", msm_dp_catalog->wide_bus_en, reg);
--
--	msm_dp_write_p0(msm_dp_catalog, MMSS_DP_INTF_CONFIG, reg);
--	return 0;
--}
--
--static void msm_dp_catalog_panel_send_vsc_sdp(struct msm_dp_catalog *msm_dp_catalog, struct dp_sdp *vsc_sdp)
+-void msm_dp_catalog_write_audio_stream(struct msm_dp_catalog *msm_dp_catalog,
+-				       struct dp_sdp_header *sdp_hdr)
 -{
 -	u32 header[2];
--	u32 val;
--	int i;
 -
--	msm_dp_utils_pack_sdp_header(&vsc_sdp->sdp_header, header);
+-	msm_dp_utils_pack_sdp_header(sdp_hdr, header);
 -
--	msm_dp_write_link(msm_dp_catalog, MMSS_DP_GENERIC0_0, header[0]);
--	msm_dp_write_link(msm_dp_catalog, MMSS_DP_GENERIC0_1, header[1]);
--
--	for (i = 0; i < sizeof(vsc_sdp->db); i += 4) {
--		val = ((vsc_sdp->db[i]) | (vsc_sdp->db[i + 1] << 8) | (vsc_sdp->db[i + 2] << 16) |
--		       (vsc_sdp->db[i + 3] << 24));
--		msm_dp_write_link(msm_dp_catalog, MMSS_DP_GENERIC0_2 + i, val);
--	}
+-	msm_dp_write_link(msm_dp_catalog, MMSS_DP_AUDIO_STREAM_0, header[0]);
+-	msm_dp_write_link(msm_dp_catalog, MMSS_DP_AUDIO_STREAM_1, header[1]);
 -}
 -
--static void msm_dp_catalog_panel_update_sdp(struct msm_dp_catalog *msm_dp_catalog)
+-void msm_dp_catalog_write_audio_timestamp(struct msm_dp_catalog *msm_dp_catalog,
+-					  struct dp_sdp_header *sdp_hdr)
 -{
--	u32 hw_revision;
+-	u32 header[2];
 -
--	hw_revision = msm_dp_catalog->hw_revision;
+-	msm_dp_utils_pack_sdp_header(sdp_hdr, header);
 -
--	if (hw_revision < DP_HW_VERSION_1_2 &&
--	    hw_revision >= DP_HW_VERSION_1_0) {
--		msm_dp_write_link(msm_dp_catalog, MMSS_DP_SDP_CFG3, 0x01);
--		msm_dp_write_link(msm_dp_catalog, MMSS_DP_SDP_CFG3, 0x00);
--	}
+-	msm_dp_write_link(msm_dp_catalog, MMSS_DP_AUDIO_TIMESTAMP_0, header[0]);
+-	msm_dp_write_link(msm_dp_catalog, MMSS_DP_AUDIO_TIMESTAMP_1, header[1]);
 -}
 -
--void msm_dp_catalog_panel_enable_vsc_sdp(struct msm_dp_catalog *msm_dp_catalog, struct dp_sdp *vsc_sdp)
+-void msm_dp_catalog_write_audio_infoframe(struct msm_dp_catalog *msm_dp_catalog,
+-					  struct dp_sdp_header *sdp_hdr)
+-{
+-	u32 header[2];
+-
+-	msm_dp_utils_pack_sdp_header(sdp_hdr, header);
+-
+-	msm_dp_write_link(msm_dp_catalog, MMSS_DP_AUDIO_INFOFRAME_0, header[0]);
+-	msm_dp_write_link(msm_dp_catalog, MMSS_DP_AUDIO_INFOFRAME_1, header[1]);
+-}
+-
+-void msm_dp_catalog_write_audio_copy_mgmt(struct msm_dp_catalog *msm_dp_catalog,
+-					  struct dp_sdp_header *sdp_hdr)
+-{
+-	u32 header[2];
+-
+-	msm_dp_utils_pack_sdp_header(sdp_hdr, header);
+-
+-	msm_dp_write_link(msm_dp_catalog, MMSS_DP_AUDIO_COPYMANAGEMENT_0, header[0]);
+-	msm_dp_write_link(msm_dp_catalog, MMSS_DP_AUDIO_COPYMANAGEMENT_1, header[1]);
+-}
+-
+-void msm_dp_catalog_write_audio_isrc(struct msm_dp_catalog *msm_dp_catalog,
+-				     struct dp_sdp_header *sdp_hdr)
+-{
+-	struct dp_sdp_header tmp = *sdp_hdr;
+-	u32 header[2];
+-	u32 reg;
+-
+-	/* XXX: is it necessary to preserve this field? */
+-	reg = msm_dp_read_link(msm_dp_catalog, MMSS_DP_AUDIO_ISRC_1);
+-	tmp.HB3 = FIELD_GET(HEADER_3_MASK, reg);
+-
+-	msm_dp_utils_pack_sdp_header(&tmp, header);
+-
+-	msm_dp_write_link(msm_dp_catalog, MMSS_DP_AUDIO_ISRC_0, header[0]);
+-	msm_dp_write_link(msm_dp_catalog, MMSS_DP_AUDIO_ISRC_1, header[1]);
+-}
+-
+-void msm_dp_catalog_audio_config_acr(struct msm_dp_catalog *msm_dp_catalog, u32 select)
 -{
 -	struct msm_dp_catalog_private *catalog;
--	u32 cfg, cfg2, misc;
+-	u32 acr_ctrl;
 -
--	catalog = container_of(msm_dp_catalog, struct msm_dp_catalog_private, msm_dp_catalog);
+-	if (!msm_dp_catalog)
+-		return;
 -
--	cfg = msm_dp_read_link(msm_dp_catalog, MMSS_DP_SDP_CFG);
--	cfg2 = msm_dp_read_link(msm_dp_catalog, MMSS_DP_SDP_CFG2);
--	misc = msm_dp_read_link(msm_dp_catalog, REG_DP_MISC1_MISC0);
+-	catalog = container_of(msm_dp_catalog,
+-		struct msm_dp_catalog_private, msm_dp_catalog);
 -
--	cfg |= GEN0_SDP_EN;
--	msm_dp_write_link(msm_dp_catalog, MMSS_DP_SDP_CFG, cfg);
+-	acr_ctrl = select << 4 | BIT(31) | BIT(8) | BIT(14);
 -
--	cfg2 |= GENERIC0_SDPSIZE_VALID;
--	msm_dp_write_link(msm_dp_catalog, MMSS_DP_SDP_CFG2, cfg2);
+-	drm_dbg_dp(catalog->drm_dev, "select: %#x, acr_ctrl: %#x\n",
+-					select, acr_ctrl);
 -
--	msm_dp_catalog_panel_send_vsc_sdp(msm_dp_catalog, vsc_sdp);
--
--	/* indicates presence of VSC (BIT(6) of MISC1) */
--	misc |= DP_MISC1_VSC_SDP;
--
--	drm_dbg_dp(catalog->drm_dev, "vsc sdp enable=1\n");
--
--	pr_debug("misc settings = 0x%x\n", misc);
--	msm_dp_write_link(msm_dp_catalog, REG_DP_MISC1_MISC0, misc);
--
--	msm_dp_catalog_panel_update_sdp(msm_dp_catalog);
+-	msm_dp_write_link(msm_dp_catalog, MMSS_DP_AUDIO_ACR_CTRL, acr_ctrl);
 -}
 -
--void msm_dp_catalog_panel_disable_vsc_sdp(struct msm_dp_catalog *msm_dp_catalog)
+-void msm_dp_catalog_audio_enable(struct msm_dp_catalog *msm_dp_catalog, bool enable)
 -{
 -	struct msm_dp_catalog_private *catalog;
--	u32 cfg, cfg2, misc;
+-	u32 audio_ctrl;
 -
--	catalog = container_of(msm_dp_catalog, struct msm_dp_catalog_private, msm_dp_catalog);
+-	if (!msm_dp_catalog)
+-		return;
 -
--	cfg = msm_dp_read_link(msm_dp_catalog, MMSS_DP_SDP_CFG);
--	cfg2 = msm_dp_read_link(msm_dp_catalog, MMSS_DP_SDP_CFG2);
--	misc = msm_dp_read_link(msm_dp_catalog, REG_DP_MISC1_MISC0);
+-	catalog = container_of(msm_dp_catalog,
+-		struct msm_dp_catalog_private, msm_dp_catalog);
 -
--	cfg &= ~GEN0_SDP_EN;
--	msm_dp_write_link(msm_dp_catalog, MMSS_DP_SDP_CFG, cfg);
+-	audio_ctrl = msm_dp_read_link(msm_dp_catalog, MMSS_DP_AUDIO_CFG);
 -
--	cfg2 &= ~GENERIC0_SDPSIZE_VALID;
--	msm_dp_write_link(msm_dp_catalog, MMSS_DP_SDP_CFG2, cfg2);
+-	if (enable)
+-		audio_ctrl |= BIT(0);
+-	else
+-		audio_ctrl &= ~BIT(0);
 -
--	/* switch back to MSA */
--	misc &= ~DP_MISC1_VSC_SDP;
+-	drm_dbg_dp(catalog->drm_dev, "dp_audio_cfg = 0x%x\n", audio_ctrl);
 -
--	drm_dbg_dp(catalog->drm_dev, "vsc sdp enable=0\n");
--
--	pr_debug("misc settings = 0x%x\n", misc);
--	msm_dp_write_link(msm_dp_catalog, REG_DP_MISC1_MISC0, misc);
--
--	msm_dp_catalog_panel_update_sdp(msm_dp_catalog);
+-	msm_dp_write_link(msm_dp_catalog, MMSS_DP_AUDIO_CFG, audio_ctrl);
+-	/* make sure audio engine is disabled */
+-	wmb();
 -}
 -
--void msm_dp_catalog_panel_tpg_enable(struct msm_dp_catalog *msm_dp_catalog,
--				struct drm_display_mode *drm_mode)
+-void msm_dp_catalog_audio_config_sdp(struct msm_dp_catalog *msm_dp_catalog)
 -{
--	struct msm_dp_catalog_private *catalog = container_of(msm_dp_catalog,
--				struct msm_dp_catalog_private, msm_dp_catalog);
--	u32 hsync_period, vsync_period;
--	u32 display_v_start, display_v_end;
--	u32 hsync_start_x, hsync_end_x;
--	u32 v_sync_width;
--	u32 hsync_ctl;
--	u32 display_hctl;
+-	struct msm_dp_catalog_private *catalog;
+-	u32 sdp_cfg = 0;
+-	u32 sdp_cfg2 = 0;
 -
--	/* TPG config parameters*/
--	hsync_period = drm_mode->htotal;
--	vsync_period = drm_mode->vtotal;
+-	if (!msm_dp_catalog)
+-		return;
 -
--	display_v_start = ((drm_mode->vtotal - drm_mode->vsync_start) *
--					hsync_period);
--	display_v_end = ((vsync_period - (drm_mode->vsync_start -
--					drm_mode->vdisplay))
--					* hsync_period) - 1;
+-	catalog = container_of(msm_dp_catalog,
+-		struct msm_dp_catalog_private, msm_dp_catalog);
 -
--	display_v_start += drm_mode->htotal - drm_mode->hsync_start;
--	display_v_end -= (drm_mode->hsync_start - drm_mode->hdisplay);
+-	sdp_cfg = msm_dp_read_link(msm_dp_catalog, MMSS_DP_SDP_CFG);
+-	/* AUDIO_TIMESTAMP_SDP_EN */
+-	sdp_cfg |= BIT(1);
+-	/* AUDIO_STREAM_SDP_EN */
+-	sdp_cfg |= BIT(2);
+-	/* AUDIO_COPY_MANAGEMENT_SDP_EN */
+-	sdp_cfg |= BIT(5);
+-	/* AUDIO_ISRC_SDP_EN  */
+-	sdp_cfg |= BIT(6);
+-	/* AUDIO_INFOFRAME_SDP_EN  */
+-	sdp_cfg |= BIT(20);
 -
--	hsync_start_x = drm_mode->htotal - drm_mode->hsync_start;
--	hsync_end_x = hsync_period - (drm_mode->hsync_start -
--					drm_mode->hdisplay) - 1;
+-	drm_dbg_dp(catalog->drm_dev, "sdp_cfg = 0x%x\n", sdp_cfg);
 -
--	v_sync_width = drm_mode->vsync_end - drm_mode->vsync_start;
+-	msm_dp_write_link(msm_dp_catalog, MMSS_DP_SDP_CFG, sdp_cfg);
 -
--	hsync_ctl = (hsync_period << 16) |
--			(drm_mode->hsync_end - drm_mode->hsync_start);
--	display_hctl = (hsync_end_x << 16) | hsync_start_x;
+-	sdp_cfg2 = msm_dp_read_link(msm_dp_catalog, MMSS_DP_SDP_CFG2);
+-	/* IFRM_REGSRC -> Do not use reg values */
+-	sdp_cfg2 &= ~BIT(0);
+-	/* AUDIO_STREAM_HB3_REGSRC-> Do not use reg values */
+-	sdp_cfg2 &= ~BIT(1);
 -
+-	drm_dbg_dp(catalog->drm_dev, "sdp_cfg2 = 0x%x\n", sdp_cfg2);
 -
--	msm_dp_write_p0(msm_dp_catalog, MMSS_DP_INTF_HSYNC_CTL, hsync_ctl);
--	msm_dp_write_p0(msm_dp_catalog, MMSS_DP_INTF_VSYNC_PERIOD_F0, vsync_period *
--			hsync_period);
--	msm_dp_write_p0(msm_dp_catalog, MMSS_DP_INTF_VSYNC_PULSE_WIDTH_F0, v_sync_width *
--			hsync_period);
--	msm_dp_write_p0(msm_dp_catalog, MMSS_DP_INTF_VSYNC_PERIOD_F1, 0);
--	msm_dp_write_p0(msm_dp_catalog, MMSS_DP_INTF_VSYNC_PULSE_WIDTH_F1, 0);
--	msm_dp_write_p0(msm_dp_catalog, MMSS_DP_INTF_DISPLAY_HCTL, display_hctl);
--	msm_dp_write_p0(msm_dp_catalog, MMSS_DP_INTF_ACTIVE_HCTL, 0);
--	msm_dp_write_p0(msm_dp_catalog, MMSS_INTF_DISPLAY_V_START_F0, display_v_start);
--	msm_dp_write_p0(msm_dp_catalog, MMSS_DP_INTF_DISPLAY_V_END_F0, display_v_end);
--	msm_dp_write_p0(msm_dp_catalog, MMSS_INTF_DISPLAY_V_START_F1, 0);
--	msm_dp_write_p0(msm_dp_catalog, MMSS_DP_INTF_DISPLAY_V_END_F1, 0);
--	msm_dp_write_p0(msm_dp_catalog, MMSS_DP_INTF_ACTIVE_V_START_F0, 0);
--	msm_dp_write_p0(msm_dp_catalog, MMSS_DP_INTF_ACTIVE_V_END_F0, 0);
--	msm_dp_write_p0(msm_dp_catalog, MMSS_DP_INTF_ACTIVE_V_START_F1, 0);
--	msm_dp_write_p0(msm_dp_catalog, MMSS_DP_INTF_ACTIVE_V_END_F1, 0);
--	msm_dp_write_p0(msm_dp_catalog, MMSS_DP_INTF_POLARITY_CTL, 0);
--
--	msm_dp_write_p0(msm_dp_catalog, MMSS_DP_TPG_MAIN_CONTROL,
--				DP_TPG_CHECKERED_RECT_PATTERN);
--	msm_dp_write_p0(msm_dp_catalog, MMSS_DP_TPG_VIDEO_CONFIG,
--				DP_TPG_VIDEO_CONFIG_BPP_8BIT |
--				DP_TPG_VIDEO_CONFIG_RGB);
--	msm_dp_write_p0(msm_dp_catalog, MMSS_DP_BIST_ENABLE,
--				DP_BIST_ENABLE_DPBIST_EN);
--	msm_dp_write_p0(msm_dp_catalog, MMSS_DP_TIMING_ENGINE_EN,
--				DP_TIMING_ENGINE_EN_EN);
--	drm_dbg_dp(catalog->drm_dev, "%s: enabled tpg\n", __func__);
+-	msm_dp_write_link(msm_dp_catalog, MMSS_DP_SDP_CFG2, sdp_cfg2);
 -}
 -
--void msm_dp_catalog_panel_tpg_disable(struct msm_dp_catalog *msm_dp_catalog)
+-void msm_dp_catalog_audio_sfe_level(struct msm_dp_catalog *msm_dp_catalog, u32 safe_to_exit_level)
 -{
--	msm_dp_write_p0(msm_dp_catalog, MMSS_DP_TPG_MAIN_CONTROL, 0x0);
--	msm_dp_write_p0(msm_dp_catalog, MMSS_DP_BIST_ENABLE, 0x0);
--	msm_dp_write_p0(msm_dp_catalog, MMSS_DP_TIMING_ENGINE_EN, 0x0);
--}
+-	struct msm_dp_catalog_private *catalog;
+-	u32 mainlink_levels;
 -
--void msm_dp_catalog_panel_clear_dsc_dto(struct msm_dp_catalog *msm_dp_catalog)
--{
--	msm_dp_write_p0(msm_dp_catalog, MMSS_DP_DSC_DTO, 0x0);
--}
+-	if (!msm_dp_catalog)
+-		return;
 -
- static void __iomem *msm_dp_ioremap(struct platform_device *pdev, int idx, size_t *len)
- {
- 	struct resource *res;
+-	catalog = container_of(msm_dp_catalog,
+-		struct msm_dp_catalog_private, msm_dp_catalog);
+-
+-	mainlink_levels = msm_dp_read_link(msm_dp_catalog, REG_DP_MAINLINK_LEVELS);
+-	mainlink_levels &= 0xFE0;
+-	mainlink_levels |= safe_to_exit_level;
+-
+-	drm_dbg_dp(catalog->drm_dev,
+-			"mainlink_level = 0x%x, safe_to_exit_level = 0x%x\n",
+-			 mainlink_levels, safe_to_exit_level);
+-
+-	msm_dp_write_link(msm_dp_catalog, REG_DP_MAINLINK_LEVELS, mainlink_levels);
+-}
 diff --git a/drivers/gpu/drm/msm/dp/dp_catalog.h b/drivers/gpu/drm/msm/dp/dp_catalog.h
-index d120a4872d444a4f8eb1e638d0e293033bf1334c..60f08fe888cb110e3fc3dfb1d763a57bd5bf47f6 100644
+index 60f08fe888cb110e3fc3dfb1d763a57bd5bf47f6..9ebdc9bd865c566efb97cf0edbdcd809e5a713e7 100644
 --- a/drivers/gpu/drm/msm/dp/dp_catalog.h
 +++ b/drivers/gpu/drm/msm/dp/dp_catalog.h
-@@ -148,17 +148,6 @@ void msm_dp_catalog_ctrl_send_phy_pattern(struct msm_dp_catalog *msm_dp_catalog,
- 				u32 pattern);
- u32 msm_dp_catalog_ctrl_read_phy_pattern(struct msm_dp_catalog *msm_dp_catalog);
+@@ -150,20 +150,4 @@ u32 msm_dp_catalog_ctrl_read_phy_pattern(struct msm_dp_catalog *msm_dp_catalog);
  
--/* DP Panel APIs */
--int msm_dp_catalog_panel_timing_cfg(struct msm_dp_catalog *msm_dp_catalog, u32 total,
--				u32 sync_start, u32 width_blanking, u32 msm_dp_active);
--void msm_dp_catalog_panel_enable_vsc_sdp(struct msm_dp_catalog *msm_dp_catalog, struct dp_sdp *vsc_sdp);
--void msm_dp_catalog_panel_disable_vsc_sdp(struct msm_dp_catalog *msm_dp_catalog);
--void msm_dp_catalog_panel_tpg_enable(struct msm_dp_catalog *msm_dp_catalog,
--				struct drm_display_mode *drm_mode);
--void msm_dp_catalog_panel_tpg_disable(struct msm_dp_catalog *msm_dp_catalog);
--
--void msm_dp_catalog_panel_clear_dsc_dto(struct msm_dp_catalog *msm_dp_catalog);
--
  struct msm_dp_catalog *msm_dp_catalog_get(struct device *dev);
  
- /* DP Audio APIs */
-diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-index b9c461fee96f8fae9259ce03a32e1155b42d17bb..9c8619f96772cb80d2ac7ea1169279db6b9da836 100644
---- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
-+++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-@@ -2011,7 +2011,7 @@ int msm_dp_ctrl_on_stream(struct msm_dp_ctrl *msm_dp_ctrl, bool force_link_train
- 		pixel_rate_orig,
- 		ctrl->panel->msm_dp_mode.out_fmt_is_yuv_420);
- 
--	msm_dp_catalog_panel_clear_dsc_dto(ctrl->catalog);
-+	msm_dp_panel_clear_dsc_dto(ctrl->panel);
- 
- 	msm_dp_ctrl_setup_tr_unit(ctrl);
- 
-@@ -2037,7 +2037,7 @@ void msm_dp_ctrl_off_link_stream(struct msm_dp_ctrl *msm_dp_ctrl)
- 	ctrl = container_of(msm_dp_ctrl, struct msm_dp_ctrl_private, msm_dp_ctrl);
- 	phy = ctrl->phy;
- 
--	msm_dp_catalog_panel_disable_vsc_sdp(ctrl->catalog);
-+	msm_dp_panel_disable_vsc_sdp(ctrl->panel);
- 
- 	/* set dongle to D3 (power off) mode */
- 	msm_dp_link_psm_config(ctrl->link, &ctrl->panel->link_info, true);
-@@ -2092,7 +2092,7 @@ void msm_dp_ctrl_off(struct msm_dp_ctrl *msm_dp_ctrl)
- 	ctrl = container_of(msm_dp_ctrl, struct msm_dp_ctrl_private, msm_dp_ctrl);
- 	phy = ctrl->phy;
- 
--	msm_dp_catalog_panel_disable_vsc_sdp(ctrl->catalog);
-+	msm_dp_panel_disable_vsc_sdp(ctrl->panel);
- 
- 	msm_dp_catalog_ctrl_mainlink_ctrl(ctrl->catalog, false);
- 
-diff --git a/drivers/gpu/drm/msm/dp/dp_panel.c b/drivers/gpu/drm/msm/dp/dp_panel.c
-index 92415bf8aa16655a6cf4f7d6f8a5896275edf001..2b6a41ec8f6589c9629160f989a3a54f2d0c68d5 100644
---- a/drivers/gpu/drm/msm/dp/dp_panel.c
-+++ b/drivers/gpu/drm/msm/dp/dp_panel.c
-@@ -4,6 +4,7 @@
-  */
- 
- #include "dp_panel.h"
-+#include "dp_reg.h"
- #include "dp_utils.h"
- 
- #include <drm/drm_connector.h>
-@@ -11,6 +12,8 @@
- #include <drm/drm_of.h>
- #include <drm/drm_print.h>
- 
-+#define DP_INTF_CONFIG_DATABUS_WIDEN     BIT(4)
-+
- #define DP_MAX_NUM_DP_LANES	4
- #define DP_LINK_RATE_HBR2	540000 /* kbytes */
- 
-@@ -242,9 +245,87 @@ void msm_dp_panel_handle_sink_request(struct msm_dp_panel *msm_dp_panel)
- 	}
- }
- 
-+static void msm_dp_panel_tpg_enable(struct msm_dp_panel *msm_dp_panel,
-+				    struct drm_display_mode *drm_mode)
-+{
-+	struct msm_dp_panel_private *panel =
-+		container_of(msm_dp_panel, struct msm_dp_panel_private, msm_dp_panel);
-+	struct msm_dp_catalog *catalog = panel->catalog;
-+	u32 hsync_period, vsync_period;
-+	u32 display_v_start, display_v_end;
-+	u32 hsync_start_x, hsync_end_x;
-+	u32 v_sync_width;
-+	u32 hsync_ctl;
-+	u32 display_hctl;
-+
-+	/* TPG config parameters*/
-+	hsync_period = drm_mode->htotal;
-+	vsync_period = drm_mode->vtotal;
-+
-+	display_v_start = ((drm_mode->vtotal - drm_mode->vsync_start) *
-+					hsync_period);
-+	display_v_end = ((vsync_period - (drm_mode->vsync_start -
-+					drm_mode->vdisplay))
-+					* hsync_period) - 1;
-+
-+	display_v_start += drm_mode->htotal - drm_mode->hsync_start;
-+	display_v_end -= (drm_mode->hsync_start - drm_mode->hdisplay);
-+
-+	hsync_start_x = drm_mode->htotal - drm_mode->hsync_start;
-+	hsync_end_x = hsync_period - (drm_mode->hsync_start -
-+					drm_mode->hdisplay) - 1;
-+
-+	v_sync_width = drm_mode->vsync_end - drm_mode->vsync_start;
-+
-+	hsync_ctl = (hsync_period << 16) |
-+			(drm_mode->hsync_end - drm_mode->hsync_start);
-+	display_hctl = (hsync_end_x << 16) | hsync_start_x;
-+
-+
-+	msm_dp_write_p0(catalog, MMSS_DP_INTF_HSYNC_CTL, hsync_ctl);
-+	msm_dp_write_p0(catalog, MMSS_DP_INTF_VSYNC_PERIOD_F0, vsync_period *
-+			hsync_period);
-+	msm_dp_write_p0(catalog, MMSS_DP_INTF_VSYNC_PULSE_WIDTH_F0, v_sync_width *
-+			hsync_period);
-+	msm_dp_write_p0(catalog, MMSS_DP_INTF_VSYNC_PERIOD_F1, 0);
-+	msm_dp_write_p0(catalog, MMSS_DP_INTF_VSYNC_PULSE_WIDTH_F1, 0);
-+	msm_dp_write_p0(catalog, MMSS_DP_INTF_DISPLAY_HCTL, display_hctl);
-+	msm_dp_write_p0(catalog, MMSS_DP_INTF_ACTIVE_HCTL, 0);
-+	msm_dp_write_p0(catalog, MMSS_INTF_DISPLAY_V_START_F0, display_v_start);
-+	msm_dp_write_p0(catalog, MMSS_DP_INTF_DISPLAY_V_END_F0, display_v_end);
-+	msm_dp_write_p0(catalog, MMSS_INTF_DISPLAY_V_START_F1, 0);
-+	msm_dp_write_p0(catalog, MMSS_DP_INTF_DISPLAY_V_END_F1, 0);
-+	msm_dp_write_p0(catalog, MMSS_DP_INTF_ACTIVE_V_START_F0, 0);
-+	msm_dp_write_p0(catalog, MMSS_DP_INTF_ACTIVE_V_END_F0, 0);
-+	msm_dp_write_p0(catalog, MMSS_DP_INTF_ACTIVE_V_START_F1, 0);
-+	msm_dp_write_p0(catalog, MMSS_DP_INTF_ACTIVE_V_END_F1, 0);
-+	msm_dp_write_p0(catalog, MMSS_DP_INTF_POLARITY_CTL, 0);
-+
-+	msm_dp_write_p0(catalog, MMSS_DP_TPG_MAIN_CONTROL,
-+				DP_TPG_CHECKERED_RECT_PATTERN);
-+	msm_dp_write_p0(catalog, MMSS_DP_TPG_VIDEO_CONFIG,
-+				DP_TPG_VIDEO_CONFIG_BPP_8BIT |
-+				DP_TPG_VIDEO_CONFIG_RGB);
-+	msm_dp_write_p0(catalog, MMSS_DP_BIST_ENABLE,
-+				DP_BIST_ENABLE_DPBIST_EN);
-+	msm_dp_write_p0(catalog, MMSS_DP_TIMING_ENGINE_EN,
-+				DP_TIMING_ENGINE_EN_EN);
-+	drm_dbg_dp(panel->drm_dev, "%s: enabled tpg\n", __func__);
-+}
-+
-+static void msm_dp_panel_tpg_disable(struct msm_dp_panel *msm_dp_panel)
-+{
-+	struct msm_dp_panel_private *panel =
-+		container_of(msm_dp_panel, struct msm_dp_panel_private, msm_dp_panel);
-+	struct msm_dp_catalog *catalog = panel->catalog;
-+
-+	msm_dp_write_p0(catalog, MMSS_DP_TPG_MAIN_CONTROL, 0x0);
-+	msm_dp_write_p0(catalog, MMSS_DP_BIST_ENABLE, 0x0);
-+	msm_dp_write_p0(catalog, MMSS_DP_TIMING_ENGINE_EN, 0x0);
-+}
-+
- void msm_dp_panel_tpg_config(struct msm_dp_panel *msm_dp_panel, bool enable)
- {
--	struct msm_dp_catalog *catalog;
- 	struct msm_dp_panel_private *panel;
- 
- 	if (!msm_dp_panel) {
-@@ -253,7 +334,6 @@ void msm_dp_panel_tpg_config(struct msm_dp_panel *msm_dp_panel, bool enable)
- 	}
- 
- 	panel = container_of(msm_dp_panel, struct msm_dp_panel_private, msm_dp_panel);
--	catalog = panel->catalog;
- 
- 	if (!panel->panel_on) {
- 		drm_dbg_dp(panel->drm_dev,
-@@ -262,18 +342,113 @@ void msm_dp_panel_tpg_config(struct msm_dp_panel *msm_dp_panel, bool enable)
- 	}
- 
- 	if (!enable) {
--		msm_dp_catalog_panel_tpg_disable(catalog);
-+		msm_dp_panel_tpg_disable(msm_dp_panel);
- 		return;
- 	}
- 
--	drm_dbg_dp(panel->drm_dev, "calling catalog tpg_enable\n");
--	msm_dp_catalog_panel_tpg_enable(catalog, &panel->msm_dp_panel.msm_dp_mode.drm_mode);
-+	drm_dbg_dp(panel->drm_dev, "calling panel's tpg_enable\n");
-+	msm_dp_panel_tpg_enable(msm_dp_panel, &panel->msm_dp_panel.msm_dp_mode.drm_mode);
-+}
-+
-+void msm_dp_panel_clear_dsc_dto(struct msm_dp_panel *msm_dp_panel)
-+{
-+	struct msm_dp_panel_private *panel =
-+		container_of(msm_dp_panel, struct msm_dp_panel_private, msm_dp_panel);
-+	struct msm_dp_catalog *catalog = panel->catalog;
-+
-+	msm_dp_write_p0(catalog, MMSS_DP_DSC_DTO, 0x0);
-+}
-+
-+static void msm_dp_panel_send_vsc_sdp(struct msm_dp_panel_private *panel, struct dp_sdp *vsc_sdp)
-+{
-+	struct msm_dp_catalog *msm_dp_catalog = panel->catalog;
-+	u32 header[2];
-+	u32 val;
-+	int i;
-+
-+	msm_dp_utils_pack_sdp_header(&vsc_sdp->sdp_header, header);
-+
-+	msm_dp_write_link(msm_dp_catalog, MMSS_DP_GENERIC0_0, header[0]);
-+	msm_dp_write_link(msm_dp_catalog, MMSS_DP_GENERIC0_1, header[1]);
-+
-+	for (i = 0; i < sizeof(vsc_sdp->db); i += 4) {
-+		val = ((vsc_sdp->db[i]) | (vsc_sdp->db[i + 1] << 8) | (vsc_sdp->db[i + 2] << 16) |
-+		       (vsc_sdp->db[i + 3] << 24));
-+		msm_dp_write_link(msm_dp_catalog, MMSS_DP_GENERIC0_2 + i, val);
-+	}
-+}
-+
-+static void msm_dp_panel_update_sdp(struct msm_dp_panel_private *panel)
-+{
-+	u32 hw_revision = panel->catalog->hw_revision;
-+
-+	if (hw_revision >= DP_HW_VERSION_1_0 &&
-+	    hw_revision < DP_HW_VERSION_1_2) {
-+		msm_dp_write_link(panel->catalog, MMSS_DP_SDP_CFG3, UPDATE_SDP);
-+		msm_dp_write_link(panel->catalog, MMSS_DP_SDP_CFG3, 0x0);
-+	}
-+}
-+
-+void msm_dp_panel_enable_vsc_sdp(struct msm_dp_panel *msm_dp_panel, struct dp_sdp *vsc_sdp)
-+{
-+	struct msm_dp_panel_private *panel =
-+		container_of(msm_dp_panel, struct msm_dp_panel_private, msm_dp_panel);
-+	struct msm_dp_catalog *msm_dp_catalog = panel->catalog;
-+	u32 cfg, cfg2, misc;
-+
-+	cfg = msm_dp_read_link(msm_dp_catalog, MMSS_DP_SDP_CFG);
-+	cfg2 = msm_dp_read_link(msm_dp_catalog, MMSS_DP_SDP_CFG2);
-+	misc = msm_dp_read_link(msm_dp_catalog, REG_DP_MISC1_MISC0);
-+
-+	cfg |= GEN0_SDP_EN;
-+	msm_dp_write_link(msm_dp_catalog, MMSS_DP_SDP_CFG, cfg);
-+
-+	cfg2 |= GENERIC0_SDPSIZE_VALID;
-+	msm_dp_write_link(msm_dp_catalog, MMSS_DP_SDP_CFG2, cfg2);
-+
-+	msm_dp_panel_send_vsc_sdp(panel, vsc_sdp);
-+
-+	/* indicates presence of VSC (BIT(6) of MISC1) */
-+	misc |= DP_MISC1_VSC_SDP;
-+
-+	drm_dbg_dp(panel->drm_dev, "vsc sdp enable=1\n");
-+
-+	pr_debug("misc settings = 0x%x\n", misc);
-+	msm_dp_write_link(msm_dp_catalog, REG_DP_MISC1_MISC0, misc);
-+
-+	msm_dp_panel_update_sdp(panel);
-+}
-+
-+void msm_dp_panel_disable_vsc_sdp(struct msm_dp_panel *msm_dp_panel)
-+{
-+	struct msm_dp_panel_private *panel =
-+		container_of(msm_dp_panel, struct msm_dp_panel_private, msm_dp_panel);
-+	struct msm_dp_catalog *msm_dp_catalog = panel->catalog;
-+	u32 cfg, cfg2, misc;
-+
-+	cfg = msm_dp_read_link(msm_dp_catalog, MMSS_DP_SDP_CFG);
-+	cfg2 = msm_dp_read_link(msm_dp_catalog, MMSS_DP_SDP_CFG2);
-+	misc = msm_dp_read_link(msm_dp_catalog, REG_DP_MISC1_MISC0);
-+
-+	cfg &= ~GEN0_SDP_EN;
-+	msm_dp_write_link(msm_dp_catalog, MMSS_DP_SDP_CFG, cfg);
-+
-+	cfg2 &= ~GENERIC0_SDPSIZE_VALID;
-+	msm_dp_write_link(msm_dp_catalog, MMSS_DP_SDP_CFG2, cfg2);
-+
-+	/* switch back to MSA */
-+	misc &= ~DP_MISC1_VSC_SDP;
-+
-+	drm_dbg_dp(panel->drm_dev, "vsc sdp enable=0\n");
-+
-+	pr_debug("misc settings = 0x%x\n", misc);
-+	msm_dp_write_link(msm_dp_catalog, REG_DP_MISC1_MISC0, misc);
-+
-+	msm_dp_panel_update_sdp(panel);
- }
- 
- static int msm_dp_panel_setup_vsc_sdp_yuv_420(struct msm_dp_panel *msm_dp_panel)
- {
--	struct msm_dp_catalog *catalog;
--	struct msm_dp_panel_private *panel;
- 	struct msm_dp_display_mode *msm_dp_mode;
- 	struct drm_dp_vsc_sdp vsc_sdp_data;
- 	struct dp_sdp vsc_sdp;
-@@ -284,8 +459,6 @@ static int msm_dp_panel_setup_vsc_sdp_yuv_420(struct msm_dp_panel *msm_dp_panel)
- 		return -EINVAL;
- 	}
- 
--	panel = container_of(msm_dp_panel, struct msm_dp_panel_private, msm_dp_panel);
--	catalog = panel->catalog;
- 	msm_dp_mode = &msm_dp_panel->msm_dp_mode;
- 
- 	memset(&vsc_sdp_data, 0, sizeof(vsc_sdp_data));
-@@ -312,7 +485,7 @@ static int msm_dp_panel_setup_vsc_sdp_yuv_420(struct msm_dp_panel *msm_dp_panel)
- 		return len;
- 	}
- 
--	msm_dp_catalog_panel_enable_vsc_sdp(catalog, &vsc_sdp);
-+	msm_dp_panel_enable_vsc_sdp(msm_dp_panel, &vsc_sdp);
- 
- 	return 0;
- }
-@@ -327,6 +500,7 @@ int msm_dp_panel_timing_cfg(struct msm_dp_panel *msm_dp_panel)
- 	u32 sync_start;
- 	u32 msm_dp_active;
- 	u32 total;
-+	u32 reg;
- 
- 	panel = container_of(msm_dp_panel, struct msm_dp_panel_private, msm_dp_panel);
- 	catalog = panel->catalog;
-@@ -372,7 +546,20 @@ int msm_dp_panel_timing_cfg(struct msm_dp_panel *msm_dp_panel)
- 
- 	msm_dp_active = data;
- 
--	msm_dp_catalog_panel_timing_cfg(catalog, total, sync_start, width_blanking, msm_dp_active);
-+	msm_dp_write_link(catalog, REG_DP_TOTAL_HOR_VER, total);
-+	msm_dp_write_link(catalog, REG_DP_START_HOR_VER_FROM_SYNC, sync_start);
-+	msm_dp_write_link(catalog, REG_DP_HSYNC_VSYNC_WIDTH_POLARITY, width_blanking);
-+	msm_dp_write_link(catalog, REG_DP_ACTIVE_HOR_VER, msm_dp_active);
-+
-+	reg = msm_dp_read_p0(catalog, MMSS_DP_INTF_CONFIG);
-+	if (catalog->wide_bus_en)
-+		reg |= DP_INTF_CONFIG_DATABUS_WIDEN;
-+	else
-+		reg &= ~DP_INTF_CONFIG_DATABUS_WIDEN;
-+
-+	drm_dbg_dp(panel->drm_dev, "wide_bus_en=%d reg=%#x\n", catalog->wide_bus_en, reg);
-+
-+	msm_dp_write_p0(catalog, MMSS_DP_INTF_CONFIG, reg);
- 
- 	if (msm_dp_panel->msm_dp_mode.out_fmt_is_yuv_420)
- 		msm_dp_panel_setup_vsc_sdp_yuv_420(msm_dp_panel);
-diff --git a/drivers/gpu/drm/msm/dp/dp_panel.h b/drivers/gpu/drm/msm/dp/dp_panel.h
-index 4906f4f09f2451cfed3c1007f38b4db7dfdb1d90..8dde55b3a5ab64c0c12d69cb2dd5b5c733c83432 100644
---- a/drivers/gpu/drm/msm/dp/dp_panel.h
-+++ b/drivers/gpu/drm/msm/dp/dp_panel.h
-@@ -57,6 +57,11 @@ int msm_dp_panel_get_modes(struct msm_dp_panel *msm_dp_panel,
- void msm_dp_panel_handle_sink_request(struct msm_dp_panel *msm_dp_panel);
- void msm_dp_panel_tpg_config(struct msm_dp_panel *msm_dp_panel, bool enable);
- 
-+void msm_dp_panel_clear_dsc_dto(struct msm_dp_panel *msm_dp_panel);
-+
-+void msm_dp_panel_enable_vsc_sdp(struct msm_dp_panel *msm_dp_panel, struct dp_sdp *vsc_sdp);
-+void msm_dp_panel_disable_vsc_sdp(struct msm_dp_panel *msm_dp_panel);
-+
- /**
-  * is_link_rate_valid() - validates the link rate
-  * @lane_rate: link rate requested by the sink
+-/* DP Audio APIs */
+-void msm_dp_catalog_write_audio_stream(struct msm_dp_catalog *msm_dp_catalog,
+-				       struct dp_sdp_header *sdp_hdr);
+-void msm_dp_catalog_write_audio_timestamp(struct msm_dp_catalog *msm_dp_catalog,
+-					  struct dp_sdp_header *sdp_hdr);
+-void msm_dp_catalog_write_audio_infoframe(struct msm_dp_catalog *msm_dp_catalog,
+-					  struct dp_sdp_header *sdp_hdr);
+-void msm_dp_catalog_write_audio_copy_mgmt(struct msm_dp_catalog *msm_dp_catalog,
+-					  struct dp_sdp_header *sdp_hdr);
+-void msm_dp_catalog_write_audio_isrc(struct msm_dp_catalog *msm_dp_catalog,
+-				     struct dp_sdp_header *sdp_hdr);
+-void msm_dp_catalog_audio_config_acr(struct msm_dp_catalog *catalog, u32 select);
+-void msm_dp_catalog_audio_enable(struct msm_dp_catalog *catalog, bool enable);
+-void msm_dp_catalog_audio_config_sdp(struct msm_dp_catalog *catalog);
+-void msm_dp_catalog_audio_sfe_level(struct msm_dp_catalog *catalog, u32 safe_to_exit_level);
+-
+ #endif /* _DP_CATALOG_H_ */
 
 -- 
 2.39.5
