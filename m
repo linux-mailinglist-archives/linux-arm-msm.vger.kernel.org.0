@@ -1,133 +1,169 @@
-Return-Path: <linux-arm-msm+bounces-43071-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-43072-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0BC189FA499
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 22 Dec 2024 08:56:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id B7BE09FA4A8
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 22 Dec 2024 09:19:26 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7EFE916680B
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 22 Dec 2024 07:56:01 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 1DF231663AB
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 22 Dec 2024 08:19:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5F9F21632D7;
-	Sun, 22 Dec 2024 07:55:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="H+T7yZPa"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6DB461632FE;
+	Sun, 22 Dec 2024 08:19:20 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-oa1-f49.google.com (mail-oa1-f49.google.com [209.85.160.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D69476F31E;
-	Sun, 22 Dec 2024 07:55:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E29FB660;
+	Sun, 22 Dec 2024 08:19:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734854157; cv=none; b=MiY+AupHPvMORFYvKrVgEuQ3XOOfn5/HJkJtRq4KRd1PHZWZHuRSNIm7rO/Ba8N8aArmreFn554DW8FSKNsd64KNiOSydpI+fs8vjH8JhdRlhTjK1w4sqwBWkSBDRfYR4oG03Z2pFSLiIHZNmG1MTsAOyR2JsjCltFF3D9KeeaI=
+	t=1734855560; cv=none; b=lZJqDgE3TAraLe10+j15d8mdQCRrP7qQuhS/Tb5wAoSSexnROg0Zc62rf5/DGnHbqIXWekgszfbsEMb593ksfP3VYPih5B8Dv7TP6N7bvpB2YsRu3wPtCcsy3xelWbpCgBasNLAjwgWs7KBAdiVSQSbLLU920k0u0IDvosNRulY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734854157; c=relaxed/simple;
-	bh=M1Vbah9THqC10bO4tCeycD96owB2e4B9+n14uYRp7Mc=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=bLEgW+Wrj7uS6eD/dGruAPyMREh7jcSn8OvSW3QzIRF8NcE9CqFx7BLb3qEv3BrI+lCmAd6uxzI5IakxSIcSW+MBRvJAi8FRPVV9DFVKhPfFtQxgtCAoGVn5m+Wxtvxsv86j0dFI7oYGxyHJJ5YX7m8MKUkMecvfjzqKkLCH2D0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=H+T7yZPa; arc=none smtp.client-ip=209.85.160.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-oa1-f49.google.com with SMTP id 586e51a60fabf-29fbba47ca4so1515366fac.3;
-        Sat, 21 Dec 2024 23:55:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1734854155; x=1735458955; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=v5qv1jdP2agz4pI5HNaKvdcQpLRY2HpN9vekhuMUNzs=;
-        b=H+T7yZPaDBpou5xjMFy83xr0OyrPrU3Qq7roV4jgIsuGgfGwQ/2PX7+EoZ/GMGae7o
-         eBqGNLEXWu6NAnDBC7W0j0I3afjlpSE9pkL95ROrGRWYawfy0nNi/YCE+l9GRiGa5Ram
-         f2zBY4IswHgJkra7cpJ8XhUjjK10DafTF7lpjs54VbKh27TrIO810zTuFDclGAyegfZc
-         pq+tN4MRexgfOcJuhW14Tyb1HrImLMeHrEwOdFMIgSkq2/dLa0JbaSGWSVk+o5hSpTVk
-         JGgWvSnTobNJOwQmCcSBERyYCL4UEU0SNP4jkxW+pX8/ATleLcmUafwymlDC7ly1lpck
-         SeLw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734854155; x=1735458955;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=v5qv1jdP2agz4pI5HNaKvdcQpLRY2HpN9vekhuMUNzs=;
-        b=Rf7IlZCdbctKK6qcL4EkMIECsq14j3VsSRxTCr0HMD6LrMfEeKUUG0i8bwpBpoLVT7
-         Ds7RS8LwKXOyKCGxOuYGx0r1y97KcEu+KpPBV/bJT4OtMNgdh6POrG47dnWWGiMxFh6q
-         Wni4TBxcHGGwogDZ3epUO5NGWNJ0CV8VPqp7kOwUWZ9EmLCgpfjsHmc8osROjvzxYlEY
-         vTzSE30loYN2IiIcio38lPMrLW/UzhdTIXIeKkDva58/4CyNdjMRht4VHQgAgEWjtxSN
-         MkeFMQuPvhuZEaCSgDbJEHe1U4oWRMTJNqR1fqA2eHmbgTYcCEPpcv+RCB9rgtMXssSV
-         7E/g==
-X-Forwarded-Encrypted: i=1; AJvYcCU9XQaeTYezab0EvoZi979rKdX2VzT9ph5iO4GWtUpVVjEYWz4/YMBHyInnWASauE2Ogte/LmugXcXROsFc@vger.kernel.org, AJvYcCXFxcjFrUJOmq9ljbPW45vbgmTJomA6SrIjqbEJDOn1SpLvR2V+WEnReRJbhz2XYnaw8c7n3DmoLn4t@vger.kernel.org, AJvYcCXYcazsnIvqH85bnrvMBf/De17ocrZtUc5JA3Wuk3G1YxtOYkan3xiW3jjHZ69kizzY3arLz+M9WZp4tbG/Zw==@vger.kernel.org
-X-Gm-Message-State: AOJu0YyHBWwpjYRxkRbThRbdn1cTWEFvg8B9wyBLEjnjl+nimVLqZ6KO
-	Fu2PeNBkjNzzSGuYvJyf2D7WWZoI3H6HQ6ME+7GuLakGztN7NVcys8j2Od228ca9dwfScsYzHVj
-	KWr62HzyUW8zHT4bHHfvJMsgGjj0=
-X-Gm-Gg: ASbGncvnWsTcDDxI/weup7MzguPVq2Y3qRuo+8EESa2wQSMIGbJayAq9VGeb7pfSAex
-	Tuyk0Qq5yn9q6kWjQG82Bw8GKFyDCOXV5RCDMm3k=
-X-Google-Smtp-Source: AGHT+IE4nGVT4fLIMqZuz5mCpJ6LP/p6tD1BoWVyOVyCEVrgqNw+yNbc1/UqV3utJuAC9+UBfhbVPXcAxO2vfep9FKQ=
-X-Received: by 2002:a05:6870:1681:b0:29e:69a9:8311 with SMTP id
- 586e51a60fabf-2a7fb39b3edmr4631701fac.36.1734854154823; Sat, 21 Dec 2024
- 23:55:54 -0800 (PST)
+	s=arc-20240116; t=1734855560; c=relaxed/simple;
+	bh=7dedxWZlfHcvdXPQyn+nkvHPRxkM7FABOCTnMOafI04=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=KuH5D598fEPmBHqfDkE+9R2dz/FLMODckm0VCcr8+hKHRAOSwMy8OxcKaqhd1XJe6FtfB+90lAmptiKlwWd91nPWZ7bnD+sMJwKuLRS6kRLJgmmGDPvU/jxnfUgz+Bk8iUZ1HbT+jf99wOZCPbUj0vvS0VWIZ2OHJROgee5A19o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 322A5C4CECD;
+	Sun, 22 Dec 2024 08:19:17 +0000 (UTC)
+Date: Sun, 22 Dec 2024 09:19:15 +0100
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To: Luo Jie <quic_luoj@quicinc.com>
+Cc: Bjorn Andersson <andersson@kernel.org>, 
+	Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-arm-kernel@lists.infradead.org, quic_kkumarcs@quicinc.com, quic_suruchia@quicinc.com, 
+	quic_pavir@quicinc.com, quic_linchen@quicinc.com, quic_leiwei@quicinc.com, 
+	bartosz.golaszewski@linaro.org, srinivas.kandagatla@linaro.org
+Subject: Re: [PATCH v7 1/5] dt-bindings: clock: qcom: Add CMN PLL clock
+ controller for IPQ SoC
+Message-ID: <yngf4ngbnkcmohjfkd6muynfr72v5yhynmyqfjmxh6qbxidmo7@bsvimplmpwsl>
+References: <20241220-qcom_ipq_cmnpll-v7-0-438a1b5cb98e@quicinc.com>
+ <20241220-qcom_ipq_cmnpll-v7-1-438a1b5cb98e@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20241219200821.8328-1-maccraft123mc@gmail.com>
- <tma7q7lfskdr7myfoeene7o27g7nhc5ca66kpmnqvgksv5oxqv@ziefqqp5khic> <57515c0f-caa0-4651-96cf-dde75a13937f@kernel.org>
-In-Reply-To: <57515c0f-caa0-4651-96cf-dde75a13937f@kernel.org>
-From: Maya Matuszczyk <maccraft123mc@gmail.com>
-Date: Sun, 22 Dec 2024 08:55:18 +0100
-Message-ID: <CAO_MupJNuK2UyXEPdr-xufWotbP-EmHyUk81YiTwaQR=WccSEA@mail.gmail.com>
-Subject: Re: [PATCH v2 1/3] dt-bindings: platform: Add bindings for Qcom's EC
- on IT8987
-To: Krzysztof Kozlowski <krzk@kernel.org>
-Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
-	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20241220-qcom_ipq_cmnpll-v7-1-438a1b5cb98e@quicinc.com>
 
-niedz., 22 gru 2024 o 07:40 Krzysztof Kozlowski <krzk@kernel.org> napisa=C5=
-=82(a):
->
-> On 22/12/2024 07:33, Krzysztof Kozlowski wrote:
-> >> +properties:
-> >> +  compatible:
-> >> +    oneOf:
-> >> +      - const: qcom,x1e-it8987-ec
-> >
-> > That's not a SoC, so I don't understand:
-> > 1. referring to the SoC,
-> > 2. Having this alone and as fallback.
-> >
-> > It does not look like you tested the bindings, at least after quick
-> > look. Please run 'make dt_binding_check' (see
-> > Documentation/devicetree/bindings/writing-schema.rst for instructions).
-> > Maybe you need to update your dtschema and yamllint. Don't rely on
-> > distro packages for dtschema and be sure you are using the latest
-> > released dtschema.
->
-> BTW, for sure Qualcomm did not develop/create it8987, so it cannot be
-> used here. Come with specific compatible for this given, one product:
-> embedded controller on one Lenovo laptop and use it also as filename.
+On Fri, Dec 20, 2024 at 09:22:42PM +0800, Luo Jie wrote:
+> The CMN PLL controller provides clocks to networking hardware blocks
+> and to GCC on Qualcomm IPQ9574 SoC. It receives input clock from the
+> on-chip Wi-Fi, and produces output clocks at fixed rates. These output
+> rates are predetermined, and are unrelated to the input clock rate.
+> The primary purpose of CMN PLL is to supply clocks to the networking
+> hardware such as PPE (packet process engine), PCS and the externally
+> connected switch or PHY device. The CMN PLL block also outputs fixed
+> rate clocks to GCC, such as 24 MHZ as XO clock and 32 KHZ as sleep
+> clock supplied to GCC.
+> 
+> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> Signed-off-by: Luo Jie <quic_luoj@quicinc.com>
+> ---
+>  .../bindings/clock/qcom,ipq9574-cmn-pll.yaml       | 85 ++++++++++++++++++++++
+>  include/dt-bindings/clock/qcom,ipq-cmn-pll.h       | 22 ++++++
+>  2 files changed, 107 insertions(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/clock/qcom,ipq9574-cmn-pll.yaml b/Documentation/devicetree/bindings/clock/qcom,ipq9574-cmn-pll.yaml
+> new file mode 100644
+> index 000000000000..db8a3ee56067
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/clock/qcom,ipq9574-cmn-pll.yaml
+> @@ -0,0 +1,85 @@
+> +# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/clock/qcom,ipq9574-cmn-pll.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm CMN PLL Clock Controller on IPQ SoC
+> +
+> +maintainers:
+> +  - Bjorn Andersson <andersson@kernel.org>
+> +  - Luo Jie <quic_luoj@quicinc.com>
+> +
+> +description:
+> +  The CMN (or common) PLL clock controller expects a reference
+> +  input clock. This reference clock is from the on-board Wi-Fi.
+> +  The CMN PLL supplies a number of fixed rate output clocks to
+> +  the devices providing networking functions and to GCC. These
+> +  networking hardware include PPE (packet process engine), PCS
+> +  and the externally connected switch or PHY devices. The CMN
+> +  PLL block also outputs fixed rate clocks to GCC. The PLL's
+> +  primary function is to enable fixed rate output clocks for
+> +  networking hardware functions used with the IPQ SoC.
+> +
+> +properties:
+> +  compatible:
+> +    enum:
+> +      - qcom,ipq9574-cmn-pll
+> +
+> +  reg:
+> +    maxItems: 1
+> +
+> +  clocks:
+> +    items:
+> +      - description: The reference clock. The supported clock rates include
+> +          25000000, 31250000, 40000000, 48000000, 50000000 and 96000000 HZ.
+> +      - description: The AHB clock
+> +      - description: The SYS clock
+> +    description:
+> +      The reference clock is the source clock of CMN PLL, which is from the
+> +      Wi-Fi. The AHB and SYS clocks must be enabled to access CMN PLL
+> +      clock registers.
+> +
+> +  clock-names:
+> +    items:
+> +      - const: ref
+> +      - const: ahb
+> +      - const: sys
+> +
+> +  "#clock-cells":
+> +    const: 1
+> +
+> +  assigned-clocks:
 
-Under these assumptions:
+Drop
 
-- Qualcomm developed the firmware running on the IT8987 in most x1e machine=
-s
-- IT8987 is also used in other machines with a non-compatible firmware
-- The driver name should reflect the assumptions
+> +    maxItems: 1
+> +
+> +  assigned-clock-rates-u64:
+> +    maxItems: 1
 
-I think the name qcom,x1e-it8987-ec is not the worst name for it, as
-"ite,it8987-ec" would imply compatibility with other devices running
-non-compatible firmware,
-and names specifying only the device wouldn't reflect the "firmware is
-based on what qcom did and it's driven the same way" part
+These wasn't here when you received review. Adding new properties always
+invalidates review.
 
-Which other names do you think would fit this better?
+No, drop them.
 
->
-> Best regards,
-> Krzysztof
+
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +  - clocks
+> +  - clock-names
+> +  - "#clock-cells"
+> +  - assigned-clocks
+
+Drop
+
+> +  - assigned-clock-rates-u64
+
+Drop... or explain
+
+Drop all review tags after making significant changes like that.
+
+Best regards,
+Krzysztof
+
 
