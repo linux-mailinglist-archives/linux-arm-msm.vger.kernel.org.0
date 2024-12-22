@@ -1,255 +1,183 @@
-Return-Path: <linux-arm-msm+bounces-43078-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-43079-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 77EBF9FA658
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 22 Dec 2024 16:08:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id D059E9FA7F1
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 22 Dec 2024 21:14:21 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 82FA0188733E
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 22 Dec 2024 15:08:19 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 010E51886739
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 22 Dec 2024 20:14:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BFE9318CBFB;
-	Sun, 22 Dec 2024 15:08:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4EBFE192B62;
+	Sun, 22 Dec 2024 20:14:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="W1uCoOm2"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="LJ9Rzg+T"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-oa1-f47.google.com (mail-oa1-f47.google.com [209.85.160.47])
+Received: from mail-lf1-f54.google.com (mail-lf1-f54.google.com [209.85.167.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13B7F18A924;
-	Sun, 22 Dec 2024 15:08:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22A7418F2CF
+	for <linux-arm-msm@vger.kernel.org>; Sun, 22 Dec 2024 20:14:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734880094; cv=none; b=QwaopOYPEqnCpBODaF1fiDJnwDtF091obNeDSm39jmmVfdpSMo3mAec3GX+URR5vle/MSea6n3fHFw4e8TbZ5Sd/GlhqOYhMVlJPSKAQ4gwFed4v2NCy2zAqcURvr5vaYLRS28PJga3UJuIZUckOCP86TgWR7fzE0Jdgzq20L3Y=
+	t=1734898454; cv=none; b=u1SG7c1Amnemb38vdlHdwhkr2ulc54QJDs2bwGMO3Z2Ph6e/C1NKiPsUUY2QKSpolHfcfu7SzhHT0F0TPBuJR83vRPFOSbZ2y1axsIpctS1wfL9staw1mmxPeklzv1xE8DWp/g58okuqUvuPdNpRxtDFHaDKMsFcz/9xIWXe2XA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734880094; c=relaxed/simple;
-	bh=KNQhSyi4ipTPPysSBkuG1N/VEAxn0uQWIXM+DCiPfNA=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=BOVlLEsIbzsk+WKfuUIbEIcEw8pvNJbxPE+On5fnSbEBGvdNR7gOH1PXdUwi0c2emGRTo8URiFJ/kJWHnCOJjRdEOAGRugD7l+oIuMvDrwLVuqgnybdZMpt+L4J/K1aGx1bO2151L3US3POYep7Ftog6njDJq+TZ0Qhc0Ot+wYc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=W1uCoOm2; arc=none smtp.client-ip=209.85.160.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-oa1-f47.google.com with SMTP id 586e51a60fabf-29e5aedbebdso1562875fac.0;
-        Sun, 22 Dec 2024 07:08:12 -0800 (PST)
+	s=arc-20240116; t=1734898454; c=relaxed/simple;
+	bh=nltqBJNSym88t0xwGnPmhRirL/N2i25MU95l0p1iW20=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=GDDV3CLzFgOGjqmjgXjvSGKTACgeGCDSzzKn/+CXljfBeAmdKE6Cd/jr90K4nPFDxoZyc4D39CDkKaFLFnNz1K9GEPbxy/kPmGBxKDUJV3wVv3xy9sKrRIZMMdmFqcm1GqfCfAigwXCtUNrvxroOlT3OdJpIu2rqsKdSrczABgc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=LJ9Rzg+T; arc=none smtp.client-ip=209.85.167.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f54.google.com with SMTP id 2adb3069b0e04-53ffaaeeb76so3695181e87.0
+        for <linux-arm-msm@vger.kernel.org>; Sun, 22 Dec 2024 12:14:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1734880092; x=1735484892; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=mZ2sbrQyrrPcANBkGFQguh+3JYHXT7LPTlFvu+SnOAw=;
-        b=W1uCoOm2ZMqSOowqi6R6IsIdRwz/7LngDrVCPll+4aLpwCoCys+mJcVWWbf6b30dqe
-         1wCXNztMVk0OzOSSOwTbnlRa7fQqTUA3Lqtozxc5yB/yltVg24VHGxfz+/kMlRXNEaBo
-         oxrNX2HR143c5aSiHRjWK9FILukLSRz999lpJ/ZAHX2SgobMuF3hj6j+qZKCUWWOL/dk
-         NAUszlrY7O3crCj83ZGFNKsUPOpCy3zXv0G4E/SbVbGv/+fzhA8w6Xg0gDj/obS8Iqbs
-         iVy0+QMFkabPkoxcNnITqJuCqNg4dovhYdpaPshNmH0g4rYuG+MSW90WLo+pqBqxY0Jk
-         GPGg==
+        d=linaro.org; s=google; t=1734898450; x=1735503250; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=QxprhQ4J3lQhku7F3H5lnA88gGNPLgwQxX0RIJtyMRs=;
+        b=LJ9Rzg+TOggKk4e71D3aPuAv7gNTPcMAQPLI2f+40bMwRCVJNxun7ZMkhQsPd8HuRQ
+         zn+A+uD0LAL0Fcp1X8UtAHdQcMx5BiXhsfXUAocjnj2DD2juDNeWsJqzLICrPIHZgdqL
+         el7z9RRHhQVgyh6uxr014D5HZdbzcs15Ktpkkd08iCqxqiHY/yuPBIwlL6UWaJ6QPQhD
+         OiRw7jW2f690lSxMvQ0ZbniW4ANfsC5ix3c3l5wtb8/LTrkVz48J6N2lY7xt5DDUSRlg
+         gck40gz26LnRyBO6v3YaklTmm/PgqFadX9BuiEScI0QABiKGySddkJFUzdNlUpGH0i8y
+         Ue6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734880092; x=1735484892;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=mZ2sbrQyrrPcANBkGFQguh+3JYHXT7LPTlFvu+SnOAw=;
-        b=oBG9cljk4a7D59W247k34fOpQhYinsPmkNwqPtG1pw822Oqpw1NyOZUWysIvibnvWq
-         z2Q/uDI1Wvptt4aCxYr6Ag55MZ2Q4PbQuD00R8s2QGs5VnlIOvSeqdH3FltEfvO2dggb
-         Sav75Ij56veyWjj/R9sEDmRkSd+aBZky5DT1uVEWzmaLKf9oyxTHm+x/QB0BX2fVy1kw
-         ++czxOVqe9Nah3HpukOLgzntiHMnwlArLPnjG9E9PBA62n3ZhwSVxhXuBWbr1Md3Pb+A
-         3KednK/FZQtWR9FbRZYnRSf4GSGeNHIoQbVNr5V6648EKw48yGGk7OwYwHA3O4MWJ/HI
-         S5eQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUomYzCTR/1mikXrkEWFPcdyE7ZvJkVym72OD77rMsGMIv+DyPo5LxhvBKU2iKRqBoiqJ7UAnpr7q3GH1bK@vger.kernel.org, AJvYcCUqHdlqXuOcfG99qrKTlrSHiWoHiayFCE5DsEr8Uqr4Ri4Zxd+M3uR1Px1YusmBxojYw5ZyVkaslkqllduvcw==@vger.kernel.org, AJvYcCVmMI6l2OdiGLLD272M+pZRobjHlOlQJGB1X7Tv6CQlcPQKyj2JE92HmQJaXSDuOSKhVPFTxvu0GPby@vger.kernel.org
-X-Gm-Message-State: AOJu0Yyd1lao0LpR/drvyjEB73A0N1IgGz9rxapgAnLNaaHKhwxdMCx6
-	VSAqrh/27yuHCEWpQdg/ZR7tz4rmU7glmsS01bMu9MPiBRyHyBvH4gEuw+58WbNm4L5o7P3m9k7
-	d22CLl7X4jKBh9tmm0IaSPL64X9o=
-X-Gm-Gg: ASbGncu1Z0WjcRFuRKaog0MC0bYGVr6SElKmmsRnzagW7hYwGQXIya5jBMLR1wM3YdD
-	e9c/hMYyOFBIn1W7oc+Iek51yVLctn7aOLmINLhk=
-X-Google-Smtp-Source: AGHT+IHOrO3Nptpr/pLzJxMo4JF+qwMmVwbfECZmbV0fgisN4KlsqBaoaQKUPVgL4heDFw0c1lTs2Otr/sYLBWMbrWk=
-X-Received: by 2002:a05:6870:ff43:b0:296:ff26:3cd1 with SMTP id
- 586e51a60fabf-2a7fb14195cmr5567941fac.21.1734880091960; Sun, 22 Dec 2024
- 07:08:11 -0800 (PST)
+        d=1e100.net; s=20230601; t=1734898450; x=1735503250;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=QxprhQ4J3lQhku7F3H5lnA88gGNPLgwQxX0RIJtyMRs=;
+        b=BRfB5hdlqdGchc29MiAqr6BHgntvUqnEWobYiQk4CZEIy+wJQgmQbEYwMAGdJ22z0I
+         5mJFn3U81meNAaDsD4vLf+5vE6DN/QdgudRH/gV22F17pM5QBgsfm8hjfbWE3TzHBaci
+         +5+PJi4D4VadjQmXpi+tH7zcIXgl+hoRJnEI+X9EraAzvVZEmR1/9iudC8bdbGJL2dYY
+         pqOQXX6TZelkrGN42G8VxSJp2B9d+CoFqV5TEjFvP+TB0BMFTb8gR7Trammf6RrUMhcb
+         jC4Rcz9enxeVwZgn+vYBhevZg1iyxgj4GAszLTw/i0XwsXWFK0DAqCM42CUyKLXIAqm4
+         /FOg==
+X-Forwarded-Encrypted: i=1; AJvYcCV16cgc5U2Opk6uJctoxgu3tfpVRIr7QZsCYx10a8NMqkv6/T9Bf9WQ+Nljh5hZHswgbiztClIR2ycmdRWK@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy79KZiAWQJWllKpZarFl+3ME+UI+fcsD2778gLvadLTbQzRysi
+	zyQjoaUbXJJBK2CtBNuQc2X7yfmDpqI6vjU7W7B9kSlKz93KFAelIHhCimqhuYjI2UXgY0OBe7S
+	c
+X-Gm-Gg: ASbGncviLFZfvZD2yAFeBxWMcguS1oHkWJGm/X4Qlb36wbuiY3KFzqENJw1EXa807OL
+	/f776cLtRLpHsUmC1VtQTmiB7jZLGsbQvD5RmRUM0TTkEJdZWw+pBBMYxgJVholxXoiZ+FI2nwZ
+	iW81v83oNBQa5HRwUyEMrQNxzUX/DRwy2XhBSxFRzG6XHK00NB/vNGZ2m9LCBNwcbNiKUc+Vlkc
+	9E0I4qUY4g4pKkQsSwc6zheCltr4NMJJneRvKa7xNjTqZ7F1ntkTK6Pq+Hee7yP
+X-Google-Smtp-Source: AGHT+IHuJKl0EsUunMGN5Ubn6CwgCiRILGyED81vP+KryR9UlYeYvtqF6+jk2ruBXuO9Ts6rda9Jwg==
+X-Received: by 2002:a05:6512:2394:b0:541:21f9:45b6 with SMTP id 2adb3069b0e04-54229562a7bmr3656179e87.37.1734898450076;
+        Sun, 22 Dec 2024 12:14:10 -0800 (PST)
+Received: from umbar.lan ([192.130.178.90])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-542235f7765sm1034331e87.13.2024.12.22.12.14.07
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 22 Dec 2024 12:14:08 -0800 (PST)
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Subject: [PATCH v5 00/11] drm/msm/dp: perform misc cleanups
+Date: Sun, 22 Dec 2024 22:14:03 +0200
+Message-Id: <20241222-fd-dp-audio-fixup-v5-0-370f09492cf6@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20241219200821.8328-1-maccraft123mc@gmail.com>
- <Z2WxzvKRVcOz5d2V@linaro.org> <CAO_MupJ7JtXNgGyXcxGa+EGAvsu-yG0O6MgneGUBdCEgKNG+MA@mail.gmail.com>
- <Z2W2UhspMZNT1TRU@linaro.org> <c8677ae6-a145-411c-a221-02faa1ce809d@kernel.org>
-In-Reply-To: <c8677ae6-a145-411c-a221-02faa1ce809d@kernel.org>
-From: Maya Matuszczyk <maccraft123mc@gmail.com>
-Date: Sun, 22 Dec 2024 16:07:36 +0100
-Message-ID: <CAO_Mup+YFAT5oFRGYucW5h_eGcfp4C5FzF20hM6xF=qMR1DdQw@mail.gmail.com>
-Subject: Re: [PATCH v2 1/3] dt-bindings: platform: Add bindings for Qcom's EC
- on IT8987
-To: Krzysztof Kozlowski <krzk@kernel.org>
-Cc: Stephan Gerhold <stephan.gerhold@linaro.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org, 
-	devicetree <devicetree@vger.kernel.org>, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAAtzaGcC/23OwQ7CIAwG4FcxnMVQxpB58j2MB0aLkpixMF00Z
+ u9u3UWNu5D+bfqVpxioJBrEbvUUhcY0pNxxqNcrEc6+O5FMyFlopY2yUMuIEnvpb5iyjOl+47r
+ RzlXkGzJK8F5fiAezeThyPqfhmstjPjHCuztrAMotaCNIJY0Kjqi1KsR6f0mdL3mTy0m8uVF/C
+ H6WCM0ENuC2/CmLHv+I6ouARaJiQrUQbE1bbH31R5hvwi4RhonoEBoLIWodf4hpml4HX8FNfAE
+ AAA==
+X-Change-ID: 20240615-fd-dp-audio-fixup-a92883ea9e40
+To: Rob Clark <robdclark@gmail.com>, 
+ Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>, 
+ Marijn Suijten <marijn.suijten@somainline.org>, 
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
+ Paloma Arellano <quic_parellan@quicinc.com>
+Cc: Douglas Anderson <dianders@chromium.org>, 
+ Stephen Boyd <swboyd@chromium.org>, linux-arm-msm@vger.kernel.org, 
+ dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
+ linux-kernel@vger.kernel.org
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3056;
+ i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
+ bh=nltqBJNSym88t0xwGnPmhRirL/N2i25MU95l0p1iW20=;
+ b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBnaHMNNB4WdPK3Tw2Vu/f6YwHbW/BeP1HUlHfG4
+ LjP8+7MpXCJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZ2hzDQAKCRCLPIo+Aiko
+ 1WBbB/wKv0fU2PHu9ZtrvZoEFNMBVuzH2QjvNYtiLZBEn1FKCGulwoUvAUMW/3TLKgdKLvmcvQ9
+ Y/Fm6E/bS/FbdQZG89e/0cVEIuBiqaUY1RFWKcpS/bM0rw5A6gfhRkk/w8ommpLkcgCQH2mm/Jb
+ 5bxpFIWpIQeg7gif2DcYGAdQQfiwQxmUn46nEdJ6Bg59512iekuv8wrWyfpKfOh8s7Sbpzca9t0
+ Sk6c6ESbAeCk5OHU4jN9J/Mfjkh5Nmtxyi71LcXenSiBXtAh1sbpe9uq/3J7/k1uoZxEKXlQlBK
+ lHR6A1f3lJbA7PQXsy8UPEpuuJs3hhtWhlIHD75wDqPU3kZl
+X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
+ fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
 
-niedz., 22 gru 2024 o 15:40 Krzysztof Kozlowski <krzk@kernel.org> napisa=C5=
-=82(a):
->
-> On 20/12/2024 19:24, Stephan Gerhold wrote:
-> > On Fri, Dec 20, 2024 at 07:16:34PM +0100, Maya Matuszczyk wrote:
-> >> Excuse the formatting, I've typed this reply from my phone
-> >>
-> >> pt., 20 gru 2024, 19:05 u=C5=BCytkownik Stephan Gerhold <
-> >> stephan.gerhold@linaro.org> napisa=C5=82:
-> >>
-> >>> On Thu, Dec 19, 2024 at 09:08:18PM +0100, Maya Matuszczyk wrote:
-> >>>> This patch adds bindings for the EC firmware running on IT8987 prese=
-nt
-> >>>> on most of X1E80100 devices
-> >>>>
-> >>>> Signed-off-by: Maya Matuszczyk <maccraft123mc@gmail.com>
-> >>>> ---
-> >>>>  .../bindings/platform/qcom,x1e-it8987-ec.yaml | 52 ++++++++++++++++=
-+++
-> >>>>  1 file changed, 52 insertions(+)
-> >>>>  create mode 100644
-> >>> Documentation/devicetree/bindings/platform/qcom,x1e-it8987-ec.yaml
-> >>>>
-> >>>> diff --git
-> >>> a/Documentation/devicetree/bindings/platform/qcom,x1e-it8987-ec.yaml
-> >>> b/Documentation/devicetree/bindings/platform/qcom,x1e-it8987-ec.yaml
-> >>>> new file mode 100644
-> >>>> index 000000000000..4a4f6eb63072
-> >>>> --- /dev/null
-> >>>> +++ b/Documentation/devicetree/bindings/platform/qcom,x1e-it8987-ec.=
-yaml
-> >>>> @@ -0,0 +1,52 @@
-> >>>> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> >>>> +%YAML 1.2
-> >>>> +---
-> >>>> +$id: http://devicetree.org/schemas/platform/qcom,x1e-it8987-ec.yaml=
-#
-> >>>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> >>>> +
-> >>>> +title: Qualcomm Embedded Controller on IT8987 chip.
-> >>>> +
-> >>>> +maintainers:
-> >>>> +  - Maya Matuszczyk <maccraft123mc@gmail.com>
-> >>>> +
-> >>>> +description:
-> >>>> +  Most x1e80100 laptops have an EC running on IT8987 MCU chip. The =
-EC
-> >>> controls
-> >>>> +  minor functions, like fans, power LED, and on some laptops it als=
-o
-> >>> handles
-> >>>> +  keyboard hotkeys.
-> >>>> +
-> >>>> +properties:
-> >>>> +  compatible:
-> >>>> +    oneOf:
-> >>>> +      - const: qcom,x1e-it8987-ec
-> >>>
-> >>> Given that ECs tend to be somewhat device-specific and many vendors
-> >>> might have slightly customized the EC firmware(?), I think it would b=
-e
-> >>> better to disallow using this generic compatible without a more speci=
-fic
-> >>> one. In other words, I would drop this line and just keep the case
-> >>> below:
-> >>>
-> >> I've looked at DSDT of other devices and they look to be compatible wi=
-th
-> >> what's on the devkit, with differences being extra features on magicbo=
-ok
-> >> art 14 and yoga slim 7x. Though this isn't a hill I'm willing to die o=
-n.
-> >>
-> >
-> > I think it's fine to keep qcom,x1e-it8987-ec as second compatible.
->
->
-> No, because:
-> 1. There is no such thing as x1e
-> 2. If there was a soc like this, this has nothing to do with SoC. It is
-> not a component inside SoC and that is the only allowed case when you
-> use SoC compatibles.
+Rework most of the register programming functions to be local to the
+calling module rather than accessing everything through huge dp_catalog
+monster.
 
-It was the closest thing I had for a "platform name"
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+---
+Changes in v5:
+- Dropped applied patches.
+- Removed MMSS_DP_DSC_DTO programming from msm_dp_catalog_ctrl_config_msa() (Abhinav)
+- Pulled the hw_revision patch closer to the top of the series (Abhinav)
+- Link to v4: https://lore.kernel.org/r/20241216-fd-dp-audio-fixup-v4-0-f8d1961cf22f@linaro.org
 
->
-> > However, without a more specific compatible, there is a risk we have
-> > nothing to match on in case device-specific handling becomes necessary
-> > in the driver at some point.
-> >
-> > It's certainly subjective, but it might be better to play it safe here
-> > and have a specific compatible that one can match, even if the behavior
-> > is 99% the same. There will often be subtly different behavior across
-> > devices, you mentioned the "keyboard backlight turning off and the powe=
-r
-> > LED slowly blinking", who knows what else exists.
-> >
-> > I suppose worst case we could also use of_machine_is_compatible() to
-> > just match the device the EC is running on, but I'm not sure if that
-> > would be frowned upon.
->
->
-> Unless you have some sort of insights or secret knowledge from Qualcomm
-> (Bjorn or Konrad can chime in here), I think these are pure guesses that
-> this is a Qualcomm product (implied by vendor prefix) or some sort of
-> re-usable generic firmware from Qualcomm present on multiple devices.
+Changes in v4:
+- Rebased on top of linux-next + msm-fixes, dropping picked up patches
+  (Abhinav)
+- Reordered patches to move dp_audio patches earlier (Abhinav).
+- Added several more patches, dropping dp_catalog.c completely.
+- Link to v3: https://lore.kernel.org/r/20241212-fd-dp-audio-fixup-v3-0-0b1c65e7dba3@linaro.org
 
-The x elite devkit also has the IT8987 EC chip, and when comparing the
-firmware of it and Yoga Slim 7x's EC there are similarities when
-running them through strings
-On both of them at the beginning there are strings that look like
-version identifiers:
-Devkit:
-UUBBK V:00.20.00$
-BBK-V20$
+Changes in v3:
+- Fixed falce -> false typo (Abhinav)
+- Dropped wrong c&p comment from msm_dp_read_p0() (Stephen)
+- Changed msm_dp_aux_clear_hw_interrupts() to return void (Stephen)
+- Fixed most of line length warnings
+- Link to v2: https://lore.kernel.org/r/20241202-fd-dp-audio-fixup-v2-0-d9187ea96dad@linaro.org
 
-Slim7x:
-UUBBK V:00.21.00$
-BBK-V21$
+Changes in v2:
+- Set safe_to_exit_level before printing it (LKP)
+- Keep TPG-related functions (Abhinav)
+- Link to v1: https://lore.kernel.org/r/20241108-fd-dp-audio-fixup-v1-0-40c8eeb60cf5@linaro.org
 
-With similar ones at the end:
-Devkit:
-EC VER:00.29.00$
-LsFv:00.29.00$
-Qualcomm$
-WoS 8c GenX$
-ODM$
-MB:A0$
-BUILD DATE:
-02/0//2/24$
-TIME:
-14:33:35$
+---
+Dmitry Baryshkov (11):
+      drm/msm/dp: split MMSS_DP_DSC_DTO register write to a separate function
+      drm/msm/dp: read hw revision only once
+      drm/msm/dp: pull I/O data out of msm_dp_catalog_private()
+      drm/msm/dp: move I/O functions to global header
+      drm/msm/dp: move/inline AUX register functions
+      drm/msm/dp: move/inline panel related functions
+      drm/msm/dp: move/inline audio related functions
+      drm/msm/dp: move/inline ctrl register functions
+      drm/msm/dp: move more AUX functions to dp_aux.c
+      drm/msm/dp: move interrupt handling to dp_ctrl
+      drm/msm/dp: drop the msm_dp_catalog module
 
-Slim7x:
-EC VER:00.60.00$
-LsFv:00.20.00$
-Qualcomm$
-WoS 8c GenX$
-ODM$
-MB:A0$
-BUILD DATE:
-2024/07/25$
-TIME:
-09:58:00$
+ drivers/gpu/drm/msm/Makefile        |    1 -
+ drivers/gpu/drm/msm/dp/dp_audio.c   |  130 +++-
+ drivers/gpu/drm/msm/dp/dp_audio.h   |    5 +-
+ drivers/gpu/drm/msm/dp/dp_aux.c     |  216 +++++-
+ drivers/gpu/drm/msm/dp/dp_aux.h     |   15 +-
+ drivers/gpu/drm/msm/dp/dp_catalog.c | 1298 -----------------------------------
+ drivers/gpu/drm/msm/dp/dp_catalog.h |  113 ---
+ drivers/gpu/drm/msm/dp/dp_ctrl.c    |  607 ++++++++++++++--
+ drivers/gpu/drm/msm/dp/dp_ctrl.h    |   19 +-
+ drivers/gpu/drm/msm/dp/dp_debug.c   |    1 -
+ drivers/gpu/drm/msm/dp/dp_display.c |  150 +++-
+ drivers/gpu/drm/msm/dp/dp_link.c    |    1 +
+ drivers/gpu/drm/msm/dp/dp_panel.c   |  256 ++++++-
+ drivers/gpu/drm/msm/dp/dp_panel.h   |   13 +-
+ drivers/gpu/drm/msm/dp/dp_reg.h     |   19 +
+ 15 files changed, 1242 insertions(+), 1602 deletions(-)
+---
+base-commit: c9261bcc1546a564407513e148c35a79a58bc2b9
+change-id: 20240615-fd-dp-audio-fixup-a92883ea9e40
 
+Best regards,
+-- 
+Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-
->
-> If the FW across devices is the same, then fallbacks for these are fine
-> with me.
-
-As the devkit has EC firmware that is handled the same way in DSDT
-tables of most of other x1e laptops with the same EC, and is a subset
-of what's done on Lenovo Yoga Slim 7x and Honor Magicbook Art 14 I
-think the devkit's compatible  + -ec would be a good pick.
-
-This conversation is getting long and I feel like I've said everything
-I wanted to say, I'll just do what you tell me to do about the
-fallback and binding filename.
-
->
-> Best regards,
-> Krzysztof
 
