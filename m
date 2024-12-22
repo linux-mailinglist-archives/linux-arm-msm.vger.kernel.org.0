@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-43076-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-43077-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id A2E5B9FA627
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 22 Dec 2024 15:34:37 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5D3AE9FA62D
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 22 Dec 2024 15:40:39 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0F29516530B
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 22 Dec 2024 14:34:35 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B2DA07A1B15
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 22 Dec 2024 14:40:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CEBEB18C018;
-	Sun, 22 Dec 2024 14:34:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CA94618D64B;
+	Sun, 22 Dec 2024 14:40:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Vnty3+C9"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uKcOyWiS"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A13AF259484;
-	Sun, 22 Dec 2024 14:34:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A6EA18C928;
+	Sun, 22 Dec 2024 14:40:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734878071; cv=none; b=dxqIMN06jGcwoI6IWiYL1yX5nVX6HaskiuuX93zDOrLFGxv3lhf1vuH1Hw0kP8+7JIvhzRWllEs8Wu80+PPcXp4xUgcKUMBzRgUxmzxhHbqEYV/89XoCKZ/7ELamRVKd3qlQUfVxJUirwszqlZNxvRSDZLS6pLsz14j3tLxE4GM=
+	t=1734878430; cv=none; b=FSw3rCdp7JVZ8xEQDcYh+K+NIrFQgGZOI/QhiwpplY8AdEtl4aYJNFFOTlfsTOWYERaYRuUkpHFDlfvUVa1X4DCSNn3L12qN3iXjnCnPjyHE2b08LqYUsJxdmNKi29jSNd/bhtbppk0S3hPA+yGhW14gB2BTd4QyjtwyMyyhq8I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734878071; c=relaxed/simple;
-	bh=1bFFIMffdESlk/DfXVFVcVEr+JL75OSenaMM0ggWsR0=;
+	s=arc-20240116; t=1734878430; c=relaxed/simple;
+	bh=1BMmdfzTmd8K7LJkzXBs3lB5Do33bBCBhWTf3hNUwcM=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=bg5CY7LWQDxm5wy8Jb7c8hYpWIGVsG5pIMWX6ifTBO+o6XLhtYBlEgBRRaT9zHxxh+0teMrkEnpA6kdYctb1b7xRq2oMLd0kQ7yXWLii7E/ykARlAi4PLT59SbFiRJwyrDVfF96ZqlTis3apzOiR0UWWPmpJeetjXm3UUju1XG0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Vnty3+C9; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41EA5C4CECD;
-	Sun, 22 Dec 2024 14:34:29 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=jr7ZemW0abK7exoy2bVAf9jc34k/XnOd0C/vDqoRjepE7ykU3BZk33MMA2i3UFR0lJVQytLKvWJz46mYNiwEMRxhwQhj2FqeRaMROPDcZMuxM9mWf6BVwHkVcTV5x9mYoCyzhCEQaIryIpMBw7JS30bPrwVGKaoDTNmBDNwpqIc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uKcOyWiS; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31508C4CECD;
+	Sun, 22 Dec 2024 14:40:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1734878071;
-	bh=1bFFIMffdESlk/DfXVFVcVEr+JL75OSenaMM0ggWsR0=;
+	s=k20201202; t=1734878430;
+	bh=1BMmdfzTmd8K7LJkzXBs3lB5Do33bBCBhWTf3hNUwcM=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=Vnty3+C9zJCMGusaGXRDl+cH7ccv0ZPs90OBf9esczi15vB85X91Wtjepksc8c3hb
-	 g2kvSIQryIc+VW7x7hDa3nf6N4olv8u6aaS/V4oY1R/kbt14CDi9opU0fL78Z7uJv+
-	 Y++2lMvagFPhIhpb7IAaLpUKOT5RqNmQYz8LY3R1a/bKstfArshSSmHGm3Pbq/YJEo
-	 NnzrLP4PrE8rDsSPfTgIjTxBRfmuEnvt0VdYPBO3pvufF/v3L/is1YWK9oMkVjBrOy
-	 NERzGvMkkWcF6xfvtM1G6cvPmvRYxkYLrdZRogxSWPYfng3dBzfbiXQwjokUnPtYHF
-	 Qg7Blh8BL+9HQ==
-Message-ID: <def949f2-301d-4edc-b303-0fbe02a18c3c@kernel.org>
-Date: Sun, 22 Dec 2024 15:34:27 +0100
+	b=uKcOyWiSXk11ddg1jqxmeE2ZaYNgC3k9L77iPlj/a8ukxoFWme5tnLUwUmryuxvaW
+	 hvZQPvLr7sEGYdTL3jIp2Fa4/U4OszXKNN7B1HkUOG4JGV5ZA/w2t2diTvn3R8E04r
+	 Pr0DiMuwra17Eb02yFL7MtjHGMZP8QZ2ni1bTBJTUlTVhItoSxqQgBMSyeTinXnaOe
+	 wUfHlB2w13b95A/YW7zt+oP/ENe7EwItwzEIfQqDsDeveMOrd4QbLw84f5po0fOk+z
+	 +uaGGbTak2XRaS8nWhOON8TNpaypeymgRm2k7wF0+UChvuQ0qLZWUNhlQoYxmtKmBL
+	 +N1/wa52kcsMg==
+Message-ID: <c8677ae6-a145-411c-a221-02faa1ce809d@kernel.org>
+Date: Sun, 22 Dec 2024 15:40:26 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -52,14 +52,15 @@ MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v2 1/3] dt-bindings: platform: Add bindings for Qcom's EC
  on IT8987
-To: Maya Matuszczyk <maccraft123mc@gmail.com>
+To: Stephan Gerhold <stephan.gerhold@linaro.org>,
+ Maya Matuszczyk <maccraft123mc@gmail.com>
 Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
  Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+ devicetree <devicetree@vger.kernel.org>, linux-kernel@vger.kernel.org
 References: <20241219200821.8328-1-maccraft123mc@gmail.com>
- <tma7q7lfskdr7myfoeene7o27g7nhc5ca66kpmnqvgksv5oxqv@ziefqqp5khic>
- <57515c0f-caa0-4651-96cf-dde75a13937f@kernel.org>
- <CAO_MupJNuK2UyXEPdr-xufWotbP-EmHyUk81YiTwaQR=WccSEA@mail.gmail.com>
+ <Z2WxzvKRVcOz5d2V@linaro.org>
+ <CAO_MupJ7JtXNgGyXcxGa+EGAvsu-yG0O6MgneGUBdCEgKNG+MA@mail.gmail.com>
+ <Z2W2UhspMZNT1TRU@linaro.org>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -105,66 +106,101 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <CAO_MupJNuK2UyXEPdr-xufWotbP-EmHyUk81YiTwaQR=WccSEA@mail.gmail.com>
+In-Reply-To: <Z2W2UhspMZNT1TRU@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-On 22/12/2024 08:55, Maya Matuszczyk wrote:
-> niedz., 22 gru 2024 o 07:40 Krzysztof Kozlowski <krzk@kernel.org> napisał(a):
+On 20/12/2024 19:24, Stephan Gerhold wrote:
+> On Fri, Dec 20, 2024 at 07:16:34PM +0100, Maya Matuszczyk wrote:
+>> Excuse the formatting, I've typed this reply from my phone
 >>
->> On 22/12/2024 07:33, Krzysztof Kozlowski wrote:
+>> pt., 20 gru 2024, 19:05 użytkownik Stephan Gerhold <
+>> stephan.gerhold@linaro.org> napisał:
+>>
+>>> On Thu, Dec 19, 2024 at 09:08:18PM +0100, Maya Matuszczyk wrote:
+>>>> This patch adds bindings for the EC firmware running on IT8987 present
+>>>> on most of X1E80100 devices
+>>>>
+>>>> Signed-off-by: Maya Matuszczyk <maccraft123mc@gmail.com>
+>>>> ---
+>>>>  .../bindings/platform/qcom,x1e-it8987-ec.yaml | 52 +++++++++++++++++++
+>>>>  1 file changed, 52 insertions(+)
+>>>>  create mode 100644
+>>> Documentation/devicetree/bindings/platform/qcom,x1e-it8987-ec.yaml
+>>>>
+>>>> diff --git
+>>> a/Documentation/devicetree/bindings/platform/qcom,x1e-it8987-ec.yaml
+>>> b/Documentation/devicetree/bindings/platform/qcom,x1e-it8987-ec.yaml
+>>>> new file mode 100644
+>>>> index 000000000000..4a4f6eb63072
+>>>> --- /dev/null
+>>>> +++ b/Documentation/devicetree/bindings/platform/qcom,x1e-it8987-ec.yaml
+>>>> @@ -0,0 +1,52 @@
+>>>> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+>>>> +%YAML 1.2
+>>>> +---
+>>>> +$id: http://devicetree.org/schemas/platform/qcom,x1e-it8987-ec.yaml#
+>>>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>>>> +
+>>>> +title: Qualcomm Embedded Controller on IT8987 chip.
+>>>> +
+>>>> +maintainers:
+>>>> +  - Maya Matuszczyk <maccraft123mc@gmail.com>
+>>>> +
+>>>> +description:
+>>>> +  Most x1e80100 laptops have an EC running on IT8987 MCU chip. The EC
+>>> controls
+>>>> +  minor functions, like fans, power LED, and on some laptops it also
+>>> handles
+>>>> +  keyboard hotkeys.
+>>>> +
 >>>> +properties:
 >>>> +  compatible:
 >>>> +    oneOf:
 >>>> +      - const: qcom,x1e-it8987-ec
 >>>
->>> That's not a SoC, so I don't understand:
->>> 1. referring to the SoC,
->>> 2. Having this alone and as fallback.
+>>> Given that ECs tend to be somewhat device-specific and many vendors
+>>> might have slightly customized the EC firmware(?), I think it would be
+>>> better to disallow using this generic compatible without a more specific
+>>> one. In other words, I would drop this line and just keep the case
+>>> below:
 >>>
->>> It does not look like you tested the bindings, at least after quick
->>> look. Please run 'make dt_binding_check' (see
->>> Documentation/devicetree/bindings/writing-schema.rst for instructions).
->>> Maybe you need to update your dtschema and yamllint. Don't rely on
->>> distro packages for dtschema and be sure you are using the latest
->>> released dtschema.
+>> I've looked at DSDT of other devices and they look to be compatible with
+>> what's on the devkit, with differences being extra features on magicbook
+>> art 14 and yoga slim 7x. Though this isn't a hill I'm willing to die on.
 >>
->> BTW, for sure Qualcomm did not develop/create it8987, so it cannot be
->> used here. Come with specific compatible for this given, one product:
->> embedded controller on one Lenovo laptop and use it also as filename.
 > 
-> Under these assumptions:
+> I think it's fine to keep qcom,x1e-it8987-ec as second compatible.
+
+
+No, because:
+1. There is no such thing as x1e
+2. If there was a soc like this, this has nothing to do with SoC. It is
+not a component inside SoC and that is the only allowed case when you
+use SoC compatibles.
+
+> However, without a more specific compatible, there is a risk we have
+> nothing to match on in case device-specific handling becomes necessary
+> in the driver at some point.
 > 
-> - Qualcomm developed the firmware running on the IT8987 in most x1e machines
-
-No one here knows whether most x1e machines have this chip...
-
-> - IT8987 is also used in other machines with a non-compatible firmware
-> - The driver name should reflect the assumptions
-
-I don't care about driver here, so you can use it for the driver but
-these are not correct assumptions for the bindings.
-
-
-
+> It's certainly subjective, but it might be better to play it safe here
+> and have a specific compatible that one can match, even if the behavior
+> is 99% the same. There will often be subtly different behavior across
+> devices, you mentioned the "keyboard backlight turning off and the power
+> LED slowly blinking", who knows what else exists.
 > 
-> I think the name qcom,x1e-it8987-ec is not the worst name for it, as
-> "ite,it8987-ec" would imply compatibility with other devices running
-> non-compatible firmware,
-> and names specifying only the device wouldn't reflect the "firmware is
-> based on what qcom did and it's driven the same way" part
-> 
-> Which other names do you think would fit this better?
+> I suppose worst case we could also use of_machine_is_compatible() to
+> just match the device the EC is running on, but I'm not sure if that
+> would be frowned upon.
 
-I suggested the one in second reply:
-lenovo,yoga-slim-whatever-model-it-is-ec
 
-If you have any indication that Qualcomm firmware from a reference board
-was used as a reference, it could be used as fallback, but I do not
-believe you can have such indication considering downstream source code
-does not exist and all other docs are confidential. Therefore lenovo EC
-is the first implementation we see and we know anything about.
+Unless you have some sort of insights or secret knowledge from Qualcomm
+(Bjorn or Konrad can chime in here), I think these are pure guesses that
+this is a Qualcomm product (implied by vendor prefix) or some sort of
+re-usable generic firmware from Qualcomm present on multiple devices.
 
+If the FW across devices is the same, then fallbacks for these are fine
+with me.
 
 Best regards,
 Krzysztof
