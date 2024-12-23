@@ -1,186 +1,242 @@
-Return-Path: <linux-arm-msm+bounces-43123-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-43124-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4C0C19FADD8
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Dec 2024 12:47:04 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 76F1B9FADDC
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Dec 2024 12:47:26 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id AECCE16431F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Dec 2024 11:47:01 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E1BFD164611
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Dec 2024 11:47:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C1A9F195FE5;
-	Mon, 23 Dec 2024 11:46:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C0FBB196434;
+	Mon, 23 Dec 2024 11:47:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="FpHhz/uv"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Zft3yCMA"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f176.google.com (mail-lj1-f176.google.com [209.85.208.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 260D418BC19
-	for <linux-arm-msm@vger.kernel.org>; Mon, 23 Dec 2024 11:46:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C388518BC19
+	for <linux-arm-msm@vger.kernel.org>; Mon, 23 Dec 2024 11:47:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734954417; cv=none; b=s4GyDTy72NVxQARawFI+58LuGJPcu06LcG37XR1j1T3ev+k24ilhcS25PnYoNv/aYgIqhMC4x7oCr7VJCAjUPDX5h98FGR1EMDYX9V0BbN3+3zRzr1hvUxUFImMbGuC5Qf8pCjkuBB1Sn3XEzt3kijaBWVYx5ZJ95xTE1/iIp50=
+	t=1734954436; cv=none; b=bt6MWlqEAKAgzePI0ItXwwG9RSN+gI2MeXSrB+eL1lHrohG2+OGk2Lj6qs3PTKppPQiNW91YLgK7jyBONNCj4UT8CkK8xulmzr1zoJ7K6W8N+XsrizkQWXDGb04QwMcCiRbrHHAhHo+nNUrO5y6KvGMqJ6f7oRroAT5T1taw2Ow=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734954417; c=relaxed/simple;
-	bh=WoNSE/sE5fC33uSU/9fyxT1jw2V0Oynfwszs7Z6IVwU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=sx0TGGbNesKJuAG/Uw6WmdvoqzF2WyuQg0m/Ejfods1By7IVR0dTIEaKOXv2IH3FwfPDM0ab3eU96Hgj3eBNIxkHJUOi2ISS6xAjIq9aPwN44pMcegHkxjRj+q2jtdfYtqEZ+bwNv1CPQkmzcwa+egibDBYy/Ui1dvHK1PCUZVE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=FpHhz/uv; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BNBVYOw002763
-	for <linux-arm-msm@vger.kernel.org>; Mon, 23 Dec 2024 11:46:55 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	x3B4oWFzJNbqUipgeIarx9O0ibUhzHvQuYbYMdgwP1o=; b=FpHhz/uvwWgLvlHd
-	E+D+I6Je46lMUesJcQdY9+eN9g/8+m995xQQG9SWhvL5CDXHtFeluwF3lL+hBzKx
-	PZmGJ+UhGkhQbbjrhKTY8N0bYWgt9hxBkA7efJNmulgvV9xfNE3a5MI+bkLB2EBC
-	M6rIBU4YM0ui7uVMS1LJmsaeqIXQpCnxnEshm9oEj66vQDr8PoMGQRPnJj4cnxvh
-	Z+pa1RrixzILK6PqI+2Sme+/w/dLsFgD3a6b33S89gXsi+mNYCpWip8QMkg29BFY
-	FdZLnj2+37l1D1WlU7UKEXQgJ/uNTmEV26++1DTASH2nRCNeYdYoV1ybfBjY5KCT
-	0M+YTA==
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com [209.85.222.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43q72mr10y-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 23 Dec 2024 11:46:55 +0000 (GMT)
-Received: by mail-qk1-f199.google.com with SMTP id af79cd13be357-7b6e43ed084so54358985a.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Dec 2024 03:46:55 -0800 (PST)
+	s=arc-20240116; t=1734954436; c=relaxed/simple;
+	bh=9B0swlY1icHspmzhbtnmpjXB5ErYiUPiOOG7FNdfGCU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=AlHSSyWSQsPjOXw0YY3I2vq0FttIGdMigRr3JlkXwmTXDZ/pCcI3zzU5tGifkzObfP/zBtKh2qnCRszQ5qoVFIPnTjeqpriBqm1F0fWHN6domRJXkJHae1zVqAovO4PbQpyXmJ07LJjXbFuQ79nXMXKddBGJfYAYflAKtix+5K8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Zft3yCMA; arc=none smtp.client-ip=209.85.208.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lj1-f176.google.com with SMTP id 38308e7fff4ca-3035210e2d1so35641541fa.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Dec 2024 03:47:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1734954433; x=1735559233; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=g7flEVlk8MpTJOgTC9yYtanlDHLTp9jgY7oIg2zLVp8=;
+        b=Zft3yCMAfSkfb1CmOb6WTndLnvlgKzVsPD4hXB//uJX358uIbqc8PdzzUq/1mhsX2j
+         +kJZRXDFSc8CkekWtO4Eil+hqnYugC/D8+QhhaOWep0sTJ7BIf5DB0VQLGtCxJxMo0QQ
+         EYgoW4FAMJ4YCdf+W8FsqM+qEC+cVfZingdsZXyG2bZJSG9eCAt0ZM7v5Fho2x7Ux1YM
+         YBpO9ZDG8M8aY/1k3EzEPZChoi7529/NchMNVD1BX5AwW8xHtw0Hq+3uGXV+svx46Ciz
+         p59mptzJVGlI726xQNaYKtYJvednLNntZD27hJwxbdoVIOCU29M+o6sRKYs1H7uz1z2U
+         Qucg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734954414; x=1735559214;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=x3B4oWFzJNbqUipgeIarx9O0ibUhzHvQuYbYMdgwP1o=;
-        b=veOEi3ZyW5tS/rohOHyVVHMCN2X1t7p6pDLmeJj9T+5EmIGW8cTx0QC8MpVgogByom
-         1qTbPaUlZyzvRmghWJtPTcuk03jvE4TFsdHbHUEgMUIXf2J858s6CSkYYOb2K/qUIFct
-         VspWLZI71XI3doCO8iaMRW3LnbkuIjrY9nsuYIMh/1mDvBEYlQLVtyplnBr/hrUo1G/X
-         Q25SSHhhm5LOUVv0RaP7lFUvqjsnJb1DDjEi6r6RexnT0ZR4sKc91BVrzZFmic/TxwQR
-         1olzO/UyhCAs7IUpJEjvwWn/gYpr0cXb7njSSvxERHmJxM9M9oegRieTPZza9CAM1EzL
-         C1Jw==
-X-Forwarded-Encrypted: i=1; AJvYcCUgL4DPcpKqeR0MFoMyCKnma1QEvIfzeVowUQhVQoqS/zI3D1hE7epIeiT8sEHeofMEZV0t5thU5w84mN03@vger.kernel.org
-X-Gm-Message-State: AOJu0YykXZFjsrtED7Hg5LnELzDkV3c/WaX7ym9SMtBknNeN9pri1v8z
-	K1IRulDVKueF5+ZtkMnHNgFTHUuQDzA/KcpPzbif9QLdmLwIX8GlDRlXHeIGhvxaO4tEcvYqgHf
-	VYpBmmTH17Hs/19NxEm44kxypOW+ChRFhqoh/zrmBTruuiFvOBM5SaU7bM411WjnS
-X-Gm-Gg: ASbGncu6FG6jJozHsuGVe32+wzvieQ4OIIIdhU10UL9hfOikLXfJWiqloi9HvHxZ5wK
-	faiRAgujd31ollCvTx6419dyc4XOotwSy4WMHyTjJn7Sq4fCc7//I7PzQz2QDCV1PXWDVzUiLxy
-	k4Vp0H4/x3v4poGK+Ib8n3erFK/Fo8QfaZQVv/8aamsaZw5/BSFJAxON9QMxT0yooSxak8zOTOQ
-	cvRqMzVY4yktYWcqBVW5/s2DCCKNhNprPy7tW2FCnDej2XpPIrzQC8Xp5Skax6AcX6OWktoLt3q
-	Lny+PPCm9Yw+GteCRxsicJ1gg/IXQD0qcjM=
-X-Received: by 2002:a05:620a:2a13:b0:7b6:da92:fcd5 with SMTP id af79cd13be357-7b9ba75c089mr709412085a.9.1734954413913;
-        Mon, 23 Dec 2024 03:46:53 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHNZDOc8mF9qHhiFj67lTcN+JTELVHiDCWwHoBDaAnJpVE8Z7J/DHYM1IQnlLkKvZX7HuEaXA==
-X-Received: by 2002:a05:620a:2a13:b0:7b6:da92:fcd5 with SMTP id af79cd13be357-7b9ba75c089mr709410985a.9.1734954413501;
-        Mon, 23 Dec 2024 03:46:53 -0800 (PST)
-Received: from [192.168.65.90] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5d80676f192sm4984127a12.35.2024.12.23.03.46.50
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 23 Dec 2024 03:46:52 -0800 (PST)
-Message-ID: <89d308d4-8565-4e60-bab7-94474dae3b55@oss.qualcomm.com>
-Date: Mon, 23 Dec 2024 12:46:49 +0100
+        d=1e100.net; s=20230601; t=1734954433; x=1735559233;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=g7flEVlk8MpTJOgTC9yYtanlDHLTp9jgY7oIg2zLVp8=;
+        b=mFK2IhaJcOLYCuFoM1bPzqjGw+qThZucN1O3G6BMBBhK92vr30OJEh09EpiV7lBAPn
+         lGi+s9AYFB/ig/Jzj12lpDlN4qFvQV+Tjw/dGePzADpbola1h4H7JedwEQbZRZekBFtF
+         d7LfH2z4DeomR4IJNICpqLwEUEK8W/US92tLIL0TtLMHydX5aYGOJV6gfL6euEBmY3iA
+         N3zCGkc6yVj3c1M/OUWerU2pRZt0y2DYXWfnE/VVs7hfJhQHoSLtZ3PWXP/IJhIQgsHG
+         W+F3tOhp5WlcDuzKNoQSkP9averG5BmwOkHscjJMvnMy24L8rsAnAvXPehnF4pQNqrQ1
+         VjTA==
+X-Forwarded-Encrypted: i=1; AJvYcCW/7pUg9NNxrsRReC7ev0h5iGTcwgNlwjizDuk4t2luDvujtq7bl0+bvDBrSjGvTeKWM79EG8PDSRmlfzdC@vger.kernel.org
+X-Gm-Message-State: AOJu0YxikK7bCMEdn/Jat3nIA43lqKKdcn6xm0IUjAuGWZnSiz8dU/lg
+	//rRHmouLWhYMWj4yBMrT7dzusJkaTqo3frYoWw6rjNVDY6cY3iTPQ5va0WA0ZY=
+X-Gm-Gg: ASbGncuzlJFznDVdK8lSvFREg+wDIY605BvLNZbuRbhdmB4RXkPH/NkEEPvj/rZeyLQ
+	SVz99EHbxh7ZJS0UaCwXN8Y00xNIiwrqw8m8H5gToPJoVObhAZghZGuFhRK+Qgw2XMNs28/vpsZ
+	lZsoOv2aPiJFEgN6DhQxxPGwUqW9i+SOJLwPaGkG1jsf+XFi6ZckMhaHodT1/GBGh+Ly5sLsuLu
+	wPrd1mp4kxyCwpOokuGkaw8C7/gM6uwdEYC6KxBta7nz8rMqI+Cs7D5o7V8y9d/Uid6uNIZI//x
+	YUSQL36J7X0xfymiIEqFcWF0mGPj2BZOyRdb
+X-Google-Smtp-Source: AGHT+IHLyRi7Tw7aBKCX/6QAu/E4dS/9nNWC1QwOhKkG5IJ629IcuSzAa7yysmIgIEYb+glTHefHsA==
+X-Received: by 2002:a05:651c:545:b0:2ff:bb68:4233 with SMTP id 38308e7fff4ca-3046862f303mr47513551fa.33.1734954432965;
+        Mon, 23 Dec 2024 03:47:12 -0800 (PST)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-3045ad99d51sm14072201fa.32.2024.12.23.03.47.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 23 Dec 2024 03:47:12 -0800 (PST)
+Date: Mon, 23 Dec 2024 13:47:10 +0200
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+Cc: Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Bjorn Helgaas <bhelgaas@google.com>, Jingoo Han <jingoohan1@gmail.com>, 
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, Lorenzo Pieralisi <lpieralisi@kernel.org>, 
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org, konrad.dybcio@oss.qualcomm.com, 
+	quic_mrana@quicinc.com, quic_vbadigan@quicinc.com, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>
+Subject: Re: [PATCH v3 2/4] PCI: of: Add API to retrieve equalization presets
+ from device tree
+Message-ID: <piccoomv7rx4dvvfdoesmxbzrdqz4ld6ii6neudsdf4hjj2yzm@2bcuacwa4feb>
+References: <20241223-preset_v2-v3-0-a339f475caf5@oss.qualcomm.com>
+ <20241223-preset_v2-v3-2-a339f475caf5@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 2/4] Bluetooth: qca: Update firmware-name to support
- board specific nvm
-To: "Cheng Jiang (IOE)" <quic_chejiang@quicinc.com>,
-        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-        Marcel Holtmann <marcel@holtmann.org>,
-        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-        Rob Herring
- <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Balakrishna Godavarthi <quic_bgodavar@quicinc.com>,
-        Rocky Liao <quic_rjliao@quicinc.com>
-Cc: linux-bluetooth@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        quic_jiaymao@quicinc.com, quic_shuaz@quicinc.com,
-        quic_zijuhu@quicinc.com, quic_mohamull@quicinc.com
-References: <20241212150232.3823088-1-quic_chejiang@quicinc.com>
- <20241212150232.3823088-3-quic_chejiang@quicinc.com>
- <94eae703-ed9e-4f57-9786-99db7aaa07d1@oss.qualcomm.com>
- <db516034-81de-4e41-932d-c1bb26e1c55b@quicinc.com>
- <d5fe224b-7ef5-47ae-840c-7b6df21da816@oss.qualcomm.com>
- <3a8fe16f-aca7-482e-b1cb-e6fa37717843@quicinc.com>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <3a8fe16f-aca7-482e-b1cb-e6fa37717843@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-ORIG-GUID: 4Gk9aqLsvef5zhlnqqRzUkDqhiFMK0SB
-X-Proofpoint-GUID: 4Gk9aqLsvef5zhlnqqRzUkDqhiFMK0SB
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 mlxlogscore=999
- clxscore=1015 mlxscore=0 lowpriorityscore=0 impostorscore=0 suspectscore=0
- priorityscore=1501 malwarescore=0 spamscore=0 bulkscore=0 adultscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2411120000
- definitions=main-2412230106
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241223-preset_v2-v3-2-a339f475caf5@oss.qualcomm.com>
 
-On 23.12.2024 3:47 AM, Cheng Jiang (IOE) wrote:
-> Hi Konrad,
+On Mon, Dec 23, 2024 at 12:21:15PM +0530, Krishna Chaitanya Chundru wrote:
+> PCIe equalization presets are predefined settings used to optimize
+> signal integrity by compensating for signal loss and distortion in
+> high-speed data transmission.
 > 
-> On 12/20/2024 9:46 PM, Konrad Dybcio wrote:
->> On 13.12.2024 8:05 AM, Cheng Jiang (IOE) wrote:
->>
->> [...]
->>
->>>> /*
->>>>  * If the board-specific file is missing, try loading the default
->>>>  * one, unless that was attempted already
->>>>  */
->>>>
->>>> But, even more importantly:
->>>>
->>>> a) do we want to load the "incorrect" file?
->>> Normally, there is a default NVM file ending with .bin, which is suitable 
->>> for most boards. However, some boards have different configurations that 
->>> require a specific NVM. If a board-specific NVM is not found, a default 
->>> NVM is preferred over not loading any NVM.
->>
->> So, if one is specified, but not found, this should either be a loud error,
->> or a very loud warning & fallback. Otherwise, the device may provide subpar
->> user experience without the user getting a chance to know the reason.
->>
->> I think failing is better here, as that sends a clearer message, and would
->> only happen if the DT has a specific path (meaning the user put some
->> intentions behind that choice)
->>
-> In the existing BT driver implementation, even if the rampatch/nvm are not found,
-> BT still works with ROM code only. No fails, just a warning in the dmesg. For this
-> new approach, we use the similar logic. 
+> As per PCIe spec 6.0.1 revision section 8.3.3.3 & 4.2.4 for data rates
+> of 8.0 GT/s, 16.0 GT/s, 32.0 GT/s, and 64.0 GT/s, there is a way to
+> configure lane equalization presets for each lane to enhance the PCIe
+> link reliability. Each preset value represents a different combination
+> of pre-shoot and de-emphasis values. For each data rate, different
+> registers are defined: for 8.0 GT/s, registers are defined in section
+> 7.7.3.4; for 16.0 GT/s, in section 7.7.5.9, etc. The 8.0 GT/s rate has
+> an extra receiver preset hint, requiring 16 bits per lane, while the
+> remaining data rates use 8 bits per lane.
 > 
-> The fallback to load a default nvm file is due to each board has a unique board
-> id, it's not necessary to upstream all the board-specific nvm since most of them 
-> may be the same, the default nvm file is suitable for them. But we can't set the 
-> default nvm file name in the DT, since the platform can attach different 
-> connectivity boards. This is a reasonable way to approach this. 
+> Based on the number of lanes and the supported data rate, this function
+> reads the device tree property and stores in the presets structure.
+> 
+> Signed-off-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+> ---
+>  drivers/pci/of.c  | 45 +++++++++++++++++++++++++++++++++++++++++++++
+>  drivers/pci/pci.h | 17 +++++++++++++++--
+>  2 files changed, 60 insertions(+), 2 deletions(-)
+> 
+> diff --git a/drivers/pci/of.c b/drivers/pci/of.c
+> index dacea3fc5128..99e0e7ae12e9 100644
+> --- a/drivers/pci/of.c
+> +++ b/drivers/pci/of.c
+> @@ -826,3 +826,48 @@ u32 of_pci_get_slot_power_limit(struct device_node *node,
+>  	return slot_power_limit_mw;
+>  }
+>  EXPORT_SYMBOL_GPL(of_pci_get_slot_power_limit);
+> +
 
-Okay, let's do it this way then.
+kerneldoc? Define who should free the memory and how.
 
->>>> b) why would we want to specify the .bin file if it's the default anyway?
->>> The default NVM directory is the root of qca. The 'firmware-name' property 
->>> can specify an NVM file in another directory. This can be either a default 
->>> NVM like 'QCA6698/hpnv21.bin' or a board-specific NVM like 'QCA6698/hpnv21.b205'.
->>
->> Do we expect QCA6698/hpnv21.bin and QCAabcd/hpnv21.bin to be compatible?
->>
-> No. It may be different. 
+> +int of_pci_get_equalization_presets(struct device *dev,
+> +				    struct pci_eq_presets *presets,
+> +				    int num_lanes)
+> +{
+> +	char name[20];
+> +	void **preset;
+> +	void *temp;
+> +	int ret;
+> +
+> +	if (of_property_present(dev->of_node, "eq-presets-8gts")) {
+> +		presets->eq_presets_8gts = devm_kzalloc(dev, sizeof(u16) * num_lanes, GFP_KERNEL);
+> +		if (!presets->eq_presets_8gts)
+> +			return -ENOMEM;
+> +
+> +		ret = of_property_read_u16_array(dev->of_node, "eq-presets-8gts",
+> +						 presets->eq_presets_8gts, num_lanes);
+> +		if (ret) {
+> +			dev_err(dev, "Error reading eq-presets-8gts %d\n", ret);
+> +			return ret;
+> +		}
+> +	}
+> +
+> +	for (int i = 1; i < sizeof(struct pci_eq_presets) / sizeof(void *); i++) {
+> +		snprintf(name, sizeof(name), "eq-presets-%dgts", 8 << i);
+> +		if (of_property_present(dev->of_node, name)) {
+> +			temp = devm_kzalloc(dev, sizeof(u8) * num_lanes, GFP_KERNEL);
+> +			if (!temp)
+> +				return -ENOMEM;
+> +
+> +			ret = of_property_read_u8_array(dev->of_node, name,
+> +							temp, num_lanes);
+> +			if (ret) {
+> +				dev_err(dev, "Error %s %d\n", name, ret);
+> +				return ret;
+> +			}
+> +
+> +			preset = (void **)((u8 *)presets + i * sizeof(void *));
 
-That's a bit disappointing considering the filename implies it's suitable
-for a family of chips.. But I guess there's nothing we can change here.
+Ugh.
 
-Konrad
+> +			*preset = temp;
+> +		}
+> +	}
+> +
+> +	return 0;
+> +}
+> +EXPORT_SYMBOL_GPL(of_pci_get_equalization_presets);
+> diff --git a/drivers/pci/pci.h b/drivers/pci/pci.h
+> index 14d00ce45bfa..82362d58bedc 100644
+> --- a/drivers/pci/pci.h
+> +++ b/drivers/pci/pci.h
+> @@ -731,7 +731,12 @@ static inline u64 pci_rebar_size_to_bytes(int size)
+>  }
+>  
+>  struct device_node;
+> -
+> +struct pci_eq_presets {
+> +	void *eq_presets_8gts;
+> +	void *eq_presets_16gts;
+> +	void *eq_presets_32gts;
+> +	void *eq_presets_64gts;
+
+Why are all of those void*? 8gts is u16*, all other are u8*.
+
+> +};
+
+Empty lines before and after the struct definition.
+
+>  #ifdef CONFIG_OF
+>  int of_pci_parse_bus_range(struct device_node *node, struct resource *res);
+>  int of_get_pci_domain_nr(struct device_node *node);
+> @@ -746,7 +751,9 @@ void pci_set_bus_of_node(struct pci_bus *bus);
+>  void pci_release_bus_of_node(struct pci_bus *bus);
+>  
+>  int devm_of_pci_bridge_init(struct device *dev, struct pci_host_bridge *bridge);
+> -
+> +int of_pci_get_equalization_presets(struct device *dev,
+> +				    struct pci_eq_presets *presets,
+> +				    int num_lanes);
+
+Keep the empty line.
+
+>  #else
+>  static inline int
+>  of_pci_parse_bus_range(struct device_node *node, struct resource *res)
+> @@ -793,6 +800,12 @@ static inline int devm_of_pci_bridge_init(struct device *dev, struct pci_host_br
+>  	return 0;
+>  }
+>  
+> +static inline int of_pci_get_equalization_presets(struct device *dev,
+> +						  struct pci_eq_presets *presets,
+> +						  int num_lanes)
+> +{
+> +	return 0;
+> +}
+>  #endif /* CONFIG_OF */
+>  
+>  struct of_changeset;
+> 
+> -- 
+> 2.34.1
+> 
+
+-- 
+With best wishes
+Dmitry
 
