@@ -1,134 +1,185 @@
-Return-Path: <linux-arm-msm+bounces-43121-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-43122-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id E8D8D9FADC9
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Dec 2024 12:37:59 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id C3BB99FADD0
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Dec 2024 12:41:49 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 38F441883924
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Dec 2024 11:38:01 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 0C8C77A1B6C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Dec 2024 11:41:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A85C919DF98;
-	Mon, 23 Dec 2024 11:37:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D3F50199FBF;
+	Mon, 23 Dec 2024 11:41:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="hj0x/k01"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="lDhGgrMB"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f45.google.com (mail-lf1-f45.google.com [209.85.167.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33D9A19CC21
-	for <linux-arm-msm@vger.kernel.org>; Mon, 23 Dec 2024 11:37:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C764419DF45
+	for <linux-arm-msm@vger.kernel.org>; Mon, 23 Dec 2024 11:41:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734953874; cv=none; b=pF/jJ8OdgpxTWiC/FJou1yW0tXieI8XWw7wF74BuOgZED2wz2GxEf9XVU13TcqiFBj2MoD6b6YSTwPt7gOhlCITYSaNClJ7BlYmWHrNVKKINgzlFm5SE4fdaQpDAiRvDDSleZMALIasb5NIHCnsneb6OIEyq+NEk+/qKAHXofDs=
+	t=1734954099; cv=none; b=iy1z49/BiLwRuMAflc1KUvpC/Hx8Y/9HwgXBmV/cEGHvcxm7UzpEruqShWTEUWTFzJ7Ml0NwclTltbyQkq5L/QGn7RNklq4FqPKy+ZMXOnX7HWd+KoacoNqeyfCBHq2tSvFScmRofJ7TD7sM5tv4mdfqoYeCcMBHO06YP3AQXpE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734953874; c=relaxed/simple;
-	bh=wUjPXxAsWNUWqccLWJuFOMSjEM1ez/Hb+5rIbn5YFbM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=iHWz7z1K13pTPdS3tn/0yorj322b+5F9gHbkl3kqW8bHfE7IZdHBQWg0wc82IHFTZw8sBULhJ/0Z5QJHYys9MSKAVZ/+YqtCDyiJ2G+BVQ/YRHYdfWDeUQR3APbO3hfqOaKsKYFUFvtYkVmvGXPKzwhQItYTzp68KYkRHjycq2E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=hj0x/k01; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BN9P1bk008140
-	for <linux-arm-msm@vger.kernel.org>; Mon, 23 Dec 2024 11:37:52 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	GxBwnZdyh0+oIX2CZcOkzfj/L38PK1tR2KNoyu7vIgA=; b=hj0x/k01KvAQ9z5h
-	Si0R0I4pRaVesF8/zDfSwU7szpm/avXesU7StxdUVi+xyOuRoG4EreHn3HddGqML
-	5MHoZLKruRk6BfaP9+E3V7IYwE36NjYbERQCdCtCdfCCEed/6BaX7UxCKJwFMUVn
-	zQtzVlp3L3B7V6M5LUeMGLliXnyMI8vuhb+JNceCjId7jI3TIPM5x8S4hxDKBMiO
-	9QGm0xHpXiwpG3JEP2vMRDnn1Y6akLsZo5c4OesHoJ3n3q9gUhePR2V0bzTiyjQt
-	sEDYnnlkt7G5HwF+Th9hkbCPTSg+UoPyjoU999IXdvRuticEhEZnQN33m8LbVB8O
-	qWMWCg==
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com [209.85.222.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43nnrsrufe-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 23 Dec 2024 11:37:51 +0000 (GMT)
-Received: by mail-qk1-f200.google.com with SMTP id af79cd13be357-7b6fec2de27so65898285a.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Dec 2024 03:37:51 -0800 (PST)
+	s=arc-20240116; t=1734954099; c=relaxed/simple;
+	bh=/dNT7Z8TLd3TNSIjuRf0myU4bsBCG5sadZmG8QxGRUM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=pV0rKD2aor3Q3ExeJUCEBbnaDmU4dO1/inwjnk2ojEIPBfA0urpUdKlx6681Lmpzk2BVQlZFG8rZ1Ri9OGppDRbmCHPM2ag2qlwRdbkUcT5G6v3S9VS6VOkdZOFiD8b51z5uT35OgYO53vh8tUIklAfn2Cb2Tv+arDvAJrBSQUA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=lDhGgrMB; arc=none smtp.client-ip=209.85.167.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-5401be44b58so4211189e87.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Dec 2024 03:41:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1734954096; x=1735558896; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=uf08w7WXgohHhU+70NDC/g42V643KfJa3j55i27XM5Q=;
+        b=lDhGgrMBE3GE2VZaG94Qh4AsFg1Zo0M5CR00dXBxD2QnHLdr47l82FVhKrOO2bjpAA
+         McaRK0XQ9YQOIR2Ih+/26vu527mk9WZR4uql+0JD5q1sewFZ73/QfuOEYi8u+xn7I0+B
+         yfF+PSL03dzQ4skHQVJ3eKKYoZnRWrHo/EOfJtYZDE8IMcXDXFrLy0EK3fORntXehsmv
+         9ST7maNUZ4/oc2iOYv32rV++BlN2mhEzqrDtUs//sBqZLcWMSb0K84/9o08QUGIRI/0M
+         +ACnl35NztWbNc44eJOJwgQuJZE45xA6aJ17v2e8KlPVKG/WUCQ/f8TGVSEaLbviRDW7
+         Aunw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734953814; x=1735558614;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=GxBwnZdyh0+oIX2CZcOkzfj/L38PK1tR2KNoyu7vIgA=;
-        b=Dm9l4l3S1x2WINOq+Q3z2he1FYjpMz7KfCyB9w2v29KQkZt2ljtrJ1e5ZqX0ssaTSf
-         YMdtEUzfWZmgMHlPk04Xyf2AvxfplKSgZDjLNxhGxfSR8f8mduGtHBQ5y6txBWmfNnvE
-         LlUBa6hjo1sfir+ECNmwu37Mr9pPiEJKg1Tz8NJq/z2b24e1YgiJqMIeGrXQhzy+dXTQ
-         0lMsVjx4qqokNGh97jclhA56bOwFFcvFsieY/tgCSjqm43859TCZGQ9btxnR/7v4E7vi
-         UqB/73IG3/pbh62kv7HQc8bvUEGBag4dVOpcyDleYc2+Sn1Fx6sVRBl/i4uQFqh6AopQ
-         YzEQ==
-X-Gm-Message-State: AOJu0YxGtDXMg3t79MlDVQGW44F9jmWkm9QaDzh+evH5VNt8MfUsILOZ
-	nzJb3cMK+TbobMnwMRA73AMjVeuN6r2jsEA/b0675R4JCf+9FXkEQ2GSA59tnRWnrOi9Ym2jLxt
-	361/ME/jxGYvQt1T3vUVm/Km8rRgiLbh4h0zFqWIy1jPotMnzAAOhMaR9Qk04p5D8
-X-Gm-Gg: ASbGncsC2CUWUYpxKBTYfWQPa8OoeJa8nwZ+5eYwT6SBF0dSVOUxJ+72DqP5BAvi+Af
-	9iE2sdnd7kClvwJD3qotHd0cqR6/VU5SHu3l7FXleM7+qnPl7p8jzvRPzUgw/jYXStWAqiWQYeX
-	ehqodJxZhSzDoGnVrCKL+SK4MiAOtcaHV+FDncrCsymsM8I+hkQCOPOB9bxmm/Y32Z9egrts7Zf
-	DnIqG2gsbk9VGBl67fw5zxNsY0Xgc6DAsJL0zu0dqyGt5JkQFudOEIbYXll3sQD1b7ibx74L4tl
-	gj43rE45YPIFaJGZqzxFpKLbN+LPPax2qaE=
-X-Received: by 2002:a05:620a:1911:b0:7b6:dc4f:8874 with SMTP id af79cd13be357-7b9ba7b0a79mr760623785a.12.1734953813775;
-        Mon, 23 Dec 2024 03:36:53 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGtL1xYU4q5iFeeT8egnMEG6BfPX15L+zymBOyU7oucET9/Hf+ap7FsaWk6YB8aHkpe/bKmYw==
-X-Received: by 2002:a05:620a:1911:b0:7b6:dc4f:8874 with SMTP id af79cd13be357-7b9ba7b0a79mr760622385a.12.1734953813408;
-        Mon, 23 Dec 2024 03:36:53 -0800 (PST)
-Received: from [192.168.65.90] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-aaee340665asm50505166b.187.2024.12.23.03.36.51
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 23 Dec 2024 03:36:52 -0800 (PST)
-Message-ID: <93ff7098-a77a-48a1-a14e-de23940bc763@oss.qualcomm.com>
-Date: Mon, 23 Dec 2024 12:36:50 +0100
+        d=1e100.net; s=20230601; t=1734954096; x=1735558896;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=uf08w7WXgohHhU+70NDC/g42V643KfJa3j55i27XM5Q=;
+        b=ratKzd9roIB6vvpZVl38XEVqxB9g1AI6FyVc2b0y3eQuVTmquOpdjCzICrZbMXOGxE
+         DAY1sVy8C5ocCTavUeX0XFi5h9o4Ze3PTskgkYWotxe4wi76hWDoL+sWAwodLhRO/o8I
+         KB8tbZjRmmiL+muuZ1N7nKGANx9AigkmEePylJlXDOjWeYQI4pnDlKeEMu+VdtwIOE4f
+         d46clGFIw4/m3PUb7SvYlmJOYbgmi+zUQD058j0BGSZ6XtdHGmvEAPZYNTRAh5tKv8UA
+         hVxLj40/mlxe2gMxunCR/i1njlI3s30fUR5krbgNyxL3QYGuVniQDpCezqFgWoroJkGD
+         yGJQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWwPCRbuJq+QkNo46fhB6zRLLGThYAijVTptoRy59q+nva0zz4ThvqqF3+IAoagxy7uguy5DRhDYlpuci0z@vger.kernel.org
+X-Gm-Message-State: AOJu0YxOtpn/8CCUGsTN6Os+QzBMRGJsZVHhIxAmCnjo3g/FInryuvP0
+	NSlx0BbgrEj59aDkIOKHIrrk/IT0JrGoEAtowy/ENmJmK+/uKkzKlOlzbMzLBG4=
+X-Gm-Gg: ASbGncuDbrpEfOXEeseM2ud3FQENZdxLxn1dHm6Zhnec+HRCNzELoJnlqWf8o3OQPCI
+	NJZ84RiSznRzWIqICwRvlchR+Pm6Ad5e7asBSeOUQQ1sKtZxJYCfpT4ulXlvkDqynvnYzy2X9bs
+	LkFvc9lzZbMHvhrLCSQt0RJP/eOqqNyONeaRz0EAeyLUCowgkS0vEMB6TVl99KPG6ZhQDKGZJzb
+	6G1Qkb/jS/uVNjKJ0XpeG30pI8WDZPswEzcplAGa8KaUAqq+QPRXICRiLfhqZeLQ1dz9p8GKXqk
+	VRldzoR/zf43Z9InTaiVtkZDNkM5dKx19U9w
+X-Google-Smtp-Source: AGHT+IHkGSR0n573lmoCfdSByUIBamlJdbqTtC1YtbeUpon8t76oIKkkN/FuZHbbP5wDWOc3HW9rMQ==
+X-Received: by 2002:a05:6512:114f:b0:540:1d37:e6e with SMTP id 2adb3069b0e04-542295434f9mr4349383e87.33.1734954095868;
+        Mon, 23 Dec 2024 03:41:35 -0800 (PST)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-542238301e0sm1278636e87.248.2024.12.23.03.41.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 23 Dec 2024 03:41:34 -0800 (PST)
+Date: Mon, 23 Dec 2024 13:41:32 +0200
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Renjiang Han <quic_renjiang@quicinc.com>
+Cc: Bjorn Andersson <andersson@kernel.org>, 
+	Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>, 
+	Stanimir Varbanov <stanimir.k.varbanov@gmail.com>, Vikash Garodia <quic_vgarodia@quicinc.com>, 
+	Bryan O'Donoghue <bryan.odonoghue@linaro.org>, Mauro Carvalho Chehab <mchehab@kernel.org>, 
+	linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-media@vger.kernel.org
+Subject: Re: [PATCH v2 2/2] venus: pm_helpers: Use dev_pm_genpd_set_hwmode to
+ switch GDSC mode on V4
+Message-ID: <5dexy2uc34b3kv532r45p6oaqn7v6bjohfdpwy42folvsdv6nd@skj7o35dflj2>
+References: <20241223-switch_gdsc_mode-v2-0-eb5c96aee662@quicinc.com>
+ <20241223-switch_gdsc_mode-v2-2-eb5c96aee662@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/4] arm64: dts: qcom: x1e80100: Add PCIe lane
- equalization preset properties
-To: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Bjorn Helgaas <bhelgaas@google.com>, Jingoo Han <jingoohan1@gmail.com>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org,
-        konrad.dybcio@oss.qualcomm.com, quic_mrana@quicinc.com,
-        quic_vbadigan@quicinc.com, Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>
-References: <20241223-preset_v2-v3-0-a339f475caf5@oss.qualcomm.com>
- <20241223-preset_v2-v3-1-a339f475caf5@oss.qualcomm.com>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <20241223-preset_v2-v3-1-a339f475caf5@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: zPPf2xFwK4PUlsuTwfyfRtovKA7ye3S5
-X-Proofpoint-ORIG-GUID: zPPf2xFwK4PUlsuTwfyfRtovKA7ye3S5
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0
- lowpriorityscore=0 bulkscore=0 phishscore=0 clxscore=1015 mlxscore=0
- impostorscore=0 suspectscore=0 spamscore=0 malwarescore=0
- priorityscore=1501 mlxlogscore=592 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2411120000 definitions=main-2412230104
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241223-switch_gdsc_mode-v2-2-eb5c96aee662@quicinc.com>
 
-On 23.12.2024 7:51 AM, Krishna Chaitanya Chundru wrote:
-> Add PCIe lane equalization preset properties for 8 GT/s and 16 GT/s data
-> rates used in lane equalization procedure.
+On Mon, Dec 23, 2024 at 02:32:42PM +0530, Renjiang Han wrote:
+> The POWER_CONTROL register addresses are not constant and can vary across
+> the variants. Also as per the HW recommendation, the GDSC mode switching
+> needs to be controlled from respective GDSC register and this is a uniform
+> approach across all the targets. Hence use dev_pm_genpd_set_hwmode() API
+> which controls GDSC mode switching using its respective GDSC register.
 > 
-> Signed-off-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+> In venus v4 variants, the vcodec gdsc gets enabled in SW mode by default
+> with new HW_CTRL_TRIGGER flag and there is no need to switch it to SW mode
+> again after enable, hence add check to avoid switching gdsc to SW mode
+> again after gdsc enable. Similarly add check to avoid switching GDSC to HW
+> mode before disabling the GDSC, so GDSC gets enabled in SW mode in the
+> next enable.
+> 
+> Signed-off-by: Renjiang Han <quic_renjiang@quicinc.com>
 > ---
+>  drivers/media/platform/qcom/venus/pm_helpers.c | 10 +++++-----
+>  1 file changed, 5 insertions(+), 5 deletions(-)
+> 
+> diff --git a/drivers/media/platform/qcom/venus/pm_helpers.c b/drivers/media/platform/qcom/venus/pm_helpers.c
+> index 33a5a659c0ada0ca97eebb5522c5f349f95c49c7..a2062b366d4aedba3eb5e4be456a005847eaec0b 100644
+> --- a/drivers/media/platform/qcom/venus/pm_helpers.c
+> +++ b/drivers/media/platform/qcom/venus/pm_helpers.c
+> @@ -412,7 +412,7 @@ static int vcodec_control_v4(struct venus_core *core, u32 coreid, bool enable)
+>  	u32 val;
+>  	int ret;
+>  
+> -	if (IS_V6(core))
+> +	if (IS_V6(core) || IS_V4(core))
+>  		return dev_pm_genpd_set_hwmode(core->pmdomains->pd_devs[coreid], !enable);
 
-Does this also apply to PCIe3?
+It is being called only for v4 and v6 targets. Drop the rest of the
+function and inline the result. I'd suggest keeping it as two patches
+though: this one which adds IS_V4() all over the place and the next one
+which performs cleanup of the dead code.
 
-Konrad
+>  	else if (coreid == VIDC_CORE_ID_1) {
+>  		ctrl = core->wrapper_base + WRAPPER_VCODEC0_MMCC_POWER_CONTROL;
+> @@ -450,7 +450,7 @@ static int poweroff_coreid(struct venus_core *core, unsigned int coreid_mask)
+>  
+>  		vcodec_clks_disable(core, core->vcodec0_clks);
+>  
+> -		if (!IS_V6(core)) {
+> +		if (!IS_V6(core) && !IS_V4(core)) {
+>  			ret = vcodec_control_v4(core, VIDC_CORE_ID_1, false);
+>  			if (ret)
+>  				return ret;
+> @@ -468,7 +468,7 @@ static int poweroff_coreid(struct venus_core *core, unsigned int coreid_mask)
+>  
+>  		vcodec_clks_disable(core, core->vcodec1_clks);
+>  
+> -		if (!IS_V6(core)) {
+> +		if (!IS_V6(core) && !IS_V4(core)) {
+>  			ret = vcodec_control_v4(core, VIDC_CORE_ID_2, false);
+
+The poweron_coreid() and poweroff_coreid() functions are called only for
+v4 and v6. The v6 case was masked out earlier. Now you've removed the v4
+case too. Can we drop such vcodec_control_v4() calls completely?
+
+>  			if (ret)
+>  				return ret;
+> @@ -491,7 +491,7 @@ static int poweron_coreid(struct venus_core *core, unsigned int coreid_mask)
+>  		if (ret < 0)
+>  			return ret;
+>  
+> -		if (!IS_V6(core)) {
+> +		if (!IS_V6(core) && !IS_V4(core)) {
+>  			ret = vcodec_control_v4(core, VIDC_CORE_ID_1, true);
+>  			if (ret)
+>  				return ret;
+> @@ -511,7 +511,7 @@ static int poweron_coreid(struct venus_core *core, unsigned int coreid_mask)
+>  		if (ret < 0)
+>  			return ret;
+>  
+> -		if (!IS_V6(core)) {
+> +		if (!IS_V6(core) && !IS_V4(core)) {
+>  			ret = vcodec_control_v4(core, VIDC_CORE_ID_2, true);
+>  			if (ret)
+>  				return ret;
+> 
+> -- 
+> 2.34.1
+> 
+
+-- 
+With best wishes
+Dmitry
 
