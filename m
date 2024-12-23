@@ -1,123 +1,190 @@
-Return-Path: <linux-arm-msm+bounces-43125-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-43126-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id DF0DD9FADE7
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Dec 2024 12:50:05 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 313E49FADEE
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Dec 2024 12:53:53 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5E97816471B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Dec 2024 11:50:03 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4F40A188401A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Dec 2024 11:53:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3F28719E982;
-	Mon, 23 Dec 2024 11:49:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0EF061A0B08;
+	Mon, 23 Dec 2024 11:53:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="LZbRvQnk"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="n4XXPxTb"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f173.google.com (mail-lj1-f173.google.com [209.85.208.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A14F5192D73
-	for <linux-arm-msm@vger.kernel.org>; Mon, 23 Dec 2024 11:49:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 646A91A3A95
+	for <linux-arm-msm@vger.kernel.org>; Mon, 23 Dec 2024 11:53:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734954599; cv=none; b=IvrwdnUROPfEMdeMU0jEejQpwws4ouxeTx9cEiZ7IwqwBo2h7WXxqsh1N/KJwER0tP1eSXQMJHka+A/qq5imTb7/RRucmYKwxmqXDzEd0GNqoukHzYEsiLzeSE4qpc5d1wvfgOOGFb2lNQSoiIehWjeXlAZgf71dvwljKK5/rmw=
+	t=1734954825; cv=none; b=irxrFoXYPWeMVz253gtwy9s9XEXFfzrZjq1w1vEIgXAnCury6mSkRQGn/PiA7nllVknMhWBOgr6ecc9LmWZ/OL1+2pnezbARre0b8WzgKgzlgfZ90DQbkeRB4nbQe4Fkv5lfeYpWXZ7niZmMtvPQsReLvf5V4cGaQ1IeiwHcDLY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734954599; c=relaxed/simple;
-	bh=6Yr21vDWuIkvsuZ47/NFrT8j3E23Ga5mNcpV2WGUrQs=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Yy8IUQvO5Qf+HMW7cXtzOxOTj3WMOlo5yndLnj31/7m1M/eNxHFMa4vXDYTwb+TWMfmCXy0QcEUPqLiCbi0m5DSpA0q3VwXeRhwPOquoPJOt4DjS+UMDVYEBoU8kqywQo6BXnH3iMN5TIOkhrSwN5t0jYzC88fM/VJgUQ/e7E9Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=LZbRvQnk; arc=none smtp.client-ip=209.85.208.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f173.google.com with SMTP id 38308e7fff4ca-3023c51146cso41999951fa.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Dec 2024 03:49:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1734954592; x=1735559392; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=81jl/t+cSQKe+ACOcy5lOOjJcqHObJWTUdY8j6yLjT4=;
-        b=LZbRvQnkBcIvLFWESdukXqB5GwfJMAXe7IxQN4kSr+tgZvgsn1QABAjIp5urX8koa+
-         TyFrV6MUmY3vIZtWyiNjdmsuHsmXvVTw2fqAxtGE2KyJG/ZEuP26dv7NXNPAQYnxe1EC
-         mKzqnnXDv5Yo77wOwKCK+2YPKpp6vf5wS0k1+dLPvOr3eOwntkPYMZRpziz2FYq8lCiz
-         f1K2nKNT5iMjyrXh8yye7SHJlhNP+zOO0YG6MUOeN1Evc4GRSKtDe+7nx/RqI2iU1IMC
-         62NqQWgIr7JuVV6YShK+ODvMy6K3j3ujJNr8gKW7CdeYBXb2I5ZxhjAHraWJCbk88rWw
-         2yWA==
+	s=arc-20240116; t=1734954825; c=relaxed/simple;
+	bh=1ycumVNb8nk/epHANWIeKyCAD7iNPvQGYRpxxtnZL/I=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=W7hBY/9kJFm0Yfb7kRee1TxbLO2/JMxcPrxkbgSiZaYCYBFtPpe54cWQik5IpJ4SxZAiwldFfCEht/GlfXS3G0mQ6MoIAJy6PMISTJyvWGshu+i8dNoSeJrnsfDWIcpuhifM4+D+uuO0D5fc2KMLL/uKnZlYtnJRMLrJ7BMeQLo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=n4XXPxTb; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BNBVdfS002805
+	for <linux-arm-msm@vger.kernel.org>; Mon, 23 Dec 2024 11:53:43 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	J5VlwP00xboXyME99V7gzV/NXrPnL3LL4izNHIkbQDc=; b=n4XXPxTbLSPuj21w
+	GhFZ9RQQ626VdBwh6a0OcDcXp0QXEojdBSHmsiRD2Fv2M5+vCLrp87lRS9eXvVW3
+	5XL3USKiIuJgnPYdoYG5W1g+Tf5NFRdeuarsNNlyn86Ds3lJlrD2jD8k9yUATWXN
+	G4nfuoszy8lOHRn78svAH6aUA5lPM7bfkpVvH4SAuH691aeivuSBAhSUJ7NlVTAE
+	4vaJU6aT66VfLv+T7QjtFngW3TdHS2PibkYYWFIn4PQRyFq5rHopypOi1oG0S0oD
+	L6iJLbad54CFoGdAI8lAuGBA4YYEWgL45lDLydqV0llHSA1waxx6AQBeBd4cJQ1T
+	5aAEhQ==
+Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com [209.85.219.70])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43q72mr1by-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 23 Dec 2024 11:53:43 +0000 (GMT)
+Received: by mail-qv1-f70.google.com with SMTP id 6a1803df08f44-6d880eea0a1so15081796d6.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Dec 2024 03:53:43 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734954592; x=1735559392;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=81jl/t+cSQKe+ACOcy5lOOjJcqHObJWTUdY8j6yLjT4=;
-        b=Dtyytg4RX/CFQ+Dj10chkgSNjLZ1jCRtDlUI+Ldy0mvUZCv3bcBRGnJz5ta/BXj5LY
-         H08QTgpaIosDLDJksh4H0aJ1x5iBR/hohEHmhTBz+05jwiN160M4gkYoVp/7EUxsKJK3
-         NTohZzDGoIc7lVF3dSICW6LiwKRZO9MoAPuqaEJCccBbDkwsypH6u0/vA9l1o7AEIHe3
-         5vr/DovsIM43LXGLXsp7Ke7agj+XKcRdqF0836IGxayQdAzz0JLku3t9KETzRYMSw+tw
-         ruzl0IXsoZOMWFuHoxI7bYWgpoLSsNWGl1obZgqXVe5nAwkAeJKXomCPUWtP1STWKGy+
-         V3Rw==
-X-Forwarded-Encrypted: i=1; AJvYcCUaoxmld3lTewR+8Au53zcPTdRsGbFEhQviRfLSte9PrNOQKXE61jtY8rTtIAK+knkUHy+UBJaHLLKYB+KN@vger.kernel.org
-X-Gm-Message-State: AOJu0Yyb/HFnDZ6Frkyhg08LC7ybC+fmKWhT2Bhzrmma5Gt/FUBO5Vc6
-	g0evkHgFJHSR8xPyfXHS6mSKbH28r7yr9xEE/gzXqlBlZ8je/8tFNGpAmTLomf4=
-X-Gm-Gg: ASbGnct5LocqYNopMKj+xAtIl17JlDx+erv19MMfT5lMEV5UaFFQXCXL3uU7Yh7w+iu
-	RhOzLF6oZw4itt7Ns0b+CpwYVDZa8etQXciQj7WYqH8OQ92iOeOSI2oUh0WhBn4nz70Yp6ukjSi
-	FmFwcWDZ6XfttbdQyOF6O6E31lyHLw/OccV5kD9bla8i4b2W3qZ5MnWubGYtTfxcXcRNR1MGzk9
-	lbR1eBow1wt9hAMCli3AD45B+9fuLVMbhxO0UzuZtntChX9O4/HNz31ou6dIXgC85JzAvj9HmTE
-	B5TZDBMcowtDtAwzRW11pu1gZLq/ByOZGoFg
-X-Google-Smtp-Source: AGHT+IHOzyQch22bff+q236NuBgW9EAlxYdWMJ7aLs2GLbKmy59AOI0ocsSlLrhAGSQfDmhwjLXuYA==
-X-Received: by 2002:a05:651c:4ca:b0:302:1c96:858f with SMTP id 38308e7fff4ca-304583710a9mr38211651fa.12.1734954591742;
-        Mon, 23 Dec 2024 03:49:51 -0800 (PST)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-3045ad6c5a0sm13023751fa.22.2024.12.23.03.49.50
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 23 Dec 2024 03:49:50 -0800 (PST)
-Date: Mon, 23 Dec 2024 13:49:49 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Renjiang Han <quic_renjiang@quicinc.com>
-Cc: Bjorn Andersson <andersson@kernel.org>, 
-	Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>, 
-	Stanimir Varbanov <stanimir.k.varbanov@gmail.com>, Vikash Garodia <quic_vgarodia@quicinc.com>, 
-	Bryan O'Donoghue <bryan.odonoghue@linaro.org>, Mauro Carvalho Chehab <mchehab@kernel.org>, 
-	linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-media@vger.kernel.org, Taniya Das <quic_tdas@quicinc.com>
-Subject: Re: [PATCH v2 1/2] clk: qcom: videocc: Use HW_CTRL_TRIGGER flag for
- video GDSC's
-Message-ID: <tvfe4inkpz3zg7k3eo2nqhcujy5weozfroyf4cgftsyrgbutkm@olh7t3qsn4dd>
-References: <20241223-switch_gdsc_mode-v2-0-eb5c96aee662@quicinc.com>
- <20241223-switch_gdsc_mode-v2-1-eb5c96aee662@quicinc.com>
+        d=1e100.net; s=20230601; t=1734954822; x=1735559622;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=J5VlwP00xboXyME99V7gzV/NXrPnL3LL4izNHIkbQDc=;
+        b=kqb+0V7A6CvXOOz4UTGdC/MqBAFE2n3LESBhbwDci3+MKQmTmFa2x4874t8G0ypGOd
+         PxFyuzLmSeNceSiTajuyOmPSOBf8rpx1j7V1cSVaPczHD8+3tyGNdSxY/XNLSTET6tnF
+         OdHNqyQZQcfyWL0gF6T8AM/M/Iz0d+7cbyC5qpfHINy502B25RyX7gysNkWg0DS1Fkzq
+         HWmsmpHxAtMVv+9IlGoZEeGsEMbAu+eX8n8xwqlVpiHucOMhihc1EHPl15xLEgYYmrvP
+         8NuP/l3tIXJblamTTpOmOststUDyGwxrpM6HSlXgXuDr0Nmn2XQhhNzDYNkKbfa19zLj
+         YftA==
+X-Gm-Message-State: AOJu0YyCT74y//d58wthXNfTa3/4i6TkARBxcNxaQWtNRxwruTdT7Frk
+	stbnrxDkIwKa/Nf90Cxj27Q/4txWsnyee6L9XshpAtBh0ZwrInBR4NjJOGeeM4gN1+7fxB/Iqpe
+	HsnHCzoYjzJjRBJdam60i/QROZ+s47LpcKWatxJNqyRFucYNW4GN8pyzlJKFZZT8o
+X-Gm-Gg: ASbGncsI3dCXH3m8HduQdcMarGSusC5o6Xxz5YhvTd1AVJxoQ3FpOunHwp3ncfA043O
+	OQQrhTmld1kL16DfegtWTjH5+rNwfLisT7d5Wm03HLNUCAh82XqQgcax714YcgBNlVmS0ud8BNR
+	43zRUK5iwlKurqsE2gZC88sUtYhm6s0n3HuacdaUeh3mrPL4EZoLI5EgHofMJfjjUOUwkixiogq
+	IzsSFMBU3urToYgFZ+TSkDH8utsos+j0wXvKIJ7RLwq98A/DwP5IjEI2PCt8CNcYc3znurWyioP
+	ggqMegmusnyHpRooSQAABPqvJmT6JrKoCRE=
+X-Received: by 2002:ad4:5b89:0:b0:6d8:8db8:43a8 with SMTP id 6a1803df08f44-6dd2339fa9dmr68175776d6.9.1734954822254;
+        Mon, 23 Dec 2024 03:53:42 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHpP//k2SXtcSanh+gJXloSY1crcdD0Pn9uWGltwmt/yy81KzcgGiu0Pg0OqhN4qqveMbLaxg==
+X-Received: by 2002:ad4:5b89:0:b0:6d8:8db8:43a8 with SMTP id 6a1803df08f44-6dd2339fa9dmr68175706d6.9.1734954821881;
+        Mon, 23 Dec 2024 03:53:41 -0800 (PST)
+Received: from [192.168.65.90] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-aaede7ef3cfsm77239966b.77.2024.12.23.03.53.39
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 23 Dec 2024 03:53:40 -0800 (PST)
+Message-ID: <bb178e94-2044-40b9-bbcc-1f31b9d4e8e0@oss.qualcomm.com>
+Date: Mon, 23 Dec 2024 12:53:39 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241223-switch_gdsc_mode-v2-1-eb5c96aee662@quicinc.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1] soc: qcom: ice: Prevent UFS probe deferral on ICE
+ probe failure
+To: Yuvaraj Ranganathan <quic_yrangana@quicinc.com>,
+        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20241203024005.391654-1-quic_yrangana@quicinc.com>
+ <5255398f-cc9d-4f85-8433-d6a4183dc449@oss.qualcomm.com>
+ <24b2ae5b-aaa5-4c50-b919-5296db6f2217@quicinc.com>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <24b2ae5b-aaa5-4c50-b919-5296db6f2217@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-ORIG-GUID: o2bDGQlGSYZeUAD84FLUsg1k8dFqfHRL
+X-Proofpoint-GUID: o2bDGQlGSYZeUAD84FLUsg1k8dFqfHRL
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 mlxlogscore=999
+ clxscore=1015 mlxscore=0 lowpriorityscore=0 impostorscore=0 suspectscore=0
+ priorityscore=1501 malwarescore=0 spamscore=0 bulkscore=0 adultscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2411120000
+ definitions=main-2412230107
 
-On Mon, Dec 23, 2024 at 02:32:41PM +0530, Renjiang Han wrote:
-> From: Taniya Das <quic_tdas@quicinc.com>
+On 23.12.2024 10:20 AM, Yuvaraj Ranganathan wrote:
+> On 12/5/2024 10:54 PM, Konrad Dybcio wrote:
+>> On 3.12.2024 3:40 AM, Yuvaraj Ranganathan wrote:
+>>> When the ICE key programming interface is unavailable, the ice create
+>>> function fails, causing the probe to set NULL as the driver data. As a 
+>>> result, when the UFS driver reads the ICE driver data and encounters a 
+>>> NULL, leading to the deferral of the UFS probe and preventing the device
+>>> from booting to the shell.
+>>>
+>>> To address this issue, modify the behavior to return an "operation not
+>>> supported" error when the ICE key programming interface is unavailable.
+>>> Additionally, mark this error in a global variable. When the UFS driver
+>>> attempts to read the ICE driver data, it will check for this error and
+>>> return it, rather than deferring the probe.
+>>>
+>>> Signed-off-by: Yuvaraj Ranganathan <quic_yrangana@quicinc.com>
+>>> ---
+>>>  drivers/soc/qcom/ice.c | 11 +++++++++--
+>>>  1 file changed, 9 insertions(+), 2 deletions(-)
+>>>
+>>> diff --git a/drivers/soc/qcom/ice.c b/drivers/soc/qcom/ice.c
+>>> index 393d2d1d275f..160916cb8fb0 100644
+>>> --- a/drivers/soc/qcom/ice.c
+>>> +++ b/drivers/soc/qcom/ice.c
+>>> @@ -41,6 +41,8 @@
+>>>  #define qcom_ice_readl(engine, reg)	\
+>>>  	readl((engine)->base + (reg))
+>>>  
+>>> +static bool qcom_ice_create_error;
+>>
+>> So you could drop this..
+>>
+>>> +
+>>>  struct qcom_ice {
+>>>  	struct device *dev;
+>>>  	void __iomem *base;
+>>> @@ -215,7 +217,7 @@ static struct qcom_ice *qcom_ice_create(struct device *dev,
+>>>  
+>>>  	if (!qcom_scm_ice_available()) {
+>>>  		dev_warn(dev, "ICE SCM interface not found\n");
+>>> -		return NULL;
+>>> +		return ERR_PTR(-EOPNOTSUPP);
+>>>  	}
+>>>  
+>>>  	engine = devm_kzalloc(dev, sizeof(*engine), GFP_KERNEL);
+>>> @@ -303,6 +305,9 @@ struct qcom_ice *of_qcom_ice_get(struct device *dev)
+>>>  		return ERR_PTR(-EPROBE_DEFER);
+>>>  	}
+>>>  
+>>> +	if (qcom_ice_create_error)
+>>> +		return ERR_PTR(-EOPNOTSUPP);
+>>> +
+>>>  	ice = platform_get_drvdata(pdev);
+>>>  	if (!ice) {
+>>
+>> ..and check for || IS_ERR(ice) here
+>>
+>> if I'm reading things right
+>>
+>> Konrad
 > 
-> The video driver will be using the newly introduced
-> dev_pm_genpd_set_hwmode() API to switch the video GDSC to HW and SW
-> control modes at runtime.
-> Hence use HW_CTRL_TRIGGER flag instead of HW_CTRL for video GDSC's for
-> Qualcomm SoC SC7180, SDM845, SM7150, SM8150 and SM8450.
-> 
-> Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
-> Signed-off-by: Renjiang Han <quic_renjiang@quicinc.com>
-> ---
->  drivers/clk/qcom/videocc-sc7180.c | 2 +-
->  drivers/clk/qcom/videocc-sdm845.c | 4 ++--
->  drivers/clk/qcom/videocc-sm7150.c | 4 ++--
->  drivers/clk/qcom/videocc-sm8150.c | 4 ++--
->  drivers/clk/qcom/videocc-sm8450.c | 4 ++--
->  5 files changed, 9 insertions(+), 9 deletions(-)
-> 
+> In case of failure, platform_set_drvdata is not invoked and it is
+> causing ice to become NULL on platform_get_drvdata.
+> Adding IS_ERR(ice) can't help unless we set the platform_set_drvdata
+> even on failure.
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Which we should be able to do, given the platform device exists by
+the time we get there.
 
--- 
-With best wishes
-Dmitry
+An additional parameter to create() may be useful to make sure we're
+not overwriting UFS's drvdata in the legacy fallback case
+
+Konrad
 
