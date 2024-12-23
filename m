@@ -1,113 +1,129 @@
-Return-Path: <linux-arm-msm+bounces-43111-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-43112-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8646D9FAD17
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Dec 2024 11:20:43 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4256F9FAD1F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Dec 2024 11:30:33 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id D420618844D2
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Dec 2024 10:20:44 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 990BD16282C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Dec 2024 10:30:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C5A0819149E;
-	Mon, 23 Dec 2024 10:20:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 24BD018BB8E;
+	Mon, 23 Dec 2024 10:30:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="oSPqvPAT"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="PNrGiAlt"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f177.google.com (mail-lj1-f177.google.com [209.85.208.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E02B317BB35
-	for <linux-arm-msm@vger.kernel.org>; Mon, 23 Dec 2024 10:20:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8155A848C;
+	Mon, 23 Dec 2024 10:30:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734949240; cv=none; b=a7w8POgme+2enZ5qFxz/iNjj6VwxV3DtA9HqCYU8+Wni6tlqRmAuZVJcM5OrnKZnjs1WOaZRQYMv0mLg4QkQCCDJglU+i2yWYgbd9eNeHZdnWQwstSchhBWKjxcINZUznKW0gE/sPhPT2dw0Ve2kxM1Wwic4VEo4RS2iwiZItUA=
+	t=1734949828; cv=none; b=VjAgogwPDQ6JR1CMJRxdclWi7Sx7l0gPY/56h+dX29EiL6Ymvh6foTF9Tcc0wCSV/YSHcBbkoMkVGtkwyzNE74fuLNtMvFeuej39ruPVNMCPZJUfz7kbyha7sCvZrhkOfln8RcUuWqzcpUzBpoY7PdC2o8rsL8dD04EloADFSsQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734949240; c=relaxed/simple;
-	bh=YQ5GjLoCA3Y+Jn/Ppy9ygZ7SHlPYCBHyH1SaK76iDjc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Ei+9U+stArjMUoePxWU3eXBwuBu5JBHoiewC1ka5UqBOGuMhZde5C4KDAxAmjUZNploicC/oXHpa7kNahBLhZsFrErSgtA/dSFmO1jiBn+GySS7VNW5IOr8h//phYdmOzPeHh3ytgoSCAREz7NDZHjMuf03QWU1xnSTxM7G1n6c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=oSPqvPAT; arc=none smtp.client-ip=209.85.208.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f177.google.com with SMTP id 38308e7fff4ca-300392cc4caso44991911fa.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Dec 2024 02:20:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1734949237; x=1735554037; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=7BdG2KEM7N5ZoDGzjtepOxh5S9LOQZbib/ahN8MnCUI=;
-        b=oSPqvPATxOtUlz+6slXWFuf4CX/S6aHkh29PXAQokw11gaPze3rHTvlV14CD5jbVeh
-         +dy/W5MjSSGOgtXm3MIdJWJRlEoEwXn1gXbZABIuvZb3DvzrLpY8FC2MGtWXLL87UQFe
-         5oAdGo0nhJisy7jGIFUVmAWlZMv9xF8B7HhOETs3qgVBAdoJdVsvfZsp092lpVQD7qko
-         3I1GRrYnR9VD8T0boqKBrqo26yNjP23fsEI5bdFYp1f2AWdVSVJHuitX+wS4wkZp+0th
-         Y1DvKBIowABeUNqCr2SrrM3rxLN5nTl1Tgt2tQQN6d7HFJZyTS6olEAe+/CJBcR6mUZC
-         Mq4A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734949237; x=1735554037;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=7BdG2KEM7N5ZoDGzjtepOxh5S9LOQZbib/ahN8MnCUI=;
-        b=HMPk6bLLl0P/2eUWpx8NT5r1ZDw4k3GpAs+WlezQQriaQJwMdUrC7RcmYdW6M++xwx
-         RC4trIdjTQpFLUGSCTousKn2vW0WNFlOaQXoru8tun+i2Zw5JZrsPK3yUSf3o9qafPjJ
-         Bb/u496Oomd/LRFJtVMLf4RR5ijTdgPm1vxaZwqGte+UKXrdxARTbmkADyvV1dpDiQ3T
-         ue/RinlWjv9OKwi+IGd0ky41FvyGdkXItEjMHaBOl0cbi4u9xyLuMiBkaHCnAtn5enqX
-         UlHkfJtFfuQJmQmGg22otqijWfPeG+ypF1fbocrEjYsBKEl76zFcq5Fx10mZvy7J3BdN
-         Kosw==
-X-Forwarded-Encrypted: i=1; AJvYcCVyYbbW3htZ0pHApgyZHI9btLkcNSng4g21MrX4Y7TodDGBqJ5IabDOzwzOd9mi9CavKNLwWMly5Qun3IvE@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx7Hgt3fXA6rLrPaMEYRij9Bk0hqCg8qTcYuOY4QY2PBBf2bGYd
-	7gYqcfPW/mtFHQ1Q7RmuTK0z9OqqGtTUrli5Mo+0V1ZNwhanv6KgQn/9vtuwhvy2Gz2p77z5UnQ
-	X
-X-Gm-Gg: ASbGncuMMlgV0CbQ6/Ij7VNqaeGlUBiAjlQ+DH/w31ziRI3d+3a7M9z52CVc0ALXOzv
-	BDmoyVCvypKeq533FGv5ua8DvggY6fweMfXQvHQOiGZCrcWjvdhvL3ghb4bz/1rK1l0tkRS7YnI
-	aFfIj76587k+L5TP6mvl1HRollb4OL6FoDRwwDJanLLYI8HJFkFFx+iS5JJmwi5/3KjbyDHN3q+
-	UUepwf3TeudPWFE3KtpRFZF60BxAixoplSxJQAsUZmHhuvmdnICZTzkIaCcR2yzHg/8/Pa9n0rF
-	vcTWidzuz7SV4OfUU5jTSt4f8D1t4IfNtukz
-X-Google-Smtp-Source: AGHT+IEZ2NVogTrl/l2IKB2Z64bE7w+PSxM/M+cf3N5h+nH0zcZBrij9zXjP0FpluXqw3LeiTBOImw==
-X-Received: by 2002:a05:6512:689:b0:540:5253:966e with SMTP id 2adb3069b0e04-54229581feamr3600119e87.44.1734949237046;
-        Mon, 23 Dec 2024 02:20:37 -0800 (PST)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5422360010esm1245736e87.79.2024.12.23.02.20.34
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 23 Dec 2024 02:20:35 -0800 (PST)
-Date: Mon, 23 Dec 2024 12:20:33 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Anandu Krishnan E <quic_anane@quicinc.com>
-Cc: srinivas.kandagatla@linaro.org, linux-arm-msm@vger.kernel.org, 
-	gregkh@linuxfoundation.org, quic_bkumar@quicinc.com, linux-kernel@vger.kernel.org, 
-	quic_chennak@quicinc.com, dri-devel@lists.freedesktop.org, arnd@arndb.de
-Subject: Re: [PATCH v2 2/2] misc: fastrpc: Add meaningful labels for exit
- paths
-Message-ID: <vn3qkcc4ufc3mzpk7qakg6tfujugcvonakkvinix5q62tthmpu@pjnex235m5ge>
-References: <20241223100101.29844-1-quic_anane@quicinc.com>
- <20241223100101.29844-3-quic_anane@quicinc.com>
+	s=arc-20240116; t=1734949828; c=relaxed/simple;
+	bh=qOX1CJ1nb5KRS6ac/jGp3ooaJcCYp60O2FlznxOa39g=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=iS2ZEqMI4oDVGM1a+fDXklB6N2NdUTLD40qRArnsjbObPfIQNv02dqQWmfcmyT98i6ATewdSN3uxBaqccbOpBx/je7etv1xnKrehNZg0wWFuTEZSMtX605BIJQ0skwXQ//dsotm+NUJT+TGV6n7y3KjDBn75RyKX4f+pfBQRbco=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=PNrGiAlt; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BN9Si5M007922;
+	Mon, 23 Dec 2024 10:30:13 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	jVOjdSbEjB5SPyb/jIw3Vcq/sAgx6qjeQaelRJANPRg=; b=PNrGiAltyu5FGx3D
+	Czz8Nkg6n+lnXnc/5xpxZSpV4ZXr6eGuvcmHJpyZ7ZHSiRlj8v13p5kUvoVhz6Yw
+	QG/EqWGR6fo1P800LaLuPuIuadg+E5LrlnMPU06cGCO3MTNi9NxmktTrdXIZvI1E
+	gwXhSmZ9nZYbTFORRXRLW1KDWTt36jVFI75AvTYG5s7sz2ZgB5iFJ5cSgOBosqkv
+	pkQcQ6jpBCBAtobY8hA+937ljyYCslVSaTrQzbjJVAIgVLCAZdCtS7ousFQTCslm
+	XIHKZEo/il0q5IvsCNjJ8V4mjpOnLcoX4uknFZLjAeHdgWJ72Q0mSfKxiwzrHYDF
+	JhDI0Q==
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43nk1m0unp-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 23 Dec 2024 10:30:13 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4BNAUCZ6018442
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 23 Dec 2024 10:30:12 GMT
+Received: from [10.206.105.210] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 23 Dec
+ 2024 02:30:09 -0800
+Message-ID: <77018932-14b0-4371-8f80-e2701cbb052c@quicinc.com>
+Date: Mon, 23 Dec 2024 16:00:06 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241223100101.29844-3-quic_anane@quicinc.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/2] misc: fastrpc: Deregister device nodes properly in
+ error scenarios
+To: Greg KH <gregkh@linuxfoundation.org>
+CC: <srinivas.kandagatla@linaro.org>, <linux-arm-msm@vger.kernel.org>,
+        <quic_bkumar@quicinc.com>, <linux-kernel@vger.kernel.org>,
+        <quic_chennak@quicinc.com>, <dri-devel@lists.freedesktop.org>,
+        <arnd@arndb.de>, stable <stable@kernel.org>
+References: <20241223100101.29844-1-quic_anane@quicinc.com>
+ <20241223100101.29844-2-quic_anane@quicinc.com>
+ <2024122343-java-exposure-bf50@gregkh>
+Content-Language: en-US
+From: Anandu Krishnan E <quic_anane@quicinc.com>
+In-Reply-To: <2024122343-java-exposure-bf50@gregkh>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: xwwjqyOxUh2Z34SIa6KXgNQx0AxS3SjQ
+X-Proofpoint-ORIG-GUID: xwwjqyOxUh2Z34SIa6KXgNQx0AxS3SjQ
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ mlxlogscore=483 clxscore=1015 priorityscore=1501 impostorscore=0
+ suspectscore=0 mlxscore=0 malwarescore=0 spamscore=0 phishscore=0
+ adultscore=0 bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2412230094
 
-On Mon, Dec 23, 2024 at 03:31:01PM +0530, Anandu Krishnan E wrote:
-> In fastrpc_rpmsg_probe function, exit path labels are not intuitive.
-> It does not metion what the goto does or why the goto exists. Rename
-> goto labels to make it more intuitive and to align with labels of
-> other functions.
+
+
+On 12/23/2024 3:40 PM, Greg KH wrote:
+> On Mon, Dec 23, 2024 at 03:31:00PM +0530, Anandu Krishnan E wrote:
+>> During fastrpc_rpmsg_probe, if secure device node registration
+>> succeeds but non-secure device node registration fails, the secure
+>> device node deregister is not called during error cleanup. Add proper
+>> exit paths to ensure proper cleanup in case of error.
+>>
+>> Fixes: 3abe3ab3cdab ("misc: fastrpc: add secure domain support")
+>> Cc: stable <stable@kernel.org>
+>> Signed-off-by: Anandu Krishnan E <quic_anane@quicinc.com>
+>> ---
+>>  drivers/misc/fastrpc.c | 2 +-
+>>  1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> Signed-off-by: Anandu Krishnan E <quic_anane@quicinc.com>
-> ---
->  drivers/misc/fastrpc.c | 16 ++++++++--------
->  1 file changed, 8 insertions(+), 8 deletions(-)
+> Shouldn't this be a stand-alone patch, not part of a series, if you wish
+> to have it included in 6.14-final?
 > 
+> thanks,
+> 
+> greg k-h
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Sure, I will send this change as a stand-alone patch in the next spin,
+so that it can be included in 6.14-final.
 
--- 
-With best wishes
-Dmitry
+Thanks 
+Anandu
+
+
+
 
