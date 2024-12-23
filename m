@@ -1,212 +1,162 @@
-Return-Path: <linux-arm-msm+bounces-43100-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-43101-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 473A29FAB49
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Dec 2024 08:50:40 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0654C9FABBD
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Dec 2024 10:03:25 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B05991655FB
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Dec 2024 07:50:37 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2B4EC1884C09
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Dec 2024 09:03:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9984C18C018;
-	Mon, 23 Dec 2024 07:50:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6481D18D620;
+	Mon, 23 Dec 2024 09:03:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="dCBOF2Y9"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="pmO24pTe"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1621189520;
-	Mon, 23 Dec 2024 07:50:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFB4718950A;
+	Mon, 23 Dec 2024 09:03:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734940226; cv=none; b=TsWdYcY2/C6QsV5r4CpCkWw3simd9QPCkniJCVfpgXZYz+o0QuwCCfe/WUaUJggy2qo7Vxml/xbUvg18gPJ9VUMrbuOCNx69PYjzS/zzotK0cGudv6zAq1qIifkQeUgLqMvx+db5QScgI7h4QzGjAWDRmQjJ4uuyJo/92d4dYAM=
+	t=1734944598; cv=none; b=WBozqdrIsiUxL3Z8S15Vv8vQD/lT2cGNbTo2bw2hMyQB+1f6RcQwxfXUAx0DRkUWGNt/Af0bdvVXwRNI1xKTS9Hopfi6OMMFQfSl1SAvsr+SiUtViZTJx8Qck6e42qIlWDxOOlXQqn9vq6rNavF3NDjIC7EgOENURgQSadqz5wo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734940226; c=relaxed/simple;
-	bh=KluvoRVs50gNq7a5yFRrEJBBDOWuB3gtzpqMMaQxMhA=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=A4fGhUvUpfUcxUt4DRxaq55Vgm9j/GWmzsyiMjMMK4n0RWSKw3zVKFQvqUTF9IAVF6par0uDWJHOB52pc6NI8HqYldbgvTupUP+1ng+fMUxy+7LxEVGidYQDFPR6FDfVUZkj+1KY/V5VzPKmNnjbPZATRbbr0GHMs57nap1qGc8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=dCBOF2Y9; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1734944598; c=relaxed/simple;
+	bh=JnqaOjxpDlEfIDe+q060j3nTcVDgy4R8TN3nDR4peeg=;
+	h=From:Subject:Date:Message-ID:MIME-Version:Content-Type:To:CC; b=I1YF60CJKDLSTAer1caKGCj26n9x+hNba1nSkfNpkmkZ5DbwqJyCzT7Acf3TGYZbh7QiORh1l8cmE36697JzyjzHraiXbx+6tmdd+AoLBYiCG4ms3XUtUwXMlbxK4JYq3kTAmvlDgZqucLFYaIX6YVKwKIcAgr5KdFUAc/IrBX8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=pmO24pTe; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BN6mbwA004776;
-	Mon, 23 Dec 2024 07:50:08 GMT
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BN6BZQg020816;
+	Mon, 23 Dec 2024 09:03:11 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=o0ylRwCleiLePsy/R7nCCMSI
-	zCh9GGBByF9fUZV3WJo=; b=dCBOF2Y9bcfzYzkpPCbsZTO47lTzNynhM+D9tR5A
-	JCH/AJ4yl215RyWRNHdXxFz9EL5kw92yCTmgZNwuiNeRY5wVywF/GkwTFNUkU2NN
-	jdhqEzp19eWYbxw7PGm6NJD2VNJJ6bnzFwB+sGpQSi/SzlZ/XyGv02qKzER7WV/+
-	jv4jAVZxV4U+15PEuqPq/487WS7BDLQK1xtlMjVurjObYl49hXRuCv0iTDhD5cGP
-	6A8qSUsxa7WWiF2PBaA/4tqpeKXoDU1WIJsdD9kjs0bdcBJoB6x96BOQtUH8Pvyt
-	AAuDYkZgQVcjB2FS9X6PFJAXiVA8HkQZQW6gAM7Zv4yvcw==
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43q2ww88bn-1
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=u+nrQlTDL9aBrOvNoXicLD
+	wRyH/0FncItu4hPBtE1AI=; b=pmO24pTeNc4rpoasEw4uUFYHoGv+fzEtjg16GL
+	DXwwiTp0P+zxnBz1YPUSHgUtO8Mht7qCjSMfLS4JG32nX+lqR2zsUcsbaeeP1Q51
+	jjbhOHalfkDI3Hv0pyZ1P/lyaLygioXuBSgjXVigJelwS4PKYfnq2eCkhCsrLCFg
+	EAUn1JsX/y6CK787QtxDnBtyOcvpMYjwAWRPWvYkkwBlUsQFP+mwdc+DyYVi2XNb
+	OAO9CLVX65uyPX6eRh/DJFTBA195NLbTP9tfunhlQs2mhvYk0zPEhVIAjebcPltU
+	HcwrHHIOxK1qD64JEf0bybDge4kE3QdSM+jXcNMo8WnZEiPw==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43q2cm0ne1-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 23 Dec 2024 07:50:07 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4BN7o6Nm027292
+	Mon, 23 Dec 2024 09:03:10 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4BN93ALc010282
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 23 Dec 2024 07:50:06 GMT
-Received: from hu-varada-blr.qualcomm.com (10.80.80.8) by
- nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
+	Mon, 23 Dec 2024 09:03:10 GMT
+Received: from hu-renjiang-sha.qualcomm.com (10.80.80.8) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Sun, 22 Dec 2024 23:50:00 -0800
-Date: Mon, 23 Dec 2024 13:19:57 +0530
-From: Varadarajan Narayanan <quic_varada@quicinc.com>
-To: Krzysztof Kozlowski <krzk@kernel.org>
-CC: <bhelgaas@google.com>, <lpieralisi@kernel.org>, <kw@linux.com>,
-        <manivannan.sadhasivam@linaro.org>, <robh@kernel.org>,
-        <krzk+dt@kernel.org>, <conor+dt@kernel.org>, <vkoul@kernel.org>,
-        <kishon@kernel.org>, <andersson@kernel.org>, <konradybcio@kernel.org>,
-        <p.zabel@pengutronix.de>, <quic_nsekar@quicinc.com>,
-        <dmitry.baryshkov@linaro.org>, <quic_srichara@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-pci@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-phy@lists.infradead.org>
-Subject: Re: [PATCH v3 1/5] dt-bindings: phy: qcom,uniphy-pcie: Document PCIe
- uniphy
-Message-ID: <Z2kWJb/77vunIPDg@hu-varada-blr.qualcomm.com>
-References: <20241217100359.4017214-1-quic_varada@quicinc.com>
- <20241217100359.4017214-2-quic_varada@quicinc.com>
- <nhzbr4knneo5k3zxvjy2ozx6ciqg2hivwyr2qxdld2x63vlzeb@mjrlqeqiykzp>
+ 15.2.1544.9; Mon, 23 Dec 2024 01:03:06 -0800
+From: Renjiang Han <quic_renjiang@quicinc.com>
+Subject: [PATCH v2 0/2] Use APIs in gdsc genpd to switch gdsc mode for
+ venus v4 core
+Date: Mon, 23 Dec 2024 14:32:40 +0530
+Message-ID: <20241223-switch_gdsc_mode-v2-0-eb5c96aee662@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <nhzbr4knneo5k3zxvjy2ozx6ciqg2hivwyr2qxdld2x63vlzeb@mjrlqeqiykzp>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIADAnaWcC/2WOwW6DMAxAfwX5vEyOIYX01P+YqgocU3wA2oSxV
+ RX/3owed7KeJT+/JySJKgmOxROirJp0njLQRwE8tNNVjIbMQEiVJSpN+tGFh8s1JL6McxCDB1c
+ GaRlr20I+u0Xp9XdXfp3fHOX+nc3Lewldm8TwPI66HItSKgrsiTw771CaqrMSanS9r/J0Eggbo
+ gb+XIOmZY6PvXa1u2wPy2X/w1Zr0JQH16OvhbsOT7mCdeLP/BvO27a9AGEfqwn+AAAA
+X-Change-ID: 20241223-switch_gdsc_mode-0653deac071a
+To: Bjorn Andersson <andersson@kernel.org>,
+        Michael Turquette
+	<mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Stanimir Varbanov
+	<stanimir.k.varbanov@gmail.com>,
+        Vikash Garodia <quic_vgarodia@quicinc.com>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Mauro Carvalho Chehab
+	<mchehab@kernel.org>
+CC: <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-media@vger.kernel.org>,
+        Renjiang Han
+	<quic_renjiang@quicinc.com>,
+        Taniya Das <quic_tdas@quicinc.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1734944586; l=2239;
+ i=quic_renjiang@quicinc.com; s=20241001; h=from:subject:message-id;
+ bh=JnqaOjxpDlEfIDe+q060j3nTcVDgy4R8TN3nDR4peeg=;
+ b=4ZrWVZTil88QA7QzB14BlgCv+RQAAILAMvxcoYvtCk4JqIEE5NyRWOpe2UM5ybrqBoNKXbuRn
+ sB7dZuS1TO7Dbq1PkVvCiPp73go+Yj8NahS1jbEd+Hn1K8LZPP6XxIb
+X-Developer-Key: i=quic_renjiang@quicinc.com; a=ed25519;
+ pk=8N59kMJUiVH++5QxJzTyHB/wh/kG5LxQ44j9zhUvZmw=
 X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
+ nalasex01c.na.qualcomm.com (10.47.97.35)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: G7LY8sYViYMibK_Ix7Wj0HgbzslH0iz9
-X-Proofpoint-GUID: G7LY8sYViYMibK_Ix7Wj0HgbzslH0iz9
+X-Proofpoint-GUID: Xj-0ewAr33OAhkziW85-aiH1aiv1orLa
+X-Proofpoint-ORIG-GUID: Xj-0ewAr33OAhkziW85-aiH1aiv1orLa
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 malwarescore=0
- spamscore=0 lowpriorityscore=0 bulkscore=0 phishscore=0 adultscore=0
- mlxlogscore=999 clxscore=1015 suspectscore=0 impostorscore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2412230068
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015
+ priorityscore=1501 spamscore=0 phishscore=0 adultscore=0 suspectscore=0
+ mlxlogscore=652 impostorscore=0 lowpriorityscore=0 bulkscore=0 mlxscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2412230081
 
-On Wed, Dec 18, 2024 at 11:28:18AM +0100, Krzysztof Kozlowski wrote:
-> On Tue, Dec 17, 2024 at 03:33:55PM +0530, Varadarajan Narayanan wrote:
-> > From: Nitheesh Sekar <quic_nsekar@quicinc.com>
-> >
-> > Document the Qualcomm UNIPHY PCIe 28LP present in IPQ5332.
-> >
-> > Signed-off-by: Nitheesh Sekar <quic_nsekar@quicinc.com>
-> > Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
-> > ---
-> > v3: Fix compatible string to be similar to other phys and rename file accordingly
-> >     Fix clocks minItems -> maxItems
->
-> I think there was just one clock, so you increased it to two.
+The Venus driver requires vcodec GDSC to be ON in SW mode for clock
+operations and move it back to HW mode to gain power benefits. Earlier,
+as there is no interface to switch the GDSC mode from GenPD framework,
+the GDSC is moved to HW control mode as part of GDSC enable callback and
+venus driver is writing to its POWER_CONTROL register to keep the GDSC ON
+from SW whereever required. But the POWER_CONTROL register addresses are
+not constant and can vary across the variants.
 
-IPQ5018 patch series had one clock. IPQ5332 introduced additional
-clocks and it became four. Of the four clocks, two were NoC
-related clocks. Since the NoC clocks are handled in icc-clk based
-interconnect driver, have dropped those two and have incldued the
-two here.
+Also as per the HW recommendation, the GDSC mode switching needs to be
+controlled from respective GDSC register and this is a uniform approach
+across all the targets. Hence use dev_pm_genpd_set_hwmode() API which
+controls GDSC mode switching using its respective GDSC register.
 
-> >     Change one of the maintainer from Sricharan to Varadarajan
-> >
-> > v2: Rename the file to match the compatible
-> >     Drop 'driver' from title
-> >     Dropped 'clock-names'
-> >     Fixed 'reset-names'
-> > --
-> >  .../phy/qcom,ipq5332-uniphy-pcie-phy.yaml     | 82 +++++++++++++++++++
-> >  1 file changed, 82 insertions(+)
-> >  create mode 100644 Documentation/devicetree/bindings/phy/qcom,ipq5332-uniphy-pcie-phy.yaml
-> >
-> > diff --git a/Documentation/devicetree/bindings/phy/qcom,ipq5332-uniphy-pcie-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,ipq5332-uniphy-pcie-phy.yaml
-> > new file mode 100644
-> > index 000000000000..0634d4fb85d1
-> > --- /dev/null
-> > +++ b/Documentation/devicetree/bindings/phy/qcom,ipq5332-uniphy-pcie-phy.yaml
-> > @@ -0,0 +1,82 @@
-> > +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
-> > +%YAML 1.2
-> > +---
-> > +$id: http://devicetree.org/schemas/phy/qcom,ipq5332-uniphy-pcie-phy.yaml#
-> > +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> > +
-> > +title: Qualcomm UNIPHY PCIe 28LP PHY
-> > +
-> > +maintainers:
-> > +  - Nitheesh Sekar <quic_nsekar@quicinc.com>
-> > +  - Varadarajan Narayanan <quic_varada@quicinc.com>
-> > +
-> > +description:
-> > +  PCIe and USB combo PHY found in Qualcomm IPQ5332 SoC
-> > +
-> > +properties:
-> > +  compatible:
-> > +    enum:
-> > +      - qcom,ipq5332-uniphy-gen3x1-pcie-phy
-> > +      - qcom,ipq5332-uniphy-gen3x2-pcie-phy
-> > +
-> > +  reg:
-> > +    maxItems: 1
-> > +
-> > +  clocks:
-> > +    maxItems: 2
->
-> I should have been more specific last time, but I assumed you will take
-> other bindings as example.  well, so now proper review: you need to list
-> tiems.
+Validated this patch series on QCS615 and SC7180.
+Also, need help to verify on sdm845 as we have no sdm845 device in hand.
 
-Sure.
+Signed-off-by: Renjiang Han <quic_renjiang@quicinc.com>
+---
+Changes in v2:
+- 1. Add the HW_CTRL_TRIGGER flag for the targets SM7150/SM8150 and SM8450
+video GDSCs supporting movement between HW and SW mode of the GDSC.
+(Suggested by Dmitry Baryshkov)
+- 2. There is a dependency of the clock driver introducing the new flag
+and the video driver adapting to this new API. Missing either the clock
+and video driver could potentially break the video driver.
+- Link to v1: https://lore.kernel.org/r/20241122-switch_gdsc_mode-v1-0-365f097ecbb0@quicinc.com
 
-> > +
-> > +  resets:
-> > +    minItems: 2
-> > +    maxItems: 3
->
-> No answer to my previous question. Question stands.
+---
+Renjiang Han (1):
+      venus: pm_helpers: Use dev_pm_genpd_set_hwmode to switch GDSC mode on V4
 
-I assume this question:- "So where are three items?" [1]
-Will remove this and list the items.
+Taniya Das (1):
+      clk: qcom: videocc: Use HW_CTRL_TRIGGER flag for video GDSC's
 
-> > +
-> > +  reset-names:
-> > +    minItems: 2
-> > +    items:
-> > +      - const: phy
-> > +      - const: phy_ahb
-> > +      - const: phy_cfg
-> > +
-> > +  "#phy-cells":
-> > +    const: 0
-> > +
-> > +  "#clock-cells":
-> > +    const: 0
-> > +
-> > +  clock-output-names:
-> > +    maxItems: 1
-> > +
-> > +required:
-> > +  - compatible
-> > +  - reg
-> > +  - resets
-> > +  - reset-names
-> > +  - clocks
->
-> Keep the same order as in properties block.
+ drivers/clk/qcom/videocc-sc7180.c              |  2 +-
+ drivers/clk/qcom/videocc-sdm845.c              |  4 ++--
+ drivers/clk/qcom/videocc-sm7150.c              |  4 ++--
+ drivers/clk/qcom/videocc-sm8150.c              |  4 ++--
+ drivers/clk/qcom/videocc-sm8450.c              |  4 ++--
+ drivers/media/platform/qcom/venus/pm_helpers.c | 10 +++++-----
+ 6 files changed, 14 insertions(+), 14 deletions(-)
+---
+base-commit: 3e42dc9229c5950e84b1ed705f94ed75ed208228
+change-id: 20241223-switch_gdsc_mode-0653deac071a
 
-Ok.
+Best regards,
+-- 
+Renjiang Han <quic_renjiang@quicinc.com>
 
-Thanks
-Varada
-
-1. https://lore.kernel.org/linux-arm-msm/c685ca4e-3992-4deb-adfb-da3bbcb59685@linaro.org/
 
