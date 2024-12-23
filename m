@@ -1,92 +1,90 @@
-Return-Path: <linux-arm-msm+bounces-43124-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-43125-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 76F1B9FADDC
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Dec 2024 12:47:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id DF0DD9FADE7
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Dec 2024 12:50:05 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E1BFD164611
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Dec 2024 11:47:23 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5E97816471B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Dec 2024 11:50:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C0FBB196434;
-	Mon, 23 Dec 2024 11:47:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3F28719E982;
+	Mon, 23 Dec 2024 11:49:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Zft3yCMA"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="LZbRvQnk"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f176.google.com (mail-lj1-f176.google.com [209.85.208.176])
+Received: from mail-lj1-f173.google.com (mail-lj1-f173.google.com [209.85.208.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C388518BC19
-	for <linux-arm-msm@vger.kernel.org>; Mon, 23 Dec 2024 11:47:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A14F5192D73
+	for <linux-arm-msm@vger.kernel.org>; Mon, 23 Dec 2024 11:49:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734954436; cv=none; b=bt6MWlqEAKAgzePI0ItXwwG9RSN+gI2MeXSrB+eL1lHrohG2+OGk2Lj6qs3PTKppPQiNW91YLgK7jyBONNCj4UT8CkK8xulmzr1zoJ7K6W8N+XsrizkQWXDGb04QwMcCiRbrHHAhHo+nNUrO5y6KvGMqJ6f7oRroAT5T1taw2Ow=
+	t=1734954599; cv=none; b=IvrwdnUROPfEMdeMU0jEejQpwws4ouxeTx9cEiZ7IwqwBo2h7WXxqsh1N/KJwER0tP1eSXQMJHka+A/qq5imTb7/RRucmYKwxmqXDzEd0GNqoukHzYEsiLzeSE4qpc5d1wvfgOOGFb2lNQSoiIehWjeXlAZgf71dvwljKK5/rmw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734954436; c=relaxed/simple;
-	bh=9B0swlY1icHspmzhbtnmpjXB5ErYiUPiOOG7FNdfGCU=;
+	s=arc-20240116; t=1734954599; c=relaxed/simple;
+	bh=6Yr21vDWuIkvsuZ47/NFrT8j3E23Ga5mNcpV2WGUrQs=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=AlHSSyWSQsPjOXw0YY3I2vq0FttIGdMigRr3JlkXwmTXDZ/pCcI3zzU5tGifkzObfP/zBtKh2qnCRszQ5qoVFIPnTjeqpriBqm1F0fWHN6domRJXkJHae1zVqAovO4PbQpyXmJ07LJjXbFuQ79nXMXKddBGJfYAYflAKtix+5K8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Zft3yCMA; arc=none smtp.client-ip=209.85.208.176
+	 Content-Type:Content-Disposition:In-Reply-To; b=Yy8IUQvO5Qf+HMW7cXtzOxOTj3WMOlo5yndLnj31/7m1M/eNxHFMa4vXDYTwb+TWMfmCXy0QcEUPqLiCbi0m5DSpA0q3VwXeRhwPOquoPJOt4DjS+UMDVYEBoU8kqywQo6BXnH3iMN5TIOkhrSwN5t0jYzC88fM/VJgUQ/e7E9Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=LZbRvQnk; arc=none smtp.client-ip=209.85.208.173
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f176.google.com with SMTP id 38308e7fff4ca-3035210e2d1so35641541fa.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Dec 2024 03:47:14 -0800 (PST)
+Received: by mail-lj1-f173.google.com with SMTP id 38308e7fff4ca-3023c51146cso41999951fa.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Dec 2024 03:49:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1734954433; x=1735559233; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1734954592; x=1735559392; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=g7flEVlk8MpTJOgTC9yYtanlDHLTp9jgY7oIg2zLVp8=;
-        b=Zft3yCMAfSkfb1CmOb6WTndLnvlgKzVsPD4hXB//uJX358uIbqc8PdzzUq/1mhsX2j
-         +kJZRXDFSc8CkekWtO4Eil+hqnYugC/D8+QhhaOWep0sTJ7BIf5DB0VQLGtCxJxMo0QQ
-         EYgoW4FAMJ4YCdf+W8FsqM+qEC+cVfZingdsZXyG2bZJSG9eCAt0ZM7v5Fho2x7Ux1YM
-         YBpO9ZDG8M8aY/1k3EzEPZChoi7529/NchMNVD1BX5AwW8xHtw0Hq+3uGXV+svx46Ciz
-         p59mptzJVGlI726xQNaYKtYJvednLNntZD27hJwxbdoVIOCU29M+o6sRKYs1H7uz1z2U
-         Qucg==
+        bh=81jl/t+cSQKe+ACOcy5lOOjJcqHObJWTUdY8j6yLjT4=;
+        b=LZbRvQnkBcIvLFWESdukXqB5GwfJMAXe7IxQN4kSr+tgZvgsn1QABAjIp5urX8koa+
+         TyFrV6MUmY3vIZtWyiNjdmsuHsmXvVTw2fqAxtGE2KyJG/ZEuP26dv7NXNPAQYnxe1EC
+         mKzqnnXDv5Yo77wOwKCK+2YPKpp6vf5wS0k1+dLPvOr3eOwntkPYMZRpziz2FYq8lCiz
+         f1K2nKNT5iMjyrXh8yye7SHJlhNP+zOO0YG6MUOeN1Evc4GRSKtDe+7nx/RqI2iU1IMC
+         62NqQWgIr7JuVV6YShK+ODvMy6K3j3ujJNr8gKW7CdeYBXb2I5ZxhjAHraWJCbk88rWw
+         2yWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734954433; x=1735559233;
+        d=1e100.net; s=20230601; t=1734954592; x=1735559392;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=g7flEVlk8MpTJOgTC9yYtanlDHLTp9jgY7oIg2zLVp8=;
-        b=mFK2IhaJcOLYCuFoM1bPzqjGw+qThZucN1O3G6BMBBhK92vr30OJEh09EpiV7lBAPn
-         lGi+s9AYFB/ig/Jzj12lpDlN4qFvQV+Tjw/dGePzADpbola1h4H7JedwEQbZRZekBFtF
-         d7LfH2z4DeomR4IJNICpqLwEUEK8W/US92tLIL0TtLMHydX5aYGOJV6gfL6euEBmY3iA
-         N3zCGkc6yVj3c1M/OUWerU2pRZt0y2DYXWfnE/VVs7hfJhQHoSLtZ3PWXP/IJhIQgsHG
-         W+F3tOhp5WlcDuzKNoQSkP9averG5BmwOkHscjJMvnMy24L8rsAnAvXPehnF4pQNqrQ1
-         VjTA==
-X-Forwarded-Encrypted: i=1; AJvYcCW/7pUg9NNxrsRReC7ev0h5iGTcwgNlwjizDuk4t2luDvujtq7bl0+bvDBrSjGvTeKWM79EG8PDSRmlfzdC@vger.kernel.org
-X-Gm-Message-State: AOJu0YxikK7bCMEdn/Jat3nIA43lqKKdcn6xm0IUjAuGWZnSiz8dU/lg
-	//rRHmouLWhYMWj4yBMrT7dzusJkaTqo3frYoWw6rjNVDY6cY3iTPQ5va0WA0ZY=
-X-Gm-Gg: ASbGncuzlJFznDVdK8lSvFREg+wDIY605BvLNZbuRbhdmB4RXkPH/NkEEPvj/rZeyLQ
-	SVz99EHbxh7ZJS0UaCwXN8Y00xNIiwrqw8m8H5gToPJoVObhAZghZGuFhRK+Qgw2XMNs28/vpsZ
-	lZsoOv2aPiJFEgN6DhQxxPGwUqW9i+SOJLwPaGkG1jsf+XFi6ZckMhaHodT1/GBGh+Ly5sLsuLu
-	wPrd1mp4kxyCwpOokuGkaw8C7/gM6uwdEYC6KxBta7nz8rMqI+Cs7D5o7V8y9d/Uid6uNIZI//x
-	YUSQL36J7X0xfymiIEqFcWF0mGPj2BZOyRdb
-X-Google-Smtp-Source: AGHT+IHLyRi7Tw7aBKCX/6QAu/E4dS/9nNWC1QwOhKkG5IJ629IcuSzAa7yysmIgIEYb+glTHefHsA==
-X-Received: by 2002:a05:651c:545:b0:2ff:bb68:4233 with SMTP id 38308e7fff4ca-3046862f303mr47513551fa.33.1734954432965;
-        Mon, 23 Dec 2024 03:47:12 -0800 (PST)
+        bh=81jl/t+cSQKe+ACOcy5lOOjJcqHObJWTUdY8j6yLjT4=;
+        b=Dtyytg4RX/CFQ+Dj10chkgSNjLZ1jCRtDlUI+Ldy0mvUZCv3bcBRGnJz5ta/BXj5LY
+         H08QTgpaIosDLDJksh4H0aJ1x5iBR/hohEHmhTBz+05jwiN160M4gkYoVp/7EUxsKJK3
+         NTohZzDGoIc7lVF3dSICW6LiwKRZO9MoAPuqaEJCccBbDkwsypH6u0/vA9l1o7AEIHe3
+         5vr/DovsIM43LXGLXsp7Ke7agj+XKcRdqF0836IGxayQdAzz0JLku3t9KETzRYMSw+tw
+         ruzl0IXsoZOMWFuHoxI7bYWgpoLSsNWGl1obZgqXVe5nAwkAeJKXomCPUWtP1STWKGy+
+         V3Rw==
+X-Forwarded-Encrypted: i=1; AJvYcCUaoxmld3lTewR+8Au53zcPTdRsGbFEhQviRfLSte9PrNOQKXE61jtY8rTtIAK+knkUHy+UBJaHLLKYB+KN@vger.kernel.org
+X-Gm-Message-State: AOJu0Yyb/HFnDZ6Frkyhg08LC7ybC+fmKWhT2Bhzrmma5Gt/FUBO5Vc6
+	g0evkHgFJHSR8xPyfXHS6mSKbH28r7yr9xEE/gzXqlBlZ8je/8tFNGpAmTLomf4=
+X-Gm-Gg: ASbGnct5LocqYNopMKj+xAtIl17JlDx+erv19MMfT5lMEV5UaFFQXCXL3uU7Yh7w+iu
+	RhOzLF6oZw4itt7Ns0b+CpwYVDZa8etQXciQj7WYqH8OQ92iOeOSI2oUh0WhBn4nz70Yp6ukjSi
+	FmFwcWDZ6XfttbdQyOF6O6E31lyHLw/OccV5kD9bla8i4b2W3qZ5MnWubGYtTfxcXcRNR1MGzk9
+	lbR1eBow1wt9hAMCli3AD45B+9fuLVMbhxO0UzuZtntChX9O4/HNz31ou6dIXgC85JzAvj9HmTE
+	B5TZDBMcowtDtAwzRW11pu1gZLq/ByOZGoFg
+X-Google-Smtp-Source: AGHT+IHOzyQch22bff+q236NuBgW9EAlxYdWMJ7aLs2GLbKmy59AOI0ocsSlLrhAGSQfDmhwjLXuYA==
+X-Received: by 2002:a05:651c:4ca:b0:302:1c96:858f with SMTP id 38308e7fff4ca-304583710a9mr38211651fa.12.1734954591742;
+        Mon, 23 Dec 2024 03:49:51 -0800 (PST)
 Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-3045ad99d51sm14072201fa.32.2024.12.23.03.47.11
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-3045ad6c5a0sm13023751fa.22.2024.12.23.03.49.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 23 Dec 2024 03:47:12 -0800 (PST)
-Date: Mon, 23 Dec 2024 13:47:10 +0200
+        Mon, 23 Dec 2024 03:49:50 -0800 (PST)
+Date: Mon, 23 Dec 2024 13:49:49 +0200
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
-Cc: Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Bjorn Helgaas <bhelgaas@google.com>, Jingoo Han <jingoohan1@gmail.com>, 
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, Lorenzo Pieralisi <lpieralisi@kernel.org>, 
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org, konrad.dybcio@oss.qualcomm.com, 
-	quic_mrana@quicinc.com, quic_vbadigan@quicinc.com, 
-	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>
-Subject: Re: [PATCH v3 2/4] PCI: of: Add API to retrieve equalization presets
- from device tree
-Message-ID: <piccoomv7rx4dvvfdoesmxbzrdqz4ld6ii6neudsdf4hjj2yzm@2bcuacwa4feb>
-References: <20241223-preset_v2-v3-0-a339f475caf5@oss.qualcomm.com>
- <20241223-preset_v2-v3-2-a339f475caf5@oss.qualcomm.com>
+To: Renjiang Han <quic_renjiang@quicinc.com>
+Cc: Bjorn Andersson <andersson@kernel.org>, 
+	Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>, 
+	Stanimir Varbanov <stanimir.k.varbanov@gmail.com>, Vikash Garodia <quic_vgarodia@quicinc.com>, 
+	Bryan O'Donoghue <bryan.odonoghue@linaro.org>, Mauro Carvalho Chehab <mchehab@kernel.org>, 
+	linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-media@vger.kernel.org, Taniya Das <quic_tdas@quicinc.com>
+Subject: Re: [PATCH v2 1/2] clk: qcom: videocc: Use HW_CTRL_TRIGGER flag for
+ video GDSC's
+Message-ID: <tvfe4inkpz3zg7k3eo2nqhcujy5weozfroyf4cgftsyrgbutkm@olh7t3qsn4dd>
+References: <20241223-switch_gdsc_mode-v2-0-eb5c96aee662@quicinc.com>
+ <20241223-switch_gdsc_mode-v2-1-eb5c96aee662@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -95,146 +93,29 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20241223-preset_v2-v3-2-a339f475caf5@oss.qualcomm.com>
+In-Reply-To: <20241223-switch_gdsc_mode-v2-1-eb5c96aee662@quicinc.com>
 
-On Mon, Dec 23, 2024 at 12:21:15PM +0530, Krishna Chaitanya Chundru wrote:
-> PCIe equalization presets are predefined settings used to optimize
-> signal integrity by compensating for signal loss and distortion in
-> high-speed data transmission.
+On Mon, Dec 23, 2024 at 02:32:41PM +0530, Renjiang Han wrote:
+> From: Taniya Das <quic_tdas@quicinc.com>
 > 
-> As per PCIe spec 6.0.1 revision section 8.3.3.3 & 4.2.4 for data rates
-> of 8.0 GT/s, 16.0 GT/s, 32.0 GT/s, and 64.0 GT/s, there is a way to
-> configure lane equalization presets for each lane to enhance the PCIe
-> link reliability. Each preset value represents a different combination
-> of pre-shoot and de-emphasis values. For each data rate, different
-> registers are defined: for 8.0 GT/s, registers are defined in section
-> 7.7.3.4; for 16.0 GT/s, in section 7.7.5.9, etc. The 8.0 GT/s rate has
-> an extra receiver preset hint, requiring 16 bits per lane, while the
-> remaining data rates use 8 bits per lane.
+> The video driver will be using the newly introduced
+> dev_pm_genpd_set_hwmode() API to switch the video GDSC to HW and SW
+> control modes at runtime.
+> Hence use HW_CTRL_TRIGGER flag instead of HW_CTRL for video GDSC's for
+> Qualcomm SoC SC7180, SDM845, SM7150, SM8150 and SM8450.
 > 
-> Based on the number of lanes and the supported data rate, this function
-> reads the device tree property and stores in the presets structure.
-> 
-> Signed-off-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+> Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
+> Signed-off-by: Renjiang Han <quic_renjiang@quicinc.com>
 > ---
->  drivers/pci/of.c  | 45 +++++++++++++++++++++++++++++++++++++++++++++
->  drivers/pci/pci.h | 17 +++++++++++++++--
->  2 files changed, 60 insertions(+), 2 deletions(-)
+>  drivers/clk/qcom/videocc-sc7180.c | 2 +-
+>  drivers/clk/qcom/videocc-sdm845.c | 4 ++--
+>  drivers/clk/qcom/videocc-sm7150.c | 4 ++--
+>  drivers/clk/qcom/videocc-sm8150.c | 4 ++--
+>  drivers/clk/qcom/videocc-sm8450.c | 4 ++--
+>  5 files changed, 9 insertions(+), 9 deletions(-)
 > 
-> diff --git a/drivers/pci/of.c b/drivers/pci/of.c
-> index dacea3fc5128..99e0e7ae12e9 100644
-> --- a/drivers/pci/of.c
-> +++ b/drivers/pci/of.c
-> @@ -826,3 +826,48 @@ u32 of_pci_get_slot_power_limit(struct device_node *node,
->  	return slot_power_limit_mw;
->  }
->  EXPORT_SYMBOL_GPL(of_pci_get_slot_power_limit);
-> +
 
-kerneldoc? Define who should free the memory and how.
-
-> +int of_pci_get_equalization_presets(struct device *dev,
-> +				    struct pci_eq_presets *presets,
-> +				    int num_lanes)
-> +{
-> +	char name[20];
-> +	void **preset;
-> +	void *temp;
-> +	int ret;
-> +
-> +	if (of_property_present(dev->of_node, "eq-presets-8gts")) {
-> +		presets->eq_presets_8gts = devm_kzalloc(dev, sizeof(u16) * num_lanes, GFP_KERNEL);
-> +		if (!presets->eq_presets_8gts)
-> +			return -ENOMEM;
-> +
-> +		ret = of_property_read_u16_array(dev->of_node, "eq-presets-8gts",
-> +						 presets->eq_presets_8gts, num_lanes);
-> +		if (ret) {
-> +			dev_err(dev, "Error reading eq-presets-8gts %d\n", ret);
-> +			return ret;
-> +		}
-> +	}
-> +
-> +	for (int i = 1; i < sizeof(struct pci_eq_presets) / sizeof(void *); i++) {
-> +		snprintf(name, sizeof(name), "eq-presets-%dgts", 8 << i);
-> +		if (of_property_present(dev->of_node, name)) {
-> +			temp = devm_kzalloc(dev, sizeof(u8) * num_lanes, GFP_KERNEL);
-> +			if (!temp)
-> +				return -ENOMEM;
-> +
-> +			ret = of_property_read_u8_array(dev->of_node, name,
-> +							temp, num_lanes);
-> +			if (ret) {
-> +				dev_err(dev, "Error %s %d\n", name, ret);
-> +				return ret;
-> +			}
-> +
-> +			preset = (void **)((u8 *)presets + i * sizeof(void *));
-
-Ugh.
-
-> +			*preset = temp;
-> +		}
-> +	}
-> +
-> +	return 0;
-> +}
-> +EXPORT_SYMBOL_GPL(of_pci_get_equalization_presets);
-> diff --git a/drivers/pci/pci.h b/drivers/pci/pci.h
-> index 14d00ce45bfa..82362d58bedc 100644
-> --- a/drivers/pci/pci.h
-> +++ b/drivers/pci/pci.h
-> @@ -731,7 +731,12 @@ static inline u64 pci_rebar_size_to_bytes(int size)
->  }
->  
->  struct device_node;
-> -
-> +struct pci_eq_presets {
-> +	void *eq_presets_8gts;
-> +	void *eq_presets_16gts;
-> +	void *eq_presets_32gts;
-> +	void *eq_presets_64gts;
-
-Why are all of those void*? 8gts is u16*, all other are u8*.
-
-> +};
-
-Empty lines before and after the struct definition.
-
->  #ifdef CONFIG_OF
->  int of_pci_parse_bus_range(struct device_node *node, struct resource *res);
->  int of_get_pci_domain_nr(struct device_node *node);
-> @@ -746,7 +751,9 @@ void pci_set_bus_of_node(struct pci_bus *bus);
->  void pci_release_bus_of_node(struct pci_bus *bus);
->  
->  int devm_of_pci_bridge_init(struct device *dev, struct pci_host_bridge *bridge);
-> -
-> +int of_pci_get_equalization_presets(struct device *dev,
-> +				    struct pci_eq_presets *presets,
-> +				    int num_lanes);
-
-Keep the empty line.
-
->  #else
->  static inline int
->  of_pci_parse_bus_range(struct device_node *node, struct resource *res)
-> @@ -793,6 +800,12 @@ static inline int devm_of_pci_bridge_init(struct device *dev, struct pci_host_br
->  	return 0;
->  }
->  
-> +static inline int of_pci_get_equalization_presets(struct device *dev,
-> +						  struct pci_eq_presets *presets,
-> +						  int num_lanes)
-> +{
-> +	return 0;
-> +}
->  #endif /* CONFIG_OF */
->  
->  struct of_changeset;
-> 
-> -- 
-> 2.34.1
-> 
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
 -- 
 With best wishes
