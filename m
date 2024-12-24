@@ -1,474 +1,668 @@
-Return-Path: <linux-arm-msm+bounces-43192-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-43193-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6A51F9FB9FC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Dec 2024 07:54:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 287789FBA02
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Dec 2024 08:00:41 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D61F5164AC4
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Dec 2024 06:54:34 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 71B06164F5C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Dec 2024 07:00:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AD0AB183098;
-	Tue, 24 Dec 2024 06:54:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 22003161320;
+	Tue, 24 Dec 2024 07:00:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="b4D3nifP"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="p0fIGz6Q"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f42.google.com (mail-lf1-f42.google.com [209.85.167.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48DB817BB32
-	for <linux-arm-msm@vger.kernel.org>; Tue, 24 Dec 2024 06:54:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7E6440BF2;
+	Tue, 24 Dec 2024 07:00:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735023273; cv=none; b=LYSyRXwJurJd9RPhvmgyGbPq6s/+ZY9Xc9iOpGgQuayqWZRpx2ZXMJMuxKQzLgmdH9jtRbJzUmVtAIo7tt2KP2BaTSUYBKRFVM/jAONCMyW6vCGra9waSbyFPKoUCDwe7AL83Ubokmh3y3CyU7p1PnfATUXbnMHiV1bEMeegK/M=
+	t=1735023635; cv=none; b=U9SOxbOsBiD1x8LtWWqFrZI469nfLiYRJdAjSngBhU3I2BTFQ+X1As7p0428xnNfC+5hq1Qe1Lm5GBAXth6cEY2v+mVYDTyGvnhQfXR51UiUlCV4GColG7aDpUWPzI/blbRxLvuhNEmc/9bRuJsuA2OAL7zazDmJaKW13EO4Rdc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735023273; c=relaxed/simple;
-	bh=4DUMIWTcQDyWIbVXaeXDpEXf7v/bUzgqUFDdHOg5A0Q=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=pPoUBOh++OUihpcgkBqLhLVA9Q2IMKmW7RnzQqAIJf8ayL9DmaXq+c4Y5WhRMZgQN4aOSx6uRKVMz7GOL8cOv0QdAF4GAJrbKfoatrhK73n6KhcHBnjDmKMGcvZWbfbpQCpmS8gjMr7XqdZi97byLYuetN4G//f9GmJNFt38v+Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=b4D3nifP; arc=none smtp.client-ip=209.85.167.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f42.google.com with SMTP id 2adb3069b0e04-53e399e3310so5807916e87.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Dec 2024 22:54:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1735023269; x=1735628069; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=RAn3MjV4rabnamQM3Om5cfvaIbOj8lJLAJvI91e//wk=;
-        b=b4D3nifP4KWYZD/XkSEKDsc7OsUnwifKZoKyisN3VqBB1DB75enjuDrihA9gJAEOb+
-         tegQTzVb8OKEPllXnBEUur5K9QavHUwg+oIRsDW+75BsynXVsAuPoLHbw0p75wOmWykr
-         la2q/NqxdMvgaDg9ngn+azzLxcdnoQeoyC8ebH3OP2lGFHvIVCDKXKxfXLF1FggivGwn
-         aiOn32tFflSk+fWOTIhqpHgETNlOMwcpASextcew/3ZhXS3/BPcuSIhULwJ7D86NwsPs
-         hPpZ58EnCULvRogHG1QjE7T0Vx6ad8QM6tH0UrDmwhPUzI/nzS+erryIJ9EC6Dh8Cq6C
-         66cw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1735023269; x=1735628069;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=RAn3MjV4rabnamQM3Om5cfvaIbOj8lJLAJvI91e//wk=;
-        b=uJQtyC7CpSm1w5An65gd58EsbeK/mKXYIwPAB4KACV7MnSIMyTwn3jiTmwicCl5nxG
-         39z1YIbMruVMLMu3GCqSiUOeBg4UOIjsgcVwRPsJ0IhqNSOzQTRE1fc6ZlCYKzCrSD2y
-         Js2dRgWg9YX0j8AmZROj4PdElRtoLib8XNg1wk3tuLoZ52L5zS/GnhUztXLS1/1n8yMR
-         gt4b8ZETlwaYwI6mZYO2ojcjlzyiZkamMDk62t+IcnSbHF+81FqMwSi9S2C5hiH7D1Qz
-         OkCIa6phJfy+2jpiV20f67Cu/EIXNXloL0odMjBsQJDQWoU9RwcTsyRkg6BXrHwmkkYK
-         DMQg==
-X-Forwarded-Encrypted: i=1; AJvYcCULqxHRAAF3/2JSEJAkcgMv2RUUQAJUeWQydIebdd85Qy7yRYvoyT916e5GNZ+KowcfN6ANMQPnlTF3+tX7@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy+04mXTWTjQ4sur60WRkWWnjfiC2V1QN9wZu5hfCZGPjhwgfek
-	LSXupH9YwOSF8g8D0DxwUhqe4PtaeORUwh8xWT9e2viQZNvT8lD08RbG6AT/Xog=
-X-Gm-Gg: ASbGncsv0W2KbhfFtvTJZTWb9OIsh6fC+Kb8G8NHM+gM08M+40HDoehhbU6sVrW0xAj
-	+EMFMlKNBPUoXv1yglP+Fs5UcLLGhI9WrfYZDNZJ8F/kuoOxRKkdFxtvoPgVUx3SjnboH+MKYOD
-	uV2My0MVyF64LM6cqsAUQGGlSgW/DzCesn4pLwoiKa/x6y20xASuj3a+19GGTChZeIneWv+i+is
-	I2Dm1CN5eDvQROav3gZN/rQVhWifYL980UAPLQaNm7tLxTonQdF2TEv3+6Dj8YqZjEpF1kzhq7+
-	ADpLncbhX0w8ju791v779ACDWURerOuqu16w
-X-Google-Smtp-Source: AGHT+IFZ9FYmkPeWqRN0z9ijU4bPknptgOJQz35q+Y9vZlQwpafVypdbiy89iGCV3AEf9UuusS4AGg==
-X-Received: by 2002:a05:6512:4482:b0:542:2999:399d with SMTP id 2adb3069b0e04-542299939bbmr4076054e87.40.1735023269333;
-        Mon, 23 Dec 2024 22:54:29 -0800 (PST)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-542235ffe72sm1526883e87.77.2024.12.23.22.54.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 23 Dec 2024 22:54:28 -0800 (PST)
-Date: Tue, 24 Dec 2024 08:54:25 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Krishna Chaitanya Chundru <quic_krichai@quicinc.com>
-Cc: Rob Herring <robh@kernel.org>, andersson@kernel.org, 
-	Bjorn Helgaas <bhelgaas@google.com>, Lorenzo Pieralisi <lpieralisi@kernel.org>, 
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>, Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, cros-qcom-dts-watchers@chromium.org, 
-	Jingoo Han <jingoohan1@gmail.com>, Bartosz Golaszewski <brgl@bgdev.pl>, quic_vbadigan@quicinc.com, 
-	linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3 1/6] dt-bindings: PCI: Add binding for qps615
-Message-ID: <srts5hm5kvbu2k6fxtejuei7eo2fjvvhpxho2giskto3w3nvoh@iymonedukgrs>
-References: <20241112-qps615_pwr-v3-0-29a1e98aa2b0@quicinc.com>
- <20241112-qps615_pwr-v3-1-29a1e98aa2b0@quicinc.com>
- <20241115161848.GA2961450-robh@kernel.org>
- <74eaef67-18f2-c2a1-1b9c-ac97cefecc54@quicinc.com>
- <kssmfrzgo7ljxveys4rh5wqyaottufhjsdjnro7k7h7e6fdgcl@i7tdpohtny2x>
- <9bcbbd2b-7fe9-d0ad-656a-f759b14a32dc@quicinc.com>
+	s=arc-20240116; t=1735023635; c=relaxed/simple;
+	bh=R1qJTlSiUr8Aba/9KYFGPfflVS1onOEAP3bsTVr7Qpk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=SQ9cfqlRunHNonlkZbY0b520hzm8U8fFsrjgdR/YIxAI/zYkKK5H8zpAtJuyqFAqZ4w7ZrG9T/t803Yr5iOMu4yci+uthoTZJHrGuMR3tOu/XYRUuiMGR+RyUjqgCeTu9EUaW1yD00wHU9wLRwLNAOBNHIWSNDx58s1G0DT091Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=p0fIGz6Q; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BO5latV006823;
+	Tue, 24 Dec 2024 07:00:09 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	4keVd3kAl65B62qnmduid4meJPbrIuIDzE86UFOq4/M=; b=p0fIGz6QJewQh43m
+	WfgyZlbvWrlUNQ6dwRad3N98G2ewQ1+4gmgSzCgFVpNxBbAQ04G7HllvWiYZOou0
+	oxeUl1NhNM69FHnLHTMIMmKwZsrkpHA3bIPWBqX+0RUVjywU6QqyLKzJrN5I8Avu
+	5f7G9JTezAyhHiUarwa250z/o/Pbh76iX7OErxJVd7FkJq8CaVgXey/p5w6uPtwL
+	sq324pleh+XKAGozOqIoexZ+66xYJUTH6gkU3uHpnRiiPjSL996/aGtMkasXBMSM
+	ePf383KY2sd6Du/t1Ji4ZtHE9rUb9VZwpPnsLdSRbRkGjYezv3IORcfyh37fQjiB
+	9GUPYw==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43qq4b06q4-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 24 Dec 2024 07:00:09 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4BO708Tv024546
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 24 Dec 2024 07:00:08 GMT
+Received: from [10.152.195.140] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 23 Dec
+ 2024 23:00:00 -0800
+Message-ID: <d278ad9a-5d23-4cb8-9de7-5a51d838ba5d@quicinc.com>
+Date: Tue, 24 Dec 2024 12:29:56 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <9bcbbd2b-7fe9-d0ad-656a-f759b14a32dc@quicinc.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH net-next v3 3/5] net: pcs: qcom-ipq9574: Add PCS
+ instantiation and phylink operations
+To: Lei Wei <quic_leiwei@quicinc.com>, Andrew Lunn <andrew+netdev@lunn.ch>,
+        "David S. Miller" <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>,
+        Paolo Abeni <pabeni@redhat.com>, "Rob
+ Herring" <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        "Conor
+ Dooley" <conor+dt@kernel.org>, Andrew Lunn <andrew@lunn.ch>,
+        Heiner Kallweit
+	<hkallweit1@gmail.com>,
+        Russell King <linux@armlinux.org.uk>
+CC: <netdev@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <quic_kkumarcs@quicinc.com>, <quic_suruchia@quicinc.com>,
+        <quic_pavir@quicinc.com>, <quic_linchen@quicinc.com>,
+        <quic_luoj@quicinc.com>, <srinivas.kandagatla@linaro.org>,
+        <bartosz.golaszewski@linaro.org>, <vsmuthu@qti.qualcomm.com>,
+        <john@phrozen.org>
+References: <20241216-ipq_pcs_6-13_rc1-v3-0-3abefda0fc48@quicinc.com>
+ <20241216-ipq_pcs_6-13_rc1-v3-3-3abefda0fc48@quicinc.com>
+Content-Language: en-US
+From: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
+In-Reply-To: <20241216-ipq_pcs_6-13_rc1-v3-3-3abefda0fc48@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: -fCPTkMNCyGcBwLZ7Ee5pwyfEi1L6E9O
+X-Proofpoint-GUID: -fCPTkMNCyGcBwLZ7Ee5pwyfEi1L6E9O
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 adultscore=0
+ malwarescore=0 lowpriorityscore=0 bulkscore=0 phishscore=0 mlxscore=0
+ suspectscore=0 priorityscore=1501 impostorscore=0 mlxlogscore=999
+ clxscore=1011 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2412240056
 
-On Tue, Dec 24, 2024 at 11:34:10AM +0530, Krishna Chaitanya Chundru wrote:
+
+
+On 12/16/2024 7:10 PM, Lei Wei wrote:
+> This patch adds the following PCS functionality for the PCS driver
+> for IPQ9574 SoC:
 > 
+> a.) Parses PCS MII DT nodes and instantiate each MII PCS instance.
+> b.) Exports PCS instance get and put APIs. The network driver calls
+> the PCS get API to get and associate the PCS instance with the port
+> MAC.
+> c.) PCS phylink operations for SGMII/QSGMII interface modes.
 > 
-> On 12/24/2024 12:27 AM, Dmitry Baryshkov wrote:
-> > On Sun, Nov 24, 2024 at 07:02:48AM +0530, Krishna Chaitanya Chundru wrote:
-> > > 
-> > > 
-> > > On 11/15/2024 9:48 PM, Rob Herring wrote:
-> > > > On Tue, Nov 12, 2024 at 08:31:33PM +0530, Krishna chaitanya chundru wrote:
-> > > > > Add binding describing the Qualcomm PCIe switch, QPS615,
-> > > > > which provides Ethernet MAC integrated to the 3rd downstream port
-> > > > > and two downstream PCIe ports.
-> > > > > 
-> > > > > Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
-> > > > > ---
-> > > > >    .../devicetree/bindings/pci/qcom,qps615.yaml       | 205 +++++++++++++++++++++
-> > > > >    1 file changed, 205 insertions(+)
-> > > > > 
-> > > > > diff --git a/Documentation/devicetree/bindings/pci/qcom,qps615.yaml b/Documentation/devicetree/bindings/pci/qcom,qps615.yaml
-> > > > > new file mode 100644
-> > > > > index 000000000000..e6a63a0bb0f3
-> > > > > --- /dev/null
-> > > > > +++ b/Documentation/devicetree/bindings/pci/qcom,qps615.yaml
-> > > > > @@ -0,0 +1,205 @@
-> > > > > +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> > > > > +%YAML 1.2
-> > > > > +---
-> > > > > +$id: http://devicetree.org/schemas/pci/qcom,qps615.yaml#
-> > > > > +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> > > > > +
-> > > > > +title: Qualcomm QPS615 PCIe switch
-> > > > > +
-> > > > > +maintainers:
-> > > > > +  - Krishna chaitanya chundru <quic_krichai@quicinc.com>
-> > > > > +
-> > > > > +description: |
-> > > > > +  Qualcomm QPS615 PCIe switch has one upstream and three downstream
-> > > > > +  ports. The 3rd downstream port has integrated endpoint device of
-> > > > > +  Ethernet MAC. Other two downstream ports are supposed to connect
-> > > > > +  to external device.
-> > > > > +
-> > > > > +  The QPS615 PCIe switch can be configured through I2C interface before
-> > > > > +  PCIe link is established to change FTS, ASPM related entry delays,
-> > > > > +  tx amplitude etc for better power efficiency and functionality.
-> > > > > +
-> > > > > +properties:
-> > > > > +  compatible:
-> > > > > +    enum:
-> > > > > +      - pci1179,0623
-> > > > > +
-> > > > > +  reg:
-> > > > > +    maxItems: 1
-> > > > > +
-> > > > > +  i2c-parent:
-> > > > > +    $ref: /schemas/types.yaml#/definitions/phandle-array
-> > > > > +    description: |
-> > > > 
-> > > > Don't need '|' if no formatting to preserve.
-> > > > 
-> > > ack
-> > > > > +      A phandle to the parent I2C node and the slave address of the device
-> > > > > +      used to do configure qps615 to change FTS, tx amplitude etc.
-> > > > > +    items:
-> > > > > +      - description: Phandle to the I2C controller node
-> > > > > +      - description: I2C slave address
-> > > > > +
-> > > > > +  vdd18-supply: true
-> > > > > +
-> > > > > +  vdd09-supply: true
-> > > > > +
-> > > > > +  vddc-supply: true
-> > > > > +
-> > > > > +  vddio1-supply: true
-> > > > > +
-> > > > > +  vddio2-supply: true
-> > > > > +
-> > > > > +  vddio18-supply: true
-> > > > > +
-> > > > > +  reset-gpios:
-> > > > > +    maxItems: 1
-> > > > > +    description:
-> > > > > +      GPIO controlling the RESX# pin.
-> > > > 
-> > > > Is the PERST# or something else?
-> > > > 
-> > > it is not PERST GPIO, it is similar to PERST in terms
-> > > of functionality which brings switch out from reset.
-> > 
-> > Do you have an actual PERST# on upstream facing port? Is it a separate
-> > wire? Judging by the RB3 Gen2 this line is being used as PERST#
-> > 
-> we had PERST# as a separate line. It has two inputs one is PERST# &
-> other one is RESX# gpio functionality wise both are similar.
-
-I don't think I follow. Are you describing the QPS615 side or the SoC side?
-
-> > > > > +
-> > > > > +  qps615,axi-clk-freq-hz:
-> > > > 
-> > > > qps615 is not a vendor prefix.
-> > > > 
-> > > > > +    description:
-> > > > > +      AXI clock rate which is internal bus of the switch
-> > > > > +      The switch only runs in two frequencies i.e 250MHz and 125MHz.
-> > > > > +    enum: [125000000, 250000000]
-> > > > > +
-> > > > > +allOf:
-> > > > > +  - $ref: "#/$defs/qps615-node"
-> > > > > +
-> > > > > +patternProperties:
-> > > > > +  "@1?[0-9a-f](,[0-7])?$":
-> > > > 
-> > > > You have 3 ports. So isn't this fixed and limited to 0-2?
-> > > > 
-> > > sure I will change it to below as suggested
-> > > "@1?[0-3](,[0-1])?$"
-> > 
-> > Why do you still need '1?' ?
-> > 
-> we want to represent integrated ethernet MAC also here and to represent it
-> we need '1' as it is multi function device. I will update the
-> description to reflect the same.
-
-Note, I has asked about the '1?' part, not about the [0-1].
-
-However as you've mentioned it, you are describing the first level
-subnodes. Per your example, these subnodes are "pcie@1,0", "pcie@2,0"
-and "pcie@3,0". Thus this patternProperties should have the regexp of
-"^pcie@[1-3],0$". The multifunction devices for the ethernet node are
-hidden under the pcie@3,0 and as such they are not being matched against
-this regexp.
-
-> > > > > +    description: child nodes describing the internal downstream ports
-> > > > > +      the qps615 switch.
-> > > > 
-> > > > Please be consistent with starting after the ':' or on the next line.
-> > > > 
-> > > > And start with capital C.
-> > > > 
-> > > > 
-> > > ack
-> > > 
-> > > > > +    type: object
-> > > > > +    $ref: "#/$defs/qps615-node"
-> > > > > +    unevaluatedProperties: false
-> > > > > +
-> > > > > +$defs:
-> > > > > +  qps615-node:
-> > > > > +    type: object
-> > > > > +
-> > > > > +    properties:
-> > > > > +      qcom,l0s-entry-delay-ns:
-> > > > > +        description: Aspm l0s entry delay.
-> > > > > +
-> > > > > +      qcom,l1-entry-delay-ns:
-> > > > > +        description: Aspm l1 entry delay.
-> > > > 
-> > > > These should probably be common being standard PCIe things. Though, why
-> > > > are they needed? I'm sure the timing is defined by the PCIe spec, so
-> > > > they are not compliant?
-> > > > 
-> > > Usually the firmware in the endpoints/switches should do this these
-> > > configurations. But the qps615 PCIe switch doesn't have any firmware
-> > > running to configure these. So the hardware exposes i2c interface to
-> > > configure these before link training.
-> > 
-> > If they are following the standard, why do you need to have them in the
-> > DT? Can you hardcode thos evalues in the driver?
-> > 
-> These values can be changed from platform to platform based upon the
-> different power goals and latency requirements so we can't have hard coded
-> values.
+> Signed-off-by: Lei Wei <quic_leiwei@quicinc.com>
+> ---
+>  drivers/net/pcs/pcs-qcom-ipq9574.c   | 463 +++++++++++++++++++++++++++++++++++
+>  include/linux/pcs/pcs-qcom-ipq9574.h |  16 ++
+>  2 files changed, 479 insertions(+)
 > 
-> And even DWC controllers also provide provision to change these values
-> currently we are not using them. As bjorn suggested if we move these to
-> common pcie bindings these can be used in future by controller drivers also.
+> diff --git a/drivers/net/pcs/pcs-qcom-ipq9574.c b/drivers/net/pcs/pcs-qcom-ipq9574.c
+> index ea90c1902b61..54acb1c8c67f 100644
+> --- a/drivers/net/pcs/pcs-qcom-ipq9574.c
+> +++ b/drivers/net/pcs/pcs-qcom-ipq9574.c
+> @@ -6,12 +6,46 @@
+>  #include <linux/clk.h>
+>  #include <linux/clk-provider.h>
+>  #include <linux/device.h>
+> +#include <linux/of.h>
+> +#include <linux/of_platform.h>
+> +#include <linux/pcs/pcs-qcom-ipq9574.h>
+>  #include <linux/phy.h>
+> +#include <linux/phylink.h>
+>  #include <linux/platform_device.h>
+>  #include <linux/regmap.h>
+>  
+>  #include <dt-bindings/net/qcom,ipq9574-pcs.h>
+>  
+> +/* Maximum number of MIIs per PCS instance. There are 5 MIIs for PSGMII. */
+> +#define PCS_MAX_MII_NRS			5
+> +
+> +#define PCS_CALIBRATION			0x1e0
+> +#define PCS_CALIBRATION_DONE		BIT(7)
+> +
+> +#define PCS_MODE_CTRL			0x46c
+> +#define PCS_MODE_SEL_MASK		GENMASK(12, 8)
+> +#define PCS_MODE_SGMII			FIELD_PREP(PCS_MODE_SEL_MASK, 0x4)
+> +#define PCS_MODE_QSGMII			FIELD_PREP(PCS_MODE_SEL_MASK, 0x1)
+> +
+> +#define PCS_MII_CTRL(x)			(0x480 + 0x18 * (x))
+> +#define PCS_MII_ADPT_RESET		BIT(11)
+> +#define PCS_MII_FORCE_MODE		BIT(3)
+> +#define PCS_MII_SPEED_MASK		GENMASK(2, 1)
+> +#define PCS_MII_SPEED_1000		FIELD_PREP(PCS_MII_SPEED_MASK, 0x2)
+> +#define PCS_MII_SPEED_100		FIELD_PREP(PCS_MII_SPEED_MASK, 0x1)
+> +#define PCS_MII_SPEED_10		FIELD_PREP(PCS_MII_SPEED_MASK, 0x0)
+> +
+> +#define PCS_MII_STS(x)			(0x488 + 0x18 * (x))
+> +#define PCS_MII_LINK_STS		BIT(7)
+> +#define PCS_MII_STS_DUPLEX_FULL		BIT(6)
+> +#define PCS_MII_STS_SPEED_MASK		GENMASK(5, 4)
+> +#define PCS_MII_STS_SPEED_10		0
+> +#define PCS_MII_STS_SPEED_100		1
+> +#define PCS_MII_STS_SPEED_1000		2
+> +
+> +#define PCS_PLL_RESET			0x780
+> +#define PCS_ANA_SW_RESET		BIT(6)
+> +
+>  #define XPCS_INDIRECT_ADDR		0x8000
+>  #define XPCS_INDIRECT_AHB_ADDR		0x83fc
+>  #define XPCS_INDIRECT_ADDR_H		GENMASK(20, 8)
+> @@ -20,6 +54,18 @@
+>  					 FIELD_PREP(GENMASK(9, 2), \
+>  					 FIELD_GET(XPCS_INDIRECT_ADDR_L, reg)))
+>  
+> +/* Per PCS MII private data */
+> +struct ipq_pcs_mii {
+> +	struct ipq_pcs *qpcs;
+> +	struct phylink_pcs pcs;
+> +	int index;
+> +
+> +	/* RX clock from NSSCC to PCS MII */
+> +	struct clk *rx_clk;
+> +	/* TX clock from NSSCC to PCS MII */
+> +	struct clk *tx_clk;
+> +};
+> +
+>  /* PCS private data */
+>  struct ipq_pcs {
+>  	struct device *dev;
+> @@ -27,12 +73,423 @@ struct ipq_pcs {
+>  	struct regmap *regmap;
+>  	phy_interface_t interface;
+>  
+> +	/* Lock to protect PCS configurations shared by multiple MII ports */
+> +	struct mutex config_lock;
+> +
+>  	/* RX clock supplied to NSSCC */
+>  	struct clk_hw rx_hw;
+>  	/* TX clock supplied to NSSCC */
+>  	struct clk_hw tx_hw;
+> +
+> +	struct ipq_pcs_mii *qpcs_mii[PCS_MAX_MII_NRS];
+>  };
+>  
+> +#define phylink_pcs_to_qpcs_mii(_pcs)	\
+> +	container_of(_pcs, struct ipq_pcs_mii, pcs)
+> +
+> +static void ipq_pcs_get_state_sgmii(struct ipq_pcs *qpcs,
+> +				    int index,
+> +				    struct phylink_link_state *state)
+> +{
+> +	unsigned int val;
+> +	int ret;
+> +
+> +	ret = regmap_read(qpcs->regmap, PCS_MII_STS(index), &val);
+> +	if (ret) {
+> +		state->link = 0;
+> +		return;
+> +	}
+> +
+> +	state->link = !!(val & PCS_MII_LINK_STS);
+> +
+> +	if (!state->link)
+> +		return;
+> +
+> +	switch (FIELD_GET(PCS_MII_STS_SPEED_MASK, val)) {
+> +	case PCS_MII_STS_SPEED_1000:
+> +		state->speed = SPEED_1000;
+> +		break;
+> +	case PCS_MII_STS_SPEED_100:
+> +		state->speed = SPEED_100;
+> +		break;
+> +	case PCS_MII_STS_SPEED_10:
+> +		state->speed = SPEED_10;
+> +		break;
+> +	default:
+> +		state->link = false;
+> +		return;
+> +	}
+> +
+> +	if (val & PCS_MII_STS_DUPLEX_FULL)
+> +		state->duplex = DUPLEX_FULL;
+> +	else
+> +		state->duplex = DUPLEX_HALF;
+> +}
+> +
+> +static int ipq_pcs_config_mode(struct ipq_pcs *qpcs,
+> +			       phy_interface_t interface)
+> +{
+> +	unsigned int val;
+> +	int ret;
+> +
+> +	/* Configure PCS interface mode */
+> +	switch (interface) {
+> +	case PHY_INTERFACE_MODE_SGMII:
+> +		val = PCS_MODE_SGMII;
+> +		break;
+> +	case PHY_INTERFACE_MODE_QSGMII:
+> +		val = PCS_MODE_QSGMII;
+> +		break;
+> +	default:
+> +		return -EOPNOTSUPP;
+> +	}
+> +
+> +	ret = regmap_update_bits(qpcs->regmap, PCS_MODE_CTRL,
+> +				 PCS_MODE_SEL_MASK, val);
+> +	if (ret)
+> +		return ret;
+> +
+> +	/* PCS PLL reset */
+> +	ret = regmap_clear_bits(qpcs->regmap, PCS_PLL_RESET, PCS_ANA_SW_RESET);
+> +	if (ret)
+> +		return ret;
+> +
+> +	fsleep(1000);
+> +	ret = regmap_set_bits(qpcs->regmap, PCS_PLL_RESET, PCS_ANA_SW_RESET);
+> +	if (ret)
+> +		return ret;
+> +
+> +	/* Wait for calibration completion */
+> +	ret = regmap_read_poll_timeout(qpcs->regmap, PCS_CALIBRATION,
+> +				       val, val & PCS_CALIBRATION_DONE,
+> +				       1000, 100000);
+> +	if (ret) {
+> +		dev_err(qpcs->dev, "PCS calibration timed-out\n");
+> +		return ret;
+> +	}
+> +
+> +	qpcs->interface = interface;
+> +
+> +	return 0;
+> +}
+> +
+> +static int ipq_pcs_config_sgmii(struct ipq_pcs *qpcs,
+> +				int index,
+> +				unsigned int neg_mode,
+> +				phy_interface_t interface)
+> +{
+> +	int ret;
+> +
+> +	/* Access to PCS registers such as PCS_MODE_CTRL which are
+> +	 * common to all MIIs, is lock protected and configured
+> +	 * only once.
+> +	 */
+> +	mutex_lock(&qpcs->config_lock);
+> +
+> +	if (qpcs->interface != interface) {
+> +		ret = ipq_pcs_config_mode(qpcs, interface);
+> +		if (ret) {
+> +			mutex_unlock(&qpcs->config_lock);
+> +			return ret;
+> +		}
+> +	}
+> +
+> +	mutex_unlock(&qpcs->config_lock);
+> +
+> +	/* Nothing to do here as in-band autoneg mode is enabled
+> +	 * by default for each PCS MII port.
+> +	 */
+> +	if (neg_mode == PHYLINK_PCS_NEG_INBAND_ENABLED)
+> +		return 0;
+> +
+> +	/* Set force speed mode */
+> +	return regmap_set_bits(qpcs->regmap,
+> +			       PCS_MII_CTRL(index), PCS_MII_FORCE_MODE);
+> +}
+> +
+> +static int ipq_pcs_link_up_config_sgmii(struct ipq_pcs *qpcs,
+> +					int index,
+> +					unsigned int neg_mode,
+> +					int speed)
+> +{
+> +	unsigned int val;
+> +	int ret;
+> +
+> +	/* PCS speed need not be configured if in-band autoneg is enabled */
+> +	if (neg_mode != PHYLINK_PCS_NEG_INBAND_ENABLED) {
+> +		/* PCS speed set for force mode */
+> +		switch (speed) {
+> +		case SPEED_1000:
+> +			val = PCS_MII_SPEED_1000;
+> +			break;
+> +		case SPEED_100:
+> +			val = PCS_MII_SPEED_100;
+> +			break;
+> +		case SPEED_10:
+> +			val = PCS_MII_SPEED_10;
+> +			break;
+> +		default:
+> +			dev_err(qpcs->dev, "Invalid SGMII speed %d\n", speed);
+> +			return -EINVAL;
+> +		}
+> +
+> +		ret = regmap_update_bits(qpcs->regmap, PCS_MII_CTRL(index),
+> +					 PCS_MII_SPEED_MASK, val);
+> +		if (ret)
+> +			return ret;
+> +	}
+> +
+> +	/* PCS adapter reset */
+> +	ret = regmap_clear_bits(qpcs->regmap,
+> +				PCS_MII_CTRL(index), PCS_MII_ADPT_RESET);
+> +	if (ret)
+> +		return ret;
+> +
+> +	return regmap_set_bits(qpcs->regmap,
+> +			       PCS_MII_CTRL(index), PCS_MII_ADPT_RESET);
+> +}
+> +
+> +static int ipq_pcs_validate(struct phylink_pcs *pcs, unsigned long *supported,
+> +			    const struct phylink_link_state *state)
+> +{
+> +	switch (state->interface) {
+> +	case PHY_INTERFACE_MODE_SGMII:
+> +	case PHY_INTERFACE_MODE_QSGMII:
+> +		return 0;
+> +	default:
+> +		return -EINVAL;
+> +	}
+> +}
+> +
+> +static int ipq_pcs_enable(struct phylink_pcs *pcs)
+> +{
+> +	struct ipq_pcs_mii *qpcs_mii = phylink_pcs_to_qpcs_mii(pcs);
+> +	struct ipq_pcs *qpcs = qpcs_mii->qpcs;
+> +	int index = qpcs_mii->index;
+> +	int ret;
+> +
+> +	ret = clk_prepare_enable(qpcs_mii->rx_clk);
+> +	if (ret) {
+> +		dev_err(qpcs->dev, "Failed to enable MII %d RX clock\n", index);
+> +		return ret;
+> +	}
+> +
+> +	ret = clk_prepare_enable(qpcs_mii->tx_clk);
+> +	if (ret) {
+> +		dev_err(qpcs->dev, "Failed to enable MII %d TX clock\n", index);
+> +		return ret;
+> +	}
+> +
+> +	return 0;
+> +}
+> +
+> +static void ipq_pcs_disable(struct phylink_pcs *pcs)
+> +{
+> +	struct ipq_pcs_mii *qpcs_mii = phylink_pcs_to_qpcs_mii(pcs);
+> +
+> +	clk_disable_unprepare(qpcs_mii->rx_clk);
+> +	clk_disable_unprepare(qpcs_mii->tx_clk);
+> +}
+> +
+> +static void ipq_pcs_get_state(struct phylink_pcs *pcs,
+> +			      struct phylink_link_state *state)
+> +{
+> +	struct ipq_pcs_mii *qpcs_mii = phylink_pcs_to_qpcs_mii(pcs);
+> +	struct ipq_pcs *qpcs = qpcs_mii->qpcs;
+> +	int index = qpcs_mii->index;
+> +
+> +	switch (state->interface) {
+> +	case PHY_INTERFACE_MODE_SGMII:
+> +	case PHY_INTERFACE_MODE_QSGMII:
+> +		ipq_pcs_get_state_sgmii(qpcs, index, state);
+> +		break;
+> +	default:
+> +		break;
+> +	}
+> +
+> +	dev_dbg_ratelimited(qpcs->dev,
+> +			    "mode=%s/%s/%s link=%u\n",
+> +			    phy_modes(state->interface),
+> +			    phy_speed_to_str(state->speed),
+> +			    phy_duplex_to_str(state->duplex),
+> +			    state->link);
+> +}
+> +
+> +static int ipq_pcs_config(struct phylink_pcs *pcs,
+> +			  unsigned int neg_mode,
+> +			  phy_interface_t interface,
+> +			  const unsigned long *advertising,
+> +			  bool permit)
+> +{
+> +	struct ipq_pcs_mii *qpcs_mii = phylink_pcs_to_qpcs_mii(pcs);
+> +	struct ipq_pcs *qpcs = qpcs_mii->qpcs;
+> +	int index = qpcs_mii->index;
+> +
+> +	switch (interface) {
+> +	case PHY_INTERFACE_MODE_SGMII:
+> +	case PHY_INTERFACE_MODE_QSGMII:
+> +		return ipq_pcs_config_sgmii(qpcs, index, neg_mode, interface);
+> +	default:
+> +		return -EOPNOTSUPP;
+> +	};
+> +}
+> +
+> +static void ipq_pcs_link_up(struct phylink_pcs *pcs,
+> +			    unsigned int neg_mode,
+> +			    phy_interface_t interface,
+> +			    int speed, int duplex)
+> +{
+> +	struct ipq_pcs_mii *qpcs_mii = phylink_pcs_to_qpcs_mii(pcs);
+> +	struct ipq_pcs *qpcs = qpcs_mii->qpcs;
+> +	int index = qpcs_mii->index;
+> +	int ret;
+> +
+> +	switch (interface) {
+> +	case PHY_INTERFACE_MODE_SGMII:
+> +	case PHY_INTERFACE_MODE_QSGMII:
+> +		ret = ipq_pcs_link_up_config_sgmii(qpcs, index,
+> +						   neg_mode, speed);
+> +		break;
+> +	default:
+> +		return;
+> +	}
+> +
+> +	if (ret)
+> +		dev_err(qpcs->dev, "PCS link up fail for interface %s\n",
+> +			phy_modes(interface));
+> +}
+> +
+> +static const struct phylink_pcs_ops ipq_pcs_phylink_ops = {
+> +	.pcs_validate = ipq_pcs_validate,
+> +	.pcs_enable = ipq_pcs_enable,
+> +	.pcs_disable = ipq_pcs_disable,
+> +	.pcs_get_state = ipq_pcs_get_state,
+> +	.pcs_config = ipq_pcs_config,
+> +	.pcs_link_up = ipq_pcs_link_up,
+> +};
+> +
+> +/**
+> + * ipq_pcs_get() - Get the IPQ PCS MII instance
+> + * @np: Device tree node to the PCS MII
+> + *
+> + * Description: Get the phylink PCS instance for the given PCS MII node @np.
+> + * This instance is associated with the specific MII of the PCS and the
+> + * corresponding Ethernet netdevice.
+> + *
+> + * Return: A pointer to the phylink PCS instance or an error-pointer value.
+> + */
+> +struct phylink_pcs *ipq_pcs_get(struct device_node *np)
+> +{
+> +	struct platform_device *pdev;
+> +	struct ipq_pcs_mii *qpcs_mii;
+> +	struct ipq_pcs *qpcs;
+> +	u32 index;
+> +
+> +	if (of_property_read_u32(np, "reg", &index))
+> +		return ERR_PTR(-EINVAL);
+> +
+> +	if (index >= PCS_MAX_MII_NRS)
+> +		return ERR_PTR(-EINVAL);
+> +
+> +	/* Get the parent device */
+> +	pdev = of_find_device_by_node(np->parent);
+> +	if (!pdev)
+> +		return ERR_PTR(-ENODEV);
+> +
+> +	qpcs = platform_get_drvdata(pdev);
+> +	if (!qpcs) {
+> +		put_device(&pdev->dev);
+> +
+> +		/* If probe is not yet completed, return DEFER to
+> +		 * the dependent driver.
+> +		 */
+> +		return ERR_PTR(-EPROBE_DEFER);
+> +	}
+> +
+> +	qpcs_mii = qpcs->qpcs_mii[index];
+> +	if (!qpcs_mii) {
+> +		put_device(&pdev->dev);
+> +		return ERR_PTR(-ENOENT);
+> +	}
+> +
+> +	return &qpcs_mii->pcs;
+> +}
+> +EXPORT_SYMBOL(ipq_pcs_get);
+> +
+> +/**
+> + * ipq_pcs_put() - Release the IPQ PCS MII instance
+> + * @pcs: PCS instance
+> + *
+> + * Description: Release a phylink PCS instance.
+> + */
+> +void ipq_pcs_put(struct phylink_pcs *pcs)
+> +{
+> +	struct ipq_pcs_mii *qpcs_mii = phylink_pcs_to_qpcs_mii(pcs);
+> +
+> +	/* Put reference taken by of_find_device_by_node() in
+> +	 * ipq_pcs_get().
+> +	 */
+> +	put_device(qpcs_mii->qpcs->dev);
+> +}
+> +EXPORT_SYMBOL(ipq_pcs_put);
+> +
+> +/* Parse the PCS MII DT nodes which are child nodes of the PCS node,
+> + * and instantiate each MII PCS instance.
+> + */
+> +static int ipq_pcs_create_miis(struct ipq_pcs *qpcs)
+> +{
+> +	struct device *dev = qpcs->dev;
+> +	struct ipq_pcs_mii *qpcs_mii;
+> +	struct device_node *mii_np;
+> +	u32 index;
+> +	int ret;
+> +
+> +	for_each_available_child_of_node(dev->of_node, mii_np) {
+> +		ret = of_property_read_u32(mii_np, "reg", &index);
+> +		if (ret) {
+> +			dev_err(dev, "Failed to read MII index\n");
+> +			of_node_put(mii_np);
 
-Ack
+Assume, the second child node failed here.
+Returning without calling the first child node of_node_put().
 
-> > > > > +
-> > > > > +      qcom,tx-amplitude-millivolt:
-> > > > > +        $ref: /schemas/types.yaml#/definitions/uint32
-> > > > > +        description: Change Tx Margin setting for low power consumption.
-> > > > > +
-> > > > > +      qcom,no-dfe-support:
-> > > > > +        type: boolean
-> > > > > +        description: Disable DFE (Decision Feedback Equalizer), which mitigates
-> > > > > +          intersymbol interference and some reflections caused by impedance mismatches.
-> > > > > +
-> > > > > +      qcom,nfts:
-> > > > > +        $ref: /schemas/types.yaml#/definitions/uint32
-> > > > > +        description:
-> > > > > +          Number of Fast Training Sequence (FTS) used during L0s to L0 exit
-> > > > > +          for bit and Symbol lock.
-> > > > 
-> > > > Also something common.
-> > > > 
-> > > > The problem I have with all these properties is you are using them on
-> > > > both the upstream and downstream sides of the PCIe links. They belong in
-> > > > either the device's node (downstream) or the bus's node (upstream).
-> > > > 
-> > > This switch allows us to configure both upstream, downstream ports and
-> > > also embedded Ethernet port which is internal to the switch. These
-> > > properties are applicable for all of those.
-> > > > > +
-> > > > > +    allOf:
-> > > > > +      - $ref: /schemas/pci/pci-bus.yaml#
-> > > > 
-> > > > pci-pci-bridge.yaml is more specific and closer to what this device is.
-> > > > 
-> > > I tried this now, I was getting warning saying the compatible
-> > > /local/mnt/workspace/skales/kobj/Documentation/devicetree/bindings/pci/qcom,qps615.example.dtb:
-> > > pcie@0,0: compatible: ['pci1179,0623'] does not contain items matching the
-> > > given schema
-> > >          from schema $id: http://devicetree.org/schemas/pci/qcom,qps615.yaml#
-> > > /local/mnt/workspace/skales/kobj/Documentation/devicetree/bindings/pci/qcom,qps615.example.dtb:
-> > > pcie@0,0: Unevaluated properties are not allowed ('#address-cells',
-> > > '#size-cells', 'bus-range', 'device_type', 'ranges' were unexpected)
-> > > 
-> > > I think pci-pci-bridge is expecting the compatible string in this format
-> > > only "pciclass,0604".
-> > 
-> > I think the pci-pci-bridge schema requires to have "pciclass,0604" among
-> > other compatibles. So you should be able to do something like:
-> > 
-> > compatible = "pci1179,0623", "pciclass,0604";
-> > 
-> > At least if follows PCI Bus Binding to Open Firmware document.
-> > 
-> let us try this and come back.
-> > > 
-> > > > > +
-> > > > > +unevaluatedProperties: false
-> > > > > +
-> > > > > +required:
-> > > > > +  - vdd18-supply
-> > > > > +  - vdd09-supply
-> > > > > +  - vddc-supply
-> > > > > +  - vddio1-supply
-> > > > > +  - vddio2-supply
-> > > > > +  - vddio18-supply
-> > > > > +  - i2c-parent
-> > > > > +  - reset-gpios
-> > > > > +
-> > > > > +examples:
-> > > > > +  - |
-> > > > > +
-> > > > > +    #include <dt-bindings/gpio/gpio.h>
-> > > > > +
-> > > > > +    pcie {
-> > > > > +        #address-cells = <3>;
-> > > > > +        #size-cells = <2>;
-> > > > > +
-> > > > > +        pcie@0 {
-> > > > > +            device_type = "pci";
-> > > > > +            reg = <0x0 0x0 0x0 0x0 0x0>;
-> > > > > +
-> > > > > +            #address-cells = <3>;
-> > > > > +            #size-cells = <2>;
-> > > > > +            ranges;
-> > > > > +            bus-range = <0x01 0xff>;
-> > > > > +
-> > > > > +            pcie@0,0 {
-> > > > > +                compatible = "pci1179,0623";
-> > > > > +                reg = <0x10000 0x0 0x0 0x0 0x0>;
-> > > > > +                device_type = "pci";
-> > > > > +                #address-cells = <3>;
-> > > > > +                #size-cells = <2>;
-> > > > > +                ranges;
-> > > > > +                bus-range = <0x02 0xff>;
-> > > > > +
-> > > > > +                i2c-parent = <&qup_i2c 0x77>;
-> > > > > +
-> > > > > +                vdd18-supply = <&vdd>;
-> > > > > +                vdd09-supply = <&vdd>;
-> > > > > +                vddc-supply = <&vdd>;
-> > > > > +                vddio1-supply = <&vdd>;
-> > > > > +                vddio2-supply = <&vdd>;
-> > > > > +                vddio18-supply = <&vdd>;
-> > > > > +
-> > > > > +                reset-gpios = <&gpio 1 GPIO_ACTIVE_LOW>;
-> > > > > +
-> > > > > +                pcie@1,0 {
-> > > > > +                    reg = <0x20800 0x0 0x0 0x0 0x0>;
-> > > > > +                    #address-cells = <3>;
-> > > > > +                    #size-cells = <2>;
-> > > > > +                    device_type = "pci";
-> > > > > +                    ranges;
-> > > > > +                    bus-range = <0x03 0xff>;
-> > > > > +
-> > > > > +                    qcom,no-dfe-support;
-> > > > > +                };
-> > > > > +
-> > > > > +                pcie@2,0 {
-> > > > > +                    reg = <0x21000 0x0 0x0 0x0 0x0>;
-> > > > > +                    #address-cells = <3>;
-> > > > > +                    #size-cells = <2>;
-> > > > > +                    device_type = "pci";
-> > > > > +                    ranges;
-> > > > > +                    bus-range = <0x04 0xff>;
-> > > > > +
-> > > > > +                    qcom,nfts = <10>;
-> > > > > +                };
-> > > > > +
-> > > > > +                pcie@3,0 {
-> > > > > +                    reg = <0x21800 0x0 0x0 0x0 0x0>;
-> > > > > +                    #address-cells = <3>;
-> > > > > +                    #size-cells = <2>;
-> > > > > +                    device_type = "pci";
-> > > > > +                    ranges;
-> > > > > +                    bus-range = <0x05 0xff>;
-> > > > > +
-> > > > > +                    qcom,tx-amplitude-millivolt = <10>;
-> > > > > +                    pcie@0,0 {
-> > > > > +                        reg = <0x50000 0x0 0x0 0x0 0x0>;
-> > > > > +                        #address-cells = <3>;
-> > > > > +                        #size-cells = <2>;
-> > > > > +                        device_type = "pci";
-> > > > 
-> > > > There's a 2nd PCI-PCI bridge?
-> > > This the embedded ethernet port which is as part of DSP3.
-> > 
-> > So is there an adidtional bus for that ethernet device?
-> > 
-> yes for ethernet it has aditional bus assigned.
+Please clear the previous child nodes resources before return.
+
+Thanks & Regards,
+Manikanta.
+
+> +			return ret;
+> +		}
+> +
+> +		if (index >= PCS_MAX_MII_NRS) {
+> +			dev_err(dev, "Invalid MII index\n");
+> +			of_node_put(mii_np);
+> +			return -EINVAL;
+> +		}
+> +
+> +		qpcs_mii = devm_kzalloc(dev, sizeof(*qpcs_mii), GFP_KERNEL);
+> +		if (!qpcs_mii) {
+> +			of_node_put(mii_np);
+> +			return -ENOMEM;
+> +		}
+> +
+> +		qpcs_mii->qpcs = qpcs;
+> +		qpcs_mii->index = index;
+> +		qpcs_mii->pcs.ops = &ipq_pcs_phylink_ops;
+> +		qpcs_mii->pcs.neg_mode = true;
+> +		qpcs_mii->pcs.poll = true;
+> +
+> +		qpcs_mii->rx_clk = devm_get_clk_from_child(dev, mii_np, "rx");
+> +		if (IS_ERR(qpcs_mii->rx_clk)) {
+> +			of_node_put(mii_np);
+> +			return dev_err_probe(dev, PTR_ERR(qpcs_mii->rx_clk),
+> +					     "Failed to get MII %d RX clock\n", index);
+> +		}
+> +
+> +		qpcs_mii->tx_clk = devm_get_clk_from_child(dev, mii_np, "tx");
+> +		if (IS_ERR(qpcs_mii->tx_clk)) {
+> +			of_node_put(mii_np);
+> +			return dev_err_probe(dev, PTR_ERR(qpcs_mii->tx_clk),
+> +					     "Failed to get MII %d TX clock\n", index);
+> +		}
+> +
+> +		qpcs->qpcs_mii[index] = qpcs_mii;
+> +	}
+> +
+> +	return 0;
+> +}
+> +
+>  static unsigned long ipq_pcs_clk_rate_get(struct ipq_pcs *qpcs)
+>  {
+>  	switch (qpcs->interface) {
+> @@ -219,6 +676,12 @@ static int ipq9574_pcs_probe(struct platform_device *pdev)
+>  	if (ret)
+>  		return ret;
+>  
+> +	ret = ipq_pcs_create_miis(qpcs);
+> +	if (ret)
+> +		return ret;
+> +
+> +	mutex_init(&qpcs->config_lock);
+> +
+>  	platform_set_drvdata(pdev, qpcs);
+>  
+>  	return 0;
+> diff --git a/include/linux/pcs/pcs-qcom-ipq9574.h b/include/linux/pcs/pcs-qcom-ipq9574.h
+> new file mode 100644
+> index 000000000000..5469a81b4482
+> --- /dev/null
+> +++ b/include/linux/pcs/pcs-qcom-ipq9574.h
+> @@ -0,0 +1,16 @@
+> +/* SPDX-License-Identifier: GPL-2.0-only */
+> +/*
+> + * Copyright (c) 2024 Qualcomm Innovation Center, Inc. All rights reserved.
+> + *
+> + */
+> +
+> +#ifndef __LINUX_PCS_QCOM_IPQ9574_H
+> +#define __LINUX_PCS_QCOM_IPQ9574_H
+> +
+> +struct device_node;
+> +struct phylink_pcs;
+> +
+> +struct phylink_pcs *ipq_pcs_get(struct device_node *np);
+> +void ipq_pcs_put(struct phylink_pcs *pcs);
+> +
+> +#endif /* __LINUX_PCS_QCOM_IPQ9574_H */
 > 
-> > > 
-> > > - Krishna Chaitanya.
-> > > > 
-> > > > > +                        ranges;
-> > > > > +
-> > > > > +                        qcom,l1-entry-delay-ns = <10>;
-> > > > > +                    };
-> > > > > +
-> > > > > +                    pcie@0,1 {
-> > > > > +                        reg = <0x50100 0x0 0x0 0x0 0x0>;
-> > > > > +                        #address-cells = <3>;
-> > > > > +                        #size-cells = <2>;
-> > > > > +                        device_type = "pci";
-> > > > > +                        ranges;
-> > > > > +
-> > > > > +                        qcom,l0s-entry-delay-ns = <10>;
-> > > > > +                    };
-> > 
-> > What is this?
-> > 
-> Ethernet endpoint is a multi function device which has 2 functions
-> This node represents 2nd node. I will update the description to
-> reflect the same.
 
-If this is an ethernet device, why does it have a name of pcie@? Per
-bindings the pcie@ name should be used only for devices with the class
-0604. Whas is the PCI device class for those devices? I think ethernet@
-(0200) should probably be the best fit, judgin by your description.
-
-> 
-> - Krishna Chaitanya.
-> 
-> > > > > +                };
-> > > > > +            };
-> > > > > +        };
-> > > > > +    };
-> > > > > 
-> > > > > -- 
-> > > > > 2.34.1
-> > > > > 
-> > 
-
--- 
-With best wishes
-Dmitry
 
