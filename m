@@ -1,127 +1,151 @@
-Return-Path: <linux-arm-msm+bounces-43169-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-43170-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 696039FB81A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Dec 2024 02:01:29 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 99DDA9FB8DB
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Dec 2024 04:08:18 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 4795F163BF4
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Dec 2024 01:01:26 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id CB0A91884F7F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Dec 2024 03:08:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B7CC4372;
-	Tue, 24 Dec 2024 01:01:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A20C949641;
+	Tue, 24 Dec 2024 03:08:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="gGXs7UIc"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="EOC6Bu5J"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 089358F5B
-	for <linux-arm-msm@vger.kernel.org>; Tue, 24 Dec 2024 01:01:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7BAC17996;
+	Tue, 24 Dec 2024 03:08:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735002080; cv=none; b=GYtRdDoWIArnrNHaaiQyOAhyYMms28tgSGMGbUvm5bYoF64g6WGfsP1AOmMevIgm3NHbrd3DmRTDL6/JiJXwTFDEuYFg+Db/KtmGcZrlhgGCaEPVF75jVcv3V+vzWGtd+XisIeq6OYFOdGSehSb9PK5a9h5drZEugUNjz0R21Vc=
+	t=1735009692; cv=none; b=pn0ZmAcwlLLSSEi4r7WnrrEWDsTESHR7t0izLDG4WEFUkBMsZKF4ybA70PXKUF4XALGgwaTuLLlu16mpvG7tKIX2YI99HwU6+PJVDu7TZympNktx4QM7g9OsQz94aIdCaIoLLRmJ3qsGWuY6yUnTqT8myV9kwCkDsuTx4OknkPE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735002080; c=relaxed/simple;
-	bh=VTjBZDdASugD3kswoxr2ITUXWzGkQEVuNdaujYNYdJ8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=jAsYxkKPm4dUGR82h8ZU7OLqgMJfnPfxIgJv3IkuFmgaSVN6BkSzTA0LoogfMRe8km/Reof6tIS7Ut6WcdephKP4LfxnlEps+UcOGEX7PC6NlPEw9aSUSIQaLSEMgxc+k9G/AiIFSoGGoGJKNT9sbsCpsVFSpx2LsKWiwdOfsgI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=gGXs7UIc; arc=none smtp.client-ip=209.85.221.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-385e1fcb0e1so2540010f8f.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Dec 2024 17:01:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1735002075; x=1735606875; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=kp86hapJwh9BF1daX3h02Pa8dcZyvAyCiDhiANA3Zk4=;
-        b=gGXs7UIcQQnNSONsqK7b/XO5mjKdmgCvH4kpXA0qxLl2AEoy2kSOC+6gy35SIXLWYK
-         mPjVEXu+SroAFJqRRbhoJNq5U/x27yq+RCKkl0R3Zw/O0UmD9dh3Qy7cJJPh4MwapHPB
-         UNhmB4guhPqK7A8vj5rmyCWyGtS0C0pS6xMwno0NmzPcSJUVuHRPd2YuNmrGB9h2JK9i
-         yJsPUZVgLyZ0uyIU/nlRQm4JPtOK1fkbr1Y3H35oKx+dEDod7HnSEJ9yB/Xwmz9jdLvI
-         LTBc+1KHrEddhlpLxhgtuLiDt0HGoJQqKfhAOJdTTvPOTFTGF98F+kxRHXYdxObs0gBr
-         Vumw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1735002075; x=1735606875;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=kp86hapJwh9BF1daX3h02Pa8dcZyvAyCiDhiANA3Zk4=;
-        b=t+Rc69y1S3iFeYnspl37+hHfVefzRtNvyeOpJVQwz+O4XHPN3LtMOcq2inJHuBY9x7
-         xpjYb0lELV2BbNXwc1WRSOROQJC1w3j2tIF7Dh702e0yO8bcqgUBqmfINepOT5DWW7zQ
-         hazi8ylvRneZVO5mlwSJW88E6wkb4+8mJYgu+zvU9PYukf9FIB4UOixh4nVwyvLY4PFC
-         0Cu5mOUv/nI+/RZ3Me0Gj9YpGAixltX1shtgE+29GQNxqJlNWXFk16MFEmb4tYMZHBl4
-         nJtioz9F0q3xnWXLuOAFBA35bb8k8cE6E19BSxISmugfpnwp/2p4xQdCI2qeN+ebSUuD
-         xmjg==
-X-Forwarded-Encrypted: i=1; AJvYcCUfgEHmY1waHLC/JE9D1IXOk0LEJnWJytDOtEPy4uZa+XiqC2B/OR85ZjpykQCbFhujqIW4ofxeucqARnn+@vger.kernel.org
-X-Gm-Message-State: AOJu0YyLJSza6DQmOagmZT4a/USTPJp0G0dF7Ru0v+TV9meRYfDcmJIp
-	m6H5wPvzbHMEaI0llE+Jbr3iQrZhgb7LrJvn2BjEH6/bT3ovOg1mAfr0vbD/BCA=
-X-Gm-Gg: ASbGncs573Ps87KV10YFi5T8/Ve7A1kI88hwJUZxHCh9QtjnEWPVS0dlsR0hsf/Srkp
-	HbSM7lfGbIw8mJqWamM0+0TekkKPEXVG4M5YMz/kjHBvzRfmiL9chiAfoee/GpKyV0WLvEmDBxx
-	MgVw0yrCCRYiH8yBVcb3WmGzEHNryeVJ8rVDWYn9OdCPkzqqPRPZXZlun8pfMIFCRbXKf89dPNq
-	BmchBFoJpGLUuMSS5Oev1lz67reR6REJMpd1TSx6EIGELIptnjfx8XIAjwGIQxoxZRPXA==
-X-Google-Smtp-Source: AGHT+IFgDGmqmDPhyXR4nLgbVh7DgOs3lG+VS/8qN+gUc2mvLbY5Wmdth9OkKBZSOAeArY7B/KdHJw==
-X-Received: by 2002:a05:6000:4022:b0:385:e879:45cc with SMTP id ffacd0b85a97d-38a221faa63mr12093565f8f.19.1735002075172;
-        Mon, 23 Dec 2024 17:01:15 -0800 (PST)
-Received: from [192.168.0.34] ([176.61.106.227])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38a1c829235sm12506493f8f.15.2024.12.23.17.01.12
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 23 Dec 2024 17:01:13 -0800 (PST)
-Message-ID: <1de7bfd7-0bd0-4e14-b52a-ed6e3bb7a09c@linaro.org>
-Date: Tue, 24 Dec 2024 01:01:11 +0000
+	s=arc-20240116; t=1735009692; c=relaxed/simple;
+	bh=V1zGyQmYhn1B3R0aP6noecmZ+tYMiaOEfL5LiuDtAuQ=;
+	h=From:Subject:Date:Message-ID:MIME-Version:Content-Type:To:CC; b=U6rQfi4hAhgEzrBU7GFX3YABNJK3ARSLnXqdjxGIQu2ohVfykYfuHfqfiLBwryK+SYwrqBlGPRtzVM+8jK3tfn08AI7CN71xqNICOKwLyzKZZ04MV75hYsCuQDc7CKx4oufMJbC2eaXvPffbv9bKwc5JaA6ETf0rEsAHCrbph8U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=EOC6Bu5J; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BNNTYBd013037;
+	Tue, 24 Dec 2024 03:07:41 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=wMZoz9EsR7ePQZtOUEnxMQ
+	EqwmOfNV6YCxuM9WMR5ks=; b=EOC6Bu5JnzVPzTD6l85NCKthQbR4LysUp4WSwU
+	VH41PRk8bHfzOAC23wBUVk1hXL5jnlvoccL1zDc+xuHQJhraDzurv49wArVWmgDA
+	JAIGzYZ2Ym39MqugT4K57XVYGqqY06m5PdWkE+gIF0lpV1p7EDHsAgcg9eP4X7Hq
+	gMkbHNJFAd8zyl61CbUVtD8GTJgw4A5YiVbPca+vw5/ZRtRg7xnIM6nsT7tgy1Sv
+	EhdwboKVKOI4wNfrvC6XT+nWx9BdPyqrFsOM0PfayPSzwfI4jTnHE5QkfS889ykM
+	7mQDkdJ2nt7mHy9p7ch4IPy0uh/4kUPGbRN8ikct7r3Kb+nA==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43qhk60fj8-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 24 Dec 2024 03:07:41 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4BO37eIQ010620
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 24 Dec 2024 03:07:40 GMT
+Received: from yijiyang-gv.ap.qualcomm.com (10.80.80.8) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Mon, 23 Dec 2024 19:07:34 -0800
+From: Yijie Yang <quic_yijiyang@quicinc.com>
+Subject: [PATCH v2 0/3] Add standalone ethernet MAC entries for qcs615
+Date: Tue, 24 Dec 2024 11:07:00 +0800
+Message-ID: <20241224-schema-v2-0-000ea9044c49@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v9 3/5] media: qcom: camss: add support for SDM670 camss
-To: Richard Acayan <mailingradian@gmail.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
- <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Robert Foss <rfoss@kernel.org>,
- Todor Tomov <todor.too@gmail.com>, Mauro Carvalho Chehab
- <mchehab@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>,
- linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
- devicetree@vger.kernel.org, linux-media@vger.kernel.org
-Cc: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-References: <20241218231729.270137-7-mailingradian@gmail.com>
- <20241218231729.270137-10-mailingradian@gmail.com>
-Content-Language: en-US
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <20241218231729.270137-10-mailingradian@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAFUlamcC/1WOy26DMBBFfwV5XUd+xiar/EfVhZkMxQtMaxOUK
+ uLfOzxSldld6Z575skK5oiFXaonyzjFEodEQb1VDLqQPpHHG2WmhDKSjhfosA/c1dI6VwslWsu
+ o/JWxjY916P2DchMK8iaHBN2Cb9RezPh9J9G4tbcqDH0fx0uV8DHyTSY8W5a6WMYh/6wfTnIl9
+ mfU65lJcsGN8WdnQ+Nrc7uSAGKCE80u0h3wB0DKxoG0XoOAA7BYJ/XfpP9ARaBW59BqY3UI7RG
+ c5/kXcfy2Q1IBAAA=
+X-Change-ID: 20241111-schema-7915779020f5
+To: Vinod Koul <vkoul@kernel.org>, Andrew Lunn <andrew+netdev@lunn.ch>,
+        "David
+ S. Miller" <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>,
+        "Jakub
+ Kicinski" <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+        Rob Herring
+	<robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>,
+        Bhupesh Sharma <bhupesh.sharma@linaro.org>,
+        "Alexandre
+ Torgue" <alexandre.torgue@foss.st.com>,
+        Giuseppe Cavallaro
+	<peppe.cavallaro@st.com>,
+        Jose Abreu <joabreu@synopsys.com>,
+        Maxime Coquelin
+	<mcoquelin.stm32@gmail.com>
+CC: <quic_yijiyang@quicinc.com>,
+        Krzysztof Kozlowski
+	<krzysztof.kozlowski@linaro.org>,
+        <netdev@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-stm32@st-md-mailman.stormreply.com>,
+        <linux-arm-kernel@lists.infradead.org>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1735009653; l=995;
+ i=quic_yijiyang@quicinc.com; s=20240408; h=from:subject:message-id;
+ bh=V1zGyQmYhn1B3R0aP6noecmZ+tYMiaOEfL5LiuDtAuQ=;
+ b=iEN0aQA+fbBlJbyinT4oTHXLhJpGSTXCeREt86FPbzelipctnYMpOhtUdAINO5U/fBryetUY1
+ IDC4GW8y4bFCV8HY1h9dkx70wnuMcmo5Sp9m2IvA/YZAw0FRfVRBvj+
+X-Developer-Key: i=quic_yijiyang@quicinc.com; a=ed25519;
+ pk=XvMv0rxjrXLYFdBXoFjTdOdAwDT5SPbQ5uAKGESDihk=
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 7Fp3y0zv5LQdjJWuF1eOXv_iFRKNJRYt
+X-Proofpoint-GUID: 7Fp3y0zv5LQdjJWuF1eOXv_iFRKNJRYt
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 mlxscore=0
+ impostorscore=0 suspectscore=0 lowpriorityscore=0 spamscore=0
+ clxscore=1015 adultscore=0 mlxlogscore=664 priorityscore=1501
+ malwarescore=0 bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2412240024
 
-On 18/12/2024 23:17, Richard Acayan wrote:
-> +		.clock = { "soc_ahb", "cpas_ahb",
-> +				"csiphy0", "csiphy0_timer" },
+Add separate EMAC entries for qcs615 since its core version is 2.3.1,
+compared to sm8150's 2.1.2.
 
-Broken indentation here and in several other places - please fix.
+Signed-off-by: Yijie Yang <quic_yijiyang@quicinc.com>
+---
+Changes in v2:
+- Update the subject for the first patch.
+- Link to v1: https://lore.kernel.org/r/20241118-schema-v1-0-11b7c1583c0c@quicinc.com
 
-Also you should rebase on media-staging as a 3way merge is required ATM.
+---
+Yijie Yang (3):
+      dt-bindings: net: qcom,ethqos: Drop fallback compatible for qcom,qcs615-ethqos
+      dt-bindings: net: snps,dwmac: add description for qcs615
+      net: stmmac: dwmac-qcom-ethqos: add support for EMAC on qcs615 platforms
 
-media-stage     git://linuxtv.org/media_stage.git (fetch)
+ Documentation/devicetree/bindings/net/qcom,ethqos.yaml  |  5 +----
+ Documentation/devicetree/bindings/net/snps,dwmac.yaml   |  2 ++
+ drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c | 17 +++++++++++++++++
+ 3 files changed, 20 insertions(+), 4 deletions(-)
+---
+base-commit: 3664e6c4f4d07fa51834cd59d94b42b7f803e79b
+change-id: 20241111-schema-7915779020f5
 
-Other than that, this looks good.
+Best regards,
+-- 
+Yijie Yang <quic_yijiyang@quicinc.com>
 
-Once you've addressed the above add.
-
-git am /tmp/\[PATCH\ v9\ 3_5\]\ media:\ qcom:\ camss:\ add\ support\ 
-for\ SDM670\ camss\ -\ Richard\ Acayan\ \<mailingradian@gmail.com\>\ -\ 
-2024-12-18\ 2317.eml -3
-Applying: media: qcom: camss: add support for SDM670 camss
-Using index info to reconstruct a base tree...
-M       drivers/media/platform/qcom/camss/camss.c
-Falling back to patching base and 3-way merge...
-Auto-merging drivers/media/platform/qcom/camss/camss.c
-
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 
