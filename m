@@ -1,59 +1,57 @@
-Return-Path: <linux-arm-msm+bounces-43247-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-43248-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5FCAF9FBC91
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Dec 2024 11:43:17 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id E33129FBCA2
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Dec 2024 11:45:50 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 6BB097A2B56
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Dec 2024 10:42:18 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id C8C9118834C5
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Dec 2024 10:44:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 191311B78F3;
-	Tue, 24 Dec 2024 10:42:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C978E1D63FB;
+	Tue, 24 Dec 2024 10:42:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FubhPi5U"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="k8F9zG9/"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1EFF1AFB36;
-	Tue, 24 Dec 2024 10:42:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EBA61D79B3;
+	Tue, 24 Dec 2024 10:42:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735036921; cv=none; b=Cl34rbI7wrlBuxNuff9PrxuESBSL7kJ0zMZD20Z+QtEg+poL+i7u2fgIu6zGt3RAZpMtXzxDJx+SkBsZc8ThRsijZfV5zU3Fjv/BY4Fag/9Rx06sG854v3atqyWy6SfMCuvY3PisM1vGn5W0bTvAiHd81PCoRrZDY70owfaqF5A=
+	t=1735036945; cv=none; b=aEKShmjSbpXlBdbaFZWgkWca38dAcRiLlsvY4xFUo5Axyrwd1+TdnGuGRrJtZByq0SbEN2kM6yzW3CNxKRyluU0Kx17fDv6voSIl0c1Ivdmnfxz34Qrl/cuKhGruqHOA/wfzz6xML4nCs1irMc8hyh7B49lHv2TAMlV8M2bx2hs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735036921; c=relaxed/simple;
-	bh=Dz4SVX2xAASKtv9jz6bwakIaWNhtPb0mwMn/25ivMyE=;
+	s=arc-20240116; t=1735036945; c=relaxed/simple;
+	bh=Qc3IowgyoTkUUcx0ynuGqKSfWfJ3v/K+Qt1ctCaL0TQ=;
 	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=KD2GGVCXf3dohbnX852lEP18Pd393DN0wVgAAC5aKveIvWK04YrVXLEs76vKx1EcCIZrzlzxuVJKgtEtjkF2Mfz+oK25lz1Lzu5qIqkcxKa8eX7KAKC+McAFYr1uQm+iCmKiNMgbP0ApPkpVEHlqp0IDB1l1O9+CCuSTTkBmc0E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FubhPi5U; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D7AEC4CED0;
-	Tue, 24 Dec 2024 10:41:57 +0000 (UTC)
+	 MIME-Version:Content-Type; b=CpDVepyPvX6/qd7g+nlxx6PkrOq1oQeww6r4ywwgkm2iSLszB5auZBF4XX4rJjQbO4/YpsemkcG6rdRSlY54/5eHK++gupapf1/31tapkyjAiLwidxV37es9qUHcuvztDnMBK8z68tniE+L/q+tdtiz6RFNCQ76cOIODqCv8e68=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=k8F9zG9/; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58E59C4CED0;
+	Tue, 24 Dec 2024 10:42:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1735036920;
-	bh=Dz4SVX2xAASKtv9jz6bwakIaWNhtPb0mwMn/25ivMyE=;
+	s=k20201202; t=1735036945;
+	bh=Qc3IowgyoTkUUcx0ynuGqKSfWfJ3v/K+Qt1ctCaL0TQ=;
 	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-	b=FubhPi5U88cf0V03e5Xh1m1OXSMmrhicVq/QFQE2bU4U4WiEdfu09gWY30otvsANc
-	 7cx6iTeqQ+d/PooBuTULAt3MVHBdQ6WvGOyFr6/oNvY9TClxTVgQ2FGecl31J3HICI
-	 ug4BkdPBRWsED20Kt7fRO42G49gRZyf88Dwce94yFFzFcPDwQ+ByQIrIPb/D0RNLC3
-	 Gl0RL5lJULP7xuPLCRqeXdvDP+oGA5tQ76iDWYe++dpdJn7BeL1+h4s8mPGVOQhkvj
-	 c8+75Kz4KFHdfhwd/sY/4bmB1opg7jGiqvNqyDJuvSUVdukSJl7qqNo+fyEexyJLvk
-	 q+Ak9urVqpwRA==
+	b=k8F9zG9/lAVA6g7KyOCZYYJqBOrj1XaKRVy97a/OSuWs8q8fu5R09/3yGEWkA1G/e
+	 ap7TkWGT1tIBa2kgcgUtTCenSIrfvHe+71xS5GbDLxLXhBoBlG5zrnO+YfCdRRzgAI
+	 aKtQ8DHXIAs+XPbycMgd0es0+cMIp6SDZ1DLqx4jDjvusN61NvAm0XBz/8dSow9lIJ
+	 MQuMNLuHbD7p1KrO1LvomFu4LVo0UYc6BaokMgK+Jr5GDXEPL6Js1ntziE/LZwzgSl
+	 T6if62BgmvqhuKw5Yx4Cl3XmcXSGKIpKGUzlEmO2bzoTKbnCSVwI5n+qFohUofL7mi
+	 uX7KlthbS0jig==
 From: Vinod Koul <vkoul@kernel.org>
-To: robin.murphy@arm.com, u.kleine-koenig@baylibre.com, 
- martin.petersen@oracle.com, fenghua.yu@intel.com, av2082000@gmail.com, 
- linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Md Sadre Alam <quic_mdalam@quicinc.com>
-Cc: quic_mmanikan@quicinc.com, quic_srichara@quicinc.com, 
- quic_varada@quicinc.com
-In-Reply-To: <20241220094203.3510335-1-quic_mdalam@quicinc.com>
-References: <20241220094203.3510335-1-quic_mdalam@quicinc.com>
-Subject: Re: [PATCH v4] dmaengine: qcom: bam_dma: Avoid writing unavailable
- register
-Message-Id: <173503691713.903491.236014957366551878.b4-ty@kernel.org>
-Date: Tue, 24 Dec 2024 16:11:57 +0530
+To: Jyothi Kumar Seerapu <quic_jseerapu@quicinc.com>
+Cc: linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, quic_msavaliy@quicinc.com, 
+ quic_vtanuku@quicinc.com
+In-Reply-To: <20241209075033.16860-1-quic_jseerapu@quicinc.com>
+References: <20241209075033.16860-1-quic_jseerapu@quicinc.com>
+Subject: Re: [PATCH v5] dmaengine: qcom: gpi: Add GPI immediate DMA support
+ for SPI protocol
+Message-Id: <173503694298.903491.10995123391235816729.b4-ty@kernel.org>
+Date: Tue, 24 Dec 2024 16:12:22 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,18 +63,23 @@ Content-Transfer-Encoding: 7bit
 X-Mailer: b4 0.14.2
 
 
-On Fri, 20 Dec 2024 15:12:03 +0530, Md Sadre Alam wrote:
-> Avoid writing unavailable register in BAM-Lite mode.
-> BAM_DESC_CNT_TRSHLD register is unavailable in BAM-Lite
-> mode. Its only available in BAM-NDP mode. So only write
-> this register for clients who is using BAM-NDP.
+On Mon, 09 Dec 2024 13:20:33 +0530, Jyothi Kumar Seerapu wrote:
+> The DMA TRE(Transfer ring element) buffer contains the DMA
+> buffer address. Accessing data from this address can cause
+> significant delays in SPI transfers, which can be mitigated to
+> some extent by utilizing immediate DMA support.
 > 
+> QCOM GPI DMA hardware supports an immediate DMA feature for data
+> up to 8 bytes, storing the data directly in the DMA TRE buffer
+> instead of the DMA buffer address. This enhancement enables faster
+> SPI data transfers.
 > 
+> [...]
 
 Applied, thanks!
 
-[1/1] dmaengine: qcom: bam_dma: Avoid writing unavailable register
-      commit: 57a7138d0627309d469719f1845d2778c251f358
+[1/1] dmaengine: qcom: gpi: Add GPI immediate DMA support for SPI protocol
+      commit: a131169dfa48d6d40da45bca67d1e4f54fa130a6
 
 Best regards,
 -- 
