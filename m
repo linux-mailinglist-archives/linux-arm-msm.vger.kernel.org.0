@@ -1,170 +1,135 @@
-Return-Path: <linux-arm-msm+bounces-43171-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-43174-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 689959FB8DF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Dec 2024 04:08:45 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id BE1529FB91F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Dec 2024 05:17:15 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id BDC2D1657A6
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Dec 2024 03:08:38 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 0F5337A1DEE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Dec 2024 04:17:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 02D0C1411C8;
-	Tue, 24 Dec 2024 03:08:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 176FF14A0B3;
+	Tue, 24 Dec 2024 04:17:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ACktODu1"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="vQcM7Z0R"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f51.google.com (mail-lf1-f51.google.com [209.85.167.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B4B112C499;
-	Tue, 24 Dec 2024 03:08:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B42F481CD
+	for <linux-arm-msm@vger.kernel.org>; Tue, 24 Dec 2024 04:17:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735009701; cv=none; b=EZQha26e3HiVF3uGQ6z837BP2ctKerAr55YacGkf8b79922TqIz97QYOIbLDCpCfkayC1BDWslfcbVDtAOKhVCLFW9nC6AqXUAJ46HlfTmYgtH3Pt5SWPvyMNIaEDKLmZewzOqnuKjzDCY+rdZSnYvQ3uVhXTDm+UbesD+IijNk=
+	t=1735013823; cv=none; b=bJiDFpjnkjcba0/dTYFHN8VutGV1xXZpiED9xf5PkFdHVv1rBR4KE4k9ar7cE1reokH04lqt1eJ/embiVNAxNsAEm40RIAa69xVoJZzOcoHxOmWd6F4S02Of2HerWhWFUJ/Q/c4RTX9oZfd9dAdZab5T/bzDoUIanzy9fEyDgNw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735009701; c=relaxed/simple;
-	bh=V7lalbixoBGJlxP3pf4NJMaXZaZuAQMqMIc+vgd+3BI=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:References:
-	 In-Reply-To:To:CC; b=QPnDO0quKGu/hJZXow5OCmxdMgfpnVbWGPEiHZYN5WUA9+75Q6hlj1FN515btZDZlYtNfDva616RJMDbRixG4RHtmsMuY6z/2J9H8FA7DYY/tJSh2BFVQj33aIx0ZwBIfdpYFO2f6u7bYKlP4SHJpw+FP5AS3GEUrTwiWCKP/gU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ACktODu1; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BNNU9fg013669;
-	Tue, 24 Dec 2024 03:08:00 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	tIuhqDedNNE+RKLFjY7UPz+oQyiGEu+Qqb7U8Kyo+Bc=; b=ACktODu10Z4pDB75
-	Q9oRTf24VGYw0jakS5ZiBFaXGhAQJQLh1fam7tvqSbjMQRyoWG/P0oE5mLf1ra6N
-	eZZVvU0B25tmDan7nh5axSC/7TYlrg1Q7G5QMUp9O/pNknla+IhVKWS/d9WJJBd5
-	kVqiPpFeYY/DR9lTlibaJ44Fd+LHVeu9Uihb41mu1e5xnQYJhyHJZEbqOz22qeJC
-	hFV31VhvNXSnvL+UqyloXsCp+CmfYn5gcykjtBIi7b8o0Kb4pGXSap5MgSWNw2RV
-	osHTjlh1QzBs+dSOWJpKfFwZy4PBkiKsjRGSIT2eiyQuIsCo7N+Qzy0gidNPrxUZ
-	14PCXg==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43qhk60fkp-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 24 Dec 2024 03:08:00 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4BO37xiR010699
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 24 Dec 2024 03:07:59 GMT
-Received: from yijiyang-gv.ap.qualcomm.com (10.80.80.8) by
- nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Mon, 23 Dec 2024 19:07:53 -0800
-From: Yijie Yang <quic_yijiyang@quicinc.com>
-Date: Tue, 24 Dec 2024 11:07:03 +0800
-Subject: [PATCH v2 3/3] net: stmmac: dwmac-qcom-ethqos: add support for
- EMAC on qcs615 platforms
+	s=arc-20240116; t=1735013823; c=relaxed/simple;
+	bh=oIie33HXjEdQse5G0/GhL59JqBHGqG/Osu83u0kXaIw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=W65ncDRiU4wXIKi3Ze2vBmSUhgQJaloFBMOqqV9k9BYswg7Xp8s6CLCmA9TkK/YSq6siN3x6UHZ5rzGnk68BOjqB50ax1KHLbB19luAJ1QlminzNPXxfU+KJ6SSfANdk5xobcQHTdAGFRkoloFwPLb8e37oUM4j98Nks32x8OlY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=vQcM7Z0R; arc=none smtp.client-ip=209.85.167.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f51.google.com with SMTP id 2adb3069b0e04-540201cfedbso4883829e87.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Dec 2024 20:17:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1735013818; x=1735618618; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=sBqVAasc5aaOLoOz1GUhccnE1y4WdkWmYtGpXlXBdiM=;
+        b=vQcM7Z0R+Ht5qSL8zOpmGaJMwzjHbWEzawfMsCOWA03IHeLdMv03MFb/KAoy7yotdf
+         gEcIn6pxZTfwSNqrjuZm01kj8dBj/ThS+WYgCz75bhAD5MBUr3GKXmItaKHmi0W6ILAf
+         5uJS0vqnl9z8WrGssVI9Bi5hQfHL4NfElE66/ImnnVkq4lZKcZeez0Pt1Bcljk9wZZf/
+         tOw53EgtbCdDPvBRSJ2SFZ1IfFgw6MIX11dr2Ibd7uNSEFp27QexaldLVVeyCZja0sTc
+         tz24ry/UtF2jzmsrpDn6A97c5jyh6CJKRy104baAAXL1heyu7NCosbDPlaN6yeXYW1Z2
+         M8uw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1735013818; x=1735618618;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=sBqVAasc5aaOLoOz1GUhccnE1y4WdkWmYtGpXlXBdiM=;
+        b=CqWhpswT7Cwk0/0Y6ZHT2DQZ8y4GiRFIw8x+ZAP3wRCnBjQagmxTP8+bfxKML0JcqI
+         DEKSNyEQhCDNq4r6Y/xNjxqTU71QlRuWrNxSwWHOJw6esSg8/R+6KD55Ihlb6szAzbCI
+         jvzrmiYXB5deJeJ8XQNTK16n4seWOMauR88473Uaq8GdJti5eVNg+onUkUWR7LpyciX8
+         sz3x7Tdo7vBbXDsmzKMB8bN96WOx9ku7YRIZBAxAvjVRrBcMc4MTKcKkduOc/SAUIUTs
+         SjtAolgOU53eXfQxoxfy/6Fc/sRM5uRaw1CKt6TdnuicwLf6WG1Ur+XrpRKWHe1nim4O
+         V7cA==
+X-Forwarded-Encrypted: i=1; AJvYcCWEjMrV8rtCpf/7pL6nTKBO+irfpzl0s57lmzZozhwYhQi2Q5I5Y0RYFCXMlY4hSNHR75tfX0SjLLi+jcpG@vger.kernel.org
+X-Gm-Message-State: AOJu0YyxkzdmWbZ61wj9AfbA+q2MBzlu5/AWmNYNHakeuJhqWR+EnpqZ
+	e7mXYRJ/PrtaBWd+DiVVvJyO2e2ApKmSA4rQHuc61VHLHhpDVgIIC7bpcvmiC0w=
+X-Gm-Gg: ASbGnctwdQ8BeAZhGtEBttAtggeuWbJtGiNaZpsSRcG93GUUizhSw4c1ue95Uy3ViSO
+	5X2lWTLskqZVzz3pn9xosdWOWAiBdfH1CQ6xUEyBjVEwavDDp4WQB40Ta36ZyrtFSf4AvC4WuU3
+	OLbR2khj56AVQdQlHLcg0/jGqF/Dx8st9TqXBduNU9TVXjx2vtFKiM5chhjFRrkbRzdlbcSSASq
+	OjZHaKIURabzNAo52CijHkd43pN5a0jPpfd6xHj/QTb8j8TadsTwFI39/m9di4SeNoQ8etfQdwL
+	DOg4z6dSS5xeeTGNen21zbmIZdjb0GeSS1mC
+X-Google-Smtp-Source: AGHT+IHMGmYGMF6q2MDHua7nxv0GhA7FnjWIVG2kKpKZJ4CxXoTwmdLNVjxPUwAUj8j/ub8sXpIJFg==
+X-Received: by 2002:ac2:4c48:0:b0:540:3579:f38f with SMTP id 2adb3069b0e04-542295821afmr5451612e87.37.1735013818146;
+        Mon, 23 Dec 2024 20:16:58 -0800 (PST)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-542238214b5sm1486186e87.187.2024.12.23.20.16.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 23 Dec 2024 20:16:56 -0800 (PST)
+Date: Tue, 24 Dec 2024 06:16:54 +0200
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Yijie Yang <quic_yijiyang@quicinc.com>
+Cc: Vinod Koul <vkoul@kernel.org>, Andrew Lunn <andrew+netdev@lunn.ch>, 
+	"David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, 
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Bhupesh Sharma <bhupesh.sharma@linaro.org>, Alexandre Torgue <alexandre.torgue@foss.st.com>, 
+	Giuseppe Cavallaro <peppe.cavallaro@st.com>, Jose Abreu <joabreu@synopsys.com>, 
+	Maxime Coquelin <mcoquelin.stm32@gmail.com>, Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
+	netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-stm32@st-md-mailman.stormreply.com, 
+	linux-arm-kernel@lists.infradead.org
+Subject: Re: [PATCH v2 0/3] Add standalone ethernet MAC entries for qcs615
+Message-ID: <t7q7szqjd475kao2bp6lzfrgbueq3niy5lonkfvbcotz5heepi@tqdiiwalhgtg>
+References: <20241224-schema-v2-0-000ea9044c49@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-ID: <20241224-schema-v2-3-000ea9044c49@quicinc.com>
-References: <20241224-schema-v2-0-000ea9044c49@quicinc.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 In-Reply-To: <20241224-schema-v2-0-000ea9044c49@quicinc.com>
-To: Vinod Koul <vkoul@kernel.org>, Andrew Lunn <andrew+netdev@lunn.ch>,
-        "David
- S. Miller" <davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>,
-        "Jakub
- Kicinski" <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
-        Rob Herring
-	<robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>,
-        Bhupesh Sharma <bhupesh.sharma@linaro.org>,
-        "Alexandre
- Torgue" <alexandre.torgue@foss.st.com>,
-        Giuseppe Cavallaro
-	<peppe.cavallaro@st.com>,
-        Jose Abreu <joabreu@synopsys.com>,
-        Maxime Coquelin
-	<mcoquelin.stm32@gmail.com>
-CC: <quic_yijiyang@quicinc.com>,
-        Krzysztof Kozlowski
-	<krzysztof.kozlowski@linaro.org>,
-        <netdev@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-stm32@st-md-mailman.stormreply.com>,
-        <linux-arm-kernel@lists.infradead.org>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1735009654; l=2068;
- i=quic_yijiyang@quicinc.com; s=20240408; h=from:subject:message-id;
- bh=V7lalbixoBGJlxP3pf4NJMaXZaZuAQMqMIc+vgd+3BI=;
- b=/PcuxJDv44ngfb0NCh2hUJrxMhlHV2nGZecD0Mo6JagRjHC7h5siDtAVSLzQTi1Ss+MM5r4f1
- 6Fp6PFa1WtZD+7qhygEim3XOkb6FyHsQ/oQz4KfgP846x8rU4HdpzlA
-X-Developer-Key: i=quic_yijiyang@quicinc.com; a=ed25519;
- pk=XvMv0rxjrXLYFdBXoFjTdOdAwDT5SPbQ5uAKGESDihk=
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: b9eCqun4IQgnbx5uL1MRRdjY8sp8VVgm
-X-Proofpoint-GUID: b9eCqun4IQgnbx5uL1MRRdjY8sp8VVgm
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 mlxscore=0
- impostorscore=0 suspectscore=0 lowpriorityscore=0 spamscore=0
- clxscore=1015 adultscore=0 mlxlogscore=999 priorityscore=1501
- malwarescore=0 bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2412240024
 
-qcs615 uses EMAC version 2.3.1, add the relevant defines and add the new
-compatible.
+On Tue, Dec 24, 2024 at 11:07:00AM +0800, Yijie Yang wrote:
+> Add separate EMAC entries for qcs615 since its core version is 2.3.1,
+> compared to sm8150's 2.1.2.
+> 
+> Signed-off-by: Yijie Yang <quic_yijiyang@quicinc.com>
+> ---
+> Changes in v2:
+> - Update the subject for the first patch.
+> - Link to v1: https://lore.kernel.org/r/20241118-schema-v1-0-11b7c1583c0c@quicinc.com
+> 
+> ---
+> Yijie Yang (3):
+>       dt-bindings: net: qcom,ethqos: Drop fallback compatible for qcom,qcs615-ethqos
+>       dt-bindings: net: snps,dwmac: add description for qcs615
+>       net: stmmac: dwmac-qcom-ethqos: add support for EMAC on qcs615 platforms
+> 
+>  Documentation/devicetree/bindings/net/qcom,ethqos.yaml  |  5 +----
+>  Documentation/devicetree/bindings/net/snps,dwmac.yaml   |  2 ++
+>  drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c | 17 +++++++++++++++++
+>  3 files changed, 20 insertions(+), 4 deletions(-)
+> ---
+> base-commit: 3664e6c4f4d07fa51834cd59d94b42b7f803e79b
 
-Signed-off-by: Yijie Yang <quic_yijiyang@quicinc.com>
----
- drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c | 17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+Which commit is it? I can't find it in linux-next
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
-index 901a3c1959fa57efb078da795ad4f92a8b6f71e1..8c76beaee48821eb2853f4e3f8bfd37db8cadf78 100644
---- a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
-@@ -249,6 +249,22 @@ static const struct ethqos_emac_driver_data emac_v2_1_0_data = {
- 	.has_emac_ge_3 = false,
- };
- 
-+static const struct ethqos_emac_por emac_v2_3_1_por[] = {
-+	{ .offset = RGMII_IO_MACRO_CONFIG,	.value = 0x00C01343 },
-+	{ .offset = SDCC_HC_REG_DLL_CONFIG,	.value = 0x2004642C },
-+	{ .offset = SDCC_HC_REG_DDR_CONFIG,	.value = 0x00000000 },
-+	{ .offset = SDCC_HC_REG_DLL_CONFIG2,	.value = 0x00200000 },
-+	{ .offset = SDCC_USR_CTL,		.value = 0x00010800 },
-+	{ .offset = RGMII_IO_MACRO_CONFIG2,	.value = 0x00002060 },
-+};
-+
-+static const struct ethqos_emac_driver_data emac_v2_3_1_data = {
-+	.por = emac_v2_3_1_por,
-+	.num_por = ARRAY_SIZE(emac_v2_3_1_por),
-+	.rgmii_config_loopback_en = true,
-+	.has_emac_ge_3 = false,
-+};
-+
- static const struct ethqos_emac_por emac_v3_0_0_por[] = {
- 	{ .offset = RGMII_IO_MACRO_CONFIG,	.value = 0x40c01343 },
- 	{ .offset = SDCC_HC_REG_DLL_CONFIG,	.value = 0x2004642c },
-@@ -898,6 +914,7 @@ static int qcom_ethqos_probe(struct platform_device *pdev)
- 
- static const struct of_device_id qcom_ethqos_match[] = {
- 	{ .compatible = "qcom,qcs404-ethqos", .data = &emac_v2_3_0_data},
-+	{ .compatible = "qcom,qcs615-ethqos", .data = &emac_v2_3_1_data},
- 	{ .compatible = "qcom,sa8775p-ethqos", .data = &emac_v4_0_0_data},
- 	{ .compatible = "qcom,sc8280xp-ethqos", .data = &emac_v3_0_0_data},
- 	{ .compatible = "qcom,sm8150-ethqos", .data = &emac_v2_1_0_data},
+> change-id: 20241111-schema-7915779020f5
+> 
+> Best regards,
+> -- 
+> Yijie Yang <quic_yijiyang@quicinc.com>
+> 
 
 -- 
-2.34.1
-
+With best wishes
+Dmitry
 
