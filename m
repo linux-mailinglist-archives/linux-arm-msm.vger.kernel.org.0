@@ -1,455 +1,205 @@
-Return-Path: <linux-arm-msm+bounces-43190-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-43191-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8447C9FB9A3
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Dec 2024 07:04:35 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 318779FB9DA
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Dec 2024 07:32:59 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id ECC06163F46
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Dec 2024 06:04:32 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 680A27A1C8E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Dec 2024 06:32:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C55BF7F9;
-	Tue, 24 Dec 2024 06:04:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E8185CA6F;
+	Tue, 24 Dec 2024 06:32:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="WFIivxu8"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="lhf9sVQw"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f44.google.com (mail-lf1-f44.google.com [209.85.167.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D002F13774D;
-	Tue, 24 Dec 2024 06:04:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B33E8EC0
+	for <linux-arm-msm@vger.kernel.org>; Tue, 24 Dec 2024 06:32:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735020272; cv=none; b=uUY8JCGGvM/4jfFpIuZGxWOLO+SGiUqGOOLHgNaMq6h6yBpb/MUF4NVWMBStVnrXGy8HII8dZGpUYuGAsNkpdWhNhKw9a1P2x6Om68Vbk/iP3BXBBPUfqOrsvkFBRIT6o/Q4vfgvq2r7CG2X7p46cecUBxpuR+9ITC8PfYlNMrc=
+	t=1735021972; cv=none; b=EVl60A/mXZgDysVW5hl2dONhWTFSnUhQ87+yAJAVYPtECg5Bz7eVkgZspOj1jIOOV0f5XbA32Ykzmgzq/gw6/HHJo9HAe4Ey/R2S1bS7nTJqoTsA1gWtGMItFy79oYRXJuJMpvUWH3Y/B/3rvheMkbtWaTLTfk7it1BDtjeihBU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735020272; c=relaxed/simple;
-	bh=TIcQp1sS0YOOa+MIDEoDb+1JeL4CyLUI3oYsyjQsuBc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=fhOgvnSHyQQRJlMbBNZ18ZdYSU5cG8lloSzWgr7NikhUhwxL1d1piFN+HN8jcgvan0S7CV6vpxGLdCUOv3G3HFkwvZL4vDOJ0EPGcEM7ZKC2JiGA1PACYqn4rALqYBdwhadA7w6So0QrqrcTd4U6havHp4brycdP0bMMuVn6lbY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=WFIivxu8; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BO18uVj015643;
-	Tue, 24 Dec 2024 06:04:21 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	kAVgFeuKYIFGyWX+9rl1YyyDccFO2P5ivc+JaaOAzoM=; b=WFIivxu8UMzS5qtk
-	SAAOpKlyHeHR0pMTmey0YJEQ+xuFQ3qZfkj8gYLVfZjtYkJdqSGe/s5XVn/9bXFr
-	03caBIVNGlCPmGemiktHlrFclBK5pzrlBL7ZzU2janikihQoXp02Q66W5bP+Mnwf
-	nLGgcbebCd6Clt72Yw5OWgN/uxZOJhdRPw5NsS5kXRIqSihqaRsdt/5wWBtBM25q
-	wSYaF461uAqUFD9S6bWVteMaenu4foC0jFXc7p818Z6p0aiPM1lw2cB4IA44h/eB
-	oHDmHZfleAWgRYXeOiwRLBSZS0Ow1l84+AmYot2vRuroFMlW8zrbccQCcP/PL+f2
-	uBiokA==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43qk1n0vts-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 24 Dec 2024 06:04:21 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4BO64KZ8021294
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 24 Dec 2024 06:04:20 GMT
-Received: from [10.216.2.152] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 23 Dec
- 2024 22:04:14 -0800
-Message-ID: <9bcbbd2b-7fe9-d0ad-656a-f759b14a32dc@quicinc.com>
-Date: Tue, 24 Dec 2024 11:34:10 +0530
+	s=arc-20240116; t=1735021972; c=relaxed/simple;
+	bh=N3mdxO6LqVTnrU1lTktN9cbBSGb7nc8+PDPMuZ7fHE8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=rdIWZdjkmmfUCTvMiOmZC0Oek86bqnfRf7ZXO1YIfhVJuC/5mfkaPxS9DIoCBkN26icppx7DDMVyGt30whGP6dW43IaNF4cb+UdgcEVBQH1Hd1uB3BRRYPIlsn9JbWLRojrbj3ghXOseKDDNlcWMmYs84iI9Nc9AGJrq8T1QMbM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=lhf9sVQw; arc=none smtp.client-ip=209.85.167.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f44.google.com with SMTP id 2adb3069b0e04-540254357c8so4927883e87.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Dec 2024 22:32:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1735021969; x=1735626769; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=bincwshAYNCJ6hJiNrJokdCtTwI1ZrZprXh0S5Xi7zE=;
+        b=lhf9sVQw5OW0V6JODMLPO2ioufKG4lUy9gc2kQh5eDdNDd0Ryw26nBLaAkvTBHJptn
+         78QfIxaAn9xlp/7LL/viROHoLXS3K9/rkLlcEAK3iBGzKaT6/OgJU+p/Ixybwn35Ydv7
+         2CIZzjH1upf3ZtPVxQhq5oNyvWCatmgINFhod9m36symZ+kgBBcM7QjLpyZ9NzuuUt84
+         VHQ/tElvc9mZNxfxDRXyxteEV+2V/gsSEwsL79VyObkAvLU5qXM4Xx2CpdRDQC/bkpNx
+         HaE61YVXrHtWVmlcbPeWwEzvUwi+0LDiEQ4Wbr86TPCNQYVlnAKp3KZr0TwC2ZFJGxeW
+         iYTw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1735021969; x=1735626769;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=bincwshAYNCJ6hJiNrJokdCtTwI1ZrZprXh0S5Xi7zE=;
+        b=PCzzaiPSCffZ1Y0+7oNtvgrB4xPynoHpogavA/PJSutRTOaA45+UjfJruvqFBlePZZ
+         y5yzZLdpVHrHKi4b6govchQYcRRQudhM3AfL8OG+qe9KrTTwtddv1FiC3/zFNmI/AAnM
+         zqWpdLffkzpCY4fmPHZAGKfjyY3BuuGISDr3lCfrLeFpSgVVnpvD8L31pey8wG39Mib+
+         dv9ybI9KZ8jQwtLyZesGrbUKI1swjZT3hCJV14rMKBCOfqZZgCHfMTH0oFgGHIcL+6Ke
+         JdRbHpdENmuElg7/QYLUXCJG7NsRHwCXUwd2+k65CZdCIYGuNuR5Q8O2Yo2kAaYUnxXf
+         5gEQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVvlw7wfXdKE2/aLWKG+VRnbe1+r5tBaCf0O1H1ur4PV9IIwICfeofqRBzD9hUSKb+FpVKDFWgTSPloR3ys@vger.kernel.org
+X-Gm-Message-State: AOJu0YyxHtWJm7w5xC/K36yJzDLSiaH91HtCPEOVKI0UCCrNVKXtjtO0
+	64As66E3KOotZ35BYXUxvAPFg774Q25fWvSn2myqg55Log5oafPgHnEl2es8bOo=
+X-Gm-Gg: ASbGnctU2jj4okyKWItZSlqun8RDP5tQePbx/Hv2SvHoVq1BdF5eUdZdhRhc5ofEz5F
+	Us5UdnKiWBNcY03dEE2gHo4172OTMUC43V1RVFjULUo4jokMnsAOPQ7e3eEE03Lxa4X4qFRhYz/
+	KFmfMgy8rvuApLSLIeWJ39UE6jr5E4i6dIfvCUtu+Ec5nonlR4QgSg6GxnGm7Tg8wunWg1g2SDr
+	RXG7DNcUwjs4hc3zrWQZIDQc9fncKJy/2xnFBm9gLhBjleRMXAJfM7wdOrAhbGkHYlCfWP4IcT/
+	fQgfbNxYm1gfiOGeJIg+fQOYc2t6uB/1OBDw
+X-Google-Smtp-Source: AGHT+IG2dUyPsRFhwHcHhqelrSh4mxVgYi+bc7D5YG6R7v8H+FahxoLp7u/H0DSLNi487A5ahAGY5w==
+X-Received: by 2002:a05:6512:3d22:b0:53e:39c2:f021 with SMTP id 2adb3069b0e04-54229533228mr5103052e87.15.1735021968071;
+        Mon, 23 Dec 2024 22:32:48 -0800 (PST)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-54223600508sm1535074e87.94.2024.12.23.22.32.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 23 Dec 2024 22:32:47 -0800 (PST)
+Date: Tue, 24 Dec 2024 08:32:44 +0200
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
+	Simona Vetter <simona@ffwll.ch>, linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+	freedreno@lists.freedesktop.org, Stephen Boyd <swboyd@chromium.org>, 
+	Doug Anderson <dianders@chromium.org>, Johan Hovold <johan@kernel.org>, 
+	Bjorn Andersson <quic_bjorande@quicinc.com>
+Subject: Re: [PATCH 2/4] drm/msm/dp: remove redundant ST_DISPLAY_OFF checks
+ in msm_dp_bridge_atomic_enable()
+Message-ID: <ldcydwcuwkwwng4d3b47pjz3ndhuhwerz6t3drwmifdzh7g3nl@3y6es72w74d7>
+References: <20241202-hpd_display_off-v1-0-8d0551847753@quicinc.com>
+ <20241202-hpd_display_off-v1-2-8d0551847753@quicinc.com>
+ <f6oh3kid5dfiqe7jy7j3d4gcv4evbtztzpgiygvzfsu6qlim2j@2vsulwcau6tr>
+ <58d28874-0fcc-42f4-831d-1f304f7d9d4f@quicinc.com>
+ <orsov5jni37n7m3xm4qdiurnfzdubxy45itmrb5gwi243l2l5t@vz623b5c35n5>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-Subject: Re: [PATCH v3 1/6] dt-bindings: PCI: Add binding for qps615
-Content-Language: en-US
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC: Rob Herring <robh@kernel.org>, <andersson@kernel.org>,
-        Bjorn Helgaas
-	<bhelgaas@google.com>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        =?UTF-8?Q?Krzysztof_Wilczy=c5=84ski?= <kw@linux.com>,
-        Manivannan Sadhasivam
-	<manivannan.sadhasivam@linaro.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        <cros-qcom-dts-watchers@chromium.org>,
-        Jingoo Han <jingoohan1@gmail.com>, Bartosz Golaszewski <brgl@bgdev.pl>,
-        <quic_vbadigan@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <linux-pci@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <20241112-qps615_pwr-v3-0-29a1e98aa2b0@quicinc.com>
- <20241112-qps615_pwr-v3-1-29a1e98aa2b0@quicinc.com>
- <20241115161848.GA2961450-robh@kernel.org>
- <74eaef67-18f2-c2a1-1b9c-ac97cefecc54@quicinc.com>
- <kssmfrzgo7ljxveys4rh5wqyaottufhjsdjnro7k7h7e6fdgcl@i7tdpohtny2x>
-From: Krishna Chaitanya Chundru <quic_krichai@quicinc.com>
-In-Reply-To: <kssmfrzgo7ljxveys4rh5wqyaottufhjsdjnro7k7h7e6fdgcl@i7tdpohtny2x>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: cQy9Z8NeHw4mH-I56iO1LBP7gaNYYblS
-X-Proofpoint-GUID: cQy9Z8NeHw4mH-I56iO1LBP7gaNYYblS
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 adultscore=0
- phishscore=0 lowpriorityscore=0 mlxlogscore=999 clxscore=1015 spamscore=0
- impostorscore=0 mlxscore=0 suspectscore=0 priorityscore=1501 bulkscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2411120000
- definitions=main-2412240047
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <orsov5jni37n7m3xm4qdiurnfzdubxy45itmrb5gwi243l2l5t@vz623b5c35n5>
 
+On Wed, Dec 04, 2024 at 12:32:55PM +0200, Dmitry Baryshkov wrote:
+> On Tue, Dec 03, 2024 at 07:24:46PM -0800, Abhinav Kumar wrote:
+> > 
+> > 
+> > On 12/3/2024 5:53 AM, Dmitry Baryshkov wrote:
+> > > On Mon, Dec 02, 2024 at 04:39:01PM -0800, Abhinav Kumar wrote:
+> > > > The checks in msm_dp_display_prepare() for making sure that we are in
+> > > > ST_DISPLAY_OFF OR ST_MAINLINK_READY seem redundant.
+> > > > 
+> > > > DRM fwk shall not issue any commits if state is not ST_MAINLINK_READY as
+> > > > msm_dp's atomic_check callback returns a failure if state is not ST_MAINLINK_READY.
+> > > 
+> > > Can the state change between atomic_check() and atomic_commit()?
+> > > 
+> > 
+> > Good question.
+> > 
+> > I cannot deny that such a possibility does exist.
+> > 
+> > From what I can see in the state machine today, the only possibility I can
+> > think of here is if a user very quickly removes the cable as soon as they
+> > connect the cable like so fast that the connect was not yet processed before
+> > disconnect.
+> 
+> If the cable has electrical issues, it is possible even w/o user
+> intervention.
 
+And the possible desynchronisation between DRM atomic states and HPD
+state machine brings back the topic: can we get rid of the state
+machine instead of trying to fix it? I'd rather see a patchset that
+removes it completely. The link training should go to the atomic_enable,
+etc, etc. Please? Pretty please? I'd rather see imperfect solution which
+has possible issues with some of the dongles (as they can be fixed later
+on) than having the imperfect HPD state machine which is known to break
+DRM framework expectations.
 
-On 12/24/2024 12:27 AM, Dmitry Baryshkov wrote:
-> On Sun, Nov 24, 2024 at 07:02:48AM +0530, Krishna Chaitanya Chundru wrote:
->>
->>
->> On 11/15/2024 9:48 PM, Rob Herring wrote:
->>> On Tue, Nov 12, 2024 at 08:31:33PM +0530, Krishna chaitanya chundru wrote:
->>>> Add binding describing the Qualcomm PCIe switch, QPS615,
->>>> which provides Ethernet MAC integrated to the 3rd downstream port
->>>> and two downstream PCIe ports.
->>>>
->>>> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
->>>> ---
->>>>    .../devicetree/bindings/pci/qcom,qps615.yaml       | 205 +++++++++++++++++++++
->>>>    1 file changed, 205 insertions(+)
->>>>
->>>> diff --git a/Documentation/devicetree/bindings/pci/qcom,qps615.yaml b/Documentation/devicetree/bindings/pci/qcom,qps615.yaml
->>>> new file mode 100644
->>>> index 000000000000..e6a63a0bb0f3
->>>> --- /dev/null
->>>> +++ b/Documentation/devicetree/bindings/pci/qcom,qps615.yaml
->>>> @@ -0,0 +1,205 @@
->>>> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
->>>> +%YAML 1.2
->>>> +---
->>>> +$id: http://devicetree.org/schemas/pci/qcom,qps615.yaml#
->>>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
->>>> +
->>>> +title: Qualcomm QPS615 PCIe switch
->>>> +
->>>> +maintainers:
->>>> +  - Krishna chaitanya chundru <quic_krichai@quicinc.com>
->>>> +
->>>> +description: |
->>>> +  Qualcomm QPS615 PCIe switch has one upstream and three downstream
->>>> +  ports. The 3rd downstream port has integrated endpoint device of
->>>> +  Ethernet MAC. Other two downstream ports are supposed to connect
->>>> +  to external device.
->>>> +
->>>> +  The QPS615 PCIe switch can be configured through I2C interface before
->>>> +  PCIe link is established to change FTS, ASPM related entry delays,
->>>> +  tx amplitude etc for better power efficiency and functionality.
->>>> +
->>>> +properties:
->>>> +  compatible:
->>>> +    enum:
->>>> +      - pci1179,0623
->>>> +
->>>> +  reg:
->>>> +    maxItems: 1
->>>> +
->>>> +  i2c-parent:
->>>> +    $ref: /schemas/types.yaml#/definitions/phandle-array
->>>> +    description: |
->>>
->>> Don't need '|' if no formatting to preserve.
->>>
->> ack
->>>> +      A phandle to the parent I2C node and the slave address of the device
->>>> +      used to do configure qps615 to change FTS, tx amplitude etc.
->>>> +    items:
->>>> +      - description: Phandle to the I2C controller node
->>>> +      - description: I2C slave address
->>>> +
->>>> +  vdd18-supply: true
->>>> +
->>>> +  vdd09-supply: true
->>>> +
->>>> +  vddc-supply: true
->>>> +
->>>> +  vddio1-supply: true
->>>> +
->>>> +  vddio2-supply: true
->>>> +
->>>> +  vddio18-supply: true
->>>> +
->>>> +  reset-gpios:
->>>> +    maxItems: 1
->>>> +    description:
->>>> +      GPIO controlling the RESX# pin.
->>>
->>> Is the PERST# or something else?
->>>
->> it is not PERST GPIO, it is similar to PERST in terms
->> of functionality which brings switch out from reset.
 > 
-> Do you have an actual PERST# on upstream facing port? Is it a separate
-> wire? Judging by the RB3 Gen2 this line is being used as PERST#
+> > 
+> > Similarly, if an irq_hpd fires after atomic_check but before
+> > atomic_enable(), and moreover if we hit the sink_count == 0 case in
+> > msm_dp_display_handle_port_status_changed() during this irq_hpd,
+> > 
+> > In both these cases, then we will transition to ST_DISCONNECT_PENDING state.
+> > 
+> > Without this change, we would have bailed out in the ST_DISCONNECT_PENDING
+> > case.
+> > 
+> > But other than this, I cannot atleast think of a case where a different
+> > state transition can happen between atomic_check() and atomic_commit()
+> > because for other transitions, I think we should be still okay.
+> > 
+> > But this is purely based on theoretical observation and hypothesis.
+> > 
+> > Is it better to add a check to bail out in the DISCONNECT_PENDING case?
 > 
-we had PERST# as a separate line. It has two inputs one is PERST# &
-other one is RESX# gpio functionality wise both are similar.
->>>> +
->>>> +  qps615,axi-clk-freq-hz:
->>>
->>> qps615 is not a vendor prefix.
->>>
->>>> +    description:
->>>> +      AXI clock rate which is internal bus of the switch
->>>> +      The switch only runs in two frequencies i.e 250MHz and 125MHz.
->>>> +    enum: [125000000, 250000000]
->>>> +
->>>> +allOf:
->>>> +  - $ref: "#/$defs/qps615-node"
->>>> +
->>>> +patternProperties:
->>>> +  "@1?[0-9a-f](,[0-7])?$":
->>>
->>> You have 3 ports. So isn't this fixed and limited to 0-2?
->>>
->> sure I will change it to below as suggested
->> "@1?[0-3](,[0-1])?$"
+> I think so, please.
 > 
-> Why do you still need '1?' ?
+> > 
+> > OR document this as "To-do: Need to bail out if DISCONNECT_PENDING" because
+> > even if I add this check, I dont know if can make sure this can be validated
+> > as the check could never hit.
+> > 
+> > 
+> > > > 
+> > > > For the ST_DISPLAY_OFF check, its mainly to guard against a scenario that
+> > > > there is an atomic_enable() without a prior atomic_disable() which once again
+> > > > should not really happen.
+> > > > 
+> > > > To simplify the code, get rid of these checks.
+> > > > 
+> > > > Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+> > > > ---
+> > > >   drivers/gpu/drm/msm/dp/dp_display.c | 6 ------
+> > > >   1 file changed, 6 deletions(-)
+> > > > 
+> > > > diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+> > > > index 992184cc17e4..614fff09e5f2 100644
+> > > > --- a/drivers/gpu/drm/msm/dp/dp_display.c
+> > > > +++ b/drivers/gpu/drm/msm/dp/dp_display.c
+> > > > @@ -1513,12 +1513,6 @@ void msm_dp_bridge_atomic_enable(struct drm_bridge *drm_bridge,
+> > > >   		return;
+> > > >   	}
+> > > > -	state = msm_dp_display->hpd_state;
+> > > > -	if (state != ST_DISPLAY_OFF && state != ST_MAINLINK_READY) {
+> > > > -		mutex_unlock(&msm_dp_display->event_mutex);
+> > > > -		return;
+> > > > -	}
+> > > > -
+> > > >   	rc = msm_dp_display_set_mode(dp, &msm_dp_display->msm_dp_mode);
+> > > >   	if (rc) {
+> > > >   		DRM_ERROR("Failed to perform a mode set, rc=%d\n", rc);
+> > > > 
+> > > > -- 
+> > > > 2.34.1
+> > > > 
+> > > 
 > 
-we want to represent integrated ethernet MAC also here and to represent 
-it we need '1' as it is multi function device. I will update the
-description to reflect the same.
->>>> +    description: child nodes describing the internal downstream ports
->>>> +      the qps615 switch.
->>>
->>> Please be consistent with starting after the ':' or on the next line.
->>>
->>> And start with capital C.
->>>
->>>
->> ack
->>
->>>> +    type: object
->>>> +    $ref: "#/$defs/qps615-node"
->>>> +    unevaluatedProperties: false
->>>> +
->>>> +$defs:
->>>> +  qps615-node:
->>>> +    type: object
->>>> +
->>>> +    properties:
->>>> +      qcom,l0s-entry-delay-ns:
->>>> +        description: Aspm l0s entry delay.
->>>> +
->>>> +      qcom,l1-entry-delay-ns:
->>>> +        description: Aspm l1 entry delay.
->>>
->>> These should probably be common being standard PCIe things. Though, why
->>> are they needed? I'm sure the timing is defined by the PCIe spec, so
->>> they are not compliant?
->>>
->> Usually the firmware in the endpoints/switches should do this these
->> configurations. But the qps615 PCIe switch doesn't have any firmware
->> running to configure these. So the hardware exposes i2c interface to
->> configure these before link training.
-> 
-> If they are following the standard, why do you need to have them in the
-> DT? Can you hardcode thos evalues in the driver?
-> 
-These values can be changed from platform to platform based upon the 
-different power goals and latency requirements so we can't have hard 
-coded values.
+> -- 
+> With best wishes
+> Dmitry
 
-And even DWC controllers also provide provision to change these values 
-currently we are not using them. As bjorn suggested if we move these to
-common pcie bindings these can be used in future by controller drivers also.
->>>> +
->>>> +      qcom,tx-amplitude-millivolt:
->>>> +        $ref: /schemas/types.yaml#/definitions/uint32
->>>> +        description: Change Tx Margin setting for low power consumption.
->>>> +
->>>> +      qcom,no-dfe-support:
->>>> +        type: boolean
->>>> +        description: Disable DFE (Decision Feedback Equalizer), which mitigates
->>>> +          intersymbol interference and some reflections caused by impedance mismatches.
->>>> +
->>>> +      qcom,nfts:
->>>> +        $ref: /schemas/types.yaml#/definitions/uint32
->>>> +        description:
->>>> +          Number of Fast Training Sequence (FTS) used during L0s to L0 exit
->>>> +          for bit and Symbol lock.
->>>
->>> Also something common.
->>>
->>> The problem I have with all these properties is you are using them on
->>> both the upstream and downstream sides of the PCIe links. They belong in
->>> either the device's node (downstream) or the bus's node (upstream).
->>>
->> This switch allows us to configure both upstream, downstream ports and
->> also embedded Ethernet port which is internal to the switch. These
->> properties are applicable for all of those.
->>>> +
->>>> +    allOf:
->>>> +      - $ref: /schemas/pci/pci-bus.yaml#
->>>
->>> pci-pci-bridge.yaml is more specific and closer to what this device is.
->>>
->> I tried this now, I was getting warning saying the compatible
->> /local/mnt/workspace/skales/kobj/Documentation/devicetree/bindings/pci/qcom,qps615.example.dtb:
->> pcie@0,0: compatible: ['pci1179,0623'] does not contain items matching the
->> given schema
->>          from schema $id: http://devicetree.org/schemas/pci/qcom,qps615.yaml#
->> /local/mnt/workspace/skales/kobj/Documentation/devicetree/bindings/pci/qcom,qps615.example.dtb:
->> pcie@0,0: Unevaluated properties are not allowed ('#address-cells',
->> '#size-cells', 'bus-range', 'device_type', 'ranges' were unexpected)
->>
->> I think pci-pci-bridge is expecting the compatible string in this format
->> only "pciclass,0604".
-> 
-> I think the pci-pci-bridge schema requires to have "pciclass,0604" among
-> other compatibles. So you should be able to do something like:
-> 
-> compatible = "pci1179,0623", "pciclass,0604";
-> 
-> At least if follows PCI Bus Binding to Open Firmware document.
-> 
-let us try this and come back.
->>
->>>> +
->>>> +unevaluatedProperties: false
->>>> +
->>>> +required:
->>>> +  - vdd18-supply
->>>> +  - vdd09-supply
->>>> +  - vddc-supply
->>>> +  - vddio1-supply
->>>> +  - vddio2-supply
->>>> +  - vddio18-supply
->>>> +  - i2c-parent
->>>> +  - reset-gpios
->>>> +
->>>> +examples:
->>>> +  - |
->>>> +
->>>> +    #include <dt-bindings/gpio/gpio.h>
->>>> +
->>>> +    pcie {
->>>> +        #address-cells = <3>;
->>>> +        #size-cells = <2>;
->>>> +
->>>> +        pcie@0 {
->>>> +            device_type = "pci";
->>>> +            reg = <0x0 0x0 0x0 0x0 0x0>;
->>>> +
->>>> +            #address-cells = <3>;
->>>> +            #size-cells = <2>;
->>>> +            ranges;
->>>> +            bus-range = <0x01 0xff>;
->>>> +
->>>> +            pcie@0,0 {
->>>> +                compatible = "pci1179,0623";
->>>> +                reg = <0x10000 0x0 0x0 0x0 0x0>;
->>>> +                device_type = "pci";
->>>> +                #address-cells = <3>;
->>>> +                #size-cells = <2>;
->>>> +                ranges;
->>>> +                bus-range = <0x02 0xff>;
->>>> +
->>>> +                i2c-parent = <&qup_i2c 0x77>;
->>>> +
->>>> +                vdd18-supply = <&vdd>;
->>>> +                vdd09-supply = <&vdd>;
->>>> +                vddc-supply = <&vdd>;
->>>> +                vddio1-supply = <&vdd>;
->>>> +                vddio2-supply = <&vdd>;
->>>> +                vddio18-supply = <&vdd>;
->>>> +
->>>> +                reset-gpios = <&gpio 1 GPIO_ACTIVE_LOW>;
->>>> +
->>>> +                pcie@1,0 {
->>>> +                    reg = <0x20800 0x0 0x0 0x0 0x0>;
->>>> +                    #address-cells = <3>;
->>>> +                    #size-cells = <2>;
->>>> +                    device_type = "pci";
->>>> +                    ranges;
->>>> +                    bus-range = <0x03 0xff>;
->>>> +
->>>> +                    qcom,no-dfe-support;
->>>> +                };
->>>> +
->>>> +                pcie@2,0 {
->>>> +                    reg = <0x21000 0x0 0x0 0x0 0x0>;
->>>> +                    #address-cells = <3>;
->>>> +                    #size-cells = <2>;
->>>> +                    device_type = "pci";
->>>> +                    ranges;
->>>> +                    bus-range = <0x04 0xff>;
->>>> +
->>>> +                    qcom,nfts = <10>;
->>>> +                };
->>>> +
->>>> +                pcie@3,0 {
->>>> +                    reg = <0x21800 0x0 0x0 0x0 0x0>;
->>>> +                    #address-cells = <3>;
->>>> +                    #size-cells = <2>;
->>>> +                    device_type = "pci";
->>>> +                    ranges;
->>>> +                    bus-range = <0x05 0xff>;
->>>> +
->>>> +                    qcom,tx-amplitude-millivolt = <10>;
->>>> +                    pcie@0,0 {
->>>> +                        reg = <0x50000 0x0 0x0 0x0 0x0>;
->>>> +                        #address-cells = <3>;
->>>> +                        #size-cells = <2>;
->>>> +                        device_type = "pci";
->>>
->>> There's a 2nd PCI-PCI bridge?
->> This the embedded ethernet port which is as part of DSP3.
-> 
-> So is there an adidtional bus for that ethernet device?
-> 
-yes for ethernet it has aditional bus assigned.
-
->>
->> - Krishna Chaitanya.
->>>
->>>> +                        ranges;
->>>> +
->>>> +                        qcom,l1-entry-delay-ns = <10>;
->>>> +                    };
->>>> +
->>>> +                    pcie@0,1 {
->>>> +                        reg = <0x50100 0x0 0x0 0x0 0x0>;
->>>> +                        #address-cells = <3>;
->>>> +                        #size-cells = <2>;
->>>> +                        device_type = "pci";
->>>> +                        ranges;
->>>> +
->>>> +                        qcom,l0s-entry-delay-ns = <10>;
->>>> +                    };
-> 
-> What is this?
->
-Ethernet endpoint is a multi function device which has 2 functions
-This node represents 2nd node. I will update the description to
-reflect the same.
-
-- Krishna Chaitanya.
-
->>>> +                };
->>>> +            };
->>>> +        };
->>>> +    };
->>>>
->>>> -- 
->>>> 2.34.1
->>>>
-> 
+-- 
+With best wishes
+Dmitry
 
