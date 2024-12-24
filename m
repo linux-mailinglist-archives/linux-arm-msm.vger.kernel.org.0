@@ -1,221 +1,175 @@
-Return-Path: <linux-arm-msm+bounces-43244-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-43245-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id E708C9FBC64
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Dec 2024 11:34:12 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id E06919FBC84
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Dec 2024 11:40:39 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id A5D241882A12
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Dec 2024 10:25:15 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C3C331611EA
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Dec 2024 10:34:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8CDAC1DED6A;
-	Tue, 24 Dec 2024 10:18:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 508BC192B69;
+	Tue, 24 Dec 2024 10:34:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="KUmCXd4o"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Cjfsr1/+"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f46.google.com (mail-lf1-f46.google.com [209.85.167.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE15E1DED55
-	for <linux-arm-msm@vger.kernel.org>; Tue, 24 Dec 2024 10:18:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A37F156F54;
+	Tue, 24 Dec 2024 10:34:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735035485; cv=none; b=F+hzj8vQU8QgQ0UeoIjH+4p5uBeGhQPouz/xcg2orecQdcwfLllEf9Dy56qT4B3jfciGsta+UZcrqEJX66PSbC3LdzHXX1m0cTrJ/qaoqdBBMhMkBEFutEWwu0l9x/1MXCS8fXPQGeNyDhtTf3sY0JIqXZVo12xrbPmIJ3kUqlg=
+	t=1735036461; cv=none; b=lSNNiTQY+TAhcQXOJPhkZaLpf5tCDqPekLzoctV0wfW6qf6jD9avk6YuI+rez9B8Q21Itr4T8ayY8HXEYDnacnb1oZRIL2pM2WwD7zfFmVWf1OUXI72kEQkTlRa1SdQ1LJAwsqvKGlwa7ZQiN2J4M1mVcGoJWkRsmAwkoucsa0M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735035485; c=relaxed/simple;
-	bh=x2bm9LjU8gDnzSnTK9zY7r1UhakQ0COQvQ8bOcHGsI4=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=gtUldgE04EPKetSAPL1GAYgNd8o51B1Jn9sThrslCyd+3FpN2PCQztdZf1DaoskL7Wb3Vvs7kRp3MbWjnpqmSd+c/EYa8zKGbwEPCXLuQkLOk5ID/Qh+adYKlJhLppl1kVi2gJFoHcl2pW7LTicMBbGehBNROxyII354fvkyKhQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=KUmCXd4o; arc=none smtp.client-ip=209.85.167.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f46.google.com with SMTP id 2adb3069b0e04-53e384e3481so4630153e87.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Dec 2024 02:18:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1735035482; x=1735640282; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=VV7cJg54Wosh+nhK6rc7uL5eYZ7PTz0Z5q2l7WfMjeM=;
-        b=KUmCXd4oZc9w2HwaTK3rMgmbQHi/rndzEfwx5Jkzo1l+GCitnyEI8o+SMuMptgIe2v
-         RPTjTWCKcUZK+MPIT/OnpLAPafGdkCPJMwBJepakdmo/BEX3OkD2cwazCsP4dC1zKkAy
-         tybcb/XBiPUGcctfJo8gH7Ez7Uid6+BCX3HKaweJnUMHHCfpYZ8rTUnZhvmM1GKqPedT
-         ARdDp2aNNEbYjAz56CNx/4yO5TL0jcICjvHmMtXc2yTUi6ZXnQGo253k0Ro0WICJMm1p
-         +Wn6f3Sir2KYT+un8x30QSWneCQPdkUkon6Yyswm/eMq+QOtYvPgQAbszNGFs5HsyqCp
-         jcfw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1735035482; x=1735640282;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=VV7cJg54Wosh+nhK6rc7uL5eYZ7PTz0Z5q2l7WfMjeM=;
-        b=suOmh1c/aCZZQwff04lac1asY51gS4LqXGo0CdJET8P8o8FRfF+CtNCriSltz8Qz8Z
-         qi6ZNsi7KVhdf86rdwrpAYXQN5GU+2CX8xYFx46PwhBcn6Hz7X1RTLbmq/DPgq4na6SO
-         cHZqkrDI024ux43JOBJaFMR+LGtL5/tSeLtSsnKr2fS9cC/hB6hBlU3am/zZYxG2KiXw
-         EH+p8kpkfQdyYoeu4G6/7rzMQad9vdwjAc1meHkBHRPN3GmXSy8G7ryrf1CAkz4UZnhG
-         TcPpUNnjdJvNGyD1qYMAab+Y96KSO6RsyOeb3Upq4Pn+1TNIXk2GkhaKE8hqjc6W0Jgr
-         LQYg==
-X-Forwarded-Encrypted: i=1; AJvYcCVskSacGhRhp3jtuqb4BaphmzuMZilTedT0VwjwX4fi8PQAaTtaeTdGc7Rime0kIWHkRtJ4DQdLIfvUDZqs@vger.kernel.org
-X-Gm-Message-State: AOJu0Yzdpfbfo5EavWn2l1ejCngi92IWEPLen7V5Qo5xDLs9sdCMqZDI
-	aPU8ppStch8fgifxGnJ9ZnpMlgJ/TZ5tDu8jok2O+gRCje4MW/N57mYF67KtSHM=
-X-Gm-Gg: ASbGncsQ2FeKflZ/HaU0TmEncqSXiMo7i4bYAKwnI8Sr6l7u/INXRBup9gu0XDpZ8V0
-	YrQkVNQdlXiIa3ZtPoxncoHp4KWyFV+QN3poxeGOgf2N5EDssaRD7JBzuzHOwvOlfFJdRJywx2m
-	bKlOQDIjtkHDxpYwLIP/QAZ+IHjfTBr7G8NRcmwniknzTyB1TGCPg2JkBVgnE+z81Li6p4dZ4fN
-	ndLKyIBm0a5e3TkZwAc4ZsEDSDx3NyNIlhN/PmBvIObJf8XI6I4//pFU6kE5YxC
-X-Google-Smtp-Source: AGHT+IGlNcgzvUW59ZQazvkQf8MOzqeKaMh2K8dXZPiTAEG27e8HyuuOJSHTPkh2Wf+t9QgoXrL/Mw==
-X-Received: by 2002:a05:6512:1281:b0:540:2ff1:3f27 with SMTP id 2adb3069b0e04-54229561ac5mr5328432e87.42.1735035481972;
-        Tue, 24 Dec 2024 02:18:01 -0800 (PST)
-Received: from umbar.lan ([192.130.178.90])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-54223600596sm1576865e87.92.2024.12.24.02.17.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 24 Dec 2024 02:18:01 -0800 (PST)
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Tue, 24 Dec 2024 12:17:20 +0200
-Subject: [PATCH v3 21/21] arm64: dts: qcom: q[dr]u1000: move board clocks
- to qdu1000.dtsi file
+	s=arc-20240116; t=1735036461; c=relaxed/simple;
+	bh=9dq5b3qgPFI9QCYffJk5mFBak/vrXyL/4DK0D+Zwpvs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=jvR5QqlCF54gW9McpxIJ8PUCucMdB8CWz+x2VmW11efR1z4NZQJCqvAA8wOB8RUvMvr/w7AfIOhbd9Gt6blRbG12wuaWo560on4Q6Gwf+4zsg9+vW/O/fcecb21dBaS7XwRxNCCeztZomsRT7idlMbQTclBZ6I9WCOFyJHmGziQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Cjfsr1/+; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E39D7C4CED0;
+	Tue, 24 Dec 2024 10:34:19 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1735036460;
+	bh=9dq5b3qgPFI9QCYffJk5mFBak/vrXyL/4DK0D+Zwpvs=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=Cjfsr1/+qefECx0GzNATBEdM2XLoXfvhQkpjnZcfe3oYXDX19lRqw/nUFBAIWMumL
+	 kYJEk3stFIpRITaJNYUd29whZ7zpJjj0ISfRZhJjE7lY/tSIVZ6o+7sKYgROuVj+22
+	 yo6CoeVe9R1pXqWuyXtAakvsNiViLS+o+uBQMxzaUtKz2yoF7w58rsqezV8fwP3iXX
+	 vLdDDRles65vGP2aERbegVD6gGbz6j7vTpX8SGTy+QgmH0kOodnX1dQQcVvPf3Bkq7
+	 D9N+6itNsDhFs3+2iWIx7n+8YN7BqnnP2/ztUUbjv90ukZs5b3cHuMKENovRhlyhaX
+	 Uu4njgyr5VoPA==
+Date: Tue, 24 Dec 2024 16:04:16 +0530
+From: Vinod Koul <vkoul@kernel.org>
+To: Md Sadre Alam <quic_mdalam@quicinc.com>
+Cc: corbet@lwn.net, thara.gopinath@gmail.com, herbert@gondor.apana.org.au,
+	davem@davemloft.net, kees@kernel.org, dave.jiang@intel.com,
+	dmaengine@vger.kernel.org, linux-doc@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-crypto@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, quic_srichara@quicinc.com,
+	quic_varada@quicinc.com, quic_utiwari@quicinc.com
+Subject: Re: [PATCH v5 02/12] dmaengine: add DMA_PREP_LOCK and
+ DMA_PREP_UNLOCK flag
+Message-ID: <Z2qOKHsYpy8kcwlv@vaman>
+References: <20241212041639.4109039-1-quic_mdalam@quicinc.com>
+ <20241212041639.4109039-3-quic_mdalam@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20241224-fix-board-clocks-v3-21-e9b08fbeadd3@linaro.org>
-References: <20241224-fix-board-clocks-v3-0-e9b08fbeadd3@linaro.org>
-In-Reply-To: <20241224-fix-board-clocks-v3-0-e9b08fbeadd3@linaro.org>
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>
-Cc: Leo Yan <leo.yan@linux.dev>, Georgi Djakov <djakov@kernel.org>, 
- Shawn Guo <shawn.guo@linaro.org>, Stephan Gerhold <stephan@gerhold.net>, 
- Zac Crosby <zac@squareup.com>, 
- =?utf-8?q?Bastian_K=C3=B6cher?= <git@kchr.de>, 
- Jeremy McNicoll <jeremymc@redhat.com>, 
- Rohit Agarwal <quic_rohiagar@quicinc.com>, 
- Melody Olvera <quic_molvera@quicinc.com>, 
- cros-qcom-dts-watchers@chromium.org, Stephen Boyd <swboyd@chromium.org>, 
- Rajendra Nayak <quic_rjendra@quicinc.com>, 
- Martin Botka <martin.botka@somainline.org>, 
- Jonathan Marek <jonathan@marek.ca>, Vinod Koul <vkoul@kernel.org>, 
- Tengfei Fan <quic_tengfan@quicinc.com>, 
- Fenglin Wu <quic_fenglinw@quicinc.com>, 
- Neil Armstrong <neil.armstrong@linaro.org>, 
- Abel Vesa <abel.vesa@linaro.org>, 
- Alexandru Marc Serdeliuc <serdeliuk@yahoo.com>, 
- Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>, 
- Sibi Sankar <quic_sibis@quicinc.com>, 
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>, Jun Nie <jun.nie@linaro.org>, 
- Max Chen <mchen@squareup.com>, Vincent Knecht <vincent.knecht@mailoo.org>, 
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2729;
- i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
- bh=x2bm9LjU8gDnzSnTK9zY7r1UhakQ0COQvQ8bOcHGsI4=;
- b=owGbwMvMwMXYbdNlx6SpcZXxtFoSQ3pWl/KXh5Oz0rvu69ybk3Bv5tWTTcLs5/z+v7zC+qfU7
- 3/A1tXPOhmNWRgYuRhkxRRZfApapsZsSg77sGNqPcwgViaQKQxcnAIwkdjr7P+Tavjfu7oWmrR/
- /MQvKhJ9aUO3V0WNv7GggGUp1zoxo2JBnrVx90IW/DnuEOfzdWfps3COlGoXId1N4nYxR1j7Kxb
- seKb2TTMxLyd7cnYZp6DCZJFXpbkSNWmzhDT48laa7H/zO7dnrZ7BkYd+32e28h3P75EwfcKk+v
- xB0X2ZsytrGyqOe1sLm4Z9/1FWcffg3fkbZRyEe7J7nI9K7Fd84d9h/GFqspLEb56QnLrzx/7O/
- 13oq10+6f1VP7eQK5aXu3l3yKTUbKj9o7rjwjVxXi053+kWis0mXgwtX3cX3vl8+uub7k9JS39W
- hknKFywqquJi+654LThl7YeIDxECt+XvxGvl/XhoVfoNAA==
-X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
- fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241212041639.4109039-3-quic_mdalam@quicinc.com>
 
-The QDU1000 and QRU1000 devices define XO and clocks completely in the
-board files, despite qdu1000.dtsi file referencing them directly. Follow
-the example of other platforms and move clock definitions to the
-qdu1000.dtsi file.
+On 12-12-24, 09:46, Md Sadre Alam wrote:
+> Add lock and unlock flag support on command descriptor.
+> Once lock set in requester pipe, then the bam controller
+> will lock all others pipe and process the request only
+> from requester pipe. Unlocking only can be performed from
+> the same pipe.
+> 
+> If DMA_PREP_LOCK flag passed in command descriptor then requester
+> of this transaction wanted to lock the BAM controller for this
+> transaction so BAM driver should set LOCK bit for the HW descriptor.
+> 
+> If DMA_PREP_UNLOCK flag passed in command descriptor then requester
+> of this transaction wanted to unlock the BAM controller.so BAM driver
+> should set UNLOCK bit for the HW descriptor.
+> 
+> BAM IP version 1.4.0 and above only supports this LOCK/UNLOCK
+> feature.
+> 
+> Signed-off-by: Md Sadre Alam <quic_mdalam@quicinc.com>
+> ---
+> 
+> Change in [v5]
+> 
+> * Added DMA_PREP_LOCK and DMA_PREP_UNLOCK flag support
+> 
+> Change in [v4]
+> 
+> * This patch was not included in v4
+> 
+> Change in [v3]
+> 
+> * This patch was not included in v3
+> 
+> Change in [v2]
+> 
+> * This patch was not included in v2
+>  
+> Change in [v1]
+> 
+> * This patch was not included in v1
+> 
+>  Documentation/driver-api/dmaengine/provider.rst | 15 +++++++++++++++
+>  include/linux/dmaengine.h                       |  6 ++++++
+>  2 files changed, 21 insertions(+)
+> 
+> diff --git a/Documentation/driver-api/dmaengine/provider.rst b/Documentation/driver-api/dmaengine/provider.rst
+> index 3085f8b460fa..5f30c20f94f3 100644
+> --- a/Documentation/driver-api/dmaengine/provider.rst
+> +++ b/Documentation/driver-api/dmaengine/provider.rst
+> @@ -628,6 +628,21 @@ DMA_CTRL_REUSE
+>    - This flag is only supported if the channel reports the DMA_LOAD_EOT
+>      capability.
+>  
+> +- DMA_PREP_LOCK
+> +
+> +  - If set, the BAM will lock all other pipes not related to the current
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- arch/arm64/boot/dts/qcom/qdu1000-idp.dts | 14 --------------
- arch/arm64/boot/dts/qcom/qdu1000.dtsi    | 14 ++++++++++++++
- arch/arm64/boot/dts/qcom/qru1000-idp.dts | 14 --------------
- 3 files changed, 14 insertions(+), 28 deletions(-)
+Why BAM, the generic API _cannot_ be implementation specific, make this
+as a generic one please
 
-diff --git a/arch/arm64/boot/dts/qcom/qdu1000-idp.dts b/arch/arm64/boot/dts/qcom/qdu1000-idp.dts
-index c73eda75faf8206181764df4d1ea32f96c9cfcd0..a36a56f03c2d112c6afdae1272b81edff890fca1 100644
---- a/arch/arm64/boot/dts/qcom/qdu1000-idp.dts
-+++ b/arch/arm64/boot/dts/qcom/qdu1000-idp.dts
-@@ -22,20 +22,6 @@ chosen {
- 		stdout-path = "serial0:115200n8";
- 	};
- 
--	clocks {
--		xo_board: xo-board-clk {
--			compatible = "fixed-clock";
--			clock-frequency = <19200000>;
--			#clock-cells = <0>;
--		};
--
--		sleep_clk: sleep-clk {
--			compatible = "fixed-clock";
--			clock-frequency = <32764>;
--			#clock-cells = <0>;
--		};
--	};
--
- 	ppvar_sys: ppvar-sys-regulator {
- 		compatible = "regulator-fixed";
- 		regulator-name = "ppvar_sys";
-diff --git a/arch/arm64/boot/dts/qcom/qdu1000.dtsi b/arch/arm64/boot/dts/qcom/qdu1000.dtsi
-index 47c0dd31aaf2e42d6d85411956207b2509a605b0..30fa8f5f992ff5b440db9871a254b60acddbac94 100644
---- a/arch/arm64/boot/dts/qcom/qdu1000.dtsi
-+++ b/arch/arm64/boot/dts/qcom/qdu1000.dtsi
-@@ -21,6 +21,20 @@ / {
- 
- 	chosen: chosen { };
- 
-+	clocks {
-+		xo_board: xo-board-clk {
-+			compatible = "fixed-clock";
-+			clock-frequency = <19200000>;
-+			#clock-cells = <0>;
-+		};
-+
-+		sleep_clk: sleep-clk {
-+			compatible = "fixed-clock";
-+			clock-frequency = <32764>;
-+			#clock-cells = <0>;
-+		};
-+	};
-+
- 	cpus {
- 		#address-cells = <2>;
- 		#size-cells = <0>;
-diff --git a/arch/arm64/boot/dts/qcom/qru1000-idp.dts b/arch/arm64/boot/dts/qcom/qru1000-idp.dts
-index 52ce51e56e2fdc51c05fb637ed4b1922801ff94b..f35e3111f516ca1ab59011f8a4145d3e21e0a221 100644
---- a/arch/arm64/boot/dts/qcom/qru1000-idp.dts
-+++ b/arch/arm64/boot/dts/qcom/qru1000-idp.dts
-@@ -22,20 +22,6 @@ chosen {
- 		stdout-path = "serial0:115200n8";
- 	};
- 
--	clocks {
--		xo_board: xo-board-clk {
--			compatible = "fixed-clock";
--			clock-frequency = <19200000>;
--			#clock-cells = <0>;
--		};
--
--		sleep_clk: sleep-clk {
--			compatible = "fixed-clock";
--			clock-frequency = <32764>;
--			#clock-cells = <0>;
--		};
--	};
--
- 	ppvar_sys: ppvar-sys-regulator {
- 		compatible = "regulator-fixed";
- 		regulator-name = "ppvar_sys";
+Anyone can use this new method and not just BAM...
+
+
+> +    pipe group, and keep handling the current pipe only.
+> +
+> +  - All pipes not within this group will be locked by this pipe upon lock
+> +    event.
+> +
+> +  - only pipes which are in the same group and relate to the same Environment
+> +    Execution(EE) will not be locked by a certain pipe.
+> +
+> +- DMA_PREP_UNLOCK
+> +
+> +  - If set, BAM will release all locked pipes
+> +
+>  General Design Notes
+>  ====================
+>  
+> diff --git a/include/linux/dmaengine.h b/include/linux/dmaengine.h
+> index 346251bf1026..8ebd43a998a7 100644
+> --- a/include/linux/dmaengine.h
+> +++ b/include/linux/dmaengine.h
+> @@ -200,6 +200,10 @@ struct dma_vec {
+>   *  transaction is marked with DMA_PREP_REPEAT will cause the new transaction
+>   *  to never be processed and stay in the issued queue forever. The flag is
+>   *  ignored if the previous transaction is not a repeated transaction.
+> + *  @DMA_PREP_LOCK: tell the driver that there is a lock bit set on command
+> + *  descriptor.
+> + *  @DMA_PREP_UNLOCK: tell the driver that there is a un-lock bit set on command
+> + *  descriptor.
+>   */
+>  enum dma_ctrl_flags {
+>  	DMA_PREP_INTERRUPT = (1 << 0),
+> @@ -212,6 +216,8 @@ enum dma_ctrl_flags {
+>  	DMA_PREP_CMD = (1 << 7),
+>  	DMA_PREP_REPEAT = (1 << 8),
+>  	DMA_PREP_LOAD_EOT = (1 << 9),
+> +	DMA_PREP_LOCK = (1 << 10),
+> +	DMA_PREP_UNLOCK = (1 << 11),
+>  };
+>  
+>  /**
+> -- 
+> 2.34.1
 
 -- 
-2.39.5
-
+~Vinod
 
