@@ -1,60 +1,59 @@
-Return-Path: <linux-arm-msm+bounces-43263-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-43264-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id D6A6F9FBF9F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Dec 2024 16:26:01 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 064919FBFA5
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Dec 2024 16:26:40 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 5495B7A1EEE
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Dec 2024 15:25:55 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9CD9A164FE8
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Dec 2024 15:26:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 72CC41DA314;
-	Tue, 24 Dec 2024 15:25:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C31B71DC99F;
+	Tue, 24 Dec 2024 15:25:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gzd2AjG4"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MtH05eoo"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 383B31D79B6;
-	Tue, 24 Dec 2024 15:25:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95E78142E76;
+	Tue, 24 Dec 2024 15:25:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735053929; cv=none; b=EcnwQED9mjnfdPRvzLOZNsgZo2tIMjuPwcn3x2hk6jXHmNT4hd1x7WMI+J/oTO7P+wJeniCqZSqQdaAYVPXgI7fMzdURQx1oZUVwDsBFTba6gTh/6+RX8j059yMZaMRBqvM6rvzYqNcrEXNzaD4p9igawTf1XGbNXp1070FZMbo=
+	t=1735053935; cv=none; b=U+zkUW1J95SL3wIfSCqImHEBUZYjm+Yl7tfCoyx+megyV0cq1OijhgEPn10C14Wn6ig7ZrCuIHP/Vs6zU3ZoP1Vf4AXLpQ/5m2UWGPQt9F0cF9H7lZJpNMLZzybHBadTKtKc20A77iM0P/7wiMZNaGCm1I4oEj1qZGeEZgv6ATE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735053929; c=relaxed/simple;
-	bh=P75T60ObovkCRBQsZ7WvanBGGd4jp9pTkykBw9rzs/E=;
+	s=arc-20240116; t=1735053935; c=relaxed/simple;
+	bh=1DxrSRX28T16OYIeVajbXDjYb7/6hcd940kOIRXJq/w=;
 	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=UU9booCs2IUYKtg48Br6Apaf5buZv5vb6jvHSwmwFWuSIDjGkEPZcT+cx8skKsKjVO7DZ7Z09AsJcLUr1CwWPKAW65p1mOJKC4ilNxb31F8H6sZVbGrPjLodIABcHYh1ZiSKs1ZV7kWA8mARgBT5aVbjRB4ZiVOALkCtLlIAsJY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gzd2AjG4; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72DF7C4CEDC;
-	Tue, 24 Dec 2024 15:25:24 +0000 (UTC)
+	 MIME-Version:Content-Type; b=rOTQqlntrG0RC9DAfFOJV02v1CXWV6Ixd5TF2la56RzMMJq9ujBDvTweD2Q2QZbsVm8riaaOuGWI9htGS4w9afAqRdOal3Dk2k32jlPN12Qf6GnZiWRAr03iiDM7WN9ZFZY3+E18lCzqbbx+ujRJRHxyXAcdGtUd1ZPN4khf6w0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MtH05eoo; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE004C4CED4;
+	Tue, 24 Dec 2024 15:25:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1735053929;
-	bh=P75T60ObovkCRBQsZ7WvanBGGd4jp9pTkykBw9rzs/E=;
+	s=k20201202; t=1735053935;
+	bh=1DxrSRX28T16OYIeVajbXDjYb7/6hcd940kOIRXJq/w=;
 	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-	b=gzd2AjG48t36e4QBIUVCQZMoszxAQMsjXRRKkTbgEtjDw9qX+uMPAh0i0yTXpZbkD
-	 rYS+ukGirvETZuVZK4g/7tL0N1XEJm/As3+cJPcCe0dORR5frS3fWCJJSJorLxfokz
-	 rqD7M2MEl8lGGwE1Txie0f0IoIt3kx9jENlrDGXzD0HMQEeflt/BIkMbYcf7jAyNvL
-	 joREUhbdOJAh0ZK2pw9bec/xOpC5M8SJ7nbHKGzUQRXaldJS8rv+sGzpFxMwWVp+6q
-	 eyCMQqYY6bk8X6TjocmQZuusSgbqlMXcfAA+HEWE7eoZ05RRUEB3OAS0VGM4psjA+t
-	 nHyzRGc/Axu7A==
+	b=MtH05eooLVpp+k/E7XLMIYFYsGSGwQWCi502g6hkHdcd5qzfS09OAksGdzOED/kL/
+	 XYaK4L3bOUWIe3bEMNFy1pSMEucpPlC98vgGfk/Sjan/KsL1oXVaTsRITpN7nFy2S7
+	 I4cUO5TilVqaOIKIYcjySQvu7WxWHRxB7rtdKXVtVPbdmQ9MAEu+RYnSFqrE89B3Yb
+	 o3X2D/7JmcYoWrCieqXsX9hhkhvPGteHFDTXRisvET/QxXEfkiE2kJUSEItk4LDAwt
+	 sXfSjyzQMhvnn6EXlW7Fd8fL0I2jlVBCccZk4qCl9WwVv03ET/r5osAxmrG0Tv6mwo
+	 URwrH3SaE7WPg==
 From: Vinod Koul <vkoul@kernel.org>
-To: bhelgaas@google.com, lpieralisi@kernel.org, kw@linux.com, 
- manivannan.sadhasivam@linaro.org, robh@kernel.org, krzk+dt@kernel.org, 
- conor+dt@kernel.org, kishon@kernel.org, andersson@kernel.org, 
- konradybcio@kernel.org, linux-arm-msm@vger.kernel.org, 
- linux-pci@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org, 
- Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
-Cc: quic_srichara@quicinc.com, quic_varada@quicinc.com
-In-Reply-To: <20241213134950.234946-1-quic_mmanikan@quicinc.com>
-References: <20241213134950.234946-1-quic_mmanikan@quicinc.com>
-Subject: Re: (subset) [PATCH 0/4] Add PCIe support for IPQ5424
-Message-Id: <173505392409.950293.14320055264182377571.b4-ty@kernel.org>
-Date: Tue, 24 Dec 2024 20:55:24 +0530
+To: Kishon Vijay Abraham I <kishon@kernel.org>, 
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, 
+ Neil Armstrong <neil.armstrong@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org, 
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+In-Reply-To: <20241204-topic-misc-sm8350-pcie-bindings-fix-v1-1-e8eaff1699d7@linaro.org>
+References: <20241204-topic-misc-sm8350-pcie-bindings-fix-v1-1-e8eaff1699d7@linaro.org>
+Subject: Re: [PATCH] dt-bindings: phy: qcom,qmp-pcie: document the SM8350
+ two lanes PCIe PHY
+Message-Id: <173505393233.950293.12984091478385927361.b4-ty@kernel.org>
+Date: Tue, 24 Dec 2024 20:55:32 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -66,21 +65,20 @@ Content-Transfer-Encoding: 7bit
 X-Mailer: b4 0.14.2
 
 
-On Fri, 13 Dec 2024 19:19:46 +0530, Manikanta Mylavarapu wrote:
-> This series adds support for enabling the PCIe host devices (PCIe0,
-> PCIe1, PCIe2, PCIe3) found on IPQ5424 platform. The PCIe0 & PCIe1
-> are 1-lane Gen3 host and PCIe2 & PCIe3 are 2-lane Gen3 host.
+On Wed, 04 Dec 2024 11:34:50 +0100, Neil Armstrong wrote:
+> Document the two lanes PCIe PHY found on SM8350 SoCs along the
+> already documented single lane PCIe PHY.
 > 
-> Depends On:
-> https://lore.kernel.org/linux-arm-msm/20241205064037.1960323-1-quic_mmanikan@quicinc.com/
-> https://lore.kernel.org/linux-arm-msm/20241213105808.674620-1-quic_varada@quicinc.com/
+> This fixes:
+> /soc@0/phy@1c0e000: failed to match any schema with compatible: ['qcom,sm8350-qmp-gen3x2-pcie-phy']
+> 
 > 
 > [...]
 
 Applied, thanks!
 
-[2/4] dt-bindings: phy: qcom,ipq8074-qmp-pcie: Document the IPQ5424 QMP PCIe PHYs
-      commit: 879ae4f226d82a2f0e452f14542efdbccf249286
+[1/1] dt-bindings: phy: qcom,qmp-pcie: document the SM8350 two lanes PCIe PHY
+      commit: d7e14bb48847a6278a77718ce83633912956651e
 
 Best regards,
 -- 
