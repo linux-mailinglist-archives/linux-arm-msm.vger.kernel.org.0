@@ -1,60 +1,60 @@
-Return-Path: <linux-arm-msm+bounces-43294-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-43295-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2B51C9FC4D2
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Dec 2024 11:42:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 9F8EA9FC4D4
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Dec 2024 11:42:27 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 83B60163FC1
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Dec 2024 10:42:00 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 215C6163F1D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Dec 2024 10:42:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C06921B4124;
-	Wed, 25 Dec 2024 10:41:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C23401B87C7;
+	Wed, 25 Dec 2024 10:41:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="SfqRyBPZ"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="cpHF1/el"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED6561A8F7A;
-	Wed, 25 Dec 2024 10:41:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 146781B6CEB;
+	Wed, 25 Dec 2024 10:41:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735123299; cv=none; b=F3JIyQfnxAw/wvLUqjP41Eb+t68J+Gk302d9ZIn5LAm5EqyiTL/4TaLurO4DnaCs72WUDq1MCI04+RSKCTOTYg15f8oX0HJNYwy6ejHzoSZZhpH/plCoSd+HHkNkxFfPzatzD1J0L4CoIHxzjDM2bsMZUUSipgp76L8RNzligXQ=
+	t=1735123302; cv=none; b=PS7mARK8550xfnYGIOVUUGpWPZ1oBVTG/fEfZDUZjFzTV9gFwa2TG9oHrb9o8RloHQQms8cuD+mnKvmzYMgOb+GJcDe4ZTGKcBjpdGx//bjY25KunmfoXIjhXpQgE+fFLW5WBolhBgd4xpa4icKuxv6c86mfjSxjeEdlsB6cjyk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735123299; c=relaxed/simple;
-	bh=O8oLyjZvzdfl/VE1Z1Awb1ogCYxGirvXinSIHWc023o=;
+	s=arc-20240116; t=1735123302; c=relaxed/simple;
+	bh=k41jP3FzTbJ3XIgGdP1q0EVkeCON1i+Z3WMZre4sS00=;
 	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=TDG0TWbgg2wCJb/tFH2Wk6PPOtj5azA5+OYUrp/QotKHJDJVtU2um2rxZAwYDCZIkz8so27eKBe8hQ4hHhzwCnqHc8t4B1qPWpj/9dLaLcVxYTF4d+tmz5/Mr58FG/cuqpObPcHjFrGJnluzqn/XmHcOrOZDfrJha9uHQD7+y34=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=SfqRyBPZ; arc=none smtp.client-ip=205.220.180.131
+	 MIME-Version:Content-Type; b=nz7b2exwqHL6AxOedp59Y68OcMpE/ZT3f9quEL+ETS7k0aBOwGXKfQGWKAUz9twwIdbBPHX7iP6Yh2Oz6bK9TZc9Y0Usr5rMZ4k2TlIgncVgg9mktp0C3eUS4j+Sa+jQHr2lh7gLMX7SYvCRkwuurDbqHOvVQtIZ1UswesIn2Uk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=cpHF1/el; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
 Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BP4RjEl009822;
-	Wed, 25 Dec 2024 10:41:30 GMT
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BP9nr1u015289;
+	Wed, 25 Dec 2024 10:41:34 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=xs07k9sBVuvh/SWXPPrrTz7G
-	lQVJCBDuTKuCMZ2un6w=; b=SfqRyBPZomsbuhEu3vahUa4Q9ufSnrksj/IC0iRI
-	cw8Joddd7CfFq+nKrPZX3ktMCYb4jdNUwP9BuWRq9gLOyIMSGbMcAU7+ZPnkw0Ru
-	aj0ZnmAORsgPFdDNaoxvLpJohV8O/5PeJumjK4ruVRqYlpCe2M5hZviGIYA3dUPQ
-	I6OI2xCqfWKE8mmrFBjnUx7s5hWuK7yUqKWlcYAUE2Xl+isVR5O6R33GWL6ziHg1
-	6xOQoNk1I3WUOjCP24/Sicaqp0lVWskRe3SUv80tXcU+9Vca67gfix0101BEWJ4W
-	p7b1xXROG7LAChHlHQrdS0/vAZZB5/nrvanoaNIZxoTyzw==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43rad81p93-1
+	:references:subject:to; s=qcppdkim1; bh=LmN9A9tBgzWeW1A2YaEszroG
+	9/dWRSRycy/Od6uUxXA=; b=cpHF1/elUf1S0pM4CuXdeFxPiytLcZgDkd1w9FCh
+	6UFTfCMcB0VBsNuAOOJ55t+3JEdY/7R6VxWpkL4LtEyuuD8qLQ8yMvvlBDyuaI3q
+	XHSCeOt+ElGmbCTZiPMyLYXHvO+ckibTwazntyCTx+WoPimTwFAEm6OPe5Z4ztNM
+	7HBgeEFtbHQazSzzOXveB24yj2Dc3pU5Ss4ztDiSEXRlhlvkndvcsL9TRPcn8eiS
+	s2v/rzuMXMKP8gppNTtHQ3fF64mn6zV5Eyf38MFsnVrnTWL2Q3IgdScSy44mxLxE
+	l0LPiVHS3eIYHb3CTBX65ylX3YiGOmU8fKFQbZXbi7OWIw==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43rad81p96-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 25 Dec 2024 10:41:30 +0000 (GMT)
+	Wed, 25 Dec 2024 10:41:33 +0000 (GMT)
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4BPAfTdX018034
+	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4BPAfW2v010964
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 25 Dec 2024 10:41:29 GMT
+	Wed, 25 Dec 2024 10:41:32 GMT
 Received: from jinlmao-gv.qualcomm.com (10.80.80.8) by
  nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Wed, 25 Dec 2024 02:41:26 -0800
+ 15.2.1544.9; Wed, 25 Dec 2024 02:41:29 -0800
 From: Mao Jinlong <quic_jinlmao@quicinc.com>
 To: Suzuki K Poulose <suzuki.poulose@arm.com>,
         Mike Leach
@@ -66,9 +66,9 @@ CC: Tao Zhang <quic_taozha@quicinc.com>, <coresight@lists.linaro.org>,
         <linux-arm-kernel@lists.infradead.org>, <linux-kernel@vger.kernel.org>,
         <linux-arm-msm@vger.kernel.org>,
         Mao Jinlong <quic_jinlmao@quicinc.com>
-Subject: [PATCH v3 2/3] coresight-tpdm: Add support to select lane
-Date: Wed, 25 Dec 2024 18:41:06 +0800
-Message-ID: <20241225104107.13425-3-quic_jinlmao@quicinc.com>
+Subject: [PATCH v3 3/3] coresight-tpdm: Add support to enable the lane for MCMB TPDM
+Date: Wed, 25 Dec 2024 18:41:07 +0800
+Message-ID: <20241225104107.13425-4-quic_jinlmao@quicinc.com>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <20241225104107.13425-1-quic_jinlmao@quicinc.com>
 References: <20241225104107.13425-1-quic_jinlmao@quicinc.com>
@@ -83,8 +83,8 @@ X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 7bSl9MWRezvuIT6iuURWcEb15WMLPR1o
-X-Proofpoint-ORIG-GUID: 7bSl9MWRezvuIT6iuURWcEb15WMLPR1o
+X-Proofpoint-GUID: RwufV493RHX4jJPWzlnRwN8O_L6ah8Re
+X-Proofpoint-ORIG-GUID: RwufV493RHX4jJPWzlnRwN8O_L6ah8Re
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
@@ -96,135 +96,93 @@ X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malware
 
 From: Tao Zhang <quic_taozha@quicinc.com>
 
-TPDM MCMB subunits supports up to 8 lanes CMB. For MCMB
-configurations, the field "XTRIG_LNSEL" in CMB_CR register selects
-which lane participates in the output pattern mach cross trigger
-mechanism governed by the M_CMB_DXPR and M_CMB_XPMR regisers.
+Add the sysfs file to set/get the enablement of the lane. For MCMB
+configurations, the field "E_LN" in CMB_CR register is the
+individual lane enables. MCMB lane N is enabled for trace
+generation when M_CMB_CR.E=1 and M_CMB_CR.E_LN[N]=1. For lanes
+that are not implemented on a given MCMB configuration, the
+corresponding bits of this field read as 0 and ignore writes.
 
 Signed-off-by: Tao Zhang <quic_taozha@quicinc.com>
 Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
 ---
- .../testing/sysfs-bus-coresight-devices-tpdm  |  8 +++
- drivers/hwtracing/coresight/coresight-tpdm.c  | 51 +++++++++++++++++++
+ .../testing/sysfs-bus-coresight-devices-tpdm  |  7 +++++
+ drivers/hwtracing/coresight/coresight-tpdm.c  | 29 +++++++++++++++++++
  drivers/hwtracing/coresight/coresight-tpdm.h  |  3 ++
- 3 files changed, 62 insertions(+)
+ 3 files changed, 39 insertions(+)
 
 diff --git a/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm b/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
-index bf710ea6e0ef..6428d3ac22b0 100644
+index 6428d3ac22b0..123340b21cee 100644
 --- a/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
 +++ b/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
-@@ -257,3 +257,11 @@ Contact:	Jinlong Mao (QUIC) <quic_jinlmao@quicinc.com>, Tao Zhang (QUIC) <quic_t
+@@ -265,3 +265,10 @@ Contact:	Jinlong Mao (QUIC) <quic_jinlmao@quicinc.com>, Tao Zhang (QUIC) <quic_t
  Description:
- 		(RW) Set/Get the MSR(mux select register) for the CMB subunit
- 		TPDM.
+ 		(RW) Set/Get which lane participates in the output pattern
+ 		match cross trigger mechanism for the MCMB subunit TPDM.
 +
-+What:		/sys/bus/coresight/devices/<tpdm-name>/mcmb_trig_lane
++What:		/sys/bus/coresight/devices/<tpdm-name>/mcmb_lanes_select
 +Date:		Nov 2024
 +KernelVersion	6.14
 +Contact:	Jinlong Mao (QUIC) <quic_jinlmao@quicinc.com>, Tao Zhang (QUIC) <quic_taozha@quicinc.com>
 +Description:
-+		(RW) Set/Get which lane participates in the output pattern
-+		match cross trigger mechanism for the MCMB subunit TPDM.
++		(RW) Set/Get the enablement of the individual lane.
 diff --git a/drivers/hwtracing/coresight/coresight-tpdm.c b/drivers/hwtracing/coresight/coresight-tpdm.c
-index 525f671dd97d..d92667cab872 100644
+index d92667cab872..669544dedacb 100644
 --- a/drivers/hwtracing/coresight/coresight-tpdm.c
 +++ b/drivers/hwtracing/coresight/coresight-tpdm.c
-@@ -252,6 +252,18 @@ static umode_t tpdm_cmb_msr_is_visible(struct kobject *kobj,
- 	return 0;
+@@ -1061,6 +1061,34 @@ static ssize_t mcmb_trig_lane_store(struct device *dev,
  }
+ static DEVICE_ATTR_RW(mcmb_trig_lane);
  
-+static umode_t tpdm_mcmb_is_visible(struct kobject *kobj,
-+				    struct attribute *attr, int n)
-+{
-+	struct device *dev = kobj_to_dev(kobj);
-+	struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
-+
-+	if (drvdata && tpdm_has_mcmb_dataset(drvdata))
-+		return attr->mode;
-+
-+	return 0;
-+}
-+
- static void tpdm_reset_datasets(struct tpdm_drvdata *drvdata)
- {
- 	if (tpdm_has_dsb_dataset(drvdata)) {
-@@ -1021,6 +1033,34 @@ static ssize_t cmb_trig_ts_store(struct device *dev,
- }
- static DEVICE_ATTR_RW(cmb_trig_ts);
- 
-+static ssize_t mcmb_trig_lane_show(struct device *dev,
-+				   struct device_attribute *attr,
-+				   char *buf)
++static ssize_t mcmb_lanes_select_show(struct device *dev,
++				      struct device_attribute *attr,
++				      char *buf)
 +{
 +	struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
 +
 +	return sysfs_emit(buf, "%u\n",
-+			  (unsigned int)drvdata->cmb->mcmb.trig_lane);
++			  (unsigned int)drvdata->cmb->mcmb.lane_select);
 +}
 +
-+static ssize_t mcmb_trig_lane_store(struct device *dev,
-+				    struct device_attribute *attr,
-+				    const char *buf,
-+				    size_t size)
++static ssize_t mcmb_lanes_select_store(struct device *dev,
++				       struct device_attribute *attr,
++				       const char *buf,
++				       size_t size)
 +{
 +	struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
 +	unsigned long val;
 +
-+	if ((kstrtoul(buf, 0, &val)) || (val >= TPDM_MCMB_MAX_LANES))
++	if (kstrtoul(buf, 0, &val) || (val & ~TPDM_MCMB_E_LN_MASK))
 +		return -EINVAL;
 +
 +	guard(spinlock)(&drvdata->spinlock);
-+	drvdata->cmb->mcmb.trig_lane = val;
++	drvdata->cmb->mcmb.lane_select = val & TPDM_MCMB_E_LN_MASK;
 +
 +	return size;
 +}
-+static DEVICE_ATTR_RW(mcmb_trig_lane);
++static DEVICE_ATTR_RW(mcmb_lanes_select);
 +
  static struct attribute *tpdm_dsb_edge_attrs[] = {
  	&dev_attr_ctrl_idx.attr,
  	&dev_attr_ctrl_val.attr,
-@@ -1183,6 +1223,11 @@ static struct attribute *tpdm_cmb_msr_attrs[] = {
- 	NULL,
- };
+@@ -1225,6 +1253,7 @@ static struct attribute *tpdm_cmb_msr_attrs[] = {
  
-+static struct attribute *tpdm_mcmb_attrs[] = {
-+	&dev_attr_mcmb_trig_lane.attr,
-+	NULL,
-+};
-+
- static struct attribute *tpdm_dsb_attrs[] = {
- 	&dev_attr_dsb_mode.attr,
- 	&dev_attr_dsb_trig_ts.attr,
-@@ -1249,6 +1294,11 @@ static struct attribute_group tpdm_cmb_msr_grp = {
- 	.name = "cmb_msr",
- };
- 
-+static struct attribute_group tpdm_mcmb_attr_grp = {
-+	.attrs = tpdm_mcmb_attrs,
-+	.is_visible = tpdm_mcmb_is_visible,
-+};
-+
- static const struct attribute_group *tpdm_attr_grps[] = {
- 	&tpdm_attr_grp,
- 	&tpdm_dsb_attr_grp,
-@@ -1260,6 +1310,7 @@ static const struct attribute_group *tpdm_attr_grps[] = {
- 	&tpdm_cmb_trig_patt_grp,
- 	&tpdm_cmb_patt_grp,
- 	&tpdm_cmb_msr_grp,
-+	&tpdm_mcmb_attr_grp,
+ static struct attribute *tpdm_mcmb_attrs[] = {
+ 	&dev_attr_mcmb_trig_lane.attr,
++	&dev_attr_mcmb_lanes_select.attr,
  	NULL,
  };
  
 diff --git a/drivers/hwtracing/coresight/coresight-tpdm.h b/drivers/hwtracing/coresight/coresight-tpdm.h
-index 0dac1a061ea4..6b8341e9f2d1 100644
+index 6b8341e9f2d1..27b083f62501 100644
 --- a/drivers/hwtracing/coresight/coresight-tpdm.h
 +++ b/drivers/hwtracing/coresight/coresight-tpdm.h
-@@ -45,6 +45,9 @@
- /* MAX number of DSB MSR */
- #define TPDM_CMB_MAX_MSR 32
+@@ -48,6 +48,9 @@
+ /* MAX lanes in the output pattern for MCMB configurations*/
+ #define TPDM_MCMB_MAX_LANES 8
  
-+/* MAX lanes in the output pattern for MCMB configurations*/
-+#define TPDM_MCMB_MAX_LANES 8
++/* Filter bit 0~7 from the value for CR_E_LN */
++#define TPDM_MCMB_E_LN_MASK		GENMASK(7, 0)
 +
  /* DSB Subunit Registers */
  #define TPDM_DSB_CR		(0x780)
