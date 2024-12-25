@@ -1,146 +1,253 @@
-Return-Path: <linux-arm-msm+bounces-43296-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-43297-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id AE0799FC525
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Dec 2024 12:38:05 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id E83179FC55B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Dec 2024 14:35:57 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2B6211883DD6
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Dec 2024 11:38:07 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id C0C617A1557
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Dec 2024 13:35:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D9F3C18E373;
-	Wed, 25 Dec 2024 11:37:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EB1C51A8F7A;
+	Wed, 25 Dec 2024 13:35:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QAjBamkJ"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="VX59sONQ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAA0713B7BC;
-	Wed, 25 Dec 2024 11:37:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7CFB1804E;
+	Wed, 25 Dec 2024 13:35:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735126679; cv=none; b=BgINyf2NUfU7vS0YIkfacZI8yjr3D45/NaTBeCvB0ltvW+OCu0+1VfM3jtEZ2Rf/XjTq7HlTrn/ttZl5IYpsXR1EMwsoY/8y4el5vmUCw6AgtPHdJX4hX2eNK0tsbyjVjlNPemL0FlG3QM3i+DYnQ1AdLNgjj8sRWWSmRk0Nvok=
+	t=1735133751; cv=none; b=fWFeFvTCGNNEpp4d6/Q0Zrvs+eqiKhhsP+tEQrz5gkeMov1d8vG2LnwW9tDmZJQGsMUYCl//eQfJtrSHOcKJDd+9ZxLM36Pcx58MjepyMLN6kfLU0eOpNVu0jSXHGkBOp+m4tuEEMF+HA3edu8epJaJr/tCVGiRCb3uUzE65YKg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735126679; c=relaxed/simple;
-	bh=yPj5JJ2j/NjJDCn1E4CRja9jwjLI5LrHbp07IpZnL0A=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=N1MvUrohcwo09QjTBwdvzQmeyNi3nSPOjxTsJfzqV37IdKC/ks/BFwozsuFM6J4tbMbjysgHFVsrYJ5cOGm9xpPRFLEf6LOy2HjHrwhKywXg0JhoObEvZWKkDJrTi3G2DZBXePYEojH+cgj/DyTvLRFb3baAT6itv3N8WHgKKfw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QAjBamkJ; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5ED93C4CECD;
-	Wed, 25 Dec 2024 11:37:54 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1735126679;
-	bh=yPj5JJ2j/NjJDCn1E4CRja9jwjLI5LrHbp07IpZnL0A=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=QAjBamkJHdfT0C/jM7kxSM+W5Jr/3J3+8paAznwBJzWR/hHaSk8bTG/7+0ZU57Hnk
-	 65RTPvMzYCN3r8C+avjDRJ5t/nCYFFvRECCQt+fXEa3AKQkfwDxVVKOBVLEVVAdSmF
-	 pIuN6TNtghjMalxcN3m2MB9re824uMGo9BTHaj+29MAQdgGMGNoFd0N6SuhYtrDT7q
-	 wpB3zDDmpwxcWwZfjl++A1IR1yG1B+/GBlhlNclDiXH+aOslkwS7xua4hivPG0qMN2
-	 GIfZjhs1CBh/XB5TOYHK+dICmpxdmaq8a0+XDiH0/O6by6O3Rt9QeVCmREMfsh+VDE
-	 BUslYNkCksFgQ==
-Message-ID: <4b4ef1c1-a20b-4b65-ad37-b9aabe074ae1@kernel.org>
-Date: Wed, 25 Dec 2024 12:37:52 +0100
+	s=arc-20240116; t=1735133751; c=relaxed/simple;
+	bh=1JQgNf6XS7hDtdX8zNoUqbaSCkMJIi2rCxERE6ygeo8=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=nefw8fXdpohoyldlTlo8H0ptTax16H3ijgL1WAzTE8fi8o9HN5mhjFPo6wgdakp/p7nV6od7NZ1UBEf+Hp2bZDiezJ7iBTQLAcrXBFrC69dGAQoy343q5UzNlFy17T3NkT2MIakF0GbLsEfRZOyYoXK4PVZi7LY6nT7N3aMWsho=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=VX59sONQ; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BPDPcab004733;
+	Wed, 25 Dec 2024 13:35:44 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=XoSTrjSpDycHKG6GATUchA
+	E3zzuVFbd/RRJiqZCfWNA=; b=VX59sONQeywoEQkKR9SnHF5XMzEeLaybTuTjyE
+	yg+5TTZEAVMjIq82pne3Biqb9ta9FGkO6gPsWTPYZwLmSQ1X4sYIINxRB07NDQCX
+	Z6TGZATk1fq22ToBwfXu7J8g94afEUblI7DPIXuQNoqOlJ670fPA73Gd96HPkQhF
+	exGWpAymGSrmjOiR6F+Gvcw3ns08WalY9yI0arwdmw79CqhvuCdQ0vO2Av3t1iDq
+	I4GI4zvIfRru/AzJTtD+IMen394dHqNSjz28bGKwHpgtpRHN/UagzaHk/+ZVnnb0
+	tY3MKNeXOaroB76iTSj3wL/EnwqxPkWq8ViClCXM2JOAQI+w==
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43rdqmrwg3-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 25 Dec 2024 13:35:44 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4BPDZhPt014824
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 25 Dec 2024 13:35:44 GMT
+Received: from hu-depengs-sha.qualcomm.com (10.80.80.8) by
+ nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Wed, 25 Dec 2024 05:35:37 -0800
+From: Depeng Shao <quic_depengs@quicinc.com>
+To: <rfoss@kernel.org>, <todor.too@gmail.com>, <bryan.odonoghue@linaro.org>,
+        <mchehab@kernel.org>, <robh@kernel.org>, <krzk+dt@kernel.org>,
+        <conor+dt@kernel.org>, <vladimir.zapolskiy@linaro.org>
+CC: <quic_eberman@quicinc.com>, <quic_depengs@quicinc.com>,
+        <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <kernel@quicinc.com>
+Subject: [PATCH v7 00/16] media: qcom: camss: Add sm8550 support
+Date: Wed, 25 Dec 2024 19:05:07 +0530
+Message-ID: <20241225133523.4034820-1-quic_depengs@quicinc.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/3] net: stmmac: qcom-ethqos: Enable RX programmable swap
- on qcs615
-To: Yijie Yang <quic_yijiyang@quicinc.com>, Vinod Koul <vkoul@kernel.org>,
- Andrew Lunn <andrew+netdev@lunn.ch>, "David S. Miller"
- <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>,
- Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>,
- Alexandre Torgue <alexandre.torgue@foss.st.com>,
- Jose Abreu <joabreu@synopsys.com>,
- Maxime Coquelin <mcoquelin.stm32@gmail.com>
-Cc: netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-stm32@st-md-mailman.stormreply.com,
- linux-arm-kernel@lists.infradead.org
-References: <20241225-support_10m100m-v1-0-4b52ef48b488@quicinc.com>
- <20241225-support_10m100m-v1-2-4b52ef48b488@quicinc.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <20241225-support_10m100m-v1-2-4b52ef48b488@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: K6Rw_k_fZ6WFHZKKTzJL8kdgUm3kPRBy
+X-Proofpoint-ORIG-GUID: K6Rw_k_fZ6WFHZKKTzJL8kdgUm3kPRBy
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 malwarescore=0
+ adultscore=0 clxscore=1015 phishscore=0 bulkscore=0 lowpriorityscore=0
+ mlxlogscore=999 impostorscore=0 suspectscore=0 priorityscore=1501
+ mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2412250120
 
-On 25/12/2024 11:04, Yijie Yang wrote:
+v7:
+- Due to the patches in https://lore.kernel.org/all/20241217140656.965235-1-quic_vikramsa@quicinc.com/
+  are merged, so rebased below patches to fix the conflict.
+  media: qcom: camss: csiphy-3ph: Remove redundant PHY init sequence control loop
+  media: qcom: camss: csiphy-3ph: Move CSIPHY variables to data field inside csiphy struct
+  media: qcom: camss: Add sm8550 compatible
+  media: qcom: camss: csiphy-3ph: Move CSIPHY variables to data field inside csiphy struct
+  media: qcom: camss: csiphy-3ph: Add Gen2 v2.1.2 two-phase MIPI CSI-2 DPHY support
+  media: qcom: camss: Add support for VFE 780
+- Add RB for "media: qcom: camss: Add CSID 780 support" - Bryan
+- Use TAG name for ICC and remove offline HW ICC - Bryan
+- Remove the logic that moving enable_irq();/disable_irq(); to wm_start() 
+  and wm_stop() to make sure no logical change in VFE refactor change.
+- Update the commit message and title for the TPG change. - Bryan
+- Link to v6: https://lore.kernel.org/all/20241211140738.3835588-1-quic_depengs@quicinc.com/
 
->  static int qcom_ethqos_probe(struct platform_device *pdev)
->  {
-> -	struct device_node *np = pdev->dev.of_node;
-> +	struct device_node *np = pdev->dev.of_node, *root;
->  	const struct ethqos_emac_driver_data *data;
->  	struct plat_stmmacenet_data *plat_dat;
->  	struct stmmac_resources stmmac_res;
-> @@ -810,6 +805,15 @@ static int qcom_ethqos_probe(struct platform_device *pdev)
->  	ret = of_get_phy_mode(np, &ethqos->phy_mode);
->  	if (ret)
->  		return dev_err_probe(dev, ret, "Failed to get phy mode\n");
-> +
-> +	root = of_find_node_by_path("/");
-> +	if (root && of_device_is_compatible(root, "qcom,sa8540p-ride"))
+v6:
+- Add bus type property in dt-binding which will be limited
+  by a latest change 
+  https://lore.kernel.org/all/20241209-camss-dphy-v1-0-5f1b6f25ed92@fairphone.com/
+- Add RB for "media: qcom: camss: Add sm8550 compatible" and
+  "media: qcom: camss: Add support for VFE 780"
+- Uppercase the hex in csiphy register list - Bryan
+- Add empty function for csid tpg - Vladimir
+- Set testgen mode to CSID_PAYLOAD_MODE_DISABLED in subdev init interface
+- encapsulate the guard __thus__ for new header - Bryan
+- Add a standalone patch for the platform which doesn't support CSID TPG
+  to make sure new platform driver can set CSID_PAYLOAD_MODE_DISABLED
+  to disable TPG
+- Update the csid for csid and vfe driver - Bryan
+- Link to v5: https://lore.kernel.org/all/20241205155538.250743-1-quic_depengs@quicinc.com/
+
+v5:
+- Update dt-bindings required items order - Krzysztof
+- Sort the reg order based on the comments in sc7280 dt-binding - Vladimir
+- Change the irq type to IRQ_TYPE_EDGE_RISING - Vladimir
+- Remove the Krzysztof's RB tag from dt-binding patch due to above
+  updates in dt-binding patch
+- Move regulator from csid resource to csiphy resource - Bryan, Vladimir
+- Move the change to add default case in vfe_src_pad_code to a
+  standalone patch. - Bryan
+- Rename csid-gen3 as csid-780 - Bryan
+- use macros() to bury bit shifts - Bryan
+- Sort the macros by register offset order  -  Vladimir
+- Redefine a macro for rup_aup in csid driver - Vladimir
+- Remove the unused macros in vfe 780 driver - Vladimir
+- Add dummy function for unsupported hw_ops in vfe 780
+  driver - Vladimir, Bryan
+- Use a standalone patch for the callback API of RUP and buf done update
+- Use a standalone patch to make CSID TPG optional - Vladimir
+- Link to v4: https://lore.kernel.org/all/20240812144131.369378-1-quic_depengs@quicinc.com/
+
+v4:
+- Update dt-bindings based on comments - Krzysztof, bod, Vladimir
+- Move common code into csid core and vfe core driver - bod
+- Remove *_relaxed in the csid and vfe drivers - Krzysztof
+- Reorganize patches in logical junks, make sure that new added
+structures have users in current patch - Krzysztof
+- Remove notify function  and add new functions in camss for buf done
+and reg update - bod
+- Remove custom code to get csid base - bod
+- Remove ISR function in vfe780 driver since it is never fired - bod
+- Move csid_top_base to camss structure since we only have one csid
+top block, and just need to get base once for csid top
+- Add Vladimir's RB
+- Remove prerequisite-patch-id in the cover letter since the changes
+have been merged
+- Add dtsi patch link for reference - Krzysztof
+https://lore.kernel.org/all/20240807123333.2056518-1-quic_depengs@quicinc.com/
+- Link to v3: https://lore.kernel.org/all/20240709160656.31146-1-quic_depengs@quicinc.com/
+
+v3:
+- Rebased the change based on below change which will be merged firstly.
+"Move camss version related defs in to resources"
+Link: https://lore.kernel.org/all/20240522154659.510-1-quic_grosikop@quicinc.com/
+- Rebased the change based on Bryan's csiphy optimization change and add
+these changes into this series, so that the new csiphy-3ph driver don't
+need to add duplicate code. This has got Bryan's permission to add his
+patches into this series.
+- Refactor some changes based on the comments to move the random code to
+patches where they are used.
+- Remove the vfe780 irq function since it isn't doing the actual work.
+- Add dt-binding for sm8550 camss driver.
+Link to V2: https://lore.kernel.org/all/20240320141136.26827-1-quic_depengs@quicinc.com/
+
+v2:
+- Update some commit messages
+Link to V1: https://lore.kernel.org/all/20240320134227.16587-1-quic_depengs@quicinc.com/
+
+v1:
+SM8550 is a Qualcomm flagship SoC. This series adds support to
+bring up the CSIPHY, CSID, VFE/RDI interfaces in SM8550.
+
+SM8550 provides
+
+- 3 x VFE, 3 RDI per VFE
+- 2 x VFE Lite, 4 RDI per VFE
+- 3 x CSID
+- 2 x CSID Lite
+- 8 x CSI PHY
+
+Bryan O'Donoghue (6):
+  media: qcom: camss: csiphy-3ph: Fix trivial indentation fault in
+    defines
+  media: qcom: camss: csiphy-3ph: Remove redundant PHY init sequence
+    control loop
+  media: qcom: camss: csiphy-3ph: Rename struct
+  media: qcom: camss: csiphy: Add an init callback to CSI PHY devices
+  media: qcom: camss: csiphy-3ph: Move CSIPHY variables to data field
+    inside csiphy struct
+  media: qcom: camss: csiphy-3ph: Use an offset variable to find common
+    control regs
+
+Depeng Shao (10):
+  media: qcom: camss: csid: Move common code into csid core
+  media: qcom: camss: vfe: Move common code into vfe core
+  media: qcom: camss: Add callback API for RUP update and buf done
+  media: qcom: camss: Add default case in vfe_src_pad_code
+  media: qcom: camss: csid: Only add TPG v4l2 ctrl if TPG hardware is
+    available
+  dt-bindings: media: camss: Add qcom,sm8550-camss binding
+  media: qcom: camss: Add sm8550 compatible
+  media: qcom: camss: csiphy-3ph: Add Gen2 v2.1.2 two-phase MIPI CSI-2
+    DPHY support
+  media: qcom: camss: Add CSID 780 support
+  media: qcom: camss: Add support for VFE 780
+
+ .../bindings/media/qcom,sm8550-camss.yaml     | 597 +++++++++++++
+ drivers/media/platform/qcom/camss/Makefile    |   2 +
+ .../platform/qcom/camss/camss-csid-4-1.c      |  19 -
+ .../platform/qcom/camss/camss-csid-4-7.c      |  42 -
+ .../platform/qcom/camss/camss-csid-780.c      | 337 ++++++++
+ .../platform/qcom/camss/camss-csid-780.h      |  25 +
+ .../platform/qcom/camss/camss-csid-gen2.c     |  60 --
+ .../media/platform/qcom/camss/camss-csid.c    | 137 ++-
+ .../media/platform/qcom/camss/camss-csid.h    |  31 +
+ .../qcom/camss/camss-csiphy-2ph-1-0.c         |   6 +
+ .../qcom/camss/camss-csiphy-3ph-1-0.c         | 794 ++++++++++--------
+ .../media/platform/qcom/camss/camss-csiphy.c  |   4 +
+ .../media/platform/qcom/camss/camss-csiphy.h  |   8 +
+ .../media/platform/qcom/camss/camss-vfe-17x.c | 112 +--
+ .../media/platform/qcom/camss/camss-vfe-4-1.c |   9 -
+ .../media/platform/qcom/camss/camss-vfe-4-7.c |  11 -
+ .../media/platform/qcom/camss/camss-vfe-4-8.c |  11 -
+ .../media/platform/qcom/camss/camss-vfe-480.c | 274 +-----
+ .../media/platform/qcom/camss/camss-vfe-780.c | 159 ++++
+ drivers/media/platform/qcom/camss/camss-vfe.c | 274 ++++++
+ drivers/media/platform/qcom/camss/camss-vfe.h |  59 +-
+ drivers/media/platform/qcom/camss/camss.c     | 359 ++++++++
+ drivers/media/platform/qcom/camss/camss.h     |   4 +
+ 23 files changed, 2464 insertions(+), 870 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/media/qcom,sm8550-camss.yaml
+ create mode 100644 drivers/media/platform/qcom/camss/camss-csid-780.c
+ create mode 100644 drivers/media/platform/qcom/camss/camss-csid-780.h
+ create mode 100644 drivers/media/platform/qcom/camss/camss-vfe-780.c
 
 
-Nope, your drivers are not supposed to poke root compatibles. Drop and
-fix your driver to behave correctly for all existing devices.
+base-commit: 8155b4ef3466f0e289e8fcc9e6e62f3f4dceeac2
+-- 
+2.34.1
 
-> +		ethqos->needs_rx_prog_swap = true;
-> +	else
-> +		ethqos->needs_rx_prog_swap =
-Best regards,
-Krzysztof
 
