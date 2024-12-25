@@ -1,193 +1,146 @@
-Return-Path: <linux-arm-msm+bounces-43295-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-43296-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9F8EA9FC4D4
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Dec 2024 11:42:27 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id AE0799FC525
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Dec 2024 12:38:05 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 215C6163F1D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Dec 2024 10:42:25 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2B6211883DD6
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Dec 2024 11:38:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C23401B87C7;
-	Wed, 25 Dec 2024 10:41:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D9F3C18E373;
+	Wed, 25 Dec 2024 11:37:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="cpHF1/el"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QAjBamkJ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 146781B6CEB;
-	Wed, 25 Dec 2024 10:41:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAA0713B7BC;
+	Wed, 25 Dec 2024 11:37:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735123302; cv=none; b=PS7mARK8550xfnYGIOVUUGpWPZ1oBVTG/fEfZDUZjFzTV9gFwa2TG9oHrb9o8RloHQQms8cuD+mnKvmzYMgOb+GJcDe4ZTGKcBjpdGx//bjY25KunmfoXIjhXpQgE+fFLW5WBolhBgd4xpa4icKuxv6c86mfjSxjeEdlsB6cjyk=
+	t=1735126679; cv=none; b=BgINyf2NUfU7vS0YIkfacZI8yjr3D45/NaTBeCvB0ltvW+OCu0+1VfM3jtEZ2Rf/XjTq7HlTrn/ttZl5IYpsXR1EMwsoY/8y4el5vmUCw6AgtPHdJX4hX2eNK0tsbyjVjlNPemL0FlG3QM3i+DYnQ1AdLNgjj8sRWWSmRk0Nvok=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735123302; c=relaxed/simple;
-	bh=k41jP3FzTbJ3XIgGdP1q0EVkeCON1i+Z3WMZre4sS00=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=nz7b2exwqHL6AxOedp59Y68OcMpE/ZT3f9quEL+ETS7k0aBOwGXKfQGWKAUz9twwIdbBPHX7iP6Yh2Oz6bK9TZc9Y0Usr5rMZ4k2TlIgncVgg9mktp0C3eUS4j+Sa+jQHr2lh7gLMX7SYvCRkwuurDbqHOvVQtIZ1UswesIn2Uk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=cpHF1/el; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BP9nr1u015289;
-	Wed, 25 Dec 2024 10:41:34 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=LmN9A9tBgzWeW1A2YaEszroG
-	9/dWRSRycy/Od6uUxXA=; b=cpHF1/elUf1S0pM4CuXdeFxPiytLcZgDkd1w9FCh
-	6UFTfCMcB0VBsNuAOOJ55t+3JEdY/7R6VxWpkL4LtEyuuD8qLQ8yMvvlBDyuaI3q
-	XHSCeOt+ElGmbCTZiPMyLYXHvO+ckibTwazntyCTx+WoPimTwFAEm6OPe5Z4ztNM
-	7HBgeEFtbHQazSzzOXveB24yj2Dc3pU5Ss4ztDiSEXRlhlvkndvcsL9TRPcn8eiS
-	s2v/rzuMXMKP8gppNTtHQ3fF64mn6zV5Eyf38MFsnVrnTWL2Q3IgdScSy44mxLxE
-	l0LPiVHS3eIYHb3CTBX65ylX3YiGOmU8fKFQbZXbi7OWIw==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43rad81p96-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 25 Dec 2024 10:41:33 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4BPAfW2v010964
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 25 Dec 2024 10:41:32 GMT
-Received: from jinlmao-gv.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Wed, 25 Dec 2024 02:41:29 -0800
-From: Mao Jinlong <quic_jinlmao@quicinc.com>
-To: Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Mike Leach
-	<mike.leach@linaro.org>,
-        James Clark <james.clark@linaro.org>,
-        "Alexander
- Shishkin" <alexander.shishkin@linux.intel.com>
-CC: Tao Zhang <quic_taozha@quicinc.com>, <coresight@lists.linaro.org>,
-        <linux-arm-kernel@lists.infradead.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>,
-        Mao Jinlong <quic_jinlmao@quicinc.com>
-Subject: [PATCH v3 3/3] coresight-tpdm: Add support to enable the lane for MCMB TPDM
-Date: Wed, 25 Dec 2024 18:41:07 +0800
-Message-ID: <20241225104107.13425-4-quic_jinlmao@quicinc.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20241225104107.13425-1-quic_jinlmao@quicinc.com>
-References: <20241225104107.13425-1-quic_jinlmao@quicinc.com>
+	s=arc-20240116; t=1735126679; c=relaxed/simple;
+	bh=yPj5JJ2j/NjJDCn1E4CRja9jwjLI5LrHbp07IpZnL0A=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=N1MvUrohcwo09QjTBwdvzQmeyNi3nSPOjxTsJfzqV37IdKC/ks/BFwozsuFM6J4tbMbjysgHFVsrYJ5cOGm9xpPRFLEf6LOy2HjHrwhKywXg0JhoObEvZWKkDJrTi3G2DZBXePYEojH+cgj/DyTvLRFb3baAT6itv3N8WHgKKfw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QAjBamkJ; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5ED93C4CECD;
+	Wed, 25 Dec 2024 11:37:54 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1735126679;
+	bh=yPj5JJ2j/NjJDCn1E4CRja9jwjLI5LrHbp07IpZnL0A=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=QAjBamkJHdfT0C/jM7kxSM+W5Jr/3J3+8paAznwBJzWR/hHaSk8bTG/7+0ZU57Hnk
+	 65RTPvMzYCN3r8C+avjDRJ5t/nCYFFvRECCQt+fXEa3AKQkfwDxVVKOBVLEVVAdSmF
+	 pIuN6TNtghjMalxcN3m2MB9re824uMGo9BTHaj+29MAQdgGMGNoFd0N6SuhYtrDT7q
+	 wpB3zDDmpwxcWwZfjl++A1IR1yG1B+/GBlhlNclDiXH+aOslkwS7xua4hivPG0qMN2
+	 GIfZjhs1CBh/XB5TOYHK+dICmpxdmaq8a0+XDiH0/O6by6O3Rt9QeVCmREMfsh+VDE
+	 BUslYNkCksFgQ==
+Message-ID: <4b4ef1c1-a20b-4b65-ad37-b9aabe074ae1@kernel.org>
+Date: Wed, 25 Dec 2024 12:37:52 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: RwufV493RHX4jJPWzlnRwN8O_L6ah8Re
-X-Proofpoint-ORIG-GUID: RwufV493RHX4jJPWzlnRwN8O_L6ah8Re
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 adultscore=0
- mlxlogscore=999 suspectscore=0 impostorscore=0 clxscore=1015 mlxscore=0
- spamscore=0 phishscore=0 priorityscore=1501 bulkscore=0 lowpriorityscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2411120000
- definitions=main-2412250094
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/3] net: stmmac: qcom-ethqos: Enable RX programmable swap
+ on qcs615
+To: Yijie Yang <quic_yijiyang@quicinc.com>, Vinod Koul <vkoul@kernel.org>,
+ Andrew Lunn <andrew+netdev@lunn.ch>, "David S. Miller"
+ <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>,
+ Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>,
+ Alexandre Torgue <alexandre.torgue@foss.st.com>,
+ Jose Abreu <joabreu@synopsys.com>,
+ Maxime Coquelin <mcoquelin.stm32@gmail.com>
+Cc: netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-stm32@st-md-mailman.stormreply.com,
+ linux-arm-kernel@lists.infradead.org
+References: <20241225-support_10m100m-v1-0-4b52ef48b488@quicinc.com>
+ <20241225-support_10m100m-v1-2-4b52ef48b488@quicinc.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
+ cFgcqTTuNHjAvxtUG8pQgGTHAObYs6xeYJtjUH0ZX6ndJ33FJYf5V3yXqqjcZ30FgHzJCFUu
+ JMp7PSyMPzpUXfU12yfcRYVEMQrmplNZssmYhiTeVicuOOypWugZKVLGNm0IweVCaZ/DJDIH
+ gNbpvVwjcKYrx85m9cBVEBUGaQP6AT7qlVCkrf50v8bofSIyVa2xmubbAwwFA1oxoOusjPIE
+ J3iadrwpFvsZjF5uHAKS+7wHLoW9hVzOnLbX6ajk5Hf8Pb1m+VH/E8bPBNNYKkfTtypTDUCj
+ NYcd27tjnXfG+SDs/EXNUAIRefCyvaRG7oRYF3Ec+2RgQDRnmmjCjoQNbFrJvJkFHlPeHaeS
+ BosGY+XWKydnmsfY7SSnjAzLUGAFhLd/XDVpb1Een2XucPpKvt9ORF+48gy12FA5GduRLhQU
+ vK4tU7ojoem/G23PcowM1CwPurC8sAVsQb9KmwTGh7rVz3ks3w/zfGBy3+WmLg++C2Wct6nM
+ Pd8/6CBVjEWqD06/RjI2AnjIq5fSEH/BIfXXfC68nMp9BZoy3So4ZsbOlBmtAPvMYX6U8VwD
+ TNeBxJu5Ex0Izf1NV9CzC3nNaFUYOY8KfN01X5SExAoVTr09ewARAQABzSVLcnp5c3p0b2Yg
+ S296bG93c2tpIDxrcnprQGtlcm5lbC5vcmc+wsGVBBMBCgA/AhsDBgsJCAcDAgYVCAIJCgsE
+ FgIDAQIeAQIXgBYhBJvQfg4MUfjVlne3VBuTQ307QWKbBQJgPO8PBQkUX63hAAoJEBuTQ307
+ QWKbBn8P+QFxwl7pDsAKR1InemMAmuykCHl+XgC0LDqrsWhAH5TYeTVXGSyDsuZjHvj+FRP+
+ gZaEIYSw2Yf0e91U9HXo3RYhEwSmxUQ4Fjhc9qAwGKVPQf6YuQ5yy6pzI8brcKmHHOGrB3tP
+ /MODPt81M1zpograAC2WTDzkICfHKj8LpXp45PylD99J9q0Y+gb04CG5/wXs+1hJy/dz0tYy
+ iua4nCuSRbxnSHKBS5vvjosWWjWQXsRKd+zzXp6kfRHHpzJkhRwF6ArXi4XnQ+REnoTfM5Fk
+ VmVmSQ3yFKKePEzoIriT1b2sXO0g5QXOAvFqB65LZjXG9jGJoVG6ZJrUV1MVK8vamKoVbUEe
+ 0NlLl/tX96HLowHHoKhxEsbFzGzKiFLh7hyboTpy2whdonkDxpnv/H8wE9M3VW/fPgnL2nPe
+ xaBLqyHxy9hA9JrZvxg3IQ61x7rtBWBUQPmEaK0azW+l3ysiNpBhISkZrsW3ZUdknWu87nh6
+ eTB7mR7xBcVxnomxWwJI4B0wuMwCPdgbV6YDUKCuSgRMUEiVry10xd9KLypR9Vfyn1AhROrq
+ AubRPVeJBf9zR5UW1trJNfwVt3XmbHX50HCcHdEdCKiT9O+FiEcahIaWh9lihvO0ci0TtVGZ
+ MCEtaCE80Q3Ma9RdHYB3uVF930jwquplFLNF+IBCn5JRzsFNBFVDXDQBEADNkrQYSREUL4D3
+ Gws46JEoZ9HEQOKtkrwjrzlw/tCmqVzERRPvz2Xg8n7+HRCrgqnodIYoUh5WsU84N03KlLue
+ MNsWLJBvBaubYN4JuJIdRr4dS4oyF1/fQAQPHh8Thpiz0SAZFx6iWKB7Qrz3OrGCjTPcW6ei
+ OMheesVS5hxietSmlin+SilmIAPZHx7n242u6kdHOh+/SyLImKn/dh9RzatVpUKbv34eP1wA
+ GldWsRxbf3WP9pFNObSzI/Bo3kA89Xx2rO2roC+Gq4LeHvo7ptzcLcrqaHUAcZ3CgFG88CnA
+ 6z6lBZn0WyewEcPOPdcUB2Q7D/NiUY+HDiV99rAYPJztjeTrBSTnHeSBPb+qn5ZZGQwIdUW9
+ YegxWKvXXHTwB5eMzo/RB6vffwqcnHDoe0q7VgzRRZJwpi6aMIXLfeWZ5Wrwaw2zldFuO4Dt
+ 91pFzBSOIpeMtfgb/Pfe/a1WJ/GgaIRIBE+NUqckM+3zJHGmVPqJP/h2Iwv6nw8U+7Yyl6gU
+ BLHFTg2hYnLFJI4Xjg+AX1hHFVKmvl3VBHIsBv0oDcsQWXqY+NaFahT0lRPjYtrTa1v3tem/
+ JoFzZ4B0p27K+qQCF2R96hVvuEyjzBmdq2esyE6zIqftdo4MOJho8uctOiWbwNNq2U9pPWmu
+ 4vXVFBYIGmpyNPYzRm0QPwARAQABwsF8BBgBCgAmAhsMFiEEm9B+DgxR+NWWd7dUG5NDfTtB
+ YpsFAmA872oFCRRflLYACgkQG5NDfTtBYpvScw/9GrqBrVLuJoJ52qBBKUBDo4E+5fU1bjt0
+ Gv0nh/hNJuecuRY6aemU6HOPNc2t8QHMSvwbSF+Vp9ZkOvrM36yUOufctoqON+wXrliEY0J4
+ ksR89ZILRRAold9Mh0YDqEJc1HmuxYLJ7lnbLYH1oui8bLbMBM8S2Uo9RKqV2GROLi44enVt
+ vdrDvo+CxKj2K+d4cleCNiz5qbTxPUW/cgkwG0lJc4I4sso7l4XMDKn95c7JtNsuzqKvhEVS
+ oic5by3fbUnuI0cemeizF4QdtX2uQxrP7RwHFBd+YUia7zCcz0//rv6FZmAxWZGy5arNl6Vm
+ lQqNo7/Poh8WWfRS+xegBxc6hBXahpyUKphAKYkah+m+I0QToCfnGKnPqyYIMDEHCS/RfqA5
+ t8F+O56+oyLBAeWX7XcmyM6TGeVfb+OZVMJnZzK0s2VYAuI0Rl87FBFYgULdgqKV7R7WHzwD
+ uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
+ 7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
+ 5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
+In-Reply-To: <20241225-support_10m100m-v1-2-4b52ef48b488@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-From: Tao Zhang <quic_taozha@quicinc.com>
+On 25/12/2024 11:04, Yijie Yang wrote:
 
-Add the sysfs file to set/get the enablement of the lane. For MCMB
-configurations, the field "E_LN" in CMB_CR register is the
-individual lane enables. MCMB lane N is enabled for trace
-generation when M_CMB_CR.E=1 and M_CMB_CR.E_LN[N]=1. For lanes
-that are not implemented on a given MCMB configuration, the
-corresponding bits of this field read as 0 and ignore writes.
+>  static int qcom_ethqos_probe(struct platform_device *pdev)
+>  {
+> -	struct device_node *np = pdev->dev.of_node;
+> +	struct device_node *np = pdev->dev.of_node, *root;
+>  	const struct ethqos_emac_driver_data *data;
+>  	struct plat_stmmacenet_data *plat_dat;
+>  	struct stmmac_resources stmmac_res;
+> @@ -810,6 +805,15 @@ static int qcom_ethqos_probe(struct platform_device *pdev)
+>  	ret = of_get_phy_mode(np, &ethqos->phy_mode);
+>  	if (ret)
+>  		return dev_err_probe(dev, ret, "Failed to get phy mode\n");
+> +
+> +	root = of_find_node_by_path("/");
+> +	if (root && of_device_is_compatible(root, "qcom,sa8540p-ride"))
 
-Signed-off-by: Tao Zhang <quic_taozha@quicinc.com>
-Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
----
- .../testing/sysfs-bus-coresight-devices-tpdm  |  7 +++++
- drivers/hwtracing/coresight/coresight-tpdm.c  | 29 +++++++++++++++++++
- drivers/hwtracing/coresight/coresight-tpdm.h  |  3 ++
- 3 files changed, 39 insertions(+)
 
-diff --git a/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm b/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
-index 6428d3ac22b0..123340b21cee 100644
---- a/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
-+++ b/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
-@@ -265,3 +265,10 @@ Contact:	Jinlong Mao (QUIC) <quic_jinlmao@quicinc.com>, Tao Zhang (QUIC) <quic_t
- Description:
- 		(RW) Set/Get which lane participates in the output pattern
- 		match cross trigger mechanism for the MCMB subunit TPDM.
-+
-+What:		/sys/bus/coresight/devices/<tpdm-name>/mcmb_lanes_select
-+Date:		Nov 2024
-+KernelVersion	6.14
-+Contact:	Jinlong Mao (QUIC) <quic_jinlmao@quicinc.com>, Tao Zhang (QUIC) <quic_taozha@quicinc.com>
-+Description:
-+		(RW) Set/Get the enablement of the individual lane.
-diff --git a/drivers/hwtracing/coresight/coresight-tpdm.c b/drivers/hwtracing/coresight/coresight-tpdm.c
-index d92667cab872..669544dedacb 100644
---- a/drivers/hwtracing/coresight/coresight-tpdm.c
-+++ b/drivers/hwtracing/coresight/coresight-tpdm.c
-@@ -1061,6 +1061,34 @@ static ssize_t mcmb_trig_lane_store(struct device *dev,
- }
- static DEVICE_ATTR_RW(mcmb_trig_lane);
- 
-+static ssize_t mcmb_lanes_select_show(struct device *dev,
-+				      struct device_attribute *attr,
-+				      char *buf)
-+{
-+	struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
-+
-+	return sysfs_emit(buf, "%u\n",
-+			  (unsigned int)drvdata->cmb->mcmb.lane_select);
-+}
-+
-+static ssize_t mcmb_lanes_select_store(struct device *dev,
-+				       struct device_attribute *attr,
-+				       const char *buf,
-+				       size_t size)
-+{
-+	struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
-+	unsigned long val;
-+
-+	if (kstrtoul(buf, 0, &val) || (val & ~TPDM_MCMB_E_LN_MASK))
-+		return -EINVAL;
-+
-+	guard(spinlock)(&drvdata->spinlock);
-+	drvdata->cmb->mcmb.lane_select = val & TPDM_MCMB_E_LN_MASK;
-+
-+	return size;
-+}
-+static DEVICE_ATTR_RW(mcmb_lanes_select);
-+
- static struct attribute *tpdm_dsb_edge_attrs[] = {
- 	&dev_attr_ctrl_idx.attr,
- 	&dev_attr_ctrl_val.attr,
-@@ -1225,6 +1253,7 @@ static struct attribute *tpdm_cmb_msr_attrs[] = {
- 
- static struct attribute *tpdm_mcmb_attrs[] = {
- 	&dev_attr_mcmb_trig_lane.attr,
-+	&dev_attr_mcmb_lanes_select.attr,
- 	NULL,
- };
- 
-diff --git a/drivers/hwtracing/coresight/coresight-tpdm.h b/drivers/hwtracing/coresight/coresight-tpdm.h
-index 6b8341e9f2d1..27b083f62501 100644
---- a/drivers/hwtracing/coresight/coresight-tpdm.h
-+++ b/drivers/hwtracing/coresight/coresight-tpdm.h
-@@ -48,6 +48,9 @@
- /* MAX lanes in the output pattern for MCMB configurations*/
- #define TPDM_MCMB_MAX_LANES 8
- 
-+/* Filter bit 0~7 from the value for CR_E_LN */
-+#define TPDM_MCMB_E_LN_MASK		GENMASK(7, 0)
-+
- /* DSB Subunit Registers */
- #define TPDM_DSB_CR		(0x780)
- #define TPDM_DSB_TIER		(0x784)
--- 
-2.17.1
+Nope, your drivers are not supposed to poke root compatibles. Drop and
+fix your driver to behave correctly for all existing devices.
 
+> +		ethqos->needs_rx_prog_swap = true;
+> +	else
+> +		ethqos->needs_rx_prog_swap =
+Best regards,
+Krzysztof
 
