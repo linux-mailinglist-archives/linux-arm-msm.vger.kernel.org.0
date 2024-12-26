@@ -1,62 +1,81 @@
-Return-Path: <linux-arm-msm+bounces-43427-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-43428-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 59A0A9FCE8C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Dec 2024 23:39:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 46C7F9FCE94
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Dec 2024 23:39:42 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id E7E03188252A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Dec 2024 22:39:19 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id D45841882FF8
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Dec 2024 22:39:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5F7631BE23E;
-	Thu, 26 Dec 2024 22:39:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8F6771C54BA;
+	Thu, 26 Dec 2024 22:39:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kwt3JaJP"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="npIoxWvE"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BC5E1BD4F7;
-	Thu, 26 Dec 2024 22:39:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AB551C54A8;
+	Thu, 26 Dec 2024 22:39:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735252740; cv=none; b=FWxgwO+H+4XRZ1d0jrnLkhHdE7I5wToBg25tFkzlKWhC/m984yaWHG4+gspuup69IxLyvTvMr53O3qHqd5GQocqYAXIz/zKX1ed/YtXQAmfZ0S+ynObp4PMD9VeIhDIuKUx1ZR4oZ9ij2IJk+w3T2DRtdRJTqlyrQ2ejKY/XB1c=
+	t=1735252742; cv=none; b=Impd/g402WP2Qatl8tM5LWtT/c++5vJ/WcficnVc8sr5RWeHnijOoRDMSp4KLihgtMmPTl/gCOYpNgmCavvVhOpGi1S2ER4VXwNRdIQie9Nr0koZeYO0fogiLY1l6xL/KTtvauHBAgEWX7HrN8GAuQSC/eJ1i58QjgXQ7j/YG7U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735252740; c=relaxed/simple;
-	bh=PRnqGqye9XLcM7XryqGktyEXPjFZialyNlgxDprsjto=;
+	s=arc-20240116; t=1735252742; c=relaxed/simple;
+	bh=ghvEWc+CY8H0nlr1RDV+hoiNH9dMWvFeMfs/OYEjr0c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Ao0Io2NIatBmAX0DKULR4SjnCFM+8FqWZq+5bsc411Sblqpdm0Fydbh3PgMroALxJILm1dK9cI3aEqGXOSvC2URXsMPV2P5FMI67OtPtK0jjmKK6dVUz9pfeW+imn/VVp0+q2m7mBRdGrRAcj4jaT4I2o0MMRMGw4GgN7rs89gs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kwt3JaJP; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A887C4CEE1;
-	Thu, 26 Dec 2024 22:38:59 +0000 (UTC)
+	 MIME-Version:Content-Type; b=ebbY7776Poz+adYIiWBk6l4yY+5Xm4z/zCqou3lM6hVPXwE3XOeOhdweYFXPpLnswX+M4SrA0PZcLTC4rgQK8dADfdfht25ZzuKsQefffeiT3U/FpGlTNoAKtLQaC9RyQtr7T+kuLEDzdIP3lfsQGWKnvU1YIvSDuMuwyOW1MMI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=npIoxWvE; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4453CC4CEE2;
+	Thu, 26 Dec 2024 22:39:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1735252740;
-	bh=PRnqGqye9XLcM7XryqGktyEXPjFZialyNlgxDprsjto=;
+	s=k20201202; t=1735252742;
+	bh=ghvEWc+CY8H0nlr1RDV+hoiNH9dMWvFeMfs/OYEjr0c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kwt3JaJPPleS9RIrUeVFTmRq/7VGdHXr7JFCCzjAVTyUAFdWHDsiP67YyCqjwch2x
-	 wEqHhau5xfAiphIyg2obojARRMuFzbhDO7kQ0bCTmFDO6Prpc3I167jqXM9zeG75Zx
-	 LVUrEmuTsyWiEJ6HWYYerRE0Oqj6+eNAyIJlzJiVNyac8jFOXz8yLHSAcTW/zhfXgp
-	 eXBI4Gqky32dzMKwz+ZnNIM/e/RlkkvsZspSKWBGui6ppLcXXQPslXEmnzFNZ+K5gs
-	 66slMAD0K3b8Agg2YRTnvbkg0BKUJVQ6Z5/hQloqwkw6xHIc70iQTExiGsgJCGAh3W
-	 GcFSF2KHGQz1g==
+	b=npIoxWvEhlwQcxUAJn3Nn3nExWdThmhOt2E3wRP7AZsLMCDTOena4lCfjCB9ObV8v
+	 +8bE1nbr+FQ1W7fnOUrWuvP2oHnH7uo+IU9/7ihoPLVUd7Fuscag0H9l2Li/ZJnPUB
+	 OGwE6kkyR3nFgdyq/zE+5m+dssgj1faxr4E09/z6l+59WjBAwRhtTDgcHmseYRV1He
+	 RzosjZXEZzVzbWoO64u1m2VLhaDoy1b+yEsd9w1D9iZvpwywHLnqSy7Y0XlsFxUAfK
+	 FN0zYX+vf6/O4rB9trQPnTfNnv+pE0ETlF7UnvmPhPeR26utG/qLPpOtWbGne+xu7Y
+	 PxLL0kAPjIZrg==
 From: Bjorn Andersson <andersson@kernel.org>
-To: Anastasia Belova <abelova@astralinux.ru>
-Cc: Michael Turquette <mturquette@baylibre.com>,
-	Stephen Boyd <sboyd@kernel.org>,
-	David Dai <daidavid1@codeaurora.org>,
-	linux-arm-msm@vger.kernel.org,
-	linux-clk@vger.kernel.org,
+To: Konrad Dybcio <konradybcio@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Amit Kucheria <amitk@kernel.org>,
+	Thara Gopinath <thara.gopinath@gmail.com>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
+	Daniel Lezcano <daniel.lezcano@linaro.org>,
+	Zhang Rui <rui.zhang@intel.com>,
+	Lukasz Luba <lukasz.luba@arm.com>,
+	Joerg Roedel <joro@8bytes.org>,
+	Will Deacon <will@kernel.org>,
+	Robin Murphy <robin.murphy@arm.com>,
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+	=?UTF-8?q?Barnab=C3=A1s=20Cz=C3=A9m=C3=A1n?= <barnabas.czeman@mainlining.org>
+Cc: linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	stable@vger.kernel.org,
-	lvc-project@linuxtesting.org
-Subject: Re: [PATCH] clk: qcom: clk-rpmh: prevent integer overflow in recalc_rate
-Date: Thu, 26 Dec 2024 16:38:31 -0600
-Message-ID: <173525273254.1449028.13893672295374918386.b4-ty@kernel.org>
+	linux-gpio@vger.kernel.org,
+	linux-pm@vger.kernel.org,
+	iommu@lists.linux.dev,
+	Dang Huynh <danct12@riseup.net>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	=?UTF-8?q?Otto=20Pfl=C3=BCger?= <otto.pflueger@abscue.de>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Stephan Gerhold <stephan.gerhold@linaro.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: Re: [PATCH v11 0/4] Add MSM8917/PM8937/Redmi 5A
+Date: Thu, 26 Dec 2024 16:38:32 -0600
+Message-ID: <173525273259.1449028.18344250660598461023.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20241203084231.6001-1-abelova@astralinux.ru>
-References: <20241203084231.6001-1-abelova@astralinux.ru>
+In-Reply-To: <20241221-msm8917-v11-0-901a74db4805@mainlining.org>
+References: <20241221-msm8917-v11-0-901a74db4805@mainlining.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -67,20 +86,22 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Tue, 03 Dec 2024 11:42:31 +0300, Anastasia Belova wrote:
-> aggr_state and unit fields are u32. The result of their
-> multiplication may not fit in this type.
+On Sat, 21 Dec 2024 00:40:47 +0100, Barnabás Czémán wrote:
+> This patch series add support for MSM8917 soc with PM8937 and
+> Xiaomi Redmi 5A (riva).
 > 
-> Add explicit casting to prevent overflow.
 > 
-> Found by Linux Verification Center (linuxtesting.org) with SVACE.
-> 
-> [...]
 
 Applied, thanks!
 
-[1/1] clk: qcom: clk-rpmh: prevent integer overflow in recalc_rate
-      commit: 89aa5925d201b90a48416784831916ca203658f9
+[1/4] arm64: dts: qcom: Add PM8937 PMIC
+      commit: 89f6e0251d3a84aef8380f03009ac1bf182ec206
+[2/4] arm64: dts: qcom: Add initial support for MSM8917
+      commit: 7f18b1ea7987ff232bc53a830d0aa81ea31d762f
+[3/4] dt-bindings: arm: qcom: Add Xiaomi Redmi 5A
+      commit: 88efce82a55d61df76e2fc4bdc68459c0b3b7581
+[4/4] arm64: dts: qcom: Add Xiaomi Redmi 5A
+      commit: 26633b5820569a5e7bb29d713e978107f4a2bd94
 
 Best regards,
 -- 
