@@ -1,177 +1,312 @@
-Return-Path: <linux-arm-msm+bounces-43372-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-43373-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 258A79FCAFA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Dec 2024 13:46:26 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 892779FCB0D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Dec 2024 14:06:37 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8B7A21882F43
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Dec 2024 12:46:27 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B250E7A00B1
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Dec 2024 13:06:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E31C51D416A;
-	Thu, 26 Dec 2024 12:46:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 696C71D279C;
+	Thu, 26 Dec 2024 13:06:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="aamVeHkM"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="FwRo17f6"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D44641CCB4A
-	for <linux-arm-msm@vger.kernel.org>; Thu, 26 Dec 2024 12:46:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BD88182D7;
+	Thu, 26 Dec 2024 13:06:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735217179; cv=none; b=B8UlW3a6bEDpb+R49CHyVek6oFrkHIkiscMjXtPo9cmbVunQ+OonvOGeg9wpxnI1LUbREdnjyGp8iNCjcRXflG//pPov7dUx6WooAqhQ/NUXJGWpXyWi2yeYOGPPhCmautdHz5pJyQ6SrtOEX7W9G9NSDEbH4ewC11Tq0Ac2af4=
+	t=1735218391; cv=none; b=YZixLDfMpQ0bHANLw4CY4iu5JntDYzDZppdHnlRX/qU9yUkT74OfOQ5ylruffI8o2nFOIbU6F1oXsr72zJTtT8wcQ9aLYH9FznAlNHj/g4DTooPMnJ2fcz2AoeCZzmH13r0q6fOojtg6q2L696m9bKAkOSyUA2jYmLbMs0xjq68=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735217179; c=relaxed/simple;
-	bh=G3hUxADeUhWD6vBq6ggpg1KhvijnCggWuXdOn1Uf7ag=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=RajbYq7wVMsZBwWi+pbMcA6jAbYqSLZUvSO4eA1W6NpsHMVnrL5VzGhiIpeozlVTKqopSVIbt4EGGI2Ni2H/IsBbnXgJ4wFthKfTbs5TNE5nt+TN8IS4duCPNqD5nWzYUnXiANjL8couKr53MXyYJCEV8ZiL7IJ/36ny6emXlBs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=aamVeHkM; arc=none smtp.client-ip=209.85.128.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-43675b1155bso45754405e9.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Dec 2024 04:46:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1735217176; x=1735821976; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=UCdNvS5Djx3r+ijh8xS7MexSd/I3n9CUOOYzp0CujaU=;
-        b=aamVeHkMGWcaLuFVGiZGAy2elUcUCgaORvnGLH2SeN+7a+wVSltAXiBFE3IFh/8oek
-         uXG7kP31nzUnlfF6opcgieZfpZ4dF96ApwgR0lA+fhNhiyZOvftJn4HOPmh01FVka9nr
-         C2XjxMzTGwTfxaKQRCtKuBUvoA2bz4Ed0jFEEtqDOn24GyZpoA6kyQYe26Zb1N8SZZ42
-         E+884Aie0zo9OvkQM2Y+gk9JRvSZudR3tt/wmXwDxw2UQOzR/B9p6QIs8qS8eVfekwZM
-         xF2/juPF/yY+gBARehbmUwFNrkiRaA/YsqTnfqLrNvQZ3yVKwo76dXnNXX7CN4TjE7Q4
-         Xfdg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1735217176; x=1735821976;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=UCdNvS5Djx3r+ijh8xS7MexSd/I3n9CUOOYzp0CujaU=;
-        b=PVA0iyRDDmHLdDeHlMWV3EL75IUH+afkHYwf2sRvkS1A6rGk5lvnyJYZ3b2Owe0ePA
-         C7i+DCkxrSWIgaZE6d39AFbm2ttgbB+4xWjtZQcMJTKm+MX8W9bCaoDf7EZdGOSdTeZX
-         ivrfpZcGX+hxrcc/Lh9WWwgL+tg07m/sv93GcVBnZC9RBwAr6/w4pKMEQ7X3kLNqJCfz
-         cjkN0XsH8Kck3JPEHgWtI7oBQYm7oqyjynN7mbwBH1EJHLmahhITQQBd+YYVynrVbmLd
-         okh9t+cTfYQdDVLkosuUhc19D+cMPdBoZ5FwnP2vSEzDcCzPuZ5eTKztyeMC16QmrpFk
-         G0Bg==
-X-Forwarded-Encrypted: i=1; AJvYcCXeZPxPUkXLRFv2zvoTtKx330lk3hmAfxKt9R3mfXvWh5Iz9cjhf1JCn7jRhP9KHvcj2ayZrjtvs7Y7vuv+@vger.kernel.org
-X-Gm-Message-State: AOJu0YyMCBBEmc1x1T6mBxejafBg/CfL55W84rieZ+Z23aq7sd06CS0v
-	KwKqz1z6ZdtZAsjgnO7gyCAZSgT4dhn/HzgZVTq/ciEgdl7K2KteLULSCnsQ9HY=
-X-Gm-Gg: ASbGncudtmBkKfJv2byeGpB0gkgXehxCOvOFmzElbJOdjthO7lauvnbtzdc1Q+C4iW8
-	0HFnsdPqa3YB3BBddyfqxgMfSN0UhttgfmlAgvQUdPsr/DGc5ohxXa1Uqw+Ajj17MfY+prPtMJ0
-	5YtTkEOJIGiAXNznhiDDqS/4O7hrflw6Pa1gmAldyktIPTMfxr2k8rrcv9/PVwwMZUA6iHYUFI5
-	z9aOQyVzTRjCRU4t7z0WdbovhA3TowVF6DwnUPWQsMqMT9qmSOK3Pw=
-X-Google-Smtp-Source: AGHT+IFdoO/zxiQ3FIpGhucTVIgGS2pedJeFOAxfk444aPe9ZZVT8fXnThIsGtTdQljhl+HRLuLbag==
-X-Received: by 2002:a05:600c:1c1a:b0:436:1b81:b65c with SMTP id 5b1f17b1804b1-43668646aebmr214219565e9.15.1735217176112;
-        Thu, 26 Dec 2024 04:46:16 -0800 (PST)
-Received: from linaro.org ([82.76.168.176])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-436611ea40csm231612665e9.1.2024.12.26.04.46.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 26 Dec 2024 04:46:14 -0800 (PST)
-Date: Thu, 26 Dec 2024 14:46:12 +0200
-From: Abel Vesa <abel.vesa@linaro.org>
-To: Johan Hovold <johan@kernel.org>
-Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-	Karol Herbst <kherbst@redhat.com>, Lyude Paul <lyude@redhat.com>,
-	Danilo Krummrich <dakr@redhat.com>,
-	Jani Nikula <jani.nikula@linux.intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
-	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
-	Tvrtko Ursulin <tursulin@ursulin.net>,
-	Rob Clark <robdclark@gmail.com>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Sean Paul <sean@poorly.run>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-	nouveau@lists.freedesktop.org, intel-gfx@lists.freedesktop.org,
-	intel-xe@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-	freedreno@lists.freedesktop.org
-Subject: Re: [PATCH v2 4/4] drm/msm/dp: Add support for LTTPR handling
-Message-ID: <Z21QFPYDfFOR905L@linaro.org>
-References: <20241211-drm-dp-msm-add-lttpr-transparent-mode-set-v2-0-d5906ed38b28@linaro.org>
- <20241211-drm-dp-msm-add-lttpr-transparent-mode-set-v2-4-d5906ed38b28@linaro.org>
- <Z1moNToiIIB9auSl@hovoldconsulting.com>
+	s=arc-20240116; t=1735218391; c=relaxed/simple;
+	bh=OUFR84oQYehGSmeLoAPIQbPkAAZFwf9CkId1WOgq/Dc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=TBA82W+5ypBvpO5O3LkX44x6DmWYsqf9hMkkC3WnLfJs3IceAfk9Oj+dVgzZ0nVrB2nNk2aAj5rGdKMFH5CMZNIOQ+GzQBdZtUMZU/xnr8GryBGs2zgAsao0UU+NSm5IhOK7uZwMPn9t5e7Gb4yPik07icyg+TDa1SHSh65haFk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=FwRo17f6; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BQBS33S006166;
+	Thu, 26 Dec 2024 13:06:24 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	RhOENLybUnzcRuOvBj4kQ1aB/y1Y1wJ0KD/g5oubxuc=; b=FwRo17f6W9yOUSF7
+	s4v3x/82nqa1zSjwailbsw3Knf8zh0Zd3uIj+/FAFcbJ8BeQIojYbgyaO4IMLYpJ
+	EYBH+a+mx3ThufIzceJ/iF4hBtQQITsLghvIshzm/E7yhEnLswpEyp7+9I8QYRq/
+	S1AewWi10p+lqvDsTJfVAC8z8OfkPLN0bQdrZxnMvL8wQgmjjsr9g/FTEtCvaKT5
+	oa6xH7ZmMQwtloCI+V5If+JkWet+axZZQnq8E9Psrq2qiPAXiodZV7Ml2uDQuXwC
+	tQz4dLJ8LXCmlrfqpADMkTonE0TY226QjzL/+I92n/HqR5CqD00uNL4TZZqbj3OY
+	8XWXgg==
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43s69ugfj9-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 26 Dec 2024 13:06:24 +0000 (GMT)
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4BQD6GP1021156
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 26 Dec 2024 13:06:16 GMT
+Received: from [10.216.14.233] (10.80.80.8) by nasanex01c.na.qualcomm.com
+ (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 26 Dec
+ 2024 05:06:12 -0800
+Message-ID: <bd699719-4958-445a-a685-4b5f6a8ad81f@quicinc.com>
+Date: Thu, 26 Dec 2024 18:36:08 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Z1moNToiIIB9auSl@hovoldconsulting.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4] i2c: i2c-qcom-geni: Serve transfer during early resume
+ stage
+To: Bjorn Andersson <andersson@kernel.org>
+CC: <andi.shyti@kernel.org>, <quic_bjorande@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <linux-i2c@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <quic_vdadhani@quicinc.com>,
+        <vkoul@kernel.org>
+References: <20241129074742.1844031-1-quic_msavaliy@quicinc.com>
+ <lun7au32tizcahzridtmx2dv3qz6onpnstadla5sf44o7o4my7@s6joggbptwgw>
+Content-Language: en-US
+From: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
+In-Reply-To: <lun7au32tizcahzridtmx2dv3qz6onpnstadla5sf44o7o4my7@s6joggbptwgw>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01c.na.qualcomm.com (10.45.79.139)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: r5iyzPhcXzaMZE2FMrrcKNNygL6aJDGJ
+X-Proofpoint-GUID: r5iyzPhcXzaMZE2FMrrcKNNygL6aJDGJ
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 adultscore=0
+ suspectscore=0 mlxlogscore=999 spamscore=0 mlxscore=0 lowpriorityscore=0
+ bulkscore=0 phishscore=0 priorityscore=1501 clxscore=1015 malwarescore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2411120000
+ definitions=main-2412260116
 
-On 24-12-11 15:56:53, Johan Hovold wrote:
-> On Wed, Dec 11, 2024 at 03:04:15PM +0200, Abel Vesa wrote:
->  
-> > +static void msm_dp_display_lttpr_init(struct msm_dp_display_private *dp)
-> > +{
-> > +	int lttpr_count;
-> > +
-> > +	if (drm_dp_read_lttpr_common_caps(dp->aux, dp->panel->dpcd,
-> > +					  dp->lttpr_caps))
-> > +		return;
-> > +
-> > +	lttpr_count = drm_dp_lttpr_count(dp->lttpr_caps);
+Hi Bjorn,
+
+On 11/30/2024 9:59 AM, Bjorn Andersson wrote:
+> On Fri, Nov 29, 2024 at 01:17:42PM +0530, Mukesh Kumar Savaliya wrote:
 > 
-> I was gonna say shouldn't you handle errors here, but that explains the
-> non-negative check I commented on the first patch in the series.
-
-So lttpr_count is a bit weird. It's either between 0 and 8, or -ERANGE
-if more than 8 LTTPRs are found, or -EINVAL if for some reason the
-DP_PHY_REPEATER_CNT register contains an invalid value.
-(see drm_dp_lttpr_count())
-
-Now, I think I should just drop the lttr_count local variable here entirely.
-
+> Your recipients list is broken because you crafted the arguments list to
+> git send-email by hand. Please read go/upstream and adopt the b4 tool
+> for sending patches.
 > 
-> This looks error prone, but I think you should at least update the
-> kernel doc comment to drm_dp_lttpr_init() in the first patch so that
-> it's clear that you pass in the number of LTTPRs *or* an errno.
+>> pm_runtime_get_sync() function fails during PM early resume and returns
+>> -EACCES because runtime PM for the device is disabled at the early stage
+>> causing i2c transfer to fail. Make changes to serve transfer with forced
+>> resume.
+>>
+>> Few i2c clients like PCI OR touch may request i2c transfers during early
+> 
+> What is "PCI OR"? Do you mean "PCI or" (or "PCIe and touch"). I'm not
+> sure why touch would need access to the I2C bus during early resume.
+Yes, I mean "PCI or".
+Touch has usecase when system is sleeping and we touch in full system 
+suspend state, the event/interrupt should fire and request to i2c read 
+happens during early resume stage. This was observed in downstream and 
+supported to customer requirements too.
 
-Yes, I'll do that. Will mention all possible values and what they mean.
-And will probably point to the drm_dp_lttpr_count() as well, just to be
-safe.
+For now, let's consider PCI which is actual client on upstream codebase.
+> 
+>> resume stage. Any i2c client can keep transfer request very early resume
+>> stage like noirq phase of PM. To serve the transfer, register an interrupt
+>> with IRQF_EARLY_RESUME and IRQF_NO_SUSPEND flags to avoid timeout of
+>> transfer when IRQ is not enabled during early stage.
+>>
+>> The actual usecase over i2c is(Not in upstream yet), PCIe client ->
+> 
+> This text goes into the git history, which means that this statement
+> (not in upstream yet) will become incorrect before this patch becomes
+> needed.
+i just wanted to explain the context and usecase.
+> 
+>> PCIe Driver -> I2C driver.
+>> PCIe client needs certain configurations over i2c after powering on the
+>> PCIe switch.
+> 
+> In the first sentence you use the word "client". In the second you use
+> "client" and "switch", but I think all three cases refer to the same
+> component.
+> 
+Yes, i2c client is PCI client switch. shall enhance this.
+> The description is much better, but I think you can polish the wording
+> to make it even clearer - remember, this will become the only
+> documentation to why the code looks like it does; it's going to be read
+> by people outside your team (and company), who hasn't been part of any
+> discussions leading up to the patch, and it need to be clear why so they
+> know what changes they can make.
+> 
+I agree and understood. I have got the latest writeup and enhanced it, i 
+should update.
+>> As part of suspend it uses suspend_noirq() to turn off the
+>> switch, because some PCIe clients do some transfers till suspend_noirq()
+>> phase. And as part of resume_noirq(), it enables the power to the switch
+>> and configures the switch again through i2c.
+>>
+>> If pm_runtime_get_sync() is failing when runtime PM is not enabled, then
+>> use pm_runtime_force_resume().
+> 
+> Tell us why, not what.
+Sure, will add reason.
+> 
+>>
+>> Co-developed-by: Viken Dadhaniya <quic_vdadhani@quicinc.com>
+>> Signed-off-by: Viken Dadhaniya <quic_vdadhani@quicinc.com>
+>> Signed-off-by: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
+>> ---
+>> Link to V3: https://lore.kernel.org/all/20241119143031.3331753-1-quic_msavaliy@quicinc.com/T/
+>>
+>> v3->v4 :
+>>   - Enhanced commit log by explaining client usecase scenario during early resume.
+>>   - Covered 'usage_count' of 'struct dev_pm_info' under CONFIG_PM to compile non PM CONFIG.
+>>
+>> ---
+>> Link to V2: https://lore.kernel.org/lkml/202410132233.P25W2vKq-lkp@intel.com/T/
+>>
+>>   v2 -> v3:
+>>   - Updated exact usecase and scenario in the commit log description.
+>>   - Removed bulleted points from technical description, added details in free flow.
+>>   - Used pm_runtime_force_resume/suspend() instead customized local implementation.
+>>   - Added debug log after pm_runtime_force_suspend().
+>>
+>> ---
+>>
+>>   v1 -> v2:
+>>   - Changed gi2c->se.dev to dev during dev_dbg() calls.
+>>   - Addressed review comments from Andi and Bjorn.
+>>   - Returned 0 instead garbage inside geni_i2c_force_resume().
+>>   - Added comments explaining forced resume transfer when runtime PM
+>>     remains disabled.
+>> ---
+>>
+>>      V1 link: https://patches.linaro.org/project/linux-i2c/patch/20240328123743.1713696-1-quic_msavaliy@quicinc.com/
+>> ---
+>> ---
+>>   drivers/i2c/busses/i2c-qcom-geni.c | 47 ++++++++++++++++++++++--------
+>>   1 file changed, 35 insertions(+), 12 deletions(-)
+>>
+>> diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-qcom-geni.c
+>> index 7a22e1f46e60..94f875aca9aa 100644
+>> --- a/drivers/i2c/busses/i2c-qcom-geni.c
+>> +++ b/drivers/i2c/busses/i2c-qcom-geni.c
+>> @@ -695,17 +695,29 @@ static int geni_i2c_xfer(struct i2c_adapter *adap,
+>>   			 int num)
+>>   {
+>>   	struct geni_i2c_dev *gi2c = i2c_get_adapdata(adap);
+>> +	struct device *dev = gi2c->se.dev;
+>>   	int ret;
+>>   
+>>   	gi2c->err = 0;
+>>   	reinit_completion(&gi2c->done);
+>> -	ret = pm_runtime_get_sync(gi2c->se.dev);
+>> -	if (ret < 0) {
+>> -		dev_err(gi2c->se.dev, "error turning SE resources:%d\n", ret);
+>> -		pm_runtime_put_noidle(gi2c->se.dev);
+>> -		/* Set device in suspended since resume failed */
+>> -		pm_runtime_set_suspended(gi2c->se.dev);
+>> -		return ret;
+>> +	/* Serve I2C transfer by forced resume if Runtime PM is enbled or not */
+> 
+> That is what the code says too, document why.
+> 
+>> +	if (!pm_runtime_enabled(dev) && gi2c->suspended) {
+>> +		#if (IS_ENABLED(CONFIG_PM))
+> 
+> This condition doesn't look right.
+Sorry, i should make it opposite.
+> 
+>> +		dev_dbg(dev, "Runtime PM is disabled hence force resume, pm_usage_count: %d\n",
+> 
+> Is the information that runtime PM being disable relevant information
+> for the average user? I guess it can be useful to have a debug print
+> telling you that power is being forced on... But this could probably be
+> expressed more succinct.
+Sure
+> 
+>> +			atomic_read(&dev->power.usage_count));
+>> +		#endif
+>> +		ret = pm_runtime_force_resume(dev);
+>> +		if (ret)
+>> +			return ret;
+>> +	} else {
+>> +		ret = pm_runtime_get_sync(gi2c->se.dev);
+>> +		if (ret < 0) {
+>> +			dev_err(gi2c->se.dev, "error turning SE resources:%d\n", ret);
+> 
+> You don't need "SE" in this sentence, but "turning on resources" would
+> sound better. Please also include a space after ':'.
+> 
+>> +			pm_runtime_put_noidle(gi2c->se.dev);
+>> +			/* Set device in suspended since resume failed */
+>> +			pm_runtime_set_suspended(gi2c->se.dev);
+>> +			return ret;
+>> +		}
+>>   	}
+>>   
+>>   	qcom_geni_i2c_conf(gi2c);
+>> @@ -715,8 +727,20 @@ static int geni_i2c_xfer(struct i2c_adapter *adap,
+>>   	else
+>>   		ret = geni_i2c_fifo_xfer(gi2c, msgs, num);
+>>   
+>> -	pm_runtime_mark_last_busy(gi2c->se.dev);
+>> -	pm_runtime_put_autosuspend(gi2c->se.dev);
+>> +	/* if Runtime PM is disabled, do force_suspend() else autosuspend the driver */
+> 
+> That is what the code says.
+Sure, will remove it then.
+> 
+>> +	if (!pm_runtime_enabled(dev) && !gi2c->suspended) {
+>> +		ret = pm_runtime_force_suspend(dev);
+>> +		#if (IS_ENABLED(CONFIG_PM))
+>> +		dev_dbg(dev, "Runtime PM is disabled hence force suspend, pm_usage_count: %d\n",
+>> +			atomic_read(&dev->power.usage_count));
+>> +		#endif
+>> +		if (ret)
+>> +			return ret;
+>> +	} else {
+>> +		pm_runtime_mark_last_busy(gi2c->se.dev);
+>> +		pm_runtime_put_autosuspend(gi2c->se.dev);
+>> +	}
+>> +
+>>   	gi2c->cur = NULL;
+>>   	gi2c->err = 0;
+>>   	return ret;
+>> @@ -833,9 +857,8 @@ static int geni_i2c_probe(struct platform_device *pdev)
+>>   	init_completion(&gi2c->done);
+>>   	spin_lock_init(&gi2c->lock);
+>>   	platform_set_drvdata(pdev, gi2c);
+>> -
+>> -	/* Keep interrupts disabled initially to allow for low-power modes */
+> 
+> This comment looks incorrect. But your change doesn't change the related
+> fact. Please send a separate commit removing it - with proper
+> motivation.
+> 
+Sure
+> Thanks,
+> Bjorn
+> 
+>> -	ret = devm_request_irq(dev, gi2c->irq, geni_i2c_irq, IRQF_NO_AUTOEN,
+>> +	ret = devm_request_irq(dev, gi2c->irq, geni_i2c_irq,
+>> +			       IRQF_NO_AUTOEN | IRQF_EARLY_RESUME | IRQF_NO_SUSPEND,
+>>   			       dev_name(dev), gi2c);
+>>   	if (ret) {
+>>   		dev_err(dev, "Request_irq failed:%d: err:%d\n",
+>> -- 
+>> 2.25.1
+>>
+>>
 
-> 
-> > +
-> > +	drm_dp_lttpr_init(dp->aux, lttpr_count);
-> > +}
-> > +
-> >  static int msm_dp_display_process_hpd_high(struct msm_dp_display_private *dp)
-> >  {
-> >  	struct drm_connector *connector = dp->msm_dp_display.connector;
-> >  	const struct drm_display_info *info = &connector->display_info;
-> >  	int rc = 0;
-> >  
-> > +	msm_dp_display_lttpr_init(dp);
-> 
-> It looks like you ignore errors on purpose so I guess that's fine.
-
-Maybe I should at least throw an error, just like the i915 does.
-Will do that.
-
-> 
-> > +
-> >  	rc = msm_dp_panel_read_sink_caps(dp->panel, connector);
-> >  	if (rc)
-> >  		goto end;
-> 
-> Either way, this is needed for external display on my x1e80100 machines,
-> while not breaking the X13s:
-> 
-> Tested-by: Johan Hovold <johan+linaro@kernel.org>
-> 
-> Johan
-
-Thanks for reviewing and testing,
-Abel
 
