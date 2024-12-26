@@ -1,61 +1,66 @@
-Return-Path: <linux-arm-msm+bounces-43384-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-43385-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 98B229FCCA9
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Dec 2024 19:28:18 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 39DA89FCCAB
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Dec 2024 19:28:23 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6EE631883454
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Dec 2024 18:28:17 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 60B717A14D6
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Dec 2024 18:28:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4B6201D61A4;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 85F821D63D0;
 	Thu, 26 Dec 2024 18:27:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nVsLKle9"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VS/WF1tv"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EF041D5CFA;
-	Thu, 26 Dec 2024 18:27:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5623B1D61BC;
+	Thu, 26 Dec 2024 18:27:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735237640; cv=none; b=QsmR7Rb5iR9UR67SWFm+kQfVD//pNqO/FY2MlpAgNAvZ9wMKWY2FY3d/jZGDxatXypTA4tbXRCiBSWFnw0iic22ZdeIaNJ4VBrHpLPnpLVonInHk7zyUs5+VrWeWuyQvm/53WMMLF6V5nVLPA3wm/3d4OKwXS+2r+hblEeNMoU4=
+	t=1735237640; cv=none; b=UuV4PCSX+stMhYWjpLWEjv5qBtxkft99g4prxPxalTKuQQOEtteOdjweT4FL0RyenI4yD+PwOk5zpEYQ6HbPCQNaNHsErLQafYgGV70OvSMFWrdyNEgSs/KIFd3d6GZwgb+Gqeb4wTWScy8wr1R6sQ+dK76felmSMs4ZXepnBeY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1735237640; c=relaxed/simple;
-	bh=xJC9Nm0YHwJstoJ4lo3nMMA7t8v/iMOSBA6NUo2yGWg=;
+	bh=uvhF0H+/nhPDwYsGew61/jcKc8p5FEUPO62yxb7+xA8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=c6Gh2NsgGFrZVOTIYBghmXHKeM4QxfOSYSm5Xngjh+SbtNVu5jDWIgQDkmTKoHfx6Ad4oJtnnbSOBvWKFTVoSZPtQb3gcsEzuHM7kCEdnNjat2Fe3Ea0VIHMXxtRCARAd1Ze2f3Ooov01gP53ZT40FgyYsNKjdN+5OqKoajwt7E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nVsLKle9; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BDD5C4CED6;
-	Thu, 26 Dec 2024 18:27:17 +0000 (UTC)
+	 MIME-Version:Content-Type; b=jAnq2tGemIVS4SAMwdzgkwPfiuQhB0I+kQQvTe+yg5xOLCPNb56l1fiq8EFbOHJHSPQaYba6rofeQXp+3nMVxOUF/wFM7bpwhnS5YRwmgD0HGKgnWrEurJTJ/cV6G9b+CwmGonGbuqjivsAicfnbJJ0BCy1L8F+xKQ2Dq366LWc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VS/WF1tv; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5FABC4CEDD;
+	Thu, 26 Dec 2024 18:27:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1735237638;
-	bh=xJC9Nm0YHwJstoJ4lo3nMMA7t8v/iMOSBA6NUo2yGWg=;
+	s=k20201202; t=1735237639;
+	bh=uvhF0H+/nhPDwYsGew61/jcKc8p5FEUPO62yxb7+xA8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nVsLKle9jLY2CAfCHHV4TBcaXid+hYjqIuejZsZDa/5fN8WV8Bc9W1oB56YsT88lY
-	 GHZE37ASl5L2FOgcaD0kHJ57bIGeg/0Aj+DfP/Q60hR7iQ256XpJeyTGy/4oz92hf5
-	 xUcHK83PM9zn06Zf3Z8uf3ZPWOIQacJzYIctJSLJekcoPz2Wspo8Rcj9NeEui+NHGJ
-	 aKsFI8KuyikCVcG2DWYfcd6GrCUf9gjDiKzAZqp+0eCfKToU/T4ZK3l8y3oAD8W5Am
-	 MgRej6EWD254NoXEm4/0ZQXy4GbGS5Vu8uGeYgrqaS9VcftMoCJYlDW8ZFzx8eoq/h
-	 bVYoymCbq0lYQ==
+	b=VS/WF1tvc7d8RVr1Y7wQgrCCdiURXH4sdFM8eWq4RecQuRjzrxZ94qXS1T2IClggs
+	 Sc5UeaOeMeyl89jP3pH/xLsOv5nskZEANPvVDZKfLXoIZ0wGe7dECwelEHtqasHRT6
+	 vY4hGobIXMrSxRP0OjOlkTHTRmUJJYb2m60ZV+LKbhmSzoAdqKCcb2ZbMyMYpSADQc
+	 MFA0RA6/sbG+HqH13qrRXphZgcEoJe/gq4kY9EpdCEP1Z0HEbYBg4MdA2qzkrBFkYe
+	 Fudgqgj2m4bxnlmaYOCDupCC0fLyFh6+h31gwvXpMyvGMuaYnj9+NAEC1BHgTQuCYJ
+	 fq5FAfsnCP5Zw==
 From: Bjorn Andersson <andersson@kernel.org>
-To: linux-arm-msm@vger.kernel.org,
-	sboyd@kernel.org,
-	Eugen Hristev <eugen.hristev@linaro.org>
-Cc: linux-clk@vger.kernel.org,
+To: Konrad Dybcio <konradybcio@kernel.org>,
+	Johan Hovold <johan+linaro@kernel.org>
+Cc: Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Jonathan Marek <jonathan@marek.ca>,
+	Stephan Gerhold <stephan.gerhold@linaro.org>,
+	Abel Vesa <abel.vesa@linaro.org>,
+	linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	linux-pm@vger.kernel.org,
-	konradybcio@kernel.org,
-	evgreen@chromium.org
-Subject: Re: [PATCH v4] soc: qcom: Rework BCM_TCS_CMD macro
-Date: Thu, 26 Dec 2024 12:26:37 -0600
-Message-ID: <173523761394.1412574.5233882312649238359.b4-ty@kernel.org>
+	regressions@lists.linux.dev
+Subject: Re: [PATCH v3 0/3] arm64: dts: qcom: x1e80100: fix USB OTG regressions
+Date: Thu, 26 Dec 2024 12:26:38 -0600
+Message-ID: <173523761368.1412574.8069026110047769537.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20241129142446.407443-1-eugen.hristev@linaro.org>
-References: <20241129142446.407443-1-eugen.hristev@linaro.org>
+In-Reply-To: <20241210111444.26240-1-johan+linaro@kernel.org>
+References: <20241210111444.26240-1-johan+linaro@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -66,21 +71,25 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Fri, 29 Nov 2024 16:24:46 +0200, Eugen Hristev wrote:
-> Reworked BCM_TCS_CMD macro in order to fix warnings from sparse:
+On Tue, 10 Dec 2024 12:14:41 +0100, Johan Hovold wrote:
+> A recent change enabling OTG mode on the Lenovo ThinkPad T14s USB-C
+> ports can break SuperSpeed device hotplugging.
 > 
-> drivers/clk/qcom/clk-rpmh.c:270:28: warning: restricted __le32 degrades to integer
-> drivers/clk/qcom/clk-rpmh.c:270:28: warning: restricted __le32 degrades to integer
+> Abel noticed that the corresponding commit for the CRD also triggers a
+> hard reset during resume from suspend.
 > 
-> While at it, used u32_encode_bits which made the code easier to
-> follow and removed unnecessary shift definitions.
+> Dmitry had already reported that enabling role switching can break UCSI.
 > 
 > [...]
 
 Applied, thanks!
 
-[1/1] soc: qcom: Rework BCM_TCS_CMD macro
-      commit: 2705bce5b4c45e2a0a354ec4df937d2803241cd8
+[1/3] Revert "arm64: dts: qcom: x1e78100-t14s: enable otg on usb-c ports"
+      (no commit info)
+[2/3] Revert "arm64: dts: qcom: x1e80100-crd: enable otg on usb ports"
+      commit: 2e5e1a7ea692dc2b9f1acf0ebeb75bc282733cac
+[3/3] Revert "arm64: dts: qcom: x1e80100: enable OTG on USB-C controllers"
+      commit: 7db0ba3e6e6c215353c1e58b42dfd77c7ab89256
 
 Best regards,
 -- 
