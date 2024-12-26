@@ -1,62 +1,64 @@
-Return-Path: <linux-arm-msm+bounces-43388-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-43389-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 057E69FCCB8
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Dec 2024 19:29:27 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8BE909FCCB9
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Dec 2024 19:29:32 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8384E1883282
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Dec 2024 18:29:16 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 28030162BE5
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Dec 2024 18:29:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 206181D90B6;
-	Thu, 26 Dec 2024 18:27:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4A5CF1D9A47;
+	Thu, 26 Dec 2024 18:27:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qjYgY1xD"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tss6zVaG"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E88EF1D90A5;
-	Thu, 26 Dec 2024 18:27:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FCDE1D95B3;
+	Thu, 26 Dec 2024 18:27:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735237644; cv=none; b=hs2djFEW2McnJI5XwFAMpQ4Wrwl6hoROI0TmpTeGtAbCpsw1tC2pKkKX7a5Glk17bcxaLtM5NlJiAslVWEnRk/JUX0OhXONl1CcHfF/ERO4f1ZUUnr8SoQBZ3emIb9smlSBasM06DfmR1EEtBGEo1Q2TZgzFLgtFAJvwaMrO0r8=
+	t=1735237645; cv=none; b=IS2Wuhfwpjp959aDKVNYYhLDC33MRl67PIPDZYhZxC1erucD0xblNuKrbgcd+/7JrrC2ByvJMrY4FVv28RLvhlXr0zJc5l3dSV7M/ayyJ4krSeBJFSgCuDq80QU1fI+tueeLrBwWAl2q3zBq5Rp7qHKSzxhjiONPWfilE1AlUpo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735237644; c=relaxed/simple;
-	bh=5mmowJ1cVox9CjJyIMyxJWx85DXh/Llzv9m04ocdxkY=;
+	s=arc-20240116; t=1735237645; c=relaxed/simple;
+	bh=msGPvWfsO7CXVftOUMwhKvero+Hoo1ttpKtnVlXosmw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=OJkiZJ+o9Q4JRF80E/AhhWz2a+BNxHp/WdeZDqB5rAY0qLSdmIsbVJetLnkCgTIoBoty3viyD/f4Z5eLDJUXB9G8H9hyZf4NuHszGwVlVLOXBdXXa5dbrnDR2KHxbvNxZkgGJUxqB0TNzBViw9DY1fDuQHZjki9uNGT0qrgRksM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qjYgY1xD; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7365C4CED7;
-	Thu, 26 Dec 2024 18:27:22 +0000 (UTC)
+	 MIME-Version:Content-Type; b=cQUvk7SRSPNRkyvcUW9EbKsP/sAgCskvGKe86o7nZi4S7m9RaKqMX6Gh+cD56p2gLzNn7+IWl4ECFRGTsE41TkH7SuJUwwdznPoCe7N349gkSkZSJQwCp2+p1e18ZT7eVjkaHhdwmF++JWhvHMDc2762S9hGRxQR+TcUqH56IuM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tss6zVaG; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEA49C4CED4;
+	Thu, 26 Dec 2024 18:27:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1735237643;
-	bh=5mmowJ1cVox9CjJyIMyxJWx85DXh/Llzv9m04ocdxkY=;
+	s=k20201202; t=1735237644;
+	bh=msGPvWfsO7CXVftOUMwhKvero+Hoo1ttpKtnVlXosmw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qjYgY1xDHRzYzlA3978cYpP8B8JLR6t0W6Hv7u25D+zzxLRs4MYK/6FLKi8s8VSrv
-	 FvGRBHAl1SdhBOxR6YnW7ck5eOOVQxSCGBM55UHgY6nApIvQJp6+754qVX4WmayLUe
-	 N3HHMk/ejhxFB2WA+u4+c/EEtbmEgAIkJ5ce9nkRGvT6qevhhkzGk8VxeHwEvEP6Jj
-	 sQc+eM5onpQVTN2sW/7H8/pCLkG8zpXXtScSRN9gxxfzm5eKt8UA/KmRABF5M01LGK
-	 loydAyspEsU4q+czHzrAQY68cHkEL8unYw68uJyCG1e3rE+/s8EtEvhmmXjofR2Hzx
-	 RQ8b7y37fiolg==
+	b=tss6zVaGt+sRrh8tCTdQT0C7qoOYrrIlg6fPZcH4+q/wDPpaIlzwtC6svPojKKkLW
+	 l3vWPozkGe/9x7s2ikrk06CORMQp6432v09iymR/fugPTq+NaF+63hP82fOibNOZGu
+	 scZyN/0PvUekK/c6fu/J1H+ui3j2YVJwzkW22+RRmnL9h9hGrzRU8oOnRwBEJLYV2H
+	 A/4uKc7SpgjFNM3ATYplj6BrWqJS/6AWuujPP8QDs+OQBj5cDIBWzkDs28xe6gnNfP
+	 aGi0AL7YEFii37lAJI21xnkwKIZVdmfE43zw8QqVk49MDf7xIlb9LaFqg3MJRVv0vp
+	 eqNL8K/yu8Fjw==
 From: Bjorn Andersson <andersson@kernel.org>
 To: Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>,
+	Viken Dadhaniya <quic_vdadhani@quicinc.com>,
 	Konrad Dybcio <konradybcio@kernel.org>
 Cc: Marijn Suijten <marijn.suijten@somainline.org>,
 	linux-arm-msm@vger.kernel.org,
 	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Subject: Re: (subset) [PATCH 0/4] X1P42100 bindings + common driver bits
-Date: Thu, 26 Dec 2024 12:26:41 -0600
-Message-ID: <173523761373.1412574.7598695268533938221.b4-ty@kernel.org>
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	kernel test robot <lkp@intel.com>
+Subject: Re: [PATCH] arm64: dts: qcom: sa8775p: Use valid node names for GPI DMAs
+Date: Thu, 26 Dec 2024 12:26:42 -0600
+Message-ID: <173523761387.1412574.7197869872651859255.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20241221-topic-x1p4_soc-v1-0-55347831d73c@oss.qualcomm.com>
-References: <20241221-topic-x1p4_soc-v1-0-55347831d73c@oss.qualcomm.com>
+In-Reply-To: <20241107-topic-sa8775_dma-v1-1-eb633e07b007@oss.qualcomm.com>
+References: <20241107-topic-sa8775_dma-v1-1-eb633e07b007@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -67,22 +69,20 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Sat, 21 Dec 2024 13:35:59 +0100, Konrad Dybcio wrote:
-> This series brings the board/platform compatibles for X1P42100 & the
-> CRD based on it and adds them to various match tables.
+On Thu, 07 Nov 2024 22:14:23 +0100, Konrad Dybcio wrote:
+> As pointed out by Intel's robot, the node name doesn't adhere to
+> dt-bindings.
 > 
-> The DT itself will come in a separate series, as it depends on some
-> more changes across the tree.
+> Fix errors like this one:
 > 
+> qcs9100-ride.dtb: qcom,gpi-dma@800000: $nodename:0: 'qcom,gpi-dma@800000' does not match '^dma-controller(@.*)?$'
 > 
 > [...]
 
 Applied, thanks!
 
-[3/4] soc: qcom: pd-mapper: Add X1P42100
-      commit: e7282bf8a0e9bb8a4cb1be406674ff7bb7b264f2
-[4/4] firmware: qcom: scm: Allow QSEECOM on X1P42100 CRD
-      commit: 6994c655e1252049007973fd641e6a26f94c420b
+[1/1] arm64: dts: qcom: sa8775p: Use valid node names for GPI DMAs
+      commit: 86348c7587f556d3f0a3f117c3f5b91a69c39df6
 
 Best regards,
 -- 
