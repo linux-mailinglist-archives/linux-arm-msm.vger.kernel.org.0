@@ -1,67 +1,64 @@
-Return-Path: <linux-arm-msm+bounces-43407-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-43408-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4B0999FCCEF
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Dec 2024 19:34:03 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0A51A9FCCF6
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Dec 2024 19:34:47 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id DFA0F162F31
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Dec 2024 18:34:00 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id DB7401883FB4
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Dec 2024 18:34:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0D8691DED55;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F0F7C1DED76;
 	Thu, 26 Dec 2024 18:27:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FSYYD9iH"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PgMcKKGR"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D54B91DED4F;
-	Thu, 26 Dec 2024 18:27:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C83CD1DED6F;
+	Thu, 26 Dec 2024 18:27:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735237664; cv=none; b=VRf1KaH+Z7Juca87wn3iMnljHXVnIpE6HiyKHwwEyN98SpJKJ/GhetOx84R6TnjGHeF+1s4s17M/e4/E5SZwYNz2gymX+/XsbUANqgkE76eJO4cKL6s7/fN5S7U/MaJJp4JH3qa0+hiU54tb9PU6XoWW79fxjy+wbQXKFYwBpa8=
+	t=1735237665; cv=none; b=DHQGX1Om7MfYVKMOmbdvvlPtuszU70fhud9xSZfMxP000TWZV2Al6AYH2QKdR7woNsz6Yn0mPW9DA9ISjxkRhcfDC7MafcAh7nr4s345HwoQZU9LE4bFbO1/t1solk+iwCkJLWx+HjoASmcXcuFqG8KRJxAmy/zjGYCbIE3akBo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735237664; c=relaxed/simple;
-	bh=3rra3OEL4T2fPfqzANKvKHQ9vGwn5eoOrpfGXhXCcco=;
+	s=arc-20240116; t=1735237665; c=relaxed/simple;
+	bh=rOJPynHkx4KHoeHAY+txPPLehuYdXH9077ruK+q6aQI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=W/gbT9Q8xy0r+U/UDY+wUE97CtbLELl4YjhLdi9qkSkJ29aqgg+VcGmzHIoXwILqq5j9xmexjJK7aMldPu5rpk4IJSn9mX6hY7OTcZIiwoLWIdi+WxLtR3km8KUZxU0m/njz0qn2ceCF9iRfr3AX0+HQqzyUnRwLIfPV6JJM2Ac=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FSYYD9iH; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50E7FC4CED7;
-	Thu, 26 Dec 2024 18:27:43 +0000 (UTC)
+	 MIME-Version:Content-Type; b=rmdMdZh6CXBPKV23LDo9l5Qp1At5R4sytxnm4pM0dB85sJ73s28+QGa4llnSBPeRhhmaZ/WLvx6K2kX881yytl6KFaE0cm9KRjZvYUVxGKG5xarFZbUJrB7bxYwgQp81ihH61Rv/TLDIJg/L+81OCIvSY2F8/7w+zWFXhsnSVoY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PgMcKKGR; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96E18C4CED6;
+	Thu, 26 Dec 2024 18:27:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1735237664;
-	bh=3rra3OEL4T2fPfqzANKvKHQ9vGwn5eoOrpfGXhXCcco=;
+	s=k20201202; t=1735237665;
+	bh=rOJPynHkx4KHoeHAY+txPPLehuYdXH9077ruK+q6aQI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FSYYD9iH9trTAby6FEylCJJBFPAVynzD6cC+dw/nNtLhlV9g8bbDyOk4h+Pfmb2Sm
-	 t6N91CDOYpAx+S5spA+xxAtvGInpUuNEaJVJY2pHDsbzQ3f82ELSCO/CbxUDV2pI9k
-	 6KSd/iMWapwrUilVpDByzsClevzP2CzZsdgnDSko7kJF++TtVzKhA/QKVeM5xCFg+s
-	 m0DS0i/W+wolfxEMpAX2XjoXIUp9FrnrSxmql0K8QFrTBy+NVGr3rzfldB2HVFq8P0
-	 ztiWw02FUiXZzYzXhi6jn3GL7/W5N5za6f7PW1tNoHTIBSy1Y8OzJ7iKKYHQ31TXfY
-	 LeE2NF7arl8AQ==
+	b=PgMcKKGR0nbf52xq68WRNlIIangtS0AR98raU5VXsphGr32RsCP5GkSiJIeJ5RGyv
+	 kofU3UJFCvsyHXYSk/d3p8uW/a2BUMsTRwTK8MYPYUNVSqC6ag8xNc6j0OdlSQSqbm
+	 MZD4PG+mi2NIk86AFv57iRePD5MRvS0e9ipXl3HbVPsBvS9v0N1zwntymOYQm/t2Vy
+	 er8JEQIJsgR2ZD4KE5skEq6iQtd321XJQB7zoRmsQ+q80rIefPqWY28yEsEnX/a2aJ
+	 hnsKE+6kDcqgoVUlcu9BvO5otJZ15sjtsbJi7qC+BlZqpk4oLBn/p2T+Jr+RC4U9e7
+	 PR0Gx9QH2dy3g==
 From: Bjorn Andersson <andersson@kernel.org>
-To: wim@linux-watchdog.org,
-	linux@roeck-us.net,
+To: konradybcio@kernel.org,
 	robh@kernel.org,
 	krzk+dt@kernel.org,
 	conor+dt@kernel.org,
-	konradybcio@kernel.org,
-	quic_rjendra@quicinc.com,
-	linux-arm-msm@vger.kernel.org,
-	linux-watchdog@vger.kernel.org,
+	Soutrik Mukhopadhyay <quic_mukhopad@quicinc.com>
+Cc: linux-arm-msm@vger.kernel.org,
 	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
-Cc: quic_srichara@quicinc.com,
-	quic_varada@quicinc.com
-Subject: Re: (subset) [PATCH v2 0/2] Add watchdog support for IPQ5424
-Date: Thu, 26 Dec 2024 12:27:00 -0600
-Message-ID: <173523761392.1412574.3549863619757179987.b4-ty@kernel.org>
+	quic_riteshk@quicinc.com,
+	quic_vproddut@quicinc.com,
+	quic_abhinavk@quicinc.com
+Subject: Re: [PATCH v6 0/2] Enable Display Port for Qualcomm SA8775P-ride platform
+Date: Thu, 26 Dec 2024 12:27:01 -0600
+Message-ID: <173523761394.1412574.14418158669309248905.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20241121051951.1776250-1-quic_mmanikan@quicinc.com>
-References: <20241121051951.1776250-1-quic_mmanikan@quicinc.com>
+In-Reply-To: <20241125105747.6595-1-quic_mukhopad@quicinc.com>
+References: <20241125105747.6595-1-quic_mukhopad@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -72,20 +69,18 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Thu, 21 Nov 2024 10:49:49 +0530, Manikanta Mylavarapu wrote:
-> Add a watchdog node to the IPQ5424 device tree and update the relevant
-> bindings accordingly.
+On Mon, 25 Nov 2024 16:27:45 +0530, Soutrik Mukhopadhyay wrote:
+> This series adds the DPTX0 and DPTX1 nodes, as a part of mdss0
+> on Qualcomm SA8775P SoC. It also enables Display Port on Qualcomm
+> SA8775P-ride platform.
 > 
-> Changes in V2:
-> 	- Fixed review comment from Krzysztof Kozlowski
-> 	- Detailed change logs are added to the respective patches
-> 
-> [...]
 
 Applied, thanks!
 
-[2/2] arm64: dts: qcom: ipq5424: Add watchdog node
-      commit: 825b203296a845a1093722062ac6e5b655825704
+[1/2] arm64: dts: qcom: sa8775p: add DisplayPort device nodes
+      commit: e1e3e5673f8d7748cdb1068ca002c1c37039d3c1
+[2/2] arm64: dts: qcom: sa8775p-ride: Enable Display Port
+      commit: 9767920a7a1abfbc5af69460e110c9114de2f7e5
 
 Best regards,
 -- 
