@@ -1,65 +1,69 @@
-Return-Path: <linux-arm-msm+bounces-43402-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-43403-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id E021F9FCCE1
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Dec 2024 19:32:58 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id C07489FCCE3
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Dec 2024 19:33:00 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id CB62818833DA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Dec 2024 18:32:39 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2081F161F0B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Dec 2024 18:32:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CD69B1DE3A0;
-	Thu, 26 Dec 2024 18:27:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 882941DE4C2;
+	Thu, 26 Dec 2024 18:27:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RgJyNW5x"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="maaiEkpg"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C9821DE2D2;
-	Thu, 26 Dec 2024 18:27:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A1291DE3D7;
+	Thu, 26 Dec 2024 18:27:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735237657; cv=none; b=rqo9rbxjZ83e09AMEvDyn33ftGrwxCF4BPBcjCmOATXncwb6uPMnPj8YEXfvKSZGIyfG24rJMswM7Lq8HDzyPKP0Q09eILeY4rGmYsXNEWDPPQw3H7VyiQXqFd9rc/l4CSfm/M0uvt30UbzDh1GU3tkpX8pTDx/jhAivkJSKnEU=
+	t=1735237659; cv=none; b=mgL5JxV5L9x7qFM3C/feQupKJAuGJHdS2PIj97lptiCalnprCBZFliqSVkBGZj+ViGB4BwUbJMBjKqSD0SGCjG0xEekL2UI17Ta3380kzAxPsvfaACsPJyZEWZXmqtZNpYe46anvvr3lFw1pwMve+mMalrMku+dGlmoUPxDLMDw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735237657; c=relaxed/simple;
-	bh=LqJfTVM8Jy9jpRjtSYRK8io97NPjHvFL3uXlihazCzM=;
+	s=arc-20240116; t=1735237659; c=relaxed/simple;
+	bh=QfgcJUk1pizXTSyGOyzeOZix24tCPB3rQDgym8387Ac=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=XnEnyRkmHrDC2uTjeq/kAPt0FWGcxIhipG4XVz8xfvV50iTCXBInidj94oshqfe6vxQc1LssNF5gVXoZS2ADyOIdoZwX1SXAWfB3vXcUlVjGEHyu/s1yb2tniodVk7uwunSWGcmWqUGEqTSVkQW94k2FSyKid6w5DcbQv4K0HqA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RgJyNW5x; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EAE3C4CEDF;
-	Thu, 26 Dec 2024 18:27:36 +0000 (UTC)
+	 MIME-Version:Content-Type; b=O9vhBfLxaiyuiXcbqjfY1oIl5tJ371yLVcIJnnw15thqIRO4kHguYVe5YjqvePmCfx8rpMvvfi+WKxRjtwK2z+X0Rfe6OKsEdAyyTBoCqMcx2kLR+BRucb9Oz5CQAL8pMlTSS4xejV9wQEPrZfbHIw3y13A8SDTw3w3o4+9FhnM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=maaiEkpg; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC847C4CED7;
+	Thu, 26 Dec 2024 18:27:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1735237657;
-	bh=LqJfTVM8Jy9jpRjtSYRK8io97NPjHvFL3uXlihazCzM=;
+	s=k20201202; t=1735237659;
+	bh=QfgcJUk1pizXTSyGOyzeOZix24tCPB3rQDgym8387Ac=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RgJyNW5xYDI4CosSFfFADVYnNUSXFoN3JBqHRCVKfAe+GQvLOn4WSE3h1wNDH0ll9
-	 G/F+4aQi1FVAuGegMxNRkF1v1WdcNv3LTHH/Gx6Nu72I+oP9upbpYzlJJIRl6ltlde
-	 89D4k7H1vJSfbuoeUsQlSpBQRt/6+wl06iF4wlw33w7NOHBxPTBsF8i6vmw/WRMAyK
-	 bqmtgy+b+zCoLJHRnTvfMkSM44KluFDT+1TcbwN7rgb1UB0vOIamtz6ojQzz3GaDkt
-	 WMTswX20sZ/U600gfYgk7p1Hlap5CGn2W8xxI3BvMlpwPYMRE0q7P4dufHPFUVoE6N
-	 QDdMhWL0Pl0rg==
+	b=maaiEkpgVWzGGx88z2+gy6SS3SrFBcVHFU4hyMK0jOVeeFev/27lZF0Vdty177C1v
+	 brG8lSSe0ICXLzrDUARsNAa5g/qUPcJXDSWC7Fhtr97KozUVmAnHnL6EiZ9P4HWi65
+	 1eQgWStkt8uJ7Hwm2f/U6rQhQscT57j//KIr8Vf8jGsVUZBI02qvwjvfrbyiz3ucUg
+	 7LO+9TqPgDJlrBhEuiR+O2aRYkBCM+l73nFB0NxZ8HUizErbnSRQNQhd/SAjVgxxns
+	 oalRWVoLwLUFjArq++jzQssBvIcHknH0AAU+A0zGFe865am7YpuJ9TiSZjFzketoq+
+	 Ac9BII+HuoE6g==
 From: Bjorn Andersson <andersson@kernel.org>
-To: Rob Herring <robh@kernel.org>,
+To: Wim Van Sebroeck <wim@linux-watchdog.org>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>,
 	Konrad Dybcio <konradybcio@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Georgi Djakov <djakov@kernel.org>,
-	Lijuan Gao <quic_lijuang@quicinc.com>
-Cc: kernel@quicinc.com,
+	Xin Liu <quic_liuxin@quicinc.com>
+Cc: Rajendra Nayak <quic_rjendra@quicinc.com>,
 	linux-arm-msm@vger.kernel.org,
-	linux-pm@vger.kernel.org,
+	linux-watchdog@vger.kernel.org,
 	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: (subset) [PATCH 0/2] arm64: qcom: Add BWMON support for QCS615
-Date: Thu, 26 Dec 2024 12:26:55 -0600
-Message-ID: <173523761379.1412574.4630232060526083229.b4-ty@kernel.org>
+	linux-kernel@vger.kernel.org,
+	kernel@quicinc.com,
+	quic_jiegan@quicinc.com,
+	quic_aiquny@quicinc.com,
+	quic_tingweiz@quicinc.com
+Subject: Re: [PATCH v4] arm64: dts: qcom: qcs8300: Add watchdog node
+Date: Thu, 26 Dec 2024 12:26:56 -0600
+Message-ID: <173523761370.1412574.13693734112650267984.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20241218-add_bwmon_support_for_qcs615-v1-0-680d798a19e5@quicinc.com>
-References: <20241218-add_bwmon_support_for_qcs615-v1-0-680d798a19e5@quicinc.com>
+In-Reply-To: <20241216080640.509182-1-quic_liuxin@quicinc.com>
+References: <20241216080640.509182-1-quic_liuxin@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -70,23 +74,33 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Wed, 18 Dec 2024 18:39:37 +0800, Lijuan Gao wrote:
-> Document and add CPU and LLCC BWMON nodes and their corresponding OPP
-> tables for QCS615 SoC.
+On Mon, 16 Dec 2024 16:06:40 +0800, Xin Liu wrote:
+> Add the watchdog node for QCS8300 SoC.
 > 
-> The patch has undergone the following verifications:
-> - Successfully passed dt_binding_check with DT_CHECKER_FLAGS=-m for binding
->   file
-> - Successfully passed dtbs_check with W=1 for dts
-> - Verified each item in the CPU and LLCC OPP tables, and the BCM threshold
->   and clock values meet expectations.
+> This patch depends on below patch series:
+> https://lore.kernel.org/linux-arm-msm/20241203-qcs8300_initial_dtsi-v4-0-d7c953484024@quicinc.com/
+> 
+> Signed-off-by: Xin Liu <quic_liuxin@quicinc.com>
+> ---
+> Changes in v4:
+> - Patch dt-bindings is already applied.
+> - Move sleep_clk to SoC DT.
+> - Link to v3: https://lore.kernel.org/linux-arm-msm/20241125093503.1162412-1-quic_liuxin@quicinc.com/
+> Changes in v3:
+> - PATCH 3/3：Add \n at the last line of the file.
+> - Link to v2: https://lore.kernel.org/linux-arm-msm/20241119102315.3167607-1-quic_liuxin@quicinc.com/
+> Changes in v2:
+> - PATCH 1/3：Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> - PATCH 2/3：Drop the Reviewed-by tag that received by v1. Assign a label to
+>   the wachdog node.
+> - Link to v1: https://lore.kernel.org/all/20241029031222.1653123-1-quic_liuxin@quicinc.com/
 > 
 > [...]
 
 Applied, thanks!
 
-[2/2] arm64: dts: qcom: qcs615: Add CPU and LLCC BWMON support
-      commit: 89fc83a9472812052610970b41fd44de94224b32
+[1/1] arm64: dts: qcom: qcs8300: Add watchdog node
+      commit: 3d0d8c8989d352b545ce1e52ad82e9f3503335f1
 
 Best regards,
 -- 
