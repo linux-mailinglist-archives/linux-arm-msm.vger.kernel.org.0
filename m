@@ -1,91 +1,87 @@
-Return-Path: <linux-arm-msm+bounces-43421-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-43422-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9C8B69FCD7F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Dec 2024 20:57:52 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 18D0A9FCDC3
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Dec 2024 22:04:39 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 33E5F1880A45
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Dec 2024 19:57:54 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A4D1E163195
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Dec 2024 21:04:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 74A4C14600D;
-	Thu, 26 Dec 2024 19:57:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 17BDC18A6B2;
+	Thu, 26 Dec 2024 21:04:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="KQr2T6He"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="bjuUZmd2"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f176.google.com (mail-lj1-f176.google.com [209.85.208.176])
+Received: from mail-lf1-f51.google.com (mail-lf1-f51.google.com [209.85.167.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7828143C7E
-	for <linux-arm-msm@vger.kernel.org>; Thu, 26 Dec 2024 19:57:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 053CC189BA4
+	for <linux-arm-msm@vger.kernel.org>; Thu, 26 Dec 2024 21:04:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735243064; cv=none; b=tM5biNmH0sYa9wYMf1o5VtXSASyzv/mlDJ9lhJKG7G90L79DvU7VUAcIWsLbawrZorGQordE6pRu+VSHydSDTPMil1x1VvRqQuyuciJWQ2yhJjev2XkGj7PA2y6wZJZFeLttxOagGJkwvs05Jm4+5KEk8xUn7+sDbyXOGUrrt7o=
+	t=1735247060; cv=none; b=QRf+IZAtldODFKzAhuNec9iXctEMx7VJMq/tOYrnKxtRG/NIj4Gg382uAZbNEvaHKHFU/AVDQkxKh+wsJ843N5t4VL+LtqTw56Dzo0IAy0APIG9TI65rF8PsCLX7S3J3OhNX0tFjAfSLsdFMQIHjSySyXl8F3NDOQJKGk3E4T/E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735243064; c=relaxed/simple;
-	bh=LX+NUXc/lOfreOg6BsFdwPMLchdyZ48efUwMS4lnopk=;
+	s=arc-20240116; t=1735247060; c=relaxed/simple;
+	bh=w5LPUHK4LvFCZM0G2OA6ufsHRsK6Q16qHrgCK8A5E8o=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=PBHGQRN5haf4vtCM65+re4RyNHW/GOJxThtAlk2Y38dk6YzMmCLHqP1Hfrmdu+20eOWeiagw2JUNagfF8MLUw61fCkN/xSJaxMjUupW9VB5KEgOQ9LFlWikT6rc/a/qQ5vArj2oCk+B+b+XzMn3SqzIbd0aAVxXGIXchoj3bHbk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=KQr2T6He; arc=none smtp.client-ip=209.85.208.176
+	 Content-Type:Content-Disposition:In-Reply-To; b=REUcZeJwp8tnaM4gprtAKeUP+wUR8skKLJX83pHkka11Q+G8CiFb5dDPrB+RWAicizvXbHffF3sHotfbot4LdbzBSEIskWqH6MAXCg8DywooHdwGACgGLjMGC0FPkteuNif/NTq1nWN6z6/jgdJ9uUsFvoFjAaYCvOVMBXZmfG0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=bjuUZmd2; arc=none smtp.client-ip=209.85.167.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f176.google.com with SMTP id 38308e7fff4ca-30229d5b229so70180421fa.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Dec 2024 11:57:42 -0800 (PST)
+Received: by mail-lf1-f51.google.com with SMTP id 2adb3069b0e04-5401b7f7141so6123959e87.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Dec 2024 13:04:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1735243061; x=1735847861; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1735247055; x=1735851855; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=MM8NrokOqIcenNMJtZO5Dg+wXB80iCg+m37JrcgrDmI=;
-        b=KQr2T6He5Z93OZnKeEYsaUSeDDJCqpIzapgQ5z6/GF6zkKkgdc0Q/0r0o4R5P+Yexs
-         eABWIEYUVqeXqg2D//FThPWB1z4/66xEbli64HOQ+wAaZaX29f4oo1pho0E45idYaAWq
-         v2MgH7mrFfLidK2q1RS2gfbJ9Ee8+j5f4rEhwYBoXKiJhYSdm2O2QtQj/4efctAyKTyq
-         ZJ8tceKeozm5rrmPWfpkqz9PTc6Y2OxCsd7XI0PbzPpGsFt0IhLfpugDdxR5Uke+qR+y
-         O+lruR0fptKr689nbZauea3cbLjAoEVL79TAVztompR9MCHUr+vpmqOn5p0yTsDGt57U
-         cTJQ==
+        bh=GOwf980uHA6/rXG31emGACIj8be43/3tzDSjlpZoroI=;
+        b=bjuUZmd2dq1xFHXAG5BZCuA6fM5Vt0SDfxPyW9JKspW/gBMrMiMu+cU01/qPdnUDcD
+         +fwFP64Ik61c4bbg/sJ389HxLYvwuf5wCgYp23b9EL7pREVNxez3ymME5eDwzVb/h7zg
+         pse5ihY1aty3NHuWjfC/XjtE/9baVZTyLZqpkcfHriOeE+0UtYMEDFfUbe5GX3VNQZ3i
+         cVcHqTDmEBHhwyej1D6+VttR2PaefIEXTVVxW7oTKgJzlzZhMHRzN0zWc7bP7u5HuA5K
+         i/X4AfzUXT+1+kv2jdUN1UUikVAQd4zRzbVu9UsNnp3NrGVUALWLwbgQUPoo+ix7HuCv
+         t2Uw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1735243061; x=1735847861;
+        d=1e100.net; s=20230601; t=1735247055; x=1735851855;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=MM8NrokOqIcenNMJtZO5Dg+wXB80iCg+m37JrcgrDmI=;
-        b=fxFDfPmDFo6nVbf75CQMSQm7kE08seHD7z87dSZmdBIn93eR7+E5Hg25kWmlz33NoX
-         kpzEYD3VwZNJdsXjZFGyXISDNjfg67qJh8OEcPfOGjsLqUp9o02E1qvGZjpyo5ePVTDP
-         kBA5t/xLvV0ja0MrayfQeeKBKhRAu63XR/szApJbT2vQxuxSWgceVEk3VElGcS0kSbjC
-         YstsE7QLCT2MROMnbczm7dK5vXHDnZoruxOhRUTv+PsBA4D4voS8vjh1/HjdTqsOAurD
-         +qM3VCIdDyXZkrNi9dmQAOOlOoYQK5vXiij/uY90ArtgGsmDh65KvMp7HYQdYX/dwJs7
-         R3fQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVSM9gd7KRolbAasD7FnTFFw1Qbb5Xp34SWeAD/oq06EClrtJpwlYTL/BD/fuw/+OEsbUaXK1TF2tWUB4XG@vger.kernel.org
-X-Gm-Message-State: AOJu0YzIgzZNW374pqLTwudNQyxhU8VnsE7ehdMRdl7s3eaJp/MNSURv
-	HODaztDkUFsVQJiJsB6bDa62KAbsEWxJpov1GqY4MXTLKvWugLrwRKqiChUawK4=
-X-Gm-Gg: ASbGncsUWCdi2zGqZBrGfBMto748dSUpPertiCpcD5eT505XMXamoItNJ7DGB8EOs3y
-	3AP/YENihmKlsuoeiLL0yJ3xtE1bmSbfNk4XECKBE4q9O1ExHn2x+kE47TNADfWd72y7fp3+zMJ
-	Vgkr4zppctFrMQWaKEfhxGfjvKCu4lZJDGsOgzEGwXzyhwTRAVPAfiLU2+z8C6A55iiYrYC01fH
-	ocDvX4rgMHaRdIozyxd+NNe3Uy8VJyEWRCKilZfNuzQag2EA5+Xm4qERkT3n6zXWL60WScPZlk4
-	t82yRF80tK1YDgCHDpgZsU+WLS0rnt9Fp3Uu
-X-Google-Smtp-Source: AGHT+IHkvBmRpIKHeCAoX/Z+sP/3+AX7saXt9A4Oym1qKh/OXbeqO1hadgMz/vRU3MOPcrtWuz2aoA==
-X-Received: by 2002:a05:651c:4ca:b0:302:3355:f756 with SMTP id 38308e7fff4ca-304685de7e4mr67062151fa.35.1735243060723;
-        Thu, 26 Dec 2024 11:57:40 -0800 (PST)
+        bh=GOwf980uHA6/rXG31emGACIj8be43/3tzDSjlpZoroI=;
+        b=Rde/7Sr8bFj2yeZRDpoWoUK4W2HQmHvIXssacv/tRSEAFX6byax7gGU9hS1mvN+iPY
+         wdH5hUHKQt3zFoS7NJNSTV52LLZPw0ZoDc5qJK9ME6N3NJHdOPPjFjXgKGF5Tt12URre
+         w1CEJc2Qil5CwQYEgkXO80Ag9uQoXarW/707fs7SxXGwqnLeiIqroaceUu1/hRLzUBmJ
+         zpjn528HMrmwvWiAGIRPhM6qWVhXWxn64VFqetWvzGKTv7ko95geDSYD4nq3U7zwyh5D
+         P7bv0Z7RZkClCwCWfu3kpJwLsknm9tGKFMsxoGbYMJ8XiAEpFlh473A+jXAhT0f1JVee
+         7D9w==
+X-Forwarded-Encrypted: i=1; AJvYcCV9zJ6wGGFBuCnAq8LaMFPhlXLpdwpLk+Saq8+m31z2/eiHKBtR/Z4RNOYCprKnh0LqB1GYnHawx04kpNNp@vger.kernel.org
+X-Gm-Message-State: AOJu0YzSIKAxbxDiEyv/gydzIhBXsDEvD5whWeFYbsnSkMRwEJenkKtm
+	eH0xNh4qcAGwL/Acgl44inck+LJa90+yVvgpJ5H5LQhRo5GVogfYRtNZOBWvT7eFU3NBoeUZTDg
+	d
+X-Gm-Gg: ASbGncsDLKR0pstqlU1+yAaZWwL5+P7M2k8w7fqo3LmXGFeS95yLSXFKw1oIQx0PUJp
+	AR6C5XLVYXK4AwVoPEJtXn59SAF8N/tyFPjePu8Rh2Hatp3lTurXj7B15UdsCxGhH1/MD/KICIJ
+	EY1U+Li6OSUgtMR8gUy3fpFfNo2uO1E4pNSOI9kpriUZdnVM9GvKFLO4ovn+Xo4Pcm87E61JCZ/
+	pZxzDkuD53mE9065oiNK7djGeGIgV4bqJj9C9zXxy8nDihT/44rYF7vMWyytQZajgfm+MBqVOwF
+	RYuea+SDFr5IhUtELV+bHLAj9IsngGz1dPgt
+X-Google-Smtp-Source: AGHT+IFDzAcuGSZ7nNZvfRLyI+DWmKNLOa1eIbqZ8rhaJ3AWR0XJoCKwXjst6+yPjQDefJtkdGntGg==
+X-Received: by 2002:ac2:4e04:0:b0:539:f630:f233 with SMTP id 2adb3069b0e04-54229586f00mr7613430e87.57.1735247055082;
+        Thu, 26 Dec 2024 13:04:15 -0800 (PST)
 Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-3045ad9c093sm23424591fa.49.2024.12.26.11.57.39
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-542238136f5sm2236642e87.116.2024.12.26.13.04.12
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 26 Dec 2024 11:57:40 -0800 (PST)
-Date: Thu, 26 Dec 2024 21:57:37 +0200
+        Thu, 26 Dec 2024 13:04:13 -0800 (PST)
+Date: Thu, 26 Dec 2024 23:04:11 +0200
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Yongxing Mou <quic_yongmou@quicinc.com>
-Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
-	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
-	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, Ritesh Kumar <quic_riteshk@quicinc.com>
-Subject: Re: [PATCH 1/2] arm64: dts: qcom: qcs8300: add DisplayPort device
- nodes
-Message-ID: <fcio2ikemgmvy636vpyvhth7qbzp43x2nebbo2qh7roalxjlvw@ssgsc5cfh4w3>
-References: <20241127-dp_dts_qcs8300-v1-0-e3d13dec4233@quicinc.com>
- <20241127-dp_dts_qcs8300-v1-1-e3d13dec4233@quicinc.com>
- <45643708-c138-4c77-85ce-fa7d49f2aa72@oss.qualcomm.com>
- <d536bbf0-4e8a-424b-b885-a22870bfbf31@quicinc.com>
+To: Yuanjie Yang <quic_yuanjiey@quicinc.com>
+Cc: adrian.hunter@intel.com, ulf.hansson@linaro.org, 
+	linux-arm-msm@vger.kernel.org, linux-mmc@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	andersson@kernel.org, quic_tingweiz@quicinc.com, quic_zhgao@quicinc.com
+Subject: Re: [PATCH v3] mmc: sdhci-msm: Correctly set the load for the
+ regulator
+Message-ID: <5q4wxz52mq6b73chi3o3xtspqbczycboeqiqsqnse6qg3vvbya@ih5rac2jqsrb>
+References: <20241226031845.2574669-1-quic_yuanjiey@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -94,27 +90,152 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <d536bbf0-4e8a-424b-b885-a22870bfbf31@quicinc.com>
+In-Reply-To: <20241226031845.2574669-1-quic_yuanjiey@quicinc.com>
 
-On Thu, Dec 26, 2024 at 03:03:46PM +0800, Yongxing Mou wrote:
+On Thu, Dec 26, 2024 at 11:18:45AM +0800, Yuanjie Yang wrote:
+> Qualcomm regulator supports two power supply modes: HPM and LPM.
+> Currently, the sdhci-msm.c driver does not set the load to adjust
+> the current for eMMC and SD. If the regulator dont't set correct
+> load in LPM state, it will lead to the inability to properly
+> initialize eMMC and SD.
 > 
+> Set the correct regulator current for eMMC and SD to ensure that the
+> device can work normally even when the regulator is in LPM.
 > 
-> On 2024/12/6 5:36, Konrad Dybcio wrote:
-> > On 27.11.2024 11:45 AM, Yongxing Mou wrote:
-> > 
-> > > +
-> > > +				clocks = <&dispcc MDSS_DISP_CC_MDSS_DPTX0_AUX_CLK>,
-> > > +					 <&dispcc MDSS_DISP_CC_MDSS_AHB_CLK>;
-> > > +				clock-names = "aux",
-> > > +					      "cfg_ahb";
-> > 
-> > power-domains = <&rpmhpd RPMHPD_MX>;
-> > 
-> emm,we use RPMHPD_MMCX in qcs8300 mdss and dpu..
-> > (or maybe even MXC?)
+> Signed-off-by: Yuanjie Yang <quic_yuanjiey@quicinc.com>
+> ---
+> Changes in v3:
+> - Optimize the code logic and separate code for regulator vmmc and vqmmc
+> - Rebase on tag: next-20241217
 
-But it is a DP PHY, not a MDSS or DPU. Is the PLL being sourced by MMCX
-or by MX?
+10 days old branch
+
+> - Link to v2: https://lore.kernel.org/all/20241127095029.3918290-1-quic_yuanjiey@quicinc.com/
+> 
+> Changes in v2:
+> - Add enum msm_reg_type to optimize the code
+> - Delete redundant emmc type judgment
+> - Link to v1: https://lore.kernel.org/linux-arm-msm/20241122075048.2006894-1-quic_yuanjiey@quicinc.com/
+> 
+> ---
+>  drivers/mmc/host/sdhci-msm.c | 64 ++++++++++++++++++++++++++++++++++--
+>  1 file changed, 62 insertions(+), 2 deletions(-)
+> 
+> diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
+> index e00208535bd1..22811964ba61 100644
+> --- a/drivers/mmc/host/sdhci-msm.c
+> +++ b/drivers/mmc/host/sdhci-msm.c
+> @@ -134,9 +134,18 @@
+>  /* Timeout value to avoid infinite waiting for pwr_irq */
+>  #define MSM_PWR_IRQ_TIMEOUT_MS 5000
+>  
+> +/* Max load for eMMC Vdd supply */
+> +#define MMC_VMMC_MAX_LOAD_UA	570000
+> +
+>  /* Max load for eMMC Vdd-io supply */
+>  #define MMC_VQMMC_MAX_LOAD_UA	325000
+>  
+> +/* Max load for SD Vdd supply */
+> +#define SD_VMMC_MAX_LOAD_UA	800000
+> +
+> +/* Max load for SD Vdd-io supply */
+> +#define SD_VQMMC_MAX_LOAD_UA	22000
+> +
+>  #define msm_host_readl(msm_host, host, offset) \
+>  	msm_host->var_ops->msm_readl_relaxed(host, offset)
+>  
+> @@ -1403,11 +1412,59 @@ static int sdhci_msm_set_pincfg(struct sdhci_msm_host *msm_host, bool level)
+>  	return ret;
+>  }
+>  
+> -static int sdhci_msm_set_vmmc(struct mmc_host *mmc)
+> +static void msm_config_vmmc_regulator(struct mmc_host *mmc, bool hpm)
+> +{
+> +	int load;
+> +
+> +	if (!mmc->card) {
+> +		regulator_set_mode(mmc->supply.vmmc,
+> +				   hpm ? REGULATOR_MODE_NORMAL : REGULATOR_MODE_IDLE);
+
+Can there be other users of the regulator or is it an exclusive one?
+Because if there can be other users, you could have pulled the power
+from them.
+
+> +		return;
+> +	}
+> +
+> +	if (!mmc_card_mmc(mmc->card) &&
+> +	    !mmc_card_sd(mmc->card))
+> +		return;
+> +
+> +	if (mmc_card_mmc(mmc->card))
+> +		load = MMC_VMMC_MAX_LOAD_UA;
+> +	else if (mmc_card_sd(mmc->card))
+> +		load =  SD_VMMC_MAX_LOAD_UA;
+
+if (mmc_card_mmc(mmc->card) ||
+    mmc_card_sd(mmc->card))
+
+> +	load = hpm ? load : 0;
+> +
+> +	regulator_set_load(mmc->supply.vmmc, load);
+> +
+> +	return;
+> +}
+> +
+> +static void msm_config_vqmmc_regulator(struct mmc_host *mmc, bool hpm)
+> +{
+> +	int load;
+> +
+> +	if (!mmc->card) {
+> +		regulator_set_mode(mmc->supply.vqmmc,
+> +				   hpm ? REGULATOR_MODE_NORMAL : REGULATOR_MODE_IDLE);
+> +		return;
+> +	}
+> +
+> +	if (!mmc_card_sd(mmc->card))
+> +		return;
+> +
+> +	load =  hpm ? SD_VQMMC_MAX_LOAD_UA : 0;
+> +
+> +	regulator_set_load(mmc->supply.vqmmc, load);
+> +
+> +	return;
+> +}
+> +
+> +static int sdhci_msm_set_vmmc(struct sdhci_msm_host *msm_host,
+> +			      struct mmc_host *mmc, bool hpm)
+>  {
+>  	if (IS_ERR(mmc->supply.vmmc))
+>  		return 0;
+>  
+> +	msm_config_vmmc_regulator(mmc, hpm);
+> +
+>  	return mmc_regulator_set_ocr(mmc, mmc->supply.vmmc, mmc->ios.vdd);
+>  }
+>  
+> @@ -1420,6 +1477,8 @@ static int msm_toggle_vqmmc(struct sdhci_msm_host *msm_host,
+>  	if (msm_host->vqmmc_enabled == level)
+>  		return 0;
+>  
+> +	msm_config_vqmmc_regulator(mmc, level);
+> +
+>  	if (level) {
+>  		/* Set the IO voltage regulator to default voltage level */
+>  		if (msm_host->caps_0 & CORE_3_0V_SUPPORT)
+> @@ -1642,7 +1701,8 @@ static void sdhci_msm_handle_pwr_irq(struct sdhci_host *host, int irq)
+>  	}
+>  
+>  	if (pwr_state) {
+> -		ret = sdhci_msm_set_vmmc(mmc);
+> +		ret = sdhci_msm_set_vmmc(msm_host, mmc,
+> +					 pwr_state & REQ_BUS_ON);
+>  		if (!ret)
+>  			ret = sdhci_msm_set_vqmmc(msm_host, mmc,
+>  					pwr_state & REQ_BUS_ON);
+> -- 
+> 2.34.1
+> 
 
 -- 
 With best wishes
