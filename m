@@ -1,61 +1,65 @@
-Return-Path: <linux-arm-msm+bounces-43416-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-43417-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 97DBE9FCD12
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Dec 2024 19:37:16 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id CD1929FCD17
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Dec 2024 19:38:01 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id B0BC1188418B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Dec 2024 18:36:41 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 75DC81632B0
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Dec 2024 18:36:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2F1D71E009D;
-	Thu, 26 Dec 2024 18:27:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 447651E04A0;
+	Thu, 26 Dec 2024 18:27:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WejQS2Mo"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZR7cLO1a"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0552A1E0090;
-	Thu, 26 Dec 2024 18:27:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1285A1E0499;
+	Thu, 26 Dec 2024 18:27:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735237676; cv=none; b=GaHWNxprTmqgWU61WuevCNe8fDXpLbmnQf8nofj25tGMaFnBYp44pg7U+gvTX7osFczPP81Y5LTToZhP1y/8MQILV3Dk4szrp+GVDcqwKJQu8eNGIbVNWz+/aA5O/n7A454NVHwSuhcEHc8/AnX4GWwO1gtCr0/kM7D2vrGkQ1M=
+	t=1735237677; cv=none; b=dK/c5GGo4/laby7bvDnCacBnY+7NmWCV4aLKaKgMBNlI6WNehIjY3U3c+ezO+n67NdYaCC6GrTwYWVHNY2C4PYZELl2boqVlk8MCf6Y0CQ3dF31feQ6GuI9bdxVVQxH3WSkSwZZRljnnMTpRypOW77ZvuSDxbs5mCuskAQcdE9U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735237676; c=relaxed/simple;
-	bh=1mldD9HuVuQo5DXQlX+5HwE4kb8+ynDCKZl9yT+WgjU=;
+	s=arc-20240116; t=1735237677; c=relaxed/simple;
+	bh=xDPOWKVzJf/ByJqPshQMd7NypddYgG6wquYO8V6nH1E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=oZSwV+njONhBwEpir5gd7z+HbDwDSmMWyFP5GwdY6s6538pqk1wrm5FGp/XeW3uIf024QCMLl3dqcqJZziz5+C07KyCA/Sp4R3+XFLSGpdSnFYXeCpzqBv7mQmzYoB84Kq9/8vmWDwR7iRgCS6YkZZkrAdZ/KZFmV3jWXk3ij80=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WejQS2Mo; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2856C4CED7;
-	Thu, 26 Dec 2024 18:27:54 +0000 (UTC)
+	 MIME-Version:Content-Type; b=nvTTJ1eyp2SkEwP7rgT2pS6AUdOCzwGj1Zm2i92iFM0O2FjyGYBUNQNOETpVeV4WtiGFwUYa8N+0m12JU+bTwgcGwea0wE2PoWUqKrqhG+M0SFyDQ9MQRBGbzOHCCP953duZ2GybK96NbaCm3a8Wohhi8WHOdwHmabjuzaQRULw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZR7cLO1a; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBC54C4CED1;
+	Thu, 26 Dec 2024 18:27:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1735237675;
-	bh=1mldD9HuVuQo5DXQlX+5HwE4kb8+ynDCKZl9yT+WgjU=;
+	s=k20201202; t=1735237677;
+	bh=xDPOWKVzJf/ByJqPshQMd7NypddYgG6wquYO8V6nH1E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WejQS2MoQC4sh/eOuR+lnYofPWL9EdvWtav2nzPzQfHt5Ufa/DpBAwp2xl+dnFHJu
-	 bNmuW4cfF13x1aGZ+7hIbnOpFz5xwUb2JVjD6sd8oBdyO6hiJ9aMFj/SZk8p7VNAPj
-	 rnUp1r8gg1X7OSQHHhWAeRA7fq/PqFbunYnpUmPM0pnt9tDI0w2fXokFpmbi/J0ah6
-	 O1RYXH7iweu56tXrnZDSqYR+lSp5hAHiXUTzXde5wXo+SVbbpI/iF69u/coBxgbEaN
-	 irylhX8cXSiuysnKLEeL0EYMiYntOIMUq4Rs146O+In2GgDkihj/8oAEMQQxNEUpac
-	 wNezbgXPFVfFg==
+	b=ZR7cLO1aYoWdxbokbfRKvFH2wxkZWBK3ikXEOWS/QNdjS1TB4/GwzgJYTIpFlXYJi
+	 8e8nqWcTsmsHBG4KzXQ2KdjLKwq2skpLZk7MjQXFbX82Gm1l6SA1K+OfoyfpJMli4a
+	 83foJUBaxmY9l8vaFbKlz8E63WkNMlc08I54UZ2ODPDgzei6i/+c4w2gORAyKKtWsC
+	 d8fxECmz5zdRSMyjxxyXfSxkWdKtiC9SHzQvK9YiBmMbi/rCDbNDk1ZYOdeMx/1e6D
+	 OpZEuBMrazSYSPYm15rDLN3cSmUf/nQlZdIh+frKz213+o3W5UqXnTR1iJHC0TGuqD
+	 QK+1qfEqdfC1w==
 From: Bjorn Andersson <andersson@kernel.org>
-To: Konrad Dybcio <konradybcio@kernel.org>,
+To: Herbert Xu <herbert@gondor.apana.org.au>,
+	"David S. Miller" <davem@davemloft.net>,
 	Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Vinod Koul <vkoul@kernel.org>,
 	Yuvaraj Ranganathan <quic_yrangana@quicinc.com>
 Cc: linux-arm-msm@vger.kernel.org,
+	linux-crypto@vger.kernel.org,
 	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3] arm64: dts: qcom: qcs8300: add QCrypto nodes
-Date: Thu, 26 Dec 2024 12:27:09 -0600
-Message-ID: <173523761373.1412574.14762332677520975903.b4-ty@kernel.org>
+Subject: Re: (subset) [PATCH V5 0/2] Enable TRNG for QCS8300
+Date: Thu, 26 Dec 2024 12:27:10 -0600
+Message-ID: <173523761393.1412574.1384588834243703699.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20241223110936.3428125-1-quic_yrangana@quicinc.com>
-References: <20241223110936.3428125-1-quic_yrangana@quicinc.com>
+In-Reply-To: <20241125064317.1748451-1-quic_yrangana@quicinc.com>
+References: <20241125064317.1748451-1-quic_yrangana@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -66,15 +70,18 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Mon, 23 Dec 2024 16:39:36 +0530, Yuvaraj Ranganathan wrote:
-> Add the QCE and Crypto BAM DMA nodes.
+On Mon, 25 Nov 2024 12:13:15 +0530, Yuvaraj Ranganathan wrote:
+> Add device-tree nodes to enable TRNG for QCS8300
+> 
+> This series depends on below patch series:
+> https://lore.kernel.org/all/20240925-qcs8300_initial_dtsi-v2-0-494c40fa2a42@quicinc.com/ - Reviewed
 > 
 > 
 
 Applied, thanks!
 
-[1/1] arm64: dts: qcom: qcs8300: add QCrypto nodes
-      commit: a86d844099474acf59cfb45f4590800ae4d9365e
+[2/2] arm64: dts: qcom: qcs8300: add TRNG node
+      commit: f1b359bdf0a51cc6a0a57279fa44b81d23ec28eb
 
 Best regards,
 -- 
