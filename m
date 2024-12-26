@@ -1,61 +1,61 @@
-Return-Path: <linux-arm-msm+bounces-43383-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-43384-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 93B409FCCA6
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Dec 2024 19:27:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 98B229FCCA9
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Dec 2024 19:28:18 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 48CB81883387
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Dec 2024 18:27:52 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6EE631883454
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Dec 2024 18:28:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 207EA1D4359;
-	Thu, 26 Dec 2024 18:27:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4B6201D61A4;
+	Thu, 26 Dec 2024 18:27:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bvUAuaMs"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nVsLKle9"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4F191D4339;
-	Thu, 26 Dec 2024 18:27:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EF041D5CFA;
+	Thu, 26 Dec 2024 18:27:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735237638; cv=none; b=AMo4bSN8TX9WCp9SNK+B7+fxE/DCuSAnR15VwAxAzAWE1hGmcCgSvP2UHIRES7tGVVeyZae/MbpQpZd6oyjun295kUVLL/g8SUZYFKZfJP49AsIqjIIK6MAnVRblCUEZxPbFX8dDAr6bp6N1A1QV9XYV2zRl1Gfiq8su5YjaUTw=
+	t=1735237640; cv=none; b=QsmR7Rb5iR9UR67SWFm+kQfVD//pNqO/FY2MlpAgNAvZ9wMKWY2FY3d/jZGDxatXypTA4tbXRCiBSWFnw0iic22ZdeIaNJ4VBrHpLPnpLVonInHk7zyUs5+VrWeWuyQvm/53WMMLF6V5nVLPA3wm/3d4OKwXS+2r+hblEeNMoU4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735237638; c=relaxed/simple;
-	bh=UNhdKr0AqLpY7vZQ/PhZ2AlxazV5nIlqtjE8DRlXn5U=;
+	s=arc-20240116; t=1735237640; c=relaxed/simple;
+	bh=xJC9Nm0YHwJstoJ4lo3nMMA7t8v/iMOSBA6NUo2yGWg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=UzIL2VpIsnMhag/Xn/2yGFO3uCKnNlFhzHmwi/45ZjQLO8n4pgJe8oPhwfa68lvigiGDL3p0G7fonX1jI6v1HK/jI24SsAVfBibPne+ge98YPBDMK8Q9FyoitYR4iUEYtwx3488f0fwEWZx3uVOayyOgV6rHUWohO2Sd+AhHuCs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bvUAuaMs; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2022FC4CED1;
+	 MIME-Version:Content-Type; b=c6Gh2NsgGFrZVOTIYBghmXHKeM4QxfOSYSm5Xngjh+SbtNVu5jDWIgQDkmTKoHfx6Ad4oJtnnbSOBvWKFTVoSZPtQb3gcsEzuHM7kCEdnNjat2Fe3Ea0VIHMXxtRCARAd1Ze2f3Ooov01gP53ZT40FgyYsNKjdN+5OqKoajwt7E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nVsLKle9; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BDD5C4CED6;
 	Thu, 26 Dec 2024 18:27:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1735237637;
-	bh=UNhdKr0AqLpY7vZQ/PhZ2AlxazV5nIlqtjE8DRlXn5U=;
+	s=k20201202; t=1735237638;
+	bh=xJC9Nm0YHwJstoJ4lo3nMMA7t8v/iMOSBA6NUo2yGWg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bvUAuaMsFBgZsdZvpn53fAr2pu1ggQnYLTFeUF+ifNqZMaPKwsFPQVKMWdk0px0dU
-	 a9WamXcy80UDvS70CT9mxncrAMJTjgxYvr15FIj8iwu+j+B5AA+ihcVoG/n0HRmBGS
-	 XHKXv8fdsd6cCCF8OnPXJnEJIwjKsErNyG2pxZfzIM4XoEhfeOmh9p3ABpCM7WYqKL
-	 HrZuJrGHDZjkjr04WjtK1JODWoNkgEzn8SHKXu4qKrnXqGFK/8Fxsx/ecelBtVQuP0
-	 DN3LaBEhMasvmmiZ198rVV3V1wxa9KtlDMHZfnRk7ucNyO1RGHogcNztDNDWD7oPvg
-	 ZJ40biTU65xaA==
+	b=nVsLKle9jLY2CAfCHHV4TBcaXid+hYjqIuejZsZDa/5fN8WV8Bc9W1oB56YsT88lY
+	 GHZE37ASl5L2FOgcaD0kHJ57bIGeg/0Aj+DfP/Q60hR7iQ256XpJeyTGy/4oz92hf5
+	 xUcHK83PM9zn06Zf3Z8uf3ZPWOIQacJzYIctJSLJekcoPz2Wspo8Rcj9NeEui+NHGJ
+	 aKsFI8KuyikCVcG2DWYfcd6GrCUf9gjDiKzAZqp+0eCfKToU/T4ZK3l8y3oAD8W5Am
+	 MgRej6EWD254NoXEm4/0ZQXy4GbGS5Vu8uGeYgrqaS9VcftMoCJYlDW8ZFzx8eoq/h
+	 bVYoymCbq0lYQ==
 From: Bjorn Andersson <andersson@kernel.org>
-To: Andy Gross <agross@kernel.org>,
-	Rob Herring <robh+dt@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	Alex Elder <elder@kernel.org>
-Subject: Re: [RFC PATCH] arm64: dts: qcom: sm8350-hdk: enable IPA
-Date: Thu, 26 Dec 2024 12:26:36 -0600
-Message-ID: <173523761396.1412574.6823147509441353405.b4-ty@kernel.org>
+To: linux-arm-msm@vger.kernel.org,
+	sboyd@kernel.org,
+	Eugen Hristev <eugen.hristev@linaro.org>
+Cc: linux-clk@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-pm@vger.kernel.org,
+	konradybcio@kernel.org,
+	evgreen@chromium.org
+Subject: Re: [PATCH v4] soc: qcom: Rework BCM_TCS_CMD macro
+Date: Thu, 26 Dec 2024 12:26:37 -0600
+Message-ID: <173523761394.1412574.5233882312649238359.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20230310203438.1585701-1-dmitry.baryshkov@linaro.org>
-References: <20230310203438.1585701-1-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20241129142446.407443-1-eugen.hristev@linaro.org>
+References: <20241129142446.407443-1-eugen.hristev@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -66,17 +66,21 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Fri, 10 Mar 2023 22:34:38 +0200, Dmitry Baryshkov wrote:
-> Although the HDK has no radio, the IPA part is still perfectly usable
-> (altough it doesn't register any real networking devices). Enable it to
-> make it possible to test IPA on this platform.
+On Fri, 29 Nov 2024 16:24:46 +0200, Eugen Hristev wrote:
+> Reworked BCM_TCS_CMD macro in order to fix warnings from sparse:
 > 
+> drivers/clk/qcom/clk-rpmh.c:270:28: warning: restricted __le32 degrades to integer
+> drivers/clk/qcom/clk-rpmh.c:270:28: warning: restricted __le32 degrades to integer
 > 
+> While at it, used u32_encode_bits which made the code easier to
+> follow and removed unnecessary shift definitions.
+> 
+> [...]
 
 Applied, thanks!
 
-[1/1] arm64: dts: qcom: sm8350-hdk: enable IPA
-      commit: cc47b123159dbad9c8a7e977e977e410de090418
+[1/1] soc: qcom: Rework BCM_TCS_CMD macro
+      commit: 2705bce5b4c45e2a0a354ec4df937d2803241cd8
 
 Best regards,
 -- 
