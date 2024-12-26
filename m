@@ -1,64 +1,73 @@
-Return-Path: <linux-arm-msm+bounces-43437-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-43438-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0E9509FCEB1
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Dec 2024 23:41:38 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6DF009FCEB4
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Dec 2024 23:41:54 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id AA3761608D8
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Dec 2024 22:41:35 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 139621883675
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Dec 2024 22:41:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 168C71B983E;
-	Thu, 26 Dec 2024 22:39:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 89FB61DA2F1;
+	Thu, 26 Dec 2024 22:39:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NORAX7+6"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HPD66hky"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC4641D9337;
-	Thu, 26 Dec 2024 22:39:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F3361DA113;
+	Thu, 26 Dec 2024 22:39:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735252752; cv=none; b=E5WPZvY8gv6ncOjs+bZ5R0BfUfXGOgb4TDicojsBAnGnWnmJKPR4w/7rOwyQGTIX9JMdu0ZvfOU8N9UApeuSAbeqvHF2Ps5lu6AERP0ZBZ2nUD9x70CVButrSvFt6VQiNCxxzIdgMY4n9wWYwEF/Ep1ek+3NR5V37+8if3dHZQ0=
+	t=1735252753; cv=none; b=ayysMAxqOpLLQ+0N3eEvST20LclzahzbTKo8eYDVt88L3CkdP+yKl/eNxhnrrnoFuYEE76tiAyxU4pr31sYKaa72qL9tXLFA0vlSWjvDC6uMui4btaK8N5yawewdhrN+p8jJ5PR4pRBQwT4my/pp0RxRrKZN6TxGAOanSY/Xnvo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735252752; c=relaxed/simple;
-	bh=Vp3T7quX47cY+XoQB9X+6J3rtyVQ++kULjxIRvZAObc=;
+	s=arc-20240116; t=1735252753; c=relaxed/simple;
+	bh=zzHpg02nt2xCzx11z3qrPTPt9BM7ACn4sX/GXztIxTA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=qNKrdLQ1Z+NoTc/oHSdVAN+65pETDco5xbuI9llQ4M14xizPRWmiFTSXyphuv6foztg5/a2VWjvMd2k8TCLewayyI3ubUWVwqItOkryVFXPGfzNiNvokZqDp0s7oSjp0aMWeDg+vOr4boT9XgADq6xj8D+qXUU7TA6CVz17shbk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NORAX7+6; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F5C1C4CED1;
-	Thu, 26 Dec 2024 22:39:10 +0000 (UTC)
+	 MIME-Version:Content-Type; b=oTi/A7gBVDCLZzbrmEqlpWcV6Wm9fw9T310CBKSGdgwOtccLfaSls+rd7nzYm99YZdOLfmuP/DtZY3YK4MyGyn7hnLu1tqT/MajbWqqTL6woDdMUul+6mwfEzskvb0EijIOjkkHpGzLF20zbJHlKy3b8c9O5C425bIY9JnhFmMM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HPD66hky; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3627C4CEDE;
+	Thu, 26 Dec 2024 22:39:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1735252751;
-	bh=Vp3T7quX47cY+XoQB9X+6J3rtyVQ++kULjxIRvZAObc=;
+	s=k20201202; t=1735252753;
+	bh=zzHpg02nt2xCzx11z3qrPTPt9BM7ACn4sX/GXztIxTA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NORAX7+6G/1G1aT8OzkDDyaXGeuVB4cgOH9uf5AmpT9sW/jN9NAE6D7puHPlrhcMb
-	 aoSO407UiGqi8jjMEujF83xyNuHoMUliYb6gWtWYKx1KFh1vmLKT29mTeKHbkgu+3W
-	 sjbsfITW71YTCfsaKqC7XB7iZCufwbwYJ/CYSjzmmVfnWY4YLhWNIuqR5Q0gzh7vg8
-	 EHiybAZ3lkHgZVx9ZK8rxycGRuO+CcawX9/WN2Yb1IN7FuXkSlh9NQMbw88MPT/Le1
-	 UbkeFzwfBMyPjJwJmf9KN5OLhpMd+gei6Qh5immNk3pB12Dtk2yYckxRpuii9ssLq8
-	 hRdN2Y7wwsX8Q==
+	b=HPD66hkyp6ULiLZXVVRtebU8omymUvvQ5tyb6NNu7Zjb5rPsoV6+LqUPyqKMV9BDY
+	 WBb8rplUSniQ5Zt54PRmW6ALOmYx71t45dHQXeaCE5rvRvkMfK7u0G3tnKcnVUN7Id
+	 etXoVXDg4Kaf+oyoLL63VV8xaiFmkQ+ZXNNf2hVquXpv6ZkJz2tMVzPaInDYMWzF3T
+	 Gc1vluxcP3Pf6PEj0nu3INYMdT6m6vQ3yOqYFbDNgGKMyr+cvmLIaDdu/ahA4Y7pkd
+	 VtK5LVAQ10OBgT3d8SixJ0Et575CCX6+iOhxZtzKobdLJAHDMs/Fxg1HuVZk5NGoEp
+	 g77FEx4NghSzw==
 From: Bjorn Andersson <andersson@kernel.org>
-To: Konrad Dybcio <konradybcio@kernel.org>,
+To: Rob Clark <robdclark@gmail.com>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Sean Paul <sean@poorly.run>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
 	Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>,
-	Luca Weiss <luca@lucaweiss.eu>,
-	Luca Weiss <luca.weiss@fairphone.com>
-Cc: ~postmarketos/upstreaming@lists.sr.ht,
-	phone-devel@vger.kernel.org,
 	linux-arm-msm@vger.kernel.org,
+	dri-devel@lists.freedesktop.org,
+	freedreno@lists.freedesktop.org,
 	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] arm64: dts: qcom: sm7225-fairphone-fp4: Drop extra qcom,msm-id value
-Date: Thu, 26 Dec 2024 16:38:41 -0600
-Message-ID: <173525273261.1449028.6524899768190730684.b4-ty@kernel.org>
+	linux-kernel@vger.kernel.org,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Richard Acayan <mailingradian@gmail.com>
+Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	David Airlie <airlied@gmail.com>,
+	Simona Vetter <simona.vetter@ffwll.ch>
+Subject: Re: (subset) [PATCH v2 0/4] drm/msm/adreno: Add A615 GPU for SDM670 and Pixel 3a
+Date: Thu, 26 Dec 2024 16:38:42 -0600
+Message-ID: <173525273245.1449028.4895991910861314242.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20241220-fp4-msm-id-v1-1-2b75af02032a@fairphone.com>
-References: <20241220-fp4-msm-id-v1-1-2b75af02032a@fairphone.com>
+In-Reply-To: <20240806214452.16406-7-mailingradian@gmail.com>
+References: <20240806214452.16406-7-mailingradian@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -69,16 +78,22 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Fri, 20 Dec 2024 09:55:01 +0100, Luca Weiss wrote:
-> The ID 434 is for SM6350 while 459 is for SM7225. Fairphone 4 is only
-> SM7225, so drop the unused 434 entry.
+On Tue, 06 Aug 2024 17:44:54 -0400, Richard Acayan wrote:
+> This adds support for the speed-binned A615 GPU on SDM670.
 > 
+> Changes since v1 (20240730013844.41951-6-mailingradian@gmail.com):
+> - add Acked-by tag (1/4)
+> - add OPPs exclusive to some speed bins (3/4)
+> - enable GMU by default (3/4)
 > 
+> [...]
 
 Applied, thanks!
 
-[1/1] arm64: dts: qcom: sm7225-fairphone-fp4: Drop extra qcom,msm-id value
-      commit: 7fb88e0d4dc1a40a29d49b603faa1484334c60f3
+[3/4] arm64: dts: qcom: sdm670: add gpu
+      commit: cd89483a1327c0317a655cca1daf9521c7ec7529
+[4/4] arm64: dts: qcom: sdm670-google-sargo: enable gpu
+      commit: fbf7cfa3ea986e5bf426748aa8afa386df61456f
 
 Best regards,
 -- 
