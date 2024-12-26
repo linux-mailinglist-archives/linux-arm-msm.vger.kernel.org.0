@@ -1,169 +1,197 @@
-Return-Path: <linux-arm-msm+bounces-43345-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-43346-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id B0D6B9FC95A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Dec 2024 08:06:51 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6B7C49FCA05
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Dec 2024 10:43:37 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 56B901883478
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Dec 2024 07:06:48 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id C70A11882284
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Dec 2024 09:43:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2A58914C5AF;
-	Thu, 26 Dec 2024 07:06:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AC4EF1CEADA;
+	Thu, 26 Dec 2024 09:43:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="kEXcGhlm"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ehv1lB/2"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5697E12B71;
-	Thu, 26 Dec 2024 07:06:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD81877F10;
+	Thu, 26 Dec 2024 09:43:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735196802; cv=none; b=VFCP9EHAXxgWUcP4KEYbDIoPSAjCqe9N0ZKGWrDl+8TbxpNH0qfDUlkBj3umua6BJFO0xYF8YLuMzmJxnjI5LSMTVeK0O6gghBdhhVeKPXVoO8w3tvGG3Ll0S3O6F/GyrS5uAZ1+v70hgkZX2S8zq+RIPgwA+FLgKWrnuCWJ3HE=
+	t=1735206211; cv=none; b=m30BGUpxIgXgSAVtcWb4CsQR+9vhQXqQRs5t0TLn8SWGuglpMpYcRoGPo3xwC36Qf+ew3LJdqcxOOOkuAhQcUjlcI7t6XtmWgiOfGQxC617heO+dnd8AS5ZlRmQyP71LGdmFIpvkkBWLOYB68dHyozoLa9Z/GE6WNeiWoAo7GBQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735196802; c=relaxed/simple;
-	bh=pEM8irB10Ema+6TlLRE2kdz1l0WA/w2TEBQaDq5dgTQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=D1MlJ6Q54VzoxYlHWbJEz+ESid8i9OM8khGA5+VhA3wd1/SPbM/yABujcCIVHRgxNyhjqe+GjlYbJSGU828QdqpcPVuahGgoqeLR//w5h92lUAHVWgP2BxoGHHmX25qAJ3XzGGfbVKmIlhtiv4r6lT2GG1fP5zxqfrNnKWX3g74=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=kEXcGhlm; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1735206211; c=relaxed/simple;
+	bh=HrZixsa4o407w0QLd9DyL3Cx7C9rBv6UU13xVhOl9Bg=;
+	h=From:Subject:Date:Message-ID:MIME-Version:Content-Type:To:CC; b=PnqLZ5vFgAoZC8t95rT1Tb7aTvNnkiaQuT0xJU/Ei7MZfhVNRWnjRpvp+SUm7jUkr28tr1qrZnsyyHRneDXZyNuLlU/8/kY6OCO+MHxzDM8VbTHa0nrRlwcz/DqG8fRaSxs5FzUTuNqJ22wG/2dBsfc4uZnUtSpyMiM+Blfr/fQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ehv1lB/2; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BQ5alVT003480;
-	Thu, 26 Dec 2024 07:06:36 GMT
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BQ8BgEc022659;
+	Thu, 26 Dec 2024 09:43:11 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	YeLxuuzatsnjAvtIwd7IxDMn6VpPy/R42vPI1syTlJA=; b=kEXcGhlmeZEU7qzB
-	5KUsRpQw4oXFAziLdIKU5i82vFY1IKskalk5xDqadcAggsmDBdbtUy6rxECTnO2g
-	TkCs5WZng7JafVdnpQsDVQwxwX2cBTejYocTNjtIULvaj5/vi3BxlnauDEMVANxc
-	I07BIaJrY6gxwMdN0W6igoEfw/HzU20xM3LdIFGdFA4nJdYEJeC+mpaLVzaciifj
-	+/4jMWQNu4fu2VTN5OkOXHUhPfTzYKAR88xEvY6DhTRo91vhu/y3xU1jL+88O/5n
-	AK8Z08m6KWiVo5llrZQOnrqEs3ECwJC+rdhaLxGlUc+VCfzvhGGRzKU7S5EWXjjy
-	3dXCOQ==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43s159gda5-1
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=QKhHf4JbsWGTY3FFN4/3Hj
+	rj/7m02iv0le2h5LxDSos=; b=ehv1lB/2Xvy+ufv2ehZLckFG+Zd1kXKqa1KstK
+	2fcojaaeZmirZFcpk+Kc62C/5oqVeA72CsgUHjpbcXsNtO3NE2F/mFbCO8TIrn/h
+	Rus+zvJ+qBfk+dGbzAWYZMZ6YjX85CaXuk8zkJv+FPE5U5FsKJ3YW03HBRevg4FA
+	EIw3Ue/KWDpFoypsq3hoH2Xmyvmses01wHDcu3RRs74MyY+v0Z20cTA0CMdDV/c9
+	vFgpwOkCOWuZKEITauh70hSG6zsNz+l7/3txz5CMxLbZuzZqqzZ+DfaftB+YcUKe
+	0GnvIn8KAdmZfPBafBMEgsG4t6L3vDPk/nTPIb9ucpgS4r9A==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43s3dwrr10-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 26 Dec 2024 07:06:36 +0000 (GMT)
+	Thu, 26 Dec 2024 09:43:11 +0000 (GMT)
 Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4BQ76Zs0003766
+	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4BQ9h9ko026118
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 26 Dec 2024 07:06:35 GMT
-Received: from [10.64.68.119] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 25 Dec
- 2024 23:06:32 -0800
-Message-ID: <9a42ba40-9984-4c19-8de4-f814d27cb20d@quicinc.com>
-Date: Thu, 26 Dec 2024 15:06:29 +0800
+	Thu, 26 Dec 2024 09:43:09 GMT
+Received: from cse-cd01-lnx.ap.qualcomm.com (10.80.80.8) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Thu, 26 Dec 2024 01:43:03 -0800
+From: Yongxing Mou <quic_yongmou@quicinc.com>
+Subject: [PATCH v2 0/5] Display enablement changes for Qualcomm QCS8300
+ platform
+Date: Thu, 26 Dec 2024 17:40:44 +0800
+Message-ID: <20241226-mdssdt_qcs8300-v2-0-acba0db533ce@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] arm64: dts: qcom: qcs8300-ride: Enable Display Port
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-        Bjorn Andersson
-	<andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIALckbWcC/43Ry2rDMBAF0F8JWneKXrbkUEr/owQjj0aNqB+Jp
+ ZqWkH+v8iiEZpOFFjNIRxfugSWaIyW2Xh3YTEtMcRrLIJ9WDLdu/CCIvsxMcqmFlBoGn5LP7R6
+ TVZyDEJ2xVnmsecfKo91MIX6fwffNZZ5p/1XcfFmygVJyZ3e9ermwXMHVa+MYc3R963OKsGiQ4
+ A02ldJWl6tvRcI44jNOw+vpu3tM8PoPg2GAncu4pQSLAg6hFsLZYE0Q1SOU0LcUIvh8AWERIMC
+ 4xuiKWzSqfoArBzwFnMYQP9rkrDHVrsV+ws+2LPM89T3NJaostmtIoHfkjb2P2rlEUIYh5vXKi
+ qrqNAWl6zpwkrYhGxAbqqmWQQXtkcihZKc6tjHlaf45173Icx/XZqv/zZYYpV6O2AVFlcXmNgb
+ bHI/HX9VmbhQ9AgAA
+X-Change-ID: 20241224-mdssdt_qcs8300-11b7883dc60b
+To: Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar
+	<quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        "Maarten
+ Lankhorst" <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard
+	<mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        Rob Herring
 	<robh@kernel.org>,
         Krzysztof Kozlowski <krzk+dt@kernel.org>,
         Conor Dooley
-	<conor+dt@kernel.org>
-CC: <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>,
-        Ritesh Kumar <quic_riteshk@quicinc.com>
-References: <20241127-dp_dts_qcs8300-v1-0-e3d13dec4233@quicinc.com>
- <20241127-dp_dts_qcs8300-v1-2-e3d13dec4233@quicinc.com>
- <466ea213-5f20-4a9f-a9dc-751756792845@oss.qualcomm.com>
-Content-Language: en-US
-From: Yongxing Mou <quic_yongmou@quicinc.com>
-In-Reply-To: <466ea213-5f20-4a9f-a9dc-751756792845@oss.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+	<conor+dt@kernel.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        "Kuogee
+ Hsieh" <quic_khsieh@quicinc.com>,
+        Vinod Koul <vkoul@kernel.org>,
+        "Kishon
+ Vijay Abraham I" <kishon@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>
+CC: Yongxing Mou <quic_yongmou@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
+        <dri-devel@lists.freedesktop.org>, <freedreno@lists.freedesktop.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-phy@lists.infradead.org>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1735206178; l=3711;
+ i=quic_yongmou@quicinc.com; s=20241121; h=from:subject:message-id;
+ bh=HrZixsa4o407w0QLd9DyL3Cx7C9rBv6UU13xVhOl9Bg=;
+ b=bIaX7B/2+vkGmUQj9+iXg/N1jRIRdrjxQwdHYd5XFggH0hbBeB9az5La2tFVsJDXAa8lvUSKW
+ h0YTS/kz1bYDU184yG4Dt3zLsoN4rf8ys5zcOGPAGCOVEnK3HZYqz3O
+X-Developer-Key: i=quic_yongmou@quicinc.com; a=ed25519;
+ pk=zeCnFRUqtOQMeFvdwex2M5o0Yf67UHYfwCyBRQ3kFbU=
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nalasex01c.na.qualcomm.com (10.47.97.35)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: n1VYVQw24Bor3BsI94vTPd9uMzAbp6Ko
-X-Proofpoint-ORIG-GUID: n1VYVQw24Bor3BsI94vTPd9uMzAbp6Ko
+X-Proofpoint-GUID: KTiTMKdPGR80sw1UqhDk1UCgks9G9HG8
+X-Proofpoint-ORIG-GUID: KTiTMKdPGR80sw1UqhDk1UCgks9G9HG8
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0
- priorityscore=1501 lowpriorityscore=0 mlxlogscore=999 spamscore=0
- clxscore=1015 phishscore=0 suspectscore=0 impostorscore=0 malwarescore=0
- adultscore=0 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2412260061
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 clxscore=1015
+ suspectscore=0 lowpriorityscore=0 mlxlogscore=999 impostorscore=0
+ bulkscore=0 malwarescore=0 priorityscore=1501 adultscore=0 phishscore=0
+ mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2412260085
 
+This series introduces support to enable the Mobile Display Subsystem (MDSS)
+, Display Processing Unit (DPU), DisplayPort controller and eDP PHY for 
+the Qualcomm QCS8300 target. It includes the addition of the hardware catalog,
+compatible string, and their YAML bindings.
 
+Signed-off-by: Yongxing Mou <quic_yongmou@quicinc.com>
+---
+This series depends on following series:
+https://lore.kernel.org/all/20241203-qcs8300_initial_dtsi-v4-2-d7c953484024@quicinc.com/
+https://lore.kernel.org/all/20241106-qcs8300-mm-patches-v3-0-f611a8f87f15@quicinc.com/
+https://lore.kernel.org/all/20241114-qcs8300-mm-cc-dt-patch-v1-1-7a974508c736@quicinc.com/
+https://lore.kernel.org/all/20241024-defconfig_sa8775p_clock_controllers-v2-1-a9e1cdaed785@quicinc.com/
+---
+Changes in v2:Fixed review comments from Krzysztof, Dmitry, Rob.
+- Decouple the devicetree changes from this series.[Dmitry][Krzysztof]
+- Drop the dpu driver changes and reuse SA8775P DPU driver.[Dmitry]
+- Fix compilation issues in MDSS bindings.[Rob][Krzysztof]
+- Correct formatting errors and remove unnecessary status in MDSS
+  bindings.[Krzysztof]
+- Add the the necessary information in MDSS changes commit msg.[Dmitry]
+- Rebase MDSS driver changes to https://lore.kernel.org/dri-devel/
+  20241127-msm-mdss-ubwc-v3-0-9782a7c2b023@linaro.org/.[Dmitry]
+- Package the DisplayPort controller and eDP PHY bindings document to
+  this patch series.
+- Collecting MDSS changes reviewd-by Dmitry.
+- Reuse the sa8775p eDP PHY as a fallback compat.[Dmitry]
+- Reuse the sm8650 DP controller as a fallback compat.[Dmitry]
+- Link to v1: https://lore.kernel.org/r/20241127-mdss_qcs8300-v1-0-29b2c3ee95b8@quicinc.com
+~
 
-On 2024/12/6 5:46, Konrad Dybcio wrote:
-> On 27.11.2024 11:45 AM, Yongxing Mou wrote:
->> Enable DPTX0 along with their corresponding PHYs for
->> qcs8300-ride platform.
->>
->> Signed-off-by: Yongxing Mou <quic_yongmou@quicinc.com>
->> ---
-> 
-> [...]
-> 
->> +
->> +	dp0-connector {
->> +		compatible = "dp-connector";
->> +		label = "DP0";
->> +		type = "full-size";
-> 
-> I was surprised to see it but yeah this is real
-> 
->> +
->> +		port {
->> +			dp0_connector_in: endpoint {
->> +				remote-endpoint = <&mdss_dp0_out>;
->> +			};
->> +		};
->> +	};
->>   };
->>   
->>   &apps_rsc {
->> @@ -223,6 +235,30 @@ &gcc {
->>   		 <0>;
->>   };
->>   
->> +&mdss {
->> +	status = "okay";
->> +};
->> +
->> +&mdss_dp0 {
->> +	status = "okay";
-> status should be the last property
-> 
-got it. thanks for ponit it.
->> +
->> +	pinctrl-0 = <&dp_hot_plug_det>;
->> +	pinctrl-names = "default";
->> +};
->> +
->> +&mdss_dp0_out {
->> +	data-lanes = <0 1 2 3>;
->> +	link-frequencies = /bits/ 64 <1620000000 2700000000 5400000000 8100000000>;
->> +	remote-endpoint = <&dp0_connector_in>;
->> +};
->> +
->> +&mdss_dp0_phy {
->> +	status = "okay";
->> +
->> +	vdda-phy-supply = <&vreg_l5a>;
->> +	vdda-pll-supply = <&vreg_l4a>;
-> I couldn't find the reference for these, so I have to trust you
-> 
-yes, this two power can work for qcs8300.and we verify it.status also 
-should be last property?
-> Konrad
-> 
+---
+Yongxing Mou (5):
+      dt-bindings: display/msm: Document the DPU for QCS8300
+      dt-bindings: display: msm: dp-controller: document QCS8300 compatible
+      dt-bindings: display/msm: Document MDSS on QCS8300
+      dt-bindings: phy: Add eDP PHY compatible for QCS8300
+      drm/msm: mdss: Add QCS8300 support
+
+ .../bindings/display/msm/dp-controller.yaml        |   4 +
+ .../bindings/display/msm/qcom,qcs8300-mdss.yaml    | 244 +++++++++++++++++++++
+ .../bindings/display/msm/qcom,sm8650-dpu.yaml      |  13 +-
+ .../devicetree/bindings/phy/qcom,edp-phy.yaml      |  19 +-
+ drivers/gpu/drm/msm/msm_mdss.c                     |  11 +
+ 5 files changed, 280 insertions(+), 11 deletions(-)
+---
+base-commit: 8155b4ef3466f0e289e8fcc9e6e62f3f4dceeac2
+change-id: 20241224-mdssdt_qcs8300-11b7883dc60b
+prerequisite-message-id: <20241203-qcs8300_initial_dtsi-v4-2-d7c953484024@quicinc.com>
+prerequisite-patch-id: 33f2488a8eb133431f200e17aac743598508dcf3
+prerequisite-patch-id: 7b653ebeaf1ca3f87620ccf7d876e3d1fe496c4a
+prerequisite-patch-id: e1b60af8a64332e5f0ecbd3a4ea2b6e090bd97cf
+prerequisite-patch-id: b823d744d2fb302e2496eaf0cf0c9c66312dcf2a
+prerequisite-message-id: <20241106-qcs8300-mm-patches-v3-0-f611a8f87f15@quicinc.com>
+prerequisite-patch-id: 367d9c742fe5087cfa6fb8e7b05ebe9bc78d68f3
+prerequisite-patch-id: ee0513c070ab96e63766d235b38ee53ca9b19181
+prerequisite-patch-id: 970974160bcdc837ccbe5ea3b5dcac582e90bc0d
+prerequisite-patch-id: 5b2bd9cc44a529b0b9e5d73128dca5d2ff9f2f44
+prerequisite-patch-id: 6a0a81242e1d0f051e3102533bf0191615c6e96b
+prerequisite-patch-id: 322540ce6d45c32f813ecef50e5135c6f08d9019
+prerequisite-message-id: <20241114-qcs8300-mm-cc-dt-patch-v1-1-7a974508c736@quicinc.com>
+prerequisite-patch-id: 8faad5c6d8ca255935d3e4d317dcbcc32b8261ff
+prerequisite-message-id: <20241024-defconfig_sa8775p_clock_controllers-v2-1-a9e1cdaed785@quicinc.com>
+prerequisite-patch-id: 81378ec66ab6e569bd828401c43c4f5af55db32c
+
+Best regards,
+-- 
+Yongxing Mou <quic_yongmou@quicinc.com>
 
 
