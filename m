@@ -1,64 +1,59 @@
-Return-Path: <linux-arm-msm+bounces-43340-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-43341-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id DC8429FC88B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Dec 2024 06:19:45 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 163F69FC895
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Dec 2024 06:26:42 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 64F4E18800E2
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Dec 2024 05:19:47 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 994C716269B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Dec 2024 05:26:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B4B36155312;
-	Thu, 26 Dec 2024 05:18:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CB612149C4A;
+	Thu, 26 Dec 2024 05:26:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dyjxDSBO"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lY8CYCQU"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7762C1531D5;
-	Thu, 26 Dec 2024 05:18:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CD6917591;
+	Thu, 26 Dec 2024 05:26:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735190285; cv=none; b=BULqOM0a/hEeh4zIlkVmAvL516IqmVz/7o5J/9ouk4fabqY77h6uKhv9xTfjmdYdCHZ2zgAsUjXqELcsMRGG5Sl2PyqC+XTHyG+eQ7C6eaMgE4B77klc6SrKryyYUooyj7NhnDbq1/52+3PzaPWCKymKj7O6Uq+/dp91pfxD29A=
+	t=1735190798; cv=none; b=P1mQtAIXkF+yBrNJ/sfsSVJqfXlHxqsZloPOhAGTwaGyXh2I1xWYxNo83EjnzHjOY02kIIWGqlw2/tYhImPH0dBPWnKZ5Uc5H2acFeSFVbE+n3QoCAmcXEfNe7/rhO/2vFR0fCD+43dZJKeqha8G5uzLQe1j4DOUaFNsfh32ANs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735190285; c=relaxed/simple;
-	bh=vMxXnhukB2vwcZRK8b6hSIIgYKD4V02K2P6FXrgfp1k=;
+	s=arc-20240116; t=1735190798; c=relaxed/simple;
+	bh=5nciksXbY6I+wpamqPIm9wIAZ1D2dLP0lJ5ZcWwMWZM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=DoIwOe1PUC4XFfssac0XRRNu5EJPFy7mODDNi/6pCdXIOood90gXgUbZLgRgau37sWsjvxidU/isiNt9y7LC4nF9tZee/bD2HvvKDXp/3nXcaB8bjanLsLE2jyd2AbMpzMMyPXHyHFzq3rISbDBcsfzIXOYsVIETILB6rl2XhL0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dyjxDSBO; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43EFEC4CED1;
-	Thu, 26 Dec 2024 05:18:03 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=MUsNQAl0qczwMgw26wblxX7u4JyiKWDolN+i862wI41r/leLw4TQ2iwQVDhG+q4+OwM3g5iVy7zsj1ENPu7wrIe7Cf6e4U9DWapCLeTJ8zXLwfRPRoVwvQlAzgBiTUehxltymfToXN1E8PaPYy9amPBhRYhKalQOjZ535t905N4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lY8CYCQU; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DAFBC4CED3;
+	Thu, 26 Dec 2024 05:26:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1735190285;
-	bh=vMxXnhukB2vwcZRK8b6hSIIgYKD4V02K2P6FXrgfp1k=;
+	s=k20201202; t=1735190798;
+	bh=5nciksXbY6I+wpamqPIm9wIAZ1D2dLP0lJ5ZcWwMWZM=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=dyjxDSBOVYkRsCj4YaE7+Chk9LX5vjKu0IAAEhdK0WUPhRofhxs4HgWUJwnxoXx26
-	 GwDxBbrI+9D66omxAYjXm9fakAcHYAtMaFobO/ndxzu/ug9oCW17foVZ8cxyGB7LHw
-	 DNKdWUldDUXS5U+II28HVZnTLpHPD7ItR3BaiQXpKnSDA0FFEgd1CjqPplxs9WJGW2
-	 nk7TQ7YHJVcoMw1WbUvg5kiZ8aPH1MSYaOkCtGkV4XSqRgQrMGpgC4ekFG+XODzUbP
-	 qvOHoyLrlGRL3jscEZtyPq5W5fUteb6sKCJiCAb+0BTzf0Q/fZVhAHbpdQ6+scue8Q
-	 XW7SIm2iF3zrQ==
-Date: Wed, 25 Dec 2024 23:18:01 -0600
+	b=lY8CYCQUVY0lOEuhBHwrYr2HD43OfHPiulIlQJI4Mo+ikX2vSRxeTUjZSBNFbrs85
+	 poI6d1c7eEoVaVBeTEsqM2ummgohUxQj2oZYl9/AvcMfkG+T4U7IoNtpWIwfwqT+zC
+	 V7skJPPJnXKKhFD1bn1dm22LYU7FrZ+mqK4F5nVLPNq3zweCD8fLjXG4pBIZMPuGwq
+	 wBAWJeB+HXtJK8uJckKcfs8CDhMDKxYGtBGYafdNskkox6KD+J0RK31Q7iz8AjMaTA
+	 Vi5fa97n/jItdFoVtHBaACzJqOQ8w6kH81PjWkMMZF9GIH/ksLy+62PXwJuf0g92Kp
+	 omMdnOJowqQ/w==
+Date: Wed, 25 Dec 2024 23:26:35 -0600
 From: Bjorn Andersson <andersson@kernel.org>
-To: Fange Zhang <quic_fangez@quicinc.com>
-Cc: Rob Clark <robdclark@gmail.com>, 
-	Abhinav Kumar <quic_abhinavk@quicinc.com>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
-	Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, 
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
-	Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>, 
-	Simona Vetter <simona@ffwll.ch>, Rob Herring <robh@kernel.org>, 
+To: Mao Jinlong <quic_jinlmao@quicinc.com>
+Cc: Suzuki K Poulose <suzuki.poulose@arm.com>, 
+	Mike Leach <mike.leach@linaro.org>, James Clark <james.clark@arm.com>, Rob Herring <robh@kernel.org>, 
 	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Krishna Manikandan <quic_mkrishn@quicinc.com>, Konrad Dybcio <konradybcio@kernel.org>, 
-	Liu Li <quic_lliu6@quicinc.com>, Xiangxu Yin <quic_xiangxuy@quicinc.com>, 
-	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: Re: [PATCH v4 0/9] Add display support for QCS615 platform
-Message-ID: <eqlps3dslxiq2vogelt4cl6edkyljim5yxhioo4qry3ryetxen@42lyv7pjzzfz>
-References: <20241210-add-display-support-for-qcs615-platform-v4-0-2d875a67602d@quicinc.com>
+	Mathieu Poirier <mathieu.poirier@linaro.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+	coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v5 2/2] arm64: dts: qcom: sm8450: Add coresight nodes
+Message-ID: <5nrjgp4drxgrqqu5e4yfnvnnnr34ffj4ielytmw2bvr5ewy7qe@bquvoxvxqmxg>
+References: <20240927095413.15278-1-quic_jinlmao@quicinc.com>
+ <20240927095413.15278-3-quic_jinlmao@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -67,120 +62,769 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20241210-add-display-support-for-qcs615-platform-v4-0-2d875a67602d@quicinc.com>
+In-Reply-To: <20240927095413.15278-3-quic_jinlmao@quicinc.com>
 
-On Tue, Dec 10, 2024 at 02:53:51PM +0800, Fange Zhang wrote:
-> This series aims to enable display on the QCS615 platform
+On Fri, Sep 27, 2024 at 02:54:11AM -0700, Mao Jinlong wrote:
+> Add coresight components on Qualcomm SM8450 Soc. The components include
+> TMC ETF/ETR, ETE, STM, TPDM, CTI.
 > 
-> 1.Add MDSS & DPU support for QCS615
-> 2.Add DSI support for QCS615
-> 
-> QCS615 platform supports DisplayPort, and this feature will be added in a future patch
-> 
-> Only dts part of this patch series depends on the following patch series
-> The other dependency patches have already been merged into linux-next
-> - dispcc
-> https://lore.kernel.org/all/20241108-qcs615-mm-clockcontroller-v3-0-7d3b2d235fdf@quicinc.com/
-> - dispcc dts
-> https://lore.kernel.org/lkml/20241108-qcs615-mm-dt-nodes-v1-0-b2669cac0624@quicinc.com/
-> 
+> Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
 
-I don't understand why you send patches to the list with dependencies on
-patches that has received feedback and requests for changes. Now you're
-forcing me to go see if perhaps there was a new version of that series
-that I have merged.
+Please rebase to fix the &CPUn vs &cpun issue, and please fix the
+dtbs_check errors.
 
-I can't find a v2 of that series, so your series is spam in my inbox.
-
-> Signed-off-by: Li Liu <quic_lliu6@quicinc.com>
-> Signed-off-by: Fange Zhang <quic_fangez@quicinc.com>
-> ---
-> Changes in v4:
-> - Add dp-connector node for anx_7625_out [Dmitry]
-> - Add missing qcom,sm6150-dsi-ctrl for dsi-controller-main.yaml [Krzysztof]
-> - Change VIG_SDM845_MASK to VIG_SDM845_MASK_SDMA for sm6150_sspp [Abhinav]
-> - Change DMA_SDM845_MASK to DMA_SDM845_MASK_SDMA for sm6150_sspp [Abhinav]
-> - Remove redundant annotation from sdm845_dsi_cfg [Dmitry]
-> - Remove redundant blocks from sm6150_intf [Dmitry]
-> - Update mdp_opp_table opp clk to correct value
-> - Link to v3: https://lore.kernel.org/r/20241122-add-display-support-for-qcs615-platform-v3-0-35252e3a51fe@quicinc.com
-> 
-> Changes in v3:
-> - Add reg_bus_bw for sm6150_data [Dmitry]
-> - Remove patch for SX150X defconfig [Dmitry]
-> - Remove dsi0_hpd_cfg_pins from ioexp [Dmitry]
-> - Remove dsi0_cdet_cfg_pins from ioexpa [Dmitry]
-> - Remove tlmm node for ioexp_intr_active and ioAexp_reset_active [Dmitry]
-> - Remove qcs615_dsi_regulators and reuse sdm845_dsi_cfg [Dmitry, Konrad]
-> - Rename qcs615/QCS615 to sm6150/SM6150 for whole patch [Dmitry]
-> - Rename qcom,dsi-phy-14nm-615 to qcom,sm6150-dsi-phy-14nm [Dmitry]
-> - Rename qcom,qcs615-dsi-ctrl to qcom,sm6150-dsi-ctrl [Dmitry]
-> - Rename qcom,qcs615-dpu to qcom,sm6150-dpu [Dmitry]
-> - Rename qcom,qcs615-mdss to qcom,sm6150-mdss [Dmitry]
-> - Split drm dsi patch to dsi and dsi phy [Dmitry]
-> - Update yaml clocks node with ephemeral nodes and remove unsed include [Dmitry, Rob]
-> - Link to v2: https://lore.kernel.org/r/20241113-add-display-support-for-qcs615-platform-v2-0-2873eb6fb869@quicinc.com
-> 
-> Changes in v2:
-> - Add QCS615 DP controller comment in commit message [Dmitry]
-> - Add comments for dsi_dp_hpd_cfg_pins and dsi_dp_cdet_cfg_pins [Dmitry]
-> - Add missing port@1 for connector for anx7625 [Dmitry]
-> - Change 0 to QCOM_ICC_TAG_ALWAYS for mdss interconnects [Dmitry]
-> - Change 0 to GPIO_ACTIVE_HIGH for GPIO flags [Dmitry]
-> - Move anx_7625 to same node [Dmitry]
-> - Move status to last in mdss_dsi0 [Dmitry]
-> - Rename dsi0_hpd_cfg_pins to dsi_dp_hpd_cfg_pins in ioexp [Dmitry]
-> - Rename dsi0_cdet_cfg_pins to dsi_dp_cdet_cfg_pins in ioexp [Dmitry]
-> - Rename anx_7625_1 to dsi_anx_7625 in ioexp [Dmitry]
-> - Remove absent block in qcs615_lm [Dmitry]
-> - Remove merge_3d value in qcs615_pp [Dmitry]
-> - Remove redundant annotation in qcs615_sspp [Dmitry]
-> - Remove unsupported dsi clk from dsi0_opp_table [Dmitry]
-> - Remove dp_hpd_cfg_pins node from ioexp [Dmitry]
-> - Splite drm driver patches to mdss, dpu and dsi [Dmitry]
-> - Link to v1: https://lore.kernel.org/r/20241014-add_display_support_for_qcs615-v1-0-4efa191dbdd4@quicinc.com
-> 
-> ---
-> Li Liu (9):
->       dt-bindings: display/msm: Add SM6150 DSI phy
->       dt-bindings: display/msm: dsi-controller-main: Document SM6150
->       dt-bindings: display/msm: Add SM6150 MDSS & DPU
->       drm/msm: mdss: Add SM6150 support
->       drm/msm/dpu: Add SM6150 support
->       drm/msm/dsi: Add dsi phy support for SM6150
->       drm/msm/dsi: Add support for SM6150
->       arm64: dts: qcom: Add display support for QCS615
->       arm64: dts: qcom: Add display support for QCS615 RIDE board
-
-Don't write "..for <soc>", use the same format as all other changes to
-such files: "arm64: dts: qcom: <soc>[-board]: change subject"
-
-Regards,
+Thanks,
 Bjorn
-> 
->  .../bindings/display/msm/dsi-controller-main.yaml  |   2 +
->  .../bindings/display/msm/dsi-phy-14nm.yaml         |   1 +
->  .../bindings/display/msm/qcom,sm6150-dpu.yaml      | 108 +++++++++
->  .../bindings/display/msm/qcom,sm6150-mdss.yaml     | 245 ++++++++++++++++++++
->  arch/arm64/boot/dts/qcom/qcs615-ride.dts           |  89 ++++++++
->  arch/arm64/boot/dts/qcom/qcs615.dtsi               | 181 ++++++++++++++-
->  .../gpu/drm/msm/disp/dpu1/catalog/dpu_5_3_sm6150.h | 254 +++++++++++++++++++++
->  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c     |   1 +
->  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h     |   1 +
->  drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c            |   1 +
->  drivers/gpu/drm/msm/dsi/dsi_cfg.c                  |   2 +
->  drivers/gpu/drm/msm/dsi/dsi_cfg.h                  |   1 +
->  drivers/gpu/drm/msm/dsi/phy/dsi_phy.c              |   2 +
->  drivers/gpu/drm/msm/dsi/phy/dsi_phy.h              |   1 +
->  drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c         |  21 ++
->  drivers/gpu/drm/msm/msm_mdss.c                     |   8 +
->  16 files changed, 917 insertions(+), 1 deletion(-)
+
 > ---
-> base-commit: 1031240d9d007339c6661dddfbe2efda0b3859e9
-> change-id: 20241209-add-display-support-for-qcs615-platform-22b8e8848f87
+>  arch/arm64/boot/dts/qcom/sm8450.dtsi | 726 +++++++++++++++++++++++++++
+>  1 file changed, 726 insertions(+)
 > 
-> Best regards,
+> diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+> index 9bafb3b350ff..6d90d6045628 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+> @@ -287,6 +287,192 @@ CLUSTER_SLEEP_1: cluster-sleep-1 {
+>  		};
+>  	};
+>  
+> +	ete-0 {
+> +		compatible = "arm,embedded-trace-extension";
+> +		cpu = <&CPU0>;
+> +
+> +		out-ports {
+> +			port {
+> +				ete0_out_funnel_ete: endpoint {
+> +					remote-endpoint = <&funnel_ete_in_ete0>;
+> +				};
+> +			};
+> +		};
+> +	};
+> +
+> +	ete-1 {
+> +		compatible = "arm,embedded-trace-extension";
+> +		cpu = <&CPU1>;
+> +
+> +		out-ports {
+> +			port {
+> +				ete1_out_funnel_ete: endpoint {
+> +					remote-endpoint = <&funnel_ete_in_ete1>;
+> +				};
+> +			};
+> +		};
+> +	};
+> +
+> +	ete-2 {
+> +		compatible = "arm,embedded-trace-extension";
+> +		cpu = <&CPU2>;
+> +
+> +		out-ports {
+> +			port {
+> +				ete2_out_funnel_ete: endpoint {
+> +					remote-endpoint = <&funnel_ete_in_ete2>;
+> +				};
+> +			};
+> +		};
+> +	};
+> +
+> +	ete-3 {
+> +		compatible = "arm,embedded-trace-extension";
+> +		cpu = <&CPU3>;
+> +
+> +		out-ports {
+> +			port {
+> +				ete3_out_funnel_ete: endpoint {
+> +					remote-endpoint = <&funnel_ete_in_ete3>;
+> +				};
+> +			};
+> +		};
+> +	};
+> +
+> +	ete-4 {
+> +		compatible = "arm,embedded-trace-extension";
+> +		cpu = <&CPU4>;
+> +
+> +		out-ports {
+> +			port {
+> +				ete4_out_funnel_ete: endpoint {
+> +					remote-endpoint = <&funnel_ete_in_ete4>;
+> +				};
+> +			};
+> +		};
+> +	};
+> +
+> +	ete-5 {
+> +		compatible = "arm,embedded-trace-extension";
+> +		cpu = <&CPU5>;
+> +
+> +		out-ports {
+> +			port {
+> +				ete5_out_funnel_ete: endpoint {
+> +					remote-endpoint = <&funnel_ete_in_ete5>;
+> +				};
+> +			};
+> +		};
+> +	};
+> +
+> +	ete-6 {
+> +		compatible = "arm,embedded-trace-extension";
+> +		cpu = <&CPU6>;
+> +
+> +		out-ports {
+> +			port {
+> +				ete6_out_funnel_ete: endpoint {
+> +					remote-endpoint = <&funnel_ete_in_ete6>;
+> +				};
+> +			};
+> +		};
+> +	};
+> +
+> +	ete-7 {
+> +		compatible = "arm,embedded-trace-extension";
+> +		cpu = <&CPU7>;
+> +
+> +		out-ports {
+> +			port {
+> +				ete7_out_funnel_ete: endpoint {
+> +					remote-endpoint = <&funnel_ete_in_ete7>;
+> +				};
+> +			};
+> +		};
+> +	};
+> +
+> +	funnel-ete {
+> +		compatible = "arm,coresight-static-funnel";
+> +
+> +		out-ports {
+> +			port {
+> +				funnel_ete_out_funnel_apss: endpoint {
+> +					remote-endpoint =
+> +						<&funnel_apss_in_funnel_ete>;
+> +				};
+> +			};
+> +		};
+> +
+> +		in-ports {
+> +			#address-cells = <1>;
+> +			#size-cells = <0>;
+> +
+> +			port@0 {
+> +				reg = <0>;
+> +				funnel_ete_in_ete0: endpoint {
+> +					remote-endpoint =
+> +						<&ete0_out_funnel_ete>;
+> +				};
+> +			};
+> +
+> +			port@1 {
+> +				reg = <1>;
+> +				funnel_ete_in_ete1: endpoint {
+> +					remote-endpoint =
+> +						<&ete1_out_funnel_ete>;
+> +				};
+> +			};
+> +
+> +			port@2 {
+> +				reg = <2>;
+> +				funnel_ete_in_ete2: endpoint {
+> +					remote-endpoint =
+> +						<&ete2_out_funnel_ete>;
+> +				};
+> +			};
+> +
+> +			port@3 {
+> +				reg = <3>;
+> +				funnel_ete_in_ete3: endpoint {
+> +					remote-endpoint =
+> +						<&ete3_out_funnel_ete>;
+> +				};
+> +			};
+> +
+> +			port@4 {
+> +				reg = <4>;
+> +				funnel_ete_in_ete4: endpoint {
+> +					remote-endpoint =
+> +						<&ete4_out_funnel_ete>;
+> +				};
+> +			};
+> +
+> +			port@5 {
+> +				reg = <5>;
+> +				funnel_ete_in_ete5: endpoint {
+> +					remote-endpoint =
+> +						<&ete5_out_funnel_ete>;
+> +				};
+> +			};
+> +
+> +			port@6 {
+> +				reg = <6>;
+> +				funnel_ete_in_ete6: endpoint {
+> +					remote-endpoint =
+> +						<&ete6_out_funnel_ete>;
+> +				};
+> +			};
+> +
+> +			port@7 {
+> +				reg = <7>;
+> +				funnel_ete_in_ete7: endpoint {
+> +					remote-endpoint =
+> +						<&ete7_out_funnel_ete>;
+> +				};
+> +			};
+> +		};
+> +	};
+> +
+>  	firmware {
+>  		scm: scm {
+>  			compatible = "qcom,scm-sm8450", "qcom,scm";
+> @@ -4141,6 +4327,546 @@ data-pins {
+>  			};
+>  		};
+>  
+> +		stm@10002000 {
+> +			compatible = "arm,coresight-stm", "arm,primecell";
+> +			reg = <0x0 0x10002000 0x0 0x1000>,
+> +				<0x0 0x16280000 0x0 0x180000>;
+> +			reg-names = "stm-base", "stm-stimulus-base";
+> +
+> +			clocks = <&aoss_qmp>;
+> +			clock-names = "apb_pclk";
+> +
+> +			out-ports {
+> +				port {
+> +					stm_out_funnel_in0: endpoint {
+> +						remote-endpoint =
+> +							<&funnel_in0_in_stm>;
+> +					};
+> +				};
+> +			};
+> +		};
+> +
+> +		funnel@10041000 {
+> +			compatible = "arm,coresight-dynamic-funnel", "arm,primecell";
+> +			reg = <0x0 0x10041000 0x0 0x1000>;
+> +
+> +			clocks = <&aoss_qmp>;
+> +			clock-names = "apb_pclk";
+> +
+> +			in-ports {
+> +				#address-cells = <1>;
+> +				#size-cells = <0>;
+> +
+> +				port@7 {
+> +					reg = <7>;
+> +					funnel_in0_in_stm: endpoint {
+> +						remote-endpoint =
+> +							<&stm_out_funnel_in0>;
+> +					};
+> +				};
+> +			};
+> +
+> +			out-ports {
+> +				port {
+> +					funnel_in0_out_funnel_qdss: endpoint {
+> +						remote-endpoint =
+> +							<&funnel_qdss_in_funnel_in0>;
+> +					};
+> +				};
+> +			};
+> +		};
+> +
+> +		funnel@10042000 {
+> +			compatible = "arm,coresight-dynamic-funnel", "arm,primecell";
+> +
+> +			reg = <0x0 0x10042000 0x0 0x1000>;
+> +
+> +			clocks = <&aoss_qmp>;
+> +			clock-names = "apb_pclk";
+> +
+> +			in-ports {
+> +				#address-cells = <1>;
+> +				#size-cells = <0>;
+> +
+> +				port@4 {
+> +					reg = <4>;
+> +					funnel_in1_in_funnel_apss: endpoint {
+> +						remote-endpoint =
+> +							<&funnel_apss_out_funnel_in1>;
+> +					};
+> +				};
+> +
+> +				port@6 {
+> +					reg = <6>;
+> +					funnel_in1_in_funnel_dl_center: endpoint {
+> +						remote-endpoint =
+> +							<&funnel_dl_center_out_funnel_in1>;
+> +					};
+> +				};
+> +			};
+> +
+> +			out-ports {
+> +				port {
+> +					funnel_in1_out_funnel_qdss: endpoint {
+> +						remote-endpoint =
+> +							<&funnel_qdss_in_funnel_in1>;
+> +					};
+> +				};
+> +			};
+> +		};
+> +
+> +		funnel@10045000 {
+> +			compatible = "arm,coresight-dynamic-funnel", "arm,primecell";
+> +			reg = <0x0 0x10045000 0x0 0x1000>;
+> +
+> +			clocks = <&aoss_qmp>;
+> +			clock-names = "apb_pclk";
+> +
+> +			in-ports {
+> +				#address-cells = <1>;
+> +				#size-cells = <0>;
+> +
+> +				port@0 {
+> +					reg = <0>;
+> +					funnel_qdss_in_funnel_in0: endpoint {
+> +						remote-endpoint =
+> +							<&funnel_in0_out_funnel_qdss>;
+> +					};
+> +				};
+> +
+> +				port@1 {
+> +					reg = <1>;
+> +					funnel_qdss_in_funnel_in1: endpoint {
+> +						remote-endpoint =
+> +							<&funnel_in1_out_funnel_qdss>;
+> +					};
+> +				};
+> +			};
+> +
+> +			out-ports {
+> +				port {
+> +					funnel_qdss_out_funnel_aoss: endpoint {
+> +						remote-endpoint =
+> +							<&funnel_aoss_in_funnel_qdss>;
+> +					};
+> +				};
+> +			};
+> +		};
+> +
+> +		replicator@10046000 {
+> +			compatible = "arm,coresight-dynamic-replicator", "arm,primecell";
+> +			reg = <0x0 0x10046000 0x0 0x1000>;
+> +
+> +			clocks = <&aoss_qmp>;
+> +			clock-names = "apb_pclk";
+> +
+> +			in-ports {
+> +				port {
+> +					replicator_qdss_in_replicator_swao: endpoint {
+> +						remote-endpoint =
+> +							<&replicator_swao_out_replicator_qdss>;
+> +					};
+> +				};
+> +			};
+> +
+> +			out-ports {
+> +
+> +				port {
+> +					replicator_qdss_out_replicator_etr: endpoint {
+> +						remote-endpoint =
+> +							<&replicator_etr_in_replicator_qdss>;
+> +					};
+> +				};
+> +			};
+> +		};
+> +
+> +		tmc_etr: tmc@10048000 {
+> +			compatible = "arm,coresight-tmc", "arm,primecell";
+> +			reg = <0x0 0x10048000 0x0 0x1000>;
+> +
+> +			iommus = <&apps_smmu 0x0600 0>;
+> +			arm,buffer-size = <0x10000>;
+> +
+> +			arm,scatter-gather;
+> +			clocks = <&aoss_qmp>;
+> +			clock-names = "apb_pclk";
+> +
+> +			in-ports {
+> +				port {
+> +					tmc_etr_in_replicator_etr: endpoint {
+> +						remote-endpoint =
+> +							<&replicator_etr_out_tmc_etr>;
+> +					};
+> +				};
+> +			};
+> +		};
+> +
+> +		replicator@1004e000 {
+> +			compatible = "arm,coresight-dynamic-replicator", "arm,primecell";
+> +			reg = <0x0 0x1004e000 0x0 0x1000>;
+> +
+> +			clocks = <&aoss_qmp>;
+> +			clock-names = "apb_pclk";
+> +
+> +			in-ports {
+> +				port {
+> +					replicator_etr_in_replicator_qdss: endpoint {
+> +						remote-endpoint =
+> +							<&replicator_qdss_out_replicator_etr>;
+> +					};
+> +				};
+> +			};
+> +
+> +			out-ports {
+> +
+> +				port {
+> +
+> +					replicator_etr_out_tmc_etr: endpoint {
+> +						remote-endpoint =
+> +							<&tmc_etr_in_replicator_etr>;
+> +					};
+> +				};
+> +			};
+> +		};
+> +
+> +		funnel@10b04000 {
+> +			compatible = "arm,coresight-dynamic-funnel", "arm,primecell";
+> +
+> +			reg = <0x0 0x10b04000 0x0 0x1000>;
+> +
+> +			clocks = <&aoss_qmp>;
+> +			clock-names = "apb_pclk";
+> +
+> +			in-ports {
+> +				#address-cells = <1>;
+> +				#size-cells = <0>;
+> +
+> +				port@6 {
+> +					reg = <6>;
+> +					funnel_aoss_in_tpda_aoss: endpoint {
+> +						remote-endpoint =
+> +							<&tpda_aoss_out_funnel_aoss>;
+> +					};
+> +				};
+> +
+> +				port@7 {
+> +					reg = <7>;
+> +					funnel_aoss_in_funnel_qdss: endpoint {
+> +						remote-endpoint =
+> +							<&funnel_qdss_out_funnel_aoss>;
+> +					};
+> +				};
+> +			};
+> +
+> +			out-ports {
+> +				port {
+> +					funnel_aoss_out_tmc_etf: endpoint {
+> +						remote-endpoint =
+> +							<&tmc_etf_in_funnel_aoss>;
+> +					};
+> +				};
+> +			};
+> +		};
+> +
+> +		tmc@10b05000 {
+> +			compatible = "arm,coresight-tmc", "arm,primecell";
+> +			reg = <0x0 0x10b05000 0x0 0x1000>;
+> +
+> +			clocks = <&aoss_qmp>;
+> +			clock-names = "apb_pclk";
+> +
+> +			in-ports {
+> +				port {
+> +					tmc_etf_in_funnel_aoss: endpoint {
+> +						remote-endpoint =
+> +							<&funnel_aoss_out_tmc_etf>;
+> +					};
+> +				};
+> +			};
+> +
+> +			out-ports {
+> +				port {
+> +					tmc_etf_out_replicator_swao: endpoint {
+> +						remote-endpoint =
+> +							<&replicator_swao_in_tmc_etf>;
+> +					};
+> +				};
+> +			};
+> +		};
+> +
+> +		replicator@10b06000 {
+> +			compatible = "arm,coresight-dynamic-replicator", "arm,primecell";
+> +			reg = <0x0 0x10b06000 0x0 0x1000>;
+> +
+> +			qcom,replicator-loses-context;
+> +			clocks = <&aoss_qmp>;
+> +			clock-names = "apb_pclk";
+> +
+> +			in-ports {
+> +				port {
+> +					replicator_swao_in_tmc_etf: endpoint {
+> +						remote-endpoint =
+> +							<&tmc_etf_out_replicator_swao>;
+> +					};
+> +				};
+> +			};
+> +
+> +			out-ports {
+> +
+> +				port {
+> +					replicator_swao_out_replicator_qdss: endpoint {
+> +						remote-endpoint =
+> +							<&replicator_qdss_in_replicator_swao>;
+> +					};
+> +				};
+> +			};
+> +		};
+> +
+> +		tpda@10b08000 {
+> +			compatible = "qcom,coresight-tpda", "arm,primecell";
+> +
+> +			reg = <0x0 0x10b08000 0x0 0x1000>;
+> +
+> +			clocks = <&aoss_qmp>;
+> +			clock-names = "apb_pclk";
+> +
+> +			in-ports {
+> +
+> +				#address-cells = <1>;
+> +				#size-cells = <0>;
+> +
+> +				port@0 {
+> +					reg = <0>;
+> +					tpda_aoss_in_tpdm_swao_prio_0: endpoint {
+> +						remote-endpoint =
+> +							<&tpdm_swao_prio_0_out_tpda_aoss>;
+> +					};
+> +				};
+> +
+> +				port@4 {
+> +					reg = <4>;
+> +					tpda_aoss_in_tpdm_swao: endpoint {
+> +						remote-endpoint =
+> +							<&tpdm_swao_out_tpda_aoss>;
+> +					};
+> +				};
+> +			};
+> +
+> +			out-ports {
+> +
+> +				port {
+> +					tpda_aoss_out_funnel_aoss: endpoint {
+> +						remote-endpoint =
+> +							<&funnel_aoss_in_tpda_aoss>;
+> +					};
+> +				};
+> +			};
+> +		};
+> +
+> +		tpdm@10b09000 {
+> +			compatible = "qcom,coresight-tpdm", "arm,primecell";
+> +			reg = <0x0 0x10b09000 0x0 0x1000>;
+> +
+> +
+> +			clocks = <&aoss_qmp>;
+> +			clock-names = "apb_pclk";
+> +
+> +			out-ports {
+> +				port {
+> +					tpdm_swao_prio_0_out_tpda_aoss: endpoint {
+> +						remote-endpoint =
+> +							<&tpda_aoss_in_tpdm_swao_prio_0>;
+> +					};
+> +				};
+> +			};
+> +		};
+> +
+> +		tpdm@10b0d000 {
+> +			compatible = "qcom,coresight-tpdm", "arm,primecell";
+> +			reg = <0x0 0x10b0d000 0x0 0x1000>;
+> +
+> +			clocks = <&aoss_qmp>;
+> +			clock-names = "apb_pclk";
+> +
+> +			out-ports {
+> +				port {
+> +					tpdm_swao_out_tpda_aoss: endpoint {
+> +						remote-endpoint =
+> +							<&tpda_aoss_in_tpdm_swao>;
+> +					};
+> +				};
+> +			};
+> +		};
+> +
+> +		tpdm@10c28000 {
+> +			compatible = "qcom,coresight-tpdm", "arm,primecell";
+> +			reg = <0x0 0x10c28000 0x0 0x1000>;
+> +
+> +			clocks = <&aoss_qmp>;
+> +			clock-names = "apb_pclk";
+> +
+> +			out-ports {
+> +				port {
+> +					tpdm_dlct_out_tpda_dl_center_26: endpoint {
+> +						remote-endpoint =
+> +							<&tpda_dl_center_26_in_tpdm_dlct>;
+> +					};
+> +				};
+> +			};
+> +		};
+> +
+> +		tpdm@10c29000 {
+> +			compatible = "qcom,coresight-tpdm", "arm,primecell";
+> +			reg = <0x0 0x10c29000 0x0 0x1000>;
+> +
+> +			clocks = <&aoss_qmp>;
+> +			clock-names = "apb_pclk";
+> +
+> +			out-ports {
+> +				port {
+> +					tpdm_ipcc_out_tpda_dl_center_27: endpoint {
+> +						remote-endpoint =
+> +							<&tpda_dl_center_27_in_tpdm_ipcc>;
+> +					};
+> +				};
+> +			};
+> +		};
+> +
+> +		cti@10c2a000 {
+> +			compatible = "arm,coresight-cti", "arm,primecell";
+> +			reg = <0x0 0x10c2a000 0x0 0x1000>;
+> +
+> +			clocks = <&aoss_qmp>;
+> +			clock-names = "apb_pclk";
+> +		};
+> +
+> +		cti@10c2b000 {
+> +			compatible = "arm,coresight-cti", "arm,primecell";
+> +			reg = <0x0 0x10c2b000 0x0 0x1000>;
+> +
+> +			clocks = <&aoss_qmp>;
+> +			clock-names = "apb_pclk";
+> +		};
+> +
+> +		tpda@10c2e000 {
+> +			compatible = "qcom,coresight-tpda", "arm,primecell";
+> +			reg = <0x0 0x10c2e000 0x0 0x1000>;
+> +
+> +			clocks = <&aoss_qmp>;
+> +			clock-names = "apb_pclk";
+> +
+> +			in-ports {
+> +
+> +				#address-cells = <1>;
+> +				#size-cells = <0>;
+> +
+> +				port@1a {
+> +					reg = <26>;
+> +					tpda_dl_center_26_in_tpdm_dlct: endpoint {
+> +						remote-endpoint =
+> +							<&tpdm_dlct_out_tpda_dl_center_26>;
+> +					};
+> +				};
+> +
+> +				port@1b {
+> +					reg = <27>;
+> +					tpda_dl_center_27_in_tpdm_ipcc: endpoint {
+> +						remote-endpoint =
+> +							<&tpdm_ipcc_out_tpda_dl_center_27>;
+> +					};
+> +				};
+> +			};
+> +
+> +			out-ports {
+> +
+> +				port {
+> +					tpda_dl_center_out_funnel_dl_center: endpoint {
+> +						remote-endpoint =
+> +							<&funnel_dl_center_in_tpda_dl_center>;
+> +					};
+> +				};
+> +			};
+> +		};
+> +
+> +		funnel@10c2f000 {
+> +			compatible = "arm,coresight-dynamic-funnel", "arm,primecell";
+> +			reg = <0x0 0x10c2f000 0x0 0x1000>;
+> +
+> +			clocks = <&aoss_qmp>;
+> +			clock-names = "apb_pclk";
+> +
+> +			in-ports {
+> +
+> +				port {
+> +					funnel_dl_center_in_tpda_dl_center: endpoint {
+> +						remote-endpoint =
+> +							<&tpda_dl_center_out_funnel_dl_center>;
+> +					};
+> +				};
+> +			};
+> +
+> +			out-ports {
+> +				port {
+> +					funnel_dl_center_out_funnel_in1: endpoint {
+> +						remote-endpoint =
+> +							<&funnel_in1_in_funnel_dl_center>;
+> +					};
+> +				};
+> +			};
+> +		};
+> +
+> +		funnel@13810000 {
+> +			compatible = "arm,coresight-dynamic-funnel", "arm,primecell";
+> +
+> +			reg = <0x0 0x13810000 0x0 0x1000>;
+> +
+> +			clocks = <&aoss_qmp>;
+> +			clock-names = "apb_pclk";
+> +
+> +			in-ports {
+> +
+> +				port {
+> +					funnel_apss_in_funnel_ete: endpoint {
+> +						remote-endpoint =
+> +							<&funnel_ete_out_funnel_apss>;
+> +					};
+> +				};
+> +			};
+> +
+> +			out-ports {
+> +				port {
+> +					funnel_apss_out_funnel_in1: endpoint {
+> +						remote-endpoint =
+> +							<&funnel_in1_in_funnel_apss>;
+> +					};
+> +				};
+> +			};
+> +		};
+> +
+> +		cti@138e0000 {
+> +			compatible = "arm,coresight-cti", "arm,primecell";
+> +			reg = <0x0 0x138e0000 0x0 0x1000>;
+> +
+> +			clocks = <&aoss_qmp>;
+> +			clock-names = "apb_pclk";
+> +		};
+> +
+> +		cti@138f0000 {
+> +			compatible = "arm,coresight-cti", "arm,primecell";
+> +			reg = <0x0 0x138f0000 0x0 0x1000>;
+> +
+> +			clocks = <&aoss_qmp>;
+> +			clock-names = "apb_pclk";
+> +		};
+> +
+> +		cti@13900000 {
+> +			compatible = "arm,coresight-cti", "arm,primecell";
+> +			reg = <0x0 0x13900000 0x0 0x1000>;
+> +
+> +			clocks = <&aoss_qmp>;
+> +			clock-names = "apb_pclk";
+> +		};
+> +
+>  		sram@146aa000 {
+>  			compatible = "qcom,sm8450-imem", "syscon", "simple-mfd";
+>  			reg = <0 0x146aa000 0 0x1000>;
 > -- 
-> fangez <quic_fangez@quicinc.com>
+> 2.46.0
 > 
 
