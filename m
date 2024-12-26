@@ -1,63 +1,69 @@
-Return-Path: <linux-arm-msm+bounces-43412-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-43413-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 79CEA9FCD01
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Dec 2024 19:35:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 4E3759FCD04
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Dec 2024 19:35:50 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 1FABE162EA1
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Dec 2024 18:35:30 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id DE6F4163108
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Dec 2024 18:35:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1D5631DF97B;
-	Thu, 26 Dec 2024 18:27:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 871CC1DFD89;
+	Thu, 26 Dec 2024 18:27:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZwQGlyp0"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="A6PwqRtV"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1A721DF971;
-	Thu, 26 Dec 2024 18:27:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59ACF1DF998;
+	Thu, 26 Dec 2024 18:27:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735237671; cv=none; b=enU3vnnFY/p/HnruY6iALRrg8Q4eEQ4Bo226BY+u1cWwH7snMkhQiLbO++TJah/avb16aHBibktIckYQ90Un5Gqd7jLKC1kb31dIgEZsNMP01+6SMY4rPLOh2lzdlwXBlv6G46UNGvvPsv90MzTf6Gqt+VHkdyDZCvatt/6S5Dg=
+	t=1735237672; cv=none; b=HUbsnp2lcOVTen2kbTE+eAojOTrsonErHbF/CXc8M1kUyvWE/2FPUgkjQTYaI2LaXf99wDB04ljf+CWBXTfc9ifdnlPh7pr8dVGWh/5y26GlTkxu3o+DZaDt9Q3ziaXFul5aS+7CcowDjG6rER0qqQum6762654dAi/dcSYQSn8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735237671; c=relaxed/simple;
-	bh=VP0YmaV52KiBLWvUfKNgIGV7VPXZlEnTFAFGrFi4buI=;
+	s=arc-20240116; t=1735237672; c=relaxed/simple;
+	bh=gtMbYk3N6xgXQ7sqpgTBbuRqKJ5+ElAd4Ea2Xf2ZLSQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=a8+AVTBtXbC95esNhx2Cjiv1NZI9VIqfBuciprYAeWKvVq1QvtVx6FmXvZvMpAQbf7b5NnBTgdhdtil+ECAmlDudpEBms6FHMszNNUQQuskgytUs2nKs231/cSpsWLsrAWFeojWoz6b7pz0KplGPO+q3PF3z1dH7D2U6kjvx+Ig=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZwQGlyp0; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE8F7C4CEDC;
-	Thu, 26 Dec 2024 18:27:49 +0000 (UTC)
+	 MIME-Version:Content-Type; b=eQ0/3R/+W1cL9VE7eNQ7T4oFz283ogvPdtTsmQW6kedkqTzKyJdzfbg0ELkLdQBwHy6eTCITjJMYx/VB3ZWKfts9tq2/ATzm2KsFL0FSiq4BXZTFIbrZZK/pT2EUoI7GNTf5gkCLiyIxzYJqEsbtMxt5zuT7PNdwEvc6XMwOg+Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=A6PwqRtV; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07D84C4CED1;
+	Thu, 26 Dec 2024 18:27:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1735237670;
-	bh=VP0YmaV52KiBLWvUfKNgIGV7VPXZlEnTFAFGrFi4buI=;
+	s=k20201202; t=1735237672;
+	bh=gtMbYk3N6xgXQ7sqpgTBbuRqKJ5+ElAd4Ea2Xf2ZLSQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZwQGlyp0zo85l+eI3NfBgOOhrjLM87OVqzV7R1uqZq2RUYmAHw3y4WNvZCiAEmTjK
-	 lWxfv2c3D2XKygSM4C+c98UanuQklAZhL+sjxoFNUDN/Inn23+vLC5QxfjcisGPQpt
-	 2r8OZf2ZP/5vOjoJHj/dL11HuRWSPVbxH2c2vyLHyPG1hMY4tj9EmiztXnd9j1P9IN
-	 cHRM4LLaXq2b42UCw8CLTOmA5/btiN/Wx71VpXp21p8DwxoICrkXafDjZbfR2CU9AM
-	 0t+VlocDiREo5YyIX07Wmz9O3zXX3IcpOTUplwoAPnXXUlrKuLfWGx6U8QxeDBILho
-	 zBxdJcCjvM6aQ==
+	b=A6PwqRtVPQ/meAuloC8xJzVHe6Lm979qIRNZ1mhu9xpernVmPo5emfnn1g1KMqS98
+	 7s2eG3DH9/ncsqVltSodFZ34+P3ext+Hjah8JmOnaLpdegV3PcJUG5/HTpHdNg+RuI
+	 kck2uZD92XLeu7RwodKiaygBi03OWpRoywoSIp0SvJQfvbsq43EtgIeTubdS62kd84
+	 NWS2uTJFhBUtVDxrl98ixzYxVb4NHX1dztUjLywXHFenhYiGallN9FfYGDaSKHfCcb
+	 xWXrXpuoxk+GGopuMRX9Y5busNnuOfIS1w71o6IAByQQRMCOeLh1g1kRh4Z/N35ST6
+	 kHmvDqJ1DdOdA==
 From: Bjorn Andersson <andersson@kernel.org>
-To: Catalin Marinas <catalin.marinas@arm.com>,
-	Will Deacon <will@kernel.org>,
-	linux-arm-msm@vger.kernel.org,
+To: Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Richard Cochran <richardcochran@gmail.com>,
 	Taniya Das <quic_tdas@quicinc.com>
 Cc: Ajit Pandey <quic_ajipan@quicinc.com>,
 	Imran Shaik <quic_imrashai@quicinc.com>,
 	Jagadeesh Kona <quic_jkona@quicinc.com>,
-	linux-arm-kernel@lists.infradead.org,
+	linux-arm-msm@vger.kernel.org,
 	linux-clk@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2] arm64: defconfig: Enable sa8775p clock controllers
-Date: Thu, 26 Dec 2024 12:27:05 -0600
-Message-ID: <173523761387.1412574.291134430312189223.b4-ty@kernel.org>
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Subject: Re: (subset) [PATCH v4 0/4] Add GCC and RPMH clock controller for QCS615 SoC
+Date: Thu, 26 Dec 2024 12:27:06 -0600
+Message-ID: <173523761388.1412574.15312254477268678919.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20241024-defconfig_sa8775p_clock_controllers-v2-1-a9e1cdaed785@quicinc.com>
-References: <20241024-defconfig_sa8775p_clock_controllers-v2-1-a9e1cdaed785@quicinc.com>
+In-Reply-To: <20241022-qcs615-clock-driver-v4-0-3d716ad0d987@quicinc.com>
+References: <20241022-qcs615-clock-driver-v4-0-3d716ad0d987@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -68,17 +74,25 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Thu, 24 Oct 2024 23:22:55 +0530, Taniya Das wrote:
-> Enable the SA8775P video, camera and display clock controllers to enable
-> the video, camera and display functionalities on Qualcomm QCS9100 ride
-> and ride rev3 boards.
+On Tue, 22 Oct 2024 17:22:49 +0530, Taniya Das wrote:
+> Add support for Global clock controller(GCC) and the RPMH clock
+> controller for the Qualcomm QCS615 SoC.
 > 
+> The QCS615 SoC is added as part of the below series.
+> https://lore.kernel.org/all/20240913-add_initial_support_for_qcs615-v2-0-9236223e7dab@quicinc.com/
 > 
+> Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
+> 
+> [...]
 
 Applied, thanks!
 
-[1/1] arm64: defconfig: Enable sa8775p clock controllers
-      commit: 8592294dfc7b46c7b964f453d64e90e6c1137090
+[1/4] dt-bindings: clock: qcom-rpmhcc: Add RPMHCC bindings for QCS615
+      commit: 94465062260063143ab806cdd16d5e183643343d
+[2/4] clk: qcom: rpmhcc: Add support for QCS615 Clocks
+      commit: 42a1905a10d622ab0a4ff564b0117444f4384c35
+[4/4] clk: qcom: gcc: Add support for QCS615 GCC clocks
+      commit: 39d6dcf67fe955eadd787052a8963837be801794
 
 Best regards,
 -- 
