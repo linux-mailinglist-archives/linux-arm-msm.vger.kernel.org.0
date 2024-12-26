@@ -1,72 +1,58 @@
-Return-Path: <linux-arm-msm+bounces-43432-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-43433-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1440B9FCEA1
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Dec 2024 23:40:33 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 45D9F9FCEA5
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Dec 2024 23:40:42 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C98DE3A037E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Dec 2024 22:40:28 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id D511218829DB
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Dec 2024 22:40:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 882B91D54F4;
-	Thu, 26 Dec 2024 22:39:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1A05A1D5CFF;
+	Thu, 26 Dec 2024 22:39:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nWLojLEF"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GkwFjXsH"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57AF11B21AB;
-	Thu, 26 Dec 2024 22:39:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E38791D5CDE;
+	Thu, 26 Dec 2024 22:39:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735252747; cv=none; b=Bj+WmZAfoE9JYEz8UPwvfeq4nIm5o5/WDhUBvDxOdCR4hDCNKuxGXP6td/SsCmrgWueR8wEefK2JufOJnfcVcmheM0CztzPoOMeHHRjlvnUQyjJzIFqBieybougIlSXTyrUplEch0ouBRXSDM9jDgZkcanrqA97xnzSibEG5jGA=
+	t=1735252748; cv=none; b=uOPQpioQ/gBCDQiOK4/coomtYiMvsCBjsv1uFcUtLXSKKlveW6hTNkwu6IbLrURwlA0eAXa2+7tU9JWAEE1jxq+mKAer4Zjhcv7J+YQr7inpw4lnNXLquTt615V180M/SuNbc0zVP1rR/YKHcoR8te8IhWncfhD3W8OKpYujWdI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735252747; c=relaxed/simple;
-	bh=sgN/I8NAvChJySX/9fgdtVSSjB1bwkDhwzRlRrtVlfk=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=tTp+dgMykCMg+1VSkr7B/fidKe26US8xksRGR7WdwWnJFNS7WDTFbVzA+zO3QD9B1ambS3iwVU05b8Mq+n2XJcQSp0nOdMlkShLmkSE37yTJQlTY6O5+Ee5aoYbaCHLYbXi6bjynyyZty51lE5MBnYEnpiZv6SWrGMVBIE3fe/s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nWLojLEF; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BA60C4CED3;
-	Thu, 26 Dec 2024 22:39:05 +0000 (UTC)
+	s=arc-20240116; t=1735252748; c=relaxed/simple;
+	bh=71BItPlbLZpfF27YNhqq0NWqgx5zslKOU+R7NLf11zM=;
+	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=mVaNt0PGAjULN2LGoRVrXmNXJzTLwLgMT7yfGOvCMk4WrNBqo5hAVGEyRF8QiqBbV9VQ/QjQzIPq64lsitPULHD76JlxhMe4EH4LGAYSxJpwnYw5cVl0zl6+IzRUbo9ZOOvbYpXG6M6N8BaNKBfImvuUNNKIj/vysLTVpFs6wnk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GkwFjXsH; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1962EC4CED1;
+	Thu, 26 Dec 2024 22:39:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1735252746;
-	bh=sgN/I8NAvChJySX/9fgdtVSSjB1bwkDhwzRlRrtVlfk=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nWLojLEFRsUA2hzyZxAxkPI0TEiUqZa06kVh1J/1JoLvF2o1mzBiLVzjSzSuYdfye
-	 S3ZqdfLqCS7p+qVpv/+mwg2Fp9K27UOZ/rQJukmlJojGZTZiL1FzpiJAR+LYH6cyJy
-	 c9Ed3mkWxFKRO4Skfu9tr1HNzq/7/O6nOPgt1bpiEL2ovEqBZTj3WL7XPKNCBkJG1H
-	 vnV2fpMc0OqN+qfRTQJYwBoHJF6Xglx/S808ExivSb9C4OFJmwGxosvDgG2s8HtEUs
-	 94LTUDnbGtlNdah804Awhmwp8DZqPskgAITap8THpOSX1XzR4pRlRR92Lszn/XlqCV
-	 6zHkB1Giy+zpA==
+	s=k20201202; t=1735252747;
+	bh=71BItPlbLZpfF27YNhqq0NWqgx5zslKOU+R7NLf11zM=;
+	h=From:To:Subject:Date:In-Reply-To:References:From;
+	b=GkwFjXsHMeMfPcCwf8EY7gP9GvvE2BV5act2b1YUda9zId80dslRCMhLtSzHPB6/8
+	 wkKgdYo+iIp8OzJs8cQxmx3c9ck5Bd+z13iSpZ+RfagZgVsYRdt4PYZ3Mi9oOz/Gcw
+	 VvAtHiWleudoNvk4wrz643DRdiY+dlegmY0r11b3NL1OBVkS6HBtXCzbEQuSh5ZNKx
+	 5oFkAZ0xEBF1HWxMNV7X7crvi7MT5VtYfFzxWxqyoCz9MXfdNHHa/+GrRYelRE/7dT
+	 vbZ/lyGqRyMaBUEuy+5bjNvPRoJoq1c/tTTU6a/h8R/7Czbu2hHrttf8ztqyObKqfR
+	 90YGtBExXsh6w==
 From: Bjorn Andersson <andersson@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Wesley Cheng <quic_wcheng@quicinc.com>,
-	Yassine Oudjana <y.oudjana@protonmail.com>,
-	Konrad Dybcio <konradybcio@kernel.org>
-Cc: Marijn Suijten <marijn.suijten@somainline.org>,
+To: Konrad Dybcio <konradybcio@kernel.org>,
+	Andy Gross <agross@codeaurora.org>,
 	linux-arm-msm@vger.kernel.org,
-	linux-usb@vger.kernel.org,
-	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	Konrad Dybcio <konradybcio@gmail.com>,
-	Petr Vorel <pvorel@suse.cz>,
-	=?UTF-8?q?Kry=C5=A1tof=20=C4=8Cern=C3=BD?= <cleverline1mc@gmail.com>,
-	Alexander Reimelt <alexander.reimelt@posteo.de>,
-	Dominik Kobinski <dominikkobinski314@gmail.com>,
-	Harry Austen <hpausten@protonmail.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Subject: Re: (subset) [RFT PATCH 0/4] More QC DWC3 fixups
-Date: Thu, 26 Dec 2024 16:38:36 -0600
-Message-ID: <173525273248.1449028.5463368821621810712.b4-ty@kernel.org>
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: Re: (subset) [PATCH 1/3] soc: qcom: pmic_glink_altmode: simplify locking with guard()
+Date: Thu, 26 Dec 2024 16:38:37 -0600
+Message-ID: <173525273246.1449028.4546246895052680534.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20241129-topic-qcom_usb_dtb_fixup-v1-0-cba24120c058@oss.qualcomm.com>
-References: <20241129-topic-qcom_usb_dtb_fixup-v1-0-cba24120c058@oss.qualcomm.com>
+In-Reply-To: <20240822164853.231087-1-krzysztof.kozlowski@linaro.org>
+References: <20240822164853.231087-1-krzysztof.kozlowski@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -77,22 +63,15 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Fri, 29 Nov 2024 23:12:44 +0100, Konrad Dybcio wrote:
-> Squashed a couple more warnings, the remaining ones I'll try to figure
-> out soon.
+On Thu, 22 Aug 2024 18:48:50 +0200, Krzysztof Kozlowski wrote:
+> Simplify error handling (less gotos) over locks with guard().
 > 
-> This is all based on what I was able to make out from docs. Couldn't get
-> any 8994 or 8996 boards I have access to booting reliably :(
-> Ccing some folks that I'm hoping could help out testing this
 > 
-> [...]
 
 Applied, thanks!
 
-[3/4] arm64: dts: qcom: msm8996: Fix up USB3 interrupts
-      commit: 9cb9c9f4e1380da317a056afd26d66a835c5796c
-[4/4] arm64: dts: qcom: msm8994: Describe USB interrupts
-      commit: c910544d2234709660d60f80345c285616e73b1c
+[1/3] soc: qcom: pmic_glink_altmode: simplify locking with guard()
+      commit: 95fee3009461f4a65247db677f445fbd67776019
 
 Best regards,
 -- 
