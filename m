@@ -1,164 +1,177 @@
-Return-Path: <linux-arm-msm+bounces-43335-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-43336-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 748BC9FC7F8
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Dec 2024 05:35:09 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 929649FC7FB
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Dec 2024 05:43:22 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 80E707A12CE
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Dec 2024 04:35:02 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id E4F201882C71
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Dec 2024 04:43:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3C5C513C689;
-	Thu, 26 Dec 2024 04:35:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5F44353363;
+	Thu, 26 Dec 2024 04:43:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="lkP3NIVr"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JufPT3WB"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pj1-f54.google.com (mail-pj1-f54.google.com [209.85.216.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F99A38FA3
-	for <linux-arm-msm@vger.kernel.org>; Thu, 26 Dec 2024 04:34:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FB235258;
+	Thu, 26 Dec 2024 04:43:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735187700; cv=none; b=JoSN57hFtMAua7RHGrRJZolKmAgPJf6RISPb7O/JuT5Ip0nHfjWkO1F4tNJbQ0iZFubgjq6O8knTRCi8N6knXoHDe5H9QX5VrembCbcyRNFo77+oiTQ7hOddlWemSo5dTjIBSaYea70g0dZHwvhtixF9iJC74WqQ7aejqEMlJCQ=
+	t=1735188199; cv=none; b=DbKvFOhXbme2jHqEVhrgg23bivrSCSYTab9DS0HjzpnwcSQDwpaDRuzwoV023gJKozwHhop4PwrJL8j+mS3O0hjXT60NasqLJJWF9ECk3Mxm5oUXFLsHnKTuMqda8xpWftS7REOpBH6tkB6tg3OjpV4/TyrzdVO+dRUz9Cw0f+s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735187700; c=relaxed/simple;
-	bh=ofgtrx+ToL0co1PolJ8/p00OmE4FUa+xQf2Nw+6Q7jw=;
+	s=arc-20240116; t=1735188199; c=relaxed/simple;
+	bh=5OfYPkPyuBwfR6uPv0h71tG9ixg26eQRQYpWfS0NWXM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=G0zYBBid3SOaARrWG5io0wybrJ+lGwBEaJHj2zyW9R8a+mB7/+vhSGzAupsMwCdL+ZKycSUZK4GRnJCWoVx7+Z/Qt2QR/ien4si9nR7Yd4XOIzKsjY1x5C3lfYoE1Buo2fjtW6i7rgG6dVhTakKDVs/KbD/eLtRanR71pv348ko=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=lkP3NIVr; arc=none smtp.client-ip=209.85.216.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pj1-f54.google.com with SMTP id 98e67ed59e1d1-2ef6c56032eso5086364a91.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Dec 2024 20:34:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1735187698; x=1735792498; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=CMCUr486bsmmq3TlE2yNphtQucspjTQzlA2KwwYZkQw=;
-        b=lkP3NIVrTY5shb+pVM48I6Lfexwd78xv5i1CtZOy+7qqi2RaTG15Q7fzcM8EoIRG5N
-         bfP0x30tAlHobIwOwzZcJrL8HKwT/KMsu4oz1+HvXTjHU+e0KtX2e2aw9g7Azl3zA+rI
-         mJUDmuTRMZpj3yDeQnf7i1MLyR/KGi6JVux+nkL9vLQfYZoDT4XHlzFhADWVlyphDdxI
-         TNA9HCsS+2vj7bFXmSmd5lalUCOxDAGxyH4YK6C3Wq3XqyPMCzv6MwwcWKrhmAPOpWpi
-         5uCk5p9DG2rHiUxeAN29ABXwuEIaYQjxU09AV7/zzq+Xr+MFSjSCwIUPHFV51d5BfD1K
-         GFbw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1735187698; x=1735792498;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=CMCUr486bsmmq3TlE2yNphtQucspjTQzlA2KwwYZkQw=;
-        b=eEBIglfrmTGnGIciICrEQCG3oCuA0niNLnr7SrrAhWsH7/fFItAlUjeztizJDWtJSv
-         oF36iLfyK/H2WlHJ+FvpWcByUJYoYKavfJ9UGaI2fCl8/K4viWzlvL1heWgZUh5ek0pf
-         HrqojdejZepGyUofiYLi+P+R+scuj7h+NpeTVyZDQlTC4xb0QBmGVL4torEXeNDoxnWz
-         z53CFTf4zm7zBAx3nnQET3pL2MeDrmh0yRf/AHeD2HhjGM++EoRQnJSB78ol/Er6CZiU
-         7L6xQPk84e3f3lAyTrh1gQPNNuX3TUFG+N7WaSMuwva8LU9YPmpfgz951VrVtTl1PIoT
-         NEhA==
-X-Forwarded-Encrypted: i=1; AJvYcCWpoN1VbbCXC0VyXUa/i+o2etQer/7sj4EfVA8BkrlOPJRWB/wUdZ30EKHk8K07KHUFE7eOKOa+ThEw8O6y@vger.kernel.org
-X-Gm-Message-State: AOJu0YxH6y9Hahs6Ky8sRBCLdYqLFAELAPco7m8ab6GTzXZfC9CzByRx
-	rZ9Ff1QWmQogsWLVBdJe4r0vrTQNHObM2MmOPffxcE9Y8XwlpyuxnjaRxG4oIA==
-X-Gm-Gg: ASbGncvQcAIt0gbomxtgL2pAgrldeNcUs03+AhS1X4A69X8jsLSrDNyHW6L994OWXRr
-	sGXpJGog5VIXNiVBIwtdreRaJ3CPvhTJ8JIKF9xR3bPs1vhK2jVO9w3LlliW/HEVBTJxaK6LNz7
-	lkCLoEL/IJeZbh/1/s33cLpxIw1RXDhsYApl7S95Qcz4bOyeCeN3rNbq8LNEIOb8bS0c3uSF9SZ
-	SgAgXCh5s45mVOR6BSRAoIBpcZU0ODPLoCmTuq33rYksZQ1sn27jN0+WHDlr70qxg==
-X-Google-Smtp-Source: AGHT+IGyCAyLDoLYd6WndbUJFcjYDJVuNhReCK6r1pPUXqGqT9ozO6gC5H+W7mYTNQfIe0UKmCQDMQ==
-X-Received: by 2002:a17:90a:d88d:b0:2ee:863e:9ffc with SMTP id 98e67ed59e1d1-2f452e4ace5mr29069894a91.21.1735187697759;
-        Wed, 25 Dec 2024 20:34:57 -0800 (PST)
-Received: from thinkpad ([36.255.17.73])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2f2ed52dfecsm14791061a91.4.2024.12.25.20.34.53
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 25 Dec 2024 20:34:57 -0800 (PST)
-Date: Thu, 26 Dec 2024 10:04:51 +0530
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: "Martin K. Petersen" <martin.petersen@oracle.com>
-Cc: Alim Akhtar <alim.akhtar@samsung.com>,
-	Avri Altman <avri.altman@wdc.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	Abel Vesa <abel.vesa@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Konrad Dybcio <konradybcio@kernel.org>, linux-scsi@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	Amit Pundir <amit.pundir@linaro.org>,
-	Nitin Rawat <quic_nitirawa@quicinc.com>, stable@vger.kernel.org,
-	Ram Kumar Dwivedi <quic_rdwivedi@quicinc.com>
-Subject: Re: [PATCH v3 0/4] scsi: ufs: qcom: Suspend fixes
-Message-ID: <20241226043451.vnm2nxm52foqnwlo@thinkpad>
-References: <20241219-ufs-qcom-suspend-fix-v3-0-63c4b95a70b9@linaro.org>
+	 Content-Type:Content-Disposition:In-Reply-To; b=YMkEFUs/P9r8ohgZIke7/jIzBoPPjOMcNDCmU6LPQJyBAVUm0sVb27oduyxppVtFQ/Ga4vJ3CgbyEyvzaZrCE3EnuRTflPGMWs3lZqCbVqxxcp2PPcNofaybEEjZ8npGOPRlhrewiAqIv5K1IbUENJ3kWU1gU5CioNP/6nlT11s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JufPT3WB; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D52BCC4CED1;
+	Thu, 26 Dec 2024 04:43:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1735188198;
+	bh=5OfYPkPyuBwfR6uPv0h71tG9ixg26eQRQYpWfS0NWXM=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=JufPT3WB2Wdp47SSZJ0l9aDg0dybt5U0vBO3BJEwBwlgNx3S1DTWDcEP/3FxOosJw
+	 s4Gtj61KG0NWl8LHuHs9Ta9PE5sYdH04m2up1G9uhd7q+YGWOauL5+1vhdTazi8nil
+	 huFlfShKneqdO3dJO7J3YCZt6w7PgSqxpnEph3Rth9WEWm8mFfAlEkKhVOO6Wfjx9z
+	 9xlo17IvlL6uQtNLti+lF4UynZ7OUS1qXYXJfOv4kBMeqxXboAISDQlmsI1LllDjxp
+	 Hp3GtRHQLMTZ3ilTKcwzRn33K9JKPoH4MGxTVWgRNo7Hal26n3lheICrMbzz+/Bhym
+	 +H2iKG0vWB/aQ==
+Date: Wed, 25 Dec 2024 22:43:16 -0600
+From: Bjorn Andersson <andersson@kernel.org>
+To: Prashanth K <quic_prashk@quicinc.com>
+Cc: Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>, linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	devicetree@vger.kernel.org, cros-qcom-dts-watchers@chromium.org
+Subject: Re: [PATCH v3 00/19] Disable USB U1/U2 entry for QC targets
+Message-ID: <whfe57qqbe2chb75igiidzmruhgwpc6ueeghnf552wsa3yrru6@m4tuyfnsoqvo>
+References: <20241218102707.76272-1-quic_prashk@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20241219-ufs-qcom-suspend-fix-v3-0-63c4b95a70b9@linaro.org>
+In-Reply-To: <20241218102707.76272-1-quic_prashk@quicinc.com>
 
-On Thu, Dec 19, 2024 at 10:20:40PM +0530, Manivannan Sadhasivam via B4 Relay wrote:
-> Hi,
+On Wed, Dec 18, 2024 at 03:56:48PM +0530, Prashanth K wrote:
+> Enabling U1 and U2 power-saving states can lead to stability and
+> performance issues, particularly for latency-sensitive or high-
+> throughput applications. These low-power link states are intended
+> to reduce power consumption by allowing the device to enter partial
+> low-power modes during idle periods. However, they can sometimes
+> result in unexpected behavior. Over the years, some of the issues
+> seen are as follows:
 > 
-> This series fixes the several suspend issues on Qcom platforms. Patch 1 fixes
-> the resume failure with spm_lvl=5 suspend on most of the Qcom platforms. For
-> this patch, I couldn't figure out the exact commit that caused the issue. So I
-> used the commit that introduced reinit support as a placeholder.
+> 1. In device mode of operation, when UVC is active, enabling U1/U2
+> is sometimes causing packets drops due to delay in entry/exit of
+> intermittent low power states. These packet drops are often reflected
+> as Missed Isochronous transfers as the controller was not able to
+> send the packet in that microframe interval and hence glitches are
+> seen on the final transmitted video output.
 > 
-> Patch 4 fixes the suspend issue on SM8550 and SM8650 platforms where UFS
-> PHY retention is not supported. Hence the default spm_lvl=3 suspend fails. So
-> this patch configures spm_lvl=5 as the default suspend level to force UFSHC/
-> device powerdown during suspend. This supersedes the previous series [1] that
-> tried to fix the issue in clock drivers.
+> 2. On QCS6490-Rb3Gen2 Vision kit, ADB connection is heavily unstable
+> when U1/U2 is enabled. Often when link enters U2, there is a re-
+> enumeration seen and device is unusable for many use cases.
 > 
-> This series is tested on Qcom SM8550 QRD, SM8650 QRD and Qcom RB5 boards.
+> 3. On QCS8300/QCS9100, it is observed that when Link enters U2, when
+> the cable is disconnected and reconnected to host PC in HS, there
+> is no link status change interrupt seen and the plug-in in HS doesn't
+> show up a bus reset and enumeration failure happens.
 > 
-> [1] https://lore.kernel.org/linux-arm-msm/20241107-ufs-clk-fix-v1-0-6032ff22a052@linaro.org
+> 4. On older targets like SM8150/SM8250/SM8350, there have been
+> throughput issues seen during tethering use cases.
 > 
-
-Martin, can you please pick up this series?
-
-- Mani
-
-> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> ---
-> Changes in v3:
-> - Added a patch that honors the runtime/system PM levels set by host drivers.
->   Otherwise patch 4 doesn't have any effect. This was discovered with SM8650
->   QRD.
-> - Collected tags
-> - Link to v2: https://lore.kernel.org/r/20241213-ufs-qcom-suspend-fix-v2-0-1de6cd2d6146@linaro.org
+> 5. On targets like SDX75, intermittent disconnects were observed
+> with certain cables due to impedence variations.
+> 
+> To avoid such issues, the USB team at Qualcomm added these quirks
+> to all targets in the past 4-5 years and extensive testing was done.
+> Although these are intermittent power states, disabling them didn't
+> cause any major increase in power numbers.
+> 
+> This series was earlier started by Krishna Kurapati where he disabled
+> U1/U2 on some SM targets. I'm extending this to more devices including
+> Auto, Compute and IOT platforms. On a side note, this quirk has been
+> already included on some mobile targets like SM8550/8650.
 > 
 > Changes in v2:
-> - Changed 'ufs_qcom_drvdata::quirks' type to 'enum ufshcd_quirks'
-> - Collected tags
-> - Link to v1: https://lore.kernel.org/r/20241211-ufs-qcom-suspend-fix-v1-0-83ebbde76b1c@linaro.org
+> - Removed the wrongly added quirks from tcsr_mutex node.
+> - Link to v2: https://lore.kernel.org/all/20241213095237.1409174-1-quic_prashk@quicinc.com/
 > 
-> ---
-> Manivannan Sadhasivam (4):
->       scsi: ufs: qcom: Power off the PHY if it was already powered on in ufs_qcom_power_up_sequence()
->       scsi: ufs: core: Honor runtime/system PM levels if set by host controller drivers
->       scsi: ufs: qcom: Allow passing platform specific OF data
->       scsi: ufs: qcom: Power down the controller/device during system suspend for SM8550/SM8650 SoCs
+> Link to RFC:
+> https://lore.kernel.org/all/20241107073650.13473-1-quic_kriskura@quicinc.com/#Z31arch:arm64:boot:dts:qcom:sm8250.dtsi
 > 
->  drivers/ufs/core/ufshcd-priv.h |  6 ------
->  drivers/ufs/core/ufshcd.c      | 10 ++++++----
->  drivers/ufs/host/ufs-qcom.c    | 31 +++++++++++++++++++------------
->  drivers/ufs/host/ufs-qcom.h    |  5 +++++
->  include/ufs/ufshcd.h           |  2 --
->  5 files changed, 30 insertions(+), 24 deletions(-)
-> ---
-> base-commit: 40384c840ea1944d7c5a392e8975ed088ecf0b37
-> change-id: 20241211-ufs-qcom-suspend-fix-5618e9c56d93
-> 
-> Best regards,
-> -- 
-> Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> 
-> 
+> Krishna Kurapati (8):
+>   arm64: dts: qcom: Disable USB U1/U2 entry for SM8350
+>   arm64: dts: qcom: Disable USB U1/U2 entry for SM8450
+>   arm64: dts: qcom: Disable USB U1/U2 entry for SM8150
+>   arm64: dts: qcom: Disable USB U1/U2 entry for SM6125
+>   arm64: dts: qcom: Disable USB U1/U2 entry for SM8250
+>   arm64: dts: qcom: Disable USB U1/U2 entry for SM6350
+>   arm64: dts: qcom: Disable USB U1/U2 entry for SC7280
+>   arm64: dts: qcom: Disable USB U1/U2 entry for SA8775P
 
--- 
-மணிவண்ணன் சதாசிவம்
+Thank you for submitting this, changes looks good and this is very
+welcome corrections!
+
+But patch subject is not okay. The prefix should match other changes in
+these files, and no "for XYZ" suffix.
+
+As such, these should all look like:
+
+"arm64: dts: qcom: <soc>: Disable USB U1/U2 entry"
+
+> 
+> Prashanth K (11):
+>   arm64: dts: qcom: Disable USB U1/U2 entry for SDM630
+>   arm64: dts: qcom: Disable USB U1/U2 entry for SDM845
+>   arm64: dts: qcom: Disable USB U1/U2 entry for SDX75
+>   ARM: dts: qcom: Disable USB U1/U2 entry for SDX65
+>   ARM: dts: qcom: Disable USB U1/U2 entry for SDX55
+
+I merge Arm and Arm64 patches through different trees, so I would
+appreciate if you send these two as a separate series (also v4).
+
+Thanks,
+Bjorn
+
+>   arm64: dts: qcom: Disable USB U1/U2 entry for QCS404
+>   arm64: dts: qcom: Disable USB U1/U2 entry for SC7180
+>   arm64: dts: qcom: Disable USB U1/U2 entry for X1E80100
+>   arm64: dts: qcom: Disable USB U1/U2 entry for QDU1000
+>   arm64: dts: qcom: Disable USB U1/U2 entry for SC8280XP
+>   arm64: dts: qcom: Disable USB U1/U2 entry for SC8180X
+> 
+>  arch/arm/boot/dts/qcom/qcom-sdx55.dtsi |  2 ++
+>  arch/arm/boot/dts/qcom/qcom-sdx65.dtsi |  2 ++
+>  arch/arm64/boot/dts/qcom/qcs404.dtsi   |  4 ++++
+>  arch/arm64/boot/dts/qcom/qdu1000.dtsi  |  2 ++
+>  arch/arm64/boot/dts/qcom/sa8775p.dtsi  |  6 ++++++
+>  arch/arm64/boot/dts/qcom/sc7180.dtsi   |  2 ++
+>  arch/arm64/boot/dts/qcom/sc7280.dtsi   |  4 ++++
+>  arch/arm64/boot/dts/qcom/sc8180x.dtsi  |  6 ++++++
+>  arch/arm64/boot/dts/qcom/sc8280xp.dtsi |  6 ++++++
+>  arch/arm64/boot/dts/qcom/sdm630.dtsi   |  4 ++++
+>  arch/arm64/boot/dts/qcom/sdm845.dtsi   |  4 ++++
+>  arch/arm64/boot/dts/qcom/sdx75.dtsi    |  2 ++
+>  arch/arm64/boot/dts/qcom/sm6125.dtsi   |  2 ++
+>  arch/arm64/boot/dts/qcom/sm6350.dtsi   |  2 ++
+>  arch/arm64/boot/dts/qcom/sm8150.dtsi   |  4 ++++
+>  arch/arm64/boot/dts/qcom/sm8250.dtsi   |  4 ++++
+>  arch/arm64/boot/dts/qcom/sm8350.dtsi   |  4 ++++
+>  arch/arm64/boot/dts/qcom/sm8450.dtsi   |  2 ++
+>  arch/arm64/boot/dts/qcom/x1e80100.dtsi | 10 ++++++++++
+>  19 files changed, 72 insertions(+)
+> 
+> -- 
+> 2.25.1
+> 
 
