@@ -1,138 +1,169 @@
-Return-Path: <linux-arm-msm+bounces-43365-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-43366-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id ED3D19FCAB5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Dec 2024 12:46:51 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 59F189FCAB9
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Dec 2024 12:48:00 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8F00C160633
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Dec 2024 11:46:49 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E2917160642
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Dec 2024 11:47:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C7A751D5173;
-	Thu, 26 Dec 2024 11:45:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7BB4A1D4341;
+	Thu, 26 Dec 2024 11:47:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="K5InQDV7"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Jcd00+qL"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 035931D278A;
-	Thu, 26 Dec 2024 11:45:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75B49156C6A
+	for <linux-arm-msm@vger.kernel.org>; Thu, 26 Dec 2024 11:47:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735213549; cv=none; b=NKgQBk7kY8C3hZPowudlK1GI7jH/l/n0CGllYl56akFa1rP1caRfm3mKXw4m1jyETGBOouwwNyYWQMog5dhjyRnOcI4peGZ8anQY8chdYkSJnavQDRAFcl8+Dlf4iKc87hG69T6HNeGnlm/yBnfOzyBsF9ITgjg+axPARidxZlY=
+	t=1735213674; cv=none; b=EWHsNOtMnA/ETaf7oHyFtGwDmCi4213TpfLQySkCFCtHEdeZ1N4Difs0qmgehWr/hex6TKw8iiPct1GJFiUrcKmwjowhFBfckqkw3YeEQFP6fRxKwAid1bsj/9j2CmLPFqEhOb6QWN84kd7xMWaQwlsr3DXjyFwnHynK1+TbS0o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735213549; c=relaxed/simple;
-	bh=xxbDau5dh7L1YdX3pSUREw3PMLaszhChP6TlltWlKsU=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=rTY8n5fvbVnsjQ0+Ac03kjkg54k7mrCyZAUMJiYMSkrKTgNzYa7ypXoBoD+GGNbG60IdsIlyR4YMI3O1gzm8hboO0i5+7gq3hQ7ZUaWFuY5WW5H9oSCGBf79DFDmu7hSFMHIVaHlTonabpW8+H3bT+TKCw3sQICiNa4MZvUEvV4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=K5InQDV7; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BQ6tqAu005080;
-	Thu, 26 Dec 2024 11:45:41 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	1nDGN0EW69mGcSOPiGASnqdqVBmzEsc3rT4UMF5UWoU=; b=K5InQDV7ap0VPT5Z
-	PROQ4i79Yd2tdls+m60YQWQy9H1lE9ZJn1cEs3pjy4p4OvTqYVvjjLk0EECZMyoY
-	jk1YP5mWEwgICmoQccrZhhVURjGfyK5tHZsnxxfwinCdlf0zn8ztHcBAl02/Rah0
-	4K4UXNAU+pJmuADPCCCZUoUjsjK6IEweowhqVpEDQF1Ndoq9ebXYtR05Z8qd6oAd
-	td5hACidLCDS0ACowNEUbsZkB0QwoqJYXkSbRnT4DnsKrteE38qccgcJQiA49jBf
-	2RCmmA2W3dLUeY2QUPpyBXahQWju0nfB+kUIh8+Gt/2QBtgHivkIWyTLhJegICF6
-	WiXFwQ==
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43s2a8t58f-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 26 Dec 2024 11:45:41 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4BQBjeUB005369
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 26 Dec 2024 11:45:40 GMT
-Received: from hu-mdalam-blr.qualcomm.com (10.80.80.8) by
- nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Thu, 26 Dec 2024 03:45:35 -0800
-From: Md Sadre Alam <quic_mdalam@quicinc.com>
-To: <herbert@gondor.apana.org.au>, <davem@davemloft.net>, <robh@kernel.org>,
-        <krzk+dt@kernel.org>, <conor+dt@kernel.org>, <andersson@kernel.org>,
-        <konradybcio@kernel.org>, <vkoul@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-crypto@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-CC: <quic_srichara@quicinc.com>, <quic_varada@quicinc.com>,
-        <quic_mdalam@quicinc.com>, <quic_mmanikan@quicinc.com>
-Subject: [PATCH v3 4/4] arm64: dts: qcom: ipq5332: update TRNG compatible
-Date: Thu, 26 Dec 2024 17:15:00 +0530
-Message-ID: <20241226114500.2623804-5-quic_mdalam@quicinc.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20241226114500.2623804-1-quic_mdalam@quicinc.com>
-References: <20241226114500.2623804-1-quic_mdalam@quicinc.com>
+	s=arc-20240116; t=1735213674; c=relaxed/simple;
+	bh=i9YSydeB4aBVCJIik+5ceZV1CxKN5SG3XQiYfGd1EJo=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=L6KGssMUXGyUrFJAFQwHxXlw1YcFp0tZEoxryIWdadvx/KcOWZ9OWPWkonZ8UpoVaAUQmLjPGDOJCTx3RwRi55k/Bk6LFoVCH0Mup9zMwa9Exm1Xpc0eo0WH5amkKwRrTmQQTzGn+JUo80ixZLY2pkSW7NcE+CTZL9FY0JKbgWs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Jcd00+qL; arc=none smtp.client-ip=209.85.128.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-436249df846so43656605e9.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Dec 2024 03:47:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1735213671; x=1735818471; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=FjQpQOBnsAQuQCuuYwq3bt89+C3Jo2rlsvlqkeFhOy4=;
+        b=Jcd00+qLG047qmb8lu6ix1cZCAOoiCTCQ8o8CzTxwoP/hxBMUEKuJKjX1rFcoGh2PN
+         QM5INJHAkfkVGiEMW7+4hTdInLseUh2JnzWl1MfxNVozKoEs7V9zq5LhS7PaAbQUResC
+         o3S4xG36UMZQ/aaB5bT0PvLq4pp7ECIDGP9FN8byhOSG0is7BvbG7+P4MBTB/wMYAsZC
+         t5JEqLobeO8P7NLIoIzSWkZX2s8AQKOape0U63Vl8cqK7HInT0e5Xn4HtEXP+rx2XjOA
+         L7+YHoAtJxC6HnmwRjq4Wi+NPiUPraD9gZKw+r/FmWkCFt0laU03TRh3c77YXlPJ+atF
+         VBqw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1735213671; x=1735818471;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=FjQpQOBnsAQuQCuuYwq3bt89+C3Jo2rlsvlqkeFhOy4=;
+        b=DTKiOZqC/Gp8zIZwcbIhydntA1k5jC3+MFNEsrQ5BFSZVhpwbtQobeYTbY5RRcoRhC
+         QJomesVd2hKDHe3XsBMV6abjHcXDJgFkD8NyLooYazb/mLXEkmaN94h+2YaMLDBorCAo
+         cJIkUwCSsFpYhyOsJPU4/fIokeN+VwmR4Z91Pz1YGJ5KWUDbnUZIdjAz+lm37aQYPeMh
+         B3bDdjaASbh4SYEmt7sYVsg41gSFsUSEfBC/QIUinNV6F7Gs9kfVTOyd0VANrRs2K2Wv
+         kKeqfBrior8KkvXQ8UNYI8fonCKzC6vUERb8suDAuoz/V4N4arBds4oQx6CjH2eMPsWz
+         vzkQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVMbOSD5B0msOmTjc5v/q+O7ylvJJcagf4dSaPRJKozonXGfm9vo9v1fDVdF6j2dJGUR2h1yYVZqvexFlVH@vger.kernel.org
+X-Gm-Message-State: AOJu0YzNHOY5UhzEFkqkJLpVkaUUp8TUMvbFOODmU2ZHIxmcuG31YIup
+	x174+Xu0gfeezlKuLpXd07Yl2/XR2Ww35/B+2vSl/uLQiLhbAyAtPAV+Z4tvtcA=
+X-Gm-Gg: ASbGncvR1kKzXfRcqEJRn0eF6TMbrl6vVbS3+CgoTOnCaQtGZ39HZkI/Zrbrf5pt3/H
+	ysTziwsGStkK3jlP7tR/7jnU5OBUyXO67AsZKPTVieVR9irhISMIuzbUWKDyOlXylzHmPvm+8lR
+	/F1W4n5DiCq97mwiHqOI/Hx7iAafSmUz9DYAhyW46Vs0YJfH1Ozk2d4pT8E212tSm/aNZWgcZ3I
+	w4DdnuTdnTzaYO19cWfPHo0Bv5utLrn91pUcJGGcEoqD+HbX+MChPMz
+X-Google-Smtp-Source: AGHT+IGdCgRKGMApMvOsj+CIB7nc+uWPPU3rs6XYm2MhAHq7Hlyna9ulgBN/+aNKHhnLDAWOFZLmUg==
+X-Received: by 2002:a05:600c:3b86:b0:434:ff9d:a3a1 with SMTP id 5b1f17b1804b1-4366854826cmr174214165e9.2.1735213670641;
+        Thu, 26 Dec 2024 03:47:50 -0800 (PST)
+Received: from [127.0.1.1] ([82.76.168.176])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4364a379d69sm256925895e9.0.2024.12.26.03.47.49
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 26 Dec 2024 03:47:49 -0800 (PST)
+From: Abel Vesa <abel.vesa@linaro.org>
+Subject: [PATCH v5 0/2] arm64: dts: qcom: x1e80100: Describe SDCs and
+ enable support on QCP
+Date: Thu, 26 Dec 2024 13:47:37 +0200
+Message-Id: <20241226-x1e80100-qcp-sdhc-v5-0-0b28f2e13c85@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: yVvSjOryRbHzeiplnbSAq9LE2nsbdA3W
-X-Proofpoint-ORIG-GUID: yVvSjOryRbHzeiplnbSAq9LE2nsbdA3W
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 adultscore=0
- priorityscore=1501 malwarescore=0 phishscore=0 lowpriorityscore=0
- bulkscore=0 mlxlogscore=964 clxscore=1015 spamscore=0 impostorscore=0
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2412260104
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAFlCbWcC/23NwQrCMAyA4VeRnq00adZVT76HeKht5gqyzVaGI
+ nt3qyAq7pY/kC93kTlFzmKzuIvEY8yx70pUy4XwreuOLGMoLVAhgVK1vAJbVSZ59oPMofUSKl+
+ DCS6syYhyNyRu4vVl7val25gvfbq9Xozw3L41O6ONIJUMDTfk1+hYw/YUO5f6VZ+O4smN+EUAz
+ RFYCGss18pZrFj9EfqLQJwjdCHIeFLAGv2h+SPoQyDMElQIV5Mny2ys0z/ENE0PJgZQhnwBAAA
+ =
+X-Change-ID: 20241007-x1e80100-qcp-sdhc-15c716dad946
+To: Ulf Hansson <ulf.hansson@linaro.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>
+Cc: Johan Hovold <johan@kernel.org>, 
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, linux-mmc@vger.kernel.org, 
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ linux-arm-msm@vger.kernel.org, Abel Vesa <abel.vesa@linaro.org>, 
+ Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+X-Mailer: b4 0.15-dev-dedf8
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1956; i=abel.vesa@linaro.org;
+ h=from:subject:message-id; bh=i9YSydeB4aBVCJIik+5ceZV1CxKN5SG3XQiYfGd1EJo=;
+ b=owEBbQKS/ZANAwAKARtfRMkAlRVWAcsmYgBnbUJfQzfkqE8wTi8FQOAPU5gZqqOB1VljdLYvF
+ HRgczh680aJAjMEAAEKAB0WIQRO8+4RTnqPKsqn0bgbX0TJAJUVVgUCZ21CXwAKCRAbX0TJAJUV
+ Vkx1D/4i18ZlTfvL99yEHhx8riHENz40DDETR4bDgesdjyzPP+xnAZC8Jjw2QHSN04rlI6LpShM
+ 0qCVbXnMXaS1REVHHiOhZhqKy0i6q1Rlc9J+HrGmqizVFzitYIXD+pZK4n+t5ftZihvSwCmlzDn
+ HiAGSTgNj9hej7IDVRIIwk10wP1czgcBz/DpCEunEc4ffzNxHO+cnwV6/ikAI3f29cmjfbkOLxe
+ m0yyNS++IVFHLiYDAMba5rcxGnmu16f2io13xKmQFVcUKGksM5dpjdtp82x7zBxj7cHTDl2j/oD
+ fxvcO1tI1WEurOqOI49Ap0QjsSuGD7jZGUb+zXyKK8hfFAgjKTvCCtnWh9tmdGg9aSLmJ1Hx+fi
+ qTA5CH51cdwoXowzZKTcBQ8YYZ7VuBQJJvP5RI2mHWSf9orshddaDDEOPzKscPbJL2pprplGCnz
+ x6FaGXhtTz1TnDckdt24YTcV9FQHn11jbi0Hpzz7Ywu1OQqGbTIQ1XbbndAJDNnJHjv7SJ6xQCx
+ pYAScB2qHxRNZywdDb1bzOHChoEtMpYHbhi5k+WE1rKk4wqVSy4xvXgKfbWkGzwwusDHapx02gY
+ vUo2c7DVRwdgO6dCtiCgk6Cd8g/iqceYEv0W8XOZJO5B6tseuTFx2lK8lDereDijHsKIy5k8cxi
+ xg7QVgid/nduJUw==
+X-Developer-Key: i=abel.vesa@linaro.org; a=openpgp;
+ fpr=6AFF162D57F4223A8770EF5AF7BF214136F41FAE
 
-RNG hardware versions greater than 3.0 are Truly Random Number
-Generators (TRNG). In IPQ5332, the RNGblock is a TRNG.
+The X1E80100 has two SDHC controllers (called SDC2 and SDC4).
+Describe both of them and enable the SDC2 on QCP. This brings
+SD card support for the microSD port on QCP.
 
-This patch corrects the compatible property which correctly describes
-the hardware without making any functional changes
+The SDC4 is described but there is no device outthere yet that makes
+use of it, AFAIK.
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Md Sadre Alam <quic_mdalam@quicinc.com>
+Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
 ---
+Changes in v5:
+- Switched the interconnect paths tags to QCOM_ICC_TAG_ALWAYS and
+  QCOM_ICC_TAG_ACTIVE_ONLY, as Konrad suggested. 
+- Actually enabled the sdhc on QCP (status = "okay" was missing).
+- Rebased to fix conflicts due to smb2360 nodes which were already
+  merged.
+- Link to v4: https://lore.kernel.org/r/20241212-x1e80100-qcp-sdhc-v4-0-a74c48ee68a3@linaro.org
 
-Change in [v3]
+Changes in v4:
+- Squashed the pinconf for SDC2 into the patch that describes the
+  controllers.
+- Reworded the commit messages a bit.
+- Link to v3: https://lore.kernel.org/r/20241022-x1e80100-qcp-sdhc-v3-0-46c401e32cbf@linaro.org
 
-* Included Reviewed-by tag
+Changes in v3:
+- Reordered the default and sleep pinconfs. Also the bias and
+  drive-strength properties. As per Konrad's suggestion.
+- Link to v2: https://lore.kernel.org/r/20241014-x1e80100-qcp-sdhc-v2-0-868e70a825e0@linaro.org
 
-Change in [v2]
+Changes in v2:
+- rebased on next-20241011
+- dropped the bindings schema update patch
+- dropped the sdhci-caps-mask properties from both
+  controllers as SDR104/SDR50 are actually supported
+- Link to v1: https://lore.kernel.org/r/20241008-x1e80100-qcp-sdhc-v1-0-dfef4c92ae31@linaro.org
 
-* Revised the commit message
-* updated compatible string
+---
+Abel Vesa (2):
+      arm64: dts: qcom: x1e80100: Describe the SDHC controllers
+      arm64: dts: qcom: x1e80100-qcp: Enable SD card support
 
-Change in [v1]
+ arch/arm64/boot/dts/qcom/x1e80100-qcp.dts |  21 +++++
+ arch/arm64/boot/dts/qcom/x1e80100.dtsi    | 146 ++++++++++++++++++++++++++++++
+ 2 files changed, 167 insertions(+)
+---
+base-commit: 8155b4ef3466f0e289e8fcc9e6e62f3f4dceeac2
+change-id: 20241007-x1e80100-qcp-sdhc-15c716dad946
 
-* Submitted initial patche to activate TRNG
-
- arch/arm64/boot/dts/qcom/ipq5332.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/arch/arm64/boot/dts/qcom/ipq5332.dtsi b/arch/arm64/boot/dts/qcom/ipq5332.dtsi
-index d3c3e215a15c..ca3da95730bd 100644
---- a/arch/arm64/boot/dts/qcom/ipq5332.dtsi
-+++ b/arch/arm64/boot/dts/qcom/ipq5332.dtsi
-@@ -180,7 +180,7 @@ cpu_speed_bin: cpu-speed-bin@1d {
- 		};
- 
- 		rng: rng@e3000 {
--			compatible = "qcom,prng-ee";
-+			compatible = "qcom,ipq5332-trng", "qcom,trng";
- 			reg = <0x000e3000 0x1000>;
- 			clocks = <&gcc GCC_PRNG_AHB_CLK>;
- 			clock-names = "core";
+Best regards,
 -- 
-2.34.1
+Abel Vesa <abel.vesa@linaro.org>
 
 
