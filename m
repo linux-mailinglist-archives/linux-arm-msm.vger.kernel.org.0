@@ -1,59 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-43434-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-43435-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5DE309FCEA7
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Dec 2024 23:40:53 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5B9199FCEAB
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Dec 2024 23:41:08 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1DA293A0361
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Dec 2024 22:40:49 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 02A74162193
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Dec 2024 22:41:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F0A9D1D63E9;
-	Thu, 26 Dec 2024 22:39:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F3D1C1D7E35;
+	Thu, 26 Dec 2024 22:39:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gKqKsgC8"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IvY5ttTM"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C56C31D63DF;
-	Thu, 26 Dec 2024 22:39:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7CD21D7994;
+	Thu, 26 Dec 2024 22:39:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735252748; cv=none; b=LaGCSTuzl/ED7s3eZxKZH4YAG/LiKFXwiCz4YeGR9I9r6KebEYs309qp1wwMjKmRQIzA2wAQ4LlZNMKF30RAPfS836QDKURce9Y5drkHdgn3PsHBuI8WbO4dnpOjXojm3oTgG301KHuGie+0wt9ex7A+my1uQhkRedPAsZRIa8s=
+	t=1735252749; cv=none; b=WP0CbqVtji7IH6CfoEKg/hp1N9JtL4GkOEdGqcO6gLwQLtxPf90VZXYDyku0DP4QMHVrPDDSX8OwI6jLrSUSrw0PkVgmxWo4/0ioNKWxbemzJ+mERA/d8US3zCwUdbCbHY+3H3hriwPfrOSczPUOfjjEs1k93MXQFptFUalEjT0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735252748; c=relaxed/simple;
-	bh=+2e40L4naeHkPBU1a9Pkqe/W3ex19iNFNzjK1/IFaEU=;
+	s=arc-20240116; t=1735252749; c=relaxed/simple;
+	bh=VFLTWnfQgdHkriO0SkXwz4JIVl+0PyLfE7mImr/Vtt4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=sk1it+NsxgagPacNnBTwvpRGe1IZoDCwytW5ce0OhCBKcjyUnNog1pmsP9l0P6uJaLVP6SG4ZoOa81xTF/YU2ndakcHp/8ri/2o13MEEAZwuFkVfkc+DojOjm+IWB0ZM3m+IHx/iUzXK7JRZZe4jBjwWMx6nXOsyv1Iqm2ywpuU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gKqKsgC8; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C346CC4CEDC;
-	Thu, 26 Dec 2024 22:39:07 +0000 (UTC)
+	 MIME-Version:Content-Type; b=t1VD4ei5zTRLD/uxuRi0vSFOwO4MMWbdZ9VYEDyh9y6b/kvdpw/osr5aCjUvZXczEwWIJpr6R1BuvIZa3C9t9yFLm21GTXQtpNl/zJAKtPIz6Awjc4oCM1sr833NmUy1KV/MebA/b1lmy6J9LxPxvUYK9jDNadPMfHbHuxdO26I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IvY5ttTM; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84ADDC4CED1;
+	Thu, 26 Dec 2024 22:39:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1735252748;
-	bh=+2e40L4naeHkPBU1a9Pkqe/W3ex19iNFNzjK1/IFaEU=;
+	s=k20201202; t=1735252749;
+	bh=VFLTWnfQgdHkriO0SkXwz4JIVl+0PyLfE7mImr/Vtt4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gKqKsgC8fEZeM5iVSZQ20UBGeTYyTJBFpL6t98cTGlX6FXzGbfRsReHsJd1+qHep4
-	 VazZPabKP5KS8TxJct7Hb30Ovxi8ie5dMsAwQneVrCfCIHdyFYRDqn8etIguv18GcS
-	 ljz017BbYoYg6mtzwuLE/6cTzUc1GQxjsGnW3kgLFh224xDTV+8VBM4RaSJbZ7tSq1
-	 GyK0cP4tUy83XidFIpLGS8Xxjc0IVeG9M7O9sjnM485lVGClriM0JLAtzThcZgHjgA
-	 +5SczRrhCrxVQ8V4s+GGF+H0rzkAzn3OzWNCBe1mPIowFtWnM8wOQC0FG0UbdkZYgN
-	 MJNsysTHOVv0A==
+	b=IvY5ttTMTvx+Zi+3kwODikX3AVr4KfyjG96xMjhFHh5J3qfRy2y8u7CtwBcK0aUN6
+	 xEOydB6Wyw5yb+OZwK0tVOvIDprtsge89G+RFAm3E03eMVZ0Cm3QcPPaMpOtUNhn6C
+	 eonPprBnr46ArcPJt8rySn1njEc6LpX6k5Mlngo48UNd/HeYpQ1vBQSHWi1Pc8l/Or
+	 S5Ps/Slx2kdqpszwZrUiZal6a/fHGBqDaEQYr1IaZAvvRyXBoSaZZOFULYN+OXLCAk
+	 tueTPAGELf6ZtMXroufOBMbBr/B4N6TLLULNZk5efrtyLTroCKgtPk7tYjJY5FV9NL
+	 DWS2xGKBMDGRA==
 From: Bjorn Andersson <andersson@kernel.org>
 To: Konrad Dybcio <konradybcio@kernel.org>,
-	Andy Gross <agross@codeaurora.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
 	linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc: stable@vger.kernel.org
-Subject: Re: (subset) [PATCH] soc: qcom: smem_state: fix missing of_node_put in error path
-Date: Thu, 26 Dec 2024 16:38:38 -0600
-Message-ID: <173525273246.1449028.16739092974223949443.b4-ty@kernel.org>
+Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Subject: Re: [PATCH v2] arm64: dts: qcom: x1e78100-t14s: add sound support
+Date: Thu, 26 Dec 2024 16:38:39 -0600
+Message-ID: <173525273255.1449028.10386868284360110581.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20240822164853.231087-2-krzysztof.kozlowski@linaro.org>
-References: <20240822164853.231087-1-krzysztof.kozlowski@linaro.org> <20240822164853.231087-2-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20241203111229.48967-1-krzysztof.kozlowski@linaro.org>
+References: <20241203111229.48967-1-krzysztof.kozlowski@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -64,16 +68,22 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Thu, 22 Aug 2024 18:48:51 +0200, Krzysztof Kozlowski wrote:
-> If of_parse_phandle_with_args() succeeds, the OF node reference should
-> be dropped, regardless of number of phandle arguments.
+On Tue, 03 Dec 2024 12:12:29 +0100, Krzysztof Kozlowski wrote:
+> Add support for audio on Lenovo T14s laptop, coming with two speakers,
+> audio jack and two digital microphones.
 > 
+> This is very early work, not yet complete:
+> 1. 2x speakers: work OK.
+> 2. 2x digital microphones: work OK.
+> 3. Headset (audio jack) recording: does not work.
+> 4. Headphones playback (audio jack): channels are intermixed.
 > 
+> [...]
 
 Applied, thanks!
 
-[1/1] soc: qcom: smem_state: fix missing of_node_put in error path
-      commit: 70096b4990848229d0784c5e51dc3c7c072f1111
+[1/1] arm64: dts: qcom: x1e78100-t14s: add sound support
+      commit: 12805b0f998cb65f5c728bf93876f9603fe58477
 
 Best regards,
 -- 
