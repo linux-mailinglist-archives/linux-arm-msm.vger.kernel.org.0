@@ -1,60 +1,60 @@
-Return-Path: <linux-arm-msm+bounces-43455-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-43456-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A363C9FD010
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Dec 2024 05:15:51 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id E990C9FD015
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Dec 2024 05:15:59 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id DBEA43A05D7
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Dec 2024 04:15:45 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 89F7C1881E71
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Dec 2024 04:16:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1A736130E58;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BE0F513AD3F;
 	Fri, 27 Dec 2024 04:15:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HpU3wx7v"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="p7BarBhY"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3C9F7F477;
-	Fri, 27 Dec 2024 04:15:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92EF213A250;
+	Fri, 27 Dec 2024 04:15:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735272935; cv=none; b=IYG6mBpKPkmN9sbCdlWVihNXeyrCmWp9NnK2xpArWBVOl24wSWNP/pvHIAqMThoZz+v5s8MQBfV7sLcDGSo9skV2fs63MtZTZXNEBesQnRMqAhqSOXfqd7gxfvkgLS6HBeoQHFfUG4p189L+3llTYo9Eux9vDxU4aXbS6oUwriI=
+	t=1735272935; cv=none; b=T5USAtLA0Uz95PXzcn7vUa8ygphvdF34dvBHWEmcyiBT9WUmUMwHrm6UMSGjKl/6FM1bYOvO4cyBasKwhTRNVUTQ3RUwEg7H1e8keNcSnzWdHZnUcR0FYLsAVT+ypliZnBeDRtJEUzS2Qad3Sf6IXdr0Pxt56VqCAsaxVz/u7Zk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1735272935; c=relaxed/simple;
-	bh=oNZ7NpxQ+vK45h1d+1Yg6PCD2GlzgTJH4CY8gyo9jeE=;
+	bh=qMv+JHj/4r1Jhn6FXcHzvrBN33JlfwGRaoumUMVcewQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=P01eNExbq9dPnb7UD6RT//SUPr4IVyqT2lbVmrX9bevOltYtIlbFnQPIAElli8b0/AmBuvfsSgjvO2v8fkUASvQBhnSnq2M5yVN9RVt4vUylh5tE9YZtCfEb4vOz/CBknRqOJDIsi2u/VskXcY3bzIjVBhHUhSmy86S5jjNOqdw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HpU3wx7v; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C623BC4CEE1;
-	Fri, 27 Dec 2024 04:15:33 +0000 (UTC)
+	 MIME-Version:Content-Type; b=hOs0U7ln4joiOE9yltZlFk1BqiIZtFCRdlFoKl9JR/LdfUF2Z0BuEP8fen006MuEcUi1IPZghYb3qj4zIMPYhtRxqB4/+VVTqYFdeQfJQOLIZQE8qBG7aPxemBn9i2I2KM2mqyoxrK5fR+LvS1lrrcsCpRnNHhg/HE/sVE+cRTg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=p7BarBhY; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9ADB5C4CEDE;
+	Fri, 27 Dec 2024 04:15:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1735272934;
-	bh=oNZ7NpxQ+vK45h1d+1Yg6PCD2GlzgTJH4CY8gyo9jeE=;
+	s=k20201202; t=1735272935;
+	bh=qMv+JHj/4r1Jhn6FXcHzvrBN33JlfwGRaoumUMVcewQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HpU3wx7voBbyl3CyXZqoxkrCYOYHMlqDasfjENdlxLQNYtao/DTQYNCg7hwwXtjsz
-	 xFCVeu7Xhe6kVApbmcRjfGaGsY1qWVYvyzzcioRuKWC50cr7Kft1J92z5soPxyf1A6
-	 bjn5bfAbD+FjSmw/dpy+sUkKME2tb3Y+KoMvqJObHANA87M92VfVUydQZpytAgELAF
-	 OEP3UsXbXHBODJZioJ9Y/6RNa+8TTQmjJgFC9ic9WEa53gd9OlmRJ41ZUY5amrHNKU
-	 hH1Pbq8I1s2ssCf2rw9ZmhL/J3fpm33jMBb019UAvFN2BBFsxJKX1PQZFsmVXzIvoL
-	 yprB1G9cljcRQ==
+	b=p7BarBhYIO6MIQx+jBnhU2KHvl36jHduETmQc9HoaVC43xPf8NU7qdNHmJQib19NT
+	 bdBu2Ye+1ZioFnTOMHS8OQiJupKjLTZbsjpxcIbzwqt1wfVHdUaWiea2/vfQGCYK1q
+	 Fts+BQITsBLOVdMXSFZYr6eGy9nIUEs+M71oxkrEOwgxAM+wJsKnsk5HCXA1jBiyAL
+	 MMCqW2guP7+uwUwB6duhJ8s+Q4ruCBQhrlPsu1TO+m73og8lp+/C6nRRYrzIWHOWyu
+	 iHKubQljBlcA74CSkp7A+bH7QRz0fV2THtWo4M1ERskn5/oEyIVT0EzMdqgKYrFZat
+	 PfZR8TPHDfo7Q==
 From: Bjorn Andersson <andersson@kernel.org>
 To: Michael Turquette <mturquette@baylibre.com>,
 	Stephen Boyd <sboyd@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 	Gabor Juhos <j4g8y7@gmail.com>
 Cc: linux-arm-msm@vger.kernel.org,
 	linux-clk@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	stable@vger.kernel.org
-Subject: Re: [PATCH] clk: qcom: clk-alpha-pll: fix alpha mode configuration
-Date: Thu, 26 Dec 2024 22:15:22 -0600
-Message-ID: <173527291942.1467503.9219912935387229437.b4-ty@kernel.org>
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 0/5] clk: qcom: remove superfluous alpha settings from PLL configs
+Date: Thu, 26 Dec 2024 22:15:23 -0600
+Message-ID: <173527291941.1467503.12069046590893387791.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20241021-fix-alpha-mode-config-v1-1-f32c254e02bc@gmail.com>
-References: <20241021-fix-alpha-mode-config-v1-1-f32c254e02bc@gmail.com>
+In-Reply-To: <20241028-alpha-mode-cleanup-v2-0-9bc6d712bd76@gmail.com>
+References: <20241028-alpha-mode-cleanup-v2-0-9bc6d712bd76@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,23 +65,26 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Mon, 21 Oct 2024 19:32:48 +0200, Gabor Juhos wrote:
-> Commit c45ae598fc16 ("clk: qcom: support for alpha mode configuration")
-> added support for configuring alpha mode, but it seems that the feature
-> was never working in practice.
+On Mon, 28 Oct 2024 19:48:14 +0100, Gabor Juhos wrote:
+> There are several alpha PLL  configurations, where the alpha mode
+> is enabled even if it is not strictly required in order to get the
+> desired output rate of the PLL. This small series removes those
+> superfluous settings.
 > 
-> The value of the alpha_{en,mode}_mask members of the configuration gets
-> added to the value parameter passed to the regmap_update_bits() function,
-> however the same values are not getting applied to the bitmask. As the
-> result, the respective bits in the USER_CTL register are never modifed
-> which leads to improper configuration of several PLLs.
 > 
-> [...]
 
 Applied, thanks!
 
-[1/1] clk: qcom: clk-alpha-pll: fix alpha mode configuration
-      commit: 33f1722eb86e45320a3dd7b3d42f6593a1d595c2
+[1/5] clk: qcom: apss-ipq-pll: drop 'alpha_en_mask' from IPQ5018 PLL config
+      commit: 3e632d9c33d8a4f0d8f98e69b56bd2f2145d91c4
+[2/5] clk: qcom: apps-ipq-pll: drop 'alpha_en_mask' from IPQ5332 PLL config
+      commit: 41c5ebfb9b4b42b1479f16a50d96146fa945abce
+[3/5] clk: qcom: gcc-ipq6018: remove alpha values from NSS Crypto PLL's config
+      commit: 5d11fd2a919b153c68cda42c175b4e45668654a9
+[4/5] clk: qcom: dispcc-qcm2290: remove alpha values from disp_cc_pll0_config
+      commit: b9286a91b59fe9c7f8e231fce8e51df3b1442f6b
+[5/5] clk: qcom: dispcc-sm6115: remove alpha values from disp_cc_pll0_config
+      commit: 320f7a476c5fe79f50d00c75debfd9f63a0e713f
 
 Best regards,
 -- 
