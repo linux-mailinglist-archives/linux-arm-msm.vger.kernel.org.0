@@ -1,79 +1,80 @@
-Return-Path: <linux-arm-msm+bounces-43503-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-43504-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 068799FD4C0
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Dec 2024 14:13:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 204859FD4CA
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Dec 2024 14:14:06 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A0D78166622
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Dec 2024 13:13:38 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B5C91164877
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Dec 2024 13:14:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C14DF1F5415;
-	Fri, 27 Dec 2024 13:12:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7CA3C1F63D5;
+	Fri, 27 Dec 2024 13:12:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Upcjw2Fo"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="amNNKYxI"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
+Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 456351F4268
-	for <linux-arm-msm@vger.kernel.org>; Fri, 27 Dec 2024 13:12:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97BBF1F426A
+	for <linux-arm-msm@vger.kernel.org>; Fri, 27 Dec 2024 13:12:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735305144; cv=none; b=MEaNX7d/FY2htsDIGvxLo6lz4ZkSkymERc5qFosJYNlxdG+GbKRlhbdy/JpQKl8s007FF4iM7Jr+HbP3KUn/pEteymd6FNpK08WMghCq7Zd4clOVan9gUkofBDrbxuz1jqiD9Ayk8xheBTEN08JTG24cHWvRFoH9k2eSGyQpxZo=
+	t=1735305146; cv=none; b=SGttvkW2PKa13FFLX6Hsa6jJePa1yVn/ox7Wi5j4C9hESdKTe0XYsjPqb9dvu6IQ8mu4VoSowQmz2sMeNEn2F6wZ+MWzFAc8KQXaMbxXbQKAHtbrRgcQIZee/o/u9+o5TdEqD0lm7wvUAKSA/kbipPnptShdKb5OblpxPQH0bl8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735305144; c=relaxed/simple;
-	bh=p4HYePqAqwwVtUBADv0DA89SPllLPOl+WT/xy3tWauE=;
+	s=arc-20240116; t=1735305146; c=relaxed/simple;
+	bh=NdOLCsokI7fFcZT7leB4rZD0T+tFfneCILi66GjN1HY=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=aKEwNY1u8FTORsSGGPXutNnDpA025PJBIF9OsordD49wAvFMn7XZc6Zq+eoz9N2nOEIhKQypx174wxG6WT8WHmjEr1WEi2JhhmCNDkLCwIRdg9q/AgM7RUP3FX+HpFMl3WKaqasEqPuqm40e/GBiq3WDQ56Po9OZoIpzse6TjRU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Upcjw2Fo; arc=none smtp.client-ip=209.85.221.43
+	 In-Reply-To:To:Cc; b=cb2bwVHl7nzZ5gLw4+O+fHGx0Y27TxHOn9PgXSDuC9Uw1tmKQrK94rtAeffIpJ3Smcl7EI5eTjLxmB8h2X7XF1kRmdV0uOASRLskK3qS7mr8u7U2ZQPO6gAOEZSjX82C8QoCzoIDM5Ef82qq736FE3f6qwV/WcNh+vGb9uBY7+o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=amNNKYxI; arc=none smtp.client-ip=209.85.128.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f43.google.com with SMTP id ffacd0b85a97d-3863703258fso4813822f8f.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Dec 2024 05:12:21 -0800 (PST)
+Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-4363ae65100so76670495e9.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Dec 2024 05:12:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1735305140; x=1735909940; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1735305142; x=1735909942; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=ZrCP587FB1TKo2UDQRRUVx0pxQFB2lu1DaIs5nyxaLA=;
-        b=Upcjw2Fo0T5UEQsgBISbJC3Th5/0YjW5dvgf+euxfU5kGFMQatbMuP9ARaVPbmfmbp
-         2Mkqm3Mi5wLh3+qekm2AotklUgTeLyiNmJfZViJFyZ57zVwBDp5O+taumoFnLudRiEnf
-         8ir81hMEHQ8K8X+/LDZ272Wz4Z7OwIeiyLRdsX+jJjoN20rFA6eNf+41CNQ5P5fqmchW
-         CBmOO4X1Q2IWymWizQQnh/WlgZpDjv10k2yfEqC6CfgNxphQrFPE77j0yru/OW/Xh5uM
-         2HR3ba5rlrCU4o4R/Z6LwUwk7c2U1jP+oWcrZ/vR/MYTv8ps9Kf9usd7QKWz5eHmYdog
-         eahg==
+        bh=u8s+qEZpEbsqh0xa5Mnwy31VON0bjr3N90r6hfq8Ne8=;
+        b=amNNKYxIIJWpVhHS2HDQm+S2HjX+bznL5YsqvDyOI511jozBxmTujJBoiZXnS6s5Ou
+         h6KDZCNcHD5Bzc85zIBqkAOdG/ncts0fcOK8vbPPTHLn4K15FpIA+0Kod3S6ZtCS4NNC
+         LbFn26jqxvS0kXWtgQF9r+fTVvxX73b56QiipbrW6ElnCHpAxb0kvuh3N2lDnWfIUUhB
+         WRcAqGdWG8TX4Hx0iowAXtnnNnPsJw1G0AswfcdxE9IXSH9yBjfQUH0BiOgPBvFx8IFY
+         eacw1a4sh+wOBzL9aOhJM0441Kzs52FyFqejVwE+PYo4D1XxUOZ1aV2QAc/4++f4GuFZ
+         W4JQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1735305140; x=1735909940;
+        d=1e100.net; s=20230601; t=1735305142; x=1735909942;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=ZrCP587FB1TKo2UDQRRUVx0pxQFB2lu1DaIs5nyxaLA=;
-        b=vmXjhhWPynLH2bzgF1XDUpKAhZoOpJiEQpQ+9AkdtXTntdmVawawQxCVFr+M/9AspB
-         KAc0SmOFJ7Kk5OmXmeuyp7L98014E+e1/yvFYSXBnzU34FHJG/gWeHeZCWuacROgWLsy
-         v7qv+JVCKr2GjI2KuEdjyR5/m/0tS1zMqvWx0FM+F55uIP6UObSeoqswZscPmBB2k2j+
-         hacBq1Jd52Ax+lmJAPNsu3gix+ROjFgvyboR8lSVkQyAxRw1SlrxwWPJTZXNSnDg+cki
-         HEhYNiJ3pUT58P7zxWQ/6/PHfHzG6vucJqWWvdf4xAWk0zBPtACIjk9jveJ8mszQbvoy
-         xp8w==
-X-Forwarded-Encrypted: i=1; AJvYcCXTElMnD9Jf0vjYMvZGd+saqYl4IsjLkQCs+IUfOZiNw2r+qDToGMgk+2RuFqh9HR3V9COq9lFXSNuyECLS@vger.kernel.org
-X-Gm-Message-State: AOJu0YyZ7tRlngZS/f4FYiCn9rf3MwrplPoZtZTo+Bc345XkTkyk+yfz
-	4lJ6sIKorT/eiqBp39PlJtLL/mymQda+zZ9fPlgBg4Af/ihTMhw7kFhpWw4ftkM=
-X-Gm-Gg: ASbGnctnu1hCHIeqZ9KWoaeeBI6zvqv4mp6A4R0HH2tRU5dsZHQizVkRhbD2r8/fw7y
-	9WBwsuPp5OAWSJAt+ULRDDVf/w01KAKjF6F+iowELV/QJVc6xrAU3hk0wA+rCTjHnV0Xf87/Rn9
-	2BUqM+j0dCuutv1R1GfuI+85aEa0L0E/oqE76nSSChQfYLA5HKDiRjqUXjGbofAER319yL3XLyi
-	e4OdzoPePUh2sIPAptfkZqvQiYenqY+HSyCeD2ErK5F7xKTUu2puy3ZOnCsED+sNw==
-X-Google-Smtp-Source: AGHT+IE+HU/jbA5GjePTDF+VWLPnPi6jNH082VPpiSJACriUcH1qnRDSCQQKWm/8AkRqdbpX5Y30Qw==
-X-Received: by 2002:a5d:6d8e:0:b0:386:3958:2ec5 with SMTP id ffacd0b85a97d-38a1a2749f8mr27109062f8f.28.1735305140548;
-        Fri, 27 Dec 2024 05:12:20 -0800 (PST)
+        bh=u8s+qEZpEbsqh0xa5Mnwy31VON0bjr3N90r6hfq8Ne8=;
+        b=htGaztjF1j/XDTThjvftysQLCaPzWiKcaboelbZYmxfTqmeXBapEYh0WEbbxVdS7Jm
+         QdEIExsRka1eovnEZlgJziJqnxIwoYOTcFlEyxQxzbKjv2viFEnepu5gxKjhu4e79EDi
+         j4KyEwXftp+Pd8m+jpWxDaUE2Qs2vu7eIDPTs9uv715hI0pQMHRxpo9f5F8bQIrZjYFt
+         zbSFVLdMrfXT16VX8YYx16JYL1BQK4U83vihiqXmbwDCgUIx0eR/c/uJ3GdUsnZFxBi4
+         YLspAp7ObmUKVWOJ2DJ/ZUiTJIYFMSEsUcxjjZm1ilwkyn8Dub8Wgw34wfwfbOwD6eGw
+         pDeg==
+X-Forwarded-Encrypted: i=1; AJvYcCVHhkWdhdXciMPUnLFgYSQH/TRftZVMpGE6gjpd5pyzawF3kR1L6/v3P2AWWEPUH9hTBNxAbXgtTcg3zx5z@vger.kernel.org
+X-Gm-Message-State: AOJu0YyTAmNCk6rh/7UenUtCYzulPqUbJpRlicqvLTJRU29wgPO5Ixt/
+	GmwdXjUjoYWgDQcw5cgN/xovRCDK525bN21BJuBmfpSQbAJb7nTJSnC+pls00dk=
+X-Gm-Gg: ASbGncvBoNZqUKn+NgE7WQoslkavbqTpZQdh4e9sQO+BltEtMY930LJo31J8E9otvc4
+	aHSK7bYgU7dncypQ64QaTDrwlLgQYGCdS4uYtnjU4g7AiPAkF6jNoSqRWahEfP1uTds0R30IKz7
+	VTuD46ncSZ0YHM4NcWyuC5JvUUdA5wGN7bsltL0xA2z8CLLu5w8Ltfe65cMICkkPRtO9MLkpPPg
+	NeMeDKjDhpFfDKm+dMc3HRE/dW1Rtrhn5twYCkejw3h2t7UsC+7FVfEpfrZl1wIdg==
+X-Google-Smtp-Source: AGHT+IGVndvEJ4cMxkBkzgZeDE9+MN8CqCd3sI3n0j52jtS9UA4faZa1/USE2uaEgfW0/GDHIb2iYg==
+X-Received: by 2002:a05:600c:1c95:b0:434:a1d3:a321 with SMTP id 5b1f17b1804b1-4366835c1b0mr241449545e9.3.1735305141817;
+        Fri, 27 Dec 2024 05:12:21 -0800 (PST)
 Received: from [127.0.1.1] ([176.61.106.227])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43656af6c42sm298899425e9.9.2024.12.27.05.12.19
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43656af6c42sm298899425e9.9.2024.12.27.05.12.20
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 27 Dec 2024 05:12:20 -0800 (PST)
+        Fri, 27 Dec 2024 05:12:21 -0800 (PST)
 From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Date: Fri, 27 Dec 2024 13:11:38 +0000
-Subject: [PATCH v2 5/6] arm64: dts: qcom: x1e80100: Add CCI definitions
+Date: Fri, 27 Dec 2024 13:11:39 +0000
+Subject: [PATCH v2 6/6] arm64: dts: qcom: x1e80100: Add CAMSS block
+ definition
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -82,7 +83,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20241227-b4-linux-next-24-11-18-dtsi-x1e80100-camss-v2-5-06fdd5a7d5bb@linaro.org>
+Message-Id: <20241227-b4-linux-next-24-11-18-dtsi-x1e80100-camss-v2-6-06fdd5a7d5bb@linaro.org>
 References: <20241227-b4-linux-next-24-11-18-dtsi-x1e80100-camss-v2-0-06fdd5a7d5bb@linaro.org>
 In-Reply-To: <20241227-b4-linux-next-24-11-18-dtsi-x1e80100-camss-v2-0-06fdd5a7d5bb@linaro.org>
 To: Loic Poulain <loic.poulain@linaro.org>, Robert Foss <rfoss@kernel.org>, 
@@ -102,189 +103,215 @@ Cc: linux-i2c@vger.kernel.org, linux-arm-msm@vger.kernel.org,
  Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 X-Mailer: b4 0.15-dev-1b0d6
 
-Add in 2 CCI busses. One bus has two CCI bus master pinouts:
-cci_i2c_scl0 = gpio101
-cci_i2c_sda0 = gpio102
-cci_i2c_scl1 = gpio103
-cci_i2c_sda1 = gpio104
+Add dtsi to describe the xe180100 CAMSS block
 
-A second bus has a single CCI bus master pinout:
-cci_i2c_scl2 = gpio105
-cci_i2c_sda2 = gpio106
+4 x CSIPHY
+2 x CSID
+2 x CSID Lite
+2 x IFE
+2 x IFE Lite
 
 Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/x1e80100.dtsi | 150 +++++++++++++++++++++++++++++++++
- 1 file changed, 150 insertions(+)
+ arch/arm64/boot/dts/qcom/x1e80100.dtsi | 185 +++++++++++++++++++++++++++++++++
+ 1 file changed, 185 insertions(+)
 
 diff --git a/arch/arm64/boot/dts/qcom/x1e80100.dtsi b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-index 5119cf64b461eb517e9306869ad0ec1b2cae629e..cc174a021e4c7b3f6578f44691eb70592975f8e8 100644
+index cc174a021e4c7b3f6578f44691eb70592975f8e8..decb895da44145e7480c782c7814ca064e7c9aa0 100644
 --- a/arch/arm64/boot/dts/qcom/x1e80100.dtsi
 +++ b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-@@ -4648,6 +4648,84 @@ usb_1_ss1_dwc3_ss: endpoint {
+@@ -4726,6 +4726,191 @@ cci1_i2c1: i2c-bus@1 {
  			};
  		};
  
-+		cci0: cci@ac15000 {
-+			compatible = "qcom,x1e80100-cci", "qcom,msm8996-cci";
-+			reg = <0 0x0ac15000 0 0x1000>;
++		camss: isp@acb6000 {
++			compatible = "qcom,x1e80100-camss";
 +
-+			interrupts = <GIC_SPI 460 IRQ_TYPE_EDGE_RISING>;
++			reg = <0 0x0acb6000 0 0x1000>,
++			      <0 0x0acb7000 0 0x2000>,
++			      <0 0x0acb9000 0 0x2000>,
++			      <0 0x0acbb000 0 0x2000>,
++			      <0 0x0acc6000 0 0x1000>,
++			      <0 0x0acca000 0 0x1000>,
++			      <0 0x0ace4000 0 0x2000>,
++			      <0 0x0ace6000 0 0x2000>,
++			      <0 0x0ace8000 0 0x2000>,
++			      <0 0x0acec000 0 0x2000>,
++			      <0 0x0acf6000 0 0x1000>,
++			      <0 0x0acf7000 0 0x1000>,
++			      <0 0x0acf8000 0 0x1000>,
++			      <0 0x0acc7000 0 0x2000>,
++			      <0 0x0accb000 0 0x2000>,
++			      <0 0x0ac62000 0 0x4000>,
++			      <0 0x0ac71000 0 0x4000>;
++			reg-names = "csid_wrapper",
++				    "csid0",
++				    "csid1",
++				    "csid2",
++				    "csid_lite0",
++				    "csid_lite1",
++				    "csiphy0",
++				    "csiphy1",
++				    "csiphy2",
++				    "csiphy4",
++				    "csitpg0",
++				    "csitpg1",
++				    "csitpg2",
++				    "vfe_lite0",
++				    "vfe_lite1",
++				    "vfe0",
++				    "vfe1";
 +
 +			clocks = <&camcc CAM_CC_CAMNOC_AXI_RT_CLK>,
++				 <&camcc CAM_CC_CAMNOC_AXI_NRT_CLK>,
++				 <&camcc CAM_CC_CORE_AHB_CLK>,
 +				 <&camcc CAM_CC_CPAS_AHB_CLK>,
-+				 <&camcc CAM_CC_CCI_0_CLK>;
-+			clock-names = "camnoc_axi",
++				 <&camcc CAM_CC_CPAS_FAST_AHB_CLK>,
++				 <&camcc CAM_CC_CPAS_IFE_0_CLK>,
++				 <&camcc CAM_CC_CPAS_IFE_1_CLK>,
++				 <&camcc CAM_CC_CPAS_IFE_LITE_CLK>,
++				 <&camcc CAM_CC_CPHY_RX_CLK_SRC>,
++				 <&camcc CAM_CC_CSID_CLK>,
++				 <&camcc CAM_CC_CSID_CSIPHY_RX_CLK>,
++				 <&camcc CAM_CC_CSIPHY0_CLK>,
++				 <&camcc CAM_CC_CSI0PHYTIMER_CLK>,
++				 <&camcc CAM_CC_CSIPHY1_CLK>,
++				 <&camcc CAM_CC_CSI1PHYTIMER_CLK>,
++				 <&camcc CAM_CC_CSIPHY2_CLK>,
++				 <&camcc CAM_CC_CSI2PHYTIMER_CLK>,
++				 <&camcc CAM_CC_CSIPHY4_CLK>,
++				 <&camcc CAM_CC_CSI4PHYTIMER_CLK>,
++				 <&gcc GCC_CAMERA_HF_AXI_CLK>,
++				 <&gcc GCC_CAMERA_SF_AXI_CLK>,
++				 <&camcc CAM_CC_IFE_0_CLK>,
++				 <&camcc CAM_CC_IFE_0_FAST_AHB_CLK>,
++				 <&camcc CAM_CC_IFE_1_CLK>,
++				 <&camcc CAM_CC_IFE_1_FAST_AHB_CLK>,
++				 <&camcc CAM_CC_IFE_LITE_CLK>,
++				 <&camcc CAM_CC_IFE_LITE_AHB_CLK>,
++				 <&camcc CAM_CC_IFE_LITE_CPHY_RX_CLK>,
++				 <&camcc CAM_CC_IFE_LITE_CSID_CLK>;
++			clock-names = "camnoc_rt_axi",
++				      "camnoc_nrt_axi",
++				      "core_ahb",
 +				      "cpas_ahb",
-+				      "cci";
++				      "cpas_fast_ahb",
++				      "cpas_vfe0",
++				      "cpas_vfe1",
++				      "cpas_vfe_lite",
++				      "cphy_rx_clk_src",
++				      "csid",
++				      "csid_csiphy_rx",
++				      "csiphy0",
++				      "csiphy0_timer",
++				      "csiphy1",
++				      "csiphy1_timer",
++				      "csiphy2",
++				      "csiphy2_timer",
++				      "csiphy4",
++				      "csiphy4_timer",
++				      "gcc_axi_hf",
++				      "gcc_axi_sf",
++				      "vfe0",
++				      "vfe0_fast_ahb",
++				      "vfe1",
++				      "vfe1_fast_ahb",
++				      "vfe_lite",
++				      "vfe_lite_ahb",
++				      "vfe_lite_cphy_rx",
++				      "vfe_lite_csid";
 +
-+			power-domains = <&camcc CAM_CC_TITAN_TOP_GDSC>;
++			interrupts = <GIC_SPI 464 IRQ_TYPE_EDGE_RISING>,
++				     <GIC_SPI 466 IRQ_TYPE_EDGE_RISING>,
++				     <GIC_SPI 431 IRQ_TYPE_EDGE_RISING>,
++				     <GIC_SPI 468 IRQ_TYPE_EDGE_RISING>,
++				     <GIC_SPI 359 IRQ_TYPE_EDGE_RISING>,
++				     <GIC_SPI 477 IRQ_TYPE_EDGE_RISING>,
++				     <GIC_SPI 478 IRQ_TYPE_EDGE_RISING>,
++				     <GIC_SPI 479 IRQ_TYPE_EDGE_RISING>,
++				     <GIC_SPI 122 IRQ_TYPE_EDGE_RISING>,
++				     <GIC_SPI 465 IRQ_TYPE_EDGE_RISING>,
++				     <GIC_SPI 467 IRQ_TYPE_EDGE_RISING>,
++				     <GIC_SPI 469 IRQ_TYPE_EDGE_RISING>,
++				     <GIC_SPI 360 IRQ_TYPE_EDGE_RISING>;
++			interrupt-names = "csid0",
++					  "csid1",
++					  "csid2",
++					  "csid_lite0",
++					  "csid_lite1",
++					  "csiphy0",
++					  "csiphy1",
++					  "csiphy2",
++					  "csiphy4",
++					  "vfe0",
++					  "vfe1",
++					  "vfe_lite0",
++					  "vfe_lite1";
 +
-+			pinctrl-0 = <&cci0_default>;
-+			pinctrl-1 = <&cci0_sleep>;
-+			pinctrl-names = "default", "sleep";
++			interconnects = <&gem_noc MASTER_APPSS_PROC QCOM_ICC_TAG_ACTIVE_ONLY
++					 &config_noc SLAVE_CAMERA_CFG QCOM_ICC_TAG_ACTIVE_ONLY>,
++					<&mmss_noc MASTER_CAMNOC_HF QCOM_ICC_TAG_ALWAYS
++					 &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>,
++					<&mmss_noc MASTER_CAMNOC_SF QCOM_ICC_TAG_ALWAYS
++					 &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>,
++					<&mmss_noc MASTER_CAMNOC_ICP QCOM_ICC_TAG_ALWAYS
++					 &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>;
++			interconnect-names = "cam_ahb",
++					     "cam_hf_mnoc",
++					     "cam_sf_mnoc",
++					     "cam_sf_icp_mnoc";
 +
-+			#address-cells = <1>;
-+			#size-cells = <0>;
++			iommus = <&apps_smmu 0x800 0x60>,
++				 <&apps_smmu 0x860 0x60>,
++				 <&apps_smmu 0x1800 0x60>,
++				 <&apps_smmu 0x1860 0x60>,
++				 <&apps_smmu 0x18e0 0x00>,
++				 <&apps_smmu 0x1900 0x00>,
++				 <&apps_smmu 0x1980 0x20>,
++				 <&apps_smmu 0x19a0 0x20>;
++
++			power-domains = <&camcc CAM_CC_IFE_0_GDSC>,
++					<&camcc CAM_CC_IFE_1_GDSC>,
++					<&camcc CAM_CC_TITAN_TOP_GDSC>;
++			power-domain-names = "ife0",
++					     "ife1",
++					     "top";
 +
 +			status = "disabled";
 +
-+			cci0_i2c0: i2c-bus@0 {
-+				reg = <0>;
-+				clock-frequency = <1000000>;
++			ports {
 +				#address-cells = <1>;
 +				#size-cells = <0>;
-+			};
 +
-+			cci0_i2c1: i2c-bus@1 {
-+				reg = <1>;
-+				clock-frequency = <1000000>;
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+			};
-+		};
++				port@0 {
++					reg = <0>;
++					#address-cells = <1>;
++					#size-cells = <0>;
++				};
 +
-+		cci1: cci@ac16000 {
-+			compatible = "qcom,x1e80100-cci", "qcom,msm8996-cci";
-+			reg = <0 0x0ac16000 0 0x1000>;
++				port@1 {
++					reg = <1>;
++					#address-cells = <1>;
++					#size-cells = <0>;
++				};
 +
-+			interrupts = <GIC_SPI 271 IRQ_TYPE_EDGE_RISING>;
++				port@2 {
++					reg = <2>;
++					#address-cells = <1>;
++					#size-cells = <0>;
++				};
 +
-+			clocks = <&camcc CAM_CC_CAMNOC_AXI_RT_CLK>,
-+				 <&camcc CAM_CC_CPAS_AHB_CLK>,
-+				 <&camcc CAM_CC_CCI_1_CLK>;
-+			clock-names = "camnoc_axi",
-+				      "cpas_ahb",
-+				      "cci";
-+
-+			power-domains = <&camcc CAM_CC_TITAN_TOP_GDSC>;
-+
-+			pinctrl-0 = <&cci1_default>;
-+			pinctrl-1 = <&cci1_sleep>;
-+			pinctrl-names = "default", "sleep";
-+
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+
-+			status = "disabled";
-+
-+			cci1_i2c0: i2c-bus@0 {
-+				reg = <0>;
-+				clock-frequency = <1000000>;
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+			};
-+
-+			cci1_i2c1: i2c-bus@1 {
-+				reg = <1>;
-+				clock-frequency = <1000000>;
-+				#address-cells = <1>;
-+				#size-cells = <0>;
++				port@3 {
++					reg = <3>;
++					#address-cells = <1>;
++					#size-cells = <0>;
++				};
 +			};
 +		};
 +
  		camcc: clock-controller@ade0000 {
  			compatible = "qcom,x1e80100-camcc";
  			reg = <0 0x0ade0000 0 0x20000>;
-@@ -5272,6 +5350,78 @@ tlmm: pinctrl@f100000 {
- 			gpio-ranges = <&tlmm 0 0 239>;
- 			wakeup-parent = <&pdc>;
- 
-+			cci0_default: cci0-default-state {
-+				cci0_i2c0_default: cci0-i2c0-default-pins {
-+					/* cci_i2c_sda0, cci_i2c_scl0 */
-+					pins = "gpio101", "gpio102";
-+					function = "cci_i2c";
-+					drive-strength = <2>;
-+					bias-pull-up;
-+				};
-+
-+				cci0_i2c1_default: cci0-i2c1-default-pins {
-+					/* cci_i2c_sda1, cci_i2c_scl1 */
-+					pins = "gpio103", "gpio104";
-+					function = "cci_i2c";
-+					drive-strength = <2>;
-+					bias-pull-up;
-+				};
-+			};
-+
-+			cci0_sleep: cci0-sleep-state {
-+				cci0_i2c0_sleep: cci0-i2c0-sleep-pins {
-+					/* cci_i2c_sda0, cci_i2c_scl0 */
-+					pins = "gpio101", "gpio102";
-+					function = "cci_i2c";
-+					drive-strength = <2>;
-+					bias-pull-down;
-+				};
-+
-+				cci0_i2c1_sleep: cci0-i2c1-sleep-pins {
-+					/* cci_i2c_sda1, cci_i2c_scl1 */
-+					pins = "gpio103", "gpio104";
-+					function = "cci_i2c";
-+					drive-strength = <2>;
-+					bias-pull-down;
-+				};
-+			};
-+
-+			cci1_default: cci1-default-state {
-+				cci1_i2c0_default: cci1-i2c0-default-pins {
-+					/* cci_i2c_sda2, cci_i2c_scl2 */
-+					pins = "gpio105","gpio106";
-+					function = "cci_i2c";
-+					drive-strength = <2>;
-+					bias-pull-up;
-+				};
-+
-+				cci1_i2c1_default: cci1-i2c1-default-pins {
-+					/* aon_cci_i2c_sda3, aon_cci_i2c_scl3 */
-+					pins = "gpio235","gpio236";
-+					function = "aon_cci";
-+					drive-strength = <2>;
-+					bias-pull-up;
-+				};
-+			};
-+
-+			cci1_sleep: cci1-sleep-state {
-+				cci1_i2c0_sleep: cci1-i2c0-sleep-pins {
-+					/* cci_i2c_sda2, cci_i2c_scl2 */
-+					pins = "gpio105","gpio106";
-+					function = "cci_i2c";
-+					drive-strength = <2>;
-+					bias-pull-down;
-+				};
-+
-+				cci1_i2c1_sleep: cci1-i2c1-sleep-pins {
-+					/* aon_cci_i2c_sda3, aon_cci_i2c_scl3 */
-+					pins = "gpio235","gpio236";
-+					function = "aon_cci";
-+					drive-strength = <2>;
-+					bias-pull-down;
-+				};
-+			};
-+
- 			qup_i2c0_data_clk: qup-i2c0-data-clk-state {
- 				/* SDA, SCL */
- 				pins = "gpio0", "gpio1";
 
 -- 
 2.45.2
