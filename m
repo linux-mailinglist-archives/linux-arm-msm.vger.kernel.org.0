@@ -1,163 +1,340 @@
-Return-Path: <linux-arm-msm+bounces-43466-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-43467-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id BC1FA9FD0B5
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Dec 2024 08:03:29 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id C15E29FD0BE
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Dec 2024 08:08:44 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3BF081883783
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Dec 2024 07:03:31 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7714A3A0539
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Dec 2024 07:08:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 57A9213D244;
-	Fri, 27 Dec 2024 07:03:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9011E13DDD3;
+	Fri, 27 Dec 2024 07:08:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="r6KvYNQJ"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="QgwkHFtO"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26A3F13BC39;
-	Fri, 27 Dec 2024 07:03:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92E87524B4;
+	Fri, 27 Dec 2024 07:08:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735283004; cv=none; b=MFzMEqncBRCrQ6R6TSu7NnXrXkjFRTdaIG633cVAJOjEsj92qALWVOdzDRbNFscGt15xRS5Jbt6U+F5G7IH5INnh54plgFmAZpl1H+ObGe0TgaoteiczzOJJzWBeZH63S5uWMz6QE2ACiC8P2nBccvv6jUM5l9d1lcW3S9769hQ=
+	t=1735283320; cv=none; b=FNkp3AipzDor7TFu2jW27Xyd4is7bKp6H6Ke1uFrpEFrXIL5wZVBmCrfy3F58guqp8Ir8HDbOQtLydbCPdtoMN2yQFSn+aGKfy2uKUoxumLXLzpQu/QjWnvmjwFnnti/pX5CYZldfP48Vw+h0wXda0AWdGVesOmfPwSVDtSFIWc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735283004; c=relaxed/simple;
-	bh=+7ck8eAbEdbMq4FfV8jX2AlQfAJ1DVeuk+4RvANLiyw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=c6OiHTB68lZbH2tDCkqBe+eCZ7+cAWF0j3deWaI/rfV7GpDwGSmgGQEQb3JYDtxVwMmOOEWeGmPnR/KwHcwC1ZbjuIPE5jFH9GG/ZA0DEj1eTCsYtqXUAENqqS3IHkOo1pZFg4ok1bzBVnzz1i719KcEIWmEsTr7q19tFIViCU8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=r6KvYNQJ; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C9DBC4CED0;
-	Fri, 27 Dec 2024 07:03:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1735283003;
-	bh=+7ck8eAbEdbMq4FfV8jX2AlQfAJ1DVeuk+4RvANLiyw=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=r6KvYNQJk2bTM+Lwx3TNBJUSgFN7bCJfYRhow8KY3L4fvo5mTd81stGiWryv4UxU7
-	 mQEvICFXIPeiyI3BKWoMS/AbdxyM08xZBi2XQrnucorQCdY2cy+Lzr/pIvHWbcoiPA
-	 tuWj0Vj2GHqKzYBgm7t4WQEJq4XLJNN1OeNkn5gt1oMAOIJjiVpV6kaeAj1ufhNb7w
-	 bfrzhAKq1mqfm5kYCrQv7llX7LFRcskyYgeh7qCHfaTmqsrlRdNoRqHxFpqZ0tkrC/
-	 t7+yt8cNiRZZxNGuiFKbAw6CQ/vEi2LUV+hmoimfGZknma1dTzQXYek6RHyiolamb0
-	 dg/w9deH6ulvQ==
-Message-ID: <df1e2fbd-7fae-4910-9908-10fdb78e4299@kernel.org>
-Date: Fri, 27 Dec 2024 08:03:15 +0100
+	s=arc-20240116; t=1735283320; c=relaxed/simple;
+	bh=MQcacsZO5FO6BC6h0EheCbYld6V5niN6BJk+49MWmf4=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=KvaybtZsjrBdFzAAkmD/gmJSxKPfI61bQcJgWQJY3UEuNsf0B+1aldWsfceyqfbKmRRuNiJJLP62lZwFPBr256qEOTjsYVuKvS6a6N9Gk27oLphf+wxW1drQKhg6EiWh3IB/g+JeVjMzVXV7NT3+MAoLxgLhh1x07bJuACDBa3w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=QgwkHFtO; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BR6KVJo023393;
+	Fri, 27 Dec 2024 07:08:22 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	EX6mOOuBmyvUqoSGZ+ot2xwfZv24embIQvJx2/xCURY=; b=QgwkHFtO/rvlDk6n
+	fWVFxLjk6oJXUxM1NRpwBGxBld6WoLtf7NE96u8BDb4pHtiS59cJlnW3rjoC6Uxx
+	YDZiH6x1PHIjDG/KNXDWZUTOMP05HQdzaaZoW62b0SfTeYKt1D5TEGaOC3/U+neL
+	QkYfPGCH/yr+9/8etWb7qRoU2YcM2zzZN6AwG84xC28lp+ZOGphRCtEQvMauu08R
+	OTBbZ5sw88jVnup6lyEgkcs/IW/Q99NUc05kb1ohReH5aPjVSToGfE+uenn6HP2j
+	ppfyyjf96rmKT4AuQEIFdfVK5gh4AlPSIz6l4EduJ/TrimrjNeQbWuylGxrMom+K
+	Z4sEvA==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43spvug598-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 27 Dec 2024 07:08:22 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4BR78LlQ005467
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 27 Dec 2024 07:08:21 GMT
+Received: from cse-cd02-lnx.ap.qualcomm.com (10.80.80.8) by
+ nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Thu, 26 Dec 2024 23:08:17 -0800
+Date: Fri, 27 Dec 2024 15:08:13 +0800
+From: Yuanjie Yang <quic_yuanjiey@quicinc.com>
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC: <adrian.hunter@intel.com>, <ulf.hansson@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-mmc@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <andersson@kernel.org>,
+        <quic_tingweiz@quicinc.com>, <quic_zhgao@quicinc.com>,
+        <quic_yuanjiey@quicinc.com>
+Subject: Re: [PATCH v3] mmc: sdhci-msm: Correctly set the load for the
+ regulator
+Message-ID: <Z25SXZxetbeyXA9t@cse-cd02-lnx.ap.qualcomm.com>
+References: <20241226031845.2574669-1-quic_yuanjiey@quicinc.com>
+ <5q4wxz52mq6b73chi3o3xtspqbczycboeqiqsqnse6qg3vvbya@ih5rac2jqsrb>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/3] net: stmmac: qcom-ethqos: Enable RX programmable swap
- on qcs615
-To: Yijie Yang <quic_yijiyang@quicinc.com>, Vinod Koul <vkoul@kernel.org>,
- Andrew Lunn <andrew+netdev@lunn.ch>, "David S. Miller"
- <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>,
- Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>,
- Alexandre Torgue <alexandre.torgue@foss.st.com>,
- Jose Abreu <joabreu@synopsys.com>,
- Maxime Coquelin <mcoquelin.stm32@gmail.com>
-Cc: netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-stm32@st-md-mailman.stormreply.com,
- linux-arm-kernel@lists.infradead.org
-References: <20241225-support_10m100m-v1-0-4b52ef48b488@quicinc.com>
- <20241225-support_10m100m-v1-2-4b52ef48b488@quicinc.com>
- <4b4ef1c1-a20b-4b65-ad37-b9aabe074ae1@kernel.org>
- <278de6e8-de8f-458a-a4b9-92b3eb81fa77@quicinc.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
- cFgcqTTuNHjAvxtUG8pQgGTHAObYs6xeYJtjUH0ZX6ndJ33FJYf5V3yXqqjcZ30FgHzJCFUu
- JMp7PSyMPzpUXfU12yfcRYVEMQrmplNZssmYhiTeVicuOOypWugZKVLGNm0IweVCaZ/DJDIH
- gNbpvVwjcKYrx85m9cBVEBUGaQP6AT7qlVCkrf50v8bofSIyVa2xmubbAwwFA1oxoOusjPIE
- J3iadrwpFvsZjF5uHAKS+7wHLoW9hVzOnLbX6ajk5Hf8Pb1m+VH/E8bPBNNYKkfTtypTDUCj
- NYcd27tjnXfG+SDs/EXNUAIRefCyvaRG7oRYF3Ec+2RgQDRnmmjCjoQNbFrJvJkFHlPeHaeS
- BosGY+XWKydnmsfY7SSnjAzLUGAFhLd/XDVpb1Een2XucPpKvt9ORF+48gy12FA5GduRLhQU
- vK4tU7ojoem/G23PcowM1CwPurC8sAVsQb9KmwTGh7rVz3ks3w/zfGBy3+WmLg++C2Wct6nM
- Pd8/6CBVjEWqD06/RjI2AnjIq5fSEH/BIfXXfC68nMp9BZoy3So4ZsbOlBmtAPvMYX6U8VwD
- TNeBxJu5Ex0Izf1NV9CzC3nNaFUYOY8KfN01X5SExAoVTr09ewARAQABzSVLcnp5c3p0b2Yg
- S296bG93c2tpIDxrcnprQGtlcm5lbC5vcmc+wsGVBBMBCgA/AhsDBgsJCAcDAgYVCAIJCgsE
- FgIDAQIeAQIXgBYhBJvQfg4MUfjVlne3VBuTQ307QWKbBQJgPO8PBQkUX63hAAoJEBuTQ307
- QWKbBn8P+QFxwl7pDsAKR1InemMAmuykCHl+XgC0LDqrsWhAH5TYeTVXGSyDsuZjHvj+FRP+
- gZaEIYSw2Yf0e91U9HXo3RYhEwSmxUQ4Fjhc9qAwGKVPQf6YuQ5yy6pzI8brcKmHHOGrB3tP
- /MODPt81M1zpograAC2WTDzkICfHKj8LpXp45PylD99J9q0Y+gb04CG5/wXs+1hJy/dz0tYy
- iua4nCuSRbxnSHKBS5vvjosWWjWQXsRKd+zzXp6kfRHHpzJkhRwF6ArXi4XnQ+REnoTfM5Fk
- VmVmSQ3yFKKePEzoIriT1b2sXO0g5QXOAvFqB65LZjXG9jGJoVG6ZJrUV1MVK8vamKoVbUEe
- 0NlLl/tX96HLowHHoKhxEsbFzGzKiFLh7hyboTpy2whdonkDxpnv/H8wE9M3VW/fPgnL2nPe
- xaBLqyHxy9hA9JrZvxg3IQ61x7rtBWBUQPmEaK0azW+l3ysiNpBhISkZrsW3ZUdknWu87nh6
- eTB7mR7xBcVxnomxWwJI4B0wuMwCPdgbV6YDUKCuSgRMUEiVry10xd9KLypR9Vfyn1AhROrq
- AubRPVeJBf9zR5UW1trJNfwVt3XmbHX50HCcHdEdCKiT9O+FiEcahIaWh9lihvO0ci0TtVGZ
- MCEtaCE80Q3Ma9RdHYB3uVF930jwquplFLNF+IBCn5JRzsFNBFVDXDQBEADNkrQYSREUL4D3
- Gws46JEoZ9HEQOKtkrwjrzlw/tCmqVzERRPvz2Xg8n7+HRCrgqnodIYoUh5WsU84N03KlLue
- MNsWLJBvBaubYN4JuJIdRr4dS4oyF1/fQAQPHh8Thpiz0SAZFx6iWKB7Qrz3OrGCjTPcW6ei
- OMheesVS5hxietSmlin+SilmIAPZHx7n242u6kdHOh+/SyLImKn/dh9RzatVpUKbv34eP1wA
- GldWsRxbf3WP9pFNObSzI/Bo3kA89Xx2rO2roC+Gq4LeHvo7ptzcLcrqaHUAcZ3CgFG88CnA
- 6z6lBZn0WyewEcPOPdcUB2Q7D/NiUY+HDiV99rAYPJztjeTrBSTnHeSBPb+qn5ZZGQwIdUW9
- YegxWKvXXHTwB5eMzo/RB6vffwqcnHDoe0q7VgzRRZJwpi6aMIXLfeWZ5Wrwaw2zldFuO4Dt
- 91pFzBSOIpeMtfgb/Pfe/a1WJ/GgaIRIBE+NUqckM+3zJHGmVPqJP/h2Iwv6nw8U+7Yyl6gU
- BLHFTg2hYnLFJI4Xjg+AX1hHFVKmvl3VBHIsBv0oDcsQWXqY+NaFahT0lRPjYtrTa1v3tem/
- JoFzZ4B0p27K+qQCF2R96hVvuEyjzBmdq2esyE6zIqftdo4MOJho8uctOiWbwNNq2U9pPWmu
- 4vXVFBYIGmpyNPYzRm0QPwARAQABwsF8BBgBCgAmAhsMFiEEm9B+DgxR+NWWd7dUG5NDfTtB
- YpsFAmA872oFCRRflLYACgkQG5NDfTtBYpvScw/9GrqBrVLuJoJ52qBBKUBDo4E+5fU1bjt0
- Gv0nh/hNJuecuRY6aemU6HOPNc2t8QHMSvwbSF+Vp9ZkOvrM36yUOufctoqON+wXrliEY0J4
- ksR89ZILRRAold9Mh0YDqEJc1HmuxYLJ7lnbLYH1oui8bLbMBM8S2Uo9RKqV2GROLi44enVt
- vdrDvo+CxKj2K+d4cleCNiz5qbTxPUW/cgkwG0lJc4I4sso7l4XMDKn95c7JtNsuzqKvhEVS
- oic5by3fbUnuI0cemeizF4QdtX2uQxrP7RwHFBd+YUia7zCcz0//rv6FZmAxWZGy5arNl6Vm
- lQqNo7/Poh8WWfRS+xegBxc6hBXahpyUKphAKYkah+m+I0QToCfnGKnPqyYIMDEHCS/RfqA5
- t8F+O56+oyLBAeWX7XcmyM6TGeVfb+OZVMJnZzK0s2VYAuI0Rl87FBFYgULdgqKV7R7WHzwD
- uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
- 7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
- 5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <278de6e8-de8f-458a-a4b9-92b3eb81fa77@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="utf-8"
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <5q4wxz52mq6b73chi3o3xtspqbczycboeqiqsqnse6qg3vvbya@ih5rac2jqsrb>
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: xf5fMMwu91Z-SHUkwVNcU5q0EUxb9gYQ
+X-Proofpoint-ORIG-GUID: xf5fMMwu91Z-SHUkwVNcU5q0EUxb9gYQ
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 spamscore=0
+ adultscore=0 phishscore=0 priorityscore=1501 impostorscore=0 clxscore=1015
+ suspectscore=0 malwarescore=0 bulkscore=0 lowpriorityscore=0
+ mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2412270060
 
-On 26/12/2024 03:29, Yijie Yang wrote:
+On Thu, Dec 26, 2024 at 11:04:11PM +0200, Dmitry Baryshkov wrote:
+> On Thu, Dec 26, 2024 at 11:18:45AM +0800, Yuanjie Yang wrote:
+> > Qualcomm regulator supports two power supply modes: HPM and LPM.
+> > Currently, the sdhci-msm.c driver does not set the load to adjust
+> > the current for eMMC and SD. If the regulator dont't set correct
+> > load in LPM state, it will lead to the inability to properly
+> > initialize eMMC and SD.
+> > 
+> > Set the correct regulator current for eMMC and SD to ensure that the
+> > device can work normally even when the regulator is in LPM.
+> > 
+> > Signed-off-by: Yuanjie Yang <quic_yuanjiey@quicinc.com>
+> > ---
+> > Changes in v3:
+> > - Optimize the code logic and separate code for regulator vmmc and vqmmc
+> > - Rebase on tag: next-20241217
 > 
+> 10 days old branch
 > 
-> On 2024-12-25 19:37, Krzysztof Kozlowski wrote:
->> On 25/12/2024 11:04, Yijie Yang wrote:
->>
->>>   static int qcom_ethqos_probe(struct platform_device *pdev)
->>>   {
->>> -	struct device_node *np = pdev->dev.of_node;
->>> +	struct device_node *np = pdev->dev.of_node, *root;
->>>   	const struct ethqos_emac_driver_data *data;
->>>   	struct plat_stmmacenet_data *plat_dat;
->>>   	struct stmmac_resources stmmac_res;
->>> @@ -810,6 +805,15 @@ static int qcom_ethqos_probe(struct platform_device *pdev)
->>>   	ret = of_get_phy_mode(np, &ethqos->phy_mode);
->>>   	if (ret)
->>>   		return dev_err_probe(dev, ret, "Failed to get phy mode\n");
->>> +
->>> +	root = of_find_node_by_path("/");
->>> +	if (root && of_device_is_compatible(root, "qcom,sa8540p-ride"))
->>
->>
->> Nope, your drivers are not supposed to poke root compatibles. Drop and
->> fix your driver to behave correctly for all existing devices.
->>
+OK I will rebase on the latest tag in next patch.
+
+> > - Link to v2: https://lore.kernel.org/all/20241127095029.3918290-1-quic_yuanjiey@quicinc.com/
+> > 
+> > Changes in v2:
+> > - Add enum msm_reg_type to optimize the code
+> > - Delete redundant emmc type judgment
+> > - Link to v1: https://lore.kernel.org/linux-arm-msm/20241122075048.2006894-1-quic_yuanjiey@quicinc.com/
+> > 
+> > ---
+> >  drivers/mmc/host/sdhci-msm.c | 64 ++++++++++++++++++++++++++++++++++--
+> >  1 file changed, 62 insertions(+), 2 deletions(-)
+> > 
+> > diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
+> > index e00208535bd1..22811964ba61 100644
+> > --- a/drivers/mmc/host/sdhci-msm.c
+> > +++ b/drivers/mmc/host/sdhci-msm.c
+> > @@ -134,9 +134,18 @@
+> >  /* Timeout value to avoid infinite waiting for pwr_irq */
+> >  #define MSM_PWR_IRQ_TIMEOUT_MS 5000
+> >  
+> > +/* Max load for eMMC Vdd supply */
+> > +#define MMC_VMMC_MAX_LOAD_UA	570000
+> > +
+> >  /* Max load for eMMC Vdd-io supply */
+> >  #define MMC_VQMMC_MAX_LOAD_UA	325000
+> >  
+> > +/* Max load for SD Vdd supply */
+> > +#define SD_VMMC_MAX_LOAD_UA	800000
+> > +
+> > +/* Max load for SD Vdd-io supply */
+> > +#define SD_VQMMC_MAX_LOAD_UA	22000
+> > +
+> >  #define msm_host_readl(msm_host, host, offset) \
+> >  	msm_host->var_ops->msm_readl_relaxed(host, offset)
+> >  
+> > @@ -1403,11 +1412,59 @@ static int sdhci_msm_set_pincfg(struct sdhci_msm_host *msm_host, bool level)
+> >  	return ret;
+> >  }
+> >  
+> > -static int sdhci_msm_set_vmmc(struct mmc_host *mmc)
+> > +static void msm_config_vmmc_regulator(struct mmc_host *mmc, bool hpm)
+> > +{
+> > +	int load;
+> > +
+> > +	if (!mmc->card) {
+> > +		regulator_set_mode(mmc->supply.vmmc,
+> > +				   hpm ? REGULATOR_MODE_NORMAL : REGULATOR_MODE_IDLE);
 > 
-> Since this change introduces a new flag in the DTS, we must maintain ABI 
-> compatibility with the kernel. The new flag is specific to the board, so 
+> Can there be other users of the regulator or is it an exclusive one?
+> Because if there can be other users, you could have pulled the power
+> from them.
 
-It's not, I don't see it specific to the board in the bindings.
+1.Yes there may be others users of the regulator.
 
-> I need to ensure root nodes are matched to allow older boards to 
-> continue functioning as before. I'm happy to adopt that approach if 
-> there are any more elegant solutions.
+I searched all the DTS files using the “qcom,sdhci-msm-v5”
+driver and found that the following four DTS files have
+instances where the SDHCI device and other devices share a
+regulator.
 
-I don't think you understood the problem. Why you are not handling this
-for my board, sa8775p-rideX and sa8225-pre-ride-yellow-shrimp?
+qcm2290.dtsi
+qrb2210-rb1.dts SDHC2(sd) and usb share pm4125_l21
+		pm4125_l21: l21 {
+			/* SDHCI2 VMMC */
+			regulator-min-microvolt = <2960000>;
+			regulator-max-microvolt = <3300000>;
+			regulator-allow-set-load;
+			regulator-boot-on;
+		};
+
+sc7280.dtsi
+qcm6490-idp.dts
+	SDHC_1(eMMC) and ufs share vreg_l7b_2p952
+		vreg_l7b_2p952: ldo7 {
+			regulator-name = "vreg_l7b_2p952";
+			regulator-min-microvolt = <2400000>;
+			regulator-max-microvolt = <3544000>;
+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+		};
+
+sc7280.dtsi
+sc7280-idp.dtsi
+	SDHC_1(eMMC) and ufs share vreg_l7b_2p9
+		vreg_l7b_2p9: ldo7 {
+			regulator-min-microvolt = <2960000>;
+			regulator-max-microvolt = <2960000>;
+		};
+
+qcs615.dtsi
+qcs615-ride.dts
+	SDHC_1(eMMC) and ufs
+		vreg_l17a: ldo17 {
+			regulator-name = "vreg_l17a";
+			regulator-min-microvolt = <2950000>;
+			regulator-max-microvolt = <3312000>;
+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+		};
+
+We can see When SDHC device and other device share a regulator,
+the regulator doesn't have regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM>
+property.
+So even if the code here uses the regulator_set_mode(REGULATOR_MODE_IDLE),
+it will have no effect to other device.
+
+2. code (!mmc->card) means SDHC device first intialize.
+
+When the SDHC device initialization does not recognize the
+device type, call mmc_power_up will reach condition
+(!mmc->card) && hpm == 1. Usually this situation is in SDHC
+initialization, and need to power up.
+This patch aim to set correct current to let SDHC can properly
+initialize even regulator-init-mode is LPM, but in first time
+initialization, We don't konw this device type. So we change
+regulator mode to HPM.
+
+When the SDHC device initialization does not recognize
+the device type, and call mmc_power_off will reach condition
+(!mmc->card) && hpm == 0. Usually this situation means SDHC
+device initialize fail.
+This scenario is rare, and most of the time the code cannot
+reach this point.
+
+> > +		return;
+> > +	}
+> > +
+> > +	if (!mmc_card_mmc(mmc->card) &&
+> > +	    !mmc_card_sd(mmc->card))
+> > +		return;
+> > +
+> > +	if (mmc_card_mmc(mmc->card))
+> > +		load = MMC_VMMC_MAX_LOAD_UA;
+> > +	else if (mmc_card_sd(mmc->card))
+> > +		load =  SD_VMMC_MAX_LOAD_UA;
+> 
+> if (mmc_card_mmc(mmc->card) ||
+>     mmc_card_sd(mmc->card))
+
+Here, I want to filter out other types of devices,
+just select the corrsponding current only for eMMC
+and SD card.
+
+"
+if (!mmc_card_mmc(mmc->card) &&
+    !mmc_card_sd(mmc->card))
+    return;
+"     filter out
+
+"
+if (mmc_card_mmc(mmc->card))
+    load = MMC_VMMC_MAX_LOAD_UA;
+else if (mmc_card_sd(mmc->card))
+    load =  SD_VMMC_MAX_LOAD_UA;
+"      select current
 
 
-Best regards,
-Krzysztof
+> > +	load = hpm ? load : 0;
+> > +
+> > +	regulator_set_load(mmc->supply.vmmc, load);
+> > +
+> > +	return;
+> > +}
+> > +
+> > +static void msm_config_vqmmc_regulator(struct mmc_host *mmc, bool hpm)
+> > +{
+> > +	int load;
+> > +
+> > +	if (!mmc->card) {
+> > +		regulator_set_mode(mmc->supply.vqmmc,
+> > +				   hpm ? REGULATOR_MODE_NORMAL : REGULATOR_MODE_IDLE);
+> > +		return;
+> > +	}
+> > +
+> > +	if (!mmc_card_sd(mmc->card))
+> > +		return;
+> > +
+> > +	load =  hpm ? SD_VQMMC_MAX_LOAD_UA : 0;
+> > +
+> > +	regulator_set_load(mmc->supply.vqmmc, load);
+> > +
+> > +	return;
+> > +}
+> > +
+> > +static int sdhci_msm_set_vmmc(struct sdhci_msm_host *msm_host,
+> > +			      struct mmc_host *mmc, bool hpm)
+> >  {
+> >  	if (IS_ERR(mmc->supply.vmmc))
+> >  		return 0;
+> >  
+> > +	msm_config_vmmc_regulator(mmc, hpm);
+> > +
+> >  	return mmc_regulator_set_ocr(mmc, mmc->supply.vmmc, mmc->ios.vdd);
+> >  }
+> >  
+> > @@ -1420,6 +1477,8 @@ static int msm_toggle_vqmmc(struct sdhci_msm_host *msm_host,
+> >  	if (msm_host->vqmmc_enabled == level)
+> >  		return 0;
+> >  
+> > +	msm_config_vqmmc_regulator(mmc, level);
+> > +
+> >  	if (level) {
+> >  		/* Set the IO voltage regulator to default voltage level */
+> >  		if (msm_host->caps_0 & CORE_3_0V_SUPPORT)
+> > @@ -1642,7 +1701,8 @@ static void sdhci_msm_handle_pwr_irq(struct sdhci_host *host, int irq)
+> >  	}
+> >  
+> >  	if (pwr_state) {
+> > -		ret = sdhci_msm_set_vmmc(mmc);
+> > +		ret = sdhci_msm_set_vmmc(msm_host, mmc,
+> > +					 pwr_state & REQ_BUS_ON);
+> >  		if (!ret)
+> >  			ret = sdhci_msm_set_vqmmc(msm_host, mmc,
+> >  					pwr_state & REQ_BUS_ON);
+> > -- 
+> > 2.34.1
+> > 
+> 
+> -- 
+> With best wishes
+> Dmitry
+
+Thanks,
+Yuanjie
+
+
 
