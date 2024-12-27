@@ -1,188 +1,161 @@
-Return-Path: <linux-arm-msm+bounces-43507-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-43508-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4E0BF9FD58E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Dec 2024 16:19:30 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id C1BC19FD666
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Dec 2024 18:15:30 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 4CB897A3A11
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Dec 2024 15:19:22 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3D2DD18857DB
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Dec 2024 17:15:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A8DD01F758E;
-	Fri, 27 Dec 2024 15:18:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B8C811F76C1;
+	Fri, 27 Dec 2024 17:15:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HSZJSPXQ"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CLo5YY2f"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f170.google.com (mail-pl1-f170.google.com [209.85.214.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F5881F7096;
-	Fri, 27 Dec 2024 15:18:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2815435974;
+	Fri, 27 Dec 2024 17:15:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735312739; cv=none; b=tWCjCzsI9c49lukaAYU1O8/sKCx0E9/2a258p4wX6N6sNuOv0g0+yU9oQsficvzSS//Rriyc9Sx3ir/+zl87dx5+2gKrH7f7ViA1pFT97zUr9Oj0h56Adbbd9lDVOZBtX5QWwoAHic41IVmrs/kJQrdQqI6wr9U5tgY+m80rids=
+	t=1735319724; cv=none; b=XrjyY1ydIFu3EdM06QiVPkAWpOE86Pxhb2m2D9OL/J5txQJZoNZsbCQy1ezvTbjB4O+Qeiezh6wbksRTziSRO0Y6em+EJXAsZJOasW0BnPSHCsQ/9ygLPf41pXALZm3lxG48sqTiRpeMT0pql+cmIizjUK4G8ZQiupt7994UHz0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735312739; c=relaxed/simple;
-	bh=gwuhGYsVedKFqdzT87QIJqQH0pn4nOPDNKbrj/M7BVs=;
-	h=Date:Content-Type:MIME-Version:From:Cc:To:In-Reply-To:References:
-	 Message-Id:Subject; b=G1rMSfc2VpO6bAjDx3F9w3DknQibbPBvrJbauoYwalPUwMPko4c8xS1o5uYfuf+EXo9Iep+/zQyMFw7KQkE8fqh4zSObLF6mza/3w4kHmcvDOopl7ul2YU9/NzC7P6CmMbpJ4RJCHFOZZ3EEx4HIqBC9sHdtwaRLiesC0su8duY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HSZJSPXQ; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B87E7C4CED0;
-	Fri, 27 Dec 2024 15:18:58 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1735312739;
-	bh=gwuhGYsVedKFqdzT87QIJqQH0pn4nOPDNKbrj/M7BVs=;
-	h=Date:From:Cc:To:In-Reply-To:References:Subject:From;
-	b=HSZJSPXQa29JFrdBCfZVI+O51G+vlm/jfQLVU1iFSmvAkwdkLodmq4RyqBDhnh6K/
-	 /P4zBj8syLPWYq7cwzJSXO4z3ZYIWdxcfvEQE1AMQC8ThwsKPAiyoGyRcK2+NA4Seh
-	 d5ZHLIyVEJku78G/c8M/8NACp9GitiS5m19zfWv+h+SEWx7QkoKz3mgDjoaSvXjyIU
-	 vSeGJMUYVOToAzV2rArAa1V4zpDlov23PzkCDkrxTJb+49kv0YFDDgs8SD25SE48OU
-	 zyOhsCsLlZcRX65FWcM7f7GperACV1PQ73WaEsgTxOkQxczW2skVpnY61vcRGwej6Q
-	 K3JwHxniRSoXw==
-Date: Fri, 27 Dec 2024 09:18:57 -0600
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+	s=arc-20240116; t=1735319724; c=relaxed/simple;
+	bh=kqENJDWRfVkjH1SxZdWluLcN8++438Sm8xVfEuDBBzw=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=tguY/qptBsKey+tb4YQL1VwvaAd4YgbLnlVjBupejMY9GOuutPvvvfT66NnxKGpUvHFEM6ubHuxcFN860o2nRPnMqP+5Pr29dggECXGPHRkMphpC7Q83bpcpIosDhaq5Cv1GkyBGocTNHgjjJ1nSDstxu+qKdFuhKiemwDIPvTg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CLo5YY2f; arc=none smtp.client-ip=209.85.214.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pl1-f170.google.com with SMTP id d9443c01a7336-21634338cfdso129301265ad.2;
+        Fri, 27 Dec 2024 09:15:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1735319722; x=1735924522; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=2xGH4XIve12sF/Sx0uzEqo2PoNPgglUjahAnQc+lAmU=;
+        b=CLo5YY2fVWccWi9xJFR6a/1KrONJJVtt2FgWcCJm6TGDu1LBeoZ3L5Fc5uGAmB+BSs
+         OJrHtn9HMtU/NWYE6ynwogWli6ImvKgec1paj0oeJsVdXVbpCl03jq51TIgf2aot6Um9
+         KHxaJsWT+5GTXb9tgaO6HAtc5/cQ37BtXw7Z6Vb18KrFEwnIGnttHk94KXw/EcWKdUkG
+         gxrXwbyltXHGof52Al5Y+6KIZ8cdi8ujkRj01Nk/1RcwsV+nJ6rp+FPEp5lMpM9vhYIn
+         /M6WYJ0mJOFEY6ZVGzbho8V3bUOpK/WSfRHNZDNFls6EvDS0AzMA/NclGe9QuP0FUofO
+         mXKg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1735319722; x=1735924522;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=2xGH4XIve12sF/Sx0uzEqo2PoNPgglUjahAnQc+lAmU=;
+        b=d+WLlQPRhn97Iw/FC3cYjxqGM66hKL78RbBUJ6FdGmIR9uwZjLojCSae2KkbJAtBXF
+         Qm306yU3WOKjFfroE2eKKVM6Z2GM1nSYeWN9JQsSE8J91vxp9Eui2oT5RQ87PTr9V47M
+         lMgLHqzLpBw6RQ3FBctxa0L4nORO/xe1JgyW7TpyXICJH4TUCVs7anKyHMOoZaiW/xgK
+         OSgKjQQ3ETKhtFTrSo2W8rG/T5xmkZ1jItgJOi1NV6/IljDI5AG/m7GzLujQy8pxKyuU
+         NQH6dj4qCv2UGa2ip8mv3b1MNFLp2oecS8GP8O9VYYQYfAa0fclxCDegYuDVRoNmPl+U
+         W/Eg==
+X-Forwarded-Encrypted: i=1; AJvYcCU+y+dR943nqKKi6/BeAYXcVcsEpD9hI4jMsMEdG+fF7cGPhLVaxJkTnY5IQTE18wc+Xi6dC7QMRpBz@vger.kernel.org, AJvYcCUhmDB5BUKgb1DerRiq1tOjKjGz6DUephPHXk8fGhZ2iEH+jnxCS+r9hhn43rcZ5JYUyG9UTrSyWChj1Kla@vger.kernel.org, AJvYcCVgnFqaPpnPJDZjp2sUL6gQYC12OLiSTl8nbpTq1C//+lirl0YSZ9gTrx1B3vrzIkC8Otn3BxD6f2eOYZLH0ql71kjqdA==@vger.kernel.org, AJvYcCWcIOzQPCZKua9H1PP6+PULABYoycArQMNPJKG3dIKoLUQ1jXWFyoC50EbcEY8qiMtrywOAcSbuQ9Bq3amH@vger.kernel.org, AJvYcCXhTj/bfC3IcTEcbph4IZwIZ4XC2bndw+44ctCF8svbkpbwsGEcw/QjU8CPDMrEDgFfq6FFmIUAJK0=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx9SsmANiqAk8hYZ0Riv0SeQqKcLF+dA5FaaorBLnsfjetm7bsM
+	jfOiILp84Ibg6TSx+97QjTwxDZrM3KJssOa4uosPd7HMvZqz6lbRTU58nGSOEM4WJcIq
+X-Gm-Gg: ASbGncs9U1s1dit0cToqVNaAzvKEfWwxlXJUAYc3UXQUXGk+KHg2iO4JxWrVi+PppOc
+	sy2z2JA95409/bi2/oJ35D7vDnMtNao2duONUAGZuq01R+TiBrU8btQUWYOd9zOcaRG3MLM4qnm
+	Y7RTy0f6FC0Ye9cg+1ZYZwZlhRIuelUgq+yNu1Ny3XG4RSOCjPqN7aEFAN7W6+N5r/vtfk0pxjG
+	fWEmjrvgcepuOE6USp9TWk5hEU0G+o8Zbm0Sq2ZMOE=
+X-Google-Smtp-Source: AGHT+IHTt64/v6O//+g4tudoDgww29789gjWkBCiS4wp+DmomX0svX8WyXKm6m1xzF+2ZGP7sVuR9A==
+X-Received: by 2002:a17:903:120e:b0:215:6816:6345 with SMTP id d9443c01a7336-219e6ea278cmr363721505ad.16.1735319722370;
+        Fri, 27 Dec 2024 09:15:22 -0800 (PST)
+Received: from nuvole.. ([2a09:bac1:76a0:dd10::2e9:62])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-219dc9f5227sm138566925ad.185.2024.12.27.09.15.16
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 27 Dec 2024 09:15:21 -0800 (PST)
+From: Pengyu Luo <mitltlatltl@gmail.com>
+To: Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Hans de Goede <hdegoede@redhat.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+	Sebastian Reichel <sre@kernel.org>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	platform-driver-x86@vger.kernel.org,
+	linux-pm@vger.kernel.org,
+	linux-usb@vger.kernel.org,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Nikita Travkin <nikita@trvn.ru>,
+	Pengyu Luo <mitltlatltl@gmail.com>
+Subject: [PATCH 0/5] platform: arm64: Huawei Matebook E Go embedded controller
+Date: Sat, 28 Dec 2024 01:13:48 +0800
+Message-ID: <20241227171353.404432-1-mitltlatltl@gmail.com>
+X-Mailer: git-send-email 2.47.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: "Rob Herring (Arm)" <robh@kernel.org>
-Cc: Konrad Dybcio <konradybcio@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, devicetree@vger.kernel.org, 
- Bjorn Andersson <andersson@kernel.org>, linux-kernel@vger.kernel.org, 
- linux-arm-msm@vger.kernel.org
-To: Yongxing Mou <quic_yongmou@quicinc.com>
-In-Reply-To: <20241226-dts_qcs8300-v2-0-ec8d4fb65cba@quicinc.com>
-References: <20241226-dts_qcs8300-v2-0-ec8d4fb65cba@quicinc.com>
-Message-Id: <173531253451.3886498.17296022505455922309.robh@kernel.org>
-Subject: Re: [PATCH v2 0/2] Enable DPU and Display Port for Qualcomm
- QCS8300-ride platform
+Content-Transfer-Encoding: 8bit
 
+This adds binding, drivers and the DT support for the Huawei Matebook E Go
+(sc8280xp) Embedded Controller which is also found in Huawei Matebook E Go
+LTE (sc8180x), but I don't have the sc8180x one to perferform test, so this
+series enable support for sc8280xp variant only, this series provides the
+following features:
 
-On Thu, 26 Dec 2024 18:43:51 +0800, Yongxing Mou wrote:
-> This series adds the MDSS, DPU and DPTX0 node on Qualcomm QCS8300 SoC.
-> It also enables Display Port on Qualcomm QCS8300-ride platform.
-> 
-> Signed-off-by: Yongxing Mou <quic_yongmou@quicinc.com>
-> ---
-> This series depends on following series:
-> https://lore.kernel.org/all/20241203-qcs8300_initial_dtsi-v4-2-d7c953484024@quicinc.com/
-> https://lore.kernel.org/all/20241106-qcs8300-mm-patches-v3-0-f611a8f87f15@quicinc.com/
-> https://lore.kernel.org/all/20241114-qcs8300-mm-cc-dt-patch-v1-1-7a974508c736@quicinc.com/
-> https://lore.kernel.org/all/20241024-defconfig_sa8775p_clock_controllers-v2-1-a9e1cdaed785@quicinc.com/
-> https://lore.kernel.org/all/20241226-mdssdt_qcs8300-v2-0-acba0db533ce@quicinc.com/
-> ---
-> Changes in v2:Fixed review comments from Konrad, Dmitry and Krzysztof.
-> - Reuse eDP PHY and DPU of SA8775 Platform.[Dmitry][Krzysztof]
-> - Reuse DisplayPort controller of SM8650.[Dmitry]
-> - Correct the regs length, format issues and power-domains.[Konrad]
-> - Integrate the dt changes of DPU and DP together.
-> - Link to v1: https://lore.kernel.org/all/20241127-dp_dts_qcs8300-v1-0-e3d13dec4233@quicinc.com/
-> ~
-> 
-> ---
-> Yongxing Mou (2):
->       arm64: dts: qcom: qcs8300: add display dt nodes for MDSS, DPU, DisplayPort and eDP PHY
->       arm64: dts: qcom: qcs8300-ride: Enable Display Port
-> 
->  arch/arm64/boot/dts/qcom/qcs8300-ride.dts |  44 +++++++
->  arch/arm64/boot/dts/qcom/qcs8300.dtsi     | 204 +++++++++++++++++++++++++++++-
->  2 files changed, 247 insertions(+), 1 deletion(-)
-> ---
-> base-commit: 8155b4ef3466f0e289e8fcc9e6e62f3f4dceeac2
-> change-id: 20241225-dts_qcs8300-4d4299067306
-> prerequisite-message-id: <20241203-qcs8300_initial_dtsi-v4-2-d7c953484024@quicinc.com>
-> prerequisite-patch-id: 33f2488a8eb133431f200e17aac743598508dcf3
-> prerequisite-patch-id: 7b653ebeaf1ca3f87620ccf7d876e3d1fe496c4a
-> prerequisite-patch-id: e1b60af8a64332e5f0ecbd3a4ea2b6e090bd97cf
-> prerequisite-patch-id: b823d744d2fb302e2496eaf0cf0c9c66312dcf2a
-> prerequisite-message-id: <20241106-qcs8300-mm-patches-v3-0-f611a8f87f15@quicinc.com>
-> prerequisite-patch-id: 367d9c742fe5087cfa6fb8e7b05ebe9bc78d68f3
-> prerequisite-patch-id: ee0513c070ab96e63766d235b38ee53ca9b19181
-> prerequisite-patch-id: 970974160bcdc837ccbe5ea3b5dcac582e90bc0d
-> prerequisite-patch-id: 5b2bd9cc44a529b0b9e5d73128dca5d2ff9f2f44
-> prerequisite-patch-id: 6a0a81242e1d0f051e3102533bf0191615c6e96b
-> prerequisite-patch-id: 322540ce6d45c32f813ecef50e5135c6f08d9019
-> prerequisite-message-id: <20241114-qcs8300-mm-cc-dt-patch-v1-1-7a974508c736@quicinc.com>
-> prerequisite-patch-id: 8faad5c6d8ca255935d3e4d317dcbcc32b8261ff
-> prerequisite-message-id: <20241024-defconfig_sa8775p_clock_controllers-v2-1-a9e1cdaed785@quicinc.com>
-> prerequisite-patch-id: 81378ec66ab6e569bd828401c43c4f5af55db32c
-> prerequisite-message-id: <20241226-mdssdt_qcs8300-v2-0-acba0db533ce@quicinc.com>
-> prerequisite-patch-id: b798711c6a9bd9c4f0b692835865235e78cd2adb
-> prerequisite-patch-id: 146c61567c42bf5268d1005f8e9b307ea2af93d9
-> prerequisite-patch-id: 3ce5246ad3470d7392df23a52b3c8b8bd1662db6
-> prerequisite-patch-id: 2ea89bba3c9c6ba37250ebd947c1d4acedc78a5d
-> prerequisite-patch-id: e81de8a09467a49eaeb4af73a0e197e4156ce202
-> 
-> Best regards,
-> --
-> Yongxing Mou <quic_yongmou@quicinc.com>
-> 
-> 
-> 
+- battery and charger information report
+- charging thresholds control
+- FN lock (An alternative method)
+- LID switch detection
+- Temperature sensors
+- USB Type-C altmode
+- USB Type-C PD(high power)
 
+Thanks to the work of Bjorn and Dmitry([1]), the work of Nikita([2]), writing a
+EC driver won't be suffering. This work refers a lot to their work, also, many
+other works. I mentioned them in the source file.
 
-My bot found new DTB warnings on the .dts files added or changed in this
-series.
+Depends: https://lore.kernel.org/linux-arm-msm/20241220160530.444864-1-mitltlatltl@gmail.com
 
-Some warnings may be from an existing SoC .dtsi. Or perhaps the warnings
-are fixed by another series. Ultimately, it is up to the platform
-maintainer whether these warnings are acceptable or not. No need to reply
-unless the platform maintainer has comments.
+[1] https://lore.kernel.org/all/20240614-yoga-ec-driver-v7-0-9f0b9b40ae76@linaro.org/
+[2] https://lore.kernel.org/all/20240315-aspire1-ec-v5-0-f93381deff39@trvn.ru/
 
-If you already ran DT checks and didn't see these error(s), then
-make sure dt-schema is up to date:
+Signed-off-by: Pengyu Luo <mitltlatltl@gmail.com>
+---
+Pengyu Luo (5):
+  dt-bindings: platform: Add Huawei Matebook E Go EC
+  platform: arm64: add Huawei Matebook E Go (sc8280xp) EC driver
+  usb: typec: ucsi: add Huawei Matebook E Go (sc8280xp) ucsi driver
+  power: supply: add Huawei Matebook E Go (sc8280xp) psy driver
+  arm64: dts: qcom: gaokun3: Add Embedded Controller node
 
-  pip3 install dtschema --upgrade
+ .../bindings/platform/huawei,gaokun-ec.yaml   | 116 ++++
+ .../boot/dts/qcom/sc8280xp-huawei-gaokun3.dts | 139 ++++
+ drivers/platform/arm64/Kconfig                |  19 +
+ drivers/platform/arm64/Makefile               |   2 +
+ drivers/platform/arm64/huawei-gaokun-ec.c     | 598 ++++++++++++++++++
+ drivers/platform/arm64/huawei-gaokun-wmi.c    | 283 +++++++++
+ drivers/power/supply/Kconfig                  |   9 +
+ drivers/power/supply/Makefile                 |   1 +
+ drivers/power/supply/huawei-gaokun-battery.c  | 446 +++++++++++++
+ drivers/usb/typec/ucsi/Kconfig                |   9 +
+ drivers/usb/typec/ucsi/Makefile               |   1 +
+ drivers/usb/typec/ucsi/ucsi_huawei_gaokun.c   | 481 ++++++++++++++
+ .../linux/platform_data/huawei-gaokun-ec.h    |  90 +++
+ 13 files changed, 2194 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/platform/huawei,gaokun-ec.yaml
+ create mode 100644 drivers/platform/arm64/huawei-gaokun-ec.c
+ create mode 100644 drivers/platform/arm64/huawei-gaokun-wmi.c
+ create mode 100644 drivers/power/supply/huawei-gaokun-battery.c
+ create mode 100644 drivers/usb/typec/ucsi/ucsi_huawei_gaokun.c
+ create mode 100644 include/linux/platform_data/huawei-gaokun-ec.h
 
-
-New warnings running 'make CHECK_DTBS=y qcom/qcs8300-ride.dtb' for 20241226-dts_qcs8300-v2-0-ec8d4fb65cba@quicinc.com:
-
-arch/arm64/boot/dts/qcom/qcs8300-ride.dtb: efuse@784000: compatible:0: 'qcom,qcs8300-qfprom' is not one of ['qcom,apq8064-qfprom', 'qcom,apq8084-qfprom', 'qcom,ipq5332-qfprom', 'qcom,ipq6018-qfprom', 'qcom,ipq8064-qfprom', 'qcom,ipq8074-qfprom', 'qcom,ipq9574-qfprom', 'qcom,msm8226-qfprom', 'qcom,msm8916-qfprom', 'qcom,msm8974-qfprom', 'qcom,msm8976-qfprom', 'qcom,msm8996-qfprom', 'qcom,msm8998-qfprom', 'qcom,qcm2290-qfprom', 'qcom,qcs404-qfprom', 'qcom,sc7180-qfprom', 'qcom,sc7280-qfprom', 'qcom,sc8280xp-qfprom', 'qcom,sdm630-qfprom', 'qcom,sdm670-qfprom', 'qcom,sdm845-qfprom', 'qcom,sm6115-qfprom', 'qcom,sm6350-qfprom', 'qcom,sm6375-qfprom', 'qcom,sm8150-qfprom', 'qcom,sm8250-qfprom', 'qcom,sm8450-qfprom', 'qcom,sm8550-qfprom', 'qcom,sm8650-qfprom']
-	from schema $id: http://devicetree.org/schemas/nvmem/qcom,qfprom.yaml#
-arch/arm64/boot/dts/qcom/qcs8300-ride.dtb: efuse@784000: Unevaluated properties are not allowed ('compatible' was unexpected)
-	from schema $id: http://devicetree.org/schemas/nvmem/qcom,qfprom.yaml#
-arch/arm64/boot/dts/qcom/qcs8300-ride.dtb: /soc@0/efuse@784000: failed to match any schema with compatible: ['qcom,qcs8300-qfprom', 'qcom,qfprom']
-arch/arm64/boot/dts/qcom/qcs8300-ride.dtb: remoteproc@3000000: compatible:0: 'qcom,qcs8300-adsp-pas' is not one of ['qcom,sa8775p-adsp-pas', 'qcom,sa8775p-cdsp0-pas', 'qcom,sa8775p-cdsp1-pas', 'qcom,sa8775p-gpdsp0-pas', 'qcom,sa8775p-gpdsp1-pas']
-	from schema $id: http://devicetree.org/schemas/remoteproc/qcom,sa8775p-pas.yaml#
-arch/arm64/boot/dts/qcom/qcs8300-ride.dtb: remoteproc@3000000: compatible: ['qcom,qcs8300-adsp-pas', 'qcom,sa8775p-adsp-pas'] is too long
-	from schema $id: http://devicetree.org/schemas/remoteproc/qcom,sa8775p-pas.yaml#
-arch/arm64/boot/dts/qcom/qcs8300-ride.dtb: remoteproc@3000000: Unevaluated properties are not allowed ('compatible' was unexpected)
-	from schema $id: http://devicetree.org/schemas/remoteproc/qcom,sa8775p-pas.yaml#
-arch/arm64/boot/dts/qcom/qcs8300-ride.dtb: /soc@0/remoteproc@3000000: failed to match any schema with compatible: ['qcom,qcs8300-adsp-pas', 'qcom,sa8775p-adsp-pas']
-arch/arm64/boot/dts/qcom/qcs8300-ride.dtb: display-subsystem@ae00000: Unevaluated properties are not allowed ('phy@aec2a00' was unexpected)
-	from schema $id: http://devicetree.org/schemas/display/msm/qcom,qcs8300-mdss.yaml#
-arch/arm64/boot/dts/qcom/qcs8300-ride.dtb: display-controller@ae01000: clock-names:0: 'nrt_bus' was expected
-	from schema $id: http://devicetree.org/schemas/display/msm/qcom,sm8650-dpu.yaml#
-arch/arm64/boot/dts/qcom/qcs8300-ride.dtb: display-controller@ae01000: Unevaluated properties are not allowed ('clock-names' was unexpected)
-	from schema $id: http://devicetree.org/schemas/display/msm/qcom,sm8650-dpu.yaml#
-arch/arm64/boot/dts/qcom/qcs8300-ride.dtb: displayport-controller@af54000: reg: [[0, 183844864, 0, 512], [0, 183845376, 0, 512], [0, 183848960, 0, 3072], [0, 183853056, 0, 1024]] is too short
-	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
-arch/arm64/boot/dts/qcom/qcs8300-ride.dtb: interrupt-controller@b220000: compatible:0: 'qcom,qcs8300-pdc' is not one of ['qcom,qdu1000-pdc', 'qcom,sa8255p-pdc', 'qcom,sa8775p-pdc', 'qcom,sar2130p-pdc', 'qcom,sc7180-pdc', 'qcom,sc7280-pdc', 'qcom,sc8180x-pdc', 'qcom,sc8280xp-pdc', 'qcom,sdm670-pdc', 'qcom,sdm845-pdc', 'qcom,sdx55-pdc', 'qcom,sdx65-pdc', 'qcom,sdx75-pdc', 'qcom,sm4450-pdc', 'qcom,sm6350-pdc', 'qcom,sm8150-pdc', 'qcom,sm8250-pdc', 'qcom,sm8350-pdc', 'qcom,sm8450-pdc', 'qcom,sm8550-pdc', 'qcom,sm8650-pdc', 'qcom,x1e80100-pdc']
-	from schema $id: http://devicetree.org/schemas/interrupt-controller/qcom,pdc.yaml#
-arch/arm64/boot/dts/qcom/qcs8300-ride.dtb: /soc@0/interrupt-controller@b220000: failed to match any schema with compatible: ['qcom,qcs8300-pdc', 'qcom,pdc']
-arch/arm64/boot/dts/qcom/qcs8300-ride.dtb: remoteproc@20c00000: compatible:0: 'qcom,qcs8300-gpdsp-pas' is not one of ['qcom,sa8775p-adsp-pas', 'qcom,sa8775p-cdsp0-pas', 'qcom,sa8775p-cdsp1-pas', 'qcom,sa8775p-gpdsp0-pas', 'qcom,sa8775p-gpdsp1-pas']
-	from schema $id: http://devicetree.org/schemas/remoteproc/qcom,sa8775p-pas.yaml#
-arch/arm64/boot/dts/qcom/qcs8300-ride.dtb: remoteproc@20c00000: compatible: ['qcom,qcs8300-gpdsp-pas', 'qcom,sa8775p-gpdsp0-pas'] is too long
-	from schema $id: http://devicetree.org/schemas/remoteproc/qcom,sa8775p-pas.yaml#
-arch/arm64/boot/dts/qcom/qcs8300-ride.dtb: remoteproc@20c00000: Unevaluated properties are not allowed ('compatible' was unexpected)
-	from schema $id: http://devicetree.org/schemas/remoteproc/qcom,sa8775p-pas.yaml#
-arch/arm64/boot/dts/qcom/qcs8300-ride.dtb: /soc@0/remoteproc@20c00000: failed to match any schema with compatible: ['qcom,qcs8300-gpdsp-pas', 'qcom,sa8775p-gpdsp0-pas']
-arch/arm64/boot/dts/qcom/qcs8300-ride.dtb: remoteproc@26300000: compatible:0: 'qcom,qcs8300-cdsp-pas' is not one of ['qcom,sa8775p-adsp-pas', 'qcom,sa8775p-cdsp0-pas', 'qcom,sa8775p-cdsp1-pas', 'qcom,sa8775p-gpdsp0-pas', 'qcom,sa8775p-gpdsp1-pas']
-	from schema $id: http://devicetree.org/schemas/remoteproc/qcom,sa8775p-pas.yaml#
-arch/arm64/boot/dts/qcom/qcs8300-ride.dtb: remoteproc@26300000: compatible: ['qcom,qcs8300-cdsp-pas', 'qcom,sa8775p-cdsp0-pas'] is too long
-	from schema $id: http://devicetree.org/schemas/remoteproc/qcom,sa8775p-pas.yaml#
-arch/arm64/boot/dts/qcom/qcs8300-ride.dtb: remoteproc@26300000: Unevaluated properties are not allowed ('compatible' was unexpected)
-	from schema $id: http://devicetree.org/schemas/remoteproc/qcom,sa8775p-pas.yaml#
-arch/arm64/boot/dts/qcom/qcs8300-ride.dtb: /soc@0/remoteproc@26300000: failed to match any schema with compatible: ['qcom,qcs8300-cdsp-pas', 'qcom,sa8775p-cdsp0-pas']
-
-
-
-
+-- 
+2.47.1
 
 
