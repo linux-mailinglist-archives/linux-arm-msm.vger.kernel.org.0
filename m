@@ -1,69 +1,64 @@
-Return-Path: <linux-arm-msm+bounces-43459-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-43460-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 769599FD01E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Dec 2024 05:16:39 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5ADEF9FD022
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Dec 2024 05:16:58 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2157D1883653
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Dec 2024 04:16:41 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8D6193A0738
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Dec 2024 04:16:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E8B7C14AD19;
-	Fri, 27 Dec 2024 04:15:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5172914D717;
+	Fri, 27 Dec 2024 04:15:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JgQcr7pT"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OXztEk9G"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC8B614A4FB;
-	Fri, 27 Dec 2024 04:15:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2709214D44D;
+	Fri, 27 Dec 2024 04:15:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735272938; cv=none; b=mtz3MxumAYLWW7WNobPIVLa4DqdX2Y9w7XudeZZAi5u2KyCID86wMiK+MATXKMR/7AnuSsiGQBjrlesRVy3wHk7cSU9dzRiYYF4Uif6NajSorGV6ofFIJgDcipuIW965sTi8N1kC8vNiy7qPlvIadPgCe6RzsGrs4+y1taKl8sw=
+	t=1735272940; cv=none; b=W1Pm6tx9vWMEk8MeBbHz0kZt0OhpN3Kj+A7ZDOmvPgcCXp4uk8jZa7VNlbNWp3K1aG69e9Hjo4UI6dpE7gOFXkbmAmB197KQQPTsSWoEJVijk4SjznY9YlH+4gR2bmB5aWW1/ZchnrNTk9C0Adg02VtN8S14NTGKQVS1eNjMnhg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735272938; c=relaxed/simple;
-	bh=H+m3kqJntqvVDQnGSKrysUklyuUJye6AmWCdSi7Gg6E=;
+	s=arc-20240116; t=1735272940; c=relaxed/simple;
+	bh=PX2gCVpNov1cAi/I9agfGg8xaQUf7f2dYAyurGCugBI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=JsgsTY2QkIGjCTJiDEwPBJv0+e3yjDOlfocCykrqFNjYItPx/cSt1xQcNKGEaRV7k/qy9ctSsJftLOXa50FRW8cos9ISbFfV7x983qdWR5ziOLxQVB4EJRvfZM5rYP5mBGioNjFuGclDTQJUkhIjNx8b4YrF807SRM7M63g5JnE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JgQcr7pT; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67DDCC4AF10;
-	Fri, 27 Dec 2024 04:15:37 +0000 (UTC)
+	 MIME-Version:Content-Type; b=PC2XzJ+QrQY3tnFoxLu+Rjtz4e6pzKvCzygFFrs2X7qQ4TjnmLTvMJCWCh+vcrWGqXtbMJyTyNNlkQRXUTZY4URwztPrrogbiYFrZEshnyn9stYxekEiZZy3faoPq/HKhVhtPvg5eczCZOLoJjvVJyNTYe5I6Rbfexw0E13aeZg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OXztEk9G; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D60A2C4CED4;
+	Fri, 27 Dec 2024 04:15:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1735272938;
-	bh=H+m3kqJntqvVDQnGSKrysUklyuUJye6AmWCdSi7Gg6E=;
+	s=k20201202; t=1735272939;
+	bh=PX2gCVpNov1cAi/I9agfGg8xaQUf7f2dYAyurGCugBI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JgQcr7pThnq5QKZhMdgAGyQulWIpzTJnzo8QiTEvj6HdopHJCY/XzLDecH0spmCSQ
-	 iX33wg+nJtWmCrv3AILDBNbvq0/748ahLhFC/wuNVtb050+1DYHaQqaR400vIxvtj7
-	 Y3WJIbLQEonw4QOY2+pZdUCbHLrc/pXro6RbWu7Clhb1Xy+jUAr7nV52q4DqEBXk4s
-	 suUlrLwZGMYiiVdEuOi8Bci0SofFTIlymGQkEypIm4oMK37eTK2fmHd+Okqdj6o1XU
-	 6OW435bcxmY76uGJdWauakpICdGf9seU/2ucyWnuRHLDBq7Sq9oTXOq9Edba0Jy2hq
-	 hmA/G+QLwbh1g==
+	b=OXztEk9G0hR3esm4cmZBlEwErDuW/rLM08DzHGcd+SyKqdh81DbyurORkHY7gyI65
+	 l0tA+XLQOGbvCG+gaOhScxSDDAsd1KqFQxxvYQ9epCNCbhz+8lr6adLwRuJfwFixkS
+	 dG4jZyFoiesD9GaXbit0DKhGdx+CcpMLnBu4b2+cyU7DaEtefAnQ5nSPRVDEmZUqRh
+	 rq+I9PewP4FDhJNFZV2EY/HKayaAujaCo1fSZxqILZsYAvIOzFKT0wv6+WQMRplIeD
+	 b3LbcsVJr5P+1+BmHjjz4Ftl4OYW4rVP2mZCGzeb8VpJwLm1Qe3ZFgc2ECOWDBpOwX
+	 WaHJxd+AqeVMw==
 From: Bjorn Andersson <andersson@kernel.org>
-To: Konrad Dybcio <konradybcio@kernel.org>,
-	Conor Dooley <conor@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Jingyi Wang <quic_jingyw@quicinc.com>
-Cc: quic_tengfan@quicinc.com,
+To: manivannan.sadhasivam@linaro.org,
+	Krishna chaitanya chundru <quic_krichai@quicinc.com>
+Cc: helgaas@kernel.org,
+	linux-pci@vger.kernel.org,
 	linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	quic_tingweiz@quicinc.com,
-	quic_aiquny@quicinc.com,
-	20240925-qcs8300_initial_dtsi-v2-0-494c40fa2a42@quicinc.com,
-	20241026-sar2130p-llcc-v3-0-2a58fa1b4d12@linaro.org,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Subject: Re: (subset) [PATCH v3 0/3] soc: qcom: llcc: Add LLCC support for the QCS8300 platform
-Date: Thu, 26 Dec 2024 22:15:26 -0600
-Message-ID: <173527291940.1467503.17007096107055888394.b4-ty@kernel.org>
+	quic_vbadigan@quicinc.com,
+	quic_nitegupt@quicinc.com,
+	quic_skananth@quicinc.com,
+	quic_ramkri@quicinc.com,
+	krzysztof.kozlowski@linaro.org
+Subject: Re: (subset) [PATCH v10 0/4] PCI: qcom: ep: Add basic interconnect support
+Date: Thu, 26 Dec 2024 22:15:27 -0600
+Message-ID: <173527291948.1467503.9672408078047236148.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20241031-qcs8300_llcc-v3-0-bb56952cb83b@quicinc.com>
-References: <20241031-qcs8300_llcc-v3-0-bb56952cb83b@quicinc.com>
+In-Reply-To: <1689751218-24492-1-git-send-email-quic_krichai@quicinc.com>
+References: <1689751218-24492-1-git-send-email-quic_krichai@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -74,22 +69,43 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Thu, 31 Oct 2024 15:14:35 +0800, Jingyi Wang wrote:
-> The QCS8300 platform has LLCC(Last Level Cache Controller) as the system
-> cache controller. Add binding, configuration and device tree node to
-> support this. There is an errata to get the number of the banks of the
-> LLCC on QCS8300 platform, hardcode it as a workaround.
+On Wed, 19 Jul 2023 12:50:14 +0530, Krishna chaitanya chundru wrote:
+> Add basic support for managing "pcie-mem" interconnect path by setting
+> a low constraint before enabling clocks and updating it after the link
+> is up based on link speed and width the device got enumerated.
 > 
-> This series depends on below patch series:
-> https://lore.kernel.org/all/20240925-qcs8300_initial_dtsi-v2-0-494c40fa2a42@quicinc.com/ - Reviewed
-> https://lore.kernel.org/all/20241026-sar2130p-llcc-v3-0-2a58fa1b4d12@linaro.org/ - Reviewed
+> changes from v9:
+> 	- addressed the comments by mani.
+> changes from v8:
+>         - Added cpu to pcie path in dtsi and in dtsi binding.
+> changes from v7:
+>         - setting icc bw to '0' in disable resources as suggested by mani.
+> changes from v6:
+>         - addressed the comments as suggested by mani.
+> changes from v5:
+>         - addressed the comments by mani.
+> changes from v4:
+>         - rebased with linux-next.
+>         - Added comments as suggested by mani.
+>         - removed the arm: dts: qcom: sdx55: Add interconnect path
+>           as that patch is already applied.
+> changes from v3:
+>         - ran make DT_CHECKER_FLAGS=-m dt_binding_check and fixed
+>          errors.
+>         - Added macros in the qcom ep driver patch as suggested by Dmitry
+> changes from v2:
+>         - changed the logic for getting speed and width as suggested
+>          by bjorn.
+>         - fixed compilation errors.
 > 
 > [...]
 
 Applied, thanks!
 
-[3/3] arm64: dts: qcom: qcs8300: Add LLCC support for QCS8300
-      commit: f17a2293d0ed99ed4f5c6886ee6dd847da99a728
+[2/4] arm: dts: qcom: sdx65: Add PCIe EP interconnect path
+      commit: 84d2ae7c09d93949fc9e9fe57bdb78a2f3fa24aa
+[3/4] arm: dts: qcom: sdx55: Add CPU PCIe EP interconnect path
+      commit: 7ec041bd2715df2da4ab19c403c27d58d173c7c0
 
 Best regards,
 -- 
