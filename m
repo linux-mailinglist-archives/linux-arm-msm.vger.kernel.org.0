@@ -1,137 +1,87 @@
-Return-Path: <linux-arm-msm+bounces-43535-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-43536-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id E715C9FD8E8
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Dec 2024 04:37:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id C09569FD8EC
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Dec 2024 04:40:01 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 805B03A24F6
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Dec 2024 03:37:33 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5C72E3A2530
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Dec 2024 03:39:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C904A35949;
-	Sat, 28 Dec 2024 03:37:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4E53935949;
+	Sat, 28 Dec 2024 03:39:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lfL3MckK"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="j6KiLlXp"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99DC42D05E;
-	Sat, 28 Dec 2024 03:37:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 225A433EA;
+	Sat, 28 Dec 2024 03:39:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735357053; cv=none; b=gNwjunbs2O/Pp5u1N0+015DdAwrBTdoelN9Cv1oTjfn28oJpR9+8GYdpwxwC0PJ8zlScFu4Lk6h6HX6iQq7MxbdSliN/f6KVWyFa79NGAhErNcoxBp7ulSZlOQXNIgukNjdCWtNnqnlnOC/TJRpy+nQ+s9q1TXyuaB7rXv+PFYQ=
+	t=1735357197; cv=none; b=ntGguDIcWxnMZxPicnXbS25UF7rDkY7LIcs7GJptxkzNaQC1iP08g0yDFjx/bpFl+mtBkC06bZevfRyuS94pq9yE7W9tGJrgVBvtPpo5BORdroW7wx+RlVKIlUHteZuBb4o1POsT3RwzT7xz6f1opHGyKOurvWrdycqh57fbKCw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735357053; c=relaxed/simple;
-	bh=SmYZUEDX/MU1VkhUZsVFSuK4z6Ay9QJSmX3fL+Sg2sk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=JCglB1VVuh6c4Vo7TiQJApTxK7ITmA8PK9SJZsGA1wLn08lfZ6+QdqGWfzFo7bkGtV9SHvKUC4sguV/qUB2ocAQEovKFsufs3+K2oGF5Kwcf3IxJPvsFAfu6R9WOWTQpOvxPTQFkLYzjjtvYnn34SxEzdEOq/UAb6dhAUjGV3/s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lfL3MckK; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 712CFC4CECD;
-	Sat, 28 Dec 2024 03:37:32 +0000 (UTC)
+	s=arc-20240116; t=1735357197; c=relaxed/simple;
+	bh=gRLGLZMJDuaDn8BKAJgqm0Mrv3neWPxzWSRXMC4tCIg=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=CRHDh5kWXeTAkZcZOjkqsr8xwBCWdzt7c0vZkzuWU8knwVxBI/G2PM0gecIMJstugWWHYFsitbnEJ2A9DKj3cM/bY5veveHtCr+kCrxpY5dRKSZaMZCQ9YSKKLWKvyHekZjjxYgGEpUJrHTmodVqXghvWY5CB0CtnJka9P4xs/s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=j6KiLlXp; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4A83C4CECD;
+	Sat, 28 Dec 2024 03:39:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1735357053;
-	bh=SmYZUEDX/MU1VkhUZsVFSuK4z6Ay9QJSmX3fL+Sg2sk=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=lfL3MckKQ6C5k4fKx9/Y3E07JzV6NOYZX0ey6x7wFS3gzSau82RvvfKyHo89dOELf
-	 uBMsAoBFGn5v6eA56Wk1HylGpIEuJvVeYgRURYhduTZ7ZzWR9DnetZH6KSB/ihKtwr
-	 KuNeqcNJa5iqQ30zvohcxoopOEaaqUtMfAWOINIV6GryqWBC4rAzhGcxMYWr2PYhwN
-	 W2NJlB6CF9EE+dzkEOkrSrskqrrzssByyP/cTxZWDw6Waekggj6EUkJ3/5pUXJkLWR
-	 3NSy2oa2b4A83atzsAmPWK8JvCULIU1TxnbZD4z6VfVyCgg6EY1VjYWjMTVxMVPCUA
-	 bKBjX6stGQeuw==
-Date: Fri, 27 Dec 2024 21:37:30 -0600
+	s=k20201202; t=1735357196;
+	bh=gRLGLZMJDuaDn8BKAJgqm0Mrv3neWPxzWSRXMC4tCIg=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=j6KiLlXpuqgRaaaXX/zgQpxJagva6w5I+mDE04t/l3M/IRGc19etr8+bH9MiCbdEi
+	 AjnEa9euXyR1+VEtmY5NEFSBTSuFOQso0XdLqOrw6mKHpJF1uPVbK/7cLQJS18iIIy
+	 eMg5IFYH9acSRQBvIrRviekMadPCWh9GEw3j+keYB0fHkzPEfF2Isinri5PP7nyae1
+	 Gfox7bgC0b0vSejc1Hjaw/HQb8U2jAx6uVgkNQCeEMJu5Kzp2M447qm3zAwRv+GUFB
+	 K0yVKTbf5ndq79KQf449b7eoHj8EteK5OeKOl7Y8ueDYlZ3RthlDraRBfDFXlvkj4O
+	 DoHSgxPYC+9Qw==
 From: Bjorn Andersson <andersson@kernel.org>
-To: Pratyush Brahma <quic_pbrahma@quicinc.com>
-Cc: konradybcio@kernel.org, robh@kernel.org, krzk+dt@kernel.org, 
-	conor+dt@kernel.org, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+To: Konrad Dybcio <konradybcio@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Abel Vesa <abel.vesa@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 2/2] arm64: dts: qcom: qcs8300: Add device node for
- gfx_smmu
-Message-ID: <u74u7ufvy46fw3hr2qswsaxil3aswetpqlhg7k7j2w3dc6q3kk@atujlcdgbp76>
-References: <20241227105818.28516-1-quic_pbrahma@quicinc.com>
- <20241227105818.28516-3-quic_pbrahma@quicinc.com>
+Subject: Re: [PATCH] arm64: dts: qcom: x1e80100: Fix interconnect tags for SDHC nodes
+Date: Fri, 27 Dec 2024 21:39:53 -0600
+Message-ID: <173535719177.1533665.14581872557543882948.b4-ty@kernel.org>
+X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20241227-b4-x1e80100-qcp-sdhc-fixes-v1-1-cd971f7f0955@linaro.org>
+References: <20241227-b4-x1e80100-qcp-sdhc-fixes-v1-1-cd971f7f0955@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241227105818.28516-3-quic_pbrahma@quicinc.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 
-On Fri, Dec 27, 2024 at 04:28:18PM +0530, Pratyush Brahma wrote:
-> Add the device node for gfx smmu that is required for gpu
-> specific address translations.
-> 
-> This patch depends on the patch series [1] posted by Imran Shaik
-> adding the clock support for gpu.
-> 
-> [1] https://lore.kernel.org/all/802d32f1-ff7e-4d61-83f1-f804ee1750ed@oss.qualcomm.com/
-> 
 
-To save other reviewers' time, this is a duplicate and rejected at:
-https://lore.kernel.org/all/64ak7h5pwqinmcymas5i4xexa6bntvti7zkwfhzx7qrsmgaow3@zmn7jffcrp5f/
-
-Regards,
-Bjorn
-
-> Signed-off-by: Pratyush Brahma <quic_pbrahma@quicinc.com>
-> ---
->  arch/arm64/boot/dts/qcom/qcs8300.dtsi | 37 +++++++++++++++++++++++++++
->  1 file changed, 37 insertions(+)
+On Fri, 27 Dec 2024 14:58:36 +0200, Abel Vesa wrote:
+> The CPU-to-SDHC interconnect path for the SDHC_2 needs to have the
+> active-only tags. The tags are missing entirely on for the SDHC_4
+> controller interconnect paths.
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/qcs8300.dtsi b/arch/arm64/boot/dts/qcom/qcs8300.dtsi
-> index 80226992a65d..8eb688e2df0a 100644
-> --- a/arch/arm64/boot/dts/qcom/qcs8300.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/qcs8300.dtsi
-> @@ -816,6 +816,43 @@
->  			#power-domain-cells = <1>;
->  		};
->  
-> +		adreno_smmu: iommu@3da0000 {
-> +			compatible = "qcom,qcs8300-smmu-500", "qcom,adreno-smmu",
-> +				   "qcom,smmu-500", "arm,mmu-500";
-> +			reg = <0x0 0x3da0000 0x0 0x20000>;
-> +			#iommu-cells = <2>;
-> +			#global-interrupts = <2>;
-> +			dma-coherent;
-> +
-> +			power-domains = <&gpucc GPU_CC_CX_GDSC>;
-> +			clocks = <&gcc GCC_GPU_MEMNOC_GFX_CLK>,
-> +				 <&gcc GCC_GPU_SNOC_DVM_GFX_CLK>,
-> +				 <&gpucc GPU_CC_AHB_CLK>,
-> +				 <&gpucc GPU_CC_HLOS1_VOTE_GPU_SMMU_CLK>,
-> +				 <&gpucc GPU_CC_CX_GMU_CLK>,
-> +				 <&gpucc GPU_CC_HUB_CX_INT_CLK>,
-> +				 <&gpucc GPU_CC_HUB_AON_CLK>;
-> +			clock-names = "gcc_gpu_memnoc_gfx_clk",
-> +				      "gcc_gpu_snoc_dvm_gfx_clk",
-> +				      "gpu_cc_ahb_clk",
-> +				      "gpu_cc_hlos1_vote_gpu_smmu_clk",
-> +				      "gpu_cc_cx_gmu_clk",
-> +				      "gpu_cc_hub_cx_int_clk",
-> +				      "gpu_cc_hub_aon_clk";
-> +			interrupts = <GIC_SPI 672 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 673 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 678 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 679 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 680 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 681 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 682 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 683 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 684 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 685 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 686 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 687 IRQ_TYPE_LEVEL_HIGH>;
-> +		};
-> +
->  		pmu@9091000 {
->  			compatible = "qcom,qcs8300-llcc-bwmon", "qcom,sc7280-llcc-bwmon";
->  			reg = <0x0 0x9091000 0x0 0x1000>;
-> -- 
-> 2.17.1
+> Fix all tags for both controllers.
 > 
+> 
+> [...]
+
+Applied, thanks!
+
+[1/1] arm64: dts: qcom: x1e80100: Fix interconnect tags for SDHC nodes
+      commit: fabdaa29f58124a30569008d419282d9ef9cc082
+
+Best regards,
+-- 
+Bjorn Andersson <andersson@kernel.org>
 
