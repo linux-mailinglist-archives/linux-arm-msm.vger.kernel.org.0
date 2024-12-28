@@ -1,139 +1,81 @@
-Return-Path: <linux-arm-msm+bounces-43545-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-43546-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id AFBB89FD9CE
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Dec 2024 11:11:04 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id E40989FD9D3
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Dec 2024 11:12:23 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3FC6C3A21DE
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Dec 2024 10:11:00 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9D8CD1883EEA
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Dec 2024 10:12:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D6BA913D279;
-	Sat, 28 Dec 2024 10:10:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A091313B59A;
+	Sat, 28 Dec 2024 10:12:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="XCIDTksV"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fLRRjdmN"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from relay8-d.mail.gandi.net (relay8-d.mail.gandi.net [217.70.183.201])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B209113AD20;
-	Sat, 28 Dec 2024 10:10:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7394435952;
+	Sat, 28 Dec 2024 10:12:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735380659; cv=none; b=THvlI8jed3rmdxwUxS0uGX7Ob0GhQEsX8593cRdkImVrUXMw8CJYvA/hbDfJpiBFysge7+IQwX8DL+ErB9Jl7Y1i1ImrqiEmCvPCD5QcO1+nyLPNFLQLXGX+y5NATDJqXzW8wjlKCnJ+vfIg0ZuKTSW+BI7/gRGzU9tqesBtSC4=
+	t=1735380739; cv=none; b=VWu7f0rx1Wt7FEk9887hs+9Dy5G+yzsowYpqLwnd2hegKwmdixhYZWYy71CuGb/59EVzBCx6qNjpESMuMJy4OuRH8TXbL8HEPYwog3fMY9Ucmc5SrkzZiWwzY+uvljH7l2+MbRCL62OtIg69SZ3QfKrcIgwem1nZGSR42HfdIlg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735380659; c=relaxed/simple;
-	bh=cyir3PDjbDyY/XEtYE4HL0kr33wE/zbWb1X3coKhFnQ=;
+	s=arc-20240116; t=1735380739; c=relaxed/simple;
+	bh=edBr7Id/A5MJc+x4re15u9kKzXTYYgwKbPkNMozVyiU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=NzREzKGg6Mez0AaILqyRTbE9oJM6UabTd1RD5Civ7myBoVrDctJLO/GSd8sC7W/HGZpSOf0/kA4HclvGufT8HDJYhsQ9tvTcddcStgD1NEEpqAMdRbdAGNNjEMoOCwdW6hKxWD06ishJWsFKdZd8+qk7X+bRxAjk5pDA/0Xd1Pk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=XCIDTksV; arc=none smtp.client-ip=217.70.183.201
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
-Received: by mail.gandi.net (Postfix) with ESMTPSA id 4D9191BF203;
-	Sat, 28 Dec 2024 10:10:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
-	t=1735380648;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=ncWYXnUi6mk+o8Emqu4x+YEeix+m7qnAVflQKfWOvnU=;
-	b=XCIDTksVVP4MKIPW77YWhn5eQnvC48fM7XT38sMO4GL+S2x3Df1Ewj/szBh5xIFIqsA2Z5
-	ZilzcEnS0ob4kPcYJWo88q53OLtd7SamktyTld8/ykS5ad9aHtO7ShlIBUvjk+nBt0QW5J
-	myFBF+iN4oCB0jXlbMsfqtkMizt/w77iQVe9W7M9LtSxoo6OTA5KHxrcgkphpt8L5CByY1
-	xg+gw54EfF9RaAE9czfc7Nlyb3vjZjVSG0fNA9q0UQtOtz8AnyO7G5irHp4pYROlBGSfmn
-	c0RlJWVwKaPGic630SqefQTeKf9SJuvfmVmrN1Vmevo6n6oweZ6GjhiunOcb6w==
-Date: Sat, 28 Dec 2024 11:10:46 +0100
-From: Alexandre Belloni <alexandre.belloni@bootlin.com>
-To: "Peng Fan (OSS)" <peng.fan@oss.nxp.com>
-Cc: "Rafael J. Wysocki" <rafael@kernel.org>,
-	Len Brown <len.brown@intel.com>, Pavel Machek <pavel@ucw.cz>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Conor Dooley <conor.dooley@microchip.com>,
-	Daire McNamara <daire.mcnamara@microchip.com>,
-	linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-input@vger.kernel.org, linux-rtc@vger.kernel.org,
-	linux-stm32@st-md-mailman.stormreply.com,
-	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-	linux-riscv@lists.infradead.org, Peng Fan <peng.fan@nxp.com>
-Subject: Re: [PATCH 00/12] pm: Introduce devm_pm_set_wake_irq
-Message-ID: <20241228101046e64adfb2@mail.local>
-References: <20241228-wake_irq-v1-0-09cfca77cd47@nxp.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=SVh5QlANVyL+eQK7AiRDLEwqya+no2FaE86d7QRvtptcg8yunfR1jPhnjMwP64yNslCi9XDAVOX2zBLMxGkZ7TyfsBIcLXKcyjHDkhbIxw5kz0MqhDlWgsIvmcZH3j0PHp3rlHVn0aqwrzNdsIuBHT5JWoTJTbHQ5KNDpGFv+KM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fLRRjdmN; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E6CBC4CED4;
+	Sat, 28 Dec 2024 10:12:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1735380739;
+	bh=edBr7Id/A5MJc+x4re15u9kKzXTYYgwKbPkNMozVyiU=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=fLRRjdmNxBJ1bImqA+wkH5Yro5fb3d77RWS/8SA4Hzet2Jzw+VoL2y217L5cwtIBP
+	 aMyMSYlQ6+wHJOL7isxZ0S2pR0pRJ4nzDwZi9Nxm5FKwHTbJfmchJ4sJc1guLYGkzw
+	 ms+GAlRk3Wxu332XQf92z3zoOVn07ERLuc0VsmqpFqDq0l2REyRJ4/ryR2eal8qTZs
+	 PcNL6XJ05zTjiEknhcMlt3l68yxagR/GU2Y1XPrQt2irO3GzOftQhFUxOv6H/9ApiG
+	 9j7JgeRUt9BXPYaJwoTktHw5Gv/Bq5gwh8wQYhQfpZYtZ3xabfuafAOTvl8d90TZDx
+	 fkQ0Lzu/nClAQ==
+Date: Sat, 28 Dec 2024 11:12:15 +0100
+From: Krzysztof Kozlowski <krzk@kernel.org>
+To: Pratyush Brahma <quic_pbrahma@quicinc.com>
+Cc: andersson@kernel.org, konradybcio@kernel.org, robh@kernel.org, 
+	krzk+dt@kernel.org, conor+dt@kernel.org, linux-arm-msm@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3 1/2] dt-bindings: arm-smmu: Document QCS8300 GPU SMMU
+Message-ID: <bziwt6ixfol6ajiclkz6iupmcnbaotxrfvz3n3rvjklfpasz2a@ztcmvbmwk7o5>
+References: <20241227105818.28516-1-quic_pbrahma@quicinc.com>
+ <20241227105818.28516-2-quic_pbrahma@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20241228-wake_irq-v1-0-09cfca77cd47@nxp.com>
-X-GND-Sasl: alexandre.belloni@bootlin.com
+In-Reply-To: <20241227105818.28516-2-quic_pbrahma@quicinc.com>
 
-On 28/12/2024 09:14:36+0800, Peng Fan (OSS) wrote:
-> This was a retry to address [1][2], to let common code handle
-> dev_pm_clear_wake_irq. Then no need to call dev_pm_clear_wake_irq
-> in each driver.remove() hook and error handling path.
+On Fri, Dec 27, 2024 at 04:28:17PM +0530, Pratyush Brahma wrote:
+> Add the compatible for Qualcomm QCS8300 GPU SMMU. Add the compatible
+> in the list of clocks required by the GPU SMMU and remove it from the
+> list of disallowed clocks.
 > 
-> In this patchset, I include input and rtc patches to show the usage
-> to avoid that introducing an API without users. There are still
-> other places using dev_pm_clear_wake_irq. If this patchset is
-> good for you, I could start to clean up other drivers such as mmc and
-> etc.
-> 
-> [1] https://lore.kernel.org/all/20241111092131.1693319-1-peng.fan@oss.nxp.com/
-> [2] https://lore.kernel.org/all/ZymxvLMkkktRoCXZ@google.com/
-
-It seems your patchset depends on devm_device_init_wakeup which did not
-make it yet.
-
-> 
-> Signed-off-by: Peng Fan <peng.fan@nxp.com>
+> Signed-off-by: Pratyush Brahma <quic_pbrahma@quicinc.com>
 > ---
-> Peng Fan (12):
->       PM: sleep: wakeirq: Introduce device-managed variant of dev_pm_set_wake_irq
->       input: keyboard: ep93xx_keypad: Use devm_pm_set_wake_irq
->       input: keyboard: omap4_keypad: Use devm_pm_set_wake_irq
->       input: misc: nxp-bbnsm-pwrkey: Use resource managed API to simplify code
->       input: touchscreen: ti_am335x_tsc: Use resource managed API to simplify code
->       rtc: stm32: Use resource managed API to simplify code
->       rtc: nxp-bbnsm: Use resource managed API to simplify code
->       rtc: ds1343: Use devm_pm_set_wake_irq
->       rtc: pm8xxx: Use devm_pm_set_wake_irq
->       rtc: ab8500: Use resource managed API to simplify code
->       rtc: mpfs: Use devm_pm_set_wake_irq
->       rtc: pl031: Use resource managed API to simplify code
-> 
->  drivers/base/power/wakeirq.c              | 25 ++++++++++++++++++
->  drivers/input/keyboard/ep93xx_keypad.c    |  8 +-----
->  drivers/input/keyboard/omap4-keypad.c     |  8 +-----
->  drivers/input/misc/nxp-bbnsm-pwrkey.c     | 15 ++++-------
->  drivers/input/touchscreen/ti_am335x_tsc.c | 43 ++++++++++---------------------
->  drivers/rtc/rtc-ab8500.c                  | 11 ++------
->  drivers/rtc/rtc-ds1343.c                  |  8 +-----
->  drivers/rtc/rtc-mpfs.c                    |  8 +-----
->  drivers/rtc/rtc-nxp-bbnsm.c               | 29 +++++++--------------
->  drivers/rtc/rtc-pl031.c                   |  6 ++---
->  drivers/rtc/rtc-pm8xxx.c                  | 12 +--------
->  drivers/rtc/rtc-stm32.c                   | 10 ++-----
->  include/linux/pm_wakeirq.h                |  6 +++++
->  13 files changed, 70 insertions(+), 119 deletions(-)
-> ---
-> base-commit: 8155b4ef3466f0e289e8fcc9e6e62f3f4dceeac2
-> change-id: 20241227-wake_irq-b68d604dd902
-> 
-> Best regards,
-> -- 
-> Peng Fan <peng.fan@nxp.com>
-> 
+>  Documentation/devicetree/bindings/iommu/arm,smmu.yaml | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
 
--- 
-Alexandre Belloni, co-owner and COO, Bootlin
-Embedded Linux and Kernel engineering
-https://bootlin.com
+I am skipping this patch due to other comments. Maybe they are not
+applicable here, but three maintainers investigating simple thing is way
+too much. Make it easy and obvious for us, not for you.
+
+Best regards,
+Krzysztof
+
 
