@@ -1,78 +1,78 @@
-Return-Path: <linux-arm-msm+bounces-43555-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-43556-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id E2FAC9FDA9F
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Dec 2024 14:07:02 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id F37B89FDAB0
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Dec 2024 14:33:49 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 679B2188323B
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Dec 2024 13:07:04 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 831A11881FA4
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Dec 2024 13:33:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 263A915DBC1;
-	Sat, 28 Dec 2024 13:06:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1E99514F9E7;
+	Sat, 28 Dec 2024 13:33:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="cUbaSkpk"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RxF5Uk1F"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
+Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com [209.85.221.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC6D8155756
-	for <linux-arm-msm@vger.kernel.org>; Sat, 28 Dec 2024 13:06:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22E79C8DF;
+	Sat, 28 Dec 2024 13:33:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735391212; cv=none; b=dglwprF8Db4pdJNhQbx/3EkcjpxuMYYDlcSJRB4yX6qT3b/5JWoTxVQyhorvbTnpM8yWDi7dXbKnzJKo/R+0OH+5e3n4wCRiJgq+k1se6a0S2oQn/ajaL++h+ctCkl+OK3dGbn/vkIOYSv9tnUiZ+uwaDpZTZITtVmy4StT65wc=
+	t=1735392825; cv=none; b=Vp2pqXxJZWl2dMhsYZ4wOjtWrbSWRhLFQEhER67htqrBbueOdvSSsdEXL6qjtxQZW+7sQNz+UeXuOcAZDR8ftwigyehG75ScIZ6fffAFLZN+gdX7KQgklur4WN6of7a6sDj15Q28KlEqccKU6ovXVhbX2JnfVLeBHMDvsCQysZo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735391212; c=relaxed/simple;
-	bh=7pH1FNXPUZur4zvOg5V0+KD1TvcrBhcmk2B7tMhJUSg=;
+	s=arc-20240116; t=1735392825; c=relaxed/simple;
+	bh=lpzmd5qgYbWzXDpiz51Kh68H/esSJWBky5nNUUWLAF0=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=kTiLxRMqb4Ojb7xpR24iBCgd4OxSIeznFuoglKLnYObxkIJPPS4HujLKpTHx6Hc0GFcKtXfa73YfAzyciEaF4qQptyvVHCSXxeHjuS+hjgkC+BP2hiXeQJ8Br2oX8KbYjmJX3aCcEwNrB3ypYulhyMQU2YoV2/p5OQxpBgHiNnI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=cUbaSkpk; arc=none smtp.client-ip=209.85.221.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-3863703258fso5217460f8f.1
-        for <linux-arm-msm@vger.kernel.org>; Sat, 28 Dec 2024 05:06:48 -0800 (PST)
+	 In-Reply-To:Content-Type; b=e1rUKFCOM16ap29TY/dX2oUWWprLngwKzBH7hrxoxdmb+mYmcH6fTGXcVRoN4Pweqlq8iRM69fPxZIybxIPCY/8bBihaYRDIbmWIiQZUqUg5DcUC6FlOl+cx3Lb2KiUYGschXFM6k67VWt9LbYsMdyHufkM2Nmr3NpVT+ttd1nI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RxF5Uk1F; arc=none smtp.client-ip=209.85.221.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-wr1-f50.google.com with SMTP id ffacd0b85a97d-385de9f789cso5964870f8f.2;
+        Sat, 28 Dec 2024 05:33:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1735391207; x=1735996007; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1735392821; x=1735997621; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=l9Ex08q88jppdYtHuLeppku7Y0JRcskid1tEbDb3tIk=;
-        b=cUbaSkpk+Wnd42rdSsAg0BUfG5WX01y0EPyHz+enHzPkVWY/NhB0CrY1ilop3ZA08G
-         PR3OKjyqs2Q/Yqgds6ubyFbuvfuQaFE1YTdj6ySX6lb2SN4mM8QuPxk50/ruqjhy8e8k
-         tSgiASt163YbhdcRm5rrTxLkXSnBUS3AfJwMWKzYy8m88Z1P7iWejNqFa/tKQntcY1g5
-         s178tulo6Ug/jBxKJgTHgUfWJ7Xw+/3MvZ5b42VETAUjYsZ6EH6+OzUvyGFC14F7bGr3
-         K9Ql5+/UvIXMEjp+yRrm23YsswYGi6E1eRxWLcR0LLfRbJ7zo3xu6NdldUdUop3E+3gj
-         iTiA==
+        bh=MGqAPkuHxLCasbPRd/+RCIFy7P37ySBYkC1/IthMi0g=;
+        b=RxF5Uk1FdVQkL2/c8qsu5o8DJ+vWJCzayCHLlurgKndmuO1Zzl0/8w7PAq2nqIc6o6
+         67juW8FjO+AFA22D4PcMp900ZJUdJJzy1Ol816bseA9RIXDabWlAH/FvfiXVH4IqOAY3
+         QHUGGEZwWEo3w8UkbQVeoU1ePyRlUiJf4jx+6+SQ95GtCxsL32mD7EUU20vxjZsPfdqF
+         102xijqh1D+M72XBrhFadeUEZ+EEFhw+jxeLCRdjZG1i5UI42HM7ynvdhGoKQAh5/Sw7
+         XJL6VBRbDy5R02okBZ135jLIOxb50hhIoF8IgAgDojATmScikW08wP0SkZ8PnEzHoAWO
+         8Vkg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1735391207; x=1735996007;
+        d=1e100.net; s=20230601; t=1735392821; x=1735997621;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=l9Ex08q88jppdYtHuLeppku7Y0JRcskid1tEbDb3tIk=;
-        b=Ai9jM/hOlOpvJq7jpooTsIqq8MtY9fQ6cZPloFc1HShc+Ej0XYHL+aelhJgFPwo5Hf
-         f76Q1j1eSgSYTDRhNWLufDv/+CGqCe0AXtzqG+HQquPa/6/FqRj2zVyva9i89yUf3M/o
-         w7LjNKt4p2hwkwjVKBdIg2GL0PW/gKNrxmYkfpCAHj/DI7Z579nFzqx2CL7ygQHGFwZ6
-         LfFJuC4kocDOYKfmZVtoPn4vd4LrIFq9zL7/gjlF8VTQ25ZtVnYpwxg+1wKxMBXOgUUU
-         IUyJB+FYTS2EUmyo07+qxBZNFtdxLrhGRJCawbaFqFuUwr5e63Ff0lOzOREsuo8jWHfm
-         lURw==
-X-Forwarded-Encrypted: i=1; AJvYcCWMbuFoSXm56pZH7vdic64knk9x0X1fo6ch6GxrIr7OnVpnJ/GDGGNpqClEw9WWUr/30F1JM0j9pys0YeXv@vger.kernel.org
-X-Gm-Message-State: AOJu0YzNoFzFKfs5UHhCu8XuzQ0auivWi/hsVDO8tyzUPtVpIbbXBL4u
-	ZqjgPLlfptUYPkXImnMBBiEOfwrcyTzX0oTl9xCV9BouVtGglhjpl3QEC5fTYFg=
-X-Gm-Gg: ASbGncsvEZMP+8dRJz+ENKmBRI9aZY+gONBnsnJWU0xkDFyO+oWCr9cCzcKXbqbmGCD
-	1k9Eemc8QANHS0BW2UQX0NwB431n3i1XwgpBAuLyPsNGP9gxHNPMHp9eGJPDLta1xobXK7vZuUd
-	Pk8YfL1FE6YBiYpf3CPeL50fP0S4MAGq5HM+qVI/GtSfIYZkZJMfl98yChB3ZwdEG1rCXlfPdEY
-	4Nryc7N+Cy+G2ucQs53mE+UffG3kLU9NQrOzI4izq1XML+l+uTjC8TIgc+bQlUHglFvVg==
-X-Google-Smtp-Source: AGHT+IFKyQpt7IZTSKfZEwaO4ndZcZS6FH9gyGEc0jzk6x+GEC8VoH1sDPJiw93OnwbF87ehb0KQzQ==
-X-Received: by 2002:a5d:47c3:0:b0:386:4a2c:3908 with SMTP id ffacd0b85a97d-38a22a1aa5bmr22460139f8f.17.1735391206986;
-        Sat, 28 Dec 2024 05:06:46 -0800 (PST)
-Received: from [192.168.0.40] ([176.61.106.227])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38a1c89e1cesm24453791f8f.64.2024.12.28.05.06.45
+        bh=MGqAPkuHxLCasbPRd/+RCIFy7P37ySBYkC1/IthMi0g=;
+        b=LlmZ0ETox5E6yHkvovUTdyyU0AddqQJGmJQBuMkkv950UOFaU2GCePHeG/Zix5LPEV
+         DSujz/zfpGVZ7jZfJMKmiqHv7yYTZNC9kx9pU1DINcVd7LBcwKSTBO+iPA/GJHW6gMdC
+         syYzLbN6PHpO3nRtkZrc8WNHJE6NpXKarQ4AFxACoOQhk+dAV+CUDIms3sTU/rAs4/C3
+         s1H2GjZNpcT3f5T9B8dB7By8I5Hr1bowrMj1YXS3K8bHnMNK1mKcGhEXK0CDLZkUo5vU
+         z8D5065iCnDNSqOQAP9CccWEs7WkkaV0Geply0kHBrs/3nECJnzRaccUxgXN9dzz2z6K
+         pvcw==
+X-Forwarded-Encrypted: i=1; AJvYcCUxIybqG+ctmLIXb2uFh+F3j/cAyvhLqMCmobqw0yI6wnOBPWjI2jfO3wNf5Ory0m7spu+9jw7JklfJACu3Og==@vger.kernel.org, AJvYcCV3pFxVwB94eBeNl8jWdrinDq7OOejXfHH7vXKq8FnLSKsXFtJYLNoXeXsZtWB/h5emYiBK0UWJsbvGsJ4=@vger.kernel.org, AJvYcCWHAtUdmVFJCuVSgnuNM8awih9mN6DsUqCZ2wr1v452r0fv+TfwG6lhH65xbFINUKwgbZICPQu4BcdoLDEZ@vger.kernel.org, AJvYcCXqTnCC00k26zmvvsiyZKnJpqITng20WSh4o6cK99NiTqfOiElb5OmUD/3t0t6P9+iCS8esWiPta6DH@vger.kernel.org
+X-Gm-Message-State: AOJu0YxHQq5XvUeU0vrvUjjFPb+aCq03t31wePyQuNOxeZjrAn+VDi+M
+	cRQ8jcQwa8sklhJsQY9DET6OoZXwe5qzeEZN6ehK9eld2Lsfo35F
+X-Gm-Gg: ASbGnct/GZqrCvW8dtjp8jJaQXL8spRg0FBGAVJ2s3C6IsR/jm+LiIhAx1SSY4BhF7b
+	3wy63X4KFB8KBuEVpCbmpZbtd8vUYX/Q8NaNGD3MDZ9Ms+tYCI3OqWHtHbQxp9omB9cc4bPvCza
+	azGve262GmJZjRdBsA9qW+yF8auFTa/99US8wPYlI761Zhw90vOIS9QiDQSE3krjsHpyEe7ZRyt
+	FoU66o8LLnRVxcfqPMFAsakoIjC+/RlqLrGKwAclKCpeqik9udWiYafqlM+3H3iwbzAAlXsng==
+X-Google-Smtp-Source: AGHT+IHM8j1PH8EZy4GV+extmbmALyusaNgkpayRkYfRnQKStltS1QaoxKfvEx0dKXojXNCBt+7Apg==
+X-Received: by 2002:adf:ab09:0:b0:38a:4184:1520 with SMTP id ffacd0b85a97d-38a418416bdmr8493579f8f.27.1735392821060;
+        Sat, 28 Dec 2024 05:33:41 -0800 (PST)
+Received: from [192.168.100.6] ([87.97.240.137])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38a1c847714sm25131265f8f.54.2024.12.28.05.33.39
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 28 Dec 2024 05:06:46 -0800 (PST)
-Message-ID: <c17372ed-baf0-40a7-b267-25f1ff849cf7@linaro.org>
-Date: Sat, 28 Dec 2024 13:06:45 +0000
+        Sat, 28 Dec 2024 05:33:40 -0800 (PST)
+Message-ID: <504ff336-3b11-4331-b2b6-86289b17ffd3@gmail.com>
+Date: Sat, 28 Dec 2024 15:33:38 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -80,577 +80,244 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/5] usb: typec: ucsi: add Huawei Matebook E Go (sc8280xp)
- ucsi driver
-To: Pengyu Luo <mitltlatltl@gmail.com>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Hans de Goede <hdegoede@redhat.com>,
- =?UTF-8?Q?Ilpo_J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
- Sebastian Reichel <sre@kernel.org>,
- Heikki Krogerus <heikki.krogerus@linux.intel.com>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, platform-driver-x86@vger.kernel.org,
- linux-pm@vger.kernel.org, linux-usb@vger.kernel.org,
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Nikita Travkin <nikita@trvn.ru>
-References: <20241227171353.404432-1-mitltlatltl@gmail.com>
- <20241227171353.404432-4-mitltlatltl@gmail.com>
-Content-Language: en-US
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <20241227171353.404432-4-mitltlatltl@gmail.com>
+Subject: Re: [PATCH v5 1/3] media: venus: Add support for static video
+ encoder/decoder declarations
+To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+ Vikash Garodia <quic_vgarodia@quicinc.com>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
+Cc: quic_renjiang@quicinc.com, quic_vnagar@quicinc.com,
+ quic_dikshita@quicinc.com, konradybcio@kernel.org,
+ linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+ Stanimir Varbanov <stanimir.varbanov@linaro.org>
+References: <20241209-media-staging-24-11-25-rb3-hw-compat-string-v5-0-ef7e5f85f302@linaro.org>
+ <20241209-media-staging-24-11-25-rb3-hw-compat-string-v5-1-ef7e5f85f302@linaro.org>
+Content-Language: en-US, bg-BG
+From: Stanimir Varbanov <stanimir.k.varbanov@gmail.com>
+In-Reply-To: <20241209-media-staging-24-11-25-rb3-hw-compat-string-v5-1-ef7e5f85f302@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 27/12/2024 17:13, Pengyu Luo wrote:
-> The Huawei Matebook E Go (sc8280xp) tablet provides implements UCSI
-> interface in the onboard EC. Add the glue driver to interface the
-> platform's UCSI implementation.
+Hi Bryan,
+
+Thank for your work !
+
+On 9.12.24 г. 13:52 ч., Bryan O'Donoghue wrote:
+> Add resource structure data and probe() logic to support static
+> declarations of encoder and decoder.
 > 
-> Signed-off-by: Pengyu Luo <mitltlatltl@gmail.com>
+> Right now we rely on video encoder/decoder selection happening in the dtb
+> but, this goes against the remit of device tree which is supposed to
+> describe hardware, not select functional logic in Linux drivers.
+> 
+> Provide two strings in the venus resource structure enc_nodename and
+> dec_nodename.
+> 
+> When set the venus driver will create an OF entry in-memory consistent
+> with:
+> 
+> dec_nodename {
+>      compat = "video-decoder";
+> };
+> 
+> and/or
+> 
+> enc_nodename {
+>      compat = "video-encoder";
+> };
+> 
+> This will allow us to reuse the existing driver scheme of relying on compat
+> names maintaining compatibility with old dtb files.
+> 
+> dec_nodename can be "video-decoder" or "video0"
+> enc_nodename can be "video-encoder" or "video1"
+> 
+> This change relies on of_changeset() API as a result select OF_DYNAMIC will
+> be added to venus/Kconfig
+> 
+> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 > ---
->   drivers/usb/typec/ucsi/Kconfig              |   9 +
->   drivers/usb/typec/ucsi/Makefile             |   1 +
->   drivers/usb/typec/ucsi/ucsi_huawei_gaokun.c | 481 ++++++++++++++++++++
->   3 files changed, 491 insertions(+)
->   create mode 100644 drivers/usb/typec/ucsi/ucsi_huawei_gaokun.c
+>   drivers/media/platform/qcom/venus/Kconfig |  1 +
+>   drivers/media/platform/qcom/venus/core.c  | 94 ++++++++++++++++++++++++++++++-
+>   drivers/media/platform/qcom/venus/core.h  |  4 ++
+>   3 files changed, 98 insertions(+), 1 deletion(-)
 > 
-> diff --git a/drivers/usb/typec/ucsi/Kconfig b/drivers/usb/typec/ucsi/Kconfig
-> index 680e1b87b..0d0f07488 100644
-> --- a/drivers/usb/typec/ucsi/Kconfig
-> +++ b/drivers/usb/typec/ucsi/Kconfig
-> @@ -78,4 +78,13 @@ config UCSI_LENOVO_YOGA_C630
->   	  To compile the driver as a module, choose M here: the module will be
->   	  called ucsi_yoga_c630.
+> diff --git a/drivers/media/platform/qcom/venus/Kconfig b/drivers/media/platform/qcom/venus/Kconfig
+> index bfd50e8f34219db8a1de7960d7ea93b20db2982a..bc2e410b29cb415a36540a4f98709eae44f4ec35 100644
+> --- a/drivers/media/platform/qcom/venus/Kconfig
+> +++ b/drivers/media/platform/qcom/venus/Kconfig
+> @@ -3,6 +3,7 @@ config VIDEO_QCOM_VENUS
+>   	depends on V4L_MEM2MEM_DRIVERS
+>   	depends on VIDEO_DEV && QCOM_SMEM
+>   	depends on (ARCH_QCOM && IOMMU_DMA) || COMPILE_TEST
+> +	select OF_DYNAMIC if ARCH_QCOM
+>   	select QCOM_MDT_LOADER if ARCH_QCOM
+>   	select QCOM_SCM
+>   	select VIDEOBUF2_DMA_CONTIG
+> diff --git a/drivers/media/platform/qcom/venus/core.c b/drivers/media/platform/qcom/venus/core.c
+> index 4e26b18790537885a77d66c1917a4e7a146eaf57..88dfa9f240dc6d18a7f58dc06b1bf10274b7121e 100644
+> --- a/drivers/media/platform/qcom/venus/core.c
+> +++ b/drivers/media/platform/qcom/venus/core.c
+> @@ -286,6 +286,89 @@ static irqreturn_t venus_isr_thread(int irq, void *dev_id)
+>   	return ret;
+>   }
 >   
-> +config UCSI_HUAWEI_GAOKUN
-> +	tristate "UCSI Interface Driver for Huawei Matebook E Go (sc8280xp)"
-> +	depends on EC_HUAWEI_GAOKUN
-> +	help
-> +	  This driver enables UCSI support on the Huawei Matebook E Go tablet.
-> +
-> +	  To compile the driver as a module, choose M here: the module will be
-> +	  called ucsi_huawei_gaokun.
-> +
->   endif
-> diff --git a/drivers/usb/typec/ucsi/Makefile b/drivers/usb/typec/ucsi/Makefile
-> index aed41d238..0b400122b 100644
-> --- a/drivers/usb/typec/ucsi/Makefile
-> +++ b/drivers/usb/typec/ucsi/Makefile
-> @@ -22,3 +22,4 @@ obj-$(CONFIG_UCSI_CCG)			+= ucsi_ccg.o
->   obj-$(CONFIG_UCSI_STM32G0)		+= ucsi_stm32g0.o
->   obj-$(CONFIG_UCSI_PMIC_GLINK)		+= ucsi_glink.o
->   obj-$(CONFIG_UCSI_LENOVO_YOGA_C630)	+= ucsi_yoga_c630.o
-> +obj-$(CONFIG_UCSI_HUAWEI_GAOKUN)	+= ucsi_huawei_gaokun.o
-> diff --git a/drivers/usb/typec/ucsi/ucsi_huawei_gaokun.c b/drivers/usb/typec/ucsi/ucsi_huawei_gaokun.c
-> new file mode 100644
-> index 000000000..84ed0407d
-> --- /dev/null
-> +++ b/drivers/usb/typec/ucsi/ucsi_huawei_gaokun.c
-> @@ -0,0 +1,481 @@
-> +// SPDX-License-Identifier: GPL-2.0-only
-> +/*
-> + * ucsi-huawei-gaokun - A UCSI driver for HUAWEI Matebook E Go (sc8280xp)
-> + *
-> + * reference: drivers/usb/typec/ucsi/ucsi_yoga_c630.c
-> + *            drivers/usb/typec/ucsi/ucsi_glink.c
-> + *            drivers/soc/qcom/pmic_glink_altmode.c
-> + *
-> + * Copyright (C) 2024 Pengyu Luo <mitltlatltl@gmail.com>
-> + */
-> +
-> +#include <linux/auxiliary_bus.h>
-> +#include <linux/bitops.h>
-> +#include <linux/completion.h>
-> +#include <linux/container_of.h>
-> +#include <linux/delay.h>
-> +#include <linux/module.h>
-> +#include <linux/notifier.h>
-> +#include <linux/of.h>
-> +#include <linux/string.h>
-> +#include <linux/workqueue_types.h>
-> +
-> +#include <linux/usb/pd_vdo.h>
-> +#include <drm/bridge/aux-bridge.h
-
-Is there a reason you don't have strict include alphanumeric ordering here ?
-
->
-> +
-> +#include "ucsi.h"
-> +#include <linux/platform_data/huawei-gaokun-ec.h>
-> +
-> +
-> +#define EC_EVENT_UCSI	0x21
-> +#define EC_EVENT_USB	0x22
-> +
-> +#define GAOKUN_CCX_MASK		GENMASK(1, 0)
-> +#define GAOKUN_MUX_MASK		GENMASK(3, 2)
-> +
-> +#define GAOKUN_DPAM_MASK	GENMASK(3, 0)
-> +#define GAOKUN_HPD_STATE_MASK	BIT(4)
-> +#define GAOKUN_HPD_IRQ_MASK	BIT(5)
-> +
-> +#define CCX_TO_ORI(ccx) (++ccx % 3)
-
-Why do you increment the value of the enum ?
-Seems strange.
-
-> +
-> +#define GET_IDX(updt) (ffs(updt) - 1)
-> +
-> +/* Configuration Channel Extension */
-> +enum gaokun_ucsi_ccx {
-> +	USBC_CCX_NORMAL,
-> +	USBC_CCX_REVERSE,
-> +	USBC_CCX_NONE,
-> +};
-> +
-> +enum gaokun_ucsi_mux {
-> +	USBC_MUX_NONE,
-> +	USBC_MUX_USB_2L,
-> +	USBC_MUX_DP_4L,
-> +	USBC_MUX_USB_DP,
-> +};
-> +
-> +struct gaokun_ucsi_reg {
-> +	u8 port_num;
-> +	u8 port_updt;
-> +	u8 port_data[4];
-> +	u8 checksum;
-> +	u8 reserved;
-> +} __packed;
-> +
-> +struct gaokun_ucsi_port {
-> +	struct completion usb_ack;
-> +	spinlock_t lock;
-> +
-> +	struct gaokun_ucsi *ucsi;
-> +	struct auxiliary_device *bridge;
-> +
-> +	int idx;
-> +	enum gaokun_ucsi_ccx ccx;
-> +	enum gaokun_ucsi_mux mux;
-> +	u8 mode;
-> +	u16 svid;
-> +	u8 hpd_state;
-> +	u8 hpd_irq;
-> +};
-> +
-> +struct gaokun_ucsi {
-> +	struct gaokun_ec *ec;
-> +	struct ucsi *ucsi;
-> +	struct gaokun_ucsi_port *ports;
-> +	struct device *dev;
-> +	struct work_struct work;
-> +	struct notifier_block nb;
-> +	u16 version;
-> +	u8 port_num;
-> +};
-> +
-> +/* -------------------------------------------------------------------------- */
-> +/* For UCSI */
-> +
-> +static int gaokun_ucsi_read_version(struct ucsi *ucsi, u16 *version)
+> +#if defined(CONFIG_OF_DYNAMIC)
+> +static int venus_add_video_core(struct venus_core *core, const char *node_name,
+> +				const char *compat)
 > +{
-> +	struct gaokun_ucsi *uec = ucsi_get_drvdata(ucsi);
-> +
-> +	*version = uec->version;
-> +
-> +	return 0;
-> +}
-> +
-> +static int gaokun_ucsi_read_cci(struct ucsi *ucsi, u32 *cci)
-> +{
-> +	struct gaokun_ucsi *uec = ucsi_get_drvdata(ucsi);
-> +	u8 buf[GAOKUN_UCSI_READ_SIZE];
+> +	struct of_changeset *ocs = core->ocs;
+> +	struct device *dev = core->dev;
+> +	struct device_node *np, *enp;
 > +	int ret;
 > +
-> +	ret = gaokun_ec_ucsi_read(uec->ec, buf);
+> +	if (!node_name)
+> +		return 0;
+> +
+> +	enp = of_find_node_by_name(dev->of_node, node_name);
+> +	if (enp) {
+> +		of_node_put(enp);
+> +		return 0;
+> +	}
+> +
+> +	np = of_changeset_create_node(ocs, dev->of_node, node_name);
+> +	if (!np) {
+> +		dev_err(dev, "Unable to create new node\n");
+> +		return -ENODEV;
+> +	}
+> +
+> +	ret = of_changeset_add_prop_string(ocs, np, "compatible", compat);
 > +	if (ret)
-> +		return ret;
+> +		dev_err(dev, "unable to add %s\n", compat);
 > +
-> +	memcpy(cci, buf, sizeof(*cci));
+> +	of_node_put(np);
 > +
-> +	return 0;
+> +	return ret;
 > +}
 > +
-> +static int gaokun_ucsi_read_message_in(struct ucsi *ucsi,
-> +				       void *val, size_t val_len)
+> +static int venus_add_dynamic_nodes(struct venus_core *core)
 > +{
-> +	struct gaokun_ucsi *uec = ucsi_get_drvdata(ucsi);
-> +	u8 buf[GAOKUN_UCSI_READ_SIZE];
+> +	struct device *dev = core->dev;
 > +	int ret;
 > +
-> +	ret = gaokun_ec_ucsi_read(uec->ec, buf);
-> +	if (ret)
-> +		return ret;
-> +
-> +	memcpy(val, buf + GAOKUN_UCSI_CCI_SIZE,
-> +	       min(val_len, GAOKUN_UCSI_DATA_SIZE));
-> +
-> +	return 0;
-> +}
-> +
-> +static int gaokun_ucsi_async_control(struct ucsi *ucsi, u64 command)
-> +{
-> +	struct gaokun_ucsi *uec = ucsi_get_drvdata(ucsi);
-> +	u8 buf[GAOKUN_UCSI_WRITE_SIZE] = {};
-> +
-> +	memcpy(buf, &command, sizeof(command));
-> +
-> +	return gaokun_ec_ucsi_write(uec->ec, buf);
-> +}
-> +
-> +static void gaokun_ucsi_update_connector(struct ucsi_connector *con)
-> +{
-> +	struct gaokun_ucsi *uec = ucsi_get_drvdata(con->ucsi);
-> +
-> +	if (con->num > uec->port_num)
-> +		return;
-> +
-> +	con->typec_cap.orientation_aware = true;
-> +}
-> +
-> +static void gaokun_set_orientation(struct ucsi_connector *con,
-> +				   struct gaokun_ucsi_port *port)
-> +{
-> +	enum gaokun_ucsi_ccx ccx;
-> +	unsigned long flags;
-> +
-> +	spin_lock_irqsave(&port->lock, flags);
-> +	ccx = port->ccx;
-> +	spin_unlock_irqrestore(&port->lock, flags);
-> +
-> +	typec_set_orientation(con->port, CCX_TO_ORI(ccx));
-> +}
-> +
-> +static void gaokun_ucsi_connector_status(struct ucsi_connector *con)
-> +{
-> +	struct gaokun_ucsi *uec = ucsi_get_drvdata(con->ucsi);
-> +	int idx;
-> +
-> +	idx = con->num - 1;
-> +	if (con->num > uec->port_num) {
-> +		dev_warn(uec->ucsi->dev, "set orientation out of range: con%d\n", idx);
-> +		return;
-> +	}
-> +
-> +	gaokun_set_orientation(con, &uec->ports[idx]);
-> +}
-> +
-> +const struct ucsi_operations gaokun_ucsi_ops = {
-> +	.read_version = gaokun_ucsi_read_version,
-> +	.read_cci = gaokun_ucsi_read_cci,
-> +	.read_message_in = gaokun_ucsi_read_message_in,
-> +	.sync_control = ucsi_sync_control_common,
-> +	.async_control = gaokun_ucsi_async_control,
-> +	.update_connector = gaokun_ucsi_update_connector,
-> +	.connector_status = gaokun_ucsi_connector_status,
-> +};
-> +
-> +/* -------------------------------------------------------------------------- */
-> +/* For Altmode */
-> +
-> +static void gaokun_ucsi_port_update(struct gaokun_ucsi_port *port,
-> +				    const u8 *port_data)
-> +{
-> +	unsigned long flags;
-> +	u8 dcc, ddi;
-> +	int offset = port->idx * 2; /* every port has 2 Bytes data */
-> +
-> +	dcc = port_data[offset];
-> +	ddi = port_data[offset + 1];
-> +
-> +	spin_lock_irqsave(&port->lock, flags);
-> +
-> +	port->ccx = FIELD_GET(GAOKUN_CCX_MASK, dcc);
-> +	port->mux = FIELD_GET(GAOKUN_MUX_MASK, dcc);
-> +	port->mode = FIELD_GET(GAOKUN_DPAM_MASK, ddi);
-> +	port->hpd_state = FIELD_GET(GAOKUN_HPD_STATE_MASK, ddi);
-> +	port->hpd_irq = FIELD_GET(GAOKUN_HPD_IRQ_MASK, ddi);
-> +
-> +	switch (port->mux) {
-> +	case USBC_MUX_NONE:
-> +		port->svid = 0;
-> +		break;
-> +	case USBC_MUX_USB_2L:
-> +		port->svid = USB_SID_PD;
-> +		break;
-> +	case USBC_MUX_DP_4L:
-> +	case USBC_MUX_USB_DP:
-> +		port->svid = USB_SID_DISPLAYPORT;
-> +		if (port->ccx == USBC_CCX_REVERSE)
-> +			port->mode -= 6;
-
-why minus six ?
-needs a comment.
-
-> +		break;
-> +	default:
-> +		break;
-> +	}
-> +
-> +	spin_unlock_irqrestore(&port->lock, flags);
-> +}
-> +
-> +static int gaokun_ucsi_refresh(struct gaokun_ucsi *uec)
-> +{
-> +	struct gaokun_ucsi_reg ureg;
-> +	int ret, idx;
-> +
-> +	ret = gaokun_ec_ucsi_get_reg(uec->ec, (u8 *)&ureg);
-> +	if (ret)
-> +		return -EIO;
-> +
-> +	uec->port_num = ureg.port_num;
-> +	idx = GET_IDX(ureg.port_updt);
-> +
-> +	if (idx >= 0 && idx < ureg.port_num)
-> +		gaokun_ucsi_port_update(&uec->ports[idx], ureg.port_data);
-
-Since you are checking the validity of the index, you should -EINVAL if 
-the index is out of range.
-
-> +
-> +	return idx;
-> +}
-> +
-> +static void gaokun_ucsi_handle_altmode(struct gaokun_ucsi_port *port)
-> +{
-> +	struct gaokun_ucsi *uec = port->ucsi;
-> +	int idx = port->idx;
-> +
-> +	if (idx >= uec->ucsi->cap.num_connectors || !uec->ucsi->connector) {
-> +		dev_warn(uec->ucsi->dev, "altmode port out of range: %d\n", idx);
-> +		return;
-> +	}
-> +
-> +	/* UCSI callback .connector_status() have set orientation */
-> +	if (port->bridge)
-> +		drm_aux_hpd_bridge_notify(&port->bridge->dev,
-> +					  port->hpd_state ?
-> +					  connector_status_connected :
-> +					  connector_status_disconnected);
-> +
-> +	gaokun_ec_ucsi_pan_ack(uec->ec, port->idx);
-> +}
-> +
-> +static void gaokun_ucsi_altmode_notify_ind(struct gaokun_ucsi *uec)
-> +{
-> +	int idx;
-> +
-> +	idx = gaokun_ucsi_refresh(uec);
-> +	if (idx < 0)
-> +		gaokun_ec_ucsi_pan_ack(uec->ec, idx);
-> +	else
-> +		gaokun_ucsi_handle_altmode(&uec->ports[idx]);
-> +}
-> +
-> +/*
-> + * USB event is necessary for enabling altmode, the event should follow
-> + * UCSI event, if not after timeout(this notify may be disabled somehow),
-> + * then force to enable altmode.
-> + */
-> +static void gaokun_ucsi_handle_no_usb_event(struct gaokun_ucsi *uec, int idx)
-> +{
-> +	struct gaokun_ucsi_port *port;
-> +
-> +	port = &uec->ports[idx];
-> +	if (!wait_for_completion_timeout(&port->usb_ack, 2 * HZ)) {
-> +		dev_warn(uec->dev, "No USB EVENT, triggered by UCSI EVENT");
-> +		gaokun_ucsi_altmode_notify_ind(uec);
-> +	}
-> +}
-> +
-> +static int gaokun_ucsi_notify(struct notifier_block *nb,
-> +			      unsigned long action, void *data)
-> +{
-> +	u32 cci;
-> +	struct gaokun_ucsi *uec = container_of(nb, struct gaokun_ucsi, nb);
-> +
-> +	switch (action) {
-> +	case EC_EVENT_USB:
-> +		gaokun_ucsi_altmode_notify_ind(uec);
-> +		return NOTIFY_OK;
-> +
-> +	case EC_EVENT_UCSI:
-> +		uec->ucsi->ops->read_cci(uec->ucsi, &cci);
-> +		ucsi_notify_common(uec->ucsi, cci);
-> +		if (UCSI_CCI_CONNECTOR(cci))
-> +			gaokun_ucsi_handle_no_usb_event(uec, UCSI_CCI_CONNECTOR(cci) - 1);
-> +
-> +		return NOTIFY_OK;
-> +
-> +	default:
-> +		return NOTIFY_DONE;
-> +	}
-> +}
-> +
-> +static int gaokun_ucsi_get_port_num(struct gaokun_ucsi *uec)
-> +{
-> +	struct gaokun_ucsi_reg ureg;
-> +	int ret;
-> +
-> +	ret = gaokun_ec_ucsi_get_reg(uec->ec, (u8 *)&ureg);
-> +
-> +	return ret ? 0 : ureg.port_num;
-> +}
-> +
-> +static int gaokun_ucsi_ports_init(struct gaokun_ucsi *uec)
-> +{
-> +	u32 port;
-> +	int i, ret, port_num;
-> +	struct device *dev = uec->dev;
-> +	struct gaokun_ucsi_port *ucsi_port;
-> +	struct fwnode_handle *fwnode;
-> +
-> +	port_num = gaokun_ucsi_get_port_num(uec);
-> +	uec->port_num = port_num;
-> +
-> +	uec->ports = devm_kzalloc(dev, port_num * sizeof(*(uec->ports)),
-> +				  GFP_KERNEL);
-> +	if (!uec->ports)
+> +	core->ocs = kmalloc(sizeof(*core->ocs), GFP_KERNEL);
+> +	if (!core->ocs)
 > +		return -ENOMEM;
 > +
-> +	for (i = 0; i < port_num; ++i) {
-> +		ucsi_port = &uec->ports[i];
-> +		ucsi_port->ccx = USBC_CCX_NONE;
-> +		ucsi_port->idx = i;
-> +		ucsi_port->ucsi = uec;
-> +		init_completion(&ucsi_port->usb_ack);
-> +		spin_lock_init(&ucsi_port->lock);
-> +	}
+> +	of_changeset_init(core->ocs);
 > +
-> +	device_for_each_child_node(dev, fwnode) {
-> +		ret = fwnode_property_read_u32(fwnode, "reg", &port);
-> +		if (ret < 0) {
-> +			dev_err(dev, "missing reg property of %pOFn\n", fwnode);
-> +			fwnode_handle_put(fwnode);
-> +			return ret;
-> +		}
+> +	ret = venus_add_video_core(core, core->res->dec_nodename, "venus-decoder");
+> +	if (ret)
+> +		goto err;
 > +
-> +		if (port >= port_num) {
-> +			dev_warn(dev, "invalid connector number %d, ignoring\n", port);
-> +			continue;
-> +		}
+> +	ret = venus_add_video_core(core, core->res->enc_nodename, "venus-encoder");
+> +	if (ret)
+> +		goto err;
 > +
-> +		ucsi_port = &uec->ports[port];
-> +		ucsi_port->bridge = devm_drm_dp_hpd_bridge_alloc(dev, to_of_node(fwnode));
-> +		if (IS_ERR(ucsi_port->bridge)) {
-> +			fwnode_handle_put(fwnode);
-> +			return PTR_ERR(ucsi_port->bridge);
-> +		}
-> +	}
-> +
-> +	for (i = 0; i < port_num; i++) {
-> +		if (!uec->ports[i].bridge)
-> +			continue;
-> +
-> +		ret = devm_drm_dp_hpd_bridge_add(dev, uec->ports[i].bridge);
-> +		if (ret)
-> +			return ret;
-> +	}
-> +
-> +	return 0;
-> +}
-> +
-> +static void gaokun_ucsi_register_worker(struct work_struct *work)
-> +{
-> +	struct gaokun_ucsi *uec;
-> +	struct ucsi *ucsi;
-> +	int ret;
-> +
-> +	uec = container_of(work, struct gaokun_ucsi, work);
-> +	ucsi = uec->ucsi;
-> +
-> +	ucsi->quirks = UCSI_NO_PARTNER_PDOS | UCSI_DELAY_DEVICE_PDOS;
-> +
-> +	ssleep(3); /* EC can't handle UCSI properly in the early stage */
-
-Could you not schedule work for + 3 seconds instead of sleeping here - 
-representing the required stall time in some sort of state machine ?
-
-3 seconds is an incredibly long time for a computer to sleep.
-
-> +
-> +	ret = gaokun_ec_register_notify(uec->ec, &uec->nb);
+> +	ret = of_changeset_apply(core->ocs);
 > +	if (ret) {
-> +		dev_err_probe(ucsi->dev, ret, "notifier register failed\n");
-> +		return;
+> +		dev_err(dev, "applying changeset fail ret %d\n", ret);
+> +		goto err;
 > +	}
 > +
-> +	ret = ucsi_register(ucsi);
-> +	if (ret)
-> +		dev_err_probe(ucsi->dev, ret, "ucsi register failed\n");
+> +	return 0;
+> +err:
+> +	of_changeset_destroy(core->ocs);
+> +	kfree(core->ocs);
+> +	core->ocs = NULL;
+> +	return ret;
 > +}
 > +
-> +static int gaokun_ucsi_register(struct gaokun_ucsi *uec)
+> +static void venus_remove_dynamic_nodes(struct venus_core *core)
 > +{
-> +	schedule_work(&uec->work);
-> +
+> +	if (core->ocs) {
+> +		of_changeset_revert(core->ocs);
+> +		of_changeset_destroy(core->ocs);
+> +		kfree(core->ocs);
+> +	}
+> +}
+> +#else
+> +static int venus_add_dynamic_nodes(struct venus_core *core)
+> +{
 > +	return 0;
 > +}
 > +
-> +static int gaokun_ucsi_probe(struct auxiliary_device *adev,
-> +			     const struct auxiliary_device_id *id)
-> +{
-> +	struct gaokun_ec *ec = adev->dev.platform_data;
-> +	struct device *dev = &adev->dev;
-> +	struct gaokun_ucsi *uec;
-> +	int ret;
+> +static void venus_remove_dynamic_nodes(struct venus_core *core) {}
+> +#endif
 > +
-> +	uec = devm_kzalloc(dev, sizeof(*uec), GFP_KERNEL);
-> +	if (!uec)
-> +		return -ENOMEM;
-> +
-> +	uec->ec = ec;
-> +	uec->dev = dev;
-> +	uec->version = 0x0100;
-> +	uec->nb.notifier_call = gaokun_ucsi_notify;
-> +
-> +	INIT_WORK(&uec->work, gaokun_ucsi_register_worker);
-> +
-> +	ret = gaokun_ucsi_ports_init(uec);
-> +	if (ret)
-> +		return ret;
-> +
-> +	uec->ucsi = ucsi_create(dev, &gaokun_ucsi_ops);
-> +	if (IS_ERR(uec->ucsi))
-> +		return PTR_ERR(uec->ucsi);
-> +
-> +	ucsi_set_drvdata(uec->ucsi, uec);
-> +	auxiliary_set_drvdata(adev, uec);
-> +
-> +	return gaokun_ucsi_register(uec);
-> +}
-> +
-> +static void gaokun_ucsi_remove(struct auxiliary_device *adev)
-> +{
-> +	struct gaokun_ucsi *uec = auxiliary_get_drvdata(adev);
-> +
-> +	gaokun_ec_unregister_notify(uec->ec, &uec->nb);
-> +	ucsi_unregister(uec->ucsi);
-> +	ucsi_destroy(uec->ucsi);
-> +}
-> +
-> +static const struct auxiliary_device_id gaokun_ucsi_id_table[] = {
-> +	{ .name = GAOKUN_MOD_NAME "." GAOKUN_DEV_UCSI, },
-> +	{}
-> +};
-> +MODULE_DEVICE_TABLE(auxiliary, gaokun_ucsi_id_table);
-> +
-> +static struct auxiliary_driver gaokun_ucsi_driver = {
-> +	.name = GAOKUN_DEV_UCSI,
-> +	.id_table = gaokun_ucsi_id_table,
-> +	.probe = gaokun_ucsi_probe,
-> +	.remove = gaokun_ucsi_remove,
-> +};
-> +
-> +module_auxiliary_driver(gaokun_ucsi_driver);
-> +
-> +MODULE_DESCRIPTION("HUAWEI Matebook E Go UCSI driver");
-> +MODULE_LICENSE("GPL");
+>   static int venus_probe(struct platform_device *pdev)
+>   {
+>   	struct device *dev = &pdev->dev;
+> @@ -365,9 +448,14 @@ static int venus_probe(struct platform_device *pdev)
+>   	if (ret < 0)
+>   		goto err_runtime_disable;
+>   
+> +	if (core->res->dec_nodename || core->res->enc_nodename) {
+> +		if (venus_add_dynamic_nodes(core))
 
+It'd be good to pass the error code to the upper layer.
+
+> +			goto err_runtime_disable;
+> +	}
+> +
+>   	ret = of_platform_populate(dev->of_node, NULL, NULL, dev);
+>   	if (ret)
+> -		goto err_runtime_disable;
+> +		goto err_remove_dynamic_nodes;
+>   
+>   	ret = venus_firmware_init(core);
+>   	if (ret)
+> @@ -411,6 +499,8 @@ static int venus_probe(struct platform_device *pdev)
+>   	venus_firmware_deinit(core);
+>   err_of_depopulate:
+>   	of_platform_depopulate(dev);
+> +err_remove_dynamic_nodes:
+> +	venus_remove_dynamic_nodes(core);
+>   err_runtime_disable:
+>   	pm_runtime_put_noidle(dev);
+>   	pm_runtime_disable(dev);
+> @@ -443,6 +533,8 @@ static void venus_remove(struct platform_device *pdev)
+>   
+>   	venus_firmware_deinit(core);
+>   
+> +	venus_remove_dynamic_nodes(core);
+> +
+>   	pm_runtime_put_sync(dev);
+>   	pm_runtime_disable(dev);
+>   
+> diff --git a/drivers/media/platform/qcom/venus/core.h b/drivers/media/platform/qcom/venus/core.h
+> index 27784fd7082c321222b23ca4b2902a04c49e19ca..306231b4f7d0201175974b4a42574f30d23e08f0 100644
+> --- a/drivers/media/platform/qcom/venus/core.h
+> +++ b/drivers/media/platform/qcom/venus/core.h
+> @@ -90,6 +90,8 @@ struct venus_resources {
+>   	u32 cp_nonpixel_start;
+>   	u32 cp_nonpixel_size;
+>   	const char *fwname;
+> +	const char *enc_nodename;
+> +	const char *dec_nodename;
+>   };
+>   
+>   enum venus_fmt {
+> @@ -171,6 +173,7 @@ struct venus_format {
+>    * @root:	debugfs root directory
+>    * @venus_ver:	the venus firmware version
+>    * @dump_core:	a flag indicating that a core dump is required
+> + * @ocs:	OF changeset pointer
+>    */
+>   struct venus_core {
+>   	void __iomem *base;
+> @@ -235,6 +238,7 @@ struct venus_core {
+>   		u32 rev;
+>   	} venus_ver;
+>   	unsigned long dump_core;
+> +	struct of_changeset *ocs;
+>   };
+>   
+>   struct vdec_controls {
+> 
+
+-- 
+regards,
+Stan
 
