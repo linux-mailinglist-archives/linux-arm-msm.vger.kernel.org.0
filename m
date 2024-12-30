@@ -1,54 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-43591-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-43592-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D0C709FE1B0
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Dec 2024 03:02:41 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id EF2479FE1B4
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Dec 2024 03:04:06 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 354683A19F8
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Dec 2024 02:02:37 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id ADFB416195A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Dec 2024 02:04:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A370C3D81;
-	Mon, 30 Dec 2024 02:02:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8BDDB2AF16;
+	Mon, 30 Dec 2024 02:04:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YZbE5vjd"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uHPlrbn7"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77F0E3C30;
-	Mon, 30 Dec 2024 02:02:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 556493C30;
+	Mon, 30 Dec 2024 02:04:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735524158; cv=none; b=QAFzd90LvAdk6pS6f/x6HujPIwbl3TUMxXWGwjWT2YfaRXKDxZ92FCG9d1ZVbqlBEEVtVVu09Plkq4smLHxp72rIaZEpAOqqC5Ani0Nc9XaJ9EeR6kBNn3QeSQyOnMMEps1D7JwWVhX9Dpx4rQh+xF/VvvUZ3uwXTjIr/pK9tq4=
+	t=1735524242; cv=none; b=rRbiEoQDjINCCGHVOVns/LxdPNUhKZVyQT1Dbuu2QZR8djj903SatKpANuQUpWnIeR9rsBQ3chLTrfYmApqDYPVXyHM6hVddQcwA/FHGpjPCn6ztoGsXPyDK3sf64xvvT2axQ0LHN/76J/8BLmoy+LWpX9m1XkFBCptvKZv6oNE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735524158; c=relaxed/simple;
-	bh=4VtUCj7Nnv/joJSbGmmW6tt51gimX2/gVM6QBoag2Is=;
+	s=arc-20240116; t=1735524242; c=relaxed/simple;
+	bh=akOrPjt3XdoM5akY0esxKzrsROwQ7JK2XuafowoF/Fo=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=thybCd+61a4PDYloMDGMENIJekvenRLQQwiruuTRMP9IbQZOks3g0NNHCKlJMAT1HCDzf2LuEhYEV6n5IFjrqA4MO5gylvD55rAir22RPu+5QZYlVDXMLqOoVtapSPyuEgJJMc7cLH5EoHaa2nQbt7rQVeWpmwo4K8c7jljOr8s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YZbE5vjd; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3397DC4CED1;
-	Mon, 30 Dec 2024 02:02:36 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=U5dOsl8VUuQ66s7zPMPEugPEv0Dr/lPYR2D+9m7Sfm3FwOJNpaGZPPvHFsMcjX77xwbzoZK0lViEFs6JBm4pQl6mD+oS6EyH/HVGCyluOHSoiGy8IWPQ0cg1OlSsUJU21xvepHYkKJDtMVYVM9PXJK8aOYbzYdd9Dse+asj5ee4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uHPlrbn7; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AF45C4CED1;
+	Mon, 30 Dec 2024 02:04:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1735524157;
-	bh=4VtUCj7Nnv/joJSbGmmW6tt51gimX2/gVM6QBoag2Is=;
+	s=k20201202; t=1735524241;
+	bh=akOrPjt3XdoM5akY0esxKzrsROwQ7JK2XuafowoF/Fo=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=YZbE5vjdwRetf6MmEKXXod7pPq1IC6rTQmhbZk2hfi2ylyxamV+vcp+smBAd1ca0c
-	 LsV+QXdJsr5ERxFA+MLL+H9eDSJG/jcIVjz+eaBbpFhNsCR2Ow0D7Ow2IxNn6v3uOp
-	 FesYbBAnx5a42vFpyFlt5pqPIJa8/dYhYMFbHBLnMDzt2KaL/kSAganKR1AAZiMnLl
-	 U/pekQOL+lWnvaqspQx59nii2zNzxVeYepCjxFCUud68nwQT8UNOeFZpj7oYpoHRMf
-	 6w6USE1vwscL9ZdTsM3MnGHTxf+KCIlXjPNVY0XGW+mM+ZVT+FII4cAyrrHqKfrcIv
-	 3389+zbSGcPng==
-Date: Mon, 30 Dec 2024 03:02:33 +0100
+	b=uHPlrbn7mO8242IRDpg5lLlWWEcNnR5Aky7XRYk3BifO4LxLFE5jo8lnVTqNSuLyp
+	 vsjlZ9FkNq9xFVXmwQZybxjB0x0MmOrOaI9qxhgE6N7Rtfw042M8l0xJ6vkJA0r5ka
+	 MOg1g+xmGu0nsSKTKY65CqH6MyGX5BoiuBLf6chpkcyFkNW6odee+ZCe0imL3PPjJl
+	 XVe2fzzzYOa7niTMoeBlX7q4i0iOEIkPubiq7DxidhO48SkLRr3g503sNXTPy4GWBZ
+	 h22j60OJPjIE0Qepw3LpL83pW3jjpiKaBamoU8Ex0JN/EMXsqkqf5lApllP1L5zRuA
+	 SdisoHDhlv6ag==
+Date: Mon, 30 Dec 2024 03:03:56 +0100
 From: Andi Shyti <andi.shyti@kernel.org>
-To: linux-arm-msm@vger.kernel.org, linux-i2c@vger.kernel.org
-Cc: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>, 
-	Vladimir Zapolskiy <vz@mleia.com>
-Subject: Re: [PATCH v3 0/2] Qcom Geni exit path cleanups
-Message-ID: <lmb7cgkksmwweo6xv4ivwbqh6k6i6jtfuowlpjkrrly3olzhg6@tsxezikdz74d>
-References: <20241227223230.462395-1-andi.shyti@kernel.org>
+To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Cc: Loic Poulain <loic.poulain@linaro.org>, Robert Foss <rfoss@kernel.org>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+	Conor Dooley <conor+dt@kernel.org>, Todor Tomov <todor.too@gmail.com>, 
+	Mauro Carvalho Chehab <mchehab@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+	Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>, 
+	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>, Jagadeesh Kona <quic_jkona@quicinc.com>, 
+	Konrad Dybcio <konradybcio@kernel.org>, linux-i2c@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, linux-media@vger.kernel.org, 
+	linux-clk@vger.kernel.org
+Subject: Re: [PATCH v2 1/6] dt-bindings: i2c: qcom-cci: Document x1e80100
+ compatible
+Message-ID: <5jj2ptvqcp7x44nsj2kdmbpqi5nz4yqgu6wcb3oytp2uox6ddu@sjzugevhprsm>
+References: <20241227-b4-linux-next-24-11-18-dtsi-x1e80100-camss-v2-0-06fdd5a7d5bb@linaro.org>
+ <20241227-b4-linux-next-24-11-18-dtsi-x1e80100-camss-v2-1-06fdd5a7d5bb@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -57,15 +66,16 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20241227223230.462395-1-andi.shyti@kernel.org>
+In-Reply-To: <20241227-b4-linux-next-24-11-18-dtsi-x1e80100-camss-v2-1-06fdd5a7d5bb@linaro.org>
 
-Hi,
+hi Bryan,
 
-> Andi Shyti (2):
->   i2c: qcom-geni: Use dev_err_probe in the probe function
->   i2c: qcom-geni: Simplify error handling in probe function
+On Fri, Dec 27, 2024 at 01:11:34PM +0000, Bryan O'Donoghue wrote:
+> Add the x1e80100 CCI device string compatible.
+> 
+> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 
-merged to i2c/i2c-host.
+Just this patch number 1: merged to i2c/i2c-host.
 
 Thanks,
 Andi
