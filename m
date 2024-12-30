@@ -1,151 +1,159 @@
-Return-Path: <linux-arm-msm+bounces-43672-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-43673-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 74F8E9FE919
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Dec 2024 17:43:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id E3E089FE93D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Dec 2024 18:00:38 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C030A3A213F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Dec 2024 16:42:55 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2D9DD3A22C9
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Dec 2024 17:00:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AC3B81ACEC4;
-	Mon, 30 Dec 2024 16:42:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9698486334;
+	Mon, 30 Dec 2024 17:00:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Bk4h/zE3"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="MK+ZDF64"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47F761ACDE7
-	for <linux-arm-msm@vger.kernel.org>; Mon, 30 Dec 2024 16:42:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7317633C9;
+	Mon, 30 Dec 2024 17:00:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735576975; cv=none; b=gbn7HErbVrYxNH6na/oiDJ/qLiQM8KaPAhp30H+6p/cNrZUIfkwKugA4Q8fe7Pp5CuDceboYqbEd71SOcjcAFP8lByI3NIl+YSlL54UDP4RRBuarAELdRIF0iCoEbOZ+TvrgfxWeddCeEKtozKnCZC9oOb0LHCN2tXFDTzqVi1E=
+	t=1735578034; cv=none; b=Gd6MmeBAsakhi21uCQflKNM2kP/eP4YyQhMSqfdXRsdDEqBV1RiTIpiLJx/7XsR58wHkf93DAjQX1Tj3KTMCP41+K1S9RQ69TuQvUoDdmQLDoIKZdE0AqM6OXBT9TzgcjD1xDz/2qlJqiumybwUiaNdwT6YkKsP7Mfj4S+Qpg40=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735576975; c=relaxed/simple;
-	bh=R1I5Ze5YuP/XuejTOCio4xdAgI8ATebpkNoS4q1KCYY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=fo2cc1djRpFvfCMbxVHN6Zj9sUokvVED9azrP0PScv9k1t75GWwVZyf9JLUwLG3FWt/3n83XvkqbsuTJLgZcjUXlz9ndC11JWZwQHlLLKNqmFfyREchifd3RAytl8KsM5WSQi0vcKFUe3B3V3qgfGybZJy/hCC7BczseRVj/PN4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Bk4h/zE3; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BUE5nfD025622
-	for <linux-arm-msm@vger.kernel.org>; Mon, 30 Dec 2024 16:42:53 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	RsTYBLS26qzbs00MIBo1jXnvIoJrDZq05HZL196SJIQ=; b=Bk4h/zE3Ag9sUqFP
-	IoxMXTtHThisI2yd5ylYSUrRnsMMTeQjNqDNW8DQ59qet1WCnWqQ8PiXiurXHcSM
-	n68XKFgJGsE2heXvLDXlJsVdiBCzdxWYM7d/hTLSoU0Ge1nz7WCxJWvCb04ywhq4
-	H7l1eIyD8XXP+7qgFmeOazHmINSXnauujFnmPkIM6AmgH/8750gvr7AAjQ+zECRR
-	QmNABUy6/aNAM1s3p/w2xTDmSmuTZeAaHWckB3sqZCyp19y1AVsw/nPVKCeWA+FK
-	64JYMJNozTe8fzpfVyxUPKboFYytPWL5cLJHBXhkOLzSyZArNl8Wdr1XuHnPJ/gQ
-	Vq3cAA==
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com [209.85.160.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43uvyt0bst-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 30 Dec 2024 16:42:53 +0000 (GMT)
-Received: by mail-qt1-f200.google.com with SMTP id d75a77b69052e-467a97dec51so6563021cf.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Dec 2024 08:42:53 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1735576972; x=1736181772;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=RsTYBLS26qzbs00MIBo1jXnvIoJrDZq05HZL196SJIQ=;
-        b=WU4hRLvocNDltcEcgIzHPpzo5/dP/DON2ByQRAZR6UXniorjPg0H7VDZcESA3FxIet
-         bfvJDY7wccwur6rbuoWLcWqJVsC8TxeYomelwbwtW76RSjP6uEKiPxTnoypWFykxpepd
-         bfosb3Ew9Qrs3IZzLta38GEqP2rYxu4ogtr3UOzzoX4sMPIQMc04yyd8oxIMUQYmXv2K
-         /r3WMmvoE4ymDCrNN7sdo7HfG5qIA4KTX+M4SVK9atgFfjtFsGY5TwV68VE0o9POmo1V
-         6QwnrSoJyODMWAJAP4JZRtNs/JDxEdQpqmM4CBBD5XfF1Rm7VlcI2pW+iR8adRIXST5L
-         Bk4w==
-X-Forwarded-Encrypted: i=1; AJvYcCXtFzfJcrJE5RusEgIK5kLjVFkJu3ghS+RGQz3sdJ7r8SqStcxol1Pyi6K7FlqORfLC0iFoaajbvFze2R8V@vger.kernel.org
-X-Gm-Message-State: AOJu0Ywnzhbrv44kkEZGqk/YtTr+ArqV1XVNSAYnlGrtI3ZeDLqS7cYZ
-	DQwe0NMpF8DxdH3+FcQvfaGzdWVYzkeyTBciNl5FVCObzppV8YOZcAf3HwOvIIzIIM14rZfH1Lw
-	B3EYpddQnGdOrBERh+IIY4mvxuyz9bhngUCVyg+I43/Z2VWrNRKtsDGxH3GLHv9zx
-X-Gm-Gg: ASbGncufsNmbzmi8O5CpP1S79z8jHhZ343A2DRvZtDLLuEmZLmro9IIkpvEZ8i0sEdE
-	04jQcRF9WpQNkZVwubrQ+rVH5cOhvvwuAAcNbJgYV98incl6OsqUzrPbETnDg+SB7Qpa4AprXeJ
-	IyDN9wW9wzwDJl5MSzLGMR1Gs77jzwozIDNcNWauPm/FPDGQ1vvOPFqVezAz7zQh8tbfqfEEnnp
-	6eHhTxhFKu8+YADuUMoP8nebUFC+hBoSeIiK27cZUvoXfvSKcuw+Y422OhLm2uebW7TY15sUqXh
-	EOO9AtiJTwABq9t2Q4fLRgbXcF2SjXpipW8=
-X-Received: by 2002:a05:622a:18a3:b0:467:69f8:7548 with SMTP id d75a77b69052e-46a4a8cdd86mr208421861cf.5.1735576972053;
-        Mon, 30 Dec 2024 08:42:52 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHIy7xGKGDPvgEzDqeM3nr3hMma0PCQ44hiJdF9vr2/Pxo+0LRbKgMmJ+4GTzIpVw2taOoIkA==
-X-Received: by 2002:a05:622a:18a3:b0:467:69f8:7548 with SMTP id d75a77b69052e-46a4a8cdd86mr208421771cf.5.1735576971673;
-        Mon, 30 Dec 2024 08:42:51 -0800 (PST)
-Received: from [192.168.65.90] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5d80701c8c2sm14773658a12.84.2024.12.30.08.42.50
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 30 Dec 2024 08:42:51 -0800 (PST)
-Message-ID: <e3dfa3a7-feb1-45d1-8dc3-c403cb92c7c0@oss.qualcomm.com>
-Date: Mon, 30 Dec 2024 17:42:49 +0100
+	s=arc-20240116; t=1735578034; c=relaxed/simple;
+	bh=bUO71XDJiq73wjQcZpelQaLVs++bipFpNXwVT+JL3c0=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=BilqkIpADOocSimiBCvBEosBqgyZhBgheaaRyUQV5y+iSjk48+/VtcMCMRWHntfRpeTYtcBUjMOJYObPKouVz1oPGwPrs0x3I2anSUpuasyzSWd/6KwMzocncEQiVDpxLrL7h1RG1FYD9+vX3cDqsMhs+BHVBUUDAzJuUxQIlTs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=MK+ZDF64; arc=none smtp.client-ip=192.198.163.18
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1735578032; x=1767114032;
+  h=from:to:cc:subject:in-reply-to:references:date:
+   message-id:mime-version;
+  bh=bUO71XDJiq73wjQcZpelQaLVs++bipFpNXwVT+JL3c0=;
+  b=MK+ZDF64RpNad1Tgvvc5D/l5Kvq/OLBa1MjnQZdwsFifBp8bqa9n/l3o
+   1jcepFnWycnU/uUnmCEmeOM+LHdrD3oC1A/6u5XoHwxg8MRg1+iKEUL0b
+   HSrc+gOkyZSjYyW9qLGGzO0x429VqbW3hcCL2bgPj0ALL0Jnzy0Aq0fgv
+   +tKcLFUbimfLbCAcbcnOHQ0UgpSkME40CDmOK7y8JdiyA2HaUpo8i1dLL
+   su7EzGhLs08+sUa33Emv93oA+sIsEdIxqUT9J80Pxe21yRG/5ML7N76vX
+   CDrb5RqThVSO4oB+YDijcmpSWSv5emM8oN0IMHVtJ9CuGw63n0zq0eBp3
+   Q==;
+X-CSE-ConnectionGUID: jRUPFZMER2yVp1BUZtWAlA==
+X-CSE-MsgGUID: Gy920CR5S922J3STdLqR6Q==
+X-IronPort-AV: E=McAfee;i="6700,10204,11301"; a="35174348"
+X-IronPort-AV: E=Sophos;i="6.12,276,1728975600"; 
+   d="scan'208";a="35174348"
+Received: from fmviesa005.fm.intel.com ([10.60.135.145])
+  by fmvoesa112.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 30 Dec 2024 09:00:29 -0800
+X-CSE-ConnectionGUID: Er8FxBBlTt2HLYTUJsAM5w==
+X-CSE-MsgGUID: 7rPfMjAqSCqhf2hQDBs1fw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; 
+   d="scan'208";a="105469494"
+Received: from ncintean-mobl1.ger.corp.intel.com (HELO localhost) ([10.245.246.167])
+  by fmviesa005-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 30 Dec 2024 09:00:21 -0800
+From: Jani Nikula <jani.nikula@linux.intel.com>
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Abel Vesa <abel.vesa@linaro.org>, Johan Hovold <johan@kernel.org>,
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard
+ <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, David
+ Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, Karol Herbst
+ <kherbst@redhat.com>, Lyude Paul <lyude@redhat.com>, Danilo Krummrich
+ <dakr@redhat.com>, Rodrigo Vivi <rodrigo.vivi@intel.com>, Joonas Lahtinen
+ <joonas.lahtinen@linux.intel.com>, Tvrtko Ursulin <tursulin@ursulin.net>,
+ Rob Clark <robdclark@gmail.com>, Abhinav Kumar
+ <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>, Marijn Suijten
+ <marijn.suijten@somainline.org>, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, dri-devel@lists.freedesktop.org,
+ linux-kernel@vger.kernel.org, nouveau@lists.freedesktop.org,
+ intel-gfx@lists.freedesktop.org, intel-xe@lists.freedesktop.org,
+ linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org
+Subject: Re: [PATCH v2 1/4] drm/dp: Add helper to set LTTPRs in transparent
+ mode
+In-Reply-To: <lnbvudvkvgifbjmscgrvv5hkuescyqz57y6m2pydphyq2ubrhg@aynvaqlu7jz3>
+Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
+References: <20241211-drm-dp-msm-add-lttpr-transparent-mode-set-v2-0-d5906ed38b28@linaro.org>
+ <20241211-drm-dp-msm-add-lttpr-transparent-mode-set-v2-1-d5906ed38b28@linaro.org>
+ <Z1mk08SHEd5_vc99@hovoldconsulting.com> <Z21VD82XCOVgVJUh@linaro.org>
+ <877c7hpavo.fsf@intel.com>
+ <lnbvudvkvgifbjmscgrvv5hkuescyqz57y6m2pydphyq2ubrhg@aynvaqlu7jz3>
+Date: Mon, 30 Dec 2024 19:00:18 +0200
+Message-ID: <87y0zxnm1p.fsf@intel.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] arm64: dts: qcom: Add cpu scaling clock node
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Taniya Das <quic_tdas@quicinc.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
- <conor+dt@kernel.org>,
-        Ajit Pandey <quic_ajipan@quicinc.com>,
-        Imran Shaik <quic_imrashai@quicinc.com>,
-        Jagadeesh Kona <quic_jkona@quicinc.com>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20241108-qcs615-mm-dt-nodes-v1-0-b2669cac0624@quicinc.com>
- <20241108-qcs615-mm-dt-nodes-v1-2-b2669cac0624@quicinc.com>
- <cgg3s6f555eb4jl5segz7irwx2kkza7w6zucfyo7myrbjhng3v@2qmyrobzakhd>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <cgg3s6f555eb4jl5segz7irwx2kkza7w6zucfyo7myrbjhng3v@2qmyrobzakhd>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-ORIG-GUID: 0TvL1xanZSGzMLAXJaztwfmcwMHZPyT3
-X-Proofpoint-GUID: 0TvL1xanZSGzMLAXJaztwfmcwMHZPyT3
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 bulkscore=0
- spamscore=0 priorityscore=1501 malwarescore=0 adultscore=0 mlxlogscore=914
- suspectscore=0 lowpriorityscore=0 mlxscore=0 impostorscore=0 clxscore=1015
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2411120000
- definitions=main-2412300144
+Content-Type: text/plain
 
-On 9.11.2024 1:00 AM, Dmitry Baryshkov wrote:
-> On Fri, Nov 08, 2024 at 11:54:05AM +0530, Taniya Das wrote:
->> Add cpufreq-hw node to support cpu frequency scaling.
-> 
-> CPU, not cpu.
-> Also the prefix is incorrect for both patches.
-> 
->>
->> Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
->> ---
+On Mon, 30 Dec 2024, Dmitry Baryshkov <dmitry.baryshkov@linaro.org> wrote:
+> On Mon, Dec 30, 2024 at 03:18:35PM +0200, Jani Nikula wrote:
+>> On Thu, 26 Dec 2024, Abel Vesa <abel.vesa@linaro.org> wrote:
+>> > On 24-12-11 15:42:27, Johan Hovold wrote:
+>> >> On Wed, Dec 11, 2024 at 03:04:12PM +0200, Abel Vesa wrote:
+>> >>  
+>> >> > +/**
+>> >> > + * drm_dp_lttpr_set_transparent_mode - set the LTTPR in transparent mode
+>> >> > + * @aux: DisplayPort AUX channel
+>> >> > + * @enable: Enable or disable transparent mode
+>> >> > + *
+>> >> > + * Returns 0 on success or a negative error code on failure.
+>> >> > + */
+>> >> > +int drm_dp_lttpr_set_transparent_mode(struct drm_dp_aux *aux, bool enable)
+>> >> > +{
+>> >> > +	u8 val = enable ? DP_PHY_REPEATER_MODE_TRANSPARENT :
+>> >> > +			  DP_PHY_REPEATER_MODE_NON_TRANSPARENT;
+>> >> > +	int ret = drm_dp_dpcd_writeb(aux, DP_PHY_REPEATER_MODE, val);
+>> >> > +
+>> >> > +	return ret == 1 ? 0 : ret;
+>> >> 
+>> >> This looks correct, but I had to go look at drm_dp_dpcd_writeb() to make
+>> >> sure it never returns 0 (for short transfers).
+>> >
+>> > Will follow Dmitry's proposal here.
+>> >
+>> > 	if (ret < 0)
+>> >         	return ret;
+>> >
+>> > 	return (ret == 1) ? 0 : -EIO;
+>> 
+>> Arguably this (well, with ret == len) is what we should've done with
+>> *all* of the drm_dp_dpcd_*() functions. I don't think there's a single
+>> case where we'd actually need to know that some but not all data was
+>> transferred. And if there are, they could be special cased. Now we have
+>> hundreds of cases where we check against length and it's just cumbersome
+>> all over the place.
+>> 
+>> The question is, how confusing is it going to be to have some of the new
+>> functions return 0 instead of len? Very? Extremely?
+>> 
+>> As painful as it would be, I'd be in favor of changing them all to
+>> return 0 on ret == len. If we find a volunteer.
+>
+> Maybe a correct Coccinelle script can do a significant part of such a
+> conversion for us?
+>
+> Anyway, I think it a right thing to do. Could you possibly add a new set
+> of API and use it inside i915 driver? Then during the next cycle we can
+> start using new functions for all other drivers. Or would you rather add
+> new API through drm-misc? Then we can concert e.g. existing helpers in
+> the first place and then start working on the drivers.
 
-[...]
+There are hundreds of drm_dp_dpcd_{read,readb,write,writeb} uses across
+drm, and then all the higher level helpers on top. I'm not sure adding a
+new API and using it in i915 achieves much.
 
-> 
-> This doesn't follow the bindings, does it?
-> 
->> +		reg = <0 0x18323000 0 0x1400>,
->> +		      <0 0x18325800 0 0x1400>;
->> +		reg-names = "freq-domain0", "freq-domain1";
->> +
->> +		clocks = <&rpmhcc RPMH_CXO_CLK>, <&gcc GPLL0>;
->> +		clock-names = "xo", "alternate";
-> 
-> Are the DCVSH interrupts?
+BR,
+Jani.
 
-32/33 for silver/gold respectively
 
-Konrad
+-- 
+Jani Nikula, Intel
 
