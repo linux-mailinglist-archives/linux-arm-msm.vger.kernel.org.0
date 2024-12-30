@@ -1,127 +1,114 @@
-Return-Path: <linux-arm-msm+bounces-43619-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-43620-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 00C489FE5B9
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Dec 2024 12:53:12 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7A2C29FE5BC
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Dec 2024 12:59:54 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B4B9B161F13
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Dec 2024 11:53:09 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BF77A3A20CC
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Dec 2024 11:59:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 71B6F1A706A;
-	Mon, 30 Dec 2024 11:53:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E9E291A7249;
+	Mon, 30 Dec 2024 11:59:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Vjpbgo2U"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="u0afciHt"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD3AB1A0BF1;
-	Mon, 30 Dec 2024 11:53:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CC1E1A706A
+	for <linux-arm-msm@vger.kernel.org>; Mon, 30 Dec 2024 11:59:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735559588; cv=none; b=JqqT4ypqjxc4WGfqaQDXxR6yy5L2d6srNFtUdKAkP09Dqq9d7b8YLRDrRVX6lS9fFa4x98E1iczjMeDzwO065kD0fWl4oUlaIDyoFvkcZlDkpRByTZTqxqitvutRToF4xTZOvgc13DaeuDjnhgiyl0t36RojUF1YSeFpS6yQ5W4=
+	t=1735559991; cv=none; b=uMWmvNgrFDiyraFYFWh3YieFsgURlYuaWuQ0LCj1rOerDslP16ofyrnrsfELcnn8cAoTmRoLGCuNi+8DloVlTc8BeKOLODXROrWqcKaR7dEZaWxr0LKd5idms9pg4tVZ4FoqLIxWr/NiAZAnZ8dCs0ys/ZpcFubYd2p0IvTbvC4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735559588; c=relaxed/simple;
-	bh=njB2gT10j6GPUeRBsQeVyoae3FlS7zrl40SynnOxoDg=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=g7G/h+O6QlGuXRqflDkqA9jYCeKTVPJvDq0Hi93eEfSWcUbjF728FVDR+t3o5rhmUNVyalqEAAnMZ93Ex5uPk02mBsOaa5yAN07kKoBlf+d4hPUzoN8EQoDT4A76hqq5v8YqDRATl+59S0QB9EIV7wcw5sd3pmlEbfOTPQOHefY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Vjpbgo2U; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BU80sMr012100;
-	Mon, 30 Dec 2024 11:52:59 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-type:date:from:message-id:mime-version:subject:to; s=
-	qcppdkim1; bh=W4OgfFvqZE11Ow6At9Oyt3ivY161goXvFIpKuMP9l/k=; b=Vj
-	pbgo2Uz5Sol5uSDdF55Wvc0HGoZ/8gPhuTx33Bh5JotOW2T6ikYvqPHtM58J4Zlp
-	HRo5fbK5hypAtOjUkTp83AaTO6trVwqZaXKgNqeXjmLllTXqiGeP3xyd0x1D362G
-	E9drnd3Jao/rrSMGYl6oFv0maIBrf+Tl0yb/d4LHJRrTAG50eLc3TWtU5D1UHbE1
-	MXMry0YJv7BToY1pQ0xNDBPMrVKV7QdX+C+sQLIgpw9h6a7b1j9SYcpmaykkjR5q
-	N14UBjgABCmW7HHrJDpf1sVRCw9IJOh4MhUgP4Ah8hcGziQx37iOGakzEZe9qzK2
-	+6K22eMwkHXKtAnCXsbQ==
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43uqmqgf2r-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 30 Dec 2024 11:52:59 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4BUBqw3v021084
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 30 Dec 2024 11:52:58 GMT
-Received: from hu-anane-hyd.qualcomm.com (10.80.80.8) by
- nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Mon, 30 Dec 2024 03:52:55 -0800
-From: Anandu Krishnan E <quic_anane@quicinc.com>
-To: <srinivas.kandagatla@linaro.org>, <linux-arm-msm@vger.kernel.org>
-CC: <gregkh@linuxfoundation.org>, <quic_bkumar@quicinc.com>,
-        <quic_ekangupt@quicinc.com>, <linux-kernel@vger.kernel.org>,
-        <quic_chennak@quicinc.com>, <dri-devel@lists.freedesktop.org>,
-        <arnd@arndb.de>, <stable@kernel.org>
-Subject: [PATCH v3] misc: fastrpc: Deregister device nodes properly in error scenarios
-Date: Mon, 30 Dec 2024 17:22:41 +0530
-Message-ID: <20241230115241.23202-1-quic_anane@quicinc.com>
-X-Mailer: git-send-email 2.17.1
+	s=arc-20240116; t=1735559991; c=relaxed/simple;
+	bh=uJl/FPrs7aLV0o0yHvZEfpNPHTdpTCh4g5t+DzGg8Hw=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
+	 MIME-Version:Content-Type; b=uEifZXZPq8YK5AFxG665xQ5+mzW5+INWvA/WJxoILtmmcLKqypWaGpzs9X+U5C70/HuR/yOQIuCvc0QTo1hH9hNkafzHNNRpV1jvHTWOy5ncic2iKMkiPfF0EtkCL6aGE6vRU7tdo0JQ+Zl+YiPmZ0Miklao5NBzms/OmH5HW5Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=u0afciHt; arc=none smtp.client-ip=209.85.128.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-43618283dedso91183295e9.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Dec 2024 03:59:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1735559988; x=1736164788; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:date:message-id:subject
+         :references:in-reply-to:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=dB9/yODLQe9+puXrprcjZ851oLTBx6bI2CxwOj5wqkw=;
+        b=u0afciHtlkKtMcRu0dCvy4RDe4QYhNW0LrsLgBOQ3EcMeB8k+WPK6UrhY9+t9o55Q5
+         RwiE7cg/HzUedF1zlC1KK5fACO5l7pPfIoRWtvUedVJoIFVQ8StIYDWzWAwOH5AFM2A/
+         LIRBPAEd7LL5iRRrWpB8S2C+bymbIzlmX+eUo4GE4qvW/kCDMtAbXELb8Id0P8UpRByS
+         3xKPtlSW4vonfr5B0+tjlEGNjCSuGfzTMbW7WgwOMukpbNyH3BF4tS767sCjqwUoWkao
+         iC1Uzz0RfXNQaTiIApV+YcnKlvaYXyWFi+Z5r6CDtW+jKH4zrLeR0UabfqWhI3IDXwC4
+         0PHg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1735559988; x=1736164788;
+        h=content-transfer-encoding:mime-version:date:message-id:subject
+         :references:in-reply-to:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=dB9/yODLQe9+puXrprcjZ851oLTBx6bI2CxwOj5wqkw=;
+        b=NFE7HlhJe8FeyHfjdtYWuhdB7QH+TS/0ooTJlrYWWDBzfYTRFCxP6rrhXrT3PCkkl6
+         9gzErC2ops5f3YvUayyOEEaYUVZsuSxOaaYRm5lWUsUa2mh7s5d7yb0Jd71M25pQUw1C
+         hZ+JL7dwvNRYGfGOUF5dbjPThH0WfE3WOyo+LA1zBmpfHavfYGR22hxXbulYz5X/P6XN
+         Raq/xenjc9xE1Fli+Z0DAvBm77VAXK9kja31HbbNvkXZCu/uD1pj+QlG91vQfq8Rc3Ck
+         m0SjrVcu+m+wInxh+TeQFJ8hIlh4hIMlezANN4DpxuF4v46i+2oYPtFD8I5zweZ2ccCh
+         38bA==
+X-Gm-Message-State: AOJu0Yx2EL9yO9YA970GyajBbNUv2s992t/l3LpP0YLfWCStnN9xfxVj
+	F29HM9vfiHL8eCLCWLzUuF/QDf1zedUSVugOn9oV/eSd0STZ4b1lAGYsI/jnDc4=
+X-Gm-Gg: ASbGnct3gG1de5nu7EW88sHBPVvFc1VVTXJ5rtR+yzHLNsMvZQs9ncwpa/yPGHqgeuZ
+	0XsrMGXlFGJafCf6NVjlOC21FSRMQSQ5B5ikst6a5S0WnOr8n31LlRAT458tTbNMwsiMXOhoZCB
+	NQi4mlsNNml2ZIo8dbKeXFr7stqTp3jAVwSJyF16Xi0fU4ji9hBRlYWeRoHU4ugAkuO1kal+37b
+	VAsxo7Dt7IntaR1kpLnXcst8yhZYWEfVCc47XJQXxj62U5ZcXvpKpjsJ1W/zI431VzFBzFeriQ=
+X-Google-Smtp-Source: AGHT+IH7PQnUhj9epYwjrvd+9otFloYOan9mIkPrQcwD6X8nhBT7WBdL5oh06N9MlYKlRKXTBPHadA==
+X-Received: by 2002:a05:600c:314a:b0:434:a815:2b57 with SMTP id 5b1f17b1804b1-43668b480b9mr260928215e9.20.1735559988376;
+        Mon, 30 Dec 2024 03:59:48 -0800 (PST)
+Received: from [192.168.68.114] ([5.133.47.210])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-436611ea42esm358854655e9.9.2024.12.30.03.59.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 30 Dec 2024 03:59:48 -0800 (PST)
+From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+To: linux-arm-msm@vger.kernel.org, 
+ Anandu Krishnan E <quic_anane@quicinc.com>
+Cc: gregkh@linuxfoundation.org, quic_bkumar@quicinc.com, 
+ quic_ekangupt@quicinc.com, linux-kernel@vger.kernel.org, 
+ quic_chennak@quicinc.com, dri-devel@lists.freedesktop.org, arnd@arndb.de, 
+ stable@kernel.org
+In-Reply-To: <20241230115241.23202-1-quic_anane@quicinc.com>
+References: <20241230115241.23202-1-quic_anane@quicinc.com>
+Subject: Re: [PATCH v3] misc: fastrpc: Deregister device nodes properly in
+ error scenarios
+Message-Id: <173555998703.252613.8963658462497802006.b4-ty@linaro.org>
+Date: Mon, 30 Dec 2024 11:59:47 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: Ks8Na3B7ZgIr_dYDxgOTyg70RG_woKzg
-X-Proofpoint-ORIG-GUID: Ks8Na3B7ZgIr_dYDxgOTyg70RG_woKzg
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 bulkscore=0
- phishscore=0 malwarescore=0 spamscore=0 impostorscore=0 lowpriorityscore=0
- mlxscore=0 mlxlogscore=890 suspectscore=0 clxscore=1015 priorityscore=1501
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2411120000
- definitions=main-2412300101
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-Mailer: b4 0.12.2
 
-During fastrpc_rpmsg_probe, if secure device node registration
-succeeds but non-secure device node registration fails, the secure
-device node deregister is not called during error cleanup. Add proper
-exit paths to ensure proper cleanup in case of error.
 
-Fixes: 3abe3ab3cdab ("misc: fastrpc: add secure domain support")
-Cc: stable@kernel.org
-Signed-off-by: Anandu Krishnan E <quic_anane@quicinc.com>
----
-Changes in v3:
- - Resolved checkpatch warning.
- - moved out from patch series to stand-alone patch.
- - Link to v2: https://lore.kernel.org/all/20241223100101.29844-1-quic_anane@quicinc.com/
+On Mon, 30 Dec 2024 17:22:41 +0530, Anandu Krishnan E wrote:
+> During fastrpc_rpmsg_probe, if secure device node registration
+> succeeds but non-secure device node registration fails, the secure
+> device node deregister is not called during error cleanup. Add proper
+> exit paths to ensure proper cleanup in case of error.
+> 
+> 
 
-Changes in v2:
- - Added Fixes: tag and cc:stable.
- - Fixed author name.
- - Link to v1: https://lore.kernel.org/all/20241220061854.24428-1-quic_anane@quicinc.com/
+Applied, thanks!
 
- drivers/misc/fastrpc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+[1/1] misc: fastrpc: Deregister device nodes properly in error scenarios
+      commit: bd79a7dbb3625304abe3086de99168534e9552c5
 
-diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
-index 48d08eeb2d20..ff144f0aa337 100644
---- a/drivers/misc/fastrpc.c
-+++ b/drivers/misc/fastrpc.c
-@@ -2344,7 +2344,7 @@ static int fastrpc_rpmsg_probe(struct rpmsg_device *rpdev)
- 
- 		err = fastrpc_device_register(rdev, data, false, domains[domain_id]);
- 		if (err)
--			goto fdev_error;
-+			goto populate_error;
- 		break;
- 	default:
- 		err = -EINVAL;
+Best regards,
 -- 
-2.17.1
+Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
 
 
