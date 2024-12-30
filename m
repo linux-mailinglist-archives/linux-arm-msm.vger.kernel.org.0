@@ -1,166 +1,142 @@
-Return-Path: <linux-arm-msm+bounces-43682-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-43683-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3436C9FEA6D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Dec 2024 20:46:13 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id E6DEC9FEA82
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Dec 2024 20:59:58 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 04A8D1883A62
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Dec 2024 19:46:15 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7A011188386A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Dec 2024 20:00:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 87484186E54;
-	Mon, 30 Dec 2024 19:46:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B6EE619ABD8;
+	Mon, 30 Dec 2024 19:59:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="RU4e0fIr"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="kmk9shUH"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
+Received: from mail-ej1-f44.google.com (mail-ej1-f44.google.com [209.85.218.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94A9213C82E
-	for <linux-arm-msm@vger.kernel.org>; Mon, 30 Dec 2024 19:46:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CABD222339
+	for <linux-arm-msm@vger.kernel.org>; Mon, 30 Dec 2024 19:59:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735587964; cv=none; b=HxD0TnX4BawRzrHwZXmlIjPkXuNricoYbL8wNyDr3TI00XXsa8hUOTQOM4ylyC7bYt21W8ozdQtdIfSsrXrf6eWag4J6hwnYuy2E3V/SRFB5ilW80OqBTtlc5PmVgwIDxwmWyt0eUEskCxm4bj7RRcc/zKdXCkYTXNf05g639qA=
+	t=1735588790; cv=none; b=KYT8kaECvLjgyKKAjRZBcEFrJx6MjKO/+T0sUg5B+jzRvRL85ZTlq1vcORwOVS4JPpiNfoeoLVCBKQfufA/XtEZNytsMDDK7kVgRffsio+6g7wozJNuxs8GVcEu9KA/HJyZMRG4gZOGssLzIq9ulqFf+HEufePuXZjWS0j+n+CE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735587964; c=relaxed/simple;
-	bh=KkfCIBKnF5fwnqaFO3EGMdwpJzBICxdQnkM1Cym2WvM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ZN1C4QxiGZZy9lDGCYHZLMeSzKOP8LTH8H3GnZZblV+CYehHAHiML4ygOHw0YzyTVIKUCbjDzKhAR58e4d7fuLfTddZDRMdSRgw+10iZeqZ2bC671aiBtwf3yFT7i4KVzT0I8spdg+Ig1iPIVgFTJLbUX852BbFl5t0VuADYLHI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=RU4e0fIr; arc=none smtp.client-ip=209.85.128.48
+	s=arc-20240116; t=1735588790; c=relaxed/simple;
+	bh=jqKk5T5lIBOI1QztQyZJ393y//Bdt9WcIiq6uelv/tE=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=iUnmTXJSyCW3kXpu28NP20EsOHxKw027xOyD00k8Nvtwea/xue/l4iTfRuF9CkQavBJowRguKeo7os4p2SuFFgTfJ3PHcepoixOSpUBWLtmcPyVrD9JpGQBnFn6TgqJfUsNTzvPjrygGp9MR0ha8YNzdMWspBCclLfinHPZKgks=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=kmk9shUH; arc=none smtp.client-ip=209.85.218.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-43658c452f5so13901245e9.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Dec 2024 11:46:01 -0800 (PST)
+Received: by mail-ej1-f44.google.com with SMTP id a640c23a62f3a-aaf6b1a5f2bso123802166b.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Dec 2024 11:59:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1735587960; x=1736192760; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=l8Naa43QCGHNyg2KPWS+kj2ly/b/cOPWw7DpI0jEnNk=;
-        b=RU4e0fIrBLSF8zGQX/5nQiuC6WO2YPDE6PRLI0iVB/yZkmNjuN1W5sX0TuhPwpFy4w
-         OwaJZmUIcZlhXgQOEMYBGQElcTlmTNfkM3vzW1u9UO6IZmJAPvvEtmJ55M76fcQpaJGt
-         AqJMMb5N7CZ7RUZ/dMtIcmzMzt1Oh7a3vYrLKS1K0B+OzBsjQKK9yfAZ8xJEIVOIulwp
-         MacvD4MSJnoL09/GcLDGR6ssydgLw3ko7m2ZTSgCxFT6WPLALM6Qwt0nmN2s6To8OJx7
-         pQ7v3JFirs9SNDWGxzwuKvfMMCA8m/7FeZJuqzrPSj4IaPNL6yabTOm3LFXFcuhBIpRd
-         4oZw==
+        d=linaro.org; s=google; t=1735588786; x=1736193586; darn=vger.kernel.org;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=p8ITBzWchsZ6aiNKydDGT+QBnZjk0ZvKoShykaX3QQc=;
+        b=kmk9shUH/PGDJy+oz+booiJ579Dig8n/Zi8VGfaveAnMI3VUO94EEpw8cS+6vfQZRO
+         ju8wtgNVCNTdVTokWWDHTUfpNfriwCKuvm872DLBldFdULqe84E5yaVcOYyXmLUoPT4d
+         QCQWs0zq7+i0ETSIGpY8WDK/vwb4dMlpu0YwTWTMCA4SqkZWFuRHrc7w26i20GH8lQXl
+         VkJVHMU9LpeawsI8G7EuQELV7/Qq44WubXZ4IxN/bbfwPWkmFsCPo8m1Bno617tDbz0F
+         B0qdtleaMN2kRbRCsMCsidUzyF2jOK+mhWzXtsyjH5uySLvTVf46UP0xWtNEWnauhDSi
+         I7TQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1735587960; x=1736192760;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=l8Naa43QCGHNyg2KPWS+kj2ly/b/cOPWw7DpI0jEnNk=;
-        b=pGA1M0mly1sILQC7q1he5DaBGbV6ds6/Um1vElwakVdxJPhMs1IGhLXFkQAgYtMS3M
-         FZSsAmN0rO/MaRGwtHPIAi4vzAhILB2SoYMrd4o87cMWV9P0hDD1R11dTXHj0xPBSCMf
-         1jWUxTmqq6PEkoBp2kADjrp9tlS4XXMSfxZigiGLlkkoeCeZgJUgs/nas1dhhkydunDo
-         PMEtEXf7u0VvKnFWhE03z1OCvBZOB0JaBjoLZKPveog/eTdXN37S0mJkpeYEzlntM+Ep
-         1MIcY3JlhHAKuiHJIAIhdspwZNahrmAApk5QXkJCZov9IfO5SO/jiZ93ACQ7G/5wtzqL
-         7bFw==
-X-Forwarded-Encrypted: i=1; AJvYcCWzENyoy+8WAollpw9ZothCtvgWSvMFMdqJQTSQwKAihICSsdxqePHlOhWDxKXZR9CSktWvXCdVAUGvoQlb@vger.kernel.org
-X-Gm-Message-State: AOJu0Ywj+kKOmYkTiuHdYkSGeDO86pfwdyxI+IDM+2ILusIUMLzEmh7U
-	CQonJu6ziWPqk/atfeomQi2O1jE/41TIXVOsa9Y/yNtJle2g0v2RZn7+mBIdI14=
-X-Gm-Gg: ASbGnctuZGuehIU+zrRRs4AQj9b1Hd94glCkk2U+KRT1b2CHeEISPpUIsonFhLFhBco
-	khrAkVEWmwLIbpWf1Iut32C870WCPxAcVQIGR8TbQpXsqBIYtYXUVXYxxs01PDiIcngBcBUnUCB
-	wWqe+7Dhd6H9ctRWfEJTr9p3U8SFX0CR0KMIBSBuKHRa8rqoD0ViyxjFEFXNsTyxR/QwWVhGJDN
-	bI4ZFQeQSYpaKNJ3zLTBhnxFCE9tGTkJhnmFBA1dRYOJpPYyfKTu3om8R0Vli5FKAp3lgh0yBq2
-	h3ypPYeoU3qkXPidebJ6
-X-Google-Smtp-Source: AGHT+IExhNxxISBwK7nKa79+DMGbXNAgnjT4OVTT/gPZUUpxNcDfWbpouGKFxa5X8xAu0n1XSLt/WA==
-X-Received: by 2002:a05:6000:1b88:b0:38a:5557:7677 with SMTP id ffacd0b85a97d-38a55577945mr1461371f8f.5.1735587959917;
-        Mon, 30 Dec 2024 11:45:59 -0800 (PST)
-Received: from [192.168.178.85] (i5E866BC1.versanet.de. [94.134.107.193])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4366127c493sm361945625e9.28.2024.12.30.11.45.58
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 30 Dec 2024 11:45:59 -0800 (PST)
-Message-ID: <aaead9e5-a978-4b3b-8635-bd8be647ae35@linaro.org>
-Date: Mon, 30 Dec 2024 21:45:49 +0200
+        d=1e100.net; s=20230601; t=1735588786; x=1736193586;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=p8ITBzWchsZ6aiNKydDGT+QBnZjk0ZvKoShykaX3QQc=;
+        b=VTBORgQvCYbJgVIp/KIBLiY6Zk41vnIYMVqjjmp+Omi7vLkhtRZSmqH0xEktRd1g7E
+         HOQM++qf64ZU9QtjLz2SCYXHPhbw7N4XFg5nG1xAT2PcK27bG5t0+74U1kZOfG08DQ4k
+         vAxWvffKkA9XT2eRQW21ZyEhpQAtjzZrF2S8UNVjafTAF1iD8qpckseYmiEhztfOtKiZ
+         WlhKIlYGuIbkDLhb6SrsF2eaRQh8TyTj7ywUKtNz1NOlHceaY9foz5Spte65CLaD2yjN
+         BWRieSUXV+JETrjUEr4hk8pN2pkOC5UtNLtdeJ1YwM0gT6vTarslW+mNjsi3O7N0Eus0
+         dJRA==
+X-Forwarded-Encrypted: i=1; AJvYcCWvob9kBHgrMUKVt9m3GXBMSGBsZjypHkNHOOZ8HmL86TfhsP9seDGnZxPv6awDT9G7pzT+joQ8A7Q0QGUk@vger.kernel.org
+X-Gm-Message-State: AOJu0Yxud9bOYAfXExAjpGZfSh+OAZT4mGtFp2xkYBrU/9/LEEDWcKlW
+	DatwBPVVJovnF5pGHVFYnYGOCUo1FoU/ok/aPF9aebaojTBosS63sAwIOSp3+aQ=
+X-Gm-Gg: ASbGncuojKnmW1AuBU2IVmlyXVClCtJRAatSem5Id0f4bSigGeI3ulrnifgggjzZJZu
+	1c5iDY2iCs8Bh8fPaZQwrCy0kKtNOV5NdX2A81EJFoWnEIGFXc0BaD+mkZAioikpYnAjAlDos0O
+	uJ536DE5/BYoarxhEBHxtT5bEoZ3HtNNedrWBARtxZiG26jLwX8JiORXhqINW42jSbKU9x9VKpa
+	CFmYCpuASPrcIFiKaZg+7b3DFyNY2UppZeDTOq09DAZO7+ETT8OsjNzgTf7/ZaCni/1gw==
+X-Google-Smtp-Source: AGHT+IEl73fx1iMH9phpTdGE5/7WHNBN41U0T7++LZh46oaIBWF/nu5kJDZmoD+HKv+QAOervaTSNg==
+X-Received: by 2002:a17:907:3f0f:b0:aa6:8b4a:4695 with SMTP id a640c23a62f3a-aac349d32eamr3129514166b.31.1735588785911;
+        Mon, 30 Dec 2024 11:59:45 -0800 (PST)
+Received: from [127.0.0.2] ([2a02:2454:ff21:ef40:4241:5a6c:e13b:73f9])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-aac0eae74e4sm1495200866b.91.2024.12.30.11.59.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 30 Dec 2024 11:59:45 -0800 (PST)
+From: Stephan Gerhold <stephan.gerhold@linaro.org>
+Date: Mon, 30 Dec 2024 20:59:35 +0100
+Subject: [PATCH] soc: qcom: socinfo: Avoid out of bounds read of serial
+ number
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 4/6] arm64: dts: qcom: x1e80100: Add CAMCC block
- definition
-Content-Language: en-US
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- Loic Poulain <loic.poulain@linaro.org>, Robert Foss <rfoss@kernel.org>,
- Andi Shyti <andi.shyti@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Todor Tomov <todor.too@gmail.com>,
- Mauro Carvalho Chehab <mchehab@kernel.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
- <sboyd@kernel.org>, Jagadeesh Kona <quic_jkona@quicinc.com>,
- Konrad Dybcio <konradybcio@kernel.org>
-Cc: linux-i2c@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-media@vger.kernel.org, linux-clk@vger.kernel.org
-References: <20241227-b4-linux-next-24-11-18-dtsi-x1e80100-camss-v2-0-06fdd5a7d5bb@linaro.org>
- <20241227-b4-linux-next-24-11-18-dtsi-x1e80100-camss-v2-4-06fdd5a7d5bb@linaro.org>
-From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-In-Reply-To: <20241227-b4-linux-next-24-11-18-dtsi-x1e80100-camss-v2-4-06fdd5a7d5bb@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+Message-Id: <20241230-qcom-socinfo-serialno-oob-v1-1-9b7a890da3da@linaro.org>
+X-B4-Tracking: v=1; b=H4sIAKb7cmcC/x3MQQqDMBBA0avIrB2IUyvaq4iLNE50QDM1ASkE7
+ 97Y5V+8nyFxFE7wqjJEPiWJhhJNXYFbbVgYZS4NZKht6GHwcLpjUifBK97YbkFR9Y3PvvPG0jz
+ QYKH4T2Qv3/97nK7rB0KX9FFrAAAA
+X-Change-ID: 20241230-qcom-socinfo-serialno-oob-586f0a2d929a
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>
+Cc: Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org, 
+ linux-kernel@vger.kernel.org
+X-Mailer: b4 0.14.2
 
-Hi Bryan.
+On MSM8916 devices, the serial number exposed in sysfs is constant and does
+not change across individual devices. It's always:
 
-On 12/27/24 15:11, Bryan O'Donoghue wrote:
-> Add the CAMCC block for x1e80100. The x1e80100 CAMCC block is an iteration
-> of previous CAMCC blocks with the exception of having two required
-> power-domains not just one.
-> 
-> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> ---
->   arch/arm64/boot/dts/qcom/x1e80100.dtsi | 17 +++++++++++++++++
->   1 file changed, 17 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/x1e80100.dtsi b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-> index c18b99765c25c901b3d0a3fbaddc320c0a8c1716..5119cf64b461eb517e9306869ad0ec1b2cae629e 100644
-> --- a/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-> @@ -3,6 +3,7 @@
->    * Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
->    */
->   
-> +#include <dt-bindings/clock/qcom,x1e80100-camcc.h>
->   #include <dt-bindings/clock/qcom,rpmh.h>
->   #include <dt-bindings/clock/qcom,sc8280xp-lpasscc.h>
->   #include <dt-bindings/clock/qcom,x1e80100-dispcc.h>
+  db410c:/sys/devices/soc0$ cat serial_number
+  2644893864
 
-It would be preferred to sort the list of includes in alphabetical order.
+The firmware used on MSM8916 exposes SOCINFO_VERSION(0, 8), which does not
+have support for the serial_num field in the socinfo struct. There is an
+existing check to avoid exposing the serial number in that case, but it's
+not correct: When checking the item_size returned by SMEM, we need to make
+sure the *end* of the serial_num is within bounds, instead of comparing
+with the *start* offset. The serial_number currently exposed on MSM8916
+devices is just an out of bounds read of whatever comes after the socinfo
+struct in SMEM.
 
-> @@ -4647,6 +4648,22 @@ usb_1_ss1_dwc3_ss: endpoint {
->   			};
->   		};
->   
-> +		camcc: clock-controller@ade0000 {
-> +			compatible = "qcom,x1e80100-camcc";
-> +			reg = <0 0x0ade0000 0 0x20000>;
-> +			clocks = <&gcc GCC_CAMERA_AHB_CLK>,
-> +				 <&bi_tcxo_div2>,
-> +				 <&bi_tcxo_ao_div2>,
-> +				 <&sleep_clk>;
-> +			power-domains = <&rpmhpd RPMHPD_MXC>,
-> +					<&rpmhpd RPMHPD_MMCX>;
-> +			required-opps = <&rpmhpd_opp_low_svs>;
-> +			#clock-cells = <1>;
-> +			#reset-cells = <1>;
-> +			#power-domain-cells = <1>;
-> +			status = "disabled";
+Fix this by changing offsetof() to offsetofend(), so that the size of the
+field is also taken into account.
 
-Please do not disable the clock controller, it was discussed in the past, that
-all clock controllers should be enabled by default.
+Cc: stable@vger.kernel.org
+Fixes: efb448d0a3fc ("soc: qcom: Add socinfo driver")
+Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
+---
+ drivers/soc/qcom/socinfo.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-> +		};
-> +
->   		mdss: display-subsystem@ae00000 {
->   			compatible = "qcom,x1e80100-mdss";
->   			reg = <0 0x0ae00000 0 0x1000>;
-> 
+diff --git a/drivers/soc/qcom/socinfo.c b/drivers/soc/qcom/socinfo.c
+index 62fadfe44a09f86ac641a4f6c162a1a1c185a985..d49c55979bb3080c724c6cffe27f3a6ef29ff62b 100644
+--- a/drivers/soc/qcom/socinfo.c
++++ b/drivers/soc/qcom/socinfo.c
+@@ -796,7 +796,7 @@ static int qcom_socinfo_probe(struct platform_device *pdev)
+ 	if (!qs->attr.soc_id || !qs->attr.revision)
+ 		return -ENOMEM;
+ 
+-	if (offsetof(struct socinfo, serial_num) <= item_size) {
++	if (offsetofend(struct socinfo, serial_num) <= item_size) {
+ 		qs->attr.serial_number = devm_kasprintf(&pdev->dev, GFP_KERNEL,
+ 							"%u",
+ 							le32_to_cpu(info->serial_num));
 
---
-Best wishes,
-Vladimir
+---
+base-commit: 643bc7bbfa59a89d46819949dfd0baf8fdb4c3ce
+change-id: 20241230-qcom-socinfo-serialno-oob-586f0a2d929a
+
+Best regards,
+-- 
+Stephan Gerhold <stephan.gerhold@linaro.org>
+
 
