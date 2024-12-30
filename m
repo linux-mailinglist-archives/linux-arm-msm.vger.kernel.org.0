@@ -1,177 +1,128 @@
-Return-Path: <linux-arm-msm+bounces-43602-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-43603-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id C2AE09FE36E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Dec 2024 08:50:57 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id CD3FA9FE372
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Dec 2024 08:51:11 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7D6F71881ED2
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Dec 2024 07:50:59 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2AFCD3A1C9E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Dec 2024 07:51:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7F54619F42D;
-	Mon, 30 Dec 2024 07:50:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A7CE819FA93;
+	Mon, 30 Dec 2024 07:51:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="LqyjVTEn"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Zhs9RpKE"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C659B155345;
-	Mon, 30 Dec 2024 07:50:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19AAE19F42D
+	for <linux-arm-msm@vger.kernel.org>; Mon, 30 Dec 2024 07:51:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735545052; cv=none; b=jXd4OkPnWtP2e+QCNVkm8jpdKGfpg/PmM7lESKjVCeMMKdeuwt3/+Z8kcTbghWyz9hiaklGHQQUB1pTTgUv2+hz0q8VODEyToD89k6ZNVnj3znAyFgIQxbyT990WXEXN6gK1w3Eu4xOvo4LcNpRPA7U9KBpoTBrJrEgsp+mzbdQ=
+	t=1735545065; cv=none; b=TbyyD1mOGG3TUIYrI50dcmwyrt5UFjQO5dyyMtrETiwHrf1JkrNv6eZ5l3tJFsUt+WZcCrLD+w7gZazPhSy8Uj53qdBrZdeuC36aKvpac5LWzD9sUVQIu0w9ctBw+zmncGmrE/tVdfiwfAetiT3FgjJst5ndEaMTYGV3pyqy3cA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735545052; c=relaxed/simple;
-	bh=gnI9nX+tGwonTRbDAHcvIM2xSVjUaJjLTFrHnTjAqJQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=Dx5OWcfEtX6bSLAqKmzoe8HMy0Bey/UQgnAkuwJAaqVsREkjpaJkptHD2tkHFQC/8yaHa6O12moPEfaM7qOb2o8kNMNhcKHB02tNaSThbys2YfbcLzyA7bTfmdu4bZbDBjXcto0xIosX4Tc2VhZUP5qZYA2pVMP8sqXtN2zl7S8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=LqyjVTEn; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BTMd21s014531;
-	Mon, 30 Dec 2024 07:50:47 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	FBSe9XsWu5bcsf4UbEBMl0aEkgZHUnZCrNCXB26edL4=; b=LqyjVTEnYgj2SQys
-	WL+a3P0/5ou/RP9PcMDY8o8KlyM1IQHeuKQlrpmNpoW09Pw2cp5i5x7mAZph02sN
-	knKd7fGbSc7W7tWfIjXENT+TQ4ogCYiSRHNg13+zFx5UDVvm2m7yAXJr1ox32Xqw
-	uHm7tWdSNTZpU5nRuJLTds0uWBWU2dvt2AQX/LLreEv7lXHMsk87MUAIhUeHZzm7
-	agDkFEAdjkvmt+GYxY9f8pliPBuC9Ek6H95SnSNr1/eJl9Zpi22L89Hyeg6CqQ6t
-	aFHUPqz7GrHeGZHadWZEgyKHoNCOUc9iB6XQGcgniUiAhpfcKNtZw4G95CrMAOQl
-	wSwXDw==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43u9tm95sy-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 30 Dec 2024 07:50:46 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4BU7ojYh013829
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 30 Dec 2024 07:50:45 GMT
-Received: from [10.152.195.140] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Sun, 29 Dec
- 2024 23:50:40 -0800
-Message-ID: <ea31d59b-38da-4844-9ea5-32e51b8578fd@quicinc.com>
-Date: Mon, 30 Dec 2024 13:20:36 +0530
+	s=arc-20240116; t=1735545065; c=relaxed/simple;
+	bh=z8+qun/QPqLHjPWgOxfTIvg6DV88xiKwezK3Sj/y6Cc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=tClcQT/vNhL9A8dbZgC+tag8zoz2TyG1KYGlzC04AFeb3obQZ2+aW+UmfDPwVKzXYtUewZmPkNg5twkJxEjAw/07RLMS1ATVzlc848V56YIp7PeXdkINljx6+UYnlyUIrd2IUVzuOF8eLKNMfENgoSwMx8eMJL0cI3oPfFBk1pI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Zhs9RpKE; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BU00CkJ025794
+	for <linux-arm-msm@vger.kernel.org>; Mon, 30 Dec 2024 07:51:03 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=IIP4QYEQeRtuKFwkCRLYPNjg
+	fxJu3vcNySyd6RWA2UU=; b=Zhs9RpKEMTx30Wos/mNJ7Zr9UDxxEXTJ5SgX+DI0
+	pL1LBE5M5Hd7dkxBct4jlJs0kUIArM+sPpy0yJN5s9IoD/pCUNSXa6HPstLawOap
+	ja04ukYJ6NJB7H3H3aGiu6jIJh1i2ipCllDj/f2DK+eCrAZf+8A5dTZr/kA1ufmo
+	PPwpjL4ADxS7hr46K+OgvXU1mQ79yH6fnqxHouXG6lMVOSK3Z48EdZGL9cw9J95w
+	d8j6ZT7VYcfwIZfY4+BAlKpGoyhJi238+H2lppVvNxQw5+r6+3E7/zgFptS2bs+j
+	AurwVSDR2Ml9XUhGYazTgTbelz7l1sqxqc1qWXlGaDOfqw==
+Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com [209.85.216.69])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43u9hu968a-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 30 Dec 2024 07:51:02 +0000 (GMT)
+Received: by mail-pj1-f69.google.com with SMTP id 98e67ed59e1d1-2f129f7717fso12170931a91.0
+        for <linux-arm-msm@vger.kernel.org>; Sun, 29 Dec 2024 23:51:02 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1735545061; x=1736149861;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=IIP4QYEQeRtuKFwkCRLYPNjgfxJu3vcNySyd6RWA2UU=;
+        b=Fky4LOHK1u6lM4XzyLHpjgF1xl9alU5faAl4JZdSPtGhScc00Joq4sJudU6O21bMsk
+         Wy7fTtnSyVuJV4BI45A4qNuFPS9u7NNfHGO3634X14k/mSENfrxzPntcr/BC2Y1T9f/K
+         VFPCadiAdZ3RYdYrqOZs/cIVoL8WvrhpDyJhOblLJ0TllPkusKr+U8VjKbBQsRMnQSmt
+         oBJqjHh+oROAoMsiJ8s2vLd/GP+ugwacdVvz3wZqg9Bc15p8d7Z+4GzDfvKHp9xoJzyt
+         3Fhuj2KeOve5yWIjXGDsAzDTcG9QlCJuQiEX8+luRNi9Odghf1sWdGC+e8eoyar7HWmb
+         rcUw==
+X-Gm-Message-State: AOJu0Yyi0IqWAWC+/jCjYK29zHU67xzoQSkx6LA4P31Ewb0mxOVGa6n9
+	P9AfcjQMahT2J4yZIv3TNWlk2Qn8J3N8nLvgXWKNnNlf63rd7sed8c7r7txPAfKcvv17vCFo5l/
+	fmfNoZbWhCZsYx6lbrDOAttngvN0B2M0MVV1rxrVWWcuO5/jvX7QcBO6DnJuU5YqK
+X-Gm-Gg: ASbGncsG8spxrhjNK5ZSl1gvwpuku96v9llNpbjbYvalkDuRmC2Ok4eA4EwcbwEi4Sf
+	yRnm3Z1jAu+jBkGJDo1yHXbK1yx4j5pMwfgJezzP5gY6BYFPIrj8rK6r1Bhzd/H6XCD+xEoom4U
+	oohdGzJSsxJrF2TX4CZz6859a7vGJrGqUi7am4lt3lFbHBuX3eIiwi90HBdGE32wIU0UjGzwxEJ
+	FPTA8/LXD6zCAyn2OjNWiKzSb0LLARpP9+7LixZNrwJCMHSdFhusuPe3+IQZZyssB5YG10NcCE7
+	9n4L69O9
+X-Received: by 2002:aa7:9319:0:b0:725:ef4b:de30 with SMTP id d2e1a72fcca58-72abde2ff67mr46847374b3a.14.1735545061536;
+        Sun, 29 Dec 2024 23:51:01 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGBQ3f1Gc5Oyil5dbOsR/lgRIAeYa3cZWqfEdlo5j/49DiXLSRReZ+q/Cu36MODzLkgMAOGTQ==
+X-Received: by 2002:aa7:9319:0:b0:725:ef4b:de30 with SMTP id d2e1a72fcca58-72abde2ff67mr46847358b3a.14.1735545061165;
+        Sun, 29 Dec 2024 23:51:01 -0800 (PST)
+Received: from hu-mojha-hyd.qualcomm.com ([202.46.23.25])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-72aad835469sm19329806b3a.60.2024.12.29.23.50.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 29 Dec 2024 23:51:00 -0800 (PST)
+Date: Mon, 30 Dec 2024 13:20:56 +0530
+From: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+To: jassisinghbrar@gmail.com, manivannan.sadhasivam@linaro.org
+Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Mukesh Ojha <mojha@qti.qualcomm.com>
+Subject: Re: [PATCH] mailbox: qcom-ipcc: Reset CLEAR_ON_RECV_RD if set from
+ boot firmware
+Message-ID: <Z3JQ4HFSoIYmc4+r@hu-mojha-hyd.qualcomm.com>
+References: <20241230070644.2512780-1-mojha@qti.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/6] dt-bindings: pinctrl: qcom: rename spi0 pins on
- IPQ5424
-To: Krzysztof Kozlowski <krzk@kernel.org>, <andersson@kernel.org>,
-        <linus.walleij@linaro.org>, <robh@kernel.org>, <krzk+dt@kernel.org>,
-        <conor+dt@kernel.org>, <konradybcio@kernel.org>,
-        <mturquette@baylibre.com>, <sboyd@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-gpio@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-clk@vger.kernel.org>
-CC: <quic_varada@quicinc.com>, <quic_srichara@quicinc.com>
-References: <20241227072446.2545148-1-quic_mmanikan@quicinc.com>
- <20241227072446.2545148-2-quic_mmanikan@quicinc.com>
- <fbdf716d-0c4c-4f51-9f54-0f38931e26cd@kernel.org>
- <2234c9d5-f434-48cf-ba77-38e9109541eb@quicinc.com>
- <88b6e7ec-0265-4507-9ce1-a72217563e32@kernel.org>
-Content-Language: en-US
-From: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
-In-Reply-To: <88b6e7ec-0265-4507-9ce1-a72217563e32@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: ccQWW536jdlqfc_Ljm3OfJNHKjwgtAzs
-X-Proofpoint-ORIG-GUID: ccQWW536jdlqfc_Ljm3OfJNHKjwgtAzs
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241230070644.2512780-1-mojha@qti.qualcomm.com>
+X-Proofpoint-GUID: hd3x7mIZFI6-wg7T-dJ3UwCBcQazWVoV
+X-Proofpoint-ORIG-GUID: hd3x7mIZFI6-wg7T-dJ3UwCBcQazWVoV
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
- suspectscore=0 phishscore=0 mlxlogscore=999 clxscore=1015
- priorityscore=1501 mlxscore=0 adultscore=0 bulkscore=0 spamscore=0
- malwarescore=0 lowpriorityscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2411120000 definitions=main-2412300065
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ clxscore=1015 mlxscore=0 adultscore=0 impostorscore=0 malwarescore=0
+ priorityscore=1501 suspectscore=0 spamscore=0 phishscore=0 mlxlogscore=672
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2412300065
 
-
-
-On 12/27/2024 3:00 PM, Krzysztof Kozlowski wrote:
-> On 27/12/2024 10:18, Manikanta Mylavarapu wrote:
->>
->>
->> On 12/27/2024 1:06 PM, Krzysztof Kozlowski wrote:
->>> On 27/12/2024 08:24, Manikanta Mylavarapu wrote:
->>>> SPI protocol runs on serial engine 4. Hence rename
->>>> spi0 pins to spi4 like spi0_cs to spi4_cs etc.
->>>>
->>>> Signed-off-by: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
->>>> ---
->>>
->>>
->>> <form letter>
->>> This is a friendly reminder during the review process.
->>>
->>> It looks like you received a tag and forgot to add it.
->>>
->>> If you do not know the process, here is a short explanation:
->>> Please add Acked-by/Reviewed-by/Tested-by tags when posting new versions
->>> of patchset, under or above your Signed-off-by tag, unless patch changed
->>> significantly (e.g. new properties added to the DT bindings). Tag is
->>> "received", when provided in a message replied to you on the mailing
->>> list. Tools like b4 can help here. However, there's no need to repost
->>> patches *only* to add the tags. The upstream maintainer will do that for
->>> tags received on the version they apply.
->>>
->>> Please read:
->>> https://elixir.bootlin.com/linux/v6.12-rc3/source/Documentation/process/submitting-patches.rst#L577
->>>
->>> If a tag was not added on purpose, please state why and what changed.
->>> </form letter>
->>>
->>
->> Hi Krzysztof,
->>
->> 	Patches #1 to #4 are newly added in V3 (to rename SPI0 to SPI4). Hence, there are no A-b/R-b
->> 	tags associated with these patches. I mentioned this information in the cover letter.
->> 	
->> 	I assume you are referring to Patch #1 from the V2 series.
->> 	Patch #1 [1] and #2 [2] from the V2 series have been merged into linux-next.
->> 	[1] https://lore.kernel.org/linux-arm-msm/20241217091308.3253897-2-quic_mmanikan@quicinc.com/
->> 	[2] https://lore.kernel.org/linux-arm-msm/20241217091308.3253897-3-quic_mmanikan@quicinc.com/
->>
->> 	Please let me know if i missed anything.
+On Mon, Dec 30, 2024 at 12:36:44PM +0530, Mukesh Ojha wrote:
+> From: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
 > 
-> v3 mislead me here and three different subsystems in one patchset.
+> For some SoCs, boot firmware is using the same IPCC instance used
+> by Linux and it has kept CLEAR_ON_RECV_RD set which basically means
+> interrupt pending registers are cleared when RECV_ID is read and the
+> register automatically updates to the next pending interrupt/client
+> status based on priority.
 > 
-> Anyway, if this is different patch then review follows - there is no ABI
-> impact explanation and this is an ABI break. What's more, entries are
-> not sorted anymore and why there is a gap? spi4, spi1 and spi10? Where
-> is spi3?
+> Clear the CLEAR_ON_RECV_RD if it is set from the boot firmware.
 > 
-> Not sure if this renaming is useful or correct, especially considering
-> not many arguments in commit msg (e.g. datasheet?).
+> Signed-off-by: Mukesh Ojha <mojha@qti.qualcomm.com>
+
+Very sorry for the spam, please ignore this patch, will send another one
+with corrected email Id.
+
+-Mukesh
 > 
-> 
-
-Hi Krzysztof,
-
-	The IPQ5424 supports two SPI instances on serial engine 4 and 5.
-	Previously, SPI clocks, gpio pins and DTS node names were named
-	according to protocol instances like spi0 and spi1.
-
-	As per the feedback received in
-	https://lore.kernel.org/linux-arm-msm/ca0ecc07-fd45-4116-9927-8eb3e737505f@oss.qualcomm.com/,
-	spi0 has been renamed to spi4 to align with the serial engine instance.
-
-	Kindly advice if it's not acceptable.
-
-Thanks & Regards,
-Manikanta.
 
