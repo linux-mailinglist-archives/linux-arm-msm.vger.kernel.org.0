@@ -1,159 +1,237 @@
-Return-Path: <linux-arm-msm+bounces-43673-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-43674-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E3E089FE93D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Dec 2024 18:00:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 2B22C9FE941
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Dec 2024 18:00:55 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2D9DD3A22C9
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Dec 2024 17:00:34 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 73CE83A2393
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Dec 2024 17:00:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9698486334;
-	Mon, 30 Dec 2024 17:00:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 69AB41ADFE4;
+	Mon, 30 Dec 2024 17:00:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="MK+ZDF64"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="WPHcCtZn"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7317633C9;
-	Mon, 30 Dec 2024 17:00:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FC5886334
+	for <linux-arm-msm@vger.kernel.org>; Mon, 30 Dec 2024 17:00:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735578034; cv=none; b=Gd6MmeBAsakhi21uCQflKNM2kP/eP4YyQhMSqfdXRsdDEqBV1RiTIpiLJx/7XsR58wHkf93DAjQX1Tj3KTMCP41+K1S9RQ69TuQvUoDdmQLDoIKZdE0AqM6OXBT9TzgcjD1xDz/2qlJqiumybwUiaNdwT6YkKsP7Mfj4S+Qpg40=
+	t=1735578045; cv=none; b=MNWV+iV84wkrRo1cJT3pDhRRapfTx0D6SMICeSVRevwmys8gPW734ZZa1V4XsZtX11nIgVGmvxrPU2AaJfP9HFeqLLYrJUnED875KtfDB8YzmUtqWl/9n1l37TtMCIjVSKy0Zk7qq7ltoxhCW4ud3KZrJEpOVCUW9YY61imz9D8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735578034; c=relaxed/simple;
-	bh=bUO71XDJiq73wjQcZpelQaLVs++bipFpNXwVT+JL3c0=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=BilqkIpADOocSimiBCvBEosBqgyZhBgheaaRyUQV5y+iSjk48+/VtcMCMRWHntfRpeTYtcBUjMOJYObPKouVz1oPGwPrs0x3I2anSUpuasyzSWd/6KwMzocncEQiVDpxLrL7h1RG1FYD9+vX3cDqsMhs+BHVBUUDAzJuUxQIlTs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=MK+ZDF64; arc=none smtp.client-ip=192.198.163.18
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1735578032; x=1767114032;
-  h=from:to:cc:subject:in-reply-to:references:date:
-   message-id:mime-version;
-  bh=bUO71XDJiq73wjQcZpelQaLVs++bipFpNXwVT+JL3c0=;
-  b=MK+ZDF64RpNad1Tgvvc5D/l5Kvq/OLBa1MjnQZdwsFifBp8bqa9n/l3o
-   1jcepFnWycnU/uUnmCEmeOM+LHdrD3oC1A/6u5XoHwxg8MRg1+iKEUL0b
-   HSrc+gOkyZSjYyW9qLGGzO0x429VqbW3hcCL2bgPj0ALL0Jnzy0Aq0fgv
-   +tKcLFUbimfLbCAcbcnOHQ0UgpSkME40CDmOK7y8JdiyA2HaUpo8i1dLL
-   su7EzGhLs08+sUa33Emv93oA+sIsEdIxqUT9J80Pxe21yRG/5ML7N76vX
-   CDrb5RqThVSO4oB+YDijcmpSWSv5emM8oN0IMHVtJ9CuGw63n0zq0eBp3
-   Q==;
-X-CSE-ConnectionGUID: jRUPFZMER2yVp1BUZtWAlA==
-X-CSE-MsgGUID: Gy920CR5S922J3STdLqR6Q==
-X-IronPort-AV: E=McAfee;i="6700,10204,11301"; a="35174348"
-X-IronPort-AV: E=Sophos;i="6.12,276,1728975600"; 
-   d="scan'208";a="35174348"
-Received: from fmviesa005.fm.intel.com ([10.60.135.145])
-  by fmvoesa112.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 30 Dec 2024 09:00:29 -0800
-X-CSE-ConnectionGUID: Er8FxBBlTt2HLYTUJsAM5w==
-X-CSE-MsgGUID: 7rPfMjAqSCqhf2hQDBs1fw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; 
-   d="scan'208";a="105469494"
-Received: from ncintean-mobl1.ger.corp.intel.com (HELO localhost) ([10.245.246.167])
-  by fmviesa005-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 30 Dec 2024 09:00:21 -0800
-From: Jani Nikula <jani.nikula@linux.intel.com>
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Abel Vesa <abel.vesa@linaro.org>, Johan Hovold <johan@kernel.org>,
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard
- <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, David
- Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, Karol Herbst
- <kherbst@redhat.com>, Lyude Paul <lyude@redhat.com>, Danilo Krummrich
- <dakr@redhat.com>, Rodrigo Vivi <rodrigo.vivi@intel.com>, Joonas Lahtinen
- <joonas.lahtinen@linux.intel.com>, Tvrtko Ursulin <tursulin@ursulin.net>,
- Rob Clark <robdclark@gmail.com>, Abhinav Kumar
- <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>, Marijn Suijten
- <marijn.suijten@somainline.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, dri-devel@lists.freedesktop.org,
- linux-kernel@vger.kernel.org, nouveau@lists.freedesktop.org,
- intel-gfx@lists.freedesktop.org, intel-xe@lists.freedesktop.org,
- linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org
-Subject: Re: [PATCH v2 1/4] drm/dp: Add helper to set LTTPRs in transparent
- mode
-In-Reply-To: <lnbvudvkvgifbjmscgrvv5hkuescyqz57y6m2pydphyq2ubrhg@aynvaqlu7jz3>
-Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
-References: <20241211-drm-dp-msm-add-lttpr-transparent-mode-set-v2-0-d5906ed38b28@linaro.org>
- <20241211-drm-dp-msm-add-lttpr-transparent-mode-set-v2-1-d5906ed38b28@linaro.org>
- <Z1mk08SHEd5_vc99@hovoldconsulting.com> <Z21VD82XCOVgVJUh@linaro.org>
- <877c7hpavo.fsf@intel.com>
- <lnbvudvkvgifbjmscgrvv5hkuescyqz57y6m2pydphyq2ubrhg@aynvaqlu7jz3>
-Date: Mon, 30 Dec 2024 19:00:18 +0200
-Message-ID: <87y0zxnm1p.fsf@intel.com>
+	s=arc-20240116; t=1735578045; c=relaxed/simple;
+	bh=kURA7o7aqA+HiAjUEE275GbuAo5azOw4NHqeZjBSpUw=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=dGlmVn2LETWUFDjMXO7yKAzjGoYWsqQR5HE2lXwgXsMUTEOgP3wYUZ7n9ySDhcCx/9VAE2HrADAwIGmpEvlhG6ChC8TrZfq8PVWk5fmjXyUq0Cx6Hi/bA//HxqLQtDRHo349RfsZ69nZBO4gvWNRie4kBlntCiwod/Q7VDnbfLA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=WPHcCtZn; arc=none smtp.client-ip=209.85.128.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-43625c4a50dso63440175e9.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Dec 2024 09:00:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1735578041; x=1736182841; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=vjWl+cSNbynsKxqcEoR2/YImYP9Ijn1wUxi9H5BocWg=;
+        b=WPHcCtZnSy0MUYvplc5vvRqA0+BAvc/W3xmmGC/hsbLZVf1uch1yG0sdW0y+IGLWJW
+         nKFHhzYJt7NGyZj1XGyiv8UB9cxFkqQ9YE9n7JUiX7nm6Tf3mDAeK2zcSfxVqKELYp2b
+         VVNERz5zDKLpufxtUi2qc6SCgpXrOPS99en4MRVweYXVD4AuQOru8AFcCGWavOA27zBX
+         RAQk/w+QGsdDVCKDeXX0k163WMtT0ZxR8b0qaZAXsGdi33JC3PHcivSfVmIrGQHQZGLT
+         oNiQf7NcFCInBhUGqh/RO8qRVX25Rmm+PQmwzOPqoyTFx2Lm8uVBCS72hLkfahhM3i3I
+         SP5w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1735578041; x=1736182841;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=vjWl+cSNbynsKxqcEoR2/YImYP9Ijn1wUxi9H5BocWg=;
+        b=Eu6ymoeB+I+/xRWYxiSYJ1KN/j8HlacaLeL+zsWKke6aK73pjj1+3Z9IkBD3+SKymI
+         kCFEKtoakytAahOdS8VjlN7M5YeQhyGBHaUKbNcgzz1EocSRuBtGAEtHI1KJH+njxg/x
+         sdvqcvy2lDKCIi4Nq1wupqY/sqArqH4OWs+BxQNPEx3n312TKxc6024N3jZsv+mu+kD+
+         r/yJvGQpBTXiCIVT6qPXsJFjn58lpWPUtdI3N6SHlFjQdPfMjwZ8Jpe6xec6+vglnYTQ
+         LFfwQoqPLVBbMcEQNivY+yhd8iyUJvyO3/hdWE2xKzE9lXVl/RDl3albbtJRVkLhhNtV
+         HcuQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXjmZyhJSNrJjaaijxuPyJZXNcCT+7We/uG1wGLWlpwIj+L+i8jEElNK9BOq/wM2z2JKMUtSo65509AubwW@vger.kernel.org
+X-Gm-Message-State: AOJu0Yytl+iqjyF/9kwNSRvmZst9hKk33U1Mem3YXWS3W3KShQi2Rp3t
+	fk9uvIEqMiSlZhqxJatgx9LKa0Zb1cD7bh4qZD6xdGaG/BFEBOXHRrugWdBLREM=
+X-Gm-Gg: ASbGncuN9k5TR7+P79Rier/SrExwBh8CqbllyJDhP03eqSjQnmPEx2BkuLTKCV2MD+s
+	81BjW2Lhp1JAbPjyWTDGfU9Y5eNFcjDgGwx7UakX1FMHg72VXhiL+/lThWf8vQQqJxBKTrvmlxs
+	XjGZ7RUMjA96wanXizzh3pltPG9R+oBtsyMHhuSHMEXPSgCxMuTWRtUmryi4Z8P7vcsI7bUFmQR
+	4ExmeuUQo2hcIw4g2hc+Qu9l8ATPoLcy2mew8ZAauux81Nutpbx361qj6JrElwnlA==
+X-Google-Smtp-Source: AGHT+IFbQYRuxdc0FKJEy3ZQahDjTHSxWr6YeT2H60Bvmm7u4AFwu1iK5XwFiexTcy5BfjlADgT+ag==
+X-Received: by 2002:a5d:5f8b:0:b0:386:3327:bf85 with SMTP id ffacd0b85a97d-38a223fd38amr35121672f8f.53.1735578040613;
+        Mon, 30 Dec 2024 09:00:40 -0800 (PST)
+Received: from [127.0.0.1] ([176.61.106.227])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-436611fc161sm359757955e9.10.2024.12.30.09.00.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 30 Dec 2024 09:00:40 -0800 (PST)
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Subject: [PATCH v6 0/3] media: venus: Provide support for selecting
+ encoder/decoder from in-driver
+Date: Mon, 30 Dec 2024 17:00:32 +0000
+Message-Id: <20241230-media-staging-24-11-25-rb3-hw-compat-string-v6-0-a4d5070d3aaa@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIALDRcmcC/6XRy07DMBAF0F+pvGaQPX4k7or/QCz8TCzRuLKjA
+ Kry7zjZAMqqdHlnpHNHmhupoaRQyfl0IyUsqaY8taCeTsSNZhoCJN8yQYqCMezgEnwyUGczpGk
+ AFMAYoIRiOYwf4PLlaua2Lts2GO601rynyEgTryXE9Lm3vb61PKY65/K1ly9sm/6vZ2FAQWvHV
+ ESlrFAv72kyJT/nMpCtaMEHcGy4o4xGL2TsYjzg/AGcNzxEZT3KoHtvD7j4jff34aLh0VOFlrc
+ vdOKAyx8cqb4Pl/vlXZCxl5FT/IOv6/oNkGI6m1sCAAA=
+X-Change-ID: 20241127-media-staging-24-11-25-rb3-hw-compat-string-ea3c99938021
+To: Stanimir Varbanov <stanimir.k.varbanov@gmail.com>, 
+ Vikash Garodia <quic_vgarodia@quicinc.com>, 
+ Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: quic_renjiang@quicinc.com, quic_vnagar@quicinc.com, 
+ quic_dikshita@quicinc.com, konradybcio@kernel.org, 
+ linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, devicetree@vger.kernel.org, 
+ Stanimir Varbanov <stanimir.varbanov@linaro.org>, 
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+X-Mailer: b4 0.15-dev-dedf8
 
-On Mon, 30 Dec 2024, Dmitry Baryshkov <dmitry.baryshkov@linaro.org> wrote:
-> On Mon, Dec 30, 2024 at 03:18:35PM +0200, Jani Nikula wrote:
->> On Thu, 26 Dec 2024, Abel Vesa <abel.vesa@linaro.org> wrote:
->> > On 24-12-11 15:42:27, Johan Hovold wrote:
->> >> On Wed, Dec 11, 2024 at 03:04:12PM +0200, Abel Vesa wrote:
->> >>  
->> >> > +/**
->> >> > + * drm_dp_lttpr_set_transparent_mode - set the LTTPR in transparent mode
->> >> > + * @aux: DisplayPort AUX channel
->> >> > + * @enable: Enable or disable transparent mode
->> >> > + *
->> >> > + * Returns 0 on success or a negative error code on failure.
->> >> > + */
->> >> > +int drm_dp_lttpr_set_transparent_mode(struct drm_dp_aux *aux, bool enable)
->> >> > +{
->> >> > +	u8 val = enable ? DP_PHY_REPEATER_MODE_TRANSPARENT :
->> >> > +			  DP_PHY_REPEATER_MODE_NON_TRANSPARENT;
->> >> > +	int ret = drm_dp_dpcd_writeb(aux, DP_PHY_REPEATER_MODE, val);
->> >> > +
->> >> > +	return ret == 1 ? 0 : ret;
->> >> 
->> >> This looks correct, but I had to go look at drm_dp_dpcd_writeb() to make
->> >> sure it never returns 0 (for short transfers).
->> >
->> > Will follow Dmitry's proposal here.
->> >
->> > 	if (ret < 0)
->> >         	return ret;
->> >
->> > 	return (ret == 1) ? 0 : -EIO;
->> 
->> Arguably this (well, with ret == len) is what we should've done with
->> *all* of the drm_dp_dpcd_*() functions. I don't think there's a single
->> case where we'd actually need to know that some but not all data was
->> transferred. And if there are, they could be special cased. Now we have
->> hundreds of cases where we check against length and it's just cumbersome
->> all over the place.
->> 
->> The question is, how confusing is it going to be to have some of the new
->> functions return 0 instead of len? Very? Extremely?
->> 
->> As painful as it would be, I'd be in favor of changing them all to
->> return 0 on ret == len. If we find a volunteer.
->
-> Maybe a correct Coccinelle script can do a significant part of such a
-> conversion for us?
->
-> Anyway, I think it a right thing to do. Could you possibly add a new set
-> of API and use it inside i915 driver? Then during the next cycle we can
-> start using new functions for all other drivers. Or would you rather add
-> new API through drm-misc? Then we can concert e.g. existing helpers in
-> the first place and then start working on the drivers.
+v6:
+- Captures and returns up the callstack error codes from venus_add_dynamic_nodes() - Stan
+- Adds Tested-by to patches 1 & 2 - Renjiang, Krzysztof 
+- Link to v5: https://lore.kernel.org/r/20241209-media-staging-24-11-25-rb3-hw-compat-string-v5-0-ef7e5f85f302@linaro.org
 
-There are hundreds of drm_dp_dpcd_{read,readb,write,writeb} uses across
-drm, and then all the higher level helpers on top. I'm not sure adding a
-new API and using it in i915 achieves much.
+v5:
+- Fixes venus_remove_dynamic_nodes() on probe err path - Dikshita
+- Link to v4: https://lore.kernel.org/r/20241128-media-staging-24-11-25-rb3-hw-compat-string-v4-0-fd062b399374@linaro.org
 
-BR,
-Jani.
+v4:
 
+- Adds some unavoidable conditional CONFIG_OF_DYNAMIC to fix media-ci testcase # Test build:OF x86_64
+- Added logic for of_changeset_revert() and of_changeset_destroy() on
+  error/remove paths - Bryan
+- Link to v3: https://lore.kernel.org/r/20241127-media-staging-24-11-25-rb3-hw-compat-string-v3-0-ef6bd25e98db@linaro.org
 
+v3:
+- Adds select OF_DYNAMIC to venus/Kconfig to ensure of_changeset_*() is
+  available. Instead of ifdefing and have the fix not work without
+  OF_DYNAMIC, select OF_DYANMIC with venus - linux-media-ci
+- Link to v2: https://lore.kernel.org/r/20241127-media-staging-24-11-25-rb3-hw-compat-string-v2-0-c010fd45f7ff@linaro.org
+
+v2:
+- Removes useless dev_info() leftover from debugging - Bryan
+  Link: https://lore.kernel.org/r/ce9ac473-2f73-4c7a-97b1-08be39f3adb4@linaro.org
+- Trivial newline change @ np = of_changeset_create_node(ocs, dev->of_node, node_name); - Bryan
+- Fixes a missing goto identified by smatch - Smatch/Bryan
+- Adds Krzysztof's RB to deprecated - Krzysztof
+- Link to v1: https://lore.kernel.org/r/20241127-media-staging-24-11-25-rb3-hw-compat-string-v1-0-99c16f266b46@linaro.org
+
+v1:
+Various venus patches have been held up due to the misuse of DT to provide
+a configuration input to venus as to which mode a given transcoder should
+be in.
+
+Link: https://lore.kernel.org/linux-arm-msm/436145fd-d65f-44ec-b950-c434775187ca@kernel.org
+Link: https://lore.kernel.org/linux-media/ba40de82-b308-67b1-5751-bb2d95f2b8a5@linaro.org/
+
+This series provides support for static configuration of venus from the resource
+structure via:
+
+1. Adding two strings to the resource structure.
+   One string for the decoder one for the encoder.
+2. The string for each SoC has been matched to the existing in the
+   DT which currently specifies the mode as decoder or encoder.
+3. New logic in the driver parses the DTB looking for the node name
+   specified for the decoder and encoder .
+4. If the DTB contains the node name, then no new node is added as
+   we assume to be working with an "old" DTB.
+5. If the DTB does not contain the specified decoder/encoder string
+   then a new in-memory node is added which contains a compat string
+   consistent with upstream compat strings used to currently select
+   between the decoder and encoder respectively.
+6. In this way new venus driver entries may be added which respect
+   the requirement to move mode selection out of DTB and into driver.
+7. Simple instances of decoder/encoder nodes in the yaml schema have been
+   marked as deprecated.
+8. Since the proposed scheme here always defers to what the DTB says that
+   means it would be possible to remove decoder/encoder entries for the
+   deprecated schema should we choose to do so at a later date but,
+   that step is not taken in this series.
+9. Some of the upstream encoder/decoder nodes for example sdm630/sdm660
+   also contain clock and power-domain information and have not been
+   updated with the static configuration data or had the schema amended to
+   deprecate values. Because these nodes impart hardware specific
+   information and are already upstream this series proposes to leave
+   those as-is.
+
+However if this scheme is adopted it should allow for addition of venus for
+both qcs615[1] and sc8280xp[2].
+
+Other SoCs such as sm8550, sm8650 and beyond are expected to be supported
+by Iris.
+
+The sm8350 and sm8280xp in the second series would then be able to excise
+the offending compat = "video-encoder" | "video-decoder" in the schema and
+DT.
+
+I considered making this series an all singing all dancing method to select
+between encoder and decoder for all SoCs but, the objective here is not to
+add functionality but to provide support for configuration in-driver
+consistent with current usage and to do so with a minimal code
+intervention.
+
+So far I've tested on RB3 by removing:
+
+video-core0 {
+	compatible = "venus-decoder";
+};
+
+video-core1 {
+	compatible = "venus-encoder";
+};
+
+This works - the code adds the nodes into memory and the video
+encoder/decoder logic in the plaform code runs.
+
+Similarly if the nodes are left in-place then no new nodes are added by the
+code in this series and still both encoder and decoder probe.
+
+Thus proving the code works and will provide support for new platforms
+while also leaving open the option of dropping nodes from upstream.
+
+I've left the dropping step out for now, it can be implemented later.
+
+[1] https://lore.kernel.org/linux-arm-msm/20241125-add-venus-for-qcs615-v3-0-5a376b97a68e@quicinc.com
+[2] https://lore.kernel.org/linux-media/20230731-topic-8280_venus-v1-0-8c8bbe1983a5@linaro.org/
+
+Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+---
+Bryan O'Donoghue (3):
+      media: venus: Add support for static video encoder/decoder declarations
+      media: venus: Populate video encoder/decoder nodename entries
+      media: dt-bindings: qcom-venus: Deprecate video-decoder and video-encoder where applicable
+
+ .../bindings/media/qcom,msm8916-venus.yaml         |  12 +--
+ .../bindings/media/qcom,sc7180-venus.yaml          |  12 +--
+ .../bindings/media/qcom,sc7280-venus.yaml          |  12 +--
+ .../bindings/media/qcom,sdm845-venus-v2.yaml       |  12 +--
+ .../bindings/media/qcom,sm8250-venus.yaml          |  12 +--
+ drivers/media/platform/qcom/venus/Kconfig          |   1 +
+ drivers/media/platform/qcom/venus/core.c           | 105 ++++++++++++++++++++-
+ drivers/media/platform/qcom/venus/core.h           |   4 +
+ 8 files changed, 119 insertions(+), 51 deletions(-)
+---
+base-commit: 72ad4ff638047bbbdf3232178fea4bec1f429319
+change-id: 20241127-media-staging-24-11-25-rb3-hw-compat-string-ea3c99938021
+
+Best regards,
 -- 
-Jani Nikula, Intel
+Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+
 
