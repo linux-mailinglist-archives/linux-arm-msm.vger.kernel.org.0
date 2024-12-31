@@ -1,76 +1,76 @@
-Return-Path: <linux-arm-msm+bounces-43742-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-43743-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 89C899FEF6F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Dec 2024 14:02:57 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 279AA9FEF75
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Dec 2024 14:03:15 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BAB7F3A2E1F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Dec 2024 13:02:51 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2DCB01883408
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Dec 2024 13:03:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5A49F19DF52;
-	Tue, 31 Dec 2024 13:02:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AB88819F424;
+	Tue, 31 Dec 2024 13:02:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="go74SY6m"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="xT0TM8+s"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f172.google.com (mail-pl1-f172.google.com [209.85.214.172])
+Received: from mail-pl1-f179.google.com (mail-pl1-f179.google.com [209.85.214.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C30C219D88B
-	for <linux-arm-msm@vger.kernel.org>; Tue, 31 Dec 2024 13:02:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F13319EED3
+	for <linux-arm-msm@vger.kernel.org>; Tue, 31 Dec 2024 13:02:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735650161; cv=none; b=YEO/IMNvW5cpIMh/jDE7VmHjST8La2Q26QqPzXmkXAV75YaJc7mcvEj5x3MejkCYTyg0bbsv3w6PKwCpPkrqeJGomCpZLqreeRDpSEPlXVybvW/btEuSVeKI/UdPahL/BhYqdeua27+DriQvJeBKaLsr8CzxIQEmrmrU5TMKXs8=
+	t=1735650166; cv=none; b=LEldyLNrCGWWT2UrYRK8gLMxD8xxFxoIfK6+fKncLdGc6OkD+9IFThVohvCpkO8VGGWLnbWGfSMwMCGVhlZpzdGz5xwAf9ODbGyklqvbNxtEFyQB0Pmo3obPiy20ncbEfiofjJ78Ud5be/X2gctU8BY/duMB5TwmarjFm2WgvYI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735650161; c=relaxed/simple;
-	bh=hVyAuooOzyUbD/jnmspiTE8wCtobigUKFEsbNH4RJ0Q=;
+	s=arc-20240116; t=1735650166; c=relaxed/simple;
+	bh=6RLdN2eI1UpuHGQ9IxNEel32aW76eUXl9jMEDUafCiw=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=fMbQGPo34pie+fdbpH2cnY9IA+aA4HZ8fbFfFsqlFSHUDfuA+sDuM6Fc0U5vOByhwLCzpT1EqDdaPTuXLSSUchzciaTM0LDwDAPe9hKTOfwM9NpBNQNmOtJUmr0hJjkLVDkTAUwZ/IW2kvSLxLieY9wB01DnnNwLI/t9iRk+PHw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=go74SY6m; arc=none smtp.client-ip=209.85.214.172
+	 MIME-Version; b=TLu+VtGQe5GNm7i+D2XNDbJ/s5mvjWBxNHs7nIaIl6s3Smq85UeDvVlWvAGtsgxPqK+UCddEWltDMJarUHzlw4tuokp36k5unVQDHGITOSvScPRfixdw+Zf2lp6IWJQloecHYNnGylFY08Hz0h9TKzbLdQ4S8UQAUublW43h7RU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=xT0TM8+s; arc=none smtp.client-ip=209.85.214.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pl1-f172.google.com with SMTP id d9443c01a7336-2156e078563so115831105ad.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 31 Dec 2024 05:02:39 -0800 (PST)
+Received: by mail-pl1-f179.google.com with SMTP id d9443c01a7336-216401de828so125972415ad.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 31 Dec 2024 05:02:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1735650159; x=1736254959; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1735650164; x=1736254964; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=lvF+49X2gFMGE7dCbt+zol5pHVl//CcUiNX288CxZPg=;
-        b=go74SY6mxOHBBTbqFyqzoW0alX3HxVyAkcpc3Fs0ci46EQ64hNCEhrLHEw9wsUzdjf
-         StkcX3FZ9S99frVeuOvb5LDFSFPlOR+IX4Gv8ugW6eJEuDH9Bay4d8it+lDgSOY4eWRe
-         anM4re/Uni/dwtuyI6LuP8Oku9cxynyn6CqORQpKYgwTEdnDb4GFWyn60+6XV75Gri2J
-         zK+o7jwrkDguy3iJhpmwTeosUmscCf7uoP4p+UBr66jaKCaj1DpfBP9CkccC1xEXFUDz
-         i1uK96UxqiyiEhwDLv3OqXj04+SBZc+ZKZtg7Wl525pN3yBOExMI8x/kSloYOKssFUl2
-         mKPQ==
+        bh=SQg0uNio4nJAv3CSDy6Q0G3Cclik4QaoMqYrEiDMWr4=;
+        b=xT0TM8+sgoY+tDimwsdBNlhxp9oRr5OLhX1uCHEOS1TuAFz0XKgFXYghOH5DTJTSQ8
+         tE+RYhoY9d5LyfpLR+8kUbQrTvrgvdkmqMbi1ywVpMLG/lb/eJVDi8BAIfe52MfOlIsO
+         IytYpWPInWE30rpxoprdJwsc6AFAO+MaHvOx5+7+BGQCESo77ju0eVv/emNC3i3bhqHW
+         2SYuCjCnqluDFpEupOgVF+cZbi5D7MOEySloKoDD9LRdtnIheymrrn5swhWC0EnUHfM/
+         z/BalonrmaPmkc/aTagpsIvtGFbw6acRpshLUUbZGtBtEIyTeEp7ht5mWd4+e3QsFeX7
+         TpPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1735650159; x=1736254959;
+        d=1e100.net; s=20230601; t=1735650164; x=1736254964;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=lvF+49X2gFMGE7dCbt+zol5pHVl//CcUiNX288CxZPg=;
-        b=UHzxgd1d0e6bb4bbe/EJyjho3mUMO9RNvMSXWG3fL6YR5k4618fGbdkibCZg2hJveF
-         MsvTu2Gzk7TXhZ6T6WQ1mtgLNqJYRSHaUMblKBWC5/Q3drA7I8KDX/KTNavraCJUzXoP
-         kcMiMk7/je1oUlsIUENUN2p3bTGj85405JWYdwkEF4OBCr3INXj8WjTDlKm4NYqA5cbf
-         FepY+/9fbVMuhyyyeGRZ3S2Wld3XbdxJk2KEDZFxcArbUFWxFVUT3Xrfu9t9vtcxAIB6
-         4Q4VtrqFTRmC4UcSzwBYoKSR7jPua0NFpME1hwxN+GRZqmkZ1rt05S5XJhEKnGKwvtln
-         3Quw==
-X-Gm-Message-State: AOJu0YxeGQfmkPJ/lWjqJBmtZQ0JOGBgpKQJkiXn+BrK9Msc4cYEQljw
-	Qa7KZcpyxXChKn9ZiJHJqhT24nhmZ8JHWT3n8yj4aRYdBCflwXHUC8RdfuAAlA==
-X-Gm-Gg: ASbGncvw06bF64qpTspeb8lMD2E5t87tfKB/VNHnluBoWcGroE8gvu2m5Rh3sGB+rNM
-	6mHkE5ZVk3yUjZZoF5EikLFWDGlIG5avZjyki6VLBtmLrZS3fm+NTz3phFnsBi/pQ7w7u+p3j0U
-	CT2XKsycylLMSa4lc2n4DAnSA5rp7653hiAWJ6VwQoz+zqv4WMwTr8Dxz8pMb75ys0mXvMWwEvb
-	rzLokDyJqld3NrzWRbVa3bS9NkUlP4uLT+ls1m+UHhsMLKgWGpzcA2nPxYCioBFArniUSTTaf/L
-	HyD4FM+qLiY=
-X-Google-Smtp-Source: AGHT+IEMULsfFORB7W9l9G4XPcBHlz6cU9L2NX3m3xplk+5DtOBI1D2wFJ5g7TgfuAIcWSgnGgDZdA==
-X-Received: by 2002:a17:903:2286:b0:215:cbbf:8926 with SMTP id d9443c01a7336-219e6f10978mr531200865ad.35.1735650159283;
-        Tue, 31 Dec 2024 05:02:39 -0800 (PST)
+        bh=SQg0uNio4nJAv3CSDy6Q0G3Cclik4QaoMqYrEiDMWr4=;
+        b=NNd5YTeLHL1E1MUluZ1q3H0ZVZcFR3i4LIzUvu4XwbYECWIuu2lCWGqWqhDp6IoJtU
+         laQgmWmdk6moRI+iIU+uniabZx2lz4PxPQ44dRfIn/GcD+rrGznBM0VTrTZ7s7ELWpES
+         vDruYxfVHKzTPPOwG+TlDzeTquD8neoDZP2oUvke9QOoTGQGByuGyflZhp3gwpjY/9PK
+         e4Wyqq4Ggl5ujZzp36WYIK0gQOWpznREotcu2rwB9omGEYTgXn7Y46aW4lKOqOgrp4Cz
+         g2lBg/GxF+GPxQUKHN0PFl8TkrRFeCJB4V4tfuD0ih+gIlnu0O08jTKpy3Lapz4L2oLq
+         qtmg==
+X-Gm-Message-State: AOJu0YxoSFL/afRNmRLX+WiwRkxkCG67WjGxmATFCZ0U/YEvkiKAAM3u
+	BSMRbD1U2NaGm9rOU3V2Bi6XlQet2Z06OvScZ37uK0nvYWY41X7IiVGYAJFFdA==
+X-Gm-Gg: ASbGncvKJUoGhcshPtQ0zeRp5Jp8FWCDCQeGTwzzq8IAPvzPa1wI9pFYD1cpLVXfx7A
+	xmS8jE/e4VGdK6FdeMEueQPpvjsrs25acP7Mm8hloQnvunldkbWsB9Xvnjn8OsgjGLfqdiHfcg6
+	z5aw1uOj4hSnGuFwBxDjQrw/TChwrEfBa62G7sxW0SGJqubEuZvUsu5lTJTgwA/E4nJU01PbrSO
+	mDM4TxkqoqHQ2Qb/nTYXAJRBaaB3QwzNSBunbvguaaclfHBXJwi9rFyNBcU/kIaLT5Wtmhv2Xh7
+	bwUWn442TKc=
+X-Google-Smtp-Source: AGHT+IE45qDDNc5YRYSihN/fWzwP55+6ssJKbZvchos2PE0NP7maDGJ62ORojGn2Lyy1W4PdSTjtog==
+X-Received: by 2002:a17:902:d551:b0:216:386e:dca with SMTP id d9443c01a7336-219e6ebb750mr600763705ad.30.1735650164377;
+        Tue, 31 Dec 2024 05:02:44 -0800 (PST)
 Received: from localhost.localdomain ([117.193.213.202])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-219dc9d945csm194514275ad.117.2024.12.31.05.02.34
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-219dc9d945csm194514275ad.117.2024.12.31.05.02.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 31 Dec 2024 05:02:38 -0800 (PST)
+        Tue, 31 Dec 2024 05:02:43 -0800 (PST)
 From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 To: lpieralisi@kernel.org,
 	kw@linux.com,
@@ -85,11 +85,11 @@ Cc: linux-arm-msm@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	devicetree@vger.kernel.org,
 	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	stable@vger.kernel.org,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Subject: [PATCH 1/2] arm64: dts: qcom: sa8775p: Fix the size of 'addr_space' regions
-Date: Tue, 31 Dec 2024 18:32:23 +0530
-Message-Id: <20241231130224.38206-2-manivannan.sadhasivam@linaro.org>
+	stable+noautosel@kernel.org,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Subject: [PATCH 2/2] PCI: qcom-ep: Mark BAR0/BAR2 as 64bit BARs and BAR1/BAR3 as RESERVED
+Date: Tue, 31 Dec 2024 18:32:24 +0530
+Message-Id: <20241231130224.38206-3-manivannan.sadhasivam@linaro.org>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20241231130224.38206-1-manivannan.sadhasivam@linaro.org>
 References: <20241231130224.38206-1-manivannan.sadhasivam@linaro.org>
@@ -101,42 +101,34 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-For both the controller instances, size of the 'addr_space' region should
-be 0x1fe00000 as per the hardware memory layout.
+On all Qcom endpoint SoCs, BAR0/BAR2 are 64bit BARs by default and software
+cannot change the type. So mark the those BARs as 64bit BARs and also mark
+the successive BAR1/BAR3 as RESERVED BARs so that the EPF drivers cannot
+use them.
 
-Otherwise, endpoint drivers cannot request even reasonable BAR size of 1MB.
-
-Cc: stable@vger.kernel.org # 6.11
-Fixes: c5f5de8434ec ("arm64: dts: qcom: sa8775p: Add ep pcie1 controller node")
-Fixes: 1924f5518224 ("arm64: dts: qcom: sa8775p: Add ep pcie0 controller node")
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Cc: stable+noautosel@kernel.org # depends on patch introducing only_64bit flag
+Fixes: f55fee56a631 ("PCI: qcom-ep: Add Qualcomm PCIe Endpoint controller driver")
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/sa8775p.dtsi | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/pci/controller/dwc/pcie-qcom-ep.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/sa8775p.dtsi b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-index 9f315a51a7c1..368bcf7c9802 100644
---- a/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-@@ -6092,7 +6092,7 @@ pcie0_ep: pcie-ep@1c00000 {
- 		      <0x0 0x40000000 0x0 0xf20>,
- 		      <0x0 0x40000f20 0x0 0xa8>,
- 		      <0x0 0x40001000 0x0 0x4000>,
--		      <0x0 0x40200000 0x0 0x100000>,
-+		      <0x0 0x40200000 0x0 0x1fe00000>,
- 		      <0x0 0x01c03000 0x0 0x1000>,
- 		      <0x0 0x40005000 0x0 0x2000>;
- 		reg-names = "parf", "dbi", "elbi", "atu", "addr_space",
-@@ -6250,7 +6250,7 @@ pcie1_ep: pcie-ep@1c10000 {
- 		      <0x0 0x60000000 0x0 0xf20>,
- 		      <0x0 0x60000f20 0x0 0xa8>,
- 		      <0x0 0x60001000 0x0 0x4000>,
--		      <0x0 0x60200000 0x0 0x100000>,
-+		      <0x0 0x60200000 0x0 0x1fe00000>,
- 		      <0x0 0x01c13000 0x0 0x1000>,
- 		      <0x0 0x60005000 0x0 0x2000>;
- 		reg-names = "parf", "dbi", "elbi", "atu", "addr_space",
+diff --git a/drivers/pci/controller/dwc/pcie-qcom-ep.c b/drivers/pci/controller/dwc/pcie-qcom-ep.c
+index c08f64d7a825..01d3862d7003 100644
+--- a/drivers/pci/controller/dwc/pcie-qcom-ep.c
++++ b/drivers/pci/controller/dwc/pcie-qcom-ep.c
+@@ -825,6 +825,10 @@ static const struct pci_epc_features qcom_pcie_epc_features = {
+ 	.msi_capable = true,
+ 	.msix_capable = false,
+ 	.align = SZ_4K,
++	.bar[BAR_0] = { .only_64bit = true, },
++	.bar[BAR_1] = { .type = BAR_RESERVED, },
++	.bar[BAR_2] = { .only_64bit = true, },
++	.bar[BAR_3] = { .type = BAR_RESERVED, },
+ };
+ 
+ static const struct pci_epc_features *
 -- 
 2.25.1
 
