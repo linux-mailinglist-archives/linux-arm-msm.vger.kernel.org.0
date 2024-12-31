@@ -1,167 +1,194 @@
-Return-Path: <linux-arm-msm+bounces-43730-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-43731-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7419F9FEDDD
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Dec 2024 09:15:39 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2838F9FEDFB
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Dec 2024 09:32:33 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A57C23A2B00
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Dec 2024 08:15:34 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id DF1F2162380
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Dec 2024 08:32:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 30D371B043A;
-	Tue, 31 Dec 2024 08:12:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 93514188714;
+	Tue, 31 Dec 2024 08:32:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="RyvluSdf"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PsDYhYvX"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C5761B042E;
-	Tue, 31 Dec 2024 08:12:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D6802D7BF;
+	Tue, 31 Dec 2024 08:32:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735632766; cv=none; b=J2YmqqHjJkH4dJY7MBjFI9kMgVzRqOBGyI1jFjDgOdVGcNbS5tbW2cZSwQF+IGxE/GtRwWDo3FaGh2lMC3QPeg0Az21CBwcRqqrckkcdvjWYNs7NRisuqm7vMXgi1J3z6fKNaLsoKG0bTP4LIF6hjQ0OAIK9nCC1THHOQ/fusLE=
+	t=1735633948; cv=none; b=MFA80K35joiqP9lVeojHvODpZxbj5siV510PlQ0q2jcbzAewyDAQFQZ03QJWj5zV/nL5LlMzi5f8KcTokckvr/MLTLpfCCflHzsxiL7F1+OM1Pkx6iUdlfzwYXrgys6KSGaFT4DcbN/HGCPTS//tFRHeoEBy/S43ikeW9ObeyDQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735632766; c=relaxed/simple;
-	bh=2p564e7UdB5b8lEMWjwmyb85SXNuG9xei0W79uStaiw=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=EZez2h0EqErw9lfvPVs3YExegYRUPaD+rQbA9sNBb7iEQ3trsMdXJumOyCONg1VI0hP/0EKncAqCpUYHvqPuZ3tz0iEmAdTfpyuBguQKFjTmAD796ndYEDmiIKCb5gPnnPbK7M7Htg7q2D2enPXOSN5DN+qmx8S3XPqrSnyfHus=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=RyvluSdf; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BV2mQr7018269;
-	Tue, 31 Dec 2024 08:12:42 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	m1ZP0vv1eaJrCcHojg6Ume2VJeE2KX9PpJ3s+IrMBlk=; b=RyvluSdfuTDDYJj7
-	S/hPItdKFoPXw5GAWRPzu/zVUngK8KCOhzMb/0sI8Li8rmY55QZKVlU0n7AIJ3Ov
-	DydtTVP8xey5CDrZI2StBYRXmdFH73zy6dIwgsliqGdvlOHhxU0NAakG4ZFcyo+F
-	X2yXkC0Ol0pGeNUvcRH/8svRdYg/uStf9N2d24J4r+C0zwvroCu/EYH57V2IaqOK
-	7FNFPznVLh5rMNHiQO3aW2GVNCfYVcy/b/x+QWZs+31E8iMnuDsP0s3mbwaBF6so
-	YcF4RaYcRuujoS6gaKneJDgde+Ve1rXORsZgv0LxU/KW/tklx+qrDc5oJVwQF33w
-	l5uxBw==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43v84y8kv6-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 31 Dec 2024 08:12:41 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4BV8Cfk0001712
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 31 Dec 2024 08:12:41 GMT
-Received: from hu-prashk-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Tue, 31 Dec 2024 00:12:36 -0800
-From: Prashanth K <quic_prashk@quicinc.com>
-To: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski
-	<krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Krishna Kurapati
-	<krishna.kurapati@oss.qualcomm.com>
-CC: <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <cros-qcom-dts-watchers@chromium.org>,
-        Prashanth K <quic_prashk@quicinc.com>,
-        Konrad Dybcio
-	<konrad.dybcio@oss.qualcomm.com>
-Subject: [PATCH v4 17/17] arm64: dts: qcom: sc8180x: Disable USB U1/U2 entry
-Date: Tue, 31 Dec 2024 13:41:15 +0530
-Message-ID: <20241231081115.3149850-18-quic_prashk@quicinc.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20241231081115.3149850-1-quic_prashk@quicinc.com>
-References: <20241231081115.3149850-1-quic_prashk@quicinc.com>
+	s=arc-20240116; t=1735633948; c=relaxed/simple;
+	bh=f8BYHSihW21/k8W6SrqH9PIwRTNiaOLgefXaPWjoJjI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=tUIOWnRN8kI24r+L4sTQ3wSObeIkWAGvTJ3xqqVrB1YWFduq+carsBMK5ZTI/+vAbZqQ8X/ef/VHbue/GvjmZoO5qDjklbbE1H0vWGsrS2TjO0jfbsY5XwimZ2b8uGgf/T9CMw8asxyiy/HyK8hfl0gtTUU1atn8SkiKjL+tI+k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PsDYhYvX; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB5FDC4CED6;
+	Tue, 31 Dec 2024 08:32:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1735633945;
+	bh=f8BYHSihW21/k8W6SrqH9PIwRTNiaOLgefXaPWjoJjI=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=PsDYhYvX1/Ddo5WJLYYgSbj8vY+Oya58+Lgaz6+h7zUEUudAcx3znCDZV5mRbewF2
+	 mck7pOkUU/TY73/Z4Nlqn9nYiL9+fnaE/84ohIY3ziIRcAz369eGwomc4s+vzH/rng
+	 sgssMMJ7FweeNS6IPKZ3kXsYB9WwDSLF4FdgeP2l4ddwF5A39CUtxFe+dgdmrPBQ3O
+	 EPpJcZrlWoyegT9Ld6PISVVE1YpoBVSEDxT3D9prao80OHanVd3Vlo9BQeYoFVtTdO
+	 hl7FMVT5ew+GwQoEz8+C+O4BvQ+WkuZDhRKM/+a0sSnjNsvW+E3LhtyXOjfWZiHjKW
+	 UEqeZj90RQovg==
+Date: Tue, 31 Dec 2024 09:32:22 +0100
+From: Krzysztof Kozlowski <krzk@kernel.org>
+To: Sricharan R <quic_srichara@quicinc.com>
+Cc: jassisinghbrar@gmail.com, robh@kernel.org, krzk+dt@kernel.org, 
+	conor+dt@kernel.org, linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	devicetree@vger.kernel.org, andersson@kernel.org, konradybcio@kernel.org, 
+	manivannan.sadhasivam@linaro.org, dmitry.baryshkov@linaro.org
+Subject: Re: [PATCH V2 1/2] dt-bindings: mailbox: Document qcom,tmel-qmp
+Message-ID: <kwtzvcoyayml3tgicnp5a75r65hqpicm7hivtk25ohp6rt34qf@sgunxjxfe33r>
+References: <20241231054900.2144961-1-quic_srichara@quicinc.com>
+ <20241231054900.2144961-2-quic_srichara@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: thuKQFEeD4GieUndmbacii294L7KRLxf
-X-Proofpoint-ORIG-GUID: thuKQFEeD4GieUndmbacii294L7KRLxf
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 mlxscore=0
- lowpriorityscore=0 mlxlogscore=505 priorityscore=1501 malwarescore=0
- impostorscore=0 suspectscore=0 clxscore=1015 spamscore=0 bulkscore=0
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2412310068
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20241231054900.2144961-2-quic_srichara@quicinc.com>
 
-Disable U1 and U2 power-saving states to improve stability of USB.
-These low-power link states, designed to reduce power consumption
-during idle periods, can cause issues in latency-sensitive or high
-throughput use cases. Over the years, some of the issues seen are
-as follows:
+On Tue, Dec 31, 2024 at 11:18:59AM +0530, Sricharan R wrote:
+> From: Sricharan Ramabadhran <quic_srichara@quicinc.com>
+> 
+> TMEL SS provides different kinds of services like secureboot, remote image
+> authentication, key management, crypto, OEM provisioning etc. This patch adds
+> support for remote image authentication. Support for rest of the services can
+> be added.
+> 
+> The QMP mailbox is the primary means of communication between TMEL SS and other
+> subsystem on the SoC. A dedicated pair of inbound and outbound mailboxes is
+> implemented for each subsystem/external execution environment which needs to
+> communicate with TMEL for security services. The inbound mailboxes are used to
+> send IPC requests to TMEL, which are then processed by TMEL firmware and
+> accordingly the responses are sent to the requestor via outbound mailboxes.
+> 
+> It is an IPC transport protocol which is light weight and supports a subset of
+> API's. It handles link initialization, negotiation, establishment and
+> communication across client(APPSS/BTSS/AUDIOSS) and server(TMEL SS).
 
-1. In device mode of operation, when UVC is active, enabling U1/U2
-is sometimes causing packets drops due to delay in entry/exit of
-intermittent these low power states. These packet drops are often
-reflected as missed isochronous transfers, as the controller wasn't
-able to send packet in that microframe interval and hence glitches
-are seen on the final transmitted video output.
 
-2. On QCS6490-Rb3Gen2 Vision kit, ADB connection is heavily unstable
-when U1/U2 is enabled. Often when link enters U2, there is a re-
-enumeration seen and device is unusable for many use cases.
+You already got comment about wrapping, so implement it.
 
-3. On QCS8300/QCS9100, it is observed that when Link enters U2, when
-the cable is disconnected and reconnected to host PC in HS, there
-is no link status change interrupt seen and the plug-in in HS doesn't
-show up a bus reset and enumeration failure happens.
+...
 
-Disabling these intermittent power states enhances device stability
-without affecting power usage.
 
-Signed-off-by: Prashanth K <quic_prashk@quicinc.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
----
- arch/arm64/boot/dts/qcom/sc8180x.dtsi | 6 ++++++
- 1 file changed, 6 insertions(+)
+> This binding describes the component responsible for communication between the
+> TMEL server based subsystems (Q6) and the TMEL client (APPSS/BTSS/AUDIOSS),
 
-diff --git a/arch/arm64/boot/dts/qcom/sc8180x.dtsi b/arch/arm64/boot/dts/qcom/sc8180x.dtsi
-index 745a7d0b8381..28693a3bfc7f 100644
---- a/arch/arm64/boot/dts/qcom/sc8180x.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc8180x.dtsi
-@@ -2762,6 +2762,8 @@ usb_mp_dwc3: usb@a400000 {
- 				iommus = <&apps_smmu 0x60 0>;
- 				snps,dis_u2_susphy_quirk;
- 				snps,dis_enblslpm_quirk;
-+				snps,dis-u1-entry-quirk;
-+				snps,dis-u2-entry-quirk;
- 				phys = <&usb_mp_hsphy0>,
- 				       <&usb_mp_qmpphy0>,
- 				       <&usb_mp_hsphy1>,
-@@ -2825,6 +2827,8 @@ usb_prim_dwc3: usb@a600000 {
- 				iommus = <&apps_smmu 0x140 0>;
- 				snps,dis_u2_susphy_quirk;
- 				snps,dis_enblslpm_quirk;
-+				snps,dis-u1-entry-quirk;
-+				snps,dis-u2-entry-quirk;
- 				phys = <&usb_prim_hsphy>, <&usb_prim_qmpphy QMP_USB43DP_USB3_PHY>;
- 				phy-names = "usb2-phy", "usb3-phy";
- 
-@@ -2902,6 +2906,8 @@ usb_sec_dwc3: usb@a800000 {
- 				iommus = <&apps_smmu 0x160 0>;
- 				snps,dis_u2_susphy_quirk;
- 				snps,dis_enblslpm_quirk;
-+				snps,dis-u1-entry-quirk;
-+				snps,dis-u2-entry-quirk;
- 				phys = <&usb_sec_hsphy>, <&usb_sec_qmpphy QMP_USB43DP_USB3_PHY>;
- 				phy-names = "usb2-phy", "usb3-phy";
- 
--- 
-2.25.1
+APPSS? Applications Safe Software? Avoid using qcom terminology. Common
+name is "CPU" for example. Or explain qcom terminology...
+
+
+> used for security services like secure image authentication, enable/disable
+> efuses, crypto services. Each client in the   SoC has its own block of message
+
+No need for double space "  ".
+
+> RAM and IRQ for communication with the TMEL SS.
+> 
+> Signed-off-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
+> ---
+>   [V2]  Added HW description as per comments.
+>         Removed the fallback compatible.
+>         Fixed naming convention to TME-L in all places.
+>         Fixed indendation for example.
+>         Removed the 'description' for some items.
+> 
+>  .../bindings/mailbox/qcom,tmel-qmp.yaml       | 65 +++++++++++++++++++
+>  1 file changed, 65 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/mailbox/qcom,tmel-qmp.yaml
+> 
+> diff --git a/Documentation/devicetree/bindings/mailbox/qcom,tmel-qmp.yaml b/Documentation/devicetree/bindings/mailbox/qcom,tmel-qmp.yaml
+> new file mode 100644
+> index 000000000000..a434359e0a2c
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/mailbox/qcom,tmel-qmp.yaml
+
+No, use compatible as filename.
+
+> @@ -0,0 +1,65 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/mailbox/qcom,tmel-qmp.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm TMEL IPCC channel
+> +
+> +maintainers:
+> +  - Sricharan Ramabadhran <quic_srichara@quicinc.com>
+> +
+> +description:
+> +  TMEL SS provides different kinds of services like secureboot, remote image
+> +  authentication, key management, crypto, OEM provisioning etc. This patch adds
+> +  support for remote image authentication. Support for rest of the services can
+> +  be added.
+> +
+> +  The QMP mailbox is the primary means of communication between TMEL SS and
+> +  other subsystem on the SoC. A dedicated pair of inbound and outbound mailboxes
+> +  is implemented for each subsystem/external execution environment which needs to
+> +  communicate with TMEL for security services. The inbound mailboxes are used to
+> +  send IPC requests to TMEL, which are then processed by TMEL firmware and
+> +  accordingly the responses are sent to the requestor via outbound mailboxes.
+> +
+> +properties:
+> +  compatible:
+> +    items:
+> +      - enum:
+> +          - qcom,ipq5424-tmel-qmp
+
+
+Why qmp? Can TMEL on IPQ5424 be anything else? Can TMEL be SMEM or using
+any other remoteproc?
+
+> +
+> +  reg:
+> +    maxItems: 1
+> +
+> +  interrupts:
+> +    maxItems: 1
+> +
+> +  mboxes:
+> +    maxItems: 1
+> +
+> +  "#mbox-cells":
+> +    const: 2
+> +    description:
+> +      The first cell is the client-id, and the second cell is the signal-id.
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +  - interrupts
+> +  - mboxes
+> +
+> +additionalProperties: false
+> +
+> +examples:
+> +  - |
+> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
+> +
+> +    tmel_qmp: mailbox@32090000 {
+
+Drop unused label.
+
+
+Best regards,
+Krzysztof
 
 
