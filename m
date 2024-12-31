@@ -1,80 +1,86 @@
-Return-Path: <linux-arm-msm+bounces-43734-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-43735-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 57F519FEE98
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Dec 2024 10:48:15 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3EEEB9FEEBB
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Dec 2024 11:33:02 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0FC9F160DFD
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Dec 2024 09:48:13 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 6C1667A1273
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Dec 2024 10:32:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 073C118A95A;
-	Tue, 31 Dec 2024 09:48:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A4EBB18E756;
+	Tue, 31 Dec 2024 10:32:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="DzFJZ+ym"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="eRV3D+PJ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74799EDE
-	for <linux-arm-msm@vger.kernel.org>; Tue, 31 Dec 2024 09:48:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06EBB18E05F
+	for <linux-arm-msm@vger.kernel.org>; Tue, 31 Dec 2024 10:32:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735638487; cv=none; b=UmII2FNaVcfktBPQfT8h9eQoJCCIsKtJ6KIM7sogSoDbGKEmoqIxNk+zovPu1BcbyY27kl48Mwyb6qx7DzLg9ZRsK3+r7xsMWdF3FDi4rEvPDNnEFD3AJnGe3PPGL6MITmtw/KQWRhD8nrpP2fZZfA08WLgDTKOCE8Cg+vKioaU=
+	t=1735641175; cv=none; b=Ru3EwCM2LWgrnHCUa3+DxHu8x9eWzNx7xpxwRyssmZe0RrswNFOrppvUsmgqk0iYCRMuahanExwLf6UHzMdNLNNrmvxTkjZhjtKGKPZv9faUQfghajJtRx8BUtGwniMW9J2mwXIcW73eU4PsGwUumIRpByzwMTKmMO9nlqa4dOs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735638487; c=relaxed/simple;
-	bh=S/qG145yAfvNp4G1vLggA8m9dSSsBxt4fvmZzzDVHDU=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=mmFz40stZN8/3nXvsxUIFg/0wFzPmEH8BbrN2mBRTZDJJFiXILoVjbketj3BS+L4UexkftcIfzwVEiMimpZDOOgS56sGGZzGciv3GOslvZuFy6Q1Lhh5KD9PdKL2EbWCe6IjGxgxwg2u2/IaHGtVDmQnNWnfKH8HzCrN0QzW0sE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=DzFJZ+ym; arc=none smtp.client-ip=209.85.128.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-4364a37a1d7so104504025e9.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 31 Dec 2024 01:48:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1735638483; x=1736243283; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=HeRwnqhfF+7/JAAgCsoF3hFLXg3W1APinrWGayK28XY=;
-        b=DzFJZ+ym6xv/GPlF8dFp+OQ0lDZpddqh/XVrlR7bhkwzKmWXyF+Ol0rnoJ1M4VGvyL
-         4/uuIaLje+Sahbyqz8FbVvTO9pGyDqAO7IphxswZXQbMk0UKrCc28j+eitDqRHC/VyXi
-         qpZAbFw8B6/F3y4FuftI4mnaiJZBj92dM63Pv94h9t4wcuodsr2/AbJEqKvyG4K3GYmn
-         s1cVCJTZDHHdZhMVyzKJORm2hGG8jl/mDhYtF7akTL+3jyJQy+UtjacEQhtYF1HXQhPm
-         0pcRrSlNMDUJbeZB1xRSly8JIGBIX0PnDliOe7oC/wLC4EIgbccO6JOKb3ZiL1tPfCei
-         bILQ==
+	s=arc-20240116; t=1735641175; c=relaxed/simple;
+	bh=unJrN9YG3TesRmJ6YNj5gaklJBK/gMnz7AsbP4vmibo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=cD24kw+KuDXyyK0mgr/BmmQPpOKD7a9QQYMheShTd46kqB1Pdj+YF1stNA5drT1bbuEj5NdEvZ0IWd9WmpKUNPDYimGqqJe+jZnRNMymR7WubcuzTqjq++aIJXKPOPdeNh84/qQ+zzPKd0gYtdhuQ/avsqHSakI0gYJ0NEtx2Fg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=eRV3D+PJ; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BV9rZo8001354
+	for <linux-arm-msm@vger.kernel.org>; Tue, 31 Dec 2024 10:32:53 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	YSJC+oAIYFHch5VxryaXW7jbaxZD9NOaWfHg11T19a0=; b=eRV3D+PJpj8fjCSy
+	4aNxjO6gdNimMFRQClI4GqQiDZDfLWbWRmh5OedZm1oLQq2O/n4iRq42KeKiwucL
+	/j/igHgVdWOsb/VqNKSKmdHaWxip6OoXFhZDeLXb5n/MzCtYK9TXl+GVpqz+rC+e
+	zKR4gD6LK833S65OyH6bqRI8xNiHzfLjoiUZAhCzy3+nfofk+5RkweAn/gbQwl6e
+	vAmYnsEbkQA3enoc5ZGShgD/py/eto+2IQJMiEyMtzm65r6v77dNRD4D0gwIJvQn
+	SUFoTaV8bBrGUY1Ce6WtkwyMXuxDIjy4cy/n8FLRrRy2fsVgBoLOp+qpGLIuA/FX
+	ERzVXA==
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com [209.85.222.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43vecq02e0-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 31 Dec 2024 10:32:52 +0000 (GMT)
+Received: by mail-qk1-f197.google.com with SMTP id af79cd13be357-7b704c982eeso81046285a.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 31 Dec 2024 02:32:52 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1735638483; x=1736243283;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=HeRwnqhfF+7/JAAgCsoF3hFLXg3W1APinrWGayK28XY=;
-        b=C7rLEWfIjK4TxcnfIbgNUbWusOl+KnsEDXRJ3PYklghMv6aNufWFG/WFymEVfXFme2
-         hOb65wmRe/uvOKmEilGn8qWlUWzN2yKzbelToOYOOZ72n3Rfrgvik1NCGIkjMkeR7r4K
-         EDttu1wm4INwQ0JY7fCHOTpvvNnL1XBQfSQb4R8ldsbkMCYR3pSMs+ki+tmPC/SN1TMv
-         w8vVp0qQL654rR0OIwY+iyhCNQGx6K6S6QGyZG9nIDfmwNBZr0ZdF61V1fx+DtaepS2E
-         keauWjuoRd7mfDU/PJb6/x26qbj+1KQW5GvTdWvb0QhKQUZSObUEF9PNRPmAAhNNY5e0
-         gInA==
-X-Gm-Message-State: AOJu0YyCCND8G6+hzq74iN6h6c9qVsGNxqfvXJ/2eTLd2tb5IaBV7jkT
-	RvsBVeemAeHohS5wVR4lZPdm5EqkGbVbk1uqcdvRD6I2YxYw7o09Om861TBSGG4=
-X-Gm-Gg: ASbGncuCF72AgwhdI1WLGYm046fTsYEyduJdEmUOfVdgGvyG7lzD/7WU0Ev4sPhuXSP
-	CfUEMkQiILvKKjRsutVMac4x7ZK7xlSf2oTzSYLhKrg7tgKCdWkeshyb4w6xXfGfcS+iDv0NpG2
-	Fp5UeDF0zSkaeyxnILROwKFRC2TsBJwvuv4IOp1C8zSulODIVmu1gtryfLpr+XQqKNgfbO9314c
-	dEvAyQSO4mW5WAFJpqc5QlcPMyYoJjEtbYWbEuFHsfiwevlKfvMDCUPJ/BhT4O5jjjZIHiumEny
-	/bvOdZYVyeGJbHV59A221SKjAV0XHcCx5Q==
-X-Google-Smtp-Source: AGHT+IEGg6YSZQT43oiZ32HhVcPdM98GCfS5GJPSKrOlCvZn4fYTA3U+3B7+/7dEhUB5UITV+Oy6hA==
-X-Received: by 2002:a05:600c:35cb:b0:434:a386:6cf with SMTP id 5b1f17b1804b1-43668548b49mr298952635e9.2.1735638482765;
-        Tue, 31 Dec 2024 01:48:02 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:982:cbb0:add3:e25d:7204:9ee5? ([2a01:e0a:982:cbb0:add3:e25d:7204:9ee5])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4366127c4b0sm383297725e9.35.2024.12.31.01.48.00
+        d=1e100.net; s=20230601; t=1735641172; x=1736245972;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=YSJC+oAIYFHch5VxryaXW7jbaxZD9NOaWfHg11T19a0=;
+        b=X4eejrFtsu9ibAoaQDNkEi2PyPYblcxbLO5rCJKMZLijtK0KRowe8i44eVAoVPYsVL
+         3jC0wnWoPuZvOYfzeebw7fwX1Q7jHjDKAhJM71rmtMuQCPVw2kxOKOoSQHLWiAS2YTYv
+         NCUQcN4vJKeMHLMKDKOf6RKOzXGsbZ6dO7/pTrKEA5eZjsoAnoy6jKguq+Rk4Sc4tkRL
+         b1a+fE7f7umE334oS7zfR6b6b9Fak6DbRjl393ctiNYnpVNAlgxtfRuhB62be7ZEvI51
+         6U31J65LNuizENeYgTNboban1In2JQ7cVFEAp1R4eJZP6aiBy/D6QRgW5yUaIdkGlZlv
+         ytEA==
+X-Gm-Message-State: AOJu0YxL7c6haJvggpx/kNj/6FMzzfd+OIop+KXbHnWotxCyHnMKH44g
+	f8vXq/6n0b02RqKI75KiNm+29ZwaI+aoawwr5+LuIrUA3eci1ghZ/1R+NwrVgZHjYO8mIKcDnEJ
+	bkVWE4ErSl6JsWtnAgPqHSr7NB6uGVYgNTPqcia2nFRxzbh8w5lQGI/qe/EuQj6O8
+X-Gm-Gg: ASbGncuAsYbIzWWWmIiAcJDGydhr3Gq95hIdB+bec8eCiASU181uEEDZ0S3aT71GjKI
+	cEHh7wPo1oYqLJtO4Dse0CpPMPtnSKV4NOcUgKQYDOPCakL6U/TTBnnJ+ezjkXZ2J25FhcSEGqZ
+	wA9WU/uQeqKCeffNinHnOYM8w0BZA7FI4bE+KsJv/qTOM0/RU8W2urbDsXDcc1htKWRo50KCZEa
+	SgvV1PbmbP60B4HEnVsBldCA7riCdeKWWy2rsOrdkTQCExnBzFjWeZ/DlzoqqZdDfKcPoQPTaaD
+	mDwhQOrZ+FkoS1uEv9RHSJK5mb3ZFLUqqYg=
+X-Received: by 2002:a05:622a:15d4:b0:467:6283:3c99 with SMTP id d75a77b69052e-46a4a8cdd7bmr241338421cf.4.1735641172122;
+        Tue, 31 Dec 2024 02:32:52 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHev8rES9N0OrYAIAyswBL66viX51APNE3D7v2N9ryEeR9n7vvKglxjk0UBQxLmkedJMPFHTQ==
+X-Received: by 2002:a05:622a:15d4:b0:467:6283:3c99 with SMTP id d75a77b69052e-46a4a8cdd7bmr241338221cf.4.1735641171775;
+        Tue, 31 Dec 2024 02:32:51 -0800 (PST)
+Received: from [192.168.65.90] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-aac0e830af1sm1560481466b.14.2024.12.31.02.32.48
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 31 Dec 2024 01:48:01 -0800 (PST)
-Message-ID: <ae360497-84d5-4153-8bc4-b3943fb30dc5@linaro.org>
-Date: Tue, 31 Dec 2024 10:48:00 +0100
+        Tue, 31 Dec 2024 02:32:50 -0800 (PST)
+Message-ID: <3f33a94e-3fb2-4df2-91f5-59a92f5094f0@oss.qualcomm.com>
+Date: Tue, 31 Dec 2024 11:32:48 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -82,303 +88,53 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-From: neil.armstrong@linaro.org
-Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH v3 1/6] drm/msm/adreno: Add support for ACD
-To: Akhil P Oommen <quic_akhilpo@quicinc.com>, Rob Clark
+Subject: Re: [PATCH v3 3/6] drm/msm/adreno: Add module param to disable ACD
+To: Akhil P Oommen <quic_akhilpo@quicinc.com>,
+        Rob Clark
  <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
- Konrad Dybcio <konradybcio@kernel.org>,
- Abhinav Kumar <quic_abhinavk@quicinc.com>,
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Marijn Suijten <marijn.suijten@somainline.org>,
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
- Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
- Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>
+        Konrad Dybcio <konradybcio@kernel.org>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
+        Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+ <conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>
 Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
- freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
- linux-pm@vger.kernel.org, devicetree@vger.kernel.org
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        linux-pm@vger.kernel.org, devicetree@vger.kernel.org
 References: <20241231-gpu-acd-v3-0-3ba73660e9ca@quicinc.com>
- <20241231-gpu-acd-v3-1-3ba73660e9ca@quicinc.com>
-Content-Language: en-US, fr
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro
-In-Reply-To: <20241231-gpu-acd-v3-1-3ba73660e9ca@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+ <20241231-gpu-acd-v3-3-3ba73660e9ca@quicinc.com>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <20241231-gpu-acd-v3-3-3ba73660e9ca@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
+X-Proofpoint-ORIG-GUID: ISPgaLgh7dnNP7_TDw8H1FGjqqNcf6ev
+X-Proofpoint-GUID: ISPgaLgh7dnNP7_TDw8H1FGjqqNcf6ev
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 bulkscore=0
+ adultscore=0 mlxlogscore=848 lowpriorityscore=0 phishscore=0
+ suspectscore=0 malwarescore=0 impostorscore=0 priorityscore=1501
+ spamscore=0 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2412310088
 
-On 30/12/2024 22:11, Akhil P Oommen wrote:
-> ACD a.k.a Adaptive Clock Distribution is a feature which helps to reduce
-> the power consumption. In some chipsets, it is also a requirement to
-> support higher GPU frequencies. This patch adds support for GPU ACD by
-> sending necessary data to GMU and AOSS. The feature support for the
-> chipset is detected based on devicetree data.
+On 30.12.2024 10:11 PM, Akhil P Oommen wrote:
+> Add a module param to disable ACD which will help to quickly rule it
+> out for any GPU issues.
 > 
 > Signed-off-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
 > ---
->   drivers/gpu/drm/msm/adreno/a6xx_gmu.c | 84 ++++++++++++++++++++++++++++++-----
->   drivers/gpu/drm/msm/adreno/a6xx_gmu.h |  1 +
->   drivers/gpu/drm/msm/adreno/a6xx_hfi.c | 36 +++++++++++++++
->   drivers/gpu/drm/msm/adreno/a6xx_hfi.h | 21 +++++++++
->   4 files changed, 132 insertions(+), 10 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-> index 14db7376c712..2689e79aefa5 100644
-> --- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-> @@ -1021,14 +1021,6 @@ int a6xx_gmu_resume(struct a6xx_gpu *a6xx_gpu)
->   
->   	gmu->hung = false;
->   
-> -	/* Notify AOSS about the ACD state (unimplemented for now => disable it) */
-> -	if (!IS_ERR(gmu->qmp)) {
-> -		ret = qmp_send(gmu->qmp, "{class: gpu, res: acd, val: %d}",
-> -			       0 /* Hardcode ACD to be disabled for now */);
-> -		if (ret)
-> -			dev_err(gmu->dev, "failed to send GPU ACD state\n");
-> -	}
-> -
->   	/* Turn on the resources */
->   	pm_runtime_get_sync(gmu->dev);
->   
-> @@ -1476,6 +1468,68 @@ static int a6xx_gmu_pwrlevels_probe(struct a6xx_gmu *gmu)
->   	return a6xx_gmu_rpmh_votes_init(gmu);
->   }
->   
-> +static int a6xx_gmu_acd_probe(struct a6xx_gmu *gmu)
-> +{
-> +	struct a6xx_gpu *a6xx_gpu = container_of(gmu, struct a6xx_gpu, gmu);
-> +	struct a6xx_hfi_acd_table *cmd = &gmu->acd_table;
-> +	struct adreno_gpu *adreno_gpu = &a6xx_gpu->base;
-> +	struct msm_gpu *gpu = &adreno_gpu->base;
-> +	int ret, i, cmd_idx = 0;
-> +
-> +	cmd->version = 1;
-> +	cmd->stride = 1;
-> +	cmd->enable_by_level = 0;
-> +
-> +	/* Skip freq = 0 and parse acd-level for rest of the OPPs */
-> +	for (i = 1; i < gmu->nr_gpu_freqs; i++) {
-> +		struct dev_pm_opp *opp;
-> +		struct device_node *np;
-> +		unsigned long freq;
-> +		u32 val;
-> +
-> +		freq = gmu->gpu_freqs[i];
-> +		opp = dev_pm_opp_find_freq_exact(&gpu->pdev->dev, freq, true);
-> +		np = dev_pm_opp_get_of_node(opp);
-> +
-> +		ret = of_property_read_u32(np, "qcom,opp-acd-level", &val);
-> +		of_node_put(np);
-> +		dev_pm_opp_put(opp);
-> +		if (ret == -EINVAL)
-> +			continue;
-> +		else if (ret) {
-> +			DRM_DEV_ERROR(gmu->dev, "Unable to read acd level for freq %lu\n", freq);
-> +			return ret;
-> +		}
-> +
-> +		cmd->enable_by_level |= BIT(i);
-> +		cmd->data[cmd_idx++] = val;
-> +	}
-> +
-> +	cmd->num_levels = cmd_idx;
-> +
-> +	/* It is a problem if qmp node is unavailable when ACD is required */
-> +	if (cmd->enable_by_level && IS_ERR_OR_NULL(gmu->qmp)) {
-> +		DRM_DEV_ERROR(gmu->dev, "Unable to send ACD state to AOSS\n");
-> +		return -EINVAL;
-> +	}
-> +
-> +	/* Otherwise, nothing to do if qmp is unavailable */
-> +	if (IS_ERR_OR_NULL(gmu->qmp))
-> +		return 0;
-> +
-> +	/*
-> +	 * Notify AOSS about the ACD state. AOSS is supposed to assume that ACD is disabled on
-> +	 * system reset. So it is harmless if we couldn't notify 'OFF' state
-> +	 */
-> +	ret = qmp_send(gmu->qmp, "{class: gpu, res: acd, val: %d}", !!cmd->enable_by_level);
-> +	if (ret && cmd->enable_by_level) {
-> +		DRM_DEV_ERROR(gmu->dev, "Failed to send ACD state to AOSS\n");
-> +		return ret;
-> +	}
-> +
-> +	return 0;
-> +}
-> +
->   static int a6xx_gmu_clocks_probe(struct a6xx_gmu *gmu)
->   {
->   	int ret = devm_clk_bulk_get_all(gmu->dev, &gmu->clocks);
-> @@ -1793,7 +1847,7 @@ int a6xx_gmu_init(struct a6xx_gpu *a6xx_gpu, struct device_node *node)
->   	gmu->qmp = qmp_get(gmu->dev);
->   	if (IS_ERR(gmu->qmp) && adreno_is_a7xx(adreno_gpu)) {
->   		ret = PTR_ERR(gmu->qmp);
-> -		goto remove_device_link;
-> +		goto detach_gxpd;
->   	}
->   
->   	init_completion(&gmu->pd_gate);
-> @@ -1809,6 +1863,10 @@ int a6xx_gmu_init(struct a6xx_gpu *a6xx_gpu, struct device_node *node)
->   	/* Get the power levels for the GMU and GPU */
->   	a6xx_gmu_pwrlevels_probe(gmu);
->   
-> +	ret = a6xx_gmu_acd_probe(gmu);
-> +	if (ret)
-> +		goto detach_gxpd;
-> +
->   	/* Set up the HFI queues */
->   	a6xx_hfi_init(gmu);
->   
-> @@ -1819,7 +1877,13 @@ int a6xx_gmu_init(struct a6xx_gpu *a6xx_gpu, struct device_node *node)
->   
->   	return 0;
->   
-> -remove_device_link:
-> +detach_gxpd:
-> +	if (!IS_ERR_OR_NULL(gmu->gxpd))
-> +		dev_pm_domain_detach(gmu->gxpd, false);
-> +
-> +	if (!IS_ERR_OR_NULL(gmu->qmp))
-> +		qmp_put(gmu->qmp);
-> +
->   	device_link_del(link);
->   
->   detach_cxpd:
-> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.h b/drivers/gpu/drm/msm/adreno/a6xx_gmu.h
-> index b4a79f88ccf4..87d225b08e9b 100644
-> --- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.h
-> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.h
-> @@ -81,6 +81,7 @@ struct a6xx_gmu {
->   	int nr_gpu_freqs;
->   	unsigned long gpu_freqs[16];
->   	u32 gx_arc_votes[16];
-> +	struct a6xx_hfi_acd_table acd_table;
->   
->   	int nr_gmu_freqs;
->   	unsigned long gmu_freqs[4];
-> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_hfi.c b/drivers/gpu/drm/msm/adreno/a6xx_hfi.c
-> index cb8844ed46b2..3c183c1c6266 100644
-> --- a/drivers/gpu/drm/msm/adreno/a6xx_hfi.c
-> +++ b/drivers/gpu/drm/msm/adreno/a6xx_hfi.c
-> @@ -702,6 +702,38 @@ static int a6xx_hfi_send_bw_table(struct a6xx_gmu *gmu)
->   		NULL, 0);
->   }
->   
-> +#define HFI_FEATURE_ACD 12
-> +
-> +static int a6xx_hfi_enable_acd(struct a6xx_gmu *gmu)
-> +{
-> +	struct a6xx_hfi_acd_table *acd_table = &gmu->acd_table;
-> +	struct a6xx_hfi_msg_feature_ctrl msg = {
-> +		.feature = HFI_FEATURE_ACD,
-> +		.enable = 1,
-> +		.data = 0,
-> +	};
-> +	int ret;
-> +
-> +	if (!acd_table->enable_by_level)
-> +		return 0;
-> +
-> +	/* Enable ACD feature at GMU */
-> +	ret = a6xx_hfi_send_msg(gmu, HFI_H2F_FEATURE_CTRL, &msg, sizeof(msg), NULL, 0);
-> +	if (ret) {
-> +		DRM_DEV_ERROR(gmu->dev, "Unable to enable ACD (%d)\n", ret);
-> +		return ret;
-> +	}
-> +
-> +	/* Send ACD table to GMU */
-> +	ret = a6xx_hfi_send_msg(gmu, HFI_H2F_MSG_ACD, &msg, sizeof(msg), NULL, 0);
 
+Is that something useful during internal development, or do we
+see ACD causing issues in the wild?
 
-Seems you still don't send the proper acd_table
+If the latter, would that be caused by e.g. outdated firmware?
 
-Neil
-
-> +	if (ret) {
-> +		DRM_DEV_ERROR(gmu->dev, "Unable to ACD table (%d)\n", ret);
-> +		return ret;
-> +	}
-> +
-> +	return 0;
-> +}
-> +
->   static int a6xx_hfi_send_test(struct a6xx_gmu *gmu)
->   {
->   	struct a6xx_hfi_msg_test msg = { 0 };
-> @@ -799,6 +831,10 @@ int a6xx_hfi_start(struct a6xx_gmu *gmu, int boot_state)
->   	if (ret)
->   		return ret;
->   
-> +	ret = a6xx_hfi_enable_acd(gmu);
-> +	if (ret)
-> +		return ret;
-> +
->   	ret = a6xx_hfi_send_core_fw_start(gmu);
->   	if (ret)
->   		return ret;
-> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_hfi.h b/drivers/gpu/drm/msm/adreno/a6xx_hfi.h
-> index 528110169398..51864c8ad0e6 100644
-> --- a/drivers/gpu/drm/msm/adreno/a6xx_hfi.h
-> +++ b/drivers/gpu/drm/msm/adreno/a6xx_hfi.h
-> @@ -151,12 +151,33 @@ struct a6xx_hfi_msg_test {
->   	u32 header;
->   };
->   
-> +#define HFI_H2F_MSG_ACD 7
-> +#define MAX_ACD_STRIDE 2
-> +
-> +struct a6xx_hfi_acd_table {
-> +	u32 header;
-> +	u32 version;
-> +	u32 enable_by_level;
-> +	u32 stride;
-> +	u32 num_levels;
-> +	u32 data[16 * MAX_ACD_STRIDE];
-> +};
-> +
->   #define HFI_H2F_MSG_START 10
->   
->   struct a6xx_hfi_msg_start {
->   	u32 header;
->   };
->   
-> +#define HFI_H2F_FEATURE_CTRL 11
-> +
-> +struct a6xx_hfi_msg_feature_ctrl {
-> +	u32 header;
-> +	u32 feature;
-> +	u32 enable;
-> +	u32 data;
-> +};
-> +
->   #define HFI_H2F_MSG_CORE_FW_START 14
->   
->   struct a6xx_hfi_msg_core_fw_start {
-> 
-
+Konrad
 
