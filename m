@@ -1,79 +1,78 @@
-Return-Path: <linux-arm-msm+bounces-43738-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-43739-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6E5539FEF1F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Dec 2024 12:48:40 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5C65D9FEF28
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Dec 2024 12:55:39 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 34DB016216A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Dec 2024 11:48:38 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8AA1F3A2E5C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Dec 2024 11:55:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3B01C944E;
-	Tue, 31 Dec 2024 11:48:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 77BC717ADE8;
+	Tue, 31 Dec 2024 11:55:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="n5dNKcqj"
+	dkim=pass (2048-bit key) header.d=ursulin-net.20230601.gappssmtp.com header.i=@ursulin-net.20230601.gappssmtp.com header.b="i5EAlF/v"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f41.google.com (mail-lf1-f41.google.com [209.85.167.41])
+Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 329B5192590
-	for <linux-arm-msm@vger.kernel.org>; Tue, 31 Dec 2024 11:48:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A28CF192590
+	for <linux-arm-msm@vger.kernel.org>; Tue, 31 Dec 2024 11:55:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735645714; cv=none; b=WwdPOYef8Ld0epdPk3hqBe7U1KsGzorQLJFpPcFcHH/Ws+VgiCbm2b+8v1Nh0gJid9t9v90JM1aWP02jaUQtMq0BZ1XEMhvfZiCbiD10RGNa8haQ5djs/2sriPTyucosofS7vGbcSKwukZ2/01hhzS39dWlAePw0rjKfBrEG1GU=
+	t=1735646136; cv=none; b=ou5GG8HZqabbpyA2GM+xsLxMxRpkxEtRmCOZcKOaL1jZKkfrufKrFVUaG+kvCsQhEt+dWrkmKwScrOlBgl2vUUyAnLS0kotOgkDjNNebDCsCPoBWJS1peRXasMibB14q4Zu1Bi234Xpi7xNENf6XpNaBiILAsgXCLYrlAu2Q9Uw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735645714; c=relaxed/simple;
-	bh=UfGb538qS6fTheMXDVXwLaYxOh/Fu2Le7j4lot7dN8w=;
+	s=arc-20240116; t=1735646136; c=relaxed/simple;
+	bh=QpGKZ91wVIoUqvx/iFmT0yQGkEu+6Lb221p2kgbWuUI=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=AN4F99FyEDqiHdpxOequPsumDP8ecC11V+YfgrCcqfhm+HpOAh0gcQ4sJI2bHohGM92GKDc8gxjnh3F573yFDpnSoCYzLjis1SQhWid1to2Ffj9qK3eSh9Fcj5t5sFg49x6KazyrDXCKlYZe242rg0820uJYfQ8J+t2DUSnNZ2o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=n5dNKcqj; arc=none smtp.client-ip=209.85.167.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f41.google.com with SMTP id 2adb3069b0e04-53e36a1cf4fso1516967e87.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 31 Dec 2024 03:48:31 -0800 (PST)
+	 In-Reply-To:Content-Type; b=nEokkmgLK/Sv0g6n9M6Mu0Hhh9NWIVI2zwPF1DRD+TakmcMCvuWMPy6q1CWUh47XAtxXzYz/yYOyWcTJk5GVy0Y7vBwSmft6uZMeqyoH3rFmUgqKwnViTH8iSmsBmH4GpI05WHSxnaAcJ1IqLmrHw1VgkvJKu6Uqc6ovHh0BHTE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ursulin.net; spf=none smtp.mailfrom=ursulin.net; dkim=pass (2048-bit key) header.d=ursulin-net.20230601.gappssmtp.com header.i=@ursulin-net.20230601.gappssmtp.com header.b=i5EAlF/v; arc=none smtp.client-ip=209.85.128.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ursulin.net
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ursulin.net
+Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-4361fe642ddso105364135e9.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 31 Dec 2024 03:55:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1735645710; x=1736250510; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=ursulin-net.20230601.gappssmtp.com; s=20230601; t=1735646133; x=1736250933; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=aPcpvSMA+nWrZjqrSVYEniXrHyrlHzlkdD9s2BkwZx0=;
-        b=n5dNKcqjq/W1+4mOIsfXadO8n6DVG4L/lPbrbp89BBsFgq5bg8QraiVjlWiu5T9Zhi
-         3/nL3O/HLAkmQnBitY+s8H1hk+04iaZKNubizhmKGj3d2PKvVSdNaRs4NWiW4l8omAmm
-         kexY5kmifmg6Jhhkl2buX//3ZaZObiiIfoAkzsXgv96+nei9kflhJ44+7N5qhWyRWDvw
-         8esDLntCgdoz1kdRHV8KR1/XbZhcY4T3oT2xuZv6ARUd9gFgNw10+V1fBZLVkM115Jhb
-         Me6IKSVNlP/8RgdFdE1E65Gc8OGh9Ac5rDjaYbZn+IaB/N31WAO1HzrR9dMwF3mdihAO
-         intw==
+        bh=kZ0cCTCCRfld4Ulk+wiogAmP056IVjuCCQi0SFVFq28=;
+        b=i5EAlF/vju9DSmT5y0276bReGR7DN9/GsyPLFK8wrMSaYpSYob2iv7v8eUdRf91C7/
+         is4vbvyhyMkUANr45dJwX/zdrsskidr88KUsxV0DAdac4d1JT54bk4k2bUJuCOlE7Mla
+         Opo+X8P3+OL39inaJwFXpjB8cgcPhcbjk87csqG/AspAYVd+m6MvBP1suj+0NGUPuQtb
+         2X1xhg2Z3kGVrkLiHmmcZeVtIG4ijdD5e410A/6JM5PKZDyWOvYCfF7sg5co4serR9tS
+         7nLxF/KXcthyFhbd26l4OrMu93aIh8OdConpQ391aZbOZpBhkZH2ux3KGrwacNc2Uhdt
+         AGaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1735645710; x=1736250510;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20230601; t=1735646133; x=1736250933;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=aPcpvSMA+nWrZjqrSVYEniXrHyrlHzlkdD9s2BkwZx0=;
-        b=QBdGoar+ic1TAOCHcVCSAHAV9W2eTF1oO09TF8NCssXaeRN6W6w1b4gJToCzNplyfY
-         kiogzjA+NHPCcdWDjMBCzEhy21FTiWDXwmRm6O3C9vXU5S4l3iTVsr1ZmaQVsHdWlQD8
-         ZdvgospCjzuIQaLKcP0ekR8kH+GD+oYmPw0eUq1ahS9drPBEvKgW0aKrvPUDKypszii5
-         PbFzhlE7d17taVjIKtiwuLnHfBU7MMR0urfkv4RDfQwmgGY2aVyD0gZ6mPkGwWnpGGdV
-         162PZdM2BCZDPYO9nk6Ocgwcl6ePk0jOfs+L9/bEK6cPVQOXYDxsaIZ45ETUKXuo6MK4
-         Wf6Q==
-X-Forwarded-Encrypted: i=1; AJvYcCXs/vYwkFvqNS+NMghk38R6aYdJbAZxR7+hFsXFCSW5Td6Oqg+nhbjK01lcItgGHusw/NrzOEkLxz6W2Glk@vger.kernel.org
-X-Gm-Message-State: AOJu0YzTLBQtiFZ2vsEdBr9Ek1Dd68wwdfsE1cG+3MI1olZI/fRQGw7z
-	deM8WrC9lgCqZtZY9X6oBX2ejY2p+JJB0hL/VXnj+rDBGwrZz3MMMsoNrvA9EG0=
-X-Gm-Gg: ASbGncuuSsFxF2Dz7OJaJcnRvx/mZ9RW/kL+EqSjfCRjUnP4MJTncrO9A3td4vjYAH5
-	n4Gk9DTe+o6mRMOQa2iNK2XchrWEfccWnJ+kjK1tjCmKbgEkq4jU9XKN0aVA1s1GVXsQuvVeyBy
-	EC/fNkBoF/FheEheEvPwdnpEDu98nUEqY0oQA9lc1uq0CeOBgwJ55jlhWlKjlP0SIx6zh4CqjU9
-	PY9SE9+2ktUz8xTMGMB8YmaaTmFarP4BjhDn4ErjYZ6ecs/lOZcNS9KOCpuNCs2N7CUI0mQvrmS
-	MX75mlxPJfJptn8yryZYGHlBZtYqBH1L5bw=
-X-Google-Smtp-Source: AGHT+IGw+IBxZDLIPKW1ctolrza83QDB3dHGcJZYelTmKDc4ccY0ytsjd0iQG/jRP+F7A5JDhTDPWA==
-X-Received: by 2002:a05:6512:3a8f:b0:53e:3756:80b4 with SMTP id 2adb3069b0e04-5422956b95emr3552488e87.12.1735645710298;
-        Tue, 31 Dec 2024 03:48:30 -0800 (PST)
-Received: from [192.168.1.4] (88-112-131-206.elisa-laajakaista.fi. [88.112.131.206])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-542235f61c2sm3323915e87.32.2024.12.31.03.48.27
+        bh=kZ0cCTCCRfld4Ulk+wiogAmP056IVjuCCQi0SFVFq28=;
+        b=nRNIG+ucMzz6KhgCrQLoxl4Jn71Xwzoo2TTVnd4KdQI0NPCwj7R95MvjhdBfTYsYb8
+         1FWkaeNN9m8UYk+namFhbDQ1O4RhklPeojwMU9TSzuzkHzvV2g9VWYQTICPG9q/g3wM1
+         cWyFYYXwHUkaZJWUF/0YU+hkrJ7Cm/VEV+nLxJdV4EHrgq9TZWGDd/uZ1/Ya5z3+dqxV
+         1V69LRtNoxUIVpyUuNbwJAKZRHPF0/jwj/DWeOTV9t5crGHyORFN5cuR5Ogz2eF/xIvE
+         /rYa+tVsrUX9589oj9GsaGno39kArNXCD6m0x5Ge9CAzcvE3MG+j01R0GFVUAd+/eL0h
+         mq/A==
+X-Forwarded-Encrypted: i=1; AJvYcCWYW2u6uKfx7TxJ3ZdgWqn66+xw93V2CC8DqnocYbSzeQW6hXs1IGvxVyak7H1K5gq9Z9aoudrcIyQxKZiE@vger.kernel.org
+X-Gm-Message-State: AOJu0YyuskjPJWsfnOU/Ax0pk98w1jhdoDVVuJGjR8jSSWsgpCFMyCeK
+	bAx4QHW3za0eGITnctHo4CowupbiaCSsSURwjJGYClC9xXdc0zDnVETzDwhbDMA=
+X-Gm-Gg: ASbGncsRKfyits7XWh4l7MGJv5V762AsLZUe7XXq5WZlJTUOgjesYhsRz9/fyYN18Um
+	AjsfG+VmMylFmkHBJWOs2mwqwF0E2Pojulwze3FBjYcgF/41LzNaJUxTV4MrZjt3xYYAoXNupVo
+	uHlJRkA9fEI9fK1kcbc4v8zTIPcSI8V+rvCB86+uhLOS5NT4ipAs9BqrmkLd7qWQmuVjrCkJk8C
+	hg/OW6jyzCRGeCqsP3C+kAmX0/3M/GES05MtIUWh4d2AZtgmgnmmKvKksMPxoZepDxUOhP3
+X-Google-Smtp-Source: AGHT+IEonJCQkKfmUZRTTcQxMpQNh8v+hJ8WjpocKj3WTxQpFwWxDIM9bcA7O43AFVEzFIMvitFZLg==
+X-Received: by 2002:a05:600c:4748:b0:434:f804:a9b0 with SMTP id 5b1f17b1804b1-43668b78818mr314536595e9.29.1735646132934;
+        Tue, 31 Dec 2024 03:55:32 -0800 (PST)
+Received: from [192.168.0.101] ([90.241.98.187])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-436611ea3e0sm390817235e9.7.2024.12.31.03.55.32
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 31 Dec 2024 03:48:28 -0800 (PST)
-Message-ID: <244c58dd-b36a-49a3-901f-8a60dc936726@linaro.org>
-Date: Tue, 31 Dec 2024 13:48:26 +0200
+        Tue, 31 Dec 2024 03:55:32 -0800 (PST)
+Message-ID: <1b5a3555-1094-404c-8b71-49dd07f59ac9@ursulin.net>
+Date: Tue, 31 Dec 2024 11:55:31 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -81,49 +80,84 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 4/6] arm64: dts: qcom: x1e80100: Add CAMCC block
- definition
-Content-Language: ru-RU
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- Loic Poulain <loic.poulain@linaro.org>, Robert Foss <rfoss@kernel.org>,
- Andi Shyti <andi.shyti@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Todor Tomov <todor.too@gmail.com>,
- Mauro Carvalho Chehab <mchehab@kernel.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
- <sboyd@kernel.org>, Jagadeesh Kona <quic_jkona@quicinc.com>,
- Konrad Dybcio <konradybcio@kernel.org>
-Cc: linux-i2c@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-media@vger.kernel.org, linux-clk@vger.kernel.org
-References: <20241227-b4-linux-next-24-11-18-dtsi-x1e80100-camss-v2-0-06fdd5a7d5bb@linaro.org>
- <20241227-b4-linux-next-24-11-18-dtsi-x1e80100-camss-v2-4-06fdd5a7d5bb@linaro.org>
- <aaead9e5-a978-4b3b-8635-bd8be647ae35@linaro.org>
- <c9d97c40-d3bf-486f-b348-91ffedeece5a@linaro.org>
-From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-In-Reply-To: <c9d97c40-d3bf-486f-b348-91ffedeece5a@linaro.org>
+Subject: Re: [PATCH] drm/msm: UAPI error reporting
+To: Rob Clark <robdclark@gmail.com>,
+ Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Cc: dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+ freedreno@lists.freedesktop.org, Rob Clark <robdclark@chromium.org>,
+ Sean Paul <sean@poorly.run>, Konrad Dybcio <konradybcio@kernel.org>,
+ Abhinav Kumar <quic_abhinavk@quicinc.com>,
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Marijn Suijten <marijn.suijten@somainline.org>,
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+ open list <linux-kernel@vger.kernel.org>
+References: <20241121164858.457921-1-robdclark@gmail.com>
+ <54601d79-4156-41f4-b1b7-250c5c970641@oss.qualcomm.com>
+ <CAF6AEGtafQM7-mYy163Krry3OHgPNH3e9A=9VEhBpiQTADtULQ@mail.gmail.com>
+Content-Language: en-GB
+From: Tvrtko Ursulin <tursulin@ursulin.net>
+In-Reply-To: <CAF6AEGtafQM7-mYy163Krry3OHgPNH3e9A=9VEhBpiQTADtULQ@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 
-On 12/31/24 00:34, Bryan O'Donoghue wrote:
-> On 30/12/2024 19:45, Vladimir Zapolskiy wrote:
->>> +            status = "disabled";
+
+On 22/11/2024 15:51, Rob Clark wrote:
+> On Fri, Nov 22, 2024 at 4:21 AM Konrad Dybcio
+> <konrad.dybcio@oss.qualcomm.com> wrote:
 >>
->> Please do not disable the clock controller, it was discussed in the
->> past, that
->> all clock controllers should be enabled by default.
+>> On 21.11.2024 5:48 PM, Rob Clark wrote:
+>>> From: Rob Clark <robdclark@chromium.org>
+>>>
+>>> Debugging incorrect UAPI usage tends to be a bit painful, so add a
+>>> helper macro to make it easier to add debug logging which can be enabled
+>>> at runtime via drm.debug.
+>>>
+>>> Signed-off-by: Rob Clark <robdclark@chromium.org>
+>>> ---
+>>
+>> [...]
+>>
+>>> +/* Helper for returning a UABI error with optional logging which can make
+>>> + * it easier for userspace to understand what it is doing wrong.
+>>> + */
+>>> +#define UERR(err, drm, fmt, ...) \
+>>> +     ({ DRM_DEV_DEBUG_DRIVER((drm)->dev, fmt, ##__VA_ARGS__); -(err); })
+>>> +
+>>>   #define DBG(fmt, ...) DRM_DEBUG_DRIVER(fmt"\n", ##__VA_ARGS__)
+>>>   #define VERB(fmt, ...) if (0) DRM_DEBUG_DRIVER(fmt"\n", ##__VA_ARGS__)
+>>
+>> I'm generally not a fan of adding driver-specific debug prints..
+>>
+>> Maybe that's something that could be pushed to the drm-common layer
+>> or even deeper down the stack?
 > 
-> Looks true but, news to me.
+> Even if we had something like DRM_DBG_UABI_ERROR() I'd probably still
+> just #define UERR() to be a wrapper for it, since line length/wrapping
+> tends to be a bit of a challenge.  And I have a fairly substantial
+> patch stack on top of this adding sparse/vm_bind support.  (Debugging
+> that was actually the motivation for this patch.)
 > 
-> Do you have a link to the discussion?
-> 
+> I noticed that xe has something similar, but slightly different shape,
+> in the form of XE_IOCTL_DBG().. but that kinda just moves the line
+> length problem into the if() conditional.  (And doesn't provide the
+> benefit of being able to display the incorrect param.)
 
-Please take a look at this discussion:
+FWIW there is also a debug only builds hack in i915:
 
-https://lore.kernel.org/all/c240075d-55d1-28f6-18ad-3897e55f8e59@somainline.org/
+/* Catch emission of unexpected errors for CI! */
+#if IS_ENABLED(CONFIG_DRM_I915_DEBUG_GEM)
+#undef EINVAL
+#define EINVAL ({ \
+	DRM_DEBUG_DRIVER("EINVAL at %s:%d\n", __func__, __LINE__); \
+	22; \
+})
+#endif
 
---
-Best wishes,
-Vladimir
+UERR functionality wise looks quite good to me. Better than the other 
+two. The name is not scoped but I appreciate the readability line length 
+challenges.
+
+Regards,
+
+Tvrtko
 
