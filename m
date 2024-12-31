@@ -1,101 +1,162 @@
-Return-Path: <linux-arm-msm+bounces-43701-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-43702-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id D6D139FECEC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Dec 2024 06:10:27 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0A73D9FECFC
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Dec 2024 06:49:29 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id C8EA21882865
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Dec 2024 05:10:29 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9FE7F3A2A5B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Dec 2024 05:49:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D9FA21552FC;
-	Tue, 31 Dec 2024 05:10:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 560C915B10D;
+	Tue, 31 Dec 2024 05:49:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="dFRB7LdF"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="P0CqNOFD"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D4A07BAEC;
-	Tue, 31 Dec 2024 05:10:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=156.67.10.101
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09C12136327;
+	Tue, 31 Dec 2024 05:49:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735621823; cv=none; b=ion4mAiyaWt0Y0+wSt/ctQ3stMvSTKnuj58QrqyEnYMstKMHMopPyI8dXLC55kUC/gVqixo740vZThgFM6koY2b2ROm42iouVTautbYskocXgb0THhs2yjzBJLLzyOFzIzbUvIBDOvEb+AGI5GXq7uM0oJPbf7Kk8eMTL7Hczmk=
+	t=1735624166; cv=none; b=sjptC+88jPXsa168jMEef7cywjdFfEvREeMueKTUH2iLv2egR7qHUxePgDmSWKdXk8Zvsc2MUg2n7Bl/sSdLSE9BrYaBLt8GxveMRnxuPUv4yOMnq2s9vTvOk364h62vFZcMzhTA3Bhl1LThxbtY3D/w9OxZDakztzXcTAD5uJI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735621823; c=relaxed/simple;
-	bh=ZkNvSHhenb3SM3Z5KwDWR53tKOXT7ezmzkg0QP1EbEQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ZBnjiL4pewT7v3IogSV16DBSOpvwkoVRbdu4nziEeVAoRXHIIlb+cl0s7xVy0XmFzDIiWCPk5VomZR9rP+PjW2stiLQZ0vlpJ/8K9dEAXmBWqpeOLdmJBzyAJ8PfroRnOroNCglfs456nMB1eaoEJQ3za93Fy3T56BRCVsvuCiY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch; spf=pass smtp.mailfrom=lunn.ch; dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b=dFRB7LdF; arc=none smtp.client-ip=156.67.10.101
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lunn.ch
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
-	s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
-	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
-	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
-	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
-	bh=hEIr7uKQr/8GkDDoxG9e26ThDBwdEqVjueY03fe5/JI=; b=dFRB7LdFj4z0+/+bES7lzBuS+j
-	ZQx7zFEhWZs3Ow4UimMfsoXiBUHNAWdF5fcNutvEA58bqDOGUf3uygFLmcRluv6XoUiGfKU14ouJA
-	yW5m0tBwScWjakiRTKjhJznlh0BEhGDwFTX2szWi6A2jnHkOIm81T/w3xMMev2c7E97U=;
-Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
-	(envelope-from <andrew@lunn.ch>)
-	id 1tSUWF-0008RM-Gb; Tue, 31 Dec 2024 06:10:15 +0100
-Date: Tue, 31 Dec 2024 06:10:15 +0100
-From: Andrew Lunn <andrew@lunn.ch>
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Cc: Wasim Nazir <quic_wasimn@quicinc.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	kernel@quicinc.com
-Subject: Re: [PATCH v5 5/6] arm64: dts: qcom: Add support for QCS9075 Ride &
- Ride-r3
-Message-ID: <f44b98c2-a0b5-4aec-a84e-683d4576a70e@lunn.ch>
-References: <20241229152332.3068172-1-quic_wasimn@quicinc.com>
- <20241229152332.3068172-6-quic_wasimn@quicinc.com>
- <7de40e71-e2e5-49fd-93a3-245afdef8188@oss.qualcomm.com>
+	s=arc-20240116; t=1735624166; c=relaxed/simple;
+	bh=Te8pAKjxAluQ109U4rfj9dpse11dM8XNuczYpcL2pic=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=mZOHRNzzGJgaab1ujKZeOmIaXDgBdjW9cYxjQaaSvCYv6KhOds05DEs+iLGNMy7EB7wyy+B6eSyMfKwCzrpcpimmGo/3dT3WdztAnbkaDrrN9w6EcRqawzIZXo4VxfnFY4qdOeCGrF61KI/RxMjI//WYtFE7wn3tcTayb0t5IiM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=P0CqNOFD; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BV4qX2v019024;
+	Tue, 31 Dec 2024 05:49:19 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=52h4Nja+hW8tr8O4ByGebt
+	H8xIOLbCUOIQUesRhWA2A=; b=P0CqNOFDP1CX5iwcqnp5F0V96HtMUbvmNZYdCb
+	kx7/xSrTMY1WN7BsJfaicHdBrEOV0TaJ7Qi0SdKyP+Glt0PBBaUiNFrnU9/zctMd
+	gBGjm/XK10cnkaC4+o87YBauylyH9ZiFeIVBZhB2e15+7+Ps7urE2CZijvw4lwQZ
+	oIIuvvZ0/ayU91COroJpSGzupzG3qhq1O21Evz7/GAiQebVIRy2wKn+/bjL1qeDX
+	fWt5j8fw2LuHyGvwgJRNiRm2h2H2E5kewDdvAqTzV1lbmJYnEzKDZM8eXLbzuRZI
+	7T9rfh+2H1/pxpLNCMkjb1CdXyyJJy8rlpLMo2qTJTkTxvXA==
+Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43v9yk83nx-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 31 Dec 2024 05:49:18 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4BV5nHPK028765
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 31 Dec 2024 05:49:17 GMT
+Received: from hu-srichara-blr.qualcomm.com (10.80.80.8) by
+ nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Mon, 30 Dec 2024 21:49:13 -0800
+From: Sricharan R <quic_srichara@quicinc.com>
+To: <jassisinghbrar@gmail.com>, <robh@kernel.org>, <krzk+dt@kernel.org>,
+        <conor+dt@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <andersson@kernel.org>, <konradybcio@kernel.org>,
+        <manivannan.sadhasivam@linaro.org>, <dmitry.baryshkov@linaro.org>,
+        <quic_srichara@quicinc.com>
+Subject: [PATCH V2 0/2] mailbox: tmel-qmp: Introduce QCOM TMEL QMP mailbox driver
+Date: Tue, 31 Dec 2024 11:18:58 +0530
+Message-ID: <20241231054900.2144961-1-quic_srichara@quicinc.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <7de40e71-e2e5-49fd-93a3-245afdef8188@oss.qualcomm.com>
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: -fH1fLwOpqeVN_jLjCLC8G1uKds0Yv2q
+X-Proofpoint-GUID: -fH1fLwOpqeVN_jLjCLC8G1uKds0Yv2q
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ suspectscore=0 phishscore=0 lowpriorityscore=0 bulkscore=0 spamscore=0
+ clxscore=1011 malwarescore=0 adultscore=0 mlxscore=0 mlxlogscore=999
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2412310047
 
-> > +&ethernet0 {
-> > +	phy-mode = "2500base-x";
-> > +};
-> > +
-> > +&ethernet1 {
-> > +	phy-mode = "2500base-x";
-> > +};
-> > +
-> > +&mdio {
-> > +	compatible = "snps,dwmac-mdio";
-> > +	#address-cells = <1>;
-> > +	#size-cells = <0>;
-> > +
-> > +	sgmii_phy0: phy@8 {
-> > +		compatible = "ethernet-phy-id31c3.1c33";
-> > +		reg = <0x8>;
-> > +		device_type = "ethernet-phy";
-> > +		interrupts-extended = <&tlmm 7 IRQ_TYPE_EDGE_FALLING>;
-> > +		reset-gpios = <&pmm8654au_2_gpios 8 GPIO_ACTIVE_LOW>;
-> > +		reset-assert-us = <11000>;
-> > +		reset-deassert-us = <70000>;
-> > +	};
-> > +
-> > +	sgmii_phy1: phy@0 {
+From: Sricharan Ramabadhran <quic_srichara@quicinc.com>
 
-SGMII is 10/100/1000. You have a phy-mode of 2500base-x, which is only
-2500. So calling this sgmii_phy is wrong. Just call it phy1: phy@0.
+The QMP mailbox is the primary means of communication between TME-L SS
+and other subsystem on the SoC. A dedicated pair of inbound and outbound
+mailboxes is implemented for each subsystem/external execution environment
+which needs to communicate with TME-L for security services. The inbound
+mailboxes are used to send IPC requests to TME-L, which are then processed
+by TME-L firmware and accordingly the responses are sent to the requestor
+via outbound mailboxes.
 
-	Andrew
+It is an IPC transport protocol which is light weight and supports
+a subset of API's. It handles link initialization, negotiation,
+establishment and communication across client(APPSS/BTSS/AUDIOSS)
+and server(TME-L SS).
+
+   -----------------------------------------------       ---------------------------------------------------
+  |                                              |       |                                                 |
+  |                 SOC  CLIENT                  | SOC   |                TME-L  SS                        |
+  |                                              | AHB   |                                                 |
+  |     ----------    ---------   ---------      |       | ------    -------     --------    ------------  |
+  |     |        |    |       |   |       |      | WO    | |     | R |     |     |      |    |SERVICES   | |
+  |     | APPS   |<-->| TMEL  |<->|       |------------->| | IN  |-->|     |     | TMEL |    |--------   | |
+  |     |        |    | COM   |   | QMP   |      | RO    | |     | W | QMP |<--->| COM  |<-->| a) ATTEST | |
+  |     |        |    |       |   |       |<-------------| | OUT |<--|     |     |      |    | b) CRYPTO | |
+  |     |        |    |       |   |       |      |       | |     |   |     |     |      |    | .. more   | |
+  |     ---------     ---------   ---------      |       | ------    -------     -------     ------------  |
+  |                                              |       |                                                 |
+   -----------------------------------------------       --------------------------------------------------
+
+TME-L SS provides different kinds of services like secureboot, remote image authentication,
+key management, crypto, OEM provisioning etc. This patch adds support for remote image
+authentication. Support for rest of the services can be added.
+
+Remote proc driver subscribes to this mailbox and uses the mbox_send_message to use
+TME-L to securely authenticate/teardown the images.
+
+Since clients like same rproc driver use SCM/TMEL across socs, the goal here was to abstract the
+TMEL-QMP SS functionality, so that clients should be able to connect and send messages with
+a common API.
+
+[v1] RFC Post
+
+[v2]
+     Added HW description in the bindings patch.
+     Fixed review comments for bindings from Krzysztof and Dmitry
+     Changed patch#2 driver to add work for mailbox tx processing    
+     Cleaned up patch#2 for some checkpatch warnings.
+     There are some checkpatch [CHECK] like below, which looks like false positive.
+
+	CHECK: Macro argument 'm' may be better as '(m)' to avoid precedence issues
+	#1072: FILE: include/linux/mailbox/tmelcom-qmp.h:40:
+	+#define TMEL_MSG_UID_CREATE(m, a)      ((u32)(((m & 0xff) << 8) | (a & 0xff)))
+
+
+Sricharan Ramabadhran (2):
+  dt-bindings: mailbox: Document qcom,tmel-qmp
+  mailbox: tmelite-qmp: Introduce TMEL QMP mailbox driver
+
+ .../bindings/mailbox/qcom,tmelite-qmp.yaml    |  65 ++
+ drivers/mailbox/Kconfig                       |   7 +
+ drivers/mailbox/Makefile                      |   2 +
+ drivers/mailbox/qcom-tmel-qmp.c               | 969 ++++++++++++++++++
+ include/linux/mailbox/tmelcom-qmp.h           | 157 +++
+ 5 files changed, 1200 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/mailbox/qcom,tmelite-qmp.yaml
+ create mode 100644 drivers/mailbox/qcom-tmel-qmp.c
+ create mode 100644 include/linux/mailbox/tmelcom-qmp.h
+
+-- 
+2.34.1
+
 
