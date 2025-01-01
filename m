@@ -1,144 +1,159 @@
-Return-Path: <linux-arm-msm+bounces-43764-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-43765-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id D0A169FF194
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Dec 2024 20:34:03 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8D4449FF317
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Jan 2025 06:59:14 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id DBEB21882192
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Dec 2024 19:34:05 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2357A161A71
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Jan 2025 05:59:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 476411ACEC8;
-	Tue, 31 Dec 2024 19:33:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8D67013FFC;
+	Wed,  1 Jan 2025 05:59:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="sclvEZkJ"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gK30eRv9"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f172.google.com (mail-pl1-f172.google.com [209.85.214.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1271E189BA2;
-	Tue, 31 Dec 2024 19:33:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAB678F58;
+	Wed,  1 Jan 2025 05:59:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735673639; cv=none; b=GFBSF8otfNC8DmZ1OsEUqMpVXx2+BzSzOWRBP29U7tex30ZItTLncvMrLHjZi7UlEVXf3cRVQc5Sn2Lqz7etX7NGdsV8nhzxJZ3pqzEZ/JikpGdeuUtQHa8R1F7JzrJ8pVs5l8vw/3tkmLS9AALSerhdm7g46HqRHGjdsFDwJzg=
+	t=1735711149; cv=none; b=kkeVgI+fJhM+rtDIMCWN7zPg48s3+HGUC/F5eVlaDhKfr+YnkZJfd6YDn57vNyRvaplCf2ABwASXIAMERObNse5M8j+o7IHPjgumnHJE89JLD/gaOLVlHAJ61VVBE/K+fA8M//BCq9L+E4A4kembQX/btvg1+iO/ohGG8NPqlJ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735673639; c=relaxed/simple;
-	bh=KqupyILPFMi9uEbau0UcuFjIDkdX7hymInBqWBOZfbU=;
-	h=Date:From:To:CC:Subject:In-Reply-To:References:Message-ID:
-	 MIME-Version:Content-Type; b=ipQc0Iteh3QBBPhtJ+6BQSjOYxc28TJbGM2E8pW506Smku0C0ojw/cUhauqZ6+IfUqtuQUXuHOVw4ab236IJ9dJJPzi3Hk/G87zuMqGWOP7X8MbtxNupZtWVFSkmORflRKwaUBvjrjalaQRuOeE5JwXBYXOKxWBlHbhEnwZ3R+8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=sclvEZkJ; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87A10C4CED2;
-	Tue, 31 Dec 2024 19:33:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1735673638;
-	bh=KqupyILPFMi9uEbau0UcuFjIDkdX7hymInBqWBOZfbU=;
-	h=Date:From:To:CC:Subject:In-Reply-To:References:From;
-	b=sclvEZkJIKc7VrKQuODKYByb5XRo0CmxzeuOlJ9g4s1IJA61jClZ2RtjiPeaNLz8J
-	 cJVNfbFragBrtilUEgJKm8RkB8nXT3Kag39p7+hLQbpSWF9eLHNvM2zKKXBrPRlOdy
-	 RB+6QNR1BpzoHEeSC1j1GflUFjUG26aQmy+cefWyvCWaRriKWBjrRC4pCBeHYRzN8K
-	 M3Gykv1baGWUjSwzCQ86ZSdY6LayLbLd7XwQnzs1sCoFVfhdzeufk2zf1QD/a8XraV
-	 Ghi6O3MJ67/xas7YkWrmWvBHeyygz/j4J+9FZCw6RRHjsFxzwpk3OwqnRcNZvHbXLw
-	 8S5Yyx04wfy2Q==
-Date: Tue, 31 Dec 2024 20:33:57 +0100
-From: Niklas Cassel <cassel@kernel.org>
-To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-CC: kw@linux.com, gregkh@linuxfoundation.org, arnd@arndb.de,
- lpieralisi@kernel.org, shuah@kernel.org, kishon@kernel.org,
- linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org, bhelgaas@google.com,
- linux-arm-msm@vger.kernel.org, robh@kernel.org,
- linux-kselftest@vger.kernel.org, Aman Gupta <aman1.gupta@samsung.com>,
- Padmanabhan Rajanbabu <p.rajanbabu@samsung.com>
-Subject: =?US-ASCII?Q?Re=3A_=5BPATCH_v4_3/3=5D_selftests=3A_pci=5Fend?=
- =?US-ASCII?Q?point=3A_Migrate_to_Kselftest_framework?=
-User-Agent: K-9 Mail for Android
-In-Reply-To: <20241231191812.ymyss2dh7naz4oda@thinkpad>
-References: <20241231131341.39292-1-manivannan.sadhasivam@linaro.org> <20241231131341.39292-4-manivannan.sadhasivam@linaro.org> <Z3QtEihbiKIGogWA@ryzen> <20241231191812.ymyss2dh7naz4oda@thinkpad>
-Message-ID: <2C16240A-28F8-4D9B-9FD7-33E4E6F0879E@kernel.org>
+	s=arc-20240116; t=1735711149; c=relaxed/simple;
+	bh=1ERfz6MYRyQC9T7JOUIcmI7il21I2EZ+euGNycX8pHI=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=Kh90sV54pNcf6lD2PPzn/idiWGDGRJLzRBJwUnHx3Gn5+vh7oCPz+iVNe0nauh9uuZxrfopdyo2wxJ6kFadX2XtFQBoQksg7avtY2M5/xGl3+uwcAge57hSfp6G8n7N018ChHgiFElyBcoGChMchgU7HKFhDWL1suDiNSDSPkeA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gK30eRv9; arc=none smtp.client-ip=209.85.214.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pl1-f172.google.com with SMTP id d9443c01a7336-2165448243fso169167925ad.1;
+        Tue, 31 Dec 2024 21:59:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1735711147; x=1736315947; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=JxlkzERHMH6O41FvyQTnmiC7rDKDMif6g1pkU6AYpeQ=;
+        b=gK30eRv9ifZlF5yeO0FpNmwLBxq/4PUPRXKRB2Harezf1/5G6Sxaz08A+y5ha0Ril3
+         tPjD5kYn7pVH2qEuxYjylsGdM/ScrE1GPWw4GLgfNCcnUWCL2Rm9M5w8QyroiUvfprMs
+         VmNt+Vs1EfqNUVPeeK7MrsyM5laq1iLVNz0GBG4ykSM07ZjxS5btH0SjxqB/huioJqJg
+         Sy+VlqPMyIgoTke32G6+aXH80y4q7In2NqWs4nVFWe4Y/FM+uE35J0vajQjQNYURyrZl
+         8ghitX/mDPpCAjSvE4U8fIoM81PZi48ZmkDr0YtzQ6wOjj7fdicbE1npG1fVM3Yd/5Ay
+         9TEg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1735711147; x=1736315947;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=JxlkzERHMH6O41FvyQTnmiC7rDKDMif6g1pkU6AYpeQ=;
+        b=AyfvSN5X0d8uCckPxltne0RNhvXkNJ9+H98GZMB8RnAJUJZ/1L6ol/M1bkq9OQQuTf
+         pt1cFUlG2Vffj8OTZi5wLUiM3dDlnW0KNeI0tQmufccAHUZxfq/XBXu5uMN1crZpvjG/
+         aiV9z4xXpph3ljePQc72WwfZ2uk615BqGnOc0yF0FW7pQETAhzUeaCLR2bcfH4wCpmau
+         hRJu+ahzVMAQKPtlxuT7O0OCtfvR3HGgjuLUfhDgYKd0/680R42PNpYcDBpC8+v/0irf
+         CR9Ye330KEzWBndoh4hGAHSZs7XOV6/xv1WOw9BF80mPOqe+233Jdd1L8YyWgdVLPwhJ
+         RMvw==
+X-Forwarded-Encrypted: i=1; AJvYcCU/A8H5T5+CMLGWVfVI1RHt3fbdR4kdnfz/NeZYilNwNMat0Kyp+UvFl47Whz4mVRLlcAzrB44NV9fBuwBgGg==@vger.kernel.org, AJvYcCUICweDMYsoOOBc2R6eu9PFChU0jtlg/mWV3LAXtaUJaAHYMA78nJhRRkpxKa1qpAyqaSn28mtUPLs=@vger.kernel.org, AJvYcCVqdoh4cIvkwaF00iRrpZYRknTwVkhqZLSrtOrT/E4OZJ8WXN1gp4WqDwYeiVOb3oCfb4U5JGxf47z44seK@vger.kernel.org, AJvYcCWStJ/ZO55vZUlM0zNQz5OKpU71nB2ICEX+SAiRe047/ButUnizVn6s0deVnb3Dmq+th0xNxSACf1XQt4iiZVLMksPa9A==@vger.kernel.org, AJvYcCWtmVpPkJyiE2zFBPD0GonnTFHOaF1t1Qi5/Nabe1PTx98/xUW4zX0HkhherGs+RKzGei/M6pu1DFvB@vger.kernel.org, AJvYcCXD4puMYIlbsIkOyYR8ws/hsJfGYOBQel0A5/V9bG3qDwyH2/FoU1Vk/U1iFxijvATi74M9Uu9EpVCw@vger.kernel.org
+X-Gm-Message-State: AOJu0YxXbbC54heIWkIafXNI/PeEfRPCD+IrVKieEmcDqClTLhZdTsyV
+	7wZ2Czi9Z091zG+8kVYjH3RswjkMKkSxjIUQuupBI/XILrVT+nAL
+X-Gm-Gg: ASbGncurOTylwPd15my9zwWth5GJ2ZnJ+hjTjd8xOnpajzB2nperXcEOdG+g/HOppHJ
+	k5BTbd/thuzeM+wOZDjZkZJH0hmRBMmLzHgnvq6yyRA7YLeNRdFO/W/OlRQh6a4jepphsQ1IL0u
+	pD7hENDIFozjH2WNLLWsxfOsjytET7dHAsiJIezcGKmMYrbA+NG2Pd51BS65gvNiqB2sypXNuod
+	vI/sADJAOWEwTxwPHu9nKwNmlydl2PGEF6pBTYAXis=
+X-Google-Smtp-Source: AGHT+IFaaIyUWgZ24rB3hmAOUX8zPA+G1PMHHz/e1QmhclfDDXABnWyBle8Zo2odWFY/pwPLmQdrVQ==
+X-Received: by 2002:a17:903:24e:b0:215:5625:885b with SMTP id d9443c01a7336-219e6f28552mr636262665ad.52.1735711147068;
+        Tue, 31 Dec 2024 21:59:07 -0800 (PST)
+Received: from nuvole.. ([2a09:bac1:76a0:dd10::2e9:e5])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-219dc9716b3sm204396595ad.90.2024.12.31.21.59.01
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 31 Dec 2024 21:59:06 -0800 (PST)
+From: Pengyu Luo <mitltlatltl@gmail.com>
+To: quic_aiquny@quicinc.com
+Cc: andersson@kernel.org,
+	bryan.odonoghue@linaro.org,
+	conor+dt@kernel.org,
+	devicetree@vger.kernel.org,
+	dmitry.baryshkov@linaro.org,
+	gregkh@linuxfoundation.org,
+	hdegoede@redhat.com,
+	heikki.krogerus@linux.intel.com,
+	ilpo.jarvinen@linux.intel.com,
+	konradybcio@kernel.org,
+	krzk+dt@kernel.org,
+	krzk@kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-pm@vger.kernel.org,
+	linux-usb@vger.kernel.org,
+	mitltlatltl@gmail.com,
+	nikita@trvn.ru,
+	platform-driver-x86@vger.kernel.org,
+	robh@kernel.org,
+	sre@kernel.org
+Subject: Re: [PATCH 1/5] dt-bindings: platform: Add Huawei Matebook E Go EC
+Date: Wed,  1 Jan 2025 13:57:44 +0800
+Message-ID: <20250101055745.357081-1-mitltlatltl@gmail.com>
+X-Mailer: git-send-email 2.47.1
+In-Reply-To: <7fc6c727-d3c1-4c6d-a990-8caeb95c43c5@quicinc.com>
+References: <7fc6c727-d3c1-4c6d-a990-8caeb95c43c5@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-
-
-On 31 December 2024 20:18:12 CET, Manivannan Sadhasivam <manivannan=2Esadh=
-asivam@linaro=2Eorg> wrote:
->On Tue, Dec 31, 2024 at 06:42:42PM +0100, Niklas Cassel wrote:
->> On Tue, Dec 31, 2024 at 06:43:41PM +0530, Manivannan Sadhasivam wrote:
->>=20
->> (=2E=2E=2E)
->>=20
->> > +	#  RUN           pci_ep_data_transfer=2Edma=2ECOPY_TEST =2E=2E=2E
->> > +	#            OK  pci_ep_data_transfer=2Edma=2ECOPY_TEST
->> > +	ok 11 pci_ep_data_transfer=2Edma=2ECOPY_TEST
->> > +	# PASSED: 11 / 11 tests passed=2E
->> > +	# Totals: pass:11 fail:0 xfail:0 xpass:0 skip:0 error:0
->> > +
->> > +
->> > +Testcase 11 (pci_ep_data_transfer=2Edma=2ECOPY_TEST) will fail for m=
-ost of the DMA
->> > +capable endpoint controllers due to the absence of the MEMCPY over D=
-MA=2E For such
->> > +controllers, it is advisable to skip the forementioned testcase usin=
-g below
->> > +command::
->>=20
->> Hm=2E=2E this is strictly not correct=2E If will currently fail because=
- pci-epf-test=2Ec
->> does:
->> if ((reg->flags & FLAG_USE_DMA) && epf_test->dma_private)
->> 	return -EINVAL;
->>=20
->> So even if a DMA driver has support for the DMA_MEMCPY cap, if the DMA =
-driver
->> also has the DMA_PRIVATE cap, this test will fail because of the code i=
-n
->> pci-epf-test=2Ec=2E
->>=20
->
->Right=2E But I think the condition should be changed to test for the MEMC=
-PY
->capability instead=2E Like,
->
->diff --git a/drivers/pci/endpoint/functions/pci-epf-test=2Ec b/drivers/pc=
-i/endpoint/functions/pci-epf-test=2Ec
->index ef6677f34116=2E=2E0b211d60a85b 100644
->--- a/drivers/pci/endpoint/functions/pci-epf-test=2Ec
->+++ b/drivers/pci/endpoint/functions/pci-epf-test=2Ec
->@@ -328,7 +328,7 @@ static void pci_epf_test_copy(struct pci_epf_test *ep=
-f_test,
->        void *copy_buf =3D NULL, *buf;
->=20
->        if (reg->flags & FLAG_USE_DMA) {
->-               if (epf_test->dma_private) {
->+               if (!dma_has_cap(DMA_MEMCPY, epf_test->dma_chan_tx->devic=
-e->cap_mask)) {
->                        dev_err(dev, "Cannot transfer data using DMA\n");
->                        ret =3D -EINVAL;
->                        goto set_status;
+On Mon, Dec 30, 2024 at 3:28 PM Aiqun(Maria) Yu <quic_aiquny@quicinc.com> wrote:
+> On 12/29/2024 6:12 PM, Pengyu Luo wrote:
 >
 
-That check does seem to make more sense than the code that is currently th=
-ere=2E
-(Perhaps send this as a proper patch?)
-Note that I'm not an expert at dmaengine=2E
+[...]
 
-I have some patches that adds DMA_MEMCPY to dw-edma, but I'm not sure if t=
-he DWC eDMA hardware supports having both src and dst as PCI addresses, or =
-if only one of them can be a PCI address (with the other one being a local =
-address)=2E
+> >>
+> >
+> > Check the motherboard, https://postimg.cc/V5r4KCgx (Credit to Tianyu Gao <gty0622@gmail.com>)
+>
+> The link is not accessible from my end. Could you please help follow the
+> document tips referenced by [1] if this content is important for the
+> overall naming design?
+>
+> Here are some snippets for reference:
+> "for 'volatile' documents, please create an entry in the kernel
+> bugzilla https://bugzilla.kernel.org and attach a copy of these documents
+> to the bugzilla entry. Finally, provide the URL of the bugzilla entry in
+> the changelog."
+>
+> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/Documentation/process/maintainer-tip.rst
+> [1]
 
-If only one of them can be a PCI address, then I'm not sure if your sugges=
-ted patch is correct=2E
+I created one entry, then I got myself and the entry banned, :(
+I had written to them to explain this yesterday. No response.
+
+Title 'Huawei Matebook E Go, whose codename is Gaokun',
+In this entry, I explained why is it called gaokun, and why gen3.
+
+> https://bugzilla.kernel.org/show_bug.cgi?id=219645
+>
+> Artem S. Tashkinov (aros@gmx.com) changed:
+>
+>            What    |Removed                     |Added
+> ----------------------------------------------------------------------------
+>              Status|NEW                         |RESOLVED
+>               Group|                            |Junk
+>           Component|man-pages                   |Spam
+>             Version|unspecified                 |2.5
+>          Resolution|---                         |INVALID
+>            Assignee|documentation_man-pages@ker |other_spam@kernel-bugs.kern
+>                    |nel-bugs.osdl.org           |el.org
+>             Product|Documentation               |Other
 
 
-Kind regards,
-Niklas
+Best wishes,
+Pengyu
 
