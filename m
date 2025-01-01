@@ -1,210 +1,275 @@
-Return-Path: <linux-arm-msm+bounces-43766-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-43767-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id AC9179FF3A0
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Jan 2025 10:35:36 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1994B9FF3D1
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Jan 2025 12:29:19 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BFA8F3A2434
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Jan 2025 09:35:31 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B60AC1619F0
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Jan 2025 11:29:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8BB0D38385;
-	Wed,  1 Jan 2025 09:35:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 344AC1C5F35;
+	Wed,  1 Jan 2025 11:29:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="ZfIdvZFs"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AZvZjMIg"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.8])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f179.google.com (mail-pl1-f179.google.com [209.85.214.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BE22EDE;
-	Wed,  1 Jan 2025 09:35:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.8
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 868044AEE0;
+	Wed,  1 Jan 2025 11:29:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735724132; cv=none; b=DSTOYA5gYOQ4FzagGX2fddcJl3HAAdv4azHAzL17ldRVBRs37HYyW1GujUIYSx1/HOtxrrmGdOElfo84H/bIljV1NqNZJFb5/jDMhG102aDMUGOaQrFB4+q2Rg8xm7RqDNxo9yIuZCi0qukYbWwT0wXMUli8bPXt8J0OdeWRG9c=
+	t=1735730955; cv=none; b=hKqsxpHdhDCkYFXgh7j/TqSClGmOtM09aCjnCsm5c2SlXHTjPMsYGOv7PIOJBN+ZG1qf4GKpRf98k000LN2bh/5IutuT1Z/EdoEnSq8wx3UTkru54BW6zCzkHsDCDl+fyudBZuxcBn0Cjn4IKCIYZJsJNZ6s2pj3UUuZLzfpDSU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735724132; c=relaxed/simple;
-	bh=72aRAhGShzHCSODJmk+qOiLHXiKulWpbOvEl+YcknxY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=FsjLR6XKGfjISb/sA4bTxCe8WpbXXeoMfhJHIG2tPvpBLu5UxkphKE8F3TJnOC2pzjsur6GWRu+KfBY8r6c3SnkNhK57C3uzrMvV2/JdjXJwYoKe1/+Blgr4MZgDd8SpaDwkMDiYztH093CuNgmJ6dQrFFpDyey1eV8ZcwlDp4Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=ZfIdvZFs; arc=none smtp.client-ip=192.198.163.8
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1735724131; x=1767260131;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=72aRAhGShzHCSODJmk+qOiLHXiKulWpbOvEl+YcknxY=;
-  b=ZfIdvZFs3bZJsj1WPGtwFdTnBNjTvrDx6qz+qdjs6a++h7KjIiCDYR/8
-   lIcCqTXQ1REX/B8ULWW/NCLl625n4wXfBKldc5aSgoMeLDlFPUAdcGMhJ
-   0F3AzYYQNf4EOH88Taz7nhDb2hwSJovMBDJAX09K4ZS8W7fWhpsipJcqI
-   atGdST20m9zhMprbmeX7irnUxyVuzVQxc2hI6CPKUCSh5/cC/BnG08wfe
-   9q6UbbYKfWmhkrDycuJsvF2bQepugxzdARyJ80Caj37YAzUs5XykLR4mN
-   FYKQD+MzRw8WrfMvzO8rYrLJK6yhmfe9EtacZO3H1KDxRdZYgrZhFiWsl
-   A==;
-X-CSE-ConnectionGUID: IPc6k93HRp6rbmg7hCaAow==
-X-CSE-MsgGUID: yDiZPPxmSImNlDxU5OBVwg==
-X-IronPort-AV: E=McAfee;i="6700,10204,11302"; a="53532345"
-X-IronPort-AV: E=Sophos;i="6.12,281,1728975600"; 
-   d="scan'208";a="53532345"
-Received: from fmviesa008.fm.intel.com ([10.60.135.148])
-  by fmvoesa102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Jan 2025 01:35:30 -0800
-X-CSE-ConnectionGUID: rNEUVw5aSOWMXl4p8dOD3g==
-X-CSE-MsgGUID: VyaDlc8cQtqG8m80GonyPg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,281,1728975600"; 
-   d="scan'208";a="101404881"
-Received: from lkp-server01.sh.intel.com (HELO d63d4d77d921) ([10.239.97.150])
-  by fmviesa008.fm.intel.com with ESMTP; 01 Jan 2025 01:35:26 -0800
-Received: from kbuild by d63d4d77d921 with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1tSv8O-0007kd-22;
-	Wed, 01 Jan 2025 09:35:24 +0000
-Date: Wed, 1 Jan 2025 17:34:29 +0800
-From: kernel test robot <lkp@intel.com>
-To: Sricharan R <quic_srichara@quicinc.com>, jassisinghbrar@gmail.com,
-	robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-	devicetree@vger.kernel.org, andersson@kernel.org,
-	konradybcio@kernel.org, manivannan.sadhasivam@linaro.org,
-	dmitry.baryshkov@linaro.org
-Cc: llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev
-Subject: Re: [PATCH V2 2/2] mailbox: tmelite-qmp: Introduce TMEL QMP mailbox
- driver
-Message-ID: <202501011724.6gr0JxBf-lkp@intel.com>
-References: <20241231054900.2144961-3-quic_srichara@quicinc.com>
+	s=arc-20240116; t=1735730955; c=relaxed/simple;
+	bh=Vt8VaSm2xKXl/IjHPEfN4f+dzv63gVPSkwjEE3RIjAw=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=bnkIZHTiOYiC0kvcTuJmk5DepXxxQg78vvDTjaos2srx22MfD7HU7u3RfPOE70r7hOItHHxBXLubXAT9Ja8Id+efvIts5/w6rY15225MaCSeLfJDFhpz13anWhLA7wyKWLVZJ1Tu7WMtKLhCRdDsIfdsqd5eIjnUw63iujBDBkE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AZvZjMIg; arc=none smtp.client-ip=209.85.214.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pl1-f179.google.com with SMTP id d9443c01a7336-21619108a6bso132807215ad.3;
+        Wed, 01 Jan 2025 03:29:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1735730953; x=1736335753; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=euxpDIryIx8z5lHOO5QRU02pYec1l4jlz4vtdy7mRWE=;
+        b=AZvZjMIgWpr/1plAJhEadzbTkddF7XR/tGSvuFy9DNloJeh62uq+ZOjOLnyyGXwefS
+         Zh+rzI61ddel+LhAoZWvP9W/aFo2BRwLvx2vnKSi3/ClGAwVJUzAm3ZxjQxDY6LZEj/g
+         NBT2VOmY0oZtioub8YyyIw+Aa6yyEWHlcu5JZE5ms5CCx6eVDolVItySA0rQdf/b3EUH
+         lt/6CCri1H9YoO6aRkENDl+P8pvLaKEcQGBNqzEpmBiyiIqgAaAp+3dsTvOVTsHbqyL3
+         dBSRQiC/wA/rK/cq0NCnuo6hT7ihutx9d9f0ZNMjmtgJYllvQkSa3C5KMZKoKtyZ8XMt
+         f02A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1735730953; x=1736335753;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=euxpDIryIx8z5lHOO5QRU02pYec1l4jlz4vtdy7mRWE=;
+        b=jb2yl7G51qeJd0b3af1bKix4EyunNwI7BCWsYbqjrKaWfMi4JWq86rpGwiq6kXp9Nb
+         9+UGn/cJQAdlDK+nT4DWdHBc0mEQlBOpQUvuh8x28F0iBVbQnU1RydyJdIw1jpQ1RdAq
+         0bmESX6dw6Fb8PKiIPesGaNRs+zPTsxZE2R/uxZuO56xnT02R/uEcdxVafbeNsxMpc1k
+         EKK2OLuBMgMgsELzzbjsn9CJswvXd3E/2QE6VJjPXBXwVQhEHnzLCYsp4X7XDOC2pmLH
+         b8vx/ayj6ghazALtZOlG81UDeoscoYDBT/fTwd3e7pSMgt2mAM3Di6wh2JNw59dhRasC
+         TJSQ==
+X-Forwarded-Encrypted: i=1; AJvYcCV/Xu04D8tCwUsfXCnu0wT8kVN67Fgjz7ouRKTvO0hKrQkr0cSbbmLyXd3D9zNqRcHTSENfusO/FKQDHcY2@vger.kernel.org, AJvYcCVOZVtbIlNcHwMpYUqGmFoBcVbkYsiSwhmKx3SYEKI4NGrZYg2p43e6XI1N+gbVJeiMYo/YG09tjjvB@vger.kernel.org, AJvYcCW00YPVLDuHwNruv519LxogADUAVXNF22lQhUwFadO9+fDYej9+bUlOZ+Offu2bL29PgEcMAJKAD/Lwn6j4JQ3Q6bzsPA==@vger.kernel.org, AJvYcCWc8O8NrjnjOeweRatvlcC+EK8krxYZIe//jVWfpg64kKrnXxoH8Rj4SW8xIsfE7E1ak9HDkdr57n0ntD0LfQ==@vger.kernel.org, AJvYcCWu2JTDhJ7NrTnYNoCYfqjmDXVE0Gs3QzVtRHdwyUn6omV2Vk78h+E7ZO88NPJLegGGumQwWbUW7EOR@vger.kernel.org, AJvYcCXXXP7dhZLpSS9ULgQe9ef4vdSPVOoA8VEtdFDfq7HBMBU0hDs4jDh1tR1ELlPJc3tJ7mDhTp9z+tk=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyGwqguxzNi00kLJP34CPDQi4aHdptjIrmgIkTBrrMqJ326hA9x
+	fzHUQ1j1v2K/icNRWvxGbUjgCY+W8qzp/td2tDePrmMcEXFe489Y
+X-Gm-Gg: ASbGncsupa4s4rb0NLQIJD0SqaDOH4ab4gsu23gpzbtUFYbAgPuPq5UybpRAccGs/Q+
+	3dYAqawnG+Za7JiRtLP62b9yFJ3TitukY4p2krwsng9UEFZYbolwUnKXMvZXr1gbWHpgBeeiFha
+	8qhBp4WzvCGSoJyt3yjob9TACjhLBeLBXlfbwUKOxwszrBdo6z5OoSQTg7MIdab5/vtSInnWiLY
+	Ep/YVU2M4lNZnYe4IJ2j4ehUfN63IMEFGzRGikA1Fk=
+X-Google-Smtp-Source: AGHT+IE4ci9i4LlYVrTe/BgBnCkk47pplNsAFc7EwOX4peUE02159UzdkhTssv4+cKqgAyQ8IzvD4g==
+X-Received: by 2002:a17:903:230c:b0:216:1543:195d with SMTP id d9443c01a7336-219e6eb3a5dmr561048665ad.25.1735730952590;
+        Wed, 01 Jan 2025 03:29:12 -0800 (PST)
+Received: from nuvole.. ([2a09:bac1:76a0:dd10::2e9:e5])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-219dc9cdd88sm204025375ad.122.2025.01.01.03.29.07
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 01 Jan 2025 03:29:12 -0800 (PST)
+From: Pengyu Luo <mitltlatltl@gmail.com>
+To: quic_aiquny@quicinc.com,
+	bryan.odonoghue@linaro.org
+Cc: andersson@kernel.org,
+	conor+dt@kernel.org,
+	devicetree@vger.kernel.org,
+	dmitry.baryshkov@linaro.org,
+	gregkh@linuxfoundation.org,
+	hdegoede@redhat.com,
+	heikki.krogerus@linux.intel.com,
+	ilpo.jarvinen@linux.intel.com,
+	konradybcio@kernel.org,
+	krzk+dt@kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-pm@vger.kernel.org,
+	linux-usb@vger.kernel.org,
+	mitltlatltl@gmail.com,
+	nikita@trvn.ru,
+	platform-driver-x86@vger.kernel.org,
+	robh@kernel.org,
+	sre@kernel.org
+Subject: Re: [PATCH 2/5] platform: arm64: add Huawei Matebook E Go (sc8280xp) EC driver
+Date: Wed,  1 Jan 2025 19:27:54 +0800
+Message-ID: <20250101112755.417954-1-mitltlatltl@gmail.com>
+X-Mailer: git-send-email 2.47.1
+In-Reply-To: <1dff7a78-1693-45d7-8ee3-357b33848595@quicinc.com>
+References: <1dff7a78-1693-45d7-8ee3-357b33848595@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241231054900.2144961-3-quic_srichara@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-Hi Sricharan,
+On Tue, Dec 31, 2024 at 1:00 PM Aiqun(Maria) Yu <quic_aiquny@quicinc.com> wrote:
+> On 12/30/2024 6:44 PM, Pengyu Luo wrote:
+> > On Mon, Dec 30, 2024 at 5:04 PM Aiqun(Maria) Yu <quic_aiquny@quicinc.com> wrote:
+> >> On 12/28/2024 1:13 AM, Pengyu Luo wrote:
+> [...]
+> >>> +     i2c_transfer(client->adapter, msgs, 2);
+> >>
+> >> ARRAY_SIZE(msgs) is suggested instead of pure 2.
+> >>
+> >
+> > Agree
+> >
+> >>> +     usleep_range(2000, 2500);
+> >>
+> >> Why is a sleep needed here? Is this information specified in any datasheet?
+> >>
+> >
+> > Have a break between 2 transaction. This sleep happens in acpi code, also
+> > inside a critical region. I rearranged it.
+> >
+> > Local7 = Acquire (\_SB.IC16.MUEC, 0x03E8)
+> > ...
+> > write ops
+> > ...
+> > Sleep (0x02)
+> > ...
+> > read ops
+> > ...
+> > Release (\_SB.IC16.MUEC)
+>
+> Could you please share the exact code snippet that is being referenced?
+> I'm a bit confused because it doesn't seem to align with the current
+> logic, which doesn't have read operations within the same mutex lock. I
+> also want to understand the background and necessity of the sleep function.
+>
+> >
+> >>> +
+> >>> +     mutex_unlock(&ec->lock);
+> >>> +
+> >>> +     return *resp;
+> >>> +}
+> >>> +
+> >>> +/* -------------------------------------------------------------------------- */
+> >>> +/* Common API */
+> [...]
+> >>> +     int i, ret;
+> >>> +     u8 _resp[RESP_HDR_SIZE + 1];
+> >>> +     u8 req[REQ_HDR_SIZE + 1] = {0x02, EC_READ, 1, };
+> >>
+> >> Could it be made more readable by specifying the macro names for 0x02
+> >> and 1? This would help in understanding the meaning of these numbers.
+> >>
+> >
+> > I really don't know the meaning of master command 0x02, 1 is the size for
+> > the data_seq behind of it. There are many possible sizes. It is not a good
+> > idea to define a macro name for everyone.
+> >
+>
+> Perhaps you didn't get the "arg..." magic here. A single definition is
+> sufficient for all sizes.
+>
+> >> Also, please ensure the actual size of the request buffer is handled
+> >> properly. In gaokun_ec_request(), the req is passed down directly, and
+> >> the i2c_msg.len is used dynamically with req[INPUT_SIZE_OFFSET] +
+> >> REQ_HDR_SIZE. This requires the caller to carefully manage the contents
+> >> to avoid memory over-read, making the code difficult to read.
+> >>
+> >> Creating a defined macro can help you avoid manually defining the size.
+> >> For example:
+> >> #define REQ(size, data_0, data_1, args...) \
+> >> u8 req[REQ_HDR_SIZE + size] = {data_0, data_1, size, args};
+> >>
+> >
+> > I think wrapping like this is not recommended, see '5)' in [1]
+> >
+> > Best wishes,
+> > Pengyu
+> >
+> > [1] https://www.kernel.org/doc/html/v4.10/process/coding-style.html#macros-enums-and-rtl
+>
+> I believe that the consideration of namespace collisions is a valid concern.
+>
+> Some examples can be like have a naming pattern as well:
+> /*To have a name pattern to reflect the size like reg0/reg1/reg2*/
+> #define REQ(variable_name, size, data_0, data_1, args...) \
+> u8 ##variable_name[REQ_HDR_SIZE + size] = {data_0, data_1, size, args};
+>
+> /*u8 req1[REQ_HDR_SIZE + 1] = {0x02, EC_READ, 1, };*/
+> REQ(req, 1, 0x02, EC_READ);
+>
+> /*u8 req2[REQ_HDR_SIZE + 2] = {0x02, 0x68, 2, 3, 0x5a}; */
+> REQ(req, 2, 0x02, 0x68, 3, 0x5a);
+>
+> Please note that this is just an example and a suggestion to avoid the
+> current manual variable pattern setting. The final decision still
+> requires the current maintainers' agreement.
+>
 
-kernel test robot noticed the following build warnings:
+I am gonna do this, Aiqun(Maria), Bryan, any suggestions?
 
-[auto build test WARNING on robh/for-next]
-[also build test WARNING on linus/master v6.13-rc5 next-20241220]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
+/*
+ * for tx, command sequences are arranged as
+ * {master_cmd, slave_cmd, data_len, data_seq}
+ */
+#define REQ_HDR_SIZE		3
+#define INPUT_SIZE_OFFSET	2
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Sricharan-R/dt-bindings-mailbox-Document-qcom-tmel-qmp/20241231-135219
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/robh/linux.git for-next
-patch link:    https://lore.kernel.org/r/20241231054900.2144961-3-quic_srichara%40quicinc.com
-patch subject: [PATCH V2 2/2] mailbox: tmelite-qmp: Introduce TMEL QMP mailbox driver
-config: i386-randconfig-005-20250101 (https://download.01.org/0day-ci/archive/20250101/202501011724.6gr0JxBf-lkp@intel.com/config)
-compiler: clang version 19.1.3 (https://github.com/llvm/llvm-project ab51eccf88f5321e7c60591c5546b254b6afab99)
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20250101/202501011724.6gr0JxBf-lkp@intel.com/reproduce)
+/*
+ * for rx, data sequences are arranged as
+ * {status, data_len(unreliable), data_seq}
+ */
+#define RESP_HDR_SIZE		2
 
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202501011724.6gr0JxBf-lkp@intel.com/
+#define MKREQ(REG0, REG1, SIZE, ...)			\
+{							\
+	/* ## will remove comma when no __VA_ARGS__ */	\
+	REG0, REG1, SIZE, ## __VA_ARGS__,		\
+	/* make sure len(pkt[3:]) >= SIZE */		\
+	[3 + SIZE] = 0,					\
+}
 
-All warnings (new ones prefixed by >>):
+#define MKRESP(SIZE)				\
+{						\
+	[RESP_HDR_SIZE + SIZE - 1] = 0,		\
+}
 
-   In file included from drivers/mailbox/qcom-tmel-qmp.c:10:
-   In file included from include/linux/dma-mapping.h:8:
-   In file included from include/linux/scatterlist.h:8:
-   In file included from include/linux/mm.h:2223:
-   include/linux/vmstat.h:518:36: warning: arithmetic between different enumeration types ('enum node_stat_item' and 'enum lru_list') [-Wenum-enum-conversion]
-     518 |         return node_stat_name(NR_LRU_BASE + lru) + 3; // skip "nr_"
-         |                               ~~~~~~~~~~~ ^ ~~~
->> drivers/mailbox/qcom-tmel-qmp.c:312:55: warning: format specifies type 'unsigned long' but the argument has type 'size_t' (aka 'unsigned int') [-Wformat]
-     312 |                 dev_err(mdev->dev, "Unsupported packet size %lu\n", pkt->iov_len);
-         |                                                             ~~~     ^~~~~~~~~~~~
-         |                                                             %zu
-   include/linux/dev_printk.h:154:65: note: expanded from macro 'dev_err'
-     154 |         dev_printk_index_wrap(_dev_err, KERN_ERR, dev, dev_fmt(fmt), ##__VA_ARGS__)
-         |                                                                ~~~     ^~~~~~~~~~~
-   include/linux/dev_printk.h:110:23: note: expanded from macro 'dev_printk_index_wrap'
-     110 |                 _p_func(dev, fmt, ##__VA_ARGS__);                       \
-         |                              ~~~    ^~~~~~~~~~~
-   drivers/mailbox/qcom-tmel-qmp.c:710:10: warning: format specifies type 'unsigned long' but the argument has type 'size_t' (aka 'unsigned int') [-Wformat]
-     709 |                 pr_err("Invalid pkt.size received size: %lu, expected: %zu\n",
-         |                                                         ~~~
-         |                                                         %zu
-     710 |                        tdev->pkt.iov_len, sizeof(struct tmel_ipc_pkt));
-         |                        ^~~~~~~~~~~~~~~~~
-   include/linux/printk.h:544:33: note: expanded from macro 'pr_err'
-     544 |         printk(KERN_ERR pr_fmt(fmt), ##__VA_ARGS__)
-         |                                ~~~     ^~~~~~~~~~~
-   include/linux/printk.h:501:60: note: expanded from macro 'printk'
-     501 | #define printk(fmt, ...) printk_index_wrap(_printk, fmt, ##__VA_ARGS__)
-         |                                                     ~~~    ^~~~~~~~~~~
-   include/linux/printk.h:473:19: note: expanded from macro 'printk_index_wrap'
-     473 |                 _p_func(_fmt, ##__VA_ARGS__);                           \
-         |                         ~~~~    ^~~~~~~~~~~
-   drivers/mailbox/qcom-tmel-qmp.c:834:6: warning: variable 'ret' set but not used [-Wunused-but-set-variable]
-     834 |         int ret;
-         |             ^
-   4 warnings generated.
+static inline void refill_req(u8 *dest, const u8 *src, size_t size)
+{
+	int i;
+	for (i = 0; i < size; ++i)
+		dest[REQ_HDR_SIZE + i] = src[i];
+}
 
+static inline void extr_resp(u8 *dest, const u8 *src, size_t size)
+{
+	int i;
+	for (i = 0; i < size; ++i)
+		dest[i] = src[RESP_HDR_SIZE + i];
+}
 
-vim +312 drivers/mailbox/qcom-tmel-qmp.c
+[...]
 
-   290	
-   291	/**
-   292	 * qmp_send_data() - Copy the data to the channel's mailbox and notify
-   293	 *		     remote subsystem of new data. This function will
-   294	 *		     return an error if the previous message sent has
-   295	 *		     not been read. Cannot Sleep.
-   296	 * @chan:	mailbox channel that data is to be sent over.
-   297	 * @data:	Data to be sent to remote processor, should be in the format of
-   298	 *		a kvec.
-   299	 *
-   300	 * Return: 0 on succes or standard Linux error code.
-   301	 */
-   302	static int qmp_send_data(struct qmp_device *mdev, void *data)
-   303	{
-   304		struct kvec *pkt = (struct kvec *)data;
-   305		void __iomem *addr;
-   306		unsigned long flags;
-   307	
-   308		if (!mdev || !data || !completion_done(&mdev->ch_complete))
-   309			return -EINVAL;
-   310	
-   311		if (pkt->iov_len > QMP_MAX_PKT_SIZE) {
- > 312			dev_err(mdev->dev, "Unsupported packet size %lu\n", pkt->iov_len);
-   313			return -EINVAL;
-   314		}
-   315	
-   316		spin_lock_irqsave(&mdev->tx_lock, flags);
-   317		if (mdev->tx_sent) {
-   318			spin_unlock_irqrestore(&mdev->tx_lock, flags);
-   319			return -EAGAIN;
-   320		}
-   321	
-   322		dev_dbg(mdev->dev, "%s: mcore 0x%x ucore 0x%x", __func__,
-   323			mdev->mcore.val, mdev->ucore.val);
-   324	
-   325		addr = mdev->mcore_desc + QMP_CTRL_DATA_SIZE;
-   326		memcpy_toio(addr, pkt->iov_base, pkt->iov_len);
-   327	
-   328		mdev->mcore.bits.frag_size = pkt->iov_len;
-   329		mdev->mcore.bits.rem_frag_count = 0;
-   330	
-   331		dev_dbg(mdev->dev, "Copied buffer to mbox, sz: %d",
-   332			mdev->mcore.bits.frag_size);
-   333	
-   334		mdev->tx_sent = true;
-   335		QMP_MCORE_CH_VAR_TOGGLE(mdev, tx);
-   336		qmp_send_irq(mdev);
-   337		qmp_schedule_tx_timeout(mdev);
-   338		spin_unlock_irqrestore(&mdev->tx_lock, flags);
-   339	
-   340		return 0;
-   341	}
-   342	
+example:
 
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+int gaokun_ec_psy_multi_read(struct gaokun_ec *ec, u8 reg,
+			     size_t resp_len, u8 *resp)
+{
+	int i, ret;
+	u8 _resp[] = MKRESP(1);
+	u8 req[] = MKREQ(0x02, EC_READ, 1);
+
+	for (i = 0; i < resp_len; ++i, ++reg) {
+		refill_req(req, &reg, 1);
+		ret = gaokun_ec_read(ec, req, sizeof(_resp), _resp);
+		if (ret)
+			return ret;
+		extr_resp(&resp[i], _resp, 1);
+	}
+
+	return 0;
+}
+
+Best wishes,
+Pengyu
 
