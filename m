@@ -1,135 +1,187 @@
-Return-Path: <linux-arm-msm+bounces-43787-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-43788-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id BAEA79FFA77
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Jan 2025 15:23:25 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5B5CC9FFBA2
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Jan 2025 17:34:26 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 870C0162A2C
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Jan 2025 14:23:23 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 05336188189D
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Jan 2025 16:34:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 01BA41A9B49;
-	Thu,  2 Jan 2025 14:23:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6B2CB38F91;
+	Thu,  2 Jan 2025 16:34:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UJTdpopN"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="L5QZGzPj"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB63AAD51;
-	Thu,  2 Jan 2025 14:23:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1089C5914C
+	for <linux-arm-msm@vger.kernel.org>; Thu,  2 Jan 2025 16:34:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735827800; cv=none; b=XLcW3LeHh2psG9NVeaiyhBOTWn6NDe1rPnSkSOF7MMWhwkhGC8C+yvKA/b4EK53jlLqAD9DBeexNiIcjZXVKKvw9kAfRmSbdaUHU3N6gjEYhj43x0nK9ebuu1BgRoUQhYEj3YJewtpEa/saeZqme3F44HDasxZ8/O/f03xZwstA=
+	t=1735835652; cv=none; b=qts9YbuS8ti6gn1Lsx2TRSHfvSBXeqMw7J+S+nYkFK/O+I30IOaFg1vTkU5V9Sa9io+lpzxMEPSz0HNLvREcYOwPF/1bEKTzkV8eUvfiYlUa5JRAB96/PfGvaE4fj5wQAZIzak9siH1CILMpPVEUHN9d5ysqWISujALhN05SGfo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735827800; c=relaxed/simple;
-	bh=WBASArHNWuzDRkBlzLrre+5pUpttJP04ha3ml0jtfCk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=s2IYBj9EurKjW8fPPOenwbuaDqR1T4IDFMp87DGDYusi9upM/tj4ycNRtz+tEkv59vmJUS8z5bs3LBsTFp80BtzixZMwk9nx/a46wM0G1BAID8/2pLK5QPNXzZ00P2eM3Y+qXbtX+QjwdIHG03yI9JlqG0al2MpkvirbytFm6SQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UJTdpopN; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0884CC4CED0;
-	Thu,  2 Jan 2025 14:23:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1735827800;
-	bh=WBASArHNWuzDRkBlzLrre+5pUpttJP04ha3ml0jtfCk=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=UJTdpopNJ8Vj/ZLQ+tn7e1QU4O0Wl0nN6iLW8fcuhsETsiToAynXzvl01EdD3PM4M
-	 zUvWDEgp0z8fKFKBYtIL2XqB3GxlLhI3kZpmWvpXV7ONrsEOE8nfdEa003xw97t5QX
-	 jJEW+U/CfV4q8re1wf+223LksgBfYgj6WUZ86ACCp08KpZEU8Vx1wIk0cKUzmBxpMR
-	 BSwFtQMo00zb1XPCKkUWaH4k9nKxS5PT+81SXVgPXahXc40jHlbZFgqo/rn4wlurGr
-	 SklXJ73W/VNXkOluc9BirsLEIDaqDRg9u5AJF46rZJxph5QOPDRvx8bDyBjX+3KO7D
-	 Gjg1R5XKD2deA==
-Date: Thu, 2 Jan 2025 15:23:14 +0100
-From: Niklas Cassel <cassel@kernel.org>
-To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Vinod Koul <vkoul@kernel.org>
-Cc: kw@linux.com, gregkh@linuxfoundation.org, arnd@arndb.de,
-	lpieralisi@kernel.org, shuah@kernel.org, kishon@kernel.org,
-	linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org,
-	bhelgaas@google.com, linux-arm-msm@vger.kernel.org, robh@kernel.org,
-	linux-kselftest@vger.kernel.org,
-	Aman Gupta <aman1.gupta@samsung.com>,
-	Padmanabhan Rajanbabu <p.rajanbabu@samsung.com>
-Subject: Re: [PATCH v4 3/3] selftests: pci_endpoint: Migrate to Kselftest
- framework
-Message-ID: <Z3ahUuSjRv66L_g9@ryzen>
-References: <20241231131341.39292-1-manivannan.sadhasivam@linaro.org>
- <20241231131341.39292-4-manivannan.sadhasivam@linaro.org>
- <Z3QtEihbiKIGogWA@ryzen>
- <20241231191812.ymyss2dh7naz4oda@thinkpad>
- <2C16240A-28F8-4D9B-9FD7-33E4E6F0879E@kernel.org>
- <20250102070404.aempesitsqktfnle@thinkpad>
+	s=arc-20240116; t=1735835652; c=relaxed/simple;
+	bh=wHTBdBmiu42htNicZa0OxfE7W0v/WQ//2woGL/Qi/lA=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=cOBbvuejwy8glv+TyQ5+UAlQlIyrXkKSvHmPDr93H4Siowh/hWXNfSWRgZ2F72cmn+kaPKwa3cWs/kVq0SkeQPdmB07UdtFQd3PF/epKVjC3hwyLCahanUAQaNtAC8mbUrCJdO4OLsCSmm9vlq55QSFWKWoj+0+PdMfu9pmTv2M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=L5QZGzPj; arc=none smtp.client-ip=209.85.128.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-4364a37a1d7so121735715e9.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Jan 2025 08:34:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1735835648; x=1736440448; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=/iPfVF3oCxMg1L1jShb3koLb6DQG0P/sNBtbIVIH9sg=;
+        b=L5QZGzPjy7JWfS2IeiXiUX6SuWW2vNq3OP5gSZW9P4fAyDkyGR14MvPNvSA3efObVw
+         z3U7mlHO9xauUxfaw9aw32gmrxo//ec1hO+qxtHCoCTNjqPgnzYV4drjNHafBYEAU4gX
+         KPlMlQ/24zdgQ9NTjInQJ3K4qtwcfVn7osh7FwO9J1Pxyuruh+ljZok76Bx+hJpNKkSC
+         Ca+9ThbyJ8sGWuCeiCQSlOP/oWfV8hmiypOgbPhTdq3Nko8aekJC6dQ8OCQthKGVE2qj
+         i+V+YDCrkT5DiUxfpX+CaPhlcuvKApwG/9Xg0yGryMxW5IznXBduBHxDacDilK32JBvm
+         Dcdw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1735835648; x=1736440448;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=/iPfVF3oCxMg1L1jShb3koLb6DQG0P/sNBtbIVIH9sg=;
+        b=DjHnBw8hPkOemYmq1GemYYM6Cd64+nImcVLzgO53os29ytxcmOc2OTHw2O+ZzMMGyl
+         neUSFBR02rbwQdoIoifdrc3BAhHH40hev21gGqOFWSPutpvD2IBVBettij+vQjk2kvz4
+         KocB2JgZige5M6Wef+OfN0e2BscaMuIXG+u9YknjPQi//hgulqfNh1Rw116L7MrHsdMT
+         pVjfkRdTZJZ/IxnJo8s8l1KhromiefB84tnlYHlZHXcEEd//3GCL91njQhwAt08xgkSP
+         KXMRyIJJDMK8gYtmgYGhLxriR9LpipoE2Z/J2w7QOE7Ls0jnX1mahpwNSV56ff8mCSZd
+         Vnig==
+X-Forwarded-Encrypted: i=1; AJvYcCUipgVA6jnqT/vjizu02+KITnks1McO/36L99vd0ghe6ypmUVv5xlwoqgNnizbrgnDAOSj6nSZnK9nW3aOz@vger.kernel.org
+X-Gm-Message-State: AOJu0YwXh9JzPa3g5P8y6ugtMTmM4KA/IdzfmXUCrpvcz4Rutu9/ZfBJ
+	+362lHP1AhZRD+a5Q9R3hmDwBzIsdIaA+/ZPIUov+GHeXgUCL7O7zYANhCspdNA=
+X-Gm-Gg: ASbGnctPMYhaacqqZmmZ+AG5N0cRkFXtBy2aIFaSNFuLngR32CzF703Veu8Z2fQ5Tb+
+	7P7xzmLwqwKn6q/H8ZPwq/x7OqwQ+dGZKY3IPqwuuhNNZx5rt/EVyOFLig8jp6MSx4hSrRaf3vB
+	U60jOcxlyhb98PMOqpKwtUdOpF1WLKa1bXOzAgv8eQu8lpzhPbJRTs7iC8dRaGryOotg7EGmKjj
+	pzKMB1FyZY5pcmZ1BC3KHpMkZyeR/52La3NL5tyl4gfUVN5pKXHFO2fUF+9ksstwQ==
+X-Google-Smtp-Source: AGHT+IFY3T9wM6oTHZCvFUtFoVeaSUwJTlMZcbumnlzMQ8N2h0yJKFnw67TkGRF6GQ0TRXEGc4+jxQ==
+X-Received: by 2002:a05:600c:468f:b0:434:a30b:5455 with SMTP id 5b1f17b1804b1-43668b78728mr372555415e9.27.1735835648137;
+        Thu, 02 Jan 2025 08:34:08 -0800 (PST)
+Received: from [127.0.1.1] ([176.61.106.227])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43656b3b295sm499265665e9.33.2025.01.02.08.34.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 02 Jan 2025 08:34:07 -0800 (PST)
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Subject: [PATCH v3 0/6] Add dt-bindings and dtsi changes for CAMSS on
+ x1e80100 silicon
+Date: Thu, 02 Jan 2025 16:32:05 +0000
+Message-Id: <20250102-b4-linux-next-24-11-18-dtsi-x1e80100-camss-v3-0-cb66d55d20cc@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250102070404.aempesitsqktfnle@thinkpad>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAIW/dmcC/52Nyw6CMBBFf8V07ZjO0Ae68j+Mi0ILNFEwLTYYw
+ r9b2BiXujw3uefMLLrgXWSn3cyCSz76oc9Q7Hes7kzfOvA2MyNOAhGPUAm4+f45Qe+mEUgAImA
+ JdoweJnQlR86hNvcYoSSjCl0oyzWxLHwE1/hpi12umTsfxyG8tnbCdf0rkxA4SMG1tFo2Sopzf
+ powHIbQsrWT6OMm0j+5Kbu5aqyVRltZVV/uZVne20ualkEBAAA=
+X-Change-ID: 20241119-b4-linux-next-24-11-18-dtsi-x1e80100-camss-82a63736d072
+To: Loic Poulain <loic.poulain@linaro.org>, Robert Foss <rfoss@kernel.org>, 
+ Andi Shyti <andi.shyti@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Todor Tomov <todor.too@gmail.com>, 
+ Mauro Carvalho Chehab <mchehab@kernel.org>, 
+ Bjorn Andersson <andersson@kernel.org>, 
+ Michael Turquette <mturquette@baylibre.com>, 
+ Stephen Boyd <sboyd@kernel.org>, 
+ Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>, 
+ Jagadeesh Kona <quic_jkona@quicinc.com>, 
+ Konrad Dybcio <konradybcio@kernel.org>
+Cc: linux-i2c@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ linux-media@vger.kernel.org, linux-clk@vger.kernel.org, 
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
+ Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+X-Mailer: b4 0.15-dev-1b0d6
 
-Hello Mani, Vinod,
+v3:
+- Fixes ordering of headers in dtsi - Vlad
+- Changes camcc to always on - Vlad
+- Applies RB as indicated - Krzysztof, Konrad
+- Link to v2: https://lore.kernel.org/r/20241227-b4-linux-next-24-11-18-dtsi-x1e80100-camss-v2-0-06fdd5a7d5bb@linaro.org
 
-On Thu, Jan 02, 2025 at 12:34:04PM +0530, Manivannan Sadhasivam wrote:
-> On Tue, Dec 31, 2024 at 08:33:57PM +0100, Niklas Cassel wrote:
-> > 
-> > I have some patches that adds DMA_MEMCPY to dw-edma, but I'm not sure if the DWC eDMA hardware supports having both src and dst as PCI addresses, or if only one of them can be a PCI address (with the other one being a local address).
-> > 
-> > If only one of them can be a PCI address, then I'm not sure if your suggested patch is correct.
-> > 
-> 
-> I don't see why that would be an issue. DMA_MEMCPY is independent of PCI/local
-> addresses. If a dmaengine driver support doing MEMCPY, then the dma cap should
-> be sufficient. As you said, if a controller supports both SLAVE and MEMCPY, the
-> test currently errors out, which is wrong.
+v2:
 
-While I am okay with your suggested change to pci-epf-test.c:
-> >-               if (epf_test->dma_private) {
-> >+               if (!dma_has_cap(DMA_MEMCPY, epf_test->dma_chan_tx->device->cap_mask)) {
+I've gone through each comment and implemented each suggestion since IMO
+they were all good/correct comments.
 
-Since this will ensure that a DMA driver implementing DMA_MEMCPY,
-which cannot be shared (has DMA_PRIVATE set), will not error out.
+Detail:
 
+- Moves x1e80100 camcc to its own yaml - Krzysztof
+- csid_wrapper comes first because it is the most relevant
+  register set - configuring all CSID blocks subordinate to it - bod, Krzysztof
+- Fixes missing commit log - Krz
+- Updates to latest format established @ sc7280 - bod
+- Includes CSID lite which I forgot to add @ v1 - Konrad, bod
+- Replaces static ICC parameters with defines - Konrad
+- Drops newlines between x and x-name - Konrad
+- Drops redundant iommu extents - Konrad
+- Leaves CAMERA_AHB_CLK as-is - Kronrad, Dmitry
+  Link: https://lore.kernel.org/r/3f1a960f-062e-4c29-ae7d-126192f35a8b@oss.qualcomm.com
+- Interrupt EDGE_RISING - Vladimir
+- Implements suggested regulator names pending refactor to PHY API - Vladimir
+- Drop slow_ahb_src clock - Vladimir
 
-What I'm trying to explain is that in:
-https://lore.kernel.org/linux-pci/Z2BW4CjdE1p50AhC@vaman/
-https://lore.kernel.org/linux-pci/20241217090129.6dodrgi4tn7l3cod@thinkpad/
+Link to v1:
+https://lore.kernel.org/r/20241119-b4-linux-next-24-11-18-dtsi-x1e80100-camss-v1-0-54075d75f654@linaro.org
 
-Vinod (any you) suggested that we should add support for prep_memcpy()
-(which implies also setting cap DMA_MEMCPY) in the dw-edma DMA driver.
+Working tree:
+https://git.codelinaro.org/bryan.odonoghue/kernel/-/tree/arm-laptop/wip/x1e80100-6.13-rc3
 
-However, from section "6.3 Using the DMA" in the DWC databook,
-the DWC eDMA hardware only supports:
-- Transfer (copy) of a block of data from local memory to remote memory.
-- Transfer (copy) of a block of data from remote memory to local memory.
+v1:
 
+This series adds dt-bindings and dtsi for CAMSS on x1e80100.
 
-Currently, we have:
-https://github.com/torvalds/linux/blob/v6.13-rc5/include/linux/dmaengine.h#L843-L844
-https://github.com/torvalds/linux/blob/v6.13-rc5/drivers/dma/dw-edma/dw-edma-core.c#L215-L231
+The primary difference between x1e80100 and other platforms is a new VFE
+and CSID pair at version 680.
 
-Where we can expose per-channel capabilities, so we set MEM_TO_DEV/DEV_TO_MEM
-per channel, however, these are returned in a struct dma_slave_caps *caps,
-so this is AFAICT only for DMA_SLAVE, not for DMA_MEMCPY.
+Some minor driver churn will be required to support outside of the new VFE
+and CSID blocks but nothing too major.
 
-Looking at:
-https://github.com/torvalds/linux/blob/v6.13-rc5/include/linux/dmaengine.h#L975-L979
-it seems that DMA_MEMCPY is always assumed to be MEM_TO_MEM.
+The CAMCC in this silicon requires two, not one power-domain requiring
+either this fix I've proposed here or something similar:
 
-To me, it seems that we would either need a new dma_transaction_type (e.g. DMA_COPY)
-where we can set dir:
-MEM_TO_DEV, DEV_TO_MEM, or DEV_TO_DEV. (dw-edma would not support DEV_TO_DEV.)
+https://lore.kernel.org/linux-arm-msm/bad60452-41b3-42fb-acba-5b7226226d2d@linaro.org/T/#t
 
-Or, if we should stick with DMA_MEMCPY, we would need another way of telling
-client drivers that only src or dst can be a remote address.
+That doesn't gate adoption of the binding description though.
 
-Until this is solved, I think I will stop my work on adding DMA_MEMCPY to the
-dw-edma driver.
+A working tree in progress can be found here:
+https://git.codelinaro.org/bryan.odonoghue/kernel/-/tree/x1e80100-6.12-rc7+camss?ref_type=heads
 
+Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+---
+Bryan O'Donoghue (6):
+      dt-bindings: i2c: qcom-cci: Document x1e80100 compatible
+      dt-bindings: clock: move qcom,x1e80100-camcc to its own file
+      dt-bindings: media: Add qcom,x1e80100-camss
+      arm64: dts: qcom: x1e80100: Add CAMCC block definition
+      arm64: dts: qcom: x1e80100: Add CCI definitions
+      arm64: dts: qcom: x1e80100: Add CAMSS block definition
 
-Kind regards,
-Niklas
+ .../bindings/clock/qcom,sm8450-camcc.yaml          |   2 -
+ .../bindings/clock/qcom,x1e80100-camcc.yaml        |  74 +++++
+ .../devicetree/bindings/i2c/qcom,i2c-cci.yaml      |   2 +
+ .../bindings/media/qcom,x1e80100-camss.yaml        | 367 +++++++++++++++++++++
+ arch/arm64/boot/dts/qcom/x1e80100.dtsi             | 351 ++++++++++++++++++++
+ 5 files changed, 794 insertions(+), 2 deletions(-)
+---
+base-commit: e25c8d66f6786300b680866c0e0139981273feba
+change-id: 20241119-b4-linux-next-24-11-18-dtsi-x1e80100-camss-82a63736d072
+
+Best regards,
+-- 
+Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+
 
