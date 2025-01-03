@@ -1,137 +1,201 @@
-Return-Path: <linux-arm-msm+bounces-43886-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-43887-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1AA9CA00972
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jan 2025 13:44:56 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7CA0BA0099B
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jan 2025 13:59:52 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5FB261884971
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jan 2025 12:44:58 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 93C9E3A4962
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jan 2025 12:59:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E84C51F941D;
-	Fri,  3 Jan 2025 12:44:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 05E121FA856;
+	Fri,  3 Jan 2025 12:58:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="DVt6xO+q"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="LvtZqBZL"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 320D91F9ECF
-	for <linux-arm-msm@vger.kernel.org>; Fri,  3 Jan 2025 12:44:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B927C1FA259
+	for <linux-arm-msm@vger.kernel.org>; Fri,  3 Jan 2025 12:58:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735908287; cv=none; b=p4a92TpqOCehv41WR+YKNUpe1LrPQ9bZG/3kyqiVEf8N9XSlKIcPnY3o9gSn21sEumVnrGJQxYuj+wsmHCf+wPZksArSDzSfHQ8ToICZQPOPuHfyd55TnYSQZL52qgIjDjBFTgNg/xJy0a8FAKJi/sp/IXrvRte1PtJNM/SuW64=
+	t=1735909130; cv=none; b=nySLckUKSHrSrEzaJYviM2LUCz0snxTHFC7vS/fz+N7UJEWnaBhlaStq7BwCY6fiZL4joKhnE2KhapCdn6COPqNc66Jxb2+SpMa+ojgTUhTJ6fkNOOPgQz9Ln6Hctzj7RbQjbA7yA5WL3oqN9+OkWI+c6kIFqD4l7MLVJ8+E1DA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735908287; c=relaxed/simple;
-	bh=OJsVQnBI822a5hWWy/C8hSW5XLLPZ80RcrW4Lx7Rjnk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ihBCKJIHpnBGnRKgZvZdWqwCDtEN254e+G5JZonQDLkNCOzuKNQr506bclT0Dj5JGTgVmGXoO4HTBWtI8VD23/k0z2yx6pF7B9WxBqcuor2pOXzCRtpGmGmp6f95dKMk7o5ItgnzFYFtb1fytHSbUD74yRfHmm5rymvsFJDXHfk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=DVt6xO+q; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 503BuF2t017583
-	for <linux-arm-msm@vger.kernel.org>; Fri, 3 Jan 2025 12:44:44 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	Iib3XxU147/JFyS85vFiFRwwDL4ry9lkMvgUWQP+oCk=; b=DVt6xO+qcsROUcQK
-	V+1JwzpsFPUsujIlzQ+n5YmaAaf4CD3DtdPGhhK0Fsd0r6yBCJGuHVAJ1QKn40nU
-	ciCtLLNOU+oOaf5fkVrfjdHSxJobNzq1SSlEIj+awigRLQPZoZPWszOKGpWTA1Bg
-	RU2gb4G+IKOsUM6dxhlWNtfREJlBKrLZPZWCEwOvlqNL9+e1FdHy09ZMjgzN/MIm
-	3pu495BllScpdiJJyh2obgyandcKKNPjHpi8CVj/Scr75lRXBXs8gc0u0gl/UQJN
-	P+R0CGcOQ2x6MxM5Exarr7U7o1Z9vkHrjq4eHybGnddQHuKqWiXBVYkVJ7/9YoA8
-	vbDx7A==
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com [209.85.160.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43xfex02ng-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 03 Jan 2025 12:44:44 +0000 (GMT)
-Received: by mail-qt1-f198.google.com with SMTP id d75a77b69052e-4679fb949e8so29071961cf.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 03 Jan 2025 04:44:44 -0800 (PST)
+	s=arc-20240116; t=1735909130; c=relaxed/simple;
+	bh=7n3rMuTJ70Req/bYVP46W8kBnza87id/HcUwiW7e2DE=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=OpkowNtdCIsQiVwELosAKMSAFcFZnEWQVQ5xfR3rlvKXQAF9U4EdtjHSiyYjVrTlR0jcESMErr0WDGbiLPRBUCXTHKNc1O9xRvPcVKlrGXVir3iNNgKpz/6uoB0rtS3lEe0LdYd6tVQwbb+Tg3H5vGkWi4PjQTCpKB+hAK244Dw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=LvtZqBZL; arc=none smtp.client-ip=209.85.221.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-3862f32a33eso5615254f8f.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 03 Jan 2025 04:58:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1735909127; x=1736513927; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=mj1C/gEdKkc2DLeyCME5RbzYecjWcWlcP/v8o/H1DYU=;
+        b=LvtZqBZLm+dTBkpNI+BIEBcsRUb9yEIiNDQqFG7V+dv1FNqDrfxrq2scqJ8BYH265z
+         nx7K52X+JjBQDS1waG/Ks8AjF9ceFbS9VFp6nWfTDYY1vNZqgzjl+A+hMU3sZjqYixaf
+         3wlaWw1WtkwBnD+S8VI5PaXxMAPePlTd0i57yqDOPhAGE46AgzXEfsThJnc/vRYBkYQR
+         VqwUopGbJSXpryF7PNsjv9RabArWcHeirra99dIzxtV8KdMiMiYuZPAo+B1AZGHzDCaU
+         aQHDWvvA5fwam7A/M/pg4o8IRNhHvym2qYjx/kiNQimspJzrgLbuYjmEfC16C8wSwOYd
+         yPxw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1735908283; x=1736513083;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Iib3XxU147/JFyS85vFiFRwwDL4ry9lkMvgUWQP+oCk=;
-        b=peDnDinFQbRSS4w1YZHDxMQ5iCAslBwnNBSG4Q+I3+ZFcwntNUZE367ZXo+W4s0AgC
-         rI3ZP+w/xQfcSbRy9/Pcw+JR33x8t9QoGenvYLEBggRUvc0hQpNhLsXZejlFmF95pv9D
-         gUflLRhX/GT2AXZZ1vNeGFAt8pkOBGW9AhVn/6qC0T8gOwVzHmFv7gIHoj8F6OSAUenM
-         1EtapP9dbwJRQdX5BO+JTs6C2JI4g3EPot2FBvGjos13TMP3K2rDOrd7rgaihpd1yVGo
-         v5727XlZqsPVU4NUNt4T56biGl808K8Cf/rguIWv3jBerSrSfsVoLNtKr5aZ/OFdr/9+
-         qUkw==
-X-Forwarded-Encrypted: i=1; AJvYcCX1hwsThE+iCFwzuDXmMzjLo0yB2c/lWo3i9nzEqFIDS4dYjYeIpnhGE5VO2dW86ah8LCzUkmedsxEJnXzK@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz56OXkIGxW3gUhL34KsXnY3Zb6t66rTCdQ37+OOr2WTSJy5Szq
-	d7rKa4uWVJxKqJaxmbMrD+yBOhgKMgpoej4tEyG9dUghvmGkuYpY0EpseESs47pmUTgc11qWEhd
-	goKvlr6lLuwPHK1DqdVbLLQRuWndR8vatHKzfXykAeGUvDIEceMIcxnBFOxHhwzmT
-X-Gm-Gg: ASbGnct9sSW57S+8z2twwGp2fYFGCTBGzMca03BiRdTyWBDr901ZqlKRJV6P7msXcWn
-	IyMEr9XVhvq7K2y/LG4LhEVYjUskAthtNd36GK2Zm+1M91DRA4iI/ooX26ctHOcJnqLbz75TgrG
-	d9n2+nT48At6K20okmRHm9A0aEtGzcWN1fouI8n2Mn13Cv7d43snbjtuju8hD+VeBdas129fprM
-	yRJ55Rk8WrdnNrOWrxyhyDw5g4dq0ALJ/2ikpH/kZUNpXDmOr7LxDeO/XXa7piUuKqlCdguAosr
-	cpu67ktvGXa1edHoObOK1oNFySXAQ/tKfKc=
-X-Received: by 2002:a05:6214:3213:b0:6d8:8d30:d4b0 with SMTP id 6a1803df08f44-6dd230ce2fdmr293603946d6.0.1735908282957;
-        Fri, 03 Jan 2025 04:44:42 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGpStx9xvQ/rcilMyiMCgBeLkKdpFPcBJ+ximdKE4jHQcparrmjurhZaQEpJKWhkAcrm7qWkA==
-X-Received: by 2002:a05:6214:3213:b0:6d8:8d30:d4b0 with SMTP id 6a1803df08f44-6dd230ce2fdmr293603796d6.0.1735908282598;
-        Fri, 03 Jan 2025 04:44:42 -0800 (PST)
-Received: from [192.168.65.90] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-aac0f070a7bsm1882834266b.201.2025.01.03.04.44.40
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 03 Jan 2025 04:44:42 -0800 (PST)
-Message-ID: <770b35b7-27c0-4b55-af85-9d6170d43102@oss.qualcomm.com>
-Date: Fri, 3 Jan 2025 13:44:40 +0100
+        d=1e100.net; s=20230601; t=1735909127; x=1736513927;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=mj1C/gEdKkc2DLeyCME5RbzYecjWcWlcP/v8o/H1DYU=;
+        b=LqGEEFCHjLKOOShf4TvhYnl3Ke/dFOHftMqOqWbMkx/+LyotGe/NiqYNph5j7KbMQp
+         wTN71Gkixbs84IZXSNI7vRpAUrnqa5Tkg9apfHeJtMobRkZ3Rb+S4NGg7ozjiKO8Ryji
+         G3QFv2fEu3YXW7FE2ZQSGmxOr/sFkhaxnUyS646pzPDal3rdCpV9HpepocnWqCs+OLPp
+         oSFaUNjhuoPv85rWE/RROeRyMLSUiIeAuXOSb8ENVnUKFDpRxzTY8RM02fx1wvoGADSa
+         4nHVBPzKr5Nno2j/EY95zTkL3z9B3j6y+dKXzRynSzG+Fvyjv3iaQuzq8cwa/xb/J1Yf
+         eY1Q==
+X-Forwarded-Encrypted: i=1; AJvYcCWWTsFgfTBhJuDijTmjD1XxIbM+qqibaB6ybi9Cv84sMMZnr/jrvUXAad/yO/3FTz1XfDVhuXX9HkrizedE@vger.kernel.org
+X-Gm-Message-State: AOJu0Ywau97Wde/o7ZoTTOkJj3+RRC+TRClPEFelMz4UFj7W7JYHCE5E
+	1T71UobOqQVo2RLF/MXT66UZH5Fnq/QlmvWUJ5cCZDGLq4OC8Yvg3LVdJogSF14=
+X-Gm-Gg: ASbGncstYaRdST2UcU1TK3VjE8l4KbLcpkdfXdenVFssJ3QKjPfDiqWE59+himyrPhK
+	EZCDl7PhjwKQg1lJZ4l8VETsmdoBuDflHgwiSiHE2XjfvAdSmT16fZ/Yfe8eJwe4aS5JbUIrQ9V
+	yanNkQueGeLR/yUaoQNmQgAzoKyzOTTwdjmM3w61dI+YsuGf1u8cWyDqh7+9LI8OMlukmus+U5Y
+	Ib8kEdDwZCOv8hOcu50S7NoOVP9PHGrrG38UrCnUgm63sLW+DTxCEz5
+X-Google-Smtp-Source: AGHT+IEOj1biKK+ZR5Kvzu/bNmgXMB6bfwX33snuXM4/eB94OvmJ7i7TkywsbUI/f94EkhNCJvhs5Q==
+X-Received: by 2002:a05:6000:2c2:b0:385:e30a:394b with SMTP id ffacd0b85a97d-38a221ea33cmr37961651f8f.16.1735909127054;
+        Fri, 03 Jan 2025 04:58:47 -0800 (PST)
+Received: from [127.0.1.1] ([86.121.162.10])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38a1c8acadcsm40225591f8f.105.2025.01.03.04.58.44
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 03 Jan 2025 04:58:46 -0800 (PST)
+From: Abel Vesa <abel.vesa@linaro.org>
+Subject: [PATCH v3 0/4] drm/dp: Rework LTTPR transparent mode handling and
+ add support to msm driver
+Date: Fri, 03 Jan 2025 14:58:14 +0200
+Message-Id: <20250103-drm-dp-msm-add-lttpr-transparent-mode-set-v3-0-5c367f4b0763@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3] arm64: dts: qcom: Add coresight node for SM8650
-To: Yuanfang Zhang <quic_yuanfang@quicinc.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc: kernel@quicinc.com, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20250103-sm8650-cs-dt-v3-1-759a3f6a3cc8@quicinc.com>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <20250103-sm8650-cs-dt-v3-1-759a3f6a3cc8@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: FWl7b8MCbf3FX9xiWBmZSVdrNGHwE7rS
-X-Proofpoint-ORIG-GUID: FWl7b8MCbf3FX9xiWBmZSVdrNGHwE7rS
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 bulkscore=0
- clxscore=1015 mlxscore=0 impostorscore=0 adultscore=0 priorityscore=1501
- spamscore=0 suspectscore=0 lowpriorityscore=0 phishscore=0 mlxlogscore=809
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2411120000
- definitions=main-2501030112
+X-B4-Tracking: v=1; b=H4sIAObed2cC/53NQQ7CIBCF4asY1o4BWrR15T2MC9oZlKSFZiCNp
+ undRTfGpS7fW3z/IhKxpySOm0UwzT75GMqothvR32y4EngsW2ipayUrBcgj4ARjGsEiwpDzxJD
+ ZhjRZppBhjEiQKIOq9j2aziHJgyjexOT8/d06X8q++ZQjP97pWb3efyqzAgm9dV3XNsa4Wp4GH
+ yzHXeSreGVm/aG1+onWhUbTyj1h1XS6+aLXdX0C9/b2Pz4BAAA=
+X-Change-ID: 20241031-drm-dp-msm-add-lttpr-transparent-mode-set-136cd5bfde07
+To: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
+ Karol Herbst <kherbst@redhat.com>, Lyude Paul <lyude@redhat.com>, 
+ Danilo Krummrich <dakr@redhat.com>, 
+ Jani Nikula <jani.nikula@linux.intel.com>, 
+ Rodrigo Vivi <rodrigo.vivi@intel.com>, 
+ Joonas Lahtinen <joonas.lahtinen@linux.intel.com>, 
+ Tvrtko Ursulin <tursulin@ursulin.net>, Rob Clark <robdclark@gmail.com>, 
+ Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Sean Paul <sean@poorly.run>, 
+ Marijn Suijten <marijn.suijten@somainline.org>
+Cc: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, Johan Hovold <johan@kernel.org>, 
+ dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
+ nouveau@lists.freedesktop.org, intel-gfx@lists.freedesktop.org, 
+ intel-xe@lists.freedesktop.org, linux-arm-msm@vger.kernel.org, 
+ freedreno@lists.freedesktop.org, Abel Vesa <abel.vesa@linaro.org>, 
+ Johan Hovold <johan+linaro@kernel.org>, Imre Deak <imre.deak@intel.com>
+X-Mailer: b4 0.15-dev-dedf8
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3566; i=abel.vesa@linaro.org;
+ h=from:subject:message-id; bh=7n3rMuTJ70Req/bYVP46W8kBnza87id/HcUwiW7e2DE=;
+ b=owEBbQKS/ZANAwAKARtfRMkAlRVWAcsmYgBnd9788w0pa/geOfKLRgX6m2PWun+geT5T3rVwc
+ jMKtsJWHX+JAjMEAAEKAB0WIQRO8+4RTnqPKsqn0bgbX0TJAJUVVgUCZ3fe/AAKCRAbX0TJAJUV
+ ViWPEACWG4nM6qgKiDXA+xCVxpDZt5mhxx7MGILuTwIcxJ02pA0tflGE7Dy4OsfVGIhOFk2cf7K
+ 4xjT27auGoZkG/suv9djSXWv1neHZBENEF+jet4THElETRhHuoiATLlXiZOu9e6rHZBvTvUX3CW
+ aLvxsG6G6OhMHxLlD24hy8kLqgNxZQxQlFne83p5kun6RakizLH5o51xgQ7AqG37t0/kHeRHPF5
+ mcfjw4Ckv/aQoYDFLNTPZA/KCn/lYyk/GBrfSmco7tvZv/CprWFFFe9//NyeB1xLk3HF0NuVGA3
+ jeQB4CAt19FD0SmQ+umNhjHkQmnezWgSlVxFlVC772KAgiBK3jjL7tRAK84yp0dK0V2Q28+T/5b
+ /6b3GnHqclTSB4rUZwGZsBsUKxScqufyuPLxnMFca4xE5S5uapP5WnmIpxI8If2NvOG2KroFkCL
+ AQo0uvpZ5LnYYGMDkbwNo/Ed6Ljcd5LGNrezVKtOCzlkRM7hVi2DU13jcduxJFlwXE/16MCO8Sa
+ oRZI7mtVzsZJ8dmtwou+4y5rNG9jlMvU9CsmCVjKYcMqAXKx6OGxNHiDGvE8RTRZtvXUJ6fSIw7
+ z8Khh8+uFnNyOWIkETFfreLSUJvbD+y6UxRvJZNDnljS0xBecn6ii2M63KKMWPCB7rhh6ZPH7nd
+ 8asiH73TzAbOiXw==
+X-Developer-Key: i=abel.vesa@linaro.org; a=openpgp;
+ fpr=6AFF162D57F4223A8770EF5AF7BF214136F41FAE
 
-On 3.01.2025 12:27 PM, Yuanfang Zhang wrote:
-> Add coresight components: Funnel, ETE and ETF for SM8650.
-> 
-> Signed-off-by: Yuanfang Zhang <quic_yuanfang@quicinc.com>
-> ---
+Looking at both i915 and nouveau DP drivers, both are setting the first
+LTTPR (if found) in transparent mode first and then in non-transparent
+mode, just like the DP v2.0 specification mentions in section 3.6.6.1.
 
-[...]
+Being part of the standard, setting the LTTPR in a specific operation mode
+can be easily moved in the generic framework. So do that by adding a new
+helper.
 
-> +
-> +		funnel@13810000 {
-> +			compatible = "arm,coresight-dynamic-funnel", "arm,primecell";
-> +
-> +			reg = <0x0 0x13810000 0x0 0x1000>;
+Then, the msm DP driver is lacking any kind of support for LTTPR handling,
+so add it by reading the LTTPR caps for figuring out the number of LTTPRs
+found on plug detect and then do exactly what the i915 and nouveau drivers
+do with respect to toggling through operating modes, just like the
+up-mentioned section from DP spec describes.
 
-This now looks good, please just re-sort these nodes (by address instead
-of adding them at the end).
+At some point, link training per sub-segment will probably be needed, but
+for now, toggling the operating modes seems to be enough at least for the
+X Elite-based platforms that this patchset has been tested on.
 
-Also, did you give this patch a try on a production-fused device?
+Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+---
+Changes in v3:
+- Picked-up T-b tag from Johan for the drm/dp transparent mode set helper
+  patch
+- Re-worked the return value of the drm/dp transparet mode set helper
+- Added some more details about what the values of the lttpr_count arg
+  is expected to be for the drm_dp_lttpr_init(), like Johan suggested.
+- Re-worked the non-transparent mode disable->enable so that the rollback
+  doesn't happen unless enable failed.
+- Picked-up Lyude's R-b tag for the nouveau patch.
+- Dropped extra parantesis at the end of the drm_dp_lttpr_init() call in
+  i915 patch.
+- Picked-up Johan's T-b tag for the drm/msm/dp patch.
+- Added some error handling and an error message in the
+  msm_dp_display_lttpr_init(), while dropping the unnecessary lttpr_count
+  local variable.
+- Link to v2: https://lore.kernel.org/r/20241211-drm-dp-msm-add-lttpr-transparent-mode-set-v2-0-d5906ed38b28@linaro.org
 
-Konrad
+Changes in v2:
+- Added new wrapper over the set_transparent new helper in order to
+  move the non-transparent disable and the its enable->disable sequence
+  mentioned in the DP standard section 3.6.6.1 entirely in the generic
+  implemetation.
+- Switch all 3 drivers to use the new wrapper.
+- Fixed the return value of the helper to return 0 on success and
+  negative value on error.
+- Added explanation about the transparent/non-transparent modes into the
+  msm dp commit message.
+- Dropped the condition for non-eDP in msm DP driver since it is allowed
+  to try to get the number of LTTPRs even on eDP and it will be always
+  0 anyway.
+- Dropped the RFC prefix
+- Link to v1: https://lore.kernel.org/r/20241031-drm-dp-msm-add-lttpr-transparent-mode-set-v1-0-cafbb9855f40@linaro.org
+
+---
+Abel Vesa (4):
+      drm/dp: Add helper to set LTTPRs in transparent mode
+      drm/nouveau/dp: Use the generic helper to control LTTPR transparent mode
+      drm/i915/dp: Use the generic helper to control LTTPR transparent mode
+      drm/msm/dp: Add support for LTTPR handling
+
+ drivers/gpu/drm/display/drm_dp_helper.c            | 61 ++++++++++++++++++++++
+ .../gpu/drm/i915/display/intel_dp_link_training.c  | 24 ++-------
+ drivers/gpu/drm/msm/dp/dp_display.c                | 17 ++++++
+ drivers/gpu/drm/nouveau/nouveau_dp.c               | 17 +-----
+ include/drm/display/drm_dp_helper.h                |  2 +
+ 5 files changed, 87 insertions(+), 34 deletions(-)
+---
+base-commit: 8155b4ef3466f0e289e8fcc9e6e62f3f4dceeac2
+change-id: 20241031-drm-dp-msm-add-lttpr-transparent-mode-set-136cd5bfde07
+
+Best regards,
+-- 
+Abel Vesa <abel.vesa@linaro.org>
+
 
