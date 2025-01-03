@@ -1,224 +1,139 @@
-Return-Path: <linux-arm-msm+bounces-43910-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-43911-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5A9ABA00D7A
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jan 2025 19:16:41 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id B756BA00D88
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jan 2025 19:17:55 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id EBAE57A03F7
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jan 2025 18:16:32 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C5DD83A47B8
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jan 2025 18:17:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5FC351F9F4F;
-	Fri,  3 Jan 2025 18:16:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A4F0B1FC109;
+	Fri,  3 Jan 2025 18:16:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="bNrUP7F8"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CSi1kgYq"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f44.google.com (mail-lf1-f44.google.com [209.85.167.44])
+Received: from mail-il1-f171.google.com (mail-il1-f171.google.com [209.85.166.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E22711FC0F3
-	for <linux-arm-msm@vger.kernel.org>; Fri,  3 Jan 2025 18:16:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E58C1FCFD9;
+	Fri,  3 Jan 2025 18:16:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735928196; cv=none; b=Aj9pd1aei4OVEG40iVJYXgWZ9UrvlJGbMNF8PLXQrkWdFZwKHVmp36zG1SsARcQzNqKT+Vk0nu+mk0q4DHMScPnnISyZx5kCZv/O1+38g0+rzyjWCscYodPbMNNoWypcJScXKiMtPqSRn7qE08GE8ixeMH0G+BfJaBlbax1ONpw=
+	t=1735928218; cv=none; b=bu53uEAcj2l+b+7jYTNohENEjtO4l5tzFgetofY6dXxWgvhPrYzTXiNZX0u8cZWkWVL34I/24ORVgVeR/k3rklNQJkEAv5+o5MXAGfe6IVOvEO6TM8xZHI4qtQCbVUiN3RBMIn9ugaBWBW3e3kwzOV8Pl6qPSrLiGnOKxY/P/bY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735928196; c=relaxed/simple;
-	bh=nMz6wKMbARuMs2Xricte7THEHrp7IfrVfF2PDmx9Jzg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=IFAG1gRIIyAyKVf1vrrLddEjv9RYeec1HumTIi0E/irRrmf8lt8OsWqT3KOLfulJYP/4xEgbVipZ4T02KgH8x1XLr3My5xWS6QX/14DGFU60+QtlkdQ5lhTTM6ytf0r8i8/vGCShFtsG/KMPNTdOSXP+gCRj4etOwjTmnxpEelQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=bNrUP7F8; arc=none smtp.client-ip=209.85.167.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f44.google.com with SMTP id 2adb3069b0e04-540215984f0so13188963e87.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 03 Jan 2025 10:16:33 -0800 (PST)
+	s=arc-20240116; t=1735928218; c=relaxed/simple;
+	bh=8ZRxQBwY6b/olGpKehwm6xum2J+FNJPoX+p5VhHODY8=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Y6injreCamAirkI6deYXcArw9Q/ndIMotAxZpFXBbahXR+wqF8SkbXxAZ3/kcqQMjpyZxaNcKVMt29lS3Ak3gmbJ2hieqLaBbbGIcb5c8qe3xaJvCRxTrwMmQ+KY/JYmrHl2VMYGwdSUB6MBlOToeK3PATeeuhVcD8qaN0usag8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CSi1kgYq; arc=none smtp.client-ip=209.85.166.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-il1-f171.google.com with SMTP id e9e14a558f8ab-3a8160382d4so39626705ab.0;
+        Fri, 03 Jan 2025 10:16:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1735928191; x=1736532991; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=CEJ8oonqtcvJ6IAkiqfllwsDWGyyWC08rfpdJ62V49g=;
-        b=bNrUP7F8MyQyX7WbWIAD/1Ft8A5CzcFzEZIu1tnPoAJtZ8oqf7SAbd06SnY9nlCop8
-         aq1twnl62BzQ+1vZjTaQX8PTQyeFgEYzl2/ON3+2NobxGzI97ftEEx1GqVgd98z/V63a
-         Wz9HaDVqFbPP1Amu+VeCvJM3aU/bV6AFpPeGmErOD2PsbVdjTXk1Z2ardIVNQvWqSyR9
-         nKGpqSFggE4QRLIxfeUnt5x7ZxqSaHQJgWhyMdybAcTosF9gy2QOhpktKvlDoiogBFUW
-         IJyoqoci2KmzARJkWenVf9JnvYc2xdH+fgfoFjlKMA8NRhXiOlO0Dy+JXZQ0AYNYvXgo
-         nDEQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1735928191; x=1736532991;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1735928216; x=1736533016; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=CEJ8oonqtcvJ6IAkiqfllwsDWGyyWC08rfpdJ62V49g=;
-        b=UZr7KlaMgI/8BVbODzSczzAVXZw2E2uvG9WC8cYQmZDKqRZDknHSoglBDTU1oTBNPD
-         DkD08IywvIlRB9xga+bHcQ7JaRsd32K5+1E/zkro5BQ46IDYcfOO4qOkkjMOGGq8YUZT
-         dGfLfCNtkOLxJwghn3sFZFDlSfZylyHvcP5A+n1cLgtQKIDLDbmdc0DVZ5sqaBhW7Fwg
-         JSFSuStI5Tz8upu6gb6/7z9dUBV7y69XqK5dLRx57NvezbGCSArOls2JkGZXY4fYFfUL
-         T/hsdPO/wZ4wBoK8KhJuTShNEC+kh3SQYnStRpqNknayIZPo3tjnjn/t/XJE0ZuHGnyK
-         p4HQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVzyjdDoe+2IbSCwx5lIoY11OLvlEGUtkhCDdMPXGSbBm/Yn7w1ViFJr9ixJ0LkZDFBT595MvfII2P3yZg9@vger.kernel.org
-X-Gm-Message-State: AOJu0YzCJO4zCzXiJcn+RVUNyFMFpdOfGKSj/IjccBUfjaZFryzog/zm
-	ftjoXuOJeDoTvRfDdrFes3ERmkiLVBb9p8gCXThFrXGhxhtt92hZ/ZYzrDp6MSs=
-X-Gm-Gg: ASbGncuGCsjp0F+Ic0ktjKyCBiyyAsoYH+rEJx+GQsyGXULOW8mYeqG3K4CGxxW7Lfo
-	zypvurF6l7WUX/Vha2wTzpw+TeJuvuf1RWy5m6EOv3//gttmdCcjvZbRtjFVHxblidXVNiB2U59
-	voEFjMFhJwW42/DKyezTc6oxyNdowjjRjJ+k/bG9/ML0pSXEQwCQ0f47+/xEFXY03AeKOxWH+S9
-	zlbFN8p+fafGH63eZYBMVFf+lSTuv3SIafVxl32nw8LNru2DdXpPipggJ7chGS7uBbLOKSzU3j1
-	i6JgOoGtQm41xylIYC/y2FAHzJyOqnygfgsP
-X-Google-Smtp-Source: AGHT+IEvvepfOBU+EsQDIAwIOdIqeI1ZlSV0iPdxp215z+zkJx6XJtR+bJJEVpMxCwPG4qFEfl+uKQ==
-X-Received: by 2002:a05:6512:23a0:b0:540:75d3:95a4 with SMTP id 2adb3069b0e04-54229538b24mr15437986e87.17.1735928191141;
-        Fri, 03 Jan 2025 10:16:31 -0800 (PST)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-54223813692sm4128190e87.125.2025.01.03.10.16.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 03 Jan 2025 10:16:29 -0800 (PST)
-Date: Fri, 3 Jan 2025 20:16:27 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Jessica Zhang <quic_jesszhan@quicinc.com>
-Cc: Rob Clark <robdclark@gmail.com>, quic_abhinavk@quicinc.com, 
-	Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, 
-	David Airlie <airlied@gmail.com>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
-	Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
-	Simona Vetter <simona@ffwll.ch>, Simona Vetter <simona.vetter@ffwll.ch>, 
-	quic_ebharadw@quicinc.com, linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
-	freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, Rob Clark <robdclark@chromium.org>, 
-	Ville =?utf-8?B?U3lyasOkbMOk?= <ville.syrjala@linux.intel.com>
-Subject: Re: [PATCH v4 15/25] drm/msm/dpu: Add CWB to msm_display_topology
-Message-ID: <a4akor2liqafta53zeev22x2pkqwzo5szwidr2ruzdvttvze5h@jtio3jue7ez3>
-References: <20241216-concurrent-wb-v4-0-fe220297a7f0@quicinc.com>
- <20241216-concurrent-wb-v4-15-fe220297a7f0@quicinc.com>
- <ki35rornnos35r3fzg5yyqzxnqua3dyfb6ewq2aefrh4u74vfi@opdnf44ntten>
- <4069bd6a-c37f-4dbe-bbd6-5b333ee54ad8@quicinc.com>
+        bh=vn5PAch7XdWTWHNIRarY/0lUl5EQINJyEEFjNVV3NLk=;
+        b=CSi1kgYqVeS0dh0z5X9cY0rUDd8X6w1eyCw3uqHFVwkuKJk9DmYk18ZqdZl263nSoC
+         wdAB/JAaRUEzdbnnbenGAsvMkYmehAz5GqfWuMR7caVBGk9VmPaxs8bOI+WPvw0r+Pac
+         MFvppVWXjdB2TbebGpC9pXbGZXfQTVM1MmGsBRf898q9T8TRL/fkWV8VxHI5CaX6aOMv
+         tEI0YPDT0nehNu9/ySGzPIxdmfHh4ZCfPz550agpUem1ii/3R4zR+XYUjFmiduEv0uDK
+         +cVYId3Z9d7D5+MdEm2ivTkaIgS5yhJE7bY49dqToKtJm1ojI8QH+FC66FdNJqB+lo+l
+         fLlA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1735928216; x=1736533016;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=vn5PAch7XdWTWHNIRarY/0lUl5EQINJyEEFjNVV3NLk=;
+        b=UWv0xGwJRVMHiLqF8RtDLUAnzZpNxQPM7PO/Ms1uaneLVbZ/U2QAuy76po6zvax1VK
+         nHilRh0+Kqi5OIGREdaL0i7XeEEqWEoDkB5lc+gh+h9iX9QWPYAI3CQFtMz6tJDbChXZ
+         C6ms6Z6uwbIiJ7mNegbnnPN5hXCZdQPmGVtz4pxsTwq8ZibaBfU96NiRtdDbAiwRiuo2
+         i0a7Z6z1yQPKrq223GNkGeMx3wKZKS3Rlid9GVr5v1On183b03KYiSwW3bIa8tDxb2Wa
+         pMudNTrvTCUob1FdgZ2ivHYZUGYGzgQmjZk32sbl3uWgX5r02g+cDzEWjqJQkTsrFKgh
+         mXhA==
+X-Forwarded-Encrypted: i=1; AJvYcCVSpS7SMHQvZObWTbRGC0sNYBuTPE4WHNpvTgCamsZVwkt/7+4+P0e25zBcnF1xvjGqRXrohi6PkiI09WsL@vger.kernel.org, AJvYcCVxu7FA4q0cbEmeeUWiV6J8PmxXZI55J+85RfdtoUDFz9UIRqN31CMwZKh50a88WL0Vh7p9t26Dpjes1qIz@vger.kernel.org
+X-Gm-Message-State: AOJu0YyDHU8UmPC3OgY7D2kW2bfqtYDceWDsyBwvuzJwmI1ALwbBu3KC
+	Dlcj1kvQ9UdcHvDpgzm7CQ3k/IjrLli5ZOvc9enRsGi5/ROPl29uQOV9Zm3qb8hpKS0TFd96Nqx
+	6sn1NtMMnUDyTC+ThbZkL8eAuYwg=
+X-Gm-Gg: ASbGnctkAn8TrIWmGBx9KXO6o0GGDwxsqF1fNmleuedkye/EezripboUX/EUmoCesew
+	fWJQTEuWfaRch8crk9+XTuf7uk8ejaDYngaIbkZ6QVn1awQWIzuAMfl6e1SL4rD0SdX8N
+X-Google-Smtp-Source: AGHT+IFkvWah3qxhzEMeR0lXa3avHR/olEfCKY9qWp0cniyQbDoTluhhzT5PfOFVB94chXa1QUUdUshg5EOLFdZeUdA=
+X-Received: by 2002:a05:6e02:194a:b0:3a7:7124:bd2b with SMTP id
+ e9e14a558f8ab-3c2d514f8e4mr434511105ab.15.1735928215590; Fri, 03 Jan 2025
+ 10:16:55 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <4069bd6a-c37f-4dbe-bbd6-5b333ee54ad8@quicinc.com>
+References: <20241212151402.159102-1-quic_bibekkum@quicinc.com>
+ <28bd756a-e0bc-49e7-9415-4c05d38c5e28@quicinc.com> <20250103153716.GE3816@willie-the-truck>
+In-Reply-To: <20250103153716.GE3816@willie-the-truck>
+From: Rob Clark <robdclark@gmail.com>
+Date: Fri, 3 Jan 2025 10:16:43 -0800
+Message-ID: <CAF6AEGua_WfLd2PQv42NK3R1oOgJ8wNf6yt6We4tH0GFkHPnoA@mail.gmail.com>
+Subject: Re: [PATCH v18 0/5] iommu/arm-smmu: introduction of ACTLR
+ implementation for Qualcomm SoCs
+To: Will Deacon <will@kernel.org>
+Cc: Bibek Kumar Patro <quic_bibekkum@quicinc.com>, robin.murphy@arm.com, joro@8bytes.org, 
+	jgg@ziepe.ca, jsnitsel@redhat.com, robh@kernel.org, 
+	krzysztof.kozlowski@linaro.org, quic_c_gdjako@quicinc.com, 
+	dmitry.baryshkov@linaro.org, iommu@lists.linux.dev, 
+	linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+	linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Fri, Jan 03, 2025 at 10:03:35AM -0800, Jessica Zhang wrote:
-> 
-> 
-> On 12/19/2024 9:03 PM, Dmitry Baryshkov wrote:
-> > On Mon, Dec 16, 2024 at 04:43:26PM -0800, Jessica Zhang wrote:
-> > > Add the cwb_enabled flag to msm_display topology and adjust the toplogy
-> > > to account for concurrent writeback
-> > 
-> > Why?
-> 
-> Hi Dmitry,
-> 
-> This flag is necessary to specify that CWB mux(es) need to be assigned for
-> the given reqeusted topology.
+On Fri, Jan 3, 2025 at 7:37=E2=80=AFAM Will Deacon <will@kernel.org> wrote:
+>
+> (please don't top-post...)
+>
+> On Mon, Dec 30, 2024 at 06:45:29PM +0530, Bibek Kumar Patro wrote:
+> > On 12/12/2024 8:43 PM, Bibek Kumar Patro wrote:
+> > > This patch series consist of six parts and covers the following:
+> > >
+> > > 1. Provide option to re-enable context caching to retain prefetcher
+> > >     settings during reset and runtime suspend.
+> > >
+> > > 2. Remove cfg inside qcom_smmu structure and replace it with single
+> > >     pointer to qcom_smmu_match_data avoiding replication of multiple
+> > >     members from same.
+> > >
+> > > 3. Add support for ACTLR PRR bit setup via adreno-smmu-priv interface=
+.
+> > >
+> > > 4. Introduce intital set of driver changes to implement ACTLR registe=
+r
+> > >     for custom prefetcher settings in Qualcomm SoCs.
+> > >
+> > > 5. Add ACTLR data and support for qcom_smmu_500.
+> > >
+> > > Changes in v18 from v17_RESEND:
+> > >   - 1/5 : No changes
+> > >   - 2/5 : No changes - reviewed-by tags collected
+> > >   - 3/5 : Addition of
+> > >     pm_runtime_resume_and_get()/pm_runtime_put_autosuspend()
+> > >     around register access of PRR related private interfaces
+> > >     as discussed in v17_RESEND.
+> > >   - 4/5, 5/5 : No changes - reviewed-by tags collected
+> > >   Link to v17_RESEND:
+> > >   https://lore.kernel.org/all/20241114160721.1527934-1-quic_bibekkum@=
+quicinc.com/
+> >
+> > Thought to follow up on this thread to highlight the latest version (v1=
+8) of
+> > this series, in case it was missed during the vacation period.
+>
+>
+> I'm waiting for Rob (Clark) to ack the last patch, as he had comments on
+> the previous version.
 
-Why is necessary? Please rephrase your statement (we need foo bar, so do
-baz).
-
-> 
-> > 
-> > > 
-> > > Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
-> > > ---
-> > >   drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c | 11 ++++++++++-
-> > >   drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c   | 10 ++++++++--
-> > >   drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h   |  2 ++
-> > >   3 files changed, 20 insertions(+), 3 deletions(-)
-> > > 
-> > > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> > > index b4bfded3d53025853cee112ca598533ece290318..b063c8fe4c0594772d84401fa56c9c21afc0ad18 100644
-> > > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> > > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> > > @@ -1198,6 +1198,8 @@ static struct msm_display_topology dpu_crtc_get_topology(
-> > >   		dpu_encoder_update_topology(drm_enc, &topology, crtc_state->state,
-> > >   					    &crtc_state->adjusted_mode);
-> > > +	topology.cwb_enabled = drm_crtc_in_clone_mode(crtc_state);
-> > > +
-> > >   	/*
-> > >   	 * Datapath topology selection
-> > >   	 *
-> > > @@ -1209,9 +1211,16 @@ static struct msm_display_topology dpu_crtc_get_topology(
-> > >   	 * 2 LM, 1 INTF (stream merge to support high resolution interfaces)
-> > >   	 *
-> > >   	 * Add dspps to the reservation requirements if ctm is requested
-> > > +	 *
-> > > +	 * Only hardcode num_lm to 2 for cases where num_intf == 2 and CWB is not
-> > > +	 * enabled. This is because in cases where CWB is enabled, num_intf will
-> > > +	 * count both the WB and real-time phys encoders.
-> > > +	 *
-> > > +	 * For non-DSC CWB usecases, have the num_lm be decided by the
-> > > +	 * (mode->hdisplay > MAX_HDISPLAY_SPLIT) check.
-> > >   	 */
-> > > -	if (topology.num_intf == 2)
-> > > +	if (topology.num_intf == 2 && !topology.cwb_enabled)
-> > >   		topology.num_lm = 2;
-> > >   	else if (topology.num_dsc == 2)
-> > >   		topology.num_lm = 2;
-> > > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
-> > > index b763ef19f4c60ae8a35df6a6ffb19e8411bc63f8..85adaf256b2c705d2d7df378b6ffc0e578f52bc3 100644
-> > > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
-> > > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
-> > > @@ -382,8 +382,14 @@ static int _dpu_rm_reserve_ctls(
-> > >   	int i = 0, j, num_ctls;
-> > >   	bool needs_split_display;
-> > > -	/* each hw_intf needs its own hw_ctrl to program its control path */
-> > > -	num_ctls = top->num_intf;
-> > > +	/*
-> > > +	 * For non-CWB mode, each hw_intf needs its own hw_ctl to program its
-> > > +	 * control path. Hardcode num_ctls to 1 if CWB is enabled
-> > > +	 */
-> > 
-> > Why?
-> 
-> This is because num_intf is based on the number of phys_encs. Since in the
-> CWB case, the WB and real-time encoders will be driven by the same CTL. I
-> can add this to the comment doc.
-
-Why are they driven by the same CTL? Is it also the case for platforms
-before DPU 5.x?
-
-> 
-> Thanks,
-> 
-> Jessica Zhang
-> 
-> > 
-> > > +	if (top->cwb_enabled)
-> > > +		num_ctls = 1;
-> > > +	else
-> > > +		num_ctls = top->num_intf;
-> > >   	needs_split_display = _dpu_rm_needs_split_display(top);
-> > > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h
-> > > index b061dfdab52e04ab7d777e912a30173273cb3db7..12db21a2403ec6930894c36a58e898c5d94c2568 100644
-> > > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h
-> > > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h
-> > > @@ -46,6 +46,7 @@ struct dpu_rm {
-> > >    * @num_dspp:     number of dspp blocks used
-> > >    * @num_dsc:      number of Display Stream Compression (DSC) blocks used
-> > >    * @needs_cdm:    indicates whether cdm block is needed for this display topology
-> > > + * @cwb_enabled:  indicates whether CWB is enabled for this display topology
-> > >    */
-> > >   struct msm_display_topology {
-> > >   	u32 num_lm;
-> > > @@ -53,6 +54,7 @@ struct msm_display_topology {
-> > >   	u32 num_dspp;
-> > >   	u32 num_dsc;
-> > >   	bool needs_cdm;
-> > > +	bool cwb_enabled;
-> > >   };
-> > >   int dpu_rm_init(struct drm_device *dev,
-> > > 
-> > > -- 
-> > > 2.34.1
-> > > 
-> > 
-> > -- 
-> > With best wishes
-> > Dmitry
-> 
-
--- 
-With best wishes
-Dmitry
+You mean 3/5?  The latest (v18) lgtm, a-b
 
