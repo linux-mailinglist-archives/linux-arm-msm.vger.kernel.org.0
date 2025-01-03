@@ -1,327 +1,157 @@
-Return-Path: <linux-arm-msm+bounces-43897-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-43898-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0B50EA00AAC
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jan 2025 15:38:55 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 28338A00ABA
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jan 2025 15:43:14 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A086F3A4284
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jan 2025 14:38:49 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D94611638F8
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jan 2025 14:43:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D246D1FAC23;
-	Fri,  3 Jan 2025 14:38:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D02051FA160;
+	Fri,  3 Jan 2025 14:43:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Ymf5idym"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="mq5qUyCF"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CED681FA25D
-	for <linux-arm-msm@vger.kernel.org>; Fri,  3 Jan 2025 14:38:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B6C71D61AC
+	for <linux-arm-msm@vger.kernel.org>; Fri,  3 Jan 2025 14:43:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735915117; cv=none; b=sKTzdlpUU9DJnetQBR5GjMzNYYu51ts9ReoJedSVfiMznyLnA0Hu9Hxme8KAiKNIwJPJip2pMcpn0JDIx4FAcmIOQB5aWE9jWOTkXXW1aZn1pia1UyNtxjqOgQ+3r6MLAZ90fjiEs07v6M+4tdHVzeVuFI12t60IK+57W2Brd8M=
+	t=1735915390; cv=none; b=LYWZbdk6UIm/uWY4Bre8vj0JldqoSuTOuLOVvN+rV5nuaNP9HdRpxBJ3A3TSXqT/OwnBjk6I7PBEAzccLsa5ejfr7b81MjWAAzJsD53XJq0FCD8UN/D51t31DenSQUOcXMHIjn4XVt8IQyE7+jcFslQdnWTGD/KIrHUy0dZGKfY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735915117; c=relaxed/simple;
-	bh=6MYAyJNiKjIJRjZP+kRmtZAtfqVcLkXfnhiloyCSICI=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=r28bnhE/uuExSajSInbdMaHVETFr/n/ZnmWz5TLd4RobafbZHm/fjeTY1y/CHRs7TpMVXeV0yRN9hhjHnjBwqiLTTH6ga60QHLDt6vqWeJdBWmYZLjw1qgplC9vbczHOY71sA55GHMI9PmMbFERfX3RZz1bbnp5Zr0Y6mB6pi58=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Ymf5idym; arc=none smtp.client-ip=209.85.221.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-385e27c75f4so8797012f8f.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 03 Jan 2025 06:38:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1735915113; x=1736519913; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=KvFk6EK6W/VRxWdLvZU9XD5Dh65CwZ2VlJ4c/jgx6xY=;
-        b=Ymf5idymuzicDiW02UuBaZWIAbDvibb78DPoW3ylp439HCoftLbQTRSToEYBbmIhDm
-         6DX9fcTpM3jo71U6EEcxYSe4RSFaTIOtrXgJ+XRUMpOFC2Kb30yj9+myHJ+WH5OxSv8Q
-         qiks/2pfGFsaRzYK2MaB0Ji4b5fM1B2sjDJDkvl/TcOOmiLky8uZGcI0M2jspEr+jKn/
-         js4+qlCk4IoBIY3kZNcuagay3KH0UOwGYsF50n7Cs+006GQBtT4ljkJpeo9HPopDGMr+
-         RohbxMJ7LGzoQVOrEsBNI7+OBCzwq/x+8eA9Vvgx+Hv4UnkILqCclRDXm8yWbAIIWkRL
-         CZPA==
+	s=arc-20240116; t=1735915390; c=relaxed/simple;
+	bh=uxWumylEPjV620S5G0ofjEcWugxp8H6fCTNOr6Nc+pU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=ey+fkeihVoAg75E8VcjiXPsLWNiv/+yCv/2nDSNqq/j4ZPbR7ZIu2KvXuRJdYObFORp5UnLz4wL7HIethN0sc7iGwgQ4WOa3pEG2gWpWbNzZlIaIIMsv0978KESWyzB/BjjDsWDvV8nC2K/5CMSBia60pnIEWEwb40nJ9TCyby0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=mq5qUyCF; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 503C4Jpr027362
+	for <linux-arm-msm@vger.kernel.org>; Fri, 3 Jan 2025 14:43:08 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	0eNM2fmxXFEoTttdl+RKcxEetksK3//yAOZC2Zriq2U=; b=mq5qUyCFEEHS2xuH
+	9swj+tHcERJwpMCR/Q0PpjAurTZS9CTORWH2cZY18k7R5M7fsCPqW1YAIccURmY6
+	DJQLPhupdSune7P1mLsoMjTdA0UZT0xw+BuVfM0wSNKsfBtGsZR6uHBBMEmyoce2
+	vxwtSN+qHl1CBjQzd8wU30CJrsZOHnH6cC38NpKJIhcBvS9MdQTStdveBZBY6v0d
+	s5jIKZyGk2aRtQD6wxaiWp5Tv0IVuwWnhcHUOlme4d0XTbjCLQjwy1DnT2n0R0v4
+	ANVnh+gQ920aCEee2Yuke6smmlCfyIo9q/zSlaMfB5w/41OVLsuH8TMl0gI5K9MN
+	xlpBHg==
+Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com [209.85.160.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43xfjk89hn-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 03 Jan 2025 14:43:08 +0000 (GMT)
+Received: by mail-qt1-f197.google.com with SMTP id d75a77b69052e-4678aa83043so33358051cf.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 03 Jan 2025 06:43:08 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1735915113; x=1736519913;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=KvFk6EK6W/VRxWdLvZU9XD5Dh65CwZ2VlJ4c/jgx6xY=;
-        b=bISjWq/dKDsIGa7fl9qnGliqw3LcZEI6/KYlBzh6QAaDoH9+Bly0OonTAT3gtFNWbn
-         71IfbaEj4XXeg5z6a6elfGXXSw/FKFPFMPVeMojtlW/HnjmCw75Y6Qz8CF5nDFIdMhN+
-         JyW3lGrMTICOiC91HNDPJdrZW0pKJnD/ey1jBY+6or2S/YOm62kp5omlozPXC8d5pdjp
-         2MdPWjmrW3+s2bdN3qVNd4UMf1/+7m6lNctqya79tz+2ocYkRgMqCh05v/6a8MSmnKxt
-         +5Fn3KZ4o9ho+24SYns+CG2mStLkcIbELpDciwyPHmmz11alW77Qnnj7ORGnxVA2xUrn
-         coAg==
-X-Gm-Message-State: AOJu0YyfCbHhLuOsgTSLG04j5rr31tKcYnqmwyKA0wJmUA+c/sSL4Fd9
-	mXinFQdusI0RPiY47arW9oi53zvYCR0k5RXTC+SqioKbHIugdPfNOkkMYRwkF9wSXLYgSXsle3h
-	Z
-X-Gm-Gg: ASbGncsSe2JcQrog2co+E7pfen0gux0o3LHcTlKygk77bNfaSN9oMSAr0up/2RuxYuo
-	HWi8rVVBlSeZUZhXsWtKeY/q+IMyN3rqi0t0TW0sDoNHJw4vuu/A/GGOEuDLP3SbvIUl8pKhCyo
-	liYnW1Iy/oR2kDDNWp2aG1pQi7blztnrCW0M0nq7qvmO5jStZhhtmsODmb7c7XZAOlvTUrtbUaV
-	R+HzkXrpCoWGaQF0l7M8ooS8FbNM7AWx9A0ctXd7P1JyBMr0llswai2a2bJcCf1T9dLuQl1IZRP
-	SA==
-X-Google-Smtp-Source: AGHT+IEXFOZ+0uZp/4l43sA+IegSsxHw2PJ6o4TvVY4/FxpHANnNWTFPHdMmzUntC1G9T6ixXRt4qw==
-X-Received: by 2002:a05:6000:186b:b0:386:3835:9fec with SMTP id ffacd0b85a97d-38a223f76aemr49024142f8f.44.1735915113174;
-        Fri, 03 Jan 2025 06:38:33 -0800 (PST)
-Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:8261:5fff:fe11:bdda])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38a1c846ca4sm41558404f8f.43.2025.01.03.06.38.32
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 03 Jan 2025 06:38:32 -0800 (PST)
-From: Neil Armstrong <neil.armstrong@linaro.org>
-Date: Fri, 03 Jan 2025 15:38:27 +0100
-Subject: [PATCH 2/2] arm64: dts: qcom: sm8650: setup gpu thermal with
- higher temperatures
+        d=1e100.net; s=20230601; t=1735915387; x=1736520187;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=0eNM2fmxXFEoTttdl+RKcxEetksK3//yAOZC2Zriq2U=;
+        b=RkgA23hMKYuFdET8XtQJyLwA4Mnr7eyuDPHf1QuSSnJ8WHKbFlVNWRYswbohKm4ruT
+         q/bIVhQbU5IIGxQ8c+PBkJbaiJ+NstYFO7Jse9X9vTBcCgo0PfLb+xGtYRFjVUOzHAMv
+         TJWqFelNDE74WnDYv+EHMtw45U11FvtQ/LWSJWGAh/Y7iTGJ/kvfmJXNeUlGXLAJ484C
+         2uTwjXG+4ZV/VW3RYS+OHSaWaA8crlO4cFQ4zXxHJbUxC9566lrl2y9EXR3m5MPer6T/
+         6L/xuf7KeiYTBnMJqZx+Mu5RZZAT2xZhMdl03UEHzNHKG+DSBZDqnQtr0rHYW4lqf74S
+         PX3Q==
+X-Gm-Message-State: AOJu0YwyN9iCYD+VNgeaGs0P1qNH9xdCbfj9xbQeA+1nb4Dc1ztxNWbL
+	cn9jpucDt3MEFvHbByU08UQqdVIWeepDUw6Ld/VCVN/m9CTXvPZJ0ZdS5bTHKFJNid1L9pGxyn/
+	OvAIqvhbvZkGGrfTpLFTStxNF1RXcC1FKufikS6Nwiw6G6dT9xomtB5GaOP4+R9BT
+X-Gm-Gg: ASbGncv1NZwPQdsCn+Ot1EK5CdG3dfDxpjfFCw5QtRnqrnGUS9RXt4KYxfrXBcrBFe/
+	h84hclk4UHIH+YrLW03TjKeVNBcJFPC7Bl7T9pRq8b0Cg3OM4r7PWymYb3SEczYJK2H6gm6YHZY
+	MHBI0xXU5HK539ayBBIuezq/Hnm05h1yheyQQwbg9Etz5xxgyK7EZbdZp3CBaE0ykSasCW5QdMi
+	9330K3fZUtnYrgFslWs3ESBRT1dQC04S1VOhaCT21lUw6/QtoQvJgG3ZvK6hKEKG2g2qsKpPpg4
+	rgTL/XTLCrXJvbJraIZNhhpUDLVOkahCCzw=
+X-Received: by 2002:a05:620a:40d2:b0:7b6:d23a:be3e with SMTP id af79cd13be357-7b9ba771993mr2577618885a.5.1735915387025;
+        Fri, 03 Jan 2025 06:43:07 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEHrrgeUYSGMyk/6pjGZU75UXfzHamiIOIFUnPhws8QEaEfODUU4xTeXfVjl77J329+7fr7Fg==
+X-Received: by 2002:a05:620a:40d2:b0:7b6:d23a:be3e with SMTP id af79cd13be357-7b9ba771993mr2577617285a.5.1735915386671;
+        Fri, 03 Jan 2025 06:43:06 -0800 (PST)
+Received: from [192.168.65.90] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5d80678c8dbsm19486058a12.40.2025.01.03.06.43.05
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 03 Jan 2025 06:43:06 -0800 (PST)
+Message-ID: <b305ec90-26b6-4dfa-830a-4ff3acd9caf5@oss.qualcomm.com>
+Date: Fri, 3 Jan 2025 15:43:04 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250103-topic-sm8650-thermal-cpu-idle-v1-2-faa1f011ecd9@linaro.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/2] arm64: dts: qcom: sm8650: rework CPU & GPU thermal
+ zones
+To: Neil Armstrong <neil.armstrong@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
 References: <20250103-topic-sm8650-thermal-cpu-idle-v1-0-faa1f011ecd9@linaro.org>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 In-Reply-To: <20250103-topic-sm8650-thermal-cpu-idle-v1-0-faa1f011ecd9@linaro.org>
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Neil Armstrong <neil.armstrong@linaro.org>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=5322;
- i=neil.armstrong@linaro.org; h=from:subject:message-id;
- bh=6MYAyJNiKjIJRjZP+kRmtZAtfqVcLkXfnhiloyCSICI=;
- b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBnd/ZmZONkGPkWRBeHrOF+YcppWKlIJtf6T1DNYzq9
- Uu+bV+KJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZ3f2ZgAKCRB33NvayMhJ0fCGD/
- 0UKMFH58M5axg9yTfUD9YC54sXBCnEAy/fHTxLa2H6OAPNZ924D66SJU9kK15RLLQ9QHM/y9YHHY9E
- IP6PJoahgFyKEgl13gBvMyOylkKprMYsRI8AAaYZobZdazRfp+rvyOV78FgRnxXcj59MmL45qzqxNE
- U/Xqu3AccEGT2quRNFXDLvm4B8W4qElSXZuD4ynvYFeCQw94g1nliDaUq6zOjssMct2mHspj/2cM5P
- nG1YgBuS+USVvAhgjtG45rCQDreRyj0S8L9NiXfnJ7L38l6tU66dS5Wz+bDTGevc7p3ngeLjtdI5ap
- U1e0OyEwzakT747w6m9BdlyISFibDWZIQm1TmPFRK8UUTV8Ju66L0D/h8YeizFRS8Hdt/jLHM8dN4a
- b5lXcGIv2jWAH7nN3Uznx3Qisnnx5cULozFetICL094eGOadxtdXinWXKoNvFaJ7H1qEfvAU6j8VMO
- XoP5QeOCeBMzoXxbqnaU1KJpFiGZ4Ne0Vh7rYtkAdrs7148/X7n3plrKO/NrRMx3L00rvOiyW+TCRI
- YAle8CDDzSdowg+psfbbzj0+PhB9wR0bifjZq4RLGd9srzvXSFx1RLek6LjG9Od2WxnZ/+6Gsyypha
- b3StsmKFdYlO0EsZRgKS5HHNFnLlFhgEtSVsDcirj6mkB1HbKrweylDx1QVw==
-X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
- fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-ORIG-GUID: lkjQy2uboa_GWlNpIdCU5_lmAHXEQbjg
+X-Proofpoint-GUID: lkjQy2uboa_GWlNpIdCU5_lmAHXEQbjg
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 lowpriorityscore=0
+ malwarescore=0 priorityscore=1501 mlxlogscore=710 spamscore=0
+ clxscore=1015 bulkscore=0 suspectscore=0 impostorscore=0 phishscore=0
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2501030130
 
-On the SM8650, the dynamic clock and voltage scaling (DCVS) for the GPU
-is done in an hardware controlled loop by the GPU Management Unit (GMU).
+On 3.01.2025 3:38 PM, Neil Armstrong wrote:
+> On the SM8650 platform, the dynamic clock and voltage scaling (DCVS) for
+> the CPUs and GPU is handled by hardware & firmware using factory and
+> form-factor determined parameters in order to maximize frequency while
+> keeping the temperature way below the junction temperature where the SoC
+> would experience a thermal shutdown if not permanent damages.
+> 
+> On the other side, the High Level Ooperating System (HLOS), like Linux,
+> is able to adjust the CPU and GPU frequency using the internal SoC
+> temperature sensors (here tsens) and it's UP/LOW interrupts, but it
+> effectly does the same work twice in an less effective manner.
+> 
+> Let's take the Hardware & Firmware action in account and design the
+> thermal zones trip points and cooling devices mapping to use the HLOS
+> as a safety warant in case the platform experiences a temperature surge
+> to helpfully avoid a thermal shutdown and handle the scenario gracefully.
+> 
+> On the CPU side, the LMh hardware does the DCVS control loop, so
+> let's set higher trip points temperatures closer to the junction
+> and thermal shutdown temperatures and add some idle injection cooling
+> device with 100% duty cycle for each CPU that would act as emergency
+> action to avoid the thermal shutdown.
+> 
+> On the GPU side, the GPU Management Unit (GMU) acts as the DCVS
+> control loop, but since we can't perform idle injection, let's
+> also set higher trip points temperatures closer to the junction
+> and thermal shutdown temperatures to reduce the GPU frequency only
+> as an emergency action before the thermal shutdown.
+> 
+> Those 2 changes optimizes the thermal management design by avoiding
+> concurrent thermal management, calculations & avoidable interrupts
+> by moving the HLOS management to a last resort emergency if the
+> Hardware & Firmwares fails to avoid a thermal shutdown.
+> 
+> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+> ---
 
-Since the GMU does a better job at maintaining the GPUs temperature in an
-acceptable range by taking in account more parameters like the die
-characteristics or other internal sensors, it makes no sense to try
-and reproduce a similar set of constraints with the Linux devfreq thermal
-core.
+Got any numbers to back this?
 
-Instead, set higher temperatures in the GPU trip points corresponding to
-the temperatures provided by Qualcomm in the dowstream source, which will
-trigger the devfreq thermal core if the GMU cannot handle the temperature
-surge, and try our best to avoid reaching the critical temperature trip
-point which should trigger an inevitable thermal shutdown.
-
-Fixes: 497624ed5506 ("arm64: dts: qcom: sm8650: Throttle the GPU when overheating")
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
----
- arch/arm64/boot/dts/qcom/sm8650.dtsi | 48 ++++++++++++++++++------------------
- 1 file changed, 24 insertions(+), 24 deletions(-)
-
-diff --git a/arch/arm64/boot/dts/qcom/sm8650.dtsi b/arch/arm64/boot/dts/qcom/sm8650.dtsi
-index 448374a32e07151e35727d92fab77356769aea8a..ddcb57886eb5eac2a70d28e6ad68fc6820b5dcf1 100644
---- a/arch/arm64/boot/dts/qcom/sm8650.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8650.dtsi
-@@ -6507,19 +6507,19 @@ map0 {
- 
- 			trips {
- 				gpu0_alert0: trip-point0 {
--					temperature = <85000>;
-+					temperature = <95000>;
- 					hysteresis = <1000>;
- 					type = "passive";
- 				};
- 
- 				trip-point1 {
--					temperature = <90000>;
-+					temperature = <115000>;
- 					hysteresis = <1000>;
- 					type = "hot";
- 				};
- 
- 				trip-point2 {
--					temperature = <110000>;
-+					temperature = <125000>;
- 					hysteresis = <1000>;
- 					type = "critical";
- 				};
-@@ -6540,19 +6540,19 @@ map0 {
- 
- 			trips {
- 				gpu1_alert0: trip-point0 {
--					temperature = <85000>;
-+					temperature = <95000>;
- 					hysteresis = <1000>;
- 					type = "passive";
- 				};
- 
- 				trip-point1 {
--					temperature = <90000>;
-+					temperature = <115000>;
- 					hysteresis = <1000>;
- 					type = "hot";
- 				};
- 
- 				trip-point2 {
--					temperature = <110000>;
-+					temperature = <125000>;
- 					hysteresis = <1000>;
- 					type = "critical";
- 				};
-@@ -6573,19 +6573,19 @@ map0 {
- 
- 			trips {
- 				gpu2_alert0: trip-point0 {
--					temperature = <85000>;
-+					temperature = <95000>;
- 					hysteresis = <1000>;
- 					type = "passive";
- 				};
- 
- 				trip-point1 {
--					temperature = <90000>;
-+					temperature = <115000>;
- 					hysteresis = <1000>;
- 					type = "hot";
- 				};
- 
- 				trip-point2 {
--					temperature = <110000>;
-+					temperature = <125000>;
- 					hysteresis = <1000>;
- 					type = "critical";
- 				};
-@@ -6606,19 +6606,19 @@ map0 {
- 
- 			trips {
- 				gpu3_alert0: trip-point0 {
--					temperature = <85000>;
-+					temperature = <95000>;
- 					hysteresis = <1000>;
- 					type = "passive";
- 				};
- 
- 				trip-point1 {
--					temperature = <90000>;
-+					temperature = <115000>;
- 					hysteresis = <1000>;
- 					type = "hot";
- 				};
- 
- 				trip-point2 {
--					temperature = <110000>;
-+					temperature = <125000>;
- 					hysteresis = <1000>;
- 					type = "critical";
- 				};
-@@ -6639,19 +6639,19 @@ map0 {
- 
- 			trips {
- 				gpu4_alert0: trip-point0 {
--					temperature = <85000>;
-+					temperature = <95000>;
- 					hysteresis = <1000>;
- 					type = "passive";
- 				};
- 
- 				trip-point1 {
--					temperature = <90000>;
-+					temperature = <115000>;
- 					hysteresis = <1000>;
- 					type = "hot";
- 				};
- 
- 				trip-point2 {
--					temperature = <110000>;
-+					temperature = <125000>;
- 					hysteresis = <1000>;
- 					type = "critical";
- 				};
-@@ -6672,19 +6672,19 @@ map0 {
- 
- 			trips {
- 				gpu5_alert0: trip-point0 {
--					temperature = <85000>;
-+					temperature = <95000>;
- 					hysteresis = <1000>;
- 					type = "passive";
- 				};
- 
- 				trip-point1 {
--					temperature = <90000>;
-+					temperature = <115000>;
- 					hysteresis = <1000>;
- 					type = "hot";
- 				};
- 
- 				trip-point2 {
--					temperature = <110000>;
-+					temperature = <125000>;
- 					hysteresis = <1000>;
- 					type = "critical";
- 				};
-@@ -6705,19 +6705,19 @@ map0 {
- 
- 			trips {
- 				gpu6_alert0: trip-point0 {
--					temperature = <85000>;
-+					temperature = <95000>;
- 					hysteresis = <1000>;
- 					type = "passive";
- 				};
- 
- 				trip-point1 {
--					temperature = <90000>;
-+					temperature = <115000>;
- 					hysteresis = <1000>;
- 					type = "hot";
- 				};
- 
- 				trip-point2 {
--					temperature = <110000>;
-+					temperature = <125000>;
- 					hysteresis = <1000>;
- 					type = "critical";
- 				};
-@@ -6738,19 +6738,19 @@ map0 {
- 
- 			trips {
- 				gpu7_alert0: trip-point0 {
--					temperature = <85000>;
-+					temperature = <95000>;
- 					hysteresis = <1000>;
- 					type = "passive";
- 				};
- 
- 				trip-point1 {
--					temperature = <90000>;
-+					temperature = <115000>;
- 					hysteresis = <1000>;
- 					type = "hot";
- 				};
- 
- 				trip-point2 {
--					temperature = <110000>;
-+					temperature = <125000>;
- 					hysteresis = <1000>;
- 					type = "critical";
- 				};
-
--- 
-2.34.1
-
+Konrad
 
