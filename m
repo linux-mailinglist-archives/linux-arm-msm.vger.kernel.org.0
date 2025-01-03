@@ -1,225 +1,152 @@
-Return-Path: <linux-arm-msm+bounces-43865-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-43866-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 20ACCA008A8
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jan 2025 12:31:38 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 14B5FA008AD
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jan 2025 12:32:09 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 64F041884F4C
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jan 2025 11:31:40 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9EC5C16123A
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jan 2025 11:32:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5E6501F9F5B;
-	Fri,  3 Jan 2025 11:31:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AFBD71F9F45;
+	Fri,  3 Jan 2025 11:31:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="oV5u5IwC"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mailgw.kylinos.cn (mailgw.kylinos.cn [124.126.103.232])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83B7F1F9F58;
-	Fri,  3 Jan 2025 11:31:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=124.126.103.232
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE5581F9F5E;
+	Fri,  3 Jan 2025 11:31:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735903894; cv=none; b=YB9OgzTSEbo3ox05qxMKCRYfAePJcBsBTbskyeAFjsdYbIwsQwMJg1qFemg+l+czrKCBG9Sf2WELwEKnpWRV7xtY5BFZnsUR6TU6IwoVpYIemMmhje2sNlHLeOvEiD6pVqcyYdwaJDPOzMBaklebFKOkcfZ/pAiM46pCnH86sDc=
+	t=1735903909; cv=none; b=DhxiA2TRgGifnK83dXejKPaEzZB/wInUFdByI8upopwr689v873i0H1FVsL9lWmM0+iAeKtGwzDJTXv7u9L/ZFvntSAYbir0xbrR/PYZwpFTZhS8L/6DjfWtBogHBXA39EyuuXX95ffdv2UqCknjp7TkS7gpYxQiqFmZQm4Ycgs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735903894; c=relaxed/simple;
-	bh=ny77bzN6WrRhlg6OIky/iT5zw+3usfKugPQ8HYu69AY=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=sjaoNBbrplArYwZxVMZNolL2VNMXjfKUEKC+DSBKODz/nWDzgOP6E9CwfUZtzzlqqHQfweyCF8TXNBdj7BRcDz/9a7EXpcn4ye1QJm4Y5D4/uXJeXbHhZgkS9/1wH9eNex/bDyCAcVk/TvF8vubeJ562wsSsynXKM3nXHMLRXLw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn; spf=pass smtp.mailfrom=kylinos.cn; arc=none smtp.client-ip=124.126.103.232
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kylinos.cn
-X-UUID: 410c7250c9c611efa216b1d71e6e1362-20250103
-X-CID-P-RULE: Release_Ham
-X-CID-O-INFO: VERSION:1.1.41,REQID:391fbcff-1fc3-44a3-8f70-c561d7a90649,IP:0,U
-	RL:0,TC:0,Content:-25,EDM:25,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTI
-	ON:release,TS:0
-X-CID-META: VersionHash:6dc6a47,CLOUDID:4137c1d9a5050ba6be514140a86da391,BulkI
-	D:nil,BulkQuantity:0,Recheck:0,SF:102,TC:nil,Content:0|50,EDM:5,IP:nil,URL
-	:0,File:nil,RT:nil,Bulk:nil,QS:nil,BEC:nil,COL:0,OSI:0,OSA:0,AV:0,LES:1,SP
-	R:NO,DKR:0,DKP:0,BRR:0,BRE:0,ARC:0
-X-CID-BVR: 0,NGT
-X-CID-BAS: 0,NGT,0,_
-X-CID-FACTOR: TF_CID_SPAM_SNR
-X-UUID: 410c7250c9c611efa216b1d71e6e1362-20250103
-Received: from mail.kylinos.cn [(10.44.16.175)] by mailgw.kylinos.cn
-	(envelope-from <zhangheng@kylinos.cn>)
-	(Generic MTA)
-	with ESMTP id 1689954287; Fri, 03 Jan 2025 19:31:20 +0800
-Received: from mail.kylinos.cn (localhost [127.0.0.1])
-	by mail.kylinos.cn (NSMail) with SMTP id 343F9E0080FF;
-	Fri,  3 Jan 2025 19:31:20 +0800 (CST)
-X-ns-mid: postfix-6777CA87-95690244
-Received: from kylin-pc.. (unknown [172.25.130.133])
-	by mail.kylinos.cn (NSMail) with ESMTPA id C6BB1E0080FF;
-	Fri,  3 Jan 2025 19:31:17 +0800 (CST)
-From: Zhang Heng <zhangheng@kylinos.cn>
-To: robdclark@gmail.com,
-	joro@8bytes.org,
-	will@kernel.org,
-	robin.murphy@arm.com
-Cc: iommu@lists.linux.dev,
-	linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Zhang Heng <zhangheng@kylinos.cn>
-Subject: [PATCH] iommu/msm: Use helper function devm_clk_get_prepared()
-Date: Fri,  3 Jan 2025 19:30:59 +0800
-Message-ID: <20250103113059.463033-1-zhangheng@kylinos.cn>
-X-Mailer: git-send-email 2.45.2
+	s=arc-20240116; t=1735903909; c=relaxed/simple;
+	bh=kV//AIW+v3DjV6DjPXMQ5cugi3oL7UFi2EsstQxDmiY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=EbzmHlfpiwZZbDPi1PHIAwq/PQLnNKBdk64u6tMi0V0N0TYY64uPST2PvhyIS/kxYOo9W/ij5waqWDL8Zc6D8vR0aZcqwToyiml9zNX/DU5gufJrXNRJG8Zo7WjihzP5q2GkTexnG3ZojWSKNmuEViUxyhdgtuK8i60+BpougsI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=oV5u5IwC; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5038Ko89010253;
+	Fri, 3 Jan 2025 11:31:43 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	OpA8Olf07J3ETZv1wozjaR/j/YnCWFxpzGDs6gOPuj4=; b=oV5u5IwCvsOKm+ZA
+	C4rOoYdt5r8Qzn+CrdSBB9sdd309GoqkHnJkJOQz3O7FhmCXuipSbRrmv2rPbPor
+	bmAFPQarbVmDXSjK4n2pqTzcmSxMrcO5qg5p4b+bBGlcJKC460VPPrudqT3b7nBa
+	Psi8Q2TUK3eu/ryJT4rn2DJiYw6SnflYCKMG7i5kCq6NQVp4dRRb/dg4DHKsCN7K
+	nDITfcrEBoY+ub2HVWIr6zNO/SZGbkhim02AhlY2W4IkJyKzw4pv68i4I+qcRJIi
+	Q9bfSAYDm3n70yRStJ5pwqkzMhdP110bBHP8jqPP002Kg7nP6nrHlbxtPchm7vdA
+	p45fqw==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43xca50dps-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 03 Jan 2025 11:31:43 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 503BVgik010874
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 3 Jan 2025 11:31:42 GMT
+Received: from [10.239.133.114] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 3 Jan 2025
+ 03:31:36 -0800
+Message-ID: <85b4ec7c-e5c5-457e-b6cc-47305199a0f3@quicinc.com>
+Date: Fri, 3 Jan 2025 19:31:34 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] arm64: dts: qcom: Add coresight node for SM8650
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+        Bjorn Andersson
+	<andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring
+	<robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>
+CC: <kernel@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+References: <20241210-sm8650-cs-dt-v2-1-cf24c6c9bddc@quicinc.com>
+ <d41df236-48b1-40fb-a19b-5d7024884186@oss.qualcomm.com>
+Content-Language: en-US
+From: Yuanfang Zhang <quic_yuanfang@quicinc.com>
+In-Reply-To: <d41df236-48b1-40fb-a19b-5d7024884186@oss.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 558JGsd6zdy3y02HbHeSIoNOCvQgTwIo
+X-Proofpoint-GUID: 558JGsd6zdy3y02HbHeSIoNOCvQgTwIo
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0
+ priorityscore=1501 mlxscore=0 malwarescore=0 suspectscore=0
+ mlxlogscore=911 spamscore=0 impostorscore=0 lowpriorityscore=0
+ clxscore=1015 adultscore=0 bulkscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2411120000 definitions=main-2501030102
 
-Since commit 7ef9651e9792 ("clk: Provide new devm_clk helpers for prepare=
-d
-and enabled clocks"), devm_clk_get() and clk_prepare() can now be replace=
-d
-by devm_clk_get_prepared() when driver prepares the clocks for the whole
-lifetime of the device. Moreover, it is no longer necessary to unprepare
-the clocks explicitly.
 
-Signed-off-by: Zhang Heng <zhangheng@kylinos.cn>
----
- drivers/iommu/msm_iommu.c | 51 +++++++++------------------------------
- 1 file changed, 11 insertions(+), 40 deletions(-)
 
-diff --git a/drivers/iommu/msm_iommu.c b/drivers/iommu/msm_iommu.c
-index ce40f0a419ea..2769e4544038 100644
---- a/drivers/iommu/msm_iommu.c
-+++ b/drivers/iommu/msm_iommu.c
-@@ -725,47 +725,32 @@ static int msm_iommu_probe(struct platform_device *=
-pdev)
- 	iommu->dev =3D &pdev->dev;
- 	INIT_LIST_HEAD(&iommu->ctx_list);
-=20
--	iommu->pclk =3D devm_clk_get(iommu->dev, "smmu_pclk");
-+	iommu->pclk =3D devm_clk_get_prepared(iommu->dev, "smmu_pclk");
- 	if (IS_ERR(iommu->pclk))
- 		return dev_err_probe(iommu->dev, PTR_ERR(iommu->pclk),
- 				     "could not get smmu_pclk\n");
-=20
--	ret =3D clk_prepare(iommu->pclk);
--	if (ret)
--		return dev_err_probe(iommu->dev, ret,
--				     "could not prepare smmu_pclk\n");
--
--	iommu->clk =3D devm_clk_get(iommu->dev, "iommu_clk");
--	if (IS_ERR(iommu->clk)) {
--		clk_unprepare(iommu->pclk);
-+	iommu->clk =3D devm_clk_get_prepared(iommu->dev, "iommu_clk");
-+	if (IS_ERR(iommu->clk))
- 		return dev_err_probe(iommu->dev, PTR_ERR(iommu->clk),
- 				     "could not get iommu_clk\n");
--	}
--
--	ret =3D clk_prepare(iommu->clk);
--	if (ret) {
--		clk_unprepare(iommu->pclk);
--		return dev_err_probe(iommu->dev, ret, "could not prepare iommu_clk\n")=
-;
--	}
-=20
- 	r =3D platform_get_resource(pdev, IORESOURCE_MEM, 0);
- 	iommu->base =3D devm_ioremap_resource(iommu->dev, r);
- 	if (IS_ERR(iommu->base)) {
- 		ret =3D dev_err_probe(iommu->dev, PTR_ERR(iommu->base), "could not get=
- iommu base\n");
--		goto fail;
-+		return ret;
- 	}
- 	ioaddr =3D r->start;
-=20
- 	iommu->irq =3D platform_get_irq(pdev, 0);
--	if (iommu->irq < 0) {
--		ret =3D -ENODEV;
--		goto fail;
--	}
-+	if (iommu->irq < 0)
-+		return -ENODEV;
-=20
- 	ret =3D of_property_read_u32(iommu->dev->of_node, "qcom,ncb", &val);
- 	if (ret) {
- 		dev_err(iommu->dev, "could not get ncb\n");
--		goto fail;
-+		return ret;
- 	}
- 	iommu->ncb =3D val;
-=20
-@@ -780,8 +765,7 @@ static int msm_iommu_probe(struct platform_device *pd=
-ev)
-=20
- 	if (!par) {
- 		pr_err("Invalid PAR value detected\n");
--		ret =3D -ENODEV;
--		goto fail;
-+		return -ENODEV;
- 	}
-=20
- 	ret =3D devm_request_threaded_irq(iommu->dev, iommu->irq, NULL,
-@@ -791,7 +775,7 @@ static int msm_iommu_probe(struct platform_device *pd=
-ev)
- 					iommu);
- 	if (ret) {
- 		pr_err("Request IRQ %d failed with ret=3D%d\n", iommu->irq, ret);
--		goto fail;
-+		return ret;
- 	}
-=20
- 	list_add(&iommu->dev_node, &qcom_iommu_devices);
-@@ -800,23 +784,19 @@ static int msm_iommu_probe(struct platform_device *=
-pdev)
- 				     "msm-smmu.%pa", &ioaddr);
- 	if (ret) {
- 		pr_err("Could not add msm-smmu at %pa to sysfs\n", &ioaddr);
--		goto fail;
-+		return ret;
- 	}
-=20
- 	ret =3D iommu_device_register(&iommu->iommu, &msm_iommu_ops, &pdev->dev=
-);
- 	if (ret) {
- 		pr_err("Could not register msm-smmu at %pa\n", &ioaddr);
--		goto fail;
-+		return ret;
- 	}
-=20
- 	pr_info("device mapped at %p, irq %d with %d ctx banks\n",
- 		iommu->base, iommu->irq, iommu->ncb);
-=20
- 	return ret;
--fail:
--	clk_unprepare(iommu->clk);
--	clk_unprepare(iommu->pclk);
--	return ret;
- }
-=20
- static const struct of_device_id msm_iommu_dt_match[] =3D {
-@@ -824,20 +804,11 @@ static const struct of_device_id msm_iommu_dt_match=
-[] =3D {
- 	{}
- };
-=20
--static void msm_iommu_remove(struct platform_device *pdev)
--{
--	struct msm_iommu_dev *iommu =3D platform_get_drvdata(pdev);
--
--	clk_unprepare(iommu->clk);
--	clk_unprepare(iommu->pclk);
--}
--
- static struct platform_driver msm_iommu_driver =3D {
- 	.driver =3D {
- 		.name	=3D "msm_iommu",
- 		.of_match_table =3D msm_iommu_dt_match,
- 	},
- 	.probe		=3D msm_iommu_probe,
--	.remove		=3D msm_iommu_remove,
- };
- builtin_platform_driver(msm_iommu_driver);
---=20
-2.45.2
+On 12/13/2024 1:04 AM, Konrad Dybcio wrote:
+> On 10.12.2024 9:23 AM, Yuanfang Zhang wrote:
+>> Add coresight components: Funnel, ETE and ETF for SM8650.
+>>
+>> Signed-off-by: Yuanfang Zhang <quic_yuanfang@quicinc.com>
+>> ---
+>> Changes in v2:
+>> - Update compatible for funnel and etf.
+>> - remove unnecessary property: reg-names and arm,primecell-periphid.
+>> - Link to v1: https://lore.kernel.org/r/20241210-sm8650-cs-dt-v1-1-269693451584@quicinc.com
+>> ---
+>>  arch/arm64/boot/dts/qcom/sm8650.dtsi | 165 +++++++++++++++++++++++++++++++++++
+>>  1 file changed, 165 insertions(+)
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/sm8650.dtsi b/arch/arm64/boot/dts/qcom/sm8650.dtsi
+>> index 25e47505adcb790d09f1d2726386438487255824..76620d478e872a2b725693dc32364e2a183572b7 100644
+>> --- a/arch/arm64/boot/dts/qcom/sm8650.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/sm8650.dtsi
+>> @@ -5654,6 +5654,171 @@ compute-cb@12 {
+>>  				};
+>>  			};
+>>  		};
+>> +
+>> +		ete0 {
+>> +			compatible = "arm,embedded-trace-extension";
+>> +
+>> +			cpu = <&cpu0>;
+>> +			qcom,skip-power-up;
+>> +
+>> +			out-ports {
+>> +				port {
+>> +					ete0_out_funnel_ete: endpoint {
+>> +						remote-endpoint = <&funnel_ete_in_ete0>;
+>> +					};
+>> +				};
+>> +			};
+>> +		};
+>> +
+>> +		funnel_ete {
+> 
+> Node names must not contain underscores, use '-' instead
+As node name pattern: "^ete([0-9a-f]+)$" in arm,embedded-trace-extension.yaml,
+then name it ete0.
+> 
+> Also, nodes without a reg property/unit address don't belong under /soc
+> 
+Done.
+> Konrad
 
 
