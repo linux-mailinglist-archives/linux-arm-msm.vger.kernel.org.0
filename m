@@ -1,63 +1,86 @@
-Return-Path: <linux-arm-msm+bounces-43876-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-43877-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6180DA00930
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jan 2025 13:27:58 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id A1B60A00934
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jan 2025 13:28:06 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 29BC03A3E5C
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jan 2025 12:27:53 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 65A92163C3B
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jan 2025 12:28:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5F8C41F9F4A;
-	Fri,  3 Jan 2025 12:27:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CBAD51FA15A;
+	Fri,  3 Jan 2025 12:27:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ckz+aIRL"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="N3bKE+H/"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DF13219E0;
-	Fri,  3 Jan 2025 12:27:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55AEE1F9ED8
+	for <linux-arm-msm@vger.kernel.org>; Fri,  3 Jan 2025 12:27:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735907275; cv=none; b=W7MyalEnjrsCowtvhaiP6FCt/yskIlqYjQoI4D5Q8t04Dd7cMBRos9gTq2JDVQp9FpE84KFbH/Bw29yg2mrMmeQ4ejxkq4PYAqtoXJjamTIvxyPYeCoDm8WaSc/7AMAYfUgzg4oR33lkftIYPqpdFyudaOuQiBArHAVlVAu7ciA=
+	t=1735907276; cv=none; b=LxoMAgsYm2VRNo67E7Qq3xZYLiIO171reFRsG++6ZY332yZDqfnvvQf9GYk6vYLcnbichBKY6Qih4c4lwI4P3VDmlu6en6hHhK3rCiAa9X1I4REKd8n3Fg0kSsrB8EcbdFrHz9GGUXq+85+0GyoSsbEe5fOR5yLUNVbtZMLySFw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735907275; c=relaxed/simple;
-	bh=rajRgg5JjehrlZpBlIzZk6nRpQpEQ1vQ8aHgvMD9jXQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=sFFIuUTAzw8ukQ6Wf12i/dcpQh6jqhPWQSb778E0kKeo/7hAjMA0G9qTeabcev6GPJTPz23tWw13RIm8xF64ayqm0w7wGMCs9Qh8pFFBiq2yaX3OEdUYYO7OlDJ8JGY7Hkm0sAQSI7QPSMuk+TCFErPW/TesGRdrT09h+cgKwNU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ckz+aIRL; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 503BJ9Jw008316;
-	Fri, 3 Jan 2025 12:27:49 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	s=arc-20240116; t=1735907276; c=relaxed/simple;
+	bh=Pqwl7N6kCzQ/hrkxhcYrmAOFRMM56Ip/rYR6bmxRT3Y=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=MsitDhmxA5wjzM5gwnBo1fMYFCn6s9ZqolLWgsYHLx1Yt84D1/fhC7iQmfuz10a0UhnT/mXCZ1pYd4b8bCYFpYq/HSl2VkgLxqzb2kkhEdkjInjdzAkS4OSadK3UTxWXTTxOUYXHaXuzCeTLKdnOy3fpjIQ+WqEDcnwituZMufg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=N3bKE+H/; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 503CEVxk013580
+	for <linux-arm-msm@vger.kernel.org>; Fri, 3 Jan 2025 12:27:54 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	DpjjYYrq/Z26vXv0hJLwz7iVJUs3bbjdoTiWtMOhdJI=; b=ckz+aIRLcTng2k67
-	UPBArNNFqm0J3z4Rdb5ECrP+3nF97rFDBOkZyFNlDpMj/g/IXHl8zQy7p5r4uHpa
-	sb+pO8Agtyi2CJiwWn2cX0HBCOeMaV9d9bJJT3ycCcxE+seXctAmiKRxFwy27SGm
-	NTDpoULzWP141CFiir0/56DrvtCY92KEi5BzqlsbGnYlsSONNLxUH3bFqsfXIulg
-	aQriHXfC8EH/X6VlkCOpQNDhB2MyRSk716KxWxWJM5IIee5xylJC15hqJPxvwdzL
-	XPzkmQRW0fA4VeJTiDVS/mbTCpfk+h7Z1qrR7zflHD8QjW/H4hX+UXYsWp2QdVjc
-	b1JFfw==
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43xewfg44u-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 03 Jan 2025 12:27:49 +0000 (GMT)
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 503CRmth006085
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 3 Jan 2025 12:27:48 GMT
-Received: from [10.216.47.210] (10.80.80.8) by nasanex01c.na.qualcomm.com
- (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 3 Jan 2025
- 04:27:44 -0800
-Message-ID: <668b93c4-96a7-4326-9718-c4693cd64948@quicinc.com>
-Date: Fri, 3 Jan 2025 17:57:40 +0530
+	QdbJ1dOWvgh+OgR4NwZE+j5YlKJamHg+xsDrOvj8Qik=; b=N3bKE+H/u8PRNQb7
+	C88AV19SPgf8adrEUgxVI0CN4QPjJXgH2zwKEINlA6GrU/WpuFleQyD+YMHgKGEt
+	kBkuXz36JyDyvscC2WeVjZ5TJIfqerz5v4EifdhermbvhdJE6N0mSbmrvyUBcfmc
+	OPu2dAb6vtAprnjO5aiE93jtBNdNHoVz/9vUrZsYkLZQ5s805ezeU71fBUCKsPmA
+	+lfTsurWNJshXatDRTAkex16q0Odj+V2j7Nb9vU3G7VXYZkYqV2HwhY9/fyHukq2
+	FCAGWqNwt+b+tSAo3cNEvLuP5CaKRxkwI9LP4aEB+mpxsBAfQ/sihfFTOOe/Iw/U
+	azGUlg==
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com [209.85.222.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43xfjk81bf-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 03 Jan 2025 12:27:54 +0000 (GMT)
+Received: by mail-qk1-f199.google.com with SMTP id af79cd13be357-7b6ee03d7d9so83230385a.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 03 Jan 2025 04:27:54 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1735907273; x=1736512073;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=QdbJ1dOWvgh+OgR4NwZE+j5YlKJamHg+xsDrOvj8Qik=;
+        b=ElVOFoHH1xEhwt6Zr6IB6OQvnzIrFbBOinFM7kh4bEiyKJAbM3wG/yfADeqfPKGd9u
+         8uZI4FNDoec5QZxp81jO5I7VuUmdJRFW/rdOd044AwBiX9qQwMrayeyaWqN8FdTeYB6Z
+         wbJQObADMlf9IGC75+U6st1lozoxlreASf1vk5kNUn1ukKumHx+PbIVGy8psDKzgG9+f
+         jpEdnKQdBW5Upd4ElHzkXomekAEE11v/tQvgjWJ7cfHy1OKSzsQ8K8L9PxuV/82OUsEZ
+         Y52EFPdYaP5rQhtP/5CXgDTNDaaxfG2tge5WGDPyI2TYp4b+RuAWPpJFJCZvIgBAVJRL
+         DZag==
+X-Gm-Message-State: AOJu0Yyl8hH9x6df9j6JsQZj7TJwqfff2m8lQPVE5VQP5y/GIrgfmSAi
+	NFsjrJCDejLm920c8YK678qIGojRx7m2gBXpRHJZpIFX+RwgNO32tbOtKghDHXnFRiyD6JTs33Q
+	nbDgLsl6fNF6AWYNbzzmgx7WLuQwwupFIB6DKRUModviUZP5MtgVJ3PcfUnLA2ZbS
+X-Gm-Gg: ASbGncscaOw31OpspPR3Zw60ziJKGgPt6HJjxO7d8OwfEFxU77qypS11Q6mRlpLN03F
+	AnXiy2hWSHIyXGvMmp9eJmqJ/3NNeqDauEVCJUlPKBNXjx5orGEbpnHQjibFX3MabrWiTozT/ra
+	97IX0RQ0ykwF+SbIc1veQbF6aWn7VlT8dnIjmWs6oAJNBxfggYKchxvs3flZylfKn4E11YEhwn7
+	2nk9yc01oU+poxcKULesTsZ9kKYJtfRXCz9YqYW8t+sMrKT3QKH/7nFQMiSiNSXGvPOHm3bsmte
+	Otu53zUpQxfDSaV1SFwllmyHiAs9laLtA4k=
+X-Received: by 2002:a05:6214:4007:b0:6da:dbf0:9645 with SMTP id 6a1803df08f44-6dd23317478mr274820746d6.3.1735907273045;
+        Fri, 03 Jan 2025 04:27:53 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IH15Wpx7u9V/hOQ08GkSp0Y5O0301pekMRgSHOKCQeCdUs50MNnQM9AG6NcnIA0Lbk63M/OqQ==
+X-Received: by 2002:a05:6214:4007:b0:6da:dbf0:9645 with SMTP id 6a1803df08f44-6dd23317478mr274820606d6.3.1735907272677;
+        Fri, 03 Jan 2025 04:27:52 -0800 (PST)
+Received: from [192.168.65.90] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-aac0e898689sm1875427466b.78.2025.01.03.04.27.49
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 03 Jan 2025 04:27:52 -0800 (PST)
+Message-ID: <c94ce3c4-5b8f-4d7c-8acd-afab63306018@oss.qualcomm.com>
+Date: Fri, 3 Jan 2025 13:27:48 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,303 +88,61 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5] i2c: i2c-qcom-geni: Serve transfer during early resume
- stage
-To: Bjorn Andersson <andersson@kernel.org>
-CC: <andi.shyti@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-i2c@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <quic_bjorande@quicinc.com>, <konrad.dybcio@linaro.org>,
-        <quic_vdadhani@quicinc.com>, <vkoul@kernel.org>
-References: <20241227130236.755794-1-quic_msavaliy@quicinc.com>
- <aihmuvxxop7ipbsfzblbmywthxnklx34x2xlbvlrd4rio6rg77@gfqnzyjjewz3>
+Subject: Re: [PATCH v8 4/5] arm64: dts: qcom: Add CMN PLL node for IPQ9574 SoC
+To: Luo Jie <quic_luoj@quicinc.com>, Bjorn Andersson <andersson@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd
+ <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+ <conor+dt@kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, quic_kkumarcs@quicinc.com,
+        quic_suruchia@quicinc.com, quic_pavir@quicinc.com,
+        quic_linchen@quicinc.com, quic_leiwei@quicinc.com,
+        bartosz.golaszewski@linaro.org, srinivas.kandagatla@linaro.org
+References: <20250103-qcom_ipq_cmnpll-v8-0-c89fb4d4849d@quicinc.com>
+ <20250103-qcom_ipq_cmnpll-v8-4-c89fb4d4849d@quicinc.com>
 Content-Language: en-US
-From: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
-In-Reply-To: <aihmuvxxop7ipbsfzblbmywthxnklx34x2xlbvlrd4rio6rg77@gfqnzyjjewz3>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <20250103-qcom_ipq_cmnpll-v8-4-c89fb4d4849d@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: i4NGDutln9c0h2nMLA1ejNDzfeW2AqP9
-X-Proofpoint-ORIG-GUID: i4NGDutln9c0h2nMLA1ejNDzfeW2AqP9
+X-Proofpoint-ORIG-GUID: NmhorxE2GYYcdbPJ9IrCAkV2QdVXMDa9
+X-Proofpoint-GUID: NmhorxE2GYYcdbPJ9IrCAkV2QdVXMDa9
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
- lowpriorityscore=0 phishscore=0 priorityscore=1501 malwarescore=0
- spamscore=0 mlxlogscore=999 clxscore=1015 suspectscore=0 bulkscore=0
- mlxscore=0 adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 lowpriorityscore=0
+ malwarescore=0 priorityscore=1501 mlxlogscore=982 spamscore=0
+ clxscore=1015 bulkscore=0 suspectscore=0 impostorscore=0 phishscore=0
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.19.0-2411120000 definitions=main-2501030110
 
+On 3.01.2025 8:31 AM, Luo Jie wrote:
+> The CMN PLL clock controller allows selection of an input clock rate
+> from a defined set of input clock rates. It in-turn supplies fixed
+> rate output clocks to the hardware blocks that provide the ethernet
+> functions such as PPE (Packet Process Engine) and connected switch or
+> PHY, and to GCC.
+> 
+> The reference clock of CMN PLL is routed from XO to the CMN PLL through
+> the internal WiFi block.
+> .XO (48 MHZ or 96 MHZ)-->WiFi (multiplier/divider)-->48 MHZ to CMN PLL.
+> 
+> The reference input clock from WiFi to CMN PLL is fully controlled by
+> the bootstrap pins which select the XO frequency (48 MHZ or 96 MHZ).
+> Based on this frequency, the divider in the internal Wi-Fi block is
+> automatically configured by hardware (1 for 48 MHZ, 2 for 96 MHZ), to
+> ensure output clock to CMN PLL is 48 MHZ.
+> 
+> Signed-off-by: Luo Jie <quic_luoj@quicinc.com>
+> ---
 
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 
-On 12/27/2024 11:51 PM, Bjorn Andersson wrote:
-> On Fri, Dec 27, 2024 at 06:32:36PM +0530, Mukesh Kumar Savaliya wrote:
->> Fix the issue where pm_runtime_get_sync() fails during the PM early resume
-> 
-> No.
-> 
-> As we discussed, start your commit messages with a description of your
-> problem. Don't say "Fix bla bla because of problem description", say
-> "The QPS615 PCIe switch needs to be configured over I2C before the PCIe
-> link is restored, but the I2C geni driver does not allow transfers
-> during the early resume phase".
-> 
-Sure Bjorn. I should consider problem statement to start with.
->> phase, returning -EACCES because runtime PM for the device is disabled at
->> this stage. This failure causes I2C transfers to fail. To resolve this,
->> serve transfers with a forced resume.
->>
->> Allow certain I2C clients, such as PCI or Touch devices, to request I2C
-> 
-> I still don't understand what kind of touch device you have attached
-> that requires I2C communication before the system is resumed. Who are
-> you going to deliver the input events to at this point in time?
-> 
-It's like this : when touch interrupt comes, it goes to Touch driver and 
-it directly starts reading via I2C. Hence, system is still resuming post 
-receiving wakeup interrupt. Just wanted to explain, if you are fine with 
-PCIe usecase, we can move ahead.
->> transfers during the early resume stage. Enable any I2C client to initiate
->> a transfer request very early in the resume stage, such as during the
->> noirq phase of PM. Register an interrupt with the IRQF_EARLY_RESUME and
->> IRQF_NO_SUSPEND flags to handle these transfers and avoid timeouts when
->> IRQs are not enabled during the early stage.
->>
->> A Potential usecase: PCIe client -> PCIe Driver -> I2C driver. It involves
->> a PCIe client driver communicating with the PCIe driver, which in turn
->> interfaces with the I2C driver. Upon powering on the PCIe device, send
->> certain configurations over I2C. During the suspend phase, use the
->> suspend_noirq() routine to turn off the PCIe device, as some PCIe clients
->> continue transfers until this phase. During the resume_noirq() phase,
->> restore power to the PCIe device and reconfigure it via I2C. This ensures
->> that the PCIe device is properly configured and operational after resuming
->> from a suspended state.
-> 
-> This paragraph looks like a problem description, it should be at the
-> top.
-> 
-Sure, started with problem statement.
-> Read and follow https://docs.kernel.org/process/submitting-patches.html#describe-your-changes
-> 
-Done.
->>
->> Use pm_runtime_force_resume() to address the failure of
->> pm_runtime_get_sync() returning a negative value when runtime PM is
->> disabled.
->>
->> Co-developed-by: Viken Dadhaniya <quic_vdadhani@quicinc.com>
->> Signed-off-by: Viken Dadhaniya <quic_vdadhani@quicinc.com>
->> Signed-off-by: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
->> ---
->> Link to V4: https://lore.kernel.org/lkml/bd699719-4958-445a-a685-4b5f6a8ad81f@quicinc.com/
->>
->> v4->v5:
->> - Commit log enhanced considering Bjorn's comments by explaining PCIe usecase.
->> - Enhanced comment with reason when using pm_runtime_force_resume().
->> - Corrected IS_ENABLED(CONFIG_PM) condition inside geni_i2c_xfer().
->> - Improved debug log as per Bjorn's suggestions during suspend, resume.
->> - Reverted back comment before devm_request_irq().
->>
->> ---
->> Link to V3: https://lore.kernel.org/all/20241119143031.3331753-1-quic_msavaliy@quicinc.com/T/
->>
->> v3->v4 :
->>   - Enhanced commit log by explaining client usecase scenario during early resume.
->>   - Covered 'usage_count' of 'struct dev_pm_info' under CONFIG_PM to compile non PM CONFIG.
->>
->> ---
->> Link to V2: https://lore.kernel.org/lkml/202410132233.P25W2vKq-lkp@intel.com/T/
->>
->>   v2 -> v3:
->>   - Updated exact usecase and scenario in the commit log description.
->>   - Removed bulleted points from technical description, added details in free flow.
->>   - Used pm_runtime_force_resume/suspend() instead customized local implementation.
->>   - Added debug log after pm_runtime_force_suspend().
->>
->> ---
->>
->>   v1 -> v2:
->>   - Changed gi2c->se.dev to dev during dev_dbg() calls.
->>   - Addressed review comments from Andi and Bjorn.
->>   - Returned 0 instead garbage inside geni_i2c_force_resume().
->>   - Added comments explaining forced resume transfer when runtime PM
->>     remains disabled.
->> ---
->>
->>      V1 link: https://patches.linaro.org/project/linux-i2c/patch/20240328123743.1713696-1-quic_msavaliy@quicinc.com/
->> ---
->> ---
->>   drivers/i2c/busses/i2c-qcom-geni.c | 47 +++++++++++++++++++++++-------
->>   1 file changed, 37 insertions(+), 10 deletions(-)
->>
->> diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-qcom-geni.c
->> index 7a22e1f46e60..1885e1ceb11c 100644
->> --- a/drivers/i2c/busses/i2c-qcom-geni.c
->> +++ b/drivers/i2c/busses/i2c-qcom-geni.c
->> @@ -695,17 +695,31 @@ static int geni_i2c_xfer(struct i2c_adapter *adap,
->>   			 int num)
->>   {
->>   	struct geni_i2c_dev *gi2c = i2c_get_adapdata(adap);
->> +	struct device *dev = gi2c->se.dev;
->>   	int ret;
->>   
->>   	gi2c->err = 0;
->>   	reinit_completion(&gi2c->done);
->> -	ret = pm_runtime_get_sync(gi2c->se.dev);
->> -	if (ret < 0) {
->> -		dev_err(gi2c->se.dev, "error turning SE resources:%d\n", ret);
->> -		pm_runtime_put_noidle(gi2c->se.dev);
->> -		/* Set device in suspended since resume failed */
->> -		pm_runtime_set_suspended(gi2c->se.dev);
->> -		return ret;
->> +	/* During early resume stage, runtime PM is disabled and pm_runtime_get_sync()
->> +	 * returns error Hence use force_resume() and serve transfer.
->> +	 */
->> +	if (!pm_runtime_enabled(dev) && gi2c->suspended) {
->> +		#if (!IS_ENABLED(CONFIG_PM))
-> 
-> Per Documentation/process/coding-style.rst section 21, this should be:
-> 	if (!IS_ENABLED(CONFIG_PM))
-Sure, Changed it.
-> 
->> +		dev_dbg(dev, "Forced power ON, pm_usage_count: %d\n",
->> +			atomic_read(&dev->power.usage_count));
-> 
-> What does this debug print tell you? Shouldn't usage_count be zero in
-> all cases where suspended = true?
-> 
-The debug log tells the usage_count when powered on during forced 
-resume. since it's debug print, purpose is to catch anything wrong 
-during issue time. It helps if usage_count is imbalanced because of any 
-wrong.
->> +		#endif
->> +		ret = pm_runtime_force_resume(dev);
-> 
-> If I understand the implementation of this function, in the case that
-> you did not invoke pm_runtime_force_suspend() this will solely invoke
-> pm_runtime_enable(), not actually invoking any callbacks and hence
-> wouldn't turn any resources on.
-> 
-> Which makes sense given that this isn't the documented intended usage of
-> the function pair.
-> 
-yes
-> 
-> In fact, the kernel-doc even says "Prior invoking this function we
-> expect the user to have brought the device into low power state by a
-> call to pm_runtime_force_suspend()".
-> 
-Do you think we should use flag is_force_suspended from inside the 
-function and accordingly act ? OR you mean to say this condition applied 
-itself is wrong if force_suspend()/force_resume() not in pair ?
->> +		if (ret)
->> +			return ret;
->> +	} else {
->> +		ret = pm_runtime_get_sync(gi2c->se.dev);
->> +		if (ret < 0) {
->> +			dev_err(gi2c->se.dev, "Error turning resources: %d\n", ret);
->> +			pm_runtime_put_noidle(gi2c->se.dev);
->> +			/* Set device in suspended since resume failed */
->> +			pm_runtime_set_suspended(gi2c->se.dev);
->> +			return ret;
->> +		}
->>   	}
->>   
->>   	qcom_geni_i2c_conf(gi2c);
->> @@ -715,8 +729,20 @@ static int geni_i2c_xfer(struct i2c_adapter *adap,
->>   	else
->>   		ret = geni_i2c_fifo_xfer(gi2c, msgs, num);
->>   
->> -	pm_runtime_mark_last_busy(gi2c->se.dev);
->> -	pm_runtime_put_autosuspend(gi2c->se.dev);
->> +	/* if Runtime PM is disabled, do force_suspend() else autosuspend the driver */
->> +	if (!pm_runtime_enabled(dev) && !gi2c->suspended) {
-> 
-> I find the asymmetry here suspicious, but I presume what you're checking is:
-> 1) !pm_runtime_enabled() => we're probably in late-suspend or early-resume
-yes
-> 2) !suspended => we invoked pm_runtime_force_resume() above, which
-> invoked geni_i2c_runtime_resume(), which cleared suspended.
-> 
-yes
-> Such spaghetti should be avoided, but if necessary need to be clearly
-> documented, and #2 is completely ignored in the comment.
-Sure, i thought by looking at code it would be clear to understand by 
-looking at the conditions. The conditions are really required to serve 
-early resume time transfer. So i think i should be adding comment 
-clarifying it.
-> 
-> "else autosuspend the driver", that part you can obviously skip as it's
-> that's exactly what the code below says.
-sure.
-> 
->> +		ret = pm_runtime_force_suspend(dev);
-> 
-> The expectation expressed in the kernel-doc of these functions is that
-> pm_runtime_force_suspend() should be followed by a
-> pm_runtime_force_resume().
-> 
-yes, i saw that but we don't get always things into pair that way. For 
-that i see most of the drivers do use SET_NOIRQ_SYSTEM_SLEEP_PM_OPS().
-
-> As you don't follow that, most of pm_runtime_force_resume() will be
-> skipped, but here the full pm_runtime_force_suspend() will happen.
-> 
-I think there is also autosuspend timer being used inside 
-force_resume(), so will not be back to back force_resume. You may 
-correct me.
-> In the event that this is the last i2c_xfer before the system is
-> entering the resume-phase, you will leave the device in force-suspend
-> and then resume it "normally" on the next i2c_xfer.
-> 
-> If you instead make another i2c_xfer within the early resume, the above
-> pm_runtime_force_resume() will suddenly behave completely differently -
-> it will actually invoke geni_i2c_runtime_resume().
-> 
-The way we intend to use is - direct i2c_xfer() function making the 
-force_resume(), do transfer(), then keeping back to force_suspend().
-Rest of the things should work by doing get_sync() and put_sync() as 
-earlier.
-> 
-> Perhaps I'm misunderstanding something here?
-> 
-You may be right. I have reviewed other drivers also, most of the 
-drivers are implementing SET_NOIRQ_SYSTEM_SLEEP_PM_OPS() and which in 
-turn calls force_suspend() and force_resume().
-
-Please let me know if that can be followed in this case too.
-> Regards,
-> Bjorn
-> 
->> +		#if (!IS_ENABLED(CONFIG_PM))
->> +		dev_dbg(dev, "Forced power OFF, pm_usage_count: %d\n",
->> +			atomic_read(&dev->power.usage_count));
->> +		#endif
->> +		if (ret)
->> +			return ret;
->> +	} else {
->> +		pm_runtime_mark_last_busy(gi2c->se.dev);
->> +		pm_runtime_put_autosuspend(gi2c->se.dev);
->> +	}
->> +
->>   	gi2c->cur = NULL;
->>   	gi2c->err = 0;
->>   	return ret;
->> @@ -835,7 +861,8 @@ static int geni_i2c_probe(struct platform_device *pdev)
->>   	platform_set_drvdata(pdev, gi2c);
->>   
->>   	/* Keep interrupts disabled initially to allow for low-power modes */
->> -	ret = devm_request_irq(dev, gi2c->irq, geni_i2c_irq, IRQF_NO_AUTOEN,
->> +	ret = devm_request_irq(dev, gi2c->irq, geni_i2c_irq,
->> +			       IRQF_NO_AUTOEN | IRQF_EARLY_RESUME | IRQF_NO_SUSPEND,
->>   			       dev_name(dev), gi2c);
->>   	if (ret) {
->>   		dev_err(dev, "Request_irq failed:%d: err:%d\n",
->> -- 
->> 2.25.1
->>
->>
-
+Konrad
 
