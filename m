@@ -1,254 +1,155 @@
-Return-Path: <linux-arm-msm+bounces-43812-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-43813-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3DF5AA00369
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jan 2025 05:21:59 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id E06E4A003AA
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jan 2025 06:39:03 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CDE1A162ADB
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jan 2025 04:21:56 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2B43C188387E
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jan 2025 05:39:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DD05B200A0;
-	Fri,  3 Jan 2025 04:21:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0FBE21B21B5;
+	Fri,  3 Jan 2025 05:38:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="dRc857Z9"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="PjyUiju2"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f181.google.com (mail-lj1-f181.google.com [209.85.208.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 104A12F22;
-	Fri,  3 Jan 2025 04:21:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C6341B1D65
+	for <linux-arm-msm@vger.kernel.org>; Fri,  3 Jan 2025 05:38:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735878114; cv=none; b=QEj3jFfm63A8xnr/T3S4h2j7PqIOBZn5bZWBJVPH3l5WLiwLIZZwZTeT7KKP1G+EOeb+n07odHD3+DuLTLOTkKCnprJRgc0wMcmg5J7h4tmvGPufUN38sPBKgN4xRbkxj2j+cDq0bXX0qx8rSMZ+mUMULPwPUMGz2E59W6us4l0=
+	t=1735882735; cv=none; b=MZ2SbZU53q89Zv3ivc6Dcpw9y0tEGpH9zZMn5fEmDastL182nuDtgNqhTZGTd0qmROTgWFpm6QCQa5McQZfBlkUxa3rLhQX9p5EtgaopCuPiXB4OpXQip8ULLaZUK7zQprVvwGHplKeNVQ2qtFoNpLet/oMJFS/l4pFyTp6sl4s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735878114; c=relaxed/simple;
-	bh=rUh+Jms2/cvZlBuLCtwSku5gU2f6s93rcjhzOGf1Nvg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=cdqltCnNhlTKT53YBvv0U+4aqWfnDaJgn7Zbrg0O/F80QrFRA+xWsCVvFm3bDV/pX031+IUmpObCLhAEj5pcJ9XpPBQCbIe0X4mnEPIxWMfFjdvOoDSc+bexplVhOPbts2z6hU35YiPo5E2H7KYmKSxvJONBA5HDrXc8m3uq8hc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=dRc857Z9; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5030t2Gj008637;
-	Fri, 3 Jan 2025 04:21:36 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	84y03jD3GZcQ7y+IdGpRQBmYmLIJsFO/lG++Ku79PMc=; b=dRc857Z90bSO/YR6
-	Qw7epzEyKm0ZG5zkOSd1DsVflGDFoXyp+Y3/qoII2zdD7ZfdtWeNpd22hH5fZciC
-	LNOsRzeJoLm8xhopnNWiRVCo7bn5hdQhdyoY9NICzHjGIqgpi3yYlQI3U7SykjdE
-	6icn7D45xZp1r7bsZEH1IzXIGVB/F7rXLcwNg0D4TUOTIWtvRjCV2Ywo8PwReOaK
-	VrNo5YXRSNJF1hhuKfD/vmDweYhZblqnYUX/QgxMc3WpcvalzhK1s+Y69RkPKvqe
-	AEmPA1p9o8vtX8jQZQfiy2Tl2jLdZkGLCoPPolZ3XoB+6w67RxncHDihdiiOdkSR
-	ztwZtQ==
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43x5s0rbn9-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 03 Jan 2025 04:21:35 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 5034LZfH029417
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 3 Jan 2025 04:21:35 GMT
-Received: from [10.218.33.29] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 2 Jan 2025
- 20:21:30 -0800
-Message-ID: <acdf1267-ce56-4ec1-8407-a5f3212a8bfe@quicinc.com>
-Date: Fri, 3 Jan 2025 09:51:23 +0530
+	s=arc-20240116; t=1735882735; c=relaxed/simple;
+	bh=XTewuUNQ+/ESgzDVGNQhvgCh25cMGfsFj/3A69tDp6U=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=VcxY378/HfBLGfqyVHBpMKXjAyFaidWflgU9Q6t23w1v9apcaQEyEhqLKX8rEU+PbEoefkWjYfuHI+bYyU60Bs0loXyqKaKv4VZUiYgXdBufqoiZaPazmUBN1qRzz5jQEsCVhi1jJrQnf2XOGJiac8Vxy7Etm8GrdsV6m8Tv/44=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=PjyUiju2; arc=none smtp.client-ip=209.85.208.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lj1-f181.google.com with SMTP id 38308e7fff4ca-30225b2586cso139181271fa.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Jan 2025 21:38:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1735882732; x=1736487532; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=Nh6CMd7r1T+hytaykBZTXDKLZ482z8ewIFxQcxwOIrc=;
+        b=PjyUiju2+93QaTOGjTiRINGC5m02tlUUCiIedkl5uIGmro+a7rmp6pQXXalqhLiR9I
+         e5O7wO+y/joJltHnDyu/QQucm0mFv7JakKcyB9/VpjiGeAkA8b0aoiRdMXoi8Kw/wxSG
+         knsbzkS1rnEtcJ46Dx1APZ697z+zIY5x4Tuj62O5f9ZqbXI1ynuTnqipd69w/QTC3EYb
+         LbftxjvSUu+5VapUmEFh+WeYMFJ5RpE7W7/wKTh32adNu0YEGWydy1c/+QTTGgBgEJNE
+         SX73WAbAoxFTvqp3nnSg3hCIKC7UXe70/JH4XAldURnbj9wNzt2JINFQ6k43TED8PQA0
+         1q2A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1735882732; x=1736487532;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Nh6CMd7r1T+hytaykBZTXDKLZ482z8ewIFxQcxwOIrc=;
+        b=mewK1LsXR+DGHHsueMbLfI5/0ISa0yv8un1pzoUtV/UyRbjnLayLNYXIW8YWQPCeOg
+         ggLMbbqVf7JDP4IdZ2eqQse/qSpHXRlEehWOq5iQPb1tDubcjRdHo0eSSiRURjZK2OgQ
+         z4zGYw4ynyFR0za5pzi1RUm7VoM6SoFpsJowaxTNJjGiXCOXd9vLEwfPn1P0vleg9vye
+         voiPGlNWDxqPCDgbCMRi3QHiNsjiEy/cpy5J+ccdmYW2wXfbTopGf3nBJOqGhjPKQfKG
+         2/CTKY6e91S4waJZlGBo30mYpG8sKPkvkDdTqM2dCvff9b/UF8smD32iYWLGjuOyQVgP
+         rJUg==
+X-Forwarded-Encrypted: i=1; AJvYcCW9Ky7fOz+d3PZ2KuKkEaNU9PoX9D9VVuDgs49qTtaqoyoZJWLPdK457tn9CY3fVYYcmLhAuxRVKUfNfLSM@vger.kernel.org
+X-Gm-Message-State: AOJu0YxUZBTh4ttMCGaD6XKFe3uB8dl9FTYUMSaElKuonU5s6ewfw+Wu
+	Ev+YWT5LVPqFz+8pv8Aqm27/TlGJhA/O1PiNqTl/32LNx/IimUItsQcCtKno3s0=
+X-Gm-Gg: ASbGncvx/o6cUWiaF9gR6/oxrkdHy79Ja/EHDqCI7889Re8JYbVgDptKZFGBTLTS7uz
+	4WOiM2d9frqTaT3ivgFjHSuLrSevddaAjqSJpYt83JEbNbQ6fYIYH+HDvs9suFwCLehnSHT2MAF
+	jfBGTK3LKxaDN19tqPFicpdwaJK7Z2AOhhaEp6AMnS5uwiqwzqrFkKTaJM2m8C23VcAIUJUiup1
+	NA0tBNBJ5Ma9FSZbgt+oFbjd23NNCQTuDYE2EaFA2kbw63h0hn/4JFW5yemCWo98t7qHv+2SmAH
+	wSK4K1GZmUf1fn95krtVJAoYEerMlBXBbdev
+X-Google-Smtp-Source: AGHT+IHmLh+NOber4nBw/SsreQFdAIZQKPzTuuOcd6i2VGjx3RMNWlFuyhwgzubmzrvX31fOVuwr6Q==
+X-Received: by 2002:a05:6512:401b:b0:540:2247:ac4e with SMTP id 2adb3069b0e04-542212e1035mr14142710e87.7.1735882732124;
+        Thu, 02 Jan 2025 21:38:52 -0800 (PST)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-3045ad6c60fsm45363211fa.24.2025.01.02.21.38.49
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 02 Jan 2025 21:38:50 -0800 (PST)
+Date: Fri, 3 Jan 2025 07:38:48 +0200
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Pengyu Luo <mitltlatltl@gmail.com>
+Cc: quic_aiquny@quicinc.com, andersson@kernel.org, 
+	bryan.odonoghue@linaro.org, conor+dt@kernel.org, devicetree@vger.kernel.org, 
+	gregkh@linuxfoundation.org, hdegoede@redhat.com, heikki.krogerus@linux.intel.com, 
+	ilpo.jarvinen@linux.intel.com, konradybcio@kernel.org, krzk+dt@kernel.org, 
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org, 
+	linux-usb@vger.kernel.org, nikita@trvn.ru, platform-driver-x86@vger.kernel.org, 
+	robh@kernel.org, sre@kernel.org
+Subject: Re: [PATCH 2/5] platform: arm64: add Huawei Matebook E Go (sc8280xp)
+ EC driver
+Message-ID: <uqr2hibbl4krkseeal6shmcifctrppimk4tr3y4i64luqpslsq@q3mz2ppencwl>
+References: <1dff7a78-1693-45d7-8ee3-357b33848595@quicinc.com>
+ <20241231074437.239979-1-mitltlatltl@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 2/6] clk: qcom: Add support for GPU Clock Controller on
- QCS8300
-To: Bjorn Andersson <andersson@kernel.org>
-CC: Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd
-	<sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski
-	<krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Ajit Pandey
-	<quic_ajipan@quicinc.com>,
-        Taniya Das <quic_tdas@quicinc.com>,
-        Jagadeesh Kona
-	<quic_jkona@quicinc.com>,
-        Satya Priya Kakitapalli
-	<quic_skakitap@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        Dmitry Baryshkov
-	<dmitry.baryshkov@linaro.org>
-References: <20241106-qcs8300-mm-patches-v3-0-f611a8f87f15@quicinc.com>
- <20241106-qcs8300-mm-patches-v3-2-f611a8f87f15@quicinc.com>
- <xc7iiuwlbihb7dguq77el5ipt2w5324klyvojkyf2eh3lit6eh@zgj567elzljm>
-Content-Language: en-US
-From: Imran Shaik <quic_imrashai@quicinc.com>
-In-Reply-To: <xc7iiuwlbihb7dguq77el5ipt2w5324klyvojkyf2eh3lit6eh@zgj567elzljm>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: Zh-LRNeAYkheVge3yxWIrwpXVZrFIbgL
-X-Proofpoint-GUID: Zh-LRNeAYkheVge3yxWIrwpXVZrFIbgL
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 mlxscore=0
- priorityscore=1501 bulkscore=0 adultscore=0 spamscore=0 malwarescore=0
- clxscore=1015 suspectscore=0 phishscore=0 mlxlogscore=999
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2501030035
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20241231074437.239979-1-mitltlatltl@gmail.com>
 
-
-
-On 12/27/2024 9:54 AM, Bjorn Andersson wrote:
-> On Wed, Nov 06, 2024 at 03:21:57PM +0530, Imran Shaik wrote:
->> Add support to the QCS8300 GPU clock controller by extending
->> the SA8775P GPU clock controller, which is mostly identical
->> but QCS8300 has few additional clocks and minor differences.
->>
+On Tue, Dec 31, 2024 at 03:44:36PM +0800, Pengyu Luo wrote:
+> On Tue, Dec 31, 2024 at 1:00 PM Aiqun(Maria) Yu <quic_aiquny@quicinc.com> wrote:
+> > On 12/30/2024 6:44 PM, Pengyu Luo wrote:
+> > > On Mon, Dec 30, 2024 at 5:04 PM Aiqun(Maria) Yu <quic_aiquny@quicinc.com> wrote:
+> > >> On 12/28/2024 1:13 AM, Pengyu Luo wrote:
+> > [...]
+> > >>> +     i2c_transfer(client->adapter, msgs, 2);
+> > >>
+> > >> ARRAY_SIZE(msgs) is suggested instead of pure 2.
+> > >>
+> > >
+> > > Agree
+> > >
+> > >>> +     usleep_range(2000, 2500);
+> > >>
+> > >> Why is a sleep needed here? Is this information specified in any datasheet?
+> > >>
+> > >
+> > > Have a break between 2 transaction. This sleep happens in acpi code, also
+> > > inside a critical region. I rearranged it.
+> > >
+> > > Local7 = Acquire (\_SB.IC16.MUEC, 0x03E8)
+> > > ...
+> > > write ops
+> > > ...
+> > > Sleep (0x02)
+> > > ...
+> > > read ops
+> > > ...
+> > > Release (\_SB.IC16.MUEC)
+> >
+> > Could you please share the exact code snippet that is being referenced?
+> > I'm a bit confused because it doesn't seem to align with the current
+> > logic, which doesn't have read operations within the same mutex lock. I
+> > also want to understand the background and necessity of the sleep function.
+> >
 > 
-> What does "mostly identical" mean?
-> 
-> Is QCS8300 a derivative of SA8775P? Or is it just by accident that these
-> two SoCs happens to have almost the same set of clocks?
-> 
+> I mentioned I rearranged it to optimize it. In a EC transaction,
+> write sleep read => write read sleep, in this way, we sleep once a
+> transaction.
 
-Yes, QCS8300 is a derivative of SA8775P.
+Sleeping between write and read is logical: it provides EC some time to
+respond. Sleeping after read is complete doesn't seem to have any
+reason.
 
 > 
-> Also, commit messages should follow the flow described in
-> https://docs.kernel.org/process/submitting-patches.html#describe-your-changes.
-> 
+> Please search
+> 'device name + acpi table' on the internet, someone dumped it and uploaded
+> it, in SSDT, check ECCD. I am not sure if huawei allows users to dump it.
+> So I don't provide it here.
 
-Sure, I will update the commit text with above details and post next series.
-
-Thanks,
-Imran
-
-> Regards,
-> Bjorn
-> 
->> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->> Signed-off-by: Imran Shaik <quic_imrashai@quicinc.com>
->> ---
->>  drivers/clk/qcom/gpucc-sa8775p.c | 49 +++++++++++++++++++++++++++++++++++++++-
->>  1 file changed, 48 insertions(+), 1 deletion(-)
->>
->> diff --git a/drivers/clk/qcom/gpucc-sa8775p.c b/drivers/clk/qcom/gpucc-sa8775p.c
->> index f8a8ac343d70..78cad622cb5a 100644
->> --- a/drivers/clk/qcom/gpucc-sa8775p.c
->> +++ b/drivers/clk/qcom/gpucc-sa8775p.c
->> @@ -12,7 +12,7 @@
->>  #include <linux/platform_device.h>
->>  #include <linux/regmap.h>
->>  
->> -#include <dt-bindings/clock/qcom,sa8775p-gpucc.h>
->> +#include <dt-bindings/clock/qcom,qcs8300-gpucc.h>
->>  
->>  #include "clk-alpha-pll.h"
->>  #include "clk-branch.h"
->> @@ -317,6 +317,24 @@ static struct clk_branch gpu_cc_crc_ahb_clk = {
->>  	},
->>  };
->>  
->> +static struct clk_branch gpu_cc_cx_accu_shift_clk = {
->> +	.halt_reg = 0x95e8,
->> +	.halt_check = BRANCH_HALT,
->> +	.clkr = {
->> +		.enable_reg = 0x95e8,
->> +		.enable_mask = BIT(0),
->> +		.hw.init = &(const struct clk_init_data){
->> +			.name = "gpu_cc_cx_accu_shift_clk",
->> +			.parent_hws = (const struct clk_hw*[]){
->> +				&gpu_cc_xo_clk_src.clkr.hw,
->> +			},
->> +			.num_parents = 1,
->> +			.flags = CLK_SET_RATE_PARENT,
->> +			.ops = &clk_branch2_ops,
->> +		},
->> +	},
->> +};
->> +
->>  static struct clk_branch gpu_cc_cx_ff_clk = {
->>  	.halt_reg = 0x914c,
->>  	.halt_check = BRANCH_HALT,
->> @@ -420,6 +438,24 @@ static struct clk_branch gpu_cc_demet_clk = {
->>  	},
->>  };
->>  
->> +static struct clk_branch gpu_cc_gx_accu_shift_clk = {
->> +	.halt_reg = 0x95e4,
->> +	.halt_check = BRANCH_HALT,
->> +	.clkr = {
->> +		.enable_reg = 0x95e4,
->> +		.enable_mask = BIT(0),
->> +		.hw.init = &(const struct clk_init_data){
->> +			.name = "gpu_cc_gx_accu_shift_clk",
->> +			.parent_hws = (const struct clk_hw*[]){
->> +				&gpu_cc_xo_clk_src.clkr.hw,
->> +			},
->> +			.num_parents = 1,
->> +			.flags = CLK_SET_RATE_PARENT,
->> +			.ops = &clk_branch2_ops,
->> +		},
->> +	},
->> +};
->> +
->>  static struct clk_branch gpu_cc_hlos1_vote_gpu_smmu_clk = {
->>  	.halt_reg = 0x7000,
->>  	.halt_check = BRANCH_HALT_VOTED,
->> @@ -499,6 +535,7 @@ static struct clk_regmap *gpu_cc_sa8775p_clocks[] = {
->>  	[GPU_CC_AHB_CLK] = &gpu_cc_ahb_clk.clkr,
->>  	[GPU_CC_CB_CLK] = &gpu_cc_cb_clk.clkr,
->>  	[GPU_CC_CRC_AHB_CLK] = &gpu_cc_crc_ahb_clk.clkr,
->> +	[GPU_CC_CX_ACCU_SHIFT_CLK] = NULL,
->>  	[GPU_CC_CX_FF_CLK] = &gpu_cc_cx_ff_clk.clkr,
->>  	[GPU_CC_CX_GMU_CLK] = &gpu_cc_cx_gmu_clk.clkr,
->>  	[GPU_CC_CX_SNOC_DVM_CLK] = &gpu_cc_cx_snoc_dvm_clk.clkr,
->> @@ -508,6 +545,7 @@ static struct clk_regmap *gpu_cc_sa8775p_clocks[] = {
->>  	[GPU_CC_DEMET_DIV_CLK_SRC] = &gpu_cc_demet_div_clk_src.clkr,
->>  	[GPU_CC_FF_CLK_SRC] = &gpu_cc_ff_clk_src.clkr,
->>  	[GPU_CC_GMU_CLK_SRC] = &gpu_cc_gmu_clk_src.clkr,
->> +	[GPU_CC_GX_ACCU_SHIFT_CLK] = NULL,
->>  	[GPU_CC_HLOS1_VOTE_GPU_SMMU_CLK] = &gpu_cc_hlos1_vote_gpu_smmu_clk.clkr,
->>  	[GPU_CC_HUB_AHB_DIV_CLK_SRC] = &gpu_cc_hub_ahb_div_clk_src.clkr,
->>  	[GPU_CC_HUB_AON_CLK] = &gpu_cc_hub_aon_clk.clkr,
->> @@ -583,6 +621,7 @@ static const struct qcom_cc_desc gpu_cc_sa8775p_desc = {
->>  };
->>  
->>  static const struct of_device_id gpu_cc_sa8775p_match_table[] = {
->> +	{ .compatible = "qcom,qcs8300-gpucc" },
->>  	{ .compatible = "qcom,sa8775p-gpucc" },
->>  	{ }
->>  };
->> @@ -596,6 +635,14 @@ static int gpu_cc_sa8775p_probe(struct platform_device *pdev)
->>  	if (IS_ERR(regmap))
->>  		return PTR_ERR(regmap);
->>  
->> +	if (of_device_is_compatible(pdev->dev.of_node, "qcom,qcs8300-gpucc")) {
->> +		gpu_cc_pll0_config.l = 0x31;
->> +		gpu_cc_pll0_config.alpha = 0xe555;
->> +
->> +		gpu_cc_sa8775p_clocks[GPU_CC_CX_ACCU_SHIFT_CLK] = &gpu_cc_cx_accu_shift_clk.clkr;
->> +		gpu_cc_sa8775p_clocks[GPU_CC_GX_ACCU_SHIFT_CLK] = &gpu_cc_gx_accu_shift_clk.clkr;
->> +	}
->> +
->>  	clk_lucid_evo_pll_configure(&gpu_cc_pll0, regmap, &gpu_cc_pll0_config);
->>  	clk_lucid_evo_pll_configure(&gpu_cc_pll1, regmap, &gpu_cc_pll1_config);
->>  
->>
->> -- 
->> 2.25.1
->>
-
+-- 
+With best wishes
+Dmitry
 
