@@ -1,64 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-43922-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-43923-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 09232A00FCB
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jan 2025 22:25:05 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 86337A01048
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jan 2025 23:39:15 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 141E0188625B
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jan 2025 21:23:04 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 426931610C2
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jan 2025 22:39:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B7DFA1C1F1D;
-	Fri,  3 Jan 2025 21:18:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8BC5B1BD9D0;
+	Fri,  3 Jan 2025 22:39:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RWNE9reb"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VULL0aBQ"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87AB41C07EA;
-	Fri,  3 Jan 2025 21:18:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BD2F2629C;
+	Fri,  3 Jan 2025 22:39:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735939119; cv=none; b=Z255Z2p0D/qHgLQ/h/Wwsngql96P8a6+NGrpjduNkKwSMIz2IynQBk/Z6+6WCSxnmNmZgwYx3j7mOTjh6BYbtkTtSSLn+0Ay3TmORJi9M58O5KgVxco6sqHpcrXicfU5KKRlPkpkxETQSOeR23vBodRHYPwXIbFB1sMB5Krto90=
+	t=1735943950; cv=none; b=WQDFN5CaxF1MwJlMuaFNiPvXuefpbPJZyoY9w4LfIB43Ilonap7ePUd2D5ZqE+C1uqGLp+Q/xcsInCAoh0wsWhIxXzReqQAgn0Tlx/+v/PAIivqQJ49W0qkIbHratUaTSuOs1u6g2pAwR/SG75VxnopNLaYM+1IpgNkqlDw15jY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735939119; c=relaxed/simple;
-	bh=Yrk/YsSXzP/Nte+IkBreXUjv1UblDRgdvIS1lIKOFlQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To; b=lYDVZor/s29Hxe5OLFLOuTVkT5mGJGzbp8BkMpAQNlRHYyHE1+ji3t3zebAnGV5ekrZvUvLUkdIDHw7YoTqy45WGpowWlGWe+9riXBFgA6kAVJnGsl14QYKCjGHKiFf/y1HVeEhAOo4Vncw+LZh66q7JvURp8h2VPZZEZl/H8mU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RWNE9reb; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB28EC4CECE;
-	Fri,  3 Jan 2025 21:18:38 +0000 (UTC)
+	s=arc-20240116; t=1735943950; c=relaxed/simple;
+	bh=KyuBE1YPsrgBWLwzGpJ3dDD8ktrGq1em5l/rIrxYNzk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=mTI/VtOWQoofbVp8no3hddUEI57hzX8EvcueI4N7RRriNBNGDANBZESP5CffbdUGkHk5x2CTBLgSNrBsYSbhGc2QwfjWZkmXkbT0V5xjxM/YHH/ywsLGhM9uY9HKjtwIFs1038slPJjqtWkjsloJpk72XMwAIViA2jTLqQerFgI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VULL0aBQ; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5AF5C4CEDD;
+	Fri,  3 Jan 2025 22:39:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1735939119;
-	bh=Yrk/YsSXzP/Nte+IkBreXUjv1UblDRgdvIS1lIKOFlQ=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:From;
-	b=RWNE9rebV2LC7ARtdr8jkr7nAmAorBFtJDVOiISUnTZqAv6n8qGXKayukW9c/uZS1
-	 Nqnt5ea2nvL8batQ8UXS4A4AZRiEU7Dt5MWBCd8azQ0H72IMwbb5uXpkdSCjhyYQ8M
-	 zk85osVZaCMDBa+2qY5v7M6aaReOy8lzjgpk7zBLznq0PyxVHo3FCUhfmQnrvv0L9m
-	 usddZB7kENa8J09L+kIW0kcF3dt1/EKL7dQgrnOy4QSTVi24+1bvM5tRz3plBk/rPp
-	 Yv3kq3+etWSFIBRGk+9kp+HdOYEO7Pet5c6dUS6JvkAW9qJOoEGjri2iRe+FH6Njk5
-	 i065sT9FBLPGQ==
-Date: Fri, 3 Jan 2025 15:18:37 -0600
-From: Bjorn Helgaas <helgaas@kernel.org>
-To: Patrick Wildt <patrick@blueri.se>
-Cc: Kalle Valo <kvalo@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
-	Rob Herring <robh+dt@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Andy Gross <agross@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Steev Klimaszewski <steev@kali.org>, linux-wireless@vger.kernel.org,
-	netdev@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-	Johan Hovold <johan+linaro@kernel.org>
-Subject: Re: [PATCH 2/2] arm64: dts: qcom: x1e80100-yoga: add wifi
- calibration variant
-Message-ID: <20250103211837.GA4406@bhelgaas>
+	s=k20201202; t=1735943949;
+	bh=KyuBE1YPsrgBWLwzGpJ3dDD8ktrGq1em5l/rIrxYNzk=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=VULL0aBQOGbTbU5tMbX1LMa+Ta/p4DfQqNgx5xTyNFrFySB/rPR6OCMnZbl+Dm/gA
+	 Fm66TAzMURVYvCzs5EYDHgdWUY7rlRTxv61uSTpmHb8fMpe4QUE4kSgWrKwdYLvFBI
+	 vfNFZ9RoblVynE9Tk4Sqjy3J1uRcR+udnlul/w1KKobi4l/mx+oMV63XajoXsmcPgf
+	 kiaQxYqgAOjcayl62lGbwE5alYrapueBkgDf06AE1iSA9xpiONxLarDQkFYfe+ZJBc
+	 fk0Yrl04Eac0jnGLDm3K7XPRncYjWt0Xl2ovDZw7Jpe3Egv0cca9IDBIdnu/An9N69
+	 teSJmfB6Vjsig==
+Date: Fri, 3 Jan 2025 23:39:05 +0100
+From: Andi Shyti <andi.shyti@kernel.org>
+To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Cc: Loic Poulain <loic.poulain@linaro.org>, Robert Foss <rfoss@kernel.org>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+	Conor Dooley <conor+dt@kernel.org>, Todor Tomov <todor.too@gmail.com>, 
+	Mauro Carvalho Chehab <mchehab@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+	Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>, 
+	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>, Jagadeesh Kona <quic_jkona@quicinc.com>, 
+	Konrad Dybcio <konradybcio@kernel.org>, linux-i2c@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, linux-media@vger.kernel.org, 
+	linux-clk@vger.kernel.org, Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: Re: [PATCH v3 1/6] dt-bindings: i2c: qcom-cci: Document x1e80100
+ compatible
+Message-ID: <tuyhcn3ivgi2otmu5zapbggrhhtna3wfgmkcsyeowoyx6bzmj3@664xn4yi6beu>
+References: <20250102-b4-linux-next-24-11-18-dtsi-x1e80100-camss-v3-0-cb66d55d20cc@linaro.org>
+ <20250102-b4-linux-next-24-11-18-dtsi-x1e80100-camss-v3-1-cb66d55d20cc@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -67,37 +66,21 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <ZpV7OeGNIGGpqNC0@windev.fritz.box>
+In-Reply-To: <20250102-b4-linux-next-24-11-18-dtsi-x1e80100-camss-v3-1-cb66d55d20cc@linaro.org>
 
-On Mon, Jul 15, 2024 at 09:40:41PM +0200, Patrick Wildt wrote:
-> Describe the bus topology for PCIe domain 4 and add the ath12k
-> calibration variant so that the board file (calibration data) can be
-> loaded.
+Hi Bryan,
 
-> +++ b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-> @@ -3085,6 +3085,16 @@ &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>,
->  			phy-names = "pciephy";
->  
->  			status = "disabled";
-> +
-> +			pcie4_port0: pcie@0 {
-> +				device_type = "pci";
-> +				reg = <0x0 0x0 0x0 0x0 0x0>;
-> +				bus-range = <0x01 0xff>;
-
-Hi Patrick, what's the purpose of this bus-range?  IIUC this describes
-a Root Port, where we can read and configure the secondary/subordinate
-bus numbers from the RP config space, so it seems like we don't need
-to describe them here.
-
-> +				#address-cells = <3>;
-> +				#size-cells = <2>;
-> +				ranges;
-> +			};
->  		};
->  
->  		pcie4_phy: phy@1c0e000 {
-> -- 
-> 2.45.2
+On Thu, Jan 02, 2025 at 04:32:06PM +0000, Bryan O'Donoghue wrote:
+> Add the x1e80100 CCI device string compatible.
 > 
+> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+
+this patch 1/6 has already been merged in i2c/i2c-host. You
+should not send it anymore.
+
+The rest of the patches are handled elsewere.
+
+Thanks,
+Andi
 
