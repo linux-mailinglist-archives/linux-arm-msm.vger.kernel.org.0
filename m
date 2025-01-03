@@ -1,62 +1,64 @@
-Return-Path: <linux-arm-msm+bounces-43921-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-43922-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 15FDBA00FBB
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jan 2025 22:23:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 09232A00FCB
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jan 2025 22:25:05 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 92F6B1885CCF
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jan 2025 21:21:48 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 141E0188625B
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jan 2025 21:23:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2A110202C38;
-	Fri,  3 Jan 2025 21:15:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B7DFA1C1F1D;
+	Fri,  3 Jan 2025 21:18:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RjXTeR3B"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RWNE9reb"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A06C21FF7DD;
-	Fri,  3 Jan 2025 21:15:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87AB41C07EA;
+	Fri,  3 Jan 2025 21:18:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735938916; cv=none; b=ch9uiiHjz7EHwLNhKmDSUk4kCMaXuDeA5A9CJ9emax9k2rp9t7eC/GgCFaputEGnXVmtt3NBbZHKHBO5PIZCkz6lqtS+cBjg0yIM+FE6riweJeF87+PXzi6J44OchmEJxgBCaKJS7onIdF9UmqpvIfgj3kSNfugxarzvUgbWYdM=
+	t=1735939119; cv=none; b=Z255Z2p0D/qHgLQ/h/Wwsngql96P8a6+NGrpjduNkKwSMIz2IynQBk/Z6+6WCSxnmNmZgwYx3j7mOTjh6BYbtkTtSSLn+0Ay3TmORJi9M58O5KgVxco6sqHpcrXicfU5KKRlPkpkxETQSOeR23vBodRHYPwXIbFB1sMB5Krto90=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735938916; c=relaxed/simple;
-	bh=7vm9MHYHGYH82BQKmuGx2CxjkfUZ+ODXMDVuxbYlzYA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=IAV39+QOvLnR3WE2yfoT2mSRGkvoXy8hZb8A+L2bM8CpNNbY8k4H+fd/KfT99azpQn6bDlZgHwyM68bLn3z3sHn3jN7dGnuIKYnHzaTYZldmCDUHhH6mukXTsSpK/IoQ9sgNnZ4bIVRdfx3NJgjom+HJlb8QQSOvvfq8UeERYS0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RjXTeR3B; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD8F1C4CECE;
-	Fri,  3 Jan 2025 21:15:15 +0000 (UTC)
+	s=arc-20240116; t=1735939119; c=relaxed/simple;
+	bh=Yrk/YsSXzP/Nte+IkBreXUjv1UblDRgdvIS1lIKOFlQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To; b=lYDVZor/s29Hxe5OLFLOuTVkT5mGJGzbp8BkMpAQNlRHYyHE1+ji3t3zebAnGV5ekrZvUvLUkdIDHw7YoTqy45WGpowWlGWe+9riXBFgA6kAVJnGsl14QYKCjGHKiFf/y1HVeEhAOo4Vncw+LZh66q7JvURp8h2VPZZEZl/H8mU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RWNE9reb; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB28EC4CECE;
+	Fri,  3 Jan 2025 21:18:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1735938916;
-	bh=7vm9MHYHGYH82BQKmuGx2CxjkfUZ+ODXMDVuxbYlzYA=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=RjXTeR3BgMdvT5fbnE/MWgTb0znii8c79ZcLAjxcQax6x+xhoUYYVG0NDtNUkF923
-	 s/Ummnxq868YpkJElpea8GFiEF3OKYG/7nD87bxqogC75ikEL0TQdwJuWvv8X+viI6
-	 RiHC5yUaANWWZxwHOE+qMh37qoJlxdVytYukzCcXjONVIaWzMZwRQye3jevSDN9R/+
-	 EsmWEGCnt1yZYj7wOzaPuk1xu2gUZ6FLYcvZPP3qrbATn+QxEn4lAANOKL/U/h/RTG
-	 sGqXZo4AB4T9j92rDHcGtbdTBHMW6Asx09FsaYRh3+a/kyATKZupFus6EC1tqOTb9Q
-	 4/wfbNfWFAVXA==
-Date: Fri, 3 Jan 2025 15:15:14 -0600
-From: "Rob Herring (Arm)" <robh@kernel.org>
-To: Luca Weiss <luca.weiss@fairphone.com>
-Cc: Konrad Dybcio <konradybcio@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	linux-kernel@vger.kernel.org, linux-i2c@vger.kernel.org,
-	Conor Dooley <conor+dt@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Bartosz Golaszewski <brgl@bgdev.pl>,
-	~postmarketos/upstreaming@lists.sr.ht, devicetree@vger.kernel.org,
-	phone-devel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH 3/5] dt-bindings: eeprom: at24: Add compatible for Puya
- P24C256C
-Message-ID: <173593891365.2842180.9280370418622410267.robh@kernel.org>
-References: <20250103-fp5-cam-eeprom-v1-0-88dee1b36f8e@fairphone.com>
- <20250103-fp5-cam-eeprom-v1-3-88dee1b36f8e@fairphone.com>
+	s=k20201202; t=1735939119;
+	bh=Yrk/YsSXzP/Nte+IkBreXUjv1UblDRgdvIS1lIKOFlQ=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:From;
+	b=RWNE9rebV2LC7ARtdr8jkr7nAmAorBFtJDVOiISUnTZqAv6n8qGXKayukW9c/uZS1
+	 Nqnt5ea2nvL8batQ8UXS4A4AZRiEU7Dt5MWBCd8azQ0H72IMwbb5uXpkdSCjhyYQ8M
+	 zk85osVZaCMDBa+2qY5v7M6aaReOy8lzjgpk7zBLznq0PyxVHo3FCUhfmQnrvv0L9m
+	 usddZB7kENa8J09L+kIW0kcF3dt1/EKL7dQgrnOy4QSTVi24+1bvM5tRz3plBk/rPp
+	 Yv3kq3+etWSFIBRGk+9kp+HdOYEO7Pet5c6dUS6JvkAW9qJOoEGjri2iRe+FH6Njk5
+	 i065sT9FBLPGQ==
+Date: Fri, 3 Jan 2025 15:18:37 -0600
+From: Bjorn Helgaas <helgaas@kernel.org>
+To: Patrick Wildt <patrick@blueri.se>
+Cc: Kalle Valo <kvalo@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+	Rob Herring <robh+dt@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Andy Gross <agross@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Steev Klimaszewski <steev@kali.org>, linux-wireless@vger.kernel.org,
+	netdev@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+	Johan Hovold <johan+linaro@kernel.org>
+Subject: Re: [PATCH 2/2] arm64: dts: qcom: x1e80100-yoga: add wifi
+ calibration variant
+Message-ID: <20250103211837.GA4406@bhelgaas>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,18 +67,37 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250103-fp5-cam-eeprom-v1-3-88dee1b36f8e@fairphone.com>
+In-Reply-To: <ZpV7OeGNIGGpqNC0@windev.fritz.box>
 
+On Mon, Jul 15, 2024 at 09:40:41PM +0200, Patrick Wildt wrote:
+> Describe the bus topology for PCIe domain 4 and add the ath12k
+> calibration variant so that the board file (calibration data) can be
+> loaded.
 
-On Fri, 03 Jan 2025 12:11:59 +0100, Luca Weiss wrote:
-> Add the compatible for an 256Kb EEPROM from Puya.
+> +++ b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
+> @@ -3085,6 +3085,16 @@ &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>,
+>  			phy-names = "pciephy";
+>  
+>  			status = "disabled";
+> +
+> +			pcie4_port0: pcie@0 {
+> +				device_type = "pci";
+> +				reg = <0x0 0x0 0x0 0x0 0x0>;
+> +				bus-range = <0x01 0xff>;
+
+Hi Patrick, what's the purpose of this bus-range?  IIUC this describes
+a Root Port, where we can read and configure the secondary/subordinate
+bus numbers from the RP config space, so it seems like we don't need
+to describe them here.
+
+> +				#address-cells = <3>;
+> +				#size-cells = <2>;
+> +				ranges;
+> +			};
+>  		};
+>  
+>  		pcie4_phy: phy@1c0e000 {
+> -- 
+> 2.45.2
 > 
-> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
-> ---
->  Documentation/devicetree/bindings/eeprom/at24.yaml | 4 ++++
->  1 file changed, 4 insertions(+)
-> 
-
-Acked-by: Rob Herring (Arm) <robh@kernel.org>
-
 
