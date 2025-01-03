@@ -1,145 +1,335 @@
-Return-Path: <linux-arm-msm+bounces-43914-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-43915-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3E326A00DBA
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jan 2025 19:43:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id C632BA00E22
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jan 2025 19:59:36 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 1C8F2163C6C
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jan 2025 18:43:28 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 921CB163FED
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jan 2025 18:59:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 992A91FC7DF;
-	Fri,  3 Jan 2025 18:43:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BFF2C1FAC55;
+	Fri,  3 Jan 2025 18:59:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZUcGJFiK"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Bix3DSTf"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58F9C1F9F7D;
-	Fri,  3 Jan 2025 18:43:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC0C21B983E;
+	Fri,  3 Jan 2025 18:59:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735929806; cv=none; b=JtG0MGjrR0l7QYZVGGhzu4rZL7+obJmT+7nGo+e+3b8iMBWWJH6iWGoVOfxqosWXvCdh+7rj5xjpSEkZAlQWLEKfgNIS47F9i3+bxWCpv+nRk6auYYmN43YdqpsiD2eICMJ4df23N30FdRVCIlE4YPc7479IpQNVcyCS/2oyu2w=
+	t=1735930771; cv=none; b=FLjMH/jWbHYTAkXJX130Lz32bbNuzdo04kiqcnrXj3B3EKqKNWRA+Kegnu9znBmnW69aH7uOzvXEKxcB1G4HT8LL/gKdYuwA8AL0bfiavzIA/FRUqTPwdZEr6N1rGpm7O2aimmQVmR2mV0FEgjiSHYfX4GVUz2Y5ccgJOc4sEtg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735929806; c=relaxed/simple;
-	bh=8pOKdkbcvZRxJ8M7I+SOFXrJdPA2Dafv5X9jSrrDkEk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=RxZakjxHlRt769RYIsVx8yjPuW7YXbajxKK6s4PZFoM+mtTrbFws2MXhIMKU4r9PpDYkXEQmzTHQ8Neea8WfnzcVXmFZFi1AGnCXIcHbY3XGI/YU1X6g3wVLplUvKaULiVNrVm0blErUjhUcVBLN3952fSqGefNv5hZnOIfNQlU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZUcGJFiK; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82ABCC4CED6;
-	Fri,  3 Jan 2025 18:43:21 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1735929805;
-	bh=8pOKdkbcvZRxJ8M7I+SOFXrJdPA2Dafv5X9jSrrDkEk=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=ZUcGJFiKlBKF6LjEBgdB1NGR4Uo/sPiahJZXmRbXxvGA2xsvBphnbzjO0WM9KWp3M
-	 NQgQXkLrUGVp1cAnrqPryrINnGobbCnBbMETZM+7BefQis2YlWka+/NAtkPvZnhbCJ
-	 CYo8bWW86rHI4e5xKYPftoxErHs4ZM7EhcSgZzIFRJxBUG4i1ll6RQ/oi93hjtWgRR
-	 oCARFTgqnSHc/n6Jna4MLJhvYu/NOOAXlAod8YW9CHmfnBusnFNZBvtDSoEopuJy0y
-	 deQwXwY9m3sAZu+VleS55xnNOzRb4mljQTd/IIeDC0O5wpdgQ4DIn9BF9asO6iTN9Y
-	 YBWrzODRxWmSg==
-Message-ID: <d78bc184-b035-41bb-b5eb-088a86c6b77d@kernel.org>
-Date: Fri, 3 Jan 2025 19:43:18 +0100
+	s=arc-20240116; t=1735930771; c=relaxed/simple;
+	bh=hAng8NWuOWivqottZ7fXYtagj8wIGpUHK40EjCiOVns=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=JB6QLuEd+7V4QcO9ahvKnIVp04/YL3bJqBXSqWtGGENvlB5L9MeVmUazpgmAlpVfK9sNvpSnIF4df/qk3xNFrxXj0sWF8BpE1QuKVkmH6Rk0x4lBdiIbATwir0n3/O4e9dtVRa9n0/hZW9xutnKI/bMgwSZiXZ8AOEXWzhYvW58=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Bix3DSTf; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 503C4Y4x022458;
+	Fri, 3 Jan 2025 18:59:25 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=rEowyQot/JNKoGQzdXBR0sON
+	mMFLbf04NYOADbA4TqI=; b=Bix3DSTfoOxBp7/Av9NFmagy/RmCXilCm2Ch9t8w
+	CrDXxgSqFsFfM0ggX20T/S48pujHbJeNnfhcm3sisxR0NGMorBQnn1VoZO7sgtey
+	tR0+rGmsB2PYjBQ3hfJSlX4SA5BJetBTjAuxCL8GZgOFuXhXmX/u3zDgAt1eS4Vq
+	wA51RSb8ypJeYxuKpB3HCEhjUyrR83TDN9RRNQGfDLezw2tyDDyVl8dRC8DK7Ucc
+	Ov2izhYKtPYOmrpxtry/FvKIDjzMGtr5Yp1Z/K5L8W5Bd4l8jvUEB1e0/4vIdmX0
+	eN0QDRoR9Ah63ubv97yYnPDNOEJf8fNh632kevYgh2gRwQ==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43xfk3gqw1-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 03 Jan 2025 18:59:25 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 503IxOYG011239
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 3 Jan 2025 18:59:24 GMT
+Received: from hu-wasimn-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Fri, 3 Jan 2025 10:59:16 -0800
+Date: Sat, 4 Jan 2025 00:29:07 +0530
+From: Wasim Nazir <quic_wasimn@quicinc.com>
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio
+	<konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski
+	<krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <kernel@quicinc.com>
+Subject: Re: [PATCH v5 5/6] arm64: dts: qcom: Add support for QCS9075 Ride &
+ Ride-r3
+Message-ID: <Z3gzezBgZhZJkxzV@hu-wasimn-hyd.qualcomm.com>
+References: <20241229152332.3068172-1-quic_wasimn@quicinc.com>
+ <20241229152332.3068172-6-quic_wasimn@quicinc.com>
+ <tjrg5zqggupjo36udpyv3vynsij76f4qlus6lkbqotuimusqgq@hosmksp77sif>
+ <Z3ZXWxoBtMNPJ9kk@hu-wasimn-hyd.qualcomm.com>
+ <4wmxjxcvt7un7wk5v43q3jpxqjs2jbc626mgah2fxbfuouu4q6@ptzibxe2apmx>
+ <Z3eMxl1Af8TOAQW/@hu-wasimn-hyd.qualcomm.com>
+ <xuy6tp4dmxiqbjitmoi6x5lngplgcczytnowqjvzvq5hh5zwoa@moipssfsgw3w>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V2 1/2] dt-bindings: mailbox: Document qcom,tmel-qmp
-To: Sricharan Ramabadhran <quic_srichara@quicinc.com>
-Cc: jassisinghbrar@gmail.com, robh@kernel.org, krzk+dt@kernel.org,
- conor+dt@kernel.org, linux-arm-msm@vger.kernel.org,
- linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
- andersson@kernel.org, konradybcio@kernel.org,
- manivannan.sadhasivam@linaro.org, dmitry.baryshkov@linaro.org
-References: <20241231054900.2144961-1-quic_srichara@quicinc.com>
- <20241231054900.2144961-2-quic_srichara@quicinc.com>
- <kwtzvcoyayml3tgicnp5a75r65hqpicm7hivtk25ohp6rt34qf@sgunxjxfe33r>
- <ac15561f-b9e7-4434-af1a-04408172d46c@quicinc.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <ac15561f-b9e7-4434-af1a-04408172d46c@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <xuy6tp4dmxiqbjitmoi6x5lngplgcczytnowqjvzvq5hh5zwoa@moipssfsgw3w>
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: -LH2_WA6MmDvF5OVkjKXD5bkNRZkf7XP
+X-Proofpoint-ORIG-GUID: -LH2_WA6MmDvF5OVkjKXD5bkNRZkf7XP
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999 phishscore=0
+ adultscore=0 priorityscore=1501 lowpriorityscore=0 spamscore=0
+ suspectscore=0 malwarescore=0 mlxscore=0 clxscore=1015 bulkscore=0
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2501030167
 
-On 03/01/2025 19:34, Sricharan Ramabadhran wrote:
->>> +description:
->>> +  TMEL SS provides different kinds of services like secureboot, remote image
->>> +  authentication, key management, crypto, OEM provisioning etc. This patch adds
->>> +  support for remote image authentication. Support for rest of the services can
->>> +  be added.
->>> +
->>> +  The QMP mailbox is the primary means of communication between TMEL SS and
->>> +  other subsystem on the SoC. A dedicated pair of inbound and outbound mailboxes
->>> +  is implemented for each subsystem/external execution environment which needs to
->>> +  communicate with TMEL for security services. The inbound mailboxes are used to
->>> +  send IPC requests to TMEL, which are then processed by TMEL firmware and
->>> +  accordingly the responses are sent to the requestor via outbound mailboxes.
->>> +
->>> +properties:
->>> +  compatible:
->>> +    items:
->>> +      - enum:
->>> +          - qcom,ipq5424-tmel-qmp
->>
->>
->> Why qmp? Can TMEL on IPQ5424 be anything else? Can TMEL be SMEM or using
->> any other remoteproc?
->>
-> TMEL on IPQ5424 uses only QMP protocol for communication.
-
-
-Then keep just "tmel". It completely defines this device.
-
+On Fri, Jan 03, 2025 at 12:31:55PM +0200, Dmitry Baryshkov wrote:
+> On Fri, Jan 03, 2025 at 12:37:50PM +0530, Wasim Nazir wrote:
+> > On Fri, Jan 03, 2025 at 07:50:43AM +0200, Dmitry Baryshkov wrote:
+> > > On Thu, Jan 02, 2025 at 02:37:39PM +0530, Wasim Nazir wrote:
+> > > > On Mon, Dec 30, 2024 at 05:45:39PM +0200, Dmitry Baryshkov wrote:
+> > > > > On Sun, Dec 29, 2024 at 08:53:31PM +0530, Wasim Nazir wrote:
+> > > > > > Add device tree support for QCS9075 Ride & Ride-r3 boards.
+> > > > > > 
+> > > > > > QCS9075 lacks the safety monitoring features of Safety-Island (SAIL)
+> > > > > > subsystem which is available in QCS9100, and it affects thermal
+> > > > > > management.
+> > > > > > 
+> > > > > > Also, between ride and ride-r3 ethernet phy is different.
+> > > > > > Ride uses 1G ethernet phy while ride-r3 uses 2.5G ethernet phy.
+> > > > > 
+> > > > > Your board files duplicate sa8775p-ride-r3.dts and sa8775p-ride.dts, but
+> > > > > include them. Existing qcs9100-ride-r3.dts and qcs9100-ride-r3.dts just
+> > > > > include corresponding SA8775P files.
+> > > > > 
+> > > > > This is not ideal for the following reasons:
+> > > > > - The approach is not uniform (between QCS9100 and QCS9075), which might
+> > > > >   lead to mistakes.
+> > > > > - The approach ends up duplicating DT code unnecessarily, which can lead
+> > > > >   to issues being patches in the one board file, but not in the other
+> > > > >   file.
+> > > > > 
+> > > > > If there are any reasons why you want to follow this approach, they must
+> > > > > be a part of the commit message.
+> > > > > 
+> > > > 
+> > > > Hi Dmitry,
+> > > > 
+> > > > Initially, we included the DTS [1] file to avoid duplication. However,
+> > > > based on Krzysztof's previous suggestion [2], we change to this format.
+> > > > 
+> > > > Please let us know how to proceed further on this.
+> > > 
+> > > Krzysztof asked you to include DTSI files instead of including DTS
+> > > files. Hope this helps.
+> > 
+> > Are you suggesting that we should also modify the 9100-ride files to
+> > include DTSI instead of DTS for consistency between QCS9100 and QCS9075?
+> > However, this would result in the duplication of Ethernet nodes in all
+> > the ride board files. Would that be acceptable?
 > 
-Best regards,
-Krzysztof
+> git mv foo.dts foo.dtsi
+> echo '#include "foo.dtsi"' > foo.dts
+> git add foo.dts
+> git commit
+> 
+
+We cannot convert sa8775p-ride-r3.dts and sa8775p-ride.dts to .dtsi as
+they represent different platforms. In patch [1], we included these DTS
+files to reuse the common hardware nodes.
+
+Could you please advise on how we should proceed with the following
+approaches?
+
+a) Previous approach [1]:
+Include sa8775p-ride-r3.dts and sa8775p-ride.dts in the qcs9075-ride
+platform DTS, similar to the qcs9100-ride platform DTS. This approach
+avoids duplicating Ethernet nodes and maintains uniformity. However, it
+involves including the DTS file directly.
+
+b) Current suggestion:
+Include sa8775p-ride.dtsi in the qcs9075-ride platform DTS and also
+modify the qcs9100-ride platform DTS files to maintain uniformity. This
+approach results in duplicating Ethernet nodes.
+
+Please let us know your recommendation to finalize the DT structure.
+
+[1] https://lore.kernel.org/all/20241119174954.1219002-6-quic_wasimn@quicinc.com/
+
+> > 
+> > > 
+> > > > 
+> > > > [1] https://lore.kernel.org/all/20241119174954.1219002-6-quic_wasimn@quicinc.com/
+> > > > [2] https://lore.kernel.org/all/8cf9edc0-a0cb-4fd0-b10e-2138784dfba3@kernel.org/
+> > > > 
+> > > > > > 
+> > > > > > Signed-off-by: Wasim Nazir <quic_wasimn@quicinc.com>
+> > > > > > ---
+> > > > > >  arch/arm64/boot/dts/qcom/Makefile            |  2 +
+> > > > > >  arch/arm64/boot/dts/qcom/qcs9075-ride-r3.dts | 46 ++++++++++++++++++++
+> > > > > >  arch/arm64/boot/dts/qcom/qcs9075-ride.dts    | 46 ++++++++++++++++++++
+> > > > > >  3 files changed, 94 insertions(+)
+> > > > > >  create mode 100644 arch/arm64/boot/dts/qcom/qcs9075-ride-r3.dts
+> > > > > >  create mode 100644 arch/arm64/boot/dts/qcom/qcs9075-ride.dts
+> > > > > > 
+> > > > > > diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+> > > > > > index 78613a1bd34a..41cb2bbd3472 100644
+> > > > > > --- a/arch/arm64/boot/dts/qcom/Makefile
+> > > > > > +++ b/arch/arm64/boot/dts/qcom/Makefile
+> > > > > > @@ -118,6 +118,8 @@ dtb-$(CONFIG_ARCH_QCOM)	+= qcs6490-rb3gen2.dtb
+> > > > > >  dtb-$(CONFIG_ARCH_QCOM)	+= qcs8300-ride.dtb
+> > > > > >  dtb-$(CONFIG_ARCH_QCOM)	+= qcs8550-aim300-aiot.dtb
+> > > > > >  dtb-$(CONFIG_ARCH_QCOM)	+= qcs9075-rb8.dtb
+> > > > > > +dtb-$(CONFIG_ARCH_QCOM)	+= qcs9075-ride.dtb
+> > > > > > +dtb-$(CONFIG_ARCH_QCOM)	+= qcs9075-ride-r3.dtb
+> > > > > >  dtb-$(CONFIG_ARCH_QCOM)	+= qcs9100-ride.dtb
+> > > > > >  dtb-$(CONFIG_ARCH_QCOM)	+= qcs9100-ride-r3.dtb
+> > > > > >  dtb-$(CONFIG_ARCH_QCOM)	+= qdu1000-idp.dtb
+> > > > > > diff --git a/arch/arm64/boot/dts/qcom/qcs9075-ride-r3.dts b/arch/arm64/boot/dts/qcom/qcs9075-ride-r3.dts
+> > > > > > new file mode 100644
+> > > > > > index 000000000000..d9a8956d3a76
+> > > > > > --- /dev/null
+> > > > > > +++ b/arch/arm64/boot/dts/qcom/qcs9075-ride-r3.dts
+> > > > > > @@ -0,0 +1,46 @@
+> > > > > > +// SPDX-License-Identifier: BSD-3-Clause
+> > > > > > +/*
+> > > > > > + * Copyright (c) 2024, Qualcomm Innovation Center, Inc. All rights reserved.
+> > > > > > + */
+> > > > > > +/dts-v1/;
+> > > > > > +
+> > > > > > +#include "sa8775p-ride.dtsi"
+> > > > > > +
+> > > > > > +/ {
+> > > > > > +	model = "Qualcomm Technologies, Inc. QCS9075 Ride Rev3";
+> > > > > > +	compatible = "qcom,qcs9075-ride-r3", "qcom,qcs9075", "qcom,sa8775p";
+> > > > > > +};
+> > > > > > +
+> > > > > > +&ethernet0 {
+> > > > > > +	phy-mode = "2500base-x";
+> > > > > > +};
+> > > > > > +
+> > > > > > +&ethernet1 {
+> > > > > > +	phy-mode = "2500base-x";
+> > > > > > +};
+> > > > > > +
+> > > > > > +&mdio {
+> > > > > > +	compatible = "snps,dwmac-mdio";
+> > > > > > +	#address-cells = <1>;
+> > > > > > +	#size-cells = <0>;
+> > > > > > +
+> > > > > > +	sgmii_phy0: phy@8 {
+> > > > > > +		compatible = "ethernet-phy-id31c3.1c33";
+> > > > > > +		reg = <0x8>;
+> > > > > > +		device_type = "ethernet-phy";
+> > > > > > +		interrupts-extended = <&tlmm 7 IRQ_TYPE_EDGE_FALLING>;
+> > > > > > +		reset-gpios = <&pmm8654au_2_gpios 8 GPIO_ACTIVE_LOW>;
+> > > > > > +		reset-assert-us = <11000>;
+> > > > > > +		reset-deassert-us = <70000>;
+> > > > > > +	};
+> > > > > > +
+> > > > > > +	sgmii_phy1: phy@0 {
+> > > > > > +		compatible = "ethernet-phy-id31c3.1c33";
+> > > > > > +		reg = <0x0>;
+> > > > > > +		device_type = "ethernet-phy";
+> > > > > > +		interrupts-extended = <&tlmm 26 IRQ_TYPE_EDGE_FALLING>;
+> > > > > > +		reset-gpios = <&pmm8654au_2_gpios 9 GPIO_ACTIVE_LOW>;
+> > > > > > +		reset-assert-us = <11000>;
+> > > > > > +		reset-deassert-us = <70000>;
+> > > > > > +	};
+> > > > > > +};
+> > > > > > diff --git a/arch/arm64/boot/dts/qcom/qcs9075-ride.dts b/arch/arm64/boot/dts/qcom/qcs9075-ride.dts
+> > > > > > new file mode 100644
+> > > > > > index 000000000000..3b524359a72d
+> > > > > > --- /dev/null
+> > > > > > +++ b/arch/arm64/boot/dts/qcom/qcs9075-ride.dts
+> > > > > > @@ -0,0 +1,46 @@
+> > > > > > +// SPDX-License-Identifier: BSD-3-Clause
+> > > > > > +/*
+> > > > > > + * Copyright (c) 2024, Qualcomm Innovation Center, Inc. All rights reserved.
+> > > > > > + */
+> > > > > > +/dts-v1/;
+> > > > > > +
+> > > > > > +#include "sa8775p-ride.dtsi"
+> > > > > > +
+> > > > > > +/ {
+> > > > > > +	model = "Qualcomm Technologies, Inc. QCS9075 Ride";
+> > > > > > +	compatible = "qcom,qcs9075-ride", "qcom,qcs9075", "qcom,sa8775p";
+> > > > > > +};
+> > > > > > +
+> > > > > > +&ethernet0 {
+> > > > > > +	phy-mode = "sgmii";
+> > > > > > +};
+> > > > > > +
+> > > > > > +&ethernet1 {
+> > > > > > +	phy-mode = "sgmii";
+> > > > > > +};
+> > > > > > +
+> > > > > > +&mdio {
+> > > > > > +	compatible = "snps,dwmac-mdio";
+> > > > > > +	#address-cells = <1>;
+> > > > > > +	#size-cells = <0>;
+> > > > > > +
+> > > > > > +	sgmii_phy0: phy@8 {
+> > > > > > +		compatible = "ethernet-phy-id0141.0dd4";
+> > > > > > +		reg = <0x8>;
+> > > > > > +		device_type = "ethernet-phy";
+> > > > > > +		interrupts-extended = <&tlmm 7 IRQ_TYPE_EDGE_FALLING>;
+> > > > > > +		reset-gpios = <&pmm8654au_2_gpios 8 GPIO_ACTIVE_LOW>;
+> > > > > > +		reset-assert-us = <11000>;
+> > > > > > +		reset-deassert-us = <70000>;
+> > > > > > +	};
+> > > > > > +
+> > > > > > +	sgmii_phy1: phy@a {
+> > > > > > +		compatible = "ethernet-phy-id0141.0dd4";
+> > > > > > +		reg = <0xa>;
+> > > > > > +		device_type = "ethernet-phy";
+> > > > > > +		interrupts-extended = <&tlmm 26 IRQ_TYPE_EDGE_FALLING>;
+> > > > > > +		reset-gpios = <&pmm8654au_2_gpios 9 GPIO_ACTIVE_LOW>;
+> > > > > > +		reset-assert-us = <11000>;
+> > > > > > +		reset-deassert-us = <70000>;
+> > > > > > +	};
+> > > > > > +};
+> > > > > > --
+> > > > > > 2.47.0
+> > > > > > 
+> > > > > 
+> > > > > -- 
+> > > > > With best wishes
+> > > > > Dmitry
+> > > > 
+> > > > 
+> > > > Thanks & Regards,
+> > > > Wasim
+> > > 
+> > > -- 
+> > > With best wishes
+> > > Dmitry
+> > 
+> > 
+> > Thanks & Regards,
+> > Wasim
+> 
+> -- 
+> With best wishes
+> Dmitry
+
+Thanks & Regards,
+Wasim
 
