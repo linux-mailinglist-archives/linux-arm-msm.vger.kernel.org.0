@@ -1,118 +1,112 @@
-Return-Path: <linux-arm-msm+bounces-43874-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-43875-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4423CA00913
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jan 2025 13:10:37 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id CE860A0092B
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jan 2025 13:22:10 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 16A99160E14
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jan 2025 12:10:35 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id ADD6D3A40D0
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jan 2025 12:22:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 268BD1F9F4E;
-	Fri,  3 Jan 2025 12:10:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9BE181F9ED8;
+	Fri,  3 Jan 2025 12:22:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="T/6hErGR"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ELhvf9kv"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f54.google.com (mail-lf1-f54.google.com [209.85.167.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B5D463CF;
-	Fri,  3 Jan 2025 12:10:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 967E51F9AA1
+	for <linux-arm-msm@vger.kernel.org>; Fri,  3 Jan 2025 12:22:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735906229; cv=none; b=ncdzTt5usMdY2bkuvRmGmWPQXKW/gDVmF++1zzMcVfKBSS9tnlhR1+DJMFCSbfBk2pKBzcf0eTeV7s3Y1HJ41+2wS/FC/vCHYxoN6RA+daXbcearQ8tCl1XCy0FjrPeQEz1ccCxpH3epMS2gm67XYMo+eWs5fSgp2zN6gCLxApM=
+	t=1735906925; cv=none; b=kZlDho6OqkoyQlV9fi1KCwvIjiGnxE40gysrTyrPtJrOhql25osPXAxJ3AcKf2MJ5K0vhsT+TbkeYKaEa0VI4vWqt6vWaFEl2TL+K8IB8iXPQ+smluyBWFm0LrgCjcFJtWrtkdSDkQbc87ZkEpoviREoHeg0yFWfbipf3pDFNWg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735906229; c=relaxed/simple;
-	bh=wLV5Xn6f3CdUs6eWelhECh6Eb+61ZGv6Pj50x1AuYK4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=imLV9rZpCZ3sFOXqyJF3WjPPjjGXkQeMqGpfrZ7FSyF3Tvoww812qH8ouXGWTXnKo4wFstyGzwOGGg/P/CMWjldCBk/tRQ2kFy325wUUyeWCeMpWgYao+DQYfm5UW9KBbeLN1gaeHv/Z7kFq4yxqlzn4nHbrsd5cAfMwpW9RgsU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=T/6hErGR; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 503C4F9o027125;
-	Fri, 3 Jan 2025 12:10:22 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	qDotob+KLOgE3EV+Z10TccPZex4ox/Ag0q3jKEja434=; b=T/6hErGR2sCV2LPs
-	ia2Ko5r8XXJ9tisVC1kL5XSwCLv0N+MBxk4W8VKEZfy0zqEK70RJkQ7UeV/x2MKQ
-	Go0XocCL9rw+aQJqxnLLxh4dygqngzosNtrsrCFYMGdVAXUwS8gdF6W7Y286fgyj
-	agT68XxDvjlAscWys/Ell2zYnGQoI9/S4bHOkzoxAoYDev9gRmD+pYhJx177fSlw
-	tmQxvOBT6jefBkYy5lgyEi+IgWK7xPgqBnPk4clq7iW6fZT4oR8bNXdYMcag24ko
-	ihBvxHQdqhBRpPNxOc7PMWZXtf/4IkI3zY2x1pdT6RtoPYp1CjdOK/ylHMjB4PTt
-	WptCbg==
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43xfjk80d3-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 03 Jan 2025 12:10:22 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 503CALik019953
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 3 Jan 2025 12:10:21 GMT
-Received: from [10.50.14.170] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 3 Jan 2025
- 04:10:17 -0800
-Message-ID: <7752fbd7-7888-4943-9202-4ad211160e02@quicinc.com>
-Date: Fri, 3 Jan 2025 17:40:14 +0530
+	s=arc-20240116; t=1735906925; c=relaxed/simple;
+	bh=O8EXrmDhtANaIfvlDnTl772IIDoJbmLJdAgbz8+k41Q=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=QO/jpzyb8l4hhmcHxV5qLx/oXMIYJi8arusvomwSIPzVyvhBzDWXcT7HAPtrNiGNgOCo8a2gDZYjtqoKAekU4DMRc2lWQxZFlMf5zhKif8Rs2O4/REeG09b3V/YsPk0iGUojQHO17UinwXkmLo9glbTdSzPbUZqPYPZA2QekLew=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ELhvf9kv; arc=none smtp.client-ip=209.85.167.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f54.google.com with SMTP id 2adb3069b0e04-53e389d8dc7so13167297e87.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 03 Jan 2025 04:22:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1735906922; x=1736511722; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=cYsxb7BeQ7ZfzNcH7+s2mWWWWWRZcp/zu7awCW8Opwg=;
+        b=ELhvf9kvrAKN3pnNGnRybRnmhVqI6roqJUxVmogsAol9y5Mp2ScsIpMOnAnKaMjzxw
+         z3otfQwY5aiAF7j6hNKq4VoIB7wgmbArzgzrCnB5cR4YrcOZT35/5UXMhbrfhumTbQPk
+         evq0PqGynKXSS59/aVPPeB8D/aE51/FvbrZqnSRclA0OaIkCuVBF2PqEuR+LGDZ0gyAc
+         raPyBdSB6Jci+s3BkSOjaaKB63fOz0l7fekQ3Kv0/gcAgtseO8/HG0laj1m2IQzpcE9/
+         uldTLAcUpi0CsvFl1OuBv5DU4xM8wy8vPAf2ii/Mmsdcbas4Yv0C7z6nSjk5Csi2yCSG
+         COGw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1735906922; x=1736511722;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=cYsxb7BeQ7ZfzNcH7+s2mWWWWWRZcp/zu7awCW8Opwg=;
+        b=BbwdUuewiQzOasRqoQC4/vztFoNS4jxH64UsV7FAHy2vSrvxGrtQxy9K/qI52UL0KM
+         MUPm7e+dnEXg6eWOpF9rS33LlTOFl5x7rwOsUwBC2CLYcZJ74OO/lMpx72BTsrU7f8QS
+         q3+551a9j5ctN9rJ4b43gRPFuBcZtA4sOowROyQwPeu3zZCqy4pNUo1MtanAQ+HM5xiN
+         LJ16XLCG924qWMhZxLEjU+8aeO+XfDgPoyzwx3VDoN5IRQLlDE5xIjaKqFnCOy3sGYEr
+         bAIi2cI8O5DNucqVgVB5koupeK687xJq5QEfZaz3YO2/V6//ZlbTSXhWji/MjWTb55nx
+         ZuZA==
+X-Forwarded-Encrypted: i=1; AJvYcCX16wk386NhT+oDF3Qoj8OMHbxzZehfsyposrf5vzEzhlOBhfKoNVha+oSd8QX6nv/ww9RoINvSGAoh0bhg@vger.kernel.org
+X-Gm-Message-State: AOJu0YyAnbbuMJoy2MXaSuEq62WaD12X0dZ+hTO4x9mp8gCNFe7kFT1S
+	0tEVEFhb52uMA9jG0U9E1AerrjpQ1fo7LRF2FqrGjUkipXu/QEUz+g+ZWL2w21eZQXvSxpL9nyx
+	z
+X-Gm-Gg: ASbGncvb1+PSe/L6iXw6cvUuvjQdTBgysFsOcRAvm9SAsurwXSm0z1/N8WTxB7a0CdF
+	Ze7LVFzl5ZNKv1a/1k5TbPftj5RYflv4y4rEV1nEAp9gewF2tVYOstyNvnHWEGWP+tcDuAodWcg
+	N4RUk4aGeHX7TWBkFyiObGNrlHIzrm0mp6EWMrA5Vx2LLjGg7Rz1eX2GJnL+2zGe2NiWE6RmQhx
+	HkI7s5rne3tiYXNQR7Bp3fpdlSg9qp+GvOIdq9T+sXk1ppvXNVTD99GYSyykn7+QMcKfd5Xwz9d
+	DQnKOr58oHVHNoaMeSxbzMlPtNnoGCZuyt3L
+X-Google-Smtp-Source: AGHT+IEkhlCStgRTYUkM2Z53ttoD7NcBvl2lyibDklVtolD0F7cE8yDUolsmvkDCrs4FxF9c6Igm9g==
+X-Received: by 2002:a05:6512:3f20:b0:53d:dd02:7cc5 with SMTP id 2adb3069b0e04-54229524640mr15589362e87.7.1735906921736;
+        Fri, 03 Jan 2025 04:22:01 -0800 (PST)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-54223830207sm4216554e87.251.2025.01.03.04.21.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 03 Jan 2025 04:22:00 -0800 (PST)
+Date: Fri, 3 Jan 2025 14:21:58 +0200
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Zhang Heng <zhangheng@kylinos.cn>
+Cc: robdclark@gmail.com, joro@8bytes.org, will@kernel.org, 
+	robin.murphy@arm.com, iommu@lists.linux.dev, linux-arm-msm@vger.kernel.org, 
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] iommu/msm: Use helper function devm_clk_get_prepared()
+Message-ID: <4okyywneygbskczj3ooay3ir7p2sfwfjvyde7jaixbrht7xu36@yiqlcvrwhypl>
+References: <20250103113059.463033-1-zhangheng@kylinos.cn>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V2 0/2] mailbox: tmel-qmp: Introduce QCOM TMEL QMP mailbox
- driver
-To: Krzysztof Kozlowski <krzk@kernel.org>, <jassisinghbrar@gmail.com>,
-        <robh@kernel.org>, <krzk+dt@kernel.org>, <conor+dt@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <andersson@kernel.org>,
-        <konradybcio@kernel.org>, <manivannan.sadhasivam@linaro.org>,
-        <dmitry.baryshkov@linaro.org>
-References: <20241231054900.2144961-1-quic_srichara@quicinc.com>
- <a4678676-39e1-4df8-998e-a91e97ae0a4f@kernel.org>
-Content-Language: en-US
-From: Sricharan Ramabadhran <quic_srichara@quicinc.com>
-In-Reply-To: <a4678676-39e1-4df8-998e-a91e97ae0a4f@kernel.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: h2Og-hjvgfxeuU1XvwJ_FVJcJq8mu6BE
-X-Proofpoint-GUID: h2Og-hjvgfxeuU1XvwJ_FVJcJq8mu6BE
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 lowpriorityscore=0
- malwarescore=0 priorityscore=1501 mlxlogscore=753 spamscore=0
- clxscore=1015 bulkscore=0 suspectscore=0 impostorscore=0 phishscore=0
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2501030107
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250103113059.463033-1-zhangheng@kylinos.cn>
 
-
-
-On 12/31/2024 1:27 PM, Krzysztof Kozlowski wrote:
-> On 31/12/2024 06:48, Sricharan R wrote:
->> Since clients like same rproc driver use SCM/TMEL across socs, the goal here was to abstract the
->> TMEL-QMP SS functionality, so that clients should be able to connect and send messages with
->> a common API.
->>
->> [v1] RFC Post
->>
->> [v2]
->>       Added HW description in the bindings patch.
->>       Fixed review comments for bindings from Krzysztof and Dmitry
+On Fri, Jan 03, 2025 at 07:30:59PM +0800, Zhang Heng wrote:
+> Since commit 7ef9651e9792 ("clk: Provide new devm_clk helpers for prepared
+> and enabled clocks"), devm_clk_get() and clk_prepare() can now be replaced
+> by devm_clk_get_prepared() when driver prepares the clocks for the whole
+> lifetime of the device. Moreover, it is no longer necessary to unprepare
+> the clocks explicitly.
 > 
-> Which ones? This is just too vague.
-ok, i mentioned detailed in respective patches.
-will have detailed in Cover letter also for next version.
+> Signed-off-by: Zhang Heng <zhangheng@kylinos.cn>
+> ---
+>  drivers/iommu/msm_iommu.c | 51 +++++++++------------------------------
+>  1 file changed, 11 insertions(+), 40 deletions(-)
+> 
 
-Regards,
-  Sricharan
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+
+-- 
+With best wishes
+Dmitry
 
