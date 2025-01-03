@@ -1,201 +1,112 @@
-Return-Path: <linux-arm-msm+bounces-43809-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-43810-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8249AA00183
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jan 2025 00:24:21 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id BBDB6A002DD
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jan 2025 03:49:52 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 08B197A1AAB
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Jan 2025 23:24:14 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9980B3A33A8
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jan 2025 02:49:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 97E861B6CF3;
-	Thu,  2 Jan 2025 23:24:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2C331149C41;
+	Fri,  3 Jan 2025 02:49:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="scbIK8eT"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from gollum.nazgul.ch (gollum.nazgul.ch [81.221.21.253])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B87EC13D;
-	Thu,  2 Jan 2025 23:24:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=81.221.21.253
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0637ABA3F
+	for <linux-arm-msm@vger.kernel.org>; Fri,  3 Jan 2025 02:49:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735860254; cv=none; b=XVRGExNphQt4d5oguvfhF4FsUFeOXVqYv7aHlotOiS7wOdorvcOzzB6glhK6kyYmyQgfZEj+7BQitnKdIksBfdVlenfwxD9v5tQY2zL86R5p7fvfDCHDSL+12FfUKDW7Ev+4KF546CTMBbcUeUGw6dOMNh36x7WS2gyYdS4VnRQ=
+	t=1735872589; cv=none; b=g03QCzWOvRfcjmGfQBu+mjGhXxbUGG377tBYL9mJsM9NkP2Dj4EgBYrXEhvLWaWClYmw0tsM9Dwxeg906W5YjtpusmGEKu2MRPSHq2r1kIFL3tnXmyHtQNjbfd4YYLd/mePzMD1YgLGdP5c+NGx0yGv1PLJObpr8aXP1d26eKck=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735860254; c=relaxed/simple;
-	bh=avrt1v3y88rkmOw+rb92zRpftGeG6Cjs+XOu6XL5mi4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=RkV0pzlXhUZJxEWikf27jIsCL6lyet4GV5TcpJWLuEWP667HFtcXxtDiT9nbYrcvV8uZYEqOoaEWWsXS2WkY03DzyFUpO+YHDoaEAf/c6OXpkG4gTn8kRpwfME9SB+IOCBrwnOI6z5eW0SxnWp6cQKJaQce+R/mONXuQlo++oB8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nazgul.ch; spf=pass smtp.mailfrom=nazgul.ch; arc=none smtp.client-ip=81.221.21.253
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nazgul.ch
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nazgul.ch
-Received: from localhost (gollum.nazgul.ch [local])
-	by gollum.nazgul.ch (OpenSMTPD) with ESMTPA id d13cec59;
-	Fri, 3 Jan 2025 00:17:28 +0100 (CET)
-Date: Fri, 3 Jan 2025 00:17:28 +0100
-From: Marcus Glocker <marcus@nazgul.ch>
-To: Wesley Cheng <quic_wcheng@quicinc.com>
-Cc: Daniel Gomez <d@kruces.com>, Konrad Dybcio <konradybcio@kernel.org>, 
-	Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, Abel Vesa <abel.vesa@linaro.org>, 
-	Johan Hovold <johan@kernel.org>
-Subject: Re: [PATCH v5 4/6] arm64: dts: qcom: Add UFS node
-Message-ID: <srqwbf4teujrcvovxglsibvhtq6wpv2ojclf4joc6hwvszhbir@2gxtczxhqlc7>
-References: <p3mhtj2rp6y2ezuwpd2gu7dwx5cbckfu4s4pazcudi4j2wogtr@4yecb2bkeyms>
- <g5vlxrttgvfqkktlkhu4uzhtvnp3qtjcbr7l2uztapzqwhrsem@wg574xldh5ar>
- <cd9d5a7c-ec0b-4f0a-bac2-f747799bf295@kernel.org>
- <l5vwputpefdkweti56em37i5asrd3vb7pxhwlzir7webfuk3fl@afcqm3faq2gt>
- <D5I1G5K85QLC.FP6NF7M20KXQ@kruces.com>
- <f5676c71-9e15-4733-aacc-2d194e2567fd@quicinc.com>
+	s=arc-20240116; t=1735872589; c=relaxed/simple;
+	bh=Ka1T8Z+8lX/trH3ErYbgl/v6NF3bsDw/cx4eBxax2oU=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=mWuxjKGlYKSdj2mEQB5nZWUFJNwmbB1pvuXbYhGtbDnwN1+KGbF66F59p1lG7t+vwUExvyBQ4ZUXljmWgYWPe+jk0Wqpai8Z0av6Edocw3JZwsPemkGLdr9kNGijS4iTw8XZWz2vf1s9oQg2YyAu3irh/6+Chgm7WrbpDpbirAE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=scbIK8eT; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09FD5C4CED0;
+	Fri,  3 Jan 2025 02:49:46 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1735872588;
+	bh=Ka1T8Z+8lX/trH3ErYbgl/v6NF3bsDw/cx4eBxax2oU=;
+	h=From:To:Cc:Subject:Date:From;
+	b=scbIK8eTminIMtmXYnHqG7NFNMBX5oc7gyzYwhzoq++7XIc5VgtaPjnwXxMQtmeUT
+	 Tl8Pvyv5UmmcEKcLRTi/Dj4UFHwqVgLg5+frHoNTS0mrKZu74rYl4VHxietpZja7sG
+	 9L3oxVMkRRASC3a1HRyqEntF4vEcKqGwwe/12X0H56QZSuVG2W1MLDd/hwW/RYWh22
+	 MJbc9EZ1agBpYjtmhpDD84MV4WUgKJSXNVP1bpPsyoJqsdh3Hr3iauNZTCm0U7ebFr
+	 Nxl7M8sVbwUCapYlrcA7O8P/FGlHZK2vQVH4Cuax6qTCPX9INcjiOA5lxoKMFFe2n1
+	 sOpjIj6VisUlw==
+From: Bjorn Andersson <andersson@kernel.org>
+To: arm@kernel.org,
+	soc@kernel.org
+Cc: linux-arm-msm@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	Arnd Bergmann <arnd@arndb.de>,
+	Olof Johansson <olof@lixom.net>,
+	Kevin Hilman <khilman@baylibre.com>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Jie Gan <quic_jiegan@quicinc.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Qiang Yu <quic_qianyu@quicinc.com>
+Subject: [GIT PULL] Qualcomm Arm64 DeviceTree fixes for v6.13
+Date: Thu,  2 Jan 2025 20:49:44 -0600
+Message-ID: <20250103024945.4649-1-andersson@kernel.org>
+X-Mailer: git-send-email 2.47.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <f5676c71-9e15-4733-aacc-2d194e2567fd@quicinc.com>
+Content-Transfer-Encoding: 8bit
 
-On Thu, Jan 02, 2025 at 01:38:10PM GMT, Wesley Cheng wrote:
 
-> 
-> On 11/9/2024 3:31 PM, Daniel Gomez wrote:
-> > On Fri Aug 30, 2024 at 7:25 PM CEST, Marcus Glocker wrote:
-> >> On Fri, Aug 30, 2024 at 02:05:48AM +0200, Konrad Dybcio wrote:
-> >>
-> >>> On 17.08.2024 10:38 PM, Marcus Glocker wrote:
-> >>>> Add the UFS Host Controller node.  This was basically copied from the
-> >>>> arch/arm64/boot/dts/qcom/sc7180.dtsi file.
-> >>>>
-> >>>> Signed-off-by: Marcus Glocker <marcus@nazgul.ch>
-> >>>> Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> >>>> ---
-> >>>>  arch/arm64/boot/dts/qcom/x1e80100.dtsi | 72 ++++++++++++++++++++++++++
-> >>>>  1 file changed, 72 insertions(+)
-> >>>>
-> >>>> diff --git a/arch/arm64/boot/dts/qcom/x1e80100.dtsi 
-> >>>> b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-> >>>> index 7bca5fcd7d52..9f01b3ff3737 100644
-> >>>> --- a/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-> >>>> +++ b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-> >>>> @@ -2878,6 +2878,78 @@ mmss_noc: interconnect@1780000 {
-> >>>>  			#interconnect-cells = <2>;
-> >>>>  		};
-> >>>>
-> >>>> +		ufs_mem_hc: ufs@1d84000 {
-> >>>> +			compatible = "qcom,x1e80100-ufshc", "qcom,ufshc",
-> >>>> +				     "jedec,ufs-2.0";
-> >>>> +			reg = <0 0x01d84000 0 0x3000>;
-> >>>> +			interrupts = <GIC_SPI 265 IRQ_TYPE_LEVEL_HIGH>;
-> >>>> +			phys = <&ufs_mem_phy>;
-> >>>> +			phy-names = "ufsphy";
-> >>>> +			lanes-per-direction = <1>;
-> >>>> +			#reset-cells = <1>;
-> >>>> +			resets = <&gcc GCC_UFS_PHY_BCR>;
-> >>>> +			reset-names = "rst";
-> >>>> +
-> >>>> +			power-domains = <&gcc GCC_UFS_PHY_GDSC>;
-> >>>> +
-> >>>> +			iommus = <&apps_smmu 0xa0 0x0>;
-> >>> Looks like this should be 0x1a0 maybe
-> >>>> +
-> >>>> +			clock-names = "core_clk",
-> >>>> +				      "bus_aggr_clk",
-> >>>> +				      "iface_clk",
-> >>>> +				      "core_clk_unipro",
-> >>>> +				      "ref_clk",
-> >>>> +				      "tx_lane0_sync_clk",
-> >>>> +				      "rx_lane0_sync_clk";
-> >>>> +			clocks = <&gcc GCC_UFS_PHY_AXI_CLK>,
-> >>>> +				 <&gcc GCC_AGGRE_UFS_PHY_AXI_CLK>,
-> >>>> +				 <&gcc GCC_UFS_PHY_AHB_CLK>,
-> >>>> +				 <&gcc GCC_UFS_PHY_UNIPRO_CORE_CLK>,
-> >>>> +				 <&rpmhcc RPMH_CXO_CLK>,
-> >>>> +				 <&gcc GCC_UFS_PHY_TX_SYMBOL_0_CLK>,
-> >>>> +				 <&gcc GCC_UFS_PHY_RX_SYMBOL_0_CLK>;
-> >>> You also want
-> >>>
-> >>> <&gcc GCC_UFS_PHY_RX_SYMBOL_1_CLK>
-> >>>
-> >>>> +			freq-table-hz = <50000000 200000000>,
-> >>> 25000000 300000000
-> >>>
-> >>>> +					<0 0>,
-> >>>> +					<0 0>,
-> >>>> +					<37500000 150000000>,
-> >>> 75000000 300000000
-> >>>
-> >>>> +					<0 0>,
-> >>>> +					<0 0>,
-> >>>> +					<0 0>;
-> >>>> +
-> >>>> +			interconnects = <&aggre1_noc MASTER_UFS_MEM QCOM_ICC_TAG_ALWAYS
-> >>>> +					 &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>,
-> >>>> +					<&gem_noc MASTER_APPSS_PROC QCOM_ICC_TAG_ALWAYS
-> >>>> +					 &config_noc SLAVE_UFS_MEM_CFG QCOM_ICC_TAG_ALWAYS>;
-> >>>> +			interconnect-names = "ufs-ddr", "cpu-ufs";
-> >>>> +
-> >>>> +			qcom,ice = <&ice>;
-> >>>> +
-> >>>> +			status = "disabled";
-> >>>> +		};
-> >>>> +
-> >>>> +		ufs_mem_phy: phy@1d87000 {
-> >>>> +			compatible = "qcom,x1e80100-qmp-ufs-phy";
-> >>>> +			reg = <0 0x01d87000 0 0x1000>;
-> >>> most definitely should be 0x01d80000 with a size of 0x2000
-> >>>
-> >>>> +			clocks = <&rpmhcc RPMH_CXO_CLK>,
-> >>>> +				 <&gcc GCC_UFS_PHY_PHY_AUX_CLK>,
-> >>>> +				 <&tcsr TCSR_UFS_PHY_CLKREF_EN>;
-> >>>> +			clock-names = "ref",
-> >>>> +				      "ref_aux",
-> >>>> +				      "qref";
-> >>>> +			power-domains = <&gcc GCC_UFS_PHY_GDSC>;
-> >>>> +			resets = <&ufs_mem_hc 0>;
-> >>>> +			reset-names = "ufsphy";
-> >>>> +			#phy-cells = <0>;
-> >>>> +			status = "disabled";
-> >>>> +		};
-> >>>> +
-> >>>> +		ice: crypto@1d90000 {
-> >>>> +			compatible = "qcom,x1e80100-inline-crypto-engine",
-> >>>> +				     "qcom,inline-crypto-engine";
-> >>>> +			reg = <0 0x01d90000 0 0x8000>;
-> >>> 0x1d88000
-> >>>
-> >>>
-> >>> All this combined means you probably wrote your init sequence into some
-> >>> free(?) register space and the one left over from the bootloader was
-> >>> good enough :P
-> >>>
-> >>> Konrad
-> >> I have not done anything special in our sub-system to boot this DTB.
-> >> Changing the values as suggested by you also doesn't make any difference
-> >> to me.
-> >>
-> >> Anyway, I think I'll give up at this point, since this process is
-> >> getting too time consuming for me.  We'll go ahead with out downstream
-> >> patches, which works for us so far.
-> 
-> 
-> Hi Marcus,
-> 
-> 
-> Do you mind if I take over this series??? I started working on getting at least the UFS and USB portions of the DT file to work on my Samsung Galaxy book4 with your patches, along with some required modifications.?? If you're OK, I'll keep you as the author for the main DT file, and submit my changes on top.
-> 
-> 
-> Thanks
-> 
-> Wesley Cheng
+The following changes since commit 40384c840ea1944d7c5a392e8975ed088ecf0b37:
 
-Hi Wesley,
+  Linux 6.13-rc1 (2024-12-01 14:28:56 -0800)
 
-Perfectly fine for me.  I'm glad if there is progress.
+are available in the Git repository at:
 
-Thanks and Regards,
-Marcus
+  https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git tags/qcom-arm64-fixes-for-6.13
+
+for you to fetch changes up to 8a6442ec3437083348f32a6159b9a67bf66417bc:
+
+  arm64: dts: qcom: sa8775p: fix the secure device bootup issue (2024-12-25 22:05:40 -0600)
+
+----------------------------------------------------------------
+Qualcomm Arm64 DeviceTree fixes for v6.13
+
+Revert the enablement of OTG support on primary and secondary USB Type-C
+controllers of X1 Elite, for now, as this broke support for USB hotplug.
+
+Disable the TPDM DCC device on SA8775P, as this is inaccessible per
+current firmware configuration. Also correct the PCIe "addr_space"
+region to enable larger BAR sizes.
+
+Also fix the address space of PCIe6a found in X1 Elite.
+
+----------------------------------------------------------------
+Jie Gan (1):
+      arm64: dts: qcom: sa8775p: fix the secure device bootup issue
+
+Johan Hovold (3):
+      Revert "arm64: dts: qcom: x1e78100-t14s: enable otg on usb-c ports"
+      Revert "arm64: dts: qcom: x1e80100-crd: enable otg on usb ports"
+      Revert "arm64: dts: qcom: x1e80100: enable OTG on USB-C controllers"
+
+Manivannan Sadhasivam (1):
+      arm64: dts: qcom: sa8775p: Fix the size of 'addr_space' regions
+
+Qiang Yu (1):
+      arm64: dts: qcom: x1e80100: Fix up BAR space size for PCIe6a
+
+ arch/arm64/boot/dts/qcom/sa8775p.dtsi                      |  5 +++--
+ arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s.dts |  8 ++++++++
+ arch/arm64/boot/dts/qcom/x1e80100-crd.dts                  | 12 ++++++++++++
+ arch/arm64/boot/dts/qcom/x1e80100.dtsi                     |  8 +-------
+ 4 files changed, 24 insertions(+), 9 deletions(-)
 
