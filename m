@@ -1,78 +1,80 @@
-Return-Path: <linux-arm-msm+bounces-43899-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-43900-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id A4D0FA00AD2
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jan 2025 15:48:40 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3C3D7A00ADB
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jan 2025 15:49:48 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 746BA163AE7
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jan 2025 14:48:38 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0176F163987
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jan 2025 14:49:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3252D1FA8E7;
-	Fri,  3 Jan 2025 14:48:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 250FF1CCB4B;
+	Fri,  3 Jan 2025 14:49:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="T6Ow8DXb"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="hy7ZZSJm"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
+Received: from mail-ej1-f44.google.com (mail-ej1-f44.google.com [209.85.218.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92E721FA8D3
-	for <linux-arm-msm@vger.kernel.org>; Fri,  3 Jan 2025 14:48:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 244C510F4
+	for <linux-arm-msm@vger.kernel.org>; Fri,  3 Jan 2025 14:49:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735915708; cv=none; b=u7HQBLxqDCB/H9VR0CZ6cTu5nJHJXEVjk6vh+iGvA7FWwma/wdMcrVVT/H6Cq88icqpk1w1IdUyxF6+4jbJvyJWhzgvLw7A/VuwA7htFBiPKrT94cz54jQTd9jTNCTN6kgy95/54p+xB0Qpd9xEEnIy6WqV764nzvPeuL7B3H4M=
+	t=1735915785; cv=none; b=fkKU9O+2yaqrMaMXDgVg3o7ERhl6IFiRu/dZNx13iHnL5i+IWbyzbzel+Bm3Lg1ApEfo4WfRetSv0qbFc7g97rwD5P+aOmcnY7LmcLfnfEyPWjxC0YbWTiOsjQqLjpEXxkN4kv+OBc4NLclpn8FTto0BX7VEJ8agjozZJxdZdfM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735915708; c=relaxed/simple;
-	bh=ARy/vXlaj5ReptwJhzWJ7HDJ7nhAj5kDO9HT4W3uHqE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=BxOWJV+/v0aWQTkY92GpzKNlkkl57Cy0wWjgspWVYifWSbwjAqPsv5lED3hN/fJf1dFfNKZ/GWKGvWNwYKHCbaS06+tDqWN/oDwvgGMW5uW2jb243BpdfLQ08BgPaQK+LNHMJWAiq5tvmH2e9QSI+rHkKZDzOi959HxRc+0BGpY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=T6Ow8DXb; arc=none smtp.client-ip=209.85.128.49
+	s=arc-20240116; t=1735915785; c=relaxed/simple;
+	bh=l5PdvwSNOa/A01eHVNgmt58WzJpi4Y9ZcSvabgUjpnE=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=EPH/wO/HY0AcFGCakg5tx9zQ20H28k/lZYlt/V6GX5iuBsxpdc385sjF972MAbQTmqTQNbvbFbYSyb4tUlgS4TKZznLJJzgfH4IHRDmeHDnM9hGT+ozg3WbZ0d8m+ztxPKkCPxzYlNHaE9NgXRi80baeUWK8punL5nWwuYEaZe0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=hy7ZZSJm; arc=none smtp.client-ip=209.85.218.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-4361c705434so89577885e9.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 03 Jan 2025 06:48:26 -0800 (PST)
+Received: by mail-ej1-f44.google.com with SMTP id a640c23a62f3a-aa6b4cc7270so1770562166b.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 03 Jan 2025 06:49:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1735915705; x=1736520505; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Yoqiwu0ZPISAmlNURS49rP/IFDhT/w9s1QlaAD1nD1w=;
-        b=T6Ow8DXbSnTp9usPLpcXy71f8IgIcgLf56e3wn7HUCYnnKgbuUTk2cwgRA0ofHKfQJ
-         5+BsxDVNCdJ32wJZDTer2ZFiE6LM7tzoK3kD3yxlj/Q2g9T6eZ30YhULSFQrrRkOiAJ0
-         R62bbRo8vpcjLRmIt03cPV8k4YuTw+EqO+R8ekBB/x/KnolE4T5JAqlIy4hdVylY5pU9
-         THi0Y+ntV/+GMHFtYGrMrLSXJbFHlVRSVbyS4OIO3bjCXjfjfgsN+QceNp+Ldnx/38YC
-         Mk6hiqwzq2Dj+DPYJu62/wk9DhQqieHO3uC8H2LcdDbTldd6DpJRubqgA7B35tyVUQKv
-         yNsQ==
+        d=linaro.org; s=google; t=1735915781; x=1736520581; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=A3YtMtWFMuecwLd1TuUHNihydqBL52LjvR2LeORhmxA=;
+        b=hy7ZZSJmDMoldlWrW9b0PAzh3HjU/Dd/u6izJPoMi1O6/4vbftk/LoUhDbyCA/1k5a
+         cx4Jh60RGZqecv2+PfO6dsvLprRPeCT6JU0+mos2IdInkix9rgftGgM4C/HcB67bSMGV
+         +9JCdr6N/zEkf9GA9vI8CTRBjn1ZDvN0cga4QlAr9ZeGAM32ZXwrEmkcxq9m2RjbD5JY
+         GLIlgFb4EW18AUhAAZHWgkQJD8v+tyq7w+kctpfND7Hbdax0zQD9upAjKgylHhwtUsVd
+         WURYXQimnT7stW2NX+NhurhnRex5IhO6FHfoOSJcpzCx60amYH5QnOoEPUoyEVIbK7tL
+         jb0w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1735915705; x=1736520505;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Yoqiwu0ZPISAmlNURS49rP/IFDhT/w9s1QlaAD1nD1w=;
-        b=ITs8uNCNFnGGllXPVPUz4MWVgEJAEYEciYpH16C1H3oYV/7H/nHcfmhtQ8fHZfncoX
-         IocUx+e3ng3d0yiNarrylR+E4fFcDQg1dY78nhbTQE7dF9kLekpDbW11a8a5dQNEE2ND
-         IcOsmbRIQFV4aUvBj8HHfOajjk/wWjlq/OZosM+m9+ExCiEUx1XBTGoV9k9s3c4eQrnR
-         X8euPegn/qjVZrkNibZ5qc+3GU6PpQkO/HwFjkdwOB1tGZAsez2roDE1v3U3A56gbN5l
-         PjbkRthZeytuAQhPyA4qFk9K+2jcQUFZ+ZZ1FAF7/R7A7OfGUELb3hX5cGTyV84kEeVh
-         5gCg==
-X-Forwarded-Encrypted: i=1; AJvYcCUu194F67/XsHBELXfqfIKn7TYv51kJvwBOj2H5pYLiK9xbaqd/TowOtG7rKx9m6JMkFxm6eNvG3DOymCxS@vger.kernel.org
-X-Gm-Message-State: AOJu0Yyb7s228BxniFpEkocA0zRyFfypTDjJPwmoJrG0RNIB+dxBPxWO
-	265XjTpEhsoy4c/vaGkyMYAYt0VCKeRHza1gDyNqKqa/9vls5uWbFg3o+ndtrPw=
-X-Gm-Gg: ASbGncv+V9Yq5SichbWJ5vDN0/VjVJDibEf8uQ10mGNSbgM/o7PEwD5rBJ6wTxNP10Y
-	VP/Nb77OQfkzDvlvRG2mb3QrIuV8wK3E9Na1P81bMf7ck7VHm4iDajayfwKI/UHCEQHX5nBlLjw
-	1pvo2ExsM24cXZD9fNaVLwpWl8bBb4GPlKb+WQAF/JRJmSSsFzQm3SvludyHqtOANhAO+lrjqsL
-	hhXett5+EeRIAGXIZ7sLA5uSHOUZNammNs9TQrPJqMeVfbpnPCSrRerQvdEZ+7aJmwS2A==
-X-Google-Smtp-Source: AGHT+IGfednntDvu6ZXrObE1Cj/rDH9xIbJPG+EOjHXzT3RtNhQEXlwqANJ26bIHkmmk2a7qppbxug==
-X-Received: by 2002:a05:600c:3b02:b0:434:f609:1af7 with SMTP id 5b1f17b1804b1-43668547462mr416110305e9.4.1735915704896;
-        Fri, 03 Jan 2025 06:48:24 -0800 (PST)
-Received: from [192.168.0.40] ([176.61.106.227])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43656b119b6sm523254265e9.22.2025.01.03.06.48.23
+        d=1e100.net; s=20230601; t=1735915781; x=1736520581;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=A3YtMtWFMuecwLd1TuUHNihydqBL52LjvR2LeORhmxA=;
+        b=CG+rCRsA+cjRsMr5DB2ZuvMmtcs3nJlzoerl9KcSuWnhNY7zq/1mEmp3l7Cpue9y+l
+         RhKq4yjHTG94jbsbjbCpV1Ry1/06xOGhs/ItGOZ130u07xqUHtkfQFGwsPFJfdjO+/by
+         3RNJrsJNYOISX16yVoQwWSIYMLVlCKTfXfziokv0zJFLTPOnI1GkhucvJ+nh+zJLJOZw
+         sCX41FbW/YrJne8jzFNSV3ob0czsjBayWak9jXJhQQMxfRZUMNTLsDykAvDOckdAyC0V
+         TG+Xqo13uldUO8Y3RUSeZwxv8zFMqabntrXDIbWZz1xl4t2zB+wUGp14SvtZmBcERWhq
+         rPbQ==
+X-Gm-Message-State: AOJu0YyEmHPfqvYx4P4lSQOrd6IpqeJSj4Alrv1QduOF/Vst0L9JZLkz
+	xFavLX93yJzQcWQrdzm6XaqHZY7P/KrODCDFKSIqYS+e83kaTmlkNUifwy9Yvg4=
+X-Gm-Gg: ASbGnctLZLh2vYWDrr0Q7xDZ9WUaRhI2dgMwlZE8Bsuo9lMgRRGjFS0ujzbbDMcOL+z
+	O4M+BcNSkWMQmmIx85h1ARRLzwGmtM8HiBMD52uHT2Omyvc1DRbHXg8PXOM3NCdmWBrzMn9GmO0
+	KGw2iZkl6qwkwmBNqr1xVde8vxFkPPdirf1j4gcqm2X3jCvXGUMRi7kGAs+FdRmwrjyPaxRq46V
+	/1a9huYM27H6pKPGdgUeEUqE6o1PwxBcrUo0aS0T0W1OzGkPJBbuLYZd5xSU9iisagApHokZrrG
+	VK85GpZkQtOaqZqAvQxNKG8MwtKY/ufDkw==
+X-Google-Smtp-Source: AGHT+IFurkEfuAcMJQwJpOfYhVCWQi4kE4VM5vjUgJ86ZkiULdXiXEk0my8lq66agyeKgtfnTq3dCw==
+X-Received: by 2002:a05:6402:3206:b0:5d1:2377:5af3 with SMTP id 4fb4d7f45d1cf-5d81dd83b23mr109564090a12.5.1735915781130;
+        Fri, 03 Jan 2025 06:49:41 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:982:cbb0:3084:b2a4:688f:2d3a? ([2a01:e0a:982:cbb0:3084:b2a4:688f:2d3a])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-aac0f06deb8sm1885241766b.190.2025.01.03.06.49.40
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 03 Jan 2025 06:48:24 -0800 (PST)
-Message-ID: <3e3136e5-cb59-45a8-8bd3-43bf401c14cb@linaro.org>
-Date: Fri, 3 Jan 2025 14:48:23 +0000
+        Fri, 03 Jan 2025 06:49:40 -0800 (PST)
+Message-ID: <ec361e16-4af0-49bc-a7ca-8d8caa3dc332@linaro.org>
+Date: Fri, 3 Jan 2025 15:49:39 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -80,86 +82,104 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v10 4/4] arm64: dts: qcom:
- qcs6490-rb3gen2-vision-mezzanine: Add vision mezzanine
-To: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
- Vikram Sharma <quic_vikramsa@quicinc.com>, rfoss@kernel.org,
- todor.too@gmail.com, mchehab@kernel.org, robh@kernel.org,
- krzk+dt@kernel.org, conor+dt@kernel.org, akapatra@quicinc.com,
- hariramp@quicinc.com, andersson@kernel.org, konradybcio@kernel.org,
- hverkuil-cisco@xs4all.nl, cros-qcom-dts-watchers@chromium.org,
- catalin.marinas@arm.com, will@kernel.org
-Cc: linux-arm-kernel@lists.infradead.org, linux-media@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, kernel@quicinc.com
-References: <20241217140656.965235-1-quic_vikramsa@quicinc.com>
- <20241217140656.965235-5-quic_vikramsa@quicinc.com>
- <22479c27-9265-4994-8974-9739ecbae5ee@linaro.org>
- <99cf5f7e-43f6-4ac4-a4a2-dc731b695572@oss.qualcomm.com>
- <c7253f5f-eb4a-4636-b0f9-7d284a2f5a8d@linaro.org>
-Content-Language: en-US
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <c7253f5f-eb4a-4636-b0f9-7d284a2f5a8d@linaro.org>
+From: Neil Armstrong <neil.armstrong@linaro.org>
+Reply-To: neil.armstrong@linaro.org
+Subject: Re: [PATCH 0/2] arm64: dts: qcom: sm8650: rework CPU & GPU thermal
+ zones
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20250103-topic-sm8650-thermal-cpu-idle-v1-0-faa1f011ecd9@linaro.org>
+ <b305ec90-26b6-4dfa-830a-4ff3acd9caf5@oss.qualcomm.com>
+Content-Language: en-US, fr
+Autocrypt: addr=neil.armstrong@linaro.org; keydata=
+ xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
+ GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
+ BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
+ qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
+ 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
+ AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
+ OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
+ Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
+ YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
+ GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
+ UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
+ GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
+ yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
+ QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
+ SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
+ 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
+ Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
+ oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
+ M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
+ 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
+ KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
+ 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
+ QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
+Organization: Linaro
+In-Reply-To: <b305ec90-26b6-4dfa-830a-4ff3acd9caf5@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
-On 19/12/2024 19:32, Vladimir Zapolskiy wrote:
->>>> +        rst-pins {
->>>> +            pins = "gpio78";
->>>> +            function = "gpio";
->>>> +            drive-strength = <2>;
->>>> +            bias-pull-down;
->>>> +            output-low;
->>>> +        };
->>>
->>> I have doubts that it's proper to embed a reset gpio into driver's
->>> pinctrl suspend/resume power management.
->>>
->>> Konrad, can you please confirm that it's really accepted?
->>>
->>> I'd rather ask to remove this reset pin control.
+On 03/01/2025 15:43, Konrad Dybcio wrote:
+> On 3.01.2025 3:38 PM, Neil Armstrong wrote:
+>> On the SM8650 platform, the dynamic clock and voltage scaling (DCVS) for
+>> the CPUs and GPU is handled by hardware & firmware using factory and
+>> form-factor determined parameters in order to maximize frequency while
+>> keeping the temperature way below the junction temperature where the SoC
+>> would experience a thermal shutdown if not permanent damages.
 >>
->> There's certainly some appearances of this in the tree.
+>> On the other side, the High Level Ooperating System (HLOS), like Linux,
+>> is able to adjust the CPU and GPU frequency using the internal SoC
+>> temperature sensors (here tsens) and it's UP/LOW interrupts, but it
+>> effectly does the same work twice in an less effective manner.
 >>
->> You could make the argument that it makes sense to prevent 
->> misconfiguration
->> (i.e. the bootloader may set the pin in input mode), but then the counter
->> argument is that the (Linux) gpiod APIs request OUT_LOW/HIGH, and we 
->> would
->> expect that the driver uses that if the GPIO is requested through
->> e.g. reset-gpios.
+>> Let's take the Hardware & Firmware action in account and design the
+>> thermal zones trip points and cooling devices mapping to use the HLOS
+>> as a safety warant in case the platform experiences a temperature surge
+>> to helpfully avoid a thermal shutdown and handle the scenario gracefully.
 >>
->> I'm not particularly sure what to recommend here. Krzysztof?
+>> On the CPU side, the LMh hardware does the DCVS control loop, so
+>> let's set higher trip points temperatures closer to the junction
+>> and thermal shutdown temperatures and add some idle injection cooling
+>> device with 100% duty cycle for each CPU that would act as emergency
+>> action to avoid the thermal shutdown.
 >>
+>> On the GPU side, the GPU Management Unit (GMU) acts as the DCVS
+>> control loop, but since we can't perform idle injection, let's
+>> also set higher trip points temperatures closer to the junction
+>> and thermal shutdown temperatures to reduce the GPU frequency only
+>> as an emergency action before the thermal shutdown.
+>>
+>> Those 2 changes optimizes the thermal management design by avoiding
+>> concurrent thermal management, calculations & avoidable interrupts
+>> by moving the HLOS management to a last resort emergency if the
+>> Hardware & Firmwares fails to avoid a thermal shutdown.
+>>
+>> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+>> ---
 > 
-> I'm worried by a possibility that a device reset/shutdown control GPIO 
-> could
-> be turned off by entering the "sleep" pinctrl setup. If a particular 
-> GPIO/pin
-> is off, is it still continuously functional as a control GPIO of some 
-> device?
-> I believe it is not anymore in general, this is my concern here.
+> Got any numbers to back this?
 
-I agree for this particular case that rst-pin should be excised.
+To back which part ? Yes I've been running loads with difference
+scenarios and effectively the hardware work is much better with
+a more linear correction and slighly better performances because
+it sets slighly higger OPPs while maintaining the core closer to
+the target temperature range. Which is kind of expected.
 
-- RST is an active low signal, which is typically _pulsed_ for a period
-   when the sensor is powered to trigger a reset in the state machine of
-   the sensor
+I don't have easy numbers to share, sorry...
 
-- What is the use-case of pulling RST down the GPIO in suspend ?
-   I'd remove the output-low though it should make no difference as
-   the sensor regulators will be off.
+So yes I consider avoiding the concurrent effort is better, but
+since we also take the firmware design in account in the whole platform
+representation in DT (DSPs, SCM, GMU, ...) we should also extend this
+to thermal.
 
-- MCLK I think should have a suspend state specified or at least
-   I can't think of a good reason right now why what I see here is wrong.
+Neil
 
-For the default state this patch disables the GPIO pull down bias, which 
-to me seems logical and correct.
+> 
+> Konrad
 
-TBH I don't have a big concern about the RST pin in reset because the 
-regulators will be off.
-
----
-bod
 
