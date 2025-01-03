@@ -1,153 +1,196 @@
-Return-Path: <linux-arm-msm+bounces-43813-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-43814-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id E06E4A003AA
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jan 2025 06:39:03 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id BB883A003B4
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jan 2025 06:43:49 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2B43C188387E
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jan 2025 05:39:06 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 94BD5162E7D
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jan 2025 05:43:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0FBE21B21B5;
-	Fri,  3 Jan 2025 05:38:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7696B16EBE8;
+	Fri,  3 Jan 2025 05:43:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="PjyUiju2"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="neFmcYS/"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f181.google.com (mail-lj1-f181.google.com [209.85.208.181])
+Received: from mail-lf1-f53.google.com (mail-lf1-f53.google.com [209.85.167.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C6341B1D65
-	for <linux-arm-msm@vger.kernel.org>; Fri,  3 Jan 2025 05:38:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 997EDCA6F
+	for <linux-arm-msm@vger.kernel.org>; Fri,  3 Jan 2025 05:43:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735882735; cv=none; b=MZ2SbZU53q89Zv3ivc6Dcpw9y0tEGpH9zZMn5fEmDastL182nuDtgNqhTZGTd0qmROTgWFpm6QCQa5McQZfBlkUxa3rLhQX9p5EtgaopCuPiXB4OpXQip8ULLaZUK7zQprVvwGHplKeNVQ2qtFoNpLet/oMJFS/l4pFyTp6sl4s=
+	t=1735883027; cv=none; b=W4css0r9C8FCT1O6vjUiIm6hqdTZwMAu+be5+UxYDr3a5qEkJ1LnFWETgO6p6WhM4RjLXR1lmnqGu6Nh7W9gNcElZ1vxwPbZnNsjPJKzeLsFBy5AELs6utLn79vzIDX1j4EDhGTbD9fEYM6ZVVdSX6pKkorY1PNKMA4TScLgT1Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735882735; c=relaxed/simple;
-	bh=XTewuUNQ+/ESgzDVGNQhvgCh25cMGfsFj/3A69tDp6U=;
+	s=arc-20240116; t=1735883027; c=relaxed/simple;
+	bh=EQ18TP4o7X0Ulpj4j+raYQTFHh+/8mbhtyshOrrD3ME=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=VcxY378/HfBLGfqyVHBpMKXjAyFaidWflgU9Q6t23w1v9apcaQEyEhqLKX8rEU+PbEoefkWjYfuHI+bYyU60Bs0loXyqKaKv4VZUiYgXdBufqoiZaPazmUBN1qRzz5jQEsCVhi1jJrQnf2XOGJiac8Vxy7Etm8GrdsV6m8Tv/44=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=PjyUiju2; arc=none smtp.client-ip=209.85.208.181
+	 Content-Type:Content-Disposition:In-Reply-To; b=i1yht4/AYPiFAoyGwj3F8Ecau2psYP4io7+Ykl58mnWgrbp0gDH3B0gGt2BlecYW9Qo7b1ACq/o1pD0SRESqvnLiDU6knhnAdFvWVdQHeYHELowFCsd3wiLLLAbXVQZZqOFkpxgM+H3xk8w40I1JU+DI8aiDhtluNDRW96LujVc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=neFmcYS/; arc=none smtp.client-ip=209.85.167.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f181.google.com with SMTP id 38308e7fff4ca-30225b2586cso139181271fa.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Jan 2025 21:38:53 -0800 (PST)
+Received: by mail-lf1-f53.google.com with SMTP id 2adb3069b0e04-54252789365so5214098e87.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Jan 2025 21:43:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1735882732; x=1736487532; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=Nh6CMd7r1T+hytaykBZTXDKLZ482z8ewIFxQcxwOIrc=;
-        b=PjyUiju2+93QaTOGjTiRINGC5m02tlUUCiIedkl5uIGmro+a7rmp6pQXXalqhLiR9I
-         e5O7wO+y/joJltHnDyu/QQucm0mFv7JakKcyB9/VpjiGeAkA8b0aoiRdMXoi8Kw/wxSG
-         knsbzkS1rnEtcJ46Dx1APZ697z+zIY5x4Tuj62O5f9ZqbXI1ynuTnqipd69w/QTC3EYb
-         LbftxjvSUu+5VapUmEFh+WeYMFJ5RpE7W7/wKTh32adNu0YEGWydy1c/+QTTGgBgEJNE
-         SX73WAbAoxFTvqp3nnSg3hCIKC7UXe70/JH4XAldURnbj9wNzt2JINFQ6k43TED8PQA0
-         1q2A==
+        d=linaro.org; s=google; t=1735883024; x=1736487824; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=31zsa9uWokXBXqyJkZuEHGz6c1PE9peb216t4vEVvbQ=;
+        b=neFmcYS/XznD3NwtBpFkacc2TxaD66fytVS8QBnaU7GKV/5X5/e7FPbUZx0Gw5Rd0l
+         XRFnGQwiglOR64gj+KSv3u1p4kGVAOSZLN9ZHJtjFKRc4FvcWxBH0jxF/Wyz5UHDqr/W
+         AeMBI/M0dolzP7hkphI7jsuPdofNm6cN+/2QpgZ24E/RgQpUNGTLWgXZco3SWVE9CMbT
+         x+jsqQXC7cD9FQU6nwriXyFx9rhpJm4rFvSL1RlrZuM3nW0uS5g0LEWuPj2+w1DLw4MU
+         Osjx7YRpbwNJ3QcpgHOJVDGSFYPaY035h6iSJR+uw1U8h4VH4LtCbKFRWuf9mY9JFuXX
+         16Ng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1735882732; x=1736487532;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Nh6CMd7r1T+hytaykBZTXDKLZ482z8ewIFxQcxwOIrc=;
-        b=mewK1LsXR+DGHHsueMbLfI5/0ISa0yv8un1pzoUtV/UyRbjnLayLNYXIW8YWQPCeOg
-         ggLMbbqVf7JDP4IdZ2eqQse/qSpHXRlEehWOq5iQPb1tDubcjRdHo0eSSiRURjZK2OgQ
-         z4zGYw4ynyFR0za5pzi1RUm7VoM6SoFpsJowaxTNJjGiXCOXd9vLEwfPn1P0vleg9vye
-         voiPGlNWDxqPCDgbCMRi3QHiNsjiEy/cpy5J+ccdmYW2wXfbTopGf3nBJOqGhjPKQfKG
-         2/CTKY6e91S4waJZlGBo30mYpG8sKPkvkDdTqM2dCvff9b/UF8smD32iYWLGjuOyQVgP
-         rJUg==
-X-Forwarded-Encrypted: i=1; AJvYcCW9Ky7fOz+d3PZ2KuKkEaNU9PoX9D9VVuDgs49qTtaqoyoZJWLPdK457tn9CY3fVYYcmLhAuxRVKUfNfLSM@vger.kernel.org
-X-Gm-Message-State: AOJu0YxUZBTh4ttMCGaD6XKFe3uB8dl9FTYUMSaElKuonU5s6ewfw+Wu
-	Ev+YWT5LVPqFz+8pv8Aqm27/TlGJhA/O1PiNqTl/32LNx/IimUItsQcCtKno3s0=
-X-Gm-Gg: ASbGncvx/o6cUWiaF9gR6/oxrkdHy79Ja/EHDqCI7889Re8JYbVgDptKZFGBTLTS7uz
-	4WOiM2d9frqTaT3ivgFjHSuLrSevddaAjqSJpYt83JEbNbQ6fYIYH+HDvs9suFwCLehnSHT2MAF
-	jfBGTK3LKxaDN19tqPFicpdwaJK7Z2AOhhaEp6AMnS5uwiqwzqrFkKTaJM2m8C23VcAIUJUiup1
-	NA0tBNBJ5Ma9FSZbgt+oFbjd23NNCQTuDYE2EaFA2kbw63h0hn/4JFW5yemCWo98t7qHv+2SmAH
-	wSK4K1GZmUf1fn95krtVJAoYEerMlBXBbdev
-X-Google-Smtp-Source: AGHT+IHmLh+NOber4nBw/SsreQFdAIZQKPzTuuOcd6i2VGjx3RMNWlFuyhwgzubmzrvX31fOVuwr6Q==
-X-Received: by 2002:a05:6512:401b:b0:540:2247:ac4e with SMTP id 2adb3069b0e04-542212e1035mr14142710e87.7.1735882732124;
-        Thu, 02 Jan 2025 21:38:52 -0800 (PST)
+        d=1e100.net; s=20230601; t=1735883024; x=1736487824;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=31zsa9uWokXBXqyJkZuEHGz6c1PE9peb216t4vEVvbQ=;
+        b=XzgxbqhKdSYUNPUS0hIWlaK6ecq8/uvhq1JF0B1c/BZ0wQHU7SASlJC0Cljm8gy4qx
+         TArNZFVTtsm7lZuIwbwko5G2sW4X69Y557P3KT2RDI6R2XhiqkmqZF0mVRl6GuyVrNJt
+         FjNMfbILnHgwTQSWoCjFKi0pxmsQ7vP+uyVT4AVtLVqUh3OTlxkgn/BCHz72xVQkffVB
+         aoMrwHZ9/rr95r5WgdNtq7xjBrb3dbJJ5KnPx48J7x2zRl/p/43VXmqxkL1HqbuV0nI7
+         nwcvL7CUoG2Lvqc8Go6VdOLlZ16dcZhe5eBtxKdL8zKRFwqPUTh3XW4fiGf7iNYvWfiB
+         +hKg==
+X-Forwarded-Encrypted: i=1; AJvYcCX1JOZaCIyt/CKZzcrE58EuY/SJYfcFe6LVTUVE8zGBtMbIJ1dKY0qBm2n8kisuM5zLkz1/lyBxhNpuFVCx@vger.kernel.org
+X-Gm-Message-State: AOJu0YwoxZ1msXuWCgAHPzWoZe1X4iD7bzumiqssdVfeya+4i44poFDK
+	ahTcn4SUzRv1Z9bJpeQ52pNz/k4OD70q9HP1T2FUpN1yTPbK28t2s2EgkwMA18k=
+X-Gm-Gg: ASbGncu30MMJHFOPL/gC5o1uUP/slrXnYWANo/+tAfxXEWSF4X/vbMDSgKN/C4QiyJH
+	cP3v36BYbkWr8Shh8jiBfMri6OlT1AcrM8fWLYi5/OFGkHvxTxRT8ZO+ozjuSZJBm0m35iPmwZ4
+	Hh72mdIcJjtxeREnBAmplRiuKRAlcBVMPrFkfsWysWZXgQlLEw9tnknEnOdwqKVcQ0NM0KBeLq5
+	k2QiDN7HluLS7BjyC9Wuf7mx2Uylik6SMhVbKlpumTr7ajm8jHUkFKmTfViApxQBbhLPi7vf9SA
+	iJjBAbMOS5aP2eOPIISs45q70pdgTbYyw0ts
+X-Google-Smtp-Source: AGHT+IFoo4JY40n63oucLAnzSrd13WH+fz3nvNmn3VFzZCXWCOLcZPWt3kQ3D5JWqqyc0gi+DPH/Bg==
+X-Received: by 2002:a05:6512:1193:b0:540:1d0a:581e with SMTP id 2adb3069b0e04-542295492ecmr15006993e87.28.1735883023775;
+        Thu, 02 Jan 2025 21:43:43 -0800 (PST)
 Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-3045ad6c60fsm45363211fa.24.2025.01.02.21.38.49
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-54223600768sm4149453e87.96.2025.01.02.21.43.42
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 02 Jan 2025 21:38:50 -0800 (PST)
-Date: Fri, 3 Jan 2025 07:38:48 +0200
+        Thu, 02 Jan 2025 21:43:42 -0800 (PST)
+Date: Fri, 3 Jan 2025 07:43:41 +0200
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Pengyu Luo <mitltlatltl@gmail.com>
-Cc: quic_aiquny@quicinc.com, andersson@kernel.org, 
-	bryan.odonoghue@linaro.org, conor+dt@kernel.org, devicetree@vger.kernel.org, 
-	gregkh@linuxfoundation.org, hdegoede@redhat.com, heikki.krogerus@linux.intel.com, 
-	ilpo.jarvinen@linux.intel.com, konradybcio@kernel.org, krzk+dt@kernel.org, 
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org, 
-	linux-usb@vger.kernel.org, nikita@trvn.ru, platform-driver-x86@vger.kernel.org, 
-	robh@kernel.org, sre@kernel.org
-Subject: Re: [PATCH 2/5] platform: arm64: add Huawei Matebook E Go (sc8280xp)
- EC driver
-Message-ID: <uqr2hibbl4krkseeal6shmcifctrppimk4tr3y4i64luqpslsq@q3mz2ppencwl>
-References: <1dff7a78-1693-45d7-8ee3-357b33848595@quicinc.com>
- <20241231074437.239979-1-mitltlatltl@gmail.com>
+To: Nirmesh Kumar Singh <quic_nkumarsi@quicinc.com>
+Cc: kernel@quicinc.com, andersson@kernel.org, konradybcio@kernel.org, 
+	robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, quic_akdwived@quicinc.com, 
+	Sahil Chandna <quic_chandna@quicinc.com>
+Subject: Re: [PATCH v2] arm64: dts: qcom:
+ qcs6490-rb3gen2-industrial-mezzanine: Add industrial mezzanine
+Message-ID: <cectmx7ncdi5zhzvzsnlgk7ckdsc2wmdqa27q3r4stypj4uga3@mein42lgljoc>
+References: <20250102190155.2593453-1-quic_nkumarsi@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20241231074437.239979-1-mitltlatltl@gmail.com>
+In-Reply-To: <20250102190155.2593453-1-quic_nkumarsi@quicinc.com>
 
-On Tue, Dec 31, 2024 at 03:44:36PM +0800, Pengyu Luo wrote:
-> On Tue, Dec 31, 2024 at 1:00 PM Aiqun(Maria) Yu <quic_aiquny@quicinc.com> wrote:
-> > On 12/30/2024 6:44 PM, Pengyu Luo wrote:
-> > > On Mon, Dec 30, 2024 at 5:04 PM Aiqun(Maria) Yu <quic_aiquny@quicinc.com> wrote:
-> > >> On 12/28/2024 1:13 AM, Pengyu Luo wrote:
-> > [...]
-> > >>> +     i2c_transfer(client->adapter, msgs, 2);
-> > >>
-> > >> ARRAY_SIZE(msgs) is suggested instead of pure 2.
-> > >>
-> > >
-> > > Agree
-> > >
-> > >>> +     usleep_range(2000, 2500);
-> > >>
-> > >> Why is a sleep needed here? Is this information specified in any datasheet?
-> > >>
-> > >
-> > > Have a break between 2 transaction. This sleep happens in acpi code, also
-> > > inside a critical region. I rearranged it.
-> > >
-> > > Local7 = Acquire (\_SB.IC16.MUEC, 0x03E8)
-> > > ...
-> > > write ops
-> > > ...
-> > > Sleep (0x02)
-> > > ...
-> > > read ops
-> > > ...
-> > > Release (\_SB.IC16.MUEC)
-> >
-> > Could you please share the exact code snippet that is being referenced?
-> > I'm a bit confused because it doesn't seem to align with the current
-> > logic, which doesn't have read operations within the same mutex lock. I
-> > also want to understand the background and necessity of the sleep function.
-> >
+On Fri, Jan 03, 2025 at 12:31:55AM +0530, Nirmesh Kumar Singh wrote:
+> From: Sahil Chandna <quic_chandna@quicinc.com>
 > 
-> I mentioned I rearranged it to optimize it. In a EC transaction,
-> write sleep read => write read sleep, in this way, we sleep once a
-> transaction.
-
-Sleeping between write and read is logical: it provides EC some time to
-respond. Sleeping after read is complete doesn't seem to have any
-reason.
-
+> Add DTS support for Qualcomm qcs6490-rb3gen2 industrial mezzanine
+> board which uses QCS6490 SoC. This board enhances the capabilities of
+> QCS6490 rb3gen2 core kit.
 > 
-> Please search
-> 'device name + acpi table' on the internet, someone dumped it and uploaded
-> it, in SSDT, check ECCD. I am not sure if huawei allows users to dump it.
-> So I don't provide it here.
+> Signed-off-by: Sahil Chandna <quic_chandna@quicinc.com>
+> Signed-off-by: Nirmesh Kumar Singh <quic_nkumarsi@quicinc.com>
+> 
+> ---
+> Changes in V2:
+> - Addressed comment by Konrad.
+> - Validated dts bindings with dtb_checks suggested by Krzysztof.
+> - Improved indentation/formatting.
+> - Fixed bug encountered during testing.
+> - Added dtb entry in makefile.
+> - Link to V1: https://lore.kernel.org/all/20241206065156.2573-1-quic_chandna@quicinc.com/
+> 
+> ---
+> ---
+>  arch/arm64/boot/dts/qcom/Makefile             |  5 +++
+>  .../qcs6490-rb3gen2-industrial-mezzanine.dtso | 34 +++++++++++++++++++
+>  2 files changed, 39 insertions(+)
+>  create mode 100644 arch/arm64/boot/dts/qcom/qcs6490-rb3gen2-industrial-mezzanine.dtso
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+> index 6ca8db4b8afe..7c61e9e330d7 100644
+> --- a/arch/arm64/boot/dts/qcom/Makefile
+> +++ b/arch/arm64/boot/dts/qcom/Makefile
+> @@ -111,6 +111,11 @@ dtb-$(CONFIG_ARCH_QCOM)	+= qcm6490-shift-otter.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= qcs404-evb-1000.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= qcs404-evb-4000.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= qcs6490-rb3gen2.dtb
+> +
+> +qcs6490-rb3gen2-industrial-mezzanine-dtbs := qcs6490-rb3gen2.dtb qcs6490-rb3gen2-industrial-mezzanine.dtbo
+> +
+> +dtb-$(CONFIG_ARCH_QCOM) += qcs6490-rb3gen2-industrial-mezzanine.dtb
+> +
+>  dtb-$(CONFIG_ARCH_QCOM)	+= qcs8550-aim300-aiot.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= qcs9100-ride.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= qcs9100-ride-r3.dtb
+> diff --git a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2-industrial-mezzanine.dtso b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2-industrial-mezzanine.dtso
+> new file mode 100644
+> index 000000000000..7a067e8dc622
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2-industrial-mezzanine.dtso
+> @@ -0,0 +1,34 @@
+> +// SPDX-License-Identifier: BSD-3-Clause
+> +/*
+> + * Copyright (c) 2024, Qualcomm Innovation Center, Inc. All rights reserved.
+> +*/
+> +
+> +/dts-v1/;
+> +/plugin/;
+> +#include <dt-bindings/clock/qcom,gcc-sc7280.h>
+> +#include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
+> +
+> +/ {
+> +pm7250b-gpios {
+
+Something is very wrong here. This line has wrong indentation, this is a
+pinctrl node under the root node (instead of the corresponding pinctrl
+device), there seem to be no references to it, etc.
+
+> +                pins = "gpio5";
+
+Please use tabs instead of spaces for identation.
+
+> +                function = "normal";
+> +                power-source = <1>;
+> +                output-high;
+> +                input-disable;
+> +                bias-pull-up;
+> +                qcom,drive-strength = <3>;
+> +        };
+> +};
+> +
+> +&spi11 {
+> +	#address-cells = <1>;
+> +	#size-cells = <0>;
+> +        status = "okay";
+> +
+> +        st33htpm0: tpm@0 {
+> +		compatible = "st,st33htpm-spi","tcg,tpm_tis-spi";
+
+Missing space
+
+> +		reg = <0>;
+> +		spi-max-frequency = <20000000>;
+> +
+
+Drop extra empty line.
+
+> +        };
+> +};
+> -- 
+> 2.34.1
+> 
 
 -- 
 With best wishes
