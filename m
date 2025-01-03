@@ -1,87 +1,89 @@
-Return-Path: <linux-arm-msm+bounces-43814-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-43815-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id BB883A003B4
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jan 2025 06:43:49 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 00F79A003C2
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jan 2025 06:48:29 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 94BD5162E7D
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jan 2025 05:43:47 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C0A3C162CDC
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jan 2025 05:48:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7696B16EBE8;
-	Fri,  3 Jan 2025 05:43:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 564EC1AA1C4;
+	Fri,  3 Jan 2025 05:48:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="neFmcYS/"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="JYFrsgof"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f53.google.com (mail-lf1-f53.google.com [209.85.167.53])
+Received: from mail-lf1-f45.google.com (mail-lf1-f45.google.com [209.85.167.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 997EDCA6F
-	for <linux-arm-msm@vger.kernel.org>; Fri,  3 Jan 2025 05:43:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D87371E517
+	for <linux-arm-msm@vger.kernel.org>; Fri,  3 Jan 2025 05:48:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735883027; cv=none; b=W4css0r9C8FCT1O6vjUiIm6hqdTZwMAu+be5+UxYDr3a5qEkJ1LnFWETgO6p6WhM4RjLXR1lmnqGu6Nh7W9gNcElZ1vxwPbZnNsjPJKzeLsFBy5AELs6utLn79vzIDX1j4EDhGTbD9fEYM6ZVVdSX6pKkorY1PNKMA4TScLgT1Q=
+	t=1735883298; cv=none; b=XYugtgMPvNmhw80MGkS2YALYiXLe4D5ACkEf/zEYqVDIA6k6dGfFWmyuGcaHZd6Mhdqd+uJfPCYAKdv6l5R4mjBGAMXC8E13b+MGx094TDVeMbK0pXK6Kz430aWcbDUZo+fe/Do/QzBu7cfo0RBeHMjh7iMu9ftDLiEmTiONKUk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735883027; c=relaxed/simple;
-	bh=EQ18TP4o7X0Ulpj4j+raYQTFHh+/8mbhtyshOrrD3ME=;
+	s=arc-20240116; t=1735883298; c=relaxed/simple;
+	bh=7nUe2OkzUCn6Ugrf3Pcn3prZAxmcgnzVHbxhArx5Dpk=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=i1yht4/AYPiFAoyGwj3F8Ecau2psYP4io7+Ykl58mnWgrbp0gDH3B0gGt2BlecYW9Qo7b1ACq/o1pD0SRESqvnLiDU6knhnAdFvWVdQHeYHELowFCsd3wiLLLAbXVQZZqOFkpxgM+H3xk8w40I1JU+DI8aiDhtluNDRW96LujVc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=neFmcYS/; arc=none smtp.client-ip=209.85.167.53
+	 Content-Type:Content-Disposition:In-Reply-To; b=lDSrfE7O4WyiIH99FI96pIn+CXXrrRc7NNtfa0qfy3gVA53btfHvLxs/QsYjz5GZw3LRzRN9y+oyJCpZQNT8B3pCgfI8i2XFItPrUhfzUiYlhbM8kfOcxy1dFc27e8T2vWAfulPiHacJF2gHoS9KvOylO9AkU54b9T4SKuCrPlo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=JYFrsgof; arc=none smtp.client-ip=209.85.167.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f53.google.com with SMTP id 2adb3069b0e04-54252789365so5214098e87.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Jan 2025 21:43:45 -0800 (PST)
+Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-53e384e3481so11611806e87.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Jan 2025 21:48:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1735883024; x=1736487824; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1735883293; x=1736488093; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=31zsa9uWokXBXqyJkZuEHGz6c1PE9peb216t4vEVvbQ=;
-        b=neFmcYS/XznD3NwtBpFkacc2TxaD66fytVS8QBnaU7GKV/5X5/e7FPbUZx0Gw5Rd0l
-         XRFnGQwiglOR64gj+KSv3u1p4kGVAOSZLN9ZHJtjFKRc4FvcWxBH0jxF/Wyz5UHDqr/W
-         AeMBI/M0dolzP7hkphI7jsuPdofNm6cN+/2QpgZ24E/RgQpUNGTLWgXZco3SWVE9CMbT
-         x+jsqQXC7cD9FQU6nwriXyFx9rhpJm4rFvSL1RlrZuM3nW0uS5g0LEWuPj2+w1DLw4MU
-         Osjx7YRpbwNJ3QcpgHOJVDGSFYPaY035h6iSJR+uw1U8h4VH4LtCbKFRWuf9mY9JFuXX
-         16Ng==
+        bh=ITZIP+H7SQpVXzPPPttp6DmGDQKxV65KZQOmqyrSyow=;
+        b=JYFrsgofYGKKDAEnVVLHimI9nUYr/e949+RiqYiYjFs/NnKIR68H54mSHSi7SgHbnD
+         R5tH3uUCWXt+bRTYE0uzEEL5LiUpbnAXb35azvi5kXvtMCXYsKcLpy+t+/2cwYkieQTd
+         FzODrVfuyJtvNP7AuyuQGT886q9RgBPV6iJNbkOgGtKYx+ovyjHu4at/o1jTh3Fr8l1w
+         kNr+6CEYXPt06T3fP3OtUtvMHR/3PeG064d59+9axPk9HbtnRuy35MmWn62t9njLFHpZ
+         WKMaHZUY3ETyM7pb/MOm/nHpqPmgzfrok3ySZZTvYPVi1znK5+qSMaRBvYBhhBJbthTz
+         rEhw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1735883024; x=1736487824;
+        d=1e100.net; s=20230601; t=1735883293; x=1736488093;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=31zsa9uWokXBXqyJkZuEHGz6c1PE9peb216t4vEVvbQ=;
-        b=XzgxbqhKdSYUNPUS0hIWlaK6ecq8/uvhq1JF0B1c/BZ0wQHU7SASlJC0Cljm8gy4qx
-         TArNZFVTtsm7lZuIwbwko5G2sW4X69Y557P3KT2RDI6R2XhiqkmqZF0mVRl6GuyVrNJt
-         FjNMfbILnHgwTQSWoCjFKi0pxmsQ7vP+uyVT4AVtLVqUh3OTlxkgn/BCHz72xVQkffVB
-         aoMrwHZ9/rr95r5WgdNtq7xjBrb3dbJJ5KnPx48J7x2zRl/p/43VXmqxkL1HqbuV0nI7
-         nwcvL7CUoG2Lvqc8Go6VdOLlZ16dcZhe5eBtxKdL8zKRFwqPUTh3XW4fiGf7iNYvWfiB
-         +hKg==
-X-Forwarded-Encrypted: i=1; AJvYcCX1JOZaCIyt/CKZzcrE58EuY/SJYfcFe6LVTUVE8zGBtMbIJ1dKY0qBm2n8kisuM5zLkz1/lyBxhNpuFVCx@vger.kernel.org
-X-Gm-Message-State: AOJu0YwoxZ1msXuWCgAHPzWoZe1X4iD7bzumiqssdVfeya+4i44poFDK
-	ahTcn4SUzRv1Z9bJpeQ52pNz/k4OD70q9HP1T2FUpN1yTPbK28t2s2EgkwMA18k=
-X-Gm-Gg: ASbGncu30MMJHFOPL/gC5o1uUP/slrXnYWANo/+tAfxXEWSF4X/vbMDSgKN/C4QiyJH
-	cP3v36BYbkWr8Shh8jiBfMri6OlT1AcrM8fWLYi5/OFGkHvxTxRT8ZO+ozjuSZJBm0m35iPmwZ4
-	Hh72mdIcJjtxeREnBAmplRiuKRAlcBVMPrFkfsWysWZXgQlLEw9tnknEnOdwqKVcQ0NM0KBeLq5
-	k2QiDN7HluLS7BjyC9Wuf7mx2Uylik6SMhVbKlpumTr7ajm8jHUkFKmTfViApxQBbhLPi7vf9SA
-	iJjBAbMOS5aP2eOPIISs45q70pdgTbYyw0ts
-X-Google-Smtp-Source: AGHT+IFoo4JY40n63oucLAnzSrd13WH+fz3nvNmn3VFzZCXWCOLcZPWt3kQ3D5JWqqyc0gi+DPH/Bg==
-X-Received: by 2002:a05:6512:1193:b0:540:1d0a:581e with SMTP id 2adb3069b0e04-542295492ecmr15006993e87.28.1735883023775;
-        Thu, 02 Jan 2025 21:43:43 -0800 (PST)
+        bh=ITZIP+H7SQpVXzPPPttp6DmGDQKxV65KZQOmqyrSyow=;
+        b=g/ilDRcpvjj4HjrvtNRzPunMTlWwq+nHqweg5+InkQjelT3alq1KZUoF0+1XVYyc9M
+         /QagawuOK4IDPPVCChCb3XZ7IfPbgOvc1KkL563v/+YOvmbE5oTKwyGdQpiUNtdhCfU+
+         xJEWgfHzaV0057IgPd43udjYNNlAK9S4BJZ2BWuIovo0/biPDuy9Be2CZgO474kVSgWg
+         /CU93pDAQS3uO4QwrDx1xJdIPQWBR+ZRV++dI6RaGfFX5+0p92Amj2XtgP4hjpEICa52
+         +vFiKU76I7O+ovTwPLHb0U995HiiB1KS3SF8kv/Yt+izROckn2hCXZpvgstPZ10dzrS9
+         cCFQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUT8D7X7vEweOzCeTOkC83Hm+w2oE//Fw2BpPPXasbSMW1vMVPFqe2DtWJUsVC4+6wCrDSNRJYMHb44qLzn@vger.kernel.org
+X-Gm-Message-State: AOJu0YxLKasYiyAxzDVDg4WaOtketmr7mM31IM7/S1ufq8NKJlXAVkQr
+	LYKD90dlNgrLo/tAQFYYfh7dRaeGmv+4ic8I7XuCKvUjl+Xx9JhK0uABSxavXCc=
+X-Gm-Gg: ASbGncueXPJuH978cUS23BRYvUYeV7Z5DL+T2Iyh+Hyj2tbv/RYfYYBFhBRAzz5QNki
+	SFQnsUy/ynYZPbAuZchEnuaF2ENhmoZZpjQ+O23xrsK0JC1hJYrtazV3b0ibRv1q6A6H4qREgfR
+	GFcnJN+hW7Ic+ldW49xUN2zaCxivU+DtIisgjw1ivrOb9kTjRCeqHA+Qy8DXRbOg0pGk4/JxYWZ
+	gnr8k8MjxSigp3jPCx1OsoOdfLKQjw/XosCw6UdyN9KJh/x1XpA6nV3+0F07Ec/+ei1WcXKNsX3
+	YNUIyPPhYr12GZz4gDhhcif/BhN+LS3p83VZ
+X-Google-Smtp-Source: AGHT+IHPWdVWih/VxuM1kwjwebDq6JydqrCSUUMDsMiPL2UbsV7YpW8IvSEXyj1tuFAeYhK6nqPhfA==
+X-Received: by 2002:a05:6512:3f0d:b0:540:358d:d9b5 with SMTP id 2adb3069b0e04-542294ae2e9mr14575418e87.0.1735883292998;
+        Thu, 02 Jan 2025 21:48:12 -0800 (PST)
 Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-54223600768sm4149453e87.96.2025.01.02.21.43.42
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-542235fed7asm4005816e87.61.2025.01.02.21.48.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 02 Jan 2025 21:43:42 -0800 (PST)
-Date: Fri, 3 Jan 2025 07:43:41 +0200
+        Thu, 02 Jan 2025 21:48:12 -0800 (PST)
+Date: Fri, 3 Jan 2025 07:48:10 +0200
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Nirmesh Kumar Singh <quic_nkumarsi@quicinc.com>
-Cc: kernel@quicinc.com, andersson@kernel.org, konradybcio@kernel.org, 
-	robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, quic_akdwived@quicinc.com, 
-	Sahil Chandna <quic_chandna@quicinc.com>
-Subject: Re: [PATCH v2] arm64: dts: qcom:
- qcs6490-rb3gen2-industrial-mezzanine: Add industrial mezzanine
-Message-ID: <cectmx7ncdi5zhzvzsnlgk7ckdsc2wmdqa27q3r4stypj4uga3@mein42lgljoc>
-References: <20250102190155.2593453-1-quic_nkumarsi@quicinc.com>
+To: Varadarajan Narayanan <quic_varada@quicinc.com>
+Cc: bhelgaas@google.com, lpieralisi@kernel.org, kw@linux.com, 
+	manivannan.sadhasivam@linaro.org, robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, 
+	vkoul@kernel.org, kishon@kernel.org, andersson@kernel.org, konradybcio@kernel.org, 
+	p.zabel@pengutronix.de, quic_nsekar@quicinc.com, linux-arm-msm@vger.kernel.org, 
+	linux-pci@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-phy@lists.infradead.org
+Subject: Re: [PATCH v5 2/5] phy: qcom: Introduce PCIe UNIPHY 28LP driver
+Message-ID: <nudzgkfufp74eyq3vwuf7f47u6u7xy5cpqw2ktb5vdnpwc7uyv@ar7akuo5q6gp>
+References: <20250102113019.1347068-1-quic_varada@quicinc.com>
+ <20250102113019.1347068-3-quic_varada@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -90,107 +92,131 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250102190155.2593453-1-quic_nkumarsi@quicinc.com>
+In-Reply-To: <20250102113019.1347068-3-quic_varada@quicinc.com>
 
-On Fri, Jan 03, 2025 at 12:31:55AM +0530, Nirmesh Kumar Singh wrote:
-> From: Sahil Chandna <quic_chandna@quicinc.com>
+On Thu, Jan 02, 2025 at 05:00:16PM +0530, Varadarajan Narayanan wrote:
+> From: Nitheesh Sekar <quic_nsekar@quicinc.com>
 > 
-> Add DTS support for Qualcomm qcs6490-rb3gen2 industrial mezzanine
-> board which uses QCS6490 SoC. This board enhances the capabilities of
-> QCS6490 rb3gen2 core kit.
+> Add Qualcomm PCIe UNIPHY 28LP driver support present
+> in Qualcomm IPQ5332 SoC and the phy init sequence.
 > 
-> Signed-off-by: Sahil Chandna <quic_chandna@quicinc.com>
-> Signed-off-by: Nirmesh Kumar Singh <quic_nkumarsi@quicinc.com>
-> 
+> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Signed-off-by: Nitheesh Sekar <quic_nsekar@quicinc.com>
+> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
 > ---
-> Changes in V2:
-> - Addressed comment by Konrad.
-> - Validated dts bindings with dtb_checks suggested by Krzysztof.
-> - Improved indentation/formatting.
-> - Fixed bug encountered during testing.
-> - Added dtb entry in makefile.
-> - Link to V1: https://lore.kernel.org/all/20241206065156.2573-1-quic_chandna@quicinc.com/
+> v5: * Use 'num-lanes' to differentiate instead of '3x1' or '3x2'
+>       in compatible string
+>     * Drop compatible specific init data as there is only one
+>       compatible string
+>     * Fix header file order
 > 
-> ---
-> ---
->  arch/arm64/boot/dts/qcom/Makefile             |  5 +++
->  .../qcs6490-rb3gen2-industrial-mezzanine.dtso | 34 +++++++++++++++++++
->  2 files changed, 39 insertions(+)
->  create mode 100644 arch/arm64/boot/dts/qcom/qcs6490-rb3gen2-industrial-mezzanine.dtso
+> v4: Fix uppercase hex digit
+>     Use phy->id for pipe clock source
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-> index 6ca8db4b8afe..7c61e9e330d7 100644
-> --- a/arch/arm64/boot/dts/qcom/Makefile
-> +++ b/arch/arm64/boot/dts/qcom/Makefile
-> @@ -111,6 +111,11 @@ dtb-$(CONFIG_ARCH_QCOM)	+= qcm6490-shift-otter.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= qcs404-evb-1000.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= qcs404-evb-4000.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= qcs6490-rb3gen2.dtb
-> +
-> +qcs6490-rb3gen2-industrial-mezzanine-dtbs := qcs6490-rb3gen2.dtb qcs6490-rb3gen2-industrial-mezzanine.dtbo
-> +
-> +dtb-$(CONFIG_ARCH_QCOM) += qcs6490-rb3gen2-industrial-mezzanine.dtb
-> +
->  dtb-$(CONFIG_ARCH_QCOM)	+= qcs8550-aim300-aiot.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= qcs9100-ride.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= qcs9100-ride-r3.dtb
-> diff --git a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2-industrial-mezzanine.dtso b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2-industrial-mezzanine.dtso
-> new file mode 100644
-> index 000000000000..7a067e8dc622
-> --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2-industrial-mezzanine.dtso
-> @@ -0,0 +1,34 @@
-> +// SPDX-License-Identifier: BSD-3-Clause
-> +/*
-> + * Copyright (c) 2024, Qualcomm Innovation Center, Inc. All rights reserved.
-> +*/
-> +
-> +/dts-v1/;
-> +/plugin/;
-> +#include <dt-bindings/clock/qcom,gcc-sc7280.h>
-> +#include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
-> +
-> +/ {
-> +pm7250b-gpios {
+> v3: Added 'Reviewed-by: Dmitry Baryshkov' and made following updates
+>     s/unsigned int/u32/g
+>     Fix 'lane_offset' comments
+>     Fix #define tab -> space
+>     Fix mixed case hex numbers
+>     Fix licensing & owner
+>     Change for-loop pointer to use [] instead of ->
+>     Use 'less than max' instead of 'not equal to max' in termination condition
+>     Smatch and Coccinelle passed
+> 
+> v2: Drop IPQ5018 related code and data
+>     Use uniform prefix for struct names
+>     Place "}, {", on the same line
+>     In qcom_uniphy_pcie_init(), use for-loop instead of while
+>     Swap reset and clock disable order in qcom_uniphy_pcie_power_off
+>     Add reset assert to qcom_uniphy_pcie_power_on's error path
+>     Use macros for usleep duration
+>     Inlined qcom_uniphy_pcie_get_resources & use devm_platform_get_and_ioremap_resource
+>     Drop 'clock-output-names' from phy_pipe_clk_register
+> ---
+>  drivers/phy/qualcomm/Kconfig                  |  12 +
+>  drivers/phy/qualcomm/Makefile                 |   1 +
+>  .../phy/qualcomm/phy-qcom-uniphy-pcie-28lp.c  | 287 ++++++++++++++++++
+>  3 files changed, 300 insertions(+)
+>  create mode 100644 drivers/phy/qualcomm/phy-qcom-uniphy-pcie-28lp.c
+> 
 
-Something is very wrong here. This line has wrong indentation, this is a
-pinctrl node under the root node (instead of the corresponding pinctrl
-device), there seem to be no references to it, etc.
+[...]
 
-> +                pins = "gpio5";
+> +
+> +static int qcom_uniphy_pcie_probe(struct platform_device *pdev)
+> +{
+> +	struct phy_provider *phy_provider;
+> +	struct device *dev = &pdev->dev;
+> +	struct qcom_uniphy_pcie *phy;
+> +	struct phy *generic_phy;
+> +	int ret;
+> +
+> +	phy = devm_kzalloc(&pdev->dev, sizeof(*phy), GFP_KERNEL);
+> +	if (!phy)
+> +		return -ENOMEM;
+> +
+> +	platform_set_drvdata(pdev, phy);
+> +	phy->dev = &pdev->dev;
+> +
+> +	phy->data = of_device_get_match_data(dev);
+> +	if (!phy->data)
+> +		return -EINVAL;
+> +
+> +	ret = of_property_read_u32(of_node_get(dev->of_node), "num-lanes",
 
-Please use tabs instead of spaces for identation.
+Who will put the reference count which you have just got?
 
-> +                function = "normal";
-> +                power-source = <1>;
-> +                output-high;
-> +                input-disable;
-> +                bias-pull-up;
-> +                qcom,drive-strength = <3>;
-> +        };
+> +				   &phy->lanes);
+> +	if (ret)
+> +		phy->lanes = 1;
+
+phy->lanes = 1;
+of_property_read_u32(np, "num-lanes", &phy->lanes);
+
+> +
+> +	ret = qcom_uniphy_pcie_get_resources(pdev, phy);
+> +	if (ret < 0)
+> +		return dev_err_probe(&pdev->dev, ret,
+> +				     "failed to get resources: %d\n", ret);
+> +
+> +	generic_phy = devm_phy_create(phy->dev, NULL, &pcie_ops);
+> +	if (IS_ERR(generic_phy))
+> +		return PTR_ERR(generic_phy);
+> +
+> +	phy_set_drvdata(generic_phy, phy);
+> +
+> +	ret = phy_pipe_clk_register(phy, generic_phy->id);
+> +	if (ret)
+> +		dev_err(&pdev->dev, "failed to register phy pipe clk\n");
+> +
+> +	phy_provider = devm_of_phy_provider_register(phy->dev,
+> +						     of_phy_simple_xlate);
+> +	if (IS_ERR(phy_provider))
+> +		return PTR_ERR(phy_provider);
+> +
+> +	return 0;
+> +}
+> +
+> +static struct platform_driver qcom_uniphy_pcie_driver = {
+> +	.probe		= qcom_uniphy_pcie_probe,
+> +	.driver		= {
+> +		.name	= "qcom-uniphy-pcie",
+> +		.of_match_table = qcom_uniphy_pcie_id_table,
+> +	},
 > +};
 > +
-> +&spi11 {
-> +	#address-cells = <1>;
-> +	#size-cells = <0>;
-> +        status = "okay";
+> +module_platform_driver(qcom_uniphy_pcie_driver);
 > +
-> +        st33htpm0: tpm@0 {
-> +		compatible = "st,st33htpm-spi","tcg,tpm_tis-spi";
-
-Missing space
-
-> +		reg = <0>;
-> +		spi-max-frequency = <20000000>;
-> +
-
-Drop extra empty line.
-
-> +        };
-> +};
+> +MODULE_DESCRIPTION("PCIE QCOM UNIPHY driver");
+> +MODULE_LICENSE("GPL");
 > -- 
 > 2.34.1
 > 
+> 
+> -- 
+> linux-phy mailing list
+> linux-phy@lists.infradead.org
+> https://lists.infradead.org/mailman/listinfo/linux-phy
 
 -- 
 With best wishes
