@@ -1,62 +1,62 @@
-Return-Path: <linux-arm-msm+bounces-43920-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-43921-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 01039A00FC1
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jan 2025 22:23:44 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 15FDBA00FBB
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jan 2025 22:23:19 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C4CDC166C09
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jan 2025 21:21:21 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 92F6B1885CCF
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jan 2025 21:21:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6DD3020124F;
-	Fri,  3 Jan 2025 21:14:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2A110202C38;
+	Fri,  3 Jan 2025 21:15:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pECRVEB+"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RjXTeR3B"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39C24201113;
-	Fri,  3 Jan 2025 21:14:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A06C21FF7DD;
+	Fri,  3 Jan 2025 21:15:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735938894; cv=none; b=rjs6qVOTBHISa5IG2EN3yiQQEY6tzLj6+dSG56BbtEEcVex8NsLVHTY/iraucAmNRvkhSbwfdNffLxPFlYgTZd8yHu0otG54WwZl8TrSZBnq9ZFJKorSmZBdZrSrRxNnED/jQXysnLr/7mwAw21CPm4+bC5UM2snJgLj99J5UeY=
+	t=1735938916; cv=none; b=ch9uiiHjz7EHwLNhKmDSUk4kCMaXuDeA5A9CJ9emax9k2rp9t7eC/GgCFaputEGnXVmtt3NBbZHKHBO5PIZCkz6lqtS+cBjg0yIM+FE6riweJeF87+PXzi6J44OchmEJxgBCaKJS7onIdF9UmqpvIfgj3kSNfugxarzvUgbWYdM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735938894; c=relaxed/simple;
-	bh=MMWnWb5iGCwcpwOoE5EbuH9SKEw1YOyvovxZm/fYqIs=;
+	s=arc-20240116; t=1735938916; c=relaxed/simple;
+	bh=7vm9MHYHGYH82BQKmuGx2CxjkfUZ+ODXMDVuxbYlzYA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=trioTZn7da58H6iPVkdpGHpdGLzIpBSC/XGn73UmqEdlkhKtG04OaVQBGE8heE36CBAiupfWwnruIOkk14tFGqSxMHZ7K6v3P1/z5iblATIvPXM1tivtbfP1WLKiEmDFGZB3SvlkXFXkD2Ta5BJkp5aWcCAi+J27FF0px6Ge9Ts=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pECRVEB+; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8ABE4C4CED2;
-	Fri,  3 Jan 2025 21:14:53 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=IAV39+QOvLnR3WE2yfoT2mSRGkvoXy8hZb8A+L2bM8CpNNbY8k4H+fd/KfT99azpQn6bDlZgHwyM68bLn3z3sHn3jN7dGnuIKYnHzaTYZldmCDUHhH6mukXTsSpK/IoQ9sgNnZ4bIVRdfx3NJgjom+HJlb8QQSOvvfq8UeERYS0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RjXTeR3B; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD8F1C4CECE;
+	Fri,  3 Jan 2025 21:15:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1735938893;
-	bh=MMWnWb5iGCwcpwOoE5EbuH9SKEw1YOyvovxZm/fYqIs=;
+	s=k20201202; t=1735938916;
+	bh=7vm9MHYHGYH82BQKmuGx2CxjkfUZ+ODXMDVuxbYlzYA=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=pECRVEB+UcUY4z2lcadf7vu4mXlc7r7MTwpQFxRq/0AllvMvu9ze7d2AhJVZH68nF
-	 364SlBBvQ+xIxYMCSEKYm1w8kg6fFF5Rb4qPiA/I/BtaJTWrsFPUrzFdeX6nBafqti
-	 boFbR7aqIa2UG0hwJaqrTtkXnhOo5ZVAC5cqLcZ8KoFwu5DITzmuAiC5Qvp+yyeKPO
-	 58qM4ZVf1reHhU0Ol45C7zksyY0fFy9ZOfXleE4cwaXMAqT/7i428kl/txb6YJ+7x6
-	 IfVNJXMcW0MHkGlJdmSGXBv5sQnb5o+UHr4U3Amdz0bxgjMlafYPL5vtTlVqXhXG/T
-	 /cpquKCX4qhkA==
-Date: Fri, 3 Jan 2025 15:14:51 -0600
+	b=RjXTeR3BgMdvT5fbnE/MWgTb0znii8c79ZcLAjxcQax6x+xhoUYYVG0NDtNUkF923
+	 s/Ummnxq868YpkJElpea8GFiEF3OKYG/7nD87bxqogC75ikEL0TQdwJuWvv8X+viI6
+	 RiHC5yUaANWWZxwHOE+qMh37qoJlxdVytYukzCcXjONVIaWzMZwRQye3jevSDN9R/+
+	 EsmWEGCnt1yZYj7wOzaPuk1xu2gUZ6FLYcvZPP3qrbATn+QxEn4lAANOKL/U/h/RTG
+	 sGqXZo4AB4T9j92rDHcGtbdTBHMW6Asx09FsaYRh3+a/kyATKZupFus6EC1tqOTb9Q
+	 4/wfbNfWFAVXA==
+Date: Fri, 3 Jan 2025 15:15:14 -0600
 From: "Rob Herring (Arm)" <robh@kernel.org>
 To: Luca Weiss <luca.weiss@fairphone.com>
-Cc: Bartosz Golaszewski <brgl@bgdev.pl>,
-	Bjorn Andersson <andersson@kernel.org>,
-	linux-kernel@vger.kernel.org, phone-devel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	~postmarketos/upstreaming@lists.sr.ht, devicetree@vger.kernel.org,
-	Conor Dooley <conor+dt@kernel.org>,
+Cc: Konrad Dybcio <konradybcio@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>, linux-i2c@vger.kernel.org
-Subject: Re: [PATCH 2/5] dt-bindings: vendor-prefixes: Add Puya Semiconductor
- (Shanghai) Co., Ltd.
-Message-ID: <173593889111.2841683.11350344430804894650.robh@kernel.org>
+	linux-kernel@vger.kernel.org, linux-i2c@vger.kernel.org,
+	Conor Dooley <conor+dt@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Bartosz Golaszewski <brgl@bgdev.pl>,
+	~postmarketos/upstreaming@lists.sr.ht, devicetree@vger.kernel.org,
+	phone-devel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH 3/5] dt-bindings: eeprom: at24: Add compatible for Puya
+ P24C256C
+Message-ID: <173593891365.2842180.9280370418622410267.robh@kernel.org>
 References: <20250103-fp5-cam-eeprom-v1-0-88dee1b36f8e@fairphone.com>
- <20250103-fp5-cam-eeprom-v1-2-88dee1b36f8e@fairphone.com>
+ <20250103-fp5-cam-eeprom-v1-3-88dee1b36f8e@fairphone.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,16 +65,16 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250103-fp5-cam-eeprom-v1-2-88dee1b36f8e@fairphone.com>
+In-Reply-To: <20250103-fp5-cam-eeprom-v1-3-88dee1b36f8e@fairphone.com>
 
 
-On Fri, 03 Jan 2025 12:11:58 +0100, Luca Weiss wrote:
-> Add the vendor prefix for a manufacturer of EEPROM chips among others.
+On Fri, 03 Jan 2025 12:11:59 +0100, Luca Weiss wrote:
+> Add the compatible for an 256Kb EEPROM from Puya.
 > 
 > Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
 > ---
->  Documentation/devicetree/bindings/vendor-prefixes.yaml | 2 ++
->  1 file changed, 2 insertions(+)
+>  Documentation/devicetree/bindings/eeprom/at24.yaml | 4 ++++
+>  1 file changed, 4 insertions(+)
 > 
 
 Acked-by: Rob Herring (Arm) <robh@kernel.org>
