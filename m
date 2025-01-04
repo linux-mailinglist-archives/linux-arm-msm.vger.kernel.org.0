@@ -1,57 +1,67 @@
-Return-Path: <linux-arm-msm+bounces-43924-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-43925-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5F11BA0113C
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  4 Jan 2025 01:09:36 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 38AD8A01177
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  4 Jan 2025 02:15:16 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9B03518849ED
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  4 Jan 2025 00:09:38 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 7ACAC7A2078
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  4 Jan 2025 01:15:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6BDA8EC5;
-	Sat,  4 Jan 2025 00:09:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 87C7270807;
+	Sat,  4 Jan 2025 01:14:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="sKarAGkp"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=hmeau.com header.i=@hmeau.com header.b="K5uR50Pk"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from abb.hmeau.com (abb.hmeau.com [144.6.53.87])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34B6B36B;
-	Sat,  4 Jan 2025 00:09:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7E86136A;
+	Sat,  4 Jan 2025 01:14:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=144.6.53.87
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735949371; cv=none; b=Sxu40c/8cqmmp2IeEfGdlcYPfq8+Mb2fCPYmJZSi0IP7twPC08a13c2BwybOqvgFa767eRJVcam0CWOj7nJy5E8NMfpOt1LLEaM6DyGNNlBgnDI8iJbXF+cWeod6PuJ5gyvrR/tk5RaLwzgegKLr3o6HfGbyxyJ3Oaep9PUAx8U=
+	t=1735953296; cv=none; b=egawDtHWXpqKHj4twLFemRn5fXieNqcPtdxbABKji/AOM/+U5LpeTmcCqIORG4E2dypFzU14XMVAasS2g11luIjggw1aTLZ25Ce5spUG3XzOFvZU16FB1Yon/2Y1Sf3CBtcdCL+lLEvIt08iT7W5mrJvPSevMHClFo6GIt7QpFg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735949371; c=relaxed/simple;
-	bh=NL+6UMAqEckQgTyP9CfH1geXhZoa5MSlyXNrFreAQ64=;
+	s=arc-20240116; t=1735953296; c=relaxed/simple;
+	bh=jBAK/wnADkzx3i5iKVMyzSwnmLBerfrM3VkjJedwGoE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=bEnZUjHHBIMjTXLI4kDe2mIE35XcoPGqc80VKtb+RhEGrysSudNuhlgQZ4RerGpF375p9WUzVnhvrfGzAePUcky/B5FLIrE/9v6gojcCi5PJaVk+siy5voyEOftxWwiTPkxY+C5DTu2iEGOyftUuldVfAcOqeWuBc32FSlBSvBA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=sKarAGkp; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6B75C4CEDD;
-	Sat,  4 Jan 2025 00:09:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1735949370;
-	bh=NL+6UMAqEckQgTyP9CfH1geXhZoa5MSlyXNrFreAQ64=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=sKarAGkp3shhVy//F9vhDi4mvw09GclBlXaRSATpbcyL8j552aZD9Y7cQ5DF9COtd
-	 JdtaeWyIjgtXy6u934m7tcw8FtUCT4nmEkv+DVNDNNXsqcN8YZaoUXiUmVxZAWVAj7
-	 qblQ1+7OKVcVpoMHDT//fgnivbb5LpPw9LZ1OHU7ZVBbTnoKKBSLBYzN9Bp4oiFUx0
-	 sGWNpJAKUUqNgO3FGHsp1lggl5I8tVADngudzQ99v2PAdol3TSmxGPoCt0jHtO26TH
-	 Wb/Sa8sJYqufUshEHl3GYTFUlwvVcbCaS1NnpaBnYYOQ/elsPbIf7QFakZUWorC7OW
-	 A91XqQ8ANJJNg==
-Date: Sat, 4 Jan 2025 01:09:26 +0100
-From: Andi Shyti <andi.shyti@kernel.org>
-To: Jyothi Kumar Seerapu <quic_jseerapu@quicinc.com>
-Cc: Vinod Koul <vkoul@kernel.org>, Sumit Semwal <sumit.semwal@linaro.org>, 
-	Christian =?utf-8?B?S8O2bmln?= <christian.koenig@amd.com>, linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-i2c@vger.kernel.org, linux-media@vger.kernel.org, 
-	dri-devel@lists.freedesktop.org, linaro-mm-sig@lists.linaro.org, quic_msavaliy@quicinc.com, 
-	quic_vtanuku@quicinc.com
-Subject: Re: [PATCH v4 0/2] Add Block event interrupt support for I2C protocol
-Message-ID: <pvcu35x7prqonlhptakepn5bdqm6skd4qmigvoavejyjj363ug@aemx3pd2po2v>
-References: <20241217170424.14703-1-quic_jseerapu@quicinc.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=rBUKwwCCT25oRYB7a9CzcOSZL95we2O4tIAI8gdAFdVR8EAjfZPyhLl/yak3W7W0M0l31Y3sHRSyTO1rSegxLid+sWec9C4XUdjkKeoXeU6gYslcRK/xGXqPXQlhpjohTLl/eA3IZU9wNJzjEesXd3brTm5n1r9xD0CrG+MgczY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gondor.apana.org.au; spf=pass smtp.mailfrom=gondor.apana.org.au; dkim=pass (2048-bit key) header.d=hmeau.com header.i=@hmeau.com header.b=K5uR50Pk; arc=none smtp.client-ip=144.6.53.87
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gondor.apana.org.au
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gondor.apana.org.au
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=hmeau.com;
+	s=formenos; h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:
+	Subject:Cc:To:From:Date:Sender:Reply-To:Content-Transfer-Encoding:Content-ID:
+	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+	:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+	List-Post:List-Owner:List-Archive;
+	bh=ZUy8OstUZytwAKEpOkUdbXFsghBvcj1EsdaEZbSbXds=; b=K5uR50PkZPEii0Hxh2ySCYxzGj
+	16qZ3hZVdwa3DQEVNN2DnrJw0DIZyf8Ed0L34AkfnN4npyFe9vkN4UbUzFC5ENcNCYrJpfSS1aW1E
+	HTHmb5xPjKwnDXEuugFz/OI+iAW8/+GAa+jyUGWedUwJ2a0PvJOv3QhujfkKzW0wK3FrX8I9sHC5+
+	RQAKY2RbX90reWM1dhXm9QSyulfQd3PWSsAsmAPJgxD+eXrk/UL0A64wa2uduLQOxlMf8taFC6yPs
+	WQDQfge5okdmbYQCwattbfRtsFqLwPDwIHqkTvU7rX11eo1bNx4NmwJbvnum71p3/5uYHhQibLQaa
+	RT4qQnjg==;
+Received: from loth.rohan.me.apana.org.au ([192.168.167.2])
+	by formenos.hmeau.com with smtp (Exim 4.96 #2 (Debian))
+	id 1tTsXe-005faR-0l;
+	Sat, 04 Jan 2025 09:14:48 +0800
+Received: by loth.rohan.me.apana.org.au (sSMTP sendmail emulation); Sat, 04 Jan 2025 09:14:46 +0800
+Date: Sat, 4 Jan 2025 09:14:46 +0800
+From: Herbert Xu <herbert@gondor.apana.org.au>
+To: Md Sadre Alam <quic_mdalam@quicinc.com>
+Cc: davem@davemloft.net, robh@kernel.org, krzk+dt@kernel.org,
+	conor+dt@kernel.org, andersson@kernel.org, konradybcio@kernel.org,
+	vkoul@kernel.org, linux-arm-msm@vger.kernel.org,
+	linux-crypto@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org, quic_srichara@quicinc.com,
+	quic_varada@quicinc.com, quic_mmanikan@quicinc.com
+Subject: Re: [PATCH v3 1/4] dt-bindings: crypto: qcom,prng: document ipq9574,
+ ipq5424 and ipq5322
+Message-ID: <Z3iLhrLgaweVF2zU@gondor.apana.org.au>
+References: <20241226114500.2623804-1-quic_mdalam@quicinc.com>
+ <20241226114500.2623804-2-quic_mdalam@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -60,81 +70,33 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20241217170424.14703-1-quic_jseerapu@quicinc.com>
+In-Reply-To: <20241226114500.2623804-2-quic_mdalam@quicinc.com>
 
-Hi,
+On Thu, Dec 26, 2024 at 05:14:57PM +0530, Md Sadre Alam wrote:
+> Document ipq9574, ipq5424 and ipq5322 compatible for the True Random Number
+> Generator.
+> 
+> Signed-off-by: Md Sadre Alam <quic_mdalam@quicinc.com>
+> ---
+> 
+> Change in [v3]
+> 
+> * Organized the device tree binding changes in sorted order
+> 
+> Change in [v2]
+> 
+> * Added device tree binding change
+> 
+> Change in [v1]
+> 
+> * This patch was not included in [v1]
+> 
+>  Documentation/devicetree/bindings/crypto/qcom,prng.yaml | 3 +++
+>  1 file changed, 3 insertions(+)
 
-this patch has been hanging here for a while, can we please have
-someone from DMA and Qualcomm look at it?
-
-Thanks,
-Andi
-
-On Tue, Dec 17, 2024 at 10:34:22PM +0530, Jyothi Kumar Seerapu wrote:
-> The I2C driver gets an interrupt upon transfer completion.
-> When handling multiple messages in a single transfer, this
-> results in N interrupts for N messages, leading to significant
-> software interrupt latency.
-> 
-> To mitigate this latency, utilize Block Event Interrupt (BEI)
-> mechanism. Enabling BEI instructs the hardware to prevent interrupt
-> generation and BEI is disabled when an interrupt is necessary.
-> 
-> Large I2C transfer can be divided into chunks of 8 messages internally.
-> Interrupts are not expected for the first 7 message completions, only
-> the last message triggers an interrupt, indicating the completion of
-> 8 messages. This BEI mechanism enhances overall transfer efficiency.
-> 
-> This optimization reduces transfer time from 168 ms to 48 ms for a
-> series of 200 I2C write messages in a single transfer, with a
-> clock frequency support of 100 kHz.
-> 
-> BEI optimizations are currently implemented for I2C write transfers only,
-> as there is no use case for multiple I2C read messages in a single transfer
-> at this time.
-> 
-> v3 -> v4:
->   - API's added for Block event interrupt with multi descriptor support is 
->     moved from qcom-gpi-dma.h file to I2C geni qcom driver file.
->   - gpi_multi_xfer_timeout_handler function is moved from GPI driver to
->     I2C driver.
->   - geni_i2c_gpi_multi_desc_xfer structure is added as a member of
->     struct geni_i2c_dev.
->   - Removed the changes of making I2C driver is dependent on GPI driver.
-> 
-> v2 -> v3:
->   - Updated commit description
->   - In I2C GENI driver, for i2c_gpi_cb_result moved the logic of
->     "!is_tx_multi_xfer" to else part.
->   - MIN_NUM_OF_MSGS_MULTI_DESC changed from 4 to 2
->   - Changes of I2C GENI driver to depend on the GPI driver moved
->     to patch3.
->   - Renamed gpi_multi_desc_process to gpi_multi_xfer_timeout_handler
->   - Added description for newly added changes in "qcom-gpi-dma.h" file.
-> 
-> v1 -> v2:
->   - DT changes are reverted for adding dma channel size as a new arg of
->     dma-cells property.
->   - DT binding change reveted for dma channel size as a new arg of
->     dma-cells property.
->   - In GPI driver, reverted the changes to parse the channel TRE size
->     from device tree.
->   - Made the changes in QCOM I2C geni driver to support the BEI
->     functionality with the existing TRE size of 64.
->   - Made changes in QCOM I2C geni driver as per the review comments.
->   - Fixed Kernel test robot reported compiltion issues.
-> 
-> 
-> Jyothi Kumar Seerapu (2):
->   dmaengine: qcom: gpi: Add GPI Block event interrupt support
->   i2c: i2c-qcom-geni: Add Block event interrupt support
-> 
->  drivers/dma/qcom/gpi.c             |   3 +
->  drivers/i2c/busses/i2c-qcom-geni.c | 275 ++++++++++++++++++++++++++---
->  include/linux/dma/qcom-gpi-dma.h   |   9 +
->  3 files changed, 262 insertions(+), 25 deletions(-)
-> 
-> -- 
-> 2.17.1
-> 
+Patch applied.  Thanks.
+-- 
+Email: Herbert Xu <herbert@gondor.apana.org.au>
+Home Page: http://gondor.apana.org.au/~herbert/
+PGP Key: http://gondor.apana.org.au/~herbert/pubkey.txt
 
