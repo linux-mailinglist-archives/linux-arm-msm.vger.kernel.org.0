@@ -1,154 +1,104 @@
-Return-Path: <linux-arm-msm+bounces-43937-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-43938-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E903BA0150E
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  4 Jan 2025 14:41:10 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id AD6A5A01619
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  4 Jan 2025 18:18:40 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A0FA53A3C00
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  4 Jan 2025 13:41:05 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0DBD81883AD8
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  4 Jan 2025 17:18:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 89D5614831C;
-	Sat,  4 Jan 2025 13:41:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6942D14375D;
+	Sat,  4 Jan 2025 17:18:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="RsAu9/4G"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="VDJmVY1H"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f52.google.com (mail-lf1-f52.google.com [209.85.167.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B51328F5;
-	Sat,  4 Jan 2025 13:41:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58B7D28EC
+	for <linux-arm-msm@vger.kernel.org>; Sat,  4 Jan 2025 17:18:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735998066; cv=none; b=i9YjFRhM7WkHWW+n7JnMZmqUEj2mk6lwcmw0q1tvtKfFv3CkwZdG5WKEcFsFBSwFgMm8QYLgv4sflK2kSVP5J/Y/Z5m3SzBh6lHmpvSdez5txBDstFwdlDL/U+KkKT1Wgi7iy1q0h7VlQ1AtwCE2bHJlZqomsPP6XxtJSdA3XMc=
+	t=1736011118; cv=none; b=fMkXzxYcdAPT0qCqoRxrtjIGBse7S9/LuMwZ+/VlI+kK4ppxU0un7aVXTVPUYg0Ee0YnJX7aYi92RXA5NixjERNV2r/jwTy8QTBeP9gUauxV0e5Mr/5Jy2+ROZTndz9xrOuRi90V3aDB2WDHUe2h7jWnoiuLPXWcPFklcML81wc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735998066; c=relaxed/simple;
-	bh=2eaXjZBeA8Gx6L45rqGzF25hV+pfiW2AhSpgf3g6Jfs=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=Wtfd0huSzQ/WsRyGY/OW9w6f8HiIY1WzAfoqbILFclu+WBU0A8tbE1K+U2yH0w+pJFvw0gLC1AsPiHepKINhY2MYPguCktLyu7axP27ot8RtLGOO0xxyB4SZQmxSqcEDM9aiKfBW/oSXPz1yrPCCLdtyFgkNz12I0zjqHbe2GFA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=RsAu9/4G; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 504BbUgf001386;
-	Sat, 4 Jan 2025 13:40:58 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	MMkcbGQSIP6ZJZBDsycEWvUrKY5qPPemfATlxINLouk=; b=RsAu9/4GEVSkVOOX
-	VYN9mcVh6HRhLU7JA1/AkOBcxykeyKx9fUGPc+/bM7zSt6lLzN+I4j/PtozWO9YZ
-	JjKoMP3/u7Of88HLBvNkTq3UrskkPywFrRU087MIb60U4el+cCZ5yzFv5IKDdamg
-	KsSX9i7BOPVYcFuyS4SyD3/La7IheljeNm+aT8OBqZGGGbSUZIzBhuyEQlgqdg4T
-	EPaJMoABV6mbzBxEaRhyNka843hbM8nZFpw9MxoaLEPL1oyjeMvendLDqAiB6h6q
-	Uy9GCHDzrCXgEVmhKdgZvkDRxynL7BSrOdo6vUpeuRjzvoPSAw+RvlspPDuK3pSO
-	tuFOGg==
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43xtpdgw77-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Sat, 04 Jan 2025 13:40:57 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 504DevPN013696
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Sat, 4 Jan 2025 13:40:57 GMT
-Received: from [10.239.97.152] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Sat, 4 Jan 2025
- 05:40:50 -0800
-Message-ID: <eedaa77a-8070-41c8-a05b-b124d37ac093@quicinc.com>
-Date: Sat, 4 Jan 2025 21:40:47 +0800
+	s=arc-20240116; t=1736011118; c=relaxed/simple;
+	bh=2Z72HU+D26I7BW9Qs8L1xNzPdqUHVKI9Jr+2DORNkWI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=SuJSFu513LMka5nwu9VkBcV8WpS/LfhkpAGRNS5TTwZUau/rdvVUXkLxCqo3ws768Uxu9D8sy7nrKlCXf8S1Fv+fBT9neYH5HNzKyEumHD6ypl9jbN8iUOp1T0H16IhEXEutLxXg/BaHP7fVG5OeNJeuafJkeK5wG2W5ftt/Y8E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=VDJmVY1H; arc=none smtp.client-ip=209.85.167.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f52.google.com with SMTP id 2adb3069b0e04-53e3c47434eso13640403e87.3
+        for <linux-arm-msm@vger.kernel.org>; Sat, 04 Jan 2025 09:18:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1736011114; x=1736615914; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=hW0+u+P9cC5nllpAC1tkykhhD8VAOl8gKY9poAu5mgY=;
+        b=VDJmVY1HVG107uv0m/VtFV1543nY2mYlkeTV7gqx1usPF9kbMLI30sUaDe0lAAcYj4
+         F7zh4ANIGS+HllT86WKd/vYTjM642JP5W169KpWlqyumSFJWMbAleqY08sON8OWBJW69
+         0UCr8XV8hA3wipfA3pDINOVGufW60/D29HUL46/dnrGoPjAiFc+gf/rqAUq0DMv3Od4Y
+         eovl0Jfnzqws8NNQU9kUpJ3cS9XJNiNZ7qxUZC3XiWhTBgLiD6RBclthbqS4J4lPYbAc
+         WNvpTjGpbD1wMcUuRS+eIdoI800juXRLFuwJYnwkl3cakwgM+MZWpryO5sJu12Of8czm
+         vnmg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1736011114; x=1736615914;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=hW0+u+P9cC5nllpAC1tkykhhD8VAOl8gKY9poAu5mgY=;
+        b=CxC9uOI0TXA5slyI5GPRxJn1et0ZLTfHVH72s/kKrlLrIE49pbVYqDm9lBdC0p3Qw4
+         Vku2QPbzJhqJNRR8YAorSmhHHTC0UgusA63yHCY7rXVLCnBE0vYEhFcmNY0U/5MHMAW3
+         TLCr4Tx+pnzJ8YHjYj77tf/9+ze/smeEm2biWgdJ1JpgX9Z+AlPDPIVSQs0rM8Qr7+lo
+         Ok5sEZQfLMkiDV+rkUyiKiYBO2aQCucVRfgwEKLtfczZCVZg9G/3GAWau5jhJljLt/Ot
+         illkgbqPAGmrxgxGSHRu5cBFvKJcVYnr626yOKhSwZBtiEjAdTIQs9LpCbAwnWp4GQXx
+         QHMw==
+X-Gm-Message-State: AOJu0YyqOWHLLUFSCRSssFAa1vFqgmqiSwSIhvN31HHcPVnknfkPCnWM
+	S3J3Y0CWE9dbnF7MJNNyabfXoeouCJQfuVilXv50SiS/fIKQvi3hpaAbwsP6U/c=
+X-Gm-Gg: ASbGncs91+BP4hZBBihLAg1akWyXrL9xkITmJ8h0UDYRKq9goP9BouSHd2ck/y5h19R
+	Jx9p8oQ3+uza50KwVNP3mFhUbDI5lcfsSh7VUOXTVGFdvrPDeks6r/HgnOhnJyYGuh2JIMPdbNE
+	G6wSAa1jy4Au8zJzPeXf9zaSRv3q1uyy9lYAND7fP3AjGMXY7CAbCaIvip0y1M7xqIOCEoawT8m
+	1rPQvDeeV19hxkrOSviv55XgOzjtO8kP3J9oetwzM6JTzx2WcHnuTFDfUarYpvw79XbCOykW/wK
+	RlCb7+V1JjLRGJAvlNZUI2XBTivCwHMQ+rzS
+X-Google-Smtp-Source: AGHT+IHUGUXgrQ4xntB02/IfHZYKdmLvgEJr4jwZjgVb7/KseJg6X9jxjehweluIJ8UGMyfemPIg1w==
+X-Received: by 2002:a05:6512:12d1:b0:53e:3a79:1ad2 with SMTP id 2adb3069b0e04-54229561a1fmr11545213e87.40.1736011114115;
+        Sat, 04 Jan 2025 09:18:34 -0800 (PST)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5422381383dsm4481764e87.161.2025.01.04.09.18.31
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 04 Jan 2025 09:18:32 -0800 (PST)
+Date: Sat, 4 Jan 2025 19:18:30 +0200
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH linux-msm/debugcc] Add SM8750
+Message-ID: <6omvqu6ul64y3niznzterw4amvu4p6ucqfxqmrs36dv7emf3rk@px4wbjoyjpln>
+References: <20250104092123.5600-1-krzysztof.kozlowski@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 12/16] dt-bindings: media: camss: Add qcom,sm8550-camss
- binding
-To: Krzysztof Kozlowski <krzk@kernel.org>
-CC: <rfoss@kernel.org>, <todor.too@gmail.com>, <bryan.odonoghue@linaro.org>,
-        <mchehab@kernel.org>, <robh@kernel.org>, <krzk+dt@kernel.org>,
-        <conor+dt@kernel.org>, <vladimir.zapolskiy@linaro.org>,
-        <quic_eberman@quicinc.com>, <linux-media@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <kernel@quicinc.com>,
-        Yongsheng Li
-	<quic_yon@quicinc.com>
-References: <20241225133523.4034820-1-quic_depengs@quicinc.com>
- <20241225133523.4034820-13-quic_depengs@quicinc.com>
- <ql3sufugcdpoxqgvs2f4clmbnx75t4jh6ts2ryneu2u5oeuwzn@yizcouuzfj2s>
-Content-Language: en-US
-From: Depeng Shao <quic_depengs@quicinc.com>
-In-Reply-To: <ql3sufugcdpoxqgvs2f4clmbnx75t4jh6ts2ryneu2u5oeuwzn@yizcouuzfj2s>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: Z0HFrQvQ2nX2C30UKUlJj58tDcF8sTh0
-X-Proofpoint-GUID: Z0HFrQvQ2nX2C30UKUlJj58tDcF8sTh0
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 spamscore=0
- impostorscore=0 phishscore=0 mlxlogscore=999 clxscore=1011
- lowpriorityscore=0 mlxscore=0 suspectscore=0 adultscore=0 malwarescore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2501040119
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250104092123.5600-1-krzysztof.kozlowski@linaro.org>
 
-Hi Krzysztof,
-
-On 12/27/2024 5:10 PM, Krzysztof Kozlowski wrote:
-> On Wed, Dec 25, 2024 at 07:05:19PM +0530, Depeng Shao wrote:
->> Add bindings for qcom,sm8550-camss in order to support the camera
->> subsystem for sm8550.
->>
->> Co-developed-by: Yongsheng Li <quic_yon@quicinc.com>
->> Signed-off-by: Yongsheng Li <quic_yon@quicinc.com>
->> Signed-off-by: Depeng Shao <quic_depengs@quicinc.com>
->> ---
-> 
-> Is this v7 or v1? Same issue was all the time in the past, so why can't
-> you finally fix it?
-> 
-> Look:
-> 
-> $ b4 diff 20241225133523.4034820-13-quic_depengs@quicinc.com
-> Breaking thread to remove parents of 20241225133523.4034820-1-quic_depengs@quicinc.com
-> Checking for older revisions
-> Grabbing search results from lore.kernel.org
->    Added from v6: 1 patches
+On Sat, Jan 04, 2025 at 10:21:23AM +0100, Krzysztof Kozlowski wrote:
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 > ---
-> Analyzing 217 messages in the thread
-> Could not find lower series to compare against.
-> 
-> I am not going to perform review, maybe other maintaners have spare
-> time to deal with this submission process.
+>  meson.build |   1 +
+>  sm8750.c    | 839 ++++++++++++++++++++++++++++++++++++++++++++++++++++
+>  2 files changed, 840 insertions(+)
+>  create mode 100644 sm8750.c
 
-Really sorry, I made a foolish mistake. I didn't realize that the patch 
-subject was missing the version number, which might be why the b4 diff 
-couldn't detect the old series. Thank you for pointing out this error. 
-Could you please advise whether I should resend v7 or fix it in next 
-version series?
+Is there a reason why you can't open a pull request on GitHub, like
+everybody else does?
 
-I have also found a workaround to replace "b4 diff". Last time, you 
-helped by giving a RB tag on the version 4 dt-binding. You can check the 
-differences[1] between version 4 and version 7 on the Patchew website. 
-If possible, could you please help review the diff provided by Patchew 
-once again? Sorry for wasting your time.
-
-Visit below website[1], then search "dt-bindings: media: camss: Add 
-qcom,sm8550-camss binding", then we can get the difference between 
-version4 and version7.
-
-
-[1] 
-https://patchew.org/linux/20240812144131.369378-1-quic._5Fdepengs@quicinc.com/diff/20241225133523.4034820-1-quic._5Fdepengs@quicinc.com/
-
-
-Thanks,
-Depeng
+-- 
+With best wishes
+Dmitry
 
