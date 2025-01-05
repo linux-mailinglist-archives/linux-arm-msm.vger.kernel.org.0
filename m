@@ -1,185 +1,253 @@
-Return-Path: <linux-arm-msm+bounces-43946-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-43947-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B39CAA01B38
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  5 Jan 2025 18:56:28 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id F3D38A01C32
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  5 Jan 2025 23:47:20 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9C4E7162E38
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  5 Jan 2025 17:56:26 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8D3F23A21A8
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  5 Jan 2025 22:47:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7DCB014A4FB;
-	Sun,  5 Jan 2025 17:56:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3F4201D5170;
+	Sun,  5 Jan 2025 22:47:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WL5pwI2Q"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="szm/MIks"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-oa1-f54.google.com (mail-oa1-f54.google.com [209.85.160.54])
+Received: from mail-lj1-f177.google.com (mail-lj1-f177.google.com [209.85.208.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D781BB658;
-	Sun,  5 Jan 2025 17:56:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1192146D57
+	for <linux-arm-msm@vger.kernel.org>; Sun,  5 Jan 2025 22:47:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736099784; cv=none; b=HCaPGHY8nT7nyy02L+XBCAFHmEVvp7w1hJhm0Q/Cli2jai1ostr2vXjhl8gA6GeAgB9js3LcOcQLtwI1gyCf24yEXkeTV2uYl2AnFOljG6ILV6bCqbNRmLSwpzvHOuWpSdrsNa5k9w56OdDT5unO0MpMlRaD08P+BG2bsRd4drE=
+	t=1736117235; cv=none; b=dbhGtv775xrS/o0PAWbU7zFaibhqfkBTdsPn+8T4kjdYlU3uGeYRxCOhIixFBZJImwaOynBDcpwYOnVwwvjzoaAi37WFZ9LC787GhD+SRaTBaDV+E6nINjQ5ptDdlcTC4Bklq4UYbBJIC2ZK+lelt0Q+xqZ8Y5Uu921o50Q7Lew=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736099784; c=relaxed/simple;
-	bh=59WbRrfzuqi4LwQlgVcvF7pyzGs+uagP//FmY9IXOxs=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=i8Yrb5wIAUrFUrkCi1bYFxeGpKKecDAgmOi6SwH/hIaeCV6c99Nj6TIVWQhXpv+Jw2H00I8E3RWsOq7wrIuHzgfE5L0x5AqyTo3CmgNix3rI4EA4i5Z3XQeBQON+HCBwSrIHFgSlkruy1y23hG6BUevAZ0rlI19Rn1cuX2lx33I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WL5pwI2Q; arc=none smtp.client-ip=209.85.160.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-oa1-f54.google.com with SMTP id 586e51a60fabf-29ff8053384so6200983fac.3;
-        Sun, 05 Jan 2025 09:56:22 -0800 (PST)
+	s=arc-20240116; t=1736117235; c=relaxed/simple;
+	bh=BMYDPdXSb2p42GtUdkIiijZF1go73+F4fVLY33Fiw28=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=rdSmv74FZ7wBltT291B2C+JXJtFKVVUATdFTrY9ZHP4xUQtQjgH0yH2oJtVVS19mWu1WWw1h7tlpi66HYUJLXoLoc63y4NOuihWFXGuw1eTjM+L7rysgiG3BqQRrIso+ZRH39EvJX1huz1TJigVORohLmIUZMQM1jfYvS53jPso=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=szm/MIks; arc=none smtp.client-ip=209.85.208.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lj1-f177.google.com with SMTP id 38308e7fff4ca-30219437e63so156465361fa.1
+        for <linux-arm-msm@vger.kernel.org>; Sun, 05 Jan 2025 14:47:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1736099782; x=1736704582; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=5XxNEftZua09LK0hM2esB8aQB+qauXYBXnPyeQF/u7M=;
-        b=WL5pwI2QlJMzGkrJBU6MRmjV618VMc5IrkXrI701r6fRLODbRr96ZbPISH2tT10iFD
-         FUC4TG+VeKD48cXMvZxz+3qulkkykNN3p/TWD8QAI2uGtQ36g2gEnP+W2rDnW1KR+H9F
-         E/TttzEIg37JqnwLA2iHYoqq2r7aqHa3rQznQwtCTxFixbyLRpt542XglhlP4QE1XSzB
-         Z6HbEqBBs+Kj0xN1+C/I5rdEe6O4L7KV0u7aA2sMVNZ1RMeklU/aQNAApGoC+8aWP3hq
-         QCpgBSpA1M6PgEiXanwI24z0jclN5WsxKnxxbuniGoc8eSQh3//2ZojBlkQ6u/v/8GiX
-         AaRg==
+        d=linaro.org; s=google; t=1736117231; x=1736722031; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=TUw/Qsx3e/Vb/fGVkhPXMOTG1JvaasLeNnFxwC0uDdk=;
+        b=szm/MIksrH41KDdmZlmqV2Su9kmCme4VQ6H75xN+6DyXIl6rDPBMr4hko2N53j4Iw5
+         1xFB6VzsrfGNjLoYnrldD/klsFoYskBuKiP6m08m6648o73NM4q9X6g47Q2vsM41vc71
+         pO5LP4r0aZXNzt4iLLso/v+0NNmPjBzw0S4mZWC2y7q2MGcMiZT6oNJIhv9G7D7ZHkGj
+         M0nN09gUBNk6kTr6sXxd05BAxHgQ8Aqy18lNlHSkj1CeoA6biQxihIponHNiluW/hLcG
+         eBGpXDr7QH3XAAMVaeIvRDKMbhOYPYAucbVNgAyFTceyD4DUuhnGbNHtMKCnE4kp6/Gd
+         st4Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736099782; x=1736704582;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=5XxNEftZua09LK0hM2esB8aQB+qauXYBXnPyeQF/u7M=;
-        b=T4mvvos55BmR+uW+6zZ5xInRllakEbwAFMpRWcGqm6wARtCPy5qH4qVKmP4T/a2ttA
-         ULm4fomG6VGv6EYNOfxVVH5j2WqG6n2cYlpf3aohJIJerpifjqysA0aKdG2QWVcKwXd7
-         DmNXNhUCaee1iTmJCObkhMPz2rt11FN414zl7TDMVkOA8io92iLtgjceXzxm4weBXnrM
-         9CMP6OWtyg7hDi513nAetmAPNTcnwD1whC7zz3es6UymbLGtdxYry3ML4Vjt0b2UsTGC
-         +FRepCDUNKr8uVz8oJCJ/YkVbfNMjvH4kn0JudHZLQY7r4bJtrZFP6732+i6yl0VCoDD
-         yB7A==
-X-Forwarded-Encrypted: i=1; AJvYcCV084mmgYw3a6Xar9IZlYPi2ZIoYlacsvhz0PSmM8XCWCMLwuDgHPo5kytaouGj24pV2TzlCsBNvNbg@vger.kernel.org, AJvYcCV9m/8WIi1jZrV2TiVHY1vfK4Hmu1tA2Tlj1Jg4dlDdo1pn8p3XuMHdJovRMKsltDzfhGPdnxMFR1T2bF8Muw==@vger.kernel.org, AJvYcCW3ukd2EJuWf67qIat2Zt3SfJQoa3n4ELkjal9cNDEOirHuGuwku3NqfFDEoIqOlCA9g8q9zdkYFZrKiJab@vger.kernel.org, AJvYcCX2ZOXAzjj1LAl+bm0+mKp3dZH+sTkKupCxpVWArbhrvqRMH5WzicdSaF0Gx4kglwB31SHom1d9Ut0=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz1HHfTgd6qr30w5Jxhnxvu34oM5iEJ0HEtyQJWDnTwsUnozorH
-	5nLQ/o5zQ3P01q+lUGtek+83b1DnYPV2ZGw7yMTqDf36+i9yUkq9/lretrYaZSXkU94xJ6gHKNq
-	RgZ9HDBwYJYd5EugKN3nJ/n5rE5Q=
-X-Gm-Gg: ASbGncuOqD/SVikkXjTl0RxCQC+Hreivkzw1sjfVvR0xutGBge/TfU6OKSUPQQPPenQ
-	HZM+yanNU5t9NfZLoS2AsTeSc8B2ARSBPEQPSvchFI53qX8479bvkCSz1WvOTNmnyB7/dABaB
-X-Google-Smtp-Source: AGHT+IHvCPNMz64lZgikf9PqNcOhvTMRwGCdjgxlvaOeMmuPREPE2VatSotMqePlInthqSEKKYUwoJA15I6O4EM0eaU=
-X-Received: by 2002:a05:6870:20d:b0:29e:32e7:5f17 with SMTP id
- 586e51a60fabf-2a7fb4b7bb3mr25812289fac.28.1736099781938; Sun, 05 Jan 2025
- 09:56:21 -0800 (PST)
+        d=1e100.net; s=20230601; t=1736117231; x=1736722031;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=TUw/Qsx3e/Vb/fGVkhPXMOTG1JvaasLeNnFxwC0uDdk=;
+        b=kW203tnl1Wy69CD8mIpzQlMvaHzt/QEIfRG7aXjeVQRLl4M/mr/4/CUFBqyFHsbLx4
+         GzQIgPocOXjMEXN2djq+UhJCUomjym0p9B+Map1eF3bUmYteuDb32Kh3yLLL+lzP2NrX
+         Vmq4MEk3U6ZuSSa5INLzydJXB/gveqdTFaW79qcxNMBegj4C1hQoBdWUSvNjHW9mvtei
+         MlBEom662zWeSDZpmD/r7hx27FPqj9xO0QNf7SXAhbMGTOelQuDnvps0PMWf/FNyyQhr
+         zYVf1jOtJDZyMnjnJwqYNjVtQM3+uigEkx2i+YCRQ8cDTHKjC0aswkZlApwLLKEL0XcC
+         d8DQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUnHgqC4OCn9AtgNPJYy+HEpB0crYVMSyN79MX2rVzxvNSonX8aMZ+h8EWqBHc+Gb2DNEGzUVDOeNkl9dsw@vger.kernel.org
+X-Gm-Message-State: AOJu0Yxya0Q8ez2611qup/1lHTRuOiWHVSV/WiGKskQHmvwVc0NWgCF7
+	Z3TdfXQpdEWqiPG0SYFGY0Eapwy/JsLnLA9antLjApa6MNZChhzDK/Zc6wJqNrI=
+X-Gm-Gg: ASbGnctO57+j1ObEH4PunzRRidIilgqllD/b9Mmo9xavYWNBt1EVrb+sR01CN89hAFe
+	2UN4t2f9ne1sqz082fvwXgTUilfcwYI9oJDYsvkkPiJ5Wtqek5O8LCOH133KxYoxPbBK1JhOKAZ
+	hF5frWgV3ze6pALPXgemTadDEFUTB6Ok72IvuvSQKXaMZlXmRB6uXweyqyJGtAPFbtNcC0gPOwV
+	KaWu4ivVtk5wVz43X17q4/fiVYUJtQRwXWt0XHJU8PdAIWAmWm3wkwdaOFGK/hbVKuUPfB9g0qG
+	qmix8YmwMxviiRE8nuDvj5xS3T2QifR6VJ3p
+X-Google-Smtp-Source: AGHT+IGdeC3kJKQByRSkP8PFuxEiAQLE0VDeCxWNLmf8WlobNvqOtqUKt3Qejko5pkmOL0gzpID7uQ==
+X-Received: by 2002:a2e:a78a:0:b0:302:4a8f:428b with SMTP id 38308e7fff4ca-304583eca3fmr125244721fa.15.1736117231020;
+        Sun, 05 Jan 2025 14:47:11 -0800 (PST)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-3045b09669csm54711531fa.120.2025.01.05.14.47.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 05 Jan 2025 14:47:09 -0800 (PST)
+Date: Mon, 6 Jan 2025 00:47:07 +0200
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Jani Nikula <jani.nikula@linux.intel.com>, 
+	Rodrigo Vivi <rodrigo.vivi@intel.com>, Joonas Lahtinen <joonas.lahtinen@linux.intel.com>, 
+	Tvrtko Ursulin <tursulin@ursulin.net>, David Airlie <airlied@gmail.com>, 
+	Simona Vetter <simona@ffwll.ch>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+	Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
+	Karol Herbst <kherbst@redhat.com>, Lyude Paul <lyude@redhat.com>, 
+	Danilo Krummrich <dakr@redhat.com>, Harry Wentland <harry.wentland@amd.com>, 
+	Leo Li <sunpeng.li@amd.com>, Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>, 
+	Alex Deucher <alexander.deucher@amd.com>, Christian =?utf-8?B?S8O2bmln?= <christian.koenig@amd.com>, 
+	Xinhui Pan <Xinhui.Pan@amd.com>, Alain Volmat <alain.volmat@foss.st.com>, 
+	Raphael Gallais-Pou <rgallaispou@gmail.com>, Liviu Dudau <liviu.dudau@arm.com>, 
+	Andrzej Hajda <andrzej.hajda@intel.com>, Neil Armstrong <neil.armstrong@linaro.org>, 
+	Robert Foss <rfoss@kernel.org>, Laurent Pinchart <Laurent.pinchart@ideasonboard.com>, 
+	Jonas Karlman <jonas@kwiboo.se>, Jernej Skrabec <jernej.skrabec@gmail.com>, 
+	Peter Senna Tschudin <peter.senna@gmail.com>, Ian Ray <ian.ray@ge.com>, 
+	Martyn Welch <martyn.welch@collabora.co.uk>, Inki Dae <inki.dae@samsung.com>, 
+	Seung-Woo Kim <sw0312.kim@samsung.com>, Kyungmin Park <kyungmin.park@samsung.com>, 
+	Krzysztof Kozlowski <krzk@kernel.org>, Alim Akhtar <alim.akhtar@samsung.com>, 
+	Stefan Agner <stefan@agner.ch>, Alison Wang <alison.wang@nxp.com>, 
+	Patrik Jakobsson <patrik.r.jakobsson@gmail.com>, Philipp Zabel <p.zabel@pengutronix.de>, 
+	Shawn Guo <shawnguo@kernel.org>, Sascha Hauer <s.hauer@pengutronix.de>, 
+	Pengutronix Kernel Team <kernel@pengutronix.de>, Fabio Estevam <festevam@gmail.com>, 
+	Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+	Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, 
+	Dave Airlie <airlied@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>, 
+	Sandy Huang <hjc@rock-chips.com>, Heiko =?utf-8?Q?St=C3=BCbner?= <heiko@sntech.de>, 
+	Andy Yan <andy.yan@rock-chips.com>, Chen-Yu Tsai <wens@csie.org>, 
+	Samuel Holland <samuel@sholland.org>, Thierry Reding <thierry.reding@gmail.com>, 
+	Mikko Perttunen <mperttunen@nvidia.com>, Jonathan Hunter <jonathanh@nvidia.com>, 
+	Dave Stevenson <dave.stevenson@raspberrypi.com>, =?utf-8?B?TWHDrXJh?= Canal <mcanal@igalia.com>, 
+	Raspberry Pi Kernel Maintenance <kernel-list@raspberrypi.com>, Gurchetan Singh <gurchetansingh@chromium.org>, 
+	Chia-I Wu <olvaffe@gmail.com>, Zack Rusin <zack.rusin@broadcom.com>, 
+	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>
+Cc: intel-gfx@lists.freedesktop.org, intel-xe@lists.freedesktop.org, 
+	dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org, nouveau@lists.freedesktop.org, 
+	amd-gfx@lists.freedesktop.org, linux-arm-kernel@lists.infradead.org, 
+	linux-samsung-soc@vger.kernel.org, imx@lists.linux.dev, linux-arm-msm@vger.kernel.org, 
+	freedreno@lists.freedesktop.org, virtualization@lists.linux.dev, 
+	spice-devel@lists.freedesktop.org, linux-rockchip@lists.infradead.org, linux-sunxi@lists.linux.dev, 
+	linux-tegra@vger.kernel.org, Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>, 
+	Jani Nikula <jani.nikula@intel.com>
+Subject: Re: [PATCH v2 0/5] drm/connector: make mode_valid() callback accept
+ const mode pointer
+Message-ID: <76ho36jqcraehnsgpjralpye52w7ryshhgizekn4qqfsikiojd@3yyorbvjkc7b>
+References: <20241214-drm-connector-mode-valid-const-v2-0-4f9498a4c822@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20241231-gpu-acd-v3-0-3ba73660e9ca@quicinc.com>
-In-Reply-To: <20241231-gpu-acd-v3-0-3ba73660e9ca@quicinc.com>
-From: Maya Matuszczyk <maccraft123mc@gmail.com>
-Date: Sun, 5 Jan 2025 18:55:46 +0100
-Message-ID: <CAO_MupJ21kOQPZG_=87mC-fQKmL=-K9AgOjriWR=wXCKU0897w@mail.gmail.com>
-Subject: Re: [PATCH v3 0/6] Support for GPU ACD feature on Adreno X1-85
-To: Akhil P Oommen <quic_akhilpo@quicinc.com>
-Cc: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, 
-	Konrad Dybcio <konradybcio@kernel.org>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
-	Simona Vetter <simona@ffwll.ch>, Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>, 
-	Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Bjorn Andersson <andersson@kernel.org>, linux-arm-msm@vger.kernel.org, 
-	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
-	linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org, 
-	devicetree@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241214-drm-connector-mode-valid-const-v2-0-4f9498a4c822@linaro.org>
 
-Hi,
-I've applied this series for testing, and I've no performance
-increase, and some screen corruption, there's some lines(mostly white)
-on my yoga slim 7x that appear on the bottom of the screen. When I
-move my cursor in swaywm over it, the lines get occluded by the cursor
-and screenshots don't show these lines.
+On Sat, Dec 14, 2024 at 03:37:04PM +0200, Dmitry Baryshkov wrote:
+> While working on the generic mode_valid() implementation for the HDMI
+> Connector framework I noticed that unlike other DRM objects
+> drm_connector accepts non-const pointer to struct drm_display_mode,
+> while obviously mode_valid() isn't expected to modify the argument.
+> 
+> Mass-change the DRM framework code to pass const argument to that
+> callback.
+> 
+> The series has been compile-tested with defconfig for x86-64, arm and
+> arm64.
+> 
+> Note: yes, I understand that this change might be hard to review and
+> merge. The only viable option that I foresee is to add new callback,
+> having the const argument and migrate drivers into using it one by one.
 
-Best Regards,
-Maya Matuszczyk
+Colleagues, I'd like to graciously ping regarding this series. Should it
+be merged as is (possibly requiring more R-B's)? Or should I rework it
+adding something like .mode_valid_new() callback which takes const
+argument?
 
-pon., 30 gru 2024 o 22:11 Akhil P Oommen <quic_akhilpo@quicinc.com> napisa=
-=C5=82(a):
->
-> This series adds support for ACD feature for Adreno GPU which helps to
-> lower the power consumption on GX rail and also sometimes is a requiremen=
-t
-> to enable higher GPU frequencies. At high level, following are the
-> sequences required for ACD feature:
->         1. Identify the ACD level data for each regulator corner
->         2. Send a message to AOSS to switch voltage plan
->         3. Send a table with ACD level information to GMU during every
->         gpu wake up
->
-> For (1), it is better to keep ACD level data in devicetree because this
-> value depends on the process node, voltage margins etc which are
-> chipset specific. For instance, same GPU HW IP on a different chipset
-> would have a different set of values. So, a new schema which extends
-> opp-v2 is created to add a new property called "qcom,opp-acd-level".
->
-> ACD support is dynamically detected based on the presence of
-> "qcom,opp-acd-level" property in GPU's opp table. Also, qmp node should b=
-e
-> present under GMU node in devicetree for communication with AOSS.
->
-> The devicetree patch in this series adds the acd-level data for X1-85
-> GPU present in Snapdragon X1 Elite chipset.
->
-> The last two devicetree patches are for Bjorn and all the rest for
-> Rob Clark.
->
+> 
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
-> Changes in v3:
-> - Rebased on top of v6.13-rc4 since X1E doesn't boot properly with msm-ne=
-xt
-> - Update patternProperties regex (Krzysztof)
-> - Update MAINTAINERS file include the new opp-v2-qcom-adreno.yaml
-> - Update the new dt properties' description
-> - Do not move qmp_get() to acd probe (Konrad)
-> - New patches: patch#2, #3 and #6
-> - Link to v2: https://lore.kernel.org/r/20241021-gpu-acd-v2-0-9c25a62803b=
-c@quicinc.com
->
 > Changes in v2:
-> - Removed RFC tag for the series
-> - Improve documentation for the new dt bindings (Krzysztof)
-> - Add fallback compatible string for opp-table (Krzysztof)
-> - Link to v1: https://lore.kernel.org/r/20241012-gpu-acd-v1-0-1e5e91aa95b=
-6@quicinc.com
->
+> - Rebased on top of linux-next
+> - Replaced 'accept const argument' with 'take a const arugment'
+>   (Laurent)
+> - Link to v1: https://lore.kernel.org/r/20241115-drm-connector-mode-valid-const-v1-0-b1b523156f71@linaro.org
+> 
 > ---
-> Akhil P Oommen (6):
->       drm/msm/adreno: Add support for ACD
->       drm/msm: a6x: Rework qmp_get() error handling
->       drm/msm/adreno: Add module param to disable ACD
->       dt-bindings: opp: Add v2-qcom-adreno vendor bindings
->       arm64: dts: qcom: x1e80100: Add ACD levels for GPU
->       arm64: dts: qcom: x1e80100: Add OPPs up to Turbo L3 for GPU
->
->  .../bindings/opp/opp-v2-qcom-adreno.yaml           | 97 ++++++++++++++++=
-++++++
->  MAINTAINERS                                        |  1 +
->  arch/arm64/boot/dts/qcom/x1e80100.dtsi             | 25 +++++-
->  drivers/gpu/drm/msm/adreno/a6xx_gmu.c              | 96 ++++++++++++++++=
-++---
->  drivers/gpu/drm/msm/adreno/a6xx_gmu.h              |  1 +
->  drivers/gpu/drm/msm/adreno/a6xx_hfi.c              | 36 ++++++++
->  drivers/gpu/drm/msm/adreno/a6xx_hfi.h              | 21 +++++
->  drivers/gpu/drm/msm/adreno/adreno_device.c         |  4 +
->  8 files changed, 268 insertions(+), 13 deletions(-)
+> Dmitry Baryshkov (5):
+>       drm/encoder_slave: make mode_valid accept const struct drm_display_mode
+>       drm/amdgpu: don't change mode in amdgpu_dm_connector_mode_valid()
+>       drm/sti: hda: pass const struct drm_display_mode* to hda_get_mode_idx()
+>       drm/connector: make mode_valid_ctx take a const struct drm_display_mode
+>       drm/connector: make mode_valid take a const struct drm_display_mode
+> 
+>  drivers/gpu/drm/amd/amdgpu/amdgpu_connectors.c           |  8 ++++----
+>  drivers/gpu/drm/amd/amdgpu/atombios_dp.c                 |  2 +-
+>  drivers/gpu/drm/amd/amdgpu/atombios_dp.h                 |  2 +-
+>  drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c        | 12 +++++++++---
+>  drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.h        |  2 +-
+>  drivers/gpu/drm/arm/display/komeda/komeda_wb_connector.c |  2 +-
+>  drivers/gpu/drm/arm/malidp_mw.c                          |  2 +-
+>  drivers/gpu/drm/bridge/adv7511/adv7511_drv.c             |  2 +-
+>  drivers/gpu/drm/bridge/cadence/cdns-mhdp8546-core.c      |  2 +-
+>  drivers/gpu/drm/bridge/megachips-stdpxxxx-ge-b850v3-fw.c |  7 -------
+>  drivers/gpu/drm/display/drm_bridge_connector.c           |  2 +-
+>  drivers/gpu/drm/display/drm_hdmi_state_helper.c          |  2 +-
+>  drivers/gpu/drm/drm_crtc_helper_internal.h               |  2 +-
+>  drivers/gpu/drm/drm_probe_helper.c                       |  2 +-
+>  drivers/gpu/drm/exynos/exynos_hdmi.c                     |  2 +-
+>  drivers/gpu/drm/fsl-dcu/fsl_dcu_drm_rgb.c                |  2 +-
+>  drivers/gpu/drm/gma500/cdv_intel_crt.c                   |  2 +-
+>  drivers/gpu/drm/gma500/cdv_intel_dp.c                    |  2 +-
+>  drivers/gpu/drm/gma500/cdv_intel_hdmi.c                  |  2 +-
+>  drivers/gpu/drm/gma500/cdv_intel_lvds.c                  |  2 +-
+>  drivers/gpu/drm/gma500/oaktrail_hdmi.c                   |  2 +-
+>  drivers/gpu/drm/gma500/psb_intel_drv.h                   |  2 +-
+>  drivers/gpu/drm/gma500/psb_intel_lvds.c                  |  2 +-
+>  drivers/gpu/drm/gma500/psb_intel_sdvo.c                  |  2 +-
+>  drivers/gpu/drm/i2c/ch7006_drv.c                         |  2 +-
+>  drivers/gpu/drm/i2c/sil164_drv.c                         |  2 +-
+>  drivers/gpu/drm/i915/display/dvo_ch7017.c                |  2 +-
+>  drivers/gpu/drm/i915/display/dvo_ch7xxx.c                |  2 +-
+>  drivers/gpu/drm/i915/display/dvo_ivch.c                  |  2 +-
+>  drivers/gpu/drm/i915/display/dvo_ns2501.c                |  2 +-
+>  drivers/gpu/drm/i915/display/dvo_sil164.c                |  2 +-
+>  drivers/gpu/drm/i915/display/dvo_tfp410.c                |  2 +-
+>  drivers/gpu/drm/i915/display/icl_dsi.c                   |  2 +-
+>  drivers/gpu/drm/i915/display/intel_crt.c                 |  2 +-
+>  drivers/gpu/drm/i915/display/intel_dp.c                  |  2 +-
+>  drivers/gpu/drm/i915/display/intel_dp_mst.c              |  2 +-
+>  drivers/gpu/drm/i915/display/intel_dsi.c                 |  2 +-
+>  drivers/gpu/drm/i915/display/intel_dsi.h                 |  2 +-
+>  drivers/gpu/drm/i915/display/intel_dvo.c                 |  2 +-
+>  drivers/gpu/drm/i915/display/intel_dvo_dev.h             |  2 +-
+>  drivers/gpu/drm/i915/display/intel_hdmi.c                |  2 +-
+>  drivers/gpu/drm/i915/display/intel_lvds.c                |  2 +-
+>  drivers/gpu/drm/i915/display/intel_sdvo.c                |  2 +-
+>  drivers/gpu/drm/i915/display/intel_tv.c                  |  2 +-
+>  drivers/gpu/drm/i915/display/vlv_dsi.c                   |  2 +-
+>  drivers/gpu/drm/imx/ipuv3/imx-tve.c                      |  2 +-
+>  drivers/gpu/drm/msm/disp/mdp4/mdp4_lvds_connector.c      |  2 +-
+>  drivers/gpu/drm/nouveau/dispnv04/tvnv17.c                |  2 +-
+>  drivers/gpu/drm/nouveau/dispnv50/disp.c                  |  2 +-
+>  drivers/gpu/drm/nouveau/nouveau_connector.c              |  2 +-
+>  drivers/gpu/drm/qxl/qxl_display.c                        |  2 +-
+>  drivers/gpu/drm/radeon/atombios_dp.c                     |  2 +-
+>  drivers/gpu/drm/radeon/radeon_connectors.c               | 10 +++++-----
+>  drivers/gpu/drm/radeon/radeon_mode.h                     |  2 +-
+>  drivers/gpu/drm/rockchip/cdn-dp-core.c                   |  2 +-
+>  drivers/gpu/drm/rockchip/inno_hdmi.c                     |  4 ++--
+>  drivers/gpu/drm/rockchip/rk3066_hdmi.c                   |  2 +-
+>  drivers/gpu/drm/sti/sti_dvo.c                            |  2 +-
+>  drivers/gpu/drm/sti/sti_hda.c                            | 12 ++++++------
+>  drivers/gpu/drm/sti/sti_hdmi.c                           |  2 +-
+>  drivers/gpu/drm/tegra/dsi.c                              |  2 +-
+>  drivers/gpu/drm/tegra/hdmi.c                             |  2 +-
+>  drivers/gpu/drm/tegra/sor.c                              |  2 +-
+>  drivers/gpu/drm/vc4/vc4_txp.c                            |  2 +-
+>  drivers/gpu/drm/virtio/virtgpu_display.c                 |  2 +-
+>  drivers/gpu/drm/vmwgfx/vmwgfx_kms.c                      |  2 +-
+>  drivers/gpu/drm/vmwgfx/vmwgfx_kms.h                      |  2 +-
+>  drivers/gpu/drm/vmwgfx/vmwgfx_stdu.c                     |  2 +-
+>  include/drm/display/drm_hdmi_state_helper.h              |  2 +-
+>  include/drm/drm_encoder_slave.h                          |  2 +-
+>  include/drm/drm_modeset_helper_vtables.h                 |  4 ++--
+>  71 files changed, 92 insertions(+), 93 deletions(-)
 > ---
-> base-commit: dbfac60febfa806abb2d384cb6441e77335d2799
-> change-id: 20240724-gpu-acd-6c1dc5dcf516
->
+> base-commit: 4176cf5c5651c33769de83bb61b0287f4ec7719f
+> change-id: 20241115-drm-connector-mode-valid-const-ae3db0ef6cb7
+> 
 > Best regards,
-> --
-> Akhil P Oommen <quic_akhilpo@quicinc.com>
->
->
+> -- 
+> Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> 
+
+-- 
+With best wishes
+Dmitry
 
