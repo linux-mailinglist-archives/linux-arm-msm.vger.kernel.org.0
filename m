@@ -1,247 +1,165 @@
-Return-Path: <linux-arm-msm+bounces-43948-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-43949-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A22B2A01C77
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jan 2025 00:19:12 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B0137A01CCA
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jan 2025 00:58:50 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 80EBD1627A1
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  5 Jan 2025 23:19:10 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 324DD3A058A
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  5 Jan 2025 23:58:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 073451AA1F2;
-	Sun,  5 Jan 2025 23:19:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 702BE1D47A2;
+	Sun,  5 Jan 2025 23:58:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b="UeDysJQP"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ZARwvtBM"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from perceval.ideasonboard.com (perceval.ideasonboard.com [213.167.242.64])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FB08647;
-	Sun,  5 Jan 2025 23:19:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.167.242.64
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 871701ACEC4
+	for <linux-arm-msm@vger.kernel.org>; Sun,  5 Jan 2025 23:58:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736119149; cv=none; b=Qzl5DKp8eOKKNqD6sg81OZeCWNs93qCrx3+2n/KiUWNFfoT3DLNaHcdQZtTK1O6+7H1dZf/uF4TsF3437YgegRxlt7Hz/CKQC2PyPHrUp78+rfKUZH9vSx6hMitmQ/mgpYWBSagvaV1B11aXWa00082k5SZoEIqSoQzPvwIQTzk=
+	t=1736121526; cv=none; b=GE/pmnApDbh5t2y+aSYUiE1UGkHWD2vbfDvsCSB/HOcWkizi0E0S9pz6db0CwnLq07+v55uzKWZE6zYLBeVgZDLLiMIQaIwRQPc5fax/7WQnxvQKQ1qHr9iWDpx0nitdIge9VK/Z1JvJh5P+cqR5Ns/NVvqNqyc4ADbeZWx99J8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736119149; c=relaxed/simple;
-	bh=eN3aRIQ/gGCSrh9ouIKHrFhOanrFncaqzRShN6d8pSM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=LC32wnSsY4Nf8nO3gCiLcXK1rZax/1mhSmY2V7QkG0nvSumY/b3Y777r0ocimMj0ixuFguvcaqY4M7K5m7kr5uGBnYOhFDEim3fQ4mJ8srO0NeqYq97ecBxOq/DWu1JsF8epD/Ig+tsYQldwF7L0QCrwiJk6HMLNyqiy0pZeewU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ideasonboard.com; spf=pass smtp.mailfrom=ideasonboard.com; dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b=UeDysJQP; arc=none smtp.client-ip=213.167.242.64
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ideasonboard.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ideasonboard.com
-Received: from pendragon.ideasonboard.com (81-175-209-231.bb.dnainternet.fi [81.175.209.231])
-	by perceval.ideasonboard.com (Postfix) with ESMTPSA id 8DC5E7E9;
-	Mon,  6 Jan 2025 00:18:04 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
-	s=mail; t=1736119085;
-	bh=eN3aRIQ/gGCSrh9ouIKHrFhOanrFncaqzRShN6d8pSM=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=UeDysJQP/8Oa1/DV3kQKsywDTYtozyWwBNwdqtX1NaCn147rROcOhgDgaBzpl9UCN
-	 dkXrg5A0RWNQK6dEu/jHI3f++kMLiO8kBcwCiPgwkrE+/NNE7iR+kBs+koVfsvkkE+
-	 0++Ipy4b9rU2Z58OdadDTjM+gkVR9C1lYmx7Vl1g=
-Date: Mon, 6 Jan 2025 01:18:53 +0200
-From: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Jani Nikula <jani.nikula@linux.intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
-	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
-	Tvrtko Ursulin <tursulin@ursulin.net>,
-	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Karol Herbst <kherbst@redhat.com>, Lyude Paul <lyude@redhat.com>,
-	Danilo Krummrich <dakr@redhat.com>,
-	Harry Wentland <harry.wentland@amd.com>,
-	Leo Li <sunpeng.li@amd.com>,
-	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Christian =?utf-8?B?S8O2bmln?= <christian.koenig@amd.com>,
-	Xinhui Pan <Xinhui.Pan@amd.com>,
-	Alain Volmat <alain.volmat@foss.st.com>,
-	Raphael Gallais-Pou <rgallaispou@gmail.com>,
-	Liviu Dudau <liviu.dudau@arm.com>,
-	Andrzej Hajda <andrzej.hajda@intel.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Robert Foss <rfoss@kernel.org>, Jonas Karlman <jonas@kwiboo.se>,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Peter Senna Tschudin <peter.senna@gmail.com>,
-	Ian Ray <ian.ray@ge.com>,
-	Martyn Welch <martyn.welch@collabora.co.uk>,
-	Inki Dae <inki.dae@samsung.com>,
-	Seung-Woo Kim <sw0312.kim@samsung.com>,
-	Kyungmin Park <kyungmin.park@samsung.com>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
-	Alim Akhtar <alim.akhtar@samsung.com>,
-	Stefan Agner <stefan@agner.ch>, Alison Wang <alison.wang@nxp.com>,
-	Patrik Jakobsson <patrik.r.jakobsson@gmail.com>,
-	Philipp Zabel <p.zabel@pengutronix.de>,
-	Shawn Guo <shawnguo@kernel.org>,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	Pengutronix Kernel Team <kernel@pengutronix.de>,
-	Fabio Estevam <festevam@gmail.com>, Rob Clark <robdclark@gmail.com>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Sean Paul <sean@poorly.run>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	Dave Airlie <airlied@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
-	Sandy Huang <hjc@rock-chips.com>,
-	Heiko =?utf-8?Q?St=C3=BCbner?= <heiko@sntech.de>,
-	Andy Yan <andy.yan@rock-chips.com>, Chen-Yu Tsai <wens@csie.org>,
-	Samuel Holland <samuel@sholland.org>,
-	Thierry Reding <thierry.reding@gmail.com>,
-	Mikko Perttunen <mperttunen@nvidia.com>,
-	Jonathan Hunter <jonathanh@nvidia.com>,
-	Dave Stevenson <dave.stevenson@raspberrypi.com>,
-	=?utf-8?B?TWHDrXJh?= Canal <mcanal@igalia.com>,
-	Raspberry Pi Kernel Maintenance <kernel-list@raspberrypi.com>,
-	Gurchetan Singh <gurchetansingh@chromium.org>,
-	Chia-I Wu <olvaffe@gmail.com>, Zack Rusin <zack.rusin@broadcom.com>,
-	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
-	intel-gfx@lists.freedesktop.org, intel-xe@lists.freedesktop.org,
-	dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-	nouveau@lists.freedesktop.org, amd-gfx@lists.freedesktop.org,
-	linux-arm-kernel@lists.infradead.org,
-	linux-samsung-soc@vger.kernel.org, imx@lists.linux.dev,
-	linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
-	virtualization@lists.linux.dev, spice-devel@lists.freedesktop.org,
-	linux-rockchip@lists.infradead.org, linux-sunxi@lists.linux.dev,
-	linux-tegra@vger.kernel.org, Jani Nikula <jani.nikula@intel.com>
-Subject: Re: [PATCH v2 0/5] drm/connector: make mode_valid() callback accept
- const mode pointer
-Message-ID: <20250105231853.GA21164@pendragon.ideasonboard.com>
-References: <20241214-drm-connector-mode-valid-const-v2-0-4f9498a4c822@linaro.org>
- <76ho36jqcraehnsgpjralpye52w7ryshhgizekn4qqfsikiojd@3yyorbvjkc7b>
+	s=arc-20240116; t=1736121526; c=relaxed/simple;
+	bh=/oB79DLaXODS/gy0IycdhaP00aBIZCZoIFqlOL0QNUE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=QwaXxW86NZtkSZGFC2My2+b3SUOL+jsxE6C+cyZWAEvDhvi4VDZKYY1gRbFUaGC2+zSVp5x8zHKJkjd5gEyXAQEF0I8Yp+GYyffYTHsSe3Dlk0/N6/jjZ/RYuf6SNtGwJUMj84pgHl/14lee6tFkPWV/Rp+9b4h8qGCiBrIqUAA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ZARwvtBM; arc=none smtp.client-ip=209.85.128.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-4361815b96cso91644225e9.1
+        for <linux-arm-msm@vger.kernel.org>; Sun, 05 Jan 2025 15:58:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1736121523; x=1736726323; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=QbNsBvpoFk/1ISttIYoBxKkguUBs6TizEP3xjLgdI3c=;
+        b=ZARwvtBMc9l9LUR3QyT8VfX+NWVX3LiEsgxZljjLUdImEa5brnRuIBhSu2deTwe7gD
+         Muhs0bG+DkDkE+MygREuGoDMYsl8iDYxSfjP6pCPe64vuovD/k/OnbbDRHEgLLWt3vUZ
+         1KjXFZf7Y2gM3IU/e64iGd+bhtpWbmRJmFib2xTGUdLLl1eoIqOZmcJF1cXFdXcj2WVN
+         1uHd9fVtnDweF0AkImXCJeTL/Aye2dS2nZZe+nenFJiLhXouHQAjV7QBavBla5hcsQZH
+         BlAYSRK6d4ppjAJ9OrNEQAO1IH9wDS5BYW5n+O9YXFn9Lof1E+6PVR71U5FBM2KClWIb
+         EFFA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1736121523; x=1736726323;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=QbNsBvpoFk/1ISttIYoBxKkguUBs6TizEP3xjLgdI3c=;
+        b=YZofvP7p8cmevYU9psbBWGkvzfVyP1aqePO797WwT1q/CxxeKCTg/26UfhDOHUfkJi
+         qDcA3S8zagXNNGAstpR4VkDyKt5vBifLFDdBlmCQcZmdr2EBQMk2zMoIyhm+0jwulAfp
+         +8d9dKVpgcqBVVZCh8bX6Qu+C8Pu6JSFbg0n5AJtBHiwDhHr+5xQhJZu+0K8chhoONzn
+         vWLDDzzQphhVk6uB45PiR6xYk6jU6Cw4trOn4gSbdTAXGgqkI7jR0ioA3GDHt1hINNrl
+         12xxS5t0FmqDcoSv+2ODyM6Y79HMThr37MtCt2H2dMCuL9coYlQWl8fKKFs0VW6qDgiR
+         r3dQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUnEbe7S9xZnyR7Zy3x93JJn/ey5gMFXmqPzZEw+WWcNGz64KlbTCJqH5jkYIKatf9LsqtdB7bxoq5LMEeK@vger.kernel.org
+X-Gm-Message-State: AOJu0YweVMG9ZGCDyh3X5Ulf3yKQbfSJ6zW1F7mfR4NjC/gwQ7M7imzh
+	UBjUYtqIZpSioOlPYeTL6W4a1CefwBiEVP48PnyIub3C7A9lYE0R2J3RqJYFbIo=
+X-Gm-Gg: ASbGncu++ZRnat+EYuVpOM4tLgW5LRTK+M2VnoxNuUjW9a6ku+MdZwdaHoQLNueTia8
+	KpLmKdzfBMCj49adyGWDv62KAPzdONSbopyQpxYnCuy5MQzajLlCFiIvzA/nwAXcbSFsdNmWqjX
+	O5JnB3TTdSJkpwuJd0knGr2oczgE49RZh8vJ82Ai8Drf5DaSBvcUIkHJd912PzZUZQlAaHpBytX
+	YHFkWowYpuOi9L2WZpea8nwanFAIeqKPFbQR9Q9g1TAV2P/LqBr7Is5uyXU27HiR4l50A==
+X-Google-Smtp-Source: AGHT+IG6j9C9E/4LQM/2K35FNp7NLqsvOtrbIvhYHwapMRYFDdicWc8WyEtxiJGPCxEYcdYg4mD91g==
+X-Received: by 2002:a5d:59ac:0:b0:385:db11:badf with SMTP id ffacd0b85a97d-38a221fb47amr46144030f8f.22.1736121522802;
+        Sun, 05 Jan 2025 15:58:42 -0800 (PST)
+Received: from [192.168.0.43] ([176.61.106.227])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38a1c833280sm46693179f8f.40.2025.01.05.15.58.40
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 05 Jan 2025 15:58:41 -0800 (PST)
+Message-ID: <f18c1277-0d72-4f7c-b325-5f19cfb0ab98@linaro.org>
+Date: Sun, 5 Jan 2025 23:58:40 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <76ho36jqcraehnsgpjralpye52w7ryshhgizekn4qqfsikiojd@3yyorbvjkc7b>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/2] media: venus: fix OOB read issue due to double read
+To: Vedang Nagar <quic_vnagar@quicinc.com>,
+ Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+ Vikash Garodia <quic_vgarodia@quicinc.com>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>
+Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20250104-venus-security-fixes-v1-0-9d0dd4594cb4@quicinc.com>
+ <20250104-venus-security-fixes-v1-1-9d0dd4594cb4@quicinc.com>
+Content-Language: en-US
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <20250104-venus-security-fixes-v1-1-9d0dd4594cb4@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Mon, Jan 06, 2025 at 12:47:07AM +0200, Dmitry Baryshkov wrote:
-> On Sat, Dec 14, 2024 at 03:37:04PM +0200, Dmitry Baryshkov wrote:
-> > While working on the generic mode_valid() implementation for the HDMI
-> > Connector framework I noticed that unlike other DRM objects
-> > drm_connector accepts non-const pointer to struct drm_display_mode,
-> > while obviously mode_valid() isn't expected to modify the argument.
-> > 
-> > Mass-change the DRM framework code to pass const argument to that
-> > callback.
-> > 
-> > The series has been compile-tested with defconfig for x86-64, arm and
-> > arm64.
-> > 
-> > Note: yes, I understand that this change might be hard to review and
-> > merge. The only viable option that I foresee is to add new callback,
-> > having the const argument and migrate drivers into using it one by one.
+On 04/01/2025 05:41, Vedang Nagar wrote:
+> During message queue read, the address is being read twice
+> from the shared memory. The first read is validated against
+> the size of the packet, however the second read is not
+> being validated.
+
+A brief scan of this code doesn't really show the base case you assert here.
+
+Could you be a bit more explicit.
+
+  Therefore, it's possible for firmware to
+> modify the value to a bigger invalid value which can lead
+> to OOB read access issue while reading the packet.
+> Added fix to reupdate the size of the packet which was
+> read for the first time.
 > 
-> Colleagues, I'd like to graciously ping regarding this series. Should it
-> be merged as is (possibly requiring more R-B's)? Or should I rework it
-> adding something like .mode_valid_new() callback which takes const
-> argument?
+> Signed-off-by: Vedang Nagar <quic_vnagar@quicinc.com>
+> ---
+>   drivers/media/platform/qcom/venus/hfi_venus.c | 1 +
+>   1 file changed, 1 insertion(+)
+> 
+> diff --git a/drivers/media/platform/qcom/venus/hfi_venus.c b/drivers/media/platform/qcom/venus/hfi_venus.c
+> index f9437b6412b91c2483670a2b11f4fd43f3206404..64cc9e916f53e5a9c82b1ff25c4475d622ebc321 100644
+> --- a/drivers/media/platform/qcom/venus/hfi_venus.c
+> +++ b/drivers/media/platform/qcom/venus/hfi_venus.c
+> @@ -298,6 +298,7 @@ static int venus_read_queue(struct venus_hfi_device *hdev,
+>   			memcpy(pkt, rd_ptr, len);
+>   			memcpy(pkt + len, queue->qmem.kva, new_rd_idx << 2);
+>   		}
+> +		memcpy(pkt, (u32 *)(queue->qmem.kva + (rd_idx << 2)), sizeof(u32));
 
-I personally like the end result. The diffstat isn't very big, I don't
-think it's that hard to review.
+I'm not entirely following your reasoning here.
 
-> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > ---
-> > Changes in v2:
-> > - Rebased on top of linux-next
-> > - Replaced 'accept const argument' with 'take a const arugment'
-> >   (Laurent)
-> > - Link to v1: https://lore.kernel.org/r/20241115-drm-connector-mode-valid-const-v1-0-b1b523156f71@linaro.org
-> > 
-> > ---
-> > Dmitry Baryshkov (5):
-> >       drm/encoder_slave: make mode_valid accept const struct drm_display_mode
-> >       drm/amdgpu: don't change mode in amdgpu_dm_connector_mode_valid()
-> >       drm/sti: hda: pass const struct drm_display_mode* to hda_get_mode_idx()
-> >       drm/connector: make mode_valid_ctx take a const struct drm_display_mode
-> >       drm/connector: make mode_valid take a const struct drm_display_mode
-> > 
-> >  drivers/gpu/drm/amd/amdgpu/amdgpu_connectors.c           |  8 ++++----
-> >  drivers/gpu/drm/amd/amdgpu/atombios_dp.c                 |  2 +-
-> >  drivers/gpu/drm/amd/amdgpu/atombios_dp.h                 |  2 +-
-> >  drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c        | 12 +++++++++---
-> >  drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.h        |  2 +-
-> >  drivers/gpu/drm/arm/display/komeda/komeda_wb_connector.c |  2 +-
-> >  drivers/gpu/drm/arm/malidp_mw.c                          |  2 +-
-> >  drivers/gpu/drm/bridge/adv7511/adv7511_drv.c             |  2 +-
-> >  drivers/gpu/drm/bridge/cadence/cdns-mhdp8546-core.c      |  2 +-
-> >  drivers/gpu/drm/bridge/megachips-stdpxxxx-ge-b850v3-fw.c |  7 -------
-> >  drivers/gpu/drm/display/drm_bridge_connector.c           |  2 +-
-> >  drivers/gpu/drm/display/drm_hdmi_state_helper.c          |  2 +-
-> >  drivers/gpu/drm/drm_crtc_helper_internal.h               |  2 +-
-> >  drivers/gpu/drm/drm_probe_helper.c                       |  2 +-
-> >  drivers/gpu/drm/exynos/exynos_hdmi.c                     |  2 +-
-> >  drivers/gpu/drm/fsl-dcu/fsl_dcu_drm_rgb.c                |  2 +-
-> >  drivers/gpu/drm/gma500/cdv_intel_crt.c                   |  2 +-
-> >  drivers/gpu/drm/gma500/cdv_intel_dp.c                    |  2 +-
-> >  drivers/gpu/drm/gma500/cdv_intel_hdmi.c                  |  2 +-
-> >  drivers/gpu/drm/gma500/cdv_intel_lvds.c                  |  2 +-
-> >  drivers/gpu/drm/gma500/oaktrail_hdmi.c                   |  2 +-
-> >  drivers/gpu/drm/gma500/psb_intel_drv.h                   |  2 +-
-> >  drivers/gpu/drm/gma500/psb_intel_lvds.c                  |  2 +-
-> >  drivers/gpu/drm/gma500/psb_intel_sdvo.c                  |  2 +-
-> >  drivers/gpu/drm/i2c/ch7006_drv.c                         |  2 +-
-> >  drivers/gpu/drm/i2c/sil164_drv.c                         |  2 +-
-> >  drivers/gpu/drm/i915/display/dvo_ch7017.c                |  2 +-
-> >  drivers/gpu/drm/i915/display/dvo_ch7xxx.c                |  2 +-
-> >  drivers/gpu/drm/i915/display/dvo_ivch.c                  |  2 +-
-> >  drivers/gpu/drm/i915/display/dvo_ns2501.c                |  2 +-
-> >  drivers/gpu/drm/i915/display/dvo_sil164.c                |  2 +-
-> >  drivers/gpu/drm/i915/display/dvo_tfp410.c                |  2 +-
-> >  drivers/gpu/drm/i915/display/icl_dsi.c                   |  2 +-
-> >  drivers/gpu/drm/i915/display/intel_crt.c                 |  2 +-
-> >  drivers/gpu/drm/i915/display/intel_dp.c                  |  2 +-
-> >  drivers/gpu/drm/i915/display/intel_dp_mst.c              |  2 +-
-> >  drivers/gpu/drm/i915/display/intel_dsi.c                 |  2 +-
-> >  drivers/gpu/drm/i915/display/intel_dsi.h                 |  2 +-
-> >  drivers/gpu/drm/i915/display/intel_dvo.c                 |  2 +-
-> >  drivers/gpu/drm/i915/display/intel_dvo_dev.h             |  2 +-
-> >  drivers/gpu/drm/i915/display/intel_hdmi.c                |  2 +-
-> >  drivers/gpu/drm/i915/display/intel_lvds.c                |  2 +-
-> >  drivers/gpu/drm/i915/display/intel_sdvo.c                |  2 +-
-> >  drivers/gpu/drm/i915/display/intel_tv.c                  |  2 +-
-> >  drivers/gpu/drm/i915/display/vlv_dsi.c                   |  2 +-
-> >  drivers/gpu/drm/imx/ipuv3/imx-tve.c                      |  2 +-
-> >  drivers/gpu/drm/msm/disp/mdp4/mdp4_lvds_connector.c      |  2 +-
-> >  drivers/gpu/drm/nouveau/dispnv04/tvnv17.c                |  2 +-
-> >  drivers/gpu/drm/nouveau/dispnv50/disp.c                  |  2 +-
-> >  drivers/gpu/drm/nouveau/nouveau_connector.c              |  2 +-
-> >  drivers/gpu/drm/qxl/qxl_display.c                        |  2 +-
-> >  drivers/gpu/drm/radeon/atombios_dp.c                     |  2 +-
-> >  drivers/gpu/drm/radeon/radeon_connectors.c               | 10 +++++-----
-> >  drivers/gpu/drm/radeon/radeon_mode.h                     |  2 +-
-> >  drivers/gpu/drm/rockchip/cdn-dp-core.c                   |  2 +-
-> >  drivers/gpu/drm/rockchip/inno_hdmi.c                     |  4 ++--
-> >  drivers/gpu/drm/rockchip/rk3066_hdmi.c                   |  2 +-
-> >  drivers/gpu/drm/sti/sti_dvo.c                            |  2 +-
-> >  drivers/gpu/drm/sti/sti_hda.c                            | 12 ++++++------
-> >  drivers/gpu/drm/sti/sti_hdmi.c                           |  2 +-
-> >  drivers/gpu/drm/tegra/dsi.c                              |  2 +-
-> >  drivers/gpu/drm/tegra/hdmi.c                             |  2 +-
-> >  drivers/gpu/drm/tegra/sor.c                              |  2 +-
-> >  drivers/gpu/drm/vc4/vc4_txp.c                            |  2 +-
-> >  drivers/gpu/drm/virtio/virtgpu_display.c                 |  2 +-
-> >  drivers/gpu/drm/vmwgfx/vmwgfx_kms.c                      |  2 +-
-> >  drivers/gpu/drm/vmwgfx/vmwgfx_kms.h                      |  2 +-
-> >  drivers/gpu/drm/vmwgfx/vmwgfx_stdu.c                     |  2 +-
-> >  include/drm/display/drm_hdmi_state_helper.h              |  2 +-
-> >  include/drm/drm_encoder_slave.h                          |  2 +-
-> >  include/drm/drm_modeset_helper_vtables.h                 |  4 ++--
-> >  71 files changed, 92 insertions(+), 93 deletions(-)
-> > ---
-> > base-commit: 4176cf5c5651c33769de83bb61b0287f4ec7719f
-> > change-id: 20241115-drm-connector-mode-valid-const-ae3db0ef6cb7
+Here's how the code looks after your change:
 
--- 
-Regards,
+if (new_rd_idx < qsize) {
+	memcpy(pkt, rd_ptr, dwords << 2);
+} else {
+	size_t len;
+	
+	new_rd_idx -= qsize;
+	len = (dwords - new_rd_idx) << 2;
+	memcpy(pkt, rd_ptr, len);
+	memcpy(pkt + len, queue->qmem.kva, new_rd_idx << 2);
+}
 
-Laurent Pinchart
+memcpy(pkt, (u32 *)(queue->qmem.kva + (rd_idx << 2)), sizeof(u32));
+
+Which of the above memcpy() operations is subject to a pointer that 
+firmware can influence exactly ?
+
+Is this a real problem you've seen if so please add a backtrace to this 
+commit log.
+
+>   	} else {
+>   		/* bad packet received, dropping */
+>   		new_rd_idx = qhdr->write_idx;
+> 
+
+If this is a fix it requires a Fixes: tag.
+
+Please add.
+
+Still finding the reasoning you are outlining here not obvious.
+
+---
+bod
 
