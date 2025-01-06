@@ -1,140 +1,179 @@
-Return-Path: <linux-arm-msm+bounces-44017-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-44018-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 290F9A0288F
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jan 2025 15:52:31 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1DD59A028A5
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jan 2025 15:57:38 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 98FE63A4567
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jan 2025 14:52:17 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9BB123A10EF
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jan 2025 14:57:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CCFED135A63;
-	Mon,  6 Jan 2025 14:52:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0114583A14;
+	Mon,  6 Jan 2025 14:57:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="xiiAzNIF"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hcwnCG1x"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f173.google.com (mail-pl1-f173.google.com [209.85.214.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BE248635D
-	for <linux-arm-msm@vger.kernel.org>; Mon,  6 Jan 2025 14:52:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C79F34A0C;
+	Mon,  6 Jan 2025 14:57:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736175125; cv=none; b=NHqDvX13q7eCRodZLd5uRc2PDpGhtZqZFW0+R63P2rHb9vsMKUqBMscSPyXJgZ1/jsFZouiBNOwK5IvRvXJtP810QMd9SUmNz3HTzCR53xK+zLYpx/4UkzIK4ZkjP5F6sUKe3ioWaWHsp6g9tLT2l7Y2anQdpkl9fqkNbF94Ng0=
+	t=1736175453; cv=none; b=fWJT9RWQ7O1/YW71jikTMlsEffP5jN0OMXRuh+MO7RLFULxdaS/RogoI81Yt3ILfTH80YE5hBuHjnZDivPVjb40ow7ECfS9d/Dvj0poq+QncvtwrYQsGnZ5NLuVXduzIv2/GQp7tjK1URvsz0wMzmxNy1kPa02joJu+WivMQ8ac=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736175125; c=relaxed/simple;
-	bh=P2Yoy2vCOV6x77FyFR28353Mr6QAvH/ioPjEKxMfKSg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=i/harjZej7qvyU2jl0gLuU6V8EvDmuFWT7sSDZnDf9BZq6SLwoiJj9gB9wrlLpR3XZWLr4631k3V+MsJfQRm0CgOU+95KJmtwv6iUFeSdFBb0fSRSgINULcrlMQtW0IPrVe1MGM2J+2xYXtDkAGpPgIqPX9Z+hwP0CHw8Dowg68=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=xiiAzNIF; arc=none smtp.client-ip=209.85.214.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pl1-f173.google.com with SMTP id d9443c01a7336-2156e078563so180611805ad.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Jan 2025 06:52:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1736175123; x=1736779923; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=RPzQv9JmUmJLzMLrGpE7zH6s1/r5xLoODlrZlCZTRjc=;
-        b=xiiAzNIFsQ/LZ+eSZoNB/F1+mvskQjyjJCKbNXgbRt6csDjlBsrtYIUMu8lRq2U28w
-         YpI3yAe4AYNJ6yqUHG6b2COTMzY+N1cEILcVN+k3JEZdctn80Bnv2oNI66FiDjFSVItF
-         yqMb8/wCszlR8AWDXLB9kHKYceXZIvDG1fEuKkUY6oJlWu2j7KUfiCXcapJrhmltjOel
-         2uk2ncT/xUWhVsPGijF/8XA6aohJY7InZ9sRT43FBbMrurf5LvZ6+0HUhyekOphSz0nv
-         sBUWeypSkHtLOjWjz1Pk827NJ8EFqhXYDlfo3s+2+5WvAuPiJS4SvyNkSa81DMj0GmA2
-         /fkw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736175123; x=1736779923;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=RPzQv9JmUmJLzMLrGpE7zH6s1/r5xLoODlrZlCZTRjc=;
-        b=DfgULWl+HPhzUim5DDPFuq6UdyOboCiIClk1WnLFLvzG/yu4EC2v2wvrSaiadsYu/Y
-         kdi3K+UjUYYcpiOSVHixDdEL3GYWx21jyX0gRvu7tJ936OdptZfOJRdeW4vAORlImsMA
-         +D+R9nQACFGY4z8JzQ02LZmlBhPAkQHOu/YL6Ms3dedInMrDSFavhnekkfcIbZ3QUcBN
-         KnZstbvgFvGaH8X6CinMnS3NQkqk3rvip677+XPJUhawgJGM6TE+As8N/Ar9VgPggKlS
-         Fe5x6FDFbbvdnnTPjhuZCBoOiM6pX59N3viXxcXwQUKBHFXmD43BtTjWQCUZtQIR7fIJ
-         faPQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUCW6AkPH11MBcAYsPuGFKN8WP+HsRmyhs0eZntD3jyWZQMejSVcxmdVGG8Y7hYSJt/oobJt7OdV8bCWLQy@vger.kernel.org
-X-Gm-Message-State: AOJu0YziMRounbLTarB6Q91vsw82uXAzLP5RABtL9hYuAR4r+JRs3/48
-	yd35o6JYETlXjczcUnOaXt1yLR9FbuW1L9A2Yeubqnrq4QitJr/t8dIUilqKQg==
-X-Gm-Gg: ASbGnctkqSh5TirmP+P0GvFR8w86dclP3FplIrPn+3HVMzzLVim6aQKm2989NMqM1q+
-	ptdMsT5+WvpbgDjvgFXU4wZtaPTaQVR9XdmtkmQkzxYzce8r1HHga68Nk4ZZho4BDADotSTEfuU
-	li0CCnbB7tmSlrfZtqjQFuie4tfn/1Osooew19Nppqe0gFsi8eS47qMegauQy1BMDjfMGzKR0FQ
-	TNz5vy7WyLNpcfCw3ZqaK28oD1oCdnWYNiw2T46KowyJztWWKA9C91SZg8ZZBD1yxA=
-X-Google-Smtp-Source: AGHT+IE4mpVT+GjLv3+7pfnCFcTYcja+19fvRAPtd/vCZh5myuA6s94pcYZbmYqV21GyNYKnPHbFfQ==
-X-Received: by 2002:a17:902:d510:b0:216:48f4:4f1a with SMTP id d9443c01a7336-219e6e9df37mr718707665ad.16.1736175123345;
-        Mon, 06 Jan 2025 06:52:03 -0800 (PST)
-Received: from thinkpad ([120.60.61.126])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-219dc96e85csm293333705ad.61.2025.01.06.06.52.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 06 Jan 2025 06:52:02 -0800 (PST)
-Date: Mon, 6 Jan 2025 20:21:59 +0530
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: Vivek Pernamitta <quic_vpernami@quicinc.com>
-Cc: mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] bus: mhi: host: Enable MSIx if the endpoint supports
-Message-ID: <20250106145159.oqseq7ysedmrmyey@thinkpad>
-References: <20250106-msix-v1-1-91d7b7143118@quicinc.com>
+	s=arc-20240116; t=1736175453; c=relaxed/simple;
+	bh=OH6QCFJFnQueFS8FvFwjI38w2sHTXla5+8K0Yq1gBak=;
+	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=qTj78IV5eOeI/5muPMKhfEvrp/KJXgAM96MjlvZHYpLD1ZpzCEX4zH/bRWxHyMyFrF9+6X2/QlABNk39EIw4AHID3uRysoP/7/T3up9k8xaxHHoNDQ2G05nQoEuo5yBF8IL7ImDhx5lTchsgJ6S8Dq9ejM4Y7TbgGeJrVAKJkYg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hcwnCG1x; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32FCCC4CED6;
+	Mon,  6 Jan 2025 14:57:33 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1736175453;
+	bh=OH6QCFJFnQueFS8FvFwjI38w2sHTXla5+8K0Yq1gBak=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+	b=hcwnCG1xXqBj3hdwVVk+8ofrSTw4FM8hqPb63ExoyqqKI/IjzAfdjdpx8k47PP/7Q
+	 vhpi79rHogDo4DFvAsYIyRxfz6sZhSpmPcREKyNsXsoj3heqv81E+JLVMhVkCpta3V
+	 1DcB45xeMplnmc7IQXyzvNZq4FcEUFVD06xZRBKMVPLuw2SPzpGZxZmqijspI5JmXr
+	 x9v4pKfUx9pPTCvhscGYkLvxWbcb9xbuAAm4WtAv9ahYcjnxR5/BB7bgzW42YTexot
+	 VcFP80YHTyqNIwm5YShMi7Aj4jaQYOikPyWJVHoZ9OrOsbocYDwtZNvRDIL5yiJrxE
+	 V9vTqJReiVbIg==
+Received: from sofa.misterjones.org ([185.219.108.64] helo=goblin-girl.misterjones.org)
+	by disco-boy.misterjones.org with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.95)
+	(envelope-from <maz@kernel.org>)
+	id 1tUoXr-009SKl-1D;
+	Mon, 06 Jan 2025 14:57:31 +0000
+Date: Mon, 06 Jan 2025 14:57:29 +0000
+Message-ID: <864j2couqu.wl-maz@kernel.org>
+From: Marc Zyngier <maz@kernel.org>
+To: Sibi Sankar <quic_sibis@quicinc.com>
+Cc: Johan Hovold <johan@kernel.org>,
+	<sudeep.holla@arm.com>,
+	<cristian.marussi@arm.com>,
+	<andersson@kernel.org>,
+	<konrad.dybcio@linaro.org>,
+	<robh+dt@kernel.org>,
+	<krzysztof.kozlowski+dt@linaro.org>,
+	<dmitry.baryshkov@linaro.org>,
+	<linux-kernel@vger.kernel.org>,
+	<linux-arm-msm@vger.kernel.org>,
+	<devicetree@vger.kernel.org>,
+	<quic_rgottimu@quicinc.com>,
+	<quic_kshivnan@quicinc.com>,
+	<conor+dt@kernel.org>,
+	<quic_nkela@quicinc.com>,
+	<quic_psodagud@quicinc.com>,
+	<abel.vesa@linaro.org>
+Subject: Re: [PATCH V7 0/2] qcom: x1e80100: Enable CPUFreq
+In-Reply-To: <f504b325-e4a8-c297-a09f-6a2158fa1a1b@quicinc.com>
+References: <20241030130840.2890904-1-quic_sibis@quicinc.com>
+	<ZyTQ9QD1tEkhQ9eu@hovoldconsulting.com>
+	<86plnf11yf.wl-maz@kernel.org>
+	<ZyTjiiGc2ApoID9Y@hovoldconsulting.com>
+	<86o72z10b6.wl-maz@kernel.org>
+	<ZypOY-NCDN9fdMAR@hovoldconsulting.com>
+	<86ed3p1rdq.wl-maz@kernel.org>
+	<0fd14fb1-736d-cf7f-128f-658bda0de583@quicinc.com>
+	<Z1HK4qIF9dT3x1OY@hovoldconsulting.com>
+	<f504b325-e4a8-c297-a09f-6a2158fa1a1b@quicinc.com>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
+ FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/29.4
+ (aarch64-unknown-linux-gnu) MULE/6.0 (HANACHIRUSATO)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250106-msix-v1-1-91d7b7143118@quicinc.com>
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+Content-Type: text/plain; charset=US-ASCII
+X-SA-Exim-Connect-IP: 185.219.108.64
+X-SA-Exim-Rcpt-To: quic_sibis@quicinc.com, johan@kernel.org, sudeep.holla@arm.com, cristian.marussi@arm.com, andersson@kernel.org, konrad.dybcio@linaro.org, robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org, dmitry.baryshkov@linaro.org, linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, quic_rgottimu@quicinc.com, quic_kshivnan@quicinc.com, conor+dt@kernel.org, quic_nkela@quicinc.com, quic_psodagud@quicinc.com, abel.vesa@linaro.org
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
 
-On Mon, Jan 06, 2025 at 10:17:33AM +0530, Vivek Pernamitta wrote:
-> Enable MSIx if the end point supports.
+On Mon, 06 Jan 2025 12:22:48 +0000,
+Sibi Sankar <quic_sibis@quicinc.com> wrote:
 > 
-
-s/MSIx/MSI-X
-
-s/end point/endpoint
-
-> Signed-off-by: Vivek Pernamitta <quic_vpernami@quicinc.com>
-> ---
-> Enable MSIx if the endpoint supports.
-
-No need of the comment here.
-
-Change LGTM!
-
-- Mani
-
-> ---
->  drivers/bus/mhi/host/pci_generic.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
-> index 56ba4192c89c16b4882d2e7c95f0dc689fd1e267..af1380220904a7e6232ff1b374da0a4ea49cb470 100644
-> --- a/drivers/bus/mhi/host/pci_generic.c
-> +++ b/drivers/bus/mhi/host/pci_generic.c
-> @@ -949,7 +949,7 @@ static int mhi_pci_get_irqs(struct mhi_controller *mhi_cntrl,
->  	 */
->  	mhi_cntrl->nr_irqs = 1 + mhi_cntrl_config->num_events;
->  
-> -	nr_vectors = pci_alloc_irq_vectors(pdev, 1, mhi_cntrl->nr_irqs, PCI_IRQ_MSI);
-> +	nr_vectors = pci_alloc_irq_vectors(pdev, 1, mhi_cntrl->nr_irqs, PCI_IRQ_MSIX | PCI_IRQ_MSI);
->  	if (nr_vectors < 0) {
->  		dev_err(&pdev->dev, "Error allocating MSI vectors %d\n",
->  			nr_vectors);
 > 
-> ---
-> base-commit: 8155b4ef3466f0e289e8fcc9e6e62f3f4dceeac2
-> change-id: 20250106-msix-a4c5488ecafe
+> On 12/5/24 21:16, Johan Hovold wrote:
+> > On Thu, Dec 05, 2024 at 04:53:05PM +0530, Sibi Sankar wrote:
+> >> On 11/5/24 23:42, Marc Zyngier wrote:
+> >>> On Tue, 05 Nov 2024 16:57:07 +0000,
+> >>> Johan Hovold <johan@kernel.org> wrote:
+> >>>> On Fri, Nov 01, 2024 at 02:43:57PM +0000, Marc Zyngier wrote:
+> > 
+> >>>>> I wonder whether the same sort of reset happen on more "commercial"
+> >>>>> systems (such as some of the laptops). You expect that people look at
+> >>>>> the cpufreq stuff closely, and don't see things exploding like we are.
+> >>>> 
+> >>>> I finally got around to getting my Lenovo ThinkPad T14s to boot (it
+> >>>> refuses to start the kernel when using GRUB, and it's not due to the
+> >>>> known 64 GB memory issue as it only has 32 GB)
+> >>> 
+> >>> <cry>
+> >>> I know the feeling. My devkit can't use GRUB either, so I added a
+> >>> hook to the GRUB config to generate EFI scripts that directly execute
+> >>> the kernel with initrd, dtb, and command line.
+> >>> 
+> >>> This is probably the worse firmware I've seen in a very long while.
+> >> 
+> >> The PERF_LEVEL_GET implementation in the SCP firmware side
+> >> is the reason for the crash :|, currently there is a bug
+> >> in the kernel that picks up index that we set with LEVEL_SET
+> >> with fast channel and that masks the crash. I was told the
+> >> crash happens when idle states are enabled and a regular
+> >> LEVEL_GET message is triggered from the kernel. This was
+> >> fixed a while back but it will take a while to flow back
+> >> to all the devices. It should already be out CRD's.
+> >> 
+> >> Johan,
+> >> Now that you are aware of the the limitations can we make
+> >> a call on how to deal with this and land cpufreq?
+> > 
+> > As Marc said, it seems you need to come up with a way to detect and work
+> > around the broken firmware.
 > 
-> Best regards,
-> -- 
-> Vivek Pernamitta <quic_vpernami@quicinc.com>
+> The perf protocol version won't have any changes so detecting
+> it isn't possible :(
+
+This is just... baffling. Can this be checked against one of the
+strings contained in the DMI tables?
+
 > 
+> > 
+> > We want to get the fast channel issue fixed, but when we merge that fix
+> > it will trigger these crashes if we also merge cpufreq support for x1e.
+> > 
+> > Can you expand the on the PERF_LEVEL_GET issue? Is it possible to
+> > implement some workaround for the buggy firmware? Like returning a dummy
+> > value? How exactly are things working today? Can't that be used a basis
+> > for a quirk?
+> 
+> The main problem is the X1E firmware supports fast channel level get
+> but when queried it says it doesn't support it :|. The PERF_LEVEL_GET
+> regular messaging which gets used as a fallback has a bug which causes
+> the device to crash. So we either enable cpufreq only on platforms
+> that has the fix in place
+
+Again: how do we detect this?
+
+> or live with the warning that certain messages
+> don't support fast channel which I don't think will fly. I've also been
+> told the crash wouldn't show up if we have all sleep states
+> disabled.
+
+So we have the choice between crashing quickly, or sucking power like
+mad?
+
+Thanks,
+
+	M.
 
 -- 
-மணிவண்ணன் சதாசிவம்
+Without deviation from the norm, progress is not possible.
 
