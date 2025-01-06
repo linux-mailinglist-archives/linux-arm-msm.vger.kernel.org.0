@@ -1,140 +1,236 @@
-Return-Path: <linux-arm-msm+bounces-43990-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-43991-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9E3F9A02587
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jan 2025 13:31:16 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D5D1EA0259E
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jan 2025 13:36:25 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8F0091634BB
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jan 2025 12:31:14 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5E2D03A2A7E
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jan 2025 12:36:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7F25D1DE3C3;
-	Mon,  6 Jan 2025 12:30:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 06F461DA60B;
+	Mon,  6 Jan 2025 12:36:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="a9LQR9JG"
+	dkim=pass (1024-bit key) header.d=jms.id.au header.i=@jms.id.au header.b="fYVvsIAy"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f52.google.com (mail-ej1-f52.google.com [209.85.218.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 239EF1DDA36;
-	Mon,  6 Jan 2025 12:30:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2290D1598EE;
+	Mon,  6 Jan 2025 12:36:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736166607; cv=none; b=aDCuLy+STRxXz8cmHlZDlWYRR8CGMaymqO3h+4KygWeiURIeD35WRfDXIDFbbUzIGkanWCq9YNGuvcBhDZ5UgOz0+yAHRYs990U7mh4efYA1pypCqiLgk3Ky8r0OBOruhoGpCJI0bv9Q5pBcOmpxo/nkl45HpnMMZ5YjdTVXUfY=
+	t=1736166981; cv=none; b=jrckw4BNRD0yezuIa6BlBiFHBkypU69hpC5ZYWDEYcs3eavhCjkacof91iSiBddP1E8Z3AlpArn0tf1GopJgswpTlxxgolOE5IJ2+w5xOojfsYjBGyTTmjBWcDm32Shx0CqK4L6C/WgEWaC/2Y3elF6mAFrl8NWUqTWAnLjyB8k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736166607; c=relaxed/simple;
-	bh=dt9uunZPfoDIamCzQdNIaGK4eUqsz1QnKbTU0kwbDmY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=GHhfp3/eKZkqDm3sfcSQalyzO5pAY4Lxi3PkTjD0ODpXC6ROGT6HjHezBou6ZaQhkarze+bTDWLdNR6T8EUNE85jr1H86h0CKFbkVks3SI2RkwsX9CBi+AgruzaaYDDh0gadajjMKOVytH34a4IhtVh8idMIkC30N/R117WuXEY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=a9LQR9JG; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AF4FC4CED2;
-	Mon,  6 Jan 2025 12:29:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1736166606;
-	bh=dt9uunZPfoDIamCzQdNIaGK4eUqsz1QnKbTU0kwbDmY=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=a9LQR9JGvR0xDzmmLzR5+XiZyNQkMMSzf8c1Gv73vWyzd8Q4iG15fZOWnWayXC50c
-	 0tJTFwh9hsvkZb+pipXUybbF6cvhVm9uycseeNmVAXjwQAUDWVeW1Osqr9dKcc7tOX
-	 TowLQZAdYm5ZjJLM7mOUJ7AVqQiTYWZ2AX6qzD//Q31W4vNBWwOqfiw7pQ/43Trfi1
-	 SavnRtZPCt+sRJZJ4+7V8ksKnIbRq2cVBTPNwYzKsD2rbq7ysZHuglAmFxg21mX60A
-	 lOv6rQXmXY+XPhQ/hc/XX2ipjv9lVQjaegFcLmoRP72x7KXjgoH5y/tcOUaYb4OsSF
-	 FO5tT8UKd6Fag==
-Message-ID: <12636552-b644-429b-8be0-44334fae6130@kernel.org>
-Date: Mon, 6 Jan 2025 13:29:57 +0100
+	s=arc-20240116; t=1736166981; c=relaxed/simple;
+	bh=3+2UE4A78WBYby8MiY6zpEHBFD6l8nYLZY+vBVkQwOc=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=eRQT+U3E0W9ctg0RQetCGUOHJpjqVij10teduMbt153qiP0i44jLX9gci8vUilePoGy0M5QMpDpf+BgIsc6RhD6+gS6s41qr4NB2nMuCD7PMxKnJJccpVvPQ5jesGxZa6Kb8n+3SQMln3FD1oZ3z/xPSyinNkIQjO2jeoLnpXrA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jms.id.au; spf=pass smtp.mailfrom=gmail.com; dkim=pass (1024-bit key) header.d=jms.id.au header.i=@jms.id.au header.b=fYVvsIAy; arc=none smtp.client-ip=209.85.218.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jms.id.au
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-ej1-f52.google.com with SMTP id a640c23a62f3a-aa67ac42819so2057064766b.0;
+        Mon, 06 Jan 2025 04:36:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=jms.id.au; s=google; t=1736166976; x=1736771776; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=dKIXxLhttbFcVYR/bgQGxM4UC+Urto6wknS8G3Bmh8Y=;
+        b=fYVvsIAyZOvJcmDN3zAXPCiuyNmhVB2zfQ6L8AdyddgQRf9wJmLXu/dyZli7aRUKix
+         BP3d5dPwaRy6U5sdeVWggfh/Pvoaa3uiThMJSSjqs+i1hRcQ2xn4bmMMTxQ131m7yHyd
+         1JsLvJWvmW1zdwKy7gGY5EPVyIcZNrMeIeRME=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1736166976; x=1736771776;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=dKIXxLhttbFcVYR/bgQGxM4UC+Urto6wknS8G3Bmh8Y=;
+        b=JgZHwBh/xQXxDRgPZkCMcmzIf5saAEQjAIFRh/kb/YdmAVNekvc4TWrmAN70lGMVmb
+         paIxP3ztkejrVv88k46G+zYYnWjtYDmUuJ2a/ygZhCOGN+zhznAiihcP3EZWSSXaSsXS
+         ZQ/VYBOSn6GLFRQf986mReaOpl9LXFvlQP9EtYrIp47Ed65Hb1z7oE5Y/Rvu4X3N347r
+         0iOgfYF9ftm6ibwYEnqHk43kvEkphqyC3srFxG01MmdRMj+yft/X3h+AWXoy1cFm6HtT
+         Fhqaj8eOFkdmHu6lJnt5qkd2sEEetr7uT130asnT1Gpqzmed6xPTOYgDVqnuQTJEQ0eb
+         WloQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVRbSGuQHHG7HM88Y8ZsGozy6pW+/nboiqOlSzRZMSRMesM/8MXamPPtrPcUJSQl/hlRnupYVCTKdWM@vger.kernel.org, AJvYcCVq9vijsQ/aiNvyRVqWRj7rlnFWrBQ3IxFQ1L1orl8V6i2PrcKQwrVAzMVFKK4SEd5gAEDG7ENKv8k+HDoFGQ==@vger.kernel.org, AJvYcCWfUQn0ADpyULPfSUnJetF/ammn5uw9avP74OB+SvN2XM0hCBzrSXbPgwuxzIDxOgE5nv53RBdmcacNsobK@vger.kernel.org, AJvYcCXn9VWDdhdBMLQNgA4F6f8dpvuKS08xM++j0eUe3y/pKslkfGDMm1t/GlaxQ9o6yXJ1AdVcgixa3IItqRY=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyKn8ljw9r3O6ukUVBdEG6uimA4owc7LKrcdLwM+sk1Doptnetg
+	x0AbaX5JxHIoFo6n3FTvi+71rAorrTquJ9EIL/TSGnIbl7AA1a09LfsFh/MYYoXfIuvfe3e6YmK
+	frQ3onD7wvcgrYwM5VA4SWL8p7WU=
+X-Gm-Gg: ASbGncuZ4iunBSf1Y6NTAQMeZQrHo3xZuh3ajAZZI2WEKSHOMyZCTbif4dSFSoEoF/T
+	QHZoTHQELsdMDcljZyfcAwwfsflc6In979XjsOA==
+X-Google-Smtp-Source: AGHT+IGwGcVs1m2atwIpdSUGW8iawaESVde18+/ZLAH7jwPmVxZpzN3LOf4WKbD6GStENEJkJ9TFSrLvno21ev/aCyc=
+X-Received: by 2002:a17:907:7e81:b0:aaf:74b3:80db with SMTP id
+ a640c23a62f3a-aaf74b380e2mr1797693966b.3.1736166976070; Mon, 06 Jan 2025
+ 04:36:16 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/5] dt-bindings: platform: Add Huawei Matebook E Go EC
-To: Pengyu Luo <mitltlatltl@gmail.com>
-Cc: andersson@kernel.org, bryan.odonoghue@linaro.org, conor+dt@kernel.org,
- devicetree@vger.kernel.org, dmitry.baryshkov@linaro.org,
- gregkh@linuxfoundation.org, hdegoede@redhat.com,
- heikki.krogerus@linux.intel.com, ilpo.jarvinen@linux.intel.com,
- jdelvare@suse.com, konradybcio@kernel.org, krzk+dt@kernel.org,
- linux-arm-msm@vger.kernel.org, linux-hwmon@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
- linux-usb@vger.kernel.org, linux@roeck-us.net,
- platform-driver-x86@vger.kernel.org, robh@kernel.org, sre@kernel.org
-References: <md45rp2dmv7aibez2sxwzyjayfi4wbujshlc46hxi6v4jzlhfr@tpbtqv46hrlh>
- <20250106080657.240974-1-mitltlatltl@gmail.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <20250106080657.240974-1-mitltlatltl@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+References: <20241212-qcom-video-iris-v9-0-e8c2c6bd4041@quicinc.com>
+In-Reply-To: <20241212-qcom-video-iris-v9-0-e8c2c6bd4041@quicinc.com>
+From: Joel Stanley <joel@jms.id.au>
+Date: Mon, 6 Jan 2025 23:06:03 +1030
+X-Gm-Features: AbW1kvbTwfL57vv40IS5aQIuxGW2DHEqbK40Wr060WqVI88XDY3rd3xwWUsD5yA
+Message-ID: <CACPK8XeFbx_8mrvT4xi-WfQF+zHJYj1=EkH2tmnnxs1WThJ8ZQ@mail.gmail.com>
+Subject: Re: [PATCH v9 00/28] Qualcomm iris video decoder driver
+To: Dikshita Agarwal <quic_dikshita@quicinc.com>
+Cc: Vikash Garodia <quic_vgarodia@quicinc.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+	Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Philipp Zabel <p.zabel@pengutronix.de>, Hans Verkuil <hverkuil@xs4all.nl>, 
+	Sebastian Fricke <sebastian.fricke@collabora.com>, 
+	"Bryan O'Donoghue" <bryan.odonoghue@linaro.org>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
+	Neil Armstrong <neil.armstrong@linaro.org>, Nicolas Dufresne <nicolas@ndufresne.ca>, 
+	=?UTF-8?Q?Uwe_Kleine=2DK=C3=B6nig?= <u.kleine-koenig@baylibre.com>, 
+	Jianhua Lu <lujianhua000@gmail.com>, Stefan Schmidt <stefan.schmidt@linaro.org>, 
+	linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, Vedang Nagar <quic_vnagar@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
 
-On 06/01/2025 09:06, Pengyu Luo wrote:
->>> +      - const: huawei,gaokun-ec
->>
->> There is no support for gaokun2 here, so I assume you checked and you
->> know these are compatible. What's more, you claim there is a generic
->> piece of hardware called gaokun-ec and everything in this family will be
->> compatible with it. Well, that's my standard disclaimer and disapproval
->> of using generic compatibles.
->>
->> So in general what you want here is *only one* compatible called
->> huawei,gaokun3-ec
->>
-> 
-> I agree with you. If there is a generic rule to follow, I am not familiar
-> with this. I have seen some bindings, using like this, so I followed it
-> recently.
+On Thu, 12 Dec 2024 at 22:23, Dikshita Agarwal
+<quic_dikshita@quicinc.com> wrote:
+>
+> Introduce support for Qualcomm new video acceleration hardware i.e.
+> iris, used for video stream decoding.
+>
+> Iris is a multi pipe based hardware that offloads video stream decoding
+> from the application processor (AP). It supports H.264 decoding. The AP
+> communicates with hardware through a well defined protocol, called as
+> host firmware interface (HFI), which provides fine-grained and
+> asynchronous control over individual hardware features.
+>
+> This driver implements upgraded HFI gen2 to communicate with firmware.
+> It supports SM8550 which is based out of HFI gen 2. It also supports
+> SM8250 which is based out of HFI gen1.
 
-Generic rule is: wildcards and family names are not allowed. Now what
-"generic" means, is different for different devices. If unsure, always
-use only device-specific compatibles.
+I tested this on an x1e based machine, a Surface Laptop 7. I had some
+errors with loading the firmware which triggered some warnings when
+trying to tear down the driver. I've pasted the WARNs at the end of
+this mail.
 
+I was using the firmware from linux-firmware, as packaged by distros:
 
+4d2dae9a8187b728939e9c79fa68012b  qcom/vpu/vpu30_p4.mbn
 
-Best regards,
-Krzysztof
+It appears to be signed by a test key, which I assume was the cause of
+the failure. Replacing it with a properly signed version worked, and I
+was able successfully decode a test video with ffplay:
+
+$ ffplay -codec:v h264_v4l2m2m test.mp4
+...
+[h264_v4l2m2m @ 0xffff500054b0] Using device /dev/video0
+[h264_v4l2m2m @ 0xffff500054b0] driver 'iris_driver' on card
+'iris_decoder' in mplane mode
+[h264_v4l2m2m @ 0xffff500054b0] requesting formats: output=H264/none
+capture=NV12/yuv420p
+
+Cheers,
+
+Joel
+---
+[    2.587909] qcom-iris aa00000.video-codec: error -22 initializing
+firmware qcom/vpu/vpu30_p4.mbn
+[    2.588095] qcom-iris aa00000.video-codec: firmware download failed
+[    2.588250] ------------[ cut here ]------------
+[    2.588251] Unmap of a partial large IOPTE is not allowed
+[    2.588256] WARNING: CPU: 4 PID: 659 at
+drivers/iommu/io-pgtable-arm.c:649 __arm_lpae_unmap+0x3cc/0x468
+[    2.588335] CPU: 4 UID: 0 PID: 659 Comm: v4l_id Tainted: G        W
+         6.13.0-rc4-00092-g1bbe1a937cf6 #21
+[    2.588338] Tainted: [W]=WARN
+[    2.588339] Hardware name: Microsoft Corporation Microsoft Surface
+Laptop, 7th Edition/Microsoft Surface Laptop, 7th Edition, BIOS
+160.2.235 08/05/2024
+[    2.588340] pstate: 61400005 (nZCv daif +PAN -UAO -TCO +DIT -SSBS BTYPE=--)
+[    2.588342] pc : __arm_lpae_unmap+0x3cc/0x468
+[    2.588344] lr : __arm_lpae_unmap+0x3cc/0x468
+[    2.588345] sp : ffff80008259b690
+[    2.588346] x29: ffff80008259b690 x28: ffff80008259bc30 x27: ffff80008259b8f8
+[    2.588349] x26: ffffb973346978d0 x25: ffff68590225e7f0 x24: ffff80008259b8f8
+[    2.588351] x23: 00000000dfc00000 x22: 0000000000001000 x21: ffff68590396ce80
+[    2.588354] x20: ffff6859068fa4f8 x19: ffff6859068fa480 x18: fffffffffffef6a8
+[    2.588356] x17: ffff685900b8c040 x16: 0000000000000000 x15: ffff80008259b248
+[    2.588359] x14: ffffb9733457e768 x13: 6465776f6c6c6120 x12: 746f6e2073692045
+[    2.588362] x11: ffffb9733457e768 x10: 000000000000030c x9 : ffffb973345d6768
+[    2.588364] x8 : 0000000000017fe8 x7 : 00000000fffff30b x6 : ffffb973345d6768
+[    2.588367] x5 : ffff685c75f4b848 x4 : 40000000fffff30b x3 : ffffaee941a6a000
+[    2.588369] x2 : 0000000000000000 x1 : 0000000000000000 x0 : ffff68590bc25640
+[    2.588372] Call trace:
+[    2.588373]  __arm_lpae_unmap+0x3cc/0x468 (P)
+[    2.588376]  __arm_lpae_unmap+0xf4/0x468
+[    2.588379]  __arm_lpae_unmap+0xf4/0x468
+[    2.588381]  arm_lpae_unmap_pages+0x70/0x84
+[    2.588383]  arm_smmu_unmap_pages+0x48/0x10c
+[    2.588385]  __iommu_unmap+0xf0/0x1c0
+[    2.588387]  iommu_unmap_fast+0x10/0x20
+[    2.588389]  __iommu_dma_unmap+0xb8/0x2c0
+[    2.588391]  iommu_dma_free+0x2c/0x54
+[    2.588392]  dma_free_attrs+0x9c/0xc0
+[    2.588395]  iris_hfi_queues_deinit+0x70/0xa0 [iris]
+[    2.588399]  iris_core_init+0xd8/0x138 [iris]
+[    2.588401]  iris_open+0x3c/0x318 [iris]
+[    2.588403]  v4l2_open+0xa8/0x124 [videodev]
+[    2.588406]  chrdev_open+0xb0/0x21c
+[    2.588409]  do_dentry_open+0x138/0x4c4
+[    2.588412]  vfs_open+0x2c/0xe4
+[    2.588413]  path_openat+0x6fc/0x10a0
+[    2.588415]  do_filp_open+0xa8/0x170
+[    2.588417]  do_sys_openat2+0xc8/0xfc
+[    2.588418]  __arm64_sys_openat+0x64/0xc0
+[    2.588420]  invoke_syscall+0x48/0x104
+[    2.588423]  el0_svc_common.constprop.0+0xc0/0xe0
+[    2.588426]  do_el0_svc+0x1c/0x28
+[    2.588428]  el0_svc+0x30/0xcc
+[    2.588431]  el0t_64_sync_handler+0x10c/0x138
+[    2.588433]  el0t_64_sync+0x198/0x19c
+[    2.588435] ---[ end trace 0000000000000000 ]---
+[    2.588438] ------------[ cut here ]------------
+[    2.588439] WARNING: CPU: 4 PID: 659 at
+drivers/iommu/dma-iommu.c:841 __iommu_dma_unmap+0x290/0x2c0
+[    2.588497] CPU: 4 UID: 0 PID: 659 Comm: v4l_id Tainted: G        W
+         6.13.0-rc4-00092-g1bbe1a937cf6 #21
+[    2.588499] Tainted: [W]=WARN
+[    2.588500] Hardware name: Microsoft Corporation Microsoft Surface
+Laptop, 7th Edition/Microsoft Surface Laptop, 7th Edition, BIOS
+160.2.235 08/05/2024
+[    2.588501] pstate: 81400005 (Nzcv daif +PAN -UAO -TCO +DIT -SSBS BTYPE=--)
+[    2.588502] pc : __iommu_dma_unmap+0x290/0x2c0
+[    2.588503] lr : __iommu_dma_unmap+0xb8/0x2c0
+[    2.588505] sp : ffff80008259b8f0
+[    2.588505] x29: ffff80008259b930 x28: ffff80008259bc30 x27: 0000000000020100
+[    2.588508] x26: 0000000000020100 x25: ffff68590bf76a08 x24: ffff80008259b910
+[    2.588511] x23: ffff80008259b8f8 x22: ffff6859113cd260 x21: ffff68590bf76a00
+[    2.588513] x20: 00000000dfc00000 x19: 0000000000001000 x18: fffffffffffef6a8
+[    2.588516] x17: ffff685900b8c040 x16: 0000000000000000 x15: ffff80008259b248
+[    2.588518] x14: ffffb9733457e768 x13: 6465776f6c6c6120 x12: 746f6e2073692045
+[    2.588521] x11: ffffb9733457e768 x10: 000000000000030c x9 : ffffb973345d6768
+[    2.588523] x8 : 0000000000017fe8 x7 : 00000000fffff30b x6 : ffffb973345d6768
+[    2.588525] x5 : ffff685c75f4b848 x4 : 40000000fffff30b x3 : ffffaee941a6a000
+[    2.588528] x2 : 0000000000000000 x1 : 0000000000000000 x0 : 0000000000000000
+[    2.588530] Call trace:
+[    2.588531]  __iommu_dma_unmap+0x290/0x2c0 (P)
+[    2.588532]  iommu_dma_free+0x2c/0x54
+[    2.588534]  dma_free_attrs+0x9c/0xc0
+[    2.588535]  iris_hfi_queues_deinit+0x70/0xa0 [iris]
+[    2.588537]  iris_core_init+0xd8/0x138 [iris]
+[    2.588539]  iris_open+0x3c/0x318 [iris]
+[    2.588541]  v4l2_open+0xa8/0x124 [videodev]
+[    2.588543]  chrdev_open+0xb0/0x21c
+[    2.588545]  do_dentry_open+0x138/0x4c4
+[    2.588547]  vfs_open+0x2c/0xe4
+[    2.588549]  path_openat+0x6fc/0x10a0
+[    2.588550]  do_filp_open+0xa8/0x170
+[    2.588551]  do_sys_openat2+0xc8/0xfc
+[    2.588553]  __arm64_sys_openat+0x64/0xc0
+[    2.588555]  invoke_syscall+0x48/0x104
+[    2.588557]  el0_svc_common.constprop.0+0xc0/0xe0
+[    2.588560]  do_el0_svc+0x1c/0x28
+[    2.588562]  el0_svc+0x30/0xcc
+[    2.588564]  el0t_64_sync_handler+0x10c/0x138
+[    2.588566]  el0t_64_sync+0x198/0x19c
+[
 
