@@ -1,179 +1,157 @@
-Return-Path: <linux-arm-msm+bounces-44018-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-44019-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1DD59A028A5
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jan 2025 15:57:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 6EAE4A028C7
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jan 2025 16:07:40 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9BB123A10EF
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jan 2025 14:57:32 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id F01B43A3B7C
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jan 2025 15:07:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0114583A14;
-	Mon,  6 Jan 2025 14:57:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CCE2D13635E;
+	Mon,  6 Jan 2025 15:07:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hcwnCG1x"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aka97H+P"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C79F34A0C;
-	Mon,  6 Jan 2025 14:57:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91B8C1C69D;
+	Mon,  6 Jan 2025 15:07:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736175453; cv=none; b=fWJT9RWQ7O1/YW71jikTMlsEffP5jN0OMXRuh+MO7RLFULxdaS/RogoI81Yt3ILfTH80YE5hBuHjnZDivPVjb40ow7ECfS9d/Dvj0poq+QncvtwrYQsGnZ5NLuVXduzIv2/GQp7tjK1URvsz0wMzmxNy1kPa02joJu+WivMQ8ac=
+	t=1736176055; cv=none; b=UfEl6smVVmUjUuwrVNJQo7jKx+6DTs0TMyV1/B6aAW63Ce1jN76UGiaSYxbiWm/gBBG95JX34JyLUaDtr9rn0TrxPRJyhkqDKHxz3t9g2wM1fVJ4GgT63CLkWAJYu9QB8hkiy7ox/4DqrHubEK0mEzX77c5z31xEhA0kiNgThwI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736175453; c=relaxed/simple;
-	bh=OH6QCFJFnQueFS8FvFwjI38w2sHTXla5+8K0Yq1gBak=;
-	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=qTj78IV5eOeI/5muPMKhfEvrp/KJXgAM96MjlvZHYpLD1ZpzCEX4zH/bRWxHyMyFrF9+6X2/QlABNk39EIw4AHID3uRysoP/7/T3up9k8xaxHHoNDQ2G05nQoEuo5yBF8IL7ImDhx5lTchsgJ6S8Dq9ejM4Y7TbgGeJrVAKJkYg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hcwnCG1x; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32FCCC4CED6;
-	Mon,  6 Jan 2025 14:57:33 +0000 (UTC)
+	s=arc-20240116; t=1736176055; c=relaxed/simple;
+	bh=awan+AiOH4AinW1IjRS0hdUNq8s7EvKHEZibS6fH3lo=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=tgGSR7jK26/5yJ7ZnqHzEAH1m6CcYsqJWGXhjSR92P70E5lpDE0ASaWzSYiyhL5DqfAqefPyKbQ4IgqY5ltCzZzPTGZCxSbnfR82Vrl1FY/6w+EqtOeUsY9kgB0qiZ0pVB+cUTozKlrXZ/L/37R95An9IYxVwfHp3BrMySROrT8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aka97H+P; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20BE5C4CED6;
+	Mon,  6 Jan 2025 15:07:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1736175453;
-	bh=OH6QCFJFnQueFS8FvFwjI38w2sHTXla5+8K0Yq1gBak=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=hcwnCG1xXqBj3hdwVVk+8ofrSTw4FM8hqPb63ExoyqqKI/IjzAfdjdpx8k47PP/7Q
-	 vhpi79rHogDo4DFvAsYIyRxfz6sZhSpmPcREKyNsXsoj3heqv81E+JLVMhVkCpta3V
-	 1DcB45xeMplnmc7IQXyzvNZq4FcEUFVD06xZRBKMVPLuw2SPzpGZxZmqijspI5JmXr
-	 x9v4pKfUx9pPTCvhscGYkLvxWbcb9xbuAAm4WtAv9ahYcjnxR5/BB7bgzW42YTexot
-	 VcFP80YHTyqNIwm5YShMi7Aj4jaQYOikPyWJVHoZ9OrOsbocYDwtZNvRDIL5yiJrxE
-	 V9vTqJReiVbIg==
-Received: from sofa.misterjones.org ([185.219.108.64] helo=goblin-girl.misterjones.org)
-	by disco-boy.misterjones.org with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.95)
-	(envelope-from <maz@kernel.org>)
-	id 1tUoXr-009SKl-1D;
-	Mon, 06 Jan 2025 14:57:31 +0000
-Date: Mon, 06 Jan 2025 14:57:29 +0000
-Message-ID: <864j2couqu.wl-maz@kernel.org>
-From: Marc Zyngier <maz@kernel.org>
-To: Sibi Sankar <quic_sibis@quicinc.com>
-Cc: Johan Hovold <johan@kernel.org>,
-	<sudeep.holla@arm.com>,
-	<cristian.marussi@arm.com>,
-	<andersson@kernel.org>,
-	<konrad.dybcio@linaro.org>,
-	<robh+dt@kernel.org>,
-	<krzysztof.kozlowski+dt@linaro.org>,
-	<dmitry.baryshkov@linaro.org>,
-	<linux-kernel@vger.kernel.org>,
-	<linux-arm-msm@vger.kernel.org>,
-	<devicetree@vger.kernel.org>,
-	<quic_rgottimu@quicinc.com>,
-	<quic_kshivnan@quicinc.com>,
-	<conor+dt@kernel.org>,
-	<quic_nkela@quicinc.com>,
-	<quic_psodagud@quicinc.com>,
-	<abel.vesa@linaro.org>
-Subject: Re: [PATCH V7 0/2] qcom: x1e80100: Enable CPUFreq
-In-Reply-To: <f504b325-e4a8-c297-a09f-6a2158fa1a1b@quicinc.com>
-References: <20241030130840.2890904-1-quic_sibis@quicinc.com>
-	<ZyTQ9QD1tEkhQ9eu@hovoldconsulting.com>
-	<86plnf11yf.wl-maz@kernel.org>
-	<ZyTjiiGc2ApoID9Y@hovoldconsulting.com>
-	<86o72z10b6.wl-maz@kernel.org>
-	<ZypOY-NCDN9fdMAR@hovoldconsulting.com>
-	<86ed3p1rdq.wl-maz@kernel.org>
-	<0fd14fb1-736d-cf7f-128f-658bda0de583@quicinc.com>
-	<Z1HK4qIF9dT3x1OY@hovoldconsulting.com>
-	<f504b325-e4a8-c297-a09f-6a2158fa1a1b@quicinc.com>
-User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
- FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/29.4
- (aarch64-unknown-linux-gnu) MULE/6.0 (HANACHIRUSATO)
+	s=k20201202; t=1736176054;
+	bh=awan+AiOH4AinW1IjRS0hdUNq8s7EvKHEZibS6fH3lo=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=aka97H+Pg4zqTewOPhxBKqQe6uTS6QC1X6IB4nTTxcdphMxFgqAFhs1ZpM1Gulbol
+	 ZeEDySDIG9mVlBUOrGyRssV9BGBTt8dZFgZcO0cl/sI69mQl7Ki73qbHiKW81Uxqaf
+	 8KN/LBF3j+wTcq/L425eTA7EPhNF8Ft/xUOJGC8bA7PPnH+8ttAlqAtnb12bLXiQmv
+	 u4IFu3UwTEykqX0uVQY5Zdcw4XIca2WUMvehGGF3q8cAHQW8uXcyHvJvNr2uch8kB1
+	 ZdxBpzG9c5/+5mwBebphCf3ByzxA9n231FDxhuLiZKiP0lZN3drrFMNuJ13tnjzVKu
+	 lJOIkRSrYIiUQ==
+Received: by mail-yb1-f178.google.com with SMTP id 3f1490d57ef6-e549a71dd3dso4150967276.0;
+        Mon, 06 Jan 2025 07:07:34 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCUBBx8YDr7fiUhMx+UOaJ0KCIVH3IC2AJIFCgPIMbLz9ii7IuM3tmEqryQbDJfi/ckfKKvSFkCqZJgin6Um@vger.kernel.org, AJvYcCUtWgSKBGuzmvQ0lpFXE3g+q67x31AlgoXifAuBAP4+I194jYFohGO4WhAOMf0/jMpWW/wnWQiEXHmCGUnlc80=@vger.kernel.org, AJvYcCVk44JP/yi4PR+SoVon9UnPfGOEsnRl744+5Rzz6l9VXqY0rQc6G6KMGNz3SGmoeljuihZgl587SI4WUA==@vger.kernel.org, AJvYcCXAjkdeEenIh7q0inn5+OP6GGA2QhgUg+hc/RSX8tilp0ZlHLVtuUZgXG6w5XJgznHXP5ARd7RjeehV@vger.kernel.org, AJvYcCXkxfktRW4407DhHb2KmXP8q+Fz8CgKv05D2Ml//LJeUk2Olz9AE1uTuliU8mcJr7ncr1OiHnLWBYsaTNJRxw==@vger.kernel.org
+X-Gm-Message-State: AOJu0YwbIXb6Iz4YNZvqrAvTn8YC/5q4NuW87XO5j0BOZGQHiYgLq6sV
+	URBCZVDPl6jY/hzzUU+7kfDNm/hOcS/sdXoPy3RyfuJkpcz+IwJ5wlyecF6M0rzTywCgl7W/vbv
+	UoPS7fdAEf91ytO0fPeToOt9kJg==
+X-Google-Smtp-Source: AGHT+IH09BKnIqxe6Y+K61gjwNh2dfOLIdP6VjieHTWStRetCqq8jo5DAw5KOFYTcVkghQ0AVoPjay6fuio4739Z1/E=
+X-Received: by 2002:a05:690c:7106:b0:6ef:7640:e18a with SMTP id
+ 00721157ae682-6f3f820f277mr480459767b3.31.1736176053275; Mon, 06 Jan 2025
+ 07:07:33 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
-Content-Type: text/plain; charset=US-ASCII
-X-SA-Exim-Connect-IP: 185.219.108.64
-X-SA-Exim-Rcpt-To: quic_sibis@quicinc.com, johan@kernel.org, sudeep.holla@arm.com, cristian.marussi@arm.com, andersson@kernel.org, konrad.dybcio@linaro.org, robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org, dmitry.baryshkov@linaro.org, linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, quic_rgottimu@quicinc.com, quic_kshivnan@quicinc.com, conor+dt@kernel.org, quic_nkela@quicinc.com, quic_psodagud@quicinc.com, abel.vesa@linaro.org
-X-SA-Exim-Mail-From: maz@kernel.org
-X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
+MIME-Version: 1.0
+References: <20250106093304.604829-1-krishna.chundru@oss.qualcomm.com>
+In-Reply-To: <20250106093304.604829-1-krishna.chundru@oss.qualcomm.com>
+From: Rob Herring <robh@kernel.org>
+Date: Mon, 6 Jan 2025 09:07:22 -0600
+X-Gmail-Original-Message-ID: <CAL_JsqJXGUmzE+tPccDmdi5r0YvQ5kOL2mh3e6KtEvTnsexnyg@mail.gmail.com>
+Message-ID: <CAL_JsqJXGUmzE+tPccDmdi5r0YvQ5kOL2mh3e6KtEvTnsexnyg@mail.gmail.com>
+Subject: Re: [PATCH V1] schemas: pci: bridge: Document PCI L0s & L1 entry
+ delay and nfts
+To: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+Cc: andersson@kernel.org, dmitry.baryshkov@linaro.org, 
+	manivannan.sadhasivam@linaro.org, krzk@kernel.org, helgaas@kernel.org, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+	lpieralisi@kernel.org, kw@linux.com, conor+dt@kernel.org, 
+	linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	devicetree-spec@vger.kernel.org, quic_vbadigan@quicinc.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, 06 Jan 2025 12:22:48 +0000,
-Sibi Sankar <quic_sibis@quicinc.com> wrote:
-> 
-> 
-> 
-> On 12/5/24 21:16, Johan Hovold wrote:
-> > On Thu, Dec 05, 2024 at 04:53:05PM +0530, Sibi Sankar wrote:
-> >> On 11/5/24 23:42, Marc Zyngier wrote:
-> >>> On Tue, 05 Nov 2024 16:57:07 +0000,
-> >>> Johan Hovold <johan@kernel.org> wrote:
-> >>>> On Fri, Nov 01, 2024 at 02:43:57PM +0000, Marc Zyngier wrote:
-> > 
-> >>>>> I wonder whether the same sort of reset happen on more "commercial"
-> >>>>> systems (such as some of the laptops). You expect that people look at
-> >>>>> the cpufreq stuff closely, and don't see things exploding like we are.
-> >>>> 
-> >>>> I finally got around to getting my Lenovo ThinkPad T14s to boot (it
-> >>>> refuses to start the kernel when using GRUB, and it's not due to the
-> >>>> known 64 GB memory issue as it only has 32 GB)
-> >>> 
-> >>> <cry>
-> >>> I know the feeling. My devkit can't use GRUB either, so I added a
-> >>> hook to the GRUB config to generate EFI scripts that directly execute
-> >>> the kernel with initrd, dtb, and command line.
-> >>> 
-> >>> This is probably the worse firmware I've seen in a very long while.
-> >> 
-> >> The PERF_LEVEL_GET implementation in the SCP firmware side
-> >> is the reason for the crash :|, currently there is a bug
-> >> in the kernel that picks up index that we set with LEVEL_SET
-> >> with fast channel and that masks the crash. I was told the
-> >> crash happens when idle states are enabled and a regular
-> >> LEVEL_GET message is triggered from the kernel. This was
-> >> fixed a while back but it will take a while to flow back
-> >> to all the devices. It should already be out CRD's.
-> >> 
-> >> Johan,
-> >> Now that you are aware of the the limitations can we make
-> >> a call on how to deal with this and land cpufreq?
-> > 
-> > As Marc said, it seems you need to come up with a way to detect and work
-> > around the broken firmware.
-> 
-> The perf protocol version won't have any changes so detecting
-> it isn't possible :(
+On Mon, Jan 6, 2025 at 3:33=E2=80=AFAM Krishna Chaitanya Chundru
+<krishna.chundru@oss.qualcomm.com> wrote:
+>
+> Some controllers and endpoints provide provision to program the entry
+> delays of L0s & L1 which will allow the link to enter L0s & L1 more
+> aggressively to save power.
+>
+> As per PCIe spec 6 sec 4.2.5.6, the number of Fast Training Sequence (FTS=
+)
+> can be programmed by the controllers or endpoints that is used for bit an=
+d
+> Symbol lock when transitioning from L0s to L0 based upon the PCIe data ra=
+te
+> FTS value can vary. So define a array for each data rate for nfts.
+>
+> These values needs to be programmed before link training.
+>
+> Signed-off-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.co=
+m>
+> ---
+> - This change was suggested in this patch: https://lore.kernel.org/all/20=
+241211060000.3vn3iumouggjcbva@thinkpad/
+> ---
+>  dtschema/schemas/pci/pci-bus-common.yaml | 16 ++++++++++++++++
 
-This is just... baffling. Can this be checked against one of the
-strings contained in the DMI tables?
+Do these properties apply to any link like downstream ports on a PCIe switc=
+h?
 
-> 
-> > 
-> > We want to get the fast channel issue fixed, but when we merge that fix
-> > it will trigger these crashes if we also merge cpufreq support for x1e.
-> > 
-> > Can you expand the on the PERF_LEVEL_GET issue? Is it possible to
-> > implement some workaround for the buggy firmware? Like returning a dummy
-> > value? How exactly are things working today? Can't that be used a basis
-> > for a quirk?
-> 
-> The main problem is the X1E firmware supports fast channel level get
-> but when queried it says it doesn't support it :|. The PERF_LEVEL_GET
-> regular messaging which gets used as a fallback has a bug which causes
-> the device to crash. So we either enable cpufreq only on platforms
-> that has the fix in place
+>  1 file changed, 16 insertions(+)
+>
+> diff --git a/dtschema/schemas/pci/pci-bus-common.yaml b/dtschema/schemas/=
+pci/pci-bus-common.yaml
+> index 94b648f..f0655ba 100644
+> --- a/dtschema/schemas/pci/pci-bus-common.yaml
+> +++ b/dtschema/schemas/pci/pci-bus-common.yaml
+> @@ -128,6 +128,16 @@ properties:
+>      $ref: /schemas/types.yaml#/definitions/uint32
+>      enum: [ 1, 2, 4, 8, 16, 32 ]
+>
+> +  nfts:
 
-Again: how do we detect this?
+Kind of short. How about num-fts? Or is "NFTS" a PCI term?
 
-> or live with the warning that certain messages
-> don't support fast channel which I don't think will fly. I've also been
-> told the crash wouldn't show up if we have all sleep states
-> disabled.
+> +    description:
+> +      Number of Fast Training Sequence (FTS) used during L0s to L0 exit =
+for bit
+> +      and Symbol lock.
+> +    $ref: /schemas/types.yaml#/definitions/uint32-array
+> +    minItems: 1
+> +    maxItems: 5
 
-So we have the choice between crashing quickly, or sucking power like
-mad?
+Need to define what is each entry? Gen 1 to 5?
 
-Thanks,
+> +    items:
+> +      maximum: 255
 
-	M.
+Why not use uint8 array then?
 
--- 
-Without deviation from the norm, progress is not possible.
+> +
+>    reset-gpios:
+>      description: GPIO controlled connection to PERST# signal
+>      maxItems: 1
+> @@ -150,6 +160,12 @@ properties:
+>      description: Disables ASPM L0s capability
+>      type: boolean
+>
+> +  aspm-l0s-entry-delay-ns:
+> +    description: Aspm l0s entry delay.
+> +
+> +  aspm-l1-entry-delay-ns:
+> +    description: Aspm l1 entry delay.
+> +
+>    vpcie12v-supply:
+>      description: 12v regulator phandle for the slot
+>
+> --
+> 2.34.1
+>
+>
 
