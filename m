@@ -1,236 +1,203 @@
-Return-Path: <linux-arm-msm+bounces-43991-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-43992-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D5D1EA0259E
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jan 2025 13:36:25 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 185ABA025D4
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jan 2025 13:46:01 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5E2D03A2A7E
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jan 2025 12:36:20 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D3A63164BA2
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jan 2025 12:45:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 06F461DA60B;
-	Mon,  6 Jan 2025 12:36:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 647841DDC2F;
+	Mon,  6 Jan 2025 12:45:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=jms.id.au header.i=@jms.id.au header.b="fYVvsIAy"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="SCf5WWz8"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f52.google.com (mail-ej1-f52.google.com [209.85.218.52])
+Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2290D1598EE;
-	Mon,  6 Jan 2025 12:36:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E96031DB951
+	for <linux-arm-msm@vger.kernel.org>; Mon,  6 Jan 2025 12:45:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736166981; cv=none; b=jrckw4BNRD0yezuIa6BlBiFHBkypU69hpC5ZYWDEYcs3eavhCjkacof91iSiBddP1E8Z3AlpArn0tf1GopJgswpTlxxgolOE5IJ2+w5xOojfsYjBGyTTmjBWcDm32Shx0CqK4L6C/WgEWaC/2Y3elF6mAFrl8NWUqTWAnLjyB8k=
+	t=1736167557; cv=none; b=VClkAXcj3S7bjH0I1oBrOF90d8zWdsHMzAFcAIm0IOSaKEw87CRUwRi/gphd90htJAEmocly6JtJNNhpMpNwjqBwuSni5IE1khOmflX4PmwdyFOyUsaMUjgALsrmIA5Zmg3GxNAWjpCHfX/ekn6KmiD7zXQTvN/uv3KzIlSUzxs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736166981; c=relaxed/simple;
-	bh=3+2UE4A78WBYby8MiY6zpEHBFD6l8nYLZY+vBVkQwOc=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=eRQT+U3E0W9ctg0RQetCGUOHJpjqVij10teduMbt153qiP0i44jLX9gci8vUilePoGy0M5QMpDpf+BgIsc6RhD6+gS6s41qr4NB2nMuCD7PMxKnJJccpVvPQ5jesGxZa6Kb8n+3SQMln3FD1oZ3z/xPSyinNkIQjO2jeoLnpXrA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jms.id.au; spf=pass smtp.mailfrom=gmail.com; dkim=pass (1024-bit key) header.d=jms.id.au header.i=@jms.id.au header.b=fYVvsIAy; arc=none smtp.client-ip=209.85.218.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jms.id.au
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ej1-f52.google.com with SMTP id a640c23a62f3a-aa67ac42819so2057064766b.0;
-        Mon, 06 Jan 2025 04:36:17 -0800 (PST)
+	s=arc-20240116; t=1736167557; c=relaxed/simple;
+	bh=fd7zdlxTAGFRBS7rqsaz7guw5qHgt0UMqK/lopJACT0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=j0yXmd9i0K2M+WCIHMJAvJvmvF4U5hefTAYklSGBOPEY3hqlwihFYPQCRdjxqxHVd5ZYMZOo4gNh/3cLTYRoAeWoTdASn5QFG4NgrdKHiyW6RbZ3TprP/JsGQFyi9kiwgVFtOY0lJ4MYgs65BZyMVTdtguT3yLWwnmcHzellyEs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=SCf5WWz8; arc=none smtp.client-ip=209.85.221.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-38789e5b6a7so6928841f8f.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Jan 2025 04:45:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=jms.id.au; s=google; t=1736166976; x=1736771776; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=dKIXxLhttbFcVYR/bgQGxM4UC+Urto6wknS8G3Bmh8Y=;
-        b=fYVvsIAyZOvJcmDN3zAXPCiuyNmhVB2zfQ6L8AdyddgQRf9wJmLXu/dyZli7aRUKix
-         BP3d5dPwaRy6U5sdeVWggfh/Pvoaa3uiThMJSSjqs+i1hRcQ2xn4bmMMTxQ131m7yHyd
-         1JsLvJWvmW1zdwKy7gGY5EPVyIcZNrMeIeRME=
+        d=linaro.org; s=google; t=1736167552; x=1736772352; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=M2cI20yQvFh0oTzvXey8G3cCYkJTkl8Kp3cskcOiadM=;
+        b=SCf5WWz80v4RQr1XHjrA0yKWGzYLavXAfbQXQ+5h68kG5hpzqyvJYK00kgiyh+G6UU
+         A0VI9BlZJc84L8fFXUBty0oY97hsJ1KTwPzAF5tHpzpfgQbaCQAEt+YUBf948capUvXU
+         Zb/ISigP+7YBcwB8zakEf4nbv7NYaScD4j0Fwueht/6TKHIlPsMVy1aXj/AB74Hh6gjL
+         Gl9fUESZu62zpT9g9b82HyNlkaB/Me76GndsAVBZFz59JjqzRhpT8WkdUzh+WGS9p7IE
+         sQx6FNStGknBl5i7KJsLhKPUM+w+PVsaTfd4hl2SpW9w3rsYqWDMLDPDXzQvFMnfGcM2
+         MffA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736166976; x=1736771776;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=dKIXxLhttbFcVYR/bgQGxM4UC+Urto6wknS8G3Bmh8Y=;
-        b=JgZHwBh/xQXxDRgPZkCMcmzIf5saAEQjAIFRh/kb/YdmAVNekvc4TWrmAN70lGMVmb
-         paIxP3ztkejrVv88k46G+zYYnWjtYDmUuJ2a/ygZhCOGN+zhznAiihcP3EZWSSXaSsXS
-         ZQ/VYBOSn6GLFRQf986mReaOpl9LXFvlQP9EtYrIp47Ed65Hb1z7oE5Y/Rvu4X3N347r
-         0iOgfYF9ftm6ibwYEnqHk43kvEkphqyC3srFxG01MmdRMj+yft/X3h+AWXoy1cFm6HtT
-         Fhqaj8eOFkdmHu6lJnt5qkd2sEEetr7uT130asnT1Gpqzmed6xPTOYgDVqnuQTJEQ0eb
-         WloQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVRbSGuQHHG7HM88Y8ZsGozy6pW+/nboiqOlSzRZMSRMesM/8MXamPPtrPcUJSQl/hlRnupYVCTKdWM@vger.kernel.org, AJvYcCVq9vijsQ/aiNvyRVqWRj7rlnFWrBQ3IxFQ1L1orl8V6i2PrcKQwrVAzMVFKK4SEd5gAEDG7ENKv8k+HDoFGQ==@vger.kernel.org, AJvYcCWfUQn0ADpyULPfSUnJetF/ammn5uw9avP74OB+SvN2XM0hCBzrSXbPgwuxzIDxOgE5nv53RBdmcacNsobK@vger.kernel.org, AJvYcCXn9VWDdhdBMLQNgA4F6f8dpvuKS08xM++j0eUe3y/pKslkfGDMm1t/GlaxQ9o6yXJ1AdVcgixa3IItqRY=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyKn8ljw9r3O6ukUVBdEG6uimA4owc7LKrcdLwM+sk1Doptnetg
-	x0AbaX5JxHIoFo6n3FTvi+71rAorrTquJ9EIL/TSGnIbl7AA1a09LfsFh/MYYoXfIuvfe3e6YmK
-	frQ3onD7wvcgrYwM5VA4SWL8p7WU=
-X-Gm-Gg: ASbGncuZ4iunBSf1Y6NTAQMeZQrHo3xZuh3ajAZZI2WEKSHOMyZCTbif4dSFSoEoF/T
-	QHZoTHQELsdMDcljZyfcAwwfsflc6In979XjsOA==
-X-Google-Smtp-Source: AGHT+IGwGcVs1m2atwIpdSUGW8iawaESVde18+/ZLAH7jwPmVxZpzN3LOf4WKbD6GStENEJkJ9TFSrLvno21ev/aCyc=
-X-Received: by 2002:a17:907:7e81:b0:aaf:74b3:80db with SMTP id
- a640c23a62f3a-aaf74b380e2mr1797693966b.3.1736166976070; Mon, 06 Jan 2025
- 04:36:16 -0800 (PST)
+        d=1e100.net; s=20230601; t=1736167552; x=1736772352;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=M2cI20yQvFh0oTzvXey8G3cCYkJTkl8Kp3cskcOiadM=;
+        b=rk1zhwTsCXtgh4lNXrrbc3nYqwzZVkRillVf/pFOmUuJGNGuO+UOl8Gk4419+VMOO+
+         EMLXOyvLd+wEozj3UOWYHZUaA38BZfUBbwo9DUipBZ4gdWDceyNJLZyNVk8kYsZZZ6wa
+         wtLF4BzGC0ERJBtK6G8Ln6FI8e77H6UK+Bmu1SglZ9IfdsU9hYWZtrutphF3g2I587ce
+         OOsS76WSPhNio/szti2ul4Lqz+lnS3MzmIReir1/FYo5NRScqBRn/byoApszWRdGIQNn
+         WTCZJ/CqnK6Jrt0U2YmI6tafflVHz7JW5YEEYngV0f875bOZ5jAdvxQ7MvXV6VPtQEd7
+         147w==
+X-Forwarded-Encrypted: i=1; AJvYcCW3e55/lRTWythuTrmPX7fRZi3o9yQ2jxCN9slJAtDEGM0ztGJBaQcDo2RmaMMn+V6uJ4/z2lRe894SHk2S@vger.kernel.org
+X-Gm-Message-State: AOJu0YyDsaIOFBmQWx6PFJBaNSWnzIiLaO4GBuUXxRU5+Ai1GFNk0ast
+	/k3htcokHoY1xCcH2YHm0aO3yGRlzmRCdWOmTMOR5uwOMCuJHXMlR6G5EO14XSs=
+X-Gm-Gg: ASbGncu1ragU3X10hRR6yT77OZV94NQG+IJbngDZTZOstXHBeoWLYIzDFaRb/zesK5t
+	6MDSBvwP+x6lWtZsgNrKlqjXXz6noUjUdR+0gqaAeZBy0AAqaOCubH3t1KXwXXnMEznPxYT4hlO
+	rHgDFQ8GGnZdambZBr86IVojBEFzPHtjJa9LkCgOa3PESebpQxZAFS+mCOxwAoCMSm9Pu/ZS9jx
+	rwfohivylSb3aCeJb92F7TjuqwLu04sreviWEs66IdEVpHgqoNDuR0=
+X-Google-Smtp-Source: AGHT+IGPXXCGpVVL8gkklF9ZQV+if58UuE9ZivrnPJUbIt2RzTzppNgGN6AJ5opvpHjGWhdKOASxmQ==
+X-Received: by 2002:a05:6000:4b07:b0:385:fa20:658b with SMTP id ffacd0b85a97d-38a221f6135mr46513894f8f.24.1736167552118;
+        Mon, 06 Jan 2025 04:45:52 -0800 (PST)
+Received: from linaro.org ([86.121.162.10])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43656b4274csm603466965e9.38.2025.01.06.04.45.49
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 06 Jan 2025 04:45:51 -0800 (PST)
+Date: Mon, 6 Jan 2025 14:45:48 +0200
+From: Abel Vesa <abel.vesa@linaro.org>
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+	Karol Herbst <kherbst@redhat.com>, Lyude Paul <lyude@redhat.com>,
+	Danilo Krummrich <dakr@redhat.com>,
+	Jani Nikula <jani.nikula@linux.intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+	Tvrtko Ursulin <tursulin@ursulin.net>,
+	Rob Clark <robdclark@gmail.com>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Sean Paul <sean@poorly.run>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Johan Hovold <johan@kernel.org>, dri-devel@lists.freedesktop.org,
+	linux-kernel@vger.kernel.org, nouveau@lists.freedesktop.org,
+	intel-gfx@lists.freedesktop.org, intel-xe@lists.freedesktop.org,
+	linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+	Imre Deak <imre.deak@intel.com>
+Subject: Re: [PATCH v3 3/4] drm/i915/dp: Use the generic helper to control
+ LTTPR transparent mode
+Message-ID: <Z3vQfIIDDgnFJsDn@linaro.org>
+References: <20250103-drm-dp-msm-add-lttpr-transparent-mode-set-v3-0-5c367f4b0763@linaro.org>
+ <20250103-drm-dp-msm-add-lttpr-transparent-mode-set-v3-3-5c367f4b0763@linaro.org>
+ <3p3wgzhtptjexplxrluod6sk36xeltpoh4hxg2yagssw7nh7hj@ikc4rssp6zej>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20241212-qcom-video-iris-v9-0-e8c2c6bd4041@quicinc.com>
-In-Reply-To: <20241212-qcom-video-iris-v9-0-e8c2c6bd4041@quicinc.com>
-From: Joel Stanley <joel@jms.id.au>
-Date: Mon, 6 Jan 2025 23:06:03 +1030
-X-Gm-Features: AbW1kvbTwfL57vv40IS5aQIuxGW2DHEqbK40Wr060WqVI88XDY3rd3xwWUsD5yA
-Message-ID: <CACPK8XeFbx_8mrvT4xi-WfQF+zHJYj1=EkH2tmnnxs1WThJ8ZQ@mail.gmail.com>
-Subject: Re: [PATCH v9 00/28] Qualcomm iris video decoder driver
-To: Dikshita Agarwal <quic_dikshita@quicinc.com>
-Cc: Vikash Garodia <quic_vgarodia@quicinc.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
-	Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Philipp Zabel <p.zabel@pengutronix.de>, Hans Verkuil <hverkuil@xs4all.nl>, 
-	Sebastian Fricke <sebastian.fricke@collabora.com>, 
-	"Bryan O'Donoghue" <bryan.odonoghue@linaro.org>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
-	Neil Armstrong <neil.armstrong@linaro.org>, Nicolas Dufresne <nicolas@ndufresne.ca>, 
-	=?UTF-8?Q?Uwe_Kleine=2DK=C3=B6nig?= <u.kleine-koenig@baylibre.com>, 
-	Jianhua Lu <lujianhua000@gmail.com>, Stefan Schmidt <stefan.schmidt@linaro.org>, 
-	linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, Vedang Nagar <quic_vnagar@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <3p3wgzhtptjexplxrluod6sk36xeltpoh4hxg2yagssw7nh7hj@ikc4rssp6zej>
 
-On Thu, 12 Dec 2024 at 22:23, Dikshita Agarwal
-<quic_dikshita@quicinc.com> wrote:
->
-> Introduce support for Qualcomm new video acceleration hardware i.e.
-> iris, used for video stream decoding.
->
-> Iris is a multi pipe based hardware that offloads video stream decoding
-> from the application processor (AP). It supports H.264 decoding. The AP
-> communicates with hardware through a well defined protocol, called as
-> host firmware interface (HFI), which provides fine-grained and
-> asynchronous control over individual hardware features.
->
-> This driver implements upgraded HFI gen2 to communicate with firmware.
-> It supports SM8550 which is based out of HFI gen 2. It also supports
-> SM8250 which is based out of HFI gen1.
+On 25-01-03 20:09:42, Dmitry Baryshkov wrote:
+> On Fri, Jan 03, 2025 at 02:58:17PM +0200, Abel Vesa wrote:
+> > LTTPRs operating modes are defined by the DisplayPort standard and the
+> > generic framework now provides a helper to switch between them, which
+> > is handling the explicit disabling of non-transparent mode and its
+> > disable->enable sequence mentioned in the DP Standard v2.0 section
+> > 3.6.6.1.
+> > 
+> > So use the new drm generic helper instead as it makes the code a bit
+> > cleaner.
+> > 
+> > Acked-by: Imre Deak <imre.deak@intel.com>
+> > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> > ---
+> >  .../gpu/drm/i915/display/intel_dp_link_training.c  | 24 +++++-----------------
+> >  1 file changed, 5 insertions(+), 19 deletions(-)
+> > 
+> > diff --git a/drivers/gpu/drm/i915/display/intel_dp_link_training.c b/drivers/gpu/drm/i915/display/intel_dp_link_training.c
+> > index 8b1977cfec503c70f07af716ee2c00e7605c6adf..c5bad311edf7b9a5cebb633b9e9692bae397f9ed 100644
+> > --- a/drivers/gpu/drm/i915/display/intel_dp_link_training.c
+> > +++ b/drivers/gpu/drm/i915/display/intel_dp_link_training.c
+> > @@ -119,9 +119,6 @@ intel_dp_set_lttpr_transparent_mode(struct intel_dp *intel_dp, bool enable)
+> >  	u8 val = enable ? DP_PHY_REPEATER_MODE_TRANSPARENT :
+> >  			  DP_PHY_REPEATER_MODE_NON_TRANSPARENT;
+> >  
+> > -	if (drm_dp_dpcd_write(&intel_dp->aux, DP_PHY_REPEATER_MODE, &val, 1) != 1)
+> > -		return false;
+> > -
+> >  	intel_dp->lttpr_common_caps[DP_PHY_REPEATER_MODE -
+> >  				    DP_LT_TUNABLE_PHY_REPEATER_FIELD_DATA_STRUCTURE_REV] = val;
+> >  
+> > @@ -146,6 +143,7 @@ static bool intel_dp_lttpr_transparent_mode_enabled(struct intel_dp *intel_dp)
+> >  static int intel_dp_init_lttpr_phys(struct intel_dp *intel_dp, const u8 dpcd[DP_RECEIVER_CAP_SIZE])
+> >  {
+> >  	int lttpr_count;
+> > +	int ret;
+> >  
+> >  	if (!intel_dp_read_lttpr_common_caps(intel_dp, dpcd))
+> >  		return 0;
+> > @@ -172,22 +170,8 @@ static int intel_dp_init_lttpr_phys(struct intel_dp *intel_dp, const u8 dpcd[DP_
+> >  		return lttpr_count;
+> >  	}
+> >  
+> > -	/*
+> > -	 * See DP Standard v2.0 3.6.6.1. about the explicit disabling of
+> > -	 * non-transparent mode and the disable->enable non-transparent mode
+> > -	 * sequence.
+> > -	 */
+> > -	intel_dp_set_lttpr_transparent_mode(intel_dp, true);
+> > -
+> > -	/*
+> > -	 * In case of unsupported number of LTTPRs or failing to switch to
+> > -	 * non-transparent mode fall-back to transparent link training mode,
+> > -	 * still taking into account any LTTPR common lane- rate/count limits.
+> > -	 */
+> > -	if (lttpr_count < 0)
+> > -		goto out_reset_lttpr_count;
+> > -
+> > -	if (!intel_dp_set_lttpr_transparent_mode(intel_dp, false)) {
+> > +	ret = drm_dp_lttpr_init(&intel_dp->aux, lttpr_count);
+> > +	if (ret) {
+> >  		lt_dbg(intel_dp, DP_PHY_DPRX,
+> >  		       "Switching to LTTPR non-transparent LT mode failed, fall-back to transparent mode\n");
+> >  
+> > @@ -196,6 +180,8 @@ static int intel_dp_init_lttpr_phys(struct intel_dp *intel_dp, const u8 dpcd[DP_
+> >  		goto out_reset_lttpr_count;
+> >  	}
+> >  
+> > +	intel_dp_set_lttpr_transparent_mode(intel_dp, false);
+> > +
+> 
+> I think the code now misses a way to update intel_dp->lttpr_common_caps
+> in a transparent-mode case:
+> intel_dp_set_lttpr_transparent_mode(intel_dp, true).
 
-I tested this on an x1e based machine, a Surface Laptop 7. I had some
-errors with loading the firmware which triggered some warnings when
-trying to tear down the driver. I've pasted the WARNs at the end of
-this mail.
+It is being called if the drm_dp_lttpr_init() returns a non-zero value,
+but that is not part of the diff here.
 
-I was using the firmware from linux-firmware, as packaged by distros:
-
-4d2dae9a8187b728939e9c79fa68012b  qcom/vpu/vpu30_p4.mbn
-
-It appears to be signed by a test key, which I assume was the cause of
-the failure. Replacing it with a properly signed version worked, and I
-was able successfully decode a test video with ffplay:
-
-$ ffplay -codec:v h264_v4l2m2m test.mp4
-...
-[h264_v4l2m2m @ 0xffff500054b0] Using device /dev/video0
-[h264_v4l2m2m @ 0xffff500054b0] driver 'iris_driver' on card
-'iris_decoder' in mplane mode
-[h264_v4l2m2m @ 0xffff500054b0] requesting formats: output=H264/none
-capture=NV12/yuv420p
-
-Cheers,
-
-Joel
----
-[    2.587909] qcom-iris aa00000.video-codec: error -22 initializing
-firmware qcom/vpu/vpu30_p4.mbn
-[    2.588095] qcom-iris aa00000.video-codec: firmware download failed
-[    2.588250] ------------[ cut here ]------------
-[    2.588251] Unmap of a partial large IOPTE is not allowed
-[    2.588256] WARNING: CPU: 4 PID: 659 at
-drivers/iommu/io-pgtable-arm.c:649 __arm_lpae_unmap+0x3cc/0x468
-[    2.588335] CPU: 4 UID: 0 PID: 659 Comm: v4l_id Tainted: G        W
-         6.13.0-rc4-00092-g1bbe1a937cf6 #21
-[    2.588338] Tainted: [W]=WARN
-[    2.588339] Hardware name: Microsoft Corporation Microsoft Surface
-Laptop, 7th Edition/Microsoft Surface Laptop, 7th Edition, BIOS
-160.2.235 08/05/2024
-[    2.588340] pstate: 61400005 (nZCv daif +PAN -UAO -TCO +DIT -SSBS BTYPE=--)
-[    2.588342] pc : __arm_lpae_unmap+0x3cc/0x468
-[    2.588344] lr : __arm_lpae_unmap+0x3cc/0x468
-[    2.588345] sp : ffff80008259b690
-[    2.588346] x29: ffff80008259b690 x28: ffff80008259bc30 x27: ffff80008259b8f8
-[    2.588349] x26: ffffb973346978d0 x25: ffff68590225e7f0 x24: ffff80008259b8f8
-[    2.588351] x23: 00000000dfc00000 x22: 0000000000001000 x21: ffff68590396ce80
-[    2.588354] x20: ffff6859068fa4f8 x19: ffff6859068fa480 x18: fffffffffffef6a8
-[    2.588356] x17: ffff685900b8c040 x16: 0000000000000000 x15: ffff80008259b248
-[    2.588359] x14: ffffb9733457e768 x13: 6465776f6c6c6120 x12: 746f6e2073692045
-[    2.588362] x11: ffffb9733457e768 x10: 000000000000030c x9 : ffffb973345d6768
-[    2.588364] x8 : 0000000000017fe8 x7 : 00000000fffff30b x6 : ffffb973345d6768
-[    2.588367] x5 : ffff685c75f4b848 x4 : 40000000fffff30b x3 : ffffaee941a6a000
-[    2.588369] x2 : 0000000000000000 x1 : 0000000000000000 x0 : ffff68590bc25640
-[    2.588372] Call trace:
-[    2.588373]  __arm_lpae_unmap+0x3cc/0x468 (P)
-[    2.588376]  __arm_lpae_unmap+0xf4/0x468
-[    2.588379]  __arm_lpae_unmap+0xf4/0x468
-[    2.588381]  arm_lpae_unmap_pages+0x70/0x84
-[    2.588383]  arm_smmu_unmap_pages+0x48/0x10c
-[    2.588385]  __iommu_unmap+0xf0/0x1c0
-[    2.588387]  iommu_unmap_fast+0x10/0x20
-[    2.588389]  __iommu_dma_unmap+0xb8/0x2c0
-[    2.588391]  iommu_dma_free+0x2c/0x54
-[    2.588392]  dma_free_attrs+0x9c/0xc0
-[    2.588395]  iris_hfi_queues_deinit+0x70/0xa0 [iris]
-[    2.588399]  iris_core_init+0xd8/0x138 [iris]
-[    2.588401]  iris_open+0x3c/0x318 [iris]
-[    2.588403]  v4l2_open+0xa8/0x124 [videodev]
-[    2.588406]  chrdev_open+0xb0/0x21c
-[    2.588409]  do_dentry_open+0x138/0x4c4
-[    2.588412]  vfs_open+0x2c/0xe4
-[    2.588413]  path_openat+0x6fc/0x10a0
-[    2.588415]  do_filp_open+0xa8/0x170
-[    2.588417]  do_sys_openat2+0xc8/0xfc
-[    2.588418]  __arm64_sys_openat+0x64/0xc0
-[    2.588420]  invoke_syscall+0x48/0x104
-[    2.588423]  el0_svc_common.constprop.0+0xc0/0xe0
-[    2.588426]  do_el0_svc+0x1c/0x28
-[    2.588428]  el0_svc+0x30/0xcc
-[    2.588431]  el0t_64_sync_handler+0x10c/0x138
-[    2.588433]  el0t_64_sync+0x198/0x19c
-[    2.588435] ---[ end trace 0000000000000000 ]---
-[    2.588438] ------------[ cut here ]------------
-[    2.588439] WARNING: CPU: 4 PID: 659 at
-drivers/iommu/dma-iommu.c:841 __iommu_dma_unmap+0x290/0x2c0
-[    2.588497] CPU: 4 UID: 0 PID: 659 Comm: v4l_id Tainted: G        W
-         6.13.0-rc4-00092-g1bbe1a937cf6 #21
-[    2.588499] Tainted: [W]=WARN
-[    2.588500] Hardware name: Microsoft Corporation Microsoft Surface
-Laptop, 7th Edition/Microsoft Surface Laptop, 7th Edition, BIOS
-160.2.235 08/05/2024
-[    2.588501] pstate: 81400005 (Nzcv daif +PAN -UAO -TCO +DIT -SSBS BTYPE=--)
-[    2.588502] pc : __iommu_dma_unmap+0x290/0x2c0
-[    2.588503] lr : __iommu_dma_unmap+0xb8/0x2c0
-[    2.588505] sp : ffff80008259b8f0
-[    2.588505] x29: ffff80008259b930 x28: ffff80008259bc30 x27: 0000000000020100
-[    2.588508] x26: 0000000000020100 x25: ffff68590bf76a08 x24: ffff80008259b910
-[    2.588511] x23: ffff80008259b8f8 x22: ffff6859113cd260 x21: ffff68590bf76a00
-[    2.588513] x20: 00000000dfc00000 x19: 0000000000001000 x18: fffffffffffef6a8
-[    2.588516] x17: ffff685900b8c040 x16: 0000000000000000 x15: ffff80008259b248
-[    2.588518] x14: ffffb9733457e768 x13: 6465776f6c6c6120 x12: 746f6e2073692045
-[    2.588521] x11: ffffb9733457e768 x10: 000000000000030c x9 : ffffb973345d6768
-[    2.588523] x8 : 0000000000017fe8 x7 : 00000000fffff30b x6 : ffffb973345d6768
-[    2.588525] x5 : ffff685c75f4b848 x4 : 40000000fffff30b x3 : ffffaee941a6a000
-[    2.588528] x2 : 0000000000000000 x1 : 0000000000000000 x0 : 0000000000000000
-[    2.588530] Call trace:
-[    2.588531]  __iommu_dma_unmap+0x290/0x2c0 (P)
-[    2.588532]  iommu_dma_free+0x2c/0x54
-[    2.588534]  dma_free_attrs+0x9c/0xc0
-[    2.588535]  iris_hfi_queues_deinit+0x70/0xa0 [iris]
-[    2.588537]  iris_core_init+0xd8/0x138 [iris]
-[    2.588539]  iris_open+0x3c/0x318 [iris]
-[    2.588541]  v4l2_open+0xa8/0x124 [videodev]
-[    2.588543]  chrdev_open+0xb0/0x21c
-[    2.588545]  do_dentry_open+0x138/0x4c4
-[    2.588547]  vfs_open+0x2c/0xe4
-[    2.588549]  path_openat+0x6fc/0x10a0
-[    2.588550]  do_filp_open+0xa8/0x170
-[    2.588551]  do_sys_openat2+0xc8/0xfc
-[    2.588553]  __arm64_sys_openat+0x64/0xc0
-[    2.588555]  invoke_syscall+0x48/0x104
-[    2.588557]  el0_svc_common.constprop.0+0xc0/0xe0
-[    2.588560]  do_el0_svc+0x1c/0x28
-[    2.588562]  el0_svc+0x30/0xcc
-[    2.588564]  el0t_64_sync_handler+0x10c/0x138
-[    2.588566]  el0t_64_sync+0x198/0x19c
-[
+> 
+> >  	return lttpr_count;
+> >  
+> >  out_reset_lttpr_count:
+> > 
+> > -- 
+> > 2.34.1
+> > 
+> 
+> -- 
+> With best wishes
+> Dmitry
 
