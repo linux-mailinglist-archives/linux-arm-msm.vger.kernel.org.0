@@ -1,122 +1,171 @@
-Return-Path: <linux-arm-msm+bounces-44056-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-44057-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B471AA03341
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jan 2025 00:20:43 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6B8A0A03354
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jan 2025 00:32:53 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A051A163B99
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jan 2025 23:20:41 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0307B1885026
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jan 2025 23:32:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 08BB11E25E5;
-	Mon,  6 Jan 2025 23:20:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1C495EEB3;
+	Mon,  6 Jan 2025 23:32:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EVxcJfOl"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Nv1DSwK6"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D12CF1E231A;
-	Mon,  6 Jan 2025 23:20:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D99B84A04;
+	Mon,  6 Jan 2025 23:32:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736205633; cv=none; b=udYAEW5zH7cp6TXKcKJvKqemjAzhhyD+koYhTM8bRkHXydBQF8+A1QTZ1Emv/lC5tFgpK8O8BXfZPePsE7PYyStck+56/CMzw6HqBQ20P+JXQNqeF9SE69totwoJu84ZynztYS16pNryMtZBcz2hgYtKuP1R7rMLHY8Dy19GWSg=
+	t=1736206369; cv=none; b=k208Zp71vH8mx/+8eghkAJpacXRlC7GFuSqwLwmD0oilyPDJe0ckIGgYPxnmmcIrPQW3fOpywBI9WJOSiYp1BgJ5YXwl4AHkxE3ynHxdxvE9ZRdVCFluG7cDAv7Vby7bD5juBx1A5KrBNcG8mMxAdH6JVLP7KSzBcnamezrSbW8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736205633; c=relaxed/simple;
-	bh=nNMeca1KPvkfqy3QnMHoCwHQluqtZ9hq1GhYIg7cB8A=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=JAd2PJpy5ywt7OUiCAJW+eDu3hxUC+z3bz20Z4lbnfIEXNtH7LhU+oVjWzu69W0U3h5xJ/U7Whs1kRJ1NWJz3msmfwK8cN6sp1lQ55psHIII8wcdatRclDrlZucNb+M0qqj1EQBVF4BhRyC02S24AfXuNuGA7FpkmfkfM1Ds73I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EVxcJfOl; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 963C6C4CEE4;
-	Mon,  6 Jan 2025 23:20:32 +0000 (UTC)
+	s=arc-20240116; t=1736206369; c=relaxed/simple;
+	bh=eeMQqExnDirKLWFXQEWznjA1b/1/ng+r1w7U0NJCPrY=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To; b=dcQnJ1tlMB0Qs/0pryjE2YqOkHcCxZ9/Sk5v5b8Q6G4OL2OgRQ+fgNolhTrIh4fimZeTE//CR0GYjgGcYvfIYptqGDL1G+RaP5IunqtgCeHb9ROn9H8HPp7tRREKEaDJea0kYYp1F540A4GmGlPkp7CoJXfu/aose1zqYhRbCCE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Nv1DSwK6; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35751C4CED2;
+	Mon,  6 Jan 2025 23:32:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1736205633;
-	bh=nNMeca1KPvkfqy3QnMHoCwHQluqtZ9hq1GhYIg7cB8A=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EVxcJfOlq9y8n9w1XL+PV3QS2C+Tn1preALMbupo9EN+vhzzKGPE/l8d8liKZ4p2a
-	 Hwa9X84peQ5IBC9+1JzXWesRYEaT66FUL8rAJyl2qIvYAmM5yO9alPKLuwlFP2lKF4
-	 RTBjBDjJLDLxRruc3dDNZhlulS2WgqCVEyX/dCQb9S9uoeYVoX3Q4XUEZawBaxxsHL
-	 hmuGimtw2pRba7tIGDsBbobWAMo6qy5Qx/kEtyQARp/KdBcMnwtQiHpkUDnR8Oppwf
-	 Sa3aB9+Lygtbt7RVaNzBXNW0li0CY//1JEk5h6rGzIT+KGFIRc0R5XoEqZBblbbTrj
-	 yq4uXNkvFCkEg==
-From: Bjorn Andersson <andersson@kernel.org>
-To: Konrad Dybcio <konradybcio@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>,
-	Prashanth K <quic_prashk@quicinc.com>
-Cc: linux-kernel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	cros-qcom-dts-watchers@chromium.org
-Subject: Re: [PATCH v4 00/17] Disable USB U1/U2 entry for QC ARM64 targets
-Date: Mon,  6 Jan 2025 17:20:28 -0600
-Message-ID: <173620562619.21468.12633829539050439876.b4-ty@kernel.org>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20241231081115.3149850-1-quic_prashk@quicinc.com>
-References: <20241231081115.3149850-1-quic_prashk@quicinc.com>
+	s=k20201202; t=1736206368;
+	bh=eeMQqExnDirKLWFXQEWznjA1b/1/ng+r1w7U0NJCPrY=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:From;
+	b=Nv1DSwK6k2zpzNAbPpGm5uDQMY7iKKu2mInE/Kg4oqhY9qsZI1NNo2dQLKkCFbLJb
+	 EbGnkKYVHcQOGDnUDtfgFg0vbkkZYdGa1krWt/ZkX90iQbGN3OLxnL/r6fxHgYAxUI
+	 dYY4S5FvyIOodelpiMXz4lkXNYfX+aeNmZZb5akDUJxJO5SE1KT193o0cELWOJoYn7
+	 16krPSvZKlLlNIKvF5oYCpOERfcYXXCzWQbkFTpJweonCeM7afKheZpq00w4umIL5K
+	 tudCkfVoy7A3/R5mDXs/5LH0K4QBghL3w14k4o3xH7Y6WpvwYmb++P7dhSx5pjq6Q0
+	 LotRGXfa4l12Q==
+Date: Mon, 6 Jan 2025 17:32:46 -0600
+From: Bjorn Helgaas <helgaas@kernel.org>
+To: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+Cc: andersson@kernel.org, robh@kernel.org, dmitry.baryshkov@linaro.org,
+	manivannan.sadhasivam@linaro.org, krzk@kernel.org,
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+	lpieralisi@kernel.org, kw@linux.com, conor+dt@kernel.org,
+	linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org,
+	devicetree-spec@vger.kernel.org, quic_vbadigan@quicinc.com
+Subject: Re: [PATCH V1] schemas: pci: bridge: Document PCI L0s & L1 entry
+ delay and nfts
+Message-ID: <20250106233246.GA116572@bhelgaas>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250106093304.604829-1-krishna.chundru@oss.qualcomm.com>
 
+On Mon, Jan 06, 2025 at 03:03:04PM +0530, Krishna Chaitanya Chundru wrote:
+> Some controllers and endpoints provide provision to program the entry
+> delays of L0s & L1 which will allow the link to enter L0s & L1 more
+> aggressively to save power.
 
-On Tue, 31 Dec 2024 13:40:58 +0530, Prashanth K wrote:
-> Enabling U1 and U2 power-saving states can lead to stability and
-> performance issues, particularly for latency-sensitive or high-
-> throughput applications. These low-power link states are intended
-> to reduce power consumption by allowing the device to enter partial
-> low-power modes during idle periods. However, they can sometimes
-> result in unexpected behavior. Over the years, some of the issues
-> seen are as follows:
+Although these are sort of related because FTS is used during L0s->L1
+transitions, I think these are subtle enough that it's worth splitting
+this into two patches.
+
+> As per PCIe spec 6 sec 4.2.5.6, the number of Fast Training Sequence (FTS)
+> can be programmed by the controllers or endpoints that is used for bit and
+> Symbol lock when transitioning from L0s to L0 based upon the PCIe data rate
+> FTS value can vary. So define a array for each data rate for nfts.
+>
+> These values needs to be programmed before link training.
+
+IIUC, the point of this is to program the N_FTS value ("number of Fast
+Training Sequences required by the Receiver" as described in PCIe
+r6.0, sec 4.2.5.1, tables 4-25, 4-26, 4-27 for TS1, TS2, and Modified
+TS1/TS2 Ordered Sets).
+
+During Link training, all PCIe components transmit the N_FTS value
+they require.  Sec 4.2.5.6 only describes the Fast Training Sequence
+from a protocol perspective.  The fact that the N_FTS value of a
+device may be programmable is device-specific.
+
+Possible text:
+
+  Per PCIe r6.0, sec 4.2.5.1, during Link training, a PCIe component
+  captures the N_FTS value it receives.  Per 4.2.5.6, when
+  transitioning the Link from L0s to L0, it must transmit N_FTS Fast
+  Training Sequences to enable the receiver to obtain bit and Symbol
+  lock.
+
+  Components may have device-specific ways to configure N_FTS values
+  to advertise during Link training.  Define an n_fts array with an
+  entry for each supported data rate.
+
+> Signed-off-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+> ---
+> - This change was suggested in this patch: https://lore.kernel.org/all/20241211060000.3vn3iumouggjcbva@thinkpad/
+> ---
+>  dtschema/schemas/pci/pci-bus-common.yaml | 16 ++++++++++++++++
+>  1 file changed, 16 insertions(+)
 > 
-> [...]
+> diff --git a/dtschema/schemas/pci/pci-bus-common.yaml b/dtschema/schemas/pci/pci-bus-common.yaml
+> index 94b648f..f0655ba 100644
+> --- a/dtschema/schemas/pci/pci-bus-common.yaml
+> +++ b/dtschema/schemas/pci/pci-bus-common.yaml
+> @@ -128,6 +128,16 @@ properties:
+>      $ref: /schemas/types.yaml#/definitions/uint32
+>      enum: [ 1, 2, 4, 8, 16, 32 ]
+>  
+> +  nfts:
+> +    description:
+> +      Number of Fast Training Sequence (FTS) used during L0s to L0 exit for bit
+> +      and Symbol lock.
 
-Applied, thanks!
+I think it's worth using the "number of Fast Training Sequences
+required by the Receiver" language from the spec to hint that these
+values will be used to program a component with the number of FTSs
+that it requires as a Receiver, and the component will advertise this
+number as N_FTS during Link training.
 
-[01/17] arm64: dts: qcom: sm8350: Disable USB U1/U2 entry
-        commit: 8582f8cee2f015ff4b8c5df3221917f3878f4c2a
-[02/17] arm64: dts: qcom: sm8450: Disable USB U1/U2 entry
-        commit: f9a963fc2510d32916e2e730c1b326c2ab3d312e
-[03/17] arm64: dts: qcom: sm8150: Disable USB U1/U2 entry
-        commit: 20f36ce4db5b544de640b5e47ac656fdd97b4896
-[04/17] arm64: dts: qcom: sm6125: Disable USB U1/U2 entry
-        commit: 2c1cf4b8cd8b4c574f1e367fd7f4fd44c1a1169a
-[05/17] arm64: dts: qcom: sm8250: Disable USB U1/U2 entry
-        commit: 06fcb653237b91e4befed93254b7c53e0d6139dc
-[06/17] arm64: dts: qcom: sm6350: Disable USB U1/U2 entry
-        commit: 8e252c3e4500eb8708de1d6e9ebead55a78a5d5d
-[07/17] arm64: dts: qcom: sc7280: Disable USB U1/U2 entry
-        commit: 0a13ba449afd4158cc981ff8b53d5c62aa34b377
-[08/17] arm64: dts: qcom: sa8775p: Disable USB U1/U2 entry
-        commit: 1052c4c63639ade18bfa2902371fd5e6c44b01e4
-[09/17] arm64: dts: qcom: sdm630: Disable USB U1/U2 entry
-        commit: 10b4593ba0f8b410d946d587828e6cae8f7cc78b
-[10/17] arm64: dts: qcom: sdm845: Disable USB U1/U2 entry
-        commit: c6b3c16f2c627a487653bc52d99b05a2bc453dc0
-[11/17] arm64: dts: qcom: sdx75: Disable USB U1/U2 entry
-        commit: cd2a6747583b441ad898834d3dd246ed271ad35d
-[12/17] arm64: dts: qcom: qcs404: Disable USB U1/U2 entry
-        commit: fc492c79faac5b44cb548578e35467873391094c
-[13/17] arm64: dts: qcom: sc7180: Disable USB U1/U2 entry
-        commit: 69336441c3c2dec512ed9c46d977c6587ebc795a
-[14/17] arm64: dts: qcom: x1e80100: Disable USB U1/U2 entry
-        commit: 9555a30e5f5d6fe97eed96907e867dc7543e1ccf
-[15/17] arm64: dts: qcom: qdu1000: Disable USB U1/U2 entry
-        commit: f70a41cefdd457d21198aeb5a062b98fddf780b3
-[16/17] arm64: dts: qcom: sc8280xp: Disable USB U1/U2 entry
-        commit: 49cfd97a335acbbdc9737e471a8ea3cbcea6c476
-[17/17] arm64: dts: qcom: sc8180x: Disable USB U1/U2 entry
-        commit: b7fdfac3f372b9d633cca6c1c54878118c8a5932
+  n_fts:
+    description:
+      The number of Fast Training Sequences (N_FTS) required by the
+      Receiver (this component) when transitioning the Link from L0s
+      to L0; advertised during initial Link training
 
-Best regards,
--- 
-Bjorn Andersson <andersson@kernel.org>
+> +    $ref: /schemas/types.yaml#/definitions/uint32-array
+> +    minItems: 1
+> +    maxItems: 5
+> +    items:
+> +      maximum: 255
+> +
+>    reset-gpios:
+>      description: GPIO controlled connection to PERST# signal
+>      maxItems: 1
+> @@ -150,6 +160,12 @@ properties:
+>      description: Disables ASPM L0s capability
+>      type: boolean
+>  
+> +  aspm-l0s-entry-delay-ns:
+> +    description: Aspm l0s entry delay.
+> +
+> +  aspm-l1-entry-delay-ns:
+> +    description: Aspm l1 entry delay.
+
+s/Aspm/ASPM/
+s/l0s/L0s/
+s/l1/L1/
+
+(I mentioned these earlier in the conversation you pointed to above,
+but they got missed)
+
+Also, to match surrounding items:
+s/\.$//
+
+>    vpcie12v-supply:
+>      description: 12v regulator phandle for the slot
+>  
+> -- 
+> 2.34.1
+> 
 
