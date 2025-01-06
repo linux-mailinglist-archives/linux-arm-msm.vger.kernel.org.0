@@ -1,182 +1,173 @@
-Return-Path: <linux-arm-msm+bounces-43988-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-43989-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id D565EA02534
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jan 2025 13:22:05 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0C52BA0253A
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jan 2025 13:23:10 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 31F101885DE5
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jan 2025 12:22:08 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8C8CD3A2189
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jan 2025 12:23:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 519611DDA2E;
-	Mon,  6 Jan 2025 12:22:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C1C781DA636;
+	Mon,  6 Jan 2025 12:23:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="dcw7NksA"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 169981DD529;
-	Mon,  6 Jan 2025 12:21:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30F5740BE0;
+	Mon,  6 Jan 2025 12:23:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736166120; cv=none; b=gMhHWwjbY4gVOXAj8uPuGpWmAr5whB+AfOsRb2zZaaz4b0q7DVLMVbhVQ5L0mxuDQrPou3Wrjc8NGRjv5T31fWoyoi85tUoR7KGzo/ddvJkzK7tsAu9FSCCZxADytkHnn/0cW5mB549a56iCJpmso5RMzcFsWvet7Xoj4zpVSDc=
+	t=1736166185; cv=none; b=ro6XTHWpbTHE2zgLfLvBzPFLV3QzwQIx4rejAOPeP+fyW4pbbL8a+uFWD9rKZaTn7gRmo3dP/x/V4ogUpzkgRLB4vBGfSTU0t034kOGfGQlrUjxgklLmoxVHmgk1qixHfyJsHkUaYnzvWe9KkEu5ye5twCrsafszthYzsZsJHN8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736166120; c=relaxed/simple;
-	bh=bbB1UHL57SGI86zjebsLsB4VAZH8OE8Jqp/y/zAiw3A=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=S20Gr7awYCLHhwPbn+edP1AzrETQIaLxDdm2vERuJt+M9F6oAReKP3l7OJ1TvlKufnc2WPJ6sy9t6g2eLKvmplP/eCaVYkfX2APM7Zt2ZPg0Dz1Cq7DP/5B7tuw0JXzn9GMyW633M5V5LR+SiZg4iMbi907auYXwGRPiSHLN3Ag=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1170C4CEE1;
-	Mon,  6 Jan 2025 12:21:51 +0000 (UTC)
-Message-ID: <f11653a7-bc49-48cd-9cdb-1659147453e4@xs4all.nl>
-Date: Mon, 6 Jan 2025 13:21:50 +0100
+	s=arc-20240116; t=1736166185; c=relaxed/simple;
+	bh=ZMGRX3Mra3v5ZOYRBNXo3pn0KTEaqRJHAxd0GJ/5/Ac=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=GyJUWO5cpnaj6Y39l0LaGuzXlnbjDxzeHAzrujFVJwNhoDN2CThNrqBGG3vzxdpKc0duvJ6APvy83+bUveofdR6Epe9Hjc9qT9KuQYYGEJSAxvQE9b4S/Mp4k4C/Zfkg4cCHY+OTOahiYKjCtMf6AcqdOUjGJO9J+OWILuUEKuo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=dcw7NksA; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5063XbvR016390;
+	Mon, 6 Jan 2025 12:22:57 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	vLInfvpbumgb5v3yKdH+TY3r7nz3E7Tsp5cZJ3q7Se0=; b=dcw7NksAuFeoohDX
+	AZ9LaZ3aX7TbWxImJk2Bct6mgu7OpMs75h8qJBQetUQj74cMnjywZvQGPqKqAmU6
+	C/ris7zlVphxV0NjUG+nWZPG9JVBGHvDaMWvpSDd2NkP2Psezsln8d+Y0ySyay3D
+	5hkwjg0RIUqXwrKxSo8mc3QPotBvoeEvhfHTS2F1Nwi5WQicY0tjdsqSuCI2WyxF
+	FzXECL+cV2JWi0+R0T/nuaH2yYIu4MYlQLChdyVvqgaWHY6NTtkSS8VmoqqPLsQW
+	5tGiFLAOkc0gAVXIGPen3wzyoDSurknM8VvIbfcHclkau9zfcirdgJgZV7wDDVr7
+	1Wmczw==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4407ck11fa-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 06 Jan 2025 12:22:57 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 506CMuDL028025
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 6 Jan 2025 12:22:56 GMT
+Received: from [10.190.163.187] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 6 Jan 2025
+ 04:22:51 -0800
+Message-ID: <f504b325-e4a8-c297-a09f-6a2158fa1a1b@quicinc.com>
+Date: Mon, 6 Jan 2025 17:52:48 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 23/26] media: venus: vdec: Make the range of
- us_per_frame explicit
-To: Ricardo Ribalda <ribalda@chromium.org>,
- Martin Tuma <martin.tuma@digiteqautomotive.com>,
- Mauro Carvalho Chehab <mchehab@kernel.org>,
- Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
- Hugues Fruchet <hugues.fruchet@foss.st.com>,
- Alain Volmat <alain.volmat@foss.st.com>,
- Maxime Coquelin <mcoquelin.stm32@gmail.com>,
- Alexandre Torgue <alexandre.torgue@foss.st.com>,
- Paul Kocialkowski <paul.kocialkowski@bootlin.com>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Chen-Yu Tsai
- <wens@csie.org>, Jernej Skrabec <jernej.skrabec@gmail.com>,
- Samuel Holland <samuel@sholland.org>,
- Sakari Ailus <sakari.ailus@linux.intel.com>,
- Thierry Reding <thierry.reding@gmail.com>,
- Jonathan Hunter <jonathanh@nvidia.com>,
- Sowjanya Komatineni <skomatineni@nvidia.com>,
- Luca Ceresoli <luca.ceresoli@bootlin.com>,
- Matthias Brugger <matthias.bgg@gmail.com>,
- AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
- Sergey Kozlov <serjk@netup.ru>, Abylay Ospan <aospan@netup.ru>,
- Ezequiel Garcia <ezequiel@vanguardiasur.com.ar>,
- Dmitry Osipenko <digetx@gmail.com>,
- Benjamin Mugnier <benjamin.mugnier@foss.st.com>,
- Sylvain Petinot <sylvain.petinot@foss.st.com>,
- Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
- Vikash Garodia <quic_vgarodia@quicinc.com>,
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc: linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-stm32@st-md-mailman.stormreply.com,
- linux-arm-kernel@lists.infradead.org, linux-staging@lists.linux.dev,
- linux-sunxi@lists.linux.dev, linux-tegra@vger.kernel.org,
- linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org
-References: <20240429-fix-cocci-v3-0-3c4865f5a4b0@chromium.org>
- <20240429-fix-cocci-v3-23-3c4865f5a4b0@chromium.org>
-Content-Language: en-US, nl
-From: Hans Verkuil <hverkuil@xs4all.nl>
-Autocrypt: addr=hverkuil@xs4all.nl; keydata=
- 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
-In-Reply-To: <20240429-fix-cocci-v3-23-3c4865f5a4b0@chromium.org>
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH V7 0/2] qcom: x1e80100: Enable CPUFreq
+Content-Language: en-US
+To: Johan Hovold <johan@kernel.org>
+CC: Marc Zyngier <maz@kernel.org>, <sudeep.holla@arm.com>,
+        <cristian.marussi@arm.com>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <dmitry.baryshkov@linaro.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <quic_rgottimu@quicinc.com>,
+        <quic_kshivnan@quicinc.com>, <conor+dt@kernel.org>,
+        <quic_nkela@quicinc.com>, <quic_psodagud@quicinc.com>,
+        <abel.vesa@linaro.org>
+References: <20241030130840.2890904-1-quic_sibis@quicinc.com>
+ <ZyTQ9QD1tEkhQ9eu@hovoldconsulting.com> <86plnf11yf.wl-maz@kernel.org>
+ <ZyTjiiGc2ApoID9Y@hovoldconsulting.com> <86o72z10b6.wl-maz@kernel.org>
+ <ZypOY-NCDN9fdMAR@hovoldconsulting.com> <86ed3p1rdq.wl-maz@kernel.org>
+ <0fd14fb1-736d-cf7f-128f-658bda0de583@quicinc.com>
+ <Z1HK4qIF9dT3x1OY@hovoldconsulting.com>
+From: Sibi Sankar <quic_sibis@quicinc.com>
+In-Reply-To: <Z1HK4qIF9dT3x1OY@hovoldconsulting.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: Uvx12WxCEOZnet5YOCg9AnPxi5v7WDl1
+X-Proofpoint-ORIG-GUID: Uvx12WxCEOZnet5YOCg9AnPxi5v7WDl1
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 phishscore=0
+ adultscore=0 malwarescore=0 spamscore=0 mlxlogscore=984 lowpriorityscore=0
+ impostorscore=0 priorityscore=1501 suspectscore=0 mlxscore=0 bulkscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2411120000
+ definitions=main-2501060109
 
-On 29/04/2024 17:05, Ricardo Ribalda wrote:
-> Unless the fps is smaller than 0.000232829 fps, this fits in a 32 bit
-> number. Make that explicit.
+
+
+On 12/5/24 21:16, Johan Hovold wrote:
+> On Thu, Dec 05, 2024 at 04:53:05PM +0530, Sibi Sankar wrote:
+>> On 11/5/24 23:42, Marc Zyngier wrote:
+>>> On Tue, 05 Nov 2024 16:57:07 +0000,
+>>> Johan Hovold <johan@kernel.org> wrote:
+>>>> On Fri, Nov 01, 2024 at 02:43:57PM +0000, Marc Zyngier wrote:
 > 
-> Found by cocci:
-> drivers/media/platform/qcom/venus/vdec.c:488:1-7: WARNING: do_div() does a 64-by-32 division, please consider using div64_u64 instead.
+>>>>> I wonder whether the same sort of reset happen on more "commercial"
+>>>>> systems (such as some of the laptops). You expect that people look at
+>>>>> the cpufreq stuff closely, and don't see things exploding like we are.
+>>>>
+>>>> I finally got around to getting my Lenovo ThinkPad T14s to boot (it
+>>>> refuses to start the kernel when using GRUB, and it's not due to the
+>>>> known 64 GB memory issue as it only has 32 GB)
+>>>
+>>> <cry>
+>>> I know the feeling. My devkit can't use GRUB either, so I added a
+>>> hook to the GRUB config to generate EFI scripts that directly execute
+>>> the kernel with initrd, dtb, and command line.
+>>>
+>>> This is probably the worse firmware I've seen in a very long while.
+>>
+>> The PERF_LEVEL_GET implementation in the SCP firmware side
+>> is the reason for the crash :|, currently there is a bug
+>> in the kernel that picks up index that we set with LEVEL_SET
+>> with fast channel and that masks the crash. I was told the
+>> crash happens when idle states are enabled and a regular
+>> LEVEL_GET message is triggered from the kernel. This was
+>> fixed a while back but it will take a while to flow back
+>> to all the devices. It should already be out CRD's.
+>>
+>> Johan,
+>> Now that you are aware of the the limitations can we make
+>> a call on how to deal with this and land cpufreq?
 > 
-> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
-> ---
->  drivers/media/platform/qcom/venus/vdec.c | 7 ++-----
->  1 file changed, 2 insertions(+), 5 deletions(-)
+> As Marc said, it seems you need to come up with a way to detect and work
+> around the broken firmware.
+
+The perf protocol version won't have any changes so detecting
+it isn't possible :(
+
 > 
-> diff --git a/drivers/media/platform/qcom/venus/vdec.c b/drivers/media/platform/qcom/venus/vdec.c
-> index 29130a9441e7..2b2874aedb2d 100644
-> --- a/drivers/media/platform/qcom/venus/vdec.c
-> +++ b/drivers/media/platform/qcom/venus/vdec.c
-> @@ -464,7 +464,7 @@ static int vdec_s_parm(struct file *file, void *fh, struct v4l2_streamparm *a)
->  	struct venus_inst *inst = to_inst(file);
->  	struct v4l2_captureparm *cap = &a->parm.capture;
->  	struct v4l2_fract *timeperframe = &cap->timeperframe;
-> -	u64 us_per_frame, fps;
-> +	u64 us_per_frame;
->  
->  	if (a->type != V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE &&
->  	    a->type != V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE)
-> @@ -484,10 +484,7 @@ static int vdec_s_parm(struct file *file, void *fh, struct v4l2_streamparm *a)
->  	if (!us_per_frame)
->  		return -EINVAL;
->  
-> -	fps = (u64)USEC_PER_SEC;
-> -	do_div(fps, us_per_frame);
-> -
-> -	inst->fps = fps;
-> +	inst->fps = USEC_PER_SEC / (u32)us_per_frame;
-
-What happens if us_per_frame > USEC_PER_SEC? inst->fps is now 0, and I wonder what
-issues that may cause.
-
-I will drop this patch from the PR, as it is probably wise to return an error if
-us_per_frame > USEC_PER_SEC.
-
-The same issue is present with the venc patch (24/26), but that wasn't included in
-the PR anyway.
-
-Regards,
-
-	Hans
-
->  	inst->timeperframe = *timeperframe;
->  
->  	return 0;
+> We want to get the fast channel issue fixed, but when we merge that fix
+> it will trigger these crashes if we also merge cpufreq support for x1e.
 > 
+> Can you expand the on the PERF_LEVEL_GET issue? Is it possible to
+> implement some workaround for the buggy firmware? Like returning a dummy
+> value? How exactly are things working today? Can't that be used a basis
+> for a quirk?
 
+The main problem is the X1E firmware supports fast channel level get
+but when queried it says it doesn't support it :|. The PERF_LEVEL_GET
+regular messaging which gets used as a fallback has a bug which causes
+the device to crash. So we either enable cpufreq only on platforms
+that has the fix in place or live with the warning that certain messages
+don't support fast channel which I don't think will fly. I've also been
+told the crash wouldn't show up if we have all sleep states disabled.
+
+> 
+>>> </cry>
+>>>
+>>>> and can confirm that it
+>>>> hard resets when accessing the cpufreq sysfs attributes as well.
+> 
+> Johan
 
