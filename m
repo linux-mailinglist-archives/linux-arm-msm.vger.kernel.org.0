@@ -1,79 +1,78 @@
-Return-Path: <linux-arm-msm+bounces-43974-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-43975-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E3853A02113
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jan 2025 09:49:33 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 92D84A02114
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jan 2025 09:49:42 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C3204163881
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jan 2025 08:49:31 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id ECD1E1883CCF
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jan 2025 08:49:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BD6431D8DE1;
-	Mon,  6 Jan 2025 08:49:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 75DC91D90C5;
+	Mon,  6 Jan 2025 08:49:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ASw/Zrf8"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="RBDWUndT"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
+Received: from mail-ej1-f51.google.com (mail-ej1-f51.google.com [209.85.218.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A696C8BE7
-	for <linux-arm-msm@vger.kernel.org>; Mon,  6 Jan 2025 08:49:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A5571D8A08
+	for <linux-arm-msm@vger.kernel.org>; Mon,  6 Jan 2025 08:49:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736153359; cv=none; b=jNwjUkpKMrC8eNHVB9LLGo8m8rHrkZnbeT0woDrXWbiAzNIKYImX2v1GkpCzkX8L85mdXoJg8ZxBNxOOJvCPs8t8WuONp0TrsCnxptVli2Nv4T4VXcPaOMk43zHBHeSXmzHNWbcRQuA2VdQ5ATw4VTh9tNNUnr1tclNpJXcAgkg=
+	t=1736153361; cv=none; b=Fi1qvzp2aVIFnTEKJp11wShAUoKHGCjNFK9W/giiz0q1zrajxuS2kWejNvV7WoWwBTDpkv0lBSb/K6JlzXi75b2nndWVuKgNck9LlKyoW7ftQfv7EEvXC08Amaz1tlgKhSIgKnwc9eYn3ZExXv0ETfm6wcl7bvuwXUeSd+4LYIo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736153359; c=relaxed/simple;
-	bh=PhVBTMK/6+dy3CEy0PY9YFYK561quc3srNdqv8QLMdg=;
+	s=arc-20240116; t=1736153361; c=relaxed/simple;
+	bh=lYvt5NktykrU4G4k710RiF9T2No7atg8/NYgEiARUDI=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=cMEJw96lav1+7/7lMJ9fhhLFE6hkbqLhFWwsAho11sIEWuGr7ZhnVUgXKp5XMmZeBlsG9JZycaDBTAiVySMJU6NjcDbeDyITd9fhKFT7IydQApQVf6IQDFowt8/LV32OFTSrdOBlO6Ki3bX3o1BZVMnlRdTHkgYzFiYiYQcd1I0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ASw/Zrf8; arc=none smtp.client-ip=209.85.218.48
+	 In-Reply-To:To:Cc; b=Jd+IoZqMu7iqLv+H0KtwsQ1t6mT2/7bffWcnxqhAhOXpG21E64NBGASa/8zY5uu3471eSEqQYQm6io55yNXuSUVS241yWmTBO5zByKakkCdDJQkx2wITY6W++uWnM12Ne4SfrsqSdfpHCmW7zmjrU5C60aV1hW1bCnH7pdmQluE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=RBDWUndT; arc=none smtp.client-ip=209.85.218.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f48.google.com with SMTP id a640c23a62f3a-aa67bc91f88so147484566b.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Jan 2025 00:49:16 -0800 (PST)
+Received: by mail-ej1-f51.google.com with SMTP id a640c23a62f3a-aa6a47a3da3so229084366b.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Jan 2025 00:49:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1736153355; x=1736758155; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1736153358; x=1736758158; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=ywLej3GM0KyKJnGRMRgcFZSn6sceBNpXrAUD1YJ/g44=;
-        b=ASw/Zrf8AnAgoPr8ZynMSe3cSY7zVq2TvrTLOCmUh/twDHQPadOj/3BbUmegfgQB1Q
-         6srIqU3sqrC2GO53YHkXuSbF76cvSrIIUsg+EpmPZWWWVujuA2rMYGy5d7Sms3b5dqBq
-         rPwR4YrsGedKA0gpc4AA5Z6lNvlQSlpEz1gUjGSupjFvQeqiIv+yJ8UdfEGhJsjY6Z4C
-         eoroVDINBtXp69T+iSZdq2ZKiQDpDEuOcO+1NGxWmQOHcl8QKxulFEp7HdItDGg67Hid
-         sJlG9iZ0mYq0UWgAtiOFXWZRUPZmxxUNdiqJ/xrN6okopAhlOcwQy773mjkiWdWCEKzb
-         loug==
+        bh=4TdAMmMa/36NEGjSEYdL3bgt28g6gvQSvEW+I+wH1Zw=;
+        b=RBDWUndT+3v9QjeAw6uYWxcHppOnTGKjL9PrKO7FLUKD+WI9BPpZGtI11Rc63AdKp6
+         pe99aSUqcTVByK0M7zHZyJLgDU24dWbLkudWgOc6gb4nmXFU32LUiUpF+ZX5M4sGZ+kl
+         J61uNCkxfakwJR8rnxwrXviyVwG2SexdMHvEv2T7jZQ/RNaDIiKobHF7YL3ClEtDV0t+
+         XtaL1zFevkc+26xDq53KcP8q75y2NrCCINKa74bXAcMhrSTYGN47VRunhdZkYBMd50jx
+         cCgT0g6ZAAH6gyBbIksE5dgefwUUgJ9zNgXwZSy7b7SPQ6HpQFImv6d6/dyOtmigq9qH
+         CDSw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736153355; x=1736758155;
+        d=1e100.net; s=20230601; t=1736153358; x=1736758158;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=ywLej3GM0KyKJnGRMRgcFZSn6sceBNpXrAUD1YJ/g44=;
-        b=KCqGSWnotE6teqLYmzO+S50q/48Du/GBqkNg7EbvrdOKR7SQo+ob0PIvq1vEcDSzvq
-         ar6pUu/MUgJUXj5iX+ZdNfJMciOHmDgqKtfYT8vzEQ2XMvjsLR5k7ipkCjZtYrKe3mHA
-         7JkN5lnJOT55c3EZKAdAsipX89L+QFilja7sxrDVJkXYcrJqtIoPIKKMY3XJg56hWBJ/
-         AANK3Mf7IPyow/MvHmrjdIDZ1CAG8F4GWiOXX9w0+PSMZPQJwspsTww+6HLZa5fQ0/cZ
-         qqxd9dTbH4RM8cQouLFgrcVmOkbdbIDI5go7cJgWsnDKNehit1TXSOmzCSiAvCGx26C7
-         Ad1Q==
-X-Gm-Message-State: AOJu0YzbVJkBlamzagCrPj5Rz2Zcd6ixOwJr0tbFxpK3UMLW1ZZtTuN5
-	LWK+koW6RmZ0uUuH0fG4iWlXPsmoP9J4FS0oPJzifglpO+BlLmAaR8LfGww1wFM=
-X-Gm-Gg: ASbGncuPnsLVNlzbz9d0S+a1mg8PJ5orWlmP8PCLZdCc9VQfHfZiLM6eb+MBvNLUapW
-	WuIakFDIFgNNmu7dfcO7T+4khpqwXct3FvUW9ifrl/4XQPxPx6xypyEHsQMMIAG7xCOYE3Eom7d
-	/U6/iD9eVRzIR7AeXWta9ZIjeXz7x7ea+1ZcB3z1nd5BYRDQ6w7RRG8LkYgVezS+nKrat1kjYDn
-	ypoZrWuEse4q68F0j0Kn8Sh0MOXMwSpWV52eiPa9rAjaC89TEyxhJlsQpqzzVr8yQUPYPKE
-X-Google-Smtp-Source: AGHT+IHKHcWYf/OgOrf9O3FcoAGEsMn4vt0y96TrbQy13IkeRq/FUB+urbvhws6fwBpAAavMVngICA==
-X-Received: by 2002:a17:907:7e92:b0:aa6:9631:9222 with SMTP id a640c23a62f3a-aac2874a950mr1828712466b.2.1736153354990;
-        Mon, 06 Jan 2025 00:49:14 -0800 (PST)
+        bh=4TdAMmMa/36NEGjSEYdL3bgt28g6gvQSvEW+I+wH1Zw=;
+        b=iUNrh6WjkaepFt8pF1i9rPcGT/oUx+ggNUaR3+r3y79/ChXfsQaOmx5OSZwEwaoTL1
+         qjCC24WFSxhsDNvlBpqH4oPmYff9tOvhBXSsAfuMtJgry/CmQMkk/ZBZ+HLuh7TvIw50
+         CsI58YxKxaLOyWmoQ7f4z4m77xNZq+/6dg+AcdfNZB7W2SbGQNtHHbSAGzCFndf4fVwn
+         Rl0ZgniwmNw0iD1rSoB5JG+kdDkwR5Mznap7c1GA/AfQKg5H5LwfewDi3vfIlxywcoFH
+         PDOOfba5SihUNL+vhs/0oASfM80j/ZnxkTFaTvFskd1DEW0cWoLaAkj2I+G9m/Lv5D0I
+         5tXg==
+X-Gm-Message-State: AOJu0Yzlw/2o3gkmU6dDR+BjjPteCW091LGXbHLU+BffKbrdV+toZohV
+	tsxmxW40TPveP+a9qgjUVPFnVkdnp/F9xjTWZM1LeMvQA9Ko/nIPU0yQhSfeZZM=
+X-Gm-Gg: ASbGncsYnpDmWQiOd4etfXIZdNjYsPJGSGOJtz7NM2YnQ1upwmpMKs+JtR4TpMzD/4l
+	7cIq/FjDkHz6YMdd5oS2DxdT8SDUwhFx0Zw1Xb+YnfdgRowzAEs+HQvU44ZvT9D1caZd6PYH9ub
+	Ly4lMrKg7IyUidVFisql98TC/bEQ6Uqeuqs5Ka/pdDBJfD9n8jRTFrvK9MrCMMIokbcvBPmrOZa
+	G16I+/uLBW6rBdPIq81PJnVP9QLPNmQFJnfry9E8aSNpp54yScvDuWuJqVop35Jd67udGTS
+X-Google-Smtp-Source: AGHT+IGuPEKa7Y8wn+0uOc+1jJboUlCaDTd8y6XllLGlDHCj5Ga52ftDkrVG81dndBjt+D74ERoj/g==
+X-Received: by 2002:a17:907:7e92:b0:aa6:a674:be3c with SMTP id a640c23a62f3a-aac2adb56d7mr2031661366b.5.1736153356335;
+        Mon, 06 Jan 2025 00:49:16 -0800 (PST)
 Received: from [127.0.1.1] ([178.197.223.165])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-aac0e82f1d2sm2222112466b.11.2025.01.06.00.49.13
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-aac0e82f1d2sm2222112466b.11.2025.01.06.00.49.15
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 06 Jan 2025 00:49:14 -0800 (PST)
+        Mon, 06 Jan 2025 00:49:15 -0800 (PST)
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Date: Mon, 06 Jan 2025 09:49:04 +0100
-Subject: [PATCH 1/4] drm/msm/dsi: Drop redundant NULL-ifying of clocks on
- error paths
+Date: Mon, 06 Jan 2025 09:49:05 +0100
+Subject: [PATCH 2/4] drm/msm/dsi: Simplify with dev_err_probe()
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -82,7 +81,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250106-drm-msm-cleanups-v1-1-271ff1c00795@linaro.org>
+Message-Id: <20250106-drm-msm-cleanups-v1-2-271ff1c00795@linaro.org>
 References: <20250106-drm-msm-cleanups-v1-0-271ff1c00795@linaro.org>
 In-Reply-To: <20250106-drm-msm-cleanups-v1-0-271ff1c00795@linaro.org>
 To: Rob Clark <robdclark@gmail.com>, 
@@ -94,65 +93,215 @@ Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
  freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
  Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1610;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=6526;
  i=krzysztof.kozlowski@linaro.org; h=from:subject:message-id;
- bh=PhVBTMK/6+dy3CEy0PY9YFYK561quc3srNdqv8QLMdg=;
- b=owEBbQKS/ZANAwAKAcE3ZuaGi4PXAcsmYgBne5kEv7KHY56NiTm9j77NT3LYMCJ8uIFoRUbF3
- 5W2BFiJFq+JAjMEAAEKAB0WIQTd0mIoPREbIztuuKjBN2bmhouD1wUCZ3uZBAAKCRDBN2bmhouD
- 170CD/4vWTXyM+nvORyBOO1HAK3W0ud+c+2A8tl59Lb1I4sWHkW4LsivhtrE1Rwl5GdaJ4TjOE/
- H1S9aW6Knaj85ZbFgSn8yKFtH4gPfhlh25E+ruqAzVgR8WS+kcEjJDm6stWoH2vver59o4/PHB2
- ZyZ46MvdktfvPOVelOt11uQbshRiXDbsAFNoYKa6vIfoN5u7JYQP4yeq47XH8SpZ2Y+QtrC+Ah+
- 6plefQsrq4PUjEd70qUdUNs/5dDRNj+WEAsYwa7XwfizNY9BgmzaqA0nPRJJu291mMn0q+w2cCV
- 3njkqnQnLoZEyRvH2qndWKqv0Lk8Oa2aWrrZjhpP2nXUIaSfWaoYtnRvQLXBqoMmCrdClhVYm42
- OfxsGBUUZCHIJbudkTKO6McO69ugiHBMC7ELfNmZs1as1cyAAoM1yemtUhTdwumN3OXyL12so6a
- 5FqymO8OhgJ5EJP+/BCcHMwMh8XFggQeYVAnf0xv0JqLB6KPIxwHTxJ5PAWImeZrcWH7svCjMwB
- 8EXxbxK7fA95BKBNWO2vbgBwTdsFSobfFhDPyaX3AvfcGRNgeJnjEexIqNgyHdQWTZAOdPdq9LU
- FY/x0NonnDbO7lPSw39p/C4Kl93CNn+QGF2Vjy7GyshrYPZtwshEd9IWB69OIUDZwvmS4VWk939
- JMpdFnWtunCaGSA==
+ bh=lYvt5NktykrU4G4k710RiF9T2No7atg8/NYgEiARUDI=;
+ b=owEBbQKS/ZANAwAKAcE3ZuaGi4PXAcsmYgBne5kFeF66qxefqCkeKAcrKm6G/RWzKa1Lo5O6x
+ 9gKuZfWWj+JAjMEAAEKAB0WIQTd0mIoPREbIztuuKjBN2bmhouD1wUCZ3uZBQAKCRDBN2bmhouD
+ 13A/EACCArEJHarifsC36OvyaQw2iWP5JpsdZKyCO79MFzugRGcxQEyzTiD76HWcoC2bprBXWcV
+ mC0MtsPseAqH8bFRdpYIBGM7Y4Gf47s2G7MRykpCTKhr9LcSYj2IxGGsnGCziJG5v7T5iemwMAj
+ uYvAFEnrvcS4mkVUxOzB6aJpEL+DbC3XXtRtx7rdH0/15gEPtcq11hJaxmzSeZ5QJPXnQEqc+Xb
+ NBKKOsaO+nafD0HpK3UhrlpuSP8T6TNcuz3k1VO4RxYHAmUmcwYhChjpt/3IstlyS8RG79pNfXV
+ jRYO9X2LnBPaa4QgNLk2FwUsKZyieP5oKqpc043UtKAyUrnqEP7JI3dvhnjt9AlgKKaDM410eO/
+ wEAzzv67SOIy1MwMh5N68UjcjM6ukxTOnhHw/SUuGPs9LT958aaavKh6vWif7xZWbzWl154Td72
+ qbm6cvOdJnltxlMSbzrw/R3OjcgUuwiSO92rmaFCXSPUUHgLmHyHxrpFwdHbCD/TYtki7Kuh00L
+ EOAa5y4hs1Sth9fQ59nLsuEz4VEEG/HutyLPpsBNDuoxCdqFQs5R1ek7df1WcGBynYvKkOMpFJs
+ QkIo8A83bTFKTMrh2plnrqA4ecPm+yTmDArVLXlrz1bvCXWrslhUr+1g52EsmMbbccfH/OO6Yj8
+ W5cpQ0NNLsNjBUQ==
 X-Developer-Key: i=krzysztof.kozlowski@linaro.org; a=openpgp;
  fpr=9BD07E0E0C51F8D59677B7541B93437D3B41629B
 
-dsi_clk_init(), which gets the clocks, is called only through platform
-driver probe and its failure is a failure of the probe.  Therefore
-NULL-ifying specific clocks is pointless and redundant - the PTR_ERR
-value stored there won't be used/dereferenced afterwards.  What's more,
-variant-specific clock init calls like dsi_clk_init_6g_v2() are not
-doing this cleanup.  Dropping redundant code allows later to make this a
-bit simpler.
+dsi_clk_init() and msm_dsi_host_init() are called only from platform
+driver probe function, so using dev_err_probe is both appropriate and
+beneficial:
+ - Properly marks device deferred probe status,
+ - Avoids dmesg flood on probe deferrals,
+ - Already incorporates printing ERR value,
+ - Shows device name (in contrast to pr_err()),
+ - Makes code smaller and simpler.
 
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 ---
- drivers/gpu/drm/msm/dsi/dsi_host.c | 3 ---
- 1 file changed, 3 deletions(-)
+ drivers/gpu/drm/msm/dsi/dsi_host.c | 100 +++++++++++++++----------------------
+ 1 file changed, 41 insertions(+), 59 deletions(-)
 
 diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
-index a98d24b7cb00b41d3bb371a965a80ceaa93775a6..86ac145076416fa7651d18820266a00d28e44b6f 100644
+index 86ac145076416fa7651d18820266a00d28e44b6f..4a2ad04eea7359545a088bdc63907f6b3e5615bd 100644
 --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
 +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
-@@ -292,7 +292,6 @@ static int dsi_clk_init(struct msm_dsi_host *msm_host)
- 		ret = PTR_ERR(msm_host->byte_clk);
- 		pr_err("%s: can't find dsi_byte clock. ret=%d\n",
- 			__func__, ret);
--		msm_host->byte_clk = NULL;
+@@ -200,7 +200,8 @@ static const struct msm_dsi_cfg_handler *dsi_get_config(
+ 
+ 	ahb_clk = msm_clk_get(msm_host->pdev, "iface");
+ 	if (IS_ERR(ahb_clk)) {
+-		pr_err("%s: cannot get interface clock\n", __func__);
++		dev_err_probe(dev, PTR_ERR(ahb_clk), "%s: cannot get interface clock\n",
++			      __func__);
  		goto exit;
  	}
  
-@@ -301,7 +300,6 @@ static int dsi_clk_init(struct msm_dsi_host *msm_host)
- 		ret = PTR_ERR(msm_host->pixel_clk);
- 		pr_err("%s: can't find dsi_pixel clock. ret=%d\n",
- 			__func__, ret);
--		msm_host->pixel_clk = NULL;
- 		goto exit;
+@@ -208,13 +209,13 @@ static const struct msm_dsi_cfg_handler *dsi_get_config(
+ 
+ 	ret = clk_prepare_enable(ahb_clk);
+ 	if (ret) {
+-		pr_err("%s: unable to enable ahb_clk\n", __func__);
++		dev_err_probe(dev, ret, "%s: unable to enable ahb_clk\n", __func__);
+ 		goto runtime_put;
  	}
  
-@@ -310,7 +308,6 @@ static int dsi_clk_init(struct msm_dsi_host *msm_host)
- 		ret = PTR_ERR(msm_host->esc_clk);
- 		pr_err("%s: can't find dsi_esc clock. ret=%d\n",
- 			__func__, ret);
--		msm_host->esc_clk = NULL;
- 		goto exit;
+ 	ret = dsi_get_version(msm_host->ctrl_base, &major, &minor);
+ 	if (ret) {
+-		pr_err("%s: Invalid version\n", __func__);
++		dev_err_probe(dev, ret, "%s: Invalid version\n", __func__);
+ 		goto disable_clks;
  	}
  
+@@ -281,39 +282,31 @@ static int dsi_clk_init(struct msm_dsi_host *msm_host)
+ 	msm_host->num_bus_clks = cfg->num_bus_clks;
+ 
+ 	ret = devm_clk_bulk_get(&pdev->dev, msm_host->num_bus_clks, msm_host->bus_clks);
+-	if (ret < 0) {
+-		dev_err(&pdev->dev, "Unable to get clocks, ret = %d\n", ret);
+-		goto exit;
+-	}
++	if (ret < 0)
++		return dev_err_probe(&pdev->dev, ret, "Unable to get clocks\n");
+ 
+ 	/* get link and source clocks */
+ 	msm_host->byte_clk = msm_clk_get(pdev, "byte");
+-	if (IS_ERR(msm_host->byte_clk)) {
+-		ret = PTR_ERR(msm_host->byte_clk);
+-		pr_err("%s: can't find dsi_byte clock. ret=%d\n",
+-			__func__, ret);
+-		goto exit;
+-	}
++	if (IS_ERR(msm_host->byte_clk))
++		return dev_err_probe(&pdev->dev, PTR_ERR(msm_host->byte_clk),
++				     "%s: can't find dsi_byte clock\n",
++				     __func__);
+ 
+ 	msm_host->pixel_clk = msm_clk_get(pdev, "pixel");
+-	if (IS_ERR(msm_host->pixel_clk)) {
+-		ret = PTR_ERR(msm_host->pixel_clk);
+-		pr_err("%s: can't find dsi_pixel clock. ret=%d\n",
+-			__func__, ret);
+-		goto exit;
+-	}
++	if (IS_ERR(msm_host->pixel_clk))
++		return dev_err_probe(&pdev->dev, PTR_ERR(msm_host->pixel_clk),
++				     "%s: can't find dsi_pixel clock\n",
++				     __func__);
+ 
+ 	msm_host->esc_clk = msm_clk_get(pdev, "core");
+-	if (IS_ERR(msm_host->esc_clk)) {
+-		ret = PTR_ERR(msm_host->esc_clk);
+-		pr_err("%s: can't find dsi_esc clock. ret=%d\n",
+-			__func__, ret);
+-		goto exit;
+-	}
++	if (IS_ERR(msm_host->esc_clk))
++		return dev_err_probe(&pdev->dev, PTR_ERR(msm_host->esc_clk),
++				     "%s: can't find dsi_esc clock\n",
++				     __func__);
+ 
+ 	if (cfg_hnd->ops->clk_init_ver)
+ 		ret = cfg_hnd->ops->clk_init_ver(msm_host);
+-exit:
++
+ 	return ret;
+ }
+ 
+@@ -1879,31 +1872,28 @@ int msm_dsi_host_init(struct msm_dsi *msm_dsi)
+ 	msm_dsi->host = &msm_host->base;
+ 
+ 	ret = dsi_host_parse_dt(msm_host);
+-	if (ret) {
+-		pr_err("%s: failed to parse dt\n", __func__);
+-		return ret;
+-	}
++	if (ret)
++		return dev_err_probe(&pdev->dev, ret, "%s: failed to parse dt\n",
++				     __func__);
+ 
+ 	msm_host->ctrl_base = msm_ioremap_size(pdev, "dsi_ctrl", &msm_host->ctrl_size);
+-	if (IS_ERR(msm_host->ctrl_base)) {
+-		pr_err("%s: unable to map Dsi ctrl base\n", __func__);
+-		return PTR_ERR(msm_host->ctrl_base);
+-	}
++	if (IS_ERR(msm_host->ctrl_base))
++		return dev_err_probe(&pdev->dev, PTR_ERR(msm_host->ctrl_base),
++				     "%s: unable to map Dsi ctrl base\n", __func__);
+ 
+ 	pm_runtime_enable(&pdev->dev);
+ 
+ 	msm_host->cfg_hnd = dsi_get_config(msm_host);
+-	if (!msm_host->cfg_hnd) {
+-		pr_err("%s: get config failed\n", __func__);
+-		return -EINVAL;
+-	}
++	if (!msm_host->cfg_hnd)
++		return dev_err_probe(&pdev->dev, -EINVAL,
++				     "%s: get config failed\n", __func__);
+ 	cfg = msm_host->cfg_hnd->cfg;
+ 
+ 	msm_host->id = dsi_host_get_id(msm_host);
+-	if (msm_host->id < 0) {
+-		pr_err("%s: unable to identify DSI host index\n", __func__);
+-		return msm_host->id;
+-	}
++	if (msm_host->id < 0)
++		return dev_err_probe(&pdev->dev, msm_host->id,
++				     "%s: unable to identify DSI host index\n",
++				     __func__);
+ 
+ 	/* fixup base address by io offset */
+ 	msm_host->ctrl_base += cfg->io_offset;
+@@ -1915,10 +1905,8 @@ int msm_dsi_host_init(struct msm_dsi *msm_dsi)
+ 		return ret;
+ 
+ 	ret = dsi_clk_init(msm_host);
+-	if (ret) {
+-		pr_err("%s: unable to initialize dsi clks\n", __func__);
+-		return ret;
+-	}
++	if (ret)
++		return dev_err_probe(&pdev->dev, ret, "%s: unable to initialize dsi clks\n", __func__);
+ 
+ 	msm_host->rx_buf = devm_kzalloc(&pdev->dev, SZ_4K, GFP_KERNEL);
+ 	if (!msm_host->rx_buf) {
+@@ -1931,26 +1919,20 @@ int msm_dsi_host_init(struct msm_dsi *msm_dsi)
+ 		return ret;
+ 	/* OPP table is optional */
+ 	ret = devm_pm_opp_of_add_table(&pdev->dev);
+-	if (ret && ret != -ENODEV) {
+-		dev_err(&pdev->dev, "invalid OPP table in device tree\n");
+-		return ret;
+-	}
++	if (ret && ret != -ENODEV)
++		return dev_err_probe(&pdev->dev, ret, "invalid OPP table in device tree\n");
+ 
+ 	msm_host->irq = irq_of_parse_and_map(pdev->dev.of_node, 0);
+-	if (!msm_host->irq) {
+-		dev_err(&pdev->dev, "failed to get irq\n");
+-		return -EINVAL;
+-	}
++	if (!msm_host->irq)
++		return dev_err_probe(&pdev->dev, -EINVAL, "failed to get irq\n");
+ 
+ 	/* do not autoenable, will be enabled later */
+ 	ret = devm_request_irq(&pdev->dev, msm_host->irq, dsi_host_irq,
+ 			IRQF_TRIGGER_HIGH | IRQF_NO_AUTOEN,
+ 			"dsi_isr", msm_host);
+-	if (ret < 0) {
+-		dev_err(&pdev->dev, "failed to request IRQ%u: %d\n",
+-				msm_host->irq, ret);
+-		return ret;
+-	}
++	if (ret < 0)
++		return dev_err_probe(&pdev->dev, ret, "failed to request IRQ%u\n",
++				     msm_host->irq);
+ 
+ 	init_completion(&msm_host->dma_comp);
+ 	init_completion(&msm_host->video_comp);
 
 -- 
 2.43.0
