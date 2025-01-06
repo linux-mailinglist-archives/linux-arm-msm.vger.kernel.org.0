@@ -1,202 +1,154 @@
-Return-Path: <linux-arm-msm+bounces-43951-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-43952-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 44937A01CEA
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jan 2025 01:56:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id C81AEA01DFD
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jan 2025 04:07:47 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id CED9E3A3114
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jan 2025 00:55:55 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5456C3A43F2
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jan 2025 03:07:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6FDBE39FCE;
-	Mon,  6 Jan 2025 00:55:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C68CE7081A;
+	Mon,  6 Jan 2025 03:07:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="I7ZFosQ7"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="nirQnCyu"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-il1-f174.google.com (mail-il1-f174.google.com [209.85.166.174])
+Received: from mail-lf1-f47.google.com (mail-lf1-f47.google.com [209.85.167.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF9B01C69D;
-	Mon,  6 Jan 2025 00:55:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC2D13D69
+	for <linux-arm-msm@vger.kernel.org>; Mon,  6 Jan 2025 03:07:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736124957; cv=none; b=amjsjRaeDKdLwJi0/ZffpxUqyaYjFxGAdiW/X/jQkcmxcEN8Bfkl9tGInTyqdXfSyRntW3oxUXmkobxvcQDFR8V4LJNgF+bssa7c0SAwMhWaI4UIth0V7q1K/E9muVaO9F0y1DhMi5Gm+wseqtd+SJBulP4khLR1pDzQA1ta7nA=
+	t=1736132864; cv=none; b=bXGGDP5HneQacqOZlx6XJPaDCa6ispgXxpANYZN4Y2FC2zhvmpZx95LEvgKq8gkhZNDlBniDpkkWCFAMdPKVSHr0CHtmj6gm8YkAFa69Ws8QPnSTA7J2gVEoW9p5o0/XFWofgTAvSj8hqwrp+CQcJ2TIHU/6coZcdcD4me7unkI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736124957; c=relaxed/simple;
-	bh=5iacpTJgQ5VakTnBQlizLdhO6M8IL4jj5UTXCh7Re6k=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=qnjQ77AIf02+539glqq1nkcTGlt+xJzTcY7nnuLX+15fg8w2utqR87lhbxWET4T+JvB/sT0IJjtrWjEWHuhWdUhKWT/d7r7mpsJVxhudrFZc2LnT8StsXENppaTIw7Rp+5pIpYchj5ZsX+zjJKiqa3855TwxpXEd1X4AjclVRRY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=I7ZFosQ7; arc=none smtp.client-ip=209.85.166.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-il1-f174.google.com with SMTP id e9e14a558f8ab-3a7deec316aso51483025ab.1;
-        Sun, 05 Jan 2025 16:55:55 -0800 (PST)
+	s=arc-20240116; t=1736132864; c=relaxed/simple;
+	bh=dALmTtc2mWUw4GY84rD8BKfxs/DyNv9YyAPMHK/HkI0=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=JiEyglIMCmIAEw+hMa0gJLCiRKqz7t3990Ys4CwQ1lElurgIUMitIPaYCwtrJoRaV3PIbH7rSvIHnG6m95KKN8M6p4JcWr7TWOk9VYbluzyN1MLXzdyRFaI7uVZ0zoCFm9nQu6h5ZMVWbVXcjhzDZ2CFlcDCMv1MwT5H3AIVtH0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=nirQnCyu; arc=none smtp.client-ip=209.85.167.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f47.google.com with SMTP id 2adb3069b0e04-53ff1f7caaeso15092909e87.0
+        for <linux-arm-msm@vger.kernel.org>; Sun, 05 Jan 2025 19:07:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1736124955; x=1736729755; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=YN6aE+MuJlFK2b44/x4t1iC0A/Dr6QJNJOQ49JRdhBA=;
-        b=I7ZFosQ7z+odK02+CKrWe7oJSBlB8uK3k2MVLxvLq6ShloNuqvJ6nhrTKTNt6ARni0
-         nD4D2OkhM98/UUQ/6HHe/LpXHA3xNac9O0Wwbnhg4h1XA9G3m7UYqMGpWvOkamSQ6shv
-         QsAtzF8RUKEy7JQcf5Mvvs/ufxOVr0Mm6d0ENAFdQtCv9yNjln1fX2mu8/SMp8OjHfhS
-         2saOf8Zqdm1yC7uYmhdXpSwDbEqQsxf8+fzXucuFYUq5Cs7FG/TOSq4PH5DIDYnugVq3
-         jucxtuBWx04iDTnpTDBlbpfYbseRBIF6+pdIWIZR2eMATkfjfPIcj8AAz+bTV73Jr4ko
-         uFoA==
+        d=linaro.org; s=google; t=1736132861; x=1736737661; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=uLK759iPI3y1Wi5RFKaCu2VPkX4DkJ5X5ePew9Klx7Q=;
+        b=nirQnCyuajNl2BAbwFJRfIf45QRaJdy9QUqP353U5NuVxYhGpoZL9qi0qERGBxpUzu
+         t4K2aVEpGk+AQNjddXcj787vDVG7VAYkS+PLQl4UX/XqpPJiMqCpO2/S1na594tiURDd
+         o+nu10kceeVfLagUGxy0bsnFP1mUUgHml/Dv3Kl0MEWKsvRl8F9YspYDMivXKQgvTHeU
+         p09kWyb8aFKTXbPiESi7Fc0ufNLn9guct0vgPy8w+gI6GXNDluz0ya0iW1EfrF80K/kU
+         FLy5oIvgrUj6fsysLWhNCcxEEkhzy+2DZGjj9+zL8mvML56kcL43CrT40r14jAzhJ2G3
+         YbAQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736124955; x=1736729755;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=YN6aE+MuJlFK2b44/x4t1iC0A/Dr6QJNJOQ49JRdhBA=;
-        b=C5g3H3y514EMniiVBJ0MzhZ/DNuIkPl3LG9WTlcjfSB9ed1pqbjYlhaaVPwNekvVKx
-         y8NlNtr46QvZwcmiPTa9MBFqRhnjPoQ5FisFLy4gaoIYrV4qDcAhpS+YClj+jzsIcyLr
-         zsh9K29VcWfhfBv2aO3JLtX8TqRDFVQDe3K2qMOEdApp5ShKi/J8VMubyaCPOCqA8fxy
-         b5hilf6eVL6bUDbbouENbTQyib+aPuCWIHaBIx1oUzOZ9slHH9gZCR5Hr6Lugh/xw2H3
-         cAKZlKvyRjqbCQ8TER8l3hpGSnBLrVlUm0kQyyvahQQOyOWzUmnfRzsnNJHQaj4RB4z1
-         RFKw==
-X-Forwarded-Encrypted: i=1; AJvYcCUVhNCwW73MHWPRRhyIW/yjPFQt4dyVmqbK29XfdcESQwMgr5E5nDnCjo6UUw/PCy5Wf2J3grgPw72OZoOpEQ==@vger.kernel.org, AJvYcCV2G2OLZwMd4wd+teLESvEkCaF1TI+7vbPhsuvC0SyaeWFBrDrki3vfD3ZEzHEtDJZxJLHMXBrEt7jxHwEd@vger.kernel.org, AJvYcCVph9zBeOVXVQ4cK0wJRDTdYwt30ircSvMm9o11F6DcHzAh8pzHyBglqVlq3edSqF6IHSHmNWJ2Do4V@vger.kernel.org, AJvYcCW1qc7q+ZFOiXkY0QkT+Lxi2d61m5O96MNyEkUPUvVoPnGApW3c82PPWd8FSmf0VAboN8narqE1qhQ=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yzt9bkKgE0skqSoOMjvJY7caHT+D6WtAPxQLZLfmy+B8WDt6It/
-	c54l4WTw4i0idyYk80qgFl446EPwbEVTyyAlHPMnu3AgoADL264dxLRS4/JpynGID56z5AHMz+7
-	oVimb/NagVjFuiOB/BQ6jRF7X3v4=
-X-Gm-Gg: ASbGncvzQW/yXF/1qXn/4TcEP5X8niHHG6Ppc2KCaoV+c+iaagorcoXhOpIABNT8szR
-	CA3eqr2JMlAzjncAwVHyZuVAkemGOIPCfyzTD2w==
-X-Google-Smtp-Source: AGHT+IHJYmBSxrbrAmecPUQ24zUko4o/O+WMOcCAM1FBbr8iLzQz0Mn6QzWXyUlMFbvBdDMqznBqnwfKE3rr7sF3iOQ=
-X-Received: by 2002:a05:6e02:1d0c:b0:3ab:a274:d73 with SMTP id
- e9e14a558f8ab-3c2d2276f0bmr356917355ab.7.1736124954550; Sun, 05 Jan 2025
- 16:55:54 -0800 (PST)
+        d=1e100.net; s=20230601; t=1736132861; x=1736737661;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=uLK759iPI3y1Wi5RFKaCu2VPkX4DkJ5X5ePew9Klx7Q=;
+        b=Xo2LXt1nihpMhwrmQd4Q71j7x2Py0fbUxmH2fgAZpCu7L4Z2mvPPM9KCpPLCJ3HFOt
+         /4N5UPnZ8U0VsO1a0A8iLG+mCm70Lhfsb0VlB/qE5ZffkA4NqBaiURZODx0QtPcxZjkx
+         5fAMKTHT1J91M+rgab1YUJqn5wMxjH9SOf3i8FXnmgjBbT6nfuj+Zvl6BFjmAxy2Yqjx
+         PUgNYFW6qG0NCuQy3J2CzaOu1bWGT1TIolnAs3Y9wH0zDiEPvd98ddOJ2L/B/iXaDAUn
+         4giywKB97BDYkfQg7dY7jyFK9+BPcM0xZLVXLTynFqZudBV2TBb1CKVX2trYYLVkfxog
+         pWyg==
+X-Gm-Message-State: AOJu0Yzxh5UEEjfDHoxqTWZSBROu/40LfAUcyxjCl4CTmVUMGZyxn/0Q
+	1rvl3ctLjic4ZIJSKlYySkkbZ49DRsb+RInGUfIbTwId+iBdt/Q8JtoA5SLpnyw=
+X-Gm-Gg: ASbGnctaaTDBSypPqP3m2+6zvC+i0jomqgBuYFHItUcIEoXzzvjhaWkNyFVwcuKIBGN
+	O/Gl70Wza0e75M1LjovQxS0erR2EcH18xOoEi47zOBuPa58beSp47gvbqlOx6FkKRQDQndW+7So
+	CdM0paM1gYBa1mJFCeIWmTJpU04nnU8K3W0VJCzKZDk2pFojzH9HnK7e31U8eCAdo5GSxpb/tuh
+	/TKbJWvbwuBE0NV8AV6SCnPlvf/hIPVIXBsSy9KZE/X1tzXiN0cC131LKNhgJ9G
+X-Google-Smtp-Source: AGHT+IFBWpRYLbrMN9ZcJZ7WAJg0q5LHtFYQuC3pXOfl5O5NxecfwSkdYJShHfj/CKimfuqE6PEFFw==
+X-Received: by 2002:a05:6512:6d3:b0:542:28b4:23ad with SMTP id 2adb3069b0e04-54229530096mr18988616e87.16.1736132860556;
+        Sun, 05 Jan 2025 19:07:40 -0800 (PST)
+Received: from umbar.lan ([192.130.178.90])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-542238301efsm4869016e87.247.2025.01.05.19.07.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 05 Jan 2025 19:07:39 -0800 (PST)
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Subject: [PATCH v4 0/9] drm/msm/dpu: rework debugfs interface of
+ dpu_core_perf
+Date: Mon, 06 Jan 2025 05:07:34 +0200
+Message-Id: <20250106-dpu-perf-rework-v4-0-00b248349476@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20241231-gpu-acd-v3-0-3ba73660e9ca@quicinc.com> <CAO_MupJ21kOQPZG_=87mC-fQKmL=-K9AgOjriWR=wXCKU0897w@mail.gmail.com>
-In-Reply-To: <CAO_MupJ21kOQPZG_=87mC-fQKmL=-K9AgOjriWR=wXCKU0897w@mail.gmail.com>
-From: Rob Clark <robdclark@gmail.com>
-Date: Sun, 5 Jan 2025 16:55:42 -0800
-Message-ID: <CAF6AEGvYFL9Q88c727eFrTgDb+FvnPm2d=6niLu80DM1DJdm5g@mail.gmail.com>
-Subject: Re: [PATCH v3 0/6] Support for GPU ACD feature on Adreno X1-85
-To: Maya Matuszczyk <maccraft123mc@gmail.com>
-Cc: Akhil P Oommen <quic_akhilpo@quicinc.com>, Sean Paul <sean@poorly.run>, 
-	Konrad Dybcio <konradybcio@kernel.org>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
-	Simona Vetter <simona@ffwll.ch>, Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>, 
-	Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Bjorn Andersson <andersson@kernel.org>, linux-arm-msm@vger.kernel.org, 
-	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
-	linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org, 
-	devicetree@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAPZIe2cC/3WNQQ6CMBBFr0Jm7ZgKhaauuIdhUWEKEw0lU0UN6
+ d2t7F2+l/z3N4gkTBHOxQZCK0cOcwZ9KKCf3DwS8pAZSlVqVZ00DssTFxKPQq8gN7TG985aS1f
+ dQF4tQp7fe/HSZZ44PoJ89oO1+tn/rbVChcZ6p0k1dW10e+fZSTgGGaFLKX0BbYYYw68AAAA=
+X-Change-ID: 20240314-dpu-perf-rework-97fca999eb46
+To: Rob Clark <robdclark@gmail.com>, 
+ Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>, 
+ Marijn Suijten <marijn.suijten@somainline.org>, 
+ David Airlie <airlied@gmail.com>, Stephen Boyd <swboyd@chromium.org>, 
+ Simona Vetter <simona.vetter@ffwll.ch>
+Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+ freedreno@lists.freedesktop.org, 
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1835;
+ i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
+ bh=dALmTtc2mWUw4GY84rD8BKfxs/DyNv9YyAPMHK/HkI0=;
+ b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBne0j442IKuF4EGUZMO6EbwdHXodDWgCJruTRNt
+ uK2rATVmfCJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZ3tI+AAKCRCLPIo+Aiko
+ 1Z/6B/0TteXy5ZL7BLc2TunIMn5GXqXDyUKyWV/z7tz9HHVj1hx1hOEU/6AzVjuaJm1fm4thjEd
+ IfQCgLDtuk5jm0RcTxy7Ef/7KzNHTL0AtwNPBdoql2JIFMdsv8e4+onMqpMumiBxg3Yp4AlaVFW
+ 70OGTApCMtu4tIWLXZ6A00ZBCP7y9EMlDc6DuFFoa6yjuz+3O0K/V3Hh9WgMJBmi4RLhsMqLSMF
+ a/DGorWkRYk+zOPlcaWiBMM4vKTZITtcnctCN05xwUnurGAjgIOaqy9GZSqB1R2C3PD9eJPJhl4
+ FKPkYXTlKjOwS/3mJffMR3/M5i1INa3s0i15n6h0Pd+ppWRf
+X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
+ fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
 
-fwiw, I did see some perf boost (was mainly looking at gfxbench aztec
-ruins vk high/normal, and also a separate mesa MR that fixes some LRZ
-issues with turnip, so I don't remember how much boost was related to
-which offhand)..  I've not seen corruption yet (gnome-shell / f41),
-although what you describe sounds cache-line(ish) and could be just
-timing related.  You could limit max freq via
-/sys/devices/platform/soc@0/3d00000.gpu/devfreq/3d00000.gpu/max_freq
-and see if that "fixes" things.  I don't really expect this patchset
-to introduce these sorts of issues, but maybe the increased freq
-exposes some preexisting conditions?
+Bring back a set of patches extracted from [1] per Abhinav's suggestion.
 
-BR,
--R
+Rework debugging overrides for the bandwidth and clock settings. Instead
+of specifying the 'mode' and some values, allow one to set the affected
+value directly.
 
-On Sun, Jan 5, 2025 at 9:56=E2=80=AFAM Maya Matuszczyk <maccraft123mc@gmail=
-.com> wrote:
->
-> Hi,
-> I've applied this series for testing, and I've no performance
-> increase, and some screen corruption, there's some lines(mostly white)
-> on my yoga slim 7x that appear on the bottom of the screen. When I
-> move my cursor in swaywm over it, the lines get occluded by the cursor
-> and screenshots don't show these lines.
->
-> Best Regards,
-> Maya Matuszczyk
->
-> pon., 30 gru 2024 o 22:11 Akhil P Oommen <quic_akhilpo@quicinc.com> napis=
-a=C5=82(a):
-> >
-> > This series adds support for ACD feature for Adreno GPU which helps to
-> > lower the power consumption on GX rail and also sometimes is a requirem=
-ent
-> > to enable higher GPU frequencies. At high level, following are the
-> > sequences required for ACD feature:
-> >         1. Identify the ACD level data for each regulator corner
-> >         2. Send a message to AOSS to switch voltage plan
-> >         3. Send a table with ACD level information to GMU during every
-> >         gpu wake up
-> >
-> > For (1), it is better to keep ACD level data in devicetree because this
-> > value depends on the process node, voltage margins etc which are
-> > chipset specific. For instance, same GPU HW IP on a different chipset
-> > would have a different set of values. So, a new schema which extends
-> > opp-v2 is created to add a new property called "qcom,opp-acd-level".
-> >
-> > ACD support is dynamically detected based on the presence of
-> > "qcom,opp-acd-level" property in GPU's opp table. Also, qmp node should=
- be
-> > present under GMU node in devicetree for communication with AOSS.
-> >
-> > The devicetree patch in this series adds the acd-level data for X1-85
-> > GPU present in Snapdragon X1 Elite chipset.
-> >
-> > The last two devicetree patches are for Bjorn and all the rest for
-> > Rob Clark.
-> >
-> > ---
-> > Changes in v3:
-> > - Rebased on top of v6.13-rc4 since X1E doesn't boot properly with msm-=
-next
-> > - Update patternProperties regex (Krzysztof)
-> > - Update MAINTAINERS file include the new opp-v2-qcom-adreno.yaml
-> > - Update the new dt properties' description
-> > - Do not move qmp_get() to acd probe (Konrad)
-> > - New patches: patch#2, #3 and #6
-> > - Link to v2: https://lore.kernel.org/r/20241021-gpu-acd-v2-0-9c25a6280=
-3bc@quicinc.com
-> >
-> > Changes in v2:
-> > - Removed RFC tag for the series
-> > - Improve documentation for the new dt bindings (Krzysztof)
-> > - Add fallback compatible string for opp-table (Krzysztof)
-> > - Link to v1: https://lore.kernel.org/r/20241012-gpu-acd-v1-0-1e5e91aa9=
-5b6@quicinc.com
-> >
-> > ---
-> > Akhil P Oommen (6):
-> >       drm/msm/adreno: Add support for ACD
-> >       drm/msm: a6x: Rework qmp_get() error handling
-> >       drm/msm/adreno: Add module param to disable ACD
-> >       dt-bindings: opp: Add v2-qcom-adreno vendor bindings
-> >       arm64: dts: qcom: x1e80100: Add ACD levels for GPU
-> >       arm64: dts: qcom: x1e80100: Add OPPs up to Turbo L3 for GPU
-> >
-> >  .../bindings/opp/opp-v2-qcom-adreno.yaml           | 97 ++++++++++++++=
-++++++++
-> >  MAINTAINERS                                        |  1 +
-> >  arch/arm64/boot/dts/qcom/x1e80100.dtsi             | 25 +++++-
-> >  drivers/gpu/drm/msm/adreno/a6xx_gmu.c              | 96 ++++++++++++++=
-++++---
-> >  drivers/gpu/drm/msm/adreno/a6xx_gmu.h              |  1 +
-> >  drivers/gpu/drm/msm/adreno/a6xx_hfi.c              | 36 ++++++++
-> >  drivers/gpu/drm/msm/adreno/a6xx_hfi.h              | 21 +++++
-> >  drivers/gpu/drm/msm/adreno/adreno_device.c         |  4 +
-> >  8 files changed, 268 insertions(+), 13 deletions(-)
-> > ---
-> > base-commit: dbfac60febfa806abb2d384cb6441e77335d2799
-> > change-id: 20240724-gpu-acd-6c1dc5dcf516
-> >
-> > Best regards,
-> > --
-> > Akhil P Oommen <quic_akhilpo@quicinc.com>
-> >
-> >
+[1] https://patchwork.freedesktop.org/series/119552/#rev2
+
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+---
+Changes in v4:
+- Dropped core_perf: from patch subject (Abhinav)
+- Fixed indentation of _dpu_core_perf_crtc_update_bus() (Abhinav)
+- Expanded commit messages to reflect different questions (Abhinav)
+- Reworked existing files to specify max allowed average bandwidth
+  (Abhinav)
+- Fixed u32 vs u64 and KBps vs Bps values in debugfs interface
+- Link to v3: https://lore.kernel.org/r/20240314-dpu-perf-rework-v3-0-79fa4e065574@linaro.org
+
+---
+Dmitry Baryshkov (9):
+      drm/msm/dpu: extract bandwidth aggregation function
+      drm/msm/dpu: remove duplicate code calculating sum of bandwidths
+      drm/msm/dpu: change ib values to u32
+      drm/msm/dpu: make fix_core_ab_vote consistent with fix_core_ib_vote
+      drm/msm/dpu: also use KBps for bw_ctl output
+      drm/msm/dpu: rename average bandwidth-related debugfs files
+      drm/msm/dpu: handle perf mode in _dpu_core_perf_crtc_update_bus()
+      drm/msm/dpu: rework core_perf debugfs overrides
+      drm/msm/dpu: drop dpu_core_perf_params::max_per_pipe_ib
+
+ drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c | 207 ++++++++------------------
+ drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h |  16 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c      |   5 +-
+ 3 files changed, 62 insertions(+), 166 deletions(-)
+---
+base-commit: 23ec7472e8aaa96838a61819a97882b5a7e17e42
+change-id: 20240314-dpu-perf-rework-97fca999eb46
+
+Best regards,
+-- 
+Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+
 
