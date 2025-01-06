@@ -1,241 +1,149 @@
-Return-Path: <linux-arm-msm+bounces-44040-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-44041-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 35B27A030F8
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jan 2025 20:56:08 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id D1123A030FC
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jan 2025 20:57:15 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 18FCC1618EC
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jan 2025 19:56:06 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 389233A15E2
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jan 2025 19:57:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B54761DE898;
-	Mon,  6 Jan 2025 19:56:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1F9561DE898;
+	Mon,  6 Jan 2025 19:57:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="h+BV8lyM"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="EFjSanqZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 907CC78F4F;
-	Mon,  6 Jan 2025 19:56:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E45778F4F;
+	Mon,  6 Jan 2025 19:57:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736193363; cv=none; b=TzjXNvfRblzibEmLzik7yjUv8hO2JuqR55Pz05PjYaPOMsK8jWvZXVJpi7s2pFdH0400hFYeqnEKc8XxJJdD6tfarw36yeZX2XQVacqgwVTKfpT5f8UtKe1ko00xLSdmYehRrCK7HFVSXxeHdpvi1WaUy5N3v3JwBeDUXuLNjGE=
+	t=1736193431; cv=none; b=M/GVLmveBMc8vZN8/n2I+bptIT38+4UwfoG85M/jzlxXCh55PARHP9cLAdXRuYKEhrYzgjFQWYqW/s7LS3ojiXHuLBW1VS2osyJaBZvK5Y4Vrziy45C40Q3DFm+2Qrb6gowdLRicQJhzAAehU5gY1xspj9C5vpVq4XSKFc4YYFQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736193363; c=relaxed/simple;
-	bh=se97MyvY1zSPMGoZXOy6XNqgw9u3GTDFNcGnYsrSbbA=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=QS7wIxp3zXNXJK0gPzg4HccPD7isoh78oeodp5dvbmclinU78putKJMavYoWc38OCcjcFtgoqKvs/crlAkYHdK0LFDsUisa44pVi/MemY3fU8/7iJNMlYHZ0A4sYx2H4e7K5wmXdb4DG6FMNZyZAZ8GGXQVRWN4jirhiLWkg7gk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=h+BV8lyM; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1736193431; c=relaxed/simple;
+	bh=cuTAaaIJl04Nwj/BHPUUvpgSukF/+Fu8MFH0SCI9sS8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=fSh2un9P/iXys7dTqx8HDCbqCwy9qBug+6OiaGpiSWkFUmtTi6eGNcAgs4+hvmSlNpYnWDtRTrF6Z6M03qb/gaFNCtHUxzBNgissHHPkKFxoWfWEB1aspJWDqS+mDp8zkpxuRdvxQ9maeY6ypZZpHmwLTKRL/iaTg7cV35pPWRs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=EFjSanqZ; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 506I3PEl021863;
-	Mon, 6 Jan 2025 19:55:50 GMT
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 506Hs7bi012374;
+	Mon, 6 Jan 2025 19:57:05 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	69S6/yCDEUmLTLWLaZeiznwVrsvneuJf/fMeApdwdBo=; b=h+BV8lyM/YeuT9Xu
-	bRG6JLIq1dvMdXFXU/mWQ8vlPTzfAOGvlIaZ00EVMQME5/4MnsfcY8AoLWInMdDv
-	5ZEDZmpVYmPSvPVyaBoq4qlTvyNTdAE5+uc3RAqMb+O5wBkV+IsJnx4GV2RFQ/kl
-	CqKq/+56nuKDyIPx1eU/NfKYkdFbBCTnjkJVsxR+g4JXg1z/c4yyFS3GK6ygBZZj
-	QL/DU+00tcyFUaUTwQc4RPGKj6QhoFp/fKsvqg63tqkAyK0HGFPOOss2A6sr5Tp/
-	ycEPnyUYbmJX5ckSS6NmQHU4J/iMqNjIH4YyKSG3w+8vn87X82ZzbydaAIXWuodT
-	KeM8qw==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 440m4a078y-1
+	lPdilwo+QhMMfvpXyfNHKRsssqAoV761VQVuxuRaY6k=; b=EFjSanqZ9FwGeuy3
+	QsuB/7ttIllVuJ4VxZO+ycGPZwrU3E7az9z6ItAFhyBcdpF3pbMx7erDcSMgwDZw
+	AOULf6Mr/7+Fz/sdCdZ1LCtqmX2HrgPY6iPZlTiOBnpFAjQPtHTgOsRHXwEwVHCT
+	JQU6A1AFHyRpH10RYl7K3yOw1fql3z1uLm+oAzdZ3iBvwJ/3K8ewTNTkY7rSxI9H
+	4GGe9dNFMcs5cjE8RAx8RSRjVcNTFKfQNe1SNSeIQhk5+4i002BomJsfl05ya0F8
+	Eyr6KWTtbpPIBM/zFr9J9PcqayOaLQFWcrNL+zG9HlO4+Kj+RRKmZNugqwuXKHYS
+	197ofQ==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 440kyqg7w0-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 06 Jan 2025 19:55:50 +0000 (GMT)
+	Mon, 06 Jan 2025 19:57:05 +0000 (GMT)
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 506Jtm87008786
+	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 506Jv415022603
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 6 Jan 2025 19:55:48 GMT
-Received: from hu-akhilpo-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Mon, 6 Jan 2025 11:55:43 -0800
-Date: Tue, 7 Jan 2025 01:25:39 +0530
-From: Akhil P Oommen <quic_akhilpo@quicinc.com>
-To: Rob Clark <robdclark@gmail.com>, Maya Matuszczyk <maccraft123mc@gmail.com>
-CC: Sean Paul <sean@poorly.run>, Konrad Dybcio <konradybcio@kernel.org>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov
-	<dmitry.baryshkov@linaro.org>,
-        Marijn Suijten
-	<marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, "Simona
- Vetter" <simona@ffwll.ch>,
-        Viresh Kumar <vireshk@kernel.org>, Nishanth Menon
-	<nm@ti.com>,
-        Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
-        <linux-pm@vger.kernel.org>, <devicetree@vger.kernel.org>
-Subject: Re: [PATCH v3 0/6] Support for GPU ACD feature on Adreno X1-85
-Message-ID: <20250106195539.tcta6yoyijfrgzhh@hu-akhilpo-hyd.qualcomm.com>
-References: <20241231-gpu-acd-v3-0-3ba73660e9ca@quicinc.com>
- <CAO_MupJ21kOQPZG_=87mC-fQKmL=-K9AgOjriWR=wXCKU0897w@mail.gmail.com>
- <CAF6AEGvYFL9Q88c727eFrTgDb+FvnPm2d=6niLu80DM1DJdm5g@mail.gmail.com>
+	Mon, 6 Jan 2025 19:57:04 GMT
+Received: from [10.216.24.147] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 6 Jan 2025
+ 11:57:01 -0800
+Message-ID: <f20bfb0d-9369-45b0-9577-835739e7b30a@quicinc.com>
+Date: Tue, 7 Jan 2025 01:26:58 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAF6AEGvYFL9Q88c727eFrTgDb+FvnPm2d=6niLu80DM1DJdm5g@mail.gmail.com>
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/2] nvmem: qfprom: Ensure access to qfprom is word
+ aligned
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Rob Herring
+	<robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        Naman Jain
+	<quic_namajain@quicinc.com>
+References: <20241027-sar2130p-nvmem-v2-0-743c1271bf2d@linaro.org>
+ <20241027-sar2130p-nvmem-v2-1-743c1271bf2d@linaro.org>
+ <60068361-ddb7-4906-84ca-195e5eb13a0f@linaro.org>
+ <plemc4swba7ybrncyxt3axxpb3qjbdktfkt7kqt3dqymlusfpq@sfgwakjp7z3g>
+ <7924984d-57e9-40f8-8998-b37d6e1bc78c@quicinc.com>
+ <4ajn23p7tbc2csspcfodl3keavl57luuvnnux3dbdhyn7d57ji@ypptsltflwtn>
+Content-Language: en-US
+From: Akhil P Oommen <quic_akhilpo@quicinc.com>
+In-Reply-To: <4ajn23p7tbc2csspcfodl3keavl57luuvnnux3dbdhyn7d57ji@ypptsltflwtn>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: fhsolYq8FXxnhPD0-PEQ5aGzumBNI4TN
-X-Proofpoint-ORIG-GUID: fhsolYq8FXxnhPD0-PEQ5aGzumBNI4TN
+X-Proofpoint-ORIG-GUID: 8H_wEd9-SveHuWMAD_Sf8mY7femrji-p
+X-Proofpoint-GUID: 8H_wEd9-SveHuWMAD_Sf8mY7femrji-p
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011 mlxscore=0
- lowpriorityscore=0 mlxlogscore=999 adultscore=0 suspectscore=0 spamscore=0
- phishscore=0 priorityscore=1501 malwarescore=0 impostorscore=0 bulkscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2411120000
- definitions=main-2501060173
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 mlxscore=0
+ impostorscore=0 malwarescore=0 adultscore=0 priorityscore=1501
+ mlxlogscore=999 clxscore=1015 phishscore=0 suspectscore=0 spamscore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2501060173
 
-On Sun, Jan 05, 2025 at 04:55:42PM -0800, Rob Clark wrote:
-> fwiw, I did see some perf boost (was mainly looking at gfxbench aztec
-> ruins vk high/normal, and also a separate mesa MR that fixes some LRZ
-> issues with turnip, so I don't remember how much boost was related to
-> which offhand)..  I've not seen corruption yet (gnome-shell / f41),
-> although what you describe sounds cache-line(ish) and could be just
-> timing related.  You could limit max freq via
-> /sys/devices/platform/soc@0/3d00000.gpu/devfreq/3d00000.gpu/max_freq
-> and see if that "fixes" things.  I don't really expect this patchset
-> to introduce these sorts of issues, but maybe the increased freq
-> exposes some preexisting conditions?
-
-Actually, ACD related issues may show up as weird glitches in HW because
-of HW spec violation. These issues are very very rare in production
-devices though. And the behavior may vary between devices due to silicon
-variations.
-
-@Maya, thanks for testing this series. Sorry, one of my patch is buggy.
-Could you please apply the below diff and check once?
-
---- a/drivers/gpu/drm/msm/adreno/a6xx_hfi.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_hfi.c
-@@ -725,7 +725,7 @@ static int a6xx_hfi_enable_acd(struct a6xx_gmu *gmu)
-        }
-
-        /* Send ACD table to GMU */
--       ret = a6xx_hfi_send_msg(gmu, HFI_H2F_MSG_ACD, &msg, sizeof(msg), NULL, 0);
-+       ret = a6xx_hfi_send_msg(gmu, HFI_H2F_MSG_ACD, acd_table, sizeof(*acd_table), NULL, 0);
-        if (ret) {
-                DRM_DEV_ERROR(gmu->dev, "Unable to ACD table (%d)\n", ret);
-                return ret;
-
---- a/drivers/gpu/drm/msm/adreno/a6xx_hfi.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_hfi.c
-@@ -109,7 +109,7 @@ static int a6xx_hfi_wait_for_ack(struct a6xx_gmu *gmu, u32 id, u32 seqnum,
-
-        /* Wait for a response */
-        ret = gmu_poll_timeout(gmu, REG_A6XX_GMU_GMU2HOST_INTR_INFO, val,
--               val & A6XX_GMU_GMU2HOST_INTR_INFO_MSGQ, 100, 5000);
-+               val & A6XX_GMU_GMU2HOST_INTR_INFO_MSGQ, 100, 1000000);
-
-        if (ret) {
-                DRM_DEV_ERROR(gmu->dev,
-
-
--Akhil
+On 1/4/2025 1:10 PM, Dmitry Baryshkov wrote:
+> On Mon, Dec 30, 2024 at 01:13:08PM +0530, Akhil P Oommen wrote:
+>> On 12/9/2024 4:23 PM, Dmitry Baryshkov wrote:
+>>> On Mon, Dec 09, 2024 at 09:55:14AM +0000, Srinivas Kandagatla wrote:
+>>>>
+>>>>
+>>>> On 26/10/2024 23:42, Dmitry Baryshkov wrote:
+>>>>> From: Naman Jain <quic_namajain@quicinc.com>
+>>>>>
+>>>>> Add logic for alignment of address for reading in qfprom driver to avoid
+>>>>> NOC error issues due to unaligned access. The problem manifests on the
+>>>>> SAR2130P platform, but in msm-5.x kernels the fix is applied
+>>>>
+>>>> Is this only issue with SAR2130P?
+>>
+>> This is applicable to all chipsets with sys arch newer than Snapdragon 8
+>> Gen 1.
+>>
+>>>
+>>> I don't know. I know that it manifests on SAR2130P, but in the vendor
+>>> kernels the fix is applied to all the platforms.
+>>>
+>>>>
+>>>>> uncoditionally. Follow this approach and uncoditionally perform aligned
+>>>>> reads.
+>>>>
+>>>> If there is a need of having proper register alignment this should go as
+>>>> part of the nvmem_config->stride and word_size configuration and not in
+>>>> reg_read callbacks.
+>>>
+>>> Thanks, I'll explore that option. Indeed, it might be easier to handle.
+>>
+>> Dmitry, any update here? I need similar change for X1E GPU speedbin support.
 > 
-> BR,
-> -R
+> Excuse me for the delay, I've sent v3, reworking the series as
+> requested:
 > 
-> On Sun, Jan 5, 2025 at 9:56 AM Maya Matuszczyk <maccraft123mc@gmail.com> wrote:
-> >
-> > Hi,
-> > I've applied this series for testing, and I've no performance
-> > increase, and some screen corruption, there's some lines(mostly white)
-> > on my yoga slim 7x that appear on the bottom of the screen. When I
-> > move my cursor in swaywm over it, the lines get occluded by the cursor
-> > and screenshots don't show these lines.
-> >
-> > Best Regards,
-> > Maya Matuszczyk
-> >
-> > pon., 30 gru 2024 o 22:11 Akhil P Oommen <quic_akhilpo@quicinc.com> napisał(a):
-> > >
-> > > This series adds support for ACD feature for Adreno GPU which helps to
-> > > lower the power consumption on GX rail and also sometimes is a requirement
-> > > to enable higher GPU frequencies. At high level, following are the
-> > > sequences required for ACD feature:
-> > >         1. Identify the ACD level data for each regulator corner
-> > >         2. Send a message to AOSS to switch voltage plan
-> > >         3. Send a table with ACD level information to GMU during every
-> > >         gpu wake up
-> > >
-> > > For (1), it is better to keep ACD level data in devicetree because this
-> > > value depends on the process node, voltage margins etc which are
-> > > chipset specific. For instance, same GPU HW IP on a different chipset
-> > > would have a different set of values. So, a new schema which extends
-> > > opp-v2 is created to add a new property called "qcom,opp-acd-level".
-> > >
-> > > ACD support is dynamically detected based on the presence of
-> > > "qcom,opp-acd-level" property in GPU's opp table. Also, qmp node should be
-> > > present under GMU node in devicetree for communication with AOSS.
-> > >
-> > > The devicetree patch in this series adds the acd-level data for X1-85
-> > > GPU present in Snapdragon X1 Elite chipset.
-> > >
-> > > The last two devicetree patches are for Bjorn and all the rest for
-> > > Rob Clark.
-> > >
-> > > ---
-> > > Changes in v3:
-> > > - Rebased on top of v6.13-rc4 since X1E doesn't boot properly with msm-next
-> > > - Update patternProperties regex (Krzysztof)
-> > > - Update MAINTAINERS file include the new opp-v2-qcom-adreno.yaml
-> > > - Update the new dt properties' description
-> > > - Do not move qmp_get() to acd probe (Konrad)
-> > > - New patches: patch#2, #3 and #6
-> > > - Link to v2: https://lore.kernel.org/r/20241021-gpu-acd-v2-0-9c25a62803bc@quicinc.com
-> > >
-> > > Changes in v2:
-> > > - Removed RFC tag for the series
-> > > - Improve documentation for the new dt bindings (Krzysztof)
-> > > - Add fallback compatible string for opp-table (Krzysztof)
-> > > - Link to v1: https://lore.kernel.org/r/20241012-gpu-acd-v1-0-1e5e91aa95b6@quicinc.com
-> > >
-> > > ---
-> > > Akhil P Oommen (6):
-> > >       drm/msm/adreno: Add support for ACD
-> > >       drm/msm: a6x: Rework qmp_get() error handling
-> > >       drm/msm/adreno: Add module param to disable ACD
-> > >       dt-bindings: opp: Add v2-qcom-adreno vendor bindings
-> > >       arm64: dts: qcom: x1e80100: Add ACD levels for GPU
-> > >       arm64: dts: qcom: x1e80100: Add OPPs up to Turbo L3 for GPU
-> > >
-> > >  .../bindings/opp/opp-v2-qcom-adreno.yaml           | 97 ++++++++++++++++++++++
-> > >  MAINTAINERS                                        |  1 +
-> > >  arch/arm64/boot/dts/qcom/x1e80100.dtsi             | 25 +++++-
-> > >  drivers/gpu/drm/msm/adreno/a6xx_gmu.c              | 96 ++++++++++++++++++---
-> > >  drivers/gpu/drm/msm/adreno/a6xx_gmu.h              |  1 +
-> > >  drivers/gpu/drm/msm/adreno/a6xx_hfi.c              | 36 ++++++++
-> > >  drivers/gpu/drm/msm/adreno/a6xx_hfi.h              | 21 +++++
-> > >  drivers/gpu/drm/msm/adreno/adreno_device.c         |  4 +
-> > >  8 files changed, 268 insertions(+), 13 deletions(-)
-> > > ---
-> > > base-commit: dbfac60febfa806abb2d384cb6441e77335d2799
-> > > change-id: 20240724-gpu-acd-6c1dc5dcf516
-> > >
-> > > Best regards,
-> > > --
-> > > Akhil P Oommen <quic_akhilpo@quicinc.com>
-> > >
-> > >
+> https://lore.kernel.org/linux-arm-msm/20250104-sar2130p-nvmem-v3-0-a94e0b7de2fa@linaro.org/
+> 
+
+No issues. Thanks a lot for getting this done.
+
+-Akhil.
 
