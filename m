@@ -1,142 +1,154 @@
-Return-Path: <linux-arm-msm+bounces-43977-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-43978-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4D0A2A02118
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jan 2025 09:49:51 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2290EA02133
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jan 2025 09:55:56 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3C72A1638B0
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jan 2025 08:49:49 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6F95A188470A
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jan 2025 08:55:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 070501D934D;
-	Mon,  6 Jan 2025 08:49:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A1E101C4A1C;
+	Mon,  6 Jan 2025 08:55:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="mWSoCwE0"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AqJv2SZ9"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f42.google.com (mail-ej1-f42.google.com [209.85.218.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E4831D90B3
-	for <linux-arm-msm@vger.kernel.org>; Mon,  6 Jan 2025 08:49:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 620C71BF58;
+	Mon,  6 Jan 2025 08:55:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736153362; cv=none; b=SC9qZR3Mw8obzprGPzwxcI7wYdI5TvIjXqb8BKKHdXRqQzNJ7T4ONnnxEAIqy5UqwndupB/YraFnXL8ebBj09uxPFIDb/r1W67Mjf4MJSTEshXbZlzCvGWG5+0NAkL8TC76faqkqKX8hNz2/UP8NsTmhsANRNmIc0N2HCga75CA=
+	t=1736153752; cv=none; b=HH/RPz/bKdjvKE/nakBzLpnraMDvvuGzjvOn9Rb24OOd89lzoYJnrAMNotxTpFBnBnHKre3NZGtm0AEeuG4hzSbrX8WD3YmroSqqy4JsVGYttqrdlAQh8sDpxgD/0yRydpjN1cr70ZxRDdyGN0EbGeW9eauw7rxbpnziCVHumfk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736153362; c=relaxed/simple;
-	bh=nandoTBlk2Y45lzh0OGLLD7YfL+lOntjDjuGTghJ18A=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=fM5xtEZbg85MmSTsCT4jvdL+Qp8cdi9hhnYJZGNhvcDS8xkhfKUt32E9JxKeMSL+pH7qtsQtTLxpLkymV/+OIGQ63WSFOdzXp8poqLGZQ91qP9VT2J2HiJvq2UgKPWn4GEen3hKYuzcmFGdPaU9PG3Lj6jM3fy8wE8kOMrc+r2Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=mWSoCwE0; arc=none smtp.client-ip=209.85.218.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f42.google.com with SMTP id a640c23a62f3a-aa6b7f3c6edso169333066b.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Jan 2025 00:49:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1736153359; x=1736758159; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=1OTbFFc/LXvyixbtCvH1lSFOmelihjhQMXdOHvfDhy0=;
-        b=mWSoCwE07E+avbjXJVRDdPyzp6qpE2vbDr0TXi/viyRc5VFIXvzCkoVnedopray3Qd
-         ovGlJJjFJfQgwSvb6tZ6gJwuBsVFb3qWMCUmR4U16p6v1+CQs0Ki4FtnT50nX4SHMtQU
-         CITqi6UBNe40utTtwK1gUEv1qgeD0QlK+XV16t8YAmp3LzLXD83igFoqgFqZcPvzj1+d
-         etHzrPpzBmMiDpqU8vX/H42mvZFFzdyFbOyblbaFSMjHJCqTXCBBZfxAHYrQL9M+3AAj
-         FZFGTEhr0GT5Mjat2U4t+P+JtxJ/5VpQG1c2Z/NO1Ggdq6hlr5hTfWyxRs1SzTMrkEt9
-         yDSA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736153359; x=1736758159;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=1OTbFFc/LXvyixbtCvH1lSFOmelihjhQMXdOHvfDhy0=;
-        b=dKhf6E53VrK/1zANP+8bWel+2BKo4MdjyiSOYZi7qEyLX0Xj9ykk5IXO9LkzVuU9dA
-         kXv/wd2q4eCr9E/Seii+7l0caHX660l0MtHKU4Gl8+u+CMswtM1Xhu+l4noHcaS/eyZW
-         56YBCx3fSzRahPSxGEHl0Im3Y2krMrmjR8uERkoys3+55htMpmNag85bG6VugMbvhqU6
-         QgpFA32M3KW7+Rtdp0RfuXqVibwh3ZN0Q6jRjUGweSJ5+Ye1TtYspHVEdnwQH4yax4dz
-         IgvI/qSUnpyYtS14pQGQ6JkXsc8yMQgyurGnrq4EONa7RJ3JhdfdWqVfNWTDHDyz/CKP
-         iVpw==
-X-Gm-Message-State: AOJu0Yzv4M3xvFO7W/kX+2pWJTiWyLAdA5QeNWoNrxj7oOvHi9D1JvXR
-	c740kuvSIEr9z/2oTGLhFKnMTbLsZklw02xyCwGbZYNN2y/yinXoLVJ6ZAxAwN0=
-X-Gm-Gg: ASbGncuP/fBirYhT4LWZLbVHgVXYDKRtoD3lU9f0nXmAT1fZ71OMcUhSHI2i3fZ3H/j
-	Pq9ZC0E1lrubbieyJMf0wp3IKYMUcRuztXtd/N2ujwqVRCFlgFWH71Yy+lj9XoFsMWec6JpzenJ
-	rbxJm2FSY9brVaAqPy8gdzxLRuQ7gbfgNk2i5h+Yy+mRVKZjwwCyUip5HJZ/foi2xT6I9wdC0cR
-	/IXR4aII/eGn+kbispfblU+k3puFkmz7JR56IMPTmZQoM/cFT73xhymGcBE4RDbi/lLHegG
-X-Google-Smtp-Source: AGHT+IFIUVGQua1Xw3vRS6huyRc0JaTlrVfc5UE7MBVZ/n19b0POGxtnLkoCKWi3gDrpntvSQ/EKdw==
-X-Received: by 2002:a17:907:d15:b0:a9a:2a56:b54 with SMTP id a640c23a62f3a-aac2b0a5754mr2065982266b.5.1736153359387;
-        Mon, 06 Jan 2025 00:49:19 -0800 (PST)
-Received: from [127.0.1.1] ([178.197.223.165])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-aac0e82f1d2sm2222112466b.11.2025.01.06.00.49.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 06 Jan 2025 00:49:18 -0800 (PST)
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Date: Mon, 06 Jan 2025 09:49:07 +0100
-Subject: [PATCH 4/4] drm/msm/dsi: Drop unnecessary -ENOMEM message
+	s=arc-20240116; t=1736153752; c=relaxed/simple;
+	bh=gG4SiTyR1rjNKpTSl7F5DKYKTnsEbd9XXx+wOP8RmzQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=uJq7Epev3Rf6ltVR8zvqogpY628K4oG+XJY/yMKaRevwL4sudud7CXlfmvnp58CSD0FEDkKZABduqU9w/g5U9R++26MwY38Ki/IwWCvpvww6TRdpeq7kGRXdjoCuqZMoopBz5BlOME5a1XbBVOpK1M8+dmF3RteI71WSaDAUcHY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AqJv2SZ9; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D5F5C4CED2;
+	Mon,  6 Jan 2025 08:55:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1736153751;
+	bh=gG4SiTyR1rjNKpTSl7F5DKYKTnsEbd9XXx+wOP8RmzQ=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=AqJv2SZ9q16OyArWqElTwLOPNwqTm/ShNQQWffb96q1lj4AqFBu2S8K57PHmnRH7/
+	 xzupTm63UbfD3+7hQmj/mjtk7Ni2a3mv4rg5ZyC7gx0mF08AN7kqGfWIqKC458mCKN
+	 gwQp1eC6iRJnKLYxcKdFS5a/G+MvmBRmjaM6UcbaHc3qmp9xl3044q8FgfIkpESvIn
+	 ifJDNyYD52oEbg9I7c1Dg0+YMil4dxoxeB9GxG9BEJ3g21c7PaizTkseSF5f+HfCFD
+	 c/9goNwKH4U8aSo3khRGr2Y22RbMLY00xLu/mzuLGW5AwAZLSwqWV1X5wYZD2lVzu1
+	 C6+ttlxaCH/rg==
+Date: Mon, 6 Jan 2025 09:55:49 +0100
+From: Maxime Ripard <mripard@kernel.org>
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Jani Nikula <jani.nikula@linux.intel.com>, 
+	Rodrigo Vivi <rodrigo.vivi@intel.com>, Joonas Lahtinen <joonas.lahtinen@linux.intel.com>, 
+	Tvrtko Ursulin <tursulin@ursulin.net>, David Airlie <airlied@gmail.com>, 
+	Simona Vetter <simona@ffwll.ch>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+	Thomas Zimmermann <tzimmermann@suse.de>, Karol Herbst <kherbst@redhat.com>, Lyude Paul <lyude@redhat.com>, 
+	Danilo Krummrich <dakr@redhat.com>, Harry Wentland <harry.wentland@amd.com>, 
+	Leo Li <sunpeng.li@amd.com>, Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>, 
+	Alex Deucher <alexander.deucher@amd.com>, Christian =?utf-8?B?S8O2bmln?= <christian.koenig@amd.com>, 
+	Xinhui Pan <Xinhui.Pan@amd.com>, Alain Volmat <alain.volmat@foss.st.com>, 
+	Raphael Gallais-Pou <rgallaispou@gmail.com>, Liviu Dudau <liviu.dudau@arm.com>, 
+	Andrzej Hajda <andrzej.hajda@intel.com>, Neil Armstrong <neil.armstrong@linaro.org>, 
+	Robert Foss <rfoss@kernel.org>, Laurent Pinchart <Laurent.pinchart@ideasonboard.com>, 
+	Jonas Karlman <jonas@kwiboo.se>, Jernej Skrabec <jernej.skrabec@gmail.com>, 
+	Peter Senna Tschudin <peter.senna@gmail.com>, Ian Ray <ian.ray@ge.com>, 
+	Martyn Welch <martyn.welch@collabora.co.uk>, Inki Dae <inki.dae@samsung.com>, 
+	Seung-Woo Kim <sw0312.kim@samsung.com>, Kyungmin Park <kyungmin.park@samsung.com>, 
+	Krzysztof Kozlowski <krzk@kernel.org>, Alim Akhtar <alim.akhtar@samsung.com>, 
+	Stefan Agner <stefan@agner.ch>, Alison Wang <alison.wang@nxp.com>, 
+	Patrik Jakobsson <patrik.r.jakobsson@gmail.com>, Philipp Zabel <p.zabel@pengutronix.de>, 
+	Shawn Guo <shawnguo@kernel.org>, Sascha Hauer <s.hauer@pengutronix.de>, 
+	Pengutronix Kernel Team <kernel@pengutronix.de>, Fabio Estevam <festevam@gmail.com>, 
+	Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+	Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, 
+	Dave Airlie <airlied@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>, 
+	Sandy Huang <hjc@rock-chips.com>, Heiko =?utf-8?Q?St=C3=BCbner?= <heiko@sntech.de>, 
+	Andy Yan <andy.yan@rock-chips.com>, Chen-Yu Tsai <wens@csie.org>, 
+	Samuel Holland <samuel@sholland.org>, Thierry Reding <thierry.reding@gmail.com>, 
+	Mikko Perttunen <mperttunen@nvidia.com>, Jonathan Hunter <jonathanh@nvidia.com>, 
+	Dave Stevenson <dave.stevenson@raspberrypi.com>, =?utf-8?B?TWHDrXJh?= Canal <mcanal@igalia.com>, 
+	Raspberry Pi Kernel Maintenance <kernel-list@raspberrypi.com>, Gurchetan Singh <gurchetansingh@chromium.org>, 
+	Chia-I Wu <olvaffe@gmail.com>, Zack Rusin <zack.rusin@broadcom.com>, 
+	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>, intel-gfx@lists.freedesktop.org, intel-xe@lists.freedesktop.org, 
+	dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org, nouveau@lists.freedesktop.org, 
+	amd-gfx@lists.freedesktop.org, linux-arm-kernel@lists.infradead.org, 
+	linux-samsung-soc@vger.kernel.org, imx@lists.linux.dev, linux-arm-msm@vger.kernel.org, 
+	freedreno@lists.freedesktop.org, virtualization@lists.linux.dev, 
+	spice-devel@lists.freedesktop.org, linux-rockchip@lists.infradead.org, linux-sunxi@lists.linux.dev, 
+	linux-tegra@vger.kernel.org, Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>, 
+	Jani Nikula <jani.nikula@intel.com>
+Subject: Re: [PATCH v2 0/5] drm/connector: make mode_valid() callback accept
+ const mode pointer
+Message-ID: <20250106-passionate-lorikeet-of-apotheosis-c62ff1@houat>
+References: <20241214-drm-connector-mode-valid-const-v2-0-4f9498a4c822@linaro.org>
+ <76ho36jqcraehnsgpjralpye52w7ryshhgizekn4qqfsikiojd@3yyorbvjkc7b>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250106-drm-msm-cleanups-v1-4-271ff1c00795@linaro.org>
-References: <20250106-drm-msm-cleanups-v1-0-271ff1c00795@linaro.org>
-In-Reply-To: <20250106-drm-msm-cleanups-v1-0-271ff1c00795@linaro.org>
-To: Rob Clark <robdclark@gmail.com>, 
- Abhinav Kumar <quic_abhinavk@quicinc.com>, 
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Sean Paul <sean@poorly.run>, 
- Marijn Suijten <marijn.suijten@somainline.org>, 
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>
-Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
- freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1024;
- i=krzysztof.kozlowski@linaro.org; h=from:subject:message-id;
- bh=nandoTBlk2Y45lzh0OGLLD7YfL+lOntjDjuGTghJ18A=;
- b=owEBbQKS/ZANAwAKAcE3ZuaGi4PXAcsmYgBne5kHtIEraO4MOoEqSxz6JNQXpGpHLSrNWQfEX
- iZDY+GUnhCJAjMEAAEKAB0WIQTd0mIoPREbIztuuKjBN2bmhouD1wUCZ3uZBwAKCRDBN2bmhouD
- 1+pED/0THA/VJeshxpTNG9Q9JUM5ne/rmPhAfuMC36rcRts0nb3XRM2iJl8ZrqdhFYwziOdXoS3
- GRJTa3s1Eeeqfx1JNNOnuMW9YsZfTCUgkhFzjIhFKjMbkcAEZ0Y6zCyzL7Ey7ew/f6aWWrBxRS4
- pPbOMMtTaJNNfNyBhKOXy+hsriEseN/h6V+T4YCHsyxNnzy0HoIo3rKXnVLXzxSBFdxnG0uyDe5
- yXGCG0QKaz11TvN1/7TQlHPBoBdSxcJQizikrKJroAvaxgBYELQ3x4nGwfUPMx/twJHbFMKOvE4
- kMuxbk/t7dG/vWsm018wcK55Ae4+qlTx2IpL4zeP8YH/rdw2PBcaW2B0XsURYguU/i2EP+KdKc+
- pcUT/cN2UgCuRcGQsK3E5h+X2SitLjIZ0MRsJ3my29iq+WqiPc6DHUsMcaoO+PAqHwS4FXGWeKg
- 3v+8gyd7mq6FTii7t73DOWxncRQxn6IzEcNoTs96DIw6iRwMcC5VpS+Ot8nTlUDQOLGrqaaHED2
- K5BchCderk1lOcNzZnjMDIedb30NjdC54RfgLsO7vHRypJfOx0RgPvtBrGkR63epFmoYTCYPkID
- mN6AlEF28DCjSSJbuWWOxwRS+V88wvWAcqx2k72/pPjLLIRyiDYSMYSd0pShYQ8/4TcgQwS11D0
- mNDGUnoEj02fbUQ==
-X-Developer-Key: i=krzysztof.kozlowski@linaro.org; a=openpgp;
- fpr=9BD07E0E0C51F8D59677B7541B93437D3B41629B
+Content-Type: multipart/signed; micalg=pgp-sha384;
+	protocol="application/pgp-signature"; boundary="7fhp4op5b7mhfhd4"
+Content-Disposition: inline
+In-Reply-To: <76ho36jqcraehnsgpjralpye52w7ryshhgizekn4qqfsikiojd@3yyorbvjkc7b>
 
-Kernel core already prints detailed report about memory allocation
-failures, so drivers should not have their own error messages.
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
----
- drivers/gpu/drm/msm/dsi/dsi_host.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+--7fhp4op5b7mhfhd4
+Content-Type: text/plain; protected-headers=v1; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+Subject: Re: [PATCH v2 0/5] drm/connector: make mode_valid() callback accept
+ const mode pointer
+MIME-Version: 1.0
 
-diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
-index a3c344b75fc2e90923cd6d26df87b7c05208f736..ab5d6fd53972f62307b0c5b801cca8b2394c5556 100644
---- a/drivers/gpu/drm/msm/dsi/dsi_host.c
-+++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
-@@ -1910,10 +1910,8 @@ int msm_dsi_host_init(struct msm_dsi *msm_dsi)
- 		return dev_err_probe(&pdev->dev, ret, "%s: unable to initialize dsi clks\n", __func__);
- 
- 	msm_host->rx_buf = devm_kzalloc(&pdev->dev, SZ_4K, GFP_KERNEL);
--	if (!msm_host->rx_buf) {
--		pr_err("%s: alloc rx temp buf failed\n", __func__);
-+	if (!msm_host->rx_buf)
- 		return -ENOMEM;
--	}
- 
- 	ret = devm_pm_opp_set_clkname(&pdev->dev, "byte");
- 	if (ret)
+On Mon, Jan 06, 2025 at 12:47:07AM +0200, Dmitry Baryshkov wrote:
+> On Sat, Dec 14, 2024 at 03:37:04PM +0200, Dmitry Baryshkov wrote:
+> > While working on the generic mode_valid() implementation for the HDMI
+> > Connector framework I noticed that unlike other DRM objects
+> > drm_connector accepts non-const pointer to struct drm_display_mode,
+> > while obviously mode_valid() isn't expected to modify the argument.
+> >=20
+> > Mass-change the DRM framework code to pass const argument to that
+> > callback.
+> >=20
+> > The series has been compile-tested with defconfig for x86-64, arm and
+> > arm64.
+> >=20
+> > Note: yes, I understand that this change might be hard to review and
+> > merge. The only viable option that I foresee is to add new callback,
+> > having the const argument and migrate drivers into using it one by one.
+>=20
+> Colleagues, I'd like to graciously ping regarding this series. Should it
+> be merged as is (possibly requiring more R-B's)? Or should I rework it
+> adding something like .mode_valid_new() callback which takes const
+> argument?
 
--- 
-2.43.0
+I think your patch is fine, and you can add my
 
+Reviewed-by: Maxime Ripard <mripard@kernel.org>
+
+We seem to lack an Acked-by for amdgpu though?
+
+Maxime
+
+--7fhp4op5b7mhfhd4
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iJUEABMJAB0WIQTkHFbLp4ejekA/qfgnX84Zoj2+dgUCZ3ualAAKCRAnX84Zoj2+
+ds65AYCm0HY0VDiw9/7lDbcyH0YuzRQu/+7FuV8GS6p+ubfGmvGVGOS+07oCUheK
+PN/gOxwBgOc9gl1vmxFUVrfM3LjcOixdshbfH49V0dlOMzIZO3m/L5caQ4O6jchE
+p0sk4xSGUQ==
+=4eTB
+-----END PGP SIGNATURE-----
+
+--7fhp4op5b7mhfhd4--
 
