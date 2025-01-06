@@ -1,134 +1,128 @@
-Return-Path: <linux-arm-msm+bounces-44011-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-44012-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id A75F6A0276B
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jan 2025 15:04:33 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 78DE2A0277C
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jan 2025 15:08:25 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0B1EC1881C50
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jan 2025 14:04:36 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A76BA163E75
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jan 2025 14:08:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 58D311DFEF;
-	Mon,  6 Jan 2025 14:04:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 817CB1DE3A3;
+	Mon,  6 Jan 2025 14:08:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="AxcDrmFc"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="N0MteEZP"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
+Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE723524F
-	for <linux-arm-msm@vger.kernel.org>; Mon,  6 Jan 2025 14:04:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C9891DDC1F
+	for <linux-arm-msm@vger.kernel.org>; Mon,  6 Jan 2025 14:08:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736172270; cv=none; b=ICXTOK5NVyPqyyNPUfoebrEaaMZCh0R4n4FbRn9aJCp45XC2KX84kXAelwV1jsXSr4q/RJ+2oqKWiHN83T3Krb05zBBmtGsthQLRfzqCcj4xH4LIQFygNXx9RgrBQOK7FVyK0AwDHE6+7stgqC+ZW3L5w3BWDZ7sl3L5NiQxyoA=
+	t=1736172489; cv=none; b=K0GdPQbBnWHadOxKFYsCxbiYRC5RRdJW05LdViWlzA7x+U/RcRmVoou91PTKqra1VFZCFTkPOprJ1Wi9Ca7jLZGV8xbxFtDL8vkWN+k/GLwrPh6//zRcA/P+PVgZETpp4TMH622RgkGon5KOW+ji8vzu+tKem+fEjuirLutfNb0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736172270; c=relaxed/simple;
-	bh=Wm1ovQHMvMxDSi7FF5AmbNcNDR9Wfa6yclPnItxHYYg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=W2TYGOJz67HSc+WXMpxIkrDhl+dZDeB2UuwK4p7aMsb4Hx2N4d3JWm45P7SAz7ex4CAonQIYEYzPHKVcNM2Et6COaTiszsxrXZWxD0qNMZJkaBuTBgsudt4yEyFhOClt1bu+t15N2p80rhZOh57iD+YyOqE+qo8s9Ms909q4ge8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=AxcDrmFc; arc=none smtp.client-ip=209.85.214.181
+	s=arc-20240116; t=1736172489; c=relaxed/simple;
+	bh=mk1DitITBu6wmhsqn2nmojT+Nq4BeNVWOenXUM2lmEw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=qM4Hhrzd6FdGUFK0L7WWj4wz0cADLWTp4aOn++hIW5H7EJH2RYiXaF5C00Qw8Sv6+3utokShp6dY0r/1P3pJIHS2om1MuEDYxiHddyGxM9UvKbYyZPV2JTCruQ5MpBwzbmqxHAxzz/6+YOPNCXH1BYOaSmvFT4/xozAhNm6DHnQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=N0MteEZP; arc=none smtp.client-ip=209.85.128.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-2163bd70069so17789915ad.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Jan 2025 06:04:28 -0800 (PST)
+Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-436345cc17bso104319995e9.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Jan 2025 06:08:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1736172268; x=1736777068; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=iPCTx7YZO3kYinhY7a/YvtUWfdELIKIx/KCwel3xU3E=;
-        b=AxcDrmFcD12EX1003K8Jsqkx3OR1XoonaBdutzv19++pl12ReqktRTYegvohqdw9bv
-         Xfzski5DS3YtQAkFMMRJESlD6NMn4+Vgo2YXEfIMPhJ+QUR+f/Y54b21ZtXgOvBKtWyO
-         7/yDHxBG1KVJCWxM0Fh9GhNxSwnQsUmOm6OoCNrj8fh/XIYPNhfX08gY8x0QtVWJ4QVS
-         FcaDBcQPIPvVm3AP3CKM0+FLavbjRlrWz06ZuUYtS1ZVpm7av+RbbIElbZpNa/9F7pTp
-         4gN6H3rkYl/Y0uGzgV0IRSRwvitsv7hWA8dnJ96jsKMt2jdaxsav8S9Jv1eiiM24AhYK
-         a1ww==
+        d=linaro.org; s=google; t=1736172485; x=1736777285; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=EWT9lmpyxnN+ivmg93OmXz9oSbysfzx800Q4Ls4JS4Q=;
+        b=N0MteEZPUuWNDfqEplcQfjSgJOEibnEPodHQGSb9WHW07ih6eXoxx5FvGokqVMchvp
+         AJ2UMAy7TbeOfs5VEvx+peekQZP48gbY1slc48H3R8JaDYTrw4C1cM1C7DvjwW7aR3AB
+         Lc6DMjZtn7CVqFnd+cYzzNsF5NMAq715BAUrtKZLs3Ep6n7SpxYWunSCIWvbDRAl6n2h
+         iIxpTjlVjrx+WuosmlD+7wzBZpi4gFRMBGVBOb7Gh9QAwZy6WjAA0PyWnreqdeTKjPay
+         CZt6wavw9ehskVNGmW70rFzKdv3iV+MJQzsc4+8MfAlWaQtFxGxD+q1zIStzlinGyIwB
+         brGA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736172268; x=1736777068;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
+        d=1e100.net; s=20230601; t=1736172485; x=1736777285;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=iPCTx7YZO3kYinhY7a/YvtUWfdELIKIx/KCwel3xU3E=;
-        b=RYCpb4dYlRj84H0+k3QEZ/rf1p3cDrmBW071n1lNPrluUrjhKaR+jDUNCupb7FdKRr
-         z1AN+Xhj0vl0ZH7M/RAnuk5lNOwtEglVYx0HxHUZ22hBHZ8DE6Nk7NSsISsPbsnoPm5s
-         daR9Gp86UDtrK0I/WHnMVpzJNbzbi1SpF4I4NZrTTK8tcGmeslfPuP3nNVyJV3bO8fNT
-         biLqipux7uSGN5VRw7K0+5J9jD/lEEKLCTMdVYUjfQ378ah9+7pGf2mNT2GOtNlCp1r0
-         qEDwjNBafbA46RCVIQcNlF6W2Z84DXp8d6WzlcRhPxnCr1iin0KuxsXCEdP3XJDAyX/a
-         oy6w==
-X-Forwarded-Encrypted: i=1; AJvYcCVw+VKMceZrEzbzcUiJivr7xhBp0sZZWZfdrGSTKBAvIQo8Lv2mPjCOUofvXfjoOUGl49vWbO3AUx/2dSfP@vger.kernel.org
-X-Gm-Message-State: AOJu0YwR2JIgkyb0yeTJq+LwvSrWUga3S3xLrtu6i6gQ2vseNTP4pPFx
-	BRq0i63kr9FDjCJlBG66RihY5selPtX+53aF1aAEXU6u5z5r2YC3Z0wjI1CRCA==
-X-Gm-Gg: ASbGncutNDiEysIzEkntX56LfaxL6hFnPjuNwNh7KCMMwzTWYIK/XBjz07Ew7Lzzka+
-	E0/WPiqn77z7HlGkYRGa6QEWEFCc66FlvEzjxE9LO+0T9+yfFhHZocvrxTJ7rbrc6FjJqmz6OQ3
-	dn015r5G0Sh9t+I33wh61sA+cYkAG59BriuvwYaRywBj4NFo0DcpeQDg61/BETmtwlpJwqYNCse
-	ENVl/mVTsPwR5cN8KdcUEbrFfYWaMiNk3ntHUHs5O1TsLO5BMJyWse6iqwpF2hdmVo=
-X-Google-Smtp-Source: AGHT+IHOt8/xeOzitH/i9FEolYj7w8e6OxGuhTMPSPoHNq0YQ4Vj0EUbfZi/o55bGUVsRd2Aw/j2rw==
-X-Received: by 2002:a17:902:e746:b0:216:6769:9ee7 with SMTP id d9443c01a7336-219e6f13c5dmr848287925ad.41.1736172268112;
-        Mon, 06 Jan 2025 06:04:28 -0800 (PST)
-Received: from thinkpad ([120.60.61.126])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-219dca02b27sm290329535ad.276.2025.01.06.06.04.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 06 Jan 2025 06:04:27 -0800 (PST)
-Date: Mon, 6 Jan 2025 19:34:17 +0530
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: Md Sadre Alam <quic_mdalam@quicinc.com>
-Cc: miquel.raynal@bootlin.com, richard@nod.at, vigneshr@ti.com,
-	bbrezillon@kernel.org, linux-mtd@lists.infradead.org,
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-	quic_srichara@quicinc.com, quic_varada@quicinc.com,
-	quic_nainmeht@quicinc.com, quic_laksd@quicinc.com
-Subject: Re: [PATCH v2 0/3] QPIC v2 fixes for SDX75
-Message-ID: <20250106140417.ypyynt2xvixiixhb@thinkpad>
-References: <20241122085933.2663927-1-quic_mdalam@quicinc.com>
- <20241220093029.z4zsr3owdnqll2vg@thinkpad>
- <18af7a68-42a3-6a82-c1b1-38ba8b06ed78@quicinc.com>
+        bh=EWT9lmpyxnN+ivmg93OmXz9oSbysfzx800Q4Ls4JS4Q=;
+        b=Q7PoXabCzfOGtjWYp2hL16krMhEB0vR9IwstHQ1TJwWC2MOIiIIPBvezXForU5/uw+
+         kSb5kDF0kJY5AremQGyYZ5m89clmrCPnWK0rxw8qM38zitVLSpVH8qRs2bTM3znW4z7j
+         h4J0VX1AAayfZ8tEeHmuhf/c0VtxJZgRQ35hCAAkxCIf0ieMbvgNlaJ+9q3CrGM7a2A5
+         zR0mfQcEIT7mj2+ARGmBVdmxAStt/OHjrCcqnVSYUHvuWSjt1FeKB//qIHLVfxoPFjAU
+         NOD33FB3b2UCdtXEYJBVUJvHwbkoNCHUeo3Us2usChnsF7/Ft+0E2QRQ24VKh2y0T5D+
+         7sqA==
+X-Forwarded-Encrypted: i=1; AJvYcCWUGBmZlMCiBYwEvCVMbynB7JjpnW6K9Ne0DGsE7hJU6NuVaegp6Nv9o/p2d44KAeI0g8T+egFkzeel5tfL@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw3xfvvJ8eUxuoj5Btyfu04UwzNfrXNuC50S/oVYIPH4bYAlSSq
+	MWltecLiGuTCE0YPz9aJoJsNjRbvSU/3PpB3E00la0fiCQIqdrdPpHIKu5Wirs8=
+X-Gm-Gg: ASbGnctASUOK4rsu1VUFFZQCDjMuF6r5VkglX9wh2mCtFF9TRLfwISwkvw5jl2AzrMu
+	HfRBdy6ddEjmx1QV7E9JbnlgsHZJNJUgLdmQvp24OfcZnjBaDVP5QW6g9n1Uo/4a+4n/0BzCyFp
+	REMp+c0sGHl+77rGwcqWU4xvv0OZVEyurKP1ErGR/Bjnxp0ZMXWLg+t95MKgWkGnUE7Ut1Wl7+j
+	QsheNsoffKPWQABOyRM69+pHGRp93oIDRLhlQ1vBa89+e2grqH5LLM4eO8XlAwo559Kvg==
+X-Google-Smtp-Source: AGHT+IHXug5yLq0vZe9jWONZUJ9YxeEdyT8/tH+NsyQkfEAG5MJnrSgKUFKRqEqVTgqoOpnTJGzJPQ==
+X-Received: by 2002:a05:600c:3554:b0:434:9934:575 with SMTP id 5b1f17b1804b1-436686461d6mr509541595e9.16.1736172484915;
+        Mon, 06 Jan 2025 06:08:04 -0800 (PST)
+Received: from [192.168.0.40] ([176.61.106.227])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43656b442dasm600692965e9.42.2025.01.06.06.08.03
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 06 Jan 2025 06:08:04 -0800 (PST)
+Message-ID: <4df2adac-c9d8-46f5-ad92-105b91f8ae4e@linaro.org>
+Date: Mon, 6 Jan 2025 14:08:03 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <18af7a68-42a3-6a82-c1b1-38ba8b06ed78@quicinc.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 2/6] media: venus: vdec: Ignore parm smaller than 1fps
+To: Ricardo Ribalda <ribalda@chromium.org>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>,
+ Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+ Vikash Garodia <quic_vgarodia@quicinc.com>,
+ Hans Verkuil <hans.verkuil@cisco.com>, Hans Verkuil <hverkuil@xs4all.nl>
+Cc: linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
+ Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+ linux-arm-msm@vger.kernel.org
+References: <20250106-fix-cocci-v4-0-3c8eb97995ba@chromium.org>
+ <20250106-fix-cocci-v4-2-3c8eb97995ba@chromium.org>
+Content-Language: en-US
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <20250106-fix-cocci-v4-2-3c8eb97995ba@chromium.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Tue, Dec 24, 2024 at 10:52:03AM +0530, Md Sadre Alam wrote:
+On 06/01/2025 13:40, Ricardo Ribalda wrote:
+> The driver uses "whole" fps in all its calculations (e.g. in
+> load_per_instance()) Return -EINVAL if the user provides a parm that
+> will result in 0 whole fps.
 > 
+> Reported-by: Hans Verkuil <hverkuil@xs4all.nl>
+> Closes: https://lore.kernel.org/linux-media/f11653a7-bc49-48cd-9cdb-1659147453e4@xs4all.nl/T/#m91cd962ac942834654f94c92206e2f85ff7d97f0
+> Fixes: 7472c1c69138 ("[media] media: venus: vdec: add video decoder files")
+> Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
+> ---
+>   drivers/media/platform/qcom/venus/vdec.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> On 12/20/2024 3:00 PM, Manivannan Sadhasivam wrote:
-> > On Fri, Nov 22, 2024 at 02:29:30PM +0530, Md Sadre Alam wrote:
-> > > v2:
-> > >   * Updated commit message
-> > >   * Added stable kernel tag
-> > >   * Added Fixes tag
-> > >   * Renamed the variable from offset_from_qpic to nandc_offset
-> > >   * Set buf_count to 512 in the parameter page read
-> > >   * Replaced the buf_count value of 512 with the len in bytes
-> > > 
-> > > v1:
-> > >   * These patches will fix the following:
-> > >   * 1) onfi param page read which was broken by exec_op() patch.
-> > >   * 2) Fixed offset passed to BAM from QPIC base
-> > > 
-> > > Md Sadre Alam (3):
-> > >    mtd: rawnand: qcom: Pass 18 bit offset from QPIC base address to BAM
-> > >    mtd: rawnand: qcom: Fix onfi param page read
-> > >    mtd: rawnand: qcom: Fix read len for onfi param page
-> > > 
-> > 
-> > Do you plan to respin this series? FYI, these are regressions, so should go in
-> > early as possible.
-> Waiting for SPI NAND series patches [1] to be merged (raw nand change patch
-> 2-5). On top of that will repost these patches.
-
-This series fixes regression, so these should be merged first. Do not make fixes
-depend on feature.
-
-- Mani
-
--- 
-மணிவண்ணன் சதாசிவம்
+> diff --git a/drivers/media/platform/qcom/venus/vdec.c b/drivers/media/platform/qcom/venus/vdec.c
+> index 98c22b9f9372..25edd77b9cf9 100644
+> --- a/drivers/media/platform/qcom/venus/vdec.c
+> +++ b/drivers/media/platform/qcom/venus/vdec.c
+> @@ -481,7 +481,7 @@ static int vdec_s_parm(struct file *file, void *fh, struct v4l2_streamparm *a)
+>   	us_per_frame = timeperframe->numerator * (u64)USEC_PER_SEC;
+>   	do_div(us_per_frame, timeperframe->denominator);
+>   
+> -	if (!us_per_frame)
+> +	if (!us_per_frame || us_per_frame > USEC_PER_SEC)
+>   		return -EINVAL;
+>   
+>   	fps = (u64)USEC_PER_SEC;
+> 
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 
