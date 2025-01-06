@@ -1,172 +1,111 @@
-Return-Path: <linux-arm-msm+bounces-43965-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-43966-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2BDFFA01F4B
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jan 2025 07:40:28 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id DA0B2A01F5E
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jan 2025 07:49:29 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 095A916058E
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jan 2025 06:40:26 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4CFAC1883EEE
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jan 2025 06:49:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 04F2B4207F;
-	Mon,  6 Jan 2025 06:40:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EF320181334;
+	Mon,  6 Jan 2025 06:49:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="PMNhdJME"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="girgLuz8"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f170.google.com (mail-lj1-f170.google.com [209.85.208.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34BC33FD1;
-	Mon,  6 Jan 2025 06:40:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 136C3481B3
+	for <linux-arm-msm@vger.kernel.org>; Mon,  6 Jan 2025 06:49:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736145623; cv=none; b=TB2ubQ8dVBq4CGx8jsBIs7T4LpIj+Qobgmm0uC/xCmbRfmU/Y+1LZ3JXJLtICXJoQ75fr4V/2WuYx0g65+ms6GQcmKgMtT5Shr8vYK2IN04RDNkdJ15gcIIqf6sdIEL86OuBT0QGWl5aBPNg9Jh2PagAnUXSi9D2CQdlpZqvkvA=
+	t=1736146164; cv=none; b=So9gu/IQYtJd9CYdc8G0/Fs5qZkqvbt+G8tvR7NkBLT4KY7DjO9HbpuIgH+M5BiRxj+tTQ+qnhkOHkBtO4Y65s4nVmnzwliqj+5nRbSnh/eyxMefmR4RwV9ebNT+zBXAEjsLz5r+oqFyXDHX4SOQs+wNvBNEaxT2ULZQttrUtNo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736145623; c=relaxed/simple;
-	bh=jfL+3oBZpQi6xfpX7Vyf73sz0ueYJR/79b3ltOPkiIs=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:To:CC; b=ReeFwy/EtOcrzhkDOLLWJa1QECczJFknNTwAx0yJrHVEFo6UqSkBTIqTg9XAIOyZdG6zldzUFCg2eO5YxUIB0E9dOPyQaqjzc6KBE+yfSGUHIpChoKYf1Z6ATTdO5Cgj2CvqMyOLI7Ybz6z3vSsL+KLJyYe+ni8lBBO6rB/O874=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=PMNhdJME; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5062vjl2029009;
-	Mon, 6 Jan 2025 06:40:12 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:message-id
-	:mime-version:subject:to; s=qcppdkim1; bh=n/pG5IDsP2kclGvx+4D9gO
-	hKpamdzlb0gWNtuhEd1qQ=; b=PMNhdJME1SlidsU2jSEgBqr55gHXMIgQTKrzL0
-	jiaSKkpbr75Qhy+zhm5xbsIMOgrBL0JsswRoVlTxzzQeowdB/eJNIGdXa/7N/3YI
-	DJC3t0IXbfufPGo+c1e7URaJ1mCFQb8JB355n6rku64zLw7B1uJZb6Nj19TeEv/e
-	TX0NMsZLAlsF4djrD1nFBvxd4bZ89IcULlAh39RkTZiz83soCMYBHgNwgtKRCBig
-	jOz6AqeAvmYJQ/ZLtKrxUrYDfShfgIcxTM9IJqwINCI/3vnqePG24kng+anMt45R
-	5/OXeXGE1OnnodpRmm+nbOOHZZLJLxbm7cZL1QAbeYIc8SBA==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4406ur0d7r-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 06 Jan 2025 06:40:12 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 5066eBDS003923
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 6 Jan 2025 06:40:11 GMT
-Received: from szioemm-lnxbld002.qualcomm.com (10.80.80.8) by
- nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Sun, 5 Jan 2025 22:40:07 -0800
-From: Fange Zhang <quic_fangez@quicinc.com>
-Date: Mon, 6 Jan 2025 14:39:09 +0800
-Subject: [PATCH] drm/msm/dpu: Add writeback support for SM6150
+	s=arc-20240116; t=1736146164; c=relaxed/simple;
+	bh=nzAe/KBldoJeXmTeqaN64qn+e6q1Ph5lDjVudvh7sqw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=XCte8f/beGFCXlvnJ9cCzYWnUXE8IY7ZVEAlWR7/kpewXG0l8MXpdKbjzdOA34qpRjk3tUBTbA3lq1ZJBLrN1h7y2nUh8o8GSOaa5h1bdztVf0zYoINzJZHhtBNwIMZkeL5R3O7VupwleMKdHQE5yhnCvaDsv8qrcM4K6dalr2g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=girgLuz8; arc=none smtp.client-ip=209.85.208.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lj1-f170.google.com with SMTP id 38308e7fff4ca-2ffd6b7d77aso190174441fa.0
+        for <linux-arm-msm@vger.kernel.org>; Sun, 05 Jan 2025 22:49:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1736146161; x=1736750961; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=3Qu8WQXQCtZnShf6h8tAcD5s24D9ELy391aex/eneOc=;
+        b=girgLuz8x95bmP8WuaRyNnVsXyiLXOQzwt8Uuw6cMLsdDv8LPrfOoQ6bqW1csLd1Tr
+         1V9RUi1FpYIIBnMb0fMZsvA1ckvxXeLEvddma6wJ0hpcoEuk0yo+Kr7XKIIFzXzGWgE6
+         3t1G/cHqJUgED5FjV9aR6UkCzNYHIynbTBwgXxk41yzKIAzlhsxqL3O5qjyWQYEEjuX5
+         mSE8NnyGv2Q+G4PeOZd0wmd7TetaN9QErzq4KGKqI/a25YO55KfT1CiDzruKgM2fRmZY
+         y1IphkG9iSPxeLVPA0of1ayOZpB/eUpZR/Xdw+hhsCUuTwkE9Z6vMruqgMdwmMgYyapK
+         imhQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1736146161; x=1736750961;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=3Qu8WQXQCtZnShf6h8tAcD5s24D9ELy391aex/eneOc=;
+        b=h39E79GEsf5YfQBy2wIwHK0tRRqc00tEWrd4n7PVyVCN10j8IRFCef2IWQDX1vjiXc
+         RZrtGCWfePdT3bTw4TxffZ8Nht0eNYHwwRNSwxEeebe6eZhGVyDZLp57NKTivNqDsSdg
+         IFbMxCX13J4aSvDeAdNvpeRrwShA/1TzicQQQDdaR01D0iXiRM3r+weM9rSm9fX++Gt2
+         RKXLoVnHs5rR/KAs+5Mx5zUf/p7FkGukyvwgCV/VeO1ptiwDLttrEteJVi1jJz6231ML
+         Rj1MWFzOE5U76a0bzdPKOIicZjozijFlsT/tQiB2G+h5F1r6t6W52gqBCV+g0xqVj4YU
+         6oWg==
+X-Forwarded-Encrypted: i=1; AJvYcCW/82YaBCok9G2+x06c1CZZw7RSCYIFs63heHNrhpwcMm/OhxqitbVA8aZGZwx+DmGmz2qc3SxOXBlxr1J/@vger.kernel.org
+X-Gm-Message-State: AOJu0YzLTWx3WxRyK43LbIR7si46eIeKS/vgWFBTe7vn6FeBXXLrtrpC
+	fD/k+41B3kUT5mg04w04Nnwqd/5oVlNsG/VpsABB8cCPVbLylF5e7FT/DRpuGG8=
+X-Gm-Gg: ASbGncu7+QjizQN56M9JbWUeZtR6eP9JDnvMKTpIagiIwyYgsWOLmpfUecYZ+nKUp1e
+	FjPw7K4g0eIzatCF9OrWP92PG/w5RmmXbG71FJKSly/bULagjr/uZd2IMF9myX7zpS6TBzZl7Dx
+	4aRIpRq5MNu96Tnjr4sGWNqzwwaQ7rdq0QRqmWKHgxoMUtm0LB9AcddqIO+HVNny1XXADI+v6dn
+	QiEMN17GVs372MQxsO9nM4AEqWJUBbecLAWdQYaVJe130rtJsZmG9+zVoPhq5Kz+IuyGPsH8cwo
+	EpRvB6D9pXVVwO9avXln6uAVTuBFDSSHMivY
+X-Google-Smtp-Source: AGHT+IGHVOrjHEa9YHZQLk1c+OGgL7giB+05TWOpDyNnvuG8TPH/ssBfuMDBwWRFHIFp85M+tdvrWw==
+X-Received: by 2002:a05:6512:10d2:b0:53e:39e6:a1c5 with SMTP id 2adb3069b0e04-54229562a91mr18706777e87.41.1736146160752;
+        Sun, 05 Jan 2025 22:49:20 -0800 (PST)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-54223813670sm4904307e87.152.2025.01.05.22.49.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 05 Jan 2025 22:49:19 -0800 (PST)
+Date: Mon, 6 Jan 2025 08:49:17 +0200
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Fange Zhang <quic_fangez@quicinc.com>
+Cc: Rob Clark <robdclark@gmail.com>, 
+	Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
+	Simona Vetter <simona@ffwll.ch>, linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+	freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, Li Liu <quic_lliu6@quicinc.com>, 
+	Xiangxu Yin <quic_xiangxuy@quicinc.com>
+Subject: Re: [PATCH] drm/msm/dpu: Add writeback support for SM6150
+Message-ID: <w2ybpbn4caps72e6ac45jae3dgmmmhf365ks2sonfmj5uyfvsr@wr5ymif75xbp>
+References: <20250106-add-writeback-support-for-sm6150-v1-1-1d2d69fc4bae@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-ID: <20250106-add-writeback-support-for-sm6150-v1-1-1d2d69fc4bae@quicinc.com>
-X-B4-Tracking: v=1; b=H4sIAI16e2cC/03OQQ6CMBAF0Ks0XdukJaGoOw/gSneGxdCO0Ii0t
- kVMCHe3gDEks/k/kzcz0oDeYKBHMlKPbxOM7VIQO0JVA12NzOiUacaznAsuGWjNBm8iVqAeLPT
- OWR/Z3XoWnlLknFVQyLwQB4mwp4lxHu/ms5y4lWv2+OrTpbiW9KQ1+ZPkR5JEkst5Jmfl2phA0
- kDq29YOvSMOomqWtfST6eqNoSBCa+utUU7TF38KDs3tAAAA
-X-Change-ID: 20250106-add-writeback-support-for-sm6150-ba7657196ea8
-To: Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar
-	<quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>
-CC: <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
-        Li Liu
-	<quic_lliu6@quicinc.com>,
-        Xiangxu Yin <quic_xiangxuy@quicinc.com>,
-        "Fange
- Zhang" <quic_fangez@quicinc.com>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1736145606; l=2114;
- i=quic_fangez@quicinc.com; s=20250106; h=from:subject:message-id;
- bh=jfL+3oBZpQi6xfpX7Vyf73sz0ueYJR/79b3ltOPkiIs=;
- b=E/jV/kYCVXz4hkmbu8/l4IKhvaPCEFrqRaT3Z+FEXUnIoukca1YlvZHsT/8C+uKFizEg/SY9U
- PZGcgEHy/l1CH/WaXCsjDkaSmR+F4+EK5J9kuJjC7Gne2WoPL+v5ePz
-X-Developer-Key: i=quic_fangez@quicinc.com; a=ed25519;
- pk=eVr/gwhy9iaqhzLeBg7K/L0fI2IbsMNzlJnwKdnGExc=
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: fd7qHdiWw97EhH8ZtWy_pAE3w2AX6xXV
-X-Proofpoint-ORIG-GUID: fd7qHdiWw97EhH8ZtWy_pAE3w2AX6xXV
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=809
- priorityscore=1501 lowpriorityscore=0 mlxscore=0 phishscore=0 spamscore=0
- bulkscore=0 adultscore=0 malwarescore=0 clxscore=1015 suspectscore=0
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2501060057
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250106-add-writeback-support-for-sm6150-v1-1-1d2d69fc4bae@quicinc.com>
 
-On the SM6150 platform there is WB_2 block. Add it to the SM6150 catalog.
+On Mon, Jan 06, 2025 at 02:39:09PM +0800, Fange Zhang wrote:
+> On the SM6150 platform there is WB_2 block. Add it to the SM6150 catalog.
+> 
+> Signed-off-by: Fange Zhang <quic_fangez@quicinc.com>
+> ---
+> A followup patch to add writeback configuration for the SM6150 catalog
+> ---
+>  drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_3_sm6150.h | 18 ++++++++++++++++++
+>  1 file changed, 18 insertions(+)
 
-Signed-off-by: Fange Zhang <quic_fangez@quicinc.com>
----
-A followup patch to add writeback configuration for the SM6150 catalog
----
- drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_3_sm6150.h | 18 ++++++++++++++++++
- 1 file changed, 18 insertions(+)
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_3_sm6150.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_3_sm6150.h
-index 621a2140f675fa28b3a7fcd8573e59b306cd6832..6d32deead77728264b6de6d5fd2843a81afdf355 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_3_sm6150.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_3_sm6150.h
-@@ -27,6 +27,7 @@ static const struct dpu_mdp_cfg sm6150_mdp = {
- 		[DPU_CLK_CTRL_DMA1] = { .reg_off = 0x2b4, .bit_off = 8 },
- 		[DPU_CLK_CTRL_DMA2] = { .reg_off = 0x2bc, .bit_off = 8 },
- 		[DPU_CLK_CTRL_DMA3] = { .reg_off = 0x2c4, .bit_off = 8 },
-+		[DPU_CLK_CTRL_WB2] = { .reg_off = 0x3b8, .bit_off = 24 },
- 	},
- };
- 
-@@ -164,6 +165,21 @@ static const struct dpu_pingpong_cfg sm6150_pp[] = {
- 	},
- };
- 
-+static const struct dpu_wb_cfg sm6150_wb[] = {
-+	{
-+		.name = "wb_2", .id = WB_2,
-+		.base = 0x66000, .len = 0x2c8,
-+		.features = WB_SM8250_MASK,
-+		.format_list = wb2_formats_rgb,
-+		.num_formats = ARRAY_SIZE(wb2_formats_rgb),
-+		.clk_ctrl = DPU_CLK_CTRL_WB2,
-+		.xin_id = 6,
-+		.vbif_idx = VBIF_RT,
-+		.maxlinewidth = 2160,
-+		.intr_wb_done = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 4),
-+	},
-+};
-+
- static const struct dpu_intf_cfg sm6150_intf[] = {
- 	{
- 		.name = "intf_0", .id = INTF_0,
-@@ -244,6 +260,8 @@ const struct dpu_mdss_cfg dpu_sm6150_cfg = {
- 	.dspp = sm6150_dspp,
- 	.pingpong_count = ARRAY_SIZE(sm6150_pp),
- 	.pingpong = sm6150_pp,
-+	.wb_count = ARRAY_SIZE(sm6150_wb),
-+	.wb = sm6150_wb,
- 	.intf_count = ARRAY_SIZE(sm6150_intf),
- 	.intf = sm6150_intf,
- 	.vbif_count = ARRAY_SIZE(sdm845_vbif),
-
----
-base-commit: 8155b4ef3466f0e289e8fcc9e6e62f3f4dceeac2
-change-id: 20250106-add-writeback-support-for-sm6150-ba7657196ea8
-
-Best regards,
 -- 
-Fange Zhang <quic_fangez@quicinc.com>
-
+With best wishes
+Dmitry
 
