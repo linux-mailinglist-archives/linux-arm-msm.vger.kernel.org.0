@@ -1,375 +1,208 @@
-Return-Path: <linux-arm-msm+bounces-44049-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-44051-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id B33C9A032CD
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jan 2025 23:40:48 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id A3351A032E8
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jan 2025 23:48:53 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A8749164484
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jan 2025 22:40:46 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7E972161AFA
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jan 2025 22:48:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 663871E048D;
-	Mon,  6 Jan 2025 22:40:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2B3DD1DFE38;
+	Mon,  6 Jan 2025 22:48:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="EFBRlPop"
+	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="BI6/Ae9b"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f48.google.com (mail-lf1-f48.google.com [209.85.167.48])
+Received: from mail-pl1-f176.google.com (mail-pl1-f176.google.com [209.85.214.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B3B01E008B
-	for <linux-arm-msm@vger.kernel.org>; Mon,  6 Jan 2025 22:40:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46F8C1DA614
+	for <linux-arm-msm@vger.kernel.org>; Mon,  6 Jan 2025 22:48:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736203246; cv=none; b=LJZipKsQOl/18YZueJkEvNMLsQsU3LKnklF5IAovDhxi8I9c2/uOTMGVCYIOtU6joBNfAaiucBav3Pq3Ng3h0aml55g0D/QMxIjT32AkSBmJT6gi10UaZ+Tkqrf9zLPwxtUshMMl1ElXh4Pw1juc9qFdA0iNYBXF5QYhqNYbrBA=
+	t=1736203732; cv=none; b=fDZOVCWqXaW1MDpxVK8TkZAJCsZ9rv5PrqZ3ttoXeo17Wx8Y72HFMPgwHPDctTRMjjwbJxRhFtEPRHzslD4e+xNnXWpSZ+/89Jko4H+gmx1OAPmJJxk0cdvkKHXPw1kfkExKAmA9yfJb/otSOfwqYMyIaaIFiJaaXLfX0h8rS6Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736203246; c=relaxed/simple;
-	bh=KcYvJn/OB21p2wmGWULthdW94fsGx4VAFSl5ZTqHWxs=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=kTS4u1hwyQ178Abb6RtGFjw4UPTTkfF1ZrAOLuB7s2SGVdI2W7cAw8uvfp5ZHTp6iFPsJQtNnGRq7eapCu1MdJdU/zSPPu3id9ZCfySpddJoKxnRsriicEJO9Hpv2pQENAC6ceA0DUXcmddoPzbR2K2888yb2hpw6oCFJ1FqB5w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=EFBRlPop; arc=none smtp.client-ip=209.85.167.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f48.google.com with SMTP id 2adb3069b0e04-5401d3ea5a1so14935206e87.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Jan 2025 14:40:44 -0800 (PST)
+	s=arc-20240116; t=1736203732; c=relaxed/simple;
+	bh=8gxhwnu/GHKRCgrt0ex2uSSSAOg8e67Y0kNE3hmUXXA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Ka0n59QurdZYHSRJo6nVrB75XP226R/D2A9gEk3dK5ASGw+Mi0GTFIFfI4L3IciCbR9EvS2Jd0ZXxFa/+3lPtaQ2qSDXe+klxGIwkYAHwV3M2zkh3xAhausptM/M418KKWyLeyO9iSX8cbsGd6Fgc/Ae2OouUVoTmzmrI/KXPyY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=BI6/Ae9b; arc=none smtp.client-ip=209.85.214.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=broadcom.com
+Received: by mail-pl1-f176.google.com with SMTP id d9443c01a7336-2164b662090so189874975ad.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Jan 2025 14:48:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1736203242; x=1736808042; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Avh+nl6Z5hJDoj7n55BVUZpLUAsqWxFGb9cklZ7LaBQ=;
-        b=EFBRlPopoZmaw97OLHpgbyffI1eQOsySn6jZi3YGk6r5ISnyU35zNnMIrWJYKcHDN+
-         t8xuJ+1vwcqz3LIArjw2qfn/boUHQ0zRGLH5iJX/LBhgYLxvAoGpZuObmil9jC3JYDyy
-         VHwY+4QSPsw/vhD/vftuUvkkYe6Q7R8eBAUZJxVqiygp+U8T0lgJNOD77nM1MZ79SUFZ
-         95+fddjhRXhF4mUrCr8SnI+37u9FRY/UwPfssL1b5dC8PME8l3waBnT2OtsEleJH0+UY
-         bXal9LSL8BdQsOqfX8LnA6Sz2d2G2BcdYh7wpdmGzdOds7AYwRwqnEeFMLOGQpbmziME
-         lcpw==
+        d=broadcom.com; s=google; t=1736203729; x=1736808529; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=9nSIYHT+rwvtPlt9X2+sDNhWPHkSk17Ltt7LSNM66Go=;
+        b=BI6/Ae9bZM2KsvPkgXn24nuTIXFjjXgV9WVX7z1vgI5uCQI4Y5zKzrUk+Wc/VObZFk
+         5q5dsA0dJzZkordchvvjdAjRQs0G5DHI0BZXe5jYS9x/Cv/VgxMgW3vHIHDI/C1DN80q
+         O+H6iZ2aI085UItLzT39cvUR8PtrJ/h0WfnJo=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736203242; x=1736808042;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+        d=1e100.net; s=20230601; t=1736203729; x=1736808529;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Avh+nl6Z5hJDoj7n55BVUZpLUAsqWxFGb9cklZ7LaBQ=;
-        b=cLPmWYgWNfc8IeOF+wtYKSq0OP64ninagVymxJ7F/dx9cose9AVu3+e3owUL+sE+Cn
-         57POXhFr3LsXMsOrYLfEOA1tTDuV3aQYeDisF2ZIV48gxvjYD+I95av+pSoxq064U8Xt
-         AApfGiJpeJTmbWpazOu3VzFbh2qePG1+n/o97Bf4pD+duLUIXoGxFhghTeFgkELEofjO
-         E0gAg2z94zv/bAxzRUs/fj3yPXrzie+A7ach6034G5Da2C1xzwQeafH64a7nb4MpPjna
-         qdcYMBxJu2GtuTENj0Leq9w3BvjGjGYUwNBnwYx3DkWzV0goEQ+XulbRU9YAEdVGxLVW
-         Ck7w==
-X-Forwarded-Encrypted: i=1; AJvYcCUUy1oUu9QVmLKmD/iQ137A0nG+OwvvMC7zDJMWpgdN+zsqmelNCePWOBhCOcy2qoCvR4IF+frq009oKp0+@vger.kernel.org
-X-Gm-Message-State: AOJu0Ywf+NILkP636VwfseDqBcb0rCZohMqcTIHxS30n7SQSdtoviy0j
-	rEGjIUtYT0k4x/NhD8mICBU/9E5vpj2Ia+Vz/S6dW+7JCulyyGS1qY2Ealz3mOA=
-X-Gm-Gg: ASbGncuwKK//gsJfd1hYxdUDkYV9OVHk2PMk9rCydPxo8oUZK1kNcE8ciuMsnRWl5+J
-	pAWa6MmfGZgcyAPcEgCBICmRCB8elpfg+kO6VPBHSi0oW8LFTG5xXfFnvwjFSS62fd6OAwTjdgx
-	LDtyMeXUV2C3RAEoqYf3WQuw18ykcuyugcW04c3mf5zbLoOX1+lFYM+ntmkfBbDW40eT74VQeHG
-	fIL3+Af7nzHQ+9WA6cRa/LLqwiHJhGqhUkmFCcSZfrVERt+H98PonCknU3D1LmouZkfCQrW0sqZ
-	//U959N4LgIxJ55l8rOBNqKhFppun7Nut1+s
-X-Google-Smtp-Source: AGHT+IH1smEZOfZ8qRrs+G5pEIpwin4KkZa54myAPNzFBvb3/d3bojYFWrsELPf1qasLIQPrd+0z+A==
-X-Received: by 2002:a05:6512:1582:b0:542:63a8:3938 with SMTP id 2adb3069b0e04-54263a83a3amr4778193e87.20.1736203242345;
-        Mon, 06 Jan 2025 14:40:42 -0800 (PST)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-54223813665sm5087258e87.146.2025.01.06.14.40.40
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 06 Jan 2025 14:40:41 -0800 (PST)
-Date: Tue, 7 Jan 2025 00:40:39 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Pratyush Brahma <quic_pbrahma@quicinc.com>
-Cc: andersson@kernel.org, konradybcio@kernel.org, robh@kernel.org, 
-	krzk+dt@kernel.org, conor+dt@kernel.org, linux-arm-msm@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] arm64: dts: qcom: qcs8300: Update memory map
-Message-ID: <vx5fhjt2vfa3uf2wwbk5y55qsbbcrjci4qcyvnwhjv6zw7fdbj@z6rfqqqkopfq>
-References: <20241217092636.17482-1-quic_pbrahma@quicinc.com>
+        bh=9nSIYHT+rwvtPlt9X2+sDNhWPHkSk17Ltt7LSNM66Go=;
+        b=w5hyGkA8jOFMZs12SDm4WbtMZ0EvpQtw4SLewlWVWToZzwqhr2aS6oqCSAPZQG3jJU
+         4fH4zfMHIy+60VhxqMZjOwiisvXaRH1NxFdzxcikVhSoHieCEezBNTCaSS6Nok9AAL0U
+         KYjob69iAZUpHcuZvGTXzidPrHlEB+9AAiyRtMOEDb5OIapuwZcbEobAO1XPAM6X3MPt
+         h9xPuzAflZ8K5o6aQU0TE2EuKX0IAGlxTDYxuvclhDeXI1ZTSg9IkrceBopgEdMfS5Ej
+         8mAi/CruEUyak/+yfEHl/1tOygLkDKGfknt0Cq471l6ErEpyC1F+WqnOQOkEZsqOfthC
+         C0cw==
+X-Forwarded-Encrypted: i=1; AJvYcCWRpGacBDBfYOFEIKe+mT3nT25d/afYuUQJUtLsz3LMyQoyFFsFpXe+90Wbtel113mZzbwoBNA/tuil8RAg@vger.kernel.org
+X-Gm-Message-State: AOJu0YzYAPCIENpSpF9VghokmUZL5qk9+aEDk0wp8FSJSOu4acD5a9Th
+	G40aXWnh7pMSKNeO/pp5tvpibSOEuOemTwVMgV4vVBNJX3hdVqCGYKeoOj6XmQ==
+X-Gm-Gg: ASbGncu6yHWdZ4NTIKMWpvJoefG/dfEKJD1avFN1JATkB1I57YtzWyY5wGDmTnteofZ
+	zsftKVsvQ9FfM+d0fjQ8IqP4Ktb68sw5NJFSIQc2Sv4pOvX9/1MeFl1KmEDNodlLqoXL9VM9Ilf
+	+mCCgVp2EQ4U1OibRhpklS6Ug82vtr/NmY0t0Y1bsKvaVqMNSUaPejpDXaCnMl2GX5LmA6zIcvO
+	ZnDJuxdc8GTPx47G5O5wtxcKP/s6qpxn8pZAufhFQGqdw23dQLfW29v4Zo0PJp8TDgxckTEPxNo
+	wQzdBxbuVIm4F650MbSd
+X-Google-Smtp-Source: AGHT+IFo4GEyCYAMGPJ+m3HD0ATJsPEIdB1Nk6nXQdJLb7QXkhqift28kuZ4wANvJ2mz/1zFnWGjEw==
+X-Received: by 2002:a05:6a20:7f8b:b0:1e1:9de5:4543 with SMTP id adf61e73a8af0-1e5e047021amr103106702637.14.1736203729569;
+        Mon, 06 Jan 2025 14:48:49 -0800 (PST)
+Received: from [10.67.48.245] ([192.19.223.252])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-842e36caf84sm29367712a12.74.2025.01.06.14.48.47
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 06 Jan 2025 14:48:48 -0800 (PST)
+Message-ID: <18dbd7d1-a46c-4112-a425-320c99f67a8d@broadcom.com>
+Date: Mon, 6 Jan 2025 14:48:46 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241217092636.17482-1-quic_pbrahma@quicinc.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 1/3] arm64: errata: Assume that unknown CPUs _are_
+ vulnerable to Spectre BHB
+To: Douglas Anderson <dianders@chromium.org>,
+ Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>,
+ Mark Rutland <mark.rutland@arm.com>
+Cc: Roxana Bradescu <roxabee@google.com>, Julius Werner
+ <jwerner@chromium.org>, bjorn.andersson@oss.qualcomm.com,
+ linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+ Jeffrey Hugo <quic_jhugo@quicinc.com>, Trilok Soni <quic_tsoni@quicinc.com>,
+ stable@vger.kernel.org, James Morse <james.morse@arm.com>,
+ Kent Overstreet <kent.overstreet@linux.dev>,
+ Suren Baghdasaryan <surenb@google.com>, linux-kernel@vger.kernel.org
+References: <20241219205426.2275508-1-dianders@chromium.org>
+ <20241219125317.v3.1.I2040fa004dafe196243f67ebcc647cbedbb516e6@changeid>
+Content-Language: en-US
+From: Florian Fainelli <florian.fainelli@broadcom.com>
+Autocrypt: addr=florian.fainelli@broadcom.com; keydata=
+ xsBNBFPAG8ABCAC3EO02urEwipgbUNJ1r6oI2Vr/+uE389lSEShN2PmL3MVnzhViSAtrYxeT
+ M0Txqn1tOWoIc4QUl6Ggqf5KP6FoRkCrgMMTnUAINsINYXK+3OLe7HjP10h2jDRX4Ajs4Ghs
+ JrZOBru6rH0YrgAhr6O5gG7NE1jhly+EsOa2MpwOiXO4DE/YKZGuVe6Bh87WqmILs9KvnNrQ
+ PcycQnYKTVpqE95d4M824M5cuRB6D1GrYovCsjA9uxo22kPdOoQRAu5gBBn3AdtALFyQj9DQ
+ KQuc39/i/Kt6XLZ/RsBc6qLs+p+JnEuPJngTSfWvzGjpx0nkwCMi4yBb+xk7Hki4kEslABEB
+ AAHNMEZsb3JpYW4gRmFpbmVsbGkgPGZsb3JpYW4uZmFpbmVsbGlAYnJvYWRjb20uY29tPsLB
+ IQQQAQgAywUCZWl41AUJI+Jo+hcKAAG/SMv+fS3xUQWa0NryPuoRGjsA3SAUAAAAAAAWAAFr
+ ZXktdXNhZ2UtbWFza0BwZ3AuY29tjDAUgAAAAAAgAAdwcmVmZXJyZWQtZW1haWwtZW5jb2Rp
+ bmdAcGdwLmNvbXBncG1pbWUICwkIBwMCAQoFF4AAAAAZGGxkYXA6Ly9rZXlzLmJyb2FkY29t
+ Lm5ldAUbAwAAAAMWAgEFHgEAAAAEFQgJChYhBNXZKpfnkVze1+R8aIExtcQpvGagAAoJEIEx
+ tcQpvGagWPEH/2l0DNr9QkTwJUxOoP9wgHfmVhqc0ZlDsBFv91I3BbhGKI5UATbipKNqG13Z
+ TsBrJHcrnCqnTRS+8n9/myOF0ng2A4YT0EJnayzHugXm+hrkO5O9UEPJ8a+0553VqyoFhHqA
+ zjxj8fUu1px5cbb4R9G4UAySqyeLLeqnYLCKb4+GklGSBGsLMYvLmIDNYlkhMdnnzsSUAS61
+ WJYW6jjnzMwuKJ0ZHv7xZvSHyhIsFRiYiEs44kiYjbUUMcXor/uLEuTIazGrE3MahuGdjpT2
+ IOjoMiTsbMc0yfhHp6G/2E769oDXMVxCCbMVpA+LUtVIQEA+8Zr6mX0Yk4nDS7OiBlvOwE0E
+ U8AbwQEIAKxr71oqe+0+MYCc7WafWEcpQHFUwvYLcdBoOnmJPxDwDRpvU5LhqSPvk/yJdh9k
+ 4xUDQu3rm1qIW2I9Puk5n/Jz/lZsqGw8T13DKyu8eMcvaA/irm9lX9El27DPHy/0qsxmxVmU
+ pu9y9S+BmaMb2CM9IuyxMWEl9ruWFS2jAWh/R8CrdnL6+zLk60R7XGzmSJqF09vYNlJ6Bdbs
+ MWDXkYWWP5Ub1ZJGNJQ4qT7g8IN0qXxzLQsmz6tbgLMEHYBGx80bBF8AkdThd6SLhreCN7Uh
+ IR/5NXGqotAZao2xlDpJLuOMQtoH9WVNuuxQQZHVd8if+yp6yRJ5DAmIUt5CCPcAEQEAAcLB
+ gQQYAQIBKwUCU8AbwgUbDAAAAMBdIAQZAQgABgUCU8AbwQAKCRCTYAaomC8PVQ0VCACWk3n+
+ obFABEp5Rg6Qvspi9kWXcwCcfZV41OIYWhXMoc57ssjCand5noZi8bKg0bxw4qsg+9cNgZ3P
+ N/DFWcNKcAT3Z2/4fTnJqdJS//YcEhlr8uGs+ZWFcqAPbteFCM4dGDRruo69IrHfyyQGx16s
+ CcFlrN8vD066RKevFepb/ml7eYEdN5SRALyEdQMKeCSf3mectdoECEqdF/MWpfWIYQ1hEfdm
+ C2Kztm+h3Nkt9ZQLqc3wsPJZmbD9T0c9Rphfypgw/SfTf2/CHoYVkKqwUIzI59itl5Lze+R5
+ wDByhWHx2Ud2R7SudmT9XK1e0x7W7a5z11Q6vrzuED5nQvkhAAoJEIExtcQpvGagugcIAJd5
+ EYe6KM6Y6RvI6TvHp+QgbU5dxvjqSiSvam0Ms3QrLidCtantcGT2Wz/2PlbZqkoJxMQc40rb
+ fXa4xQSvJYj0GWpadrDJUvUu3LEsunDCxdWrmbmwGRKqZraV2oG7YEddmDqOe0Xm/NxeSobc
+ MIlnaE6V0U8f5zNHB7Y46yJjjYT/Ds1TJo3pvwevDWPvv6rdBeV07D9s43frUS6xYd1uFxHC
+ 7dZYWJjZmyUf5evr1W1gCgwLXG0PEi9n3qmz1lelQ8lSocmvxBKtMbX/OKhAfuP/iIwnTsww
+ 95A2SaPiQZA51NywV8OFgsN0ITl2PlZ4Tp9hHERDe6nQCsNI/Us=
+In-Reply-To: <20241219125317.v3.1.I2040fa004dafe196243f67ebcc647cbedbb516e6@changeid>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Tue, Dec 17, 2024 at 02:56:36PM +0530, Pratyush Brahma wrote:
-> This is based on Jingyi Wang's patches [1] to introduce the
-> initial dtsi for QCS8300 SOC.
-
-Based on? Do you mean that it depends on the mentioned patch? Is it
-merged already by maintainers or not?
+On 12/19/24 12:53, Douglas Anderson wrote:
+> The code for detecting CPUs that are vulnerable to Spectre BHB was
+> based on a hardcoded list of CPU IDs that were known to be affected.
+> Unfortunately, the list mostly only contained the IDs of standard ARM
+> cores. The IDs for many cores that are minor variants of the standard
+> ARM cores (like many Qualcomm Kyro CPUs) weren't listed. This led the
+> code to assume that those variants were not affected.
 > 
-> New updates to the memory map of qcs8300 have brought in some
-> new carveouts (viz. sail_ss, firmware memory, tz memory, etc.) and
-> also the base addresses of some of the pil carveouts (q6_cdsp_dtb_mem 
-> and cdsp_mem) have changed.
-
-Is there any kind of reference to the firmware / bootloaders version
-which changed the layout?
-
+> Flip the code on its head and instead assume that a core is vulnerable
+> if it doesn't have CSV2_3 but is unrecognized as being safe. This
+> involves creating a "Spectre BHB safe" list.
 > 
-> Incorporate these changes in the new memory map for qcs8300. Also
-> modify the labels of some of the carveouts to indicate pil carveouts.
+> As of right now, the only CPU IDs added to the "Spectre BHB safe" list
+> are ARM Cortex A35, A53, A55, A510, and A520. This list was created by
+> looking for cores that weren't listed in ARM's list [1] as per review
+> feedback on v2 of this patch [2].
 > 
-> [1] https://lore.kernel.org/all/20240925-qcs8300_initial_dtsi-v2-3-494c40fa2a42@quicinc.com/
-
-If the patch is merged, please use the standard "commit aabbccdd ("Make
-foo do bar")" notation. If it is not yet. please move this under three
-dashes line, so that it doesn't get recorded in the git history.
-
+> NOTE: this patch will not actually _mitigate_ anyone, it will simply
+> cause them to report themselves as vulnerable. If any cores in the
+> system are reported as vulnerable but not mitigated then the whole
+> system will be reported as vulnerable though the system will attempt
+> to mitigate with the information it has about the known cores.
 > 
-> Signed-off-by: Pratyush Brahma <quic_pbrahma@quicinc.com>
+> [1] https://developer.arm.com/Arm%20Security%20Center/Spectre-BHB
+> [2] https://lore.kernel.org/r/20241219175128.GA25477@willie-the-truck
+> 
+> 
+> Fixes: 558c303c9734 ("arm64: Mitigate spectre style branch history side channels")
+> Cc: stable@vger.kernel.org
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
 > ---
->  arch/arm64/boot/dts/qcom/qcs8300.dtsi | 180 ++++++++++++++++++++++++--
->  1 file changed, 170 insertions(+), 10 deletions(-)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/qcs8300.dtsi b/arch/arm64/boot/dts/qcom/qcs8300.dtsi
-> index 2c35f96c3f28..e16d11c05515 100644
-> --- a/arch/arm64/boot/dts/qcom/qcs8300.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/qcs8300.dtsi
-> @@ -377,6 +377,21 @@
->  		#size-cells = <2>;
->  		ranges;
->  
-> +		sail_ss_mem: sail-ss-region@80000000 {
-> +			reg = <0x0 0x80000000 0x0 0x10000000>;
-> +			no-map;
-> +		};
-> +
-> +		hyp_mem: hyp-region@90000000 {
-> +			reg = <0x0 0x90000000 0x0 0x600000>;
-> +			no-map;
-> +		};
-> +
-> +		xbl_boot_mem: xbl-boot-region@90600000 {
-> +			reg = <0x0 0x90600000 0x0 0x200000>;
-> +			no-map;
-> +		};
-> +
->  		aop_image_mem: aop-image-region@90800000 {
->  			reg = <0x0 0x90800000 0x0 0x60000>;
->  			no-map;
-> @@ -388,6 +403,26 @@
->  			no-map;
->  		};
->  
-> +		uefi_logs_mem: uefi-logs-region@908b0000 {
-> +			reg = <0x0 0x908b0000 0x0 0x10000>;
-> +			no-map;
-> +		};
-> +
-> +		ddr_training_checksum_data_mem: ddr-training-checksum-data-region@908c0000 {
-> +			reg = <0x0 0x908c0000 0x0 0x1000>;
-> +			no-map;
-> +		};
-> +
-> +		reserved_mem: reserved-region@908f0000 {
-> +			reg = <0x0 0x908f0000 0x0 0xe000>;
-> +			no-map;
-> +		};
-> +
-> +		secdata_apps_mem: secdata-apps-region@908fe000 {
-> +			reg = <0x0 0x908fe000 0x0 0x2000>;
-> +			no-map;
-> +		};
-> +
->  		smem_mem: smem@90900000 {
->  			compatible = "qcom,smem";
->  			reg = <0x0 0x90900000 0x0 0x200000>;
-> @@ -395,6 +430,61 @@
->  			hwlocks = <&tcsr_mutex 3>;
->  		};
->  
-> +		tz_sail_mailbox_mem: tz-sail-mailbox-region@90c00000 {
-> +			reg = <0x0 0x90c00000 0x0 0x100000>;
-> +			no-map;
-> +		};
-> +
-> +		sail_mailbox_mem: sail-mailbox-region@90d00000 {
-> +			reg = <0x0 0x90d00000 0x0 0x100000>;
-> +			no-map;
-> +		};
-> +
-> +		sail_ota_mem: sail-ota-region@90e00000 {
-> +			reg = <0x0 0x90e00000 0x0 0x300000>;
-> +			no-map;
-> +		};
-> +
-> +		xbl_dtlog_mem: xbl-dtlog-region@91a40000 {
-> +			reg = <0x0 0x91a40000 0x0 0x40000>;
-> +			no-map;
-> +		};
-> +
-> +		gunyah_md_mem: gunyah-md-region@91a80000 {
-> +			reg = <0x0 0x91a80000 0x0 0x80000>;
-> +			no-map;
-> +		};
-> +
-> +		aoss_backup_mem: aoss-backup-region@91b00000 {
-> +			reg = <0x0 0x91b00000 0x0 0x40000>;
-> +			no-map;
-> +		};
-> +
-> +		cpucp_backup_mem: cpucp-backup-region@91b40000 {
-> +			reg = <0x0 0x91b40000 0x0 0x40000>;
-> +			no-map;
-> +		};
-> +
-> +		tz_config_backup_mem: tz-config-backup-region@91b80000 {
-> +			reg = <0x0 0x91b80000 0x0 0x10000>;
-> +			no-map;
-> +		};
-> +
-> +		ddr_training_data_mem: ddr-training-data-region@91b90000 {
-> +			reg = <0x0 0x91b90000 0x0 0x10000>;
-> +			no-map;
-> +		};
-> +
-> +		cdt_data_backup_mem: cdt-data-backup-region@91ba0000 {
-> +			reg = <0x0 0x91ba0000 0x0 0x1000>;
-> +			no-map;
-> +		};
-> +
-> +		tzffi_mem: tzffi-region@91c00000 {
-> +			reg = <0x0 0x91c00000 0x0 0x1400000>;
-> +			no-map;
-> +		};
-> +
->  		lpass_machine_learning_mem: lpass-machine-learning-region@93b00000 {
->  			reg = <0x0 0x93b00000 0x0 0xf00000>;
->  			no-map;
-> @@ -405,12 +495,12 @@
->  			no-map;
->  		};
->  
-> -		camera_mem: camera-region@95200000 {
-> +		camera_mem: pil-camera-region@95200000 {
->  			reg = <0x0 0x95200000 0x0 0x500000>;
->  			no-map;
->  		};
->  
-> -		adsp_mem: adsp-region@95c00000 {
-> +		adsp_mem: pil-adsp-region@95c00000 {
->  			no-map;
->  			reg = <0x0 0x95c00000 0x0 0x1e00000>;
->  		};
-> @@ -425,35 +515,105 @@
->  			no-map;
->  		};
->  
-> -		gpdsp_mem: gpdsp-region@97b00000 {
-> +		gpdsp_mem: pil-gpdsp-region@97b00000 {
->  			reg = <0x0 0x97b00000 0x0 0x1e00000>;
->  			no-map;
->  		};
->  
-> -		q6_cdsp_dtb_mem: q6-cdsp-dtb-region@99900000 {
-> -			reg = <0x0 0x99900000 0x0 0x80000>;
-> +		q6_cdsp_dtb_mem: q6-cdsp-dtb-region@9b700000 {
-> +			reg = <0x0 0x9b700000 0x0 0x80000>;
->  			no-map;
->  		};
->  
-> -		cdsp_mem: cdsp-region@99980000 {
-> -			reg = <0x0 0x99980000 0x0 0x1e00000>;
-> +		cdsp_mem: pil-cdsp-region@99900000 {
-> +			reg = <0x0 0x99900000 0x0 0x1e00000>;
->  			no-map;
->  		};
->  
-> -		gpu_microcode_mem: gpu-microcode-region@9b780000 {
-> +		gpu_microcode_mem: pil-gpu-region@9b780000 {
->  			reg = <0x0 0x9b780000 0x0 0x2000>;
->  			no-map;
->  		};
->  
-> -		cvp_mem: cvp-region@9b782000 {
-> +		cvp_mem: pil-cvp-region@9b782000 {
->  			reg = <0x0 0x9b782000 0x0 0x700000>;
->  			no-map;
->  		};
->  
-> -		video_mem: video-region@9be82000 {
-> +		video_mem: pil-video-region@9be82000 {
->  			reg = <0x0 0x9be82000 0x0 0x700000>;
->  			no-map;
->  		};
-> +
-> +		audio_mdf_mem: audio-mdf-region@ae000000 {
-> +			reg = <0x0 0xae000000 0x0 0x1000000>;
-> +			no-map;
-> +		};
-> +
-> +		firmware_mem: firmware-region@b0000000 {
-> +			reg = <0x0 0xb0000000 0x0 0x800000>;
-> +			no-map;
-> +		};
-> +
-> +		hyptz_reserved_mem: hyptz-reserved@beb00000 {
-> +			reg = <0x0 0xbeb00000 0x0 0x11500000>;
-> +			no-map;
-> +		};
-> +
-> +		firmware_scmi_mem: scmi-region@d0000000 {
-> +			reg = <0x0 0xd0000000 0x0 0x40000>;
-> +			no-map;
-> +		};
-> +
-> +		firmware_logs_mem: firmware-logs-region@d0040000 {
-> +			reg = <0x0 0xd0040000 0x0 0x10000>;
-> +			no-map;
-> +		};
-> +
-> +		firmware_audio_mem: firmware-audio-region@d0050000 {
-> +			reg = <0x0 0xd0050000 0x0 0x4000>;
-> +			no-map;
-> +		};
-> +
-> +		firmware_reserved_mem: firmware-reserved-region@d0054000 {
-> +			reg = <0x0 0xd0054000 0x0 0x9c000>;
-> +			no-map;
-> +		};
-> +
-> +		firmwarequantum_test_mem: firmwarequantum-test-region@d00f0000 {
-> +			reg = <0x0 0xd00f0000 0x0 0x10000>;
-> +			no-map;
-> +		};
-> +
-> +		tags_mem: tags-region@d0100000 {
-> +			reg = <0x0 0xd0100000 0x0 0x800000>;
-> +			no-map;
-> +		};
-> +
-> +		qtee_mem: qtee-region@d1300000 {
-> +			reg = <0x0 0xd1300000 0x0 0x500000>;
-> +			no-map;
-> +		};
-> +
-> +		deep_sleep_back_up_mem: deep-sleep-back-up-region@d1800000 {
-> +			reg = <0x0 0xd1800000 0x0 0x100000>;
-> +			no-map;
-> +		};
-> +
-> +		trusted_apps_mem: trusted-apps-region@d1900000 {
-> +			reg = <0x0 0xd1900000 0x0 0x1900000>;
-> +			no-map;
-> +		};
-> +
-> +		tz_stat_mem: tz-stat-region@db100000 {
-> +			reg = <0x0 0xdb100000 0x0 0x100000>;
-> +			no-map;
-> +		};
-> +
-> +		cpucp_fw_mem: cpucp-fw-region@db200000 {
-> +			reg = <0x0 0xdb200000 0x0 0x100000>;
-> +			no-map;
-> +		};
->  	};
->  
->  	smp2p-adsp {
-> -- 
-> 2.17.1
+> Changes in v3:
+> - Don't guess the mitigation; just report unknown cores as vulnerable.
+> - Restructure the code since is_spectre_bhb_affected() defaults to true
 > 
+> Changes in v2:
+> - New
+> 
+>   arch/arm64/include/asm/spectre.h |   1 -
+>   arch/arm64/kernel/proton-pack.c  | 144 +++++++++++++++++--------------
+>   2 files changed, 77 insertions(+), 68 deletions(-)
+> 
+> diff --git a/arch/arm64/include/asm/spectre.h b/arch/arm64/include/asm/spectre.h
+> index 0c4d9045c31f..f1524cdeacf1 100644
+> --- a/arch/arm64/include/asm/spectre.h
+> +++ b/arch/arm64/include/asm/spectre.h
+> @@ -97,7 +97,6 @@ enum mitigation_state arm64_get_meltdown_state(void);
+>   
+>   enum mitigation_state arm64_get_spectre_bhb_state(void);
+>   bool is_spectre_bhb_affected(const struct arm64_cpu_capabilities *entry, int scope);
+> -u8 spectre_bhb_loop_affected(int scope);
+>   void spectre_bhb_enable_mitigation(const struct arm64_cpu_capabilities *__unused);
+>   bool try_emulate_el1_ssbs(struct pt_regs *regs, u32 instr);
+>   
+> diff --git a/arch/arm64/kernel/proton-pack.c b/arch/arm64/kernel/proton-pack.c
+> index da53722f95d4..06e04c9e6480 100644
+> --- a/arch/arm64/kernel/proton-pack.c
+> +++ b/arch/arm64/kernel/proton-pack.c
+> @@ -845,52 +845,68 @@ static unsigned long system_bhb_mitigations;
+>    * This must be called with SCOPE_LOCAL_CPU for each type of CPU, before any
+>    * SCOPE_SYSTEM call will give the right answer.
+>    */
+> -u8 spectre_bhb_loop_affected(int scope)
+> +static bool is_spectre_bhb_safe(int scope)
+> +{
+> +	static const struct midr_range spectre_bhb_safe_list[] = {
+> +		MIDR_ALL_VERSIONS(MIDR_CORTEX_A35),
+> +		MIDR_ALL_VERSIONS(MIDR_CORTEX_A53),
 
+You can add MIDR_ALL_VERSIONS(MIDR_BRAHMA_B53) here as well. Thanks
 -- 
-With best wishes
-Dmitry
+Florian
+
 
