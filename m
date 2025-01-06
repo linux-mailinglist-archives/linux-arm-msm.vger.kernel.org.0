@@ -1,78 +1,79 @@
-Return-Path: <linux-arm-msm+bounces-44001-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-44003-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 02540A026DE
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jan 2025 14:41:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 142C9A026F3
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jan 2025 14:44:59 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 52F4C1885DE3
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jan 2025 13:41:34 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 21EAF1885FE2
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jan 2025 13:45:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8EE2F1DEFDD;
-	Mon,  6 Jan 2025 13:40:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C5FC41DDC2D;
+	Mon,  6 Jan 2025 13:44:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="PAQxFpv9"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="nLEsiTv0"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qk1-f174.google.com (mail-qk1-f174.google.com [209.85.222.174])
+Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 411951DE8B6
-	for <linux-arm-msm@vger.kernel.org>; Mon,  6 Jan 2025 13:40:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3CCC1DDC2E
+	for <linux-arm-msm@vger.kernel.org>; Mon,  6 Jan 2025 13:44:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736170817; cv=none; b=icBypPM91n45jeyNDNwKJQ42+i+g9k81av3g8khPpbyMXxOeXvxmnXt+FWxeH/5BXoVoGM6yZLviNYgcyL8xlW89YdHW6tvy/Z4p6m/Ay6hx4GIvWTRwXEsJ/Y6akZi6KzGRrboeOhGFeoZYFZuiqJ2bJp6AldZsAz3trfB8wEY=
+	t=1736171084; cv=none; b=JZ49wwo+b9MSs0oukMcAiqMfLFY1fjv0FBdDjCZ2myxEbow4ZHN/xfYgv5F8IFSqcbYbW0rEbsren6LA1bAmNgUbjExXRmTeTl4DV5FPz1BRlNc8MWSAmOSxymOMIuHLWqBKNxZ5b90D6OUW9EPas+OpvNXFOmh7CivY+oh9TcU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736170817; c=relaxed/simple;
-	bh=/hPtkiqbMiSuYUABeLf0k0X64qWSBh2CcTj5F3/fdPI=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=f4ElprfIg6/WVvqwnToPhhq+TMgUR+jlNJFnRtQwdrv4bKnErWDdRZLjlR25Blf46uMj5XRSmRLTxJEfTjZU2w1Me/GXMEXwdMs51/gxyB87P+LdiH/Sz3fIiA9mSkfaiQN8gMWM6RJWPdv+8twPdsxoTDY2oHAd1TzrOUAzdJA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=PAQxFpv9; arc=none smtp.client-ip=209.85.222.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
-Received: by mail-qk1-f174.google.com with SMTP id af79cd13be357-7b9c6c2c44eso918866285a.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Jan 2025 05:40:15 -0800 (PST)
+	s=arc-20240116; t=1736171084; c=relaxed/simple;
+	bh=IzLjyqiZQYj0HolvNDwEGq9bzWMpH1csfdZOubbN4CY=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=SYwByEyD/fpY8yWzAtxvW1pAFRYjHURwN/knAWjcJmMmdEq8DmV7TSD3vc+GEgRkcqkPARL4zMR38IqomrQQomaWz5BAHzOild7iF9yR/gCY9zaWihiCKKYkq3VVdfwNtRjN+473/XUytM7Lkwb94Vk/LVS97oV2UDtbciSnryY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=nLEsiTv0; arc=none smtp.client-ip=209.85.128.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-436230de7a3so22460905e9.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Jan 2025 05:44:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1736170814; x=1736775614; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=OaluQD75i5WN0/M2E9V2xLSR9NLQRzro4V8nhNRsJEo=;
-        b=PAQxFpv9MIGmrwTaRjVIdwABBj58hHScDnH38p+lDl4EVwNoyIoOrdWTWfvpi9x04D
-         KhQCidNj7qaHL0gfXVUUQVleuywVolb9Jmbh4hgjbCrpwoXxgL28jr5b9EZpNulVa8Gy
-         k2pNZmcNOjW1GJMxV+SE/kKt69WQ/iI8ChNFM=
+        d=linaro.org; s=google; t=1736171081; x=1736775881; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=EMnwIoklKmOQ9k3BBN3w1reDAPPc+Np1bkPck8HODv8=;
+        b=nLEsiTv0iLxLdXZwuRW/PRC2sIJ0D8DCgYgsAMD+C8bRVf94qhP9Z8iMduflxdGO5r
+         fP+jJYSmkhNgexV5pR4yQcYsYPdNmTcv9O8HIuRCmOzyp5LtBFunUR3ii+7Stusgzbi0
+         YMfluSbz1wYKtOh+GW/jbw/O11ZJwD4/oxtkya9jIQe+83YCkTCJNxdnifzoIXQAZVLd
+         S2XiDAvD0o7R+GbosTbNhNx3CG6TLQ9txIfI5AgYr0O7fQmwP9dVWa2/3ulmaE2oMGrq
+         GAwhk25nQjnfpThPV+8I8IhplYALs+G1hC3qrg46uam0f7y4C4CVJOVhtViHtXjRsSTC
+         gIzQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736170814; x=1736775614;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=OaluQD75i5WN0/M2E9V2xLSR9NLQRzro4V8nhNRsJEo=;
-        b=RMvmzXgxc7ms0nxDkwMZhXkxhXQqDiVC2ne65oN8XHN20wcD9K1P3toqqefKvEormX
-         5WSGrK9OjtM29bIPUyN1kyG3QcBr5/qkI/ch2+SCmcjniZcvBE2GzCIHemL5GNrn5T69
-         wMexL9wXuwsng38mnjDsRU4GBnDJVG6tbiKoAYQrx6XJMJM+JJf1ngUvXPU34ZQdkREx
-         +bUQLTJjALlx99omngydFMR3nBDyJxr3PQGOiDlMKy5DFK0Z18Fj0AWzTVk9T+oBCcJI
-         EO+qeoViIWRemyngWva8IqI9ue9kiv66cJyu2J38TjcnpAXLjoG831zMn13LnDj7euc2
-         y8AQ==
-X-Forwarded-Encrypted: i=1; AJvYcCX73Mg6mUxQT3X6zbtHjcpDGQE7PWWICBB9MfW2cfY8iYGQ3k0NwKqNPcPZJ9nYFi3Px+v/rrlrV3wKl8x5@vger.kernel.org
-X-Gm-Message-State: AOJu0YyLlaYiOwtAM1PV5XHmdkz6kAE8/ILByJJC2UVvzI2FoaZ5Pe7I
-	v+LFLKo8UKSeGW1Ku2VJvm5+82c0lwFcxr0hT/lDZGsTV2Au45vwL0mbNBHFNw==
-X-Gm-Gg: ASbGncvUFF65huU3HHEcI5MM3nE0ELyfnLuVvrWZyjpBtEnsW1CDMlh43yVgRVOItR9
-	ZE/Q4DRTPRswa+2J3AO1r40ALE0L9KsdoKrQ5mbuN3calYsYFb3YsP9KNpFBgCwSmibvxkd40/t
-	78DYcG+DonTA+rLp/7rAS0KplBJzvcfPyWG5JhaNEAe4v3ikzJtCGYXbUSk9nhRLOHggUnXgDPK
-	UR+vgH7lI4MallRpdgdgOY3nHg1XzNYIpBGItQEQzFYXfWSzokes4sS+MZiefgXOYNcHbXKt19X
-	1aqzMYBNvzyfVZinlYYBkzKWnSt47dnOoyHl
-X-Google-Smtp-Source: AGHT+IHv1oIpl6WcfgN36jKDKAWdHfzzIkAbnj9H7EHr8HHbAWlAP6Mwo+/BVH3tIZ5MTc2nhgENBw==
-X-Received: by 2002:a05:620a:468f:b0:7b6:d050:720f with SMTP id af79cd13be357-7b9ba79ae8bmr10079146685a.22.1736170814275;
-        Mon, 06 Jan 2025 05:40:14 -0800 (PST)
-Received: from denia.c.googlers.com (172.174.245.35.bc.googleusercontent.com. [35.245.174.172])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-7b9ac478d35sm1501861085a.90.2025.01.06.05.40.13
+        d=1e100.net; s=20230601; t=1736171081; x=1736775881;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=EMnwIoklKmOQ9k3BBN3w1reDAPPc+Np1bkPck8HODv8=;
+        b=ZsJjDVZkEvdcXxX4yUNwZ+n4d4nKWPO4vGorABdln5cxoZhM2q5+50fRRdWpW+3IpQ
+         /ZZzdDsbWI41W6Pbq6+G4iFSo+raHhjFq/m71I1NGCDHWei4jyd8/t4qHdYVvMXBxIgx
+         gmlDEqup11aPvCaS6YMcQr06RkN+m20tYLpzfwpWqV7xOSAcPi9E0p55Wv6bdPiZmlBI
+         WtQskoUrbH0b9L6rD5rEo0/xED+57/j89d7EsQhV6apIJ31Euy1lLLIQ5HJjHkvMJ85+
+         Kg1KR+HM9S6uLQM9au/26HTCe23fCXABAHTKJZAFETrGaNPfbBITjbOw5KQREo0RvyRd
+         S2Og==
+X-Gm-Message-State: AOJu0YxvQz+cB/e+m+g/ug7bt+cfVcWaS6EYnO73psxTtoSUB6aj3j5u
+	8QIS1NMQJyrpCLO37Drh9Qbg3o2J4YRlFrNgkhF1mR3q9Lx2F61IbQt0OFLkCv1SzzEgFGuPMBw
+	0
+X-Gm-Gg: ASbGncs382VZVNWaKrpTN+nD1o2JYiKeZAZOx11sFHcHpD+fSsO3CXsdmg/Wzc7CeWy
+	B3w3bmBGZDT92qBYnfyNv2z0p7Gu4UrhTgp14wG4CYzjEGKI7ilfkg15SIlzlhzWALFj+v6xMQZ
+	nTxoYoiLUJDgyWbgK3S9u4dgiyEoJ510Nd1f2buS8JEQGVgmSIHWMupHKqqbHhu4d70XMfeUom/
+	0g7Ko7BZO5TdrwHU7Mz1EdP5bXt+92gw7t57RGWFZKYrYXy0aSNEM3NSHfd7NHIWhxSSV7E
+X-Google-Smtp-Source: AGHT+IEXQzyXvJh87C4qYu7Ax5vz3+jmqOb6lMmmEshKHmHAav4FLPK3omE//aDu+k4UsNcOasv61g==
+X-Received: by 2002:adf:9b83:0:b0:38a:4184:1239 with SMTP id ffacd0b85a97d-38a418412d5mr11223749f8f.10.1736171081048;
+        Mon, 06 Jan 2025 05:44:41 -0800 (PST)
+Received: from [127.0.1.1] ([178.197.223.165])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38a1c8acc02sm47383151f8f.104.2025.01.06.05.44.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 06 Jan 2025 05:40:13 -0800 (PST)
-From: Ricardo Ribalda <ribalda@chromium.org>
-Date: Mon, 06 Jan 2025 13:40:12 +0000
-Subject: [PATCH v4 6/6] media: venus: vdec: Make the range of us_per_frame
- explicit
+        Mon, 06 Jan 2025 05:44:40 -0800 (PST)
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH v2 0/3] clk: qcom: sm8750: Add sm8750-dispcc clock
+ controller
+Date: Mon, 06 Jan 2025 14:44:28 +0100
+Message-Id: <20250106-sm8750-dispcc-v2-0-6f42beda6317@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -81,59 +82,75 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250106-fix-cocci-v4-6-3c8eb97995ba@chromium.org>
-References: <20250106-fix-cocci-v4-0-3c8eb97995ba@chromium.org>
-In-Reply-To: <20250106-fix-cocci-v4-0-3c8eb97995ba@chromium.org>
-To: Mauro Carvalho Chehab <mchehab@kernel.org>, 
- Stanimir Varbanov <stanimir.k.varbanov@gmail.com>, 
- Vikash Garodia <quic_vgarodia@quicinc.com>, 
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>, 
- Hans Verkuil <hans.verkuil@cisco.com>, Hans Verkuil <hverkuil@xs4all.nl>
-Cc: linux-media@vger.kernel.org, linux-kernel@vger.kernel.org, 
- Stanimir Varbanov <stanimir.varbanov@linaro.org>, 
- linux-arm-msm@vger.kernel.org, Ricardo Ribalda <ribalda@chromium.org>
-X-Mailer: b4 0.13.0
+X-B4-Tracking: v=1; b=H4sIADzee2cC/13MzQoCIRSG4VsZzjrjKJpDq+4jZmH+zBwoHTSkG
+ Lz3bKBNy/eD79mg+Ey+wHnYIPtKhVLsIQ4D2MXE2TNyvUGgkJwLxcpj1AqZo7JaywIGo28nGYx
+ 10D9r9oFeu3edei9Unim/d77y7/qTxj+pcoaMC9SojESu7OVO0eR0THmGqbX2ARN568KrAAAA
+X-Change-ID: 20241125-sm8750-dispcc-f0fa7b64facd
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Michael Turquette <mturquette@baylibre.com>, 
+ Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, 
+ Neil Armstrong <neil.armstrong@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ Conor Dooley <conor.dooley@microchip.com>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1462;
+ i=krzysztof.kozlowski@linaro.org; h=from:subject:message-id;
+ bh=IzLjyqiZQYj0HolvNDwEGq9bzWMpH1csfdZOubbN4CY=;
+ b=owEBbQKS/ZANAwAKAcE3ZuaGi4PXAcsmYgBne95BbwhkZoUPTZwRDH6P8tjnEWzo4z7vS6O7r
+ +AIEX/2BTiJAjMEAAEKAB0WIQTd0mIoPREbIztuuKjBN2bmhouD1wUCZ3veQQAKCRDBN2bmhouD
+ 1xd8D/98vuMER27s5/cr0rdd39XTxPqh2YSlg9Ybvb8cXrFN+jeQV/TvgF4ve0t52SKauCaT5Sc
+ 51gjdcMyNtcT5XPnfY9krIgClBvPl3BAXJuHwM2txKngbPe6L3Kz0A7s3ETUNwUIGvPlMbXUDnQ
+ jnyYwRuxEUz6GAQ+aubhgWmJRotodmPzoGdGd9PPyc65CyPWdYpDkBv4e8RAMbM82rdiz0YfIR5
+ tuudFNp//IgliJUaNSdm1e1CJEbXSyeVHH9rfRdnyK7p3sK+QPSAU/k1v7aMmypZqOlMhDjM6Es
+ FdEh0p98uLW5GUZmNxITGloM6DAbY4GnIUrTM0Nj5rGhx2cGdJwUvJkDjkWEuAme83Qd+q0fV+q
+ yZPXvDjMJ/cDvkALAF13UJRxWtGUB5qKYGPHyzCnQGXxt8jEj2eQ16L4w0VYwcEFN7HXaKAtDwa
+ QHn2K6i2SORte35KSBhTfctNd8kU7jYgQqBh3LN1xOC/+Kch6UUFVoxA2Cm1pQJZzfT2QPknKnI
+ HHcqSi4QQWopKNdJQetO+iySKhSBoD48FIXqz0RPQtAZdn8Bb9zqHTog8+jpt37twzXtgjwC673
+ r3VSrA8McuCy9DkM3bBVc5NxBaTQx3DEF6cHlI+WnyAy3J1hIs+HU2VW/MSyOm5I8Kjmu9e3Zpy
+ sMDhtoLYFZjo/fQ==
+X-Developer-Key: i=krzysztof.kozlowski@linaro.org; a=openpgp;
+ fpr=9BD07E0E0C51F8D59677B7541B93437D3B41629B
 
-Fps bigger than 0.000232829 fps, this fits in a 32 bit us_per_frame.
-There is no need to do a 64 bit division here.
-Also, the driver only works with whole fps.
+Add Display clock controller for SM8750.
 
-Found by cocci:
-drivers/media/platform/qcom/venus/vdec.c:488:1-7: WARNING: do_div() does a 64-by-32 division, please consider using div64_u64 instead.
+Changes in v2:
+- Implement feedback from Stephen - see individual patches changelog.
+- Few cleanups found during testing/review - see individual patches changelog.
+- Use clk_rcg2_shared_ops, where applicable.
+- Link to v1: https://lore.kernel.org/r/20241128-sm8750-dispcc-v1-0-120705a4015c@linaro.org
 
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
+Dependency:
+1. Taycan PLL and rest of clocks: "clks: qcom: Introduce clks for
+   SM8750"
+   https://lore.kernel.org/r/20241112002807.2804021-4-quic_molvera@quicinc.com
+
+Best regards,
+Krzysztof
+
 ---
- drivers/media/platform/qcom/venus/vdec.c | 7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
+Krzysztof Kozlowski (3):
+      dt-bindings: clock: qcom,sm8550-dispcc: Add SM8750 DISPCC
+      clk: qcom: clk-alpha-pll: Add Pongo PLL
+      clk: qcom: dispcc-sm8750: Add SM8750 Display clock controller
 
-diff --git a/drivers/media/platform/qcom/venus/vdec.c b/drivers/media/platform/qcom/venus/vdec.c
-index 6b8906ced6bc..88f6b5a3a4fe 100644
---- a/drivers/media/platform/qcom/venus/vdec.c
-+++ b/drivers/media/platform/qcom/venus/vdec.c
-@@ -464,7 +464,7 @@ static int vdec_s_parm(struct file *file, void *fh, struct v4l2_streamparm *a)
- 	struct venus_inst *inst = to_inst(file);
- 	struct v4l2_captureparm *cap = &a->parm.capture;
- 	struct v4l2_fract *timeperframe = &cap->timeperframe;
--	u64 us_per_frame, fps;
-+	u64 us_per_frame;
- 
- 	if (a->type != V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE &&
- 	    a->type != V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE)
-@@ -486,10 +486,7 @@ static int vdec_s_parm(struct file *file, void *fh, struct v4l2_streamparm *a)
- 	if (!us_per_frame || us_per_frame > USEC_PER_SEC)
- 		return -EINVAL;
- 
--	fps = (u64)USEC_PER_SEC;
--	do_div(fps, us_per_frame);
--
--	inst->fps = fps;
-+	inst->fps = USEC_PER_SEC / (u32)us_per_frame;
- 	timeperframe->numerator = 1;
- 	timeperframe->denominator = inst->fps;
- 
+ .../bindings/clock/qcom,sm8550-dispcc.yaml         |    4 +-
+ drivers/clk/qcom/Kconfig                           |   11 +
+ drivers/clk/qcom/Makefile                          |    1 +
+ drivers/clk/qcom/clk-alpha-pll.c                   |  165 +-
+ drivers/clk/qcom/clk-alpha-pll.h                   |    6 +
+ drivers/clk/qcom/dispcc-sm8750.c                   | 1963 ++++++++++++++++++++
+ include/dt-bindings/clock/qcom,sm8750-dispcc.h     |  112 ++
+ 7 files changed, 2260 insertions(+), 2 deletions(-)
+---
+base-commit: 3dc591aad724ed3578548c211cc3c368f6dc5947
+change-id: 20241125-sm8750-dispcc-f0fa7b64facd
 
+Best regards,
 -- 
-2.47.1.613.gc27f4b7a9f-goog
+Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 
