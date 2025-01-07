@@ -1,148 +1,188 @@
-Return-Path: <linux-arm-msm+bounces-44147-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-44148-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id E265EA04153
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jan 2025 14:58:07 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 98CE8A04241
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jan 2025 15:24:33 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0FA44165768
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jan 2025 13:58:05 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3DCB81888621
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jan 2025 14:21:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 37B761F131C;
-	Tue,  7 Jan 2025 13:57:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 15F161F37B4;
+	Tue,  7 Jan 2025 14:19:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ndufresne-ca.20230601.gappssmtp.com header.i=@ndufresne-ca.20230601.gappssmtp.com header.b="MB9P6/Da"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="jV+oKrol"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qv1-f50.google.com (mail-qv1-f50.google.com [209.85.219.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B3DB1F191D
-	for <linux-arm-msm@vger.kernel.org>; Tue,  7 Jan 2025 13:57:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B4C71F2C40;
+	Tue,  7 Jan 2025 14:19:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736258278; cv=none; b=Sw3RZS5RNk1QbXpuqTFoi4C2rivGT3ZCZRuvi7NPWRjmFUY1W9NEmoT2lYVNoUQV/AyOiWkw6jmQAxuskpcZstF+sQjDmRk1rZvsXsMK6S1KjfoEwGXcg/RaOWqzAvNyqun1kuCxX0VicrUdGMfX1wC5XshnjqBjPxxZiXpVBO0=
+	t=1736259570; cv=none; b=uByGFuAJ8wsG0Msvhf7aceiHvTWH5fBdLYzDje7bI9Ay01FtgvnsTR8s1MhVV3WeEJrfmJZtxPO3dJ3ZIBk9eLCH0RzdilrDTfM9gUroc2gvxHYTw5URaLTBqWbax49g5Nx9KfA8UeRo5CJUUBE+4lGhISj90UE0o/DbPGXWtM4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736258278; c=relaxed/simple;
-	bh=XTyG24D1CeOjSgwkEBhS4J5dOBcU4kH2tt6gva41xZE=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=bKptf1O5j1J3pM+PzMYTTX5fBIPEbaw2SrWZUQ9ZA82NJGWMEKRlMQb7H4oMfg4DjrUx7Gw/GdVUzqHZrdSTDB1M9lEXGj7kpKKuRDa0iBZhgIltYagfZO9AR6t5I8AI0/qu4QJ2OirkEY4adouEmkzYIvv2Grtc3cFLBQKyJlk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ndufresne.ca; spf=none smtp.mailfrom=ndufresne.ca; dkim=pass (2048-bit key) header.d=ndufresne-ca.20230601.gappssmtp.com header.i=@ndufresne-ca.20230601.gappssmtp.com header.b=MB9P6/Da; arc=none smtp.client-ip=209.85.219.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ndufresne.ca
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ndufresne.ca
-Received: by mail-qv1-f50.google.com with SMTP id 6a1803df08f44-6d8a3e99e32so126872996d6.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Jan 2025 05:57:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ndufresne-ca.20230601.gappssmtp.com; s=20230601; t=1736258274; x=1736863074; darn=vger.kernel.org;
-        h=mime-version:user-agent:content-transfer-encoding:references
-         :in-reply-to:date:cc:to:from:subject:message-id:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=XfVj6FlFhMc3oiLEFsY9aBgjICEEoiKXKRJpCRloMIs=;
-        b=MB9P6/Da0bbATv6+XvNOOfnz3XThggMslU67TwRNaVtKhzl1RQNDf4u+9GR/k+/x2R
-         AGsGkA0f9fwP9Q5g5fU1LCEKaUnI59wP1hzQHigoJsVisxXWK8N6T8cdZeJx75kNXguu
-         uDMmsshFlRyrOS6nHLAP0JMIJ5G5w1OHLPlK46ezofSgJF+HfNPcmslJRVD223YK4LuB
-         pEKDtYu1SVaRTWbfWXpGa1+03bcelqDWYif9KY2PaRnusZFBkSPKgcniVEWjNQHn/3Cd
-         Rb8n4ghaKunT2d35VpUsr+F3UfQ1nCPM6lIfIXJR2eNAXqHSiArJJy9ZfjkqvBX/leZW
-         NXMg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736258274; x=1736863074;
-        h=mime-version:user-agent:content-transfer-encoding:references
-         :in-reply-to:date:cc:to:from:subject:message-id:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=XfVj6FlFhMc3oiLEFsY9aBgjICEEoiKXKRJpCRloMIs=;
-        b=vApNgZCjNIB/mYOBW9hDQEZ064sBZ96WG1lz7x3GS8EdkydoQxtQlbfvasGrN9BkHb
-         IWfxNU+QijKMVMA4iqZFkPuK9SfZF3MVYrDsFZEOHmo8/UglfLBqLAwLJyARm9bhCuLI
-         l3l/URKV04SNzfsRXH3VAZ9UditIXBqjTFBhL0Syt0X/K+9J0MKUBxAUiaInxVVjIOF2
-         L8hX4bJFgOzMqp9ijqFOfOv6QDzggqbG/mTeUulmfBofAgCcu4ubviYD+iKbD+XzKXli
-         FcFWTlBTr56XonumcYbls66pXNnkg06vWcbfLctNlgf/wjiHZu9BW5cJebWKyBLE3bgw
-         OSZA==
-X-Forwarded-Encrypted: i=1; AJvYcCWMcDs6hef6fxLbv9rZhKu3hrTaJgERFae6Kab2xtjtpU87bDW9X5sTh8q00C8dDMW4psoY0uXy0rd5kdMv@vger.kernel.org
-X-Gm-Message-State: AOJu0YxQU1yAQUvfSdpooEwpwQ7jILthRCn8fy7RdJ0aT4GUjPoBFxiq
-	n6HS1q/ylbUwuhptF0EJ3yrFIpqZ4lGBo7c1H0Mv5xdMNPE5nAK8A6V4y9+/qoI=
-X-Gm-Gg: ASbGnctsSC2GNHtvETnpr+DeofeslBKsBllad2vx43RAbnZZUhAFjGtdCl+7x4R1PXc
-	YINO/Y5FrVRsgyYjkG0zEDpGN3SeW3eZkJGCqmyDW9W7U3I8ifoBLiXlZcN8E7s1Tj+fvFVeusP
-	A4q+N7HXWLkWW9GiedaDwWd5kqxQRZwqUamQzN+esnR2mMjsI6pelQUd+oAJ5M0jnfl+3EXeX+v
-	UnzCGOH6lSCPzReB9c/9s4diQ9JVQQShUsH3VhcstTo1A5pEQ8P+80HJA==
-X-Google-Smtp-Source: AGHT+IHPU1lCWtFpHhYsjCvkXWbXGnqexw3MD2VVfwbeG1yis8bUAo6lsxnfJ7XG9nLeGPhxmdC3Fg==
-X-Received: by 2002:ad4:5ce9:0:b0:6d8:9c92:654a with SMTP id 6a1803df08f44-6dd2331e946mr1072703606d6.10.1736258274045;
-        Tue, 07 Jan 2025 05:57:54 -0800 (PST)
-Received: from nicolas-tpx395.localdomain ([2606:6d00:15:862e::7a9])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-6dd181c05f7sm180854666d6.90.2025.01.07.05.57.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Jan 2025 05:57:53 -0800 (PST)
-Message-ID: <635ce4ed82aaca422b869f467300b0eccf9c8703.camel@ndufresne.ca>
-Subject: Re: [PATCH v9 27/28] media: iris: enable video driver probe of
- SM8250 SoC
-From: Nicolas Dufresne <nicolas@ndufresne.ca>
-To: Dikshita Agarwal <quic_dikshita@quicinc.com>, Mauro Carvalho Chehab	
- <mchehab+huawei@kernel.org>, Sebastian Fricke
- <sebastian.fricke@collabora.com>
-Cc: Vikash Garodia <quic_vgarodia@quicinc.com>, Abhinav Kumar	
- <quic_abhinavk@quicinc.com>, Mauro Carvalho Chehab <mchehab@kernel.org>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley	 <conor+dt@kernel.org>, Philipp Zabel
- <p.zabel@pengutronix.de>, Hans Verkuil	 <hverkuil@xs4all.nl>, Bryan
- O'Donoghue <bryan.odonoghue@linaro.org>, Dmitry Baryshkov
- <dmitry.baryshkov@linaro.org>, Neil Armstrong <neil.armstrong@linaro.org>,
- Uwe =?ISO-8859-1?Q?Kleine-K=F6nig?=	 <u.kleine-koenig@baylibre.com>,
- Jianhua Lu <lujianhua000@gmail.com>, Stefan Schmidt
- <stefan.schmidt@linaro.org>, linux-media@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, 	devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-Date: Tue, 07 Jan 2025 08:57:52 -0500
-In-Reply-To: <fbe0d935-a3cf-dfa0-aad8-56834a0a002c@quicinc.com>
-References: <20241212-qcom-video-iris-v9-0-e8c2c6bd4041@quicinc.com>
-	 <20241212-qcom-video-iris-v9-27-e8c2c6bd4041@quicinc.com>
-	 <20241223113027.21b8f7ab@foz.lan>
-	 <fbe0d935-a3cf-dfa0-aad8-56834a0a002c@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.54.2 (3.54.2-1.fc41) 
+	s=arc-20240116; t=1736259570; c=relaxed/simple;
+	bh=Q6MQDHNRFKm2sOpuRD1mFw1ZawQQ014ZZApZqBmyNAM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=UBIyuX/KsSwQSV9JIAKYHivObgt0papQoFWgh1iW48mGsmQn2WYEylybGj5Nty0llDwkLZA6ept+Ekyp3lLdxQ4TBqYZnYxTLHdecfc3LbiB7tTLy3T18BVaGazjYclFv1avmOoxBpyI0Md7KeZd0Cdf/NfIMERe94ytkDzmpDk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=jV+oKrol; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 507A8Pbe023187;
+	Tue, 7 Jan 2025 14:19:11 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	kdUcPs4cnRbG4X/cME+w/iNc+oPWaYkwkn8rqB4yEWM=; b=jV+oKrol3mWJ+rhb
+	TUQCXfCh6Mn1iIMMebj3cCmWkM7FZ3FENG6pmFlMAom0jU/2E8v17rHUWhYj+laM
+	EZ+NAMsvsL5Pkzx2U72VzTYrEVpx2TSqaZWG7DWiI0f8RymF3LnI9RxcjZZFDFfc
+	WL0wmLdR9WvWYKixl7a4fkVw6WbvfG/WRIyG5Q4ultHdL5hv1mKC82Y2ioCWsnju
+	YC2D4NVdML43QaIc89ERNDlAhda2N9A+YbtUdwjx6qp3Lx99VUiPjZa7jHw+tEdc
+	Q5odytN8ggXLdxt6q8dlU3PWagpyJ96lwBh6QrCEIIzQzLLz509xeOi4zc985dA3
+	ePSDkA==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44128nrjuk-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 07 Jan 2025 14:19:11 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 507EJAwU024293
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 7 Jan 2025 14:19:10 GMT
+Received: from [10.216.0.179] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 7 Jan 2025
+ 06:19:04 -0800
+Message-ID: <6d75827d-5285-35ff-bf9b-aec77cd8304e@quicinc.com>
+Date: Tue, 7 Jan 2025 19:49:00 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.1
+Subject: Re: [PATCH V1] schemas: pci: bridge: Document PCI L0s & L1 entry
+ delay and nfts
+Content-Language: en-US
+To: Rob Herring <robh@kernel.org>,
+        Krishna Chaitanya Chundru
+	<krishna.chundru@oss.qualcomm.com>
+CC: <andersson@kernel.org>, <dmitry.baryshkov@linaro.org>,
+        <manivannan.sadhasivam@linaro.org>, <krzk@kernel.org>,
+        <helgaas@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <lpieralisi@kernel.org>, <kw@linux.com>,
+        <conor+dt@kernel.org>, <linux-pci@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <devicetree-spec@vger.kernel.org>,
+        <quic_vbadigan@quicinc.com>
+References: <20250106093304.604829-1-krishna.chundru@oss.qualcomm.com>
+ <CAL_JsqJXGUmzE+tPccDmdi5r0YvQ5kOL2mh3e6KtEvTnsexnyg@mail.gmail.com>
+From: Krishna Chaitanya Chundru <quic_krichai@quicinc.com>
+In-Reply-To: <CAL_JsqJXGUmzE+tPccDmdi5r0YvQ5kOL2mh3e6KtEvTnsexnyg@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: YtVJhBZfzPH_hrZe9NfpqH6sKmuy8ESH
+X-Proofpoint-ORIG-GUID: YtVJhBZfzPH_hrZe9NfpqH6sKmuy8ESH
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999
+ priorityscore=1501 bulkscore=0 clxscore=1011 suspectscore=0 mlxscore=0
+ spamscore=0 impostorscore=0 lowpriorityscore=0 malwarescore=0 phishscore=0
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2501070120
 
-Le lundi 23 d=C3=A9cembre 2024 =C3=A0 16:21 +0530, Dikshita Agarwal a =C3=
-=A9crit=C2=A0:
->=20
-> On 12/23/2024 4:00 PM, Mauro Carvalho Chehab wrote:
-> > Em Thu, 12 Dec 2024 17:21:49 +0530
-> > Dikshita Agarwal <quic_dikshita@quicinc.com> escreveu:
-> >=20
-> > > +	.dma_mask =3D GENMASK(31, 29) - 1,
-> >=20
-> > Setting a mask to GENMASK() - 1 sounds weird. Is it really what you wan=
-t?
-> > I so, why?
-> >=20
-> Hi Mauro,
->=20
-> the value of this dma mask should be 0xe0000000 -1.
->=20
-> The background for the same is, 0xe0000000 onward memory space is allocat=
-ed
-> for IO register space so we are restricting the driver buffer allocations
-> to 0xe0000000 - 1.
->=20
-> Based on the comments received in the past, we are using GENMASK to
-> generate 0xe0000000.
->=20
-> Does this answer your query or I missed something?
 
-I'm not sure it will do what you want. (0xe0000000 -1) matches ~BIT(29). Pe=
-rhaps
-you wanted to use ~0xe0000000.=20
 
-Nicolas
+On 1/6/2025 8:37 PM, Rob Herring wrote:
+> On Mon, Jan 6, 2025 at 3:33 AM Krishna Chaitanya Chundru
+> <krishna.chundru@oss.qualcomm.com> wrote:
+>>
+>> Some controllers and endpoints provide provision to program the entry
+>> delays of L0s & L1 which will allow the link to enter L0s & L1 more
+>> aggressively to save power.
+>>
+>> As per PCIe spec 6 sec 4.2.5.6, the number of Fast Training Sequence (FTS)
+>> can be programmed by the controllers or endpoints that is used for bit and
+>> Symbol lock when transitioning from L0s to L0 based upon the PCIe data rate
+>> FTS value can vary. So define a array for each data rate for nfts.
+>>
+>> These values needs to be programmed before link training.
+>>
+>> Signed-off-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+>> ---
+>> - This change was suggested in this patch: https://lore.kernel.org/all/20241211060000.3vn3iumouggjcbva@thinkpad/
+>> ---
+>>   dtschema/schemas/pci/pci-bus-common.yaml | 16 ++++++++++++++++
+> 
+> Do these properties apply to any link like downstream ports on a PCIe switch?
+> 
+These applies to downstream ports also on a switch.
+>>   1 file changed, 16 insertions(+)
+>>
+>> diff --git a/dtschema/schemas/pci/pci-bus-common.yaml b/dtschema/schemas/pci/pci-bus-common.yaml
+>> index 94b648f..f0655ba 100644
+>> --- a/dtschema/schemas/pci/pci-bus-common.yaml
+>> +++ b/dtschema/schemas/pci/pci-bus-common.yaml
+>> @@ -128,6 +128,16 @@ properties:
+>>       $ref: /schemas/types.yaml#/definitions/uint32
+>>       enum: [ 1, 2, 4, 8, 16, 32 ]
+>>
+>> +  nfts:
+> 
+> Kind of short. How about num-fts? Or is "NFTS" a PCI term?
+> 
+yes, nfts is the PCIe spec term.
+>> +    description:
+>> +      Number of Fast Training Sequence (FTS) used during L0s to L0 exit for bit
+>> +      and Symbol lock.
+>> +    $ref: /schemas/types.yaml#/definitions/uint32-array
+>> +    minItems: 1
+>> +    maxItems: 5
+> 
+> Need to define what is each entry? Gen 1 to 5?
+> 
+yes there are from Gen1 to Gen 5, I will update this in next patch these
+details.
+>> +    items:
+>> +      maximum: 255
+> 
+> Why not use uint8 array then?
+>
+In the previous commits it was suggested to use u32 by the reviewers to
+make it uniform withall the properties,it makes sense to use it as uint8
+as we are moving to generic properties.
 
->=20
-> Thanks,
-> Dikshita
-> > Thanks,
-> > Mauro
+- Krishna Chaitanya.
 
+>> +
+>>     reset-gpios:
+>>       description: GPIO controlled connection to PERST# signal
+>>       maxItems: 1
+>> @@ -150,6 +160,12 @@ properties:
+>>       description: Disables ASPM L0s capability
+>>       type: boolean
+>>
+>> +  aspm-l0s-entry-delay-ns:
+>> +    description: Aspm l0s entry delay.
+>> +
+>> +  aspm-l1-entry-delay-ns:
+>> +    description: Aspm l1 entry delay.
+>> +
+>>     vpcie12v-supply:
+>>       description: 12v regulator phandle for the slot
+>>
+>> --
+>> 2.34.1
+>>
+>>
+> 
 
