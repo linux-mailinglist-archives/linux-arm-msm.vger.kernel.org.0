@@ -1,172 +1,203 @@
-Return-Path: <linux-arm-msm+bounces-44123-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-44124-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3D4CAA03DA2
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jan 2025 12:27:29 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1F91AA03DBF
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jan 2025 12:31:52 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A4E731659C3
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jan 2025 11:27:20 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 83DCB1886F4D
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jan 2025 11:31:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B7D7F1EC01B;
-	Tue,  7 Jan 2025 11:25:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 519951EC00C;
+	Tue,  7 Jan 2025 11:31:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="QF0olLCY"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="bDY0BsLM"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f54.google.com (mail-ed1-f54.google.com [209.85.208.54])
+Received: from mail-lf1-f46.google.com (mail-lf1-f46.google.com [209.85.167.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34DF81EC006
-	for <linux-arm-msm@vger.kernel.org>; Tue,  7 Jan 2025 11:25:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00C941E9B2D
+	for <linux-arm-msm@vger.kernel.org>; Tue,  7 Jan 2025 11:31:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736249123; cv=none; b=B2kic6BVXp17+kZ/7/rMMN9O4XIMSGANlEmpNevoNaESht8/xmfPJRaNo9NVxBQejTjw60iBfX9zGPTjJymg1OLZxlnpYMyorJOGUXZJiCDCdfs8Z0aqu1oAlfEXtzNOP2AqEd2dRo5gTUZ33GSZLUyn+vsQMjnlKRbY99Ki7/k=
+	t=1736249497; cv=none; b=bmMnolCThZoTQrVpHGomugMmCNpyGmVruEcyAY1nr3tEFufPU+9lKnoWCvA6UoHdq5cOVoU698EwjUNALBleZiJk2WN2tP6xhZI48VydFAb6IJBmDQNh03tRHgsBrKEE4uLmRv6CM6vDAvePLEo8ygYn1DiGVdw/GWW6gErk39g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736249123; c=relaxed/simple;
-	bh=OfOEkScPJn2s6J2v3K85ULAVMG3MWr1RZT8sX5h4CTk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=FADD3OgSE77XPx0XLEIFzh9On6tqWZ1qwfKgjjO3Fq3rPiSDO0c8wxcpxdQIPukKceP2rK6le9elwrltbbCkkDOzQc+SG1q7IeiUplVLvD3jQTEzHHibYSP2I1V4250Pl9bWY7fx+/g/AeQrARRBGU7+Y3xdAMyVqyNVfOBWHcA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=QF0olLCY; arc=none smtp.client-ip=209.85.208.54
+	s=arc-20240116; t=1736249497; c=relaxed/simple;
+	bh=n2ZgSrqVf8Xk2qny3IM696f2eGm4cHoO0kMMWIjRAo8=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=DteNbSKhen6ocUidMntY3CTW/bIAERGkXv2sw8IgBPubsblm5bysRK1FZKOlv6ZEI7RHSix73wmsZOKBylPa3aeq6noVgpmCpRGyrhzELEpL7LjVIVRJ4/w5Bhfv/FQP86XPEp9D9bNAh5i0Lu9tSnrZ/E59CwODIQX9gbAVswI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=bDY0BsLM; arc=none smtp.client-ip=209.85.167.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f54.google.com with SMTP id 4fb4d7f45d1cf-5d3bbb0f09dso27005499a12.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Jan 2025 03:25:20 -0800 (PST)
+Received: by mail-lf1-f46.google.com with SMTP id 2adb3069b0e04-540218726d5so15902430e87.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Jan 2025 03:31:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1736249119; x=1736853919; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=7sn2BG5sdvDbcSzNStcu70GGFUnOPYuQtJHvkvNK9yg=;
-        b=QF0olLCYJJt+m6wTpwxV4PhaqOhVWSEn21fKNorrOjE+hY2f5z2+2EdVi3IfvuS9kI
-         LhvBq1fOaO+I1DuDdwBe/52d0twX9+2Sfn474wtfi15z5FHRT57HSALEJsKSP6VL8rP5
-         fkqdLimbA9yNHle0sJ35aLWWxoN5VVXsYyOooCnOQ2OErq8Q6xPPI9KEyjwgJ2Q9Z0jv
-         28oYf4vmcG6BqCuRDEnVE2ItlJ/Osul6bgyKPQvevSPgipd1+nEvNPWLtShE+sLQ34s2
-         iHchcQzp/GC/PP2+gBSy3iM9FU1sPiFST5OfcGnc3pQ/TEu/1KBE0SDWCc6B5UsV1fM/
-         0T1Q==
+        d=linaro.org; s=google; t=1736249493; x=1736854293; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=G3N5s5fdL2YNf7soMuvHTeYgJ8vy52pHoEfk/tcGSD8=;
+        b=bDY0BsLM8At+eWkCdB0yferZt4y0ZuBMSC877h89x4rpgxicEIerr/pRHppopCUyct
+         r9Hs8kpyv0NyehvBBMulpVi3AGyMqt3hekzIS6OTc0qiVk718eILL1u8lgfd3O2Ok46h
+         3AO+SXxP6a2+IKLAoBK7UeYLFhITGa3x61m0q2qiWGM9Vnpsz6xQ/pWrh/K6AA7KYwon
+         i7tgaMHzPKa5Cq/TfGO8wM/cj3KYwgLIq4V/Hot45tlHA2D/8d9DyHIfCha8mcF9i+hv
+         Vma0ec1BpHjWd9DgWbYP9p4vUBGZx8twFatt574zpr8Ka5A1xFodHT490DkqoZRX/OBh
+         Y46A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736249119; x=1736853919;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=7sn2BG5sdvDbcSzNStcu70GGFUnOPYuQtJHvkvNK9yg=;
-        b=UDvXxhcakbSW5J/vQEClKmyFn5tM4T4bZd4xZd7Docx//fDobRGAQkoWvfdTDwWP4S
-         3lwYWHDBN68jsVPa2G6W50tX4FgjxKhoX2+kIbPilKzUwZR+qhqTnbaBr27lKgpqCmz8
-         M61giWlXQCuF5YwjWeB2S+UcI9AKQvq2SUy5V7N013p1IK7AzluJ0XM8tMwx1dSCgG6v
-         hon/OPQrvNcN1Y8R0WcasOoJRmPrrFu8UQkqbetny3AQncHHxRHM/Xh7K2L6Tbu5bvDJ
-         xVo7oKnKQ3cd4wmyIyzWfP9LxWkZUSyp3f+zQZ1OwaHN7q5zhF0e+jVvkKvMln5U7WCN
-         j+2A==
-X-Forwarded-Encrypted: i=1; AJvYcCUdZG1XiM/o/ifBn00OzyJxKtPAC9rvo8Pa1ERenE6Z49HNQly4qTjEnPHqCwbl9W+NE15F1HTpWalmhNbY@vger.kernel.org
-X-Gm-Message-State: AOJu0YyDGzxxQVXF1wZ6MhjtPC/v5Si7v+tqjTzVpfMqT7f3SPZ7QNDy
-	RVcZyfyBfhZD5/gfBwrYcHYZGsIF+YS4gF2v0ZVa2rl1bnHmNRvCuBvO+81cKHU=
-X-Gm-Gg: ASbGnctZul1PhXM8xetRa6VshDwfSb47LAy9nkWszY83Wk4PRouupYTHsqwWrUOZ/fU
-	Gh2VI6OBJ3wUFctuX7sGK8OfurelYpKb3hMTgRGz13CoVUGhZdcdN6wVaVxQL6Z02ih5mCnkRtO
-	c/qDSFS72QrEXLSHBMp6E31P2ioyQQ52VgG/hMG1weaCDPNswLKvLwiO0GA7GH2OMvjCkJiFpzw
-	bT5Dyfeow64Lei12lVSb5otUP1XV+/tygJ6zxygYswCLaDygSdFT8Sx9y8jMw5Y7UkrjRgQJZtF
-	d24kR3rZMZQWzV6kxKyQf9ZVDFiuoGR5ziH6zL8=
-X-Google-Smtp-Source: AGHT+IGh9M3EnIPRVcMQNI989EcvZxMCNMXogDiQ3BV0jMzT1VyZYyESdCgc7jwCzo0D83CZJZ/lXg==
-X-Received: by 2002:a17:907:9722:b0:aa6:6fa5:65b3 with SMTP id a640c23a62f3a-aac3352c204mr5521668866b.47.1736249119218;
-        Tue, 07 Jan 2025 03:25:19 -0800 (PST)
-Received: from ?IPV6:2a02:8109:888d:ff00:ca7f:54ff:fe52:4519? ([2a02:8109:888d:ff00:ca7f:54ff:fe52:4519])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-aac0e895502sm2397516066b.63.2025.01.07.03.25.17
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 07 Jan 2025 03:25:18 -0800 (PST)
-Message-ID: <66fb0c6d-472c-4131-bd25-83266cf497e4@linaro.org>
-Date: Tue, 7 Jan 2025 12:25:17 +0100
+        d=1e100.net; s=20230601; t=1736249493; x=1736854293;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=G3N5s5fdL2YNf7soMuvHTeYgJ8vy52pHoEfk/tcGSD8=;
+        b=AZwyIPgq4uiWcQ5iT7jkJtn5THnh66mSI9dWuq70thdZY5wb/XFsOEzACI30zxxVm4
+         ysGo1g/Atc8A/Pxus9e0j08hNFV391Ssh/odvVENeMJEa75H66pFbt7RFyyyZaCZUKtV
+         pHL331rvGTIZ4MpFNlLEUHgvnK9wD2Hze39YgSg0xVEF+JNo33Z7unvkw9YiGkslNS3o
+         OtG1bt9IITqH9RVFOlgq+8V5CHT3+SxjtNcqK5lCK2eppkVfjdc2l7yzw6LX9g8qDiWP
+         c2FmeZvR+WTa1DzXqPNxb1NIVaq9BNUzs7fbA2sWiP/qQZGuex8bwXRwTBuXeMZwXYSw
+         DMMA==
+X-Forwarded-Encrypted: i=1; AJvYcCXJ+oGFKeYrKz0nTp+qlc5RBRAwltzAXmtpGTGCPg6B6c4TOuWkR7Yt6Jjh1P5qELyjWcV3Z944zKCWtuSq@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx8hDxyQXJiZkfwm4VgZRVGQwkoUN9RSVouegnLijCqykinT1AD
+	b9guAKWMbXlET+kSvOl9uzOHggtBt8wxx3cpZA4s0OepaMYI6c//t2dOBqWrldQ=
+X-Gm-Gg: ASbGncsh1jJTR61DzyaKktfv2TdK7hH+qrTmhNc39+EpgpgQwZeDA7LEoelRkYdzy9W
+	SzMuqWJQwzXNUdVzYf8X+2aPSvOfGCrMyJc2N+5FmyrdVnKzWrC5gB/UZZpTXrlCM5MCcRagVQF
+	/h9MQtO52ZRtFX9T5n146kWjsKD4AqkJ+qeLqkpWoCZaIi9awvhmmV+os0lUYNuqKCxWWiGdaKy
+	Etxy0jmndW4CzDvuUdFBJf+4/jPXudmqP4UDWu0ON56vzpj1DxIM8vpm/USE0NoKbZg42prrW+B
+	HimS8WEFbmOj6mSUgbxTH219
+X-Google-Smtp-Source: AGHT+IENf5iIM0eyUUKKI+rIQnGA5rELVSy2jGiVzJtZlwGnyitqzrPGGRO+n/bqFHmHqnjQEDg7ZA==
+X-Received: by 2002:ac2:4c4c:0:b0:542:7217:361a with SMTP id 2adb3069b0e04-54272173890mr3514721e87.10.1736249493006;
+        Tue, 07 Jan 2025 03:31:33 -0800 (PST)
+Received: from eriador.lan (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-542235f658csm5169219e87.44.2025.01.07.03.31.30
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 07 Jan 2025 03:31:31 -0800 (PST)
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Jani Nikula <jani.nikula@linux.intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+	Tvrtko Ursulin <tursulin@ursulin.net>,
+	David Airlie <airlied@gmail.com>,
+	Simona Vetter <simona@ffwll.ch>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Karol Herbst <kherbst@redhat.com>,
+	Lyude Paul <lyude@redhat.com>,
+	Danilo Krummrich <dakr@redhat.com>,
+	Harry Wentland <harry.wentland@amd.com>,
+	Leo Li <sunpeng.li@amd.com>,
+	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Xinhui Pan <Xinhui.Pan@amd.com>,
+	Alain Volmat <alain.volmat@foss.st.com>,
+	Raphael Gallais-Pou <rgallaispou@gmail.com>,
+	Liviu Dudau <liviu.dudau@arm.com>,
+	Andrzej Hajda <andrzej.hajda@intel.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Robert Foss <rfoss@kernel.org>,
+	Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+	Jonas Karlman <jonas@kwiboo.se>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Peter Senna Tschudin <peter.senna@gmail.com>,
+	Ian Ray <ian.ray@ge.com>,
+	Martyn Welch <martyn.welch@collabora.co.uk>,
+	Inki Dae <inki.dae@samsung.com>,
+	Seung-Woo Kim <sw0312.kim@samsung.com>,
+	Kyungmin Park <kyungmin.park@samsung.com>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
+	Alim Akhtar <alim.akhtar@samsung.com>,
+	Stefan Agner <stefan@agner.ch>,
+	Alison Wang <alison.wang@nxp.com>,
+	Patrik Jakobsson <patrik.r.jakobsson@gmail.com>,
+	Philipp Zabel <p.zabel@pengutronix.de>,
+	Shawn Guo <shawnguo@kernel.org>,
+	Sascha Hauer <s.hauer@pengutronix.de>,
+	Pengutronix Kernel Team <kernel@pengutronix.de>,
+	Fabio Estevam <festevam@gmail.com>,
+	Rob Clark <robdclark@gmail.com>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Sean Paul <sean@poorly.run>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	Dave Airlie <airlied@redhat.com>,
+	Gerd Hoffmann <kraxel@redhat.com>,
+	Sandy Huang <hjc@rock-chips.com>,
+	=?UTF-8?q?Heiko=20St=C3=BCbner?= <heiko@sntech.de>,
+	Andy Yan <andy.yan@rock-chips.com>,
+	Chen-Yu Tsai <wens@csie.org>,
+	Samuel Holland <samuel@sholland.org>,
+	Thierry Reding <thierry.reding@gmail.com>,
+	Mikko Perttunen <mperttunen@nvidia.com>,
+	Jonathan Hunter <jonathanh@nvidia.com>,
+	Dave Stevenson <dave.stevenson@raspberrypi.com>,
+	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>,
+	Raspberry Pi Kernel Maintenance <kernel-list@raspberrypi.com>,
+	Gurchetan Singh <gurchetansingh@chromium.org>,
+	Chia-I Wu <olvaffe@gmail.com>,
+	Zack Rusin <zack.rusin@broadcom.com>,
+	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: intel-gfx@lists.freedesktop.org,
+	intel-xe@lists.freedesktop.org,
+	dri-devel@lists.freedesktop.org,
+	linux-kernel@vger.kernel.org,
+	nouveau@lists.freedesktop.org,
+	amd-gfx@lists.freedesktop.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-samsung-soc@vger.kernel.org,
+	imx@lists.linux.dev,
+	linux-arm-msm@vger.kernel.org,
+	freedreno@lists.freedesktop.org,
+	virtualization@lists.linux.dev,
+	spice-devel@lists.freedesktop.org,
+	linux-rockchip@lists.infradead.org,
+	linux-sunxi@lists.linux.dev,
+	linux-tegra@vger.kernel.org,
+	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
+	Jani Nikula <jani.nikula@intel.com>
+Subject: Re: [PATCH v2 0/5] drm/connector: make mode_valid() callback accept const mode pointer
+Date: Tue,  7 Jan 2025 13:31:28 +0200
+Message-ID: <173624946815.1500596.321177900833598022.b4-ty@linaro.org>
+X-Mailer: git-send-email 2.45.2
+In-Reply-To: <20241214-drm-connector-mode-valid-const-v2-0-4f9498a4c822@linaro.org>
+References: <20241214-drm-connector-mode-valid-const-v2-0-4f9498a4c822@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 0/7] Add support to load QUP SE firmware from
-Content-Language: en-US
-To: Viken Dadhaniya <quic_vdadhani@quicinc.com>, andi.shyti@kernel.org,
- robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
- gregkh@linuxfoundation.org, jirislaby@kernel.org, broonie@kernel.or,
- andersson@kernel.org, konradybcio@kernel.org, johan+linaro@kernel.org,
- dianders@chromium.org, agross@kernel.org, linux-arm-msm@vger.kernel.org,
- linux-i2c@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-serial@vger.kernel.org,
- linux-spi@vger.kernel.org
-Cc: =quic_msavaliy@quicinc.com, quic_anupkulk@quicinc.com
-References: <20241204150326.1470749-1-quic_vdadhani@quicinc.com>
-From: Caleb Connolly <caleb.connolly@linaro.org>
-In-Reply-To: <20241204150326.1470749-1-quic_vdadhani@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 
-Hi Viken,
-
-On 04/12/2024 16:03, Viken Dadhaniya wrote:
-> In Qualcomm SoCs, firmware loading for Serial Engines (SE) in the QUP
-> hardware has traditionally been managed by TrustZone (TZ). This setup
-> handled Serial Engines(SE) assignments and access control permissions,
-> ensuring a high level of security but limiting flexibility and
-> accessibility.
->  
-> This limitation poses a significant challenge for developers who need more
-> flexibility to enable any protocol on any of the SEs within the QUP
-> hardware.
->  
-> To address this, we are introducing a change that opens the firmware
-> loading mechanism to the Linux environment. This enhancement increases
-> flexibility and allows for more streamlined and efficient management. We
-> can now handle SE assignments and access control permissions directly
-> within Linux, eliminating the dependency on TZ.
->  
-> We propose an alternative method for firmware loading and SE
-> ownership/transfer mode configuration based on device tree configuration.
-> This method does not rely on other execution environments, making it
-> accessible to all developers.
->  
-> For SEs used prior to the kernel, their firmware will be loaded by the
-> respective image drivers (e.g., Debug UART, Secure or trusted SE).
-> Additionally, the GSI firmware, which is common to all SEs per QUPV3 core,
-> will not be loaded by Linux driver but TZ only. At the kernel level, only
-> the SE protocol driver should load the respective protocol firmware.
-
-I gave this series a spin on the RB3 Gen 2 with U-Boot.
-
-After fixing the compilation errors, it seems like there is a consistent
-hard crash (the board freezes and resets) at some point during i2c
-controller init with this series.
-
-I noticed a similar issue with this same logic implemented in U-Boot.
-
-Could you clarify which xfer mode is appropriate for the i2c controllers
-on the RB3 Gen 2 and maybe give this a try yourself, or let me know what
-other info you'd need to debug this.
-
-Thanks and kind regards,
+On Sat, 14 Dec 2024 15:37:04 +0200, Dmitry Baryshkov wrote:
+> While working on the generic mode_valid() implementation for the HDMI
+> Connector framework I noticed that unlike other DRM objects
+> drm_connector accepts non-const pointer to struct drm_display_mode,
+> while obviously mode_valid() isn't expected to modify the argument.
 > 
-> Viken Dadhaniya (7):
->   dt-bindings: i2c: qcom,i2c-geni: Document DT properties for QUP
->     firmware loading
->   spi: dt-bindings: Document DT properties for QUP firmware loading
->   dt-bindings: serial: Document DT properties for QUP firmware loading
->   soc: qcom: geni-se:: Add support to load QUP SE Firmware via Linux
->     subsystem
->   i2c: qcom-geni: Load i2c qup Firmware from linux side
->   spi: geni-qcom: Load spi qup Firmware from linux side
->   serial: qcom-geni: Load UART qup Firmware from linux side
+> Mass-change the DRM framework code to pass const argument to that
+> callback.
 > 
->  .../bindings/i2c/qcom,i2c-geni-qcom.yaml      |  11 +
->  .../serial/qcom,serial-geni-qcom.yaml         |  12 +
->  .../bindings/spi/qcom,spi-geni-qcom.yaml      |  11 +
->  drivers/i2c/busses/i2c-qcom-geni.c            |  11 +-
->  drivers/soc/qcom/qcom-geni-se.c               | 445 ++++++++++++++++++
->  drivers/spi/spi-geni-qcom.c                   |   7 +-
->  drivers/tty/serial/qcom_geni_serial.c         |   7 +-
->  include/linux/soc/qcom/geni-se.h              |  17 +
->  include/linux/soc/qcom/qup-fw-load.h          | 179 +++++++
->  9 files changed, 692 insertions(+), 8 deletions(-)
->  create mode 100644 include/linux/soc/qcom/qup-fw-load.h
-> 
+> [...]
 
+Applied to drm-misc-next, thanks!
+
+[1/5] drm/encoder_slave: make mode_valid accept const struct drm_display_mode
+      commit: 7a5cd45fab0a2671aa4ea6d8fb80cea268387176
+[2/5] drm/amdgpu: don't change mode in amdgpu_dm_connector_mode_valid()
+      commit: b255ce4388e09f14311e7912d0ccd45a14a08d66
+[3/5] drm/sti: hda: pass const struct drm_display_mode* to hda_get_mode_idx()
+      commit: 5f011b442006ccb29044263df10843de80fc0b14
+[4/5] drm/connector: make mode_valid_ctx take a const struct drm_display_mode
+      commit: 66df9debcb29d14802912ed79a9cf9ba721b51a4
+[5/5] drm/connector: make mode_valid take a const struct drm_display_mode
+      commit: 26d6fd81916e62d2b0568d9756e5f9c33f0f9b7a
+
+Best regards,
 -- 
-// Caleb (they/them)
+With best wishes
+Dmitry
 
 
