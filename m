@@ -1,150 +1,168 @@
-Return-Path: <linux-arm-msm+bounces-44166-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-44167-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 277CBA04540
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jan 2025 16:55:46 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1260DA0454D
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jan 2025 16:59:53 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8FCB43A371F
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jan 2025 15:55:40 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0A3F71621D8
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jan 2025 15:59:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AF63D1F131C;
-	Tue,  7 Jan 2025 15:55:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BA6991F37B6;
+	Tue,  7 Jan 2025 15:59:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Knxa0b8P"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Xd7tIbag"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
+Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54EBD1F2391
-	for <linux-arm-msm@vger.kernel.org>; Tue,  7 Jan 2025 15:55:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 000C61EE003
+	for <linux-arm-msm@vger.kernel.org>; Tue,  7 Jan 2025 15:59:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736265341; cv=none; b=DVEeqEy5XeW7snKSbLInZIF66CKaGLC1QRfPAs14ZFVqEz5OPi4auD5/bLK0m+bKkC/IAMyt1df6DJetoWC6JGXzi4YeOaEF3jCWYdqvffRj8Cp4JEWJP9rDOR+4mCyed4zTuj17J8lO+1Gyiil9qF7Lgr8Nc4pNFrJjVoOYqAI=
+	t=1736265584; cv=none; b=KN7q/8xK/48PuOdn7vkxDgdTLlQts6lO9XvAFFNxdG5nwSZ0cN+s0NGpvO7KDCxaECtYwY3sGg/oN0alzTHmKhSw6FbdGLznLsazI79kl0fSgsHK8m1WkwI0REag4LO9GFaeTyf3chgxI+f4zYQkxx9gOQjjbkFh8yOeSh0LMnU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736265341; c=relaxed/simple;
-	bh=PjDOhgrKG6iaPq/ljTnv08K3Tt3+ljS/3Zo3ZnBspMM=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=qsA51yDiGwN+awHbGdFNUvxSNp/a8u1IARmY3tV+H4fBjKrm18grgx7wOnLsK7/NPz3wgqGLdBCxEiRCSVh45rNZEMUy4VzR/mJE8xffcL/VNWNguq7vWaR6W+9BLESiUAWAPtAuuCdLDh2hAXiUCOjbS0Zmcp+kVXxLR926tJM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Knxa0b8P; arc=none smtp.client-ip=209.85.128.50
+	s=arc-20240116; t=1736265584; c=relaxed/simple;
+	bh=l+Qrsw0fVCXtAQkM7h7C+anVR3mchFyzhSwGDio+GBs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=eKjnwjVK4oPCJJ1q73tiNLB4quoH5zMb9vUiQnCgltTW48QiX8le4pdC9FK2vottDgAC5SdCWPE5F7F0To9i44167tDh4466xF7EW6oONxtMYVX+KP+rxaEGQVhKBshDvn2yaCnHvhAc+psKfbLSotvs4MJeL92A2M30wLD0gjQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Xd7tIbag; arc=none smtp.client-ip=209.85.128.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-4361c705434so113763915e9.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Jan 2025 07:55:37 -0800 (PST)
+Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-4361e89b6daso108564825e9.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Jan 2025 07:59:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1736265335; x=1736870135; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=yNy7DNnFZXplDv0Zlm/11c4dslj5j2UjTcsCw2RR9TY=;
-        b=Knxa0b8Pg3qTWJxOrPK6i+++yQv4m2B847M1xGKv1EreBeFIDdq94KPnEC7gVeaxCF
-         J+Gd/P94etPzTB2e4NIODv/rYUgmWW9xbv5ZXrWdV+gJ1PvqewuZbIStSLHJCigsWJd2
-         1ObzhH8yMnpMXjI0LzQFUwmVYz/GTSrzMCMryTHnvdTVOGeozVjkJI5W2Bw/bubk5xRN
-         RYOw2O+OGsVnRLLGJ08+yZMT406kQI1qpFyIs8LKH0AFg7YqkTwtTnlmWUPscrAtx7po
-         4ZxzsdIC2ioIYu/F122uWp0uB/RxCTomwYCibMs6RMikYSz/MOLAnuUMeXSwyt2Ehm39
-         pCEg==
+        d=linaro.org; s=google; t=1736265578; x=1736870378; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=h+ADADWhOmPqLF2wl2yVt0du6NuOaHurQK2JRxbZmU4=;
+        b=Xd7tIbagBPTQIsbpJquxZLQsCUBXde7Gvj6lJ/s7YNb2g58Yrd2ShXMK7wKi6Bn/tE
+         N39xxrOTToiVCyTPu1pV0fipIbot+hrzHmnwespedpG1bcj4OYpwIHYneHa/RwONfwkV
+         OXqMayc52QOmYFoYie0PociqH9S3ZeG1iW/31a9Wi2gnOGyQV3A9bS/egPlU5D458BzJ
+         ehGwU5y3OXQmn1gm2kMQ0XxYKVzGIhaNgQX4+UnvIxlFscyv0o/9T8YMS9/gJWIBfp2m
+         Go2twDbJ0BQUXpdGxHb6mfs9DMPNib5PBncAdWT9N6jeTapI3Gc4EY8vJVCLDauL+eb7
+         MZWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736265335; x=1736870135;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=yNy7DNnFZXplDv0Zlm/11c4dslj5j2UjTcsCw2RR9TY=;
-        b=KRag9/iDh7K/PiM1LvQk4safwURPDzInhoxWuuzw8M/Gh4SE5o7adfgRSb1SOXVNYn
-         /FvQP43+jCopemWzjbhtLwoTrGra7ZBEnvAaFmXlwTkHiOd2dJ0tI51jR1I+GvCE4YVK
-         92MU3JvcPdHjUX6RBqK2ahBOyR1uCoMVIo12T+V1VpzVe3GM/Wqd6qdYZYJojDGXAuVZ
-         FJJOoIaMQAVN1cOLLuOVsD523A8fLbJciIyrspBhXO8RwRpLZnBxUJ+N4crEY7ZRxE7u
-         87JO3qou4mXi1TsLujoRup4v2nPgULUUrgvecT8TVHhy4bl0sTs+ENZgb1dXmO1So5E0
-         Snow==
-X-Forwarded-Encrypted: i=1; AJvYcCVkBriDNrCZTp3ZNVjbmASuL/sLUb43Ve9JgRBCp7sUUYLP4o6gUzwRhUShOeg/QVBjltG+VpEagXurNwUl@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy7ijn/R4mWRw/KpUH3vcOoF85JGj6rMacesIHfaK1jEJ+czLHj
-	p5k0ODNcKMCF0m29Y8oLZ8cXRWFUDwIwTeJ7g5mY6QB79KlrwBBrF84TwEZ2wBg=
-X-Gm-Gg: ASbGncsO+ogJAR31GyTWNt5rGJnIkZDQIlnmrEdFjQvSkzOw+111clRMNhRFZZQgGzo
-	qv4cD9anQhfnRD1lHOZDnPH1aur0kM16b+Vix2zY9jkU8fODf7owrrq+NtnGhaOT4UNYGhQ2ED7
-	gOFEtlXDeb9C57YUhc8HuGryTs63+Xfe/wu3kiaABdSUNWRZyjANs7fYjn5wF5trxO6+IgC2i5Y
-	D6WUhAt8upTdVo3UsJE7orctDgFScZXPl3+7dm3baHWUpY/SZ+Awd49
-X-Google-Smtp-Source: AGHT+IHnLFH8otYdkrgR9N1j4TKNMFcyzqclQ03/greEidtqVylxjesTpEGHQLuz/X7sm6+/XeGXLA==
-X-Received: by 2002:a05:6000:704:b0:385:e3b8:f331 with SMTP id ffacd0b85a97d-38a221f9c89mr55461325f8f.14.1736265335438;
-        Tue, 07 Jan 2025 07:55:35 -0800 (PST)
-Received: from [127.0.1.1] ([86.121.162.10])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38a1c89e2d2sm51494493f8f.71.2025.01.07.07.55.34
+        d=1e100.net; s=20230601; t=1736265578; x=1736870378;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=h+ADADWhOmPqLF2wl2yVt0du6NuOaHurQK2JRxbZmU4=;
+        b=myAq+werJ0lI5q4wxyA4YoyxFq1cLlIotrvISgpfsBaloXdQw5Jd4ahjiMmUyg0QKl
+         ZL1Z1XDxcJdKKjtlt45JZKIJF5BdRPnc+HGf0oW98Op1tRyYGPG2s1Wgi5DdcOoCDqN4
+         bZsGlKFt9sduK5fB1o1smeQItuAgka1p3BD8RKxV40OuCSbrGLpYpvIwFB46aoNDjOBq
+         dRxkupqfX0NqWh43iSwc4r+383ulRPCIVa+hyiTpNMbbDKvQuV/03rOzntv49RNwkkMm
+         KrGEKZPoLZIH4G+6RzOijSNz89q7Bf5jVh+tw5z/nU1zqQ0XbStmPyH2PvFzRY4c67+1
+         cnBg==
+X-Forwarded-Encrypted: i=1; AJvYcCXeXyrTgPvX7o+Wb1Tl8Jjb3DOAZfFgdSSoB6ZMD4Eny44NiiP1R4fyS2L6xVqSQrRga6rzmtNvmDGIsVhT@vger.kernel.org
+X-Gm-Message-State: AOJu0YzqIcuDeo02Ss9VQTI2h8vbBN2ixrAxKw7Kf8mSMWsx5hhBCiB6
+	XdZnEX52t7dsnluvUw+L1ZGpHYEz5FtUeiQj+1i2WUpOKuf+YmAyzXW9gv/4RCc=
+X-Gm-Gg: ASbGncv1H0A8MoSGmBBJJjjW+xH/DhbwmjSu0uC+3Fb/bDdSs3NVoFoqulnWLXxGv73
+	Lt2r+IuRHmrUBbAm25BCoBqqJdpLDGrmiH09U+tAoo22U0X60AWJYKq013Ez7Hc01RA6TPOw+s5
+	kTOakSNE6zZV6jnO4Zsx5peOpg9p040AmCbiY/K2r43ssMJt4umqjClXDpCMbSb/EhJdgG3vBbl
+	4KV17yoHOK2FTUBwv0JHX/3+1T2qz/r6/wcxn+seiDFOYhVrQE0TV8=
+X-Google-Smtp-Source: AGHT+IHnKv0kLLNL0GG1YXgdtnDBlDk632FVanPGB41cQBbp9am5uqBkiza9lwphaCUvyiU4W9JsTA==
+X-Received: by 2002:a05:600c:3516:b0:434:fbda:1f44 with SMTP id 5b1f17b1804b1-436686464e7mr535176005e9.19.1736265578320;
+        Tue, 07 Jan 2025 07:59:38 -0800 (PST)
+Received: from linaro.org ([86.121.162.10])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-436611ea47asm601467345e9.4.2025.01.07.07.59.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Jan 2025 07:55:34 -0800 (PST)
+        Tue, 07 Jan 2025 07:59:37 -0800 (PST)
+Date: Tue, 7 Jan 2025 17:59:36 +0200
 From: Abel Vesa <abel.vesa@linaro.org>
-Date: Tue, 07 Jan 2025 17:55:23 +0200
-Subject: [PATCH] clk: qcom: gcc-x1e80100: Do not turn off usb_2 controller
- GDSC
+To: Johan Hovold <johan@kernel.org>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] arm64: dts: qcom: x1e78100-t14s: Enable fingerprint
+ reader
+Message-ID: <Z31PaEckuGQEZxyh@linaro.org>
+References: <20250107-x1e80100-t14-enable-fingerprint-sensor-v1-1-8fd911d39ad1@linaro.org>
+ <Z308ZCrnsaLReaIX@linaro.org>
+ <Z31F_sZahYrCSVlr@hovoldconsulting.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250107-x1e80100-clk-gcc-fix-usb2-gdsc-pwrsts-v1-1-e15d1a5e7d80@linaro.org>
-X-B4-Tracking: v=1; b=H4sIAGtOfWcC/x2N0QqDMAxFf0XyvEBbmJb9ivhQ01jDhpNmOkH89
- 4W9nQOHe09QrsIKj+aEyruovBcTf2uA5rQURsnmEFy4O+86PDxHA4f0emIhwkkO3HQMWLISrt+
- qH8UUOXHbRupyANtaK1v3/+mH6/oBUlijA3cAAAA=
-X-Change-ID: 20250107-x1e80100-clk-gcc-fix-usb2-gdsc-pwrsts-a8eae668c7d2
-To: Bjorn Andersson <andersson@kernel.org>, 
- Michael Turquette <mturquette@baylibre.com>, 
- Stephen Boyd <sboyd@kernel.org>
-Cc: Konrad Dybcio <konradybcio@kernel.org>, Johan Hovold <johan@kernel.org>, 
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
- linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
- linux-kernel@vger.kernel.org, stable@vger.kernel.org, 
- Abel Vesa <abel.vesa@linaro.org>
-X-Mailer: b4 0.15-dev-dedf8
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1153; i=abel.vesa@linaro.org;
- h=from:subject:message-id; bh=PjDOhgrKG6iaPq/ljTnv08K3Tt3+ljS/3Zo3ZnBspMM=;
- b=owEBbQKS/ZANAwAKARtfRMkAlRVWAcsmYgBnfU5ymyn11JB07fkANMbhPM38aGpncyv9oOB91
- stB0cdhSA+JAjMEAAEKAB0WIQRO8+4RTnqPKsqn0bgbX0TJAJUVVgUCZ31OcgAKCRAbX0TJAJUV
- VnyqD/9WzdCOsLTMWvb+LFmv25a9ALOMGDvZkh5rrlXFGboztP1f1Uz6Gb5y7CyOpQkv3YVCoBb
- 6P831yjfAYyiqWoYQ2ncNmzlDRknbS/yhtT1Sw3x6hPjmDnl4g1MRruxO8LaE+XMjc6rvlMjKhg
- aQ99kjMdd6S2KMs1VJBbnmPxrwMJTIx+BwLsNTNis/s38J5kknmL+t5tWN7nHlliUNTCT05dR6U
- AnP2aN/bvcYpv8aX1Go7WOxnqZkq1DOGvJ/K2Xz4+YkJcfsFRYp2XATsjFiztGjnkMymfOnCth/
- SeRtcf2MV00Fb1JbCPK5+j0ZamPHnQHsZSWUPH+yGZwc1VmPNNp5jV1xekYVw8EoUTtKzHFEoFX
- 7bsz/GUa1+PO+h6kvvnllw+Iu8anGgv+xtG+lUd9lXomvgF8fwAd/QsplAdySNy+Nwvg+UsNzga
- abYjGykt3dyJQvuNiab0fmwrN93eyu8qOp0xAS5l9StLismFMZSV6PNH9kpD4COC6jGOZCYdg9f
- 6aAZa8GFv5a2gbq+qP6TmWYDopmPSdtBqd8p3ZbLBJ9JffBLXsjfGAJOnVzPf3dyQ4n6DoH6REa
- nDdu/28NUzM1VIVqfqTAb5sZFxlgKgKmxMX1X1r/8bUpCNbBcMywPCTY41wGaB2jHNPeVXacaCn
- fEfkia/qopJr/rA==
-X-Developer-Key: i=abel.vesa@linaro.org; a=openpgp;
- fpr=6AFF162D57F4223A8770EF5AF7BF214136F41FAE
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <Z31F_sZahYrCSVlr@hovoldconsulting.com>
 
-Allowing the usb_2 controller GDSC to be turned off during system suspend
-renders the controller unable to resume.
+On 25-01-07 16:19:26, Johan Hovold wrote:
+> On Tue, Jan 07, 2025 at 04:38:28PM +0200, Abel Vesa wrote:
+> > On 25-01-07 15:35:07, Abel Vesa wrote:
+> > > On Lenovo ThinkPad T14s, the fingerprint reader placed in the power
+> > > button is connected via the usb_2 controller. The controller has only
+> > > a USB 2.0 PHY which is then connected via a NXP PTN3222 eUSB2 repeater,
+> > > which in turn is connected to the Goodix fingerprint reader.
+> > > 
+> > > So enable all the usb_2 controller and PHY nodes, set dual-role mode to
+> > > host and describe the eUSB2 repeater in order to get the fingerprint
+> > > reader discovered.
+> > > 
+> > > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> > 
+> > Turns out that on resume a couple of things are broken w.r.t. to the usb_2 controller:
+> > 
+> > [   41.104913] arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xe2010600, fsynr=0x110001, cbfrsynra=0x14e0, cb
+> > [   41.104936] arm-smmu 15000000.iommu: FSR    = 00000402 [Format=2 TF], SID=0x14e0
+> > [   41.104950] arm-smmu 15000000.iommu: FSYNR0 = 00110001 [S1CBNDX=17 PLVL=1]
+> > [   51.420689] xhci-hcd xhci-hcd.6.auto: xHCI host not responding to stop endpoint command
+> > [   51.420702] xhci-hcd xhci-hcd.6.auto: xHCI host controller not responding, assume dead
+> > [   51.420720] xhci-hcd xhci-hcd.6.auto: HC died; cleaning up
+> > [   51.420836] usb 5-1: PM: dpm_run_callback(): usb_dev_resume returns -22
+> > [   51.420864] usb 5-1: PM: failed to resume async: error -22
+> > 
+> > So do not apply this yet.
+> > 
+> > Sorry for not testing this properly before sending.
+> 
+> Heh, thanks for the heads up.
+> 
+> I was just about to reply with my:
+> 
+> Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
+> Tested-by: Johan Hovold <johan+linaro@kernel.org>
+> 
+> after comparing with the schematics and verifying that the fingerprint
+> reader enumerates.
 
-So use PWRSTS_RET_ON instead in order to make sure this the GDSC doesn't
-go down.
+Thanks for reviewing.
 
-Fixes: 161b7c401f4b ("clk: qcom: Add Global Clock controller (GCC) driver for X1E80100")
-Cc: stable@vger.kernel.org      # 6.8
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
----
- drivers/clk/qcom/gcc-x1e80100.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> But I do indeed see something similar here on resume:
+> 
+> [ 1891.737726] arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xe3f6ddbec0, fsynr=0x510000, cbfrsynra=0x14e0, cb=3
+> [ 1891.737738] arm-smmu 15000000.iommu: FSR    = 00000402 [Format=2 TF], SID=0x14e0
+> [ 1891.737746] arm-smmu 15000000.iommu: FSYNR0 = 00510000 [S1CBNDX=81 PLVL=0]
+> [ 1891.804342] r8152 7-1:1.0 eth0: carrier on
+> [ 1902.039158] xhci-hcd xhci-hcd.1.auto: xHCI host not responding to stop endpoint command
+> [ 1902.039191] xhci-hcd xhci-hcd.1.auto: xHCI host controller not responding, assume dead
+> [ 1902.039795] xhci-hcd xhci-hcd.1.auto: HC died; cleaning up
+> [ 1902.040050] usb 1-1: PM: dpm_run_callback(): usb_dev_resume returns -5
+> [ 1902.040272] usb 1-1: PM: failed to resume async: error -5
+> [ 1902.581479] OOM killer enabled.
+> [ 1902.586673] Restarting tasks ...
+> [ 1902.587565] usb 1-1: USB disconnect, device number 2
 
-diff --git a/drivers/clk/qcom/gcc-x1e80100.c b/drivers/clk/qcom/gcc-x1e80100.c
-index 8ea25aa25dff043ab4a81fee78b6173139f871b6..7288af845434d824eb91489ab97be25d665cad3a 100644
---- a/drivers/clk/qcom/gcc-x1e80100.c
-+++ b/drivers/clk/qcom/gcc-x1e80100.c
-@@ -6083,7 +6083,7 @@ static struct gdsc gcc_usb20_prim_gdsc = {
- 	.pd = {
- 		.name = "gcc_usb20_prim_gdsc",
- 	},
--	.pwrsts = PWRSTS_OFF_ON,
-+	.pwrsts = PWRSTS_RET_ON,
- 	.flags = POLL_CFG_GDSCR | RETAIN_FF_ENABLE,
- };
- 
+Turns out it is the GDSC that has power status flags PWRSTS_OFF_ON when it
+should've had PWRSTS_RET_ON. Sent a fix here:
 
----
-base-commit: 7b4b9bf203da94fbeac75ed3116c84aa03e74578
-change-id: 20250107-x1e80100-clk-gcc-fix-usb2-gdsc-pwrsts-a8eae668c7d2
+https://lore.kernel.org/all/20250107-x1e80100-clk-gcc-fix-usb2-gdsc-pwrsts-v1-1-e15d1a5e7d80@linaro.org/
 
-Best regards,
--- 
-Abel Vesa <abel.vesa@linaro.org>
+With this patch, the above resume issue goes away entirely.
 
+> 
+> Johan
+
+Abel
 
