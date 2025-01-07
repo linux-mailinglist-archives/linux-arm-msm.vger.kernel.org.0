@@ -1,315 +1,148 @@
-Return-Path: <linux-arm-msm+bounces-44146-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-44147-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id BC506A0414C
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jan 2025 14:57:26 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id E265EA04153
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jan 2025 14:58:07 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D2CE01656E8
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jan 2025 13:57:22 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0FA44165768
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jan 2025 13:58:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7C7201F130B;
-	Tue,  7 Jan 2025 13:57:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 37B761F131C;
+	Tue,  7 Jan 2025 13:57:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="jEjf4ch9"
+	dkim=pass (2048-bit key) header.d=ndufresne-ca.20230601.gappssmtp.com header.i=@ndufresne-ca.20230601.gappssmtp.com header.b="MB9P6/Da"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f50.google.com (mail-qv1-f50.google.com [209.85.219.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BB481F12F8;
-	Tue,  7 Jan 2025 13:57:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B3DB1F191D
+	for <linux-arm-msm@vger.kernel.org>; Tue,  7 Jan 2025 13:57:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736258242; cv=none; b=jBZHUh+Jp5fvoW7+x0/8TrD0I+w9TKN1uCTUfsjJnUFIHigYNXYcCIvNFnkXVPGNVXgqQVVniv1u65xTU/q4Iz6yYqcQ3Bw59hhPL5Y+pJw0zHVg6ZEZQadCrTo/GZGqaNBDrkbOL0L9PHmP4poh4vEfVcROUXk1tjPPVfPXX/M=
+	t=1736258278; cv=none; b=Sw3RZS5RNk1QbXpuqTFoi4C2rivGT3ZCZRuvi7NPWRjmFUY1W9NEmoT2lYVNoUQV/AyOiWkw6jmQAxuskpcZstF+sQjDmRk1rZvsXsMK6S1KjfoEwGXcg/RaOWqzAvNyqun1kuCxX0VicrUdGMfX1wC5XshnjqBjPxxZiXpVBO0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736258242; c=relaxed/simple;
-	bh=9sFDOBQur3f5tBNr0wmawF+I1m57JmBRamz+mNTH6oo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=GlYG13jxlCbiLyuMp/t6Vuau/0p/fNJpASnDvl0UvoF/XIWrTx4nkfR02Fa2gCDFUFTgq84aKbWwygYKR0Qdaici7Vz/kP53Dc7AikZl5AcXsAJjhpC/cqKCp01MOcL0Ld0YBtacupOrIHIApDgOu8e2WitB/qjegUvK1h6PwXw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=jEjf4ch9; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 507Afflo025761;
-	Tue, 7 Jan 2025 13:57:00 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	iSdzEm08lsBGc08NAggX/tt0VgwWKdoXo57PETNi5LY=; b=jEjf4ch9pBBXHabY
-	y5th0Dtoq052pJ2e1L4tEEx74KL8mziOgYljqIqVEgx/cq08eKxnxZ8eV7v8yy/5
-	ZyLwJ+N/4rspvjHnMPN2VKn3N3BCSz/M37PyfvhFN0SmA6Z4IN4F34Y7VgDkF0/L
-	H6tpftn1kEUTPvmW4vzV/xkVhLv4/MLnT8x3X7+QaRWC6/Hw9zncUmGXeBLCpnJz
-	Nm+j/KPo7T29xB5kywX3LMYgCygEwdrv+Fy2TaNoft95R8oDSo4F44xW6blEw4kt
-	cAgoqogWMA0vayegBSp0KoV+WtKV0p18QcrWa0trBEzRKR70yKbBWcBuER5mVlBn
-	3blJ9g==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4412r78eqd-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 07 Jan 2025 13:56:59 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 507DuxvC027495
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 7 Jan 2025 13:56:59 GMT
-Received: from [10.218.43.20] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 7 Jan 2025
- 05:56:55 -0800
-Message-ID: <c0ae7ca0-6855-45ff-b466-7c1c312c760b@quicinc.com>
-Date: Tue, 7 Jan 2025 19:26:52 +0530
+	s=arc-20240116; t=1736258278; c=relaxed/simple;
+	bh=XTyG24D1CeOjSgwkEBhS4J5dOBcU4kH2tt6gva41xZE=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=bKptf1O5j1J3pM+PzMYTTX5fBIPEbaw2SrWZUQ9ZA82NJGWMEKRlMQb7H4oMfg4DjrUx7Gw/GdVUzqHZrdSTDB1M9lEXGj7kpKKuRDa0iBZhgIltYagfZO9AR6t5I8AI0/qu4QJ2OirkEY4adouEmkzYIvv2Grtc3cFLBQKyJlk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ndufresne.ca; spf=none smtp.mailfrom=ndufresne.ca; dkim=pass (2048-bit key) header.d=ndufresne-ca.20230601.gappssmtp.com header.i=@ndufresne-ca.20230601.gappssmtp.com header.b=MB9P6/Da; arc=none smtp.client-ip=209.85.219.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ndufresne.ca
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ndufresne.ca
+Received: by mail-qv1-f50.google.com with SMTP id 6a1803df08f44-6d8a3e99e32so126872996d6.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Jan 2025 05:57:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ndufresne-ca.20230601.gappssmtp.com; s=20230601; t=1736258274; x=1736863074; darn=vger.kernel.org;
+        h=mime-version:user-agent:content-transfer-encoding:references
+         :in-reply-to:date:cc:to:from:subject:message-id:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=XfVj6FlFhMc3oiLEFsY9aBgjICEEoiKXKRJpCRloMIs=;
+        b=MB9P6/Da0bbATv6+XvNOOfnz3XThggMslU67TwRNaVtKhzl1RQNDf4u+9GR/k+/x2R
+         AGsGkA0f9fwP9Q5g5fU1LCEKaUnI59wP1hzQHigoJsVisxXWK8N6T8cdZeJx75kNXguu
+         uDMmsshFlRyrOS6nHLAP0JMIJ5G5w1OHLPlK46ezofSgJF+HfNPcmslJRVD223YK4LuB
+         pEKDtYu1SVaRTWbfWXpGa1+03bcelqDWYif9KY2PaRnusZFBkSPKgcniVEWjNQHn/3Cd
+         Rb8n4ghaKunT2d35VpUsr+F3UfQ1nCPM6lIfIXJR2eNAXqHSiArJJy9ZfjkqvBX/leZW
+         NXMg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1736258274; x=1736863074;
+        h=mime-version:user-agent:content-transfer-encoding:references
+         :in-reply-to:date:cc:to:from:subject:message-id:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=XfVj6FlFhMc3oiLEFsY9aBgjICEEoiKXKRJpCRloMIs=;
+        b=vApNgZCjNIB/mYOBW9hDQEZ064sBZ96WG1lz7x3GS8EdkydoQxtQlbfvasGrN9BkHb
+         IWfxNU+QijKMVMA4iqZFkPuK9SfZF3MVYrDsFZEOHmo8/UglfLBqLAwLJyARm9bhCuLI
+         l3l/URKV04SNzfsRXH3VAZ9UditIXBqjTFBhL0Syt0X/K+9J0MKUBxAUiaInxVVjIOF2
+         L8hX4bJFgOzMqp9ijqFOfOv6QDzggqbG/mTeUulmfBofAgCcu4ubviYD+iKbD+XzKXli
+         FcFWTlBTr56XonumcYbls66pXNnkg06vWcbfLctNlgf/wjiHZu9BW5cJebWKyBLE3bgw
+         OSZA==
+X-Forwarded-Encrypted: i=1; AJvYcCWMcDs6hef6fxLbv9rZhKu3hrTaJgERFae6Kab2xtjtpU87bDW9X5sTh8q00C8dDMW4psoY0uXy0rd5kdMv@vger.kernel.org
+X-Gm-Message-State: AOJu0YxQU1yAQUvfSdpooEwpwQ7jILthRCn8fy7RdJ0aT4GUjPoBFxiq
+	n6HS1q/ylbUwuhptF0EJ3yrFIpqZ4lGBo7c1H0Mv5xdMNPE5nAK8A6V4y9+/qoI=
+X-Gm-Gg: ASbGnctsSC2GNHtvETnpr+DeofeslBKsBllad2vx43RAbnZZUhAFjGtdCl+7x4R1PXc
+	YINO/Y5FrVRsgyYjkG0zEDpGN3SeW3eZkJGCqmyDW9W7U3I8ifoBLiXlZcN8E7s1Tj+fvFVeusP
+	A4q+N7HXWLkWW9GiedaDwWd5kqxQRZwqUamQzN+esnR2mMjsI6pelQUd+oAJ5M0jnfl+3EXeX+v
+	UnzCGOH6lSCPzReB9c/9s4diQ9JVQQShUsH3VhcstTo1A5pEQ8P+80HJA==
+X-Google-Smtp-Source: AGHT+IHPU1lCWtFpHhYsjCvkXWbXGnqexw3MD2VVfwbeG1yis8bUAo6lsxnfJ7XG9nLeGPhxmdC3Fg==
+X-Received: by 2002:ad4:5ce9:0:b0:6d8:9c92:654a with SMTP id 6a1803df08f44-6dd2331e946mr1072703606d6.10.1736258274045;
+        Tue, 07 Jan 2025 05:57:54 -0800 (PST)
+Received: from nicolas-tpx395.localdomain ([2606:6d00:15:862e::7a9])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-6dd181c05f7sm180854666d6.90.2025.01.07.05.57.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 07 Jan 2025 05:57:53 -0800 (PST)
+Message-ID: <635ce4ed82aaca422b869f467300b0eccf9c8703.camel@ndufresne.ca>
+Subject: Re: [PATCH v9 27/28] media: iris: enable video driver probe of
+ SM8250 SoC
+From: Nicolas Dufresne <nicolas@ndufresne.ca>
+To: Dikshita Agarwal <quic_dikshita@quicinc.com>, Mauro Carvalho Chehab	
+ <mchehab+huawei@kernel.org>, Sebastian Fricke
+ <sebastian.fricke@collabora.com>
+Cc: Vikash Garodia <quic_vgarodia@quicinc.com>, Abhinav Kumar	
+ <quic_abhinavk@quicinc.com>, Mauro Carvalho Chehab <mchehab@kernel.org>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley	 <conor+dt@kernel.org>, Philipp Zabel
+ <p.zabel@pengutronix.de>, Hans Verkuil	 <hverkuil@xs4all.nl>, Bryan
+ O'Donoghue <bryan.odonoghue@linaro.org>, Dmitry Baryshkov
+ <dmitry.baryshkov@linaro.org>, Neil Armstrong <neil.armstrong@linaro.org>,
+ Uwe =?ISO-8859-1?Q?Kleine-K=F6nig?=	 <u.kleine-koenig@baylibre.com>,
+ Jianhua Lu <lujianhua000@gmail.com>, Stefan Schmidt
+ <stefan.schmidt@linaro.org>, linux-media@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, 	devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+Date: Tue, 07 Jan 2025 08:57:52 -0500
+In-Reply-To: <fbe0d935-a3cf-dfa0-aad8-56834a0a002c@quicinc.com>
+References: <20241212-qcom-video-iris-v9-0-e8c2c6bd4041@quicinc.com>
+	 <20241212-qcom-video-iris-v9-27-e8c2c6bd4041@quicinc.com>
+	 <20241223113027.21b8f7ab@foz.lan>
+	 <fbe0d935-a3cf-dfa0-aad8-56834a0a002c@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.54.2 (3.54.2-1.fc41) 
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V8] scsi: ufs: qcom: Enable UFS Shared ICE Feature
-To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-CC: <James.Bottomley@HansenPartnership.com>, <martin.petersen@oracle.com>,
-        <andersson@kernel.org>, <bvanassche@acm.org>, <ebiggers@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-scsi@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>,
-        Naveen Kumar Goud Arepalli
-	<quic_narepall@quicinc.com>,
-        Nitin Rawat <quic_nitirawa@quicinc.com>
-References: <20241224154725.8127-1-quic_rdwivedi@quicinc.com>
- <20250106140203.2euwwch4hnjtfbzl@thinkpad>
-Content-Language: en-US
-From: Ram Kumar Dwivedi <quic_rdwivedi@quicinc.com>
-In-Reply-To: <20250106140203.2euwwch4hnjtfbzl@thinkpad>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: nG8GL77hXMsimDfac5S41yTGF6VNaSuq
-X-Proofpoint-ORIG-GUID: nG8GL77hXMsimDfac5S41yTGF6VNaSuq
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- mlxlogscore=999 malwarescore=0 mlxscore=0 clxscore=1015 spamscore=0
- suspectscore=0 phishscore=0 adultscore=0 impostorscore=0
- priorityscore=1501 bulkscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2411120000 definitions=main-2501070117
 
+Le lundi 23 d=C3=A9cembre 2024 =C3=A0 16:21 +0530, Dikshita Agarwal a =C3=
+=A9crit=C2=A0:
+>=20
+> On 12/23/2024 4:00 PM, Mauro Carvalho Chehab wrote:
+> > Em Thu, 12 Dec 2024 17:21:49 +0530
+> > Dikshita Agarwal <quic_dikshita@quicinc.com> escreveu:
+> >=20
+> > > +	.dma_mask =3D GENMASK(31, 29) - 1,
+> >=20
+> > Setting a mask to GENMASK() - 1 sounds weird. Is it really what you wan=
+t?
+> > I so, why?
+> >=20
+> Hi Mauro,
+>=20
+> the value of this dma mask should be 0xe0000000 -1.
+>=20
+> The background for the same is, 0xe0000000 onward memory space is allocat=
+ed
+> for IO register space so we are restricting the driver buffer allocations
+> to 0xe0000000 - 1.
+>=20
+> Based on the comments received in the past, we are using GENMASK to
+> generate 0xe0000000.
+>=20
+> Does this answer your query or I missed something?
 
+I'm not sure it will do what you want. (0xe0000000 -1) matches ~BIT(29). Pe=
+rhaps
+you wanted to use ~0xe0000000.=20
 
-On 06-Jan-25 7:32 PM, Manivannan Sadhasivam wrote:
-> On Tue, Dec 24, 2024 at 09:17:25PM +0530, Ram Kumar Dwivedi wrote:
->> By default, the UFS controller allocates a fixed number of RX
->> and TX engines statically. Consequently, when UFS reads are in
->> progress, the TX ICE engines remain idle, and vice versa.
->> This leads to inefficient utilization of RX and TX engines.
->>
->> To address this limitation, enable the UFS shared ICE feature for
->> Qualcomm UFS V5.0 and above. This feature utilizes a pool of crypto
->> cores for both TX streams (UFS Write – Encryption) and RX streams
->> (UFS Read – Decryption). With this approach, crypto cores are
->> dynamically allocated to either the RX or TX stream as needed.
->>
->> Co-developed-by: Naveen Kumar Goud Arepalli <quic_narepall@quicinc.com>
->> Signed-off-by: Naveen Kumar Goud Arepalli <quic_narepall@quicinc.com>
->> Co-developed-by: Nitin Rawat <quic_nitirawa@quicinc.com>
->> Signed-off-by: Nitin Rawat <quic_nitirawa@quicinc.com>
->> Signed-off-by: Ram Kumar Dwivedi <quic_rdwivedi@quicinc.com>
->> ---
->> Changes from v7:
->> 1. Addressed Eric's comment to perform ice configuration only if
->>    UFSHCD_CAP_CRYPTO is enabled.
->>  
->> Changes from v6: 
->> 1. Addressed Eric's comment to replace is_ice_config_supported() helper
->>    function with a conditional check for UFS_QCOM_CAP_ICE_CONFIG.
->>
->> Changes from v5: 
->> 1. Addressed Bart's comment to declare the "val" variable with
->>    the "static" keyword.
->>
->> Changes from v4:
->> 1. Addressed Bart's comment to use get_unaligned_le32() instead of
->>    bit shifting and to declare val with the const keyword.
->>
->> Changes from v3:
->> 1. Addressed Bart's comment to change the data type of "config" to u32
->>    and "val" to uint8_t.
->>
->> Changes from v2:
->> 1. Refactored the code to have a single algorithm in the code and
->> enabled by default.
->> 2. Revised the commit message to incorporate the refactored change.
->> 3. Qcom host capabilities are now enabled in a separate function.
->>
->> Changes from v1:
->> 1. Addressed Rob's and Krzysztof's comment to fix dt binding compilation
->>    issue.
->> 2. Addressed Rob's comment to enable the nodes in example.
->> 3. Addressed Eric's comment to rephrase patch commit description.
->>    Used terminology as ICE allocator instead of ICE algorithm.
->> 4. Addressed Christophe's comment to align the comment as per kernel doc.
->> ---
->>  drivers/ufs/host/ufs-qcom.c | 38 ++++++++++++++++++++++++++++++++++
->>  drivers/ufs/host/ufs-qcom.h | 41 ++++++++++++++++++++++++++++++++++++-
->>  2 files changed, 78 insertions(+), 1 deletion(-)
->>
->> diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
->> index 68040b2ab5f8..ffc67b5d5c3e 100644
->> --- a/drivers/ufs/host/ufs-qcom.c
->> +++ b/drivers/ufs/host/ufs-qcom.c
->> @@ -15,6 +15,7 @@
->>  #include <linux/platform_device.h>
->>  #include <linux/reset-controller.h>
->>  #include <linux/time.h>
->> +#include <linux/unaligned.h>
->>  
->>  #include <soc/qcom/ice.h>
->>  
->> @@ -105,6 +106,26 @@ static struct ufs_qcom_host *rcdev_to_ufs_host(struct reset_controller_dev *rcd)
->>  }
->>  
->>  #ifdef CONFIG_SCSI_UFS_CRYPTO
->> +/**
->> + * ufs_qcom_config_ice_allocator() - ICE core allocator configuration
->> + *
->> + * @host: pointer to qcom specific variant structure.
->> + */
->> +static void ufs_qcom_config_ice_allocator(struct ufs_qcom_host *host)
->> +{
->> +	struct ufs_hba *hba = host->hba;
->> +	static const uint8_t val[4] = { NUM_RX_R1W0, NUM_TX_R0W1, NUM_RX_R1W1, NUM_TX_R1W1 };
->> +	u32 config;
->> +
->> +	if (!(host->caps & UFS_QCOM_CAP_ICE_CONFIG) ||
->> +			!(host->hba->caps & UFSHCD_CAP_CRYPTO))
->> +		return;
->> +
->> +	config = get_unaligned_le32(val);
->> +
->> +	ufshcd_writel(hba, ICE_ALLOCATOR_TYPE, REG_UFS_MEM_ICE_CONFIG);
->> +	ufshcd_writel(hba, config, REG_UFS_MEM_ICE_NUM_CORE);
->> +}
->>  
->>  static inline void ufs_qcom_ice_enable(struct ufs_qcom_host *host)
->>  {
->> @@ -196,6 +217,11 @@ static inline int ufs_qcom_ice_suspend(struct ufs_qcom_host *host)
->>  {
->>  	return 0;
->>  }
->> +
->> +static void ufs_qcom_config_ice_allocator(struct ufs_qcom_host *host)
->> +{
->> +}
->> +
->>  #endif
->>  
->>  static void ufs_qcom_disable_lane_clks(struct ufs_qcom_host *host)
->> @@ -435,6 +461,8 @@ static int ufs_qcom_hce_enable_notify(struct ufs_hba *hba,
->>  		err = ufs_qcom_enable_lane_clks(host);
->>  		break;
->>  	case POST_CHANGE:
->> +		ufs_qcom_config_ice_allocator(host);
->> +
-> 
-> Any reason why this is not paired with ufs_qcom_ice_enable() below?
-Hi Mani,
+Nicolas
 
-I have addressed this in the latest patchset.
-
-Thanks,
-Ram.
-> 
->>  		/* check if UFS PHY moved from DISABLED to HIBERN8 */
->>  		err = ufs_qcom_check_hibern8(hba);
->>  		ufs_qcom_enable_hw_clk_gating(hba);
->> @@ -932,6 +960,14 @@ static void ufs_qcom_set_host_params(struct ufs_hba *hba)
->>  	host_params->hs_tx_gear = host_params->hs_rx_gear = ufs_qcom_get_hs_gear(hba);
->>  }
->>  
->> +static void ufs_qcom_set_host_caps(struct ufs_hba *hba)
->> +{
->> +	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
->> +
->> +	if (host->hw_ver.major >= 0x5)
->> +		host->caps |= UFS_QCOM_CAP_ICE_CONFIG;
->> +}
->> +
->>  static void ufs_qcom_set_caps(struct ufs_hba *hba)
->>  {
->>  	hba->caps |= UFSHCD_CAP_CLK_GATING | UFSHCD_CAP_HIBERN8_WITH_CLK_GATING;
->> @@ -940,6 +976,8 @@ static void ufs_qcom_set_caps(struct ufs_hba *hba)
->>  	hba->caps |= UFSHCD_CAP_WB_EN;
->>  	hba->caps |= UFSHCD_CAP_AGGR_POWER_COLLAPSE;
->>  	hba->caps |= UFSHCD_CAP_RPM_AUTOSUSPEND;
->> +
->> +	ufs_qcom_set_host_caps(hba);
->>  }
->>  
->>  /**
->> diff --git a/drivers/ufs/host/ufs-qcom.h b/drivers/ufs/host/ufs-qcom.h
->> index b9de170983c9..92e2278b6a54 100644
->> --- a/drivers/ufs/host/ufs-qcom.h
->> +++ b/drivers/ufs/host/ufs-qcom.h
->> @@ -196,7 +196,8 @@ struct ufs_qcom_host {
->>  #ifdef CONFIG_SCSI_UFS_CRYPTO
->>  	struct qcom_ice *ice;
->>  #endif
->> -
->> +	#define UFS_QCOM_CAP_ICE_CONFIG BIT(0)
-> 
-> Do not place definition inside struct.
-Hi Mani,
-
-I have addressed this in the latest patchset.
-
-Thanks,
-Ram.
-
-> 
->> +	u32 caps;
->>  	void __iomem *dev_ref_clk_ctrl_mmio;
->>  	bool is_dev_ref_clk_enabled;
->>  	struct ufs_hw_version hw_ver;
->> @@ -226,6 +227,44 @@ ufs_qcom_get_debug_reg_offset(struct ufs_qcom_host *host, u32 reg)
->>  	return UFS_CNTLR_3_x_x_VEN_REGS_OFFSET(reg);
->>  };
->>  
->> +#ifdef CONFIG_SCSI_UFS_CRYPTO
-> 
-> This guard is strictly not needed.
-
-Hi Mani,
-
-The ufs shared ice functionality needs to be enabled only when crypto is enabled. 
-Hence we are guarding it.
-
-Thanks,
-Ram.
-
-
-
-> 
->> +
->> +/* ICE configuration to share AES engines among TX stream and RX stream */
->> +#define ICE_ALLOCATOR_TYPE 2
->> +#define REG_UFS_MEM_ICE_CONFIG 0x260C
->> +#define REG_UFS_MEM_ICE_NUM_CORE  0x2664
-> 
-> These register definitions should go inside the enum at the top of this file.
-> 
-> Also move other ICE definitions above REG_UFS_CFG2_CGC_EN_ALL to align with
-> other register definitions.
-
-Hi Mani,
-
-I have addressed this in the latest patchset.
-
-Thanks,
-Ram.
-> 
-> - Mani
-> 
+>=20
+> Thanks,
+> Dikshita
+> > Thanks,
+> > Mauro
 
 
