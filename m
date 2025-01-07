@@ -1,190 +1,156 @@
-Return-Path: <linux-arm-msm+bounces-44153-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-44154-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1B1E3A0438C
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jan 2025 16:00:10 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id A9ED5A043B8
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jan 2025 16:07:41 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2A6901649D8
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jan 2025 15:00:02 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E58A83A2DCB
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jan 2025 15:07:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3E4841F1927;
-	Tue,  7 Jan 2025 14:59:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0B1E11F2362;
+	Tue,  7 Jan 2025 15:07:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="SMR06eDI"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cps1BWbb"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f53.google.com (mail-lf1-f53.google.com [209.85.167.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B52B51F0E2A
-	for <linux-arm-msm@vger.kernel.org>; Tue,  7 Jan 2025 14:59:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFEFF1F131F;
+	Tue,  7 Jan 2025 15:07:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736261984; cv=none; b=Ci6nFe/v776fcx+oB4CGT+zh73B92iikYELq3btVWNWCS8r3N9436ucYwXIWPjWubQ0JlxbMFUvmFYgrwsnMX0PwFCu2EL+flPG5y9sIIyLNVGucBpJXuXOl2kWpuf0sW6GTBjeBkVNiTNoDcQnLprOIW5HqGDgvUNyJq31PS2c=
+	t=1736262456; cv=none; b=ruPEQjddvgzP7638LcLZMLQoTUeJ0YUNjol+wCwC4HpTYm+WV0SnJWE0C0UKtCEqkl6alkDbHdmux5S7DkzHDpF30RZDmyRzQyejW6+vQkWfUulA6G68IqYCIuiwcIPvNg7zVYJO3+Wq0VHMuU959i4RQ0xQe1veDGYTg04+TfU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736261984; c=relaxed/simple;
-	bh=rwk2c38iwo7mVDzYO6kOS55wSuGj9l6YRCJLROAsy+U=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=A34NVypr60Np6qcYR6jOvXz9yeUdeCqu4XdUGRxKlchwuVHzZ5zEZiLTSCBrsVO7FKPWB7KJKFyi29JKNRlTZmLbYlmRAXvludMLXeSmpwvuQs9y4HvgsJfeAnztwICKL7BVOrkQOI1h93lYP2tvyZEuBvYxrFtjCWY9L0otsQc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=SMR06eDI; arc=none smtp.client-ip=209.85.167.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f53.google.com with SMTP id 2adb3069b0e04-53e3a227b82so14216969e87.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Jan 2025 06:59:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1736261977; x=1736866777; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=4+tMXMMx3Gas7S3TmVN5d5qx2ZmZWgcEv2HRlb3nK6A=;
-        b=SMR06eDIEKF+dDTG7hCemZp1Pv/K7eLM5xZbPRV6kloIKGmk0xRsXlx8+6Q5VLqo+h
-         oqoEJXkHsL5ng8WWWPv1ul7k6KCaxP88wkuuQNPt7Fd0l2Ku8kFJE5W+Tsa1OwMedpil
-         678XlzXuLexANdM/vTDL0iH09nVylhPfiiCk9E4Ht6VADP+qDmfrqO/B7WriyaDI+EbC
-         /FSb0gRJu02+Lmomcx/3+uzFDrlUfxAjUb01JOnoq5QKXOxsfk/2XMQDbFaBolFr98dZ
-         XhV6cjhvlaxsbldPuDM/E7SqO4inpmOoU5u0bkOtfuymd+/Z02wMcF+SHutSjCjYsQwA
-         BcLQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736261977; x=1736866777;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=4+tMXMMx3Gas7S3TmVN5d5qx2ZmZWgcEv2HRlb3nK6A=;
-        b=fIK3d+efifyf2P7KHIou4LbfWRO0PDMXivTF8BQT5HDpg49U2OQauQGdCmPV/c86YT
-         a5Gij3eu3KMcPLYPepZaKmicA1p5aIfauhBI2nTlDd7GcuUOyVjHkbRC0Fl9dnwt5/78
-         tCq51xL/n0IBl7qeETaPnTReNEpBnWjgFGp57AH93n1Xlv4cQTKsZ6PECAC7D6M4t+Ig
-         /HYN4z8MhXD3xRQefc+J924b6uVORuLAbRcl6OhTDXTwmXAw9HVPdjF7mYKQ2lZs4qp/
-         /MxOs7K+/Q0xaBoNH5fkLf/8VTUiHGYo43LXCdyoQK/7fFhED9kq9PtalZjqvB2UXReS
-         H1sg==
-X-Forwarded-Encrypted: i=1; AJvYcCWzQaOK09LWWJ89jJfyeLaM0EBrJzAMgv62PJdOr0F6VCCnkOYApQmj5eESe7tpTQBD+zn1yHR/AAXIpkkN@vger.kernel.org
-X-Gm-Message-State: AOJu0YyKjbJ0M2NkhVzQuVywLaUlWIz9hCG5pYtdYrjAxKwbf+bU0Wm6
-	cYQrDbXl14ObGJVvJZODOvLNsz7dxcwQ8JBBtbWykkBJ2EG7WxVmd0LRF+Ls8nc=
-X-Gm-Gg: ASbGncs5Zg4l6bMyG8m4j7TiV9QUNs8DRrY1KxEMrLWk6HcMFt9G4Jk3hDbpNvhBRc5
-	CutIle8ZCdKpVI1v4c0hS4/c13WsiBYqwTq4FWnt6kPgoXjZ4SvSIVZQK40+3KVYJESg7GIyv36
-	sHNWT2gwQr3MVMOwqSQXKe8llqjoTkIMRTxYKj6cd3/lu8f5aurKBt2kqBvuzIKJouxY4B0sWU7
-	sjJj2qgs65BPytCD6JNA1fZ5Vil57aFdIidS/UJDAjGOil+XrQEqwDvjEmbcnypyKxY4c8GGsmd
-	Udc3/nBTXM2TlQ/KeQCn2QF5j5lAqXwUfns1
-X-Google-Smtp-Source: AGHT+IEfA6+3JA9QoZe5TfehNOUHvzxEVNx4Xj3j6hOCVSTxt55YSawGeAotiCRHoqcs1nEyys1w5A==
-X-Received: by 2002:a05:6512:12c7:b0:541:1c49:270 with SMTP id 2adb3069b0e04-5422956b990mr21327115e87.49.1736261976763;
-        Tue, 07 Jan 2025 06:59:36 -0800 (PST)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-3045b082e3csm57916231fa.114.2025.01.07.06.59.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Jan 2025 06:59:35 -0800 (PST)
-Date: Tue, 7 Jan 2025 16:59:34 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc: Bjorn Andersson <andersson@kernel.org>, 
-	Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Neil Armstrong <neil.armstrong@linaro.org>, linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 2/3] clk: qcom: clk-alpha-pll: Add Pongo PLL
-Message-ID: <hrykjklurrj3gqsauwtdiptyqf7uuiu5zuk6dtevchukrsrmty@tqgwqhtgqkbe>
-References: <20250106-sm8750-dispcc-v2-0-6f42beda6317@linaro.org>
- <20250106-sm8750-dispcc-v2-2-6f42beda6317@linaro.org>
- <nasilduqcbrdtfnx7ef5rzp4blyvbwhyypjpkzlmv4o6oohj4e@gz2a6kffkf7p>
- <940a744c-ca5d-4edd-8a90-be2f8c7da7c0@linaro.org>
+	s=arc-20240116; t=1736262456; c=relaxed/simple;
+	bh=wjlKPk4Qu042U6KjaRkIyNF6oWv4wUq/wNI/EplKxMQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=dMss7aIzqZJTgO2smx69uZeRhiEpVXmKGawk8COjI56ugatvK9Rwn2n5O3XqG52iQCPs7ftbKBmb5WiX27w6AUyXuRm9rmgCxhHiElVMhkZvC+JllgMmkWrjkAyCdbALLal9T2kO6QGfvDSoq1JIE/rLUImiklQd7FldSicJsE0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cps1BWbb; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 930F5C4CEDF;
+	Tue,  7 Jan 2025 15:07:34 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1736262456;
+	bh=wjlKPk4Qu042U6KjaRkIyNF6oWv4wUq/wNI/EplKxMQ=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=cps1BWbb53THqvJlQfzJCIfNxBcIzcrVwDah/7t3G2jQOePV5dtxXuqmy5PoE6lHB
+	 N134lPkZ2z06yfW7nZpANUGtG5rOplOyrNnpgbh2VWD1PUtASZm5yQ3tHybLF7PfJL
+	 Lyq/QcCbY/jpYfc7AHzvr6TJFPGltcurHQaENVXUuFQ7OwgXK0iV6I6RrHTIXB1TO3
+	 DbWfBx/HjmoRLohphvvDDcVHD0F3C2dzCIehBgzENrrHhB+hmd8ok4BBhitheuCbmG
+	 8JBoo7kXVt+wyTDEeCyCls/hNi++HF4Cw/gOJTZi6hZy8tN0FuklHbZNc59Rj6Zy6t
+	 G1gBe/c/dV1rQ==
+Message-ID: <29eaebd2-dc69-4576-892f-71ef859e5ae0@kernel.org>
+Date: Tue, 7 Jan 2025 17:07:43 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <940a744c-ca5d-4edd-8a90-be2f8c7da7c0@linaro.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3] clk: qcom: gdsc: Add a flag to skip setting power
+ collapse bits
+To: andersson@kernel.org
+Cc: sboyd@kernel.org, mturquette@baylibre.com, quic_mdtipton@quicinc.com,
+ linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+ linux-kernel@vger.kernel.org, Georgi Djakov <quic_c_gdjako@quicinc.com>
+References: <20241205222156.1880299-1-quic_c_gdjako@quicinc.com>
+Content-Language: en-US
+From: Georgi Djakov <djakov@kernel.org>
+In-Reply-To: <20241205222156.1880299-1-quic_c_gdjako@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Tue, Jan 07, 2025 at 02:36:52PM +0100, Krzysztof Kozlowski wrote:
-> On 07/01/2025 13:36, Dmitry Baryshkov wrote:
-> > On Mon, Jan 06, 2025 at 02:44:30PM +0100, Krzysztof Kozlowski wrote:
-> >> Add support for Pongo type of PLL clocks, used in Qualcomm SM8750 SoC.
-> >> Notable difference comparing to other PLLs is the need for calibration
-> >> for internally generated clock followed by wait_for_pll().  This is done
-> >> in configure call and at this time clocks are not yet registered, thus
-> >> wait_for_pll() cannot use clk_hw_get_name.
-> > 
-> > Is this still correct?
+On 6.12.24 0:21, Georgi Djakov wrote:
+> The sdm845 platforms have a hardware issue that requires keeping
+> some of the MMNOC GDSCs in SW collapse mode (which is the power-on
+> default). But if some driver tries to use these GDSCs and the mode
+> is updated because of runtime pm calls, we may get a board hang.
+> Introduce a flag to skip any updates to the power collapse settings
+> for the impacted GDSCs to avoid unexpected board hangs.
 > 
-> No, it is not, I forgot to drop it after reworking code.
-> 
-> Patches were merged, though.
-> 
-> 
-> > 
-> >> Locking during this
-> >> calibration requires much more time, thus increase the timeout in
-> >> wait_for_pll().
-> >>
-> >> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> >>
-> >> ---
-> >>
-> >> v2:
-> >>  - EXPORT_SYMBOL_GPL
-> >>  - Move the PLL calibration and wait_for_pll_enable_lock() call to
-> >>    prepare callback.
-> >> ---
-> >>  drivers/clk/qcom/clk-alpha-pll.c | 165 ++++++++++++++++++++++++++++++++++++++-
-> >>  drivers/clk/qcom/clk-alpha-pll.h |   6 ++
-> >>  2 files changed, 170 insertions(+), 1 deletion(-)
-> >>
-> >> diff --git a/drivers/clk/qcom/clk-alpha-pll.c b/drivers/clk/qcom/clk-alpha-pll.c
-> >> index 00d3659ea2124e26dd50c1b4e88ba71c1411442e..df609f7e394de2dc73e60df01b1ad71714c0719d 100644
-> >> --- a/drivers/clk/qcom/clk-alpha-pll.c
-> >> +++ b/drivers/clk/qcom/clk-alpha-pll.c
-> >> @@ -58,6 +58,7 @@
-> >>  #define PLL_TEST_CTL_U(p)	((p)->offset + (p)->regs[PLL_OFF_TEST_CTL_U])
-> >>  #define PLL_TEST_CTL_U1(p)     ((p)->offset + (p)->regs[PLL_OFF_TEST_CTL_U1])
-> >>  #define PLL_TEST_CTL_U2(p)     ((p)->offset + (p)->regs[PLL_OFF_TEST_CTL_U2])
-> >> +#define PLL_TEST_CTL_U3(p)     ((p)->offset + (p)->regs[PLL_OFF_TEST_CTL_U3])
-> >>  #define PLL_STATUS(p)		((p)->offset + (p)->regs[PLL_OFF_STATUS])
-> >>  #define PLL_OPMODE(p)		((p)->offset + (p)->regs[PLL_OFF_OPMODE])
-> >>  #define PLL_FRAC(p)		((p)->offset + (p)->regs[PLL_OFF_FRAC])
-> >> @@ -197,6 +198,23 @@ const u8 clk_alpha_pll_regs[][PLL_OFF_MAX_REGS] = {
-> >>  		[PLL_OFF_TEST_CTL_U1] = 0x34,
-> >>  		[PLL_OFF_TEST_CTL_U2] = 0x38,
-> >>  	},
-> >> +	[CLK_ALPHA_PLL_TYPE_PONGO_ELU] = {
-> >> +		[PLL_OFF_OPMODE] = 0x04,
-> >> +		[PLL_OFF_STATE] = 0x08,
-> >> +		[PLL_OFF_STATUS] = 0x0c,
-> >> +		[PLL_OFF_L_VAL] = 0x10,
-> >> +		[PLL_OFF_USER_CTL] = 0x14,
-> >> +		[PLL_OFF_USER_CTL_U] = 0x18,
-> >> +		[PLL_OFF_CONFIG_CTL] = 0x1c,
-> >> +		[PLL_OFF_CONFIG_CTL_U] = 0x20,
-> >> +		[PLL_OFF_CONFIG_CTL_U1] = 0x24,
-> >> +		[PLL_OFF_CONFIG_CTL_U2] = 0x28,
-> >> +		[PLL_OFF_TEST_CTL] = 0x2c,
-> >> +		[PLL_OFF_TEST_CTL_U] = 0x30,
-> >> +		[PLL_OFF_TEST_CTL_U1] = 0x34,
-> >> +		[PLL_OFF_TEST_CTL_U2] = 0x38,
-> >> +		[PLL_OFF_TEST_CTL_U3] = 0x3c,
-> >> +	},
-> >>  	[CLK_ALPHA_PLL_TYPE_TAYCAN_ELU] = {
-> >>  		[PLL_OFF_OPMODE] = 0x04,
-> >>  		[PLL_OFF_STATE] = 0x08,
-> >> @@ -337,6 +355,12 @@ EXPORT_SYMBOL_GPL(clk_alpha_pll_regs);
-> >>  #define LUCID_EVO_PLL_CAL_L_VAL_SHIFT	16
-> >>  #define LUCID_OLE_PLL_RINGOSC_CAL_L_VAL_SHIFT	24
-> >>  
-> >> +/* PONGO ELU PLL specific setting and offsets */
-> >> +#define PONGO_PLL_OUT_MASK		GENMASK(1, 0)
-> >> +#define PONGO_PLL_L_VAL_MASK		GENMASK(11, 0)
-> > 
-> > Does it really support such a high L value, or are there any additional
-> > flags / data entries? PLL2 uses 0x493, which should end up with 22 GHz
-> > clock, if my calculations are correct.
-> 
-> That's the bitfield also in datasheet (except downstream driver). Not
-> exactly answer to "does it really support", but not sure what else we
-> can do here.
+> Fixes: 7bb38c20f2b6 ("arm64: dts: qcom: sdm845: Add DT nodes for the TBUs")
+> Reviewed-by: Mike Tipton <quic_mdtipton@quicinc.com>
+> Signed-off-by: Georgi Djakov <quic_c_gdjako@quicinc.com>
 
-What is the PLL2 frequency if you program config->l as it is now
-(0x493)?
+Gentle ping... as this is pending for a while. Are there any comments?
+Can it be applied?
 
--- 
-With best wishes
-Dmitry
+Thanks,
+Georgi
+
+> ---
+> v3:
+> - No changes
+> 
+> v2: https://lore.kernel.org/r/20241009151657.1041691-1-quic_c_gdjako@quicinc.com/
+> - Pick up Reviewed-by tag
+> - Add Fixes tag
+> 
+> v1: https://lore.kernel.org/r/20240813120015.3242787-1-quic_c_gdjako@quicinc.com/
+>   drivers/clk/qcom/gcc-sdm845.c | 6 +++---
+>   drivers/clk/qcom/gdsc.c       | 3 +++
+>   drivers/clk/qcom/gdsc.h       | 1 +
+>   3 files changed, 7 insertions(+), 3 deletions(-)
+> 
+> diff --git a/drivers/clk/qcom/gcc-sdm845.c b/drivers/clk/qcom/gcc-sdm845.c
+> index dc3aa7014c3e..019b780e31c8 100644
+> --- a/drivers/clk/qcom/gcc-sdm845.c
+> +++ b/drivers/clk/qcom/gcc-sdm845.c
+> @@ -3503,7 +3503,7 @@ static struct gdsc hlos1_vote_mmnoc_mmu_tbu_hf0_gdsc = {
+>   		.name = "hlos1_vote_mmnoc_mmu_tbu_hf0_gdsc",
+>   	},
+>   	.pwrsts = PWRSTS_OFF_ON,
+> -	.flags = VOTABLE,
+> +	.flags = VOTABLE | SKIP_SET_COLLAPSE,
+>   };
+>   
+>   static struct gdsc hlos1_vote_mmnoc_mmu_tbu_hf1_gdsc = {
+> @@ -3512,7 +3512,7 @@ static struct gdsc hlos1_vote_mmnoc_mmu_tbu_hf1_gdsc = {
+>   		.name = "hlos1_vote_mmnoc_mmu_tbu_hf1_gdsc",
+>   	},
+>   	.pwrsts = PWRSTS_OFF_ON,
+> -	.flags = VOTABLE,
+> +	.flags = VOTABLE | SKIP_SET_COLLAPSE,
+>   };
+>   
+>   static struct gdsc hlos1_vote_mmnoc_mmu_tbu_sf_gdsc = {
+> @@ -3521,7 +3521,7 @@ static struct gdsc hlos1_vote_mmnoc_mmu_tbu_sf_gdsc = {
+>   		.name = "hlos1_vote_mmnoc_mmu_tbu_sf_gdsc",
+>   	},
+>   	.pwrsts = PWRSTS_OFF_ON,
+> -	.flags = VOTABLE,
+> +	.flags = VOTABLE | SKIP_SET_COLLAPSE,
+>   };
+>   
+>   static struct clk_regmap *gcc_sdm670_clocks[] = {
+> diff --git a/drivers/clk/qcom/gdsc.c b/drivers/clk/qcom/gdsc.c
+> index fa5fe4c2a2ee..4b83cec9137c 100644
+> --- a/drivers/clk/qcom/gdsc.c
+> +++ b/drivers/clk/qcom/gdsc.c
+> @@ -121,6 +121,9 @@ static int gdsc_update_collapse_bit(struct gdsc *sc, bool val)
+>   	u32 reg, mask;
+>   	int ret;
+>   
+> +	if (sc->flags & SKIP_SET_COLLAPSE)
+> +		return 0;
+> +
+>   	if (sc->collapse_mask) {
+>   		reg = sc->collapse_ctrl;
+>   		mask = sc->collapse_mask;
+> diff --git a/drivers/clk/qcom/gdsc.h b/drivers/clk/qcom/gdsc.h
+> index 1e2779b823d1..6bb7e023a19a 100644
+> --- a/drivers/clk/qcom/gdsc.h
+> +++ b/drivers/clk/qcom/gdsc.h
+> @@ -68,6 +68,7 @@ struct gdsc {
+>   #define RETAIN_FF_ENABLE	BIT(7)
+>   #define NO_RET_PERIPH	BIT(8)
+>   #define HW_CTRL_TRIGGER	BIT(9)
+> +#define SKIP_SET_COLLAPSE	BIT(10)
+>   	struct reset_controller_dev	*rcdev;
+>   	unsigned int			*resets;
+>   	unsigned int			reset_count;
+
 
