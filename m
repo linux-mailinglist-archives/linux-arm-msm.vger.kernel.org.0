@@ -1,179 +1,175 @@
-Return-Path: <linux-arm-msm+bounces-44201-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-44202-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 034E8A049AF
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jan 2025 19:55:51 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id BC831A04AA4
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jan 2025 21:08:18 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D8C231670F4
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jan 2025 18:55:48 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9C1DA166D0E
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jan 2025 20:08:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 78E171F190E;
-	Tue,  7 Jan 2025 18:55:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4818A1F63FC;
+	Tue,  7 Jan 2025 20:08:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ed9V2840"
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="GeAuhMUq"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 690CF41C6A;
-	Tue,  7 Jan 2025 18:55:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D51518C01E
+	for <linux-arm-msm@vger.kernel.org>; Tue,  7 Jan 2025 20:08:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736276148; cv=none; b=CfWPUhnHBgEt13+q1pH+kxOvnRdM0n6ImKFFnXSD04X9qM1CzUdOwlkLZMMFHRub6SOyNhViXVcendJUXguQxDdvWEBwrmGzRWxAzq7YzkdWdQsZYOuUryVEIVpz18gcrxE8EsP0qiGt0MHj65c+jcL1RbPI9jn7PmpEp/PerOw=
+	t=1736280490; cv=none; b=gq+mavqj4tuNngxj6WNN/px20FAWTGbzS5EIQoDxkykmAmZ9VxOBZA1SVbKds1jJAVW15WIh7Bfyo41uy+bVJkKIOgApYkwLJC9SLdd6tRt5Pkf1BttBOq6GSUEKkfJXv4IZocpavxiAdBskEitL8Y2OTLNbiv9cC8JOdHor6BM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736276148; c=relaxed/simple;
-	bh=BiH6nCQHtex4rc+BQ8EI6b3gwXKQmiFYTIQt05JOWVk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=t0vnGeRv/SOGqnkRawvVVu2xesaYjReE83gyjYJ5zXpyU7RDwSfFTmmerdFietr67g9ljpKyCZSa6AsrPgg+MxRfS6vNuuyA3OJ3nNEDsj8QXIhwww/fzAisa1eKFthIzYkdqt9kAt9wCFUAfey0JMn618iOCJSJTEiSn5l3Oy8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ed9V2840; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 507A8Pvk023187;
-	Tue, 7 Jan 2025 18:55:38 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	MnB4R6DpJxceRTTXuWVWKyFW3MtkLh7BTThyJ0FukU0=; b=ed9V2840gBYRVav2
-	Ru0lYcbWoSr/BbvHicNaBxafI/sR+znSzwHUCF/1acdUrKWBKaBsxRW8LeQeJXnW
-	Mi4ZwQFNdPQD0nviR3WRGMWjVCWRSZqLLiZaWD1fZ+u0P0HSYPLQV29R4JuJu9/W
-	eQZaPt/QKaw+dmAJdMebkHy91s7eFI67Tqj48uMMmogd8NlMopHxAuLkxscnp7mf
-	HrSqWN5aalu2munSMtIelT0NoiEmK0gAfJrtnjZbWbOxUa9fSL+pByfVfzh99hud
-	KIINWkUvUQkfgcWki8nQXzO76giwhW17gIrNoTvBV1U1meURJ/6bRXAbLQ3PAVND
-	UtJGlg==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44128nsayk-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 07 Jan 2025 18:55:37 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 507ItbMw003082
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 7 Jan 2025 18:55:37 GMT
-Received: from [10.134.71.247] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 7 Jan 2025
- 10:55:36 -0800
-Message-ID: <24a9ef31-6a41-4a7a-9a4f-793d3e6ff559@quicinc.com>
-Date: Tue, 7 Jan 2025 10:55:36 -0800
+	s=arc-20240116; t=1736280490; c=relaxed/simple;
+	bh=sW+YtVvseWX81mmY8eksl64Kcr9nFrBv78jNK5VPeYs=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=cgOFPxUvGuI7aOms9ff4saIDR3mzkRQBAGRHy81bGajP3oBx4rlKp//VcH2H2guALkRC6F4wxiU1K9I+494L1M+piwLwZmx5o5Izeph1SCxUhdhBAkLghU8/G5vIby1rfjdxJlCjoaMI37jQQm7H/o+WYZ8vIU4rNAsXjzmDDcA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=GeAuhMUq; arc=none smtp.client-ip=209.85.214.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
+Received: by mail-pl1-f174.google.com with SMTP id d9443c01a7336-2166f1e589cso18265405ad.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Jan 2025 12:08:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google; t=1736280488; x=1736885288; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=P+ktxhUGYGa3yNjnjHMajfbM7+ExHdrh9QS4E9J5Jm8=;
+        b=GeAuhMUqp9QAHOLEXkgeY1A97cT0nYDWpLt6np4RFmO6WAcRdxG9V/RrrjXNL2ofR0
+         0DmZMESjRSTSsrT6u+EdMg+cWjfDTtmTw8iT72JpTk1Lbu8jCza45Gygtcdt4ubVc8Oe
+         xhtOKom0W4UEan/4pUblTPX6aQpshiCr6tPFY=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1736280488; x=1736885288;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=P+ktxhUGYGa3yNjnjHMajfbM7+ExHdrh9QS4E9J5Jm8=;
+        b=vBgVqgQ68QV89jjJjaV6xjGhOW0cLk8uvcnzOBsDqMSG0VCZ46cU4l7qdY48JEpxlJ
+         Acvl6FCEDWmnBjPyAm634sLykNtV+PzcDilXTLkd7AGQSdtmFG7++BfVQ1H4QYnPowoN
+         IA3u5mBvRMLKuHmWH1f9xA8N1hSYSN6ZHT73tSDQmWuwAB0H6DkTew5/yPMLr67ZUvCW
+         //eGPy5J9QUwsMZ8kt3k66J6DtkdqR6+G/1NB7atvz2uZrbp/fHXgVG4C4Xv7uLQ3q1e
+         pSapfEkCvbn5iPcGQhuyAuD3CzcJ/1NA65fs98gT14rJ/RT6ktkIGpz6iDtmolPHuZmI
+         XnVw==
+X-Forwarded-Encrypted: i=1; AJvYcCUGOu3UtZOOj9jJ2F1NDbnvqXQvr9p+FXLmIiGykfk0OhldEbURsJupE7/KDmoLvftfRikRVMpHwEL6Rs5W@vger.kernel.org
+X-Gm-Message-State: AOJu0YzvvOwbr2EE95InQBofXFtRnBLmgyDNjwIW7HbY4JMSQ12VWRYa
+	rUZ2s6PdNRfwO9psXj1NtEiyQMtYXgVWbLTJlsOM7KcD8eFqw8aPloCcTmLqZw==
+X-Gm-Gg: ASbGnctMhR8hokQNHdcQ0dhgY1LePMIhEmocKxBrfLb+OmedzLtoLEuiqrclxXMJZkb
+	2PdZ2owQYyJ0MMD7Q532HvhvxeP4o0IoEgTUNdM1wNgfSpgpe0zJmLz6Mnjs6+l+Fx4spL4dmkT
+	NGbsMcMSUl/B4vFZ3HKZXAQlSw+yu1QJtz7p8066KWEYIKJvz2zTqNdDJvwZwGAMNb5qdEVm7S6
+	gE4eU5j677d3ZL+BvT0Oi1KdpMW1CjDvn7Qv4WckToHWCNk1kNTPaVTGZeekTCQe9x1TZaIFWLE
+X-Google-Smtp-Source: AGHT+IFVBn3Ij7LbCn0txABKNdFr2EWfmGyAelW8kD1WcnsSLP1ApJp3uRCtKztZB6YW77FsGgN49g==
+X-Received: by 2002:a17:902:f685:b0:216:5002:7341 with SMTP id d9443c01a7336-21a83fde2bcmr3869285ad.44.1736280487549;
+        Tue, 07 Jan 2025 12:08:07 -0800 (PST)
+Received: from dianders.sjc.corp.google.com ([2620:15c:9d:2:2961:4bbc:5703:5820])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-219dc962d47sm314263425ad.55.2025.01.07.12.08.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 07 Jan 2025 12:08:06 -0800 (PST)
+From: Douglas Anderson <dianders@chromium.org>
+To: Catalin Marinas <catalin.marinas@arm.com>,
+	Will Deacon <will@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>
+Cc: Roxana Bradescu <roxabee@google.com>,
+	Julius Werner <jwerner@chromium.org>,
+	bjorn.andersson@oss.qualcomm.com,
+	Trilok Soni <quic_tsoni@quicinc.com>,
+	linux-arm-msm@vger.kernel.org,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	linux-arm-kernel@lists.infradead.org,
+	Jeffrey Hugo <quic_jhugo@quicinc.com>,
+	Scott Bauer <sbauer@quicinc.com>,
+	Douglas Anderson <dianders@chromium.org>,
+	Anshuman Khandual <anshuman.khandual@arm.com>,
+	Besar Wicaksono <bwicaksono@nvidia.com>,
+	D Scott Phillips <scott@os.amperecomputing.com>,
+	Easwar Hariharan <eahariha@linux.microsoft.com>,
+	James Morse <james.morse@arm.com>,
+	Oliver Upton <oliver.upton@linux.dev>,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH v4 0/5] arm64: errata: Rework Spectre BHB mitigations to not assume "safe"
+Date: Tue,  7 Jan 2025 12:05:57 -0800
+Message-ID: <20250107200715.422172-1-dianders@chromium.org>
+X-Mailer: git-send-email 2.47.1.613.gc27f4b7a9f-goog
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/4] drm/msm/dpu: enable CDM for all supported platforms
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Marijn
- Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>
-References: <20241224-dpu-add-cdm-v1-0-7aabfcb58246@linaro.org>
- <92ba142e-0793-4a47-a8b4-115050114132@quicinc.com>
- <t2pun2bz73aq426jokjlyeweknln74ygf5xj44tnmsoxowvnku@qtxqjruhfkju>
-Content-Language: en-US
-From: Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <t2pun2bz73aq426jokjlyeweknln74ygf5xj44tnmsoxowvnku@qtxqjruhfkju>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 57z7Y6R_DSJf01rW-a2efZ8Z-0ckTiU7
-X-Proofpoint-ORIG-GUID: 57z7Y6R_DSJf01rW-a2efZ8Z-0ckTiU7
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=739
- priorityscore=1501 bulkscore=0 clxscore=1015 suspectscore=0 mlxscore=0
- spamscore=0 impostorscore=0 lowpriorityscore=0 malwarescore=0 phishscore=0
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2501070155
+Content-Transfer-Encoding: 8bit
 
 
+Recently I realized that a device with some Qualcomm Kryo 4xx cores
+reported in `lscpu` that it was _not_ vulnerable to Spectre BHB. This
+seemed unlikely to me.
 
-On 1/7/2025 3:48 AM, Dmitry Baryshkov wrote:
-> On Mon, Jan 06, 2025 at 07:17:40PM -0800, Abhinav Kumar wrote:
->>
->>
->> On 12/23/2024 8:25 PM, Dmitry Baryshkov wrote:
->>> Enable CDM block on all the platforms where it is supposed to be
->>> present. Notably, from the platforms being supported by the DPU driver
->>> it is not enabled for SM6115 (DPU 6.3), QCM2290 (DPU 6.5) and SM6375
->>> (DPU 6.9)
->>>
->>
->> Thanks for enabling it, but can you also explain on which of these has
->> validation already been done and on which ones you need Tested-by from the
->> community?
-> 
-> Actually none :D It is purely based on your CDM support and existing
-> vendor DT trees. Maybe we should spend some time validating it.
-> 
+I wrote up a patch series to attempt (with a lot of guesswork) to add
+Qualcomm cores to the tables governing how the Spectre BHB mitigation
+worked.
 
-Ok. Let me continue the code review. Lets get back to the test status 
-closer to the merge window and take a call. Even covering majority of 
-the chipsets will be a win.
+In response to that patch, Will suggested that I flip the mitigation
+on its head and assume things are vulnerable until we find that
+they're not [1]. This patch series _attempts_ to accomplish that.
 
-I can certainly signup for sa8775p, as I will be active on that platform 
-in the upcoming weeks.
+In case it's not obvious, v2 of this patch series was pretty different
+than v1 because it flips the logic on its head. Some of the patches
+carried over, though.
 
->>
->> Is it fair to assume that changes (3) and (4) were sent out separately and
->> not squashed into (2) because they are pending validation?
-> 
-> No, it's because I don't have DT (and so I didn't have reference) for
-> SC8280XP or X Elite.
-> 
+v3 is yet more different, avoiding the guesses (and thus dropping
+some patches) and also incorporating feedback from Julius in response
+to v2.
 
-Got it. Will take a look.
+v4 addresses minor feedback plus re-adds Qualcomm cores since I
+managed to find a contact at Qualcomm to provide confirmation.
 
->>
->>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->>> ---
->>> Dmitry Baryshkov (4):
->>>         drm/msm/dpu: rename CDM block definition
->>>         drm/msm/dpu: enable CDM_0 for all DPUs which are known to have it
->>>         drm/msm/dpu: enable CDM_0 for SC8280XP platform
->>>         drm/msm/dpu: enable CDM_0 for X Elite platform
->>>
->>>    drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_10_0_sm8650.h  | 1 +
->>>    drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_1_14_msm8937.h | 1 +
->>>    drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_1_15_msm8917.h | 1 +
->>>    drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_1_16_msm8953.h | 1 +
->>>    drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_1_7_msm8996.h  | 1 +
->>>    drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h  | 1 +
->>>    drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_2_sdm660.h   | 1 +
->>>    drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_3_sdm630.h   | 1 +
->>>    drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h   | 1 +
->>>    drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_1_sdm670.h   | 1 +
->>>    drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h   | 1 +
->>>    drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h  | 1 +
->>>    drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_2_sm7150.h   | 1 +
->>>    drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_3_sm6150.h   | 1 +
->>>    drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_4_sm6125.h   | 1 +
->>>    drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h   | 2 +-
->>>    drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_2_sc7180.h   | 1 +
->>>    drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_4_sm6350.h   | 1 +
->>>    drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h   | 1 +
->>>    drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h   | 2 +-
->>>    drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h | 1 +
->>>    drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h   | 1 +
->>>    drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_4_sa8775p.h  | 2 +-
->>>    drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h   | 1 +
->>>    drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_2_x1e80100.h | 1 +
->>>    drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c           | 2 +-
->>>    26 files changed, 26 insertions(+), 4 deletions(-)
->>> ---
->>> base-commit: 8155b4ef3466f0e289e8fcc9e6e62f3f4dceeac2
->>> change-id: 20241215-dpu-add-cdm-0b5b9283ffa8
->>>
->>> Best regards,
-> 
+As a last caveat, I'll note that I am certainly no expert on
+Spectre. Mostly I ended up here running `lscpu` on a device and
+noticing that it thought that it wasn't affected by Spectre v2 when I
+thought it was.
+
+Link to prev versions:
+v1: https://lore.kernel.org/r/20241209174430.2904353-1-dianders@chromium.org/
+v2: https://lore.kernel.org/r/20241214005248.198803-1-dianders@chromium.org
+v3: https://lore.kernel.org/r/20241219205426.2275508-1-dianders@chromium.org
+
+[1] https://lore.kernel.org/r/20241211213410.GB17486@willie-the-truck
+
+Changes in v4:
+- Re-added QCOM_KRYO_4XX_GOLD k24 patch after Qualcomm confirmed.
+- Add MIDR_BRAHMA_B53 as safe.
+- Get rid of `spectre_bhb_firmware_mitigated_list`.
+- Re-added KRYO 2XX/3XX/4XX silver patch after Qualcomm confirmed.
+
+Changes in v3:
+- Removed QCOM_KRYO_4XX_GOLD k24 patch.
+- Don't guess the mitigation; just report unknown cores as vulnerable.
+- Restructure the code since is_spectre_bhb_affected() defaults to true
+- Removed KRYO 2XX/3XX/4XX silver patch.
+- arm64: cputype: Add MIDR_CORTEX_A76AE
+- arm64: errata: Add newer ARM cores to the spectre_bhb_loop_affected() lists
+
+Changes in v2:
+- Slight change to wording and notes of KRYO_4XX_GOLD patch
+- arm64: errata: Assume that unknown CPUs _are_ vulnerable to Spectre BHB
+- arm64: errata: Add KRYO 2XX/3XX/4XX silver cores to Spectre BHB safe list
+
+Douglas Anderson (5):
+  arm64: errata: Add QCOM_KRYO_4XX_GOLD to the spectre_bhb_k24_list
+  arm64: errata: Assume that unknown CPUs _are_ vulnerable to Spectre
+    BHB
+  arm64: errata: Add KRYO 2XX/3XX/4XX silver cores to Spectre BHB safe
+    list
+  arm64: cputype: Add MIDR_CORTEX_A76AE
+  arm64: errata: Add newer ARM cores to the spectre_bhb_loop_affected()
+    lists
+
+ arch/arm64/include/asm/cputype.h |   2 +
+ arch/arm64/include/asm/spectre.h |   1 -
+ arch/arm64/kernel/proton-pack.c  | 218 +++++++++++++++++--------------
+ 3 files changed, 120 insertions(+), 101 deletions(-)
+
+-- 
+2.47.1.613.gc27f4b7a9f-goog
+
 
