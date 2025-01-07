@@ -1,87 +1,88 @@
-Return-Path: <linux-arm-msm+bounces-44131-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-44132-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 54378A03F23
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jan 2025 13:30:45 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id E559DA03F60
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jan 2025 13:37:21 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id CA6F17A12F0
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jan 2025 12:30:34 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 56C103A12F0
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jan 2025 12:37:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9AF221EF0B9;
-	Tue,  7 Jan 2025 12:30:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 791751E22E9;
+	Tue,  7 Jan 2025 12:36:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="ftXJPCq7"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="OIFVmpaT"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.15])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f47.google.com (mail-lf1-f47.google.com [209.85.167.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75FDF1E9B39;
-	Tue,  7 Jan 2025 12:30:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.15
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC33E1EE00F
+	for <linux-arm-msm@vger.kernel.org>; Tue,  7 Jan 2025 12:36:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736253038; cv=none; b=RCB1msi6VEK/QY/2tomA42XEVG9wHAFwPZidosH081YjLWBKNeoZv+SoNDvYYHpbAogAg4LGWy9Y6Vp6sC57MDpHa3nZ/EsEcLGxuNFU1sgalBEJGx1iccQXjUvOUz08gx7b7LsYa0d0hJam9FnRQY/OgaYeNQOXvutJcZUuaS0=
+	t=1736253418; cv=none; b=kBWbX5OtDLxJuvQPx4kyowl53LuH4G2cMsnpaMqbMM9+KFhvTyyMKRLWGuQtJmJfkXizu8xmz26PZgoYUy5bM/qfH2+S4R9uhNyoIKs4mT2qpx3eJJyViHJha6N3Y6C2Ligzn+4iUrJKAODuDz9F5ESbz61hfVBt7NDubXmNRPM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736253038; c=relaxed/simple;
-	bh=EFqSCzd5v2Gld3g1FW1U/UHjDj5HxerwE3IJ+FqZM2g=;
+	s=arc-20240116; t=1736253418; c=relaxed/simple;
+	bh=6mrw4fSn7qi9tJ9B32OnUA5Ho5ERm0pRHovMgS+21dU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=CCODsCOvOyHo9rNwFwy8YFdBt2GlxTD+w0PCWGPhPXraCX4/3QUfYNOMf+FUA2K4EtuQb9d1Y/YZFwow/nE6wwVfOjdnyRuMFBfz/cH9Az7Y9aTVG2+ZsQG+AmsDMEgRTM6UVcBwmDzLOHXFQzg32h+aoaUebvFFEsO9jRHODlw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=ftXJPCq7; arc=none smtp.client-ip=198.175.65.15
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1736253034; x=1767789034;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=EFqSCzd5v2Gld3g1FW1U/UHjDj5HxerwE3IJ+FqZM2g=;
-  b=ftXJPCq7Y5NGXH37+GpFanRe2Fhd5d/x2JGK/rX64fFncTNkdQj+TuDU
-   zH+KL7hIzcOZc8FAAsgqRmxtah3ZKweVrlUw0/BT+M9KZ4KIMlRRNrXaP
-   7x7QEii5hXOuSPq/lk8ZxfnY3Abqt5QBcN2GOAqnn8ujTpg1TNJWFf2eO
-   UPbSKtkQHSI7mCwge9pUVUIdV8jSxdckAZ6f/FINUMJ9J94GjiZ/WPREE
-   Ch8JOuxas3vTvZ7jBM+shGPrUj+TJn4QdunIAaJt9UWFMlY7Ee44Hwj0q
-   9KaVsdUv24i5BqIfnxtB0MmXgn5qy5JuZQguPThbBdZgKGiem9XycBcAJ
-   Q==;
-X-CSE-ConnectionGUID: 6D8uDw8LSc+2fzzX/jFARA==
-X-CSE-MsgGUID: +cPjFAEPTGa0PMtunsagWQ==
-X-IronPort-AV: E=McAfee;i="6700,10204,11308"; a="40104615"
-X-IronPort-AV: E=Sophos;i="6.12,295,1728975600"; 
-   d="scan'208";a="40104615"
-Received: from fmviesa005.fm.intel.com ([10.60.135.145])
-  by orvoesa107.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Jan 2025 04:30:30 -0800
-X-CSE-ConnectionGUID: i18lxXtXSlCTxbaY8oKubA==
-X-CSE-MsgGUID: SQqy/uwbQOWfJL+/vu8YDg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; 
-   d="scan'208";a="107375946"
-Received: from kuha.fi.intel.com ([10.237.72.152])
-  by fmviesa005.fm.intel.com with SMTP; 07 Jan 2025 04:30:24 -0800
-Received: by kuha.fi.intel.com (sSMTP sendmail emulation); Tue, 07 Jan 2025 14:30:23 +0200
-Date: Tue, 7 Jan 2025 14:30:23 +0200
-From: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-To: Pengyu Luo <mitltlatltl@gmail.com>
-Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Hans de Goede <hdegoede@redhat.com>,
-	Ilpo =?iso-8859-1?Q?J=E4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-	Sebastian Reichel <sre@kernel.org>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Jean Delvare <jdelvare@suse.com>,
-	Guenter Roeck <linux@roeck-us.net>, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	platform-driver-x86@vger.kernel.org, linux-pm@vger.kernel.org,
-	linux-usb@vger.kernel.org, linux-hwmon@vger.kernel.org,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Subject: Re: [PATCH v2 3/5] usb: typec: ucsi: add Huawei Matebook E Go ucsi
- driver
-Message-ID: <Z30eX_s9p5ql-9cx@kuha.fi.intel.com>
-References: <20250105174159.227831-1-mitltlatltl@gmail.com>
- <20250105174159.227831-4-mitltlatltl@gmail.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=AHJiPNr0LnOC3P3OhS2/z84+c4qQ758I4Tg7VSQ9LnLnfw3hZtJaPUjGptxGRj9jwHzJgSdieADhxEeGw+1srPtwhzCF4iSp9SQU9232Yv99ObGIbl4raKUOx/6tT6LuojRNlAi7a6Qh3Q+cVxyeLDaj1nRjqZxWY6ECouMno3M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=OIFVmpaT; arc=none smtp.client-ip=209.85.167.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f47.google.com with SMTP id 2adb3069b0e04-53e3a5fa6aaso17756674e87.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Jan 2025 04:36:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1736253412; x=1736858212; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=5iNvZalbLYQ8Bg0nS+hkF7lJIYaC+1upZ95vfPfhmX0=;
+        b=OIFVmpaTZzHDH6yNC0vgojC9j/oQ/RbUYDABeh2jHKEpggO/oYzbFIv0s6PjmeFJaj
+         tpfcE6lZNm2vW0kHQZFyhQsbLpXRK/e496ZeYbZhG7hyYlAoR0SvmU+NbqdHTto4dzoN
+         Jme4j4HXwSpAfc3vLv98912H0CEHuo3yu+WHYPUSVc6pRw7Rw6Ka0SuPw/o1FipERU63
+         f1bB2/MEILKm4HW9cm+l6zoyq/iliLsNQjFDP5BdzaQAgev/NLhOx3Yk/c8wafQ5Qc2g
+         l1xIZRdjx1boIcbc8Y5Ti5lq//KTzBUsNf6OGi+9iQWlJLvzsoH/AyCds44BwPOEu2QA
+         TNkw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1736253412; x=1736858212;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=5iNvZalbLYQ8Bg0nS+hkF7lJIYaC+1upZ95vfPfhmX0=;
+        b=RL2OlQfMP0M7cL9V0jK4Q3fv6fhSjLjbWcHO3qx1UVvDMPLJ62imO0H+ecy08wdF4s
+         rWViy63+BsUmWoT2d77SgQWFtzobSehNyQYjmewIErgu6Ue3JOfmKAkc8dsYa+wg/KSY
+         ptBARqZUTPCdnkOAlMmDk3zoCvM8+EU1Qf6EOM5y9I6c2AHDS7OphfUsdOC1tR8C0LRs
+         Ps9hDUTrmrST7lDJI/McdDXLauNB4IRtkcCEeZXDf5/18Q6pAc9aMLYYyKZ//A5hrTXo
+         ZxiyvYuLUdhuZIunszKO5lsTcikWf1wAXBuGB9k8OU6iBzhDObNG+5zmZzGncAw6rgfz
+         PCAA==
+X-Forwarded-Encrypted: i=1; AJvYcCV94Ri3qjcM7we5ACUe9MEwVvZkAefvKAS1eGJdr2b+l0NyAu5U0XbNv8VDP83V2UkkXHVZNGC3ADB6a092@vger.kernel.org
+X-Gm-Message-State: AOJu0YzZxiMv2hQsc3zxUGtTT19vjd1aGwhqt9RG4KnDvSON7NH6LLd4
+	U8qeh0qAt8vICL+V7x94vsyDBzaaMplCXF3G5KrawSsw2AHL+rzQb4Fgp3kk+L8=
+X-Gm-Gg: ASbGncuEWvcTCZb7aaiwxEAhG9echBfjsc+W4p00a8/cOPVpfJ99fLWQIdADPGR+qhQ
+	3fS3FRphe0GIaT//18AOAndvrdVV9O6tmpF+UB+kAqrRiKvEpblFKoWyhgZ2mTbhg5ybq/DYZFH
+	+WMDTLMLuNC8R3eaZtYPYmJ3AUzmXuRkfRK9pD+b3eBUYGsL1ME2Jps6+2ulQhj9FXYtd7xcUkS
+	JPTBARY/DsGI/aEC4g/ualZ9Yzpgif4IFKJvKLxFFCcTyCMd+mdsGOJIqm/dwSail+ZbJEDh+9x
+	DihZAs+EMlRAw6m+8bwt0LOPa1YJ2FeP8EUA
+X-Google-Smtp-Source: AGHT+IFwk0vfiDcXRC31OJIVLjshvIF9bF/YLOZzdPmOjhYIp+YNNm+1djecvNteWO6LKr/mRpAdEg==
+X-Received: by 2002:a05:6512:3503:b0:542:2e05:313b with SMTP id 2adb3069b0e04-5427e988ff7mr916026e87.21.1736253411670;
+        Tue, 07 Jan 2025 04:36:51 -0800 (PST)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5422382156dsm5126401e87.186.2025.01.07.04.36.49
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 07 Jan 2025 04:36:50 -0800 (PST)
+Date: Tue, 7 Jan 2025 14:36:48 +0200
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc: Bjorn Andersson <andersson@kernel.org>, 
+	Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Neil Armstrong <neil.armstrong@linaro.org>, linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 2/3] clk: qcom: clk-alpha-pll: Add Pongo PLL
+Message-ID: <nasilduqcbrdtfnx7ef5rzp4blyvbwhyypjpkzlmv4o6oohj4e@gz2a6kffkf7p>
+References: <20250106-sm8750-dispcc-v2-0-6f42beda6317@linaro.org>
+ <20250106-sm8750-dispcc-v2-2-6f42beda6317@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -90,607 +91,294 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250105174159.227831-4-mitltlatltl@gmail.com>
+In-Reply-To: <20250106-sm8750-dispcc-v2-2-6f42beda6317@linaro.org>
 
-Hi,
+On Mon, Jan 06, 2025 at 02:44:30PM +0100, Krzysztof Kozlowski wrote:
+> Add support for Pongo type of PLL clocks, used in Qualcomm SM8750 SoC.
+> Notable difference comparing to other PLLs is the need for calibration
+> for internally generated clock followed by wait_for_pll().  This is done
+> in configure call and at this time clocks are not yet registered, thus
+> wait_for_pll() cannot use clk_hw_get_name.
 
-On Mon, Jan 06, 2025 at 01:41:57AM +0800, Pengyu Luo wrote:
-> The Huawei Matebook E Go tablet implements the UCSI interface in the
-> onboard EC. Add the glue driver to interface with the platform's UCSI
-> implementation.
+Is this still correct?
+
+> Locking during this
+> calibration requires much more time, thus increase the timeout in
+> wait_for_pll().
 > 
-> Signed-off-by: Pengyu Luo <mitltlatltl@gmail.com>
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> 
 > ---
->  drivers/usb/typec/ucsi/Kconfig              |  10 +
->  drivers/usb/typec/ucsi/Makefile             |   1 +
->  drivers/usb/typec/ucsi/ucsi_huawei_gaokun.c | 524 ++++++++++++++++++++
->  3 files changed, 535 insertions(+)
->  create mode 100644 drivers/usb/typec/ucsi/ucsi_huawei_gaokun.c
-
-This did not apply cleanly anymore, but I guess you'll be rebasing in
-any case. A few nitpicks below.
-
-> diff --git a/drivers/usb/typec/ucsi/Kconfig b/drivers/usb/typec/ucsi/Kconfig
-> index 680e1b87b..8a73df84a 100644
-> --- a/drivers/usb/typec/ucsi/Kconfig
-> +++ b/drivers/usb/typec/ucsi/Kconfig
-> @@ -78,4 +78,14 @@ config UCSI_LENOVO_YOGA_C630
->  	  To compile the driver as a module, choose M here: the module will be
->  	  called ucsi_yoga_c630.
+> 
+> v2:
+>  - EXPORT_SYMBOL_GPL
+>  - Move the PLL calibration and wait_for_pll_enable_lock() call to
+>    prepare callback.
+> ---
+>  drivers/clk/qcom/clk-alpha-pll.c | 165 ++++++++++++++++++++++++++++++++++++++-
+>  drivers/clk/qcom/clk-alpha-pll.h |   6 ++
+>  2 files changed, 170 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/clk/qcom/clk-alpha-pll.c b/drivers/clk/qcom/clk-alpha-pll.c
+> index 00d3659ea2124e26dd50c1b4e88ba71c1411442e..df609f7e394de2dc73e60df01b1ad71714c0719d 100644
+> --- a/drivers/clk/qcom/clk-alpha-pll.c
+> +++ b/drivers/clk/qcom/clk-alpha-pll.c
+> @@ -58,6 +58,7 @@
+>  #define PLL_TEST_CTL_U(p)	((p)->offset + (p)->regs[PLL_OFF_TEST_CTL_U])
+>  #define PLL_TEST_CTL_U1(p)     ((p)->offset + (p)->regs[PLL_OFF_TEST_CTL_U1])
+>  #define PLL_TEST_CTL_U2(p)     ((p)->offset + (p)->regs[PLL_OFF_TEST_CTL_U2])
+> +#define PLL_TEST_CTL_U3(p)     ((p)->offset + (p)->regs[PLL_OFF_TEST_CTL_U3])
+>  #define PLL_STATUS(p)		((p)->offset + (p)->regs[PLL_OFF_STATUS])
+>  #define PLL_OPMODE(p)		((p)->offset + (p)->regs[PLL_OFF_OPMODE])
+>  #define PLL_FRAC(p)		((p)->offset + (p)->regs[PLL_OFF_FRAC])
+> @@ -197,6 +198,23 @@ const u8 clk_alpha_pll_regs[][PLL_OFF_MAX_REGS] = {
+>  		[PLL_OFF_TEST_CTL_U1] = 0x34,
+>  		[PLL_OFF_TEST_CTL_U2] = 0x38,
+>  	},
+> +	[CLK_ALPHA_PLL_TYPE_PONGO_ELU] = {
+> +		[PLL_OFF_OPMODE] = 0x04,
+> +		[PLL_OFF_STATE] = 0x08,
+> +		[PLL_OFF_STATUS] = 0x0c,
+> +		[PLL_OFF_L_VAL] = 0x10,
+> +		[PLL_OFF_USER_CTL] = 0x14,
+> +		[PLL_OFF_USER_CTL_U] = 0x18,
+> +		[PLL_OFF_CONFIG_CTL] = 0x1c,
+> +		[PLL_OFF_CONFIG_CTL_U] = 0x20,
+> +		[PLL_OFF_CONFIG_CTL_U1] = 0x24,
+> +		[PLL_OFF_CONFIG_CTL_U2] = 0x28,
+> +		[PLL_OFF_TEST_CTL] = 0x2c,
+> +		[PLL_OFF_TEST_CTL_U] = 0x30,
+> +		[PLL_OFF_TEST_CTL_U1] = 0x34,
+> +		[PLL_OFF_TEST_CTL_U2] = 0x38,
+> +		[PLL_OFF_TEST_CTL_U3] = 0x3c,
+> +	},
+>  	[CLK_ALPHA_PLL_TYPE_TAYCAN_ELU] = {
+>  		[PLL_OFF_OPMODE] = 0x04,
+>  		[PLL_OFF_STATE] = 0x08,
+> @@ -337,6 +355,12 @@ EXPORT_SYMBOL_GPL(clk_alpha_pll_regs);
+>  #define LUCID_EVO_PLL_CAL_L_VAL_SHIFT	16
+>  #define LUCID_OLE_PLL_RINGOSC_CAL_L_VAL_SHIFT	24
 >  
-> +config UCSI_HUAWEI_GAOKUN
-> +	tristate "UCSI Interface Driver for Huawei Matebook E Go"
-> +	depends on EC_HUAWEI_GAOKUN
-> +	help
-> +	  This driver enables UCSI support on the Huawei Matebook E Go tablet,
-> +	  which is a sc8280xp-based 2-in-1 tablet.
+> +/* PONGO ELU PLL specific setting and offsets */
+> +#define PONGO_PLL_OUT_MASK		GENMASK(1, 0)
+> +#define PONGO_PLL_L_VAL_MASK		GENMASK(11, 0)
+
+Does it really support such a high L value, or are there any additional
+flags / data entries? PLL2 uses 0x493, which should end up with 22 GHz
+clock, if my calculations are correct.
+
+> +#define PONGO_XO_PRESENT		BIT(10)
+> +#define PONGO_CLOCK_SELECT		BIT(12)
 > +
-> +	  To compile the driver as a module, choose M here: the module will be
-> +	  called ucsi_huawei_gaokun.
-> +
->  endif
-> diff --git a/drivers/usb/typec/ucsi/Makefile b/drivers/usb/typec/ucsi/Makefile
-> index aed41d238..0b400122b 100644
-> --- a/drivers/usb/typec/ucsi/Makefile
-> +++ b/drivers/usb/typec/ucsi/Makefile
-> @@ -22,3 +22,4 @@ obj-$(CONFIG_UCSI_CCG)			+= ucsi_ccg.o
->  obj-$(CONFIG_UCSI_STM32G0)		+= ucsi_stm32g0.o
->  obj-$(CONFIG_UCSI_PMIC_GLINK)		+= ucsi_glink.o
->  obj-$(CONFIG_UCSI_LENOVO_YOGA_C630)	+= ucsi_yoga_c630.o
-> +obj-$(CONFIG_UCSI_HUAWEI_GAOKUN)	+= ucsi_huawei_gaokun.o
-> diff --git a/drivers/usb/typec/ucsi/ucsi_huawei_gaokun.c b/drivers/usb/typec/ucsi/ucsi_huawei_gaokun.c
-> new file mode 100644
-> index 000000000..044545b44
-> --- /dev/null
-> +++ b/drivers/usb/typec/ucsi/ucsi_huawei_gaokun.c
-> @@ -0,0 +1,524 @@
-> +// SPDX-License-Identifier: GPL-2.0-only
-> +/*
-> + * ucsi-huawei-gaokun - A UCSI driver for HUAWEI Matebook E Go
-> + *
-> + * reference: drivers/usb/typec/ucsi/ucsi_yoga_c630.c
-> + *            drivers/usb/typec/ucsi/ucsi_glink.c
-> + *            drivers/soc/qcom/pmic_glink_altmode.c
-> + *
-> + * Copyright (C) 2024 Pengyu Luo <mitltlatltl@gmail.com>
-> + */
-> +
-> +#include <drm/bridge/aux-bridge.h>
-> +#include <linux/auxiliary_bus.h>
-> +#include <linux/bitops.h>
-> +#include <linux/completion.h>
-> +#include <linux/container_of.h>
-> +#include <linux/module.h>
-> +#include <linux/notifier.h>
-> +#include <linux/of.h>
-> +#include <linux/platform_data/huawei-gaokun-ec.h>
-> +#include <linux/string.h>
-> +#include <linux/usb/pd_vdo.h>
-> +#include <linux/usb/typec_altmode.h>
-> +#include <linux/usb/typec_dp.h>
-> +#include <linux/workqueue_types.h>
-> +
-> +#include "ucsi.h"
-> +
-> +#define EC_EVENT_UCSI	0x21
-> +#define EC_EVENT_USB	0x22
-> +
-> +#define GAOKUN_CCX_MASK		GENMASK(1, 0)
-> +#define GAOKUN_MUX_MASK		GENMASK(3, 2)
-> +
-> +#define GAOKUN_DPAM_MASK	GENMASK(3, 0)
-> +#define GAOKUN_HPD_STATE_MASK	BIT(4)
-> +#define GAOKUN_HPD_IRQ_MASK	BIT(5)
-> +
-> +#define GET_IDX(updt) (ffs(updt) - 1)
-> +
-> +#define CCX_TO_ORI(ccx) (++ccx % 3) /* convert ccx to enum typec_orientation */
-> +
-> +/* Configuration Channel Extension */
-> +enum gaokun_ucsi_ccx {
-> +	USBC_CCX_NORMAL,
-> +	USBC_CCX_REVERSE,
-> +	USBC_CCX_NONE,
-> +};
-> +
-> +enum gaokun_ucsi_mux {
-> +	USBC_MUX_NONE,
-> +	USBC_MUX_USB_2L,
-> +	USBC_MUX_DP_4L,
-> +	USBC_MUX_USB_DP,
-> +};
-> +/* based on pmic_glink_altmode_pin_assignment */
-> +enum gaokun_ucsi_dpam_pan {	/* DP Alt Mode Pin Assignments */
-> +	USBC_DPAM_PAN_NONE,
-> +	USBC_DPAM_PAN_A,	/* Not supported after USB Type-C Standard v1.0b */
-> +	USBC_DPAM_PAN_B,	/* Not supported after USB Type-C Standard v1.0b */
-> +	USBC_DPAM_PAN_C,	/* USBC_DPAM_PAN_C_REVERSE - 6 */
-> +	USBC_DPAM_PAN_D,
-> +	USBC_DPAM_PAN_E,
-> +	USBC_DPAM_PAN_F,	/* Not supported after USB Type-C Standard v1.0b */
-> +	USBC_DPAM_PAN_A_REVERSE,/* Not supported after USB Type-C Standard v1.0b */
-> +	USBC_DPAM_PAN_B_REVERSE,/* Not supported after USB Type-C Standard v1.0b */
-> +	USBC_DPAM_PAN_C_REVERSE,
-> +	USBC_DPAM_PAN_D_REVERSE,
-> +	USBC_DPAM_PAN_E_REVERSE,
-> +	USBC_DPAM_PAN_F_REVERSE,/* Not supported after USB Type-C Standard v1.0b */
-> +};
-> +
-> +struct gaokun_ucsi_reg {
-> +	u8 port_num;
-> +	u8 port_updt;
-> +	u8 port_data[4];
-> +	u8 checksum;
-> +	u8 reserved;
-> +} __packed;
-> +
-> +struct gaokun_ucsi_port {
-> +	struct completion usb_ack;
-> +	spinlock_t lock;
-> +
-> +	struct gaokun_ucsi *ucsi;
-> +	struct auxiliary_device *bridge;
-> +
-> +	int idx;
-> +	enum gaokun_ucsi_ccx ccx;
-> +	enum gaokun_ucsi_mux mux;
-> +	u8 mode;
-> +	u16 svid;
-> +	u8 hpd_state;
-> +	u8 hpd_irq;
-> +};
-> +
-> +struct gaokun_ucsi {
-> +	struct gaokun_ec *ec;
-> +	struct ucsi *ucsi;
-> +	struct gaokun_ucsi_port *ports;
-> +	struct device *dev;
-> +	struct delayed_work work;
-> +	struct notifier_block nb;
-> +	u16 version;
-> +	u8 port_num;
-> +};
-> +
-> +/* -------------------------------------------------------------------------- */
-> +/* For UCSI */
-> +
-> +static int gaokun_ucsi_read_version(struct ucsi *ucsi, u16 *version)
+>  /* ZONDA PLL specific */
+>  #define ZONDA_PLL_OUT_MASK	0xf
+>  #define ZONDA_STAY_IN_CFA	BIT(16)
+> @@ -366,7 +390,8 @@ static int wait_for_pll(struct clk_alpha_pll *pll, u32 mask, bool inverse,
+>  	if (ret)
+>  		return ret;
+>  
+> -	for (count = 200; count > 0; count--) {
+> +	/* Pongo PLLs using a 32KHz reference can take upwards of 1500us to lock. */
+> +	for (count = 1500; count > 0; count--) {
+>  		ret = regmap_read(pll->clkr.regmap, PLL_MODE(pll), &val);
+>  		if (ret)
+>  			return ret;
+> @@ -2527,6 +2552,144 @@ const struct clk_ops clk_alpha_pll_reset_lucid_evo_ops = {
+>  };
+>  EXPORT_SYMBOL_GPL(clk_alpha_pll_reset_lucid_evo_ops);
+>  
+> +static int alpha_pll_pongo_elu_prepare(struct clk_hw *hw)
 > +{
-> +	struct gaokun_ucsi *uec = ucsi_get_drvdata(ucsi);
-> +
-> +	*version = uec->version;
-> +
-> +	return 0;
-> +}
-> +
-> +static int gaokun_ucsi_read_cci(struct ucsi *ucsi, u32 *cci)
-> +{
-> +	struct gaokun_ucsi *uec = ucsi_get_drvdata(ucsi);
-> +	u8 buf[GAOKUN_UCSI_READ_SIZE];
+> +	struct clk_alpha_pll *pll = to_clk_alpha_pll(hw);
+> +	struct regmap *regmap = pll->clkr.regmap;
 > +	int ret;
 > +
-> +	ret = gaokun_ec_ucsi_read(uec->ec, buf);
-> +	if (ret)
-> +		return ret;
+> +	/* Enable PLL intially to one-time calibrate against XO. */
+> +	regmap_write(regmap, PLL_OPMODE(pll), PLL_RUN);
+> +	regmap_update_bits(regmap, PLL_MODE(pll), PLL_RESET_N, PLL_RESET_N);
+> +	regmap_update_bits(regmap, PLL_MODE(pll), PONGO_XO_PRESENT, PONGO_XO_PRESENT);
 > +
-> +	memcpy(cci, buf, sizeof(*cci));
-> +
-> +	return 0;
-> +}
-> +
-> +static int gaokun_ucsi_read_message_in(struct ucsi *ucsi,
-> +				       void *val, size_t val_len)
-> +{
-> +	struct gaokun_ucsi *uec = ucsi_get_drvdata(ucsi);
-> +	u8 buf[GAOKUN_UCSI_READ_SIZE];
-> +	int ret;
-> +
-> +	ret = gaokun_ec_ucsi_read(uec->ec, buf);
-> +	if (ret)
-> +		return ret;
-> +
-> +	memcpy(val, buf + GAOKUN_UCSI_CCI_SIZE,
-> +	       min(val_len, GAOKUN_UCSI_DATA_SIZE));
-> +
-> +	return 0;
-> +}
-> +
-> +static int gaokun_ucsi_async_control(struct ucsi *ucsi, u64 command)
-> +{
-> +	struct gaokun_ucsi *uec = ucsi_get_drvdata(ucsi);
-> +	u8 buf[GAOKUN_UCSI_WRITE_SIZE] = {};
-> +
-> +	memcpy(buf, &command, sizeof(command));
-> +
-> +	return gaokun_ec_ucsi_write(uec->ec, buf);
-> +}
-> +
-> +static void gaokun_ucsi_update_connector(struct ucsi_connector *con)
-> +{
-> +	struct gaokun_ucsi *uec = ucsi_get_drvdata(con->ucsi);
-> +
-> +	if (con->num > uec->port_num)
-> +		return;
-> +
-> +	con->typec_cap.orientation_aware = true;
-> +}
-> +
-> +static void gaokun_set_orientation(struct ucsi_connector *con,
-> +				   struct gaokun_ucsi_port *port)
-> +{
-> +	enum gaokun_ucsi_ccx ccx;
-> +	unsigned long flags;
-> +
-> +	spin_lock_irqsave(&port->lock, flags);
-> +	ccx = port->ccx;
-> +	spin_unlock_irqrestore(&port->lock, flags);
-> +
-> +	typec_set_orientation(con->port, CCX_TO_ORI(ccx));
-> +}
-> +
-> +static void gaokun_ucsi_connector_status(struct ucsi_connector *con)
-> +{
-> +	struct gaokun_ucsi *uec = ucsi_get_drvdata(con->ucsi);
-> +	int idx;
-> +
-> +	idx = con->num - 1;
-> +	if (con->num > uec->port_num) {
-> +		dev_warn(uec->dev, "set orientation out of range: con%d\n", idx);
-> +		return;
-> +	}
-> +
-> +	gaokun_set_orientation(con, &uec->ports[idx]);
-> +}
-> +
-> +const struct ucsi_operations gaokun_ucsi_ops = {
-> +	.read_version = gaokun_ucsi_read_version,
-> +	.read_cci = gaokun_ucsi_read_cci,
-> +	.read_message_in = gaokun_ucsi_read_message_in,
-> +	.sync_control = ucsi_sync_control_common,
-> +	.async_control = gaokun_ucsi_async_control,
-> +	.update_connector = gaokun_ucsi_update_connector,
-> +	.connector_status = gaokun_ucsi_connector_status,
-> +};
-> +
-> +/* -------------------------------------------------------------------------- */
-> +/* For Altmode */
-> +
-> +static void gaokun_ucsi_port_update(struct gaokun_ucsi_port *port,
-> +				    const u8 *port_data)
-> +{
-> +	struct gaokun_ucsi *uec = port->ucsi;
-> +	int offset = port->idx * 2; /* every port has 2 Bytes data */
-> +	unsigned long flags;
-> +	u8 dcc, ddi;
-> +
-> +	dcc = port_data[offset];
-> +	ddi = port_data[offset + 1];
-> +
-> +	spin_lock_irqsave(&port->lock, flags);
-> +
-> +	port->ccx = FIELD_GET(GAOKUN_CCX_MASK, dcc);
-> +	port->mux = FIELD_GET(GAOKUN_MUX_MASK, dcc);
-> +	port->mode = FIELD_GET(GAOKUN_DPAM_MASK, ddi);
-> +	port->hpd_state = FIELD_GET(GAOKUN_HPD_STATE_MASK, ddi);
-> +	port->hpd_irq = FIELD_GET(GAOKUN_HPD_IRQ_MASK, ddi);
-> +
-> +	/* Mode and SVID are unused; keeping them to make things clearer */
-> +	switch (port->mode) {
-> +	case USBC_DPAM_PAN_C:
-> +	case USBC_DPAM_PAN_C_REVERSE:
-> +		port->mode = DP_PIN_ASSIGN_C; /* correct it for usb later */
-> +		break;
-> +	case USBC_DPAM_PAN_D:
-> +	case USBC_DPAM_PAN_D_REVERSE:
-> +		port->mode = DP_PIN_ASSIGN_D;
-> +		break;
-> +	case USBC_DPAM_PAN_E:
-> +	case USBC_DPAM_PAN_E_REVERSE:
-> +		port->mode = DP_PIN_ASSIGN_E;
-> +		break;
-> +	case USBC_DPAM_PAN_NONE:
-> +		port->mode = TYPEC_STATE_SAFE;
-> +		break;
-> +	default:
-> +		dev_warn(uec->dev, "unknow mode %d\n", port->mode);
-> +		break;
-> +	}
-> +
-> +	switch (port->mux) {
-> +	case USBC_MUX_NONE:
-> +		port->svid = 0;
-> +		break;
-> +	case USBC_MUX_USB_2L:
-> +		port->svid = USB_SID_PD;
-> +		port->mode = TYPEC_STATE_USB; /* same as PAN_C, correct it */
-> +		break;
-> +	case USBC_MUX_DP_4L:
-> +	case USBC_MUX_USB_DP:
-> +		port->svid = USB_SID_DISPLAYPORT;
-> +		break;
-> +	default:
-> +		dev_warn(uec->dev, "unknow mux state %d\n", port->mux);
-> +		break;
-> +	}
-> +
-> +	spin_unlock_irqrestore(&port->lock, flags);
-> +}
-> +
-> +static int gaokun_ucsi_refresh(struct gaokun_ucsi *uec)
-> +{
-> +	struct gaokun_ucsi_reg ureg;
-> +	int ret, idx;
-> +
-> +	ret = gaokun_ec_ucsi_get_reg(uec->ec, (u8 *)&ureg);
-> +	if (ret)
-> +		return GAOKUN_UCSI_NO_PORT_UPDATE;
-> +
-> +	uec->port_num = ureg.port_num;
-> +	idx = GET_IDX(ureg.port_updt);
-> +
-> +	if (idx < 0 || idx >= ureg.port_num)
-> +		return GAOKUN_UCSI_NO_PORT_UPDATE;
-> +
-> +	gaokun_ucsi_port_update(&uec->ports[idx], ureg.port_data);
-> +	return idx;
-> +}
-> +
-> +static void gaokun_ucsi_handle_altmode(struct gaokun_ucsi_port *port)
-> +{
-> +	struct gaokun_ucsi *uec = port->ucsi;
-> +	int idx = port->idx;
-> +
-> +	if (idx >= uec->ucsi->cap.num_connectors) {
-> +		dev_warn(uec->dev, "altmode port out of range: %d\n", idx);
-> +		return;
-> +	}
-> +
-> +	/* UCSI callback .connector_status() have set orientation */
-> +	if (port->bridge)
-> +		drm_aux_hpd_bridge_notify(&port->bridge->dev,
-> +					  port->hpd_state ?
-> +					  connector_status_connected :
-> +					  connector_status_disconnected);
-> +
-> +	gaokun_ec_ucsi_pan_ack(uec->ec, port->idx);
-> +}
-> +
-> +static void gaokun_ucsi_altmode_notify_ind(struct gaokun_ucsi *uec)
-> +{
-> +	int idx;
-> +
-> +	 if (!uec->ucsi->connector) { /* slow to register */
-> +		 dev_err(uec->dev, "ucsi connector is not initialized yet\n");
-> +		 return;
-> +	 }
-> +
-> +	idx = gaokun_ucsi_refresh(uec);
-> +	if (idx == GAOKUN_UCSI_NO_PORT_UPDATE)
-> +		gaokun_ec_ucsi_pan_ack(uec->ec, idx); /* ack directly if no update */
-> +	else
-> +		gaokun_ucsi_handle_altmode(&uec->ports[idx]);
-> +}
-> +
-> +/*
-> + * USB event is necessary for enabling altmode, the event should follow
-> + * UCSI event, if not after timeout(this notify may be disabled somehow),
-> + * then force to enable altmode.
-> + */
-> +static void gaokun_ucsi_handle_no_usb_event(struct gaokun_ucsi *uec, int idx)
-> +{
-> +	struct gaokun_ucsi_port *port;
-> +
-> +	port = &uec->ports[idx];
-> +	if (!wait_for_completion_timeout(&port->usb_ack, 2 * HZ)) {
-> +		dev_warn(uec->dev, "No USB EVENT, triggered by UCSI EVENT");
-> +		gaokun_ucsi_altmode_notify_ind(uec);
-> +	}
-> +}
-> +
-> +static int gaokun_ucsi_notify(struct notifier_block *nb,
-> +			      unsigned long action, void *data)
-> +{
-> +	u32 cci;
-> +	struct gaokun_ucsi *uec = container_of(nb, struct gaokun_ucsi, nb);
-> +
-> +	switch (action) {
-> +	case EC_EVENT_USB:
-> +		gaokun_ucsi_altmode_notify_ind(uec);
-> +		return NOTIFY_OK;
-> +
-> +	case EC_EVENT_UCSI:
-> +		uec->ucsi->ops->read_cci(uec->ucsi, &cci);
-
-I think it would be more clear here to just call
-gaokun_ucsi_read_cci() directly here.
-
-> +		ucsi_notify_common(uec->ucsi, cci);
-> +		if (UCSI_CCI_CONNECTOR(cci))
-> +			gaokun_ucsi_handle_no_usb_event(uec, UCSI_CCI_CONNECTOR(cci) - 1);
-> +
-> +		return NOTIFY_OK;
-> +
-> +	default:
-> +		return NOTIFY_DONE;
-> +	}
-> +}
-> +
-> +static inline int gaokun_ucsi_get_port_num(struct gaokun_ucsi *uec)
-> +{
-> +	struct gaokun_ucsi_reg ureg;
-> +	int ret;
-> +
-> +	ret = gaokun_ec_ucsi_get_reg(uec->ec, (u8 *)&ureg);
-> +
-> +	return ret ? 0 : ureg.port_num;
-> +}
-
-This function does not look like it's necessary to me.
-
-> +static int gaokun_ucsi_ports_init(struct gaokun_ucsi *uec)
-> +{
-> +	u32 port;
-> +	int i, ret, port_num;
-> +	struct device *dev = uec->dev;
-> +	struct gaokun_ucsi_port *ucsi_port;
-> +	struct fwnode_handle *fwnode;
-> +
-> +	port_num = gaokun_ucsi_get_port_num(uec);
-> +	uec->port_num = port_num;
-
-struct gaokun_ucsi_reg ureg = { };
-
-gaokun_ec_ucsi_get_reg(uec->ec, &ureg);
-port_num = ureg->port_num;
-
-(Btw. port_num here is confusing IMO, because you are not talking
-about the number of a port, but instead number of all ports. So
-something like num_ports or nports would be better).
-
-> +	uec->ports = devm_kcalloc(dev, port_num, sizeof(*(uec->ports)),
-> +				  GFP_KERNEL);
-> +	if (!uec->ports)
-> +		return -ENOMEM;
-> +
-> +	for (i = 0; i < port_num; ++i) {
-> +		ucsi_port = &uec->ports[i];
-> +		ucsi_port->ccx = USBC_CCX_NONE;
-> +		ucsi_port->idx = i;
-> +		ucsi_port->ucsi = uec;
-> +		init_completion(&ucsi_port->usb_ack);
-> +		spin_lock_init(&ucsi_port->lock);
-> +	}
-> +
-> +	device_for_each_child_node(dev, fwnode) {
-> +		ret = fwnode_property_read_u32(fwnode, "reg", &port);
-> +		if (ret < 0) {
-> +			dev_err(dev, "missing reg property of %pOFn\n", fwnode);
-> +			fwnode_handle_put(fwnode);
-> +			return ret;
-> +		}
-> +
-> +		if (port >= port_num) {
-> +			dev_warn(dev, "invalid connector number %d, ignoring\n", port);
-> +			continue;
-> +		}
-> +
-> +		ucsi_port = &uec->ports[port];
-> +		ucsi_port->bridge = devm_drm_dp_hpd_bridge_alloc(dev, to_of_node(fwnode));
-> +		if (IS_ERR(ucsi_port->bridge)) {
-> +			fwnode_handle_put(fwnode);
-> +			return PTR_ERR(ucsi_port->bridge);
-> +		}
-> +	}
-> +
-> +	for (i = 0; i < port_num; i++) {
-> +		if (!uec->ports[i].bridge)
-> +			continue;
-> +
-> +		ret = devm_drm_dp_hpd_bridge_add(dev, uec->ports[i].bridge);
-> +		if (ret)
-> +			return ret;
-> +	}
-> +
-> +	return 0;
-> +}
-> +
-> +static void gaokun_ucsi_register_worker(struct work_struct *work)
-> +{
-> +	struct gaokun_ucsi *uec;
-> +	struct ucsi *ucsi;
-> +	int ret;
-> +
-> +	uec = container_of(work, struct gaokun_ucsi, work.work);
-> +	ucsi = uec->ucsi;
-> +	/* This may be a problem specific to sc8280xp-based machines */
-> +	ucsi->quirks = UCSI_NO_PARTNER_PDOS | UCSI_DELAY_DEVICE_PDOS;
-> +
-> +	ret = gaokun_ec_register_notify(uec->ec, &uec->nb);
+> +	/* Set regmap for wait_for_pll() */
+> +	pll->clkr.regmap = regmap;
+> +	ret = wait_for_pll_enable_lock(pll);
 > +	if (ret) {
-> +		dev_err_probe(ucsi->dev, ret, "notifier register failed\n");
-> +		return;
+> +		/* Reverse calibration - disable PLL output */
+> +		regmap_update_bits(regmap, PLL_MODE(pll), PLL_OUTCTRL, 0);
+> +		return ret;
 > +	}
 > +
-> +	ret = ucsi_register(ucsi);
-> +	if (ret)
-> +		dev_err_probe(ucsi->dev, ret, "ucsi register failed\n");
-> +}
+> +	/* Disable PLL after one-time calibration. */
+> +	regmap_write(regmap, PLL_OPMODE(pll), PLL_STANDBY);
 > +
-> +static inline int gaokun_ucsi_register(struct gaokun_ucsi *uec)
-> +{
-> +	/* EC can't handle UCSI properly in the early stage */
-> +	schedule_delayed_work(&uec->work, 3 * HZ);
+> +	/* Select internally generated clock. */
+> +	regmap_update_bits(regmap, PLL_MODE(pll), PONGO_CLOCK_SELECT,
+> +			   PONGO_CLOCK_SELECT);
 > +
 > +	return 0;
 > +}
-
-This whole function is unnecessary.
-
-> +static int gaokun_ucsi_probe(struct auxiliary_device *adev,
-> +			     const struct auxiliary_device_id *id)
+> +
+> +static int alpha_pll_pongo_elu_enable(struct clk_hw *hw)
 > +{
-> +	struct gaokun_ec *ec = adev->dev.platform_data;
-> +	struct device *dev = &adev->dev;
-> +	struct gaokun_ucsi *uec;
+> +	struct clk_alpha_pll *pll = to_clk_alpha_pll(hw);
+> +	struct regmap *regmap = pll->clkr.regmap;
 > +	int ret;
 > +
-> +	uec = devm_kzalloc(dev, sizeof(*uec), GFP_KERNEL);
-> +	if (!uec)
-> +		return -ENOMEM;
+> +	/* Check if PLL is already enabled */
+> +	if (trion_pll_is_enabled(pll, regmap))
+> +		return 0;
 > +
-> +	uec->ec = ec;
-> +	uec->dev = dev;
-> +	uec->version = 0x0100;
-
-Please add a definition for UCSI v1.0 to ucsi.h (separate patch).
-
-> +	uec->nb.notifier_call = gaokun_ucsi_notify;
-> +
-> +	INIT_DELAYED_WORK(&uec->work, gaokun_ucsi_register_worker);
-> +
-> +	ret = gaokun_ucsi_ports_init(uec);
+> +	ret = regmap_update_bits(regmap, PLL_MODE(pll), PLL_RESET_N, PLL_RESET_N);
 > +	if (ret)
 > +		return ret;
 > +
-> +	uec->ucsi = ucsi_create(dev, &gaokun_ucsi_ops);
-> +	if (IS_ERR(uec->ucsi))
-> +		return PTR_ERR(uec->ucsi);
+> +	/* Set operation mode to RUN */
+> +	regmap_write(regmap, PLL_OPMODE(pll), PLL_RUN);
 > +
-> +	ucsi_set_drvdata(uec->ucsi, uec);
-> +	auxiliary_set_drvdata(adev, uec);
+> +	ret = wait_for_pll_enable_lock(pll);
+> +	if (ret)
+> +		return ret;
 > +
-> +	return gaokun_ucsi_register(uec);
+> +	/* Enable the global PLL outputs */
+> +	ret = regmap_update_bits(regmap, PLL_MODE(pll), PLL_OUTCTRL, PLL_OUTCTRL);
+> +	if (ret)
+> +		return ret;
+> +
+> +	/* Ensure that the write above goes through before returning. */
+> +	mb();
+> +
+> +	return ret;
 > +}
 > +
-> +static void gaokun_ucsi_remove(struct auxiliary_device *adev)
+> +static void alpha_pll_pongo_elu_disable(struct clk_hw *hw)
 > +{
-> +	struct gaokun_ucsi *uec = auxiliary_get_drvdata(adev);
+> +	struct clk_alpha_pll *pll = to_clk_alpha_pll(hw);
+> +	struct regmap *regmap = pll->clkr.regmap;
+> +	int ret;
 > +
-> +	gaokun_ec_unregister_notify(uec->ec, &uec->nb);
-> +	ucsi_unregister(uec->ucsi);
-> +	ucsi_destroy(uec->ucsi);
+> +	/* Disable the global PLL output */
+> +	ret = regmap_update_bits(regmap, PLL_MODE(pll), PLL_OUTCTRL, 0);
+> +	if (ret)
+> +		return;
+> +
+> +	/* Place the PLL mode in STANDBY */
+> +	regmap_write(regmap, PLL_OPMODE(pll), PLL_STANDBY);
 > +}
 > +
-> +static const struct auxiliary_device_id gaokun_ucsi_id_table[] = {
-> +	{ .name = GAOKUN_MOD_NAME "." GAOKUN_DEV_UCSI, },
-> +	{}
+> +static unsigned long alpha_pll_pongo_elu_recalc_rate(struct clk_hw *hw,
+> +						     unsigned long parent_rate)
+> +{
+> +	struct clk_alpha_pll *pll = to_clk_alpha_pll(hw);
+> +	struct regmap *regmap = pll->clkr.regmap;
+> +	u32 l;
+> +
+> +	if (regmap_read(regmap, PLL_L_VAL(pll), &l))
+> +		return 0;
+> +
+> +	l &= PONGO_PLL_L_VAL_MASK;
+> +
+> +	return alpha_pll_calc_rate(parent_rate, l, 0, pll_alpha_width(pll));
+> +}
+> +
+> +const struct clk_ops clk_alpha_pll_pongo_elu_ops = {
+> +	.prepare = alpha_pll_pongo_elu_prepare,
+> +	.enable = alpha_pll_pongo_elu_enable,
+> +	.disable = alpha_pll_pongo_elu_disable,
+> +	.recalc_rate = alpha_pll_pongo_elu_recalc_rate,
 > +};
-> +MODULE_DEVICE_TABLE(auxiliary, gaokun_ucsi_id_table);
+> +EXPORT_SYMBOL_GPL(clk_alpha_pll_pongo_elu_ops);
 > +
-> +static struct auxiliary_driver gaokun_ucsi_driver = {
-> +	.name = GAOKUN_DEV_UCSI,
-> +	.id_table = gaokun_ucsi_id_table,
-> +	.probe = gaokun_ucsi_probe,
-> +	.remove = gaokun_ucsi_remove,
-> +};
+> +void clk_pongo_elu_pll_configure(struct clk_alpha_pll *pll,
+> +				 struct regmap *regmap,
+> +				 const struct alpha_pll_config *config)
+> +{
+> +	u32 val;
 > +
-> +module_auxiliary_driver(gaokun_ucsi_driver);
+> +	regmap_update_bits(regmap, PLL_USER_CTL(pll), PONGO_PLL_OUT_MASK,
+> +			   PONGO_PLL_OUT_MASK);
 > +
-> +MODULE_DESCRIPTION("HUAWEI Matebook E Go UCSI driver");
-> +MODULE_LICENSE("GPL");
-
-thanks,
+> +	if (trion_pll_is_enabled(pll, regmap))
+> +		return;
+> +
+> +	if (regmap_read(regmap, PLL_L_VAL(pll), &val))
+> +		return;
+> +	val &= PONGO_PLL_L_VAL_MASK;
+> +	if (val)
+> +		return;
+> +
+> +	clk_alpha_pll_write_config(regmap, PLL_L_VAL(pll), config->l);
+> +	clk_alpha_pll_write_config(regmap, PLL_ALPHA_VAL(pll), config->alpha);
+> +	clk_alpha_pll_write_config(regmap, PLL_CONFIG_CTL(pll), config->config_ctl_val);
+> +	clk_alpha_pll_write_config(regmap, PLL_CONFIG_CTL_U(pll), config->config_ctl_hi_val);
+> +	clk_alpha_pll_write_config(regmap, PLL_CONFIG_CTL_U1(pll), config->config_ctl_hi1_val);
+> +	clk_alpha_pll_write_config(regmap, PLL_CONFIG_CTL_U2(pll), config->config_ctl_hi2_val);
+> +	clk_alpha_pll_write_config(regmap, PLL_USER_CTL(pll),
+> +				   config->user_ctl_val | PONGO_PLL_OUT_MASK);
+> +	clk_alpha_pll_write_config(regmap, PLL_USER_CTL_U(pll), config->user_ctl_hi_val);
+> +	clk_alpha_pll_write_config(regmap, PLL_TEST_CTL(pll), config->test_ctl_val);
+> +	clk_alpha_pll_write_config(regmap, PLL_TEST_CTL_U(pll), config->test_ctl_hi_val);
+> +	clk_alpha_pll_write_config(regmap, PLL_TEST_CTL_U1(pll), config->test_ctl_hi1_val);
+> +	clk_alpha_pll_write_config(regmap, PLL_TEST_CTL_U2(pll), config->test_ctl_hi2_val);
+> +	clk_alpha_pll_write_config(regmap, PLL_TEST_CTL_U3(pll), config->test_ctl_hi3_val);
+> +
+> +	/* Disable PLL output */
+> +	regmap_update_bits(regmap, PLL_MODE(pll), PLL_OUTCTRL, 0);
+> +}
+> +EXPORT_SYMBOL_GPL(clk_pongo_elu_pll_configure);
+> +
+>  void clk_rivian_evo_pll_configure(struct clk_alpha_pll *pll, struct regmap *regmap,
+>  				  const struct alpha_pll_config *config)
+>  {
+> diff --git a/drivers/clk/qcom/clk-alpha-pll.h b/drivers/clk/qcom/clk-alpha-pll.h
+> index 87bd469d9c2c2ec4e0758c97231527b92fe6afe5..79aca8525262211ae5295245427d4540abf1e09a 100644
+> --- a/drivers/clk/qcom/clk-alpha-pll.h
+> +++ b/drivers/clk/qcom/clk-alpha-pll.h
+> @@ -27,6 +27,7 @@ enum {
+>  	CLK_ALPHA_PLL_TYPE_ZONDA_OLE,
+>  	CLK_ALPHA_PLL_TYPE_LUCID_EVO,
+>  	CLK_ALPHA_PLL_TYPE_LUCID_OLE,
+> +	CLK_ALPHA_PLL_TYPE_PONGO_ELU,
+>  	CLK_ALPHA_PLL_TYPE_TAYCAN_ELU,
+>  	CLK_ALPHA_PLL_TYPE_RIVIAN_EVO,
+>  	CLK_ALPHA_PLL_TYPE_DEFAULT_EVO,
+> @@ -53,6 +54,7 @@ enum {
+>  	PLL_OFF_TEST_CTL_U,
+>  	PLL_OFF_TEST_CTL_U1,
+>  	PLL_OFF_TEST_CTL_U2,
+> +	PLL_OFF_TEST_CTL_U3,
+>  	PLL_OFF_STATE,
+>  	PLL_OFF_STATUS,
+>  	PLL_OFF_OPMODE,
+> @@ -138,6 +140,7 @@ struct alpha_pll_config {
+>  	u32 test_ctl_hi_mask;
+>  	u32 test_ctl_hi1_val;
+>  	u32 test_ctl_hi2_val;
+> +	u32 test_ctl_hi3_val;
+>  	u32 main_output_mask;
+>  	u32 aux_output_mask;
+>  	u32 aux2_output_mask;
+> @@ -196,6 +199,7 @@ extern const struct clk_ops clk_alpha_pll_postdiv_lucid_evo_ops;
+>  #define clk_alpha_pll_postdiv_lucid_ole_ops clk_alpha_pll_postdiv_lucid_evo_ops
+>  #define clk_alpha_pll_postdiv_taycan_elu_ops clk_alpha_pll_postdiv_lucid_evo_ops
+>  
+> +extern const struct clk_ops clk_alpha_pll_pongo_elu_ops;
+>  extern const struct clk_ops clk_alpha_pll_rivian_evo_ops;
+>  #define clk_alpha_pll_postdiv_rivian_evo_ops clk_alpha_pll_postdiv_fabia_ops
+>  
+> @@ -222,6 +226,8 @@ void clk_lucid_evo_pll_configure(struct clk_alpha_pll *pll, struct regmap *regma
+>  				 const struct alpha_pll_config *config);
+>  void clk_lucid_ole_pll_configure(struct clk_alpha_pll *pll, struct regmap *regmap,
+>  				 const struct alpha_pll_config *config);
+> +void clk_pongo_elu_pll_configure(struct clk_alpha_pll *pll, struct regmap *regmap,
+> +				 const struct alpha_pll_config *config);
+>  #define clk_taycan_elu_pll_configure(pll, regmap, config) \
+>  	clk_lucid_evo_pll_configure(pll, regmap, config)
+>  
+> 
+> -- 
+> 2.43.0
+> 
 
 -- 
-heikki
+With best wishes
+Dmitry
 
