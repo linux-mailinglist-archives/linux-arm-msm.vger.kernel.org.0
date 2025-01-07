@@ -1,159 +1,164 @@
-Return-Path: <linux-arm-msm+bounces-44198-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-44199-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id EC93EA04846
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jan 2025 18:29:36 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1F2CFA04899
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jan 2025 18:50:08 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6C8DE1888478
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jan 2025 17:29:39 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 4B17A7A2849
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jan 2025 17:50:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 508971990A7;
-	Tue,  7 Jan 2025 17:28:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8B3531898F8;
+	Tue,  7 Jan 2025 17:50:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GZdd0Vss"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XbYVarLf"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-oa1-f51.google.com (mail-oa1-f51.google.com [209.85.160.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D31E1F6666;
-	Tue,  7 Jan 2025 17:28:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AC2A15D1;
+	Tue,  7 Jan 2025 17:49:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736270925; cv=none; b=PygWWERQo5fULAappadkodUSh/i4JoynAIgepku1d5eAiEaoCZwuhcQ50s2VAIP/9mLwZqpWBovPVebuNn7dMY5ibUiRH/dtk+A+4VQdad0xPiZ6LYqJjEGpIlydbdUQGx3ZI1ES6hBnJYzNIJOdCABjsxjtTg/WzVa+UQvR3pE=
+	t=1736272201; cv=none; b=O5aDabeGvY/ldiuhvAxGbSyxzgjkBKzBLBsr6XXDJeiKisqMJkb5VN4dx4OorAvnLwNs9m/XRrWSMICEMNwIuzt6gF/+LvrK4KRpTE0L86k+gzLNOvOMX+ANT9r7yilw43ODJzKtj2I3aFPtpJF+q6eXlEHNokYwKLEicFGo0o4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736270925; c=relaxed/simple;
-	bh=DAA1UK2KydFrRMt3Qo0I+WPwB/nz2RbIQrtjnir/c6c=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=bd2FM3XqxyLIdqn4Ux6bZt38W1w01Ktw+fDHfK4VRK0n2DAecJeE5WninymeuppAKCQvwXZwIsIMD6SLh8zeDMQ/KJOEbWghDn2uC66KgxOGWPXSkFQZZa7hHAsRIM4jupD39iVWFEGN8TznJaAEzqhVEwyKJ/epyJl/fj6lSs4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GZdd0Vss; arc=none smtp.client-ip=209.85.160.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-oa1-f51.google.com with SMTP id 586e51a60fabf-2a3bf796cccso7001279fac.1;
-        Tue, 07 Jan 2025 09:28:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1736270921; x=1736875721; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=+GvcgifYJeQE7xZ/54WkUZwGkobYZRvFniYCDNRZmjU=;
-        b=GZdd0Vssrp0TQs4TCBqmeWQMwCt5OzjVMTIRHubu6STLAerTvzXCYlrQplIdkOzHaZ
-         NNknN+zEq0pfkJHlBlUqdYoS2AqP86bsf1itt4GP3lNTOnP6QidgzXB15DX9r+GuNO5+
-         alo87X6yWg+CZ7Wbo3+410kgMsRsQMPTyBBzHFgj4HocRlapNpnLv65U/INwSd8tTIck
-         jeuEeq5Sx2DaUFC2xGxAzBfQgbGKw4tCEJa41vQhx8hEysN6+GAyiUli3hL8Q8BpE4IB
-         jHrvUJxmjHRNN6IDOwkWDhLgQWxY2WHy/bblvtGMqjtH5HunPHPjiq0+RKywShlpcUSI
-         dxqg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736270921; x=1736875721;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=+GvcgifYJeQE7xZ/54WkUZwGkobYZRvFniYCDNRZmjU=;
-        b=nqVQRAMNTNzp7cNSpxv8q99ES7ZHrl2wK4T/XsyvEBsaOP3CMAYjHphK1ZW73yIJCp
-         RRzQUQ05xWSJIlJKzHQd1L+XA4MRkOKorrEPiGExP1InRWGLBxxvh955RsWa70ZD+/3F
-         zWquJ2TvpSt1LisgUTBBiAyE8Mw/wCH9Yreb9ajHdPLflO+uStZw5DaYUYSTgarj1qPB
-         1zNaztr0hlZ90wDgDTSKIGw1PN30+dGTrARzZgCbdimkhmqX97NUuIEUEM07VrwsUDa8
-         eJKZcNfkqXY7ancc7ylfjHp+uxC92CKpKjvWeej82wDa08O19ZsuWFG9bh+jtfUh8F8F
-         roDQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUpNwEtiDLBJ9r4VFt7qMVbYFDamtrSEeXS+8lel5tvu5KB9zlvEsMrMD01aBtbJY2FMMtKF1rSgKb+T7k=@vger.kernel.org, AJvYcCWRMq2Ms3TIb3+oFcJJH1FugAc+tJJkTaX/12BHpMp1WAXNjpvHJikdeVseG3HZP4/tFexH7Z/EccwBp9Og@vger.kernel.org, AJvYcCWbTcTLOW28/nDYLD7gYujLIszckzCfJTz/WXGqbrVqCZws79//o52lSHkxa9hUbLc3E6PyHRer6Doveuul@vger.kernel.org
-X-Gm-Message-State: AOJu0YwGdnkDZ2FDxIWpkO9bZbNKr+16myEF6Sgc0tqufreUQFS6J43i
-	9s6xzjIDkuAwxPO4SzkOfp10UT1XonM82FeFVfEs+tXj+PhS9dB1ArqTUSbWEVQtN3ll0+lOv0h
-	vo6nEQTnqzLNOxznRppK3sgy95AI=
-X-Gm-Gg: ASbGnctVnuOzglWGjzX9+JRe+yiTAgQyCsX2oSQeJQ6aAvW6qFKAGkNhSMF7NgX+YgY
-	x+PdY8t2Gh5a735YXj+Lvx0VUj+7EhEEICMrnN2w=
-X-Google-Smtp-Source: AGHT+IHWrvfjul8bGWLCG7K0V5IaoxBR0xeFnQU2gldG8cMCp95gzX8UgLTMLPMtg8u83XezlNekJKZzBPTIWi7NoZU=
-X-Received: by 2002:a05:6870:a496:b0:2a3:c59f:4cba with SMTP id
- 586e51a60fabf-2a7fb0cf188mr29060596fac.17.1736270920998; Tue, 07 Jan 2025
- 09:28:40 -0800 (PST)
+	s=arc-20240116; t=1736272201; c=relaxed/simple;
+	bh=QiWd9qO0ZHQDyITcPCRiQrzwNVwwk2Gp/rRGjhwaGt8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=t9kWAyex487XHJtHeF7cdOTatPQhz9nEKEX3MY9GVLgc/GLqJvj6HbBEFGj989Hv5yA1atyjrD72Ma7mpvd5hkcIKVmDpDt7emuufP7Pd7sD7wrKJCpUWFCkY6akEwdqfRmRPQo9X4Ey5d3v6SZIXIrlwyCy6Wr2SazgmoFc9pM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XbYVarLf; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34816C4CED6;
+	Tue,  7 Jan 2025 17:49:59 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1736272199;
+	bh=QiWd9qO0ZHQDyITcPCRiQrzwNVwwk2Gp/rRGjhwaGt8=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=XbYVarLfsZSSPrqg6MkeemWSfWLBm7nWBbKChexDJdX7Nn5X68fU67Ow1nbalIAuL
+	 Zyh0tYeH/7DWKsPpNOJkNko3Vd163dqOSmY4nm75+YqPU7BsyXXq3GXPDvzQanQMNB
+	 6hlsnpkIpoxNCOvulRXZUQZvFTNb7jtN3mvc9jCaLigRK6S5wt5Dl6mxOI4MG/PBSc
+	 cXm+T5fmN9vjTma27+ryw0jLHCV/KXFP9j595DJu93he1OZfJ9cwIsJxaIM+k4q8Ry
+	 zSf+lnkzohs+N+rMAWnGaK8+Z7tb9GK0q+SOq3F8QyiUERM9g3X6pKwAi0dUfqFns4
+	 GQh3aUs1sruRw==
+Date: Tue, 7 Jan 2025 11:49:57 -0600
+From: Bjorn Andersson <andersson@kernel.org>
+To: Georgi Djakov <quic_c_gdjako@quicinc.com>
+Cc: sboyd@kernel.org, mturquette@baylibre.com, quic_mdtipton@quicinc.com, 
+	linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	djakov@kernel.org
+Subject: Re: [PATCH v3] clk: qcom: gdsc: Add a flag to skip setting power
+ collapse bits
+Message-ID: <sfnqygr6rodqidyjo2ighia4pvjhavm4nuijrx7pi62pel7qur@ycpn7qjgnybv>
+References: <20241205222156.1880299-1-quic_c_gdjako@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250107-fix-cocci-v5-0-b26da641f730@chromium.org> <20250107-fix-cocci-v5-1-b26da641f730@chromium.org>
-In-Reply-To: <20250107-fix-cocci-v5-1-b26da641f730@chromium.org>
-From: Kosta Stefanov <costa.stephanoff@gmail.com>
-Date: Tue, 7 Jan 2025 19:28:30 +0200
-X-Gm-Features: AbW1kvbfUwaeL1fxXTsi_WrN9S_jTEC6LrMr24QI4GikjHcwZllkdMOLydzsLnY
-Message-ID: <CAJvEA4nC8-2aMHUg+iJ8qMNuQKYnmpbpK_iZMhoivOQX14G5DQ@mail.gmail.com>
-Subject: Re: [PATCH v5 1/6] media: dvb-frontends: tda10048: Make the range of
- z explicit.
-To: Ricardo Ribalda <ribalda@chromium.org>
-Cc: Mauro Carvalho Chehab <mchehab@kernel.org>, Stanimir Varbanov <stanimir.k.varbanov@gmail.com>, 
-	Vikash Garodia <quic_vgarodia@quicinc.com>, "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>, 
-	Hans Verkuil <hverkuil@xs4all.nl>, linux-media@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241205222156.1880299-1-quic_c_gdjako@quicinc.com>
 
-hi Ricardo, according to the datasheet the recommended sampling
-frequency is 55 MHz (BTW, if you look at the definitions in the source
-code and make the calculations that is exactly the sampling frequency
-all currently supported in Linux devices are using as well).
+On Thu, Dec 05, 2024 at 02:21:56PM -0800, Georgi Djakov wrote:
+> The sdm845 platforms have a hardware issue that requires keeping
+> some of the MMNOC GDSCs in SW collapse mode (which is the power-on
 
-also, I spent few minutes time to make the calculations based on the
-restrains of the PLL build-in tda10048 and in theory the maximum is 69
-MHz. so, if you make next revision of this patch, feel free to update
-the comment accordingly, in short - recommended sampling frequency of
-55 MHz, theoretical maximum of 69 MHz.
+Here you say "keep in SW collapse".
 
-in any case, your assumption is correct and in reality is away less
-than the maximum value you assumed.
-
-Reviewed-by: Kosta Stefanov <costa.stephanoff@gmail.com>
-
---Kosta
-
-
-On Tue, Jan 7, 2025 at 12:54=E2=80=AFPM Ricardo Ribalda <ribalda@chromium.o=
-rg> wrote:
->
-> We have not been able to find the relevant datahsheet, but it seems rare
-> that the device will have a sampling frequency over 613MHz.
->
-> Nonetheless, this patch does not introduce any change in behaviour, it
-> just adds a comment to make explicit the current limit: div by 32 bits.
->
-> Found by cocci:
-> drivers/media/dvb-frontends/tda10048.c:345:1-7: WARNING: do_div() does a =
-64-by-32 division, please consider using div64_u64 instead.
->
-> Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
+> default). But if some driver tries to use these GDSCs and the mode
+> is updated because of runtime pm calls, we may get a board hang.
+> Introduce a flag to skip any updates to the power collapse settings
+> for the impacted GDSCs to avoid unexpected board hangs.
+> 
+> Fixes: 7bb38c20f2b6 ("arm64: dts: qcom: sdm845: Add DT nodes for the TBUs")
+> Reviewed-by: Mike Tipton <quic_mdtipton@quicinc.com>
+> Signed-off-by: Georgi Djakov <quic_c_gdjako@quicinc.com>
 > ---
->  drivers/media/dvb-frontends/tda10048.c | 4 +++-
->  1 file changed, 3 insertions(+), 1 deletion(-)
->
-> diff --git a/drivers/media/dvb-frontends/tda10048.c b/drivers/media/dvb-f=
-rontends/tda10048.c
-> index 3e725cdcc66b..1886f733dbbf 100644
-> --- a/drivers/media/dvb-frontends/tda10048.c
-> +++ b/drivers/media/dvb-frontends/tda10048.c
-> @@ -328,7 +328,8 @@ static int tda10048_set_wref(struct dvb_frontend *fe,=
- u32 sample_freq_hz,
->                              u32 bw)
->  {
->         struct tda10048_state *state =3D fe->demodulator_priv;
-> -       u64 t, z;
-> +       u32 z;
-> +       u64 t;
->
->         dprintk(1, "%s()\n", __func__);
->
-> @@ -341,6 +342,7 @@ static int tda10048_set_wref(struct dvb_frontend *fe,=
- u32 sample_freq_hz,
->         /* t *=3D 2147483648 on 32bit platforms */
->         t *=3D (2048 * 1024);
->         t *=3D 1024;
-> +       /* Sample frequency is under 613MHz */
->         z =3D 7 * sample_freq_hz;
->         do_div(t, z);
->         t +=3D 5;
->
-> --
-> 2.47.1.613.gc27f4b7a9f-goog
->
->
+> v3:
+> - No changes
+> 
+> v2: https://lore.kernel.org/r/20241009151657.1041691-1-quic_c_gdjako@quicinc.com/
+> - Pick up Reviewed-by tag
+> - Add Fixes tag
+> 
+> v1: https://lore.kernel.org/r/20240813120015.3242787-1-quic_c_gdjako@quicinc.com/ 
+>  drivers/clk/qcom/gcc-sdm845.c | 6 +++---
+>  drivers/clk/qcom/gdsc.c       | 3 +++
+>  drivers/clk/qcom/gdsc.h       | 1 +
+>  3 files changed, 7 insertions(+), 3 deletions(-)
+> 
+> diff --git a/drivers/clk/qcom/gcc-sdm845.c b/drivers/clk/qcom/gcc-sdm845.c
+> index dc3aa7014c3e..019b780e31c8 100644
+> --- a/drivers/clk/qcom/gcc-sdm845.c
+> +++ b/drivers/clk/qcom/gcc-sdm845.c
+> @@ -3503,7 +3503,7 @@ static struct gdsc hlos1_vote_mmnoc_mmu_tbu_hf0_gdsc = {
+>  		.name = "hlos1_vote_mmnoc_mmu_tbu_hf0_gdsc",
+>  	},
+>  	.pwrsts = PWRSTS_OFF_ON,
+> -	.flags = VOTABLE,
+> +	.flags = VOTABLE | SKIP_SET_COLLAPSE,
+>  };
+>  
+>  static struct gdsc hlos1_vote_mmnoc_mmu_tbu_hf1_gdsc = {
+> @@ -3512,7 +3512,7 @@ static struct gdsc hlos1_vote_mmnoc_mmu_tbu_hf1_gdsc = {
+>  		.name = "hlos1_vote_mmnoc_mmu_tbu_hf1_gdsc",
+>  	},
+>  	.pwrsts = PWRSTS_OFF_ON,
+> -	.flags = VOTABLE,
+> +	.flags = VOTABLE | SKIP_SET_COLLAPSE,
+>  };
+>  
+>  static struct gdsc hlos1_vote_mmnoc_mmu_tbu_sf_gdsc = {
+> @@ -3521,7 +3521,7 @@ static struct gdsc hlos1_vote_mmnoc_mmu_tbu_sf_gdsc = {
+>  		.name = "hlos1_vote_mmnoc_mmu_tbu_sf_gdsc",
+>  	},
+>  	.pwrsts = PWRSTS_OFF_ON,
+> -	.flags = VOTABLE,
+> +	.flags = VOTABLE | SKIP_SET_COLLAPSE,
+>  };
+>  
+>  static struct clk_regmap *gcc_sdm670_clocks[] = {
+> diff --git a/drivers/clk/qcom/gdsc.c b/drivers/clk/qcom/gdsc.c
+> index fa5fe4c2a2ee..4b83cec9137c 100644
+> --- a/drivers/clk/qcom/gdsc.c
+> +++ b/drivers/clk/qcom/gdsc.c
+> @@ -121,6 +121,9 @@ static int gdsc_update_collapse_bit(struct gdsc *sc, bool val)
+>  	u32 reg, mask;
+>  	int ret;
+>  
+> +	if (sc->flags & SKIP_SET_COLLAPSE)
+> +		return 0;
+
+And here you say "skip SW collapse" (well functionally you say skip set
+or clear SW collapse, but the constant says "skip set/enter SW collapse").
+
+
+Do you need to perform the other functions of gdsc_enable() and
+gdsc_disable() for these GDSCs?
+
+Is there a reason why we declare PWRSTS_ON and PWRSTS_OFF as valid
+states for this GDSCs and then add a quirk/hack at the bottom of the
+callstack to not perform the (key) operation?
+
+Regards,
+Bjorn
+
+> +
+>  	if (sc->collapse_mask) {
+>  		reg = sc->collapse_ctrl;
+>  		mask = sc->collapse_mask;
+> diff --git a/drivers/clk/qcom/gdsc.h b/drivers/clk/qcom/gdsc.h
+> index 1e2779b823d1..6bb7e023a19a 100644
+> --- a/drivers/clk/qcom/gdsc.h
+> +++ b/drivers/clk/qcom/gdsc.h
+> @@ -68,6 +68,7 @@ struct gdsc {
+>  #define RETAIN_FF_ENABLE	BIT(7)
+>  #define NO_RET_PERIPH	BIT(8)
+>  #define HW_CTRL_TRIGGER	BIT(9)
+> +#define SKIP_SET_COLLAPSE	BIT(10)
+>  	struct reset_controller_dev	*rcdev;
+>  	unsigned int			*resets;
+>  	unsigned int			reset_count;
 
