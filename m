@@ -1,63 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-44073-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-44074-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0612FA03722
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jan 2025 05:50:52 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id BB5F4A0376C
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jan 2025 06:41:49 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D4260163A77
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jan 2025 04:50:49 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 84CB5162EB3
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jan 2025 05:41:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 31029770FE;
-	Tue,  7 Jan 2025 04:50:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2AB1D15749C;
+	Tue,  7 Jan 2025 05:41:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="gm6mMTsj"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="kBkF9knI"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1614418EAB;
-	Tue,  7 Jan 2025 04:50:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABEF178F49;
+	Tue,  7 Jan 2025 05:41:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736225449; cv=none; b=lnK2P9nJdjRaNcODdPOzKb5XpbwcYmvIya5niIOgyTtuneB6rvZgKQ+fwzl3pQXyXwoXq562g8u4YNG1yv9I2h6GoiuAwsO293a4R/iqcGiivmLQ3MsC2pzAex2Pbl15RbBchp56B0ijg8QblHDVE1jcxEpd3C66uqsIn4JBCu4=
+	t=1736228504; cv=none; b=BkXqFFBkRFjQwayDF2O9cq7N9j3Uex9b3zNdUStvsNAawbVLGLksCakirF8b/wi38Gum1HOExd6+OsWAk8fxxwIwkP+Mow0GoQjY2NfuKn1TBnfxlqjIsFJgPJ1HLIAb6xOZjr5fjn/SixAAckllMJKDvgDSBld2d1GRaYSP++Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736225449; c=relaxed/simple;
-	bh=gA6FSYqlWzCZt24ckVeukqaY2K8DYVmZoSXqGbxO+U4=;
+	s=arc-20240116; t=1736228504; c=relaxed/simple;
+	bh=y5oswktjjXoDXa7lwo4GPhLx46yLdPeU+dMMFlvJtBQ=;
 	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=ghXGI/TjhC1w+wUoHyyKSLn6BNzUSRv7eWapIYbBmLFhGOK2pzY/SJPJo1bUJFPaiFXwbpoKeWyPdyB6KCliRr/uv2ul+A5TZ7Vu7JQ4TNcdgM4lwKXRhZSuFtGZn/niaCJCquRGwl9PqSpL8K/LRPaTIooeWmeI237jOmmBrss=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=gm6mMTsj; arc=none smtp.client-ip=205.220.168.131
+	 In-Reply-To:Content-Type; b=cEZ34ZbABBOxmqRrMMqklr2C8l5+qO6DVYv6akcYA507sojt/NWKLHoDN7qRvX8sPOl7RcZMHHPemstCBmeALax4990hu9tkhzJa5DyFSa6Q6ofrdsRKVlAf4QQg17iymQO34vFeTae4FWS5CaRZOSmhcMlvBU+jv9LATRo5RIk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=kBkF9knI; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5073PmJO006516;
-	Tue, 7 Jan 2025 04:50:32 GMT
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 507401U0012848;
+	Tue, 7 Jan 2025 05:41:20 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	/WpkrPrWawUtuFQj866JPaYVpcE429Endl8YKxCDDzg=; b=gm6mMTsjGnaLhdA1
-	UDLaBE0T4YqF57tfKPZvt+IRCnlNbf+oqYp8eFN9D2qIO+wjsh11GVMj02+IFWfw
-	lfv8h5u8EOuoKxSZbqRNEiXjtOuJeGtr1gb3skBbYp35S9T6MNdagohgcuv0NnCE
-	+aQ2v/eCof9iDKzIM6likcYO0yBvmEEFiTIVGBjfqSV5WI0AAvLiwvsZaCVvSxh2
-	xPmzVxgrdz+cukBSVJPxe/HtlL/wZWLPc5nQdOZu47QcTJYWZ4W22z7xueCY38p4
-	UBMiF+eTH3PnPX5VpALc5SiFwcZwXMVRGnmhAq+ahyc+0gRlXbn85uDVrv4YpzWc
-	1TUbQA==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 440vbu0515-1
+	Jp//zljxmkJUPS4LMLP6QOwLXDUS8c7lU7NPn4T4Dj4=; b=kBkF9knISj/D7YKZ
+	BiO0wb4XwHh0k4uMlwq1+5EoA6ZRshOl/GG3mei6LL7zKuofqcHHtA27vwfjtpHQ
+	cauyH7ymXQb+z80YzqX8JVmudFSJSMOkYENM9r4fFGFWmPT7Nkugjgv25TmT00nZ
+	N2g6+M5q6WOPN0Zsn/UKCHwCcSqJJBHrr4vafUu6DLVtWUvrkBpRIvXx23Bmo/6K
+	8D6bBaK86eDUq++NkUxHHCg95IRT0NmVDaguPDM3SIEsXJVyVfNP9zwtEP9sOHrq
+	OVNlnZ0+RabBj13z56cEQDm5pSYn3D63L6XOfdElk/Jvd79xBsRYtU3xXgQboGDp
+	ABLLkQ==
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 440vutg5hf-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 07 Jan 2025 04:50:32 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 5074oVMv030536
+	Tue, 07 Jan 2025 05:41:19 +0000 (GMT)
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 5075fIFC005999
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 7 Jan 2025 04:50:31 GMT
-Received: from [10.64.16.151] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+	Tue, 7 Jan 2025 05:41:18 GMT
+Received: from [10.216.26.158] (10.80.80.8) by nasanex01c.na.qualcomm.com
+ (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 6 Jan 2025
- 20:50:27 -0800
-Message-ID: <aeb30048-cdcd-4746-9e86-11beaa2b0cad@quicinc.com>
-Date: Tue, 7 Jan 2025 12:50:25 +0800
+ 21:41:14 -0800
+Message-ID: <13c5b4d2-8fab-4ad2-98b7-1f71584509a6@quicinc.com>
+Date: Tue, 7 Jan 2025 11:11:10 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,119 +65,138 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] drm/msm/dpu: Add writeback support for SM6150
-To: Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Rob Clark
-	<robdclark@gmail.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        "Sean
- Paul" <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        "David Airlie" <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>
-CC: <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
-        Li Liu
-	<quic_lliu6@quicinc.com>,
-        Xiangxu Yin <quic_xiangxuy@quicinc.com>, <quic_fangez@quicinc.com>
-References: <20250106-add-writeback-support-for-sm6150-v1-1-1d2d69fc4bae@quicinc.com>
- <acd91ca7-1951-4711-b76a-afe583eb0b27@quicinc.com>
+Subject: Re: [PATCH v4 1/2] dmaengine: qcom: gpi: Add GPI Block event
+ interrupt support
+To: Jyothi Kumar Seerapu <quic_jseerapu@quicinc.com>,
+        Vinod Koul
+	<vkoul@kernel.org>, Andi Shyti <andi.shyti@kernel.org>,
+        Sumit Semwal
+	<sumit.semwal@linaro.org>,
+        =?UTF-8?Q?Christian_K=C3=B6nig?=
+	<christian.koenig@amd.com>
+CC: <linux-arm-msm@vger.kernel.org>, <dmaengine@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-i2c@vger.kernel.org>,
+        <linux-media@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <linaro-mm-sig@lists.linaro.org>, <quic_vtanuku@quicinc.com>
+References: <20241217170424.14703-1-quic_jseerapu@quicinc.com>
+ <20241217170424.14703-2-quic_jseerapu@quicinc.com>
 Content-Language: en-US
-From: fange zhang <quic_fangez@quicinc.com>
-In-Reply-To: <acd91ca7-1951-4711-b76a-afe583eb0b27@quicinc.com>
+From: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
+In-Reply-To: <20241217170424.14703-2-quic_jseerapu@quicinc.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
+ nasanex01c.na.qualcomm.com (10.45.79.139)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: ypFGH6d-1VmqEZ6L-Ye_4N5rySz3Yx81
-X-Proofpoint-GUID: ypFGH6d-1VmqEZ6L-Ye_4N5rySz3Yx81
+X-Proofpoint-GUID: rh3e6RNNzMKXbrrMJ_RYUmr6lQKmyoEM
+X-Proofpoint-ORIG-GUID: rh3e6RNNzMKXbrrMJ_RYUmr6lQKmyoEM
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999
- lowpriorityscore=0 phishscore=0 malwarescore=0 impostorscore=0 bulkscore=0
- adultscore=0 clxscore=1015 mlxscore=0 priorityscore=1501 spamscore=0
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2501070035
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011 spamscore=0
+ adultscore=0 malwarescore=0 mlxlogscore=999 phishscore=0
+ lowpriorityscore=0 impostorscore=0 bulkscore=0 priorityscore=1501
+ suspectscore=0 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2501070044
 
 
 
-On 2025/1/7 3:15, Abhinav Kumar wrote:
+On 12/17/2024 10:34 PM, Jyothi Kumar Seerapu wrote:
+> GSI hardware generates an interrupt for each transfer completion.
+> For multiple messages within a single transfer, this results in
+> N interrupts for N messages, leading to significant software
+> interrupt latency.
 > 
+> To mitigate this latency, utilize Block Event Interrupt (BEI) mechanism.
+> Enabling BEI instructs the GSI hardware to prevent interrupt generation
+> and BEI is disabled when an interrupt is necessary.
 > 
-> On 1/5/2025 10:39 PM, Fange Zhang wrote:
->> On the SM6150 platform there is WB_2 block. Add it to the SM6150 catalog.
->>
->> Signed-off-by: Fange Zhang <quic_fangez@quicinc.com>
->> ---
->> A followup patch to add writeback configuration for the SM6150 catalog
->> ---
->>   drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_3_sm6150.h | 18 ++++++++ 
->> ++++++++++
->>   1 file changed, 18 insertions(+)
->>
->> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_3_sm6150.h b/ 
->> drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_3_sm6150.h
->> index 
->> 621a2140f675fa28b3a7fcd8573e59b306cd6832..6d32deead77728264b6de6d5fd2843a81afdf355 100644
->> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_3_sm6150.h
->> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_3_sm6150.h
->> @@ -27,6 +27,7 @@ static const struct dpu_mdp_cfg sm6150_mdp = {
->>           [DPU_CLK_CTRL_DMA1] = { .reg_off = 0x2b4, .bit_off = 8 },
->>           [DPU_CLK_CTRL_DMA2] = { .reg_off = 0x2bc, .bit_off = 8 },
->>           [DPU_CLK_CTRL_DMA3] = { .reg_off = 0x2c4, .bit_off = 8 },
->> +        [DPU_CLK_CTRL_WB2] = { .reg_off = 0x3b8, .bit_off = 24 },
->>       },
->>   };
->> @@ -164,6 +165,21 @@ static const struct dpu_pingpong_cfg sm6150_pp[] = {
->>       },
->>   };
->> +static const struct dpu_wb_cfg sm6150_wb[] = {
->> +    {
->> +        .name = "wb_2", .id = WB_2,
->> +        .base = 0x66000, .len = 0x2c8,
+> When using BEI, consider splitting a single multi-message transfer into
+> chunks of 8 internally. Interrupts are not expected for the first 7 message
+chunks of 8 internally. This seems half statement to me. Something is 
+missing to complete the statement.
+> completions, only the last message triggers an interrupt,indicating
+,indicating
+here give space before.
+> the completion of 8 messages.
 > 
-> This is not correct.
+> This BEI mechanism enhances overall transfer efficiency.
 > 
-> WB_2 offset is at 0x66000. However, MDP base address accounts for the 
-> 0x1000 offset. So this should still be 0x65000.
+> Signed-off-by: Jyothi Kumar Seerapu <quic_jseerapu@quicinc.com>
+> ---
 > 
-> Why is 0x66000 used here? It does not match the docs.
-sorry, missed it, yes it should be 0x65000, will fix it in next patch.
+> v3 -> v4:
+>    - API's added for Block event interrupt with multi descriptor support for
+>      I2C is moved from qcom-gpi-dma.h file to I2C geni qcom driver file.
+>    - gpi_multi_xfer_timeout_handler function is moved from GPI driver to
+>      I2C driver.
 > 
-> How was this change verified?
-i checked drm state, and found the new writeback connector is loaded 
-successfully.
+> v2-> v3:
+>     - Renamed gpi_multi_desc_process to gpi_multi_xfer_timeout_handler
+>     - MIN_NUM_OF_MSGS_MULTI_DESC changed from 4 to 2
+>     - Added documentation for newly added changes in "qcom-gpi-dma.h" file
+>     - Updated commit description.
 > 
->> +        .features = WB_SM8250_MASK,
->> +        .format_list = wb2_formats_rgb,
->> +        .num_formats = ARRAY_SIZE(wb2_formats_rgb),
->> +        .clk_ctrl = DPU_CLK_CTRL_WB2,
->> +        .xin_id = 6,
->> +        .vbif_idx = VBIF_RT,
->> +        .maxlinewidth = 2160,
->> +        .intr_wb_done = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 4),
->> +    },
->> +};
->> +
->>   static const struct dpu_intf_cfg sm6150_intf[] = {
->>       {
->>           .name = "intf_0", .id = INTF_0,
->> @@ -244,6 +260,8 @@ const struct dpu_mdss_cfg dpu_sm6150_cfg = {
->>       .dspp = sm6150_dspp,
->>       .pingpong_count = ARRAY_SIZE(sm6150_pp),
->>       .pingpong = sm6150_pp,
->> +    .wb_count = ARRAY_SIZE(sm6150_wb),
->> +    .wb = sm6150_wb,
->>       .intf_count = ARRAY_SIZE(sm6150_intf),
->>       .intf = sm6150_intf,
->>       .vbif_count = ARRAY_SIZE(sdm845_vbif),
->>
->> ---
->> base-commit: 8155b4ef3466f0e289e8fcc9e6e62f3f4dceeac2
->> change-id: 20250106-add-writeback-support-for-sm6150-ba7657196ea8
->>
->> Best regards,
+> v1 -> v2:
+>     - Changed dma_addr type from array of pointers to array.
+>     - To support BEI functionality with the TRE size of 64 defined in GPI driver,
+>       updated QCOM_GPI_MAX_NUM_MSGS to 16 and NUM_MSGS_PER_IRQ to 4.
+> 
+>   drivers/dma/qcom/gpi.c           | 3 +++
+>   include/linux/dma/qcom-gpi-dma.h | 9 +++++++++
+>   2 files changed, 12 insertions(+)
+> 
+> diff --git a/drivers/dma/qcom/gpi.c b/drivers/dma/qcom/gpi.c
+> index 52a7c8f2498f..74eabcd1416d 100644
+> --- a/drivers/dma/qcom/gpi.c
+> +++ b/drivers/dma/qcom/gpi.c
+> @@ -1693,6 +1693,9 @@ static int gpi_create_i2c_tre(struct gchan *chan, struct gpi_desc *desc,
+>   
+>   		tre->dword[3] = u32_encode_bits(TRE_TYPE_DMA, TRE_FLAGS_TYPE);
+>   		tre->dword[3] |= u32_encode_bits(1, TRE_FLAGS_IEOT);
+> +
+> +		if (i2c->flags & QCOM_GPI_BLOCK_EVENT_IRQ)
+> +			tre->dword[3] |= u32_encode_bits(1, TRE_FLAGS_BEI);
+>   	}
+>   
+>   	for (i = 0; i < tre_idx; i++)
+> diff --git a/include/linux/dma/qcom-gpi-dma.h b/include/linux/dma/qcom-gpi-dma.h
+> index 6680dd1a43c6..d818c6a955e2 100644
+> --- a/include/linux/dma/qcom-gpi-dma.h
+> +++ b/include/linux/dma/qcom-gpi-dma.h
+> @@ -15,6 +15,13 @@ enum spi_transfer_cmd {
+>   	SPI_DUPLEX,
+>   };
+>   
+> +/**
+> + * define QCOM_GPI_BLOCK_EVENT_IRQ - Block event interrupt support
+> + *
+> + * This is used to enable/disable the Block event interrupt mechanism.
+> + */
+> +#define QCOM_GPI_BLOCK_EVENT_IRQ	BIT(0)
+> +
+>   /**
+>    * struct gpi_spi_config - spi config for peripheral
+>    *
+> @@ -65,6 +72,7 @@ enum i2c_op {
+>    * @rx_len: receive length for buffer
+>    * @op: i2c cmd
+>    * @muli-msg: is part of multi i2c r-w msgs
+> + * @flags: true for block event interrupt support
+>    */
+>   struct gpi_i2c_config {
+>   	u8 set_config;
+> @@ -78,6 +86,7 @@ struct gpi_i2c_config {
+>   	u32 rx_len;
+>   	enum i2c_op op;
+>   	bool multi_msg;
+> +	bool flags;
+can we better singular name instead of general name ?
+something like bei_flag ? OR block_int_flag ?
+
+>   };
+>   
+>   #endif /* QCOM_GPI_DMA_H */
 
 
