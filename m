@@ -1,129 +1,128 @@
-Return-Path: <linux-arm-msm+bounces-44208-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-44209-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 57770A04B0C
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jan 2025 21:36:38 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 118C1A04B2E
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jan 2025 21:42:36 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id EC9E91887B8D
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jan 2025 20:36:40 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E6B55165C23
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jan 2025 20:42:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A1A8B1F63F5;
-	Tue,  7 Jan 2025 20:36:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1E6CD1F470D;
+	Tue,  7 Jan 2025 20:42:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b="gOoPXZIt"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="f1X6Fjoq"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f172.google.com (mail-pl1-f172.google.com [209.85.214.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EB0B1D958E;
-	Tue,  7 Jan 2025 20:36:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB5141F37C0;
+	Tue,  7 Jan 2025 20:42:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736282193; cv=none; b=s7oqHzvBMGrNMjZmNiNWc9wWZtqEBckrB2Z9LPNau+a4oPOWfke6CQzVQ6zEId4VXJU3VCLJV8lFMJBxj4N3n02F5A0SkI2au8PlmfAA2KZqjo69UJOrBzL0QlvoPso7F4afYLWwevAeDFnvrlMhuRko3/w2F/ksEWp7HcXZ2xY=
+	t=1736282551; cv=none; b=GS2dkOXNTAF69qjdSGf0n82ca9D7Tdu6le95THnDLLn8boeE/IesSK33AmFe4ldDKAAW2LlxZEkTvxff5W5tY6doLuOMrf9olGTmYG/OZPj+7+RxwlbtQQPnupSlPiisDb+Gcpr5TQE3c8gMzBm9ZxaCAJufC4KkXXl8/7xNhcY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736282193; c=relaxed/simple;
-	bh=qYQ7E76CkhHf7z8mHbaeAvsIbpxTsY/ZInvAEaM94Hs=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=FwLreq1Wq7Hb3B4t1nra8pZgNYTQqCXfPMPvaPNGl+5rWULld90XGfoA7wy8YrRiPL4e/gQBkG94THH0/hFX02zmpC0VK5VUIzoo3KfpKh0HDpVsMB4HLWOnfm8mvQrzrAoYa6bmjEdDoqjBPrO4lslGJSe68nlxim/wcQQZu68=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com; spf=pass smtp.mailfrom=googlemail.com; dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b=gOoPXZIt; arc=none smtp.client-ip=209.85.214.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=googlemail.com
-Received: by mail-pl1-f172.google.com with SMTP id d9443c01a7336-219f8263ae0so187687045ad.0;
-        Tue, 07 Jan 2025 12:36:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20230601; t=1736282191; x=1736886991; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=k5J+gh+iXgRwyFdRk/bfAnhtBt/J24ElglqD+pzBrcM=;
-        b=gOoPXZItkNmvG+cOTN9duR16l4hSV1Wg/Wz6ZVjNDEb2+naIpk3+zmHfkV7F+wirnj
-         K0i6u06apIU/nPL5nHFojuFBX0n3gxSUyrnVIm3XhjOvtT9RqGGu1Qn10qJqocSM4dqw
-         boz0fXVTXlGEW5VnHhW3I0e/GHyuO+MGky1LV6n3mlmQUdu+xzdyIUHh/qx/p/C8Gh+m
-         b04EzFJuOBX4Ekn+z0bW7NYSM1YIH8ePUbUAYtgp4CC8xZyb2fsXa8HKAf6zBNuO9qkk
-         SjSc9XsxmZDrgR19+n6SqmlnK5S01pF5mlwSHfd/En8rlN8CvZcG/5mjh4N0jVld+9Uu
-         zOFg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736282191; x=1736886991;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=k5J+gh+iXgRwyFdRk/bfAnhtBt/J24ElglqD+pzBrcM=;
-        b=EBZ+wACUMf7I1aoksf+GWi0jrT8R/GIdsqP/pFCpCDrC3gYy2/4v+188gdGm2s6bsW
-         0ZoOxZEjT3rJ4T7MsScDBwf52PBf0QIuYVulBh5pgF3sTOapw6iAmTacD8IKTZ1Qe5wp
-         GcdsKvgiB50fkTXy9ZiXL3wPelCX4W+G5UQyzN33PEJBy1G21VOGYo2g08D6g6PnX+GK
-         9DwYQWyt97J/3LuTb1eKx/5dAFaD578zyg/2lvE6rvFaeZIDp0yqF6+7LQ4Zd5SedXM1
-         m3Lv56F4aFUXEzAZIZnDItHscvD4t+bQJ3XMcmCgbRIAFX71Cre6gSz50Egi7ewsmhga
-         fQfg==
-X-Forwarded-Encrypted: i=1; AJvYcCU3BWUnNzt+4JTJ+iqenqwqOVgNki/QjJJqc7VyIqNo3GuHtdd3Xj/e2M0xlZPeh5Mv7i4sRCgyoWGPBR6rExYuQxM=@vger.kernel.org, AJvYcCUt7WdZLiCtH3QIaJE8JTgbo8hDH2oZU2EkEYdU9sL7cJS5VWBPbrltjUc4NEGnd5Zf18rYHcgvtUIc@vger.kernel.org, AJvYcCVDFTYzARPkf3VBodit4y/AYEHt0bERZXkgvdAM9dnppKzAbLl+o3QiQShw32hpSGSVPEdTAlu+2YY3IiHi@vger.kernel.org, AJvYcCXckck7LPJzUG4SIMxlDEXoLygWV8J6JtCPE8CXScja8CMKk8GDdYU+6xk3/CXEEvLtKLjmn+twbjlOz0X7BA==@vger.kernel.org
-X-Gm-Message-State: AOJu0YyMRkVX2wt4ML6fG40CwrZomDlbKoOMjok0V1wIeTQzy7If9X6j
-	XotZdcfSKfbqSiq13PeRIQtv/gVYKvM/4iBDF0UcY+07r1rWxS4+NdRGebUcBe1ToJvrSHDruMM
-	cWuaAW4Bg+6MIDIG/cdahH4TIG48=
-X-Gm-Gg: ASbGnctohPRNzGda0zQ1FFx2pg740mWONcJsH676WoMa7kLzgrmNxLbgkyhgGBt5ql4
-	ERp/awS6rng5+XLjYKkTlDrCxc136WxKWFCItMnWaxaq2irGdGJMn
-X-Google-Smtp-Source: AGHT+IHgiQDN0G5/PdDd430gJpVrEIqkV02owORB8V1V6tlHZDq0VmXjlHDjVTSTRjC3ezsidQtyveZkFyttC72Msfc=
-X-Received: by 2002:a17:902:f70a:b0:216:8319:2949 with SMTP id
- d9443c01a7336-21a84000ae2mr5997805ad.56.1736282191527; Tue, 07 Jan 2025
- 12:36:31 -0800 (PST)
+	s=arc-20240116; t=1736282551; c=relaxed/simple;
+	bh=B1Ckc7g9BeYgu/ickCDB0Ca1bCjlvly28BndxYTw1HE=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To; b=SRdKL7ZWBfFrJl+e4QY0Q/lqTJTixoRZdQb0v1LGXyb/Ed+LB6jnpexZknEsEWWPoUic8A58qJFa3gODWymGuJXrIT/PF5WBPo9LMzL300ghVnUzNnyo5kILup1ZKLlP+6asOXLj6ROaJ9v6FvSIOwMpfbyHIH+2u7BV96sDzDY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=f1X6Fjoq; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23916C4CED6;
+	Tue,  7 Jan 2025 20:42:30 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1736282550;
+	bh=B1Ckc7g9BeYgu/ickCDB0Ca1bCjlvly28BndxYTw1HE=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:From;
+	b=f1X6FjoqgTjt1mJZyJ+Jl8CPM0ijT8X6zotnBSQ3+iWJO2VYUwttFLuC2UIyPTAih
+	 68qbHXpmh8kkKeqvLxQJPqwV3rBtzD7UuJOnmHnIIQ/JXlNovNudCiI3AiwWIi3CzL
+	 h5gb+c3sKucJIKeYdp/b7r2HEDcKZvXJZ/hx4LPgJseLkKlC0yulDeh8ciIfAHdWBt
+	 TAIy9K+7EqNi8q1HhQez/AJNsoYFkuXw+aE+5aA+KU3i2wUt7VE6B5KsDngi6wTso2
+	 MGf1iN7lfvazmT2Gvyu69WhQfg2x/kPiysSlJwTkLrUUUKAIUy5f7QPsVwKTMjBR4d
+	 YLaVUeqFa1IdQ==
+Date: Tue, 7 Jan 2025 14:42:28 -0600
+From: Bjorn Helgaas <helgaas@kernel.org>
+To: Krishna Chaitanya Chundru <quic_krichai@quicinc.com>
+Cc: Rob Herring <robh@kernel.org>,
+	Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>,
+	andersson@kernel.org, dmitry.baryshkov@linaro.org,
+	manivannan.sadhasivam@linaro.org, krzk@kernel.org,
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+	lpieralisi@kernel.org, kw@linux.com, conor+dt@kernel.org,
+	linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org,
+	devicetree-spec@vger.kernel.org, quic_vbadigan@quicinc.com
+Subject: Re: [PATCH V1] schemas: pci: bridge: Document PCI L0s & L1 entry
+ delay and nfts
+Message-ID: <20250107204228.GA180123@bhelgaas>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250107125854.227233-1-krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20250107125854.227233-1-krzysztof.kozlowski@linaro.org>
-From: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
-Date: Tue, 7 Jan 2025 21:36:20 +0100
-X-Gm-Features: AbW1kvat2n17hvPwDrGQUj8U_8QFAMpbYP8hJMpXB_xRYGmIfR0aXMkOm1WMYyw
-Message-ID: <CAFBinCCqekcg75YPnck5NEiLftpiDR5KhX7Ngc2xuRKpbMik+A@mail.gmail.com>
-Subject: Re: [PATCH] dt-bindings: display: Correct indentation and style in
- DTS example
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc: Neil Armstrong <neil.armstrong@linaro.org>, 
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
-	Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Kevin Hilman <khilman@baylibre.com>, Jerome Brunet <jbrunet@baylibre.com>, 
-	Andrzej Hajda <andrzej.hajda@intel.com>, Robert Foss <rfoss@kernel.org>, 
-	Laurent Pinchart <Laurent.pinchart@ideasonboard.com>, Jonas Karlman <jonas@kwiboo.se>, 
-	Jernej Skrabec <jernej.skrabec@gmail.com>, Shawn Guo <shawnguo@kernel.org>, 
-	Sascha Hauer <s.hauer@pengutronix.de>, Pengutronix Kernel Team <kernel@pengutronix.de>, 
-	Fabio Estevam <festevam@gmail.com>, Inki Dae <inki.dae@samsung.com>, 
-	Jagan Teki <jagan@amarulasolutions.com>, Marek Szyprowski <m.szyprowski@samsung.com>, 
-	Chun-Kuang Hu <chunkuang.hu@kernel.org>, Philipp Zabel <p.zabel@pengutronix.de>, 
-	Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Sean Paul <sean@poorly.run>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, Matthias Brugger <matthias.bgg@gmail.com>, 
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, 
-	Geert Uytterhoeven <geert+renesas@glider.be>, Magnus Damm <magnus.damm@gmail.com>, 
-	Lucas Stach <l.stach@pengutronix.de>, Krishna Manikandan <quic_mkrishn@quicinc.com>, 
-	Jonathan Marek <jonathan@marek.ca>, Mahadevan <quic_mahap@quicinc.com>, 
-	Kieran Bingham <kieran.bingham+renesas@ideasonboard.com>, 
-	Jacopo Mondi <jacopo+renesas@jmondi.org>, dri-devel@lists.freedesktop.org, 
-	linux-amlogic@lists.infradead.org, devicetree@vger.kernel.org, 
-	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, 
-	imx@lists.linux.dev, linux-mediatek@lists.infradead.org, 
-	linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org, 
-	linux-renesas-soc@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <6d75827d-5285-35ff-bf9b-aec77cd8304e@quicinc.com>
 
-On Tue, Jan 7, 2025 at 1:58=E2=80=AFPM Krzysztof Kozlowski
-<krzysztof.kozlowski@linaro.org> wrote:
->
-> DTS example in the bindings should be indented with 2- or 4-spaces and
-> aligned with opening '- |', so correct any differences like 3-spaces or
-> mixtures 2- and 4-spaces in one binding.
->
-> No functional changes here, but saves some comments during reviews of
-> new patches built on existing code.
->
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> ---
->  .../display/amlogic,meson-dw-hdmi.yaml        |  8 +-
-For amlogic,meson-dw-hdmi.yaml:
-Reviewed-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
+On Tue, Jan 07, 2025 at 07:49:00PM +0530, Krishna Chaitanya Chundru wrote:
+> On 1/6/2025 8:37 PM, Rob Herring wrote:
+> > On Mon, Jan 6, 2025 at 3:33 AM Krishna Chaitanya Chundru
+> > <krishna.chundru@oss.qualcomm.com> wrote:
+> > > 
+> > > Some controllers and endpoints provide provision to program the entry
+> > > delays of L0s & L1 which will allow the link to enter L0s & L1 more
+> > > aggressively to save power.
+> > > 
+> > > As per PCIe spec 6 sec 4.2.5.6, the number of Fast Training Sequence (FTS)
+> > > can be programmed by the controllers or endpoints that is used for bit and
+> > > Symbol lock when transitioning from L0s to L0 based upon the PCIe data rate
+> > > FTS value can vary. So define a array for each data rate for nfts.
+> > > 
+> > > These values needs to be programmed before link training.
+
+> > Do these properties apply to any link like downstream ports on a
+> > PCIe switch?
+> > 
+> These applies to downstream ports also on a switch.
+
+IIUC every PCIe component with a Link, i.e., Upstream Ports (on a
+Switch or Endpoint) and Downstream Ports (a Root Port or Switch), has
+an N_FTS value that it advertises during Link training.
+
+I suppose N_FTS depends on the component electrical design and maybe
+the Link, and it only makes sense to have this n-fts property for
+specific devices that support this kind of configuration, right?  I
+don't think we would know what to do with n-fts for random plug-in
+Switches or Endpoints because there's no generic way to configure
+N_FTS, and we *couldn't* do it before the Link is trained anyway
+unless there's some sideband mechanism.
+
+> > > +    description:
+> > > +      Number of Fast Training Sequence (FTS) used during L0s to L0 exit for bit
+> > > +      and Symbol lock.
+> > > +    $ref: /schemas/types.yaml#/definitions/uint32-array
+> > > +    minItems: 1
+> > > +    maxItems: 5
+> > 
+> > Need to define what is each entry? Gen 1 to 5?
+> > 
+> yes there are from Gen1 to Gen 5, I will update this in next patch these
+> details.
+
+Components are permitted to advertise different N_FTS values at
+different *speeds*, not "GenX" (PCIe r6.0, sec 4.2.5.6)
+
+The spec discourages use of Gen1, etc because they are ambiguous (sec
+1.2):
+
+  Terms like "PCIe Gen3" are ambiguous and should be avoided. For
+  example, "gen3" could mean (1) compliant with Base 3.0, (2)
+  compliant with Base 3.1 (last revision of 3.x), (3) compliant with
+  Base 3.0 and supporting 8.0 GT/s, (4) compliant with Base 3.0 or
+  later and supporting 8.0 GT/s, ....
+
+We're stuck with the use of genX for max-link-speed, but we should use
+speeds when we can for clarity, e.g., in the description here.
 
