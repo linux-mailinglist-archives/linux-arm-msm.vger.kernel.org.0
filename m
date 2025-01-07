@@ -1,66 +1,66 @@
-Return-Path: <linux-arm-msm+bounces-44159-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-44160-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7BB90A04415
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jan 2025 16:19:32 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5F921A0441B
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jan 2025 16:20:08 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 20A551883373
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jan 2025 15:19:35 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id AEDE37A0419
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jan 2025 15:19:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1C7F31F0E51;
-	Tue,  7 Jan 2025 15:19:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 79BA71F0E51;
+	Tue,  7 Jan 2025 15:20:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bD06FyTa"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qDKST+jn"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E201F86321;
-	Tue,  7 Jan 2025 15:19:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EB1B86321;
+	Tue,  7 Jan 2025 15:20:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736263168; cv=none; b=nhBWhvWm14znHdFG13a1eeMLc7/oX++mHbB8Wh25m8L/e2eRfQ6JVOq2BdshVjkMpogAznvj6+rVrowMkxqxaImOF6wsi8d2UlfF5gty27SMGxuF6043ugyWEk1wTHCotEw6kUvWS9OA18IDzsydhFuIy4BZCvID+wx7WeHa5Bk=
+	t=1736263201; cv=none; b=IH6lekfNdJ3V28OnWXwHPpx5oR5p7sdd2DSA+7Zkp5ClsJso3ySvDYHam/SNW5+E4fBb7kKJn+Sv4Kl+QrydznqZlZFn0ZxO2lr/22H8o8PfK/iAH6QkghuF4lVQxkt/LGkh8PiaIUGNZ0mhYcSWxsKoxuD3B+NsWnIUJ/rFpKc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736263168; c=relaxed/simple;
-	bh=Voi/m6pVXj7Nl+pADzsiMjmJS0WQikU2+O/Gvfr9pT0=;
+	s=arc-20240116; t=1736263201; c=relaxed/simple;
+	bh=HW5UP+Hh2z2a22Lx+HwnvhXepcphCb4HK1NIWFN1HuY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=amajUM+0aKCqR/rE09dKYJFRzTFD0ph6ysgkUP8SxaqZM630ZLS4v0eawHH1UO80SjXof9eURjKLIvUa7csOHUy1XU8nevqFx6Sf4FAwB07pr+DkuO5U0XKajBYMNxnFNhf0PSxbacEkXM7/2jzNQGWpM1swTnKHfh5Pq1nSoLs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bD06FyTa; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BE94C4CED6;
-	Tue,  7 Jan 2025 15:19:27 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=T8kd4sGl0IPDLpx48hdn93QTq+eyrZGDeb7fwDAYLIIJB52Bsi6MqI7/oRUEDeFpY1JjpvBUu+dP2N3baQ+m8stdLhi/7zTHJ2enDEJRuBYPcZRKM9CHaiGh2I9H3IU2+XnigTbeeaCg/XqbuHIEGrmhO8qaFo/3q9LXzlmEDvE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qDKST+jn; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CE55C4CEE0;
+	Tue,  7 Jan 2025 15:19:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1736263167;
-	bh=Voi/m6pVXj7Nl+pADzsiMjmJS0WQikU2+O/Gvfr9pT0=;
+	s=k20201202; t=1736263200;
+	bh=HW5UP+Hh2z2a22Lx+HwnvhXepcphCb4HK1NIWFN1HuY=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=bD06FyTaD7UkAxKfOogWxO9ViRaT1wU51KpvKVchHARrhaWnm6IwMV0UwkZcdxT/+
-	 /InZcDiO6RlfEJrmEfj39MViqOKKj87/HXe6fw/BHnTJaRmyv2COxyzNherqcZc6jr
-	 8YY7CgDfDlh4hZwSBhIcSyJs7cAgfBMN0xeaB/oO4I/rakCAwW18Mh0kBVvYl5xYxf
-	 T+0aWmi8PVSrOE8vcCfUqsMqQFBDyr57M0qjSUrmi29ibOPnm5zmGsiW0foPiCPfpg
-	 c1Gy2Ky9LGXH6xz/pCMo9PfYmItBYS85fh+gZ2vPPuSfCYdXORKpt6ezPlagaorzJY
-	 3ELWNxcWa2YhQ==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan@kernel.org>)
-	id 1tVBMc-000000002O5-1PR3;
-	Tue, 07 Jan 2025 16:19:26 +0100
-Date: Tue, 7 Jan 2025 16:19:26 +0100
-From: Johan Hovold <johan@kernel.org>
-To: Abel Vesa <abel.vesa@linaro.org>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] arm64: dts: qcom: x1e78100-t14s: Enable fingerprint
- reader
-Message-ID: <Z31F_sZahYrCSVlr@hovoldconsulting.com>
-References: <20250107-x1e80100-t14-enable-fingerprint-sensor-v1-1-8fd911d39ad1@linaro.org>
- <Z308ZCrnsaLReaIX@linaro.org>
+	b=qDKST+jn66IN7CqV7Kww2DUrbI8shNCa41lebRHzR1NDPBLqt+t+PxQj1y72pHYe2
+	 /IgZg+/Yx1YGcuCN2yJc1MZp854BuAyK9Y0jitUNZo5WcwksYZSAuK77tRRK2/mfeg
+	 K1L8870o8OAY4u/eUTJQi4oCX5tlLOdqeCm/BUyI6MqVDFQtC/eC3bgG03XF25/nlv
+	 vTttlFQL77zUIXc5FXvNflBt326zpSyLaSfee4QkMDjXUsM1l8zA+KMZvRDkH/yHdZ
+	 BF7/cTsRtEkiNAqYCkHQTenlpkTR5DH2ChavbXaU8al6mo1setNVliE9KNVd2uCaGK
+	 k92GtyZBwseTg==
+Date: Tue, 7 Jan 2025 15:19:54 +0000
+From: Will Deacon <will@kernel.org>
+To: Douglas Anderson <dianders@chromium.org>
+Cc: Catalin Marinas <catalin.marinas@arm.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Trilok Soni <quic_tsoni@quicinc.com>,
+	Jeffrey Hugo <quic_jhugo@quicinc.com>,
+	Roxana Bradescu <roxabee@google.com>,
+	bjorn.andersson@oss.qualcomm.com,
+	Julius Werner <jwerner@chromium.org>,
+	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+	Anshuman Khandual <anshuman.khandual@arm.com>,
+	Besar Wicaksono <bwicaksono@nvidia.com>,
+	D Scott Phillips <scott@os.amperecomputing.com>,
+	Easwar Hariharan <eahariha@linux.microsoft.com>,
+	Oliver Upton <oliver.upton@linux.dev>, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3 0/2] arm64: cputype: Add info about some Qualcomm Kryo
+ cores
+Message-ID: <20250107151953.GB7368@willie-the-truck>
+References: <20241219211131.2389091-1-dianders@chromium.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -69,60 +69,37 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <Z308ZCrnsaLReaIX@linaro.org>
+In-Reply-To: <20241219211131.2389091-1-dianders@chromium.org>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 
-On Tue, Jan 07, 2025 at 04:38:28PM +0200, Abel Vesa wrote:
-> On 25-01-07 15:35:07, Abel Vesa wrote:
-> > On Lenovo ThinkPad T14s, the fingerprint reader placed in the power
-> > button is connected via the usb_2 controller. The controller has only
-> > a USB 2.0 PHY which is then connected via a NXP PTN3222 eUSB2 repeater,
-> > which in turn is connected to the Goodix fingerprint reader.
-> > 
-> > So enable all the usb_2 controller and PHY nodes, set dual-role mode to
-> > host and describe the eUSB2 repeater in order to get the fingerprint
-> > reader discovered.
-> > 
-> > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+On Thu, Dec 19, 2024 at 01:11:08PM -0800, Douglas Anderson wrote:
 > 
-> Turns out that on resume a couple of things are broken w.r.t. to the usb_2 controller:
+> This series breaks off of my series that reworked Spectre BHB
+> mitigations. Originally I needed Qualcomm Kryo IDs because I was
+> adding "guesses" about their Spectre BHB mitigations. Now that the
+> Spectre BHB series no longer has guesses I don't need them there, but
+> these two patches still seem worth it to land on their own.
 > 
-> [   41.104913] arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xe2010600, fsynr=0x110001, cbfrsynra=0x14e0, cb
-> [   41.104936] arm-smmu 15000000.iommu: FSR    = 00000402 [Format=2 TF], SID=0x14e0
-> [   41.104950] arm-smmu 15000000.iommu: FSYNR0 = 00110001 [S1CBNDX=17 PLVL=1]
-> [   51.420689] xhci-hcd xhci-hcd.6.auto: xHCI host not responding to stop endpoint command
-> [   51.420702] xhci-hcd xhci-hcd.6.auto: xHCI host controller not responding, assume dead
-> [   51.420720] xhci-hcd xhci-hcd.6.auto: HC died; cleaning up
-> [   51.420836] usb 5-1: PM: dpm_run_callback(): usb_dev_resume returns -22
-> [   51.420864] usb 5-1: PM: failed to resume async: error -22
+> I've still called this series "v3" because the first patch was part of
+> the v1 and v2 of the previous series.
 > 
-> So do not apply this yet.
+> Link to prev versions:
+> v1: https://lore.kernel.org/r/20241209174430.2904353-1-dianders@chromium.org/
+> v2: https://lore.kernel.org/r/20241214005248.198803-1-dianders@chromium.org
 > 
-> Sorry for not testing this properly before sending.
+> Changes in v3:
+> - arm64: cputype: Add comments about Qualcomm Kryo 5XX and 6XX cores
+> 
+> Douglas Anderson (2):
+>   arm64: cputype: Add QCOM_CPU_PART_KRYO_3XX_GOLD
+>   arm64: cputype: Add comments about Qualcomm Kryo 5XX and 6XX cores
+> 
+>  arch/arm64/include/asm/cputype.h | 12 ++++++++++++
+>  1 file changed, 12 insertions(+)
 
-Heh, thanks for the heads up.
+Can somebody from Qualcomm please provide an Ack on these patches?
 
-I was just about to reply with my:
+Thanks,
 
-Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
-Tested-by: Johan Hovold <johan+linaro@kernel.org>
-
-after comparing with the schematics and verifying that the fingerprint
-reader enumerates.
-
-But I do indeed see something similar here on resume:
-
-[ 1891.737726] arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xe3f6ddbec0, fsynr=0x510000, cbfrsynra=0x14e0, cb=3
-[ 1891.737738] arm-smmu 15000000.iommu: FSR    = 00000402 [Format=2 TF], SID=0x14e0
-[ 1891.737746] arm-smmu 15000000.iommu: FSYNR0 = 00510000 [S1CBNDX=81 PLVL=0]
-[ 1891.804342] r8152 7-1:1.0 eth0: carrier on
-[ 1902.039158] xhci-hcd xhci-hcd.1.auto: xHCI host not responding to stop endpoint command
-[ 1902.039191] xhci-hcd xhci-hcd.1.auto: xHCI host controller not responding, assume dead
-[ 1902.039795] xhci-hcd xhci-hcd.1.auto: HC died; cleaning up
-[ 1902.040050] usb 1-1: PM: dpm_run_callback(): usb_dev_resume returns -5
-[ 1902.040272] usb 1-1: PM: failed to resume async: error -5
-[ 1902.581479] OOM killer enabled.
-[ 1902.586673] Restarting tasks ...
-[ 1902.587565] usb 1-1: USB disconnect, device number 2
-
-Johan
+Will
 
