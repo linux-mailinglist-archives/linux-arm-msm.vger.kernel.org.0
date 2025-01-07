@@ -1,136 +1,321 @@
-Return-Path: <linux-arm-msm+bounces-44081-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-44082-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id DAB0FA039A3
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jan 2025 09:18:43 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5E761A03A2F
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jan 2025 09:50:10 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C287B160467
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jan 2025 08:18:41 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 74B443A5643
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jan 2025 08:49:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C7D0A19D8BE;
-	Tue,  7 Jan 2025 08:18:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E978B1E25FF;
+	Tue,  7 Jan 2025 08:49:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pf-is-s-u-tokyo-ac-jp.20230601.gappssmtp.com header.i=@pf-is-s-u-tokyo-ac-jp.20230601.gappssmtp.com header.b="DRMq6NmW"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="JGN20aPi"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pj1-f48.google.com (mail-pj1-f48.google.com [209.85.216.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F3D513B58F
-	for <linux-arm-msm@vger.kernel.org>; Tue,  7 Jan 2025 08:18:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0425481C4;
+	Tue,  7 Jan 2025 08:49:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736237914; cv=none; b=OJU4UJjQKoMbfLBN6RzXhKQTWfrQwGoCaIzeugE/0D+K3wVBbaPpP5BpRP3siSPvT+XfY8yD8dIsxpH0pRrJZJow71uPzkUqxJe6ePA5ylQhwlvG+hITJDts0l8Lh315+D2NUqVB1MHMUYDIVk9OvDqE2ppN21J4zNPfxesQkOE=
+	t=1736239751; cv=none; b=Tn+BuvJsDN9mAJLszAw6ZloGlIvRq3MsxCDzTL6MOyQmGIlsfpS30cwxFzJ6nYs55kqNuy6h2OhlPLmp/xdmImuHMYvmv9CGx7m2rdSlIsEzz5itRhQGzfbays2bT98UjvRjfvBDk8TwKQjVJRhxU3MHUo9OG1dZr2rYTqAzhjs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736237914; c=relaxed/simple;
-	bh=HnNCh1Q3KlhmMeC8lNBlZ5CUCHbHo6jy1nhXGvRePvw=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=cghxQdqiVjOQN74snMS0WqPHCGC4XVnfvgsdUUL5IVKQl8DW+0kOzG0/G455bhIViMSXQfzGixr60aSl2p2iq/6p4KASYoci3Q3fLXxKm31emkOITl2WdMbOvi7zpgT3uDijBaTW/hA8OHEC7BNnQhbHwLQaDHD1E9X8k+RXmbA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pf.is.s.u-tokyo.ac.jp; spf=none smtp.mailfrom=pf.is.s.u-tokyo.ac.jp; dkim=pass (2048-bit key) header.d=pf-is-s-u-tokyo-ac-jp.20230601.gappssmtp.com header.i=@pf-is-s-u-tokyo-ac-jp.20230601.gappssmtp.com header.b=DRMq6NmW; arc=none smtp.client-ip=209.85.216.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pf.is.s.u-tokyo.ac.jp
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=pf.is.s.u-tokyo.ac.jp
-Received: by mail-pj1-f48.google.com with SMTP id 98e67ed59e1d1-2ef72924e53so22265589a91.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Jan 2025 00:18:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=pf-is-s-u-tokyo-ac-jp.20230601.gappssmtp.com; s=20230601; t=1736237909; x=1736842709; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=SZK/yTYx4bLOgM6eUDbsfeaqYkaot9y4hEnvLb1sHyg=;
-        b=DRMq6NmW5Qf/CP/h44/s0ZiqBh89tWCimjnjkeI9j85XEmgg2PufHLnoCcJOLet3Y9
-         BbX9j2i+/xMYYgVJxqBEx7DCLDgInq40ArfBDJwN51vVRBQ4DOaZVStTpTq1WFJXnMSF
-         TSo4/HMH8960fjWKcvrRRD3o3fXwIYAspUkI00IlRXUefpRlQMXJv2lV+E9GRuhOqkOe
-         XUGei/2QylgTqqgFB/T91/+IQcx1EerklzaChqQuNuBU3mqikZXxUrn7De5siQQjCqs1
-         +EL4A4k3hORGxYoZ0fCNlBQxzVnuv/krDFB7TEhLHwctv2/xAiaN9cr9hXLmHDNQVXJL
-         SUCg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736237909; x=1736842709;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=SZK/yTYx4bLOgM6eUDbsfeaqYkaot9y4hEnvLb1sHyg=;
-        b=ZTD9wM25YYaWMDZxK+GUzArbEG4rSITK5QeRUvldu9VaKcRgUFbQXFpsyxnTuaz8bx
-         2MIkD5K1KzF4W8/OaPKPNphwdYUEaj4y6sHa4lIkELCXV3EpWO+wh1AX2TNt8Vpvgm5C
-         1PychPNTqYBT6Zm6ygXvKPTQy3Ae55xLZkopS5XBNDCV/SwHTQuh0UYP3HAok+zBj0oY
-         Z4T03ZBwtwXd9FiAOOnP1Sty+h+HNKdC2Eu5xLX+7FThj8ARFvKFGS9mNF8QOkbhThx5
-         1nfLjc7Ne1lKsQjAF3uurhC9dCaDjjP0lstaECmSyBnCSXGRTvPVSwgzrraEFKaoq2j4
-         axQA==
-X-Gm-Message-State: AOJu0Yy2P0LDCvazTfPXdH/cGaYSoQ8wiG9hD+qIdKm9YsNfk7DV2G9q
-	8CWUpxeWEumdxFRiLrgh3AZ4Vy4jaYUFP6kcfGKOvqQlrgmcHAD9PSGa9YscflgasEgDTwwDd51
-	L
-X-Gm-Gg: ASbGncvpFlw8lAt2inRKwHNmMnf5qZ9PvqeEO9zpvyjtKOmQAI2OfbcEcljrkZNyCXe
-	CI8ZeLHRdVSNkEBONpjvmAorO4pvr69BTIZgyuAxOb3+fjFBuYNhByXBEkMbXfIBz+cP4KvkPZv
-	ZJ+GER2XQQgeogAx+Yn657SoQyqlhm2x6Xhbw7q13v6gC7xsgMx8he01/FdMWskeqeTAnTcbkDb
-	oiOa2XzoG+TBYJkyps4JXUgt+9EKMeAWwXxTSYRmhKGhKeo4yoVnrlLwwdjEnqHn0f3AGbYaA9W
-	lQsNMw7qgwqZPEIUKjj0uHWgSUlirSY04ce0H39R1Yk=
-X-Google-Smtp-Source: AGHT+IE6nYaq+2Pc2AmvMPydzhnAp6cGlAbDnWzylaRTixQOTxjzjQteOGDfHRjoPoPgeKv89CF9EA==
-X-Received: by 2002:a17:90a:f94d:b0:2ea:4a6b:79d1 with SMTP id 98e67ed59e1d1-2f452e149bbmr89385834a91.11.1736237909642;
-        Tue, 07 Jan 2025 00:18:29 -0800 (PST)
-Received: from localhost.localdomain (133-32-227-190.east.xps.vectant.ne.jp. [133.32.227.190])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-219dc9f5035sm304635065ad.180.2025.01.07.00.18.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Jan 2025 00:18:29 -0800 (PST)
-From: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
-To: andersson@kernel.org,
-	mathieu.poirier@linaro.org
-Cc: linux-arm-msm@vger.kernel.org,
-	Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
-Subject: [PATCH] rpmsg: qcom_smd: Fix an OF node leak inqcom_smd_register_edge()
-Date: Tue,  7 Jan 2025 17:18:23 +0900
-Message-Id: <20250107081823.1682549-1-joe@pf.is.s.u-tokyo.ac.jp>
-X-Mailer: git-send-email 2.34.1
+	s=arc-20240116; t=1736239751; c=relaxed/simple;
+	bh=R6UIKGBtUQlx/3/LJQ1ajW3n/ng0uVZ2C8EM28vjFWU=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:To:CC; b=jCfkAWEmg22y2560qPwdo2F2XuYyMDt/KHg/BOSZusu2i86mBUsWxOgQYlkveAQxODTBuvoWbD8p3slMPMpOIikqRhDBrOFpvSOpiYDr1DVp8VyV2HQUOfvMHu2VuKTvVWRLystGf5Bo/xRlAK+aG6rYcbPaIMmzO0xANO2wF6k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=JGN20aPi; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5074eV3h014425;
+	Tue, 7 Jan 2025 08:48:58 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=B1hMH6jvjoHwXDZti8JhNi
+	dBmVeFxvzJLNc/eVz7MdY=; b=JGN20aPi9gDss1fs0WxFIhFDEG4OrGFkFDLP+k
+	3k73PYwpllfzGr1+OLNi2Vu4j+aP6lHMI/KSpx5biH/xiDOtIh47ZDfT2zfkSb91
+	qRqqnaR32rPVdvJFJi3uamuDHmgX5UflTfE5pTs3oSAyNbN1xXvW2zZj7pFzPHPv
+	CTJhbL/r01R2qgzVd7O2z+kBzR64n2ATdC1bKj2Afn7IJPQWy3a9HvkJu4BF7Yri
+	EzQEC/WcObZJSi5Wp704JPTMntT78lPI7RxBmPJfZ4Ca7entrxhMM5sdHCbSek1d
+	5VnDIselXVxwFAOkpyLxUvqk1EpQRvyquEuPrINvgjMLpb+A==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 440wex0gu8-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 07 Jan 2025 08:48:57 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 5078mvRB016467
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 7 Jan 2025 08:48:57 GMT
+Received: from yuanfang4-gv.ap.qualcomm.com (10.80.80.8) by
+ nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Tue, 7 Jan 2025 00:48:50 -0800
+From: Yuanfang Zhang <quic_yuanfang@quicinc.com>
+Date: Tue, 7 Jan 2025 16:48:26 +0800
+Subject: [PATCH v4] arm64: dts: qcom: Add coresight node for SM8650
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-ID: <20250107-sm8650-cs-dt-v4-1-2113b18754ea@quicinc.com>
+X-B4-Tracking: v=1; b=H4sIAFnqfGcC/33MvQ7CIBiF4VtpmMXwb3HyPowDfoBlaKtQiabpv
+ UsbHaqJ4znJ844ouRhcQvtqRNHlkELflSE2FYLGdBeHgy0bMcIEZUTj1NZKEgwJ2wEbq4S24I1
+ 0NSrkGp0PjyV3PJXdhDT08bnUM53fd4iSdShTTDFTWmkuJJW1ONzuAUIHW+hbNKcy+8dZ4eCZA
+ AX6bC38cv7hklDCvzgvfCe14V4ZDlCv+TRNLyDCVMkoAQAA
+X-Change-ID: 20241209-sm8650-cs-dt-ad649dcfa5e8
+To: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio
+	<konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski
+	<krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>
+CC: <kernel@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        Yuanfang Zhang
+	<quic_yuanfang@quicinc.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1736239730; l=4866;
+ i=quic_yuanfang@quicinc.com; s=20241209; h=from:subject:message-id;
+ bh=R6UIKGBtUQlx/3/LJQ1ajW3n/ng0uVZ2C8EM28vjFWU=;
+ b=fkL3WYjGR5qpJltPG1n6OBDHGc97vWvaTulnjHZMD8r0NMRk365YH5hau8i/30/DkZtFX4qG2
+ IklTCVk8OjRAA6p1QiiywwCpJMJZe3ksDCrJ+zQzO5DhuCnOWhzIWBO
+X-Developer-Key: i=quic_yuanfang@quicinc.com; a=ed25519;
+ pk=ZrIjRVq9LN8/zCQGbDEwrZK/sfnVjwQ2elyEZAOaV1Q=
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 4EmgQLeC6aoTr4UUxmV7wWe-itYpDAhj
+X-Proofpoint-ORIG-GUID: 4EmgQLeC6aoTr4UUxmV7wWe-itYpDAhj
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 adultscore=1
+ clxscore=1015 mlxlogscore=946 mlxscore=0 phishscore=0 malwarescore=0
+ suspectscore=0 lowpriorityscore=0 priorityscore=1501 impostorscore=0
+ spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2501070073
 
-qcom_smd_register_edge() leaks an OF node reference when
-qcom_smd_create_chrdev() fails, since qcom_smd_parse_edge() sets
-of_node_get(node) to edge->of_node. Add of_node_put() calls to the error
-path of qcom_smd_register_edge() and qcom_smd_unregister_edge().
+Add coresight components: Funnel, ETE and ETF for SM8650.
 
-This was found by an experimental verifier that I am developing. Due to
-the lack of actual devices, no runtime test was able to be performed.
-
-Fixes: 53e2822e56c7 ("rpmsg: Introduce Qualcomm SMD backend")
-Signed-off-by: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
+Signed-off-by: Yuanfang Zhang <quic_yuanfang@quicinc.com>
 ---
- drivers/rpmsg/qcom_smd.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+Changes in v4:
+- Re-sort these nodes by address.
+- Link to v3: https://lore.kernel.org/r/20250103-sm8650-cs-dt-v3-1-759a3f6a3cc8@quicinc.com
 
-diff --git a/drivers/rpmsg/qcom_smd.c b/drivers/rpmsg/qcom_smd.c
-index 40d386809d6b..6982015b218d 100644
---- a/drivers/rpmsg/qcom_smd.c
-+++ b/drivers/rpmsg/qcom_smd.c
-@@ -1509,13 +1509,15 @@ struct qcom_smd_edge *qcom_smd_register_edge(struct device *parent,
- 	ret = qcom_smd_create_chrdev(edge);
- 	if (ret) {
- 		dev_err(&edge->dev, "failed to register chrdev for edge\n");
--		goto unregister_dev;
-+		goto put_node;
- 	}
+Changes in v3:
+- Move ete0 and funnel-ete to /.
+- Update coding style.
+- Link to v2: https://lore.kernel.org/r/20241210-sm8650-cs-dt-v2-1-cf24c6c9bddc@quicinc.com
+
+Changes in v2:
+- Update compatible for funnel and etf.
+- remove unnecessary property: reg-names and arm,primecell-periphid.
+- Link to v1: https://lore.kernel.org/r/20241210-sm8650-cs-dt-v1-1-269693451584@quicinc.com
+---
+ arch/arm64/boot/dts/qcom/sm8650.dtsi | 166 +++++++++++++++++++++++++++++++++++
+ 1 file changed, 166 insertions(+)
+
+diff --git a/arch/arm64/boot/dts/qcom/sm8650.dtsi b/arch/arm64/boot/dts/qcom/sm8650.dtsi
+index 25e47505adcb790d09f1d2726386438487255824..49d6567fbd2e68b66b517d8d9180c7443f8bf611 100644
+--- a/arch/arm64/boot/dts/qcom/sm8650.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8650.dtsi
+@@ -365,6 +365,40 @@ cluster_sleep_1: cluster-sleep-1 {
+ 		};
+ 	};
  
- 	schedule_work(&edge->scan_work);
++	ete0 {
++		compatible = "arm,embedded-trace-extension";
++
++		cpu = <&cpu0>;
++
++		out-ports {
++			port {
++				ete0_out_funnel_ete: endpoint {
++					remote-endpoint = <&funnel_ete_in_ete0>;
++				};
++			};
++		};
++	};
++
++	funnel-ete {
++		compatible = "arm,coresight-static-funnel";
++
++		in-ports {
++			port {
++				funnel_ete_in_ete0: endpoint {
++					remote-endpoint = <&ete0_out_funnel_ete>;
++				};
++			};
++		};
++
++		out-ports {
++			port {
++				funnel_ete_out_funnel_apss: endpoint {
++					remote-endpoint = <&funnel_apss_in_funnel_ete>;
++				};
++			};
++		};
++	};
++
+ 	firmware {
+ 		scm: scm {
+ 			compatible = "qcom,scm-sm8650", "qcom,scm";
+@@ -4854,6 +4888,138 @@ data-pins {
+ 			};
+ 		};
  
- 	return edge;
- 
-+put_node:
-+	of_node_put(node);
- unregister_dev:
- 	if (!IS_ERR_OR_NULL(edge->mbox_chan))
- 		mbox_free_channel(edge->mbox_chan);
-@@ -1548,6 +1550,7 @@ void qcom_smd_unregister_edge(struct qcom_smd_edge *edge)
- 	if (ret)
- 		dev_warn(&edge->dev, "can't remove smd device: %d\n", ret);
- 
-+	of_node_put(edge->of_node);
- 	mbox_free_channel(edge->mbox_chan);
- 	device_unregister(&edge->dev);
- }
++		funnel@10042000 {
++			compatible = "arm,coresight-dynamic-funnel", "arm,primecell";
++
++			reg = <0x0 0x10042000 0x0 0x1000>;
++
++			clocks = <&aoss_qmp>;
++			clock-names = "apb_pclk";
++
++			in-ports {
++				#address-cells = <1>;
++				#size-cells = <0>;
++
++				port@4 {
++					reg = <4>;
++
++					funnel_in1_in_funnel_apss: endpoint {
++						remote-endpoint = <&funnel_apss_out_funnel_in1>;
++					};
++				};
++			};
++
++			out-ports {
++				port {
++					funnel_in1_out_funnel_qdss: endpoint {
++						remote-endpoint = <&funnel_qdss_in_funnel_in1>;
++					};
++				};
++			};
++		};
++
++		funnel@10045000 {
++			compatible = "arm,coresight-dynamic-funnel", "arm,primecell";
++
++			reg = <0x0 0x10045000 0x0 0x1000>;
++
++			clocks = <&aoss_qmp>;
++			clock-names = "apb_pclk";
++
++			in-ports {
++				#address-cells = <1>;
++				#size-cells = <0>;
++
++				port@1 {
++					reg = <1>;
++
++					funnel_qdss_in_funnel_in1: endpoint {
++						remote-endpoint = <&funnel_in1_out_funnel_qdss>;
++					};
++				};
++			};
++
++			out-ports {
++				port {
++					funnel_qdss_out_funnel_aoss: endpoint {
++						remote-endpoint = <&funnel_aoss_in_funnel_qdss>;
++					};
++				};
++			};
++		};
++
++		funnel@10b04000 {
++			compatible = "arm,coresight-dynamic-funnel", "arm,primecell";
++
++			reg = <0x0 0x10b04000 0x0 0x1000>;
++
++			clocks = <&aoss_qmp>;
++			clock-names = "apb_pclk";
++
++			in-ports {
++				#address-cells = <1>;
++				#size-cells = <0>;
++
++				port@7 {
++					reg = <7>;
++
++					funnel_aoss_in_funnel_qdss: endpoint {
++						remote-endpoint = <&funnel_qdss_out_funnel_aoss>;
++					};
++				};
++			};
++
++			out-ports {
++				port {
++					funnel_aoss_out_tmc_etf: endpoint {
++						remote-endpoint = <&tmc_etf_in_funnel_aoss>;
++					};
++				};
++			};
++		};
++
++		tmc@10b05000 {
++			compatible = "arm,coresight-tmc", "arm,primecell";
++
++			reg = <0x0 0x10b05000 0x0 0x1000>;
++
++			clocks = <&aoss_qmp>;
++			clock-names = "apb_pclk";
++
++			in-ports {
++				port {
++					tmc_etf_in_funnel_aoss: endpoint {
++						remote-endpoint = <&funnel_aoss_out_tmc_etf>;
++					};
++				};
++			};
++		};
++
++		funnel@13810000 {
++			compatible = "arm,coresight-dynamic-funnel", "arm,primecell";
++
++			reg = <0x0 0x13810000 0x0 0x1000>;
++
++			clocks = <&aoss_qmp>;
++			clock-names = "apb_pclk";
++
++			in-ports {
++				port {
++					funnel_apss_in_funnel_ete: endpoint {
++						remote-endpoint = <&funnel_ete_out_funnel_apss>;
++					};
++				};
++			};
++
++			out-ports {
++				port {
++					funnel_apss_out_funnel_in1: endpoint {
++						remote-endpoint = <&funnel_in1_in_funnel_apss>;
++					};
++				};
++			};
++		};
++
+ 		apps_smmu: iommu@15000000 {
+ 			compatible = "qcom,sm8650-smmu-500", "qcom,smmu-500", "arm,mmu-500";
+ 			reg = <0 0x15000000 0 0x100000>;
+
+---
+base-commit: fac04efc5c793dccbd07e2d59af9f90b7fc0dca4
+change-id: 20241209-sm8650-cs-dt-ad649dcfa5e8
+
+Best regards,
 -- 
-2.34.1
+Yuanfang Zhang <quic_yuanfang@quicinc.com>
 
 
