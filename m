@@ -1,96 +1,65 @@
-Return-Path: <linux-arm-msm+bounces-44216-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-44217-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id C2777A04C7D
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jan 2025 23:36:33 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 62673A04C89
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jan 2025 23:42:52 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id AE4C01667C8
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jan 2025 22:36:31 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C2D5F3A59E0
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jan 2025 22:42:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8D14C1DE895;
-	Tue,  7 Jan 2025 22:36:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 67FF91D47A2;
+	Tue,  7 Jan 2025 22:42:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="wFoHTiGV"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IEo1YU1M"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f50.google.com (mail-lf1-f50.google.com [209.85.167.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DC2F190664
-	for <linux-arm-msm@vger.kernel.org>; Tue,  7 Jan 2025 22:36:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E399190664;
+	Tue,  7 Jan 2025 22:42:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736289386; cv=none; b=RzQ3F1p+hDItGuouHDr9chK3Y3aj819xpxwY30cbGI4pjfnaIPS1xU/uPVREwoCei8zl98DA1EM/i8DqdRUeq4d9aeZSggxj3wzwQZX9+QQc8SjpTb1i+tSVhs0GVDk3Pkp1Fbu4i29M9yRZ6aByV+XSgyKpNCMM8KCsLBTpfV0=
+	t=1736289767; cv=none; b=JbSV2JIa3o6MYgBRbaPSH3rO1BaZ335uJ8s1Np7T1QuSdXGIY4iPFECQ8LNMjKiAKNjMIIEYZtP6hI4M46IE1F84+/lvimJn+dn1/tlzXD2xZcPeUGI7jM2WrPC/Qwd6SLtiKZq3jzN9/5wyfgSVy8qAq5Y6Qg8x2pNnhIGab3g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736289386; c=relaxed/simple;
-	bh=lOGBi/dp0P/iXOekSeQaqINO0H2TAMk7HjUz1XdtwTI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=SiVbRkiD/YdrwsR9o18KdoPF3vgvl1AAD7P/FOFDoTsq5r5VdgNJHagz+v8d/0zdeEXw9jiMsXqlHfDv9+PwqDQmAzAYDyjedKmq0U2PZOc6s/c+JrkMnqKHcq6O/t06HilCZzXZ6LF4HA7BlEzcuCA2TwURofJJO5GW9nhn8lQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=wFoHTiGV; arc=none smtp.client-ip=209.85.167.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-5401d3ea5a1so15994544e87.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Jan 2025 14:36:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1736289382; x=1736894182; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=vMISyp8hjXFa2TqyuFC9YGrFh0SxgMd4glaeVKBHUSo=;
-        b=wFoHTiGVj1032UVSbfPVOEdd5zSaeSp2Tzohd2TF/W+zZX+ra5rm7ftmSJyIjoCUIz
-         6uvNtbnEncQJ6ZtQUxpZOqk/IrGg3TXOH9NAjqzh64ppcFbrdq8cQGpLFK1+AfyS5QTa
-         xo4hBqxUZAVjlIzgaOgGdIjcuUdTlc4xh3mMtTV7NTpudu08GtJ1UFydUhSlFevZTzo3
-         3AJ2QjGE4Fdd1nPpvv88jRAJppCOSd48s6KAa6Zqwn17PgLco/texi9To9aNTNRn9M3+
-         UpLctht60AC742gP+i/k5fZ+IxNpm5dDiiQg7i2aGjCtsAeNyKvi3wGXPY/orDRvyMok
-         uhqg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736289382; x=1736894182;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=vMISyp8hjXFa2TqyuFC9YGrFh0SxgMd4glaeVKBHUSo=;
-        b=WYLMP/t3trwZIKdlCxI6rwGa/XQ4YcWfG5ikoLvicUFjzcxDUAOBozx66J9mkiDr7g
-         prWF4/EwTA2+YN4f/IUDVC1EsOfDu8K+RL0jUhkaL2fZ4HtgM7R0pYV3T139wVNT24vs
-         Y6KzhGOzbsqoVJr6NaTUBcz/3+jpfzB27W4vXlOMODkdA3mOHWxRfxmd2X91DgkPjAy+
-         yNrDipxJG4AV6zpBr+FElOld3krHSlwAytxLT0sskPIjzWZk09PYSFHJ3mEWmQUUAXyO
-         oqoIFF1LGKrxSu/MV0sWplAXdjHpo8Lb5GXRBrUYwTJATLZmQ0laUCTwouNwa8f88f3m
-         o1yg==
-X-Forwarded-Encrypted: i=1; AJvYcCXquWLAWogYfYfSGR3MrUBzebaJ9qWAPN/4o8eM7SGh30xRys/VMB2Q/QX6Kwn4m/cg1W5hmIr2K3eWlKJw@vger.kernel.org
-X-Gm-Message-State: AOJu0YxcIjZKTyzhKOtXTafGO3O5Js1cubp2zc3yPLU3h8KKSzx/Y7yh
-	ft5DjBUwzdc8VNzpmkT1NCm10IittMaizijyQd9GhV7B2Gs3osKzsAAFBDMUtkc=
-X-Gm-Gg: ASbGnctduKV3t4cUVTHG81fUakwFCsM9aiAR/WDjGR8iD60bPK1qv6NcOVl5Q/H2dCk
-	a1EnilX2MUYeZHA89i8OConRJ46jOxqRpHcJwvrll9biTlIFl4Uj3Th1W/dwVfj+ieLiEZncV9O
-	6tqFxIiBYZNvKivhLXbPJjTsHwVYqER2BwR5OplkqukCW63Sd9Iw4aixZeyo2QBD+6X6A/oERDc
-	kYUe21zmbrcCUMwqCjso2XFCJ6Jg883fGupPYsmpcw8IbMMZTpWJN6ogUx1t2sQkcBnpZ7CsWcO
-	kvgYtovMOCZ33hGLNqc601Xv1gZ+y7jQt7wM
-X-Google-Smtp-Source: AGHT+IGl8271bjARGx+9WnI8XCLW5vsddlIYolMsA//DxW2vDKnbu+pgC7EKJfmOJ60v2ZvZiNOvQg==
-X-Received: by 2002:a05:6512:3b90:b0:542:214c:533 with SMTP id 2adb3069b0e04-54284559eefmr143332e87.30.1736289380867;
-        Tue, 07 Jan 2025 14:36:20 -0800 (PST)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-54223832c26sm5339629e87.279.2025.01.07.14.36.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Jan 2025 14:36:19 -0800 (PST)
-Date: Wed, 8 Jan 2025 00:36:17 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Vedang Nagar <quic_vnagar@quicinc.com>
-Cc: Luca Weiss <luca.weiss@fairphone.com>, 
-	cros-qcom-dts-watchers@chromium.org, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	"Vikash Garodia (QUIC)" <quic_vgarodia@quicinc.com>
-Subject: Re: [PATCH] arm64: dts: qcom: sc7280: enable venus node
-Message-ID: <vzafzur7ci4klp6cup5jpbhw2adjtgew2dlcogucganmpvsqmz@axdhktuypzlg>
-References: <20241004-venus_sc7280-v1-1-4d7d8fd7e95b@quicinc.com>
- <kezh3lmysij56g2tjwwuas5r26ro5i777yxxitsdcjeg7zp67v@oknrdbkzison>
- <78e6ff6b-efe1-496c-a1fb-c9a0a4aba2d2@quicinc.com>
- <CAA8EJpqqZL7xybcbJMsbTQB+ht5-A+ocNs+Sq30j=v1zM3JL9g@mail.gmail.com>
- <fbba794a-ba04-4790-b5e9-b4df3cba35b2@quicinc.com>
- <D5KAUZHYJHFS.1NXF5SVWYL03G@fairphone.com>
- <39206687-6fb3-434f-b2ba-a028cf6f8ed3@quicinc.com>
- <D5KW7A8BZG6K.2L7FEV6SWRZ2D@fairphone.com>
- <26b3aee7-5729-447b-983a-cfa5951595ba@quicinc.com>
+	s=arc-20240116; t=1736289767; c=relaxed/simple;
+	bh=OAaF3t+3+AbOpQgAHh9T97TjVE9os6Ew4Mn69K/1Wxc=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To; b=EKAo5xJm0Ir/5wQRScI788CEK6bC8Dkecl6Qcz5c2K5AiRcsnvw3k7aaa2FdXMiCRj16mpyt2PNIhccph97YK9zn0ZRrW23BauYArA/JCkbbPtCkBtez0F4GY0VQM40Y3e2tkdkoIirTjGOR/7NxUzIiK/ZEruXWw+ZF6y54FJ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IEo1YU1M; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8608DC4CEDE;
+	Tue,  7 Jan 2025 22:42:46 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1736289766;
+	bh=OAaF3t+3+AbOpQgAHh9T97TjVE9os6Ew4Mn69K/1Wxc=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:From;
+	b=IEo1YU1M6xcnjl2DhgYfSrhtO4jyG4gPs0FmBg4oabm8aCweQjs0JpOWg3QG8UOBd
+	 o5CLi09ZiuuXu5rZhxJJNJdasqeD6S4SFNw9L6QqhL1BKhbdxTWPIhl0dhM4rRTeo7
+	 LKEidAtlfzpayBqCBnPe4NOaEWNH3erm2H15dCgTdEko9y8w39tGOV6jG+LZl44ImR
+	 uK31BIQjQCg1J2OKpvGXWf+ZwtkKFizGDdNeJafSl2ZbjiUeBh0k3lysC7fZNZQTO0
+	 oH7AL8vwAwk+s26jniRZtaCQWD0kn5UV3xlFEprX/f63esJVtu9jlmBQxfSfEUTUup
+	 xv2FfsGBLTSlA==
+Date: Tue, 7 Jan 2025 16:42:44 -0600
+From: Bjorn Helgaas <helgaas@kernel.org>
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Krishna Chaitanya Chundru <quic_krichai@quicinc.com>,
+	andersson@kernel.org, Bjorn Helgaas <bhelgaas@google.com>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	cros-qcom-dts-watchers@chromium.org,
+	Jingoo Han <jingoohan1@gmail.com>,
+	Bartosz Golaszewski <brgl@bgdev.pl>, quic_vbadigan@quicinc.com,
+	linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3 1/6] dt-bindings: PCI: Add binding for qps615
+Message-ID: <20250107224244.GA187680@bhelgaas>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -99,113 +68,118 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <26b3aee7-5729-447b-983a-cfa5951595ba@quicinc.com>
+In-Reply-To: <eysqoiiizunkjxqyvfaxbx4szwnz4osv42j7xr247irnthifwu@nhxytsl4brvu>
 
-On Tue, Jan 07, 2025 at 09:41:56AM +0530, Vedang Nagar wrote:
-> Hi Luca,
-> 
-> On 11/13/2024 1:33 PM, Luca Weiss wrote:
-> > Hi Vedang,
-> > 
-> > On Wed Nov 13, 2024 at 8:01 AM CET, Vedang Nagar wrote:
-> >> Hi Luca,
-> >> On 11/12/2024 8:49 PM, Luca Weiss wrote:
-> >>> Hi Vedang,
-> >>>
-> >>> On Tue Nov 12, 2024 at 3:39 PM CET, Vedang Nagar wrote:
-> >>>>
-> >>>>
-> >>>> On 11/12/2024 6:43 PM, Dmitry Baryshkov wrote:
-> >>>>> On Tue, 12 Nov 2024 at 08:17, Vedang Nagar <quic_vnagar@quicinc.com> wrote:
-> >>>>>>
-> >>>>>>
-> >>>>>>
-> >>>>>> On 10/7/2024 1:20 AM, Dmitry Baryshkov wrote:
-> >>>>>>> On Fri, Oct 04, 2024 at 04:22:31PM GMT, Vedang Nagar wrote:
-> >>>>>>>> Enable the venus node on Qualcomm sc7280. It was made disabled
-> >>>>>>>> earlier to avoid bootup crash, which is fixed now with [1].
-> >>>>>>>
-> >>>>>>> NAK, there might be other reasons to keep venus disabled, like the lack
-> >>>>>>> of the vendor-signed firmware for the particular device.
-> >>>>>> Can you pls elaborate more on this? Any device with sc7280 SOC can use
-> >>>>>> venus.mbn which is already present in linux-firmware git.
-> >>>>>
-> >>>>> Can it though if the device is fused to use vendor keys and to check
-> >>>>> the trust chain?
-> >>>> Yes, infact the existing ones are signed and works with trustzone authentication.
-> >>>
-> >>> No, the venus firmware from linux-firmware does not work on a device
-> >>> with secure boot on, like the (QCM6490) Fairphone 5 smartphone.
-> >> Are you saying even after applying this [1] you are seeing the same ?
-> >>
-> >> [1]
-> >> https://patchwork.kernel.org/project/linux-media/patch/20231201-sc7280-venus-pas-v3-2-bc132dc5fc30@fairphone.com/
-> > 
-> > That patch has been in mainline since v6.9 and my tree is newer, so yes.
-> > 
-> > See e.g. Qualcomm doc KBA-161204232438 for some details.
-> > 
-> > Regards
-> > Luca
-> > 
-> >>>
-> >>> $ rm /lib/firmware/qcom/qcm6490/fairphone5/venus.mbn
-> >>> $ cp /lib/firmware/qcom/vpu-2.0/venus.mbn.zst /lib/firmware/qcom/qcm6490/fairphone5/venus.mbn.zst
-> >>>
-> >>> leads to
-> >>>
-> >>> [   10.848191] qcom-venus aa00000.video-codec: Adding to iommu group 13
-> >>> [   10.863062] qcom-venus aa00000.video-codec: non legacy binding
-> >>> [   10.909555] qcom-venus aa00000.video-codec: error -22 initializing firmware qcom/qcm6490/fairphone5/venus.mbn
-> >>> [   10.910099] qcom-venus aa00000.video-codec: fail to load video firmware
-> >>> [   10.910849] qcom-venus aa00000.video-codec: probe with driver qcom-venus failed with error -22
-> >>>
-> We have seen similar issue with older firmware present in
-> linux-firmware git due to a bug in singing of the firmware image.
-> 
-> This issue seems to be resolved with below change:
-> aeede7afb7a186b62f9e1f959c33fd5f2dea0f7a: qcom: update venus firmware file for SC7280
-> 
-> Can you pls give a try with latest firmware if you still see the same issue?
-> We tried internally and do not see any such failure now.
+On Tue, Dec 24, 2024 at 11:49:42AM +0200, Dmitry Baryshkov wrote:
+> On Tue, Dec 24, 2024 at 02:41:10PM +0530, Krishna Chaitanya Chundru wrote:
+> > On 12/5/2024 2:55 AM, Bjorn Helgaas wrote:
+> > > On Tue, Nov 12, 2024 at 08:31:33PM +0530, Krishna chaitanya chundru wrote:
+> > > > Add binding describing the Qualcomm PCIe switch, QPS615,
+> > > > which provides Ethernet MAC integrated to the 3rd downstream port
+> > > > and two downstream PCIe ports.
 
-
-Have you been trying it on the FP5 (or any other vendor-fused device) or
-on the RB3gen2, fused to accept any CA key?
-
+> > > > +    pcie {
+> > > > +        #address-cells = <3>;
+> > > > +        #size-cells = <2>;
+> > > > +
+> > > > +        pcie@0 {
+> > > > +            device_type = "pci";
+> > > > +            reg = <0x0 0x0 0x0 0x0 0x0>;
+> > > > +
+> > > > +            #address-cells = <3>;
+> > > > +            #size-cells = <2>;
+> > > > +            ranges;
+> > > > +            bus-range = <0x01 0xff>;
+> > > > +
+> > > > +            pcie@0,0 {
+> > > > +                compatible = "pci1179,0623";
+> > > > +                reg = <0x10000 0x0 0x0 0x0 0x0>;
+> > > > +                device_type = "pci";
+> > > > +                #address-cells = <3>;
+> > > > +                #size-cells = <2>;
+> > > > +                ranges;
+> > > > +                bus-range = <0x02 0xff>;
+> > > 
+> > > This binding describes a switch.  I don't think bus-range should
+> > > appear here at all because it is not a feature of the hardware (unless
+> > > the switch ports are broken and their Secondary/Subordinate Bus
+> > > Numbers are hard-wired).
+> > > 
+> > > The Primary/Secondary/Subordinate Bus Numbers of all switch ports
+> > > should be writable and the PCI core knows how to manage them.
+> > 
+> > The dt binding check is throwing an error if we don't keep bus-range
+> > property for that reason we added it, from dt binding perspective i think it
+> > is mandatory to add this property.
 > 
-> Regards,
-> Vedang Nagar
-> 
-> >>> It's the same with e.g. adsp firmware, modem firmware, etc.
-> >>>
-> >>> With secure boot off, yes, the hardware will load any firmware
-> >>> regardless of the signature.
-> >>>
-> >>> Regards
-> >>> Luca
-> >>>
-> >>>>>
-> >>>>>>
-> >>>>>> Regards,
-> >>>>>> Vedang Nagar
-> >>>>>>>
-> >>>>>>>>
-> >>>>>>>> [1]
-> >>>>>>>> https://lore.kernel.org/linux-media/20231201-sc7280-venus-pas-v3-2-bc132dc5fc30@fairphone.com/
-> >>>>>>>>
-> >>>>>>>> Signed-off-by: Vedang Nagar <quic_vnagar@quicinc.com>
-> >>>>>>>> ---
-> >>>>>>>>  arch/arm64/boot/dts/qcom/sc7280.dtsi | 2 --
-> >>>>>>>>  1 file changed, 2 deletions(-)
-> >>>>>>>
-> >>>>>
-> >>>>>
-> >>>>>
-> >>>
-> 
+> Could you please provide an error message? I don't see any of the PCIe
+> bindingins declaring bus-range as mandatory. I might be missing it
+> though.
 
--- 
-With best wishes
-Dmitry
+I think the warning message is like this:
+
+  Warning (pci_device_bus_num): /soc@0/pcie@1c00000/pcie@0/wifi@0: PCI bus number 1 out of range, expected (0 - 0)
+
+and only happens if there's a device below a Root Port or a Switch.
+In that case the device "reg" property apparently has to include the
+bus/device/function.
+
+IIUC, in this case, we're describing a Switch with an integrated
+Ethernet MAC:
+
+  pcie@0 {
+    device_type = "pci";
+    reg = <0x0 0x0 0x0 0x0 0x0>;           # 00:00.0 RP to [bus 01-ff]
+    bus-range = <0x01 0xff>;
+
+    pcie@0,0 {
+      compatible = "pci1179,0623";
+      reg = <0x10000 0x0 0x0 0x0 0x0>;     # 01:00.0 Switch USP to [bus 02-ff]
+      device_type = "pci";
+      bus-range = <0x02 0xff>;
+
+      pcie@1,0 {
+        reg = <0x20800 0x0 0x0 0x0 0x0>;   # 02:01.0 Switch DSP to [bus 03-ff]
+        device_type = "pci";
+        bus-range = <0x03 0xff>;
+        qcom,no-dfe-support;
+      };
+
+      pcie@2,0 {
+        reg = <0x21000 0x0 0x0 0x0 0x0>;   # 02:02.0 Switch DSP to [bus 04-ff]
+        device_type = "pci";
+        bus-range = <0x04 0xff>;
+        qcom,nfts = <10>;
+      };
+
+      pcie@3,0 {
+        reg = <0x21800 0x0 0x0 0x0 0x0>;   # 02:02.1 Switch DSP to [bus 05-ff]
+        device_type = "pci";
+        bus-range = <0x05 0xff>;
+        qcom,tx-amplitude-millivolt = <10>;
+
+        pcie@0,0 {
+          reg = <0x50000 0x0 0x0 0x0 0x0>; # 05:00.0 Ethernet MAC, I guess?
+          device_type = "pci";
+          qcom,l1-entry-delay-ns = <10>;
+        };
+
+        ...
+      };
+    };
+  };
+
+So I think the bus-range properties are needed to match the reg
+properties of the downstream devices.
+
+I do think the bus-ranges of the Switch Downstream Ports look bogus
+because they all extend to bus ff, so they overlap.  The Switch
+wouldn't know how to route config transactions to the correct DSP.
+I suppose the PCI core would fix these overlaps at boot time, but 
+it seems wrong to describe them this way here.
+
+There's an example "reg" decoding and a couple URLs here:
+https://lore.kernel.org/r/20250106230705.GA132316@bhelgaas
+
+Bjorn
 
