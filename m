@@ -1,61 +1,61 @@
-Return-Path: <linux-arm-msm+bounces-44104-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-44105-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 30548A03C1E
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jan 2025 11:18:56 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id B34CBA03C22
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jan 2025 11:19:10 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2598A1660CC
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jan 2025 10:18:54 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1D6DE3A5557
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jan 2025 10:19:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B725B1EBA1E;
-	Tue,  7 Jan 2025 10:17:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 902501E883E;
+	Tue,  7 Jan 2025 10:17:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="jUuf8kMZ"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="VxkRD3H0"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93BBF1E573B;
-	Tue,  7 Jan 2025 10:17:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F42191E9B30;
+	Tue,  7 Jan 2025 10:17:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736245065; cv=none; b=rVcOvhYkOuxqhxBN2JqzZiyPH9jTGz8R4G69mOb4CgCHLI0kxxa7LAhY/JjZZVHyeVYtFwK8jeoFsoHHY/tgskfS8++RPYRlc/4AkCEqX5+YdjYxqHz6mmbzMYuQ4kah2zN0vIykk5iF8FQ6WsIl8oeY8VZQMeSIE5b3Zi4+o0o=
+	t=1736245071; cv=none; b=DeBcz97zpJUekfr05PaNGdaKJQFBg0GPKv0TrwIr0yh470Zu2Yw1fFstPpTbISwFBn2eW3OkXVAKO2a/AUuf13L9xW9xA2OksL9L771OiG+UgyDIr4uIqfglXwbSTd/V0vfCN4nYVla7jK0l0OqBAY2h+rINoogUUMvk3HD4cF8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736245065; c=relaxed/simple;
-	bh=hkHIL5Own1pCTR27Yq7+Hf9OobkLroXI1UDm9NUK4Hk=;
+	s=arc-20240116; t=1736245071; c=relaxed/simple;
+	bh=fTCOAwwgmXFhJUS3RpjWVLJ0El5Bpf+OCquk8uJmZms=;
 	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=alZ7pHEZXCvPIvDpc7mXGcPDABbY7hRWq07WPe6RGgRy4otJWt8vV4WSDRJ4o/DaYO/M7nQeS6jfQc7jgL+Nn7t6L6rf0a6gFuZO9O98R8FVOPpGh86NPW5TqI883hgYlYpvJ49KVs1O0ouNI6qXH7dca5msLD+PM38ikttyE70=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=jUuf8kMZ; arc=none smtp.client-ip=205.220.168.131
+	 MIME-Version:Content-Type; b=R7sDe5vFw1hovxpN+J7EUTJeSs1ttXmUv2EpR8WIBBR3ipWQgnqOdPsrbxm1VmLxHGX0on3sEo1M49wNrbZid3NfxkSKphUA+vNjrUyPd0i8Di1w0dIyCp42+34wMTB00SAFDdMW1C8wILyhOs0JmBpmE+IsKQfgxlGLQXPYISo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=VxkRD3H0; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 507A8w6E023720;
-	Tue, 7 Jan 2025 10:17:37 GMT
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5078baPG010577;
+	Tue, 7 Jan 2025 10:17:42 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	mHYet4W5Ozykh/cgeRUVx9m91W8+16EcHWtkJcKKd8g=; b=jUuf8kMZ/QGzJLMo
-	RbfDDHA0MyBG7IJyGFJ+oSaMl1y5aJ638dBdMta+QPK2fyC0fiKUFD8US9lIj1Sv
-	gYtLqpKtpfMyOmui7/wTnUYof7pZemKqWKJ/0QjO6m9mtfsoZU4Tys9FnE+JyDsA
-	5JOUcxlJL2JSbUVA6WMQX0WVvhEdEyklBUC7vXbo77o0SSHdRh+ax+/TwSJD1pvk
-	p50H/PDIc933WQf4gM0dML0snIbS3tdwTcA/W/JKvnkWklBXi+Z5S7HhoC80VjzA
-	+mJvYXqMGjPOHa3NpVJxVIW9SnxMYtZbsqSNu757cHuy5rRVDZ5jM1mb7WD1EZOO
-	CEuiRg==
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44128nr0sb-1
+	Rr8316U76cBPnUFzG868U/Q+DNQoKBb/gtw5f2tz/70=; b=VxkRD3H0aZYp/hLW
+	ecfnYxcV0KIU8yeTB/m9rAgppaWWIG8I5s/df/efmzmPqKlzxQrPG5NSqrsCbuB2
+	Waj7RSPNqRJv7E1QC8WBG/z876XLLqgMELaqCBPKE0NbfQZwHWq3jj7L3ahzBhRn
+	QqdcW+cB4soqMla94w3lphAI+SwkUP6lnuQSFV/eK/QMf4/klFw56dFcRW/DQD+M
+	rAmoKW/aQO4cgQD7hHAnIqTAH/sXhdCw0Mw7AbLUvKlXw5OmgQdHLgbJ9MS1UFHK
+	QFqjQdnV/e13S1qXNGKBJlm+YHb4Ak/CEtMqRB/0F8BlOVCzN/t/FxBcRLZokpq2
+	F1kTiA==
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4410x2r7y4-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 07 Jan 2025 10:17:36 +0000 (GMT)
+	Tue, 07 Jan 2025 10:17:42 +0000 (GMT)
 Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-	by NASANPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 507AHa5Y029131
+	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 507AHfbh023687
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 7 Jan 2025 10:17:36 GMT
+	Tue, 7 Jan 2025 10:17:41 GMT
 Received: from hu-gokulsri-blr.qualcomm.com (10.80.80.8) by
  nasanex01c.na.qualcomm.com (10.45.79.139) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Tue, 7 Jan 2025 02:17:31 -0800
+ 15.2.1544.9; Tue, 7 Jan 2025 02:17:36 -0800
 From: Gokul Sriram Palanisamy <quic_gokulsri@quicinc.com>
 To: <jassisinghbrar@gmail.com>, <robh@kernel.org>, <krzk+dt@kernel.org>,
         <conor+dt@kernel.org>, <andersson@kernel.org>,
@@ -65,9 +65,9 @@ To: <jassisinghbrar@gmail.com>, <robh@kernel.org>, <krzk+dt@kernel.org>,
         <linux-remoteproc@vger.kernel.org>, <dmitry.baryshkov@linaro.org>
 CC: <quic_gokulsri@quicinc.com>, <quic_viswanat@quicinc.com>,
         <quic_srichara@quicinc.com>
-Subject: [PATCH V3 5/8] mailbox: qcom: Add support for IPQ5424 APCS IPC
-Date: Tue, 7 Jan 2025 15:46:44 +0530
-Message-ID: <20250107101647.2087358-6-quic_gokulsri@quicinc.com>
+Subject: [PATCH V3 6/8] arm64: dts: qcom: ipq5332: add nodes to bringup q6
+Date: Tue, 7 Jan 2025 15:46:45 +0530
+Message-ID: <20250107101647.2087358-7-quic_gokulsri@quicinc.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250107101647.2087358-1-quic_gokulsri@quicinc.com>
 References: <20250107101647.2087358-1-quic_gokulsri@quicinc.com>
@@ -83,36 +83,121 @@ X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nasanex01c.na.qualcomm.com (10.45.79.139)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: jeHefE-2HRZorEYmIDc9SytFw_8WwpXE
-X-Proofpoint-ORIG-GUID: jeHefE-2HRZorEYmIDc9SytFw_8WwpXE
+X-Proofpoint-GUID: 2rC4k2HoAR9KLSy-lMhf2-rZNxyc1oq2
+X-Proofpoint-ORIG-GUID: 2rC4k2HoAR9KLSy-lMhf2-rZNxyc1oq2
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999
- priorityscore=1501 bulkscore=0 clxscore=1011 suspectscore=0 mlxscore=0
- spamscore=0 impostorscore=0 lowpriorityscore=0 malwarescore=0 phishscore=0
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 spamscore=0
+ lowpriorityscore=0 bulkscore=0 mlxscore=0 malwarescore=0 clxscore=1015
+ phishscore=0 adultscore=0 mlxlogscore=819 impostorscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.19.0-2411120000 definitions=main-2501070085
 
-IPQ5424 mailbox do not have clock support and reuses msm8994_apcs_data.
+From: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
 
+Enable nodes required for q6 remoteproc bring up.
+
+Signed-off-by: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
 Signed-off-by: Gokul Sriram Palanisamy <quic_gokulsri@quicinc.com>
 ---
- drivers/mailbox/qcom-apcs-ipc-mailbox.c | 1 +
- 1 file changed, 1 insertion(+)
+ arch/arm64/boot/dts/qcom/ipq5332.dtsi | 64 ++++++++++++++++++++++++++-
+ 1 file changed, 63 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/mailbox/qcom-apcs-ipc-mailbox.c b/drivers/mailbox/qcom-apcs-ipc-mailbox.c
-index f0d1fc0fb9ff..11c41e935a36 100644
---- a/drivers/mailbox/qcom-apcs-ipc-mailbox.c
-+++ b/drivers/mailbox/qcom-apcs-ipc-mailbox.c
-@@ -157,6 +157,7 @@ static const struct of_device_id qcom_apcs_ipc_of_match[] = {
- 	{ .compatible = "qcom,sm6125-apcs-hmss-global", .data = &msm8994_apcs_data },
- 	{ .compatible = "qcom,sm6115-apcs-hmss-global", .data = &msm8994_apcs_data },
- 	{ .compatible = "qcom,ipq5332-apcs-apps-global", .data = &ipq6018_apcs_data },
-+	{ .compatible = "qcom,ipq5424-apcs-apps-global", .data = &msm8994_apcs_data },
- 	{ .compatible = "qcom,ipq8074-apcs-apps-global", .data = &ipq6018_apcs_data },
- 	{ .compatible = "qcom,sc7180-apss-shared", .data = &apps_shared_apcs_data },
- 	{ .compatible = "qcom,sc8180x-apss-shared", .data = &apps_shared_apcs_data },
+diff --git a/arch/arm64/boot/dts/qcom/ipq5332.dtsi b/arch/arm64/boot/dts/qcom/ipq5332.dtsi
+index d3c3e215a15c..85e10b20342a 100644
+--- a/arch/arm64/boot/dts/qcom/ipq5332.dtsi
++++ b/arch/arm64/boot/dts/qcom/ipq5332.dtsi
+@@ -2,7 +2,7 @@
+ /*
+  * IPQ5332 device tree source
+  *
+- * Copyright (c) 2022-2023 Qualcomm Innovation Center, Inc. All rights reserved.
++ * Copyright (c) 2022-2025 Qualcomm Innovation Center, Inc. All rights reserved.
+  */
+ 
+ #include <dt-bindings/clock/qcom,apss-ipq.h>
+@@ -146,6 +146,11 @@ smem@4a800000 {
+ 
+ 			hwlocks = <&tcsr_mutex 3>;
+ 		};
++
++		q6_region: wcss@4a900000 {
++			reg = <0x0 0x4a900000 0x0 0x2b00000>;
++			no-map;
++		};
+ 	};
+ 
+ 	soc@0 {
+@@ -479,6 +484,39 @@ frame@b128000 {
+ 				status = "disabled";
+ 			};
+ 		};
++
++		q6v5_wcss: remoteproc@d100000 {
++			compatible = "qcom,ipq5332-wcss-sec-pil";
++			reg = <0xd100000 0x4040>;
++			firmware-name = "ath12k/IPQ5332/hw1.0/q6_fw0.mdt";
++			interrupts-extended = <&intc GIC_SPI 421 IRQ_TYPE_EDGE_RISING>,
++					      <&wcss_smp2p_in 0 IRQ_TYPE_NONE>,
++					      <&wcss_smp2p_in 1 IRQ_TYPE_NONE>,
++					      <&wcss_smp2p_in 2 IRQ_TYPE_NONE>,
++					      <&wcss_smp2p_in 3 IRQ_TYPE_NONE>;
++			interrupt-names = "wdog",
++					  "fatal",
++					  "ready",
++					  "handover",
++					  "stop-ack";
++
++			clocks = <&gcc GCC_IM_SLEEP_CLK>;
++			clock-names = "sleep";
++
++			qcom,smem-states = <&wcss_smp2p_out 1>,
++					   <&wcss_smp2p_out 0>;
++			qcom,smem-state-names = "stop",
++						"shutdown";
++
++			memory-region = <&q6_region>;
++
++			glink-edge {
++				interrupts = <GIC_SPI 417 IRQ_TYPE_EDGE_RISING>;
++				label = "rtr";
++				qcom,remote-pid = <1>;
++				mboxes = <&apcs_glb 8>;
++			};
++		};
+ 	};
+ 
+ 	timer {
+@@ -488,4 +526,28 @@ timer {
+ 			     <GIC_PPI 4 (GIC_CPU_MASK_SIMPLE(4) | IRQ_TYPE_LEVEL_LOW)>,
+ 			     <GIC_PPI 1 (GIC_CPU_MASK_SIMPLE(4) | IRQ_TYPE_LEVEL_LOW)>;
+ 	};
++
++	wcss: wcss-smp2p {
++		compatible = "qcom,smp2p";
++		qcom,smem = <435>, <428>;
++
++		interrupt-parent = <&intc>;
++		interrupts = <GIC_SPI 418 IRQ_TYPE_EDGE_RISING>;
++
++		mboxes = <&apcs_glb 9>;
++
++		qcom,local-pid = <0>;
++		qcom,remote-pid = <1>;
++
++		wcss_smp2p_out: master-kernel {
++			qcom,entry-name = "master-kernel";
++			#qcom,smem-state-cells = <1>;
++		};
++
++		wcss_smp2p_in: slave-kernel {
++			qcom,entry-name = "slave-kernel";
++			interrupt-controller;
++			#interrupt-cells = <2>;
++		};
++	};
+ };
 -- 
 2.34.1
 
