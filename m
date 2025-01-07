@@ -1,62 +1,66 @@
-Return-Path: <linux-arm-msm+bounces-44180-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-44181-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 33F46A046A6
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jan 2025 17:40:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id E1758A046AB
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jan 2025 17:40:41 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id F31FF3A230B
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jan 2025 16:40:19 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 79C4F3A3764
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jan 2025 16:40:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5EE161F7569;
-	Tue,  7 Jan 2025 16:39:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C94AB1F76AB;
+	Tue,  7 Jan 2025 16:39:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="G0aG7XWa"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aReApzZl"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34B061F709F;
-	Tue,  7 Jan 2025 16:39:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 786891F75B5;
+	Tue,  7 Jan 2025 16:39:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736267954; cv=none; b=eByksVFPwL9IxaDCuy6nfXmcfu7uPupgorxh3tmmOdkT1+AjzOvTdslh7zWWEQKTxJ75f1E4OOBasnek7JhUJLqwfmzUyFlZCO5qJpiKKlODFK07vuW7hYCZtmKHV1/AY3WYrqpAufETB6fxU/j61qar2Ym8ASwEEsfaKgPLd/w=
+	t=1736267955; cv=none; b=tskAmG+Sl1dKorcB8DYz19jboeUI+nDhSlY+zLGgH0Ssbx0fmy6wiSBn2MwPzPOMgAgUDhkf158zAtD+6J3oRHSU6o45Jlt/ulzKxS+97HePtkP9onD1Va2t27o+Rj2Q8TSQB0vJLlY/FGs9BDSA2dZKzkjhHPLi5iFy+r6jyG8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736267954; c=relaxed/simple;
-	bh=G1jyKWXF87HE8s7o11LwIQTqPB+pRsslNyK6knFlQH4=;
+	s=arc-20240116; t=1736267955; c=relaxed/simple;
+	bh=9HemNwXCla1HurzEoi/CnptD9OsC5NaOru+Ac77BG70=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=gggrPobSqWuUtEgmWkdY5e7k2hGQoDfUzR1TLO5mVxSvFNFvuuv073HAoZFt4Q+GRcIQGDxhZZZWl+yubD0lVwCdd+7v7mZn093REAndcIgJRDr9sc6IxenA8EMDXjZaa9l4Vj6V0g+b1QdMewa0HrgCIQd8/Vs6GeMxRIeqb24=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=G0aG7XWa; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A712C4CEDD;
-	Tue,  7 Jan 2025 16:39:12 +0000 (UTC)
+	 MIME-Version:Content-Type; b=cyL7WXtHTGMbTWMV+24FNOeKBE48kRDoItUrTHhuX89ZdnSwspluhoKjfdk/DM/4NxtxSxGLhbS0mueYj2gb6ruTfsDCmsTigaBMXuT7BIT4RnXyV0rQg5CNElt0Z2IwCUBHWXDEpBpBTGRYUFplbJZ3jV026Clo+wvcPmzyQWA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aReApzZl; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06F75C4CEDE;
+	Tue,  7 Jan 2025 16:39:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1736267953;
-	bh=G1jyKWXF87HE8s7o11LwIQTqPB+pRsslNyK6knFlQH4=;
+	s=k20201202; t=1736267955;
+	bh=9HemNwXCla1HurzEoi/CnptD9OsC5NaOru+Ac77BG70=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G0aG7XWatmaryDQbr7GkRK9r3Gq7mlMDufQptnQeuRu/RbborDpW5kfvxVict+sSl
-	 TKsFf3YCAPq7b0V9yTHgI1jwuBtn4pzJh/AwfWEBim3Q5AOPW/w+xte5qZ7/ltgD9d
-	 xpYMMuaG0YsLsjqR0n7CoBOfOrgm4QJMZOvJFXIElGUaxcjQa8GR8hqFNrOrdv8qfk
-	 AGYBBJZndPpsESe1vuSouv6He4rKk9fNW/ZgiJJhiVNocszfyfFSgx2Ajld0vvXiZI
-	 HJQ842GBUNBrz9jdNOANwVxqwNRg4Xo0JBpikmVFB5TFQFX2lK0x5FnRpiZkXIFTHW
-	 +PEHIZdxhormA==
+	b=aReApzZlze75+vx7Qnx7rrd64DTjsFwrzqUYqvjDC/xnxlSHPre5LgR12Hdua3phD
+	 h7lOlx2IYr3A+2DFC2iuw++JkxFlUicPQCnShoefTKV3K2NjfG1R78ZA5K7vUCAhg4
+	 h7grMGrio88ePMuhhUvlrrQxS6JPVY7DF5e57YqyHxxYlHr1sv7skmszQcXUCC08fb
+	 0TEUhfu0Kqinst3IC+c+y/kUd3GgFxnlLcDG49sYTvYugDPdTgJbgovL1SGvULgv3R
+	 CXoij+OizVuru0LqP66FTmYBIP7mvIuec84svfVZpPhyo8StgvC68w/OCCoxpML1X8
+	 rwNR2AqIMHUUw==
 From: Bjorn Andersson <andersson@kernel.org>
-To: Konrad Dybcio <konradybcio@kernel.org>,
+To: Linus Walleij <linus.walleij@linaro.org>,
 	Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>,
+	Jingyi Wang <quic_jingyw@quicinc.com>,
+	Konrad Dybcio <konradybcio@kernel.org>,
 	Lijuan Gao <quic_lijuang@quicinc.com>
 Cc: kernel@quicinc.com,
 	linux-arm-msm@vger.kernel.org,
+	linux-gpio@vger.kernel.org,
 	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] arm64: dts: qcom: qcs615: Add CPU capacity and DPC properties
-Date: Tue,  7 Jan 2025 10:38:44 -0600
-Message-ID: <173626793410.69400.12072758705675236468.b4-ty@kernel.org>
+	linux-kernel@vger.kernel.org,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: Re: (subset) [PATCH v2 0/6] Correct the number of GPIOs in gpio-ranges for QCS615 and QCS8300
+Date: Tue,  7 Jan 2025 10:38:45 -0600
+Message-ID: <173626793401.69400.2278973364367185634.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20241211-add_cpu_capacity_and_dpc_properties-v1-1-03aaee023a77@quicinc.com>
-References: <20241211-add_cpu_capacity_and_dpc_properties-v1-1-03aaee023a77@quicinc.com>
+In-Reply-To: <20241219-correct_gpio_ranges-v2-0-19af8588dbd0@quicinc.com>
+References: <20241219-correct_gpio_ranges-v2-0-19af8588dbd0@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -67,17 +71,24 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Wed, 11 Dec 2024 17:35:46 +0800, Lijuan Gao wrote:
-> Add "capacity-dmips-mhz" and "dynamic-power-coefficient" to the QCS615 SoC.
-> They are used to build the energy model, which in turn is used by EAS to
-> take placement decisions.
+On Thu, 19 Dec 2024 15:59:42 +0800, Lijuan Gao wrote:
+> The UFS_RESET pin on Qualcomm SoCs are controlled by TLMM and exposed
+> through the GPIO framework. It is expected to be wired to the reset pin
+> of the primary UFS memory so that the UFS driver can toggle it.
 > 
+> The UFS_RESET pin is exported as GPIOs in addtion to the real GPIOs. The
+> QCS615 TLMM pin controller has GPIOs 0-122, so correct the gpio-rangs to
+> 124. The QCS8300 TLMM pin controller has GPIOs 0-132, so correct the
+> gpio-rangs to 134.
 > 
+> [...]
 
 Applied, thanks!
 
-[1/1] arm64: dts: qcom: qcs615: Add CPU capacity and DPC properties
-      commit: 82db707eb97d96f6460730a65be9cb2f9b3a4959
+[5/6] arm64: dts: qcom: correct gpio-ranges for QCS615
+      commit: 80c82827327d80bde8fc96ebd4e637d0454062db
+[6/6] arm64: dts: qcom: correct gpio-ranges for QCS8300
+      commit: c57c39ee522d873db2cb23486581a8269c389cfe
 
 Best regards,
 -- 
