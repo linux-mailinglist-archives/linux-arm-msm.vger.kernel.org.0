@@ -1,185 +1,147 @@
-Return-Path: <linux-arm-msm+bounces-44217-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-44218-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 62673A04C89
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jan 2025 23:42:52 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8CBFDA04C8F
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jan 2025 23:43:41 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C2D5F3A59E0
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jan 2025 22:42:46 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 782011669B9
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jan 2025 22:43:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 67FF91D47A2;
-	Tue,  7 Jan 2025 22:42:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2BE84199FC9;
+	Tue,  7 Jan 2025 22:43:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IEo1YU1M"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="nT5OkujT"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f181.google.com (mail-lj1-f181.google.com [209.85.208.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E399190664;
-	Tue,  7 Jan 2025 22:42:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A2A519F120
+	for <linux-arm-msm@vger.kernel.org>; Tue,  7 Jan 2025 22:43:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736289767; cv=none; b=JbSV2JIa3o6MYgBRbaPSH3rO1BaZ335uJ8s1Np7T1QuSdXGIY4iPFECQ8LNMjKiAKNjMIIEYZtP6hI4M46IE1F84+/lvimJn+dn1/tlzXD2xZcPeUGI7jM2WrPC/Qwd6SLtiKZq3jzN9/5wyfgSVy8qAq5Y6Qg8x2pNnhIGab3g=
+	t=1736289816; cv=none; b=laXw5UgOC6zf0Z26bldHFmXCg3MVwqbZNtuvyuifzg+NNNmzpFLR1f3qPxedIwbDgKNBMOTWD9fDVtOhPcSPiaD8ugDSZXVgU7UVESDLSJsDRajq0FbUEuwZtkRt2xtyXjd8koKEmm5zdyiGSWXI2Zfe7zALgSdfYjqI3QXZgtM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736289767; c=relaxed/simple;
-	bh=OAaF3t+3+AbOpQgAHh9T97TjVE9os6Ew4Mn69K/1Wxc=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To; b=EKAo5xJm0Ir/5wQRScI788CEK6bC8Dkecl6Qcz5c2K5AiRcsnvw3k7aaa2FdXMiCRj16mpyt2PNIhccph97YK9zn0ZRrW23BauYArA/JCkbbPtCkBtez0F4GY0VQM40Y3e2tkdkoIirTjGOR/7NxUzIiK/ZEruXWw+ZF6y54FJ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IEo1YU1M; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8608DC4CEDE;
-	Tue,  7 Jan 2025 22:42:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1736289766;
-	bh=OAaF3t+3+AbOpQgAHh9T97TjVE9os6Ew4Mn69K/1Wxc=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:From;
-	b=IEo1YU1M6xcnjl2DhgYfSrhtO4jyG4gPs0FmBg4oabm8aCweQjs0JpOWg3QG8UOBd
-	 o5CLi09ZiuuXu5rZhxJJNJdasqeD6S4SFNw9L6QqhL1BKhbdxTWPIhl0dhM4rRTeo7
-	 LKEidAtlfzpayBqCBnPe4NOaEWNH3erm2H15dCgTdEko9y8w39tGOV6jG+LZl44ImR
-	 uK31BIQjQCg1J2OKpvGXWf+ZwtkKFizGDdNeJafSl2ZbjiUeBh0k3lysC7fZNZQTO0
-	 oH7AL8vwAwk+s26jniRZtaCQWD0kn5UV3xlFEprX/f63esJVtu9jlmBQxfSfEUTUup
-	 xv2FfsGBLTSlA==
-Date: Tue, 7 Jan 2025 16:42:44 -0600
-From: Bjorn Helgaas <helgaas@kernel.org>
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Krishna Chaitanya Chundru <quic_krichai@quicinc.com>,
-	andersson@kernel.org, Bjorn Helgaas <bhelgaas@google.com>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	cros-qcom-dts-watchers@chromium.org,
-	Jingoo Han <jingoohan1@gmail.com>,
-	Bartosz Golaszewski <brgl@bgdev.pl>, quic_vbadigan@quicinc.com,
-	linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3 1/6] dt-bindings: PCI: Add binding for qps615
-Message-ID: <20250107224244.GA187680@bhelgaas>
+	s=arc-20240116; t=1736289816; c=relaxed/simple;
+	bh=DV7wpbry1jkw+VWJERzJa6U1rgHn8ivUK6AEfkD8XWc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=snL9WXcjwmHzyKgQJswupRTFT506ZsHLCaNwo8GhnOwKK9fCc7cXeG9hDwp9EB57By+I5tQPxVdfFWv+aWW4smAn4C70HF2H9zoAHRfZhLafli7oYd1JAkOYUjXk43P6HGpG/zoveJxSD9xkVHZcny5Job/BOu7skZDJyMohRTM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=nT5OkujT; arc=none smtp.client-ip=209.85.208.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lj1-f181.google.com with SMTP id 38308e7fff4ca-3011c7b39c7so186618081fa.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Jan 2025 14:43:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1736289812; x=1736894612; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=pa3RqmxudYJyFQPRnw18vNuYTg6IZacGgInKXmkuvPY=;
+        b=nT5OkujT7Eb6/jPWMB3/PQFJimGn6zAarYezM5HUzy9xMvqVmpFI+lrLL+4nQe57X1
+         djCuWEoXvZXE2v5EXK5NAZjC5Xgwk+0NFIw1G7HRf9zENXNbtBJGfPEeURwjy14i5pA2
+         Qc4vWTTIhE72qzlBBq7t1qayVw9sPbdQwvOw5g0hqx0sump075XF726bYNrtxH21jYNX
+         ppjteGXediW3imgQxSnM8iCDHt8/QwPiRsXmwbhx5Wk8c5EAxiNt+59zP8pkWEj4z0wx
+         14T5fEU0Pm1NWfEj0RV0+pRpXqWkT1ARaumvq06R0jrNmcQHQ4OjZQLdqPk3eu+nP3QK
+         KDuQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1736289812; x=1736894612;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=pa3RqmxudYJyFQPRnw18vNuYTg6IZacGgInKXmkuvPY=;
+        b=kyW8YHlDNjMwV1i2X78DgYltR982cn+2HxfoetCs/9cPk2Y/jdmRXPYrFxprVA/kK1
+         gJ8LNtvckpTDEnJq9MghHOWhxrDiTCuvD+rlbn30tXacYErIG9jBhDyv6HAgGQYFgP1Q
+         ZlDn+ukaZ5ifluCcu/1qy9BWT0fs1YULBWq0X7jqdICWeTQvWlgP/7R9mrbNHMdhgOdu
+         fviKbyzxPqTWfdZPegM81YbhjWs9UetGrWw7CkzvN2GWZnqcKabR/euOtbvG7JgkzFVv
+         WhXq5/gl5FOUahGTDfUijdbIxr8XIAYJMXnGZVbqr8kbh8lzIq+Q2yjYI6JrZ9J+EYWW
+         X5PQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVj2BLk7N1RWYXmJ1i8j/hAdztNISI8Jy0foBfcBnqHAJsFIG+PwhLZqXNyMkvpPq9iDguN6rL4kWEPQplV@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx4Gl10+L7qPNLOalFskXizDv4F7WjtdWTQWMhtvYhdOSM8jBoB
+	6MTDL/9H04jjH/ZUotCw+R9dYKtzRcSGbxS6FcjpZYoTLfnTEg4sEC4JmXHjSm0=
+X-Gm-Gg: ASbGncsJcjcRRwJnp98sOSV3F9+4TX2YAQii21maJftWsWKy1EPgcINwoGXrSsGsYz3
+	LAhckw9sKENdpNABtaMLg0YrjztkpK78AWlBOTBocxBCcfL/TDu4pDksjhgIRajv2h1jQlIWoFY
+	F0VVZ8sTVCnYpRQXDB1IxVkPpa4qsmfu5UGt4TPQLOAOzbpkO4+in0D59YoXtgqqsx+vH6DKbfc
+	y4VG4pZRIuOvKGhl8hOfNEpklvs9RPptDCm1d0lQ6Znq1KhiCIZeBsgV3IU0jGTpOC0M1zKHllw
+	8cUzFmVk/lgPcQHjHZQaZX4I0yo7YtlwuuMH
+X-Google-Smtp-Source: AGHT+IHy5V27gDH+by9fnJ68iOhPGvEIJqeaut59nvgCwr8FXp2+T/5yYWYjCX3jT2mFaBHiG+I4UA==
+X-Received: by 2002:a2e:bea8:0:b0:302:1b18:2c09 with SMTP id 38308e7fff4ca-305f45ba080mr1149561fa.27.1736289812296;
+        Tue, 07 Jan 2025 14:43:32 -0800 (PST)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-3045ad9b9c4sm61091001fa.31.2025.01.07.14.43.30
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 07 Jan 2025 14:43:31 -0800 (PST)
+Date: Wed, 8 Jan 2025 00:43:29 +0200
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Rob Clark <robdclark@gmail.com>
+Cc: Will Deacon <will@kernel.org>, iommu@lists.linux.dev, 
+	linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org, 
+	Robin Murphy <robin.murphy@arm.com>, Rob Clark <robdclark@chromium.org>, 
+	Joerg Roedel <joro@8bytes.org>, 
+	"moderated list:ARM SMMU DRIVERS" <linux-arm-kernel@lists.infradead.org>, open list <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH v2] iommu/arm-smmu-qcom: Only enable stall on smmu-v2
+Message-ID: <fipxf3vf3nrbiqgwtu7z4vqcyt52dludehdvqc2cnfbal6poyv@uj4hxrlhnqeg>
+References: <20250102183232.115279-1-robdclark@gmail.com>
+ <20250107125738.GA6991@willie-the-truck>
+ <CAF6AEGtZSOMi-=AOmjoXSVkwfyvKOymSuRRMZ7jOcM2wyhu5qg@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <eysqoiiizunkjxqyvfaxbx4szwnz4osv42j7xr247irnthifwu@nhxytsl4brvu>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAF6AEGtZSOMi-=AOmjoXSVkwfyvKOymSuRRMZ7jOcM2wyhu5qg@mail.gmail.com>
 
-On Tue, Dec 24, 2024 at 11:49:42AM +0200, Dmitry Baryshkov wrote:
-> On Tue, Dec 24, 2024 at 02:41:10PM +0530, Krishna Chaitanya Chundru wrote:
-> > On 12/5/2024 2:55 AM, Bjorn Helgaas wrote:
-> > > On Tue, Nov 12, 2024 at 08:31:33PM +0530, Krishna chaitanya chundru wrote:
-> > > > Add binding describing the Qualcomm PCIe switch, QPS615,
-> > > > which provides Ethernet MAC integrated to the 3rd downstream port
-> > > > and two downstream PCIe ports.
-
-> > > > +    pcie {
-> > > > +        #address-cells = <3>;
-> > > > +        #size-cells = <2>;
-> > > > +
-> > > > +        pcie@0 {
-> > > > +            device_type = "pci";
-> > > > +            reg = <0x0 0x0 0x0 0x0 0x0>;
-> > > > +
-> > > > +            #address-cells = <3>;
-> > > > +            #size-cells = <2>;
-> > > > +            ranges;
-> > > > +            bus-range = <0x01 0xff>;
-> > > > +
-> > > > +            pcie@0,0 {
-> > > > +                compatible = "pci1179,0623";
-> > > > +                reg = <0x10000 0x0 0x0 0x0 0x0>;
-> > > > +                device_type = "pci";
-> > > > +                #address-cells = <3>;
-> > > > +                #size-cells = <2>;
-> > > > +                ranges;
-> > > > +                bus-range = <0x02 0xff>;
-> > > 
-> > > This binding describes a switch.  I don't think bus-range should
-> > > appear here at all because it is not a feature of the hardware (unless
-> > > the switch ports are broken and their Secondary/Subordinate Bus
-> > > Numbers are hard-wired).
-> > > 
-> > > The Primary/Secondary/Subordinate Bus Numbers of all switch ports
-> > > should be writable and the PCI core knows how to manage them.
-> > 
-> > The dt binding check is throwing an error if we don't keep bus-range
-> > property for that reason we added it, from dt binding perspective i think it
-> > is mandatory to add this property.
+On Tue, Jan 07, 2025 at 07:26:44AM -0800, Rob Clark wrote:
+> On Tue, Jan 7, 2025 at 4:57 AM Will Deacon <will@kernel.org> wrote:
+> >
+> > On Thu, Jan 02, 2025 at 10:32:31AM -0800, Rob Clark wrote:
+> > > From: Rob Clark <robdclark@chromium.org>
+> > >
+> > > On mmu-500, stall-on-fault seems to stall all context banks, causing the
+> > > GMU to misbehave.  So limit this feature to smmu-v2 for now.
+> > >
+> > > This fixes an issue with an older mesa bug taking outo the system
+> > > because of GMU going off into the weeds.
+> > >
+> > > What we _think_ is happening is that, if the GPU generates 1000's of
+> > > faults at ~once (which is something that GPUs can be good at), it can
+> > > result in a sufficient number of stalled translations preventing other
+> > > transactions from entering the same TBU.
+> >
+> > MMU-500 is an implementation of the SMMUv2 architecture, so this feels
+> > upside-down to me. That is, it should always be valid to probe with
+> > the less specific "SMMUv2" compatible string (modulo hardware errata)
+> > and be limited to the architectural behaviour.
 > 
-> Could you please provide an error message? I don't see any of the PCIe
-> bindingins declaring bus-range as mandatory. I might be missing it
-> though.
+> I should have been more specific and referred to qcom,smmu-v2
+> 
+> > So what is about MMU-500 that means stalling doesn't work when compared
+> > to any other SMMUv2 implementation?
+> 
+> Well, I have a limited # of data points, in the sense that there
+> aren't too many a6xx devices prior to the switch to qcom,smmu-500..
+> but I have access to crash metrics for a lot of sc7180 devices
+> (qcom,smmu-v2), and I've been unable to find any signs of this sort of
+> stall related issue.
+> 
+> So maybe I can't 100% say this is qcom,smmu-500 vs qcom,smmu-v2, vs
+> some other change in later gens that used qcom,smmu-500 or some other
+> factor, I'm not sure what other conclusion to draw.
 
-I think the warning message is like this:
+Might it be that v2 was an actual hw, but mmu-500 is somehow
+virtualized? And as such by these stalls we might be observing some kind
+of FW bug in hyp?
 
-  Warning (pci_device_bus_num): /soc@0/pcie@1c00000/pcie@0/wifi@0: PCI bus number 1 out of range, expected (0 - 0)
+> 
+> BR,
+> -R
 
-and only happens if there's a device below a Root Port or a Switch.
-In that case the device "reg" property apparently has to include the
-bus/device/function.
-
-IIUC, in this case, we're describing a Switch with an integrated
-Ethernet MAC:
-
-  pcie@0 {
-    device_type = "pci";
-    reg = <0x0 0x0 0x0 0x0 0x0>;           # 00:00.0 RP to [bus 01-ff]
-    bus-range = <0x01 0xff>;
-
-    pcie@0,0 {
-      compatible = "pci1179,0623";
-      reg = <0x10000 0x0 0x0 0x0 0x0>;     # 01:00.0 Switch USP to [bus 02-ff]
-      device_type = "pci";
-      bus-range = <0x02 0xff>;
-
-      pcie@1,0 {
-        reg = <0x20800 0x0 0x0 0x0 0x0>;   # 02:01.0 Switch DSP to [bus 03-ff]
-        device_type = "pci";
-        bus-range = <0x03 0xff>;
-        qcom,no-dfe-support;
-      };
-
-      pcie@2,0 {
-        reg = <0x21000 0x0 0x0 0x0 0x0>;   # 02:02.0 Switch DSP to [bus 04-ff]
-        device_type = "pci";
-        bus-range = <0x04 0xff>;
-        qcom,nfts = <10>;
-      };
-
-      pcie@3,0 {
-        reg = <0x21800 0x0 0x0 0x0 0x0>;   # 02:02.1 Switch DSP to [bus 05-ff]
-        device_type = "pci";
-        bus-range = <0x05 0xff>;
-        qcom,tx-amplitude-millivolt = <10>;
-
-        pcie@0,0 {
-          reg = <0x50000 0x0 0x0 0x0 0x0>; # 05:00.0 Ethernet MAC, I guess?
-          device_type = "pci";
-          qcom,l1-entry-delay-ns = <10>;
-        };
-
-        ...
-      };
-    };
-  };
-
-So I think the bus-range properties are needed to match the reg
-properties of the downstream devices.
-
-I do think the bus-ranges of the Switch Downstream Ports look bogus
-because they all extend to bus ff, so they overlap.  The Switch
-wouldn't know how to route config transactions to the correct DSP.
-I suppose the PCI core would fix these overlaps at boot time, but 
-it seems wrong to describe them this way here.
-
-There's an example "reg" decoding and a couple URLs here:
-https://lore.kernel.org/r/20250106230705.GA132316@bhelgaas
-
-Bjorn
+-- 
+With best wishes
+Dmitry
 
