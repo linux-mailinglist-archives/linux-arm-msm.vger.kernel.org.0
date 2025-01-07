@@ -1,162 +1,347 @@
-Return-Path: <linux-arm-msm+bounces-44120-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-44121-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 459B3A03D38
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jan 2025 12:05:52 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D336FA03D42
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jan 2025 12:06:51 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 31B9B7A00C2
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jan 2025 11:05:44 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9ADB9165430
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jan 2025 11:06:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 326181D515B;
-	Tue,  7 Jan 2025 11:05:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 706E41E102A;
+	Tue,  7 Jan 2025 11:06:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ICpfpPfG"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="mz5fu/Vm"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 084E0219ED;
-	Tue,  7 Jan 2025 11:05:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FEF51E0DBA
+	for <linux-arm-msm@vger.kernel.org>; Tue,  7 Jan 2025 11:06:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.12
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736247944; cv=none; b=EsnB64eElVzgyDmtmeFe19SHtXLPilazp5sWe7dDYOlq+1ru/RjjwGj3AjTCDVG5Zz0IKUU8ZHL+di9H90LXSb4xHrRWr6nUhf+gKp3BmJcafvsmIuhG3hW1DwIMxm1IkBy+EQ+O0FyzMDRjjYXd4hC1mRVA58LllyHvmCEQw9U=
+	t=1736248007; cv=none; b=TOyAMDiGgd2MWSECwhZwU2+mUhUgZLLqtRMIDX4N09cP8ixmr8GrI4BDMEgaSDIRjpiqmWvy4HEc7+MwVIOzNp/6N/bme40J/XrPSgN4eHgBS0cy8dbVkHkuD8cm/v3zO0Bsqr9dxR2fs46NF7zlR8dkqUy5XqEsA/BmDQRHXLg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736247944; c=relaxed/simple;
-	bh=ThRmP5SNmsjh2B0dSxhnd+9YAXIeaNOahsI6G66Q/74=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=U2Kg0kYDqqtXqIb54WaxFA2Qy+KsmfWSl6z9mw/h/2Quclm6gkvCPHvHSvYWHZCWt9sPkK+F1bkCRxwMPSq45GqaNbQC9GQSUBRJQ4ByEog7gncxuAF3TCPLRH4mosgSblyZT4wp/5sY2CYTO2vsYB5uYN8dLBV3PI+9lVhpObM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ICpfpPfG; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 507A0T1J019736;
-	Tue, 7 Jan 2025 11:05:19 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=/yz6W5asShFN9pgFAwO5c5pG
-	EwHieZL0RQw4bc3kmgQ=; b=ICpfpPfGS51AnQ8VIHw3sGv8lco2EJi+Epk2dojM
-	Iwq1NYkeg7dfozpAMCc1f+k5kk99ukUAX9hXxDtGyvmi1s3ayqyDi+UNFeYeAUf5
-	/IEHB7y/6iUXgK0TrhXPlDKhnPzSSsbCWLGAEmXaNBgespMjcHVQjH33MnilylJf
-	PhBm+YmdtGwRqppiw53OBjR3cmz60bLPsrpJGw9JulI1qkwQ2sjBy1IpioZF2U09
-	K/xzF0cwqTw39aRj/4duKB7t1DwIaqKBAtz0X8v/Id8OEemKd4QnynpSd3/PxMWZ
-	dlUfa8C6RoXt4YMFRfB2z6JrNIPoP2EeX2DSlUhscgYLhQ==
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44124xr5fk-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 07 Jan 2025 11:05:18 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 507B5HcW015952
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 7 Jan 2025 11:05:17 GMT
-Received: from hu-varada-blr.qualcomm.com (10.80.80.8) by
- nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Tue, 7 Jan 2025 03:05:11 -0800
-Date: Tue, 7 Jan 2025 16:35:08 +0530
-From: Varadarajan Narayanan <quic_varada@quicinc.com>
-To: Krzysztof Kozlowski <krzk@kernel.org>
-CC: <bhelgaas@google.com>, <lpieralisi@kernel.org>, <kw@linux.com>,
-        <manivannan.sadhasivam@linaro.org>, <robh@kernel.org>,
-        <krzk+dt@kernel.org>, <conor+dt@kernel.org>, <vkoul@kernel.org>,
-        <kishon@kernel.org>, <andersson@kernel.org>, <konradybcio@kernel.org>,
-        <p.zabel@pengutronix.de>, <quic_nsekar@quicinc.com>,
-        <dmitry.baryshkov@linaro.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-pci@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-phy@lists.infradead.org>
-Subject: Re: [PATCH v5 3/5] dt-bindings: PCI: qcom: Document the IPQ5332 PCIe
- controller
-Message-ID: <Z30KZM1RGdFvB1dy@hu-varada-blr.qualcomm.com>
-References: <20250102113019.1347068-1-quic_varada@quicinc.com>
- <20250102113019.1347068-4-quic_varada@quicinc.com>
- <4hwclzotaowog6rzfejiixqvvg7iumg4udbvq3h72mmh42dbki@piphsf37vhpv>
+	s=arc-20240116; t=1736248007; c=relaxed/simple;
+	bh=wJSaWoFDYchpojRM0kpL/yBmnF5ud/8yWzzE4yjcMsw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=uqmpz6q6CGq9GzvW/y9nAj2nmfLq+tT6u6+JUESj1/fTc3SBmLPEA+sl366sSktzzTnwAaey9dhJhwKpHBSeQht4Fd3jTmde8HxtjNwEQDIMzpbadSsf7nIUUBPXoyfXdbVeDPuBBBD0NwPCIwLPOFpqLRpxi66kM3HqVFGVOJA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=mz5fu/Vm; arc=none smtp.client-ip=198.175.65.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1736248004; x=1767784004;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=wJSaWoFDYchpojRM0kpL/yBmnF5ud/8yWzzE4yjcMsw=;
+  b=mz5fu/VmtIDRuPRcdT1uk6TXJr5V7HReqRlt+Dt1O6JMQB6SvKaDAgOG
+   rHlv8uMPCnJEtBHhMx8IbTbv2UatKtREzJgSGXivHRkRrsyk0nUdMvPNA
+   gtjAGlmhX+keBMscfQm82v0gLMyEFf7AQK52qw601BGrydOV215zKT6wL
+   C7Efifnl7auhgqcUUuzN7NiI56gndQTWm3MCtoDuvTZQkk8YlZBrODQ6C
+   L/fmaqPSv5bwU0pXOm9aBo9TSdzFAzAN38QDq84uL0scHNaSqToxv45Tx
+   Jk/LzNntAKPCJ8UAkhU1+7ZmMBI5xCZAxt7BPLqGIaI3mz3OiBFX1rW+B
+   A==;
+X-CSE-ConnectionGUID: h6w2OigtQqSBEUvMPgE35A==
+X-CSE-MsgGUID: QoyDziS2Txy+hD16+WK2zA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11307"; a="47782032"
+X-IronPort-AV: E=Sophos;i="6.12,295,1728975600"; 
+   d="scan'208";a="47782032"
+Received: from fmviesa007.fm.intel.com ([10.60.135.147])
+  by orvoesa104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Jan 2025 03:06:44 -0800
+X-CSE-ConnectionGUID: JDwiL8OhRDuC1Tt5Bm5USA==
+X-CSE-MsgGUID: yakZGx+6T6acA/Ih+AgFZA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.12,295,1728975600"; 
+   d="scan'208";a="102633597"
+Received: from derekcam-mobl.ger.corp.intel.com (HELO [10.245.83.121]) ([10.245.83.121])
+  by fmviesa007-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Jan 2025 03:06:41 -0800
+Message-ID: <05386aca-5100-475b-b462-ec1942a580f7@linux.intel.com>
+Date: Tue, 7 Jan 2025 12:06:39 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <4hwclzotaowog6rzfejiixqvvg7iumg4udbvq3h72mmh42dbki@piphsf37vhpv>
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: Rqs0Y1pnTmicV7r4h61kix2iYIbzCCBR
-X-Proofpoint-GUID: Rqs0Y1pnTmicV7r4h61kix2iYIbzCCBR
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 mlxscore=0
- malwarescore=0 priorityscore=1501 bulkscore=0 suspectscore=0 phishscore=0
- adultscore=0 lowpriorityscore=0 impostorscore=0 clxscore=1015
- mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2501070092
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/7] bus: mhi: host: Refactor BHI/BHIe based firmware
+ loading
+To: Jeffrey Hugo <quic_jhugo@quicinc.com>, quic_carlv@quicinc.com,
+ manivannan.sadhasivam@linaro.org, quic_yabdulra@quicinc.com,
+ quic_mattleun@quicinc.com, quic_thanson@quicinc.com
+Cc: ogabbay@kernel.org, lizhi.hou@amd.com, linux-arm-msm@vger.kernel.org,
+ dri-devel@lists.freedesktop.org, mhi@lists.linux.dev
+References: <20241213213340.2551697-1-quic_jhugo@quicinc.com>
+ <20241213213340.2551697-2-quic_jhugo@quicinc.com>
+Content-Language: en-US
+From: Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>
+Organization: Intel Technology Poland sp. z o.o. - ul. Slowackiego 173, 80-298
+ Gdansk - KRS 101882 - NIP 957-07-52-316
+In-Reply-To: <20241213213340.2551697-2-quic_jhugo@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Fri, Jan 03, 2025 at 08:45:14AM +0100, Krzysztof Kozlowski wrote:
-> On Thu, Jan 02, 2025 at 05:00:17PM +0530, Varadarajan Narayanan wrote:
-> > Document the PCIe controller on IPQ5332 platform.
-> >
-> > Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
-> > ---
-> > v5: Re-arrange 5332 and 9574 compatibles to handle fallback usage in dts
->
-> What? How this is related to commit msg?
->
-> >
-> > v4: * v3 reused ipq9574 bindings for ipq5332. Instead add one for ipq5332
-> >     * DTS uses ipq9574 compatible as fallback. Hence move ipq9574 to be able
-> >       to use the 'reg' section for both ipq5332 and ipq9574. Else, dtbs_check
-> >       and dt_binding_check flag errors.
-> > ---
-> >  Documentation/devicetree/bindings/pci/qcom,pcie.yaml | 10 ++++++++--
-> >  1 file changed, 8 insertions(+), 2 deletions(-)
-> >
-> > diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
-> > index bd87f6b49d68..9f37eca1ce0d 100644
-> > --- a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
-> > +++ b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
-> > @@ -26,7 +26,6 @@ properties:
-> >            - qcom,pcie-ipq8064-v2
-> >            - qcom,pcie-ipq8074
-> >            - qcom,pcie-ipq8074-gen3
-> > -          - qcom,pcie-ipq9574
->
-> I don't understand this change at all and your commit msg explains
-> here nothing.
+Hi,
 
-All DT entries except "reg" is similar between ipq5332 and
-ipq9574. ipq9574 has 5 registers while ipq5332 has 6. MHI is the
-additional (i.e. sixth) entry for ipq5332.
+On 12/13/2024 10:33 PM, Jeffrey Hugo wrote:
+> From: Matthew Leung <quic_mattleun@quicinc.com>
+> 
+> Refactor the firmware loading code to have distinct helper functions for
+> BHI and BHIe operations. This lays the foundation for separating the
+> firmware loading protocol from the firmware being loaded and the EE it
+> is loaded in.
+> 
+> Signed-off-by: Matthew Leung <quic_mattleun@quicinc.com>
+> Reviewed-by: Youssef Samir <quic_yabdulra@quicinc.com>
+> Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+> Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+> ---
+>  drivers/bus/mhi/host/boot.c | 155 +++++++++++++++++++++++++-----------
+>  1 file changed, 110 insertions(+), 45 deletions(-)
+> 
+> diff --git a/drivers/bus/mhi/host/boot.c b/drivers/bus/mhi/host/boot.c
+> index e8c92972f9df..e3f3c07166ad 100644
+> --- a/drivers/bus/mhi/host/boot.c
+> +++ b/drivers/bus/mhi/host/boot.c
+> @@ -177,6 +177,37 @@ int mhi_download_rddm_image(struct mhi_controller *mhi_cntrl, bool in_panic)
+>  }
+>  EXPORT_SYMBOL_GPL(mhi_download_rddm_image);
+>  
+> +static inline void mhi_fw_load_error_dump(struct mhi_controller *mhi_cntrl)
+> +{
+> +	struct device *dev = &mhi_cntrl->mhi_dev->dev;
+> +	rwlock_t *pm_lock = &mhi_cntrl->pm_lock;
+> +	void __iomem *base = mhi_cntrl->bhi;
+> +	int ret;
+> +	u32 val;
+> +	int i;
+> +	struct {
+> +		char *name;
+> +		u32 offset;
+> +	} error_reg[] = {
+> +		{ "ERROR_CODE", BHI_ERRCODE },
+> +		{ "ERROR_DBG1", BHI_ERRDBG1 },
+> +		{ "ERROR_DBG2", BHI_ERRDBG2 },
+> +		{ "ERROR_DBG3", BHI_ERRDBG3 },
+> +		{ NULL },
+> +	};
+> +
+> +	read_lock_bh(pm_lock);
+> +	if (MHI_REG_ACCESS_VALID(mhi_cntrl->pm_state)) {
+> +		for (i = 0; error_reg[i].name; i++) {
+> +			ret = mhi_read_reg(mhi_cntrl, base, error_reg[i].offset, &val);
+> +			if (ret)
+> +				break;
+> +			dev_err(dev, "Reg: %s value: 0x%x\n", error_reg[i].name, val);
+> +		}
+> +	}
+> +	read_unlock_bh(pm_lock);
+> +}
+> +
+>  static int mhi_fw_load_bhie(struct mhi_controller *mhi_cntrl,
+>  			    const struct mhi_buf *mhi_buf)
+>  {
+> @@ -226,24 +257,13 @@ static int mhi_fw_load_bhie(struct mhi_controller *mhi_cntrl,
+>  }
+>  
+>  static int mhi_fw_load_bhi(struct mhi_controller *mhi_cntrl,
+> -			   dma_addr_t dma_addr,
+> -			   size_t size)
+> +			    const struct mhi_buf *mhi_buf)
+>  {
+> -	u32 tx_status, val, session_id;
+> -	int i, ret;
+> -	void __iomem *base = mhi_cntrl->bhi;
+> -	rwlock_t *pm_lock = &mhi_cntrl->pm_lock;
+>  	struct device *dev = &mhi_cntrl->mhi_dev->dev;
+> -	struct {
+> -		char *name;
+> -		u32 offset;
+> -	} error_reg[] = {
+> -		{ "ERROR_CODE", BHI_ERRCODE },
+> -		{ "ERROR_DBG1", BHI_ERRDBG1 },
+> -		{ "ERROR_DBG2", BHI_ERRDBG2 },
+> -		{ "ERROR_DBG3", BHI_ERRDBG3 },
+> -		{ NULL },
+> -	};
+> +	rwlock_t *pm_lock = &mhi_cntrl->pm_lock;
+> +	void __iomem *base = mhi_cntrl->bhi;
+> +	u32 tx_status, session_id;
+> +	int ret;
+>  
+>  	read_lock_bh(pm_lock);
+>  	if (!MHI_REG_ACCESS_VALID(mhi_cntrl->pm_state)) {
+> @@ -255,11 +275,9 @@ static int mhi_fw_load_bhi(struct mhi_controller *mhi_cntrl,
+>  	dev_dbg(dev, "Starting image download via BHI. Session ID: %u\n",
+>  		session_id);
+>  	mhi_write_reg(mhi_cntrl, base, BHI_STATUS, 0);
+> -	mhi_write_reg(mhi_cntrl, base, BHI_IMGADDR_HIGH,
+> -		      upper_32_bits(dma_addr));
+> -	mhi_write_reg(mhi_cntrl, base, BHI_IMGADDR_LOW,
+> -		      lower_32_bits(dma_addr));
+> -	mhi_write_reg(mhi_cntrl, base, BHI_IMGSIZE, size);
+> +	mhi_write_reg(mhi_cntrl, base, BHI_IMGADDR_HIGH, upper_32_bits(mhi_buf->dma_addr));
+> +	mhi_write_reg(mhi_cntrl, base, BHI_IMGADDR_LOW, lower_32_bits(mhi_buf->dma_addr));
+> +	mhi_write_reg(mhi_cntrl, base, BHI_IMGSIZE, mhi_buf->len);
+>  	mhi_write_reg(mhi_cntrl, base, BHI_IMGTXDB, session_id);
+>  	read_unlock_bh(pm_lock);
+>  
+> @@ -274,18 +292,7 @@ static int mhi_fw_load_bhi(struct mhi_controller *mhi_cntrl,
+>  
+>  	if (tx_status == BHI_STATUS_ERROR) {
+>  		dev_err(dev, "Image transfer failed\n");
+> -		read_lock_bh(pm_lock);
+> -		if (MHI_REG_ACCESS_VALID(mhi_cntrl->pm_state)) {
+> -			for (i = 0; error_reg[i].name; i++) {
+> -				ret = mhi_read_reg(mhi_cntrl, base,
+> -						   error_reg[i].offset, &val);
+> -				if (ret)
+> -					break;
+> -				dev_err(dev, "Reg: %s value: 0x%x\n",
+> -					error_reg[i].name, val);
+> -			}
+> -		}
+> -		read_unlock_bh(pm_lock);
+> +		mhi_fw_load_error_dump(mhi_cntrl);
+>  		goto invalid_pm_state;
+>  	}
+>  
+> @@ -296,6 +303,16 @@ static int mhi_fw_load_bhi(struct mhi_controller *mhi_cntrl,
+>  	return -EIO;
+>  }
+>  
+> +static void mhi_free_bhi_buffer(struct mhi_controller *mhi_cntrl,
+> +				struct image_info *image_info)
+> +{
+> +	struct mhi_buf *mhi_buf = image_info->mhi_buf;
+> +
+> +	dma_free_coherent(mhi_cntrl->cntrl_dev, mhi_buf->len, mhi_buf->buf, mhi_buf->dma_addr);
+> +	kfree(image_info->mhi_buf);
+> +	kfree(image_info);
+> +}
+> +
+>  void mhi_free_bhie_table(struct mhi_controller *mhi_cntrl,
+>  			 struct image_info *image_info)
+>  {
+> @@ -310,6 +327,47 @@ void mhi_free_bhie_table(struct mhi_controller *mhi_cntrl,
+>  	kfree(image_info);
+>  }
+>  
+> +static int mhi_alloc_bhi_buffer(struct mhi_controller *mhi_cntrl,
+> +				struct image_info **image_info,
+> +				size_t alloc_size)
+> +{
+> +	struct image_info *img_info;
+> +	struct mhi_buf *mhi_buf;
+> +	int segments = 1;Are you planning for variable segment count in future?
 
-If ipq9574 is not removed from here, dt_binding_check gives the
-following errors
+> +	img_info = kzalloc(sizeof(*img_info), GFP_KERNEL);
+> +	if (!img_info)
+> +		return -ENOMEM;
+> +
+> +	/* Allocate memory for entry */
+> +	img_info->mhi_buf = kcalloc(segments, sizeof(*img_info->mhi_buf),
+> +				    GFP_KERNEL);
+> +	if (!img_info->mhi_buf)
+> +		goto error_alloc_mhi_buf;
+> +
+> +	/* Allocate and populate vector table */
+> +	mhi_buf = img_info->mhi_buf;
+> +
+> +	mhi_buf->len = alloc_size;
+> +	mhi_buf->buf = dma_alloc_coherent(mhi_cntrl->cntrl_dev, mhi_buf->len,
+> +					  &mhi_buf->dma_addr, GFP_KERNEL);
+> +	if (!mhi_buf->buf)
+> +		goto error_alloc_segment;
+> +
+> +	img_info->bhi_vec = NULL;
+> +	img_info->entries = segments;
+> +	*image_info = img_info;
+> +
+> +	return 0;
+> +
+> +error_alloc_segment:
+> +	kfree(mhi_buf);
+> +error_alloc_mhi_buf:
+> +	kfree(img_info);
+> +
+> +	return -ENOMEM;
+> +}
+> +
+>  int mhi_alloc_bhie_table(struct mhi_controller *mhi_cntrl,
+>  			 struct image_info **image_info,
+>  			 size_t alloc_size)
+> @@ -364,9 +422,18 @@ int mhi_alloc_bhie_table(struct mhi_controller *mhi_cntrl,
+>  	return -ENOMEM;
+>  }
+>  
+> -static void mhi_firmware_copy(struct mhi_controller *mhi_cntrl,
+> -			      const u8 *buf, size_t remainder,
+> -			      struct image_info *img_info)
+> +static void mhi_firmware_copy_bhi(struct mhi_controller *mhi_cntrl,
+> +				  const u8 *buf, size_t size,
+> +				  struct image_info *img_info)
+> +{
+> +	struct mhi_buf *mhi_buf = img_info->mhi_buf;
+> +
+> +	memcpy(mhi_buf->buf, buf, size);
+> +}
+I'm not sure this function improves readablity.
 
-1.	/local/mnt/workspace/varada/upstream/pci-v6/arch/arm64/boot/dts/qcom/ipq5332-rdp474.dtb: pcie@18000000: reg: [[557056, 12288], [402653184, 3869], [402657056, 168], [402657280, 4096], [403701760, 4096], [569344, 4096]] is too long
+> +static void mhi_firmware_copy_bhie(struct mhi_controller *mhi_cntrl,
+> +				   const u8 *buf, size_t remainder,
+> +				   struct image_info *img_info)
+>  {
+>  	size_t to_cpy;
+>  	struct mhi_buf *mhi_buf = img_info->mhi_buf;
+> @@ -390,10 +457,9 @@ void mhi_fw_load_handler(struct mhi_controller *mhi_cntrl)
+>  	const struct firmware *firmware = NULL;
+>  	struct device *dev = &mhi_cntrl->mhi_dev->dev;
+>  	enum mhi_pm_state new_state;
+> +	struct image_info *image;
+>  	const char *fw_name;
+>  	const u8 *fw_data;
+> -	void *buf;
+> -	dma_addr_t dma_addr;
+>  	size_t size, fw_sz;
+>  	int ret;
+>  
+> @@ -452,17 +518,16 @@ void mhi_fw_load_handler(struct mhi_controller *mhi_cntrl)
+>  	fw_sz = firmware->size;
+>  
+>  skip_req_fw:
+> -	buf = dma_alloc_coherent(mhi_cntrl->cntrl_dev, size, &dma_addr,
+> -				 GFP_KERNEL);
+> -	if (!buf) {
+> +	ret = mhi_alloc_bhi_buffer(mhi_cntrl, &image, size);
+> +	if (ret) {
+>  		release_firmware(firmware);
+>  		goto error_fw_load;
+>  	}
+> +	mhi_firmware_copy_bhi(mhi_cntrl, fw_data, size, image);
+>  
+>  	/* Download image using BHI */
+> -	memcpy(buf, fw_data, size);
+> -	ret = mhi_fw_load_bhi(mhi_cntrl, dma_addr, size);
+> -	dma_free_coherent(mhi_cntrl->cntrl_dev, size, buf, dma_addr);
+> +	ret = mhi_fw_load_bhi(mhi_cntrl, image->mhi_buf);
+> +	mhi_free_bhi_buffer(mhi_cntrl, image);
+>  
+>  	/* Error or in EDL mode, we're done */
+>  	if (ret) {
+> @@ -493,7 +558,7 @@ void mhi_fw_load_handler(struct mhi_controller *mhi_cntrl)
+>  		}
+>  
+>  		/* Load the firmware into BHIE vec table */
+> -		mhi_firmware_copy(mhi_cntrl, fw_data, fw_sz, mhi_cntrl->fbc_image);
+> +		mhi_firmware_copy_bhie(mhi_cntrl, fw_data, fw_sz, mhi_cntrl->fbc_image);
+>  	}
+>  
+>  	release_firmware(firmware);
 
-	Failed validating 'maxItems' in schema['allOf'][2]['then']['properties']['reg']:
-	    {'maxItems': 5, 'minItems': 5}
-
-2.	/local/mnt/workspace/varada/upstream/pci-v6/arch/arm64/boot/dts/qcom/ipq5332-rdp474.dtb: pcie@18000000: reg-names: ['parf', 'dbi', 'elbi', 'atu', 'config', 'mhi'] is too long
-
-	Failed validating 'maxItems' in schema['allOf'][2]['then']['properties']['reg-names']:
-	    {'items': [{'const': 'dbi'},
-		       {'const': 'elbi'},
-		       {'const': 'atu'},
-		       {'const': 'parf'},
-		       {'const': 'config'}],
-	     'maxItems': 5,
-	     'minItems': 5,
-	     'type': 'array'}
-
-Hence had to remove it from here and add it to the sdx55 reg
-definition.
-
-Will capture this in the commit message.
-
-Thanks
-Varada
+Regards,
+Jacek
 
