@@ -1,130 +1,185 @@
-Return-Path: <linux-arm-msm+bounces-44424-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-44425-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3BD30A05F43
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jan 2025 15:47:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id B1BDCA05F56
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jan 2025 15:52:46 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 09003166205
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jan 2025 14:47:11 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id ABF5A166096
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jan 2025 14:52:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C898A1FC7E0;
-	Wed,  8 Jan 2025 14:47:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3D7B91FCD09;
+	Wed,  8 Jan 2025 14:52:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Us/oQ6eH"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tHB/0WmI"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-oo1-f44.google.com (mail-oo1-f44.google.com [209.85.161.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15B7613B288
-	for <linux-arm-msm@vger.kernel.org>; Wed,  8 Jan 2025 14:47:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09C6C1FC7F1;
+	Wed,  8 Jan 2025 14:52:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736347626; cv=none; b=cHUqutikHMumQcFnVE2Na5maYzEsSSFc47Z+66C86SJviDymFOqXaW6NFlnzq49kQFVOfE3okqcAwf3UJsuPQ2Zut2k+ylvBnnr+plmQmnS02pVw53oX71GAGftE3BJE0bwurSS1GbVeUPKtmYClutEIULkpW7YfABZoFNpUn6g=
+	t=1736347965; cv=none; b=OzC6y9PM+ea6qnGm7AthohlPSNt4cKtEs7Kn04oXIjx//fHoU3Fy8H2/mtFxvTb4BDevI7F3IBsA/R/BuV3901vdknzhUX1SVVIDC/lw/VLVaDsEwox/+G/6sOnxaxilWA2zPQLtLkFHzpzFd+yQVMxVLdQjuiVfe6/uabkBSGg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736347626; c=relaxed/simple;
-	bh=OdE6D5N8RrpzSeHpeycvSVWOB2W1RR8oVCgZ0kZqXjo=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=mQB/GUWBKq8kZbFqv6K2eVOHtcSc8f1PRMCfxQ3UAkvxh2CeS9f8oA//yGAR9bA8euLuaWyIzXR1JNs3oc2MWt2dcm+JNFiBUYxlsO9dlkXThTLL/Y8Wo/PdkFsJAkRGEwJrycBO+fRxoJfKZrPWuafa888j7y2tRwKIkTlai2Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Us/oQ6eH; arc=none smtp.client-ip=209.85.161.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-oo1-f44.google.com with SMTP id 006d021491bc7-5f63c89e72bso2361971eaf.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Jan 2025 06:47:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1736347623; x=1736952423; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=OdE6D5N8RrpzSeHpeycvSVWOB2W1RR8oVCgZ0kZqXjo=;
-        b=Us/oQ6eHevDPW6pWDxmKD+TFRLCOcQSB5OBa2wNVlxhB4HmRfCojBcGYLeosC9Ypm9
-         WmABC0SYECnLy5vU3ksRwh28DknEAc6dJ/aQsJtAKS9E4BwJsI+8GGaCGO2KaVMuwcCk
-         QtkIsMeuwoTGtn4aSXkV8vLmn3E4JlJPM07vmYGvAHkyHr1gndTTCsn2e02PxnEfhMb9
-         8bfdTcEYeaQzIi+nSAKWMHcw7uEMZnCTan/1oQz7oHE/tze1gtvwO5sUqWr2YXRIcrnu
-         5huD1w9j7B+Z5CGJKBriYO6mm/PxAVbIavKI0RLS3ktSQd/dyEUCAesUDm8OMxr+oG3B
-         drpA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736347623; x=1736952423;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=OdE6D5N8RrpzSeHpeycvSVWOB2W1RR8oVCgZ0kZqXjo=;
-        b=jb7nwDU1NcZLuCbZME22Wz7wMW1W/GxBXFh65cW2sbt6qF48Rds/2VFD4+yAv0yPd3
-         B8KftOAsY79sTd3NtwkldQQvQYKvQCV650LlJmqOGzDgl9QYoLIuzdv1V+n/0rRxksy+
-         XJJA37JK4jEyfaArq7FUqGdO4FqQL99kfqW1XvDyl1ZgZ/F5ihiN8LugGVqi+Ilenlpf
-         Yuvbp4sUCV/f6c1Xkc2IGHoBhMvKC4fHmvU/0QqI+GpeU5/E3cWpnTnZUWNWsyyaTRaq
-         ZD7kAyHGpePnti7oOjxy8JIjPolVlARpfPaUswp0VgPeUD8/OV2TgZa2pyxE7uM9JyVb
-         N2Uw==
-X-Forwarded-Encrypted: i=1; AJvYcCVDFVh2V6W2MbZR+pLY/EhiyvmLXM34QHFXhkqYKb3d3x1Cz4zbl/j+TSEbsla4icnTeCmfGnRFH9Vi5NS1@vger.kernel.org
-X-Gm-Message-State: AOJu0Ywgc4UsJlxskXGmE8WYAudFN6x8gidw4iADg9Si6AEJZlYxeSFP
-	5H8rS/NBCrnbhn7KgMDphZ4b1xaWsBoCr5gkH592EQaFxbrp9tan7lOnNAOYe4w4pepDijs547g
-	nTQAX7vxdETHayfDk/TKeU2N65strxe3OGPuadQ==
-X-Gm-Gg: ASbGncsZXrCmW7NoaywqldNkVwz4INyFzaqnMUCVzVFmIHMiMiGVclk6pZZA7P6H92D
-	exbAIBZZVhlVZHEdzlB1OpUq/R479guFedqhndW/5RLFTQTKRQJ2a17PEQ9srt2DgcNh4
-X-Google-Smtp-Source: AGHT+IGozL0b6866JXapQ+PEbHnvhj3a6/0QQ88A8IJ/+L+igHRG0D/Vq+aG6UHzobmpoTeJz0Mbo/TlMtGJUaQpZJU=
-X-Received: by 2002:a05:6820:4b07:b0:5f6:d91b:ef36 with SMTP id
- 006d021491bc7-5f730849a23mr1529084eaf.1.1736347623278; Wed, 08 Jan 2025
- 06:47:03 -0800 (PST)
+	s=arc-20240116; t=1736347965; c=relaxed/simple;
+	bh=a3ho2vecaIpCSyRJg3lIAeUiNwzNu5h3r+7NClo9Quc=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=mjdf7PedPyLteMIr0uyQB4UN8+z02wovVD8BhGUEkH2Jcr01P6JtNXFg1+5L+QgdA6QFC4Dht4L2lDtwarESu2t0eRa7K8jdked7CuJzdVJodft3V8pgSMUGr7dxmGcjyFV/WWvp4EU2ZAdcWedUc35zhM5UF5l8gYVrCm9wvKI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tHB/0WmI; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D624C4CED3;
+	Wed,  8 Jan 2025 14:52:40 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1736347964;
+	bh=a3ho2vecaIpCSyRJg3lIAeUiNwzNu5h3r+7NClo9Quc=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+	b=tHB/0WmIDPXbQjh7juRiylvbGaNOmDFzMXOqexoHbRtZFWwQAvL17iATXT0ceNkC7
+	 vKN71mUB0nMJNSYnbPVidM8OyXTOYgpB59StbOCXO81s/6yaSx013Bb/dMwqXQtylE
+	 JB/pyyBOgxvH88Aca/Xoa0ObF2wAlD71buJvFgP4eiWN/ytkBDyT67+ntQIpBJl7tC
+	 +DJNkylikSep6qIKZSOMpWKpP1m+d43OwvAS6Q0sXGZGlJsYc/4FmriLO/5wzPJQth
+	 4KsFcVOnyPzBZ++2aRMQv//yhchr2pYul60bDHIMxu6eC+EXAVdydipm0FFkUbr3bU
+	 rgoudXHgr2DmQ==
+Date: Wed, 8 Jan 2025 15:52:37 +0100
+From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+To: Dikshita Agarwal <quic_dikshita@quicinc.com>
+Cc: Hans Verkuil <hverkuil@xs4all.nl>, Nicolas Dufresne
+ <nicolas@ndufresne.ca>, Sebastian Fricke <sebastian.fricke@collabora.com>,
+ Vikash Garodia <quic_vgarodia@quicinc.com>, Abhinav Kumar
+ <quic_abhinavk@quicinc.com>, Mauro Carvalho Chehab <mchehab@kernel.org>,
+ "Rob Herring" <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ "Conor Dooley" <conor+dt@kernel.org>, Philipp Zabel
+ <p.zabel@pengutronix.de>, "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>,
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Neil Armstrong
+ <neil.armstrong@linaro.org>, Uwe =?UTF-8?B?S2xlaW5lLUvDtm5pZw==?=
+ <u.kleine-koenig@baylibre.com>, Jianhua Lu <lujianhua000@gmail.com>, Stefan
+ Schmidt <stefan.schmidt@linaro.org>, <linux-media@vger.kernel.org>,
+ <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+ <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH v9 27/28] media: iris: enable video driver probe of
+ SM8250 SoC
+Message-ID: <20250108155237.5cf0ba10@foz.lan>
+In-Reply-To: <5953bea1-194d-fe2e-251a-d4ef3e7544d3@quicinc.com>
+References: <20241212-qcom-video-iris-v9-0-e8c2c6bd4041@quicinc.com>
+	<20241212-qcom-video-iris-v9-27-e8c2c6bd4041@quicinc.com>
+	<20241223113027.21b8f7ab@foz.lan>
+	<fbe0d935-a3cf-dfa0-aad8-56834a0a002c@quicinc.com>
+	<635ce4ed82aaca422b869f467300b0eccf9c8703.camel@ndufresne.ca>
+	<c0f59149-713b-45e4-3755-4a52cfaa93f6@quicinc.com>
+	<498a99e1-77ca-4acf-8850-cb74417ae88c@xs4all.nl>
+	<9fc76dd1-ef49-a9d2-0271-eacb50943b03@quicinc.com>
+	<9b33ba28-5aa9-4863-8fde-535841ddbc10@xs4all.nl>
+	<6654d78e-d16b-489a-3532-e2fbc788b0ef@quicinc.com>
+	<067d0deb-50ea-46bd-9f09-827b0ba61aa3@xs4all.nl>
+	<5953bea1-194d-fe2e-251a-d4ef3e7544d3@quicinc.com>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250108-mhi_recovery_fix-v1-0-a0a00a17da46@linaro.org> <20250108-mhi_recovery_fix-v1-1-a0a00a17da46@linaro.org>
-In-Reply-To: <20250108-mhi_recovery_fix-v1-1-a0a00a17da46@linaro.org>
-From: Loic Poulain <loic.poulain@linaro.org>
-Date: Wed, 8 Jan 2025 15:46:26 +0100
-X-Gm-Features: AbW1kvZfPY4Kk4qbtmTD0fHBZZNdvUZzXO5U_uMo2FSCqxn2gzTvApC3VGAA_jo
-Message-ID: <CAMZdPi-2O_aNWHnRKkMGUKsrTdfTTuNM70y_7X5xvADiyk-+VQ@mail.gmail.com>
-Subject: Re: [PATCH 1/2] bus: mhi: host: pci_generic: Use pci_try_reset_function()
- to avoid deadlock
-To: manivannan.sadhasivam@linaro.org
-Cc: mhi@lists.linux.dev, Johan Hovold <johan@kernel.org>, linux-arm-msm@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, 8 Jan 2025 at 14:39, Manivannan Sadhasivam via B4 Relay
-<devnull+manivannan.sadhasivam.linaro.org@kernel.org> wrote:
->
-> From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
->
-> There are multiple places from where the recovery work gets scheduled
-> asynchronously. Also, there are multiple places where the caller waits
-> synchronously for the recovery to be completed. One such place is during
-> the PM shutdown() callback.
->
-> If the device is not alive during recovery_work, it will try to reset the
-> device using pci_reset_function(). This function internally will take the
-> device_lock() first before resetting the device. By this time, if the lock
-> has already been acquired, then recovery_work will get stalled while
-> waiting for the lock. And if the lock was already acquired by the caller
-> which waits for the recovery_work to be completed, it will lead to
-> deadlock.
->
-> This is what happened on the X1E80100 CRD device when the device died
-> before shutdown() callback. Driver core calls the driver's shutdown()
-> callback while holding the device_lock() leading to deadlock.
->
-> And this deadlock scenario can occur on other paths as well, like during
-> the PM suspend() callback, where the driver core would hold the
-> device_lock() before calling driver's suspend() callback. And if the
-> recovery_work was already started, it could lead to deadlock. This is also
-> observed on the X1E80100 CRD.
->
-> So to fix both issues, use pci_try_reset_function() in recovery_work. This
-> function first checks for the availability of the device_lock() before
-> trying to reset the device. If the lock is available, it will acquire it
-> and reset the device. Otherwise, it will return -EAGAIN. If that happens,
-> recovery_work will fail with the error message "Recovery failed" as not
-> much could be done.
->
-> Cc: stable@vger.kernel.org # 5.12
-> Reported-by: Johan Hovold <johan@kernel.org>
-> Closes: https://lore.kernel.org/mhi/Z1me8iaK7cwgjL92@hovoldconsulting.com
-> Fixes: 7389337f0a78 ("mhi: pci_generic: Add suspend/resume/recovery procedure")
-> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Em Wed, 8 Jan 2025 16:42:03 +0530
+Dikshita Agarwal <quic_dikshita@quicinc.com> escreveu:
 
-Reviewed-by: Loic Poulain <loic.poulain@linaro.org>
+> On 1/8/2025 4:13 PM, Hans Verkuil wrote:
+> > On 1/8/25 11:21, Dikshita Agarwal wrote: =20
+> >>
+> >>
+> >> On 1/8/2025 2:25 PM, Hans Verkuil wrote: =20
+> >>> On 08/01/2025 09:51, Dikshita Agarwal wrote: =20
+> >>>>
+> >>>>
+> >>>> On 1/8/2025 1:17 PM, Hans Verkuil wrote: =20
+> >>>>> On 08/01/2025 08:43, Dikshita Agarwal wrote: =20
+> >>>>>>
+> >>>>>>
+> >>>>>> On 1/7/2025 7:27 PM, Nicolas Dufresne wrote: =20
+> >>>>>>> Le lundi 23 d=C3=A9cembre 2024 =C3=A0 16:21 +0530, Dikshita Agarw=
+al a =C3=A9crit=C2=A0: =20
+> >>>>>>>>
+> >>>>>>>> On 12/23/2024 4:00 PM, Mauro Carvalho Chehab wrote: =20
+> >>>>>>>>> Em Thu, 12 Dec 2024 17:21:49 +0530
+> >>>>>>>>> Dikshita Agarwal <quic_dikshita@quicinc.com> escreveu:
+> >>>>>>>>> =20
+> >>>>>>>>>> +	.dma_mask =3D GENMASK(31, 29) - 1, =20
+> >>>>>>>>>
+> >>>>>>>>> Setting a mask to GENMASK() - 1 sounds weird. Is it really what=
+ you want?
+> >>>>>>>>> I so, why?
+> >>>>>>>>> =20
+> >>>>>>>> Hi Mauro,
+> >>>>>>>>
+> >>>>>>>> the value of this dma mask should be 0xe0000000 -1.
+> >>>>>>>>
+> >>>>>>>> The background for the same is, 0xe0000000 onward memory space i=
+s allocated
+> >>>>>>>> for IO register space so we are restricting the driver buffer al=
+locations
+> >>>>>>>> to 0xe0000000 - 1.
+> >>>>>>>>
+> >>>>>>>> Based on the comments received in the past, we are using GENMASK=
+ to
+> >>>>>>>> generate 0xe0000000.
+> >>>>>>>>
+> >>>>>>>> Does this answer your query or I missed something? =20
+> >>>>>>>
+> >>>>>>> I'm not sure it will do what you want. (0xe0000000 -1) matches ~B=
+IT(29). Perhaps
+> >>>>>>> you wanted to use ~0xe0000000.=20
+> >>>>>>> =20
+> >>>>>> value of dma mask is coming as expected with GENMASK(31, 29) - 1
+> >>>>>>
+> >>>>>> qcom-iris aa00000.video-codec: dma_mask DFFFFFFF (0xe0000000 -1) =
+=20
+> >>>>>
+> >>>>> Isn't this just the equivalent of GENMASK(28, 0)? Can't you use tha=
+t? =20
+> >>>
+> >>> Too early in the morning, this suggestion was clearly wrong.
+> >>> =20
+> >>>>>
+> >>>>> It's much easier to understand than GENMASK()-1. =20
+> >>>>
+> >>>> Sure, I can use either ~GENMASK(29, 29) or ~BIT(29), =20
+> >>>
+> >>> ~BIT(29).
+> >>>
+> >>> It's really weird to just disable a single bit, so I think some comme=
+nts
+> >>> explaining why this mask is needed would be good (if there aren't com=
+ments
+> >>> already).
+> >>> =20
+> >> I tested this some more, and seems ~BIT(29) doesn't work, as its still
+> >> conflicting with the register space. =20
+> >=20
+> > Odd, perhaps a 64 vs 32 bit issue?
+> >  =20
+> >> Correct value would be GENMASK(31,30) + GENMASK(28,0) to set the exact=
+ bits
+> >> to get the desired value i.e 0xe0000000 -1 =20
+> > Honestly, in this case I would prefer to just go with the actual hex va=
+lue
+> > 0xdfffffff together with an explanatory comment.
+> >  =20
+> We moved to GENMASK way to address comment on previous version, but sure
+> can directly use 0xdfffffff with a comment.
+
+If I understood it right, bits 0-31 can be used, but the hardware has some
+issue using bit 29 at the mask. Could you please comment why it can't be
+used?
+
+Btw, as this is a mask, IMO the better would be to document that all bits
+except for BIT(29) can be used with something like:
+
+	/* Bit 29 can't be used because ... */
+	 .dma_mask =3D GENMASK(31, 0) - BIT(29)
+
+Thanks,
+Mauro
 
