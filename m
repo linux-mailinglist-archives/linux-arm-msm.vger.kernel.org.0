@@ -1,74 +1,65 @@
-Return-Path: <linux-arm-msm+bounces-44284-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-44285-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1FAFFA05127
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jan 2025 03:53:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 420D6A0512A
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jan 2025 03:53:38 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8ECBC1889CDD
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jan 2025 02:53:31 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id D7C281889928
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jan 2025 02:53:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A4CA619CC22;
-	Wed,  8 Jan 2025 02:52:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 82ADE19DFA2;
+	Wed,  8 Jan 2025 02:52:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RyRbOvJF"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iZlgRSJL"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C78919C54A;
-	Wed,  8 Jan 2025 02:52:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E68819D8A2;
+	Wed,  8 Jan 2025 02:52:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736304777; cv=none; b=HXCo219GThPhcJJXHdIHaTAwzH9V0dGu2Rd/pEBR0FLEajebfeS7Q8ctEfPiMwohPe2hRxPjsVUHvLc8zHc2HLAogB1oJROwLe5jXt0FeR8q9uV3deQF3rom4hjqebSoXrozwsLHXCWnFKONYWfDilw+XPdEOGVJbsAet3YkvlU=
+	t=1736304778; cv=none; b=YuaOMdNKY0OrSDOQwdGMBRc6cGe5qhMKzIn8g5FzD1RQ3DfhEVKICRZGJw7C5ukfhc19wgZSuchhqdQLnZqp84CNhANH6WZNOYdga/IVcuzaNgfP3BxMN6Evj5Me65SEbKfhDOMYqZCliEXexYphwjYlqHe8+8NRR2+OttouezQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736304777; c=relaxed/simple;
-	bh=bWk0N/iUuUmPksh/fczOo0wVV/WukZ+Ms8pDNiaGQZE=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=C+hJzv3yYWV83hdf9DA8ntlS2iEI3TlUCl/eMCbYf+NEfdDSyin875e15LcuoFnCXhTc/o089swr7/3gugfrpBzJvKeVTu57eVCpDu8FeDb4g/NlTdDckFu34MH1Rsu5yM+lALAPAcNkTFCxSX+PJToOwpOjARwR5w8c65wmWRg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RyRbOvJF; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71DA0C4CEE2;
-	Wed,  8 Jan 2025 02:52:55 +0000 (UTC)
+	s=arc-20240116; t=1736304778; c=relaxed/simple;
+	bh=RNqtwYaqW7MPjUOYh/8VKVV/dAixoasXf04+2SxYaD0=;
+	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=DCUGw2316NbxYItm3fr8XR5ZZRQpZseQHJSck9YTc5tSdMv7o7GvUNecptKsooAndGGxwUvooavVY5yuuOAxp8UmGI07sqBGSJENY95hUXTMAY6yLdXl57EFmhGDvExJYHicSLr3b7aOZEalnyjzaFH5odHMT4BnIQJs0CvmGho=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iZlgRSJL; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36CB7C4CEDF;
+	Wed,  8 Jan 2025 02:52:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1736304777;
-	bh=bWk0N/iUuUmPksh/fczOo0wVV/WukZ+Ms8pDNiaGQZE=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RyRbOvJF2PC/qT3MNekGSZii9EkGPm8hFQigHKgfapeMtQdVLwzqFpPJDl1PqKj++
-	 B0HhCEaG3BJH3a2XCQ+2PjAEsz1x7aXAjqJtc7jaIdr6MwKvQQu4x4/qkE7OYyUEvM
-	 vdKYWn5swry8SaDgVnwpbZ6f8616SsgZLDtRKIJkCqXFQIHtSDqx+S6C3RCSO9Yv0l
-	 kgW9brB4T6trQAjxLPL75KQhtVNfgFA4AUA74DUpKCVLeFgSDQSf0CcMdlFFaTvafy
-	 Cit5jImGFVaaPeKISmUO+M0s4qNds7gxAf+C3Zb/a+2/cZz+DPFAQcX1nPwLxH5fyy
-	 CZ/usle2TsF6A==
+	s=k20201202; t=1736304778;
+	bh=RNqtwYaqW7MPjUOYh/8VKVV/dAixoasXf04+2SxYaD0=;
+	h=From:To:Subject:Date:In-Reply-To:References:From;
+	b=iZlgRSJL2tEgLzwQaxyCk4pkLXsGOQt1N/BK0CyjzfxuU+zZe2GAyP+Go49bR7yVy
+	 IXi3cc9Vz3NiDsVvJ7s75dvbJ2sntg2kqTsCy7CPPKX7vzR99SQrsAch0gyAuzwknc
+	 YH4ICAgPcd2VVZwYIsqTqxXoGFw3kNn60+NG84GG5zSP9oL5CkmG3ZFTXumR8+0mFm
+	 ilIc7/LNnpmxWRltQfQGeA7dh0NZku+PSnqQpToqmpRLqf4r7E1ISbdOGKNIQjl6MK
+	 XKgma4LBjHZfCjso5wdlCEyUZjwuyaOwHKAXnBkgVpKMPWW4fcncW3qWfS/uINk0KD
+	 5UG74dNYbSNfg==
 From: Bjorn Andersson <andersson@kernel.org>
-To: Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Xin Liu <quic_liuxin@quicinc.com>
-Cc: Vinod Koul <vkoul@kernel.org>,
-	Kishon Vijay Abraham I <kishon@kernel.org>,
-	Alim Akhtar <alim.akhtar@samsung.com>,
-	Avri Altman <avri.altman@wdc.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	Andy Gross <agross@kernel.org>,
-	linux-arm-msm@vger.kernel.org,
-	linux-phy@lists.infradead.org,
-	devicetree@vger.kernel.org,
+To: mturquette@baylibre.com,
+	sboyd@kernel.org,
+	djakov@kernel.org,
+	robh@kernel.org,
+	krzk+dt@kernel.org,
+	conor+dt@kernel.org,
 	linux-kernel@vger.kernel.org,
-	linux-scsi@vger.kernel.org,
-	quic_jiegan@quicinc.com,
-	quic_aiquny@quicinc.com,
-	quic_tingweiz@quicinc.com,
-	quic_sayalil@quicinc.com
-Subject: Re: (subset) [PATCH v4 0/3] Enable UFS on QCS615
-Date: Tue,  7 Jan 2025 20:52:46 -0600
-Message-ID: <173630476486.101108.6875505033763914837.b4-ty@kernel.org>
+	linux-arm-msm@vger.kernel.org,
+	linux-clk@vger.kernel.org,
+	linux-pm@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	Varadarajan Narayanan <quic_varada@quicinc.com>
+Subject: Re: (subset) [PATCH v1 1/2] dt-bindings: interconnect: Add Qualcomm IPQ5424 support
+Date: Tue,  7 Jan 2025 20:52:47 -0600
+Message-ID: <173630476483.101108.3442415567679884744.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20241216095439.531357-1-quic_liuxin@quicinc.com>
-References: <20241216095439.531357-1-quic_liuxin@quicinc.com>
+In-Reply-To: <20241213105808.674620-1-quic_varada@quicinc.com>
+References: <20241213105808.674620-1-quic_varada@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -79,22 +70,19 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Mon, 16 Dec 2024 17:54:36 +0800, Xin Liu wrote:
-> From: Sayali Lokhande <quic_sayalil@quicinc.com>
+On Fri, 13 Dec 2024 16:28:07 +0530, Varadarajan Narayanan wrote:
+> Add master/slave ids for Qualcomm IPQ5424 Network-On-Chip
+> interfaces. This will be used by the gcc-ipq5424 driver
+> for providing interconnect services using the icc-clk framework.
 > 
-> Add UFS support to the QCS615 Ride platform. The UFS host controller and
-> QMP UFS PHY hardware of QCS615 are derived from SM6115. Include the
-> relevant binding documents accordingly. Additionally, configure UFS-related
-> clock, power, and interconnect settings in the device tree.
 > 
-> [...]
 
 Applied, thanks!
 
-[2/3] arm64: dts: qcom: qcs615: add UFS node
-      commit: a6a9d10e796957aefbc4c8d53ed7673714e83b31
-[3/3] arm64: dts: qcom: qcs615-ride: Enable UFS node
-      commit: 4b120ef62ed653f4bc05e5f68832d2d2ac548b60
+[1/2] dt-bindings: interconnect: Add Qualcomm IPQ5424 support
+      commit: 2e1c78bf674024375de6eea33e113acc3473d2e2
+[2/2] clk: qcom: ipq5424: Use icc-clk for enabling NoC related clocks
+      commit: 170f3d2c065ecb9757ed4e155e463aa25fd1eef9
 
 Best regards,
 -- 
