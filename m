@@ -1,238 +1,179 @@
-Return-Path: <linux-arm-msm+bounces-44352-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-44353-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id ABF75A05950
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jan 2025 12:12:30 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7CF75A05954
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jan 2025 12:13:01 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9A4A0165A8A
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jan 2025 11:12:28 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6B050165B2B
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jan 2025 11:12:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BC15B1F76CD;
-	Wed,  8 Jan 2025 11:12:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5A0201F76CD;
+	Wed,  8 Jan 2025 11:12:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="AAHULk68"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="YwUMXpXy"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2501D19D090;
-	Wed,  8 Jan 2025 11:12:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5845E1F76D0
+	for <linux-arm-msm@vger.kernel.org>; Wed,  8 Jan 2025 11:12:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736334746; cv=none; b=SjeNQhNpoSDngo8oQYoov70XaHNd7MJAsRh9iX1Sqo252cYBpE92G/mtdN4q511EMHjLTY7B084jyb4pDSswWXlF5W2tEnHZHfO4a+Tk6V7qqJ+Urrj1l5RnDOKeVmR/P0yhgv3rxcBO52yoRPrKlP7TuPmRf9CZvrYpQRvek2M=
+	t=1736334777; cv=none; b=WQ49YslhJ90JRjrNFOCEbwhPpWDNfDw7RNTxyYIy88uoqVaE2W+DIW7JpsaVnR9TuBHI4mSchcQznFG2ofd4VwCsZB+HMdWvpCzqsGSvvl+Vxbb6iYe0cJ0/Ra1M3dbi5zM4uWAJU7x8ySEPBU44TWMjCCh4NlsU0fgifbASM80=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736334746; c=relaxed/simple;
-	bh=dEldfHW90ZhVsld/rEzXya6NixDsyXxn8WQJ9ua8eIs=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=SK0kZD+/MdVnPxTQIDVjlsh2FLOuliD7F4VvYBccCr74UwxJhXCjkt3LYyqA43iB4400IJAybjyz/hjDCU9+n54WnQT8YeHtLWkqjL4qHFxSpG0cRHWE0IkKslkdXQYtyL3eW/RaYqvW1tPoulvDzbmjbr2AdG95WWPho6+/mdM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=AAHULk68; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 508AdkDJ011449;
-	Wed, 8 Jan 2025 11:12:14 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	kfZCtz7Q9C5sAfmn6EtdHKleBcX5vhYfsfi24yR0vzg=; b=AAHULk68eHsXWA4Y
-	Yl6ypCKk6TkvVsLNoWbOnA/oH9P+a+bJd/0ECAO9QIgj6yNImPkGW1HgbnWVg3O8
-	dDF+izO9PJ8mpgiz/WpHZQz89J10fWxHzdz6juiQx8D8kP6SM7jtlOkpbzZ2nJ3C
-	FGUnR51kkv+ePN07aFLwWf1NZ2qzTGBdVa42bR2zISZSSL/vDV0tHHAV5mbUAaas
-	ENG3BvEYetdoy4NPzmxMe27QD0Y9hFF2qcbeS09vAjj717YthDyjqdYlOwg5HhBr
-	RTTthn8Vdi6UDuSdxttL9erk8Bk1ACgVYlWFO9LeqACIDDOLjQkF+f6aVoI4JrXC
-	QCV6gA==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 441nj2ggyn-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 08 Jan 2025 11:12:14 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 508BCDV5010351
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 8 Jan 2025 11:12:13 GMT
-Received: from [10.50.21.116] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 8 Jan 2025
- 03:12:06 -0800
-Message-ID: <5953bea1-194d-fe2e-251a-d4ef3e7544d3@quicinc.com>
-Date: Wed, 8 Jan 2025 16:42:03 +0530
+	s=arc-20240116; t=1736334777; c=relaxed/simple;
+	bh=HZCEetwRael+dNFw4oLqL99vRLgbXiFXWkjfYlHHQBI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Kk5Oozlq4fmp/+RUog3ewsZ3HsWrH9sD+KLXlcB550ZKaZ5BtkJmGRXpXd9sxglbl7X2TBRRHlEsvaZAhp+wUoV4ksJFbZx0KiJmIGj6A2SPMH7DyRJHecXf5maTbdpRyqaLmGOqBoJgFh9m3GUoQawcVUWMezeUf15fK22W6nQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=YwUMXpXy; arc=none smtp.client-ip=209.85.221.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-3862c78536bso825782f8f.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Jan 2025 03:12:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1736334773; x=1736939573; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+         :from:references:cc:to:subject:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=E8p18qN2yYH0mtoCqB/wWFUlUmYpYcguuGr2FBn7gA0=;
+        b=YwUMXpXyMvzRZtUaTIGmbuuWDF5maSDs/iuvFJvWRgTihmoOA5zUhQM3wj5QasxNRx
+         361iTuh7piJZksNc+nVQHJi6Gr5sP0TOQrtYh2+YgfYqdXli3M1aQC54JM10Q5kYZahs
+         HSq27GebHa++gdH2oHf74ELY7ik2IX+nUu/f6gvVYOXggToMsQef8kI2x/OVADeqi58a
+         4ZL3aZfIkm+p9h7alUH1CFyemwZWAJVcu1xdMbO/wIDpeeGQXdpIDGGS+2r4VeiCcd8Y
+         HiGnEb7pU6ogINRhkU9aiptMBq3FjU1BNiFvt4WBPCxl4ZmCF5Gx6gE13sv7YkSxj4bd
+         RyhA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1736334773; x=1736939573;
+        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+         :from:references:cc:to:subject:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=E8p18qN2yYH0mtoCqB/wWFUlUmYpYcguuGr2FBn7gA0=;
+        b=JYaMXuk5B4bgPndHMtEULX29QvjLCScpoiOm89rDWqLD09yoK1goUBXy0UttIoSyY0
+         xYtMu3SepzlNQB0jx9MO7Uo//FctHhWeAk0X1c7mv6HP3Ps1H5IaiIYDpHnsiOAhH7G4
+         bVe32Fe44LVJcoumWiKhVBg35XdgCrJVdJBvdh9jgPnx0zrQKCfGwzXrmTxzVuTx1ykm
+         VWlcbyUxWiDra9eJQLQbDoLWzOJVL8pvrEOHsWLJohQ+aAcCpUOWkWYSFkwNJYMY5o4J
+         ijARJgA5B57lmo9D3TEe1dyIHtx+0RFUnjNQobYTWg5w34ORhWcU3+XhBfoNxYPRoZr7
+         pWdQ==
+X-Forwarded-Encrypted: i=1; AJvYcCV7K0oE69Kdyfz92rQe9egXEItG9YXm1xvscgddxgjh10yZOJaHXiru3OX7a+UlazlhqXrKQLiqKUHDy3Qi@vger.kernel.org
+X-Gm-Message-State: AOJu0YxKGcj2ht0KhlcgdCQmm11QRYVtYqfNkcrOt7fYikK6VpnjfaQI
+	t59pScYf7NxOkZESZRf4j0lycVjxdFPaHabcMDhfJaX5BHXQ9dursBhkTSoiJUM=
+X-Gm-Gg: ASbGncvEVJUNvVbyeydztgit9d/TbXMSaBFJZHytz0HVOFFz7Vs7Fw7laWZ13CG+H42
+	ziKYHclBBBUAooZYiWOVzGhDO0+SwYGpQA8MpnGBFQYhDWhQ+pONA8jM8k8CbRlfEBli3hq/JLz
+	jkvjPA9uyXlTikbtw7Jc3quGDmXIhTGob1TF/FPw+6QibAejSCk/NV1JXsLcAaMkMwcLfzQUjYE
+	7DwzSJPIZh3paGGLMJmqA+p439W1D7c9YaIU0536SUyo7/aZ6boLDOTUDclGvMnEuB27Bf2hLsl
+X-Google-Smtp-Source: AGHT+IEM8rCW3UPYD3EciO4Pw5JPCX65SyzCXXRo5TKTJ3xOV+GtrweZsjR4+WVhxiNLpjsRHOd46A==
+X-Received: by 2002:a05:6000:2ad:b0:385:e374:bd4 with SMTP id ffacd0b85a97d-38a872c7de7mr811485f8f.3.1736334773568;
+        Wed, 08 Jan 2025 03:12:53 -0800 (PST)
+Received: from [192.168.1.20] ([178.197.223.165])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-436e2e96365sm17090145e9.43.2025.01.08.03.12.52
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 08 Jan 2025 03:12:52 -0800 (PST)
+Message-ID: <b0db7570-5606-401f-bf1a-dd1076d2dc52@linaro.org>
+Date: Wed, 8 Jan 2025 12:12:51 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH v9 27/28] media: iris: enable video driver probe of SM8250
- SoC
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 3/6] firmware: qcom: scm: Handle various probe ordering
+ for qcom_scm_assign_mem()
+To: Bjorn Andersson <andersson@kernel.org>
+Cc: Konrad Dybcio <konradybcio@kernel.org>,
+ Mukesh Ojha <quic_mojha@quicinc.com>,
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Stephan Gerhold <stephan.gerhold@linaro.org>,
+ Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+ Kuldeep Singh <quic_kuldsing@quicinc.com>,
+ Elliot Berman <quic_eberman@quicinc.com>,
+ Andrew Halaney <ahalaney@redhat.com>,
+ Avaneesh Kumar Dwivedi <quic_akdwived@quicinc.com>,
+ Andy Gross <andy.gross@linaro.org>, linux-arm-msm@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20241209-qcom-scm-missing-barriers-and-all-sort-of-srap-v2-0-9061013c8d92@linaro.org>
+ <20241209-qcom-scm-missing-barriers-and-all-sort-of-srap-v2-3-9061013c8d92@linaro.org>
+ <o5oz3scbvsvutv43uqgh74xzfxituzieaa57o6mzomdyr3qixo@2j4ogsbu255o>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Content-Language: en-US
-To: Hans Verkuil <hverkuil@xs4all.nl>,
-        Nicolas Dufresne
-	<nicolas@ndufresne.ca>,
-        Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
-        Sebastian Fricke <sebastian.fricke@collabora.com>
-CC: Vikash Garodia <quic_vgarodia@quicinc.com>,
-        Abhinav Kumar
-	<quic_abhinavk@quicinc.com>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        "Rob
- Herring" <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        "Conor
- Dooley" <conor+dt@kernel.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        "Bryan
- O'Donoghue" <bryan.odonoghue@linaro.org>,
-        Dmitry Baryshkov
-	<dmitry.baryshkov@linaro.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        =?UTF-8?Q?Uwe_Kleine-K=c3=b6nig?= <u.kleine-koenig@baylibre.com>,
-        Jianhua Lu
-	<lujianhua000@gmail.com>,
-        Stefan Schmidt <stefan.schmidt@linaro.org>,
-        <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-References: <20241212-qcom-video-iris-v9-0-e8c2c6bd4041@quicinc.com>
- <20241212-qcom-video-iris-v9-27-e8c2c6bd4041@quicinc.com>
- <20241223113027.21b8f7ab@foz.lan>
- <fbe0d935-a3cf-dfa0-aad8-56834a0a002c@quicinc.com>
- <635ce4ed82aaca422b869f467300b0eccf9c8703.camel@ndufresne.ca>
- <c0f59149-713b-45e4-3755-4a52cfaa93f6@quicinc.com>
- <498a99e1-77ca-4acf-8850-cb74417ae88c@xs4all.nl>
- <9fc76dd1-ef49-a9d2-0271-eacb50943b03@quicinc.com>
- <9b33ba28-5aa9-4863-8fde-535841ddbc10@xs4all.nl>
- <6654d78e-d16b-489a-3532-e2fbc788b0ef@quicinc.com>
- <067d0deb-50ea-46bd-9f09-827b0ba61aa3@xs4all.nl>
-From: Dikshita Agarwal <quic_dikshita@quicinc.com>
-In-Reply-To: <067d0deb-50ea-46bd-9f09-827b0ba61aa3@xs4all.nl>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: rebeuzv89PKqycubTI12B6G-iSHlgzJg
-X-Proofpoint-ORIG-GUID: rebeuzv89PKqycubTI12B6G-iSHlgzJg
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- priorityscore=1501 adultscore=0 malwarescore=0 suspectscore=0
- mlxlogscore=999 phishscore=0 impostorscore=0 clxscore=1015 spamscore=0
- mlxscore=0 bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2501080091
+Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
+ 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
+ D2GYIS41Kv4Isx2dEFh+/Q==
+In-Reply-To: <o5oz3scbvsvutv43uqgh74xzfxituzieaa57o6mzomdyr3qixo@2j4ogsbu255o>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-
-
-On 1/8/2025 4:13 PM, Hans Verkuil wrote:
-> On 1/8/25 11:21, Dikshita Agarwal wrote:
+On 07/01/2025 01:42, Bjorn Andersson wrote:
 >>
->>
->> On 1/8/2025 2:25 PM, Hans Verkuil wrote:
->>> On 08/01/2025 09:51, Dikshita Agarwal wrote:
->>>>
->>>>
->>>> On 1/8/2025 1:17 PM, Hans Verkuil wrote:
->>>>> On 08/01/2025 08:43, Dikshita Agarwal wrote:
->>>>>>
->>>>>>
->>>>>> On 1/7/2025 7:27 PM, Nicolas Dufresne wrote:
->>>>>>> Le lundi 23 décembre 2024 à 16:21 +0530, Dikshita Agarwal a écrit :
->>>>>>>>
->>>>>>>> On 12/23/2024 4:00 PM, Mauro Carvalho Chehab wrote:
->>>>>>>>> Em Thu, 12 Dec 2024 17:21:49 +0530
->>>>>>>>> Dikshita Agarwal <quic_dikshita@quicinc.com> escreveu:
->>>>>>>>>
->>>>>>>>>> +	.dma_mask = GENMASK(31, 29) - 1,
->>>>>>>>>
->>>>>>>>> Setting a mask to GENMASK() - 1 sounds weird. Is it really what you want?
->>>>>>>>> I so, why?
->>>>>>>>>
->>>>>>>> Hi Mauro,
->>>>>>>>
->>>>>>>> the value of this dma mask should be 0xe0000000 -1.
->>>>>>>>
->>>>>>>> The background for the same is, 0xe0000000 onward memory space is allocated
->>>>>>>> for IO register space so we are restricting the driver buffer allocations
->>>>>>>> to 0xe0000000 - 1.
->>>>>>>>
->>>>>>>> Based on the comments received in the past, we are using GENMASK to
->>>>>>>> generate 0xe0000000.
->>>>>>>>
->>>>>>>> Does this answer your query or I missed something?
->>>>>>>
->>>>>>> I'm not sure it will do what you want. (0xe0000000 -1) matches ~BIT(29). Perhaps
->>>>>>> you wanted to use ~0xe0000000. 
->>>>>>>
->>>>>> value of dma mask is coming as expected with GENMASK(31, 29) - 1
->>>>>>
->>>>>> qcom-iris aa00000.video-codec: dma_mask DFFFFFFF (0xe0000000 -1)
->>>>>
->>>>> Isn't this just the equivalent of GENMASK(28, 0)? Can't you use that?
->>>
->>> Too early in the morning, this suggestion was clearly wrong.
->>>
->>>>>
->>>>> It's much easier to understand than GENMASK()-1.
->>>>
->>>> Sure, I can use either ~GENMASK(29, 29) or ~BIT(29),
->>>
->>> ~BIT(29).
->>>
->>> It's really weird to just disable a single bit, so I think some comments
->>> explaining why this mask is needed would be good (if there aren't comments
->>> already).
->>>
->> I tested this some more, and seems ~BIT(29) doesn't work, as its still
->> conflicting with the register space.
+>> diff --git a/drivers/firmware/qcom/qcom_scm.c b/drivers/firmware/qcom/qcom_scm.c
+>> index 5d91b8e22844608f35432f1ba9c08d477d4ff762..93212c8f20ad65ecc44804b00f4b93e3eaaf8d95 100644
+>> --- a/drivers/firmware/qcom/qcom_scm.c
+>> +++ b/drivers/firmware/qcom/qcom_scm.c
+>> @@ -1075,6 +1075,9 @@ int qcom_scm_assign_mem(phys_addr_t mem_addr, size_t mem_sz,
+>>  	int ret, i, b;
+>>  	u64 srcvm_bits = *srcvm;
+>>  
+>> +	if (!qcom_scm_is_available())
+>> +		return -EPROBE_DEFER;
 > 
-> Odd, perhaps a 64 vs 32 bit issue?
+> This API is generally called from places other than probe, making the
+> return of EPROBE_DEFER undesirable. While not pretty, a client depending
+> on the scm driver to be probed is expected to call
+> qcom_scm_is_available().
 > 
->> Correct value would be GENMASK(31,30) + GENMASK(28,0) to set the exact bits
->> to get the desired value i.e 0xe0000000 -1
-> 
-> Honestly, in this case I would prefer to just go with the actual hex value
-> 0xdfffffff together with an explanatory comment.
-> 
-We moved to GENMASK way to address comment on previous version, but sure
-can directly use 0xdfffffff with a comment.
+> qcom_rmtfs_mem_probe() does this right before calling
+> qcom_scm_assign_mem(), am I misunderstanding the case you're describing?
 
-Thanks,
-Dikshita
-> Regards,
-> 
-> 	Hans
-> 
->>> Regards,
->>>
->>> 	Hans
->>>
->>>> Please let me know which would be better?
->>>>
->>>> Thanks,
->>>> Dikshita
->>>>
->>>>>
->>>>> Regards,
->>>>>
->>>>> 	Hans
->>>>>
->>>>>>
->>>>>> Thanks,
->>>>>> Dikshita
->>>>>>> Nicolas
->>>>>>>
->>>>>>>>
->>>>>>>> Thanks,
->>>>>>>> Dikshita
->>>>>>>>> Thanks,
->>>>>>>>> Mauro
->>>>>>>
->>>>>
->>>>>
->>>
-> 
+I tried to reproduce my NULL ptr but now I cannot and indeed if every
+path is protected with qcom_scm_is_available() everything should be fine.
+
+Let's skip this patch then.
+
+Best regards,
+Krzysztof
 
