@@ -1,36 +1,81 @@
-Return-Path: <linux-arm-msm+bounces-44334-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-44335-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1ADEBA055D6
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jan 2025 09:55:18 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5E771A0567A
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jan 2025 10:15:44 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 608A73A6669
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jan 2025 08:55:12 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id E2DA518880EB
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jan 2025 09:15:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A96A61E9B26;
-	Wed,  8 Jan 2025 08:55:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 898B21AA1D2;
+	Wed,  8 Jan 2025 09:15:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="IprCCsH8"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D71B1A76DA;
-	Wed,  8 Jan 2025 08:55:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2076F8634F
+	for <linux-arm-msm@vger.kernel.org>; Wed,  8 Jan 2025 09:15:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736326513; cv=none; b=ooozOIn6EOKu8Atwjte6b3C3kgVqiykYQi3RUov1Ph8QOybnEtpGbNpZ4F17Jr3e0o8jOwG3EWczSR1DQQEpgruc1eO06UagLL2Ep8LQWAwUWV6qYmBrK1NVgDguo5PV+IwXFA3lnL6er3Fdkj+TzaH4Hu041QMkJX80Dsu5TeA=
+	t=1736327739; cv=none; b=CWUOCRhp1rWHa2B30S0NnoLE9JkxXw+M40BmATdjn1nWINJciRWKGNTe+36+oPXhLSPVpLZjVXfjv/MB1d9faUlTUaEk29wV9FpuEyNbJSyWHrpLKHg9gSgkh5CRGUvXGt2AFiYO+3A8x2szR0syYHYoCGvN/Xva71Rg0VgEZjM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736326513; c=relaxed/simple;
-	bh=+m1REw0wUHFJ1LpY0FQrnetQE+JYAEmXfiVCKMhqGiY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=tAiDEtTuXPKI5YMeScqLXpRIAsnDuYNYiTb/h96Za8QoYkpNXs2Z9iEwjyadAzc5MB95RztSUhr5aazz6QM+npHR6lGZ4BZzMFIywNgYRZeOh303fSRmx+Annq01PXQCyohZlo9OHB0MxvSdbPd1lNewTaqx8lognGewDb+T3+U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15F70C4CEE0;
-	Wed,  8 Jan 2025 08:55:08 +0000 (UTC)
-Message-ID: <9b33ba28-5aa9-4863-8fde-535841ddbc10@xs4all.nl>
-Date: Wed, 8 Jan 2025 09:55:07 +0100
+	s=arc-20240116; t=1736327739; c=relaxed/simple;
+	bh=smSNxMxiiV9Zwcn6TToXT9n8ICEUnMbb43wNbBKOg+E=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=aJHlIWn2u1zJU111Tr771b7/aAyGua3UqOlgpehOrGzh7uN7W+s94saL2MiyQ7L+qwzy7MWN0pBHf+2TFHrlZ2y26NAs9LUQk2114gSxxAHCITh8wEyYhbMnytPBbiPINd8VoAJAseBywIhNxNSZUKkL6OHWLYiZxYzA26r6cwY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=IprCCsH8; arc=none smtp.client-ip=209.85.221.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-385d7f19f20so7282502f8f.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Jan 2025 01:15:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1736327735; x=1736932535; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=GDiahWrl6T9cXZgCCGkHTEx0Nips7sBBPWaR4i9Z8Ro=;
+        b=IprCCsH87B8RyKjUECctNZ4sS4RLsfn1wiqm8VoolAZETpC2NzEgmT7Dlp2HMi52PI
+         ZZSraF8tyqmlg3456y2CeJxw5uypvo0hXKXmzqHBf56RaXDeEe2FrVQM2Y8q7zrL77mR
+         MzIisY75teBgdNW8GSUT3GLDe3hSQeczAW8FbKDTp8qA5rjaFKXoiXqfEVVM5TpbG629
+         tdpawUF6KJuoXUI2YCCVaGL1ejAXDSjPwU+qlOJBzzFsBXDmOfjqF7qNgyhAPhHhhjVE
+         hDhKB2coaEE364SbhrP0zHfRKMnR0slDQRAwQxRBqbNAhV2YwiX7wMgzJrypxFyor02E
+         g4lg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1736327735; x=1736932535;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=GDiahWrl6T9cXZgCCGkHTEx0Nips7sBBPWaR4i9Z8Ro=;
+        b=EsVCGNbQBbrjYbBjaVobsnin83zo2p40oysZpu/8FbcNYQFR163DAH5Ih2VO3p7D9M
+         ZxudKsZD/Zig1TWtIe2jzG38gegvHSXDir35e+tbTOpaibcLe1POI4RRIK+L23Ky68H6
+         rx0u1GjFObOsI1HqrhbX7wjkbbKTIPEHDhTprq2zDSBtLU11L97klgF4MjY4x+5gcY+p
+         xZpO80nAgizFe3C2cNFx1MSN7yv6ZYDYu/yHqDwVkWrVsUFNsM8gXz0e5NuaNirEKMcg
+         KK1OwyXeUIF8DqqivabUGJVq2gwqc0DGMXhbBgBo57d+UbaV4XfRppUmY7ZNKunt8xzS
+         1kqQ==
+X-Forwarded-Encrypted: i=1; AJvYcCU6Yq8t+hHidOddWSkXuofhuI4ayr17nugkochLHHG44CTjxyktskvFOU/CpTaDHGbSGaI30eOLvO8HdkrJ@vger.kernel.org
+X-Gm-Message-State: AOJu0YxLlx29BHVoHBiAP0Wysb6S0DfSIxTsN+orusRC4dKZnXToyQxm
+	39lv+hyN8mXISf8w8kMbNzdmgCF1TvXKfCvfJKMjX1yW1CAJnUFxRc9KzqHsWpc=
+X-Gm-Gg: ASbGncujepr+16hmZg4JnEnxOJPmZ2LlEXtLStduDthzSXp/R7QzzBhYpNeSP4mo8kR
+	sUfw/SgA6ReKAS02HAOc+xju6a/IeU2VATCh3Xma+ZtKUFMXM5VEntQ6WRmgSUMY1H/e47Av+x9
+	WwwjsI0JHpI9GCI4sXiC7DuHTSkMsPsd884IJ8gqqV5rSI2WoSOLhCV3nmQ9K6wkUK2Puc1DuoL
+	h/Ho7i5tZbN3RKxCYlHa0RXW+9+kxN3+yBd3YWCuRKwGC2tssqkWIsilTK2lKTj9nYIE45B5iEA
+	Ky0CUhgR36KzffHSwhhId73M0eSS5cIvLg==
+X-Google-Smtp-Source: AGHT+IGRz1l0mf1DvBr1gOXG7M29ULpJjaGp3mFK1ZtZ8sTRtb21m+s4b2Y7BHzhH6icvEzgPtycKw==
+X-Received: by 2002:a05:6000:1864:b0:385:f071:a1c9 with SMTP id ffacd0b85a97d-38a87357964mr1344903f8f.50.1736327735315;
+        Wed, 08 Jan 2025 01:15:35 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:982:cbb0:127c:1a45:c431:c5f9? ([2a01:e0a:982:cbb0:127c:1a45:c431:c5f9])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38a1c8292f4sm53269751f8f.3.2025.01.08.01.15.34
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 08 Jan 2025 01:15:34 -0800 (PST)
+Message-ID: <2fcd9a10-ae9e-480f-87a1-5b49e5082ef5@linaro.org>
+Date: Wed, 8 Jan 2025 10:15:34 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -38,162 +83,700 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v9 27/28] media: iris: enable video driver probe of SM8250
- SoC
-To: Dikshita Agarwal <quic_dikshita@quicinc.com>,
- Nicolas Dufresne <nicolas@ndufresne.ca>,
- Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
- Sebastian Fricke <sebastian.fricke@collabora.com>
-Cc: Vikash Garodia <quic_vgarodia@quicinc.com>,
- Abhinav Kumar <quic_abhinavk@quicinc.com>,
- Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
+From: Neil Armstrong <neil.armstrong@linaro.org>
+Reply-To: neil.armstrong@linaro.org
+Subject: Re: [PATCH 1/2] arm64: dts: qcom: sm8650: setup cpu thermal with idle
+ on high temperatures
+To: Bjorn Andersson <andersson@kernel.org>
+Cc: Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
  Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Philipp Zabel <p.zabel@pengutronix.de>,
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Neil Armstrong <neil.armstrong@linaro.org>,
- =?UTF-8?Q?Uwe_Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
- Jianhua Lu <lujianhua000@gmail.com>,
- Stefan Schmidt <stefan.schmidt@linaro.org>, linux-media@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20241212-qcom-video-iris-v9-0-e8c2c6bd4041@quicinc.com>
- <20241212-qcom-video-iris-v9-27-e8c2c6bd4041@quicinc.com>
- <20241223113027.21b8f7ab@foz.lan>
- <fbe0d935-a3cf-dfa0-aad8-56834a0a002c@quicinc.com>
- <635ce4ed82aaca422b869f467300b0eccf9c8703.camel@ndufresne.ca>
- <c0f59149-713b-45e4-3755-4a52cfaa93f6@quicinc.com>
- <498a99e1-77ca-4acf-8850-cb74417ae88c@xs4all.nl>
- <9fc76dd1-ef49-a9d2-0271-eacb50943b03@quicinc.com>
-Content-Language: en-US, nl
-From: Hans Verkuil <hverkuil@xs4all.nl>
-Autocrypt: addr=hverkuil@xs4all.nl; keydata=
- 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
-In-Reply-To: <9fc76dd1-ef49-a9d2-0271-eacb50943b03@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+ <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20250103-topic-sm8650-thermal-cpu-idle-v1-0-faa1f011ecd9@linaro.org>
+ <20250103-topic-sm8650-thermal-cpu-idle-v1-1-faa1f011ecd9@linaro.org>
+ <qszkxmtrqr62wgd3qx7uctu22w4qrkietasvffinzwmzt7ccum@r26dikuqp7a4>
+ <11ca788f-67e6-4e5c-9ace-083b730bc9ce@linaro.org>
+ <2xp2xz4w7drpnql5khevz4wenlmiu3omwcilfisb3vvq2jlnwg@tcmjb475kghk>
+Content-Language: en-US, fr
+Autocrypt: addr=neil.armstrong@linaro.org; keydata=
+ xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
+ GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
+ BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
+ qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
+ 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
+ AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
+ OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
+ Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
+ YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
+ GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
+ UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
+ GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
+ yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
+ QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
+ SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
+ 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
+ Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
+ oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
+ M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
+ 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
+ KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
+ 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
+ QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
+Organization: Linaro
+In-Reply-To: <2xp2xz4w7drpnql5khevz4wenlmiu3omwcilfisb3vvq2jlnwg@tcmjb475kghk>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On 08/01/2025 09:51, Dikshita Agarwal wrote:
+On 08/01/2025 04:11, Bjorn Andersson wrote:
+> On Tue, Jan 07, 2025 at 09:13:18AM +0100, Neil Armstrong wrote:
+>> Hi,
+>>
+>> On 07/01/2025 00:39, Bjorn Andersson wrote:
+>>> On Fri, Jan 03, 2025 at 03:38:26PM +0100, Neil Armstrong wrote:
+>>>> On the SM8650, the dynamic clock and voltage scaling (DCVS) is done in an
+>>>> hardware controlled loop using the LMH and EPSS blocks with constraints and
+>>>> OPPs programmed in the board firmware.
+>>>>
+>>>> Since the Hardware does a better job at maintaining the CPUs temperature
+>>>> in an acceptable range by taking in account more parameters like the die
+>>>> characteristics or other factory fused values, it makes no sense to try
+>>>> and reproduce a similar set of constraints with the Linux cpufreq thermal
+>>>> core.
+>>>>
+>>>> In addition, the tsens IP is responsible for monitoring the temperature
+>>>> across the SoC and the current settings will heavily trigger the tsens
+>>>> UP/LOW interrupts if the CPU temperatures reaches the hardware thermal
+>>>> constraints which are currently defined in the DT. And since the CPUs
+>>>> are not hooked in the thermal trip points, the potential interrupts and
+>>>> calculations are a waste of system resources.
+>>>>
+>>>> Instead, set higher temperatures in the CPU trip points, and hook some CPU
+>>>> idle injector with a 100% duty cycle at the highest trip point in the case
+>>>> the hardware DCVS cannot handle the temperature surge, and try our best to
+>>>> avoid reaching the critical temperature trip point which should trigger an
+>>>> inevitable thermal shutdown.
+>>>>
+>>>
+>>> Are you able to hit these higher temperatures? Do you have some test
+>>> case where the idle-injection shows to be successful in blocking us from
+>>> reaching the critical temp?
+>>
+>> No, I've been able to test idle-injection and observed a noticeable effect
+>> but I had to set lower trip, do you know how I can easily "block" LMH/EPSS from
+>> scaling down and let the temp go higher ?
+>>
 > 
+> I don't know how to override that configuration.
 > 
-> On 1/8/2025 1:17 PM, Hans Verkuil wrote:
->> On 08/01/2025 08:43, Dikshita Agarwal wrote:
+>>>
+>>> E.g. in X13s (SC8280XP) we opted for relying on LMH/EPSS and define only
+>>> the critical trip for when the hardware fails us.
+>>
+>> It's the goal here aswell
+>>
+> 
+> How about simplifying the patch by removing the idle-injection step and
+> just rely on LMH/EPSS and the "critical" trip (at least until someone
+> can prove that there's value in the extra mitigation)?
+
+OK, but I see value in this idle injection mitigation in that case LMH/EPSS
+fails, the only factor in control of HLOS is by stopping scheduling tasks
+since frequency won't be able to scale anymore.
+
+Anyway, I agree it can be added later on, so should I drop the 2 trip points
+and only leave the critical one ?
+
+> 
+> Regards,
+> Bjorn
+> 
 >>>
 >>>
->>> On 1/7/2025 7:27 PM, Nicolas Dufresne wrote:
->>>> Le lundi 23 décembre 2024 à 16:21 +0530, Dikshita Agarwal a écrit :
->>>>>
->>>>> On 12/23/2024 4:00 PM, Mauro Carvalho Chehab wrote:
->>>>>> Em Thu, 12 Dec 2024 17:21:49 +0530
->>>>>> Dikshita Agarwal <quic_dikshita@quicinc.com> escreveu:
->>>>>>
->>>>>>> +	.dma_mask = GENMASK(31, 29) - 1,
->>>>>>
->>>>>> Setting a mask to GENMASK() - 1 sounds weird. Is it really what you want?
->>>>>> I so, why?
->>>>>>
->>>>> Hi Mauro,
->>>>>
->>>>> the value of this dma mask should be 0xe0000000 -1.
->>>>>
->>>>> The background for the same is, 0xe0000000 onward memory space is allocated
->>>>> for IO register space so we are restricting the driver buffer allocations
->>>>> to 0xe0000000 - 1.
->>>>>
->>>>> Based on the comments received in the past, we are using GENMASK to
->>>>> generate 0xe0000000.
->>>>>
->>>>> Does this answer your query or I missed something?
->>>>
->>>> I'm not sure it will do what you want. (0xe0000000 -1) matches ~BIT(29). Perhaps
->>>> you wanted to use ~0xe0000000. 
->>>>
->>> value of dma mask is coming as expected with GENMASK(31, 29) - 1
+>>> I have no concerns at all about "removing" the 90C trip point, that
+>>> makes total sense to me - let the hardware keep the cores as close to
+>>> max as possible, and then use some slower sensor for keeping the system
+>>> temperature in check (such as the x13s skin sensor).
 >>>
->>> qcom-iris aa00000.video-codec: dma_mask DFFFFFFF (0xe0000000 -1)
->>
->> Isn't this just the equivalent of GENMASK(28, 0)? Can't you use that?
-
-Too early in the morning, this suggestion was clearly wrong.
-
->>
->> It's much easier to understand than GENMASK()-1.
-> 
-> Sure, I can use either ~GENMASK(29, 29) or ~BIT(29),
-
-~BIT(29).
-
-It's really weird to just disable a single bit, so I think some comments
-explaining why this mask is needed would be good (if there aren't comments
-already).
-
-Regards,
-
-	Hans
-
-> Please let me know which would be better?
-> 
-> Thanks,
-> Dikshita
-> 
->>
->> Regards,
->>
->> 	Hans
->>
 >>>
->>> Thanks,
->>> Dikshita
->>>> Nicolas
+>>> PS. The described behavior should apply to anything SDM845 and newer, so
+>>> I'd like to see this set/document precedence for other platforms.
+>>>
+>>> Regards,
+>>> Bjorn
+>>>
+>>>> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+>>>> ---
+>>>>    arch/arm64/boot/dts/qcom/sm8650.dtsi | 274 +++++++++++++++++++++++++++--------
+>>>>    1 file changed, 214 insertions(+), 60 deletions(-)
 >>>>
->>>>>
->>>>> Thanks,
->>>>> Dikshita
->>>>>> Thanks,
->>>>>> Mauro
+>>>> diff --git a/arch/arm64/boot/dts/qcom/sm8650.dtsi b/arch/arm64/boot/dts/qcom/sm8650.dtsi
+>>>> index 25e47505adcb790d09f1d2726386438487255824..448374a32e07151e35727d92fab77356769aea8a 100644
+>>>> --- a/arch/arm64/boot/dts/qcom/sm8650.dtsi
+>>>> +++ b/arch/arm64/boot/dts/qcom/sm8650.dtsi
+>>>> @@ -99,6 +99,13 @@ l3_0: l3-cache {
+>>>>    					cache-unified;
+>>>>    				};
+>>>>    			};
+>>>> +
+>>>> +			cpu0_idle: thermal-idle {
+>>>> +				#cooling-cells = <2>;
+>>>> +				duration-us = <800000>;
+>>>> +				exit-latency-us = <10000>;
+>>>> +			};
+>>>> +
+>>>>    		};
+>>>>    		cpu1: cpu@100 {
+>>>> @@ -119,6 +126,12 @@ cpu1: cpu@100 {
+>>>>    			qcom,freq-domain = <&cpufreq_hw 0>;
+>>>>    			#cooling-cells = <2>;
+>>>> +
+>>>> +			cpu1_idle: thermal-idle {
+>>>> +				#cooling-cells = <2>;
+>>>> +				duration-us = <800000>;
+>>>> +				exit-latency-us = <10000>;
+>>>> +			};
+>>>>    		};
+>>>>    		cpu2: cpu@200 {
+>>>> @@ -146,6 +159,12 @@ l2_200: l2-cache {
+>>>>    				cache-unified;
+>>>>    				next-level-cache = <&l3_0>;
+>>>>    			};
+>>>> +
+>>>> +			cpu2_idle: thermal-idle {
+>>>> +				#cooling-cells = <2>;
+>>>> +				duration-us = <800000>;
+>>>> +				exit-latency-us = <10000>;
+>>>> +			};
+>>>>    		};
+>>>>    		cpu3: cpu@300 {
+>>>> @@ -166,6 +185,12 @@ cpu3: cpu@300 {
+>>>>    			qcom,freq-domain = <&cpufreq_hw 3>;
+>>>>    			#cooling-cells = <2>;
+>>>> +
+>>>> +			cpu3_idle: thermal-idle {
+>>>> +				#cooling-cells = <2>;
+>>>> +				duration-us = <800000>;
+>>>> +				exit-latency-us = <10000>;
+>>>> +			};
+>>>>    		};
+>>>>    		cpu4: cpu@400 {
+>>>> @@ -193,6 +218,12 @@ l2_400: l2-cache {
+>>>>    				cache-unified;
+>>>>    				next-level-cache = <&l3_0>;
+>>>>    			};
+>>>> +
+>>>> +			cpu4_idle: thermal-idle {
+>>>> +				#cooling-cells = <2>;
+>>>> +				duration-us = <800000>;
+>>>> +				exit-latency-us = <10000>;
+>>>> +			};
+>>>>    		};
+>>>>    		cpu5: cpu@500 {
+>>>> @@ -220,6 +251,12 @@ l2_500: l2-cache {
+>>>>    				cache-unified;
+>>>>    				next-level-cache = <&l3_0>;
+>>>>    			};
+>>>> +
+>>>> +			cpu5_idle: thermal-idle {
+>>>> +				#cooling-cells = <2>;
+>>>> +				duration-us = <800000>;
+>>>> +				exit-latency-us = <10000>;
+>>>> +			};
+>>>>    		};
+>>>>    		cpu6: cpu@600 {
+>>>> @@ -247,6 +284,12 @@ l2_600: l2-cache {
+>>>>    				cache-unified;
+>>>>    				next-level-cache = <&l3_0>;
+>>>>    			};
+>>>> +
+>>>> +			cpu6_idle: thermal-idle {
+>>>> +				#cooling-cells = <2>;
+>>>> +				duration-us = <800000>;
+>>>> +				exit-latency-us = <10000>;
+>>>> +			};
+>>>>    		};
+>>>>    		cpu7: cpu@700 {
+>>>> @@ -274,6 +317,12 @@ l2_700: l2-cache {
+>>>>    				cache-unified;
+>>>>    				next-level-cache = <&l3_0>;
+>>>>    			};
+>>>> +
+>>>> +			cpu7_idle: thermal-idle {
+>>>> +				#cooling-cells = <2>;
+>>>> +				duration-us = <800000>;
+>>>> +				exit-latency-us = <10000>;
+>>>> +			};
+>>>>    		};
+>>>>    		cpu-map {
+>>>> @@ -5752,23 +5801,30 @@ cpu2-top-thermal {
+>>>>    			trips {
+>>>>    				trip-point0 {
+>>>> -					temperature = <90000>;
+>>>> +					temperature = <108000>;
+>>>>    					hysteresis = <2000>;
+>>>>    					type = "passive";
+>>>>    				};
+>>>> -				trip-point1 {
+>>>> -					temperature = <95000>;
+>>>> +				cpu2_top_alert1: trip-point1 {
+>>>> +					temperature = <110000>;
+>>>>    					hysteresis = <2000>;
+>>>>    					type = "passive";
+>>>>    				};
+>>>>    				cpu2-critical {
+>>>> -					temperature = <110000>;
+>>>> +					temperature = <115000>;
+>>>>    					hysteresis = <1000>;
+>>>>    					type = "critical";
+>>>>    				};
+>>>>    			};
+>>>> +
+>>>> +			cooling-maps {
+>>>> +				map0 {
+>>>> +					trip = <&cpu2_top_alert1>;
+>>>> +					cooling-device = <&cpu2_idle 100 100>;
+>>>> +				};
+>>>> +			};
+>>>>    		};
+>>>>    		cpu2-bottom-thermal {
+>>>> @@ -5776,23 +5832,30 @@ cpu2-bottom-thermal {
+>>>>    			trips {
+>>>>    				trip-point0 {
+>>>> -					temperature = <90000>;
+>>>> +					temperature = <108000>;
+>>>>    					hysteresis = <2000>;
+>>>>    					type = "passive";
+>>>>    				};
+>>>> -				trip-point1 {
+>>>> -					temperature = <95000>;
+>>>> +				cpu2_bottom_alert1: trip-point1 {
+>>>> +					temperature = <110000>;
+>>>>    					hysteresis = <2000>;
+>>>>    					type = "passive";
+>>>>    				};
+>>>>    				cpu2-critical {
+>>>> -					temperature = <110000>;
+>>>> +					temperature = <115000>;
+>>>>    					hysteresis = <1000>;
+>>>>    					type = "critical";
+>>>>    				};
+>>>>    			};
+>>>> +
+>>>> +			cooling-maps {
+>>>> +				map0 {
+>>>> +					trip = <&cpu2_bottom_alert1>;
+>>>> +					cooling-device = <&cpu2_idle 100 100>;
+>>>> +				};
+>>>> +			};
+>>>>    		};
+>>>>    		cpu3-top-thermal {
+>>>> @@ -5800,23 +5863,30 @@ cpu3-top-thermal {
+>>>>    			trips {
+>>>>    				trip-point0 {
+>>>> -					temperature = <90000>;
+>>>> +					temperature = <108000>;
+>>>>    					hysteresis = <2000>;
+>>>>    					type = "passive";
+>>>>    				};
+>>>> -				trip-point1 {
+>>>> -					temperature = <95000>;
+>>>> +				cpu3_top_alert1: trip-point1 {
+>>>> +					temperature = <110000>;
+>>>>    					hysteresis = <2000>;
+>>>>    					type = "passive";
+>>>>    				};
+>>>>    				cpu3-critical {
+>>>> -					temperature = <110000>;
+>>>> +					temperature = <115000>;
+>>>>    					hysteresis = <1000>;
+>>>>    					type = "critical";
+>>>>    				};
+>>>>    			};
+>>>> +
+>>>> +			cooling-maps {
+>>>> +				map0 {
+>>>> +					trip = <&cpu3_top_alert1>;
+>>>> +					cooling-device = <&cpu3_idle 100 100>;
+>>>> +				};
+>>>> +			};
+>>>>    		};
+>>>>    		cpu3-bottom-thermal {
+>>>> @@ -5824,23 +5894,30 @@ cpu3-bottom-thermal {
+>>>>    			trips {
+>>>>    				trip-point0 {
+>>>> -					temperature = <90000>;
+>>>> +					temperature = <108000>;
+>>>>    					hysteresis = <2000>;
+>>>>    					type = "passive";
+>>>>    				};
+>>>> -				trip-point1 {
+>>>> -					temperature = <95000>;
+>>>> +				cpu3_bottom_alert1: trip-point1 {
+>>>> +					temperature = <110000>;
+>>>>    					hysteresis = <2000>;
+>>>>    					type = "passive";
+>>>>    				};
+>>>>    				cpu3-critical {
+>>>> -					temperature = <110000>;
+>>>> +					temperature = <115000>;
+>>>>    					hysteresis = <1000>;
+>>>>    					type = "critical";
+>>>>    				};
+>>>>    			};
+>>>> +
+>>>> +			cooling-maps {
+>>>> +				map0 {
+>>>> +					trip = <&cpu3_bottom_alert1>;
+>>>> +					cooling-device = <&cpu3_idle 100 100>;
+>>>> +				};
+>>>> +			};
+>>>>    		};
+>>>>    		cpu4-top-thermal {
+>>>> @@ -5848,23 +5925,30 @@ cpu4-top-thermal {
+>>>>    			trips {
+>>>>    				trip-point0 {
+>>>> -					temperature = <90000>;
+>>>> +					temperature = <108000>;
+>>>>    					hysteresis = <2000>;
+>>>>    					type = "passive";
+>>>>    				};
+>>>> -				trip-point1 {
+>>>> -					temperature = <95000>;
+>>>> +				cpu4_top_alert1: trip-point1 {
+>>>> +					temperature = <110000>;
+>>>>    					hysteresis = <2000>;
+>>>>    					type = "passive";
+>>>>    				};
+>>>>    				cpu4-critical {
+>>>> -					temperature = <110000>;
+>>>> +					temperature = <115000>;
+>>>>    					hysteresis = <1000>;
+>>>>    					type = "critical";
+>>>>    				};
+>>>>    			};
+>>>> +
+>>>> +			cooling-maps {
+>>>> +				map0 {
+>>>> +					trip = <&cpu4_top_alert1>;
+>>>> +					cooling-device = <&cpu4_idle 100 100>;
+>>>> +				};
+>>>> +			};
+>>>>    		};
+>>>>    		cpu4-bottom-thermal {
+>>>> @@ -5872,23 +5956,30 @@ cpu4-bottom-thermal {
+>>>>    			trips {
+>>>>    				trip-point0 {
+>>>> -					temperature = <90000>;
+>>>> +					temperature = <108000>;
+>>>>    					hysteresis = <2000>;
+>>>>    					type = "passive";
+>>>>    				};
+>>>> -				trip-point1 {
+>>>> -					temperature = <95000>;
+>>>> +				cpu4_bottom_alert1: trip-point1 {
+>>>> +					temperature = <110000>;
+>>>>    					hysteresis = <2000>;
+>>>>    					type = "passive";
+>>>>    				};
+>>>>    				cpu4-critical {
+>>>> -					temperature = <110000>;
+>>>> +					temperature = <115000>;
+>>>>    					hysteresis = <1000>;
+>>>>    					type = "critical";
+>>>>    				};
+>>>>    			};
+>>>> +
+>>>> +			cooling-maps {
+>>>> +				map0 {
+>>>> +					trip = <&cpu4_bottom_alert1>;
+>>>> +					cooling-device = <&cpu4_idle 100 100>;
+>>>> +				};
+>>>> +			};
+>>>>    		};
+>>>>    		cpu5-top-thermal {
+>>>> @@ -5896,23 +5987,30 @@ cpu5-top-thermal {
+>>>>    			trips {
+>>>>    				trip-point0 {
+>>>> -					temperature = <90000>;
+>>>> +					temperature = <108000>;
+>>>>    					hysteresis = <2000>;
+>>>>    					type = "passive";
+>>>>    				};
+>>>> -				trip-point1 {
+>>>> -					temperature = <95000>;
+>>>> +				cpu5_top_alert1: trip-point1 {
+>>>> +					temperature = <110000>;
+>>>>    					hysteresis = <2000>;
+>>>>    					type = "passive";
+>>>>    				};
+>>>>    				cpu5-critical {
+>>>> -					temperature = <110000>;
+>>>> +					temperature = <115000>;
+>>>>    					hysteresis = <1000>;
+>>>>    					type = "critical";
+>>>>    				};
+>>>>    			};
+>>>> +
+>>>> +			cooling-maps {
+>>>> +				map0 {
+>>>> +					trip = <&cpu5_top_alert1>;
+>>>> +					cooling-device = <&cpu5_idle 100 100>;
+>>>> +				};
+>>>> +			};
+>>>>    		};
+>>>>    		cpu5-bottom-thermal {
+>>>> @@ -5920,23 +6018,30 @@ cpu5-bottom-thermal {
+>>>>    			trips {
+>>>>    				trip-point0 {
+>>>> -					temperature = <90000>;
+>>>> +					temperature = <108000>;
+>>>>    					hysteresis = <2000>;
+>>>>    					type = "passive";
+>>>>    				};
+>>>> -				trip-point1 {
+>>>> -					temperature = <95000>;
+>>>> +				cpu5_bottom_alert1: trip-point1 {
+>>>> +					temperature = <110000>;
+>>>>    					hysteresis = <2000>;
+>>>>    					type = "passive";
+>>>>    				};
+>>>>    				cpu5-critical {
+>>>> -					temperature = <110000>;
+>>>> +					temperature = <115000>;
+>>>>    					hysteresis = <1000>;
+>>>>    					type = "critical";
+>>>>    				};
+>>>>    			};
+>>>> +
+>>>> +			cooling-maps {
+>>>> +				map0 {
+>>>> +					trip = <&cpu5_bottom_alert1>;
+>>>> +					cooling-device = <&cpu5_idle 100 100>;
+>>>> +				};
+>>>> +			};
+>>>>    		};
+>>>>    		cpu6-top-thermal {
+>>>> @@ -5944,23 +6049,30 @@ cpu6-top-thermal {
+>>>>    			trips {
+>>>>    				trip-point0 {
+>>>> -					temperature = <90000>;
+>>>> +					temperature = <108000>;
+>>>>    					hysteresis = <2000>;
+>>>>    					type = "passive";
+>>>>    				};
+>>>> -				trip-point1 {
+>>>> -					temperature = <95000>;
+>>>> +				cpu6_top_alert1: trip-point1 {
+>>>> +					temperature = <110000>;
+>>>>    					hysteresis = <2000>;
+>>>>    					type = "passive";
+>>>>    				};
+>>>>    				cpu6-critical {
+>>>> -					temperature = <110000>;
+>>>> +					temperature = <115000>;
+>>>>    					hysteresis = <1000>;
+>>>>    					type = "critical";
+>>>>    				};
+>>>>    			};
+>>>> +
+>>>> +			cooling-maps {
+>>>> +				map0 {
+>>>> +					trip = <&cpu6_top_alert1>;
+>>>> +					cooling-device = <&cpu6_idle 100 100>;
+>>>> +				};
+>>>> +			};
+>>>>    		};
+>>>>    		cpu6-bottom-thermal {
+>>>> @@ -5968,23 +6080,30 @@ cpu6-bottom-thermal {
+>>>>    			trips {
+>>>>    				trip-point0 {
+>>>> -					temperature = <90000>;
+>>>> +					temperature = <108000>;
+>>>>    					hysteresis = <2000>;
+>>>>    					type = "passive";
+>>>>    				};
+>>>> -				trip-point1 {
+>>>> -					temperature = <95000>;
+>>>> +				cpu6_bottom_alert1: trip-point1 {
+>>>> +					temperature = <110000>;
+>>>>    					hysteresis = <2000>;
+>>>>    					type = "passive";
+>>>>    				};
+>>>>    				cpu6-critical {
+>>>> -					temperature = <110000>;
+>>>> +					temperature = <115000>;
+>>>>    					hysteresis = <1000>;
+>>>>    					type = "critical";
+>>>>    				};
+>>>>    			};
+>>>> +
+>>>> +			cooling-maps {
+>>>> +				map0 {
+>>>> +					trip = <&cpu6_bottom_alert1>;
+>>>> +					cooling-device = <&cpu6_idle 100 100>;
+>>>> +				};
+>>>> +			};
+>>>>    		};
+>>>>    		aoss1-thermal {
+>>>> @@ -6010,23 +6129,30 @@ cpu7-top-thermal {
+>>>>    			trips {
+>>>>    				trip-point0 {
+>>>> -					temperature = <90000>;
+>>>> +					temperature = <108000>;
+>>>>    					hysteresis = <2000>;
+>>>>    					type = "passive";
+>>>>    				};
+>>>> -				trip-point1 {
+>>>> -					temperature = <95000>;
+>>>> +				cpu7_top_alert1: trip-point1 {
+>>>> +					temperature = <110000>;
+>>>>    					hysteresis = <2000>;
+>>>>    					type = "passive";
+>>>>    				};
+>>>>    				cpu7-critical {
+>>>> -					temperature = <110000>;
+>>>> +					temperature = <115000>;
+>>>>    					hysteresis = <1000>;
+>>>>    					type = "critical";
+>>>>    				};
+>>>>    			};
+>>>> +
+>>>> +			cooling-maps {
+>>>> +				map0 {
+>>>> +					trip = <&cpu7_top_alert1>;
+>>>> +					cooling-device = <&cpu7_idle 100 100>;
+>>>> +				};
+>>>> +			};
+>>>>    		};
+>>>>    		cpu7-middle-thermal {
+>>>> @@ -6034,23 +6160,30 @@ cpu7-middle-thermal {
+>>>>    			trips {
+>>>>    				trip-point0 {
+>>>> -					temperature = <90000>;
+>>>> +					temperature = <108000>;
+>>>>    					hysteresis = <2000>;
+>>>>    					type = "passive";
+>>>>    				};
+>>>> -				trip-point1 {
+>>>> -					temperature = <95000>;
+>>>> +				cpu7_middle_alert1: trip-point1 {
+>>>> +					temperature = <110000>;
+>>>>    					hysteresis = <2000>;
+>>>>    					type = "passive";
+>>>>    				};
+>>>>    				cpu7-critical {
+>>>> -					temperature = <110000>;
+>>>> +					temperature = <115000>;
+>>>>    					hysteresis = <1000>;
+>>>>    					type = "critical";
+>>>>    				};
+>>>>    			};
+>>>> +
+>>>> +			cooling-maps {
+>>>> +				map0 {
+>>>> +					trip = <&cpu7_middle_alert1>;
+>>>> +					cooling-device = <&cpu7_idle 100 100>;
+>>>> +				};
+>>>> +			};
+>>>>    		};
+>>>>    		cpu7-bottom-thermal {
+>>>> @@ -6058,23 +6191,30 @@ cpu7-bottom-thermal {
+>>>>    			trips {
+>>>>    				trip-point0 {
+>>>> -					temperature = <90000>;
+>>>> +					temperature = <108000>;
+>>>>    					hysteresis = <2000>;
+>>>>    					type = "passive";
+>>>>    				};
+>>>> -				trip-point1 {
+>>>> -					temperature = <95000>;
+>>>> +				cpu7_bottom_alert1: trip-point1 {
+>>>> +					temperature = <110000>;
+>>>>    					hysteresis = <2000>;
+>>>>    					type = "passive";
+>>>>    				};
+>>>>    				cpu7-critical {
+>>>> -					temperature = <110000>;
+>>>> +					temperature = <115000>;
+>>>>    					hysteresis = <1000>;
+>>>>    					type = "critical";
+>>>>    				};
+>>>>    			};
+>>>> +
+>>>> +			cooling-maps {
+>>>> +				map0 {
+>>>> +					trip = <&cpu7_bottom_alert1>;
+>>>> +					cooling-device = <&cpu7_idle 100 100>;
+>>>> +				};
+>>>> +			};
+>>>>    		};
+>>>>    		cpu0-thermal {
+>>>> @@ -6082,23 +6222,30 @@ cpu0-thermal {
+>>>>    			trips {
+>>>>    				trip-point0 {
+>>>> -					temperature = <90000>;
+>>>> +					temperature = <108000>;
+>>>>    					hysteresis = <2000>;
+>>>>    					type = "passive";
+>>>>    				};
+>>>> -				trip-point1 {
+>>>> -					temperature = <95000>;
+>>>> +				cpu0_alert1: trip-point1 {
+>>>> +					temperature = <110000>;
+>>>>    					hysteresis = <2000>;
+>>>>    					type = "passive";
+>>>>    				};
+>>>>    				cpu0-critical {
+>>>> -					temperature = <110000>;
+>>>> +					temperature = <115000>;
+>>>>    					hysteresis = <1000>;
+>>>>    					type = "critical";
+>>>>    				};
+>>>>    			};
+>>>> +
+>>>> +			cooling-maps {
+>>>> +				map0 {
+>>>> +					trip = <&cpu0_alert1>;
+>>>> +					cooling-device = <&cpu0_idle 100 100>;
+>>>> +				};
+>>>> +			};
+>>>>    		};
+>>>>    		cpu1-thermal {
+>>>> @@ -6106,23 +6253,30 @@ cpu1-thermal {
+>>>>    			trips {
+>>>>    				trip-point0 {
+>>>> -					temperature = <90000>;
+>>>> +					temperature = <108000>;
+>>>>    					hysteresis = <2000>;
+>>>>    					type = "passive";
+>>>>    				};
+>>>> -				trip-point1 {
+>>>> -					temperature = <95000>;
+>>>> +				cpu1_alert1: trip-point1 {
+>>>> +					temperature = <110000>;
+>>>>    					hysteresis = <2000>;
+>>>>    					type = "passive";
+>>>>    				};
+>>>>    				cpu1-critical {
+>>>> -					temperature = <110000>;
+>>>> +					temperature = <115000>;
+>>>>    					hysteresis = <1000>;
+>>>>    					type = "critical";
+>>>>    				};
+>>>>    			};
+>>>> +
+>>>> +			cooling-maps {
+>>>> +				map0 {
+>>>> +					trip = <&cpu1_alert1>;
+>>>> +					cooling-device = <&cpu1_idle 100 100>;
+>>>> +				};
+>>>> +			};
+>>>>    		};
+>>>>    		nsphvx0-thermal {
 >>>>
->>
+>>>> -- 
+>>>> 2.34.1
+>>>>
 >>
 
 
