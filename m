@@ -1,78 +1,77 @@
-Return-Path: <linux-arm-msm+bounces-44308-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-44309-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 055B5A05293
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jan 2025 06:24:30 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9373AA052B8
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jan 2025 06:42:19 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7E084188854F
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jan 2025 05:24:32 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 9136A7A146B
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jan 2025 05:42:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D19CD1990AE;
-	Wed,  8 Jan 2025 05:24:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DB84419B586;
+	Wed,  8 Jan 2025 05:42:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Wtzf+Ncw"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="sv/+tbMV"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pj1-f42.google.com (mail-pj1-f42.google.com [209.85.216.42])
+Received: from mail-pl1-f175.google.com (mail-pl1-f175.google.com [209.85.214.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21B9070838
-	for <linux-arm-msm@vger.kernel.org>; Wed,  8 Jan 2025 05:24:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C05710E4
+	for <linux-arm-msm@vger.kernel.org>; Wed,  8 Jan 2025 05:42:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736313866; cv=none; b=Zbbu238pP01Vqe66xxjqvNbkkCIPPLAzGWzvQSGdVm5OAEIRMLTP589EFhFvYcRZkEL6mqo1dFOKT+97zE3FIWvjKmrwZ3/0VLWZQBfZYcWOVM+242I94bI3NYzAwdDUrtfGXbwraok2gnsCO3cMWzkGIMRD0sLQwy4ql+ySKiA=
+	t=1736314933; cv=none; b=pbwNHuaevDO+jtXZSERmQEq0xFNuDQiQoEzmyg8/6G9oMNEArjEOUXO6UhipNUjOrOFoBnTkbkcUW0BcQbILfeHfOIsMhCL8vhi3eNRuulXvlsyynV8v9OG3JIx1cYw9CeG5hG9niypEcf+TE1xh3llrs3Sgxm8ZtmZzeZv3VMM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736313866; c=relaxed/simple;
-	bh=T3XUWs5B2XgRnR4N9N20WoY0iCbEWAwD7wx377rIgHo=;
+	s=arc-20240116; t=1736314933; c=relaxed/simple;
+	bh=V1/eCskG0EEA3jK4/+w1sWmTTp3nj57YncqG93zlAl4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=O5xnhIQHstVERzVlE7e1Kjzy6VVxo4aJYT8J2wqObicwWYNquEZKPN/h50s6raH3KgNRxzzz3KNSbdAYikGtoFH1ub1VMXXuQ5x+bAnp3Rp3NarxUjpjHmz8cl4vPN4LyCUky0EBv+2S1U6/l8Z9jyqyQZaJ9mTmU7MfgW5qvjM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Wtzf+Ncw; arc=none smtp.client-ip=209.85.216.42
+	 Content-Type:Content-Disposition:In-Reply-To; b=FFIXDWRR2xoiFgNwCNp77RecfxmzFifhfBUwP1cKPmGS3jGuiGtEFLP7YyDa4II+duuBMIQc/03dBsNnGpIkOdIDoNuDUS+JsvvMzZ7CG4H7esupIY9SsBjdMvj6H2ZoioOFV3xEOB4fbwzabt72v+Ese2KHBMeXqKrJGfOamxw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=sv/+tbMV; arc=none smtp.client-ip=209.85.214.175
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pj1-f42.google.com with SMTP id 98e67ed59e1d1-2f43da61ba9so19455445a91.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Jan 2025 21:24:24 -0800 (PST)
+Received: by mail-pl1-f175.google.com with SMTP id d9443c01a7336-2166360285dso245123235ad.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Jan 2025 21:42:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1736313864; x=1736918664; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1736314930; x=1736919730; darn=vger.kernel.org;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=QD6L0ujpzaRC/L59NoO6Z/+6+/oZeKQ9pKbwkOhBz1U=;
-        b=Wtzf+Ncwf8xk2m0V/rLUN8fgTGwOkOdXppx2NgG6sXzFnm5BSe2zKpHrmugLy0IF53
-         4kt9eXDnnAp0mTFB4scqodxgo6G17LsX+Rv85g+FLnvp5rE4nq52W38Nl1hrYyBfBDWN
-         0nicKTSoNt13qjfeTvuFmRhqz6pE+SWt8Uf/suCQJeBLee3F1YhFb2HWi8Irf104B5X5
-         OYd+kltV6q07ftBfSBbg7ANUEnytRiRBeqXwuxf8bog2D+BdefCKS/CCmLhT3rFyB5RZ
-         7VOodsKO5cJu4+CoQiVcApImy4jbWQ4GjxkhkQcWbwpJs7usx0+y9jl9C2JG+ipGpa2C
-         zgdA==
+        bh=VRf3KLf8/gL60sYLc56uaXjwgEUxVqDlLqbN/+vh4pU=;
+        b=sv/+tbMV3ApdnvA/8WHZ889/m6SYnlp9M5Ko1pyGD3S9B7ghS5FWiJ2r6T/I/Y/FOt
+         HZ0JcWWE1cDa8Ly0GqTWsGwuz9E755m6k5jxnn1PqY1LCdw0a04zteiAFSWQMlcTP08c
+         6cv2ZBqtqxKrUoJ+TtirqKzi02vKBhFLwBl0VydRq2F7APW+vKfmaINv1H6i/VLpPBUL
+         cWKRhpcrkgD5T+D0cdSJr6JV269nyV49IfYP2vy47z3OGAkTaSDge9uBvLHSj0dv1wFw
+         6rVA2sogAiEMDbeiQmQhAOpRAvnLKtf0YfZMnmVtD0neKzy6OqO0dCpuGDmM/67IW+HJ
+         w6HQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736313864; x=1736918664;
+        d=1e100.net; s=20230601; t=1736314930; x=1736919730;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=QD6L0ujpzaRC/L59NoO6Z/+6+/oZeKQ9pKbwkOhBz1U=;
-        b=boG4m7Ffei5jbyrz4ea4c+ml7TQd5p4BaH2Dgzn2lUz5vlJqIQCUpDJ6s+5mU/YA/C
-         lCKWsjHGNjAwSnYaiYuqlkHD+POsOh6+dhlDGEID7tn7r+9rXP6I5FtQLa9B7o6F1fzv
-         T/wutEWDJT48tOyi8tWwxzCp/X/Cspm2YVMCgdaJ92+49NErbOr9KlegdJDe/TD9zdbo
-         lci0yVbfpeWBnwPIr2mhIlQoZdoG0meI0/UvyK0fOcDjSBbURXZxQI4vGSZD24fXR84A
-         bhP810CvDO3zoicXuycDugrtgAAxAo0Jdqm91tNOQ7yYceNOnQtwbtYljAZg3CAvl9nz
-         YJlw==
-X-Forwarded-Encrypted: i=1; AJvYcCV67IdIG5tMqOux5ZsIr/phmS5f3UoQkRZuUhdpvORgcJ1FN0uOiMRdVJ1XLDaU5UANfM6ZK/4BHRaiDvf0@vger.kernel.org
-X-Gm-Message-State: AOJu0Yxex8x9njsxNA7ObWVNfDvQsti6ee0f2Gdh93OQ5gBTVL2TtXYG
-	ZI8U7NxABktnUfnNbau/UoQMfcvFX5j2uPg5Tg4m+JocRcPZbTsUuuSwinn+NDltRiMxEuE9O/E
-	=
-X-Gm-Gg: ASbGnctnyLu8chXwx+Q9ddg86yBCzgKh0DQwt3O7H1SiKXninRvYOvj9XRcbKJcZ+1r
-	aYhkaF5noajwbLK2tYJL2RPq1wTyk6YnJniIkK35k9JvafMESGCeyK6W8g5XYiq5FWj16W0o4x0
-	zRbTcIbURsbDOxURLSIMdo4agHTb8v9uXPjNoSgfiBjepcCOyzZ2pxmjrR1gDVa3qHdr6Jhc9Qs
-	Bwh5/EgU2FwvJzIPGiXx7DReH2lZrZ0x/i+iSv7kFqe60A8RCsXOUNKMiQmyHv43JdW
-X-Google-Smtp-Source: AGHT+IFeyo2aY47f/bHnipeLkhHuGpmxHpg269EGkKbkJq3egoRjBog7l1tF3IalKZ3HcujkOf6x+Q==
-X-Received: by 2002:a17:90b:2cc7:b0:2ee:5edc:4b2 with SMTP id 98e67ed59e1d1-2f548f6a952mr2289084a91.20.1736313864340;
-        Tue, 07 Jan 2025 21:24:24 -0800 (PST)
+        bh=VRf3KLf8/gL60sYLc56uaXjwgEUxVqDlLqbN/+vh4pU=;
+        b=Ikm/yiZ1byGmZecStz6X4svAqn8GnNPkwsNFXCBQGqaawG/4fEm7X5Lzxe1pbXBOxw
+         sgp1fo2tt3D3VgVtEZ6qc5HudlR/57DOOr56b5u9weHRXQBTvXMzL7VyC0Mm/Mjv2GDd
+         f2b7DOZ2iqOl79tb+p7ykY2M2mjsWUvdgFvvz4PX/39pXzosT3RDeKFJfs07O3bXgtbP
+         NsDvKrMDQzI3lRwGzIegMS0RrOdYb4CztinnvRMlIAZJ4zsTiu5cTLuMoIAjVdVbJlgA
+         M/9IqSuJa/gkb1rRi2tFmOaJVV80fnAjn0KfAd6TqGy+oz130NifwXqThVzsMvXWhRvo
+         PZWA==
+X-Forwarded-Encrypted: i=1; AJvYcCXb1dtvwOFKJONxReoLW6xVXaFKXSTLqhcjwON682CQ/BqHjpgBU+ryK54jkmW+YU92ppEZVymKZwpM43In@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw14hUBTxFkshCdMHGkQtAO6K4l0Myc93Mh2r/RagiO1MKq8kZM
+	dAXj/MoEAWVUTcBivYYj0KXObJczk128QDXbK1GkK7UzLAQl34G/51TcH2msiA==
+X-Gm-Gg: ASbGncvhwJnMXr0frrZj/N5YvtW8JPy0RcRIpkbaBevNRSTZEY0BK+lO24PQK63SGm1
+	kcOj6bv+amMiKjATGKn0EU94NatQBndoOBQzqt6zYfU/kfuwp5DBiUxkUIe4PjTuszxHm+BM37/
+	nWrJdHqpVF5lozTZTeMcMGrB1xC8IEN0oh+ew7MotWMryO4MEk90mME7057YNDHJtsiopuUiAHN
+	k++sESOIjU48TNfbH9MqkvZVxp9D75iNiuKoNtmE1jgsIKk8jger07CF+XCJcV+ubck
+X-Google-Smtp-Source: AGHT+IHfb7DiJvfS8v29jxsUziZRhFKDaY9dPzRiz3np6wV51MwuSsfBjIEy6SOqBmGKPG5YDPPdEQ==
+X-Received: by 2002:a17:902:d491:b0:215:54a1:8584 with SMTP id d9443c01a7336-21a83f4c070mr21127315ad.17.1736314930490;
+        Tue, 07 Jan 2025 21:42:10 -0800 (PST)
 Received: from thinkpad ([117.213.100.67])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-219dc9f5195sm317147125ad.194.2025.01.07.21.24.20
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-219dc9f4429sm318970325ad.173.2025.01.07.21.42.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Jan 2025 21:24:23 -0800 (PST)
-Date: Wed, 8 Jan 2025 10:54:16 +0530
+        Tue, 07 Jan 2025 21:42:09 -0800 (PST)
+Date: Wed, 8 Jan 2025 11:12:02 +0530
 From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 To: Jeffrey Hugo <quic_jhugo@quicinc.com>
 Cc: quic_carlv@quicinc.com, quic_yabdulra@quicinc.com,
@@ -80,11 +79,11 @@ Cc: quic_carlv@quicinc.com, quic_yabdulra@quicinc.com,
 	ogabbay@kernel.org, lizhi.hou@amd.com,
 	jacek.lawrynowicz@linux.intel.com, linux-arm-msm@vger.kernel.org,
 	dri-devel@lists.freedesktop.org, mhi@lists.linux.dev
-Subject: Re: [PATCH 1/7] bus: mhi: host: Refactor BHI/BHIe based firmware
- loading
-Message-ID: <20250108052416.cqfoxzvw42me2kub@thinkpad>
+Subject: Re: [PATCH 2/7] bus: mhi: host: Add a policy to enable image
+ transfer via BHIe in PBL
+Message-ID: <20250108054202.r4bqxduuhpcvpqm4@thinkpad>
 References: <20241213213340.2551697-1-quic_jhugo@quicinc.com>
- <20241213213340.2551697-2-quic_jhugo@quicinc.com>
+ <20241213213340.2551697-3-quic_jhugo@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -94,174 +93,95 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20241213213340.2551697-2-quic_jhugo@quicinc.com>
+In-Reply-To: <20241213213340.2551697-3-quic_jhugo@quicinc.com>
 
-On Fri, Dec 13, 2024 at 02:33:34PM -0700, Jeffrey Hugo wrote:
+On Fri, Dec 13, 2024 at 02:33:35PM -0700, Jeffrey Hugo wrote:
 > From: Matthew Leung <quic_mattleun@quicinc.com>
 > 
-> Refactor the firmware loading code to have distinct helper functions for
-> BHI and BHIe operations. This lays the foundation for separating the
-> firmware loading protocol from the firmware being loaded and the EE it
-> is loaded in.
+> Currently, mhi host only performs firmware transfer via BHI in PBL and
+
+s/mhi/MHI here and below.
+
+> BHIe from SBL. To support BHIe transfer directly from PBL, a policy
+> needs to be added.
+> 
+> With this policy, BHIe will be used to transfer firmware in PBL if the
+> mhi controller has bhie regs, sets seg_len, and does not set
+
+s/bhie/BHIe
+
+> fbc_download. The intention is to transfer firmware using BHIe in PBL
+> without further BHIe transfers in SBL.
 > 
 > Signed-off-by: Matthew Leung <quic_mattleun@quicinc.com>
 > Reviewed-by: Youssef Samir <quic_yabdulra@quicinc.com>
 > Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
 > Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
 > ---
->  drivers/bus/mhi/host/boot.c | 155 +++++++++++++++++++++++++-----------
->  1 file changed, 110 insertions(+), 45 deletions(-)
+>  drivers/bus/mhi/host/boot.c     | 80 +++++++++++++++++++++++++++------
+>  drivers/bus/mhi/host/init.c     |  2 +-
+>  drivers/bus/mhi/host/internal.h |  8 ++++
+>  3 files changed, 75 insertions(+), 15 deletions(-)
 > 
 > diff --git a/drivers/bus/mhi/host/boot.c b/drivers/bus/mhi/host/boot.c
-> index e8c92972f9df..e3f3c07166ad 100644
+> index e3f3c07166ad..c9ecb6427209 100644
 > --- a/drivers/bus/mhi/host/boot.c
 > +++ b/drivers/bus/mhi/host/boot.c
-> @@ -177,6 +177,37 @@ int mhi_download_rddm_image(struct mhi_controller *mhi_cntrl, bool in_panic)
->  }
->  EXPORT_SYMBOL_GPL(mhi_download_rddm_image);
->  
-> +static inline void mhi_fw_load_error_dump(struct mhi_controller *mhi_cntrl)
-
-No need to add 'inline' keyword in c files. You can trust the compiler.
-
-> +{
-> +	struct device *dev = &mhi_cntrl->mhi_dev->dev;
-> +	rwlock_t *pm_lock = &mhi_cntrl->pm_lock;
-> +	void __iomem *base = mhi_cntrl->bhi;
-> +	int ret;
-> +	u32 val;
-> +	int i;
-
-int ret, i?
-
-> +	struct {
-> +		char *name;
-> +		u32 offset;
-> +	} error_reg[] = {
-> +		{ "ERROR_CODE", BHI_ERRCODE },
-> +		{ "ERROR_DBG1", BHI_ERRDBG1 },
-> +		{ "ERROR_DBG2", BHI_ERRDBG2 },
-> +		{ "ERROR_DBG3", BHI_ERRDBG3 },
-> +		{ NULL },
-> +	};
-> +
-> +	read_lock_bh(pm_lock);
-> +	if (MHI_REG_ACCESS_VALID(mhi_cntrl->pm_state)) {
-> +		for (i = 0; error_reg[i].name; i++) {
-> +			ret = mhi_read_reg(mhi_cntrl, base, error_reg[i].offset, &val);
-> +			if (ret)
-> +				break;
-> +			dev_err(dev, "Reg: %s value: 0x%x\n", error_reg[i].name, val);
-> +		}
-> +	}
-> +	read_unlock_bh(pm_lock);
-> +}
-> +
-
-[...]
-
-> +static int mhi_alloc_bhi_buffer(struct mhi_controller *mhi_cntrl,
-> +				struct image_info **image_info,
-> +				size_t alloc_size)
-> +{
-> +	struct image_info *img_info;
-> +	struct mhi_buf *mhi_buf;
-> +	int segments = 1;
-> +
-> +	img_info = kzalloc(sizeof(*img_info), GFP_KERNEL);
-> +	if (!img_info)
-> +		return -ENOMEM;
-> +
-> +	/* Allocate memory for entry */
-> +	img_info->mhi_buf = kcalloc(segments, sizeof(*img_info->mhi_buf),
-> +				    GFP_KERNEL);
-
-Why do you need kcalloc for only 1 segment?
-
-> +	if (!img_info->mhi_buf)
-> +		goto error_alloc_mhi_buf;
-> +
-> +	/* Allocate and populate vector table */
-> +	mhi_buf = img_info->mhi_buf;
-> +
-> +	mhi_buf->len = alloc_size;
-> +	mhi_buf->buf = dma_alloc_coherent(mhi_cntrl->cntrl_dev, mhi_buf->len,
-> +					  &mhi_buf->dma_addr, GFP_KERNEL);
-> +	if (!mhi_buf->buf)
-> +		goto error_alloc_segment;
-> +
-> +	img_info->bhi_vec = NULL;
-> +	img_info->entries = segments;
-> +	*image_info = img_info;
-> +
-> +	return 0;
-> +
-> +error_alloc_segment:
-> +	kfree(mhi_buf);
-> +error_alloc_mhi_buf:
-> +	kfree(img_info);
-> +
-> +	return -ENOMEM;
-> +}
-> +
->  int mhi_alloc_bhie_table(struct mhi_controller *mhi_cntrl,
->  			 struct image_info **image_info,
->  			 size_t alloc_size)
-> @@ -364,9 +422,18 @@ int mhi_alloc_bhie_table(struct mhi_controller *mhi_cntrl,
->  	return -ENOMEM;
->  }
->  
-> -static void mhi_firmware_copy(struct mhi_controller *mhi_cntrl,
-> -			      const u8 *buf, size_t remainder,
-> -			      struct image_info *img_info)
-> +static void mhi_firmware_copy_bhi(struct mhi_controller *mhi_cntrl,
-> +				  const u8 *buf, size_t size,
-> +				  struct image_info *img_info)
-> +{
-> +	struct mhi_buf *mhi_buf = img_info->mhi_buf;
-> +
-> +	memcpy(mhi_buf->buf, buf, size);
-> +}
-> +
-> +static void mhi_firmware_copy_bhie(struct mhi_controller *mhi_cntrl,
-> +				   const u8 *buf, size_t remainder,
-> +				   struct image_info *img_info)
->  {
->  	size_t to_cpy;
->  	struct mhi_buf *mhi_buf = img_info->mhi_buf;
-> @@ -390,10 +457,9 @@ void mhi_fw_load_handler(struct mhi_controller *mhi_cntrl)
->  	const struct firmware *firmware = NULL;
->  	struct device *dev = &mhi_cntrl->mhi_dev->dev;
->  	enum mhi_pm_state new_state;
-> +	struct image_info *image;
->  	const char *fw_name;
->  	const u8 *fw_data;
-> -	void *buf;
-> -	dma_addr_t dma_addr;
->  	size_t size, fw_sz;
->  	int ret;
->  
-> @@ -452,17 +518,16 @@ void mhi_fw_load_handler(struct mhi_controller *mhi_cntrl)
->  	fw_sz = firmware->size;
->  
->  skip_req_fw:
-> -	buf = dma_alloc_coherent(mhi_cntrl->cntrl_dev, size, &dma_addr,
-> -				 GFP_KERNEL);
-> -	if (!buf) {
-> +	ret = mhi_alloc_bhi_buffer(mhi_cntrl, &image, size);
-> +	if (ret) {
->  		release_firmware(firmware);
->  		goto error_fw_load;
+> @@ -452,12 +452,62 @@ static void mhi_firmware_copy_bhie(struct mhi_controller *mhi_cntrl,
 >  	}
+>  }
+>  
+> +static enum mhi_fw_load_type mhi_fw_load_type_get(const struct mhi_controller *mhi_cntrl)
+> +{
+> +	enum mhi_fw_load_type ret = MHI_FW_LOAD_UNKNOWN;
+
+You can directly return the enum without a local variable.
+
+> +
+> +	if (mhi_cntrl->fbc_download) {
+> +		if (mhi_cntrl->bhie && mhi_cntrl->seg_len)
+
+I don't think this condition can fail. If 'mhi_cntrl->bhie' is NULL,
+mhi_prepare_for_power_up() will fail. So I think MHI_FW_LOAD_UNKNOWN is not
+needed.
+
+Also, all the validation should be performed early, not while loading fw.
+
+> +			ret = MHI_FW_LOAD_FBC;
+> +	} else {
+> +		if (mhi_cntrl->bhie && mhi_cntrl->seg_len)
+> +			ret = MHI_FW_LOAD_BHIE;
+> +		else
+> +			ret = MHI_FW_LOAD_BHI;
+> +	}
+> +	return ret;
+> +}
+> +
+> +static int mhi_send_image_bhi(struct mhi_controller *mhi_cntrl, const u8 *fw_data, size_t size)
+
+mhi_load_image_bhi?
+
+> +{
+> +	struct image_info *image;
+> +	int ret;
+> +
+> +	ret = mhi_alloc_bhi_buffer(mhi_cntrl, &image, size);
+> +	if (ret)
+> +		return ret;
+> +
 > +	mhi_firmware_copy_bhi(mhi_cntrl, fw_data, size, image);
+> +
+> +	ret = mhi_fw_load_bhi(mhi_cntrl, &image->mhi_buf[image->entries - 1]);
+> +	mhi_free_bhi_buffer(mhi_cntrl, image);
+> +
+> +	return ret;
+> +}
+> +
+> +static int mhi_send_image_bhie(struct mhi_controller *mhi_cntrl, const u8 *fw_data, size_t size)
 
-Why can't you directly use memcpy here? I know what you want to keep symmetry
-with mhi_firmware_copy_bhie(), but it seems unnecessary to me.
-
-Adding a comment like "Load the firmware into BHI vec table" is enough.
+mhi_load_image_bhie?
 
 - Mani
-
 
 -- 
 மணிவண்ணன் சதாசிவம்
