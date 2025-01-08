@@ -1,142 +1,132 @@
-Return-Path: <linux-arm-msm+bounces-44426-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-44427-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 63AE3A05F62
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jan 2025 15:55:45 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 63DD4A05FEA
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jan 2025 16:19:50 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B2BF23A56BD
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jan 2025 14:55:39 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 597C81664C7
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jan 2025 15:19:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5553C1FCFFB;
-	Wed,  8 Jan 2025 14:55:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 999791FCFF0;
+	Wed,  8 Jan 2025 15:19:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="gTQ9OZV5"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="w1nswO97"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f43.google.com (mail-ej1-f43.google.com [209.85.218.43])
+Received: from mail-oa1-f41.google.com (mail-oa1-f41.google.com [209.85.160.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 737631FCF78
-	for <linux-arm-msm@vger.kernel.org>; Wed,  8 Jan 2025 14:55:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 220D919F133
+	for <linux-arm-msm@vger.kernel.org>; Wed,  8 Jan 2025 15:19:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736348137; cv=none; b=JFZ1NK284K7lL+ZPMr2xQ2J5oPc4sMd3TI7mmoPIVgaPYWnyiTESAEGa7M2XDyG7sZyS6+S9CYi4hbxCRFLNtPcwtDervk2lNsPye71r0kvH3bCagwXpnLWpOEX4cRI4jc4mPmhwpDF/FM7To6eqyIqzZrfus9VeAqvt/lnLuXw=
+	t=1736349586; cv=none; b=IouEi15+HP2LlXgpdCueRTxeFgjUa4mi2y6hvqh8i7qWxWY8V8QBG+XyquTPwlLWPTt4Y4wJtG6LYBIg4R7HMJN7/x/hjXzLrv81bYbxDEy66IEPQ3cXcR3NdOnYyppX8fZLAk1JGEpeOibXzM/TzL8OpKpwdGJ7fV7tFz2Or/4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736348137; c=relaxed/simple;
-	bh=67JK1rlmJtGcesXL4SPQSN/FDXqiuAIio1r2G9KnuLM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=uy9XXaqF2KV3eQh6g6Z5h5lBRipPNDuKusUnbQ30X1NGLqcr/+cyn3WFx8QAfbPn2xRf4u29iawwyihNCc2Ld6/b7Fn4P/XLV4jlc3v/GxVpPwjC4tdX681wGsD+I0GlTk19AGiNdWjrwkm097PGxHXc8Tgz6xp52nyRWL78lTc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=gTQ9OZV5; arc=none smtp.client-ip=209.85.218.43
+	s=arc-20240116; t=1736349586; c=relaxed/simple;
+	bh=S8+xIJyK33ZHzGHOInxNuQ7XoyymzN8JimDgUHl2LMQ=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=l6V45L5u5vPdcGnjdEDhEH+pYv1QjB05gTkGVOiTwyBGAmVwN7aAbTT+35w7TEqckyb1uwVSz26kiMAi/yBwQA4vvQUMDysjwtkzBGh/tl46S5StkFwg44cZMaV+7EOvL12C6AyzQZp5fHCPOz9zKXWM3sjyoPCSQpWbILpwgaI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=w1nswO97; arc=none smtp.client-ip=209.85.160.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f43.google.com with SMTP id a640c23a62f3a-aaec61d0f65so280989766b.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Jan 2025 06:55:35 -0800 (PST)
+Received: by mail-oa1-f41.google.com with SMTP id 586e51a60fabf-29fae583cc8so513903fac.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Jan 2025 07:19:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1736348134; x=1736952934; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=x+O0NMpY6QzRmleywGIkKRE2USypKZLsxBppr3RZn6U=;
-        b=gTQ9OZV5Glt4NgQCChHsIO7gTRCxfCNANjgUeGdow3pdDXjJlUQZQBvV2GMGuoKe2t
-         30Q6zBXDekFd8Z1h6nI+uFXANA+Zzi/GIfciF7uBIyEbRaRlcH63KbR689EvLKqcp6uw
-         BJvCzjcPEfDXPz3JGS2qflBzoNOKc4CkOCfGJPeMJZs8jhNwAhr1Xzm04PEozucDQTCL
-         F3xRm6gzgIguPb1W2CASAOe7WNeiwqVwr9aSNQNSX9jCgYNd74b5xV5424lGqu7DzGg0
-         BAPqOwsCKGq/O2+3PUO9Gbw/jGolEvG5LUO1I7Zxg7KnWRHT1GtvLlCJHU1Z60T5VqfX
-         +mug==
+        d=linaro.org; s=google; t=1736349583; x=1736954383; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=6Zs0x6zXwLhMKy2YimFx22u5+ybSyZ3K5Ks5ZMiPS6U=;
+        b=w1nswO97nSovzBwOLaHKx4SpsJYjHKGgtOmETPKgjB70I93z7aFcPmlzw4fZ7RVCB5
+         RmiUcjIhdE07Z5Y85oQzjoD9mWGBzjKNpxwEbG8l5qh1fpUfoSHMmtIWK8G3TNRkL/X7
+         T5Kghw2O9vIDWOyAiH3KqwoIxRiZ72bWCDRYrWGFBY683VdUiw6kwYPSnFfn6dZ8mb6x
+         Zy7vLQd2djt6rpmm20/GHUAra8Pstu2CNO1AxMr1aaa4CKCeWKnxCLN8nebS9O48uf7l
+         Or3lDESEI6Mn9rsJsNYXb2/YIG/QhkSXSVcUcjykJ05gqvLb7rx3v4jrZ61q2aEw9DYW
+         UXFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736348134; x=1736952934;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=x+O0NMpY6QzRmleywGIkKRE2USypKZLsxBppr3RZn6U=;
-        b=ptzDkSuUWQWwifwx+FkMNFPny+sZFF9eJQ+wfE58RJUPZzaXI+Cja4KxupBN/rOlQq
-         yUi8ZRSKDnyInmnX8yLurrlAePI4O37eBNkaBVsBAfzDO1xT8Nj9Hk4RRzXCNwiMkbxz
-         J97FPpE85RMyjQR9zeInezWbwmReWX1JqSxvBbLbvvc7JZHwLhfwDG3Gtx/g0hbrYvVJ
-         gp/Ikxe8boMF9WMpAkeJq1/YyehMrvEjyQnZOV+4f5s+rhveQJlig/HcxUOlOSivukS9
-         0x1I0OIWxpj0Yb4ae1gp5ZnzQ5gU6uJBqairmMIEwv5ptjdZuBjf5W4wwhQWnd1seWyC
-         b1fQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVaixX80aIz4v15c2fxFXB5Jvn1CMhrJ3BdXHzcvCYLxor+0ZqCViD8gKL39VMIsHSZ9SbP4jVBMf1WTsXz@vger.kernel.org
-X-Gm-Message-State: AOJu0YwUd9KhsWZp1FGdYLwCR7S/t/mLmPmtd0SPTs/wCG7+33pduiQE
-	Eq/9gOY9vRTHnKwZZPL27M5kPI5CmwaunlPkiJh4p9kSZdVIJKptwjGMP/JI08Y=
-X-Gm-Gg: ASbGnct7UD0+ZCNpa91iUwkfts16VrKj1Cw1c2PxoP9tv86jQkONHg9dKqKD5jWo75S
-	IzdEtAOkzUy0xxkWRFiw6kY8+37wrJC35rvZenL26an6+Sv6CM9aed1gTAMgEav2wW68v2ZcKg/
-	3FaKbaEdWREMy9t62GW+AkT4gcIk7bTvHYtmRKFtMeTjiLCnoQRK8h46/crfhw8zwxQFIk7GogP
-	c+kN4eCltdvlklx9qD1YicIa431MvWUo08xbSuV6xnf8sBSWqjs6J7xA/K6yqL8jt+z4liGSeu+
-	FoHNVvCtaSIR3mo1kXHsOBogOqIiUExZc4sBZOw=
-X-Google-Smtp-Source: AGHT+IFnWVoDQuHcKTyFxi4kBSfHYu1d60lV+zwr2XqYC5cBIMfaq1XRcTiYwNflIFjII+AZubU8Uw==
-X-Received: by 2002:a17:907:7e91:b0:aa6:4a5b:b729 with SMTP id a640c23a62f3a-ab2ab6f3447mr256057366b.33.1736348133620;
-        Wed, 08 Jan 2025 06:55:33 -0800 (PST)
-Received: from ?IPV6:2a02:8109:888d:ff00:ca7f:54ff:fe52:4519? ([2a02:8109:888d:ff00:ca7f:54ff:fe52:4519])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5d983a172d9sm73309a12.57.2025.01.08.06.55.30
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 08 Jan 2025 06:55:31 -0800 (PST)
-Message-ID: <fff03f10-7e87-48db-8e8f-b06a47d4545f@linaro.org>
-Date: Wed, 8 Jan 2025 15:55:29 +0100
+        d=1e100.net; s=20230601; t=1736349583; x=1736954383;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=6Zs0x6zXwLhMKy2YimFx22u5+ybSyZ3K5Ks5ZMiPS6U=;
+        b=RO2D9g3T8Ad47EoH/HWgRO748qCpQuE0+zLBeeYoWp0wtZYZMDfwmXcjQDTHyLQ+CC
+         Fkf6+IOpkYD3DcAceIT4Sz5CZ9C3WfCk9WBFU9b9YjdHrA28Ncw1h5B2mYQn21IPc9Kp
+         411FRkqdPZM26OqnCqkJtQbcQtlM1h+yBm7xW5/qpYDnqIpNWxmHRn4hIATzkT4M/rg1
+         svsSaHfLSZG9syUh5Y7wzGv+gt3zjkE9ihnmGSUSiNxo5CanxL2b8AU6zDBRmaq+K8K1
+         re7KKVLHky+oAqVqJwxeqKmfJA+xn6BGZ3xrAv7pLREtkOYx6NbXCNbpER5Qy3YtjAUe
+         Lifg==
+X-Forwarded-Encrypted: i=1; AJvYcCUj2mXnpY+Qv6IRJ2H5D/865hN+FF5IjCx8KjbTpNDE0X6c4AKLP1tp2sR0eZvGBqtzH6NjnsuUQebe3Cv6@vger.kernel.org
+X-Gm-Message-State: AOJu0YyoOOGtKY2vtYUICXM8RtXgNd3X+a34ettV9plLlaLS9AERnc/e
+	ETKcn5DKDNaEu+9ywMoATPPRsx7io/NvzISoJmdtLny+zyJsQqrXoTEeSE4bM+sghrNqtHRLiMt
+	CwOBc8JSY7Flo+lyZLcbHbFQD9qlEE8mgtHH96ksb+Ya0FuHCaRo=
+X-Gm-Gg: ASbGncuQF8rGNPk8D+pYkTM8iW+JdLtX8XdeOD8utvzAxndagWexvjG/bT2VZ40QGfl
+	O1MtihHO1BYT8aNWo43FUrk7gRSMoGilRikdt2Bc1jmQWxaOOp9NR3KmDNi5gADfThZRi
+X-Google-Smtp-Source: AGHT+IFdcASMuSPx7wnPTSOxzCIvnK5AZhtUpSDpvfTmQ7F1nQUlpr4kCBfb2r1WlGxp8XqNukwAN1+7QxEq5LVuoOg=
+X-Received: by 2002:a05:6870:ff45:b0:29e:7629:1466 with SMTP id
+ 586e51a60fabf-2a9eaa986e7mr3988370fac.7.1736349583243; Wed, 08 Jan 2025
+ 07:19:43 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 4/4] arm64: dts: qcom: qcs9100: Add support for the
- QCS9100 Ride and Ride Rev3 boards
-Content-Language: en-US
-To: Konrad Dybcio <konradybcio@kernel.org>,
- Tengfei Fan <quic_tengfan@quicinc.com>,
- Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: kernel@quicinc.com, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20240911-add_qcs9100_support-v2-0-e43a71ceb017@quicinc.com>
- <20240911-add_qcs9100_support-v2-4-e43a71ceb017@quicinc.com>
- <dc1216db-128f-4cb4-9df9-ba095dfe713d@kernel.org>
-From: Caleb Connolly <caleb.connolly@linaro.org>
-In-Reply-To: <dc1216db-128f-4cb4-9df9-ba095dfe713d@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+References: <20250108-mhi_recovery_fix-v1-0-a0a00a17da46@linaro.org> <20250108-mhi_recovery_fix-v1-2-a0a00a17da46@linaro.org>
+In-Reply-To: <20250108-mhi_recovery_fix-v1-2-a0a00a17da46@linaro.org>
+From: Loic Poulain <loic.poulain@linaro.org>
+Date: Wed, 8 Jan 2025 16:19:06 +0100
+X-Gm-Features: AbW1kvZa6gRkeZ9H-nvbe12ihHDmXyCS470lzORAghiZyMgYmyhYw4TS9_LQmVE
+Message-ID: <CAMZdPi9KiLczjETLwJG_9krn_z=Og0uZhYuajPeZYoBHanxMiw@mail.gmail.com>
+Subject: Re: [PATCH 2/2] bus: mhi: host: pci_generic: Recover the device
+ synchronously from mhi_pci_runtime_resume()
+To: manivannan.sadhasivam@linaro.org
+Cc: mhi@lists.linux.dev, Johan Hovold <johan@kernel.org>, linux-arm-msm@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, stable@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
+On Wed, 8 Jan 2025 at 14:39, Manivannan Sadhasivam via B4 Relay
+<devnull+manivannan.sadhasivam.linaro.org@kernel.org> wrote:
+>
+> From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+>
+> Currently, in mhi_pci_runtime_resume(), if the resume fails, recovery_work
+> is started asynchronously and success is returned. But this doesn't align
+> with what PM core expects as documented in
+> Documentation/power/runtime_pm.rst:
+>
+> "Once the subsystem-level resume callback (or the driver resume callback,
+> if invoked directly) has completed successfully, the PM core regards the
+> device as fully operational, which means that the device _must_ be able to
+> complete I/O operations as needed.  The runtime PM status of the device is
+> then 'active'."
+>
+> So the PM core ends up marking the runtime PM status of the device as
+> 'active', even though the device is not able to handle the I/O operations.
+> This same condition more or less applies to system resume as well.
+>
+> So to avoid this ambiguity, try to recover the device synchronously from
+> mhi_pci_runtime_resume() and return the actual error code in the case of
+> recovery failure.
+>
+> For doing so, move the recovery code to __mhi_pci_recovery_work() helper
+> and call that from both mhi_pci_recovery_work() and
+> mhi_pci_runtime_resume(). Former still ignores the return value, while the
+> latter passes it to PM core.
+>
+> Cc: stable@vger.kernel.org # 5.13
+> Reported-by: Johan Hovold <johan@kernel.org>
+> Closes: https://lore.kernel.org/mhi/Z2PbEPYpqFfrLSJi@hovoldconsulting.com
+> Fixes: d3800c1dce24 ("bus: mhi: pci_generic: Add support for runtime PM")
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
+Note that it will noticeably impact the user experience on system-wide
+resume (mhi_pci_resume), because MHI devices usually take a while (a
+few seconds) to cold boot and reach a ready state (or time out in the
+worst case). So we may have people complaining about delayed resume
+regression on their laptop even if they are not using the MHI
+device/modem function. Are we ok with that?
 
-On 17/09/2024 01:32, Konrad Dybcio wrote:
-> On 11.09.2024 1:10 PM, Tengfei Fan wrote:
->> Add device tree support for the QCS9100 Ride and Ride Rev3 boards. The
->> QCS9100 is a variant of the SA8775p, and they are fully compatible with
->> each other. The QCS9100 Ride/Ride Rev3 board is essentially the same as
->> the SA8775p Ride/Ride Rev3 board, with the QCS9100 SoC mounted instead
->> of the SA8775p.
->>
->> Signed-off-by: Tengfei Fan <quic_tengfan@quicinc.com>
->> ---
-> 
-> Reviewed-by: Konrad Dybcio <konradybcio@kernel.org>
-
-I don't understand this, if both boards are identical except for the
-name of the SoC then why do we have two devicetree files?
-
-You can surely detect which SoC is in use at runtime if necessary, and
-maybe pick a name which doesn't have the SoC in it if you really want to
-avoid confusion.
-
-If there are differentiating features which will be added later, then I
-think this at least deserves a comment stating as such.
-
-Additionally, the files should be shuffled around to better represent
-that there's two very similar boards with just some minor differences,
-this is a common case already and there is a standard way to handle it
-(see e.g. sdm845-oneplus-common.dtsi and
-sdm845-oneplus-enchilada/fajita.dts)
-
-#include'ing a .dts file just seems like a mess here.
-
-Kind regards,
-
-> 
-> Konrad
-
--- 
-// Caleb (they/them)
-
+Regards,
+Loic
 
