@@ -1,75 +1,65 @@
-Return-Path: <linux-arm-msm+bounces-44297-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-44298-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D5CB9A05233
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jan 2025 05:44:04 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7B1D2A05237
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jan 2025 05:44:22 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3319B3A6F3B
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jan 2025 04:43:59 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 76873161F6B
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jan 2025 04:44:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0FC9E1A08CA;
-	Wed,  8 Jan 2025 04:43:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A0B782594B3;
+	Wed,  8 Jan 2025 04:43:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ztf+TQ/N"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nvGB47D2"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCF101A073F;
-	Wed,  8 Jan 2025 04:43:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72F511A23B8;
+	Wed,  8 Jan 2025 04:43:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736311432; cv=none; b=jHYCvWU3ny3SYsWnFCPEHUqO/2RgVD6new0mdXbKtvk66TZPdYzB9ZYzDGusOIaOnXZ6QwPI3YLZ/nlj9uL2Jobfft3rzSYJ3thPYOKWwGLppyCGcqZkmjRleUbynQW35WdZ8VDcO7uErjFiSAD60+qtgVvfdFPQq47R1FtEeNg=
+	t=1736311433; cv=none; b=NkLjP0dNQl2Qu7JSlKXhzfaBoD9NRLH2AY8Ouxl2udwQPMkZwODeh1nHrtiguAggWK5TupMrPqF8v3zWMoplQMVT86+AOx6A6icqaFDw7aUoAiFNyv3vT3bTYenqENPvbHXbsTU0ynVz23lw2nuScNtO6zvIoplTroov+uIlnAk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736311432; c=relaxed/simple;
-	bh=zrGJQoH0dvmgH6dxRLPUvDFMlfzgZDDrLwRLJDURHgg=;
+	s=arc-20240116; t=1736311433; c=relaxed/simple;
+	bh=/KsyKMmsUNCRol6QfIiF+3eCe0c93hEobsQYeWv/DAM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Qd/QXFdkXNaC19yzSE7TFZmI4h6+nF+Z0wOXlKjejZRe0jISx5J+A1oSZUlb5+UZ4bcpjRIzn81t1GDOTUSRIXaannDN90mQ9p1HScPB/vuOge5pk3GRs2IlcccS9eleiTg22Yp1TUka+uszEINz2N0KWpi4vr/vgL6lv42jSFk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ztf+TQ/N; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13E25C4CEE1;
-	Wed,  8 Jan 2025 04:43:50 +0000 (UTC)
+	 MIME-Version:Content-Type; b=TsHQRFQWZOEGIITNb87tV1Qj/CgCqEtjXxbUH+igDPxXWhWs5n3uhJ1H8jFdrRtACXxnDtGtFtXLt5FMbtIsSjDR/XWrULCml0OMReQRLFHPgw7Hc37wewMe4wxApDhrjCyhsjw9jvYyrfsiDNhcVPl4qRTMiSKr4SAzGZvIe+k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nvGB47D2; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 125BAC4CED0;
+	Wed,  8 Jan 2025 04:43:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1736311431;
-	bh=zrGJQoH0dvmgH6dxRLPUvDFMlfzgZDDrLwRLJDURHgg=;
+	s=k20201202; t=1736311433;
+	bh=/KsyKMmsUNCRol6QfIiF+3eCe0c93hEobsQYeWv/DAM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ztf+TQ/NSW3qERHePdqPJ+t7YSLT0uOMUCaTKLqSYHFwjkBKm9M5ZehtVOkMO5qQQ
-	 UGpSPwnXuGhgRUZQ9ipQXL1vblHnWxvIAlau731bo50jfjlF/+VP/+21Ze4KjwrwGM
-	 tpCb4OOvs7U6/OQFdvgsAaAx0lBLYTSD9nrcZOtUn6o3ZbpOFdIHni2o9sB8lVm+k2
-	 wf9hPIeq6ER5fehfve91cnXuYrD0UxRTJkVAmDp/18/2/YmwOQhbTMWF5bWLmHRNhO
-	 YLQPHOEddRncc1XgRpl9pMANd2p02EWW355N5s8wmOxLEUOO4j/Vu7/0ncNkFPfyWl
-	 RfoWU5gdEU/RQ==
+	b=nvGB47D2BpPiRZTbLvi33hzrtP89Cjfe7VjWL9BMgpofRmjhzRgdjrvdGdy5NTA3l
+	 JKNEBeKERKUTsE5reAbeqJySSrm4yXfgurgXOSTgYiGHW4n2LC0gJjt1fohzzOav2Z
+	 RCBfW5LSXXyQGI3duaRr2ebXag41U1Ijzi0wrp/433zcWji8BcJ6TZv+zo4tnPEh1/
+	 9JK9ZWxVaW90HzbezFvfSjtBB102M7dVkwKkm4C2FZwZGGt8p3b647OlaI1h2SaNfe
+	 FfI3LRk1cVexUu/DOESnC30U6PGbl9yGovJejrkS8indqF2cKhXu68SJLpXjAZ+mbl
+	 rWt7OEUQHvq4A==
 From: Bjorn Andersson <andersson@kernel.org>
-To: Loic Poulain <loic.poulain@linaro.org>,
-	Robert Foss <rfoss@kernel.org>,
-	Andi Shyti <andi.shyti@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Todor Tomov <todor.too@gmail.com>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
-	Michael Turquette <mturquette@baylibre.com>,
-	Stephen Boyd <sboyd@kernel.org>,
-	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-	Jagadeesh Kona <quic_jkona@quicinc.com>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Cc: linux-i2c@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org,
+To: lpieralisi@kernel.org,
+	kw@linux.com,
+	robh@kernel.org,
+	bhelgaas@google.com,
+	konradybcio@kernel.org,
+	krzk+dt@kernel.org,
+	conor+dt@kernel.org,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org,
+	linux-pci@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	linux-media@vger.kernel.org,
-	linux-clk@vger.kernel.org,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Subject: Re: (subset) [PATCH v3 0/6] Add dt-bindings and dtsi changes for CAMSS on x1e80100 silicon
-Date: Tue,  7 Jan 2025 22:43:41 -0600
-Message-ID: <173631142076.110881.800526094135590633.b4-ty@kernel.org>
+	devicetree@vger.kernel.org
+Subject: Re: (subset) [PATCH 0/2] PCI: qcom-ep: BAR fixes
+Date: Tue,  7 Jan 2025 22:43:42 -0600
+Message-ID: <173631142072.110881.6854526601749603529.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20250102-b4-linux-next-24-11-18-dtsi-x1e80100-camss-v3-0-cb66d55d20cc@linaro.org>
-References: <20250102-b4-linux-next-24-11-18-dtsi-x1e80100-camss-v3-0-cb66d55d20cc@linaro.org>
+In-Reply-To: <20241231130224.38206-1-manivannan.sadhasivam@linaro.org>
+References: <20241231130224.38206-1-manivannan.sadhasivam@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -80,21 +70,21 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Thu, 02 Jan 2025 16:32:05 +0000, Bryan O'Donoghue wrote:
-> v3:
-> - Fixes ordering of headers in dtsi - Vlad
-> - Changes camcc to always on - Vlad
-> - Applies RB as indicated - Krzysztof, Konrad
-> - Link to v2: https://lore.kernel.org/r/20241227-b4-linux-next-24-11-18-dtsi-x1e80100-camss-v2-0-06fdd5a7d5bb@linaro.org
+On Tue, 31 Dec 2024 18:32:22 +0530, Manivannan Sadhasivam wrote:
+> This series has a couple of fixes for Qcom PCIe endpoint controller. The dts
+> patch fixes the size of the 'addr_space' regions that allows the endpoint
+> drivers to request and map BARs of size >= 1MB. The driver patch marks BAR0/BAR2
+> as 64bit BARs.
 > 
-> v2:
+> Previously, this series was part of the Kselftest series [1]. But submitting
+> separately as these are independent fixes anyway.
 > 
 > [...]
 
 Applied, thanks!
 
-[2/6] dt-bindings: clock: move qcom,x1e80100-camcc to its own file
-      commit: 7ec95ff9abf499b4775148db92528feb4e8ff1ee
+[1/2] arm64: dts: qcom: sa8775p: Fix the size of 'addr_space' regions
+      commit: ec2f548e1a92f49f765e2bce14ceed34698514fc
 
 Best regards,
 -- 
