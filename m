@@ -1,171 +1,193 @@
-Return-Path: <linux-arm-msm+bounces-44276-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-44277-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C7AF8A050F2
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jan 2025 03:43:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 863FCA05106
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jan 2025 03:51:10 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B1BEF1684C2
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jan 2025 02:43:10 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 71D6A1616F9
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jan 2025 02:51:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0519F158D96;
-	Wed,  8 Jan 2025 02:43:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2D94E16D4E6;
+	Wed,  8 Jan 2025 02:51:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="G5JFA6yr"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="mbQQRR6U"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 579982EAE5;
-	Wed,  8 Jan 2025 02:43:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7299134AB;
+	Wed,  8 Jan 2025 02:51:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736304186; cv=none; b=qtX4pw/TaEbwF7Ro4esFeot3zjUvPcjE2PKDKLGOfA6f/GUcdRQ4GSH7NgamW4CHHe14JcgitvWJnKePFyO2FJZpW972pXlAAgdYCtl+Uk926CEyCd4p/a6l7DOOX+hn21qPGqgBLKKfM0xiUCqYfgr7QTnVODKUONAPTmxoqC4=
+	t=1736304666; cv=none; b=GtjVTf0pe2ttgVFXeqkY0X8j4GrOSad1WptFlDVUEGVHszg/OPfkQLWZc3436TNG8hxoYOW2V4qHGG/Dbo2qldRV2dOkvltGknnuLtKDKq9O/tsv9JuLJv1wTi7c0tK85phS5XilazQbCKJdd0Rk0bipzkjYlQzIPjaPFjPDTv4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736304186; c=relaxed/simple;
-	bh=JlSwh/0gE6sirlxADVlIqNfAcabpWdazRoq04XhYycU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=JFdOakWSgKAmllAUty1h54231LiejK4ovFPEjavgSAKJbFnfHIaxS2L+ddOKhUfDoR7LqNTtGvOYDd/gvgNnPT5aGg8m5WBMhMm/d5DwMalIFlAdbrDzA2ZG4Pb63lPFxW8SYM0rlNvIrEvQKclkBT6jpmJ5p0b5m4OFcMW8OR4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=G5JFA6yr; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1736304666; c=relaxed/simple;
+	bh=/GAox1t5XWzfkNhbbnb6O1GJ+Eo/vPuQ3zFtOe29PM0=;
+	h=From:Subject:Date:Message-ID:MIME-Version:Content-Type:To:CC; b=inhya9j5FXjE+nzb1WRnTwSC6Yq3eWasNyBmVGLtuew2HWoV04qMifxTwUMxThKYidx206FmLEXQ9aBc874rtcY1BgFNq5PntRmDeel/Srh5gnj83zoRTbvPvAse+sxC8XZsh8rNI4JW2bmISbPjfgLeIJT+rX/Bu3K5J/p5fts=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=mbQQRR6U; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50829ViL017165;
-	Wed, 8 Jan 2025 02:42:55 GMT
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 507Gs2eh032265;
+	Wed, 8 Jan 2025 02:50:44 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	id4Q4t7To12y3BMf3JeHw3Jjoq3ak7F8TiFe2dBOU/Y=; b=G5JFA6yrJK2GimHn
-	YHoVMUGOlwJ8H+1ouwWZVilb+c/LbWL3TvYcQv8ECCk6ao9ooIIiJaa67eUw9ZAl
-	1sS2bcqhvxhnVU8uVnqfm2tczo4TEUzfmhPHS4AC0OiOpDyAlYSsBwvMTACd90Y9
-	MJOJnx41Vp7EnS9+ZPP4Yyag9Kd6sKFwNtyfZhu5nJ2Al6aK4oC4V7zXRvH/XzUX
-	SeL3vFDnVXnFtviDgKPSynYd0i0miy+fyV2WiiADyk77wv9rG4MMN0cqnKuh88YR
-	ZXM32mAX6DsihWDjJOqJlrmy+xxQS2A9HpXGHr1/mLbyiMawmlYgevGUXXO4F/w5
-	mPIwLA==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 441gb582sp-1
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=27KVUIrjrERUC74lE4/kb5
+	He/Ym2uOcuY+jfp3BovDU=; b=mbQQRR6UpJsKRiU+lem0l8BP8pCJKarqgpapIg
+	Bcma0or1R3ushx4xtsXEiYMz6Pxqdvu3eRiFNTCS3DqRClXF/m3Yk1ctvH92rFN6
+	CZS9BMiJQXm/1CxdYoeius7MMoHh6oIYIe4giJNZW8fYqjIFQW7+imZITXp4eHfE
+	f6WaX9cifdpFiP4hHLeRVC6m5OdF4X1cQkDQt9Vt2Ys/i+oDg0amRBHD+D/v2p+j
+	iqJh9fZxxq6y5rY9p1By4Xx9YHfmq8RetSscNo+jzJJiQyfU0y92veVo6QT+WKiu
+	p1ACoS9ALePL6mlJdZ4maad+8gfl3ZrU4TIgD43ArJ0wHHjw==
+Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44186nh5u7-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 08 Jan 2025 02:42:55 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 5082gsCj020216
+	Wed, 08 Jan 2025 02:50:44 +0000 (GMT)
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 5082oht8008324
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 8 Jan 2025 02:42:54 GMT
-Received: from [10.216.0.179] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 7 Jan 2025
- 18:42:49 -0800
-Message-ID: <f71ad2e5-684a-3444-14ba-794238ef48d1@quicinc.com>
-Date: Wed, 8 Jan 2025 08:12:46 +0530
+	Wed, 8 Jan 2025 02:50:43 GMT
+Received: from nsssdc-sh01-lnx.ap.qualcomm.com (10.80.80.8) by
+ nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Tue, 7 Jan 2025 18:50:37 -0800
+From: Lei Wei <quic_leiwei@quicinc.com>
+Subject: [PATCH net-next v4 0/5] Add PCS support for Qualcomm IPQ9574 SoC
+Date: Wed, 8 Jan 2025 10:50:23 +0800
+Message-ID: <20250108-ipq_pcs_net-next-v4-0-0de14cd2902b@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-Subject: Re: [PATCH V1] schemas: pci: bridge: Document PCI L0s & L1 entry
- delay and nfts
-Content-Language: en-US
-To: Bjorn Helgaas <helgaas@kernel.org>
-CC: Rob Herring <robh@kernel.org>,
-        Krishna Chaitanya Chundru
-	<krishna.chundru@oss.qualcomm.com>,
-        <andersson@kernel.org>, <dmitry.baryshkov@linaro.org>,
-        <manivannan.sadhasivam@linaro.org>, <krzk@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <lpieralisi@kernel.org>, <kw@linux.com>, <conor+dt@kernel.org>,
-        <linux-pci@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <devicetree-spec@vger.kernel.org>, <quic_vbadigan@quicinc.com>
-References: <20250107204228.GA180123@bhelgaas>
-From: Krishna Chaitanya Chundru <quic_krichai@quicinc.com>
-In-Reply-To: <20250107204228.GA180123@bhelgaas>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAO/nfWcC/zWMQQqAIBAAvyJ7TtBKor4SIbFutRczjRCivydBx
+ 4GZuSFRZEowiBsiXZx49wXaSgBus19JsisMtaqN0qqTHA4bMFlPp/SUT4mLMzj3utEaoWQh0sL
+ 5W47wWzA9zwuUkDxfbAAAAA==
+To: Andrew Lunn <andrew+netdev@lunn.ch>,
+        "David S. Miller"
+	<davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>, Jakub Kicinski
+	<kuba@kernel.org>,
+        Paolo Abeni <pabeni@redhat.com>, Rob Herring
+	<robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>, Andrew Lunn <andrew@lunn.ch>,
+        Heiner Kallweit
+	<hkallweit1@gmail.com>,
+        Russell King <linux@armlinux.org.uk>
+CC: <netdev@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <quic_kkumarcs@quicinc.com>, <quic_suruchia@quicinc.com>,
+        <quic_pavir@quicinc.com>, <quic_linchen@quicinc.com>,
+        <quic_luoj@quicinc.com>, <quic_leiwei@quicinc.com>,
+        <srinivas.kandagatla@linaro.org>, <bartosz.golaszewski@linaro.org>,
+        <vsmuthu@qti.qualcomm.com>, <john@phrozen.org>,
+        Krzysztof Kozlowski
+	<krzysztof.kozlowski@linaro.org>
+X-Mailer: b4 0.14.1
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1736304637; l=3390;
+ i=quic_leiwei@quicinc.com; s=20240829; h=from:subject:message-id;
+ bh=/GAox1t5XWzfkNhbbnb6O1GJ+Eo/vPuQ3zFtOe29PM0=;
+ b=3pBTStJEjbzQRfgJv0ZH2fOkPVRR/SUmfid2PJaAk/igpHEVfiSctwidvuXVoV+CIx8UTn3Jp
+ HnySR7eUP6BBRNtQqUDSy9fOnx/kRl3jaOPQ1SSNTAk4POY27rFzB2P
+X-Developer-Key: i=quic_leiwei@quicinc.com; a=ed25519;
+ pk=uFXBHtxtDjtIrTKpDEZlMLSn1i/sonZepYO8yioKACM=
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: PDG1HlW3hGETA6rip5FsPff5_7pRIRpT
-X-Proofpoint-ORIG-GUID: PDG1HlW3hGETA6rip5FsPff5_7pRIRpT
+X-Proofpoint-ORIG-GUID: cjakPdWi-ZVCMMXiCo7oxiw6opbmhB1E
+X-Proofpoint-GUID: cjakPdWi-ZVCMMXiCo7oxiw6opbmhB1E
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 mlxscore=0
- adultscore=0 priorityscore=1501 lowpriorityscore=0 bulkscore=0
- clxscore=1015 mlxlogscore=999 impostorscore=0 malwarescore=0 phishscore=0
- spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2501080019
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0 mlxscore=0
+ adultscore=0 bulkscore=0 impostorscore=0 clxscore=1015 suspectscore=0
+ mlxlogscore=999 spamscore=0 phishscore=0 priorityscore=1501 malwarescore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2411120000
+ definitions=main-2501080019
 
+The 'UNIPHY' PCS block in the Qualcomm IPQ9574 SoC provides Ethernet
+PCS and SerDes functions. It supports 1Gbps mode PCS and 10-Gigabit
+mode PCS (XPCS) functions, and supports various interface modes for
+the connectivity between the Ethernet MAC and the external PHYs/Switch.
+There are three UNIPHY (PCS) instances in IPQ9574, supporting the six
+Ethernet ports.
 
+This patch series adds base driver support for initializing the PCS,
+and PCS phylink ops for managing the PCS modes/states. Support for
+SGMII/QSGMII (PCS) and USXGMII (XPCS) modes is being added initially.
 
-On 1/8/2025 2:12 AM, Bjorn Helgaas wrote:
-> On Tue, Jan 07, 2025 at 07:49:00PM +0530, Krishna Chaitanya Chundru wrote:
->> On 1/6/2025 8:37 PM, Rob Herring wrote:
->>> On Mon, Jan 6, 2025 at 3:33 AM Krishna Chaitanya Chundru
->>> <krishna.chundru@oss.qualcomm.com> wrote:
->>>>
->>>> Some controllers and endpoints provide provision to program the entry
->>>> delays of L0s & L1 which will allow the link to enter L0s & L1 more
->>>> aggressively to save power.
->>>>
->>>> As per PCIe spec 6 sec 4.2.5.6, the number of Fast Training Sequence (FTS)
->>>> can be programmed by the controllers or endpoints that is used for bit and
->>>> Symbol lock when transitioning from L0s to L0 based upon the PCIe data rate
->>>> FTS value can vary. So define a array for each data rate for nfts.
->>>>
->>>> These values needs to be programmed before link training.
-> 
->>> Do these properties apply to any link like downstream ports on a
->>> PCIe switch?
->>>
->> These applies to downstream ports also on a switch.
-> 
-> IIUC every PCIe component with a Link, i.e., Upstream Ports (on a
-> Switch or Endpoint) and Downstream Ports (a Root Port or Switch), has
-> an N_FTS value that it advertises during Link training.
-> 
-> I suppose N_FTS depends on the component electrical design and maybe
-> the Link, and it only makes sense to have this n-fts property for
-> specific devices that support this kind of configuration, right?  I
-> don't think we would know what to do with n-fts for random plug-in
-> Switches or Endpoints because there's no generic way to configure
-> N_FTS, and we *couldn't* do it before the Link is trained anyway
-> unless there's some sideband mechanism.
-yes I agree with it, we have one such type of PCIe switch which has i2c
-sideband mechanism = to program it before enabling link training. This
-properties can be used for the switches which has side band mechanism.
-> 
->>>> +    description:
->>>> +      Number of Fast Training Sequence (FTS) used during L0s to L0 exit for bit
->>>> +      and Symbol lock.
->>>> +    $ref: /schemas/types.yaml#/definitions/uint32-array
->>>> +    minItems: 1
->>>> +    maxItems: 5
->>>
->>> Need to define what is each entry? Gen 1 to 5?
->>>
->> yes there are from Gen1 to Gen 5, I will update this in next patch these
->> details.
-> 
-> Components are permitted to advertise different N_FTS values at
-> different *speeds*, not "GenX" (PCIe r6.0, sec 4.2.5.6)
-> 
-> The spec discourages use of Gen1, etc because they are ambiguous (sec
-> 1.2):
-> 
->    Terms like "PCIe Gen3" are ambiguous and should be avoided. For
->    example, "gen3" could mean (1) compliant with Base 3.0, (2)
->    compliant with Base 3.1 (last revision of 3.x), (3) compliant with
->    Base 3.0 and supporting 8.0 GT/s, (4) compliant with Base 3.0 or
->    later and supporting 8.0 GT/s, ....
-> 
-> We're stuck with the use of genX for max-link-speed, but we should use
-> speeds when we can for clarity, e.g., in the description here.
-Ack, that's why I tried to mention data rates instead of gen in the
-commit text.
+The Ethernet driver which handles the MAC operations will create the
+PCS instances and phylink for the MAC, by utilizing the API exported
+by this driver.
 
-- Krishna Chaitanya.
+While support is being added initially for IPQ9574, the driver is
+expected to be easily extendable later for other SoCs in the IPQ
+family such as IPQ5332.
+
+Signed-off-by: Lei Wei <quic_leiwei@quicinc.com>
+---
+Changes in v4:
+- Add "COMMON_CLK" to the Kconfig dependency option.
+- Optimize to avoid indentation in "ipq_pcs_config_usxgmii".
+- Remove the PCS config lock.
+- Add the "pcs_inband_caps" method.
+- Link to v3: https://lore.kernel.org/r/20241216-ipq_pcs_6-13_rc1-v3-0-3abefda0fc48@quicinc.com
+
+Changes in v3:
+- Remove the clk enabled check in "pcs_disable" method.
+- Add "pcs_validate" method to validate supported interface mode and
+  duplex mode.
+- Use regmap_set_bits()/regmap_clear_bits() API where appropriate.
+- Collect Reviewed-by tag for dtbindings.
+- Link to v2: https://lore.kernel.org/r/20241204-ipq_pcs_rc1-v2-0-26155f5364a1@quicinc.com
+
+Changes in v2:
+- dtbindings updates
+  a.) Rename dt-binding header file to match binding file name.
+  b.) Drop unused labels and the redundant examples.
+  c.) Rename "mii_rx"/"mii_tx" clock names to "rx"/"tx".
+- Rename "PCS_QCOM_IPQ" with specific name "PCS_QCOM_IPQ9574" in
+  Kconfig.
+- Remove interface mode check for the PCS lock.
+- Use Cisco SGMII AN mode as default SGMII/QSGMII AN mode.
+- Instantiate MII PCS instances in probe and export "ipq_pcs_get" and
+  "ipq_pcs_put" APIs.
+- Move MII RX and TX clock enable and disable to "pcs_enable" and
+  "pcs_disable" methods.
+- Change "dev_dbg" to "dev_dbg_ratelimited" in "pcs_get_state" method.
+- Link to v1: https://lore.kernel.org/r/20241101-ipq_pcs_rc1-v1-0-fdef575620cf@quicinc.com
+
+---
+Lei Wei (5):
+      dt-bindings: net: pcs: Add Ethernet PCS for Qualcomm IPQ9574 SoC
+      net: pcs: Add PCS driver for Qualcomm IPQ9574 SoC
+      net: pcs: qcom-ipq9574: Add PCS instantiation and phylink operations
+      net: pcs: qcom-ipq9574: Add USXGMII interface mode support
+      MAINTAINERS: Add maintainer for Qualcomm IPQ9574 PCS driver
+
+ .../bindings/net/pcs/qcom,ipq9574-pcs.yaml         | 190 +++++
+ MAINTAINERS                                        |   9 +
+ drivers/net/pcs/Kconfig                            |   9 +
+ drivers/net/pcs/Makefile                           |   1 +
+ drivers/net/pcs/pcs-qcom-ipq9574.c                 | 877 +++++++++++++++++++++
+ include/dt-bindings/net/qcom,ipq9574-pcs.h         |  15 +
+ include/linux/pcs/pcs-qcom-ipq9574.h               |  15 +
+ 7 files changed, 1116 insertions(+)
+---
+base-commit: 3e5908172c05ab1511f2a6719b806d6eda6e1715
+change-id: 20250107-ipq_pcs_net-next-cfd5ca91311c
+
+Best regards,
+-- 
+Lei Wei <quic_leiwei@quicinc.com>
+
 
