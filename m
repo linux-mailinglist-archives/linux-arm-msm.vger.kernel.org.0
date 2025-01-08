@@ -1,92 +1,88 @@
-Return-Path: <linux-arm-msm+bounces-44361-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-44362-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id BF790A05AEF
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jan 2025 13:03:15 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6E2BEA05AFE
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jan 2025 13:05:41 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D7F9516689B
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jan 2025 12:03:11 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BBD843A2670
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jan 2025 12:05:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2328F1F9A80;
-	Wed,  8 Jan 2025 12:02:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8E23A1F8AF6;
+	Wed,  8 Jan 2025 12:05:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Ejmp3rcB"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="knp0r22q"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f46.google.com (mail-ed1-f46.google.com [209.85.208.46])
+Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com [209.85.208.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FA571F9410
-	for <linux-arm-msm@vger.kernel.org>; Wed,  8 Jan 2025 12:02:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1AB21F758A
+	for <linux-arm-msm@vger.kernel.org>; Wed,  8 Jan 2025 12:05:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736337772; cv=none; b=ER61u/PGknjjkYwXDvartHGsqMhGPj2rKNeWxp0j1qk/ghHEOEqPEhKFrQb/wYGXGptey+DS5EeQ+6fewNfXrNQt5IX+nJBC49MO6YkIrE47PWZzlECouQ+1Q7t/u+8J9iNoThFHwMvJBU+iU6e5A5z1ZqBKAVCA0hxef2BSUQw=
+	t=1736337936; cv=none; b=h/15jBLINTF9fyTE+VPraEeHccEdlMW2G9aWuKo72/OpRyLcfXSG0WrWaO9p5BvXN+PfUQY33SH3gYO6ZCBRP8Bm3rbtTUevn9HSnK2LqHt8LzJkFU5mj9DCRiton6QQEoqCaH88GAAkYn2xfcjaJc4ksRbOcrWqVt/P8u/j1f0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736337772; c=relaxed/simple;
-	bh=tf5tt0BwsPCPSLPP0H73t4FU8k2JMKXfyoSUw91MxX8=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=n7d4MnV52VPB1/EmXEWTYqbo87fr5CiiZDPnoQUPG/W87Ury9pUln/Kj0ZO2hUHCxRGWYFGH/u/h4KBldTOtFT2r64rHNj5BkRndeKg+NF2Kf8xKX3X2WeWIT2QbV2lfNYoYwPw7mzxPTC6UPKyzDnMVdDOgTDvWTa5GdeFIoL8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Ejmp3rcB; arc=none smtp.client-ip=209.85.208.46
+	s=arc-20240116; t=1736337936; c=relaxed/simple;
+	bh=O/ipbfUJ+i6XxrL+DK3a6ndmvpYfRjXuPQImjQMFwY4=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Ia3YOoDF36IjpQnJmRlauFJbYpk9C2nxigKfBQHvK6ZihGjjphxyqWWALVYHbPnF7t/+oh3jf+vgRuHT545iq9eHlln7Gz54b2f9NedGOgNAkuZ8RRlvsMOVbAi7S6LrwfRoTGLrKF2/Iu5wok9Lvs294QgVJpY70XweoKRkFVg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=knp0r22q; arc=none smtp.client-ip=209.85.208.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f46.google.com with SMTP id 4fb4d7f45d1cf-5d3d69e5b63so2731627a12.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Jan 2025 04:02:50 -0800 (PST)
+Received: by mail-ed1-f51.google.com with SMTP id 4fb4d7f45d1cf-5d3cd821c60so3781782a12.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Jan 2025 04:05:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1736337769; x=1736942569; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1736337933; x=1736942733; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=/Fu/J7aLcA/6JcanW9gRS4vVtHfaRVS9VuYzk8LT6DQ=;
-        b=Ejmp3rcB4sCcsaFIErGIy30v0gbfdg3YxxgCHl6gffuTfFBm3rxIlm35HB10ulskyb
-         MhFR5xklpiy57oMFQycrDIZ9vixzQrobKlwKHg9g4Nwmpj+VXfBMLAsH0r98IPJ+/DrR
-         iYKEvcGWl1v6voFrNqi/ZzrIH5UNp3/ZKAifhUgMaQWhyjkdQXRAoTIH1WxS89EUfh3/
-         8ln9MWgRnnhzg9ZLds11otGsSUnHs4Tcv8sphVLn+23Qo4QytBlEvPoNvQHS+jd5iZrx
-         UzmXVmylkdCfYqhVTnbHb9VY50hH7XY3DIOrOzu1OrXav89LJpkc9/kHFhsoR9Ajn5X0
-         ZhGw==
+        bh=ydCNg6jT36E12xsOeua+Sa7IGX974RGk3urRyUbAQcg=;
+        b=knp0r22qSano6GySAuO8bJkxWKa3dAnvtvoqqYJfekwX9xf4GiE64RVOqYlKiLj5ap
+         IebIzAOTYZ9V9zicnDOLQzR8UqiPORTl6EjpRsmGNHMxMvtBZ1FC/+Lc7tg4orJ9x649
+         BUMic65ls+RTVlgnTeWXssQ8z8oO0uk+Hte1Lculm6ePV1MpD8LQbgdGCjZGLoxUSmLz
+         xdJAAbhkTWzHwtURexV+1jvGO8lo7hHP1R573v8Ls781T81yko9LRmhXXNli67uynGg3
+         3L0znN7F4Jwu1yrDRhh01kNRQEQ31817nfiILJDW32c6fIQWqS28O44jgNS94yy8HPQS
+         H6cA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736337769; x=1736942569;
+        d=1e100.net; s=20230601; t=1736337933; x=1736942733;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=/Fu/J7aLcA/6JcanW9gRS4vVtHfaRVS9VuYzk8LT6DQ=;
-        b=W+Q2dtz1gICdvGS+FQhhFKXD1hSN4feS0zDfR4ZJIs8MStMy8KrEbcJOpSgtDcu72+
-         a3yLcjRfaAVc+Lq7C4eGeDAwbpmzK/OIyJN+hvqu04GkxjrzLEEcC6+yaANUogaa92T/
-         L7V3ZgCylMEO/IY8P44nuhGBpaAIivA7raJvOVjSc08zVy/K3G/SM8W8qB62L6ACbPXz
-         e+09/9q/Nt5K0zCriU1yxbCV1xbrOm0sZVT3FoTDJxLVjUDZI3wnDOe4x3HBUOK1Y8Kk
-         HZYum7X76vHt70yXAKNi4zMDzKITQy9pAeCJZ0znv8q7e7Lcougsl/q/DTbp9RjhWUD6
-         uPbQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXXKcO0Iexc5HhFSlF5NiDzMcAoAKMgSBQuAyxlii4kXeJYsq+k3BVGiruqwmj7WFMwBg3ZQJBwME7J84rs@vger.kernel.org
-X-Gm-Message-State: AOJu0Yzjw3JGOwPhdibx7BPCWhVcC8b4M/1kDzv6MxUPTRymJABmYGJ9
-	wMYHXAx06i3rEKCOdw03kII8QuLKCHqUWiIrMEGoTOTUMtOiX5ZvP9aM2KbcvH4=
-X-Gm-Gg: ASbGncsMzbHVG/jswTnzr8NnGAK0RKBPiBP6DneIXCs4Qzt87xvXiNrTbghlMCqfcfS
-	y4V1lhjYSp9kv+Ot+7DV3n7WD7VHBcnidtH5rYMvhqoqvOtU3/n9CY8FdI3mY7tsEntJIvIedz8
-	x9UFYIsTxSEYqDauYtyH0cOiSSnytq1Km7TD6SYWB2OO10MWniU85l7Y2ahrj3eniEtU6AMlUcy
-	BNKC7YhzBMe9fLW4fAN5mHAo2ahEEX41YheMATsRFaWBEkNCizX7emFbkFnvgPlJdRqWDk=
-X-Google-Smtp-Source: AGHT+IHxvLCzAIC3B4tsUuo5mheGbuKfSphHrdU5pFDT/pfFnaWpUoIrvtESSJfsRkrVx8FBwhrfkQ==
-X-Received: by 2002:a05:6402:2687:b0:5d3:ba42:e9f8 with SMTP id 4fb4d7f45d1cf-5d972e47d23mr814405a12.7.1736337768837;
-        Wed, 08 Jan 2025 04:02:48 -0800 (PST)
+        bh=ydCNg6jT36E12xsOeua+Sa7IGX974RGk3urRyUbAQcg=;
+        b=fAjPDUXulAmMsD8pBMufqbo6JPyBDwaoA0OIgPEhKI3TPTFlSMJ6p1/u+g1cXEb/Dp
+         TBOWGc1KFmLjuRAlnFgwV5nsrFsP3iZYwXyZldd/57I66kKIE77dSLze+ncoHto03wkf
+         1lWF0L+VpZ8s179n2t48eokTbJhNG31ujC+qPhb3zqXfbaiEFY9MUIG1sw1aPH7bRnIa
+         IBXaboZHLCHCKfzyMgstgnzftH6sAYxXfZ4qPP6ZY1TPjL/wLqTkMGrK5EOSOYL28Bem
+         x70Hpgh1OPiE7gURNPIjf7Qxkb2WYCzjva5g0i0Np7ZwaBtk1SQ6QxpsDpthDzHcwxDw
+         FmIA==
+X-Forwarded-Encrypted: i=1; AJvYcCU99MKVZzw9osjT3gpsslGHie63QCE45ujEFCtWyoRO6jmPqGSiZtfkP9c8QloA0rAV60ycS9885nxNTazH@vger.kernel.org
+X-Gm-Message-State: AOJu0Yxcu1kJJRntyW5WxNv/1drZ6PHtFdUiy71kc9nlUTbtYE7ZL7HE
+	9/XjwG4Dphw0skz1ZSanAVGUElDoJTuGzWiY9rS9wvE4w0DCyudatpZUPIXV6HpEpgTGSLre9pD
+	K
+X-Gm-Gg: ASbGncufrM1GzEb4tWeoGVdI9jQ0x5k76zS4YZbA4O0nAJ1K/OPCYNFBNGPp+/wt0n7
+	udvASdc4/ERnKW2oefiTZlalWSs9z1WqmuhF6Ty78x0gh1yMQbyHUPTS9cbPjcdBzMODp5Kj4Va
+	2u5iHfzTsD0QF69RiDi14CCfQgcXBZsGJ5tc/pYRqJmaM1mEEdgqpT0RB68oWuAjtfZ/Nmo3sr1
+	5zcYwdKxgjW/0w76ofnN+y3AbGqCk4abcrJUltRv7oWcCN51w+cwoS1twHCkIdDMOZcmUM=
+X-Google-Smtp-Source: AGHT+IFK1TbD0Uf1FgK7ziNEnOG9YYy0/1HJ7Ai3OvVZgi26v6PEQj7rnDX7uvM6M1rlaGSscM2GKQ==
+X-Received: by 2002:a17:907:c586:b0:a9e:80ed:5cc6 with SMTP id a640c23a62f3a-ab2abcb0cd1mr71382666b.13.1736337933040;
+        Wed, 08 Jan 2025 04:05:33 -0800 (PST)
 Received: from krzk-bin.. ([178.197.223.165])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5d80675ab3bsm25281427a12.5.2025.01.08.04.02.45
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-aac0e830b10sm2479699866b.37.2025.01.08.04.05.31
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 08 Jan 2025 04:02:47 -0800 (PST)
+        Wed, 08 Jan 2025 04:05:32 -0800 (PST)
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To: Andrew Lunn <andrew+netdev@lunn.ch>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+To: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
 	Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>,
-	Alex Elder <elder@kernel.org>,
 	linux-arm-msm@vger.kernel.org,
-	netdev@vger.kernel.org,
 	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org
 Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH net-next] dt-bindings: net: qcom,ipa: Use recommended MBN firmware format in DTS example
-Date: Wed,  8 Jan 2025 13:02:42 +0100
-Message-ID: <20250108120242.156201-1-krzysztof.kozlowski@linaro.org>
+Subject: [PATCH] arm64: dts: qcom: Use recommended MBN firmware format in DTS example
+Date: Wed,  8 Jan 2025 13:05:30 +0100
+Message-ID: <20250108120530.156928-1-krzysztof.kozlowski@linaro.org>
 X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
@@ -97,27 +93,146 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
 All Qualcomm firmwares uploaded to linux-firmware are in MBN format,
-instead of split MDT.  No functional changes, just correct the DTS
-example so people will not rely on unaccepted files.
+instead of split MDT.  Firmware for boards here is not yet in
+linux-firmware, but if it gets accepted it will be MBN, not MDT.
+
+Change might affect users of DTS which rely on manually placed firmware
+files, not coming from linux-firmware package.
 
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 ---
- Documentation/devicetree/bindings/net/qcom,ipa.yaml | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/sa8155p-adp.dts             |  4 ++--
+ .../arm64/boot/dts/qcom/sdm630-sony-xperia-nile.dtsi |  2 +-
+ .../boot/dts/qcom/sm8150-microsoft-surface-duo.dts   |  8 ++++----
+ arch/arm64/boot/dts/qcom/sm8150-mtp.dts              |  8 ++++----
+ arch/arm64/boot/dts/qcom/sm8550-samsung-q5q.dts      | 12 ++++++------
+ 5 files changed, 17 insertions(+), 17 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/net/qcom,ipa.yaml b/Documentation/devicetree/bindings/net/qcom,ipa.yaml
-index 53cae71d9957..1a46d80a66e8 100644
---- a/Documentation/devicetree/bindings/net/qcom,ipa.yaml
-+++ b/Documentation/devicetree/bindings/net/qcom,ipa.yaml
-@@ -239,7 +239,7 @@ examples:
+diff --git a/arch/arm64/boot/dts/qcom/sa8155p-adp.dts b/arch/arm64/boot/dts/qcom/sa8155p-adp.dts
+index 9e9c7f81096b..4dfd66076629 100644
+--- a/arch/arm64/boot/dts/qcom/sa8155p-adp.dts
++++ b/arch/arm64/boot/dts/qcom/sa8155p-adp.dts
+@@ -383,12 +383,12 @@ &qupv3_id_1 {
  
-                 qcom,gsi-loader = "self";
-                 memory-region = <&ipa_fw_mem>;
--                firmware-name = "qcom/sc7180-trogdor/modem/modem.mdt";
-+                firmware-name = "qcom/sc7180-trogdor/modem/modem.mbn";
+ &remoteproc_adsp {
+ 	status = "okay";
+-	firmware-name = "qcom/sa8155p/adsp.mdt";
++	firmware-name = "qcom/sa8155p/adsp.mbn";
+ };
  
-                 iommus = <&apps_smmu 0x440 0x0>,
-                          <&apps_smmu 0x442 0x0>;
+ &remoteproc_cdsp {
+ 	status = "okay";
+-	firmware-name = "qcom/sa8155p/cdsp.mdt";
++	firmware-name = "qcom/sa8155p/cdsp.mbn";
+ };
+ 
+ &sdhc_2 {
+diff --git a/arch/arm64/boot/dts/qcom/sdm630-sony-xperia-nile.dtsi b/arch/arm64/boot/dts/qcom/sdm630-sony-xperia-nile.dtsi
+index a4b722e0fc1e..40522e237eac 100644
+--- a/arch/arm64/boot/dts/qcom/sdm630-sony-xperia-nile.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm630-sony-xperia-nile.dtsi
+@@ -157,7 +157,7 @@ extcon_usb: extcon-usb {
+ };
+ 
+ &adsp_pil {
+-	firmware-name = "qcom/sdm630/Sony/nile/adsp.mdt";
++	firmware-name = "qcom/sdm630/Sony/nile/adsp.mbn";
+ };
+ 
+ &blsp_i2c1 {
+diff --git a/arch/arm64/boot/dts/qcom/sm8150-microsoft-surface-duo.dts b/arch/arm64/boot/dts/qcom/sm8150-microsoft-surface-duo.dts
+index 9a3d0ac6c423..835ef929ff2d 100644
+--- a/arch/arm64/boot/dts/qcom/sm8150-microsoft-surface-duo.dts
++++ b/arch/arm64/boot/dts/qcom/sm8150-microsoft-surface-duo.dts
+@@ -453,22 +453,22 @@ &qupv3_id_2 {
+ 
+ &remoteproc_adsp {
+ 	status = "okay";
+-	firmware-name = "qcom/sm8150/microsoft/adsp.mdt";
++	firmware-name = "qcom/sm8150/microsoft/adsp.mbn";
+ };
+ 
+ &remoteproc_cdsp {
+ 	status = "okay";
+-	firmware-name = "qcom/sm8150/microsoft/cdsp.mdt";
++	firmware-name = "qcom/sm8150/microsoft/cdsp.mbn";
+ };
+ 
+ &remoteproc_mpss {
+ 	status = "okay";
+-	firmware-name = "qcom/sm8150/microsoft/modem.mdt";
++	firmware-name = "qcom/sm8150/microsoft/modem.mbn";
+ };
+ 
+ &remoteproc_slpi {
+ 	status = "okay";
+-	firmware-name = "qcom/sm8150/microsoft/slpi.mdt";
++	firmware-name = "qcom/sm8150/microsoft/slpi.mbn";
+ };
+ 
+ &pon_resin {
+diff --git a/arch/arm64/boot/dts/qcom/sm8150-mtp.dts b/arch/arm64/boot/dts/qcom/sm8150-mtp.dts
+index 2e1c7afe0aa7..12e8e1ada6d8 100644
+--- a/arch/arm64/boot/dts/qcom/sm8150-mtp.dts
++++ b/arch/arm64/boot/dts/qcom/sm8150-mtp.dts
+@@ -379,22 +379,22 @@ &qupv3_id_1 {
+ 
+ &remoteproc_adsp {
+ 	status = "okay";
+-	firmware-name = "qcom/sm8150/adsp.mdt";
++	firmware-name = "qcom/sm8150/adsp.mbn";
+ };
+ 
+ &remoteproc_cdsp {
+ 	status = "okay";
+-	firmware-name = "qcom/sm8150/cdsp.mdt";
++	firmware-name = "qcom/sm8150/cdsp.mbn";
+ };
+ 
+ &remoteproc_mpss {
+ 	status = "okay";
+-	firmware-name = "qcom/sm8150/modem.mdt";
++	firmware-name = "qcom/sm8150/modem.mbn";
+ };
+ 
+ &remoteproc_slpi {
+ 	status = "okay";
+-	firmware-name = "qcom/sm8150/slpi.mdt";
++	firmware-name = "qcom/sm8150/slpi.mbn";
+ };
+ 
+ &tlmm {
+diff --git a/arch/arm64/boot/dts/qcom/sm8550-samsung-q5q.dts b/arch/arm64/boot/dts/qcom/sm8550-samsung-q5q.dts
+index e8383faac576..7d29a57a2b54 100644
+--- a/arch/arm64/boot/dts/qcom/sm8550-samsung-q5q.dts
++++ b/arch/arm64/boot/dts/qcom/sm8550-samsung-q5q.dts
+@@ -547,20 +547,20 @@ &qupv3_id_0 {
+ };
+ 
+ &remoteproc_adsp {
+-	firmware-name = "qcom/sm8550/adsp.mdt",
+-			"qcom/sm8550/adsp_dtb.mdt";
++	firmware-name = "qcom/sm8550/adsp.mbn",
++			"qcom/sm8550/adsp_dtb.mbn";
+ 	status = "okay";
+ };
+ 
+ &remoteproc_cdsp {
+-	firmware-name = "qcom/sm8550/cdsp.mdt",
+-			"qcom/sm8550/cdsp_dtb.mdt";
++	firmware-name = "qcom/sm8550/cdsp.mbn",
++			"qcom/sm8550/cdsp_dtb.mbn";
+ 	status = "okay";
+ };
+ 
+ &remoteproc_mpss {
+-	firmware-name = "qcom/sm8550/modem.mdt",
+-			"qcom/sm8550/modem_dtb.mdt";
++	firmware-name = "qcom/sm8550/modem.mbn",
++			"qcom/sm8550/modem_dtb.mbn";
+ 	status = "okay";
+ };
+ 
 -- 
 2.43.0
 
