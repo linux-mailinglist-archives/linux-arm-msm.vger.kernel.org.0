@@ -1,107 +1,238 @@
-Return-Path: <linux-arm-msm+bounces-44351-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-44352-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 73A22A05945
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jan 2025 12:10:28 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id ABF75A05950
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jan 2025 12:12:30 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0A6291882650
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jan 2025 11:10:31 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9A4A0165A8A
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jan 2025 11:12:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9A9361F7554;
-	Wed,  8 Jan 2025 11:10:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BC15B1F76CD;
+	Wed,  8 Jan 2025 11:12:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ptYYEETA"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="AAHULk68"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C8F019D06A;
-	Wed,  8 Jan 2025 11:10:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2501D19D090;
+	Wed,  8 Jan 2025 11:12:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736334623; cv=none; b=Z8B817GbiXy25RuMLkT4YYil3xvW/0d+XKCeOzkVx7fQ0SdaoahdHa3D2Jp+blhumblj9/nxPthW+zdmSQLq8fOOqpmXE1qiDvk6NDQqyIrMjPUayKJfuMjBYtaHcsFlRoRDwGrDKLA6s57nOpFn+tVqm8Vj2BWNj7gzTe15sYY=
+	t=1736334746; cv=none; b=SjeNQhNpoSDngo8oQYoov70XaHNd7MJAsRh9iX1Sqo252cYBpE92G/mtdN4q511EMHjLTY7B084jyb4pDSswWXlF5W2tEnHZHfO4a+Tk6V7qqJ+Urrj1l5RnDOKeVmR/P0yhgv3rxcBO52yoRPrKlP7TuPmRf9CZvrYpQRvek2M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736334623; c=relaxed/simple;
-	bh=BQVTkGBa3sFSGo2a1+LUlQ3fXejyr9MIERqpWM0YmaQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=iwmwfzXevn8ANE56RwfrllGC4aWcHUwcM3IXTc/3OPTGedSoirnIGQFqhinbNzw617j5cwVaa8vgGUzHYGEeU7EEWLt3Pk2SWAwIEckIcJzCY+Qe5sJGNy8dMA7VWHXYGi5Tze6VwAmC2dsbrkGgMtFTm4Z3fV3UrEoHbyqNWiw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ptYYEETA; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F3A7C4CEDD;
-	Wed,  8 Jan 2025 11:10:22 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1736334622;
-	bh=BQVTkGBa3sFSGo2a1+LUlQ3fXejyr9MIERqpWM0YmaQ=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=ptYYEETAqxzN7ofeUU9dDrqp5qszrb/iDH+V1i8yMqTiHXyVofhFBJfzn/tEjiLZP
-	 gDcBRFbZQPLRI31l/ZVPTqKMidigdDvdWxYRanIqP07rAz5beZI2VV1f+t06GUWCRf
-	 CBUR5nerZEQ6L1uSZCurBOJ0LosWLMJzbqRVBOwSDO5+8CprDc13vwVBfmZkVZLTnv
-	 RoQ+g2y+q3jdZCZWfW3orUlqNoJ16CVEPSpaUf/94YpnEDNcHmzOa2bRr5RGbMct1/
-	 j/a8ayJ26CPHz1HIx3ujQQRxeQFt7ycRNVJAEUgPT5QiBo2zCLdkpJJ0hMiS9Trkw9
-	 JD4xBKox4KRyQ==
-Date: Wed, 8 Jan 2025 16:40:19 +0530
-From: Vinod Koul <vkoul@kernel.org>
-To: Georgi Djakov <djakov@kernel.org>
-Cc: Md Sadre Alam <quic_mdalam@quicinc.com>, linux-arm-msm@vger.kernel.org,
-	dmaengine@vger.kernel.org, quic_mmanikan@quicinc.com,
-	quic_srichara@quicinc.com, quic_varada@quicinc.com,
-	robin.murphy@arm.com, u.kleine-koenig@baylibre.com,
-	martin.petersen@oracle.com, fenghua.yu@intel.com,
-	av2082000@gmail.com, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v4] dmaengine: qcom: bam_dma: Avoid writing unavailable
- register
-Message-ID: <Z35dG7J8BLzeoT3B@vaman>
-References: <20241220094203.3510335-1-quic_mdalam@quicinc.com>
- <9ef3daa8-cdb1-49f2-8d19-a72d6210ff3a@kernel.org>
+	s=arc-20240116; t=1736334746; c=relaxed/simple;
+	bh=dEldfHW90ZhVsld/rEzXya6NixDsyXxn8WQJ9ua8eIs=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=SK0kZD+/MdVnPxTQIDVjlsh2FLOuliD7F4VvYBccCr74UwxJhXCjkt3LYyqA43iB4400IJAybjyz/hjDCU9+n54WnQT8YeHtLWkqjL4qHFxSpG0cRHWE0IkKslkdXQYtyL3eW/RaYqvW1tPoulvDzbmjbr2AdG95WWPho6+/mdM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=AAHULk68; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 508AdkDJ011449;
+	Wed, 8 Jan 2025 11:12:14 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	kfZCtz7Q9C5sAfmn6EtdHKleBcX5vhYfsfi24yR0vzg=; b=AAHULk68eHsXWA4Y
+	Yl6ypCKk6TkvVsLNoWbOnA/oH9P+a+bJd/0ECAO9QIgj6yNImPkGW1HgbnWVg3O8
+	dDF+izO9PJ8mpgiz/WpHZQz89J10fWxHzdz6juiQx8D8kP6SM7jtlOkpbzZ2nJ3C
+	FGUnR51kkv+ePN07aFLwWf1NZ2qzTGBdVa42bR2zISZSSL/vDV0tHHAV5mbUAaas
+	ENG3BvEYetdoy4NPzmxMe27QD0Y9hFF2qcbeS09vAjj717YthDyjqdYlOwg5HhBr
+	RTTthn8Vdi6UDuSdxttL9erk8Bk1ACgVYlWFO9LeqACIDDOLjQkF+f6aVoI4JrXC
+	QCV6gA==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 441nj2ggyn-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 08 Jan 2025 11:12:14 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 508BCDV5010351
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 8 Jan 2025 11:12:13 GMT
+Received: from [10.50.21.116] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 8 Jan 2025
+ 03:12:06 -0800
+Message-ID: <5953bea1-194d-fe2e-251a-d4ef3e7544d3@quicinc.com>
+Date: Wed, 8 Jan 2025 16:42:03 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <9ef3daa8-cdb1-49f2-8d19-a72d6210ff3a@kernel.org>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH v9 27/28] media: iris: enable video driver probe of SM8250
+ SoC
+Content-Language: en-US
+To: Hans Verkuil <hverkuil@xs4all.nl>,
+        Nicolas Dufresne
+	<nicolas@ndufresne.ca>,
+        Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+        Sebastian Fricke <sebastian.fricke@collabora.com>
+CC: Vikash Garodia <quic_vgarodia@quicinc.com>,
+        Abhinav Kumar
+	<quic_abhinavk@quicinc.com>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        "Rob
+ Herring" <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        "Conor
+ Dooley" <conor+dt@kernel.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        "Bryan
+ O'Donoghue" <bryan.odonoghue@linaro.org>,
+        Dmitry Baryshkov
+	<dmitry.baryshkov@linaro.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        =?UTF-8?Q?Uwe_Kleine-K=c3=b6nig?= <u.kleine-koenig@baylibre.com>,
+        Jianhua Lu
+	<lujianhua000@gmail.com>,
+        Stefan Schmidt <stefan.schmidt@linaro.org>,
+        <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+References: <20241212-qcom-video-iris-v9-0-e8c2c6bd4041@quicinc.com>
+ <20241212-qcom-video-iris-v9-27-e8c2c6bd4041@quicinc.com>
+ <20241223113027.21b8f7ab@foz.lan>
+ <fbe0d935-a3cf-dfa0-aad8-56834a0a002c@quicinc.com>
+ <635ce4ed82aaca422b869f467300b0eccf9c8703.camel@ndufresne.ca>
+ <c0f59149-713b-45e4-3755-4a52cfaa93f6@quicinc.com>
+ <498a99e1-77ca-4acf-8850-cb74417ae88c@xs4all.nl>
+ <9fc76dd1-ef49-a9d2-0271-eacb50943b03@quicinc.com>
+ <9b33ba28-5aa9-4863-8fde-535841ddbc10@xs4all.nl>
+ <6654d78e-d16b-489a-3532-e2fbc788b0ef@quicinc.com>
+ <067d0deb-50ea-46bd-9f09-827b0ba61aa3@xs4all.nl>
+From: Dikshita Agarwal <quic_dikshita@quicinc.com>
+In-Reply-To: <067d0deb-50ea-46bd-9f09-827b0ba61aa3@xs4all.nl>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: rebeuzv89PKqycubTI12B6G-iSHlgzJg
+X-Proofpoint-ORIG-GUID: rebeuzv89PKqycubTI12B6G-iSHlgzJg
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ priorityscore=1501 adultscore=0 malwarescore=0 suspectscore=0
+ mlxlogscore=999 phishscore=0 impostorscore=0 clxscore=1015 spamscore=0
+ mlxscore=0 bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2501080091
 
-On 07-01-25, 23:30, Georgi Djakov wrote:
-> On 20.12.24 11:42, Md Sadre Alam wrote:
-> > Avoid writing unavailable register in BAM-Lite mode.
-> > BAM_DESC_CNT_TRSHLD register is unavailable in BAM-Lite
-> > mode. Its only available in BAM-NDP mode. So only write
-> > this register for clients who is using BAM-NDP.
-> > 
-> > Signed-off-by: Md Sadre Alam <quic_mdalam@quicinc.com>
-> > ---
-> 
-> My Dragonboard db845c fails to boot on recent linux-next releases and
-> git bisect points to this patch. It boots again when it's reverted.
 
-Should we revert?
 
+On 1/8/2025 4:13 PM, Hans Verkuil wrote:
+> On 1/8/25 11:21, Dikshita Agarwal wrote:
+>>
+>>
+>> On 1/8/2025 2:25 PM, Hans Verkuil wrote:
+>>> On 08/01/2025 09:51, Dikshita Agarwal wrote:
+>>>>
+>>>>
+>>>> On 1/8/2025 1:17 PM, Hans Verkuil wrote:
+>>>>> On 08/01/2025 08:43, Dikshita Agarwal wrote:
+>>>>>>
+>>>>>>
+>>>>>> On 1/7/2025 7:27 PM, Nicolas Dufresne wrote:
+>>>>>>> Le lundi 23 décembre 2024 à 16:21 +0530, Dikshita Agarwal a écrit :
+>>>>>>>>
+>>>>>>>> On 12/23/2024 4:00 PM, Mauro Carvalho Chehab wrote:
+>>>>>>>>> Em Thu, 12 Dec 2024 17:21:49 +0530
+>>>>>>>>> Dikshita Agarwal <quic_dikshita@quicinc.com> escreveu:
+>>>>>>>>>
+>>>>>>>>>> +	.dma_mask = GENMASK(31, 29) - 1,
+>>>>>>>>>
+>>>>>>>>> Setting a mask to GENMASK() - 1 sounds weird. Is it really what you want?
+>>>>>>>>> I so, why?
+>>>>>>>>>
+>>>>>>>> Hi Mauro,
+>>>>>>>>
+>>>>>>>> the value of this dma mask should be 0xe0000000 -1.
+>>>>>>>>
+>>>>>>>> The background for the same is, 0xe0000000 onward memory space is allocated
+>>>>>>>> for IO register space so we are restricting the driver buffer allocations
+>>>>>>>> to 0xe0000000 - 1.
+>>>>>>>>
+>>>>>>>> Based on the comments received in the past, we are using GENMASK to
+>>>>>>>> generate 0xe0000000.
+>>>>>>>>
+>>>>>>>> Does this answer your query or I missed something?
+>>>>>>>
+>>>>>>> I'm not sure it will do what you want. (0xe0000000 -1) matches ~BIT(29). Perhaps
+>>>>>>> you wanted to use ~0xe0000000. 
+>>>>>>>
+>>>>>> value of dma mask is coming as expected with GENMASK(31, 29) - 1
+>>>>>>
+>>>>>> qcom-iris aa00000.video-codec: dma_mask DFFFFFFF (0xe0000000 -1)
+>>>>>
+>>>>> Isn't this just the equivalent of GENMASK(28, 0)? Can't you use that?
+>>>
+>>> Too early in the morning, this suggestion was clearly wrong.
+>>>
+>>>>>
+>>>>> It's much easier to understand than GENMASK()-1.
+>>>>
+>>>> Sure, I can use either ~GENMASK(29, 29) or ~BIT(29),
+>>>
+>>> ~BIT(29).
+>>>
+>>> It's really weird to just disable a single bit, so I think some comments
+>>> explaining why this mask is needed would be good (if there aren't comments
+>>> already).
+>>>
+>> I tested this some more, and seems ~BIT(29) doesn't work, as its still
+>> conflicting with the register space.
 > 
-> [..]
+> Odd, perhaps a 64 vs 32 bit issue?
 > 
-> >   	bchan->reconfigure = 0;
-> > @@ -1192,10 +1199,11 @@ static int bam_init(struct bam_device *bdev)
-> >   	u32 val;
-> >   	/* read revision and configuration information */
-> > -	if (!bdev->num_ees) {
-> > -		val = readl_relaxed(bam_addr(bdev, 0, BAM_REVISION));
-> > +	val = readl_relaxed(bam_addr(bdev, 0, BAM_REVISION));
-> > +	if (!bdev->num_ees)
-> >   		bdev->num_ees = (val >> NUM_EES_SHIFT) & NUM_EES_MASK;
-> > -	}
-> > +
-> > +	bdev->bam_revision = val & REVISION_MASK;
+>> Correct value would be GENMASK(31,30) + GENMASK(28,0) to set the exact bits
+>> to get the desired value i.e 0xe0000000 -1
 > 
-> The problem seems to occur when we try to read the revision for the
-> slimbus bam instance at 0x17184000 (which has "qcom,num-ees = <2>;").
+> Honestly, in this case I would prefer to just go with the actual hex value
+> 0xdfffffff together with an explanatory comment.
 > 
-> Thanks,
-> Georgi
+We moved to GENMASK way to address comment on previous version, but sure
+can directly use 0xdfffffff with a comment.
 
--- 
-~Vinod
+Thanks,
+Dikshita
+> Regards,
+> 
+> 	Hans
+> 
+>>> Regards,
+>>>
+>>> 	Hans
+>>>
+>>>> Please let me know which would be better?
+>>>>
+>>>> Thanks,
+>>>> Dikshita
+>>>>
+>>>>>
+>>>>> Regards,
+>>>>>
+>>>>> 	Hans
+>>>>>
+>>>>>>
+>>>>>> Thanks,
+>>>>>> Dikshita
+>>>>>>> Nicolas
+>>>>>>>
+>>>>>>>>
+>>>>>>>> Thanks,
+>>>>>>>> Dikshita
+>>>>>>>>> Thanks,
+>>>>>>>>> Mauro
+>>>>>>>
+>>>>>
+>>>>>
+>>>
+> 
 
