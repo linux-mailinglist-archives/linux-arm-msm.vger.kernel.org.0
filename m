@@ -1,65 +1,65 @@
-Return-Path: <linux-arm-msm+bounces-44390-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-44391-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4E6C8A05D67
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jan 2025 14:50:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 2F42FA05D70
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jan 2025 14:51:14 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 922E618892D5
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jan 2025 13:50:35 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 248F01889308
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jan 2025 13:50:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4455F1FF1DE;
-	Wed,  8 Jan 2025 13:48:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E473D1FF61A;
+	Wed,  8 Jan 2025 13:48:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="WDf7a1Wt"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="NLtZ/CZ8"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D1491FCCE8;
-	Wed,  8 Jan 2025 13:48:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC6C01FF60F;
+	Wed,  8 Jan 2025 13:48:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736344125; cv=none; b=NT9AbRGlcDLC6klAiU/5AhR6v6vpd+bF1L7dSzIj8PgYecBR6KiyEYVkzd5cV+9u6jZfUwcWLiAULPRwtlSLFJpm9VKPE/g+2ctHLfncex9leGl35AcOzhiUMcR9cCj7au+hWQrJI+cS+mC8tvp9ajxQIpyf2S9GPkTBi80NZws=
+	t=1736344130; cv=none; b=F6ez2oGo7no/hOIHg5/wncq8nl2PNALFmzoNoyd7fkjOz9T5KLgxH9aEYV1b6Bw/Y6CqjDJecXu10rZ/mLXSn9wdM9x2p0puodGZGBM3A1ZcIHFj1sWGixbv00gBGrcGcUOX1f6NYdCgc0ws2wthX4mv/q9S9Qi98dOWqKNlACQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736344125; c=relaxed/simple;
-	bh=QB5aazQ9axS/76GVr1wKs00kevkfQXeUCMGLVK5MIK0=;
+	s=arc-20240116; t=1736344130; c=relaxed/simple;
+	bh=+Ec43bSnbpku5NMv7jjRmcWpNRD4ah75dVYT4MMS8Xw=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:References:
-	 In-Reply-To:To:CC; b=PBh1Yd3Ye/67oHJ3fH3Ro+7/5yvOAsPzYCrb4UZ8dAUlEV0OBgWZwykWgNNzSxUNPWtDPwEcMtSMUoi8u0/rdIJ8RXTSBOI9BxWqn/kaFLS2a55xoyTmG6ZBCtvtT5AhpwH2gg/lZQuDfY8Qpz0wnVJ+PTvCLqjp+mR7DSCHmE4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=WDf7a1Wt; arc=none smtp.client-ip=205.220.180.131
+	 In-Reply-To:To:CC; b=jfNRlbFMxntLc+UPgHUatMnk9MdqZPbYxwk1/tEV7ivHECe4nIAjXxlK4Yy38tbDSrVp3oYj3VtWfcGC+YKahmDCSQ8KecFeANciQdL5T/ZaeQ3XgCe/9u7mXLRaRAJ1+tOP9AHHo/zLFgd0AYjhuVAMtTgb94+c4ccapSFis6Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=NLtZ/CZ8; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 508BkVHp007662;
-	Wed, 8 Jan 2025 13:48:29 GMT
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 508BkTQw018483;
+	Wed, 8 Jan 2025 13:48:35 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	okpRfl2U4u+z/ShGn955JZjKTZzNTaKTJrruyiFJdEs=; b=WDf7a1WtluWkPTYB
-	cozFsNREoKtGV9tmBzwCb1Ve2JeYBQsKN277hjrXVBgrlbMr9giKV5VGzVADjIbE
-	IeM3RZI/JTNUGdqrc65l4sdk0Dnheepw+QGfWBWWtBZwDrCq22Ga+zGCAm7b/cUL
-	iZm2RVDJ96K5Q5H9uUgHP4iS1gi1N/gzcOBrn2MQ1WTo51KwHMB/WRJSuMVadg84
-	WBZ1VTs/jDo+46FaruTsVa9Ppspbyv45C3ihGiLGUOyY0A7zd1HV7gaFFQmzhV2K
-	sS945rl3idhGDaRhkeHj+USKT6U9jEutwymxMVJwef+ROfD97oz5j5MxPd5v9CAc
-	aXAjdQ==
+	c9mFC2KTHaa37mlku0aOp4p+azpelAzN21CmUqeEeZo=; b=NLtZ/CZ8tf1ADhna
+	6l8gdzp1/E09JJ1JjVKIu4TixxsXEOO6bEZ+7DXu8XflvtYsW6oVvSl7KS5Udi1R
+	1fW2jbl7cIDLnYoyM20+oJRKxn7YfmApBTF80FGpLx9hDxsb4JD51cO2RZh0C65C
+	0Jk76wgHZSo8B/QnS0RvS5RX6Tc/2GWzyoEg8oK+nsr5Bk1/nM+DXOLPe3KeyFnD
+	Lwu/5bYQ4/KJ/P2IFzztexIJ4OD/Do5/jdIS8jsNaoPqIfJaPiHoW7JWrVBRf1Zz
+	EWKFyZbfGJxwQ//LWMwASuWpWLIRtsUdWT8RiMXDGopOpW7xktGnl7YKOa4YPebs
+	2BziAQ==
 Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 441pgnrnk2-1
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 441nm18u19-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 08 Jan 2025 13:48:29 +0000 (GMT)
+	Wed, 08 Jan 2025 13:48:35 +0000 (GMT)
 Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 508DmSdY002459
+	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 508DmYJq002507
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 8 Jan 2025 13:48:28 GMT
+	Wed, 8 Jan 2025 13:48:34 GMT
 Received: from nsssdc-sh01-lnx.ap.qualcomm.com (10.80.80.8) by
  nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Wed, 8 Jan 2025 05:48:21 -0800
+ 15.2.1544.9; Wed, 8 Jan 2025 05:48:28 -0800
 From: Luo Jie <quic_luoj@quicinc.com>
-Date: Wed, 8 Jan 2025 21:47:14 +0800
-Subject: [PATCH net-next v2 07/14] net: ethernet: qualcomm: Initialize PPE
- queue settings
+Date: Wed, 8 Jan 2025 21:47:15 +0800
+Subject: [PATCH net-next v2 08/14] net: ethernet: qualcomm: Initialize PPE
+ service code settings
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -68,7 +68,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-ID: <20250108-qcom_ipq_ppe-v2-7-7394dbda7199@quicinc.com>
+Message-ID: <20250108-qcom_ipq_ppe-v2-8-7394dbda7199@quicinc.com>
 References: <20250108-qcom_ipq_ppe-v2-0-7394dbda7199@quicinc.com>
 In-Reply-To: <20250108-qcom_ipq_ppe-v2-0-7394dbda7199@quicinc.com>
 To: Andrew Lunn <andrew+netdev@lunn.ch>,
@@ -98,552 +98,413 @@ CC: <linux-arm-msm@vger.kernel.org>, <netdev@vger.kernel.org>,
         <srinivas.kandagatla@linaro.org>, <bartosz.golaszewski@linaro.org>,
         <john@phrozen.org>, Luo Jie <quic_luoj@quicinc.com>
 X-Mailer: b4 0.14.1
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1736344057; l=16309;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1736344057; l=15825;
  i=quic_luoj@quicinc.com; s=20240808; h=from:subject:message-id;
- bh=QB5aazQ9axS/76GVr1wKs00kevkfQXeUCMGLVK5MIK0=;
- b=C73J72zSo/G4+03gWIyylFJb+rOco890QnL3XDu9vFgK9G2uHawgyB84iCRc4l7qPucZ4g+Y5
- c1viLs3qlGbCPoIdWSZ/TyegXTRz/ygHpzuad+RS/nWNcNKmErmcCTL
+ bh=+Ec43bSnbpku5NMv7jjRmcWpNRD4ah75dVYT4MMS8Xw=;
+ b=wiFmOH2B5+o5LawCr3z6BR3V5ZDi5nH2EM9lEbOcRwlnMPQx0MmXLAS1+7dxCq+6zCFtHj5uP
+ uDiP9U7aIqGDvO/h7eB+8LVjZBusAZMOb/gUiKFtP0Cw6uNiVDJti8N
 X-Developer-Key: i=quic_luoj@quicinc.com; a=ed25519;
  pk=P81jeEL23FcOkZtXZXeDDiPwIwgAHVZFASJV12w3U6w=
 X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nasanex01b.na.qualcomm.com (10.46.141.250)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: V2OMtsBD9OWYPIvX9-AaRek2f4HT0eCo
-X-Proofpoint-ORIG-GUID: V2OMtsBD9OWYPIvX9-AaRek2f4HT0eCo
+X-Proofpoint-ORIG-GUID: m6oxz-gd-EKt0XGz4OuLpla_n7GkE4Ic
+X-Proofpoint-GUID: m6oxz-gd-EKt0XGz4OuLpla_n7GkE4Ic
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 mlxlogscore=999
- mlxscore=0 suspectscore=0 impostorscore=0 lowpriorityscore=0 spamscore=0
- adultscore=0 phishscore=0 priorityscore=1501 bulkscore=0 malwarescore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2411120000
- definitions=main-2501080115
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ impostorscore=0 suspectscore=0 adultscore=0 malwarescore=0 phishscore=0
+ bulkscore=0 lowpriorityscore=0 clxscore=1015 mlxlogscore=999 mlxscore=0
+ spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2501080115
 
-Configure unicast and multicast hardware queues for the PPE
-ports to enable packet forwarding between the ports.
+PPE service code is a special code (0-255) that is defined by PPE for
+PPE's packet processing stages, as per the network functions required
+for the packet.
 
-Each PPE port is assigned with a range of queues. The queue ID
-selection for a packet is decided by the queue base and queue
-offset that is configured based on the internal priority and
-the RSS hash value of the packet.
+For packet being sent out by ARM cores on Ethernet ports, The service
+code 1 is used as the default service code. This service code is used
+to bypass most of packet processing stages of the PPE before the packet
+transmitted out PPE port, since the software network stack has already
+processed the packet.
 
 Signed-off-by: Luo Jie <quic_luoj@quicinc.com>
 ---
- drivers/net/ethernet/qualcomm/ppe/ppe_config.c | 357 ++++++++++++++++++++++++-
- drivers/net/ethernet/qualcomm/ppe/ppe_config.h |  63 +++++
- drivers/net/ethernet/qualcomm/ppe/ppe_regs.h   |  21 ++
- 3 files changed, 440 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/qualcomm/ppe/ppe_config.c |  95 +++++++++++++++-
+ drivers/net/ethernet/qualcomm/ppe/ppe_config.h | 145 +++++++++++++++++++++++++
+ drivers/net/ethernet/qualcomm/ppe/ppe_regs.h   |  53 +++++++++
+ 3 files changed, 292 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/net/ethernet/qualcomm/ppe/ppe_config.c b/drivers/net/ethernet/qualcomm/ppe/ppe_config.c
-index 2041efeb3a55..f379ee9d94a6 100644
+index f379ee9d94a6..c337b4deddc8 100644
 --- a/drivers/net/ethernet/qualcomm/ppe/ppe_config.c
 +++ b/drivers/net/ethernet/qualcomm/ppe/ppe_config.c
-@@ -125,6 +125,34 @@ struct ppe_scheduler_port_config {
- 	unsigned int drr_node_id;
- };
+@@ -8,6 +8,7 @@
+  */
  
-+/**
-+ * struct ppe_port_schedule_resource - PPE port scheduler resource.
-+ * @ucastq_start: Unicast queue start ID.
-+ * @ucastq_end: Unicast queue end ID.
-+ * @mcastq_start: Multicast queue start ID.
-+ * @mcastq_end: Multicast queue end ID.
-+ * @flow_id_start: Flow start ID.
-+ * @flow_id_end: Flow end ID.
-+ * @l0node_start: Scheduler node start ID for queue level.
-+ * @l0node_end: Scheduler node end ID for queue level.
-+ * @l1node_start: Scheduler node start ID for flow level.
-+ * @l1node_end: Scheduler node end ID for flow level.
-+ *
-+ * PPE scheduler resource allocated among the PPE ports.
-+ */
-+struct ppe_port_schedule_resource {
-+	unsigned int ucastq_start;
-+	unsigned int ucastq_end;
-+	unsigned int mcastq_start;
-+	unsigned int mcastq_end;
-+	unsigned int flow_id_start;
-+	unsigned int flow_id_end;
-+	unsigned int l0node_start;
-+	unsigned int l0node_end;
-+	unsigned int l1node_start;
-+	unsigned int l1node_end;
-+};
-+
- /* Assign the share buffer number 1550 to group 0 by default. */
- static int ipq9574_ppe_bm_group_config = 1550;
- 
-@@ -673,6 +701,111 @@ static struct ppe_scheduler_port_config ppe_port_sch_config[] = {
- 	},
- };
- 
-+/* The scheduler resource is applied to each PPE port, The resource
-+ * includes the unicast & multicast queues, flow nodes and DRR nodes.
-+ */
-+static struct ppe_port_schedule_resource ppe_scheduler_res[] = {
-+	{	.ucastq_start	= 0,
-+		.ucastq_end	= 63,
-+		.mcastq_start	= 256,
-+		.ucastq_end	= 271,
-+		.flow_id_start	= 0,
-+		.flow_id_end	= 0,
-+		.l0node_start	= 0,
-+		.l0node_end	= 7,
-+		.l1node_start	= 0,
-+		.l1node_end	= 0,
-+	},
-+	{	.ucastq_start	= 144,
-+		.ucastq_end	= 159,
-+		.mcastq_start	= 272,
-+		.ucastq_end	= 275,
-+		.flow_id_start	= 36,
-+		.flow_id_end	= 39,
-+		.l0node_start	= 48,
-+		.l0node_end	= 63,
-+		.l1node_start	= 8,
-+		.l1node_end	= 11,
-+	},
-+	{	.ucastq_start	= 160,
-+		.ucastq_end	= 175,
-+		.mcastq_start	= 276,
-+		.ucastq_end	= 279,
-+		.flow_id_start	= 40,
-+		.flow_id_end	= 43,
-+		.l0node_start	= 64,
-+		.l0node_end	= 79,
-+		.l1node_start	= 12,
-+		.l1node_end	= 15,
-+	},
-+	{	.ucastq_start	= 176,
-+		.ucastq_end	= 191,
-+		.mcastq_start	= 280,
-+		.ucastq_end	= 283,
-+		.flow_id_start	= 44,
-+		.flow_id_end	= 47,
-+		.l0node_start	= 80,
-+		.l0node_end	= 95,
-+		.l1node_start	= 16,
-+		.l1node_end	= 19,
-+	},
-+	{	.ucastq_start	= 192,
-+		.ucastq_end	= 207,
-+		.mcastq_start	= 284,
-+		.ucastq_end	= 287,
-+		.flow_id_start	= 48,
-+		.flow_id_end	= 51,
-+		.l0node_start	= 96,
-+		.l0node_end	= 111,
-+		.l1node_start	= 20,
-+		.l1node_end	= 23,
-+	},
-+	{	.ucastq_start	= 208,
-+		.ucastq_end	= 223,
-+		.mcastq_start	= 288,
-+		.ucastq_end	= 291,
-+		.flow_id_start	= 52,
-+		.flow_id_end	= 55,
-+		.l0node_start	= 112,
-+		.l0node_end	= 127,
-+		.l1node_start	= 24,
-+		.l1node_end	= 27,
-+	},
-+	{	.ucastq_start	= 224,
-+		.ucastq_end	= 239,
-+		.mcastq_start	= 292,
-+		.ucastq_end	= 295,
-+		.flow_id_start	= 56,
-+		.flow_id_end	= 59,
-+		.l0node_start	= 128,
-+		.l0node_end	= 143,
-+		.l1node_start	= 28,
-+		.l1node_end	= 31,
-+	},
-+	{	.ucastq_start	= 240,
-+		.ucastq_end	= 255,
-+		.mcastq_start	= 296,
-+		.ucastq_end	= 299,
-+		.flow_id_start	= 60,
-+		.flow_id_end	= 63,
-+		.l0node_start	= 144,
-+		.l0node_end	= 159,
-+		.l1node_start	= 32,
-+		.l1node_end	= 35,
-+	},
-+	{	.ucastq_start	= 64,
-+		.ucastq_end	= 143,
-+		.mcastq_start	= 0,
-+		.ucastq_end	= 0,
-+		.flow_id_start	= 1,
-+		.flow_id_end	= 35,
-+		.l0node_start	= 8,
-+		.l0node_end	= 47,
-+		.l1node_start	= 1,
-+		.l1node_end	= 7,
-+	},
-+};
-+
- /* Set the PPE queue level scheduler configuration. */
- static int ppe_scheduler_l0_queue_map_set(struct ppe_device *ppe_dev,
- 					  int node_id, int port,
-@@ -804,6 +937,149 @@ int ppe_queue_scheduler_set(struct ppe_device *ppe_dev,
- 					      port, scheduler_cfg);
+ #include <linux/bitfield.h>
++#include <linux/bitmap.h>
+ #include <linux/bits.h>
+ #include <linux/device.h>
+ #include <linux/regmap.h>
+@@ -1080,6 +1081,75 @@ int ppe_port_resource_get(struct ppe_device *ppe_dev, int port,
+ 	return 0;
  }
  
 +/**
-+ * ppe_queue_ucast_base_set - Set PPE unicast queue base ID and profile ID
++ * ppe_sc_config_set - Set PPE service code configuration
 + * @ppe_dev: PPE device
-+ * @queue_dst: PPE queue destination configuration
-+ * @queue_base: PPE queue base ID
-+ * @profile_id: Profile ID
++ * @sc: Service ID, 0-255 supported by PPE
++ * @cfg: Service code configuration
 + *
-+ * The PPE unicast queue base ID and profile ID are configured based on the
-+ * destination port information that can be service code or CPU code or the
-+ * destination port.
++ * PPE service code is used by the PPE during its packet processing stages,
++ * to perform or bypass certain selected packet operations on the packet.
 + *
 + * Return 0 on success, negative error code on failure.
 + */
-+int ppe_queue_ucast_base_set(struct ppe_device *ppe_dev,
-+			     struct ppe_queue_ucast_dest queue_dst,
-+			     int queue_base, int profile_id)
++int ppe_sc_config_set(struct ppe_device *ppe_dev, int sc, struct ppe_sc_cfg cfg)
 +{
-+	int index, profile_size;
-+	u32 val, reg;
++	u32 val, reg, servcode_val[2] = {};
++	unsigned long bitmap_value;
++	int ret;
 +
-+	profile_size = queue_dst.src_profile << 8;
-+	if (queue_dst.service_code_en)
-+		index = PPE_QUEUE_BASE_SERVICE_CODE + profile_size +
-+			queue_dst.service_code;
-+	else if (queue_dst.cpu_code_en)
-+		index = PPE_QUEUE_BASE_CPU_CODE + profile_size +
-+			queue_dst.cpu_code;
-+	else
-+		index = profile_size + queue_dst.dest_port;
++	val = FIELD_PREP(PPE_IN_L2_SERVICE_TBL_DST_PORT_ID_VALID, cfg.dest_port_valid);
++	val |= FIELD_PREP(PPE_IN_L2_SERVICE_TBL_DST_PORT_ID, cfg.dest_port);
++	val |= FIELD_PREP(PPE_IN_L2_SERVICE_TBL_DST_DIRECTION, cfg.is_src);
 +
-+	val = FIELD_PREP(PPE_UCAST_QUEUE_MAP_TBL_PROFILE_ID, profile_id);
-+	val |= FIELD_PREP(PPE_UCAST_QUEUE_MAP_TBL_QUEUE_ID, queue_base);
-+	reg = PPE_UCAST_QUEUE_MAP_TBL_ADDR + index * PPE_UCAST_QUEUE_MAP_TBL_INC;
++	bitmap_value = bitmap_read(cfg.bitmaps.egress, 0, PPE_SC_BYPASS_EGRESS_SIZE);
++	val |= FIELD_PREP(PPE_IN_L2_SERVICE_TBL_DST_BYPASS_BITMAP, bitmap_value);
++	val |= FIELD_PREP(PPE_IN_L2_SERVICE_TBL_RX_CNT_EN,
++			  test_bit(PPE_SC_BYPASS_COUNTER_RX, cfg.bitmaps.counter));
++	val |= FIELD_PREP(PPE_IN_L2_SERVICE_TBL_TX_CNT_EN,
++			  test_bit(PPE_SC_BYPASS_COUNTER_TX, cfg.bitmaps.counter));
++	reg = PPE_IN_L2_SERVICE_TBL_ADDR + PPE_IN_L2_SERVICE_TBL_INC * sc;
++
++	ret = regmap_write(ppe_dev->regmap, reg, val);
++	if (ret)
++		return ret;
++
++	bitmap_value = bitmap_read(cfg.bitmaps.ingress, 0, PPE_SC_BYPASS_INGRESS_SIZE);
++	PPE_SERVICE_SET_BYPASS_BITMAP(servcode_val, bitmap_value);
++	PPE_SERVICE_SET_RX_CNT_EN(servcode_val,
++				  test_bit(PPE_SC_BYPASS_COUNTER_RX_VLAN, cfg.bitmaps.counter));
++	reg = PPE_SERVICE_TBL_ADDR + PPE_SERVICE_TBL_INC * sc;
++
++	ret = regmap_bulk_write(ppe_dev->regmap, reg,
++				servcode_val, ARRAY_SIZE(servcode_val));
++	if (ret)
++		return ret;
++
++	reg = PPE_EG_SERVICE_TBL_ADDR + PPE_EG_SERVICE_TBL_INC * sc;
++	ret = regmap_bulk_read(ppe_dev->regmap, reg,
++			       servcode_val, ARRAY_SIZE(servcode_val));
++	if (ret)
++		return ret;
++
++	PPE_EG_SERVICE_SET_NEXT_SERVCODE(servcode_val, cfg.next_service_code);
++	PPE_EG_SERVICE_SET_UPDATE_ACTION(servcode_val, cfg.eip_field_update_bitmap);
++	PPE_EG_SERVICE_SET_HW_SERVICE(servcode_val, cfg.eip_hw_service);
++	PPE_EG_SERVICE_SET_OFFSET_SEL(servcode_val, cfg.eip_offset_sel);
++	PPE_EG_SERVICE_SET_TX_CNT_EN(servcode_val,
++				     test_bit(PPE_SC_BYPASS_COUNTER_TX_VLAN, cfg.bitmaps.counter));
++
++	ret = regmap_bulk_write(ppe_dev->regmap, reg,
++				servcode_val, ARRAY_SIZE(servcode_val));
++	if (ret)
++		return ret;
++
++	bitmap_value = bitmap_read(cfg.bitmaps.tunnel, 0, PPE_SC_BYPASS_TUNNEL_SIZE);
++	val = FIELD_PREP(PPE_TL_SERVICE_TBL_BYPASS_BITMAP, bitmap_value);
++	reg = PPE_TL_SERVICE_TBL_ADDR + PPE_TL_SERVICE_TBL_INC * sc;
 +
 +	return regmap_write(ppe_dev->regmap, reg, val);
-+}
-+
-+/**
-+ * ppe_queue_ucast_offset_pri_set - Set PPE unicast queue offset based on priority
-+ * @ppe_dev: PPE device
-+ * @profile_id: Profile ID
-+ * @priority: PPE internal priority to be used to set queue offset
-+ * @queue_offset: Queue offset used for calculating the destination queue ID
-+ *
-+ * The PPE unicast queue offset is configured based on the PPE
-+ * internal priority.
-+ *
-+ * Return 0 on success, negative error code on failure.
-+ */
-+int ppe_queue_ucast_offset_pri_set(struct ppe_device *ppe_dev,
-+				   int profile_id,
-+				   int priority,
-+				   int queue_offset)
-+{
-+	u32 val, reg;
-+	int index;
-+
-+	index = (profile_id << 4) + priority;
-+	val = FIELD_PREP(PPE_UCAST_PRIORITY_MAP_TBL_CLASS, queue_offset);
-+	reg = PPE_UCAST_PRIORITY_MAP_TBL_ADDR + index * PPE_UCAST_PRIORITY_MAP_TBL_INC;
-+
-+	return regmap_write(ppe_dev->regmap, reg, val);
-+}
-+
-+/**
-+ * ppe_queue_ucast_offset_hash_set - Set PPE unicast queue offset based on hash
-+ * @ppe_dev: PPE device
-+ * @profile_id: Profile ID
-+ * @rss_hash: Packet hash value to be used to set queue offset
-+ * @queue_offset: Queue offset used for calculating the destination queue ID
-+ *
-+ * The PPE unicast queue offset is configured based on the RSS hash value.
-+ *
-+ * Return 0 on success, negative error code on failure.
-+ */
-+int ppe_queue_ucast_offset_hash_set(struct ppe_device *ppe_dev,
-+				    int profile_id,
-+				    int rss_hash,
-+				    int queue_offset)
-+{
-+	u32 val, reg;
-+	int index;
-+
-+	index = (profile_id << 8) + rss_hash;
-+	val = FIELD_PREP(PPE_UCAST_HASH_MAP_TBL_HASH, queue_offset);
-+	reg = PPE_UCAST_HASH_MAP_TBL_ADDR + index * PPE_UCAST_HASH_MAP_TBL_INC;
-+
-+	return regmap_write(ppe_dev->regmap, reg, val);
-+}
-+
-+/**
-+ * ppe_port_resource_get - Get PPE resource per port
-+ * @ppe_dev: PPE device
-+ * @port: PPE port
-+ * @type: Resource type
-+ * @res_start: Resource start ID returned
-+ * @res_end: Resource end ID returned
-+ *
-+ * PPE resource is assigned per PPE port, which is acquired for QoS scheduler.
-+ *
-+ * Return 0 on success, negative error code on failure.
-+ */
-+int ppe_port_resource_get(struct ppe_device *ppe_dev, int port,
-+			  enum ppe_resource_type type,
-+			  int *res_start, int *res_end)
-+{
-+	struct ppe_port_schedule_resource res;
-+
-+	/* The reserved resource with the maximum port ID of PPE is
-+	 * also allowed to be acquired.
-+	 */
-+	if (port > ppe_dev->num_ports)
-+		return -EINVAL;
-+
-+	res = ppe_scheduler_res[port];
-+	switch (type) {
-+	case PPE_RES_UCAST:
-+		*res_start = res.ucastq_start;
-+		*res_end = res.ucastq_end;
-+		break;
-+	case PPE_RES_MCAST:
-+		*res_start = res.mcastq_start;
-+		*res_end = res.mcastq_end;
-+		break;
-+	case PPE_RES_FLOW_ID:
-+		*res_start = res.flow_id_start;
-+		*res_end = res.flow_id_end;
-+		break;
-+	case PPE_RES_L0_NODE:
-+		*res_start = res.l0node_start;
-+		*res_end = res.l0node_end;
-+		break;
-+	case PPE_RES_L1_NODE:
-+		*res_start = res.l1node_start;
-+		*res_end = res.l1node_end;
-+		break;
-+	default:
-+		return -EINVAL;
-+	}
-+
-+	return 0;
 +}
 +
  static int ppe_config_bm_threshold(struct ppe_device *ppe_dev, int bm_port_id,
  				   struct ppe_bm_port_config port_cfg)
  {
-@@ -1139,6 +1415,81 @@ static int ppe_config_scheduler(struct ppe_device *ppe_dev)
- 	return ret;
- };
+@@ -1490,6 +1560,25 @@ static int ppe_queue_dest_init(struct ppe_device *ppe_dev)
+ 	return 0;
+ }
  
-+/* Configure PPE queue destination of each PPE port. */
-+static int ppe_queue_dest_init(struct ppe_device *ppe_dev)
++/* Initialize the service code 1 used by CPU port. */
++static int ppe_servcode_init(struct ppe_device *ppe_dev)
 +{
-+	int ret, port_id, index, q_base, q_offset, res_start, res_end, pri_max;
-+	struct ppe_queue_ucast_dest queue_dst;
++	struct ppe_sc_cfg sc_cfg = {};
 +
-+	for (port_id = 0; port_id < ppe_dev->num_ports; port_id++) {
-+		memset(&queue_dst, 0, sizeof(queue_dst));
++	bitmap_zero(sc_cfg.bitmaps.counter, PPE_SC_BYPASS_COUNTER_SIZE);
++	bitmap_zero(sc_cfg.bitmaps.tunnel, PPE_SC_BYPASS_TUNNEL_SIZE);
 +
-+		ret = ppe_port_resource_get(ppe_dev, port_id, PPE_RES_UCAST,
-+					    &res_start, &res_end);
-+		if (ret)
-+			return ret;
++	bitmap_fill(sc_cfg.bitmaps.ingress, PPE_SC_BYPASS_INGRESS_SIZE);
++	clear_bit(PPE_SC_BYPASS_INGRESS_FAKE_MAC_HEADER, sc_cfg.bitmaps.ingress);
++	clear_bit(PPE_SC_BYPASS_INGRESS_SERVICE_CODE, sc_cfg.bitmaps.ingress);
++	clear_bit(PPE_SC_BYPASS_INGRESS_FAKE_L2_PROTO, sc_cfg.bitmaps.ingress);
 +
-+		q_base = res_start;
-+		queue_dst.dest_port = port_id;
++	bitmap_fill(sc_cfg.bitmaps.egress, PPE_SC_BYPASS_EGRESS_SIZE);
++	clear_bit(PPE_SC_BYPASS_EGRESS_ACL_POST_ROUTING_CHECK, sc_cfg.bitmaps.egress);
 +
-+		/* Configure queue base ID and profile ID that is same as
-+		 * physical port ID.
-+		 */
-+		ret = ppe_queue_ucast_base_set(ppe_dev, queue_dst,
-+					       q_base, port_id);
-+		if (ret)
-+			return ret;
-+
-+		/* Queue priority range supported by each PPE port */
-+		ret = ppe_port_resource_get(ppe_dev, port_id, PPE_RES_L0_NODE,
-+					    &res_start, &res_end);
-+		if (ret)
-+			return ret;
-+
-+		pri_max = res_end - res_start;
-+
-+		/* Redirect ARP reply packet with the max priority on CPU port,
-+		 * which keeps the ARP reply directed to CPU (CPU code is 101)
-+		 * with highest priority queue of EDMA.
-+		 */
-+		if (port_id == 0) {
-+			memset(&queue_dst, 0, sizeof(queue_dst));
-+
-+			queue_dst.cpu_code_en = true;
-+			queue_dst.cpu_code = 101;
-+			ret = ppe_queue_ucast_base_set(ppe_dev, queue_dst,
-+						       q_base + pri_max,
-+						       0);
-+			if (ret)
-+				return ret;
-+		}
-+
-+		/* Initialize the queue offset of internal priority. */
-+		for (index = 0; index < PPE_QUEUE_INTER_PRI_NUM; index++) {
-+			q_offset = index > pri_max ? pri_max : index;
-+
-+			ret = ppe_queue_ucast_offset_pri_set(ppe_dev, port_id,
-+							     index, q_offset);
-+			if (ret)
-+				return ret;
-+		}
-+
-+		/* Initialize the queue offset of RSS hash as 0 to avoid the
-+		 * random hardware value that will lead to the unexpected
-+		 * destination queue generated.
-+		 */
-+		index = 0;
-+		for (index = 0; index < PPE_QUEUE_HASH_NUM; index++) {
-+			ret = ppe_queue_ucast_offset_hash_set(ppe_dev, port_id,
-+							      index, 0);
-+			if (ret)
-+				return ret;
-+		}
-+	}
-+
-+	return 0;
++	return ppe_sc_config_set(ppe_dev, PPE_EDMA_SC_BYPASS_ID, sc_cfg);
 +}
 +
  int ppe_hw_config(struct ppe_device *ppe_dev)
  {
  	int ret;
-@@ -1151,5 +1502,9 @@ int ppe_hw_config(struct ppe_device *ppe_dev)
+@@ -1506,5 +1595,9 @@ int ppe_hw_config(struct ppe_device *ppe_dev)
  	if (ret)
  		return ret;
  
--	return ppe_config_scheduler(ppe_dev);
-+	ret = ppe_config_scheduler(ppe_dev);
+-	return ppe_queue_dest_init(ppe_dev);
++	ret = ppe_queue_dest_init(ppe_dev);
 +	if (ret)
 +		return ret;
 +
-+	return ppe_queue_dest_init(ppe_dev);
++	return ppe_servcode_init(ppe_dev);
  }
 diff --git a/drivers/net/ethernet/qualcomm/ppe/ppe_config.h b/drivers/net/ethernet/qualcomm/ppe/ppe_config.h
-index f28cfe7e1548..6553da34effe 100644
+index 6553da34effe..db5b033229d9 100644
 --- a/drivers/net/ethernet/qualcomm/ppe/ppe_config.h
 +++ b/drivers/net/ethernet/qualcomm/ppe/ppe_config.h
-@@ -8,6 +8,16 @@
+@@ -6,6 +6,8 @@
+ #ifndef __PPE_CONFIG_H__
+ #define __PPE_CONFIG_H__
  
++#include <linux/types.h>
++
  #include "ppe.h"
  
-+/* There are different table index ranges for configuring queue base ID of
-+ * the destination port, CPU code and service code.
-+ */
-+#define PPE_QUEUE_BASE_DEST_PORT		0
-+#define PPE_QUEUE_BASE_CPU_CODE			1024
-+#define PPE_QUEUE_BASE_SERVICE_CODE		2048
-+
-+#define PPE_QUEUE_INTER_PRI_NUM			16
-+#define PPE_QUEUE_HASH_NUM			256
+ /* There are different table index ranges for configuring queue base ID of
+@@ -18,6 +20,9 @@
+ #define PPE_QUEUE_INTER_PRI_NUM			16
+ #define PPE_QUEUE_HASH_NUM			256
+ 
++/* The service code is used by EDMA port to transmit packet to PPE. */
++#define PPE_EDMA_SC_BYPASS_ID			1
 +
  /**
   * enum ppe_scheduler_frame_mode - PPE scheduler frame mode.
   * @PPE_SCH_WITH_IPG_PREAMBLE_FRAME_CRC: The scheduled frame includes IPG,
-@@ -42,8 +52,61 @@ struct ppe_scheduler_cfg {
- 	enum ppe_scheduler_frame_mode frame_mode;
+@@ -90,6 +95,144 @@ struct ppe_queue_ucast_dest {
+ 	int dest_port;
  };
  
-+/**
-+ * enum ppe_resource_type - PPE resource type.
-+ * @PPE_RES_UCAST: Unicast queue resource.
-+ * @PPE_RES_MCAST: Multicast queue resource.
-+ * @PPE_RES_L0_NODE: Level 0 for queue based node resource.
-+ * @PPE_RES_L1_NODE: Level 1 for flow based node resource.
-+ * @PPE_RES_FLOW_ID: Flow based node resource.
-+ */
-+enum ppe_resource_type {
-+	PPE_RES_UCAST,
-+	PPE_RES_MCAST,
-+	PPE_RES_L0_NODE,
-+	PPE_RES_L1_NODE,
-+	PPE_RES_FLOW_ID,
++/* Hardware bitmaps for bypassing features of the ingress packet. */
++enum ppe_sc_ingress_type {
++	PPE_SC_BYPASS_INGRESS_VLAN_TAG_FMT_CHECK = 0,
++	PPE_SC_BYPASS_INGRESS_VLAN_MEMBER_CHECK = 1,
++	PPE_SC_BYPASS_INGRESS_VLAN_TRANSLATE = 2,
++	PPE_SC_BYPASS_INGRESS_MY_MAC_CHECK = 3,
++	PPE_SC_BYPASS_INGRESS_DIP_LOOKUP = 4,
++	PPE_SC_BYPASS_INGRESS_FLOW_LOOKUP = 5,
++	PPE_SC_BYPASS_INGRESS_FLOW_ACTION = 6,
++	PPE_SC_BYPASS_INGRESS_ACL = 7,
++	PPE_SC_BYPASS_INGRESS_FAKE_MAC_HEADER = 8,
++	PPE_SC_BYPASS_INGRESS_SERVICE_CODE = 9,
++	PPE_SC_BYPASS_INGRESS_WRONG_PKT_FMT_L2 = 10,
++	PPE_SC_BYPASS_INGRESS_WRONG_PKT_FMT_L3_IPV4 = 11,
++	PPE_SC_BYPASS_INGRESS_WRONG_PKT_FMT_L3_IPV6 = 12,
++	PPE_SC_BYPASS_INGRESS_WRONG_PKT_FMT_L4 = 13,
++	PPE_SC_BYPASS_INGRESS_FLOW_SERVICE_CODE = 14,
++	PPE_SC_BYPASS_INGRESS_ACL_SERVICE_CODE = 15,
++	PPE_SC_BYPASS_INGRESS_FAKE_L2_PROTO = 16,
++	PPE_SC_BYPASS_INGRESS_PPPOE_TERMINATION = 17,
++	PPE_SC_BYPASS_INGRESS_DEFAULT_VLAN = 18,
++	PPE_SC_BYPASS_INGRESS_DEFAULT_PCP = 19,
++	PPE_SC_BYPASS_INGRESS_VSI_ASSIGN = 20,
++	/* Values 21-23 are not specified by hardware. */
++	PPE_SC_BYPASS_INGRESS_VLAN_ASSIGN_FAIL = 24,
++	PPE_SC_BYPASS_INGRESS_SOURCE_GUARD = 25,
++	PPE_SC_BYPASS_INGRESS_MRU_MTU_CHECK = 26,
++	PPE_SC_BYPASS_INGRESS_FLOW_SRC_CHECK = 27,
++	PPE_SC_BYPASS_INGRESS_FLOW_QOS = 28,
++	/* This must be last as it determines the size of the BITMAP. */
++	PPE_SC_BYPASS_INGRESS_SIZE,
++};
++
++/* Hardware bitmaps for bypassing features of the egress packet. */
++enum ppe_sc_egress_type {
++	PPE_SC_BYPASS_EGRESS_VLAN_MEMBER_CHECK = 0,
++	PPE_SC_BYPASS_EGRESS_VLAN_TRANSLATE = 1,
++	PPE_SC_BYPASS_EGRESS_VLAN_TAG_FMT_CTRL = 2,
++	PPE_SC_BYPASS_EGRESS_FDB_LEARN = 3,
++	PPE_SC_BYPASS_EGRESS_FDB_REFRESH = 4,
++	PPE_SC_BYPASS_EGRESS_L2_SOURCE_SECURITY = 5,
++	PPE_SC_BYPASS_EGRESS_MANAGEMENT_FWD = 6,
++	PPE_SC_BYPASS_EGRESS_BRIDGING_FWD = 7,
++	PPE_SC_BYPASS_EGRESS_IN_STP_FLTR = 8,
++	PPE_SC_BYPASS_EGRESS_EG_STP_FLTR = 9,
++	PPE_SC_BYPASS_EGRESS_SOURCE_FLTR = 10,
++	PPE_SC_BYPASS_EGRESS_POLICER = 11,
++	PPE_SC_BYPASS_EGRESS_L2_PKT_EDIT = 12,
++	PPE_SC_BYPASS_EGRESS_L3_PKT_EDIT = 13,
++	PPE_SC_BYPASS_EGRESS_ACL_POST_ROUTING_CHECK = 14,
++	PPE_SC_BYPASS_EGRESS_PORT_ISOLATION = 15,
++	PPE_SC_BYPASS_EGRESS_PRE_ACL_QOS = 16,
++	PPE_SC_BYPASS_EGRESS_POST_ACL_QOS = 17,
++	PPE_SC_BYPASS_EGRESS_DSCP_QOS = 18,
++	PPE_SC_BYPASS_EGRESS_PCP_QOS = 19,
++	PPE_SC_BYPASS_EGRESS_PREHEADER_QOS = 20,
++	PPE_SC_BYPASS_EGRESS_FAKE_MAC_DROP = 21,
++	PPE_SC_BYPASS_EGRESS_TUNL_CONTEXT = 22,
++	PPE_SC_BYPASS_EGRESS_FLOW_POLICER = 23,
++	/* This must be last as it determines the size of the BITMAP. */
++	PPE_SC_BYPASS_EGRESS_SIZE,
++};
++
++/* Hardware bitmaps for bypassing counter of packet. */
++enum ppe_sc_counter_type {
++	PPE_SC_BYPASS_COUNTER_RX_VLAN = 0,
++	PPE_SC_BYPASS_COUNTER_RX = 1,
++	PPE_SC_BYPASS_COUNTER_TX_VLAN = 2,
++	PPE_SC_BYPASS_COUNTER_TX = 3,
++	/* This must be last as it determines the size of the BITMAP. */
++	PPE_SC_BYPASS_COUNTER_SIZE,
++};
++
++/* Hardware bitmaps for bypassing features of tunnel packet. */
++enum ppe_sc_tunnel_type {
++	PPE_SC_BYPASS_TUNNEL_SERVICE_CODE = 0,
++	PPE_SC_BYPASS_TUNNEL_TUNNEL_HANDLE = 1,
++	PPE_SC_BYPASS_TUNNEL_L3_IF_CHECK = 2,
++	PPE_SC_BYPASS_TUNNEL_VLAN_CHECK = 3,
++	PPE_SC_BYPASS_TUNNEL_DMAC_CHECK = 4,
++	PPE_SC_BYPASS_TUNNEL_UDP_CSUM_0_CHECK = 5,
++	PPE_SC_BYPASS_TUNNEL_TBL_DE_ACCE_CHECK = 6,
++	PPE_SC_BYPASS_TUNNEL_PPPOE_MC_TERM_CHECK = 7,
++	PPE_SC_BYPASS_TUNNEL_TTL_EXCEED_CHECK = 8,
++	PPE_SC_BYPASS_TUNNEL_MAP_SRC_CHECK = 9,
++	PPE_SC_BYPASS_TUNNEL_MAP_DST_CHECK = 10,
++	PPE_SC_BYPASS_TUNNEL_LPM_DST_LOOKUP = 11,
++	PPE_SC_BYPASS_TUNNEL_LPM_LOOKUP = 12,
++	PPE_SC_BYPASS_TUNNEL_WRONG_PKT_FMT_L2 = 13,
++	PPE_SC_BYPASS_TUNNEL_WRONG_PKT_FMT_L3_IPV4 = 14,
++	PPE_SC_BYPASS_TUNNEL_WRONG_PKT_FMT_L3_IPV6 = 15,
++	PPE_SC_BYPASS_TUNNEL_WRONG_PKT_FMT_L4 = 16,
++	PPE_SC_BYPASS_TUNNEL_WRONG_PKT_FMT_TUNNEL = 17,
++	/* Values 18-19 are not specified by hardware. */
++	PPE_SC_BYPASS_TUNNEL_PRE_IPO = 20,
++	/* This must be last as it determines the size of the BITMAP. */
++	PPE_SC_BYPASS_TUNNEL_SIZE,
 +};
 +
 +/**
-+ * struct ppe_queue_ucast_dest - PPE unicast queue destination.
-+ * @src_profile: Source profile.
-+ * @service_code_en: Enable service code to map the queue base ID.
-+ * @service_code: Service code.
-+ * @cpu_code_en: Enable CPU code to map the queue base ID.
-+ * @cpu_code: CPU code.
-+ * @dest_port: destination port.
-+ *
-+ * PPE egress queue ID is decided by the service code if enabled, otherwise
-+ * by the CPU code if enabled, or by destination port if both service code
-+ * and CPU code are disabled.
++ * struct ppe_sc_bypss - PPE service bypass bitmaps
++ * @ingress: Bitmap of features that can be bypassed on the ingress packet.
++ * @egress: Bitmap of features that can be bypassed on the egress packet.
++ * @counter: Bitmap of features that can be bypassed on the counter type.
++ * @tunnel: Bitmap of features that can be bypassed on the tunnel packet.
 + */
-+struct ppe_queue_ucast_dest {
-+	int src_profile;
-+	bool service_code_en;
-+	int service_code;
-+	bool cpu_code_en;
-+	int cpu_code;
++struct ppe_sc_bypass {
++	DECLARE_BITMAP(ingress, PPE_SC_BYPASS_INGRESS_SIZE);
++	DECLARE_BITMAP(egress, PPE_SC_BYPASS_EGRESS_SIZE);
++	DECLARE_BITMAP(counter, PPE_SC_BYPASS_COUNTER_SIZE);
++	DECLARE_BITMAP(tunnel, PPE_SC_BYPASS_TUNNEL_SIZE);
++};
++
++/**
++ * struct ppe_sc_cfg - PPE service code configuration.
++ * @dest_port_valid: Generate destination port or not.
++ * @dest_port: Destination port ID.
++ * @bitmaps: Bitmap of bypass features.
++ * @is_src: Destination port acts as source port, packet sent to CPU.
++ * @next_service_code: New service code generated.
++ * @eip_field_update_bitmap: Fields updated as actions taken for EIP.
++ * @eip_hw_service: Selected hardware functions for EIP.
++ * @eip_offset_sel: Packet offset selection, using packet's layer 4 offset
++ * or using packet's layer 3 offset for EIP.
++ *
++ * Service code is generated during the packet passing through PPE.
++ */
++struct ppe_sc_cfg {
++	bool dest_port_valid;
 +	int dest_port;
++	struct ppe_sc_bypass bitmaps;
++	bool is_src;
++	int next_service_code;
++	int eip_field_update_bitmap;
++	int eip_hw_service;
++	int eip_offset_sel;
 +};
 +
  int ppe_hw_config(struct ppe_device *ppe_dev);
  int ppe_queue_scheduler_set(struct ppe_device *ppe_dev,
  			    int node_id, bool flow_level, int port,
- 			    struct ppe_scheduler_cfg scheduler_cfg);
-+int ppe_queue_ucast_base_set(struct ppe_device *ppe_dev,
-+			     struct ppe_queue_ucast_dest queue_dst,
-+			     int queue_base,
-+			     int profile_id);
-+int ppe_queue_ucast_offset_pri_set(struct ppe_device *ppe_dev,
-+				   int profile_id,
-+				   int priority,
-+				   int queue_offset);
-+int ppe_queue_ucast_offset_hash_set(struct ppe_device *ppe_dev,
-+				    int profile_id,
-+				    int rss_hash,
-+				    int queue_offset);
-+int ppe_port_resource_get(struct ppe_device *ppe_dev, int port,
-+			  enum ppe_resource_type type,
-+			  int *res_start, int *res_end);
+@@ -109,4 +252,6 @@ int ppe_queue_ucast_offset_hash_set(struct ppe_device *ppe_dev,
+ int ppe_port_resource_get(struct ppe_device *ppe_dev, int port,
+ 			  enum ppe_resource_type type,
+ 			  int *res_start, int *res_end);
++int ppe_sc_config_set(struct ppe_device *ppe_dev, int sc,
++		      struct ppe_sc_cfg cfg);
  #endif
 diff --git a/drivers/net/ethernet/qualcomm/ppe/ppe_regs.h b/drivers/net/ethernet/qualcomm/ppe/ppe_regs.h
-index 4c832179d539..0232f23dcefe 100644
+index 0232f23dcefe..80f003afad78 100644
 --- a/drivers/net/ethernet/qualcomm/ppe/ppe_regs.h
 +++ b/drivers/net/ethernet/qualcomm/ppe/ppe_regs.h
-@@ -164,6 +164,27 @@
- #define PPE_BM_PORT_FC_SET_PRE_ALLOC(tbl_cfg, value)	\
- 	u32p_replace_bits((u32 *)(tbl_cfg) + 0x1, value, PPE_BM_PORT_FC_W1_PRE_ALLOC)
+@@ -25,10 +25,63 @@
+ #define PPE_BM_SCH_CFG_TBL_SECOND_PORT_VALID	BIT(6)
+ #define PPE_BM_SCH_CFG_TBL_SECOND_PORT		GENMASK(11, 8)
  
-+/* The queue base configurations based on destination port,
-+ * service code or CPU code.
++/* PPE service code configuration for the ingress direction functions,
++ * including bypass configuration for relevant PPE switch core functions
++ * such as flow entry lookup bypass.
 + */
-+#define PPE_UCAST_QUEUE_MAP_TBL_ADDR		0x810000
-+#define PPE_UCAST_QUEUE_MAP_TBL_ENTRIES		3072
-+#define PPE_UCAST_QUEUE_MAP_TBL_INC		0x10
-+#define PPE_UCAST_QUEUE_MAP_TBL_PROFILE_ID	GENMASK(3, 0)
-+#define PPE_UCAST_QUEUE_MAP_TBL_QUEUE_ID	GENMASK(11, 4)
++#define PPE_SERVICE_TBL_ADDR			0x15000
++#define PPE_SERVICE_TBL_ENTRIES			256
++#define PPE_SERVICE_TBL_INC			0x10
++#define PPE_SERVICE_W0_BYPASS_BITMAP		GENMASK(31, 0)
++#define PPE_SERVICE_W1_RX_CNT_EN		BIT(0)
 +
-+/* The queue offset configurations based on RSS hash value. */
-+#define PPE_UCAST_HASH_MAP_TBL_ADDR		0x830000
-+#define PPE_UCAST_HASH_MAP_TBL_ENTRIES		4096
-+#define PPE_UCAST_HASH_MAP_TBL_INC		0x10
-+#define PPE_UCAST_HASH_MAP_TBL_HASH		GENMASK(7, 0)
++#define PPE_SERVICE_SET_BYPASS_BITMAP(tbl_cfg, value)	\
++	u32p_replace_bits((u32 *)tbl_cfg, value, PPE_SERVICE_W0_BYPASS_BITMAP)
++#define PPE_SERVICE_SET_RX_CNT_EN(tbl_cfg, value)	\
++	u32p_replace_bits((u32 *)(tbl_cfg) + 0x1, value, PPE_SERVICE_W1_RX_CNT_EN)
 +
-+/* The queue offset configurations based on PPE internal priority. */
-+#define PPE_UCAST_PRIORITY_MAP_TBL_ADDR		0x842000
-+#define PPE_UCAST_PRIORITY_MAP_TBL_ENTRIES	256
-+#define PPE_UCAST_PRIORITY_MAP_TBL_INC		0x10
-+#define PPE_UCAST_PRIORITY_MAP_TBL_CLASS	GENMASK(3, 0)
+ /* PPE queue counters enable/disable control. */
+ #define PPE_EG_BRIDGE_CONFIG_ADDR		0x20044
+ #define PPE_EG_BRIDGE_CONFIG_QUEUE_CNT_EN	BIT(2)
+ 
++/* PPE service code configuration on the egress direction. */
++#define PPE_EG_SERVICE_TBL_ADDR			0x43000
++#define PPE_EG_SERVICE_TBL_ENTRIES		256
++#define PPE_EG_SERVICE_TBL_INC			0x10
++#define PPE_EG_SERVICE_W0_UPDATE_ACTION		GENMASK(31, 0)
++#define PPE_EG_SERVICE_W1_NEXT_SERVCODE		GENMASK(7, 0)
++#define PPE_EG_SERVICE_W1_HW_SERVICE		GENMASK(13, 8)
++#define PPE_EG_SERVICE_W1_OFFSET_SEL		BIT(14)
++#define PPE_EG_SERVICE_W1_TX_CNT_EN		BIT(15)
 +
- /* PPE unicast queue (0-255) configurations. */
- #define PPE_AC_UNICAST_QUEUE_CFG_TBL_ADDR	0x848000
- #define PPE_AC_UNICAST_QUEUE_CFG_TBL_ENTRIES	256
++#define PPE_EG_SERVICE_SET_UPDATE_ACTION(tbl_cfg, value)	\
++	u32p_replace_bits((u32 *)tbl_cfg, value, PPE_EG_SERVICE_W0_UPDATE_ACTION)
++#define PPE_EG_SERVICE_SET_NEXT_SERVCODE(tbl_cfg, value)	\
++	u32p_replace_bits((u32 *)(tbl_cfg) + 0x1, value, PPE_EG_SERVICE_W1_NEXT_SERVCODE)
++#define PPE_EG_SERVICE_SET_HW_SERVICE(tbl_cfg, value)	\
++	u32p_replace_bits((u32 *)(tbl_cfg) + 0x1, value, PPE_EG_SERVICE_W1_HW_SERVICE)
++#define PPE_EG_SERVICE_SET_OFFSET_SEL(tbl_cfg, value)	\
++	u32p_replace_bits((u32 *)(tbl_cfg) + 0x1, value, PPE_EG_SERVICE_W1_OFFSET_SEL)
++#define PPE_EG_SERVICE_SET_TX_CNT_EN(tbl_cfg, value)	\
++	u32p_replace_bits((u32 *)(tbl_cfg) + 0x1, value, PPE_EG_SERVICE_W1_TX_CNT_EN)
++
++/* PPE service code configuration for destination port and counter. */
++#define PPE_IN_L2_SERVICE_TBL_ADDR		0x66000
++#define PPE_IN_L2_SERVICE_TBL_ENTRIES		256
++#define PPE_IN_L2_SERVICE_TBL_INC		0x10
++#define PPE_IN_L2_SERVICE_TBL_DST_PORT_ID_VALID	BIT(0)
++#define PPE_IN_L2_SERVICE_TBL_DST_PORT_ID	GENMASK(4, 1)
++#define PPE_IN_L2_SERVICE_TBL_DST_DIRECTION	BIT(5)
++#define PPE_IN_L2_SERVICE_TBL_DST_BYPASS_BITMAP	GENMASK(29, 6)
++#define PPE_IN_L2_SERVICE_TBL_RX_CNT_EN		BIT(30)
++#define PPE_IN_L2_SERVICE_TBL_TX_CNT_EN		BIT(31)
++
++/* PPE service code configuration for the tunnel packet. */
++#define PPE_TL_SERVICE_TBL_ADDR			0x306000
++#define PPE_TL_SERVICE_TBL_ENTRIES		256
++#define PPE_TL_SERVICE_TBL_INC			4
++#define PPE_TL_SERVICE_TBL_BYPASS_BITMAP	GENMASK(31, 0)
++
+ /* Port scheduler global config. */
+ #define PPE_PSCH_SCH_DEPTH_CFG_ADDR		0x400000
+ #define PPE_PSCH_SCH_DEPTH_CFG_INC		4
 
 -- 
 2.34.1
