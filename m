@@ -1,121 +1,321 @@
-Return-Path: <linux-arm-msm+bounces-44371-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-44372-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8A024A05C2C
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jan 2025 13:56:17 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id A9868A05C41
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jan 2025 14:00:52 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 12F571884959
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jan 2025 12:56:20 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 381441889180
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jan 2025 13:00:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AF6831FA15F;
-	Wed,  8 Jan 2025 12:56:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D51321FA8C0;
+	Wed,  8 Jan 2025 13:00:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="N7O5f7bH"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-vs1-f46.google.com (mail-vs1-f46.google.com [209.85.217.46])
+Received: from mail-pl1-f177.google.com (mail-pl1-f177.google.com [209.85.214.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 256111F9F5A;
-	Wed,  8 Jan 2025 12:56:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A94E1F75A7
+	for <linux-arm-msm@vger.kernel.org>; Wed,  8 Jan 2025 13:00:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736340972; cv=none; b=kU2mMUzIb1eRd3yQ/u2HSysxkCrQNc6Z02pq9ZRvL3XMbitJ+oeAg+1yKb/UqL4TGe3A12o1/15eKt7oBPpygEbR7QyqpCsTSucsxcaUaWvbKVhbz3JFO8t795oAO83hyitnsGdrEkqQRXHFFdilCE4js2IkvRO0mgQM0C+t9vo=
+	t=1736341242; cv=none; b=hU3jUTvVFjfLj+LKs3O+ineGookPMnIUosplCMaiMaRFmy7d5iATZjKBAdWWGf/aAMjus7G4buRIyzhj2YD12nPHZ4a9JKlf5wiJAZ1V6kzhctwvK9baU3ylNkn/l9BsHhuWaixO2vVEAG8IHW61DT7olM6VH8zlg47xHPab/yo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736340972; c=relaxed/simple;
-	bh=oKT7Yz8DLH/KDqfm87YOoAHzlTdU3CIV02cT2d0S8zc=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=aWlh6aC0ZGo2QpGSk45FduojpzbpQ4G+hLobZR2aL0i/fcaiMwoPFRhL1fZhfJDy4h1QCWk/+I3wFL6Q+xqme7+ZdYbkLaE29toNfnj+iJp6+kDvMMs1n9Pljzha2UyQ6MeOnPuCZNxqrGFCKQqXJXEtSD0Tk7kg2Dc6hTqt7YU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.217.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-vs1-f46.google.com with SMTP id ada2fe7eead31-4afdfd3124dso4617490137.2;
-        Wed, 08 Jan 2025 04:56:10 -0800 (PST)
+	s=arc-20240116; t=1736341242; c=relaxed/simple;
+	bh=Wj28RozVCOy4C0tYb73R3985H60BjAclllBcLXn5gnA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=P7xoJic3BtVdd2JZKD2NxcR3q8dE7rDACqNMOCgYksgRWPdDFNEL9M0H7BGKTOd0puIkSt9bHHACMYkavA9PfPxunu6VdRb+LrLfiViDDvPFk8QKaWmB6mNdjUQBglyXpN+noFHzNMADNddlfllqv160mcqtRAkPSQhGMXOq66Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=N7O5f7bH; arc=none smtp.client-ip=209.85.214.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-pl1-f177.google.com with SMTP id d9443c01a7336-2162c0f6a39so14873875ad.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Jan 2025 05:00:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1736341239; x=1736946039; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=ArHdKKpjSTh/QEt1kD1NBblzUcPvKmhivs35nKXQPgw=;
+        b=N7O5f7bHyPdFVs8KDl3y3XGVVlPw0IShoDRdhv/5s8YsD8cs1PckO2OOyeMNI9Gn7N
+         wwvmPYVelxds3rPS2OBH/JqxlYrX6vfVgdgI4DGnxRx+FOMFikHF3b7Yv2ITTmn/zwCP
+         2noeN59w9hss17ogUrQYoCikqY6NuWLsBxgeYS64DzNqkDm9B/ovSvcR2cn6HDibploh
+         nGM6RA0gz24kvjbIDyfj6gCKbf/10WD4KFF8TIESxtZBYVUf4gXYx4WNjs+oRxPcTbFZ
+         DZGTupniZnr5NsVwWz80xWJ1ktLwK1XhlvyfX+Yfe5RCCP6aQ1Ca1enepSgX3LYB9SpC
+         zI8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736340969; x=1736945769;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=zr5OAgOEPPZiSNcmjwmBPGqoc39w41Bm0SLcztepzJA=;
-        b=JRsDL/n9SGsgK+jp30v5i9Ovs8sZg1+1p0dhpeCvbnuhQJ6qX0d6nz5KuXmuFsUaBk
-         xvCnr/hW8b2WtpEMmbIG5lP7UT0qjg2N83trU0gQlo1Oa+dtAlM6drIUI7i4WHUrO7kM
-         mkTxpXhlHr0ftEpO4Perx1cSln5S3vuRcgNSTaqVBLDIWOXJOJx8D2LOr0x8LzT1yjRN
-         qLGyx6KYP+6odVYKOWaSNDmhGNBoXXZ2YS9w8aJHu7SQvCBngdhk12tr77YfUNXccVar
-         scqGn2/kqkg4hCbkOpgN/BZwe42J0FBEzc1wQZn49ONSCqtMefzPE+QisVZbR4MmeEA6
-         Tptw==
-X-Forwarded-Encrypted: i=1; AJvYcCU1iT6meDIpLREuYNANfy5pHPrw3j/P5AeSwywXbJ4vfMtruhQEjKXWkwnPSmCKfsmBUL0bTXUTS0lJyh8rHQ==@vger.kernel.org, AJvYcCVWI/QVANfc/zbUW9yfouO58rd0OIsFysYLIEveub+NhLAkb4eo3KjDzBEeZQf1BhSrZNzBnsWhrUjL+KOIM3a9gHo=@vger.kernel.org, AJvYcCVk4b9rPJtYd9W4waX7TqXYltZFJKThBmKuVCQ4hFaDIcKkLEgw+tOCr4Sf6Y1BV8YKievs72KzhxPI@vger.kernel.org, AJvYcCWQgW4Lc3sdBBgYvnbXC8D3S3vSkEx5zVhh+6Mlj5SISwLEb+6YtVh2pQwrdkiEu6+/vd/C3T/WLJP+@vger.kernel.org, AJvYcCWnwRymLN8QknNgQ3kFlLXhOxPd8NK0m+leEbZhtrOMErP9ZYI3ypqxELKpRw0rR5M94uIducImpcm2qFXD@vger.kernel.org, AJvYcCX5mwkKNatJ9mu8wiKa7fsFM518iUQzJRWVLZQFn2VcqobCG+2c1GXPsZmH+hFm03ORShswXN5Lqow6@vger.kernel.org, AJvYcCXDPwAocUbtBDz+TNuGF4JlAF13Jeswv1HbJ07hqEtAlY+z9YNKuolDziDIp7YpkbFTBwkKOn6EoLGmbjs=@vger.kernel.org, AJvYcCXgESDVTzk6vYfJjqUoLf3d8H1SGfDr+IYM5trx77i3AdShYHqtOm3Mj+EpkP51EfsV4G856Z2zd6tQ6A==@vger.kernel.org
-X-Gm-Message-State: AOJu0YxgC00Sv1ZE4hUwHJUAklxdZep2rOO7TV6XcwSQQ7DInow3zi0+
-	4l+Hlm8kji3mOoTeRAJp7edgBDDy7NK/el+dNS2S0X3FDBw1Ly+8FCD2F6pY
-X-Gm-Gg: ASbGnctA39A+5fz0oxBwZiHe3tcbPWCqZApO1Dirqn5qMwbNSaJGM7IcFIaa5uN5Ypq
-	ruCTmxPwqByT67+PK0vEbo6wJcyUH5Ez3ZLgWUIdtogoiRyMs+OkFg9Sf/fsWZu4Rbq/T6kTzVX
-	jXwkiwZCS1LEOp+uPydrmUOY6dYpsHTB/1+tjfW9Vm+SJRpoZaMtksg6U8YyzfOFeILNL15qiQw
-	lS9kln2GU6iMsDItzn6mguAHv+a5usPR9dQ20F4tMvoHL22hFN+YMEK8xHdN4l5kf/CzGoCvnrX
-	xkTQanGmLO1d6z1kzR770/M=
-X-Google-Smtp-Source: AGHT+IGXigZfJbGek043S1B2Kso9f9KPMJJpqNGHfmzud/SjN0BItpqeokefRoP4CAhSyoBpp3lbLQ==
-X-Received: by 2002:a05:6102:6d0:b0:4af:f630:7216 with SMTP id ada2fe7eead31-4b3d0f2999amr1764418137.16.1736340969517;
-        Wed, 08 Jan 2025 04:56:09 -0800 (PST)
-Received: from mail-vk1-f172.google.com (mail-vk1-f172.google.com. [209.85.221.172])
-        by smtp.gmail.com with ESMTPSA id ada2fe7eead31-4b2bf98d1c9sm8376010137.4.2025.01.08.04.56.09
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 08 Jan 2025 04:56:09 -0800 (PST)
-Received: by mail-vk1-f172.google.com with SMTP id 71dfb90a1353d-5187f0b893dso5403208e0c.3;
-        Wed, 08 Jan 2025 04:56:09 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AJvYcCUkEphz2cn+a5FlMLFJ/mM0h8YJGwO5xOE11dlowaT5V3Kw2KY5d94OtDBMKG9OrJ558CA2cZzvChyp@vger.kernel.org, AJvYcCWHFtNMKCLY/6mwyD/nFBC5NtT+nrsscNK8T4S/Q6MbLYuAkw9PKe3WdOxNAgoIb9KGUSI+1W7wFhp+1Q==@vger.kernel.org, AJvYcCWRfqHPpp6L7OzPKmTFuqwmgCXmpP3XATW5SxWSQ4Qe1jjQHbiZvVbCR0JRHsVsCzjiO8cBmtqvnoFFxXjSj7Ljq+g=@vger.kernel.org, AJvYcCWXPQQEXO8qulQkEeOpx0yYLzM7L4us4+EShHSw0zNJJ4LW9NmokSu6j6hWYm3UnpnkJOfdg08ZSG7u@vger.kernel.org, AJvYcCXFasQFEDhhyOfUAZtpcaIvUa1xgHLffxkIAwD5/ANRD7uz8hRp8VEYzi7PueqK43+cBhZsdZCQenf746zL@vger.kernel.org, AJvYcCXQP7YsThJ8i4HCTkiZ25WMbelsbuzQl1XOGgsToVrC4piww5jPJAK+HOJjfJxtIwiffPXX4UvIz3ib@vger.kernel.org, AJvYcCXVTxZyRYGyxv7h4d4rhtE2ZTm3O+Cs9caouCkHFgJKX/MSggW1jgYOI8yLizF9a5vUDPUJhgpGBJkQCjc=@vger.kernel.org, AJvYcCXh5LyDLuUMrlI0iqgZ9D3v+ZwPRsv2YXACatRGhjmLs1VdWrmjboUnrMS+F+9YviJYtlQVLvGYmdQn3PYsow==@vger.kernel.org
-X-Received: by 2002:a05:6102:5123:b0:4b2:ad82:1318 with SMTP id
- ada2fe7eead31-4b3d0fde32amr1732752137.26.1736340968977; Wed, 08 Jan 2025
- 04:56:08 -0800 (PST)
+        d=1e100.net; s=20230601; t=1736341239; x=1736946039;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=ArHdKKpjSTh/QEt1kD1NBblzUcPvKmhivs35nKXQPgw=;
+        b=J3Iw3ov2VQZOoSm9zVvDZviXnD8mAGXJGEw4QqxvSAyeS4P/tueinuFAUHPAgIGIjg
+         jzODLwDzCwYuLiJwo0qxo0SwHvAVYSDfsqRxc3k7lqwzlNWrEA4Abaz934/c+fF1AP21
+         N35o9YCF+drmRnba1b1IG/TLn5L74oQtGUudLTtLx88rNzNmtXjjyQEqS1rNUU5VkxKS
+         hqT59Uex6v2hfJR/Q1unzAIhKKSHzuqkZr0KDc4wfAc87qtVX3ap4B9Eb/ozMOS6vAkJ
+         iF5Iq4KGHrkRV1/Fj0+arj+3p2cEaf7CWqYzC2iDTtd1H6tfW01WjS2253teVvRoLN/5
+         b5Uw==
+X-Forwarded-Encrypted: i=1; AJvYcCUkrP6a2FXRNlSSY1YcFNQrULPCbSEcfO+60feWWVCWcH0YzeYTZVUgZNxTD1j6ovosSQ1CfMzgg+Umk4vQ@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy7/6zNNeLHk0VbzfuubejEDccjK+5aodSVks+4S3+82DQXrJzg
+	LPmqOZFlsjMbeo13WAgFMBRa98cWtWSmuBn2nyKdrt1vEDqDY/phkHK8BPI9Lw==
+X-Gm-Gg: ASbGncuzCF7bn0qypJyIfIDxUG1hBwr5Vpk3kHzfkqPPz2DKdzZlCozHBTRXyPYElPp
+	EpdGFzyOHEcZ8/8ouD+oru9hNHuyPjZoQsrHYENThVrL/FfapM1C5MWFLXKJfL8C+UDj2uk/erY
+	SVjrdR08kydGvsb/LqbckqWTB9PQ2jS+kP+3SEIWQMZJEQXk9xzYco1Ehb58pWDY00oElMjSWue
+	zuRFC0ZlTl5iUbussoVDjAxSW6tg45MjNINzPyzNo1icXxGkrUTNhncdgZPhFj8WRDk
+X-Google-Smtp-Source: AGHT+IEzKpMdYLbC5yp6u5C+8MfqOqVWWhcO4hQ6BfaG30+WOj6SupeNYMvZNnYglrQooMN3vbMUYg==
+X-Received: by 2002:a05:6a00:35c9:b0:728:15fd:dabb with SMTP id d2e1a72fcca58-72d2171f5f8mr4815569b3a.8.1736341238992;
+        Wed, 08 Jan 2025 05:00:38 -0800 (PST)
+Received: from thinkpad ([117.213.97.234])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-72aad6cc885sm35361737b3a.0.2025.01.08.05.00.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 08 Jan 2025 05:00:38 -0800 (PST)
+Date: Wed, 8 Jan 2025 18:30:32 +0530
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To: Ram Kumar Dwivedi <quic_rdwivedi@quicinc.com>
+Cc: James.Bottomley@HansenPartnership.com, martin.petersen@oracle.com,
+	andersson@kernel.org, bvanassche@acm.org, ebiggers@kernel.org,
+	linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Naveen Kumar Goud Arepalli <quic_narepall@quicinc.com>,
+	Nitin Rawat <quic_nitirawa@quicinc.com>
+Subject: Re: [PATCH V9] scsi: ufs: qcom: Enable UFS Shared ICE Feature
+Message-ID: <20250108130032.37lz3ee6gcmfc36j@thinkpad>
+References: <20250107135624.7628-1-quic_rdwivedi@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250107131456.247610-1-krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20250107131456.247610-1-krzysztof.kozlowski@linaro.org>
-From: Geert Uytterhoeven <geert@linux-m68k.org>
-Date: Wed, 8 Jan 2025 13:55:57 +0100
-X-Gmail-Original-Message-ID: <CAMuHMdWjRu8AnCei67oBX-eR6RqD6m11SbH6mRmpjD2sfTtFzA@mail.gmail.com>
-X-Gm-Features: AbW1kvZ52DN__RR4vjE2dLHCl44CSoj_lJNsAln_Gci5kCuBVU2sP3BZtvvNBVQ
-Message-ID: <CAMuHMdWjRu8AnCei67oBX-eR6RqD6m11SbH6mRmpjD2sfTtFzA@mail.gmail.com>
-Subject: Re: [PATCH] dt-bindings: Correct indentation and style in DTS example
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
-	Conor Dooley <conor+dt@kernel.org>, linux-arm-kernel@lists.infradead.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org, 
-	iommu@lists.linux.dev, linux-leds@vger.kernel.org, linux-mmc@vger.kernel.org, 
-	linux-tegra@vger.kernel.org, linux-rtc@vger.kernel.org, 
-	linux-renesas-soc@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20250107135624.7628-1-quic_rdwivedi@quicinc.com>
 
-On Tue, Jan 7, 2025 at 2:15=E2=80=AFPM Krzysztof Kozlowski
-<krzysztof.kozlowski@linaro.org> wrote:
-> DTS example in the bindings should be indented with 2- or 4-spaces and
-> aligned with opening '- |', so correct any differences like 3-spaces or
-> mixtures 2- and 4-spaces in one binding.
->
-> No functional changes here, but saves some comments during reviews of
-> new patches built on existing code.
->
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+On Tue, Jan 07, 2025 at 07:26:24PM +0530, Ram Kumar Dwivedi wrote:
+> By default, the UFS controller allocates a fixed number of RX
+> and TX engines statically. Consequently, when UFS reads are in
+> progress, the TX ICE engines remain idle, and vice versa.
+> This leads to inefficient utilization of RX and TX engines.
+> 
+> To address this limitation, enable the UFS shared ICE feature for
+> Qualcomm UFS V5.0 and above. This feature utilizes a pool of crypto
+> cores for both TX streams (UFS Write – Encryption) and RX streams
+> (UFS Read – Decryption). With this approach, crypto cores are
+> dynamically allocated to either the RX or TX stream as needed.
+> 
+> Co-developed-by: Naveen Kumar Goud Arepalli <quic_narepall@quicinc.com>
+> Signed-off-by: Naveen Kumar Goud Arepalli <quic_narepall@quicinc.com>
+> Co-developed-by: Nitin Rawat <quic_nitirawa@quicinc.com>
+> Signed-off-by: Nitin Rawat <quic_nitirawa@quicinc.com>
+> Signed-off-by: Ram Kumar Dwivedi <quic_rdwivedi@quicinc.com>
+> ---
+> Changes from v8:
+> 1. Addressed Manivannan's comment to call ufs_qcom_config_ice_allocator()
+>    from ufs_qcom_ice_enable().
 
->  .../devicetree/bindings/mmc/renesas,sdhi.yaml |  78 +++----
->  .../bindings/rtc/renesas,rzn1-rtc.yaml        |  22 +-
+No I did not. More below.
 
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be> # renesas
+> 2. Addressed Manivannan's comment to place UFS_QCOM_CAP_ICE_CONFIG
+>    definition outside of the ufs_qcom_host struct.
+> 3. Addressed Manivannan's comment to align ICE definitions with
+>    other definitions.
+> 
+> Changes from v7:
+> 1. Addressed Eric's comment to perform ice configuration only if
+>    UFSHCD_CAP_CRYPTO is enabled.
+>  
+> Changes from v6: 
+> 1. Addressed Eric's comment to replace is_ice_config_supported() helper
+>    function with a conditional check for UFS_QCOM_CAP_ICE_CONFIG.
+> 
+> Changes from v5: 
+> 1. Addressed Bart's comment to declare the "val" variable with
+>    the "static" keyword.
+> 
+> Changes from v4:
+> 1. Addressed Bart's comment to use get_unaligned_le32() instead of
+>    bit shifting and to declare val with the const keyword.
+> 
+> Changes from v3:
+> 1. Addressed Bart's comment to change the data type of "config" to u32
+>    and "val" to uint8_t.
+> 
+> Changes from v2:
+> 1. Refactored the code to have a single algorithm in the code and
+> enabled by default.
+> 2. Revised the commit message to incorporate the refactored change.
+> 3. Qcom host capabilities are now enabled in a separate function.
+> 
+> Changes from v1:
+> 1. Addressed Rob's and Krzysztof's comment to fix dt binding compilation
+>    issue.
+> 2. Addressed Rob's comment to enable the nodes in example.
+> 3. Addressed Eric's comment to rephrase patch commit description.
+>    Used terminology as ICE allocator instead of ICE algorithm.
+> 4. Addressed Christophe's comment to align the comment as per kernel doc.
+> ---
+>  drivers/ufs/host/ufs-qcom.c | 38 +++++++++++++++++++++++++++++++++
+>  drivers/ufs/host/ufs-qcom.h | 42 ++++++++++++++++++++++++++++++++++++-
+>  2 files changed, 79 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
+> index 68040b2ab5f8..f4b9fb0740b4 100644
+> --- a/drivers/ufs/host/ufs-qcom.c
+> +++ b/drivers/ufs/host/ufs-qcom.c
+> @@ -15,6 +15,7 @@
+>  #include <linux/platform_device.h>
+>  #include <linux/reset-controller.h>
+>  #include <linux/time.h>
+> +#include <linux/unaligned.h>
+>  
+>  #include <soc/qcom/ice.h>
+>  
+> @@ -105,11 +106,33 @@ static struct ufs_qcom_host *rcdev_to_ufs_host(struct reset_controller_dev *rcd)
+>  }
+>  
+>  #ifdef CONFIG_SCSI_UFS_CRYPTO
+> +/**
+> + * ufs_qcom_config_ice_allocator() - ICE core allocator configuration
+> + *
+> + * @host: pointer to qcom specific variant structure.
+> + */
+> +static void ufs_qcom_config_ice_allocator(struct ufs_qcom_host *host)
+> +{
+> +	struct ufs_hba *hba = host->hba;
+> +	static const uint8_t val[4] = { NUM_RX_R1W0, NUM_TX_R0W1, NUM_RX_R1W1, NUM_TX_R1W1 };
+> +	u32 config;
+> +
+> +	if (!(host->caps & UFS_QCOM_CAP_ICE_CONFIG) ||
+> +			!(host->hba->caps & UFSHCD_CAP_CRYPTO))
+> +		return;
+> +
+> +	config = get_unaligned_le32(val);
+> +
+> +	ufshcd_writel(hba, ICE_ALLOCATOR_TYPE, REG_UFS_MEM_ICE_CONFIG);
+> +	ufshcd_writel(hba, config, REG_UFS_MEM_ICE_NUM_CORE);
+> +}
+>  
+>  static inline void ufs_qcom_ice_enable(struct ufs_qcom_host *host)
+>  {
+>  	if (host->hba->caps & UFSHCD_CAP_CRYPTO)
+>  		qcom_ice_enable(host->ice);
+> +
+> +	ufs_qcom_config_ice_allocator(host);
 
-Gr{oetje,eeting}s,
+I did not ask you to move ufs_qcom_config_ice_allocator() inside
+ufs_qcom_ice_enable(). Rather do below in ufs_qcom_hce_enable_notify():
 
-                        Geert
+	ufs_qcom_config_ice_allocator(host);
+	ufs_qcom_ice_enable(host);
 
---=20
-Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k=
-.org
+>  }
+>  
+>  static int ufs_qcom_ice_init(struct ufs_qcom_host *host)
+> @@ -196,6 +219,11 @@ static inline int ufs_qcom_ice_suspend(struct ufs_qcom_host *host)
+>  {
+>  	return 0;
+>  }
+> +
+> +static void ufs_qcom_config_ice_allocator(struct ufs_qcom_host *host)
+> +{
+> +}
+> +
+>  #endif
+>  
+>  static void ufs_qcom_disable_lane_clks(struct ufs_qcom_host *host)
+> @@ -932,6 +960,14 @@ static void ufs_qcom_set_host_params(struct ufs_hba *hba)
+>  	host_params->hs_tx_gear = host_params->hs_rx_gear = ufs_qcom_get_hs_gear(hba);
+>  }
+>  
+> +static void ufs_qcom_set_host_caps(struct ufs_hba *hba)
+> +{
+> +	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
+> +
+> +	if (host->hw_ver.major >= 0x5)
+> +		host->caps |= UFS_QCOM_CAP_ICE_CONFIG;
+> +}
+> +
+>  static void ufs_qcom_set_caps(struct ufs_hba *hba)
+>  {
+>  	hba->caps |= UFSHCD_CAP_CLK_GATING | UFSHCD_CAP_HIBERN8_WITH_CLK_GATING;
+> @@ -940,6 +976,8 @@ static void ufs_qcom_set_caps(struct ufs_hba *hba)
+>  	hba->caps |= UFSHCD_CAP_WB_EN;
+>  	hba->caps |= UFSHCD_CAP_AGGR_POWER_COLLAPSE;
+>  	hba->caps |= UFSHCD_CAP_RPM_AUTOSUSPEND;
+> +
+> +	ufs_qcom_set_host_caps(hba);
+>  }
+>  
+>  /**
+> diff --git a/drivers/ufs/host/ufs-qcom.h b/drivers/ufs/host/ufs-qcom.h
+> index b9de170983c9..de41028ecee0 100644
+> --- a/drivers/ufs/host/ufs-qcom.h
+> +++ b/drivers/ufs/host/ufs-qcom.h
+> @@ -135,6 +135,46 @@ enum {
+>  #define UNIPRO_CORE_CLK_FREQ_201_5_MHZ         202
+>  #define UNIPRO_CORE_CLK_FREQ_403_MHZ           403
+>  
+> +
 
-In personal conversations with technical people, I call myself a hacker. Bu=
-t
-when I'm talking to journalists I just say "programmer" or something like t=
-hat.
-                                -- Linus Torvalds
+Extra newline
+
+> +#ifdef CONFIG_SCSI_UFS_CRYPTO
+
+As I said in previous iteration, you do not need the guard for definitions.
+
+> +
+> +/* ICE configuration to share AES engines among TX stream and RX stream */
+> +#define UFS_QCOM_CAP_ICE_CONFIG BIT(0)
+
+This is a bit definition. So define this as like other bit definitions in this
+header.
+
+> +#define ICE_ALLOCATOR_TYPE 2
+> +#define REG_UFS_MEM_ICE_CONFIG 0x260C
+> +#define REG_UFS_MEM_ICE_NUM_CORE  0x2664
+
+I asked you to move these two register definitions to register enum but still
+not addressed.
+
+> +
+> +/*
+> + * Number of cores allocated for RX stream when Read data block received and
+> + * Write data block is not in progress
+> + */
+> +#define NUM_RX_R1W0 28
+> +
+> +/*
+> + * Number of cores allocated for TX stream when Device asked to send write
+> + * data block and Read data block is not in progress
+> + */
+> +#define NUM_TX_R0W1 28
+> +
+> +/*
+> + * Number of cores allocated for RX stream when Read data block received and
+> + * Write data block is in progress
+> + * OR
+> + * Device asked to send write data block and Read data block is in progress
+> + */
+> +#define NUM_RX_R1W1 15
+> +
+> +/*
+> + * Number of cores allocated for TX stream (UFS write) when Read data block
+> + * received and Write data block is in progress
+> + * OR
+> + * Device asked to send write data block and Read data block is in progress
+> + */
+> +#define NUM_TX_R1W1 13
+> +
+> +#endif /* UFS_CRYPTO */
+> +
+
+Extra newline.
+
+- Mani
+
+-- 
+மணிவண்ணன் சதாசிவம்
 
