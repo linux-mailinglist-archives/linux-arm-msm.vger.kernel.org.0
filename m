@@ -1,60 +1,61 @@
-Return-Path: <linux-arm-msm+bounces-44474-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-44475-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2D285A068CE
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jan 2025 23:52:06 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 93385A068D1
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jan 2025 23:52:10 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 532193A6381
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jan 2025 22:51:59 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id AB0C0163893
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jan 2025 22:52:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5591D204C22;
-	Wed,  8 Jan 2025 22:51:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 327BA204F64;
+	Wed,  8 Jan 2025 22:51:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NwxFpZoK"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DuGT4mSL"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CD7219EEBF;
-	Wed,  8 Jan 2025 22:51:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07461204C36;
+	Wed,  8 Jan 2025 22:51:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736376710; cv=none; b=FkMgvrNeZJd0tf3eVws+0px4Sp//oC6lzf25zIeTNVDXileMZjND44IeVNp4jTimA967/TBJ+h1/4wyl4mbnwFlZr50Fx5G3dUvnY8jz79qlTT/A47LMTOG9kTi3eXGxoVnrGa6MaRqormg+kdZak9q0oojNQlOVqHIWeYqGVMg=
+	t=1736376711; cv=none; b=tVU9MlHD3U6RlW5ZtANvx3Rmu4tV9X2ZNmlv5gAL1uDfr/bfWlhzqxkf/ok6DpDQg4ylSQzZNjaEh2SNjcvUx2cnj87p3ixUx0yF/5n5AxDmGtp9WBx2emuInDTC0GAKTsQfLnQAKuUTXfqZo7JB/YHY/3rP2SBOlUqFqJveSLs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736376710; c=relaxed/simple;
-	bh=34LjuJ5bPfofDGxa8K0A7scuz185lT1MGHOyPUMSi78=;
+	s=arc-20240116; t=1736376711; c=relaxed/simple;
+	bh=rn+nRSwdtd94mIJ0M5TJJvAJOrE2zm0T8bzlKKvilKQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Ti3kUfnhc/PTHAZ7diQe6eon+PnJpG4Hwl15/TGM/OCvjFwqajjaIfLGNpaQXVUn3uQ/OSgyvjnrfNvyQInz/VIDnH43wdnqNX9nwCpBcslToFXGTgC1syAoqPiAQhauWHOxcuj2UzXzQ1jRbhVfZzT9vXPUJST2zWLDOCIwMOE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NwxFpZoK; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64961C4CED3;
-	Wed,  8 Jan 2025 22:51:49 +0000 (UTC)
+	 MIME-Version:Content-Type; b=faBdYe3gCPasVv9dzhz4mzHAo4G9CyuyVvpQawZszsXHTX+foqq+/nJ14X+ua2Ij9mjrT7aBfpy0ig9VnyNpLZrLGOrgb7nvP1+kZAcWjQnOA7VPUl9PVAOQ1Ix3Q73mAhoDKaduCKPENP5MlGVEMFrjGE9Z7Ni49Y2l6kIA+gk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DuGT4mSL; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39D33C4CEE2;
+	Wed,  8 Jan 2025 22:51:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1736376710;
-	bh=34LjuJ5bPfofDGxa8K0A7scuz185lT1MGHOyPUMSi78=;
+	bh=rn+nRSwdtd94mIJ0M5TJJvAJOrE2zm0T8bzlKKvilKQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NwxFpZoK6lJOFoXAhNB74ytJB5cJiI9+euYwZCKdUpwchsEdP8CkybEgypsT3S9aG
-	 jQV9o2jRUWGvLKFMn3THoqtnAT1IcyHEioRSk+HSHQYLy1YMEwnDViv8d4y6IxKlLe
-	 YqsTP+ZNbSVlKj9Wb0jlhhYSahHiShLUN1cA7Z5FoEciz1ZN3UIwtOv02IRzTFSiiE
-	 juvm7KWPEil+pgZFUe2+z5JO/EWFurfKGb9rDB6E3E1y7vLq4coPHHUCjFwS0HVDAA
-	 xMsw3BLLaPI0CvTEz79N35kmL0Ep/nn/8E1wh7XFuxx2AWfmebiNYzcSzKG+dcQD6Q
-	 9p4qVM5XnbLbQ==
+	b=DuGT4mSL4q/CJZj7Ok0X32U8OpPuSrcKLbjwqfyfRxHx5x1jh9A9dOs/Z7gX/7fT2
+	 57i1zCwDiMT4CHOmwBZ28UmHh9rosHvEqrucLZNX/Z1+gLQBU1TdDRGoyTlr1i9OSU
+	 yoQHCZnzGDixA3Gf6kfSS1XKIJrIHXrBbR2QXqB6EBU3sRcJCPqDmNM85pMv0ljsgK
+	 udc+b6AFa7FiykN0A2KVt/9xrFSrUjVHAZTBTZP7F5aE/wT76rNEvTmnwMPnMckbL1
+	 +zSkjsN43HvWFqO7iDsH8D06BJ8y4ZDHiq2cAFNckVBk+lLMu1EkCadQpSuoLkeM7w
+	 tV+eNwsSOMHrQ==
 From: Bjorn Andersson <andersson@kernel.org>
 To: Konrad Dybcio <konradybcio@kernel.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Luca Weiss <luca.weiss@fairphone.com>
-Cc: ~postmarketos/upstreaming@lists.sr.ht,
-	phone-devel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] soc: qcom: pd_mapper: Add SM7225 compatible
-Date: Wed,  8 Jan 2025 16:51:42 -0600
-Message-ID: <173637670470.158785.17315728222693452905.b4-ty@kernel.org>
+Subject: Re: [PATCH 0/2] arm64: dts: qcom: sdm450-lenovo-tbx605f: add panel nodes
+Date: Wed,  8 Jan 2025 16:51:43 -0600
+Message-ID: <173637670471.158785.5940174966816912651.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20241220-pd-mapper-sm7225-v1-1-68f85a87288d@fairphone.com>
-References: <20241220-pd-mapper-sm7225-v1-1-68f85a87288d@fairphone.com>
+In-Reply-To: <20241115-topic-sdm450-upstream-lab-ibb-v1-0-8a8e74befbfe@linaro.org>
+References: <20241115-topic-sdm450-upstream-lab-ibb-v1-0-8a8e74befbfe@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,16 +66,24 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Fri, 20 Dec 2024 09:39:44 +0100, Luca Weiss wrote:
-> The Qualcomm SM7225 is practically identical to SM6350, so add an entry
-> using that data.
+On Fri, 15 Nov 2024 11:20:52 +0100, Neil Armstrong wrote:
+> Add the necessary nodes to enable the DSI Panel on the Lenovo
+> Lenovo Smart Tab M10.
 > 
+> The panel is already upstream with:
+> https://lore.kernel.org/all/20240828-topic-sdm450-upstream-tbx605f-panel-v3-0-b792f93e1d6b@linaro.org/
 > 
+> And the LAB-IBB bindings changes was sent at:
+> https://lore.kernel.org/all/20241115-topic-sdm450-upstream-lab-ibb-bindings-v1-1-1f4bff4583b0@linaro.org/
+> 
+> [...]
 
 Applied, thanks!
 
-[1/1] soc: qcom: pd_mapper: Add SM7225 compatible
-      commit: 8e6854efd4738d3c9e6fdfeff8df726d454d4c7d
+[1/2] arm64: dts: qcom: pmi8950: add LAB-IBB nodes
+      commit: f8ed8fd08426df23037fd73e9f1c3cfdef827769
+[2/2] arm64: dts: qcom: sdm450-lenovo-tbx605f: add DSI panel nodes
+      commit: cddaf231361d83a0605d51a8b70855eb57a58131
 
 Best regards,
 -- 
