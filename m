@@ -1,135 +1,139 @@
-Return-Path: <linux-arm-msm+bounces-44224-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-44225-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0AB02A04DDF
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jan 2025 00:51:01 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id E9629A04E49
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jan 2025 01:50:59 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1F3CE3A4963
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jan 2025 23:50:55 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E3C22165E2E
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jan 2025 00:50:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2DCC91F63D4;
-	Tue,  7 Jan 2025 23:50:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E69891F95A;
+	Wed,  8 Jan 2025 00:50:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="fduCUKWc"
+	dkim=pass (2048-bit key) header.d=pf-is-s-u-tokyo-ac-jp.20230601.gappssmtp.com header.i=@pf-is-s-u-tokyo-ac-jp.20230601.gappssmtp.com header.b="kGCRe6S4"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f51.google.com (mail-lf1-f51.google.com [209.85.167.51])
+Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F7151F63ED
-	for <linux-arm-msm@vger.kernel.org>; Tue,  7 Jan 2025 23:50:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDBE5DF5C
+	for <linux-arm-msm@vger.kernel.org>; Wed,  8 Jan 2025 00:50:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736293854; cv=none; b=FXq2cQSBR8SREOIh2Y9M4Gb4KEPdIfwQfBP4LjdDOQe6G3I9pGHMasSRyibMCsL/oE6FpKHObX5oCl/VdYLnJEZWY2gNQiyEunr4N/EYVe/ZQzn46bbWndrRHXJkTnN0M3ZAZNdksGSWjsgffS/s1k1HYLyk5xwoFFMuDM6CaYg=
+	t=1736297457; cv=none; b=fEeq+jgveedKKmcgfZDdLFvLEDdVoy8jODvyTFkynh6oW6nlQ3eg0MbLs3LyXoLCIjAzupBA9P0pkrffh2muICCImelTbB3oREzY/mepU/kYrm/Zd4xPRhnQL0lsCB9TYSccmJq95Pc4/uS4xA2lHwG79hX5LLkIjJSDgEAri1A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736293854; c=relaxed/simple;
-	bh=AoKzduww5JTHtLHaYHEdrkvNKnvZ0IyAhMtg5W0q8Mg=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=gvTGBWAsqBl3OhLva7R60BIa6iRRd98zhck71UiLB9g78uKyUxyjwK7+MHp3AwDHEscVxSF1QVSwCWVuwFH6bUxZDbxscQm9RtCHshtY6j39AN/Yk+utADGFPZczyxSQgW9T1H02wthLYp2rjDlImxTWZMc7yXuuZVBWsyuoTag=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=fduCUKWc; arc=none smtp.client-ip=209.85.167.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f51.google.com with SMTP id 2adb3069b0e04-5401c68b89eso353799e87.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Jan 2025 15:50:51 -0800 (PST)
+	s=arc-20240116; t=1736297457; c=relaxed/simple;
+	bh=DPbSWuq2o0DZLfWEZ3kor0ZJ/H4buV/b9sB02jclP/0=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=LQ14o21rk/t9tJ/A3jyMSzc+iHgfYURrA6VEyFyLYPb6IUX/0zwu6GfXPStOE4ecfTxs25J+1Kol26ijjdp8mTEM4Hwv3TwU+H1EIMBaHsjodJehDb/icXkKWozMWBR5CgkCGcCSAnEeAupabkRLbJ1gFRt+attOoUkkWydbhiY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pf.is.s.u-tokyo.ac.jp; spf=none smtp.mailfrom=pf.is.s.u-tokyo.ac.jp; dkim=pass (2048-bit key) header.d=pf-is-s-u-tokyo-ac-jp.20230601.gappssmtp.com header.i=@pf-is-s-u-tokyo-ac-jp.20230601.gappssmtp.com header.b=kGCRe6S4; arc=none smtp.client-ip=209.85.214.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pf.is.s.u-tokyo.ac.jp
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=pf.is.s.u-tokyo.ac.jp
+Received: by mail-pl1-f182.google.com with SMTP id d9443c01a7336-216634dd574so157921385ad.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Jan 2025 16:50:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1736293850; x=1736898650; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=mzA8ULDWK+L6lzlTxbv+SOWG/fbWpGETGTXU33lZ5cE=;
-        b=fduCUKWcD9FYwQvFfAGEoBLBDlPXMLHQtJiODXcocHLLmiygXnncSyBVxvPyAk2bEB
-         WHsLfi2kgjImIpUFb90jQ56R9NgOO6Oi5T1TAxYyOTncVoyZblXGbu8vlv5STx5b8q2t
-         R3q47wQxX2BWPgUrbQ1O2hxiBgDIpE9ZvUv8nYdGqzVUib/Yjc2UMn3VpdUA/Nck5K+o
-         mUmyLfioHBH74DmMhyZaPkQQ0Ii0hTfjtAgcYTrDVehSgBbwlOg1bU2hy5dwXS+KdAdl
-         PJWjbNqCZmiSD6P6zcNZist6MnAGbg4AsmIW4fyJmabjcN3XrgssrPWmsHlnHXNxMKV2
-         VoDg==
+        d=pf-is-s-u-tokyo-ac-jp.20230601.gappssmtp.com; s=20230601; t=1736297455; x=1736902255; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=5T/H4qKBWxsLQZ0Wgfk0NqqS/2SWo0oCmcMpOk0wgbw=;
+        b=kGCRe6S4opzQA0fDXdQ42fUnSLTrKWwKcWXBXmobl7W+25ECPz0weIgAygsT/TjBZ/
+         OpAsZgamqX2DLIoRlxTq8OQ9J4KsucBxqZTjgQXCL9WJ4IjGV7sesT13prMwdzYTS6SX
+         fv9bF6TqU/QaNIxOEybqBQHgPo+DrTqJGYF60nG0Tp6yRtwcQieVof2SfSOKZf14zw4L
+         VFsHDY9rSU/fyqF0I5tBjT2nWDBMUSPWpff8exhu+fTZ2i0KB6P/UMoaJRI8kkNN3uAx
+         FxTCj3DSqIo0GbcrIp9vXgQPTaBrRaOnHSaza5IanqWtoNqahkE6PfqD56pZQrX9KkLv
+         vgJg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736293850; x=1736898650;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=mzA8ULDWK+L6lzlTxbv+SOWG/fbWpGETGTXU33lZ5cE=;
-        b=wb/oExZUzQT2fWxc+neGS5BVLpA8sKoR/ySGYqvX8S9p6da2M7vQyaReC8dOzjkOyk
-         HDcGEjMgpkmE3khZwlmkgaHYNG9IpGntjQoH0n8jiMlCqlPtueacxlNUYWUTfYnlx/xQ
-         ECgrl9Dfuhqk7gstIXeDCzJ5UlMbWRTqH/4KK2sOdWFhmLpE7+DiZa6vjUqjFkl7Se/m
-         lsVVYUim4k8hIOJ9ijCJuhD9UR/HQsqcmpOHYuDkCLqy8tWdl6eJ2zWtG8tKmHRet4cZ
-         L4VvoJBB+VaSjENHbdT/CTXyV51alUGqWnuSlkSlQto4eNxQZIzXqWcHf7ZATGAvnZHn
-         Z54w==
-X-Forwarded-Encrypted: i=1; AJvYcCWYB69/ishLk5KEjWF6kq7vaSPBazaDJDJXQLqXryqR7J7Uh8kK867COp6MjPOxXngeubn1gZTVawkVmLyh@vger.kernel.org
-X-Gm-Message-State: AOJu0YzhLDdtV739nP4eibh7+Wm6ILE+ig6fuSZFmumttb5hAXf6kWnO
-	zENjI8aaTK5D7xnok7yaRMyXPdXuok5nBjFTSQWWsphxdXYxNM7sj7mYrufvlA4=
-X-Gm-Gg: ASbGnctqTX5VUi7RECYqdxMCVoPqsLT+sSgNV7bRwVV01lpVEpnRjQ/hhfPNTAfehS3
-	RoiOHyESQfcQK2/YT2qlBoSPME3/Yl6jTvi9cWpdTN3yv1l9S8ercS774EnbD1/YVoNGlJTnWKA
-	ZWaY+yqU4MNjE3UWV54DowPtD8TI5NnvQyK9SEopZuka7tEPZj5cu+hzQg34cLHn9BNsL1QcFQ5
-	2MhoTgbL7JETZ1VBxqu7zmGxTu19b8MEmkGeWwVSpHyBQ+KLEcoWtJMRsgM3PDqjmMyIOPCIz2c
-	NY/n/V5cNLxck2tY2AqFzpU1
-X-Google-Smtp-Source: AGHT+IEq/n/Tfq7aT4FpmCEZdmi1g3GO0mqtL7fWEuY6dUSLlQYwrreN3n6ytarFegj9TLUJkrf0bw==
-X-Received: by 2002:a05:6512:334e:b0:542:7fb2:4098 with SMTP id 2adb3069b0e04-5427fb240dbmr964465e87.26.1736293850322;
-        Tue, 07 Jan 2025 15:50:50 -0800 (PST)
-Received: from eriador.lan (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-542235f5d5asm5409976e87.45.2025.01.07.15.50.47
+        d=1e100.net; s=20230601; t=1736297455; x=1736902255;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=5T/H4qKBWxsLQZ0Wgfk0NqqS/2SWo0oCmcMpOk0wgbw=;
+        b=cqk+5B+G+uGwZtDeePcY8F7NtoKrPAlQEfis8sf6jCb8JCiWfyd5fDVrBsFtHVYssv
+         aikks5zVTFjOeaxihsqdVUlhQgQMQbTsZgk0smvgqW5dpPb8jCyFBgZ+0JYCUouqOwIp
+         OakPTAFxqur3vhm1LuOV0gp14+T3jvGtlO80Z9P2DqJqYoWieDLZl1onqBoao1mYZSQZ
+         z9S0x3tgXveYrcombbH4d02u2rl1+Hx48qQ9Dfocjr4Vcidyur1ZyGslDELnXIvc018Z
+         UTJJSTSjahJMk0DwmsSeg+6yLGKdnym8iGLosA6mMppve1nWIRGZhrmdu4EVOn8aRL5h
+         aGMw==
+X-Gm-Message-State: AOJu0Yz8X1NeSskAxmHC1I0spSVJPwBnMWIoMbtXl/0lt3qlK9U01zxD
+	kcmtMP8QtaFtqQRsh977I5PA5TZs5mr6HdG3It24Il9YSpqT0Ys2guG7UvLaBos=
+X-Gm-Gg: ASbGnctPXnlTaEwCqD70in1XJ+S6pFsn5QhW3ssVxmeGv8s6SRHXWplTFkU/uv4xAoc
+	w0kcBquGA8FqgqqW2UegbhoqC19+SjuLOrEpnMFeEqdUcc3ivUmQDuxZiIWsPcnIf6HlWWTcNjr
+	I3+/3FBK0klupWkNe4EBM0spUSyn5+US7cekAoffDP479gRr/5jSSmT+PnS3prT0+szYCihgy4X
+	o9ox6YmuhWKBqVHAs85brcmcjc4C2s0+HeXqIPN6/uD+bxWp+hOw24Egk0ishPe+N0FC1uj+/gG
+	Fddq
+X-Google-Smtp-Source: AGHT+IHUuEiZBdG3omlHGc4ZkH2vvEsKR/HCHgwXps2NDTxpakpxXIrweBkqhk4Gm4QwEIfeDyy7pg==
+X-Received: by 2002:a05:6a21:7898:b0:1e1:ae4a:1d50 with SMTP id adf61e73a8af0-1e88cfd3cd9mr2154472637.25.1736297455171;
+        Tue, 07 Jan 2025 16:50:55 -0800 (PST)
+Received: from localhost.localdomain ([2001:f70:39c0:3a00:83ee:4294:3e0f:6eda])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-842e4db5fb6sm26331644a12.85.2025.01.07.16.50.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Jan 2025 15:50:49 -0800 (PST)
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Rob Clark <robdclark@gmail.com>,
-	quic_abhinavk@quicinc.com,
-	Sean Paul <sean@poorly.run>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	David Airlie <airlied@gmail.com>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Simona Vetter <simona@ffwll.ch>,
-	Simona Vetter <simona.vetter@ffwll.ch>,
-	Jessica Zhang <quic_jesszhan@quicinc.com>
-Cc: quic_ebharadw@quicinc.com,
-	linux-arm-msm@vger.kernel.org,
-	dri-devel@lists.freedesktop.org,
-	freedreno@lists.freedesktop.org,
-	linux-kernel@vger.kernel.org,
-	Rob Clark <robdclark@chromium.org>,
-	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>
-Subject: Re: (subset) [PATCH v4 00/25] drm/msm/dpu: Add Concurrent Writeback Support for DPU 10.x+
-Date: Wed,  8 Jan 2025 01:50:46 +0200
-Message-ID: <173629378661.1569938.10235663597211043453.b4-ty@linaro.org>
-X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20241216-concurrent-wb-v4-0-fe220297a7f0@quicinc.com>
-References: <20241216-concurrent-wb-v4-0-fe220297a7f0@quicinc.com>
+        Tue, 07 Jan 2025 16:50:54 -0800 (PST)
+From: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
+To: andersson@kernel.org,
+	mathieu.poirier@linaro.org
+Cc: linux-arm-msm@vger.kernel.org,
+	dmitry.baryshkov@linaro.org,
+	Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
+Subject: [PATCH v2] rpmsg: qcom_smd: Fix an OF node leak inqcom_smd_register_edge()
+Date: Wed,  8 Jan 2025 09:50:45 +0900
+Message-Id: <20250108005045.2716459-1-joe@pf.is.s.u-tokyo.ac.jp>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
-On Mon, 16 Dec 2024 16:43:11 -0800, Jessica Zhang wrote:
-> DPU supports a single writeback session running concurrently with primary
-> display when the CWB mux is configured properly. This series enables
-> clone mode for DPU driver and adds support for programming the CWB mux
-> in cases where the hardware has dedicated CWB pingpong blocks. Currently,
-> the CWB hardware blocks have only been added to the SM8650
-> hardware catalog and only DSI has been exposed as a possible_clone of WB.
-> 
-> [...]
+qcom_smd_register_edge() leaks an OF node reference when
+qcom_smd_create_chrdev() fails, since qcom_smd_parse_edge() sets
+of_node_get(node) to edge->of_node. Add of_node_put() calls to the error
+path of qcom_smd_register_edge() and qcom_smd_unregister_edge().
 
-Applied to drm-misc-next, thanks!
+This was found by an experimental verifier that I am developing. Due to
+the lack of actual devices, no runtime test was able to be performed.
 
-[01/25] drm: add clone mode check for CRTC
-        commit: eee0912a7185d5dc0a700d48f7ff620bb7f5389b
-[02/25] drm/tests: Add test for drm_crtc_in_clone_mode()
-        commit: 5a6e8c369486a79493ab300a1987cc6aad16cf6a
-[03/25] drm: Add valid clones check
-        commit: 41b4b11da02157c7474caf41d56baae0e941d01a
-[04/25] drm/tests: Add test for drm_atomic_helper_check_modeset()
-        commit: 88849f24e2abba8a8951aa76ea60a72fba916afe
+Fixes: 53e2822e56c7 ("rpmsg: Introduce Qualcomm SMD backend")
+Signed-off-by: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
+---
+Changes in v2:
+- Put edge->of_node for clarity.
+---
+ drivers/rpmsg/qcom_smd.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-Best regards,
+diff --git a/drivers/rpmsg/qcom_smd.c b/drivers/rpmsg/qcom_smd.c
+index 40d386809d6b..c2bb4887424f 100644
+--- a/drivers/rpmsg/qcom_smd.c
++++ b/drivers/rpmsg/qcom_smd.c
+@@ -1509,13 +1509,15 @@ struct qcom_smd_edge *qcom_smd_register_edge(struct device *parent,
+ 	ret = qcom_smd_create_chrdev(edge);
+ 	if (ret) {
+ 		dev_err(&edge->dev, "failed to register chrdev for edge\n");
+-		goto unregister_dev;
++		goto put_node;
+ 	}
+ 
+ 	schedule_work(&edge->scan_work);
+ 
+ 	return edge;
+ 
++put_node:
++	of_node_put(edge->of_node);
+ unregister_dev:
+ 	if (!IS_ERR_OR_NULL(edge->mbox_chan))
+ 		mbox_free_channel(edge->mbox_chan);
+@@ -1548,6 +1550,7 @@ void qcom_smd_unregister_edge(struct qcom_smd_edge *edge)
+ 	if (ret)
+ 		dev_warn(&edge->dev, "can't remove smd device: %d\n", ret);
+ 
++	of_node_put(edge->of_node);
+ 	mbox_free_channel(edge->mbox_chan);
+ 	device_unregister(&edge->dev);
+ }
 -- 
-With best wishes
-Dmitry
+2.34.1
 
 
