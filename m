@@ -1,141 +1,148 @@
-Return-Path: <linux-arm-msm+bounces-44355-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-44356-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C037DA05972
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jan 2025 12:15:26 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 09B6AA05985
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jan 2025 12:19:42 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C84683A5BC8
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jan 2025 11:15:20 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 389B91604DE
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jan 2025 11:19:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 88AFC1F8EE9;
-	Wed,  8 Jan 2025 11:15:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1C0F41F8671;
+	Wed,  8 Jan 2025 11:19:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="DTQPvQ+6"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="nXjm1dXx"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CD281F8667;
-	Wed,  8 Jan 2025 11:15:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A39FE1F76D0;
+	Wed,  8 Jan 2025 11:19:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736334919; cv=none; b=FOPgWYjJ9/6LW8TXObc6YGYxD841eNQOXgjF2WcdAtroQGVOrFj6kxv7aObkJ6gkDoofNGJW9lPuYfQoeSPI746OsTsHPy9XVP4gH+CK+fIuUgz8DIsOYiqtdMjFYNi3DSVGfyh1glSxqWrq9HDJtp1G5YFuNpufxgZZiMFmflc=
+	t=1736335178; cv=none; b=OMmKOOnAtm6/NG7lIh4NnfTleo9K/GEpCsxEmHpBXkxo1VA+0jw6W1w17GU52YSUUG0exko0dZJQFjyZX638EvQsq6HOOWUe6oo2p8df+l1WPcGZFyPlK61BHYeIF+RtV1gLuSuz0q3u4S4HfLj+V4QEa28dcVh5dQ3VQuCdB4w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736334919; c=relaxed/simple;
-	bh=NZQwHblK5E2xelOY7Jp0RG9QoaAHmfXPo2tUgLj4eLo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=cs5ALS7us8aGVANyJuBlWlX9sSQAoMRBVZhGSYEn+HD62UIGP0r3sjevuEIGWNhZRrY28UrFEK5GhSOkdio1BZTLF44x7+jPqoMDoluUQYEswedO1aHoA5gVcwZqpNrKPueZlFu05wu86LxopVopeFF4u0U5hCrpY30M4WfTtU8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=DTQPvQ+6; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1736335178; c=relaxed/simple;
+	bh=BeXxIz0de9XddAG8TQB5W4B0y7FQJj5fiuTudwx+zXc=;
+	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
+	 Content-Type:MIME-Version; b=lUCY66tCPc2jGhQHj1kqpWYswq0fanJS91kiVU48jttkFuwsYA5svSXacRNsRz/k7/vo/kv9Jw4e/ow2KhOnlzE0axbX90YZ89Y2bCh1Y+VNr5bQOwpnCf8h9yTxzjYd1H6Iwy2EYMcS/DBWabJaLVPZ1rKgY1+iQEcSlZ+GHQc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=nXjm1dXx; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 508Ad0YB021756;
-	Wed, 8 Jan 2025 11:15:08 GMT
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 508AdZJD012721;
+	Wed, 8 Jan 2025 11:19:32 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	bBS++8LsF7HrpW7CPyJBK6xCa27qQjkIbMEP1WS6vKo=; b=DTQPvQ+60mYZd/vt
-	P25fCHTHViSZl8MFefMKKYe/z+nTFVgyf2MNPEowVyTz9e2HUGHjjzxLJ2HUoaCL
-	FU7HnywxHQotJLSIUHAyVWt1X5uQ6WcNvCwKbKi/l5iIDfIZCKZXRTkhBjnRonpA
-	/EPcrdI0kooj8+b6kO8eEXR7mlWk2LcTIFgm4dsi92GuoqaKHF9RwK4eoeDjlutH
-	2w6LSFk62u4al5gR4UyNRfXX1oABFjlLFLrgfjtxIfGVwmtKL6KTPUnujblQyEYU
-	7MMDZXxQL4wzQNOZqEzHP0/p7wC4q1jgBdubk4LlFKNUKA4aq4HKLm3M7kml9qKX
-	e030hA==
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 441nm18ghv-1
+	BeXxIz0de9XddAG8TQB5W4B0y7FQJj5fiuTudwx+zXc=; b=nXjm1dXxH4LUNARi
+	Fdo3AwFdcOXYHwKhVSs5ZXJ7zEMlAO7OrDzcwKDo7Eo0sDDlUXY8AeJ+nZ9DYJq2
+	quvzoeuuHjEK/KpUvEYbMK/crGjXg5CTz1QEynCwgGz2abvKOwhoKMey5nDFxOn1
+	HovgR2jv5T0ZyG7Ylz8//kaJS4VbDv14pauthyGZwXm3hxzPBzHdf3VPciODKODJ
+	Kn1X+aIyASkRvUeUYV2Kb/zxbns80Io6Cxl347uZymGKCx3LqjWtvHklDx59o9Z7
+	l2jBHhvKCDUBilXaNjf1+0H9n3ulTajSMYDVpQRez4OArrJmqE28AOuxhwHu0Sek
+	wlPMsg==
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 441phg8ba9-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 08 Jan 2025 11:15:07 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 508BF6jv013913
+	Wed, 08 Jan 2025 11:19:32 +0000 (GMT)
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 508BJWJA006153
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 8 Jan 2025 11:15:06 GMT
-Received: from [10.151.36.43] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 8 Jan 2025
- 03:15:02 -0800
-Message-ID: <0b93ee40-0d1e-a137-c049-ac5adcc81e54@quicinc.com>
-Date: Wed, 8 Jan 2025 16:44:59 +0530
+	Wed, 8 Jan 2025 11:19:32 GMT
+Received: from nasanex01c.na.qualcomm.com (10.45.79.139) by
+ nasanex01c.na.qualcomm.com (10.45.79.139) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Wed, 8 Jan 2025 03:19:31 -0800
+Received: from nasanex01c.na.qualcomm.com ([fe80::d28b:c308:bf27:8c82]) by
+ nasanex01c.na.qualcomm.com ([fe80::d28b:c308:bf27:8c82%13]) with mapi id
+ 15.02.1544.009; Wed, 8 Jan 2025 03:19:31 -0800
+From: "Gokul Sriram P (QUIC)" <quic_gokulsri@quicinc.com>
+To: Krzysztof Kozlowski <krzk@kernel.org>,
+        "dmitry.baryshkov@linaro.org"
+	<dmitry.baryshkov@linaro.org>
+CC: "jassisinghbrar@gmail.com" <jassisinghbrar@gmail.com>,
+        "robh@kernel.org"
+	<robh@kernel.org>,
+        "krzk+dt@kernel.org" <krzk+dt@kernel.org>,
+        "conor+dt@kernel.org" <conor+dt@kernel.org>,
+        "andersson@kernel.org"
+	<andersson@kernel.org>,
+        "mathieu.poirier@linaro.org"
+	<mathieu.poirier@linaro.org>,
+        "konradybcio@kernel.org"
+	<konradybcio@kernel.org>,
+        "Manikanta Mylavarapu (QUIC)"
+	<quic_mmanikan@quicinc.com>,
+        "linux-arm-msm@vger.kernel.org"
+	<linux-arm-msm@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org"
+	<linux-kernel@vger.kernel.org>,
+        "devicetree@vger.kernel.org"
+	<devicetree@vger.kernel.org>,
+        "linux-remoteproc@vger.kernel.org"
+	<linux-remoteproc@vger.kernel.org>,
+        "Vignesh Viswanathan (QUIC)"
+	<quic_viswanat@quicinc.com>,
+        "Sricharan Ramabadhran (QUIC)"
+	<quic_srichara@quicinc.com>
+Subject: RE: [PATCH V3 2/8] dt-bindings: remoteproc: qcom: document hexagon
+ based WCSS secure PIL
+Thread-Topic: [PATCH V3 2/8] dt-bindings: remoteproc: qcom: document hexagon
+ based WCSS secure PIL
+Thread-Index: AQHbYO1WRi1cDUkl3ket5j1QDVDWGbMLwboAgAC8GJ+AADMVIA==
+Date: Wed, 8 Jan 2025 11:19:31 +0000
+Message-ID: <f9059c312a2948568fef6d4f92c97cae@quicinc.com>
+References: <20250107101647.2087358-1-quic_gokulsri@quicinc.com>
+ <20250107101647.2087358-3-quic_gokulsri@quicinc.com>
+ <pjm5wrxnfutixopeeqzgb6q75z6cilpgfcd2maigqlu4i34mta@2k6trubvrkp2>
+ <f0eef19b-8497-4e7d-bed1-882cdb8c1ab1@quicinc.com>
+ <0bcdbb63-e1a4-4e34-a038-218f843993e0@kernel.org>
+In-Reply-To: <0bcdbb63-e1a4-4e34-a038-218f843993e0@kernel.org>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-Subject: Re: [PATCH v4] dmaengine: qcom: bam_dma: Avoid writing unavailable
- register
-Content-Language: en-US
-To: Vinod Koul <vkoul@kernel.org>, Georgi Djakov <djakov@kernel.org>
-CC: <linux-arm-msm@vger.kernel.org>, <dmaengine@vger.kernel.org>,
-        <quic_mmanikan@quicinc.com>, <quic_srichara@quicinc.com>,
-        <quic_varada@quicinc.com>, <robin.murphy@arm.com>,
-        <u.kleine-koenig@baylibre.com>, <martin.petersen@oracle.com>,
-        <fenghua.yu@intel.com>, <av2082000@gmail.com>,
-        <linux-kernel@vger.kernel.org>
-References: <20241220094203.3510335-1-quic_mdalam@quicinc.com>
- <9ef3daa8-cdb1-49f2-8d19-a72d6210ff3a@kernel.org> <Z35dG7J8BLzeoT3B@vaman>
-From: Md Sadre Alam <quic_mdalam@quicinc.com>
-In-Reply-To: <Z35dG7J8BLzeoT3B@vaman>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: i63YH69VzkrIjy4EoShz8LmLlt3ERsoi
-X-Proofpoint-GUID: i63YH69VzkrIjy4EoShz8LmLlt3ERsoi
+X-Proofpoint-GUID: 5FndvHRvjVlvvg8JrtSSU-_tHL0rvHRw
+X-Proofpoint-ORIG-GUID: 5FndvHRvjVlvvg8JrtSSU-_tHL0rvHRw
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- impostorscore=0 suspectscore=0 adultscore=0 malwarescore=0 phishscore=0
- bulkscore=0 lowpriorityscore=0 clxscore=1011 mlxlogscore=999 mlxscore=0
- spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2501080091
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
+ lowpriorityscore=0 mlxscore=0 phishscore=0 mlxlogscore=995
+ priorityscore=1501 malwarescore=0 bulkscore=0 spamscore=0 adultscore=0
+ impostorscore=0 clxscore=1015 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2411120000 definitions=main-2501080092
 
-
-
-On 1/8/2025 4:40 PM, Vinod Koul wrote:
-> On 07-01-25, 23:30, Georgi Djakov wrote:
->> On 20.12.24 11:42, Md Sadre Alam wrote:
->>> Avoid writing unavailable register in BAM-Lite mode.
->>> BAM_DESC_CNT_TRSHLD register is unavailable in BAM-Lite
->>> mode. Its only available in BAM-NDP mode. So only write
->>> this register for clients who is using BAM-NDP.
->>>
->>> Signed-off-by: Md Sadre Alam <quic_mdalam@quicinc.com>
->>> ---
->>
->> My Dragonboard db845c fails to boot on recent linux-next releases and
->> git bisect points to this patch. It boots again when it's reverted.
-> 
-> Should we revert?
-I am checking this will fix and post patch quickly.
-> 
->>
->> [..]
->>
->>>    	bchan->reconfigure = 0;
->>> @@ -1192,10 +1199,11 @@ static int bam_init(struct bam_device *bdev)
->>>    	u32 val;
->>>    	/* read revision and configuration information */
->>> -	if (!bdev->num_ees) {
->>> -		val = readl_relaxed(bam_addr(bdev, 0, BAM_REVISION));
->>> +	val = readl_relaxed(bam_addr(bdev, 0, BAM_REVISION));
->>> +	if (!bdev->num_ees)
->>>    		bdev->num_ees = (val >> NUM_EES_SHIFT) & NUM_EES_MASK;
->>> -	}
->>> +
->>> +	bdev->bam_revision = val & REVISION_MASK;
->>
->> The problem seems to occur when we try to read the revision for the
->> slimbus bam instance at 0x17184000 (which has "qcom,num-ees = <2>;").
->>
->> Thanks,
->> Georgi
-> 
+T24gMDcvMDEvMjAyNSAxMzo1NiwgR29rdWwgU3JpcmFtIFAgd3JvdGU6DQo+Pj4+ICtleGFtcGxl
+czoNCj4+Pj4gKyAgLSB8DQo+Pj4+ICsgICAgI2luY2x1ZGUgPGR0LWJpbmRpbmdzL2ludGVycnVw
+dC1jb250cm9sbGVyL2FybS1naWMuaD4NCj4+Pj4gKyAgICAjaW5jbHVkZSA8ZHQtYmluZGluZ3Mv
+Y2xvY2svcWNvbSxpcHE1MzMyLWdjYy5oPg0KPj4+PiArICAgIHJlbW90ZXByb2NAZDEwMDAwMCB7
+DQo+Pj4+ICsgICAgICBjb21wYXRpYmxlID0gInFjb20saXBxNTMzMi13Y3NzLXNlYy1waWwiOw0K
+Pj4+PiArICAgICAgcmVnID0gPDB4ZDEwMDAwMCAweDQwNDA+Ow0KPj4+PiArICAgICAgZmlybXdh
+cmUtbmFtZSA9ICJhdGgxMmsvSVBRNTMzMi9odzEuMC9xNl9mdzAubWR0IjsNCj4+PiBOaXQ6IC5t
+Ym4NCj4+Pg0KPj4gDQo+PiBIaSBEbWl0cnksDQo+PiANCj4+IEl0cyAubWR0IGZvcm1hdCBvbmx5
+IGluIG91ciBjYXNlLg0KPj4gDQo+IFRoZW4gcHJvYmFibHkgeW91IG5lZWQgdG8gZml4IHlvdXIg
+Zm9ybWF0Lg0KDQpIaSBEbWl0cnkvIEtyenlzenRvZiwNCldlIHVzZSBzcGxpdCBmaXJtd2FyZSBp
+bWFnZSB3aGVyZSAgLm1ibiBpbWFnZSBpcyBzcGxpdCBpbnRvIHggIHNlZ21lbnRzIHdpdGggLmIw
+MCB0byAuYnh4IGV4dGVuc2lvbi4gVGhlIG1ibiBoZWFkZXIgYWxvbmcgd2l0aCBzaWduaW5nIG1l
+dGFkYXRhIHdpbGwgYmUgcGFydCBvZiB0aGUgLm1kdC4gVGhlIHNlY3VyZSBhdXRoZW50aWNhdGlv
+ciAoVHJ1c3Rab25lKSB3aWxsIGV4cGVjdCBtZXRhZGF0YSBhcyBwYXJ0IG9mIC5tZHQgYW5kIHdp
+bGwgYXV0aGVudGljYXRlIHRoZSAuYnh4IHNlZ21lbnRzLg0KDQpDZXJ0YWluIG1zbSBwbGF0Zm9y
+bXMgYWxyZWFkeSBzdXBwb3J0IC5tZHQgZm9ybWF0IGFzIGluIGh0dHBzOi8vZ2l0Lmtlcm5lbC5v
+cmcvcHViL3NjbS9saW51eC9rZXJuZWwvZ2l0L3RvcnZhbGRzL2xpbnV4LmdpdC90cmVlL0RvY3Vt
+ZW50YXRpb24vZGV2aWNldHJlZS9iaW5kaW5ncy9yZW1vdGVwcm9jL3Fjb20sc202MTE1LXBhcy55
+YW1sP2g9djYuMTMtcmM2Lg0KDQpSZWdhcmRzLA0KR29rdWwNCg==
 
