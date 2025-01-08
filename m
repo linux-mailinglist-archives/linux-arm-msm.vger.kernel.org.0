@@ -1,48 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-44325-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-44326-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9C97FA0549F
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jan 2025 08:35:04 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3B63EA054AE
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jan 2025 08:37:13 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4FCAC18875AA
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jan 2025 07:35:07 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7829E162B80
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jan 2025 07:37:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C30AE1A8F84;
-	Wed,  8 Jan 2025 07:34:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3280D1ACECE;
+	Wed,  8 Jan 2025 07:36:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QsjfQIW1"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="dWahy5Ob"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90A1217084F;
-	Wed,  8 Jan 2025 07:34:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 631391A9B3E;
+	Wed,  8 Jan 2025 07:36:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736321699; cv=none; b=WRIS1hjBTxGpiDbwqNuLq67XMogV9vpdDeAQtzcvV0Z2h1bmZAjGjVDqFLuQR+rV6MmEIyi3Owhh9Jj6OGXRQk5sWjuhM5Xb6o4Lz1gz0UMVuFmaIUO2YPnllHKNMKAyiVRrF0h1qR0iZsusajVxa0yCe9eZ8+lyatZ28FZQhMc=
+	t=1736321819; cv=none; b=m7gE4tzwyVq6eettGi5j1FVEFRBTj/vSfAT2t1ZMv2mtJzHfzhc0lBykvVMmyfTHpZbsiMpu7tso9jr0+s2qUVd6GOM9T0ZzcApQzrZidr+JW1e6IDFPuGczt25Lko3yXy4BnjNNQK6ntwm+l8x9tOklXCQ0WCvxylK77GM2cIQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736321699; c=relaxed/simple;
-	bh=v2VTnquJkI4ulRk4uVxVYaUBaNscmWW5fUVLlB1kcgU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=uMmzMT96A0T1qCmnFrE3Sg2l5DJfRrN2WXhjlveL9xy2f62j5K0D248Ir9ovhlV0Typ34KClb6ZbTFh2f9ciupbYRxHLE85sNCO25r0/XpwlUQgsxPeOTSbNINfSuxM64o9NfjdOJPKWLEnjzjx3R0e9f+CLo3baw4yEUL4v1LQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QsjfQIW1; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38844C4CEE2;
-	Wed,  8 Jan 2025 07:34:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1736321699;
-	bh=v2VTnquJkI4ulRk4uVxVYaUBaNscmWW5fUVLlB1kcgU=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=QsjfQIW1zMiPbtEgpThV5Art9VyHqEa3IGiKAgNNxKUdujER647aJ2nNTWit6oNv8
-	 8jJxGqb6W2j+z5YeAenlfH8bo5rvcrYvg1HhYdLurh9ofEYTyDftvf6rApx6dKbU7B
-	 tnRxWOTH6sKAAQ2F/RY/phQ/MTQCLz+f1SSkw3k9ieLv/28mjzZwrFJVihVDP6+04w
-	 BKCNW4s8oFM/QRq5+W1JVvSD0L41CZ4YTzZwKFhE5TEsQ1L9aLZY2RWXMUVS/Oo9rj
-	 PCEZyPLALTe13WB/FEpFtsRORDicAboFOLVf/vQv4SnLyF9e08Ej8ZPqKdVCxfoBfI
-	 d/fIOs82D7/xQ==
-Message-ID: <0bcdbb63-e1a4-4e34-a038-218f843993e0@kernel.org>
-Date: Wed, 8 Jan 2025 08:34:51 +0100
+	s=arc-20240116; t=1736321819; c=relaxed/simple;
+	bh=5FhRyrUMdcyVDYsOyTWL4UAbkcMexKqZhuyrfivqCPM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=VM9EzkrQTG9TlxQIaAAwcdT9sfVXlY/R0Nagdy22rxnqj+grRXbB53Lymi1HiL05qRcqze22CPbXbTr73QkTFDGeMdLmFQlHxAbCgH8Ns8YPCQ5KKX6DSySqyHa0cHdT8DJR0HVojg2Tttg8FeLgK/8Ze0ezELAEXGwoJlxm0io=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=dWahy5Ob; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5086kjXx024049;
+	Wed, 8 Jan 2025 07:36:44 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	EleiQ9KInhS+kP4uM/4+xoyRnNn9v0zlwQ2mLXSonv0=; b=dWahy5ObUCCRkYeH
+	Rfj9nrmzcyPlMr/6zxeeBoGZrB2pQOLskMZBqQjTP6UvOxq5ya41drjY43qAOV2b
+	E8hgyeP98mCmvT/QtG0l9MKUuwHD/uFKYjoCmu95oscQ2aexobXHTSUrAh08Bnwz
+	GpYLaS01J84zM6lcFuJNeDnWqsWWp8dsqulkJACC6Q8a9C7kUNGxzu8NAk9Wqa7O
+	0gh8JLoNtjJMXBYgJYu6oaxcMy+1ad4ryVUKx341BCNlDNmWVkZP6DK3331bQuJZ
+	omzwJCFhQ+ZJ6ruSynaFZrvfRh92qvXCHN+2VKMszlDzoj1f/vHXgRz5VnKFMiT5
+	8bY7zQ==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 441md303qq-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 08 Jan 2025 07:36:43 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 5087agt6025001
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 8 Jan 2025 07:36:42 GMT
+Received: from [10.64.68.119] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 7 Jan 2025
+ 23:36:35 -0800
+Message-ID: <9b915699-1969-4b84-8eda-3a4080202881@quicinc.com>
+Date: Wed, 8 Jan 2025 15:36:32 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,87 +65,135 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V3 2/8] dt-bindings: remoteproc: qcom: document hexagon
- based WCSS secure PIL
-To: Gokul Sriram P <quic_gokulsri@quicinc.com>,
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: jassisinghbrar@gmail.com, robh@kernel.org, krzk+dt@kernel.org,
- conor+dt@kernel.org, andersson@kernel.org, mathieu.poirier@linaro.org,
- konradybcio@kernel.org, quic_mmanikan@quicinc.com,
- linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
- devicetree@vger.kernel.org, linux-remoteproc@vger.kernel.org,
- quic_viswanat@quicinc.com, quic_srichara@quicinc.com
-References: <20250107101647.2087358-1-quic_gokulsri@quicinc.com>
- <20250107101647.2087358-3-quic_gokulsri@quicinc.com>
- <pjm5wrxnfutixopeeqzgb6q75z6cilpgfcd2maigqlu4i34mta@2k6trubvrkp2>
- <f0eef19b-8497-4e7d-bed1-882cdb8c1ab1@quicinc.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
+Subject: Re: [PATCH v2 0/5] Display enablement changes for Qualcomm QCS8300
+ platform
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC: Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar
+	<quic_abhinavk@quicinc.com>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten
+	<marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, "Simona
+ Vetter" <simona@ffwll.ch>,
+        Maarten Lankhorst
+	<maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Kuogee Hsieh
+	<quic_khsieh@quicinc.com>, Vinod Koul <vkoul@kernel.org>,
+        "Kishon Vijay
+ Abraham I" <kishon@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-phy@lists.infradead.org>
+References: <20241226-mdssdt_qcs8300-v2-0-acba0db533ce@quicinc.com>
+ <mha5mg3yyco2dm6g4nw5xfufuhqataoyiw6arkjalsu5caswth@vblodqj3ldcp>
 Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <f0eef19b-8497-4e7d-bed1-882cdb8c1ab1@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
+From: Yongxing Mou <quic_yongmou@quicinc.com>
+In-Reply-To: <mha5mg3yyco2dm6g4nw5xfufuhqataoyiw6arkjalsu5caswth@vblodqj3ldcp>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: BzHgK2IvYyfe3UOFHv-Z6xeB8WQjkTTY
+X-Proofpoint-ORIG-GUID: BzHgK2IvYyfe3UOFHv-Z6xeB8WQjkTTY
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 spamscore=0
+ priorityscore=1501 impostorscore=0 bulkscore=0 phishscore=0
+ mlxlogscore=999 lowpriorityscore=0 adultscore=0 malwarescore=0
+ suspectscore=0 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2501080060
 
-On 07/01/2025 13:56, Gokul Sriram P wrote:
->>> +examples:
->>> +  - |
->>> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
->>> +    #include <dt-bindings/clock/qcom,ipq5332-gcc.h>
->>> +    remoteproc@d100000 {
->>> +      compatible = "qcom,ipq5332-wcss-sec-pil";
->>> +      reg = <0xd100000 0x4040>;
->>> +      firmware-name = "ath12k/IPQ5332/hw1.0/q6_fw0.mdt";
->> Nit: .mbn
+
+
+On 2024/12/29 12:44, Dmitry Baryshkov wrote:
+> On Thu, Dec 26, 2024 at 05:40:44PM +0800, Yongxing Mou wrote:
+>> This series introduces support to enable the Mobile Display Subsystem (MDSS)
+>> , Display Processing Unit (DPU), DisplayPort controller and eDP PHY for
+>> the Qualcomm QCS8300 target. It includes the addition of the hardware catalog,
+>> compatible string, and their YAML bindings.
+>>
+>> Signed-off-by: Yongxing Mou <quic_yongmou@quicinc.com>
+>> ---
+>> This series depends on following series:
+>> https://lore.kernel.org/all/20241203-qcs8300_initial_dtsi-v4-2-d7c953484024@quicinc.com/
+>> https://lore.kernel.org/all/20241106-qcs8300-mm-patches-v3-0-f611a8f87f15@quicinc.com/
+>> https://lore.kernel.org/all/20241114-qcs8300-mm-cc-dt-patch-v1-1-7a974508c736@quicinc.com/
+>> https://lore.kernel.org/all/20241024-defconfig_sa8775p_clock_controllers-v2-1-a9e1cdaed785@quicinc.com/
+> 
+> How does it depend on all those series? Does it have any intersection
+> point at all? You should have decoupled all bindings from those series.
+> If you did, please update your cover letter. If you didn't, please do
+> your home work.
+> 
+Thanks for point it.Yes, we have decouple all bindings from dts 
+changes.For binding checks or driver, we no longer need these 
+dependencies. I will update the cover letter later. Thanks.
+>> ---
+>> Changes in v2:Fixed review comments from Krzysztof, Dmitry, Rob.
+>> - Decouple the devicetree changes from this series.[Dmitry][Krzysztof]
+>> - Drop the dpu driver changes and reuse SA8775P DPU driver.[Dmitry]
+>> - Fix compilation issues in MDSS bindings.[Rob][Krzysztof]
+>> - Correct formatting errors and remove unnecessary status in MDSS
+>>    bindings.[Krzysztof]
+>> - Add the the necessary information in MDSS changes commit msg.[Dmitry]
+>> - Rebase MDSS driver changes to https://lore.kernel.org/dri-devel/
+>>    20241127-msm-mdss-ubwc-v3-0-9782a7c2b023@linaro.org/.[Dmitry]
+>> - Package the DisplayPort controller and eDP PHY bindings document to
+>>    this patch series.
+>> - Collecting MDSS changes reviewd-by Dmitry.
+>> - Reuse the sa8775p eDP PHY as a fallback compat.[Dmitry]
+>> - Reuse the sm8650 DP controller as a fallback compat.[Dmitry]
+>> - Link to v1: https://lore.kernel.org/r/20241127-mdss_qcs8300-v1-0-29b2c3ee95b8@quicinc.com
+>> ~
+>>
+>> ---
+>> Yongxing Mou (5):
+>>        dt-bindings: display/msm: Document the DPU for QCS8300
+>>        dt-bindings: display: msm: dp-controller: document QCS8300 compatible
+>>        dt-bindings: display/msm: Document MDSS on QCS8300
+>>        dt-bindings: phy: Add eDP PHY compatible for QCS8300
+>>        drm/msm: mdss: Add QCS8300 support
+>>
+>>   .../bindings/display/msm/dp-controller.yaml        |   4 +
+>>   .../bindings/display/msm/qcom,qcs8300-mdss.yaml    | 244 +++++++++++++++++++++
+>>   .../bindings/display/msm/qcom,sm8650-dpu.yaml      |  13 +-
+>>   .../devicetree/bindings/phy/qcom,edp-phy.yaml      |  19 +-
+>>   drivers/gpu/drm/msm/msm_mdss.c                     |  11 +
+>>   5 files changed, 280 insertions(+), 11 deletions(-)
+>> ---
+>> base-commit: 8155b4ef3466f0e289e8fcc9e6e62f3f4dceeac2
+>> change-id: 20241224-mdssdt_qcs8300-11b7883dc60b
+>> prerequisite-message-id: <20241203-qcs8300_initial_dtsi-v4-2-d7c953484024@quicinc.com>
+>> prerequisite-patch-id: 33f2488a8eb133431f200e17aac743598508dcf3
+>> prerequisite-patch-id: 7b653ebeaf1ca3f87620ccf7d876e3d1fe496c4a
+>> prerequisite-patch-id: e1b60af8a64332e5f0ecbd3a4ea2b6e090bd97cf
+>> prerequisite-patch-id: b823d744d2fb302e2496eaf0cf0c9c66312dcf2a
+>> prerequisite-message-id: <20241106-qcs8300-mm-patches-v3-0-f611a8f87f15@quicinc.com>
+>> prerequisite-patch-id: 367d9c742fe5087cfa6fb8e7b05ebe9bc78d68f3
+>> prerequisite-patch-id: ee0513c070ab96e63766d235b38ee53ca9b19181
+>> prerequisite-patch-id: 970974160bcdc837ccbe5ea3b5dcac582e90bc0d
+>> prerequisite-patch-id: 5b2bd9cc44a529b0b9e5d73128dca5d2ff9f2f44
+>> prerequisite-patch-id: 6a0a81242e1d0f051e3102533bf0191615c6e96b
+>> prerequisite-patch-id: 322540ce6d45c32f813ecef50e5135c6f08d9019
+>> prerequisite-message-id: <20241114-qcs8300-mm-cc-dt-patch-v1-1-7a974508c736@quicinc.com>
+>> prerequisite-patch-id: 8faad5c6d8ca255935d3e4d317dcbcc32b8261ff
+>> prerequisite-message-id: <20241024-defconfig_sa8775p_clock_controllers-v2-1-a9e1cdaed785@quicinc.com>
+>> prerequisite-patch-id: 81378ec66ab6e569bd828401c43c4f5af55db32c
+>>
+>> Best regards,
+>> -- 
+>> Yongxing Mou <quic_yongmou@quicinc.com>
 >>
 > 
-> Hi Dmitry,
-> 
-> Its .mdt format only in our case.
-> 
-Then probably you need to fix your format.
 
-Best regards,
-Krzysztof
 
