@@ -1,165 +1,166 @@
-Return-Path: <linux-arm-msm+bounces-44484-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-44485-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id E4716A06945
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jan 2025 00:07:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 68EA2A06996
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jan 2025 00:41:22 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 96168188909C
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jan 2025 23:07:58 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1CBB01885D94
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jan 2025 23:41:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 491DD2040BD;
-	Wed,  8 Jan 2025 23:07:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id ED7D6204C1A;
+	Wed,  8 Jan 2025 23:41:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Y3keCW3X"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="B/fe4x3b"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2090C202C4A;
-	Wed,  8 Jan 2025 23:07:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F303204C2A;
+	Wed,  8 Jan 2025 23:41:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736377671; cv=none; b=skGbWYJWkEB/wHmJyRRoIE9wUV+yAR7R2WK25nq3HyNgMWkeca1xC60bhAzOsAtgYsMbyINOgYDcbDjzGlfpem1TYqnB/7Wshgm8aYUNqJNXJz5RfzfG5DrL9+YX+egjIp/yzXHMfkIjuUP6aHGFnVJqAM7eehzg1Y53VLIHqJA=
+	t=1736379677; cv=none; b=iv/NgeQJuKRJ01ykR4fv3+qcE853noSZrWx0wNf5hzbBWTgB8CezPo6QtjnVL3PqykH8nxDCP8J5sw5ieu2ilQu8C7apuf7lkhB1DSvvnJcbAdtCj8lS0xFWqIeofW/SissEvTa2sMZrxPSLhnNcHbRKtGZO08TsMWHXkuNd7fc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736377671; c=relaxed/simple;
-	bh=T7RR+2rSSB1VsDW24Y2aot8jNoQomcIY3SSN50UwTRQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=IRvtGSlj9L9iw1gvjBO5ZHyYog2tIPV34RxBjRcGyuA1kk/gWv3x7Rc1gJUqRj9ecMFSOL2fJ9BMsy95llCMqbu6Z+iPHgNTlBAM4H6PX3OwCtAAS6ir4dJNLewR/XiV24g39/llritsInDomLXzgy+xoEy9QRlVT5P6cMK2RM0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Y3keCW3X; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77DE9C4CED3;
-	Wed,  8 Jan 2025 23:07:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1736377670;
-	bh=T7RR+2rSSB1VsDW24Y2aot8jNoQomcIY3SSN50UwTRQ=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=Y3keCW3XOkzGsIQXnReZqDWjBVCPv9ebvDWXew4sa2is4gWOcmKn1mzd0+K4VVNq4
-	 UDtO8hCKyVa/7NpK4Q0IjjVQmdrSHxYRJd6/u4CYU7gXzfzF90suVmK5GxVpAzcOim
-	 t4vVqhvNGS3nV+b6o7FVevvITBW65bLxVXSKOXT7GDB9q1rjgtTPfz7nneKMGzxh1D
-	 IVLL9vSAGg99cEKPyXZDbMtLVHHYlN/xNe9z0BOgzerDmPFUqSVVJiz6YsRlRMQfrb
-	 uN/rx2xP9IjSUGTd1QiPJirJ+zrzA7qvL/LVPljlqHQib4ARJLTTvTELiRO5rd7/n2
-	 iI3IVhnjRMCOQ==
-Date: Wed, 8 Jan 2025 17:07:47 -0600
-From: Bjorn Andersson <andersson@kernel.org>
-To: Stephan Gerhold <stephan.gerhold@linaro.org>
-Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>, Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, Abel Vesa <abel.vesa@linaro.org>, 
-	Johan Hovold <johan@kernel.org>
-Subject: Re: [PATCH 2/2] arm64: dts: qcom: x1e80100-crd: Drop duplicate DMIC
- supplies
-Message-ID: <6vfrlwir6sfommhn3met6wnjm76lnnxw4rdwzq75b7lzcy4jep@2cbcfvb3tvr2>
-References: <20241203-x1e80100-va-mic-bias-v1-0-0dfd4d9b492c@linaro.org>
- <20241203-x1e80100-va-mic-bias-v1-2-0dfd4d9b492c@linaro.org>
- <f65e1559-b409-4906-aabb-eb24b5b0fcf2@linaro.org>
- <Z1ATxAsXFhQraQwH@linaro.org>
- <afd010c9-8c24-482e-a479-2396f08c972b@oss.qualcomm.com>
- <Z1H1BHAeO-0832Ea@linaro.org>
+	s=arc-20240116; t=1736379677; c=relaxed/simple;
+	bh=CcE4N8GZykTnQZSKNYqt1O94q2aijywmnEGJAZLDWVw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=NLh1IsYd0cRkdsrPHexphJfHaN5XUOqe61uV7l6wK4tMy0chopMksa9xhpzZnf7RNFrodh/sjBjt0jlsDYsIt1CLLYiPkp51660SrJit9qhVS21G9KDYG2T7BMRZlX9pEo9DXXjxh7UFnYN3EhCER3D7R9VNTEXDz8bfc3DBwjk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=B/fe4x3b; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 508JsehX017399;
+	Wed, 8 Jan 2025 23:41:09 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	UFsrE6vhX1PZrq0qLvy4LKF/eCeRlAc7e7f74Vt1w10=; b=B/fe4x3bhxAweZzd
+	9yoBlGS/gtonCFrrMvlVKNmSUNcrSoU/FGT3mGzS7N7mdapWhKUi2RC0srNZB87M
+	SZTgtSIRmqbkrjbpPumR/8eUZUI332x0iACZYFDKqnL19HA9rS0iwts/1LQvBg6E
+	0SDzZfeCXksPNE3M9nG2fSa74dvrxkEyBogGBMi6AmN+GjNl3dqAht1geWM0uFmk
+	6O/9C8B+plrrzkNmTMXFF9zjwq2nkxJ2P4Y6l19msk0GZzEZ22T3mRhFYb6xxV6J
+	6/yXdE4Dq9sIoOt5TU1HCH6bi73TVY4bQNf4jMjBNATc1trVpt8zxD4/qDIRWm9f
+	d8u+vQ==
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 441yxfge00-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 08 Jan 2025 23:41:09 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 508Nf8le019978
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 8 Jan 2025 23:41:08 GMT
+Received: from [10.134.70.212] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 8 Jan 2025
+ 15:41:08 -0800
+Message-ID: <95b83e6f-e455-4df0-b121-a1d900de0a56@quicinc.com>
+Date: Wed, 8 Jan 2025 15:41:07 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Z1H1BHAeO-0832Ea@linaro.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 04/15] drm/msm/dpu: decide right side per last bit
+Content-Language: en-US
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Jun Nie
+	<jun.nie@linaro.org>
+CC: Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar
+	<quic_abhinavk@quicinc.com>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten
+	<marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, "Simona
+ Vetter" <simona@ffwll.ch>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>
+References: <20241219-sm8650-v6-13-hmd-deckard-mdss-quad-upstream-32-v3-0-92c7c0a228e3@linaro.org>
+ <20241219-sm8650-v6-13-hmd-deckard-mdss-quad-upstream-32-v3-4-92c7c0a228e3@linaro.org>
+ <yqbze4h6obiwulmvh64r62slaiih75hzescf5tjwqgtmhqy3wi@y4uedbo5jrzu>
+From: Jessica Zhang <quic_jesszhan@quicinc.com>
+In-Reply-To: <yqbze4h6obiwulmvh64r62slaiih75hzescf5tjwqgtmhqy3wi@y4uedbo5jrzu>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: pyMOUFmsfgHlToR0dnDDRq_ViYiSFPgN
+X-Proofpoint-GUID: pyMOUFmsfgHlToR0dnDDRq_ViYiSFPgN
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 malwarescore=0
+ lowpriorityscore=0 suspectscore=0 phishscore=0 spamscore=0 mlxscore=0
+ impostorscore=0 priorityscore=1501 adultscore=0 mlxlogscore=999
+ clxscore=1011 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2501080194
 
-On Thu, Dec 05, 2024 at 07:46:28PM +0100, Stephan Gerhold wrote:
-> On Thu, Dec 05, 2024 at 06:11:47PM +0100, Konrad Dybcio wrote:
-> > On 4.12.2024 9:33 AM, Stephan Gerhold wrote:
-> > > On Wed, Dec 04, 2024 at 08:20:15AM +0100, Krzysztof Kozlowski wrote:
-> > >> On 03/12/2024 18:44, Stephan Gerhold wrote:
-> > >>> The WCD938x codec provides two controls for each of the MIC_BIASn outputs:
-> > >>>
-> > >>>  - "MIC BIASn" enables an internal regulator to generate the output
-> > >>>    with a configurable voltage (qcom,micbiasN-microvolt).
-> > >>>
-> > >>>  - "VA MIC BIASn" enables "pull-up mode" that bypasses the internal
-> > >>>    regulator and directly outputs fixed 1.8V from the VDD_PX pin.
-> > >>>    This is intended for low-power VA (voice activation) use cases.
-> > >>>
-> > >>> The audio-routing setup for the X1E80100 CRD currently specifies both
-> > >>> as power supplies for the DMICs, but only one of them can be active
-> > >>> at the same time. In practice, only the internal regulator is used
-> > >>> with the current setup because the driver prefers it over pull-up mode.
-> > >>>
-> > >>> Make this more clear by dropping the redundant routes to the pull-up
-> > >>> "VA MIC BIASn" supply. There is no functional difference except that we
-> > >>> skip briefly switching to pull-up mode when shutting down the microphone.
-> > >>>
-> > >>> Fixes: 4442a67eedc1 ("arm64: dts: qcom: x1e80100-crd: add sound card")
-> > >>
-> > >> If there is no functional difference and this is just redundant, then
-> > >> there is nothing to fix, so drop the tag. But the point is that users
-> > >> might want the low-power VA. You claim they don't want... sure, I am
-> > >> fine with that but there is nothing to fix in such case.
-> > >>
-> > > 
-> > > The fix here is that two mutually exclusive power supplies for the DMIC
-> > > are specified in the device tree. You can only have one of them active
-> > > at the same time. The Linux driver handles that gracefully, but the
-> > > device tree is still wrong and IMO deserves a fixes tag.
-> > > 
-> > > The functional difference is that we skip briefly switching to pull-up
-> > > mode when shutting down the microphone. Users won't notice that, but
-> > > it's not the intended behavior.
-> > > 
-> > > I don't claim that users don't want to switch to the low-power pull-up
-> > > mode (VA MIC BIASn). However, we would need a different mechanism to
-> > > give them the option to switch at runtime. "audio-routing" just
-> > > specifies static routes, so the current description does not allow
-> > > switching between the two modes either.
-> > 
-> > Is there no existing mechanism to alter this at runtime?
-> > 
-> 
-> I don't think so... Since it's currently exposed as two separate DAPM
-> supplies (instead of a mux or similar) you can only choose between one
-> of them in the static routes specified by "audio-routing" in the DT.
-> 
-> I tried looking at how downstream handles this, but this left me even
-> more confused than I was before. :-) On CRD we currently have the
-> following routes in DT:
-> 
-> 	"VA DMIC0", "MIC BIAS3",
-> 	"VA DMIC1", "MIC BIAS3",
-> 	"VA DMIC2", "MIC BIAS1",
-> 	"VA DMIC3", "MIC BIAS1",
-> 	"VA DMIC0", "VA MIC BIAS3",
-> 	"VA DMIC1", "VA MIC BIAS3",
-> 	"VA DMIC2", "VA MIC BIAS1",
-> 	"VA DMIC3", "VA MIC BIAS1",
-> 
-> MIC BIAS and VA MIC BIAS are mutually exclusive, so this is not correct.
-> But if you look at e.g. SM8550 downstream they have:
-> 
-> 	"TX DMIC0", "MIC BIAS3",
-> 	"TX DMIC1", "MIC BIAS3",
-> 	"TX DMIC2", "MIC BIAS1",
-> 	"TX DMIC3", "MIC BIAS1",
-> 	"VA DMIC0", "VA MIC BIAS3",
-> 	"VA DMIC1", "VA MIC BIAS3",
-> 	"VA DMIC2", "VA MIC BIAS1",
-> 	"VA DMIC3", "VA MIC BIAS1";
-> 
-> Note the TX DMIC vs VA DMIC. So they specify one of the supplies for the
-> TX macro DMIC, and the low-power one for the VA macro DMIC. That would
-> be fine.
-> 
-> Now the question is: If we can use the DMIC through both the TX and the
-> VA macro, and we're not doing voice activation, why are we using the VA
-> macro in the first place?
-> 
-> @Srini: Do you remember why?
-> 
 
-What's the verdict regarding this?
 
-Regards,
-Bjorn
+On 12/19/2024 2:09 PM, Dmitry Baryshkov wrote:
+> On Thu, Dec 19, 2024 at 03:49:22PM +0800, Jun Nie wrote:
+>> decide right side of a pair per last bit, in case of multiple
+>> mixer pairs.
+> 
+> Proper English sentences, please. Also describe why, not what.
+
+Hi Jun,
+
+Can we also add a note in the commit message on why the last bit check 
+works?
+
+Thanks,
+
+Jessica Zhang
+
+> 
+>>
+>> Signed-off-by: Jun Nie <jun.nie@linaro.org>
+>> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>> ---
+>>   drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c | 5 ++---
+>>   1 file changed, 2 insertions(+), 3 deletions(-)
+>>
+>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+>> index 7191b1a6d41b3..41c9d3e3e3c7c 100644
+>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+>> @@ -369,11 +369,10 @@ static void _dpu_crtc_setup_blend_cfg(struct dpu_crtc_mixer *mixer,
+>>   static void _dpu_crtc_program_lm_output_roi(struct drm_crtc *crtc)
+>>   {
+>>   	struct dpu_crtc_state *crtc_state;
+>> -	int lm_idx, lm_horiz_position;
+>> +	int lm_idx;
+>>   
+>>   	crtc_state = to_dpu_crtc_state(crtc->state);
+>>   
+>> -	lm_horiz_position = 0;
+>>   	for (lm_idx = 0; lm_idx < crtc_state->num_mixers; lm_idx++) {
+>>   		const struct drm_rect *lm_roi = &crtc_state->lm_bounds[lm_idx];
+>>   		struct dpu_hw_mixer *hw_lm = crtc_state->mixers[lm_idx].hw_lm;
+>> @@ -384,7 +383,7 @@ static void _dpu_crtc_program_lm_output_roi(struct drm_crtc *crtc)
+>>   
+>>   		cfg.out_width = drm_rect_width(lm_roi);
+>>   		cfg.out_height = drm_rect_height(lm_roi);
+>> -		cfg.right_mixer = lm_horiz_position++;
+>> +		cfg.right_mixer = lm_idx & 0x1;
+>>   		cfg.flags = 0;
+>>   		hw_lm->ops.setup_mixer_out(hw_lm, &cfg);
+>>   	}
+>>
+>> -- 
+>> 2.34.1
+>>
+> 
+> -- 
+> With best wishes
+> Dmitry
+
 
