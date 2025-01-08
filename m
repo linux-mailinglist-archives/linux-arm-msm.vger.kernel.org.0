@@ -1,212 +1,258 @@
-Return-Path: <linux-arm-msm+bounces-44406-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-44407-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id DE38FA05EC3
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jan 2025 15:33:31 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 53454A05ED7
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jan 2025 15:38:44 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4CB343A74C9
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jan 2025 14:32:59 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id CD2121888125
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jan 2025 14:38:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0C4A61FECBB;
-	Wed,  8 Jan 2025 14:32:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3EDA81FC7CC;
+	Wed,  8 Jan 2025 14:38:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="cQEskSqI"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="lqGi1IOH"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A81C1FDE2D
-	for <linux-arm-msm@vger.kernel.org>; Wed,  8 Jan 2025 14:32:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67E412594A2;
+	Wed,  8 Jan 2025 14:38:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736346734; cv=none; b=WH9rs+ewtoJQQmUQAEx1OJfqq4E4+356PKiwYTbzOwCAXZB9E8JbMd3A38c/s4N0VMkq2pjCAE/Oeg54ECtyE6RFrvo8tQ/GJkexBy5oxDp2YN3yGhmJ3FF5y/ndRHBADN8ItxX3G5tpxaIWc90PALoUwWEd+Okr7G+Mfk0BB6s=
+	t=1736347120; cv=none; b=Dx4mF0w2AeP4RbHnhr0sHFFGpzGqjg6kLa9RgybFV0LjzBng0AAxnyJc0qh99GfJGQ+vWBurX4GjZGcK/vPo0K49EFl4pSLbDxEWXdtUVNwlRAGp322YWbYmk3Yizwjd8GpJlV2TpErCOZIL/jzuz1s5RPc/BNGCKWNXvO7Lb/Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736346734; c=relaxed/simple;
-	bh=gGD3sgWWKsWmZCbwj23CZ+mFd/H5NaRSFUP35PwpXX0=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=tuSDjkYtaylObgwapFCUQWglEzp8jQiWUBCO5JMPDi2h61fvRepwotonXPSQjsxCBOzm+nlAPV+QSDzEyaUD9Y0zYoCOy0nGlB2IH8gVtrPUW3YJDVIYJZyD710F2Osxvd9ryJdgJjhzsW81uvwYQ9hOqgf6xma/h0pKByrvKvw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=cQEskSqI; arc=none smtp.client-ip=209.85.128.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-435f8f29f8aso122076525e9.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Jan 2025 06:32:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1736346731; x=1736951531; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=+jujrpOc62dfLDuJvGTA1l4Fb+UZ4JKp3nDe8a+P2YU=;
-        b=cQEskSqIkCYogRispOvY+BP9WkjqcBLyxLWSedpo4eO7XgFVNghjYk9fIDaWOQbzkd
-         Qtn6aB/2wr2h+YnAspentgUl7qNwBNHL/OFOdlpXKPkVjFPICz77GE6NH0L9Pgu196wg
-         NjVTYp24XaCxhzVaD+1Y5K3jrxix8jgZ+vEjProv/su0XTVaBwn1y4WChY5Ta0QRQWVV
-         /Xql1aIyo3FjCDkQpfqQfac01U+wY7mA2m6DMDuN7bgDdUYs0fKcE9fDRtKplYv0VLCQ
-         5nh/lQW3acwYqasGsvbyVcKqSZWi/jNEcZWOZ+fps4KZRzzGN59xSCUCJaQypde1aV5t
-         h0Kg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736346731; x=1736951531;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=+jujrpOc62dfLDuJvGTA1l4Fb+UZ4JKp3nDe8a+P2YU=;
-        b=QgFZd4+ymTh7MzMeO+NZflmybNj/VDcG32huHJI1BffBIw2y+0yP3mEL2KVtKzPA77
-         whYvK/Abj/ODTbzl0b+0fgJ6i8bLw4ZdM/hwKr2uNUd2IFZq6xkXDT4AKWpUdup3sVNO
-         RbRJyfodEdve5wwroPm7mIqxh37NQTPvTQzLTanwF17a0WNTsFVext/2tPT5nurOevzQ
-         GaaClWVQuz4JNnbOowEG7s2J1HpJPEFC4sSFumY3Z/ck9F0cXar1LY+GZ3ftLkmt1QPm
-         IPrcqt7EY3Euy2bBcN14zWP8/o8J8OE0xborZWBLjda3z0vVQZBY4+2PoYkUmSQBk2Ne
-         bOvw==
-X-Forwarded-Encrypted: i=1; AJvYcCVRelVivPiSqN/vnIVtWzVq6smSfahMtADuWZkq6lQUUEKO3i0zQWeJ6+9KCw+7Rcut4mx2IgajUZTYSwEc@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw6J5hF01OLM5VxfOv2bnUmp6tqV2wjsKTUvMtcS7VYYr2poGxM
-	eYmD/VHChiWmJfWSpR3Tg/0PG83DC8k7/9dSb+eVyy/o4GUwgBauEBNw+y+t6hY=
-X-Gm-Gg: ASbGncumK/rbT9mhgoe36zZrzsTHFoS+Wv7SX54cXkAT2x+J1aS/9sNdiDg/uzmnGoo
-	sA9HDvBEXxSRSNwbDHMyKbARRWYQUzudowSHQv+p14RaPKYs90YjqQ6rUGUiVdy/jG1SUG3RZ2l
-	LnkZ9p6g/vB/lhkda8EafSKtdsrpUJ+xuE1lYc8vEY6Yr2L6vE1q1rFF1ekCwkTyDA7Zx9GKgUH
-	yHRnCGHl4QyxI+zSWcQaDyl7nxhl4uw3ACDaKQEwh5fEy8RGJpQvNy4
-X-Google-Smtp-Source: AGHT+IGaIDQlqPS504o1O/zyLX5qhdWguSocQGDnOn2wpB8opY97HAItR5eD/SovsojJHKkwgRdW4Q==
-X-Received: by 2002:a05:600c:3ca2:b0:434:9499:9e87 with SMTP id 5b1f17b1804b1-436e26e5159mr21957015e9.25.1736346731434;
-        Wed, 08 Jan 2025 06:32:11 -0800 (PST)
-Received: from [127.0.1.1] ([86.121.162.10])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-436e2e89e14sm22741445e9.33.2025.01.08.06.32.09
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 08 Jan 2025 06:32:10 -0800 (PST)
-From: Abel Vesa <abel.vesa@linaro.org>
-Date: Wed, 08 Jan 2025 16:31:46 +0200
-Subject: [PATCH v4 4/4] drm/msm/dp: Add support for LTTPR handling
+	s=arc-20240116; t=1736347120; c=relaxed/simple;
+	bh=xrx9qjM88saMDtzXlksp1hiiBExisXX46W3dFaBj5ns=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=DWKjjEncvnWdlwGZp+Y+wBEWK6cQkancUi+NamKt37IzH2EHXm5KGnYf/QJcYt8mHjYyRflWjvUwTdysX9nLxaJkgRfi8uNM6F02poZv07UJomuCF/ECyyOwpZ6dkvIsDNo9PfzwzNL8MeP4LO17R+j0OdBIkxZ+V8yYyH0URJ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=lqGi1IOH; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 508BkWZW002310;
+	Wed, 8 Jan 2025 14:38:33 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=8LAqY+pxc8L8FWe0gA4CAj
+	fFu1M0tayBsqeM7VlNQAY=; b=lqGi1IOHN3QZJCgGqHqQ+x9w1szpsUTeptFmcG
+	cY7x3Bjg+knBUXS2ZeYz3aBI5qWsnmnnw9/nrnSq/diAyml9C0FkbRtPlZPlJwKA
+	Oqmz/2D/wqhf1pTkjHYqJVKtfOpbtvVC8rH1VezcszlcG2nx+t0ILbFR8zKRrgMf
+	/Uz2x38+WN8JC80Jn5reCtkJU2AeVfhTi9Gg9V1A9/OgicRU7JKyWsLMeTxShlsA
+	Sahl+pseEnI3Kn712xkq0XLFVdauV6+0oA6mWIpX72Hce7IccMABYoG2enwhyEPr
+	U8oyh4Xh38a8b5xHbPR4TDNChNByVquGiT5mMRfTSPlyd88w==
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 441md314r5-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 08 Jan 2025 14:38:33 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 508EcWbO024670
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 8 Jan 2025 14:38:32 GMT
+Received: from hu-depengs-sha.qualcomm.com (10.80.80.8) by
+ nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Wed, 8 Jan 2025 06:38:25 -0800
+From: Depeng Shao <quic_depengs@quicinc.com>
+To: <rfoss@kernel.org>, <todor.too@gmail.com>, <bryan.odonoghue@linaro.org>,
+        <mchehab@kernel.org>, <robh@kernel.org>, <krzk+dt@kernel.org>,
+        <conor+dt@kernel.org>, <vladimir.zapolskiy@linaro.org>,
+        <hverkuil@xs4all.nl>
+CC: <quic_eberman@quicinc.com>, <quic_depengs@quicinc.com>,
+        <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <kernel@quicinc.com>
+Subject: [PATCH v8 00/16] media: qcom: camss: Add sm8550 support
+Date: Wed, 8 Jan 2025 20:07:17 +0530
+Message-ID: <20250108143733.2761200-1-quic_depengs@quicinc.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250108-drm-dp-msm-add-lttpr-transparent-mode-set-v4-4-918949bc2e3a@linaro.org>
-References: <20250108-drm-dp-msm-add-lttpr-transparent-mode-set-v4-0-918949bc2e3a@linaro.org>
-In-Reply-To: <20250108-drm-dp-msm-add-lttpr-transparent-mode-set-v4-0-918949bc2e3a@linaro.org>
-To: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
- Karol Herbst <kherbst@redhat.com>, Lyude Paul <lyude@redhat.com>, 
- Danilo Krummrich <dakr@redhat.com>, 
- Jani Nikula <jani.nikula@linux.intel.com>, 
- Rodrigo Vivi <rodrigo.vivi@intel.com>, 
- Joonas Lahtinen <joonas.lahtinen@linux.intel.com>, 
- Tvrtko Ursulin <tursulin@ursulin.net>, Rob Clark <robdclark@gmail.com>, 
- Abhinav Kumar <quic_abhinavk@quicinc.com>, 
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Sean Paul <sean@poorly.run>, 
- Marijn Suijten <marijn.suijten@somainline.org>
-Cc: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, Johan Hovold <johan@kernel.org>, 
- dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
- nouveau@lists.freedesktop.org, intel-gfx@lists.freedesktop.org, 
- intel-xe@lists.freedesktop.org, linux-arm-msm@vger.kernel.org, 
- freedreno@lists.freedesktop.org, Abel Vesa <abel.vesa@linaro.org>, 
- Johan Hovold <johan+linaro@kernel.org>
-X-Mailer: b4 0.15-dev-dedf8
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3405; i=abel.vesa@linaro.org;
- h=from:subject:message-id; bh=gGD3sgWWKsWmZCbwj23CZ+mFd/H5NaRSFUP35PwpXX0=;
- b=owEBbQKS/ZANAwAKARtfRMkAlRVWAcsmYgBnfoxgHIDfMJj0b2BEuxIl+LhVXL3lTbbVduy2B
- j5EgHydbryJAjMEAAEKAB0WIQRO8+4RTnqPKsqn0bgbX0TJAJUVVgUCZ36MYAAKCRAbX0TJAJUV
- VpwBD/9NB5RkB8wmNALPhbXeaU3+pvYY4I3FGE8tvFKBNxVnnnGHblZOMbHU6z2WS1s6WVZ3OsI
- ngNMet1tVi0j/SZLy1Wmu1rpEt67TAHUkEQlBQLhRjbNJWsj9lbAkQPR0jlwiDjzWADUqao+wW+
- b09Hrco7d99sYgCTOEikq3DM/MpQf6AWrh/K9KflicTrEQ5b/hg5CC0CN+hwmhj+WBZJKHtt496
- kjyHDSqWmz3a2TbkknzfAV/7nklR8Fm8ip6AZ6cukHbB+CUrXyZTC5MmOH8bSLq9Mg57mdDOOyH
- +Ps2ncVdMh9svTKquhUopu+ydUxMYWrPFcS1UqAAVMpwKBz/jr0F2M+b4VvUhkVZO7enCSE0Rh3
- qfFwchwovWHOXn53ezc0zFGCBQ8419BGTSXd/hw+uFb05HRHwLIPn/Vh0T0LR93LoVFvIZQFTbf
- FsFBUiOKPrsOz0FXc1ZvJscYM3ObR5X6RwgdOYnaFIdgUWV+6OiJ+j6viy56sBIWpVW9yXGu15d
- OAekrCv4810gA0mNxtqKwZhTT4WVCW0tKEuTKXVz3PQ9Bk6Lz13xIplXyVvEhBuFGWYv0YYrtHX
- TQPdQwbtl2PUstj2MygUJkbR4xUtGpBUzLq/ySJNXub3hbCVV61ykWSakKBQC3laYYedTZFDfvb
- HkAeeBmNm2sOaDQ==
-X-Developer-Key: i=abel.vesa@linaro.org; a=openpgp;
- fpr=6AFF162D57F4223A8770EF5AF7BF214136F41FAE
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: HS5GrT4QGcbeLbGu9Rele7lmfpfRFUgn
+X-Proofpoint-ORIG-GUID: HS5GrT4QGcbeLbGu9Rele7lmfpfRFUgn
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 spamscore=0
+ priorityscore=1501 impostorscore=0 bulkscore=0 phishscore=0
+ mlxlogscore=999 lowpriorityscore=0 adultscore=0 malwarescore=0
+ suspectscore=0 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2501080122
 
-Link Training Tunable PHY Repeaters (LTTPRs) are defined in DisplayPort
-1.4a specification. As the name suggests, these PHY repeaters are
-capable of adjusting their output for link training purposes.
+v8:
+- Add correct version number for each patch - Krzysztof, Hans, Bryan
+- Correct the copyright in patches [15/16] and [16/16]
+- Link to v7: https://lore.kernel.org/all/20241225133523.4034820-1-quic_depengs@quicinc.com/
 
-According to the DisplayPort standard, LTTPRs have two operating
-modes:
- - non-transparent - it replies to DPCD LTTPR field specific AUX
-   requests, while passes through all other AUX requests
- - transparent - it passes through all AUX requests.
+v7:
+- Due to the patches in https://lore.kernel.org/all/20241217140656.965235-1-quic_vikramsa@quicinc.com/
+  are merged, so rebased below patches to fix the conflict.
+  media: qcom: camss: csiphy-3ph: Remove redundant PHY init sequence control loop
+  media: qcom: camss: csiphy-3ph: Move CSIPHY variables to data field inside csiphy struct
+  media: qcom: camss: Add sm8550 compatible
+  media: qcom: camss: csiphy-3ph: Move CSIPHY variables to data field inside csiphy struct
+  media: qcom: camss: csiphy-3ph: Add Gen2 v2.1.2 two-phase MIPI CSI-2 DPHY support
+  media: qcom: camss: Add support for VFE 780
+- Add RB for "media: qcom: camss: Add CSID 780 support" - Bryan
+- Use TAG name for ICC and remove offline HW ICC - Bryan
+- Remove the logic that moving enable_irq();/disable_irq(); to wm_start() 
+  and wm_stop() to make sure no logical change in VFE refactor change.
+- Update the commit message and title for the TPG change. - Bryan
+- Link to v6: https://lore.kernel.org/all/20241211140738.3835588-1-quic_depengs@quicinc.com/
 
-Switching between this two modes is done by the DPTX by issuing
-an AUX write to the DPCD PHY_REPEATER_MODE register.
+v6:
+- Add bus type property in dt-binding which will be limited
+  by a latest change 
+  https://lore.kernel.org/all/20241209-camss-dphy-v1-0-5f1b6f25ed92@fairphone.com/
+- Add RB for "media: qcom: camss: Add sm8550 compatible" and
+  "media: qcom: camss: Add support for VFE 780"
+- Uppercase the hex in csiphy register list - Bryan
+- Add empty function for csid tpg - Vladimir
+- Set testgen mode to CSID_PAYLOAD_MODE_DISABLED in subdev init interface
+- encapsulate the guard __thus__ for new header - Bryan
+- Add a standalone patch for the platform which doesn't support CSID TPG
+  to make sure new platform driver can set CSID_PAYLOAD_MODE_DISABLED
+  to disable TPG
+- Update the csid for csid and vfe driver - Bryan
+- Link to v5: https://lore.kernel.org/all/20241205155538.250743-1-quic_depengs@quicinc.com/
 
-The msm DP driver is currently lacking any handling of LTTPRs.
-This means that if at least one LTTPR is found between DPTX and DPRX,
-the link training would fail if that LTTPR was not already configured
-in transparent mode.
+v5:
+- Update dt-bindings required items order - Krzysztof
+- Sort the reg order based on the comments in sc7280 dt-binding - Vladimir
+- Change the irq type to IRQ_TYPE_EDGE_RISING - Vladimir
+- Remove the Krzysztof's RB tag from dt-binding patch due to above
+  updates in dt-binding patch
+- Move regulator from csid resource to csiphy resource - Bryan, Vladimir
+- Move the change to add default case in vfe_src_pad_code to a
+  standalone patch. - Bryan
+- Rename csid-gen3 as csid-780 - Bryan
+- use macros() to bury bit shifts - Bryan
+- Sort the macros by register offset order  -  Vladimir
+- Redefine a macro for rup_aup in csid driver - Vladimir
+- Remove the unused macros in vfe 780 driver - Vladimir
+- Add dummy function for unsupported hw_ops in vfe 780
+  driver - Vladimir, Bryan
+- Use a standalone patch for the callback API of RUP and buf done update
+- Use a standalone patch to make CSID TPG optional - Vladimir
+- Link to v4: https://lore.kernel.org/all/20240812144131.369378-1-quic_depengs@quicinc.com/
 
-The section 3.6.6.1 from the DisplayPort v2.0 specification mandates
-that before link training with the LTTPR is started, the DPTX may place
-the LTTPR in non-transparent mode by first switching to transparent mode
-and then to non-transparent mode. This operation seems to be needed only
-on first link training and doesn't need to be done again until device is
-unplugged.
+v4:
+- Update dt-bindings based on comments - Krzysztof, bod, Vladimir
+- Move common code into csid core and vfe core driver - bod
+- Remove *_relaxed in the csid and vfe drivers - Krzysztof
+- Reorganize patches in logical junks, make sure that new added
+structures have users in current patch - Krzysztof
+- Remove notify function  and add new functions in camss for buf done
+and reg update - bod
+- Remove custom code to get csid base - bod
+- Remove ISR function in vfe780 driver since it is never fired - bod
+- Move csid_top_base to camss structure since we only have one csid
+top block, and just need to get base once for csid top
+- Add Vladimir's RB
+- Remove prerequisite-patch-id in the cover letter since the changes
+have been merged
+- Add dtsi patch link for reference - Krzysztof
+https://lore.kernel.org/all/20240807123333.2056518-1-quic_depengs@quicinc.com/
+- Link to v3: https://lore.kernel.org/all/20240709160656.31146-1-quic_depengs@quicinc.com/
 
-It has been observed on a few X Elite-based platforms which have
-such LTTPRs in their board design that the DPTX needs to follow the
-procedure described above in order for the link training to be successful.
+v3:
+- Rebased the change based on below change which will be merged firstly.
+"Move camss version related defs in to resources"
+Link: https://lore.kernel.org/all/20240522154659.510-1-quic_grosikop@quicinc.com/
+- Rebased the change based on Bryan's csiphy optimization change and add
+these changes into this series, so that the new csiphy-3ph driver don't
+need to add duplicate code. This has got Bryan's permission to add his
+patches into this series.
+- Refactor some changes based on the comments to move the random code to
+patches where they are used.
+- Remove the vfe780 irq function since it isn't doing the actual work.
+- Add dt-binding for sm8550 camss driver.
+Link to V2: https://lore.kernel.org/all/20240320141136.26827-1-quic_depengs@quicinc.com/
 
-So add support for reading the LTTPR DPCD caps to figure out the number
-of such LTTPRs first. Then, for platforms (or Type-C dongles) that have
-at least one such an LTTPR, set its operation mode to transparent mode
-first and then to non-transparent, just like the mentioned section of
-the specification mandates.
+v2:
+- Update some commit messages
+Link to V1: https://lore.kernel.org/all/20240320134227.16587-1-quic_depengs@quicinc.com/
 
-Tested-by: Johan Hovold <johan+linaro@kernel.org>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
----
- drivers/gpu/drm/msm/dp/dp_display.c | 17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+v1:
+SM8550 is a Qualcomm flagship SoC. This series adds support to
+bring up the CSIPHY, CSID, VFE/RDI interfaces in SM8550.
 
-diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-index 24dd37f1682bf5016bb0efbeb44489061deff060..ad09daa4c8ab5c0eb67890509b94e72820bab870 100644
---- a/drivers/gpu/drm/msm/dp/dp_display.c
-+++ b/drivers/gpu/drm/msm/dp/dp_display.c
-@@ -107,6 +107,8 @@ struct msm_dp_display_private {
- 	struct msm_dp_event event_list[DP_EVENT_Q_MAX];
- 	spinlock_t event_lock;
- 
-+	u8 lttpr_caps[DP_LTTPR_COMMON_CAP_SIZE];
-+
- 	bool wide_bus_supported;
- 
- 	struct msm_dp_audio *audio;
-@@ -367,12 +369,27 @@ static int msm_dp_display_send_hpd_notification(struct msm_dp_display_private *d
- 	return 0;
- }
- 
-+static void msm_dp_display_lttpr_init(struct msm_dp_display_private *dp)
-+{
-+	int rc;
-+
-+	if (drm_dp_read_lttpr_common_caps(dp->aux, dp->panel->dpcd,
-+					  dp->lttpr_caps))
-+		return;
-+
-+	rc = drm_dp_lttpr_init(dp->aux, drm_dp_lttpr_count(dp->lttpr_caps));
-+	if (rc)
-+		DRM_ERROR("failed to set LTTPRs transparency mode, rc=%d\n", rc);
-+}
-+
- static int msm_dp_display_process_hpd_high(struct msm_dp_display_private *dp)
- {
- 	struct drm_connector *connector = dp->msm_dp_display.connector;
- 	const struct drm_display_info *info = &connector->display_info;
- 	int rc = 0;
- 
-+	msm_dp_display_lttpr_init(dp);
-+
- 	rc = msm_dp_panel_read_sink_caps(dp->panel, connector);
- 	if (rc)
- 		goto end;
+SM8550 provides
 
+- 3 x VFE, 3 RDI per VFE
+- 2 x VFE Lite, 4 RDI per VFE
+- 3 x CSID
+- 2 x CSID Lite
+- 8 x CSI PHY
+
+Bryan O'Donoghue (6):
+  media: qcom: camss: csiphy-3ph: Fix trivial indentation fault in
+    defines
+  media: qcom: camss: csiphy-3ph: Remove redundant PHY init sequence
+    control loop
+  media: qcom: camss: csiphy-3ph: Rename struct
+  media: qcom: camss: csiphy: Add an init callback to CSI PHY devices
+  media: qcom: camss: csiphy-3ph: Move CSIPHY variables to data field
+    inside csiphy struct
+  media: qcom: camss: csiphy-3ph: Use an offset variable to find common
+    control regs
+
+Depeng Shao (10):
+  media: qcom: camss: csid: Move common code into csid core
+  media: qcom: camss: vfe: Move common code into vfe core
+  media: qcom: camss: Add callback API for RUP update and buf done
+  media: qcom: camss: Add default case in vfe_src_pad_code
+  media: qcom: camss: csid: Only add TPG v4l2 ctrl if TPG hardware is
+    available
+  dt-bindings: media: camss: Add qcom,sm8550-camss binding
+  media: qcom: camss: Add sm8550 compatible
+  media: qcom: camss: csiphy-3ph: Add Gen2 v2.1.2 two-phase MIPI CSI-2
+    DPHY support
+  media: qcom: camss: Add CSID 780 support
+  media: qcom: camss: Add support for VFE 780
+
+ .../bindings/media/qcom,sm8550-camss.yaml     | 597 +++++++++++++
+ drivers/media/platform/qcom/camss/Makefile    |   2 +
+ .../platform/qcom/camss/camss-csid-4-1.c      |  19 -
+ .../platform/qcom/camss/camss-csid-4-7.c      |  42 -
+ .../platform/qcom/camss/camss-csid-780.c      | 337 ++++++++
+ .../platform/qcom/camss/camss-csid-780.h      |  25 +
+ .../platform/qcom/camss/camss-csid-gen2.c     |  60 --
+ .../media/platform/qcom/camss/camss-csid.c    | 137 ++-
+ .../media/platform/qcom/camss/camss-csid.h    |  31 +
+ .../qcom/camss/camss-csiphy-2ph-1-0.c         |   6 +
+ .../qcom/camss/camss-csiphy-3ph-1-0.c         | 794 ++++++++++--------
+ .../media/platform/qcom/camss/camss-csiphy.c  |   4 +
+ .../media/platform/qcom/camss/camss-csiphy.h  |   8 +
+ .../media/platform/qcom/camss/camss-vfe-17x.c | 112 +--
+ .../media/platform/qcom/camss/camss-vfe-4-1.c |   9 -
+ .../media/platform/qcom/camss/camss-vfe-4-7.c |  11 -
+ .../media/platform/qcom/camss/camss-vfe-4-8.c |  11 -
+ .../media/platform/qcom/camss/camss-vfe-480.c | 274 +-----
+ .../media/platform/qcom/camss/camss-vfe-780.c | 159 ++++
+ drivers/media/platform/qcom/camss/camss-vfe.c | 274 ++++++
+ drivers/media/platform/qcom/camss/camss-vfe.h |  59 +-
+ drivers/media/platform/qcom/camss/camss.c     | 359 ++++++++
+ drivers/media/platform/qcom/camss/camss.h     |   4 +
+ 23 files changed, 2464 insertions(+), 870 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/media/qcom,sm8550-camss.yaml
+ create mode 100644 drivers/media/platform/qcom/camss/camss-csid-780.c
+ create mode 100644 drivers/media/platform/qcom/camss/camss-csid-780.h
+ create mode 100644 drivers/media/platform/qcom/camss/camss-vfe-780.c
+
+
+base-commit: 8155b4ef3466f0e289e8fcc9e6e62f3f4dceeac2
 -- 
 2.34.1
 
