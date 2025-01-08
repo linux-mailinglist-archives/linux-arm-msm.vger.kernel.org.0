@@ -1,36 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-44343-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-44344-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 69234A05876
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jan 2025 11:44:09 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 03A15A0587B
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jan 2025 11:44:30 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 53DE318804B4
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jan 2025 10:44:01 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 526DE3A4F1A
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jan 2025 10:44:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1C5AA1F4293;
-	Wed,  8 Jan 2025 10:43:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 825811F63CC;
+	Wed,  8 Jan 2025 10:44:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="FUm4GvmI"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC4431CEAD6;
-	Wed,  8 Jan 2025 10:43:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAAFC1F3D53;
+	Wed,  8 Jan 2025 10:44:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736333031; cv=none; b=l+L6tujd8bPgBhKpN6wgsSc7dkAjpxDjy3xHTLQYpyPCyAEJT3b0G5t+W1ky/yROIyu45vR98SB1ialiTMEvE/CQcdllertjW/+ROOtEAfMxlWgGmzh7gNAqrEUXze0MFeHRr7mYPv6Dor1Y3USUBvI+k/4nf+x+C2FQSmFaldk=
+	t=1736333064; cv=none; b=ib127LaKEiX4mg6R7ezI8H9J5WnFALq/93E/eb0Ek9LkHi1L8cxF+72Gvrh0LxZgZyxqCXq54dqd92mzhPod14z3wTvRegIrC8LT11ZMnqGAeGWEd4h+Vgnwjq1lTIBuHhH7zi5FbM3KqFCx5wdlT4ceQc+ZkGL0a8vglUpXEoU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736333031; c=relaxed/simple;
-	bh=1P1KrTcR8V8R1f8L+0GLWXARzxVo+K4mjkTICs/ig0s=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=qoDfxV15GqeA0wmBgqDs66Ji9v/OSZYdVqEG47lQTyjq3ttw3ZITuPE7omZDdynfldCi2Y1Z4/GcIqEigZUMmvP0ZlefGIe5dWAx7ioQmGA4hOukQxZN/ZEtx79Luk3kq0wm4r4oOwGXnDxFIe9sy0ORJ0f9txYEoj+JWi24m1Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03B83C4CEDF;
-	Wed,  8 Jan 2025 10:43:46 +0000 (UTC)
-Message-ID: <067d0deb-50ea-46bd-9f09-827b0ba61aa3@xs4all.nl>
-Date: Wed, 8 Jan 2025 11:43:45 +0100
+	s=arc-20240116; t=1736333064; c=relaxed/simple;
+	bh=G5PH8JBium3MhTePsoIKiYmPSafl8ZQATIn7yTo+Ttk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=DGfr8cjXp2NMpfgqYYspxzbwHVnwaUAeg8nn0FTtZ4kQfe9Zj1V+PGdg9rY3cTcXKGxYDSstl9Hx2gaMUPjO2isYzuXiKuYwW+vLxtY9rLvGspZMj0LZ9dinslTW5pcBw5itf2gFmVSnX9GQ7Flv+C9ZZCc7IUIFLMXN/AqHwgM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=FUm4GvmI; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 508Ad3J9000895;
+	Wed, 8 Jan 2025 10:43:59 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	+0bR843H3VQ7Rmm291IX960YQ4KDT/hV5fiNWuqDkfs=; b=FUm4GvmIFJtE7uN4
+	pe5WfcCd295p3sLHxmmypVxNEY8cKkDEjdtFW9pjUpKCkyxETjtJ0VCGbUW+pMqk
+	5vg8GGI9yKo9Z6qepS2XTPaTTjK2xUA+/xe6lB4oQcU5FOjkXHBw02sxXRpP9wVg
+	KGPPvrS9ahDo3Uh0NxEnoidBogta5NeEZb84/2DVLnmCzhtnjxfJzkaCNglIRdSI
+	8c3J0YIYuWHdgVZCBv3NfChIiwRD7Bz/5rmFT2aDYf0zbgTSIGxmz0FU3bFpWms3
+	P/13L6NQAIP7mHxdasPx7vsX26be3yhOb0TYZdzUojisLRnJ5jUa5A2B1q1kkoBI
+	BQKmaA==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 441ms8rgkr-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 08 Jan 2025 10:43:58 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 508AhwR3028602
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 8 Jan 2025 10:43:58 GMT
+Received: from [10.253.35.161] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 8 Jan 2025
+ 02:43:52 -0800
+Message-ID: <b035db82-7203-4e30-8457-caa4fa1b4e97@quicinc.com>
+Date: Wed, 8 Jan 2025 18:43:49 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -38,141 +65,99 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v9 27/28] media: iris: enable video driver probe of SM8250
- SoC
+Subject: Re: [PATCH 0/3] Support tuning the RX sampling swap of the MAC.
+To: Andrew Lunn <andrew@lunn.ch>
+CC: Vinod Koul <vkoul@kernel.org>, Andrew Lunn <andrew+netdev@lunn.ch>,
+        "David
+ S. Miller" <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>, Jakub
+ Kicinski <kuba@kernel.org>,
+        Paolo Abeni <pabeni@redhat.com>, Rob Herring
+	<robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio
+	<konradybcio@kernel.org>,
+        Alexandre Torgue <alexandre.torgue@foss.st.com>,
+        Jose Abreu <joabreu@synopsys.com>,
+        Maxime Coquelin
+	<mcoquelin.stm32@gmail.com>, <netdev@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>,
+        <linux-stm32@st-md-mailman.stormreply.com>,
+        <linux-arm-kernel@lists.infradead.org>
+References: <20241225-support_10m100m-v1-0-4b52ef48b488@quicinc.com>
+ <6dcfdb0b-c1ec-49f7-927e-531b20264d68@lunn.ch>
+ <2aa2c6dd-e3f2-4b9b-8572-20b801edef81@quicinc.com>
+ <59590ff5-676a-4cd6-a951-96f66972aad4@lunn.ch>
 Content-Language: en-US
-To: Dikshita Agarwal <quic_dikshita@quicinc.com>,
- Nicolas Dufresne <nicolas@ndufresne.ca>,
- Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
- Sebastian Fricke <sebastian.fricke@collabora.com>
-Cc: Vikash Garodia <quic_vgarodia@quicinc.com>,
- Abhinav Kumar <quic_abhinavk@quicinc.com>,
- Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Philipp Zabel <p.zabel@pengutronix.de>,
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Neil Armstrong <neil.armstrong@linaro.org>,
- =?UTF-8?Q?Uwe_Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
- Jianhua Lu <lujianhua000@gmail.com>,
- Stefan Schmidt <stefan.schmidt@linaro.org>, linux-media@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20241212-qcom-video-iris-v9-0-e8c2c6bd4041@quicinc.com>
- <20241212-qcom-video-iris-v9-27-e8c2c6bd4041@quicinc.com>
- <20241223113027.21b8f7ab@foz.lan>
- <fbe0d935-a3cf-dfa0-aad8-56834a0a002c@quicinc.com>
- <635ce4ed82aaca422b869f467300b0eccf9c8703.camel@ndufresne.ca>
- <c0f59149-713b-45e4-3755-4a52cfaa93f6@quicinc.com>
- <498a99e1-77ca-4acf-8850-cb74417ae88c@xs4all.nl>
- <9fc76dd1-ef49-a9d2-0271-eacb50943b03@quicinc.com>
- <9b33ba28-5aa9-4863-8fde-535841ddbc10@xs4all.nl>
- <6654d78e-d16b-489a-3532-e2fbc788b0ef@quicinc.com>
-From: Hans Verkuil <hverkuil@xs4all.nl>
-In-Reply-To: <6654d78e-d16b-489a-3532-e2fbc788b0ef@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+From: Yijie Yang <quic_yijiyang@quicinc.com>
+In-Reply-To: <59590ff5-676a-4cd6-a951-96f66972aad4@lunn.ch>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: x_CwTAya_QyRJEXsvvGJOqX8bkJFVQPs
+X-Proofpoint-GUID: x_CwTAya_QyRJEXsvvGJOqX8bkJFVQPs
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 malwarescore=0
+ priorityscore=1501 suspectscore=0 mlxlogscore=720 lowpriorityscore=0
+ adultscore=0 impostorscore=0 clxscore=1015 phishscore=0 spamscore=0
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2501080087
 
-On 1/8/25 11:21, Dikshita Agarwal wrote:
+
+
+On 2024-12-27 01:14, Andrew Lunn wrote:
+> On Thu, Dec 26, 2024 at 11:06:48AM +0800, Yijie Yang wrote:
+>>
+>>
+>> On 2024-12-26 01:49, Andrew Lunn wrote:
+>>> On Wed, Dec 25, 2024 at 06:04:44PM +0800, Yijie Yang wrote:
+>>>> The Ethernet MAC requires precise sampling times at Rx, but signals on the
+>>>> Rx side after transmission on the board may vary due to different hardware
+>>>> layouts. The RGMII_CONFIG2_RX_PROG_SWAP can be used to switch the sampling
+>>>> occasion between the rising edge and falling edge of the clock to meet the
+>>>> sampling requirements.
+>>>
+>>> The RGMII specification says that RD[3:0] pins are sampled on the
+>>> rising edge for bits 3:0 and falling edge for bits 7:4.
+>>>
+>>> Given this is part of the standard, why would you want to do anything
+>>> else?
+>>>
+>>> Is this maybe another symptom of having the RGMII delays messed up?
+>>>
+>>> Anyway, i don't see a need for this property, unless you are working
+>>> with a PHY which breaks the RGMII standard, and has its clock
+>>> reversed?
+>>
+>> Please correct me if there are any errors. As described in the Intel and TI
+>> design guidelines, Dual Data Rate (DDR), which samples at both edges of the
+>> clock, is primarily used for 1Gbps speeds. For 100Mbps and 10Mbps speeds,
+>> Single Data Rate (SDR), which samples at the rising edge of the clock, is
+>> typically adopted.
 > 
+> If it is typically adopted, why do you need to support falling edge?
+> Because we can is not a good reason. Do you have a board with a PHY
+> which requires falling edge for some reason?
+
+It's an RX-side feature and is unrelated to the PHY. As I mentioned in 
+another email, it's designed to introduce a half-clock cycle delay for 
+correct sampling in the IO Macro.
+
 > 
-> On 1/8/2025 2:25 PM, Hans Verkuil wrote:
->> On 08/01/2025 09:51, Dikshita Agarwal wrote:
->>>
->>>
->>> On 1/8/2025 1:17 PM, Hans Verkuil wrote:
->>>> On 08/01/2025 08:43, Dikshita Agarwal wrote:
->>>>>
->>>>>
->>>>> On 1/7/2025 7:27 PM, Nicolas Dufresne wrote:
->>>>>> Le lundi 23 décembre 2024 à 16:21 +0530, Dikshita Agarwal a écrit :
->>>>>>>
->>>>>>> On 12/23/2024 4:00 PM, Mauro Carvalho Chehab wrote:
->>>>>>>> Em Thu, 12 Dec 2024 17:21:49 +0530
->>>>>>>> Dikshita Agarwal <quic_dikshita@quicinc.com> escreveu:
->>>>>>>>
->>>>>>>>> +	.dma_mask = GENMASK(31, 29) - 1,
->>>>>>>>
->>>>>>>> Setting a mask to GENMASK() - 1 sounds weird. Is it really what you want?
->>>>>>>> I so, why?
->>>>>>>>
->>>>>>> Hi Mauro,
->>>>>>>
->>>>>>> the value of this dma mask should be 0xe0000000 -1.
->>>>>>>
->>>>>>> The background for the same is, 0xe0000000 onward memory space is allocated
->>>>>>> for IO register space so we are restricting the driver buffer allocations
->>>>>>> to 0xe0000000 - 1.
->>>>>>>
->>>>>>> Based on the comments received in the past, we are using GENMASK to
->>>>>>> generate 0xe0000000.
->>>>>>>
->>>>>>> Does this answer your query or I missed something?
->>>>>>
->>>>>> I'm not sure it will do what you want. (0xe0000000 -1) matches ~BIT(29). Perhaps
->>>>>> you wanted to use ~0xe0000000. 
->>>>>>
->>>>> value of dma mask is coming as expected with GENMASK(31, 29) - 1
->>>>>
->>>>> qcom-iris aa00000.video-codec: dma_mask DFFFFFFF (0xe0000000 -1)
->>>>
->>>> Isn't this just the equivalent of GENMASK(28, 0)? Can't you use that?
->>
->> Too early in the morning, this suggestion was clearly wrong.
->>
->>>>
->>>> It's much easier to understand than GENMASK()-1.
->>>
->>> Sure, I can use either ~GENMASK(29, 29) or ~BIT(29),
->>
->> ~BIT(29).
->>
->> It's really weird to just disable a single bit, so I think some comments
->> explaining why this mask is needed would be good (if there aren't comments
->> already).
->>
-> I tested this some more, and seems ~BIT(29) doesn't work, as its still
-> conflicting with the register space.
+> 	Andrew
+> 
 
-Odd, perhaps a 64 vs 32 bit issue?
-
-> Correct value would be GENMASK(31,30) + GENMASK(28,0) to set the exact bits
-> to get the desired value i.e 0xe0000000 -1
-
-Honestly, in this case I would prefer to just go with the actual hex value
-0xdfffffff together with an explanatory comment.
-
-Regards,
-
-	Hans
-
->> Regards,
->>
->> 	Hans
->>
->>> Please let me know which would be better?
->>>
->>> Thanks,
->>> Dikshita
->>>
->>>>
->>>> Regards,
->>>>
->>>> 	Hans
->>>>
->>>>>
->>>>> Thanks,
->>>>> Dikshita
->>>>>> Nicolas
->>>>>>
->>>>>>>
->>>>>>> Thanks,
->>>>>>> Dikshita
->>>>>>>> Thanks,
->>>>>>>> Mauro
->>>>>>
->>>>
->>>>
->>
+-- 
+Best Regards,
+Yijie
 
 
