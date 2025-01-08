@@ -1,198 +1,309 @@
-Return-Path: <linux-arm-msm+bounces-44377-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-44378-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0DB73A05C74
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jan 2025 14:16:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 6A5ECA05CAC
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jan 2025 14:23:02 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id F15271664AC
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jan 2025 13:16:42 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7F131166C09
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jan 2025 13:22:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 127DB1F76C3;
-	Wed,  8 Jan 2025 13:16:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E04681FBE89;
+	Wed,  8 Jan 2025 13:22:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="naKhyRqE"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="hI4ejmQU"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
+Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C4C91F8F06
-	for <linux-arm-msm@vger.kernel.org>; Wed,  8 Jan 2025 13:16:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DDF21FBC94
+	for <linux-arm-msm@vger.kernel.org>; Wed,  8 Jan 2025 13:22:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736342201; cv=none; b=nqkzx/83aQxlqSmWY28U8zSDahcobRDvjzXFb40MPNUSHmcQmN3Seuwlze0revpArJ0xMca4eQsiTDZLkRauuCiimfJHIwlAis6NCkDtZSu3QaC+tWvTjO1fgFKAZxemShKbN1e19XJfvA+eK7K4znIRRq+/PJvxeoPuihYdnxM=
+	t=1736342568; cv=none; b=oY4Rsve2xdPZ8gIWq5AaEVVWnTvEEutwFXVp+x1qa4qAEHK+vCpvmVrGA5SKqP6PAfZtePCT6Al5FiTKyo8MTn1/f9kYHh8xZ4oRJ5CCTalRcbFGcKjPf3BOt8e+MSgVsZOUfiZ3DpGGtXKqp0oUi8R3/0GlIT6+lqb4kx/uGZE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736342201; c=relaxed/simple;
-	bh=58fHc2ylZsBzk/+g0gPOZYXbq7Taq9dz4tCVApLQD6M=;
+	s=arc-20240116; t=1736342568; c=relaxed/simple;
+	bh=Dpg2Wb5I47smoJMY9zxlEd9D/QcsYMbGnyKqAhDGG88=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=cd2fuiDFmiLKJhcA+/iTatrUwz5YmRHB0C3KfrKoReHOTyHA9zgVnQfJCzIoaFgx50vFnNEcaprxdRt9XWw5eeQca+mVVw8lqr2y6+fAMtxpY9QYJ7HeAtkip+MSMwoy7sga7JddROC3goW8OV7PomdVtrXeYT1/RSDTfzvqV8I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=naKhyRqE; arc=none smtp.client-ip=209.85.221.47
+	 Content-Type:Content-Disposition:In-Reply-To; b=j66sfsY1l/oC0NiW0lXMRg19Q9iFI8OlQh04g1VZF1/TFmd3aOvYiVo0KYCgvqH+5H1Hm3c7HuLd1zdViKr1uyQjSmMgEyfYcIoGLZgRFV9LdFnQwqaIrAkRojFTDjhE2JSL/5UIQS4NL3Bytjt2lkblNyHXJmvjCBe0OoV/NgE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=hI4ejmQU; arc=none smtp.client-ip=209.85.214.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-38a25d4b9d4so6411430f8f.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Jan 2025 05:16:39 -0800 (PST)
+Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-2166360285dso252157215ad.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Jan 2025 05:22:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1736342197; x=1736946997; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=go7fn8G/ymJBJOoBu9CCL9fg2QtY/C41teH6UPJDvwo=;
-        b=naKhyRqEfMY+edEs6oYsbr8xfaGwHwXKxyy2kcy+XSEyP81X6WUxZ6m85+ExOK93OK
-         bUq/xCSsZnu++oLIVRYYkFIGWj2tc9Ni9r8102VTAw4vlhQyb9oKmSZUZNBNwro1ypwd
-         /3tsT5xZr+IBz/ibpGkCYhfzU5tCnbiUlU3OFED9Qkbw0VX8tJItlj3HLjZ1XH4u/wDg
-         vqeM38pJkzNGr/0ZOAas5y1nJBKP1PvD2XeQD9HryaFPHAD4ceZYhLgjBDBE7RVM7fyu
-         V3u6k0ddV5pspSipVnSGwu3JXy2Ef5HRQ7i8cwe9BmImE3JU8RFjoKlYilsAiNXJKh2R
-         yMFg==
+        d=linaro.org; s=google; t=1736342566; x=1736947366; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=uGQ6gTUaI3ZQFf1nCYXuOnJ+ZKOpQdsJP9iOpS9TOig=;
+        b=hI4ejmQUnfASu1kUE7slRbne0vD0YZoF29Gwo0k/siTAMksZXChQETizCheoJWHgyd
+         lGWTzC6gHEInqHuy7zK6gQB/r18MFozGjRgX0aq53yL5cqncZjsl3sEjlRN4/339kVjS
+         2pnqJIO+r+hriKv2WKMrcZH/O/TSYdtpMKZ99chE+0AmOC76/THfOLfuUL3KmEX110XZ
+         UvoxA6nYPGa4RgAXIP7xFr7zH2warQ6iecOnBkpVoPo2u/YnQeC1D9kUVceV/Rs0xdP+
+         Y9xqAM7l/tyjTsKrgEVt3cQTx2iKz7hjVVaZDKCbz4H41OhBu9CjEAp2HIEozXIDMFJO
+         TPjg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736342197; x=1736946997;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=go7fn8G/ymJBJOoBu9CCL9fg2QtY/C41teH6UPJDvwo=;
-        b=pNxMMXFEKorxuJQVDdMh9uUuWDy1rnOy9KrIwhP6RK9B8ROs9GVt2TmetPfG0oZW4/
-         AWzFYDF2YGgAuuuOQBHDrDqg2nDxLewaAdQg5vdNLJxJV0YZDrVBsWVaWGKKbeZuxHs3
-         eM7qmcv3SJYd7C85uTOYOaNf/yTn5HsSOsJCBfX1TbctEJk7cgt1BMST+GV/9GHqm2pG
-         iv0vvoQ/ThL4b+g7dsZ0ItmHy0tXUCIToqXvY6bDuJvXqnUWWlNCJU1+7/ZWyuIvrMW6
-         SCnMsRM87sC86nrXo+M1vrqqVhiJxUJ4IlxMbtLqerKUe/7WGgHNCXXl8kpB7v8Vp2Xt
-         NLeQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUNwx/bYV7cSyjppTwMXRrBhq7abMxePeKNWFMnC2Relz0HovoPwUGvtHduEg4XXuE2b9WNMY22kKWeexth@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz+QcG0MrZvsZtzoRKbi/WjlJEBpX5EoWxCBMmkAgvvDLoxJPLP
-	dKvc6thpc517YhXLaWKBTAhvJ5G7axRPmqdbpxlS4PV7F8Kn2FnUXZsg3Vx1RvA=
-X-Gm-Gg: ASbGnctwmFKSV1NV0dmKGcSrhqzxsHvPfLM8ZjWJCgEBc7uH8qt2GZYi3B7g+OFbYgu
-	mI0wwZb+r/TPOrApqcuXaPAtl+xoZ3sZpyH5uNikJuS+kKWNOxmY5iDAkGGYivhog9BkMvCgzUj
-	bQ3XSmiYwSq/0K2iEeErGD5YYqaVpTw8buxZtTKoFH6WmWS2qn56QPaz252zbklpfsBO5BnnkjA
-	8FQINicfNBI/sGI72blESjRSij5jUjxqLJCzCRaupITaYW8ghNIRiE=
-X-Google-Smtp-Source: AGHT+IHuzod8aMhCQ+n6NVLGNnPNVKNs6REXYs0yamrClbVZfZoa7djflMAszxH2qhTaAW4scrTx/w==
-X-Received: by 2002:a5d:64ed:0:b0:385:e303:8dd8 with SMTP id ffacd0b85a97d-38a872e8b18mr2604012f8f.26.1736342197530;
-        Wed, 08 Jan 2025 05:16:37 -0800 (PST)
-Received: from linaro.org ([86.121.162.10])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38a1c832c45sm52417065f8f.32.2025.01.08.05.16.35
+        d=1e100.net; s=20230601; t=1736342566; x=1736947366;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=uGQ6gTUaI3ZQFf1nCYXuOnJ+ZKOpQdsJP9iOpS9TOig=;
+        b=OOA9EkE9tJWK6a6XXlhquZXw1FSZHg6E2XrBfkUIoDfnDaI1H/dWZSwu13zXazDYPh
+         7Bwrcaqn5u/TaddQwS2oZL2vu78iOCLkeKypUUh4HRbmYYevnGTzmLSd2Ka1S3uXI4Vj
+         8avaow+4qEeSXm9/Rb8wMSYqQy38l4fGnRklXyYK7yQX4IM/1Fzshyik+bjhKYuZmrtl
+         4IOFSSxwsDR80xk9G85DHgnej9RjUJhZ+vpPNqJIWpfjZyz8rLKncgK/lchDGmF+SBbQ
+         41Nzb/DAxJeWwf2Ih5576d96Oy89TNEMkexpUeQhYtvSo7DTBXN5ln7UvLWvutxCZt6z
+         Kz7Q==
+X-Forwarded-Encrypted: i=1; AJvYcCX21+JNyG/cofTmbiFGNhcgaJrZBGhXSwqnPupl6yUAXMd9H3YxXl2iT0wb49I/PmBm9xISRGhL3+C48bLc@vger.kernel.org
+X-Gm-Message-State: AOJu0YxthUi1Ji6mmyM+ML1Y6H3ez5O+AzheHCZWDwGcjWk7sofeaeH5
+	nRVWwtEiQoYpS9P6xBRRQvxPFO/FFgwMCZLvm6EYuGzX8oeAHWaP1DtK7C2tRg==
+X-Gm-Gg: ASbGncsp96Vg3Ea5FVGl70nysQXUhhSVGYHI/76YPyOtSx50oAVfythHpNB17FCezxE
+	nCLP/1vB2/HcJ0jx1cnNtqDZJRVhZ0zrGloPfwL+fb6mkzk9XUtau1Lxwndxua2CiYP3iGErEns
+	K6ot9yTj1rTnWzYuJ8sNkmZ/XsTmKPnJN4fGfEfZg1zGD2R71tGorNTx3cA1QxyeZAJX6NIDYT4
+	8J3K+2InQv+bLrtEksNv2FooAYLhvil5mUMSU6PeX+ZNDGsC2BoPOEqgNqe+XUCSe/8
+X-Google-Smtp-Source: AGHT+IECtsM/gRYWLFY3hTWl1Cc6HjpXQcF89x7voGNTV2OpqZVBPzam7oV8L4vtfZfa5pZdqlOIuA==
+X-Received: by 2002:a17:903:2b08:b0:216:70b6:8723 with SMTP id d9443c01a7336-21a83fb5af8mr47573525ad.44.1736342566329;
+        Wed, 08 Jan 2025 05:22:46 -0800 (PST)
+Received: from thinkpad ([117.213.97.234])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-219dc970c8fsm327792835ad.60.2025.01.08.05.22.40
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 08 Jan 2025 05:16:37 -0800 (PST)
-Date: Wed, 8 Jan 2025 15:16:29 +0200
-From: Abel Vesa <abel.vesa@linaro.org>
-To: Johan Hovold <johan@kernel.org>
-Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-	Karol Herbst <kherbst@redhat.com>, Lyude Paul <lyude@redhat.com>,
-	Danilo Krummrich <dakr@redhat.com>,
-	Jani Nikula <jani.nikula@linux.intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
-	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
-	Tvrtko Ursulin <tursulin@ursulin.net>,
-	Rob Clark <robdclark@gmail.com>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Sean Paul <sean@poorly.run>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-	nouveau@lists.freedesktop.org, intel-gfx@lists.freedesktop.org,
-	intel-xe@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-	freedreno@lists.freedesktop.org,
-	Johan Hovold <johan+linaro@kernel.org>
-Subject: Re: [PATCH v3 1/4] drm/dp: Add helper to set LTTPRs in transparent
- mode
-Message-ID: <Z356ra0IDQ4SMbfN@linaro.org>
-References: <20250103-drm-dp-msm-add-lttpr-transparent-mode-set-v3-0-5c367f4b0763@linaro.org>
- <20250103-drm-dp-msm-add-lttpr-transparent-mode-set-v3-1-5c367f4b0763@linaro.org>
- <Z3z0NcDhmwOoQhlG@hovoldconsulting.com>
+        Wed, 08 Jan 2025 05:22:45 -0800 (PST)
+Date: Wed, 8 Jan 2025 18:52:35 +0530
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To: Varadarajan Narayanan <quic_varada@quicinc.com>
+Cc: bhelgaas@google.com, lpieralisi@kernel.org, kw@linux.com,
+	robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
+	vkoul@kernel.org, kishon@kernel.org, andersson@kernel.org,
+	konradybcio@kernel.org, p.zabel@pengutronix.de,
+	quic_nsekar@quicinc.com, dmitry.baryshkov@linaro.org,
+	linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-phy@lists.infradead.org,
+	Praveenkumar I <quic_ipkumar@quicinc.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Subject: Re: [PATCH v5 4/5] arm64: dts: qcom: ipq5332: Add PCIe related nodes
+Message-ID: <20250108132235.gh6p5d6t7wklzpm7@thinkpad>
+References: <20250102113019.1347068-1-quic_varada@quicinc.com>
+ <20250102113019.1347068-5-quic_varada@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <Z3z0NcDhmwOoQhlG@hovoldconsulting.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20250102113019.1347068-5-quic_varada@quicinc.com>
 
-On 25-01-07 10:30:29, Johan Hovold wrote:
-> On Fri, Jan 03, 2025 at 02:58:15PM +0200, Abel Vesa wrote:
-> > According to the DisplayPort standard, LTTPRs have two operating
-> > modes:
-> >  - non-transparent - it replies to DPCD LTTPR field specific AUX
-> >    requests, while passes through all other AUX requests
-> >  - transparent - it passes through all AUX requests.
-> > 
-> > Switching between this two modes is done by the DPTX by issuing
-> > an AUX write to the DPCD PHY_REPEATER_MODE register.
-> > 
-> > Add a generic helper that allows switching between these modes.
-> > 
-> > Also add a generic wrapper for the helper that handles the explicit
-> > disabling of non-transparent mode and its disable->enable sequence
-> > mentioned in the DP Standard v2.0 section 3.6.6.1. Do this in order
-> > to move this handling out of the vendor specific driver implementation
-> > into the generic framework.
-> > 
-> > Tested-by: Johan Hovold <johan+linaro@kernel.org>
-> > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+On Thu, Jan 02, 2025 at 05:00:18PM +0530, Varadarajan Narayanan wrote:
+> From: Praveenkumar I <quic_ipkumar@quicinc.com>
 > 
-> > +/**
-> > + * drm_dp_lttpr_init - init LTTPR transparency mode according to DP standard
-> > + *
-> > + * @aux: DisplayPort AUX channel
-> > + * @lttpr_count: Number of LTTPRs. Between 0 and 8, according to DP standard.
-> > + *               Negative error code for any non-valid number.
-> > + *               See drm_dp_lttpr_count().
-> > + *
-> > + * Returns 0 on success or a negative error code on failure.
-> > + */
-> > +int drm_dp_lttpr_init(struct drm_dp_aux *aux, int lttpr_count)
-> > +{
-> > +	int ret;
-> > +
-> > +	if (!lttpr_count)
-> > +		return 0;
-> > +
-> > +	/*
-> > +	 * See DP Standard v2.0 3.6.6.1 about the explicit disabling of
-> > +	 * non-transparent mode and the disable->enable non-transparent mode
-> > +	 * sequence.
-> > +	 */
-> > +	ret = drm_dp_lttpr_set_transparent_mode(aux, true);
-> > +	if (ret)
-> > +		return ret;
-> > +
-> > +	if (lttpr_count < 0)
-> > +		return -ENODEV;
-> > +
-> > +	/*
-> > +	 * Roll-back to tranparent mode if setting non-tranparent mode failed
+> Add phy and controller nodes for pcie0_x1 and pcie1_x2.
 > 
-> typo: transparent (2x)
-
-Will fix.
-
+> Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+> Signed-off-by: Praveenkumar I <quic_ipkumar@quicinc.com>
+> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
+> ---
+> v5: Add 'num-lanes' to "pcie1_phy: phy@4b1000"
+>     Make ipq5332 as main and ipq9574 as fallback compatible
+>     Move controller nodes per address
+>     Having Konrad's Reviewed-By
 > 
-> > +	 */
+> v4: Remove 'reset-names' as driver uses bulk APIs
+>     Remove 'clock-output-names' as driver uses bulk APIs
+>     Add missing reset for pcie1_phy
+>     Convert 'reg-names' to a vertical list
+>     Move 'msi-map' before interrupts
 > 
-> I think this comment now needs to go inside the conditional, if you want
-> to keep it at all.
-
-Yes, will move it.
-
+> v3: Fix compatible string for phy nodes
+>     Use ipq9574 as backup compatible instead of new compatible for ipq5332
+>     Fix mixed case hex addresses
+>     Add "mhi" space
+>     Removed unnecessary comments and stray blank lines
 > 
-> > +	if (drm_dp_lttpr_set_transparent_mode(aux, false)) {
-> > +		drm_dp_lttpr_set_transparent_mode(aux, true);
-> > +		return -EINVAL;
-> > +	}
-> > +
-> > +	return 0;
-> > +}
-> > +EXPORT_SYMBOL(drm_dp_lttpr_init);
+> v2: Fix nodes' location per address
+> ---
+>  arch/arm64/boot/dts/qcom/ipq5332.dtsi | 221 +++++++++++++++++++++++++-
+>  1 file changed, 219 insertions(+), 2 deletions(-)
 > 
-> This looks much better to me now, so with the above addressed: 
-> 
-> Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
+> diff --git a/arch/arm64/boot/dts/qcom/ipq5332.dtsi b/arch/arm64/boot/dts/qcom/ipq5332.dtsi
+> index d3c3e215a15c..89daf955e4bd 100644
+> --- a/arch/arm64/boot/dts/qcom/ipq5332.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/ipq5332.dtsi
+> @@ -186,6 +186,43 @@ rng: rng@e3000 {
+>  			clock-names = "core";
+>  		};
+>  
+> +		pcie0_phy: phy@4b0000 {
+> +			compatible = "qcom,ipq5332-uniphy-pcie-phy";
+> +			reg = <0x004b0000 0x800>;
+> +
+> +			clocks = <&gcc GCC_PCIE3X1_0_PIPE_CLK>,
+> +				 <&gcc GCC_PCIE3X1_PHY_AHB_CLK>;
+> +
+> +			resets = <&gcc GCC_PCIE3X1_0_PHY_BCR>,
+> +				 <&gcc GCC_PCIE3X1_PHY_AHB_CLK_ARES>,
+> +				 <&gcc GCC_PCIE3X1_0_PHY_PHY_BCR>;
+> +
+> +			#clock-cells = <0>;
+> +
+> +			#phy-cells = <0>;
+> +			status = "disabled";
+> +		};
+> +
+> +		pcie1_phy: phy@4b1000 {
+> +			compatible = "qcom,ipq5332-uniphy-pcie-phy";
+> +			reg = <0x004b1000 0x1000>;
+> +
+> +			clocks = <&gcc GCC_PCIE3X2_PIPE_CLK>,
+> +				 <&gcc GCC_PCIE3X2_PHY_AHB_CLK>;
+> +
+> +			resets = <&gcc GCC_PCIE3X2_PHY_BCR>,
+> +				 <&gcc GCC_PCIE3X2_PHY_AHB_CLK_ARES>,
+> +				 <&gcc GCC_PCIE3X2PHY_PHY_BCR>;
+> +
+> +			#clock-cells = <0>;
+> +
+> +			#phy-cells = <0>;
+> +
+> +			num-lanes = <2>;
+> +
+> +			status = "disabled";
+> +		};
+> +
+>  		tlmm: pinctrl@1000000 {
+>  			compatible = "qcom,ipq5332-tlmm";
+>  			reg = <0x01000000 0x300000>;
+> @@ -212,8 +249,8 @@ gcc: clock-controller@1800000 {
+>  			#interconnect-cells = <1>;
+>  			clocks = <&xo_board>,
+>  				 <&sleep_clk>,
+> -				 <0>,
+> -				 <0>,
+> +				 <&pcie1_phy>,
+> +				 <&pcie0_phy>,
+>  				 <0>;
+>  		};
+>  
+> @@ -479,6 +516,186 @@ frame@b128000 {
+>  				status = "disabled";
+>  			};
+>  		};
+> +
+> +		pcie1: pcie@18000000 {
 
-Thanks for reviewing!
+pcie@
 
-Abel
+> +			compatible = "qcom,pcie-ipq5332", "qcom,pcie-ipq9574";
+> +			reg = <0x00088000 0x3000>,
+> +			      <0x18000000 0xf1d>,
+> +			      <0x18000f20 0xa8>,
+> +			      <0x18001000 0x1000>,
+> +			      <0x18100000 0x1000>,
+> +			      <0x0008b000 0x1000>;
+> +			reg-names = "parf",
+> +				    "dbi",
+> +				    "elbi",
+> +				    "atu",
+> +				    "config",
+> +				    "mhi";
+> +			device_type = "pci";
+> +			linux,pci-domain = <1>;
+> +			bus-range = <0x00 0xff>;
+> +			num-lanes = <2>;
+> +			#address-cells = <3>;
+> +			#size-cells = <2>;
+> +
+> +			ranges = <0x01000000 0 0x18200000 0x18200000 0 0x00100000>,
 
+I/O address space should start from 0. Please refer other SoCs.
+
+Also, use 0x0 for consistency.
+
+> +				 <0x02000000 0 0x18300000 0x18300000 0 0x07d00000>;
+> +
+> +			msi-map = <0x0 &v2m0 0x0 0xffd>;
+> +
+> +			interrupts = <GIC_SPI 403 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 404 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 405 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 406 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 407 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 408 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 409 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 410 IRQ_TYPE_LEVEL_HIGH>;
+> +			interrupt-names = "msi0",
+> +					  "msi1",
+> +					  "msi2",
+> +					  "msi3",
+> +					  "msi4",
+> +					  "msi5",
+> +					  "msi6",
+> +					  "msi7";
+
+Is there a 'global' interrupt? If so, please add it.
+
+> +
+> +			#interrupt-cells = <1>;
+> +			interrupt-map-mask = <0 0 0 0x7>;
+> +			interrupt-map = <0 0 0 1 &intc 0 0 412 IRQ_TYPE_LEVEL_HIGH>,
+> +					<0 0 0 2 &intc 0 0 413 IRQ_TYPE_LEVEL_HIGH>,
+> +					<0 0 0 3 &intc 0 0 414 IRQ_TYPE_LEVEL_HIGH>,
+> +					<0 0 0 4 &intc 0 0 415 IRQ_TYPE_LEVEL_HIGH>;
+> +
+> +			clocks = <&gcc GCC_PCIE3X2_AXI_M_CLK>,
+> +				 <&gcc GCC_PCIE3X2_AXI_S_CLK>,
+> +				 <&gcc GCC_PCIE3X2_AXI_S_BRIDGE_CLK>,
+> +				 <&gcc GCC_PCIE3X2_RCHG_CLK>,
+> +				 <&gcc GCC_PCIE3X2_AHB_CLK>,
+> +				 <&gcc GCC_PCIE3X2_AUX_CLK>;
+> +			clock-names = "axi_m",
+> +				      "axi_s",
+> +				      "axi_bridge",
+> +				      "rchng",
+> +				      "ahb",
+> +				      "aux";
+> +
+> +			resets = <&gcc GCC_PCIE3X2_PIPE_ARES>,
+> +				 <&gcc GCC_PCIE3X2_CORE_STICKY_ARES>,
+> +				 <&gcc GCC_PCIE3X2_AXI_S_STICKY_ARES>,
+> +				 <&gcc GCC_PCIE3X2_AXI_S_CLK_ARES>,
+> +				 <&gcc GCC_PCIE3X2_AXI_M_STICKY_ARES>,
+> +				 <&gcc GCC_PCIE3X2_AXI_M_CLK_ARES>,
+> +				 <&gcc GCC_PCIE3X2_AUX_CLK_ARES>,
+> +				 <&gcc GCC_PCIE3X2_AHB_CLK_ARES>;
+> +			reset-names = "pipe",
+> +				      "sticky",
+> +				      "axi_s_sticky",
+> +				      "axi_s",
+> +				      "axi_m_sticky",
+> +				      "axi_m",
+> +				      "aux",
+> +				      "ahb";
+> +
+> +			phys = <&pcie1_phy>;
+> +			phy-names = "pciephy";
+> +
+> +			interconnects = <&gcc MASTER_SNOC_PCIE3_2_M &gcc SLAVE_SNOC_PCIE3_2_M>,
+> +					<&gcc MASTER_ANOC_PCIE3_2_S &gcc SLAVE_ANOC_PCIE3_2_S>;
+> +			interconnect-names = "pcie-mem", "cpu-pcie";
+
+Can you check if the controller supports cache coherency? If so, you need to add
+'dma-coherent'.
+
+> +
+> +			status = "disabled";
+
+Please define the root port node as well.
+
+All the above comments applies to 2nd controller node as well.
+
+- Mani
+
+-- 
+மணிவண்ணன் சதாசிவம்
 
