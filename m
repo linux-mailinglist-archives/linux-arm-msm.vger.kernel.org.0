@@ -1,120 +1,136 @@
-Return-Path: <linux-arm-msm+bounces-44462-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-44464-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 70BD2A0686C
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jan 2025 23:35:25 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 954B5A06884
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jan 2025 23:41:37 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 21D34188701A
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jan 2025 22:35:28 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9592F16417C
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jan 2025 22:41:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CFCA6204F65;
-	Wed,  8 Jan 2025 22:34:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 123D42046B8;
+	Wed,  8 Jan 2025 22:41:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EIHCTyPl"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ONeQOGpi"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F5EB204C37;
-	Wed,  8 Jan 2025 22:34:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7ABC3202C5D;
+	Wed,  8 Jan 2025 22:41:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736375696; cv=none; b=byCUajAHoTSyL/mzdeUlhaJDmU8WvQi1qmkDyD1lYE7zXgGI4pi0wu3zPq3tScixWEB3YSDaDfTjWIikRWKdf/2hI/LjyzTIAyTLMr03cR/Irlr2kYPM/38YgLTUbTvoy7qdiakExMUEASnRxwe8Td3wa1eQOOinVTlIinq7LgA=
+	t=1736376090; cv=none; b=L22uYCyz98wmmCYq+T4fmPNRBh4GUePci6yt1XFjFmPD4DGfWWc6nsfZdd3uL8z5q7Zh5LjJPpRzT7UV4pC311egntMKM+v+OKEwsKS0+ZC5mWNQSkpzd2oUVEZCvWVQPlAFZjoYPrceFST9sGtHVB8VMDOQE6NXz3ElfabIddA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736375696; c=relaxed/simple;
-	bh=c1y6CJhU0MlPeCvA4ixwlFby2yJDyQrNFh2NOkdJtUE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=gKf9CRGWfXv844HHfjjH+7VxW/E+gEo03uPmwlzCGi4u9vTQi/uqh+i6m1M0aELdfX0cuM+YECMVz674Ne5s61KPCigFHIOlf/BGVrttG0VSrdzNRI/PjQ4ApVqOqzeFF47gyv9u/XA44GUc2WiHPXtB1HzbyRfqXNZkxdp/E/s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EIHCTyPl; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D027C4CEE1;
-	Wed,  8 Jan 2025 22:34:55 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1736375696;
-	bh=c1y6CJhU0MlPeCvA4ixwlFby2yJDyQrNFh2NOkdJtUE=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=EIHCTyPld8Y4L74iZF0RoQek8FV2iZ0i01TbFRDYQ4oC1lyy4jBGlD/WJaVrXJn9/
-	 fl6Qc3uQiSTjsLDEkLc3VQktvFqxjc8za0M4sCFAj3MsgkH+I7LGLWnaSeg8FVZF9F
-	 43hdwuGpOQS63V1Fw6AnRS4b2nA48yqzdmWUxZ0Xlm8c5OGG90ZzQhRlu13TUEjaNr
-	 f7KqwVobj/ysPQetvKWLMGFhV178sIxFlCMAQjSXFffYfkaCKbDV9wQs+SaFUcDF2J
-	 sAtXYFvG1PAUG2UIfbdW96eAEBRo0FnmVQIxJ855NnEhbYJOEfgj+hJit8SDNAd7l5
-	 HCvFXQOjTb4bg==
-Date: Wed, 8 Jan 2025 16:34:53 -0600
-From: Bjorn Andersson <andersson@kernel.org>
-To: Qingqing Zhou <quic_qqzhou@quicinc.com>
-Cc: konradybcio@kernel.org, robh@kernel.org, krzk+dt@kernel.org, 
-	conor+dt@kernel.org, robimarko@gmail.com, will@kernel.org, robin.murphy@arm.com, 
-	joro@8bytes.org, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, iommu@lists.linux.dev
-Subject: Re: [PATCH 2/2] arm64: dts: qcom: qcs615: add the GPU SMMU node
-Message-ID: <fgcpk3dxmhsqvjijzcben53f4gpihkc7fwyzafih4fgubbz7j6@qzpqjaudfnxi>
-References: <20241122074922.28153-1-quic_qqzhou@quicinc.com>
- <20241122074922.28153-3-quic_qqzhou@quicinc.com>
+	s=arc-20240116; t=1736376090; c=relaxed/simple;
+	bh=+iay958krtRqU2ep2SDQFCVEnxEbjSddMCAaPd9dG9I=;
+	h=From:Subject:Date:Message-ID:MIME-Version:Content-Type:To:CC; b=OcGi+Ld89p5e4xzXgwyXOER4oTSURfzUsB97947bpn4m+Si529XtzPEu1zPN4Cb628MZnmtebYdGG/tXdFneF8CTLI9X+X77LkYB3w9Omq1/kIvXH5dtMXEfp1PYQuQxin6eMUvJAZg0e3MyXf3dtBcak7L5pGnv1/VjLf5WqOc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ONeQOGpi; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 508Igaaw007885;
+	Wed, 8 Jan 2025 22:41:21 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=5TcPL8L9MCetsP4xQlnAFz
+	YYzHUR76FXshbTlJ5if2Q=; b=ONeQOGpiDiv7D0e6LLkxXO1WNsxrsxg3HI7Ia7
+	WzQMrObfF2VAuVbXenYgIGMKtJEpN7doogcFxejXC2z5G3P1Gf3IgR4jmi/9wQpc
+	PbS11wSG6FHAlATwSFPWN5dUCklmjgxsHdP1kq/XHNIdpGOP0DmVGqXXJ5ZtujKT
+	eYA7OyIzj2b5OI+vUMwsRUj+ydTs6wqKG7uukj7cOFqlt8zwlcBd+Ri/dhR9b2hO
+	77weOoLbkJ2LWfYCVZEk6hh5Dvldyzxtk+CwmjfXOjlGI9LEhAEHNJ+v7SDwwPvq
+	SgyRabXg1AS8BLjLLf8+LQr15z3Mx/xq4X6mPNDDK4wm+PVw==
+Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 441xvnrfmq-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 08 Jan 2025 22:41:21 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 508Mf672003593
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 8 Jan 2025 22:41:06 GMT
+Received: from jesszhan-linux.qualcomm.com (10.80.80.8) by
+ nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Wed, 8 Jan 2025 14:41:05 -0800
+From: Jessica Zhang <quic_jesszhan@quicinc.com>
+Subject: [PATCH 0/2] drm/msm/dpu: Minor virtual planes fixes
+Date: Wed, 8 Jan 2025 14:40:46 -0800
+Message-ID: <20250108-virtual-planes-fixes-v1-0-420cb36df94a@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241122074922.28153-3-quic_qqzhou@quicinc.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAO7+fmcC/x2LWwqAIBAArxL7naBL0eMq0cdiay2EhZYE0d2zf
+ gaGYW6IHIQj9MUNgZNE2XwWUxZgF/IzK5myA2qstdGtShKOk1a1r+Q5KifXx8qwww6RbAN53QP
+ /IZ/D+DwvWGSEc2YAAAA=
+X-Change-ID: 20250108-virtual-planes-fixes-f41ef2922ac7
+To: Rob Clark <robdclark@gmail.com>,
+        Dmitry Baryshkov
+	<dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten
+	<marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, "Simona
+ Vetter" <simona@ffwll.ch>
+CC: <quic_abhinavk@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
+        <dri-devel@lists.freedesktop.org>, <freedreno@lists.freedesktop.org>,
+        <linux-kernel@vger.kernel.org>,
+        Jessica Zhang <quic_jesszhan@quicinc.com>
+X-Mailer: b4 0.15-dev-1b0d6
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1736376065; l=1038;
+ i=quic_jesszhan@quicinc.com; s=20230329; h=from:subject:message-id;
+ bh=+iay958krtRqU2ep2SDQFCVEnxEbjSddMCAaPd9dG9I=;
+ b=6PkDfh1YlEJmxKKfmNpLpFeLOqaMDh1iGCJi5TRdz+2b7zavrwzMS/d2Jls7FK9VkRX69FPBT
+ KDMOIxpjmPKD26ub24sH0g0xIczacO2TMU01Vwnkeb9hbFbUkuyuKvE
+X-Developer-Key: i=quic_jesszhan@quicinc.com; a=ed25519;
+ pk=gAUCgHZ6wTJOzQa3U0GfeCDH7iZLlqIEPo4rrjfDpWE=
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: PtG3g32k4_ehjr973dFK2e5PHXIBV6y2
+X-Proofpoint-ORIG-GUID: PtG3g32k4_ehjr973dFK2e5PHXIBV6y2
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
+ lowpriorityscore=0 bulkscore=0 clxscore=1015 suspectscore=0
+ mlxlogscore=954 priorityscore=1501 spamscore=0 malwarescore=0 adultscore=0
+ mlxscore=0 phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2501080186
 
-On Fri, Nov 22, 2024 at 01:19:22PM +0530, Qingqing Zhou wrote:
-> Add the Adreno GPU SMMU node for QCS615 platform.
-> 
+This series adds the following fixes related to the virtual planes code
+changes:
 
-Please resubmit this in a series together with gpucc, gmu and gpu nodes.
+1) Initialize the return value of dpu_assign_plane_resources() so that
+   the function doesn't return a garbage value if all planes are
+   disabled/otherwise not visible.
+2) Remove extraneous return value for dpu_crtc_reassign_planes()
 
-Regards,
-Bjorn
+These were discovered when setting `msm.dpu_use_virtual_planes=1` in the
+command line arguments, but not forcing virtual planes to be used.
 
-> Signed-off-by: Qingqing Zhou <quic_qqzhou@quicinc.com>
-> ---
->  arch/arm64/boot/dts/qcom/qcs615.dtsi | 27 +++++++++++++++++++++++++++
->  1 file changed, 27 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/qcs615.dtsi b/arch/arm64/boot/dts/qcom/qcs615.dtsi
-> index 56af38d4f75f..4e0f26563db9 100644
-> --- a/arch/arm64/boot/dts/qcom/qcs615.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/qcs615.dtsi
-> @@ -528,6 +528,33 @@
->  			#power-domain-cells = <1>;
->  		};
->  
-> +		adreno_smmu: iommu@50a0000 {
-> +			compatible = "qcom,qcs615-smmu-500", "qcom,adreno-smmu",
-> +				     "qcom,smmu-500", "arm,mmu-500";
-> +			reg = <0x0 0x50a0000 0x0 0x10000>;
-> +			#iommu-cells = <2>;
-> +			#global-interrupts = <1>;
-> +			dma-coherent;
-> +
-> +			power-domains = <&gpucc CX_GDSC>;
-> +			clocks = <&gcc GCC_GPU_MEMNOC_GFX_CLK>,
-> +				 <&gpucc GPU_CC_HLOS1_VOTE_GPU_SMMU_CLK>,
-> +				 <&gcc GCC_GPU_SNOC_DVM_GFX_CLK>;
-> +			clock-names = "mem",
-> +				      "hlos",
-> +				      "iface";
-> +
-> +			interrupts = <GIC_SPI 585 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 590 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 591 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 592 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 593 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 594 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 595 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 596 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 597 IRQ_TYPE_LEVEL_HIGH>;
-> +		};
-> +
->  		dc_noc: interconnect@9160000 {
->  			reg = <0x0 0x09160000 0x0 0x3200>;
->  			compatible = "qcom,qcs615-dc-noc";
-> -- 
-> 2.17.1
-> 
+Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+---
+Jessica Zhang (2):
+      drm/msm/dpu: Initialize return value for dpu_assign_plane_resources()
+      drm/msm/dpu: Drop extraneous return in dpu_crtc_reassign_planes()
+
+ drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c  | 2 --
+ drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 2 +-
+ 2 files changed, 1 insertion(+), 3 deletions(-)
+---
+base-commit: 866e43b945bf98f8e807dfa45eca92f931f3a032
+change-id: 20250108-virtual-planes-fixes-f41ef2922ac7
+
+Best regards,
+-- 
+Jessica Zhang <quic_jesszhan@quicinc.com>
+
 
