@@ -1,66 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-44460-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-44461-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 35C64A06839
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jan 2025 23:25:39 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id B2A76A0685C
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jan 2025 23:33:58 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3664D160D51
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jan 2025 22:25:37 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 00AAE3A1208
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jan 2025 22:33:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CB2191A070E;
-	Wed,  8 Jan 2025 22:25:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 725A8204681;
+	Wed,  8 Jan 2025 22:33:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="V/SM2GMU"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="X4yREZda"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F15A185B6D;
-	Wed,  8 Jan 2025 22:25:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D3E7204096;
+	Wed,  8 Jan 2025 22:33:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736375135; cv=none; b=B1dyBylwaFQ6eqCuC0I63oJfxmsyr/vJ+ah47IiULXaXcwcOEZYuXhXFynvx9QEoqKAeeAr5VbZvHf4hm++WEIvlsLijVFdksm1kokewZdudRs+vFrYciK+X8wW0Wn8fCO9KxFJ9Gdg8wVRHI61qdigdD5ntuAiplmea4zxngzQ=
+	t=1736375635; cv=none; b=Kb55cBIMAZVTDVdRaBdlICBgUVEwjxeK6XBLaa6ki0x/Emg8vMipDUg5h7+Zn5EmKiYqgKTaLgyCWr1n1xP5gv9jECsKU+jT0JBtxPY+kKI43xzfqjNpI54QZsy7lXw91qHWxwKtbB0nAfmo/uQIIwB+M2EP70fQjzCSS0kF6mc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736375135; c=relaxed/simple;
-	bh=U9CVUjI/D6atnZOLe9RQZGpxxZQy7AiGwtA6NT1UoAw=;
+	s=arc-20240116; t=1736375635; c=relaxed/simple;
+	bh=zhMeq6e9p3UZO4+kqRySehHwx4EOWlJy8VBJhzApWkg=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=NhCAPDQsRD+BiioIpZVmnrtZnuXqP4qgBdPHCXhBsxd+HrIO6xaKPeNEAh4wfGfMgj3z1MkspIVUMDxCNqLKJlX9CnSfIvSerPW86pF3dpzQnXzTt5NQfd296IxvsYMMTTmCbGz8yTgcW9UThFn6c535L7akFvbo+ROz2ZdrBSg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=V/SM2GMU; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39E6CC4CED3;
-	Wed,  8 Jan 2025 22:25:33 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=TuIluQKGEfy2D97VHz3+W1DL4gGlIi71mdyb42Ir40kEb9o6DMqz+65UN3Rl8JJzyGqKLwHqJcsR8jaK2j8U2vP+BuXwmzd8CILXWW29AyDVKBWyMIsIuHXZYLzITWQI7/OrccgcJQKmfYzdGCukDBCUqSguG71zL5N6L72WDH8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=X4yREZda; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BC86C4CED3;
+	Wed,  8 Jan 2025 22:33:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1736375135;
-	bh=U9CVUjI/D6atnZOLe9RQZGpxxZQy7AiGwtA6NT1UoAw=;
+	s=k20201202; t=1736375634;
+	bh=zhMeq6e9p3UZO4+kqRySehHwx4EOWlJy8VBJhzApWkg=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=V/SM2GMUoE47sBQjTtz1XIfbRHweNnbHwesx50zC8lxqA/qQ1cG7wbPI2/gO9+yW7
-	 ylx32/ZPRh6wKHkhhUj7mNijobXQK9/kox+oGRRialLUjVTReGAkShu+SSI4H5A5xf
-	 /r5vvxI59Dh9v14OQiNEDlBN/9LaS5Ufi4BwhFa3RqNhaftIk7WgkRtAY581OPnXxw
-	 XWM5q2A5Yt/mLwWORcd8Dt1pR2gQYEwmrvYRtHO0Mo3G8S1jEL+bRouIlNVzD8XLnQ
-	 EZA0dv4+KqD5ORdLgOcqUtOXFnIXNDmUUy2Jcnx6uCTZogOMIt2Pg+7gYtQc+B9doc
-	 WVaJ7iGshE4yw==
-Date: Wed, 8 Jan 2025 16:25:31 -0600
+	b=X4yREZda6O3jHCglBv/wiKX/kB6CRC0KtzK/2M4ULMwu/lOo0YJVDq/vH+fFMCye3
+	 AdN7TiJQGTq4A8qAlVmyqOE702xPRUxBvI+cfmGKAf7l0qVEEwzLOYVUGmTm/+VClY
+	 5JwdVurCc7ksCFIjX/TTpohVL23o2HWieNPLpkRbad/Y7MUHOqkVnuKEDP+uAFH/HD
+	 VzCRhdz6iGwAMbF33lyqir3erSgtdupge+46/gjSE5aM9kSDwx+bBj5sn3sZX3Kk+a
+	 4qqn+Bkd4xGqPR3SO+GnGxxHADROUg+aNi1+J76/Oqw+sE7XZofuC9ZdK/NnG8+yF4
+	 OoPDZnlvNB0Jg==
+Date: Wed, 8 Jan 2025 16:33:51 -0600
 From: Bjorn Andersson <andersson@kernel.org>
-To: Abel Vesa <abel.vesa@linaro.org>
-Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
-	Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
-	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
-	Karol Herbst <kherbst@redhat.com>, Lyude Paul <lyude@redhat.com>, 
-	Danilo Krummrich <dakr@redhat.com>, Jani Nikula <jani.nikula@linux.intel.com>, 
-	Rodrigo Vivi <rodrigo.vivi@intel.com>, Joonas Lahtinen <joonas.lahtinen@linux.intel.com>, 
-	Tvrtko Ursulin <tursulin@ursulin.net>, Rob Clark <robdclark@gmail.com>, 
-	Abhinav Kumar <quic_abhinavk@quicinc.com>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
-	Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, Johan Hovold <johan@kernel.org>, dri-devel@lists.freedesktop.org, 
-	linux-kernel@vger.kernel.org, nouveau@lists.freedesktop.org, intel-gfx@lists.freedesktop.org, 
-	intel-xe@lists.freedesktop.org, linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org, 
-	Johan Hovold <johan+linaro@kernel.org>
-Subject: Re: [PATCH v4 4/4] drm/msm/dp: Add support for LTTPR handling
-Message-ID: <zfyl7xvkackpv2tfabvcjqt6e3uxxgyxwg6t4fvjrlzeg5m6nf@wc5suvzcm54u>
-References: <20250108-drm-dp-msm-add-lttpr-transparent-mode-set-v4-0-918949bc2e3a@linaro.org>
- <20250108-drm-dp-msm-add-lttpr-transparent-mode-set-v4-4-918949bc2e3a@linaro.org>
+To: Akhil P Oommen <quic_akhilpo@quicinc.com>
+Cc: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Marijn Suijten <marijn.suijten@somainline.org>, 
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
+	Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>, 
+	Simona Vetter <simona@ffwll.ch>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, Jie Zhang <quic_jiezh@quicinc.com>
+Subject: Re: [PATCH RESEND v2 3/4] arm64: dts: qcom: qcs615: Add gpu and gmu
+ nodes
+Message-ID: <y7rf2klosrpvr5foroilgma5rwmlyq4ux5zymxd5cen7d6yu42@xig34xs6whtg>
+References: <20241213-qcs615-gpu-dt-v2-0-47f3b312b178@quicinc.com>
+ <20241213-qcs615-gpu-dt-v2-3-47f3b312b178@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -69,103 +66,134 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250108-drm-dp-msm-add-lttpr-transparent-mode-set-v4-4-918949bc2e3a@linaro.org>
+In-Reply-To: <20241213-qcs615-gpu-dt-v2-3-47f3b312b178@quicinc.com>
 
-On Wed, Jan 08, 2025 at 04:31:46PM +0200, Abel Vesa wrote:
-> Link Training Tunable PHY Repeaters (LTTPRs) are defined in DisplayPort
-> 1.4a specification. As the name suggests, these PHY repeaters are
-> capable of adjusting their output for link training purposes.
+On Fri, Dec 13, 2024 at 05:01:05PM +0530, Akhil P Oommen wrote:
+> From: Jie Zhang <quic_jiezh@quicinc.com>
 > 
-> According to the DisplayPort standard, LTTPRs have two operating
-> modes:
->  - non-transparent - it replies to DPCD LTTPR field specific AUX
->    requests, while passes through all other AUX requests
->  - transparent - it passes through all AUX requests.
+> Add gpu and gmu nodes for qcs615 chipset.
 > 
-> Switching between this two modes is done by the DPTX by issuing
-> an AUX write to the DPCD PHY_REPEATER_MODE register.
-> 
-> The msm DP driver is currently lacking any handling of LTTPRs.
-> This means that if at least one LTTPR is found between DPTX and DPRX,
-> the link training would fail if that LTTPR was not already configured
-> in transparent mode.
-> 
-> The section 3.6.6.1 from the DisplayPort v2.0 specification mandates
-> that before link training with the LTTPR is started, the DPTX may place
-> the LTTPR in non-transparent mode by first switching to transparent mode
-> and then to non-transparent mode. This operation seems to be needed only
-> on first link training and doesn't need to be done again until device is
-> unplugged.
-> 
-> It has been observed on a few X Elite-based platforms which have
-> such LTTPRs in their board design that the DPTX needs to follow the
-> procedure described above in order for the link training to be successful.
-> 
-> So add support for reading the LTTPR DPCD caps to figure out the number
-> of such LTTPRs first. Then, for platforms (or Type-C dongles) that have
-> at least one such an LTTPR, set its operation mode to transparent mode
-> first and then to non-transparent, just like the mentioned section of
-> the specification mandates.
-> 
-> Tested-by: Johan Hovold <johan+linaro@kernel.org>
-> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
-> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-> ---
->  drivers/gpu/drm/msm/dp/dp_display.c | 17 +++++++++++++++++
->  1 file changed, 17 insertions(+)
-> 
-> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-> index 24dd37f1682bf5016bb0efbeb44489061deff060..ad09daa4c8ab5c0eb67890509b94e72820bab870 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_display.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
-> @@ -107,6 +107,8 @@ struct msm_dp_display_private {
->  	struct msm_dp_event event_list[DP_EVENT_Q_MAX];
->  	spinlock_t event_lock;
->  
-> +	u8 lttpr_caps[DP_LTTPR_COMMON_CAP_SIZE];
 
-As far as I can see these 8 bytes are read and acted upon only within
-msm_dp_display_lttpr_init() below. Any particular reason why you don't
-just put them on the stack?
+Please resubmit this in a series together with the gpucc patch.
 
 Regards,
 Bjorn
 
+> Signed-off-by: Jie Zhang <quic_jiezh@quicinc.com>
+> Signed-off-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
+> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>  arch/arm64/boot/dts/qcom/qcs615.dtsi | 88 ++++++++++++++++++++++++++++++++++++
+>  1 file changed, 88 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/qcs615.dtsi b/arch/arm64/boot/dts/qcom/qcs615.dtsi
+> index 8df26efde3fd6c0f85b9bcddb461fae33687dc75..dee5d3be4aa34dd64864b6fe32ad589abac99bb7 100644
+> --- a/arch/arm64/boot/dts/qcom/qcs615.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/qcs615.dtsi
+> @@ -387,6 +387,11 @@ smem_region: smem@86000000 {
+>  			no-map;
+>  			hwlocks = <&tcsr_mutex 3>;
+>  		};
 > +
->  	bool wide_bus_supported;
+> +		pil_gpu_mem: pil-gpu@97715000 {
+> +			reg = <0x0 0x97715000 0x0 0x2000>;
+> +			no-map;
+> +		};
+>  	};
 >  
->  	struct msm_dp_audio *audio;
-> @@ -367,12 +369,27 @@ static int msm_dp_display_send_hpd_notification(struct msm_dp_display_private *d
->  	return 0;
->  }
+>  	soc: soc@0 {
+> @@ -508,6 +513,89 @@ qup_uart0_rx: qup-uart0-rx-state {
+>  			};
+>  		};
 >  
-> +static void msm_dp_display_lttpr_init(struct msm_dp_display_private *dp)
-> +{
-> +	int rc;
+> +		gpu: gpu@5000000 {
+> +			compatible = "qcom,adreno-612.0", "qcom,adreno";
+> +			reg = <0x0 0x05000000 0x0 0x90000>;
+> +			reg-names = "kgsl_3d0_reg_memory";
 > +
-> +	if (drm_dp_read_lttpr_common_caps(dp->aux, dp->panel->dpcd,
-> +					  dp->lttpr_caps))
-> +		return;
+> +			clocks = <&gpucc GPU_CC_GX_GFX3D_CLK>,
+> +				 <&gcc GCC_DDRSS_GPU_AXI_CLK>,
+> +				 <&gcc GCC_GPU_MEMNOC_GFX_CLK>,
+> +				 <&gpucc GPU_CC_CX_GMU_CLK>,
+> +				 <&gpucc GPU_CC_CXO_CLK>;
+> +			clock-names = "core",
+> +				      "mem_iface",
+> +				      "alt_mem_iface",
+> +				      "gmu",
+> +				      "xo";
 > +
-> +	rc = drm_dp_lttpr_init(dp->aux, drm_dp_lttpr_count(dp->lttpr_caps));
-> +	if (rc)
-> +		DRM_ERROR("failed to set LTTPRs transparency mode, rc=%d\n", rc);
-> +}
+> +			interrupts = <GIC_SPI 300 IRQ_TYPE_LEVEL_HIGH>;
 > +
->  static int msm_dp_display_process_hpd_high(struct msm_dp_display_private *dp)
->  {
->  	struct drm_connector *connector = dp->msm_dp_display.connector;
->  	const struct drm_display_info *info = &connector->display_info;
->  	int rc = 0;
->  
-> +	msm_dp_display_lttpr_init(dp);
+> +			interconnects = <&gem_noc MASTER_GFX3D QCOM_ICC_TAG_ALWAYS
+> +					 &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>;
+> +			interconnect-names = "gfx-mem";
 > +
->  	rc = msm_dp_panel_read_sink_caps(dp->panel, connector);
->  	if (rc)
->  		goto end;
+> +			iommus = <&adreno_smmu 0x0 0x401>;
+> +			operating-points-v2 = <&gpu_opp_table>;
+> +			power-domains = <&rpmhpd RPMHPD_CX>;
+> +			qcom,gmu = <&rgmu>;
+> +
+> +			#cooling-cells = <2>;
+> +
+> +			status = "disabled";
+> +
+> +			gpu_zap_shader: zap-shader {
+> +				memory-region = <&pil_gpu_mem>;
+> +			};
+> +
+> +			gpu_opp_table: opp-table {
+> +				compatible = "operating-points-v2";
+> +
+> +				opp-435000000 {
+> +					opp-hz = /bits/ 64 <435000000>;
+> +					required-opps = <&rpmhpd_opp_svs>;
+> +					opp-peak-kBps = <3000000>;
+> +				};
+> +
+> +				opp-500000000 {
+> +					opp-hz = /bits/ 64 <500000000>;
+> +					required-opps = <&rpmhpd_opp_svs_l1>;
+> +					opp-peak-kBps = <3975000>;
+> +				};
+> +
+> +				opp-650000000 {
+> +					opp-hz = /bits/ 64 <650000000>;
+> +					required-opps = <&rpmhpd_opp_nom>;
+> +					opp-peak-kBps = <5287500>;
+> +				};
+> +
+> +				opp-745000000 {
+> +					opp-hz = /bits/ 64 <745000000>;
+> +					required-opps = <&rpmhpd_opp_nom_l1>;
+> +					opp-peak-kBps = <6075000>;
+> +				};
+> +
+> +				opp-845000000 {
+> +					opp-hz = /bits/ 64 <845000000>;
+> +					required-opps = <&rpmhpd_opp_turbo>;
+> +					opp-peak-kBps = <7050000>;
+> +				};
+> +			};
+> +		};
+> +
+> +		rgmu: rgmu@506a000 {
+> +			compatible = "qcom,adreno-rgmu";
+> +			reg = <0x0 0x0506a000 0x0 0x34000>;
+> +			reg-names = "gmu";
+> +			power-domains = <&gpucc CX_GDSC>,
+> +					<&gpucc GX_GDSC>;
+> +			power-domain-names = "cx", "gx";
+> +
+> +			interrupts = <GIC_SPI 304 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 305 IRQ_TYPE_LEVEL_HIGH>;
+> +			interrupt-names = "hfi", "gmu";
+> +		};
+> +
+>  		gpucc: clock-controller@5090000 {
+>  			compatible = "qcom,qcs615-gpucc";
+>  			reg = <0 0x5090000 0 0x9000>;
 > 
 > -- 
-> 2.34.1
+> 2.45.2
 > 
 
