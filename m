@@ -1,63 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-44320-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-44321-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id E8758A0535D
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jan 2025 07:42:35 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 73866A0545E
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jan 2025 08:19:51 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E057B1651E2
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jan 2025 06:42:33 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 681C67A1CDA
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jan 2025 07:19:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 79AA51A83F9;
-	Wed,  8 Jan 2025 06:42:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 22D541A9B55;
+	Wed,  8 Jan 2025 07:19:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="myCwcFpr"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tJG9+hRn"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1B6F15852E;
-	Wed,  8 Jan 2025 06:42:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E51401A7264;
+	Wed,  8 Jan 2025 07:19:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736318549; cv=none; b=C39IAwFqBgl4FAyBOhdsFtEJu/4JorG5muZHKEZh/WcuA3wV0+GnvSlIiqW8GtpIb4lhdYx9ygM45xPyOCis7OylDFCLmgPFirhv7j+f3f/w/p0oFer5TSEroWSnkCi0oMsTMByFzEQ8lTNR3mE01DbAixSv7jWdJpwkxk9TK6g=
+	t=1736320770; cv=none; b=J27CVsQnFojL/MtX9sG4TwXu0yY3y8UePB7YW2+1sMEnhpd4Y0klM7KjdFT4q17/nK2sh61rS6KEba5LO2Mvy8ppYer9N/S368iGP9ugN2XW8mam61w2bPQTWtfsfHmWnuBjRoBjzgArsy1oOWVTBdLes4g/k64UEhyuAKPxsvY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736318549; c=relaxed/simple;
-	bh=Frd5d+So7TskOsopHuWut+cQ4qx3mlGTfHkwDm1mZD8=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:CC:References:
-	 In-Reply-To:Content-Type; b=BlZtL4VpY8s4j1y9+HbDVnYLe4lBNPQ2npbnrHemkkFffr2CvQ7jtDW1LCiRGf5EiB6Va3WiOtbqqELBOxprlByN70VbJXOlK6gKIQ+J/YO0BKaJk/i84sl7YMtT3pbnPf44cuN9GcuaU9kKtTmomUyjtG80zwuzKjYkfl1DQVk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=myCwcFpr; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5083nvT9007264;
-	Wed, 8 Jan 2025 06:42:23 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	YZ0yIDJ9HFhnAvtpJBGdsr9ieGq4lZ6bLNIGbPcTjKA=; b=myCwcFpr1GkqCWdD
-	U2V0gF6bhPLwTgHnaMn0kqDz4ZczzaHiGPpMd1m8Vluhvxieu2unzq1wmRmZIjVx
-	LAlLUCr60PM3gNiUCOCBdz8WNocWJLG79FC9Q4QLwADSM1XWG1i7m53HYKpDUOcz
-	klqXZI6VsrR9rUmGJgydWPVnL4uj/38vitKW+osrA3BymspRlyKGDrlXvhZV1oZB
-	Plp0M/Kcb2sH/7TbZ0oDgFMlJhcnjNeRrovPVHG1NveQA5c+BDCUR1JYNbwkeNDX
-	vzIgm2MinRfZpSrFwuBwpEXAwDtGr6uwhkMlMCwHJdfRmq62B6Nfzl8ezt9Dlurk
-	LjtD2Q==
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 441ht58bbq-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 08 Jan 2025 06:42:22 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 5086gMjL018827
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 8 Jan 2025 06:42:22 GMT
-Received: from [10.50.31.204] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 7 Jan 2025
- 22:42:17 -0800
-Message-ID: <3ee41b72-774d-4080-9c3b-3dfeb6babba1@quicinc.com>
-Date: Wed, 8 Jan 2025 12:12:14 +0530
+	s=arc-20240116; t=1736320770; c=relaxed/simple;
+	bh=NOjxFjPiFxT527PiGFoNNkAPVLdtxQhUm1eAB4jinV4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=DY157uzmeSmcNznR4AsbpTepQ3hKTRHyhdfHUlC4atpg73qN8A7me5sdtgpH3PywxDpUZS7P8+WTAfBzoUv55fsVrZhG3p8EXDZbEZ5dy8FmKPbf421z/0GcUrE4wUJ6AxoNJWevzKFVYAjr7A4jcxw/nb3WHGP47v6EQN2Qko8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tJG9+hRn; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17374C4CEE4;
+	Wed,  8 Jan 2025 07:19:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1736320768;
+	bh=NOjxFjPiFxT527PiGFoNNkAPVLdtxQhUm1eAB4jinV4=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=tJG9+hRnGDNq+vhWALx7FsdTKpnNlnHL6tXXxbCg72zHQpe02Ebidj2hWgEP/54uA
+	 yrxW/BLctFhgtLzjQyOu786+WvYImwCfyaIuOoxmK6pj983neNQwgINtRs618X3/T4
+	 zBt6KW0G4hlPGvILcImAYGz0+5u7ykNd0PBuqx9NFx90PFI5uFX/GX0MCHlYGuwvqx
+	 bhdh4WxHzjp2smOhATJXnMUhDu8SqF3EHswuQr9w33/yT5bxou+1zNGZymRSu20Y3j
+	 SQOrcYPhZB3k5pcQTe+ezzM8COGKbmVIcwcLKm0g2JdWyPNBcbAFv0LJvvlhs2w2ci
+	 mX0TwgtKfu3Cw==
+Message-ID: <50b03189-bf2c-46c8-b7c2-4aa5eed97c35@kernel.org>
+Date: Wed, 8 Jan 2025 08:19:19 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,82 +50,117 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V3 4/8] remoteproc: qcom: add hexagon based WCSS secure
- PIL driver
-From: Sricharan Ramabadhran <quic_srichara@quicinc.com>
-To: Bjorn Andersson <andersson@kernel.org>,
-        Gokul Sriram Palanisamy
-	<quic_gokulsri@quicinc.com>
-CC: <jassisinghbrar@gmail.com>, <robh@kernel.org>, <krzk+dt@kernel.org>,
-        <conor+dt@kernel.org>, <mathieu.poirier@linaro.org>,
-        <konradybcio@kernel.org>, <quic_mmanikan@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-remoteproc@vger.kernel.org>,
-        <dmitry.baryshkov@linaro.org>, <quic_viswanat@quicinc.com>
-References: <20250107101647.2087358-1-quic_gokulsri@quicinc.com>
- <20250107101647.2087358-5-quic_gokulsri@quicinc.com>
- <ligcw5ndzuu4kgegxb6f3ttzpmw6iglyzq5kt4l45xyeemsfsr@f2735qq7frhk>
- <d07ce5a7-43a3-48d0-90c9-55ff7a34d650@quicinc.com>
+Subject: Re: [PATCH v5 3/5] dt-bindings: PCI: qcom: Document the IPQ5332 PCIe
+ controller
+To: Varadarajan Narayanan <quic_varada@quicinc.com>
+Cc: bhelgaas@google.com, lpieralisi@kernel.org, kw@linux.com,
+ manivannan.sadhasivam@linaro.org, robh@kernel.org, krzk+dt@kernel.org,
+ conor+dt@kernel.org, vkoul@kernel.org, kishon@kernel.org,
+ andersson@kernel.org, konradybcio@kernel.org, p.zabel@pengutronix.de,
+ quic_nsekar@quicinc.com, dmitry.baryshkov@linaro.org,
+ linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-phy@lists.infradead.org
+References: <20250102113019.1347068-1-quic_varada@quicinc.com>
+ <20250102113019.1347068-4-quic_varada@quicinc.com>
+ <4hwclzotaowog6rzfejiixqvvg7iumg4udbvq3h72mmh42dbki@piphsf37vhpv>
+ <Z30KZM1RGdFvB1dy@hu-varada-blr.qualcomm.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
-In-Reply-To: <d07ce5a7-43a3-48d0-90c9-55ff7a34d650@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: aeIP3m7hnfEIqtOOx0VyLWekbY6d4nXv
-X-Proofpoint-GUID: aeIP3m7hnfEIqtOOx0VyLWekbY6d4nXv
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 spamscore=0
- bulkscore=0 mlxlogscore=455 priorityscore=1501 impostorscore=0
- adultscore=0 suspectscore=0 phishscore=0 lowpriorityscore=0 malwarescore=0
- mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2501080052
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 fv0=
+In-Reply-To: <Z30KZM1RGdFvB1dy@hu-varada-blr.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-
-
-On 1/8/2025 11:59 AM, Sricharan Ramabadhran wrote:
-> [..]
-> 
->>> +#include <linux/firmware/qcom/qcom_scm.h>
->>> +#include <linux/interrupt.h>
->>> +#include <linux/io.h>
->>> +#include <linux/iopoll.h>
->>> +#include <linux/kernel.h>
->>> +#include <linux/module.h>
->>> +#include <linux/of_address.h>
->>> +#include <linux/of_device.h>
->>> +#include <linux/of_reserved_mem.h>
->>> +#include <linux/platform_device.h>
->>> +#include <linux/reset.h>
->>> +#include <linux/soc/qcom/mdt_loader.h>
->>> +#include <linux/soc/qcom/smem.h>
->>> +#include <linux/soc/qcom/smem_state.h>
->>> +#include <linux/mailbox_client.h>
->>> +#include <linux/mailbox/tmelcom-qmp.h>
+On 07/01/2025 12:05, Varadarajan Narayanan wrote:
+>>> ---
+>>>  Documentation/devicetree/bindings/pci/qcom,pcie.yaml | 10 ++++++++--
+>>>  1 file changed, 8 insertions(+), 2 deletions(-)
+>>>
+>>> diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
+>>> index bd87f6b49d68..9f37eca1ce0d 100644
+>>> --- a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
+>>> +++ b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
+>>> @@ -26,7 +26,6 @@ properties:
+>>>            - qcom,pcie-ipq8064-v2
+>>>            - qcom,pcie-ipq8074
+>>>            - qcom,pcie-ipq8074-gen3
+>>> -          - qcom,pcie-ipq9574
 >>
->> This will require mailbox maintainer to first accept the tmelcom mailbox
->> driver, and share a immutable branch with me (or we have to wait until
->> this include file trickles in).
->>
->> Please ensure that mailbox maintainer is aware of this request.
+>> I don't understand this change at all and your commit msg explains
+>> here nothing.
 > 
-> Hi Bjorn,
->   The plan is, in the next spin of TMEL[V3], tmel driver will take care
->   of routing the request to either SCM(or)TMEL, so that client drivers
->   like rproc/crypto etc which requires those secure services can be
->   abstract (ie) just do a mbox_send_message with a SCM cmd id. That way
->   for adding any future secure services in client drivers, nothing
->   extra needs to be done and this will avoid this header dependency
->   as well. Is that approach fine ?
+> All DT entries except "reg" is similar between ipq5332 and
+> ipq9574. ipq9574 has 5 registers while ipq5332 has 6. MHI is the
+> additional (i.e. sixth) entry for ipq5332.
+> 
+> If ipq9574 is not removed from here, dt_binding_check gives the
+> following errors
+> 
+> 1.	/local/mnt/workspace/varada/upstream/pci-v6/arch/arm64/boot/dts/qcom/ipq5332-rdp474.dtb: pcie@18000000: reg: [[557056, 12288], [402653184, 3869], [402657056, 168], [402657280, 4096], [403701760, 4096], [569344, 4096]] is too long
+> 
+> 	Failed validating 'maxItems' in schema['allOf'][2]['then']['properties']['reg']:
+> 	    {'maxItems': 5, 'minItems': 5}
+> 
+> 2.	/local/mnt/workspace/varada/upstream/pci-v6/arch/arm64/boot/dts/qcom/ipq5332-rdp474.dtb: pcie@18000000: reg-names: ['parf', 'dbi', 'elbi', 'atu', 'config', 'mhi'] is too long
+> 
+> 	Failed validating 'maxItems' in schema['allOf'][2]['then']['properties']['reg-names']:
+> 	    {'items': [{'const': 'dbi'},
+> 		       {'const': 'elbi'},
+> 		       {'const': 'atu'},
+> 		       {'const': 'parf'},
+> 		       {'const': 'config'}],
+> 	     'maxItems': 5,
+> 	     'minItems': 5,
+> 	     'type': 'array'}
+> 
+> Hence had to remove it from here and add it to the sdx55 reg
+> definition.
 
-Ok, with more thought, i guess this approach will not work. Will stick
-to what you are suggesting, just use mbox->chan available in client
-itself to take the decision.
-
-Regards,
-  Sricharan
+So you entirely dropped constrain for regs. No. This has to be fixed,
+not dropped.
+Best regards,
+Krzysztof
 
