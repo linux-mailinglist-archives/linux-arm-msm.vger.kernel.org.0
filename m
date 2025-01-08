@@ -1,79 +1,79 @@
-Return-Path: <linux-arm-msm+bounces-44404-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-44405-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id EFD72A05EB6
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jan 2025 15:32:45 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2CDCBA05EC2
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jan 2025 15:33:17 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id DAB817A14A3
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jan 2025 14:32:37 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3E0E53A7011
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jan 2025 14:32:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DE7A81FE46A;
-	Wed,  8 Jan 2025 14:32:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CEEC71FDE2C;
+	Wed,  8 Jan 2025 14:32:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="cuQti48p"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ViGAC26J"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
+Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0514C1FDE06
-	for <linux-arm-msm@vger.kernel.org>; Wed,  8 Jan 2025 14:32:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8F6D1FC7F0
+	for <linux-arm-msm@vger.kernel.org>; Wed,  8 Jan 2025 14:32:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736346731; cv=none; b=nb3cRQ8mKywYf0S0Mg3r5MC5wXc9OporI0vNKNb9liA9bDy+F2KAqDM6lwwsppWpBaTyfdDCDlNrB/JsUfkAFHvA4Ny6yv8mAbE7jTBw0VkUcRbfl5bjU5MVonfoxag0xO51S1H1dLNPo657ja/6VPhvebkFlZo1TdCh2/fG2ng=
+	t=1736346732; cv=none; b=C6lrszQ9LJxgT7XTGCtyUJA2AAeMLxOx8CzO0ugUGgtN2nDxr3RZ0vZ20Tr8VdbsQyy/DLiHaBEhTi4KXml2UCy9bSpYHrB51vZWMgSs6QtqM6LhR4qDOtbYW2gQkYBvQilf3S7bEvTXHKHggzw1SLel5vabNYl2wroAfdXwUrs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736346731; c=relaxed/simple;
-	bh=zSpYhtCfdoGV8lx5sZ6QJCKOEoZaxgqNtvMuGie1uZU=;
+	s=arc-20240116; t=1736346732; c=relaxed/simple;
+	bh=i0gLL9cKFwnwAUFAvwIYOq+eSp8wWGGPgQgjnTN3PKE=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=G8Xyy7Qp3mzX0apzz9llg00gsbAq7yTvrPtSVtNa83gvrR6yLygwf84U13xglI9L8pOcBu9V9HD3m5AdRBSJGiH5h6qFqjoMkM/tzs9usi2OjtgZRn95IcLISV2PrV3VTZb3NNbuGQiQ2ZI5i9X7uY/HR/xcqYVKUWOlxthP1TQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=cuQti48p; arc=none smtp.client-ip=209.85.128.49
+	 In-Reply-To:To:Cc; b=qH8RiLUJUOoEFnQgnj1dXAIkR+Op4JtFYmaQ+C4gxgntXnUx2IvEYbmQREPDq2Gnl0LveFiHoRPaP4oqZugZQciSn6dqW9E7KdclEhVHJ9djwWyu9THj8BPCc9VnDJ7venJ2EdfE6jiMl+3nzTmnuWw2L9y3NcQZnwE93AAjguw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ViGAC26J; arc=none smtp.client-ip=209.85.128.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-43624b2d453so172756155e9.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Jan 2025 06:32:08 -0800 (PST)
+Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-43623f0c574so116440955e9.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Jan 2025 06:32:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1736346727; x=1736951527; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1736346729; x=1736951529; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=8ja7AsPHVhh/ztffyEqltS3S3NOI8MWwC75cFS3zUfQ=;
-        b=cuQti48pvFfPNJ51MW+ys0Ku+Au5RddvLtGLwQcNs8E1sm71Pjy+9rrMoQr9w2jMF1
-         ctTX9oceFt0c5OwRE4yjW7f+9GJXrHtqu3BeowwsRC3nHF8eEJkCqekRdiLBOL94Rk2t
-         q92xYFEueEkj38MrmlgLMwEq2qIYmK1jDcuFh7br9o6u4rFGbRGTrnQiNBKFjmDuNd9e
-         9qE7BTrRdNNis4KJPuUz6yNwWZT1H/5qbupPvByOpJ1lJ2+Dn9Y1yuBJTgmqyFE3r1SL
-         K/mFMQe2otj5kMiCI8eRpFmwukc3yGRIFtnB8EpHjLJWRKt9Bs1LTqp7RynzekADEnWV
-         i6ZQ==
+        bh=9rGR892CsW48bbjquxFjsrZJbQNkPKwTMgb7XwAF2pQ=;
+        b=ViGAC26JTPgy0QEn/DJb8St0jpn0YF11nXUaGpojbuz7RjWCdMxGdqk5Nym9VeTHIC
+         dSiDCG798Q9X2e99bUNFP+Cdezoir1XEutTi0P7bofZjdxkz9XbPxYiYAjnn8QvD91es
+         HIJmdhHegDw3SP06Gu/9AXTiicRjtvxa/JWRCFPWOEWpRHMTx4iXVecQvGsrUAFmkDQP
+         UR2Mux9YS1FN6NWEte4OCMjZ3tymafDhyJWnNEZuEgOdPMrGhHs29ecKQVdtcu15z/k/
+         tiBO9MqVrFJYCIAY9sQX+rUOZJUd19zCs7Z8chNM65+5kng1k7mvWV5rufs0SeIaAddT
+         Hpkw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736346727; x=1736951527;
+        d=1e100.net; s=20230601; t=1736346729; x=1736951529;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=8ja7AsPHVhh/ztffyEqltS3S3NOI8MWwC75cFS3zUfQ=;
-        b=rymPr/wm9ipfgKNgM5Eb2NLG2ULbtc0gG4d94MgfEbH1fqt1+aSnaqqjsg5icffW3l
-         UMKRc+o47lqJrhSTFKunSEcnurmmor3m9sMzZWIjJ6HyKH+xXPExM2RIxijAooOsPTFc
-         fKiKS3ab/KrBPkqYWz7uD5sy8RLR5m+SHL54YIk0/+C3t5FstpdLzu7o/qfnGvqDKM+3
-         f8JOynWfuh5cKD5ITDWxVd4YAr66arREhk2hDVjEFm3pi7BC0eau0VbRbBMwUuu19QEK
-         gcFWOoQ8zpUrHHHlgdcYAnd0kg4JaGXtgv34ny9PGbqgIKoFI6wBUHTSqZ1hwXhhgkYK
-         0RRg==
-X-Forwarded-Encrypted: i=1; AJvYcCUp8232wpmqKaThXTZPbv5G7+2lglApD8iA6mH0GA1L6FhTSFfb65cs7+n83Rn4yLwsWTCsoCAGwWeXtFLD@vger.kernel.org
-X-Gm-Message-State: AOJu0YzVCpK4+U2IFUcjINc9t8X1QB2ygeS0HusWF+ch8WMQtTyTnsxX
-	4sZfIJjj0GHlDM1CWMQqNKxphx3DPUiAkMb1j0HJpBkIiJalTvuZ4SlfFQBhmcY=
-X-Gm-Gg: ASbGncuuunUQx/16aiY2fvYYcsTEDCuZii/WE3kscoWXOCQDVdGo2JVYBa3+76UmJHn
-	QTYE5o5GhSlWr3hX/4zIi25nSqfEpONpq65bf88lDPDwyOF7I+LWejOn1uJYqKTbft/W+W4jiau
-	lj7HAQ0vXVLBnJNPm25vSvuagvOIG6cZyhRQKIjSryMcqPLLfDA4rJbTaZt8EDEdsgw7FuPTCGn
-	WkrxvkBZggBZDVDvGOhYQWAmjwskaY0W9xJnvxcK1Sm1+kIyyxKa1rn
-X-Google-Smtp-Source: AGHT+IEeHzOxvdMOGmcpEKHTmCQ1xR9X2mBdhrRAs090fw105gW9jWt3zL5YMm4BKVnJtfcnbPIJ6g==
-X-Received: by 2002:a05:600c:1c1d:b0:431:4f29:9539 with SMTP id 5b1f17b1804b1-436e26fbaa6mr23365835e9.32.1736346727258;
-        Wed, 08 Jan 2025 06:32:07 -0800 (PST)
+        bh=9rGR892CsW48bbjquxFjsrZJbQNkPKwTMgb7XwAF2pQ=;
+        b=mXGkcsHuPeZJmxjyAvpNFsQg0FEPKtqYlI80VdZOEEYIRm2S6plG1OwFGaExzh+FY4
+         omJDV4+8zQWKh1s2U5k2Hk/4Hm4kxo0wPJi8PFw7B7sSXXNoa0yAATCuqTGdej1XcnTp
+         2Xpdg9X5vPpEshxdAIw6CYr4FiBrwW5EyeVkZVK55noV05NuRy13TDVxqXUDLZiMINHe
+         aJmJ4yDLf/GRXKWAmlfl/5LfrRmALQGcIeXsY1okGCdoyBVToPzNX4yd8mxHerZHDuyE
+         YlCZ/7nuhpTTCvqGn2HmxWr5E3mfbOf3AxOAIqT6v6L1Me9cT0xVO08rMhW57IF7DbwZ
+         aZ9A==
+X-Forwarded-Encrypted: i=1; AJvYcCUXjn3GHYzv3IWXi0FG3XM0UMUqHCvtBoDYZAdtnrC/MeKgXvH6TkIq8r5AOZBE+GT81wNiRgVgUH9PuQhX@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy04hZjwDVG3vbWeVMmOnvptTRLSh8w+OQsLc5xCHcAeP/Jlsmr
+	dNTCIvBtXnvjp9gk+0FKHV5D8I/yqUKC+va4A29t6T3pt0x3RjZBgJ8eQJJimWE=
+X-Gm-Gg: ASbGnctfSGe7Zj/JsSAwzfCb1qYh2zDjBXOBTLkNmriK41RBHCjzwZj7qw7YRnfhVZg
+	m948kA+5M2nToYAA99Fn50OobgiJhkmnoZZe7S3kEPkz8inSX80k6LjZMll84XTOMf+Tu8lwPqV
+	ul2/Ctg5uqDRribdIcPqjWIAzEguXLtW7nwmj0vHR+rHlA01/fGIprfY62JaiKkeEc2YSPUQCzJ
+	xP01KLFkK3MiD/rerFrVj+xuVWiIJsc2z5VUuBGskt6W77x4vXi4Lal
+X-Google-Smtp-Source: AGHT+IHOFNgi43hh97zw23/scdO9rgdvzo4suhicC6urfK1gf1ViwOyw1YHkL1LYT0r9NFeFOfWQ9Q==
+X-Received: by 2002:a05:600c:4f15:b0:436:51bb:7a43 with SMTP id 5b1f17b1804b1-436e26776f7mr25763075e9.5.1736346729387;
+        Wed, 08 Jan 2025 06:32:09 -0800 (PST)
 Received: from [127.0.1.1] ([86.121.162.10])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-436e2e89e14sm22741445e9.33.2025.01.08.06.32.05
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-436e2e89e14sm22741445e9.33.2025.01.08.06.32.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 08 Jan 2025 06:32:06 -0800 (PST)
+        Wed, 08 Jan 2025 06:32:08 -0800 (PST)
 From: Abel Vesa <abel.vesa@linaro.org>
-Date: Wed, 08 Jan 2025 16:31:44 +0200
-Subject: [PATCH v4 2/4] drm/nouveau/dp: Use the generic helper to control
+Date: Wed, 08 Jan 2025 16:31:45 +0200
+Subject: [PATCH v4 3/4] drm/i915/dp: Use the generic helper to control
  LTTPR transparent mode
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
@@ -83,7 +83,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250108-drm-dp-msm-add-lttpr-transparent-mode-set-v4-2-918949bc2e3a@linaro.org>
+Message-Id: <20250108-drm-dp-msm-add-lttpr-transparent-mode-set-v4-3-918949bc2e3a@linaro.org>
 References: <20250108-drm-dp-msm-add-lttpr-transparent-mode-set-v4-0-918949bc2e3a@linaro.org>
 In-Reply-To: <20250108-drm-dp-msm-add-lttpr-transparent-mode-set-v4-0-918949bc2e3a@linaro.org>
 To: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
@@ -103,22 +103,23 @@ Cc: Bjorn Andersson <andersson@kernel.org>,
  dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
  nouveau@lists.freedesktop.org, intel-gfx@lists.freedesktop.org, 
  intel-xe@lists.freedesktop.org, linux-arm-msm@vger.kernel.org, 
- freedreno@lists.freedesktop.org, Abel Vesa <abel.vesa@linaro.org>
+ freedreno@lists.freedesktop.org, Abel Vesa <abel.vesa@linaro.org>, 
+ Imre Deak <imre.deak@intel.com>
 X-Mailer: b4 0.15-dev-dedf8
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1634; i=abel.vesa@linaro.org;
- h=from:subject:message-id; bh=zSpYhtCfdoGV8lx5sZ6QJCKOEoZaxgqNtvMuGie1uZU=;
- b=owEBbQKS/ZANAwAKARtfRMkAlRVWAcsmYgBnfoxd1zaADCiqyAG6sqqGiZaCSMDvAko7Z/RAB
- qnzYaAuP/uJAjMEAAEKAB0WIQRO8+4RTnqPKsqn0bgbX0TJAJUVVgUCZ36MXQAKCRAbX0TJAJUV
- VsotEACKVYOAT4FX0Zl5/UtLfxszK6yqfSpvZBETDmfriJH3iARfEmyFCwzxT5krleGndSDwyWo
- muThvi9bmeveOffXwjS8yLtngaQQXm823SZWXLksm4rnDrgYtt8neXuYFKlkIwT7bLnydJ0DaJN
- JHTd3qWl1JqaA2voGitbWcjHGm+pQsyLr2qPugi3oVy0SbKleIX4uOHpcF/bie7veTJF4NIZIwn
- 78+SUdHeJnvW0KMTl+Lx3YB+0kuMf0lzwSSFNiMZh8gAngpJQRE83FncDSI9g3RDXdaIX1VHmZ5
- cx/PkZKSloNzdooFCZWaHCeEShwsSeLD2xPGWA9JRf49cKwyEso50jtquK264rKvDzrAAvWV2QT
- 6XXoLhrTkffqBoOqgbrc2WQbCpi2K6lIsWiqcKWPqfpr3XSUYpRNbvq+b0xwy42+D+LgpfbhUXJ
- dpM7NrjpU5qwl3BcPEHj+6IrytmW2bX4R5o9NArIQIi1rxnExJtr5XP9GGI7U3rHuW1wnciXJJx
- ogtweTyXXFCBIQXSAf4Uxwu+GkVziAZ1KkCB0OX5wDzOScajLIhPmr0Pt05vMOZbglN4KM2y+Rl
- esuSrBYIrshvVYjjyJ5H+uB0nipBl+fsNU0e9efycXuEOiA/7n2y7TeXx2vsg422BzYLPp0aHam
- l+vjJUlVNxarFVw==
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3093; i=abel.vesa@linaro.org;
+ h=from:subject:message-id; bh=i0gLL9cKFwnwAUFAvwIYOq+eSp8wWGGPgQgjnTN3PKE=;
+ b=owEBbQKS/ZANAwAKARtfRMkAlRVWAcsmYgBnfoxeHNki79B0QYd4mTUlmaS4L+1SJlhYA9Z/v
+ A4IDLvBSQeJAjMEAAEKAB0WIQRO8+4RTnqPKsqn0bgbX0TJAJUVVgUCZ36MXgAKCRAbX0TJAJUV
+ VvsXD/oC6cp0EXwMhmMRSeEBz9Zyx8ZcCFWQr/TnVk4AXiXuzPX9TJGnd77Zq+bPTvcfFEkGd9T
+ 2iCgdfAC12kiMTsTGPfSC4CJw5A6F8fKgAu3Gzm9mhGMIvSEGMUH9ObSxk8aLljgxHjWqJdBfsS
+ PnX+z1pwhNwDf7dJMqmeyDCUtaTCAOX2/0aPtGYDaPV9+5xHAUDipJ8/6f+XAbgUKLmisnmVeO/
+ x1JN8l4JHYndHJ0UVM5r86iEytn0+7Y/WDSv5faTe9lxmZXBL2vbr+IGwI25/dsCFbueTZxL1ot
+ N4uZBzIFRqUMN2eTq2DHF2IKtKoSHsEdDUcrGkmolIL+4B2BIP1mrjrd1N5MbiFtEaHfmFdNkzj
+ XNSijG0GamQoUl+OC+VC5AyL3QYvG7X80lZhthpK3Ad4wiXzqJG59so0TeEpx9OWAqs7BTGdF0T
+ +wwS6vXDmzqygQrfXuQfY1zatwG0RZHuY4LDJz8U1rs3gb2HUqgxesCwaXK95u4Xcms5qGrr6Qf
+ V7UFT8z0OFgZ6jzG++l1+Ud28R6i2GbJgISqMjRqEstLMKA/HPo8db1bIiY6lgiMTj3Qth8kcSA
+ lY+oYAQaSCGcqdUVuE4D9b8V/3CL+h7FF4sSgISfB2xfD7eq2XAV43yQ4tc5uPB2BiqR0hqyuPc
+ +ZR64oI0/smoEBA==
 X-Developer-Key: i=abel.vesa@linaro.org; a=openpgp;
  fpr=6AFF162D57F4223A8770EF5AF7BF214136F41FAE
 
@@ -129,42 +130,73 @@ disable->enable sequence mentioned in the DP Standard v2.0 section
 3.6.6.1.
 
 So use the new drm generic helper instead as it makes the code a bit
-cleaner.
+cleaner. Since the driver specific implementation holds the
+lttrp_common_caps, if the call to the drm generic helper fails, the
+lttrp_common_caps need to be updated as the helper has already rolled
+back to transparent mode.
 
-Reviewed-by: Lyude Paul <lyude@redhat.com>
+Acked-by: Imre Deak <imre.deak@intel.com>
 Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
 ---
- drivers/gpu/drm/nouveau/nouveau_dp.c | 17 ++---------------
- 1 file changed, 2 insertions(+), 15 deletions(-)
+ .../gpu/drm/i915/display/intel_dp_link_training.c  | 24 +++++-----------------
+ 1 file changed, 5 insertions(+), 19 deletions(-)
 
-diff --git a/drivers/gpu/drm/nouveau/nouveau_dp.c b/drivers/gpu/drm/nouveau/nouveau_dp.c
-index bcda0105160f1450df855281e0d932606a5095dd..55691ec44abaa53c84e73358e33df1949bb1e35c 100644
---- a/drivers/gpu/drm/nouveau/nouveau_dp.c
-+++ b/drivers/gpu/drm/nouveau/nouveau_dp.c
-@@ -79,21 +79,8 @@ nouveau_dp_probe_dpcd(struct nouveau_connector *nv_connector,
- 	    !drm_dp_read_lttpr_common_caps(aux, dpcd, outp->dp.lttpr.caps)) {
- 		int nr = drm_dp_lttpr_count(outp->dp.lttpr.caps);
+diff --git a/drivers/gpu/drm/i915/display/intel_dp_link_training.c b/drivers/gpu/drm/i915/display/intel_dp_link_training.c
+index 8b1977cfec503c70f07af716ee2c00e7605c6adf..c5bad311edf7b9a5cebb633b9e9692bae397f9ed 100644
+--- a/drivers/gpu/drm/i915/display/intel_dp_link_training.c
++++ b/drivers/gpu/drm/i915/display/intel_dp_link_training.c
+@@ -119,9 +119,6 @@ intel_dp_set_lttpr_transparent_mode(struct intel_dp *intel_dp, bool enable)
+ 	u8 val = enable ? DP_PHY_REPEATER_MODE_TRANSPARENT :
+ 			  DP_PHY_REPEATER_MODE_NON_TRANSPARENT;
  
--		if (nr) {
--			drm_dp_dpcd_writeb(aux, DP_PHY_REPEATER_MODE,
--						DP_PHY_REPEATER_MODE_TRANSPARENT);
+-	if (drm_dp_dpcd_write(&intel_dp->aux, DP_PHY_REPEATER_MODE, &val, 1) != 1)
+-		return false;
 -
--			if (nr > 0) {
--				ret = drm_dp_dpcd_writeb(aux, DP_PHY_REPEATER_MODE,
--							      DP_PHY_REPEATER_MODE_NON_TRANSPARENT);
--				if (ret != 1) {
--					drm_dp_dpcd_writeb(aux, DP_PHY_REPEATER_MODE,
--								DP_PHY_REPEATER_MODE_TRANSPARENT);
--				} else {
--					outp->dp.lttpr.nr = nr;
--				}
--			}
--		}
-+		if (!drm_dp_lttpr_init(aux, nr))
-+			outp->dp.lttpr.nr = nr;
+ 	intel_dp->lttpr_common_caps[DP_PHY_REPEATER_MODE -
+ 				    DP_LT_TUNABLE_PHY_REPEATER_FIELD_DATA_STRUCTURE_REV] = val;
+ 
+@@ -146,6 +143,7 @@ static bool intel_dp_lttpr_transparent_mode_enabled(struct intel_dp *intel_dp)
+ static int intel_dp_init_lttpr_phys(struct intel_dp *intel_dp, const u8 dpcd[DP_RECEIVER_CAP_SIZE])
+ {
+ 	int lttpr_count;
++	int ret;
+ 
+ 	if (!intel_dp_read_lttpr_common_caps(intel_dp, dpcd))
+ 		return 0;
+@@ -172,22 +170,8 @@ static int intel_dp_init_lttpr_phys(struct intel_dp *intel_dp, const u8 dpcd[DP_
+ 		return lttpr_count;
  	}
  
- 	ret = drm_dp_read_dpcd_caps(aux, dpcd);
+-	/*
+-	 * See DP Standard v2.0 3.6.6.1. about the explicit disabling of
+-	 * non-transparent mode and the disable->enable non-transparent mode
+-	 * sequence.
+-	 */
+-	intel_dp_set_lttpr_transparent_mode(intel_dp, true);
+-
+-	/*
+-	 * In case of unsupported number of LTTPRs or failing to switch to
+-	 * non-transparent mode fall-back to transparent link training mode,
+-	 * still taking into account any LTTPR common lane- rate/count limits.
+-	 */
+-	if (lttpr_count < 0)
+-		goto out_reset_lttpr_count;
+-
+-	if (!intel_dp_set_lttpr_transparent_mode(intel_dp, false)) {
++	ret = drm_dp_lttpr_init(&intel_dp->aux, lttpr_count);
++	if (ret) {
+ 		lt_dbg(intel_dp, DP_PHY_DPRX,
+ 		       "Switching to LTTPR non-transparent LT mode failed, fall-back to transparent mode\n");
+ 
+@@ -196,6 +180,8 @@ static int intel_dp_init_lttpr_phys(struct intel_dp *intel_dp, const u8 dpcd[DP_
+ 		goto out_reset_lttpr_count;
+ 	}
+ 
++	intel_dp_set_lttpr_transparent_mode(intel_dp, false);
++
+ 	return lttpr_count;
+ 
+ out_reset_lttpr_count:
 
 -- 
 2.34.1
