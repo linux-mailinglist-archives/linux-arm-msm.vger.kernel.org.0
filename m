@@ -1,64 +1,65 @@
-Return-Path: <linux-arm-msm+bounces-44306-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-44307-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 41EC5A05269
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jan 2025 05:54:31 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9C744A05273
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jan 2025 05:58:47 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id D8D411889983
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jan 2025 04:54:33 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 010F23A6F4D
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jan 2025 04:58:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DAE461A0BED;
-	Wed,  8 Jan 2025 04:54:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7FA301A072C;
+	Wed,  8 Jan 2025 04:58:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JzI3BaZc"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="f577Q+V2"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC1341A08A3;
-	Wed,  8 Jan 2025 04:54:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50F5D19CC31;
+	Wed,  8 Jan 2025 04:58:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736312061; cv=none; b=oLisKAA8M85VBy1FfRFY98Gg0gyKNM7cZRN+FxiOPXpbUL2G3un9pMWY23YFMOthlw94vpo+QQHRUrCU8y56SNI2aJ/Er1iDHQfnTKDN6CjCE0eXW2Hau2SELGRCvigKwN1E6tiT4xTFnsco/8w/cmdWuwQJ73JuVY7ki8GiuyY=
+	t=1736312323; cv=none; b=go2d0a8fwL1gTXaJyWR3mhmpuZd4IRmz99KTNo87J7w1R11n4S1ElFiGYNVgXjjKFY0jC0+d4YNyFUvpUJ7inE4+BI2A3MIaRH45i7xLo0bEe8YJrTWyAUvc4+7EeZyhLj6woJj2ULKn2p9eqBvK1Q75eU9Lyji6zmj1gGIV8Hw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736312061; c=relaxed/simple;
-	bh=OyhohNFbvFv5c5PX/ptJTjyFtvVLPm0YUVoIISObS2s=;
+	s=arc-20240116; t=1736312323; c=relaxed/simple;
+	bh=jFYufPeryoQ9CFNlxOJcCOFvHCEYh8iCaszhrUU8DY4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=W2Dy13ZaIFn7EDejNuK6YBXTIBZnPBmjaWs9m2AKW/yDgOuLTPXlIdNHaeUXUKVwN+Ysvm+BZsb1gu8gezUGzwhCPh4qr2uY+D2ZEttD07gmdnQXa/inkDtj7SD/sYw6khsGCEOn6F2idFwCM0Ti1tORecb8J750ZO6m5dk/SZA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JzI3BaZc; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E692C4CEE0;
-	Wed,  8 Jan 2025 04:54:19 +0000 (UTC)
+	 MIME-Version:Content-Type; b=EAXusZYqCREyWdoK0gTZMwpXWhRDRtZulzySq6p/K8RF6AXqrl+G0UtxkiaPqExVFVgh3HXdyZrTfdiVT30ixqpQSMmy4ILmatFzVE6JHAGrTU7K3MhkszALIhy/YggeJMpR/tOyv/gLVM1Vflsu4cviDjwDZxCM4yAlrEpmyjA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=f577Q+V2; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6217C4CED0;
+	Wed,  8 Jan 2025 04:58:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1736312060;
-	bh=OyhohNFbvFv5c5PX/ptJTjyFtvVLPm0YUVoIISObS2s=;
+	s=k20201202; t=1736312322;
+	bh=jFYufPeryoQ9CFNlxOJcCOFvHCEYh8iCaszhrUU8DY4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JzI3BaZc9W0PtxaJZ9AtFBQrlsCyrk5Lkr+YvIjLPn7VKw78Y4IfNxDNyGobTtsO6
-	 sG/Ihab9e8/pmNpl1fUUzTYvVCOVobq8KmN4BdEwEFspPa2o+yrUeLYjJ3zyvSBWRJ
-	 h9n4bh0bJ1yZiknkSdcm3xN5DpBBLSyak8HZ3+uFLa+WcdJGIYSBXafRfx50ZpuUvK
-	 uI3qtoOav9hiEu2/UEf21mgjynXg9U3ToZjZ3SLzNUaQ/r+8T5y4sIwlx9nKQAJkrM
-	 Y/lrq02Dmh/WXP4Bj3YrAgVTodUrt92H+dM7uQqDqYhFWHeW+KBoLM06Lb8HzaP85H
-	 Hrii8KdrpHIEA==
+	b=f577Q+V2rTiMtbmsts7AD1fHodOj7zM2txr2Vcq7+rglUDHgMvT+xIin0XpVNBICw
+	 zHGRjWn+hqku0E+fB5KwVNj5hOMOmHTflzdP4XfnWox0g0zhMwJ5vlvFSDD4j2L8K9
+	 cOoQga12uc1bcrrwb9fz6YT2/8DwGgx76ab+3746Qjuca7Ll/QSo+XZyp35T5bHv8D
+	 mit1Zy5mS8KAnME0Mhhg52KZu2/yo1Gdf9KDTMwBpWaj6lAQB8rLY11Rq8e8MrDYv9
+	 FWcy+x2i70hU6NBmV94/sa012ygvcfjnj+2agwc3/TaZv1LB4TFv8ciM4bQ5vbjQgt
+	 6lB8h+GR6in5w==
 From: Bjorn Andersson <andersson@kernel.org>
-To: Krzysztof Kozlowski <krzk+dt@kernel.org>,
+To: Konrad Dybcio <konradybcio@kernel.org>,
+	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+Cc: Robert Foss <rfoss@kernel.org>,
+	Todor Tomov <todor.too@gmail.com>,
+	Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
 	Rob Herring <robh@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Krishna Kurapati <quic_kriskura@quicinc.com>
-Cc: linux-kernel@vger.kernel.org,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	linux-media@vger.kernel.org,
 	linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	quic_ppratap@quicinc.com,
-	quic_jackp@quicinc.com
-Subject: Re: [PATCH v4 0/2] Add Devicetree support for USB controllers on QCS8300
-Date: Tue,  7 Jan 2025 22:54:14 -0600
-Message-ID: <173631205046.113795.2001854293543091473.b4-ty@kernel.org>
+	devicetree@vger.kernel.org
+Subject: Re: (subset) [PATCH v3 0/6] dt-bindings: media: camss: Fix interrupt types
+Date: Tue,  7 Jan 2025 22:58:40 -0600
+Message-ID: <173631231619.115129.6056790573158063874.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20241114055152.1562116-1-quic_kriskura@quicinc.com>
-References: <20241114055152.1562116-1-quic_kriskura@quicinc.com>
+In-Reply-To: <20241127122950.885982-1-vladimir.zapolskiy@linaro.org>
+References: <20241127122950.885982-1-vladimir.zapolskiy@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -69,26 +70,25 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Thu, 14 Nov 2024 11:21:50 +0530, Krishna Kurapati wrote:
-> This series aims at enabling USB on QCS8300 which has 2 USB controllers.
-> The primary controller is SuperSpeed capable and secondary one is
-> High Speed only capable. Both the High Speed Phys are Femto phys and the
-> SuperSpeed Phy is a QMP Uni Phy.
+On Wed, 27 Nov 2024 14:29:44 +0200, Vladimir Zapolskiy wrote:
+> It was discovered that on a few Qualcomm platforms types of interrupts
+> do not match the type given by the Qualcomm IP catalog, the type in
+> downstream code and the type requested by the CAMSS driver itself.
 > 
-> Base DT Support has been added for both controllers while only one has
-> been enabled on Ride Platform. The primary controller has been configured
-> in device mode. The secondary controller will be enabled in host mode post
-> addition of SPMI Node which allows control over PMIC Gpios for providing
-> vbus to connected peripherals.
+> The mismatched interrupt type between firmware and the correspondent CAMSS
+> driver leads to known problems, similar to the ones which were discussed
+> previously:
 > 
 > [...]
 
 Applied, thanks!
 
-[1/2] arm64: dts: qcom: Add support for usb nodes on QCS8300
-      commit: ceb39e1ea327a96cdd9fcc54c65664f0659cd9b7
-[2/2] arm64: dts: qcom: Enable USB controllers for QCS8300
-      commit: 46ee6177b76736b49b1f34bec1244e4996fd199c
+[4/6] arm64: dts: qcom: sc8280xp: Fix interrupt type of camss interrupts
+      commit: b08535cd41c27b4f32319b5bff754c9da6dc2205
+[5/6] arm64: dts: qcom: sdm845: Fix interrupt types of camss interrupts
+      commit: cb96722b728e81ad97f5b5b20dea64cd294a5452
+[6/6] arm64: dts: qcom: sm8250: Fix interrupt types of camss interrupts
+      commit: 6c7bba42ebc3da56e64d4aec4c4a31dd454e05fd
 
 Best regards,
 -- 
