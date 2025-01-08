@@ -1,239 +1,160 @@
-Return-Path: <linux-arm-msm+bounces-44362-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-44363-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6E2BEA05AFE
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jan 2025 13:05:41 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3907EA05B0E
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jan 2025 13:10:36 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BBD843A2670
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jan 2025 12:05:35 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id DE26A1888D57
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jan 2025 12:10:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8E23A1F8AF6;
-	Wed,  8 Jan 2025 12:05:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E928A1F8F19;
+	Wed,  8 Jan 2025 12:10:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="knp0r22q"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="d/GQi6dW"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com [209.85.208.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1AB21F758A
-	for <linux-arm-msm@vger.kernel.org>; Wed,  8 Jan 2025 12:05:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16FE01F8AE0;
+	Wed,  8 Jan 2025 12:10:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736337936; cv=none; b=h/15jBLINTF9fyTE+VPraEeHccEdlMW2G9aWuKo72/OpRyLcfXSG0WrWaO9p5BvXN+PfUQY33SH3gYO6ZCBRP8Bm3rbtTUevn9HSnK2LqHt8LzJkFU5mj9DCRiton6QQEoqCaH88GAAkYn2xfcjaJc4ksRbOcrWqVt/P8u/j1f0=
+	t=1736338226; cv=none; b=feRJY67bfn1FbmipLB1bDVZvjtjUtbTA0hRyu00hpWqNSHwJk8/oX8DAIrZvFDwuS5zCWXq+DTeUdFsi8pWULxJQlLk9c3+pP2MRKyZtErsIxIt1O7+SwH7QpVCjsqQw1n6q7lXRcNBRUUu/SHBGJveAgYOsmd/0EkvIwI0BC8Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736337936; c=relaxed/simple;
-	bh=O/ipbfUJ+i6XxrL+DK3a6ndmvpYfRjXuPQImjQMFwY4=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Ia3YOoDF36IjpQnJmRlauFJbYpk9C2nxigKfBQHvK6ZihGjjphxyqWWALVYHbPnF7t/+oh3jf+vgRuHT545iq9eHlln7Gz54b2f9NedGOgNAkuZ8RRlvsMOVbAi7S6LrwfRoTGLrKF2/Iu5wok9Lvs294QgVJpY70XweoKRkFVg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=knp0r22q; arc=none smtp.client-ip=209.85.208.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f51.google.com with SMTP id 4fb4d7f45d1cf-5d3cd821c60so3781782a12.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Jan 2025 04:05:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1736337933; x=1736942733; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=ydCNg6jT36E12xsOeua+Sa7IGX974RGk3urRyUbAQcg=;
-        b=knp0r22qSano6GySAuO8bJkxWKa3dAnvtvoqqYJfekwX9xf4GiE64RVOqYlKiLj5ap
-         IebIzAOTYZ9V9zicnDOLQzR8UqiPORTl6EjpRsmGNHMxMvtBZ1FC/+Lc7tg4orJ9x649
-         BUMic65ls+RTVlgnTeWXssQ8z8oO0uk+Hte1Lculm6ePV1MpD8LQbgdGCjZGLoxUSmLz
-         xdJAAbhkTWzHwtURexV+1jvGO8lo7hHP1R573v8Ls781T81yko9LRmhXXNli67uynGg3
-         3L0znN7F4Jwu1yrDRhh01kNRQEQ31817nfiILJDW32c6fIQWqS28O44jgNS94yy8HPQS
-         H6cA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736337933; x=1736942733;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=ydCNg6jT36E12xsOeua+Sa7IGX974RGk3urRyUbAQcg=;
-        b=fAjPDUXulAmMsD8pBMufqbo6JPyBDwaoA0OIgPEhKI3TPTFlSMJ6p1/u+g1cXEb/Dp
-         TBOWGc1KFmLjuRAlnFgwV5nsrFsP3iZYwXyZldd/57I66kKIE77dSLze+ncoHto03wkf
-         1lWF0L+VpZ8s179n2t48eokTbJhNG31ujC+qPhb3zqXfbaiEFY9MUIG1sw1aPH7bRnIa
-         IBXaboZHLCHCKfzyMgstgnzftH6sAYxXfZ4qPP6ZY1TPjL/wLqTkMGrK5EOSOYL28Bem
-         x70Hpgh1OPiE7gURNPIjf7Qxkb2WYCzjva5g0i0Np7ZwaBtk1SQ6QxpsDpthDzHcwxDw
-         FmIA==
-X-Forwarded-Encrypted: i=1; AJvYcCU99MKVZzw9osjT3gpsslGHie63QCE45ujEFCtWyoRO6jmPqGSiZtfkP9c8QloA0rAV60ycS9885nxNTazH@vger.kernel.org
-X-Gm-Message-State: AOJu0Yxcu1kJJRntyW5WxNv/1drZ6PHtFdUiy71kc9nlUTbtYE7ZL7HE
-	9/XjwG4Dphw0skz1ZSanAVGUElDoJTuGzWiY9rS9wvE4w0DCyudatpZUPIXV6HpEpgTGSLre9pD
-	K
-X-Gm-Gg: ASbGncufrM1GzEb4tWeoGVdI9jQ0x5k76zS4YZbA4O0nAJ1K/OPCYNFBNGPp+/wt0n7
-	udvASdc4/ERnKW2oefiTZlalWSs9z1WqmuhF6Ty78x0gh1yMQbyHUPTS9cbPjcdBzMODp5Kj4Va
-	2u5iHfzTsD0QF69RiDi14CCfQgcXBZsGJ5tc/pYRqJmaM1mEEdgqpT0RB68oWuAjtfZ/Nmo3sr1
-	5zcYwdKxgjW/0w76ofnN+y3AbGqCk4abcrJUltRv7oWcCN51w+cwoS1twHCkIdDMOZcmUM=
-X-Google-Smtp-Source: AGHT+IFK1TbD0Uf1FgK7ziNEnOG9YYy0/1HJ7Ai3OvVZgi26v6PEQj7rnDX7uvM6M1rlaGSscM2GKQ==
-X-Received: by 2002:a17:907:c586:b0:a9e:80ed:5cc6 with SMTP id a640c23a62f3a-ab2abcb0cd1mr71382666b.13.1736337933040;
-        Wed, 08 Jan 2025 04:05:33 -0800 (PST)
-Received: from krzk-bin.. ([178.197.223.165])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-aac0e830b10sm2479699866b.37.2025.01.08.04.05.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 08 Jan 2025 04:05:32 -0800 (PST)
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH] arm64: dts: qcom: Use recommended MBN firmware format in DTS example
-Date: Wed,  8 Jan 2025 13:05:30 +0100
-Message-ID: <20250108120530.156928-1-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.43.0
+	s=arc-20240116; t=1736338226; c=relaxed/simple;
+	bh=7v6VJpeD1AHjtiI+PW6xiSL0EBTcYgEqbMYj30hmRf4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=I0TO/p3xGEVfJ+AqWoeBJHn2dTC6SrdO8TdWNcId4VM3sJxs3wo8G5S9EEw1VKyU39EY0+T0Ru2vJz0D0FxmWHexgzxSro0e2+CdKMoPCXWKTgB3TQLHWnxmzo8Kgi5TZYYodMj5GxHwZbc7BRk4z/oBSeZwJlhRyVvbx+M+GXc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=d/GQi6dW; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 508BkW7p011537;
+	Wed, 8 Jan 2025 12:10:22 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	/wbi1dn1BaW4RjtF4+vYEtqjtJxT1Sw34X55ioOywDs=; b=d/GQi6dW4FKa35HK
+	RWJSqSTZcN+ZY9/MhVLRf/mCJDm7mUfvjnWnfWRn5r5BiRXKMc7V4tXyg7VXKS6V
+	WlhG908RYyyDqkosW8/VydtUZiqaqPHxtlpRObKo0sKOdpTkl1rIZD1tKzj1MAoR
+	Az/MH2hgHg8vX38g48KkWQrHx9luj6QZMXQUAJIEYlbIyiIOlHZiKkZ23qLpY6/1
+	0WWnhSAA1+XhKvk4xKIPFNfgtgIifVjw4vw/7YxuowMcJRh8GcF7SE5PJU57qDXz
+	/Sq+n/Hd80vKk9q36Zmk+Xi3cXyHkxbGs/8ljy8pMvdjiNTQPJMPoKLOkAO5tOQo
+	iHXLgw==
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 441ppn0dtg-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 08 Jan 2025 12:10:22 +0000 (GMT)
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 508CALNh003045
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 8 Jan 2025 12:10:21 GMT
+Received: from [10.219.57.57] (10.80.80.8) by nasanex01c.na.qualcomm.com
+ (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 8 Jan 2025
+ 04:10:18 -0800
+Message-ID: <e7abe34c-9df9-425b-933e-cc744a63b80c@quicinc.com>
+Date: Wed, 8 Jan 2025 17:40:09 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 2/2] arm64: dts: qcom: qcs8300: Add device node for
+ gfx_smmu
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, <andersson@kernel.org>
+CC: <konradybcio@kernel.org>, <robh@kernel.org>, <krzk+dt@kernel.org>,
+        <conor+dt@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+References: <20241227110024.30203-1-quic_pbrahma@quicinc.com>
+ <1c8af731-c551-4d72-84a0-f14d57bec4ec@oss.qualcomm.com>
+Content-Language: en-US
+From: Pratyush Brahma <quic_pbrahma@quicinc.com>
+In-Reply-To: <1c8af731-c551-4d72-84a0-f14d57bec4ec@oss.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01c.na.qualcomm.com (10.45.79.139)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: YoQtExhHSDPmSlFymms8lJD3RJu8-Ahl
+X-Proofpoint-ORIG-GUID: YoQtExhHSDPmSlFymms8lJD3RJu8-Ahl
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 suspectscore=0
+ impostorscore=0 bulkscore=0 phishscore=0 priorityscore=1501 mlxscore=0
+ spamscore=0 lowpriorityscore=0 adultscore=0 mlxlogscore=856 clxscore=1015
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2411120000
+ definitions=main-2501080099
 
-All Qualcomm firmwares uploaded to linux-firmware are in MBN format,
-instead of split MDT.  Firmware for boards here is not yet in
-linux-firmware, but if it gets accepted it will be MBN, not MDT.
 
-Change might affect users of DTS which rely on manually placed firmware
-files, not coming from linux-firmware package.
+On 12/30/2024 6:49 PM, Konrad Dybcio wrote:
+> On 27.12.2024 12:00 PM, Pratyush Brahma wrote:
+>> Add the device node for gfx smmu that is required for gpu
+>> specific address translations.
+>>
+>> This patch depends on the patch series [1] posted by Imran Shaik
+>> adding the clock support for gpu.
+>>
+>> [1] https://lore.kernel.org/all/802d32f1-ff7e-4d61-83f1-f804ee1750ed@oss.qualcomm.com/
+>>
+>> Signed-off-by: Pratyush Brahma <quic_pbrahma@quicinc.com>
+>> ---
+>>   arch/arm64/boot/dts/qcom/qcs8300.dtsi | 37 +++++++++++++++++++++++++++
+>>   1 file changed, 37 insertions(+)
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/qcs8300.dtsi b/arch/arm64/boot/dts/qcom/qcs8300.dtsi
+>> index 80226992a65d..8eb688e2df0a 100644
+>> --- a/arch/arm64/boot/dts/qcom/qcs8300.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/qcs8300.dtsi
+>> @@ -816,6 +816,43 @@
+>>   			#power-domain-cells = <1>;
+>>   		};
+>>   
+>> +		adreno_smmu: iommu@3da0000 {
+>> +			compatible = "qcom,qcs8300-smmu-500", "qcom,adreno-smmu",
+>> +				   "qcom,smmu-500", "arm,mmu-500";
+>> +			reg = <0x0 0x3da0000 0x0 0x20000>;
+>> +			#iommu-cells = <2>;
+>> +			#global-interrupts = <2>;
+>> +			dma-coherent;
+>> +
+>> +			power-domains = <&gpucc GPU_CC_CX_GDSC>;
+>> +			clocks = <&gcc GCC_GPU_MEMNOC_GFX_CLK>,
+>> +				 <&gcc GCC_GPU_SNOC_DVM_GFX_CLK>,
+>> +				 <&gpucc GPU_CC_AHB_CLK>,
+>> +				 <&gpucc GPU_CC_HLOS1_VOTE_GPU_SMMU_CLK>,
+>> +				 <&gpucc GPU_CC_CX_GMU_CLK>,
+>> +				 <&gpucc GPU_CC_HUB_CX_INT_CLK>,
+>> +				 <&gpucc GPU_CC_HUB_AON_CLK>;
+>> +			clock-names = "gcc_gpu_memnoc_gfx_clk",
+>> +				      "gcc_gpu_snoc_dvm_gfx_clk",
+>> +				      "gpu_cc_ahb_clk",
+>> +				      "gpu_cc_hlos1_vote_gpu_smmu_clk",
+>> +				      "gpu_cc_cx_gmu_clk",
+>> +				      "gpu_cc_hub_cx_int_clk",
+>> +				      "gpu_cc_hub_aon_clk";
+> Most of these entries look totally bogus, please make sure you only
+> reference the ones actually required
+These entries are exactly similar to the ones we use in sa8775p as well 
+[1] and the usecases
+haven't changed between qcs8300 and sa8775p.
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
----
- arch/arm64/boot/dts/qcom/sa8155p-adp.dts             |  4 ++--
- .../arm64/boot/dts/qcom/sdm630-sony-xperia-nile.dtsi |  2 +-
- .../boot/dts/qcom/sm8150-microsoft-surface-duo.dts   |  8 ++++----
- arch/arm64/boot/dts/qcom/sm8150-mtp.dts              |  8 ++++----
- arch/arm64/boot/dts/qcom/sm8550-samsung-q5q.dts      | 12 ++++++------
- 5 files changed, 17 insertions(+), 17 deletions(-)
+Can you please let me know which entries you find irrelevant here?
 
-diff --git a/arch/arm64/boot/dts/qcom/sa8155p-adp.dts b/arch/arm64/boot/dts/qcom/sa8155p-adp.dts
-index 9e9c7f81096b..4dfd66076629 100644
---- a/arch/arm64/boot/dts/qcom/sa8155p-adp.dts
-+++ b/arch/arm64/boot/dts/qcom/sa8155p-adp.dts
-@@ -383,12 +383,12 @@ &qupv3_id_1 {
- 
- &remoteproc_adsp {
- 	status = "okay";
--	firmware-name = "qcom/sa8155p/adsp.mdt";
-+	firmware-name = "qcom/sa8155p/adsp.mbn";
- };
- 
- &remoteproc_cdsp {
- 	status = "okay";
--	firmware-name = "qcom/sa8155p/cdsp.mdt";
-+	firmware-name = "qcom/sa8155p/cdsp.mbn";
- };
- 
- &sdhc_2 {
-diff --git a/arch/arm64/boot/dts/qcom/sdm630-sony-xperia-nile.dtsi b/arch/arm64/boot/dts/qcom/sdm630-sony-xperia-nile.dtsi
-index a4b722e0fc1e..40522e237eac 100644
---- a/arch/arm64/boot/dts/qcom/sdm630-sony-xperia-nile.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm630-sony-xperia-nile.dtsi
-@@ -157,7 +157,7 @@ extcon_usb: extcon-usb {
- };
- 
- &adsp_pil {
--	firmware-name = "qcom/sdm630/Sony/nile/adsp.mdt";
-+	firmware-name = "qcom/sdm630/Sony/nile/adsp.mbn";
- };
- 
- &blsp_i2c1 {
-diff --git a/arch/arm64/boot/dts/qcom/sm8150-microsoft-surface-duo.dts b/arch/arm64/boot/dts/qcom/sm8150-microsoft-surface-duo.dts
-index 9a3d0ac6c423..835ef929ff2d 100644
---- a/arch/arm64/boot/dts/qcom/sm8150-microsoft-surface-duo.dts
-+++ b/arch/arm64/boot/dts/qcom/sm8150-microsoft-surface-duo.dts
-@@ -453,22 +453,22 @@ &qupv3_id_2 {
- 
- &remoteproc_adsp {
- 	status = "okay";
--	firmware-name = "qcom/sm8150/microsoft/adsp.mdt";
-+	firmware-name = "qcom/sm8150/microsoft/adsp.mbn";
- };
- 
- &remoteproc_cdsp {
- 	status = "okay";
--	firmware-name = "qcom/sm8150/microsoft/cdsp.mdt";
-+	firmware-name = "qcom/sm8150/microsoft/cdsp.mbn";
- };
- 
- &remoteproc_mpss {
- 	status = "okay";
--	firmware-name = "qcom/sm8150/microsoft/modem.mdt";
-+	firmware-name = "qcom/sm8150/microsoft/modem.mbn";
- };
- 
- &remoteproc_slpi {
- 	status = "okay";
--	firmware-name = "qcom/sm8150/microsoft/slpi.mdt";
-+	firmware-name = "qcom/sm8150/microsoft/slpi.mbn";
- };
- 
- &pon_resin {
-diff --git a/arch/arm64/boot/dts/qcom/sm8150-mtp.dts b/arch/arm64/boot/dts/qcom/sm8150-mtp.dts
-index 2e1c7afe0aa7..12e8e1ada6d8 100644
---- a/arch/arm64/boot/dts/qcom/sm8150-mtp.dts
-+++ b/arch/arm64/boot/dts/qcom/sm8150-mtp.dts
-@@ -379,22 +379,22 @@ &qupv3_id_1 {
- 
- &remoteproc_adsp {
- 	status = "okay";
--	firmware-name = "qcom/sm8150/adsp.mdt";
-+	firmware-name = "qcom/sm8150/adsp.mbn";
- };
- 
- &remoteproc_cdsp {
- 	status = "okay";
--	firmware-name = "qcom/sm8150/cdsp.mdt";
-+	firmware-name = "qcom/sm8150/cdsp.mbn";
- };
- 
- &remoteproc_mpss {
- 	status = "okay";
--	firmware-name = "qcom/sm8150/modem.mdt";
-+	firmware-name = "qcom/sm8150/modem.mbn";
- };
- 
- &remoteproc_slpi {
- 	status = "okay";
--	firmware-name = "qcom/sm8150/slpi.mdt";
-+	firmware-name = "qcom/sm8150/slpi.mbn";
- };
- 
- &tlmm {
-diff --git a/arch/arm64/boot/dts/qcom/sm8550-samsung-q5q.dts b/arch/arm64/boot/dts/qcom/sm8550-samsung-q5q.dts
-index e8383faac576..7d29a57a2b54 100644
---- a/arch/arm64/boot/dts/qcom/sm8550-samsung-q5q.dts
-+++ b/arch/arm64/boot/dts/qcom/sm8550-samsung-q5q.dts
-@@ -547,20 +547,20 @@ &qupv3_id_0 {
- };
- 
- &remoteproc_adsp {
--	firmware-name = "qcom/sm8550/adsp.mdt",
--			"qcom/sm8550/adsp_dtb.mdt";
-+	firmware-name = "qcom/sm8550/adsp.mbn",
-+			"qcom/sm8550/adsp_dtb.mbn";
- 	status = "okay";
- };
- 
- &remoteproc_cdsp {
--	firmware-name = "qcom/sm8550/cdsp.mdt",
--			"qcom/sm8550/cdsp_dtb.mdt";
-+	firmware-name = "qcom/sm8550/cdsp.mbn",
-+			"qcom/sm8550/cdsp_dtb.mbn";
- 	status = "okay";
- };
- 
- &remoteproc_mpss {
--	firmware-name = "qcom/sm8550/modem.mdt",
--			"qcom/sm8550/modem_dtb.mdt";
-+	firmware-name = "qcom/sm8550/modem.mbn",
-+			"qcom/sm8550/modem_dtb.mbn";
- 	status = "okay";
- };
- 
+[1] commit 1a1ff00c1626c "arm64: dts: qcom: sa8775p: add the GPU IOMMU node"
+
+>
+> Konrad
+
 -- 
-2.43.0
+Thanks and Regards
+Pratyush Brahma
 
 
