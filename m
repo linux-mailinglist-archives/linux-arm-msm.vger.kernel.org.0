@@ -1,83 +1,171 @@
-Return-Path: <linux-arm-msm+bounces-44275-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-44276-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3EC6CA0507C
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jan 2025 03:17:03 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C7AF8A050F2
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jan 2025 03:43:12 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 246481618C3
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jan 2025 02:16:56 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B1BEF1684C2
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jan 2025 02:43:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 06E681AC42B;
-	Wed,  8 Jan 2025 02:13:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0519F158D96;
+	Wed,  8 Jan 2025 02:43:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LtRYqq6W"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="G5JFA6yr"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C03791ABEA1;
-	Wed,  8 Jan 2025 02:13:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 579982EAE5;
+	Wed,  8 Jan 2025 02:43:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736302406; cv=none; b=MUE/GTnXCuUNWmo7zr0dNrnE/ZyXm9ADex65eMuLdE6djkCfpLyEdAKFR/rhqBfiZE2Uh+hrpyILBIF135I/2vHndAS2TmZV9QlqU1Vu4qAn9V/KoqwoYFaykp98D2FdkvopBxt44f2sjiLB4uY8Us5UJUqdeTq60mXaz1wFkUQ=
+	t=1736304186; cv=none; b=qtX4pw/TaEbwF7Ro4esFeot3zjUvPcjE2PKDKLGOfA6f/GUcdRQ4GSH7NgamW4CHHe14JcgitvWJnKePFyO2FJZpW972pXlAAgdYCtl+Uk926CEyCd4p/a6l7DOOX+hn21qPGqgBLKKfM0xiUCqYfgr7QTnVODKUONAPTmxoqC4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736302406; c=relaxed/simple;
-	bh=gO2qYoM/cMMUqbPfQAIw6gGOoH+1B/4vdXQ86L583wc=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ol1poKypq0tKAfwTdr9kGfdaChDrBUaBJg6nWy6RswvaqTM5Aqh8M9FiZAy57+tRvKEWyz4FeEGddrZnjpiE/N4LY04e7nC95hsAJWTI/c8a9agvKJSiLx4UIB0+a0F7KkkFBo57A5LjmOS022XZ/z/kiguT11KSSnzP6+3v+Nw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LtRYqq6W; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9492FC4CEE1;
-	Wed,  8 Jan 2025 02:13:25 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1736302406;
-	bh=gO2qYoM/cMMUqbPfQAIw6gGOoH+1B/4vdXQ86L583wc=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LtRYqq6WhukJF+uBw6xilppLOjbIKmKO+VJLSgEJm7Gz762vpvYzi9z79RwX84uVJ
-	 5jjygZ/+hS1nj8TXGkjiE43UfzIX7dSANsEesmZvalgeaCxJ+ynW2iFbHvOkugRZiF
-	 iQkwifzSx+Nde5kCEbFxOzHcFNQxhZ4HbWbpBxzxM29hZYRjlVmObEAtXV2ihiUh9n
-	 pAHirV2OW+E/0K2pjWnTHPIl9LXfbF7++ZdL9JtlkMod6HoW40C/3ZzjoupyUnGTSf
-	 RpB0sJARqMjHgMvkEqTvsPO3nR8OMxQCYP8Z66GFA32zS+E/LLBdeaJWdVYDyb0qUc
-	 rfauGcCjDXD1w==
-From: Bjorn Andersson <andersson@kernel.org>
-To: Konrad Dybcio <konradybcio@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Yuanfang Zhang <quic_yuanfang@quicinc.com>
-Cc: kernel@quicinc.com,
-	linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v4] arm64: dts: qcom: Add coresight node for SM8650
-Date: Tue,  7 Jan 2025 20:13:17 -0600
-Message-ID: <173630239535.95965.17802549499867943782.b4-ty@kernel.org>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20250107-sm8650-cs-dt-v4-1-2113b18754ea@quicinc.com>
-References: <20250107-sm8650-cs-dt-v4-1-2113b18754ea@quicinc.com>
+	s=arc-20240116; t=1736304186; c=relaxed/simple;
+	bh=JlSwh/0gE6sirlxADVlIqNfAcabpWdazRoq04XhYycU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=JFdOakWSgKAmllAUty1h54231LiejK4ovFPEjavgSAKJbFnfHIaxS2L+ddOKhUfDoR7LqNTtGvOYDd/gvgNnPT5aGg8m5WBMhMm/d5DwMalIFlAdbrDzA2ZG4Pb63lPFxW8SYM0rlNvIrEvQKclkBT6jpmJ5p0b5m4OFcMW8OR4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=G5JFA6yr; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50829ViL017165;
+	Wed, 8 Jan 2025 02:42:55 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	id4Q4t7To12y3BMf3JeHw3Jjoq3ak7F8TiFe2dBOU/Y=; b=G5JFA6yrJK2GimHn
+	YHoVMUGOlwJ8H+1ouwWZVilb+c/LbWL3TvYcQv8ECCk6ao9ooIIiJaa67eUw9ZAl
+	1sS2bcqhvxhnVU8uVnqfm2tczo4TEUzfmhPHS4AC0OiOpDyAlYSsBwvMTACd90Y9
+	MJOJnx41Vp7EnS9+ZPP4Yyag9Kd6sKFwNtyfZhu5nJ2Al6aK4oC4V7zXRvH/XzUX
+	SeL3vFDnVXnFtviDgKPSynYd0i0miy+fyV2WiiADyk77wv9rG4MMN0cqnKuh88YR
+	ZXM32mAX6DsihWDjJOqJlrmy+xxQS2A9HpXGHr1/mLbyiMawmlYgevGUXXO4F/w5
+	mPIwLA==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 441gb582sp-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 08 Jan 2025 02:42:55 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 5082gsCj020216
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 8 Jan 2025 02:42:54 GMT
+Received: from [10.216.0.179] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 7 Jan 2025
+ 18:42:49 -0800
+Message-ID: <f71ad2e5-684a-3444-14ba-794238ef48d1@quicinc.com>
+Date: Wed, 8 Jan 2025 08:12:46 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.1
+Subject: Re: [PATCH V1] schemas: pci: bridge: Document PCI L0s & L1 entry
+ delay and nfts
+Content-Language: en-US
+To: Bjorn Helgaas <helgaas@kernel.org>
+CC: Rob Herring <robh@kernel.org>,
+        Krishna Chaitanya Chundru
+	<krishna.chundru@oss.qualcomm.com>,
+        <andersson@kernel.org>, <dmitry.baryshkov@linaro.org>,
+        <manivannan.sadhasivam@linaro.org>, <krzk@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <lpieralisi@kernel.org>, <kw@linux.com>, <conor+dt@kernel.org>,
+        <linux-pci@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <devicetree-spec@vger.kernel.org>, <quic_vbadigan@quicinc.com>
+References: <20250107204228.GA180123@bhelgaas>
+From: Krishna Chaitanya Chundru <quic_krichai@quicinc.com>
+In-Reply-To: <20250107204228.GA180123@bhelgaas>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: PDG1HlW3hGETA6rip5FsPff5_7pRIRpT
+X-Proofpoint-ORIG-GUID: PDG1HlW3hGETA6rip5FsPff5_7pRIRpT
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 mlxscore=0
+ adultscore=0 priorityscore=1501 lowpriorityscore=0 bulkscore=0
+ clxscore=1015 mlxlogscore=999 impostorscore=0 malwarescore=0 phishscore=0
+ spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2501080019
 
 
-On Tue, 07 Jan 2025 16:48:26 +0800, Yuanfang Zhang wrote:
-> Add coresight components: Funnel, ETE and ETF for SM8650.
+
+On 1/8/2025 2:12 AM, Bjorn Helgaas wrote:
+> On Tue, Jan 07, 2025 at 07:49:00PM +0530, Krishna Chaitanya Chundru wrote:
+>> On 1/6/2025 8:37 PM, Rob Herring wrote:
+>>> On Mon, Jan 6, 2025 at 3:33 AM Krishna Chaitanya Chundru
+>>> <krishna.chundru@oss.qualcomm.com> wrote:
+>>>>
+>>>> Some controllers and endpoints provide provision to program the entry
+>>>> delays of L0s & L1 which will allow the link to enter L0s & L1 more
+>>>> aggressively to save power.
+>>>>
+>>>> As per PCIe spec 6 sec 4.2.5.6, the number of Fast Training Sequence (FTS)
+>>>> can be programmed by the controllers or endpoints that is used for bit and
+>>>> Symbol lock when transitioning from L0s to L0 based upon the PCIe data rate
+>>>> FTS value can vary. So define a array for each data rate for nfts.
+>>>>
+>>>> These values needs to be programmed before link training.
 > 
+>>> Do these properties apply to any link like downstream ports on a
+>>> PCIe switch?
+>>>
+>> These applies to downstream ports also on a switch.
 > 
+> IIUC every PCIe component with a Link, i.e., Upstream Ports (on a
+> Switch or Endpoint) and Downstream Ports (a Root Port or Switch), has
+> an N_FTS value that it advertises during Link training.
+> 
+> I suppose N_FTS depends on the component electrical design and maybe
+> the Link, and it only makes sense to have this n-fts property for
+> specific devices that support this kind of configuration, right?  I
+> don't think we would know what to do with n-fts for random plug-in
+> Switches or Endpoints because there's no generic way to configure
+> N_FTS, and we *couldn't* do it before the Link is trained anyway
+> unless there's some sideband mechanism.
+yes I agree with it, we have one such type of PCIe switch which has i2c
+sideband mechanism = to program it before enabling link training. This
+properties can be used for the switches which has side band mechanism.
+> 
+>>>> +    description:
+>>>> +      Number of Fast Training Sequence (FTS) used during L0s to L0 exit for bit
+>>>> +      and Symbol lock.
+>>>> +    $ref: /schemas/types.yaml#/definitions/uint32-array
+>>>> +    minItems: 1
+>>>> +    maxItems: 5
+>>>
+>>> Need to define what is each entry? Gen 1 to 5?
+>>>
+>> yes there are from Gen1 to Gen 5, I will update this in next patch these
+>> details.
+> 
+> Components are permitted to advertise different N_FTS values at
+> different *speeds*, not "GenX" (PCIe r6.0, sec 4.2.5.6)
+> 
+> The spec discourages use of Gen1, etc because they are ambiguous (sec
+> 1.2):
+> 
+>    Terms like "PCIe Gen3" are ambiguous and should be avoided. For
+>    example, "gen3" could mean (1) compliant with Base 3.0, (2)
+>    compliant with Base 3.1 (last revision of 3.x), (3) compliant with
+>    Base 3.0 and supporting 8.0 GT/s, (4) compliant with Base 3.0 or
+>    later and supporting 8.0 GT/s, ....
+> 
+> We're stuck with the use of genX for max-link-speed, but we should use
+> speeds when we can for clarity, e.g., in the description here.
+Ack, that's why I tried to mention data rates instead of gen in the
+commit text.
 
-Applied, thanks!
-
-[1/1] arm64: dts: qcom: Add coresight node for SM8650
-      commit: 256e6937e48a14cc5ea02ce9e4e0fbb4463c4464
-
-Best regards,
--- 
-Bjorn Andersson <andersson@kernel.org>
+- Krishna Chaitanya.
 
