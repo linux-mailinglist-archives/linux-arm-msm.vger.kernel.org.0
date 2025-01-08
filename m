@@ -1,122 +1,156 @@
-Return-Path: <linux-arm-msm+bounces-44245-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-44260-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3E305A04F29
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jan 2025 02:25:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 7DDF5A04FA5
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jan 2025 02:35:27 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3942116110B
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jan 2025 01:25:25 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 77BD8163F2F
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jan 2025 01:35:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6AD621A2872;
-	Wed,  8 Jan 2025 01:22:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8BC2019F11E;
+	Wed,  8 Jan 2025 01:28:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Yuq8R46H"
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="SoJsMj/E"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f47.google.com (mail-pj1-f47.google.com [209.85.216.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D211199E88;
-	Wed,  8 Jan 2025 01:22:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D399015FD13
+	for <linux-arm-msm@vger.kernel.org>; Wed,  8 Jan 2025 01:28:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736299370; cv=none; b=rDH26YfuEAyRnNF5tNpwEdP+v0AzVtXx0313DpMZcnJMZAdYTTy5GkZr9EAF6XPzd6dUiEeuUs+QF36NMwPWzDLeARRkzRQWMf5I2qnB/Zukj4PoyONBHYuKsUB7nuz2+7F75j6IyfSQHFcnHZcrBKU4PA5EDgrMi2MPZ9sUEgU=
+	t=1736299731; cv=none; b=bf2UiixsQS5v5JOO07E2/sMkrlNnnsXdcXrhwDvcSfZnAXZFqNqz31GQtB8ZVY6Ud5m//uZ8KjGNcZFIYADMpPv1NQTZ4tIcD3Hx9vgow746SJJyxpHC3pxOTYDhILcrATJpb1UscF60VBG1bV8kHcUvUuiZFC15ogX3TloEWt4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736299370; c=relaxed/simple;
-	bh=0OBobLi7ExKS88UXVDqp57BgOzSWIY6pBcXtLyP8eXw=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Xw26c2K5SaM0uBbM9tOMw8QH8ykK7aZkOGmb71oNYfl4iojZNvBi547cux+RoubDrq/wCJ4wNcq28CNtcVXieYVlfr6XggGiFZPVbXXS9ZqmOmjoDYzsgiCeVFu6WWWUPVJ4mseOEx4IIOkKjMU8ydyjWpl+YsWmQttq++W9gws=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Yuq8R46H; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 507K6W4c027970;
-	Wed, 8 Jan 2025 01:22:34 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	wcD3BPbhWVoPjRNWO38IFE1Iyo7XgqPy9NMwnNA2krs=; b=Yuq8R46HcVqTh7PO
-	NUt/kpE67QfSmMqZUux04rII6Ae6KHa8Y9X3SMfkdGeWBl5+b5j8Q7aVmd9AXa0X
-	JnwF7dORnP1bSrYfN05Nny23RTm8kIUdU7BJvKusBU5cM5KyjIYmPzPZm2719pMS
-	vJr3XWNDzKTFuHrYAZVjDj4PQCmuq/7+n1HDs7h8j+OAkyRWLbCNEwAIQ5IUIGw8
-	IIhVW/Rn0Pfx+I8PLj41DEl6Dr8CYOpnn2wR4TdIsFJ8AhRFbcuoMy/7UQj5nCqL
-	RNVB//zYnOxGwnS7WdfoEIsjOXFG3bgEGoZkShUYc7xnxlC8etHxi1n+Iyo6mtm7
-	JMOLgA==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 441b0k8hnk-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 08 Jan 2025 01:22:34 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 5081MXdC028021
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 8 Jan 2025 01:22:33 GMT
-Received: from hu-wcheng-lv.qualcomm.com (10.49.16.6) by
- nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Tue, 7 Jan 2025 17:22:33 -0800
-From: Wesley Cheng <quic_wcheng@quicinc.com>
-To: <srinivas.kandagatla@linaro.org>, <mathias.nyman@intel.com>,
-        <perex@perex.cz>, <conor+dt@kernel.org>, <dmitry.torokhov@gmail.com>,
-        <corbet@lwn.net>, <broonie@kernel.org>, <lgirdwood@gmail.com>,
-        <krzk+dt@kernel.org>, <pierre-louis.bossart@linux.intel.com>,
-        <Thinh.Nguyen@synopsys.com>, <tiwai@suse.com>, <robh@kernel.org>,
-        <gregkh@linuxfoundation.org>
-CC: <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-sound@vger.kernel.org>, <linux-input@vger.kernel.org>,
-        <linux-usb@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-doc@vger.kernel.org>, Wesley Cheng <quic_wcheng@quicinc.com>
-Subject: [PATCH v32 32/32] ALSA: usb-audio: qcom: Notify USB audio devices on USB offload probing
-Date: Tue, 7 Jan 2025 17:22:13 -0800
-Message-ID: <20250108012213.1659364-33-quic_wcheng@quicinc.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20250108012213.1659364-1-quic_wcheng@quicinc.com>
-References: <20250108012213.1659364-1-quic_wcheng@quicinc.com>
+	s=arc-20240116; t=1736299731; c=relaxed/simple;
+	bh=bqg0+FMlOKL/Oya+KGSPfGQW2exu4yfKcdmsG6B/3po=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=t0nwVFkT48X+Gj/sd7J+d92Tc7johUbz0l2YD80Gd7u1Tqa5eSJ9YazBxC0/ARJSa4Os4aM1qBftU9z9b90r/PCPMCCNMjAsQW1wvWyGbmjJrtgGigPZI4kEBRZerc5qpebvNJ7nXgnUMFJ82Vuy3r+fFwB6MZWGZOmrc3wROpE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=SoJsMj/E; arc=none smtp.client-ip=209.85.216.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
+Received: by mail-pj1-f47.google.com with SMTP id 98e67ed59e1d1-2eec9b3a1bbso18812850a91.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Jan 2025 17:28:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google; t=1736299729; x=1736904529; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=tqd+1cGHPrlBvYanevBgNpqOS63DSGTtWvcDTpfRh2k=;
+        b=SoJsMj/E9Poy8wUJbkJREedDQHgP2F1wxEPLniI/k2wp3yE1pceISNAmzXcVfuXvK5
+         9BRfHYhK60g9yqeak5OBgywz7qnRB25adOeuLBBiTzuSrfUDnPTlJ9A5SDxZx1pgOZO4
+         5pMYyaVVHcg8MSluakLdO5pDb17PinNeuRpXo=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1736299729; x=1736904529;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=tqd+1cGHPrlBvYanevBgNpqOS63DSGTtWvcDTpfRh2k=;
+        b=KrkGq627zXWf4vkPOGUCgs61SUcaQRJVKIiKWLX8Mq5+9TfSYRQhD7SsKEh48vgRe6
+         CiWSWezKbDHWECMr8BycE14Kme90WZhHPtxtv8CiA/Kbh+d+ywV5+b7b0uq8JaSafMp3
+         uQgGNxYFE4gyjz2wCdTKlnWjc+TCSnVPB8NsYfHNuN/QTUtVGN7nX/2e1brwdUt92uzr
+         4wgVdK4EutrWd9onKlaQV5k1IyAaUN9WoaaQiu3VjF3LfcOVNwqE6ZAcUUOssvEbNXb8
+         5YO25uISWp9sRmzvgz23qSB32CjKkWIuZ7JT9yZIFmh/dmj9XhIIm8sBk1CV9OwL4oiP
+         Wi8Q==
+X-Forwarded-Encrypted: i=1; AJvYcCXe9ER9kyqe7iiyBWuCzhINyEqAHOCeikzmSe4QInCJUg3e8u878zpr9E7pM5ExX5lyZCaE1ilhFDuvPM8m@vger.kernel.org
+X-Gm-Message-State: AOJu0YytcoUbSv/sdP4jlX1fSIEoVA3lbPeqY66G47ZQHJ/OR+Q99n8w
+	qbSJdx//Mtu7vAcH8Gjibjl8G8kJLyXns0oA7a+fxeG6OviFt+rWc+GmbziV3g==
+X-Gm-Gg: ASbGnctmi8HicduCn6fOeW+z6b2BRebzxO8rmQrD6X0uYjjJRkGwkFrXzUN8S7IUfXJ
+	P/vIGITsFl1cJMBrP2sDMD6mA/ohecGFUZjXnZLT0wS8L62AYdaJqAc1yMEpOm2RD0c83rPUcXW
+	AEJ4S6LIkQJGvLJIz7GyUzOR0yuva3javM2bzUTTpxYhZQZ593QFUAN8wKypXNSbgl2SEewQPx0
+	1cl2t+lPF2I9yDOfS3I78mN3/crVGVlwVwX6zJQVdwzrGzLyRJc0EmlR/mMXvbPWKDpGQQdnJxO
+	b2Kug7+9wjwyYgHZKGwM
+X-Google-Smtp-Source: AGHT+IGLMAn658p03PrE1F/SvBkX0kJr3VIC8TJvPQU2lqUj87YfRHHuWKXhHHpqPyBEZ+g+tphMPA==
+X-Received: by 2002:a17:90b:5448:b0:2f4:f7f8:fc8b with SMTP id 98e67ed59e1d1-2f548f1c430mr1421193a91.27.1736299729083;
+        Tue, 07 Jan 2025 17:28:49 -0800 (PST)
+Received: from localhost (129.135.125.34.bc.googleusercontent.com. [34.125.135.129])
+        by smtp.gmail.com with UTF8SMTPSA id 98e67ed59e1d1-2f54a2d43dcsm225080a91.38.2025.01.07.17.28.48
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 07 Jan 2025 17:28:48 -0800 (PST)
+From: Stephen Boyd <swboyd@chromium.org>
+To: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>
+Cc: linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev,
+	devicetree@vger.kernel.org,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Rob Herring <robh@kernel.org>,
+	linux-arm-msm@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	Arnd Bergmann <arnd@arndb.de>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Saravana Kannan <saravanak@google.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>
+Subject: [RFC PATCH 0/6] qcom: Add an SoC PM driver for sc7180 using PM domains
+Date: Tue,  7 Jan 2025 17:28:37 -0800
+Message-ID: <20250108012846.3275443-1-swboyd@chromium.org>
+X-Mailer: git-send-email 2.47.1.613.gc27f4b7a9f-goog
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nalasex01c.na.qualcomm.com (10.47.97.35) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: os3n6aM1Tov9vTtXxZIYeUe3jNhBEelb
-X-Proofpoint-ORIG-GUID: os3n6aM1Tov9vTtXxZIYeUe3jNhBEelb
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 phishscore=0
- bulkscore=0 mlxscore=0 lowpriorityscore=0 impostorscore=0 adultscore=0
- priorityscore=1501 suspectscore=0 spamscore=0 malwarescore=0
- mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2501080007
 
-If the vendor USB offload class driver is not ready/initialized before USB
-SND discovers attached devices, utilize snd_usb_rediscover_devices() to
-find all currently attached devices, so that the ASoC entities are notified
-on available USB audio devices.
+This series implements an SoC PM driver for Qualcomm's SC7180 SoC that
+creates devices for the nodes that make up the soc node and attaches PM
+domains to those devices before the devices are added to the platform
+bus. The overall plan is to remove power management logic from various
+platform drivers and consolidate it into this SoC PM driver using PM
+domains. This series isn't there yet, as I haven't had the time to do
+much beyond this starting part.
 
-Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
----
- sound/usb/qcom/qc_audio_offload.c | 2 ++
- 1 file changed, 2 insertions(+)
+This is a followup to my presentation at OSSEU in 2024[1]. I'm sending
+it out so that the early pieces can land while we work through the PM
+domain parts which I worry is going to get annoying rather quickly.
 
-diff --git a/sound/usb/qcom/qc_audio_offload.c b/sound/usb/qcom/qc_audio_offload.c
-index 81f75ca34e4d..6e1b43cb869e 100644
---- a/sound/usb/qcom/qc_audio_offload.c
-+++ b/sound/usb/qcom/qc_audio_offload.c
-@@ -1972,6 +1972,8 @@ static int __init qc_usb_audio_offload_init(void)
- 	if (ret < 0)
- 		goto release_qmi;
- 
-+	snd_usb_rediscover_devices();
-+
- 	return 0;
- 
- release_qmi:
+TODO:
+ * Populate more child devices and attach more pm domains to test out
+   more stuff
+ * Set power state of PM domains to match on/off state of resources like
+   clks, regulators, etc.
+ * Investigate setting runtime PM state of devices before they're added
+   to platform bus
+ * Remove PM code from drivers using the platform_data non-NULL trick
+ * Make multiple domains? Perhaps clk domain, regulator domain,
+   interconnect domain, etc?
+ * Provide a way for runtime active devices out of boot to be powered
+   down when a driver isn't attached
+
+[1] https://osseu2024.sched.com/event/1ej38/the-case-for-an-soc-power-management-driver-stephen-boyd-google
+
+Stephen Boyd (6):
+  bus: Extract simple-bus into self-contained driver
+  dt-bindings: bus: Add qcom,soc-sc7180 SoC
+  bus: Add basic sc7180 bus driver
+  of: Extract alloc/add functions from of_platform_device_create_pdata()
+  bus: qcom-sc7180: Attach pm domain to watchdog device
+  arm64: dts: qcom: sc7180: Add SoC specific compatible to soc node
+
+ .../bindings/bus/qcom,soc-sc7180.yaml         |  76 ++++++++
+ arch/arm64/boot/dts/qcom/sc7180.dtsi          |   2 +-
+ drivers/bus/Kconfig                           |  26 +++
+ drivers/bus/Makefile                          |   6 +
+ drivers/bus/qcom/Kconfig                      |  16 ++
+ drivers/bus/qcom/Makefile                     |   3 +
+ drivers/bus/qcom/qcom-sc7180.c                | 173 ++++++++++++++++++
+ drivers/bus/simple-bus.c                      |  79 ++++++++
+ drivers/bus/simple-pm-bus.c                   |   2 +
+ drivers/of/platform.c                         | 130 +++++++++++--
+ include/linux/of_platform.h                   |  14 ++
+ 11 files changed, 511 insertions(+), 16 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/bus/qcom,soc-sc7180.yaml
+ create mode 100644 drivers/bus/qcom/Kconfig
+ create mode 100644 drivers/bus/qcom/Makefile
+ create mode 100644 drivers/bus/qcom/qcom-sc7180.c
+ create mode 100644 drivers/bus/simple-bus.c
+
+
+base-commit: 3c48780d48df029cf9d5f42b8971663e6fb975ae
+-- 
+https://chromeos.dev
+
 
