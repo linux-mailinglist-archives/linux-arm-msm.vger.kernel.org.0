@@ -1,163 +1,118 @@
-Return-Path: <linux-arm-msm+bounces-44344-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-44345-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 03A15A0587B
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jan 2025 11:44:30 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1149CA05893
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jan 2025 11:47:46 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 526DE3A4F1A
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jan 2025 10:44:24 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 255DC7A01D0
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jan 2025 10:47:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 825811F63CC;
-	Wed,  8 Jan 2025 10:44:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4E4F81F63DF;
+	Wed,  8 Jan 2025 10:47:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="FUm4GvmI"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="TXlPEkeX"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f43.google.com (mail-lf1-f43.google.com [209.85.167.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAAFC1F3D53;
-	Wed,  8 Jan 2025 10:44:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 595031F1309
+	for <linux-arm-msm@vger.kernel.org>; Wed,  8 Jan 2025 10:47:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736333064; cv=none; b=ib127LaKEiX4mg6R7ezI8H9J5WnFALq/93E/eb0Ek9LkHi1L8cxF+72Gvrh0LxZgZyxqCXq54dqd92mzhPod14z3wTvRegIrC8LT11ZMnqGAeGWEd4h+Vgnwjq1lTIBuHhH7zi5FbM3KqFCx5wdlT4ceQc+ZkGL0a8vglUpXEoU=
+	t=1736333260; cv=none; b=fN87a25Sf4eI5kQh8Zz9MEgKsipnn14zRd9jxG6sZvJ0Do9btF6eEJOhV88v8g8OccqvZ0zE1HZaN4fpVQkOfi6lkkV4rH5ICM89JSM9oItRY6ngn9YoKzhBWKnIMfVcOclOi68wepkJY14uSgRoJTE1uUqmivUGfXQMANGBUFg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736333064; c=relaxed/simple;
-	bh=G5PH8JBium3MhTePsoIKiYmPSafl8ZQATIn7yTo+Ttk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=DGfr8cjXp2NMpfgqYYspxzbwHVnwaUAeg8nn0FTtZ4kQfe9Zj1V+PGdg9rY3cTcXKGxYDSstl9Hx2gaMUPjO2isYzuXiKuYwW+vLxtY9rLvGspZMj0LZ9dinslTW5pcBw5itf2gFmVSnX9GQ7Flv+C9ZZCc7IUIFLMXN/AqHwgM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=FUm4GvmI; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 508Ad3J9000895;
-	Wed, 8 Jan 2025 10:43:59 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	+0bR843H3VQ7Rmm291IX960YQ4KDT/hV5fiNWuqDkfs=; b=FUm4GvmIFJtE7uN4
-	pe5WfcCd295p3sLHxmmypVxNEY8cKkDEjdtFW9pjUpKCkyxETjtJ0VCGbUW+pMqk
-	5vg8GGI9yKo9Z6qepS2XTPaTTjK2xUA+/xe6lB4oQcU5FOjkXHBw02sxXRpP9wVg
-	KGPPvrS9ahDo3Uh0NxEnoidBogta5NeEZb84/2DVLnmCzhtnjxfJzkaCNglIRdSI
-	8c3J0YIYuWHdgVZCBv3NfChIiwRD7Bz/5rmFT2aDYf0zbgTSIGxmz0FU3bFpWms3
-	P/13L6NQAIP7mHxdasPx7vsX26be3yhOb0TYZdzUojisLRnJ5jUa5A2B1q1kkoBI
-	BQKmaA==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 441ms8rgkr-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 08 Jan 2025 10:43:58 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 508AhwR3028602
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 8 Jan 2025 10:43:58 GMT
-Received: from [10.253.35.161] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 8 Jan 2025
- 02:43:52 -0800
-Message-ID: <b035db82-7203-4e30-8457-caa4fa1b4e97@quicinc.com>
-Date: Wed, 8 Jan 2025 18:43:49 +0800
+	s=arc-20240116; t=1736333260; c=relaxed/simple;
+	bh=7Dp8gSfhyK3cIrHj2oyDrtZ5XxPQ6DdZq3tD+jolDFU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=MoXfMzx37tiirVXphdNWzdtZWVqqUq/VC8xBwmBPg5Iz38FssYxZ1/jhf21wqs7vxGYh450B2F9eCDxR04a4OV5FWAKE+Bo7ZRhnPcNQeX0t2R8EqaT9GThW/T0PYMw1IRX3GNOt4Z1r1429VSAqrW/n7RGVP17mAQIJ/+VAVOY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=TXlPEkeX; arc=none smtp.client-ip=209.85.167.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f43.google.com with SMTP id 2adb3069b0e04-5401be44b58so17429771e87.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Jan 2025 02:47:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1736333256; x=1736938056; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=KqGib1ZDnwv7hSRkBTzUodWhJMWwuBUix5Fy/i7/wXU=;
+        b=TXlPEkeXZfQT1d0ghYqWPOpOVrOIguEqLLAPjcfeRcPlAB1nlL6vAsk/dFmnCmfvgF
+         uSoHLLKGMZpxAvHTjhS9tXDa/aHhEsnONPyBUGMjghDyr0joC41kKl/dnvlT0Ot7HJNU
+         AlfQMbDDQQsVMIr4JcRzhkCz1WWHYN40AOwdE8fI5HgA0DUQlx9KQ7WXIIj14MX0oiDQ
+         4rvsnNR1fAcwKael8p+2AGp6K5SZLogB8uYnr7mUFkXufj1qqMIoI1z4UNaZTOJeseLW
+         YXojmnjnjS+pu7sXRJLdO2XAgzpUJzZmVv2WD54yFt2ZM5CD2c0F+/cEOj9CpD6cR1sy
+         WLxg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1736333256; x=1736938056;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=KqGib1ZDnwv7hSRkBTzUodWhJMWwuBUix5Fy/i7/wXU=;
+        b=dIRdkw937B0773JpZ1OLAvMQeTuSMb5AvbhsTYp3DQtc70LzlkBbU4GJJ1SnvDnH7Y
+         emvd9NQ89jUpqCncreFUBdqUy/nuyJcs6zhl/IW54LZ63PqqmsK4qw9K+hhh341DnlVZ
+         vA1v2IlX4jc1ofEEe3WeOEplBymI2GMnsyMCCe6RB0wkEGbY6pfXHxGAhJJjmAJWBwrn
+         07brFL/3VaBXaVeV7CBSY9VovWXWhwlOMCr8Jzy0ottbCXRGTfX2HcsP/OuGUrEhmrAd
+         VM2z7h4fvpXauv/+CfRHoxHloseO2IxSOYxOmiGaKzSYRBjUM+pG+Wvc4msopOIP4yQt
+         j5XA==
+X-Forwarded-Encrypted: i=1; AJvYcCVuZY1hJ/0XokqXR+AsUu3AozRd/RL4gEj8s/kKXHWmc7rbh2WJ2nwg/IWBfWS79TcRIO3DMcwMV9vvdR9B@vger.kernel.org
+X-Gm-Message-State: AOJu0YzXMzx9xW6ef3ngLvudQ6mAgIVsxgz4dMpYeZxP6zxoRqBYUynm
+	D6aCgRp3OoC770iTa0r0mid0LEuFUrENfzUOGxDiPZLka6ssVcE4oeTnd7aDDZC78Nr+xSKeYz3
+	L
+X-Gm-Gg: ASbGncsiljGylw2mVc2dbnl+gsZV1uiIBKtDSxlEVf6+0/qSSj9h7jXZJzjJ59eJs1j
+	wtJFLzInxukF08yMLLZ5yybSxTsp7hlxGMbCxgAeA0Mv2ULy5HjwyHWbldG6Vf4Kh2LD6dkDUoH
+	m3wC/+UVkDyAwBnzCkByfjFgUj1nEbU6q+iBRqUov+5vFe3lK5p84pmvxPM5CGWNQIU1sw2ElUr
+	at0RxXhifJFNYY5FEwlAnc0trdN+mDwCG9YRvut3mpEganmH0gJksJo4GKA1hP5we1jpBPhotCJ
+	pwwEPpQ+jhWK/URrmzltRpY6l/4E+6yMDaex
+X-Google-Smtp-Source: AGHT+IEgV7BYOyPY9tt7dlqJRF287AoBBvsP0IoKOgZDwqu4YNfzFyL37fxw2kC3z/KJ5mhZiXcKzg==
+X-Received: by 2002:a05:6512:ac7:b0:542:29a6:a067 with SMTP id 2adb3069b0e04-542845af553mr606181e87.6.1736333256365;
+        Wed, 08 Jan 2025 02:47:36 -0800 (PST)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-3045ad9bbd0sm62422871fa.37.2025.01.08.02.47.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 08 Jan 2025 02:47:35 -0800 (PST)
+Date: Wed, 8 Jan 2025 12:47:33 +0200
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
+Cc: andersson@kernel.org, mathieu.poirier@linaro.org, 
+	linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v2] rpmsg: qcom_smd: Fix an OF node leak
+ inqcom_smd_register_edge()
+Message-ID: <4t2q2sij3o7iixzmau55gsh6gcvmpm4jrgp5v5mkfuocwai3sb@ahdwofczf53z>
+References: <20250108005045.2716459-1-joe@pf.is.s.u-tokyo.ac.jp>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/3] Support tuning the RX sampling swap of the MAC.
-To: Andrew Lunn <andrew@lunn.ch>
-CC: Vinod Koul <vkoul@kernel.org>, Andrew Lunn <andrew+netdev@lunn.ch>,
-        "David
- S. Miller" <davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>, Jakub
- Kicinski <kuba@kernel.org>,
-        Paolo Abeni <pabeni@redhat.com>, Rob Herring
-	<robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konradybcio@kernel.org>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        Jose Abreu <joabreu@synopsys.com>,
-        Maxime Coquelin
-	<mcoquelin.stm32@gmail.com>, <netdev@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>,
-        <linux-stm32@st-md-mailman.stormreply.com>,
-        <linux-arm-kernel@lists.infradead.org>
-References: <20241225-support_10m100m-v1-0-4b52ef48b488@quicinc.com>
- <6dcfdb0b-c1ec-49f7-927e-531b20264d68@lunn.ch>
- <2aa2c6dd-e3f2-4b9b-8572-20b801edef81@quicinc.com>
- <59590ff5-676a-4cd6-a951-96f66972aad4@lunn.ch>
-Content-Language: en-US
-From: Yijie Yang <quic_yijiyang@quicinc.com>
-In-Reply-To: <59590ff5-676a-4cd6-a951-96f66972aad4@lunn.ch>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: x_CwTAya_QyRJEXsvvGJOqX8bkJFVQPs
-X-Proofpoint-GUID: x_CwTAya_QyRJEXsvvGJOqX8bkJFVQPs
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 malwarescore=0
- priorityscore=1501 suspectscore=0 mlxlogscore=720 lowpriorityscore=0
- adultscore=0 impostorscore=0 clxscore=1015 phishscore=0 spamscore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2501080087
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250108005045.2716459-1-joe@pf.is.s.u-tokyo.ac.jp>
 
-
-
-On 2024-12-27 01:14, Andrew Lunn wrote:
-> On Thu, Dec 26, 2024 at 11:06:48AM +0800, Yijie Yang wrote:
->>
->>
->> On 2024-12-26 01:49, Andrew Lunn wrote:
->>> On Wed, Dec 25, 2024 at 06:04:44PM +0800, Yijie Yang wrote:
->>>> The Ethernet MAC requires precise sampling times at Rx, but signals on the
->>>> Rx side after transmission on the board may vary due to different hardware
->>>> layouts. The RGMII_CONFIG2_RX_PROG_SWAP can be used to switch the sampling
->>>> occasion between the rising edge and falling edge of the clock to meet the
->>>> sampling requirements.
->>>
->>> The RGMII specification says that RD[3:0] pins are sampled on the
->>> rising edge for bits 3:0 and falling edge for bits 7:4.
->>>
->>> Given this is part of the standard, why would you want to do anything
->>> else?
->>>
->>> Is this maybe another symptom of having the RGMII delays messed up?
->>>
->>> Anyway, i don't see a need for this property, unless you are working
->>> with a PHY which breaks the RGMII standard, and has its clock
->>> reversed?
->>
->> Please correct me if there are any errors. As described in the Intel and TI
->> design guidelines, Dual Data Rate (DDR), which samples at both edges of the
->> clock, is primarily used for 1Gbps speeds. For 100Mbps and 10Mbps speeds,
->> Single Data Rate (SDR), which samples at the rising edge of the clock, is
->> typically adopted.
+On Wed, Jan 08, 2025 at 09:50:45AM +0900, Joe Hattori wrote:
+> qcom_smd_register_edge() leaks an OF node reference when
+> qcom_smd_create_chrdev() fails, since qcom_smd_parse_edge() sets
+> of_node_get(node) to edge->of_node. Add of_node_put() calls to the error
+> path of qcom_smd_register_edge() and qcom_smd_unregister_edge().
 > 
-> If it is typically adopted, why do you need to support falling edge?
-> Because we can is not a good reason. Do you have a board with a PHY
-> which requires falling edge for some reason?
-
-It's an RX-side feature and is unrelated to the PHY. As I mentioned in 
-another email, it's designed to introduce a half-clock cycle delay for 
-correct sampling in the IO Macro.
-
+> This was found by an experimental verifier that I am developing. Due to
+> the lack of actual devices, no runtime test was able to be performed.
 > 
-> 	Andrew
+> Fixes: 53e2822e56c7 ("rpmsg: Introduce Qualcomm SMD backend")
+> Signed-off-by: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
+> ---
+> Changes in v2:
+> - Put edge->of_node for clarity.
+> ---
+>  drivers/rpmsg/qcom_smd.c | 5 ++++-
+>  1 file changed, 4 insertions(+), 1 deletion(-)
 > 
+
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
 -- 
-Best Regards,
-Yijie
-
+With best wishes
+Dmitry
 
