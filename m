@@ -1,161 +1,137 @@
-Return-Path: <linux-arm-msm+bounces-44679-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-44680-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 74587A0833F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jan 2025 00:03:25 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2D9F3A08347
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jan 2025 00:07:50 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6D348168BF4
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jan 2025 23:03:23 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 09DD07A1EF6
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jan 2025 23:07:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7A1DF2063C9;
-	Thu,  9 Jan 2025 23:03:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6DE4D205AD7;
+	Thu,  9 Jan 2025 23:07:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="RZQJUnd/"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="K3hJU/4U"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f51.google.com (mail-lf1-f51.google.com [209.85.167.51])
+Received: from mail-pj1-f53.google.com (mail-pj1-f53.google.com [209.85.216.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D0D9205E0F
-	for <linux-arm-msm@vger.kernel.org>; Thu,  9 Jan 2025 23:03:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED7F0171658;
+	Thu,  9 Jan 2025 23:07:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736463794; cv=none; b=IhLuUrB4gP2mhIjAdFBndPlc7KdYPa8VFNjMa4N+jKr1NVXhkVshE+Kbeb0i0FlIKvfeP0BdyI5N9SjL0yTQd2QPsMo0bTqbfkOP1tHpYv20LWnK4rcFhANd8S2w0Adn/LEAZFBHujy5SshOKhrIcfreHI+xNAPVMW4LOyX6iBU=
+	t=1736464060; cv=none; b=p6Ce8CwbLmyLfcKlC2ZU2pQFygOle9MLuM7E9xbvSWaOz2bulzi9ZBrP8LuiIkmhbXV4Gq/WLS+gUgA9cgMI5RfzGcQ6KmcVFBlt7CDuXFTZThL+D5iu7PZj1/Fk5fibQOSw5YuYS0jp8/zQeYvRVAvj4oKXrHi+1WKbvXf48gw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736463794; c=relaxed/simple;
-	bh=hY2rkJrYPz6wESPMCkN5cJxZr3WT7E7660Vjmz+mNt4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=F4df8CnExfC/ozonMU/kLY0m/pWtmgPCQzsmWutb/tKQzn2hU+hvtPw+3xOhANaCj5DFcJRszGorgS1HzHqpw2hIep/I4pk7JZ93zBm/DZEoRMxDpQwqgGypazaFJpCgzOMPJ1Hpe294IhECP8BL741hjx/SFLyVQ0vDxcPIm60=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=RZQJUnd/; arc=none smtp.client-ip=209.85.167.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f51.google.com with SMTP id 2adb3069b0e04-540215984f0so1592480e87.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Jan 2025 15:03:12 -0800 (PST)
+	s=arc-20240116; t=1736464060; c=relaxed/simple;
+	bh=vmMryDxbgvpoI6kGJc9UE7lXz4Gghjxx2kQADnyVMsU=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=PcJB3t6fY1C5fVd3pOqHI77GI7l1IWqoWBxpJQebw5zJdGYhFDqpce5r4OubKlZxhsYasDsn7bcGFbtdMGgs94uJilsY4DjphoYDbaX4lhnZAF0LJmakEwEv13ECs3w8PS+x1x8ulPxqs7JTD0n50uxS+L4GfJn/FSx0UghiD3c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=K3hJU/4U; arc=none smtp.client-ip=209.85.216.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pj1-f53.google.com with SMTP id 98e67ed59e1d1-2ef6c56032eso1917211a91.2;
+        Thu, 09 Jan 2025 15:07:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1736463791; x=1737068591; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=AAcNvBDLCMVwN0Us4db6UaMc6t+XPG2++mfdFKlIJ/k=;
-        b=RZQJUnd/FGH+nbmDO5+xiYdCL9WICwF/J3hFzRivXaBzvBqy5Hy8eu7fy82Ikc6km9
-         exhv5Inj4gyuiU5AIkO1BIbq0H2cYEZkV56rmhUDIFT6Xb7snk8h0jWIESeg8U3Ikr9J
-         KnfS+EI7NNJ9vsAjvVui7xBp5u0f4g/U0VNlK5RKjS3Ws0xQvy2COCq5JyXWJEu8i2y1
-         +jydnhIV2hP9/t3x4FXEwsP6q0xrT/jBi2uCvMXUDPbG1aPyjtns8UId4zPsM7Yb/Uul
-         vRiYNiOAnGyugVVAx1DiYAP6lSo3IHII6aF77RAbPFqA4cZa5oSfY3dJmT+JIx9mTE6P
-         jfwg==
+        d=gmail.com; s=20230601; t=1736464058; x=1737068858; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=hsEXuz5pOePCgHaBAUoGEuivEUiSeuPzmqjBLNVeF5U=;
+        b=K3hJU/4UQteYg9yB6JMV4FwMISlKGc/xnJKP4QW4AO4h9yPGpyBzOPfAxykH7h1Qtj
+         CT9Du1bZN4akYgNYAQfZB6U+3SXXe2EHEiM/Yp+faNVepFl9KoXVa2hVyIpmHEn4iZaU
+         bTNiqouM5dbbhAvJnkzTspt1eJ+zmRUGIglpGimQxoPVFdSCt5hFmtEwvLS7is5waNWP
+         RhSkvYruPtKEyUUbNWCL92wDWABeGtOKwl5ak2BjrdHZM52UUiI0J8tmoaWmIN7uH+vI
+         Qhom2N+pqlq0PpCJXQ69Kpb3akrCvDFaChYO2/Sb9bnjPoaVO+Lz0yfTm4M0h3EENqgk
+         Tf/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736463791; x=1737068591;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=AAcNvBDLCMVwN0Us4db6UaMc6t+XPG2++mfdFKlIJ/k=;
-        b=NLVhofjN0uPUHZHKdh/UYcGEL/pOBxxL/+GQiNza6tAoyCR5Md+r5d6+qaC4LNYZrI
-         V54tjaze2RktRUxyokpGNq8mWrowzsILfQXWJAQerwCLoctd9RTIhEAVLMNhIZLReKdR
-         1OBt3iOKJASj6YgwxOVWh4rdNT/8liMckK1lX4AN+xuxYmME05tR4YYRAurDnxThdNfy
-         96c6Fl9TiFP04x2XzjlKv1JUas9UJJTsluxkIWIjSS49WiHJ+AHr0NOm+XR/jtHS7k4C
-         sUH1m0b1T4Fx03PncdoHtIKkCZMS1IWegrAwU+N5ApTk5nZdyczUX7HSm54aZQtMcB3L
-         gQXw==
-X-Forwarded-Encrypted: i=1; AJvYcCVlDu8fLzbrI+uNvw4N0jTgGZ0tRUlNSG5ZMURje79/o+oZtQoAWnJ84Oo8NZUW7/PR+jDdg/vY0rNHHCxN@vger.kernel.org
-X-Gm-Message-State: AOJu0YyDPsXBLxTJn5UqdEMWf28vqEgmBqne0wms/3Cvub1TI2yWzX+e
-	0GMSZ1NIy+n84x1Cc1h7CT9rZVutBogHPJ91hvZ2NjGGU0g0Q9IGr60Bu9K/Clw=
-X-Gm-Gg: ASbGnctsFqxOhSYgouIzGBTHBejhVIDeb1puVs3nsRkLj3QS138f843R2a7ypsH1pY4
-	v5Igcmp85haAZvs88HmrBYZv+d7pHC10AePOMjhX121F5MC3qTyrtJZAwPlh0torl4PZGe1AdmP
-	aIKOjhV8wY8iDnGQxV5HW9BO8RjMCa5Mhb6Y6+AQpe6WoPKzSsG/aWiLHrUFWTurNjNJ53bl6uk
-	Hr6z5jXhhgqSNN7R3SHybcT8K+csw31286m4MSyXXQOzm25XcOnLbb2PObDFSTG8alYwmqgek5V
-	r3sYPJAkLXTw2/8eom8P3u3f3dTRWLBNvIjf
-X-Google-Smtp-Source: AGHT+IHf6pkAtxzAARwiQGzNbECIXTffJ/LFIaL0vm4+LTZtTr/waEIktn0uMxncfhNuRu6tqNYP7A==
-X-Received: by 2002:a05:6512:3e02:b0:53e:38fd:7518 with SMTP id 2adb3069b0e04-542845b1a57mr3023380e87.3.1736463790653;
-        Thu, 09 Jan 2025 15:03:10 -0800 (PST)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5428becac3esm327366e87.233.2025.01.09.15.03.09
+        d=1e100.net; s=20230601; t=1736464058; x=1737068858;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=hsEXuz5pOePCgHaBAUoGEuivEUiSeuPzmqjBLNVeF5U=;
+        b=Qljualr6Fq6buuyZUEOQsJQOe+G7QrUKOeDNAG8dgxja5Or/dfdKz60SlbVl00qCOP
+         RoufD/c+1H97qB44FJDq6vwgt3KnbD740kMFvkBfUYGPS72S23M7VZHltp71dBgs6tdv
+         DC77NjHV0E6wlQGbwbhxpZVcy7VMSjbszxuY9EoPbqi+eZ/IGL8V+gR0Nmvzmvqk0Mw8
+         u9tDzipDFdfQFO0+rnNCmFxf5HdmPyyaFGoCU03vsJvma2hGp5RkKcUoRtGNtyvWlNql
+         0ob30giuS+nKehqJbnSv9oS2wjh3e/BH5j1yiMxC9J7sUwqDUri0kCw6AvOpMGj+l705
+         va6A==
+X-Forwarded-Encrypted: i=1; AJvYcCVNLUZ5jIGTOyjbTunG0qkziIlNeMbZor/uyRurbSzKx4wpTsvjCe5K7Eww2VFVoneOSFmtmfpEN5+8C88y@vger.kernel.org, AJvYcCVU961n6sCwVch87feXS9suOjsTFD9LhKC+udZ5eV9M8L5N5qvbB2pA0IB//eNrSrCY66CEb/ogzD+70i0x@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy5yMn/OORJ24PCqBUSsdBQLPEe6tHqP7EWJtKxcKRwMPxzVnlq
+	zhr4qdeJjzdFjnfqQPsstFh3wiBK5Q0mAExIw59NvhHK+xWyCXP6
+X-Gm-Gg: ASbGnct9vwL8iZqks/W0Gw7XdRIn+tDch8rzkAFVrJ761doHjuUWLQoHz0ZK9qmt2nU
+	WdU9BD6bPDeJCz34lgHlrVym2DHcG60p2SzotocMRBN5ewkTiFijnNY1WQ8RNXH4QUYr3kMbFO/
+	XzcnxdJfQq+kHeIPLul7wzX2RUloZIGqC3f/qETXX1HJNBp1gdwkqmqW3Evn0WO6z1fyXzht/Eu
+	tsRUxQl9j4ZW6hgmhHZCx5eTsFk76MN0zTu1KzuriwZaFrpAKnu7gN7ihh4ZH5S2iNdlPrkpbta
+	JVhrRfc41wGeyc/cs7/e1rCE7p7RivU=
+X-Google-Smtp-Source: AGHT+IFijBusIXQNveTYyVkWineuwP7XNYtVjA05OP1gn+j7t447g9otZeq6N7nH7yR5y0Gph1vzJQ==
+X-Received: by 2002:a17:90b:540b:b0:2f2:3efd:96da with SMTP id 98e67ed59e1d1-2f548f4ea9emr13487800a91.24.1736464058061;
+        Thu, 09 Jan 2025 15:07:38 -0800 (PST)
+Received: from localhost ([2a00:79e1:2e00:1301:12e9:d196:a1e9:ab67])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2f54a28730dsm4544298a91.20.2025.01.09.15.07.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 09 Jan 2025 15:03:10 -0800 (PST)
-Date: Fri, 10 Jan 2025 01:03:07 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc: Rob Clark <robdclark@gmail.com>, 
-	Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
-	Simona Vetter <simona@ffwll.ch>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
-	Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
-	Conor Dooley <conor+dt@kernel.org>, Krishna Manikandan <quic_mkrishn@quicinc.com>, 
-	Jonathan Marek <jonathan@marek.ca>, Kuogee Hsieh <quic_khsieh@quicinc.com>, 
-	Neil Armstrong <neil.armstrong@linaro.org>, linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
-	freedreno@lists.freedesktop.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	Srini Kandagatla <srinivas.kandagatla@linaro.org>
-Subject: Re: [PATCH RFC / WIP 11/11] drm/msm/dpu: WIP: CTL_LAYER_EXT is gone
-Message-ID: <h5eabjdgzsvn2hutcc6osndieg3v6hkusfdxnrfhy77gmyx4eq@4wwltux4erz5>
-References: <20250109-b4-sm8750-display-v1-0-b3f15faf4c97@linaro.org>
- <20250109-b4-sm8750-display-v1-11-b3f15faf4c97@linaro.org>
+        Thu, 09 Jan 2025 15:07:37 -0800 (PST)
+From: Rob Clark <robdclark@gmail.com>
+To: dri-devel@lists.freedesktop.org
+Cc: freedreno@lists.freedesktop.org,
+	linux-arm-msm@vger.kernel.org,
+	Rob Clark <robdclark@chromium.org>,
+	Rob Clark <robdclark@gmail.com>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Sean Paul <sean@poorly.run>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	David Airlie <airlied@gmail.com>,
+	Simona Vetter <simona@ffwll.ch>,
+	linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH] drm/msm: Avoid rounding up to one jiffy
+Date: Thu,  9 Jan 2025 15:07:33 -0800
+Message-ID: <20250109230734.8111-1-robdclark@gmail.com>
+X-Mailer: git-send-email 2.47.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250109-b4-sm8750-display-v1-11-b3f15faf4c97@linaro.org>
+Content-Transfer-Encoding: 8bit
 
-On Thu, Jan 09, 2025 at 02:08:38PM +0100, Krzysztof Kozlowski wrote:
-> Not finished. Looking around, maybe someone already did some works
-> around new CTL_PIPE_ACTIVE and CTL_LAYER_ACTIVE registers?
+From: Rob Clark <robdclark@chromium.org>
 
-This is not enough, the whole blend setup is to be moved to LM
-block.
+If userspace is trying to achieve a timeout of zero, let 'em have it.
+Only round up if the timeout is greater than zero.
 
-> 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> ---
->  drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_12_0_sm8750.h | 12 ++++++------
->  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c          |  3 +++
->  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h          |  3 +++
->  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c              | 10 ++++++++--
->  4 files changed, 20 insertions(+), 8 deletions(-)
-> 
+Fixes: 4969bccd5f4e ("drm/msm: Avoid rounding down to zero jiffies")
+Signed-off-by: Rob Clark <robdclark@chromium.org>
+---
+ drivers/gpu/drm/msm/msm_drv.h | 10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
 
-[...]
-
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
-> index 06b01cd36ce2442ee6e1b85be227851a234cc96b..502449cbbddcb21b7008f139ac065d187a16b68e 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
-> @@ -40,6 +40,8 @@
->  #define   CTL_INTF_FLUSH                0x110
->  #define   CTL_CDM_FLUSH                0x114
->  #define   CTL_PERIPH_FLUSH              0x128
-> +#define   CTL_PIPE_ACTIVE               0x12C
-> +#define   CTL_LAYER_ACTIVE              0x130
->  #define   CTL_INTF_MASTER               0x134
->  #define   CTL_DSPP_n_FLUSH(n)           ((0x13C) + ((n) * 4))
->  
-> @@ -729,8 +731,12 @@ static void _setup_ctl_ops(struct dpu_hw_ctl_ops *ops,
->  	ops->trigger_pending = dpu_hw_ctl_trigger_pending;
->  	ops->reset = dpu_hw_ctl_reset_control;
->  	ops->wait_reset_status = dpu_hw_ctl_wait_reset_status;
-> -	ops->clear_all_blendstages = dpu_hw_ctl_clear_all_blendstages;
-> -	ops->setup_blendstage = dpu_hw_ctl_setup_blendstage;
-> +	if (cap & BIT(DPU_CTL_NO_LAYER_EXT)) {
-
-I'd prefer if this is was an explicit MDSS / DPU version check rather
-than an extra feature bit, enable new functions for version >= 11.0
-
-> +		// TODO: NOT COMPLETE, This has to be implemented
-> +	} else {
-> +		ops->clear_all_blendstages = dpu_hw_ctl_clear_all_blendstages;
-> +		ops->setup_blendstage = dpu_hw_ctl_setup_blendstage;
-> +	}
->  	ops->update_pending_flush_sspp = dpu_hw_ctl_update_pending_flush_sspp;
->  	ops->update_pending_flush_mixer = dpu_hw_ctl_update_pending_flush_mixer;
->  	if (cap & BIT(DPU_CTL_DSPP_SUB_BLOCK_FLUSH))
-> 
-> -- 
-> 2.43.0
-> 
-
+diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_drv.h
+index fee31680a6d5..451d258b9827 100644
+--- a/drivers/gpu/drm/msm/msm_drv.h
++++ b/drivers/gpu/drm/msm/msm_drv.h
+@@ -537,16 +537,14 @@ static inline int align_pitch(int width, int bpp)
+ static inline unsigned long timeout_to_jiffies(const ktime_t *timeout)
+ {
+ 	ktime_t now = ktime_get();
+-	s64 remaining_jiffies;
+ 
+-	if (ktime_compare(*timeout, now) < 0) {
+-		remaining_jiffies = 0;
++	if (ktime_compare(*timeout, now) <= 0) {
++		return 0;
+ 	} else {
+ 		ktime_t rem = ktime_sub(*timeout, now);
+-		remaining_jiffies = ktime_divns(rem, NSEC_PER_SEC / HZ);
++		s64 remaining_jiffies = ktime_divns(rem, NSEC_PER_SEC / HZ);
++		return clamp(remaining_jiffies, 1LL, (s64)INT_MAX);
+ 	}
+-
+-	return clamp(remaining_jiffies, 1LL, (s64)INT_MAX);
+ }
+ 
+ /* Driver helpers */
 -- 
-With best wishes
-Dmitry
+2.47.1
+
 
