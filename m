@@ -1,36 +1,57 @@
-Return-Path: <linux-arm-msm+bounces-44582-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-44583-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2AF08A07732
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jan 2025 14:21:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 24DB3A0774B
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jan 2025 14:27:19 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9261A3A88D6
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jan 2025 13:21:44 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 59F8E3A74A5
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jan 2025 13:27:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7354821885C;
-	Thu,  9 Jan 2025 13:21:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8CF27214A6D;
+	Thu,  9 Jan 2025 13:27:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=oldschoolsolutions.biz header.i=jens.glathe@oldschoolsolutions.biz header.b="hq/3wi4S"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mout.kundenserver.de (mout.kundenserver.de [212.227.126.135])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53F0F218837;
-	Thu,  9 Jan 2025 13:21:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEB391853;
+	Thu,  9 Jan 2025 13:27:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.126.135
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736428904; cv=none; b=oZKy5E30MZIdbra1L9NYt/lywsUkLN9i2GrWOYzbiggjCFSmRy4zitGBcCQRXnGWGYaPTQL6VLAA/+XhNu9o7HNpk8daQ8G0pjH55lXB9i8i460NGALb0P3V0WqH+5otBTQgv1YPKOdQFETStpYZcBIq85y/q1FSKbzxwy9YA1E=
+	t=1736429234; cv=none; b=UQf8mc4tXqcUOPcjSQAJosKiZQ/4raUqo1ODZtMck7Q2IO5ESOPJpW0A7JSc0hmlNETBJcNURRW+JbV1yrtVtNpyLfCfZNS7oW0ZczAn8yrDP03/yXvQmXHxyHAkq4ForcSC6bd0sc/Pc7r9GwbdhZvznPB0XQSi2Dp7TLjRiCs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736428904; c=relaxed/simple;
-	bh=x53JsgUitjwT4JYv2K0Off0/mCpvowOe8rTgN1+NhsU=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=L8usM/5tYHYrvnLOxi4k1+QNMkGRym0jbSEif5UPyGobDcZDYe3lymxv1yGhlio90KCpFBUVZjKyCApB0jXQ8JVVd2ONBJGvxpBC02gCifh57vLaEk6OxHdlhHTsUI+tR+KbFsFQ2ZhvtaCrEjX8mKZNLzg1qf/B4nAjtab0CU0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F36DC4CED2;
-	Thu,  9 Jan 2025 13:21:41 +0000 (UTC)
-Message-ID: <29079904-dc97-4bf3-80e6-cb63a785c80e@xs4all.nl>
-Date: Thu, 9 Jan 2025 14:21:40 +0100
+	s=arc-20240116; t=1736429234; c=relaxed/simple;
+	bh=eDfPL13BEwOyMfyMggn7vf2AeMKPlzaJmKWJrVT4SjE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=BhZJJF502O5yJTHe6+BNRly3aYI28qiDkSip0ucEtx3IiduBkNZnC8Ofb1eQpU7DM4OFdi3dR53obf4T4d+mUqqistJAVQ8Speownm1eEFrcp3dMzYuefQ/MQy1Mt73mgeVZWgHdjddk2p2A9iYLZu3PRmh6rteH2ukQz2tMaQg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=oldschoolsolutions.biz; spf=pass smtp.mailfrom=oldschoolsolutions.biz; dkim=pass (2048-bit key) header.d=oldschoolsolutions.biz header.i=jens.glathe@oldschoolsolutions.biz header.b=hq/3wi4S; arc=none smtp.client-ip=212.227.126.135
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=oldschoolsolutions.biz
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oldschoolsolutions.biz
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+	d=oldschoolsolutions.biz; s=s1-ionos; t=1736429223; x=1737034023;
+	i=jens.glathe@oldschoolsolutions.biz;
+	bh=eDfPL13BEwOyMfyMggn7vf2AeMKPlzaJmKWJrVT4SjE=;
+	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
+	 References:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding:cc:content-transfer-encoding:
+	 content-type:date:from:message-id:mime-version:reply-to:subject:
+	 to;
+	b=hq/3wi4SE5EFyD57UBEB2XwiZx715MqugHYVoRT4H/5p5nglLJRQfV3hLg+g0pWT
+	 8j61Iqs9KIR658yG5W/a4JeLxucsMdfawhSSnG0fPMHwjQljaJODBHyLhE4KK4yBJ
+	 KZ3UtrQIsCUE+UYwW/NVP/a1UULQ8JgPXFWl/VQzPGRCD/S2gxtJKo85IVZWv6pd6
+	 Eq33ICqXGeWm6p/LxhXVIB5KHN2+EJtZ8TSBeROfWLwqaiw2y0RzgOp5dwXyGSjVG
+	 myJ1ToIzvGoRT9E5HhmjgQgJezUoFIxS8GFDoVTQqiwlLWqZIsiTsAFg/vXFBk0T3
+	 NhmtuTlkI3YHmC3FmQ==
+X-UI-Sender-Class: 55c96926-9e95-11ee-ae09-1f7a4046a0f6
+Received: from [192.168.0.152] ([91.64.229.215]) by mrelayeu.kundenserver.de
+ (mreue010 [212.227.15.167]) with ESMTPSA (Nemesis) id
+ 1M5Q2f-1tUV7K2v4v-00DuJ0; Thu, 09 Jan 2025 14:27:03 +0100
+Message-ID: <411d3601-be05-44f7-8e6d-614a0a387fc7@oldschoolsolutions.biz>
+Date: Thu, 9 Jan 2025 14:27:03 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -38,140 +59,100 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/2] media: iris: fix memory leak and improve driver
-From: Hans Verkuil <hverkuil@xs4all.nl>
-To: Dikshita Agarwal <quic_dikshita@quicinc.com>,
- Vikash Garodia <quic_vgarodia@quicinc.com>,
- Abhinav Kumar <quic_abhinavk@quicinc.com>,
- Mauro Carvalho Chehab <mchehab@kernel.org>,
- Stefan Schmidt <stefan.schmidt@linaro.org>,
- Sebastian Fricke <sebastian.fricke@collabora.com>
-Cc: Joel Stanley <joel@jms.id.au>, linux-media@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
- 20241212-qcom-video-iris-v9-0-e8c2c6bd4041@quicinc.com
-References: <20250109-iris-driver-fixes-v1-0-789a0f5dd7ee@quicinc.com>
- <c1b5dcba-b476-47be-a270-a100efef8ff6@xs4all.nl>
-Content-Language: en-US, nl
-Autocrypt: addr=hverkuil@xs4all.nl; keydata=
- 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
-In-Reply-To: <c1b5dcba-b476-47be-a270-a100efef8ff6@xs4all.nl>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Subject: Re: [RESEND PATCH 1/2] soc: qcom: rmtfs: allow building the module
+ with COMPILE_TEST=y
+To: Bartosz Golaszewski <brgl@bgdev.pl>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org,
+ linux-kernel@vger.kernel.org,
+ Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+References: <20241202094903.18388-1-brgl@bgdev.pl>
+ <3b99b4c0-5880-4ee8-bbec-d07673d9ce11@oldschoolsolutions.biz>
+ <CAMRc=MdtbgSuwjv_h7+VVr5U2frc24NYmpifPQJ0O0iQt_sWKg@mail.gmail.com>
+Content-Language: en-US
+From: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
+In-Reply-To: <CAMRc=MdtbgSuwjv_h7+VVr5U2frc24NYmpifPQJ0O0iQt_sWKg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:79clL7J2W6O4VFs8egQkNf+rC7+1sbM/7+MFwDp10eJJhOdqv17
+ gRD2MPSoAxQH0DH3hdUHAn1IqaSVsSUGTY9wriY//S3sKM5QUcqbirCkd5dQexcz7+FstOK
+ Fp/ThMaY2HixT5UkY4SQa1gUjElo6szK3e90sP/fhFLoIxIImB+a3zPPVdLAev4jlZpfm4i
+ 9bODjKCBqmBFTL9bRWHcw==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:C9tN2NbWmXw=;7e4RoMtYyMLx8Wc4yqR7GfTJp5h
+ qiE5kczS7tUDKWq7/jZ0TSGidWn3EO9PZ/R6O4ZK6FHll9z4qE1OPWGjXU/6kTaBecHGaxyFy
+ LIpjFBl0HQ/MC3Eegb1MxPLePR+JNPql+O8S38NOZofc+0hMyGB8J7F5n03K2WZI5+F2YoZH1
+ kx9QvluPkNjp6YQmFFDQhLx/K1dcICDB9coXAq79H1LfNJba5j5GlsfpbC2RDRWiI2X9N4a8g
+ Klf20NBWZ5tJXGels2Yitu/p2RXaJx0bPD4qS/NHz4UBQGtTi9sBJqBjIc47WPM7mpjSR014+
+ xv5kkFGohjvGf7Lsv4XIdztRqcCeC9QC4eGcytP3jGMYv0RClyTJ1N3oJ0na0wMeQl7a5Six1
+ nUtlIkeus3G/2FjMr7sOY/S0Jd1yjmIWojjdXD5wkNrbNdiwrx1duDidFRaLUlQ6AydJIERoc
+ r0iFF2i32z4jkZ0KLX0SkLeLnI0FkCyNQc+YwHd4ZS2db3iGD6zpHsvTjqLLEmdXgnaFTOAMZ
+ WRLCIh0f4JDyImi2aIdq4lCzdaawEbEH9eS8+xc+rg3eijA+yQwMwOUiEV6wnkw7eXhwSZpvZ
+ YejAQ89tcXoSGjO5ARoFoQfSucWNtaN+qFKQ2UXC8ZWncIuGJ+FxPFjIaidYFQlW494K+XP8N
+ /RrPIC3DtctI8j27+RWTuB1DWkH2aKbbUB2T9WvpwL61s45wb6erlPfGY5xiAXteYJhQcUNDw
+ 7MaIfEqJgtHgxykrw2f9+FfWLWw9Z4A0/wG2uquMTIlfdt91c6XNuFONQeUrfhLt0AhavMb4B
+ ozMMWKOg0ZeWdy6/Q11wArRzkztN/lQ39Xp5/w0MzNaZf/69Jjnw5cPGvTXADrACZKtKfPS9t
+ RWMOZS2NzFfCC4pkucfj1clCjcmxY5eQc6ttY1SJEfu/FGObEKrkukuYox92Tms4PmmwUyfvW
+ 9rwY/4q7mOxayRFVuPw0nIKfU3tA1IJqGOYeawGoNegUlqlLnMOtN1fdPp+erMFPwNTy8x56t
+ FkYX7YNyulkzg2AYGYmVFhCRNbeYBl1ToUuuxHkxOQnt8dTkOotyYeNW4gJxTM8U7N/2DePnC
+ R4yxUJioU=
 
-On 09/01/2025 13:47, Hans Verkuil wrote:
-> Hi all,
-> 
-> The iris v3 series (https://patchwork.linuxtv.org/project/linux-media/list/?series=13467)
+On 09.01.25 12:13, Bartosz Golaszewski wrote:
+> Well, that's weird. Are you 100% sure this commit is the culprit? I
+> have no idea how this could happen, it's just a Kconfig tweak.
 
-Sorry, I meant the v9 series (https://patchwork.linuxtv.org/bundle/hverkuil/b1/?series=14183)
-of course.
+That's what I thought, too. I merged qcom/for-next into my branch for
+testing and adventure, compared / merged my dt's that were in both, and
+then this showed up on the HP X14. On the Snapdragon Dev Kit all 5 eUSB2
+repeaters work regardless with the same build. The chip in question is
+the SMB2360, a PMIC which also contains the eUSB2 repeater.
 
-v3 was never marked Superseded in patchwork, so I accidentally selected that one. The v3
-series is now properly marked as Superseded.
+jglathe@sdbox2:~/src/linux_ms_dev_kit$ git bisect log
+git bisect start
+# status: waiting for both good and bad commits
+# bad: [a9059ebc60d5b845a95b25650eb24c1df5ed2132] arm64: dts: qcom:
+x1e80100: Fix usb_2 controller interrupts
+git bisect bad a9059ebc60d5b845a95b25650eb24c1df5ed2132
+# status: waiting for good commit(s), bad commit known
+# good: [2bab385991536a07d6f4c0970fa665f9626db059] Ubuntu: rebase to
+v6.13-rc6
+git bisect good 2bab385991536a07d6f4c0970fa665f9626db059
+# good: [2cc57105ca61b9fb3744adbf83bbc8b2c0c0d055] johan_defconfig: add
+custom config
+git bisect good 2cc57105ca61b9fb3744adbf83bbc8b2c0c0d055
+# good: [260e63d4eece13d5f908646b8b9e5af44a40d012] arm64: dts: qcom:
+msm8996-xiaomi-gemini: Fix LP5562 LED1 reg property
+git bisect good 260e63d4eece13d5f908646b8b9e5af44a40d012
+# good: [033bf6bd4e245be05553ed1ec774dd78c77922ec] arm64: dts: qcom:
+sar2130p: correct sleep clock frequency
+git bisect good 033bf6bd4e245be05553ed1ec774dd78c77922ec
+# good: [76f8b9a9e0d9fdafa6103ea789865dd6897f3bd6] dt-bindings: clock:
+qcom-rpmhcc: Add RPMHCC bindings for QCS615
+git bisect good 76f8b9a9e0d9fdafa6103ea789865dd6897f3bd6
+# good: [22507018ce51df4f63a5ad468608426bcd799e2b] clk: qcom:
+gcc-mdm9607: Fix cmd_rcgr offset for blsp1_uart6 rcg
+git bisect good 22507018ce51df4f63a5ad468608426bcd799e2b
+# good: [8db2b9a883cbb85a189ad74c3fb3264cc54134b8] soc: qcom:
+pmic_glink_altmode: simplify locking with guard()
+git bisect good 8db2b9a883cbb85a189ad74c3fb3264cc54134b8
+# bad: [17f8cef45b6a390dd2216d28290c21a92c3e3ae1] Ubuntu: Update changelog
+git bisect bad 17f8cef45b6a390dd2216d28290c21a92c3e3ae1
+# bad: [1c51ac09700c1722329672f6254dca78fbc32101] soc: qcom: rmtfs:
+constify rmtfs_class
+git bisect bad 1c51ac09700c1722329672f6254dca78fbc32101
+# bad: [d6c656205ae9eb32dce89df95faabe898029e668] soc: qcom: rmtfs:
+allow building the module with COMPILE_TEST=3Dy
+git bisect bad d6c656205ae9eb32dce89df95faabe898029e668
+# first bad commit: [d6c656205ae9eb32dce89df95faabe898029e668] soc:
+qcom: rmtfs: allow building the module with COMPILE_TEST=3Dy
 
-Regards,
+I have put the tag up on github [1]. It _is_ odd.
 
-	Hans
+Jens
 
-> plus these two patches on top passed the media-ci tests.
-> 
-> If there are no further comments, then I plan to merge this for 6.14
-> tomorrow afternoon.
-> 
-> Regards,
-> 
-> 	Hans
-> 
-> On 09/01/2025 12:26, Dikshita Agarwal wrote:
->> This series fixes a memory leak and improves the representation of 
->> dma mask to set upper bound of DMA address space.
->>
->> Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
->> ---
->> Dikshita Agarwal (2):
->>       media: iris: represent dma_mask in more readable form
->>       media: iris: fix memory leak while freeing queue memory
->>
->>  drivers/media/platform/qcom/iris/iris_hfi_queue.c       | 8 +++++---
->>  drivers/media/platform/qcom/iris/iris_platform_sm8250.c | 3 ++-
->>  drivers/media/platform/qcom/iris/iris_platform_sm8550.c | 3 ++-
->>  3 files changed, 9 insertions(+), 5 deletions(-)
->> ---
->> base-commit: 698b6e3163bafd61e1b7d13572e2c42974ac85ec
->> change-id: 20250108-iris-driver-fixes-d79c0ecc100d
->> prerequisite-message-id: <20241212-qcom-video-iris-v9-0-e8c2c6bd4041@quicinc.com>
->> prerequisite-patch-id: bfa9c88ec537e21017d5c9da3ad30d885d2eb132
->> prerequisite-patch-id: bf37c5c6dc78b857caf6b544f6eb4000dee5dbaa
->> prerequisite-patch-id: 4d3c8665de2faf0ad912943e3a9c9b4ca76bfd7f
->> prerequisite-patch-id: 327454576fb8440c8521917a6582e4839b6088c3
->> prerequisite-patch-id: fc523bc1a4f188e1924ebc18885c4dcd9b375e89
->> prerequisite-patch-id: 1f837af2ed6c4925884b45e75828ff5b8ff057f0
->> prerequisite-patch-id: 18c77c70db79b933a13df15f98f681a931156aea
->> prerequisite-patch-id: 40168197cad291efe92bd5bf78e039475ed10ae8
->> prerequisite-patch-id: b164fd80f4dcfb46b314377e8a595ce654418578
->> prerequisite-patch-id: 271bf0ca62c46ff9b14db3c23196112c2f59256d
->> prerequisite-patch-id: 67b096b9d1362eacfad13470c20e8eca833bf53d
->> prerequisite-patch-id: 5c433b5a1407fda64de411ccdc723dc664319037
->> prerequisite-patch-id: 8011d3230e717a0af3c6084b786612ff57bc770a
->> prerequisite-patch-id: 6d6f8da843afa6d7159730838ab2ac6e800e9246
->> prerequisite-patch-id: aa428f34e6695451780ff6b1bf8bc2dfb95c7071
->> prerequisite-patch-id: c95c03b5085eaecafafcabf4d700247b3b00bd87
->> prerequisite-patch-id: e41b4e7438a3fe56ba75501a417dba49365ed393
->> prerequisite-patch-id: ff1531525f124cf59596b8ca80a58f31b85763d0
->> prerequisite-patch-id: f20122e51eeb3691706b7d0f63628a84efc11b34
->> prerequisite-patch-id: e397711e5044a5e830f7f46d3683b6c234c23dda
->> prerequisite-patch-id: 99ad3fb3466a939438edf93e1591008a51004540
->> prerequisite-patch-id: f96d6202f4ba4194b9a185243e0659d2bb8ec6e0
->> prerequisite-patch-id: 71b8db4f106aa9322575573174c63d8d9eab20a1
->> prerequisite-patch-id: 532f7998ec08c4cc01c69dcfd050ad854d8bdbad
->> prerequisite-patch-id: cc80eabbf33df03053869cd47912efbd2c67d19a
->> prerequisite-patch-id: 837959096e4fb7aa2b9d5afbd847aa0a4399ea87
->> prerequisite-patch-id: f78814e6508d3439e1d77d82af471b839e03d1ec
->> prerequisite-patch-id: 5a664eca073472e80da8f257cb030740e009737e
->>
->> Best regards,
-> 
-> 
+[1]
+https://github.com/jglathe/linux_ms_dev_kit/tree/jg/ubuntu-qcom-x1e-6.13-r=
+c6-eUSB2-bad
 
 
