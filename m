@@ -1,373 +1,247 @@
-Return-Path: <linux-arm-msm+bounces-44586-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-44587-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id AE575A07833
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jan 2025 14:53:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 12565A07838
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jan 2025 14:53:40 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0D4B83A76CD
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jan 2025 13:52:48 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8D5293A1DA7
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jan 2025 13:53:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6B540217F41;
-	Thu,  9 Jan 2025 13:52:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B2175217729;
+	Thu,  9 Jan 2025 13:53:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="pNNPWm8Y"
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="tUfdHALg";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="20ZoBBsD";
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="xgWcDfsx";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="ywAop16h"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E5DD17C60;
-	Thu,  9 Jan 2025 13:52:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B780C2185A9;
+	Thu,  9 Jan 2025 13:53:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736430770; cv=none; b=I7JrLRJCIM6crvvK5KxWcTqJkJBl0kHUGEfYlaf3YCUj7QAjtBbY2MIeAR0vysRFc2X4qoJF91oeRMU0qorDuSKEt5VIK0isRXH2stB/6hghZkncpm8hir6MwMNey5dFAjYMqv1EkyV/xm+NLQVgO7KQDPJskVLD4C/0VfX2hiI=
+	t=1736430811; cv=none; b=fe8f0kuhLWERl+GurcnsEZrYB9iBaqy0cNVMszaVg6pxFkliGfFhFxy3QfEoXt2RNQOks/J8TA+IoNfGfGyi4uJSToPG+YOESl594nRc/XEX5j5YLGL0wI+WGAGAzj9Bl2KmY55Ga7joU1LqRL2uHc/sU3AMUt0tydh9Q/GLjT4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736430770; c=relaxed/simple;
-	bh=JFYyZToHH6eltx3HQ06c8sjSsRFqTsRJh67eLjM1IqQ=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=e9ongkOZYfdHudGjSYP45w8ClrQAbSclrzcLZ99wlsdeUFzImwiG9/sxhdZ+Owm+25m1zzKh/uhTBqX7Wq/ABivxuRhFA1LDlqxbonteIIiZ159RBv4o9OiJMmxeka76yU9VkFe0Ndm59LSFRTyEko3M3eIdXvcKCi1SkITLNSs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=pNNPWm8Y; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 509Bcvs5000945;
-	Thu, 9 Jan 2025 13:52:43 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=k8c8+K7xNdhKN6ObZDvGKYyU
-	JWrTBdBVGuHiMj38LUo=; b=pNNPWm8YjpDRQH8HFBp9A11N5kMUWUgxKQD5eY/f
-	ffn7MdFIcDRqDEZjNQ8KmZ6xlqD9yXQ6s/KfaDYs6K2AZ8zONsstC7poCFUVPEvN
-	1cC+qcAdo/sLtWjHR0IsNexXX6um2A290PmtX0Lge2W1abAk0tw7h4eic/RtzITj
-	dMS3M6G7Ke32QU8HfZ+8Fqm3ZTkakClWbabUi7xssdwnMzvPYFr5f6YkWzXYWpmF
-	RyMLkJbuVMLUHJ08A5i+7SoSoxj2NMFa/p1qhI5X25lvzOXBDbgt9bKbh28d+LTq
-	oFW/unVE4RMJ5QvGFxfOncJpC5SBAS3k/dNfKeZEtr2w9w==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 442drwra3j-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 09 Jan 2025 13:52:43 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 509DqgUU030445
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 9 Jan 2025 13:52:42 GMT
-Received: from hu-wasimn-hyd.qualcomm.com (10.80.80.8) by
- nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Thu, 9 Jan 2025 05:52:35 -0800
-Date: Thu, 9 Jan 2025 19:22:31 +0530
-From: Wasim Nazir <quic_wasimn@quicinc.com>
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski
-	<krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <kernel@quicinc.com>
-Subject: Re: [PATCH v5 5/6] arm64: dts: qcom: Add support for QCS9075 Ride &
- Ride-r3
-Message-ID: <Z3/UnzkkiexjXNbF@hu-wasimn-hyd.qualcomm.com>
-References: <20241229152332.3068172-1-quic_wasimn@quicinc.com>
- <20241229152332.3068172-6-quic_wasimn@quicinc.com>
- <tjrg5zqggupjo36udpyv3vynsij76f4qlus6lkbqotuimusqgq@hosmksp77sif>
- <Z3ZXWxoBtMNPJ9kk@hu-wasimn-hyd.qualcomm.com>
- <4wmxjxcvt7un7wk5v43q3jpxqjs2jbc626mgah2fxbfuouu4q6@ptzibxe2apmx>
- <Z3eMxl1Af8TOAQW/@hu-wasimn-hyd.qualcomm.com>
- <xuy6tp4dmxiqbjitmoi6x5lngplgcczytnowqjvzvq5hh5zwoa@moipssfsgw3w>
- <Z3gzezBgZhZJkxzV@hu-wasimn-hyd.qualcomm.com>
- <37isla6xfjeofsmfvb6ertnqe6ufyu3wh3duqsyp765ivdueex@nlzqyqgnocib>
+	s=arc-20240116; t=1736430811; c=relaxed/simple;
+	bh=WAUd6E/tEOAn24aycmwPuYRSLomFdffFzFi1YMN+NSw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=b9CW6hZ1M7JFZmDKNxv18McO5wxDf4SUdztwWn2MVDy5LSaGitFDTmQn1OxqnyPqptULkw1oFGVK7TJXUb4QbC3pcC4kXHt29UX1pQd9XUnCaa8dlqCkI0WbVwIbFDa3paXcCiX+8RHepxxfrI+l4fKNrH0GQ2svzB8MOjPnFEw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=tUfdHALg; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=20ZoBBsD; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=xgWcDfsx; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=ywAop16h; arc=none smtp.client-ip=195.135.223.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-out2.suse.de (Postfix) with ESMTPS id 635821F393;
+	Thu,  9 Jan 2025 13:53:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1736430798; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=BtpiwbAGjYqo8EDAGEE5AiW9KUDe9ltNVFkQF2I5wys=;
+	b=tUfdHALgs0ii3pMIm1AyUJOOe8LqskXpR1+ExWF91bdkGNa9CIjaLL1RoR+flsrumPwkqg
+	EaPUJ6ij78PGyWCM/G/CERrOsh00bww67F+gx8xxH8bfJjgV38AbsYQc/tWZsXKCqqIwXR
+	bD8qThtEhu1fEiGc1xcVyn7qS1zozzQ=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1736430798;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=BtpiwbAGjYqo8EDAGEE5AiW9KUDe9ltNVFkQF2I5wys=;
+	b=20ZoBBsDEjR1qcQlko21QPxkqS+sBTcGZ+7fmhr3A1uonEjrAiuzvzHlqkbOC0riqQ00uY
+	YKZukV9JOWNNDVDQ==
+Authentication-Results: smtp-out2.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1736430797; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=BtpiwbAGjYqo8EDAGEE5AiW9KUDe9ltNVFkQF2I5wys=;
+	b=xgWcDfsxpwpyfVDCzoFPTGYjLGRQhWl56sD1iaz9ONSAFlT72hMZ4CtWNtK9Y9A74NIe4c
+	lnhiduHHOVghzNAvWl5PxON/oJ196i4bpaU2rqC+n/l83JEqpCaaWDPHf5sr5563ljl7l0
+	v+OyHKkUqmwJcWeY0m2/GmV/HX6FEbE=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1736430797;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=BtpiwbAGjYqo8EDAGEE5AiW9KUDe9ltNVFkQF2I5wys=;
+	b=ywAop16hqbKpCohSHrBqKy/qQ/OYWtMcjfjLNPTMgszu7XHrCBFpt0u+Ep5ub9qDOYgo3B
+	ym/iuGhXxB7lC4DQ==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id D7C5A13876;
+	Thu,  9 Jan 2025 13:53:16 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+	by imap1.dmz-prg2.suse.org with ESMTPSA
+	id tYxLM8zUf2esVAAAD6G6ig
+	(envelope-from <tzimmermann@suse.de>); Thu, 09 Jan 2025 13:53:16 +0000
+Message-ID: <e1a1fc68-cb8d-4fb0-879f-a84e679f6b2b@suse.de>
+Date: Thu, 9 Jan 2025 14:53:16 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <37isla6xfjeofsmfvb6ertnqe6ufyu3wh3duqsyp765ivdueex@nlzqyqgnocib>
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: L8tROaV_HNWGSCoNYZAYaW79L5pem04Z
-X-Proofpoint-GUID: L8tROaV_HNWGSCoNYZAYaW79L5pem04Z
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 malwarescore=0
- impostorscore=0 adultscore=0 mlxscore=0 mlxlogscore=999 spamscore=0
- clxscore=1015 phishscore=0 priorityscore=1501 lowpriorityscore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2501090111
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/6] drm: enforce rules for
+ drm_atomic_helper_check_modeset()
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+ Maxime Ripard <mripard@kernel.org>, David Airlie <airlied@gmail.com>,
+ Simona Vetter <simona@ffwll.ch>, Rob Clark <robdclark@gmail.com>,
+ Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>,
+ Marijn Suijten <marijn.suijten@somainline.org>,
+ Chandan Uddaraju <chandanu@codeaurora.org>,
+ Jeykumar Sankaran <jsanka@codeaurora.org>,
+ Jordan Crouse <jordan@cosmicpenguin.net>,
+ Sravanthi Kollukuduru <skolluku@codeaurora.org>
+Cc: dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+ Archit Taneja <architt@codeaurora.org>, Rajesh Yadav
+ <ryadav@codeaurora.org>, linux-arm-msm@vger.kernel.org,
+ freedreno@lists.freedesktop.org, Simona Vetter <simona.vetter@ffwll.ch>
+References: <20241222-drm-dirty-modeset-v1-0-0e76a53eceb9@linaro.org>
+Content-Language: en-US
+From: Thomas Zimmermann <tzimmermann@suse.de>
+Autocrypt: addr=tzimmermann@suse.de; keydata=
+ xsBNBFs50uABCADEHPidWt974CaxBVbrIBwqcq/WURinJ3+2WlIrKWspiP83vfZKaXhFYsdg
+ XH47fDVbPPj+d6tQrw5lPQCyqjwrCPYnq3WlIBnGPJ4/jreTL6V+qfKRDlGLWFjZcsrPJGE0
+ BeB5BbqP5erN1qylK9i3gPoQjXGhpBpQYwRrEyQyjuvk+Ev0K1Jc5tVDeJAuau3TGNgah4Yc
+ hdHm3bkPjz9EErV85RwvImQ1dptvx6s7xzwXTgGAsaYZsL8WCwDaTuqFa1d1jjlaxg6+tZsB
+ 9GluwvIhSezPgnEmimZDkGnZRRSFiGP8yjqTjjWuf0bSj5rUnTGiyLyRZRNGcXmu6hjlABEB
+ AAHNJ1Rob21hcyBaaW1tZXJtYW5uIDx0emltbWVybWFubkBzdXNlLmRlPsLAjgQTAQgAOAIb
+ AwULCQgHAgYVCgkICwIEFgIDAQIeAQIXgBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftODH
+ AAoJEGgNwR1TC3ojx1wH/0hKGWugiqDgLNXLRD/4TfHBEKmxIrmfu9Z5t7vwUKfwhFL6hqvo
+ lXPJJKQpQ2z8+X2vZm/slsLn7J1yjrOsoJhKABDi+3QWWSGkaGwRJAdPVVyJMfJRNNNIKwVb
+ U6B1BkX2XDKDGffF4TxlOpSQzdtNI/9gleOoUA8+jy8knnDYzjBNOZqLG2FuTdicBXblz0Mf
+ vg41gd9kCwYXDnD91rJU8tzylXv03E75NCaTxTM+FBXPmsAVYQ4GYhhgFt8S2UWMoaaABLDe
+ 7l5FdnLdDEcbmd8uLU2CaG4W2cLrUaI4jz2XbkcPQkqTQ3EB67hYkjiEE6Zy3ggOitiQGcqp
+ j//OwE0EWznS4AEIAMYmP4M/V+T5RY5at/g7rUdNsLhWv1APYrh9RQefODYHrNRHUE9eosYb
+ T6XMryR9hT8XlGOYRwKWwiQBoWSDiTMo/Xi29jUnn4BXfI2px2DTXwc22LKtLAgTRjP+qbU6
+ 3Y0xnQN29UGDbYgyyK51DW3H0If2a3JNsheAAK+Xc9baj0LGIc8T9uiEWHBnCH+RdhgATnWW
+ GKdDegUR5BkDfDg5O/FISymJBHx2Dyoklv5g4BzkgqTqwmaYzsl8UxZKvbaxq0zbehDda8lv
+ hFXodNFMAgTLJlLuDYOGLK2AwbrS3Sp0AEbkpdJBb44qVlGm5bApZouHeJ/+n+7r12+lqdsA
+ EQEAAcLAdgQYAQgAIAIbDBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftOH6AAoJEGgNwR1T
+ C3ojVSkIALpAPkIJPQoURPb1VWjh34l0HlglmYHvZszJWTXYwavHR8+k6Baa6H7ufXNQtThR
+ yIxJrQLW6rV5lm7TjhffEhxVCn37+cg0zZ3j7zIsSS0rx/aMwi6VhFJA5hfn3T0TtrijKP4A
+ SAQO9xD1Zk9/61JWk8OysuIh7MXkl0fxbRKWE93XeQBhIJHQfnc+YBLprdnxR446Sh8Wn/2D
+ Ya8cavuWf2zrB6cZurs048xe0UbSW5AOSo4V9M0jzYI4nZqTmPxYyXbm30Kvmz0rYVRaitYJ
+ 4kyYYMhuULvrJDMjZRvaNe52tkKAvMevcGdt38H4KSVXAylqyQOW5zvPc4/sq9c=
+In-Reply-To: <20241222-drm-dirty-modeset-v1-0-0e76a53eceb9@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Score: -4.30
+X-Spamd-Result: default: False [-4.30 / 50.00];
+	BAYES_HAM(-3.00)[100.00%];
+	NEURAL_HAM_LONG(-1.00)[-1.000];
+	NEURAL_HAM_SHORT(-0.20)[-0.999];
+	MIME_GOOD(-0.10)[text/plain];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	ARC_NA(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	FREEMAIL_TO(0.00)[linaro.org,linux.intel.com,kernel.org,gmail.com,ffwll.ch,quicinc.com,poorly.run,somainline.org,codeaurora.org,cosmicpenguin.net];
+	RCPT_COUNT_TWELVE(0.00)[20];
+	MID_RHS_MATCH_FROM(0.00)[];
+	FREEMAIL_ENVRCPT(0.00)[gmail.com];
+	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	FROM_EQ_ENVFROM(0.00)[];
+	FROM_HAS_DN(0.00)[];
+	TO_DN_SOME(0.00)[];
+	RCVD_TLS_ALL(0.00)[];
+	TO_MATCH_ENVRCPT_ALL(0.00)[];
+	RCVD_COUNT_TWO(0.00)[2];
+	FUZZY_BLOCKED(0.00)[rspamd.com];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,bootlin.com:url,ffwll.ch:email,suse.de:mid]
+X-Spam-Flag: NO
+X-Spam-Level: 
 
-On Fri, Jan 03, 2025 at 09:58:40PM +0200, Dmitry Baryshkov wrote:
-> On Sat, Jan 04, 2025 at 12:29:07AM +0530, Wasim Nazir wrote:
-> > On Fri, Jan 03, 2025 at 12:31:55PM +0200, Dmitry Baryshkov wrote:
-> > > On Fri, Jan 03, 2025 at 12:37:50PM +0530, Wasim Nazir wrote:
-> > > > On Fri, Jan 03, 2025 at 07:50:43AM +0200, Dmitry Baryshkov wrote:
-> > > > > On Thu, Jan 02, 2025 at 02:37:39PM +0530, Wasim Nazir wrote:
-> > > > > > On Mon, Dec 30, 2024 at 05:45:39PM +0200, Dmitry Baryshkov wrote:
-> > > > > > > On Sun, Dec 29, 2024 at 08:53:31PM +0530, Wasim Nazir wrote:
-> > > > > > > > Add device tree support for QCS9075 Ride & Ride-r3 boards.
-> > > > > > > > 
-> > > > > > > > QCS9075 lacks the safety monitoring features of Safety-Island (SAIL)
-> > > > > > > > subsystem which is available in QCS9100, and it affects thermal
-> > > > > > > > management.
-> > > > > > > > 
-> > > > > > > > Also, between ride and ride-r3 ethernet phy is different.
-> > > > > > > > Ride uses 1G ethernet phy while ride-r3 uses 2.5G ethernet phy.
-> > > > > > > 
-> > > > > > > Your board files duplicate sa8775p-ride-r3.dts and sa8775p-ride.dts, but
-> > > > > > > include them. Existing qcs9100-ride-r3.dts and qcs9100-ride-r3.dts just
-> > > > > > > include corresponding SA8775P files.
-> > > > > > > 
-> > > > > > > This is not ideal for the following reasons:
-> > > > > > > - The approach is not uniform (between QCS9100 and QCS9075), which might
-> > > > > > >   lead to mistakes.
-> > > > > > > - The approach ends up duplicating DT code unnecessarily, which can lead
-> > > > > > >   to issues being patches in the one board file, but not in the other
-> > > > > > >   file.
-> > > > > > > 
-> > > > > > > If there are any reasons why you want to follow this approach, they must
-> > > > > > > be a part of the commit message.
-> > > > > > > 
-> > > > > > 
-> > > > > > Hi Dmitry,
-> > > > > > 
-> > > > > > Initially, we included the DTS [1] file to avoid duplication. However,
-> > > > > > based on Krzysztof's previous suggestion [2], we change to this format.
-> > > > > > 
-> > > > > > Please let us know how to proceed further on this.
-> > > > > 
-> > > > > Krzysztof asked you to include DTSI files instead of including DTS
-> > > > > files. Hope this helps.
-> > > > 
-> > > > Are you suggesting that we should also modify the 9100-ride files to
-> > > > include DTSI instead of DTS for consistency between QCS9100 and QCS9075?
-> > > > However, this would result in the duplication of Ethernet nodes in all
-> > > > the ride board files. Would that be acceptable?
-> > > 
-> > > git mv foo.dts foo.dtsi
-> > > echo '#include "foo.dtsi"' > foo.dts
-> > > git add foo.dts
-> > > git commit
-> > > 
-> > 
-> > We cannot convert sa8775p-ride-r3.dts and sa8775p-ride.dts to .dtsi as
-> > they represent different platforms. In patch [1], we included these DTS
-> > files to reuse the common hardware nodes.
-> > 
-> > Could you please advise on how we should proceed with the following
-> > approaches?
-> > 
-> > a) Previous approach [1]:
-> > Include sa8775p-ride-r3.dts and sa8775p-ride.dts in the qcs9075-ride
-> > platform DTS, similar to the qcs9100-ride platform DTS. This approach
-> > avoids duplicating Ethernet nodes and maintains uniformity. However, it
-> > involves including the DTS file directly.
-> > 
-> > b) Current suggestion:
-> > Include sa8775p-ride.dtsi in the qcs9075-ride platform DTS and also
-> > modify the qcs9100-ride platform DTS files to maintain uniformity. This
-> > approach results in duplicating Ethernet nodes.
-> > 
-> > Please let us know your recommendation to finalize the DT structure.
-> 
-> sa8775p.dtsi
-> `__sa8775p-ride.dtsi
->    `__sa8775p-ride-r2.dtsi
->       `__sa8775p-ride.dts
->       `__qcs9100-ride.dts
->       `__qcs9075-ride.dts
->    `__sa8775p-ride-r3.dtsi
->       `__sa8775p-ride-r3.dts
->       `__qcs9100-ride-r3.dts
->       `__qcs9075-ride-r3.dts
+Hi
 
-Thanks Dmitry, we need slight modification to the above structure as
-we don't have any ride-r2 boards, so we want to go ahead with this structure:
 
-sa8775p.dtsi
-`__sa8775p-ride-common.dtsi
-   `__sa8775p-ride.dtsi
-      `__sa8775p-ride.dts
-      `__qcs9100-ride.dts
-      `__qcs9075-ride.dts
-   `__sa8775p-ride-r3.dtsi
-      `__sa8775p-ride-r3.dts
-      `__qcs9100-ride-r3.dts
-      `__qcs9075-ride-r3.dts
+Am 22.12.24 um 06:00 schrieb Dmitry Baryshkov:
+> As pointed out by Simona, the drm_atomic_helper_check_modeset() and
+> drm_atomic_helper_check() require the former function is rerun if the
+> driver's callbacks modify crtc_state->mode_changed. MSM is one of the
+> drivers which failed to follow this requirement.
 
-> 
-> > 
-> > [1] https://lore.kernel.org/all/20241119174954.1219002-6-quic_wasimn@quicinc.com/
-> > 
-> > > > 
-> > > > > 
-> > > > > > 
-> > > > > > [1] https://lore.kernel.org/all/20241119174954.1219002-6-quic_wasimn@quicinc.com/
-> > > > > > [2] https://lore.kernel.org/all/8cf9edc0-a0cb-4fd0-b10e-2138784dfba3@kernel.org/
-> > > > > > 
-> > > > > > > > 
-> > > > > > > > Signed-off-by: Wasim Nazir <quic_wasimn@quicinc.com>
-> > > > > > > > ---
-> > > > > > > >  arch/arm64/boot/dts/qcom/Makefile            |  2 +
-> > > > > > > >  arch/arm64/boot/dts/qcom/qcs9075-ride-r3.dts | 46 ++++++++++++++++++++
-> > > > > > > >  arch/arm64/boot/dts/qcom/qcs9075-ride.dts    | 46 ++++++++++++++++++++
-> > > > > > > >  3 files changed, 94 insertions(+)
-> > > > > > > >  create mode 100644 arch/arm64/boot/dts/qcom/qcs9075-ride-r3.dts
-> > > > > > > >  create mode 100644 arch/arm64/boot/dts/qcom/qcs9075-ride.dts
-> > > > > > > > 
-> > > > > > > > diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-> > > > > > > > index 78613a1bd34a..41cb2bbd3472 100644
-> > > > > > > > --- a/arch/arm64/boot/dts/qcom/Makefile
-> > > > > > > > +++ b/arch/arm64/boot/dts/qcom/Makefile
-> > > > > > > > @@ -118,6 +118,8 @@ dtb-$(CONFIG_ARCH_QCOM)	+= qcs6490-rb3gen2.dtb
-> > > > > > > >  dtb-$(CONFIG_ARCH_QCOM)	+= qcs8300-ride.dtb
-> > > > > > > >  dtb-$(CONFIG_ARCH_QCOM)	+= qcs8550-aim300-aiot.dtb
-> > > > > > > >  dtb-$(CONFIG_ARCH_QCOM)	+= qcs9075-rb8.dtb
-> > > > > > > > +dtb-$(CONFIG_ARCH_QCOM)	+= qcs9075-ride.dtb
-> > > > > > > > +dtb-$(CONFIG_ARCH_QCOM)	+= qcs9075-ride-r3.dtb
-> > > > > > > >  dtb-$(CONFIG_ARCH_QCOM)	+= qcs9100-ride.dtb
-> > > > > > > >  dtb-$(CONFIG_ARCH_QCOM)	+= qcs9100-ride-r3.dtb
-> > > > > > > >  dtb-$(CONFIG_ARCH_QCOM)	+= qdu1000-idp.dtb
-> > > > > > > > diff --git a/arch/arm64/boot/dts/qcom/qcs9075-ride-r3.dts b/arch/arm64/boot/dts/qcom/qcs9075-ride-r3.dts
-> > > > > > > > new file mode 100644
-> > > > > > > > index 000000000000..d9a8956d3a76
-> > > > > > > > --- /dev/null
-> > > > > > > > +++ b/arch/arm64/boot/dts/qcom/qcs9075-ride-r3.dts
-> > > > > > > > @@ -0,0 +1,46 @@
-> > > > > > > > +// SPDX-License-Identifier: BSD-3-Clause
-> > > > > > > > +/*
-> > > > > > > > + * Copyright (c) 2024, Qualcomm Innovation Center, Inc. All rights reserved.
-> > > > > > > > + */
-> > > > > > > > +/dts-v1/;
-> > > > > > > > +
-> > > > > > > > +#include "sa8775p-ride.dtsi"
-> > > > > > > > +
-> > > > > > > > +/ {
-> > > > > > > > +	model = "Qualcomm Technologies, Inc. QCS9075 Ride Rev3";
-> > > > > > > > +	compatible = "qcom,qcs9075-ride-r3", "qcom,qcs9075", "qcom,sa8775p";
-> > > > > > > > +};
-> > > > > > > > +
-> > > > > > > > +&ethernet0 {
-> > > > > > > > +	phy-mode = "2500base-x";
-> > > > > > > > +};
-> > > > > > > > +
-> > > > > > > > +&ethernet1 {
-> > > > > > > > +	phy-mode = "2500base-x";
-> > > > > > > > +};
-> > > > > > > > +
-> > > > > > > > +&mdio {
-> > > > > > > > +	compatible = "snps,dwmac-mdio";
-> > > > > > > > +	#address-cells = <1>;
-> > > > > > > > +	#size-cells = <0>;
-> > > > > > > > +
-> > > > > > > > +	sgmii_phy0: phy@8 {
-> > > > > > > > +		compatible = "ethernet-phy-id31c3.1c33";
-> > > > > > > > +		reg = <0x8>;
-> > > > > > > > +		device_type = "ethernet-phy";
-> > > > > > > > +		interrupts-extended = <&tlmm 7 IRQ_TYPE_EDGE_FALLING>;
-> > > > > > > > +		reset-gpios = <&pmm8654au_2_gpios 8 GPIO_ACTIVE_LOW>;
-> > > > > > > > +		reset-assert-us = <11000>;
-> > > > > > > > +		reset-deassert-us = <70000>;
-> > > > > > > > +	};
-> > > > > > > > +
-> > > > > > > > +	sgmii_phy1: phy@0 {
-> > > > > > > > +		compatible = "ethernet-phy-id31c3.1c33";
-> > > > > > > > +		reg = <0x0>;
-> > > > > > > > +		device_type = "ethernet-phy";
-> > > > > > > > +		interrupts-extended = <&tlmm 26 IRQ_TYPE_EDGE_FALLING>;
-> > > > > > > > +		reset-gpios = <&pmm8654au_2_gpios 9 GPIO_ACTIVE_LOW>;
-> > > > > > > > +		reset-assert-us = <11000>;
-> > > > > > > > +		reset-deassert-us = <70000>;
-> > > > > > > > +	};
-> > > > > > > > +};
-> > > > > > > > diff --git a/arch/arm64/boot/dts/qcom/qcs9075-ride.dts b/arch/arm64/boot/dts/qcom/qcs9075-ride.dts
-> > > > > > > > new file mode 100644
-> > > > > > > > index 000000000000..3b524359a72d
-> > > > > > > > --- /dev/null
-> > > > > > > > +++ b/arch/arm64/boot/dts/qcom/qcs9075-ride.dts
-> > > > > > > > @@ -0,0 +1,46 @@
-> > > > > > > > +// SPDX-License-Identifier: BSD-3-Clause
-> > > > > > > > +/*
-> > > > > > > > + * Copyright (c) 2024, Qualcomm Innovation Center, Inc. All rights reserved.
-> > > > > > > > + */
-> > > > > > > > +/dts-v1/;
-> > > > > > > > +
-> > > > > > > > +#include "sa8775p-ride.dtsi"
-> > > > > > > > +
-> > > > > > > > +/ {
-> > > > > > > > +	model = "Qualcomm Technologies, Inc. QCS9075 Ride";
-> > > > > > > > +	compatible = "qcom,qcs9075-ride", "qcom,qcs9075", "qcom,sa8775p";
-> > > > > > > > +};
-> > > > > > > > +
-> > > > > > > > +&ethernet0 {
-> > > > > > > > +	phy-mode = "sgmii";
-> > > > > > > > +};
-> > > > > > > > +
-> > > > > > > > +&ethernet1 {
-> > > > > > > > +	phy-mode = "sgmii";
-> > > > > > > > +};
-> > > > > > > > +
-> > > > > > > > +&mdio {
-> > > > > > > > +	compatible = "snps,dwmac-mdio";
-> > > > > > > > +	#address-cells = <1>;
-> > > > > > > > +	#size-cells = <0>;
-> > > > > > > > +
-> > > > > > > > +	sgmii_phy0: phy@8 {
-> > > > > > > > +		compatible = "ethernet-phy-id0141.0dd4";
-> > > > > > > > +		reg = <0x8>;
-> > > > > > > > +		device_type = "ethernet-phy";
-> > > > > > > > +		interrupts-extended = <&tlmm 7 IRQ_TYPE_EDGE_FALLING>;
-> > > > > > > > +		reset-gpios = <&pmm8654au_2_gpios 8 GPIO_ACTIVE_LOW>;
-> > > > > > > > +		reset-assert-us = <11000>;
-> > > > > > > > +		reset-deassert-us = <70000>;
-> > > > > > > > +	};
-> > > > > > > > +
-> > > > > > > > +	sgmii_phy1: phy@a {
-> > > > > > > > +		compatible = "ethernet-phy-id0141.0dd4";
-> > > > > > > > +		reg = <0xa>;
-> > > > > > > > +		device_type = "ethernet-phy";
-> > > > > > > > +		interrupts-extended = <&tlmm 26 IRQ_TYPE_EDGE_FALLING>;
-> > > > > > > > +		reset-gpios = <&pmm8654au_2_gpios 9 GPIO_ACTIVE_LOW>;
-> > > > > > > > +		reset-assert-us = <11000>;
-> > > > > > > > +		reset-deassert-us = <70000>;
-> > > > > > > > +	};
-> > > > > > > > +};
-> > > > > > > > --
-> > > > > > > > 2.47.0
-> > > > > > > > 
-> > > > > > > 
-> > > > > > > -- 
-> > > > > > > With best wishes
-> > > > > > > Dmitry
-> > > > > > 
-> > > > > > 
-> > > > > > Thanks & Regards,
-> > > > > > Wasim
-> > > > > 
-> > > > > -- 
-> > > > > With best wishes
-> > > > > Dmitry
-> > > > 
-> > > > 
-> > > > Thanks & Regards,
-> > > > Wasim
-> > > 
-> > > -- 
-> > > With best wishes
-> > > Dmitry
-> > 
-> > Thanks & Regards,
-> > Wasim
-> 
-> -- 
-> With best wishes
-> Dmitry
+I'm concerned about the implications of this series. How does a driver 
+upgrade from simple pageflip to full modeset if necessary? The solution 
+in msm appears to be to run the related test before 
+drm_atomic_helper_check(). (Right?)
 
-Thanks & Regards,
-Wasim
+My corner case is in mgag200, which has to reprogram the PLL if the 
+color mode changes. So it sets mode_changed to true in the primary 
+plane's atomic_check. [1] This works in practice because the plane 
+checks run before the CRTC checks. So the CRTC code will do the correct 
+thing. Reprogramming the PLL means to disable the display at some point. 
+So it comes down to a full modeset.
+
+You mention that drm_atomic_helper_check() needs to rerun if 
+mode_changed flips. Would it be possible to implement this instead 
+within the helper?
+
+Best regards
+Thomas
+
+[1] 
+https://elixir.bootlin.com/linux/v6.12/source/drivers/gpu/drm/mgag200/mgag200_mode.c#L493
+
+>
+> As suggested by Simona, implement generic code to verify that the
+> drivers abide to those requirement and rework MSM driver to follow that
+> restrictions.
+>
+> There are no dependencies between core and MSM parts, so they can go
+> separately via corresponding trees.
+>
+> Reported-by: Simona Vetter <simona.vetter@ffwll.ch>
+> Link: https://lore.kernel.org/dri-devel/ZtW_S0j5AEr4g0QW@phenom.ffwll.local/
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+> Dmitry Baryshkov (6):
+>        drm/atomic-helper: document drm_atomic_helper_check() restrictions
+>        drm/atomic: prepare to check that drivers follow restrictions for needs_modeset
+>        drm/msm/dpu: don't use active in atomic_check()
+>        drm/msm/dpu: move needs_cdm setting to dpu_encoder_get_topology()
+>        drm/msm/dpu: simplify dpu_encoder_get_topology() interface
+>        drm/msm/dpu: don't set crtc_state->mode_changed from atomic_check()
+>
+>   drivers/gpu/drm/drm_atomic.c                |  3 +
+>   drivers/gpu/drm/drm_atomic_helper.c         | 86 ++++++++++++++++++++++++++---
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c    |  4 --
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 82 +++++++++++++++++----------
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h |  4 ++
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c     | 26 +++++++++
+>   drivers/gpu/drm/msm/msm_atomic.c            | 13 ++++-
+>   drivers/gpu/drm/msm/msm_kms.h               |  7 +++
+>   include/drm/drm_atomic.h                    | 10 ++++
+>   9 files changed, 192 insertions(+), 43 deletions(-)
+> ---
+> base-commit: b72747fdde637ebf52e181671bf6f41cd773b3e1
+> change-id: 20241222-drm-dirty-modeset-88079bd27ae6
+>
+> Best regards,
+
+-- 
+--
+Thomas Zimmermann
+Graphics Driver Developer
+SUSE Software Solutions Germany GmbH
+Frankenstrasse 146, 90461 Nuernberg, Germany
+GF: Ivo Totev, Andrew Myers, Andrew McDonald, Boudien Moerman
+HRB 36809 (AG Nuernberg)
+
 
