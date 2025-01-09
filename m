@@ -1,217 +1,236 @@
-Return-Path: <linux-arm-msm+bounces-44605-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-44607-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 173BFA07993
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jan 2025 15:48:14 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 992B5A07A23
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jan 2025 16:03:24 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 48EBF3A6C50
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jan 2025 14:48:08 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 30C461882E1A
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jan 2025 15:03:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E12B454769;
-	Thu,  9 Jan 2025 14:48:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A6A6221C194;
+	Thu,  9 Jan 2025 15:03:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="dtBRK7Ib"
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="mcNhyiMP";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="gptbxtyj";
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="mcNhyiMP";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="gptbxtyj"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4809B2AD25;
-	Thu,  9 Jan 2025 14:48:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF502206F27;
+	Thu,  9 Jan 2025 15:03:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.130
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736434091; cv=none; b=JHhBXYZ/BxaM6rNw3YEbRj1M1aITK0HFTeoEIKyXKOhRLJS43x9LR8w24PIkf7G3hTLmyqKOhy9CDkQfeKRkbosm+hWl1BwiRJXwZ6sdRHSM+FzXodj55c1jKBYySq5V8qrUozGDoLzqJfahYHQgR6Pfm6/yCm6G8cA078WZ0xk=
+	t=1736434998; cv=none; b=rlrqpunbTUO9ESsU8Gc+d7/VU4QhR2S2lQ6Bid11FCbErUTgzEBOgygRXvisitpzLGcecPTmD9b8jQyKlKrf9WeLd+jeQGpnzodpZbV81glMqbRBTYC/FSXG3VxGnkoiODe9Fgk4r4Mt82QrMBbTB68Hd5mFVsU0BUDUgSPrkO0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736434091; c=relaxed/simple;
-	bh=wD5tclgmVGudI4r1tvEbdKRuW1GIjguaDkyvyvZase8=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Kffe+rtNvBNqZMvCUweacd6NuzYMAkqr/Zqnma9WKo4+Q2TTKibUQa7MveSWEG75gvtQJQDkWm58HTBCiuPy7G5HTMS9MEgAUfs2z6zRrYk5YkosBI6Bw60xavXbKpl39+5xIjtFoYMinvXRGh7vjcZgfALJNFUGq5IpMyaQHvY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=dtBRK7Ib; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5099vaUj031458;
-	Thu, 9 Jan 2025 14:48:06 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=k/+QaEVd3zOhqxTW1Y6DjnVP
-	3fLQZkvbJD9Z7HKi6Ns=; b=dtBRK7IbBfdfBaM6bkcS5FU7SrliaKlg69VlqK1R
-	U3XTLOVGMqsKEy8gC3qI1VUDtPyV1u4dh/q3JzP6Fyd1n1tyTthRdT5NXez6oJuw
-	qFMxoh28Yy6m/qWmsvErH2005bHjwWxKiX3zMhIJFuU/nefoze7Q8sMsPZjbxCDT
-	lwJ3sPPE0Crcaqp2Zg3RR6rbEkfa0gddMlTDbS/haF/ZB+GpZAmmBbgkgIWMBVOW
-	hfPJ7w6Kt76cdX2OmJW0gOdy1ggD7A78paNCJik5KVYw3ASgmrwC9AdMp6zZ/IgN
-	m+9X6COoBrZNXBgfXAduEd+KNr9m0gfsUJjGvsNgU5E6ew==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 442c9k8nd4-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 09 Jan 2025 14:48:06 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 509Em5ed026660
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 9 Jan 2025 14:48:05 GMT
-Received: from hu-wasimn-hyd.qualcomm.com (10.80.80.8) by
- nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Thu, 9 Jan 2025 06:47:58 -0800
-Date: Thu, 9 Jan 2025 20:17:54 +0530
-From: Wasim Nazir <quic_wasimn@quicinc.com>
-To: Krzysztof Kozlowski <krzk@kernel.org>
-CC: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Bjorn Andersson
-	<andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring
-	<robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <kernel@quicinc.com>
-Subject: Re: [PATCH v5 5/6] arm64: dts: qcom: Add support for QCS9075 Ride &
- Ride-r3
-Message-ID: <Z3/hmncCDG8OzVkc@hu-wasimn-hyd.qualcomm.com>
-References: <20241229152332.3068172-1-quic_wasimn@quicinc.com>
- <20241229152332.3068172-6-quic_wasimn@quicinc.com>
- <tjrg5zqggupjo36udpyv3vynsij76f4qlus6lkbqotuimusqgq@hosmksp77sif>
- <Z3ZXWxoBtMNPJ9kk@hu-wasimn-hyd.qualcomm.com>
- <4wmxjxcvt7un7wk5v43q3jpxqjs2jbc626mgah2fxbfuouu4q6@ptzibxe2apmx>
- <Z3eMxl1Af8TOAQW/@hu-wasimn-hyd.qualcomm.com>
- <xuy6tp4dmxiqbjitmoi6x5lngplgcczytnowqjvzvq5hh5zwoa@moipssfsgw3w>
- <Z3gzezBgZhZJkxzV@hu-wasimn-hyd.qualcomm.com>
- <37isla6xfjeofsmfvb6ertnqe6ufyu3wh3duqsyp765ivdueex@nlzqyqgnocib>
- <67b888fb-2207-4da5-b52e-ce84a53ae1f9@kernel.org>
+	s=arc-20240116; t=1736434998; c=relaxed/simple;
+	bh=xW/Gupb74krBZP6bo4+ZQTX9+jtseLVBG0wqvLbnX2I=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=Yt8BrA1+G2WlzSGj8JN2ZwGbi8iwIOLXobZwyJRzz9e0OV+W46S0Wnww0ceBMAwgnW5he6KopyFB3iJyOrXPWMW8CWqyaCQd00g1peC5XGEHUiXxnL0YiALoJZxPSws40KtFeBKHc4kJSJ+ped/S0bIBhRcMozQD2D4cUR7oKvs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=mcNhyiMP; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=gptbxtyj; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=mcNhyiMP; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=gptbxtyj; arc=none smtp.client-ip=195.135.223.130
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-out1.suse.de (Postfix) with ESMTPS id 0B36C21173;
+	Thu,  9 Jan 2025 15:03:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1736434995; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=ayMP9fgai3U2SRutfILrxld66PrmIAS8Xan8q+cw9vU=;
+	b=mcNhyiMPnM+4j1AopsnKFUXAyXxBjIEzkwkM4SaRb6QPomPzcXjJDSMydwiTkaeendLYuu
+	onTUMYPgd6lz099mNddFue/NFvbfZw/FP74gYFtSuDhctKd0uALTn8tGhNEcH/JRxCAJnv
+	JMpR9FHiaNMB4stMe8C0ZyObftX5iQM=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1736434995;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=ayMP9fgai3U2SRutfILrxld66PrmIAS8Xan8q+cw9vU=;
+	b=gptbxtyjgUS1zD900ZGA6biMREqapnx6iFpYtdoWkt0TK2hXPI337A2feZfbCYmSM5mS2P
+	no98HSzI83Q0NVCA==
+Authentication-Results: smtp-out1.suse.de;
+	dkim=pass header.d=suse.de header.s=susede2_rsa header.b=mcNhyiMP;
+	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=gptbxtyj
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1736434995; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=ayMP9fgai3U2SRutfILrxld66PrmIAS8Xan8q+cw9vU=;
+	b=mcNhyiMPnM+4j1AopsnKFUXAyXxBjIEzkwkM4SaRb6QPomPzcXjJDSMydwiTkaeendLYuu
+	onTUMYPgd6lz099mNddFue/NFvbfZw/FP74gYFtSuDhctKd0uALTn8tGhNEcH/JRxCAJnv
+	JMpR9FHiaNMB4stMe8C0ZyObftX5iQM=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1736434995;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=ayMP9fgai3U2SRutfILrxld66PrmIAS8Xan8q+cw9vU=;
+	b=gptbxtyjgUS1zD900ZGA6biMREqapnx6iFpYtdoWkt0TK2hXPI337A2feZfbCYmSM5mS2P
+	no98HSzI83Q0NVCA==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 84E9E139AB;
+	Thu,  9 Jan 2025 15:03:14 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+	by imap1.dmz-prg2.suse.org with ESMTPSA
+	id 8o8oHzLlf2c1awAAD6G6ig
+	(envelope-from <tzimmermann@suse.de>); Thu, 09 Jan 2025 15:03:14 +0000
+From: Thomas Zimmermann <tzimmermann@suse.de>
+To: maarten.lankhorst@linux.intel.com,
+	mripard@kernel.org,
+	airlied@gmail.com,
+	simona@ffwll.ch
+Cc: dri-devel@lists.freedesktop.org,
+	linux-mediatek@lists.infradead.org,
+	freedreno@lists.freedesktop.org,
+	linux-arm-msm@vger.kernel.org,
+	imx@lists.linux.dev,
+	linux-samsung-soc@vger.kernel.org,
+	nouveau@lists.freedesktop.org,
+	virtualization@lists.linux.dev,
+	spice-devel@lists.freedesktop.org,
+	linux-renesas-soc@vger.kernel.org,
+	linux-rockchip@lists.infradead.org,
+	linux-tegra@vger.kernel.org,
+	intel-xe@lists.freedesktop.org,
+	xen-devel@lists.xenproject.org,
+	Thomas Zimmermann <tzimmermann@suse.de>
+Subject: [PATCH v2 00/25] drm/dumb-buffers: Fix and improve buffer-size calculation
+Date: Thu,  9 Jan 2025 15:56:54 +0100
+Message-ID: <20250109150310.219442-1-tzimmermann@suse.de>
+X-Mailer: git-send-email 2.47.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <67b888fb-2207-4da5-b52e-ce84a53ae1f9@kernel.org>
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: _8dtelST1X6W7KqhWQY0KL9ivNXnuUEn
-X-Proofpoint-GUID: _8dtelST1X6W7KqhWQY0KL9ivNXnuUEn
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 mlxscore=0
- spamscore=0 phishscore=0 malwarescore=0 priorityscore=1501 suspectscore=0
- impostorscore=0 bulkscore=0 lowpriorityscore=0 mlxlogscore=999
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2501090118
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Rspamd-Queue-Id: 0B36C21173
+X-Spam-Score: -2.01
+X-Rspamd-Action: no action
+X-Spamd-Result: default: False [-2.01 / 50.00];
+	BAYES_HAM(-3.00)[100.00%];
+	SUSPICIOUS_RECIPS(1.50)[];
+	NEURAL_HAM_LONG(-1.00)[-1.000];
+	MID_CONTAINS_FROM(1.00)[];
+	NEURAL_HAM_SHORT(-0.20)[-1.000];
+	R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	MIME_GOOD(-0.10)[text/plain];
+	MX_GOOD(-0.01)[];
+	FUZZY_BLOCKED(0.00)[rspamd.com];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	ASN(0.00)[asn:25478, ipnet:::/0, country:RU];
+	ARC_NA(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[19];
+	MIME_TRACE(0.00)[0:+];
+	FREEMAIL_TO(0.00)[linux.intel.com,kernel.org,gmail.com,ffwll.ch];
+	FREEMAIL_ENVRCPT(0.00)[gmail.com];
+	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	FROM_EQ_ENVFROM(0.00)[];
+	FROM_HAS_DN(0.00)[];
+	TO_DN_SOME(0.00)[];
+	RCVD_TLS_ALL(0.00)[];
+	TO_MATCH_ENVRCPT_ALL(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid,suse.de:dkim,imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo];
+	RCVD_COUNT_TWO(0.00)[2];
+	DKIM_TRACE(0.00)[suse.de:+]
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+X-Spam-Flag: NO
+X-Spam-Level: 
 
-On Wed, Jan 08, 2025 at 03:09:09PM +0100, Krzysztof Kozlowski wrote:
-> On 03/01/2025 20:58, Dmitry Baryshkov wrote:
-> >>>>>> Initially, we included the DTS [1] file to avoid duplication. However,
-> >>>>>> based on Krzysztof's previous suggestion [2], we change to this format.
-> >>>>>>
-> >>>>>> Please let us know how to proceed further on this.
-> >>>>>
-> >>>>> Krzysztof asked you to include DTSI files instead of including DTS
-> >>>>> files. Hope this helps.
-> >>>>
-> >>>> Are you suggesting that we should also modify the 9100-ride files to
-> >>>> include DTSI instead of DTS for consistency between QCS9100 and QCS9075?
-> >>>> However, this would result in the duplication of Ethernet nodes in all
-> >>>> the ride board files. Would that be acceptable?
-> >>>
-> >>> git mv foo.dts foo.dtsi
-> >>> echo '#include "foo.dtsi"' > foo.dts
-> >>> git add foo.dts
-> >>> git commit
-> >>>
-> >>
-> >> We cannot convert sa8775p-ride-r3.dts and sa8775p-ride.dts to .dtsi as
-> >> they represent different platforms. In patch [1], we included these DTS
-> >> files to reuse the common hardware nodes.
-> >>
-> >> Could you please advise on how we should proceed with the following
-> >> approaches?
-> >>
-> >> a) Previous approach [1]:
-> >> Include sa8775p-ride-r3.dts and sa8775p-ride.dts in the qcs9075-ride
-> >> platform DTS, similar to the qcs9100-ride platform DTS. This approach
-> >> avoids duplicating Ethernet nodes and maintains uniformity. However, it
-> >> involves including the DTS file directly.
-> >>
-> >> b) Current suggestion:
-> >> Include sa8775p-ride.dtsi in the qcs9075-ride platform DTS and also
-> >> modify the qcs9100-ride platform DTS files to maintain uniformity. This
-> >> approach results in duplicating Ethernet nodes.
-> >>
-> >> Please let us know your recommendation to finalize the DT structure.
-> > 
-> > sa8775p.dtsi
-> > `__sa8775p-ride.dtsi
-> >    `__sa8775p-ride-r2.dtsi
-> >       `__sa8775p-ride.dts
-> >       `__qcs9100-ride.dts
-> >       `__qcs9075-ride.dts
-> >    `__sa8775p-ride-r3.dtsi
-> >       `__sa8775p-ride-r3.dts
-> >       `__qcs9100-ride-r3.dts
-> >       `__qcs9075-ride-r3.dts
-> > 
-> Wasim and all other copy-pasters of sa8775p-ride,
-> 
-> Just to recap, qcs9100 contributions started this terrible pattern of
-> board including a board. Unfortunately qcs9100 was merged, so that ship
-> has sailed.
-> 
-> This patchset was going the same way, because poor choices like to keep
-> spreading, but at one of previous versions I noticed it and objected.
-> 
-> This v5 however solves above problem by duplicating the nodes.
-> 
-> Apparently all these designs - sa8755p, qcs9100 and qcs9075 - use the
-> same board, but none of this was communicated. I checked all the commit
-> msgs in this patchset and nothing explained about it. What annoys me is
-> that you do not communicate your design forcing us to accept poor DTS or
-> forcing us to guess and make poor judgments.
-> 
-> Come with proper hardware description and split out shared parts, like
-> motherboard. Look how other vendors are doing it, e.g. NXP or Renesas.
-> But assuming there are shared parts because I am pretty sure you will
-> pick my comments when it suits you without actually following them fully
-> and without understanding and explaining to us your own hardware.
-> 
+Dumb-buffer pitch and size is specified by width, height, bits-per-pixel
+plus various hardware-specific alignments. The calculation of these
+values is inconsistent and duplicated among drivers. The results for
+formats with bpp < 8 are incorrect.
 
-Hi Krzysztof,
+This series fixes this for most drivers. Default scanline pitch and
+buffer size are now calculated with the existing 4CC helpers. There is
+a new helper drm_mode_size_dumb() that calculates scanline pitch and
+buffer size according to driver requirements.
 
-Here is the pictorial flow showing how SoCs are derived and what all boards
-are supported.
+The series fixes the common GEM implementations for DMA, SHMEM and
+VRAM. It further changes most implementations of dumb_create to use
+the new helper. A small number of  drivers has more complicated
+calculations and will be updated by a later patches.
 
-  +---------------------------------------------------------------------+
-  |                                                                     |
-  |								 sa8775p                                |
-  |					        		|                                   |
-  |			+-----------------------+-----------------------+           |
-  |			|				  		|			    		|           |
-  |			v				  		|				    	v           |
-  |		 qcs9100			  		|		    		 qcs9075        |
-  |			|				  		|			    		|           |
-  |			v					    v						v           |
-  |		  (IOT)				     (AUTO)					  (IOT)         |
-  |	qcs9100-ride.dts		sa8775p-ride.dts		qcs9075-ride.dts    |
-  |	qcs9100-ride-r3.dts		sa8775p-ride-r3.dts		qcs9075-ride-r3.dts |
-  |													qcs9075-rb8.dts     |
-  |                                                                     |
-  +---------------------------------------------------------------------+
+v2:
+- rewrite series
+- convert many individual drivers besides the shared GEM helpers
 
-Although we included details about the QCS9075 and QCS9100 in the cover
-letter and commit message, explaining their differences and common
-origin from the SA8775P SOC, the new DT structure suggested by Dmitry
-should make things clearer. This structure properly splits common parts
-and enhances reusability.
+Thomas Zimmermann (25):
+  drm/dumb-buffers: Sanitize output on errors
+  drm/dumb-buffers: Provide helper to set pitch and size
+  drm/gem-dma: Compute dumb-buffer sizes with drm_mode_size_dumb()
+  drm/gem-shmem: Compute dumb-buffer sizes with drm_mode_size_dumb()
+  drm/gem-vram: Compute dumb-buffer sizes with drm_mode_size_dumb()
+  drm/armada: Compute dumb-buffer sizes with drm_mode_size_dumb()
+  drm/exynos: Compute dumb-buffer sizes with drm_mode_size_dumb()
+  drm/gma500: Compute dumb-buffer sizes with drm_mode_size_dumb()
+  drm/hibmc: Compute dumb-buffer sizes with drm_mode_size_dumb()
+  drm/imx/ipuv3: Compute dumb-buffer sizes with drm_mode_size_dumb()
+  drm/loongson: Compute dumb-buffer sizes with drm_mode_size_dumb()
+  drm/mediatek: Compute dumb-buffer sizes with drm_mode_size_dumb()
+  drm/msm: Compute dumb-buffer sizes with drm_mode_size_dumb()
+  drm/nouveau: Compute dumb-buffer sizes with drm_mode_size_dumb()
+  drm/omapdrm: Compute dumb-buffer sizes with drm_mode_size_dumb()
+  drm/qxl: Compute dumb-buffer sizes with drm_mode_size_dumb()
+  drm/renesas/rcar-du: Compute dumb-buffer sizes with
+    drm_mode_size_dumb()
+  drm/renesas/rz-du: Compute dumb-buffer sizes with drm_mode_size_dumb()
+  drm/rockchip: Compute dumb-buffer sizes with drm_mode_size_dumb()
+  drm/tegra: Compute dumb-buffer sizes with drm_mode_size_dumb()
+  drm/virtio: Compute dumb-buffer sizes with drm_mode_size_dumb()
+  drm/vmwgfx: Compute dumb-buffer sizes with drm_mode_size_dumb()
+  drm/xe: Compute dumb-buffer sizes with drm_mode_size_dumb()
+  drm/xen: Compute dumb-buffer sizes with drm_mode_size_dumb()
+  drm/xlnx: Compute dumb-buffer sizes with drm_mode_size_dumb()
 
-> Best regards,
-> Krzysztof
+ drivers/gpu/drm/armada/armada_gem.c           |  16 +--
+ drivers/gpu/drm/drm_dumb_buffers.c            | 133 ++++++++++++++++--
+ drivers/gpu/drm/drm_gem_dma_helper.c          |   7 +-
+ drivers/gpu/drm/drm_gem_shmem_helper.c        |  16 +--
+ drivers/gpu/drm/drm_gem_vram_helper.c         |  89 +++---------
+ drivers/gpu/drm/exynos/exynos_drm_gem.c       |   8 +-
+ drivers/gpu/drm/gma500/gem.c                  |  21 +--
+ .../gpu/drm/hisilicon/hibmc/hibmc_drm_drv.c   |  25 +++-
+ drivers/gpu/drm/imx/ipuv3/imx-drm-core.c      |  29 +++-
+ drivers/gpu/drm/loongson/lsdc_gem.c           |  29 ++--
+ drivers/gpu/drm/mediatek/mtk_gem.c            |  13 +-
+ drivers/gpu/drm/msm/msm_gem.c                 |  27 +++-
+ drivers/gpu/drm/nouveau/nouveau_display.c     |   7 +-
+ drivers/gpu/drm/omapdrm/omap_gem.c            |  15 +-
+ drivers/gpu/drm/qxl/qxl_dumb.c                |  17 ++-
+ drivers/gpu/drm/renesas/rcar-du/rcar_du_kms.c |   7 +-
+ drivers/gpu/drm/renesas/rz-du/rzg2l_du_kms.c  |   7 +-
+ drivers/gpu/drm/rockchip/rockchip_drm_gem.c   |  12 +-
+ drivers/gpu/drm/tegra/gem.c                   |   8 +-
+ drivers/gpu/drm/virtio/virtgpu_gem.c          |  11 +-
+ drivers/gpu/drm/vmwgfx/vmwgfx_surface.c       |  21 +--
+ drivers/gpu/drm/xe/xe_bo.c                    |   8 +-
+ drivers/gpu/drm/xen/xen_drm_front.c           |   7 +-
+ drivers/gpu/drm/xlnx/zynqmp_kms.c             |   7 +-
+ include/drm/drm_dumb_buffers.h                |  14 ++
+ include/drm/drm_gem_vram_helper.h             |   6 -
+ 26 files changed, 333 insertions(+), 227 deletions(-)
+ create mode 100644 include/drm/drm_dumb_buffers.h
 
-Thanks & Regards,
-Wasim
+
+base-commit: f06efdfad9d0e9f5cb74404ac98e1a5b3b246567
+prerequisite-patch-id: 0aa359f6144c4015c140c8a6750be19099c676fb
+prerequisite-patch-id: c67e5d886a47b7d0266d81100837557fda34cb24
+prerequisite-patch-id: cbc453ee02fae02af22fbfdce56ab732c7a88c36
+-- 
+2.47.1
+
 
