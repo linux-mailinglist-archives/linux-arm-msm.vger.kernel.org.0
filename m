@@ -1,199 +1,143 @@
-Return-Path: <linux-arm-msm+bounces-44621-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-44606-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B280FA07AD5
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jan 2025 16:04:41 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id F0C2DA079F1
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jan 2025 15:58:57 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 04864169766
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jan 2025 15:04:30 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 28DF83A7DD6
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jan 2025 14:58:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2095F2206B7;
-	Thu,  9 Jan 2025 15:03:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 713CF21C162;
+	Thu,  9 Jan 2025 14:58:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="E4gyrWDS";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="g1BuhauS";
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="E4gyrWDS";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="g1BuhauS"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ma/QunMp"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 378A222068D;
-	Thu,  9 Jan 2025 15:03:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.130
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DB6721B1BF;
+	Thu,  9 Jan 2025 14:58:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736435007; cv=none; b=RL07H2/zDWjvSfeI6D4XPsHw4OzgES/kn3EFYr9+bx+4huISLOyXfP9kx2o8ZlLTp5s/z46hbMDDkxzkEBEvI6LSAN0NX3+cPrdPosc2PvzBLvpwpCO1eWc9QkWt0t7gcOvtnXUAhLLVVDixE6J6KDhw0hkZPBiLvL/vyXdb+iI=
+	t=1736434733; cv=none; b=R+VMwMKNKpHaf+x27lpnTc4pqH9O9IeYqu8XHnF8IOMhXYAoKXViyqBuLXKJsZ0hiLesKXXYRhuIyReKH/fN1fen0fNWdLmv9NyLcoq/JvroJhAN76Qx/W3De7YgOB+a6j+HAMpI2KT5v/5Xt84V9nWI5x5cTQs2JKe0UGvxLVo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736435007; c=relaxed/simple;
-	bh=iKiiE2VGFX3nzM8wVIpPt1h4ByRr4DMZImdWb/8xRzQ=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q2KAppC8j1FHR1KVmh3NtZn0F/GuTFZfqtfZJNDrWT3x8y3g6cAhKi3f9jL5hmmJkDzUcBuzSkrDYXMAHtI7fwGwd1L5hunucu43M+XFpVxuIzwNBpi/IdeGfAPefAOxDedwxW5ccGTYyt1E0dMqpgJhhIY06IkEHXPGa4Qsjck=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=E4gyrWDS; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=g1BuhauS; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=E4gyrWDS; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=g1BuhauS; arc=none smtp.client-ip=195.135.223.130
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out1.suse.de (Postfix) with ESMTPS id 780B521176;
-	Thu,  9 Jan 2025 15:03:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1736435003; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=3o8YijqW7m/S5WxSzbbW/Q5FOb5jd8geeefF53uQ3Sk=;
-	b=E4gyrWDSGtocRabFdSS5vO711dWQ2MU575H8KfCe4OIkyPCA64KXntTrgwB04h8JcFr5ij
-	xGfFwNJcpSOGvfLup/xsh5sfcWUTxBtKhvkwanObi0+W+5qbhuBGzvR2cpxkr34FuFR2Aa
-	8mjAZNQsz4nyJhK9QAybn0E0vXObC2c=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1736435003;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=3o8YijqW7m/S5WxSzbbW/Q5FOb5jd8geeefF53uQ3Sk=;
-	b=g1BuhauSMOd9WqdOfRXc+TgRctQC+2ed7h7cFyLQpsl0EwtIe/Yr6P+pyfq3JSAjSvvpPJ
-	3Yoz+g7dCFqbVDBg==
-Authentication-Results: smtp-out1.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1736435003; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=3o8YijqW7m/S5WxSzbbW/Q5FOb5jd8geeefF53uQ3Sk=;
-	b=E4gyrWDSGtocRabFdSS5vO711dWQ2MU575H8KfCe4OIkyPCA64KXntTrgwB04h8JcFr5ij
-	xGfFwNJcpSOGvfLup/xsh5sfcWUTxBtKhvkwanObi0+W+5qbhuBGzvR2cpxkr34FuFR2Aa
-	8mjAZNQsz4nyJhK9QAybn0E0vXObC2c=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1736435003;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=3o8YijqW7m/S5WxSzbbW/Q5FOb5jd8geeefF53uQ3Sk=;
-	b=g1BuhauSMOd9WqdOfRXc+TgRctQC+2ed7h7cFyLQpsl0EwtIe/Yr6P+pyfq3JSAjSvvpPJ
-	3Yoz+g7dCFqbVDBg==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id E8CA413AA7;
-	Thu,  9 Jan 2025 15:03:22 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
-	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id GDmLNzrlf2c1awAAD6G6ig
-	(envelope-from <tzimmermann@suse.de>); Thu, 09 Jan 2025 15:03:22 +0000
-From: Thomas Zimmermann <tzimmermann@suse.de>
-To: maarten.lankhorst@linux.intel.com,
-	mripard@kernel.org,
-	airlied@gmail.com,
-	simona@ffwll.ch
-Cc: dri-devel@lists.freedesktop.org,
-	linux-mediatek@lists.infradead.org,
-	freedreno@lists.freedesktop.org,
-	linux-arm-msm@vger.kernel.org,
-	imx@lists.linux.dev,
-	linux-samsung-soc@vger.kernel.org,
-	nouveau@lists.freedesktop.org,
-	virtualization@lists.linux.dev,
-	spice-devel@lists.freedesktop.org,
-	linux-renesas-soc@vger.kernel.org,
-	linux-rockchip@lists.infradead.org,
-	linux-tegra@vger.kernel.org,
-	intel-xe@lists.freedesktop.org,
-	xen-devel@lists.xenproject.org,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
-Subject: [PATCH v2 15/25] drm/omapdrm: Compute dumb-buffer sizes with drm_mode_size_dumb()
-Date: Thu,  9 Jan 2025 15:57:09 +0100
-Message-ID: <20250109150310.219442-16-tzimmermann@suse.de>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20250109150310.219442-1-tzimmermann@suse.de>
-References: <20250109150310.219442-1-tzimmermann@suse.de>
+	s=arc-20240116; t=1736434733; c=relaxed/simple;
+	bh=CDsK2ol5aehDfnV6LhUEdFF8jxR9hEEyAE1pkOvdgKQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=WJF48pSAl7iLjlUH5ZuWS/rakDwO0sFB9ochLMuSFFr1aTXypf1v/4ZoDr6HqGEJCSg1fBqCQ3t/fQQdKsjiGC9UpGGo0Wr34nsZgoDwwUIZfkyzKYJ4cP/PPnClplK33owSGjdl1CG1nfq0svK2F8LCHfaNmJFOoJjrgMfjhtg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ma/QunMp; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A653C4CED2;
+	Thu,  9 Jan 2025 14:58:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1736434732;
+	bh=CDsK2ol5aehDfnV6LhUEdFF8jxR9hEEyAE1pkOvdgKQ=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=Ma/QunMp+TxfyjG7kYIat0v+nwIrJiXDuzHweK/wmV3e35j0Vy8lGffSuz+cyCKxR
+	 lW/kFpkkwVqR/fNWbzbYmkgBJqexTSV/fNci9lWL7fyR+zGcoMJ5msQwM6WuUawEaM
+	 z/ulF/mihe2Ta6ap+yY55zE/dS4jJM67DiBvsSxXLDzVMctB6l7IW0A2dJhNgVdJzL
+	 lnRd783/0J8gddL0e7kiIC5OS1lrE+VLi0EVSEMd5xkbXsxFMQ8bdN5yGpGk+hrRw3
+	 fe4v6T/j/m+0d7S22X8P3tiv0EO/nIQVM9MxPAhfpL0I8palBIZNCT4hAW+336UIX6
+	 VIus/r05CoK2A==
+Received: from johan by xi.lan with local (Exim 4.97.1)
+	(envelope-from <johan@kernel.org>)
+	id 1tVtzo-000000007tf-2gk4;
+	Thu, 09 Jan 2025 15:58:53 +0100
+Date: Thu, 9 Jan 2025 15:58:52 +0100
+From: Johan Hovold <johan@kernel.org>
+To: Dikshita Agarwal <quic_dikshita@quicinc.com>
+Cc: Vikash Garodia <quic_vgarodia@quicinc.com>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Philipp Zabel <p.zabel@pengutronix.de>,
+	Hans Verkuil <hverkuil@xs4all.nl>,
+	Sebastian Fricke <sebastian.fricke@collabora.com>,
+	Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Nicolas Dufresne <nicolas@ndufresne.ca>,
+	Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
+	Jianhua Lu <lujianhua000@gmail.com>,
+	Stefan Schmidt <stefan.schmidt@linaro.org>,
+	linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Vedang Nagar <quic_vnagar@quicinc.com>,
+	Bjorn Andersson <andersson@kernel.org>
+Subject: Re: [PATCH v9 00/28] Qualcomm iris video decoder driver
+Message-ID: <Z3_kLJ6Oy6m9D_wU@hovoldconsulting.com>
+References: <20241212-qcom-video-iris-v9-0-e8c2c6bd4041@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Level: 
-X-Spamd-Result: default: False [-1.30 / 50.00];
-	BAYES_HAM(-3.00)[100.00%];
-	SUSPICIOUS_RECIPS(1.50)[];
-	MID_CONTAINS_FROM(1.00)[];
-	NEURAL_HAM_LONG(-1.00)[-1.000];
-	R_MISSING_CHARSET(0.50)[];
-	NEURAL_HAM_SHORT(-0.20)[-1.000];
-	MIME_GOOD(-0.10)[text/plain];
-	ARC_NA(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,suse.de:email,suse.de:mid];
-	RCPT_COUNT_TWELVE(0.00)[20];
-	MIME_TRACE(0.00)[0:+];
-	TO_DN_SOME(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	FREEMAIL_TO(0.00)[linux.intel.com,kernel.org,gmail.com,ffwll.ch];
-	FROM_EQ_ENVFROM(0.00)[];
-	RCVD_COUNT_TWO(0.00)[2];
-	TO_MATCH_ENVRCPT_ALL(0.00)[];
-	RCVD_TLS_ALL(0.00)[];
-	FUZZY_BLOCKED(0.00)[rspamd.com];
-	R_RATELIMIT(0.00)[to_ip_from(RLqirfcw6gnbcr9a9yhi49fhi6),to(RLbwen1niosrcqbxsafh1)];
-	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	FREEMAIL_ENVRCPT(0.00)[gmail.com]
-X-Spam-Score: -1.30
-X-Spam-Flag: NO
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241212-qcom-video-iris-v9-0-e8c2c6bd4041@quicinc.com>
 
-Call drm_mode_size_dumb() to compute dumb-buffer scanline pitch and
-buffer size. Align the pitch to a multiple of 8.
+[ +CC: Bjorn ]
 
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Cc: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
----
- drivers/gpu/drm/omapdrm/omap_gem.c | 15 +++++++--------
- 1 file changed, 7 insertions(+), 8 deletions(-)
+On Thu, Dec 12, 2024 at 05:21:22PM +0530, Dikshita Agarwal wrote:
+> Introduce support for Qualcomm new video acceleration hardware i.e. 
+> iris, used for video stream decoding.
 
-diff --git a/drivers/gpu/drm/omapdrm/omap_gem.c b/drivers/gpu/drm/omapdrm/omap_gem.c
-index b9c67e4ca360..b8413a2dcdeb 100644
---- a/drivers/gpu/drm/omapdrm/omap_gem.c
-+++ b/drivers/gpu/drm/omapdrm/omap_gem.c
-@@ -11,6 +11,7 @@
- #include <linux/pfn_t.h>
- #include <linux/vmalloc.h>
- 
-+#include <drm/drm_dumb_buffers.h>
- #include <drm/drm_prime.h>
- #include <drm/drm_vma_manager.h>
- 
-@@ -583,15 +584,13 @@ static int omap_gem_object_mmap(struct drm_gem_object *obj, struct vm_area_struc
- int omap_gem_dumb_create(struct drm_file *file, struct drm_device *dev,
- 		struct drm_mode_create_dumb *args)
- {
--	union omap_gem_size gsize;
--
--	args->pitch = DIV_ROUND_UP(args->width * args->bpp, 8);
--
--	args->size = PAGE_ALIGN(args->pitch * args->height);
-+	union omap_gem_size gsize = { };
-+	int ret;
- 
--	gsize = (union omap_gem_size){
--		.bytes = args->size,
--	};
-+	ret = drm_mode_size_dumb(dev, args, SZ_8, 0);
-+	if (ret)
-+		return ret;
-+	gsize.bytes = args->size;
- 
- 	return omap_gem_new_handle(dev, file, gsize,
- 			OMAP_BO_SCANOUT | OMAP_BO_WC, &args->handle);
--- 
-2.47.1
+> Note: A harmless onetime error log "Lucid PLL latch failed. Output may
+> be unstable!" is seen during bootup.  It doesn't impact any video 
+> usecase and is currently under discussion.
 
+This could be an indication that some resources are not described
+correctly and could potentially require both binding and driver changes
+to address.
+
+This is also something which could cause trouble later (e.g. during
+suspend) even if you manage to get the clock running after boot.
+
+Generally, you should not be introducing any new warnings; they are
+there to let you know that something is wrong.
+
+Where is this issue being discussed?
+
+I think we at least need a public analysis and understanding of the
+problem before merging this.
+
+> Dikshita Agarwal (18):
+>       dt-bindings: media: Add video support for QCOM SM8550 SoC
+
+Could you please post the DT changes required for sm8550 so that people
+can test this series more easily? You can do it in a separate series if
+you prefer (with a link to this series in the cover letter) or as part
+of this one (at the end, with a note saying that those changes should go
+through the qcom SoC tree).
+
+>       media: iris: add platform driver for iris video device
+>       media: iris: implement iris v4l2 file ops
+>       media: iris: introduce iris core state management with shared queues
+>       media: iris: implement video firmware load/unload
+>       media: iris: implement boot sequence of the firmware
+>       media: iris: introduce host firmware interface with necessary hooks
+>       media: iris: implement power management
+>       media: iris: implement reqbuf ioctl with vb2_queue_setup
+>       media: iris: implement iris v4l2_ctrl_ops
+>       media: iris: implement vb2 streaming ops
+>       media: iris: allocate, initialize and queue internal buffers
+>       media: iris: implement vb2 ops for buf_queue and firmware response
+>       media: iris: add support for dynamic resolution change
+>       media: iris: handle streamoff/on from client in dynamic resolution change
+>       media: iris: add support for drain sequence
+>       media: iris: enable video driver probe of SM8250 SoC
+
+You should also say something in the cover letter about sm8250 now being
+supported by two mainline drivers and how you propose to handle that
+conflict.
+
+>       media: MAINTAINERS: add Qualcomm iris video accelerator driver
+
+Johan
 
