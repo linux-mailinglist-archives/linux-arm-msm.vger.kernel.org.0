@@ -1,95 +1,87 @@
-Return-Path: <linux-arm-msm+bounces-44646-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-44647-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 29D15A07D73
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jan 2025 17:26:36 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 38218A07D99
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jan 2025 17:33:00 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 0A0D17A1784
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jan 2025 16:26:28 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2B17B188CA5E
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jan 2025 16:33:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2545A221D9F;
-	Thu,  9 Jan 2025 16:26:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4BA19221DAE;
+	Thu,  9 Jan 2025 16:32:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="sbSREeiq";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="Lfl2D7Ow";
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="sbSREeiq";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="Lfl2D7Ow"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="UiVsYazX"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65078220688;
-	Thu,  9 Jan 2025 16:26:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61A3621B192
+	for <linux-arm-msm@vger.kernel.org>; Thu,  9 Jan 2025 16:32:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736439989; cv=none; b=d8QzMf4io/czmjEwsV/2Wuf9421EKtP/Eh+Hq9bkC4MWD/TAwtzgdeRDNGRN/f6TnWMtOXcFDvcHSJknAR1lBaUUfH4IPFLjYynoN8cCgCm4j5mY6ptlTBPtD/YTh2DBx2twRXpNkGcFsHER/1itSZqtp9SQVcz6hOzcXuP9goM=
+	t=1736440346; cv=none; b=ZymWQN8iyWUhDhAe7HhVsdM87FWVnRwTPNJWCws7hAP8yUGVOgt4+PX+HqPFvpwWRKKsIVSGP7ErbKebRSf6VKwXVXfE9i5PLBmVL5csE1k/dK4MsfP8VjRnTI3KZMXEmklpciCA02aFRe0cXZmol32HwtvLHCAVrfhNey958h8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736439989; c=relaxed/simple;
-	bh=EZz5xquVq/aDT17edkaW0KEhgvHqQ5MRlePTtD9IYpE=;
+	s=arc-20240116; t=1736440346; c=relaxed/simple;
+	bh=jpvqrcF4hGRAxo2viLIcicgd8PEE9sV/j/+ugYMxkww=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=sPs1m4j5UeX2xgucd7A4PAA7ThpsAoh3HzdfuRZIPnUpSm8ZZPv1k6jopwLC97dOGh8NTAj6MFfzPNE5IANtXkk2Di6CeJ970RzaPLdxk08rOkjRfUbz3rEOcHAhEFA792e8h4NWAr0N850ezfgGSngmml2v0lfszv6Q8AdOwNw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=sbSREeiq; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=Lfl2D7Ow; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=sbSREeiq; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=Lfl2D7Ow; arc=none smtp.client-ip=195.135.223.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id 8BEF71F394;
-	Thu,  9 Jan 2025 16:26:25 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1736439985; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=NRmPm0ZNk/C3mZstvTuhKj0QjfwNtjAVVxCaUxWitUE=;
-	b=sbSREeiq9iYjhEjeQW4qdyaKgpxCCvgX4XR/fBFVbBO4pMWr9sS4BXsXIGQmQ85imThdW3
-	YEr9PS4vxUj00SkQvkhd+WdDG7ceEvYLGtYIwa15RLNL2aCvQCzad51udAuGukV2DSk9ep
-	xC+VFiwxwgPTMZtQGbOekt/679hQbN0=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1736439985;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=NRmPm0ZNk/C3mZstvTuhKj0QjfwNtjAVVxCaUxWitUE=;
-	b=Lfl2D7OwYEWe79nVY++MQKtG++F9vBKMfMM+7FkArBH4/ckhXi+TbuY3f0MHOm2XwF8VUk
-	tzwhYX4d2YyHyaDw==
-Authentication-Results: smtp-out2.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1736439985; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=NRmPm0ZNk/C3mZstvTuhKj0QjfwNtjAVVxCaUxWitUE=;
-	b=sbSREeiq9iYjhEjeQW4qdyaKgpxCCvgX4XR/fBFVbBO4pMWr9sS4BXsXIGQmQ85imThdW3
-	YEr9PS4vxUj00SkQvkhd+WdDG7ceEvYLGtYIwa15RLNL2aCvQCzad51udAuGukV2DSk9ep
-	xC+VFiwxwgPTMZtQGbOekt/679hQbN0=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1736439985;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=NRmPm0ZNk/C3mZstvTuhKj0QjfwNtjAVVxCaUxWitUE=;
-	b=Lfl2D7OwYEWe79nVY++MQKtG++F9vBKMfMM+7FkArBH4/ckhXi+TbuY3f0MHOm2XwF8VUk
-	tzwhYX4d2YyHyaDw==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 00C48139AB;
-	Thu,  9 Jan 2025 16:26:24 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
-	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id 9qu0ObD4f2fqBgAAD6G6ig
-	(envelope-from <tzimmermann@suse.de>); Thu, 09 Jan 2025 16:26:24 +0000
-Message-ID: <6666af19-a98d-41d7-8329-7b50807c04a9@suse.de>
-Date: Thu, 9 Jan 2025 17:26:24 +0100
+	 In-Reply-To:Content-Type; b=aYsGiSMVCV2cXlR3k2+J9O5x56vGslyIo76a+q6bRaUhnuCGdHsJN12HR4cHXArQlT33ClXU9+M+1zc1Xdc0AXjhdxZb5X00aQVmgvDVpav6sTpOhQ/AnFxuxpAeMoo+du5WB82y1JF0CDsbLUJuMl20Ex+qvifqSQk8IgCb9OQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=UiVsYazX; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 509FHvPf023737
+	for <linux-arm-msm@vger.kernel.org>; Thu, 9 Jan 2025 16:32:23 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	TZIf3KDfTUTVomLYZRx8BxgSZSw37kPH65pTsVw4Nvw=; b=UiVsYazXkmQIFXiB
+	fZsUUsyHc2C3bUWH6UG7xYtIBFj5/+594ouyTZ9AwtjHUmtpQAJ3e7wDmJMKs9+q
+	GTkN/e+YxibZndC6xwwNNA8Jq245tg/Kervm/VfuP4iTCqyk/TpZjDs39TDd4rHf
+	A6GSChgabG4tVKnM/ZSlbXlq+eFYVe/B4zClgcbVkEZekp6jxJa3bhg4qmcuciOJ
+	UDQO0uCUt8K+wRuI6n8VBZmqCbCdcRg38ArsHF6+WbJipiOY8UuU9batKsG7dl9m
+	Fnqo7HaqNgBw4hNX351DULqka4uujfgHxswH22wH4nkye+jIokRQnSX5i8lHDEhR
+	HpXk7g==
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com [209.85.160.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 442gyj05we-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 09 Jan 2025 16:32:23 +0000 (GMT)
+Received: by mail-qt1-f198.google.com with SMTP id d75a77b69052e-467a437e5feso2807881cf.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Jan 2025 08:32:23 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1736440342; x=1737045142;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=TZIf3KDfTUTVomLYZRx8BxgSZSw37kPH65pTsVw4Nvw=;
+        b=Wrven5yQYSYIhHV8imHaVuaXQDPcM3c9BpOLNwXzgJKrrtx27RHblghfqlW1grFjmi
+         moecFSO9SennGuR2007VQdbjGpBqpaJ6qyAqP9uhJxAd6RVt7y7YNI3P7hbGbYXCDHHT
+         nDPhTaZlNJn7eCaRPY6keCDC3tyJOVQi9f4+uPzHEcK/19YFOyNgP7LflVvTZZjjQKZZ
+         I1LZX2Q72bklRvh5gtcyPH/xnEWIMyRW9Aeq6DfI4ZWXd/TBW20Rrkfx8r1j9OILGi6P
+         JEoFtez02y6Ibhq5na70Q+VHJ3gHuYGRC8ksIASmKscC2+JhO1yrimcz7Q8+8sZlqgnr
+         s0lg==
+X-Forwarded-Encrypted: i=1; AJvYcCV/PWOXnfY9lyTIFU5zKP9Y0iN1Po1dE6EoApZJBU3by9cNZhyX0h/mOmJ2TK0We8Y2644yjWpTzF/FAD+l@vger.kernel.org
+X-Gm-Message-State: AOJu0Yyb6aDpn7MOF8aAPgmNWZS6IrF2L6mtp1/1c6XpAtJF4OkaURnz
+	zc+QL0Ej+uFQ9OeZuDFeZXyJoCtoPo601D7NpVNIEykBNSB2tDQNWuBzgrnm2kqL/m5CC+mMMOo
+	538Akei+r5JW7Gk4fNtEoQlfsGXEevCwk76E8EgnbLXmp4bTM7PpPNJAQDKYoHpQH
+X-Gm-Gg: ASbGncvUWZi2htL2LcbFQ69EfxxS4z92xhm7xaSa27R+b+efTeF4fcUuDzvqsjw5BU0
+	VhDxy73XI745JiyDr2hTBWppgynupovYpbsSBDwg7H1nsGYsOSYALYi6KQwBY2hf3XoAzxUWTHW
+	2aesE96zqLvFr+0mP2+uuI9zu3pEjyuGZs4PxwVgSnZjrVq9MKtR4HFHq8QK9SkxTvNtoQtvG5j
+	M4ukqwi6Hr0uqJkWKG5hMbdN/AC0BkxOUKwe3YRRiaI9CgJG7T43m0NZ6bmOQw78RLtCl16FlZz
+	jUPDytwgqwI3jryCgqNjQK0QdjP++lRasno=
+X-Received: by 2002:a05:622a:1a9a:b0:467:5fd2:9963 with SMTP id d75a77b69052e-46c71003a8bmr39248661cf.6.1736440341965;
+        Thu, 09 Jan 2025 08:32:21 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IESaLiH5Dn+ta1J2zWfqZW6hkxUZtVhHNn5etUsvoGD8pVb16ljFLPIw5/lLiL31svbqdd3Uw==
+X-Received: by 2002:a05:622a:1a9a:b0:467:5fd2:9963 with SMTP id d75a77b69052e-46c71003a8bmr39248401cf.6.1736440341474;
+        Thu, 09 Jan 2025 08:32:21 -0800 (PST)
+Received: from [192.168.65.90] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ab2c9563b32sm85164866b.122.2025.01.09.08.32.19
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 09 Jan 2025 08:32:20 -0800 (PST)
+Message-ID: <49739b30-bc48-4c4c-b1e1-f70fd9a65144@oss.qualcomm.com>
+Date: Thu, 9 Jan 2025 17:32:18 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -97,154 +89,233 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 23/25] drm/xe: Compute dumb-buffer sizes with
- drm_mode_size_dumb()
-To: Matthew Auld <matthew.auld@intel.com>, maarten.lankhorst@linux.intel.com,
- mripard@kernel.org, airlied@gmail.com, simona@ffwll.ch
-Cc: dri-devel@lists.freedesktop.org, linux-mediatek@lists.infradead.org,
- freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
- imx@lists.linux.dev, linux-samsung-soc@vger.kernel.org,
- nouveau@lists.freedesktop.org, virtualization@lists.linux.dev,
- spice-devel@lists.freedesktop.org, linux-renesas-soc@vger.kernel.org,
- linux-rockchip@lists.infradead.org, linux-tegra@vger.kernel.org,
- intel-xe@lists.freedesktop.org, xen-devel@lists.xenproject.org,
- Lucas De Marchi <lucas.demarchi@intel.com>,
- =?UTF-8?Q?Thomas_Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
- Rodrigo Vivi <rodrigo.vivi@intel.com>
-References: <20250109150310.219442-1-tzimmermann@suse.de>
- <20250109150310.219442-24-tzimmermann@suse.de>
- <91c904f8-ba47-4595-be65-6fb57dcc9c64@intel.com>
+Subject: Re: [PATCH 2/2] arm64: dts: qcom: x1e80100-crd: Drop duplicate DMIC
+ supplies
+To: Stephan Gerhold <stephan.gerhold@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Abel Vesa <abel.vesa@linaro.org>, Johan Hovold <johan@kernel.org>
+References: <20241203-x1e80100-va-mic-bias-v1-2-0dfd4d9b492c@linaro.org>
+ <f65e1559-b409-4906-aabb-eb24b5b0fcf2@linaro.org>
+ <Z1ATxAsXFhQraQwH@linaro.org>
+ <afd010c9-8c24-482e-a479-2396f08c972b@oss.qualcomm.com>
+ <Z1H1BHAeO-0832Ea@linaro.org>
+ <6vfrlwir6sfommhn3met6wnjm76lnnxw4rdwzq75b7lzcy4jep@2cbcfvb3tvr2>
+ <Z3-XoDgUgdS7DDvm@linaro.org>
+ <0f9e456b-cd54-4496-a2d2-795aae744385@oss.qualcomm.com>
+ <Z3_PPOwPNOPkZPkz@linaro.org>
+ <4f0ca97e-ac6c-4b73-ab19-c91c6f3eb697@oss.qualcomm.com>
+ <Z3_vMrFfdIne4yVl@linaro.org>
 Content-Language: en-US
-From: Thomas Zimmermann <tzimmermann@suse.de>
-Autocrypt: addr=tzimmermann@suse.de; keydata=
- xsBNBFs50uABCADEHPidWt974CaxBVbrIBwqcq/WURinJ3+2WlIrKWspiP83vfZKaXhFYsdg
- XH47fDVbPPj+d6tQrw5lPQCyqjwrCPYnq3WlIBnGPJ4/jreTL6V+qfKRDlGLWFjZcsrPJGE0
- BeB5BbqP5erN1qylK9i3gPoQjXGhpBpQYwRrEyQyjuvk+Ev0K1Jc5tVDeJAuau3TGNgah4Yc
- hdHm3bkPjz9EErV85RwvImQ1dptvx6s7xzwXTgGAsaYZsL8WCwDaTuqFa1d1jjlaxg6+tZsB
- 9GluwvIhSezPgnEmimZDkGnZRRSFiGP8yjqTjjWuf0bSj5rUnTGiyLyRZRNGcXmu6hjlABEB
- AAHNJ1Rob21hcyBaaW1tZXJtYW5uIDx0emltbWVybWFubkBzdXNlLmRlPsLAjgQTAQgAOAIb
- AwULCQgHAgYVCgkICwIEFgIDAQIeAQIXgBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftODH
- AAoJEGgNwR1TC3ojx1wH/0hKGWugiqDgLNXLRD/4TfHBEKmxIrmfu9Z5t7vwUKfwhFL6hqvo
- lXPJJKQpQ2z8+X2vZm/slsLn7J1yjrOsoJhKABDi+3QWWSGkaGwRJAdPVVyJMfJRNNNIKwVb
- U6B1BkX2XDKDGffF4TxlOpSQzdtNI/9gleOoUA8+jy8knnDYzjBNOZqLG2FuTdicBXblz0Mf
- vg41gd9kCwYXDnD91rJU8tzylXv03E75NCaTxTM+FBXPmsAVYQ4GYhhgFt8S2UWMoaaABLDe
- 7l5FdnLdDEcbmd8uLU2CaG4W2cLrUaI4jz2XbkcPQkqTQ3EB67hYkjiEE6Zy3ggOitiQGcqp
- j//OwE0EWznS4AEIAMYmP4M/V+T5RY5at/g7rUdNsLhWv1APYrh9RQefODYHrNRHUE9eosYb
- T6XMryR9hT8XlGOYRwKWwiQBoWSDiTMo/Xi29jUnn4BXfI2px2DTXwc22LKtLAgTRjP+qbU6
- 3Y0xnQN29UGDbYgyyK51DW3H0If2a3JNsheAAK+Xc9baj0LGIc8T9uiEWHBnCH+RdhgATnWW
- GKdDegUR5BkDfDg5O/FISymJBHx2Dyoklv5g4BzkgqTqwmaYzsl8UxZKvbaxq0zbehDda8lv
- hFXodNFMAgTLJlLuDYOGLK2AwbrS3Sp0AEbkpdJBb44qVlGm5bApZouHeJ/+n+7r12+lqdsA
- EQEAAcLAdgQYAQgAIAIbDBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftOH6AAoJEGgNwR1T
- C3ojVSkIALpAPkIJPQoURPb1VWjh34l0HlglmYHvZszJWTXYwavHR8+k6Baa6H7ufXNQtThR
- yIxJrQLW6rV5lm7TjhffEhxVCn37+cg0zZ3j7zIsSS0rx/aMwi6VhFJA5hfn3T0TtrijKP4A
- SAQO9xD1Zk9/61JWk8OysuIh7MXkl0fxbRKWE93XeQBhIJHQfnc+YBLprdnxR446Sh8Wn/2D
- Ya8cavuWf2zrB6cZurs048xe0UbSW5AOSo4V9M0jzYI4nZqTmPxYyXbm30Kvmz0rYVRaitYJ
- 4kyYYMhuULvrJDMjZRvaNe52tkKAvMevcGdt38H4KSVXAylqyQOW5zvPc4/sq9c=
-In-Reply-To: <91c904f8-ba47-4595-be65-6fb57dcc9c64@intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Level: 
-X-Spamd-Result: default: False [-2.80 / 50.00];
-	BAYES_HAM(-3.00)[100.00%];
-	SUSPICIOUS_RECIPS(1.50)[];
-	NEURAL_HAM_LONG(-1.00)[-1.000];
-	NEURAL_HAM_SHORT(-0.20)[-1.000];
-	MIME_GOOD(-0.10)[text/plain];
-	FREEMAIL_TO(0.00)[intel.com,linux.intel.com,kernel.org,gmail.com,ffwll.ch];
-	TO_DN_SOME(0.00)[];
-	MIME_TRACE(0.00)[0:+];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	ARC_NA(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
-	FREEMAIL_ENVRCPT(0.00)[gmail.com];
-	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	FROM_EQ_ENVFROM(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[22];
-	RCVD_TLS_ALL(0.00)[];
-	RCVD_COUNT_TWO(0.00)[2];
-	TO_MATCH_ENVRCPT_ALL(0.00)[];
-	FUZZY_BLOCKED(0.00)[rspamd.com];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[bootlin.com:url,suse.de:email,suse.de:mid]
-X-Spam-Score: -2.80
-X-Spam-Flag: NO
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <Z3_vMrFfdIne4yVl@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-GUID: DO4YyAVLgkXSrUgkKLJ-UuR8quFvnwQq
+X-Proofpoint-ORIG-GUID: DO4YyAVLgkXSrUgkKLJ-UuR8quFvnwQq
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 adultscore=0
+ priorityscore=1501 clxscore=1015 mlxlogscore=999 phishscore=0
+ lowpriorityscore=0 malwarescore=0 bulkscore=0 suspectscore=0 spamscore=0
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2501090132
 
-Hi
-
-
-Am 09.01.25 um 17:05 schrieb Matthew Auld:
-> On 09/01/2025 14:57, Thomas Zimmermann wrote:
->> Call drm_mode_size_dumb() to compute dumb-buffer scanline pitch
->> and buffer size. Align the pitch to a multiple of 8. Align the
->> buffer size according to hardware requirements.
+On 9.01.2025 4:45 PM, Stephan Gerhold wrote:
+> On Thu, Jan 09, 2025 at 03:00:01PM +0100, Konrad Dybcio wrote:
+>> On 9.01.2025 2:29 PM, Stephan Gerhold wrote:
+>>> On Thu, Jan 09, 2025 at 01:57:17PM +0100, Konrad Dybcio wrote:
+>>>> On 9.01.2025 10:32 AM, Stephan Gerhold wrote:
+>>>>> On Wed, Jan 08, 2025 at 05:07:47PM -0600, Bjorn Andersson wrote:
+>>>>>> On Thu, Dec 05, 2024 at 07:46:28PM +0100, Stephan Gerhold wrote:
+>>>>>>> On Thu, Dec 05, 2024 at 06:11:47PM +0100, Konrad Dybcio wrote:
+>>>>>>>> On 4.12.2024 9:33 AM, Stephan Gerhold wrote:
+>>>>>>>>> On Wed, Dec 04, 2024 at 08:20:15AM +0100, Krzysztof Kozlowski wrote:
+>>>>>>>>>> On 03/12/2024 18:44, Stephan Gerhold wrote:
+>>>>>>>>>>> The WCD938x codec provides two controls for each of the MIC_BIASn outputs:
+>>>>>>>>>>>
+>>>>>>>>>>>  - "MIC BIASn" enables an internal regulator to generate the output
+>>>>>>>>>>>    with a configurable voltage (qcom,micbiasN-microvolt).
+>>>>>>>>>>>
+>>>>>>>>>>>  - "VA MIC BIASn" enables "pull-up mode" that bypasses the internal
+>>>>>>>>>>>    regulator and directly outputs fixed 1.8V from the VDD_PX pin.
+>>>>>>>>>>>    This is intended for low-power VA (voice activation) use cases.
+>>>>>>>>>>>
+>>>>>>>>>>> The audio-routing setup for the X1E80100 CRD currently specifies both
+>>>>>>>>>>> as power supplies for the DMICs, but only one of them can be active
+>>>>>>>>>>> at the same time. In practice, only the internal regulator is used
+>>>>>>>>>>> with the current setup because the driver prefers it over pull-up mode.
+>>>>>>>>>>>
+>>>>>>>>>>> Make this more clear by dropping the redundant routes to the pull-up
+>>>>>>>>>>> "VA MIC BIASn" supply. There is no functional difference except that we
+>>>>>>>>>>> skip briefly switching to pull-up mode when shutting down the microphone.
+>>>>>>>>>>>
+>>>>>>>>>>> Fixes: 4442a67eedc1 ("arm64: dts: qcom: x1e80100-crd: add sound card")
+>>>>>>>>>>
+>>>>>>>>>> If there is no functional difference and this is just redundant, then
+>>>>>>>>>> there is nothing to fix, so drop the tag. But the point is that users
+>>>>>>>>>> might want the low-power VA. You claim they don't want... sure, I am
+>>>>>>>>>> fine with that but there is nothing to fix in such case.
+>>>>>>>>>>
+>>>>>>>>>
+>>>>>>>>> The fix here is that two mutually exclusive power supplies for the DMIC
+>>>>>>>>> are specified in the device tree. You can only have one of them active
+>>>>>>>>> at the same time. The Linux driver handles that gracefully, but the
+>>>>>>>>> device tree is still wrong and IMO deserves a fixes tag.
+>>>>>>>>>
+>>>>>>>>> The functional difference is that we skip briefly switching to pull-up
+>>>>>>>>> mode when shutting down the microphone. Users won't notice that, but
+>>>>>>>>> it's not the intended behavior.
+>>>>>>>>>
+>>>>>>>>> I don't claim that users don't want to switch to the low-power pull-up
+>>>>>>>>> mode (VA MIC BIASn). However, we would need a different mechanism to
+>>>>>>>>> give them the option to switch at runtime. "audio-routing" just
+>>>>>>>>> specifies static routes, so the current description does not allow
+>>>>>>>>> switching between the two modes either.
+>>>>>>>>
+>>>>>>>> Is there no existing mechanism to alter this at runtime?
+>>>>>>>>
+>>>>>>>
+>>>>>>> I don't think so... Since it's currently exposed as two separate DAPM
+>>>>>>> supplies (instead of a mux or similar) you can only choose between one
+>>>>>>> of them in the static routes specified by "audio-routing" in the DT.
+>>>>>>>
+>>>>>>> I tried looking at how downstream handles this, but this left me even
+>>>>>>> more confused than I was before. :-) On CRD we currently have the
+>>>>>>> following routes in DT:
+>>>>>>>
+>>>>>>> 	"VA DMIC0", "MIC BIAS3",
+>>>>>>> 	"VA DMIC1", "MIC BIAS3",
+>>>>>>> 	"VA DMIC2", "MIC BIAS1",
+>>>>>>> 	"VA DMIC3", "MIC BIAS1",
+>>>>>>> 	"VA DMIC0", "VA MIC BIAS3",
+>>>>>>> 	"VA DMIC1", "VA MIC BIAS3",
+>>>>>>> 	"VA DMIC2", "VA MIC BIAS1",
+>>>>>>> 	"VA DMIC3", "VA MIC BIAS1",
+>>>>>>>
+>>>>>>> MIC BIAS and VA MIC BIAS are mutually exclusive, so this is not correct.
+>>>>>>> But if you look at e.g. SM8550 downstream they have:
+>>>>>>>
+>>>>>>> 	"TX DMIC0", "MIC BIAS3",
+>>>>>>> 	"TX DMIC1", "MIC BIAS3",
+>>>>>>> 	"TX DMIC2", "MIC BIAS1",
+>>>>>>> 	"TX DMIC3", "MIC BIAS1",
+>>>>>>> 	"VA DMIC0", "VA MIC BIAS3",
+>>>>>>> 	"VA DMIC1", "VA MIC BIAS3",
+>>>>>>> 	"VA DMIC2", "VA MIC BIAS1",
+>>>>>>> 	"VA DMIC3", "VA MIC BIAS1";
+>>>>>>>
+>>>>>>> Note the TX DMIC vs VA DMIC. So they specify one of the supplies for the
+>>>>>>> TX macro DMIC, and the low-power one for the VA macro DMIC. That would
+>>>>>>> be fine.
+>>>>>>>
+>>>>>>> Now the question is: If we can use the DMIC through both the TX and the
+>>>>>>> VA macro, and we're not doing voice activation, why are we using the VA
+>>>>>>> macro in the first place?
+>>>>>>>
+>>>>>>> @Srini: Do you remember why?
+>>>>>>>
+>>>>>>
+>>>>>> What's the verdict regarding this?
+>>>>>>
+>>>>>
+>>>>> We started discussing this, but did not come to a conclusion yet if we
+>>>>> should be recording from the DMICs using the TX macro instead of the VA
+>>>>> macro.
+>>>>>
+>>>>> The patch I submitted is still valid though, independent of that
+>>>>> question. Since we're not doing voice activation we want to have the
+>>>>> "full quality" MIC BIAS supply, not the low-power one.
+>>>>
+>>>> Can/should we discuss a new sound API to make this toggleable?
+>>>>
+>>>> Do these microphones physically connect to muxable inputs, or does this
+>>>> depend on board wiring?
+>>>>
+>>>
+>>> The WCD938x codec has 4 MIC_BIAS output pins that are typically used as
+>>> power supply for microphones. Inside the codec there is an option to
+>>> drive these output pins in one of two modes:
+>>>
+>>>  1. Internal regulator to generate the output with a configurable
+>>>     voltage (qcom,micbiasN-microvolt). Exposed as "MIC BIASn" supply in
+>>>     the Linux driver.
+>>>
+>>>  2. "Pull-up mode" that bypasses the internal regulator and directly
+>>>     outputs fixed 1.8V from the VDD_PX pin. Exposed as "VA MIC BIASn"
+>>>     supply in the Linux driver.
+>>>
+>>> The board-specific part here is only which microphone is wired to which
+>>> MIC BIAS pin (e.g. DMIC0 -> MIC BIAS3, DMIC2 -> MIC BIAS1 etc). 
+>>>
+>>> Both options will work if the microphone can operate at 1.8V. In that
+>>> case, I think generally we want (1) for normal audio use cases and (2)
+>>> for low-power use cases (like "voice activation").
+>>>
+>>> Apparently the same applies for the "macro" to use. TX macro should be
+>>> used for normal audio, and VA macro only for low-power use cases. With
+>>> that there is a clear mapping:
+>>>
+>>>  - TX macro DMICs -> full power "MIC BIAS" supply
+>>>  - VA macro DMICs -> low-power "VA MIC BIAS" supply
+>>>
+>>> I don't see why someone would want to change this mapping, so I don't
+>>> think it's worth making this user configurable.
+>>>
+>>> Given that we're currently using the VA macro for normal audio, we
+>>> should describe VA macro DMICs -> full power "MIC BIAS" supply for now
+>>> and ideally migrate to using the TX macro later.
 >>
->> Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
->> Cc: Lucas De Marchi <lucas.demarchi@intel.com>
->> Cc: "Thomas Hellström" <thomas.hellstrom@linux.intel.com>
->> Cc: Rodrigo Vivi <rodrigo.vivi@intel.com>
->> ---
->>   drivers/gpu/drm/xe/xe_bo.c | 8 ++++----
->>   1 file changed, 4 insertions(+), 4 deletions(-)
+>> So, in short, if I understood you correctly, audio comes in through a
+>> hardwired connection to a given macro, but the bias pins can be configured
+>> to output the bias voltage through any of the macros.
 >>
->> diff --git a/drivers/gpu/drm/xe/xe_bo.c b/drivers/gpu/drm/xe/xe_bo.c
->> index e6c896ad5602..d75e3c39ab14 100644
->> --- a/drivers/gpu/drm/xe/xe_bo.c
->> +++ b/drivers/gpu/drm/xe/xe_bo.c
->> @@ -8,6 +8,7 @@
->>   #include <linux/dma-buf.h>
->>     #include <drm/drm_drv.h>
->> +#include <drm/drm_dumb_buffers.h>
->>   #include <drm/drm_gem_ttm_helper.h>
->>   #include <drm/drm_managed.h>
->>   #include <drm/ttm/ttm_device.h>
->> @@ -2535,14 +2536,13 @@ int xe_bo_dumb_create(struct drm_file 
->> *file_priv,
->>       struct xe_device *xe = to_xe_device(dev);
->>       struct xe_bo *bo;
->>       uint32_t handle;
->> -    int cpp = DIV_ROUND_UP(args->bpp, 8);
->>       int err;
->>       u32 page_size = max_t(u32, PAGE_SIZE,
->>           xe->info.vram_flags & XE_VRAM_FLAGS_NEED64K ? SZ_64K : SZ_4K);
->>   -    args->pitch = ALIGN(args->width * cpp, 64);
->> -    args->size = ALIGN(mul_u32_u32(args->pitch, args->height),
->> -               page_size);
->> +    err = drm_mode_size_dumb(dev, args, SZ_64, page_size);
->
-> AFAICT this looks to change the behaviour, where u64 size was 
-> technically possible and was allowed given that args->size is u64, but 
-> this helper is limiting the size to u32. Is that intentional? If so, 
-> we should probably make that clear in the commit message.
+> 
+> That's not entirely right. In our case here, the digital data from the
+> DMIC goes directly to both the TX and VA macro. The power supply comes
+> directly from the WCD983x codec. So the macro isn't involved in the bias
+> voltage at all. Perhaps a picture will help:
+> 
+>                              +------+                         
+>                         Data |      |  Power                  
+>                           +--+ DMIC |<----------------+       
+>                           |  |      |                 |       
+>                           |  +------+                 |       
+>     +---------------------+---+    +------------------+------+
+>     | SoC  +----------+   |   |    | WCD983x       MIC_BIAS1 |
+>     |      | TX Macro |<--+   |    |                  ^      |
+>     |      +----------+   |   |    | +-----------+    |      |
+>     |      +----------+   |   |    | | Regulator +----X--+   |
+>     |      | VA Macro |<--+   |    | +-----------+       |   |
+>     |      +----------+       |    |       ^          VDD_PX |
+>     +-------------------------+    +-------+-----------------+
+>                                            |             ^    
+>                                            |             |    
+> 
+> X inside the WCD983x is where we can make the choice, if we want to use
+> the internal regulator or output VDD_PX on MIC_BIAS1 directly. 
+> 
+> We can also choose to consume the microphone data either via the TX
+> macro or the VA macro. IIRC there is no mux for this, the data just ends
+> up in both at the same time.
+> 
+> Does that help explain it?
 
-That's an interesting observation; thanks. The ioctl's internal checks 
-have always limited the size to 32 bit. [1] I think it is not supposed 
-to be larger than that. We can change the helper to support 64-bit sizes 
-as well.
+I think that's a "sadly, yes" ;)
 
-Having said that, is there any use case? Dumb buffers are for software 
-rendering only. Allocating more than a few dozen MiB seems like a 
-mistake. Maybe we should rather limit the allowed allocation size instead?
+Because that means we can switch the mics to e.g. the VA macro for
+low power always-listening usecases at runtime (e.g. screen off), but we
+may want to push it back to the RX macro for $reasons. And I'm assuming
+there's probably $reasons2 to use the matching bias output from WCD..
 
-Best regards
-Thomas
+Unless both $reasons are bogus, in which case we should probably stick
+to keeping the bias and consuming macro paired to make the DT look sane
 
-[1] 
-https://elixir.bootlin.com/linux/v6.12.6/source/drivers/gpu/drm/drm_dumb_buffers.c#L82
-
->
->> +    if (err)
->> +        return err;
->>         bo = xe_bo_create_user(xe, NULL, NULL, args->size,
->>                      DRM_XE_GEM_CPU_CACHING_WC,
->
-
--- 
---
-Thomas Zimmermann
-Graphics Driver Developer
-SUSE Software Solutions Germany GmbH
-Frankenstrasse 146, 90461 Nuernberg, Germany
-GF: Ivo Totev, Andrew Myers, Andrew McDonald, Boudien Moerman
-HRB 36809 (AG Nuernberg)
-
+Konrad
 
