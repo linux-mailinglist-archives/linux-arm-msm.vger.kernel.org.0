@@ -1,179 +1,128 @@
-Return-Path: <linux-arm-msm+bounces-44576-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-44577-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D59B1A076CE
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jan 2025 14:13:15 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0A0E4A076CB
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jan 2025 14:12:53 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id D02C37A15B4
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jan 2025 13:12:26 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 40C613A5940
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jan 2025 13:12:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C2097218AC6;
-	Thu,  9 Jan 2025 13:11:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id ED0102185A0;
+	Thu,  9 Jan 2025 13:12:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Ue0KuKUR"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="GB+LNnJy"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15D9721883D
-	for <linux-arm-msm@vger.kernel.org>; Thu,  9 Jan 2025 13:11:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D92CD217F28;
+	Thu,  9 Jan 2025 13:12:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736428313; cv=none; b=Wnd1etAxZlTvrjc/SzjFjlMfIDLpd9zWI3UpKtfO6feJvkQj5mDpwL/MSJ3C2v5J0OugpsTtxJVVK3bfZVSiDe2V3MY0ozbhwr8W6OaDekZURBzQ+2gDHf9OIAqdjtuym652zXmaoW3WeRAHnGaBujlMGYEJ6LT1KPCoLdgZdDY=
+	t=1736428337; cv=none; b=ixJ/0ipKcH3BfotN0SztuXuoWGUsLdhGbfrk0votT9AUa2XIcU0JtmIAD3x5IIQlQvALyEUhRBTbcp/cDBRTz6qvPyyxL6GcMX3EFGlIntonoQGgJf44kEKuagboXATVZg+XKlWPnXwpe2+iv/32XJ2g3T4bWg2UT48d4aTNTGU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736428313; c=relaxed/simple;
-	bh=rEfDHif2k/cUFRgYFQXP363rHi3KLnxYgxFlHnkElyw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=hZBH/0VgEtc/zx4RWRFVgsZQuPR1B8UquPWhKysgn6qA9Ic9MiT/gvW44zuUCSopGM6M9T0YafPj5UjOT5oELLRetmBVVhxxHUobrvBgxwyddrQJ4DYko0mUJuGwYZGG8Np4AUGrm7vhTrM/CiLFn0VQnv3i+sTxoSpAonEeF+E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Ue0KuKUR; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5098xJTS008540
-	for <linux-arm-msm@vger.kernel.org>; Thu, 9 Jan 2025 13:11:51 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	GNYgBzr7+PYOLhPzCHQQoOI0wbcUWcQWNOky2FZhSeU=; b=Ue0KuKURi6sp0qiW
-	zB3DHfwgYz+1JOG13cZS9gwXwdusfdj9QJFr2rsdnlCNvJegdkXkpNCyZfVO0+s7
-	muNIxr3gHQvclg9JG6PH4fwfqcC7afyIeB9EBWE5GPzl2RlpcdAIFywZCkpm5/ga
-	L8gPYi5wdXLMPBjMccXLGpPuoSh7t64Twbrb0MVCCRv8OYsM8L5jyHbPtOTrgTRU
-	jS1tVY/06rzzz/92P652BPs8Ye9R75/SFQ4VmDPFjHr6MJHSI0mPcYnhelstVWZB
-	HZSy7Ydb75zQW+RWy//4T3qZ1OAwZTfG0LmgTHllszaJZY1HMFjPVdTgwuDv+YQ+
-	nqbhMg==
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com [209.85.160.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 442bdxgjw6-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 09 Jan 2025 13:11:51 +0000 (GMT)
-Received: by mail-qt1-f197.google.com with SMTP id d75a77b69052e-46b3359e6deso1831331cf.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Jan 2025 05:11:51 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736428310; x=1737033110;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=GNYgBzr7+PYOLhPzCHQQoOI0wbcUWcQWNOky2FZhSeU=;
-        b=lT0ut+EYZAIRJ+fN4JFJ/PZBfIyiwvz6vzwfUrZlIhWngnCaZIoyzM3FDB+f+qmuV3
-         r2Rm0qoR++BWTeCXxnX+qR9I021OJUzyjVtXVAFAlclu2LSOXHp48LGI3pTTmhJ1XvCx
-         qZQ1dSgTox27vbkcocQoLZY8tnUQkcCH7CkriKkZ6SnpnB3iyptQ0rbIUKZROmba6yEJ
-         d/eH1u2WL64uRSl1lNJTR74wvLR/etb5geSlnieu6QCm90k3bv/eB1vHG8NCJaISffmd
-         hUSzqhPzCm++rZCRhWyrgTHH+nAB6oFWQ0QFKUrCtgaFs3Z4R1/5OR9unqf0l0t4LLov
-         ZCCA==
-X-Forwarded-Encrypted: i=1; AJvYcCWOreqqC7Lb55peBQOlCPHfemsSmt85M/BZBVsfmytHhtXRxlAsyb99GQfAme2KUXTACXAt5MSBSmd4Sc/H@vger.kernel.org
-X-Gm-Message-State: AOJu0YwGM73SvYkgRfxaMh4m7je8Xx1HeImnyuGH3kenV+qI1xiTVle/
-	36oN/l6Jop+pN5N7vNRHNYuu5YSflfSl1Ct8Crwf5kKxdIjZq7B8wfQXH2d0JXchH8RGdGOhCks
-	XAN/jfhbs0EA9nZkn+/PD+oU6fIowlU4dGIvjnWsVuSeZpp1HQOnYy4z8pEGUcsxy
-X-Gm-Gg: ASbGncu3emSI/QMnlEOXqIIORC/S3T4Xo5UjupLjGJiT7wRlPN4h8l0569RF2C8hgg5
-	oFxxJehzO0jXdpuJgnKZ79AUQSbD1Pw+nk8ptBXXLbdrFtrUHAwJEjGIZVJCpqJBKbe5/WjHb7E
-	sxA16LPzhNQimtwA7D0YIL24tlbC3niV/57yMWKOcr6o3HoCJ2NAph6FC/L84pK4gv8zyrpNz3r
-	BsZ8JQ1aaSihHKmx62xSwU+giVIR6ty2R6LsTK9CD1QQCbBFySLowPd63c51yVZJT5ZrF46xnOi
-	GV1rNqPYaNjTjMMuXAkmu4ZFuCOccLAmdx4=
-X-Received: by 2002:ac8:5e4a:0:b0:467:825e:133b with SMTP id d75a77b69052e-46c7108eed3mr33342341cf.13.1736428309906;
-        Thu, 09 Jan 2025 05:11:49 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFCeDVZrbZMWQibNMNrxaFt3Ya9WrO8tuNQ4vIKOezNZklsG4aWWaAtbuPScIua3vZy2tUY3g==
-X-Received: by 2002:ac8:5e4a:0:b0:467:825e:133b with SMTP id d75a77b69052e-46c7108eed3mr33342061cf.13.1736428309525;
-        Thu, 09 Jan 2025 05:11:49 -0800 (PST)
-Received: from [192.168.65.90] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5d99091e9absm592973a12.45.2025.01.09.05.11.46
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 09 Jan 2025 05:11:49 -0800 (PST)
-Message-ID: <f05f86ff-abfe-42d9-b92c-7788829fe95f@oss.qualcomm.com>
-Date: Thu, 9 Jan 2025 14:11:46 +0100
+	s=arc-20240116; t=1736428337; c=relaxed/simple;
+	bh=ag+CVL8GO1ZYXa8AfDCwJl1QeL0yUyMSeLoUvIHHepE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=TGlcUGo2NUGtZmZ33Qxv7v3bNUP6L1ST2HDFCM6Xxity9MQj4fNIAACF2MnMkF2hVJ4N0qGj904PHkPEw0NyZF3HiB0SumGapBFPLr545mCXEpin1hbhaZ+bu34nR66YIVAlfpTeszrFMPxysvUDHehVRPCc0G28XwMluIzgk/o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=GB+LNnJy; arc=none smtp.client-ip=198.175.65.18
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1736428337; x=1767964337;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=ag+CVL8GO1ZYXa8AfDCwJl1QeL0yUyMSeLoUvIHHepE=;
+  b=GB+LNnJykrosOwogLmVgsLQHpcolJXe13fHrKC94VzS2biEMzeVsFvZr
+   xQEeMbq4WHi3BsHlBjoQ85Xg64tPgaqS4VrcpBRSDVAS9cGRZ9FgYaoBG
+   2CkD4FTspVO+n7uETmYVsv6SB9ogTSXcqzWyHTkkh6toi8t+poKBT61Js
+   8qBUBx9dXi0MLZlMb3m42AFuSiRayhDieHvBqDghu7+gXUf0K6iLFu3J0
+   gECIYU8c2Hj/j4j7A8eXUVxqxpg/MSonmeHEO5BS2wlP0poYDM1aOJi0/
+   mZbuM9B5tvPub6o2VOQMWUnyfjD/du2hr8H52Q/ZHh5cvk1Lq9F3XyeQz
+   w==;
+X-CSE-ConnectionGUID: +ZEc85x3SEqpqFji1zP7jw==
+X-CSE-MsgGUID: Rkv2lW+pTYqW231t9/uu6w==
+X-IronPort-AV: E=McAfee;i="6700,10204,11310"; a="36802438"
+X-IronPort-AV: E=Sophos;i="6.12,301,1728975600"; 
+   d="scan'208";a="36802438"
+Received: from orviesa002.jf.intel.com ([10.64.159.142])
+  by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Jan 2025 05:12:16 -0800
+X-CSE-ConnectionGUID: fJrEWseXQLiO5pdH9F86mA==
+X-CSE-MsgGUID: fAZbMe0HR5ieD1l6xsc5Dg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.12,301,1728975600"; 
+   d="scan'208";a="134235630"
+Received: from lkp-server01.sh.intel.com (HELO d63d4d77d921) ([10.239.97.150])
+  by orviesa002.jf.intel.com with ESMTP; 09 Jan 2025 05:12:11 -0800
+Received: from kbuild by d63d4d77d921 with local (Exim 4.96)
+	(envelope-from <lkp@intel.com>)
+	id 1tVsKV-000HZX-2u;
+	Thu, 09 Jan 2025 13:12:07 +0000
+Date: Thu, 9 Jan 2025 21:11:53 +0800
+From: kernel test robot <lkp@intel.com>
+To: Akhil P Oommen <quic_akhilpo@quicinc.com>,
+	Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+	Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
+	Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Maya Matuszczyk <maccraft123mc@gmail.com>
+Cc: oe-kbuild-all@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+	linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
+	devicetree@vger.kernel.org
+Subject: Re: [PATCH v4 5/7] dt-bindings: opp: Add v2-qcom-adreno vendor
+ bindings
+Message-ID: <202501092058.5rRJ1ocm-lkp@intel.com>
+References: <20250109-gpu-acd-v4-5-08a5efaf4a23@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V3 6/8] arm64: dts: qcom: ipq5332: add nodes to bringup q6
-To: Gokul Sriram Palanisamy <quic_gokulsri@quicinc.com>,
-        jassisinghbrar@gmail.com, robh@kernel.org, krzk+dt@kernel.org,
-        conor+dt@kernel.org, andersson@kernel.org, mathieu.poirier@linaro.org,
-        konradybcio@kernel.org, quic_mmanikan@quicinc.com,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        dmitry.baryshkov@linaro.org
-Cc: quic_viswanat@quicinc.com, quic_srichara@quicinc.com
-References: <20250107101647.2087358-1-quic_gokulsri@quicinc.com>
- <20250107101647.2087358-7-quic_gokulsri@quicinc.com>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <20250107101647.2087358-7-quic_gokulsri@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: 9tLgHmilwo0iRN6wgdUHEXWyFZMeEUyM
-X-Proofpoint-ORIG-GUID: 9tLgHmilwo0iRN6wgdUHEXWyFZMeEUyM
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 adultscore=0
- mlxlogscore=920 impostorscore=0 lowpriorityscore=0 suspectscore=0
- priorityscore=1501 mlxscore=0 bulkscore=0 clxscore=1015 phishscore=0
- spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2501090105
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250109-gpu-acd-v4-5-08a5efaf4a23@quicinc.com>
 
-On 7.01.2025 11:16 AM, Gokul Sriram Palanisamy wrote:
-> From: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
-> 
-> Enable nodes required for q6 remoteproc bring up.
-> 
-> Signed-off-by: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
-> Signed-off-by: Gokul Sriram Palanisamy <quic_gokulsri@quicinc.com>
-> ---
+Hi Akhil,
 
-[...]
+kernel test robot noticed the following build warnings:
 
-> +		q6v5_wcss: remoteproc@d100000 {
-> +			compatible = "qcom,ipq5332-wcss-sec-pil";
-> +			reg = <0xd100000 0x4040>;
+[auto build test WARNING on dbfac60febfa806abb2d384cb6441e77335d2799]
 
-Please pad the address part to 8 hex digits with leading zeroes
+url:    https://github.com/intel-lab-lkp/linux/commits/Akhil-P-Oommen/drm-msm-adreno-Add-support-for-ACD/20250109-044339
+base:   dbfac60febfa806abb2d384cb6441e77335d2799
+patch link:    https://lore.kernel.org/r/20250109-gpu-acd-v4-5-08a5efaf4a23%40quicinc.com
+patch subject: [PATCH v4 5/7] dt-bindings: opp: Add v2-qcom-adreno vendor bindings
+config: csky-randconfig-051-20250109 (https://download.01.org/0day-ci/archive/20250109/202501092058.5rRJ1ocm-lkp@intel.com/config)
+compiler: csky-linux-gcc (GCC) 14.2.0
+dtschema version: 2024.12.dev6+gc4da38d
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20250109/202501092058.5rRJ1ocm-lkp@intel.com/reproduce)
 
-> +			firmware-name = "ath12k/IPQ5332/hw1.0/q6_fw0.mdt";
-> +			interrupts-extended = <&intc GIC_SPI 421 IRQ_TYPE_EDGE_RISING>,
-> +					      <&wcss_smp2p_in 0 IRQ_TYPE_NONE>,
-> +					      <&wcss_smp2p_in 1 IRQ_TYPE_NONE>,
-> +					      <&wcss_smp2p_in 2 IRQ_TYPE_NONE>,
-> +					      <&wcss_smp2p_in 3 IRQ_TYPE_NONE>;
-> +			interrupt-names = "wdog",
-> +					  "fatal",
-> +					  "ready",
-> +					  "handover",
-> +					  "stop-ack";
-> +
-> +			clocks = <&gcc GCC_IM_SLEEP_CLK>;
-> +			clock-names = "sleep";
-> +
-> +			qcom,smem-states = <&wcss_smp2p_out 1>,
-> +					   <&wcss_smp2p_out 0>;
-> +			qcom,smem-state-names = "stop",
-> +						"shutdown";
-> +
-> +			memory-region = <&q6_region>;
-> +
-> +			glink-edge {
-> +				interrupts = <GIC_SPI 417 IRQ_TYPE_EDGE_RISING>;
-> +				label = "rtr";
-> +				qcom,remote-pid = <1>;
-> +				mboxes = <&apcs_glb 8>;
-> +			};
-> +		};
->  	};
->  
->  	timer {
-> @@ -488,4 +526,28 @@ timer {
->  			     <GIC_PPI 4 (GIC_CPU_MASK_SIMPLE(4) | IRQ_TYPE_LEVEL_LOW)>,
->  			     <GIC_PPI 1 (GIC_CPU_MASK_SIMPLE(4) | IRQ_TYPE_LEVEL_LOW)>;
->  	};
-> +
-> +	wcss: wcss-smp2p {
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202501092058.5rRJ1ocm-lkp@intel.com/
 
-All other DTs (except the odd cookie ipq6018 which sneaked through) call
-these smp2p-foo instead of foo-smp2p
+All warnings (new ones prefixed by >>):
 
-Konrad
+   Documentation/devicetree/bindings/net/snps,dwmac.yaml: mac-mode: missing type definition
+>> Warning: Duplicate compatible "operating-points-v2" found in schemas matching "$id":
+   	http://devicetree.org/schemas/opp/opp-v2.yaml#
+   	http://devicetree.org/schemas/opp/opp-v2-qcom-adreno.yaml#
+
+-- 
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
 
