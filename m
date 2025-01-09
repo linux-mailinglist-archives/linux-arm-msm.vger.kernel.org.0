@@ -1,197 +1,181 @@
-Return-Path: <linux-arm-msm+bounces-44553-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-44554-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id A8C4BA0756D
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jan 2025 13:14:34 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 48E85A07570
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jan 2025 13:15:03 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9F73A1644A6
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jan 2025 12:14:32 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7D3023A07F1
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jan 2025 12:14:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5D89F21764D;
-	Thu,  9 Jan 2025 12:14:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B21BD216E39;
+	Thu,  9 Jan 2025 12:14:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="hGQcPTj5"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="xfsPbaT5"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
+Received: from mail-lf1-f54.google.com (mail-lf1-f54.google.com [209.85.167.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98E87216E24
-	for <linux-arm-msm@vger.kernel.org>; Thu,  9 Jan 2025 12:14:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D033A217641
+	for <linux-arm-msm@vger.kernel.org>; Thu,  9 Jan 2025 12:14:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736424868; cv=none; b=TpO3Gi/PR3+/VsYIkbffBVQuOaGifYavucLX0kPRkAxCH7wdJTmC3UiNgWu6FXTGyX6fNuRvwIDpZ5qTzBxB5itPJwU7eyXMw98r9s43ZXnSyLPR9RDytSJXjrpSvLDr9JOMBF42xMNUNuyV4mf6NGDlJzx8S4up8rq++mnmsrU=
+	t=1736424898; cv=none; b=ZOEUp6yHXkASs8j0cYYy7enNPUPjRrDSidMQqGitTIsBvzJYs7EKuESt7BzkDpfdDlknR7S79kl528y/t67c8Tqp1YmS9Be0j1fajHzpBzFL+OIuFXzRomkYYSmDw9eUt5YmLAas2SPJesad1nkwPTG0nAs7x+q0gkhLKpZDzfs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736424868; c=relaxed/simple;
-	bh=8Vv2C9JrNlsK2WjWmy3HhCT7El+dsWz+YiIQGAZv1Cs=;
+	s=arc-20240116; t=1736424898; c=relaxed/simple;
+	bh=p4j5IStoWyO7OVlzCOyuC2KiL7EPtJiEnWHh/dplXAU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=tBOUGsBUQ7QJyzzmBrv1WXejHPqIccoZpZ1+pneNKfgf3epIZQcMAB+ZlKQEMcHZBKMj8t7Zzw1JQrZKbbSZ3GVl7dADkS68pIkxhfA3wX8wqKWJxBuVtKgC1H/ylwM0Ib19A5SKDcBq1e4ByINBxHJXe2Cto8LUQyfg1PyMYB4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=hGQcPTj5; arc=none smtp.client-ip=209.85.128.47
+	 Content-Type:Content-Disposition:In-Reply-To; b=AFHRj9MulgVQmMhanBNRYeZwofNllC3iNpCIan44sdaRE8TEhH/LRGXDn9JbP0/LDeNQIU0XPTX7i20Yp9haholA+yGWMbHQNq4IzdOPdcw56fr6/kfjKZrXTj8BV2GVK7xODlqMe9GU+IHaKd4HzmzMLBPLd87EJHu3T0xTQzw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=xfsPbaT5; arc=none smtp.client-ip=209.85.167.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-436341f575fso9198435e9.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Jan 2025 04:14:25 -0800 (PST)
+Received: by mail-lf1-f54.google.com with SMTP id 2adb3069b0e04-54024aa9febso797993e87.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Jan 2025 04:14:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1736424864; x=1737029664; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Qgi4e6BoGIUkq88BVzT7YBbI2Ar0NhYklw/AGMjsAlg=;
-        b=hGQcPTj5OD9dr8icYh3aUe8YZzGY5BLBWeiq3C8BW64bbwyrj80rkGOrkoXCHFboN3
-         YcJXgvHM52xjTgM8mTFuxpJEIGEsm0k+EKNpQs7WpWeYhy1jHpY339/dEGlqO89xrDcR
-         lsQi9cRczh2+0eJnutu/nLsGmoqBH3nC7LRj0Bsn++VNllRz5yy7B3EsdcFBsLbfA3gC
-         qsZDleTZmI+iDyRl2GTm9MuDzbQah6X/Dplx/uS0Rm2wTFlsm9Mo7kXMdRrYG/wcKRqO
-         5+BQJT+i5uy6sjBHQq3p9p5SEyJAPbdofNa9tCPzlQ4E0yu+Cz92/MSzAnVMCAgo+kcj
-         dFmA==
+        d=linaro.org; s=google; t=1736424895; x=1737029695; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=7Y3HY3/3raPKrBdMfi/LEIgt0D1405I14g2HDD+nyIE=;
+        b=xfsPbaT5r4LHhu4Dpr3TD3d/dSfcQ6n1Ptw3RC7H3G9gh/K4Bjc+SKabf1ULgIw6pK
+         pD/26hwF00enoqHxlrePYCDLfdxoPMqR1P70TKf+mHlQAcvtBqn1RAs8ndi0jrSIrC5Y
+         UC+tOTpYzgR2vemPbp4djlzwJ9+/Rprd1V4a/oAGnhPpP3as/XVnQXPltL2EmC2WcYUs
+         YcEb0cZII1x+e+Ksoh+1smlyBLfjUN/MdB6JmSTsZ2Mj/0u8Ybf9xuUe5O1sM3WR24y+
+         pOf9ja9tG2OexqFfqiXJu7akCMpISPWwjLytJw2XpssW6fMjPkW0SGYZCcnCv4pmCl+Q
+         a1lw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736424864; x=1737029664;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Qgi4e6BoGIUkq88BVzT7YBbI2Ar0NhYklw/AGMjsAlg=;
-        b=vPCJsm5QLKHT5HhACKmTSa4M/jY8uDeUY7Qmdca1lev31PjmTA+9Jhri5afl1n2LhQ
-         O+oLtUhRqjMImUZbm2qxtEW2ruJjgofckY3XlTs+KLvW9c+jf+KZvdMLZO+/KzRtCVtl
-         3+2batNHUgAZbSwb9vwiuXk0723mXxL/nYGDiHDvnX8F/9kg1Okx7DY7ncKY00Kr/QD5
-         TtFIe80Mc3TcbrEvSUQY7LjcIacBOnZ5wyPJOXYTtTu30IYRMFYshwJGgMXPj9oI6V9Q
-         Th1Yboe6Fdc2EmsbBSydCL6acj2i6rBF5PV8r3W0BXg9GAAr/lVVfd0M+gahsvL5y6CF
-         5PvA==
-X-Forwarded-Encrypted: i=1; AJvYcCUWlwhoVHdW6MRdUWWY+Z+JVI72Jd0IIX5lrm0s07XIXNzk+izkGva7rSr98iNDoHvrtGZ9zOCeryVxnLU0@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx++bPcA0bxrvupUm81SQDYNawGj/6V62pi2wOoGPB7wKs8qjLI
-	0qzYjfdm2exh0FjMm4Vo3W8c8atI13Fqf6nCj95paDY6+1SYEFpZ3AuWU9XJ7fM=
-X-Gm-Gg: ASbGncu7V8D+AWh3ZoetkljZvv0p3rntO2gtX8JtY7P3YP/vmyvvNdso+JRm7Z8KlKe
-	Nl+FY5jCWoVPxAkfR5B2Sr8ZJFh5VCdWC3Phlcv3gf6FfqVGRmN1NL2JoJq+bpZDU5zsq+Rygzm
-	a7nyRoRmBDMHKPHUHiOWNqgYu6SHchC2lehgy+o4fbgs9LnRW+3oLKrG5OqbsITuE/FdpQCydtn
-	1jwIEza+j5hycs8u5tkVs1fPeZv43aqRT/m2TjSdTeMzNDAYPI4APw=
-X-Google-Smtp-Source: AGHT+IFZfJfwssLNpBYM5MjiXFRSaZImZ4dWDIr4RYjQoPZfimRRPYITmNGGjTmVo8KU+9ieJp1Ivg==
-X-Received: by 2002:a05:600c:6b6f:b0:436:e86e:e4ab with SMTP id 5b1f17b1804b1-436e86ee529mr33625975e9.30.1736424863901;
-        Thu, 09 Jan 2025 04:14:23 -0800 (PST)
-Received: from linaro.org ([86.121.162.10])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-436e2da6401sm53853955e9.2.2025.01.09.04.14.21
+        d=1e100.net; s=20230601; t=1736424895; x=1737029695;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=7Y3HY3/3raPKrBdMfi/LEIgt0D1405I14g2HDD+nyIE=;
+        b=rxyvo+Y/Qno+4NBXXVnyxcUuoH6L53iJzf827qeyJteJFehFYkHFKDuYAqmD7UCTif
+         FgYorFFsqydYKACDZ0i7R+trbh0awmYO3czrQmgsVzh4Cp1eaa4+jomMZUZbH98SvmNc
+         TGCgsIh5WWA2V9LXq8LmAAF3Tpe6FdSkQiuWSI0l5D+f5KTiLZQ+1YmtWwHYTNx0JWLF
+         xrqAJUgQovMEw6tpE1OmWJ7wAes+Ey7FTE9vaj0WwMBzzTgmD5yO0D5XGhUNpwZxrgDC
+         vt7p2mFab+DT4LJDcGdaMmvnSU0FJl8oUB83zWlGnDGuFC4rj79OJYd7u1Aa76zKp7Gj
+         FENw==
+X-Forwarded-Encrypted: i=1; AJvYcCVFKIUhSyGRe8thx+CtmTwLfC7N+AM+nybn5UhzOF4zqckjGy0n/oli2R+Zhc3XD8++1Arer/uK5kap8cER@vger.kernel.org
+X-Gm-Message-State: AOJu0YxmDKKO8koKudLbFjK30FEcG7zr5j7Kkbl3Pgqnp0WRaztvVNcG
+	+LQagDfWrNM2ooE3rcOjkaqRJul7bqsAtEm5ZxF9Wp9Er5JG3r+5T7i1AbG0UnA=
+X-Gm-Gg: ASbGnctdiH8B0wNgrn9ASGp6dOIsXFa/MBi2tDCacRbGJshSldE3xdmfLCLEgMaJAWP
+	6bieF+VetU67pIIijqLA63R5kFI8v6PUBABR1jupSC1koUrrAOaKzJ4yfMvueCZEnLXygTg7k5N
+	nQDdu85RQeqRpAIlfFYw1JXLmeqhFBberECSvcw1qucAmRRUgfHACvESegTExL1lsurw8ZGraEK
+	jYOKIjDWnsGzanZLZSpmaJmjLWe0bjlqCmGh7VTrjgBGXzXoJHPLSJB+ZEVusnnayZuCZCQc/4X
+	5QJHS+SvRT2OztyIPOlxA86Azh5DePe7PTAk
+X-Google-Smtp-Source: AGHT+IG5w+mHeSxL6HLuB+vsJtc5xv9b0UjlOGR0qPmcZlQhgaehIdffVretPgnpXUgovXqCroBRTw==
+X-Received: by 2002:a05:6512:104c:b0:53e:383c:dfa9 with SMTP id 2adb3069b0e04-542845d32f9mr2107453e87.30.1736424894890;
+        Thu, 09 Jan 2025 04:14:54 -0800 (PST)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5428be49a12sm180006e87.17.2025.01.09.04.14.53
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 09 Jan 2025 04:14:23 -0800 (PST)
-Date: Thu, 9 Jan 2025 14:14:21 +0200
-From: Abel Vesa <abel.vesa@linaro.org>
-To: Bjorn Andersson <andersson@kernel.org>
-Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-	Karol Herbst <kherbst@redhat.com>, Lyude Paul <lyude@redhat.com>,
-	Danilo Krummrich <dakr@redhat.com>,
-	Jani Nikula <jani.nikula@linux.intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
-	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
-	Tvrtko Ursulin <tursulin@ursulin.net>,
-	Rob Clark <robdclark@gmail.com>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Sean Paul <sean@poorly.run>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Johan Hovold <johan@kernel.org>, dri-devel@lists.freedesktop.org,
-	linux-kernel@vger.kernel.org, nouveau@lists.freedesktop.org,
-	intel-gfx@lists.freedesktop.org, intel-xe@lists.freedesktop.org,
-	linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
-	Johan Hovold <johan+linaro@kernel.org>
-Subject: Re: [PATCH v4 1/4] drm/dp: Add helper to set LTTPRs in transparent
- mode
-Message-ID: <Z3+9nUwDyyYkB2Jl@linaro.org>
-References: <20250108-drm-dp-msm-add-lttpr-transparent-mode-set-v4-0-918949bc2e3a@linaro.org>
- <20250108-drm-dp-msm-add-lttpr-transparent-mode-set-v4-1-918949bc2e3a@linaro.org>
- <b4z2o4sgyjyh7wqbybtifi5evhh7b3tgfujson6l5ajmjdwt3f@x2xz6iod54vz>
+        Thu, 09 Jan 2025 04:14:53 -0800 (PST)
+Date: Thu, 9 Jan 2025 14:14:52 +0200
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Jun Nie <jun.nie@linaro.org>
+Cc: Jessica Zhang <quic_jesszhan@quicinc.com>, 
+	Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+	Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, 
+	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, linux-arm-msm@vger.kernel.org, 
+	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3 04/15] drm/msm/dpu: decide right side per last bit
+Message-ID: <4uzsmtbeoilcodnlbnbst2t2gfbhaucpzne2bzwavdeawmqs4q@u33sixkksfls>
+References: <20241219-sm8650-v6-13-hmd-deckard-mdss-quad-upstream-32-v3-0-92c7c0a228e3@linaro.org>
+ <20241219-sm8650-v6-13-hmd-deckard-mdss-quad-upstream-32-v3-4-92c7c0a228e3@linaro.org>
+ <yqbze4h6obiwulmvh64r62slaiih75hzescf5tjwqgtmhqy3wi@y4uedbo5jrzu>
+ <95b83e6f-e455-4df0-b121-a1d900de0a56@quicinc.com>
+ <CABymUCOGzvR0utNUR3-6bFDi3c3yRTUu=CcTo2-eTKBvpoU-PA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <b4z2o4sgyjyh7wqbybtifi5evhh7b3tgfujson6l5ajmjdwt3f@x2xz6iod54vz>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CABymUCOGzvR0utNUR3-6bFDi3c3yRTUu=CcTo2-eTKBvpoU-PA@mail.gmail.com>
 
-On 25-01-08 16:17:47, Bjorn Andersson wrote:
-> On Wed, Jan 08, 2025 at 04:31:43PM +0200, Abel Vesa wrote:
-> > According to the DisplayPort standard, LTTPRs have two operating
-> > modes:
-> >  - non-transparent - it replies to DPCD LTTPR field specific AUX
-> >    requests, while passes through all other AUX requests
-> >  - transparent - it passes through all AUX requests.
-> > 
-> > Switching between this two modes is done by the DPTX by issuing
-> > an AUX write to the DPCD PHY_REPEATER_MODE register.
-> > 
-> > Add a generic helper that allows switching between these modes.
-> > 
-> > Also add a generic wrapper for the helper that handles the explicit
-> > disabling of non-transparent mode and its disable->enable sequence
-> > mentioned in the DP Standard v2.0 section 3.6.6.1. Do this in order
-> > to move this handling out of the vendor specific driver implementation
-> > into the generic framework.
-> > 
-> > Tested-by: Johan Hovold <johan+linaro@kernel.org>
-> > Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
-> > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-> > ---
-> >  drivers/gpu/drm/display/drm_dp_helper.c | 62 +++++++++++++++++++++++++++++++++
-> >  include/drm/display/drm_dp_helper.h     |  2 ++
-> >  2 files changed, 64 insertions(+)
-> > 
-> > diff --git a/drivers/gpu/drm/display/drm_dp_helper.c b/drivers/gpu/drm/display/drm_dp_helper.c
-> > index da3c8521a7fa7d3c9761377363cdd4b44ab1106e..fa7eff94d408718a1762834597f0cd51376d2596 100644
-> > --- a/drivers/gpu/drm/display/drm_dp_helper.c
-> > +++ b/drivers/gpu/drm/display/drm_dp_helper.c
-> > @@ -2817,6 +2817,68 @@ int drm_dp_lttpr_max_link_rate(const u8 caps[DP_LTTPR_COMMON_CAP_SIZE])
-> >  }
-> >  EXPORT_SYMBOL(drm_dp_lttpr_max_link_rate);
-> >  
-> > +/**
-> > + * drm_dp_lttpr_set_transparent_mode - set the LTTPR in transparent mode
+On Thu, Jan 09, 2025 at 12:35:48PM +0800, Jun Nie wrote:
+> Jessica Zhang <quic_jesszhan@quicinc.com> 于2025年1月9日周四 07:41写道：
+> >
+> >
+> >
+> > On 12/19/2024 2:09 PM, Dmitry Baryshkov wrote:
+> > > On Thu, Dec 19, 2024 at 03:49:22PM +0800, Jun Nie wrote:
+> > >> decide right side of a pair per last bit, in case of multiple
+> > >> mixer pairs.
+> > >
+> > > Proper English sentences, please. Also describe why, not what.
+> >
+> > Hi Jun,
+> >
+> > Can we also add a note in the commit message on why the last bit check
+> > works?
 > 
-> kernel-doc functions should have () suffix
+> Sure. How about this?
+> 
+>     Currently we only support one pair of mixer, so counter's
+>     non-zero value is enough to mark the right one. There will
+>     be case with multiple mixer pairs, so let's use the last bit to
+>     mark the right mixer in a mixer pair. If the last bit is set, it
+>     marks the right mixer in the pair, it's left mixer otherwise.
 
-Yes, will add.
+You are not marking the right mixer, so it is not suitable.
 
 > 
-> > + * @aux: DisplayPort AUX channel
-> > + * @enable: Enable or disable transparent mode
-> > + *
-> > + * Returns 0 on success or a negative error code on failure.
-> 
-> And this should be "Return: ...".
+> >
+> > Thanks,
+> >
+> > Jessica Zhang
+> >
+> > >
+> > >>
+> > >> Signed-off-by: Jun Nie <jun.nie@linaro.org>
+> > >> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > >> ---
+> > >>   drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c | 5 ++---
+> > >>   1 file changed, 2 insertions(+), 3 deletions(-)
+> > >>
+> > >> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+> > >> index 7191b1a6d41b3..41c9d3e3e3c7c 100644
+> > >> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+> > >> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+> > >> @@ -369,11 +369,10 @@ static void _dpu_crtc_setup_blend_cfg(struct dpu_crtc_mixer *mixer,
+> > >>   static void _dpu_crtc_program_lm_output_roi(struct drm_crtc *crtc)
+> > >>   {
+> > >>      struct dpu_crtc_state *crtc_state;
+> > >> -    int lm_idx, lm_horiz_position;
+> > >> +    int lm_idx;
+> > >>
+> > >>      crtc_state = to_dpu_crtc_state(crtc->state);
+> > >>
+> > >> -    lm_horiz_position = 0;
+> > >>      for (lm_idx = 0; lm_idx < crtc_state->num_mixers; lm_idx++) {
+> > >>              const struct drm_rect *lm_roi = &crtc_state->lm_bounds[lm_idx];
+> > >>              struct dpu_hw_mixer *hw_lm = crtc_state->mixers[lm_idx].hw_lm;
+> > >> @@ -384,7 +383,7 @@ static void _dpu_crtc_program_lm_output_roi(struct drm_crtc *crtc)
+> > >>
+> > >>              cfg.out_width = drm_rect_width(lm_roi);
+> > >>              cfg.out_height = drm_rect_height(lm_roi);
+> > >> -            cfg.right_mixer = lm_horiz_position++;
+> > >> +            cfg.right_mixer = lm_idx & 0x1;
+> > >>              cfg.flags = 0;
+> > >>              hw_lm->ops.setup_mixer_out(hw_lm, &cfg);
+> > >>      }
+> > >>
+> > >> --
+> > >> 2.34.1
+> > >>
+> > >
+> > > --
+> > > With best wishes
+> > > Dmitry
+> >
 
-Will fix as well.
-
-> 
-> > + */
-> > +int drm_dp_lttpr_set_transparent_mode(struct drm_dp_aux *aux, bool enable)
-> > +{
-> > +	u8 val = enable ? DP_PHY_REPEATER_MODE_TRANSPARENT :
-> > +			  DP_PHY_REPEATER_MODE_NON_TRANSPARENT;
-> > +	int ret = drm_dp_dpcd_writeb(aux, DP_PHY_REPEATER_MODE, val);
-> > +
-> > +	if (ret < 0)
-> > +		return ret;
-> > +
-> > +	return (ret == 1) ? 0 : -EIO;
-> > +}
-> > +EXPORT_SYMBOL(drm_dp_lttpr_set_transparent_mode);
-> > +
-> > +/**
-> > + * drm_dp_lttpr_init - init LTTPR transparency mode according to DP standard
-> > + *
-> 
-> Documentation also explicitly says not to leave a blank line here...
-
-Will drop the blank line.
-
-> 
-> Regards,
-> Bjorn
-> 
-
-Thanks for reviewing!
-
-Abel
+-- 
+With best wishes
+Dmitry
 
