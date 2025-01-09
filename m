@@ -1,77 +1,79 @@
-Return-Path: <linux-arm-msm+bounces-44563-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-44564-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id B2E82A0768A
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jan 2025 14:08:56 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3AEEAA07698
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jan 2025 14:09:07 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 311C5168536
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jan 2025 13:08:49 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C7975168329
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jan 2025 13:09:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 23E22216E14;
-	Thu,  9 Jan 2025 13:08:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DA94E218AAD;
+	Thu,  9 Jan 2025 13:08:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="L41Yqr3f"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="JZ6YtotP"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2354A21859F
-	for <linux-arm-msm@vger.kernel.org>; Thu,  9 Jan 2025 13:08:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E71402185A9
+	for <linux-arm-msm@vger.kernel.org>; Thu,  9 Jan 2025 13:08:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736428128; cv=none; b=G5MMyo9TryalmPtSD5n8JUlA/LvL7m7q2/o6IAW5JgwvPFp3QxaOyG40o0KMfeFH+83gOPjSmpnUpHmJiaU78XZKywFNutrQsUGMMEbrSZw3QwqIdiwwrvSCTj9mZsnaZaLPvqmLAY5qzOlhx2e1cegAQ/C5LAuYQtKYP9RySbA=
+	t=1736428130; cv=none; b=PYap6U3gju0uiwyQQQhHuUcJVg2QoV+l2Ra9zBnpqDETxLwjwQmMKFrInC/Hq9IUUQOqrDGKyaCsQULi0J/VC/HnHxMUkpnBnTHexmtxTnTAqZVxICYWdDa8b4TJNAjzxGbhvmJ/j54M4zun9TXU4q7frQoa1fZlfy5h8AwQClo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736428128; c=relaxed/simple;
-	bh=V/rvpjKAc8KwegpBEpR0XfRNaqLlpjQvs3AFkc0+3mc=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=iW7O0rH63ybfZEZ+Qj3LLcd3NB/H9l6FdBjFSgDwEUpRfAe2bZhxDHuz1uJoAEQZQ4U5TKFNjsWXC8N4U+QFcFlzp7R7CneEIGEyVEl/JVtSeqSlT1XiT+yEEmSTs/GeFjC7rlkjgoywzTLzOYPNjz8hWOup8BT6EJGMSeRQPsU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=L41Yqr3f; arc=none smtp.client-ip=209.85.128.42
+	s=arc-20240116; t=1736428130; c=relaxed/simple;
+	bh=IfZcYabdsZFdNzsj0O/kJeMDTVSlCJN19MOBQa68Yvo=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=ef3VG4zcLQ5jT79EZh0kXj55WNrAJz+6e/nsTN/C5E5XzOTUlntVj//+zH5gQDFkthOH1u+LkivujXyRXmpMKIJhetbnAjAp55Nt0axr2cZk5QA6iVGuoCQMTjfZF4mRgmumPsQHDdXyPz6MpKlQty7s+59mnInY5sN7bLm8GX8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=JZ6YtotP; arc=none smtp.client-ip=209.85.128.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-43620a5f81bso954425e9.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Jan 2025 05:08:45 -0800 (PST)
+Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-436381876e2so1360645e9.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Jan 2025 05:08:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1736428124; x=1737032924; darn=vger.kernel.org;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=fuLlOiXUXKnRhH1On0PX1rvgW+QHGgHGX18PUfH8Sfk=;
-        b=L41Yqr3fGLivj014Nz0PZscTVYJ6ptwNPM5Z6JzWKN1lXseC/cH9h3qkvUkom40+6O
-         hw+SvyVJCWSiIuj6WfWUe3nfkxwInwBrAHEEBEftEKbDtsIMMlz5Xe1ABVwl/PT2KnTZ
-         /aM4IQpMS8zlvhB5/ISL1hHWv5JqSasZJXkwm2g3P+Z/dxdUlgMFTBW6r6SyNsptAu4k
-         MCVZ9HARgDMwd/4LF6yzUDOaPqju6FonRFQElxjj7wyGkRpjq8CficY2WvKpgTxQENQu
-         Qx3C7LfSWQjDd3m4/1eC1RWOZ1EbwZn2Bj+ppFXPEDLGokguXdLOhayvB1dI2ZVnfGNW
-         UINQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736428124; x=1737032924;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=linaro.org; s=google; t=1736428126; x=1737032926; darn=vger.kernel.org;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=fuLlOiXUXKnRhH1On0PX1rvgW+QHGgHGX18PUfH8Sfk=;
-        b=V4+LFJw3RFjLi+mB5VT+cjJJo3FZaKmP7LnHnFz9sR2XWapPljs/mGf87wIuhBHs8Z
-         gWZ/YidnvJKsYjTf+NfW34fV5akCtsTRB7z1N3/bBgAwC0Lm8jVmCFjqVEGnN0gGCTWe
-         of1FVmS/yVARbIQunXycui8ER2BOLQ9nC/yPYM3q7LtEBBCu8jiZyrpRiCxl++fJSwzB
-         CGrj2ot1qzt3ftnsgFnuWggCoK2da2VFTEdWOtWRD9n1a72Yj72lqdATz751++FphcCI
-         FYsf/QjQEs7CjAvwucYmYB/th3sdFecJc2+mnpoUwhXac4I7pqz8aJpfnSYA1BdONEeE
-         oTuw==
-X-Gm-Message-State: AOJu0Yw4b0tIhuo6xWg8ntVnAr0ONyLksudtpbi4VPoWndmz6m3sXLfl
-	rC71H1NOqe0q+6bybCGp4V6ABpdcW3KmgSP/J7V1sRLq6+PlaJ8A3nC0v0b4FXQ=
-X-Gm-Gg: ASbGnctYeNMulQH63xctd97/m7R1McBDyfxSmeEN2bzl7o+0TM204MVPltxahVwu/0f
-	I+9w8P3g6CoQSXmZhbI7rVC4tP8qpeWGmYp5+mhffeKXXnUX0Kd29t11osZfrw2WLwl1c3J6DSX
-	3piKYKoA/jqOymU2fhLptd3Jo00vbtrwBXG+OJSIxMr4VxtSO0Ty5R+SOJcqqQUqkM/9AismoMA
-	okyvdNzW9DG8JkXjpLjxiEs0rzccOvOZkfHRhXbuZMNUNvvYiJ7M37lZBgF2n6iPxT8BYX0
-X-Google-Smtp-Source: AGHT+IFHSrO/z2IrsdPv1zlsY4eaxotZ8IucbvWgCMwW9PfHOa6zyCWKyMdvewg6jasNjfGQd9IjHQ==
-X-Received: by 2002:a05:600c:4e52:b0:434:a339:ec67 with SMTP id 5b1f17b1804b1-436eba35780mr7441695e9.3.1736428124428;
-        Thu, 09 Jan 2025 05:08:44 -0800 (PST)
+        bh=uHRWkFVUYJcbnQ4lEEkkpM4EW1jEFq6Ihd+cartFoEo=;
+        b=JZ6YtotPi2pu5iCK+uIvmJw+5y0UQCMZf37ksfDPE05TvD9h1w8V0RmePON6fzqtrs
+         TsdRmzNCT+DxRuLCeUVvvKPv5HOC5pOkC8s5CgYprPtPGpZgFLQOU+BDurs4ZVTQwGFs
+         8lQbA4jDcsuYV4dy9OL9tWyviLPwQ5Cpa4u3ji/EyxcP74MEqjY9raUaUKbw6ymiaLjX
+         28NtpNfF0EsAMR/vEBfxDervhWBgMNxnO7mM8DrzhmTJbvZ7M1E3F5/5tyu9swKBNbUd
+         KtUwpdfMIQPgXxvwU+yikc7OXZT2ugFD/w1o/kq7Dip3ujVWusP2fuefpPLmaO67m5U0
+         tWgw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1736428126; x=1737032926;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=uHRWkFVUYJcbnQ4lEEkkpM4EW1jEFq6Ihd+cartFoEo=;
+        b=dNaGq0QCg04vZzrPXxNScFcwTgVizuBNfiaY/JessRkmDwv+/JnoU0J1+NkG+fiZJa
+         fcG+agGnXG/rmVmaP6Tq7va+1f5Bqqnb8/OvTWed53tTP8sZ/qPG4J5zJ51jwgzaZIq/
+         ne7z64BLoZPJ3PLHP/ksjHVP6sN5xoXVMxcsGrazjJLiMEFHrlT+dCd+T++r8BM7Payp
+         jw9tnNY9TFSrzmNz9oAnhXcLR9IJHwEVZ1QNUDyU5FG866PPFX/0dwsCkncdBpCwLdeb
+         /3qt5O02Pbtc7WAJ9uc/3gmKNPTs5o+dFto5CKGMHejVDPats/Ohroz1fV61gOvaG6Pi
+         85Xg==
+X-Gm-Message-State: AOJu0YyMKTobeGHtFV1aDGWH4YTNY1TRbjXR6GgU+gOyI+XD7PHkCOUC
+	mJ23CDUd6bIJFXqneXH0vMvJPdJOkaamJ6zl3T3oSsLeY04wWGMqm+WK/SUegbw=
+X-Gm-Gg: ASbGncvM5b8T4L1hPHmaensS6SuZ7B7P3cDbRuG2TKSotW80Dl5DxoZ7gctZ7ZW164j
+	PRZe7VMcj0TPBj5X57aJ2akMDfznKor442F5WFUhcfS3FEQGGwjJdfK3osB913i2Ia0YcqfSZFI
+	sGanju9Nxwm1MsV1C+Asj4fp1e9X9zjK+jwibLRxzoqjR5EmqKNdOaiGd3Hh7KgNPXADdSSdazy
+	3ZoYUAQPxuOFkCq31ywfXn3h5P7+RJZQeU3ier3X3BedjyurD7vWPCS7+poI+en0MXMHfkK
+X-Google-Smtp-Source: AGHT+IEF9iEco/3jygfFz2+wsWwY9iuB08FDT1mjl5kd6+TgpEtqRc7b7CFjp+6LWzrgMy9hb42Jlw==
+X-Received: by 2002:a05:600c:5027:b0:434:a30b:5433 with SMTP id 5b1f17b1804b1-436e26ff752mr25586615e9.5.1736428126203;
+        Thu, 09 Jan 2025 05:08:46 -0800 (PST)
 Received: from [127.0.1.1] ([178.197.223.165])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38a8e4b8124sm1789167f8f.81.2025.01.09.05.08.42
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38a8e4b8124sm1789167f8f.81.2025.01.09.05.08.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 09 Jan 2025 05:08:43 -0800 (PST)
+        Thu, 09 Jan 2025 05:08:45 -0800 (PST)
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [RFC PATCH 00/11] drm/msm: Add support for SM8750
-Date: Thu, 09 Jan 2025 14:08:27 +0100
-Message-Id: <20250109-b4-sm8750-display-v1-0-b3f15faf4c97@linaro.org>
+Date: Thu, 09 Jan 2025 14:08:28 +0100
+Subject: [PATCH RFC 01/11] dt-bindings: display/msm: dsi-controller-main:
+ Combine if:then: entries
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -80,10 +82,9 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAEvKf2cC/x3MTQ5AMBBA4avIrE3S0iquIhbFYBJ/6SRCxN01l
- t/ivQeEApNAnTwQ6GThfYvQaQL97LeJkIdoyFRmlVYVdgZlLZ1VOLAci7+xIG9z56zxo4bYHYF
- Gvv5n077vB5Y+EIJjAAAA
-X-Change-ID: 20250109-b4-sm8750-display-6ea537754af1
+Message-Id: <20250109-b4-sm8750-display-v1-1-b3f15faf4c97@linaro.org>
+References: <20250109-b4-sm8750-display-v1-0-b3f15faf4c97@linaro.org>
+In-Reply-To: <20250109-b4-sm8750-display-v1-0-b3f15faf4c97@linaro.org>
 To: Rob Clark <robdclark@gmail.com>, 
  Abhinav Kumar <quic_abhinavk@quicinc.com>, 
  Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Sean Paul <sean@poorly.run>, 
@@ -102,83 +103,125 @@ Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
  Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
  Srini Kandagatla <srinivas.kandagatla@linaro.org>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2797;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2973;
  i=krzysztof.kozlowski@linaro.org; h=from:subject:message-id;
- bh=V/rvpjKAc8KwegpBEpR0XfRNaqLlpjQvs3AFkc0+3mc=;
- b=owEBbQKS/ZANAwAKAcE3ZuaGi4PXAcsmYgBnf8pNMxOxDm6xY/QOvdYu5+akyHTu8VgNfBwAe
- 6VwNxI77hiJAjMEAAEKAB0WIQTd0mIoPREbIztuuKjBN2bmhouD1wUCZ3/KTQAKCRDBN2bmhouD
- 17uHEACGj8f29cWYZih4RbFvhERvA/L+duReJZfq9d9CgKJ7xas6I5SlG3ngq/xKmzoZaWRG/Oh
- ZW9Ao9yofp80d3R25rnB0Jz4XwNRnHklzWylNjvODP7eQ5MRLpAt6BS8S31ePLTYle+NmBwtGXR
- ycK8CgHKhWqz8WXSE303J+8L8LVbzha8kIAi3sj4zC6PiPK1kY5wdaFqWpRveLvujsmL8MWXSUu
- CiqohhGM1lmH+YbAiYh18t5bWc9bhRaUp0xzFueO48cJ1RjEJV9vd3tUVkVyG62LQIVsgF6lUAI
- ft0HqSi76fSvEusD8WciL8L7sijeBOn7xYndPVXNXrVVSk5k9Ng6V191HCGGrm6YplGd/v8Di1E
- rDY0bkVSvvaCR2bt+P8gXXkvCZtbXGV68dt2J3XHDzUNsnQVrXYlMYpf3WUZwRcXgjIGn5oNaNj
- q8WdA3+BMXEYel7b27RvkafsQ0DOB8jOgKy2PZkZWfqgb6+oe6l4+Sr38iAxn5KbFgXomNmwinS
- Jy5g3bE5XhA4b9b808dzhzXQ2WRHuC9SvBuNwjd8o1M4w+Y2QhNNAVRuEHGCty5fBIGVyBtnWot
- v1go/IG7wfraVukYcisvNcE0EIhsuVkz9vNJPh560JzAppkbdcYSlgkiwlfb8+RisYzDjP2tAMI
- wFeIluQPFV4IrLA==
+ bh=IfZcYabdsZFdNzsj0O/kJeMDTVSlCJN19MOBQa68Yvo=;
+ b=owEBbQKS/ZANAwAKAcE3ZuaGi4PXAcsmYgBnf8pRvAVm7n8iqcOs0PLBF+zrL6Wo3H3RqAvMO
+ PB74U/ANkqJAjMEAAEKAB0WIQTd0mIoPREbIztuuKjBN2bmhouD1wUCZ3/KUQAKCRDBN2bmhouD
+ 16wsEACVeHta1watLdItGSKKdsZJrWq+PIVjOq7NatwSmdBQ2MNeaHRvqntEMifiX9j0PKHUQBu
+ u3lc/mq9QInohThDto7mc++GeuSCAy/U0911WnxWo4anPLdEnY+byETdnnR1mkRY3pqgArBSNmG
+ RzbuOMZfKryR8gcSsrVhtweagmQTCVReR/Akx58KYimbd4cJI9zKzhxkzI3jBGYaFbeA2S+39IE
+ VcUzWQn77+s1V/13WwPfbaMoMH+4hgoSIF/2R3EGVHS+1Aq4jj8NzD3Cdzl208hS7xde/a1/a7X
+ cIyLitYR3k98kCbIwBekUjJWjU5b2fWVl7pNoq+VXi/kMyFv6r7AQsow0byPQoTzDTSSWr7+l9U
+ dii1lywm7opZdmJqKkFx3ERN/vJdHFhqUDe0NPKt3e4zNxVFsjEtG2109ZWbldhCmzUuxO68q9L
+ lIK92rDrn9kkh4bbbeKh/FBYXvtQy5Q2nkZFVVW1lEbTAX4Dmnfx2fqQ7G6r010qr0mV9wvFSlD
+ zfpXzfhPhD8uS3JmS1nCYdvUtrgMftvXH3fSj+vBNXQ42/yIgmnOahqZ0s8JONl+xF2WvJTZEt/
+ hiIAhRJfk9sdZ8DyZQvzmvq/TDvS7WCCmAjnBOQdJV7ut6HLgmStFWEPR8okSkmpAsvdl9kk/Sk
+ HaoE/75ZdBL+zNQ==
 X-Developer-Key: i=krzysztof.kozlowski@linaro.org; a=openpgp;
  fpr=9BD07E0E0C51F8D59677B7541B93437D3B41629B
 
-Hi,
+Several devices have the same clock inputs, thus they can be in the same
+if:then: clause, making everything smaller.  No functional impact.
 
-RFC or WIP: support is not yet finished because of two important
-differences not yet implemented.
-1. DPU_CTL_NO_LAYER_EXT: see last commit
-2. SDE_MIXER_X_SRC_SEL: LM crossbar: also hardware changes requiring
-   each pipe rectangle to be programmed separately in X_SRC_SEL blend
-   stage. Downstream patch is bigger than above (1).
-
-Sending this early, to gather comments or maybe find volunteers for
-implementing above missing pieces. :)
-
-The hardware catalog and DSI parts should be finished.
-
-Best regards,
-Krzysztof
-
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 ---
-Krzysztof Kozlowski (11):
-      dt-bindings: display/msm: dsi-controller-main: Combine if:then: entries
-      dt-bindings: display/msm: dsi-controller-main: Add missing minItems
-      dt-bindings: display/msm: dsi-phy-7nm: Add SM8750
-      dt-bindings: display/msm: dsi-controller-main: Add SM8750
-      dt-bindings: display/msm: dp-controller: Add SM8750
-      dt-bindings: display/msm: qcom,sm8650-dpu: Add SM8750
-      dt-bindings: display/msm: qcom,sm8750-mdss: Add SM8750
-      drm/msm/dsi: Add support for SM8750
-      drm/msm/dpu: Add support for SM8750
-      drm/msm/mdss: Add support for SM8750
-      [RFC / WIP] drm/msm/dpu: WIP: CTL_LAYER_EXT is gone
+ .../bindings/display/msm/dsi-controller-main.yaml  | 64 ++--------------------
+ 1 file changed, 5 insertions(+), 59 deletions(-)
 
- .../bindings/display/msm/dp-controller.yaml        |   4 +
- .../bindings/display/msm/dsi-controller-main.yaml  | 124 +++--
- .../bindings/display/msm/dsi-phy-7nm.yaml          |   1 +
- .../bindings/display/msm/qcom,sm8650-dpu.yaml      |   1 +
- .../bindings/display/msm/qcom,sm8750-mdss.yaml     | 460 ++++++++++++++++++
- .../drm/msm/disp/dpu1/catalog/dpu_12_0_sm8750.h    | 522 +++++++++++++++++++++
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c     |  38 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h     |   4 +
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c         |  16 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h        |   6 +
- drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c            |   1 +
- drivers/gpu/drm/msm/dsi/dsi.h                      |   2 +
- drivers/gpu/drm/msm/dsi/dsi_cfg.c                  |  25 +
- drivers/gpu/drm/msm/dsi/dsi_cfg.h                  |   1 +
- drivers/gpu/drm/msm/dsi/dsi_host.c                 |  80 ++++
- drivers/gpu/drm/msm/dsi/phy/dsi_phy.c              |   2 +
- drivers/gpu/drm/msm/dsi/phy/dsi_phy.h              |   1 +
- drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c          |  78 ++-
- drivers/gpu/drm/msm/msm_mdss.c                     |  33 ++
- drivers/gpu/drm/msm/msm_mdss.h                     |   1 +
- .../gpu/drm/msm/registers/display/dsi_phy_7nm.xml  |  14 +
- 21 files changed, 1335 insertions(+), 79 deletions(-)
----
-base-commit: c38a35d266317199e72729fbbca5b2337c20a6d9
-change-id: 20250109-b4-sm8750-display-6ea537754af1
+diff --git a/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml b/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml
+index a9636b76854d0f781923e06b90503dec11b25763..a90255f60d9e31c9c7ed94816284fa8f0d71d392 100644
+--- a/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml
++++ b/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml
+@@ -248,24 +248,6 @@ allOf:
+           contains:
+             enum:
+               - qcom,msm8916-dsi-ctrl
+-    then:
+-      properties:
+-        clocks:
+-          maxItems: 6
+-        clock-names:
+-          items:
+-            - const: mdp_core
+-            - const: iface
+-            - const: bus
+-            - const: byte
+-            - const: pixel
+-            - const: core
+-
+-  - if:
+-      properties:
+-        compatible:
+-          contains:
+-            enum:
+               - qcom,msm8953-dsi-ctrl
+               - qcom,msm8976-dsi-ctrl
+     then:
+@@ -328,28 +310,13 @@ allOf:
+           contains:
+             enum:
+               - qcom,msm8998-dsi-ctrl
+-              - qcom,sm6125-dsi-ctrl
+-              - qcom,sm6350-dsi-ctrl
+-    then:
+-      properties:
+-        clocks:
+-          maxItems: 6
+-        clock-names:
+-          items:
+-            - const: byte
+-            - const: byte_intf
+-            - const: pixel
+-            - const: core
+-            - const: iface
+-            - const: bus
+-
+-  - if:
+-      properties:
+-        compatible:
+-          contains:
+-            enum:
+               - qcom,sc7180-dsi-ctrl
+               - qcom,sc7280-dsi-ctrl
++              - qcom,sdm845-dsi-ctrl
++              - qcom,sm6115-dsi-ctrl
++              - qcom,sm6125-dsi-ctrl
++              - qcom,sm6350-dsi-ctrl
++              - qcom,sm6375-dsi-ctrl
+               - qcom,sm6150-dsi-ctrl
+               - qcom,sm7150-dsi-ctrl
+               - qcom,sm8150-dsi-ctrl
+@@ -393,27 +360,6 @@ allOf:
+             - const: pixel
+             - const: core
+ 
+-  - if:
+-      properties:
+-        compatible:
+-          contains:
+-            enum:
+-              - qcom,sdm845-dsi-ctrl
+-              - qcom,sm6115-dsi-ctrl
+-              - qcom,sm6375-dsi-ctrl
+-    then:
+-      properties:
+-        clocks:
+-          maxItems: 6
+-        clock-names:
+-          items:
+-            - const: byte
+-            - const: byte_intf
+-            - const: pixel
+-            - const: core
+-            - const: iface
+-            - const: bus
+-
+ unevaluatedProperties: false
+ 
+ examples:
 
-Best regards,
 -- 
-Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+2.43.0
 
 
