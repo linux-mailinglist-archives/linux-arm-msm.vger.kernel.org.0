@@ -1,224 +1,232 @@
-Return-Path: <linux-arm-msm+bounces-44551-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-44552-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 524A5A07553
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jan 2025 13:10:35 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id EF3FDA07567
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jan 2025 13:13:03 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 37ECB7A33A2
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jan 2025 12:10:27 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E5C9E164350
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jan 2025 12:13:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 81DC618D;
-	Thu,  9 Jan 2025 12:10:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 47C2D21518C;
+	Thu,  9 Jan 2025 12:12:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="CPGBoty+"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="p+emDWtw"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
+Received: from mail-lf1-f47.google.com (mail-lf1-f47.google.com [209.85.167.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CE5321766F
-	for <linux-arm-msm@vger.kernel.org>; Thu,  9 Jan 2025 12:10:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22A90217642
+	for <linux-arm-msm@vger.kernel.org>; Thu,  9 Jan 2025 12:12:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736424622; cv=none; b=Hd0eHhplqpQn1+CmZlw8WFtvytFyjqXuWTCoU6/GG8x1eu01id35l30dnmJLUF1EDtNqKf4IYe9zOkpCAjQ8aNe9l8oqrU88YEYLOLikasF6Giu68VbWHND5t5RU3JYYqnSUdAMZQCGf1z1JETEANDNwR/9otKjUgGXMh9ND6sY=
+	t=1736424774; cv=none; b=VEJKBfDc37nFIMh4Gc/PgwL2UrACwpP4RjDdrS28vDp4z6HVQHOkkokI02KsPeZH0L3n56fWFfLQ6BabTEHraBBcYGFeV83QAnkL49pONteUnxr6q/RZ7oFOluaNqPAgVyytrbu0/zJQyIkVgeztzyVMiyiEt86LlLyl4qYdS2M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736424622; c=relaxed/simple;
-	bh=yw80//erKtIihCTfLejyupKTzJ5/n78i0rH/c2Vn88A=;
+	s=arc-20240116; t=1736424774; c=relaxed/simple;
+	bh=fGcDtiB6fhZQzLY51FLsKTo0G3UbW8dEyylp3AIs2Qo=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=uEl9LXxE/bhfZkadzCT1485OL2PKAj9ObmOvg8Qx7suenFAdSnm4rmjD+sHwXw8g6EK84ikuwUsPibED+fRlzOUEqtWbwr4CMSt94pywaALh2p3eOAi/fb9+VZ7mIMcQ0KLIchJ55ov58WAx1H9V1CIgzp6DWNXUdSV7zagS11Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=CPGBoty+; arc=none smtp.client-ip=209.85.128.43
+	 Content-Type:Content-Disposition:In-Reply-To; b=kYgwFPLF3cCrnrJ0lYEX7WZNOXW1XvhGjIZq25B+c/+/s0Vjhb5pqxcxbPvGLPf69WwmM8jkUuHIadJaihKFadhq0av0PTbEpt/+ve7+0nhoOjS135CPNzypLYU1RNyJVzSZD3UkC5fhr4lvSkyg7mRrZMdTzEYp0tyc9UM7450=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=p+emDWtw; arc=none smtp.client-ip=209.85.167.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-4368a293339so10350775e9.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Jan 2025 04:10:20 -0800 (PST)
+Received: by mail-lf1-f47.google.com with SMTP id 2adb3069b0e04-53e28cf55cdso638775e87.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Jan 2025 04:12:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1736424619; x=1737029419; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=ScDEvNBMi9Yu3n8HTIx1zSceI6fYU9kCdn5rYgIhGU8=;
-        b=CPGBoty+ygH9gBegbx0nxyEe8oXvZlHqg7o1/gC/4mgYGJHLqarZzTJ/hhjro28nno
-         Vi/eR2vSWPnLWw015buz+cvt3kIhLZtlCRUO26I55YqxAjCkUxt8Qeix6TPyYj9HWROu
-         RmSVVd8HOpLpzP3MzFz2/QuM/8F5D5rYrrcESQOYJD3uML79miHCBuexyZLR1T8v9q/W
-         Q1V0UaNfJIu48ovc0lFW3seqj5bSeow7HL/K7tLI549aCQYUE9uYHkcjRpE9/pZPtDjR
-         cRTj5PhNXqWM+E3Vn0WzAs1vP7R0B2ve3iHvl0EKSoDbaqEPnNn0jt9LbL45Ord+FE+l
-         ZB3Q==
+        d=linaro.org; s=google; t=1736424770; x=1737029570; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=KdeRkbfFs33TxRcMnl/YLeLF47rmay+guENZ9SOKZfo=;
+        b=p+emDWtw3TxTjToRbsM7dEDui1v58LLUcd3RGSJ2dqrGmCdvoyO2aV+YoYoxepGoAl
+         jGeUYA+DgrbCOhknxTpNlwmX4X4e4QbPMRrnPRqq/GJ33hMN8q9UwTy//ADijPVLJQzQ
+         jMgd1Vkae+rxMg88F5sa+d6MGav6gSPj0vZ1+J0hqzrAV2gK78aKgm10UqRfsi5uL5UT
+         cuFCkdRRPgVk0DZ6E8jGe7hsipR2MWJdGMo8FuE/z4C416lRvmD5V6v0Z7kvlt+f1mCi
+         VVF/Wjdr3PuHI2LR8FkFKUepXMptFiD6Y3PiUbMWptgF+jzm/84B+IIGtcM1y152aQK/
+         sRyg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736424619; x=1737029419;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ScDEvNBMi9Yu3n8HTIx1zSceI6fYU9kCdn5rYgIhGU8=;
-        b=p+TCrTs8ZWuCWmKh/Y1lC2GzHbByt17u2qTQveFUkLLteShJuylAMJeTn1p9PS6z/z
-         hM4mNSKWErn/9iIN7pwIhMV5cGBEUxlGCgVil51bwTBENWx/ZWUhykG0AkwOOu/fuqeZ
-         kmb15i2oQnNIEb7ZhO0QxQM77ZtrnH2OC+QdUFnP0d3j/9XLU6jL+mIFEh11Zj0AQiyS
-         ryNYSyTLym9iVuyxOVzp2KAqBdvwA1QW/PROq2smtekWfV1yW5iZy4QB3n6heq44fF5/
-         T6S+VdyuKpFGqa8tnRzZWXf5f/D1o1msjblQcDCQ5CZYnBY01uWKRIMPMa0VUR7VYUnd
-         FQ7g==
-X-Forwarded-Encrypted: i=1; AJvYcCVL2xdjps02/fbrItmfp/Mp0rtDD5Y53aJsYNXmaDxhV+hvxBvXkiEUaqVF+AMkVFxj7mTUqMSolauyt8Dx@vger.kernel.org
-X-Gm-Message-State: AOJu0YzcsF6mR788JBGHqjiOPAPfBIDACsAArA0aVfsAZMiGTYBui/SL
-	QtVRTfxt0zqSE9pvO9cdGVT0XL29DEUenqe98WU82DO0INivMrfviIpzPBGkN8Y=
-X-Gm-Gg: ASbGncsX8kcXegTUn8CIoCf7GdAcZLn7MpKHJu11StncHNvsb8RjZ8kyzswB8CFAB4P
-	KjwTYLNF5pui7uHxwhk43v9vIGYzpiFlrH97VjbrdJtSTeBuStTfTWtWkV6unHM6iXx5j3PUrtl
-	3NI9YXLGjf/nrZyx5vGWVov25QtB+wICUpm2qPSL6UF8oYzc4Wk1vt2dTdQtb8UQqcCf/gQegGE
-	wBAM3STUWEqTQqBb1ddVXTti3whOr8m4XCP1WQtwwjEnMRTKF3Z/HM=
-X-Google-Smtp-Source: AGHT+IG8rp+QX8v4S4fqKATVXk+QD/aEvAPXmO9Bulu0mN6QuKMDbLW3pqUmFSzB7pw+E5Uf11Sy2A==
-X-Received: by 2002:a05:600c:46ce:b0:436:6ddf:7a27 with SMTP id 5b1f17b1804b1-436e27072a7mr53497435e9.23.1736424618831;
-        Thu, 09 Jan 2025 04:10:18 -0800 (PST)
-Received: from linaro.org ([86.121.162.10])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-436e2da63eesm53042595e9.3.2025.01.09.04.10.16
+        d=1e100.net; s=20230601; t=1736424770; x=1737029570;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=KdeRkbfFs33TxRcMnl/YLeLF47rmay+guENZ9SOKZfo=;
+        b=s9AO70rZ3nUXC3d6IR4yvP3FA9oL+LbJo9J9lseBR+xlXxwDAniH4lZJpUtUxShs21
+         Bitpm8Vg9M63av8UW1xIu02meXRhmtDZJ1t68OKTphSRG+rCnQtgVunTALKYAn0LMHNd
+         lEz2fZjFau7xWztRgDQXKKY/ntZoyPGN6UiWulY90lfGpPICMdCNdHNNO0QwZvLzyrMW
+         nAVcyg/DSlNJFBM/XZM8H9l1JON+k4VZ5JUxbPe6pr/jWFAsLu+mNVoemVkxa0uZ8b5u
+         HBbP/5h+7md4ID7SRzkX50H2Iw/N8Kb5pJK6kzBSJKaznUzIIVSYgINMTe0I3KBHUXbo
+         VFoA==
+X-Forwarded-Encrypted: i=1; AJvYcCUHoK2XfqPHErzOR5l1MzBnbufVbWev2MCH3ICrrIalsoN9gdJ36VNqj8248Wmk1lBhTWYCaLMad7KNL32p@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx6hON3te0KUmZSdDi8ADmLkiH1rFfCbhItH1shtLsmeUMg+zG+
+	JML1LFfGpTAKTPO0WvJlwFiYUIgHXB/E7RDslYIr+q2hrtdiRyOOyV61NYY6Qx8=
+X-Gm-Gg: ASbGnculnCq5O0jBtPD7xOyXePUrhfjxes1IgLMpSCGe4cxvjlumHozszdWLXXku4Rr
+	Vrc0zJ4oeP/VJYk1ko7gm+7gsipbd9CRV1koJSY4mkxx0w6WElcOduy9oJRByWgkLowFWoMSP13
+	okneGP92bSgmdXblfQws1Zekzk+t/PM551D/zd5NeBSGvOUvmIPbz0oDpRH7MqesGXfK+Fhe2J7
+	+rv8vdSKecP0Kz+jGi/41X97ByETOZdBKsmstXXr3KQ+iyDWXiBXdJWGsXEz0NGZ0rYifGGONo3
+	44dEJik7hnfsjs5v5TimW3sHpKNr1lZYXLZp
+X-Google-Smtp-Source: AGHT+IGcLOACthHe0DypjNG0/hG6RbfroIonsbZtEI6aQmGGUITF0LHYrpPPJqro3Chg+GyOAZCpfQ==
+X-Received: by 2002:a05:6512:15a3:b0:542:2f5a:5f52 with SMTP id 2adb3069b0e04-542845b9037mr1567997e87.13.1736424770156;
+        Thu, 09 Jan 2025 04:12:50 -0800 (PST)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5428be49dfesm176082e87.39.2025.01.09.04.12.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 09 Jan 2025 04:10:18 -0800 (PST)
-Date: Thu, 9 Jan 2025 14:10:16 +0200
-From: Abel Vesa <abel.vesa@linaro.org>
+        Thu, 09 Jan 2025 04:12:48 -0800 (PST)
+Date: Thu, 9 Jan 2025 14:12:46 +0200
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-	Karol Herbst <kherbst@redhat.com>, Lyude Paul <lyude@redhat.com>,
-	Danilo Krummrich <dakr@redhat.com>,
-	Jani Nikula <jani.nikula@linux.intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
-	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
-	Tvrtko Ursulin <tursulin@ursulin.net>,
-	Rob Clark <robdclark@gmail.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Sean Paul <sean@poorly.run>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Johan Hovold <johan@kernel.org>, dri-devel@lists.freedesktop.org,
-	linux-kernel@vger.kernel.org, nouveau@lists.freedesktop.org,
-	intel-gfx@lists.freedesktop.org, intel-xe@lists.freedesktop.org,
-	linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
-	Johan Hovold <johan+linaro@kernel.org>
-Subject: Re: [PATCH v4 4/4] drm/msm/dp: Add support for LTTPR handling
-Message-ID: <Z3+8qDc19zicI6vQ@linaro.org>
-References: <20250108-drm-dp-msm-add-lttpr-transparent-mode-set-v4-0-918949bc2e3a@linaro.org>
- <20250108-drm-dp-msm-add-lttpr-transparent-mode-set-v4-4-918949bc2e3a@linaro.org>
- <feb4f780-8fe6-426b-9ba4-ab1fb102ac27@quicinc.com>
+Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+	Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
+	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, Rob Clark <robdclark@gmail.com>, 
+	Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, 
+	Chandan Uddaraju <chandanu@codeaurora.org>, Jeykumar Sankaran <jsanka@codeaurora.org>, 
+	Jordan Crouse <jordan@cosmicpenguin.net>, Sravanthi Kollukuduru <skolluku@codeaurora.org>, 
+	dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
+	Archit Taneja <architt@codeaurora.org>, Rajesh Yadav <ryadav@codeaurora.org>, 
+	linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org, 
+	Simona Vetter <simona.vetter@ffwll.ch>
+Subject: Re: [PATCH 6/6] drm/msm/dpu: don't set crtc_state->mode_changed from
+ atomic_check()
+Message-ID: <ncbiyesfrhm5723ydrdkdkwbji2yq7dgtzqx5y74c6iqfvws5s@elaxa5ysjmbo>
+References: <20241222-drm-dirty-modeset-v1-0-0e76a53eceb9@linaro.org>
+ <20241222-drm-dirty-modeset-v1-6-0e76a53eceb9@linaro.org>
+ <91dff265-5e13-45db-b46d-0eef4a95f5f6@quicinc.com>
+ <a6fa4aa2-d90b-4b5e-92fd-db3912ed248a@quicinc.com>
+ <2i5vun3pabozzqxjnciylahfx7jljtdmowjo625ida44e37djm@2axmuodlaqtk>
+ <a0c48f70-2a0f-45b0-b179-91dd544b5b59@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <feb4f780-8fe6-426b-9ba4-ab1fb102ac27@quicinc.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <a0c48f70-2a0f-45b0-b179-91dd544b5b59@quicinc.com>
 
-On 25-01-08 14:57:41, Abhinav Kumar wrote:
+On Wed, Jan 08, 2025 at 09:22:56PM -0800, Abhinav Kumar wrote:
 > 
 > 
-> On 1/8/2025 6:31 AM, Abel Vesa wrote:
-> > Link Training Tunable PHY Repeaters (LTTPRs) are defined in DisplayPort
-> > 1.4a specification. As the name suggests, these PHY repeaters are
-> > capable of adjusting their output for link training purposes.
+> On 1/8/2025 8:26 PM, Dmitry Baryshkov wrote:
+> > On Wed, Jan 08, 2025 at 08:11:27PM -0800, Abhinav Kumar wrote:
+> > > 
+> > > 
+> > > On 1/8/2025 6:27 PM, Abhinav Kumar wrote:
+> > > > 
+> > > > 
+> > > > On 12/21/2024 9:00 PM, Dmitry Baryshkov wrote:
+> > > > > The MSM driver uses drm_atomic_helper_check() which mandates that none
+> > > > > of the atomic_check() callbacks toggles crtc_state->mode_changed.
+> > > > > Perform corresponding check before calling the drm_atomic_helper_check()
+> > > > > function.
+> > > > > 
+> > > > > Fixes: 8b45a26f2ba9 ("drm/msm/dpu: reserve cdm blocks for writeback
+> > > > > in case of YUV output")
+> > > > > Reported-by: Simona Vetter <simona.vetter@ffwll.ch>
+> > > > > Closes:
+> > > > > https://lore.kernel.org/dri-devel/ZtW_S0j5AEr4g0QW@phenom.ffwll.local/
+> > > > > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > > > > ---
+> > > > >    drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 32
+> > > > > +++++++++++++++++++++++++----
+> > > > >    drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h |  4 ++++
+> > > > >    drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c     | 26
+> > > > > +++++++++++++++++++++++
+> > > > >    drivers/gpu/drm/msm/msm_atomic.c            | 13 +++++++++++-
+> > > > >    drivers/gpu/drm/msm/msm_kms.h               |  7 +++++++
+> > > > >    5 files changed, 77 insertions(+), 5 deletions(-)
+> > > > > 
+> > > > > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> > > > > b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> > > > > index 209e6fb605b2d8724935b62001032e7d39540366..b7c3aa8d0e2ca58091deacdeaccb0819d2bf045c
+> > > > > 100644
+> > > > > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> > > > > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> > > > > @@ -753,6 +753,34 @@ static void
+> > > > > dpu_encoder_assign_crtc_resources(struct dpu_kms *dpu_kms,
+> > > > >        cstate->num_mixers = num_lm;
+> > > > >    }
+> > > > > +/**
+> > > > > + * dpu_encoder_virt_check_mode_changed: check if full modeset is
+> > > > > required
+> > > > > + * @drm_enc:    Pointer to drm encoder structure
+> > > > > + * @crtc_state:    Corresponding CRTC state to be checked
+> > > > > + * @conn_state: Corresponding Connector's state to be checked
+> > > > > + *
+> > > > > + * Check if the changes in the object properties demand full mode set.
+> > > > > + */
+> > > > > +int dpu_encoder_virt_check_mode_changed(struct drm_encoder *drm_enc,
+> > > > > +                    struct drm_crtc_state *crtc_state,
+> > > > > +                    struct drm_connector_state *conn_state)
+> > > > > +{
+> > > > > +    struct dpu_encoder_virt *dpu_enc = to_dpu_encoder_virt(drm_enc);
+> > > > > +    struct msm_display_topology topology;
+> > > > > +
+> > > > > +    DPU_DEBUG_ENC(dpu_enc, "\n");
+> > > > > +
+> > > > > +    /* Using mode instead of adjusted_mode as it wasn't computed yet */
+> > > > > +    topology = dpu_encoder_get_topology(dpu_enc, &crtc_state->mode,
+> > > > > crtc_state, conn_state);
+> > > > > +
+> > > > > +    if (topology.needs_cdm && !dpu_enc->cur_master->hw_cdm)
+> > > > > +        crtc_state->mode_changed = true;
+> > > > > +    else if (!topology.needs_cdm && dpu_enc->cur_master->hw_cdm)
+> > > > > +        crtc_state->mode_changed = true;
+> > > > > +
+> > > > > +    return 0;
+> > > > > +}
+> > > > 
+> > > > How will this work exactly?
+> > > > 
+> > > > needs_cdm is set in the encoder's atomic_check which is called inside
+> > > > drm_atomic_helper_check(). But this function is called before that.
+> > > > 
+> > > > So needs_cdm will never hit.
+> > > > 
+> > > 
+> > > Sorry, my bad. after change (4) of this series needs_cdm is also populated
+> > > within  dpu_encoder_get_topology().
+> > > 
+> > > To follow up on https://patchwork.freedesktop.org/patch/629231/?series=137975&rev=4#comment_1148651
+> > > 
+> > > So is the plan for CWB to add a dpu_crtc_check_mode_changed() like
+> > > dpu_encoder's and call it?
 > > 
-> > According to the DisplayPort standard, LTTPRs have two operating
-> > modes:
-> >   - non-transparent - it replies to DPCD LTTPR field specific AUX
-> >     requests, while passes through all other AUX requests
-> >   - transparent - it passes through all AUX requests.
+> > I think dpu_encoder_virt_check_mode_changed() would transform into the
+> > dpu_crtc_check_mode_changed() together with one of the patches that
+> > moves resource allocation and refactors topology handling.
 > > 
-> > Switching between this two modes is done by the DPTX by issuing
-> > an AUX write to the DPCD PHY_REPEATER_MODE register.
-> > 
-> > The msm DP driver is currently lacking any handling of LTTPRs.
-> > This means that if at least one LTTPR is found between DPTX and DPRX,
-> > the link training would fail if that LTTPR was not already configured
-> > in transparent mode.
-> > 
-> > The section 3.6.6.1 from the DisplayPort v2.0 specification mandates
-> > that before link training with the LTTPR is started, the DPTX may place
-> > the LTTPR in non-transparent mode by first switching to transparent mode
-> > and then to non-transparent mode. This operation seems to be needed only
-> > on first link training and doesn't need to be done again until device is
-> > unplugged.
-> > 
-> > It has been observed on a few X Elite-based platforms which have
-> > such LTTPRs in their board design that the DPTX needs to follow the
-> > procedure described above in order for the link training to be successful.
-> > 
-> > So add support for reading the LTTPR DPCD caps to figure out the number
-> > of such LTTPRs first. Then, for platforms (or Type-C dongles) that have
-> > at least one such an LTTPR, set its operation mode to transparent mode
-> > first and then to non-transparent, just like the mentioned section of
-> > the specification mandates.
-> > 
-> > Tested-by: Johan Hovold <johan+linaro@kernel.org>
-> > Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
-> > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-> > ---
-> >   drivers/gpu/drm/msm/dp/dp_display.c | 17 +++++++++++++++++
-> >   1 file changed, 17 insertions(+)
-> > 
-> > diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-> > index 24dd37f1682bf5016bb0efbeb44489061deff060..ad09daa4c8ab5c0eb67890509b94e72820bab870 100644
-> > --- a/drivers/gpu/drm/msm/dp/dp_display.c
-> > +++ b/drivers/gpu/drm/msm/dp/dp_display.c
-> > @@ -107,6 +107,8 @@ struct msm_dp_display_private {
-> >   	struct msm_dp_event event_list[DP_EVENT_Q_MAX];
-> >   	spinlock_t event_lock;
-> > +	u8 lttpr_caps[DP_LTTPR_COMMON_CAP_SIZE];
-> > +
 > 
-> The reason downstream stored it panel is to read it first in dp_panel's
-> read_sink_caps and call lttpr_init if drm_dp_lttpr_count() is non-zero.
+> hmm we need the cur_master for cdm. That will not be accessible in
+> dpu_crtc.c so we will end up with a separate dpu_crtc_check_mode_changed()
+> for CWB from what I see. We will discuss it further when we re-post CWB.
 > 
-> But here it looks like  msm_dp_display_lttpr_init() internally handles this
-> for us. So no need to store this?
+> But overall, I think we can make CWB work on top of this.
+> 
+> Hence,
+> 
+> Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+> 
+> I do not know how important patch 2 is for this series and I would prefer
+> not delaying CWB even more than what it already has been.
+> 
+> If we cannot reach a conclusion on patch 2, can you break that one out of
+> this series so that the rest of it is ready to land?
 
-Replied to Bjorn already about this and why I thought it was a good idea
-to add it.
-
-But will drop in the next version.
+Yes, there is no dependency between patches 1-2 and 3-6.
 
 > 
-> >   	bool wide_bus_supported;
-> >   	struct msm_dp_audio *audio;
-> > @@ -367,12 +369,27 @@ static int msm_dp_display_send_hpd_notification(struct msm_dp_display_private *d
-> >   	return 0;
-> >   }
-> > +static void msm_dp_display_lttpr_init(struct msm_dp_display_private *dp)
-> > +{
-> > +	int rc;
-> > +
-> > +	if (drm_dp_read_lttpr_common_caps(dp->aux, dp->panel->dpcd,
-> > +					  dp->lttpr_caps))
-> > +		return;
-> > +
-> > +	rc = drm_dp_lttpr_init(dp->aux, drm_dp_lttpr_count(dp->lttpr_caps));
-> > +	if (rc)
-> > +		DRM_ERROR("failed to set LTTPRs transparency mode, rc=%d\n", rc);
-> > +}
-> > +
-> >   static int msm_dp_display_process_hpd_high(struct msm_dp_display_private *dp)
-> >   {
-> >   	struct drm_connector *connector = dp->msm_dp_display.connector;
-> >   	const struct drm_display_info *info = &connector->display_info;
-> >   	int rc = 0;
-> > +	msm_dp_display_lttpr_init(dp);
-> > +
-> 
-> Can you pls move this call after msm_dp_panel_read_sink_caps()?
-> 
-> If msm_dp_panel_read_sink_caps() fails there is no need to call
-> msm_dp_display_lttpr_init().
-
-Sure.
-
-> 
-> 
-> >   	rc = msm_dp_panel_read_sink_caps(dp->panel, connector);
-> >   	if (rc)
-> >   		goto end;
+> > > 
+> > > 
+> > > > 
+> > > > > +
+> > > > >    static int dpu_encoder_virt_atomic_check(
+> > > > >            struct drm_encoder *drm_enc,
+> > > > >            struct drm_crtc_state *crtc_state,
 > > 
 
-Thanks for reviewing!
-
-Abel
+-- 
+With best wishes
+Dmitry
 
