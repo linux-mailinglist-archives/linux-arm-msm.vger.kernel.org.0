@@ -1,95 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-44663-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-44664-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6A238A0811C
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jan 2025 21:03:16 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B552BA08133
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jan 2025 21:12:08 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 70EB71678B4
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jan 2025 20:03:14 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E093C3A543A
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jan 2025 20:12:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 544AB1B4239;
-	Thu,  9 Jan 2025 20:03:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BA1831FC114;
+	Thu,  9 Jan 2025 20:12:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="aqnMgi8d"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FJ72og+s"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from relay9-d.mail.gandi.net (relay9-d.mail.gandi.net [217.70.183.199])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 501B9B677;
-	Thu,  9 Jan 2025 20:03:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.199
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F133B677;
+	Thu,  9 Jan 2025 20:12:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736452993; cv=none; b=BNn559wQLBM41doNoMmmAdrWnuPOVkxyJ7XIFQvvsj3rgzggAWSZ8T8nq5xQ06DUheDZea+a0zxWIuNSO11YA/Q6bfZIUM71/PLufQyYL6Q1w7ttkdp7UckmyY+fdsGBAvVOs+kSnCHIdD39KWL+Tvj475v3fDdSiwlwi1D/AkU=
+	t=1736453522; cv=none; b=J99dNiYZ4j54p0dJWsqqI0xCtJJc+POMNHYCEILX3VZC8YDRxChgBZyMVYJmhIh6rVIxhc3rJTLGqB274fMQvzAX2QkxEcIfzRJgbTwM3Vb440qiRnDlHcwnIeEwr6oTwk3OBs9xz/LaL9cREF0Zu3ezk4aXmriz01mYrT4MdOM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736452993; c=relaxed/simple;
-	bh=CEraVU4ce4vgP8jPE97cGax/9P4aNGpnQ4WcUIe/0vQ=;
+	s=arc-20240116; t=1736453522; c=relaxed/simple;
+	bh=gB7Gyi/7K03hBpNRRISpwdG1QNfzARRmIWdRCxIaiWw=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=eC2L35ckqF8+lcS/LeoL9Q0P/ljXhExfTciFuq4nMVDzWInFdu4mqDIJl/7fxOUKi8Qa198I4vnG8wUg1L7JT5zmCfMdGF+eGsWj1LUrTvqT2welZlo5BFfzz+1KaAYEEnQ0AuW8xcLHSXpALBKzZVJP4dTpYFrS1UPsbRgYbpE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=aqnMgi8d; arc=none smtp.client-ip=217.70.183.199
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
-Received: by mail.gandi.net (Postfix) with ESMTPSA id 81E65FF802;
-	Thu,  9 Jan 2025 20:03:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
-	t=1736452988;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=ufquL8MTaCaDartUz08Jv9Co5w4deNYxwsOj/E8fcww=;
-	b=aqnMgi8dmXNmdqbb82gZLgfSEWXhFqHsrY4xDCQkXxC1eVbQ/WCgrOzndGV9myrqe/hElG
-	jef5H3/ls9gbinUu25fBKeiz2GZiCFulJ+4WhYBhfC45VCcq4EfPtR0KIHfjbcek+Q1VfV
-	9wBuydXTJ3vjy+3TBFcHwgj4253G33JMK1TEdzYz0Ww2Ja4TgQmwoyNJWYJWfnKuos+WPd
-	cU46FTlgkwEX3NlsLIdW4FYBG1lIgDNygresvTuecEYNDGFWiC7SET7ShqD2glnBctwGq+
-	pVYOLHmLiyMp2+38SZucpgCpNOe0nHGnaKhJZh2gFh8WYrNUDI6LJ28dYOimqg==
-Date: Thu, 9 Jan 2025 21:03:04 +0100
-From: Alexandre Belloni <alexandre.belloni@bootlin.com>
-To: linux-rtc@vger.kernel.org,
-	Wolfram Sang <wsa+renesas@sang-engineering.com>
-Cc: Yiting Deng <yiting.deng@amlogic.com>,
-	Xianwei Zhao <xianwei.zhao@amlogic.com>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Gregory Clement <gregory.clement@bootlin.com>,
-	Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
-	Nicolas Ferre <nicolas.ferre@microchip.com>,
-	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
-	Benson Leung <bleung@chromium.org>,
-	Guenter Roeck <groeck@chromium.org>,
-	Support Opensource <support.opensource@diasemi.com>,
-	Paul Cercueil <paul@crapouillou.net>,
-	Vladimir Zapolskiy <vz@mleia.com>,
-	Piotr Wojtaszczyk <piotr.wojtaszczyk@timesys.com>,
-	Chanwoo Choi <cw00.choi@samsung.com>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Kevin Hilman <khilman@baylibre.com>,
-	Jerome Brunet <jbrunet@baylibre.com>,
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-	Eddie Huang <eddie.huang@mediatek.com>,
-	Sean Wang <sean.wang@mediatek.com>,
-	Matthias Brugger <matthias.bgg@gmail.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Orson Zhai <orsonzhai@gmail.com>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Chunyan Zhang <zhang.lyra@gmail.com>, Chen-Yu Tsai <wens@csie.org>,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Samuel Holland <samuel@sholland.org>,
-	Vincent Shih <vincent.sunplus@gmail.com>,
-	Thierry Reding <thierry.reding@gmail.com>,
-	Jonathan Hunter <jonathanh@nvidia.com>,
-	Michal Simek <michal.simek@amd.com>,
-	linux-amlogic@lists.infradead.org,
-	linux-arm-kernel@lists.infradead.org,
-	chrome-platform@lists.linux.dev, linux-mips@vger.kernel.org,
-	linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-	linux-renesas-soc@vger.kernel.org,
-	linux-samsung-soc@vger.kernel.org, linux-sunxi@lists.linux.dev,
-	linux-tegra@vger.kernel.org, patches@opensource.cirrus.com
-Subject: Re: [PATCH] rtc: use boolean values with device_init_wakeup()
-Message-ID: <173644377117.1019413.12980385173648327961.b4-ty@bootlin.com>
-References: <20241217071331.3607-2-wsa+renesas@sang-engineering.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=cBzSyTGh9n7B2aI52XVnF7pXhRtrnDNHqSVu+wNf7arw2AJKVfIvqRphJXQUBAwRqvt4uXaW3FaMpVAQwGmk/7W2ZyzMVTtWa5A4McFm/fHE/Q3rjbD/giYgqr99h4kDd1ZWojWyf3l0rU6dxBVmmovdCsuU/2boLE/WtMoeYYY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FJ72og+s; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36EF2C4CED2;
+	Thu,  9 Jan 2025 20:11:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1736453522;
+	bh=gB7Gyi/7K03hBpNRRISpwdG1QNfzARRmIWdRCxIaiWw=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=FJ72og+si4DnY78p9HByG2rW7LacMMqr87IYhRnJvsMYj6xHDkbbnnuRud71kplgN
+	 4L7dfrKKwSpqk9WQV7PNc3pLjCFboNUxp8O6TnBvbVPtG6QLp18VOJrkMmJeQYaSJZ
+	 O4GmWskLeW7H0GWdF7VqkL9eAli9HCm4qlni7vY/iLTNfVTroPF5xHzF7Qz/JPS+8Y
+	 /NnWsHrdbV2jvRzinfLhjB3vd8GVkmHFapvO+C6OXkabH5EJxP+cRxn43oKW0SMiLy
+	 rDJ1DIkEZF9dE4ZLiMqi4n9SNLPDC4085j5pSx8jnmuQYOtyn3AUOINHtNdycF5Q/g
+	 trHeB2MW3OmVA==
+Date: Thu, 9 Jan 2025 20:11:54 +0000
+From: Simon Horman <horms@kernel.org>
+To: Luo Jie <quic_luoj@quicinc.com>
+Cc: Andrew Lunn <andrew+netdev@lunn.ch>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Lei Wei <quic_leiwei@quicinc.com>,
+	Suruchi Agarwal <quic_suruchia@quicinc.com>,
+	Pavithra R <quic_pavir@quicinc.com>,
+	Jonathan Corbet <corbet@lwn.net>, Kees Cook <kees@kernel.org>,
+	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
+	Philipp Zabel <p.zabel@pengutronix.de>,
+	linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-doc@vger.kernel.org, linux-hardening@vger.kernel.org,
+	quic_kkumarcs@quicinc.com, quic_linchen@quicinc.com,
+	srinivas.kandagatla@linaro.org, bartosz.golaszewski@linaro.org,
+	john@phrozen.org
+Subject: Re: [PATCH net-next v2 04/14] net: ethernet: qualcomm: Initialize
+ PPE buffer management for IPQ9574
+Message-ID: <20250109201154.GS7706@kernel.org>
+References: <20250108-qcom_ipq_ppe-v2-0-7394dbda7199@quicinc.com>
+ <20250108-qcom_ipq_ppe-v2-4-7394dbda7199@quicinc.com>
+ <20250109172714.GN7706@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -98,25 +77,188 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20241217071331.3607-2-wsa+renesas@sang-engineering.com>
-X-GND-Sasl: alexandre.belloni@bootlin.com
+In-Reply-To: <20250109172714.GN7706@kernel.org>
 
-On Tue, 17 Dec 2024 08:13:26 +0100, Wolfram Sang wrote:
-> device_init_wakeup() second argument is a bool type. Use proper boolean
-> values when calling it to match the type and to produce unambiguous code
-> which is easier to understand.
+On Thu, Jan 09, 2025 at 05:27:14PM +0000, Simon Horman wrote:
+> On Wed, Jan 08, 2025 at 09:47:11PM +0800, Luo Jie wrote:
+> > The BM (Buffer Management) config controls the pause frame generated
+> > on the PPE port. There are maximum 15 BM ports and 4 groups supported,
+> > all BM ports are assigned to group 0 by default. The number of hardware
+> > buffers configured for the port influence the threshold of the flow
+> > control for that port.
+> > 
+> > Signed-off-by: Luo Jie <quic_luoj@quicinc.com>
 > 
+> ...
 > 
+> > diff --git a/drivers/net/ethernet/qualcomm/ppe/ppe_config.c b/drivers/net/ethernet/qualcomm/ppe/ppe_config.c
+> 
+> ...
+> 
+> > +/* The buffer configurations per PPE port. There are 15 BM ports and
+> > + * 4 BM groups supported by PPE. BM port (0-7) is for EDMA port 0,
+> > + * BM port (8-13) is for PPE physical port 1-6 and BM port 14 is for
+> > + * EIP port.
+> > + */
+> > +static struct ppe_bm_port_config ipq9574_ppe_bm_port_config[] = {
+> > +	{
+> > +		/* Buffer configuration for the BM port ID 0 of EDMA. */
+> > +		.port_id_start	= 0,
+> > +		.port_id_end	= 0,
+> > +		.pre_alloc	= 0,
+> > +		.in_fly_buf	= 100,
+> > +		.ceil		= 1146,
+> > +		.weight		= 7,
+> > +		.resume_offset	= 8,
+> > +		.resume_ceil	= 0,
+> > +		.dynamic	= true,
+> > +	},
+> > +	{
+> > +		/* Buffer configuration for the BM port ID 1-7 of EDMA. */
+> > +		.port_id_start	= 1,
+> > +		.port_id_end	= 7,
+> > +		.pre_alloc	= 0,
+> > +		.in_fly_buf	= 100,
+> > +		.ceil		= 250,
+> > +		.weight		= 4,
+> > +		.resume_offset	= 36,
+> > +		.resume_ceil	= 0,
+> > +		.dynamic	= true,
+> > +	},
+> > +	{
+> > +		/* Buffer configuration for the BM port ID 8-13 of PPE ports. */
+> > +		.port_id_start	= 8,
+> > +		.port_id_end	= 13,
+> > +		.pre_alloc	= 0,
+> > +		.in_fly_buf	= 128,
+> > +		.ceil		= 250,
+> > +		.weight		= 4,
+> > +		.resume_offset	= 36,
+> > +		.resume_ceil	= 0,
+> > +		.dynamic	= true,
+> > +	},
+> > +	{
+> > +		/* Buffer configuration for the BM port ID 14 of EIP. */
+> > +		.port_id_start	= 14,
+> > +		.port_id_end	= 14,
+> > +		.pre_alloc	= 0,
+> > +		.in_fly_buf	= 40,
+> > +		.ceil		= 250,
+> > +		.weight		= 4,
+> > +		.resume_offset	= 36,
+> > +		.resume_ceil	= 0,
+> > +		.dynamic	= true,
+> > +	},
+> > +};
+> > +
+> > +static int ppe_config_bm_threshold(struct ppe_device *ppe_dev, int bm_port_id,
+> > +				   struct ppe_bm_port_config port_cfg)
+> > +{
+> > +	u32 reg, val, bm_fc_val[2];
+> > +	int ret;
+> > +
+> > +	/* Configure BM flow control related threshold. */
+> > +	PPE_BM_PORT_FC_SET_WEIGHT(bm_fc_val, port_cfg.weight);
+> 
+> Hi Luo Jie,
+> 
+> When compiling with W=1 for x86_32 and ARM (32bit)
+> (but, curiously not x86_64 or arm64), gcc-14 complains that
+> bm_fc_val is uninitialised, I believe due to the line above and
+> similar lines below.
+> 
+> In file included from drivers/net/ethernet/qualcomm/ppe/ppe_config.c:10:
+> In function 'u32p_replace_bits',
+>     inlined from 'ppe_config_bm_threshold' at drivers/net/ethernet/qualcomm/ppe/ppe_config.c:112:2:
+> ./include/linux/bitfield.h:189:15: warning: 'bm_fc_val' is used uninitialized [-Wuninitialized]
+>   189 |         *p = (*p & ~to(field)) | type##_encode_bits(val, field);        \
+>       |               ^~
+> ./include/linux/bitfield.h:198:9: note: in expansion of macro '____MAKE_OP'
+>   198 |         ____MAKE_OP(u##size,u##size,,)
+>       |         ^~~~~~~~~~~
+> ./include/linux/bitfield.h:201:1: note: in expansion of macro '__MAKE_OP'
+>   201 | __MAKE_OP(32)
+>       | ^~~~~~~~~
+> drivers/net/ethernet/qualcomm/ppe/ppe_config.c: In function 'ppe_config_bm_threshold':
+> drivers/net/ethernet/qualcomm/ppe/ppe_config.c:108:23: note: 'bm_fc_val' declared here
+>   108 |         u32 reg, val, bm_fc_val[2];
+>       |                       ^~~~~~~~~
+> 
+> > +	PPE_BM_PORT_FC_SET_RESUME_OFFSET(bm_fc_val, port_cfg.resume_offset);
+> > +	PPE_BM_PORT_FC_SET_RESUME_THRESHOLD(bm_fc_val, port_cfg.resume_ceil);
+> > +	PPE_BM_PORT_FC_SET_DYNAMIC(bm_fc_val, port_cfg.dynamic);
+> > +	PPE_BM_PORT_FC_SET_REACT_LIMIT(bm_fc_val, port_cfg.in_fly_buf);
+> > +	PPE_BM_PORT_FC_SET_PRE_ALLOC(bm_fc_val, port_cfg.pre_alloc);
+> > +
+> > +	/* Configure low/high bits of the ceiling for the BM port. */
+> > +	val = FIELD_PREP(GENMASK(2, 0), port_cfg.ceil);
+> 
+> The value of port_cfg.ceil is 250 or 1146, as set in
+> ipq9574_ppe_bm_port_config. clang-19 W=1 builds complain that this
+> value is too large for the field (3 bits).
+> 
+> drivers/net/ethernet/qualcomm/ppe/ppe_config.c:120:8: error: call to '__compiletime_assert_925' declared with 'error' attribute: FIELD_PREP: value too large for the field
+>   120 |         val = FIELD_PREP(GENMASK(2, 0), port_cfg.ceil);
+>       |               ^
+> ./include/linux/bitfield.h:115:3: note: expanded from macro 'FIELD_PREP'
+>   115 |                 __BF_FIELD_CHECK(_mask, 0ULL, _val, "FIELD_PREP: ");    \
+>       |                 ^
+> ./include/linux/bitfield.h:68:3: note: expanded from macro '__BF_FIELD_CHECK'
+>    68 |                 BUILD_BUG_ON_MSG(__builtin_constant_p(_val) ?           \
+>       |                 ^
+> ./include/linux/build_bug.h:39:37: note: expanded from macro 'BUILD_BUG_ON_MSG'
+>    39 | #define BUILD_BUG_ON_MSG(cond, msg) compiletime_assert(!(cond), msg)
+>       |                                     ^
+> note: (skipping 1 expansions in backtrace; use -fmacro-backtrace-limit=0 to see all)
+> ././include/linux/compiler_types.h:530:2: note: expanded from macro '_compiletime_assert'
+>   530 |         __compiletime_assert(condition, msg, prefix, suffix)
+>       |         ^
+> ././include/linux/compiler_types.h:523:4: note: expanded from macro '__compiletime_assert'
+>   523 |                         prefix ## suffix();                             \
+>       |                         ^
+> <scratch space>:95:1: note: expanded from here
+>    95 | __compiletime_assert_925
+>       | ^
+> 1 error generated
+> 
+> > +	PPE_BM_PORT_FC_SET_CEILING_LOW(bm_fc_val, val);
+> > +	val = FIELD_PREP(GENMASK(10, 3), port_cfg.ceil);
 
-Applied, thanks!
+One more thing - I was pondering this over dinner.
 
-[1/1] rtc: use boolean values with device_init_wakeup()
-      https://git.kernel.org/abelloni/c/8c28c4993f11
+I believe that the above will write the bits 0-7 of port_cfg.ceil
+to bits 3-10 of val. I am guessing that the reverse mapping of
+bits is intended.
 
-Best regards,
-
--- 
-Alexandre Belloni, co-owner and COO, Bootlin
-Embedded Linux and Kernel engineering
-https://bootlin.com
+> > +	PPE_BM_PORT_FC_SET_CEILING_HIGH(bm_fc_val, val);
+> > +
+> > +	reg = PPE_BM_PORT_FC_CFG_TBL_ADDR + PPE_BM_PORT_FC_CFG_TBL_INC * bm_port_id;
+> > +	ret = regmap_bulk_write(ppe_dev->regmap, reg,
+> > +				bm_fc_val, ARRAY_SIZE(bm_fc_val));
+> > +	if (ret)
+> > +		return ret;
+> > +
+> > +	/* Assign the default group ID 0 to the BM port. */
+> > +	val = FIELD_PREP(PPE_BM_PORT_GROUP_ID_SHARED_GROUP_ID, 0);
+> > +	reg = PPE_BM_PORT_GROUP_ID_ADDR + PPE_BM_PORT_GROUP_ID_INC * bm_port_id;
+> > +	ret = regmap_update_bits(ppe_dev->regmap, reg,
+> > +				 PPE_BM_PORT_GROUP_ID_SHARED_GROUP_ID,
+> > +				 val);
+> > +	if (ret)
+> > +		return ret;
+> > +
+> > +	/* Enable BM port flow control. */
+> > +	val = FIELD_PREP(PPE_BM_PORT_FC_MODE_EN, true);
+> > +	reg = PPE_BM_PORT_FC_MODE_ADDR + PPE_BM_PORT_FC_MODE_INC * bm_port_id;
+> > +
+> > +	return regmap_update_bits(ppe_dev->regmap, reg,
+> > +				  PPE_BM_PORT_FC_MODE_EN,
+> > +				  val);
+> > +}
+> 
+> ...
+> 
+> -- 
+> pw-bot: changes-requested
+> 
 
