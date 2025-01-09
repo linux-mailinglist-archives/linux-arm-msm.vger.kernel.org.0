@@ -1,36 +1,87 @@
-Return-Path: <linux-arm-msm+bounces-44560-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-44561-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 10364A0760F
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jan 2025 13:48:06 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7C71DA07655
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jan 2025 13:59:07 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 39B3F3A1290
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jan 2025 12:48:00 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 588F21889054
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jan 2025 12:58:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AC715217707;
-	Thu,  9 Jan 2025 12:48:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5101B219A7D;
+	Thu,  9 Jan 2025 12:57:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="R9hQfC78"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A3BD802;
-	Thu,  9 Jan 2025 12:48:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0398E219A70
+	for <linux-arm-msm@vger.kernel.org>; Thu,  9 Jan 2025 12:57:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736426883; cv=none; b=nSIwPmvnXOoCNkr8nLS2RAldr8CaxjPpFzC5ms3E05Rg/qpjlX6FX+wlEeFleHqME35iO0XA0n8sjIrB0pGv65oq2P3iFucsfhbCDsmGPSk9jlkE4yuLOi5AS34+lRGXzmlL1TC+H3w+Mv2sCovv0LdeLFNgSssUYx3l57V/9Es=
+	t=1736427447; cv=none; b=ciYqtwRCv8YOwePDXjfq74CIf5/9ciZgNjQeae9WzaIGkcT6YqBDloOZSPu6wMRyFccCwYxEFzJQnQiMXHzF1FtRC9hGutMzbzwKLyH+2W8F+ztzUam4MzygGguitEO7LUKbFQQMMCU+cUnECM6nF2zeODosnhtxkhrDJbzF/xc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736426883; c=relaxed/simple;
-	bh=pHCPXxMO1ZAftyO4EaX4lIDMPY971ttf/cvNdYhLp/w=;
+	s=arc-20240116; t=1736427447; c=relaxed/simple;
+	bh=EQRNeTk+hBONpa7+5D0zMr2pGV9NPKrhECuScjn30jU=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=RG9hi175O2/L33Pnv7ktAsDn3YtmkS1H8AYObXFZd1psTrioxWlWp3Vtvi7EYBRKTHI1/OWPG4/d2kFRBwxw0awhfKRGUD8Ru08iTfX/1Ygy8tudjEFvYxUn2es+0zqQrg0idGCSvpm5ytqmJ6x5F2hWoH5RC8dJi4NArKuVOD4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9934DC4CED2;
-	Thu,  9 Jan 2025 12:48:00 +0000 (UTC)
-Message-ID: <c1b5dcba-b476-47be-a270-a100efef8ff6@xs4all.nl>
-Date: Thu, 9 Jan 2025 13:47:58 +0100
+	 In-Reply-To:Content-Type; b=RA7q3diOXzIaMsvJC4fMieuwl2Q5PpjeKPJcaGQGk2jrhIeMm/JzWhgsUL3jAgB7Up+UICMu6VsunZFEVr/skTeurqzdtPZ0TTHR7o5oS+KIjjtwdWyDVAjfbJnXaHFn7hWvUIshrqgQVT1ZGYrSLnR+HjVRITtadjANww4QktA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=R9hQfC78; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5099NaBS007951
+	for <linux-arm-msm@vger.kernel.org>; Thu, 9 Jan 2025 12:57:24 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	Wdrt8+vy10d3LeMY2xaFa/Zw6kJZLY+e+LjMIzLlwmE=; b=R9hQfC78Tqr2WxXg
+	0ZrN2MebST3KPrZ7u0awjf4U24Ev6fRjzN0TH66Agy4923+y2PJAv4mWS9//XJ2e
+	Wrh2747eo2BAnkUAQZsUCpa1EfWvLWN9x2++55G1D0sL8YoXQL4N4c7BhcfyT9im
+	jsbI/mvE3p+iC50XHdtVBgg+WuCf3g2z0gme9iYHXiwfYOIHxWD1jzoI1Ikkp7xd
+	3vT6tV+4dC+15EHkzHHOMKGK7dLfGcTLJpVpQRKZBZfGoLNrlPPm8ldAki87rPbP
+	gtwP4oX+wbvhZKBZCFTu3kSlYY9pzR7lOSduaNZgRwkKwGu8w6Ct5YGyL80YVrBr
+	aPicvA==
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com [209.85.160.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 442bsm8fxm-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 09 Jan 2025 12:57:23 +0000 (GMT)
+Received: by mail-qt1-f199.google.com with SMTP id d75a77b69052e-4679af4d6b7so2159191cf.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Jan 2025 04:57:23 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1736427442; x=1737032242;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Wdrt8+vy10d3LeMY2xaFa/Zw6kJZLY+e+LjMIzLlwmE=;
+        b=MfT7LTPz4gT9pvMJBsVgHAs1+T81Uw/QwMCiI61htikLiwzWd+scFrB8nRBmAxPcMP
+         7lzakyCmB296SGptruiVcCPrLq1O/yPVpHHcYWFAzfxLw6sm/6smzFzUSjXIrOPl8ih5
+         2tZ7Ix0zi9bCKcVAeNkOy9V/LdYNl1OAgQ2ycbFRLoLv94p6KtHIx8VKJ7S5hbn6tnwo
+         W/8PpAu4aPo4HVpixEjT1W6FcgtOepGHUnXMbNpCT3istJSGK8/vTix9Cl+Srx5DOHMz
+         1LUruhaQP5cy6NdZ0vmvP9QoZmqf2qNNifCkEhx2WFgne3epkerq6rNb4AzNHlMmQNZq
+         lGJQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXrNituZmT6LppSOYE6t2yhQvAZn0gOrlO6169ty5rPmwQnUbz+WWs4MkjbkwH3ZitvCvOlFbH6wvCavD32@vger.kernel.org
+X-Gm-Message-State: AOJu0YzkUCa9Z8Xc+u0Eo11QZdT7g16GMbCDBwlq/X2YUbNUGM0ydsin
+	EK+wwFLcrl1UwJv/tNaQLDEg8xOcbu3u2I+LABb7rNvG/f6lqvflHcnC+RSCiWemX3yqJKYxZ6s
+	sCxDVEhRjVcH/iyE9OJQwyYpONPLIuiGWgtA6jfp9JPb8S4su7E6IzGxxrtQwfMT+
+X-Gm-Gg: ASbGncuRj7vnZ/L08JN0IcLcP2Wr8gHE5yaRqtLLolyxaxURq/HdOkrXbldnLAP4ywV
+	BL+q9ovRre+wVkupH0jEhEJ2FK98gUigL8v2jow4fWEulRdZPlQ/5tFuGb5a7Q/YkR3UYEHLTXy
+	7dKgubUFbje2rGEacEP6jGVOXbmy0hNcRFavVLaWS9N9dNc0OoQrZcA6tw4WRcQSAI20p1sP1hf
+	2yOGUdAO7GbJg4EtTk4iBsxyH4xUkkBHQLVT2BZLHsaZbq/u0lp1Ysz6pJwJ9O2U2u/R39BMENc
+	KeE9EIUGVwdLyA151LVBRfaCfCFg+sTpxKNJ
+X-Received: by 2002:a05:622a:413:b0:466:88ba:2026 with SMTP id d75a77b69052e-46c710f9f57mr30736451cf.14.1736427442373;
+        Thu, 09 Jan 2025 04:57:22 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEcu5W+7ZgRtg2ylSZnOMnR6OkKgSahUtxRQxSwNm8om6gJaZ1fGlL6jQic93YoEugEd2X3ZA==
+X-Received: by 2002:a05:622a:413:b0:466:88ba:2026 with SMTP id d75a77b69052e-46c710f9f57mr30736301cf.14.1736427441915;
+        Thu, 09 Jan 2025 04:57:21 -0800 (PST)
+Received: from [192.168.65.234] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5d9900c4368sm568178a12.22.2025.01.09.04.57.18
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 09 Jan 2025 04:57:20 -0800 (PST)
+Message-ID: <0f9e456b-cd54-4496-a2d2-795aae744385@oss.qualcomm.com>
+Date: Thu, 9 Jan 2025 13:57:17 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -38,125 +89,155 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/2] media: iris: fix memory leak and improve driver
-To: Dikshita Agarwal <quic_dikshita@quicinc.com>,
- Vikash Garodia <quic_vgarodia@quicinc.com>,
- Abhinav Kumar <quic_abhinavk@quicinc.com>,
- Mauro Carvalho Chehab <mchehab@kernel.org>,
- Stefan Schmidt <stefan.schmidt@linaro.org>,
- Sebastian Fricke <sebastian.fricke@collabora.com>
-Cc: Joel Stanley <joel@jms.id.au>, linux-media@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
- 20241212-qcom-video-iris-v9-0-e8c2c6bd4041@quicinc.com
-References: <20250109-iris-driver-fixes-v1-0-789a0f5dd7ee@quicinc.com>
-Content-Language: en-US, nl
-From: Hans Verkuil <hverkuil@xs4all.nl>
-Autocrypt: addr=hverkuil@xs4all.nl; keydata=
- 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
-In-Reply-To: <20250109-iris-driver-fixes-v1-0-789a0f5dd7ee@quicinc.com>
+Subject: Re: [PATCH 2/2] arm64: dts: qcom: x1e80100-crd: Drop duplicate DMIC
+ supplies
+To: Stephan Gerhold <stephan.gerhold@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>
+Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Abel Vesa <abel.vesa@linaro.org>, Johan Hovold <johan@kernel.org>
+References: <20241203-x1e80100-va-mic-bias-v1-0-0dfd4d9b492c@linaro.org>
+ <20241203-x1e80100-va-mic-bias-v1-2-0dfd4d9b492c@linaro.org>
+ <f65e1559-b409-4906-aabb-eb24b5b0fcf2@linaro.org>
+ <Z1ATxAsXFhQraQwH@linaro.org>
+ <afd010c9-8c24-482e-a479-2396f08c972b@oss.qualcomm.com>
+ <Z1H1BHAeO-0832Ea@linaro.org>
+ <6vfrlwir6sfommhn3met6wnjm76lnnxw4rdwzq75b7lzcy4jep@2cbcfvb3tvr2>
+ <Z3-XoDgUgdS7DDvm@linaro.org>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <Z3-XoDgUgdS7DDvm@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
+X-Proofpoint-ORIG-GUID: aGB0JZcoSijfbytpPvMrUqC80Rj1GF0T
+X-Proofpoint-GUID: aGB0JZcoSijfbytpPvMrUqC80Rj1GF0T
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 malwarescore=0
+ mlxlogscore=999 spamscore=0 impostorscore=0 priorityscore=1501
+ clxscore=1015 adultscore=0 phishscore=0 bulkscore=0 lowpriorityscore=0
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2501090103
 
-Hi all,
-
-The iris v3 series (https://patchwork.linuxtv.org/project/linux-media/list/?series=13467)
-plus these two patches on top passed the media-ci tests.
-
-If there are no further comments, then I plan to merge this for 6.14
-tomorrow afternoon.
-
-Regards,
-
-	Hans
-
-On 09/01/2025 12:26, Dikshita Agarwal wrote:
-> This series fixes a memory leak and improves the representation of 
-> dma mask to set upper bound of DMA address space.
+On 9.01.2025 10:32 AM, Stephan Gerhold wrote:
+> On Wed, Jan 08, 2025 at 05:07:47PM -0600, Bjorn Andersson wrote:
+>> On Thu, Dec 05, 2024 at 07:46:28PM +0100, Stephan Gerhold wrote:
+>>> On Thu, Dec 05, 2024 at 06:11:47PM +0100, Konrad Dybcio wrote:
+>>>> On 4.12.2024 9:33 AM, Stephan Gerhold wrote:
+>>>>> On Wed, Dec 04, 2024 at 08:20:15AM +0100, Krzysztof Kozlowski wrote:
+>>>>>> On 03/12/2024 18:44, Stephan Gerhold wrote:
+>>>>>>> The WCD938x codec provides two controls for each of the MIC_BIASn outputs:
+>>>>>>>
+>>>>>>>  - "MIC BIASn" enables an internal regulator to generate the output
+>>>>>>>    with a configurable voltage (qcom,micbiasN-microvolt).
+>>>>>>>
+>>>>>>>  - "VA MIC BIASn" enables "pull-up mode" that bypasses the internal
+>>>>>>>    regulator and directly outputs fixed 1.8V from the VDD_PX pin.
+>>>>>>>    This is intended for low-power VA (voice activation) use cases.
+>>>>>>>
+>>>>>>> The audio-routing setup for the X1E80100 CRD currently specifies both
+>>>>>>> as power supplies for the DMICs, but only one of them can be active
+>>>>>>> at the same time. In practice, only the internal regulator is used
+>>>>>>> with the current setup because the driver prefers it over pull-up mode.
+>>>>>>>
+>>>>>>> Make this more clear by dropping the redundant routes to the pull-up
+>>>>>>> "VA MIC BIASn" supply. There is no functional difference except that we
+>>>>>>> skip briefly switching to pull-up mode when shutting down the microphone.
+>>>>>>>
+>>>>>>> Fixes: 4442a67eedc1 ("arm64: dts: qcom: x1e80100-crd: add sound card")
+>>>>>>
+>>>>>> If there is no functional difference and this is just redundant, then
+>>>>>> there is nothing to fix, so drop the tag. But the point is that users
+>>>>>> might want the low-power VA. You claim they don't want... sure, I am
+>>>>>> fine with that but there is nothing to fix in such case.
+>>>>>>
+>>>>>
+>>>>> The fix here is that two mutually exclusive power supplies for the DMIC
+>>>>> are specified in the device tree. You can only have one of them active
+>>>>> at the same time. The Linux driver handles that gracefully, but the
+>>>>> device tree is still wrong and IMO deserves a fixes tag.
+>>>>>
+>>>>> The functional difference is that we skip briefly switching to pull-up
+>>>>> mode when shutting down the microphone. Users won't notice that, but
+>>>>> it's not the intended behavior.
+>>>>>
+>>>>> I don't claim that users don't want to switch to the low-power pull-up
+>>>>> mode (VA MIC BIASn). However, we would need a different mechanism to
+>>>>> give them the option to switch at runtime. "audio-routing" just
+>>>>> specifies static routes, so the current description does not allow
+>>>>> switching between the two modes either.
+>>>>
+>>>> Is there no existing mechanism to alter this at runtime?
+>>>>
+>>>
+>>> I don't think so... Since it's currently exposed as two separate DAPM
+>>> supplies (instead of a mux or similar) you can only choose between one
+>>> of them in the static routes specified by "audio-routing" in the DT.
+>>>
+>>> I tried looking at how downstream handles this, but this left me even
+>>> more confused than I was before. :-) On CRD we currently have the
+>>> following routes in DT:
+>>>
+>>> 	"VA DMIC0", "MIC BIAS3",
+>>> 	"VA DMIC1", "MIC BIAS3",
+>>> 	"VA DMIC2", "MIC BIAS1",
+>>> 	"VA DMIC3", "MIC BIAS1",
+>>> 	"VA DMIC0", "VA MIC BIAS3",
+>>> 	"VA DMIC1", "VA MIC BIAS3",
+>>> 	"VA DMIC2", "VA MIC BIAS1",
+>>> 	"VA DMIC3", "VA MIC BIAS1",
+>>>
+>>> MIC BIAS and VA MIC BIAS are mutually exclusive, so this is not correct.
+>>> But if you look at e.g. SM8550 downstream they have:
+>>>
+>>> 	"TX DMIC0", "MIC BIAS3",
+>>> 	"TX DMIC1", "MIC BIAS3",
+>>> 	"TX DMIC2", "MIC BIAS1",
+>>> 	"TX DMIC3", "MIC BIAS1",
+>>> 	"VA DMIC0", "VA MIC BIAS3",
+>>> 	"VA DMIC1", "VA MIC BIAS3",
+>>> 	"VA DMIC2", "VA MIC BIAS1",
+>>> 	"VA DMIC3", "VA MIC BIAS1";
+>>>
+>>> Note the TX DMIC vs VA DMIC. So they specify one of the supplies for the
+>>> TX macro DMIC, and the low-power one for the VA macro DMIC. That would
+>>> be fine.
+>>>
+>>> Now the question is: If we can use the DMIC through both the TX and the
+>>> VA macro, and we're not doing voice activation, why are we using the VA
+>>> macro in the first place?
+>>>
+>>> @Srini: Do you remember why?
+>>>
+>>
+>> What's the verdict regarding this?
+>>
 > 
-> Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
-> ---
-> Dikshita Agarwal (2):
->       media: iris: represent dma_mask in more readable form
->       media: iris: fix memory leak while freeing queue memory
+> We started discussing this, but did not come to a conclusion yet if we
+> should be recording from the DMICs using the TX macro instead of the VA
+> macro.
 > 
->  drivers/media/platform/qcom/iris/iris_hfi_queue.c       | 8 +++++---
->  drivers/media/platform/qcom/iris/iris_platform_sm8250.c | 3 ++-
->  drivers/media/platform/qcom/iris/iris_platform_sm8550.c | 3 ++-
->  3 files changed, 9 insertions(+), 5 deletions(-)
-> ---
-> base-commit: 698b6e3163bafd61e1b7d13572e2c42974ac85ec
-> change-id: 20250108-iris-driver-fixes-d79c0ecc100d
-> prerequisite-message-id: <20241212-qcom-video-iris-v9-0-e8c2c6bd4041@quicinc.com>
-> prerequisite-patch-id: bfa9c88ec537e21017d5c9da3ad30d885d2eb132
-> prerequisite-patch-id: bf37c5c6dc78b857caf6b544f6eb4000dee5dbaa
-> prerequisite-patch-id: 4d3c8665de2faf0ad912943e3a9c9b4ca76bfd7f
-> prerequisite-patch-id: 327454576fb8440c8521917a6582e4839b6088c3
-> prerequisite-patch-id: fc523bc1a4f188e1924ebc18885c4dcd9b375e89
-> prerequisite-patch-id: 1f837af2ed6c4925884b45e75828ff5b8ff057f0
-> prerequisite-patch-id: 18c77c70db79b933a13df15f98f681a931156aea
-> prerequisite-patch-id: 40168197cad291efe92bd5bf78e039475ed10ae8
-> prerequisite-patch-id: b164fd80f4dcfb46b314377e8a595ce654418578
-> prerequisite-patch-id: 271bf0ca62c46ff9b14db3c23196112c2f59256d
-> prerequisite-patch-id: 67b096b9d1362eacfad13470c20e8eca833bf53d
-> prerequisite-patch-id: 5c433b5a1407fda64de411ccdc723dc664319037
-> prerequisite-patch-id: 8011d3230e717a0af3c6084b786612ff57bc770a
-> prerequisite-patch-id: 6d6f8da843afa6d7159730838ab2ac6e800e9246
-> prerequisite-patch-id: aa428f34e6695451780ff6b1bf8bc2dfb95c7071
-> prerequisite-patch-id: c95c03b5085eaecafafcabf4d700247b3b00bd87
-> prerequisite-patch-id: e41b4e7438a3fe56ba75501a417dba49365ed393
-> prerequisite-patch-id: ff1531525f124cf59596b8ca80a58f31b85763d0
-> prerequisite-patch-id: f20122e51eeb3691706b7d0f63628a84efc11b34
-> prerequisite-patch-id: e397711e5044a5e830f7f46d3683b6c234c23dda
-> prerequisite-patch-id: 99ad3fb3466a939438edf93e1591008a51004540
-> prerequisite-patch-id: f96d6202f4ba4194b9a185243e0659d2bb8ec6e0
-> prerequisite-patch-id: 71b8db4f106aa9322575573174c63d8d9eab20a1
-> prerequisite-patch-id: 532f7998ec08c4cc01c69dcfd050ad854d8bdbad
-> prerequisite-patch-id: cc80eabbf33df03053869cd47912efbd2c67d19a
-> prerequisite-patch-id: 837959096e4fb7aa2b9d5afbd847aa0a4399ea87
-> prerequisite-patch-id: f78814e6508d3439e1d77d82af471b839e03d1ec
-> prerequisite-patch-id: 5a664eca073472e80da8f257cb030740e009737e
-> 
-> Best regards,
+> The patch I submitted is still valid though, independent of that
+> question. Since we're not doing voice activation we want to have the
+> "full quality" MIC BIAS supply, not the low-power one.
 
+Can/should we discuss a new sound API to make this toggleable?
+
+Do these microphones physically connect to muxable inputs, or does this
+depend on board wiring?
+
+Konrad
+
+> 
+> It looks like there have been new users of this pattern added upstream.
+> I'll resend this patch with all the new occurrences and will try further
+> clarifying the commit messge while at it.
+> 
+> Thanks,
+> Stephan
 
