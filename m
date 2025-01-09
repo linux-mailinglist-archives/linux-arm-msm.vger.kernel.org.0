@@ -1,146 +1,159 @@
-Return-Path: <linux-arm-msm+bounces-44548-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-44549-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id DD8A1A074A5
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jan 2025 12:27:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id BEEC3A074B1
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jan 2025 12:29:07 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9B78F188AE0A
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jan 2025 11:27:50 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 884C918878D9
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jan 2025 11:29:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 43336217675;
-	Thu,  9 Jan 2025 11:27:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2F86C2165FF;
+	Thu,  9 Jan 2025 11:29:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="b6ffXXhC"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ACrO7Sqv"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9877721765C;
-	Thu,  9 Jan 2025 11:27:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E83D2163BF;
+	Thu,  9 Jan 2025 11:29:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736422031; cv=none; b=RbBmvmwbHxlrfbemDktgLHu6KULYowZvckyCXkgyPv1jVfxyGT0/KWiRosFWbaKEjrbhXhtIWKMkc06lWK8dLUHl9YeQ+rJ9T4d2S7aOeEgepWeG7P/XunBihYnon4VPk87ecdcZMmukeJaMryV7YyiTUgXx3Ds5Qfapzf4IM6o=
+	t=1736422142; cv=none; b=dGtUc24JO4hF6KPkh8fTq1p3jWxV+oiZq/Bm8uDpSYkzSW5aY4A7UZVZi8kGnH1NYlP5pQWkuoepuZ58eZbBOG60HANwHy87N0ck6DTxhbF3Ciob1WmQRpZylimA+gndy0vWzp6wxdCpDPeAX4g5Okv5X+g+2vyD36OUyCrokF8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736422031; c=relaxed/simple;
-	bh=nAteW2pZPElXGXOc/ZpncpcwVWManw1OixJnsAZHxH4=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:References:
-	 In-Reply-To:To:CC; b=fLNFEqAh4LJ2Q0mI2MnJW9ZnSwyqyg2OMShkJB9inuZCkx+BfBcAMlWF++qA3XjNTCg+P3vWTmge5ZYrKG8AfYMzEANvXIUh9Fiy5dBr3UMyojdW+XbLgjzhQdbF3VT3XZ2d8KT25JlrQXR8gsTHocVhcg9Q4yrh4P+aCC5/HaA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=b6ffXXhC; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1736422142; c=relaxed/simple;
+	bh=r+rKgccDyV+IEDJPwy8XJybMKCaSZukgYLQ+Rw96vDc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=PF1i0b0qZ3hjS+WvTRY9GCzI2SXqlG0ZvXmoBA3GXb4mrYvyl+syAB0ALvgkGPhAfQBfMHPEypPC87s5kX+VlewdvWa+A6bti8WtL6dGmYKgfHyQjjefu4q4q9lXnhbDoTyMlIxc+xg3TEsJpeLqVDmYP5N6DqKXMz9sCvy/Urw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ACrO7Sqv; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5097Gni8019227;
-	Thu, 9 Jan 2025 11:26:59 GMT
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5096qYqX009896;
+	Thu, 9 Jan 2025 11:28:47 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	NSsRs5KEmtRw7jwI4JgpBLgPxMotTNcafAkH0PYPNhQ=; b=b6ffXXhCpzZFmXEY
-	Xc1dEsrgexu8WVc9wI7bLMHkxFRfEWcBjVUDykvmKe0Ia5a/Ma4gdXZHaQ8wruR3
-	tyfiglE8qVAn6DRz3IqKbNBX3YJ/9u3FjKVZsFbWjqL0ftoVXGDafTcAHlLafIhW
-	olgIpVFqF77o8FBDB9KaL9PMhEVTHN3lb3f7PutyL+k7pssfBXcZfm6fRhNvieGD
-	LD+4U6q0QNlcE9FRTa9OmP9CscXOnTNOvt0NeCT4hfPRXJRKVk3vRY3SxWn5+pzt
-	j3djNqQxj6LfPJxAC26+pUOawybQ+xrUw+hnfWr8B4E82Ds3vvMXPp/mecZITvYU
-	F7PPqA==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4429x50k88-1
+	7VOsZOL91cnSNmUxwP6JvrtfctbXJqndgsMxurhIG88=; b=ACrO7SqvL5n7iXR8
+	TAL6KLdMk7mHhCB7wn7pFODrW6ZVAVNnv7j+FH9iuyzjLVWBs2pA8ggR9kPJF3CW
+	f+AT4h+hIjI8wy/KuBKhn2W4SmTQjq+UUetK1JC1v67ZbpY60adF7wv8K2CDaqUM
+	PaptQz2mK6doI/eNS7rb9im0yhqDOpF4s6GMejEtmYTuVMT0txIq8rJrvd5Py/e0
+	yPE1GKvzZ2JSgeF+eYv9oYU1UA/t7LAuILbhpGR5PZNfEVpDx6fYcF9iaSeWgB2b
+	lWEJzc9iKHdr+k7m1nEsuOO1/2onM3ONTrGQZ6+yOKs8ohOuk5dvs7HZ4bG0Nm6P
+	erVVzw==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4429jt8nak-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 09 Jan 2025 11:26:59 +0000 (GMT)
+	Thu, 09 Jan 2025 11:28:47 +0000 (GMT)
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 509BQwpD017441
+	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 509BSkYv024392
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 9 Jan 2025 11:26:58 GMT
-Received: from hu-dikshita-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Thu, 9 Jan 2025 03:26:55 -0800
-From: Dikshita Agarwal <quic_dikshita@quicinc.com>
-Date: Thu, 9 Jan 2025 16:56:41 +0530
-Subject: [PATCH 2/2] media: iris: fix memory leak while freeing queue
- memory
+	Thu, 9 Jan 2025 11:28:46 GMT
+Received: from [10.206.104.82] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 9 Jan 2025
+ 03:28:39 -0800
+Message-ID: <7a7c0b64-0b38-4130-875d-cf73266032bd@quicinc.com>
+Date: Thu, 9 Jan 2025 16:58:36 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-ID: <20250109-iris-driver-fixes-v1-2-789a0f5dd7ee@quicinc.com>
-References: <20250109-iris-driver-fixes-v1-0-789a0f5dd7ee@quicinc.com>
-In-Reply-To: <20250109-iris-driver-fixes-v1-0-789a0f5dd7ee@quicinc.com>
-To: Vikash Garodia <quic_vgarodia@quicinc.com>,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 2/7] drm/msm/a6xx: Increase HFI response timeout
+To: <neil.armstrong@linaro.org>, Rob Clark <robdclark@gmail.com>,
+        Sean Paul
+	<sean@poorly.run>, Konrad Dybcio <konradybcio@kernel.org>,
         Abhinav Kumar
 	<quic_abhinavk@quicinc.com>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Stefan Schmidt <stefan.schmidt@linaro.org>
-CC: Hans Verkuil <hverkuil@xs4all.nl>, Joel Stanley <joel@jms.id.au>,
-        <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>,
-        Dikshita Agarwal <quic_dikshita@quicinc.com>,
-        <20241212-qcom-video-iris-v9-0-e8c2c6bd4041@quicinc.com>
-X-Mailer: b4 0.14.1
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1736422008; l=1445;
- i=quic_dikshita@quicinc.com; s=20240917; h=from:subject:message-id;
- bh=nAteW2pZPElXGXOc/ZpncpcwVWManw1OixJnsAZHxH4=;
- b=uEyqjQHzP3liZDfXAaYEfe+n2niki7BtNY7gyjTcpYsLRHYNNBP4E0LGaMxr7ARSP2JbkwtGm
- wH05ZiPmduMBujRWfX7Y/B5B9NKTFE2rdEzMS9LPUv69O4XlW0A4mNG
-X-Developer-Key: i=quic_dikshita@quicinc.com; a=ed25519;
- pk=EEvKY6Ar1OI5SWf44FJ1Ebo1KuQEVbbf5UNPO+UHVhM=
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie
+	<airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        Viresh Kumar
+	<vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
+        Stephen Boyd
+	<sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski
+	<krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Bjorn Andersson
+	<andersson@kernel.org>,
+        Maya Matuszczyk <maccraft123mc@gmail.com>
+CC: <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
+        <linux-pm@vger.kernel.org>, <devicetree@vger.kernel.org>
+References: <20250109-gpu-acd-v4-0-08a5efaf4a23@quicinc.com>
+ <20250109-gpu-acd-v4-2-08a5efaf4a23@quicinc.com>
+ <00a01ba3-8b03-4a41-a8a0-650aaf661f12@linaro.org>
+Content-Language: en-US
+From: Akhil P Oommen <quic_akhilpo@quicinc.com>
+In-Reply-To: <00a01ba3-8b03-4a41-a8a0-650aaf661f12@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: ipOq9E1EYtJSsg9FjJ3oOYCrDGY0qcYe
-X-Proofpoint-ORIG-GUID: ipOq9E1EYtJSsg9FjJ3oOYCrDGY0qcYe
+X-Proofpoint-ORIG-GUID: w5bm3R8otdmmmGltXdVOEQ6MsZy22KSg
+X-Proofpoint-GUID: w5bm3R8otdmmmGltXdVOEQ6MsZy22KSg
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 impostorscore=0
- bulkscore=0 mlxlogscore=992 clxscore=1015 priorityscore=1501
- lowpriorityscore=0 malwarescore=0 mlxscore=0 spamscore=0 adultscore=0
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ malwarescore=0 spamscore=0 impostorscore=0 adultscore=0 suspectscore=0
+ phishscore=0 bulkscore=0 clxscore=1015 mlxlogscore=999 mlxscore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.19.0-2411120000 definitions=main-2501090091
 
-Memory allocated for shared queues is not freed completely in tear down
-sequence. Fix it by passing the correct value while freeing the queue
-memory.
+On 1/9/2025 1:24 PM, neil.armstrong@linaro.org wrote:
+> On 08/01/2025 21:39, Akhil P Oommen wrote:
+>> When ACD feature is enabled, it triggers some internal calibrations
+>> which result in a pretty long delay during the first HFI perf vote.
+>> So, increase the HFI response timeout to match the downstream driver.
+>>
+>> Signed-off-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
+>> ---
+>>   drivers/gpu/drm/msm/adreno/a6xx_hfi.c | 4 ++--
+>>   1 file changed, 2 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_hfi.c b/drivers/gpu/drm/
+>> msm/adreno/a6xx_hfi.c
+>> index 3c183c1c6266..7d04b242363c 100644
+>> --- a/drivers/gpu/drm/msm/adreno/a6xx_hfi.c
+>> +++ b/drivers/gpu/drm/msm/adreno/a6xx_hfi.c
+>> @@ -108,7 +108,7 @@ static int a6xx_hfi_wait_for_ack(struct a6xx_gmu
+>> *gmu, u32 id, u32 seqnum,
+>>         /* Wait for a response */
+>>       ret = gmu_poll_timeout(gmu, REG_A6XX_GMU_GMU2HOST_INTR_INFO, val,
+>> -        val & A6XX_GMU_GMU2HOST_INTR_INFO_MSGQ, 100, 5000);
+>> +        val & A6XX_GMU_GMU2HOST_INTR_INFO_MSGQ, 100, 1000000);
+>>         if (ret) {
+>>           DRM_DEV_ERROR(gmu->dev,
+>> @@ -725,7 +725,7 @@ static int a6xx_hfi_enable_acd(struct a6xx_gmu *gmu)
+>>       }
+>>         /* Send ACD table to GMU */
+>> -    ret = a6xx_hfi_send_msg(gmu, HFI_H2F_MSG_ACD, &msg, sizeof(msg),
+>> NULL, 0);
+>> +    ret = a6xx_hfi_send_msg(gmu, HFI_H2F_MSG_ACD, acd_table,
+>> sizeof(*acd_table), NULL, 0);
+>>       if (ret) {
+>>           DRM_DEV_ERROR(gmu->dev, "Unable to ACD table (%d)\n", ret);
+>>           return ret;
+>>
+> 
+> Ok it's here, this should be on previous patch!
 
-Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
----
- drivers/media/platform/qcom/iris/iris_hfi_queue.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+Aah! It got messed up when I squashed fixup commits.
 
-diff --git a/drivers/media/platform/qcom/iris/iris_hfi_queue.c b/drivers/media/platform/qcom/iris/iris_hfi_queue.c
-index 9195715c5d5a..d1113708644b 100644
---- a/drivers/media/platform/qcom/iris/iris_hfi_queue.c
-+++ b/drivers/media/platform/qcom/iris/iris_hfi_queue.c
-@@ -292,6 +292,7 @@ int iris_hfi_queues_init(struct iris_core *core)
- 
- void iris_hfi_queues_deinit(struct iris_core *core)
- {
-+	u32 queue_size;
- 	if (!core->iface_q_table_vaddr)
- 		return;
- 
-@@ -305,9 +306,10 @@ void iris_hfi_queues_deinit(struct iris_core *core)
- 	core->sfr_vaddr = NULL;
- 	core->sfr_daddr = 0;
- 
--	dma_free_attrs(core->dev, sizeof(struct iris_hfi_queue_table_header),
--		       core->iface_q_table_vaddr, core->iface_q_table_daddr,
--		       DMA_ATTR_WRITE_COMBINE);
-+	queue_size = ALIGN(sizeof(struct iris_hfi_queue_table_header) +
-+		(IFACEQ_QUEUE_SIZE * IFACEQ_NUMQ), SZ_4K);
-+	dma_free_attrs(core->dev, queue_size, core->iface_q_table_vaddr,
-+		       core->iface_q_table_daddr, DMA_ATTR_WRITE_COMBINE);
- 
- 	core->iface_q_table_vaddr = NULL;
- 	core->iface_q_table_daddr = 0;
+-Akhil.
 
--- 
-2.34.1
+> 
+> Neil
 
 
