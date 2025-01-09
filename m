@@ -1,63 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-44489-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-44490-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 46F38A06A43
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jan 2025 02:29:31 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4097AA06A49
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jan 2025 02:29:57 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 95A6518898BC
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jan 2025 01:29:25 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D49D03A6FDF
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jan 2025 01:29:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CBE631AAC9;
-	Thu,  9 Jan 2025 01:28:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5B4DA747F;
+	Thu,  9 Jan 2025 01:29:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="fQ/8qyTw"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="M4Fe6lJD"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 440D417C61;
-	Thu,  9 Jan 2025 01:28:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4BC279F5;
+	Thu,  9 Jan 2025 01:29:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736386112; cv=none; b=OLPXSp0u/yp6oZyB8U858b5SyQye0D+aJB1EU6EYdcf/Fqt+RVplxVUcf5PTTaw4bZJ98Iul3GL8XQQ4WgMuS1dGTeHsRQ7EVhzZWP4UNVlgl1btNco2VmK7fAULAcmkH8VXW7TpRgkmt4fy07zOtqSA6nydYrNHd/F7LlnxbIM=
+	t=1736386175; cv=none; b=hc45ZZTj0doTgaJaUGYhFK+ApQWy5l7bYbTRzDtzpj32ZoR/EmRGV5tSrose8N7cnVADOM8QLs1kJryagWrXbtKk3PzQxL5WJYALT36rzoAnaUSZi4H6aLPsUX7kwlD5hA9aCDrVFYq+WkSQC8EhZ/ReLOsEDNi7EoT/Rixt818=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736386112; c=relaxed/simple;
-	bh=IRzjYXIiDE5bRIi18r5svFFJ8DPFiDvd2Ji861G4gOk=;
+	s=arc-20240116; t=1736386175; c=relaxed/simple;
+	bh=BLi7qrl59SMfU7L5FTyymoZUeP/TcONsV4T6JppBAYQ=;
 	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=tr1IqaInl/ltig35ml2HozP3rGmIdNvbvieFnx/QfhvN6uH2je4wewOojap6DM7mmc0M3+q56KgZYxmf2EOj+axDG9D/YTit8z8lFzs601nc6i7LUmug9vUHMTyldF2tHu14G6fg2OvtXowhp43myr41RCobXaNHHc7T4bE7mNM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=fQ/8qyTw; arc=none smtp.client-ip=205.220.168.131
+	 In-Reply-To:Content-Type; b=UttSyyYRZnt6MBVbtIf/1AQew4OE+esvOKwTuqZO0tCHA1uqzgQVxJkszBGOBLHqeaIXxaVbt9QxGz35A/Se+lYbTGOc5vGGXBcyUmQTCCkDFC+Umd/pBrHXOczlNz4alTdg3O6oud5nQVVmv51JTUvitTjPJ7k8zaRo9zksZX0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=M4Fe6lJD; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 508GrqjC021280;
-	Thu, 9 Jan 2025 01:27:01 GMT
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 508HMtXc015511;
+	Thu, 9 Jan 2025 01:29:28 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	iFlXTm7kHgZkTUyIpF8VoykTgwzjL1Xjg3GnWr7mbR8=; b=fQ/8qyTw0FnC3iuw
-	6f0rMK/20lyMScbcs/5TYPjX8u68QLw/uLJ8nNFJR5ur2b6+B7GCoVo63fRdE56R
-	L/FAu6mkjum8WdfBWOXdbTU2+EdjcmSbRSJFO34gLgatF3Nw58ROBNDn3UESOfV/
-	Wsrybs1hsns4bHRoEjoCmOofxgAygzd3PgFBxuzHFDwCnLK1xyhiTvJs8EjLioKr
-	9mbkFCAG5gKRjQJQzQppAC50D2xdFJlWtrHGmgiD+TR4KQoncoRun38wSdfXO1j0
-	Vn2mm7d3f7reONypkYNGjLTLx8FTMnxW2bcP+tTDPqe2nzP3y1BEKKQCpDRXMr7x
-	KlUdcQ==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 441w9m12bx-1
+	0mQq7rTWgdcVVRdlVYIwdtr3gJb6UdcYIoBL+JdYm/g=; b=M4Fe6lJDEFXjiVyP
+	PkSN/BQGGNzfPaqLq199xuRLz2hsbBGY4OSIUKK6B3f1PbyewJy9p6YZ0YWx3bQj
+	lRrAr035n6gmgtxX8kU79G8fCHHEQbImGjh0UL2WD8iIKRi+SDHrMf+Ua4JLrRCb
+	iNLdvnd+i3a+FmbCpyDMHhNqdFeEV9PHDnb1m/3od1xEiElRfKNf/ptu1zuA17/i
+	2rC+sJeGm7KVUICIfqZm3av9ew5YACZolXzLeIshxABnHzNCMcNzEafrFdlSXdmJ
+	/8Ia2wzWBfP2VlxaDpkFifTXjCrWtiYmQfDBWvkMHR88KfcWkNxvSTb0KL9NYqCI
+	lyfrmw==
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 441wq50yny-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 09 Jan 2025 01:27:01 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 5091R06I011603
+	Thu, 09 Jan 2025 01:29:27 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 5091TQW1012349
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 9 Jan 2025 01:27:00 GMT
-Received: from [10.71.108.79] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+	Thu, 9 Jan 2025 01:29:26 GMT
+Received: from [10.134.70.212] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 8 Jan 2025
- 17:27:00 -0800
-Message-ID: <bd046827-8323-4518-bb5d-d0e943428ee7@quicinc.com>
-Date: Wed, 8 Jan 2025 17:26:59 -0800
+ 17:29:25 -0800
+Message-ID: <da270bd6-3f7a-4100-8352-acbf14b62db5@quicinc.com>
+Date: Wed, 8 Jan 2025 17:29:24 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,65 +65,98 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/6] drm/msm/dpu: move needs_cdm setting to
- dpu_encoder_get_topology()
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Maarten Lankhorst
-	<maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul
-	<sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Chandan
- Uddaraju <chandanu@codeaurora.org>,
-        Jeykumar Sankaran
-	<jsanka@codeaurora.org>,
-        Jordan Crouse <jordan@cosmicpenguin.net>,
-        Sravanthi
- Kollukuduru <skolluku@codeaurora.org>
-CC: <dri-devel@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
-        Archit
- Taneja <architt@codeaurora.org>,
-        Rajesh Yadav <ryadav@codeaurora.org>, <linux-arm-msm@vger.kernel.org>,
-        <freedreno@lists.freedesktop.org>,
-        Simona
- Vetter <simona.vetter@ffwll.ch>
-References: <20241222-drm-dirty-modeset-v1-0-0e76a53eceb9@linaro.org>
- <20241222-drm-dirty-modeset-v1-4-0e76a53eceb9@linaro.org>
+Subject: Re: [PATCH v3 05/15] drm/msm/dpu: fix mixer number counter on
+ allocation
 Content-Language: en-US
-From: Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <20241222-drm-dirty-modeset-v1-4-0e76a53eceb9@linaro.org>
+To: Jun Nie <jun.nie@linaro.org>, Rob Clark <robdclark@gmail.com>,
+        "Abhinav
+ Kumar" <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov
+	<dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten
+	<marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, "Simona
+ Vetter" <simona@ffwll.ch>
+CC: <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>
+References: <20241219-sm8650-v6-13-hmd-deckard-mdss-quad-upstream-32-v3-0-92c7c0a228e3@linaro.org>
+ <20241219-sm8650-v6-13-hmd-deckard-mdss-quad-upstream-32-v3-5-92c7c0a228e3@linaro.org>
+From: Jessica Zhang <quic_jesszhan@quicinc.com>
+In-Reply-To: <20241219-sm8650-v6-13-hmd-deckard-mdss-quad-upstream-32-v3-5-92c7c0a228e3@linaro.org>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 8GTLgLUzVWHhX6TGYmw_oWYQPqFlHBKS
-X-Proofpoint-ORIG-GUID: 8GTLgLUzVWHhX6TGYmw_oWYQPqFlHBKS
+X-Proofpoint-GUID: ZobGOj06gTjbqaZVquUVblrZ4EmkK_fu
+X-Proofpoint-ORIG-GUID: ZobGOj06gTjbqaZVquUVblrZ4EmkK_fu
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0
- priorityscore=1501 malwarescore=0 impostorscore=0 mlxscore=0
- lowpriorityscore=0 spamscore=0 bulkscore=0 clxscore=1015 phishscore=0
- mlxlogscore=999 suspectscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2411120000 definitions=main-2501090009
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 priorityscore=1501
+ suspectscore=0 lowpriorityscore=0 impostorscore=0 bulkscore=0 spamscore=0
+ clxscore=1015 malwarescore=0 mlxlogscore=999 adultscore=0 phishscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2411120000
+ definitions=main-2501090009
 
 
 
-On 12/21/2024 9:00 PM, Dmitry Baryshkov wrote:
-> As a preparation for calling dpu_encoder_get_topology() from different
-> places, move the code setting topology->needs_cdm to that function
-> (instead of patching topology separately).
+On 12/18/2024 11:49 PM, Jun Nie wrote:
+> Add the case to reserve multiple pairs mixers for high resolution.
+> Current code only supports one pair of mixer usage case. To support
+> quad-pipe usage case, two pairs of mixers are needed.
 > 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Current code resets number of mixer on failure of pair's peer test and
+> retry on another pair. If two pairs are needed, the failure on the test
+> of 2nd pair results clearing to the 1st pair. This patch only clear the
+> bit for the 2nd pair allocation before retry on another pair.
+
+Hi Jun,
+
+I think the commit message wording is a bit unclear. Maybe something 
+like "Reset the current lm_count to an even number instead of completely 
+clearing it. This prevents all pairs from being cleared in cases where 
+multiple LM pairs are needed"
+
+> 
+> Signed-off-by: Jun Nie <jun.nie@linaro.org>
 > ---
->   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 41 ++++++++++++++++-------------
->   1 file changed, 22 insertions(+), 19 deletions(-)
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c | 6 +++++-
+>   1 file changed, 5 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
+> index cde3c5616f9bc..a8b01b78c02c7 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
+> @@ -316,7 +316,11 @@ static int _dpu_rm_reserve_lms(struct dpu_rm *rm,
+>   		if (!rm->mixer_blks[i])
+>   			continue;
+>   
+> -		lm_count = 0;
+> +		/*
+> +		 * Clear the last bit to drop the previous primary mixer if
+> +		 * fail to find its peer.
+
+Same here can we reword it to something like "Reset lm_count to an even 
+index. This will drop the previous primary mixer if ..."
+
+> +		 */
+> +		lm_count &= 0xfe;
+
+Nit: Can we directly clear the first bit instead of doing an 8-bit bitmask?
+
+Thanks,
+
+Jessica Zhang
+
+>   		lm_idx[lm_count] = i;
+>   
+>   		if (!_dpu_rm_check_lm_and_get_connected_blks(rm, global_state,
+> 
+> -- 
+> 2.34.1
 > 
 
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 
