@@ -1,63 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-44512-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-44513-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0C1B0A06D8A
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jan 2025 06:24:18 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id F163EA06D8F
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jan 2025 06:27:28 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id EC3B516199A
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jan 2025 05:24:15 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C5F4D166709
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jan 2025 05:27:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id ED5C71FF617;
-	Thu,  9 Jan 2025 05:24:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D77A11FF617;
+	Thu,  9 Jan 2025 05:27:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ZKVXdb4H"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="gznYPpP+"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3551B213E85;
-	Thu,  9 Jan 2025 05:24:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 720FD14EC77;
+	Thu,  9 Jan 2025 05:27:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736400254; cv=none; b=BUZpFjzYc5Lz7BiJs88jp4u3QYGAvETJxco0fIVZ9b1Ku6K3bN2NJPg5heazqraw9OPdsYbZhNAslYP9xH11TCoiz140vMYpudgy80f20AvrCBVZ99Er6grCPN5TKVSxgIeov1Xsymcn6RjN5lzLwNE6tCu4fjzcbVs1FwG4/iI=
+	t=1736400444; cv=none; b=SCA6qOZLdnEh5mZibqYgRblAkR775zXXm6PJjALFl2BXH/tkvVGRH57NC7ODanp8UEQEbf/BE36mMwSl9jMWJm27vZwZ87dTNBS4R0++OOZkFz8OwSKsRa2IuXS4pal1JFrkAD3U5YCLt+nSdT2urb35Nht2PDO4SC2AIXg1u3Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736400254; c=relaxed/simple;
-	bh=TwEi4v0PdgRSLSFcFXIf9E5Tn9zehiiaQcSaocguRIA=;
+	s=arc-20240116; t=1736400444; c=relaxed/simple;
+	bh=kLlzJQorMuptyWSEkUU3ETjnyTFggx04tqkPPHKONoE=;
 	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=ugsvtur77lPPlQq/jre0CRoOhaDAr6PSs/+N3hen80lXwlnUy1qrsu9moPagUuIW/MEq525iMIkQDO9X7kn7MePkcJNI54b73h3uACrvX56/WZ6rSD1dpop9vK6ZioZNkl0E/M9BdQrVoFnWUsE0IUYcKffYy9TRhmedIO1t9Sw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ZKVXdb4H; arc=none smtp.client-ip=205.220.168.131
+	 In-Reply-To:Content-Type; b=n9kKTlR8r0VuK5t0DBVgJWQEOU7hIPCfBja91Xq+S8BaOs6Zq5iNjnqgjnkKdWcYD/cNsVz+0hLsArjnzcUjJfzZyT48pX+9+CDLEn7D2RC1fKXdVfwlDA7zCukFOUi+iwwuaKL3VvW+03k/IeeobTBa0rw49Mxp9vSaCkcgKWQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=gznYPpP+; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5094CUu2019308;
-	Thu, 9 Jan 2025 05:22:59 GMT
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5094F1QD009624;
+	Thu, 9 Jan 2025 05:26:13 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	GSTP3W8j6D84vx/G8rl6YFv2M+h0dh//C4CY+PhpalA=; b=ZKVXdb4HFNSbubXl
-	hfKgE4ySa73A5RRRY9oNnQZCXPDHk1FaPvZ11CLZXoVxNcvKYzkzBjS1fUn1w1qN
-	IfwPJ9l9OXWjp2jACTsc9WhE7vHrlevS5CiU8bGK4uXbcm4X6mnr3/GUdVCihtRo
-	7f3M6oFoKa5Bh4GvfBJdTSi9STeS3gVXc9vTV+453RL4os5i7e1/z9FrDDMPFv8/
-	2urn2rh6QsCx3Kiw+gpcqkXTvfoDiSPDS9S835ksGbn2CQ1MCN9CO6igX12JBVXT
-	xWsAFsB+BQ7JKPMBH6EhCIXx9wtV2io+dsSedu45NLze2vVNdE4UVl89YHAH43Y+
-	xkgShw==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44277e047t-1
+	WpIhsdFB6/y2K2RGvdx8WKOgJmhGxtTk6i+OWYkJOH4=; b=gznYPpP+pTZOjl5v
+	vJ6+4PeVRAS19DzPKMwMfQYmFTrAwRTkyQlxX6KIruetDBzRmf1UTl81lkwA0+0V
+	OJtd1IqJ3mxaKTHDauBhhYsGXdIUHKDaE4Iu+uVCQlhJSoLPKEdfTP0qNuwDgRDu
+	gf3eOPFwIABK6YxhoRIM6fvmMtRf+1fQ7R4zsZXUV1tCmfExvczCYVh2v4EWH+u+
+	asMtZBPOWtug1M0dCRTHVZOXjbHoog3uQMPqUPQT7PO0WVsg/PDd24LnnRrSMbgF
+	/gSJlRKMtckFfbFNvGxocOJNLK0MZSPnYFuW1Yx0aFEYUWfjxW0eYqGmnTLk1DZf
+	Amo/Gw==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44278t840x-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 09 Jan 2025 05:22:58 +0000 (GMT)
+	Thu, 09 Jan 2025 05:26:13 +0000 (GMT)
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 5095MvP3030064
+	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 5095QCKk011301
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 9 Jan 2025 05:22:57 GMT
+	Thu, 9 Jan 2025 05:26:12 GMT
 Received: from [10.110.60.159] (10.80.80.8) by nalasex01a.na.qualcomm.com
  (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 8 Jan 2025
- 21:22:57 -0800
-Message-ID: <a0c48f70-2a0f-45b0-b179-91dd544b5b59@quicinc.com>
-Date: Wed, 8 Jan 2025 21:22:56 -0800
+ 21:26:11 -0800
+Message-ID: <08336168-3989-4aa8-aac7-a573c9302809@quicinc.com>
+Date: Wed, 8 Jan 2025 21:26:11 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,25 +65,25 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6/6] drm/msm/dpu: don't set crtc_state->mode_changed from
- atomic_check()
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard
-	<mripard@kernel.org>,
+Subject: Re: [PATCH 1/6] drm/atomic-helper: document drm_atomic_helper_check()
+ restrictions
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Maarten Lankhorst
+	<maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
         Thomas Zimmermann <tzimmermann@suse.de>,
-        David Airlie
-	<airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        Rob Clark
-	<robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Marijn Suijten
-	<marijn.suijten@somainline.org>,
-        Chandan Uddaraju <chandanu@codeaurora.org>,
-        Jeykumar Sankaran <jsanka@codeaurora.org>,
-        Jordan Crouse
-	<jordan@cosmicpenguin.net>,
-        Sravanthi Kollukuduru <skolluku@codeaurora.org>,
-        <dri-devel@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul
+	<sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Chandan
+ Uddaraju <chandanu@codeaurora.org>,
+        Jeykumar Sankaran
+	<jsanka@codeaurora.org>,
+        Jordan Crouse <jordan@cosmicpenguin.net>,
+        Sravanthi
+ Kollukuduru <skolluku@codeaurora.org>
+CC: <dri-devel@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
         Archit
  Taneja <architt@codeaurora.org>,
         Rajesh Yadav <ryadav@codeaurora.org>, <linux-arm-msm@vger.kernel.org>,
@@ -91,145 +91,46 @@ CC: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
         Simona
  Vetter <simona.vetter@ffwll.ch>
 References: <20241222-drm-dirty-modeset-v1-0-0e76a53eceb9@linaro.org>
- <20241222-drm-dirty-modeset-v1-6-0e76a53eceb9@linaro.org>
- <91dff265-5e13-45db-b46d-0eef4a95f5f6@quicinc.com>
- <a6fa4aa2-d90b-4b5e-92fd-db3912ed248a@quicinc.com>
- <2i5vun3pabozzqxjnciylahfx7jljtdmowjo625ida44e37djm@2axmuodlaqtk>
+ <20241222-drm-dirty-modeset-v1-1-0e76a53eceb9@linaro.org>
 Content-Language: en-US
 From: Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <2i5vun3pabozzqxjnciylahfx7jljtdmowjo625ida44e37djm@2axmuodlaqtk>
+In-Reply-To: <20241222-drm-dirty-modeset-v1-1-0e76a53eceb9@linaro.org>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: LgULmlQAGZUMQrmoJFO6n64tX2T963nk
-X-Proofpoint-GUID: LgULmlQAGZUMQrmoJFO6n64tX2T963nk
+X-Proofpoint-GUID: zXLXDKTfDb3vlXNcKAHuFHDyduKdn0d-
+X-Proofpoint-ORIG-GUID: zXLXDKTfDb3vlXNcKAHuFHDyduKdn0d-
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 suspectscore=0
- malwarescore=0 bulkscore=0 mlxlogscore=999 impostorscore=0 phishscore=0
- adultscore=0 spamscore=0 priorityscore=1501 lowpriorityscore=0 mlxscore=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 priorityscore=1501
+ bulkscore=0 lowpriorityscore=0 malwarescore=0 impostorscore=0 phishscore=0
+ adultscore=0 mlxlogscore=959 suspectscore=0 clxscore=1015 spamscore=0
  classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2411120000
  definitions=main-2501090042
 
 
 
-On 1/8/2025 8:26 PM, Dmitry Baryshkov wrote:
-> On Wed, Jan 08, 2025 at 08:11:27PM -0800, Abhinav Kumar wrote:
->>
->>
->> On 1/8/2025 6:27 PM, Abhinav Kumar wrote:
->>>
->>>
->>> On 12/21/2024 9:00 PM, Dmitry Baryshkov wrote:
->>>> The MSM driver uses drm_atomic_helper_check() which mandates that none
->>>> of the atomic_check() callbacks toggles crtc_state->mode_changed.
->>>> Perform corresponding check before calling the drm_atomic_helper_check()
->>>> function.
->>>>
->>>> Fixes: 8b45a26f2ba9 ("drm/msm/dpu: reserve cdm blocks for writeback
->>>> in case of YUV output")
->>>> Reported-by: Simona Vetter <simona.vetter@ffwll.ch>
->>>> Closes:
->>>> https://lore.kernel.org/dri-devel/ZtW_S0j5AEr4g0QW@phenom.ffwll.local/
->>>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->>>> ---
->>>>    drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 32
->>>> +++++++++++++++++++++++++----
->>>>    drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h |  4 ++++
->>>>    drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c     | 26
->>>> +++++++++++++++++++++++
->>>>    drivers/gpu/drm/msm/msm_atomic.c            | 13 +++++++++++-
->>>>    drivers/gpu/drm/msm/msm_kms.h               |  7 +++++++
->>>>    5 files changed, 77 insertions(+), 5 deletions(-)
->>>>
->>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
->>>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
->>>> index 209e6fb605b2d8724935b62001032e7d39540366..b7c3aa8d0e2ca58091deacdeaccb0819d2bf045c
->>>> 100644
->>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
->>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
->>>> @@ -753,6 +753,34 @@ static void
->>>> dpu_encoder_assign_crtc_resources(struct dpu_kms *dpu_kms,
->>>>        cstate->num_mixers = num_lm;
->>>>    }
->>>> +/**
->>>> + * dpu_encoder_virt_check_mode_changed: check if full modeset is
->>>> required
->>>> + * @drm_enc:    Pointer to drm encoder structure
->>>> + * @crtc_state:    Corresponding CRTC state to be checked
->>>> + * @conn_state: Corresponding Connector's state to be checked
->>>> + *
->>>> + * Check if the changes in the object properties demand full mode set.
->>>> + */
->>>> +int dpu_encoder_virt_check_mode_changed(struct drm_encoder *drm_enc,
->>>> +                    struct drm_crtc_state *crtc_state,
->>>> +                    struct drm_connector_state *conn_state)
->>>> +{
->>>> +    struct dpu_encoder_virt *dpu_enc = to_dpu_encoder_virt(drm_enc);
->>>> +    struct msm_display_topology topology;
->>>> +
->>>> +    DPU_DEBUG_ENC(dpu_enc, "\n");
->>>> +
->>>> +    /* Using mode instead of adjusted_mode as it wasn't computed yet */
->>>> +    topology = dpu_encoder_get_topology(dpu_enc, &crtc_state->mode,
->>>> crtc_state, conn_state);
->>>> +
->>>> +    if (topology.needs_cdm && !dpu_enc->cur_master->hw_cdm)
->>>> +        crtc_state->mode_changed = true;
->>>> +    else if (!topology.needs_cdm && dpu_enc->cur_master->hw_cdm)
->>>> +        crtc_state->mode_changed = true;
->>>> +
->>>> +    return 0;
->>>> +}
->>>
->>> How will this work exactly?
->>>
->>> needs_cdm is set in the encoder's atomic_check which is called inside
->>> drm_atomic_helper_check(). But this function is called before that.
->>>
->>> So needs_cdm will never hit.
->>>
->>
->> Sorry, my bad. after change (4) of this series needs_cdm is also populated
->> within  dpu_encoder_get_topology().
->>
->> To follow up on https://patchwork.freedesktop.org/patch/629231/?series=137975&rev=4#comment_1148651
->>
->> So is the plan for CWB to add a dpu_crtc_check_mode_changed() like
->> dpu_encoder's and call it?
+On 12/21/2024 9:00 PM, Dmitry Baryshkov wrote:
+> The drm_atomic_helper_check() calls drm_atomic_helper_check_modeset()
+> insternally. Document that corresponding restrictions also apply to the
+
+insternally ---> internally
+
+
+> drivers that call the former function (as it's easy to miss the
+> documentation for the latter function).
 > 
-> I think dpu_encoder_virt_check_mode_changed() would transform into the
-> dpu_crtc_check_mode_changed() together with one of the patches that
-> moves resource allocation and refactors topology handling.
->
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>   drivers/gpu/drm/drm_atomic_helper.c | 9 +++++++++
+>   1 file changed, 9 insertions(+)
+> 
 
-hmm we need the cur_master for cdm. That will not be accessible in 
-dpu_crtc.c so we will end up with a separate 
-dpu_crtc_check_mode_changed() for CWB from what I see. We will discuss 
-it further when we re-post CWB.
-
-But overall, I think we can make CWB work on top of this.
-
-Hence,
+With that typo fixed,
 
 Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-
-I do not know how important patch 2 is for this series and I would 
-prefer not delaying CWB even more than what it already has been.
-
-If we cannot reach a conclusion on patch 2, can you break that one out 
-of this series so that the rest of it is ready to land?
-
->>
->>
->>>
->>>> +
->>>>    static int dpu_encoder_virt_atomic_check(
->>>>            struct drm_encoder *drm_enc,
->>>>            struct drm_crtc_state *crtc_state,
-> 
 
