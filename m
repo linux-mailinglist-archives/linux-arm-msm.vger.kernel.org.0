@@ -1,321 +1,189 @@
-Return-Path: <linux-arm-msm+bounces-44647-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-44648-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 38218A07D99
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jan 2025 17:33:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id D541CA07DAE
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jan 2025 17:35:28 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2B17B188CA5E
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jan 2025 16:33:00 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id C0BB7188742D
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jan 2025 16:35:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4BA19221DAE;
-	Thu,  9 Jan 2025 16:32:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D9938222571;
+	Thu,  9 Jan 2025 16:35:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="UiVsYazX"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="YFSXa7bN"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61A3621B192
-	for <linux-arm-msm@vger.kernel.org>; Thu,  9 Jan 2025 16:32:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0432721B192
+	for <linux-arm-msm@vger.kernel.org>; Thu,  9 Jan 2025 16:35:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736440346; cv=none; b=ZymWQN8iyWUhDhAe7HhVsdM87FWVnRwTPNJWCws7hAP8yUGVOgt4+PX+HqPFvpwWRKKsIVSGP7ErbKebRSf6VKwXVXfE9i5PLBmVL5csE1k/dK4MsfP8VjRnTI3KZMXEmklpciCA02aFRe0cXZmol32HwtvLHCAVrfhNey958h8=
+	t=1736440522; cv=none; b=uTbB+ooVfg9YeM8dyb70bHBex+iTgYt2yiUlKcrTYx2hTdtsz7ACMMgHcDyY+bXIUgdAdS4mWDIDTwwGhWvp4GZexyeCuMzbcMrrd6eRol2opGr9leNRYepB2zRPykQBXt4m9gsaHjQKBj5gmOunyGk5BSmsGn6IcImxt8NrClc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736440346; c=relaxed/simple;
-	bh=jpvqrcF4hGRAxo2viLIcicgd8PEE9sV/j/+ugYMxkww=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=aYsGiSMVCV2cXlR3k2+J9O5x56vGslyIo76a+q6bRaUhnuCGdHsJN12HR4cHXArQlT33ClXU9+M+1zc1Xdc0AXjhdxZb5X00aQVmgvDVpav6sTpOhQ/AnFxuxpAeMoo+du5WB82y1JF0CDsbLUJuMl20Ex+qvifqSQk8IgCb9OQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=UiVsYazX; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 509FHvPf023737
-	for <linux-arm-msm@vger.kernel.org>; Thu, 9 Jan 2025 16:32:23 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	TZIf3KDfTUTVomLYZRx8BxgSZSw37kPH65pTsVw4Nvw=; b=UiVsYazXkmQIFXiB
-	fZsUUsyHc2C3bUWH6UG7xYtIBFj5/+594ouyTZ9AwtjHUmtpQAJ3e7wDmJMKs9+q
-	GTkN/e+YxibZndC6xwwNNA8Jq245tg/Kervm/VfuP4iTCqyk/TpZjDs39TDd4rHf
-	A6GSChgabG4tVKnM/ZSlbXlq+eFYVe/B4zClgcbVkEZekp6jxJa3bhg4qmcuciOJ
-	UDQO0uCUt8K+wRuI6n8VBZmqCbCdcRg38ArsHF6+WbJipiOY8UuU9batKsG7dl9m
-	Fnqo7HaqNgBw4hNX351DULqka4uujfgHxswH22wH4nkye+jIokRQnSX5i8lHDEhR
-	HpXk7g==
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com [209.85.160.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 442gyj05we-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 09 Jan 2025 16:32:23 +0000 (GMT)
-Received: by mail-qt1-f198.google.com with SMTP id d75a77b69052e-467a437e5feso2807881cf.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Jan 2025 08:32:23 -0800 (PST)
+	s=arc-20240116; t=1736440522; c=relaxed/simple;
+	bh=CXQv/d/ryKD1V15TOdPA3c2hC2cQSek84MTW/PXYPlU=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Gr03uVFh/rN5mIGKQvdEEU6gafScX2QZAbQJvFX8w1fXA32N2vOb3LDTI4aTYS5wYFiYlfflbpwSFIRd4CN676BKG5i6RvDuf91BKjHjYWO+Wp5GQ5y36V0TyzjP7o850ODYtCHM8MjSn/+GqElt7CY8SPaiaGWn3XgNUg2g+k0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=YFSXa7bN; arc=none smtp.client-ip=209.85.128.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-435b0df5dbdso65305e9.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Jan 2025 08:35:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1736440519; x=1737045319; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=baUKr168OOAaPISTC82PBM16R+vBD3PnUmTKM1n0mko=;
+        b=YFSXa7bNloFvqpFYe+KqsAHHd9nHG5OaYb5RkhGXTObxeFiYwAkhhNl58weotRn3G3
+         WOIN+n7BqwKMimciCra/oLvN4nLY7U8qajV71u1Q8mNTDHAHIt2Ee9/8XlvjgG8SqUaZ
+         /D2HlfnPKAX3IyDCRGP10mxZXkGx9m5vFYiTyAxBhKp4ha4k4zfbuuNQQhTnREU5095A
+         jJUQnqTxFe9vU5OtRhpC/keudpLOK1FeuG+D7LgtVMTyA5zXslby5yJCt19/kV0Yg0U1
+         ptDagc+dHGu8jfO7/m+kEbEuEymgEj67zjd+9mFh3LL/+0ThA1yR42MpYYi2/qgfy5Ry
+         yf5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736440342; x=1737045142;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=TZIf3KDfTUTVomLYZRx8BxgSZSw37kPH65pTsVw4Nvw=;
-        b=Wrven5yQYSYIhHV8imHaVuaXQDPcM3c9BpOLNwXzgJKrrtx27RHblghfqlW1grFjmi
-         moecFSO9SennGuR2007VQdbjGpBqpaJ6qyAqP9uhJxAd6RVt7y7YNI3P7hbGbYXCDHHT
-         nDPhTaZlNJn7eCaRPY6keCDC3tyJOVQi9f4+uPzHEcK/19YFOyNgP7LflVvTZZjjQKZZ
-         I1LZX2Q72bklRvh5gtcyPH/xnEWIMyRW9Aeq6DfI4ZWXd/TBW20Rrkfx8r1j9OILGi6P
-         JEoFtez02y6Ibhq5na70Q+VHJ3gHuYGRC8ksIASmKscC2+JhO1yrimcz7Q8+8sZlqgnr
-         s0lg==
-X-Forwarded-Encrypted: i=1; AJvYcCV/PWOXnfY9lyTIFU5zKP9Y0iN1Po1dE6EoApZJBU3by9cNZhyX0h/mOmJ2TK0We8Y2644yjWpTzF/FAD+l@vger.kernel.org
-X-Gm-Message-State: AOJu0Yyb6aDpn7MOF8aAPgmNWZS6IrF2L6mtp1/1c6XpAtJF4OkaURnz
-	zc+QL0Ej+uFQ9OeZuDFeZXyJoCtoPo601D7NpVNIEykBNSB2tDQNWuBzgrnm2kqL/m5CC+mMMOo
-	538Akei+r5JW7Gk4fNtEoQlfsGXEevCwk76E8EgnbLXmp4bTM7PpPNJAQDKYoHpQH
-X-Gm-Gg: ASbGncvUWZi2htL2LcbFQ69EfxxS4z92xhm7xaSa27R+b+efTeF4fcUuDzvqsjw5BU0
-	VhDxy73XI745JiyDr2hTBWppgynupovYpbsSBDwg7H1nsGYsOSYALYi6KQwBY2hf3XoAzxUWTHW
-	2aesE96zqLvFr+0mP2+uuI9zu3pEjyuGZs4PxwVgSnZjrVq9MKtR4HFHq8QK9SkxTvNtoQtvG5j
-	M4ukqwi6Hr0uqJkWKG5hMbdN/AC0BkxOUKwe3YRRiaI9CgJG7T43m0NZ6bmOQw78RLtCl16FlZz
-	jUPDytwgqwI3jryCgqNjQK0QdjP++lRasno=
-X-Received: by 2002:a05:622a:1a9a:b0:467:5fd2:9963 with SMTP id d75a77b69052e-46c71003a8bmr39248661cf.6.1736440341965;
-        Thu, 09 Jan 2025 08:32:21 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IESaLiH5Dn+ta1J2zWfqZW6hkxUZtVhHNn5etUsvoGD8pVb16ljFLPIw5/lLiL31svbqdd3Uw==
-X-Received: by 2002:a05:622a:1a9a:b0:467:5fd2:9963 with SMTP id d75a77b69052e-46c71003a8bmr39248401cf.6.1736440341474;
-        Thu, 09 Jan 2025 08:32:21 -0800 (PST)
-Received: from [192.168.65.90] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ab2c9563b32sm85164866b.122.2025.01.09.08.32.19
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 09 Jan 2025 08:32:20 -0800 (PST)
-Message-ID: <49739b30-bc48-4c4c-b1e1-f70fd9a65144@oss.qualcomm.com>
-Date: Thu, 9 Jan 2025 17:32:18 +0100
+        d=1e100.net; s=20230601; t=1736440519; x=1737045319;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=baUKr168OOAaPISTC82PBM16R+vBD3PnUmTKM1n0mko=;
+        b=jj8XSRCptj8q9qH5ndsrWHlyqbEhbUBaiN1zFYWZiLRX43Zv42T8NFI0K/8ffqn/cn
+         O9Fzdz/6wjYCpFahhX8MTD3gao1IYn70T1LgQmqcRPNXnMDPI83qUATAvvdbB9Rk83rr
+         ByidpPLhUQFXlVIW2QyBEM4xHv4wwV/HKboRQxFxg8MpHlkHe9q/S+E9JrLPmyr+IAOI
+         ZMz07n4QaYKX5/ZKluWUgDmUKpCrufwG8tpZ3D4TNocecdXVX0pkJRnt/f0qnwpXWh46
+         GMRZX5HHpwGhGEFuaGu8HaEnhRfNqDt5wLptdopTomVgoWJw+kRn1ZeNKnHgJ5sS5imX
+         h2YA==
+X-Forwarded-Encrypted: i=1; AJvYcCU4TDFWuxX9t+zxJCvyXf7lVKIJZ5Ur36NyLTR8v5yRktgcmBxVFOPPHxMttPxWNABEg8RXAKXCyYqb72mk@vger.kernel.org
+X-Gm-Message-State: AOJu0YxRSy3ZZQ74adLLV6U0bh1jkLkynFaVVxTn5UaRjvnBJQiH38JY
+	cur6ScoqiqsNtfeApkHSio7BCyXznp4Tl3Mz66nkHrDq+r82lvfkd9TqzOCgALpkVJ1z0IGvE1O
+	PHsLFJDdRt1dIMDIGH/tT9BJ06kVNCbbRL4xX
+X-Gm-Gg: ASbGnculzfjoJI63Tq1GKDIv/IcsWsFuCE3Q0P2zeqi9AaMTYyMzryxmyzw8AAx4JbQ
+	IxfkCuAJ4YhstcWKG2nyYLSE519eFLRAYf+pe
+X-Google-Smtp-Source: AGHT+IFv0P2PeWbqF1YSBzg+TWGRgPHYK/TQ1vBRRVO50fQW5HLnFqB94TvYMz9y+LQS6PAgTWSV97KjtJt4QPa3b+U=
+X-Received: by 2002:a05:600c:1c89:b0:436:51cf:285b with SMTP id
+ 5b1f17b1804b1-436e8e34745mr1290225e9.4.1736440519033; Thu, 09 Jan 2025
+ 08:35:19 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] arm64: dts: qcom: x1e80100-crd: Drop duplicate DMIC
- supplies
-To: Stephan Gerhold <stephan.gerhold@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Abel Vesa <abel.vesa@linaro.org>, Johan Hovold <johan@kernel.org>
-References: <20241203-x1e80100-va-mic-bias-v1-2-0dfd4d9b492c@linaro.org>
- <f65e1559-b409-4906-aabb-eb24b5b0fcf2@linaro.org>
- <Z1ATxAsXFhQraQwH@linaro.org>
- <afd010c9-8c24-482e-a479-2396f08c972b@oss.qualcomm.com>
- <Z1H1BHAeO-0832Ea@linaro.org>
- <6vfrlwir6sfommhn3met6wnjm76lnnxw4rdwzq75b7lzcy4jep@2cbcfvb3tvr2>
- <Z3-XoDgUgdS7DDvm@linaro.org>
- <0f9e456b-cd54-4496-a2d2-795aae744385@oss.qualcomm.com>
- <Z3_PPOwPNOPkZPkz@linaro.org>
- <4f0ca97e-ac6c-4b73-ab19-c91c6f3eb697@oss.qualcomm.com>
- <Z3_vMrFfdIne4yVl@linaro.org>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <Z3_vMrFfdIne4yVl@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: DO4YyAVLgkXSrUgkKLJ-UuR8quFvnwQq
-X-Proofpoint-ORIG-GUID: DO4YyAVLgkXSrUgkKLJ-UuR8quFvnwQq
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 adultscore=0
- priorityscore=1501 clxscore=1015 mlxlogscore=999 phishscore=0
- lowpriorityscore=0 malwarescore=0 bulkscore=0 suspectscore=0 spamscore=0
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2501090132
+References: <20241213164811.2006197-1-tabba@google.com>
+In-Reply-To: <20241213164811.2006197-1-tabba@google.com>
+From: Fuad Tabba <tabba@google.com>
+Date: Thu, 9 Jan 2025 16:34:42 +0000
+X-Gm-Features: AbW1kvYn98mIpWwaDWDfzqXeleucds2C1o-ePw1uKVi8SN1keW_ixb8bDBYEyig
+Message-ID: <CA+EHjTzcx=eXSERSANMByhcgRRAbUL3kPAYkeu-uUgd0nPBPPA@mail.gmail.com>
+Subject: Re: [RFC PATCH v4 00/14] KVM: Restricted mapping of guest_memfd at
+ the host and arm64 support
+To: kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org
+Cc: pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au, 
+	anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com, 
+	aou@eecs.berkeley.edu, seanjc@google.com, viro@zeniv.linux.org.uk, 
+	brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org, 
+	xiaoyao.li@intel.com, yilun.xu@intel.com, chao.p.peng@linux.intel.com, 
+	jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com, 
+	yu.c.zhang@linux.intel.com, isaku.yamahata@intel.com, mic@digikod.net, 
+	vbabka@suse.cz, vannapurve@google.com, ackerleytng@google.com, 
+	mail@maciej.szmigiero.name, david@redhat.com, michael.roth@amd.com, 
+	wei.w.wang@intel.com, liam.merwick@oracle.com, isaku.yamahata@gmail.com, 
+	kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com, steven.price@arm.com, 
+	quic_eberman@quicinc.com, quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, 
+	quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com, 
+	quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com, 
+	james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev, 
+	maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com, 
+	roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, 
+	rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com, 
+	jthoughton@google.com
+Content-Type: text/plain; charset="UTF-8"
 
-On 9.01.2025 4:45 PM, Stephan Gerhold wrote:
-> On Thu, Jan 09, 2025 at 03:00:01PM +0100, Konrad Dybcio wrote:
->> On 9.01.2025 2:29 PM, Stephan Gerhold wrote:
->>> On Thu, Jan 09, 2025 at 01:57:17PM +0100, Konrad Dybcio wrote:
->>>> On 9.01.2025 10:32 AM, Stephan Gerhold wrote:
->>>>> On Wed, Jan 08, 2025 at 05:07:47PM -0600, Bjorn Andersson wrote:
->>>>>> On Thu, Dec 05, 2024 at 07:46:28PM +0100, Stephan Gerhold wrote:
->>>>>>> On Thu, Dec 05, 2024 at 06:11:47PM +0100, Konrad Dybcio wrote:
->>>>>>>> On 4.12.2024 9:33 AM, Stephan Gerhold wrote:
->>>>>>>>> On Wed, Dec 04, 2024 at 08:20:15AM +0100, Krzysztof Kozlowski wrote:
->>>>>>>>>> On 03/12/2024 18:44, Stephan Gerhold wrote:
->>>>>>>>>>> The WCD938x codec provides two controls for each of the MIC_BIASn outputs:
->>>>>>>>>>>
->>>>>>>>>>>  - "MIC BIASn" enables an internal regulator to generate the output
->>>>>>>>>>>    with a configurable voltage (qcom,micbiasN-microvolt).
->>>>>>>>>>>
->>>>>>>>>>>  - "VA MIC BIASn" enables "pull-up mode" that bypasses the internal
->>>>>>>>>>>    regulator and directly outputs fixed 1.8V from the VDD_PX pin.
->>>>>>>>>>>    This is intended for low-power VA (voice activation) use cases.
->>>>>>>>>>>
->>>>>>>>>>> The audio-routing setup for the X1E80100 CRD currently specifies both
->>>>>>>>>>> as power supplies for the DMICs, but only one of them can be active
->>>>>>>>>>> at the same time. In practice, only the internal regulator is used
->>>>>>>>>>> with the current setup because the driver prefers it over pull-up mode.
->>>>>>>>>>>
->>>>>>>>>>> Make this more clear by dropping the redundant routes to the pull-up
->>>>>>>>>>> "VA MIC BIASn" supply. There is no functional difference except that we
->>>>>>>>>>> skip briefly switching to pull-up mode when shutting down the microphone.
->>>>>>>>>>>
->>>>>>>>>>> Fixes: 4442a67eedc1 ("arm64: dts: qcom: x1e80100-crd: add sound card")
->>>>>>>>>>
->>>>>>>>>> If there is no functional difference and this is just redundant, then
->>>>>>>>>> there is nothing to fix, so drop the tag. But the point is that users
->>>>>>>>>> might want the low-power VA. You claim they don't want... sure, I am
->>>>>>>>>> fine with that but there is nothing to fix in such case.
->>>>>>>>>>
->>>>>>>>>
->>>>>>>>> The fix here is that two mutually exclusive power supplies for the DMIC
->>>>>>>>> are specified in the device tree. You can only have one of them active
->>>>>>>>> at the same time. The Linux driver handles that gracefully, but the
->>>>>>>>> device tree is still wrong and IMO deserves a fixes tag.
->>>>>>>>>
->>>>>>>>> The functional difference is that we skip briefly switching to pull-up
->>>>>>>>> mode when shutting down the microphone. Users won't notice that, but
->>>>>>>>> it's not the intended behavior.
->>>>>>>>>
->>>>>>>>> I don't claim that users don't want to switch to the low-power pull-up
->>>>>>>>> mode (VA MIC BIASn). However, we would need a different mechanism to
->>>>>>>>> give them the option to switch at runtime. "audio-routing" just
->>>>>>>>> specifies static routes, so the current description does not allow
->>>>>>>>> switching between the two modes either.
->>>>>>>>
->>>>>>>> Is there no existing mechanism to alter this at runtime?
->>>>>>>>
->>>>>>>
->>>>>>> I don't think so... Since it's currently exposed as two separate DAPM
->>>>>>> supplies (instead of a mux or similar) you can only choose between one
->>>>>>> of them in the static routes specified by "audio-routing" in the DT.
->>>>>>>
->>>>>>> I tried looking at how downstream handles this, but this left me even
->>>>>>> more confused than I was before. :-) On CRD we currently have the
->>>>>>> following routes in DT:
->>>>>>>
->>>>>>> 	"VA DMIC0", "MIC BIAS3",
->>>>>>> 	"VA DMIC1", "MIC BIAS3",
->>>>>>> 	"VA DMIC2", "MIC BIAS1",
->>>>>>> 	"VA DMIC3", "MIC BIAS1",
->>>>>>> 	"VA DMIC0", "VA MIC BIAS3",
->>>>>>> 	"VA DMIC1", "VA MIC BIAS3",
->>>>>>> 	"VA DMIC2", "VA MIC BIAS1",
->>>>>>> 	"VA DMIC3", "VA MIC BIAS1",
->>>>>>>
->>>>>>> MIC BIAS and VA MIC BIAS are mutually exclusive, so this is not correct.
->>>>>>> But if you look at e.g. SM8550 downstream they have:
->>>>>>>
->>>>>>> 	"TX DMIC0", "MIC BIAS3",
->>>>>>> 	"TX DMIC1", "MIC BIAS3",
->>>>>>> 	"TX DMIC2", "MIC BIAS1",
->>>>>>> 	"TX DMIC3", "MIC BIAS1",
->>>>>>> 	"VA DMIC0", "VA MIC BIAS3",
->>>>>>> 	"VA DMIC1", "VA MIC BIAS3",
->>>>>>> 	"VA DMIC2", "VA MIC BIAS1",
->>>>>>> 	"VA DMIC3", "VA MIC BIAS1";
->>>>>>>
->>>>>>> Note the TX DMIC vs VA DMIC. So they specify one of the supplies for the
->>>>>>> TX macro DMIC, and the low-power one for the VA macro DMIC. That would
->>>>>>> be fine.
->>>>>>>
->>>>>>> Now the question is: If we can use the DMIC through both the TX and the
->>>>>>> VA macro, and we're not doing voice activation, why are we using the VA
->>>>>>> macro in the first place?
->>>>>>>
->>>>>>> @Srini: Do you remember why?
->>>>>>>
->>>>>>
->>>>>> What's the verdict regarding this?
->>>>>>
->>>>>
->>>>> We started discussing this, but did not come to a conclusion yet if we
->>>>> should be recording from the DMICs using the TX macro instead of the VA
->>>>> macro.
->>>>>
->>>>> The patch I submitted is still valid though, independent of that
->>>>> question. Since we're not doing voice activation we want to have the
->>>>> "full quality" MIC BIAS supply, not the low-power one.
->>>>
->>>> Can/should we discuss a new sound API to make this toggleable?
->>>>
->>>> Do these microphones physically connect to muxable inputs, or does this
->>>> depend on board wiring?
->>>>
->>>
->>> The WCD938x codec has 4 MIC_BIAS output pins that are typically used as
->>> power supply for microphones. Inside the codec there is an option to
->>> drive these output pins in one of two modes:
->>>
->>>  1. Internal regulator to generate the output with a configurable
->>>     voltage (qcom,micbiasN-microvolt). Exposed as "MIC BIASn" supply in
->>>     the Linux driver.
->>>
->>>  2. "Pull-up mode" that bypasses the internal regulator and directly
->>>     outputs fixed 1.8V from the VDD_PX pin. Exposed as "VA MIC BIASn"
->>>     supply in the Linux driver.
->>>
->>> The board-specific part here is only which microphone is wired to which
->>> MIC BIAS pin (e.g. DMIC0 -> MIC BIAS3, DMIC2 -> MIC BIAS1 etc). 
->>>
->>> Both options will work if the microphone can operate at 1.8V. In that
->>> case, I think generally we want (1) for normal audio use cases and (2)
->>> for low-power use cases (like "voice activation").
->>>
->>> Apparently the same applies for the "macro" to use. TX macro should be
->>> used for normal audio, and VA macro only for low-power use cases. With
->>> that there is a clear mapping:
->>>
->>>  - TX macro DMICs -> full power "MIC BIAS" supply
->>>  - VA macro DMICs -> low-power "VA MIC BIAS" supply
->>>
->>> I don't see why someone would want to change this mapping, so I don't
->>> think it's worth making this user configurable.
->>>
->>> Given that we're currently using the VA macro for normal audio, we
->>> should describe VA macro DMICs -> full power "MIC BIAS" supply for now
->>> and ideally migrate to using the TX macro later.
->>
->> So, in short, if I understood you correctly, audio comes in through a
->> hardwired connection to a given macro, but the bias pins can be configured
->> to output the bias voltage through any of the macros.
->>
-> 
-> That's not entirely right. In our case here, the digital data from the
-> DMIC goes directly to both the TX and VA macro. The power supply comes
-> directly from the WCD983x codec. So the macro isn't involved in the bias
-> voltage at all. Perhaps a picture will help:
-> 
->                              +------+                         
->                         Data |      |  Power                  
->                           +--+ DMIC |<----------------+       
->                           |  |      |                 |       
->                           |  +------+                 |       
->     +---------------------+---+    +------------------+------+
->     | SoC  +----------+   |   |    | WCD983x       MIC_BIAS1 |
->     |      | TX Macro |<--+   |    |                  ^      |
->     |      +----------+   |   |    | +-----------+    |      |
->     |      +----------+   |   |    | | Regulator +----X--+   |
->     |      | VA Macro |<--+   |    | +-----------+       |   |
->     |      +----------+       |    |       ^          VDD_PX |
->     +-------------------------+    +-------+-----------------+
->                                            |             ^    
->                                            |             |    
-> 
-> X inside the WCD983x is where we can make the choice, if we want to use
-> the internal regulator or output VDD_PX on MIC_BIAS1 directly. 
-> 
-> We can also choose to consume the microphone data either via the TX
-> macro or the VA macro. IIRC there is no mux for this, the data just ends
-> up in both at the same time.
-> 
-> Does that help explain it?
+Hi,
 
-I think that's a "sadly, yes" ;)
+As mentioned in the guest_memfd sync (2025-01-09), below is the state
+diagram that uses the new states in this patch series, and how they
+would interact with sharing/unsharing in pKVM:
 
-Because that means we can switch the mics to e.g. the VA macro for
-low power always-listening usecases at runtime (e.g. screen off), but we
-may want to push it back to the RX macro for $reasons. And I'm assuming
-there's probably $reasons2 to use the matching bias output from WCD..
+https://lpc.events/event/18/contributions/1758/attachments/1457/3699/Guestmemfd%20folio%20state%20page_type.pdf
 
-Unless both $reasons are bogus, in which case we should probably stick
-to keeping the bias and consuming macro paired to make the DT look sane
+This patch series doesn't necessarily impose all these transitions,
+many of them would be a matter of policy. This just happens to be the
+current way I've done it with pKVM/arm64.
 
-Konrad
+Cheers,
+/fuad
+
+On Fri, 13 Dec 2024 at 16:48, Fuad Tabba <tabba@google.com> wrote:
+>
+> This series adds restricted mmap() support to guest_memfd, as
+> well as support for guest_memfd on arm64. It is based on Linux
+> 6.13-rc2.  Please refer to v3 for the context [1].
+>
+> Main changes since v3:
+> - Added a new folio type for guestmem, used to register a
+>   callback when a folio's reference count reaches 0 (Matthew
+>   Wilcox, DavidH) [2]
+> - Introduce new mappability states for folios, where a folio can
+> be mappable by the host and the guest, only the guest, or by no
+> one (transient state)
+> - Rebased on Linux 6.13-rc2
+> - Refactoring and tidying up
+>
+> Cheers,
+> /fuad
+>
+> [1] https://lore.kernel.org/all/20241010085930.1546800-1-tabba@google.com/
+> [2] https://lore.kernel.org/all/20241108162040.159038-1-tabba@google.com/
+>
+> Ackerley Tng (2):
+>   KVM: guest_memfd: Make guest mem use guest mem inodes instead of
+>     anonymous inodes
+>   KVM: guest_memfd: Track mappability within a struct kvm_gmem_private
+>
+> Fuad Tabba (12):
+>   mm: Consolidate freeing of typed folios on final folio_put()
+>   KVM: guest_memfd: Introduce kvm_gmem_get_pfn_locked(), which retains
+>     the folio lock
+>   KVM: guest_memfd: Folio mappability states and functions that manage
+>     their transition
+>   KVM: guest_memfd: Handle final folio_put() of guestmem pages
+>   KVM: guest_memfd: Allow host to mmap guest_memfd() pages when shared
+>   KVM: guest_memfd: Add guest_memfd support to
+>     kvm_(read|/write)_guest_page()
+>   KVM: guest_memfd: Add KVM capability to check if guest_memfd is host
+>     mappable
+>   KVM: guest_memfd: Add a guest_memfd() flag to initialize it as
+>     mappable
+>   KVM: guest_memfd: selftests: guest_memfd mmap() test when mapping is
+>     allowed
+>   KVM: arm64: Skip VMA checks for slots without userspace address
+>   KVM: arm64: Handle guest_memfd()-backed guest page faults
+>   KVM: arm64: Enable guest_memfd private memory when pKVM is enabled
+>
+>  Documentation/virt/kvm/api.rst                |   4 +
+>  arch/arm64/include/asm/kvm_host.h             |   3 +
+>  arch/arm64/kvm/Kconfig                        |   1 +
+>  arch/arm64/kvm/mmu.c                          | 119 +++-
+>  include/linux/kvm_host.h                      |  75 +++
+>  include/linux/page-flags.h                    |  22 +
+>  include/uapi/linux/kvm.h                      |   2 +
+>  include/uapi/linux/magic.h                    |   1 +
+>  mm/debug.c                                    |   1 +
+>  mm/swap.c                                     |  28 +-
+>  tools/testing/selftests/kvm/Makefile          |   1 +
+>  .../testing/selftests/kvm/guest_memfd_test.c  |  64 +-
+>  virt/kvm/Kconfig                              |   4 +
+>  virt/kvm/guest_memfd.c                        | 579 +++++++++++++++++-
+>  virt/kvm/kvm_main.c                           | 229 ++++++-
+>  15 files changed, 1074 insertions(+), 59 deletions(-)
+>
+>
+> base-commit: fac04efc5c793dccbd07e2d59af9f90b7fc0dca4
+> --
+> 2.47.1.613.gc27f4b7a9f-goog
+>
 
