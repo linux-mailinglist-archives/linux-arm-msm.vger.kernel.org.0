@@ -1,217 +1,190 @@
-Return-Path: <linux-arm-msm+bounces-44643-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-44644-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 982CDA07D14
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jan 2025 17:13:52 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 80235A07D1E
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jan 2025 17:15:24 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 6FB077A2454
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jan 2025 16:13:44 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B2E8A3A0600
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jan 2025 16:15:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8EC182206B7;
-	Thu,  9 Jan 2025 16:13:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7BE5B221DA6;
+	Thu,  9 Jan 2025 16:15:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b="meDIIVTG"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LAG8oDTW"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from pandora.armlinux.org.uk (pandora.armlinux.org.uk [78.32.30.218])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6E2721E08B;
-	Thu,  9 Jan 2025 16:13:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=78.32.30.218
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47E81221D9B;
+	Thu,  9 Jan 2025 16:15:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736439220; cv=none; b=r0L5/mJuE4xivAc9too/lVHRy9LLVKDFpmLTZnoSEz7R4xG6dzNli5r7+WPRALtTjKyJt+rwRMZliYkTkTa5Q8oP8FltXDBmpS33BwE/TPOq7PRkDUFWvq9iKnfB3cme/jnkFqPQltMV7YxRV5NIj7y3sc7E7m1ao59lFiUcdrw=
+	t=1736439321; cv=none; b=CPWnG7gjlXGBDYfJcTGESqD79ckVoMPnG2/QPdkqpbp0BpK5ON3XarXI+o2fhmcb4UwWEEKkTLZfHyaaR18dW41FscEzZzufcMMHidmCtYoa5/9hlr4GekMHVx5mru1hldgmefTnXV5L0c/xAizX4T+AeZA2PrdjCjonKG8QtsU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736439220; c=relaxed/simple;
-	bh=Hauyispm0ekzmLBL7S196DKfmz8odokzDnpR1FtdwjU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=cmT0wpSKfDTq3JALJwG3mIzrgNx8ufxrVGBXVSk9WzkgBIZLAmMtLTtthw5AgjG2zy8ZYkRPWFU1tHmeLsqIwwYDeQ7WHTwCMtX3L/65DSBP5TR4nHn6O7jbiyrLp7ncTzGGJzHakZAALw4TqMp6kuUufvMOeSC7QBHolVTY/1M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk; spf=none smtp.mailfrom=armlinux.org.uk; dkim=pass (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b=meDIIVTG; arc=none smtp.client-ip=78.32.30.218
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=armlinux.org.uk
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=armlinux.org.uk; s=pandora-2019; h=Sender:In-Reply-To:Content-Type:
-	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
-	Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
-	Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
-	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=K9TXd/MaiyLOy1udYeUAh3f162Hdvsw2jJGZBHKT2Lw=; b=meDIIVTGSv2LavpMl34VU8indt
-	Jw95K+5tyiiZO4lBkoH5O/uv7cOY7yoj5ACOBkbBaQJwrGwhiz0MyQVZ6ibRx/ezoIHHC9agvy/0a
-	1KPzyyfrZdIJXHeGU+sE/rLxTO43g63eoHX7ZiPEjkyCUdGprxe4Mnm5B3oTL5z1/F6+ZY1eX6Gt0
-	0gRFuCuJ7OOqi27EV9iTbc7vxjDEyeDOrVf/U0p/3qBsHGZDPnUauKTJxALcuWqj3VRpLVsVtTf9M
-	/j0phsc8aVqEbrYCzpoHSoKnBJR9BhA7K2EgaslENe6dCCdIrZx2iX7TInsFrsZi7ZJTy2UGVkIRC
-	ieDOR5XQ==;
-Received: from shell.armlinux.org.uk ([fd8f:7570:feb6:1:5054:ff:fe00:4ec]:34434)
-	by pandora.armlinux.org.uk with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.96)
-	(envelope-from <linux@armlinux.org.uk>)
-	id 1tVv9w-0002M7-2B;
-	Thu, 09 Jan 2025 16:13:24 +0000
-Received: from linux by shell.armlinux.org.uk with local (Exim 4.96)
-	(envelope-from <linux@shell.armlinux.org.uk>)
-	id 1tVv9t-0007Ri-1F;
-	Thu, 09 Jan 2025 16:13:21 +0000
-Date: Thu, 9 Jan 2025 16:13:21 +0000
-From: "Russell King (Oracle)" <linux@armlinux.org.uk>
-To: Lei Wei <quic_leiwei@quicinc.com>
-Cc: Simon Horman <horms@kernel.org>, Andrew Lunn <andrew+netdev@lunn.ch>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, Andrew Lunn <andrew@lunn.ch>,
-	Heiner Kallweit <hkallweit1@gmail.com>, netdev@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, quic_kkumarcs@quicinc.com,
-	quic_suruchia@quicinc.com, quic_pavir@quicinc.com,
-	quic_linchen@quicinc.com, quic_luoj@quicinc.com,
-	srinivas.kandagatla@linaro.org, bartosz.golaszewski@linaro.org,
-	vsmuthu@qti.qualcomm.com, john@phrozen.org
-Subject: Re: [PATCH net-next v4 3/5] net: pcs: qcom-ipq9574: Add PCS
- instantiation and phylink operations
-Message-ID: <Z3_1odA89W-kPNhO@shell.armlinux.org.uk>
-References: <20250108-ipq_pcs_net-next-v4-0-0de14cd2902b@quicinc.com>
- <20250108-ipq_pcs_net-next-v4-3-0de14cd2902b@quicinc.com>
- <20250108100358.GG2772@kernel.org>
- <8ac3167c-c8aa-4ddb-948f-758714df7495@quicinc.com>
+	s=arc-20240116; t=1736439321; c=relaxed/simple;
+	bh=IF+rz2PvsBQx52Qdi1CL3g27mHqZQX9cudkC8UuiDoA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=m/5newNNFLj0WL+vEaJKRbGWgyodRXZeuWWKbPdbrsCxrzPOUoKdnyyiK7Ny5G6ax0GoSPw9rZwXGsBsc9OaaZGA5L2msfhgwrM27egoAoZOVfCSQqjg9YtK6Db76v+MlLbjcXpf2CXn11m6eM+KBLnCjDcwRfpMspk072rUpGQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LAG8oDTW; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D34F0C4CED3;
+	Thu,  9 Jan 2025 16:15:11 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1736439320;
+	bh=IF+rz2PvsBQx52Qdi1CL3g27mHqZQX9cudkC8UuiDoA=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=LAG8oDTWFUUe6/Sir0/NEC3wffDjChHNhzI/3k1cq8BTu48yngQtRSAePzF36xjpl
+	 NtEFVZXU4xjC4zTKqdm91vqG8O1NTDLIowkJ7r1TVEVU5ttrJANAZvOTuPIGh5QXEd
+	 5W1bXyT3hl0ut/7P9cDbDWy8KqBW47YOEdYFlnIDAueewJaQpUu9fvgfUD5n6TQEbs
+	 iUluazbhWpQNclNXQX076jbuIYffpTmIymmePW62HC2eJCmOU0B+ECFBVTR5mHc4WB
+	 84y2hYnyUlePZVb+J6ak2JUfs9lj6SXeDCIvUCkTsfB05+DEGHp+mF5u+RoTlJiogu
+	 ZY4e7Mdv9igMw==
+Message-ID: <6ca8eb52-7538-47c0-afb5-e4a91322539b@kernel.org>
+Date: Thu, 9 Jan 2025 17:15:08 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <8ac3167c-c8aa-4ddb-948f-758714df7495@quicinc.com>
-Sender: Russell King (Oracle) <linux@armlinux.org.uk>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 5/7] dt-bindings: opp: Add v2-qcom-adreno vendor
+ bindings
+To: Akhil P Oommen <quic_akhilpo@quicinc.com>
+Cc: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+ Konrad Dybcio <konradybcio@kernel.org>,
+ Abhinav Kumar <quic_abhinavk@quicinc.com>,
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Marijn Suijten <marijn.suijten@somainline.org>,
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+ Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
+ Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Maya Matuszczyk <maccraft123mc@gmail.com>, linux-arm-msm@vger.kernel.org,
+ dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+ linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
+ devicetree@vger.kernel.org
+References: <20250109-gpu-acd-v4-0-08a5efaf4a23@quicinc.com>
+ <20250109-gpu-acd-v4-5-08a5efaf4a23@quicinc.com>
+ <67mvekrysu2ms5dsvjyh37wbl5dmcnk2r3xnow2e5xeeqahhrr@ar5zsq3wzip3>
+ <d23fe626-4025-4a6c-8916-1771641b2a78@quicinc.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 fv0=
+In-Reply-To: <d23fe626-4025-4a6c-8916-1771641b2a78@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Thu, Jan 09, 2025 at 09:11:05PM +0800, Lei Wei wrote:
+On 09/01/2025 14:13, Akhil P Oommen wrote:
+> On 1/9/2025 1:36 PM, Krzysztof Kozlowski wrote:
+>> On Thu, Jan 09, 2025 at 02:10:01AM +0530, Akhil P Oommen wrote:
+>>> Add a new schema which extends opp-v2 to support a new vendor specific
+>>> property required for Adreno GPUs found in Qualcomm's SoCs. The new
+>>> property called "qcom,opp-acd-level" carries a u32 value recommended
+>>> for each opp needs to be shared to GMU during runtime.
+>>>
+>>> Also, update MAINTAINERS file include the new opp-v2-qcom-adreno.yaml.
+>>>
+>>> Cc: Rob Clark <robdclark@gmail.com>
+>>> Signed-off-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
+>>> ---
+>>>  .../bindings/opp/opp-v2-qcom-adreno.yaml           | 97 ++++++++++++++++++++++
+>>>  MAINTAINERS                                        |  1 +
+>>>  2 files changed, 98 insertions(+)
+>>>
+>>> diff --git a/Documentation/devicetree/bindings/opp/opp-v2-qcom-adreno.yaml b/Documentation/devicetree/bindings/opp/opp-v2-qcom-adreno.yaml
+>>> new file mode 100644
+>>> index 000000000000..de1f7c6c4f0e
+>>> --- /dev/null
+>>> +++ b/Documentation/devicetree/bindings/opp/opp-v2-qcom-adreno.yaml
+>>> @@ -0,0 +1,97 @@
+>>> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+>>> +%YAML 1.2
+>>> +---
+>>> +$id: http://devicetree.org/schemas/opp/opp-v2-qcom-adreno.yaml#
+>>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>>> +
+>>> +title: Qualcomm Adreno compatible OPP supply
+>>> +
+>>> +description:
+>>> +  Adreno GPUs present in Qualcomm's Snapdragon chipsets uses an OPP specific
+>>> +  ACD related information tailored for the specific chipset. This binding
+>>> +  provides the information needed to describe such a hardware value.
+>>> +
+>>> +maintainers:
+>>> +  - Rob Clark <robdclark@gmail.com>
+>>> +
+>>
+>> You need select: here. See bot's warnings and other schemas, like
+>> primecell, how they do it.
 > 
+> Somehow this error is not reproducible on my setup. I have upgraded both
+> Dtschema (2024.11) and and yamllint.
+
+
+You probably need to test all bindings, so skipping DT_SCHEMA_FILES
+
+> Anyway, could you please confirm if the below addition would be sufficient?
 > 
-> On 1/8/2025 6:03 PM, Simon Horman wrote:
-> > On Wed, Jan 08, 2025 at 10:50:26AM +0800, Lei Wei wrote:
-> > > This patch adds the following PCS functionality for the PCS driver
-> > > for IPQ9574 SoC:
-> > > 
-> > > a.) Parses PCS MII DT nodes and instantiate each MII PCS instance.
-> > > b.) Exports PCS instance get and put APIs. The network driver calls
-> > > the PCS get API to get and associate the PCS instance with the port
-> > > MAC.
-> > > c.) PCS phylink operations for SGMII/QSGMII interface modes.
-> > > 
-> > > Signed-off-by: Lei Wei <quic_leiwei@quicinc.com>
-> > 
-> > ...
-> > 
-> > > +static int ipq_pcs_enable(struct phylink_pcs *pcs)
-> > > +{
-> > > +	struct ipq_pcs_mii *qpcs_mii = phylink_pcs_to_qpcs_mii(pcs);
-> > > +	struct ipq_pcs *qpcs = qpcs_mii->qpcs;
-> > > +	int index = qpcs_mii->index;
-> > > +	int ret;
-> > > +
-> > > +	ret = clk_prepare_enable(qpcs_mii->rx_clk);
-> > > +	if (ret) {
-> > > +		dev_err(qpcs->dev, "Failed to enable MII %d RX clock\n", index);
-> > > +		return ret;
-> > > +	}
-> > > +
-> > > +	ret = clk_prepare_enable(qpcs_mii->tx_clk);
-> > > +	if (ret) {
-> > > +		dev_err(qpcs->dev, "Failed to enable MII %d TX clock\n", index);
-> > > +		return ret;
-> > 
-> > Hi Lei Wei,
-> > 
-> > I think you need something like the following to avoid leaking qpcs_mii->rx_clk.
-> > 
-> > 		goto err_disable_unprepare_rx_clk;
-> > 	}
-> > 
-> > 	return 0;
-> > 
-> > err_disable_unprepare_rx_clk:
-> > 	clk_disable_unprepare(qpcs_mii->rx_clk);
-> > 	return ret;
-> > }
-> > 
-> > Flagged by Smatch.
-> > 
-> 
-> We had a conversation with Russell King in v2 that even if the phylink pcs
-> enable sequence encounters an error, it does not unwind the steps it has
-> already done. So we removed the call to unprepare in case of error here,
-> since an error here is essentially fatal in this path with no unwind
-> possibility.
-> 
-> https://lore.kernel.org/all/38d7191f-e4bf-4457-9898-bb2b186ec3c7@quicinc.com/
-> 
-> However to satisfy this smatch warning/error, we may need to revert back to
-> the adding the unprepare call in case of error. Request Russel to comment as
-> well if this is fine.
-> 
-> Is it possible to share the log/command-options of the smatch failure so
-> that we can reproduce this? Thanks.
+> select:
+>   required:
+>     - compatible
+>   properties:
+>     compatible:
+>       contains:
+>         const: operating-points-v2-adreno
 
-As I previously stated, the problem is that an error in this path is
-basically unrecoverable. Therefore, I don't see any point in trying to
-clean up.
 
-We could probably do a bit better in phylink, and report the error, so
-something like this:
+For this binding yes, but if the warning persist, then you might need to
+update operating-points-v2 as well, with a similar select but without
+"contains:".
 
-diff --git a/drivers/net/phy/phylink.c b/drivers/net/phy/phylink.c
-index 0ae96d1376b4..62385c46118f 100644
---- a/drivers/net/phy/phylink.c
-+++ b/drivers/net/phy/phylink.c
-@@ -1401,11 +1401,21 @@ static void phylink_major_config(struct phylink *pl, bool restart,
- 
- 	phylink_mac_config(pl, state);
- 
--	if (pl->pcs)
--		phylink_pcs_post_config(pl->pcs, state->interface);
-+	if (pl->pcs) {
-+		err = phylink_pcs_post_config(pl->pcs, state->interface);
-+		if (err < 0)
-+			phylink_err(pl, "%s (%ps) failed: %pe\n",
-+				    "pcs_post_config",
-+				    pl->pcs->pcs_post_config, ERR_PTR(err));
-+	}
- 
--	if (pl->pcs_state == PCS_STATE_STARTING || pcs_changed)
--		phylink_pcs_enable(pl->pcs);
-+	if (pl->pcs_state == PCS_STATE_STARTING || pcs_changed) {
-+		err = phylink_pcs_enable(pl->pcs);
-+		if (err < 0)
-+			phylink_err(pl, "%s (%ps) failed: %pe\n",
-+				    "pcs_enable",
-+				    pl->pcs->pcs_enable, ERR_PTR(err));
-+	}
- 
- 	neg_mode = pl->act_link_an_mode;
- 	if (pl->pcs && pl->pcs->neg_mode)
 
-but trying to unwind the state back to what it was previously on an
-error doesn't make any sense.
-
-For example, by this time, the PHY could have switched interface modes
-on us because the media changed speed. If we fail to switch to the new
-interface mode, then even if we _could_ restore the previous
-confinguration, that would result in the PHY using a different
-interface mode to the host, and there would still be no link.
-
-If a major_config() operation ever fails, then the affected network
-interface is basically dead.
-
-So, is there any point in adding code to clean up after an error in
-things like .pcs_enable() methods? Nice to have, but it doesn't solve
-the problem that the network interface is still dead as a result of
-the error.
-
--- 
-RMK's Patch system: https://www.armlinux.org.uk/developer/patches/
-FTTP is here! 80Mbps down 10Mbps up. Decent connectivity at last!
+Best regards,
+Krzysztof
 
