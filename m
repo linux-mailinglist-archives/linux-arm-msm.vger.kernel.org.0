@@ -1,173 +1,254 @@
-Return-Path: <linux-arm-msm+bounces-44652-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-44653-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id E06CAA07E78
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jan 2025 18:15:30 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id CCE8FA07EB4
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jan 2025 18:27:24 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E66BD168B93
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jan 2025 17:15:28 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 743EC188D0DD
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jan 2025 17:27:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B54D3191484;
-	Thu,  9 Jan 2025 17:15:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C8B7718FC80;
+	Thu,  9 Jan 2025 17:27:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="R0mEQ+Wu"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iw1g/gHf"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.19])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A71F118E05F;
-	Thu,  9 Jan 2025 17:15:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.19
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8737018E756;
+	Thu,  9 Jan 2025 17:27:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736442927; cv=none; b=dGubg2ijQ3RGfml4/jRRqPVBfbtvjATOSymRvY70WPKJWIk8rUUvTZYSke+ZqbHEIkxx6AcG3diS32WBh9eRG5nr2eV+Jl4267w/8V/i/CWPp4aNILeJdB+uprmLFMmFisE2mMJ9u+ex5E3rytvUcEbvwhKBKwmdxDbqp1C9VRs=
+	t=1736443641; cv=none; b=Vf/TPhKI66So61u8wTsL69DJWMhxcawaLTQ99sP+YzMQDDo/QuMlyVqlPoZ2BrAllgdMwpJdreLn8T7ftXwDkUa0zzhX63K1Tf7/VugTi9MfQerl3xia0GGuGhTLK9Tsd8YuU/WAZrP6I+SblTg+fSAuNUnH2AXVCZp+X9fW+6Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736442927; c=relaxed/simple;
-	bh=iHe0e5c+fmzIEFb4JwfVINvpf7LWF6/4nvNtj0QRgPQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=gjSyq4wpUGf05i6SP16AyTL7Q/D1mofNYIHjzqkWVmkJo/2oWTtKqOHx8dnHzMwQM32I40wXMBUFD5CiAkxfQSLdXClJnUNz4ie3/D8V7XP0Fz2S58QCiuxw6HOrjFHinMcxHwbiY1chj8Lr+V7mAXOxHUs0h+Un6TG1cmcWKuI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=R0mEQ+Wu; arc=none smtp.client-ip=198.175.65.19
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1736442926; x=1767978926;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=iHe0e5c+fmzIEFb4JwfVINvpf7LWF6/4nvNtj0QRgPQ=;
-  b=R0mEQ+WuUaHa5xHsD1YsYxKojJgiuLbG7KgDusO19vIqAqLmP+cTqSwz
-   LfRIh+glbMsbVuJUi3jpL6ZBCDcehOwtV9cJgwIBIMg15JEUL3x4E8G1o
-   lpwJ/VJIDKIDtPHOQS7yk61zH9xneX1RDTLpMcdppznHK6wBPuw2t1JML
-   L7YkAbgzQxUYbircwgDBGXzhrcBz6KIvKdC4a/+qV6/Q+YtCuwCqYG21f
-   5SOcVm79KzpOdZWsUUlFggDHFv+yFLrGXwNiVdOeZlxFWjUg8jFkc+QsM
-   56bkzb6lj1qK/XBAtbWxQd5p9HU1GBfD3UdT86inl66/Oi4zaJq2YmPWL
-   Q==;
-X-CSE-ConnectionGUID: hMJ0Okn/T5KKfu2pCyyrxA==
-X-CSE-MsgGUID: rNzKv++oTSSC1KgQzZi8fw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11310"; a="36604448"
-X-IronPort-AV: E=Sophos;i="6.12,301,1728975600"; 
-   d="scan'208";a="36604448"
-Received: from orviesa001.jf.intel.com ([10.64.159.141])
-  by orvoesa111.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Jan 2025 09:15:26 -0800
-X-CSE-ConnectionGUID: sCHGnpr3S22msRSMnEsaNw==
-X-CSE-MsgGUID: Kiw4VfoXQbSJcARHoMEU4w==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; 
-   d="scan'208";a="140776648"
-Received: from bergbenj-mobl1.ger.corp.intel.com (HELO [10.245.245.241]) ([10.245.245.241])
-  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Jan 2025 09:15:20 -0800
-Message-ID: <ec240a46-3fe1-46fa-84bc-2f962d7441ce@intel.com>
-Date: Thu, 9 Jan 2025 17:15:17 +0000
+	s=arc-20240116; t=1736443641; c=relaxed/simple;
+	bh=k6dSHtIzHPXjCi55pFzcPs0hQ6RidrPUUyk4gC3kNmw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=TbXZATN5Q9CunAPiL3YxtnMj4KOHuc3qDYpOcNlJKNxG1PM3Nnm/EyidH1dic94bfGNOks7iEryynt9a0OVGH6OQ6jc49myq32mGTdkyj6AMfevrMOvS771tSJ5cBw/8NjXllL3VSJ9qtJhtLmN6G06MFqmPnID4dHq2mzyJX6g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iw1g/gHf; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E216C4CED2;
+	Thu,  9 Jan 2025 17:27:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1736443641;
+	bh=k6dSHtIzHPXjCi55pFzcPs0hQ6RidrPUUyk4gC3kNmw=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=iw1g/gHf9UnQ6FPaRmdIh69NJ2JP4qyUVC7TdimvhOvT39hb8cevQEIQZR2wac6LZ
+	 /wPyHWsWBAq0Y4Bk5qIMRY1X8UgoEECnc/XTfTa6q+BqUzST6zcpVBA5TmVR/PK8Lp
+	 nWcrvKqkNFQbNQvP7bYrP7TJS3vmELKIf5yy/REnM9H+J+e+tPHo/ACLd+GjhQM8r3
+	 aZtFdyyskZ/TdjuExwsO+M1hA5HM99NiUuu3egJinnB4FT1EfiG5RzdwM6fpROxQ65
+	 6LpB+rTv6jNwhDbdA6XLDMaX+NsXYidNsPV1TFavPfHfyw0RGbmuNj7BZiq5AA8kZb
+	 6nHuTNpJ0Fo2Q==
+Date: Thu, 9 Jan 2025 17:27:14 +0000
+From: Simon Horman <horms@kernel.org>
+To: Luo Jie <quic_luoj@quicinc.com>
+Cc: Andrew Lunn <andrew+netdev@lunn.ch>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Lei Wei <quic_leiwei@quicinc.com>,
+	Suruchi Agarwal <quic_suruchia@quicinc.com>,
+	Pavithra R <quic_pavir@quicinc.com>,
+	Jonathan Corbet <corbet@lwn.net>, Kees Cook <kees@kernel.org>,
+	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
+	Philipp Zabel <p.zabel@pengutronix.de>,
+	linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-doc@vger.kernel.org, linux-hardening@vger.kernel.org,
+	quic_kkumarcs@quicinc.com, quic_linchen@quicinc.com,
+	srinivas.kandagatla@linaro.org, bartosz.golaszewski@linaro.org,
+	john@phrozen.org
+Subject: Re: [PATCH net-next v2 04/14] net: ethernet: qualcomm: Initialize
+ PPE buffer management for IPQ9574
+Message-ID: <20250109172714.GN7706@kernel.org>
+References: <20250108-qcom_ipq_ppe-v2-0-7394dbda7199@quicinc.com>
+ <20250108-qcom_ipq_ppe-v2-4-7394dbda7199@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 23/25] drm/xe: Compute dumb-buffer sizes with
- drm_mode_size_dumb()
-To: Thomas Zimmermann <tzimmermann@suse.de>,
- maarten.lankhorst@linux.intel.com, mripard@kernel.org, airlied@gmail.com,
- simona@ffwll.ch
-Cc: dri-devel@lists.freedesktop.org, linux-mediatek@lists.infradead.org,
- freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
- imx@lists.linux.dev, linux-samsung-soc@vger.kernel.org,
- nouveau@lists.freedesktop.org, virtualization@lists.linux.dev,
- spice-devel@lists.freedesktop.org, linux-renesas-soc@vger.kernel.org,
- linux-rockchip@lists.infradead.org, linux-tegra@vger.kernel.org,
- intel-xe@lists.freedesktop.org, xen-devel@lists.xenproject.org,
- Lucas De Marchi <lucas.demarchi@intel.com>,
- =?UTF-8?Q?Thomas_Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
- Rodrigo Vivi <rodrigo.vivi@intel.com>
-References: <20250109150310.219442-1-tzimmermann@suse.de>
- <20250109150310.219442-24-tzimmermann@suse.de>
- <91c904f8-ba47-4595-be65-6fb57dcc9c64@intel.com>
- <6666af19-a98d-41d7-8329-7b50807c04a9@suse.de>
-Content-Language: en-GB
-From: Matthew Auld <matthew.auld@intel.com>
-In-Reply-To: <6666af19-a98d-41d7-8329-7b50807c04a9@suse.de>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250108-qcom_ipq_ppe-v2-4-7394dbda7199@quicinc.com>
 
-On 09/01/2025 16:26, Thomas Zimmermann wrote:
-> Hi
+On Wed, Jan 08, 2025 at 09:47:11PM +0800, Luo Jie wrote:
+> The BM (Buffer Management) config controls the pause frame generated
+> on the PPE port. There are maximum 15 BM ports and 4 groups supported,
+> all BM ports are assigned to group 0 by default. The number of hardware
+> buffers configured for the port influence the threshold of the flow
+> control for that port.
 > 
-> 
-> Am 09.01.25 um 17:05 schrieb Matthew Auld:
->> On 09/01/2025 14:57, Thomas Zimmermann wrote:
->>> Call drm_mode_size_dumb() to compute dumb-buffer scanline pitch
->>> and buffer size. Align the pitch to a multiple of 8. Align the
->>> buffer size according to hardware requirements.
->>>
->>> Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
->>> Cc: Lucas De Marchi <lucas.demarchi@intel.com>
->>> Cc: "Thomas Hellström" <thomas.hellstrom@linux.intel.com>
->>> Cc: Rodrigo Vivi <rodrigo.vivi@intel.com>
->>> ---
->>>   drivers/gpu/drm/xe/xe_bo.c | 8 ++++----
->>>   1 file changed, 4 insertions(+), 4 deletions(-)
->>>
->>> diff --git a/drivers/gpu/drm/xe/xe_bo.c b/drivers/gpu/drm/xe/xe_bo.c
->>> index e6c896ad5602..d75e3c39ab14 100644
->>> --- a/drivers/gpu/drm/xe/xe_bo.c
->>> +++ b/drivers/gpu/drm/xe/xe_bo.c
->>> @@ -8,6 +8,7 @@
->>>   #include <linux/dma-buf.h>
->>>     #include <drm/drm_drv.h>
->>> +#include <drm/drm_dumb_buffers.h>
->>>   #include <drm/drm_gem_ttm_helper.h>
->>>   #include <drm/drm_managed.h>
->>>   #include <drm/ttm/ttm_device.h>
->>> @@ -2535,14 +2536,13 @@ int xe_bo_dumb_create(struct drm_file 
->>> *file_priv,
->>>       struct xe_device *xe = to_xe_device(dev);
->>>       struct xe_bo *bo;
->>>       uint32_t handle;
->>> -    int cpp = DIV_ROUND_UP(args->bpp, 8);
->>>       int err;
->>>       u32 page_size = max_t(u32, PAGE_SIZE,
->>>           xe->info.vram_flags & XE_VRAM_FLAGS_NEED64K ? SZ_64K : SZ_4K);
->>>   -    args->pitch = ALIGN(args->width * cpp, 64);
->>> -    args->size = ALIGN(mul_u32_u32(args->pitch, args->height),
->>> -               page_size);
->>> +    err = drm_mode_size_dumb(dev, args, SZ_64, page_size);
->>
->> AFAICT this looks to change the behaviour, where u64 size was 
->> technically possible and was allowed given that args->size is u64, but 
->> this helper is limiting the size to u32. Is that intentional? If so, 
->> we should probably make that clear in the commit message.
-> 
-> That's an interesting observation; thanks. The ioctl's internal checks 
-> have always limited the size to 32 bit. [1] I think it is not supposed 
-> to be larger than that. We can change the helper to support 64-bit sizes 
-> as well.
+> Signed-off-by: Luo Jie <quic_luoj@quicinc.com>
 
-Ah, I missed the internal check.
+...
 
-> 
-> Having said that, is there any use case? Dumb buffers are for software 
-> rendering only. Allocating more than a few dozen MiB seems like a 
-> mistake. Maybe we should rather limit the allowed allocation size instead?
+> diff --git a/drivers/net/ethernet/qualcomm/ppe/ppe_config.c b/drivers/net/ethernet/qualcomm/ppe/ppe_config.c
 
-Yeah, I doubt there are any real users. Given the existing internal 
-check, limiting to u32 makes sense to me.
+...
 
-> 
-> Best regards
-> Thomas
-> 
-> [1] https://elixir.bootlin.com/linux/v6.12.6/source/drivers/gpu/drm/ 
-> drm_dumb_buffers.c#L82
-> 
->>
->>> +    if (err)
->>> +        return err;
->>>         bo = xe_bo_create_user(xe, NULL, NULL, args->size,
->>>                      DRM_XE_GEM_CPU_CACHING_WC,
->>
-> 
+> +/* The buffer configurations per PPE port. There are 15 BM ports and
+> + * 4 BM groups supported by PPE. BM port (0-7) is for EDMA port 0,
+> + * BM port (8-13) is for PPE physical port 1-6 and BM port 14 is for
+> + * EIP port.
+> + */
+> +static struct ppe_bm_port_config ipq9574_ppe_bm_port_config[] = {
+> +	{
+> +		/* Buffer configuration for the BM port ID 0 of EDMA. */
+> +		.port_id_start	= 0,
+> +		.port_id_end	= 0,
+> +		.pre_alloc	= 0,
+> +		.in_fly_buf	= 100,
+> +		.ceil		= 1146,
+> +		.weight		= 7,
+> +		.resume_offset	= 8,
+> +		.resume_ceil	= 0,
+> +		.dynamic	= true,
+> +	},
+> +	{
+> +		/* Buffer configuration for the BM port ID 1-7 of EDMA. */
+> +		.port_id_start	= 1,
+> +		.port_id_end	= 7,
+> +		.pre_alloc	= 0,
+> +		.in_fly_buf	= 100,
+> +		.ceil		= 250,
+> +		.weight		= 4,
+> +		.resume_offset	= 36,
+> +		.resume_ceil	= 0,
+> +		.dynamic	= true,
+> +	},
+> +	{
+> +		/* Buffer configuration for the BM port ID 8-13 of PPE ports. */
+> +		.port_id_start	= 8,
+> +		.port_id_end	= 13,
+> +		.pre_alloc	= 0,
+> +		.in_fly_buf	= 128,
+> +		.ceil		= 250,
+> +		.weight		= 4,
+> +		.resume_offset	= 36,
+> +		.resume_ceil	= 0,
+> +		.dynamic	= true,
+> +	},
+> +	{
+> +		/* Buffer configuration for the BM port ID 14 of EIP. */
+> +		.port_id_start	= 14,
+> +		.port_id_end	= 14,
+> +		.pre_alloc	= 0,
+> +		.in_fly_buf	= 40,
+> +		.ceil		= 250,
+> +		.weight		= 4,
+> +		.resume_offset	= 36,
+> +		.resume_ceil	= 0,
+> +		.dynamic	= true,
+> +	},
+> +};
+> +
+> +static int ppe_config_bm_threshold(struct ppe_device *ppe_dev, int bm_port_id,
+> +				   struct ppe_bm_port_config port_cfg)
+> +{
+> +	u32 reg, val, bm_fc_val[2];
+> +	int ret;
+> +
+> +	/* Configure BM flow control related threshold. */
+> +	PPE_BM_PORT_FC_SET_WEIGHT(bm_fc_val, port_cfg.weight);
 
+Hi Luo Jie,
+
+When compiling with W=1 for x86_32 and ARM (32bit)
+(but, curiously not x86_64 or arm64), gcc-14 complains that
+bm_fc_val is uninitialised, I believe due to the line above and
+similar lines below.
+
+In file included from drivers/net/ethernet/qualcomm/ppe/ppe_config.c:10:
+In function 'u32p_replace_bits',
+    inlined from 'ppe_config_bm_threshold' at drivers/net/ethernet/qualcomm/ppe/ppe_config.c:112:2:
+./include/linux/bitfield.h:189:15: warning: 'bm_fc_val' is used uninitialized [-Wuninitialized]
+  189 |         *p = (*p & ~to(field)) | type##_encode_bits(val, field);        \
+      |               ^~
+./include/linux/bitfield.h:198:9: note: in expansion of macro '____MAKE_OP'
+  198 |         ____MAKE_OP(u##size,u##size,,)
+      |         ^~~~~~~~~~~
+./include/linux/bitfield.h:201:1: note: in expansion of macro '__MAKE_OP'
+  201 | __MAKE_OP(32)
+      | ^~~~~~~~~
+drivers/net/ethernet/qualcomm/ppe/ppe_config.c: In function 'ppe_config_bm_threshold':
+drivers/net/ethernet/qualcomm/ppe/ppe_config.c:108:23: note: 'bm_fc_val' declared here
+  108 |         u32 reg, val, bm_fc_val[2];
+      |                       ^~~~~~~~~
+
+> +	PPE_BM_PORT_FC_SET_RESUME_OFFSET(bm_fc_val, port_cfg.resume_offset);
+> +	PPE_BM_PORT_FC_SET_RESUME_THRESHOLD(bm_fc_val, port_cfg.resume_ceil);
+> +	PPE_BM_PORT_FC_SET_DYNAMIC(bm_fc_val, port_cfg.dynamic);
+> +	PPE_BM_PORT_FC_SET_REACT_LIMIT(bm_fc_val, port_cfg.in_fly_buf);
+> +	PPE_BM_PORT_FC_SET_PRE_ALLOC(bm_fc_val, port_cfg.pre_alloc);
+> +
+> +	/* Configure low/high bits of the ceiling for the BM port. */
+> +	val = FIELD_PREP(GENMASK(2, 0), port_cfg.ceil);
+
+The value of port_cfg.ceil is 250 or 1146, as set in
+ipq9574_ppe_bm_port_config. clang-19 W=1 builds complain that this
+value is too large for the field (3 bits).
+
+drivers/net/ethernet/qualcomm/ppe/ppe_config.c:120:8: error: call to '__compiletime_assert_925' declared with 'error' attribute: FIELD_PREP: value too large for the field
+  120 |         val = FIELD_PREP(GENMASK(2, 0), port_cfg.ceil);
+      |               ^
+./include/linux/bitfield.h:115:3: note: expanded from macro 'FIELD_PREP'
+  115 |                 __BF_FIELD_CHECK(_mask, 0ULL, _val, "FIELD_PREP: ");    \
+      |                 ^
+./include/linux/bitfield.h:68:3: note: expanded from macro '__BF_FIELD_CHECK'
+   68 |                 BUILD_BUG_ON_MSG(__builtin_constant_p(_val) ?           \
+      |                 ^
+./include/linux/build_bug.h:39:37: note: expanded from macro 'BUILD_BUG_ON_MSG'
+   39 | #define BUILD_BUG_ON_MSG(cond, msg) compiletime_assert(!(cond), msg)
+      |                                     ^
+note: (skipping 1 expansions in backtrace; use -fmacro-backtrace-limit=0 to see all)
+././include/linux/compiler_types.h:530:2: note: expanded from macro '_compiletime_assert'
+  530 |         __compiletime_assert(condition, msg, prefix, suffix)
+      |         ^
+././include/linux/compiler_types.h:523:4: note: expanded from macro '__compiletime_assert'
+  523 |                         prefix ## suffix();                             \
+      |                         ^
+<scratch space>:95:1: note: expanded from here
+   95 | __compiletime_assert_925
+      | ^
+1 error generated
+
+> +	PPE_BM_PORT_FC_SET_CEILING_LOW(bm_fc_val, val);
+> +	val = FIELD_PREP(GENMASK(10, 3), port_cfg.ceil);
+> +	PPE_BM_PORT_FC_SET_CEILING_HIGH(bm_fc_val, val);
+> +
+> +	reg = PPE_BM_PORT_FC_CFG_TBL_ADDR + PPE_BM_PORT_FC_CFG_TBL_INC * bm_port_id;
+> +	ret = regmap_bulk_write(ppe_dev->regmap, reg,
+> +				bm_fc_val, ARRAY_SIZE(bm_fc_val));
+> +	if (ret)
+> +		return ret;
+> +
+> +	/* Assign the default group ID 0 to the BM port. */
+> +	val = FIELD_PREP(PPE_BM_PORT_GROUP_ID_SHARED_GROUP_ID, 0);
+> +	reg = PPE_BM_PORT_GROUP_ID_ADDR + PPE_BM_PORT_GROUP_ID_INC * bm_port_id;
+> +	ret = regmap_update_bits(ppe_dev->regmap, reg,
+> +				 PPE_BM_PORT_GROUP_ID_SHARED_GROUP_ID,
+> +				 val);
+> +	if (ret)
+> +		return ret;
+> +
+> +	/* Enable BM port flow control. */
+> +	val = FIELD_PREP(PPE_BM_PORT_FC_MODE_EN, true);
+> +	reg = PPE_BM_PORT_FC_MODE_ADDR + PPE_BM_PORT_FC_MODE_INC * bm_port_id;
+> +
+> +	return regmap_update_bits(ppe_dev->regmap, reg,
+> +				  PPE_BM_PORT_FC_MODE_EN,
+> +				  val);
+> +}
+
+...
+
+-- 
+pw-bot: changes-requested
 
