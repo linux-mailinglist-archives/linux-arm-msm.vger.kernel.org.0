@@ -1,63 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-44494-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-44495-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D2BBFA06ADA
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jan 2025 03:22:24 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id CBD2AA06AF2
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jan 2025 03:28:32 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6A448162FBA
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jan 2025 02:22:22 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6342218870C2
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jan 2025 02:28:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7EF9CBE5E;
-	Thu,  9 Jan 2025 02:22:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5E9CC37160;
+	Thu,  9 Jan 2025 02:28:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ngV9TcfZ"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="R4wslZ78"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 991B3291E;
-	Thu,  9 Jan 2025 02:22:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A52783FC7;
+	Thu,  9 Jan 2025 02:28:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736389340; cv=none; b=b8a4f/FJuQx5OOk7HELnqZNCMdvtYQXI8sSvnAGygOJuvVBJ8KSFXStPT7fl7Ykn6g5ztdIJNXxc1sikqZ0J4CpdcCxeVLpiw9qAXYn1W7wP1aXS9gqCpiFGTK3C2pvW+zcVavGs+rKYWHEWOaj9fpp8N6LAOjWHkOe15XwErwU=
+	t=1736389710; cv=none; b=XI23TS+Q00GR+W4xu8nAzU+GZx7P+Sj0hu8zUhV6kHhweq9LomLiPcXYE3lO1mZn8M+owbxErHQtxGhTvFmTXZ3+bztePubKIt/s1vtxCsHor9hXXm5Zhw17kJA5MvjoRap2hiqNZjm5yC5Dhq5Uzds5dCggB+EUdiaGHEDn9RI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736389340; c=relaxed/simple;
-	bh=6mg/Cxyq1CAce8eIFoMGBeZnVgR2Q7EKooq9Huy2iGM=;
+	s=arc-20240116; t=1736389710; c=relaxed/simple;
+	bh=3x4cJ8n9a0Si8SSfqnBBxgvebSUKb8VFDRlkUZNWV1w=;
 	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=cgK0Esu7iG8Sd0oWCwUCRIx+7FijrTpXX6e53HqpU0OZNogQlBvhEHJUwtOUnXlzggWdP3OH8XYUq4I13wVPGCBp3o6WWd2oxpnu6Ub3wsUPeU5Y2uWW27DrUfsIzCbKIKqS1RlDM0HJOuGYuIzxlii+x65C9e0sQin+T3ffzqU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ngV9TcfZ; arc=none smtp.client-ip=205.220.180.131
+	 In-Reply-To:Content-Type; b=kX+ln+Nx9SOtyrh6G8FsUAD0elFuvrhiRQNutCIlAe2RVtAmOTotI3j556xrV9Z7NPRcxtJC3jDk83nUTIYsmpWK+D0v8Tpm5osnnoG21bFbWoByGS7uZGkl0tM4Tb09Xvob/r/aHhtABqGvuRfbWOUDozn/R+FpAEm27OdrUlA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=R4wslZ78; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 509030pJ013366;
-	Thu, 9 Jan 2025 02:22:11 GMT
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 508IgkM7007921;
+	Thu, 9 Jan 2025 02:27:15 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	4zCck2ggZzYNdrCUC/XqgundnyfsHgGB5zVqD103ikU=; b=ngV9TcfZwjg4WpSf
-	9WO61JFZ7oUSbKWB/rXuXeKFxUDgGIl9rBeN8hlfUUhKsG3DeBOLs4Q9nL2+T+Vp
-	qzQk5eRV9Gs/vB7LZ9vaj69I09c8WqnUCwdsv+R5M85tEJIuMcVLFo2IvXwcTpMY
-	/8uQgrP/C5Wvy+z2JmhIInx0jciEusj3EI9yjOdGP1MkCCu0w7Y9kyOCelQ4Ua7V
-	k58+94IkD+SGDkTkBlLLWvtWAHcPNUVLBdOA20+bNKBJHZ9mI58dDRIVVG+YCza8
-	XK8yB4Gn5MCzVe06aN2ti98IUt7Tzx4eBEG3FHOeqIXgqV8XRHFLbi40CTUMacBB
-	5LRo1Q==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4423jsr81x-1
+	izdwFs4Omex+dJXp6hLRP8EEckjkqVRofQXCOIMvH/0=; b=R4wslZ78ZuR68gH6
+	nrU89nIWDKb2vI+tDRzvqal/PHh6UD1fMn61r8j6l/OWLBox74soi+1BXyAXGLOm
+	TSF5J5V1GGqwrErJyQS76V4XTqXuV1tZP/Q+E+5RWHm9GqlJmxsgzgGnlULHJSEh
+	dgUP1VY+PQbp4kb15B5028NM2sHAkpE2MKUfnCMi6nMLcm0mSMXGU3nTVcH97hvG
+	ioCfc46Cq2Q5QKHgUl7tP4w9U1lS+AUNdHYEjlzk9wKVeiQxxE/lBBbH0vCptW5b
+	WsQmJdYt+Xs79UYahGMntC3ZlpWOn7UFeU50lv1GXChbLs7Jy13qXdIUsvTh5Pkz
+	cGqqMw==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 441xvnrvmt-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 09 Jan 2025 02:22:10 +0000 (GMT)
+	Thu, 09 Jan 2025 02:27:15 +0000 (GMT)
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 5092M9T5027302
+	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 5092REIo025237
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 9 Jan 2025 02:22:09 GMT
+	Thu, 9 Jan 2025 02:27:14 GMT
 Received: from [10.71.108.79] (10.80.80.8) by nalasex01a.na.qualcomm.com
  (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 8 Jan 2025
- 18:22:09 -0800
-Message-ID: <58d9c139-c811-47aa-a527-4b1af110337c@quicinc.com>
-Date: Wed, 8 Jan 2025 18:22:08 -0800
+ 18:27:13 -0800
+Message-ID: <91dff265-5e13-45db-b46d-0eef4a95f5f6@quicinc.com>
+Date: Wed, 8 Jan 2025 18:27:13 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,142 +65,240 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] drm/msm/dpu: Force disabling commits to take non-async
- path
+Subject: Re: [PATCH 6/6] drm/msm/dpu: don't set crtc_state->mode_changed from
+ atomic_check()
 To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark
-	<robdclark@gmail.com>
-CC: Jessica Zhang <quic_jesszhan@quicinc.com>, Sean Paul <sean@poorly.run>,
+        Maarten Lankhorst
+	<maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul
+	<sean@poorly.run>,
         Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie
-	<airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        Rob Clark
-	<robdclark@chromium.org>, <linux-arm-msm@vger.kernel.org>,
-        <dri-devel@lists.freedesktop.org>, <freedreno@lists.freedesktop.org>,
-        <linux-kernel@vger.kernel.org>
-References: <20250108-async-disable-fix-v1-1-3f93eb600a3a@quicinc.com>
- <CAF6AEGtksLq5jpizGMj4t248rbNScgDvrxpxv09==b3DmpkLuQ@mail.gmail.com>
- <CAA8EJpqPZc7DNOb6WcRVtH0cFs9mUziL-dPgyakEJGO73=B6gA@mail.gmail.com>
+        Chandan
+ Uddaraju <chandanu@codeaurora.org>,
+        Jeykumar Sankaran
+	<jsanka@codeaurora.org>,
+        Jordan Crouse <jordan@cosmicpenguin.net>,
+        Sravanthi
+ Kollukuduru <skolluku@codeaurora.org>
+CC: <dri-devel@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
+        Archit
+ Taneja <architt@codeaurora.org>,
+        Rajesh Yadav <ryadav@codeaurora.org>, <linux-arm-msm@vger.kernel.org>,
+        <freedreno@lists.freedesktop.org>,
+        Simona
+ Vetter <simona.vetter@ffwll.ch>
+References: <20241222-drm-dirty-modeset-v1-0-0e76a53eceb9@linaro.org>
+ <20241222-drm-dirty-modeset-v1-6-0e76a53eceb9@linaro.org>
 Content-Language: en-US
 From: Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <CAA8EJpqPZc7DNOb6WcRVtH0cFs9mUziL-dPgyakEJGO73=B6gA@mail.gmail.com>
+In-Reply-To: <20241222-drm-dirty-modeset-v1-6-0e76a53eceb9@linaro.org>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: uRPTSqgVl8mARDEfbqLUREtnvc1PKzFN
-X-Proofpoint-ORIG-GUID: uRPTSqgVl8mARDEfbqLUREtnvc1PKzFN
+X-Proofpoint-GUID: NYlA8ec3ct0BErbmdCZWiblNC9UWplim
+X-Proofpoint-ORIG-GUID: NYlA8ec3ct0BErbmdCZWiblNC9UWplim
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- mlxlogscore=999 impostorscore=0 mlxscore=0 phishscore=0 malwarescore=0
- adultscore=0 priorityscore=1501 bulkscore=0 spamscore=0 clxscore=1015
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2501090016
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
+ lowpriorityscore=0 bulkscore=0 clxscore=1015 suspectscore=0
+ mlxlogscore=999 priorityscore=1501 spamscore=0 malwarescore=0 adultscore=0
+ mlxscore=0 phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2501090017
 
 
 
-On 1/8/2025 6:14 PM, Dmitry Baryshkov wrote:
-> On Thu, 9 Jan 2025 at 03:45, Rob Clark <robdclark@gmail.com> wrote:
->>
->> On Wed, Jan 8, 2025 at 2:58 PM Jessica Zhang <quic_jesszhan@quicinc.com> wrote:
->>>
->>> Force commit that are disabling a plane in the async_crtc to take the
->>> non-async commit tail path.
->>>
->>> In cases where there are two consecutive async cursor updates (one
->>> regular non-NULL update followed by a disabling NULL FB update), it is
->>> possible for the second NULL update to not be queued (due to the
->>> pending_crtc_mask check) or otherwise not be run before the cursor FB is
->>> deallocated by drm_atomic_helper_cleanup_planes(). This would cause a
->>> context fault since the hardware would try to fetch the old plane state
->>> with the stale FB address.
->>>
->>> Avoid this issue by forcing cursor updates that will disable the cursor
->>> plane to be blocking commits. This will ensure that hardware clears and
->>> stops fetching the FB source address before the driver deallocates the FB
->>>
->>> Fixes: 2d99ced787e3 ("drm/msm: async commit support")
->>> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
->>> ---
->>>   drivers/gpu/drm/msm/msm_atomic.c | 13 +++++++++++++
->>>   1 file changed, 13 insertions(+)
->>>
->>> diff --git a/drivers/gpu/drm/msm/msm_atomic.c b/drivers/gpu/drm/msm/msm_atomic.c
->>> index 9c45d641b5212c11078ab38c13a519663d85e10a..ddc74c68148c643d34ca631dd28d4cdc2b8c7dc0 100644
->>> --- a/drivers/gpu/drm/msm/msm_atomic.c
->>> +++ b/drivers/gpu/drm/msm/msm_atomic.c
->>> @@ -142,6 +142,7 @@ static bool can_do_async(struct drm_atomic_state *state,
->>>          struct drm_connector_state *connector_state;
->>>          struct drm_connector *connector;
->>>          struct drm_crtc_state *crtc_state;
->>> +       struct drm_plane_state *plane_state;
->>>          struct drm_crtc *crtc;
->>>          int i, num_crtcs = 0;
->>>
->>> @@ -162,6 +163,18 @@ static bool can_do_async(struct drm_atomic_state *state,
->>>                  *async_crtc = crtc;
->>>          }
->>>
->>> +       /*
->>> +        * Force a blocking commit if the cursor is being disabled. This is to
->>> +        * ensure that the registers are cleared and hardware doesn't try to
->>> +        * fetch from a stale address.
->>> +        */
->>> +       if (*async_crtc) {
->>> +               plane_state = drm_atomic_get_new_plane_state(state,
->>> +                                                            (*async_crtc)->cursor);
->>> +               if (plane_state && !plane_state->fb)
->>> +                       return false;
->>
->> hmm, I suppose we want the same even if the fb changes?  Or
->> alternatively somewhere hold an extra ref to the backing obj until hw
->> has finished scanout?
->
-
-Hi Rob
-
-Do you mean we need to also check if old_plane_state->fb != 
-new_plane_state->fb, then use blocking commit?
-
-We can try that out.
-
-holding extra ref gets tricky IMO. In this way, the calls are balanced 
-in places we know.
-
-> I think a more correct approach would be to run a worker, waiting for
-> the commit to happen and then freeing the FBs.
+On 12/21/2024 9:00 PM, Dmitry Baryshkov wrote:
+> The MSM driver uses drm_atomic_helper_check() which mandates that none
+> of the atomic_check() callbacks toggles crtc_state->mode_changed.
+> Perform corresponding check before calling the drm_atomic_helper_check()
+> function.
 > 
-
-Hi Dmitry
-
-This option was tried . It gets very messy to handle it this way. Then 
-we realized that, the worker is going to try to do the same thing a 
-blocking commit does which is to wait for hw to finish scanout and then 
-cleanup planes. Hence this was preferred and is better IMO.
-
->>
->> BR,
->> -R
->>
->>> +       }
->>> +
->>>          return true;
->>>   }
->>>
->>>
->>> ---
->>> base-commit: 866e43b945bf98f8e807dfa45eca92f931f3a032
->>> change-id: 20250108-async-disable-fix-cc1b9a1d5b19
->>>
->>> Best regards,
->>> --
->>> Jessica Zhang <quic_jesszhan@quicinc.com>
->>>
+> Fixes: 8b45a26f2ba9 ("drm/msm/dpu: reserve cdm blocks for writeback in case of YUV output")
+> Reported-by: Simona Vetter <simona.vetter@ffwll.ch>
+> Closes: https://lore.kernel.org/dri-devel/ZtW_S0j5AEr4g0QW@phenom.ffwll.local/
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 32 +++++++++++++++++++++++++----
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h |  4 ++++
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c     | 26 +++++++++++++++++++++++
+>   drivers/gpu/drm/msm/msm_atomic.c            | 13 +++++++++++-
+>   drivers/gpu/drm/msm/msm_kms.h               |  7 +++++++
+>   5 files changed, 77 insertions(+), 5 deletions(-)
 > 
-> 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> index 209e6fb605b2d8724935b62001032e7d39540366..b7c3aa8d0e2ca58091deacdeaccb0819d2bf045c 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> @@ -753,6 +753,34 @@ static void dpu_encoder_assign_crtc_resources(struct dpu_kms *dpu_kms,
+>   	cstate->num_mixers = num_lm;
+>   }
+>   
+> +/**
+> + * dpu_encoder_virt_check_mode_changed: check if full modeset is required
+> + * @drm_enc:    Pointer to drm encoder structure
+> + * @crtc_state:	Corresponding CRTC state to be checked
+> + * @conn_state: Corresponding Connector's state to be checked
+> + *
+> + * Check if the changes in the object properties demand full mode set.
+> + */
+> +int dpu_encoder_virt_check_mode_changed(struct drm_encoder *drm_enc,
+> +					struct drm_crtc_state *crtc_state,
+> +					struct drm_connector_state *conn_state)
+> +{
+> +	struct dpu_encoder_virt *dpu_enc = to_dpu_encoder_virt(drm_enc);
+> +	struct msm_display_topology topology;
+> +
+> +	DPU_DEBUG_ENC(dpu_enc, "\n");
+> +
+> +	/* Using mode instead of adjusted_mode as it wasn't computed yet */
+> +	topology = dpu_encoder_get_topology(dpu_enc, &crtc_state->mode, crtc_state, conn_state);
+> +
+> +	if (topology.needs_cdm && !dpu_enc->cur_master->hw_cdm)
+> +		crtc_state->mode_changed = true;
+> +	else if (!topology.needs_cdm && dpu_enc->cur_master->hw_cdm)
+> +		crtc_state->mode_changed = true;
+> +
+> +	return 0;
+> +}
+
+How will this work exactly?
+
+needs_cdm is set in the encoder's atomic_check which is called inside 
+drm_atomic_helper_check(). But this function is called before that.
+
+So needs_cdm will never hit.
+
+
+> +
+>   static int dpu_encoder_virt_atomic_check(
+>   		struct drm_encoder *drm_enc,
+>   		struct drm_crtc_state *crtc_state,
+> @@ -786,10 +814,6 @@ static int dpu_encoder_virt_atomic_check(
+>   
+>   	topology = dpu_encoder_get_topology(dpu_enc, adj_mode, crtc_state, conn_state);
+>   
+> -	if (topology.needs_cdm && !dpu_enc->cur_master->hw_cdm)
+> -		crtc_state->mode_changed = true;
+> -	else if (!topology.needs_cdm && dpu_enc->cur_master->hw_cdm)
+> -		crtc_state->mode_changed = true;
+>   	/*
+>   	 * Release and Allocate resources on every modeset
+>   	 */
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
+> index 92b5ee390788d16e85e195a664417896a2bf1cae..da133ee4701a329f566f6f9a7255f2f6d050f891 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
+> @@ -88,4 +88,8 @@ void dpu_encoder_cleanup_wb_job(struct drm_encoder *drm_enc,
+>   
+>   bool dpu_encoder_is_valid_for_commit(struct drm_encoder *drm_enc);
+>   
+> +int dpu_encoder_virt_check_mode_changed(struct drm_encoder *drm_enc,
+> +					struct drm_crtc_state *crtc_state,
+> +					struct drm_connector_state *conn_state);
+> +
+>   #endif /* __DPU_ENCODER_H__ */
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> index dae8a94d3366abfb8937d5f44d8968f1d0691c2d..e2d822f7d785dc0debcb28595029a3e2050b0cf4 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> @@ -446,6 +446,31 @@ static void dpu_kms_disable_commit(struct msm_kms *kms)
+>   	pm_runtime_put_sync(&dpu_kms->pdev->dev);
+>   }
+>   
+> +static int dpu_kms_check_mode_changed(struct msm_kms *kms, struct drm_atomic_state *state)
+> +{
+> +	struct drm_crtc_state *new_crtc_state;
+> +	struct drm_connector *connector;
+> +	struct drm_connector_state *new_conn_state;
+> +	int i;
+> +
+> +	for_each_new_connector_in_state(state, connector, new_conn_state, i) {
+> +		struct drm_encoder *encoder;
+> +
+> +		WARN_ON(!!new_conn_state->best_encoder != !!new_conn_state->crtc);
+> +
+> +		if (!new_conn_state->crtc || !new_conn_state->best_encoder)
+> +			continue;
+> +
+> +		new_crtc_state = drm_atomic_get_new_crtc_state(state, new_conn_state->crtc);
+> +
+> +		encoder = new_conn_state->best_encoder;
+> +
+> +		dpu_encoder_virt_check_mode_changed(encoder, new_crtc_state, new_conn_state);
+> +	}
+> +
+> +	return 0;
+> +}
+> +
+>   static void dpu_kms_flush_commit(struct msm_kms *kms, unsigned crtc_mask)
+>   {
+>   	struct dpu_kms *dpu_kms = to_dpu_kms(kms);
+> @@ -1049,6 +1074,7 @@ static const struct msm_kms_funcs kms_funcs = {
+>   	.irq             = dpu_core_irq,
+>   	.enable_commit   = dpu_kms_enable_commit,
+>   	.disable_commit  = dpu_kms_disable_commit,
+> +	.check_mode_changed = dpu_kms_check_mode_changed,
+>   	.flush_commit    = dpu_kms_flush_commit,
+>   	.wait_flush      = dpu_kms_wait_flush,
+>   	.complete_commit = dpu_kms_complete_commit,
+> diff --git a/drivers/gpu/drm/msm/msm_atomic.c b/drivers/gpu/drm/msm/msm_atomic.c
+> index a7a2384044ffdb13579cc9a10f56f8de9beca761..364df245e3a209094782ca1b47b752a729b32a5b 100644
+> --- a/drivers/gpu/drm/msm/msm_atomic.c
+> +++ b/drivers/gpu/drm/msm/msm_atomic.c
+> @@ -183,10 +183,16 @@ static unsigned get_crtc_mask(struct drm_atomic_state *state)
+>   
+>   int msm_atomic_check(struct drm_device *dev, struct drm_atomic_state *state)
+>   {
+> +	struct msm_drm_private *priv = dev->dev_private;
+> +	struct msm_kms *kms = priv->kms;
+>   	struct drm_crtc_state *old_crtc_state, *new_crtc_state;
+>   	struct drm_crtc *crtc;
+> -	int i;
+> +	int i, ret = 0;
+>   
+> +	/*
+> +	 * FIXME: stop setting allow_modeset and move this check to the DPU
+> +	 * driver.
+> +	 */
+>   	for_each_oldnew_crtc_in_state(state, crtc, old_crtc_state,
+>   				      new_crtc_state, i) {
+>   		if ((old_crtc_state->ctm && !new_crtc_state->ctm) ||
+> @@ -196,6 +202,11 @@ int msm_atomic_check(struct drm_device *dev, struct drm_atomic_state *state)
+>   		}
+>   	}
+>   
+> +	if (kms && kms->funcs && kms->funcs->check_mode_changed)
+> +		ret = kms->funcs->check_mode_changed(kms, state);
+> +	if (ret)
+> +		return ret;
+> +
+>   	return drm_atomic_helper_check(dev, state);
+>   }
+>   
+> diff --git a/drivers/gpu/drm/msm/msm_kms.h b/drivers/gpu/drm/msm/msm_kms.h
+> index e60162744c669773b6e5aef824a173647626ab4e..ec2a75af89b09754faef1a07adc9338f7d78161e 100644
+> --- a/drivers/gpu/drm/msm/msm_kms.h
+> +++ b/drivers/gpu/drm/msm/msm_kms.h
+> @@ -59,6 +59,13 @@ struct msm_kms_funcs {
+>   	void (*enable_commit)(struct msm_kms *kms);
+>   	void (*disable_commit)(struct msm_kms *kms);
+>   
+> +	/**
+> +	 * @check_mode_changed:
+> +	 *
+> +	 * Verify if the commit requires a full modeset on one of CRTCs.
+> +	 */
+> +	int (*check_mode_changed)(struct msm_kms *kms, struct drm_atomic_state *state);
+> +
+>   	/**
+>   	 * Prepare for atomic commit.  This is called after any previous
+>   	 * (async or otherwise) commit has completed.
 > 
 
