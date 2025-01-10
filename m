@@ -1,160 +1,328 @@
-Return-Path: <linux-arm-msm+bounces-44714-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-44715-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id EADE7A08A9C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jan 2025 09:44:31 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 674C2A08AD3
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jan 2025 09:59:44 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 16B5A3A8BC9
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jan 2025 08:44:26 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 8DDAB7A32A0
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jan 2025 08:59:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B1222207E19;
-	Fri, 10 Jan 2025 08:44:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 00909207A28;
+	Fri, 10 Jan 2025 08:59:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="oqhdcaDh"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="gFKxMwmX"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f47.google.com (mail-lf1-f47.google.com [209.85.167.47])
+Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C82E42080DB
-	for <linux-arm-msm@vger.kernel.org>; Fri, 10 Jan 2025 08:44:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF16F20896B
+	for <linux-arm-msm@vger.kernel.org>; Fri, 10 Jan 2025 08:59:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736498663; cv=none; b=YmguxPC61+1JH/hXb9mIK+zuTDcc4XkabR1ArH8eGYid7ki8aGlMmTG+DSSw1pUrAO6ej5R4ju/B1U37iMQHJ+D/0X+sr7IoQuKd+wjOJdx5gzMms91zudanIC8R+H9aiimqX6gOZ2OrT8/5Rn77Pqd7oHe/AEMippliEKCRpX0=
+	t=1736499572; cv=none; b=MaCSQ4IXesFsqaOHnqA572zib6enkNXmvkuhNovQM6bWJqRdRLdsIfnvH+wyVOgAjlh7+gPuU8I8LLsAsS0IBNtbxqpt9JkGSVWltSOwhb3JQgJlRG2nXGUWwStO0LUxsFPwleaFWGTjc3Iew8c8+S0dAU+ntjIDlAG20Iyyr1k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736498663; c=relaxed/simple;
-	bh=bcs5XrixjJuICcKrOi0QLiwMCzGybnpSV1jIYpcaEdk=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=CQKa9wsV9S/us7F+c2UZ2mGkGbGP3ioCRNP4liEQLnxZITNRQzaKK9RdJrwJ2uk0K9E2S7WAP4BUIL++H0+YpT7x5ebBVCSErK75NdPKksW5YGwkaVl/RFNdqvnHEv/sD77POS0583OinEG9RQa3aCa9CO12aWvevfZCCtnE7TQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=oqhdcaDh; arc=none smtp.client-ip=209.85.167.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
-Received: by mail-lf1-f47.google.com with SMTP id 2adb3069b0e04-540215984f0so2005894e87.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Jan 2025 00:44:20 -0800 (PST)
+	s=arc-20240116; t=1736499572; c=relaxed/simple;
+	bh=HXD+3vBFq3ftj+fQdTwmu+nD89WB1mRYA0tNbZJ/EaM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=R2gGJbXSU7+4rJ8JI1OYjrNEJzHXs+968fh6OlrYJvSskkR3ERCDAKo9++Pe+4Yz9vEABrEh5vPJOfC+PkOG9iZCew476EF4vBxEdUxxIJPcb86XIv7qHV9gtG2xXxzMqPkqcACpMPYakHpAn3TOHYqk6chYIiTBCcGW0hT+nP0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=gFKxMwmX; arc=none smtp.client-ip=209.85.128.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-43637977fa4so2186665e9.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Jan 2025 00:59:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1736498659; x=1737103459; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=3J6ybie5MZTohAU5zO4AHtHmlS6SVT///Z6RnwOTF0I=;
-        b=oqhdcaDhpg7uKVN/GIznd4jiSK2ORwiXk9h/zpw9FR245bEuGdgGwuv+iH7nlP+B8m
-         9zSJy/VKhvJMc6ppvhGlbHo0DpM4g+sUf+393Z8NQE5l644lXXhX/hc02MoRYreuPbqy
-         1r7QVc8llQBVdCfRPVAL+k/Y9s9TGUl8HgbN9u680Qy4aSKB90ejT4XD+RT9i7blL+NE
-         cGP+WYt29uNl4d9Gw2WB4t37qzpLJXDzmBUYGtIqQZ/70PnLzFAUzfmBXAjKu9Q09iGx
-         +l7IMfhAkeuAw4F38csY9kRhSxRMk/6yUGsObLAkdEDRMnEffvi9RyOJf1veWr4qfHlw
-         KPfg==
+        d=linaro.org; s=google; t=1736499569; x=1737104369; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+         :from:references:cc:to:subject:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=7hGLjdZowT5PE1ZxrLTVLx1p/trcvoJO2svUWorXuAc=;
+        b=gFKxMwmXEhmdfGIqlLZPA7m1MSuArnl8tgSDOVcMWoL/4MmYwrLpwry/CVFqLZmi84
+         mFg0ZV5Jxp2+dIGPFXQu6pZHjBLCyRRyrudd4tSlWI++81/hpX7P3vvaLCLjT85L8pCH
+         l08S3CbU4eHmmIXGxkX/lfMWBMYBVMXCWJQTET6KloPnb9NwgMOzJADEDTir/kuzDvsa
+         EsjItDb1pt81tjLR8Rp3z3WCERaFYFWDeuZ6z4qDXcHLAYvmYwF/iy9Qd+69bO0tIrjC
+         z2TUr/mEEk01jS1ujDfHuBSAo/AYxC8XFzg7bnNW44GYr41b3aNPAoBFQTY/BQ9cfxHZ
+         kwVw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736498659; x=1737103459;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=3J6ybie5MZTohAU5zO4AHtHmlS6SVT///Z6RnwOTF0I=;
-        b=e087bLqNH5r+G1A8EVbq16sdVCT44x+dPrDZeUN/YyO5yoOkL9oSGovuwpxrHuVIGi
-         KuIcvf5hi+QgVH4KWyepSaa5Q3Gez1JqS/vBAhZdhL7Uv/V8lEUO5aEDpri2pa6WEmaJ
-         hXSm5KFmIVGaw4Z9ZOEbPE5SBU3mxt4eFKlvTbBnR0o6myH/GMhuF+CExq8Rc9UjJwSq
-         jsbe1PvRqlqum/YLsyJHyUaQd6iRsRDpLyv5QSx/baumiF3LTkjZAwgnLbFT0SAh0PTV
-         0sq8OMYa+LfoF2v2bZnn/fgCt6y/4tvWqS6ihrOllHleZ2RA938QgtU4wJRtBAv85gMS
-         LMKw==
-X-Forwarded-Encrypted: i=1; AJvYcCXPYgeOjba7OvUxc4nR5i4M+TneEH6+FOJtcj00mP6y0F0pEZlVoITyLMcJZhbNEYQg7Ysou5vxnTwnAtEg@vger.kernel.org
-X-Gm-Message-State: AOJu0YyFCUEjr53UZnazbZkdMN6zrWt3EZUVsnDKKr29xNwgKfTCQGfk
-	Vjhxd0/hYab2DB0/V1q8udPTmD45sHPcW34vo3dR2QFIKVLvDDeYTTu6hCL5fqtN9zpnI+ZLs2x
-	8Ho5SbvVRL1Qm7DVJ/z1O6C5VbZMl6LUAKe/PGA==
-X-Gm-Gg: ASbGncsvsdNPsc/tszlHGUiGJ9d5jtRkCg1wq9GmXZ3qn+45Q98BeX4mjh3U7f3p0Oi
-	/fR5/mcB/uSHDra4a7kA/QY9qvYbrLWaxrFKDO/yFusZayuV/Em20HBIDjKwga4SMf3sV
-X-Google-Smtp-Source: AGHT+IEyB2cuChMeX1r+nZtaJdP6Mzdmo0n9PGPsFhkwAW7ukTnXjzzz9a+MUocObbefl6A9T2AxU0IqAEz7Wjzjkhg=
-X-Received: by 2002:a05:6512:2399:b0:540:1ea7:44db with SMTP id
- 2adb3069b0e04-542845b1aedmr3480546e87.4.1736498658964; Fri, 10 Jan 2025
- 00:44:18 -0800 (PST)
+        d=1e100.net; s=20230601; t=1736499569; x=1737104369;
+        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+         :from:references:cc:to:subject:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=7hGLjdZowT5PE1ZxrLTVLx1p/trcvoJO2svUWorXuAc=;
+        b=Ad/GOYA+P/L823rCW0jyAlvC1limQ55a0i2v1GmprXF+RvGwTM4YdOh3tZcH4n+Rmr
+         3HLgAkxffdvzgIJ60zFsdSD1foeDHdZkoDZolRGg+8KmpFm3n4O6SWdDo21wp6Wy5sDq
+         ITj+ueWbgjekh7v3BoTKm++UNaxMOSMyNUiEHjxh8Ul4CMCSVcQEjV/x7XYwSgcT5saw
+         +4acDcSjuwSaCQ3dQ3dBwSWcFp1z5WqtJmh6/SrTfgwBo0rlWjDFklMmeDm1Bb/N9k1c
+         Mh8wgc+Ca8wP9He1ZCHWl1NDaB+6l1wbIJ75QJ5touViKOKPpt0tQFzFyGDhapT8oBGw
+         FKUg==
+X-Forwarded-Encrypted: i=1; AJvYcCWLHcf9SBzg9LwLeA0YRU26IuXTDa4qSif/p09BqrlsGbNHr+5zJ6VGr90u75u+gM0NnHVI9vZAUEvSk8W0@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw3yc16/C1MgUbVFYne2Rvd2grHYJGQrnDtC8/j6CCNsqmHJRL1
+	8wBRZa3yf9nIhAp7DW2ehAG5TuPPejeSLfH9PGTLL/hXU3ru38nGABzx+n3dcdQ=
+X-Gm-Gg: ASbGncuQvMfrVxkPoi/LKFaW0jZ93etMeS1xJj+uajd+R3b1kw/6gbRcBtjyFwXb1Da
+	mrnvT8cfm3fXbMPg/BYUhZGJxqb57kqKj5EL0mRleC7d9fMGCXdHkpMsEtLACV41U/ncYhCbjNR
+	QkvuXYE5k9OvbVVlBFTIc8IqSb/FMoRKCcSPq199gJDN8tcrlMI50D/vTD6utoxztrMStJ2tZ8n
+	ZBfisiI99Yr0rhX8mSgwjp32ZWsBIjXDXmG+Jhv/ChqcoCHUq1RcU5Caxs311EFafTUS0FvQlj1
+X-Google-Smtp-Source: AGHT+IEwkrz+PoZxV4MO0Kjo8rXrqQ8ksbadzeeixn9+7H03IOjhaq561a8mPD+Elnwcr7igIHcNDw==
+X-Received: by 2002:a05:600c:4e52:b0:434:a339:ec67 with SMTP id 5b1f17b1804b1-436eba35780mr19968995e9.3.1736499569224;
+        Fri, 10 Jan 2025 00:59:29 -0800 (PST)
+Received: from [192.168.1.20] ([178.197.223.165])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-436e2e92dc4sm79327445e9.39.2025.01.10.00.59.27
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 10 Jan 2025 00:59:28 -0800 (PST)
+Message-ID: <4fc7fdd5-36cd-42e6-af4a-e0e429f9f50b@linaro.org>
+Date: Fri, 10 Jan 2025 09:59:26 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20241213041958.202565-1-ebiggers@kernel.org>
-In-Reply-To: <20241213041958.202565-1-ebiggers@kernel.org>
-From: Bartosz Golaszewski <brgl@bgdev.pl>
-Date: Fri, 10 Jan 2025 09:44:07 +0100
-X-Gm-Features: AbW1kvYIJl4nVvnVQIFwQlGZKMe8mAAA_MH2MqnfAcbAm7yp2J-zmj2cn1w9I5U
-Message-ID: <CAMRc=MdeZ_k9z+ZKW1ub0m9ymh3eABUU7ZRPY9TYHM_fc+D+qQ@mail.gmail.com>
-Subject: Re: [PATCH v10 00/15] Support for hardware-wrapped inline encryption keys
-To: Eric Biggers <ebiggers@kernel.org>
-Cc: linux-block@vger.kernel.org, linux-fscrypt@vger.kernel.org, 
-	linux-mmc@vger.kernel.org, linux-scsi@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, Gaurav Kashyap <quic_gaurkash@quicinc.com>, 
-	Adrian Hunter <adrian.hunter@intel.com>, Alim Akhtar <alim.akhtar@samsung.com>, 
-	Avri Altman <avri.altman@wdc.com>, Bart Van Assche <bvanassche@acm.org>, 
-	Bjorn Andersson <andersson@kernel.org>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
-	"James E . J . Bottomley" <James.Bottomley@hansenpartnership.com>, Jens Axboe <axboe@kernel.dk>, 
-	Konrad Dybcio <konradybcio@kernel.org>, 
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, 
-	"Martin K . Petersen" <martin.petersen@oracle.com>, Ulf Hansson <ulf.hansson@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH RFC 08/11] drm/msm/dsi: Add support for SM8750
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Rob Clark <robdclark@gmail.com>, Abhinav Kumar
+ <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>,
+ Marijn Suijten <marijn.suijten@somainline.org>,
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>,
+ Krishna Manikandan <quic_mkrishn@quicinc.com>,
+ Jonathan Marek <jonathan@marek.ca>, Kuogee Hsieh <quic_khsieh@quicinc.com>,
+ Neil Armstrong <neil.armstrong@linaro.org>, linux-arm-msm@vger.kernel.org,
+ dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ Srini Kandagatla <srinivas.kandagatla@linaro.org>
+References: <20250109-b4-sm8750-display-v1-0-b3f15faf4c97@linaro.org>
+ <20250109-b4-sm8750-display-v1-8-b3f15faf4c97@linaro.org>
+ <3p7kjok5jzwvgt7dxuad26xgdkjd52v4gbtuudvgkeoj33skqn@afl2ddtsq7s2>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Content-Language: en-US
+Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
+ 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
+ D2GYIS41Kv4Isx2dEFh+/Q==
+In-Reply-To: <3p7kjok5jzwvgt7dxuad26xgdkjd52v4gbtuudvgkeoj33skqn@afl2ddtsq7s2>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Fri, Dec 13, 2024 at 5:20=E2=80=AFAM Eric Biggers <ebiggers@kernel.org> =
-wrote:
->
-> This patchset is based on next-20241212 and is also available in git via:
->
->     git fetch https://git.kernel.org/pub/scm/fs/fscrypt/linux.git wrapped=
--keys-v10
->
-> This patchset adds support for hardware-wrapped inline encryption keys, a
-> security feature supported by some SoCs.  It adds the block and fscrypt
-> framework for the feature as well as support for it with UFS on Qualcomm =
-SoCs.
->
-> This feature is described in full detail in the included Documentation ch=
-anges.
-> But to summarize, hardware-wrapped keys are inline encryption keys that a=
-re
-> wrapped (encrypted) by a key internal to the hardware so that they can on=
-ly be
-> unwrapped (decrypted) by the hardware.  Initially keys are wrapped with a
-> permanent hardware key, but during actual use they are re-wrapped with a
-> per-boot ephemeral key for improved security.  The hardware supports impo=
-rting
-> keys as well as generating keys itself.
->
-> This differs from the existing support for hardware-wrapped keys in the k=
-ernel
-> crypto API (also called "hardware-bound keys" in some places) in the same=
- way
-> that the crypto API differs from blk-crypto: the crypto API is for genera=
-l
-> crypto operations, whereas blk-crypto is for inline storage encryption.
->
-> This feature is already being used by Android downstream for several year=
-s
-> (https://source.android.com/docs/security/features/encryption/hw-wrapped-=
-keys),
-> but on other platforms userspace support will be provided via fscryptctl =
-and
-> tests via xfstests (I have some old patches for this that need to be upda=
-ted).
->
-> Maintainers, please consider merging the following preparatory patches fo=
-r 6.14:
->
->   - UFS / SCSI tree: patches 1-4
->   - MMC tree: patches 5-7
->   - Qualcomm / MSM tree: patch 8
->
+On 10/01/2025 00:18, Dmitry Baryshkov wrote:
+> On Thu, Jan 09, 2025 at 02:08:35PM +0100, Krzysztof Kozlowski wrote:
+>> Add support for DSI PHY v7.0 on Qualcomm SM8750 SoC which comes with two
+>> differences worth noting:
+>>
+>> 1. ICODE_ACCUM_STATUS_LOW and ALOG_OBSV_BUS_STATUS_1 registers - their
+>>    offsets were just switched.  Currently these registers are not used
+>>    in the driver, so the easiest is to document both but keep them
+>>    commented out to avoid conflict.
+>>
+>> 2. DSI PHY PLLs, the parents of pixel and byte clocks, cannot be used as
+>>    parents before they are prepared and initial rate is set.  Therefore
+>>    assigned-clock-parents are not working here and driver is responsible
+>>    for reparenting clocks with proper procedure: see dsi_clk_init_6g_v2_9().
+> 
+> Isn't it a description of CLK_SET_PARENT_GATE and/or
 
-IIUC The following patches will have to wait for the v6.15 cycle?
+No - must be gated accross reparent - so opposite.
 
-[PATCH v10 9/15] soc: qcom: ice: make qcom_ice_program_key() take
-struct blk_crypto_key
-[PATCH v10 10/15] blk-crypto: add basic hardware-wrapped key support
-[PATCH v10 11/15] blk-crypto: show supported key types in sysfs
-[PATCH v10 12/15] blk-crypto: add ioctls to create and prepare
-hardware-wrapped keys
-[PATCH v10 13/15] fscrypt: add support for hardware-wrapped keys
-[PATCH v10 14/15] soc: qcom: ice: add HWKM support to the ICE driver
-[PATCH v10 15/15] ufs: qcom: add support for wrapped keys
+> CLK_OPS_PARENT_ENABLE ?
 
-Bartosz
+Yes, but does not work. Probably enabling parent, before
+assigned-clocks-parents, happens still too early:
+
+[    1.623554] DSI PLL(0) lock failed, status=0x00000000
+[    1.623556] PLL(0) lock failed
+[    1.624650] ------------[ cut here ]------------
+[    1.624651] disp_cc_mdss_byte0_clk_src: rcg didn't update its
+configuration.
+
+Or maybe something is missing in the DSI PHY PLL driver?
+
+> 
+>>
+>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>> ---
+>>  drivers/gpu/drm/msm/dsi/dsi.h                      |  2 +
+>>  drivers/gpu/drm/msm/dsi/dsi_cfg.c                  | 25 +++++++
+>>  drivers/gpu/drm/msm/dsi/dsi_cfg.h                  |  1 +
+>>  drivers/gpu/drm/msm/dsi/dsi_host.c                 | 80 ++++++++++++++++++++++
+>>  drivers/gpu/drm/msm/dsi/phy/dsi_phy.c              |  2 +
+>>  drivers/gpu/drm/msm/dsi/phy/dsi_phy.h              |  1 +
+>>  drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c          | 78 +++++++++++++++++++--
+>>  .../gpu/drm/msm/registers/display/dsi_phy_7nm.xml  | 14 ++++
+> 
+> Please separate DSI and PHY changes.
+> 
+>>  8 files changed, 197 insertions(+), 6 deletions(-)
+>>
+>> diff --git a/drivers/gpu/drm/msm/dsi/dsi_cfg.c b/drivers/gpu/drm/msm/dsi/dsi_cfg.c
+>> index 7754dcec33d06e3d6eb8a9d55e53f24af073adb9..e2a8d6fcc45b6c207a3018ea7c8744fcf34dabd2 100644
+>> --- a/drivers/gpu/drm/msm/dsi/dsi_cfg.c
+>> +++ b/drivers/gpu/drm/msm/dsi/dsi_cfg.c
+>> @@ -205,6 +205,17 @@ static const struct msm_dsi_config sm8650_dsi_cfg = {
+>>  	},
+>>  };
+>>  
+>> +static const struct msm_dsi_config sm8750_dsi_cfg = {
+>> +	.io_offset = DSI_6G_REG_SHIFT,
+>> +	.regulator_data = sm8650_dsi_regulators,
+>> +	.num_regulators = ARRAY_SIZE(sm8650_dsi_regulators),
+>> +	.bus_clk_names = dsi_v2_4_clk_names,
+>> +	.num_bus_clks = ARRAY_SIZE(dsi_v2_4_clk_names),
+>> +	.io_start = {
+>> +		{ 0xae94000, 0xae96000 },
+>> +	},
+>> +};
+>> +
+>>  static const struct regulator_bulk_data sc7280_dsi_regulators[] = {
+>>  	{ .supply = "vdda", .init_load_uA = 8350 },	/* 1.2 V */
+>>  	{ .supply = "refgen" },
+>> @@ -257,6 +268,18 @@ static const struct msm_dsi_host_cfg_ops msm_dsi_6g_v2_host_ops = {
+>>  	.calc_clk_rate = dsi_calc_clk_rate_6g,
+>>  };
+>>  
+>> +static const struct msm_dsi_host_cfg_ops msm_dsi_6g_v2_9_host_ops = {
+>> +	.link_clk_set_rate = dsi_link_clk_set_rate_6g_v2_9,
+>> +	.link_clk_enable = dsi_link_clk_enable_6g,
+>> +	.link_clk_disable = dsi_link_clk_disable_6g,
+>> +	.clk_init_ver = dsi_clk_init_6g_v2_9,
+>> +	.tx_buf_alloc = dsi_tx_buf_alloc_6g,
+>> +	.tx_buf_get = dsi_tx_buf_get_6g,
+>> +	.tx_buf_put = dsi_tx_buf_put_6g,
+>> +	.dma_base_get = dsi_dma_base_get_6g,
+>> +	.calc_clk_rate = dsi_calc_clk_rate_6g,
+>> +};
+>> +
+>>  static const struct msm_dsi_cfg_handler dsi_cfg_handlers[] = {
+>>  	{MSM_DSI_VER_MAJOR_V2, MSM_DSI_V2_VER_MINOR_8064,
+>>  		&apq8064_dsi_cfg, &msm_dsi_v2_host_ops},
+>> @@ -300,6 +323,8 @@ static const struct msm_dsi_cfg_handler dsi_cfg_handlers[] = {
+>>  		&sm8550_dsi_cfg, &msm_dsi_6g_v2_host_ops},
+>>  	{MSM_DSI_VER_MAJOR_6G, MSM_DSI_6G_VER_MINOR_V2_8_0,
+>>  		&sm8650_dsi_cfg, &msm_dsi_6g_v2_host_ops},
+>> +	{MSM_DSI_VER_MAJOR_6G, MSM_DSI_6G_VER_MINOR_V2_9_0,
+>> +		&sm8750_dsi_cfg, &msm_dsi_6g_v2_9_host_ops},
+>>  };
+>>  
+>>  const struct msm_dsi_cfg_handler *msm_dsi_cfg_get(u32 major, u32 minor)
+>> diff --git a/drivers/gpu/drm/msm/dsi/dsi_cfg.h b/drivers/gpu/drm/msm/dsi/dsi_cfg.h
+>> index 120cb65164c1ba1deb9acb513e5f073bd560c496..859c279afbb0377d16f8406f3e6b083640aff5a1 100644
+>> --- a/drivers/gpu/drm/msm/dsi/dsi_cfg.h
+>> +++ b/drivers/gpu/drm/msm/dsi/dsi_cfg.h
+>> @@ -30,6 +30,7 @@
+>>  #define MSM_DSI_6G_VER_MINOR_V2_6_0	0x20060000
+>>  #define MSM_DSI_6G_VER_MINOR_V2_7_0	0x20070000
+>>  #define MSM_DSI_6G_VER_MINOR_V2_8_0	0x20080000
+>> +#define MSM_DSI_6G_VER_MINOR_V2_9_0	0x20090000
+>>  
+>>  #define MSM_DSI_V2_VER_MINOR_8064	0x0
+>>  
+>> diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
+>> index 2218d4f0c5130a0b13f428e89aa30ba2921da572..ced28ee61eedc0a82da9f1d0792f17ee2a5538c4 100644
+>> --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
+>> +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
+>> @@ -119,6 +119,15 @@ struct msm_dsi_host {
+>>  	struct clk *pixel_clk;
+>>  	struct clk *byte_intf_clk;
+>>  
+>> +	/*
+>> +	 * Clocks which needs to be properly parented between DISPCC and DSI PHY
+>> +	 * PLL:
+>> +	 */
+>> +	struct clk *byte_src_clk;
+>> +	struct clk *pixel_src_clk;
+>> +	struct clk *dsi_pll_byte_clk;
+>> +	struct clk *dsi_pll_pixel_clk;
+>> +
+>>  	unsigned long byte_clk_rate;
+>>  	unsigned long byte_intf_clk_rate;
+>>  	unsigned long pixel_clk_rate;
+>> @@ -269,6 +278,38 @@ int dsi_clk_init_6g_v2(struct msm_dsi_host *msm_host)
+>>  	return ret;
+>>  }
+>>  
+>> +int dsi_clk_init_6g_v2_9(struct msm_dsi_host *msm_host)
+>> +{
+>> +	struct device *dev = &msm_host->pdev->dev;
+>> +	int ret;
+>> +
+>> +	ret = dsi_clk_init_6g_v2(msm_host);
+>> +	if (ret)
+>> +		return ret;
+>> +
+>> +	msm_host->byte_src_clk = devm_clk_get(dev, "byte_src");
+>> +	if (IS_ERR(msm_host->byte_src_clk))
+>> +		return dev_err_probe(dev, PTR_ERR(msm_host->byte_src_clk),
+>> +				     "can't get byte_src clock\n");
+>> +
+>> +	msm_host->dsi_pll_byte_clk = devm_clk_get(dev, "dsi_pll_byte");
+>> +	if (IS_ERR(msm_host->dsi_pll_byte_clk))
+>> +		return dev_err_probe(dev, PTR_ERR(msm_host->dsi_pll_byte_clk),
+>> +				     "can't get dsi_pll_byte clock\n");
+>> +
+>> +	msm_host->pixel_src_clk = devm_clk_get(dev, "pixel_src");
+>> +	if (IS_ERR(msm_host->pixel_src_clk))
+>> +		return dev_err_probe(dev, PTR_ERR(msm_host->pixel_src_clk),
+>> +				     "can't get pixel_src clock\n");
+>> +
+>> +	msm_host->dsi_pll_pixel_clk = devm_clk_get(dev, "dsi_pll_pixel");
+>> +	if (IS_ERR(msm_host->dsi_pll_pixel_clk))
+>> +		return dev_err_probe(dev, PTR_ERR(msm_host->dsi_pll_pixel_clk),
+>> +				     "can't get dsi_pll_pixel clock\n");
+> 
+> How is this going to work in the bonded DSI mode when DSI1 is being fed
+> by the DSI0 PLL? For existing platforms this is being handled by
+> changing the parents in DT.
+
+I don't see the problem - you just put different clock as input in DTS?
+
+Please trim your replies, so we won't need to keep scrolling to figure
+out that there is nothing more to read.
+
+Best regards,
+Krzysztof
 
