@@ -1,185 +1,139 @@
-Return-Path: <linux-arm-msm+bounces-44745-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-44746-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 97ADAA094BA
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jan 2025 16:11:48 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1863EA094F5
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jan 2025 16:21:37 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id D1C467A318D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jan 2025 15:11:27 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 3289E7A192B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jan 2025 15:21:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9A13C211468;
-	Fri, 10 Jan 2025 15:11:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5238A2116EC;
+	Fri, 10 Jan 2025 15:21:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Y9+HzQ0F"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="XRRFA/0L"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFF1721018F;
-	Fri, 10 Jan 2025 15:11:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9946C211298
+	for <linux-arm-msm@vger.kernel.org>; Fri, 10 Jan 2025 15:21:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736521891; cv=none; b=bACPRQimgg4k0EtWrUyWSc6Jxe4uIu9hkutEb2hXpntICTiDTjd2+7y2/XKEB3U7gEeOvOOVvdmWhIPoy9tFsPM/P8vEREVZc4QvjUir4Pn4IBVrqNy6P8/uu6EWi0pWEtzIXYLK9gKkgemhs5eToVFLoEmbZ6hSs0raWbKLaVM=
+	t=1736522488; cv=none; b=lFMLzOqiIF4CbnY1N0uiEYShCIlsh9P7MQYDNXsaYSkusc9BnehRE+6zPGP8isvPQrw5k/tUDF8n69TtPZe1paRG7bicbIkYDh3UZl2tcIXRz6hLXuK2POa1Mqcq2mA164VJ2BfeIutWPUZS+1FbprcQ9jD3aNH1tc9gITqGZdw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736521891; c=relaxed/simple;
-	bh=3AWBDR51k8EjmvzZKZZF0lUu83ZkotqIpvqLk14BTTg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=P+p0cVuVW5TDU+R/4BxCYhZuZaM95f7KDjjee1ydmvQ4rYgZsjaBBtACbmroryKQl2sM33pBD3TwoBd0j/7N2QXO/yTCfPzYbDy68eFxMFOB8ySLBPB+7llN+hC63+SWDLTFBI9HkrFQLADKONFjGtmfH6QpiRxZMHrGg1SARU4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Y9+HzQ0F; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50ABEmlr029611;
-	Fri, 10 Jan 2025 15:11:25 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	XWP9D22463TG461zzS/0GqrlDIt8bqUaXD/50HiqKwo=; b=Y9+HzQ0F/cwW/LhQ
-	mZ8Bjt7PQTK8dZU7xDCpDQFGtY+6PM6VWXA8zK0p7Sd4ayO174KEmXvV/fK+UDvk
-	APr15gqGYf7Qnrf+wFbWQ5mh3HaiL8utunyCIVYVaYbnJOhQHIvfyQaLnHY9w+Ud
-	2Ve2Dx1uwwJ/VvfpH5dYBQrhpQSYcKh6MCuEgwKyrkwjpODdlBW5WP4dpQ81F2ak
-	eZwPaP2+sD+BF1EQ0ui7V9z30UvGpTBUoX68UlXPbqSaM9A8vWjFpgYFm8HDXNl7
-	4GmfWC3Xoxru/pxiQJWNejS4z8McZUE2wiP5gsJT7FghGCpeDSRSOpQICm7wx7f9
-	KrVnAA==
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4432gq0mjb-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 10 Jan 2025 15:11:24 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 50AFBNP8002130
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 10 Jan 2025 15:11:23 GMT
-Received: from [10.239.97.152] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 10 Jan
- 2025 07:11:17 -0800
-Message-ID: <287d8fb9-8313-480b-b2c7-0b24dd2d82bd@quicinc.com>
-Date: Fri, 10 Jan 2025 23:11:15 +0800
+	s=arc-20240116; t=1736522488; c=relaxed/simple;
+	bh=JnqFWSB3iJHN2sZQAq8AP/OtACXVIFWvAsbe/hFx6B8=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=gvsummD2RoR4J7uJMhU9MWP9j9mMOHBSZUAHmBYNHLFTiQipbr3ajYI4pSuiwPDnT8y7tj1RikkWD8qeqAvsmwiTxZkXYw0pXxj88mjRjGbVw8smIgcBOpy1lPGohRxbj7EBK0KUlITzA+w/F+2sYeBJt3Cds5bR+2sw7zsFL/0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=XRRFA/0L; arc=none smtp.client-ip=209.85.128.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-436ce2ab251so16602245e9.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Jan 2025 07:21:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1736522484; x=1737127284; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=/mYQvssNBwc29hpj1QqQP20JVpNfZ61yAfUKzfc2V4o=;
+        b=XRRFA/0LWs/CtReS7Ed5BHM7z8sYLVaMYgRsQGz2cDeiJaJPL8hN94Pc4iWM/mirWv
+         /mpSvf5o67MwhCOj/B8CbtLXlox7mTgxPx7Fo1/tQuNEFaXkChpKWH0jR+evCUwdCt/k
+         mgjfZPPKMBghNsZJCVF/Nz0Ab9wzvZUHeSZ3JvdLh0MzHXE7nVuQGXyKngeW/lIl8J94
+         ksXIqGCKXSPb/wzXHUQnmmr3jYJa1mtp9hIihipfU4560aRjWpAgEaRFyTIg2Xf2hOtz
+         OU893NtR3lwR+zd8kaZBUR4lYttFZHI6rsW0GB4D0Wj3IwLK6Zvm6sr2TzYKmfmDfVKA
+         8wRw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1736522484; x=1737127284;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=/mYQvssNBwc29hpj1QqQP20JVpNfZ61yAfUKzfc2V4o=;
+        b=jHa/IZyZG+VsHkYzR1SVzPUuTe1N7S2SkOUzFkQViHGwSPaN88uZCM23FL0pTgHgEJ
+         RzQ97+LiB/JpUrWgBGa+5CEWJE2NJll+VS/YVL+jWVgeUxjFgr3x/Ba3qVsXCmJadyFr
+         yo/NkfipNWNWnxq5vQ6tmxJbV655fmaNnEOOV1HJnq2vsCO30QU65llXsXVXG+XDW5qH
+         LCcpKjEKTgVJqwwJ+uuXhnDPF2yfvub0IUIeKmPphKuI8YBsYPDSCAnoaMw4E24/Mr4I
+         IBv2Iw7ppxuNTVIE/OpHxbrjj3CK0hnEq12jG53fURJM8WlTByKELPe8vL5ogUDBRO0F
+         vmCA==
+X-Gm-Message-State: AOJu0YyFmOyr3+HtNVBgQqRdkQ7nKkcSFK3c5Fuf0tjZ8Z1IoBj8Q+dx
+	luBnuKhYFCWxklpSn9Ymkz6JuUblD/lHfRKFM48QiZLB/MD4XdT0prT++q3M7J4=
+X-Gm-Gg: ASbGncvsLsjILIqohZ98jrI9UUN82seQbcr9RNYiHJxllNbKNfaMt7DuBafZ8WeD+Gi
+	0QuwL01xwPtmLcgBUM+7vjqhzvux4Pghhs7F/jAXs1FuqV45kZbTBPjGGWRZKM9pF5GY3v3NQC3
+	HyBuuq+nHw5VMWtLfG8Jq4t1x8x2gEWQ8OojUkhMKAIIyVt2ZLOdln/SE3uEzHDJYBPZEstK8ac
+	xUpFgSh7zHyqUJUgaLCOF6lpJR1WDas8GPyXvGi2xQ47wvQ9oktmxt7/q858vQJWrcd46RPFr5Y
+	GA==
+X-Google-Smtp-Source: AGHT+IENrY8NBnNToJJmSGO34BCcM4kSpUFWWK4T1gTw9QcuOAyOmPgeSHcQAZlYTWlrWi2W3O57tQ==
+X-Received: by 2002:a05:600c:3c82:b0:434:a10f:c3 with SMTP id 5b1f17b1804b1-436e2696082mr101321745e9.9.1736522484024;
+        Fri, 10 Jan 2025 07:21:24 -0800 (PST)
+Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:52eb:f6ff:feb3:451a])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-436e2e92794sm88714725e9.37.2025.01.10.07.21.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 10 Jan 2025 07:21:23 -0800 (PST)
+From: Neil Armstrong <neil.armstrong@linaro.org>
+Subject: [PATCH 0/4] arm64: qcom: sm8650: add DDR, LLCC & L3 CPU bandwidth
+ scaling
+Date: Fri, 10 Jan 2025 16:21:17 +0100
+Message-Id: <20250110-topic-sm8650-ddr-bw-scaling-v1-0-041d836b084c@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 00/16] media: qcom: camss: Add sm8550 support
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>, <rfoss@kernel.org>,
-        <todor.too@gmail.com>, <mchehab@kernel.org>, <robh@kernel.org>,
-        <krzk+dt@kernel.org>, <conor+dt@kernel.org>,
-        <vladimir.zapolskiy@linaro.org>, <hverkuil@xs4all.nl>
-CC: <quic_eberman@quicinc.com>, <linux-media@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <kernel@quicinc.com>
-References: <20250108143733.2761200-1-quic_depengs@quicinc.com>
- <cc1f4718-2553-4c49-b1c8-6f6f3bbeeb56@linaro.org>
-Content-Language: en-US
-From: Depeng Shao <quic_depengs@quicinc.com>
-In-Reply-To: <cc1f4718-2553-4c49-b1c8-6f6f3bbeeb56@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: iihgphZTPHTr3VXre_fGV97N8PfQrIBV
-X-Proofpoint-ORIG-GUID: iihgphZTPHTr3VXre_fGV97N8PfQrIBV
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- malwarescore=0 adultscore=0 clxscore=1015 spamscore=0 suspectscore=0
- lowpriorityscore=0 phishscore=0 impostorscore=0 mlxscore=0 bulkscore=0
- mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2501100119
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAO06gWcC/x3MwQqDMAwA0F+RnBdo6izqrwwP2qYa2Ko0sgniv
+ 694fJd3gnIWVuirEzJ/RWVNBfSowC9jmhklFIM1tjFEBvd1E4/6aV1jMISM0w/Vj29JM0ZqXR2
+ njuzTQRm2zFGOe38N1/UHbTvQLW0AAAA=
+X-Change-ID: 20250110-topic-sm8650-ddr-bw-scaling-f1863fb91246
+To: Georgi Djakov <djakov@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Sibi Sankar <quic_sibis@quicinc.com>, 
+ Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org, 
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ Neil Armstrong <neil.armstrong@linaro.org>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=939;
+ i=neil.armstrong@linaro.org; h=from:subject:message-id;
+ bh=JnqFWSB3iJHN2sZQAq8AP/OtACXVIFWvAsbe/hFx6B8=;
+ b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBngTrwbhAkA4yrWtOiKbdeTc4YW6EHqsy3ZrZaur7C
+ Az+xEoSJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZ4E68AAKCRB33NvayMhJ0VkoEA
+ C3v9ea9whcNFKPh8APJpLKz1PP4DiRYa9Ds6q36PsRQVY1raZr3k7F8vFrwSI+LvcATsVWD5jFMqMH
+ pF8DhjsBZ2bfYMo1QOd2rhGHLWJK5Gpd6jS4L2NyLxMgN62+83oEuozkBa9RUtfFx7/EaLOIPVAtlE
+ SfvoEoRMSwso4zEZMYNUvIGL+jMHaElk131LFdtw5DFpkHjZ2eYjzuEniPLsVNQr63fcrCN1GCWkDG
+ n87lGQuEwdnYoA7FpUKFMRbL7VOngpmW5ShadVu5bbOsUcPi2OdujS95AFltAazTGcdwu5HNF9AJDV
+ GcgsuC4dsQvB1KD2lN4YF1D+63GwdTde+k4VK+OrzXKbSsrPX1aeTWF9sCQyba7BpndYERUryqOi9I
+ Nnf/l9sIUI00zqbDwhJVS1k3ofev9XrxOrBrrcFMJ8yRmlX1PQE8NKUT74XcVrC7Qd86XmWxpJ92iv
+ +DYuWNUaK3BQnJ27nn2PJ5v07ETMrMiILwP1AzdJb2+j5KfoDqzBllQql8s6+uFfioCdr7m6l8Xcr5
+ o8grkpX5Obnu+WWkFDTlETyxOKmD7x1bL6rgkYMErpKyQ+jnBWGCaTLd/hE26evIZKcXgz6YYAIEGE
+ 51EGWtPGlZz2fE80qooreWotG9DNxFowVetkLZ1uVf0cF0c+IR3VlP/dctRQ==
+X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
+ fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
 
-Hi Bryan,
+Add the OSM L3 controller node then add the necessary interconnect
+properties with the appropriate OPP table for each CPU cluster to
+allow the DDR, LLCC & L3 CPU bandwidth to scale along the CPU
+cluster operating point.
 
-On 1/10/2025 9:50 PM, Bryan O'Donoghue wrote:
-> On 08/01/2025 14:37, Depeng Shao wrote:
->> v8:
->> - Add correct version number for each patch - Krzysztof, Hans, Bryan
->> - Correct the copyright in patches [15/16] and [16/16]
->> - Link to v7: https://lore.kernel.org/all/20241225133523.4034820-1- 
->> quic_depengs@quicinc.com/
-> Patch #9 doesn't apply to media.git/next
-> 
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+---
+Neil Armstrong (4):
+      dt-bindings: interconnect: OSM L3: Document sm8650 OSM L3 compatible
+      arm64: dts: qcom: sm8650: add OSM L3 node
+      arm64: dts: qcom: sm8650: add cpu interconnect nodes
+      arm64: dts: qcom: add cpu OPP table with DDR, LLCC & L3 bandwidths
 
-Yes, below patch[1] is merged these days, so my series get conflict. I 
-will rebase my series and verify it next Monday.
+ .../bindings/interconnect/qcom,osm-l3.yaml         |   1 +
+ arch/arm64/boot/dts/qcom/sm8650.dtsi               | 938 +++++++++++++++++++++
+ 2 files changed, 939 insertions(+)
+---
+base-commit: 6ecd20965bdc21b265a0671ccf36d9ad8043f5ab
+change-id: 20250110-topic-sm8650-ddr-bw-scaling-f1863fb91246
 
-[1] Revert "media: qcom: camss: Restructure camss_link_entities"
+Best regards,
+-- 
+Neil Armstrong <neil.armstrong@linaro.org>
 
-> git remote add media git://linuxtv.org/media.git
-> git fetch media
-> 
-> git checkout -b media-next-25-10-01-camss-8550 media/next
-> 
-> b4 shazam 20250108143733.2761200-1-quic_depengs@quicinc.com
-> Grabbing thread from lore.kernel.org/all/20250108143733.2761200-1- 
-> quic_depengs@quicinc.com/t.mbox.gz
-> Checking for newer revisions
-> Grabbing search results from lore.kernel.org
-> Analyzing 17 messages in the thread
-> Analyzing 260 code-review messages
-> Checking attestation on all messages, may take a moment...
-> ---
->    ✓ [PATCH v8 1/16] media: qcom: camss: csiphy-3ph: Fix trivial 
-> indentation fault in defines
->    ✓ [PATCH v8 2/16] media: qcom: camss: csiphy-3ph: Remove redundant 
-> PHY init sequence control loop
->    ✓ [PATCH v8 3/16] media: qcom: camss: csiphy-3ph: Rename struct
->    ✓ [PATCH v8 4/16] media: qcom: camss: csiphy: Add an init callback to 
-> CSI PHY devices
->    ✓ [PATCH v8 5/16] media: qcom: camss: csiphy-3ph: Move CSIPHY 
-> variables to data field inside csiphy struct
->    ✓ [PATCH v8 6/16] media: qcom: camss: csiphy-3ph: Use an offset 
-> variable to find common control regs
->    ✓ [PATCH v8 7/16] media: qcom: camss: csid: Move common code into 
-> csid core
->    ✓ [PATCH v8 8/16] media: qcom: camss: vfe: Move common code into vfe 
-> core
->    ✓ [PATCH v8 9/16] media: qcom: camss: Add callback API for RUP update 
-> and buf done
->    ✓ [PATCH v8 10/16] media: qcom: camss: Add default case in 
-> vfe_src_pad_code
->    ✓ [PATCH v8 11/16] media: qcom: camss: csid: Only add TPG v4l2 ctrl 
-> if TPG hardware is available
->    ✓ [PATCH v8 12/16] dt-bindings: media: camss: Add qcom,sm8550-camss 
-> binding
->    ✓ [PATCH v8 13/16] media: qcom: camss: Add sm8550 compatible
->    ✓ [PATCH v8 14/16] media: qcom: camss: csiphy-3ph: Add Gen2 v2.1.2 
-> two-phase MIPI CSI-2 DPHY support
->    ✓ [PATCH v8 15/16] media: qcom: camss: Add CSID 780 support
->    ✓ [PATCH v8 16/16] media: qcom: camss: Add support for VFE 780
->    ---
->    ✓ Signed: DKIM/quicinc.com
-> ---
-> Total patches: 16
-> ---
->   Base: using specified base-commit 
-> 8155b4ef3466f0e289e8fcc9e6e62f3f4dceeac2
-> Applying: media: qcom: camss: csiphy-3ph: Fix trivial indentation fault 
-> in defines
-> Applying: media: qcom: camss: csiphy-3ph: Remove redundant PHY init 
-> sequence control loop
-> Applying: media: qcom: camss: csiphy-3ph: Rename struct
-> Applying: media: qcom: camss: csiphy: Add an init callback to CSI PHY 
-> devices
-> Applying: media: qcom: camss: csiphy-3ph: Move CSIPHY variables to data 
-> field inside csiphy struct
-> Applying: media: qcom: camss: csiphy-3ph: Use an offset variable to find 
-> common control regs
-> Applying: media: qcom: camss: csid: Move common code into csid core
-> Applying: media: qcom: camss: vfe: Move common code into vfe core
-> Applying: media: qcom: camss: Add callback API for RUP update and buf done
-> Patch failed at 0009 media: qcom: camss: Add callback API for RUP update 
-> and buf done
-> error: patch failed: drivers/media/platform/qcom/camss/camss.c:2454
-> 
-
-Thanks,
-Depeng
 
