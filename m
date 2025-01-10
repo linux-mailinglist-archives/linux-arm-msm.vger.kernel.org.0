@@ -1,165 +1,184 @@
-Return-Path: <linux-arm-msm+bounces-44728-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-44729-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 561A3A08E89
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jan 2025 11:53:05 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 28688A08ED2
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jan 2025 12:08:43 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5740C165244
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jan 2025 10:53:03 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 23D791643C8
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jan 2025 11:08:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2AE4B20551F;
-	Fri, 10 Jan 2025 10:53:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C2508205AB5;
+	Fri, 10 Jan 2025 11:08:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="p0n9mN3T"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ACjUZS+0"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECF3F1CF5CE;
-	Fri, 10 Jan 2025 10:52:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE7FB1AA1F6;
+	Fri, 10 Jan 2025 11:08:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736506380; cv=none; b=m2OAfne5CddAH9V6K1FSxQ/Lwy/wMRyJk4zWRUFU17T6mFy0jw6rtC3RssOkG1xdHZ/Z5ipsFBkJT8ZUVtBdnHF3ivTH78TXFZDJsyeQoPvKmXmyT52GgeXDi9CxlbKbWmUtkcT0XeCT5qmHobMDCSzfHiw/Mhp5TWOc/WlIcXc=
+	t=1736507317; cv=none; b=Tbu6Pzb3/VmK0mQZQDLP1dpPUZx7wArKveG7ou8TYtUoTedY0gOq4hYqBjHboCkzipP3Mmus1aB5iL3bQQD9e/7VmnVQtRR7gLe/eOCDywV5QIAa1uB5zwyNDa+d5DZ9e2yOBDd3zQnYY171Av36jJ18ZU/QaK+sClDTxBXq17o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736506380; c=relaxed/simple;
-	bh=Le7iqxPX0SAj4enuHruL9yUr5Hz6fjMftvdwLgFI6Mk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ppNphJpGRiQc+WIo82RSHn91t+P+9MHOhaSOXwMW55oGru6mQUQ25q1kMJCUDXwbGoIBkimpIINjjuKNkv6qctHR1QYyrqJfnXIJyyb3XOyzOST115t2j6raMOFFUwsgJBIU8OmfQqdEMA3HlXmYmRu/ZaYhbBJYr4lmW0MVj00=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=p0n9mN3T; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14527C4CED6;
-	Fri, 10 Jan 2025 10:52:54 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1736506379;
-	bh=Le7iqxPX0SAj4enuHruL9yUr5Hz6fjMftvdwLgFI6Mk=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=p0n9mN3TTuuhQEyKH9D+BYKZwweCbKmnAV3BQiC1R3SAMPjPu5DJl/QuMrUs7fSky
-	 /O5ydpAGd083kUXB5XLlWwu3+HbBj+CAGvWpUU4yysxvoHWaMVkU/axJSQhGsvvGeQ
-	 4EDZ0kn5vZ2DXJRNga8hR8CXSxIJmzlIYy5ymcMxjpWibkDA5W4u796usN0Q/T0rtI
-	 lYfsvmhHO4u6NumDuRWb1DZaS7xMbxP6ilQxlWNzICm2dJfLi1HFi9rREs/JtWhM3K
-	 lBDt1oidd3nrQ6ukFN4AQaryDJnYGFpx1CW07e9fxTVqd7ovG806RpFfZqLVLSpTo0
-	 xmgGVGviWPOUQ==
-Date: Fri, 10 Jan 2025 10:52:52 +0000
-From: Simon Horman <horms@kernel.org>
-To: Lei Wei <quic_leiwei@quicinc.com>
-Cc: Andrew Lunn <andrew+netdev@lunn.ch>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, Andrew Lunn <andrew@lunn.ch>,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	Russell King <linux@armlinux.org.uk>, netdev@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, quic_kkumarcs@quicinc.com,
-	quic_suruchia@quicinc.com, quic_pavir@quicinc.com,
-	quic_linchen@quicinc.com, quic_luoj@quicinc.com,
-	srinivas.kandagatla@linaro.org, bartosz.golaszewski@linaro.org,
-	vsmuthu@qti.qualcomm.com, john@phrozen.org
-Subject: Re: [PATCH net-next v4 3/5] net: pcs: qcom-ipq9574: Add PCS
- instantiation and phylink operations
-Message-ID: <20250110105252.GY7706@kernel.org>
-References: <20250108-ipq_pcs_net-next-v4-0-0de14cd2902b@quicinc.com>
- <20250108-ipq_pcs_net-next-v4-3-0de14cd2902b@quicinc.com>
- <20250108100358.GG2772@kernel.org>
- <8ac3167c-c8aa-4ddb-948f-758714df7495@quicinc.com>
+	s=arc-20240116; t=1736507317; c=relaxed/simple;
+	bh=hNKoypBhLRndMEGmScoAdpD+WezNA+2JSUxUIoLq1Dg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=qxfD4A2HTOo4VCcy2hyQE/SiPXjTJwg6ClBc5boMzVJAGcyS8KQ8e81azgEQ/TUZoK9Y5F2QsEAff6peZWgYAKRYGazSfqHNVgjSbrijf70V0Udt+hDVHCbIoSuUmJaTIS3ZxMcfmzcGT5bT7f2QOGZPK9AsWsrX7UPBHgiPnwA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ACjUZS+0; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50A9EhVc011902;
+	Fri, 10 Jan 2025 11:08:27 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	+0yzZDdrYg3hbTSZpwZKd9ZttAgN3bR9WgKodODYYuQ=; b=ACjUZS+0J35eP7Sb
+	9XRd9iYoy506cNaLu/YbmpWMXB+hJupbnK3Q7I4TyH9hXBCcS4uIvtFpXzorxjNT
+	JqgrtjxMgICoCU9mU5VEVfMOVoA3jMPosTkuJ9xLgtlmpKR942nWfbagdpKUErJz
+	1m6LsL4iRXOpaX91pcRaDsqx7+pBVXAulxovQqUZj0nEI9J5omzNAkVaT5jptkcp
+	Gsq1P/LVHPsc1VBk/n8heqrkmCC+C1E3ZRxWVO4+yLUxlKOR/4iCnARu/GIzC1Nm
+	BE6CI+6/y5YhgdG4Xsj+coTFV4SfHi/J145ztK/KarceCf34U8+UVHKWUIdIWi6k
+	8AtavA==
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4430rfga4w-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 10 Jan 2025 11:08:26 +0000 (GMT)
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 50AB8P1f006111
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 10 Jan 2025 11:08:25 GMT
+Received: from [10.151.36.43] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 10 Jan
+ 2025 03:08:21 -0800
+Message-ID: <1a5fc7e9-39fe-e527-efc3-1ea990bbb53b@quicinc.com>
+Date: Fri, 10 Jan 2025 16:38:18 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <8ac3167c-c8aa-4ddb-948f-758714df7495@quicinc.com>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.1
+Subject: Re: [PATCH] dmaengine: qcom: bam_dma: Fix BAM_RIVISON register
+ handling
+Content-Language: en-US
+To: Stephan Gerhold <stephan.gerhold@linaro.org>
+CC: <vkoul@kernel.org>, <ulf.hansson@linaro.org>, <robin.murphy@arm.com>,
+        <kees@kernel.org>, <u.kleine-koenig@baylibre.com>,
+        <linux-arm-msm@vger.kernel.org>, <av2082000@gmail.com>,
+        <dmaengine@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <djakov@kernel.org>, <quic_varada@quicinc.com>,
+        <quic_srichara@quicinc.com>
+References: <20250110051409.4099727-1-quic_mdalam@quicinc.com>
+ <Z4DzHs0gtbTPxq2_@linaro.org>
+From: Md Sadre Alam <quic_mdalam@quicinc.com>
+In-Reply-To: <Z4DzHs0gtbTPxq2_@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: ca4nQHDF_vm8ZX5iX4IsmUwFk4OodrLX
+X-Proofpoint-GUID: ca4nQHDF_vm8ZX5iX4IsmUwFk4OodrLX
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 adultscore=0
+ impostorscore=0 lowpriorityscore=0 spamscore=0 malwarescore=0
+ clxscore=1011 mlxscore=0 mlxlogscore=999 priorityscore=1501 phishscore=0
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2501100087
 
-On Thu, Jan 09, 2025 at 09:11:05PM +0800, Lei Wei wrote:
+
+
+On 1/10/2025 3:45 PM, Stephan Gerhold wrote:
+> On Fri, Jan 10, 2025 at 10:44:09AM +0530, Md Sadre Alam wrote:
+>> This patch fixes a bug introduced in the previous commit where the
+>> BAM_DESC_CNT_TRSHLD register was conditionally written based on BAM-NDP
+>> mode. Additionally, it addresses an issue where reading the BAM_REVISION
+>> register hangs if num-ees is not zero. A check has been added to prevent
+>> this.
+>>
+>> Cc: stable@vger.kernel.org
+>> Fixes: 57a7138d0627 ("dmaengine: qcom: bam_dma: Avoid writing unavailable register")
+>> Reported-by: Georgi Djakov <djakov@kernel.org>
+>> Link: https://lore.kernel.org/lkml/9ef3daa8-cdb1-49f2-8d19-a72d6210ff3a@kernel.org/
+>> Signed-off-by: Md Sadre Alam <quic_mdalam@quicinc.com>
+>> ---
+>>   drivers/dma/qcom/bam_dma.c | 23 ++++++++++++++++-------
+>>   1 file changed, 16 insertions(+), 7 deletions(-)
+>>
+>> diff --git a/drivers/dma/qcom/bam_dma.c b/drivers/dma/qcom/bam_dma.c
+>> index c14557efd577..2b88b27f2f91 100644
+>> --- a/drivers/dma/qcom/bam_dma.c
+>> +++ b/drivers/dma/qcom/bam_dma.c
+>> @@ -445,11 +445,15 @@ static void bam_reset(struct bam_device *bdev)
+>>   	writel_relaxed(val, bam_addr(bdev, 0, BAM_CTRL));
+>>   
+>>   	/* set descriptor threshold, start with 4 bytes */
+>> -	if (in_range(bdev->bam_revision, BAM_NDP_REVISION_START,
+>> -		     BAM_NDP_REVISION_END))
+>> +	if (!bdev->num_ees && in_range(bdev->bam_revision, BAM_NDP_REVISION_START,
+>> +				       BAM_NDP_REVISION_END))
+>>   		writel_relaxed(DEFAULT_CNT_THRSHLD,
+>>   			       bam_addr(bdev, 0, BAM_DESC_CNT_TRSHLD));
+>>   
+>> +	if (bdev->num_ees && !bdev->bam_revision)
+>> +		writel_relaxed(DEFAULT_CNT_THRSHLD, bam_addr(bdev, 0,
+>> +							     BAM_DESC_CNT_TRSHLD));
+>> +
+>>   	/* Enable default set of h/w workarounds, ie all except BAM_FULL_PIPE */
+>>   	writel_relaxed(BAM_CNFG_BITS_DEFAULT, bam_addr(bdev, 0, BAM_CNFG_BITS));
+>>   
+>> @@ -1006,10 +1010,14 @@ static void bam_apply_new_config(struct bam_chan *bchan,
+>>   			maxburst = bchan->slave.src_maxburst;
+>>   		else
+>>   			maxburst = bchan->slave.dst_maxburst;
+>> -		if (in_range(bdev->bam_revision, BAM_NDP_REVISION_START,
+>> -			     BAM_NDP_REVISION_END))
+>> +		if (!bdev->num_ees && in_range(bdev->bam_revision, BAM_NDP_REVISION_START,
+>> +					       BAM_NDP_REVISION_END))
+>>   			writel_relaxed(maxburst,
+>>   				       bam_addr(bdev, 0, BAM_DESC_CNT_TRSHLD));
+>> +
+>> +		if (bdev->num_ees && !bdev->bam_revision)
+>> +			writel_relaxed(DEFAULT_CNT_THRSHLD, bam_addr(bdev, 0,
+>> +								     BAM_DESC_CNT_TRSHLD));
 > 
+> I guess you meant writel_relaxed(maxburst, ...) here?
 > 
-> On 1/8/2025 6:03 PM, Simon Horman wrote:
-> > On Wed, Jan 08, 2025 at 10:50:26AM +0800, Lei Wei wrote:
-> > > This patch adds the following PCS functionality for the PCS driver
-> > > for IPQ9574 SoC:
-> > > 
-> > > a.) Parses PCS MII DT nodes and instantiate each MII PCS instance.
-> > > b.) Exports PCS instance get and put APIs. The network driver calls
-> > > the PCS get API to get and associate the PCS instance with the port
-> > > MAC.
-> > > c.) PCS phylink operations for SGMII/QSGMII interface modes.
-> > > 
-> > > Signed-off-by: Lei Wei <quic_leiwei@quicinc.com>
-> > 
-> > ...
-> > 
-> > > +static int ipq_pcs_enable(struct phylink_pcs *pcs)
-> > > +{
-> > > +	struct ipq_pcs_mii *qpcs_mii = phylink_pcs_to_qpcs_mii(pcs);
-> > > +	struct ipq_pcs *qpcs = qpcs_mii->qpcs;
-> > > +	int index = qpcs_mii->index;
-> > > +	int ret;
-> > > +
-> > > +	ret = clk_prepare_enable(qpcs_mii->rx_clk);
-> > > +	if (ret) {
-> > > +		dev_err(qpcs->dev, "Failed to enable MII %d RX clock\n", index);
-> > > +		return ret;
-> > > +	}
-> > > +
-> > > +	ret = clk_prepare_enable(qpcs_mii->tx_clk);
-> > > +	if (ret) {
-> > > +		dev_err(qpcs->dev, "Failed to enable MII %d TX clock\n", index);
-> > > +		return ret;
-> > 
-> > Hi Lei Wei,
-> > 
-> > I think you need something like the following to avoid leaking qpcs_mii->rx_clk.
-> > 
-> > 		goto err_disable_unprepare_rx_clk;
-> > 	}
-> > 
-> > 	return 0;
-> > 
-> > err_disable_unprepare_rx_clk:
-> > 	clk_disable_unprepare(qpcs_mii->rx_clk);
-> > 	return ret;
-> > }
-> > 
-> > Flagged by Smatch.
-> > 
+> This patch is quite confusing. We shouldn't duplicate the register
+> writes here just to have different handling for if (bdev->num_ees) and
+> if (!bdev->num_ees).
 > 
-> We had a conversation with Russell King in v2 that even if the phylink pcs
-> enable sequence encounters an error, it does not unwind the steps it has
-> already done. So we removed the call to unprepare in case of error here,
-> since an error here is essentially fatal in this path with no unwind
-> possibility.
+> Also, num-ees is unrelated to the question if the BAM is BAM-NDP or
+> BAM-Lite. Typically we specify qcom,num-ees in the device tree for a BAM
+> if the BAM is either:
 > 
-> https://lore.kernel.org/all/38d7191f-e4bf-4457-9898-bb2b186ec3c7@quicinc.com/
+>   - Controlled remotely (= powered on and initialized outside of Linux)
+>     This is the case for the SLIMbus BAM Georgi mentioned.
 > 
-> However to satisfy this smatch warning/error, we may need to revert back to
-> the adding the unprepare call in case of error. Request Russel to comment as
-> well if this is fine.
+>   - Powered remotely (= powered on outside of Linux, but must be
+>     initialized inside Linux)
+> 
+> Reading BAM_REVISION in these cases will hang in bam_init(), because we
+> cannot guarantee the BAM is already powered on when the bam_dma driver
+> is being loaded in Linux. We need to delay reading the register until
+> the BAM is up.
+> 
+> Given that these writes happen only for the !bdev->controlled_remotely
+> case, you could fix this more cleanly by reading the BAM revision inside
+> bam_reset().
+Thank you for review and suggestion. Will clean up in next revision.
 
-Thanks, I had missed that.
-
-I don't think there is a need to update the code just to make Smatch happy.
-Only if there is a real problem. Which, with the discussion at the link
-above in mind, does not seem to be the case here.
-
-> Is it possible to share the log/command-options of the smatch failure so
-> that we can reproduce this? Thanks.
-
-Sure, I hope this answers your question.
-
-Smatch can be found here https://github.com/error27/smatch/
-
-And I invoked it like this:
-$ PATH=".../smatch/bin:$PATH" .../smatch/smatch_scripts/kchecker drivers/net/pcs/pcs-qcom-ipq9574.o
-
-Which yields the following warning:
-drivers/net/pcs/pcs-qcom-ipq9574.c:283 ipq_pcs_enable() warn: 'qpcs_mii->rx_clk' from clk_prepare_enable() not released on lines: 280.
-
-
-
+Thanks,
+Alam.
 
