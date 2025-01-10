@@ -1,145 +1,141 @@
-Return-Path: <linux-arm-msm+bounces-44733-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-44734-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id C7B4FA0903E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jan 2025 13:23:46 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id C3797A09079
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jan 2025 13:32:50 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9B117188C966
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jan 2025 12:23:49 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id DD51F3ACABE
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jan 2025 12:31:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 232ED20D4E0;
-	Fri, 10 Jan 2025 12:23:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4354A20E31C;
+	Fri, 10 Jan 2025 12:28:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="M0Ke93HN"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="ifSRdC7r"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4562920CCE3;
-	Fri, 10 Jan 2025 12:23:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A937220D4ED
+	for <linux-arm-msm@vger.kernel.org>; Fri, 10 Jan 2025 12:28:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736511821; cv=none; b=GZ3EiVsudQMejv+gNPwLtzvcWfLCvyaGkWqdfuy9zaxE8gss0UDaIdHLOgZZi54rZbqRsqB6KhHKubqvOuCS+2C1KYzBUTQkbPMVYrLQPhHIkJpDulMtMr1N1C5NJsIVwIbwsJN2u8AJ1DGvaTk1BSfWUGtrErRkDmz2e5+/pFE=
+	t=1736512100; cv=none; b=Kt0CdYtO2ND7opPdxTb62ISLF5xSsHcfUP2Y+z5nHk62jH84XjqMwF4mxMyun1FmBzT66dTKpA/17kTOQ0H1Pl+fYf4lcrJm/OaViA9lk80cXUxpgYjtJpLCZYtnyoJ288sLVcRo1Ku6SUh9oD3zKzixED+7ktTHyK+PpNS3jxE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736511821; c=relaxed/simple;
-	bh=+FA7H4STrw+JEDIxLQDlnVp2bLisbr9zCZmqMiF0rQY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=cPegqm4ndw3/026eH5GE2knl4tPBohIZNylh3KY/elIlltdf1EJpItQu89oxAq5fAbUYg9fa7V4x8ki8k/9s1kpkapt+Ls+luU8+nH23hh0TX7Y6gSNnCR4z3BwJMk2hpw+ocuXB+E7BvANXRos4ffWEiQwpmM9E3X2WgPp0eDs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=M0Ke93HN; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50A97vmG011289;
-	Fri, 10 Jan 2025 12:23:29 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	s=arc-20240116; t=1736512100; c=relaxed/simple;
+	bh=9mgZHNGBzLOQuXSB+jkyfWeQuF5YUIZNGRd6gKBxgek=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=h/a9G3ZZ1BRADcGQdH52SQHKG6D/H9IUMO0uev40X/xKKG/PWXYFEpS3Z/Kmx8edejq2WOrgntT+GWH2WFXO3lB5YYvbYWBZUxS8fUnfNvdWRF/AjxupHp+SCmM2oap5pHAJAeltqIcFpH3WhhIFZfbf0cnh/2D3Nz6eRUM0Sxc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=ifSRdC7r; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50A9wi0D011292
+	for <linux-arm-msm@vger.kernel.org>; Fri, 10 Jan 2025 12:28:17 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	++EmC/20yf7hwqRN0XwkY0VoGAoG2cpMo+50uiQQXfY=; b=M0Ke93HNQpQaYk+W
-	iXZ0j1CzM6kBtWo4DlEJ1fArTdf4uQMcsFmzL3sWtKZTjl42mem7+6O0eAdkUPZ1
-	kogIY4yxl70Lg3y4C/6Rhy9w3zfihuKTKUtD/onf1dAfc22hGL47zfugXpcrHVGM
-	wpNBcXyXut/BOkK1I0/C5IvHd9aS/s/BurZlSk8n/WIFLWPoiOLvt1DLyAzAYM43
-	Hq4iU7sxfVhmECayGfOMiF5pMPIitWL2QwZHscv+OjyGPHrnwn98gBTtLsrhuVCR
-	0qSe/kbxTVSPWQQgekLWxWUr51ogEa6FxoYr8XvQ3UAoGro4hPptIXVi9YgRZFZT
-	nv0LSA==
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4430n5ggt8-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 10 Jan 2025 12:23:29 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 50ACNS0I020463
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 10 Jan 2025 12:23:28 GMT
-Received: from [10.151.36.43] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 10 Jan
- 2025 04:23:24 -0800
-Message-ID: <1964d238-d56a-b9ea-cda8-0b9ff32481cb@quicinc.com>
-Date: Fri, 10 Jan 2025 17:53:21 +0530
+	5Lq9dyuLus20yp4kplmjOnFQeKKs+HMiGfzSgt3azWY=; b=ifSRdC7rkMwAg0n+
+	4THTTeHh/w5QuUff9OOajJx6xu5NUkIT4DtOc6dkU9RsqmRQRUkF9UMqMbfP7OD/
+	y6y/7BaWtlxXqcfvbGU+Gwl1zHsjv9GDaQMQEKMxCbyI3XT8RJNdOe7j+fe8G6HP
+	/Xa0IzxnNPRgdSaRtfjBiarB7sNsgniI65NhmhlnqMJgc5qXiv8ZiKEPFAA3ygXb
+	BcOxET3Wpa8nfZ7G2oY/neWC6j4qKuSL7u6oWSr24wLot+U4I/tKs/RpyRvX1bn7
+	E/mZxvUF7f4zamqpqf+0tbpotKgQlSeaDimsiuzL50dUxQ5x94UpzUwWwb7oqT/n
+	zgCHSg==
+Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com [209.85.160.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4431d48bcm-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 10 Jan 2025 12:28:17 +0000 (GMT)
+Received: by mail-qt1-f197.google.com with SMTP id d75a77b69052e-4678aa83043so4780741cf.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Jan 2025 04:28:17 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1736512096; x=1737116896;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=5Lq9dyuLus20yp4kplmjOnFQeKKs+HMiGfzSgt3azWY=;
+        b=GaQHqSuneNCybj12jdZzOzisdDCpLO0Rq6u87aJe9m8eMjqR5VN5grFSW4Leb2r5+x
+         mbRpJmLyR3wxR/zCpZiz1aekU25isUdL4X7WwC+BX+IdJqnaUnLLF6ZZfH/agZOD1S/h
+         507QXWBei0Sx4dgCTiKUjcUnhTAkZLOEHuQ2sYp2iHUdoU5m4qzUkUIHgiA6Y5QHCIvD
+         nTljm/arwbFPyLA3GYuCTunhRY2yvR3AcFnZtxJuLDlHEC+dv8u2YhMbNq1iP9XEtfRk
+         Eoo3oObjYrqgwNwlcGMvIaFx3YW/fCHTvAphWUT53dL/HlSDLW24EwTozNhs0s+g7Iu/
+         RJtg==
+X-Gm-Message-State: AOJu0Yx+/EEJUyDfJRvZC6hq5eemZvJUrfe9QBMt8oRwECx0XXgjEQJc
+	2w/LFrFL9Rn/R512IAVed6Bceo7UishLmCCX4JAAx/PuX+pFmaBVb0WSVVRQKgcMYhxScU7DTmK
+	qmsBREvqAtpDN0pbrKgMowvUwhkWdZbPp095j+iexgZLy91SU0CLMcJBeCwFpco3eMdpBEnCx
+X-Gm-Gg: ASbGncs6MEMdNDxeARUGIbtFFFvVkebqO29zmUfkSUwtS6FPKPUY8lcVapwMfNq+VS4
+	Qe+3yrdxsaMDuC0gF/+t9CEiWF8HKm9Kg60Px5BCWw3CNEAq7oWm0VLNQhj3hppAmErKTrz9dti
+	pOd9jJ42laNACVu6W+ipshige2q5XezfL74+0y7vSn+89bXyQSIFjJp9WmsX/trDUO87hu6IYoq
+	WzoS8ov6iLR2q0M6W9etF5ndhDX1nhYB8O7Q9+i+ru2Oe+lZFfZwZWrvEpr5erXrCCcUB7upqHv
+	rzMEBm3jq2a/G3gdTc/Givf1XDyqynL2osA=
+X-Received: by 2002:a05:622a:401a:b0:46c:78cc:e53 with SMTP id d75a77b69052e-46c78cc0f32mr45291261cf.0.1736512096460;
+        Fri, 10 Jan 2025 04:28:16 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGB7BuZgxjZZXc0Iv1450j7nE/9I//uHvCF6onNzcuH1Yn7yj6fVcJxeBrNjKccMHbS0VLMAQ==
+X-Received: by 2002:a05:622a:401a:b0:46c:78cc:e53 with SMTP id d75a77b69052e-46c78cc0f32mr45291211cf.0.1736512096080;
+        Fri, 10 Jan 2025 04:28:16 -0800 (PST)
+Received: from [192.168.65.90] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5d99008c2d7sm1622982a12.3.2025.01.10.04.28.14
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 10 Jan 2025 04:28:15 -0800 (PST)
+Message-ID: <2e240422-b964-42ce-b537-413b1d8ae07d@oss.qualcomm.com>
+Date: Fri, 10 Jan 2025 13:28:13 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-Subject: Re: [PATCH v4] dmaengine: qcom: bam_dma: Avoid writing unavailable
- register
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] arm64: dts: qcom: sc8280xp: correct usb phy power supply
+To: Pengyu Luo <mitltlatltl@gmail.com>,
+        Bjorn Andersson
+ <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20250110092326.167575-1-mitltlatltl@gmail.com>
 Content-Language: en-US
-To: Stephan Gerhold <stephan.gerhold@linaro.org>
-CC: <vkoul@kernel.org>, <robin.murphy@arm.com>, <u.kleine-koenig@baylibre.com>,
-        <martin.petersen@oracle.com>, <fenghua.yu@intel.com>,
-        <av2082000@gmail.com>, <linux-arm-msm@vger.kernel.org>,
-        <dmaengine@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <quic_mmanikan@quicinc.com>, <quic_srichara@quicinc.com>,
-        <quic_varada@quicinc.com>
-References: <20241220094203.3510335-1-quic_mdalam@quicinc.com>
- <Z4D2jQNNW94qGIlv@linaro.org>
- <fb253fa0-7877-e1b8-138a-b9d9a80c81f1@quicinc.com>
- <Z4ENabbDjT8kfpQF@linaro.org>
-From: Md Sadre Alam <quic_mdalam@quicinc.com>
-In-Reply-To: <Z4ENabbDjT8kfpQF@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <20250110092326.167575-1-mitltlatltl@gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 3InJ54gMHhgAsy2MbuEsm-8RdCr9pZ6H
-X-Proofpoint-ORIG-GUID: 3InJ54gMHhgAsy2MbuEsm-8RdCr9pZ6H
+X-Proofpoint-ORIG-GUID: I_JJ6CjTh7BZWMynKGZrSIPHLzpsFZ66
+X-Proofpoint-GUID: I_JJ6CjTh7BZWMynKGZrSIPHLzpsFZ66
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 adultscore=0
- impostorscore=0 suspectscore=0 mlxscore=0 malwarescore=0 bulkscore=0
- mlxlogscore=999 spamscore=0 priorityscore=1501 phishscore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2501100096
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 adultscore=0
+ malwarescore=0 phishscore=0 mlxlogscore=811 spamscore=0 mlxscore=0
+ lowpriorityscore=0 clxscore=1015 priorityscore=1501 suspectscore=0
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2501100097
 
+On 10.01.2025 10:23 AM, Pengyu Luo wrote:
+> On this platform, according to dsdt tables, usb{0,1} phy consume the
+> following regulators. usb2 phy should be corrected also, usb2 in dsdt
+> is a little complicated, so correct usb{0,1} only for now.
+> 
+> 	usb0	usb1	voltage	consumer
+> hsphy:
+> 	l1c	l1c	1.8v	vdda18-supply
+> 	l9d	l4b	0.912v	vdda-pll-supply
+> 	l7d	l13c	3.072v	vdda33-supply
+> qmpphy:
+> 	l4d	l3b	1.2v	vdda-phy-supply
+> 	l6d	l6b	0.88v	vdda-pll-supply
 
+Looking at the CRD schematics, it should instead be:
 
-On 1/10/2025 5:37 PM, Stephan Gerhold wrote:
-> On Fri, Jan 10, 2025 at 05:29:29PM +0530, Md Sadre Alam wrote:
->> On 1/10/2025 3:59 PM, Stephan Gerhold wrote:
->>> On Fri, Dec 20, 2024 at 03:12:03PM +0530, Md Sadre Alam wrote:
->>>> Avoid writing unavailable register in BAM-Lite mode.
->>>> BAM_DESC_CNT_TRSHLD register is unavailable in BAM-Lite
->>>> mode. Its only available in BAM-NDP mode. So only write
->>>> this register for clients who is using BAM-NDP.
->>>>
->>>> Signed-off-by: Md Sadre Alam <quic_mdalam@quicinc.com>
->>>
->>> What are we actually fixing here? Which platform is affected? Is there a
->>> crash, reset, or incorrect behavior?
->> On SDX75, QPIC use BAM-Lite and as per HW description this
->> BAM_DESC_CNT_TRSHLD register is not available, and writing to this
->> SDX75 was hanging.
->>>
->>> We have had this code for years without reported issues, with both
->>> BAM-NDP and BAM-Lite instances. The register documentation on APQ8016E
->>> documents the BAM_DESC_CNT_TRSHLD register even for the BAM-Lite
->>> instance. There is a comment that it doesn't apply to BAM-Lite, but I
->>> would expect the written value just ends up being ignored in that case.
->> With older xPU it was being ignored but with new xPU its hanging. HW
->> team suggested don't write this register for BAM-Lite mode since its not
->> available.
->>>
-> 
-> OK, thanks for the explanation.
-> 
->>> Also, there is not just BAM-NDP and BAM-Lite, but also plain "BAM". What
->>> about that one? Should we write to BAM_DESC_CNT_TRSHLD?
->> Apart from BAM-Lite this register available in all the BAM
-> 
-> Please check again if we need to check for additional revision numbers
-> for the non-NDP BAM types then. Or alternatively, change the check to
-> write the register on if (!BAM-Lite) instead of if (BAM-NDP). That might
-> be easier.
-Ok Thanks. will check once again this and post in next revision.
-> 
-> Thanks,
-> Stephan
+USB0	USB1	VOLT		NAME
+L1B	L8D	0.9ish		PHY
+L4D	L4D	1.2		PLL
+
+I'm hoping I'm reading those right, it's not super obvious
+
+Konrad
+
 
