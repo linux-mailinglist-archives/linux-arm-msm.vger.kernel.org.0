@@ -1,311 +1,318 @@
-Return-Path: <linux-arm-msm+bounces-44701-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-44702-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 24ED9A08537
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jan 2025 03:11:16 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 65FE8A08636
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jan 2025 05:37:00 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id EAA783A919F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jan 2025 02:10:56 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0C182188B486
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jan 2025 04:37:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 44A692E62B;
-	Fri, 10 Jan 2025 02:10:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 908E517B500;
+	Fri, 10 Jan 2025 04:36:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="d74IIJ9j"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="kYwAh1WD"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f175.google.com (mail-lj1-f175.google.com [209.85.208.175])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D65131E105B
-	for <linux-arm-msm@vger.kernel.org>; Fri, 10 Jan 2025 02:10:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA75C8F54;
+	Fri, 10 Jan 2025 04:36:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736475030; cv=none; b=oIJdF1b4S5A7zpK0FoCyihUSMwPCLJ4crQfyQfH0Kecy+/UJh6lnYDPsoJ8tYhjwPQwOS1zy569hdXA/CegiGbpLcPUxT2ZK8q/5z1J7D4VyRzy0X9qtccYLpeQ4KWotrrdS5KPvCCfiTzAOpVAwPKHc8AH3Q8lICkbTX6qCQJQ=
+	t=1736483815; cv=none; b=m3d/jho3b0aBjRESjtBcfi/YKfNcvjdZjKg3P59aufezOkHpVKXo7v94YBoBX8cVsvj5TsN344tISrObvBqsv/4wHHvxlhTpRXaZ5uPZxIlSYgOEVPsUJfKrqdR7RtUv4PzJt5yqi10Oy84vIPUMf/P0N3p3eTHym0YmeYcPJRw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736475030; c=relaxed/simple;
-	bh=unfOPsu9DKuz9pCrr/2XkPMSG+zD0AZHScZKRcsNaos=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=omoX26YiHpNPLOqRINiBNgvWeSCjjxVm5anTTQ7mqlOT8uxr4j9XZ5j6+RSTwnv/PgfUAj9pRwZaB3uY1ZgG+C3kjOa7IM2tQBZH6CIEYgBGAgnwLV/nkfiqnZYJbUMS0jWN3WRhTf1SPo0fiAJyXDD+LYeEVaUqprKvK1BvBvE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=d74IIJ9j; arc=none smtp.client-ip=209.85.208.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f175.google.com with SMTP id 38308e7fff4ca-3022484d4e4so14818171fa.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Jan 2025 18:10:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1736475026; x=1737079826; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=HuF+PDTZLa51ksUbL9ys8lpiPzQDblZtDnsaGpEQ4Pk=;
-        b=d74IIJ9jdPrkrFdLqDo5v1ZPN65SmSKF0jlEplzLfkh8ZVqznTgxTeoSZF2W0h2Gyo
-         iAPPCFtKJxRDQcjZ4e9L6paenem8q85J5ciiqRqycOI7sphFxpWbnJU80oDNkk0EkR+U
-         AQDzaPRDREd0+Se1diwTpy/llsKdiTl2j0yema5RW/zARRbN6Ls0xE0x5ZAB2lZ9u8Jg
-         G1XUgX3/BgDJXWWmzX0Nwnju1o6LjIOkcWvxnc/Er/bamc7hgbmnXHc+ytUeIDYcBw80
-         DN69OmyX3QVhpJ2jCy1kvE1ua1dHH/YkEQ51R94Oc77KG0ghJCKMr68WRrX0zfPEpCbU
-         nMJg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736475026; x=1737079826;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=HuF+PDTZLa51ksUbL9ys8lpiPzQDblZtDnsaGpEQ4Pk=;
-        b=k8V25AMSz4ygvir7jj2aW8tfaw8ULO9e7qSPNTLENymlo93ANpM74ZVWJene3C5kzM
-         +eaQPbwnJZZQTMhrGNoVK4Jr4uoGl+qPporRfGZP2yYE9yrQBWEJ01INDIbEzx3kcvVv
-         QPXo1QI/J7CJF3hwr6bh+ugJezGhVAj5vJsXnoLYJxdpVfzUJW8jAVIDlWOVjGDix7B9
-         W1RC2VkRVbpmfiTk7dktyNPLOZUhxRvou3EOqmXifZlrs2Aff1JF4dQ5Xhrg7R8YaWLx
-         I80Honr3jju5vRcTMcs4mWZHtDPp2cAP3rnfPr2MHPCLWWX+ULAR7vgT+NAWudVGQ8ss
-         +gpQ==
-X-Forwarded-Encrypted: i=1; AJvYcCU8atZKDcUPsk6LhBgpucdgaiMJOpIO5Nu6WEhLURWFiVjQLeAQl428p3XRR3zTFU3+97EI5DPvXmxqJQ7z@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz2t/ALU5zVaTXoMagqk0f5Ogt/WRy7mHcUKxdZ6hO+K/OUtF/D
-	h1QvHWKWsOYuuF9xtR3MljHp3Em3DhRKTORu9rrtzSP/wYFGF3LHRRAKlGciu1w=
-X-Gm-Gg: ASbGnctXfvKKJ5sZDzCgd0yhVJrO/ZWs+X/zDhCp9OH09RAFzWmyUZUQo74lahDUY9H
-	OnGWvJy7yzvpd4XbbsiuZw8UnwWK81IkbXUXg23kOxUS4BHfw3P3IxGz3CfFX4eILz7lrPZH/un
-	wd6DzobYXJMQJR3iC9G0PKNtDL8qPTzSeI1bjyBq6WV5S/EePR2i8A7/WNn/rRbl43T9GCLVPqy
-	P7O8F5h1cE0Mj6N5gIN6Ozb9x6RazQE+a9KwHAXC0/iB/p9cISyvjFyTLc1PrLoKxz45+te0xfQ
-	FOjCYRwOjRjz1vAcBiO92FcgXQwmjknJqTql
-X-Google-Smtp-Source: AGHT+IHIdXNP0uDJYI6s6RzE9hHm7Ve5TI47ub1eVeneAydvG48x9Ku9A8XERv0pX/THyzQY39IZ4g==
-X-Received: by 2002:a2e:a544:0:b0:302:3c78:4e17 with SMTP id 38308e7fff4ca-305f45ce4dcmr27587431fa.29.1736475025879;
-        Thu, 09 Jan 2025 18:10:25 -0800 (PST)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-305ff1ec57csm3442351fa.104.2025.01.09.18.10.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 09 Jan 2025 18:10:24 -0800 (PST)
-Date: Fri, 10 Jan 2025 04:10:22 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Jessica Zhang <quic_jesszhan@quicinc.com>
-Cc: Rob Clark <robdclark@gmail.com>, quic_abhinavk@quicinc.com, 
-	Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, 
-	David Airlie <airlied@gmail.com>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
-	Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
-	Simona Vetter <simona@ffwll.ch>, Simona Vetter <simona.vetter@ffwll.ch>, 
-	quic_ebharadw@quicinc.com, linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
-	freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, Rob Clark <robdclark@chromium.org>, 
-	Ville =?utf-8?B?U3lyasOkbMOk?= <ville.syrjala@linux.intel.com>
-Subject: Re: [PATCH v4 15/25] drm/msm/dpu: Add CWB to msm_display_topology
-Message-ID: <657hmty7qisg74pugmgxz4y4idze65ddozm25vnizcavqsubov@fk56ijbl23uv>
-References: <20241216-concurrent-wb-v4-0-fe220297a7f0@quicinc.com>
- <20241216-concurrent-wb-v4-15-fe220297a7f0@quicinc.com>
- <ki35rornnos35r3fzg5yyqzxnqua3dyfb6ewq2aefrh4u74vfi@opdnf44ntten>
- <4069bd6a-c37f-4dbe-bbd6-5b333ee54ad8@quicinc.com>
- <a4akor2liqafta53zeev22x2pkqwzo5szwidr2ruzdvttvze5h@jtio3jue7ez3>
- <e47b33e6-142d-42d6-8ae9-f2d2c7793d18@quicinc.com>
- <wheu3izj3pit6k3cmslpyegunmrcryy65y5eu432nec2y2aor6@kda3xnujhtnm>
- <0b741278-7c81-406b-bd28-e0cb9252e459@quicinc.com>
- <CAA8EJpogbq+iU-PA_ZXkTzU-1+MLaeLUaXWt_D+hTYnJ5_26Ew@mail.gmail.com>
- <fbba6424-f831-4cc5-8ed7-f508722c86bd@quicinc.com>
+	s=arc-20240116; t=1736483815; c=relaxed/simple;
+	bh=APD83ixTjkgIL6sDveyllfSkGtkEUiL9rAk7xFlL0Y4=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=NA2Hmsw4giozTCCztRgDa8UV8WU5R/Xe41XmS4LNrDQIwILfK9lE1GZk5BI9O3aA4XukdBeLlqCZoG1g78cyOkB8JmZEbixdQ0pCOG8ANA5iL831GETpeyfqGxMgj6aTUQZJZYYTKRJA4M3Z9ByXDXAwENQY+55AsvtIjNC2ky8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=kYwAh1WD; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50A1W32t023421;
+	Fri, 10 Jan 2025 04:36:40 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=M8AynVnJMRD2H0YVv/u0Whl6
+	0TNKLKUVltGlZet2XLU=; b=kYwAh1WDRJHpEllGQa7Eb560nz40k+zX2rgYk6tS
+	JqQnv/PVftHz2yaODeZ9tZN8h03bS8TtxUh5/IUi+1Q9PdIYWPbs6JFGc5jc3qLb
+	yS6OmHf4qPfOLOJ1cG9wjBm4qspTCo+NEVxWk9C2g+8KTm79tqP2JZesfP4wbXus
+	XVZBXhWrjuHWM06HKJi2cX3quZeSrlKWYLMBSg35b/Zxxno20WCSBoO8nStcHCQ9
+	qk2I8PhF46/qg3Uu4mY9W2EVHlnwBtvzNlVxIambseWeY4qNMOI/jn9TKAnz9e6S
+	5WxBpoQCP1vGEAsrmb+xvjXRDqPCxqmgkg9WRQ4aAFBDPA==
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 442syc0bxf-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 10 Jan 2025 04:36:39 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 50A4acmP017036
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 10 Jan 2025 04:36:38 GMT
+Received: from hu-varada-blr.qualcomm.com (10.80.80.8) by
+ nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Thu, 9 Jan 2025 20:36:32 -0800
+Date: Fri, 10 Jan 2025 10:06:29 +0530
+From: Varadarajan Narayanan <quic_varada@quicinc.com>
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+CC: <bhelgaas@google.com>, <lpieralisi@kernel.org>, <kw@linux.com>,
+        <robh@kernel.org>, <krzk+dt@kernel.org>, <conor+dt@kernel.org>,
+        <vkoul@kernel.org>, <kishon@kernel.org>, <andersson@kernel.org>,
+        <konradybcio@kernel.org>, <p.zabel@pengutronix.de>,
+        <quic_nsekar@quicinc.com>, <dmitry.baryshkov@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-pci@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-phy@lists.infradead.org>,
+        Praveenkumar I <quic_ipkumar@quicinc.com>,
+        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Subject: Re: [PATCH v5 4/5] arm64: dts: qcom: ipq5332: Add PCIe related nodes
+Message-ID: <Z4Cjzc5nyOv0R9tS@hu-varada-blr.qualcomm.com>
+References: <20250102113019.1347068-1-quic_varada@quicinc.com>
+ <20250102113019.1347068-5-quic_varada@quicinc.com>
+ <20250108132235.gh6p5d6t7wklzpm7@thinkpad>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset="us-ascii"
 Content-Disposition: inline
-In-Reply-To: <fbba6424-f831-4cc5-8ed7-f508722c86bd@quicinc.com>
+In-Reply-To: <20250108132235.gh6p5d6t7wklzpm7@thinkpad>
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: PDsGTaYB_0n28TRswOJR4j5vfPdyrjOL
+X-Proofpoint-ORIG-GUID: PDsGTaYB_0n28TRswOJR4j5vfPdyrjOL
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 mlxlogscore=999
+ malwarescore=0 phishscore=0 lowpriorityscore=0 impostorscore=0 bulkscore=0
+ clxscore=1015 mlxscore=0 suspectscore=0 priorityscore=1501 adultscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2411120000
+ definitions=main-2501100036
 
-On Thu, Jan 09, 2025 at 05:50:16PM -0800, Jessica Zhang wrote:
-> 
-> 
-> On 1/9/2025 5:42 PM, Dmitry Baryshkov wrote:
-> > On Fri, 10 Jan 2025 at 02:30, Jessica Zhang <quic_jesszhan@quicinc.com> wrote:
-> > > 
-> > > 
-> > > 
-> > > On 1/9/2025 4:00 PM, Dmitry Baryshkov wrote:
-> > > > On Thu, Jan 09, 2025 at 02:34:44PM -0800, Jessica Zhang wrote:
-> > > > > 
-> > > > > 
-> > > > > On 1/3/2025 10:16 AM, Dmitry Baryshkov wrote:
-> > > > > > On Fri, Jan 03, 2025 at 10:03:35AM -0800, Jessica Zhang wrote:
-> > > > > > > 
-> > > > > > > 
-> > > > > > > On 12/19/2024 9:03 PM, Dmitry Baryshkov wrote:
-> > > > > > > > On Mon, Dec 16, 2024 at 04:43:26PM -0800, Jessica Zhang wrote:
-> > > > > > > > > Add the cwb_enabled flag to msm_display topology and adjust the toplogy
-> > > > > > > > > to account for concurrent writeback
-> > > > > > > > 
-> > > > > > > > Why?
-> > > > > > > 
-> > > > > > > Hi Dmitry,
-> > > > > > > 
-> > > > > > > This flag is necessary to specify that CWB mux(es) need to be assigned for
-> > > > > > > the given reqeusted topology.
-> > > > > > 
-> > > > > > Why is necessary? Please rephrase your statement (we need foo bar, so do
-> > > > > > baz).
-> > > > > 
-> > > > > Ack, what do you think of rephrasing the commit msg to this:
-> > > > > 
-> > > > > ```
-> > > > > Add support for adjusting topology based on if concurrent writeback is
-> > > > > enabled.
-> > > > > 
-> > > > > Currently, the topology is calculated based on the assumption that the user
-> > > > > cannot request real-time and writeback simultaneously. For example, the
-> > > > > number of LMs and CTLs are currently based off the number of phys encoders
-> > > > > under the assumption there will be at least 1 LM/CTL per phys encoder.
-> > > > > 
-> > > > > This will not hold true for concurrent writeback as 2 phys encoders (1
-> > > > > real-time and 1 writeback) can be driven by 1 LM/CTL when concurrent
-> > > > > writeback is enabled.
-> > > > > 
-> > > > > To account for this, add a cwb_enabled flag and only adjust the number of
-> > > > > CTL/LMs needed by a given topology based on the number of phys encoders only
-> > > > > if CWB is not enabled.
-> > > > > 
-> > > > > ```
-> > > > > 
-> > > > > > 
-> > > > > > > 
-> > > > > > > > 
-> > > > > > > > > 
-> > > > > > > > > Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
-> > > > > > > > > ---
-> > > > > > > > >      drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c | 11 ++++++++++-
-> > > > > > > > >      drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c   | 10 ++++++++--
-> > > > > > > > >      drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h   |  2 ++
-> > > > > > > > >      3 files changed, 20 insertions(+), 3 deletions(-)
-> > > > > > > > > 
-> > > > > > > > > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> > > > > > > > > index b4bfded3d53025853cee112ca598533ece290318..b063c8fe4c0594772d84401fa56c9c21afc0ad18 100644
-> > > > > > > > > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> > > > > > > > > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> > > > > > > > > @@ -1198,6 +1198,8 @@ static struct msm_display_topology dpu_crtc_get_topology(
-> > > > > > > > >                   dpu_encoder_update_topology(drm_enc, &topology, crtc_state->state,
-> > > > > > > > >                                               &crtc_state->adjusted_mode);
-> > > > > > > > > +        topology.cwb_enabled = drm_crtc_in_clone_mode(crtc_state);
-> > > > > > > > > +
-> > > > > > > > >           /*
-> > > > > > > > >            * Datapath topology selection
-> > > > > > > > >            *
-> > > > > > > > > @@ -1209,9 +1211,16 @@ static struct msm_display_topology dpu_crtc_get_topology(
-> > > > > > > > >            * 2 LM, 1 INTF (stream merge to support high resolution interfaces)
-> > > > > > > > >            *
-> > > > > > > > >            * Add dspps to the reservation requirements if ctm is requested
-> > > > > > > > > +         *
-> > > > > > > > > +         * Only hardcode num_lm to 2 for cases where num_intf == 2 and CWB is not
-> > > > > > > > > +         * enabled. This is because in cases where CWB is enabled, num_intf will
-> > > > > > > > > +         * count both the WB and real-time phys encoders.
-> > > > > > > > > +         *
-> > > > > > > > > +         * For non-DSC CWB usecases, have the num_lm be decided by the
-> > > > > > > > > +         * (mode->hdisplay > MAX_HDISPLAY_SPLIT) check.
-> > > > > > > > >            */
-> > > > > > > > > -        if (topology.num_intf == 2)
-> > > > > > > > > +        if (topology.num_intf == 2 && !topology.cwb_enabled)
-> > > > > > > > >                   topology.num_lm = 2;
-> > > > > > > > >           else if (topology.num_dsc == 2)
-> > > > > > > > >                   topology.num_lm = 2;
-> > > > > > > > > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
-> > > > > > > > > index b763ef19f4c60ae8a35df6a6ffb19e8411bc63f8..85adaf256b2c705d2d7df378b6ffc0e578f52bc3 100644
-> > > > > > > > > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
-> > > > > > > > > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
-> > > > > > > > > @@ -382,8 +382,14 @@ static int _dpu_rm_reserve_ctls(
-> > > > > > > > >           int i = 0, j, num_ctls;
-> > > > > > > > >           bool needs_split_display;
-> > > > > > > > > -        /* each hw_intf needs its own hw_ctrl to program its control path */
-> > > > > > > > > -        num_ctls = top->num_intf;
-> > > > > > > > > +        /*
-> > > > > > > > > +         * For non-CWB mode, each hw_intf needs its own hw_ctl to program its
-> > > > > > > > > +         * control path. Hardcode num_ctls to 1 if CWB is enabled
-> > > > > > > > > +         */
-> > > > > > > > 
-> > > > > > > > Why?
-> > > > > > > 
-> > > > > > > This is because num_intf is based on the number of phys_encs. Since in the
-> > > > > > > CWB case, the WB and real-time encoders will be driven by the same CTL. I
-> > > > > > > can add this to the comment doc.
-> > > > > > 
-> > > > > > Why are they driven by the same CTL? Is it also the case for platforms
-> > > > > > before DPU 5.x?
-> > > > > 
-> > > > > This is because the WB and real-time path for a given topology would be
-> > > > > driven by the same data path so the same CTL should enable the real-time and
-> > > > > WB active bits.
-> > > > > 
-> > > > > This is the same for pre-DPU 5.x.
-> > > > 
-> > > > But pre-5.x platforms didn't have ACTIVE_CTL, so they should be using
-> > > > separte CTL for each of the physical encoders.
-> > > 
-> > > For pre-DPU 5.x, enabling CWB would mean configuring the registers under
-> > > both the WB and MODE_SEL_* cases here [1]
-> > 
-> > But do we still have to use a single CTL or would we use two different
-> > CTLs, one for the main output and one for WB?
-> 
-> We would have to enable both WB and the real-time output on the same CTL
+On Wed, Jan 08, 2025 at 06:52:35PM +0530, Manivannan Sadhasivam wrote:
+> On Thu, Jan 02, 2025 at 05:00:18PM +0530, Varadarajan Narayanan wrote:
+> > From: Praveenkumar I <quic_ipkumar@quicinc.com>
+> >
+> > Add phy and controller nodes for pcie0_x1 and pcie1_x2.
+> >
+> > Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+> > Signed-off-by: Praveenkumar I <quic_ipkumar@quicinc.com>
+> > Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
+> > ---
+> > v5: Add 'num-lanes' to "pcie1_phy: phy@4b1000"
+> >     Make ipq5332 as main and ipq9574 as fallback compatible
+> >     Move controller nodes per address
+> >     Having Konrad's Reviewed-By
+> >
+> > v4: Remove 'reset-names' as driver uses bulk APIs
+> >     Remove 'clock-output-names' as driver uses bulk APIs
+> >     Add missing reset for pcie1_phy
+> >     Convert 'reg-names' to a vertical list
+> >     Move 'msi-map' before interrupts
+> >
+> > v3: Fix compatible string for phy nodes
+> >     Use ipq9574 as backup compatible instead of new compatible for ipq5332
+> >     Fix mixed case hex addresses
+> >     Add "mhi" space
+> >     Removed unnecessary comments and stray blank lines
+> >
+> > v2: Fix nodes' location per address
+> > ---
+> >  arch/arm64/boot/dts/qcom/ipq5332.dtsi | 221 +++++++++++++++++++++++++-
+> >  1 file changed, 219 insertions(+), 2 deletions(-)
+> >
+> > diff --git a/arch/arm64/boot/dts/qcom/ipq5332.dtsi b/arch/arm64/boot/dts/qcom/ipq5332.dtsi
+> > index d3c3e215a15c..89daf955e4bd 100644
+> > --- a/arch/arm64/boot/dts/qcom/ipq5332.dtsi
+> > +++ b/arch/arm64/boot/dts/qcom/ipq5332.dtsi
+> > @@ -186,6 +186,43 @@ rng: rng@e3000 {
+> >  			clock-names = "core";
+> >  		};
+> >
+> > +		pcie0_phy: phy@4b0000 {
+> > +			compatible = "qcom,ipq5332-uniphy-pcie-phy";
+> > +			reg = <0x004b0000 0x800>;
+> > +
+> > +			clocks = <&gcc GCC_PCIE3X1_0_PIPE_CLK>,
+> > +				 <&gcc GCC_PCIE3X1_PHY_AHB_CLK>;
+> > +
+> > +			resets = <&gcc GCC_PCIE3X1_0_PHY_BCR>,
+> > +				 <&gcc GCC_PCIE3X1_PHY_AHB_CLK_ARES>,
+> > +				 <&gcc GCC_PCIE3X1_0_PHY_PHY_BCR>;
+> > +
+> > +			#clock-cells = <0>;
+> > +
+> > +			#phy-cells = <0>;
+> > +			status = "disabled";
+> > +		};
+> > +
+> > +		pcie1_phy: phy@4b1000 {
+> > +			compatible = "qcom,ipq5332-uniphy-pcie-phy";
+> > +			reg = <0x004b1000 0x1000>;
+> > +
+> > +			clocks = <&gcc GCC_PCIE3X2_PIPE_CLK>,
+> > +				 <&gcc GCC_PCIE3X2_PHY_AHB_CLK>;
+> > +
+> > +			resets = <&gcc GCC_PCIE3X2_PHY_BCR>,
+> > +				 <&gcc GCC_PCIE3X2_PHY_AHB_CLK_ARES>,
+> > +				 <&gcc GCC_PCIE3X2PHY_PHY_BCR>;
+> > +
+> > +			#clock-cells = <0>;
+> > +
+> > +			#phy-cells = <0>;
+> > +
+> > +			num-lanes = <2>;
+> > +
+> > +			status = "disabled";
+> > +		};
+> > +
+> >  		tlmm: pinctrl@1000000 {
+> >  			compatible = "qcom,ipq5332-tlmm";
+> >  			reg = <0x01000000 0x300000>;
+> > @@ -212,8 +249,8 @@ gcc: clock-controller@1800000 {
+> >  			#interconnect-cells = <1>;
+> >  			clocks = <&xo_board>,
+> >  				 <&sleep_clk>,
+> > -				 <0>,
+> > -				 <0>,
+> > +				 <&pcie1_phy>,
+> > +				 <&pcie0_phy>,
+> >  				 <0>;
+> >  		};
+> >
+> > @@ -479,6 +516,186 @@ frame@b128000 {
+> >  				status = "disabled";
+> >  			};
+> >  		};
+> > +
+> > +		pcie1: pcie@18000000 {
+>
+> pcie@
 
-Thanks for the confirmation. Then the text your wrote above should be
-mostly okay. Please drop the first ("Add support...") sentence and s/can
-be driven by/must be driven by/ .
+Not able to understand. Can you please let me know if you want
+the label 'pcie1' to be dropped? This label is used in the board
+dts to enable this node, so cannot drop.
 
-> 
-> > 
-> > > 
-> > > [1]
-> > > https://elixir.bootlin.com/linux/v6.12.6/source/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c#L588
-> > > 
-> > > > 
-> > > > > 
-> > > > > > 
-> > > > > > > 
-> > > > > > > Thanks,
-> > > > > > > 
-> > > > > > > Jessica Zhang
-> > > > > > > 
-> > > > > > > > 
-> > > > > > > > > +        if (top->cwb_enabled)
-> > > > > > > > > +                num_ctls = 1;
-> > > > > > > > > +        else
-> > > > > > > > > +                num_ctls = top->num_intf;
-> > > > > > > > >           needs_split_display = _dpu_rm_needs_split_display(top);
-> > > > > > > > > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h
-> > > > > > > > > index b061dfdab52e04ab7d777e912a30173273cb3db7..12db21a2403ec6930894c36a58e898c5d94c2568 100644
-> > > > > > > > > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h
-> > > > > > > > > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h
-> > > > > > > > > @@ -46,6 +46,7 @@ struct dpu_rm {
-> > > > > > > > >       * @num_dspp:     number of dspp blocks used
-> > > > > > > > >       * @num_dsc:      number of Display Stream Compression (DSC) blocks used
-> > > > > > > > >       * @needs_cdm:    indicates whether cdm block is needed for this display topology
-> > > > > > > > > + * @cwb_enabled:  indicates whether CWB is enabled for this display topology
-> > > > > > > > >       */
-> > > > > > > > >      struct msm_display_topology {
-> > > > > > > > >           u32 num_lm;
-> > > > > > > > > @@ -53,6 +54,7 @@ struct msm_display_topology {
-> > > > > > > > >           u32 num_dspp;
-> > > > > > > > >           u32 num_dsc;
-> > > > > > > > >           bool needs_cdm;
-> > > > > > > > > +        bool cwb_enabled;
-> > > > > > > > >      };
-> > > > > > > > >      int dpu_rm_init(struct drm_device *dev,
-> > > > > > > > > 
-> > > > > > > > > --
-> > > > > > > > > 2.34.1
-> > > > > > > > > 
-> > > > > > > > 
-> > > > > > > > --
-> > > > > > > > With best wishes
-> > > > > > > > Dmitry
-> > > > > > > 
-> > > > > > 
-> > > > > > --
-> > > > > > With best wishes
-> > > > > > Dmitry
-> > > > > 
-> > > > 
-> > > > --
-> > > > With best wishes
-> > > > Dmitry
-> > > 
-> > 
-> > 
-> > -- 
-> > With best wishes
-> > Dmitry
-> 
+> > +			compatible = "qcom,pcie-ipq5332", "qcom,pcie-ipq9574";
+> > +			reg = <0x00088000 0x3000>,
+> > +			      <0x18000000 0xf1d>,
+> > +			      <0x18000f20 0xa8>,
+> > +			      <0x18001000 0x1000>,
+> > +			      <0x18100000 0x1000>,
+> > +			      <0x0008b000 0x1000>;
+> > +			reg-names = "parf",
+> > +				    "dbi",
+> > +				    "elbi",
+> > +				    "atu",
+> > +				    "config",
+> > +				    "mhi";
+> > +			device_type = "pci";
+> > +			linux,pci-domain = <1>;
+> > +			bus-range = <0x00 0xff>;
+> > +			num-lanes = <2>;
+> > +			#address-cells = <3>;
+> > +			#size-cells = <2>;
+> > +
+> > +			ranges = <0x01000000 0 0x18200000 0x18200000 0 0x00100000>,
+>
+> I/O address space should start from 0. Please refer other SoCs.
+>
+> Also, use 0x0 for consistency.
 
--- 
-With best wishes
-Dmitry
+Ok.
+
+> > +				 <0x02000000 0 0x18300000 0x18300000 0 0x07d00000>;
+> > +
+> > +			msi-map = <0x0 &v2m0 0x0 0xffd>;
+> > +
+> > +			interrupts = <GIC_SPI 403 IRQ_TYPE_LEVEL_HIGH>,
+> > +				     <GIC_SPI 404 IRQ_TYPE_LEVEL_HIGH>,
+> > +				     <GIC_SPI 405 IRQ_TYPE_LEVEL_HIGH>,
+> > +				     <GIC_SPI 406 IRQ_TYPE_LEVEL_HIGH>,
+> > +				     <GIC_SPI 407 IRQ_TYPE_LEVEL_HIGH>,
+> > +				     <GIC_SPI 408 IRQ_TYPE_LEVEL_HIGH>,
+> > +				     <GIC_SPI 409 IRQ_TYPE_LEVEL_HIGH>,
+> > +				     <GIC_SPI 410 IRQ_TYPE_LEVEL_HIGH>;
+> > +			interrupt-names = "msi0",
+> > +					  "msi1",
+> > +					  "msi2",
+> > +					  "msi3",
+> > +					  "msi4",
+> > +					  "msi5",
+> > +					  "msi6",
+> > +					  "msi7";
+>
+> Is there a 'global' interrupt? If so, please add it.
+
+Ok.
+
+> > +
+> > +			#interrupt-cells = <1>;
+> > +			interrupt-map-mask = <0 0 0 0x7>;
+> > +			interrupt-map = <0 0 0 1 &intc 0 0 412 IRQ_TYPE_LEVEL_HIGH>,
+> > +					<0 0 0 2 &intc 0 0 413 IRQ_TYPE_LEVEL_HIGH>,
+> > +					<0 0 0 3 &intc 0 0 414 IRQ_TYPE_LEVEL_HIGH>,
+> > +					<0 0 0 4 &intc 0 0 415 IRQ_TYPE_LEVEL_HIGH>;
+> > +
+> > +			clocks = <&gcc GCC_PCIE3X2_AXI_M_CLK>,
+> > +				 <&gcc GCC_PCIE3X2_AXI_S_CLK>,
+> > +				 <&gcc GCC_PCIE3X2_AXI_S_BRIDGE_CLK>,
+> > +				 <&gcc GCC_PCIE3X2_RCHG_CLK>,
+> > +				 <&gcc GCC_PCIE3X2_AHB_CLK>,
+> > +				 <&gcc GCC_PCIE3X2_AUX_CLK>;
+> > +			clock-names = "axi_m",
+> > +				      "axi_s",
+> > +				      "axi_bridge",
+> > +				      "rchng",
+> > +				      "ahb",
+> > +				      "aux";
+> > +
+> > +			resets = <&gcc GCC_PCIE3X2_PIPE_ARES>,
+> > +				 <&gcc GCC_PCIE3X2_CORE_STICKY_ARES>,
+> > +				 <&gcc GCC_PCIE3X2_AXI_S_STICKY_ARES>,
+> > +				 <&gcc GCC_PCIE3X2_AXI_S_CLK_ARES>,
+> > +				 <&gcc GCC_PCIE3X2_AXI_M_STICKY_ARES>,
+> > +				 <&gcc GCC_PCIE3X2_AXI_M_CLK_ARES>,
+> > +				 <&gcc GCC_PCIE3X2_AUX_CLK_ARES>,
+> > +				 <&gcc GCC_PCIE3X2_AHB_CLK_ARES>;
+> > +			reset-names = "pipe",
+> > +				      "sticky",
+> > +				      "axi_s_sticky",
+> > +				      "axi_s",
+> > +				      "axi_m_sticky",
+> > +				      "axi_m",
+> > +				      "aux",
+> > +				      "ahb";
+> > +
+> > +			phys = <&pcie1_phy>;
+> > +			phy-names = "pciephy";
+> > +
+> > +			interconnects = <&gcc MASTER_SNOC_PCIE3_2_M &gcc SLAVE_SNOC_PCIE3_2_M>,
+> > +					<&gcc MASTER_ANOC_PCIE3_2_S &gcc SLAVE_ANOC_PCIE3_2_S>;
+> > +			interconnect-names = "pcie-mem", "cpu-pcie";
+>
+> Can you check if the controller supports cache coherency? If so, you need to add
+> 'dma-coherent'.
+
+Ok.
+
+> > +
+> > +			status = "disabled";
+>
+> Please define the root port node as well.
+>
+> All the above comments applies to 2nd controller node as well.
+
+Ok.
+
+Thanks
+Varada
 
