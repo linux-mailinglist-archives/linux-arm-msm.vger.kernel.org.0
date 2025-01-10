@@ -1,94 +1,96 @@
-Return-Path: <linux-arm-msm+bounces-44685-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-44686-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2BF9BA083B9
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jan 2025 00:57:50 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 734DBA083BF
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jan 2025 01:00:47 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2503F1675F7
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jan 2025 23:57:48 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9A9433A1BEB
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jan 2025 00:00:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E6D9E2063E2;
-	Thu,  9 Jan 2025 23:57:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4D6E25028C;
+	Fri, 10 Jan 2025 00:00:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Qfi49NPH"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="FWECsQMJ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f181.google.com (mail-lj1-f181.google.com [209.85.208.181])
+Received: from mail-lj1-f174.google.com (mail-lj1-f174.google.com [209.85.208.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E08D0205E22
-	for <linux-arm-msm@vger.kernel.org>; Thu,  9 Jan 2025 23:57:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B49AFC1D
+	for <linux-arm-msm@vger.kernel.org>; Fri, 10 Jan 2025 00:00:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736467065; cv=none; b=bRVcDrbUTGiWRzmgFcbfkAtUeKaO3WMqQJHb6B4nLKILMn907UQ8+p8V2urLugBzS6X9lcOefbVq4XJacehE9G0S8zj+ahs0vaY4m5ZT20zq9vfTB0L0t51dxXacC2klsBf3eGGLZB0ExoH2rcQx3TWVvGVeUTRn8VaRi1tJF1A=
+	t=1736467244; cv=none; b=YWqAbRbZLX0a2KmPC1hdXGVG3yDSC48fpwqEIpXtDnAWWPnvxtxVpEtaBMCKS9+5kwK72Xyrt2UK7/P95AaM932fBW3UEh4e05jpYvwWHFbFr8moMSQDBWNZbG8qMtHWhEDhymkhBX58OfDJHNxwpScnClsebJ+Mwx9oJZ4t+Ck=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736467065; c=relaxed/simple;
-	bh=/IqFR84qWpSKeGYsUa0A+VLSgzQyolbai+JNyY5zxxM=;
+	s=arc-20240116; t=1736467244; c=relaxed/simple;
+	bh=9IACV5z/CgubkMSnp3SOw1be+ZWd2t8hgmJedpX7mCw=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=NFlC2nNzDcOr5lWo5812kW6Xif+otcc8Xt2PzCdWFhw9VyxD1eX/46FtnAXom6REnyObRnPG7Bxy0ooM3msECzGn6n0X0ZdGDzLUjJ/04VgtHjztIUx01PN7d+9S2Qjy5cqo2y0whpvsuqf21Vbpjj2nV2XfE7Ih9d0DzMU1fhk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Qfi49NPH; arc=none smtp.client-ip=209.85.208.181
+	 Content-Type:Content-Disposition:In-Reply-To; b=p3yvmMOCg0a3MDKxg4W9m9n22yZnvNuEXOQuxi4HR5JZqyVKyFATUbTKTEDlDGEeRfZglg3A/Gyp9VsjK7yRcniwBN8Z168/ahEjHVly+b3Kp9c5XC8vc0Qg9NrKuTVKuIwoNMXxo2YGR8LEZsKiMTEi48zhTCAXnJj/GC1lWm8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=FWECsQMJ; arc=none smtp.client-ip=209.85.208.174
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f181.google.com with SMTP id 38308e7fff4ca-30034ad2ca3so10620601fa.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Jan 2025 15:57:43 -0800 (PST)
+Received: by mail-lj1-f174.google.com with SMTP id 38308e7fff4ca-2ffd6b7d77aso17096601fa.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Jan 2025 16:00:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1736467062; x=1737071862; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1736467240; x=1737072040; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=79FHqofEtRr0hlMpVLWdJtC6zUk7BGgo+xqNv88BarQ=;
-        b=Qfi49NPHwsJWc2O5a5ZlToUx7LexWu9O5fYVhbDNgbEJT71hZOdmJNoD9pmlVCJm6O
-         lih7Dp1W6s5W/sHlYDZM4h0XlPDTxidE0jpDIhfLvaVAofoLscfuCubqlG5DaynpGNi+
-         HdDUn8oQ890z6P2JBaCw0GovLiteMBdwrXXdTnZwGeVvhsb3qHmjvhHvAL3vgMA0rRs7
-         629jq9uPKqrh7glaE+GDhTSFgj0XSRDYyBxtV95ZnlCJxIzhN3s2NDPzOlyo/nqw68Z4
-         sJEweVG86eGSrXQ7JsSpt8bGfsFbFOpoBNTGAauSBfXqM0U0nAbR5qPhWg1MWyb/Blhb
-         5OoQ==
+        bh=V89tZmVrHGFuPql+PBulxt76Abvyv1smk3+78i/64eA=;
+        b=FWECsQMJDXvcaxo1oFU+8yeBrN8ITlTg6mpS8FnnLkz7Vj4LA6oVduK5B9XqhQDyAX
+         8pzzd2F3rzjSPqArByaz1TfdrbfI6gOA257mUrNEY+wMb84PAn+kioiKA6IiBNqUhZ5C
+         Jnb+pGsAFmN2dMyqEq2hcWdce2on4dGDtwLBm60toxLE1TXp1zDLVMhlcFjnT3uIeP0T
+         ScaM6d2d7SmCxpEyYqadLfA/eCLLysqSFgS3W+a1yA6zRU0LqlpYvO2Af2VFdY/lvzDz
+         YcoHryLn7J8Oh/l5/lHjGpHQSbx22x/RqkbVD6ZZGPHbV+NukdAGrqea9quk1kTOXL+X
+         3UhQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736467062; x=1737071862;
+        d=1e100.net; s=20230601; t=1736467240; x=1737072040;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=79FHqofEtRr0hlMpVLWdJtC6zUk7BGgo+xqNv88BarQ=;
-        b=FkO+7ytJR7tMf8L2pvEHDR9849XAcYYBvL4DWBGueqTeipsA/dGiSnmztB6xEHm/4g
-         ssZEBmyA9v1oq/QFEeVlTMgEkq+ItaCY5q7jrIxSmxtOgCwk5K/RZ0DoM/cBHxLB95sn
-         67Jz71hR+JT8obQMDXTD1I4SOsYNOI1TikL/1FmdQD8jU5sYpJEsvUJU7tooKoA+ooDx
-         JZ5OLkZwVvojFio2hB5oHdnaIgNxvXDzkDct1m4ObjQ82lBqf1kzwADcfAT3DT8ZBnwb
-         EmsSPbZqzJt+VisAbUILAp1xlRjDhXwFFsBZ8iHRv2bp8Vl34I3piNTBX90cxRVAgq8t
-         RdQg==
-X-Forwarded-Encrypted: i=1; AJvYcCVN/iuYvkXxiaScANuab+ZmtbYccOHvH1LdSNLzfmCWGlbicygVD07obPptJUySHtyXHSDW8A+ljPyO/HO0@vger.kernel.org
-X-Gm-Message-State: AOJu0YyaWgLqwk6RdvFqlNuxC2u47xu6yAFAnMCihxM7JSY0/roNTXRq
-	olJFX7vj/gDSX1iitiW45SbcwKl93ylHcBmkQDI4qR63fG5jlaww/mhiFi+qsO8=
-X-Gm-Gg: ASbGncvh6dDuGfAY5ROHYXbSKGhwhwsNhXqIz0mosv6PqxV0Augn4EOeZWyxxXWCScS
-	NKxAOJ6XaTOSC7urqWfMiAk4QnjQPWnBt7aYsTU65X8YVp8TgBjaMee6LL6rpovnDqeinwktw5T
-	I3bRsfNkIeC+fgK5Gk1QrsziyWCbGFtrXEnJy2X8jSTgS6YseQSuChq367utq4wmOTI87Eu3HCV
-	POAM+y19/BAggISrcu3UudBd3nwZjDcul3CO41QaSIDEWYPVDNwIFZ+5cCojsjUWqOXpikUq3nW
-	PKEppMHwrdvLbE3HdKR3jrolc338/B7sJcoi
-X-Google-Smtp-Source: AGHT+IHKbDVXIxAZdZxXANVu9gYbEJQ+jYurQOYZiJih1oOmheQ8+kN5cRpFn4H5d2vGBTXPfoMOKQ==
-X-Received: by 2002:a05:651c:546:b0:2ff:d044:61fc with SMTP id 38308e7fff4ca-305f45f37d2mr25960581fa.33.1736467061939;
-        Thu, 09 Jan 2025 15:57:41 -0800 (PST)
+        bh=V89tZmVrHGFuPql+PBulxt76Abvyv1smk3+78i/64eA=;
+        b=XhGq+AJQJVx+rXR17TYLsvPNUlcyA0xR2y10IZfLiXpryFKJhQ830z7+52datEdGYY
+         x2hA2l+DLsr1RlciJVMqtjyinaf9xM8oQwRY1AanySqz9Rwj/XNRZFkkKySDsUXYgm+d
+         1tjelwI9VYCXPQ0TBjHVJrCUqQlrt85mUiF8e4EGoPVGQH7gl4jJ0a7OUJCcbbbr9wQo
+         d3Z1eDiCV9FNHoo+/Q+JhPaOAvl9QXqcbrRylkgJhNhZTMqkvUS/V3VWxf7pgT82RAch
+         4/ADoLsDGIu8h5RqMyVZ4rNrL9W10og6+gnrpyMPdksBOSHZ806YHetNenGeyFdHotcT
+         Wjuw==
+X-Forwarded-Encrypted: i=1; AJvYcCUXQeYU8TrrxCNE13qqvmugwnpLfRL6Wv83EbRPYBh3t/bsCZJNIzbrwn7q11dSigQU3LkLmZbX6DHY7pEZ@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz+Met/m+/BS6PuIC/7t1zFN/a8AoR8Gr2AivIMkVhaUSV1Sm2m
+	Zo4PZivI6bYEy0ZNNrlEKqM4fp1ghm4CRr6DbSVB1WNRaBR6eKtEyuHbI7aXA7zGd+QSHNY3r38
+	0
+X-Gm-Gg: ASbGncsUvNB2hlSWRXHMIclpnb8t/j4KGChrg/aQBeepI72ynAq0NH6u/SXAS3aBOZI
+	+PzwC7rH2hd0Ny3Od75ZeP0tZ/xONfYp5g5sR+FWD9+5zp0rIwztRfdHIXsVPKy3ZgdbxKhJnel
+	Hmo7TFuTIC0vyN+Pp5q2vQOuTNS84FH3+/fVE+iC80dX5KIifA9/I04NVGzm2kqC1DesY4zhJRd
+	hX9hvDvecBDQfmYEAqX2Abggv06X1n3QE+6rTa99zziZOj9j++ikLRIxfxBFHSde5rrYfXsLH/r
+	3knbg2ytHBf1els6MplOTUnjbxWE3X9jHVHe
+X-Google-Smtp-Source: AGHT+IF1kMl3/8tplC3d3ceeZdPyxdOdcXWi0l4AL0IfJYyKy6rFEmO45OwPi0QlXvFa+z23H39rUA==
+X-Received: by 2002:a05:651c:50b:b0:300:34b2:f89e with SMTP id 38308e7fff4ca-305f45747b3mr28788641fa.17.1736467240081;
+        Thu, 09 Jan 2025 16:00:40 -0800 (PST)
 Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-305ff1c7b99sm3363311fa.84.2025.01.09.15.57.39
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-305ff1ec4ecsm3364311fa.103.2025.01.09.16.00.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 09 Jan 2025 15:57:40 -0800 (PST)
-Date: Fri, 10 Jan 2025 01:57:38 +0200
+        Thu, 09 Jan 2025 16:00:38 -0800 (PST)
+Date: Fri, 10 Jan 2025 02:00:37 +0200
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Thomas Zimmermann <tzimmermann@suse.de>
-Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
-	Maxime Ripard <mripard@kernel.org>, David Airlie <airlied@gmail.com>, 
-	Simona Vetter <simona@ffwll.ch>, Rob Clark <robdclark@gmail.com>, 
-	Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, Chandan Uddaraju <chandanu@codeaurora.org>, 
-	Jeykumar Sankaran <jsanka@codeaurora.org>, Jordan Crouse <jordan@cosmicpenguin.net>, 
-	Sravanthi Kollukuduru <skolluku@codeaurora.org>, dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
-	Archit Taneja <architt@codeaurora.org>, Rajesh Yadav <ryadav@codeaurora.org>, 
-	linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org, 
-	Simona Vetter <simona.vetter@ffwll.ch>
-Subject: Re: [PATCH 0/6] drm: enforce rules for
- drm_atomic_helper_check_modeset()
-Message-ID: <t7ga7l7hi5y634hc6sklp6mzae3jfqs66nkalviojrzrgez3kf@b4h4ue6fdj7j>
-References: <20241222-drm-dirty-modeset-v1-0-0e76a53eceb9@linaro.org>
- <e1a1fc68-cb8d-4fb0-879f-a84e679f6b2b@suse.de>
+To: Jessica Zhang <quic_jesszhan@quicinc.com>
+Cc: Rob Clark <robdclark@gmail.com>, quic_abhinavk@quicinc.com, 
+	Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, 
+	David Airlie <airlied@gmail.com>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+	Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
+	Simona Vetter <simona@ffwll.ch>, Simona Vetter <simona.vetter@ffwll.ch>, 
+	quic_ebharadw@quicinc.com, linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+	freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, Rob Clark <robdclark@chromium.org>, 
+	Ville =?utf-8?B?U3lyasOkbMOk?= <ville.syrjala@linux.intel.com>
+Subject: Re: [PATCH v4 15/25] drm/msm/dpu: Add CWB to msm_display_topology
+Message-ID: <wheu3izj3pit6k3cmslpyegunmrcryy65y5eu432nec2y2aor6@kda3xnujhtnm>
+References: <20241216-concurrent-wb-v4-0-fe220297a7f0@quicinc.com>
+ <20241216-concurrent-wb-v4-15-fe220297a7f0@quicinc.com>
+ <ki35rornnos35r3fzg5yyqzxnqua3dyfb6ewq2aefrh4u74vfi@opdnf44ntten>
+ <4069bd6a-c37f-4dbe-bbd6-5b333ee54ad8@quicinc.com>
+ <a4akor2liqafta53zeev22x2pkqwzo5szwidr2ruzdvttvze5h@jtio3jue7ez3>
+ <e47b33e6-142d-42d6-8ae9-f2d2c7793d18@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -97,88 +99,168 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <e1a1fc68-cb8d-4fb0-879f-a84e679f6b2b@suse.de>
+In-Reply-To: <e47b33e6-142d-42d6-8ae9-f2d2c7793d18@quicinc.com>
 
-On Thu, Jan 09, 2025 at 02:53:16PM +0100, Thomas Zimmermann wrote:
-> Hi
+On Thu, Jan 09, 2025 at 02:34:44PM -0800, Jessica Zhang wrote:
 > 
 > 
-> Am 22.12.24 um 06:00 schrieb Dmitry Baryshkov:
-> > As pointed out by Simona, the drm_atomic_helper_check_modeset() and
-> > drm_atomic_helper_check() require the former function is rerun if the
-> > driver's callbacks modify crtc_state->mode_changed. MSM is one of the
-> > drivers which failed to follow this requirement.
+> On 1/3/2025 10:16 AM, Dmitry Baryshkov wrote:
+> > On Fri, Jan 03, 2025 at 10:03:35AM -0800, Jessica Zhang wrote:
+> > > 
+> > > 
+> > > On 12/19/2024 9:03 PM, Dmitry Baryshkov wrote:
+> > > > On Mon, Dec 16, 2024 at 04:43:26PM -0800, Jessica Zhang wrote:
+> > > > > Add the cwb_enabled flag to msm_display topology and adjust the toplogy
+> > > > > to account for concurrent writeback
+> > > > 
+> > > > Why?
+> > > 
+> > > Hi Dmitry,
+> > > 
+> > > This flag is necessary to specify that CWB mux(es) need to be assigned for
+> > > the given reqeusted topology.
+> > 
+> > Why is necessary? Please rephrase your statement (we need foo bar, so do
+> > baz).
 > 
-> I'm concerned about the implications of this series. How does a driver
-> upgrade from simple pageflip to full modeset if necessary? The solution in
-> msm appears to be to run the related test before drm_atomic_helper_check().
-> (Right?)
+> Ack, what do you think of rephrasing the commit msg to this:
 > 
-> My corner case is in mgag200, which has to reprogram the PLL if the color
-> mode changes. So it sets mode_changed to true in the primary plane's
-> atomic_check. [1] This works in practice because the plane checks run before
-> the CRTC checks. So the CRTC code will do the correct thing. Reprogramming
-> the PLL means to disable the display at some point. So it comes down to a
-> full modeset.
+> ```
+> Add support for adjusting topology based on if concurrent writeback is
+> enabled.
 > 
-> You mention that drm_atomic_helper_check() needs to rerun if mode_changed
-> flips. Would it be possible to implement this instead within the helper?
+> Currently, the topology is calculated based on the assumption that the user
+> cannot request real-time and writeback simultaneously. For example, the
+> number of LMs and CTLs are currently based off the number of phys encoders
+> under the assumption there will be at least 1 LM/CTL per phys encoder.
+> 
+> This will not hold true for concurrent writeback as 2 phys encoders (1
+> real-time and 1 writeback) can be driven by 1 LM/CTL when concurrent
+> writeback is enabled.
+> 
+> To account for this, add a cwb_enabled flag and only adjust the number of
+> CTL/LMs needed by a given topology based on the number of phys encoders only
+> if CWB is not enabled.
+> 
+> ```
+> 
+> > 
+> > > 
+> > > > 
+> > > > > 
+> > > > > Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+> > > > > ---
+> > > > >    drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c | 11 ++++++++++-
+> > > > >    drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c   | 10 ++++++++--
+> > > > >    drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h   |  2 ++
+> > > > >    3 files changed, 20 insertions(+), 3 deletions(-)
+> > > > > 
+> > > > > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+> > > > > index b4bfded3d53025853cee112ca598533ece290318..b063c8fe4c0594772d84401fa56c9c21afc0ad18 100644
+> > > > > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+> > > > > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+> > > > > @@ -1198,6 +1198,8 @@ static struct msm_display_topology dpu_crtc_get_topology(
+> > > > >    		dpu_encoder_update_topology(drm_enc, &topology, crtc_state->state,
+> > > > >    					    &crtc_state->adjusted_mode);
+> > > > > +	topology.cwb_enabled = drm_crtc_in_clone_mode(crtc_state);
+> > > > > +
+> > > > >    	/*
+> > > > >    	 * Datapath topology selection
+> > > > >    	 *
+> > > > > @@ -1209,9 +1211,16 @@ static struct msm_display_topology dpu_crtc_get_topology(
+> > > > >    	 * 2 LM, 1 INTF (stream merge to support high resolution interfaces)
+> > > > >    	 *
+> > > > >    	 * Add dspps to the reservation requirements if ctm is requested
+> > > > > +	 *
+> > > > > +	 * Only hardcode num_lm to 2 for cases where num_intf == 2 and CWB is not
+> > > > > +	 * enabled. This is because in cases where CWB is enabled, num_intf will
+> > > > > +	 * count both the WB and real-time phys encoders.
+> > > > > +	 *
+> > > > > +	 * For non-DSC CWB usecases, have the num_lm be decided by the
+> > > > > +	 * (mode->hdisplay > MAX_HDISPLAY_SPLIT) check.
+> > > > >    	 */
+> > > > > -	if (topology.num_intf == 2)
+> > > > > +	if (topology.num_intf == 2 && !topology.cwb_enabled)
+> > > > >    		topology.num_lm = 2;
+> > > > >    	else if (topology.num_dsc == 2)
+> > > > >    		topology.num_lm = 2;
+> > > > > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
+> > > > > index b763ef19f4c60ae8a35df6a6ffb19e8411bc63f8..85adaf256b2c705d2d7df378b6ffc0e578f52bc3 100644
+> > > > > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
+> > > > > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
+> > > > > @@ -382,8 +382,14 @@ static int _dpu_rm_reserve_ctls(
+> > > > >    	int i = 0, j, num_ctls;
+> > > > >    	bool needs_split_display;
+> > > > > -	/* each hw_intf needs its own hw_ctrl to program its control path */
+> > > > > -	num_ctls = top->num_intf;
+> > > > > +	/*
+> > > > > +	 * For non-CWB mode, each hw_intf needs its own hw_ctl to program its
+> > > > > +	 * control path. Hardcode num_ctls to 1 if CWB is enabled
+> > > > > +	 */
+> > > > 
+> > > > Why?
+> > > 
+> > > This is because num_intf is based on the number of phys_encs. Since in the
+> > > CWB case, the WB and real-time encoders will be driven by the same CTL. I
+> > > can add this to the comment doc.
+> > 
+> > Why are they driven by the same CTL? Is it also the case for platforms
+> > before DPU 5.x?
+> 
+> This is because the WB and real-time path for a given topology would be
+> driven by the same data path so the same CTL should enable the real-time and
+> WB active bits.
+> 
+> This is the same for pre-DPU 5.x.
 
-I think this should be a driver's decision. For MSM it was easier to
-move the mode_changed changes and to isolate that before calling into
-the drm_atomic_helper_check_modeset() code. Other drivers might prefer
-to rerun the helper.
+But pre-5.x platforms didn't have ACTIVE_CTL, so they should be using
+separte CTL for each of the physical encoders.
 
 > 
-> Best regards
-> Thomas
-> 
-> [1] https://elixir.bootlin.com/linux/v6.12/source/drivers/gpu/drm/mgag200/mgag200_mode.c#L493
-> 
 > > 
-> > As suggested by Simona, implement generic code to verify that the
-> > drivers abide to those requirement and rework MSM driver to follow that
-> > restrictions.
+> > > 
+> > > Thanks,
+> > > 
+> > > Jessica Zhang
+> > > 
+> > > > 
+> > > > > +	if (top->cwb_enabled)
+> > > > > +		num_ctls = 1;
+> > > > > +	else
+> > > > > +		num_ctls = top->num_intf;
+> > > > >    	needs_split_display = _dpu_rm_needs_split_display(top);
+> > > > > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h
+> > > > > index b061dfdab52e04ab7d777e912a30173273cb3db7..12db21a2403ec6930894c36a58e898c5d94c2568 100644
+> > > > > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h
+> > > > > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h
+> > > > > @@ -46,6 +46,7 @@ struct dpu_rm {
+> > > > >     * @num_dspp:     number of dspp blocks used
+> > > > >     * @num_dsc:      number of Display Stream Compression (DSC) blocks used
+> > > > >     * @needs_cdm:    indicates whether cdm block is needed for this display topology
+> > > > > + * @cwb_enabled:  indicates whether CWB is enabled for this display topology
+> > > > >     */
+> > > > >    struct msm_display_topology {
+> > > > >    	u32 num_lm;
+> > > > > @@ -53,6 +54,7 @@ struct msm_display_topology {
+> > > > >    	u32 num_dspp;
+> > > > >    	u32 num_dsc;
+> > > > >    	bool needs_cdm;
+> > > > > +	bool cwb_enabled;
+> > > > >    };
+> > > > >    int dpu_rm_init(struct drm_device *dev,
+> > > > > 
+> > > > > -- 
+> > > > > 2.34.1
+> > > > > 
+> > > > 
+> > > > -- 
+> > > > With best wishes
+> > > > Dmitry
+> > > 
 > > 
-> > There are no dependencies between core and MSM parts, so they can go
-> > separately via corresponding trees.
-> > 
-> > Reported-by: Simona Vetter <simona.vetter@ffwll.ch>
-> > Link: https://lore.kernel.org/dri-devel/ZtW_S0j5AEr4g0QW@phenom.ffwll.local/
-> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > ---
-> > Dmitry Baryshkov (6):
-> >        drm/atomic-helper: document drm_atomic_helper_check() restrictions
-> >        drm/atomic: prepare to check that drivers follow restrictions for needs_modeset
-> >        drm/msm/dpu: don't use active in atomic_check()
-> >        drm/msm/dpu: move needs_cdm setting to dpu_encoder_get_topology()
-> >        drm/msm/dpu: simplify dpu_encoder_get_topology() interface
-> >        drm/msm/dpu: don't set crtc_state->mode_changed from atomic_check()
-> > 
-> >   drivers/gpu/drm/drm_atomic.c                |  3 +
-> >   drivers/gpu/drm/drm_atomic_helper.c         | 86 ++++++++++++++++++++++++++---
-> >   drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c    |  4 --
-> >   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 82 +++++++++++++++++----------
-> >   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h |  4 ++
-> >   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c     | 26 +++++++++
-> >   drivers/gpu/drm/msm/msm_atomic.c            | 13 ++++-
-> >   drivers/gpu/drm/msm/msm_kms.h               |  7 +++
-> >   include/drm/drm_atomic.h                    | 10 ++++
-> >   9 files changed, 192 insertions(+), 43 deletions(-)
-> > ---
-> > base-commit: b72747fdde637ebf52e181671bf6f41cd773b3e1
-> > change-id: 20241222-drm-dirty-modeset-88079bd27ae6
-> > 
-> > Best regards,
-> 
-> -- 
-> --
-> Thomas Zimmermann
-> Graphics Driver Developer
-> SUSE Software Solutions Germany GmbH
-> Frankenstrasse 146, 90461 Nuernberg, Germany
-> GF: Ivo Totev, Andrew Myers, Andrew McDonald, Boudien Moerman
-> HRB 36809 (AG Nuernberg)
+> > -- 
+> > With best wishes
+> > Dmitry
 > 
 
 -- 
