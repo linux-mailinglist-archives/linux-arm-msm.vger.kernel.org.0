@@ -1,88 +1,88 @@
-Return-Path: <linux-arm-msm+bounces-44723-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-44724-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 655ADA08DA9
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jan 2025 11:15:57 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3FC39A08E0A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jan 2025 11:30:14 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 786453A209B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jan 2025 10:15:51 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 97A7D188A53D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jan 2025 10:29:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3718B1CDFD4;
-	Fri, 10 Jan 2025 10:15:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A40A320ADF6;
+	Fri, 10 Jan 2025 10:29:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="loLG3CMo"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="af8bFHwU"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f44.google.com (mail-ej1-f44.google.com [209.85.218.44])
+Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3720420ADEC
-	for <linux-arm-msm@vger.kernel.org>; Fri, 10 Jan 2025 10:15:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBA7020B1ED
+	for <linux-arm-msm@vger.kernel.org>; Fri, 10 Jan 2025 10:29:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736504147; cv=none; b=CVa1wklYEIfvVBJW0RhFV5QOSxNe20veKrVGiG1uXHXhJZbNqDaq7x/1ZKTAdS9s1aImGZ/7V8b6ZAMearTHBdReHlBUX+AxxCvDG7Mcv5RVPcasIqsCO6+7N/wiTg9fBZtYRRoapqtjMTw1vJQcjA9VG/T70yGSTKnUkSgEc5I=
+	t=1736504982; cv=none; b=kKvNnxDjzmGHA1ciOYzN9JbvLp1anOchaBUpatv5CzQ0t/ohr3Lj/e4iSoDJjW2N8b70VSDuAkXkOws/vaq5qM5HVkoWmCfHXBMdYHykZUCYw6zMmE7IWakiCkgvon1ipYMr9zZggtyLBYsdTdIgtK/9+JOEzULMxcL9WJR94EE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736504147; c=relaxed/simple;
-	bh=OG5Slfzzn+4YZ57E3I8Aah1Mfpy3Cxh1SjEqcqb7rMc=;
+	s=arc-20240116; t=1736504982; c=relaxed/simple;
+	bh=mT7hLXo0OAyRVomNCCOY75eOUAVIlmDmdMbe5y8doQE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=HTRbUjXhMtp+GK6TipGZunpB2FdFR+f32fTYf7irK1ecalTH/cfUNvLTJ3AZcrJZNpXDyEZa9IThhmbpt5oTAKOi+C+eht9DNim95Iwd1rka0/Uv1DQfiUJ2wIOl66AQfB/SPV4gpw+6FrgizQebKylxohKEX+7JcNpsHDs6oxY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=loLG3CMo; arc=none smtp.client-ip=209.85.218.44
+	 Content-Type:Content-Disposition:In-Reply-To; b=jwnjtErrXK7AG1cAkBAi6OSL5ES1kg7rZ73ncSYIQPMR0ylAhlnfK9mmiDe62rJNkoKAvbjj04boqK5KVyWQ29r5yQf8/NPMZWul0qZGWXSYjBjB3lHd2J9AmCFA5x4vq6Dt6n/ptBNGfev1YOQ+sJcwLtrSApok+qOc78Vifi0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=af8bFHwU; arc=none smtp.client-ip=209.85.218.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f44.google.com with SMTP id a640c23a62f3a-aaec61d0f65so350433666b.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Jan 2025 02:15:44 -0800 (PST)
+Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-aa684b6d9c7so343069366b.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Jan 2025 02:29:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1736504143; x=1737108943; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1736504979; x=1737109779; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=8I5F2q/E1Uyw0awphW5FocvFmJIVkEVv/Vv7zorOGUY=;
-        b=loLG3CMo7Hl/ncnnldCodaVvckSO1hOXgE7NsB7BfPOoe/dmLNMeZVS4WXDPuc7lyr
-         om8DkFWMd/7FB9kNjZuGpt96qtyRTao/+Xb/gQbRPUb5aH4/vHu7ejBnaukbCrKsL/OH
-         1eIrRhY4hx5niuI/wirw1Ifah0P92g9STnrYkzYpxZ09dGLyrz7ZYEv/89BvbDcDmxRR
-         sCXoFpFVTNH2Cs04FYupVm/JuKS7hQg/UOCSKwfPWb6xL+7wuaZmJ0dCRCaQvW9+0+T6
-         31xiLMDk9AnqZti0Omlp5j2WQ1TVF/1DB4Kc04EAj/GvCyPCtZVTODUUF42DRz3NJxyv
-         LBUA==
+        bh=DFXbwysOSLDtoIDrz04DXm6/Zw3SDx6zPfwlh2JFNx8=;
+        b=af8bFHwUXyGfmfD+Kho3wnX3TXq2rrs58CFph7XdDrjR+t+EELx0nljulcIm+oEZx5
+         3OJjv9xD2mLvJDk5Yk/tRLdUrfCQmJijQ7Azd7wfy4SXJP5ecAZR4G7xxRsmV5adfCHV
+         tKKugtx7Q//00d2ps7HSzl+2ncM70umvKFByCUEjQfAKGEFKw91O4W7IE+4gaEgIf/wz
+         WYWB/Syn93uUey4nSno/Y6ZVUhfj6ZwnQiVtLU3bwvCTLAm9CPDiXHDg5sNPcRdm2IO7
+         KbyZpu/oOxpK0IclTk6Hye39UMhEYOxtsc5SkhIvSKTm0wXY/kiuccblBB5RGkgxJgqF
+         C8XA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736504143; x=1737108943;
+        d=1e100.net; s=20230601; t=1736504979; x=1737109779;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=8I5F2q/E1Uyw0awphW5FocvFmJIVkEVv/Vv7zorOGUY=;
-        b=OiZ6ffmY2rLrU4keCIFxbGx41aFA/WjtJv92+G3ztn6pn0tmhxL9nG+SSxDK9jnzhv
-         tVqFgKTFb7QA6xYl0EWkzjyG5wkPFyyay5vQeNrgiutlQciOKokdjZ2XMLWKkdtG/7h1
-         6A9SZ5ENAjqVLXxHJU3KepVqafGvxBEGGIRqnSXR8W3IQcx7DVrDgixF4V767SUB5nOZ
-         91h0atxPks/F5mVsGnKPbxx7/P0lsVUbvNwvaw/0iiCe0LL8hUB26L/Ky6byDb3/5NYL
-         nQHOlfywZeuUNkKCAZBpyC628fTMW1nevG14jRW65MxeYkLyN8plLrzHNnr/eH4gFSF1
-         uCSA==
-X-Forwarded-Encrypted: i=1; AJvYcCUIVJpaKaasUgbjuJ74VLZCiZ1gFx2nE044fpQtDAZKMBQPN5np6mpDv+TBlt5V1mha3/nwha3V8FHxcw/i@vger.kernel.org
-X-Gm-Message-State: AOJu0Yxi1tyJptkHX3+wIwdF1tcyx30FWsiDhmHAwmyeRZtU3QREDIEx
-	5Z3GZG2MWtyej4lorgiBMxlr7GmblHEL5pR2bRF+GNgdu6zASkqQnzQHay8Plv0=
-X-Gm-Gg: ASbGnct3XLhxIF2dkKjsjwgRGgnQxzf8mFpNFgvfhLTjH/uSRP73Kx6MP3kpxSWG+QA
-	hh53HE2EjjN1JRbgMsdS5esnTaYCM+iHoLHPfIVZXjv/3HFVtF9C9fJJysrjPQaRqV0pN7SwB8y
-	JGBCBqQ60Q2GlHascC7QNap1US63lB/2rAjcoDYfVZZbgdynmj9QCZI9t6Z5x9tijl0FQ6QJbSN
-	kDaZUg6gBBI8nIDxDColkVE8e24uI0+wJfkJFWpevzQ8nZAK4M+kGx0TZBcDIJw0upI
-X-Google-Smtp-Source: AGHT+IFxOfe+uLe4Ftus+tUMtlwHJqHVL74w+6Tuu37QcKSdGFuUOdk5R49N8KAeZXoV1/5uRbSyeA==
-X-Received: by 2002:a17:906:c141:b0:aa6:5eae:7ed6 with SMTP id a640c23a62f3a-ab2ab6a2f04mr761193166b.13.1736504143287;
-        Fri, 10 Jan 2025 02:15:43 -0800 (PST)
+        bh=DFXbwysOSLDtoIDrz04DXm6/Zw3SDx6zPfwlh2JFNx8=;
+        b=r3+MsCLNcGf26v2iSBtCWSPy5TCbqLbdnZjWsSarO3xKkb7gEW2OdqXil2hTtFsNza
+         2bzU+AZNJ4sNX363DmPwfwfKME27kHY7S/GpQflPgMY5kIVaw+Ff4+Wt1ENraXqgAmWt
+         IldhDHoDRuKQGdjkICsgoyUSz8N5oHuZY9ZbH7YDf7jnCteS0Xb7ATHPiosf34EGCgKA
+         Q/23eH96HqN/FcJpSdps+FKflgvPhTXsO07LVTCaIy4ZGHcxthoVExmrp7x294MgBGxY
+         5ccjyrWT/xAj9NhgnfxDJERDj8/TKg0Ef76+pV9iR+MYnEpllWHmIgohBQX/N4trT3NZ
+         QlSQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUPPGu1MJ6RX9gC8OYJW+T6xKINCnAHyvIBxw9ZSI547GrqvullVwJezeiVIKISvPFmrPChRhGexdVNdG7m@vger.kernel.org
+X-Gm-Message-State: AOJu0YybQuUfsR2heS75l+tuDgQc4btVks4g2XKHktkOtLuTLOeadigN
+	7pCwR3IGaLRMQgB23JEtEkiYTbzc5i1LRlkaXqNZq+ld35KNdY6GQTu2XarG2UY=
+X-Gm-Gg: ASbGnctIMl0rC76LWoe7BGauugDAhoKlypgFtc83SsvXsra/whXqy/71EFBxzc8V/Ph
+	L6hCQidN9+7ywi4fdYJPw/LKfBw5iFyLthBtNHPfkF0bQbZQjDEEhkJEMYw3kYEQvrD23PCYw8A
+	YEzZLDTZTyB4IZUGhE+uTv4wxGByoFD/Z+409ah7eA+X+6u19kXpfymEE2X9u8EwFrOCM71Uswl
+	Jvz4LDgdKl9yRC3fq/AnlJqY7leYMnpzV+sEaWVi+JHWZc+FSJoKewOdZlCeMyti8W+
+X-Google-Smtp-Source: AGHT+IFMqpCwcqX2sHs5/lhB+pWcvO3m7YKVkr7BbL4UklMWafwFeJcgHUkq0HgfG2Fc/USROn7i9g==
+X-Received: by 2002:a17:907:72cf:b0:aa6:a33c:70a7 with SMTP id a640c23a62f3a-ab2abc8ecb1mr84005266b.49.1736504979103;
+        Fri, 10 Jan 2025 02:29:39 -0800 (PST)
 Received: from linaro.org ([2a02:2454:ff21:ef30:d2b5:f46c:e0e4:a1af])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ab2c90d52edsm151801166b.42.2025.01.10.02.15.42
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ab2c96468afsm153806366b.170.2025.01.10.02.29.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 10 Jan 2025 02:15:42 -0800 (PST)
-Date: Fri, 10 Jan 2025 11:15:38 +0100
+        Fri, 10 Jan 2025 02:29:38 -0800 (PST)
+Date: Fri, 10 Jan 2025 11:29:33 +0100
 From: Stephan Gerhold <stephan.gerhold@linaro.org>
 To: Md Sadre Alam <quic_mdalam@quicinc.com>
-Cc: vkoul@kernel.org, ulf.hansson@linaro.org, robin.murphy@arm.com,
-	kees@kernel.org, u.kleine-koenig@baylibre.com,
-	linux-arm-msm@vger.kernel.org, av2082000@gmail.com,
+Cc: vkoul@kernel.org, robin.murphy@arm.com, u.kleine-koenig@baylibre.com,
+	martin.petersen@oracle.com, fenghua.yu@intel.com,
+	av2082000@gmail.com, linux-arm-msm@vger.kernel.org,
 	dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
-	djakov@kernel.org, quic_varada@quicinc.com,
-	quic_srichara@quicinc.com
-Subject: Re: [PATCH] dmaengine: qcom: bam_dma: Fix BAM_RIVISON register
- handling
-Message-ID: <Z4DzHs0gtbTPxq2_@linaro.org>
-References: <20250110051409.4099727-1-quic_mdalam@quicinc.com>
+	quic_mmanikan@quicinc.com, quic_srichara@quicinc.com,
+	quic_varada@quicinc.com
+Subject: Re: [PATCH v4] dmaengine: qcom: bam_dma: Avoid writing unavailable
+ register
+Message-ID: <Z4D2jQNNW94qGIlv@linaro.org>
+References: <20241220094203.3510335-1-quic_mdalam@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -91,85 +91,71 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250110051409.4099727-1-quic_mdalam@quicinc.com>
+In-Reply-To: <20241220094203.3510335-1-quic_mdalam@quicinc.com>
 
-On Fri, Jan 10, 2025 at 10:44:09AM +0530, Md Sadre Alam wrote:
-> This patch fixes a bug introduced in the previous commit where the
-> BAM_DESC_CNT_TRSHLD register was conditionally written based on BAM-NDP
-> mode. Additionally, it addresses an issue where reading the BAM_REVISION
-> register hangs if num-ees is not zero. A check has been added to prevent
-> this.
+On Fri, Dec 20, 2024 at 03:12:03PM +0530, Md Sadre Alam wrote:
+> Avoid writing unavailable register in BAM-Lite mode.
+> BAM_DESC_CNT_TRSHLD register is unavailable in BAM-Lite
+> mode. Its only available in BAM-NDP mode. So only write
+> this register for clients who is using BAM-NDP.
 > 
-> Cc: stable@vger.kernel.org
-> Fixes: 57a7138d0627 ("dmaengine: qcom: bam_dma: Avoid writing unavailable register")
-> Reported-by: Georgi Djakov <djakov@kernel.org>
-> Link: https://lore.kernel.org/lkml/9ef3daa8-cdb1-49f2-8d19-a72d6210ff3a@kernel.org/
 > Signed-off-by: Md Sadre Alam <quic_mdalam@quicinc.com>
+
+What are we actually fixing here? Which platform is affected? Is there a
+crash, reset, or incorrect behavior?
+
+We have had this code for years without reported issues, with both
+BAM-NDP and BAM-Lite instances. The register documentation on APQ8016E
+documents the BAM_DESC_CNT_TRSHLD register even for the BAM-Lite
+instance. There is a comment that it doesn't apply to BAM-Lite, but I
+would expect the written value just ends up being ignored in that case.
+
+Also, there is not just BAM-NDP and BAM-Lite, but also plain "BAM". What
+about that one? Should we write to BAM_DESC_CNT_TRSHLD?
+
 > ---
->  drivers/dma/qcom/bam_dma.c | 23 ++++++++++++++++-------
->  1 file changed, 16 insertions(+), 7 deletions(-)
+> Change in [v4]
+> 
+> * Added in_range() macro
+> 
+> Change in [v3]
+> 
+> * Removed BAM_LITE macro
+> 
+> * Updated commit message
+> 
+> * Adjusted if condition check
+> 
+> * Renamed BAM-NDP macro to BAM_NDP_REVISION_START and
+>    BAM_NDP_REVISION_END
+> 
+> Change in [v2]
+> 
+> * Replace 0xff with REVISION_MASK in the statement
+>    bdev->bam_revision = val & REVISION_MASK
+> 
+> Change in [v1]
+> 
+> * Added initial patch
+> 
+>  drivers/dma/qcom/bam_dma.c | 24 ++++++++++++++++--------
+>  1 file changed, 16 insertions(+), 8 deletions(-)
 > 
 > diff --git a/drivers/dma/qcom/bam_dma.c b/drivers/dma/qcom/bam_dma.c
-> index c14557efd577..2b88b27f2f91 100644
+> index bbc3276992bb..c14557efd577 100644
 > --- a/drivers/dma/qcom/bam_dma.c
 > +++ b/drivers/dma/qcom/bam_dma.c
-> @@ -445,11 +445,15 @@ static void bam_reset(struct bam_device *bdev)
->  	writel_relaxed(val, bam_addr(bdev, 0, BAM_CTRL));
+> @@ -59,6 +59,9 @@ struct bam_desc_hw {
+>  #define DESC_FLAG_NWD BIT(12)
+>  #define DESC_FLAG_CMD BIT(11)
 >  
->  	/* set descriptor threshold, start with 4 bytes */
-> -	if (in_range(bdev->bam_revision, BAM_NDP_REVISION_START,
-> -		     BAM_NDP_REVISION_END))
-> +	if (!bdev->num_ees && in_range(bdev->bam_revision, BAM_NDP_REVISION_START,
-> +				       BAM_NDP_REVISION_END))
->  		writel_relaxed(DEFAULT_CNT_THRSHLD,
->  			       bam_addr(bdev, 0, BAM_DESC_CNT_TRSHLD));
->  
-> +	if (bdev->num_ees && !bdev->bam_revision)
-> +		writel_relaxed(DEFAULT_CNT_THRSHLD, bam_addr(bdev, 0,
-> +							     BAM_DESC_CNT_TRSHLD));
+> +#define BAM_NDP_REVISION_START	0x20
+> +#define BAM_NDP_REVISION_END	0x27
 > +
->  	/* Enable default set of h/w workarounds, ie all except BAM_FULL_PIPE */
->  	writel_relaxed(BAM_CNFG_BITS_DEFAULT, bam_addr(bdev, 0, BAM_CNFG_BITS));
->  
-> @@ -1006,10 +1010,14 @@ static void bam_apply_new_config(struct bam_chan *bchan,
->  			maxburst = bchan->slave.src_maxburst;
->  		else
->  			maxburst = bchan->slave.dst_maxburst;
-> -		if (in_range(bdev->bam_revision, BAM_NDP_REVISION_START,
-> -			     BAM_NDP_REVISION_END))
-> +		if (!bdev->num_ees && in_range(bdev->bam_revision, BAM_NDP_REVISION_START,
-> +					       BAM_NDP_REVISION_END))
->  			writel_relaxed(maxburst,
->  				       bam_addr(bdev, 0, BAM_DESC_CNT_TRSHLD));
-> +
-> +		if (bdev->num_ees && !bdev->bam_revision)
-> +			writel_relaxed(DEFAULT_CNT_THRSHLD, bam_addr(bdev, 0,
-> +								     BAM_DESC_CNT_TRSHLD));
 
-I guess you meant writel_relaxed(maxburst, ...) here?
-
-This patch is quite confusing. We shouldn't duplicate the register
-writes here just to have different handling for if (bdev->num_ees) and
-if (!bdev->num_ees).
-
-Also, num-ees is unrelated to the question if the BAM is BAM-NDP or
-BAM-Lite. Typically we specify qcom,num-ees in the device tree for a BAM
-if the BAM is either:
-
- - Controlled remotely (= powered on and initialized outside of Linux)
-   This is the case for the SLIMbus BAM Georgi mentioned.
-
- - Powered remotely (= powered on outside of Linux, but must be
-   initialized inside Linux)
-
-Reading BAM_REVISION in these cases will hang in bam_init(), because we
-cannot guarantee the BAM is already powered on when the bam_dma driver
-is being loaded in Linux. We need to delay reading the register until
-the BAM is up.
-
-Given that these writes happen only for the !bdev->controlled_remotely
-case, you could fix this more cleanly by reading the BAM revision inside
-bam_reset().
+Are you sure this covers all SoCs we support upstream? If one of the
+older or newer supported SoCs uses a value outside of this range, it
+will now be missing the register write.
 
 Thanks,
 Stephan
