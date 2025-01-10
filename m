@@ -1,130 +1,113 @@
-Return-Path: <linux-arm-msm+bounces-44767-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-44768-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id E9509A09B98
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jan 2025 20:10:24 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3D67FA09BC9
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jan 2025 20:23:49 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 97584188E7A6
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jan 2025 19:10:27 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 48BDA16AC18
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jan 2025 19:23:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 28F3E24B23E;
-	Fri, 10 Jan 2025 19:10:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 334A52144BA;
+	Fri, 10 Jan 2025 19:23:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="j9cnfvGh"
+	dkim=pass (2048-bit key) header.d=xs4all.nl header.i=@xs4all.nl header.b="HD73YyIG"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from ewsoutbound.kpnmail.nl (ewsoutbound.kpnmail.nl [195.121.94.183])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA4BD24B221;
-	Fri, 10 Jan 2025 19:10:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CDF2212FB9
+	for <linux-arm-msm@vger.kernel.org>; Fri, 10 Jan 2025 19:23:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.121.94.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736536222; cv=none; b=sTJZUvSJhjfOuRFwHINFTZCH3sqC3plkYjBmJqhOVYhb9wT+1r4DFAUHeHM+io8GZ15qWLs9gDY/A6ca4BrkDjnXK3vpr4GwtSJFteYRY8J9eLBfxMr3bklGVF2kftoRQ2ETxUZDuySlPJNXa73hxkir7b45ePHLX8b4eiG8Zac=
+	t=1736537024; cv=none; b=Lq4uc5vazHVpJK3JdBYx7wbvcNjUuuUE8QLcGz5iGHJx2Anm0D/1nl6QUpgak6JRUQglSdeykxrgEC42NQKGyWINoozZhnbFs0lYJZ7y5xbTc3rhR4PwTmntsd38hbGq9ptX6Uo2r0ZsFCvUiKG7G/KIM4W04zs1nLdyde/OztQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736536222; c=relaxed/simple;
-	bh=abbuXe0efS2QoH5PhHzMi7xNGC82etU29gnMzoWoI/Q=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=LZuR84ylJcaluZFOZrC3wspEZ3eObEhYPjhEexu+7iyCFeCXgj+IXGkmpJq9Q2l2m2Kyusoryv8D3JRZS1+bv6lbydUjvxIjgq/J7DGM56QUT8HVV92kQXrgMWAKEI5JdlLE/G5ZTMp7L4Ip4vqngYreVCAOwScm3STV4B7KdNM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=j9cnfvGh; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42E47C4CED6;
-	Fri, 10 Jan 2025 19:10:21 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1736536221;
-	bh=abbuXe0efS2QoH5PhHzMi7xNGC82etU29gnMzoWoI/Q=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=j9cnfvGhPribEablygATyI8cVaiAVMmdZ4x67bKDp5+0wzkYaydbp5k+y3SCoi5TO
-	 a0QggZ3C+xAbDTdqBQdX/U/CmMfgOdnhPNf96KqTfbXn09Cnrm1Xp4y2D+vJEdTkuX
-	 RaCIP5VCKuGDCqXsiDf0G5BTU0vRWp8pmNgjOu1MBMAeWCrmGhvUmFzAfZxXzCUjZX
-	 bj2AqhIxiLJp3OE6t9/YlO5/1A5ZvnWj+4c2qJvDqK09/iyJ+5tUghc+KEXYUCHowP
-	 JszbfYa/8cu3WAYKVCTzbGl0+PQbsMjtwBKMgISsDXXqMamRAZ0I+eRBL0eBYBoGjM
-	 LgSGugnselPBA==
-Date: Fri, 10 Jan 2025 19:10:19 +0000
-From: Eric Biggers <ebiggers@kernel.org>
-To: Bartosz Golaszewski <brgl@bgdev.pl>
-Cc: linux-block@vger.kernel.org, linux-fscrypt@vger.kernel.org,
-	linux-mmc@vger.kernel.org, linux-scsi@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	Gaurav Kashyap <quic_gaurkash@quicinc.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Alim Akhtar <alim.akhtar@samsung.com>,
-	Avri Altman <avri.altman@wdc.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	"James E . J . Bottomley" <James.Bottomley@hansenpartnership.com>,
-	Jens Axboe <axboe@kernel.dk>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	"Martin K . Petersen" <martin.petersen@oracle.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: Re: [PATCH v10 00/15] Support for hardware-wrapped inline encryption
- keys
-Message-ID: <20250110191019.GA24424@google.com>
-References: <20241213041958.202565-1-ebiggers@kernel.org>
- <CAMRc=MdeZ_k9z+ZKW1ub0m9ymh3eABUU7ZRPY9TYHM_fc+D+qQ@mail.gmail.com>
+	s=arc-20240116; t=1736537024; c=relaxed/simple;
+	bh=SKvv2wL/SHI91AQ3qMk4EbzIXzqQAPhYnMO18KKIh2Q=;
+	h=Date:Message-Id:From:To:Cc:In-Reply-To:Subject:References; b=hEg/SAtg+xqXhK12H6/lZkeGjhnijLqgoNUvlf8n+7xDIe+kRWiqBWnYmZLNL2kxtNJ+I2NIT39LEXyvMpjcrrUU9/oexUNj8Mwv5E5972/CPpJ9nTGliSoY9fbCa3jPcHcIE6OQc0WJpIKKdL+Z9g0r/4nBE1UmEo0sSdqEcmM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=xs4all.nl; spf=pass smtp.mailfrom=xs4all.nl; dkim=pass (2048-bit key) header.d=xs4all.nl header.i=@xs4all.nl header.b=HD73YyIG; arc=none smtp.client-ip=195.121.94.183
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=xs4all.nl
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=xs4all.nl
+X-KPN-MessageId: 3fb7d581-cf88-11ef-bc52-005056992ed3
+Received: from smtp.kpnmail.nl (unknown [10.31.155.8])
+	by ewsoutbound.so.kpn.org (Halon) with ESMTPS
+	id 3fb7d581-cf88-11ef-bc52-005056992ed3;
+	Fri, 10 Jan 2025 20:22:36 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+	d=xs4all.nl; s=xs4all01;
+	h=subject:to:from:message-id:date;
+	bh=/KJAI6rZMyrjpAxu9pgZwMk+8GZtTyA5Rf3XMKlCiTs=;
+	b=HD73YyIGE4gHpyjA22GJ4eiyLk505qcsE/l17BfsqrNxP+Hw1YLEX6XnVmA31Z8zgJAaf94nAlfQC
+	 6SrW3Bxcr+D7J78tlaAsOIphNVdVdpbKuUS2YQp+j6scSZ2pljOSTZ+8anemWEZzKwOMeQR2OhmmFg
+	 cH8Pt4rQO4ktGfAD4aX5kPJTLYT1NExihK2OtXcf9dfRaCIcbmIhqPTS4vMcko6tM3ETJn/oNVH05z
+	 VF4RM9kT7x6ZNmUaTMg0tE8LK292W5yCF4cY+qUm0NONBpyDBGQb8hr0cHGuuGt0tiJsMX6jJuTdds
+	 I8hjIOajc9qnX/NyaPnEFMUdmGSd8zA==
+X-KPN-MID: 33|wXVuMNrdWrxB13ZpC56pa88QK1GxPQ79V/REObUI/8pgxD9phj+Km3IoP4/kr8O
+ prt/2tQ9SZAuwssehM1qU6BOaIPRzbWre//eXY0yPfeU=
+X-KPN-VerifiedSender: Yes
+X-CMASSUN: 33|GIHfWUSF6CnM6ln1WfNvLbA1HdK5TvV7mkIicrjwkf4raD1jjTjLhpE9wgEGJNf
+ 2zudQ8lIqYHBT29xAk5yxtg==
+Received: from bloch.sibelius.xs4all.nl (80-61-163-207.fixed.kpn.net [80.61.163.207])
+	by smtp.xs4all.nl (Halon) with ESMTPSA
+	id 3c6a1ca4-cf88-11ef-894c-00505699d6e5;
+	Fri, 10 Jan 2025 20:22:31 +0100 (CET)
+Date: Fri, 10 Jan 2025 20:22:30 +0100
+Message-Id: <87frlqv5hl.fsf@bloch.sibelius.xs4all.nl>
+From: Mark Kettenis <mark.kettenis@xs4all.nl>
+To: Johan Hovold <johan@kernel.org>
+Cc: kettenis@openbsd.org, andersson@kernel.org,
+	konradybcio@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
+	conor+dt@kernel.org, quic_rjendra@quicinc.com,
+	abel.vesa@linaro.org, quic_sibis@quicinc.com,
+	johan+linaro@kernel.org, linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+In-Reply-To: <Z4FND-b-gEb6YJw6@hovoldconsulting.com> (message from Johan
+	Hovold on Fri, 10 Jan 2025 17:38:39 +0100)
+Subject: Re: [PATCH] arm64: dts: qcom: x1e80100: Mark usb_2 as dma-coherent
+References: <20250109205232.92336-1-kettenis@openbsd.org> <Z4FND-b-gEb6YJw6@hovoldconsulting.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAMRc=MdeZ_k9z+ZKW1ub0m9ymh3eABUU7ZRPY9TYHM_fc+D+qQ@mail.gmail.com>
 
-On Fri, Jan 10, 2025 at 09:44:07AM +0100, Bartosz Golaszewski wrote:
-> On Fri, Dec 13, 2024 at 5:20 AM Eric Biggers <ebiggers@kernel.org> wrote:
-> >
-> > This patchset is based on next-20241212 and is also available in git via:
-> >
-> >     git fetch https://git.kernel.org/pub/scm/fs/fscrypt/linux.git wrapped-keys-v10
-> >
-> > This patchset adds support for hardware-wrapped inline encryption keys, a
-> > security feature supported by some SoCs.  It adds the block and fscrypt
-> > framework for the feature as well as support for it with UFS on Qualcomm SoCs.
-> >
-> > This feature is described in full detail in the included Documentation changes.
-> > But to summarize, hardware-wrapped keys are inline encryption keys that are
-> > wrapped (encrypted) by a key internal to the hardware so that they can only be
-> > unwrapped (decrypted) by the hardware.  Initially keys are wrapped with a
-> > permanent hardware key, but during actual use they are re-wrapped with a
-> > per-boot ephemeral key for improved security.  The hardware supports importing
-> > keys as well as generating keys itself.
-> >
-> > This differs from the existing support for hardware-wrapped keys in the kernel
-> > crypto API (also called "hardware-bound keys" in some places) in the same way
-> > that the crypto API differs from blk-crypto: the crypto API is for general
-> > crypto operations, whereas blk-crypto is for inline storage encryption.
-> >
-> > This feature is already being used by Android downstream for several years
-> > (https://source.android.com/docs/security/features/encryption/hw-wrapped-keys),
-> > but on other platforms userspace support will be provided via fscryptctl and
-> > tests via xfstests (I have some old patches for this that need to be updated).
-> >
-> > Maintainers, please consider merging the following preparatory patches for 6.14:
-> >
-> >   - UFS / SCSI tree: patches 1-4
-> >   - MMC tree: patches 5-7
-> >   - Qualcomm / MSM tree: patch 8
-> >
+> Date: Fri, 10 Jan 2025 17:38:39 +0100
+> From: Johan Hovold <johan@kernel.org>
 > 
-> IIUC The following patches will have to wait for the v6.15 cycle?
+> On Thu, Jan 09, 2025 at 09:52:31PM +0100, Mark Kettenis wrote:
+> > Make this USB controller consistent with the others on this platform.
+> > 
+> > Fixes: 4af46b7bd66f ("arm64: dts: qcom: x1e80100: Add USB nodes")
+> > Signed-off-by: Mark Kettenis <kettenis@openbsd.org>
+> > ---
+> >  arch/arm64/boot/dts/qcom/x1e80100.dtsi | 2 ++
+> >  1 file changed, 2 insertions(+)
+> > 
+> > diff --git a/arch/arm64/boot/dts/qcom/x1e80100.dtsi b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
+> > index 4936fa5b98ff..aad1153a443d 100644
+> > --- a/arch/arm64/boot/dts/qcom/x1e80100.dtsi
+> > +++ b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
+> > @@ -4814,6 +4814,8 @@ usb_2_dwc3: usb@a200000 {
+> >  				snps,dis-u1-entry-quirk;
+> >  				snps,dis-u2-entry-quirk;
+> >  
+> > +				dma-coherent;
+> > +
 > 
-> [PATCH v10 9/15] soc: qcom: ice: make qcom_ice_program_key() take
-> struct blk_crypto_key
-> [PATCH v10 10/15] blk-crypto: add basic hardware-wrapped key support
-> [PATCH v10 11/15] blk-crypto: show supported key types in sysfs
-> [PATCH v10 12/15] blk-crypto: add ioctls to create and prepare
-> hardware-wrapped keys
-> [PATCH v10 13/15] fscrypt: add support for hardware-wrapped keys
-> [PATCH v10 14/15] soc: qcom: ice: add HWKM support to the ICE driver
-> [PATCH v10 15/15] ufs: qcom: add support for wrapped keys
+> Can someone from Qualcomm please confirm that this is correct, and that
+> it's not the other way round and this property should be removed from
+> the other controllers (e.g. if this was just some copy-pasta from sm8550
+> which is the only other Qualcomm platform that claims to have
+> dma-coherent USB controllers).
 
-Yes, that's correct.
+It certainly wouldn't hurt to have confirmation from someone familliar
+with the SoC design.
 
-- Eric
+However treating the controllers as DMA coherent when they're not
+would almost certainly resulted in reports of USB devices being
+unreliable on these machines as the OS would skip necessary cache
+flushes.  I did test this patch on the ASUS Vivobook S 15 where the
+microSD-card reader uses the usb_2 controller.
 
