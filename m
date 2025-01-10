@@ -1,206 +1,291 @@
-Return-Path: <linux-arm-msm+bounces-44688-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-44689-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C6299A083D2
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jan 2025 01:12:37 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id B1C34A0840B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jan 2025 01:31:08 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E7C8A3A8B8A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jan 2025 00:12:31 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D9AA83A171D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jan 2025 00:31:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 590577489;
-	Fri, 10 Jan 2025 00:12:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7B84BD2FF;
+	Fri, 10 Jan 2025 00:31:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="vnVsI+Ut"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="MzAdWqn/"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f43.google.com (mail-lf1-f43.google.com [209.85.167.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D13C539A
-	for <linux-arm-msm@vger.kernel.org>; Fri, 10 Jan 2025 00:12:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FE102594B4;
+	Fri, 10 Jan 2025 00:31:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736467953; cv=none; b=YX7tIhJlBiyn5FqymfTcoLW6zEu6jNYhHQtZU80+xAzcNuagkpC2CvCEAG79dNynvIJcQu1j3v12cky5O3bpVDTEb56kqUNp/Op/4gUk8Gq02CiVpGIw1ePW+I1mR/y7OPyyAtT2GpnCWigNacDCHxPRLQJ2ZPmLoUs/KsoSuAY=
+	t=1736469066; cv=none; b=J5R6Sb4FWCyAmxrKIh1AhJw6SMAMZBhQ4ITyDsG4Fj1/1600dt7MsYncxuJJajnZN+qvZxEM0G9Z6rdCqehqbmWRLHTmYNlLg/b8quCBPBDljyeuhcjps1bc42RMJNn+ELTq818J2hzqvWdftvqfXVVgWx/Zfpln815klRiT1Ew=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736467953; c=relaxed/simple;
-	bh=9HYxOlBVMJGp+kYa5cCj+uVdCLrvkLZ1Yp+RYPBpmpE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=CJoM4uJPlVeo5o0b4+14mripOh4zlETNgPp1EO4o8PxZ0GeG7+it5tcie2s6pV7D0Qi2s4UA28u+SvmuxLSxAKbF0vQEPJrIlcRfxBpnsUz/h4VLQ+xKZ6S5c1HgzMOXOgDIfJRBJxFjFp1tQWOlsDbU9TE4Y5Od+0gFkizTuTE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=vnVsI+Ut; arc=none smtp.client-ip=209.85.167.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f43.google.com with SMTP id 2adb3069b0e04-53f22fd6832so1609185e87.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Jan 2025 16:12:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1736467949; x=1737072749; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=bOM8iTrS8cJotx5OK5PF3W6RZdr+BZepKPQm6WfCyO8=;
-        b=vnVsI+UtEqXLL4qXpUUlt0sn36RKLG3V1y/RISqU/HKa6x89dDnYUN/Z4KKt78jIse
-         4CwEB/udzjGJtXqhMUXKncZOlmM4vD4yYbP3CmbciFwp0N6hI/jQjtFOfd8KMKLmh6mb
-         ZZ/UymStrjHnxi1UvWzxxNMJseJXXg68rrch9cbqd2E9niekFMLkSiaRQrbqNNfo0dOC
-         HyVpnWHzol+UdMkhOtajj8TGBXO0mCyZCZvYe/2b20tQOL6M7k5Hhl8tq0nL9x2pzTXh
-         t++fnGkxlT+3ncpAh8M+S9h3racyOVjzsmAotT1xs97MfyaveuWu1SHAMBpOr+sMUXhH
-         o0NQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736467949; x=1737072749;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=bOM8iTrS8cJotx5OK5PF3W6RZdr+BZepKPQm6WfCyO8=;
-        b=g65bZEPSkZb4yHWmtzaw1LTU9OLaXVmAQaSeZfLP2eeZTWCueGe8Ud+lM/Ol0RZzWH
-         Pcawf05iwU+rc4kD5smPsGLCqsJuCvfLn9uhosNrdPh5meb8WfQu3X3EhnuWfgTMcXGn
-         8ubkUOzEDxfApgPgnZ+LSpGLOdiVNDKdQR83sHKddHa8WfBdtEY05p46cb2vwSsskA4c
-         3Q/J9hKF+CPBIHYcnvJdLMnpt07xH9TQBuP2s5LMs7Hwshgdg/WWS+R8xGziAqf1P3Cu
-         chA0GdfTSTgpp+uBaYmSoN4RiyQC+/BQ+fYGumMM58Knm1rjb27DP/wf4cpeo/xdgJnE
-         EG5Q==
-X-Forwarded-Encrypted: i=1; AJvYcCXOMIR4lpxG10Fn6Z+tblJHpRHs4XalizHLYEN0ITycwTZF7mbwepcKrD1NIcbd/mi8xAM8npiq1VOG71Ti@vger.kernel.org
-X-Gm-Message-State: AOJu0YxSCQI12HgIpWgiFd+DOu8SALGyBpgvNZHCWS2jt0RIQiek5vY8
-	Kqzcw2q5duq+ZMEAzYP87R7Sac72uEl+v/b02HmVYMdytr5XhcJOXESgg4D5Yp4=
-X-Gm-Gg: ASbGncvRCV+PV2Lq5FuPKFMQSdJUp5tucPi5+GSf7wu90oaPCGpLdVmXSQojldMuT54
-	scj5UMBmBme9D0GZ21WrkdY3UNzPHeBigBbrwh+J5Qce7bdIyg1PSXRAddWkI/GIRNgjYz128cU
-	UFrs1alsxGURJ7TaJSSrkTNzihd9KHXRtQJzKcIQP6wL2kFZOtAz0UQlqSxgI1fYjauZ6PdVAdN
-	gyMl6p5IksQ0cCsRxvrvv6W2IwAzriNRKMZ63diVsJSWYenvYRW8ia28J9J8KCX3w24Gp0p+gvF
-	QG6KE0xw1IZvifVKMyjZfgVW5KTXYxLzdOak
-X-Google-Smtp-Source: AGHT+IGwIl2CKZkBwjuoikiFYrtznIYuYloYMjubKPdN284XWv1Xg6SBpze2m0OXrZNk5dsJj+ecLw==
-X-Received: by 2002:a05:6512:3b9d:b0:542:6d01:f55f with SMTP id 2adb3069b0e04-5428481ceaamr2920549e87.48.1736467949461;
-        Thu, 09 Jan 2025 16:12:29 -0800 (PST)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5428becafaasm339014e87.239.2025.01.09.16.12.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 09 Jan 2025 16:12:28 -0800 (PST)
-Date: Fri, 10 Jan 2025 02:12:26 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Johan Hovold <johan@kernel.org>
-Cc: Dikshita Agarwal <quic_dikshita@quicinc.com>, 
-	Vikash Garodia <quic_vgarodia@quicinc.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
-	Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Philipp Zabel <p.zabel@pengutronix.de>, Hans Verkuil <hverkuil@xs4all.nl>, 
-	Sebastian Fricke <sebastian.fricke@collabora.com>, Bryan O'Donoghue <bryan.odonoghue@linaro.org>, 
-	Neil Armstrong <neil.armstrong@linaro.org>, Nicolas Dufresne <nicolas@ndufresne.ca>, 
-	Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>, Jianhua Lu <lujianhua000@gmail.com>, 
-	Stefan Schmidt <stefan.schmidt@linaro.org>, linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	Bjorn Andersson <andersson@kernel.org>
-Subject: Re: [PATCH v9 27/28] media: iris: enable video driver probe of
- SM8250 SoC
-Message-ID: <te2nhzkl2mx3y7vknokzwtr7szfge7dum7sy37ndy6laot5yqn@urv7svjqgmk7>
-References: <20241212-qcom-video-iris-v9-0-e8c2c6bd4041@quicinc.com>
- <20241212-qcom-video-iris-v9-27-e8c2c6bd4041@quicinc.com>
- <Z3_nCPk_g8znto4A@hovoldconsulting.com>
+	s=arc-20240116; t=1736469066; c=relaxed/simple;
+	bh=z52YQX8gQYTCfGGy91pGy57O7BvSZcfP9+GFdUPZDWA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=cVQLLm7dXNIx9+pKGVxBh5Ybb2GHBu7ktLWtQWach12xDcymfOvYXBMAvNGPRA8ziXUcbq1q1SuTvF/1lnYMf7INbb8VvMurKWbVwLsloMsccgpCI86DYHpMuUPgu0s+EWvAcN55CzhdP4U3/D2/xyfeAWQZStwVkVWkMNU4HO0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=MzAdWqn/; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 509FsImC008045;
+	Fri, 10 Jan 2025 00:30:48 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	VbH1HHcelxywTv8xyO7ItmqOafGq6JB2aI8BO18/1mc=; b=MzAdWqn/u6gwYiAM
+	LMIGRHtJaocyrZT7WYIjPGCb+ailaCkRiAkICFADrzdj/dnh2DBIUi1dTPGP0vEe
+	vSG1lOTNgSsFsnAwb7vY2yue2N2nlx9OP5Ifw8icu1L7xnw79/UQsFoUpiU/DIc5
+	4LnaCnS4EMupYQONn4Y0y1toIXovJxoiLREfHL/KZxRz15kqLwlOt1nDaNYPsARQ
+	amP1/5MeF9FZm2d+i76bfFakqu196t7eyOoIrq6Ng6LZ0laZDD5P65pekqE4blEH
+	qKdvrlDp8RXFSo0IUaK+6hmG0wOZPTVWxSIMYMEp9NRF1AHsoilnCWKr6GUzxlpU
+	M6UBGA==
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 442hgg12rw-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 10 Jan 2025 00:30:47 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 50A0Ukbi031157
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 10 Jan 2025 00:30:46 GMT
+Received: from [10.134.70.212] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 9 Jan 2025
+ 16:30:44 -0800
+Message-ID: <0b741278-7c81-406b-bd28-e0cb9252e459@quicinc.com>
+Date: Thu, 9 Jan 2025 16:30:42 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Z3_nCPk_g8znto4A@hovoldconsulting.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 15/25] drm/msm/dpu: Add CWB to msm_display_topology
+Content-Language: en-US
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC: Rob Clark <robdclark@gmail.com>, <quic_abhinavk@quicinc.com>,
+        Sean Paul
+	<sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        "David
+ Airlie" <airlied@gmail.com>,
+        Maarten Lankhorst
+	<maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        Simona Vetter <simona@ffwll.ch>,
+        Simona Vetter <simona.vetter@ffwll.ch>, <quic_ebharadw@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
+        Rob Clark
+	<robdclark@chromium.org>,
+        =?UTF-8?B?VmlsbGUgU3lyasOkbMOk?=
+	<ville.syrjala@linux.intel.com>
+References: <20241216-concurrent-wb-v4-0-fe220297a7f0@quicinc.com>
+ <20241216-concurrent-wb-v4-15-fe220297a7f0@quicinc.com>
+ <ki35rornnos35r3fzg5yyqzxnqua3dyfb6ewq2aefrh4u74vfi@opdnf44ntten>
+ <4069bd6a-c37f-4dbe-bbd6-5b333ee54ad8@quicinc.com>
+ <a4akor2liqafta53zeev22x2pkqwzo5szwidr2ruzdvttvze5h@jtio3jue7ez3>
+ <e47b33e6-142d-42d6-8ae9-f2d2c7793d18@quicinc.com>
+ <wheu3izj3pit6k3cmslpyegunmrcryy65y5eu432nec2y2aor6@kda3xnujhtnm>
+From: Jessica Zhang <quic_jesszhan@quicinc.com>
+In-Reply-To: <wheu3izj3pit6k3cmslpyegunmrcryy65y5eu432nec2y2aor6@kda3xnujhtnm>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: VN38wp86vmSi6s-LECG8AG9TAFZqh-bQ
+X-Proofpoint-ORIG-GUID: VN38wp86vmSi6s-LECG8AG9TAFZqh-bQ
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ clxscore=1015 mlxscore=0 priorityscore=1501 suspectscore=0 malwarescore=0
+ spamscore=0 phishscore=0 mlxlogscore=999 adultscore=0 bulkscore=0
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2501100001
 
-On Thu, Jan 09, 2025 at 04:11:04PM +0100, Johan Hovold wrote:
-> On Thu, Dec 12, 2024 at 05:21:49PM +0530, Dikshita Agarwal wrote:
-> > Initialize the platform data and enable video driver probe of SM8250
-> > SoC. Add a kernel param to select between venus and iris drivers for
-> > platforms supported by both drivers, for ex: SM8250.
-> 
-> Why do you want to use a module parameter for this? What would be the
-> default configuration? (Module parameters should generally be avoided.)
-> 
-> Why not simply switch to the new driver (and make sure that the new
-> driver is selected if the old one was enabled in the kernel config)?
 
-Because the new driver doesn't yet have feature parity with the venus
-driver. So it was agreed that developers provide upgrade path to allow
-users to gradually test and switch to the new driver. When the feature
-parity is achieved, the plan is to switch default to point to the Iris
-driver, then after a few releases start removing platforms from Venus.
 
-> > Tested-by: Stefan Schmidt <stefan.schmidt@linaro.org> # x1e80100 (Dell
+On 1/9/2025 4:00 PM, Dmitry Baryshkov wrote:
+> On Thu, Jan 09, 2025 at 02:34:44PM -0800, Jessica Zhang wrote:
+>>
+>>
+>> On 1/3/2025 10:16 AM, Dmitry Baryshkov wrote:
+>>> On Fri, Jan 03, 2025 at 10:03:35AM -0800, Jessica Zhang wrote:
+>>>>
+>>>>
+>>>> On 12/19/2024 9:03 PM, Dmitry Baryshkov wrote:
+>>>>> On Mon, Dec 16, 2024 at 04:43:26PM -0800, Jessica Zhang wrote:
+>>>>>> Add the cwb_enabled flag to msm_display topology and adjust the toplogy
+>>>>>> to account for concurrent writeback
+>>>>>
+>>>>> Why?
+>>>>
+>>>> Hi Dmitry,
+>>>>
+>>>> This flag is necessary to specify that CWB mux(es) need to be assigned for
+>>>> the given reqeusted topology.
+>>>
+>>> Why is necessary? Please rephrase your statement (we need foo bar, so do
+>>> baz).
+>>
+>> Ack, what do you think of rephrasing the commit msg to this:
+>>
+>> ```
+>> Add support for adjusting topology based on if concurrent writeback is
+>> enabled.
+>>
+>> Currently, the topology is calculated based on the assumption that the user
+>> cannot request real-time and writeback simultaneously. For example, the
+>> number of LMs and CTLs are currently based off the number of phys encoders
+>> under the assumption there will be at least 1 LM/CTL per phys encoder.
+>>
+>> This will not hold true for concurrent writeback as 2 phys encoders (1
+>> real-time and 1 writeback) can be driven by 1 LM/CTL when concurrent
+>> writeback is enabled.
+>>
+>> To account for this, add a cwb_enabled flag and only adjust the number of
+>> CTL/LMs needed by a given topology based on the number of phys encoders only
+>> if CWB is not enabled.
+>>
+>> ```
+>>
+>>>
+>>>>
+>>>>>
+>>>>>>
+>>>>>> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+>>>>>> ---
+>>>>>>     drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c | 11 ++++++++++-
+>>>>>>     drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c   | 10 ++++++++--
+>>>>>>     drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h   |  2 ++
+>>>>>>     3 files changed, 20 insertions(+), 3 deletions(-)
+>>>>>>
+>>>>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+>>>>>> index b4bfded3d53025853cee112ca598533ece290318..b063c8fe4c0594772d84401fa56c9c21afc0ad18 100644
+>>>>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+>>>>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+>>>>>> @@ -1198,6 +1198,8 @@ static struct msm_display_topology dpu_crtc_get_topology(
+>>>>>>     		dpu_encoder_update_topology(drm_enc, &topology, crtc_state->state,
+>>>>>>     					    &crtc_state->adjusted_mode);
+>>>>>> +	topology.cwb_enabled = drm_crtc_in_clone_mode(crtc_state);
+>>>>>> +
+>>>>>>     	/*
+>>>>>>     	 * Datapath topology selection
+>>>>>>     	 *
+>>>>>> @@ -1209,9 +1211,16 @@ static struct msm_display_topology dpu_crtc_get_topology(
+>>>>>>     	 * 2 LM, 1 INTF (stream merge to support high resolution interfaces)
+>>>>>>     	 *
+>>>>>>     	 * Add dspps to the reservation requirements if ctm is requested
+>>>>>> +	 *
+>>>>>> +	 * Only hardcode num_lm to 2 for cases where num_intf == 2 and CWB is not
+>>>>>> +	 * enabled. This is because in cases where CWB is enabled, num_intf will
+>>>>>> +	 * count both the WB and real-time phys encoders.
+>>>>>> +	 *
+>>>>>> +	 * For non-DSC CWB usecases, have the num_lm be decided by the
+>>>>>> +	 * (mode->hdisplay > MAX_HDISPLAY_SPLIT) check.
+>>>>>>     	 */
+>>>>>> -	if (topology.num_intf == 2)
+>>>>>> +	if (topology.num_intf == 2 && !topology.cwb_enabled)
+>>>>>>     		topology.num_lm = 2;
+>>>>>>     	else if (topology.num_dsc == 2)
+>>>>>>     		topology.num_lm = 2;
+>>>>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
+>>>>>> index b763ef19f4c60ae8a35df6a6ffb19e8411bc63f8..85adaf256b2c705d2d7df378b6ffc0e578f52bc3 100644
+>>>>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
+>>>>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
+>>>>>> @@ -382,8 +382,14 @@ static int _dpu_rm_reserve_ctls(
+>>>>>>     	int i = 0, j, num_ctls;
+>>>>>>     	bool needs_split_display;
+>>>>>> -	/* each hw_intf needs its own hw_ctrl to program its control path */
+>>>>>> -	num_ctls = top->num_intf;
+>>>>>> +	/*
+>>>>>> +	 * For non-CWB mode, each hw_intf needs its own hw_ctl to program its
+>>>>>> +	 * control path. Hardcode num_ctls to 1 if CWB is enabled
+>>>>>> +	 */
+>>>>>
+>>>>> Why?
+>>>>
+>>>> This is because num_intf is based on the number of phys_encs. Since in the
+>>>> CWB case, the WB and real-time encoders will be driven by the same CTL. I
+>>>> can add this to the comment doc.
+>>>
+>>> Why are they driven by the same CTL? Is it also the case for platforms
+>>> before DPU 5.x?
+>>
+>> This is because the WB and real-time path for a given topology would be
+>> driven by the same data path so the same CTL should enable the real-time and
+>> WB active bits.
+>>
+>> This is the same for pre-DPU 5.x.
 > 
-> Looks like something is missing from Stefan's Tested-by tag throughout
-> the series ("Dell XPS13"?)
-> 
-> > Reviewed-by: Stefan Schmidt <stefan.schmidt@linaro.org>
-> > Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
->  
-> > +static bool prefer_venus = true;
-> > +MODULE_PARM_DESC(prefer_venus, "Select whether venus or iris driver should be preferred");
-> > +module_param(prefer_venus, bool, 0444);
-> > +
-> > +/* list all platforms supported by only iris driver */
-> > +static const char *const iris_only_platforms[] = {
-> > +	"qcom,sm8550-iris",
-> > +	NULL,
-> > +};
-> 
-> Surely you don't want to have to add every new platform to two tables
-> (i.e. the id table and again here).
+> But pre-5.x platforms didn't have ACTIVE_CTL, so they should be using
+> separte CTL for each of the physical encoders.
 
-I'd agree here, this list should go. We should only list platforms under
-the migration.
+For pre-DPU 5.x, enabling CWB would mean configuring the registers under 
+both the WB and MODE_SEL_* cases here [1]
+
+[1] 
+https://elixir.bootlin.com/linux/v6.12.6/source/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c#L588
 
 > 
-> > +
-> > +/* list all platforms supported by both venus and iris drivers */
-> > +static const char *const venus_to_iris_migration[] = {
-> > +	"qcom,sm8250-venus",
-> > +	NULL,
-> > +};
-> > +
-> > +static bool video_drv_should_bind(struct device *dev, bool is_iris_driver)
-
-The name should follow other names in the driver.
-`video_drv_should_bind` doesn't have a common prefix.
-
-Also export it and use it from the venus driver if Iris is enabled.
-
-> > +{
-> > +	if (of_device_compatible_match(dev->of_node, iris_only_platforms))
-> > +		return is_iris_driver;
-> > +
-> > +	/* If it is not in the migration list, use venus */
-> > +	if (!of_device_compatible_match(dev->of_node, venus_to_iris_migration))
-> > +		return !is_iris_driver;
-> > +
-> > +	return prefer_venus ? !is_iris_driver : is_iris_driver;
-> > +}
-> > +
-> >  static int iris_probe(struct platform_device *pdev)
-> >  {
-> >  	struct device *dev = &pdev->dev;
-> > @@ -196,6 +224,9 @@ static int iris_probe(struct platform_device *pdev)
-> >  	u64 dma_mask;
-> >  	int ret;
-> >  
-> > +	if (!video_drv_should_bind(&pdev->dev, true))
-> > +		return -ENODEV;
+>>
+>>>
+>>>>
+>>>> Thanks,
+>>>>
+>>>> Jessica Zhang
+>>>>
+>>>>>
+>>>>>> +	if (top->cwb_enabled)
+>>>>>> +		num_ctls = 1;
+>>>>>> +	else
+>>>>>> +		num_ctls = top->num_intf;
+>>>>>>     	needs_split_display = _dpu_rm_needs_split_display(top);
+>>>>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h
+>>>>>> index b061dfdab52e04ab7d777e912a30173273cb3db7..12db21a2403ec6930894c36a58e898c5d94c2568 100644
+>>>>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h
+>>>>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h
+>>>>>> @@ -46,6 +46,7 @@ struct dpu_rm {
+>>>>>>      * @num_dspp:     number of dspp blocks used
+>>>>>>      * @num_dsc:      number of Display Stream Compression (DSC) blocks used
+>>>>>>      * @needs_cdm:    indicates whether cdm block is needed for this display topology
+>>>>>> + * @cwb_enabled:  indicates whether CWB is enabled for this display topology
+>>>>>>      */
+>>>>>>     struct msm_display_topology {
+>>>>>>     	u32 num_lm;
+>>>>>> @@ -53,6 +54,7 @@ struct msm_display_topology {
+>>>>>>     	u32 num_dspp;
+>>>>>>     	u32 num_dsc;
+>>>>>>     	bool needs_cdm;
+>>>>>> +	bool cwb_enabled;
+>>>>>>     };
+>>>>>>     int dpu_rm_init(struct drm_device *dev,
+>>>>>>
+>>>>>> -- 
+>>>>>> 2.34.1
+>>>>>>
+>>>>>
+>>>>> -- 
+>>>>> With best wishes
+>>>>> Dmitry
+>>>>
+>>>
+>>> -- 
+>>> With best wishes
+>>> Dmitry
+>>
 > 
-> AFAICT nothing is preventing venus from binding even when 'prefer_venus'
-> is false.
-> 
-> > +
-> >  	core = devm_kzalloc(&pdev->dev, sizeof(*core), GFP_KERNEL);
-> >  	if (!core)
-> >  		return -ENOMEM;
-> > @@ -324,6 +355,10 @@ static const struct of_device_id iris_dt_match[] = {
-> >  		.compatible = "qcom,sm8550-iris",
-> >  		.data = &sm8550_data,
-> >  	},
-> > +	{
-> > +		.compatible = "qcom,sm8250-venus",
-> > +		.data = &sm8250_data,
-> > +	},
-> >  	{ },
-> >  };
-> >  MODULE_DEVICE_TABLE(of, iris_dt_match);
-> 
-> Johan
+> -- 
+> With best wishes
+> Dmitry
 
--- 
-With best wishes
-Dmitry
 
