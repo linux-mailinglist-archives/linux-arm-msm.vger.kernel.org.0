@@ -1,192 +1,146 @@
-Return-Path: <linux-arm-msm+bounces-44743-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-44744-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 08848A0936A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jan 2025 15:27:19 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id A09BCA0936B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jan 2025 15:28:27 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3C3CD16B14E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jan 2025 14:27:05 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AFD213A8DC2
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jan 2025 14:28:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 333A42101B5;
-	Fri, 10 Jan 2025 14:27:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B41992101B2;
+	Fri, 10 Jan 2025 14:28:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jiwYv5ji"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="u5t4E4w4"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f177.google.com (mail-pl1-f177.google.com [209.85.214.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CD052101A9;
-	Fri, 10 Jan 2025 14:26:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82B8820C017;
+	Fri, 10 Jan 2025 14:28:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736519221; cv=none; b=UrSuPf/YvylQTCV/Kc2+mwwtyizy3NiPIaYE/OZn5qMpalmu3tvpMaAKmjG0KuPwU7XxMfLms8e068ymf++AMoHIjizGlIDhqDaniPpXOtNRPpJD+CDxDlt3lMe6bIlFKj1u4EvrCPu4X+70a9qSsVLQe4+tLdIErHFLWPTPBro=
+	t=1736519303; cv=none; b=C1s3RW3RYjHts+5S02YkfXyjNO2vUY+Jcg5hjkiEqkgf/eyNEcVpxgtSdAPp2wTOqN5cCuAlMyp9ml5l3XXywczbNO7FcwLoacCxAx0RllIcPewWp0VUqeLfsNW8Lo8dBScOcYPNpZ+GZLFzqPFr0MAkUC6W5398A4VJkhHoB6E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736519221; c=relaxed/simple;
-	bh=OPC+yg9FBpWb/X52k+8z4z8ODDxQlLKKuUSgwfZapXk=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=uaaeKK3LECCYcl+GxaYVGKY2dBWr8XPoylxJ3CTyyyh915GRaZwfhP0qaRoP/g5H5LPcvHBFva6A6PyBIPGtt8yMgXNAzGAl0KVDa3Fr5MHMByHQDtL1v8mhCvunlAoWDUnBDmq1TqsJqPxD+z9PWduLwvfCF/R9D4f6XpfrJWw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jiwYv5ji; arc=none smtp.client-ip=209.85.214.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pl1-f177.google.com with SMTP id d9443c01a7336-2163bd70069so35635975ad.0;
-        Fri, 10 Jan 2025 06:26:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1736519219; x=1737124019; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=gwkldYtsnRI2uxbAB2Qhl5fxTuU35YkpoPwwrZ8CVIU=;
-        b=jiwYv5jijrDS2/ADmiprTzFbJWn6kpMEmrQSvZT2zpdysxitytx4jWqOO7FVlaG6Ei
-         w2hS18G0HPnTVzrDhDc3R10vj4b5FuJp2DCTfub53n9+ZPg4h5Bk8crfScu0ZffXNCTA
-         /fnF7BME4k7xoHbM6eLmquvdyF4npjdahCgOukBcXkJN+jrNiFLCQiAXX5iUr1aO2dSV
-         gCJ58f5yb5bbp2GyJR2ASEV1gO4Rjb5yOO2lkilBPADbhk4OyQby10gyyB31ANv4hmz6
-         hkefryTsdqwvX5fM0MB2MwDylJDjFpaftPV8TgCMTNkm91Wig3+AJ/1vJm3vo6M28okb
-         Ju9w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736519219; x=1737124019;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=gwkldYtsnRI2uxbAB2Qhl5fxTuU35YkpoPwwrZ8CVIU=;
-        b=W+m5+7EfybK2l/joBkJMakw20ruttRD3TIYJ59rF9ahp+YlZLCIIttK8zsrZCjzNk5
-         gQCyLHN/JzrgIcyqB/LkCGionnAto4KRXQkekdIJG5Dhx/M9Z2DZy1r8bUIWItMnJciB
-         F0L8mdJtcvNPcl/17Nky9WdjIhkL7mo/+NXUHDtxgXgCHdXXA52Khe+86b6m54DZwCmv
-         +xbD+kisfYsyUV95j7pXL04kWYJn4ZspMcW1fK/SHZLITd/RmU/TUyZSW9E0mopskAjo
-         zHokGT3Oi1pNhJkf+nKFjqN2gXXwAM6FhjeLtAhfB5U2u79SM5NdNs5i4CqW/G4PA2iJ
-         4UBw==
-X-Forwarded-Encrypted: i=1; AJvYcCVUTYYKcrO0+V5iVzasaUk7IFqhEKJXNlE3WB0h9HUG66rF0aWRtHzpkSvjM2jbArNv5Llb6m1jO6rlmEaaAQ==@vger.kernel.org, AJvYcCVu4KYpnL6RrukukFiesbu9ro5H5qzz06ubGEtjQKEoaWqMqpXU+eePlI1VhgGRes53y4kpoyZTFoG8@vger.kernel.org, AJvYcCWNtBulT2KAiMa+JVm5knAgSDSd75yF58v33Oc0Upni1UZtV5gE5QLbWpTkaxjQiA1HWXdRCgy7+ADcDJbG@vger.kernel.org
-X-Gm-Message-State: AOJu0YwV38aqKWDFl40PAZ/6jzTeI0dw7Tzrqi/9tTUsrCwnDfIAmJEj
-	HgXPDAAvzpTdVh13vAA9ubgr/7zMtf8kDJqohbRKJwz+C+wYSAVJs6Yknou6GDMIcA==
-X-Gm-Gg: ASbGncss9FFkFcLqg+7qVboBtK3MqF+1qCSk7uzCqOPDVYPaEi4l1ts/fWwHaDJHIju
-	KegvMcbqVKNa5Fb+6c0ypMk/1oYnkp0ctDdzCxQNgROn7HAZy8GaYELZxc/Vs1gqu9DLXrAjIsm
-	pY/ggZ+B5Cb8nWlHo8MuhbKPQxG0XuMRtBUvw0THQaP2aQ+znTS5/aA+T/cDuSb0zn4MrKX3y6H
-	noX+eWzRBQSDi+fTIPlmaY00XxuJQnkjz0xACPDSsRFPbpZq+bmam0=
-X-Google-Smtp-Source: AGHT+IFp5BkEGYbwBqUZXm370jPDvf4t12qAjDreAbp2iAHT8rGDrJru5tWyj21B/bhgYXKFUTBBTw==
-X-Received: by 2002:a05:6a20:6a11:b0:1dc:790e:3bd0 with SMTP id adf61e73a8af0-1e88cfa6af5mr17754032637.15.1736519218833;
-        Fri, 10 Jan 2025 06:26:58 -0800 (PST)
-Received: from nuvole.. ([144.202.86.13])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-a318e055feesm2957074a12.30.2025.01.10.06.26.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 10 Jan 2025 06:26:58 -0800 (PST)
-From: Pengyu Luo <mitltlatltl@gmail.com>
-To: konrad.dybcio@oss.qualcomm.com
-Cc: andersson@kernel.org,
-	conor+dt@kernel.org,
-	devicetree@vger.kernel.org,
-	konradybcio@kernel.org,
-	krzk+dt@kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	mitltlatltl@gmail.com,
-	robh@kernel.org
-Subject: Re: [PATCH] arm64: dts: qcom: sc8280xp: correct usb phy power supply
-Date: Fri, 10 Jan 2025 22:25:30 +0800
-Message-ID: <20250110142531.194629-1-mitltlatltl@gmail.com>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <2e240422-b964-42ce-b537-413b1d8ae07d@oss.qualcomm.com>
-References: <2e240422-b964-42ce-b537-413b1d8ae07d@oss.qualcomm.com>
+	s=arc-20240116; t=1736519303; c=relaxed/simple;
+	bh=F+pRqybOv0EfGT0TG8OreId9zOD5mPSZO+2Pu0L++UI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=pMRjlN/88GvH6WDbdzfWgD6ceQiGbunjEDAaW+Cg+vOAuC2hY+1kzEEq6FSiVVOAllTjj082b+2N3p+LjB5ocN3UttIfjCmRxrZANp/SBDrOYs+EV4VWbpmbh8rHG0rDYqP4WhqmIC+zA3ZCdORBBKu/nSySTrJbxkomY1ffw7k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=u5t4E4w4; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DC34C4CEE0;
+	Fri, 10 Jan 2025 14:28:23 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1736519303;
+	bh=F+pRqybOv0EfGT0TG8OreId9zOD5mPSZO+2Pu0L++UI=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=u5t4E4w4hmmlWCg5X8zLnMDjGObdeJf2B/92elesFrEpf6tIYAfjaq9aG3HlpFgO5
+	 FFf7Gu8YgokXqTBvCvDQLWh0JgQQh8+50XbsMAL7nQcqbp+De2+PXLOCeVEGS4eiLy
+	 M9XBNF3N5CxL0i9KmZVtmJT/+V+ureB5vs/5SDXBUnpfd6H8kWGP0nBazOiK2pBjQd
+	 bm3aQ/6ipo6lJO3CplNeliC9B/JDZjEtBOAhE8vbDJQ2G2mL/5BAeRCgbIk3Wy9l+e
+	 UfTGf9nOiIYcUfi/e7awe1eEDWw0VhB0n0W+n/naY0QO/N8d32U5BPg109SwjdSMwn
+	 8Jjp0EpJBPoXw==
+Received: from johan by xi.lan with local (Exim 4.97.1)
+	(envelope-from <johan@kernel.org>)
+	id 1tWFzs-000000005Lx-16wQ;
+	Fri, 10 Jan 2025 15:28:24 +0100
+Date: Fri, 10 Jan 2025 15:28:24 +0100
+From: Johan Hovold <johan@kernel.org>
+To: Vikash Garodia <quic_vgarodia@quicinc.com>
+Cc: Dikshita Agarwal <quic_dikshita@quicinc.com>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Philipp Zabel <p.zabel@pengutronix.de>,
+	Hans Verkuil <hverkuil@xs4all.nl>,
+	Sebastian Fricke <sebastian.fricke@collabora.com>,
+	Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Nicolas Dufresne <nicolas@ndufresne.ca>,
+	Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
+	Jianhua Lu <lujianhua000@gmail.com>,
+	Stefan Schmidt <stefan.schmidt@linaro.org>,
+	linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	Bjorn Andersson <andersson@kernel.org>
+Subject: Re: [PATCH v9 27/28] media: iris: enable video driver probe of
+ SM8250 SoC
+Message-ID: <Z4EuiPEw8mvDQ2gv@hovoldconsulting.com>
+References: <20241212-qcom-video-iris-v9-0-e8c2c6bd4041@quicinc.com>
+ <20241212-qcom-video-iris-v9-27-e8c2c6bd4041@quicinc.com>
+ <Z3_nCPk_g8znto4A@hovoldconsulting.com>
+ <64f8bebd-35e1-c743-b212-e1a3292bade2@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <64f8bebd-35e1-c743-b212-e1a3292bade2@quicinc.com>
 
-On Fri, Jan 10, 2025 at 8:28 PM Konrad Dybcio <konrad.dybcio@oss.qualcomm.com> wrote:
-> On 10.01.2025 10:23 AM, Pengyu Luo wrote:
-> > On this platform, according to dsdt tables, usb{0,1} phy consume the
-> > following regulators. usb2 phy should be corrected also, usb2 in dsdt
-> > is a little complicated, so correct usb{0,1} only for now.
-> >
-> >       usb0    usb1    voltage consumer
-> > hsphy:
-> >       l1c     l1c     1.8v    vdda18-supply
-> >       l9d     l4b     0.912v  vdda-pll-supply
-> >       l7d     l13c    3.072v  vdda33-supply
-> > qmpphy:
-> >       l4d     l3b     1.2v    vdda-phy-supply
-> >       l6d     l6b     0.88v   vdda-pll-supply
->
-> Looking at the CRD schematics, it should instead be:
->
-> USB0    USB1    VOLT            NAME
-> L1B     L8D     0.9ish          PHY
-> L4D     L4D     1.2             PLL
->
-> I'm hoping I'm reading those right, it's not super obvious
->
+On Thu, Jan 09, 2025 at 11:18:29PM +0530, Vikash Garodia wrote:
+> On 1/9/2025 8:41 PM, Johan Hovold wrote:
+> > On Thu, Dec 12, 2024 at 05:21:49PM +0530, Dikshita Agarwal wrote:
+> >> Initialize the platform data and enable video driver probe of SM8250
+> >> SoC. Add a kernel param to select between venus and iris drivers for
+> >> platforms supported by both drivers, for ex: SM8250.
+> > 
+> > Why do you want to use a module parameter for this? What would be the
+> > default configuration? (Module parameters should generally be avoided.)
 
-Yes, right.
+> This was discussed during v4 [1] and implemented as per suggestion
+> 
+> [1]
+> https://lore.kernel.org/linux-media/eea14133-2152-37bb-e2ff-fcc7ed4c47f5@quicinc.com/
 
-Yours is correspond to usb2 qmpphy(internal usb)
+First, the background and motivation for this still needs to go in the
+commit message (and be mentioned in the cover letter).
 
-this is from sc8280xp-crd:
+Second, what you implemented here is not even equivalent to what was
+done in the mdm drm driver since that module parameter is honoured by
+both drivers so that at most one driver tries to bind to the platform
+device.
 
-&usb_2_qmpphy0 {
-        vdda-phy-supply = <&vreg_l1b>;
-        vdda-pll-supply = <&vreg_l4d>;
+With this patch as it stands, which driver ends up binding depends on
+things like link order and what driver has been built a module, etc. (as
+I pointed out below).
 
-        status = "okay";
-};
+> > Why not simply switch to the new driver (and make sure that the new
+> > driver is selected if the old one was enabled in the kernel config)?
 
-&usb_2_qmpphy1 {
-        vdda-phy-supply = <&vreg_l8d>;
-        vdda-pll-supply = <&vreg_l4d>;
+> Its about the platform in migration i.e sm8250. Since new driver is not yet
+> feature parity with old driver, choice is provided to client if it wants to use
+> the new driver (default being old driver for sm8250)
 
-        status = "okay";
-};
+This should be described in the commit message, along with details on
+what the delta is so that the reasoning can be evaluated.
 
-I had checked many dsdt tables of sc8280xp-based devices, they are
+And I'm still not sure using a module parameter for this is the right
+thing to do as it is generally something that should be avoided.
 
-Name (LPCC, Package (0x07)
-{
-...
-Package (0x08)
-{
-	"\\_SB.URS0.USB0",
-	...
-	"PPP_RESOURCE_ID_LDO1_C" // 1.8v
-	...
-	"PPP_RESOURCE_ID_LDO9_D" // 0.912v
-	...
-	"PPP_RESOURCE_ID_LDO7_D" // 3.072v
-	...
-	"PPP_RESOURCE_ID_LDO4_D" // 1.2v
-	...
-	"PPP_RESOURCE_ID_LDO6_D" // 0.88v
-	...
-}
-...
-Package (0x08)
-{
-	"\\_SB.URS1.USB1",
-	...
-	"PPP_RESOURCE_ID_LDO1_C" // 1.8v
-	...
-	"PPP_RESOURCE_ID_LDO4_B" // 0.912v
-	...
-	"PPP_RESOURCE_ID_LDO13_C" // 3.072v
-	...
-	"PPP_RESOURCE_ID_LDO3_B" // 1.2v
-	...
-	"PPP_RESOURCE_ID_LDO6_B" // 0.88v
-	...
-}
-...
-}
+> >>  static int iris_probe(struct platform_device *pdev)
+> >>  {
+> >>  	struct device *dev = &pdev->dev;
+> >> @@ -196,6 +224,9 @@ static int iris_probe(struct platform_device *pdev)
+> >>  	u64 dma_mask;
+> >>  	int ret;
+> >>  
+> >> +	if (!video_drv_should_bind(&pdev->dev, true))
+> >> +		return -ENODEV;
+> > 
+> > AFAICT nothing is preventing venus from binding even when 'prefer_venus'
+> > is false.
+> > 
+> >> +
+> >>  	core = devm_kzalloc(&pdev->dev, sizeof(*core), GFP_KERNEL);
+> >>  	if (!core)
+> >>  		return -ENOMEM;
 
-On many platforms, such as sm8350-hdk, sc8180x-primus, x1e80100-crd, which
-also support qmp phy, their PHY consumes a 1.2v vreg, their PLL consumes a
-0.88v(approx) vreg. So I wirite this patch.
-
-> Konrad
->
-
-Best wishes,
-Pengyu
+Johan
 
