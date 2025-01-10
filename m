@@ -1,171 +1,174 @@
-Return-Path: <linux-arm-msm+bounces-44740-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-44741-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id B9494A09283
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jan 2025 14:50:55 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4CD10A092B5
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jan 2025 14:58:52 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B6039162EDB
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jan 2025 13:50:53 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id B0EE81884C89
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jan 2025 13:58:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5E4A420E717;
-	Fri, 10 Jan 2025 13:50:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 27CC220E71D;
+	Fri, 10 Jan 2025 13:58:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="x/MHSryn"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qnDL8Ogj"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B213D20E6EA
-	for <linux-arm-msm@vger.kernel.org>; Fri, 10 Jan 2025 13:50:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB2DE4400;
+	Fri, 10 Jan 2025 13:58:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736517046; cv=none; b=XDQbFS3Qbe8nTaGzPU4f3ptdkU/4LXk0itGDd8BlSskXqqqYF6GUILBS+S8XSyLtLV7yETalLnQTdjtPJAO9MqnSOJy+rkDTTWs7HB1eRSd/sCe4wYw9Oa5bpj3rMiHWmbGXCxPZyCSXfnatkSFedgzIms2CXUUY5m6n7MwDQgM=
+	t=1736517525; cv=none; b=mWNFSQXT34mbnKa7ajCqoXUzJaWsPhqC8i9NlV759UjEJou2MgUp3H4LckDX/n/oRDZ8qZJ7ReBkrZRCM3uim6naNOYAK50srmmRLKz1amU8LkjjB2Z2GBgrq1FDiw5oKSiyeA9xmy2qDTQSpJ10ZrHft0LiT3bmh86UF7qPBZI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736517046; c=relaxed/simple;
-	bh=ciJAEmo8xS1YodmCHYYwU3P0gYxHOe/kHbBoWXH+FFY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=o+9dCaqXJxR4wNyk4XGUiFK1PTJUI6uhiyZMbAmlu4kS2rZM2u104qwBaEuob00luVFQ4+SGFb8HSTu/CiogmkluEckuJ60/iK4jN30XOStCZWhQ0WBqOjNZJpe+ME/EJY3aLtoQSHrDD9t1mv0sBpAlzb6injgXaJpK+BN36Bk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=x/MHSryn; arc=none smtp.client-ip=209.85.221.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-385e87b25f0so2086331f8f.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Jan 2025 05:50:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1736517042; x=1737121842; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=+KDUqAsdGT0AfuSaRdiWzIkDzcUh2fPCqtIyZmpfwLg=;
-        b=x/MHSrynt13XPwt5cR6U2vDjhnPDRvjhJU3njGCW0HypqxMCRAldIYAnC7Im9gv3dV
-         ElqKmmPe76cCcAjmNxQwtQ9D2HfkH3vHoFQ5KPx68UdnCB7E0kvSh/7h68JgineZTIT/
-         e3UKu9wpn/CWUXx+pejAeFFrZt6d+pYqLvDnGv4U+2aOmkWa+PHUukY9GVyBm0QfPN0/
-         DNU9rjOf0DKp/0rIk1QWA6A+rM4VYAmPsXEd834rWyHJpwJCkt/pLwaTsEJEuxw0kad7
-         avNTh+877+90GmCX/1Mbcb0V0WCWdrq6B1AWlkJY2hpt7ft3cP8RksbZG2OVMpysJ3V8
-         CYYw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736517042; x=1737121842;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=+KDUqAsdGT0AfuSaRdiWzIkDzcUh2fPCqtIyZmpfwLg=;
-        b=wbltCReuyWamAvs/G3WtsNBkYtjEHpxSUQIvvQADsau4C4u3i51J0yhRBCBR01azUH
-         WiE69+CBy1DKRGt+YsDasBI4cW5biUIRFioM05XF/YtkUFf8pSYLFo2cCbpRv8fqyH6Y
-         fjAdFlfo+/WQg3RWEYfhHfKlq//ppGZ3L2O7Slt6hmyDQbKjd3ZEDysd7htEsmRGbId9
-         Fyhh5t/EBx3XQQCOT4yJLwDFJW0MJVGa2BVcCT+Pqwnc++PkA6E0T2xyQejPmucg9Crt
-         Pj1BUBf2ql75tsaNFVEjMIL1aF1czSpnumVNWLvWZ3dgh7Vdp/mUWieJcGLQYfbQKeXv
-         jHWw==
-X-Forwarded-Encrypted: i=1; AJvYcCVRKyexcRnUxg+0R+ZL8ydUQIEY2wTu685fxCfNLCirmLLOXlH3X/4kUrsLYCbTO1Xkdjvses6ZiA2OSYq9@vger.kernel.org
-X-Gm-Message-State: AOJu0YwRvnot3NprIP0aXH7A2mP5Gx7m/cdpChwqg5M2ySqCTg3ePL/n
-	Dvn2z7T19teQg3YHgc7JUVEoeQdyTP0WfpDGz421aBs0tz+Psj6Ku6XS79mNRRs=
-X-Gm-Gg: ASbGncsmk/oDUxQCxyFweAJcp4nEVNgF27fUg0kApBM9dLH2wwJkt5kmpvtc/NNk32o
-	Qr+8vsU+qIOUqth4GD8DyCwc8cZxgnQTWWi1Lx5kQV9WvpRBhdS4oRlwo85yEdb06V5HwFa8U6Q
-	uGOjKll7/YzNthu3rFcaZoo4WzC82wqmpwxAGWVpl5ED3Yz3ZOScV86lpG/NqrCE0U2g4QeWGma
-	Aod8huAHNdTBds/5vKlTXfrKMzG7VyWVwu3NDQ8So+Dvpq6HqcogR9AgwtZI0w9oVVPVA==
-X-Google-Smtp-Source: AGHT+IEgRpwnL9+2BYjn1UjqK+ab40fSxMxuHo8PKVl2h8lrY3ULkx3M7dtkhojEPsThVIBzRXZZGg==
-X-Received: by 2002:a05:6000:2a9:b0:38a:88bc:aea6 with SMTP id ffacd0b85a97d-38a8b0b816dmr6511542f8f.6.1736517042032;
-        Fri, 10 Jan 2025 05:50:42 -0800 (PST)
-Received: from [192.168.0.43] ([176.61.106.227])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-436e9e03f62sm52506215e9.22.2025.01.10.05.50.40
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 10 Jan 2025 05:50:41 -0800 (PST)
-Message-ID: <cc1f4718-2553-4c49-b1c8-6f6f3bbeeb56@linaro.org>
-Date: Fri, 10 Jan 2025 13:50:40 +0000
+	s=arc-20240116; t=1736517525; c=relaxed/simple;
+	bh=XAsMOZHVjLWiwYwZ4XWgtrLFfXOn9aVDTZPHs4WqG2o=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=SH2g9KU/yYH1gMGGnbjH182zaLnOQX5PAn/Rce1M6KgYHR9fnmSjP9RaOb3OK+N/SoAqA1R3ihrqMfs94mE2K6+dBU+ogCrwASVFTvNXhETwa6+oCAuxFnr5clC3fe3gP/CmOPa8C2MdjW+A0nLarPfcUZmWi8gXAF0VI2Im/UA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qnDL8Ogj; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D415C4CED6;
+	Fri, 10 Jan 2025 13:58:44 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1736517524;
+	bh=XAsMOZHVjLWiwYwZ4XWgtrLFfXOn9aVDTZPHs4WqG2o=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=qnDL8Ogjh0lqfqkDcVSXHaZ6x2mjTvkcUbncmr9YAnLU00SSd/eDGST7jXuMQM2bp
+	 MJM7a8fz+G1ZwiIfvLFdRwi7Sdi2QXLoOiU9TpgFUXGnJO1x8d2rInjKvaUQbpzNrP
+	 rGX/Ho/iXuqv9VUGSDOAzKkuAmpOzeMHF2h7CDG4qVRRZcBHbXspQ/hvenMaHru2Q0
+	 KDpiEGwTR29RRKCwRQooFR4tdvVQZLlZTSVbFRlr7uS9cWE165vJXiHOzyKDytrkF/
+	 iB3D7OrCTbsaSx2WyZCfMKv3/49JIgtkFh6WCPDG8EKsXK2P9VzzhfH+f/AFtr60qP
+	 R82HeuiFCeElg==
+Date: Fri, 10 Jan 2025 07:58:43 -0600
+From: Rob Herring <robh@kernel.org>
+To: Stephen Boyd <swboyd@chromium.org>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev,
+	devicetree@vger.kernel.org,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+	Arnd Bergmann <arnd@arndb.de>, Conor Dooley <conor+dt@kernel.org>,
+	Saravana Kannan <saravanak@google.com>,
+	Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <u.kleine-koenig@baylibre.com>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>
+Subject: Re: [RFC PATCH 2/6] dt-bindings: bus: Add qcom,soc-sc7180 SoC
+Message-ID: <20250110135843.GA2630182-robh@kernel.org>
+References: <20250108012846.3275443-1-swboyd@chromium.org>
+ <20250108012846.3275443-3-swboyd@chromium.org>
+ <7a64e927-235b-4d63-af59-f2c80464a9a1@oss.qualcomm.com>
+ <CAE-0n53wX99ry88zOOuq6SPVpraiENheJ1T+HZri82x4gqZJ_w@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 00/16] media: qcom: camss: Add sm8550 support
-To: Depeng Shao <quic_depengs@quicinc.com>, rfoss@kernel.org,
- todor.too@gmail.com, mchehab@kernel.org, robh@kernel.org,
- krzk+dt@kernel.org, conor+dt@kernel.org, vladimir.zapolskiy@linaro.org,
- hverkuil@xs4all.nl
-Cc: quic_eberman@quicinc.com, linux-media@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, kernel@quicinc.com
-References: <20250108143733.2761200-1-quic_depengs@quicinc.com>
-Content-Language: en-US
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <20250108143733.2761200-1-quic_depengs@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAE-0n53wX99ry88zOOuq6SPVpraiENheJ1T+HZri82x4gqZJ_w@mail.gmail.com>
 
-On 08/01/2025 14:37, Depeng Shao wrote:
-> v8:
-> - Add correct version number for each patch - Krzysztof, Hans, Bryan
-> - Correct the copyright in patches [15/16] and [16/16]
-> - Link to v7: https://lore.kernel.org/all/20241225133523.4034820-1-quic_depengs@quicinc.com/
-Patch #9 doesn't apply to media.git/next
+On Thu, Jan 09, 2025 at 01:51:12PM -0800, Stephen Boyd wrote:
+> Quoting Konrad Dybcio (2025-01-09 06:05:14)
+> > On 8.01.2025 2:28 AM, Stephen Boyd wrote:
+> > > Document the Qualcomm SC7180 System on a Chip (SoC). This SoC is made up
+> > > of multiple devices that have their own bindings, therefore this binding
+> > > is for a "bus" that is the SoC node.
+> > >
+> > > TODO: Document all child nodes. This is woefully incomplete but at least
+> > > shows what is involved with describing an SoC node in dt schema.
+> >
+> > I'm not sure I'm a fan, because...
+> >
+> > [...]
+> >
+> > > +
+> > > +properties:
+> > > +  compatible:
+> > > +    items:
+> > > +      - const: qcom,soc-sc7180
+> > > +      - const: simple-bus
+> > > +
+> > > +  '#address-cells':
+> > > +    const: 2
+> > > +
+> > > +  '#size-cells':
+> > > +    const: 2
+> > > +
+> > > +  clock-controller@100000:
+> > > +    $ref: /schemas/clock/qcom,gcc-sc7180.yaml#
 
-git remote add media git://linuxtv.org/media.git
-git fetch media
+This makes the above schema be applied twice. Once here and then when 
+the compatible matches. That can be avoided by just listing a 
+compatible. The QCom display bindings follow that style.
 
-git checkout -b media-next-25-10-01-camss-8550 media/next
+> > > +
+> > > +  watchdog@17c10000:
+> > > +    $ref: /schemas/watchdog/qcom-wdt.yaml#
+> > > +
+> > > +required:
+> > > +  - compatible
+> > > +  - '#address-cells'
+> > > +  - '#size-cells'
+> > > +  - clock-controller@100000
+> > > +  - watchdog@17c10000
+> > > +
+> > > +additionalProperties: false
+> >
+> > ..this approach will make any dt node addition under /soc require
+> > an additional bindings change, which sounds like absolute madness
+> 
+> We should pretty much know what nodes go under here though, because it's
+> a chip that exists and doesn't change after the fact. I agree that it
+> will be annoying during early development when everyone is modifying the
+> same file to add their node, but that problem also exists with the dts
+> files today so it doesn't seem like total madness. It's also nice to be
+> able to look at one file and quickly find all the schemas for the SoC
+> used, like a table of contents almost or a memory map for the chip.
 
-b4 shazam 20250108143733.2761200-1-quic_depengs@quicinc.com 
+I don't really care for listing everything either.
 
-Grabbing thread from 
-lore.kernel.org/all/20250108143733.2761200-1-quic_depengs@quicinc.com/t.mbox.gz
-Checking for newer revisions
-Grabbing search results from lore.kernel.org
-Analyzing 17 messages in the thread
-Analyzing 260 code-review messages
-Checking attestation on all messages, may take a moment...
----
-   ✓ [PATCH v8 1/16] media: qcom: camss: csiphy-3ph: Fix trivial 
-indentation fault in defines
-   ✓ [PATCH v8 2/16] media: qcom: camss: csiphy-3ph: Remove redundant 
-PHY init sequence control loop
-   ✓ [PATCH v8 3/16] media: qcom: camss: csiphy-3ph: Rename struct
-   ✓ [PATCH v8 4/16] media: qcom: camss: csiphy: Add an init callback to 
-CSI PHY devices
-   ✓ [PATCH v8 5/16] media: qcom: camss: csiphy-3ph: Move CSIPHY 
-variables to data field inside csiphy struct
-   ✓ [PATCH v8 6/16] media: qcom: camss: csiphy-3ph: Use an offset 
-variable to find common control regs
-   ✓ [PATCH v8 7/16] media: qcom: camss: csid: Move common code into 
-csid core
-   ✓ [PATCH v8 8/16] media: qcom: camss: vfe: Move common code into vfe core
-   ✓ [PATCH v8 9/16] media: qcom: camss: Add callback API for RUP update 
-and buf done
-   ✓ [PATCH v8 10/16] media: qcom: camss: Add default case in 
-vfe_src_pad_code
-   ✓ [PATCH v8 11/16] media: qcom: camss: csid: Only add TPG v4l2 ctrl 
-if TPG hardware is available
-   ✓ [PATCH v8 12/16] dt-bindings: media: camss: Add qcom,sm8550-camss 
-binding
-   ✓ [PATCH v8 13/16] media: qcom: camss: Add sm8550 compatible
-   ✓ [PATCH v8 14/16] media: qcom: camss: csiphy-3ph: Add Gen2 v2.1.2 
-two-phase MIPI CSI-2 DPHY support
-   ✓ [PATCH v8 15/16] media: qcom: camss: Add CSID 780 support
-   ✓ [PATCH v8 16/16] media: qcom: camss: Add support for VFE 780
-   ---
-   ✓ Signed: DKIM/quicinc.com
----
-Total patches: 16
----
-  Base: using specified base-commit 8155b4ef3466f0e289e8fcc9e6e62f3f4dceeac2
-Applying: media: qcom: camss: csiphy-3ph: Fix trivial indentation fault 
-in defines
-Applying: media: qcom: camss: csiphy-3ph: Remove redundant PHY init 
-sequence control loop
-Applying: media: qcom: camss: csiphy-3ph: Rename struct
-Applying: media: qcom: camss: csiphy: Add an init callback to CSI PHY 
-devices
-Applying: media: qcom: camss: csiphy-3ph: Move CSIPHY variables to data 
-field inside csiphy struct
-Applying: media: qcom: camss: csiphy-3ph: Use an offset variable to find 
-common control regs
-Applying: media: qcom: camss: csid: Move common code into csid core
-Applying: media: qcom: camss: vfe: Move common code into vfe core
-Applying: media: qcom: camss: Add callback API for RUP update and buf done
-Patch failed at 0009 media: qcom: camss: Add callback API for RUP update 
-and buf done
-error: patch failed: drivers/media/platform/qcom/camss/camss.c:2454
+We could just generate all the schemas used. Either "give me all the 
+schemas matching some compatible patter" or "give me all the schemas 
+used to validate the DTB". The latter was possible on a per node basis, 
+but I think I dropped that when I changed how we select schemas to 
+apply.
 
+Speaking of memory maps, I would like a tool which could dump memory map 
+from .dts. My primary reason is to find overlapping regions.
+
+> One thing that I find annoying is that you have to put the whole soc
+> node and child nodes in the example. Maybe we can omit the example
+> because there are so many child nodes.
+> 
+> >
+> > I think additionalProperties: true would be sufficient here, like in
+> > Documentation/devicetree/bindings/soc/imx/imx8m-soc.yaml
+> >
+
+No. You can do:
+
+additionalProperties:
+  type: object
+
+Or a patternProperties entry requiring '@' in the name.
+
+
+> Ok. That binding looks to be for the efuse properties of the SoC node
+> itself? I was hoping to find another example of this "describe the whole
+> SoC" sort of binding but that doesn't match. Is there one already out
+> there? Should I move this binding to bindings/soc/qcom instead of
+> bindings/bus?
+
+bindings/bus
+
+The 'soc' nodes here aren't really for the whole SoC. Cpus aren't in 
+the soc node. They are for buses. We should allow for there to be more 
+than 1 for instance.
+
+Rob
 
