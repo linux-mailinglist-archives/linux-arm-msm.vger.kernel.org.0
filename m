@@ -1,155 +1,160 @@
-Return-Path: <linux-arm-msm+bounces-44713-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-44714-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4348CA089D6
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jan 2025 09:23:02 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id EADE7A08A9C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jan 2025 09:44:31 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 45EB1165B1E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jan 2025 08:23:00 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 16B5A3A8BC9
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jan 2025 08:44:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A6E112080D6;
-	Fri, 10 Jan 2025 08:22:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B1222207E19;
+	Fri, 10 Jan 2025 08:44:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="VrAL+4ST"
+	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="oqhdcaDh"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f47.google.com (mail-lf1-f47.google.com [209.85.167.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF1D6205E01;
-	Fri, 10 Jan 2025 08:22:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C82E42080DB
+	for <linux-arm-msm@vger.kernel.org>; Fri, 10 Jan 2025 08:44:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736497342; cv=none; b=rS+zX5dA6uCPecUsjJDcKc/37ary6YufB35GC6e3nmr2sJ1PfB8OouifM9BxEJCS0reKyPi56P4WfE59pcCZEJBanMFhJpPTX9WfTFKBtaHueZytrjb+nhg9czT00PhdMJ3KantCANewSsDQGckvk7WIoy+MaFlbunJsR0VePYY=
+	t=1736498663; cv=none; b=YmguxPC61+1JH/hXb9mIK+zuTDcc4XkabR1ArH8eGYid7ki8aGlMmTG+DSSw1pUrAO6ej5R4ju/B1U37iMQHJ+D/0X+sr7IoQuKd+wjOJdx5gzMms91zudanIC8R+H9aiimqX6gOZ2OrT8/5Rn77Pqd7oHe/AEMippliEKCRpX0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736497342; c=relaxed/simple;
-	bh=2QacisfZC77wH3nmwmgatCSXgiarASOgF95tC5xTLqU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=pYLX4G4vwdOPkhDlu63gwkDR4AoOMRgQ7SD5HLezhnqQGHUPBvt6500/MnlLzkD1+8PGqPlACVMMTHb70I3XE7br1gAK0+L5Lmr+hbRgrjmdj7d3CGuU4Hsewpea9Lc86GTncex8mc/9MrORSrxzhANa2QmBlG+OGEBIrlT9Njw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=VrAL+4ST; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50A2i7No018187;
-	Fri, 10 Jan 2025 08:22:03 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	0uPWMzQe26BjKrvpBxQ1DfCRGPTp4gTh6KZhjh7t+wk=; b=VrAL+4STtBHnU2Mi
-	sPjuLGPJ3ThTH7GOvETVuQBScS8Ohjt3tolp9PgRgQuiPn7oQvxSreCbSVjCUmtL
-	L3qCukhyY0E+zedayFj+UUugwrwYrrSuBz2K7oTb2dUab8f3e49MKYwBoizCRKX0
-	6Y3LEvdCxco85qU/QcZ4CMUPRUfTB8fayde8xQotahhYzFAaydoVz5Qnn0LOCVHZ
-	1Tlw0a7m7aBZqTfzTUdp6H8aOeCxyuyj3WBmaOYCefq1F/u7CV00ODqZnzkeGB3r
-	nHfRlJI7U/tyjoq9c4cqSjGTTWeE7Rl3ytz3GSgRRzlsWd++nSCULGPzdjS6K9Ip
-	/xiFtg==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 442u14gqh1-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 10 Jan 2025 08:22:03 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 50A8M2Cv017952
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 10 Jan 2025 08:22:02 GMT
-Received: from [10.231.216.103] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 10 Jan
- 2025 00:21:59 -0800
-Message-ID: <53082cad-a046-424a-ab05-67d34005131d@quicinc.com>
-Date: Fri, 10 Jan 2025 16:21:57 +0800
+	s=arc-20240116; t=1736498663; c=relaxed/simple;
+	bh=bcs5XrixjJuICcKrOi0QLiwMCzGybnpSV1jIYpcaEdk=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=CQKa9wsV9S/us7F+c2UZ2mGkGbGP3ioCRNP4liEQLnxZITNRQzaKK9RdJrwJ2uk0K9E2S7WAP4BUIL++H0+YpT7x5ebBVCSErK75NdPKksW5YGwkaVl/RFNdqvnHEv/sD77POS0583OinEG9RQa3aCa9CO12aWvevfZCCtnE7TQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=oqhdcaDh; arc=none smtp.client-ip=209.85.167.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
+Received: by mail-lf1-f47.google.com with SMTP id 2adb3069b0e04-540215984f0so2005894e87.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Jan 2025 00:44:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1736498659; x=1737103459; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=3J6ybie5MZTohAU5zO4AHtHmlS6SVT///Z6RnwOTF0I=;
+        b=oqhdcaDhpg7uKVN/GIznd4jiSK2ORwiXk9h/zpw9FR245bEuGdgGwuv+iH7nlP+B8m
+         9zSJy/VKhvJMc6ppvhGlbHo0DpM4g+sUf+393Z8NQE5l644lXXhX/hc02MoRYreuPbqy
+         1r7QVc8llQBVdCfRPVAL+k/Y9s9TGUl8HgbN9u680Qy4aSKB90ejT4XD+RT9i7blL+NE
+         cGP+WYt29uNl4d9Gw2WB4t37qzpLJXDzmBUYGtIqQZ/70PnLzFAUzfmBXAjKu9Q09iGx
+         +l7IMfhAkeuAw4F38csY9kRhSxRMk/6yUGsObLAkdEDRMnEffvi9RyOJf1veWr4qfHlw
+         KPfg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1736498659; x=1737103459;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=3J6ybie5MZTohAU5zO4AHtHmlS6SVT///Z6RnwOTF0I=;
+        b=e087bLqNH5r+G1A8EVbq16sdVCT44x+dPrDZeUN/YyO5yoOkL9oSGovuwpxrHuVIGi
+         KuIcvf5hi+QgVH4KWyepSaa5Q3Gez1JqS/vBAhZdhL7Uv/V8lEUO5aEDpri2pa6WEmaJ
+         hXSm5KFmIVGaw4Z9ZOEbPE5SBU3mxt4eFKlvTbBnR0o6myH/GMhuF+CExq8Rc9UjJwSq
+         jsbe1PvRqlqum/YLsyJHyUaQd6iRsRDpLyv5QSx/baumiF3LTkjZAwgnLbFT0SAh0PTV
+         0sq8OMYa+LfoF2v2bZnn/fgCt6y/4tvWqS6ihrOllHleZ2RA938QgtU4wJRtBAv85gMS
+         LMKw==
+X-Forwarded-Encrypted: i=1; AJvYcCXPYgeOjba7OvUxc4nR5i4M+TneEH6+FOJtcj00mP6y0F0pEZlVoITyLMcJZhbNEYQg7Ysou5vxnTwnAtEg@vger.kernel.org
+X-Gm-Message-State: AOJu0YyFCUEjr53UZnazbZkdMN6zrWt3EZUVsnDKKr29xNwgKfTCQGfk
+	Vjhxd0/hYab2DB0/V1q8udPTmD45sHPcW34vo3dR2QFIKVLvDDeYTTu6hCL5fqtN9zpnI+ZLs2x
+	8Ho5SbvVRL1Qm7DVJ/z1O6C5VbZMl6LUAKe/PGA==
+X-Gm-Gg: ASbGncsvsdNPsc/tszlHGUiGJ9d5jtRkCg1wq9GmXZ3qn+45Q98BeX4mjh3U7f3p0Oi
+	/fR5/mcB/uSHDra4a7kA/QY9qvYbrLWaxrFKDO/yFusZayuV/Em20HBIDjKwga4SMf3sV
+X-Google-Smtp-Source: AGHT+IEyB2cuChMeX1r+nZtaJdP6Mzdmo0n9PGPsFhkwAW7ukTnXjzzz9a+MUocObbefl6A9T2AxU0IqAEz7Wjzjkhg=
+X-Received: by 2002:a05:6512:2399:b0:540:1ea7:44db with SMTP id
+ 2adb3069b0e04-542845b1aedmr3480546e87.4.1736498658964; Fri, 10 Jan 2025
+ 00:44:18 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/2] clk: qcom: videocc: Use HW_CTRL_TRIGGER flag for
- video GDSC's
-To: Bjorn Andersson <andersson@kernel.org>
-CC: Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd
-	<sboyd@kernel.org>,
-        Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
-        "Vikash Garodia" <quic_vgarodia@quicinc.com>,
-        Bryan O'Donoghue
-	<bryan.odonoghue@linaro.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-media@vger.kernel.org>,
-        Taniya Das
-	<quic_tdas@quicinc.com>
-References: <20241223-switch_gdsc_mode-v2-0-eb5c96aee662@quicinc.com>
- <20241223-switch_gdsc_mode-v2-1-eb5c96aee662@quicinc.com>
- <szj4urqpxoek3y65ov6bavxqjsgs5nnu5o32e73z47mudelq4v@6fjbmm2h7pen>
- <7556a703-db1a-48f1-8546-e9acf91ca0c6@quicinc.com>
- <fmxvklw2fmt4akltrpw6v4wmmi6teu7rozz6tozr4hkos6io4s@4jp76l7xql3l>
-Content-Language: en-US
-From: Renjiang Han <quic_renjiang@quicinc.com>
-In-Reply-To: <fmxvklw2fmt4akltrpw6v4wmmi6teu7rozz6tozr4hkos6io4s@4jp76l7xql3l>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: u1YZhsLFgM6TekFWozEZzxsKMONeSsnK
-X-Proofpoint-GUID: u1YZhsLFgM6TekFWozEZzxsKMONeSsnK
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 suspectscore=0
- phishscore=0 spamscore=0 impostorscore=0 lowpriorityscore=0
- priorityscore=1501 clxscore=1015 mlxlogscore=999 bulkscore=0 mlxscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2501100068
+References: <20241213041958.202565-1-ebiggers@kernel.org>
+In-Reply-To: <20241213041958.202565-1-ebiggers@kernel.org>
+From: Bartosz Golaszewski <brgl@bgdev.pl>
+Date: Fri, 10 Jan 2025 09:44:07 +0100
+X-Gm-Features: AbW1kvYIJl4nVvnVQIFwQlGZKMe8mAAA_MH2MqnfAcbAm7yp2J-zmj2cn1w9I5U
+Message-ID: <CAMRc=MdeZ_k9z+ZKW1ub0m9ymh3eABUU7ZRPY9TYHM_fc+D+qQ@mail.gmail.com>
+Subject: Re: [PATCH v10 00/15] Support for hardware-wrapped inline encryption keys
+To: Eric Biggers <ebiggers@kernel.org>
+Cc: linux-block@vger.kernel.org, linux-fscrypt@vger.kernel.org, 
+	linux-mmc@vger.kernel.org, linux-scsi@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, Gaurav Kashyap <quic_gaurkash@quicinc.com>, 
+	Adrian Hunter <adrian.hunter@intel.com>, Alim Akhtar <alim.akhtar@samsung.com>, 
+	Avri Altman <avri.altman@wdc.com>, Bart Van Assche <bvanassche@acm.org>, 
+	Bjorn Andersson <andersson@kernel.org>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
+	"James E . J . Bottomley" <James.Bottomley@hansenpartnership.com>, Jens Axboe <axboe@kernel.dk>, 
+	Konrad Dybcio <konradybcio@kernel.org>, 
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, 
+	"Martin K . Petersen" <martin.petersen@oracle.com>, Ulf Hansson <ulf.hansson@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-
-On 1/8/2025 12:41 PM, Bjorn Andersson wrote:
-> On Thu, Jan 02, 2025 at 12:06:14PM +0800, Renjiang Han wrote:
->> On 12/26/2024 11:54 AM, Bjorn Andersson wrote:
->>>> The video driver will be using the newly introduced
->>>> dev_pm_genpd_set_hwmode() API to switch the video GDSC to HW and SW
->>>> control modes at runtime.
->>> "Will be using", does that imply then that if this patch is merged
->>> before (or without the venus patch) something unexpected will happen?
->>>
->>> Please clarify how you expect this to be merged, or clarify in the
->>> commit message that ordering is not of any concern.
->>>
->>> Regards,
->>> Bjorn
->>   Thanks for your comment. This patch series is to make the video driver
->>   to use dev_pm_genpd_set_hwmode() to switch GDSC mode. This patch and
->>   the venus driver patch need to be merged at the same time. Otherwise,
->>   the video will not work properly on these platforms.
->>
-> The two patches are handled by different maintainers, of different
-> subsystems and as such would not be expected to be merged together ever.
+On Fri, Dec 13, 2024 at 5:20=E2=80=AFAM Eric Biggers <ebiggers@kernel.org> =
+wrote:
 >
-> If you have such requirements, it need to be made very clear to the
-> maintainers that they will have to synchronize the effort.
+> This patchset is based on next-20241212 and is also available in git via:
 >
+>     git fetch https://git.kernel.org/pub/scm/fs/fscrypt/linux.git wrapped=
+-keys-v10
 >
-> You're expected to always keep the tree "bisectable", i.e. the tree
-> should function after each commit in the git history. Please clarify
-> the best possible order here, and if the changes truly need to be merged
-> in some specific order let's see if we can get Maruo's Acked-by and I
-> could merge the pair through the clock tree.
+> This patchset adds support for hardware-wrapped inline encryption keys, a
+> security feature supported by some SoCs.  It adds the block and fscrypt
+> framework for the feature as well as support for it with UFS on Qualcomm =
+SoCs.
 >
-> Regards,
-> Bjorn
+> This feature is described in full detail in the included Documentation ch=
+anges.
+> But to summarize, hardware-wrapped keys are inline encryption keys that a=
+re
+> wrapped (encrypted) by a key internal to the hardware so that they can on=
+ly be
+> unwrapped (decrypted) by the hardware.  Initially keys are wrapped with a
+> permanent hardware key, but during actual use they are re-wrapped with a
+> per-boot ephemeral key for improved security.  The hardware supports impo=
+rting
+> keys as well as generating keys itself.
+>
+> This differs from the existing support for hardware-wrapped keys in the k=
+ernel
+> crypto API (also called "hardware-bound keys" in some places) in the same=
+ way
+> that the crypto API differs from blk-crypto: the crypto API is for genera=
+l
+> crypto operations, whereas blk-crypto is for inline storage encryption.
+>
+> This feature is already being used by Android downstream for several year=
+s
+> (https://source.android.com/docs/security/features/encryption/hw-wrapped-=
+keys),
+> but on other platforms userspace support will be provided via fscryptctl =
+and
+> tests via xfstests (I have some old patches for this that need to be upda=
+ted).
+>
+> Maintainers, please consider merging the following preparatory patches fo=
+r 6.14:
+>
+>   - UFS / SCSI tree: patches 1-4
+>   - MMC tree: patches 5-7
+>   - Qualcomm / MSM tree: patch 8
+>
 
-  Thanks for your explanation. The use of dev_pm_genpd_set_hwmode() depends
-  on the HW_CTRL_TRIGGER flag, and the reading and writing of the
-  WRAPPER_VCODEC0_MMCC_POWER_CONTROL and WRAPPER_VCODEC0_MMCC_POWER_STATUS
-  registers depends on the HW_CTRL flag. Therefore, the clock patch and
-  the venus driver patch need to be merged at the same time. Otherwise,
-  the venus driver cannot work properly.
+IIUC The following patches will have to wait for the v6.15 cycle?
 
--- 
-Best Regards,
-Renjiang
+[PATCH v10 9/15] soc: qcom: ice: make qcom_ice_program_key() take
+struct blk_crypto_key
+[PATCH v10 10/15] blk-crypto: add basic hardware-wrapped key support
+[PATCH v10 11/15] blk-crypto: show supported key types in sysfs
+[PATCH v10 12/15] blk-crypto: add ioctls to create and prepare
+hardware-wrapped keys
+[PATCH v10 13/15] fscrypt: add support for hardware-wrapped keys
+[PATCH v10 14/15] soc: qcom: ice: add HWKM support to the ICE driver
+[PATCH v10 15/15] ufs: qcom: add support for wrapped keys
 
+Bartosz
 
