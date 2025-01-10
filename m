@@ -1,246 +1,214 @@
-Return-Path: <linux-arm-msm+bounces-44717-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-44718-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id E1120A08BF6
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jan 2025 10:29:28 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 14DF3A08C6B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jan 2025 10:41:38 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2AF6516ABA1
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jan 2025 09:28:37 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2C36A188BFF3
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jan 2025 09:41:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0112C20B7FC;
-	Fri, 10 Jan 2025 09:25:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2E86B20B200;
+	Fri, 10 Jan 2025 09:40:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="P5wUYU/y"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="jm7OeBpS"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
+Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 460AE207A20;
-	Fri, 10 Jan 2025 09:25:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4197E20A5FD
+	for <linux-arm-msm@vger.kernel.org>; Fri, 10 Jan 2025 09:40:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736501101; cv=none; b=GfDqSXGDMjnT+PNUBJR//rczOjNcPeoKESuh42/HVcbygw2pBBxAveg4UHsQUVhSMZj1ty2Xk3DF0PWrpJxv1cWVw4/2OYaWI2vvxQZAumfHsFz7ECGehSm6F/cSBMXLIui5urp6sF8CiNv7Ai5FzBK7ax41bV2eljCZddGaoCQ=
+	t=1736502012; cv=none; b=mP8h9sfKAmUxbB4Wuz7+dyi4MM++8aimnvTyn6vi/SaRfDHZ+zX5iVMfOdus1291vli6VxJCvEuoK5PDkHY4qEojp3oGn/GDOMKWhmT8PHkrxbxfNL9YI5DsxnC6VrEUDDQjtnnV3FBhsz6De/kqxHMjCGXBYXcofcqEMKrarU4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736501101; c=relaxed/simple;
-	bh=niGjgrrVmdtVS1WVm9sHB6O3NublVeEjaptVU73jCc0=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=DbEc4cySK0gmWAwi4a2PVZTSWdpVeumZuXgYSS9WXDSjhpnd5tDfVhJgxDB8bt8P4xOBO8CrdI3x3T2o3L6mwoAuWYQSHNTfUKJCieWpIef9MQRnIL+ZcAkUSC/3AcWO5/npmLYTeZZtpcKBOGCzLP6wokpQujUvc41TnhLQ+gg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=P5wUYU/y; arc=none smtp.client-ip=209.85.214.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pl1-f174.google.com with SMTP id d9443c01a7336-21a1e6fd923so40163785ad.1;
-        Fri, 10 Jan 2025 01:25:00 -0800 (PST)
+	s=arc-20240116; t=1736502012; c=relaxed/simple;
+	bh=B9gQoAZcHEbkCb38aULLmmHJebE+z+93gfYSVCV5ers=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=Oz3vGNV6L+ZLkeWKmAWU20KiPsyFO4VGyiDzj828ILwJ6quoBTIE54yObhh08nv+tvsQQOHQJ6L3n4zs4VEvysjrugN2Giekv6I5bXRlCrLyrFAG75rJOL5OjBX1Jixf1Jdq79Fo8PRJLNKjXUOGq4vfAQ7n4nW0YWFBIQQ31mA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=jm7OeBpS; arc=none smtp.client-ip=209.85.128.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-43635796b48so11867645e9.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Jan 2025 01:40:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1736501100; x=1737105900; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=7eyMIA6kVSBHitlP2NADPr2F2L1DgOnj57DVaHBD8ew=;
-        b=P5wUYU/yFwindPrSxZRYnbEcwlK/S/XL7pB2qsdpJvn23ug+Bl84NGa+giRamMoBid
-         JeWw4MAE3IvfFZwp5/EcTfN8cOv+2GFMxiY/KiZzEleUPOBndaFYYE/isYPmX+yZ5ype
-         Hc11ol7cpQhdvVC6iCgiLgRu49ibS1/qxmpRkRzsgM0SazsFosXzCjtqG6HWV2HaycOr
-         3tG2i/3VddU0oGhRYg0zXqbS571MU4hxF5opB1wtyUo7yJw7nNfTLunnkkgb0Z3YzPAb
-         8lsht/DGIb9AuhYnmlqEgcHfRDPrDL1DviVTrvncRMeR+ERbdbNrESJNOxkSeh1Gd4cq
-         UfXA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736501100; x=1737105900;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=linaro.org; s=google; t=1736502008; x=1737106808; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=7eyMIA6kVSBHitlP2NADPr2F2L1DgOnj57DVaHBD8ew=;
-        b=B7Pld0j1ajr7KFX9GUzVKnUZXwNHxKBAG9XAkEfAxRaBfxSwn6lVTpBoSL0KHtJIRD
-         /fC9ON8xxt9bAMGCyZASKAnYGL4ngtcTrfkcsqoah05DWsRF70DcwXJlUfxbZQhqpOEu
-         ecU4lrN4svqdeCBZpalLE6gVAF/73h1JFzY+1UQMPoPjmNd4J4kbJUhMaK1D76rL3F55
-         lj3RUQVFs5eyq0/sp82KqYgkMgXs98mmFvQXbYpORYlD5VP7TJnv8fm4/ASA9r+wHNBN
-         ZmULgVUoKci/0ht8cAf2cL/Ngo0MQaDvneqPbLLgQ7/hKaqrWCkyKvrbaI9Im+bSjzTn
-         LExQ==
-X-Forwarded-Encrypted: i=1; AJvYcCU3hF/t5pEYABiI2UzfOwQ3S3JWUXr51oCdmzFPod2jO0WrlQ26YlFEzwxToF1ysYLoVVuZw39IsVk/SLDJTw==@vger.kernel.org, AJvYcCVRq0YkGdYK4BD28GSwuXYzFtU+EG78mO3R65v2FMW3UeBm8zpFWeu51ati9aD58wrW3T4eH+fexgAY@vger.kernel.org, AJvYcCVUvdzjfCFmQs+BloKrc8yOsIw9RBYfGnCPD4R3T347rMaTN3gvjKKiURJooIMSNJcWKLP8SvY06t05dX21@vger.kernel.org
-X-Gm-Message-State: AOJu0YxNBwgQtOO225Ur8hfrv915/wjGxRz1awx94WwFiNJxPKONHwuh
-	RBMC2tC5X5VPKcS4GjbPfKL1cC9A7uI+5lVZ7NJQazOSd3fLug99e6FZwgg0Kv1cDg==
-X-Gm-Gg: ASbGncslpzGHNkYo1xonr7K+ED51Kd1IBSBh1YdCIQvZCIMsZlX+KxKwxl+Z0BE+X8z
-	MCIHSxcinZT2VrLolaMzIiiy2dunhoVrARkEm8SWATJ4E78t1IHAqNHnHOsyfn9jY5wpheiXqOc
-	2fEjUpgB66wiNXyX3YzqF7OZUs0NUr4p5tYKPTzMNDOvikteB5qxeYKCgq/shK/885HKp4uTUOF
-	JGkHfwophCusczqXZEBPkwWBKFNL1+egfSvt6YXsr9D24OI5qkBJ9Y=
-X-Google-Smtp-Source: AGHT+IEqM33omEl/Vt5aGBTweWkw0NcdKLGLmfnGjh27GEht1qiSgOpXbXiFido58MgIJFwO/DUyyw==
-X-Received: by 2002:a17:90b:274a:b0:2ee:7862:1b10 with SMTP id 98e67ed59e1d1-2f548f2a149mr15244724a91.11.1736501099523;
-        Fri, 10 Jan 2025 01:24:59 -0800 (PST)
-Received: from nuvole.. ([144.202.86.13])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2f5593fecc6sm2898244a91.19.2025.01.10.01.24.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 10 Jan 2025 01:24:58 -0800 (PST)
-From: Pengyu Luo <mitltlatltl@gmail.com>
-To: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>
-Cc: Pengyu Luo <mitltlatltl@gmail.com>,
-	linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH] arm64: dts: qcom: sc8280xp: correct usb phy power supply
-Date: Fri, 10 Jan 2025 17:23:25 +0800
-Message-ID: <20250110092326.167575-1-mitltlatltl@gmail.com>
-X-Mailer: git-send-email 2.47.1
+        bh=SF3crOlWCGj1R8oqDRPXYGGY0Mj9v0tyYCeWQYdroig=;
+        b=jm7OeBpS3cZRncHU6O9B3Z5IBAtpTMEg/ZFGTWRl83+euMNGqCPy3Ye4AqbgFJ1/28
+         D1ymbQpFbEDh7UKrYAiweFN3VFhQUffUZlNcma1kJnMj0KT2P2/rcp4pmbCKxTrXm+s7
+         x3WVKsrW7RLdXVtcsP9faztl45hULWzW607mwUv2XSjblZnJONgo7EPKKET0/nUVkLYi
+         vMda00EKEr5pnEY33LwTVY07fYjwgVj6Ihz6M+2WmS4378l/WovGeh1HNLFteMoGVpNq
+         ImIa8kc1Wx+Ihu7A+jZ0/MuQhbO9gsPaPKNqaloOGf5gm2mda75Xm34nu9znj2IKY7kO
+         Ly3A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1736502008; x=1737106808;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=SF3crOlWCGj1R8oqDRPXYGGY0Mj9v0tyYCeWQYdroig=;
+        b=k3N+qXan72yrm+w8bcnQ8nm9pi4SbcV6p16ZVMVMsBTWzyZJ0/PNWX4KKcFi1Zmu2N
+         yDhtKNipXzFmpDOJWFfl1XkCf7m7nLAmEZfzI0dIFafN1+hptzh2Ox2u5L4Hl7DoDu/i
+         euUcDb9rKNp7DkdBuQZoBItjC47ZrpZNx4x/B56ofba7JNJl37e9NUWDewwhKpn6b272
+         gS+/REhOWL/Tqb2hpGeKhVlt4rbF38A8DPINtnBprAuWAdz7UP+X/hmpsXM4TgU3mVvI
+         +U7k37KM7+8x+EA3MCzumP+X1K/u+pZEf86mcSzaTCOUd3Vcv/5C+mpEeoBGYkD1kmxR
+         N0SA==
+X-Forwarded-Encrypted: i=1; AJvYcCX19pYMc+mC9Q1nJ8qvh9TdykG4cb8hD5b0wYFc9zQXzEmMpGRiQxNM6ho2iEq8+N7tKa+YGBhh8lyvLtYp@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy8BDdCDKdFZdnQEAG85UL9iEDrbCYZFTfbLgkKLVKzPOCBZqY0
+	oTexRjMX7bkQuScLjgFQSVRO4GyF+2QgKqKnebeMPTTWgn21l1KwbwcnLlSmnI4=
+X-Gm-Gg: ASbGncu3c/VYbIRphY8DSBZUZbMMBR8/eEB5RFs6wz69XXR9yYLefWMeCWRwVCKbK/+
+	F8saHoV0q5ePxna9+HZFNx0IxV+/YZ5I7cpFvd4lYEHN3VJhb2ye54seJJO6GHR/Dlm4udZxGpH
+	dIJJU3NBowSWZxwMrMeRxIErb9af4CXDLVAEBW/y796eyPqg/O3DgJaKOpWYR7W5HS//M4BNETf
+	QePo+g4TCimYnWLHlzrhleROrZeTWqWljsUQ8GFBPa0ra5Vd3w/CWKrXBBc/lo/mQGvsOT7/MiW
+	6G1n2rJkmKJzLVAt59o4iVa2RQS8vi8KLQ==
+X-Google-Smtp-Source: AGHT+IHLuzKdaVCxIByL/2fBsJ6AX9cp70n4uEZ2RwQeZXgcDqCMPp9zQG1Mnv5ZNffB/PAKd+1Xgg==
+X-Received: by 2002:a05:600c:1d2a:b0:435:edb0:5d27 with SMTP id 5b1f17b1804b1-436e8827fbcmr57830335e9.9.1736502008509;
+        Fri, 10 Jan 2025 01:40:08 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:982:cbb0:bf4e:5758:59ef:deb8? ([2a01:e0a:982:cbb0:bf4e:5758:59ef:deb8])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-436e2df3610sm80749405e9.20.2025.01.10.01.40.06
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 10 Jan 2025 01:40:07 -0800 (PST)
+Message-ID: <35a678a8-4282-4891-8a12-7efdaf4bb129@linaro.org>
+Date: Fri, 10 Jan 2025 10:40:05 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+From: Neil Armstrong <neil.armstrong@linaro.org>
+Reply-To: neil.armstrong@linaro.org
+Subject: Re: [PATCH 1/2] arm64: dts: qcom: sm8650: setup cpu thermal with idle
+ on high temperatures
+To: Bjorn Andersson <andersson@kernel.org>
+Cc: Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20250103-topic-sm8650-thermal-cpu-idle-v1-0-faa1f011ecd9@linaro.org>
+ <20250103-topic-sm8650-thermal-cpu-idle-v1-1-faa1f011ecd9@linaro.org>
+ <qszkxmtrqr62wgd3qx7uctu22w4qrkietasvffinzwmzt7ccum@r26dikuqp7a4>
+ <11ca788f-67e6-4e5c-9ace-083b730bc9ce@linaro.org>
+ <2xp2xz4w7drpnql5khevz4wenlmiu3omwcilfisb3vvq2jlnwg@tcmjb475kghk>
+ <2fcd9a10-ae9e-480f-87a1-5b49e5082ef5@linaro.org>
+ <rcoviajiv4wrtnggbrd3l7toysxohu3ysu6xzynjr4fx7j6s5q@5dcepoujtupw>
+Content-Language: en-US, fr
+Autocrypt: addr=neil.armstrong@linaro.org; keydata=
+ xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
+ GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
+ BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
+ qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
+ 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
+ AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
+ OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
+ Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
+ YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
+ GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
+ UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
+ GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
+ yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
+ QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
+ SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
+ 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
+ Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
+ oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
+ M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
+ 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
+ KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
+ 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
+ QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
+Organization: Linaro
+In-Reply-To: <rcoviajiv4wrtnggbrd3l7toysxohu3ysu6xzynjr4fx7j6s5q@5dcepoujtupw>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On this platform, according to dsdt tables, usb{0,1} phy consume the
-following regulators. usb2 phy should be corrected also, usb2 in dsdt
-is a little complicated, so correct usb{0,1} only for now.
+On 09/01/2025 22:01, Bjorn Andersson wrote:
+> On Wed, Jan 08, 2025 at 10:15:34AM +0100, Neil Armstrong wrote:
+>> On 08/01/2025 04:11, Bjorn Andersson wrote:
+>>> On Tue, Jan 07, 2025 at 09:13:18AM +0100, Neil Armstrong wrote:
+>>>> Hi,
+>>>>
+>>>> On 07/01/2025 00:39, Bjorn Andersson wrote:
+>>>>> On Fri, Jan 03, 2025 at 03:38:26PM +0100, Neil Armstrong wrote:
+>>>>>> On the SM8650, the dynamic clock and voltage scaling (DCVS) is done in an
+>>>>>> hardware controlled loop using the LMH and EPSS blocks with constraints and
+>>>>>> OPPs programmed in the board firmware.
+>>>>>>
+>>>>>> Since the Hardware does a better job at maintaining the CPUs temperature
+>>>>>> in an acceptable range by taking in account more parameters like the die
+>>>>>> characteristics or other factory fused values, it makes no sense to try
+>>>>>> and reproduce a similar set of constraints with the Linux cpufreq thermal
+>>>>>> core.
+>>>>>>
+>>>>>> In addition, the tsens IP is responsible for monitoring the temperature
+>>>>>> across the SoC and the current settings will heavily trigger the tsens
+>>>>>> UP/LOW interrupts if the CPU temperatures reaches the hardware thermal
+>>>>>> constraints which are currently defined in the DT. And since the CPUs
+>>>>>> are not hooked in the thermal trip points, the potential interrupts and
+>>>>>> calculations are a waste of system resources.
+>>>>>>
+>>>>>> Instead, set higher temperatures in the CPU trip points, and hook some CPU
+>>>>>> idle injector with a 100% duty cycle at the highest trip point in the case
+>>>>>> the hardware DCVS cannot handle the temperature surge, and try our best to
+>>>>>> avoid reaching the critical temperature trip point which should trigger an
+>>>>>> inevitable thermal shutdown.
+>>>>>>
+>>>>>
+>>>>> Are you able to hit these higher temperatures? Do you have some test
+>>>>> case where the idle-injection shows to be successful in blocking us from
+>>>>> reaching the critical temp?
+>>>>
+>>>> No, I've been able to test idle-injection and observed a noticeable effect
+>>>> but I had to set lower trip, do you know how I can easily "block" LMH/EPSS from
+>>>> scaling down and let the temp go higher ?
+>>>>
+>>>
+>>> I don't know how to override that configuration.
+>>>
+>>>>>
+>>>>> E.g. in X13s (SC8280XP) we opted for relying on LMH/EPSS and define only
+>>>>> the critical trip for when the hardware fails us.
+>>>>
+>>>> It's the goal here aswell
+>>>>
+>>>
+>>> How about simplifying the patch by removing the idle-injection step and
+>>> just rely on LMH/EPSS and the "critical" trip (at least until someone
+>>> can prove that there's value in the extra mitigation)?
+>>
+>> OK, but I see value in this idle injection mitigation in that case LMH/EPSS
+>> fails, the only factor in control of HLOS is by stopping scheduling tasks
+>> since frequency won't be able to scale anymore.
+>>
+> 
+> I think that sounds good, but afaict we don't have any indication of
+> this being a problem and we don't have any way to test that it actually
+> solves that problem.
 
-	usb0	usb1	voltage	consumer
-hsphy:
-	l1c	l1c	1.8v	vdda18-supply
-	l9d	l4b	0.912v	vdda-pll-supply
-	l7d	l13c	3.072v	vdda33-supply
-qmpphy:
-	l4d	l3b	1.2v	vdda-phy-supply
-	l6d	l6b	0.88v	vdda-pll-supply
+Sure, let's postpone the idle injection when we can actually test it.
 
-base-commit: 2b88851f583d3c4e40bcd40cfe1965241ec229dd
-Signed-off-by: Pengyu Luo <mitltlatltl@gmail.com>
----
- arch/arm64/boot/dts/qcom/sc8280xp-crd.dts                 | 8 ++++----
- arch/arm64/boot/dts/qcom/sc8280xp-huawei-gaokun3.dts      | 8 ++++----
- .../arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts | 8 ++++----
- arch/arm64/boot/dts/qcom/sc8280xp-microsoft-arcata.dts    | 8 ++++----
- arch/arm64/boot/dts/qcom/sc8280xp-microsoft-blackrock.dts | 4 ++--
- 5 files changed, 18 insertions(+), 18 deletions(-)
+> 
+>> Anyway, I agree it can be added later on, so should I drop the 2 trip points
+>> and only leave the critical one ?
+>>
+> 
+> I think that's a simple and functional starting point - and it solves
+> your IRQ issue.
 
-diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts b/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
-index 75adaa19d..ad61bb206 100644
---- a/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
-+++ b/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
-@@ -815,8 +815,8 @@ &usb_0_hsphy {
- };
- 
- &usb_0_qmpphy {
--	vdda-phy-supply = <&vreg_l9d>;
--	vdda-pll-supply = <&vreg_l4d>;
-+	vdda-phy-supply = <&vreg_l4d>;
-+	vdda-pll-supply = <&vreg_l6d>;
- 
- 	orientation-switch;
- 
-@@ -852,8 +852,8 @@ &usb_1_hsphy {
- };
- 
- &usb_1_qmpphy {
--	vdda-phy-supply = <&vreg_l4b>;
--	vdda-pll-supply = <&vreg_l3b>;
-+	vdda-phy-supply = <&vreg_l3b>;
-+	vdda-pll-supply = <&vreg_l6b>;
- 
- 	orientation-switch;
- 
-diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-huawei-gaokun3.dts b/arch/arm64/boot/dts/qcom/sc8280xp-huawei-gaokun3.dts
-index 09b95f89e..e46f24c3f 100644
---- a/arch/arm64/boot/dts/qcom/sc8280xp-huawei-gaokun3.dts
-+++ b/arch/arm64/boot/dts/qcom/sc8280xp-huawei-gaokun3.dts
-@@ -1013,8 +1013,8 @@ &usb_0_hsphy {
- };
- 
- &usb_0_qmpphy {
--	vdda-phy-supply = <&vreg_l9d>;
--	vdda-pll-supply = <&vreg_l4d>;
-+	vdda-phy-supply = <&vreg_l4d>;
-+	vdda-pll-supply = <&vreg_l6d>;
- 
- 	orientation-switch;
- 
-@@ -1042,8 +1042,8 @@ &usb_1_hsphy {
- };
- 
- &usb_1_qmpphy {
--	vdda-phy-supply = <&vreg_l4b>;
--	vdda-pll-supply = <&vreg_l3b>;
-+	vdda-phy-supply = <&vreg_l3b>;
-+	vdda-pll-supply = <&vreg_l6b>;
- 
- 	orientation-switch;
- 
-diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-index f3190f408..5bf43050d 100644
---- a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-+++ b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-@@ -1363,8 +1363,8 @@ &usb_0_hsphy {
- };
- 
- &usb_0_qmpphy {
--	vdda-phy-supply = <&vreg_l9d>;
--	vdda-pll-supply = <&vreg_l4d>;
-+	vdda-phy-supply = <&vreg_l4d>;
-+	vdda-pll-supply = <&vreg_l6d>;
- 
- 	orientation-switch;
- 
-@@ -1400,8 +1400,8 @@ &usb_1_hsphy {
- };
- 
- &usb_1_qmpphy {
--	vdda-phy-supply = <&vreg_l4b>;
--	vdda-pll-supply = <&vreg_l3b>;
-+	vdda-phy-supply = <&vreg_l3b>;
-+	vdda-pll-supply = <&vreg_l6b>;
- 
- 	orientation-switch;
- 
-diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-microsoft-arcata.dts b/arch/arm64/boot/dts/qcom/sc8280xp-microsoft-arcata.dts
-index ae5daeac8..179c944a6 100644
---- a/arch/arm64/boot/dts/qcom/sc8280xp-microsoft-arcata.dts
-+++ b/arch/arm64/boot/dts/qcom/sc8280xp-microsoft-arcata.dts
-@@ -769,8 +769,8 @@ &usb_0_hsphy {
- };
- 
- &usb_0_qmpphy {
--	vdda-phy-supply = <&vreg_l9d>;
--	vdda-pll-supply = <&vreg_l4d>;
-+	vdda-phy-supply = <&vreg_l4d>;
-+	vdda-pll-supply = <&vreg_l6d>;
- 
- 	orientation-switch;
- 
-@@ -806,8 +806,8 @@ &usb_1_hsphy {
- };
- 
- &usb_1_qmpphy {
--	vdda-phy-supply = <&vreg_l4b>;
--	vdda-pll-supply = <&vreg_l3b>;
-+	vdda-phy-supply = <&vreg_l3b>;
-+	vdda-pll-supply = <&vreg_l6b>;
- 
- 	orientation-switch;
- 
-diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-microsoft-blackrock.dts b/arch/arm64/boot/dts/qcom/sc8280xp-microsoft-blackrock.dts
-index fa9d94105..d73b45d54 100644
---- a/arch/arm64/boot/dts/qcom/sc8280xp-microsoft-blackrock.dts
-+++ b/arch/arm64/boot/dts/qcom/sc8280xp-microsoft-blackrock.dts
-@@ -1003,7 +1003,7 @@ &usb_0_hsphy {
- 
- &usb_0_qmpphy {
- 	vdda-phy-supply = <&vreg_l4d>;
--	vdda-pll-supply = <&vreg_l9d>;
-+	vdda-pll-supply = <&vreg_l6d>;
- 
- 	orientation-switch;
- 
-@@ -1040,7 +1040,7 @@ &usb_1_hsphy {
- 
- &usb_1_qmpphy {
- 	vdda-phy-supply = <&vreg_l3b>;
--	vdda-pll-supply = <&vreg_l4b>;
-+	vdda-pll-supply = <&vreg_l6b>;
- 
- 	orientation-switch;
- 
--- 
-2.47.1
+Ack
+
+Thanks,
+Neil
+
+> 
+> Regards,
+> Bjorn
 
 
