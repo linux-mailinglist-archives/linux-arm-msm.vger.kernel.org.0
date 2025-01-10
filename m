@@ -1,247 +1,192 @@
-Return-Path: <linux-arm-msm+bounces-44742-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-44743-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id EE2C4A092FF
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jan 2025 15:09:41 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 08848A0936A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jan 2025 15:27:19 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6222D16A2D9
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jan 2025 14:09:38 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3C3CD16B14E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jan 2025 14:27:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4A40420E70F;
-	Fri, 10 Jan 2025 14:09:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 333A42101B5;
+	Fri, 10 Jan 2025 14:27:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="N6X4Ck3D"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jiwYv5ji"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f177.google.com (mail-pl1-f177.google.com [209.85.214.177])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19C8F20E701;
-	Fri, 10 Jan 2025 14:09:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CD052101A9;
+	Fri, 10 Jan 2025 14:26:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736518177; cv=none; b=ARnSXtSkHooPEWYUdByBT/M/OZW4dsthctPEDrkYQUluziaifhzhMOjSjGuOQYWGPvzB/VnBH7QURTALP2OYqeYihMsxYNuJk/yrY9Fg5diKy/HOSRXRAgwGmpRRSwyqc33gWb6x0J7tohpPPVeXSuuTMb1huG1yaKomWXnf4UI=
+	t=1736519221; cv=none; b=UrSuPf/YvylQTCV/Kc2+mwwtyizy3NiPIaYE/OZn5qMpalmu3tvpMaAKmjG0KuPwU7XxMfLms8e068ymf++AMoHIjizGlIDhqDaniPpXOtNRPpJD+CDxDlt3lMe6bIlFKj1u4EvrCPu4X+70a9qSsVLQe4+tLdIErHFLWPTPBro=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736518177; c=relaxed/simple;
-	bh=BzqU8k0ICGCf9P2lsYRHW6RrSoUUVhJhmDeNcCF/upo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=H0TnM7gEWpZgggHfSrPg6xvdgHtqJ7c9w1JP6AQHIhGwiORPewFsR9EaI1uJTnA6YWexxfLD2fhf73KyzMUF9gEUt0BICPfPIUVEY/8T4b8o/jGAvlqIZx0BnDDYPpGh5E+AKlqVBTqwrTCwE6ysv3RqLhCoxobyWCdN/Vynd8E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=N6X4Ck3D; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D57E6C4CED6;
-	Fri, 10 Jan 2025 14:09:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1736518176;
-	bh=BzqU8k0ICGCf9P2lsYRHW6RrSoUUVhJhmDeNcCF/upo=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=N6X4Ck3DIAaxq3dwu9LnBtCtQSYh1wtLY1sQXIYSQN56fTof/Xt1fvalaxdOFbTLi
-	 Xwv27NKD1oxDtn6rSZxzZSxBEJOyFvIm9GhEQlykxWNvYlbtJ5WAeUuD/p03dP3Yrn
-	 jOJehV+J3FPIWMqhSQtixHYW4fv6TN6peeBW7F1guMNAwVwWyK/hg0d/wLIdGsZ3qy
-	 H9aSS2gzYJ29a3ssBvXWE/Uyq00zQxi+0Km5opq1OUpxzMim2zzufjoIcHKxC1qBBx
-	 E/+7FbVph1WDoZuWuNt19NHrJQfzAfUiGIzKJcn+xuv1gpZ/GqNj1FDCKRxx8aRhBE
-	 HcKWtu0yCHMJQ==
-Date: Fri, 10 Jan 2025 08:09:34 -0600
-From: Rob Herring <robh@kernel.org>
-To: Stephen Boyd <swboyd@chromium.org>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev,
+	s=arc-20240116; t=1736519221; c=relaxed/simple;
+	bh=OPC+yg9FBpWb/X52k+8z4z8ODDxQlLKKuUSgwfZapXk=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=uaaeKK3LECCYcl+GxaYVGKY2dBWr8XPoylxJ3CTyyyh915GRaZwfhP0qaRoP/g5H5LPcvHBFva6A6PyBIPGtt8yMgXNAzGAl0KVDa3Fr5MHMByHQDtL1v8mhCvunlAoWDUnBDmq1TqsJqPxD+z9PWduLwvfCF/R9D4f6XpfrJWw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jiwYv5ji; arc=none smtp.client-ip=209.85.214.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pl1-f177.google.com with SMTP id d9443c01a7336-2163bd70069so35635975ad.0;
+        Fri, 10 Jan 2025 06:26:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1736519219; x=1737124019; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=gwkldYtsnRI2uxbAB2Qhl5fxTuU35YkpoPwwrZ8CVIU=;
+        b=jiwYv5jijrDS2/ADmiprTzFbJWn6kpMEmrQSvZT2zpdysxitytx4jWqOO7FVlaG6Ei
+         w2hS18G0HPnTVzrDhDc3R10vj4b5FuJp2DCTfub53n9+ZPg4h5Bk8crfScu0ZffXNCTA
+         /fnF7BME4k7xoHbM6eLmquvdyF4npjdahCgOukBcXkJN+jrNiFLCQiAXX5iUr1aO2dSV
+         gCJ58f5yb5bbp2GyJR2ASEV1gO4Rjb5yOO2lkilBPADbhk4OyQby10gyyB31ANv4hmz6
+         hkefryTsdqwvX5fM0MB2MwDylJDjFpaftPV8TgCMTNkm91Wig3+AJ/1vJm3vo6M28okb
+         Ju9w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1736519219; x=1737124019;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=gwkldYtsnRI2uxbAB2Qhl5fxTuU35YkpoPwwrZ8CVIU=;
+        b=W+m5+7EfybK2l/joBkJMakw20ruttRD3TIYJ59rF9ahp+YlZLCIIttK8zsrZCjzNk5
+         gQCyLHN/JzrgIcyqB/LkCGionnAto4KRXQkekdIJG5Dhx/M9Z2DZy1r8bUIWItMnJciB
+         F0L8mdJtcvNPcl/17Nky9WdjIhkL7mo/+NXUHDtxgXgCHdXXA52Khe+86b6m54DZwCmv
+         +xbD+kisfYsyUV95j7pXL04kWYJn4ZspMcW1fK/SHZLITd/RmU/TUyZSW9E0mopskAjo
+         zHokGT3Oi1pNhJkf+nKFjqN2gXXwAM6FhjeLtAhfB5U2u79SM5NdNs5i4CqW/G4PA2iJ
+         4UBw==
+X-Forwarded-Encrypted: i=1; AJvYcCVUTYYKcrO0+V5iVzasaUk7IFqhEKJXNlE3WB0h9HUG66rF0aWRtHzpkSvjM2jbArNv5Llb6m1jO6rlmEaaAQ==@vger.kernel.org, AJvYcCVu4KYpnL6RrukukFiesbu9ro5H5qzz06ubGEtjQKEoaWqMqpXU+eePlI1VhgGRes53y4kpoyZTFoG8@vger.kernel.org, AJvYcCWNtBulT2KAiMa+JVm5knAgSDSd75yF58v33Oc0Upni1UZtV5gE5QLbWpTkaxjQiA1HWXdRCgy7+ADcDJbG@vger.kernel.org
+X-Gm-Message-State: AOJu0YwV38aqKWDFl40PAZ/6jzTeI0dw7Tzrqi/9tTUsrCwnDfIAmJEj
+	HgXPDAAvzpTdVh13vAA9ubgr/7zMtf8kDJqohbRKJwz+C+wYSAVJs6Yknou6GDMIcA==
+X-Gm-Gg: ASbGncss9FFkFcLqg+7qVboBtK3MqF+1qCSk7uzCqOPDVYPaEi4l1ts/fWwHaDJHIju
+	KegvMcbqVKNa5Fb+6c0ypMk/1oYnkp0ctDdzCxQNgROn7HAZy8GaYELZxc/Vs1gqu9DLXrAjIsm
+	pY/ggZ+B5Cb8nWlHo8MuhbKPQxG0XuMRtBUvw0THQaP2aQ+znTS5/aA+T/cDuSb0zn4MrKX3y6H
+	noX+eWzRBQSDi+fTIPlmaY00XxuJQnkjz0xACPDSsRFPbpZq+bmam0=
+X-Google-Smtp-Source: AGHT+IFp5BkEGYbwBqUZXm370jPDvf4t12qAjDreAbp2iAHT8rGDrJru5tWyj21B/bhgYXKFUTBBTw==
+X-Received: by 2002:a05:6a20:6a11:b0:1dc:790e:3bd0 with SMTP id adf61e73a8af0-1e88cfa6af5mr17754032637.15.1736519218833;
+        Fri, 10 Jan 2025 06:26:58 -0800 (PST)
+Received: from nuvole.. ([144.202.86.13])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-a318e055feesm2957074a12.30.2025.01.10.06.26.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 10 Jan 2025 06:26:58 -0800 (PST)
+From: Pengyu Luo <mitltlatltl@gmail.com>
+To: konrad.dybcio@oss.qualcomm.com
+Cc: andersson@kernel.org,
+	conor+dt@kernel.org,
 	devicetree@vger.kernel.org,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-	Arnd Bergmann <arnd@arndb.de>, Conor Dooley <conor+dt@kernel.org>,
-	Saravana Kannan <saravanak@google.com>,
-	Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <u.kleine-koenig@baylibre.com>
-Subject: Re: [RFC PATCH 5/6] bus: qcom-sc7180: Attach pm domain to watchdog
- device
-Message-ID: <20250110140934.GB2630182-robh@kernel.org>
-References: <20250108012846.3275443-1-swboyd@chromium.org>
- <20250108012846.3275443-6-swboyd@chromium.org>
+	konradybcio@kernel.org,
+	krzk+dt@kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	mitltlatltl@gmail.com,
+	robh@kernel.org
+Subject: Re: [PATCH] arm64: dts: qcom: sc8280xp: correct usb phy power supply
+Date: Fri, 10 Jan 2025 22:25:30 +0800
+Message-ID: <20250110142531.194629-1-mitltlatltl@gmail.com>
+X-Mailer: git-send-email 2.47.1
+In-Reply-To: <2e240422-b964-42ce-b537-413b1d8ae07d@oss.qualcomm.com>
+References: <2e240422-b964-42ce-b537-413b1d8ae07d@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250108012846.3275443-6-swboyd@chromium.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Tue, Jan 07, 2025 at 05:28:42PM -0800, Stephen Boyd wrote:
-> Find the watchdog device described as a child node of the sc7180 SoC
-> node and attach a generic pm domain to the device before registering the
-> device with the platform bus. The domain simply gets the clk and turns
-> it on when the pm domain is powered on and turns it off when the pm
-> domain is powered off.
-> 
-> Cc: Rob Herring <robh@kernel.org>
-> Cc: Bjorn Andersson <andersson@kernel.org>
-> Cc: Konrad Dybcio <konradybcio@kernel.org>
-> Cc: <linux-arm-msm@vger.kernel.org>
-> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
-> ---
->  drivers/bus/qcom/qcom-sc7180.c | 122 +++++++++++++++++++++++++++++++++
->  1 file changed, 122 insertions(+)
-> 
-> diff --git a/drivers/bus/qcom/qcom-sc7180.c b/drivers/bus/qcom/qcom-sc7180.c
-> index a615cf5a2129..7dfe6b32efef 100644
-> --- a/drivers/bus/qcom/qcom-sc7180.c
-> +++ b/drivers/bus/qcom/qcom-sc7180.c
-> @@ -3,18 +3,140 @@
->   * SoC bus driver for Qualcomm SC7180 SoCs
->   */
->  
-> +#include <linux/cleanup.h>
-> +#include <linux/clk.h>
->  #include <linux/device.h>
-> +#include <linux/dev_printk.h>
->  #include <linux/init.h>
->  #include <linux/mod_devicetable.h>
->  #include <linux/module.h>
->  #include <linux/of.h>
->  #include <linux/of_platform.h>
->  #include <linux/platform_device.h>
-> +#include <linux/pm.h>
-> +#include <linux/pm_domain.h>
-> +
-> +struct qcom_soc_pm_domain {
-> +	struct clk *clk;
-> +	struct generic_pm_domain pd;
-> +};
-> +
-> +static struct qcom_soc_pm_domain *
-> +gpd_to_qcom_soc_pm_domain(struct generic_pm_domain *gpd)
-> +{
-> +	return container_of(gpd, struct qcom_soc_pm_domain, pd);
-> +}
-> +
-> +static struct qcom_soc_pm_domain *pd_to_qcom_soc_pm_domain(struct dev_pm_domain *pd)
-> +{
-> +	struct generic_pm_domain *gpd;
-> +
-> +	gpd = container_of(pd, struct generic_pm_domain, domain);
-> +
-> +	return gpd_to_qcom_soc_pm_domain(gpd);
-> +}
-> +
-> +static struct qcom_soc_pm_domain *dev_to_qcom_soc_pm_domain(struct device *dev)
-> +{
-> +	struct dev_pm_domain *pd;
-> +
-> +	pd = dev->pm_domain;
-> +	if (!pd)
-> +		return NULL;
-> +
-> +	return pd_to_qcom_soc_pm_domain(pd);
-> +}
-> +
-> +static struct platform_device *
-> +qcom_soc_alloc_device(struct platform_device *socdev, const char *compatible)
-> +{
-> +	struct device_node *np __free(device_node);
-> +
-> +	np = of_get_compatible_child(socdev->dev.of_node, compatible);
-> +
-> +	return of_platform_device_alloc(np, NULL, &socdev->dev);
-> +}
-> +
-> +static int qcom_soc_domain_activate(struct device *dev)
-> +{
-> +	struct qcom_soc_pm_domain *soc_domain;
-> +
-> +	dev_info(dev, "Activating device\n");
-> +	soc_domain = dev_to_qcom_soc_pm_domain(dev);
-> +
-> +	soc_domain->clk = devm_clk_get(dev, NULL);
-> +
-> +	return PTR_ERR_OR_ZERO(soc_domain->clk);
-> +}
-> +
-> +static int qcom_soc_domain_power_on(struct generic_pm_domain *domain)
-> +{
-> +	struct qcom_soc_pm_domain *soc_domain;
-> +
-> +	pr_info("Powering on device\n");
-> +	soc_domain = gpd_to_qcom_soc_pm_domain(domain);
-> +
-> +	return clk_prepare_enable(soc_domain->clk);
-> +}
-> +
-> +static int qcom_soc_domain_power_off(struct generic_pm_domain *domain)
-> +{
-> +	struct qcom_soc_pm_domain *soc_domain;
-> +
-> +	pr_info("Powering off device\n");
-> +	soc_domain = gpd_to_qcom_soc_pm_domain(domain);
-> +
-> +	clk_disable_unprepare(soc_domain->clk);
+On Fri, Jan 10, 2025 at 8:28 PM Konrad Dybcio <konrad.dybcio@oss.qualcomm.com> wrote:
+> On 10.01.2025 10:23 AM, Pengyu Luo wrote:
+> > On this platform, according to dsdt tables, usb{0,1} phy consume the
+> > following regulators. usb2 phy should be corrected also, usb2 in dsdt
+> > is a little complicated, so correct usb{0,1} only for now.
+> >
+> >       usb0    usb1    voltage consumer
+> > hsphy:
+> >       l1c     l1c     1.8v    vdda18-supply
+> >       l9d     l4b     0.912v  vdda-pll-supply
+> >       l7d     l13c    3.072v  vdda33-supply
+> > qmpphy:
+> >       l4d     l3b     1.2v    vdda-phy-supply
+> >       l6d     l6b     0.88v   vdda-pll-supply
+>
+> Looking at the CRD schematics, it should instead be:
+>
+> USB0    USB1    VOLT            NAME
+> L1B     L8D     0.9ish          PHY
+> L4D     L4D     1.2             PLL
+>
+> I'm hoping I'm reading those right, it's not super obvious
+>
 
-How's this going to scale when there are multiple clocks and it's not 
-just turn on/off all the clocks in any order? Or when there's ordering 
-requirements between different resources.
+Yes, right.
 
-I'm pretty sure I've seen attempts to order clock entries in DT based on 
-the order they want to enable them.
+Yours is correspond to usb2 qmpphy(internal usb)
 
-> +
-> +	return 0;
-> +}
-> +
-> +static int qcom_soc_add_clk_domain(struct platform_device *socdev,
-> +				   struct platform_device *pdev)
-> +{
-> +	struct qcom_soc_pm_domain *domain;
-> +	struct generic_pm_domain *pd;
-> +	int ret;
-> +
-> +	domain = devm_kzalloc(&socdev->dev, sizeof(*domain), GFP_KERNEL);
-> +	if (!domain)
-> +		return -ENOMEM;
-> +
-> +	pd = &domain->pd;
-> +	pd->name = "wdog";
-> +	ret = pm_genpd_init(pd, NULL, false);
-> +	if (ret)
-> +		return ret;
-> +
-> +	/* TODO: Wrap this in a generic_pm_domain function similar to power_on() */
-> +	pd->domain.activate = qcom_soc_domain_activate;
-> +	pd->power_on = qcom_soc_domain_power_on;
-> +	pd->power_off = qcom_soc_domain_power_off;
-> +
-> +	dev_info(&socdev->dev, "adding pm domain for %s\n", dev_name(&pdev->dev));
-> +	dev_pm_domain_set(&pdev->dev, &pd->domain);
-> +
-> +	return 0;
-> +}
->  
->  static int qcom_soc_sc7180_probe(struct platform_device *pdev)
->  {
->  	struct device *dev = &pdev->dev;
->  	struct device_node *np = dev->of_node;
-> +	struct platform_device *sdev;
-> +	int ret;
-> +
-> +	sdev = qcom_soc_alloc_device(pdev, "qcom,apss-wdt-sc7180");
+this is from sc8280xp-crd:
 
-We're going to have to have an explicit call for every child node?
+&usb_2_qmpphy0 {
+        vdda-phy-supply = <&vreg_l1b>;
+        vdda-pll-supply = <&vreg_l4d>;
 
-> +	if (!sdev)
-> +		return dev_err_probe(dev, -ENODEV, "Failed to alloc sdev\n");
-> +
-> +	ret = qcom_soc_add_clk_domain(pdev, sdev);
-> +	if (ret)
-> +		return dev_err_probe(dev, ret, "Failed to add clk domain to sdev\n");
-> +
-> +	ret = of_platform_device_add(sdev);
-> +	if (ret)
-> +		return dev_err_probe(dev, ret, "Failed to add sdev to bus\n");
->  
->  	return of_platform_populate(np, NULL, NULL, dev);
->  }
-> -- 
-> https://chromeos.dev
-> 
+        status = "okay";
+};
+
+&usb_2_qmpphy1 {
+        vdda-phy-supply = <&vreg_l8d>;
+        vdda-pll-supply = <&vreg_l4d>;
+
+        status = "okay";
+};
+
+I had checked many dsdt tables of sc8280xp-based devices, they are
+
+Name (LPCC, Package (0x07)
+{
+...
+Package (0x08)
+{
+	"\\_SB.URS0.USB0",
+	...
+	"PPP_RESOURCE_ID_LDO1_C" // 1.8v
+	...
+	"PPP_RESOURCE_ID_LDO9_D" // 0.912v
+	...
+	"PPP_RESOURCE_ID_LDO7_D" // 3.072v
+	...
+	"PPP_RESOURCE_ID_LDO4_D" // 1.2v
+	...
+	"PPP_RESOURCE_ID_LDO6_D" // 0.88v
+	...
+}
+...
+Package (0x08)
+{
+	"\\_SB.URS1.USB1",
+	...
+	"PPP_RESOURCE_ID_LDO1_C" // 1.8v
+	...
+	"PPP_RESOURCE_ID_LDO4_B" // 0.912v
+	...
+	"PPP_RESOURCE_ID_LDO13_C" // 3.072v
+	...
+	"PPP_RESOURCE_ID_LDO3_B" // 1.2v
+	...
+	"PPP_RESOURCE_ID_LDO6_B" // 0.88v
+	...
+}
+...
+}
+
+On many platforms, such as sm8350-hdk, sc8180x-primus, x1e80100-crd, which
+also support qmp phy, their PHY consumes a 1.2v vreg, their PLL consumes a
+0.88v(approx) vreg. So I wirite this patch.
+
+> Konrad
+>
+
+Best wishes,
+Pengyu
 
