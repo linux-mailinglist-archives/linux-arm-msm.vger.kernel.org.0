@@ -1,178 +1,159 @@
-Return-Path: <linux-arm-msm+bounces-44795-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-44796-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 67DD5A0A463
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Jan 2025 16:35:19 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4656EA0A497
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Jan 2025 17:15:01 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5A2F53AA259
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Jan 2025 15:35:13 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 4A42A169E7F
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Jan 2025 16:14:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0EFA31AF0BF;
-	Sat, 11 Jan 2025 15:35:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D118B19342F;
+	Sat, 11 Jan 2025 16:14:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rPcslEvg"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="j8QtUdTt"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2FB218FDBA;
-	Sat, 11 Jan 2025 15:35:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06FC082899;
+	Sat, 11 Jan 2025 16:14:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736609714; cv=none; b=pqstog4g/jUvmPXgpixk+dVcXoavJc0BfTQqYJtlO+4ggebDxdbDV+SY9bS7pFkn575ZoI53EBqfrU21Iv62w6iUsmt6BqtLU8WWAfi55WF5mdWh8yDpTAlqBOv44hDf7qH0/vjctOPStToRmRIBEwgdKz9NLv3xYeHuXrx41Mk=
+	t=1736612096; cv=none; b=lmYnFsZVfHRI/8Ixhv7mfd5qvOcfnkWTEJvGtdDV0bc7FdfNbs/gi+uzSbYQie3YNNRhK9DsSrXhDBX9iTLUeLTKjLCXREApkdse07T0hAx8EVf/44ek801RLsCsZaGfC0EiCYW2BGppAq5m3vjErkW/g6JrlUzAl6+N2h7Si7A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736609714; c=relaxed/simple;
-	bh=DkYnECulvi7qQtGWYQuoQyyVrOEXO3B5RNTc9nE2whg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=H+GhkYUwxSfJDo9LLKn2phoy15VU9J5vrIsi8vIOXRGRFdEzEwLnkw6Ywo2B+UiaFG7z0vyAEQ+AIb06t5JuG6Q+UaUv6cq7Axde9P4nu6rao0pbx0BDfAZg49bm8VXH6XaGoSqRZtLoZCcH+jJ3SmvIPX/8XgNEQHUsRZQKRwQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rPcslEvg; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADDE0C4CED2;
-	Sat, 11 Jan 2025 15:35:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1736609714;
-	bh=DkYnECulvi7qQtGWYQuoQyyVrOEXO3B5RNTc9nE2whg=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=rPcslEvgLvba+RvIm6rQ7oIKgHxKqHZ4PzpfH9FSLyM8tNI0yi8c+tO39b51BIbBr
-	 rLKaj4TeAOF9bZyMGapuYGwKAJWQVon8FARH3xwMH0mhxMCZcUQ5TaTMIpA0zpem7L
-	 NUEJavFf0Nm52jQggYb1/c/yU4eiX2ayORZ4kV7840GiMEwDB0lqwgZYkiorjrdcUg
-	 sR3nyuFAHR8xipipP8g4XPyyVRzyCcsk6FWkqDfFS0CCaMrjybZH+bDc8ALL1H6usd
-	 Rs9F2qRf5t4tYX8kaiWZUjiNg6/pq4LKGAddBhKOXafBkQCPlmt7DEi9DrW/oRr/iX
-	 Dci4X1DVn8r5g==
-Message-ID: <8aef8331-662d-49ee-a918-8a4a5000d9ec@kernel.org>
-Date: Sat, 11 Jan 2025 16:35:09 +0100
+	s=arc-20240116; t=1736612096; c=relaxed/simple;
+	bh=4BCNF1K5gTtzLMK6o3TysxdxJB/SU9lvn8Zp9GdSb1M=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=hRwAEmtkyUHwnn9E2jRA3JeGU+8ZaiE9xnwh8YRwHE0HV+OKQR8wCGQakeDECMknbc85dSO0aZ69NofOoIOaXyrV1eJTRb1+LrTXhnREMarw6wIRGmsV5kWtgEPEpqkExNOiasGLPdDNEBwGOF7NbGxzDNa6mSPWgUYBvkq94fs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=j8QtUdTt; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50BDqUaR030543;
+	Sat, 11 Jan 2025 16:14:52 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=nvhPutBJiDRCgnRY3Qtk+K
+	UVHKnWzw+UEKOTJOLWw5Q=; b=j8QtUdTtETBGXYVHcYGqx9XGKmIQ2GJwZBXdoC
+	R06Nl5oIhVx6+PGkUWsyqiN+k3WQVHQwL+KBgR3PMJ0omq0s1W7FfFRApMHX5Lzz
+	gIWGcixxy54Srfxn8cXbOnT4ZG69sZQIWoBEm34sWYxyZrjsblomg2c+tGU/bn7X
+	nv9RhkC7g/2cmPj602/a07/suB1tVg8eIwHiJvbfLM5cPWsVKYZ4CqXC3kckJdNb
+	fiz4/nb5KAFY6Cg4AAaA/Uj7bFIc5Ni0841EQdD9rDQuKL8GNUrXDoByizU1DX0e
+	ipiKPLgeu/3TLfIryEVsA6tjRkwTYgDlI8sWZjyJc9sVtFrw==
+Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 443hx70rev-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sat, 11 Jan 2025 16:14:51 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 50BGEpjA005533
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sat, 11 Jan 2025 16:14:51 GMT
+Received: from 4206f847eb12.qualcomm.com (10.80.80.8) by
+ nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Sat, 11 Jan 2025 08:14:47 -0800
+From: Raviteja Laggyshetty <quic_rlaggysh@quicinc.com>
+To: Georgi Djakov <djakov@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio
+	<konradybcio@kernel.org>,
+        Odelu Kukatla <quic_okukatla@quicinc.com>,
+        "Mike
+ Tipton" <mdptipton@quicinc.com>,
+        Vivek Aknurwar <viveka@quicinc.com>
+CC: Sibi Sankar <quic_sibis@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
+        <linux-pm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+Subject: [V7 0/5]  Add EPSS L3 provider support on SA8775P SoC
+Date: Sat, 11 Jan 2025 16:14:24 +0000
+Message-ID: <20250111161429.51-1-quic_rlaggysh@quicinc.com>
+X-Mailer: git-send-email 2.39.2
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC] soc: qcom: pmic_glink: Fix device access from worker
- during suspend
-To: Abel Vesa <abel.vesa@linaro.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>
-Cc: Caleb Connolly <caleb.connolly@linaro.org>,
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Johan Hovold <johan@kernel.org>, Neil Armstrong <neil.armstrong@linaro.org>,
- linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
- stable@vger.kernel.org
-References: <20250110-soc-qcom-pmic-glink-fix-device-access-on-worker-while-suspended-v1-1-e32fd6bf322e@linaro.org>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <20250110-soc-qcom-pmic-glink-fix-device-access-on-worker-while-suspended-v1-1-e32fd6bf322e@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: YK8JJJ7OeKc_JLW59iq-vL_21V-1WMnf
+X-Proofpoint-ORIG-GUID: YK8JJJ7OeKc_JLW59iq-vL_21V-1WMnf
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ impostorscore=0 malwarescore=0 lowpriorityscore=0 bulkscore=0 mlxscore=0
+ clxscore=1015 spamscore=0 adultscore=0 suspectscore=0 mlxlogscore=999
+ phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2501110138
 
-On 10/01/2025 16:29, Abel Vesa wrote:
-> The pmic_glink_altmode_worker() currently gets scheduled on the system_wq.
-> When the system is suspended (s2idle), the fact that the worker can be
-> scheduled to run while devices are still suspended provesto be a problem
-> when a Type-C retimer, switch or mux that is controlled over a bus like
-> I2C, because the I2C controller is suspended.
-> 
-> This has been proven to be the case on the X Elite boards where such
-> retimers (ParadeTech PS8830) are used in order to handle Type-C
-> orientation and altmode configuration. The following warning is thrown:
-> 
-> [   35.134876] i2c i2c-4: Transfer while suspended
-> [   35.143865] WARNING: CPU: 0 PID: 99 at drivers/i2c/i2c-core.h:56 __i2c_transfer+0xb4/0x57c [i2c_core]
-> [   35.352879] Workqueue: events pmic_glink_altmode_worker [pmic_glink_altmode]
-> [   35.360179] pstate: 61400005 (nZCv daif +PAN -UAO -TCO +DIT -SSBS BTYPE=--)
-> [   35.455242] Call trace:
-> [   35.457826]  __i2c_transfer+0xb4/0x57c [i2c_core] (P)
-> [   35.463086]  i2c_transfer+0x98/0xf0 [i2c_core]
-> [   35.467713]  i2c_transfer_buffer_flags+0x54/0x88 [i2c_core]
-> [   35.473502]  regmap_i2c_write+0x20/0x48 [regmap_i2c]
-> [   35.478659]  _regmap_raw_write_impl+0x780/0x944
-> [   35.483401]  _regmap_bus_raw_write+0x60/0x7c
-> [   35.487848]  _regmap_write+0x134/0x184
-> [   35.491773]  regmap_write+0x54/0x78
-> [   35.495418]  ps883x_set+0x58/0xec [ps883x]
-> [   35.499688]  ps883x_sw_set+0x60/0x84 [ps883x]
-> [   35.504223]  typec_switch_set+0x48/0x74 [typec]
-> [   35.508952]  pmic_glink_altmode_worker+0x44/0x1fc [pmic_glink_altmode]
-> [   35.515712]  process_scheduled_works+0x1a0/0x2d0
-> [   35.520525]  worker_thread+0x2a8/0x3c8
-> [   35.524449]  kthread+0xfc/0x184
-> [   35.527749]  ret_from_fork+0x10/0x20
-> 
-> The solution here is to schedule the altmode worker on the system_freezable_wq
-> instead of the system_wq. This will result in the altmode worker not being
-> scheduled to run until the devices are resumed first, which will give the
-> controllers like I2C a chance to resume before the transfer is requested.
-> 
-> Fixes: 080b4e24852b ("soc: qcom: pmic_glink: Introduce altmode support")
-> Cc: stable@vger.kernel.org    # 6.3
-> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+Add Epoch Subsystem (EPSS) L3 provider support on SA8775P SoCs.
 
-This is an incomplete fix, I think. You fix one case but several other
-possibilities are still there:
+Current interconnect framework is based on static IDs for creating node
+and registering with framework. This becomes a limitation for topologies
+where there are multiple instances of same interconnect provider. Add
+icc_node_create_alloc_id() API to create icc node with dynamic id, this
+will help to overcome the dependency on static IDs.
 
-1. Maybe the driver just lacks proper suspend/resume handling?
-I assume all this happens during system suspend, so what certainty you
-have that your second work - pmic_glink_altmode_pdr_notify() - is not
-executed as well?
+Change since v6:
+ - Added icc_node_create_alloc_id() API to dynamically allocate ID while 
+   creating the node. Replaced the IDA (ID allocator) with
+   icc_node_create_alloc_id() API to allocate node IDs dynamically.
+ - Removed qcom,epss-l3-perf generic compatible as per the comment.
+ - Added L3 ICC handles for CPU0 and CPU4 in DT, as per Bjorn comment.
+   Link to comment:
+   https://lore.kernel.org/lkml/ww3t3tu7p36qzlhcetaxif2xzrpgslydmuqo3fqvisbuar4bjh@qc2u43dck3qi/
 
-2. Follow up: all other drivers and all other future use cases will be
-affected as well. Basically what this patch is admitting is that driver
-can be executed anytime, even during suspend, so each call of
-pmic_glink_send() has to be audited. Now and in the future, because what
-stops some developer of adding one more path calling pmic_glink_send(),
-which also turns out to be executed during suspend?
+Change since v5:
+ - Reused qcom,sm8250-epss-l3 compatible for sa8775p SoC.
+ - Rearranged the patches, moved dt changes to end of series.
+ - Updated the commit text.
 
-3. So qcom_battmgr.c is buggy as well?
+Changes since v4:
+ - Added generic compatible "qcom,epss-l3-perf" and split the driver
+   changes accordingly.
 
-4. ucsi_glink.c? I don't see handling suspend, either...
+Changes since v3:
+ - Removed epss-l3-perf generic compatible changes. These will be posted
+   as separate patch until then SoC specific compatible will be used for
+   probing.
 
-Maybe the entire problem is how pmic glink was designed: not as proper
-bus driver which handles both child-parent relationship and system suspend.
-Best regards,
-Krzysztof
+Changes since v2:
+ - Updated the commit text to reflect the reason for code change.
+ - Added SoC-specific and generic compatible to driver match table.
+
+Changes since v1:
+ - Removed the usage of static IDs and implemented dynamic ID assignment
+   for icc nodes using IDA.
+ - Removed separate compatibles for cl0 and cl1. Both cl0 and cl1
+   devices use the same compatible.
+ - Added new generic compatible for epss-l3-perf.
+
+Jagadeesh Kona (1):
+  arm64: dts: qcom: sa8775p: Add CPU OPP tables to scale DDR/L3
+
+Raviteja Laggyshetty (4):
+  interconnect: core: Add dynamic id allocation support
+  interconnect: qcom: Add multidev EPSS L3 support
+  dt-bindings: interconnect: Add EPSS L3 compatible for SA8775P
+  arm64: dts: qcom: sa8775p: add EPSS l3 interconnect provider
+
+ .../bindings/interconnect/qcom,osm-l3.yaml    |   1 +
+ arch/arm64/boot/dts/qcom/sa8775p.dtsi         | 229 ++++++++++++++++++
+ drivers/interconnect/core.c                   |  32 +++
+ drivers/interconnect/qcom/osm-l3.c            |  91 +++++--
+ include/linux/interconnect-provider.h         |   6 +
+ 5 files changed, 335 insertions(+), 24 deletions(-)
+
+-- 
+2.39.2
 
 
