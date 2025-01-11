@@ -1,78 +1,77 @@
-Return-Path: <linux-arm-msm+bounces-44784-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-44785-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6B9C8A0A27F
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Jan 2025 10:56:03 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id BFD0EA0A283
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Jan 2025 10:56:18 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9C19B3A9525
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Jan 2025 09:55:53 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3EC99188B465
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Jan 2025 09:56:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 52CCF1917EB;
-	Sat, 11 Jan 2025 09:55:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5E769192B8F;
+	Sat, 11 Jan 2025 09:55:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="C96bSz6T"
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="eCMys+aI"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qk1-f173.google.com (mail-qk1-f173.google.com [209.85.222.173])
+Received: from mail-qk1-f174.google.com (mail-qk1-f174.google.com [209.85.222.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9204B1917F0
-	for <linux-arm-msm@vger.kernel.org>; Sat, 11 Jan 2025 09:55:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B18A1922E7
+	for <linux-arm-msm@vger.kernel.org>; Sat, 11 Jan 2025 09:55:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736589331; cv=none; b=fTTlVfH7WOyz0eQAv3Bv4lQaIOIY54U0FXDOjZxrjDAnOjRiCfb20i2aKHQlHZXlzb84GZE4COQleK3BWWzidxoUOrBFTX9CIVRk6slB7cBa1TstQNsFNl8lDJm8igHG/az3N6kyxTruNqG4d53PPz9acG/DDd84n0B5l9GhaNc=
+	t=1736589333; cv=none; b=Dk7A4WKY5B0Hs023l7ZSP/tf9YyIBx8teKXbcoPpi141vHQAW1EFQdqiFZkh6KfQBmwo98dyvvN6GyCt0ptczEYeCwZteAZ3xjy1besvLTIxEDWloEk3B5zxIgYcSvXXOOFusbsgaeHhE+ppijcWIV8vzlfo1TcbFwQE+G/sACA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736589331; c=relaxed/simple;
-	bh=+5gKBR6lmCbLgDxwlcOKTLF2APbAil9sB0eDtQkBz/w=;
+	s=arc-20240116; t=1736589333; c=relaxed/simple;
+	bh=BHqXjzXegfvyleJbFzCIkEZ/Ohsk17MMdh8326GOkbU=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=ZvXiVAPiCqKfIIN4+2yqRTLQFAflD9kDxPoJZ3hESdelDm4271ifPuKzH45WzZOZt4WsuYcC1+G36nlsgykF+feIyDQ0HHI/P+uuqUX5vedjC5U6V6jbBDAXsKD8/ojfcLYT/5/rw1X2GXqv5WrGNXUutfakkcMtFuGQBrG70ds=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=C96bSz6T; arc=none smtp.client-ip=209.85.222.173
+	 In-Reply-To:To:Cc; b=Ljy/8MAPurhzQf8ISosQ+HgEOeiDuzURGlfII+V3kj3hNdhzSVLGrNeSzLOHagZ3grupTjEKIliYF7SilLh+04MtfALBo3aUEe1TA/055OV9/dUhIJr1o0CUhdUPNTGRncwGv7k+wdptyCoyxa6lmJJjFtPE4ZyqQdeloSDM02g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=eCMys+aI; arc=none smtp.client-ip=209.85.222.174
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
-Received: by mail-qk1-f173.google.com with SMTP id af79cd13be357-7b70e78351aso236813285a.0
-        for <linux-arm-msm@vger.kernel.org>; Sat, 11 Jan 2025 01:55:29 -0800 (PST)
+Received: by mail-qk1-f174.google.com with SMTP id af79cd13be357-7b6e5ee6ac7so232739285a.0
+        for <linux-arm-msm@vger.kernel.org>; Sat, 11 Jan 2025 01:55:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1736589328; x=1737194128; darn=vger.kernel.org;
+        d=chromium.org; s=google; t=1736589330; x=1737194130; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=oGXizJerOok0lDZxPeMPfVFSvShgmDlyLJgvxCS81kE=;
-        b=C96bSz6TaoQXqnsfWjFREu7KcD0EjOj6CbbnAHPSV2wqMTwI6pYbppEnh56C8ciRLt
-         H/6p4gZMwGnmmDFNwcYC9KGNozEAzwSgg1WjdQioFifHmeBNay88+Q2Nqm16gdQZszcM
-         ZX50gFtVpauN4oFNajPz3VpJMepN/dQNUDEQk=
+        bh=L1KYqWnRc25c7X6AgX8mJMBcXv6X4I+XW042aps6zcs=;
+        b=eCMys+aINUeyPpHOqwmcacUWkFZpKdFbU3ZRGl2lokoR4qr5aKpr4UDxLxbAkP0xhm
+         W17GheV+iCuPMwLG3CEpQO/NQ1bwW2Q6OJzTb3cPHwjchTh3BfTxzkGoqiSEtI9FfXfO
+         ck8Uj5y3NhBNhIllRRwxnAaPKwhiZJUhubre8=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736589328; x=1737194128;
+        d=1e100.net; s=20230601; t=1736589330; x=1737194130;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=oGXizJerOok0lDZxPeMPfVFSvShgmDlyLJgvxCS81kE=;
-        b=DULErJhT+7PC49mI8w3G8isu0J3FYF4CwrZBHnj5gEU42r7fcTeztG4dOBvHT4GFPK
-         GJ6uTNXgX43Kj6VCkO+lFpD3VAGjm413DNOA3QbIBPxaU8pXjTUuDnUfYU/zbARmioiq
-         B3ne/PYz9j1jHLLzdg1B/5TGaVq7jwwdFCALwf2Df8VifHF7ySS5FF6XGeRLq8oQIxQB
-         HOQGDZiZuoBPl89c7lI/WP90Z1bjDo5ixjB+Z43047mcYzqIUf9w20kn+Dc465ixyEyX
-         VxW7P49HvrKwdyEkXamE8eOWNtBg6UfxfAhS92JqbDql7wdI/Zxd93w3DPemRnUCzuTD
-         /hZA==
-X-Forwarded-Encrypted: i=1; AJvYcCWbu8Vmu70tU6wgik2oq3aBoPRKUF+WB7ISJvrYx6HKH9aXWRiPcZNcJaU3xi7ZPliU/+/xdYIex5oyWvdb@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw1wk+XG1a7MtlQ/t1HkXxU/JsqB3NR9r7siGyOoN8onCLjKgYV
-	Ya8JYfF/y8Q1N1z7RdAiRRy6on1Cpg9GbAKaOPItzNv8efsotNGNJI7+Q5n6Gg==
-X-Gm-Gg: ASbGncsxVBGNG6iqIkLjeQoVB6XyVug00fLaptswv8N9+9vDRXhmf6uxmAbrLMpXMkE
-	b7fPpbZjTbKSI2y9495ob5HbnNQB/EeLuR+DpTMuibAWGcOxwW0Y5fhm+W++oN62foeNjP3ymY0
-	HVqrPdLYCMRHgRAZkn0P0AZZJtxxZt25VkIHo28Q3meDGrRN4+ZsRM4aLueuWubwYi5+exSw//C
-	1iffmSZsXtAnUq3ppPx+/5pvwTsw86eruWOSGm2QJKGlO1Y7WvjNCSKvBGIfyYyiZTkXFEVsVzR
-	xrYm7kAowh+8BGw8rFKf12I++wCo4wLhBm9O
-X-Google-Smtp-Source: AGHT+IEpVR9I5biYuCr+SXV0UBeBGfKSe31bfLKgP7VOr+BuuQiGS7W1xlNlsmHP///j6pnH4LIVBQ==
-X-Received: by 2002:a05:620a:462b:b0:7b6:c540:9531 with SMTP id af79cd13be357-7bcd974a281mr2043337685a.18.1736589328570;
-        Sat, 11 Jan 2025 01:55:28 -0800 (PST)
+        bh=L1KYqWnRc25c7X6AgX8mJMBcXv6X4I+XW042aps6zcs=;
+        b=Trb0koaDlbOQVEj+FYP7IbxPkRHTgJ+jcvT8t+ssd2fZta+PZZz6/DjY9z92IhwLC2
+         k8sdR1O8K4SxFO7BXvQZh9xs7db/DODGxd+1Dpiqq0IAbceUZtBcxW5XEOpNBxZf/NCz
+         op4jzAhtsmjWlsa/R//ZFtp9I2jShPQvdyYEAF8EOyQ1QKmqcbKGTGw7G5AUG3m0rMKD
+         4UHtITsZWMV9PasZyfm3CqEIp1TDZw8+wXmDzLjW2dLjzhnuboIN6ocHZOAMuiBhGsod
+         uJ3tkTareQg0ZMl+WxAGv0r7ZZFiF9w/zTgXx4E3M+VysuYd+LSfn5+/CHytppzJeVff
+         E4uA==
+X-Forwarded-Encrypted: i=1; AJvYcCXyJPEnmB6d7KImLuQ3RofRYG2ZY6NtY/UssCTTi9S6J1v2XJTKFm883Rol98uTfRQaG8L6hjQzjP3Jxjoy@vger.kernel.org
+X-Gm-Message-State: AOJu0YzOTgVCM3EYX8G600MuPAkutCHXudMRMiUzfL1q8FRHKxtzNE2D
+	g9Vrk70iSj8qDqLqJkyYhThdDs5X8qsLAMIHFvrSryIosEY5Ey9BW2oX6SyZVQ==
+X-Gm-Gg: ASbGncv922pvF3iKrr8cvE/QfKSgon3Cgh25sW1hkiv4hZHUhqTWwGHxhxm0XoMxqlz
+	pEym7xoDMLe3y/DEr0TLNlLtQOJK4vQL3retj7y7n/RECi/qk+SRvQzxBJbgsV+fCrxfwO3x3yD
+	MCsp8rqPACFSdBq1vizl/BtOMXjnycowMabe1Z4MkjaIJf+w2jVtQlKcb5q45EtEcNY6QxIzAQO
+	OAVOS0fC6pSbQqcEOADfisFr+whhAIFvKC2Y1lome18dp3DhLyvfZsTeeWHQ2zhOqAKZoTfw8Ai
+	LgDhrxLBqrxYMuxbn9CVDXJqEaFCxpUu2JNU
+X-Google-Smtp-Source: AGHT+IEPxC3OyMHAru8G3Gzds3v7OF/JkO9AvPzj8XxD1gntOl6n6mbYKW7VgLUWHJdUgNP6gB5oAA==
+X-Received: by 2002:a05:620a:4402:b0:7b6:d6dd:8826 with SMTP id af79cd13be357-7bcd97b8724mr2371667285a.55.1736589330581;
+        Sat, 11 Jan 2025 01:55:30 -0800 (PST)
 Received: from denia.c.googlers.com (172.174.245.35.bc.googleusercontent.com. [35.245.174.172])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-7bce327b8besm267096785a.59.2025.01.11.01.55.26
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-7bce327b8besm267096785a.59.2025.01.11.01.55.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 11 Jan 2025 01:55:27 -0800 (PST)
+        Sat, 11 Jan 2025 01:55:29 -0800 (PST)
 From: Ricardo Ribalda <ribalda@chromium.org>
-Date: Sat, 11 Jan 2025 09:55:16 +0000
-Subject: [PATCH v6 3/6] media: venus: venc: Clamp parm smaller than 1fps
- and bigger than 240
+Date: Sat, 11 Jan 2025 09:55:17 +0000
+Subject: [PATCH v6 4/6] media: venus: Remove timeperframe from inst
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -81,7 +80,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250111-fix-cocci-v6-3-1aa7842006cc@chromium.org>
+Message-Id: <20250111-fix-cocci-v6-4-1aa7842006cc@chromium.org>
 References: <20250111-fix-cocci-v6-0-1aa7842006cc@chromium.org>
 In-Reply-To: <20250111-fix-cocci-v6-0-1aa7842006cc@chromium.org>
 To: Mauro Carvalho Chehab <mchehab@kernel.org>, 
@@ -93,39 +92,125 @@ Cc: linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
  linux-arm-msm@vger.kernel.org, Ricardo Ribalda <ribalda@chromium.org>
 X-Mailer: b4 0.13.0
 
-The driver uses "whole" fps in all its calculations (e.g. in
-load_per_instance()). Those calculation expect an fps bigger than 1, and
-not big enough to overflow.
+The driver only cares about whole fps. We can infer the timeperframe
+from the fps field. Remove the redundant field.
 
-Clamp the parm if the user provides a value that will result in an invalid
-fps.
-
-Reported-by: Hans Verkuil <hverkuil@xs4all.nl>
-Closes: https://lore.kernel.org/linux-media/f11653a7-bc49-48cd-9cdb-1659147453e4@xs4all.nl/T/#m91cd962ac942834654f94c92206e2f85ff7d97f0
-Fixes: aaaa93eda64b ("[media] media: venus: venc: add video encoder files")
 Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
 ---
- drivers/media/platform/qcom/venus/venc.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/media/platform/qcom/venus/core.h |  2 --
+ drivers/media/platform/qcom/venus/vdec.c | 15 ++++++++-------
+ drivers/media/platform/qcom/venus/venc.c | 16 ++++++++--------
+ 3 files changed, 16 insertions(+), 17 deletions(-)
 
+diff --git a/drivers/media/platform/qcom/venus/core.h b/drivers/media/platform/qcom/venus/core.h
+index afae2b9fdaf7..1d4fd5cc75d9 100644
+--- a/drivers/media/platform/qcom/venus/core.h
++++ b/drivers/media/platform/qcom/venus/core.h
+@@ -407,7 +407,6 @@ enum venus_inst_modes {
+  * @tss:		timestamp metadata
+  * @payloads:		cache plane payload to use it for clock/BW scaling
+  * @fps:		holds current FPS
+- * @timeperframe:	holds current time per frame structure
+  * @fmt_out:	a reference to output format structure
+  * @fmt_cap:	a reference to capture format structure
+  * @num_input_bufs:	holds number of input buffers
+@@ -478,7 +477,6 @@ struct venus_inst {
+ 	struct venus_ts_metadata tss[VIDEO_MAX_FRAME];
+ 	unsigned long payloads[VIDEO_MAX_FRAME];
+ 	u64 fps;
+-	struct v4l2_fract timeperframe;
+ 	const struct venus_format *fmt_out;
+ 	const struct venus_format *fmt_cap;
+ 	unsigned int num_input_bufs;
+diff --git a/drivers/media/platform/qcom/venus/vdec.c b/drivers/media/platform/qcom/venus/vdec.c
+index c1d5f94e16b4..e160a5508154 100644
+--- a/drivers/media/platform/qcom/venus/vdec.c
++++ b/drivers/media/platform/qcom/venus/vdec.c
+@@ -471,10 +471,12 @@ static int vdec_s_parm(struct file *file, void *fh, struct v4l2_streamparm *a)
+ 		return -EINVAL;
+ 
+ 	memset(cap->reserved, 0, sizeof(cap->reserved));
+-	if (!timeperframe->denominator)
+-		timeperframe->denominator = inst->timeperframe.denominator;
+-	if (!timeperframe->numerator)
+-		timeperframe->numerator = inst->timeperframe.numerator;
++
++	if (!timeperframe->numerator || !timeperframe->denominator) {
++		timeperframe->numerator = 1;
++		timeperframe->denominator = inst->fps;
++	}
++
+ 	cap->readbuffers = 0;
+ 	cap->extendedmode = 0;
+ 	cap->capability = V4L2_CAP_TIMEPERFRAME;
+@@ -487,7 +489,8 @@ static int vdec_s_parm(struct file *file, void *fh, struct v4l2_streamparm *a)
+ 	fps = min(VENUS_MAX_FPS, fps);
+ 
+ 	inst->fps = fps;
+-	inst->timeperframe = *timeperframe;
++	timeperframe->numerator = 1;
++	timeperframe->denominator = inst->fps;
+ 
+ 	return 0;
+ }
+@@ -1612,8 +1615,6 @@ static void vdec_inst_init(struct venus_inst *inst)
+ 	inst->out_width = frame_width_min(inst);
+ 	inst->out_height = frame_height_min(inst);
+ 	inst->fps = 30;
+-	inst->timeperframe.numerator = 1;
+-	inst->timeperframe.denominator = 30;
+ 	inst->opb_buftype = HFI_BUFFER_OUTPUT;
+ }
+ 
 diff --git a/drivers/media/platform/qcom/venus/venc.c b/drivers/media/platform/qcom/venus/venc.c
-index c1c543535aaf..943d432b6568 100644
+index 943d432b6568..17bec44c9825 100644
 --- a/drivers/media/platform/qcom/venus/venc.c
 +++ b/drivers/media/platform/qcom/venus/venc.c
-@@ -411,11 +411,10 @@ static int venc_s_parm(struct file *file, void *fh, struct v4l2_streamparm *a)
- 	us_per_frame = timeperframe->numerator * (u64)USEC_PER_SEC;
- 	do_div(us_per_frame, timeperframe->denominator);
+@@ -401,10 +401,10 @@ static int venc_s_parm(struct file *file, void *fh, struct v4l2_streamparm *a)
  
--	if (!us_per_frame)
--		return -EINVAL;
--
-+	us_per_frame = max(USEC_PER_SEC, us_per_frame);
- 	fps = (u64)USEC_PER_SEC;
+ 	memset(out->reserved, 0, sizeof(out->reserved));
+ 
+-	if (!timeperframe->denominator)
+-		timeperframe->denominator = inst->timeperframe.denominator;
+-	if (!timeperframe->numerator)
+-		timeperframe->numerator = inst->timeperframe.numerator;
++	if (!timeperframe->numerator || !timeperframe->denominator) {
++		timeperframe->numerator = 1;
++		timeperframe->denominator = inst->fps;
++	}
+ 
+ 	out->capability = V4L2_CAP_TIMEPERFRAME;
+ 
+@@ -416,8 +416,9 @@ static int venc_s_parm(struct file *file, void *fh, struct v4l2_streamparm *a)
  	do_div(fps, us_per_frame);
-+	fps = min(VENUS_MAX_FPS, fps);
+ 	fps = min(VENUS_MAX_FPS, fps);
  
- 	inst->timeperframe = *timeperframe;
+-	inst->timeperframe = *timeperframe;
  	inst->fps = fps;
++	timeperframe->numerator = 1;
++	timeperframe->denominator = inst->fps;
+ 
+ 	return 0;
+ }
+@@ -431,7 +432,8 @@ static int venc_g_parm(struct file *file, void *fh, struct v4l2_streamparm *a)
+ 		return -EINVAL;
+ 
+ 	a->parm.output.capability |= V4L2_CAP_TIMEPERFRAME;
+-	a->parm.output.timeperframe = inst->timeperframe;
++	a->parm.output.timeperframe.numerator = 1;
++	a->parm.output.timeperframe.denominator = inst->fps;
+ 
+ 	return 0;
+ }
+@@ -1454,8 +1456,6 @@ static void venc_inst_init(struct venus_inst *inst)
+ 	inst->out_width = 1280;
+ 	inst->out_height = 720;
+ 	inst->fps = 15;
+-	inst->timeperframe.numerator = 1;
+-	inst->timeperframe.denominator = 15;
+ 	inst->hfi_codec = HFI_VIDEO_CODEC_H264;
+ }
+ 
 
 -- 
 2.47.1.613.gc27f4b7a9f-goog
