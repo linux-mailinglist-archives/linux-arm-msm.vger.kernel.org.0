@@ -1,59 +1,62 @@
-Return-Path: <linux-arm-msm+bounces-44778-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-44779-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 47A46A0A20F
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Jan 2025 09:54:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 9A0EEA0A26A
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Jan 2025 10:51:48 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 329DB3A7BCC
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Jan 2025 08:54:47 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A3FCE3A83CD
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Jan 2025 09:51:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DAED917CA1D;
-	Sat, 11 Jan 2025 08:54:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CAF7118BB8E;
+	Sat, 11 Jan 2025 09:51:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kG7ZjHff"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BIjTofQn"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7F6A156678;
-	Sat, 11 Jan 2025 08:54:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BD311494D9;
+	Sat, 11 Jan 2025 09:51:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736585687; cv=none; b=EDPPlQbmPI1qXjuq8m0d/nDN1n8K4lEc59t1oTIPLma2Ye7av0H4o7jepjRtb1OiyOeTlS2NYgUy/LkohbdCiT31TSrggTknLUkq73zeC7nm/64H/8YiWPEJbMDUj2oAk0ga1/2WIxVzGM5agvbOatFEdHufiDHgvq1xuIS11ms=
+	t=1736589103; cv=none; b=EyCnOq7ZEfF2q/aBpdrAciFeci43jWvUQKgpmbFOmnrySnix15DsgEM6B6H9eYZ+lHfUvPEfUdV08tAHysJqpeZ9BYK6SJV6exjXHGa6prxpMGXAr2VYzNQHnl1McSxyfiG0jFh5jmqGq4yf9+3KgyLhyrhOCOn97yJ389J2Oco=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736585687; c=relaxed/simple;
-	bh=Q1leHkeRtCRi+yGc79UFLanzygVMi5/CCQJjiMUYiI4=;
+	s=arc-20240116; t=1736589103; c=relaxed/simple;
+	bh=PktPUpb/tRLHLjiGg+FbkVcP6k7A0rn964PryI06Log=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=tFjNaKTiX0e52hnSTaiBzTOxGIUWiILJ5dKHt0Zbfi0wnaBx8e3b+OsH16/jv/WYYL8K4M680Qtv5tJXXHm1ZyREYc2BC4yEv+k6hG2Hp0xn1dudw7dYkK8oZUrGhj/VJ7p7QK2rqyoPAFD3QSmmzWQ01huo1iFuXzzYmqlBnyg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kG7ZjHff; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56169C4CED2;
-	Sat, 11 Jan 2025 08:54:46 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=grEe14wSje1RYEbBK/AAq0ylLTe97UBvaLVtrpKa95VEEU/kFzXvkr1CNdZzglwvuXQ5BXa6wq8hJgBQ5nk5oC6sCcDCNaQVqBhLoAejet3rR6enA81fD+5XmmZQTNVWPIUqB0MvzMiGi/xs+6kvBqBSeC1xlcxfZ7RxWIY0DCs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BIjTofQn; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82EE6C4CED2;
+	Sat, 11 Jan 2025 09:51:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1736585687;
-	bh=Q1leHkeRtCRi+yGc79UFLanzygVMi5/CCQJjiMUYiI4=;
+	s=k20201202; t=1736589103;
+	bh=PktPUpb/tRLHLjiGg+FbkVcP6k7A0rn964PryI06Log=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=kG7ZjHffva5Z1V4EA5nTcfBjg46GCnSh313uwg97pkLr2orWlunyviLmhkaCsqy1S
-	 vJKLm1BEo4LnPHxut7MDF28LTfrNKTqH/4Bo++DVDgw3SvvgeLC36v13EK+WYp8i6T
-	 Lx/ROvzeC2eLQqP3mAQxbGyk8F6ewqN5rSSwS+I0A4zGkQLu7ii38TOP5UwML98PVU
-	 oFpo3Pmjp1FWJjnwNq+8D3ABrTrlQf+dfiVPpIsmma+DxMFfqwrc9OxrKxDF01c9kW
-	 rr0LPM7zoyjRfowCMxDR3OnUHI3nRkCdJeHkx7Os541rdbCaxmjvCEygjVo8B1Zrsa
-	 0AvTAzEaeAJLg==
-Date: Sat, 11 Jan 2025 09:54:43 +0100
+	b=BIjTofQn1SJrvkJolD3wL/WDhla1G9vLMPrfVwaqOHYyS2UwV6rjcP19ZKzsj9SKI
+	 srNs4urpo1hzmUnmTkjb2XwuwLCNKLqG6ZyEPfRK1Xtt5aFo/GLydq0+7ayhg3htWD
+	 HY2BxhxTXTrpF3wjGMWna7CpNVwJ3YMI0f+pVAb4BrI2mQe4nZMa4ZeSo/LUa5zBEH
+	 TQPxIZUkGDybUsdBc/0RqdBeCzEatXSwVMgwsA44wE6afll7vTI7ppmFTGvIbJvxl4
+	 9AEJrHV0NHrbfL8Ox2ErFXZRyOm2yMORZkFFn1gpBG1/XkvvhwHQWl9JWqCxDMOJ+D
+	 OZXSgD7KCWboA==
+Date: Sat, 11 Jan 2025 10:51:39 +0100
 From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Depeng Shao <quic_depengs@quicinc.com>
-Cc: rfoss@kernel.org, todor.too@gmail.com, bryan.odonoghue@linaro.org, 
-	mchehab@kernel.org, robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, 
-	vladimir.zapolskiy@linaro.org, hverkuil@xs4all.nl, quic_eberman@quicinc.com, 
-	linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, kernel@quicinc.com, Yongsheng Li <quic_yon@quicinc.com>
-Subject: Re: [PATCH v8 12/16] dt-bindings: media: camss: Add
- qcom,sm8550-camss binding
-Message-ID: <4cuarxxr7wlebwrnhjzi7yv7cfoe53i3f72s7jteeo6buxq5et@sbccepsvyf4o>
-References: <20250108143733.2761200-1-quic_depengs@quicinc.com>
- <20250108143733.2761200-13-quic_depengs@quicinc.com>
+To: Akhil P Oommen <quic_akhilpo@quicinc.com>
+Cc: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Marijn Suijten <marijn.suijten@somainline.org>, 
+	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Bjorn Andersson <andersson@kernel.org>, Srinivas Kandagatla <srinivas.kandagatla@linaro.org>, 
+	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
+	linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH RFC 3/4] dt-bindings: nvmem: qfprom: Add X1E80100
+ compatible
+Message-ID: <dqirlou2bcntkqo3t7hnkigvgrtfm5fh5nufks55mfaqyis7hg@6gu6xfk6gz74>
+References: <20250109-x1e-speedbin-b4-v1-0-009e812b7f2a@quicinc.com>
+ <20250109-x1e-speedbin-b4-v1-3-009e812b7f2a@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -62,19 +65,15 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20250108143733.2761200-13-quic_depengs@quicinc.com>
+In-Reply-To: <20250109-x1e-speedbin-b4-v1-3-009e812b7f2a@quicinc.com>
 
-On Wed, Jan 08, 2025 at 08:07:29PM +0530, Depeng Shao wrote:
-> Add bindings for qcom,sm8550-camss in order to support the camera
-> subsystem for sm8550.
+On Thu, Jan 09, 2025 at 04:12:40AM +0530, Akhil P Oommen wrote:
+> Document compatible string for the QFPROM on X1E80100 platform.
 > 
-> Co-developed-by: Yongsheng Li <quic_yon@quicinc.com>
-> Signed-off-by: Yongsheng Li <quic_yon@quicinc.com>
-> Signed-off-by: Depeng Shao <quic_depengs@quicinc.com>
+> Signed-off-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
 > ---
->  .../bindings/media/qcom,sm8550-camss.yaml     | 597 ++++++++++++++++++
->  1 file changed, 597 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/media/qcom,sm8550-camss.yaml
+
+This shouldn't be really RFC...
 
 Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
