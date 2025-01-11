@@ -1,138 +1,127 @@
-Return-Path: <linux-arm-msm+bounces-44793-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-44794-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 59CF6A0A3FD
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Jan 2025 14:47:00 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6D354A0A41E
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Jan 2025 15:22:03 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id CB4697A3745
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Jan 2025 13:46:51 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7CA541637A6
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Jan 2025 14:22:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B29BB1A238D;
-	Sat, 11 Jan 2025 13:46:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0072340BF2;
+	Sat, 11 Jan 2025 14:22:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="dClmYMmI"
+	dkim=pass (2048-bit key) header.d=oltmanns.dev header.i=@oltmanns.dev header.b="A5pqBkVs"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mout-p-201.mailbox.org (mout-p-201.mailbox.org [80.241.56.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AC5824B22D;
-	Sat, 11 Jan 2025 13:46:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BACF91E492;
+	Sat, 11 Jan 2025 14:21:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.241.56.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736603213; cv=none; b=oRgQnQOWmQ4CVv5558Xa2ukxtwake95SKBtoEntag0jhapyopZgFoXMiAAS1fAv6RRRUtLEgL4etz6o/C9faRBgJwcT5r8M0dADHQWpqW7DAZUKOJXZ7FqKQ4q2vW5RgLIkIQVZLMql5VOBaJTKjE0zPmqwxSRRAscR9ZXm8LyI=
+	t=1736605319; cv=none; b=sjP3gTszkHPUOkm/wo5jDxvcTqyxJz9fc2lN93DswpoXshB+NcsTeFTX7WaM94blt8G8XZR2nwiDERknOoVslZim7mx/umJPyV2+DzR5QYdMHBCMUdNneF8cilx0ep8dXxLXD+GtX+PpN9OlaShCWGOAKJL4dlE1jDPzI7/bf9k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736603213; c=relaxed/simple;
-	bh=aZ9cCWH80fN3OFBlDFqtOmWrQ0UWv2va4uTjI1Wcr7E=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=cJONpQ3Q1AnSbWSRD0hzvm47M2wPTNtQnPX8E2zG7OJdtxE3/U1lBK7erlrwlKb3RwUyPNxdV7PyNW/FWt673WrWKiey2NS9cRIhJsC7Ke+JlNNufi1SRNLBZ1m+YcmSpFMg03cLtNKPkA/SZWFWEj2BITbxDK2S0QG9MuC+tOM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=dClmYMmI; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50BDHoOv018777;
-	Sat, 11 Jan 2025 13:46:41 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	DTbzQpVjL5rC6V/zXb0+3+9DIPoFYNAYfkzCCrwbWMg=; b=dClmYMmI/XB+k7Z3
-	BjyL8+IETeWLZ4M+cgjawpg/lr0kFL52+2ziCvv9th1IVj9MG6E2NNTta1KTU+sS
-	29d17aKUQGuUFfFNBhB0Q5Soiy7jFyvTtSDqp0nNH8V4cSEqQJNrmtkpULPgBHP0
-	B8ihWEUg3Q76qSelUy9iEZaX5kjrpE6RycHn0IYiEa17h9zvOjVFCYv+PdwXPj1i
-	JxiNeUhKFKg3aQuX4jJXOF4IPSe3fahiA8tKlw4r45k4+DaNK4m+hlZChVSnD2IW
-	OtNnQEq4Cx9OkkFCTwDhQ7dX/+Fe/u9SjjL6epODb9egXFcMUNH78osr7AUmx0HL
-	mqok0g==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 443hmy8ktu-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Sat, 11 Jan 2025 13:46:41 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 50BDke3a021841
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Sat, 11 Jan 2025 13:46:40 GMT
-Received: from [10.216.14.247] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Sat, 11 Jan
- 2025 05:46:34 -0800
-Message-ID: <8468e80f-ecf9-4c35-8078-6afa0fe25594@quicinc.com>
-Date: Sat, 11 Jan 2025 19:16:20 +0530
+	s=arc-20240116; t=1736605319; c=relaxed/simple;
+	bh=clD0JYRcF/C1xi3xGggMAmmDiTfzk5reKILZo8Lx1Jk=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=EO86lQvPvPJgsa6uwsHZZXyGWa4ujdJyjgGNs5LDZCd/VOrwh3uIncu77nkdwJST+d0xziAmYgSI5M98ToyXSJ+KmL0hRzefUNif36yehmZjaogkR7MpPEOTuoHE1NMREci7C7gSuAzX5O81FsOd4WQIA0txBwyVJpKJ7WwbQi8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oltmanns.dev; spf=pass smtp.mailfrom=oltmanns.dev; dkim=pass (2048-bit key) header.d=oltmanns.dev header.i=@oltmanns.dev header.b=A5pqBkVs; arc=none smtp.client-ip=80.241.56.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oltmanns.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oltmanns.dev
+Received: from smtp1.mailbox.org (smtp1.mailbox.org [10.196.197.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by mout-p-201.mailbox.org (Postfix) with ESMTPS id 4YVgh16vjqz9sbF;
+	Sat, 11 Jan 2025 15:21:53 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oltmanns.dev;
+	s=MBO0001; t=1736605314;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=9N85Y4Z2qowL9rTsrfCGNbRfvRafyq+lZp7gyIycm2Y=;
+	b=A5pqBkVsu2yTZLCKZ6G5TbUuy775lMfStvRSvT9rho0HWJHCLdCBslmRTySoVQ7P5IEQ5V
+	MPGuIeQg9vt4A2eew/P0Fde+v3LmM6yXx6KUHPWhgwb6vdXp8RyIA+5jTUEjZd8DWC38t2
+	unhxNNZZm+3yBDJDq0HkWyGJiMTkfFSWv/R6vuP9eHjT2StDL66530WT8ObshImA10MoRN
+	KRHqCz7gefx6kHRAD7E7ASsMZrgb2CzWhEejRLEEShp26toivf9rgD6T2iI3gwkpCgS1C0
+	SlfJv6/Jz23ZVgvjUdHg5LK8rSzgUH+K7JV3FU/w0VR++5X/l0dVfwwx5kULmA==
+From: Frank Oltmanns <frank@oltmanns.dev>
+To: Johan Hovold <johan@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+  Chris Lew <quic_clew@quicinc.com>
+Cc: Stephan Gerhold <stephan.gerhold@linaro.org>,  Johan Hovold
+ <johan+linaro@kernel.org>,  Dmitry Baryshkov
+ <dmitry.baryshkov@linaro.org>,  Konrad Dybcio <konradybcio@kernel.org>,
+  Abel Vesa <abel.vesa@linaro.org>,  linux-arm-msm@vger.kernel.org,
+  linux-kernel@vger.kernel.org,  regressions@lists.linux.dev,
+  stable@vger.kernel.org
+Subject: Re: [PATCH] soc: qcom: mark pd-mapper as broken
+In-Reply-To: <Z36Gag6XhOrsIXqK@hovoldconsulting.com> (Johan Hovold's message
+	of "Wed, 8 Jan 2025 15:06:34 +0100")
+References: <20241010074246.15725-1-johan+linaro@kernel.org>
+	<Zwj3jDhc9fRoCCn6@linaro.org> <87wmf7ahc3.fsf@oltmanns.dev>
+	<Z3z7sHn6yrUvsc6Y@hovoldconsulting.com>
+	<Z36Gag6XhOrsIXqK@hovoldconsulting.com>
+Date: Sat, 11 Jan 2025 15:21:35 +0100
+Message-ID: <87wmf18m8g.fsf@oltmanns.dev>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V3 4/8] remoteproc: qcom: add hexagon based WCSS secure
- PIL driver
-Content-Language: en-US
-To: Gokul Sriram Palanisamy <quic_gokulsri@quicinc.com>,
-        Bjorn Andersson
-	<andersson@kernel.org>
-CC: "jassisinghbrar@gmail.com" <jassisinghbrar@gmail.com>,
-        "robh@kernel.org"
-	<robh@kernel.org>,
-        "krzk+dt@kernel.org" <krzk+dt@kernel.org>,
-        "conor+dt@kernel.org" <conor+dt@kernel.org>,
-        "mathieu.poirier@linaro.org"
-	<mathieu.poirier@linaro.org>,
-        "konradybcio@kernel.org"
-	<konradybcio@kernel.org>,
-        "Manikanta Mylavarapu (QUIC)"
-	<quic_mmanikan@quicinc.com>,
-        "linux-arm-msm@vger.kernel.org"
-	<linux-arm-msm@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org"
-	<linux-kernel@vger.kernel.org>,
-        "devicetree@vger.kernel.org"
-	<devicetree@vger.kernel.org>,
-        "linux-remoteproc@vger.kernel.org"
-	<linux-remoteproc@vger.kernel.org>,
-        "dmitry.baryshkov@linaro.org"
-	<dmitry.baryshkov@linaro.org>,
-        "Vignesh Viswanathan (QUIC)"
-	<quic_viswanat@quicinc.com>,
-        "Sricharan Ramabadhran (QUIC)"
-	<quic_srichara@quicinc.com>
-References: <20250107101647.2087358-1-quic_gokulsri@quicinc.com>
- <20250107101647.2087358-5-quic_gokulsri@quicinc.com>
- <ligcw5ndzuu4kgegxb6f3ttzpmw6iglyzq5kt4l45xyeemsfsr@f2735qq7frhk>
- <a169904a-1a1c-4bfb-9000-15a504f17522@quicinc.com>
-From: Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
-In-Reply-To: <a169904a-1a1c-4bfb-9000-15a504f17522@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: DY8j1VjLdljw0l0fjBuf3ajh-ZlooKGa
-X-Proofpoint-GUID: DY8j1VjLdljw0l0fjBuf3ajh-ZlooKGa
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 mlxscore=0
- clxscore=1011 impostorscore=0 spamscore=0 malwarescore=0
- lowpriorityscore=0 priorityscore=1501 mlxlogscore=939 suspectscore=0
- adultscore=0 bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2501110118
+Content-Type: text/plain
 
-
-
->>> +static int wcss_sec_start(struct rproc *rproc)
->>> +{
->>> +	struct wcss_sec *wcss = rproc->priv;
->>> +	struct device *dev = wcss->dev;
->>> +	const struct wcss_data *desc = of_device_get_match_data(dev);
+On 2025-01-08 at 15:06:34 +0100, Johan Hovold <johan@kernel.org> wrote:
+> On Tue, Jan 07, 2025 at 11:02:24AM +0100, Johan Hovold wrote:
+>> On Mon, Jan 06, 2025 at 08:10:52PM +0100, Frank Oltmanns wrote:
+>
+>> > Thank you so much for this idea. I'm currently using this workaround on
+>> > my sdm845 device (where the in-kernel pd-mapper is breaking the
+>> > out-of-tree call audio functionality).
 >>
->> Please avoid "parsing" DT in runtime.
-> 
-> I didn't underatand this.
-> 
+>> Thanks for letting us know that the audio issue affects sdm845 as well
+>> (I don't seem to hit it on sc8280xp and the X13s).
+>
+> And today I also hit this on the sc8280xp CRD reference design, so as
+> expected, there is nothing SoC specific about the audio service
+> regression either:
+>
+> [   11.235564] PDR: avs/audio get domain list txn wait failed: -110
+> [   11.241976] PDR: service lookup for avs/audio failed: -110
+>
+> even if it may be masked by random changes in timing.
+>
+> These means it affects also machines like the X13s which already have
+> audio enabled.
 
-IIUC, you should handle this in probe (one time) rather than for every 
-wcss_sec_start() call. In probe, you are already fetching this data. So 
-you can re-use the wcss->desc instead of parsing it again.
+I've blocklisted the in-kernel pd-mapper module for now and have
+switched back to the userspace pd-mapper.
+
+I don't know if it's helpful or not, but I don't get these error logs
+when using to the in-kernel pd-mapper. It's just that the phone's mic
+only works on approximately every third boot (unless I defer loading the
+module).
+
+>
+>> > Is there any work going on on making the timing of the in-kernel
+>> > pd-mapper more reliable?
+>>
+>> The ECANCELLED regression has now been fixed, but the audio issue
+>> remains to be addressed (I think Bjorn has done some preliminary
+>> investigation).
+>
+> Hopefully Bjorn or Chris have some plan on how to address the audio
+> regression.
+
+If you come up with a patch, I'd be glad to test it on my
+xiaomi-beryllium device.
+
+Thanks again,
+  Frank
+
+>
+> Johan
 
