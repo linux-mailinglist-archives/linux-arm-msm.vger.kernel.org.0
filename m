@@ -1,86 +1,36 @@
-Return-Path: <linux-arm-msm+bounces-44789-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-44790-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id DFE4EA0A2A8
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Jan 2025 11:16:27 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8A81EA0A2EE
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Jan 2025 11:45:20 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id D1845188BC71
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Jan 2025 10:16:30 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8BFCA16B4DF
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Jan 2025 10:45:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4047018B492;
-	Sat, 11 Jan 2025 10:16:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="WvMHHIKc"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 062501925A1;
+	Sat, 11 Jan 2025 10:45:10 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC41C170A23
-	for <linux-arm-msm@vger.kernel.org>; Sat, 11 Jan 2025 10:16:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0D4F19006F;
+	Sat, 11 Jan 2025 10:45:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736590586; cv=none; b=VS7E0hYD08AtPRMAv1h3ee0X+NEQJByWO7lximKOqz1vD6BdKxGoHYRoVsyWnsZYWUHMoc+BPeyWVFS9sLyJ5ORLrMUDKqBs2hwQdgwL1lWwtk5/hSkYm9GOmSnEoYB96OOtWlNo4uyqRrRo3MLLfHh+zNO3i66axDdpch971M8=
+	t=1736592309; cv=none; b=RVpIUvBpCPw1w4dAnbJOGvnR75dHC44ivVwGGfODZhMydGdkYSJQx8VowAqsLvwRFoTNru4OWv9JFq2DakNkLOIyq6joZlIhjdU/ve/OpMB1F8livFZ+m11Qpno+6vQfeY5NI+phYRR+M3KO+MqBnB540oIOBwuN9j/SxZR25ok=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736590586; c=relaxed/simple;
-	bh=+0C8BlzusYxOPptL9BVR6fsXIYLEOTda+I65CwE8f6M=;
+	s=arc-20240116; t=1736592309; c=relaxed/simple;
+	bh=52Pl44Q3COZfRIFHQEk5QMRdal6vOQrCpMHEDhgWu2k=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=kt6lWNHra0gJojo99XLARAk/ik4TM2nmNkmyB7eE5XqXpQPlMKbttdnams05y9FB9oMeWjnB6uNtwo7SGK2JTw258xxmQlle13gtLiP0X10x0guLRTW5stwFZKGu8AO+M0ZjPGPLw35+htdlpVpmh8t4bjIFquSvXALTTIf7Qlk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=WvMHHIKc; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50B6JQ5v004066
-	for <linux-arm-msm@vger.kernel.org>; Sat, 11 Jan 2025 10:16:23 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	w9+WyrSy4Bt0wnJHAm346WUu/Hgt2IxkMJO9OgJiDVk=; b=WvMHHIKcThoftU1l
-	tyqz4wdCu8/6zpzR+OueS+H6hJRx8cr+QuiZpuvk0Z9qzfp5XLFlZw4D3hQqSnvf
-	Fr1Jdcl+tXbti2eLo+9ekEo/OZjyFgQIRs1Mg80ul/HzafkhGQZE6yNMRfwLTrEd
-	YSwA/It/Saj6DzHYF1yl2h9L8FRu1efb/AKYAsEZfkgBDv7fHH3buCbBcpMDgZh1
-	KwjYPb7V1CvoQkSw+jcfLl+0OZxwG94lIr+WO+D5yJooJmR0DejX3ynZOGtnTVjz
-	/PkgwOsLnn/NgKFrNlfi+lrYxvUBO0483+e167Acd/rCg9SapjbXA/PHFGJjyWdD
-	me0E3w==
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com [209.85.160.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 443hjk8cyk-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Sat, 11 Jan 2025 10:16:23 +0000 (GMT)
-Received: by mail-qt1-f198.google.com with SMTP id d75a77b69052e-467a437e5feso7421611cf.0
-        for <linux-arm-msm@vger.kernel.org>; Sat, 11 Jan 2025 02:16:23 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736590569; x=1737195369;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=w9+WyrSy4Bt0wnJHAm346WUu/Hgt2IxkMJO9OgJiDVk=;
-        b=iqDCSKNMPiVQoKzHFSwzfwjgO8NHhi45bLqfFSNGG4Wd/xpr5DCG0fXH0OQRbgSfUc
-         C5p1KYqWBgMZ3fTqPI5lmRDle0bSEgToubmr4CQ+Zl9+bsc4X2HOzDHRYt0OJSQOCFEU
-         wmXwM/uFvluMek92n5nU+Svs9hxP6Lnkr1drr5egxgc7pEdNcuoza+SgJVU+9z5BIX4t
-         nBqQ8UPmXjp+ICPo+I9zgXB1OhHHhCyjhzpy6dYR4OvN253or6cIcEQOELiLjMINqQH2
-         D9MxhWyJcgeWl73wHZAdlg/PMvq8jl7y5NjNL2ssYzoTsp2DOLpW0VsEtBYeCu4IJR1Z
-         spLw==
-X-Gm-Message-State: AOJu0YwSHvlrYjHtpzsCG87T3o0LbdVtLSYuLLyygPy0qz34K9ukrsxi
-	Pm88DCP5sWIFnGvKEy7P6HI0ByfikHX8JDqJUIIdtqaWYNNX+UsXODnCSOFiOh9xzkEs9lpHSQ2
-	9SSsNBuibyIwaksmtRQS06e5ZF+kEiofBZdYsZTQqOpLAunj/vsBdddPxCafS6S2tYR5R3afo
-X-Gm-Gg: ASbGncsKPZHk36d1+LN8wxrpgP/Koii7MBNfzHw3+xCNSwK2pJJK1dEFSmzGV0EX4wb
-	QFeM31bR1KYB1pZjHMQ5+wGLYakfkXxWxfF3gGjaPIHf7rzskESudpjJRhz7BUhZ7H6jWRvIW7Z
-	Ew3G2NFi6AFLR14B8fm+pj/ORxrYfraBh9NbWGVp7vSNF3Y7i0vuKTWJ7somdpMvt+Ix/uWbcfA
-	pf7Oi4zbN7nkXEf9hAx2OD5t64fX1sesg246ouFWUNNArc+2VCMFS7oc7kn0263p4TyGFaS5qE8
-	1neBNcJyTQZY49hRSd1RGx0Ykwaq8uEHw4U=
-X-Received: by 2002:a05:622a:450:b0:460:9026:6861 with SMTP id d75a77b69052e-46c7102be4cmr82952681cf.9.1736590569474;
-        Sat, 11 Jan 2025 02:16:09 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHbKnV/v9Y7xtZ/lsEvPDhcI9HeXBzrrHAPAicTsOH8LPJnx7Wcrgu8KbVeasp8ehZ3y4BjQQ==
-X-Received: by 2002:a05:622a:450:b0:460:9026:6861 with SMTP id d75a77b69052e-46c7102be4cmr82952551cf.9.1736590569059;
-        Sat, 11 Jan 2025 02:16:09 -0800 (PST)
-Received: from [192.168.65.90] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5d99008c3cdsm2548085a12.1.2025.01.11.02.16.05
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 11 Jan 2025 02:16:07 -0800 (PST)
-Message-ID: <a087a20a-04f1-496a-adb0-1462bd79b5be@oss.qualcomm.com>
-Date: Sat, 11 Jan 2025 11:16:04 +0100
+	 In-Reply-To:Content-Type; b=b0QavjlAd99g0N4rQZ+wiFn8cNun2zI1iyw/kBiPQ798NYhUNNsuuhAK5lpMhLVqyz9FqBDYjqIoy1P0GrySPSAiMfVIluJAcPY+RbR+T1tAupTQO/SOae+VE36VZn19wROGlHCbJ9h/LaELi3rD7Zkff0I7gZLMzQ6fm0CyM58=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F144DC4CED2;
+	Sat, 11 Jan 2025 10:45:04 +0000 (UTC)
+Message-ID: <7e75deb6-6c0e-4bf8-b4c5-d76b1abe2d5b@xs4all.nl>
+Date: Sat, 11 Jan 2025 11:45:02 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -88,42 +38,180 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/4] arm64: dts: qcom: sm8650: add OSM L3 node
-To: Neil Armstrong <neil.armstrong@linaro.org>,
-        Georgi Djakov <djakov@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
- <conor+dt@kernel.org>,
-        Sibi Sankar <quic_sibis@quicinc.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20250110-topic-sm8650-ddr-bw-scaling-v1-0-041d836b084c@linaro.org>
- <20250110-topic-sm8650-ddr-bw-scaling-v1-2-041d836b084c@linaro.org>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <20250110-topic-sm8650-ddr-bw-scaling-v1-2-041d836b084c@linaro.org>
+Subject: Re: [PATCH v9 27/28] media: iris: enable video driver probe of SM8250
+ SoC
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Dikshita Agarwal <quic_dikshita@quicinc.com>, Johan Hovold
+ <johan@kernel.org>, Vikash Garodia <quic_vgarodia@quicinc.com>
+Cc: Abhinav Kumar <quic_abhinavk@quicinc.com>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Philipp Zabel <p.zabel@pengutronix.de>,
+ Sebastian Fricke <sebastian.fricke@collabora.com>,
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+ Neil Armstrong <neil.armstrong@linaro.org>,
+ Nicolas Dufresne <nicolas@ndufresne.ca>,
+ =?UTF-8?Q?Uwe_Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
+ Jianhua Lu <lujianhua000@gmail.com>,
+ Stefan Schmidt <stefan.schmidt@linaro.org>, linux-media@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, Bjorn Andersson <andersson@kernel.org>
+References: <20241212-qcom-video-iris-v9-0-e8c2c6bd4041@quicinc.com>
+ <20241212-qcom-video-iris-v9-27-e8c2c6bd4041@quicinc.com>
+ <Z3_nCPk_g8znto4A@hovoldconsulting.com>
+ <64f8bebd-35e1-c743-b212-e1a3292bade2@quicinc.com>
+ <Z4EuiPEw8mvDQ2gv@hovoldconsulting.com>
+ <24334fb8-4d83-eb06-aee3-dfe1f8e4937b@quicinc.com>
+ <552972B8-1ACA-4243-A8E3-8F48DAF39C5C@linaro.org>
+Content-Language: en-US, nl
+From: Hans Verkuil <hverkuil@xs4all.nl>
+Autocrypt: addr=hverkuil@xs4all.nl; keydata=
+ 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
+In-Reply-To: <552972B8-1ACA-4243-A8E3-8F48DAF39C5C@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: FBszjtHUbTiRG3YKixHNUpKaKL8A19J7
-X-Proofpoint-ORIG-GUID: FBszjtHUbTiRG3YKixHNUpKaKL8A19J7
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 clxscore=1015
- spamscore=0 suspectscore=0 bulkscore=0 priorityscore=1501 mlxlogscore=785
- lowpriorityscore=0 malwarescore=0 phishscore=0 mlxscore=0 impostorscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2411120000
- definitions=main-2501110089
 
-On 10.01.2025 4:21 PM, Neil Armstrong wrote:
-> Add the OSC L3 Cache controller node.
+On 10/01/2025 19:01, Dmitry Baryshkov wrote:
+> On 10 January 2025 19:30:30 EET, Dikshita Agarwal <quic_dikshita@quicinc.com> wrote:
+>>
+>>
+>> On 1/10/2025 7:58 PM, Johan Hovold wrote:
+>>> On Thu, Jan 09, 2025 at 11:18:29PM +0530, Vikash Garodia wrote:
+>>>> On 1/9/2025 8:41 PM, Johan Hovold wrote:
+>>>>> On Thu, Dec 12, 2024 at 05:21:49PM +0530, Dikshita Agarwal wrote:
+>>>>>> Initialize the platform data and enable video driver probe of SM8250
+>>>>>> SoC. Add a kernel param to select between venus and iris drivers for
+>>>>>> platforms supported by both drivers, for ex: SM8250.
+>>>>>
+>>>>> Why do you want to use a module parameter for this? What would be the
+>>>>> default configuration? (Module parameters should generally be avoided.)
+>>>
+>>>> This was discussed during v4 [1] and implemented as per suggestion
+>>>>
+>>>> [1]
+>>>> https://lore.kernel.org/linux-media/eea14133-2152-37bb-e2ff-fcc7ed4c47f5@quicinc.com/
+>>>
+>>> First, the background and motivation for this still needs to go in the
+>>> commit message (and be mentioned in the cover letter).
+>>>
+>>> Second, what you implemented here is not even equivalent to what was
+>>> done in the mdm drm driver since that module parameter is honoured by
+>>> both drivers so that at most one driver tries to bind to the platform
+>>> device.
+>>>
+>>> With this patch as it stands, which driver ends up binding depends on
+>>> things like link order and what driver has been built a module, etc. (as
+>>> I pointed out below).
+>>>
+>>>>> Why not simply switch to the new driver (and make sure that the new
+>>>>> driver is selected if the old one was enabled in the kernel config)?
+>>>
+>>>> Its about the platform in migration i.e sm8250. Since new driver is not yet
+>>>> feature parity with old driver, choice is provided to client if it wants to use
+>>>> the new driver (default being old driver for sm8250)
+>>>
+>>> This should be described in the commit message, along with details on
+>>> what the delta is so that the reasoning can be evaluated.
+>>>
+>>> And I'm still not sure using a module parameter for this is the right
+>>> thing to do as it is generally something that should be avoided.
+>>>
+>> I understand your concern of using module params.
+>> I will modify it to rely on Kconfig to select the driver (suggested by
+>> Hans) instead of module param.
 > 
-> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-> ---
+> Please don't. This makes it impossible to perform side-by-side comparison. Also as venus and iris drivers are not completely equivalent wrt supported platforms, distributions will have to select whether to disable support for older platforms or for new platforms: Kconfig dependency will make it impossible to enable support for both kinds.
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+An alternative is that the module option is placed under
 
-Konrad
+#if defined(CONFIG_VIDEO_QCOM_IRIS) && defined(CONFIG_VIDEO_QCOM_VENUS)
+
+So it only activates if both drivers are compiled.
+
+But the fact that both drivers can work for the same hardware is something that
+must be clearly documented. Probably in a comment block before this module option.
+Possibly also in the Kconfigs for the IRIS and VENUS drivers.
+
+Things that are unusual require explanation, so in this case I'd like to see:
+
+1) Why are there two drivers?
+2) Why allow runtime-selection of which driver to use? (E.g. side-by-side comparison)
+3) Which hardware supports only venus, only iris, or both?
+4) What is the road forward? (I assume that venus is removed once feature parity is reached?)
+
+Regards,
+
+	Hans
+
+> 
+>> something like:
+>> config VIDEO_QCOM_IRIS
+>>        tristate "Qualcomm iris V4L2 decoder driver"
+>>       ...
+>>        depends on VIDEO_QCOM_VENUS=n || COMPILE_TEST
+>>
+>> Thanks,
+>> Dikshita
+>>>>>>  static int iris_probe(struct platform_device *pdev)
+>>>>>>  {
+>>>>>>  	struct device *dev = &pdev->dev;
+>>>>>> @@ -196,6 +224,9 @@ static int iris_probe(struct platform_device *pdev)
+>>>>>>  	u64 dma_mask;
+>>>>>>  	int ret;
+>>>>>>  
+>>>>>> +	if (!video_drv_should_bind(&pdev->dev, true))
+>>>>>> +		return -ENODEV;
+>>>>>
+>>>>> AFAICT nothing is preventing venus from binding even when 'prefer_venus'
+>>>>> is false.
+>>>>>
+>>>>>> +
+>>>>>>  	core = devm_kzalloc(&pdev->dev, sizeof(*core), GFP_KERNEL);
+>>>>>>  	if (!core)
+>>>>>>  		return -ENOMEM;
+>>>
+>>> Johan
+> 
+
 
