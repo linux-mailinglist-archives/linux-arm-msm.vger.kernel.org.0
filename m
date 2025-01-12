@@ -1,125 +1,114 @@
-Return-Path: <linux-arm-msm+bounces-44822-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-44823-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id A0599A0AB16
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 12 Jan 2025 18:04:00 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 378EDA0AB54
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 12 Jan 2025 18:49:01 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 896363A63AC
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 12 Jan 2025 17:03:54 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id EF8E93A67C9
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 12 Jan 2025 17:48:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 404FC1B87ED;
-	Sun, 12 Jan 2025 17:03:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A4E0D1B87E9;
+	Sun, 12 Jan 2025 17:48:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=wanadoo.fr header.i=@wanadoo.fr header.b="fnH0iNQQ"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="C+JtWPgy"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.smtpout.orange.fr (smtp-26.smtpout.orange.fr [80.12.242.26])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F08BA1BEF7D;
-	Sun, 12 Jan 2025 17:03:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.12.242.26
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E96A6322E;
+	Sun, 12 Jan 2025 17:48:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736701435; cv=none; b=ai/Rd0J15ID9pQgksSeMJlWFdnBsj26aX4SQn6gpMnypey5tWSW14CKU0n+6J7xTvvJt97unaXFk9YgPDh9tdo0M8XhRNWVCXBDUN7vw1uR5CV2XGPGp0i1BeSfCsMNrflKIxXT19syCYvhjtRVyvYvw0Q2PslyANYKNZGInfMU=
+	t=1736704136; cv=none; b=J5yJ3aiWRlRlcauqs4TNG5CUuCrc2XyrgxPfYJTiyPLLO95m+nr7q3Jd65ZhqR4k8KUsD1a/8YNEaZVrX6m75dHQA8BmwzkPJX4YKZNeP995m50Ls7bxCLyGaPPOiTkR4at8GkZ20X/kV1Qrnv1KPACpeVQLKM24+tUwwRRMh3Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736701435; c=relaxed/simple;
-	bh=ABE6baLfT+jnOfm3E0iUTl8bed0Mn68JyxJRW+NvnLM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=G41g8LplAGLrDj706IxuoCTzGrJWPBFAFy7HKUmkZhBfvilh6Tk2FBAnk6orjUEETHVAYC/cpuUmed50LI2ilymgYX1eeStZSJ5gJpRcTHOGIZ82czPB10rqY4fJyWKV3QLZi+oNwGIFbxM4eXY2E5t7X2MwJetuM/rkm3VIpF4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=wanadoo.fr; spf=pass smtp.mailfrom=wanadoo.fr; dkim=pass (2048-bit key) header.d=wanadoo.fr header.i=@wanadoo.fr header.b=fnH0iNQQ; arc=none smtp.client-ip=80.12.242.26
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=wanadoo.fr
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=wanadoo.fr
-Received: from [192.168.1.37] ([90.11.132.44])
-	by smtp.orange.fr with ESMTPA
-	id X1NCt2XX5qZ5JX1NGt8sSO; Sun, 12 Jan 2025 18:03:49 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=wanadoo.fr;
-	s=t20230301; t=1736701429;
-	bh=gcp02vfLN1uVTWXJ8UJ8BzKX5eeyuNnorXOtRkd8w94=;
-	h=Message-ID:Date:MIME-Version:Subject:To:From;
-	b=fnH0iNQQzQe3piqBMIVE5d9BG6+w8xEgN2VBqmi8AXirOeRy60NrMR/v+/jXABh16
-	 JpvenW7mQrRyQJNS7ODfCQud/A0sHpCYumL7Rxo4dvkQRkFn5Sq+X8YWWLh1l3Npj7
-	 EKCh7IqNNNluOSSWpJWw/jeZKljq/zAdtpT71biBfD3cTuF1rjWn5vFZEgL0E6FQCj
-	 rUQtMFXuQPg5CYG5zF84tPPtJtZ/Li8U3366GMCLOd/+RYloATVfvXiYux/yyQLhAh
-	 h/GhbIjMLlosT95vg3PB740gtcl7sPYn5Kc0tMKx+JEYGR+BJ4RpBBEKNHbPCy3uh+
-	 8FUFx8/CX7JlA==
-X-ME-Helo: [192.168.1.37]
-X-ME-Auth: bWFyaW9uLmphaWxsZXRAd2FuYWRvby5mcg==
-X-ME-Date: Sun, 12 Jan 2025 18:03:49 +0100
-X-ME-IP: 90.11.132.44
-Message-ID: <05dfdd2f-e2c2-40ff-8a84-038c4da8385a@wanadoo.fr>
-Date: Sun, 12 Jan 2025 18:03:38 +0100
+	s=arc-20240116; t=1736704136; c=relaxed/simple;
+	bh=r4kR21UGLDQuk4FtXxiZ74IIyOTc5qe1jrZhsj74Aw0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=Zw0XXoz30ORLYw3HcGe/ws/ISOLKBXfVpv+qipwO79UX95N4ix12N6cFkX515dSePUHIKoEwTtymV7K55pxW9dQNcjU4rkkTTxaSYMMjAkcehLhs0nNnE0QIP8Wne0YHb4Lj2JoNqonTYhqDfLBEf0cChUxncmCDyYvX7J1//TY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=C+JtWPgy; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50C8pbZr019574;
+	Sun, 12 Jan 2025 17:48:38 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	/lScFyZXIQYunYhaA/38nCBDBO+G4itV3Ti7Q4+S3ts=; b=C+JtWPgy4GDU/5B0
+	4SEjwHYzM5jEj7gKfVS6JRXBnCnyGDL1Qg/zow/FK/8wmRjcm5RVNBMs9z8rItNg
+	tdhocDDmyGE49hnJyJZaPTckKiyLe7YwAgBV1jaHgcwFujKX4j7fDk7lFsnMAUWQ
+	0YPyLoGbFCW/XKweVlSyXvcRqNqHGqi6nvNsw0ZEpL+iC8dBo2g+5vRhXIu9oRwN
+	mIkumqHyHxGC6+xy0XZHkM/pPbRieUXbIuKvlJVJhNvwwSbu4Scb/QTEVKaVzxmv
+	ERFsPmcqqcf1h62+uUrTWfyZXwKN9tZA5mzHlULB7jf4Nqt0UX3i3XuiwYjvPi6i
+	3bivVA==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 443hm22cfm-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sun, 12 Jan 2025 17:48:38 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 50CHmae8006900
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sun, 12 Jan 2025 17:48:36 GMT
+Received: from [10.226.59.182] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Sun, 12 Jan
+ 2025 09:48:35 -0800
+Message-ID: <9bf72460-48d0-e83f-9ef5-bb6bbd95828e@quicinc.com>
+Date: Sun, 12 Jan 2025 10:48:35 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH net-next] net: phy: Constify struct mdio_device_id
-To: Andrew Lunn <andrew@lunn.ch>
-Cc: SkyLake.Huang@mediatek.com, UNGLinuxDriver@microchip.com,
- andrei.botila@oss.nxp.com, andrew@lunn.ch,
- angelogioacchino.delregno@collabora.com, arun.ramadoss@microchip.com,
- bcm-kernel-feedback-list@broadcom.com, daniel@makrotopia.org,
- davem@davemloft.net, dqfext@gmail.com, edumazet@google.com,
- florian.fainelli@broadcom.com, heiko@sntech.de, hkallweit1@gmail.com,
- jbrunet@baylibre.com, kabel@kernel.org, kernel-janitors@vger.kernel.org,
- khilman@baylibre.com, kuba@kernel.org, linux-amlogic@lists.infradead.org,
- linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-mediatek@lists.infradead.org,
- linux-rockchip@lists.infradead.org, linux@armlinux.org.uk,
- lxu@maxlinear.com, martin.blumenstingl@googlemail.com,
- matthias.bgg@gmail.com, michael.hennerich@analog.com,
- neil.armstrong@linaro.org, netdev@vger.kernel.org, pabeni@redhat.com,
- piergiorgio.beruto@gmail.com, richardcochran@gmail.com, rjui@broadcom.com,
- sbranden@broadcom.com
-References: <403c381b7d9156b67ad68ffc44b8eee70c5e86a9.1736691226.git.christophe.jaillet@wanadoo.fr>
- <9dfeb860-3c0c-4f16-a150-fdce133281e8@lunn.ch>
-Content-Language: en-US, fr-FR
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-In-Reply-To: <9dfeb860-3c0c-4f16-a150-fdce133281e8@lunn.ch>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.0
+Subject: Re: [PATCH 1/4] dt-bindings: clock: qcom,mmcc: support LVDS PLL input
+ for apq8064
+Content-Language: en-US
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Bjorn Andersson
+	<andersson@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        "Stephen
+ Boyd" <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski
+	<krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Taniya Das
+	<quic_tdas@quicinc.com>
+CC: Rob Clark <robdclark@gmail.com>, <linux-arm-msm@vger.kernel.org>,
+        <linux-clk@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+References: <20241224-apq8064-fix-mmcc-v1-0-c95d2e2bf143@linaro.org>
+ <20241224-apq8064-fix-mmcc-v1-1-c95d2e2bf143@linaro.org>
+From: Jeffrey Hugo <quic_jhugo@quicinc.com>
+In-Reply-To: <20241224-apq8064-fix-mmcc-v1-1-c95d2e2bf143@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: Qx_oX95oMr4HNlnOgdghm4IYzh4qMFC5
+X-Proofpoint-ORIG-GUID: Qx_oX95oMr4HNlnOgdghm4IYzh4qMFC5
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011 adultscore=0
+ mlxlogscore=832 phishscore=0 mlxscore=0 suspectscore=0 malwarescore=0
+ spamscore=0 lowpriorityscore=0 bulkscore=0 impostorscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2501120158
 
-Le 12/01/2025 à 17:46, Andrew Lunn a écrit :
-> On Sun, Jan 12, 2025 at 03:14:50PM +0100, Christophe JAILLET wrote:
->> 'struct mdio_device_id' is not modified in these drivers.
->>
->> Constifying these structures moves some data to a read-only section, so
->> increase overall security.
->>
->> On a x86_64, with allmodconfig, as an example:
->> Before:
->> ======
->>     text	   data	    bss	    dec	    hex	filename
->>    27014	  12792	      0	  39806	   9b7e	drivers/net/phy/broadcom.o
->>
->> After:
->> =====
->>     text	   data	    bss	    dec	    hex	filename
->>    27206	  12600	      0	  39806	   9b7e	drivers/net/phy/broadcom.o
->>
->> Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+On 12/24/2024 3:12 AM, Dmitry Baryshkov wrote:
+> APQ8064 / MSM8960 have separate LVDS PLL driving the LVDS / LCDC clock.
+> Add corresponding input to clock controller bindings.
 > 
-> Seems sensible.
-> 
-> Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-> 
-> Is the long terms goal to make MODULE_DEVICE_TABLE() enforce the
-> const?
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-It was not my initial goal, but I can give it a look if you think it's 
-worth it.
-
-But some other constifications will be needed before that.
-
-CJ
-
-> 
->      Andrew
-> 
-> 
-
+Acked-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
 
