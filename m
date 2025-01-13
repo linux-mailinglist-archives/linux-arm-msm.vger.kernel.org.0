@@ -1,141 +1,116 @@
-Return-Path: <linux-arm-msm+bounces-44889-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-44890-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id EEFDFA0B84A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Jan 2025 14:36:57 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id E3544A0B859
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Jan 2025 14:38:15 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B1432166BBA
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Jan 2025 13:36:55 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A2BAD3A1AB8
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Jan 2025 13:38:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2E6FB23873B;
-	Mon, 13 Jan 2025 13:36:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BF57B230D3D;
+	Mon, 13 Jan 2025 13:38:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Kcqc3TiQ"
+	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="w7vN9zyB"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f41.google.com (mail-ed1-f41.google.com [209.85.208.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 645B31CAA8F;
-	Mon, 13 Jan 2025 13:36:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2AED125B2;
+	Mon, 13 Jan 2025 13:38:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=156.67.10.101
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736775403; cv=none; b=lMhs1ZrnW3XSXN55zXkJ7cBWIVyHUTfXxmNjw5MY0O61mJPSuYYpyw3XNL+ftGttHFblPxfHbU+bSXijh1V3xPnGP5CLK10h5g+tj6ME3qzh8kI+MQQZuSSotVU1eq1c2Ebe7vO3sreOipKzXPR6w6EsFrBvG77qQ84r3omX+iw=
+	t=1736775491; cv=none; b=VX7U5qNfDMeHumokBhi7W3vfXTit0lYTZKL9ARRtbZYxZnuvFtrPS/cUnI8yenvl0jdbaFkLc1je9DtA/47p1pSXqa9WBykxbwaYyVdpgQTco8r//mWc4x8mZI8dRj22ABoffAjiaeLP1rsQ0zT9boC+Ec6wrFuRCgKmrJeAnyM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736775403; c=relaxed/simple;
-	bh=dVOX1ct04XRB6HS4XCM9AuU0WW15SibfodTKj6OCrFA=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:MIME-Version:
-	 Content-Type; b=jnbwwk/yh1b+kbJKA91OkqIYvOAGaFVsSUp3Vq81U7tuS+2gzQJOXTk+vgNq9vKVrt8jnPl4Vr1eRc+RViTJ5jyxMY6F8iLyJg5AsQO8jhYj0pGuCXsckPpzgwaHesgka4HTkLtgJBSJgh6QAzY0AMTsp8KFTR+KvCyztQ6WHL8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Kcqc3TiQ; arc=none smtp.client-ip=209.85.208.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ed1-f41.google.com with SMTP id 4fb4d7f45d1cf-5d3e8f64d5dso8352006a12.3;
-        Mon, 13 Jan 2025 05:36:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1736775400; x=1737380200; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:in-reply-to:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=BCOO3CeumWEhxRoRrsxtZPCsXRg2joLKXPxHQJ2qLzk=;
-        b=Kcqc3TiQpGsFgrhUgJ92ZQ09uZvFAXzPQmQYDX8qDFe71X3cqH6/9xVcZhdQ5G2RbA
-         SQIewa3Opy/75bKFpJgxIyESFVahGpkmhC61E7SNyVv9/rRu7vFjwOvDxOs4uBII30jt
-         9it2PQ/K4mkTEJyPpWLW7ri6CA705ASfVSHUU3iU+GB7HeE7imjecvIUptFXbCh9DWYM
-         1a4T/o0DrFVu/tqyiI689azMIMcKL9OB7fIT4fposP4Ox1BqekRpAiKLcJPrbZt7er5A
-         gR1HheFZpyZYN/IVVhqB1EHs9eItXhfIHEW3/lrmSsFZU8y0uAEqsl28WEu0QKE7sYGM
-         D4cw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736775400; x=1737380200;
-        h=content-transfer-encoding:mime-version:in-reply-to:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=BCOO3CeumWEhxRoRrsxtZPCsXRg2joLKXPxHQJ2qLzk=;
-        b=vqa6rUqLZ+iApwPyw0bfRRCMIdjQK+ExhPLnCI28kC1KREjJvUdui2AfoDbhYJ1stb
-         G3ibCtYoXRPw2nQKcBG7EK50qKwEBPHbqPBskP8yIDMcjv9s5rrJCdNh7Pe9A3ir8NQ6
-         xQGCzoddNOx5BcnEWA1b8xTnpub/nlL0KWBR72ynFQSY7Xm2pDyn67X8rPNtkW9PoI8A
-         jqptf+q9FYm8cTOFHxdnJVhgFh3ROTmAm5WjOW8d2xH1WX+cxXfpIcGeJxWcMis5TqZ4
-         Oci4vX5+giYqrJFy18/GU1KSFz8IUqfIo1AA1zKF48+EuwdSn1UrQmgC28XhUSS86wAh
-         P7jw==
-X-Forwarded-Encrypted: i=1; AJvYcCU/0hhyqO8d20+233YRUcvTbSx3WfgzubN3KMQLwsRSEUGd3P+RC2AvhQBwzryLfryr+sBOfv6ktSC1i7439Q==@vger.kernel.org, AJvYcCUi1bl7rxRS5jawmo4NxMOJ+n/kcac40zB00ZkOAt3qs132PkELMB/uhvIlFEsfXLtY8GjTE0cBmwOM@vger.kernel.org, AJvYcCUwB90i0dNke9AQh9mjtj4pnR7nm69ogt83SOXi1XytwoSx9J2KBAZPHr++xYbBdx8KNW4lQxFuvlyTaCU=@vger.kernel.org, AJvYcCVDJg3RqeELTA3KiM7sVgGqvsQu6GDHuCexhw/k58I2HGfBbtEfo3gH8DG3Rcom6A6EvQoihmXhoFREVNO2@vger.kernel.org, AJvYcCVb9HAc50U0FiwttFmAolviET7D3yZHuuvO6BI2fZ8ilwhx262XocQLgaN69+WYBOD1EPR1m0/Ooofi/3U=@vger.kernel.org, AJvYcCVntDS7PHYGkj/R+mWgWYixV1EfdPoxGC80qLOY/DLWM9I6tVmu2l1/iH/Wk/2h67ht+1+PgQUFxUG1@vger.kernel.org, AJvYcCXuBa336J4wJNbjbFT7fkfj5Z5uBEViZkvyjKmEVIcqnjIXsdpDnIZx1SgTC80OqjI3L+rRa+znmStg@vger.kernel.org
-X-Gm-Message-State: AOJu0YyKlBI56hZDmUWMAPFaintn4KxgkRyMyB7Pc3zg31Fz8sKm00FN
-	zjBEzY67S44o0RLX88bc0851rEKMHQJ6CVMgsgOekQHRqwoZ04Ch
-X-Gm-Gg: ASbGncvObGdv2RbvdknOuhISnXPS5Szh65g5RuVRNB/4iju6ZO3Hj/pHcItCAVeMKMx
-	++m4+4ZJuISwjY9/wZuWcUX23fd3Wq/XmNT4I/GYRlTgn3m1zN+00beK0Q55meAI8lSOv0n0W8M
-	BnnL4YdLKAG/6P+BXqfbGTBN0JwV1LNXx1KEkC7EfSagmL0bXYsRVd6uVSePxn3O8Qemk+RkjIH
-	fEvgf1OvtaJhqbjF5JPll1r3z4QZYKMjqUbLXHmWQFJpUYTHQ2tq5Si585lSsK5nhLAefk=
-X-Google-Smtp-Source: AGHT+IFjst6wsdjTPwp6oiIf+Y1R9oxN/d9Kg2WINuDvWnvcQG61H8vLN/Y+6oQgF/w1Z8cqOc3BsA==
-X-Received: by 2002:a05:6402:4023:b0:5d0:e2c8:dc8d with SMTP id 4fb4d7f45d1cf-5d972e1b962mr18696919a12.20.1736775399331;
-        Mon, 13 Jan 2025 05:36:39 -0800 (PST)
-Received: from foxbook (adqh85.neoplus.adsl.tpnet.pl. [79.185.141.85])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5d99008c2ccsm4986793a12.18.2025.01.13.05.36.37
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 13 Jan 2025 05:36:39 -0800 (PST)
-Date: Mon, 13 Jan 2025 14:36:32 +0100
-From: =?UTF-8?B?TWljaGHFgg==?= Pecio <michal.pecio@gmail.com>
-To: quic_wcheng@quicinc.com
-Cc: Thinh.Nguyen@synopsys.com, broonie@kernel.org, conor+dt@kernel.org,
- corbet@lwn.net, devicetree@vger.kernel.org, dmitry.torokhov@gmail.com,
- gregkh@linuxfoundation.org, krzk+dt@kernel.org, lgirdwood@gmail.com,
- linux-arm-msm@vger.kernel.org, linux-doc@vger.kernel.org,
- linux-input@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-sound@vger.kernel.org, linux-usb@vger.kernel.org,
- mathias.nyman@intel.com, perex@perex.cz,
- pierre-louis.bossart@linux.intel.com, robh@kernel.org,
- srinivas.kandagatla@linaro.org, tiwai@suse.com
-Subject: Re: [PATCH v32 01/32] usb: host: xhci: Repurpose event handler for
- skipping interrupter events
-Message-ID: <20250113143632.63c52d74@foxbook>
-In-Reply-To: <20250108012213.1659364-2-quic_wcheng@quicinc.com>
+	s=arc-20240116; t=1736775491; c=relaxed/simple;
+	bh=nHN3ZaTTiEw6x6KDpMqEEiPy8Os0si5mupUZrQsZhAQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=um6hO14BRtsGZsEY2I4uGLyyT/CNnNQkcYjIQ9GwiT0gTh6aA9VeOMANWSHK94dmLcY/8XZ+IWz2u1tZu/uq6itHgC7M2iS2lnURqKI2UGQwJWFd2ocihl4jAgjRco5rujm/2SbQF1xMAnywToz29Du9rvwAdA2u5HLon264nPw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch; spf=pass smtp.mailfrom=lunn.ch; dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b=w7vN9zyB; arc=none smtp.client-ip=156.67.10.101
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lunn.ch
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
+	s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
+	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
+	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
+	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
+	bh=K3/LnQGpJFz1AF0FoQuzUY+SDS8BerFJpfW2HEfDwmg=; b=w7vN9zyBghaON2SXZA2zkbWGCK
+	ioUyHajgaWLXq1Ib45mo9URWcz+QYj2uk2rSGyvvWk6gKSlh0xAGaFn+/vYKTPPEjQBBTKotFLOHf
+	7yrV/eE6KxMgDbDc5GoZh9aJ+iqrDhXSEKiWxY0AIjoNPJKWgcbSqy/1Y+DUVUxnkAQU=;
+Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
+	(envelope-from <andrew@lunn.ch>)
+	id 1tXKdd-0046S9-3A; Mon, 13 Jan 2025 14:37:53 +0100
+Date: Mon, 13 Jan 2025 14:37:53 +0100
+From: Andrew Lunn <andrew@lunn.ch>
+To: Lei Wei <quic_leiwei@quicinc.com>
+Cc: Luo Jie <quic_luoj@quicinc.com>, Andrew Lunn <andrew+netdev@lunn.ch>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Suruchi Agarwal <quic_suruchia@quicinc.com>,
+	Pavithra R <quic_pavir@quicinc.com>,
+	Simon Horman <horms@kernel.org>, Jonathan Corbet <corbet@lwn.net>,
+	Kees Cook <kees@kernel.org>,
+	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
+	Philipp Zabel <p.zabel@pengutronix.de>,
+	linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-doc@vger.kernel.org, linux-hardening@vger.kernel.org,
+	quic_kkumarcs@quicinc.com, quic_linchen@quicinc.com,
+	srinivas.kandagatla@linaro.org, bartosz.golaszewski@linaro.org,
+	john@phrozen.org
+Subject: Re: [PATCH net-next v2 12/14] net: ethernet: qualcomm: Initialize
+ PPE L2 bridge settings
+Message-ID: <8bdde187-b329-480d-a745-16871276a331@lunn.ch>
+References: <20250108-qcom_ipq_ppe-v2-0-7394dbda7199@quicinc.com>
+ <20250108-qcom_ipq_ppe-v2-12-7394dbda7199@quicinc.com>
+ <4dbf1550-32e9-4cce-bf0c-8b92dbd49b50@lunn.ch>
+ <c67f4510-e71b-4211-8fe2-35dabfc7b44e@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <c67f4510-e71b-4211-8fe2-35dabfc7b44e@quicinc.com>
 
-Hi,
-
-> Depending on the interrupter use case, the OS may only be used to
-> handle the interrupter event ring clean up.
-
-What do you mean by "cleanup"? Because I see that this patch ends up
-acknowledging events to the xHC and I don't know why it would do so?
-
-> In these scenarios, event TRBs don't need to be handled by the OS,
-> so introduce an xhci interrupter flag to tag if the events from an
-> interrupter needs to be handled or not.
-
-Right, and if the OS isn't handling those events because they are owned
-by a coprocessor then it shouldn't be acknowledging them either, which
-has the effect that the xHC considers their memory free for reuse.
-
-Also, what happens when Linux goes to sleep and this IRQ stops running?
-I expected that the coprocessor itself should be updating the xHC about
-its own progress.
-
-Is it a bug? How is this stuff supposed to work?
-
-How are future developers supposed to know how it is supposed to work?
-I imagine that few of them will have Qualcomm hardware for testing.
-
-
-> static int xhci_handle_event_trb(struct xhci_hcd *xhci, struct xhci_interrupter *ir,
-> 				 union xhci_trb *event)
-> {
-> 	u32 trb_type;
+> > Why is learning needed on physical ports? In general, switches forward
+> > unknown destination addresses to the CPU. Which is what you want when
+> > the ports are isolated from each other. Everything goes to the
+> > CPU. But maybe this switch does not work like this?
+> > 
 > 
-> +	/*
-> +	 * Some interrupters do not need to handle event TRBs, as they may be
-> +	 * managed by another entity, but rely on the OS to clean up.
-> +	 */
-> +	if (ir->skip_events)
-> +		return 0;
+> L2 forwarding can be disabled in PPE in two ways:
+> 
+> 1.) Keep the learning enabled (which is the default HW setting) and
+> configure the FDB-miss-action to redirect to CPU.
+> 
+> This works because even if FDB learning is enabled, we need to represent
+> the bridge and the physical ports using their 'virtual switch instance'
+> (VSI) in the PPE HW, and create the 'port membership' for the bridge VSI
+> (the list of slave ports), before FDB based forwarding can take place. Since
+> we do not yet support switchdev, these VSI are not created and packets are
+> always forwarded to CPU due to FDB miss.
+> 
+> (or)
+> 
+> 2.) Explicitly disable learning either globally or on the ports.
+> 
+> With method 1 we can achieve packet forwarding to CPU without explicitly
+> disabling learning. When switchdev is enabled later, L2 forwarding can be
+> enabled as a natural extension on top of this configuration. So we have
+> chosen the first approach.
 
-This function is only called from one place so the caller could perform
-this check and don't waste time calling it.
+How does ageing work in this setup? Will a cable unplug/plug flush all
+the learned entries? Is ageing set to some reasonable default in case
+a MAC address moves?
 
-Regards,
-Michalal
+	Andrew
 
