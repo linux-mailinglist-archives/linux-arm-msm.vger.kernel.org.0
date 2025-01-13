@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-44886-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-44887-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 43370A0B6A4
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Jan 2025 13:20:34 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 62F05A0B6AA
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Jan 2025 13:21:06 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C84873A78D7
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Jan 2025 12:20:26 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7A4371886FE7
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Jan 2025 12:21:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 698F722A4D8;
-	Mon, 13 Jan 2025 12:20:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A0D7122A4E8;
+	Mon, 13 Jan 2025 12:20:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OjXMmYcf"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YMlCELoT"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DD5B19259F;
-	Mon, 13 Jan 2025 12:20:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 719B319259F;
+	Mon, 13 Jan 2025 12:20:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736770827; cv=none; b=s+wUESOeUznh6ly2P9NeKm7Qc31w3oNUu8n7+V46rK+f3PGSKm6u0p+nOeEAznDS4pO8iX37aRmpXQAGPS8RiGpOamZk/KtmNsBMZSWQ7nuxy6dEVvdy/lAECaLgsxhTv07WvC8+X+C7C1IFWFhJyxX4bYMXzOBzVtA9ZivS2Gg=
+	t=1736770859; cv=none; b=KaAcng5sYPc7U0m/eUOD/g14bV47Z22x7Lq9vQp8L9jXc4elsimx3uQD9A9f1OI8TMdzJah+NBGax8w6M2yjyN71x8Hd+Adt5PklV+jfnEwgD+4yRntcuod0CSchUMARO8eydVTHQ35nuhLnckTVd0cF8gOoYHaP8lW4uHki9zY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736770827; c=relaxed/simple;
-	bh=RQ5t9VnQI43JKbxo3QziGpfqYPXVPGd1VsOE808fKeY=;
+	s=arc-20240116; t=1736770859; c=relaxed/simple;
+	bh=zeuivvyjgMhdMQ4XVBMiM7OLqxjSDWw9s3df7FP2EQg=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ZrDnKEgfJbAZYFEdg6t3H+hMPtXO/T63AzxqntTm1E3/6KEnYkzWrzFhTD9dnjSMD23uG8UKGQKiDxiS3H/umPMeDUNQFwjS8JckaS6XmuyYsC8Xhj15PcrhGImZWsg1xOaLhW37nOVIWrmBm3LFPTMDDcs/41g0bVgHuUn510w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OjXMmYcf; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2C00C4CED6;
-	Mon, 13 Jan 2025 12:20:23 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=YRijNBg+V6AXC99DsE2MufZgxEAE0gTSLfy286t5nmaTcqn4sK85IXM35aKf0kdoqxknrVM0IYmAzwfAznCbfK/B+W0MxO+oVn7LRRiUpeUNBrHOEYc2TKnLukqyf32sZ+CCy4Wqu7jL/U8xzAurlTT7vY/mJu3LSL2rPV7qkYs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YMlCELoT; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 093B7C4CEDD;
+	Mon, 13 Jan 2025 12:20:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1736770825;
-	bh=RQ5t9VnQI43JKbxo3QziGpfqYPXVPGd1VsOE808fKeY=;
+	s=k20201202; t=1736770859;
+	bh=zeuivvyjgMhdMQ4XVBMiM7OLqxjSDWw9s3df7FP2EQg=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=OjXMmYcfEyOoEJ2/deUrGw7n3Lf1KsXzSuHWFTjyH6Hx44nd4uBD/wUTNoqTvABWK
-	 jgUfkiXzRGzGWX/NbMz/nvxaG2Q6bjsT3Fg6hc3Qv5dWHpp0e6m18ry5SQ+UBsJUdh
-	 I9kAXsx7ZkYYk+eQQqEbk3gGw2Uz4WogiiiX79iW9Rldz0Ny0gbjYt4H5mu4iLgwrx
-	 3+ISTVbGwNPfDdAF2N31s/NNjlq81vGPfbxshZKwdwQVKNrIRowHJbQd8/11kTqN8G
-	 HLj7JpSlYHct8eDiyDLZ076qDAR1UZyjAtNLTWnNf9wS51Z2/NYbY9H0U9mcgEoTtQ
-	 tgSlS+fsnBtog==
-Message-ID: <95647b2a-83ff-40d1-bcc4-1b7168286a53@kernel.org>
-Date: Mon, 13 Jan 2025 13:20:22 +0100
+	b=YMlCELoT+ZOqaB06Iu5AKgLsZ9va6lI37PYraeZi8hKXNGun/5lJc6VGGreWtSiID
+	 W2v5SqHYkMlXeBA78k1W3EXYokMN3Wvv2vbosqJfwha4ihk9kJhWDq4gPZiWwMAsjD
+	 Flo5XaUPkt/RscKICjaciK1EoeD/N5/2b6LWKB820AqO8wd7rd2LOiUTsotXRKrnRs
+	 AgaPWDthDrHUx2TIdqbENArG89FZ5cCWuLhy0YjMBV/A0dRU6IcGx+kqP2SFxCJzog
+	 3GyWH+cl+0CBTD4/HiNZkHtha8+JupnFc1V2Tv8vlDbHXb7GZZSdCYmlRUhdenr2ak
+	 qZ0gV1+X56hIQ==
+Message-ID: <5cd4e2aa-be24-4298-a23d-352e82e9c1e1@kernel.org>
+Date: Mon, 13 Jan 2025 13:20:55 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -59,8 +59,8 @@ Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
  linux-kernel@vger.kernel.org
 References: <20250113-sa8775p-iot-memory-map-v2-0-aa2bb544706e@quicinc.com>
  <20250113-sa8775p-iot-memory-map-v2-2-aa2bb544706e@quicinc.com>
-Content-Language: en-US
 From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
  cFgcqTTuNHjAvxtUG8pQgGTHAObYs6xeYJtjUH0ZX6ndJ33FJYf5V3yXqqjcZ30FgHzJCFUu
@@ -110,6 +110,11 @@ Content-Transfer-Encoding: 7bit
 
 On 13/01/2025 13:13, Pratyush Brahma wrote:
 > Update the iot specific memory map for qcs9100* boards.
+
+Why?
+
+Every single time. Don't say what, we see it easily. Say why.
+
 > 
 > Signed-off-by: Pratyush Brahma <quic_pbrahma@quicinc.com>
 > ---
@@ -117,25 +122,6 @@ On 13/01/2025 13:13, Pratyush Brahma wrote:
 >  arch/arm64/boot/dts/qcom/qcs9100-ride.dts    | 2 ++
 >  2 files changed, 4 insertions(+)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/qcs9100-ride-r3.dts b/arch/arm64/boot/dts/qcom/qcs9100-ride-r3.dts
-> index 759d1ec694b20e9cead674c1bd61c6a6627eeb27..06e57239bbe975b9c0b939d438095692243e39cf 100644
-> --- a/arch/arm64/boot/dts/qcom/qcs9100-ride-r3.dts
-> +++ b/arch/arm64/boot/dts/qcom/qcs9100-ride-r3.dts
-> @@ -5,6 +5,8 @@
->  /dts-v1/;
->  
->  #include "sa8775p-ride-r3.dts"
-> +#include "sa8775p-iot.dtsi"
-
-No. Either this is car or iot. Cannot be both.
-
-In other threads I already complained you add some artificial split of
-DTS/DTSI and not describing the hardware. This is another example of
-that - you claim you have automotive board, which is derived from
-automotive board, but it is not automotive and instead it is iot.
-
-Decide about all this and come with DTS/DTSI structure reflecting actual
-hardware, not how you want to organize your device nodes.
 
 Best regards,
 Krzysztof
