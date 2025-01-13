@@ -1,128 +1,129 @@
-Return-Path: <linux-arm-msm+bounces-44856-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-44857-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0AFEFA0B0E6
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Jan 2025 09:21:05 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id E7497A0B0FD
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Jan 2025 09:25:21 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 191F816648E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Jan 2025 08:21:03 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 08385188792B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Jan 2025 08:25:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EC03F2343B6;
-	Mon, 13 Jan 2025 08:20:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 85692233139;
+	Mon, 13 Jan 2025 08:25:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="gnQSVPx8"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="VKuIxveU"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f52.google.com (mail-lf1-f52.google.com [209.85.167.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7ADC02343AE;
-	Mon, 13 Jan 2025 08:20:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 692B91465AE
+	for <linux-arm-msm@vger.kernel.org>; Mon, 13 Jan 2025 08:25:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736756434; cv=none; b=rOJJzHhRfyxA1PaxKxce8DOiahEdpNi5JlPg1V3INQNVGIEZR16rWrXja1y1MtJs+V73EcdF3oqhmA7COrgT2YNjQLa6r8AKx8QN/dYQMCSPI5dWJksMMeIvi7O/PCpe5EVFrKjlwrHN1kKnz3wYCWrUuspjY3Wl2RzOR4c6Vm4=
+	t=1736756717; cv=none; b=Tf1il/WeQW12QeSUOhXkA1v/S053SsUq+DICWQx/80GD5cWvRtD9/aBg3pQavGbYFKrQ7hCOEnWrVPlmRKgqYegEZHnleHB2cg2+205iYDiEHxEtdRnYo+jl6Be2weolZDfW8KdkQyDC0b20UJ143Dmygi51WQNs/96CA3978zw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736756434; c=relaxed/simple;
-	bh=T2+vwE8Q/jX5sjYtCnlHq5K3xPwjojUoWuI3P0DevBk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=EjJ09pXYpdXzYPWBGqfyBMOCsN4Hcj7hdWcClaX4OEMLRE3ZnPW7N9Lp9L3ZulHXb0y9LiV53aVZkfDs0KEdrgtbejZEfSFQj+62d+Wz9VPRJGCz9FLljl8U7t76MpCw+BVHP1Dnrn8zGlrawbJINBz/RUYeWSTwhbnw2o98y0I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=gnQSVPx8; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50CNVmNK001429;
-	Mon, 13 Jan 2025 08:20:19 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	KTOGnUSuzyr+oWqVsvrpKAAsSXbxNV6JiMO8j/CSbgA=; b=gnQSVPx8SzXP5jLi
-	GRLKap5D6FO5Ovkep4MJICmvTQMzTTg6B/lnklB+1H3XsC9wzvRXDJy+0HSY2awQ
-	bA85QjI9NVi0cwUjqbSDhtehybG/dr/AiyuMmtnnWlK1VGlH/PSUnGkIhAlCO2oU
-	Z/uS36vr/bXJf+aOXzd5ubwVqI5bqFj6Jswr0TTnS9NXPNDfmu8c2AZ9bM7AKmuT
-	jYn8x4BsG5D4LSDEJm2rgBcfJNqvtGmlU8N3B8Cy4SHRkPqyPKAGbaqpwJFGMqm0
-	htcDpCWFUrUDyheLhC9WrE836jH/GFdNAHXJu8/BWhIPm6WBql4qDmvdFjDBy3Ze
-	8w6VDg==
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 444f5bhjr2-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 13 Jan 2025 08:20:19 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 50D8KHKF014816
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 13 Jan 2025 08:20:17 GMT
-Received: from [10.253.33.98] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 13 Jan
- 2025 00:20:11 -0800
-Message-ID: <45d3eda0-7a2f-4ba3-9646-1f0e4b4f8943@quicinc.com>
-Date: Mon, 13 Jan 2025 16:20:09 +0800
+	s=arc-20240116; t=1736756717; c=relaxed/simple;
+	bh=5t/TrcuXNWNUZTuS5pgxHTJQKuHzmhw4UrOTlIJ4BOg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Z28UOIPZI4eVBL18LnDHT5H051tnSiuy1/6kGC92nWYmzTvepKvhAaPYEM81n1rXf1MvZ/tCKtX93bQG1ItEAFTwwehFkwqXNpeP6t9mH7aY0nreeu6l6E+gsH0+JBnIZRrg3Sw85GI4bW4OKqQYJIl4TCtbGOeRk9UT/xJ9Mr0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=VKuIxveU; arc=none smtp.client-ip=209.85.167.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f52.google.com with SMTP id 2adb3069b0e04-5401bd6cdb4so3753546e87.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Jan 2025 00:25:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1736756713; x=1737361513; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=HsOOejTFjVwFwvDCfWyTG69OVT7YoO10LJVJy5N++GA=;
+        b=VKuIxveUwLt3RwsqOf2zdz43fjhwd0REq9TdceAA/AAgp+Mdq4Xba5PE9k0BGFuQYC
+         os/xvPD2AjzWp+rKOF0LSlfm/D+H3qhAoETVYKVRvm0fXYE6AH3nNGSzfVN0WPORmacE
+         JC3gAoqoXA9b8wBsoqzvLU7QtqIueS449tgcs1PLWEBQbV3Dnh/KR0RJnJU6AG66vLri
+         cp6PF9f8RLLKT2F6gEng47/DpBkELHIAYTSNM4pJZ58RB2bj79hAMp6A1DfZhXsdRqxf
+         u0jeUEuMvigo4bzKtMTApw4aMEQkPQmFClP7E1Yz2/Vfu45v5qrDCtsXDcscFEaw+Tr6
+         6Ctw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1736756713; x=1737361513;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=HsOOejTFjVwFwvDCfWyTG69OVT7YoO10LJVJy5N++GA=;
+        b=S7UAIpL+7XkprZharjtF0zUNP/YHS/WP/axnXZwlh09ESyag9f7krFN8Z1NBPzNyUA
+         4KxSGxRmCIXGZhwfRKu5a0L/xRdSQSVWZSXnPKN/w2Nqus2LEfuDtuykzYkSC+AR7qG8
+         dxlNtmI2KHV2It8jiTWKWcvHI20F4uYb4x+g1LE/2A0SenTxvyyxsQTyxoHz9sVFYxq6
+         yuGNGR8jf6/b+WIkq6KoAxVcduwUR/Vo/arOqk84vg6o11K1EUQXQhpD6QM4ijpV01zB
+         hEza4dwq8+5usxe8hcNRBe5fmZVdMCj+ZJfpaJOXw6ZGQXg6+2iDInCFDmNsUoBzf5nU
+         9k6A==
+X-Forwarded-Encrypted: i=1; AJvYcCUHnDbqL0MzTZQlQYa+MGDdtkJtpeaJ6jM45D0mQQetjtHJVGl/EwKsDkkRJ4N0hzQ+MbpfHULppcb5ZrsB@vger.kernel.org
+X-Gm-Message-State: AOJu0YzUk9TwRDMqdhTWTSpi86hobsiELLGvEYeXWqIyLnjScw2d65r/
+	4/M0j+kZMz5+lZQi8zAmyJuLpelBdP1wgZKQ/v0zOzSyPfWdLt6OlwWnUj9D6p8=
+X-Gm-Gg: ASbGncvCqqAc80jfDCaAzU077Gc/jbRy7iuqWo1QaVJwD2ZGbUxvQLmdEp5/crRLmpW
+	4XA5wq7UEvI3J7lZPL86MFsAnuEGCX/BBFMeua5XSpNHN9dbNi2rIEvOXAzvHPx+Dh4qkezdAqh
+	n1SQUxn3rbn7Snc/xLJS8RhmSnAKqshvI5uZDc6BLv8N+WudNV17qS3dw66CHJzo0IQmwmAXt4A
+	NK5OdpP+pNVOOdvkmxc/KteElCwcnYSsakRpbYCS8jXYFLK5XSu5w4filRH55GM+HUvAthNKWUA
+	DrpYIr5hl5v9V23CNn0ofkrK5oI/FOK/vlOK
+X-Google-Smtp-Source: AGHT+IERZWZtkZrsbkHThnFiBHKfz//tsYW/urMLTgJODZNi9Tp473Grr1NqQ4M0NySCRCOoV5n3Rw==
+X-Received: by 2002:a05:6512:138c:b0:540:2188:763c with SMTP id 2adb3069b0e04-542845b0b55mr6338144e87.37.1736756712614;
+        Mon, 13 Jan 2025 00:25:12 -0800 (PST)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5428bec0659sm1286326e87.185.2025.01.13.00.25.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 13 Jan 2025 00:25:11 -0800 (PST)
+Date: Mon, 13 Jan 2025 10:25:09 +0200
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Thomas Zimmermann <tzimmermann@suse.de>
+Cc: maarten.lankhorst@linux.intel.com, mripard@kernel.org, 
+	airlied@gmail.com, simona@ffwll.ch, dri-devel@lists.freedesktop.org, 
+	linux-mediatek@lists.infradead.org, freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org, 
+	imx@lists.linux.dev, linux-samsung-soc@vger.kernel.org, nouveau@lists.freedesktop.org, 
+	virtualization@lists.linux.dev, spice-devel@lists.freedesktop.org, 
+	linux-renesas-soc@vger.kernel.org, linux-rockchip@lists.infradead.org, linux-tegra@vger.kernel.org, 
+	intel-xe@lists.freedesktop.org, xen-devel@lists.xenproject.org, Rob Clark <robdclark@gmail.com>, 
+	Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>, 
+	Marijn Suijten <marijn.suijten@somainline.org>
+Subject: Re: [PATCH v2 13/25] drm/msm: Compute dumb-buffer sizes with
+ drm_mode_size_dumb()
+Message-ID: <bbw2n4ccn5jlq7q7lsw3xdnbieazgexkwkycrqvk5aoiq5q3wx@nz6gd3unwkg4>
+References: <20250109150310.219442-1-tzimmermann@suse.de>
+ <20250109150310.219442-14-tzimmermann@suse.de>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH net-next v4 3/5] net: pcs: qcom-ipq9574: Add PCS
- instantiation and phylink operations
-To: Jakub Kicinski <kuba@kernel.org>, Simon Horman <horms@kernel.org>
-CC: Andrew Lunn <andrew+netdev@lunn.ch>,
-        "David S. Miller"
-	<davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>, Paolo Abeni
-	<pabeni@redhat.com>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski
-	<krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>, Andrew Lunn
-	<andrew@lunn.ch>,
-        Heiner Kallweit <hkallweit1@gmail.com>,
-        Russell King
-	<linux@armlinux.org.uk>, <netdev@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <quic_kkumarcs@quicinc.com>,
-        <quic_suruchia@quicinc.com>, <quic_pavir@quicinc.com>,
-        <quic_linchen@quicinc.com>, <quic_luoj@quicinc.com>,
-        <srinivas.kandagatla@linaro.org>, <bartosz.golaszewski@linaro.org>,
-        <vsmuthu@qti.qualcomm.com>, <john@phrozen.org>
-References: <20250108-ipq_pcs_net-next-v4-0-0de14cd2902b@quicinc.com>
- <20250108-ipq_pcs_net-next-v4-3-0de14cd2902b@quicinc.com>
- <20250108100358.GG2772@kernel.org>
- <8ac3167c-c8aa-4ddb-948f-758714df7495@quicinc.com>
- <20250110105252.GY7706@kernel.org> <20250110163225.43fe8043@kernel.org>
-Content-Language: en-US
-From: Lei Wei <quic_leiwei@quicinc.com>
-In-Reply-To: <20250110163225.43fe8043@kernel.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 4PZO-eVY0aKhcDrThjj0pMLQBrPJeRZM
-X-Proofpoint-ORIG-GUID: 4PZO-eVY0aKhcDrThjj0pMLQBrPJeRZM
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 mlxscore=0
- mlxlogscore=938 malwarescore=0 clxscore=1015 impostorscore=0
- priorityscore=1501 bulkscore=0 suspectscore=0 adultscore=0 spamscore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2501130070
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250109150310.219442-14-tzimmermann@suse.de>
 
+On Thu, Jan 09, 2025 at 03:57:07PM +0100, Thomas Zimmermann wrote:
+> Call drm_mode_size_dumb() to compute dumb-buffer scanline pitch and
+> buffer size. The hardware requires the scnaline pitch to be a multiple
+> of 32 pixels. Therefore compute the byte size of 32 pixels in the given
+> color mode and align the pitch accordingly.
 
+- scanline, not scnaline
+- the statement about 32-pixel alignment needs an explanation that it is
+  being currently handled by align_pitch().
 
-On 1/11/2025 8:32 AM, Jakub Kicinski wrote:
-> On Fri, 10 Jan 2025 10:52:52 +0000 Simon Horman wrote:
->> I don't think there is a need to update the code just to make Smatch happy.
->> Only if there is a real problem. Which, with the discussion at the link
->> above in mind, does not seem to be the case here.
+With that in mind:
+
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+
+> Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+> Cc: Rob Clark <robdclark@gmail.com>
+> Cc: Abhinav Kumar <quic_abhinavk@quicinc.com>
+> Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Cc: Sean Paul <sean@poorly.run>
+> Cc: Marijn Suijten <marijn.suijten@somainline.org>
+> ---
+>  drivers/gpu/drm/msm/msm_gem.c | 27 +++++++++++++++++++++++++--
+>  1 file changed, 25 insertions(+), 2 deletions(-)
 > 
-> Maybe be good to add a one line comment in the code to make it clear
-> this is intentional. Chances are we'll get a semi-automated "fixes"
-> for this before long.
 
-Sure, I will add the comment to make it clear.
+-- 
+With best wishes
+Dmitry
 
