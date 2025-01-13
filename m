@@ -1,116 +1,141 @@
-Return-Path: <linux-arm-msm+bounces-44890-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-44891-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id E3544A0B859
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Jan 2025 14:38:15 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1CE86A0BB74
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Jan 2025 16:15:26 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A2BAD3A1AB8
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Jan 2025 13:38:09 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id CBE5E188D7DB
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Jan 2025 15:12:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BF57B230D3D;
-	Mon, 13 Jan 2025 13:38:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 73FCF229811;
+	Mon, 13 Jan 2025 15:07:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="w7vN9zyB"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="f67kZsSM"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f54.google.com (mail-lf1-f54.google.com [209.85.167.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2AED125B2;
-	Mon, 13 Jan 2025 13:38:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=156.67.10.101
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9848B22980E
+	for <linux-arm-msm@vger.kernel.org>; Mon, 13 Jan 2025 15:07:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736775491; cv=none; b=VX7U5qNfDMeHumokBhi7W3vfXTit0lYTZKL9ARRtbZYxZnuvFtrPS/cUnI8yenvl0jdbaFkLc1je9DtA/47p1pSXqa9WBykxbwaYyVdpgQTco8r//mWc4x8mZI8dRj22ABoffAjiaeLP1rsQ0zT9boC+Ec6wrFuRCgKmrJeAnyM=
+	t=1736780872; cv=none; b=QurcLc5vdSOmMTpJEy12lqsUL/dbnAY5cFNgJukR1aWXrj1kK2hp9D/oQ6NJf+4xAXJ/zp4D8h+92taJNfgV52H6T7TD6QKUa9RUJvJ2ZfsPlWeRgC2RD+cbDEodnxtKjkJaKmcdgaDtxA8es/jvojiRvA+JJ1Jllrtm3LLq1LI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736775491; c=relaxed/simple;
-	bh=nHN3ZaTTiEw6x6KDpMqEEiPy8Os0si5mupUZrQsZhAQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=um6hO14BRtsGZsEY2I4uGLyyT/CNnNQkcYjIQ9GwiT0gTh6aA9VeOMANWSHK94dmLcY/8XZ+IWz2u1tZu/uq6itHgC7M2iS2lnURqKI2UGQwJWFd2ocihl4jAgjRco5rujm/2SbQF1xMAnywToz29Du9rvwAdA2u5HLon264nPw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch; spf=pass smtp.mailfrom=lunn.ch; dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b=w7vN9zyB; arc=none smtp.client-ip=156.67.10.101
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lunn.ch
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
-	s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
-	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
-	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
-	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
-	bh=K3/LnQGpJFz1AF0FoQuzUY+SDS8BerFJpfW2HEfDwmg=; b=w7vN9zyBghaON2SXZA2zkbWGCK
-	ioUyHajgaWLXq1Ib45mo9URWcz+QYj2uk2rSGyvvWk6gKSlh0xAGaFn+/vYKTPPEjQBBTKotFLOHf
-	7yrV/eE6KxMgDbDc5GoZh9aJ+iqrDhXSEKiWxY0AIjoNPJKWgcbSqy/1Y+DUVUxnkAQU=;
-Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
-	(envelope-from <andrew@lunn.ch>)
-	id 1tXKdd-0046S9-3A; Mon, 13 Jan 2025 14:37:53 +0100
-Date: Mon, 13 Jan 2025 14:37:53 +0100
-From: Andrew Lunn <andrew@lunn.ch>
-To: Lei Wei <quic_leiwei@quicinc.com>
-Cc: Luo Jie <quic_luoj@quicinc.com>, Andrew Lunn <andrew+netdev@lunn.ch>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Suruchi Agarwal <quic_suruchia@quicinc.com>,
-	Pavithra R <quic_pavir@quicinc.com>,
-	Simon Horman <horms@kernel.org>, Jonathan Corbet <corbet@lwn.net>,
-	Kees Cook <kees@kernel.org>,
-	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
-	Philipp Zabel <p.zabel@pengutronix.de>,
-	linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-doc@vger.kernel.org, linux-hardening@vger.kernel.org,
-	quic_kkumarcs@quicinc.com, quic_linchen@quicinc.com,
-	srinivas.kandagatla@linaro.org, bartosz.golaszewski@linaro.org,
-	john@phrozen.org
-Subject: Re: [PATCH net-next v2 12/14] net: ethernet: qualcomm: Initialize
- PPE L2 bridge settings
-Message-ID: <8bdde187-b329-480d-a745-16871276a331@lunn.ch>
-References: <20250108-qcom_ipq_ppe-v2-0-7394dbda7199@quicinc.com>
- <20250108-qcom_ipq_ppe-v2-12-7394dbda7199@quicinc.com>
- <4dbf1550-32e9-4cce-bf0c-8b92dbd49b50@lunn.ch>
- <c67f4510-e71b-4211-8fe2-35dabfc7b44e@quicinc.com>
+	s=arc-20240116; t=1736780872; c=relaxed/simple;
+	bh=5wK2BGx//zUz/XNuJSSzKnvYT5PA/aXDXBm8lXWbTas=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=TG0m6e5qTl9nxnbXEBbVPns/DkKYXmq04v2DO0acWxLWJCp7p3f0QbyhgM+Z0u8sw1nM0G0DkZxGPKdzsyPPqJFqudTHRMOgHyggHKbKBEYIJRCDptMn5CLgXmoOxcJCDuuiOBJIrBBdIOeO/neKWPa7n31wxoCDMSIbL+KHB34=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=f67kZsSM; arc=none smtp.client-ip=209.85.167.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f54.google.com with SMTP id 2adb3069b0e04-54024ecc33dso4600211e87.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Jan 2025 07:07:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1736780869; x=1737385669; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=5wK2BGx//zUz/XNuJSSzKnvYT5PA/aXDXBm8lXWbTas=;
+        b=f67kZsSMeaUGBzPvuWbWy+rUDt9VDzT0bCIRLpzkb06jek27R1xEVWNoHrEUhxNX4O
+         iC/eHYSJPoWXWxhmmzMeal8EvRwHqcAT38FeKV6xxnA/znKn7nfTjLxxNkom8FvoMg/d
+         iCQ3y59w7/EPPi9gLZsn5RUXyztm7lH//6l+BuvUc++w4LRA63kFL9wb+T4cUUSsBVmj
+         ykUXnbMTBO25+eJj1FzdOBXWyecFKgXAKpb/FyrkyndXzqnyUnn6+Hy0R+jJhfNn3CTm
+         BTOnkz5GRpiBquloplSZJZCnpOfoqWGhNptrNgafTgsB+p47kXkcN9Gg1ADMeUW0ERpf
+         SX1g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1736780869; x=1737385669;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=5wK2BGx//zUz/XNuJSSzKnvYT5PA/aXDXBm8lXWbTas=;
+        b=fZWQ1Re1B2hI+F8H63Sn4vqe7vxQEIXL+OkbPhtxQLazjEV+Q1kULh+OHBKByt47EE
+         s2wDParmjtouc3pmfMfsQqZneJniKxwqreggDlNMP/T97qhgLU0bdYbRsLqN04wgiYQv
+         0wzhjXdozG39x8uYYboZNNfrzED4U2eg+E+xUfUwQKiiqWFveWEqeg3qELKmRT3IdNcj
+         lEAX1z/F6WnNJOCWLxzC208LFgmFRfV4Lm3qUoW0L+Ol0EupT0qrMwK66IZA2mhSsO2K
+         YFWpDQ6Xgi3sjEG6HjfsLLtm5ecmymogAzQL8fvhKNlyVfn1a2sDAkJkJ4ZD0VJYBjXX
+         tmaQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVR41SNGcyVNdhksr+rH/Rm8A7M6ykNbdeND1ibklNNUHg7A8WxQ+Xo8B+GSQBwdJk8j1av4Ue/R926CgNo@vger.kernel.org
+X-Gm-Message-State: AOJu0YwmbJgzSfo8nVBEXbnGvzJviVZkKfIAWpWM9Yj/kCFFuhQvXRaX
+	E+aGB1rLhnYZT8C0CZ+oG6cA6vefur1C0ljt1W2MfTZHZogQY1mQWESJ+cPiNNNIiPfeb+Msnsj
+	H64PNsY/RdsY4MgmTDMsNoGbwQZGsbCp79mZFotslk6a0HbFc
+X-Gm-Gg: ASbGnct4HrDslSzuhV1lBtn3/rDe+TQ48KCEbLqBhEOwl2z0B6dmzlkvRbuHRF7/IdV
+	LcoNuoc9PLhAYvVAmvUCXCZAAkXOCSZMIylkE
+X-Google-Smtp-Source: AGHT+IES3tZBy6Xs2c9tlrWY162TnjF3uWtTrphszdVGsSsqqCXRWdJUrRBTJwefuNL0CvDs1zX4DNXrPFBHB8nhuyM=
+X-Received: by 2002:a05:6512:a96:b0:540:1f7d:8bce with SMTP id
+ 2adb3069b0e04-542845b9744mr5354221e87.38.1736780868642; Mon, 13 Jan 2025
+ 07:07:48 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <c67f4510-e71b-4211-8fe2-35dabfc7b44e@quicinc.com>
+References: <20241014-armv7-cacheinfo-v2-0-38ab76d2b7fa@linaro.org>
+ <CACRpkdbfckBBW5W5sEvz1LwzdOvTKi_fi7tDu+9nPeKumYkPeA@mail.gmail.com>
+ <lkxm6m2u25o4qfvpja7qsldqm7zjxejkn6d5qihyxbg2zvntwh@icvun74e6rll> <y74nrynys7srlwmtfzpjwklfkw33vijrnefjm3iyngn2y35mlz@joqsk74rwl2l>
+In-Reply-To: <y74nrynys7srlwmtfzpjwklfkw33vijrnefjm3iyngn2y35mlz@joqsk74rwl2l>
+From: Linus Walleij <linus.walleij@linaro.org>
+Date: Mon, 13 Jan 2025 16:07:36 +0100
+X-Gm-Features: AbW1kvYQ4bwujBVNetakHufjq4DsT8RTYbJHLkl_N2maIXPBhXD2T0GN-Pxhbsg
+Message-ID: <CACRpkdZ1Joi+UW6EQuatx3Z0P0o+HULjwXB9vaAWOJxdBsNO8Q@mail.gmail.com>
+Subject: Re: [PATCH v2 0/2] ARM: implement cacheinfo support (for v7/v7m)
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Sudeep Holla <sudeep.holla@arm.com>, Ard Biesheuvel <ardb@kernel.org>, 
+	Russell King <linux@armlinux.org.uk>, linux-arm-kernel@lists.infradead.org, 
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+	Arnd Bergmann <arnd@arndb.de>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-> > Why is learning needed on physical ports? In general, switches forward
-> > unknown destination addresses to the CPU. Which is what you want when
-> > the ports are isolated from each other. Everything goes to the
-> > CPU. But maybe this switch does not work like this?
-> > 
-> 
-> L2 forwarding can be disabled in PPE in two ways:
-> 
-> 1.) Keep the learning enabled (which is the default HW setting) and
-> configure the FDB-miss-action to redirect to CPU.
-> 
-> This works because even if FDB learning is enabled, we need to represent
-> the bridge and the physical ports using their 'virtual switch instance'
-> (VSI) in the PPE HW, and create the 'port membership' for the bridge VSI
-> (the list of slave ports), before FDB based forwarding can take place. Since
-> we do not yet support switchdev, these VSI are not created and packets are
-> always forwarded to CPU due to FDB miss.
-> 
-> (or)
-> 
-> 2.) Explicitly disable learning either globally or on the ports.
-> 
-> With method 1 we can achieve packet forwarding to CPU without explicitly
-> disabling learning. When switchdev is enabled later, L2 forwarding can be
-> enabled as a natural extension on top of this configuration. So we have
-> chosen the first approach.
+On Fri, Jan 3, 2025 at 6:55=E2=80=AFAM Dmitry Baryshkov
+<dmitry.baryshkov@linaro.org> wrote:
+> On Thu, Nov 07, 2024 at 04:34:36PM +0200, Dmitry Baryshkov wrote:
+> > On Thu, Nov 07, 2024 at 02:55:55PM +0100, Linus Walleij wrote:
+> > > Hi Dmitry,
+> > >
+> > > On Mon, Oct 14, 2024 at 3:55=E2=80=AFPM Dmitry Baryshkov
+> > > <dmitry.baryshkov@linaro.org> wrote:
+> > >
+> > > > Follow the ARM64 platform and implement simple cache information dr=
+iver.
+> > > > As it reads data from CTR (ARMv6+) and CLIDR (ARMv7+) registers, it=
+ is
+> > > > limited to the ARMv7 / ARMv7M, providing simple fallback or just
+> > > > returning -EOPNOTSUPP in case of older platforms.
+> > > >
+> > > > In theory we should be able to skip CLIDR reading and assume that D=
+cache
+> > > > and Icache (or unified L1 cache) always exist if CTR is supported a=
+nd
+> > > > returns sensible value. However I think this better be handled by t=
+he
+> > > > maintainers of corresponding platforms.
+> > > >
+> > > > Other than just providing information to the userspace, this patchs=
+et is
+> > > > required in order to implement L2 cache driver (and in the end CPU
+> > > > frequency scaling) on ARMv7-based Qualcomm devices.
+> > > >
+> > > > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > >
+> > > I added my review tags to the v2 patches, can you put them
+> > > into Russell's patch tracker?
+> >
+> > Done, 9432/1 and 9433/1, thank you!
+>
+> These patches are still in the patch tracker in the "Incoming" state.
+>
+> Russell, Linus (and Sudeep, Ard, Arnd), is there anything blocking them
+> from being accepted?
 
-How does ageing work in this setup? Will a cable unplug/plug flush all
-the learned entries? Is ageing set to some reasonable default in case
-a MAC address moves?
+I added my Reviewed-by, perhaps rebase them on v6.13-rc1 so
+Russell knows it applies cleanly? (It's pretty straight-forward to
+supercede a patch in the tracker.)
 
-	Andrew
+Yours,
+Linus Walleij
 
