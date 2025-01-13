@@ -1,129 +1,141 @@
-Return-Path: <linux-arm-msm+bounces-44888-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-44889-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D0F37A0B714
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Jan 2025 13:38:47 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id EEFDFA0B84A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Jan 2025 14:36:57 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E92941671FE
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Jan 2025 12:38:45 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B1432166BBA
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Jan 2025 13:36:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4B1D122A4CB;
-	Mon, 13 Jan 2025 12:38:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2E6FB23873B;
+	Mon, 13 Jan 2025 13:36:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="n0s7Aun4"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Kcqc3TiQ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f41.google.com (mail-ed1-f41.google.com [209.85.208.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE24115667D;
-	Mon, 13 Jan 2025 12:38:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 645B31CAA8F;
+	Mon, 13 Jan 2025 13:36:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736771923; cv=none; b=CFCC5hQU7O62DYl9oMbpnliebbV/e5dWyMJQNvasQFWZDuUSWxc/8khTllg5ay+Krs5oCURC07DNYVJC5yyrFcPlF8TFbP/kdZpF+AifVroxP+IrDd0PC6gFGfgbToZKKJE/kdKr9xPZH71/oZPoKnycnQP2v7jjtkm04VETzGI=
+	t=1736775403; cv=none; b=lMhs1ZrnW3XSXN55zXkJ7cBWIVyHUTfXxmNjw5MY0O61mJPSuYYpyw3XNL+ftGttHFblPxfHbU+bSXijh1V3xPnGP5CLK10h5g+tj6ME3qzh8kI+MQQZuSSotVU1eq1c2Ebe7vO3sreOipKzXPR6w6EsFrBvG77qQ84r3omX+iw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736771923; c=relaxed/simple;
-	bh=tjqMiNiQbn1nzZHkqLUV+mgpgwbFs0hkK4i43iXFpx4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=pA+C0rEr/1Zt2QtzK2VHGWB3ql679rjem3NB4fhKTnZwieZcWNQ4C3n3gB4m6RE8yvVg5WVUd917Mlq3gs8CPo8ErNQWLyPkc7JfrgtW07XTPYHfE+kCb9Z996D4p4TYObFzO6COSsYjrXk2v5ree8S/d1OcdLECYuInqTnbv1o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=n0s7Aun4; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50DAieLc015594;
-	Mon, 13 Jan 2025 12:38:39 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	X+1jxtuHqGrt+7AWlzi82hXADTE/630O73IYS0ye7sk=; b=n0s7Aun4PDfBPVXr
-	AWYwWbzFUlR4trS2jG3kWCZmlSVmGp8goNX1VWmmeDRnjMyLJWOLdscF9iAS84Hl
-	qyDe5OxUp++IQDCXD7EW80RgKYLMt4SzQ56mq+wO9CiO0WgJ7L/JgyzcoDz3lxAC
-	lySTQHTgG4s3muJMbYfFHmpi3zVRMNTX5+e1zbBubNH89yihAUeUBAVJCYGBLwyb
-	wx9GWRdAhzMe/UfbgRxdyvDRAitod9Uqp42+sUnLgf5G+6WdD9HvR4XEFLo/CvEW
-	dj9vVGoxdI1frDFDRN5MDTCgQ8redEecmXwLMN/sOhBSxdYzBlCZxE6EJlpM1PxD
-	xyFmKQ==
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 444f5bjfwr-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 13 Jan 2025 12:38:38 +0000 (GMT)
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 50DCcchq006178
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 13 Jan 2025 12:38:38 GMT
-Received: from [10.216.33.75] (10.80.80.8) by nasanex01c.na.qualcomm.com
- (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 13 Jan
- 2025 04:38:35 -0800
-Message-ID: <d7d68648-6356-43da-b13a-1a6b2cf976de@quicinc.com>
-Date: Mon, 13 Jan 2025 18:08:26 +0530
+	s=arc-20240116; t=1736775403; c=relaxed/simple;
+	bh=dVOX1ct04XRB6HS4XCM9AuU0WW15SibfodTKj6OCrFA=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:MIME-Version:
+	 Content-Type; b=jnbwwk/yh1b+kbJKA91OkqIYvOAGaFVsSUp3Vq81U7tuS+2gzQJOXTk+vgNq9vKVrt8jnPl4Vr1eRc+RViTJ5jyxMY6F8iLyJg5AsQO8jhYj0pGuCXsckPpzgwaHesgka4HTkLtgJBSJgh6QAzY0AMTsp8KFTR+KvCyztQ6WHL8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Kcqc3TiQ; arc=none smtp.client-ip=209.85.208.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-ed1-f41.google.com with SMTP id 4fb4d7f45d1cf-5d3e8f64d5dso8352006a12.3;
+        Mon, 13 Jan 2025 05:36:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1736775400; x=1737380200; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:in-reply-to:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=BCOO3CeumWEhxRoRrsxtZPCsXRg2joLKXPxHQJ2qLzk=;
+        b=Kcqc3TiQpGsFgrhUgJ92ZQ09uZvFAXzPQmQYDX8qDFe71X3cqH6/9xVcZhdQ5G2RbA
+         SQIewa3Opy/75bKFpJgxIyESFVahGpkmhC61E7SNyVv9/rRu7vFjwOvDxOs4uBII30jt
+         9it2PQ/K4mkTEJyPpWLW7ri6CA705ASfVSHUU3iU+GB7HeE7imjecvIUptFXbCh9DWYM
+         1a4T/o0DrFVu/tqyiI689azMIMcKL9OB7fIT4fposP4Ox1BqekRpAiKLcJPrbZt7er5A
+         gR1HheFZpyZYN/IVVhqB1EHs9eItXhfIHEW3/lrmSsFZU8y0uAEqsl28WEu0QKE7sYGM
+         D4cw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1736775400; x=1737380200;
+        h=content-transfer-encoding:mime-version:in-reply-to:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=BCOO3CeumWEhxRoRrsxtZPCsXRg2joLKXPxHQJ2qLzk=;
+        b=vqa6rUqLZ+iApwPyw0bfRRCMIdjQK+ExhPLnCI28kC1KREjJvUdui2AfoDbhYJ1stb
+         G3ibCtYoXRPw2nQKcBG7EK50qKwEBPHbqPBskP8yIDMcjv9s5rrJCdNh7Pe9A3ir8NQ6
+         xQGCzoddNOx5BcnEWA1b8xTnpub/nlL0KWBR72ynFQSY7Xm2pDyn67X8rPNtkW9PoI8A
+         jqptf+q9FYm8cTOFHxdnJVhgFh3ROTmAm5WjOW8d2xH1WX+cxXfpIcGeJxWcMis5TqZ4
+         Oci4vX5+giYqrJFy18/GU1KSFz8IUqfIo1AA1zKF48+EuwdSn1UrQmgC28XhUSS86wAh
+         P7jw==
+X-Forwarded-Encrypted: i=1; AJvYcCU/0hhyqO8d20+233YRUcvTbSx3WfgzubN3KMQLwsRSEUGd3P+RC2AvhQBwzryLfryr+sBOfv6ktSC1i7439Q==@vger.kernel.org, AJvYcCUi1bl7rxRS5jawmo4NxMOJ+n/kcac40zB00ZkOAt3qs132PkELMB/uhvIlFEsfXLtY8GjTE0cBmwOM@vger.kernel.org, AJvYcCUwB90i0dNke9AQh9mjtj4pnR7nm69ogt83SOXi1XytwoSx9J2KBAZPHr++xYbBdx8KNW4lQxFuvlyTaCU=@vger.kernel.org, AJvYcCVDJg3RqeELTA3KiM7sVgGqvsQu6GDHuCexhw/k58I2HGfBbtEfo3gH8DG3Rcom6A6EvQoihmXhoFREVNO2@vger.kernel.org, AJvYcCVb9HAc50U0FiwttFmAolviET7D3yZHuuvO6BI2fZ8ilwhx262XocQLgaN69+WYBOD1EPR1m0/Ooofi/3U=@vger.kernel.org, AJvYcCVntDS7PHYGkj/R+mWgWYixV1EfdPoxGC80qLOY/DLWM9I6tVmu2l1/iH/Wk/2h67ht+1+PgQUFxUG1@vger.kernel.org, AJvYcCXuBa336J4wJNbjbFT7fkfj5Z5uBEViZkvyjKmEVIcqnjIXsdpDnIZx1SgTC80OqjI3L+rRa+znmStg@vger.kernel.org
+X-Gm-Message-State: AOJu0YyKlBI56hZDmUWMAPFaintn4KxgkRyMyB7Pc3zg31Fz8sKm00FN
+	zjBEzY67S44o0RLX88bc0851rEKMHQJ6CVMgsgOekQHRqwoZ04Ch
+X-Gm-Gg: ASbGncvObGdv2RbvdknOuhISnXPS5Szh65g5RuVRNB/4iju6ZO3Hj/pHcItCAVeMKMx
+	++m4+4ZJuISwjY9/wZuWcUX23fd3Wq/XmNT4I/GYRlTgn3m1zN+00beK0Q55meAI8lSOv0n0W8M
+	BnnL4YdLKAG/6P+BXqfbGTBN0JwV1LNXx1KEkC7EfSagmL0bXYsRVd6uVSePxn3O8Qemk+RkjIH
+	fEvgf1OvtaJhqbjF5JPll1r3z4QZYKMjqUbLXHmWQFJpUYTHQ2tq5Si585lSsK5nhLAefk=
+X-Google-Smtp-Source: AGHT+IFjst6wsdjTPwp6oiIf+Y1R9oxN/d9Kg2WINuDvWnvcQG61H8vLN/Y+6oQgF/w1Z8cqOc3BsA==
+X-Received: by 2002:a05:6402:4023:b0:5d0:e2c8:dc8d with SMTP id 4fb4d7f45d1cf-5d972e1b962mr18696919a12.20.1736775399331;
+        Mon, 13 Jan 2025 05:36:39 -0800 (PST)
+Received: from foxbook (adqh85.neoplus.adsl.tpnet.pl. [79.185.141.85])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5d99008c2ccsm4986793a12.18.2025.01.13.05.36.37
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Mon, 13 Jan 2025 05:36:39 -0800 (PST)
+Date: Mon, 13 Jan 2025 14:36:32 +0100
+From: =?UTF-8?B?TWljaGHFgg==?= Pecio <michal.pecio@gmail.com>
+To: quic_wcheng@quicinc.com
+Cc: Thinh.Nguyen@synopsys.com, broonie@kernel.org, conor+dt@kernel.org,
+ corbet@lwn.net, devicetree@vger.kernel.org, dmitry.torokhov@gmail.com,
+ gregkh@linuxfoundation.org, krzk+dt@kernel.org, lgirdwood@gmail.com,
+ linux-arm-msm@vger.kernel.org, linux-doc@vger.kernel.org,
+ linux-input@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-sound@vger.kernel.org, linux-usb@vger.kernel.org,
+ mathias.nyman@intel.com, perex@perex.cz,
+ pierre-louis.bossart@linux.intel.com, robh@kernel.org,
+ srinivas.kandagatla@linaro.org, tiwai@suse.com
+Subject: Re: [PATCH v32 01/32] usb: host: xhci: Repurpose event handler for
+ skipping interrupter events
+Message-ID: <20250113143632.63c52d74@foxbook>
+In-Reply-To: <20250108012213.1659364-2-quic_wcheng@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/3] arm64: dts: qcom: qcs9100: Update memory map
-To: Krzysztof Kozlowski <krzk@kernel.org>,
-        Bjorn Andersson
-	<andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring
-	<robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>
-CC: <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <20250113-sa8775p-iot-memory-map-v2-0-aa2bb544706e@quicinc.com>
- <20250113-sa8775p-iot-memory-map-v2-2-aa2bb544706e@quicinc.com>
- <5cd4e2aa-be24-4298-a23d-352e82e9c1e1@kernel.org>
-Content-Language: en-US
-From: Pratyush Brahma <quic_pbrahma@quicinc.com>
-In-Reply-To: <5cd4e2aa-be24-4298-a23d-352e82e9c1e1@kernel.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: HJLEaqTUabMjFN37hE2FHOmxnqXCYD8J
-X-Proofpoint-ORIG-GUID: HJLEaqTUabMjFN37hE2FHOmxnqXCYD8J
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 mlxscore=0
- mlxlogscore=586 malwarescore=0 clxscore=1011 impostorscore=0
- priorityscore=1501 bulkscore=0 suspectscore=0 adultscore=0 spamscore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2501130106
+
+Hi,
+
+> Depending on the interrupter use case, the OS may only be used to
+> handle the interrupter event ring clean up.
+
+What do you mean by "cleanup"? Because I see that this patch ends up
+acknowledging events to the xHC and I don't know why it would do so?
+
+> In these scenarios, event TRBs don't need to be handled by the OS,
+> so introduce an xhci interrupter flag to tag if the events from an
+> interrupter needs to be handled or not.
+
+Right, and if the OS isn't handling those events because they are owned
+by a coprocessor then it shouldn't be acknowledging them either, which
+has the effect that the xHC considers their memory free for reuse.
+
+Also, what happens when Linux goes to sleep and this IRQ stops running?
+I expected that the coprocessor itself should be updating the xHC about
+its own progress.
+
+Is it a bug? How is this stuff supposed to work?
+
+How are future developers supposed to know how it is supposed to work?
+I imagine that few of them will have Qualcomm hardware for testing.
 
 
-On 1/13/2025 5:50 PM, Krzysztof Kozlowski wrote:
-> On 13/01/2025 13:13, Pratyush Brahma wrote:
->> Update the iot specific memory map for qcs9100* boards.
-> Why?
->
-> Every single time. Don't say what, we see it easily. Say why.
-I assumed incorrectly it would be perhaps enough to have mentioned
-this in patch 1 of this series and the cover letter, so didn't mention here.
+> static int xhci_handle_event_trb(struct xhci_hcd *xhci, struct xhci_interrupter *ir,
+> 				 union xhci_trb *event)
+> {
+> 	u32 trb_type;
+> 
+> +	/*
+> +	 * Some interrupters do not need to handle event TRBs, as they may be
+> +	 * managed by another entity, but rely on the OS to clean up.
+> +	 */
+> +	if (ir->skip_events)
+> +		return 0;
 
-Can you please review the memory map changes in patch 1 as well?
-Once the strategy for the dts changes are baked in internally with the
-current reviews, I will send out another series incorporating the comments
-with the memory map changes.
->> Signed-off-by: Pratyush Brahma <quic_pbrahma@quicinc.com>
->> ---
->>   arch/arm64/boot/dts/qcom/qcs9100-ride-r3.dts | 2 ++
->>   arch/arm64/boot/dts/qcom/qcs9100-ride.dts    | 2 ++
->>   2 files changed, 4 insertions(+)
->>
-> Best regards,
-> Krzysztof
+This function is only called from one place so the caller could perform
+this check and don't waste time calling it.
 
--- 
-Thanks and Regards
-Pratyush Brahma
-
+Regards,
+Michalal
 
