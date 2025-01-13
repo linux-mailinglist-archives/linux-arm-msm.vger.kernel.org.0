@@ -1,344 +1,192 @@
-Return-Path: <linux-arm-msm+bounces-44900-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-44901-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 83589A0BF50
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Jan 2025 18:54:11 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3622BA0BFDD
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Jan 2025 19:34:28 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3AD281889F34
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Jan 2025 17:54:04 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 042383A3E88
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Jan 2025 18:34:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4CF551BEF7C;
-	Mon, 13 Jan 2025 17:53:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D2C1E1C3C1D;
+	Mon, 13 Jan 2025 18:34:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fSOosu6d"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ig3xdhV4"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f170.google.com (mail-pl1-f170.google.com [209.85.214.170])
+Received: from mail-pj1-f42.google.com (mail-pj1-f42.google.com [209.85.216.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CE091C3029;
-	Mon, 13 Jan 2025 17:53:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A5C71C5485;
+	Mon, 13 Jan 2025 18:34:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736790804; cv=none; b=cr1wIZkAIlDgE8AVEOLJz4Cn6GkbL3e8U/HaLtt1LqUMLfrC6DmWAaaFqnEF/eQzSlRmutzJ6p74EfqLIw8UqvaBnqIT4fXj192OeUp1bD1qkN1gtOo9IH42e0yrDoEHo7X6k3Rppe254okeJyDLTJ/JrrsQvFTCX7cVtMa8hKI=
+	t=1736793262; cv=none; b=nBj8gTElLnsah0nzCtIKyO2QZB/Y8lMTdcYHQwbXFnAKbzHvo6jzh726MPLaLaWr4ZHRsIuvZ+ZGkRzVvdcnoXOZwSg9hAZd4UvPANssv991EyRYI6UPKspj3QPkSZt4ce07huNpN/1q5XjuAs2uerRX9AjwnnK8pgg/mMSRZ8U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736790804; c=relaxed/simple;
-	bh=OwVWuseTNWroA+uJMs7XSqwDxqtJXywX6tYH7cAdya0=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=svSobE0HeNYCS3ynzbP+8oO7g2Jy6E5U46w/8DoJ6OleaC1/RgE+Q82fg8PV2nsxV7Cm14AUIhgVBRU21s5pHXhIU4cPKH2sa4FJLsXQa9eslUSnxWEmNNFSzG3RESb/mZHCb+MRzqDw+ah97hiF1SMceks9nri+CBWY8SsvASE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fSOosu6d; arc=none smtp.client-ip=209.85.214.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+	s=arc-20240116; t=1736793262; c=relaxed/simple;
+	bh=JW66LzXvkSldtcjOIAoWhfUsMT1RsmmpXnMrCnnL98M=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=SOcvV7f0KGnyvyR5wWQBZyj9bP5z6fRT5Fh/QcXKlBjuzxqhngZYJgiSEwUxmokGn5n6ejWGccyvxO9M1KPHa84eAh5MTt9znB5tGe/ZC+NsDWxYXP+bwWYhyKrnFAWd9Sj5VQYRPnTfJ9Q+Z+sVpi7tby6Cx/pSkQ+GtvtM33I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ig3xdhV4; arc=none smtp.client-ip=209.85.216.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pl1-f170.google.com with SMTP id d9443c01a7336-216634dd574so52687995ad.2;
-        Mon, 13 Jan 2025 09:53:22 -0800 (PST)
+Received: by mail-pj1-f42.google.com with SMTP id 98e67ed59e1d1-2ef748105deso5849458a91.1;
+        Mon, 13 Jan 2025 10:34:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1736790802; x=1737395602; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=28V0RQB8EoSyy3cFCq4Krah5UQMbH1QJd6NpV+bZku0=;
-        b=fSOosu6duV+J4i8pZvA0rfduZUCndiITiXIkYqSoWlfC5VRDyhZzRuMREvuU/me3vA
-         tof1KqtBo3f7oZtV6WroflSWu3oAYDHTHi1a8CLGfk5fnYoeiFWOKAFpKqIZcOcRIuco
-         IsXtpoETkX6VzRkISYgtz40vvFtkog8RJSsnkkMyneSWZYtCkViKvjmLxcmO0/A4JgMD
-         AQtFUjrBnYrR0Sgj7fQNtq7jsgSB96s1ytNTLlMsuSudQmjAScBd2bgH0Nb9GtsQUJCa
-         Bphyr5gMr9gpvkYSTUGXvBneTsqX8kViIzady76J812SXr/bKiVnqFLbHuvvWN7m8eva
-         tDuw==
+        d=gmail.com; s=20230601; t=1736793260; x=1737398060; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:sender:from:to:cc:subject:date:message-id:reply-to;
+        bh=dUk9K/3v1fmRTIGpSlzyJ4xMMqx5o/nZbSm/00tBSUQ=;
+        b=Ig3xdhV4VrOpQO4CQ7srMkUZesZOs+vJlKusoVcUqA2uXwYZFYYBJjjYBO9yTUKTR0
+         ufF0zZZSYOqp+ad4NE36e7HVdrpNv8HFzF7dTvan6IGAAFKBPX/oodVq00XP7qZJl8yX
+         51T0+j5mgvPJcOtyL54IybCkbWgc+l7htUEeoCD4wi+GaN2y6JDCW0Av0ew6r1D6QLK1
+         rPSCU9Pbgd+iSj3mKdhGPre43o2Yo8Tx/Zxb2g3d2elYOKOhgYXYD0m1EZQvCq6nud9R
+         L16lYs0BXUAGdvEdPxCqSmdNjgZwfmXmY3aHAbX0zvEBSFodjyuSqIj24VqavBP2aFav
+         8aMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736790802; x=1737395602;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=28V0RQB8EoSyy3cFCq4Krah5UQMbH1QJd6NpV+bZku0=;
-        b=UqbnkdAl3PDrumHiyr5cgR3e054l+H0JcM9GNBc9J7OIgPRpHr+czzOvM+I+AGexCd
-         gveAd6BN7+aa77tQ+cN0vYsyEqubvJUgDA5NS559EFU30apUHxaCjC1mNRj198Vnf6Rn
-         RhpBV9LrFg+GpI2KJC+ez6qzDvrt9+qR5oqVbTrGay5BMogsyQqQ+IgzMypFnCBzvXmD
-         eWvQT6KGYdNuHwDJsFiLyHEmj0izAHXXn4vvuLsRfmwMcXQYY9TnO9t5Ukg+bm5MfijK
-         fkIYEJ0ZZi+Ctj42ng/eLBv5YSV8Yn9DtiHYDZW1kamTa8mDuJ8y+9FayTR+6KXWT6mn
-         6GHQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVEnAiX7xDcmYhlycdM/sQ6ZWpeCgpi2XYP7JH9lP2+CyfcFQPmvrYZ8+g6rklRpcQeJdrOVKTzidAtDTgO/g==@vger.kernel.org, AJvYcCWmq0oMQQ4LRkpmomhLJm9PWO14MhYkOe1oPiAWcVYg2pr9Oc1GcyM/T74WHW5gXN/CMz9/xmC7TOZmM0g5@vger.kernel.org, AJvYcCWxDEKDHVVAYDhTxWGuQEvEVXqtD3ee9IXR1YZqHEQ4+VYDS9+2QC+3mWyTu1Ff1AkW8YJKLG6DHF3a@vger.kernel.org
-X-Gm-Message-State: AOJu0Ywnu+cdVMyocXZqdYWSrhpx+oEOQyTE4Nv3BjBzjBXWt1shHgrs
-	RxiRsaognrbZ9CJPoqw5UO8DILP0d0iwbwUMUAnGlWXY7qssuMFE
-X-Gm-Gg: ASbGncuFGbE7OJdtHrQBQRhFp/R8q/bX5EhG8Upz4iCCCuBIxfa/KZDbq5f9IKQEqNq
-	T9qQMGCDq/sdSofFjN7jtMPZ3VCgWCrtTo+ksl9m13YiMBRb3IsNp3Xd8aVXPsbjc2VLcaaVnd8
-	hPRvMWsBoK+HKB5RwgVUgUkr45a2OFhL02kzDJJS27RVCAOMdhFdmbp33usKgmO2fKgCRX2QARz
-	30BGRZg+SVdRzlEV8et1R+YfwGt6iOpXYfa5Ik5J2UJBmI9qiOMtuA=
-X-Google-Smtp-Source: AGHT+IGto2BaQi68523DsR3iDavWRRsTMrTS1ATGfAroiQo6cHE20D2gdGngXC1KyKQ3zwQ4S9MgSw==
-X-Received: by 2002:a17:902:cec5:b0:215:8270:77e2 with SMTP id d9443c01a7336-21a83da4965mr318816775ad.0.1736790801823;
-        Mon, 13 Jan 2025 09:53:21 -0800 (PST)
-Received: from nuvole.. ([144.202.86.13])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-21a9f10e0c4sm55724905ad.24.2025.01.13.09.53.15
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 13 Jan 2025 09:53:21 -0800 (PST)
-From: Pengyu Luo <mitltlatltl@gmail.com>
-To: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>
-Cc: Pengyu Luo <mitltlatltl@gmail.com>,
-	linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH v3 6/6] arm64: dts: qcom: gaokun3: Add Embedded Controller node
-Date: Tue, 14 Jan 2025 01:51:28 +0800
-Message-ID: <20250113175131.590683-4-mitltlatltl@gmail.com>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20250113175131.590683-1-mitltlatltl@gmail.com>
-References: <20250113175131.590683-1-mitltlatltl@gmail.com>
+        d=1e100.net; s=20230601; t=1736793260; x=1737398060;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:sender:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=dUk9K/3v1fmRTIGpSlzyJ4xMMqx5o/nZbSm/00tBSUQ=;
+        b=WVTQX2oj6N9uatgjDwLIgjvDT7Dd+6pql4S+fo03uraZLkqO+PEN3IeHZSQ8iXR0Pt
+         aP9fRNT1qHqntxBaYTyChkZGCdqLhpEZsW19BNLuhVPbwQsrSpD+qYynuZXFQyiQ2kd5
+         ewAJVNUua6epOh95FcwY7NOuMyI/arzueuJ/kKTXILAPf5Hl36rwQa6t/oCMwyVZBqJZ
+         gwjZyZsKn8A21lnEovmbABASL/ZuZIBkc+sVzpi1NBq/dOFjA73jTBb8buEd74l9jxNY
+         aNdxrBuJ9q13Esf/uhOu2hkXkusHMKhbrgA+c4e+gyR8kuhszk0B+K6Kj4x3MdNz62vz
+         DZLA==
+X-Forwarded-Encrypted: i=1; AJvYcCUkphzOSwL44VhK/PxzI2vKqBEtInHln7ogQGlUwTmY/9rdJGcB7VkSOPPhBQMWi47OZAWjVBxSKFKcMPQ=@vger.kernel.org, AJvYcCVSeNyo+xe81SY4jDj7Ot0Qkc7e6/iPF/Vw1r3ELmbT+qZcUsDFMBcvYr2zrCkK0/hvsKlFpqdeZkLqvxqhyIo/bLxNBw==@vger.kernel.org, AJvYcCVSo1rbbU4bllLGTNIZVf8VW031vqe3MbTsLrTPPLvJyLB80OGqCScnXLwZ/YgxJ0K66tGDZrO9Kck=@vger.kernel.org, AJvYcCVmGVxAlCcJVd+FF/UFZIgkHA0Ckpn9iv1dN9AvIKHQvQGrX5NsmvWiznz7xHxYhnL3EDSagepUU0zIGMiP@vger.kernel.org, AJvYcCVvwf5a9tBRX+AuKWgfW2PbZR+PMqPY6uHb5uSE76So7AbFbutcM4Pl1fmPmnGpCzHWMbwqoPfgkMWgo1bJ@vger.kernel.org, AJvYcCXVm8lbZbcUEGZLKZ84ifdI3AhkGzTsTDo629yWhxYCY4N5LTIklje9/em/ZlsvZPVKCYcdNR3hwxZd@vger.kernel.org
+X-Gm-Message-State: AOJu0YyMhSPxb6hfS9VLNT21MdoNLFID0cJSpZQMSAY37MZCcHKAM+HZ
+	83aceD64+ZyxMf8SQWzZ/HCqn+6ry7694YmHI3Bb8RVnObgdyb55
+X-Gm-Gg: ASbGncsWyb1qN9NDCGXSgIO5RpG9vofVq/AZFDHTUblXo5x//WAKG4LnJTtVM9BtHzu
+	FOQtoHkEiLOPZErWJVF8bWeHwIvZH5hWU1BreR+zcb+dZA/8qgi2AjzCU8U6QBVTUtk2iGafgbn
+	txJbWZnU6keDExEgmYw3kOufRRqaokMppfr4/9180cNEr/25ARGB8gJXKSniswqqYkCoE/c4P09
+	gYVPnhy2V+ldUdUzxHLbPL0XU0Tarhc2gmox67c0hOIzZhNnqhSEK2k4kNgm6iUj5BCZEkJeKKz
+	fjrKBX82dZGhUji/DqVKfkEaXY5ASg==
+X-Google-Smtp-Source: AGHT+IGffTqtldE+fbRRcZSQfUCPNUY9FZEm8W/f9587s75zCFU9ByP7Dahck4ocBkuv8JrlehJN8w==
+X-Received: by 2002:a17:90b:4a44:b0:2ea:61de:38f7 with SMTP id 98e67ed59e1d1-2f548f1d420mr31860946a91.29.1736793260365;
+        Mon, 13 Jan 2025 10:34:20 -0800 (PST)
+Received: from ?IPV6:2600:1700:e321:62f0:da43:aeff:fecc:bfd5? ([2600:1700:e321:62f0:da43:aeff:fecc:bfd5])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2f5593d07cbsm9069751a91.3.2025.01.13.10.34.17
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 13 Jan 2025 10:34:19 -0800 (PST)
+Sender: Guenter Roeck <groeck7@gmail.com>
+Message-ID: <dae486c3-8c3d-4b56-8022-4620fa638f82@roeck-us.net>
+Date: Mon, 13 Jan 2025 10:34:17 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 2/6] platform: arm64: add Huawei Matebook E Go EC
+ driver
+To: Pengyu Luo <mitltlatltl@gmail.com>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Hans de Goede <hdegoede@redhat.com>,
+ =?UTF-8?Q?Ilpo_J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+ Sebastian Reichel <sre@kernel.org>,
+ Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ Jean Delvare <jdelvare@suse.com>
+Cc: devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, platform-driver-x86@vger.kernel.org,
+ linux-pm@vger.kernel.org, linux-usb@vger.kernel.org,
+ linux-hwmon@vger.kernel.org
+References: <20250113175049.590511-1-mitltlatltl@gmail.com>
+Content-Language: en-US
+From: Guenter Roeck <linux@roeck-us.net>
+Autocrypt: addr=linux@roeck-us.net; keydata=
+ xsFNBE6H1WcBEACu6jIcw5kZ5dGeJ7E7B2uweQR/4FGxH10/H1O1+ApmcQ9i87XdZQiB9cpN
+ RYHA7RCEK2dh6dDccykQk3bC90xXMPg+O3R+C/SkwcnUak1UZaeK/SwQbq/t0tkMzYDRxfJ7
+ nyFiKxUehbNF3r9qlJgPqONwX5vJy4/GvDHdddSCxV41P/ejsZ8PykxyJs98UWhF54tGRWFl
+ 7i1xvaDB9lN5WTLRKSO7wICuLiSz5WZHXMkyF4d+/O5ll7yz/o/JxK5vO/sduYDIlFTvBZDh
+ gzaEtNf5tQjsjG4io8E0Yq0ViobLkS2RTNZT8ICq/Jmvl0SpbHRvYwa2DhNsK0YjHFQBB0FX
+ IdhdUEzNefcNcYvqigJpdICoP2e4yJSyflHFO4dr0OrdnGLe1Zi/8Xo/2+M1dSSEt196rXaC
+ kwu2KgIgmkRBb3cp2vIBBIIowU8W3qC1+w+RdMUrZxKGWJ3juwcgveJlzMpMZNyM1jobSXZ0
+ VHGMNJ3MwXlrEFPXaYJgibcg6brM6wGfX/LBvc/haWw4yO24lT5eitm4UBdIy9pKkKmHHh7s
+ jfZJkB5fWKVdoCv/omy6UyH6ykLOPFugl+hVL2Prf8xrXuZe1CMS7ID9Lc8FaL1ROIN/W8Vk
+ BIsJMaWOhks//7d92Uf3EArDlDShwR2+D+AMon8NULuLBHiEUQARAQABzTJHdWVudGVyIFJv
+ ZWNrIChMaW51eCBhY2NvdW50KSA8bGludXhAcm9lY2stdXMubmV0PsLBgQQTAQIAKwIbAwYL
+ CQgHAwIGFQgCCQoLBBYCAwECHgECF4ACGQEFAlVcphcFCRmg06EACgkQyx8mb86fmYFg0RAA
+ nzXJzuPkLJaOmSIzPAqqnutACchT/meCOgMEpS5oLf6xn5ySZkl23OxuhpMZTVX+49c9pvBx
+ hpvl5bCWFu5qC1jC2eWRYU+aZZE4sxMaAGeWenQJsiG9lP8wkfCJP3ockNu0ZXXAXwIbY1O1
+ c+l11zQkZw89zNgWgKobKzrDMBFOYtAh0pAInZ9TSn7oA4Ctejouo5wUugmk8MrDtUVXmEA9
+ 7f9fgKYSwl/H7dfKKsS1bDOpyJlqhEAH94BHJdK/b1tzwJCFAXFhMlmlbYEk8kWjcxQgDWMu
+ GAthQzSuAyhqyZwFcOlMCNbAcTSQawSo3B9yM9mHJne5RrAbVz4TWLnEaX8gA5xK3uCNCeyI
+ sqYuzA4OzcMwnnTASvzsGZoYHTFP3DQwf2nzxD6yBGCfwNGIYfS0i8YN8XcBgEcDFMWpOQhT
+ Pu3HeztMnF3HXrc0t7e5rDW9zCh3k2PA6D2NV4fews9KDFhLlTfCVzf0PS1dRVVWM+4jVl6l
+ HRIAgWp+2/f8dx5vPc4Ycp4IsZN0l1h9uT7qm1KTwz+sSl1zOqKD/BpfGNZfLRRxrXthvvY8
+ BltcuZ4+PGFTcRkMytUbMDFMF9Cjd2W9dXD35PEtvj8wnEyzIos8bbgtLrGTv/SYhmPpahJA
+ l8hPhYvmAvpOmusUUyB30StsHIU2LLccUPPOwU0ETofVZwEQALlLbQeBDTDbwQYrj0gbx3bq
+ 7kpKABxN2MqeuqGr02DpS9883d/t7ontxasXoEz2GTioevvRmllJlPQERVxM8gQoNg22twF7
+ pB/zsrIjxkE9heE4wYfN1AyzT+AxgYN6f8hVQ7Nrc9XgZZe+8IkuW/Nf64KzNJXnSH4u6nJM
+ J2+Dt274YoFcXR1nG76Q259mKwzbCukKbd6piL+VsT/qBrLhZe9Ivbjq5WMdkQKnP7gYKCAi
+ pNVJC4enWfivZsYupMd9qn7Uv/oCZDYoBTdMSBUblaLMwlcjnPpOYK5rfHvC4opxl+P/Vzyz
+ 6WC2TLkPtKvYvXmdsI6rnEI4Uucg0Au/Ulg7aqqKhzGPIbVaL+U0Wk82nz6hz+WP2ggTrY1w
+ ZlPlRt8WM9w6WfLf2j+PuGklj37m+KvaOEfLsF1v464dSpy1tQVHhhp8LFTxh/6RWkRIR2uF
+ I4v3Xu/k5D0LhaZHpQ4C+xKsQxpTGuYh2tnRaRL14YMW1dlI3HfeB2gj7Yc8XdHh9vkpPyuT
+ nY/ZsFbnvBtiw7GchKKri2gDhRb2QNNDyBnQn5mRFw7CyuFclAksOdV/sdpQnYlYcRQWOUGY
+ HhQ5eqTRZjm9z+qQe/T0HQpmiPTqQcIaG/edgKVTUjITfA7AJMKLQHgp04Vylb+G6jocnQQX
+ JqvvP09whbqrABEBAAHCwWUEGAECAA8CGwwFAlVcpi8FCRmg08MACgkQyx8mb86fmYHNRQ/+
+ J0OZsBYP4leJvQF8lx9zif+v4ZY/6C9tTcUv/KNAE5leyrD4IKbnV4PnbrVhjq861it/zRQW
+ cFpWQszZyWRwNPWUUz7ejmm9lAwPbr8xWT4qMSA43VKQ7ZCeTQJ4TC8kjqtcbw41SjkjrcTG
+ wF52zFO4bOWyovVAPncvV9eGA/vtnd3xEZXQiSt91kBSqK28yjxAqK/c3G6i7IX2rg6pzgqh
+ hiH3/1qM2M/LSuqAv0Rwrt/k+pZXE+B4Ud42hwmMr0TfhNxG+X7YKvjKC+SjPjqp0CaztQ0H
+ nsDLSLElVROxCd9m8CAUuHplgmR3seYCOrT4jriMFBtKNPtj2EE4DNV4s7k0Zy+6iRQ8G8ng
+ QjsSqYJx8iAR8JRB7Gm2rQOMv8lSRdjva++GT0VLXtHULdlzg8VjDnFZ3lfz5PWEOeIMk7Rj
+ trjv82EZtrhLuLjHRCaG50OOm0hwPSk1J64R8O3HjSLdertmw7eyAYOo4RuWJguYMg5DRnBk
+ WkRwrSuCn7UG+qVWZeKEsFKFOkynOs3pVbcbq1pxbhk3TRWCGRU5JolI4ohy/7JV1TVbjiDI
+ HP/aVnm6NC8of26P40Pg8EdAhajZnHHjA7FrJXsy3cyIGqvg9os4rNkUWmrCfLLsZDHD8FnU
+ mDW4+i+XlNFUPUYMrIKi9joBhu18ssf5i5Q=
+In-Reply-To: <20250113175049.590511-1-mitltlatltl@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-The Embedded Controller in the Huawei Matebook E Go is accessible on &i2c15
-and provides battery and adapter status, port orientation status, as well
-as HPD event notifications for two USB Type-C port, etc.
+On 1/13/25 09:50, Pengyu Luo wrote:
+> There are three variants of which Huawei released the first two
+> simultaneously.
+> 
+> Huawei Matebook E Go LTE(sc8180x), codename seems to be gaokun2.
+> Huawei Matebook E Go(sc8280xp@3.0GHz), codename must be gaokun3. (see [1])
+> Huawei Matebook E Go 2023(sc8280xp@2.69GHz), codename should be also gaokun3.
+> 
+> Adding support for the latter two variants for now, this driver should
+> also work for the sc8180x variant according to acpi table files, but I
+> don't have the device to test yet.
+> 
+> Different from other Qualcomm Snapdragon sc8280xp based machines, the
+> Huawei Matebook E Go uses an embedded controller while others use
+> a system called PMIC GLink. This embedded controller can be used to
+> perform a set of various functions, including, but not limited to:
+> 
+> - Battery and charger monitoring;
+> - Charge control and smart charge;
+> - Fn_lock settings;
+> - Tablet lid status;
+> - Temperature sensors;
+> - USB Type-C notifications (ports orientation,  DP alt mode HPD);
+> - USB Type-C PD (according to observation, up to 48w).
+> 
+> Add a driver for the EC which creates devices for UCSI and power supply
+> devices.
+> 
+> [1] https://bugzilla.kernel.org/show_bug.cgi?id=219645
+> 
+> Signed-off-by: Pengyu Luo <mitltlatltl@gmail.com>
+> ---
+...
+> +	ec->hwmon_dev = hwmon_device_register_with_groups(dev, "gaokun_ec_hwmon",
+> +							  ec, gaokun_ec_hwmon_groups);
 
-Add the EC to the device tree and describe the relationship among
-the type-c connectors, role switches, orientation switches and the QMP
-combo PHY.
+This API function is deprecated.
 
-Signed-off-by: Pengyu Luo <mitltlatltl@gmail.com>
----
- .../boot/dts/qcom/sc8280xp-huawei-gaokun3.dts | 163 ++++++++++++++++++
- 1 file changed, 163 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-huawei-gaokun3.dts b/arch/arm64/boot/dts/qcom/sc8280xp-huawei-gaokun3.dts
-index 09b95f89e..1667c7157 100644
---- a/arch/arm64/boot/dts/qcom/sc8280xp-huawei-gaokun3.dts
-+++ b/arch/arm64/boot/dts/qcom/sc8280xp-huawei-gaokun3.dts
-@@ -28,6 +28,7 @@ / {
- 
- 	aliases {
- 		i2c4 = &i2c4;
-+		i2c15 = &i2c15;
- 		serial1 = &uart2;
- 	};
- 
-@@ -216,6 +217,40 @@ map1 {
- 		};
- 	};
- 
-+	usb0-sbu-mux {
-+		compatible = "pericom,pi3usb102", "gpio-sbu-mux";
-+
-+		select-gpios = <&tlmm 164 GPIO_ACTIVE_HIGH>;
-+
-+		pinctrl-0 = <&usb0_sbu_default>;
-+		pinctrl-names = "default";
-+
-+		orientation-switch;
-+
-+		port {
-+			usb0_sbu_mux: endpoint {
-+				remote-endpoint = <&ucsi0_sbu>;
-+			};
-+		};
-+	};
-+
-+	usb1-sbu-mux {
-+		compatible = "pericom,pi3usb102", "gpio-sbu-mux";
-+
-+		select-gpios = <&tlmm 47 GPIO_ACTIVE_HIGH>;
-+
-+		pinctrl-0 = <&usb1_sbu_default>;
-+		pinctrl-names = "default";
-+
-+		orientation-switch;
-+
-+		port {
-+			usb1_sbu_mux: endpoint {
-+				remote-endpoint = <&ucsi1_sbu>;
-+			};
-+		};
-+	};
-+
- 	wcn6855-pmu {
- 		compatible = "qcom,wcn6855-pmu";
- 
-@@ -584,6 +619,97 @@ touchscreen@4f {
- 
- };
- 
-+&i2c15 {
-+	clock-frequency = <400000>;
-+
-+	pinctrl-0 = <&i2c15_default>;
-+	pinctrl-names = "default";
-+
-+	status = "okay";
-+
-+	embedded-controller@38 {
-+		compatible = "huawei,gaokun3-ec";
-+		reg = <0x38>;
-+
-+		interrupts-extended = <&tlmm 107 IRQ_TYPE_LEVEL_LOW>;
-+
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+
-+		connector@0 {
-+			compatible = "usb-c-connector";
-+			reg = <0>;
-+			power-role = "dual";
-+			data-role = "dual";
-+
-+			ports {
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+
-+				port@0 {
-+					reg = <0>;
-+
-+					ucsi0_hs_in: endpoint {
-+						remote-endpoint = <&usb_0_dwc3_hs>;
-+					};
-+				};
-+
-+				port@1 {
-+					reg = <1>;
-+
-+					ucsi0_ss_in: endpoint {
-+						remote-endpoint = <&usb_0_qmpphy_out>;
-+					};
-+				};
-+
-+				port@2 {
-+					reg = <2>;
-+
-+					ucsi0_sbu: endpoint {
-+						remote-endpoint = <&usb0_sbu_mux>;
-+					};
-+				};
-+			};
-+		};
-+
-+		connector@1 {
-+			compatible = "usb-c-connector";
-+			reg = <1>;
-+			power-role = "dual";
-+			data-role = "dual";
-+
-+			ports {
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+
-+				port@0 {
-+					reg = <0>;
-+
-+					ucsi1_hs_in: endpoint {
-+						remote-endpoint = <&usb_1_dwc3_hs>;
-+					};
-+				};
-+
-+				port@1 {
-+					reg = <1>;
-+
-+					ucsi1_ss_in: endpoint {
-+						remote-endpoint = <&usb_1_qmpphy_out>;
-+					};
-+				};
-+
-+				port@2 {
-+					reg = <2>;
-+
-+					ucsi1_sbu: endpoint {
-+						remote-endpoint = <&usb1_sbu_mux>;
-+					};
-+				};
-+			};
-+		};
-+	};
-+};
-+
- &mdss0 {
- 	status = "okay";
- };
-@@ -1004,6 +1130,10 @@ &usb_0_dwc3 {
- 	dr_mode = "host";
- };
- 
-+&usb_0_dwc3_hs {
-+	remote-endpoint = <&ucsi0_hs_in>;
-+};
-+
- &usb_0_hsphy {
- 	vdda-pll-supply = <&vreg_l9d>;
- 	vdda18-supply = <&vreg_l1c>;
-@@ -1025,6 +1155,10 @@ &usb_0_qmpphy_dp_in {
- 	remote-endpoint = <&mdss0_dp0_out>;
- };
- 
-+&usb_0_qmpphy_out {
-+	remote-endpoint = <&ucsi0_ss_in>;
-+};
-+
- &usb_1 {
- 	status = "okay";
- };
-@@ -1033,6 +1167,10 @@ &usb_1_dwc3 {
- 	dr_mode = "host";
- };
- 
-+&usb_1_dwc3_hs {
-+	remote-endpoint = <&ucsi1_hs_in>;
-+};
-+
- &usb_1_hsphy {
- 	vdda-pll-supply = <&vreg_l4b>;
- 	vdda18-supply = <&vreg_l1c>;
-@@ -1054,6 +1192,10 @@ &usb_1_qmpphy_dp_in {
- 	remote-endpoint = <&mdss0_dp1_out>;
- };
- 
-+&usb_1_qmpphy_out {
-+	remote-endpoint = <&ucsi1_ss_in>;
-+};
-+
- &usb_2 {
- 	status = "okay";
- };
-@@ -1177,6 +1319,13 @@ i2c4_default: i2c4-default-state {
- 		bias-disable;
- 	};
- 
-+	i2c15_default: i2c15-default-state {
-+		pins = "gpio36", "gpio37";
-+		function = "qup15";
-+		drive-strength = <2>;
-+		bias-pull-up;
-+	};
-+
- 	mode_pin_active: mode-pin-state {
- 		pins = "gpio26";
- 		function = "gpio";
-@@ -1301,6 +1450,20 @@ tx-pins {
- 		};
- 	};
- 
-+	usb0_sbu_default: usb0-sbu-state {
-+		pins = "gpio164";
-+		function = "gpio";
-+		drive-strength = <16>;
-+		bias-disable;
-+	};
-+
-+	usb1_sbu_default: usb1-sbu-state {
-+		pins = "gpio47";
-+		function = "gpio";
-+		drive-strength = <16>;
-+		bias-disable;
-+	};
-+
- 	wcd_default: wcd-default-state {
- 		reset-pins {
- 			pins = "gpio106";
--- 
-2.47.1
+Guenter
 
 
