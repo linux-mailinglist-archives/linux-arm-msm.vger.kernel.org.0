@@ -1,110 +1,170 @@
-Return-Path: <linux-arm-msm+bounces-44942-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-44943-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 64017A0C5A1
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jan 2025 00:27:37 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id E0CE4A0C5A4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jan 2025 00:28:00 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 84C9C18873B7
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Jan 2025 23:27:40 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A45533A1314
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Jan 2025 23:27:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 21D241FA24C;
-	Mon, 13 Jan 2025 23:27:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6DAB21F9F70;
+	Mon, 13 Jan 2025 23:27:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OuqVNYp7"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="NBxX3fYm"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1AFF1FA171;
-	Mon, 13 Jan 2025 23:27:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90C491F9F6B;
+	Mon, 13 Jan 2025 23:27:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736810845; cv=none; b=QammDmyz1uGIVDiatKGn7J85mM1k86FqYLVv7GRRZKyNhE9KlQDCL5OZ9FsNx2q4hc8gu0oQwzM/unRY8JGHY2g0EeL8CcptKVtEpUv7uxpgpcpLq79paPKxkrVTVdejP5G69D81NJ+uK17v2TrqpGqKRDka+BrP8zz99qd2a64=
+	t=1736810878; cv=none; b=C7HCo23fJzh5Fm34O6vtnPWn9di+MLRwTOOlTWRSQCAoXmHRHY9llqYbOKFcifYd//9rujvz3D2ioqhP+JtEsLcRGrkj5iLKpDjukEkEnQZjZN5OPAV67t+QpmKr1DGZU6HBR3oF1oBV0nWnX+/3bD01LJdihA28lwuBw3djQxk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736810845; c=relaxed/simple;
-	bh=LU24eK07VvcIkX9LfFim5vaybKtgDkqsrjcRzbnxX2k=;
-	h=Date:Content-Type:MIME-Version:From:Cc:To:In-Reply-To:References:
-	 Message-Id:Subject; b=cn/ZEwzkV+GlOppOAHXbLNARLpFwkqJr31UFPFZTZMn5wR+gBqj4s5R8k7rtU3bsPAPVSAWKwK0U/8aLbd+Cs+BNvx2LlTv2g1mVHLLvC80dTeX2dO7xYrbIx3EJZsJ4qym61GShEtRCtw1UkjrU5tCY5w08aEkWKdDnMi1FBu4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OuqVNYp7; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F588C4CEE2;
-	Mon, 13 Jan 2025 23:27:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1736810844;
-	bh=LU24eK07VvcIkX9LfFim5vaybKtgDkqsrjcRzbnxX2k=;
-	h=Date:From:Cc:To:In-Reply-To:References:Subject:From;
-	b=OuqVNYp72kU4m/ZLkR2w8do2Oiy7y5lcpPjjFWqKewZyA9/I+AfNf6J6fhIREy+HH
-	 b2GTXzah5jpzVNawtzHJKjPNsmddER5XS5EyV+lnP/ui7RZ98FxjRjrOkLDDhDSEJ+
-	 w3o2P7HMbpP9MALBadSLs2ReFD3WOmrNlbtakMP1lI2o8PbPHCMfR4CA5pJ/pZO3me
-	 AGqIhBAeTU9S4thjZi3hSL3UbJoyc4BC/d1Y3CdH2EbI82LfG76jQS+U1jdxYOlA3I
-	 K1+p68h83RITXH3DxG1+Ac4PtDCfi4LWnRWWEimPPBtFo5rmnRXBBYxKdXpbZW7Xux
-	 riTGsdbFdY9Nw==
-Date: Mon, 13 Jan 2025 17:27:23 -0600
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+	s=arc-20240116; t=1736810878; c=relaxed/simple;
+	bh=1yIrDXcZYhcyxN986ZYGN1NBDhALQeVPow6Y93lrGvk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=hjC+6JPQeufBKma6VEzyqTMzjgRGeqw2smpQRB0hXirJ64EHIUcOeMX/rZKM74FT7fIFFDnvRa/lELQTM/mEvIrJM89mrJlecKB8SUj18zQCAtwidXedoj43/awo22NBCoc3Eo/skNCuG3o4G7Vk6QyXsbSNt/2gq2CJb1zc2Xw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=NBxX3fYm; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50DKs85a025453;
+	Mon, 13 Jan 2025 23:27:39 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	2SMsbRwfz/DxTuCO//N0aO2VimKu/X+j8sEr189L7cM=; b=NBxX3fYmHO7pFTkW
+	CxDmXJWXtqmN/0mSvZEeVCydo1uyUjl1grP80r/9Mp3ISgZ1Um7keDXto3NJnkyf
+	moiyL9LSCnGklyKDkRr8IeIXAU1ZnRNRRyULC7s+tOb/whdYZYUD27lJjX6rPQtM
+	Szj7ECkHuxkP4Eb3NaWi7y9uHNIiaSN6LLeMmlcSqJpAY1quZpx6BtKXEucsQyeJ
+	mNpeUtxk86O7dE4OAeC5z48EzuO6pqYz+Leg47ylr0qiU/cYloXMB5gGr3ULjJ8h
+	Ym8a3fmb4kCT4F3eNjwfWtubjvE4OZsduVQjkkBF3QCezvpYNPo98x51uTeoAZ2O
+	eQ9dQw==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 445a9288q0-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 13 Jan 2025 23:27:39 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 50DNRcEe030837
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 13 Jan 2025 23:27:38 GMT
+Received: from [10.110.66.138] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 13 Jan
+ 2025 15:27:37 -0800
+Message-ID: <f8a9e454-72f4-4979-b29d-109700b2a204@quicinc.com>
+Date: Mon, 13 Jan 2025 15:27:24 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: "Rob Herring (Arm)" <robh@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
- Kishon Vijay Abraham I <kishon@kernel.org>, 
- Trilok Soni <quic_tsoni@quicinc.com>, Conor Dooley <conor+dt@kernel.org>, 
- linux-phy@lists.infradead.org, Konrad Dybcio <konradybcio@kernel.org>, 
- Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>, 
- Vinod Koul <vkoul@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
- linux-usb@vger.kernel.org, Philipp Zabel <p.zabel@pengutronix.de>, 
- linux-kernel@vger.kernel.org, Catalin Marinas <catalin.marinas@arm.com>, 
- Will Deacon <will@kernel.org>, Wesley Cheng <quic_wcheng@quicinc.com>, 
- linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org
-To: Melody Olvera <quic_molvera@quicinc.com>
-In-Reply-To: <20250113-sm8750_usb_master-v1-3-09afe1dc2524@quicinc.com>
-References: <20250113-sm8750_usb_master-v1-0-09afe1dc2524@quicinc.com>
- <20250113-sm8750_usb_master-v1-3-09afe1dc2524@quicinc.com>
-Message-Id: <173681084257.3610270.9006254199741701933.robh@kernel.org>
-Subject: Re: [PATCH 3/7] dt-bindings: usb: qcom,dwc3: Add SM8750 compatible
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v32 01/32] usb: host: xhci: Repurpose event handler for
+ skipping interrupter events
+To: =?UTF-8?Q?Micha=C5=82_Pecio?= <michal.pecio@gmail.com>
+CC: <Thinh.Nguyen@synopsys.com>, <broonie@kernel.org>, <conor+dt@kernel.org>,
+        <corbet@lwn.net>, <devicetree@vger.kernel.org>,
+        <dmitry.torokhov@gmail.com>, <gregkh@linuxfoundation.org>,
+        <krzk+dt@kernel.org>, <lgirdwood@gmail.com>,
+        <linux-arm-msm@vger.kernel.org>, <linux-doc@vger.kernel.org>,
+        <linux-input@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-sound@vger.kernel.org>, <linux-usb@vger.kernel.org>,
+        <mathias.nyman@intel.com>, <perex@perex.cz>,
+        <pierre-louis.bossart@linux.intel.com>, <robh@kernel.org>,
+        <srinivas.kandagatla@linaro.org>, <tiwai@suse.com>
+References: <20250113143632.63c52d74@foxbook>
+Content-Language: en-US
+From: Wesley Cheng <quic_wcheng@quicinc.com>
+In-Reply-To: <20250113143632.63c52d74@foxbook>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: CNsYdWrGujrNWaOAdifB8Kkp4WjMkrQ2
+X-Proofpoint-ORIG-GUID: CNsYdWrGujrNWaOAdifB8Kkp4WjMkrQ2
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 malwarescore=0
+ suspectscore=0 impostorscore=0 adultscore=0 priorityscore=1501 spamscore=0
+ lowpriorityscore=0 clxscore=1015 mlxlogscore=999 phishscore=0 bulkscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2411120000
+ definitions=main-2501130184
+
+Hi Michal,
+
+On 1/13/2025 5:36 AM, Michał Pecio wrote:
+> Hi,
+>
+>> Depending on the interrupter use case, the OS may only be used to
+>> handle the interrupter event ring clean up.
+> What do you mean by "cleanup"? Because I see that this patch ends up
+> acknowledging events to the xHC and I don't know why it would do so?
 
 
-On Mon, 13 Jan 2025 13:52:09 -0800, Melody Olvera wrote:
-> From: Wesley Cheng <quic_wcheng@quicinc.com>
-> 
-> SM8750 uses the Synopsys DWC3 controller. Add this to the compatibles list
-> to utilize the DWC3 QCOM and DWC3 core framework.
-> 
-> Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
-> Signed-off-by: Melody Olvera <quic_molvera@quicinc.com>
-> ---
->  Documentation/devicetree/bindings/usb/qcom,dwc3.yaml | 3 +++
->  1 file changed, 3 insertions(+)
-> 
-
-My bot found errors running 'make dt_binding_check' on your patch:
-
-yamllint warnings/errors:
-
-dtschema/dtc warnings/errors:
+Cleanup so that we can ensure there are no pending events that were left once the secondary interrupter is disabled.  Based on previous feedback, there are use cases where the OS may actually want to handle events occurring on the secondary interrupter, but that support will take some time to implement/test.
 
 
-doc reference errors (make refcheckdocs):
+>> In these scenarios, event TRBs don't need to be handled by the OS,
+>> so introduce an xhci interrupter flag to tag if the events from an
+>> interrupter needs to be handled or not.
+> Right, and if the OS isn't handling those events because they are owned
+> by a coprocessor then it shouldn't be acknowledging them either, which
+> has the effect that the xHC considers their memory free for reuse.
 
-See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20250113-sm8750_usb_master-v1-3-09afe1dc2524@quicinc.com
 
-The base for the series is generally the latest rc1. A different dependency
-should be noted in *this* patch.
+This implementation was done as part of an effort to consolidate the cleanup of the pending events with the same path as the handling of events for the main/primary interrupter:
 
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
+https://lore.kernel.org/linux-usb/33dfa0c5-c43f-79f6-2700-beee2e5d389f@quicinc.com/
 
-pip3 install dtschema --upgrade
 
-Please check and re-submit after running the above command yourself. Note
-that DT_SCHEMA_FILES can be set to your schema file to speed up checking
-your schema. However, it must be unset to test all examples with your schema.
+> Also, what happens when Linux goes to sleep and this IRQ stops running?
+> I expected that the coprocessor itself should be updating the xHC about
+> its own progress.
+
+
+Currently, Linux is not expected to go to sleep if the coprocessor is active.  The coprocessor will notify when the audio stream is enabled and disabled, and the USB device runtime PM counters are incremented/decremented respectively.  If Linux forcefully goes to sleep, then support is there to ensure the coprocessor's audio stream is disabled before entering suspend.
+
+
+>
+> Is it a bug? How is this stuff supposed to work?
+>
+> How are future developers supposed to know how it is supposed to work?
+> I imagine that few of them will have Qualcomm hardware for testing.
+
+
+Most of the implementation details of the overall mechanisms are highlighted in the cover letter, so can you clarify what you are suggesting that needs to be done for this statement?
+
+
+>
+>> static int xhci_handle_event_trb(struct xhci_hcd *xhci, struct xhci_interrupter *ir,
+>> 				 union xhci_trb *event)
+>> {
+>> 	u32 trb_type;
+>>
+>> +	/*
+>> +	 * Some interrupters do not need to handle event TRBs, as they may be
+>> +	 * managed by another entity, but rely on the OS to clean up.
+>> +	 */
+>> +	if (ir->skip_events)
+>> +		return 0;
+> This function is only called from one place so the caller could perform
+> this check and don't waste time calling it.
+
+
+I'm open to do it from either place.  We have to ensure that we cycle through each pending event during the cleanup phase.
+
+
+Thanks
+
+Wesley Cheng
 
 
