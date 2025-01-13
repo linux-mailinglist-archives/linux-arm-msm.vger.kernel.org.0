@@ -1,129 +1,211 @@
-Return-Path: <linux-arm-msm+bounces-44854-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-44855-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2AF99A0B0C5
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Jan 2025 09:14:56 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 93E1DA0B0E2
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Jan 2025 09:20:44 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 429A1163760
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Jan 2025 08:14:54 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 0DFC27A3904
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Jan 2025 08:20:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BF76823236F;
-	Mon, 13 Jan 2025 08:14:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AF6A4233140;
+	Mon, 13 Jan 2025 08:20:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="KVN45Gn/"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="mkubaI8I"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f172.google.com (mail-lj1-f172.google.com [209.85.208.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D358F232369
-	for <linux-arm-msm@vger.kernel.org>; Mon, 13 Jan 2025 08:14:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14E4B231A56;
+	Mon, 13 Jan 2025 08:20:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736756093; cv=none; b=S7yOffqHbw2JFOZ0T+Zg20VbEdtsBk/EDKi/WqD8wf08AodROIRN3ZTpYNIQS4SRuu7Lb2+ixW3a8z3U8fN6coK5iIXbiycvd/XmI0+cWg59MifT31H8yXsGSscNMhIveJ0pW9J2x1x+dHLNNgnTh7cx9prP1aUG9Ag509TBG2k=
+	t=1736756430; cv=none; b=omyllWWxwfS2OA5CDZ+pQsV38G2sdcdeOHD40qyxqOJ3k9N13gqK/P6PPd0x2ZTY4OYKxKaDh/+HKki05XIe9sG2xs425puV3GtudP0cQwgFoegEpXYcw3BdTJdK1NtpQMCKSXKWcRrfyKNd5JnzAQBN1Thdb/fkFxGNi0AXoZc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736756093; c=relaxed/simple;
-	bh=Hvgcs+cliAfpJ3VVSWJBygzxwPv3GVFdCfpgC7KIO4A=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=sG71Y1xgN7LNdvAk/DA1j5utDFcOwvV4Z1vVmYq438ZCev+C0dX/m5rpU9SMMUVtts5QuJDeBJnj38vcA6bAV2b1uRI+iM/zpYHLN1sL8Gv3JRQxZGkgScnZ7z0T9wZIXXReNOEPPFmjhFCu8b/HlUeBNbZgOT/gRk3s4J+xa6g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=KVN45Gn/; arc=none smtp.client-ip=209.85.208.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f172.google.com with SMTP id 38308e7fff4ca-304d760f12aso32011601fa.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Jan 2025 00:14:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1736756090; x=1737360890; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=EiBQMlbbRKX1jfLOnAiy2eBHbg9zc0uMkgrPET/8Jyw=;
-        b=KVN45Gn/TeQcr8nxOFWmfi5aYFaqpsUZngD324pbbkZf3kC87yhZWqMkS8fxtJWyhJ
-         6LUQOO9PbgWAnU/OzQY0oT1Ac+S77Dvy5494MNGw2UpsJoLw9eKpoax0AY86GhSIPP77
-         QdyVLX+NnpqFKhyGxpmFwRa4vsylKm8miJ78niEGgTl9c9FaxxHgw+PTPwDXj2kT06AQ
-         BdVtZE7MQg2AhksRsMRH+zom8UDpHllH3thYlpNKnZBzOFJDnKVL8GBn4SibvFsG/q3M
-         woFfuub6dTfJLowWkXB9WEcmdFDO7U0QfBfgEl4bCayFezUdxd1yeBaizvMp4I9HyZwS
-         xV7Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736756090; x=1737360890;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=EiBQMlbbRKX1jfLOnAiy2eBHbg9zc0uMkgrPET/8Jyw=;
-        b=OJ/9aX6Hmph1d8qbjO+QHQLFjRA5xpIUYKPbMvigQrsn52KNQFL2Q3dCu8rBiVeCXh
-         ienMLKDH9Rgtuu1JfJj+eKJ2NAQmoyPE29SUWnazLD4C/reKIBnGKvAgdeO7tQ+vJrp9
-         w8dSOHDBiHB5y4NX4Psf8Pe4ksEWD0V1KieD3mtQYw7GQLN0d5nSGqTDhPP/RDk+MFW0
-         fYMY91HGJEppduDVMRMFp7Q0ufggcTb/obTCKWwBqGPSxH6cLKM9pimwdGErF9ZxN/q6
-         ye1RLh3IBhUBZk5QPFerC+OkZnQqFLOAMHS0LztIWzWjmG5xSQA9SDkGExTZYV+dnCFq
-         yzGg==
-X-Forwarded-Encrypted: i=1; AJvYcCWkJ7E0YVJmziBaU7+wP3QV8tTbRNLSzJxCegFKu21GSoeAywuacrCGR+XhYhjbYF3ry7BKs+6Fszvh/Pvl@vger.kernel.org
-X-Gm-Message-State: AOJu0YxrvDZWn6WMuMHQ8+882aFOuWQiCFrTafHS6H+WihGsJWE7/aYl
-	kTZMyW+ZGxpNneNpN3L/d+icB1GP3BkTMGQ8UVJ4FRM23pPOUulaub0+BU4yXZo=
-X-Gm-Gg: ASbGncuaNTbJILdfQBvBKyn20XYHmzdO1SoFL8KUpP1CkH9OI+kEluXspoL9SkDup3o
-	wFjipTgN3XJ/caZFFUTdpKF6RFKmh0p5GBIoVTKgs9z2VSWYhT/OzfR9kNEj7WNH7+DD95fZVYw
-	6ZEjRq7AzFi4XIGpe2sn2MS6Y30/tbeE8JC5RbRdxjKY6qjycTdSQaVbS/ijMKMUZMZhiV1CMVG
-	5EZ8EZw9edi/Z79uzjFrqV+aUrSIZc9VbjKZRkcj8VBz9JKEHSHGjOhKcbSIATCu04HizGzpIN3
-	iWvFQ58IarZMoqao2gxQZyMhYj4VktfxMyWr
-X-Google-Smtp-Source: AGHT+IFiOGkWxTgwDiqqZRV/TncB2+0Lbwph18oB4337Oov0d7u7UgJwOOmW10YyJRV+FY90JH+dtg==
-X-Received: by 2002:a05:6512:39cc:b0:540:3581:5047 with SMTP id 2adb3069b0e04-54284820134mr7051637e87.48.1736756089990;
-        Mon, 13 Jan 2025 00:14:49 -0800 (PST)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5428be49dd5sm1253953e87.48.2025.01.13.00.14.47
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 13 Jan 2025 00:14:48 -0800 (PST)
-Date: Mon, 13 Jan 2025 10:14:46 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Raviteja Laggyshetty <quic_rlaggysh@quicinc.com>
-Cc: Georgi Djakov <djakov@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
-	Odelu Kukatla <quic_okukatla@quicinc.com>, Mike Tipton <mdptipton@quicinc.com>, 
-	Vivek Aknurwar <viveka@quicinc.com>, Sibi Sankar <quic_sibis@quicinc.com>, 
-	linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH V7 1/5] interconnect: core: Add dynamic id allocation
- support
-Message-ID: <x4lsksrpwe5z6ti7gi2kufyhrpvffsmo2im3oqhqgfaft2ihfm@7xnd6bvy47rv>
-References: <20250111161429.51-1-quic_rlaggysh@quicinc.com>
- <20250111161429.51-2-quic_rlaggysh@quicinc.com>
+	s=arc-20240116; t=1736756430; c=relaxed/simple;
+	bh=4+chX1jsbW61op44SlDeuJje9hKl94J6pDz8yqfyt3Q=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=A4/rGOjOVLW/eHxsOVQGqaOd7bEV9bleDF6YkPN8nC7bKKstObFkjhw85aDLnm3IEMjWNkZkLNwnETvOyEzgnOcYKnegwPtyBgkd3vRTF/QQsRSSGPhK3VbDVVd+GvLOFu52bC9QUDdgwrjjH3TkR0U+1V691Hf2zU5Wff+8DOI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=mkubaI8I; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50D4sdvw001454;
+	Mon, 13 Jan 2025 08:20:04 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	PgTDnGsNKXJLy6fZXS3tEtI7+FhqPIzJUmiGDgsJesU=; b=mkubaI8I5ym0gxjL
+	dXimjiGjOnYdOSxVp42/7vfL57uzFjP22fk50mYo7TMpzJlq8nKhbbbdPh5R49/F
+	kJPl1vEoyNy9cjcTqDikK+uaw4QPEox3GuSzS5MydyuEQSsJKeRbv1exXu6Ul5yQ
+	j1KgouwDdWYYWphNouqmG+PFIEhf0jdbLu5TYr6L5gqrOqECBPgti+GawY5aj1BR
+	XgBErqwN7y8xbEWy7qRIN3oyfBIjILDVRUCbyLjtnFCGD1RM1IgN5npf74hHkDve
+	TYu++yh03rZnq9mQkH0W1Ifprdqt74CZGmnwDsPesSLiTCkIdmALrYP40cNSYzZt
+	IB2qAg==
+Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 444v728e1s-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 13 Jan 2025 08:20:04 +0000 (GMT)
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 50D8K35W030308
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 13 Jan 2025 08:20:03 GMT
+Received: from [10.253.33.98] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 13 Jan
+ 2025 00:19:57 -0800
+Message-ID: <44e82323-b40d-41ea-86ee-57c4872a46e8@quicinc.com>
+Date: Mon, 13 Jan 2025 16:19:54 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250111161429.51-2-quic_rlaggysh@quicinc.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH net-next v4 3/5] net: pcs: qcom-ipq9574: Add PCS
+ instantiation and phylink operations
+To: Simon Horman <horms@kernel.org>
+CC: Andrew Lunn <andrew+netdev@lunn.ch>,
+        "David S. Miller"
+	<davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>, Jakub Kicinski
+	<kuba@kernel.org>,
+        Paolo Abeni <pabeni@redhat.com>, Rob Herring
+	<robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>, Andrew Lunn <andrew@lunn.ch>,
+        Heiner Kallweit
+	<hkallweit1@gmail.com>,
+        Russell King <linux@armlinux.org.uk>, <netdev@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <quic_kkumarcs@quicinc.com>,
+        <quic_suruchia@quicinc.com>, <quic_pavir@quicinc.com>,
+        <quic_linchen@quicinc.com>, <quic_luoj@quicinc.com>,
+        <srinivas.kandagatla@linaro.org>, <bartosz.golaszewski@linaro.org>,
+        <vsmuthu@qti.qualcomm.com>, <john@phrozen.org>
+References: <20250108-ipq_pcs_net-next-v4-0-0de14cd2902b@quicinc.com>
+ <20250108-ipq_pcs_net-next-v4-3-0de14cd2902b@quicinc.com>
+ <20250108100358.GG2772@kernel.org>
+ <8ac3167c-c8aa-4ddb-948f-758714df7495@quicinc.com>
+ <20250110105252.GY7706@kernel.org>
+Content-Language: en-US
+From: Lei Wei <quic_leiwei@quicinc.com>
+In-Reply-To: <20250110105252.GY7706@kernel.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: ppbTE0bSAqDDpyLkLjeisu1cD4C7AiqM
+X-Proofpoint-ORIG-GUID: ppbTE0bSAqDDpyLkLjeisu1cD4C7AiqM
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 adultscore=0
+ suspectscore=0 mlxscore=0 clxscore=1015 bulkscore=0 phishscore=0
+ impostorscore=0 priorityscore=1501 malwarescore=0 lowpriorityscore=0
+ mlxlogscore=822 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2501130070
 
-On Sat, Jan 11, 2025 at 04:14:25PM +0000, Raviteja Laggyshetty wrote:
-> Current interconnect framework is based on static IDs for creating node
-> and registering with framework. This becomes a limitation for topologies
-> where there are multiple instances of same interconnect provider. Add
-> icc_node_create_alloc_id() API to create icc node with dynamic id, this
-> will help to overcome the dependency on static IDs.
 
-This doesn't overcome the dependency on static ID. Drivers still have to
-manually lookup the resulting ID and use it to link the nodes. Instead
-ICC framework should be providing a completely dynamic solution:
-- icc_node_create() should get a completely dynamic counterpart. Use
-  e.g. 1000000 as a dynamic start ID.
-- icc_link_create() shold get a counterpart which can create a link
-  between two icc_node instances directly, without an additional lookup.
 
-You can check if your implementation is correct if you can refactor
-existing ICC drivers (e.g. icc-clk and/or icc-rpm to drop ID arrays
-completely).
+On 1/10/2025 6:52 PM, Simon Horman wrote:
+> On Thu, Jan 09, 2025 at 09:11:05PM +0800, Lei Wei wrote:
+>>
+>>
+>> On 1/8/2025 6:03 PM, Simon Horman wrote:
+>>> On Wed, Jan 08, 2025 at 10:50:26AM +0800, Lei Wei wrote:
+>>>> This patch adds the following PCS functionality for the PCS driver
+>>>> for IPQ9574 SoC:
+>>>>
+>>>> a.) Parses PCS MII DT nodes and instantiate each MII PCS instance.
+>>>> b.) Exports PCS instance get and put APIs. The network driver calls
+>>>> the PCS get API to get and associate the PCS instance with the port
+>>>> MAC.
+>>>> c.) PCS phylink operations for SGMII/QSGMII interface modes.
+>>>>
+>>>> Signed-off-by: Lei Wei <quic_leiwei@quicinc.com>
+>>>
+>>> ...
+>>>
+>>>> +static int ipq_pcs_enable(struct phylink_pcs *pcs)
+>>>> +{
+>>>> +	struct ipq_pcs_mii *qpcs_mii = phylink_pcs_to_qpcs_mii(pcs);
+>>>> +	struct ipq_pcs *qpcs = qpcs_mii->qpcs;
+>>>> +	int index = qpcs_mii->index;
+>>>> +	int ret;
+>>>> +
+>>>> +	ret = clk_prepare_enable(qpcs_mii->rx_clk);
+>>>> +	if (ret) {
+>>>> +		dev_err(qpcs->dev, "Failed to enable MII %d RX clock\n", index);
+>>>> +		return ret;
+>>>> +	}
+>>>> +
+>>>> +	ret = clk_prepare_enable(qpcs_mii->tx_clk);
+>>>> +	if (ret) {
+>>>> +		dev_err(qpcs->dev, "Failed to enable MII %d TX clock\n", index);
+>>>> +		return ret;
+>>>
+>>> Hi Lei Wei,
+>>>
+>>> I think you need something like the following to avoid leaking qpcs_mii->rx_clk.
+>>>
+>>> 		goto err_disable_unprepare_rx_clk;
+>>> 	}
+>>>
+>>> 	return 0;
+>>>
+>>> err_disable_unprepare_rx_clk:
+>>> 	clk_disable_unprepare(qpcs_mii->rx_clk);
+>>> 	return ret;
+>>> }
+>>>
+>>> Flagged by Smatch.
+>>>
+>>
+>> We had a conversation with Russell King in v2 that even if the phylink pcs
+>> enable sequence encounters an error, it does not unwind the steps it has
+>> already done. So we removed the call to unprepare in case of error here,
+>> since an error here is essentially fatal in this path with no unwind
+>> possibility.
+>>
+>> https://lore.kernel.org/all/38d7191f-e4bf-4457-9898-bb2b186ec3c7@quicinc.com/
+>>
+>> However to satisfy this smatch warning/error, we may need to revert back to
+>> the adding the unprepare call in case of error. Request Russel to comment as
+>> well if this is fine.
+> 
+> Thanks, I had missed that.
+> 
+> I don't think there is a need to update the code just to make Smatch happy.
+> Only if there is a real problem. Which, with the discussion at the link
+> above in mind, does not seem to be the case here.
+> 
+
+OK.
+
+>> Is it possible to share the log/command-options of the smatch failure so
+>> that we can reproduce this? Thanks.
+> 
+> Sure, I hope this answers your question.
+> 
+> Smatch can be found here https://github.com/error27/smatch/
+> 
+> And I invoked it like this:
+> $ PATH=".../smatch/bin:$PATH" .../smatch/smatch_scripts/kchecker drivers/net/pcs/pcs-qcom-ipq9574.o
+> 
+> Which yields the following warning:
+> drivers/net/pcs/pcs-qcom-ipq9574.c:283 ipq_pcs_enable() warn: 'qpcs_mii->rx_clk' from clk_prepare_enable() not released on lines: 280.
+>
+
+Thanks for sharing this information.
 
 > 
-> Signed-off-by: Raviteja Laggyshetty <quic_rlaggysh@quicinc.com>
-> ---
->  drivers/interconnect/core.c           | 32 +++++++++++++++++++++++++++
->  include/linux/interconnect-provider.h |  6 +++++
->  2 files changed, 38 insertions(+)
 > 
 
--- 
-With best wishes
-Dmitry
 
