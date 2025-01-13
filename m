@@ -1,212 +1,133 @@
-Return-Path: <linux-arm-msm+bounces-44907-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-44908-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0D76AA0C2A3
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Jan 2025 21:32:17 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id E1331A0C347
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Jan 2025 22:08:44 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AC0153A7C92
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Jan 2025 20:31:59 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 826BD7A1E1A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Jan 2025 21:08:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 74CB01D5CFB;
-	Mon, 13 Jan 2025 20:31:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8841D1CDFC1;
+	Mon, 13 Jan 2025 21:08:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eSJcAYi4"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="LTyrAtFf"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 434A81D5CDB;
-	Mon, 13 Jan 2025 20:31:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E55921EA65;
+	Mon, 13 Jan 2025 21:08:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736800298; cv=none; b=OCI/Uwnb36Zihjz9DEj2ZVOk+T1253YbCutaloLrUy8oN8g3D+34TmlA+qfVYLuIXcMgWwI8akppd+BpxuzFywSxBNZgaN3BTS31BqzDjC5t9bMQsr6kQdlGbIyZBJgkGblOEpG0G2wE7gTQdiT9nsW2snnZ5FvZCd/KhOIxXN0=
+	t=1736802517; cv=none; b=nbuSygGFb3lVFIzrbCpnnj23UR039+XVgyuy4eVVRDZ6yEq9hDSgvUJ3uhRKst7taPEIkeSxxF0P9rjjQwBXAxmI/CX2njmRqH6LxG3UXzYaYEjkWOmm2Et+md3MBFU15h6YBxG2I6/1mvoSscwWWuemVWAGzyTuU0lw2DY9d0w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736800298; c=relaxed/simple;
-	bh=Up9r2sF9a7ds9s6HK6Cfz2WXo56DasNauR2Pfzo2u2c=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=OyUHyW/re+6zbYcGEtCo6IIwh1fU5r9jZTz6d86y8s2lAd4c120RE52+USHTNIsdpjBUZWECFdrxKTAOHjgTVu5XifmpRqbQ2RLMt4RmOTs92YP33HQpEo+x1xf8cGuup7f/9ZiargV0cj0XDAKYFknAQ18cHS6VWHqvfEH0mhM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eSJcAYi4; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8053DC4CEE1;
-	Mon, 13 Jan 2025 20:31:37 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1736800297;
-	bh=Up9r2sF9a7ds9s6HK6Cfz2WXo56DasNauR2Pfzo2u2c=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=eSJcAYi42WHeJopVXG2d4MstJhfedjBfC2USIrP0nvBv8QEYaT9cYrmwkM57tIUb1
-	 w6kkoH5b6qF05D1LSj9GA3his4Tuei4M3TaD3qhtttIYCs5tihJEclBlAnUrMG2tFl
-	 djLQ4YKvvFWaTlU9vKbqoBGu2L7G0hQCrBpj3+LM0AbIoeSt/tnHouzZnfWCgd/Fms
-	 whfJzQN9T4TvrZNNDtZCE1cdaBWz/sa3zwTyq+aaBotUBM49Srf6T/yaZdvFcfoPaQ
-	 FZRNrtsPZFsH8h+0dEpGnd2YVZUsjBbh/LZ0IPlaGw5RlqtOX6Xh65zhY0y6nqh56l
-	 tCeWqclB7sUvA==
-Date: Mon, 13 Jan 2025 20:31:36 +0000
-From: Eric Biggers <ebiggers@kernel.org>
-To: =?iso-8859-1?Q?Andr=E9?= Draszik <andre.draszik@linaro.org>
-Cc: Alim Akhtar <alim.akhtar@samsung.com>,
-	Avri Altman <avri.altman@wdc.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	"James E.J. Bottomley" <James.Bottomley@hansenpartnership.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	Peter Griffin <peter.griffin@linaro.org>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Tudor Ambarus <tudor.ambarus@linaro.org>,
-	Will McVicker <willmcvicker@google.com>, kernel-team@android.com,
-	linux-scsi@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-samsung-soc@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH] scsi: ufs: pltfrm: fix use-after free in init error and
- remove paths
-Message-ID: <20250113203136.GB1800842@google.com>
-References: <20250113-ufshcd-fix-v1-1-ca63d1d4bd55@linaro.org>
- <20250113192235.GA1800842@google.com>
- <c4129ea9da39badb3a686f7f93c334ecbc6d83f6.camel@linaro.org>
+	s=arc-20240116; t=1736802517; c=relaxed/simple;
+	bh=u86pFjr/gswDn64tcLgFaVm6wWSL3MypRv30v2+1NLw=;
+	h=From:Subject:Date:Message-ID:MIME-Version:Content-Type:To:CC; b=sDLfRBcP/WlpWegeQMB0oyoSHHG3mC3JXamuxkk+0trUfLtcFDBu+dej1ghLlfj+BgIqenq64LwPkOT9EZAjGgUEtX3OJFuwBDKJ6G4kK+1s4fmDGLQtvvuyqmHrfubDZKfFe+ZB+6rftngzpJH/p89k9pT78svlpsTW4BWnd7c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=LTyrAtFf; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50DH3h6e020108;
+	Mon, 13 Jan 2025 21:08:28 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=TRkATnv+asOVlrEbiSLV+w
+	5Cn4+nN8JQq7iTNUpH97k=; b=LTyrAtFfbOdLDVPhMwrKB0o9cm+XvBSxG8LUnI
+	3l3ue87yBva5rCKE6eVbbWRA72Xq77HRSQsDCtfUPfGliNzCBDPaDwlooRpAZ0Px
+	wgF+z9chXUE43XMy8Re2Z3CKeNVKTBSaYUaWS6O251ZWX0D9R7rhTV9KRdv14Vay
+	Hza7xFUDNZKWQ0i+ElYiwL59ucwy/J8Lhn1WUu/emcnTQhKTGzrBJrzLwgegd/Qa
+	ZfYv1owipBmbtmnZ31c9WQ0b2Fd1pifuoGtZPs5cOvnyGAZwi7CxyutofJcZc/ww
+	l/Wpnf4/LS1JigFCbiyILUBV/KYMA1lRkpx/CzrnWWsLXJWQ==
+Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4456wa8hfx-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 13 Jan 2025 21:08:27 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 50DL8Q97021206
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 13 Jan 2025 21:08:26 GMT
+Received: from hu-molvera-lv.qualcomm.com (10.49.16.6) by
+ nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Mon, 13 Jan 2025 13:08:26 -0800
+From: Melody Olvera <quic_molvera@quicinc.com>
+Subject: [PATCH 0/2] arm64: dts: qcom: sm8750: Introduce BWMONs
+Date: Mon, 13 Jan 2025 13:08:16 -0800
+Message-ID: <20250113-sm8750_bwmon_master-v1-0-f082da3a3308@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <c4129ea9da39badb3a686f7f93c334ecbc6d83f6.camel@linaro.org>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAMCAhWcC/x3MQQ5AMBBA0avIrDWZClGuItJQg1m0pCNIxN01l
+ m/x/wNCkUmgzR6IdLLwFhJ0noFbh7CQ4ikZCiwq1Fgr8aau0I6X34L1gxwUlZvK0ZBGg66BVO6
+ RZr7/a9e/7wcvl72vZQAAAA==
+X-Change-ID: 20250107-sm8750_bwmon_master-cd4b8e1080c9
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Georgi Djakov
+	<djakov@kernel.org>, Rob Herring <robh@kernel.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio
+	<konradybcio@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        "Satya
+ Durga Srinivasu Prabhala" <quic_satyap@quicinc.com>,
+        Trilok Soni
+	<quic_tsoni@quicinc.com>
+CC: <linux-arm-msm@vger.kernel.org>, <linux-pm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        Melody Olvera
+	<quic_molvera@quicinc.com>,
+        Shivnandan Kumar <quic_kshivnan@quicinc.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1736802506; l=617;
+ i=quic_molvera@quicinc.com; s=20241204; h=from:subject:message-id;
+ bh=u86pFjr/gswDn64tcLgFaVm6wWSL3MypRv30v2+1NLw=;
+ b=/l9NS95xsAH2gooHH+kxMzk4rc2yEX20NNSY1tYITEPBHArvP51p4RObhpXUmcpuZbmH5uc+1
+ xoUg8UIxvqFApGD6+wsIbhuCCUynqlvswcXibS4LjLB5qnfGCIJMLH5
+X-Developer-Key: i=quic_molvera@quicinc.com; a=ed25519;
+ pk=1DGLp3zVYsHAWipMaNZZTHR321e8xK52C9vuAoeca5c=
+X-ClientProxiedBy: nalasex01a.na.qualcomm.com (10.47.209.196) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: f0srBoZUZcgHIknXzKd_1jGyePkq5vTn
+X-Proofpoint-ORIG-GUID: f0srBoZUZcgHIknXzKd_1jGyePkq5vTn
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 clxscore=1015
+ suspectscore=0 adultscore=0 mlxlogscore=712 priorityscore=1501
+ phishscore=0 malwarescore=0 impostorscore=0 lowpriorityscore=0 mlxscore=0
+ spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2501130168
 
-On Mon, Jan 13, 2025 at 07:28:00PM +0000, André Draszik wrote:
-> On Mon, 2025-01-13 at 19:22 +0000, Eric Biggers wrote:
-> > On Mon, Jan 13, 2025 at 07:13:45PM +0000, André Draszik wrote:
-> > > devm_blk_crypto_profile_init() registers a cleanup handler to run when
-> > > the associated (platform-) device is being released. For UFS, the
-> > > crypto private data and pointers are stored as part of the ufs_hba's
-> > > data structure 'struct ufs_hba::crypto_profile'. This structure is
-> > > allocated as part of the underlying ufshd allocation.
-> > > 
-> > > During driver release or during error handling in ufshcd_pltfrm_init(),
-> > > this structure is released as part of ufshcd_dealloc_host() before the
-> > > (platform-) device associated with the crypto call above is released.
-> > > Once this device is released, the crypto cleanup code will run, using
-> > > the just-released 'struct ufs_hba::crypto_profile'. This causes a
-> > > use-after-free situation:
-> > > 
-> > >     exynos-ufshc 14700000.ufs: ufshcd_pltfrm_init() failed -11
-> > >     exynos-ufshc 14700000.ufs: probe with driver exynos-ufshc failed with error -11
-> > >     Unable to handle kernel paging request at virtual address 01adafad6dadad88
-> > >     Mem abort info:
-> > >       ESR = 0x0000000096000004
-> > >       EC = 0x25: DABT (current EL), IL = 32 bits
-> > >       SET = 0, FnV = 0
-> > >       EA = 0, S1PTW = 0
-> > >       FSC = 0x04: level 0 translation fault
-> > >     Data abort info:
-> > >       ISV = 0, ISS = 0x00000004, ISS2 = 0x00000000
-> > >       CM = 0, WnR = 0, TnD = 0, TagAccess = 0
-> > >       GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
-> > >     [01adafad6dadad88] address between user and kernel address ranges
-> > >     Internal error: Oops: 0000000096000004 [#1] PREEMPT SMP
-> > >     Modules linked in:
-> > >     CPU: 0 UID: 0 PID: 1 Comm: swapper/0 Tainted: G        W          6.13.0-rc5-next-20250106+ #70
-> > >     Tainted: [W]=WARN
-> > >     Hardware name: Oriole (DT)
-> > >     pstate: 20400005 (nzCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-> > >     pc : kfree+0x60/0x2d8
-> > >     lr : kvfree+0x44/0x60
-> > >     sp : ffff80008009ba80
-> > >     x29: ffff80008009ba90 x28: 0000000000000000 x27: ffffbcc6591e0130
-> > >     x26: ffffbcc659309960 x25: ffffbcc658f89c50 x24: ffffbcc659539d80
-> > >     x23: ffff22e000940040 x22: ffff22e001539010 x21: ffffbcc65714b22c
-> > >     x20: 6b6b6b6b6b6b6b6b x19: 01adafad6dadad80 x18: 0000000000000000
-> > >     x17: ffffbcc6579fbac8 x16: ffffbcc657a04300 x15: ffffbcc657a027f4
-> > >     x14: ffffbcc656f969cc x13: ffffbcc6579fdc80 x12: ffffbcc6579fb194
-> > >     x11: ffffbcc6579fbc34 x10: 0000000000000000 x9 : ffffbcc65714b22c
-> > >     x8 : ffff80008009b880 x7 : 0000000000000000 x6 : ffff80008009b940
-> > >     x5 : ffff80008009b8c0 x4 : ffff22e000940518 x3 : ffff22e006f54f40
-> > >     x2 : ffffbcc657a02268 x1 : ffff80007fffffff x0 : ffffc1ffc0000000
-> > >     Call trace:
-> > >      kfree+0x60/0x2d8 (P)
-> > >      kvfree+0x44/0x60
-> > >      blk_crypto_profile_destroy_callback+0x28/0x70
-> > >      devm_action_release+0x1c/0x30
-> > >      release_nodes+0x6c/0x108
-> > >      devres_release_all+0x98/0x100
-> > >      device_unbind_cleanup+0x20/0x70
-> > >      really_probe+0x218/0x2d0
-> > > 
-> > > In other words, the initialisation code flow is:
-> > > 
-> > >   platform-device probe
-> > >     ufshcd_pltfrm_init()
-> > >       ufshcd_alloc_host()
-> > >         scsi_host_alloc()
-> > >           allocation of struct ufs_hba
-> > >           creation of scsi-host devices
-> > >     devm_blk_crypto_profile_init()
-> > >       devm registration of cleanup handler using platform-device
-> > > 
-> > > and during error handling of ufshcd_pltfrm_init() or during driver
-> > > removal:
-> > > 
-> > >   ufshcd_dealloc_host()
-> > >     scsi_host_put()
-> > >       put_device(scsi-host)
-> > >         release of struct ufs_hba
-> > >   put_device(platform-device)
-> > >     crypto cleanup handler
-> > > 
-> > > To fix this use-after free, register the crypto cleanup handler against
-> > > the scsi-host device instead, so that it runs before release of struct
-> > > ufs_hba.
-> > > 
-> > > Signed-off-by: André Draszik <andre.draszik@linaro.org>
-> > > ---
-> > > In my case, as per above trace I initially encountered an error in
-> > > ufshcd_verify_dev_init(), which made me notice this problem. For
-> > > reproducing, it'd be possible to change that function to just return an
-> > > error.
-> > > 
-> > > Other approaches for solving this issue I see are the following, but I
-> > > believe this one here is the cleanest:
-> > > 
-> > > * turn 'struct ufs_hba::crypto_profile' into a dynamically allocated
-> > >   pointer, in which case it doesn't matter if cleanup runs after
-> > >   scsi_host_put()
-> > > * add an explicit devm_blk_crypto_profile_deinit() to be called by API
-> > >   users when necessary, e.g. before ufshcd_dealloc_host() in this case
-> > 
-> > Thanks for catching this.
-> > 
-> > There's also the option of using blk_crypto_profile_init() instead of
-> > devm_blk_crypto_profile_init(), and calling blk_crypto_profile_destroy()
-> > explicitly.  Would that be any easier here?
-> 
-> Ah, yes, that was actually my initial fix for testing, but I dismissed
-> that due to needing more changes and potentially not knowing in all
-> situation if it needs to be called or not.
-> 
-> TBH, my preferred fix would actually be the alternative 1 outlined
-> above (dynamic allocation). This way future drivers can not make this
-> same mistake.
-> 
-> Any thoughts?
-> 
+Document and describe the BWMONs in the SM8750 SoC.
 
-I assume you mean replacing devm_blk_crypto_profile_init() with a new function
-devm_blk_crypto_profile_new() that dynamically allocates a struct
-blk_crypto_profile, and making struct ufs_hba store a pointer to struct
-blk_crypto_profile instead of embed it.  And likewise for struct mmc_host.
+Signed-off-by: Melody Olvera <quic_molvera@quicinc.com>
+---
+Shivnandan Kumar (2):
+      dt-bindings: interconnect: qcom,msm8998-bwmon: Add SM8750 CPU BWMONs
+      arm64: dts: qcom: sm8750: Add BWMONs
 
-I think that would avoid this bug, but it seems suboptimal to introduce the
-extra level of indirection.  The blk_crypto_profile is not really an independent
-object from struct ufs_hba; all its methods need to cast the blk_crypto_profile
-to the struct ufs_hba that contains it.  We could replace the container_of()
-with a back-pointer, so technically it would work.  But the fact that both would
-be pointing to each other suggests that they really should be in the same
-struct.
+ .../bindings/interconnect/qcom,msm8998-bwmon.yaml  |  1 +
+ arch/arm64/boot/dts/qcom/sm8750.dtsi               | 74 ++++++++++++++++++++++
+ 2 files changed, 75 insertions(+)
+---
+base-commit: 37136bf5c3a6f6b686d74f41837a6406bec6b7bc
+change-id: 20250107-sm8750_bwmon_master-cd4b8e1080c9
 
-If it's possible, it would be nice to just make the destruction of the crypto
-profile happen at the right time, when the other resources owned by the ufs_hba
-are destroyed.
+Best regards,
+-- 
+Melody Olvera <quic_molvera@quicinc.com>
 
-- Eric
 
