@@ -1,63 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-45044-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-45045-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 483BFA1123D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jan 2025 21:42:01 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id E4534A11260
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jan 2025 21:44:24 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8077D188ADDC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jan 2025 20:42:04 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A363C3A8668
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jan 2025 20:43:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5478A20AF65;
-	Tue, 14 Jan 2025 20:41:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1507020E32D;
+	Tue, 14 Jan 2025 20:43:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=acm.org header.i=@acm.org header.b="mp/2kYD2"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="j0aeQiiY"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from 009.lax.mailroute.net (009.lax.mailroute.net [199.89.1.12])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F16D1459FD;
-	Tue, 14 Jan 2025 20:41:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=199.89.1.12
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0C3620E01D;
+	Tue, 14 Jan 2025 20:43:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736887316; cv=none; b=lNM34YJdlYuSwHyu6IFTdeRsNFOq6Pewrttzkv5bV/LnvssGqCEnBELQhc8g9JZ9mx3Pz/apcKNoeqUzALbyDFDAHuZpzNQ8fEaaIPgGoPzd8TZgvT+YDwPI4d5IWGrBTUImcRpeShpjaziACYDz4aIvTiAgpK/r1ni7rTs0lDA=
+	t=1736887402; cv=none; b=gqftGQfnJQS+P+RLfTAYPQ8fsUklAh3UCpe7boVlzIOT0Am2yge8NoYk//GLVNGooQ6mdEBIF4rpdpEMfUhxyUz9nHEOCzB386VMZPuh/DEP7Z1IgV22CJAN05XQfS8b70oA3izqwOXHfZYhMrFg95QkGagJEKA/hsDkVtHZ4/Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736887316; c=relaxed/simple;
-	bh=eChCjDfe+5qP39jVvD14ozYe3D0oCfwixEvuEuVlEN0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=XwYOHtIl/RJP1UaSVYmcG/LLA85B5fy5rjOMkDszTCs9qulFTpI67x+MAcgYHpu4/qgVoJI1i8NTp2vsM9J6UKF6vapu/jiO7HF8toX9sXJBFTEDzEt4S0Aj1YDauLYW0YVaCQ49azdrHbeVV/FYibHe9ff3zRmvzhLZM4F8PBs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=acm.org; spf=pass smtp.mailfrom=acm.org; dkim=pass (2048-bit key) header.d=acm.org header.i=@acm.org header.b=mp/2kYD2; arc=none smtp.client-ip=199.89.1.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=acm.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=acm.org
-Received: from localhost (localhost [127.0.0.1])
-	by 009.lax.mailroute.net (Postfix) with ESMTP id 4YXgz06jcKzlgMVb;
-	Tue, 14 Jan 2025 20:41:48 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=acm.org; h=
-	content-transfer-encoding:content-type:content-type:in-reply-to
-	:from:from:content-language:references:subject:subject
-	:user-agent:mime-version:date:date:message-id:received:received;
-	 s=mr01; t=1736887299; x=1739479300; bh=rzBLylIyj8bVzNZ/mtrpV/DG
-	OTTTimLWwe6O0B/wwds=; b=mp/2kYD2KPxYJ5bSKS93GkD77RNSyy8HmPpnPSFd
-	BS95wlSrOLR3cfu9bGk/Wh2uU7PsOw6u2musctDFAgnUN0cpfMXBv4+BTaqG54T8
-	13SX3gwoV4npcdU+DsN1IeELPqTixLAq+nT0R9/STqWDeEBD5Ymt8GZ8Eqw8wMFc
-	hJXsE44fDlHtRh3soEPpw6GJW4u4Ubae0fvHYTF1f7vcCWphiNDcvSKeUyqAXv5b
-	m+S93mt/wX0EuUQDncHFi3+nOj092B2L3jRdyiv1/vKBLPVPAWiPKCBxTcCDW34+
-	n8SMqjt3EVj0lXRCdr4tk21O+BZmj6lF479+2gYVfIiN6w==
-X-Virus-Scanned: by MailRoute
-Received: from 009.lax.mailroute.net ([127.0.0.1])
- by localhost (009.lax [127.0.0.1]) (mroute_mailscanner, port 10029) with LMTP
- id NCQDeftpnuhx; Tue, 14 Jan 2025 20:41:39 +0000 (UTC)
-Received: from [100.66.154.22] (unknown [104.135.204.82])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: bvanassche@acm.org)
-	by 009.lax.mailroute.net (Postfix) with ESMTPSA id 4YXgyl5sK3zlgTWK;
-	Tue, 14 Jan 2025 20:41:35 +0000 (UTC)
-Message-ID: <cec304ef-0a5d-4f80-aaa4-05432c7a0b88@acm.org>
-Date: Tue, 14 Jan 2025 12:41:34 -0800
+	s=arc-20240116; t=1736887402; c=relaxed/simple;
+	bh=vuLGJWWWPOxXs1PhleeQNa9QpoUeiQzpYHQoVn/uUuc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=WyoFppEVCyJS4opxpDWTNkDXQ9G/caJpJj7Ydt08PR525JDYkFDjJOhlnPXeCi5PK1DCSxxIuXUpKg5ROWgxAXvbwmLnBXkkxXJ7YjzHtwxrMrrmc5/7zXhXXVXkDKRyqhXPzk2RUa3PMKEGCrjT5t42az4bkxaO7duvy3yyRMc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=j0aeQiiY; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50EGjt7A032511;
+	Tue, 14 Jan 2025 20:43:02 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	umlQhVy2M+CQipFDCc+b+/LwaU2H+7yYsOGc4pT54LA=; b=j0aeQiiYggAREeso
+	K6zQkbGc56r5MNAFva7+hf45f+Cwgvo1ncqYG83Ud38iTbwvADW5+4CpyNvGRIDV
+	4RxaAMugt/t7gfCr/6aBqLW0BIQ+G0TXBsN/iO4YwEqTSQsPlwWxgkAbXpvX7hqE
+	R5CFMb9HiX7cX2/rPvIwimiE9XxfoBX9eW+g8Vjn6jh+CcQEZdc74SREA3xUinVP
+	EC5wKzVcTHXWSU7R4fNelhG+xhWXQPQI8WFDmXVL3LrVncNvgAnemQJeOhp6eFRp
+	sxKZQpKNWjzIEZ64ykEsNKeMSy8lbCx2BlMPZ6Tpx9ih4cwcuObOSppoy33HtI2t
+	4F8pKA==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 445uqsghbg-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 14 Jan 2025 20:43:02 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 50EKh1Nf005980
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 14 Jan 2025 20:43:01 GMT
+Received: from [10.110.124.91] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 14 Jan
+ 2025 12:43:00 -0800
+Message-ID: <5d5e9ba4-d544-416e-b57b-dc5c8692b737@quicinc.com>
+Date: Tue, 14 Jan 2025 12:42:59 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,95 +65,90 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] scsi: ufs: fix use-after free in init error and remove
- paths
-To: =?UTF-8?Q?Andr=C3=A9_Draszik?= <andre.draszik@linaro.org>,
- Alim Akhtar <alim.akhtar@samsung.com>, Avri Altman <avri.altman@wdc.com>,
- "James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>,
- "Martin K. Petersen" <martin.petersen@oracle.com>,
- Peter Griffin <peter.griffin@linaro.org>,
- Krzysztof Kozlowski <krzk@kernel.org>,
- Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
- Eric Biggers <ebiggers@kernel.org>
-Cc: Tudor Ambarus <tudor.ambarus@linaro.org>,
- Will McVicker <willmcvicker@google.com>, kernel-team@android.com,
- linux-scsi@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-samsung-soc@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
- linux-arm-msm@vger.kernel.org, stable@vger.kernel.org
-References: <20250114-ufshcd-fix-v2-1-2dc627590a4a@linaro.org>
- <58f1b701-68da-49c0-b2b1-e079bad4cd08@acm.org>
- <13a3fdb675baa36fcda1bb254b05032b1175a2a8.camel@linaro.org>
+Subject: Re: [PATCH v32 01/32] usb: host: xhci: Repurpose event handler for
+ skipping interrupter events
+To: =?UTF-8?Q?Micha=C5=82_Pecio?= <michal.pecio@gmail.com>
+CC: <Thinh.Nguyen@synopsys.com>, <broonie@kernel.org>, <conor+dt@kernel.org>,
+        <corbet@lwn.net>, <devicetree@vger.kernel.org>,
+        <dmitry.torokhov@gmail.com>, <gregkh@linuxfoundation.org>,
+        <krzk+dt@kernel.org>, <lgirdwood@gmail.com>,
+        <linux-arm-msm@vger.kernel.org>, <linux-doc@vger.kernel.org>,
+        <linux-input@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-sound@vger.kernel.org>, <linux-usb@vger.kernel.org>,
+        <mathias.nyman@intel.com>, <perex@perex.cz>,
+        <pierre-louis.bossart@linux.intel.com>, <robh@kernel.org>,
+        <srinivas.kandagatla@linaro.org>, <tiwai@suse.com>
+References: <20250113143632.63c52d74@foxbook>
+ <f8a9e454-72f4-4979-b29d-109700b2a204@quicinc.com>
+ <20250114150847.1c3c9ebe@foxbook>
 Content-Language: en-US
-From: Bart Van Assche <bvanassche@acm.org>
-In-Reply-To: <13a3fdb675baa36fcda1bb254b05032b1175a2a8.camel@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: quoted-printable
+From: Wesley Cheng <quic_wcheng@quicinc.com>
+In-Reply-To: <20250114150847.1c3c9ebe@foxbook>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: tQ44ouugD3MuZAEKQAnvUaXJKuGsS2L6
+X-Proofpoint-GUID: tQ44ouugD3MuZAEKQAnvUaXJKuGsS2L6
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-01-14_07,2025-01-13_02,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 lowpriorityscore=0
+ adultscore=0 mlxlogscore=999 malwarescore=0 suspectscore=0 clxscore=1015
+ priorityscore=1501 bulkscore=0 impostorscore=0 phishscore=0 spamscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2411120000
+ definitions=main-2501140157
 
-On 1/14/25 11:56 AM, Andr=C3=A9 Draszik wrote:
-> Hi Bart,
->=20
-> On Tue, 2025-01-14 at 09:55 -0800, Bart Van Assche wrote:
->> On 1/14/25 8:16 AM, Andr=C3=A9 Draszik wrote:
->>> +/**
->>> + * ufshcd_scsi_host_put_callback - deallocate underlying Scsi_Host a=
-nd
->>> + *				=C2=A0=C2=A0 thereby the Host Bus Adapter (HBA)
->>> + * @host: pointer to SCSI host
->>> + */
->>> +static void ufshcd_scsi_host_put_callback(void *host)
->>> +{
->>> +	scsi_host_put(host);
->>> +}
->>
->> Please rename ufshcd_scsi_host_put_callback() such that the function
->> name makes clear when this function is called instead of what the
->> function does.
->=20
-> Would you have a suggestion for such a name? Something like
-> ufshcd_driver_release_action()?
->=20
-> Unless I'm misunderstanding you, I believe most drivers use
-> a function name that says what the function does, e.g.
-> dell_wmi_ddv_debugfs_remove (just as a completely random
-> example out of many).
->=20
-> If going by when it is called and if applying this principle
-> throughout ufshcd, then there can only ever be one such
-> function in ufshcd, as all devm_add_action() callback actions
-> happen at driver release, which surely isn't what you mean.
->=20
-> You probably meant something different?
+Hi Michal,
 
-I meant what I wrote in my previous email: to chose another name
-for ufshcd_scsi_host_put_callback() only. Having a function name that
-duplicates the function body leaves readers of the code guessing
-from where the function is called. BTW, naming callbacks after their
-call site is a normal practice as far as I know. From ufs-qcom.c:
+On 1/14/2025 6:08 AM, Michał Pecio wrote:
+> Thanks, I think I now see how this is meant to work.
+>
+>
+> Cover leter mostly discusses the ALSA side of things, but not low level
+> details of xHCI operation, such as who will be ringing doorbells and
+> how, handling IRQs, updating event ring dequeue, or handling halted EPs.
+>
+> So for the record, as far as I see:
+> 1. There is no API for ringing doorbells or even getting a pointer,
+>    the coprocessor needs to have its own access. Fair enough.
+> 2. Same for event ring dequeue, but the driver must clean up leftover
+>    unacknowledged events after sideband operation stops.
+> 3. Linux IRQ handler never needs to worry about sideband interrupts.
+> 4. Resetting halted endpoints is not implemented at all, I think?
+>    So this code is currently mostly useful with isochronous.
 
-static const struct ufs_hba_variant_ops ufs_hba_qcom_vops =3D {
-	.name                   =3D "qcom",
-	.init                   =3D ufs_qcom_init,
-	.exit                   =3D ufs_qcom_exit,
-	.get_ufs_hci_version	=3D ufs_qcom_get_ufs_hci_version,
-	.clk_scale_notify	=3D ufs_qcom_clk_scale_notify,
-	.setup_clocks           =3D ufs_qcom_setup_clocks,
-	.hce_enable_notify      =3D ufs_qcom_hce_enable_notify,
-	.link_startup_notify    =3D ufs_qcom_link_startup_notify,
-	.pwr_change_notify	=3D ufs_qcom_pwr_change_notify,
-	.apply_dev_quirks	=3D ufs_qcom_apply_dev_quirks,
-	.fixup_dev_quirks       =3D ufs_qcom_fixup_dev_quirks,
-	.suspend		=3D ufs_qcom_suspend,
-	.resume			=3D ufs_qcom_resume,
-	.dbg_register_dump	=3D ufs_qcom_dump_dbg_regs,
-	.device_reset		=3D ufs_qcom_device_reset,
-	.config_scaling_param =3D ufs_qcom_config_scaling_param,
-	.reinit_notify		=3D ufs_qcom_reinit_notify,
-	.mcq_config_resource	=3D ufs_qcom_mcq_config_resource,
-	.get_hba_mac		=3D ufs_qcom_get_hba_mac,
-	.op_runtime_config	=3D ufs_qcom_op_runtime_config,
-	.get_outstanding_cqs	=3D ufs_qcom_get_outstanding_cqs,
-	.config_esi		=3D ufs_qcom_config_esi,
-};
 
-Bart.
+Yep, all your points about the code with respects to the xHCI perspective is correct.
+
+
+>
+> And the 'skip_events' flag only exists to enable ring cleanup when the
+> interrupter is removed? In such case I think it's overkill.
+>
+> The code would be simpler and its intent more visible if 'skip_events'
+> were a new parameter of xhci_handle_events(). Existing IRQ would call
+> the function normally, while xhci_skip_sec_intr_events() would use the
+> new parameter to suppress event handling in this one special case.
+>
+> It would be immediately clear that skipping only applies on removal.
+>
+> You could completely get rid of PATCH 01/32 because 02/32 would no
+> longer need to set this flag on the interrupter, and the 'if' branch
+> adedd by 01/32 could go into 03/32 where it logically belongs.
+>
+> Just a suggestion. I simply don't see any need to have a flag which
+> causes events on a ring to always be skipped as a matter of policy.
+> Your code doesn't seem to require it. Probably nobody ever will.
+>
+
+In my previous discussions with Mathias, I think the plan was that he wanted it to be built in a way where we should be able to accommodate a use case where the secondary interrupter was going to be actually handled by the Linux side.  This is why the skip_events is populated/defined by the xHCI sideband calls, so that we can differentiate between the secondary interrupter use cases.  Although, it is the correct assumption that this series doesn't actually implement that functionality. 
+
+
+Thanks
+
+Wesley Cheng
+
 
