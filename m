@@ -1,195 +1,264 @@
-Return-Path: <linux-arm-msm+bounces-45021-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-45022-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id D4895A109C2
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jan 2025 15:47:07 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id EF318A10B4B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jan 2025 16:44:07 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 735BB7A3137
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jan 2025 14:46:59 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0AB00167B24
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jan 2025 15:44:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 43E5A154C17;
-	Tue, 14 Jan 2025 14:46:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E41881B87C6;
+	Tue, 14 Jan 2025 15:41:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PjuYS0NC"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="ZN2Vuu6e"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06CD61494A5;
-	Tue, 14 Jan 2025 14:46:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B27321BD012;
+	Tue, 14 Jan 2025 15:41:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.19
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736866015; cv=none; b=FEeWLKgf6FOBfiVQx6hjSGttnQPjZuTG014kSSOoT05caAggEGNC4u3Ch0Zb3T74uQSamoztnyhL7V7aKaqFm5SnZ+OhvYdmjuxFFSM+U3PBy8Rvw+nanzynhHToBbOJTaUEudS5a3JwqqP55z9fFxfm9Q4d7q2rDOvf1O6WVSY=
+	t=1736869263; cv=none; b=kAzc5REk/cEstN4rXSk+L10I5dti3tJUz1dfBz34AkGH/wC9wJgigSnaUytV64yLgAi9r89N4ELvPRuyva/AjQ6bf13HgntKzV0xB8nTI+TE3K3hKveLTosIPljO5W6i3NNg4AG+Neq007PnGHPwiXDUzHBnWVy3EElstwPoQiw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736866015; c=relaxed/simple;
-	bh=PdLXMpw6mCU+0JWw02u7MvqnmujtMCIwWZO18hYjTB0=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=Qtd7ItLi3vvww8GXckB0w9lN8KsN+qR/oW/zPFGWuJtOZEqEJQjHLIj1zS6WUO2mD8gt5f16LJYLCh2a5va405iARJ1CdwpLecntveoMle+cyU2KPZAGau+GUwDHQ4JTVubXXfEC1OyPoC2G+voSCvbTMfBAK8Vb6N07JI7Oc4U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PjuYS0NC; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 9478CC4CEE4;
-	Tue, 14 Jan 2025 14:46:54 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1736866014;
-	bh=PdLXMpw6mCU+0JWw02u7MvqnmujtMCIwWZO18hYjTB0=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=PjuYS0NCNwOj6OsLBtJ9g5/Fgb2qLUXbEO6jfero59q61XDL0nRz4exBL5SfWeQft
-	 4CdrxxJOSsjrTCimg34q7DFLxsKzwJ059M0UPonIAh/BlAlTzgII6cnhx8bAtsPOlY
-	 nabsSLayOHB9/dzaEU5DlXQaZlRIkZYJs7WEKUqJDEJsv4pxuj0RJglDorM0A+Sz+C
-	 Sr+q1vBKjYYg7HH/LDWFz9woVRxoMQpzFh8ViAQlx7CeMrQrli2HeguZHhKsXZf7b3
-	 oEsvEO37w890HVQ6aYiTHdPNdyt/UUtZBW3wLKnIHBUIV2358DH+Dg20/GpjbL7HY4
-	 N2mLTzHAe0YHg==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 89040C02185;
-	Tue, 14 Jan 2025 14:46:54 +0000 (UTC)
-From: Ricky Cheung via B4 Relay <devnull+rcheung844.gmail.com@kernel.org>
-Date: Tue, 14 Jan 2025 22:46:50 +0800
-Subject: [PATCH RESEND v2 3/3] arm64: dts: qcom:
- msm8916-xiaoxun-jz0145-v33: Add initial device tree
+	s=arc-20240116; t=1736869263; c=relaxed/simple;
+	bh=qn0liHuV+HqEbBeQ5aYzpXs6UUzCWEWNkcftd2sCrYI=;
+	h=From:Date:To:cc:Subject:In-Reply-To:Message-ID:References:
+	 MIME-Version:Content-Type; b=Q3/2CcMXn2Q8dKmPBkLq+dyb5SrdhLtdabtf6Op4sW9mZHHqumz76d1I+h0smSajJkHc6titKcmkdHzqhDMXUvEEwQtkZ1afFp4rhZL03vtRxtwsxb9CxGqilR7I1RPnX7++Vk4nLnuneYEA0lEtn5LrtO4kiCYinTj4k801wm8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=ZN2Vuu6e; arc=none smtp.client-ip=192.198.163.19
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1736869262; x=1768405262;
+  h=from:date:to:cc:subject:in-reply-to:message-id:
+   references:mime-version:content-id;
+  bh=qn0liHuV+HqEbBeQ5aYzpXs6UUzCWEWNkcftd2sCrYI=;
+  b=ZN2Vuu6eIZjLpcyaRAiwSGsWRK9mKzaROu3jFt5SHE1t4vSjJlXhLvzs
+   A/2yoebuayhGnOrsQwil/PP2LYBxpTYOWyEuxvv7dr5Zd/IIrVl4ZY2jh
+   y4T1uzx3U1SdJhXo+r4FAPS9zRV2Pi6ie++wjYXjMYr8ZZgqeJElOxQVS
+   Qn9GvXyp6dtsyiQhi3RFuugn88G48R2i/Zlzv0VKUPJf1TQr64j+b9KvI
+   VYge5Te+VnuBLAfQBkAUZuXW8oTE0mKPclfV3Qpf+SxgC+5FVSIVlKLvO
+   1PqPBSN5Gmm69MIknySFIaA1fwgEKeF+robgZoYCa8J2Zkd40HqoLaLfh
+   A==;
+X-CSE-ConnectionGUID: Xht8FwqoRta4GJL6j7tNCg==
+X-CSE-MsgGUID: 8KJloBnlRkaGX15EFQqU8Q==
+X-IronPort-AV: E=McAfee;i="6700,10204,11315"; a="36382267"
+X-IronPort-AV: E=Sophos;i="6.12,314,1728975600"; 
+   d="scan'208";a="36382267"
+Received: from fmviesa007.fm.intel.com ([10.60.135.147])
+  by fmvoesa113.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Jan 2025 07:41:00 -0800
+X-CSE-ConnectionGUID: 5HLHvUtqSW6Cs32LBcDWVw==
+X-CSE-MsgGUID: 8RF7edNCQ6+5zyjKd/T0yQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.12,314,1728975600"; 
+   d="scan'208";a="104784037"
+Received: from ijarvine-mobl1.ger.corp.intel.com (HELO localhost) ([10.245.244.54])
+  by fmviesa007-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Jan 2025 07:40:55 -0800
+From: =?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
+Date: Tue, 14 Jan 2025 17:40:51 +0200 (EET)
+To: Pengyu Luo <mitltlatltl@gmail.com>
+cc: andersson@kernel.org, bryan.odonoghue@linaro.org, conor+dt@kernel.org, 
+    devicetree@vger.kernel.org, 
+    Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
+    Hans de Goede <hdegoede@redhat.com>, heikki.krogerus@linux.intel.com, 
+    jdelvare@suse.com, konradybcio@kernel.org, krzk+dt@kernel.org, 
+    linux-arm-msm@vger.kernel.org, linux-hwmon@vger.kernel.org, 
+    LKML <linux-kernel@vger.kernel.org>, linux-pm@vger.kernel.org, 
+    linux-usb@vger.kernel.org, linux@roeck-us.net, 
+    platform-driver-x86@vger.kernel.org, robh@kernel.org, sre@kernel.org
+Subject: Re: [PATCH v3 2/6] platform: arm64: add Huawei Matebook E Go EC
+ driver
+In-Reply-To: <20250114083133.607318-1-mitltlatltl@gmail.com>
+Message-ID: <d2a42fc7-37a9-3fcc-4c35-e542ddb112e8@linux.intel.com>
+References: <402b261b-e51d-7121-1e13-b1bc1f5d40f5@linux.intel.com> <20250114083133.607318-1-mitltlatltl@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250114-xiaoxun-jz0145-v33-v2-3-495e986579ce@gmail.com>
-References: <20250114-xiaoxun-jz0145-v33-v2-0-495e986579ce@gmail.com>
-In-Reply-To: <20250114-xiaoxun-jz0145-v33-v2-0-495e986579ce@gmail.com>
-To: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>
-Cc: devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
- linux-arm-msm@vger.kernel.org, Ricky Cheung <rcheung844@gmail.com>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1736866013; l=2981;
- i=rcheung844@gmail.com; s=20250114; h=from:subject:message-id;
- bh=aIMQMh96vCDp6yLLJW7U1OCy3sPhGfKYSD82VLXOyKc=;
- b=Q9gCbGyNmj2MC/WTb3BTCarJrM+iQpvKWnQeA+GZ9Kdo/XuMKmuIhBvGAtL7sLBax9LU/zDK0
- JEjkA+kIma0APajAAMo+AtZS8/gtPNjKeqX/tG1tdAE1m+AGgSdYx6T
-X-Developer-Key: i=rcheung844@gmail.com; a=ed25519;
- pk=JjZsSnuDD1xuR4EXY4XGKELgToA++HxxheDlHU/41yI=
-X-Endpoint-Received: by B4 Relay for rcheung844@gmail.com/20250114 with
- auth_id=323
-X-Original-From: Ricky Cheung <rcheung844@gmail.com>
-Reply-To: rcheung844@gmail.com
+Content-Type: multipart/mixed; BOUNDARY="8323328-1499874815-1736864506=:1077"
+Content-ID: <03944f23-5ba5-efab-3be2-7e7a72fa6aa4@linux.intel.com>
 
-From: Ricky Cheung <rcheung844@gmail.com>
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-This commit implements support for the JZ0145 v33 WiFi/LTE dongle
-based on MSM8916, which was sold by XiaoXun BiCheng Technology.
+--8323328-1499874815-1736864506=:1077
+Content-Type: text/plain; CHARSET=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-ID: <839add08-5968-6c24-36a6-f31790b45694@linux.intel.com>
 
-The stock bootloader could boot with this patch with lk2nd, but only
-one CPU core would be enabled. Enablement for all CPU cores require
-lk1st and d410c firmware files.
+On Tue, 14 Jan 2025, Pengyu Luo wrote:
+> On Tue, Jan 14, 2025 at 2:56=E2=80=AFAM Ilpo J=C3=A4rvinen <ilpo.jarvinen=
+@linux.intel.com> wrote:
+> > On Tue, 14 Jan 2025, Pengyu Luo wrote:
+> >=20
+> > > There are three variants of which Huawei released the first two
+> > > simultaneously.
+> > >
+> > > Huawei Matebook E Go LTE(sc8180x), codename seems to be gaokun2.
+> > > Huawei Matebook E Go(sc8280xp@3.0GHz), codename must be gaokun3. (see=
+ [1])
+> > > Huawei Matebook E Go 2023(sc8280xp@2.69GHz), codename should be also =
+gaokun3.
+> > >
+> > > Adding support for the latter two variants for now, this driver shoul=
+d
+> > > also work for the sc8180x variant according to acpi table files, but =
+I
+> > > don't have the device to test yet.
+> > >
+> > > Different from other Qualcomm Snapdragon sc8280xp based machines, the
+> > > Huawei Matebook E Go uses an embedded controller while others use
+> > > a system called PMIC GLink. This embedded controller can be used to
+> > > perform a set of various functions, including, but not limited to:
+> > >
+> > > - Battery and charger monitoring;
+> > > - Charge control and smart charge;
+> > > - Fn_lock settings;
+> > > - Tablet lid status;
+> > > - Temperature sensors;
+> > > - USB Type-C notifications (ports orientation,  DP alt mode HPD);
+> > > - USB Type-C PD (according to observation, up to 48w).
+> > >
+> > > Add a driver for the EC which creates devices for UCSI and power supp=
+ly
+> > > devices.
+> > >
+> > > [1] https://bugzilla.kernel.org/show_bug.cgi?id=3D219645
+> > >
+> > > Signed-off-by: Pengyu Luo <mitltlatltl@gmail.com>
 
-Currently supported / tested:
-- All CPU cores
-- Buttons
-- LEDs
-- Modem
-- SDHC
-- USB Device Mode
+> > > +/**
+> > > + * gaokun_ec_psy_get_smart_charge_enable - check if smart charge is =
+enabled
+> > > + * @ec: The gaokun_ec
+> > > + * @on: The state
+> > > + *
+> > > + * Return: 0 on success or negative error code.
+> > > + */
+> > > +int gaokun_ec_psy_get_smart_charge_enable(struct gaokun_ec *ec, bool=
+ *on)
+> > > +{
+> > > +     /* GBAC */
+> > > +     *on =3D 0; /* clear other 3 Bytes */
+> >=20
+> > =3D false (as it's bool)
+> >=20
+> > What that comment means??? The type is bool so what "3 Bytes" ???
+> >=20
+>=20
+> We will write to the lowest Byte, the higher 3 Bytes are dirty, so clear =
+it.
 
-Although I do not have UART equipment on hand, UART should function
-and is labelled on the PCB of this device.
+Are you saying you assume bool is 4 bytes long? I'd be cautious on making=
+=20
+assumptions on sizeof(bool).
+=20
+> We can also implememnt it like this
+>=20
+> int ret;
+> u8 resp;
+>=20
+> ret =3D gaokun_ec_read_byte(.., &resp);
+> if (ret)
+>         return ret;
+>=20
+> *on =3D !!resp;
 
-Signed-off-by: Ricky Cheung <rcheung844@gmail.com>
----
- arch/arm64/boot/dts/qcom/Makefile                  |  1 +
- .../boot/dts/qcom/msm8916-xiaoxun-jz0145-v33.dts   | 66 ++++++++++++++++++++++
- 2 files changed, 67 insertions(+)
+Yes, I prefer explicit u8 -> bool conversion like this.
 
-diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-index ae002c7cf1268a6f848fefdfadbd746091ee517b..ce8d4a731645e012f1222a130f068b62cacaa514 100644
---- a/arch/arm64/boot/dts/qcom/Makefile
-+++ b/arch/arm64/boot/dts/qcom/Makefile
-@@ -58,6 +58,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-thwc-ufi001c.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-wingtech-wt86518.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-wingtech-wt86528.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-wingtech-wt88047.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-xiaoxun-jz0145-v33.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-yiming-uz801v3.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8929-wingtech-wt82918hd.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8939-huawei-kiwi.dtb
-diff --git a/arch/arm64/boot/dts/qcom/msm8916-xiaoxun-jz0145-v33.dts b/arch/arm64/boot/dts/qcom/msm8916-xiaoxun-jz0145-v33.dts
-new file mode 100644
-index 0000000000000000000000000000000000000000..7f1049e111b37213eeadc6a247d4cf21e7e0cd5f
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/msm8916-xiaoxun-jz0145-v33.dts
-@@ -0,0 +1,66 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+
-+/dts-v1/;
-+
-+#include "msm8916-ufi.dtsi"
-+
-+/ {
-+	model = "JZ0145 v33 4G Modem Stick";
-+	compatible = "xiaoxun,jz0145-v33", "qcom,msm8916";
-+};
-+
-+&button_restart {
-+	gpios = <&tlmm 37 GPIO_ACTIVE_HIGH>;
-+};
-+
-+&led_b {
-+	gpios = <&tlmm 8 GPIO_ACTIVE_HIGH>;
-+};
-+
-+&led_g {
-+	gpios = <&tlmm 7 GPIO_ACTIVE_HIGH>;
-+};
-+
-+&led_r {
-+	gpios = <&tlmm 6 GPIO_ACTIVE_HIGH>;
-+};
-+
-+&mpss {
-+	pinctrl-0 = <&sim_ctrl_default>;
-+	pinctrl-names = "default";
-+};
-+
-+&button_default {
-+	pins = "gpio37";
-+	bias-pull-down;
-+};
-+
-+&gpio_leds_default {
-+	pins = "gpio6", "gpio7", "gpio8";
-+};
-+
-+/* This selects the external SIM card slot by default */
-+&tlmm {
-+	sim_ctrl_default: sim-ctrl-default-state {
-+		esim-sel-pins {
-+			pins = "gpio22", "gpio23";
-+			function = "gpio";
-+			bias-disable;
-+			output-low;
-+		};
-+
-+		sim-en-pins {
-+			pins = "gpio1";
-+			function = "gpio";
-+			bias-disable;
-+			output-low;
-+		};
-+
-+		sim-sel-pins {
-+			pins = "gpio20";
-+			function = "gpio";
-+			bias-disable;
-+			output-high;
-+		};
-+	};
-+};
+> > > +/* Fn lock */
+> > > +static int gaokun_ec_get_fn_lock(struct gaokun_ec *ec, bool *on)
+> > > +{
+> > > +     /* GFRS */
+> > > +     u8 req[] =3D MKREQ(0x02, 0x6B, 0);
+> >=20
+> > Does that random acronym map to one of the literal? In which case a def=
+ine
+> > would be more useful than a comment. (You seem to have a few similar
+> > comments preceeding the req definitions)
+> >=20
+>=20
+> They are ACPI method names/identifiers, it will be useful if someone want
+> to locate ACPI's implementations.
 
--- 
-2.47.1
+Okay, I guess it's fine as is then.
 
 
+> > > +static int gaokun_ec_get_temp(struct gaokun_ec *ec, u8 idx, int *tem=
+p)
+> > > +{
+> > > +     /* GTMP */
+> > > +     u8 req[] =3D MKREQ(0x02, 0x61, 1, temp_reg[idx]);
+> > > +     u8 resp[] =3D MKRESP(sizeof(__le16));
+> > > +     __le16 tmp;
+> > > +     int ret;
+> > > +
+> > > +     ret =3D gaokun_ec_read(ec, req, sizeof(resp), resp);
+> > > +     if (ret)
+> > > +             return ret;
+> > > +
+> > > +     extr_resp((u8 *)&tmp, resp, sizeof(tmp));
+> > > +     *temp =3D le16_to_cpu(tmp) * 100; /* convert to HwMon's unit */
+> >=20
+> > extr_resp() does memcpy() but there should be no need to copy anything
+> > here. You just want to have __le16 pointer of the response data data.
+> >=20
+>=20
+> I think this would break abstraction, recently, these data are accessed b=
+y
+> extr_resp() and refill_req() only.
+
+If you want to keep doing it like that, not a big deal for me.
+
+There are different ways to do the abstraction though, and not all require
+memcpy() when changing a layer (e.g., a pointer advancing to the other=20
+layer).
+
+> > > +/* -----------------------------------------------------------------=
+--------- */
+> > > +/* EC */
+> > > +
+> > > +static irqreturn_t gaokun_ec_irq_handler(int irq, void *data)
+> > > +{
+> > > +     struct gaokun_ec *ec =3D data;
+> > > +     u8 req[] =3D MKREQ(EC_EVENT, EC_QUERY, 0);
+> >=20
+> > Great, here you have named them. Could you name all of the other litera=
+ls
+> > too, please.
+>=20
+> I mentioned this in previous version. Most of them are magic, it is hard =
+to
+> generalize them. We could name partial scmd according to specific functio=
+ns
+> (sysfs functions), their function names have implied registers' meaning, =
+and
+> these registers would be never reused in other functions.
+
+Fair (I didn't read every comment made to the previous version).
+
+> > > +/* -----------------------------------------------------------------=
+--------- */
+> > > +/* API For UCSI */
+> >=20
+> > for
+> >=20
+>=20
+> Agree
+
+For me, you don't need to reply "Agree", "Ack" or something along those=20
+lines if you're going to act on the feedback. Just make sure you don't=20
+forget them :-). It'll save us both some time when we focus on points that=
+=20
+need further discussion.
+
+--=20
+ i.
+--8323328-1499874815-1736864506=:1077--
 
