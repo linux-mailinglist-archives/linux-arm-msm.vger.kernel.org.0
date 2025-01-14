@@ -1,63 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-45003-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-45004-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id DEA0AA10535
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jan 2025 12:22:06 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3F617A10569
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jan 2025 12:30:05 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id E8AB41887863
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jan 2025 11:22:09 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id EB1CD3A42F7
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jan 2025 11:29:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0901E22DC42;
-	Tue, 14 Jan 2025 11:21:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 66DDD284A64;
+	Tue, 14 Jan 2025 11:30:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Am4SVgIn"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="BZMf0cI/"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 249EF22963A;
-	Tue, 14 Jan 2025 11:21:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7AE3224B1A;
+	Tue, 14 Jan 2025 11:30:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736853718; cv=none; b=XgmSGD1E73HUx/HA9rX4ixeF0HBt+onP/EzKEILq38fQY2CNjLwFzOU0xxVgwkxD9A1p5CZ0sKjjkaKdZJSjlAD1vmpDdurOj28Y77XYEr3umn1rkNtbPs+Q68iAMKR4+QlabN3ooxd3N4CwXgy+o5TMMy+/pWgnR5B+TQYb2NU=
+	t=1736854202; cv=none; b=Kd7JVDNA8O4bQKrOhRU4HDHQOVByVRII6J+D4TeRjtbsBhw0RtlaeSz6TsWZLismffGM9v8FVqSe54p4w15zx8wylF9Z/VIuomO2q7cEO+3/O3tmGCsaAuXbxZiIflAj6Gr3H05UqCOTUQ7tK/p+n+G+0BeCUa5yqRamLiZbp8g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736853718; c=relaxed/simple;
-	bh=0zEIL6u4SHqcJ/UmXchjPwnCB/2oWPGe6FVMyqAnMjg=;
+	s=arc-20240116; t=1736854202; c=relaxed/simple;
+	bh=jVoYk1AmULzhUU8WlSEvj9i7fgoomwuf9PP0j4l/piw=;
 	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=NErX/q80riubuWAoSsBbbU0gTsFZb4yrwx6loLPF2FHVdnP9Sxk5bfmZJT1ga/Sk4m50v4QWcGTFyalg7brQbS758pIMOWKceDV8KBhr4sOarLa+r3xRWVjEVGRVh2C1yxL1fzTryGiKEk028pUqPSdgMMt6YCc8/Ptkl3jo1z8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Am4SVgIn; arc=none smtp.client-ip=205.220.180.131
+	 In-Reply-To:Content-Type; b=nbauK/yeD11WQ+VhDm/8dn3a5GitR3x02FTMQDvU1QN+F776O9fBDjlmhcO1lCbbKUlAH/muE7zvazrHp2B98S9s8MJqTTqzRqneolxxuZ9suQmBf1c1ili1ypzROm4vS95k61CSonmLgFHpLHxTQ/F7MVyKMyfXalkErEV34w0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=BZMf0cI/; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50E86JpM020662;
-	Tue, 14 Jan 2025 11:21:39 GMT
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50E8Conq028872;
+	Tue, 14 Jan 2025 11:29:44 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	QlOdxO3OmanBBTk+Gz46nfFMr/I29UEEjRPNmLHpDK0=; b=Am4SVgInlAdYnbXR
-	V9vS3ytz5xm/h0T/VT9tW8DlN/fCUohj21Q1eotZeEXE42PlC6lX9OG4cO3iJxmp
-	pd5Vn806SuAYnNt0PaeqVQvaP3Z5E9jqqZLHx7MoNnubq93b1LXVh0ZxH8qCECt9
-	Oq3/2uBb64LPt2BJIxQw8Wus0F2CUyqJ4KuK/odspnwCOVsYbklX9Y/2JWzVZqok
-	AhIukKctfiuv585h1szbhJRc5rE/jdYWFEx3NVMSrdmNglpWiq7VI0e3SO1qaUVa
-	bNVK1Q1lkHtLCOB2GwH7dfloFcuo1UNaMPeitKhGWu6QQui/TQH3mxNRc3BJerrc
-	Ji8xag==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 445m42gdt0-1
+	2n3EadQ8u+lFGYjWg3XzykC7KMKSjEnNBtScXvNI6y4=; b=BZMf0cI/9k+ijul6
+	U4F55LdE8JjDmwuRNgHOKFMf4vPdGivdec456UvisFF4Sbvptg1VddRmT7u+2S8t
+	Md0O8pMajmIYP7ZmlYKMcwuYYN62sZHB8i19rLbbOkJG3bEnnG3CfmhM/4B3n6UL
+	lliMKE8EzCPXuYKZXoTehPhOIvRnsDsnMXxIIWT9cmp1CE58AXWuUQE39/bQqOHS
+	p5NQfiwDnX/6CDtxsDSjJXbZrPU4l6vsqltjIpxStJdSPmCEJGbj9RtAQ4KCSJg+
+	tPWE9nMEXqe2U69Updsm5neUjVYoFIpSo96lpr4bOkq3LiiAe8lZKru4wjQBtwsF
+	s0X0Qw==
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 445m7b0d5w-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 14 Jan 2025 11:21:38 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 50EBLbxk005570
+	Tue, 14 Jan 2025 11:29:43 +0000 (GMT)
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 50EBThfr031183
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 14 Jan 2025 11:21:37 GMT
-Received: from [10.64.68.119] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+	Tue, 14 Jan 2025 11:29:43 GMT
+Received: from [10.253.32.159] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 14 Jan
- 2025 03:21:31 -0800
-Message-ID: <cf223355-3d9f-423a-acbe-55993ce9fcfc@quicinc.com>
-Date: Tue, 14 Jan 2025 19:21:28 +0800
+ 2025 03:29:37 -0800
+Message-ID: <4599e35b-eb2b-4d12-82c7-f2a8a804e08f@quicinc.com>
+Date: Tue, 14 Jan 2025 19:29:35 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,117 +65,103 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 3/4] dt-bindings: display/msm: Document MDSS on QCS8300
-To: Krzysztof Kozlowski <krzk@kernel.org>,
-        Dmitry Baryshkov
-	<dmitry.baryshkov@linaro.org>
-CC: Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar
-	<quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten
-	<marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, "Simona
- Vetter" <simona@ffwll.ch>,
-        Maarten Lankhorst
-	<maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>, Rob Herring <robh@kernel.org>,
+Subject: Re: [PATCH net-next v2 12/14] net: ethernet: qualcomm: Initialize PPE
+ L2 bridge settings
+To: Andrew Lunn <andrew@lunn.ch>
+CC: Luo Jie <quic_luoj@quicinc.com>, Andrew Lunn <andrew+netdev@lunn.ch>,
+        "David S. Miller" <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>,
+        Paolo Abeni <pabeni@redhat.com>, "Rob
+ Herring" <robh@kernel.org>,
         Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Kuogee Hsieh
-	<quic_khsieh@quicinc.com>, Vinod Koul <vkoul@kernel.org>,
-        "Kishon Vijay
- Abraham I" <kishon@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-phy@lists.infradead.org>
-References: <20250113-mdssdt_qcs8300-v3-0-6c8e93459600@quicinc.com>
- <20250113-mdssdt_qcs8300-v3-3-6c8e93459600@quicinc.com>
- <lyv4bopv3zw62qll5cjjx46ejdjjmssvhabdxj2uq23mcmwqpb@lld6hynsiwfe>
- <CAA8EJppUEB-c5LbWN5dJoRh+6+nNFH3G9h_uwbuTo=B8kp_9oA@mail.gmail.com>
- <bda8dd18-3bed-427a-bd19-9cb011256c93@kernel.org>
+        "Conor
+ Dooley" <conor+dt@kernel.org>,
+        Suruchi Agarwal <quic_suruchia@quicinc.com>,
+        Pavithra R <quic_pavir@quicinc.com>, Simon Horman <horms@kernel.org>,
+        Jonathan Corbet <corbet@lwn.net>, Kees Cook <kees@kernel.org>,
+        "Gustavo A. R.
+ Silva" <gustavoars@kernel.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        <linux-arm-msm@vger.kernel.org>, <netdev@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-doc@vger.kernel.org>, <linux-hardening@vger.kernel.org>,
+        <quic_kkumarcs@quicinc.com>, <quic_linchen@quicinc.com>,
+        <srinivas.kandagatla@linaro.org>, <bartosz.golaszewski@linaro.org>,
+        <john@phrozen.org>
+References: <20250108-qcom_ipq_ppe-v2-0-7394dbda7199@quicinc.com>
+ <20250108-qcom_ipq_ppe-v2-12-7394dbda7199@quicinc.com>
+ <4dbf1550-32e9-4cce-bf0c-8b92dbd49b50@lunn.ch>
+ <c67f4510-e71b-4211-8fe2-35dabfc7b44e@quicinc.com>
+ <8bdde187-b329-480d-a745-16871276a331@lunn.ch>
 Content-Language: en-US
-From: Yongxing Mou <quic_yongmou@quicinc.com>
-In-Reply-To: <bda8dd18-3bed-427a-bd19-9cb011256c93@kernel.org>
+From: Lei Wei <quic_leiwei@quicinc.com>
+In-Reply-To: <8bdde187-b329-480d-a745-16871276a331@lunn.ch>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
 X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
+ nasanex01a.na.qualcomm.com (10.52.223.231)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 8G77iWHE67xKFMIAseGtqeUg1yLxU39T
-X-Proofpoint-GUID: 8G77iWHE67xKFMIAseGtqeUg1yLxU39T
+X-Proofpoint-ORIG-GUID: Xn8srb3T476UNFJ326d45w4emPi_uQ39
+X-Proofpoint-GUID: Xn8srb3T476UNFJ326d45w4emPi_uQ39
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 mlxlogscore=999
- clxscore=1011 lowpriorityscore=0 impostorscore=0 mlxscore=0
- priorityscore=1501 malwarescore=0 adultscore=0 spamscore=0 suspectscore=0
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2501140095
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 bulkscore=0
+ malwarescore=0 clxscore=1015 mlxscore=0 mlxlogscore=999 adultscore=0
+ lowpriorityscore=0 suspectscore=0 impostorscore=0 spamscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2501140096
 
 
 
-On 2025/1/14 18:11, Krzysztof Kozlowski wrote:
-> On 14/01/2025 11:00, Dmitry Baryshkov wrote:
->> On Tue, 14 Jan 2025 at 09:57, Krzysztof Kozlowski <krzk@kernel.org> wrote:
+On 1/13/2025 9:37 PM, Andrew Lunn wrote:
+>>> Why is learning needed on physical ports? In general, switches forward
+>>> unknown destination addresses to the CPU. Which is what you want when
+>>> the ports are isolated from each other. Everything goes to the
+>>> CPU. But maybe this switch does not work like this?
 >>>
->>> On Mon, Jan 13, 2025 at 04:03:10PM +0800, Yongxing Mou wrote:
->>>> +patternProperties:
->>>> +  "^display-controller@[0-9a-f]+$":
->>>> +    type: object
->>>> +    additionalProperties: true
->>>> +
->>>> +    properties:
->>>> +      compatible:
->>>> +        items:
->>>> +          - const: qcom,qcs8300-dpu
->>>> +          - const: qcom,sa8775p-dpu
->>>> +
->>>> +  "^displayport-controller@[0-9a-f]+$":
->>>> +    type: object
->>>> +    additionalProperties: true
->>>> +
->>>> +    properties:
->>>> +      compatible:
->>>> +        items:
->>>> +          - const: qcom,qcs8300-dp
->>>> +          - const: qcom,sm8650-dp
->>>
->>> Parts of qcs8300 display are compatible with sa8775p, other parts with
->>> sm8650. That's odd or even not correct. Assuming it is actually correct,
->>> it deserves explanation in commit msg.
 >>
->> It seems to be correct. These are two different IP blocks with
->> different modifications. QCS8300's DP configuration matches the SM8650
->> ([1]), though the DPU is the same as the one on the SA8775P platform.
+>> L2 forwarding can be disabled in PPE in two ways:
 >>
->> [1] https://lore.kernel.org/dri-devel/411626da-7563-48fb-ac7c-94f06e73e4b8@quicinc.com/
+>> 1.) Keep the learning enabled (which is the default HW setting) and
+>> configure the FDB-miss-action to redirect to CPU.
+>>
+>> This works because even if FDB learning is enabled, we need to represent
+>> the bridge and the physical ports using their 'virtual switch instance'
+>> (VSI) in the PPE HW, and create the 'port membership' for the bridge VSI
+>> (the list of slave ports), before FDB based forwarding can take place. Since
+>> we do not yet support switchdev, these VSI are not created and packets are
+>> always forwarded to CPU due to FDB miss.
+>>
+>> (or)
+>>
+>> 2.) Explicitly disable learning either globally or on the ports.
+>>
+>> With method 1 we can achieve packet forwarding to CPU without explicitly
+>> disabling learning. When switchdev is enabled later, L2 forwarding can be
+>> enabled as a natural extension on top of this configuration. So we have
+>> chosen the first approach.
 > 
-> That's the driver, so you claim that qcs8300, which is a sa8775p, is not
-> compatible with sa8775p because of current driver code? You see the
-> contradiction? sa8775p is not compatible with sa8775p because of current
-> driver patch?
+> How does ageing work in this setup? Will a cable unplug/plug flush all
+> the learned entries? Is ageing set to some reasonable default in case
+> a MAC address moves?
 > 
-> I don't think it is correct, but let's repeat: if you think otherwise,
-> this should be explain in commit msg.
-> 
-> Best regards,
-> Krzysztof
 
-Hi,let me explain this: qcs8300 uses the same DPU as sa8775p, which is 
-DPU_8_4. Therefore, for the DPU driver, qcs8300 reuses the driver of 
-sa8775p. However, for the DisplayPort controller of qcs8300, it's 
-different with sa8775p. qcs8300 only supports one DisplayPort output 
-port, while sa8775p has two DPUs and supports four DisplayPort outputs. 
-Therefore, the DisplayPort controller driver of sa8775p cannot be reused 
-for qcs8300. Additionally, the base offset of qcs8300's DisplayPort 
-controller is the same as that of sm8650, so the DisplayPort controller 
-reuses "qcom,sm8650-dp". I explained this in the commit messages of the 
-previous two bindings, but it might not have been explained in the 
-commit message of this patch.i will update the commit msg in next patchset.
+I would like to clarify that representing the bridge and its slave ports
+inside PPE (using a VSI - virtual switch instance) is a pre-requisite 
+before learning can take place on a port. At this point, since switchdev
+is not enabled, VSI is not created for port/bridge and hence FDB 
+learning does not take place. Later when we enable switchdev and 
+represent the bridge/slave-ports in PPE, FDB learning will automatically 
+occur on top of this initial configuration. I will add this note in the 
+comments and commit message to make it clear.
+
+Regarding FDB entry ageing (when switchdev is enabled later), MAC 
+address move can be automatically detected and old entry flushed by the 
+PPE. However for link change events on a port, PPE will rely on software 
+to flush FDB entries for the port.
+
+> 	Andrew
 
 
