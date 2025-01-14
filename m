@@ -1,129 +1,159 @@
-Return-Path: <linux-arm-msm+bounces-45043-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-45044-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2E5C4A11227
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jan 2025 21:37:16 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 483BFA1123D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jan 2025 21:42:01 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 675E7168BA4
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jan 2025 20:37:06 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8077D188ADDC
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jan 2025 20:42:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 24FCE20C464;
-	Tue, 14 Jan 2025 20:36:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5478A20AF65;
+	Tue, 14 Jan 2025 20:41:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="GjwFKVoe"
+	dkim=pass (2048-bit key) header.d=acm.org header.i=@acm.org header.b="mp/2kYD2"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from 009.lax.mailroute.net (009.lax.mailroute.net [199.89.1.12])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4172320B80A
-	for <linux-arm-msm@vger.kernel.org>; Tue, 14 Jan 2025 20:36:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F16D1459FD;
+	Tue, 14 Jan 2025 20:41:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=199.89.1.12
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736887013; cv=none; b=AI+h6pcL6xSFuLbyshXnMMK8UE9GbjMVJfbAFc4DdorkSq8a84GZHZnv+7dznvZSE+lk7E8i6uH5Ttw4U3Q1sqrrdN3Qw/59Ez+9b8PYn1bUWqh9mFc+tEvW8KcjAsRyYHk0Yg76hX4IFfUCOdT0o6eU0tPS2vYEnvLiEhMKtFQ=
+	t=1736887316; cv=none; b=lNM34YJdlYuSwHyu6IFTdeRsNFOq6Pewrttzkv5bV/LnvssGqCEnBELQhc8g9JZ9mx3Pz/apcKNoeqUzALbyDFDAHuZpzNQ8fEaaIPgGoPzd8TZgvT+YDwPI4d5IWGrBTUImcRpeShpjaziACYDz4aIvTiAgpK/r1ni7rTs0lDA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736887013; c=relaxed/simple;
-	bh=DBlRzvTLswFCm+rfKv4D6k8mA3vi3W2vtOEjVI5j0pQ=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=LK2FMBvGGTZSzHsw4k0OHgHa4r/DLl+y2BmrCNTTkSpPhGSMuhJKvJhh53xiSlQNS3csZixgIITo5qdteB0D3sVVV0dWNUExqNd1HNbFS/9sugO8wOwXWNlM3ClRbJdFF6sAcehzsdp/wzGkecpQK+QIXfstSp5dHWweemFhAg8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=GjwFKVoe; arc=none smtp.client-ip=209.85.128.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-43637977fa4so6435505e9.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Jan 2025 12:36:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1736887009; x=1737491809; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=bAvYGyeFu8e281JGlOSAn04kCJpvUAp6RFPN2J5Vh0w=;
-        b=GjwFKVoeJtBuo8Y5ezIltmOwKNlLtw0CgqEsDYT9AbJewJULGMcSkvvs7/GDCp5I1V
-         GICOq1jbp426O2xi4QCyVyEj4TYE18GmaMV0Ee+mahLYsUFwAO5YIvrXunTH5RBaULIg
-         zsxjknWVsIaOJh0ycP5M6ryN9BEU0k74JZruh0fAKZ+zFspzvGOwZ2PSIhExBkPJgXag
-         QjWWIwM6VOXzO4cC3SVemy0hE46YMIuC3t1eL2CSUdBBWgg4zQ/IolhA0uWvSkVZLbij
-         mOfZLd1OyXXBrIc5j5kjUJ/NaDZa9PO02exIKaIzPCG9lhfonbL1L0GcOVf1XerTZmUr
-         aEag==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736887009; x=1737491809;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=bAvYGyeFu8e281JGlOSAn04kCJpvUAp6RFPN2J5Vh0w=;
-        b=seBGEbzHJSj5kFH4gOnXy483ZTctgrz8YzlT1s6lcoDVI6uPu2enQXFSJL7jZqigQb
-         OIWTBoh+dZTxsbSBzUMtm0/8qz8Hizex80OlbUQYuFR+ssfsWX0hIdhhA8+Zh1kg+CEg
-         C6U5+OAcNmv5XBMlVDswswOytzFg7tZ1M9AsZ6o+rGyW8XhnjiAvA7jXqiG6TLtvJQFq
-         m4GmXd+cKcutEF9tepk0MsnGmAF8LzmJPNARxUBd09LcOco50PNIOPRrgFMCAzCRjGxm
-         hmU1cXzZT6CBQbkBJ93O7ofYwScwlWnACJ8ehvX6vbRRDi6+PqVIVBleQ+OnpbKQt01b
-         JMzg==
-X-Forwarded-Encrypted: i=1; AJvYcCU33P9vK5WRj1qK2BweVxax5jeTg6Sbp4DRqbiLHLjUL8/YLC4AiTcMN6wyC24sYvQvS3e5pzeC1ph3ReEu@vger.kernel.org
-X-Gm-Message-State: AOJu0YyY2506StNmsbe7I2iAfhoTMJ63f3uKxNMkfWCmbTLDHnouLo0Z
-	3LB4l4yINCYh/7lJwWh7NUgfwvC4T6hpN7B8wODGEGTXqu25TdNGSslbMBrys7Q=
-X-Gm-Gg: ASbGncswWIAVR6MgVM/HLce18uBbVrMr4BX/qwUqd2cUZ+hZtWyNoOmnldzhM4Up+Gn
-	yjYVZSsvZhm1LtyrL0D9h20yZ8Qy+M/NxZ4/EFzrSSvyWQGidd/CeqYmf05kFgc0MaQhi+tVtwL
-	sePKPpUNFbnkBWemLqcUGSMu0m06v89WaoDDcuPx7GcFn+FB9opOvMMCHCVANA8+I5wMwNpa/tW
-	1IKynjcExGpdWzGRyJK164ZMfMz5t0vj4tFLUhIgmOXfXiQJ5J7b3wO4fux/eUxkWarH9A=
-X-Google-Smtp-Source: AGHT+IH1AxZZel/rWX6XENrksgjORmTMJ53M+8w7vOj2GMgiRPx3qqebgaoXnrxaxEjhON+gKlNHHw==
-X-Received: by 2002:a05:600c:3d06:b0:434:9cb7:7321 with SMTP id 5b1f17b1804b1-436e2691021mr106914705e9.1.1736887009595;
-        Tue, 14 Jan 2025 12:36:49 -0800 (PST)
-Received: from krzk-bin.. ([178.197.223.165])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-436e9e37d69sm185953105e9.30.2025.01.14.12.36.48
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 14 Jan 2025 12:36:49 -0800 (PST)
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH] soc: qcom: Use str_enable_disable-like helpers
-Date: Tue, 14 Jan 2025 21:36:46 +0100
-Message-ID: <20250114203646.1013708-1-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.43.0
+	s=arc-20240116; t=1736887316; c=relaxed/simple;
+	bh=eChCjDfe+5qP39jVvD14ozYe3D0oCfwixEvuEuVlEN0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=XwYOHtIl/RJP1UaSVYmcG/LLA85B5fy5rjOMkDszTCs9qulFTpI67x+MAcgYHpu4/qgVoJI1i8NTp2vsM9J6UKF6vapu/jiO7HF8toX9sXJBFTEDzEt4S0Aj1YDauLYW0YVaCQ49azdrHbeVV/FYibHe9ff3zRmvzhLZM4F8PBs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=acm.org; spf=pass smtp.mailfrom=acm.org; dkim=pass (2048-bit key) header.d=acm.org header.i=@acm.org header.b=mp/2kYD2; arc=none smtp.client-ip=199.89.1.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=acm.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=acm.org
+Received: from localhost (localhost [127.0.0.1])
+	by 009.lax.mailroute.net (Postfix) with ESMTP id 4YXgz06jcKzlgMVb;
+	Tue, 14 Jan 2025 20:41:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=acm.org; h=
+	content-transfer-encoding:content-type:content-type:in-reply-to
+	:from:from:content-language:references:subject:subject
+	:user-agent:mime-version:date:date:message-id:received:received;
+	 s=mr01; t=1736887299; x=1739479300; bh=rzBLylIyj8bVzNZ/mtrpV/DG
+	OTTTimLWwe6O0B/wwds=; b=mp/2kYD2KPxYJ5bSKS93GkD77RNSyy8HmPpnPSFd
+	BS95wlSrOLR3cfu9bGk/Wh2uU7PsOw6u2musctDFAgnUN0cpfMXBv4+BTaqG54T8
+	13SX3gwoV4npcdU+DsN1IeELPqTixLAq+nT0R9/STqWDeEBD5Ymt8GZ8Eqw8wMFc
+	hJXsE44fDlHtRh3soEPpw6GJW4u4Ubae0fvHYTF1f7vcCWphiNDcvSKeUyqAXv5b
+	m+S93mt/wX0EuUQDncHFi3+nOj092B2L3jRdyiv1/vKBLPVPAWiPKCBxTcCDW34+
+	n8SMqjt3EVj0lXRCdr4tk21O+BZmj6lF479+2gYVfIiN6w==
+X-Virus-Scanned: by MailRoute
+Received: from 009.lax.mailroute.net ([127.0.0.1])
+ by localhost (009.lax [127.0.0.1]) (mroute_mailscanner, port 10029) with LMTP
+ id NCQDeftpnuhx; Tue, 14 Jan 2025 20:41:39 +0000 (UTC)
+Received: from [100.66.154.22] (unknown [104.135.204.82])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: bvanassche@acm.org)
+	by 009.lax.mailroute.net (Postfix) with ESMTPSA id 4YXgyl5sK3zlgTWK;
+	Tue, 14 Jan 2025 20:41:35 +0000 (UTC)
+Message-ID: <cec304ef-0a5d-4f80-aaa4-05432c7a0b88@acm.org>
+Date: Tue, 14 Jan 2025 12:41:34 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] scsi: ufs: fix use-after free in init error and remove
+ paths
+To: =?UTF-8?Q?Andr=C3=A9_Draszik?= <andre.draszik@linaro.org>,
+ Alim Akhtar <alim.akhtar@samsung.com>, Avri Altman <avri.altman@wdc.com>,
+ "James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>,
+ "Martin K. Petersen" <martin.petersen@oracle.com>,
+ Peter Griffin <peter.griffin@linaro.org>,
+ Krzysztof Kozlowski <krzk@kernel.org>,
+ Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+ Eric Biggers <ebiggers@kernel.org>
+Cc: Tudor Ambarus <tudor.ambarus@linaro.org>,
+ Will McVicker <willmcvicker@google.com>, kernel-team@android.com,
+ linux-scsi@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-samsung-soc@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+ linux-arm-msm@vger.kernel.org, stable@vger.kernel.org
+References: <20250114-ufshcd-fix-v2-1-2dc627590a4a@linaro.org>
+ <58f1b701-68da-49c0-b2b1-e079bad4cd08@acm.org>
+ <13a3fdb675baa36fcda1bb254b05032b1175a2a8.camel@linaro.org>
+Content-Language: en-US
+From: Bart Van Assche <bvanassche@acm.org>
+In-Reply-To: <13a3fdb675baa36fcda1bb254b05032b1175a2a8.camel@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: quoted-printable
 
-Replace ternary (condition ? "enable" : "disable") syntax with helpers
-from string_choices.h because:
-1. Simple function call with one argument is easier to read.  Ternary
-   operator has three arguments and with wrapping might lead to quite
-   long code.
-2. Is slightly shorter thus also easier to read.
-3. It brings uniformity in the text - same string.
-4. Allows deduping by the linker, which results in a smaller binary
-   file.
+On 1/14/25 11:56 AM, Andr=C3=A9 Draszik wrote:
+> Hi Bart,
+>=20
+> On Tue, 2025-01-14 at 09:55 -0800, Bart Van Assche wrote:
+>> On 1/14/25 8:16 AM, Andr=C3=A9 Draszik wrote:
+>>> +/**
+>>> + * ufshcd_scsi_host_put_callback - deallocate underlying Scsi_Host a=
+nd
+>>> + *				=C2=A0=C2=A0 thereby the Host Bus Adapter (HBA)
+>>> + * @host: pointer to SCSI host
+>>> + */
+>>> +static void ufshcd_scsi_host_put_callback(void *host)
+>>> +{
+>>> +	scsi_host_put(host);
+>>> +}
+>>
+>> Please rename ufshcd_scsi_host_put_callback() such that the function
+>> name makes clear when this function is called instead of what the
+>> function does.
+>=20
+> Would you have a suggestion for such a name? Something like
+> ufshcd_driver_release_action()?
+>=20
+> Unless I'm misunderstanding you, I believe most drivers use
+> a function name that says what the function does, e.g.
+> dell_wmi_ddv_debugfs_remove (just as a completely random
+> example out of many).
+>=20
+> If going by when it is called and if applying this principle
+> throughout ufshcd, then there can only ever be one such
+> function in ufshcd, as all devm_add_action() callback actions
+> happen at driver release, which surely isn't what you mean.
+>=20
+> You probably meant something different?
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
----
- drivers/soc/qcom/qcom_aoss.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+I meant what I wrote in my previous email: to chose another name
+for ufshcd_scsi_host_put_callback() only. Having a function name that
+duplicates the function body leaves readers of the code guessing
+from where the function is called. BTW, naming callbacks after their
+call site is a normal practice as far as I know. From ufs-qcom.c:
 
-diff --git a/drivers/soc/qcom/qcom_aoss.c b/drivers/soc/qcom/qcom_aoss.c
-index 0320ad3b9148..a543ab9bee6c 100644
---- a/drivers/soc/qcom/qcom_aoss.c
-+++ b/drivers/soc/qcom/qcom_aoss.c
-@@ -12,6 +12,7 @@
- #include <linux/platform_device.h>
- #include <linux/thermal.h>
- #include <linux/slab.h>
-+#include <linux/string_choices.h>
- #include <linux/soc/qcom/qcom_aoss.h>
- 
- #define CREATE_TRACE_POINTS
-@@ -358,7 +359,7 @@ static int qmp_cdev_set_cur_state(struct thermal_cooling_device *cdev,
- 		return 0;
- 
- 	ret = qmp_send(qmp_cdev->qmp, "{class: volt_flr, event:zero_temp, res:%s, value:%s}",
--		       qmp_cdev->name, cdev_state ? "on" : "off");
-+		       qmp_cdev->name, str_on_off(cdev_state));
- 	if (!ret)
- 		qmp_cdev->state = cdev_state;
- 
--- 
-2.43.0
+static const struct ufs_hba_variant_ops ufs_hba_qcom_vops =3D {
+	.name                   =3D "qcom",
+	.init                   =3D ufs_qcom_init,
+	.exit                   =3D ufs_qcom_exit,
+	.get_ufs_hci_version	=3D ufs_qcom_get_ufs_hci_version,
+	.clk_scale_notify	=3D ufs_qcom_clk_scale_notify,
+	.setup_clocks           =3D ufs_qcom_setup_clocks,
+	.hce_enable_notify      =3D ufs_qcom_hce_enable_notify,
+	.link_startup_notify    =3D ufs_qcom_link_startup_notify,
+	.pwr_change_notify	=3D ufs_qcom_pwr_change_notify,
+	.apply_dev_quirks	=3D ufs_qcom_apply_dev_quirks,
+	.fixup_dev_quirks       =3D ufs_qcom_fixup_dev_quirks,
+	.suspend		=3D ufs_qcom_suspend,
+	.resume			=3D ufs_qcom_resume,
+	.dbg_register_dump	=3D ufs_qcom_dump_dbg_regs,
+	.device_reset		=3D ufs_qcom_device_reset,
+	.config_scaling_param =3D ufs_qcom_config_scaling_param,
+	.reinit_notify		=3D ufs_qcom_reinit_notify,
+	.mcq_config_resource	=3D ufs_qcom_mcq_config_resource,
+	.get_hba_mac		=3D ufs_qcom_get_hba_mac,
+	.op_runtime_config	=3D ufs_qcom_op_runtime_config,
+	.get_outstanding_cqs	=3D ufs_qcom_get_outstanding_cqs,
+	.config_esi		=3D ufs_qcom_config_esi,
+};
 
+Bart.
 
