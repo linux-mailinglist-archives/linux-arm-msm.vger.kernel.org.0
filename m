@@ -1,80 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-44982-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-44983-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9CEFBA10294
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jan 2025 10:03:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 13FFCA102D8
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jan 2025 10:18:26 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 516463A1E45
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jan 2025 09:03:10 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C10AE3A7646
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jan 2025 09:18:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3B0041C3BFC;
-	Tue, 14 Jan 2025 09:03:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0B8EE22DC5C;
+	Tue, 14 Jan 2025 09:18:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="c7scwbm8"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="bgrxjFHy"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5140E1CA84
-	for <linux-arm-msm@vger.kernel.org>; Tue, 14 Jan 2025 09:03:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D0D822DC49;
+	Tue, 14 Jan 2025 09:18:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736845394; cv=none; b=Kt1ePo0MM1D0TPs1+fZWP/iZgfJk1vW7YvTUatpNIhDhi9dKQHFXRhjS8fsq7NOOTEX18h9cebhfC98HEwGsUg32KO5XL5L9Wq/w+B5uBjCPOfdV5j4moVVV43vkXLP1zMzffhAa2n5z9JM8UbfUKizJJ1Px1bblCaByY43YyL8=
+	t=1736846302; cv=none; b=bNcZS/cGkK3mrLpylERIgPLl/Fz9c9PytumGPry/5kRAGLBIqXnOaXiUr/iha7q+adpERMem7pHPXAqKveIe07j97+3pDs3wVhjY10NKer5QIQA80lQYfKSlSibGuWp+2E8AGfiZFVLg2r2QpKUR95zMB6qxDoPfZS1NZVN4eWA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736845394; c=relaxed/simple;
-	bh=65CMyAvJZWeMYW9lSPh+gQO2EdJLTg8CEx8bGVBAi0o=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=hjiYtWdPO0EIqfjTcI2BIFWGqhBte9lJ+hWWA1c4XV8XzpD1p5uDzB8I3swL6pRQe9IMnssBUJzligcL7TCZGiJuds2uH9POFQlyC3m7PDv3UctLaCjTVuJFUvd716zt0T8eEAO0DMOTUSP+4y/XibNsnWc/ZI4pMAuvYZy82Bo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=c7scwbm8; arc=none smtp.client-ip=209.85.128.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-436202dd7f6so59673535e9.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Jan 2025 01:03:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1736845391; x=1737450191; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=9oRp10szVe/sp5qOtcIJEA83i4TBBkxS++1UqrcNlEc=;
-        b=c7scwbm8t9w1J+DWkefQg4XEOnbuAUKq33mFk3j9R0BfU9DZ6exfva0YUW74U9skoG
-         rixYlk7JP/2gAypHksn4A6aeDUUTyzuXRfFfWy8HMLQmAVMk7z8GETtKFBMPyaYyAPh2
-         gizhhml/O/oVy0QQHNKDiOUDAElM/lUeSiExwefZhK3/MCzLHgN8VZGAIOYl/i2DC9v6
-         EUAvMEsAm3/Vb72nocZXAZPFSdIeaav50IBVt7wFOdwt+xlHBao51XLjH0+YRX3OjMNv
-         h2ICGWOKIyBF52/o4VCF+/0nU7u876CqGpClrL9OqVC4hpaeTw4gzoduf9GdduhdV8PB
-         slgA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736845391; x=1737450191;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=9oRp10szVe/sp5qOtcIJEA83i4TBBkxS++1UqrcNlEc=;
-        b=BlgH0SawbobrDvTLrHwcjRRjNfOQzdCThauZ4xfn0CE/WJ7wKWwiPiF2ZqBlPpDU+0
-         4UojDPdZury1pNzWfE6TEsHd626Yj6f+dgSm7KNHTq25eLAFW1sOnfP01AzO/jqwV6TC
-         fHf4glV+pNO9NBHhi91XjpaBTlS5HiVu9/CeqZORUWOurRjpTD9XPT2qyrEbDUxwC+ZG
-         bOOE5TpbMWt1xecN8A45zkyELe08YdgWQZwKjHnNY5vELrCw5ILRCmQNJREamd4vQmLB
-         aIIfmbB3YuNgfE/l4Din7W8bzimkMXzSGH0Ox/dxpjuWdpbqYYRQJf/gL6OBtpE97BD0
-         himg==
-X-Gm-Message-State: AOJu0Yze9xFvm32WrN955koIwT0s5sXJfP8P/h6qXxAevZx1BBpRCWiw
-	tuN/8WgUsJ6vWjOZfnEY0G3mr0MVWGl2/Yu5aKLUayDhHYnrj4ia8Y7ehQ174iQ=
-X-Gm-Gg: ASbGncs9azkalH0LuGiQb/AU4o8M88mB8pVJhMZiAmDuaJtISwL9NCIWicwy/CB21YI
-	ARIXlzKC75C0hge5Gbgxd0Y4ZlahHLnvHwo/aSVwJWcdxaj6fIpDE55ZCXqdE1Ku2L6yJs54naS
-	zsKZ8frEM6S4UqBRujjyIUaIMiSiXtl4GBJbcMiQ0W8+PCqDwJLsmx7Ru+nKXpzXIA6iXf4cvq/
-	XnQpV51v/e7o0Dr+8WiaDt+vYFOnS8FYJuTEHMUI665zX4dbwtdWbQtJqfKQfJZ2cn04A0aUl47
-	MK8OTmbQIL/sVrz6j/GsyRYtBDi1z1idUw==
-X-Google-Smtp-Source: AGHT+IFGm1kBlbbYeDIOiNXov1hQWBIBtkjOag7tnMPu7QnAuqavk8TeHI5ruUgj7jK1f/l2ezBnIQ==
-X-Received: by 2002:a05:600c:1c8f:b0:434:f586:753c with SMTP id 5b1f17b1804b1-436e2686096mr224882135e9.7.1736845390659;
-        Tue, 14 Jan 2025 01:03:10 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:982:cbb0:a5df:aa69:5642:11b5? ([2a01:e0a:982:cbb0:a5df:aa69:5642:11b5])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-436f67192a1sm99549905e9.27.2025.01.14.01.03.09
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 14 Jan 2025 01:03:10 -0800 (PST)
-Message-ID: <ca6d7042-e143-4502-9878-9e75453c4d54@linaro.org>
-Date: Tue, 14 Jan 2025 10:03:09 +0100
+	s=arc-20240116; t=1736846302; c=relaxed/simple;
+	bh=Yy0eIwnOSh6G3GWKBNkJQj10YUu8tYJe0B2qTW0mQEI=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:CC:References:
+	 In-Reply-To:Content-Type; b=nTR4a+h+8gCJDFCDjAayyXRYBWD/kUKRMtfMlv3k1WRmeYiwnjvknG+Ep6PdqsBqKEIOjJiM0bWEmzHYDjmJqzqC4KJWhPNRF3T0R52EEInzRrvAl4ETXnSLhFTHCAb3mDJ3VDWW4iFJZqySFI+XzAPP7X3N9+HZ8khfK80MD3w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=bgrxjFHy; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50E7cZIt019694;
+	Tue, 14 Jan 2025 09:18:13 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	Ez/MatY4ncetVheu42gjWT0fmCQoTLlhYeLYizkO/aU=; b=bgrxjFHyiiDvaC5n
+	DwQrTn/dW3/Lc2gYKjpKXVXEziH49nrEs32dBHtDkI+AdKH0HM+iOkijmy4xEBNG
+	6GOikmZeR8ARTl3nzCsE5fkvfTGtOif34XB2AWCnyRGhi3Cv23i7ftvdKAL3VR1x
+	Kn8b76Mm6X1DHxK89zIJYPgQX5Ruh9ckWY4ATMcUur1sjT9Lzf6t7VRlGKbVExXo
+	xUWf6euDFMyoejTXgcx2vep4QsdgMtcudSgWKFs8jJGQpII4phrhepwq4MZ1Nt0e
+	K4tRGGY1v0R55SG/uBuiz/DDpRJ2AMyYDxnRanSwbhbWTAuUuDPkj81cJWWn3+NE
+	Nv77bw==
+Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 445kqc071r-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 14 Jan 2025 09:18:12 +0000 (GMT)
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+	by NASANPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 50E9IC0X008885
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 14 Jan 2025 09:18:12 GMT
+Received: from [10.216.21.195] (10.80.80.8) by nasanex01c.na.qualcomm.com
+ (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 14 Jan
+ 2025 01:18:04 -0800
+Message-ID: <1566eafb-7286-4f27-922d-0bbaaab8120b@quicinc.com>
+Date: Tue, 14 Jan 2025 14:48:01 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -82,178 +65,147 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-From: neil.armstrong@linaro.org
-Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH 2/2] arm64: dts: qcom: Add PMIC glink nodes for SM8750 MTP
- and QRD
-To: Melody Olvera <quic_molvera@quicinc.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>,
- Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>,
- Trilok Soni <quic_tsoni@quicinc.com>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, Jishnu Prakash <quic_jprakash@quicinc.com>
-References: <20250113-sm8750_gpmic_master-v1-0-ef45cf206979@quicinc.com>
- <20250113-sm8750_gpmic_master-v1-2-ef45cf206979@quicinc.com>
-Content-Language: en-US, fr
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro
-In-Reply-To: <20250113-sm8750_gpmic_master-v1-2-ef45cf206979@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Subject: Re: [PATCH v5 2/4] dmaengine: gpi: Add Lock and Unlock TRE support to
+ access I2C exclusively
+From: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
+To: Vinod Koul <vkoul@kernel.org>, Md Sadre Alam <quic_mdalam@quicinc.com>
+CC: <konrad.dybcio@linaro.org>, <andersson@kernel.org>,
+        <andi.shyti@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <dmaengine@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-i2c@vger.kernel.org>, <conor+dt@kernel.org>,
+        <agross@kernel.org>, <devicetree@vger.kernel.org>, <linux@treblig.org>,
+        <dan.carpenter@linaro.org>, <Frank.Li@nxp.com>,
+        <konradybcio@kernel.org>, <bryan.odonoghue@linaro.org>,
+        <krzk+dt@kernel.org>, <robh@kernel.org>, <quic_vdadhani@quicinc.com>
+References: <20241129144357.2008465-1-quic_msavaliy@quicinc.com>
+ <20241129144357.2008465-3-quic_msavaliy@quicinc.com> <Z01YBLcxDXI2UwXR@vaman>
+ <d49b16b2-95e5-42b4-9bc1-40cb0bfa15b1@quicinc.com> <Z1BJSbf+1G8ojTib@vaman>
+ <5ef44277-6739-4e1e-af62-0f40ae081ec1@quicinc.com> <Z2qFyQFFjiHy+FvY@vaman>
+ <b34e3ac0-70b4-491c-a807-dc13fac41d06@quicinc.com>
+Content-Language: en-US
+In-Reply-To: <b34e3ac0-70b4-491c-a807-dc13fac41d06@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01c.na.qualcomm.com (10.45.79.139)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: H5KyG2jT57WlKMZNDFeUMgpS4lFEtgp0
+X-Proofpoint-ORIG-GUID: H5KyG2jT57WlKMZNDFeUMgpS4lFEtgp0
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999
+ suspectscore=0 lowpriorityscore=0 impostorscore=0 mlxscore=0
+ priorityscore=1501 spamscore=0 clxscore=1015 bulkscore=0 adultscore=0
+ phishscore=0 malwarescore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2411120000 definitions=main-2501140075
 
-On 13/01/2025 22:22, Melody Olvera wrote:
-> From: Jishnu Prakash <quic_jprakash@quicinc.com>
+Hi Vinod,
+
+On 12/26/2024 5:52 PM, Mukesh Kumar Savaliya wrote:
 > 
-> Add the PMIC glink node with connectors for SM8750 MTP and QRD.
 > 
-> Signed-off-by: Jishnu Prakash <quic_jprakash@quicinc.com>
-> Signed-off-by: Melody Olvera <quic_molvera@quicinc.com>
-> ---
->   arch/arm64/boot/dts/qcom/sm8750-mtp.dts | 34 +++++++++++++++++++++++++++++++++
->   arch/arm64/boot/dts/qcom/sm8750-qrd.dts | 34 +++++++++++++++++++++++++++++++++
->   2 files changed, 68 insertions(+)
+> On 12/24/2024 3:28 PM, Vinod Koul wrote:
+>> On 18-12-24, 18:04, Mukesh Kumar Savaliya wrote:
+>>> Hi Vinod, Thanks !  I just saw your comments now as somehow it was 
+>>> going in
+>>> some other folder and didn't realize.
+>>>
+>>> On 12/4/2024 5:51 PM, Vinod Koul wrote:
+>>>> On 02-12-24, 16:13, Mukesh Kumar Savaliya wrote:
+>>>>> Thanks for the review comments Vinod !
+>>>>>
+>>>>> On 12/2/2024 12:17 PM, Vinod Koul wrote:
+>>>>>> On 29-11-24, 20:13, Mukesh Kumar Savaliya wrote:
+>>>>>>> GSI DMA provides specific TREs(Transfer ring element) namely Lock 
+>>>>>>> and
+>>>>>>> Unlock TRE. It provides mutually exclusive access to I2C 
+>>>>>>> controller from
+>>>>>>> any of the processor(Apps,ADSP). Lock prevents other subsystems from
+>>>>>>> concurrently performing DMA transfers and avoids disturbance to 
+>>>>>>> data path.
+>>>>>>> Basically for shared I2C usecase, lock the SE(Serial Engine) for 
+>>>>>>> one of
+>>>>>>> the processor, complete the transfer, unlock the SE.
+>>>>>>>
+>>>>>>> Apply Lock TRE for the first transfer of shared SE and Apply Unlock
+>>>>>>> TRE for the last transfer.
+>>>>>>>
+>>>>>>> Also change MAX_TRE macro to 5 from 3 because of the two 
+>>>>>>> additional TREs.
+>>>>>>>
+>>>>>>
+>>>>>> ...
+>>>>>>
+>>>>>>> @@ -65,6 +65,9 @@ enum i2c_op {
+>>>>>>>      * @rx_len: receive length for buffer
+>>>>>>>      * @op: i2c cmd
+>>>>>>>      * @muli-msg: is part of multi i2c r-w msgs
+>>>>>>> + * @shared_se: bus is shared between subsystems
+>>>>>>> + * @bool first_msg: use it for tracking multimessage xfer
+>>>>>>> + * @bool last_msg: use it for tracking multimessage xfer
+>>>>>>>      */
+>>>>>>>     struct gpi_i2c_config {
+>>>>>>>         u8 set_config;
+>>>>>>> @@ -78,6 +81,9 @@ struct gpi_i2c_config {
+>>>>>>>         u32 rx_len;
+>>>>>>>         enum i2c_op op;
+>>>>>>>         bool multi_msg;
+>>>>>>> +    bool shared_se;
+>>>>>>
+>>>>>> Looking at this why do you need this field? It can be internal to 
+>>>>>> your
+>>>>>> i2c driver... Why not just set an enum for lock and use the values as
+>>>>>> lock/unlock/dont care and make the interface simpler. I see no 
+>>>>>> reason to
+>>>>>> use three variables to communicate the info which can be handled in
+>>>>>> simpler way..?
+>>>>>>
+>>>>> Below was earlier reply to [PATCH V3, 2/4], please let me know if 
+>>>>> you have
+>>>>> any additional comment and need further clarifications.
+>>>>
+>>>> Looks like you misunderstood, the question is why do you need three
+>>>> variables to convey this info..? Use a single variable please
+>>> Yes, I think so. Please let me clarify.
+>>> First variable is a feature flag and it's required to be explicitly
+>>> mentioned by client (i2c/spi/etc) to GSI driver.
+>>>
+>>> Second and third, can be optimized to boolean so either first or last 
+>>> can be
+>>> passed.
+>>>
+>>> Please correct me or add simple change where you would like to make, 
+>>> i can
+>>> add that.
+>>
+>> I though we could do with a single and derive
+>>
+> Sure, so as mentioned in the other crypto BAM patch probably dmaengine.h 
+> can hold flag and that can add support for lock/unlock similar to that 
+> patch.
+> I just realized it from your shared patch. let me work internally with 
+> Md sadre and review. Thanks for the comment.
+>> Also, please see 20241212041639.4109039-3-quic_mdalam@quicinc.com, folks
+>> from same company should talk together on same solutions, please
+>> converge and come up with a single proposal which works for both drivers
+>>
+I have discussed with Md Sadre and tried to understand and utilize the 
+enum of lock and unlock in my changes. Below is the summary.
+
+I can't use those lock and unlock enums here because it's required for 
+first and last message respectively. intermediate transfers will not use 
+anything. So we need to define one more enum like dma_ctrl_none.
+
+if i create another internal parent structure having required 3 members, 
+then also it will need 3 child members. So i think current one looks 
+good to me.
+
+Please help review and suggest if anything can be better here.
+
+> Sure
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sm8750-mtp.dts b/arch/arm64/boot/dts/qcom/sm8750-mtp.dts
-> index 9e3aacad7bdab6848e86f8e45e04907e1c752a07..0bca1f9acdedfe1852293b72862979e42fdd6241 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8750-mtp.dts
-> +++ b/arch/arm64/boot/dts/qcom/sm8750-mtp.dts
-> @@ -81,6 +81,40 @@ key-volume-up {
->   		};
->   	};
->   
-> +	pmic-glink {
-> +		compatible = "qcom,sm8750-pmic-glink",
-> +			     "qcom,sm8550-pmic-glink",
-> +			     "qcom,pmic-glink";
-> +		#address-cells = <1>;
-> +		#size-cells = <0>;
-> +		orientation-gpios = <&tlmm 61 GPIO_ACTIVE_HIGH>;
-> +
-> +		connector@0 {
-> +			compatible = "usb-c-connector";
-> +			reg = <0>;
-> +
-> +			power-role = "dual";
-> +			data-role = "dual";
-> +
-> +			ports {
-> +				#address-cells = <1>;
-> +				#size-cells = <0>;
-> +
-> +				port@0 {
-> +					reg = <0>;
-> +					pmic_glink_hs_in: endpoint {
-> +					};
-> +				};
-> +
-> +				port@1 {
-> +					reg = <1>;
-> +					pmic_glink_ss_in: endpoint {
-> +					};
-> +				};
-
-
-Hmm I think you should drop everything and only add en empty connector:
-
-+	pmic-glink {
-+		compatible = "qcom,sm8750-pmic-glink",
-+			     "qcom,sm8550-pmic-glink",
-+			     "qcom,pmic-glink";
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+		orientation-gpios = <&tlmm 61 GPIO_ACTIVE_HIGH>;
-+
-+		connector@0 {
-+			compatible = "usb-c-connector";
-+			reg = <0>;
-+
-+			power-role = "dual";
-+			data-role = "dual";
-+		};
-+	};
-
-and add the ports when you introduce the USB nodes.
-
-Neil
-
-> +			};
-> +		};
-> +	};
-> +
->   	vph_pwr: vph-pwr-regulator {
->   		compatible = "regulator-fixed";
->   
-> diff --git a/arch/arm64/boot/dts/qcom/sm8750-qrd.dts b/arch/arm64/boot/dts/qcom/sm8750-qrd.dts
-> index f77efab0aef9bab751a947173bcdcc27df7295a8..c53c08fc7d0d759aab921c76550bf98c2a308d49 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8750-qrd.dts
-> +++ b/arch/arm64/boot/dts/qcom/sm8750-qrd.dts
-> @@ -80,6 +80,40 @@ key-volume-up {
->   		};
->   	};
->   
-> +	pmic-glink {
-> +		compatible = "qcom,sm8750-pmic-glink",
-> +			     "qcom,sm8550-pmic-glink",
-> +			     "qcom,pmic-glink";
-> +		#address-cells = <1>;
-> +		#size-cells = <0>;
-> +		orientation-gpios = <&tlmm 61 GPIO_ACTIVE_HIGH>;
-> +
-> +		connector@0 {
-> +			compatible = "usb-c-connector";
-> +			reg = <0>;
-> +
-> +			power-role = "dual";
-> +			data-role = "dual";
-> +
-> +			ports {
-> +				#address-cells = <1>;
-> +				#size-cells = <0>;
-> +
-> +				port@0 {
-> +					reg = <0>;
-> +					pmic_glink_hs_in: endpoint {
-> +					};
-> +				};
-> +
-> +				port@1 {
-> +					reg = <1>;
-> +					pmic_glink_ss_in: endpoint {
-> +					};
-> +				};
-> +			};
-> +		};
-> +	};
-> +
->   	vph_pwr: vph-pwr-regulator {
->   		compatible = "regulator-fixed";
->   
 > 
 
 
