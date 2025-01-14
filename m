@@ -1,152 +1,182 @@
-Return-Path: <linux-arm-msm+bounces-44977-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-44978-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 21F77A10243
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jan 2025 09:40:09 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 3F401A10276
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jan 2025 09:56:51 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3F570164699
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jan 2025 08:40:07 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5B2DD165D5F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jan 2025 08:56:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 45C41284A5C;
-	Tue, 14 Jan 2025 08:40:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2E661284A75;
+	Tue, 14 Jan 2025 08:56:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="JbHQFKHN"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="HQ0LC2uO"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8022E24024E;
-	Tue, 14 Jan 2025 08:40:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 639AD1C5F2A;
+	Tue, 14 Jan 2025 08:56:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736844005; cv=none; b=kBiG7SUSDD5O1P6JckZfTiAY0Imn1seZ73BQIQ/r/XV/UI3NmSWUjOBhKkYkuQr2TMzhpjuNzFfdIRnx8Mq5oEn5HUJ7mZ4dhkrZ3RftaSGlFjjiK1e/66BgjhOsB1vOjAM7UXAf334de8F/jpgZpEuADPFKyxotTwu/tTIUbiE=
+	t=1736845007; cv=none; b=Wfwddb3cWDOjzGAJAuFj/bORFKBVDHs8G/BAgybuC1OJIOlOkAAe9J+UrhQmWvWcLhPcW1O4ImxqT7u6QUjgRS6HyQOiuOC2RHnjYXdJx56mUQnIF5EmT3SU/dDhRRMVqJ6SkQ2ZmBDvxBFR6po2QS0sAbQGgd5Ge+KMdf9nrRM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736844005; c=relaxed/simple;
-	bh=+Nv2NBrwmCCZ1xgruSVVyKBPVnNh9HXjMKgk4WydGHE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=RG5EZTJT8lgHUqdJ6t62mVQ6TSIKtd2veUUjMDsRtA3XW047ABrbgYlOXcSttfcS9lkdZqbSBzYrar6wMxyKQz8y9sTemUgLevaD6kPAW38chM0xS2I2NWkFWwWGC/Za9Wb0JSCP0/rgQ1c9Pk4Z+8oDv7Tj2wtUJl4V1YrA2Jo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=JbHQFKHN; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1736845007; c=relaxed/simple;
+	bh=u3HNhLt63zkv/PJhmytMgy5VSVAb/fxhCMn0nl5XVBw=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:To:CC; b=VqJhFKgybOCodQqJ/UOM+uM7NGDrJO4ntAjckQumzwKN0waZIHDYyqZ6lIkAECewsnU8JepHgcC6W02DnRXe05qoXCoctqD+MtGyxU3qU60bOqhdepM73+yLIiqVd/YWs7Tto9Dzv1cT9WeFOqSZ3TvscVJhh5rFHYFkyQldnNY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=HQ0LC2uO; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50E2roq3008802;
-	Tue, 14 Jan 2025 08:39:51 GMT
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50E8Cftg028752;
+	Tue, 14 Jan 2025 08:56:38 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	NHQaAstEqNv45AdrcWHch1WADxggkaEEPu1wSZb46fg=; b=JbHQFKHNDxSDFkTk
-	oKv+L74+wIr6bWfXZEf6N9CrdOgV0lpEL+UmubyaFTFJJ/5+h4k8kTAAwhR8F3CA
-	4AfHWgg5qQpc1B1Peffcr51CU4ZxBqX4yLP4mEztCfssSpHJSTGvTPHZbaMnYBml
-	Wmw7tFvr1d6sW7lsgLa5tUHDjVkj0ZoD4jon4FHoN2j6PIciV4XkiQgv+ktPN8P5
-	74OkcvCnuouYEt426gKfCk41NfutKFp6OJ1KKw6OZoZA6uGQj+OlL/HeYzM1bC7D
-	BU+AMuvzOTatzoN5YYbCAdfRd7zV5CfsiKaPfNJD+KzRwwWKlpM+jZDUO8gq8RxC
-	9L4PjQ==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 445fhtrnfe-1
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=teIRJ17yWtqpF23vzj2ZO+
+	pTMPI8o829wxrSPF4J0D4=; b=HQ0LC2uO/CraAoLYsLFSloqpzlqckFPozTKdmT
+	qNMKiGn4CjS8wSL1MMKbj4jKVyNoJGIDTjVFgZjnX9vDIJblos5HrQViIAllYTVU
+	iskUmSkm++eTntmIeypK6t8v7cslPdsqGdpyUjZ+au3b371iyAjIImqZbCXUuMCr
+	8wvZTvr9osxsG1M2fnSlZPqeyoIWEodzjDJAzK5glODU8dqKYrNR2RcBy2ZTvvSF
+	pUbgLZTF9upVByAb4OvY7PFiEQ8bk1lClsQQYxbwtyLch6cZpHapRjEsWppqZBlX
+	xyhbUnTmx4gvcWXN65na8F9B5OeIC9gQvT2+bXdGvDWy4xPQ==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 445m7b034r-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 14 Jan 2025 08:39:50 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 50E8dnMT004055
+	Tue, 14 Jan 2025 08:56:37 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 50E8ubcw021105
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 14 Jan 2025 08:39:49 GMT
-Received: from [10.253.75.207] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 14 Jan
- 2025 00:39:44 -0800
-Message-ID: <87423e4e-a766-49b5-8ca8-5a79329a7bfc@quicinc.com>
-Date: Tue, 14 Jan 2025 16:39:41 +0800
+	Tue, 14 Jan 2025 08:56:37 GMT
+Received: from szioemm-lnxbld002.qualcomm.com (10.80.80.8) by
+ nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Tue, 14 Jan 2025 00:56:32 -0800
+From: Fange Zhang <quic_fangez@quicinc.com>
+Date: Tue, 14 Jan 2025 16:55:24 +0800
+Subject: [PATCH v2] drm/msm/dpu: Add writeback support for SM6150
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3] dt-bindings: net: qcom,ethqos: Correct fallback
- compatible for qcom,qcs615-ethqos
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-CC: Vinod Koul <vkoul@kernel.org>, Andrew Lunn <andrew+netdev@lunn.ch>,
-        "David
- S. Miller" <davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>, Jakub
- Kicinski <kuba@kernel.org>,
-        Paolo Abeni <pabeni@redhat.com>, Rob Herring
-	<robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konradybcio@kernel.org>, <netdev@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <20250113-schema_qcs615-v3-1-d5bbf0ee8cb7@quicinc.com>
- <d3i5hmkft77xm5jxcpfapnjmodsbmpyeklvcxtrqfvk2fqnonx@ajoc7pguzr36>
-Content-Language: en-US
-From: Yijie Yang <quic_yijiyang@quicinc.com>
-In-Reply-To: <d3i5hmkft77xm5jxcpfapnjmodsbmpyeklvcxtrqfvk2fqnonx@ajoc7pguzr36>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+Message-ID: <20250114-add-writeback-support-for-sm6150-v2-1-d707b31aad5c@quicinc.com>
+X-B4-Tracking: v=1; b=H4sIAHwmhmcC/42PsW7DMAxEf0XQXBWWUStNp+QDOrVbkYGWaJuIY
+ 6mS7CQI/O+lnaLIWJDLHYh3vJtMGAmTfBM3GXGiRH5gUT4JaTsYWlTkWMuyKKtCF0aBc+ocKWM
+ N9qjSGIKPWTU+qnQyuipUDRtTbfTWILxKxoSIDV3WiK/DXUf8Hjkp3025d078IcUvUjBSfLwvy
+ IXy2VESvMB+3/vzGESAbLv1jH+ioX1gWMjQ+/aRsUQzI/t4XctOes3+f69JKx5XOrNt7EsNuOM
+ Slgb7bP1JHuZ5/gFWNzlDTQEAAA==
+X-Change-ID: 20250106-add-writeback-support-for-sm6150-ba7657196ea8
+To: Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar
+	<quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>
+CC: <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
+        Li Liu
+	<quic_lliu6@quicinc.com>,
+        Xiangxu Yin <quic_xiangxuy@quicinc.com>,
+        "Fange
+ Zhang" <quic_fangez@quicinc.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1736844992; l=2527;
+ i=quic_fangez@quicinc.com; s=20250106; h=from:subject:message-id;
+ bh=u3HNhLt63zkv/PJhmytMgy5VSVAb/fxhCMn0nl5XVBw=;
+ b=tiuj5Og+ps3R2u44Etm7bbG+KmX6ZTgnQlfs5qEnGIzTOz0GeoP1fPwWobERGH0/coOhxkLFw
+ YpgAXAwYfzWA2HWIJMmHU0xFfTvDWHkL1vGRxm7kXpwTMdpeZKhdfxV
+X-Developer-Key: i=quic_fangez@quicinc.com; a=ed25519;
+ pk=eVr/gwhy9iaqhzLeBg7K/L0fI2IbsMNzlJnwKdnGExc=
 X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
+ nalasex01b.na.qualcomm.com (10.47.209.197)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 1Ed3In4mdJ-1VaekFLBzeMp8wg8oDHvr
-X-Proofpoint-ORIG-GUID: 1Ed3In4mdJ-1VaekFLBzeMp8wg8oDHvr
+X-Proofpoint-ORIG-GUID: w3nHKtugrM20uNem8H2Z6JZa2sGwui9i
+X-Proofpoint-GUID: w3nHKtugrM20uNem8H2Z6JZa2sGwui9i
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 phishscore=0
- impostorscore=0 clxscore=1015 mlxscore=0 mlxlogscore=395
- priorityscore=1501 malwarescore=0 spamscore=0 bulkscore=0
- lowpriorityscore=0 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2411120000 definitions=main-2501140071
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 bulkscore=0
+ malwarescore=0 clxscore=1015 mlxscore=0 mlxlogscore=999 adultscore=0
+ lowpriorityscore=0 suspectscore=0 impostorscore=0 spamscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2501140074
 
+On the SM6150 platform there is WB_2 block. Add it to the SM6150 catalog.
 
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Signed-off-by: Fange Zhang <quic_fangez@quicinc.com>
+---
+A followup patch to add writeback configuration for the SM6150 catalog
 
-On 2025-01-14 16:03, Krzysztof Kozlowski wrote:
-> On Mon, Jan 13, 2025 at 05:15:39PM +0800, Yijie Yang wrote:
->> The qcs615-ride utilizes the same EMAC as the qcs404, rather than the
->> sm8150.
->> The current fallback could lead to package loss, and the ethernet on
-> 
-> Packet? Package?
+test passed using kms_writeback
+---
+Changes in v2:
+- Change reg_off from 0x3b8 to 0x2bc for sm6150_mdp [Abhinav]
+- Change bit_off from 24 to 16 for sm6150_mdp [Abninav]
+- Change base from 0x66000 to 0x65000 for sm6150_wb [Abninav]
+- Link to v1: https://lore.kernel.org/r/20250106-add-writeback-support-for-sm6150-v1-1-1d2d69fc4bae@quicinc.com
+---
+ drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_3_sm6150.h | 18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
 
-I made an error in word usage, and I will correct it.
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_3_sm6150.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_3_sm6150.h
+index 621a2140f675fa28b3a7fcd8573e59b306cd6832..ae4cff2201bdc235a93693b3aff9dcc38c3129c0 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_3_sm6150.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_3_sm6150.h
+@@ -27,6 +27,7 @@ static const struct dpu_mdp_cfg sm6150_mdp = {
+ 		[DPU_CLK_CTRL_DMA1] = { .reg_off = 0x2b4, .bit_off = 8 },
+ 		[DPU_CLK_CTRL_DMA2] = { .reg_off = 0x2bc, .bit_off = 8 },
+ 		[DPU_CLK_CTRL_DMA3] = { .reg_off = 0x2c4, .bit_off = 8 },
++		[DPU_CLK_CTRL_WB2] = { .reg_off = 0x2bc, .bit_off = 16 },
+ 	},
+ };
+ 
+@@ -164,6 +165,21 @@ static const struct dpu_pingpong_cfg sm6150_pp[] = {
+ 	},
+ };
+ 
++static const struct dpu_wb_cfg sm6150_wb[] = {
++	{
++		.name = "wb_2", .id = WB_2,
++		.base = 0x65000, .len = 0x2c8,
++		.features = WB_SM8250_MASK,
++		.format_list = wb2_formats_rgb,
++		.num_formats = ARRAY_SIZE(wb2_formats_rgb),
++		.clk_ctrl = DPU_CLK_CTRL_WB2,
++		.xin_id = 6,
++		.vbif_idx = VBIF_RT,
++		.maxlinewidth = 2160,
++		.intr_wb_done = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 4),
++	},
++};
++
+ static const struct dpu_intf_cfg sm6150_intf[] = {
+ 	{
+ 		.name = "intf_0", .id = INTF_0,
+@@ -244,6 +260,8 @@ const struct dpu_mdss_cfg dpu_sm6150_cfg = {
+ 	.dspp = sm6150_dspp,
+ 	.pingpong_count = ARRAY_SIZE(sm6150_pp),
+ 	.pingpong = sm6150_pp,
++	.wb_count = ARRAY_SIZE(sm6150_wb),
++	.wb = sm6150_wb,
+ 	.intf_count = ARRAY_SIZE(sm6150_intf),
+ 	.intf = sm6150_intf,
+ 	.vbif_count = ARRAY_SIZE(sdm845_vbif),
 
-> 
->> qcs615-ride was not utilized by anyone.
-> 
-> I don't get how this part of sentence is connected to previous part. I
-> see the "and" but what do you want to say here? Packages with qcs615
-> board were lost, therefore the ethernet was not used by anyone? Or
-> packets could be lost and this means ethernet cannot be used?
-> 
+---
+base-commit: f0a810be07f92801d5e489941cc0902532eeb656
+change-id: 20250106-add-writeback-support-for-sm6150-ba7657196ea8
 
-The word 'and' represents two independent facts without implying a 
-logical relationship between them. The two facts correspondingly lead to 
-the two conclusions in the next sentence.
-
->> Therefore, it needs to be revised,
->> and there is no need to worry about the ABI impact.
-> 
-> Again, Oxford comma of joining entirely independent claues. Can you
-> filter this via someone / ChatGPT / Google grammar / Outlook grammar?
-
-All the sentences here have been polished by Copilot. I will reorganize 
-them for better understanding.
-
-> 
-> Best regards,
-> Krzysztof
-> 
-> 
-
+Best regards,
 -- 
-Best Regards,
-Yijie
+Fange Zhang <quic_fangez@quicinc.com>
 
 
