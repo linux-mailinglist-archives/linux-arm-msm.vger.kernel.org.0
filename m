@@ -1,106 +1,108 @@
-Return-Path: <linux-arm-msm+bounces-45030-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-45031-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A608BA10E13
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jan 2025 18:45:05 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 5BB89A10E67
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jan 2025 18:55:57 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C4FDA168152
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jan 2025 17:45:03 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7A35516A069
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jan 2025 17:55:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D082B1FA256;
-	Tue, 14 Jan 2025 17:44:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6B4BF1FBC93;
+	Tue, 14 Jan 2025 17:55:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KQHiRpI2"
+	dkim=pass (2048-bit key) header.d=acm.org header.i=@acm.org header.b="ro0Em/7m"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from 008.lax.mailroute.net (008.lax.mailroute.net [199.89.1.11])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2BA21FA15B;
-	Tue, 14 Jan 2025 17:44:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B23DF1EE7AC;
+	Tue, 14 Jan 2025 17:55:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=199.89.1.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736876694; cv=none; b=m34orrJA8O7Kui4PhkeERxtOt7MO/Lm6450a6WVYWITaFvK1YYZiNVwkwDUnJ6h2uiRaslOxd1pE8WnlI8EfuvDoQwsg0K5zpbGtYpUFnNWhmtDghLtatXJM2OroBGM+7vy/tqd9F+0D989faGXD7euWQXG9rlVxSp6Ca9bK5HE=
+	t=1736877337; cv=none; b=bZXcxPZ5+zeL7naEl2eA/tku8P3hFogQfiVFPmdZFDyBgy36T3VT23X77XqGfLMAtIWxLXB9tfEXYtdAcahY36xnkGItx62FvfP/nHqufPO1M4YUH5FZdyvmZCxFKBXxxcKsJAZGeOd16Czq5cIxa448V7yAi5hDl+rwh6uwTQY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736876694; c=relaxed/simple;
-	bh=OTCnha/a9rNAsnNEvgldUgUR0XgD0TIbmvA4K9sREXQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=m6NQUY2x3gLNudzgDYraYHu0eN1jS5bv5J4SE+U9yc7yV1spgIMUyhaTGNwI3X78XI1wC+Pys+8laKWA3yfelIQgnXQJrDsaziV3zqY+kcmyosq0uhbqrZnVMeG1mvn8IWCzeupJxiSTVRo5uOszpKLRdf20hZ60WoYcW8JGSf0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KQHiRpI2; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0305AC4CEE3;
-	Tue, 14 Jan 2025 17:44:52 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1736876693;
-	bh=OTCnha/a9rNAsnNEvgldUgUR0XgD0TIbmvA4K9sREXQ=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=KQHiRpI2VMOvMYrTphKAsz9y+tHcOAa7ekE9WWHV/+BTPk0hdiYHq7QBbLNlSwjgM
-	 GOmd+HDSXuKd+HBiRWczdMRKVaZ4qCKUJ/+JAOF2gPokZa32QIGqsHaJ4oA6r2V0ha
-	 hnWnR5CeThS1B5tit+ww9w9sf+Z2/HXY5TteAZsp9B8mCEhCBgLGd6snopFpyIUYuv
-	 HHxGTfQGjGKkuCzwxhPLXSFobR1cbALtGBZhBZ1zIvpTf6okjWws+LTwFj0FWLx7aV
-	 +QW91xEgFkKIcmsvJrPOXmmJmtpQ8r0pWB4pdx+tS36XzV3wiz7VVxffzy+eRmuh6v
-	 RDOtN9kmL/zdg==
-Date: Tue, 14 Jan 2025 11:44:52 -0600
-From: Rob Herring <robh@kernel.org>
-To: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, Felipe Balbi <balbi@kernel.org>,
-	Wesley Cheng <quic_wcheng@quicinc.com>,
-	Saravana Kannan <saravanak@google.com>,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-	Philipp Zabel <p.zabel@pengutronix.de>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>, Frank Li <Frank.li@nxp.com>,
-	linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3 00/12] usb: dwc3: qcom: Flatten dwc3 structure
-Message-ID: <20250114174452.GB1414434-robh@kernel.org>
-References: <20250113-dwc3-refactor-v3-0-d1722075df7b@oss.qualcomm.com>
+	s=arc-20240116; t=1736877337; c=relaxed/simple;
+	bh=OHmL6w79Y9VGVpAbxGEP9bE0AQIQfKl+7BgRzpI7zGU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=EVNro2im/DA1V6AzA5KrlQpV8vn/M4pTDRHrqyG0O97aJhxuu3JngsbNJQazFi3fGlqXgq7qMXtsFc8q0hpsPpNGiJDEKDUhpvueml78HiA2hDCPilrG+R6b0uHYad149y6hlCO4z7WZGJoKwdOfd/Wv0oUqnSpiZ16radjiqdE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=acm.org; spf=pass smtp.mailfrom=acm.org; dkim=pass (2048-bit key) header.d=acm.org header.i=@acm.org header.b=ro0Em/7m; arc=none smtp.client-ip=199.89.1.11
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=acm.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=acm.org
+Received: from localhost (localhost [127.0.0.1])
+	by 008.lax.mailroute.net (Postfix) with ESMTP id 4YXcH472G0z6CmQyd;
+	Tue, 14 Jan 2025 17:55:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=acm.org; h=
+	content-transfer-encoding:content-type:content-type:in-reply-to
+	:from:from:content-language:references:subject:subject
+	:user-agent:mime-version:date:date:message-id:received:received;
+	 s=mr01; t=1736877321; x=1739469322; bh=rx+xxhgfz6Qv2U93Mr0uyJHH
+	3Uz3OWpv7e13MnI9pr4=; b=ro0Em/7mo2qYSG+4wF8NaY7HMuHC5oECKV3t+la6
+	KyggnwIpZUwBvFMlG1aBzhAHriMjCEYTdU8Sq0c9Td6MXxFqvZFuuB1TjiFVibKF
+	Fu1xR8VK3avTZwS4Gxjt8skCD4CXyIlP8N2VSke98A6EMwChSlg+drCp47iTXAC6
+	eZvCXQm+3ArjlzGzyA7LN5R5rQNL48EjR2Bzlq4VRz16S3Ret+SS9sZA1bWJa/BZ
+	AQUb0q6hzLUOZUQMcqeVLWthLQ6ejbEGmhGb5dnGGUPOJ/mU228+s0lik61FMSep
+	pZCHy6AFKDR6VgD6wd5+Is0RP8nqs49Q+D8+U5Jm3NTiJw==
+X-Virus-Scanned: by MailRoute
+Received: from 008.lax.mailroute.net ([127.0.0.1])
+ by localhost (008.lax [127.0.0.1]) (mroute_mailscanner, port 10029) with LMTP
+ id BUc2kVQEpj2k; Tue, 14 Jan 2025 17:55:21 +0000 (UTC)
+Received: from [100.66.154.22] (unknown [104.135.204.82])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: bvanassche@acm.org)
+	by 008.lax.mailroute.net (Postfix) with ESMTPSA id 4YXcGt0mRjz6CmQyb;
+	Tue, 14 Jan 2025 17:55:17 +0000 (UTC)
+Message-ID: <58f1b701-68da-49c0-b2b1-e079bad4cd08@acm.org>
+Date: Tue, 14 Jan 2025 09:55:16 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250113-dwc3-refactor-v3-0-d1722075df7b@oss.qualcomm.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] scsi: ufs: fix use-after free in init error and remove
+ paths
+To: =?UTF-8?Q?Andr=C3=A9_Draszik?= <andre.draszik@linaro.org>,
+ Alim Akhtar <alim.akhtar@samsung.com>, Avri Altman <avri.altman@wdc.com>,
+ "James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>,
+ "Martin K. Petersen" <martin.petersen@oracle.com>,
+ Peter Griffin <peter.griffin@linaro.org>,
+ Krzysztof Kozlowski <krzk@kernel.org>,
+ Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+ Eric Biggers <ebiggers@kernel.org>
+Cc: Tudor Ambarus <tudor.ambarus@linaro.org>,
+ Will McVicker <willmcvicker@google.com>, kernel-team@android.com,
+ linux-scsi@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-samsung-soc@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+ linux-arm-msm@vger.kernel.org, stable@vger.kernel.org
+References: <20250114-ufshcd-fix-v2-1-2dc627590a4a@linaro.org>
+Content-Language: en-US
+From: Bart Van Assche <bvanassche@acm.org>
+In-Reply-To: <20250114-ufshcd-fix-v2-1-2dc627590a4a@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, Jan 13, 2025 at 09:11:33PM -0800, Bjorn Andersson wrote:
-> The USB IP-block found in most Qualcomm platforms is modelled in the
-> Linux kernel as 3 different independent device drivers, but as shown by
-> the already existing layering violations in the Qualcomm glue driver
-> they can not be operated independently.
-> 
-> With the current implementation, the glue driver registers the core and
-> has no way to know when this is done. As a result, e.g. the suspend
-> callbacks needs to guard against NULL pointer dereferences when trying
-> to peek into the struct dwc3 found in the drvdata of the child.
-> 
-> Missing from the upstream Qualcomm USB support is proper handling of
-> role switching, in which the glue needs to be notified upon DRD mode
-> changes. Several attempts has been made through the years to register
-> callbacks etc, but they always fall short when it comes to handling of
-> the core's probe deferral on resources etc.
-> 
-> Furhtermore, the DeviceTree binding is a direct representation of the
-> Linux driver model, and doesn't necessarily describe "the USB IP-block".
-> 
-> This series therefor attempts to flatten the driver split, and operate
-> the glue and core out of the same platform_device instance. And in order
-> to do this, the DeviceTree representation of the IP block is flattened.
-> 
-> To avoid littering the dwc3-qcom driver with the migration code - which
-> we should be able to drop again in a LTS or two - this is now placed in
-> drivers/of/overlays.
-> 
-> A patch to convert a single platform - sc8280xp - is included in the
-> series. The broader conversion will be submitted in a follow up series.
+On 1/14/25 8:16 AM, Andr=C3=A9 Draszik wrote:
+> +/**
+> + * ufshcd_scsi_host_put_callback - deallocate underlying Scsi_Host and
+> + *				   thereby the Host Bus Adapter (HBA)
+> + * @host: pointer to SCSI host
+> + */
+> +static void ufshcd_scsi_host_put_callback(void *host)
+> +{
+> +	scsi_host_put(host);
+> +}
 
-Is it not possible to use the same overlays also fixup the .dts files at 
-build time?
+Please rename ufshcd_scsi_host_put_callback() such that the function=20
+name makes clear when this function is called instead of what the=20
+function does.
 
-Rob
+Thanks,
+
+Bart.
 
