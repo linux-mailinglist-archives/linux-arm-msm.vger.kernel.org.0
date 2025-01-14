@@ -1,245 +1,149 @@
-Return-Path: <linux-arm-msm+bounces-45027-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-45028-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 381BEA10CCA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jan 2025 17:55:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id F1B42A10DEE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jan 2025 18:37:07 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 48F48188AAFE
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jan 2025 16:55:50 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0DC621885D15
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jan 2025 17:37:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DC1EC1C2324;
-	Tue, 14 Jan 2025 16:54:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AA24D1F8EFB;
+	Tue, 14 Jan 2025 17:37:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="hfme9WqA"
+	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="WU9QW6xK"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
+Received: from mail-pl1-f180.google.com (mail-pl1-f180.google.com [209.85.214.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C090B1D5154
-	for <linux-arm-msm@vger.kernel.org>; Tue, 14 Jan 2025 16:54:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F0D71CAA7C
+	for <linux-arm-msm@vger.kernel.org>; Tue, 14 Jan 2025 17:37:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736873683; cv=none; b=F/pwbHfFpETEeQ/Utv2bpzDybs6P/h2zYTi6puQzNECZyC/FwZ4Hx0uNynfPW5/RgGmeRv2yWoBGSJqq8WWf8nTLjIRzk3ZAhCT1unUeG9JpXvQOB4FvZDQ9hQheCC4m3IycK9HZhZyv7aKVexAP1ZgN/TwGv66GCVqVWMHn21E=
+	t=1736876223; cv=none; b=srxyxev72EENuFPsAK560XvY7msufTJ7yUfePzD+8FI95lG/rhNOCFH/9OsRuty1MJlwi6+Q593hwmlFlSmCzyb5a0yN9nARCLtsOmK4ZwUuqcCLKHwKldS3z0ki3o7d5KsWFJH6JudSP/Lk7hrz0UaAgZtsUGb9CLOFyZrVIt0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736873683; c=relaxed/simple;
-	bh=80y0ZD2DqPk4N5CYZbDl0WM8yXhgHTstPGSnJZeMvKg=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=bdN+wL/qNjuxzGt/N1zG9K16yw7TeqXTFrMm62l05bU0rnDfcAmHQSRkhUHbuzOqV54lJkm/z3/WQLIBU/K9BTnsJnTYOuSOOv2x3/ACOQ8dMU3pRw63T3/bGWpp3/SyCcBkOYhIHDBcvGwl1zDMQBlc0i8mmflPCUwu6VJW82k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=hfme9WqA; arc=none smtp.client-ip=209.85.128.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-4363dc916ceso41444135e9.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Jan 2025 08:54:41 -0800 (PST)
+	s=arc-20240116; t=1736876223; c=relaxed/simple;
+	bh=HOGM+1VPtJmo9bMIxYQO0YkNCY77g9qlc0Z0fhwZYnc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=VXZlfDfyKiTBRZwckPLlczr4BdpdxZxJm7LaG+7FdsPzh3BeLt4SevXDc1zkP2A5s6f+QvXEYQe9OC1cjxqBbdOsMAyZXLBdYtKnbChf87AuRXqRaYv9erTOq9aWtSvCaq+n54T+pQmXAUxNlVU4WfaE3k3qg8q4pfrqSsLGIio=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=WU9QW6xK; arc=none smtp.client-ip=209.85.214.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=broadcom.com
+Received: by mail-pl1-f180.google.com with SMTP id d9443c01a7336-216395e151bso159795ad.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Jan 2025 09:37:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1736873680; x=1737478480; darn=vger.kernel.org;
-        h=mime-version:user-agent:content-transfer-encoding:references
-         :in-reply-to:date:cc:to:from:subject:message-id:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=80y0ZD2DqPk4N5CYZbDl0WM8yXhgHTstPGSnJZeMvKg=;
-        b=hfme9WqAO8VJ5hRd4rK1v4Aj6gHFzI2PZ7ne+cUFYpMIMwORpszE1c5jdS3IDRfNWS
-         zpx943xdddO35083qM0WkmKC/68BsduiJNkj2ROP3m1RbFCBH/ek/DzCNbAV0E2rurFx
-         /yvBi8Jh3QUiLeyeZFcvMOowxrLDEMvUR8ofjYBVPzqRr9rX1BgNlPQJMQhy87WdNEMu
-         5Juh4x4szDS9dEzifvnDsgh2Nl7/lV41YArgymQmzwQv2ETBoT75zicIQk7FKEWNLq2g
-         0fYgxqE74aQzbWq/PzDO0hvdBUjfNhq42h/A43NX5Px3SjkvIcf/Kh5NOxRv0lqU9s6L
-         El6g==
+        d=broadcom.com; s=google; t=1736876221; x=1737481021; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:to:subject:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=7rcl1SX/OvDfBPdSZc3LYo5TUWBN/Uceh2ueRnzxWfk=;
+        b=WU9QW6xKJ+N60QGhgNCths1sX/ARscFya9eJPOPFQI9EzfqejrjcYRNJcrzqXF1JNP
+         Ps4pvjIEsNm6m9MC1ub4aTWCI9WNhUu8pSBKszHgfAdoWSidm8jEsjL0U787Wv8z8QB/
+         JcTNIQev3EWUsG8gFSqC3Uz1WYqbuQDqSYl+U=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736873680; x=1737478480;
-        h=mime-version:user-agent:content-transfer-encoding:references
-         :in-reply-to:date:cc:to:from:subject:message-id:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=80y0ZD2DqPk4N5CYZbDl0WM8yXhgHTstPGSnJZeMvKg=;
-        b=KZajWMIiiDfWJZ0RzgEoNYDMDD4F70b33vlNv+oQAr40IgxYbivlD2vLaGi3w1y4Vr
-         jJF1KttJV0dylMFqV5pJWqev657aK/XqXYwwlVUadgBxhyZkLTc4w1deec/pckjM/3ZG
-         FR0J1HMKv1R/B5DfWqPelm+d965uOLlcvDKJwnqsmWRk8NteyMHV3joVj9rOrq++t/Mv
-         AkhTnOY5TibPx1p5vAG+4UcpDpArHT8pFypjBJEZ2ebjObVsZaXPnQq0SQGxkD4ct2pQ
-         Wv7EXHg/BKXVmu9rEgPVNo7VTTQJnj65DNKW2UtCMlGg3FwXUM5VfIYs0MNO9RrskkTt
-         iP+w==
-X-Forwarded-Encrypted: i=1; AJvYcCX+J76/Hza3RI81hUuSbN+tG1QMqacjlFf1WTWjk9LX54ifZCNVTAumJHtsI+qH5m1YxQbn5Xrwawux8e2v@vger.kernel.org
-X-Gm-Message-State: AOJu0YwfZtGhrY2ZyoJvLmZF4FRjI/eoM/2PzQPKKtB9M01U/Zk8XBrN
-	ihX9SKQujwlV5UWSDWi0HsaqRicGGDZ+dJXzJ1Ml40C7vkrdY3AqaFcEZzwK06k=
-X-Gm-Gg: ASbGncv91+mq0Deal33DpKK03nlZ9taTsEIbcaznErYsBUlPQFZe/jkLodj+u2c0NoG
-	gqjIvgIOJ4/NIAkXRURgBfSi7VV7Plho6k5oZbeojaAHj7aW5JJklm6BOaZwVBrxBHSDFuLxVo5
-	BIEIQ0RtU2oBq8von6P82kLZiwsjbIsC0qvWc3bOR53l+bsNlb7YDVsng/zqvpiqe0o+AhZ2CLx
-	OOjSAU8h1k0S5MwjGpMdpvY4mIx6YY19RGul9xz8UGmvBoPdy4loFn7Mu2ts3QVzQs=
-X-Google-Smtp-Source: AGHT+IFiSz9B8Y/tFYQ0oTGPiQrOjEXpcMKzTOAox1qutsuyH4237qdiFg4uxD6I3EHJ58Yi2W/NwQ==
-X-Received: by 2002:a05:600c:3d0c:b0:434:9e17:190c with SMTP id 5b1f17b1804b1-436e9c9c052mr164758145e9.0.1736873680089;
-        Tue, 14 Jan 2025 08:54:40 -0800 (PST)
-Received: from [192.168.243.26] ([80.233.75.14])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-436e2dc0bb7sm213674845e9.16.2025.01.14.08.54.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 14 Jan 2025 08:54:39 -0800 (PST)
-Message-ID: <98bc4711aaf8d35f36435da8901e2805d3984db1.camel@linaro.org>
-Subject: Re: [PATCH v2] scsi: ufs: fix use-after free in init error and
- remove paths
-From: =?ISO-8859-1?Q?Andr=E9?= Draszik <andre.draszik@linaro.org>
-To: Alim Akhtar <alim.akhtar@samsung.com>, Avri Altman
- <avri.altman@wdc.com>,  Bart Van Assche <bvanassche@acm.org>, "James E.J.
- Bottomley" <James.Bottomley@HansenPartnership.com>, "Martin K. Petersen"
- <martin.petersen@oracle.com>, Peter Griffin <peter.griffin@linaro.org>,
- Krzysztof Kozlowski <krzk@kernel.org>, Manivannan Sadhasivam
- <manivannan.sadhasivam@linaro.org>,  Eric Biggers <ebiggers@kernel.org>
-Cc: Tudor Ambarus <tudor.ambarus@linaro.org>, Will McVicker
- <willmcvicker@google.com>, kernel-team@android.com,
- linux-scsi@vger.kernel.org,  linux-kernel@vger.kernel.org,
- linux-samsung-soc@vger.kernel.org,  linux-arm-kernel@lists.infradead.org,
- linux-arm-msm@vger.kernel.org,  stable@vger.kernel.org
-Date: Tue, 14 Jan 2025 16:54:37 +0000
-In-Reply-To: <20250114-ufshcd-fix-v2-1-2dc627590a4a@linaro.org>
-References: <20250114-ufshcd-fix-v2-1-2dc627590a4a@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.52.1-4 
+        d=1e100.net; s=20230601; t=1736876221; x=1737481021;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:to:subject:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=7rcl1SX/OvDfBPdSZc3LYo5TUWBN/Uceh2ueRnzxWfk=;
+        b=Mx2anhA9y5NtEVa2Mh7NPuUdSKzg6csh1mx1uz+u5tFrcCBaSggvUhfNGN9jCGWlsx
+         6t61T4vL8s1nK5oNc6NEnQXKcuVaK/qxBV5nQgrFDuTqZY7s4x5s3N3ow3ZLUFtwFD92
+         C1dVPpS5Hg0kSXli0EDzvJQbI1w7m5u0HJ5HjhFK9lgapD0FVsSTZvJZLJVPEmaJ14df
+         rBRAqN49RbxH8MWjc7QHBsddpihBETNHF5Dg6sAuCpMCk5tG96+4fK5aO070/DXy0hvr
+         /n+j6ctB9NqkdtiL7q3E/w9DCFbpPM+UdKDMvA8a5Gnt1cpDr82S8UweRBoC9e3gh5Xh
+         1rlg==
+X-Forwarded-Encrypted: i=1; AJvYcCUEFzmW6wAwyLw64Kdl5RyCRYYKB4HslwlFUlNFT1kwjbTNO1Ih3+0HpcHYQqfhkTVxmUYGyvs/1rUlM60r@vger.kernel.org
+X-Gm-Message-State: AOJu0Yzd6tuwO5d7cXc7zjtafYyyMBjw88KlwkUwnAcgmdHI1XxiywD7
+	0DA2Vez/Im+9Mo1qwyCEal41QX+hlaKAUDU/D6fVaU2rmdDYRfUL/fumUsKNM0V+Bw8MVZ51SA8
+	=
+X-Gm-Gg: ASbGncvDY+jPEf9iX1iuoVHT4jRl1z0c4jRG4U2AL4T/wW6Vqk93RjzTOI7ayxeQ32l
+	a+o3uEhoE9+Dh5BppgjZh7JOkv/q8a/JfINjIOURM7zotZWtdTcEyc3TzvZ3eNpb3HXRlkx6eQG
+	f0HHc31ZcdnQ41JWOyQQ/7nAiY7I4vK0LBZvi46xby7VmcGOuYsAcYFzfAPXRXHMZ5+CPYZi7iI
+	5Bx5HOG81c22wUMvkTAjAMjp+xhmDehY3yXCDEKoeZERV7X2MB5NcyhxX03Ns234i6Cu79TknJf
+	3OJXHUFHuAYwTrQgm9Fm
+X-Google-Smtp-Source: AGHT+IEFzv5G0xmABBL+XZICiZP0VhjMpDV3vlDzoecWcnfA7PB2ZBZcrMRU1kwwvn6finYRTqr0/A==
+X-Received: by 2002:a17:902:ecc3:b0:216:14fb:d277 with SMTP id d9443c01a7336-21a8d6c7ab4mr318410025ad.22.1736876221535;
+        Tue, 14 Jan 2025 09:37:01 -0800 (PST)
+Received: from [10.67.48.245] ([192.19.223.252])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-21a9f10ddeasm70270415ad.48.2025.01.14.09.36.59
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 14 Jan 2025 09:37:00 -0800 (PST)
+Message-ID: <96dba1fb-53f3-40fb-8e20-887cd089961c@broadcom.com>
+Date: Tue, 14 Jan 2025 09:36:59 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] clk: Use str_enable_disable-like helpers
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+ Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
+ <sboyd@kernel.org>, Ray Jui <rjui@broadcom.com>,
+ Scott Branden <sbranden@broadcom.com>,
+ Broadcom internal kernel review list
+ <bcm-kernel-feedback-list@broadcom.com>,
+ Linus Walleij <linus.walleij@linaro.org>,
+ Bjorn Andersson <andersson@kernel.org>, linux-clk@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+ linux-arm-msm@vger.kernel.org
+References: <20250114105618.273302-1-krzysztof.kozlowski@linaro.org>
+Content-Language: en-US
+From: Florian Fainelli <florian.fainelli@broadcom.com>
+Autocrypt: addr=florian.fainelli@broadcom.com; keydata=
+ xsBNBFPAG8ABCAC3EO02urEwipgbUNJ1r6oI2Vr/+uE389lSEShN2PmL3MVnzhViSAtrYxeT
+ M0Txqn1tOWoIc4QUl6Ggqf5KP6FoRkCrgMMTnUAINsINYXK+3OLe7HjP10h2jDRX4Ajs4Ghs
+ JrZOBru6rH0YrgAhr6O5gG7NE1jhly+EsOa2MpwOiXO4DE/YKZGuVe6Bh87WqmILs9KvnNrQ
+ PcycQnYKTVpqE95d4M824M5cuRB6D1GrYovCsjA9uxo22kPdOoQRAu5gBBn3AdtALFyQj9DQ
+ KQuc39/i/Kt6XLZ/RsBc6qLs+p+JnEuPJngTSfWvzGjpx0nkwCMi4yBb+xk7Hki4kEslABEB
+ AAHNMEZsb3JpYW4gRmFpbmVsbGkgPGZsb3JpYW4uZmFpbmVsbGlAYnJvYWRjb20uY29tPsLB
+ IQQQAQgAywUCZWl41AUJI+Jo+hcKAAG/SMv+fS3xUQWa0NryPuoRGjsA3SAUAAAAAAAWAAFr
+ ZXktdXNhZ2UtbWFza0BwZ3AuY29tjDAUgAAAAAAgAAdwcmVmZXJyZWQtZW1haWwtZW5jb2Rp
+ bmdAcGdwLmNvbXBncG1pbWUICwkIBwMCAQoFF4AAAAAZGGxkYXA6Ly9rZXlzLmJyb2FkY29t
+ Lm5ldAUbAwAAAAMWAgEFHgEAAAAEFQgJChYhBNXZKpfnkVze1+R8aIExtcQpvGagAAoJEIEx
+ tcQpvGagWPEH/2l0DNr9QkTwJUxOoP9wgHfmVhqc0ZlDsBFv91I3BbhGKI5UATbipKNqG13Z
+ TsBrJHcrnCqnTRS+8n9/myOF0ng2A4YT0EJnayzHugXm+hrkO5O9UEPJ8a+0553VqyoFhHqA
+ zjxj8fUu1px5cbb4R9G4UAySqyeLLeqnYLCKb4+GklGSBGsLMYvLmIDNYlkhMdnnzsSUAS61
+ WJYW6jjnzMwuKJ0ZHv7xZvSHyhIsFRiYiEs44kiYjbUUMcXor/uLEuTIazGrE3MahuGdjpT2
+ IOjoMiTsbMc0yfhHp6G/2E769oDXMVxCCbMVpA+LUtVIQEA+8Zr6mX0Yk4nDS7OiBlvOwE0E
+ U8AbwQEIAKxr71oqe+0+MYCc7WafWEcpQHFUwvYLcdBoOnmJPxDwDRpvU5LhqSPvk/yJdh9k
+ 4xUDQu3rm1qIW2I9Puk5n/Jz/lZsqGw8T13DKyu8eMcvaA/irm9lX9El27DPHy/0qsxmxVmU
+ pu9y9S+BmaMb2CM9IuyxMWEl9ruWFS2jAWh/R8CrdnL6+zLk60R7XGzmSJqF09vYNlJ6Bdbs
+ MWDXkYWWP5Ub1ZJGNJQ4qT7g8IN0qXxzLQsmz6tbgLMEHYBGx80bBF8AkdThd6SLhreCN7Uh
+ IR/5NXGqotAZao2xlDpJLuOMQtoH9WVNuuxQQZHVd8if+yp6yRJ5DAmIUt5CCPcAEQEAAcLB
+ gQQYAQIBKwUCU8AbwgUbDAAAAMBdIAQZAQgABgUCU8AbwQAKCRCTYAaomC8PVQ0VCACWk3n+
+ obFABEp5Rg6Qvspi9kWXcwCcfZV41OIYWhXMoc57ssjCand5noZi8bKg0bxw4qsg+9cNgZ3P
+ N/DFWcNKcAT3Z2/4fTnJqdJS//YcEhlr8uGs+ZWFcqAPbteFCM4dGDRruo69IrHfyyQGx16s
+ CcFlrN8vD066RKevFepb/ml7eYEdN5SRALyEdQMKeCSf3mectdoECEqdF/MWpfWIYQ1hEfdm
+ C2Kztm+h3Nkt9ZQLqc3wsPJZmbD9T0c9Rphfypgw/SfTf2/CHoYVkKqwUIzI59itl5Lze+R5
+ wDByhWHx2Ud2R7SudmT9XK1e0x7W7a5z11Q6vrzuED5nQvkhAAoJEIExtcQpvGagugcIAJd5
+ EYe6KM6Y6RvI6TvHp+QgbU5dxvjqSiSvam0Ms3QrLidCtantcGT2Wz/2PlbZqkoJxMQc40rb
+ fXa4xQSvJYj0GWpadrDJUvUu3LEsunDCxdWrmbmwGRKqZraV2oG7YEddmDqOe0Xm/NxeSobc
+ MIlnaE6V0U8f5zNHB7Y46yJjjYT/Ds1TJo3pvwevDWPvv6rdBeV07D9s43frUS6xYd1uFxHC
+ 7dZYWJjZmyUf5evr1W1gCgwLXG0PEi9n3qmz1lelQ8lSocmvxBKtMbX/OKhAfuP/iIwnTsww
+ 95A2SaPiQZA51NywV8OFgsN0ITl2PlZ4Tp9hHERDe6nQCsNI/Us=
+In-Reply-To: <20250114105618.273302-1-krzysztof.kozlowski@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Tue, 2025-01-14 at 16:16 +0000, Andr=C3=A9 Draszik wrote:
-> devm_blk_crypto_profile_init() registers a cleanup handler to run when
-> the associated (platform-) device is being released. For UFS, the
-> crypto private data and pointers are stored as part of the ufs_hba's
-> data structure 'struct ufs_hba::crypto_profile'. This structure is
-> allocated as part of the underlying ufshd allocation.
->=20
-> During driver release or during error handling in ufshcd_pltfrm_init(),
-> this structure is released as part of ufshcd_dealloc_host() before the
-> (platform-) device associated with the crypto call above is released.
-> Once this device is released, the crypto cleanup code will run, using
-> the just-released 'struct ufs_hba::crypto_profile'. This causes a
-> use-after-free situation:
->=20
-> =C2=A0=C2=A0=C2=A0 exynos-ufshc 14700000.ufs: ufshcd_pltfrm_init() failed=
- -11
-> =C2=A0=C2=A0=C2=A0 exynos-ufshc 14700000.ufs: probe with driver exynos-uf=
-shc failed with error -11
-> =C2=A0=C2=A0=C2=A0 Unable to handle kernel paging request at virtual addr=
-ess 01adafad6dadad88
-> =C2=A0=C2=A0=C2=A0 Mem abort info:
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 ESR =3D 0x0000000096000004
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 EC =3D 0x25: DABT (current EL), IL =3D 32 =
-bits
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 SET =3D 0, FnV =3D 0
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 EA =3D 0, S1PTW =3D 0
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 FSC =3D 0x04: level 0 translation fault
-> =C2=A0=C2=A0=C2=A0 Data abort info:
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 ISV =3D 0, ISS =3D 0x00000004, ISS2 =3D 0x=
-00000000
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 CM =3D 0, WnR =3D 0, TnD =3D 0, TagAccess =
-=3D 0
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 GCS =3D 0, Overlay =3D 0, DirtyBit =3D 0, =
-Xs =3D 0
-> =C2=A0=C2=A0=C2=A0 [01adafad6dadad88] address between user and kernel add=
-ress ranges
-> =C2=A0=C2=A0=C2=A0 Internal error: Oops: 0000000096000004 [#1] PREEMPT SM=
-P
-> =C2=A0=C2=A0=C2=A0 Modules linked in:
-> =C2=A0=C2=A0=C2=A0 CPU: 0 UID: 0 PID: 1 Comm: swapper/0 Tainted: G=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 W=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0 6.13.0-rc5-next-20250106+ #70
-> =C2=A0=C2=A0=C2=A0 Tainted: [W]=3DWARN
-> =C2=A0=C2=A0=C2=A0 Hardware name: Oriole (DT)
-> =C2=A0=C2=A0=C2=A0 pstate: 20400005 (nzCv daif +PAN -UAO -TCO -DIT -SSBS =
-BTYPE=3D--)
-> =C2=A0=C2=A0=C2=A0 pc : kfree+0x60/0x2d8
-> =C2=A0=C2=A0=C2=A0 lr : kvfree+0x44/0x60
-> =C2=A0=C2=A0=C2=A0 sp : ffff80008009ba80
-> =C2=A0=C2=A0=C2=A0 x29: ffff80008009ba90 x28: 0000000000000000 x27: ffffb=
-cc6591e0130
-> =C2=A0=C2=A0=C2=A0 x26: ffffbcc659309960 x25: ffffbcc658f89c50 x24: ffffb=
-cc659539d80
-> =C2=A0=C2=A0=C2=A0 x23: ffff22e000940040 x22: ffff22e001539010 x21: ffffb=
-cc65714b22c
-> =C2=A0=C2=A0=C2=A0 x20: 6b6b6b6b6b6b6b6b x19: 01adafad6dadad80 x18: 00000=
-00000000000
-> =C2=A0=C2=A0=C2=A0 x17: ffffbcc6579fbac8 x16: ffffbcc657a04300 x15: ffffb=
-cc657a027f4
-> =C2=A0=C2=A0=C2=A0 x14: ffffbcc656f969cc x13: ffffbcc6579fdc80 x12: ffffb=
-cc6579fb194
-> =C2=A0=C2=A0=C2=A0 x11: ffffbcc6579fbc34 x10: 0000000000000000 x9 : ffffb=
-cc65714b22c
-> =C2=A0=C2=A0=C2=A0 x8 : ffff80008009b880 x7 : 0000000000000000 x6 : ffff8=
-0008009b940
-> =C2=A0=C2=A0=C2=A0 x5 : ffff80008009b8c0 x4 : ffff22e000940518 x3 : ffff2=
-2e006f54f40
-> =C2=A0=C2=A0=C2=A0 x2 : ffffbcc657a02268 x1 : ffff80007fffffff x0 : ffffc=
-1ffc0000000
-> =C2=A0=C2=A0=C2=A0 Call trace:
-> =C2=A0=C2=A0=C2=A0=C2=A0 kfree+0x60/0x2d8 (P)
-> =C2=A0=C2=A0=C2=A0=C2=A0 kvfree+0x44/0x60
-> =C2=A0=C2=A0=C2=A0=C2=A0 blk_crypto_profile_destroy_callback+0x28/0x70
-> =C2=A0=C2=A0=C2=A0=C2=A0 devm_action_release+0x1c/0x30
-> =C2=A0=C2=A0=C2=A0=C2=A0 release_nodes+0x6c/0x108
-> =C2=A0=C2=A0=C2=A0=C2=A0 devres_release_all+0x98/0x100
-> =C2=A0=C2=A0=C2=A0=C2=A0 device_unbind_cleanup+0x20/0x70
-> =C2=A0=C2=A0=C2=A0=C2=A0 really_probe+0x218/0x2d0
->=20
-> In other words, the initialisation code flow is:
->=20
-> =C2=A0 platform-device probe
-> =C2=A0=C2=A0=C2=A0 ufshcd_pltfrm_init()
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 ufshcd_alloc_host()
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 scsi_host_alloc()
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 allocation of stru=
-ct ufs_hba
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 creation of scsi-h=
-ost devices
-> =C2=A0=C2=A0=C2=A0 devm_blk_crypto_profile_init()
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 devm registration of cleanup handler using=
- platform-device
->=20
-> and during error handling of ufshcd_pltfrm_init() or during driver
-> removal:
->=20
-> =C2=A0 ufshcd_dealloc_host()
-> =C2=A0=C2=A0=C2=A0 scsi_host_put()
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 put_device(scsi-host)
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 release of struct ufs_hba
-> =C2=A0 put_device(platform-device)
-> =C2=A0=C2=A0=C2=A0 crypto cleanup handler
->=20
-> To fix this use-after free, change ufshcd_alloc_host() to register a
-> devres action to automatically cleanup the underlying SCSI device on
-> ufshcd destruction, without requiring explicit calls to
-> ufshcd_dealloc_host(). This way:
->=20
-> =C2=A0=C2=A0=C2=A0 * the crypto profile and all other ufs_hba-owned resou=
-rces are
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 destroyed before SCSI (as they've been reg=
-istered after)
-> =C2=A0=C2=A0=C2=A0 * a memleak is plugged in tc-dwc-g210-pci.c as a side-=
-effect
-> =C2=A0=C2=A0=C2=A0 * EXPORT_SYMBOL_GPL(ufshcd_dealloc_host) can be remove=
-d fully as
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 it's not needed anymore
-> =C2=A0=C2=A0=C2=A0 * no future drivers using ufshcd_alloc_host() could ev=
-er forget
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 adding the cleanup
->=20
-> Fixes: cb77cb5abe1f ("blk-crypto: rename blk_keyslot_manager to blk_crypt=
-o_profile")
-> Fixes: d76d9d7d1009 ("scsi: ufs: use devm_blk_ksm_init()")
-> Cc: stable@vger.kernel.org
-> Signed-off-by: Andr=C3=A9 Draszik <andre.draszik@linaro.org>
-> ---
-> Changes in v2:
-> - completely new approach using devres action for Scsi_host cleanup, to
-> =C2=A0 ensure ordering
+On 1/14/25 02:56, Krzysztof Kozlowski wrote:
+> Replace ternary (condition ? "enable" : "disable") syntax with helpers
+> from string_choices.h because:
+> 1. Simple function call with one argument is easier to read.  Ternary
+>     operator has three arguments and with wrapping might lead to quite
+>     long code.
+> 2. Is slightly shorter thus also easier to read.
+> 3. It brings uniformity in the text - same string.
+> 4. Allows deduping by the linker, which results in a smaller binary
+>     file.
+> 
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-As mentioned, I am not sure if this approach has wider implications
-(in particular if there is any underlying assumption or requirement
-for the Scsi_host device to clean up before the ufshcd device).
-
-Simple testing using a few iteration of manual module bind/unbind
-worked, as did the error handling / cleanup during init. But I'm
-not sure if that is sufficient testing for the changed release
-ordering.
-
-Cheers,
-Andre'
-
+Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
+-- 
+Florian
 
