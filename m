@@ -1,264 +1,195 @@
-Return-Path: <linux-arm-msm+bounces-45022-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-45023-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id EF318A10B4B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jan 2025 16:44:07 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 39F12A10B9D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jan 2025 17:00:15 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0AB00167B24
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jan 2025 15:44:06 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3E42A1889152
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jan 2025 16:00:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E41881B87C6;
-	Tue, 14 Jan 2025 15:41:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 25AC3194A74;
+	Tue, 14 Jan 2025 16:00:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="ZN2Vuu6e"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Lp+A+QkS"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.19])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f52.google.com (mail-ej1-f52.google.com [209.85.218.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B27321BD012;
-	Tue, 14 Jan 2025 15:41:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.19
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1F021ADC79
+	for <linux-arm-msm@vger.kernel.org>; Tue, 14 Jan 2025 16:00:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736869263; cv=none; b=kAzc5REk/cEstN4rXSk+L10I5dti3tJUz1dfBz34AkGH/wC9wJgigSnaUytV64yLgAi9r89N4ELvPRuyva/AjQ6bf13HgntKzV0xB8nTI+TE3K3hKveLTosIPljO5W6i3NNg4AG+Neq007PnGHPwiXDUzHBnWVy3EElstwPoQiw=
+	t=1736870407; cv=none; b=uFFS4DvgyHuLcu0iPzFI2jpFWPTqymBVXOnRrfCBNpJ//e1RyKEUwKIZTuRXmpeYyc0v4SK1UQ3Ov8PtdeXB9AzYYoB/MfKb5oAf7tD9z/lhBSWIqqbftIMocfMBkE/ylNPthjhnIk3gsbYxTHIav49oPW0KsEAe3ygJRYLo1XA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736869263; c=relaxed/simple;
-	bh=qn0liHuV+HqEbBeQ5aYzpXs6UUzCWEWNkcftd2sCrYI=;
-	h=From:Date:To:cc:Subject:In-Reply-To:Message-ID:References:
-	 MIME-Version:Content-Type; b=Q3/2CcMXn2Q8dKmPBkLq+dyb5SrdhLtdabtf6Op4sW9mZHHqumz76d1I+h0smSajJkHc6titKcmkdHzqhDMXUvEEwQtkZ1afFp4rhZL03vtRxtwsxb9CxGqilR7I1RPnX7++Vk4nLnuneYEA0lEtn5LrtO4kiCYinTj4k801wm8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=ZN2Vuu6e; arc=none smtp.client-ip=192.198.163.19
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1736869262; x=1768405262;
-  h=from:date:to:cc:subject:in-reply-to:message-id:
-   references:mime-version:content-id;
-  bh=qn0liHuV+HqEbBeQ5aYzpXs6UUzCWEWNkcftd2sCrYI=;
-  b=ZN2Vuu6eIZjLpcyaRAiwSGsWRK9mKzaROu3jFt5SHE1t4vSjJlXhLvzs
-   A/2yoebuayhGnOrsQwil/PP2LYBxpTYOWyEuxvv7dr5Zd/IIrVl4ZY2jh
-   y4T1uzx3U1SdJhXo+r4FAPS9zRV2Pi6ie++wjYXjMYr8ZZgqeJElOxQVS
-   Qn9GvXyp6dtsyiQhi3RFuugn88G48R2i/Zlzv0VKUPJf1TQr64j+b9KvI
-   VYge5Te+VnuBLAfQBkAUZuXW8oTE0mKPclfV3Qpf+SxgC+5FVSIVlKLvO
-   1PqPBSN5Gmm69MIknySFIaA1fwgEKeF+robgZoYCa8J2Zkd40HqoLaLfh
-   A==;
-X-CSE-ConnectionGUID: Xht8FwqoRta4GJL6j7tNCg==
-X-CSE-MsgGUID: 8KJloBnlRkaGX15EFQqU8Q==
-X-IronPort-AV: E=McAfee;i="6700,10204,11315"; a="36382267"
-X-IronPort-AV: E=Sophos;i="6.12,314,1728975600"; 
-   d="scan'208";a="36382267"
-Received: from fmviesa007.fm.intel.com ([10.60.135.147])
-  by fmvoesa113.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Jan 2025 07:41:00 -0800
-X-CSE-ConnectionGUID: 5HLHvUtqSW6Cs32LBcDWVw==
-X-CSE-MsgGUID: 8RF7edNCQ6+5zyjKd/T0yQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,314,1728975600"; 
-   d="scan'208";a="104784037"
-Received: from ijarvine-mobl1.ger.corp.intel.com (HELO localhost) ([10.245.244.54])
-  by fmviesa007-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Jan 2025 07:40:55 -0800
-From: =?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
-Date: Tue, 14 Jan 2025 17:40:51 +0200 (EET)
-To: Pengyu Luo <mitltlatltl@gmail.com>
-cc: andersson@kernel.org, bryan.odonoghue@linaro.org, conor+dt@kernel.org, 
-    devicetree@vger.kernel.org, 
-    Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
-    Hans de Goede <hdegoede@redhat.com>, heikki.krogerus@linux.intel.com, 
-    jdelvare@suse.com, konradybcio@kernel.org, krzk+dt@kernel.org, 
-    linux-arm-msm@vger.kernel.org, linux-hwmon@vger.kernel.org, 
-    LKML <linux-kernel@vger.kernel.org>, linux-pm@vger.kernel.org, 
-    linux-usb@vger.kernel.org, linux@roeck-us.net, 
-    platform-driver-x86@vger.kernel.org, robh@kernel.org, sre@kernel.org
-Subject: Re: [PATCH v3 2/6] platform: arm64: add Huawei Matebook E Go EC
- driver
-In-Reply-To: <20250114083133.607318-1-mitltlatltl@gmail.com>
-Message-ID: <d2a42fc7-37a9-3fcc-4c35-e542ddb112e8@linux.intel.com>
-References: <402b261b-e51d-7121-1e13-b1bc1f5d40f5@linux.intel.com> <20250114083133.607318-1-mitltlatltl@gmail.com>
+	s=arc-20240116; t=1736870407; c=relaxed/simple;
+	bh=J4e6o0GB4Lf3g9wymfmTdluyJyMHR3IjQfm+7CyjyxI=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=eMgZkKFY7tMxlcnHrjSEc7rksEWM6A4Yv7I7X/kzlfqjqEnjxqls+oCLR92LNybQH4+2VXCtRi8UBkhjh5R+w/QsYP6b4Yke7tb7y/04sZNSmciNNVLJCycTDzOMnKXFW0O2KuyS5VNX8EcY/oHpGaCaKX0TIO4Zxn52PQPboa0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Lp+A+QkS; arc=none smtp.client-ip=209.85.218.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ej1-f52.google.com with SMTP id a640c23a62f3a-aa6954ec439so81225566b.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Jan 2025 08:00:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1736870403; x=1737475203; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=036P+TMXTDmBCcuo6XqZkVW5lvGpV28GsgySqY677wI=;
+        b=Lp+A+QkSUNH5CM1ItW5N55iYTEmm0WOkJgGEQNp+0WhN3suVNL9LuyzdLsVzFr4shX
+         IogN/T8zpHMrsfpj6b0iUwmDHqxkUXiZbYT8ehelfErQkYp5Xw0iYATzsDwBPJSIHamI
+         Vsq3caXL/nDBQILH2fFPl4/l8lwpiKeDm6AfbwXafql2xF930T8KAueLlXpZmHJSYG8v
+         gmxU76HZtgo7siZpLopNpYwQxnVwT7Mg7hcE2KEVZGq+V3MfAqwV2TLS+tseGRdpygVa
+         4TckVHNQEqo+9dKrabhlUpQY29mm3Dt4lxXdz801ZgcvzE/c7ScBFIjzofI8eRGYAg8N
+         Xarg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1736870403; x=1737475203;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=036P+TMXTDmBCcuo6XqZkVW5lvGpV28GsgySqY677wI=;
+        b=J7ewPEhkdRqfmfTz7oDe5f19Lq7HmQEsIpQ5D1F8clfSaUGiAIhjmyEXpkFBMeGvSn
+         I8jQUwTl9SJisJXfiNWz0GhTlD8QLq0So+vHL1IUF+nGSWgF/pGjXYsApegK3MYpHGIL
+         lfuMunO0Zox/2qL0FZHYLR2VrOkhL8lXpP7XdrwsFy+GM5OqZNn1cFaiQfiPnq0AESUn
+         7Ju29DFzzJsNUMLfoXZtVjWsRdX0o/NO1JuhUUdomrDJDn9fbNPckVThcEinyqTnV2PC
+         gTL9ILyop4dHUJMY0NHqvxSOLd95ir9iImaowy2Fnutt1SZVZE8uhWdCBO+lfWVGdDrI
+         MiQQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVhNZO1QQxVE98fXZmnPlNW92FW8pRwBkDtD45D8CsmlO2o0TMl9WXGyXvWrp2aOZ2EPv72pQi0cWRFIlSK@vger.kernel.org
+X-Gm-Message-State: AOJu0Yzai01T1pcqGnCbHch/c6HVtm+AANl6bvQyEQKbz2IiilzBtV2J
+	sL+yikSpwG1m4/ZadegfAlQ67RPmrt9R4LZQQFF3Fvil9QaSekMXnO/z/HJf8qc=
+X-Gm-Gg: ASbGncvOZGGz3zpXpRNufffbHDLQcr7mEFpRx8UXeaYzJwRAiB6tzFYQ5nnqBJ/6Xfo
+	dSmAOKe3oG6GzWVR+9BlSQbTflFQx9aoAvnUzzHEwZ20pbnUL84rSeI319tVNoWk8gocTuvDleo
+	3TzaZcoKPeRi+JiPsO/raHATYSqFHRKKecatwPGBtAMeudHIGNM4g21FsIXHQjr8F9TmDnQCd+R
+	F1CIZ9hSbvcATLDgrV0pilUdP60EZl+t3pOMsU/gHFPe6WEXK6TdXBNopLzspRrqmkQRpQ=
+X-Google-Smtp-Source: AGHT+IG7PMlVz7CMMGWaY0OGnnMJa79kLHXPYfRYGus1Svu/ubNikdklVMAggGNIsgi/jcBKMo4Vmg==
+X-Received: by 2002:a17:907:97c6:b0:aa6:79e6:5b03 with SMTP id a640c23a62f3a-ab2ab5759b6mr916847166b.6.1736870403102;
+        Tue, 14 Jan 2025 08:00:03 -0800 (PST)
+Received: from krzk-bin.. ([178.197.223.165])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ab2c95af424sm651908666b.137.2025.01.14.08.00.01
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 14 Jan 2025 08:00:02 -0800 (PST)
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To: Rob Clark <robdclark@gmail.com>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Sean Paul <sean@poorly.run>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	David Airlie <airlied@gmail.com>,
+	Simona Vetter <simona@ffwll.ch>,
+	linux-arm-msm@vger.kernel.org,
+	dri-devel@lists.freedesktop.org,
+	freedreno@lists.freedesktop.org,
+	linux-kernel@vger.kernel.org
+Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH] drm/msm/dpu: Simplify using local 'ctl' variable
+Date: Tue, 14 Jan 2025 16:59:59 +0100
+Message-ID: <20250114155959.583889-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; BOUNDARY="8323328-1499874815-1736864506=:1077"
-Content-ID: <03944f23-5ba5-efab-3be2-7e7a72fa6aa4@linux.intel.com>
+Content-Transfer-Encoding: 8bit
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+In few places we store 'phys_enc->hw_ctl' to local 'ctl' variable so use
+it everywhere.  No functional change.
 
---8323328-1499874815-1736864506=:1077
-Content-Type: text/plain; CHARSET=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Content-ID: <839add08-5968-6c24-36a6-f31790b45694@linux.intel.com>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+---
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 32 ++++++++++-----------
+ 1 file changed, 16 insertions(+), 16 deletions(-)
 
-On Tue, 14 Jan 2025, Pengyu Luo wrote:
-> On Tue, Jan 14, 2025 at 2:56=E2=80=AFAM Ilpo J=C3=A4rvinen <ilpo.jarvinen=
-@linux.intel.com> wrote:
-> > On Tue, 14 Jan 2025, Pengyu Luo wrote:
-> >=20
-> > > There are three variants of which Huawei released the first two
-> > > simultaneously.
-> > >
-> > > Huawei Matebook E Go LTE(sc8180x), codename seems to be gaokun2.
-> > > Huawei Matebook E Go(sc8280xp@3.0GHz), codename must be gaokun3. (see=
- [1])
-> > > Huawei Matebook E Go 2023(sc8280xp@2.69GHz), codename should be also =
-gaokun3.
-> > >
-> > > Adding support for the latter two variants for now, this driver shoul=
-d
-> > > also work for the sc8180x variant according to acpi table files, but =
-I
-> > > don't have the device to test yet.
-> > >
-> > > Different from other Qualcomm Snapdragon sc8280xp based machines, the
-> > > Huawei Matebook E Go uses an embedded controller while others use
-> > > a system called PMIC GLink. This embedded controller can be used to
-> > > perform a set of various functions, including, but not limited to:
-> > >
-> > > - Battery and charger monitoring;
-> > > - Charge control and smart charge;
-> > > - Fn_lock settings;
-> > > - Tablet lid status;
-> > > - Temperature sensors;
-> > > - USB Type-C notifications (ports orientation,  DP alt mode HPD);
-> > > - USB Type-C PD (according to observation, up to 48w).
-> > >
-> > > Add a driver for the EC which creates devices for UCSI and power supp=
-ly
-> > > devices.
-> > >
-> > > [1] https://bugzilla.kernel.org/show_bug.cgi?id=3D219645
-> > >
-> > > Signed-off-by: Pengyu Luo <mitltlatltl@gmail.com>
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+index 5172ab4dea99..702e344f5aad 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+@@ -2183,8 +2183,8 @@ static void dpu_encoder_helper_reset_mixers(struct dpu_encoder_phys *phys_enc)
+ 	memset(&mixer, 0, sizeof(mixer));
+ 
+ 	/* reset all mixers for this encoder */
+-	if (phys_enc->hw_ctl->ops.clear_all_blendstages)
+-		phys_enc->hw_ctl->ops.clear_all_blendstages(phys_enc->hw_ctl);
++	if (ctl->ops.clear_all_blendstages)
++		ctl->ops.clear_all_blendstages(ctl);
+ 
+ 	global_state = dpu_kms_get_existing_global_state(phys_enc->dpu_kms);
+ 
+@@ -2193,12 +2193,12 @@ static void dpu_encoder_helper_reset_mixers(struct dpu_encoder_phys *phys_enc)
+ 
+ 	for (i = 0; i < num_lm; i++) {
+ 		hw_mixer[i] = to_dpu_hw_mixer(hw_lm[i]);
+-		if (phys_enc->hw_ctl->ops.update_pending_flush_mixer)
+-			phys_enc->hw_ctl->ops.update_pending_flush_mixer(ctl, hw_mixer[i]->idx);
++		if (ctl->ops.update_pending_flush_mixer)
++			ctl->ops.update_pending_flush_mixer(ctl, hw_mixer[i]->idx);
+ 
+ 		/* clear all blendstages */
+-		if (phys_enc->hw_ctl->ops.setup_blendstage)
+-			phys_enc->hw_ctl->ops.setup_blendstage(ctl, hw_mixer[i]->idx, NULL);
++		if (ctl->ops.setup_blendstage)
++			ctl->ops.setup_blendstage(ctl, hw_mixer[i]->idx, NULL);
+ 	}
+ }
+ 
+@@ -2250,7 +2250,7 @@ void dpu_encoder_helper_phys_cleanup(struct dpu_encoder_phys *phys_enc)
+ 
+ 	dpu_enc = to_dpu_encoder_virt(phys_enc->parent);
+ 
+-	phys_enc->hw_ctl->ops.reset(ctl);
++	ctl->ops.reset(ctl);
+ 
+ 	dpu_encoder_helper_reset_mixers(phys_enc);
+ 
+@@ -2265,8 +2265,8 @@ void dpu_encoder_helper_phys_cleanup(struct dpu_encoder_phys *phys_enc)
+ 			phys_enc->hw_wb->ops.bind_pingpong_blk(phys_enc->hw_wb, PINGPONG_NONE);
+ 
+ 		/* mark WB flush as pending */
+-		if (phys_enc->hw_ctl->ops.update_pending_flush_wb)
+-			phys_enc->hw_ctl->ops.update_pending_flush_wb(ctl, phys_enc->hw_wb->idx);
++		if (ctl->ops.update_pending_flush_wb)
++			ctl->ops.update_pending_flush_wb(ctl, phys_enc->hw_wb->idx);
+ 	} else {
+ 		for (i = 0; i < dpu_enc->num_phys_encs; i++) {
+ 			if (dpu_enc->phys_encs[i] && phys_enc->hw_intf->ops.bind_pingpong_blk)
+@@ -2275,8 +2275,8 @@ void dpu_encoder_helper_phys_cleanup(struct dpu_encoder_phys *phys_enc)
+ 						PINGPONG_NONE);
+ 
+ 			/* mark INTF flush as pending */
+-			if (phys_enc->hw_ctl->ops.update_pending_flush_intf)
+-				phys_enc->hw_ctl->ops.update_pending_flush_intf(phys_enc->hw_ctl,
++			if (ctl->ops.update_pending_flush_intf)
++				ctl->ops.update_pending_flush_intf(ctl,
+ 						dpu_enc->phys_encs[i]->hw_intf->idx);
+ 		}
+ 	}
+@@ -2285,8 +2285,8 @@ void dpu_encoder_helper_phys_cleanup(struct dpu_encoder_phys *phys_enc)
+ 	if (phys_enc->hw_pp && phys_enc->hw_pp->merge_3d) {
+ 		phys_enc->hw_pp->merge_3d->ops.setup_3d_mode(phys_enc->hw_pp->merge_3d,
+ 				BLEND_3D_NONE);
+-		if (phys_enc->hw_ctl->ops.update_pending_flush_merge_3d)
+-			phys_enc->hw_ctl->ops.update_pending_flush_merge_3d(ctl,
++		if (ctl->ops.update_pending_flush_merge_3d)
++			ctl->ops.update_pending_flush_merge_3d(ctl,
+ 					phys_enc->hw_pp->merge_3d->idx);
+ 	}
+ 
+@@ -2294,9 +2294,9 @@ void dpu_encoder_helper_phys_cleanup(struct dpu_encoder_phys *phys_enc)
+ 		if (phys_enc->hw_cdm->ops.bind_pingpong_blk && phys_enc->hw_pp)
+ 			phys_enc->hw_cdm->ops.bind_pingpong_blk(phys_enc->hw_cdm,
+ 								PINGPONG_NONE);
+-		if (phys_enc->hw_ctl->ops.update_pending_flush_cdm)
+-			phys_enc->hw_ctl->ops.update_pending_flush_cdm(phys_enc->hw_ctl,
+-								       phys_enc->hw_cdm->idx);
++		if (ctl->ops.update_pending_flush_cdm)
++			ctl->ops.update_pending_flush_cdm(ctl,
++							  phys_enc->hw_cdm->idx);
+ 	}
+ 
+ 	if (dpu_enc->dsc) {
+-- 
+2.43.0
 
-> > > +/**
-> > > + * gaokun_ec_psy_get_smart_charge_enable - check if smart charge is =
-enabled
-> > > + * @ec: The gaokun_ec
-> > > + * @on: The state
-> > > + *
-> > > + * Return: 0 on success or negative error code.
-> > > + */
-> > > +int gaokun_ec_psy_get_smart_charge_enable(struct gaokun_ec *ec, bool=
- *on)
-> > > +{
-> > > +     /* GBAC */
-> > > +     *on =3D 0; /* clear other 3 Bytes */
-> >=20
-> > =3D false (as it's bool)
-> >=20
-> > What that comment means??? The type is bool so what "3 Bytes" ???
-> >=20
->=20
-> We will write to the lowest Byte, the higher 3 Bytes are dirty, so clear =
-it.
-
-Are you saying you assume bool is 4 bytes long? I'd be cautious on making=
-=20
-assumptions on sizeof(bool).
-=20
-> We can also implememnt it like this
->=20
-> int ret;
-> u8 resp;
->=20
-> ret =3D gaokun_ec_read_byte(.., &resp);
-> if (ret)
->         return ret;
->=20
-> *on =3D !!resp;
-
-Yes, I prefer explicit u8 -> bool conversion like this.
-
-> > > +/* Fn lock */
-> > > +static int gaokun_ec_get_fn_lock(struct gaokun_ec *ec, bool *on)
-> > > +{
-> > > +     /* GFRS */
-> > > +     u8 req[] =3D MKREQ(0x02, 0x6B, 0);
-> >=20
-> > Does that random acronym map to one of the literal? In which case a def=
-ine
-> > would be more useful than a comment. (You seem to have a few similar
-> > comments preceeding the req definitions)
-> >=20
->=20
-> They are ACPI method names/identifiers, it will be useful if someone want
-> to locate ACPI's implementations.
-
-Okay, I guess it's fine as is then.
-
-
-> > > +static int gaokun_ec_get_temp(struct gaokun_ec *ec, u8 idx, int *tem=
-p)
-> > > +{
-> > > +     /* GTMP */
-> > > +     u8 req[] =3D MKREQ(0x02, 0x61, 1, temp_reg[idx]);
-> > > +     u8 resp[] =3D MKRESP(sizeof(__le16));
-> > > +     __le16 tmp;
-> > > +     int ret;
-> > > +
-> > > +     ret =3D gaokun_ec_read(ec, req, sizeof(resp), resp);
-> > > +     if (ret)
-> > > +             return ret;
-> > > +
-> > > +     extr_resp((u8 *)&tmp, resp, sizeof(tmp));
-> > > +     *temp =3D le16_to_cpu(tmp) * 100; /* convert to HwMon's unit */
-> >=20
-> > extr_resp() does memcpy() but there should be no need to copy anything
-> > here. You just want to have __le16 pointer of the response data data.
-> >=20
->=20
-> I think this would break abstraction, recently, these data are accessed b=
-y
-> extr_resp() and refill_req() only.
-
-If you want to keep doing it like that, not a big deal for me.
-
-There are different ways to do the abstraction though, and not all require
-memcpy() when changing a layer (e.g., a pointer advancing to the other=20
-layer).
-
-> > > +/* -----------------------------------------------------------------=
---------- */
-> > > +/* EC */
-> > > +
-> > > +static irqreturn_t gaokun_ec_irq_handler(int irq, void *data)
-> > > +{
-> > > +     struct gaokun_ec *ec =3D data;
-> > > +     u8 req[] =3D MKREQ(EC_EVENT, EC_QUERY, 0);
-> >=20
-> > Great, here you have named them. Could you name all of the other litera=
-ls
-> > too, please.
->=20
-> I mentioned this in previous version. Most of them are magic, it is hard =
-to
-> generalize them. We could name partial scmd according to specific functio=
-ns
-> (sysfs functions), their function names have implied registers' meaning, =
-and
-> these registers would be never reused in other functions.
-
-Fair (I didn't read every comment made to the previous version).
-
-> > > +/* -----------------------------------------------------------------=
---------- */
-> > > +/* API For UCSI */
-> >=20
-> > for
-> >=20
->=20
-> Agree
-
-For me, you don't need to reply "Agree", "Ack" or something along those=20
-lines if you're going to act on the feedback. Just make sure you don't=20
-forget them :-). It'll save us both some time when we focus on points that=
-=20
-need further discussion.
-
---=20
- i.
---8323328-1499874815-1736864506=:1077--
 
