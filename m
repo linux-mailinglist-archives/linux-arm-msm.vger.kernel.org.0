@@ -1,63 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-44944-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-44945-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id A957AA0C5AD
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jan 2025 00:28:22 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 39DF3A0FE24
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jan 2025 02:31:55 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id DC4FA3A5E93
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Jan 2025 23:28:15 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id EED193A7005
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jan 2025 01:31:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D070C1FA150;
-	Mon, 13 Jan 2025 23:28:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7057F22B5A3;
+	Tue, 14 Jan 2025 01:31:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="dVy+aiEO"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="BRRrECD2"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B48D1D61A2;
-	Mon, 13 Jan 2025 23:28:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB42222AE7E
+	for <linux-arm-msm@vger.kernel.org>; Tue, 14 Jan 2025 01:31:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736810896; cv=none; b=BuZFCWhjTL1PWzkngUBXs3vK9JWR7yNJgt1gH0GQp3qWqzYaF+B2PB7PRnYsTtXoV80UC54Cmh3YjIba4Hz9yyWzd4mYNm5jUFu/Xvd2h53ik6tzJ5toUAhI/8bSNvppY1RBszI8lzG64M6jHVw9MZa3EnE3+I7+oufJ6/d2obQ=
+	t=1736818312; cv=none; b=tiDzbmAGXxeO+7gL3TdET/M4wqNkwHUBshCvBd8v9tapC29MVP7XkW8PmOZ7SCCNLpmKwRTslMWSGeLCaIQyWxDs0/DYtun2khkIuZ45zrXCAhO/SHrOvAUpmHX78nJCcokXSdkjm5nKOAGPEanNQGI9C97tEqUZP5xRK1CyKyc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736810896; c=relaxed/simple;
-	bh=qnML/MjmfWbEVuGNTbx209LYPz08WZNs1swxEtBqmrI=;
+	s=arc-20240116; t=1736818312; c=relaxed/simple;
+	bh=m/+kvi9HD6IqWv6MzvRWTkcEPAgITnDJNP4DvCXy37Y=;
 	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=OGWBmXXHdzZV8Ak2KnXJJWlbS6KFub95t+JVaGb6UVg9bgbFPCOpfEq7YvPsDvYnn8ow+67k/ibZHLGhAy2Fjf6gWpCdZ4lXdT2X3SWj2qEfjcCixzFkxztslJ4zr7pQGcwyLj4VkgYrpiiOZSUyofSKxJxC4WlVuL9o9aD46YE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=dVy+aiEO; arc=none smtp.client-ip=205.220.168.131
+	 In-Reply-To:Content-Type; b=syJR9vMzbl4R2xAexTbUoY/2ReT4+6nYYJoGPaMDPr0OBWe+7RZ27GkH4RZbK8i4NXfhoINVZq/NQkrHRx16wsiF52+2OB+hpen3/ADWKqalvMCPVA/ncEPw+ztvvodBAt/FaFvO9qY3brASFax9NnvLH5PPc4CLJ1Hb4UU81+I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=BRRrECD2; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50DHDiJe014953;
-	Mon, 13 Jan 2025 23:28:03 GMT
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50DH3i11020124;
+	Tue, 14 Jan 2025 01:31:41 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	qnML/MjmfWbEVuGNTbx209LYPz08WZNs1swxEtBqmrI=; b=dVy+aiEOCg6Whv5A
-	CcKmWRzUUlilHFYXD+lL05q68lYC9GIYqjdgkWRmcUb5TO4//2dS79r6EKXIR+71
-	LtRzOFU4PctsHgXDi/N7wdAJhuvF8lERSy8iiDdH8pi0NrOgqOWymiemLXp8YvYz
-	Ph+VcsIsGt58ALEYomPFJECeRFnfDZboeqRdRmwXALFwnD53ruX82+/zLRUSoPRQ
-	3PzNyIGl/8yvsBG0e02e9CY7vIfB0eSWBgdSU4B+IDvlFwRJQ2BgIxKJg+DICEIa
-	bI+NKRPPUey4JPxn5YKTdPIYx463MwVnMexkpdCoSTUTak1t0eouT0nQ9EBKjAvk
-	OcJDsw==
+	QqYrKHvprx70ssLEZk0ynL28q1dwRsUZAy8EBMLnmpA=; b=BRRrECD2dMy5FlP8
+	v8is2CgwS60UfaLg/X9Dd+8NoncyM9iApgGLWD31G0hNqW4tGDXaRNXF5bJuh97p
+	/aTj4Io29849STZYVVfPuuojirxgBpZO9upWXwKwluohLlL9anwZLurEkx93gh4P
+	NNXHjIowg5+whWHuNPimQdK9qBduwtmaMy4Z9175lC9o/sc3uI0rCpqxyG09KPle
+	Ek8PX7wvd46NxUIx49/fNTdva/U8jGvkFHlKwIqZ3Amt/PwSCfkRPE5a4NRdK57F
+	t/Tlu+HNbXmMqzKsGOAM1Mv8jEs/6JlESn0kYTJHNMtZr+DmpyhR9NZRGikVQm2A
+	zWHa2A==
 Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44571yrrme-1
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4456wa90xj-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 13 Jan 2025 23:28:03 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 50DNS2NJ011042
+	Tue, 14 Jan 2025 01:31:41 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 50E1VeJo009736
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 13 Jan 2025 23:28:02 GMT
-Received: from [10.110.66.138] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+	Tue, 14 Jan 2025 01:31:40 GMT
+Received: from [10.71.108.79] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 13 Jan
- 2025 15:28:01 -0800
-Message-ID: <060a6fb1-05a6-488a-aba2-64d7bc8693df@quicinc.com>
-Date: Mon, 13 Jan 2025 15:28:00 -0800
+ 2025 17:31:39 -0800
+Message-ID: <21bf3612-7b93-44ee-82b0-462a02d8e3ce@quicinc.com>
+Date: Mon, 13 Jan 2025 17:31:38 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,64 +65,155 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v32 02/32] xhci: sideband: add initial api to register a
- secondary interrupter entity
-To: Mathias Nyman <mathias.nyman@linux.intel.com>,
-        <srinivas.kandagatla@linaro.org>, <mathias.nyman@intel.com>,
-        <perex@perex.cz>, <conor+dt@kernel.org>, <dmitry.torokhov@gmail.com>,
-        <corbet@lwn.net>, <broonie@kernel.org>, <lgirdwood@gmail.com>,
-        <krzk+dt@kernel.org>, <pierre-louis.bossart@linux.intel.com>,
-        <Thinh.Nguyen@synopsys.com>, <tiwai@suse.com>, <robh@kernel.org>,
-        <gregkh@linuxfoundation.org>
-CC: <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-sound@vger.kernel.org>, <linux-input@vger.kernel.org>,
-        <linux-usb@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-doc@vger.kernel.org>
-References: <20250108012213.1659364-1-quic_wcheng@quicinc.com>
- <20250108012213.1659364-3-quic_wcheng@quicinc.com>
- <b029c775-a0cf-4991-95b7-a02187c0863b@linux.intel.com>
+Subject: Re: [PATCH v4 4/9] drm/msm/dpu: make fix_core_ab_vote consistent with
+ fix_core_ib_vote
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Marijn
+ Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Stephen Boyd <swboyd@chromium.org>,
+        Simona Vetter <simona.vetter@ffwll.ch>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>
+References: <20250106-dpu-perf-rework-v4-0-00b248349476@linaro.org>
+ <20250106-dpu-perf-rework-v4-4-00b248349476@linaro.org>
+ <35a22251-c348-4bb7-905c-e24032100a00@quicinc.com>
+ <sklr3ryu35xmoejkmbu35d3jxsg2clk3whmzslxtzcbcb3gjy4@bmcivlzkxqa3>
+ <a17204c1-6eb5-4ce4-a302-c5f582055037@quicinc.com>
+ <0B5D10CF-35CE-4CF5-9105-5ACCC04EB94B@linaro.org>
 Content-Language: en-US
-From: Wesley Cheng <quic_wcheng@quicinc.com>
-In-Reply-To: <b029c775-a0cf-4991-95b7-a02187c0863b@linux.intel.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
+From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <0B5D10CF-35CE-4CF5-9105-5ACCC04EB94B@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: akqRraIlZUG8tlhrebYekkqcbiiDY1kA
-X-Proofpoint-ORIG-GUID: akqRraIlZUG8tlhrebYekkqcbiiDY1kA
+X-Proofpoint-GUID: 076LzRLzTnji_aaUsXHT6ZrarDKyGCCI
+X-Proofpoint-ORIG-GUID: 076LzRLzTnji_aaUsXHT6ZrarDKyGCCI
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- malwarescore=0 phishscore=0 spamscore=0 impostorscore=0 bulkscore=0
- clxscore=1015 lowpriorityscore=0 adultscore=0 suspectscore=0 mlxscore=0
- mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2501130184
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 clxscore=1015
+ suspectscore=0 adultscore=0 mlxlogscore=973 priorityscore=1501
+ phishscore=0 malwarescore=0 impostorscore=0 lowpriorityscore=0 mlxscore=0
+ spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2501140010
 
-Hi Mathias,
 
-On 1/8/2025 6:10 AM, Mathias Nyman wrote:
-> On 8.1.2025 3.21, Wesley Cheng wrote:
->> From: Mathias Nyman <mathias.nyman@linux.intel.com>
+
+On 1/11/2025 5:08 AM, Dmitry Baryshkov wrote:
+> On 11 January 2025 01:49:23 EET, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
 >>
->> Introduce XHCI sec intr, which manages the USB endpoints being requested by
->> a client driver.  This is used for when client drivers are attempting to
->> offload USB endpoints to another entity for handling USB transfers.  XHCI
->> sec intr will allow for drivers to fetch the required information about the
->> transfer ring, so the user can submit transfers independently.  Expose the
->> required APIs for drivers to register and request for a USB endpoint and to
->> manage XHCI secondary interrupters.
->
-> The "sec intr" above should also be renamed back to "sideband"
->
->
+>>
+>> On 1/9/2025 6:02 PM, Dmitry Baryshkov wrote:
+>>> On Thu, Jan 09, 2025 at 05:40:23PM -0800, Abhinav Kumar wrote:
+>>>>
+>>>>
+>>>> On 1/5/2025 7:07 PM, Dmitry Baryshkov wrote:
+>>>>> The fix_core_ab_vote is an average bandwidth value, used for bandwidth
+>>>>> overrides in several cases. However there is an internal inconsistency:
+>>>>> fix_core_ib_vote is defined in KBps, while fix_core_ab_vote is defined
+>>>>> in Bps.
+>>>>>
+>>>>> Fix that by changing the type of the variable to u32 and using * 1000ULL
+>>>>> multiplier when setting up the dpu_core_perf_params::bw_ctl value.
+>>>>>
+>>>>
+>>>> Actually after looking at this, I have another question.
+>>>>
+>>>> How did you conclude that fix_core_ib_vote is in KBps?
+>>>>
+>>>> min_dram_ib is in KBps in the catalog but how is fix_core_ib_vote?
+>>>>
+>>>> It depends on the interpretation perhaps. If the debugfs was supposed to
+>>>> operate under the expectation that the provided value will be pre-multiplied
+>>>> by 1000 and given then that explains why it was not multiplied again.
+>>>>
+>>>> And I cross-checked some of the internal usages of the debugfs, the values
+>>>> provided to it were in Bps and not KBps.
+>>>
+>>> Well... As you wrote min_dram_ib is in KBps. So, by comparing the next
+>>> two lines, fix_core_ib_vote should also be in kBps, as there is no
+>>> premultiplier:
+>>>
+>>>                   perf->max_per_pipe_ib = core_perf->fix_core_ib_vote;
+>>> [...]
+>>>                   perf->max_per_pipe_ib = perf_cfg->min_dram_ib;
+>>>
+>>> And then, as a proof, perf->max_per_pipe_ib is passed to icc_set_bw()
+>>> without any modifications:
+>>>
+>>>                   icc_set_bw(kms->path[i], avg_bw, perf.max_per_pipe_ib);
+>>>
+>>
+>> Understood max_per_pipe_ib. But then by the same logic, fix_core_ab_vote is always in Bps and not in KBps because bw_ctl is in Bps.
+>>
+>> Is it really a discrepancy that fix_core_ib_vote is defined in KBps, while fix_core_ab_vote is defined in Bps because they are just following the units in which bw_ctl and max_per_pipe_ib were defined in resp.
+> 
+> Yes. They come in pair, as a part of the user interface. If one is in Bps and another one in KBps, it is very easy to forget that and misinterpret them or to make a mistake while programming them. Not to mention that the threshold files, which are related to AB, are in KBps.
+> 
 
-Sounds good, will do...
+In that case, the documentation for both needs to be updated as well as 
+it still says both are in bps not kbps.
 
+  * @fix_core_ib_vote: fixed core ib vote in bps used in mode 2
+  * @fix_core_ab_vote: fixed core ab vote in bps used in mode 2
+  */
+struct dpu_core_perf {
+         const struct dpu_perf_cfg *perf_cfg;
+         u64 core_clk_rate;
+         u64 max_core_clk_rate;
+         struct dpu_core_perf_tune perf_tune;
+         u32 enable_bw_release;
+         u64 fix_core_clk_rate;
+         u64 fix_core_ib_vote;
+         u64 fix_core_ab_vote;
+};
 
-Thanks
-Wesley Cheng
-
+>>
+>>>
+>>>>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>>>>> ---
+>>>>>     drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c | 4 ++--
+>>>>>     drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h | 2 +-
+>>>>>     2 files changed, 3 insertions(+), 3 deletions(-)
+>>>>>
+>>>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
+>>>>> index 7263ab63a692554cd51a7fd91bd6250330179240..7cabc8f26908cfd2dbbffebd7c70fc37d9159733 100644
+>>>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
+>>>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
+>>>>> @@ -125,7 +125,7 @@ static void _dpu_core_perf_calc_crtc(const struct dpu_core_perf *core_perf,
+>>>>>     		perf->max_per_pipe_ib = 0;
+>>>>>     		perf->core_clk_rate = 0;
+>>>>>     	} else if (core_perf->perf_tune.mode == DPU_PERF_MODE_FIXED) {
+>>>>> -		perf->bw_ctl = core_perf->fix_core_ab_vote;
+>>>>> +		perf->bw_ctl = core_perf->fix_core_ab_vote * 1000ULL;
+>>>>>     		perf->max_per_pipe_ib = core_perf->fix_core_ib_vote;
+>>>>>     		perf->core_clk_rate = core_perf->fix_core_clk_rate;
+>>>>>     	} else {
+>>>>> @@ -479,7 +479,7 @@ int dpu_core_perf_debugfs_init(struct dpu_kms *dpu_kms, struct dentry *parent)
+>>>>>     			&perf->fix_core_clk_rate);
+>>>>>     	debugfs_create_u32("fix_core_ib_vote", 0600, entry,
+>>>>>     			&perf->fix_core_ib_vote);
+>>>>> -	debugfs_create_u64("fix_core_ab_vote", 0600, entry,
+>>>>> +	debugfs_create_u32("fix_core_ab_vote", 0600, entry,
+>>>>>     			&perf->fix_core_ab_vote);
+>>>>>     	return 0;
+>>>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h
+>>>>> index ca4595b4ec217697849af02446b23ed0857a0295..5e07119c14c6a9ed3413d0eaddbd93df5cc3f79d 100644
+>>>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h
+>>>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h
+>>>>> @@ -51,7 +51,7 @@ struct dpu_core_perf {
+>>>>>     	u32 enable_bw_release;
+>>>>>     	u64 fix_core_clk_rate;
+>>>>>     	u32 fix_core_ib_vote;
+>>>>> -	u64 fix_core_ab_vote;
+>>>>> +	u32 fix_core_ab_vote;
+>>>>>     };
+>>>>>     int dpu_core_perf_crtc_check(struct drm_crtc *crtc,
+>>>>>
+>>>
+> 
 
