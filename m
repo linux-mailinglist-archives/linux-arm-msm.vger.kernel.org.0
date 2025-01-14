@@ -1,250 +1,327 @@
-Return-Path: <linux-arm-msm+bounces-44947-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-44948-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id E16DEA0FE3E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jan 2025 02:44:03 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 052BDA0FE49
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jan 2025 02:51:25 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A27CE3A7681
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jan 2025 01:43:57 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0638C18880EB
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jan 2025 01:51:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 749932135AF;
-	Tue, 14 Jan 2025 01:44:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E72D917BB0D;
+	Tue, 14 Jan 2025 01:51:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="JRiAycj5"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="I4mrTD65"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yb1-f182.google.com (mail-yb1-f182.google.com [209.85.219.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C87A3232
-	for <linux-arm-msm@vger.kernel.org>; Tue, 14 Jan 2025 01:43:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAF7F1EB2E;
+	Tue, 14 Jan 2025 01:51:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736819040; cv=none; b=i62PWPurg3YBqF2/BSzgqlIT7UeqRuM/faXAuZAKslew4thN3pCn9Tq3AZuQkqDoZGfzLoVQluf52XOTfp8QsrSc/HJR4dRursCGLpG2L+7sdQSk+XOv0gdPuUu7T56w+PXesATLr3ftXZki0wX1lm/2zsJpmoO8k1J4Ky8bIUc=
+	t=1736819480; cv=none; b=sHiimIZwcZnBg3MpMBko9bk9nOt4Pipdq3xyHibUSGuLpho7V5JtUyGRDfAMtMardEqkSsXXJPyfwkuuoz3Pn2eUXApOJ/rmx7shddvQPJcl+UjX2XBUKBAmeLnaISvWH5CbUzcHOQCQFA8Yxwi2inDRUOW937iDhAoDjxSaxT4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736819040; c=relaxed/simple;
-	bh=tBtqAUGlnJ911iFCLxJalEW5BTOHuxFvE2EnASQc3t0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=jXH9VlgOsmHvmDbhs6Acg7nOXEfVQcfp0TSXe9SgrmFatSRh7UjPe3X4GwLgOqmKHL+1I5RYjszQBqX6cU9Z7ux+4hMxL44A4EP8iFHPKsyfocF892KQezwxY99CXMHAG5ODGq3oP3pI/upfqjuWxk8o38EDcgso3UhQo29NeMk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=JRiAycj5; arc=none smtp.client-ip=209.85.219.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yb1-f182.google.com with SMTP id 3f1490d57ef6-e53aa843a24so8591520276.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Jan 2025 17:43:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1736819037; x=1737423837; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=htgTFIaFwiArnc5q09+1so1au1sTRILiasQC2A0e6a0=;
-        b=JRiAycj5/JwNHs2460Q8/z4VW7U8BYy3jwbOmPV+fjqyK/lqibSG+bQSBpY+BOBOsk
-         HYt3eTzlJG5JbD4Y8KGZAN/eyVC0q02Oj+q9Z4uyxmz5EXIIqWn8+WGor6izsE6rBAg/
-         4g4zD77ppxWHQbibyZXsjGiBXor40/+AuUqRTRXD856kGQsEFBB+0TmQxOkDskFewZ5w
-         3F4TRBN1Weh9Mt4qnl5qI5N8ewpq8On5Y1LTyphDX+baijC+cggBqJB628kNdjI9eW0w
-         wVImD3U7Yf1jWJKWc9W/GyJvatKJDqkMyob1bUR8TnUfFEj0cimB2pV3JPTyOHsMPFIV
-         1Ncw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736819037; x=1737423837;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=htgTFIaFwiArnc5q09+1so1au1sTRILiasQC2A0e6a0=;
-        b=lcFfMyGZGzolRgjYKWKVh+ljRTxlk4eeEWXoAjTVf5N5ebYm/lAVV/fs0CGt2rKMgt
-         HQ6RKnf72iCbQaDGAjGOIgx95KEFzo69HRe4UAY9NWGgHHlM91Fah7PWJKPdPqfAyi7t
-         bnKcxSEbXJE1J+dtfEAUqRyjUm79Fu73/c3j0fJGtlhW/YXCSz62TJcpRe1dXVKXLZcQ
-         Kg2NihpUaXTBg9+15MNcoE7Uy18glW+zn9L7bFppdJjuoQMS78PI0mLFuTIK5ZZG9Wem
-         3ydONLDyR01UiHfLDEgdmvLxgcy8AKVv66tkQfdHOxKTYdMwYODLvqhKZslO9fpeaw2f
-         qVlg==
-X-Forwarded-Encrypted: i=1; AJvYcCVGwxHMsKUx4GVTjVk0ASUV/Bpa8W6tKh4x/l42jsCHBLZFJLe/MxbWDVnixG588B5637SUJmbMucEXMYxx@vger.kernel.org
-X-Gm-Message-State: AOJu0YwXtmd0OpnDJN8xR2XAOylK7379550WD8FUukERmHCEz7l1+ex9
-	rt2MvGf7mZ/E2bqDhGdtZToSztynmd6+ns3yzhGyEp6i8ax8vr/qOeEC/rdfaN4ZMGwMewYCry1
-	wVrcF23yxZiMXaLoman2kLVpmcXOjAk8UPbVN7w==
-X-Gm-Gg: ASbGncvhiymSIM287oRiPN9HWaFFsuUB3Z5mv6/BoEMsOC2LHJrUR6GsSUjtSYd5sXc
-	nmLHRzd/3v+rBaDSKnbT/BWJ6r0ffNOXyBY4Y4gqkJ0ATIF4/2xLK8tUgkaR1ka5xrW/CDQ==
-X-Google-Smtp-Source: AGHT+IHpgRwQwBboEQ9PjLu/qgJ6amLTybGzvApvLaw73OSKQimY/kP8OVbkT4jb34R/TN7el1N2PJkLDyHes2owXN0=
-X-Received: by 2002:a25:b116:0:b0:e48:c570:301f with SMTP id
- 3f1490d57ef6-e55013913d0mr15064289276.4.1736819037055; Mon, 13 Jan 2025
- 17:43:57 -0800 (PST)
+	s=arc-20240116; t=1736819480; c=relaxed/simple;
+	bh=C31oeLQsUknkE7j0ghXma5PbORX25IMMMLdka6T1hdM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=bzMArGnBQNWZOiuX0HSZLULISQ/Sv4gLcRJh2sZo+O8Zt1dHYFw+xh+ix8rhvSgIvJQg0OrwQADLZThGi3iOaCFSDuR5+97zLq9a878NC4BsPquRd7gz9pfHEU6bzOFoHWh83oTlAYvWSejAZvfLJ2/s84ANdwhW78YnBBVcseA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=I4mrTD65; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50DGveQ5022467;
+	Tue, 14 Jan 2025 01:51:00 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	/KdLI8livRlilT3/R2ER/HwxMqZTMsclsBQBvK2SmQ0=; b=I4mrTD65xqC8i1PT
+	rzqCQQMrs672CL1N3xO9n7tzOvsDTXqdbedznShpOtSiUI4RkTVvXrNHxOzW+amL
+	6aDvk5rrbA9v77IR4rbobSGcgTKAkq1kZySntgWJpPMPkBFNegzoljbKSx15g3yj
+	udFLMQXCzg4CwWNwR5lj5LIDj4cms31V8qxNzZdH8MfZ2zGjL5og36Th6UccoYuA
+	r33Owox3yia+Q4GxlFsgDyGBIvgeSddsSco9iXIhLitwarWjz2KF8A9E8G7cJ7Nw
+	JOTJ4GWLlIFtmX8xSo6G2JfyIFNUfqIjfz9unD3vDkc4zBI+gXsp/XW4Z/s3PQ7E
+	iea4+Q==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 445293a28j-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 14 Jan 2025 01:50:59 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 50E1owOU001385
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 14 Jan 2025 01:50:58 GMT
+Received: from [10.64.68.153] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 13 Jan
+ 2025 17:50:53 -0800
+Message-ID: <a96c2e49-217d-4c90-b32a-ad8eb439a4ec@quicinc.com>
+Date: Tue, 14 Jan 2025 09:50:51 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250106-dpu-perf-rework-v4-0-00b248349476@linaro.org>
- <20250106-dpu-perf-rework-v4-4-00b248349476@linaro.org> <35a22251-c348-4bb7-905c-e24032100a00@quicinc.com>
- <sklr3ryu35xmoejkmbu35d3jxsg2clk3whmzslxtzcbcb3gjy4@bmcivlzkxqa3>
- <a17204c1-6eb5-4ce4-a302-c5f582055037@quicinc.com> <0B5D10CF-35CE-4CF5-9105-5ACCC04EB94B@linaro.org>
- <21bf3612-7b93-44ee-82b0-462a02d8e3ce@quicinc.com>
-In-Reply-To: <21bf3612-7b93-44ee-82b0-462a02d8e3ce@quicinc.com>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Tue, 14 Jan 2025 03:43:47 +0200
-X-Gm-Features: AbW1kvad6lKhpK2tZ6HHSVq70g3dwPhGSQw6wEQMhInSeg_0ncekc-pqlWLXa18
-Message-ID: <CAA8EJpoqO7EMdYzU9uqWdTRmto9qb6N=XhM4EzdAijPmoQA9uw@mail.gmail.com>
-Subject: Re: [PATCH v4 4/9] drm/msm/dpu: make fix_core_ab_vote consistent with fix_core_ib_vote
-To: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
-	Stephen Boyd <swboyd@chromium.org>, Simona Vetter <simona.vetter@ffwll.ch>, 
-	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
-	freedreno@lists.freedesktop.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-On Tue, 14 Jan 2025 at 03:31, Abhinav Kumar <quic_abhinavk@quicinc.com> wro=
-te:
->
->
->
-> On 1/11/2025 5:08 AM, Dmitry Baryshkov wrote:
-> > On 11 January 2025 01:49:23 EET, Abhinav Kumar <quic_abhinavk@quicinc.c=
-om> wrote:
-> >>
-> >>
-> >> On 1/9/2025 6:02 PM, Dmitry Baryshkov wrote:
-> >>> On Thu, Jan 09, 2025 at 05:40:23PM -0800, Abhinav Kumar wrote:
-> >>>>
-> >>>>
-> >>>> On 1/5/2025 7:07 PM, Dmitry Baryshkov wrote:
-> >>>>> The fix_core_ab_vote is an average bandwidth value, used for bandwi=
-dth
-> >>>>> overrides in several cases. However there is an internal inconsiste=
-ncy:
-> >>>>> fix_core_ib_vote is defined in KBps, while fix_core_ab_vote is defi=
-ned
-> >>>>> in Bps.
-> >>>>>
-> >>>>> Fix that by changing the type of the variable to u32 and using * 10=
-00ULL
-> >>>>> multiplier when setting up the dpu_core_perf_params::bw_ctl value.
-> >>>>>
-> >>>>
-> >>>> Actually after looking at this, I have another question.
-> >>>>
-> >>>> How did you conclude that fix_core_ib_vote is in KBps?
-> >>>>
-> >>>> min_dram_ib is in KBps in the catalog but how is fix_core_ib_vote?
-> >>>>
-> >>>> It depends on the interpretation perhaps. If the debugfs was suppose=
-d to
-> >>>> operate under the expectation that the provided value will be pre-mu=
-ltiplied
-> >>>> by 1000 and given then that explains why it was not multiplied again=
-.
-> >>>>
-> >>>> And I cross-checked some of the internal usages of the debugfs, the =
-values
-> >>>> provided to it were in Bps and not KBps.
-> >>>
-> >>> Well... As you wrote min_dram_ib is in KBps. So, by comparing the nex=
-t
-> >>> two lines, fix_core_ib_vote should also be in kBps, as there is no
-> >>> premultiplier:
-> >>>
-> >>>                   perf->max_per_pipe_ib =3D core_perf->fix_core_ib_vo=
-te;
-> >>> [...]
-> >>>                   perf->max_per_pipe_ib =3D perf_cfg->min_dram_ib;
-> >>>
-> >>> And then, as a proof, perf->max_per_pipe_ib is passed to icc_set_bw()
-> >>> without any modifications:
-> >>>
-> >>>                   icc_set_bw(kms->path[i], avg_bw, perf.max_per_pipe_=
-ib);
-> >>>
-> >>
-> >> Understood max_per_pipe_ib. But then by the same logic, fix_core_ab_vo=
-te is always in Bps and not in KBps because bw_ctl is in Bps.
-> >>
-> >> Is it really a discrepancy that fix_core_ib_vote is defined in KBps, w=
-hile fix_core_ab_vote is defined in Bps because they are just following the=
- units in which bw_ctl and max_per_pipe_ib were defined in resp.
-> >
-> > Yes. They come in pair, as a part of the user interface. If one is in B=
-ps and another one in KBps, it is very easy to forget that and misinterpret=
- them or to make a mistake while programming them. Not to mention that the =
-threshold files, which are related to AB, are in KBps.
-> >
->
-> In that case, the documentation for both needs to be updated as well as
-> it still says both are in bps not kbps.
-
-Ack, I missed it.
-
->
->   * @fix_core_ib_vote: fixed core ib vote in bps used in mode 2
->   * @fix_core_ab_vote: fixed core ab vote in bps used in mode 2
->   */
-> struct dpu_core_perf {
->          const struct dpu_perf_cfg *perf_cfg;
->          u64 core_clk_rate;
->          u64 max_core_clk_rate;
->          struct dpu_core_perf_tune perf_tune;
->          u32 enable_bw_release;
->          u64 fix_core_clk_rate;
->          u64 fix_core_ib_vote;
->          u64 fix_core_ab_vote;
-> };
->
-> >>
-> >>>
-> >>>>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> >>>>> ---
-> >>>>>     drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c | 4 ++--
-> >>>>>     drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h | 2 +-
-> >>>>>     2 files changed, 3 insertions(+), 3 deletions(-)
-> >>>>>
-> >>>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c b/driver=
-s/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
-> >>>>> index 7263ab63a692554cd51a7fd91bd6250330179240..7cabc8f26908cfd2dbb=
-ffebd7c70fc37d9159733 100644
-> >>>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
-> >>>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
-> >>>>> @@ -125,7 +125,7 @@ static void _dpu_core_perf_calc_crtc(const stru=
-ct dpu_core_perf *core_perf,
-> >>>>>                   perf->max_per_pipe_ib =3D 0;
-> >>>>>                   perf->core_clk_rate =3D 0;
-> >>>>>           } else if (core_perf->perf_tune.mode =3D=3D DPU_PERF_MODE=
-_FIXED) {
-> >>>>> -         perf->bw_ctl =3D core_perf->fix_core_ab_vote;
-> >>>>> +         perf->bw_ctl =3D core_perf->fix_core_ab_vote * 1000ULL;
-> >>>>>                   perf->max_per_pipe_ib =3D core_perf->fix_core_ib_=
-vote;
-> >>>>>                   perf->core_clk_rate =3D core_perf->fix_core_clk_r=
-ate;
-> >>>>>           } else {
-> >>>>> @@ -479,7 +479,7 @@ int dpu_core_perf_debugfs_init(struct dpu_kms *=
-dpu_kms, struct dentry *parent)
-> >>>>>                           &perf->fix_core_clk_rate);
-> >>>>>           debugfs_create_u32("fix_core_ib_vote", 0600, entry,
-> >>>>>                           &perf->fix_core_ib_vote);
-> >>>>> - debugfs_create_u64("fix_core_ab_vote", 0600, entry,
-> >>>>> + debugfs_create_u32("fix_core_ab_vote", 0600, entry,
-> >>>>>                           &perf->fix_core_ab_vote);
-> >>>>>           return 0;
-> >>>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h b/driver=
-s/gpu/drm/msm/disp/dpu1/dpu_core_perf.h
-> >>>>> index ca4595b4ec217697849af02446b23ed0857a0295..5e07119c14c6a9ed341=
-3d0eaddbd93df5cc3f79d 100644
-> >>>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h
-> >>>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h
-> >>>>> @@ -51,7 +51,7 @@ struct dpu_core_perf {
-> >>>>>           u32 enable_bw_release;
-> >>>>>           u64 fix_core_clk_rate;
-> >>>>>           u32 fix_core_ib_vote;
-> >>>>> - u64 fix_core_ab_vote;
-> >>>>> + u32 fix_core_ab_vote;
-> >>>>>     };
-> >>>>>     int dpu_core_perf_crtc_check(struct drm_crtc *crtc,
-> >>>>>
-> >>>
-> >
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v8 4/5] Coresight: Add Coresight TMC Control Unit driver
+To: James Clark <james.clark@linaro.org>
+CC: Jinlong Mao <quic_jinlmao@quicinc.com>, <coresight@lists.linaro.org>,
+        <linux-arm-kernel@lists.infradead.org>, <linux-kernel@vger.kernel.org>,
+        <devicetree@vger.kernel.org>,
+        Tingwei Zhang <quic_tingweiz@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>,
+        <linux-stm32@st-md-mailman.stormreply.com>,
+        Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Mike Leach
+	<mike.leach@linaro.org>,
+        Alexander Shishkin
+	<alexander.shishkin@linux.intel.com>,
+        Maxime Coquelin
+	<mcoquelin.stm32@gmail.com>,
+        Alexandre Torgue <alexandre.torgue@foss.st.com>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>
+References: <20241226011022.1477160-1-quic_jiegan@quicinc.com>
+ <20241226011022.1477160-5-quic_jiegan@quicinc.com>
+ <5d8df2d3-41b9-4c21-ba63-c184bad50041@linaro.org>
+Content-Language: en-US
+From: Jie Gan <quic_jiegan@quicinc.com>
+In-Reply-To: <5d8df2d3-41b9-4c21-ba63-c184bad50041@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: xk4ojLngdV_PDRmpcdBL4eTSDueLoj9H
+X-Proofpoint-ORIG-GUID: xk4ojLngdV_PDRmpcdBL4eTSDueLoj9H
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 phishscore=0
+ lowpriorityscore=0 bulkscore=0 spamscore=0 mlxscore=0 impostorscore=0
+ malwarescore=0 priorityscore=1501 mlxlogscore=999 adultscore=0
+ clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2501140012
 
 
 
---=20
-With best wishes
-Dmitry
+On 1/13/2025 8:05 PM, James Clark wrote:
+> 
+> 
+> On 26/12/2024 1:10 am, Jie Gan wrote:
+>> The Coresight TMC Control Unit hosts miscellaneous configuration 
+>> registers
+>> which control various features related to TMC ETR sink.
+>>
+>> Based on the trace ID, which is programmed in the related CTCU ATID
+>> register of a specific ETR, trace data with that trace ID gets into
+>> the ETR buffer, while other trace data gets dropped.
+>>
+>> Enabling source device sets one bit of the ATID register based on
+>> source device's trace ID.
+>> Disabling source device resets the bit according to the source
+>> device's trace ID.
+>>
+>> Signed-off-by: Jie Gan <quic_jiegan@quicinc.com>
+>> ---
+>>   drivers/hwtracing/coresight/Kconfig          |   8 +
+>>   drivers/hwtracing/coresight/Makefile         |   1 +
+>>   drivers/hwtracing/coresight/coresight-ctcu.c | 273 +++++++++++++++++++
+>>   drivers/hwtracing/coresight/coresight-ctcu.h |  21 ++
+>>   include/linux/coresight.h                    |   3 +-
+>>   5 files changed, 305 insertions(+), 1 deletion(-)
+>>   create mode 100644 drivers/hwtracing/coresight/coresight-ctcu.c
+>>   create mode 100644 drivers/hwtracing/coresight/coresight-ctcu.h
+>>
+>> diff --git a/drivers/hwtracing/coresight/Kconfig b/drivers/hwtracing/ 
+>> coresight/Kconfig
+>> index 06f0a7594169..152eab0b9b2a 100644
+>> --- a/drivers/hwtracing/coresight/Kconfig
+>> +++ b/drivers/hwtracing/coresight/Kconfig
+>> @@ -133,6 +133,14 @@ config CORESIGHT_STM
+>>         To compile this driver as a module, choose M here: the
+>>         module will be called coresight-stm.
+>> +config CORESIGHT_CTCU
+>> +    tristate "CoreSight TMC Control Unit driver"
+>> +    help
+>> +      This driver provides support for CoreSight TMC Control Unit
+>> +      that hosts miscellaneous configuration registers. This is
+>> +      primarily used for controlling the behaviors of the TMC
+>> +      ETR device.
+>> +
+>>   config CORESIGHT_CPU_DEBUG
+>>       tristate "CoreSight CPU Debug driver"
+>>       depends on ARM || ARM64
+>> diff --git a/drivers/hwtracing/coresight/Makefile b/drivers/hwtracing/ 
+>> coresight/Makefile
+>> index 4ba478211b31..1b7869910a12 100644
+>> --- a/drivers/hwtracing/coresight/Makefile
+>> +++ b/drivers/hwtracing/coresight/Makefile
+>> @@ -51,3 +51,4 @@ coresight-cti-y := coresight-cti-core.o    
+>> coresight-cti-platform.o \
+>>              coresight-cti-sysfs.o
+>>   obj-$(CONFIG_ULTRASOC_SMB) += ultrasoc-smb.o
+>>   obj-$(CONFIG_CORESIGHT_DUMMY) += coresight-dummy.o
+>> +obj-$(CONFIG_CORESIGHT_CTCU) += coresight-ctcu.o
+>> diff --git a/drivers/hwtracing/coresight/coresight-ctcu.c b/drivers/ 
+>> hwtracing/coresight/coresight-ctcu.c
+>> new file mode 100644
+>> index 000000000000..7650dbe9a41e
+>> --- /dev/null
+>> +++ b/drivers/hwtracing/coresight/coresight-ctcu.c
+>> @@ -0,0 +1,273 @@
+>> +// SPDX-License-Identifier: GPL-2.0-only
+>> +/*
+>> + * Copyright (c) 2024 Qualcomm Innovation Center, Inc. All rights 
+>> reserved.
+>> + */
+>> +
+>> +#include <linux/clk.h>
+>> +#include <linux/coresight.h>
+>> +#include <linux/device.h>
+>> +#include <linux/err.h>
+>> +#include <linux/kernel.h>
+>> +#include <linux/init.h>
+>> +#include <linux/io.h>
+>> +#include <linux/module.h>
+>> +#include <linux/mutex.h>
+>> +#include <linux/of.h>
+>> +#include <linux/platform_device.h>
+>> +#include <linux/slab.h>
+>> +
+>> +#include "coresight-ctcu.h"
+>> +#include "coresight-priv.h"
+>> +#include "coresight-trace-id.h"
+>> +
+>> +DEFINE_CORESIGHT_DEVLIST(ctcu_devs, "ctcu");
+>> +
+>> +#define ctcu_writel(drvdata, val, offset)    __raw_writel((val), 
+>> drvdata->base + offset)
+>> +#define ctcu_readl(drvdata, offset)        __raw_readl(drvdata->base 
+>> + offset)
+>> +
+>> +/* The TMC Coresight Control Unit uses four ATID registers to control 
+>> the data filter function based
+>> + * on the trace ID for each TMC ETR sink. The length of each ATID 
+>> register is 32 bits. Therefore,
+>> + * the ETR has a related field in CTCU that is 128 bits long. Each 
+>> trace ID is represented by one
+>> + * bit in that filed.
+>> + * e.g. ETR0ATID0 layout, set bit 5 for traceid 5
+>> + *                                           bit5
+>> + * ------------------------------------------------------
+>> + * |   |28|   |24|   |20|   |16|   |12|   |8|  1|4|   |0|
+>> + * ------------------------------------------------------
+>> + *
+>> + * e.g. ETR0:
+>> + * 127                     0 from ATID_offset for ETR0ATID0
+>> + * -------------------------
+>> + * |ATID3|ATID2|ATID1|ATID0|
+>> + *
+>> + */
+>> +#define CTCU_ATID_REG_OFFSET(traceid, atid_offset) \
+>> +        ((traceid / 32) * 4 + atid_offset)
+>> +
+>> +#define CTCU_ATID_REG_BIT(traceid)    (traceid % 32)
+>> +#define CTCU_ATID_REG_SIZE        0x10
+>> +
+>> +struct ctcu_atid_config {
+>> +    const uint32_t atid_offset;
+>> +    const uint32_t port_num;
+>> +};
+>> +
+>> +struct ctcu_config {
+>> +    const struct ctcu_atid_config *atid_config;
+>> +    int num_atid_config;
+>> +};
+>> +
+>> +static const struct ctcu_atid_config sa8775p_atid_cfgs[] = {
+>> +    {0xf8,  0},
+>> +    {0x108, 1},
+>> +};
+>> +
+>> +static const struct ctcu_config sa8775p_cfgs = {
+>> +    .atid_config        = sa8775p_atid_cfgs,
+>> +    .num_atid_config    = ARRAY_SIZE(sa8775p_atid_cfgs),
+>> +};
+>> +
+>> +/*
+>> + * __ctcu_set_etr_traceid: Set bit in the ATID register based on 
+>> trace ID when enable is true.
+>> + * Reset the bit of the ATID register based on trace ID when enable 
+>> is false.
+>> + *
+>> + * @csdev:    coresight_device struct related to the device
+>> + * @traceid:    trace ID of the source tracer.
+>> + * @enable:    True for set bit and false for reset bit.
+>> + *
+>> + * Returns 0 indicates success. Non-zero result means failure.
+>> + */
+>> +static int __ctcu_set_etr_traceid(struct coresight_device *csdev,
+>> +                  u8 traceid,
+>> +                  int port_num,
+>> +                  bool enable)
+>> +{
+>> +    uint32_t atid_offset, reg_offset, val;
+>> +    struct ctcu_drvdata *drvdata;
+>> +    int bit;
+>> +
+>> +    if (!IS_VALID_CS_TRACE_ID(traceid))
+>> +        return -EINVAL;
+> 
+> Minor point, but this was already done in the calling function.
+Thanks for comment. Totally agree with you, it's redundant codes here.
+I will remove it in next version.
+
+> 
+>> +
+>> +    drvdata = dev_get_drvdata(csdev->dev.parent);
+>> +    if (IS_ERR_OR_NULL(drvdata))
+>> +        return -EINVAL;
+>> +
+>> +    atid_offset = drvdata->atid_offset[port_num];
+>> +    if (atid_offset == 0)
+>> +        return -EINVAL;
+>> +
+>> +    guard(raw_spinlock_irqsave)(&drvdata->spin_lock);
+>> +    CS_UNLOCK(drvdata->base);
+>> +
+>> +    bit = CTCU_ATID_REG_BIT(traceid);
+>> +    reg_offset = CTCU_ATID_REG_OFFSET(traceid, atid_offset);
+> 
+> The locks only need to be around the read/write below. bit and 
+> reg_offset are all local and shouldn't be affected. Doesn't really make 
+> a difference but makes the code a bit more readable.
+Yes, agree with you. It makes sense and is easier to read. Will move the 
+CS_UNLOCK to the proper position.
+
+> 
+>> +    if (reg_offset - atid_offset > CTCU_ATID_REG_SIZE) {
+>> +        CS_LOCK(drvdata);
+>> +        return -EINVAL;
+>> +    }
+>> +
+>> +    val = ctcu_readl(drvdata, reg_offset);
+>> +    if (enable)
+>> +        val = val | BIT(bit);
+>> +    else
+>> +        val = val & ~BIT(bit);
+>> +
+>> +    ctcu_writel(drvdata, val, reg_offset);
+>> +    CS_LOCK(drvdata->base);
+>> +
+>> +    return 0;
+>> +}
+>> +
+[...]
+
+Thanks,
+Jie
+
 
