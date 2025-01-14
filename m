@@ -1,62 +1,62 @@
-Return-Path: <linux-arm-msm+bounces-45052-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-45053-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0635CA11455
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jan 2025 23:46:50 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id BAB29A1146E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jan 2025 23:56:08 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9C1D03A5803
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jan 2025 22:46:43 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id AD4A6163E06
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jan 2025 22:56:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 267CB20CCCF;
-	Tue, 14 Jan 2025 22:46:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A2FBB2135BD;
+	Tue, 14 Jan 2025 22:56:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KOdmhHn2"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Xw977NWR"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E84C71D47BD;
-	Tue, 14 Jan 2025 22:46:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66F0020AF6D;
+	Tue, 14 Jan 2025 22:56:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736894805; cv=none; b=W6/Q/kj3P9gyXqqVTkh4+hnoLB4271Tj+v9srWd05Zz6yt/MISvDRIYyIyqOmxyV3guOmvrPKIfAWBR+U1wBbYv8JJT0Nq6TSjFxgfjH7Re1s1qi/Syj2rBsdNlcCs0A+tZbsTfpLn6AwBOWhPjsD8bWV5555HcqIsQzf5BWWc0=
+	t=1736895363; cv=none; b=sOjiRK5YjdPezlKG3TNw2ymZ3O1XqHFx3WAMcfcnSdCVGneVgv3TNcz1hvenyIhGkKCW46cP1Gs5XYJCqhX6T0PNvy5awfctkIRheppCBNtwccKvxRzPDnoqfS3EMWyW8VnQs4WxQ8gXgc4u7vqvlpFftE0Xm35m4irnAKH4reM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736894805; c=relaxed/simple;
-	bh=wtRYAsEqANErYEMs5FdUR4HrHln+NmBeAq6yC2QeyFI=;
+	s=arc-20240116; t=1736895363; c=relaxed/simple;
+	bh=f00806oyHZJpBEDnTJ2T3SLsZTfFt2z1apea35SR2BU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=D6L1sPHwwo5G7V22cSl3CXjiQGRo4RYRQzuBA7DEcUhXpuPntGkhUs0Gvj+0kLG9IAhfDaYw8Sh+mO7BXkSs9DVxCTtFASCGl37qjHjNsuHM+JWtJ5l2spAaAOhvSM+Skpl2eRpVwbe1asgHnx1+EIRiw/UuGQuZ1RAVyB0Qwcc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KOdmhHn2; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EBD7C4CEDD;
-	Tue, 14 Jan 2025 22:46:43 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=WN2IkNr1Hk2AeHEmGIGG95aN/NMb5ExAZ109hBO3fOCDKd9MwcWlHLCY1o5nVM8BurJvdKUf1+8yzZjMTuCEHupH1yd/rVEHP3d5/jIij9U7aqqsTpWICRYs8xXn3M12fNmCpkeuf6DbDJ+mjjseF95fRY6Xw0LUHGhFwxcAPyI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Xw977NWR; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6455C4CEDD;
+	Tue, 14 Jan 2025 22:56:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1736894804;
-	bh=wtRYAsEqANErYEMs5FdUR4HrHln+NmBeAq6yC2QeyFI=;
+	s=k20201202; t=1736895362;
+	bh=f00806oyHZJpBEDnTJ2T3SLsZTfFt2z1apea35SR2BU=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=KOdmhHn2WV5PYB2Gre/O4QTnKp/sZOc+Dvkn0BmB068IWWzSsUTDC6RlzrFsmJI4S
-	 upozA5i4diLAN01F85FIM/y+jiVtr2PGK1Cv7KDPsyPQmgp/S25uDipjBtdEflO0C+
-	 5ELtLFXuyweCPTR1lfvELTYpm0MVre9okuVNH2/s4ZXyHaFuk2Xjk8/bzW6biv8izl
-	 unqlW1mdP0i520Er+K9l1IE3h4S++5TuRoFuq/vP+qgbiEnHGNJqhDzNfFduavq5g5
-	 R6PIxSJLugJrbLJwT5t85/A1QrRG4BsSjZjsgUOndqxRUwgEANGT0MSd4aBMOEU3fj
-	 4yUkNbM+bhB9g==
-Date: Tue, 14 Jan 2025 16:46:41 -0600
+	b=Xw977NWRNeLSYebXySKQdHG9knR2/ZKBay/LkglnodiWiw0CtP9HwFcxrRoCIDjyG
+	 fCOhjlmYpVcds5KBl4d890bZPVJuP2HgM4oHUGE4POUS6ao80Ke+Hh1LygM225od9a
+	 MZfzv2qOca73Mjhv+Y/MMPfuIptzV3J7aB0IrHb0ffYiIvOBsEnemOTl+fDKO1vhxB
+	 QGXiAe2LiOyd86ebroYK17jAgMLaxJqpGHHPqpWSa0LxwOOQ91pUPA8WeJsxrQF9mT
+	 P+W7SGnUS4BrdGQYXmG7yWTgBl0GwW+c6Os2Df7NLxdPJ2FtbZTb5n9MsoMwXMBHav
+	 yqH9HC2y4ZGRg==
+Date: Tue, 14 Jan 2025 16:55:59 -0600
 From: Bjorn Andersson <andersson@kernel.org>
-To: Rob Herring <robh@kernel.org>
+To: Frank Li <Frank.li@nxp.com>
 Cc: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>, 
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
-	Conor Dooley <conor+dt@kernel.org>, Felipe Balbi <balbi@kernel.org>, 
-	Wesley Cheng <quic_wcheng@quicinc.com>, Saravana Kannan <saravanak@google.com>, 
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>, Philipp Zabel <p.zabel@pengutronix.de>, 
-	Konrad Dybcio <konradybcio@kernel.org>, Frank Li <Frank.li@nxp.com>, linux-arm-msm@vger.kernel.org, 
-	linux-usb@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3 06/12] of: overlays: dwc3-flattening: Add Qualcomm
- Arm64 board overlays
-Message-ID: <7krlwxqealxptxjx63fi7ne4j4felo2n2t4mkxmmimnrax4jxt@wiwrbgu53wmu>
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Felipe Balbi <balbi@kernel.org>, Wesley Cheng <quic_wcheng@quicinc.com>, 
+	Saravana Kannan <saravanak@google.com>, Thinh Nguyen <Thinh.Nguyen@synopsys.com>, 
+	Philipp Zabel <p.zabel@pengutronix.de>, Konrad Dybcio <konradybcio@kernel.org>, 
+	linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3 08/12] usb: dwc3: core: Expose core driver as library
+Message-ID: <3s77lvw4dp3cg2s6tqt63wuexft3pusfbg2ibteacnd5z2dolf@p7mb2j5j5jlz>
 References: <20250113-dwc3-refactor-v3-0-d1722075df7b@oss.qualcomm.com>
- <20250113-dwc3-refactor-v3-6-d1722075df7b@oss.qualcomm.com>
- <20250114174248.GA1414434-robh@kernel.org>
+ <20250113-dwc3-refactor-v3-8-d1722075df7b@oss.qualcomm.com>
+ <Z4a+fyhInS7ETgKh@lizhi-Precision-Tower-5810>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,223 +65,119 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250114174248.GA1414434-robh@kernel.org>
+In-Reply-To: <Z4a+fyhInS7ETgKh@lizhi-Precision-Tower-5810>
 
-On Tue, Jan 14, 2025 at 11:42:48AM -0600, Rob Herring wrote:
-> On Mon, Jan 13, 2025 at 09:11:39PM -0800, Bjorn Andersson wrote:
-[..]
-> > +dwc3-flattening-overlay-y += dwc3-qcom_sm8250_xiaomi_elish.dtb.o
-> > +dwc3-flattening-overlay-y += dwc3-qcom_sm8350.dtb.o
-> > +dwc3-flattening-overlay-y += dwc3-qcom_sm8350_qcom_sm8350_hdk.dtb.o
-> > +dwc3-flattening-overlay-y += dwc3-qcom_sm8450.dtb.o
-> > +dwc3-flattening-overlay-y += dwc3-qcom_sm8550.dtb.o
-> > +dwc3-flattening-overlay-y += dwc3-qcom_sm8650.dtb.o
-> > +dwc3-flattening-overlay-y += dwc3-qcom_x1e80100.dtb.o
-> > +dwc3-flattening-overlay-y += dwc3-qcom_x1e80100_hp_omnibook_x14.dtb.o
+On Tue, Jan 14, 2025 at 02:43:59PM -0500, Frank Li wrote:
+> On Mon, Jan 13, 2025 at 09:11:41PM -0800, Bjorn Andersson wrote:
+> > The DWC3 IP block is handled by three distinct device drivers: XHCI,
+> > DWC3 core and a platform specific (optional) DWC3 glue driver.
+> >
+> > This has resulted in, at least in the case of the Qualcomm glue, the
+> > presence of a number of layering violations, where the glue code either
+> > can't handle, or has to work around, the fact that core might not probe
+> > deterministically.
+> >
+> > An example of this is that the suspend path should operate slightly
+> > different depending on the device operating in host or peripheral mode,
+> > and the only way to determine the operating state is to peek into the
+> > core's drvdata.
+> >
+> > The Qualcomm glue driver is expected to make updates in the qscratch
+> > register region (the "glue" region) during role switch events, but with
+> > the glue and core split using the driver model, there is no reasonable
+> > way to introduce listeners for mode changes.
+> >
+> > Split the dwc3 core platform_driver callbacks and their implementation
+> > and export the implementation, to make it possible to deterministically
+> > instantiate the dwc3 core as part of the dwc3 glue drivers and to
+> > allow flattening of the DeviceTree representation.
+> >
+> > Signed-off-by: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
+> > ---
+> >  drivers/usb/dwc3/core.c | 149 ++++++++++++++++++++++++++++++------------------
+> >  drivers/usb/dwc3/glue.h |  22 +++++++
+> >  2 files changed, 117 insertions(+), 54 deletions(-)
+> >
+> > diff --git a/drivers/usb/dwc3/core.c b/drivers/usb/dwc3/core.c
+> > index c22b8678e02e..930d812a9fbb 100644
+> > --- a/drivers/usb/dwc3/core.c
+> > +++ b/drivers/usb/dwc3/core.c
+> > @@ -36,6 +36,7 @@
+> >
+> >  #include "core.h"
+> >  #include "gadget.h"
+> > +#include "glue.h"
+> >  #include "io.h"
+> >
+> >  #include "debug.h"
+> > @@ -2129,27 +2130,14 @@ static int dwc3_get_num_ports(struct dwc3 *dwc)
+> >  	return 0;
+> >  }
+> >
+> > -static int dwc3_probe(struct platform_device *pdev)
+> > +int dwc3_init(struct dwc3 *dwc, struct resource *res)
 > 
-> Some of these platforms are quite new. I think they could tolerate a 
-> flag day. It's your fault for knowing this is a problem and continuing 
-> to accept new users...
-> 
-
-Yes, I agree. But as the timeline for bringing a solution to the table
-has been unknown I don't think it would make sense to keep thing hostage.
-
-> For the ones we do maintain compatibility, I would like to define some 
-> timeframe for doing so. This would be a lot of stuff to keep forever. I 
-> suspect the ABI gets broken anyways and/or there are new features 
-> enabled.
-> 
-
-Absolutely. The majority of the involved boards are booted off an
-Android bootimg, which mostly implies that the DTB would come with the
-kernel - so we don't need to keep things around for long.
-
-The exception that comes to mind is the WoS laptops, where people
-do have UEFI or DtbLoader EFI application load a DTB which isn't
-automatically upgraded by their Linux distro - so for those it makes
-sense to keep things around longer. That said, for most of these, things
-are still evolving, so users should want to upgrade anyways.
-
-The features that this will enable us to implement in the USB drivers
-are things like reliable USB role switch, for which I don't see there to
-be any DT impact...
-
-
-TL;DR I think we could start remove some of these after 1 or 2 releases,
-and perhaps keep the WoS ones around for another LTS. Doesn't that sound
-reasonable? Would you like this documented in some particular way?
-
-> > diff --git a/drivers/of/overlays/dwc3-flattening/dwc3-flattening.c b/drivers/of/overlays/dwc3-flattening/dwc3-flattening.c
-> > index 0a3a31c5088b..d33cdf6661c0 100644
-> > --- a/drivers/of/overlays/dwc3-flattening/dwc3-flattening.c
-> > +++ b/drivers/of/overlays/dwc3-flattening/dwc3-flattening.c
-> > @@ -21,6 +21,24 @@ struct dwc3_overlay_data {
-> >  	const char *migrate_match;
-> >  };
-> >  
-> > +static const struct dwc3_overlay_data dwc3_qcom_apq8094_overlay = {
-> 
-> Can't all these be init section? It's a lot of bloat for everyone else 
-> otherwise. Same issue for the overlays themselves. The one that you 
-> apply should be copied out of init.
+> Maybe need data struct, which included res. It may need pass down more
+> information in future.
 > 
 
-That we should be able to do.
+Per this series we're resolving the race conditions stemming from
+dwc3-qcom and core having different lifetimes, but more importantly it
+will allow us to propose a mechanism for invoking role-switch events in
+the glue code from the core - i.e. we are planning to add at least one
+more argument here; so this proposal makes sense.
 
-> > +	.fdt = __dtb_dwc3_qcom_apq8094_begin,
-> > +	.end = __dtb_dwc3_qcom_apq8094_end,
-> > +	.migrate_match = "qcom,dwc3",
+> >  {
+> > -	struct device		*dev = &pdev->dev;
+> > -	struct resource		*res, dwc_res;
+> > +	struct device		*dev = dwc->dev;
+> > +	struct resource		dwc_res;
+> >  	unsigned int		hw_mode;
+> >  	void __iomem		*regs;
+> > -	struct dwc3		*dwc;
+> >  	int			ret;
+> >
+> ...
 > 
-> This is the same everywhere AFAICT, so why do we need it?
-> 
-
-This was the only thing in the implementation that was
-Qualcomm-specific, and Frank expressed interest in trying this out for
-NXP as well. But we could certainly postpone this until the first
-non-qcom,dwc3 user comes along (if that happens).
-
-> > +};
-> > +
-[..]
-> > diff --git a/drivers/of/overlays/dwc3-flattening/dwc3-qcom_msm8992.dts b/drivers/of/overlays/dwc3-flattening/dwc3-qcom_msm8992.dts
-> > new file mode 100644
-> > index 000000000000..8ca699460ec3
-> > --- /dev/null
-> > +++ b/drivers/of/overlays/dwc3-flattening/dwc3-qcom_msm8992.dts
-> > @@ -0,0 +1,32 @@
-> > +// SPDX-License-Identifier: BSD-3-Clause
+> > +++ b/drivers/usb/dwc3/glue.h
+> > @@ -0,0 +1,22 @@
+> > +/* SPDX-License-Identifier: GPL-2.0 */
 > > +/*
-> > + * Copyright (c) 2025 Qualcomm Innovation Center, Inc. All rights reserved.
+> > + * glue.h - DesignWare USB3 DRD glue header
 > > + */
-> > +/dts-v1/;
-> > +/plugin/;
 > > +
-> > +#include <dt-bindings/interrupt-controller/arm-gic.h>
+> > +#ifndef __DRIVERS_USB_DWC3_GLUE_H
+> > +#define __DRIVERS_USB_DWC3_GLUE_H
 > > +
-> > +/ {
-> > +	fragment@0 {
-> > +		target-path = "/soc@0/usb@f92f8800";
-> > +		#address-cells = <1>;
-> > +		#size-cells = <1>;
-> > +		interrupt-parent = <&intc>;
+> > +#include <linux/types.h>
+> > +#include "core.h"
 > > +
-> > +		__overlay__ {
-> > +			compatible = "qcom,msm8994-dwc3", "qcom,snps-dwc3";
+> > +int dwc3_init(struct dwc3 *dwc, struct resource *res);
+> > +void dwc3_uninit(struct dwc3 *dwc);
+> > +
+> > +int dwc3_runtime_suspend(struct dwc3 *dwc);
+> > +int dwc3_runtime_resume(struct dwc3 *dwc);
+> > +int dwc3_runtime_idle(struct dwc3 *dwc);
+> > +int dwc3_suspend(struct dwc3 *dwc);
+> > +int dwc3_resume(struct dwc3 *dwc);
+> > +void dwc3_complete(struct dwc3 *dwc);
 > 
-> Should be 8992? If not, this is the same as the next overlay.
-> 
-
-This follows the existing dtb, where msm8992.dtsi inherits msm8994 and
-overwrites a few properties.
-
-> > +			reg = <0xf9200000 0xd000>;
-> > +			interrupts = <GIC_SPI 131 IRQ_TYPE_LEVEL_HIGH>,
-> > +				     <GIC_SPI 180 IRQ_TYPE_LEVEL_HIGH>,
-> > +				     <GIC_SPI 311 IRQ_TYPE_LEVEL_HIGH>,
-> > +				     <GIC_SPI 133 IRQ_TYPE_LEVEL_HIGH>,
-> > +				     <GIC_SPI 310 IRQ_TYPE_LEVEL_HIGH>;
-> > +			interrupt-names = "dwc_usb3",
-> > +					  "pwr_event",
-> > +					  "qusb2_phy",
-> > +					  "hs_phy_irq",
-> > +					  "ss_phy_irq";
-> > +		};
-> > +	};
-> > +};
-[..]
-> > diff --git a/drivers/of/overlays/dwc3-flattening/dwc3-qcom_msm8996_oneplus_oneplus3.dts b/drivers/of/overlays/dwc3-flattening/dwc3-qcom_msm8996_oneplus_oneplus3.dts
-> > new file mode 100644
-> > index 000000000000..7a583de320cf
-> > --- /dev/null
-> > +++ b/drivers/of/overlays/dwc3-flattening/dwc3-qcom_msm8996_oneplus_oneplus3.dts
-> > @@ -0,0 +1,56 @@
-> > +// SPDX-License-Identifier: BSD-3-Clause
-> > +/*
-> > + * Copyright (c) 2025 Qualcomm Innovation Center, Inc. All rights reserved.
-> > + */
-> > +/dts-v1/;
-> > +/plugin/;
-> > +
-> > +#include <dt-bindings/interrupt-controller/arm-gic.h>
-> > +
-> > +/ {
-> > +	fragment@0 {
-> > +		target-path = "/soc@0/usb@6af8800";
-> > +		#address-cells = <1>;
-> > +		#size-cells = <1>;
-> > +		interrupt-parent = <&intc>;
-> > +
-> > +		__overlay__ {
-> > +			compatible = "qcom,msm8996-dwc3", "qcom,snps-dwc3";
-> > +			reg = <0x06a00000 0xd000>;
-> > +			interrupts = <GIC_SPI 131 IRQ_TYPE_LEVEL_HIGH>,
-> > +				     <GIC_SPI 180 IRQ_TYPE_LEVEL_HIGH>,
-> > +				     <GIC_SPI 347 IRQ_TYPE_LEVEL_HIGH>,
-> > +				     <GIC_SPI 133 IRQ_TYPE_LEVEL_HIGH>,
-> > +				     <GIC_SPI 243 IRQ_TYPE_LEVEL_HIGH>;
-> > +			interrupt-names = "dwc_usb3",
-> > +					  "pwr_event",
-> > +					  "qusb2_phy",
-> > +					  "hs_phy_irq",
-> > +					  "ss_phy_irq";
-> 
-> No SS phy, so should be dropped? OTOH, less variation if you keep it.
+> dwc3_usb_*()? There may be name polution in future. There are many IPs
+> created by dwc.
 > 
 
-It's msm8996 and that has a SuperSpeed PHY. As such, the "phys" below is
-wrong, and probably done so in order to disable SuperSpeed...
+I thought dwc3 was uniquely associated with USB, but I don't have any
+objections to your proposal.
 
-I did reflect on a number of these and would like us to revisit them,
-but the overlay matches the current behavior.
-
-> You can utilize includes in overlays just like base .dts files. So this 
-> one really just needs to include the previous overlay and override phys 
-> and phy-names.
-> 
-
-Okay, will give that a try.
-
-> > +			phys = <&hsusb_phy1>;
-> > +			phy-names = "usb2-phy";
-> > +		};
-> > +	};
-> > +
-> > +	fragment@1 {
-> > +		target-path = "/soc@0/usb@76f8800";
-> > +		#address-cells = <1>;
-> > +		#size-cells = <1>;
-> > +		interrupt-parent = <&intc>;
-> > +
-> > +		__overlay__ {
-> > +			compatible = "qcom,msm8996-dwc3", "qcom,snps-dwc3";
-> > +			reg = <0x07600000 0xd000>;
-> > +			interrupts = <GIC_SPI 138 IRQ_TYPE_LEVEL_HIGH>,
-> > +				     <GIC_SPI 140 IRQ_TYPE_LEVEL_HIGH>,
-> > +				     <GIC_SPI 352 IRQ_TYPE_LEVEL_HIGH>,
-> > +				     <GIC_SPI 139 IRQ_TYPE_LEVEL_HIGH>;
-> > +			interrupt-names = "dwc_usb3",
-> > +					  "pwr_event",
-> > +					  "qusb2_phy",
-> > +					  "hs_phy_irq";
-> > +			phys = <&hsusb_phy2>;
-> > +			phy-names = "usb2-phy";
-> > +		};
-> > +	};
-> > +};
-> > diff --git a/drivers/of/overlays/dwc3-flattening/dwc3-qcom_msm8996_oneplus_oneplus3t.dts b/drivers/of/overlays/dwc3-flattening/dwc3-qcom_msm8996_oneplus_oneplus3t.dts
-> > new file mode 100644
-> > index 000000000000..7a583de320cf
-> > --- /dev/null
-> > +++ b/drivers/of/overlays/dwc3-flattening/dwc3-qcom_msm8996_oneplus_oneplus3t.dts
-> 
-> This looks pretty much like the prior one?
-> 
-
-Yes, I generated these to be 1:1 with the compatibles, which matches on
-the specific board compatible. If we're in agreement on the general
-approach I can go back and spend more time consolidating these.
-
-Regards,
+Thanks,
 Bjorn
+
+> Frank
+> 
+> > +
+> > +#endif
+> >
+> > --
+> > 2.45.2
+> >
 
