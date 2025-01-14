@@ -1,77 +1,77 @@
-Return-Path: <linux-arm-msm+bounces-44990-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-44991-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 727B2A10451
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jan 2025 11:35:38 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B02D0A10467
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jan 2025 11:38:38 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 70893188785B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jan 2025 10:35:41 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id DCFFA3A3EBF
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jan 2025 10:38:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4D5013DABE3;
-	Tue, 14 Jan 2025 10:35:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7A6EF22DC48;
+	Tue, 14 Jan 2025 10:38:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="gmzPRxu/"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ZVYngFy1"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f54.google.com (mail-lf1-f54.google.com [209.85.167.54])
+Received: from mail-lj1-f171.google.com (mail-lj1-f171.google.com [209.85.208.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E83B3DABE7
-	for <linux-arm-msm@vger.kernel.org>; Tue, 14 Jan 2025 10:34:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EAD11ADC9F
+	for <linux-arm-msm@vger.kernel.org>; Tue, 14 Jan 2025 10:38:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736850901; cv=none; b=ci6aYTdP5kjzGJxGYyuj9EkKl+vMX0IR4YZOV9SBCK5H5ZffUw8Y/QxtU2fag+nP058yNZW9JjZclADwlns9zhO8cTXKWanOkzfbFFEMCWFwA1iZn6hIn6LjY5kok4q+KvCrE3WP/jOvHPKJN6L0j+yQV6zo5JqysjHixWJk8Tw=
+	t=1736851109; cv=none; b=BGoU3KSj4KRuNn5D7b4Q7Kr70tVIgSj5N8vKN9ejazt7Z4Jm/NYz4UQxzt3lw3cUlHcJ8OM4EPFD3Ly0n4s0BAG+6nlB+QWgNLOaBZztbZ/UBvTJ31qkyGOsXbeAkuVVBeT81VXoeYvPcecuejBXI0k4/GJyil3uAPJC23zAUEQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736850901; c=relaxed/simple;
-	bh=oBY+3eZc51Y6fF6g/l8GEc6MeyGaj+xttfDQd4bfPhE=;
+	s=arc-20240116; t=1736851109; c=relaxed/simple;
+	bh=R1Tk783hfRtPKsihEFcpmlIEDLctCnv9KDLzdCmuyqc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=TMgvJSVh0DWvY8I1qjJmGY2TZ8CBr+ZA4l5urQhHwYnaolL1DrWUtBsLdcSPw16o7TiuylkySJ/sWDNz0kgD+2zCeomnyHGCWaHIkoS0oDhe0ZGuFEPAFZUDABCuQmgHFNVo8cdRbeGolsyxq/ajt4o2koSbT6s0YLrur6l2/1c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=gmzPRxu/; arc=none smtp.client-ip=209.85.167.54
+	 Content-Type:Content-Disposition:In-Reply-To; b=i5eOTQIUUS66V2d42wjIQ/dYEh5EBi/Jb7ov+OlsxVRQ28p0gJh/qLIbm7ZzUrn8C96W0hWG4e5z33hKlnEMu67S7mq3NAqekK9L7bwylJRD4gx/wdd1YiXZngYx6LdFcdiVTFtCJqgS2W4mwugUzAZg7yrvoKCftExPx87uGVM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ZVYngFy1; arc=none smtp.client-ip=209.85.208.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f54.google.com with SMTP id 2adb3069b0e04-53df80eeeedso4950958e87.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Jan 2025 02:34:58 -0800 (PST)
+Received: by mail-lj1-f171.google.com with SMTP id 38308e7fff4ca-303489e8775so47035571fa.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Jan 2025 02:38:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1736850897; x=1737455697; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1736851105; x=1737455905; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=T82zNstFBnDSTTkW/x3AxhknKVdFYWE7bW1yyO8UUJc=;
-        b=gmzPRxu/O9WthVoXIcfrpQWp3mNRQRuQnLIFI+Yk2GGYuFtoEvFABbxrLFbzFyKli6
-         lB0LnXCU+44vF4KjLCogQoXIbDhLL79r1bkO+uPkupWeNFz3thx7uwjZXCvnXw7s/EG8
-         zZhPuyPYsU+SNfvgVt4UBXK4l1TpnbWhsR7Kpk0Sy0jPBayJ5kkjQnh5AIC1RhFmutCr
-         FIxJ1a9VRFpGAPDW/VpEk230NiTOwUqq6Db/lGtKSrqGaEL30DQE04qPtaie7A0x6K7H
-         MmRrhlCtprYLwBtj6ayfANmNp2xd0yzpkr0XUBJxhwVfovZ+fxTx5fMFFuREAwwpdTz8
-         tncg==
+        bh=uNN7B9q2J4hdcvsmifk7w5aJJJisTFxNMJ5KcojNYOk=;
+        b=ZVYngFy1Wrvl70mVNUFMgRPugW0F4B+zVfpT7SfOjyE3MQGSvgIGR5aeaYefIWDVkN
+         BuX9TBAa8jzoe4AFA4DAv8QtVzz3FDQjZi/8dZNal3JKxwimbuotSJdrrmZi7gPHcJ0I
+         tbIqGwhABLhtp30pW1sNv2ef/2Ibck4PSMszQ4c/zn3ceAemtUDSFtDvKZ79dNbZaohI
+         8WsnqHadCwShBrDb9Fkp+7b8Y999q15nX+SSR+bagdV32FDdH5m44XbD6rgbS4ln7VNe
+         7b9OcRWJxSY38HIulz07J8ps+Dwy7iSbcd1OqwlFMROKdOF5g+KBw2ENJYENQ8F/u0uc
+         OGkA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736850897; x=1737455697;
+        d=1e100.net; s=20230601; t=1736851105; x=1737455905;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=T82zNstFBnDSTTkW/x3AxhknKVdFYWE7bW1yyO8UUJc=;
-        b=vq2WCuovqJfq9GL3nUM3nhyGYXlvn8UxRlRLjp0j9ZFJglPsHxkddmfSKDVBn/QbLo
-         p073lbE9bm96YQTzPCfEsrhcW5u1gXFxTK0J5CTtcfqWCkA5SjjAqFyh2mbRxAJe6JTY
-         I2bu7j4zhKZOkmbkbE6wEvTRuluY/pTeBP6ikYWGNmekFoCt/sBHY9DZFRUXUNrlIg32
-         WReI2lzRwikKIWCIJBYuGdEDrcFFOcVbV/TC20QZZnY4AmdM8Hhbg4PocLHCbykMtiZC
-         gyfBsRI+8BOpUdvWEp6x/9KWz+nnMwx++Qs3uPUlj9/AVRUer2v3Z8hqfI9yGOhIBPUx
-         yYew==
-X-Forwarded-Encrypted: i=1; AJvYcCVoxpcTUEKpl8o8XUnJWPbp9uPmclFEpvnXTWrXfEPuKPR0s+OJyLbFDDIyuMjoDUlsIQ1hToMh1oTU8cQz@vger.kernel.org
-X-Gm-Message-State: AOJu0YwWITkfsPJMe0OBIZmMG4KkOHmK4QreknwPl3PhhI8JROCrvr4w
-	AUNsQ6Oh12Orz2wB9RaPThrCh952fac5rj2wpKIwgiImZnYDfY2bGGAQclfIxa0=
-X-Gm-Gg: ASbGncvynFdnpxpdOe7jSuTFvN7q4qFYQMyN/7GKRDM5akbNxKPe+CtZfFse7rS1UuO
-	ftjhoT+E5WBaIvcFcMSHj5V41G/bl5UuRkomjolM+EMmBd7W4C8HA9y9//ICzmr/8Kch4yHCrPK
-	ve2/sWgyZkzCI/+Hml726gZQT4IcCLxvY+0a1siiqNcjWYGDK/5imrsw0I81PFz5XlCpOXvGGWs
-	9xutalBYBI1IFCOi6Yqqd0D5TPNlUZzggIAnydNPgWOaPGhNP/UFhFaUYbqAehHgZVgaZ1DJU+k
-	CA5nz18mT1LjijvpftwNv9QZcgS/pndeAc+k
-X-Google-Smtp-Source: AGHT+IFwrbLGTrG2dyiu5uP2+GJnDGK0/StK5LmN5McezpTF9gNRaaageIc+tg7gnEcGTINdnMPa7w==
-X-Received: by 2002:a05:6512:ba9:b0:540:2223:9b20 with SMTP id 2adb3069b0e04-542845d1b75mr6413752e87.53.1736850897244;
-        Tue, 14 Jan 2025 02:34:57 -0800 (PST)
+        bh=uNN7B9q2J4hdcvsmifk7w5aJJJisTFxNMJ5KcojNYOk=;
+        b=eTm3KFQyrUxrVuqDaN/tv8Z6W455xq1bsQfCB0snEYNJ97PPhlhcHbuvSg3a+53Nf7
+         sJ6rQ6+h3DXH4lS6mzHpUr11ICbdOGUtHpLTqpTX6/aJI5Ed/UIpcrhle0GunZPBnisU
+         GGE9dykVL9uBH2C0RJKEwNPNihNkQcJfS55dBt/hqEeFvXOMdsNTZNA5UtBf+INyrRbD
+         pjxOB/OSUd90snKpRcdh7RV0spNQy4mj0XUTT03pEAcjP0lxwOb6eHH2r+Obb8opedSh
+         vNAWXllp2VTz1ccdoXW1KGEwxD0OW9x8NC/hpJffUPDdy1oLgerCjNHP6gLVWoAhtU7J
+         vcDg==
+X-Forwarded-Encrypted: i=1; AJvYcCWiNQN03ggoqNz/ldtWNKuFIbLXgTKk6knyxd5UMajQV9pFcjfDy6NRDO0SXWv8stUmc0HNgQifhw5cie+Q@vger.kernel.org
+X-Gm-Message-State: AOJu0YykiVPnbv2+ew8IJFWGohNM3vtvi2qKfzquEGpNK+7FI8p0hwPh
+	uMMHNLKchfAlrkm9FFHnV9o32ZYgApztsv1g+RM7hVize6nB95hw9xnQevmBeCs=
+X-Gm-Gg: ASbGnctrj49SfmKpLLF2jiBErhpiA2sFUnB+7+zTmHKFykPJrrw8rNOdUBpIS4tF87G
+	SYoCsGlXPIzzTazcHQTd9DHpUFNGxYvE4BIm2U+JrQ/ln5ZwJzZzN2lCO2RabyEPjN5N9LF//W5
+	ojiqbba7V+VbZWUJfZRhNPA0oQhdwSziM9lbdHWtog06Ne1cSfKONMFxK0O+UXNR40d0kb6od3j
+	CTPxdV5SQJalAfNBcv4j9OInhVcGNJYnjiC3GEb0Y0FS0B9Ufp7UmqH6Vy9O3/JdjU2V9Ixn9dh
+	LsAfZ44BPW3MPg8i4eDrW7LDeBSJzRB9Pm7g
+X-Google-Smtp-Source: AGHT+IH9mYReL6tlrIcgo5opzWGTvKgKAIdX/HKYiCEzoUfpZVvDTRHMg3q7JMHy6gADKHC6a95e6g==
+X-Received: by 2002:a05:651c:1a0b:b0:2ff:cc65:68aa with SMTP id 38308e7fff4ca-305f45ebec5mr63982821fa.31.1736851105153;
+        Tue, 14 Jan 2025 02:38:25 -0800 (PST)
 Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5428be49ee9sm1623927e87.52.2025.01.14.02.34.55
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-305ff1ec12bsm16951771fa.110.2025.01.14.02.38.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 14 Jan 2025 02:34:56 -0800 (PST)
-Date: Tue, 14 Jan 2025 12:34:54 +0200
+        Tue, 14 Jan 2025 02:38:24 -0800 (PST)
+Date: Tue, 14 Jan 2025 12:38:22 +0200
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To: Melody Olvera <quic_molvera@quicinc.com>
 Cc: Vinod Koul <vkoul@kernel.org>, 
@@ -84,10 +84,11 @@ Cc: Vinod Koul <vkoul@kernel.org>,
 	Trilok Soni <quic_tsoni@quicinc.com>, linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org, 
 	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, linux-usb@vger.kernel.org, 
 	linux-arm-kernel@lists.infradead.org
-Subject: Re: [PATCH 5/7] phy: qcom: Add M31 based eUSB2 PHY driver
-Message-ID: <rpwm6gimdb4zyvyusovfbfaw4uxrossm6elayebvt2gusb7zwk@67w7672qpcto>
+Subject: Re: [PATCH 7/7] arm64: dts: qcom: sm8750: Add USB support to SM8750
+ platforms
+Message-ID: <lk26ltslmijj7tj2kst2wsvd6d2hyj3zjzcwavwl63evjhcgdh@ewqliiijispu>
 References: <20250113-sm8750_usb_master-v1-0-09afe1dc2524@quicinc.com>
- <20250113-sm8750_usb_master-v1-5-09afe1dc2524@quicinc.com>
+ <20250113-sm8750_usb_master-v1-7-09afe1dc2524@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -96,221 +97,254 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250113-sm8750_usb_master-v1-5-09afe1dc2524@quicinc.com>
+In-Reply-To: <20250113-sm8750_usb_master-v1-7-09afe1dc2524@quicinc.com>
 
-On Mon, Jan 13, 2025 at 01:52:11PM -0800, Melody Olvera wrote:
+On Mon, Jan 13, 2025 at 01:52:13PM -0800, Melody Olvera wrote:
 > From: Wesley Cheng <quic_wcheng@quicinc.com>
 > 
-> On SM8750, the eUSB2 PHY used is M31 based. Add the initialization
-> sequences to bring it out of reset, and to initialize the associated eUSB2
-> repeater as well.
-
-What does M31 mean? What is the relationship between the eUSB and USB
-M31 PHYs?
-
+> Enable USB support on SM8750 MTP and QRD variants. SM8750 has a QMP combo
+> PHY for the SSUSB path, and a M31 eUSB2 PHY for the HSUSB path.
 > 
 > Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
 > Signed-off-by: Melody Olvera <quic_molvera@quicinc.com>
 > ---
->  drivers/phy/qualcomm/Kconfig              |  12 +-
->  drivers/phy/qualcomm/Makefile             |   1 +
->  drivers/phy/qualcomm/phy-qcom-m31-eusb2.c | 269 ++++++++++++++++++++++++++++++
->  3 files changed, 281 insertions(+), 1 deletion(-)
+>  arch/arm64/boot/dts/qcom/sm8750-mtp.dts |  24 ++++++
+>  arch/arm64/boot/dts/qcom/sm8750-qrd.dts |  24 ++++++
+>  arch/arm64/boot/dts/qcom/sm8750.dtsi    | 134 ++++++++++++++++++++++++++++++++
 
-Please run the patch through checkpatch.pl --strict
+Separate SoC and board patches.
 
+>  3 files changed, 182 insertions(+)
 > 
-> diff --git a/drivers/phy/qualcomm/phy-qcom-m31-eusb2.c b/drivers/phy/qualcomm/phy-qcom-m31-eusb2.c
-> new file mode 100644
-> index 0000000000000000000000000000000000000000..e15529673e358db914936a60fa605c872cd2511a
-> --- /dev/null
-> +++ b/drivers/phy/qualcomm/phy-qcom-m31-eusb2.c
-> @@ -0,0 +1,269 @@
-> +// SPDX-License-Identifier: GPL-2.0+
-> +/*
-> + * Copyright (c) 2024 Qualcomm Innovation Center, Inc. All rights reserved.
-> + */
+> diff --git a/arch/arm64/boot/dts/qcom/sm8750-mtp.dts b/arch/arm64/boot/dts/qcom/sm8750-mtp.dts
+> index 9e3aacad7bdab6848e86f8e45e04907e1c752a07..059eccbbc3fb05fc8806e36d35dc469d44443a26 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8750-mtp.dts
+> +++ b/arch/arm64/boot/dts/qcom/sm8750-mtp.dts
+> @@ -792,3 +792,27 @@ &tlmm {
+>  &uart7 {
+>  	status = "okay";
+>  };
 > +
-> +#include <linux/clk.h>
-> +#include <linux/delay.h>
-> +#include <linux/err.h>
-> +#include <linux/io.h>
-> +#include <linux/kernel.h>
-> +#include <linux/module.h>
-> +#include <linux/of.h>
-> +#include <linux/phy/phy.h>
-> +#include <linux/platform_device.h>
-> +#include <linux/reset.h>
-> +#include <linux/slab.h>
-> +
-> +#define USB_PHY_UTMI_CTRL0		(0x3c)
-> +
-> +#define USB_PHY_UTMI_CTRL5		(0x50)
-> +
-> +#define USB_PHY_HS_PHY_CTRL_COMMON0	(0x54)
-> +#define FSEL				(0x7 << 4)
-
-GENMASK()
-
-> +#define FSEL_38_4_MHZ_VAL		(0x6 << 4)
-
-FIELD_PREP
-
-> +
-> +#define USB_PHY_HS_PHY_CTRL2		(0x64)
-> +
-> +#define USB_PHY_CFG0			(0x94)
-> +#define USB_PHY_CFG1			(0x154)
-> +
-> +#define USB_PHY_FSEL_SEL		(0xb8)
-> +
-> +#define USB_PHY_XCFGI_39_32		(0x16c)
-> +#define USB_PHY_XCFGI_71_64		(0x17c)
-> +#define USB_PHY_XCFGI_31_24		(0x168)
-> +#define USB_PHY_XCFGI_7_0		(0x15c)
-> +
-> +#define M31_EUSB_PHY_INIT_CFG(o, b, v)	\
-> +{				\
-> +	.off = o,		\
-> +	.mask = b,		\
-> +	.val = v,		\
-> +}
-> +
-> +struct m31_phy_tbl_entry {
-> +	u32 off;
-> +	u32 mask;
-> +	u32 val;
+> +&usb_1 {
+> +	status = "okay";
 > +};
 > +
-> +struct m31_eusb2_priv_data {
-> +	const struct m31_phy_tbl_entry	*setup_seq;
-> +	unsigned int			setup_seq_nregs;
-> +	const struct m31_phy_tbl_entry	*override_seq;
-> +	unsigned int			override_seq_nregs;
-> +	const struct m31_phy_tbl_entry	*reset_seq;
-> +	unsigned int			reset_seq_nregs;
-> +	unsigned int			fsel;
+> +&usb_1_dwc3 {
+> +	dr_mode = "peripheral";
 > +};
 > +
-> +static const struct m31_phy_tbl_entry m31_eusb2_setup_tbl[] = {
-> +	M31_EUSB_PHY_INIT_CFG(USB_PHY_CFG0, BIT(1), 1),
-> +	M31_EUSB_PHY_INIT_CFG(USB_PHY_UTMI_CTRL5, BIT(1), 1),
-> +	M31_EUSB_PHY_INIT_CFG(USB_PHY_CFG1, BIT(0), 1),
-> +	M31_EUSB_PHY_INIT_CFG(USB_PHY_FSEL_SEL, BIT(0), 1),
+> +&usb_1_hsphy {
+> +	vdd-supply = <&vreg_l2d_0p88>;
+> +	vdda12-supply = <&vreg_l3g_1p2>;
+> +
+> +	phys = <&pmih0108_eusb2_repeater>;
+> +
+> +	status = "okay";
 > +};
 > +
-> +static const struct m31_phy_tbl_entry m31_eusb_phy_override_tbl[] = {
-> +	M31_EUSB_PHY_INIT_CFG(USB_PHY_XCFGI_39_32, GENMASK(3, 2), 0),
-> +	M31_EUSB_PHY_INIT_CFG(USB_PHY_XCFGI_71_64, GENMASK(3, 0), 7),
-> +	M31_EUSB_PHY_INIT_CFG(USB_PHY_XCFGI_31_24, GENMASK(2, 0), 0),
-> +	M31_EUSB_PHY_INIT_CFG(USB_PHY_XCFGI_7_0, GENMASK(1, 0), 0),
+> +&usb_dp_qmpphy {
+> +	vdda-phy-supply = <&vreg_l3g_1p2>;
+> +	vdda-pll-supply = <&vreg_l2d_0p88>;
+> +
+> +	status = "okay";
+> +};
+> diff --git a/arch/arm64/boot/dts/qcom/sm8750-qrd.dts b/arch/arm64/boot/dts/qcom/sm8750-qrd.dts
+> index f77efab0aef9bab751a947173bcdcc27df7295a8..01c0af643626917614fbd68cf8962ef947ca6548 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8750-qrd.dts
+> +++ b/arch/arm64/boot/dts/qcom/sm8750-qrd.dts
+> @@ -790,3 +790,27 @@ &tlmm {
+>  &uart7 {
+>  	status = "okay";
+>  };
+> +
+> +&usb_1 {
+> +	status = "okay";
 > +};
 > +
-> +static const struct m31_phy_tbl_entry m31_eusb_phy_reset_tbl[] = {
-> +	M31_EUSB_PHY_INIT_CFG(USB_PHY_HS_PHY_CTRL2, BIT(3), 1),
-> +	M31_EUSB_PHY_INIT_CFG(USB_PHY_HS_PHY_CTRL2, BIT(2), 1),
-> +	M31_EUSB_PHY_INIT_CFG(USB_PHY_UTMI_CTRL0, BIT(0), 1),
-> +	M31_EUSB_PHY_INIT_CFG(USB_PHY_HS_PHY_CTRL_COMMON0, BIT(1), 1),
-> +	M31_EUSB_PHY_INIT_CFG(USB_PHY_HS_PHY_CTRL_COMMON0, BIT(2), 0),
-> +	M31_EUSB_PHY_INIT_CFG(USB_PHY_UTMI_CTRL5, BIT(1), 0),
-> +	M31_EUSB_PHY_INIT_CFG(USB_PHY_HS_PHY_CTRL2, BIT(3), 0),
-> +	M31_EUSB_PHY_INIT_CFG(USB_PHY_CFG0, BIT(1), 0),
+> +&usb_1_dwc3 {
+> +	dr_mode = "peripheral";
 > +};
 > +
-> +struct m31eusb2_phy {
-> +	struct phy			*phy;
-> +	void __iomem			*base;
-> +	const struct m31_eusb2_priv_data	*data;
+> +&usb_1_hsphy {
+> +	vdd-supply = <&vreg_l2d_0p88>;
+> +	vdda12-supply = <&vreg_l3g_1p2>;
 > +
-> +	struct regulator		*vreg;
-> +	struct clk			*clk;
-> +	struct reset_control		*reset;
+> +	phys = <&pmih0108_eusb2_repeater>;
 > +
-> +	struct phy *repeater;
+> +	status = "okay";
 > +};
 > +
-> +static void msm_m31_eusb2_write_readback(void __iomem *base, u32 offset,
-> +					const u32 mask, u32 val)
-> +{
-> +	u32 write_val, tmp = readl_relaxed(base + offset);
+> +&usb_dp_qmpphy {
+> +	vdda-phy-supply = <&vreg_l3g_1p2>;
+> +	vdda-pll-supply = <&vreg_l2d_0p88>;
 > +
-> +	tmp &= ~mask;
-> +	write_val = tmp | val;
+> +	status = "okay";
+> +};
+> diff --git a/arch/arm64/boot/dts/qcom/sm8750.dtsi b/arch/arm64/boot/dts/qcom/sm8750.dtsi
+> index 3bbd7d18598ee0a3a0d5130c03a3166e1fc14d82..54522fd3d0e11c3cff02beaf1d249fe654cacc0f 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8750.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm8750.dtsi
+> @@ -10,6 +10,7 @@
+>  #include <dt-bindings/interconnect/qcom,icc.h>
+>  #include <dt-bindings/interconnect/qcom,sm8750-rpmh.h>
+>  #include <dt-bindings/interrupt-controller/arm-gic.h>
+> +#include <dt-bindings/phy/phy-qcom-qmp.h>
+>  #include <dt-bindings/power/qcom,rpmhpd.h>
+>  #include <dt-bindings/power/qcom-rpmpd.h>
+>  #include <dt-bindings/soc/qcom,rpmh-rsc.h>
+> @@ -1966,6 +1967,139 @@ lpass_lpicx_noc: interconnect@7420000 {
+>  			#interconnect-cells = <2>;
+>  		};
+>  
+> +		usb_1_hsphy: phy@88e3000 {
+> +			compatible = "qcom,sm8750-m31-eusb2-phy";
+> +			reg = <0x0 0x88e3000 0x0 0x29c>;
 > +
-> +	writel_relaxed(write_val, base + offset);
+> +			clocks = <&tcsrcc TCSR_USB2_CLKREF_EN>;
+> +			clock-names = "ref";
 > +
-> +	tmp = readl_relaxed(base + offset);
-> +	tmp &= mask;
+> +			resets = <&gcc GCC_QUSB2PHY_PRIM_BCR>;
 > +
-> +	if (tmp != val)
-> +		pr_err("write: %x to offset: %x FAILED\n", val, offset);
-> +}
+> +			#phy-cells = <0>;
 > +
-> +static void m31eusb2_phy_write_sequence(struct m31eusb2_phy *phy,
-> +					const struct m31_phy_tbl_entry *tbl,
-> +					int num)
-> +{
-> +	int i;
+> +			status = "disabled";
+> +		};
 > +
-> +	for (i = 0 ; i < num; i++, tbl++) {
-> +		dev_dbg(&phy->phy->dev, "Offset:%x BitMask:%x Value:%x",
-> +					tbl->off, tbl->mask, tbl->val);
+> +		usb_dp_qmpphy: phy@88e8000 {
+> +			compatible = "qcom,sm8750-qmp-usb3-dp-phy";
+> +			reg = <0x0 0x088e8000 0x0 0x3000>;
 > +
-> +		msm_m31_eusb2_write_readback(phy->base,
-> +					tbl->off, tbl->mask,
-> +					tbl->val << __ffs(tbl->mask));
+> +			clocks = <&gcc GCC_USB3_PRIM_PHY_AUX_CLK>,
+> +				 <&rpmhcc RPMH_CXO_CLK>,
+> +				 <&gcc GCC_USB3_PRIM_PHY_COM_AUX_CLK>,
+> +				 <&gcc GCC_USB3_PRIM_PHY_PIPE_CLK>;
+> +			clock-names = "aux",
+> +				      "ref",
+> +				      "com_aux",
+> +				      "usb3_pipe";
+> +
+> +			resets = <&gcc GCC_USB3_PHY_PRIM_BCR>,
+> +				 <&gcc GCC_USB3_DP_PHY_PRIM_BCR>;
+> +			reset-names = "phy",
+> +				      "common";
+> +
+> +			power-domains = <&gcc GCC_USB3_PHY_GDSC>;
+> +
+> +			#clock-cells = <1>;
+> +			#phy-cells = <1>;
 
-could you please check, what actually gets written? I suspect there
-should be a -1 here.
+Missing orientation-switch and ports{} description.
 
-> +	}
-> +}
 > +
-> +static int m31eusb2_phy_init(struct phy *uphy)
-> +{
-> +	struct m31eusb2_phy *phy = phy_get_drvdata(uphy);
-> +	const struct m31_eusb2_priv_data *data = phy->data;
-> +	int ret;
+> +			status = "disabled";
+> +		};
 > +
-> +	ret = regulator_enable(phy->vreg);
-> +	if (ret) {
-> +		dev_err(&uphy->dev, "failed to enable regulator, %d\n", ret);
-> +		return ret;
-> +	}
+> +		usb_1: usb@a6f8800 {
+> +			compatible = "qcom,sm8750-dwc3", "qcom,dwc3";
+> +			reg = <0x0 0x0a6f8800 0x0 0x400>;
+> +			status = "disabled";
+> +			#address-cells = <2>;
+> +			#size-cells = <2>;
+> +			ranges;
 > +
-> +	ret = phy_init(phy->repeater);
-> +	if (ret) {
-> +		dev_err(&uphy->dev, "repeater init failed. %d\n", ret);
-> +		goto disable_vreg;
-> +	}
+> +			clocks = <&gcc GCC_CFG_NOC_USB3_PRIM_AXI_CLK>,
+> +				 <&gcc GCC_USB30_PRIM_MASTER_CLK>,
+> +				 <&gcc GCC_AGGRE_USB3_PRIM_AXI_CLK>,
+> +				 <&gcc GCC_USB30_PRIM_SLEEP_CLK>,
+> +				 <&gcc GCC_USB30_PRIM_MOCK_UTMI_CLK>,
+> +				 <&tcsrcc TCSR_USB3_CLKREF_EN>;
+> +			clock-names = "cfg_noc",
+> +				      "core",
+> +				      "iface",
+> +				      "sleep",
+> +				      "mock_utmi",
+> +				      "xo";
 > +
-> +	if (ret) {
-> +		dev_err(&uphy->dev, "failed to enable cfg ahb clock, %d\n", ret);
-> +		goto disable_repeater;
-> +	}
+> +			assigned-clocks = <&gcc GCC_USB30_PRIM_MOCK_UTMI_CLK>,
+> +					  <&gcc GCC_USB30_PRIM_MASTER_CLK>;
+> +			assigned-clock-rates = <19200000>, <200000000>;
 > +
-> +	/* Perform phy reset */
-> +	reset_control_assert(phy->reset);
-> +	udelay(5);
-> +	reset_control_deassert(phy->reset);
+> +			interrupts-extended = <&intc GIC_SPI 130 IRQ_TYPE_LEVEL_HIGH>,
+> +						  <&intc GIC_SPI 131 IRQ_TYPE_LEVEL_HIGH>,
+> +					      <&pdc 14 IRQ_TYPE_EDGE_BOTH>,
+> +					      <&pdc 15 IRQ_TYPE_EDGE_BOTH>,
+> +					      <&pdc 17 IRQ_TYPE_LEVEL_HIGH>;
+> +			interrupt-names = "pwr_event",
+> +					  "hs_phy_irq",
+> +					  "dp_hs_phy_irq",
+> +					  "dm_hs_phy_irq",
+> +					  "ss_phy_irq";
 > +
-> +	m31eusb2_phy_write_sequence(phy, data->setup_seq, data->setup_seq_nregs);
-> +	msm_m31_eusb2_write_readback(phy->base,
-> +					USB_PHY_HS_PHY_CTRL_COMMON0, FSEL,
-> +					data->fsel);
-> +	m31eusb2_phy_write_sequence(phy, data->override_seq, data->override_seq_nregs);
-> +	m31eusb2_phy_write_sequence(phy, data->reset_seq, data->reset_seq_nregs);
+> +			power-domains = <&gcc GCC_USB30_PRIM_GDSC>;
+> +			required-opps = <&rpmhpd_opp_nom>;
 > +
-> +	return 0;
+> +			resets = <&gcc GCC_USB30_PRIM_BCR>;
 > +
-> +disable_repeater:
-> +	phy_exit(phy->repeater);
-> +disable_vreg:
-> +	regulator_disable(phy->vreg);
+> +			interconnects = <&aggre1_noc MASTER_USB3_0 0 &mc_virt SLAVE_EBI1 0>,
+> +					<&gem_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_USB3_0 0>;
+> +			interconnect-names = "usb-ddr", "apps-usb";
 > +
-> +	return 0;
-> +}
+> +			usb_1_dwc3: usb@a600000 {
+> +				compatible = "snps,dwc3";
+> +				reg = <0x0 0x0a600000 0x0 0xe000>;
 > +
+> +				interrupts = <GIC_SPI 133 IRQ_TYPE_LEVEL_HIGH>;
+> +
+> +				iommus = <&apps_smmu 0x40 0x0>;
+> +
+> +				phys = <&usb_1_hsphy>, <&usb_dp_qmpphy QMP_USB43DP_USB3_PHY>;
+> +				phy-names = "usb2-phy", "usb3-phy";
+> +
+> +				snps,hird-threshold = /bits/ 8 <0x0>;
+> +				snps,usb2-gadget-lpm-disable;
+> +				snps,dis_u2_susphy_quirk;
+> +				snps,dis_enblslpm_quirk;
+> +				snps,dis-u1-entry-quirk;
+> +				snps,dis-u2-entry-quirk;
+> +				snps,is-utmi-l1-suspend;
+> +				snps,usb3_lpm_capable;
+> +				snps,usb2-lpm-disable;
+> +				snps,has-lpm-erratum;
+> +				tx-fifo-resize;
+> +
+> +				dr_mode = "peripheral";
+
+This goes to the board files.
+
+> +
+> +				dma-coherent;
+> +
+> +				ports {
+> +					#address-cells = <1>;
+> +					#size-cells = <0>;
+> +
+> +					port@0 {
+> +						reg = <0>;
+> +
+> +						usb_1_dwc3_hs: endpoint {
+> +						};
+> +					};
+> +
+> +					port@1 {
+> +						reg = <1>;
+> +
+> +						usb_1_dwc3_ss: endpoint {
+
+QMP endpoint.
+
+> +						};
+> +					};
+> +				};
+> +			};
+> +		};
+> +
+>  		pdc: interrupt-controller@b220000 {
+>  			compatible = "qcom,sm8750-pdc", "qcom,pdc";
+>  			reg = <0x0 0x0b220000 0x0 0x10000>, <0x0 0x164400f0 0x0 0x64>;
+> 
+> -- 
+> 2.46.1
+> 
 
 -- 
 With best wishes
