@@ -1,200 +1,187 @@
-Return-Path: <linux-arm-msm+bounces-45001-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-45002-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id A6346A1050F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jan 2025 12:10:42 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7455FA10524
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jan 2025 12:20:08 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id ABEF2165A08
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jan 2025 11:10:40 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 52FC41887607
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jan 2025 11:20:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 27EEB22DC2C;
-	Tue, 14 Jan 2025 11:10:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6C25B1DA632;
+	Tue, 14 Jan 2025 11:20:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="X9iEnLfs"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="reWFLyoA"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f41.google.com (mail-lf1-f41.google.com [209.85.167.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19D2E20F97E
-	for <linux-arm-msm@vger.kernel.org>; Tue, 14 Jan 2025 11:10:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DF2020F960;
+	Tue, 14 Jan 2025 11:20:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736853040; cv=none; b=H7lkL3iVHzEIi74vXQFiIJptJjo30ClQznktqGrkBATx4icVfSF+coy+XbZhUU5+DBo1i4LQQQGnYYogCAkL+eO3YRWsxA2FemKC9eL4mfikcStUqKLmGVVlJsV05YHWIUKl8ojbwGi/C48dOiaLA6t9c8YbWGJDlpuDnHLw9SY=
+	t=1736853605; cv=none; b=uXrdkYBnt+4sJgYOYzBMHyT1B/s2vSGTf9Smzb3Un7mUwU4nTuPIjaXsknk8P7SDmnXm9SWKwkHMj4Ln94pt1tFWYZXlQgTi5FBvao+9crum7hl3iykYgb+xR4jrx8WTUbL7BBm61gG5YpP6OEb59EXYppd1yhpL3BStiErm/pg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736853040; c=relaxed/simple;
-	bh=4KL4l7ODHAlcwlZHO7+5385DxhKBPURrOkI/fQMNUpg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=WyrzctKRgtii1T4rB6w2WnDV1RHY7RcHrpNnOUAbNh7K0bBTlT2ns1uyXPPrzIC2XuKMfvTVNrItkgmmX9N39AQuExvDC7n3DU7VBDKjmYFNgcx3UviopRUiZbGjyo5Jiy5Juari59otKHj8zkLjIi1S0gImWcgxC/JER6qIVu0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=X9iEnLfs; arc=none smtp.client-ip=209.85.167.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f41.google.com with SMTP id 2adb3069b0e04-5401c68b89eso5786143e87.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Jan 2025 03:10:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1736853036; x=1737457836; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=LcbWpbmmbJ2bnU2WDhOtIaUm7QnK525Rc7UTLeMZn7M=;
-        b=X9iEnLfsveHmolwuznJ370jcOVmpI6RCLty5jFWWRJMY7yW6OSjQYvG0P7exo6kRCm
-         RlMZ/yye1QDst/lg+Ify9vD6eVzMIbPbQk3bK0KQA9maKYmUHWNn3kbgLbWZS12KXeXq
-         455NPQX+zFq7ZK6fOHmNqGfkRMuUC0KWeNdtgbED0+/NFT8Rzmepy9BKiJ7uJ3pDqM6z
-         dWNilvqTOQx5XMGV7mR/Lu2aIdzR82NwGimfJlwRZ7YkreI3TWdRk2TW3Xnp9on5OxQi
-         i4ANYhCtKAlCsHvdc19aIB9SKGzXwLUqe43ROPWBclpktoqe62bnFIajL4gsNFjwiRS+
-         L8LA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736853036; x=1737457836;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=LcbWpbmmbJ2bnU2WDhOtIaUm7QnK525Rc7UTLeMZn7M=;
-        b=KuQK3ofhawBLxzbL7nV/q0XVQSrU9rRIDSsp+3hpAnbq16rXxGRLNoK8bvSYlujQl8
-         G4NJVE5Pcd1r8KFprGChyuwCG9LDqXj3Ivnb0O4LAW8oJXDN9d/cYmIIpDfxZckJbAhU
-         OGofkom3EyV537XVwXoeZiytnixdNGYo71/klbJuS6lncZWbdlv4w7V3+8PgCPTv5TO+
-         jsfy+/SGc6vW/nINGtcxiNx55fqmEUtoDwL+Dl7s8I5fQPJUHkHCMk6dAGs+OqwyP7Xq
-         enI5AxoBbn0icr28Vnzz5zE32slF54EMqJqHZBzwb0wJZWo7c0Bm/FtMlPShFGe6xQI6
-         Lk5Q==
-X-Forwarded-Encrypted: i=1; AJvYcCURB/LaJsxBvqQTj/x3WaY+dZZWFrtqDwsOe3aX42rC/U+I51Vw7vrvpcUnI8mjzpobgRwwrd2HEZB3/NBq@vger.kernel.org
-X-Gm-Message-State: AOJu0YwwVV5wTYzS8hPf7TmIMGCy/P6kQZdHx3evYuy3dyYveUaZmTeD
-	L/aYeSHfZKCEVpaSDGMl1zHMdO+R4Doq/qyWgX0lF3Epjp7ed2dhgj7jA8XLC9g=
-X-Gm-Gg: ASbGnctqAD1DO0IARvL2Qr76jVmqTzobKk/qACgqNkGwy94UzmkmA6rQ9n8Fxtjws3g
-	TJgFFYhDeUXuz4AY1+esTb9hGR9RrGDMw9iCEWuliGJ8bvUvojLSOA/AfLavfe/aDP9jkCXHBSB
-	+ZM6ywtVXZIsyqwDAQlPpLKzXGwSg8lK0eWfMdYBDz7JyROHrpGWkigUVlypzGDjdUGMAsEibVB
-	Gf+qG+O7w0QXlRvd3mTRLt5Z+XOG7Lrd141QkkV16mbtuH0S4nnMnP5VbkwCUA0NDqGZ/Yws3UE
-	ao7UwqzpxBFdrr+E9Ooz3gXPEKzqc6kuBGqx
-X-Google-Smtp-Source: AGHT+IGvCkkJqD6qSUoUh+xwHvMJ01rnl6B7Sa+qT153PtEezacOoKnOV9KdyQAKOj7uQ/LiGgjBPQ==
-X-Received: by 2002:a05:6512:2391:b0:540:2fe6:6a3c with SMTP id 2adb3069b0e04-5428a5775dcmr7566905e87.0.1736853036185;
-        Tue, 14 Jan 2025 03:10:36 -0800 (PST)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5428bea68aesm1648501e87.149.2025.01.14.03.10.33
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 14 Jan 2025 03:10:34 -0800 (PST)
-Date: Tue, 14 Jan 2025 13:10:32 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
-	Stephen Boyd <swboyd@chromium.org>, Simona Vetter <simona.vetter@ffwll.ch>, 
-	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
-Subject: Re: [PATCH v4 7/9] drm/msm/dpu: handle perf mode in
- _dpu_core_perf_crtc_update_bus()
-Message-ID: <ab4wkauem3xb65wh3h22bcyzlpx26rrmsicrdlewomn55ykpqi@tggrsmb6qcmf>
-References: <20250106-dpu-perf-rework-v4-0-00b248349476@linaro.org>
- <20250106-dpu-perf-rework-v4-7-00b248349476@linaro.org>
- <459422c9-c272-4389-9b05-487a0148a082@quicinc.com>
+	s=arc-20240116; t=1736853605; c=relaxed/simple;
+	bh=iubXg7mTZJkM9mUTfTPL1C9MGDJtLRu1FOpNDl7dFqk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=sPCv7Dq+7Ym7IWTFHfDnKBF+3588ri3+cxiCdfmqB9jV1XXkH97Zu6LjjJSy6MDN4+gETA3qjep2KN+jD+0rYLARExP/g+k1KUriRaisZ9pv5SfhhqKPPuslrBG7F+MgdqJWO186Bcq27n+ZW5/359+yuSXrg9nNvy6tW8gX1P4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=reWFLyoA; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A0AFC4CEDD;
+	Tue, 14 Jan 2025 11:19:56 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1736853604;
+	bh=iubXg7mTZJkM9mUTfTPL1C9MGDJtLRu1FOpNDl7dFqk=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=reWFLyoAtdNKS89yatZmIynKIrnbwtf0NQp3ogzUHmBwAs+X5SiJpqirJnE+pvw3l
+	 kPnXxHZ4p1CiTxhUjJym+wpOETICtViZZNl0/ce79XvRTE66IgAjEQWd4khuP/62JB
+	 k9Z0A7UdEVlK5BtaSwjvZCS1els5C/Ms0By9STlmFVUYm8q7zFSnMPhBJh+Q5Y+J30
+	 8zVb6kpu9/63XY4XnK8hUE1uIW4F+oLsKy7WRzJPxC5JIU/WXbAbdS4whqXPHt3pcW
+	 eBCkh+u4t9/DTPv3/ikH0YIB3jqi1tEjta625CZmUAfT4j/ydBdgFBRODoxcpv6Twp
+	 slpHqjfXmrZ6g==
+Message-ID: <2bafc177-b996-43ae-bd37-f095c9f16b62@kernel.org>
+Date: Tue, 14 Jan 2025 12:19:54 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <459422c9-c272-4389-9b05-487a0148a082@quicinc.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 3/4] dt-bindings: display/msm: Document MDSS on QCS8300
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Yongxing Mou <quic_yongmou@quicinc.com>, Rob Clark <robdclark@gmail.com>,
+ Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>,
+ Marijn Suijten <marijn.suijten@somainline.org>,
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>,
+ Neil Armstrong <neil.armstrong@linaro.org>,
+ Kuogee Hsieh <quic_khsieh@quicinc.com>, Vinod Koul <vkoul@kernel.org>,
+ Kishon Vijay Abraham I <kishon@kernel.org>,
+ Bjorn Andersson <andersson@kernel.org>, linux-arm-msm@vger.kernel.org,
+ dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-phy@lists.infradead.org
+References: <20250113-mdssdt_qcs8300-v3-0-6c8e93459600@quicinc.com>
+ <20250113-mdssdt_qcs8300-v3-3-6c8e93459600@quicinc.com>
+ <lyv4bopv3zw62qll5cjjx46ejdjjmssvhabdxj2uq23mcmwqpb@lld6hynsiwfe>
+ <CAA8EJppUEB-c5LbWN5dJoRh+6+nNFH3G9h_uwbuTo=B8kp_9oA@mail.gmail.com>
+ <bda8dd18-3bed-427a-bd19-9cb011256c93@kernel.org>
+ <rx5jyaehsgdw5cluyjtrn5yvxnd2uemdde5jbvq2dq3dirr2ak@hkegxop7tiew>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 fv0=
+In-Reply-To: <rx5jyaehsgdw5cluyjtrn5yvxnd2uemdde5jbvq2dq3dirr2ak@hkegxop7tiew>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Mon, Jan 13, 2025 at 07:38:16PM -0800, Abhinav Kumar wrote:
+On 14/01/2025 12:09, Dmitry Baryshkov wrote:
+> On Tue, Jan 14, 2025 at 11:11:23AM +0100, Krzysztof Kozlowski wrote:
+>> On 14/01/2025 11:00, Dmitry Baryshkov wrote:
+>>> On Tue, 14 Jan 2025 at 09:57, Krzysztof Kozlowski <krzk@kernel.org> wrote:
+>>>>
+>>>> On Mon, Jan 13, 2025 at 04:03:10PM +0800, Yongxing Mou wrote:
+>>>>> +patternProperties:
+>>>>> +  "^display-controller@[0-9a-f]+$":
+>>>>> +    type: object
+>>>>> +    additionalProperties: true
+>>>>> +
+>>>>> +    properties:
+>>>>> +      compatible:
+>>>>> +        items:
+>>>>> +          - const: qcom,qcs8300-dpu
+>>>>> +          - const: qcom,sa8775p-dpu
+>>>>> +
+>>>>> +  "^displayport-controller@[0-9a-f]+$":
+>>>>> +    type: object
+>>>>> +    additionalProperties: true
+>>>>> +
+>>>>> +    properties:
+>>>>> +      compatible:
+>>>>> +        items:
+>>>>> +          - const: qcom,qcs8300-dp
+>>>>> +          - const: qcom,sm8650-dp
+>>>>
+>>>> Parts of qcs8300 display are compatible with sa8775p, other parts with
+>>>> sm8650. That's odd or even not correct. Assuming it is actually correct,
+>>>> it deserves explanation in commit msg.
+>>>
+>>> It seems to be correct. These are two different IP blocks with
+>>> different modifications. QCS8300's DP configuration matches the SM8650
+>>> ([1]), though the DPU is the same as the one on the SA8775P platform.
+>>>
+>>> [1] https://lore.kernel.org/dri-devel/411626da-7563-48fb-ac7c-94f06e73e4b8@quicinc.com/
+>>
+>> That's the driver, so you claim that qcs8300, which is a sa8775p, is not
+>> compatible with sa8775p because of current driver code? You see the
+>> contradiction? sa8775p is not compatible with sa8775p because of current
+>> driver patch?
 > 
-> 
-> On 1/5/2025 7:07 PM, Dmitry Baryshkov wrote:
-> > Move perf mode handling for the bandwidth to
-> > _dpu_core_perf_crtc_update_bus() rather than overriding per-CRTC data
-> > and then aggregating known values.
-> > 
-> > Note, this changes the fix_core_ab_vote. Previously it would be
-> > multiplied per the CRTC number, now it will be used directly for
-> > interconnect voting. This better reflects user requirements in the case
-> > of different resolutions being set on different CRTCs: instead of using
-> > the same bandwidth for each CRTC (which is incorrect) user can now
-> > calculate overall bandwidth required by all outputs and use that value.
-> > 
-> 
-> There are two things this change is doing:
-> 
-> 1) Dropping the core_clk_rate setting because its already handled inside
-> _dpu_core_perf_get_core_clk_rate() and hence dpu_core_perf_crtc_update()
-> will still work.
-> 
-> and
-> 
-> 2) Then this part of moving the ab/ib setting to
-> _dpu_core_perf_crtc_update_bus().
-> 
-> Can we split this into two changes so that its clear that dropping
-> core_clk_rate setting in this change will not cause an issue.
+> I think you are slightly confused with different similar QCS SKUs here.
+> QCS9100 is sa8775p. QCS8300 is a lighter version of it.
 
-Ack
 
-> 
-> 
-> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > ---
-> >   drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c | 40 +++++++++++++--------------
-> >   1 file changed, 19 insertions(+), 21 deletions(-)
-> > 
-> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
-> > index 70f43e8359caee2082f2ca9944a17a6a20aa3d49..7ff3405c6867556a8dc776783b91f1da6c86ef3f 100644
-> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
-> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
-> > @@ -118,22 +118,9 @@ static void _dpu_core_perf_calc_crtc(const struct dpu_core_perf *core_perf,
-> >   		return;
-> >   	}
-> > -	memset(perf, 0, sizeof(struct dpu_core_perf_params));
-> > -
-> > -	if (core_perf->perf_tune.mode == DPU_PERF_MODE_MINIMUM) {
-> > -		perf->bw_ctl = 0;
-> > -		perf->max_per_pipe_ib = 0;
-> > -		perf->core_clk_rate = 0;
-> > -	} else if (core_perf->perf_tune.mode == DPU_PERF_MODE_FIXED) {
-> > -		perf->bw_ctl = core_perf->fix_core_ab_vote * 1000ULL;
-> > -		perf->max_per_pipe_ib = core_perf->fix_core_ib_vote;
-> > -		perf->core_clk_rate = core_perf->fix_core_clk_rate;
-> > -	} else {
-> > -		perf->bw_ctl = _dpu_core_perf_calc_bw(perf_cfg, crtc);
-> > -		perf->max_per_pipe_ib = perf_cfg->min_dram_ib;
-> > -		perf->core_clk_rate = _dpu_core_perf_calc_clk(perf_cfg, crtc, state);
-> > -	}
-> > -
-> > +	perf->bw_ctl = _dpu_core_perf_calc_bw(perf_cfg, crtc);
-> > +	perf->max_per_pipe_ib = perf_cfg->min_dram_ib;
-> > +	perf->core_clk_rate = _dpu_core_perf_calc_clk(perf_cfg, crtc, state);
-> >   	DRM_DEBUG_ATOMIC(
-> >   		"crtc=%d clk_rate=%llu core_ib=%u core_ab=%u\n",
-> >   			crtc->base.id, perf->core_clk_rate,
-> > @@ -222,18 +209,29 @@ static int _dpu_core_perf_crtc_update_bus(struct dpu_kms *kms,
-> >   {
-> >   	struct dpu_core_perf_params perf = { 0 };
-> >   	int i, ret = 0;
-> > -	u64 avg_bw;
-> > +	u32 avg_bw;
-> > +	u32 peak_bw;
-> >   	if (!kms->num_paths)
-> >   		return 0;
-> > -	dpu_core_perf_aggregate(crtc->dev, dpu_crtc_get_client_type(crtc), &perf);
-> > +	if (kms->perf.perf_tune.mode == DPU_PERF_MODE_MINIMUM) {
-> > +		avg_bw = 0;
-> > +		peak_bw = 0;
-> > +	} else if (kms->perf.perf_tune.mode == DPU_PERF_MODE_FIXED) {
-> > +		avg_bw = kms->perf.fix_core_ab_vote;
-> > +		peak_bw = kms->perf.fix_core_ib_vote;
-> > +	} else {
-> > +		dpu_core_perf_aggregate(crtc->dev, dpu_crtc_get_client_type(crtc), &perf);
-> > +
-> > +		avg_bw = div_u64(perf.bw_ctl, 1000); /*Bps_to_icc*/
-> > +		peak_bw = perf.max_per_pipe_ib;
-> > +	}
-> > -	avg_bw = perf.bw_ctl;
-> > -	do_div(avg_bw, (kms->num_paths * 1000)); /*Bps_to_icc*/
-> > +	avg_bw /= kms->num_paths;
-> >   	for (i = 0; i < kms->num_paths; i++)
-> > -		icc_set_bw(kms->path[i], avg_bw, perf.max_per_pipe_ib);
-> > +		icc_set_bw(kms->path[i], avg_bw, peak_bw);
-> >   	return ret;
-> >   }
-> > 
+True, yet still qcs8300 derives from SA8775p:
 
--- 
-With best wishes
-Dmitry
+https://lore.kernel.org/all/acdf1267-ce56-4ec1-8407-a5f3212a8bfe@quicinc.com/
+
+Therefore my comment, that commit msg must explain why derivative
+display is SA8775p-compatible in DPU part, but not in DP part, is still
+valid.
+
+Look how useful is commit msg here:
+
+"Document the MDSS hardware found on the Qualcomm QCS8300 platform."
+
+It says exactly what is in the diff. As well we could just skip it...
+
+Best regards,
+Krzysztof
 
