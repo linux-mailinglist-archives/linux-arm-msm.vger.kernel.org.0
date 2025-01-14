@@ -1,65 +1,47 @@
-Return-Path: <linux-arm-msm+bounces-44973-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-44974-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id CA649A10194
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jan 2025 08:57:12 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 83FF0A101A2
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jan 2025 09:03:46 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id ED6A01888563
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jan 2025 07:57:15 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 435353A5071
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jan 2025 08:03:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CB37524333A;
-	Tue, 14 Jan 2025 07:57:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UoSLtcyo"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3D05A24335F;
+	Tue, 14 Jan 2025 08:03:43 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CE591361;
-	Tue, 14 Jan 2025 07:57:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1448920459B;
+	Tue, 14 Jan 2025 08:03:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736841427; cv=none; b=dJ1ihoSXTp12thcW/Hk18MLlBVO9VmVCRSTi37HhyNotMdvjAJP4rNaBYJOMlLggD8N3TZWFXz4w/jH0WCO7EptMJs1zLkV5/GynlgPQYvfu3Vg1sjQZA2Q1BwvqHhvrx1z6WqFu0XrUyNlpUyYXZzsnGsap7SrdPe/nXfGA9BM=
+	t=1736841823; cv=none; b=kAu8nHgDhJflFrpqrlQMy4Y3dNCP4apuXBqel3CrXIREsOF3utf5uBwnRXunKtUgUF06PPVV22JwEJVMNwTmF4hJodLb9E6/tF+2iu2TZznjaLoS2cfRM1OormBjRfo5bYBPYq3sugfxGlEZ+sq4aDEeJgov0C4wI89RJ5UULz4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736841427; c=relaxed/simple;
-	bh=ZloWZNduwAPjDvbGadMXp2gP8vQf1XX1e+wOh0WKm7o=;
+	s=arc-20240116; t=1736841823; c=relaxed/simple;
+	bh=oh1JZjgs/dfH4VzwZLadbdk2O5emv7+NTl6Xq3nxLjc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=j6sg3Kj/Sp3l/06cIYUu5Jaui6+pNKztLobAraLqDoz2Xidug1XtdNfLbcdxSgX7qpg82xIdzcguJwgA8ydbPZGKnOOAhsAxZPmqRMt2VtIEn2H63rxregHzx8y7d+UxrQPLvXop6kD1A2+C0AV5fWE+txaxjgk3B4vumSOyt+U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UoSLtcyo; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F08EC4CEDD;
-	Tue, 14 Jan 2025 07:57:06 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1736841427;
-	bh=ZloWZNduwAPjDvbGadMXp2gP8vQf1XX1e+wOh0WKm7o=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=UoSLtcyoyKBgQ0ahEo0MIpQJ5CIHFw61HjTFG2rLHJKe/RQ8eqfVGEEbT9uBFIQ1Y
-	 f1UuX4Bzdl4DPrVun1gYmxjAwRxBWMiBeT+/6EU8QlZZx8r3iolZazKFa92DeE1guA
-	 XWw5iy9Ixx9Pv2Rhn1LmOjLDlZquKEnx6CZsVC/TPTQZuyZ+D0r/7PAj84UaWciOjH
-	 0TihPtxkTLaTjhSLbKkV3m4B7UUknwEo9o1a8rURDRXsSfA4z+pdWtCrzSp5kOXjMJ
-	 wK+C/MaUZpVPOUEQwo5ekuY2uVCMbkUyTVg0iUMCsf/POPIhoWog6Ug1v3RNUa7V1v
-	 Qt6jRxWMgcsOA==
-Date: Tue, 14 Jan 2025 08:57:04 +0100
-From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Yongxing Mou <quic_yongmou@quicinc.com>
-Cc: Rob Clark <robdclark@gmail.com>, 
-	Abhinav Kumar <quic_abhinavk@quicinc.com>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
-	Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, 
-	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
-	Thomas Zimmermann <tzimmermann@suse.de>, Rob Herring <robh@kernel.org>, 
+	 Content-Type:Content-Disposition:In-Reply-To; b=lsiqNM8W8+brhXoDkNbuaVcCmZW9tkVc2ohkRUyLFRh3OROmn//zlhI9gk39avdvqBrxYew9Ae4mLnoMAHyzgPIs5MZnAx4uW1zrFkmkogOp/BnZQ81wnrx7SefMXAWNyYgwKBZvDdgkZixJ5MF4zhb///SJKDNhaQAVhB/iaA8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C65D1C4CEDD;
+	Tue, 14 Jan 2025 08:03:41 +0000 (UTC)
+Date: Tue, 14 Jan 2025 09:03:39 +0100
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To: Yijie Yang <quic_yijiyang@quicinc.com>
+Cc: Vinod Koul <vkoul@kernel.org>, Andrew Lunn <andrew+netdev@lunn.ch>, 
+	"David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, 
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, Rob Herring <robh@kernel.org>, 
 	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Neil Armstrong <neil.armstrong@linaro.org>, Kuogee Hsieh <quic_khsieh@quicinc.com>, 
-	Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I <kishon@kernel.org>, 
-	Bjorn Andersson <andersson@kernel.org>, linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
-	freedreno@lists.freedesktop.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-phy@lists.infradead.org
-Subject: Re: [PATCH v3 3/4] dt-bindings: display/msm: Document MDSS on QCS8300
-Message-ID: <lyv4bopv3zw62qll5cjjx46ejdjjmssvhabdxj2uq23mcmwqpb@lld6hynsiwfe>
-References: <20250113-mdssdt_qcs8300-v3-0-6c8e93459600@quicinc.com>
- <20250113-mdssdt_qcs8300-v3-3-6c8e93459600@quicinc.com>
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, netdev@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3] dt-bindings: net: qcom,ethqos: Correct fallback
+ compatible for qcom,qcs615-ethqos
+Message-ID: <d3i5hmkft77xm5jxcpfapnjmodsbmpyeklvcxtrqfvk2fqnonx@ajoc7pguzr36>
+References: <20250113-schema_qcs615-v3-1-d5bbf0ee8cb7@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -68,33 +50,27 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20250113-mdssdt_qcs8300-v3-3-6c8e93459600@quicinc.com>
+In-Reply-To: <20250113-schema_qcs615-v3-1-d5bbf0ee8cb7@quicinc.com>
 
-On Mon, Jan 13, 2025 at 04:03:10PM +0800, Yongxing Mou wrote:
-> +patternProperties:
-> +  "^display-controller@[0-9a-f]+$":
-> +    type: object
-> +    additionalProperties: true
-> +
-> +    properties:
-> +      compatible:
-> +        items:
-> +          - const: qcom,qcs8300-dpu
-> +          - const: qcom,sa8775p-dpu
-> +
-> +  "^displayport-controller@[0-9a-f]+$":
-> +    type: object
-> +    additionalProperties: true
-> +
-> +    properties:
-> +      compatible:
-> +        items:
-> +          - const: qcom,qcs8300-dp
-> +          - const: qcom,sm8650-dp
+On Mon, Jan 13, 2025 at 05:15:39PM +0800, Yijie Yang wrote:
+> The qcs615-ride utilizes the same EMAC as the qcs404, rather than the
+> sm8150.
+> The current fallback could lead to package loss, and the ethernet on
 
-Parts of qcs8300 display are compatible with sa8775p, other parts with
-sm8650. That's odd or even not correct. Assuming it is actually correct,
-it deserves explanation in commit msg.
+Packet? Package?
+
+> qcs615-ride was not utilized by anyone. 
+
+I don't get how this part of sentence is connected to previous part. I
+see the "and" but what do you want to say here? Packages with qcs615
+board were lost, therefore the ethernet was not used by anyone? Or
+packets could be lost and this means ethernet cannot be used?
+
+> Therefore, it needs to be revised,
+> and there is no need to worry about the ABI impact.
+
+Again, Oxford comma of joining entirely independent claues. Can you
+filter this via someone / ChatGPT / Google grammar / Outlook grammar?
 
 Best regards,
 Krzysztof
