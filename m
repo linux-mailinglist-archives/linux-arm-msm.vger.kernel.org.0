@@ -1,79 +1,78 @@
-Return-Path: <linux-arm-msm+bounces-45146-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-45147-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id E4FB6A12700
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jan 2025 16:15:14 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id E823CA127DA
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jan 2025 16:52:14 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3DD67188748C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jan 2025 15:15:18 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 880B5188B66A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jan 2025 15:52:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C916C145B2E;
-	Wed, 15 Jan 2025 15:15:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1C81A1632FB;
+	Wed, 15 Jan 2025 15:52:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="BhF10V5a"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ciYqMMz4"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
+Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com [209.85.221.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FCDE13BC18
-	for <linux-arm-msm@vger.kernel.org>; Wed, 15 Jan 2025 15:15:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C395155A4E
+	for <linux-arm-msm@vger.kernel.org>; Wed, 15 Jan 2025 15:51:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736954112; cv=none; b=d+icSsUtt55mGvM4JNmh0IA0hry7DT529AIWp64fTmM1qnwMdALeVvTIfwPCKDbae/WqL+n+IOGTyURMSxdpzYDlDteSM/zqQzoReArDJhphQc9mjnH19yyB6DxH5WWwX0v5OgDKUMuG6xHzaHW6SVikTrK3p5VMKFjX+j/Ii+o=
+	t=1736956321; cv=none; b=PADeMGyUAWuwar4srUqe+S5s8K8moAGqKVE/Fv9mQvgsFLTJiNJHsGkv85rjU7mmxiGmy40jrikp4vtusBbyrKVgQKoG8BTwJ/tx3kzOE+U0uZLyFMta8Tz6EklDnDNk63TMlw2sj0TCla6550ZrMkMzLIKA8kfPJtck3F3PDJo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736954112; c=relaxed/simple;
-	bh=v+tW/5b7Yz65Cimfgu2a56TKjHf0nLTX2HO5jcRtR8U=;
+	s=arc-20240116; t=1736956321; c=relaxed/simple;
+	bh=b1O9BPFJ71XFLlUheuDka+LRzs2aZ3Th0tVtRVVvWWM=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=M34aYLm7+fVJtjipcS3JqoaGOxjM4a6lx9ogYUo2//cBhF00JbOIPmtKFb9PPPqV+fJsnvqLezIrrbZniqMiNn1aSSbzoCm1n2ZbIiA0kqHT+//y/EC31MrrZjh0qevpUMbWXii2h0qo3TFs9Up/fPZyW4GGyP9JpY3FTyAOUUY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=BhF10V5a; arc=none smtp.client-ip=209.85.128.50
+	 In-Reply-To:Content-Type; b=tpApTHNWPC+IVC1I23RbwosFekVijIzxqlzPlyOzxI+ec0z+wqcZt9lnVRD3q7+tr/U2b6y9Fv4JbjqY4N1aIajulvJMPvSbgKSdqBwcmwE7tIYmneKQNVfcqSiRkxjGKvGLiP/SBYWOz790ALSTYMsnq8kyeJDZkBSucJUwlqw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ciYqMMz4; arc=none smtp.client-ip=209.85.221.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-4361b6f9faeso6507035e9.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Jan 2025 07:15:10 -0800 (PST)
+Received: by mail-wr1-f50.google.com with SMTP id ffacd0b85a97d-3862b40a6e0so3761227f8f.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Jan 2025 07:51:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1736954109; x=1737558909; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1736956317; x=1737561117; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=27BCS3obqDWdKu8wPBVyzX/4QMUicUdiJJjn7SeODGI=;
-        b=BhF10V5aK8aNPtemP3T3N2i+gkBUqs7ZJEtO3Lr81mJLaVaVbPYLOR5LsV4HCDunG+
-         qR/KVqCsvS30iBfnKa6MDt8/Y39GbhmaUhZ0V+i4B8ySfFnD1N27GgNtIxg2NdWBCM3X
-         X2JVISsJMZU+UWYoJV+V0vF3crRoghCETB25JCohemdcxjkTBaEMSDUKUji444FywPXg
-         EVYiLc/76BmaC7SQtmpIrlPfVrfo5goVjTLtHz+2zT4gIwnf5vjgQ+mFXZzmgW4fO32/
-         7nW9qqjWrcibalraedx5sDVt94GgRXZPvkEI1oUhqh6Vie3ziwRlTFuOrdhddF/O3fAO
-         0gWA==
+        bh=+9T2aeq3iFePOXUR9+HZacaUOvR2SWTMTmgZmEVRLMQ=;
+        b=ciYqMMz4V04vmbPJZmFwfMtbpGSNM9t7sFokD4ePTEiuDLK3YhY5jD0rTjIUmPcCjF
+         FKYu4EU6Oqh0whe9Z6qbpw1vsslNlgtVOpIegAev9U0I9YL+I4uhwJMVZmjrmnB4dLIM
+         /KabHWO4Ho9ApX6ANGOMxO7djVBII6fkvPU0vNKs+yRbD6zTDezKDOzIQCiZG2zK8ck/
+         /LfNQxN8wHVS9ftrnJhLbV/J/9AEIhTW0yTiILnGN5Eoib2QxsAJnac1w06plGIL/UUR
+         Tb7laseZpZF6w0zmiaUJ/CDEDtypvlBsUcDxjeqrA20/qfyQN0RVM6o//0HVRKUWkkIW
+         1HLA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736954109; x=1737558909;
+        d=1e100.net; s=20230601; t=1736956317; x=1737561117;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=27BCS3obqDWdKu8wPBVyzX/4QMUicUdiJJjn7SeODGI=;
-        b=hOCdWX3ZeQGWsKFBdgMRz+PHhaBm0F6tO7+szGMJR88jBhQ0ZwbqSLEqEPMZfjdI/J
-         Gbneh2i5GUrXKcl2jEAAq8jYGFJqwbJ/GN/9OkMVbUJgP/jdU3JBBfBUplNKBDvgQS6T
-         EeXd4d+HnZ5dAFuBOXLSWklS5r5kUfev7Tilp/4eLONx3SagFGiw2v3qx2Enqn9xnpDg
-         eQNuywIiz7frME4bR8GljdkZvmTywrNt2QHs3zsEnyM8ujLj0RCke/gJm6aVZj6npkx7
-         AL3Kgw6Q1mSw4qGWFbQlEKEj1zsPq6/ZhcWVVJ+uPJ81iCuO9ZBCMlwPJCMk5Q01NFUZ
-         tezQ==
-X-Forwarded-Encrypted: i=1; AJvYcCW4wp0SZU8e2EAjFlM7e+Ra7Xjk3ZRI7SX7+MweDaRlh9VH1TWk0XvFNrpl4aD42n2R3k4Mg2hc0tFVJTL7@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz4Jv4PAziw4aV9U/wy1WS109hA1zrD4yp3wfwuP+wgSsAjNSwD
-	e0GVyLRY3uqzQIQo6UfpZ8/UyVeLMdpR2AvYRknNA8RUpXI2RIBTRq7m78TeAPdicx8ma0SnMca
-	g
-X-Gm-Gg: ASbGncsE95k/WFhol0zNmimBOI65simviDnyelJiY+kBE6MP95uQC0KDkhUpv9f0Z4c
-	ElTginbE49h0COopzJJHZS/1RGtab8vz6Bc0a67aJlabcIrq2zEEHdgScPnaT5RD71omgzL3jUC
-	qWCJQfG9Rrg3VtYVsZShnXIeXHZznUrcLu6juZcKeZRs415xORZecZb5Hrk+x0k/2M9UcxUDFpU
-	eH5LA89BAnE4JJxpTUWMDWBfTchH6T5ZH1aQhDls0fYPF2ulzoxyUXXg0aSZGJTVG5jYA==
-X-Google-Smtp-Source: AGHT+IHcjyEIL1Wamxnymek4xnB4ls055HOXGh964+mQo8ykhNiNVYn3DyPzlDxhYKiSBNi933JvlQ==
-X-Received: by 2002:a7b:cc94:0:b0:434:f2af:6e74 with SMTP id 5b1f17b1804b1-437c6b2ff46mr31074005e9.15.1736954108763;
-        Wed, 15 Jan 2025 07:15:08 -0800 (PST)
+        bh=+9T2aeq3iFePOXUR9+HZacaUOvR2SWTMTmgZmEVRLMQ=;
+        b=mMY7FMwBgkIu5CHUR27VgYjMTA9lRQ5TNYVwmk0et6E2Nu+Alfy+j+kkCzqhemjZ7P
+         Uj2pVnkhHfMf8c0UvZv5Czx51jmgqkZTOy2Za5JgaZB4+rIRTvix3raZ+zYxZr6p8tfU
+         23DnwevRSJ8MwkF3mR3u1+U8g1ViS9rqAr3+q9GkP+byBIid93Z3yxYZZVahObp4xV4+
+         bpHNsVQqQrlLbhRqYMYGFQTbGuciwORKF8w5k7cWmzUAC3dkXHYwdqd1ufiPlyw0jfQa
+         CMRd0km3g3KfQMbZkg2256ARUc+ZTYVTuHauu0k8LR/p9V1XnNYmNZOo7mMKpJoyGgUw
+         V6gQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXsiFzhCnz/T2egpkjpKmMa8D5sMEJy6NwLexoT/DxnAc4uWCaDa5SzvvjqjjLN6vMM3qiTvluUEHNpSug1@vger.kernel.org
+X-Gm-Message-State: AOJu0YzBLU0qjQem+tMAUEUqU2NRF3FX29aR1psYhFkYgI5HpnxL5dR8
+	4j5th0e3LCcuQEJ/+cu1FOttcADm/RIuWz9TYWHvUUk37t1z0+duHyQTKGf96iE=
+X-Gm-Gg: ASbGnctrLJdj/Fl4Oj6wJpAxKJ9d70nKALq50PEsFbCGcCIimH/knmeAvjuZCjOeUyO
+	ZrlP9MKS7bIBjmMpN/QBiAELjmHKRWwDPcM9lfKiUfg9A55lncI2vtNtrYjdxnd5DXi87nBb+oj
+	+90OsJUkKXzU5F1Tp9eP8YrV8UCiC9++dqRG3PuAOkHwmumydhFXfAt2c0SLoB31bUujAADBj4/
+	S6lYCgOuCHsz2KGMKJz23+H9QSDOB9sDX23zRIB3WeExVj8jNa+oYXQAYqfSVnHqoFoPg==
+X-Google-Smtp-Source: AGHT+IGeRpOl/xcLw670njQbGIlse4M/Ta6BGmBUsUpeZiOkBp+9SFFfdRLO7qw8vg+sKUOnhUyOGg==
+X-Received: by 2002:a5d:6da8:0:b0:38a:5ce8:df51 with SMTP id ffacd0b85a97d-38a872f7ef2mr26480703f8f.2.1736956317319;
+        Wed, 15 Jan 2025 07:51:57 -0800 (PST)
 Received: from [192.168.0.35] ([176.61.106.227])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-437c7528076sm27391825e9.25.2025.01.15.07.15.07
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38a8e37d0fasm18298220f8f.19.2025.01.15.07.51.56
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 15 Jan 2025 07:15:08 -0800 (PST)
-Message-ID: <88a0cbea-9462-4ad1-8212-4cb55ffb6a1f@linaro.org>
-Date: Wed, 15 Jan 2025 15:15:06 +0000
+        Wed, 15 Jan 2025 07:51:56 -0800 (PST)
+Message-ID: <bbd19ffd-038c-435c-a63b-260a0b933660@linaro.org>
+Date: Wed, 15 Jan 2025 15:51:55 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -81,51 +80,172 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v9 27/28] media: iris: enable video driver probe of SM8250
- SoC
-To: Hans Verkuil <hverkuil@xs4all.nl>,
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Dikshita Agarwal <quic_dikshita@quicinc.com>, Johan Hovold
- <johan@kernel.org>, Vikash Garodia <quic_vgarodia@quicinc.com>
-Cc: Abhinav Kumar <quic_abhinavk@quicinc.com>,
- Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Philipp Zabel <p.zabel@pengutronix.de>,
- Sebastian Fricke <sebastian.fricke@collabora.com>,
- Neil Armstrong <neil.armstrong@linaro.org>,
- Nicolas Dufresne <nicolas@ndufresne.ca>,
- =?UTF-8?Q?Uwe_Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
- Jianhua Lu <lujianhua000@gmail.com>,
- Stefan Schmidt <stefan.schmidt@linaro.org>, linux-media@vger.kernel.org,
+Subject: Re: [PATCH v8 11/16] media: qcom: camss: csid: Only add TPG v4l2 ctrl
+ if TPG hardware is available
+To: Depeng Shao <quic_depengs@quicinc.com>, rfoss@kernel.org,
+ todor.too@gmail.com, mchehab@kernel.org, robh@kernel.org,
+ krzk+dt@kernel.org, conor+dt@kernel.org, vladimir.zapolskiy@linaro.org,
+ hverkuil@xs4all.nl
+Cc: quic_eberman@quicinc.com, linux-media@vger.kernel.org,
  linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, Bjorn Andersson <andersson@kernel.org>
-References: <20241212-qcom-video-iris-v9-0-e8c2c6bd4041@quicinc.com>
- <20241212-qcom-video-iris-v9-27-e8c2c6bd4041@quicinc.com>
- <Z3_nCPk_g8znto4A@hovoldconsulting.com>
- <64f8bebd-35e1-c743-b212-e1a3292bade2@quicinc.com>
- <Z4EuiPEw8mvDQ2gv@hovoldconsulting.com>
- <24334fb8-4d83-eb06-aee3-dfe1f8e4937b@quicinc.com>
- <552972B8-1ACA-4243-A8E3-8F48DAF39C5C@linaro.org>
- <7e75deb6-6c0e-4bf8-b4c5-d76b1abe2d5b@xs4all.nl>
+ linux-kernel@vger.kernel.org, kernel@quicinc.com
+References: <20250108143733.2761200-1-quic_depengs@quicinc.com>
+ <20250108143733.2761200-12-quic_depengs@quicinc.com>
 Content-Language: en-US
 From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <7e75deb6-6c0e-4bf8-b4c5-d76b1abe2d5b@xs4all.nl>
+In-Reply-To: <20250108143733.2761200-12-quic_depengs@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 11/01/2025 10:45, Hans Verkuil wrote:
-> 4) What is the road forward? (I assume that venus is removed once feature parity is reached?)
+On 08/01/2025 14:37, Depeng Shao wrote:
+> There is no CSID TPG on some SoCs, so the v4l2 ctrl in CSID driver
+> shouldn't be registered. Checking the supported TPG modes to indicate
+> if the TPG hardware exists or not and only registering v4l2 ctrl for
+> CSID only when the TPG hardware is present.
+> 
+> Signed-off-by: Depeng Shao <quic_depengs@quicinc.com>
+> ---
+>   .../media/platform/qcom/camss/camss-csid.c    | 60 +++++++++++--------
+>   1 file changed, 35 insertions(+), 25 deletions(-)
+> 
+> diff --git a/drivers/media/platform/qcom/camss/camss-csid.c b/drivers/media/platform/qcom/camss/camss-csid.c
+> index 6cf8e434dc05..e26a69a454a7 100644
+> --- a/drivers/media/platform/qcom/camss/camss-csid.c
+> +++ b/drivers/media/platform/qcom/camss/camss-csid.c
+> @@ -760,11 +760,13 @@ static int csid_set_stream(struct v4l2_subdev *sd, int enable)
+>   	int ret;
+>   
+>   	if (enable) {
+> -		ret = v4l2_ctrl_handler_setup(&csid->ctrls);
+> -		if (ret < 0) {
+> -			dev_err(csid->camss->dev,
+> -				"could not sync v4l2 controls: %d\n", ret);
+> -			return ret;
+> +		if (csid->testgen.nmodes != CSID_PAYLOAD_MODE_DISABLED) {
+> +			ret = v4l2_ctrl_handler_setup(&csid->ctrls);
+> +			if (ret < 0) {
+> +				dev_err(csid->camss->dev,
+> +					"could not sync v4l2 controls: %d\n", ret);
+> +				return ret;
+> +			}
+>   		}
+>   
+>   		if (!csid->testgen.enabled &&
+> @@ -838,7 +840,8 @@ static void csid_try_format(struct csid_device *csid,
+>   		break;
+>   
+>   	case MSM_CSID_PAD_SRC:
+> -		if (csid->testgen_mode->cur.val == 0) {
+> +		if (csid->testgen.nmodes == CSID_PAYLOAD_MODE_DISABLED ||
+> +		    csid->testgen_mode->cur.val == 0) {
+>   			/* Test generator is disabled, */
+>   			/* keep pad formats in sync */
+>   			u32 code = fmt->code;
+> @@ -888,7 +891,8 @@ static int csid_enum_mbus_code(struct v4l2_subdev *sd,
+>   
+>   		code->code = csid->res->formats->formats[code->index].code;
+>   	} else {
+> -		if (csid->testgen_mode->cur.val == 0) {
+> +		if (csid->testgen.nmodes == CSID_PAYLOAD_MODE_DISABLED ||
+> +		    csid->testgen_mode->cur.val == 0) {
+>   			struct v4l2_mbus_framefmt *sink_fmt;
+>   
+>   			sink_fmt = __csid_get_format(csid, sd_state,
+> @@ -1267,7 +1271,8 @@ static int csid_link_setup(struct media_entity *entity,
+>   
+>   		/* If test generator is enabled */
+>   		/* do not allow a link from CSIPHY to CSID */
+> -		if (csid->testgen_mode->cur.val != 0)
+> +		if (csid->testgen.nmodes != CSID_PAYLOAD_MODE_DISABLED &&
+> +		    csid->testgen_mode->cur.val != 0)
+>   			return -EBUSY;
+>   
+>   		sd = media_entity_to_v4l2_subdev(remote->entity);
+> @@ -1360,24 +1365,27 @@ int msm_csid_register_entity(struct csid_device *csid,
+>   		 MSM_CSID_NAME, csid->id);
+>   	v4l2_set_subdevdata(sd, csid);
+>   
+> -	ret = v4l2_ctrl_handler_init(&csid->ctrls, 1);
+> -	if (ret < 0) {
+> -		dev_err(dev, "Failed to init ctrl handler: %d\n", ret);
+> -		return ret;
+> -	}
+> +	if (csid->testgen.nmodes != CSID_PAYLOAD_MODE_DISABLED) {
+> +		ret = v4l2_ctrl_handler_init(&csid->ctrls, 1);
+> +		if (ret < 0) {
+> +			dev_err(dev, "Failed to init ctrl handler: %d\n", ret);
+> +			return ret;
+> +		}
+>   
+> -	csid->testgen_mode = v4l2_ctrl_new_std_menu_items(&csid->ctrls,
+> -				&csid_ctrl_ops, V4L2_CID_TEST_PATTERN,
+> -				csid->testgen.nmodes, 0, 0,
+> -				csid->testgen.modes);
+> +		csid->testgen_mode =
+> +			v4l2_ctrl_new_std_menu_items(&csid->ctrls,
+> +						     &csid_ctrl_ops, V4L2_CID_TEST_PATTERN,
+> +						     csid->testgen.nmodes, 0, 0,
+> +						     csid->testgen.modes);
+>   
+> -	if (csid->ctrls.error) {
+> -		dev_err(dev, "Failed to init ctrl: %d\n", csid->ctrls.error);
+> -		ret = csid->ctrls.error;
+> -		goto free_ctrl;
+> -	}
+> +		if (csid->ctrls.error) {
+> +			dev_err(dev, "Failed to init ctrl: %d\n", csid->ctrls.error);
+> +			ret = csid->ctrls.error;
+> +			goto free_ctrl;
+> +		}
+>   
+> -	csid->subdev.ctrl_handler = &csid->ctrls;
+> +		csid->subdev.ctrl_handler = &csid->ctrls;
+> +	}
+>   
+>   	ret = csid_init_formats(sd, NULL);
+>   	if (ret < 0) {
+> @@ -1408,7 +1416,8 @@ int msm_csid_register_entity(struct csid_device *csid,
+>   media_cleanup:
+>   	media_entity_cleanup(&sd->entity);
+>   free_ctrl:
+> -	v4l2_ctrl_handler_free(&csid->ctrls);
+> +	if (csid->testgen.nmodes != CSID_PAYLOAD_MODE_DISABLED)
+> +		v4l2_ctrl_handler_free(&csid->ctrls);
+>   
+>   	return ret;
+>   }
+> @@ -1421,7 +1430,8 @@ void msm_csid_unregister_entity(struct csid_device *csid)
+>   {
+>   	v4l2_device_unregister_subdev(&csid->subdev);
+>   	media_entity_cleanup(&csid->subdev.entity);
+> -	v4l2_ctrl_handler_free(&csid->ctrls);
+> +	if (csid->testgen.nmodes != CSID_PAYLOAD_MODE_DISABLED)
+> +		v4l2_ctrl_handler_free(&csid->ctrls);
+>   }
+>   
+>   inline bool csid_is_lite(struct csid_device *csid)
 
-sm8250 support is to removed and all HFI_6XX platforms of which sm8250 
-is one, are expected to be supported by Iris once feature parity is 
-upstream.
+The TPG on the RB5 has a known bug that not all test patterns work. I 
+verified that the coloured box TPG still works after this change.
 
-HFI <= HFI_4XX will continue to be venus, including any new upstream 
-submissions for HFI_4XX.
+Like so:
 
-Unless/until Iris gets upstream feature parity, we will continue to add 
-new HFI_6XX SoCs to venus.
+# colour bars test pattern 9
+media-ctl --reset
+yavta --no-query -w '0x009f0903 9' /dev/v4l-subdev6
+yavta --list /dev/v4l-subdev6
+media-ctl -d /dev/media0 -V '"msm_csid0":0[fmt:SGRBG10_1X10/3280x2464]'
+media-ctl -d /dev/media0 -V '"msm_vfe0_rdi0":0[fmt:SGRBG10_1X10/3280x2464]'
+media-ctl -l '"msm_csid0":1->"msm_vfe0_rdi0":0[1]'
+media-ctl -d /dev/media0 -p
+yavta -B capture-mplane --capture=5 -n 5 -I -f SGRBG10P -s 3280x2464 
+--file=TPG-SGRBG10-3280x2464-000-#.bin /dev/video0
 
----
-bod
+I think we had some confusion about the TPG regressing on v6/v7 of this 
+patch but, I suspect the wrong test pattern was tested.
+
+This works as expected for me.
+
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Tested-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org> # qrb5165 rb5
 
