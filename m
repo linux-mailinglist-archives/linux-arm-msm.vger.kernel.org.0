@@ -1,235 +1,172 @@
-Return-Path: <linux-arm-msm+bounces-45148-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-45149-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 73749A129B8
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jan 2025 18:23:18 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0EB00A12A11
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jan 2025 18:42:17 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0B5F43A1675
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jan 2025 17:23:12 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AE3C83A1CBF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jan 2025 17:42:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D3AA31791F4;
-	Wed, 15 Jan 2025 17:23:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0370B19B5BE;
+	Wed, 15 Jan 2025 17:42:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="WOkEvGH0"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZvoCtSQE"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pj1-f47.google.com (mail-pj1-f47.google.com [209.85.216.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 030B743ACB
-	for <linux-arm-msm@vger.kernel.org>; Wed, 15 Jan 2025 17:23:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8FF51D5149;
+	Wed, 15 Jan 2025 17:42:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736961795; cv=none; b=jNV9WQZQN1sZltPSNvP/u++50RAVtCc/15IqO+NubdtBkJWv64jEn6XYfUK8w2yQ/+5x67eyaHrG5PMuXSc0L3kc2FwaUR7oKyxRTfhGISRv0fUtQMBQOJiL13FvdTImhjDc9vXdyWQhJBCPHyAK5/IdqDqnKnvTbsWhelHC7CU=
+	t=1736962932; cv=none; b=BeqdHwoqxKetUMuTmgnCGiJKDf5mCiAmiMW7P/O5mo50IrAMpY/u3cRrQbQH8BPlZSR9gM7/62SkMToHvqkVGmBTn48/wOp8U/1zRh56l/qDHM3V78k20sd7RDpkm3j4yQwB9RdBXBimNO9oM12SIB+ISVa3h1EJSkTpkC8r3dg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736961795; c=relaxed/simple;
-	bh=1KB7txDCZ93nbVXZ0ai+jU1Hipar0RSY2izZhKnCt40=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=eAufZ2LWMBxyq1qJm2Fg/5vfunIfCx4m806OHADUHByMxhv/IzXgQvI1aMjn6bh9Iw1NG5gChU2kOjivy/rKZamcSZxRDImW+3oe21AVXrVr/Wre2PvU+UTnnel093gMZyaVwRsn4kbQzHih3Kstke2U+7e+B9FmrmI7zZmsLSY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=WOkEvGH0; arc=none smtp.client-ip=209.85.216.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pj1-f47.google.com with SMTP id 98e67ed59e1d1-2ee67e9287fso122443a91.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Jan 2025 09:23:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1736961793; x=1737566593; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=LGc/C1yzuBbuvav0aaHLoiBeH6vLxOKW0EyhRVyasAY=;
-        b=WOkEvGH0QMD5GRUjKSnDxypGaEkgX5f3K073bReGxTOLkZcPxk4bdt9yUSIVR993TQ
-         Yex/y/wQILZt5XNKZ8BkYp1gqf2d6jdmN22gyXjOJwE2HnYjY87vHVGMhNgqFV75dezs
-         5bEKG92pZrKdUYdtfCw8DzUUR8nsDrDLQqrG4XFjYSecnlaSkqBF9zYYZhYB1nsdSXY5
-         JI9Tb+7+BRhxKeQ9sN5G7fWbpSRpftDLa8c5UIVaEikylVAd0hG4QU+3V8pk63AXD5u0
-         uLoD74NNURsc8/tYYy2xyR361WtInlqUTazGdGVqrK0J71eUu6V8GcIw3LHkGU6DPcPw
-         2WJA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736961793; x=1737566593;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=LGc/C1yzuBbuvav0aaHLoiBeH6vLxOKW0EyhRVyasAY=;
-        b=bPEGZxo8L128Kg8Wzm2pVea8W2zYMvwIlFbWkTmtC/1G3J04fU/bC7ECsnmyxRfZmF
-         38OBmCpWezMJ/z9muhEzxTUkR0I0P4kgnBQAqhpnEiEnFp+z5KCYcUFaZZsjD8rQe8/8
-         L2H5In/NTMX6w0DTcjFRMrUOoKHbmeE/+Z7JFTqOtyBWDlsmucdJLMGq/hiqHL/3UpuF
-         ehjltsRC55NQ4mSzCpov9mfejrmKMHthPInDozOHVDBWNz6fb+zOINpMRYHeexJUtlUT
-         jzjZEhqevXAnnP0ksyj2Ck4t+1GtGpg8CWpmi6bjBSIx0khgSTmQPRcJ5zhqkIRH3F8o
-         RNQg==
-X-Forwarded-Encrypted: i=1; AJvYcCXxsdglOa0vA3m35X9S1YIZQqqBTJz+Bnvl/10maQZjZpUMoHi8eFUxZgy8XPpNI5r55MprdB5L1Dj3FeLx@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw4tlIvXvCgyt7akz7ncc80RuMKabzUG0BS0R2yGLcWh61JjsZk
-	Jx7Js2CPQ7ADPpYcP56Hx4l1xrAav56xZBv3/CuZrIp5bkHsjfuXqBD7wG9A7T3eacGJIZxKX7U
-	=
-X-Gm-Gg: ASbGncueT55DtlN1EeRF88nXmNxYrRFyBtlR4z7ibEeKy79AZrcYz3FmFY7GwKdYd2z
-	BEWMOJ3XwV/6N5ZovccUONjwJMEWENTyBWa72yK0/2O1sKx9o6XEI4cP8YlgaUNR9jJmOuHsJop
-	ouh7YT6kzlAtX9LGwXK+klYzjNOgkpNbv//ZEFtenkMd2u2UoXDyqFjonMYS8CDjrj4Snwew5Db
-	QcxhsIx9VXHsqYRBEy+TO25QaNVWXDS8/BCOexwEiY3Y7K/G6jMjcL5kj2MrVHeTYo=
-X-Google-Smtp-Source: AGHT+IF95efwqWrgS/F1QQMyR5CmEdptuRTAbW6O82AZwIxPM/ttdhBkwmweSD0dvhrGKAnwUqY7KA==
-X-Received: by 2002:a17:90a:dfcb:b0:2ea:5054:6c49 with SMTP id 98e67ed59e1d1-2f548da510amr51228181a91.0.1736961793330;
-        Wed, 15 Jan 2025 09:23:13 -0800 (PST)
-Received: from thinkpad ([120.60.139.68])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2f72c2bb332sm1781624a91.36.2025.01.15.09.23.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Jan 2025 09:23:11 -0800 (PST)
-Date: Wed, 15 Jan 2025 22:53:04 +0530
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: Bjorn Helgaas <helgaas@kernel.org>
-Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Krishna Chaitanya Chundru <quic_krichai@quicinc.com>,
-	andersson@kernel.org, Bjorn Helgaas <bhelgaas@google.com>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	s=arc-20240116; t=1736962932; c=relaxed/simple;
+	bh=J0BtSYzRxpo1jeplxTVHrBhzUcmqL8aCpxn3sz43+hU=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To; b=fEnjb8yHF6i2VWes0CKYhDVlQBJwv32DGfvIbp1Wdu/GC+yRF6ZWkYkxO7jf7DhwX+anLNAxw+fSpgxzLuoyhqhwlH5qE47WBplg0GLPOzjtvu+zkYcJbR0jOAaTYebMV2j0tEab1yAdINiCz7hM87tQJbjEXZpCBYHXU6zSeeg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZvoCtSQE; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 370B8C4CED1;
+	Wed, 15 Jan 2025 17:42:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1736962932;
+	bh=J0BtSYzRxpo1jeplxTVHrBhzUcmqL8aCpxn3sz43+hU=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:From;
+	b=ZvoCtSQESTPXZOBTlWQOAUC2H+95Rkp3JvfsdSBMnDLdGvK/M4coFFfxcvM3ULjuN
+	 G26HVs/YY2okFoiKzalZV9me6X7uGawMOTtYpL/+PUIoVjxPMCpQ/Z/ZyHVq+suA85
+	 DX+9TPOhFcjMUJ9JC4j8w1qBq6t60MCSMMumzyrMSO2Xs2y21ynfej8dSJyjPvIYnS
+	 rW/qxfy9sGh5HWLU6XeBKz3x6LNUXvmLx15luB958tPqNUaaDRa72l51Ae2/hI6PFw
+	 8K8/YJIcdQClzOGBFC+5/3VC29h0Op2j7T1zOsl7z0wKLdNeWTjMqim0OQzv8Xgoec
+	 LPLFBlzd0iN6g==
+Date: Wed, 15 Jan 2025 11:42:10 -0600
+From: Bjorn Helgaas <helgaas@kernel.org>
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc: Rob Herring <robh+dt@kernel.org>, Rob Herring <robh@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
 	Conor Dooley <conor+dt@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	cros-qcom-dts-watchers@chromium.org,
-	Jingoo Han <jingoohan1@gmail.com>,
-	Bartosz Golaszewski <brgl@bgdev.pl>, quic_vbadigan@quicinc.com,
-	linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3 1/6] dt-bindings: PCI: Add binding for qps615
-Message-ID: <20250115172304.5jxgot6enijumbqy@thinkpad>
-References: <eysqoiiizunkjxqyvfaxbx4szwnz4osv42j7xr247irnthifwu@nhxytsl4brvu>
- <20250107224244.GA187680@bhelgaas>
+	cros-qcom-dts-watchers@chromium.org, linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	=?utf-8?B?TsOtY29sYXMgRi4gUi4gQS4=?= Prado <nfraprado@collabora.com>
+Subject: Re: [PATCH v2 01/21] arm64: dts: qcom: sm8250: Add PCIe bridge node
+Message-ID: <20250115174210.GA537839@bhelgaas>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250107224244.GA187680@bhelgaas>
+In-Reply-To: <20250115105431.gw34xgta2lmgjqva@thinkpad>
 
-On Tue, Jan 07, 2025 at 04:42:44PM -0600, Bjorn Helgaas wrote:
-> On Tue, Dec 24, 2024 at 11:49:42AM +0200, Dmitry Baryshkov wrote:
-> > On Tue, Dec 24, 2024 at 02:41:10PM +0530, Krishna Chaitanya Chundru wrote:
-> > > On 12/5/2024 2:55 AM, Bjorn Helgaas wrote:
-> > > > On Tue, Nov 12, 2024 at 08:31:33PM +0530, Krishna chaitanya chundru wrote:
-> > > > > Add binding describing the Qualcomm PCIe switch, QPS615,
-> > > > > which provides Ethernet MAC integrated to the 3rd downstream port
-> > > > > and two downstream PCIe ports.
-> 
-> > > > > +    pcie {
-> > > > > +        #address-cells = <3>;
-> > > > > +        #size-cells = <2>;
+On Wed, Jan 15, 2025 at 04:24:31PM +0530, Manivannan Sadhasivam wrote:
+> On Mon, Jan 06, 2025 at 05:07:05PM -0600, Bjorn Helgaas wrote:
+> > On Sun, Jan 05, 2025 at 03:46:12PM +0530, Manivannan Sadhasivam wrote:
+> > > On Fri, Jan 03, 2025 at 03:05:31PM -0600, Bjorn Helgaas wrote:
+> > > > On Thu, Mar 21, 2024 at 04:46:21PM +0530, Manivannan Sadhasivam wrote:
+> > > > > On Qcom SoCs, the PCIe host bridge is connected to a single PCIe bridge
+> > > > > for each controller instance. Hence, add a node to represent the bridge.
+> > > > > 
+> > > > > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> > > > > ---
+> > > > >  arch/arm64/boot/dts/qcom/sm8250.dtsi | 30 ++++++++++++++++++++++++++++++
+> > > > >  1 file changed, 30 insertions(+)
+> > > > > 
+> > > > > diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+> > > > > index 39bd8f0eba1e..fe5485256b22 100644
+> > > > > --- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
+> > > > > +++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+> > > > > @@ -2203,6 +2203,16 @@ pcie0: pcie@1c00000 {
+> > > > >  			dma-coherent;
+> > > > >  
+> > > > >  			status = "disabled";
 > > > > > +
-> > > > > +        pcie@0 {
-> > > > > +            device_type = "pci";
-> > > > > +            reg = <0x0 0x0 0x0 0x0 0x0>;
-> > > > > +
-> > > > > +            #address-cells = <3>;
-> > > > > +            #size-cells = <2>;
-> > > > > +            ranges;
-> > > > > +            bus-range = <0x01 0xff>;
-> > > > > +
-> > > > > +            pcie@0,0 {
-> > > > > +                compatible = "pci1179,0623";
-> > > > > +                reg = <0x10000 0x0 0x0 0x0 0x0>;
-> > > > > +                device_type = "pci";
-> > > > > +                #address-cells = <3>;
-> > > > > +                #size-cells = <2>;
-> > > > > +                ranges;
-> > > > > +                bus-range = <0x02 0xff>;
+> > > > > +			pcie@0 {
+> > > > > +				device_type = "pci";
+> > > > > +				reg = <0x0 0x0 0x0 0x0 0x0>;
+> > > > > +				bus-range = <0x01 0xff>;
 > > > > 
-> > > > This binding describes a switch.  I don't think bus-range should
-> > > > appear here at all because it is not a feature of the hardware (unless
-> > > > the switch ports are broken and their Secondary/Subordinate Bus
-> > > > Numbers are hard-wired).
-> > > > 
-> > > > The Primary/Secondary/Subordinate Bus Numbers of all switch ports
-> > > > should be writable and the PCI core knows how to manage them.
+> > > > Hi Mani, most or all of the patches in this series add this
+> > > > "bus-range" property.  IIUC, these are all Root Ports and hence the
+> > > > secondary/subordinate bus numbers should be programmable.
 > > > 
-> > > The dt binding check is throwing an error if we don't keep bus-range
-> > > property for that reason we added it, from dt binding perspective i think it
-> > > is mandatory to add this property.
+> > > Right. It is not a functional dependency.
+> > > 
+> > > > If that's the case, I don't think we need to include "bus-range" in DT
+> > > > for them, do we?
+> > > 
+> > > We mostly include it to silence the below bindings check for the
+> > > endpoint device node:
+> > > 
+> > > Warning (pci_device_bus_num): /soc@0/pcie@1c00000/pcie@0/wifi@0: PCI bus number 1 out of range, expected (0 - 0)
+> > > 
+> > > DTC check is happy if the 'bus-range' property is absent in the
+> > > bridge node. But while validating the endpoint node (if defined), it
+> > > currently relies on the parent 'bus-range' property to verify the
+> > > bus number provided in the endpoint 'reg' property.
+> > > 
+> > > I don't know else the check can verify the correctness of the
+> > > endpoint bus number. So deferring to Rob here.
 > > 
-> > Could you please provide an error message? I don't see any of the PCIe
-> > bindingins declaring bus-range as mandatory. I might be missing it
-> > though.
+> > I should know more about how this works in DT, but I don't.
+> > 
+> > I guess https://git.kernel.org/linus/83d2a0a1e2b9 ("arm64: dts: qcom:
+> > sm8250: Add PCIe bridge node") added this (subsequently renamed to
+> > "pcieport0"):
+> > 
+> >   +			pcie@0 {
+> >   +				device_type = "pci";
+> >   +				reg = <0x0 0x0 0x0 0x0 0x0>;
+> >   +				bus-range = <0x01 0xff>;
+> > 
+> > which is used at places like
+> > https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts?id=v6.12#n788:
+> > 
+> >   &pcieport0 {
+> > 	  wifi@0 {
+> > 		  compatible = "pci17cb,1101";
+> > 		  reg = <0x10000 0x0 0x0 0x0 0x0>;
+> > 
+> > Based on
+> > https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/Documentation/devicetree/bindings/pci/pci.txt?id=v6.12#n46
+> > (which is written for Root Ports and Switch Ports, but presumably
+> > applies to endpoints like wifi as well), "reg" contains the device's
+> > bus/device/function:
+> > 
+> >   - reg:
+> >      Identifies the PCI-PCI bridge. As defined in the IEEE Std 1275-1994
+> >      document, it is a five-cell address encoded as (phys.hi phys.mid
+> >      phys.lo size.hi size.lo). phys.hi should contain the device's BDF as
+> >      0b00000000 bbbbbbbb dddddfff 00000000. The other cells should be zero.
+> > 
+> > So 0x10000 would decode to 01:00.0, which matches the <1 1> bus-range.
+> > 
+> > I don't know the reason for requiring the BDF there, but the venerable
+> > https://www.devicetree.org/open-firmware/bindings/pci/pci2_1.pdf, sec
+> > 4.1.1, says "reg" is mandatory for PCI Child Nodes, and the first
+> > entry must be the config space address (bus/device/function).
+> > 
+> > I suppose maybe the BDF is needed to associate the properties with the
+> > correct device, and if the OS were to reprogram the bridge secondary
+> > bus number, it would have to remember the original value to preserve
+> > this association.  I don't think Linux *does* remember that, but it
+> > also generally leaves the bridge bus numbers alone.
 > 
-> I think the warning message is like this:
-> 
->   Warning (pci_device_bus_num): /soc@0/pcie@1c00000/pcie@0/wifi@0: PCI bus number 1 out of range, expected (0 - 0)
-> 
-> and only happens if there's a device below a Root Port or a Switch.
-> In that case the device "reg" property apparently has to include the
-> bus/device/function.
-> 
-> IIUC, in this case, we're describing a Switch with an integrated
-> Ethernet MAC:
-> 
->   pcie@0 {
->     device_type = "pci";
->     reg = <0x0 0x0 0x0 0x0 0x0>;           # 00:00.0 RP to [bus 01-ff]
->     bus-range = <0x01 0xff>;
-> 
->     pcie@0,0 {
->       compatible = "pci1179,0623";
->       reg = <0x10000 0x0 0x0 0x0 0x0>;     # 01:00.0 Switch USP to [bus 02-ff]
->       device_type = "pci";
->       bus-range = <0x02 0xff>;
-> 
->       pcie@1,0 {
->         reg = <0x20800 0x0 0x0 0x0 0x0>;   # 02:01.0 Switch DSP to [bus 03-ff]
->         device_type = "pci";
->         bus-range = <0x03 0xff>;
->         qcom,no-dfe-support;
->       };
-> 
->       pcie@2,0 {
->         reg = <0x21000 0x0 0x0 0x0 0x0>;   # 02:02.0 Switch DSP to [bus 04-ff]
->         device_type = "pci";
->         bus-range = <0x04 0xff>;
->         qcom,nfts = <10>;
->       };
-> 
->       pcie@3,0 {
->         reg = <0x21800 0x0 0x0 0x0 0x0>;   # 02:02.1 Switch DSP to [bus 05-ff]
->         device_type = "pci";
->         bus-range = <0x05 0xff>;
->         qcom,tx-amplitude-millivolt = <10>;
-> 
->         pcie@0,0 {
->           reg = <0x50000 0x0 0x0 0x0 0x0>; # 05:00.0 Ethernet MAC, I guess?
->           device_type = "pci";
->           qcom,l1-entry-delay-ns = <10>;
->         };
-> 
->         ...
->       };
->     };
->   };
-> 
-> So I think the bus-range properties are needed to match the reg
-> properties of the downstream devices.
-> 
-> I do think the bus-ranges of the Switch Downstream Ports look bogus
-> because they all extend to bus ff, so they overlap.  The Switch
-> wouldn't know how to route config transactions to the correct DSP.
-> I suppose the PCI core would fix these overlaps at boot time, but 
-> it seems wrong to describe them this way here.
-> 
+> Device drivers need to parse the properties defined in the device DT
+> node. And the only way to identify the node is by using its 'reg'
+> property which has the BDF identifier. This is common to other
+> busses where the device address is encoded in the 'reg' property.
 
-Yeah, max bus range is really a dynamic value. But I don't know how we could
-define a legal value other than 'ff' statically.
+Does this assume there is some firmware to configure these bridges
+before Linux boots?  If bridges are completely unconfigured after
+power-on, their secondary and subordinate bus numbers will be zero, so
+a bus-range property for the bridge can only be an assumption about
+what Linux will do.
 
-Open firmware PCI bus binding defines 'bus-range' as:
-
-"Two integers, each encoded as with encode-int, the first representing the bus
-number of the PCI bus implemented by the bus controller represented by this node
-(the secondary bus number in PCI-to-PCI bridge nomenclature), and the second
-representing the largest bus number of any PCI bus in the portion of the PCI
-domain that is subordinate to this node (the subordinate bus number in
-PCI-to-PCI bridge nomenclature)."
-
-https://www.openfirmware.info/data/docs/bus.pci.pdf
-
-- Mani
-
--- 
-மணிவண்ணன் சதாசிவம்
+Bjorn
 
