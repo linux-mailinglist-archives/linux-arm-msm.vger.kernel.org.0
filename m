@@ -1,79 +1,79 @@
-Return-Path: <linux-arm-msm+bounces-45080-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-45081-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0D6ADA11B92
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jan 2025 09:10:22 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 34062A11BBB
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jan 2025 09:20:53 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0A4643A33D1
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jan 2025 08:10:15 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 48D631889D62
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jan 2025 08:20:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5B57E22FAE2;
-	Wed, 15 Jan 2025 08:10:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A8B001F9F41;
+	Wed, 15 Jan 2025 08:20:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="lUGBAygu"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="xwFPbC8A"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f52.google.com (mail-ed1-f52.google.com [209.85.208.52])
+Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A5DE236A6E
-	for <linux-arm-msm@vger.kernel.org>; Wed, 15 Jan 2025 08:10:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D35BF1DB15D
+	for <linux-arm-msm@vger.kernel.org>; Wed, 15 Jan 2025 08:20:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736928614; cv=none; b=Sh8ce23WML4DW1T0oa7aSCrS4Aq2AKKzcSPqotp8Mju5xnGII8cj/hKN7yE1ZxNqvvYAiGoiItswVHbnDRDFmw2KmrdobtLSoO5503FN0x+aJwtDQKoDiOyt08pkQJF3AgYMChdl/bIJ4EHIJi/k23WcyxSWuFdyGOkyTHeFTK0=
+	t=1736929248; cv=none; b=SLa3hiVbmgkqEhIGIuaXje9ikIHN6FY46O1WLRhYoFbs3heR/5KanoXPAwX/8EYuBXWxTnoFnGavztIdmF51ZXDb0W2e3lK8VnKoT+H4sTYbBAj/GzF+rLpK5UcgQerk/Xuq7iz2hNau3mg+MIrKEn0nEJ6fCreTRafmQjlrUDQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736928614; c=relaxed/simple;
-	bh=1syB/yTFe9pOxtUgkfKTZOUhX8XikyYYbP8bmiyG/p8=;
+	s=arc-20240116; t=1736929248; c=relaxed/simple;
+	bh=SYxPUi7qB00bEexxv5uaZyOlcqQie7Hjwm+LRuj14uk=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=IzKJDWhT0n4NiOcAZEd01jd4tSokgdL282nzwrMV2YBdnYDfZYAcaUQwuMQy0rZrk25WkzbsPmMMcGwrKOqBzfhK2gOeeyFIZm1X/E2HdvCIW3RH6BxMpPa0vNK3jIzxBEImsEhUHuGeVsnA1HmzEqQjkRAQuEk5iBd+6Sp6SHQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=lUGBAygu; arc=none smtp.client-ip=209.85.208.52
+	 In-Reply-To:Content-Type; b=Ky1NI1S3UMbEm7aKKqAoI8Ra04bALmK3iplGeO8NHJ04g0H7nsHix6hOVhiFpZ3NJjLG311Q6AxAaGtu9Wp+1n2kclG0LZ36IGq167vtBmJzUg1G4MnNQ0Gj36ST5S5L7D6Ok+7VBRGdLCXGxnJBhW3CSy+RHoA2SYaTuXh6hVQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=xwFPbC8A; arc=none smtp.client-ip=209.85.221.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f52.google.com with SMTP id 4fb4d7f45d1cf-5d0bf4ec53fso1071308a12.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Jan 2025 00:10:12 -0800 (PST)
+Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-385e0d47720so496991f8f.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Jan 2025 00:20:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1736928611; x=1737533411; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1736929245; x=1737534045; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:content-language
          :from:references:cc:to:subject:user-agent:mime-version:date
          :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=2x8pd15zEdXV/nC469cdN0tUhzRio5oRNAxqPdMlKlY=;
-        b=lUGBAygutaKXUnNPH5qAw9NPHRD4d4Qtz96tWqoWiabC1xRb/LE3bcPxdhS5oFiOaM
-         p3uqFDfs9c8Xxc6lgttyQyyL865sBdNJp1vVHGskcG/2tFDlUH7NKVHFeGgdpjJqA3Bg
-         Dypz+jl6xpMlzxEUPdA5LPsBiyd+29YXsf9HD5SH/sCh4tlaQVw5/9F7vtunRWckboAP
-         5vPP+b/Axf9AbwZVtg8bpguHub2tFN1IBNWsb/8SsR3kJgKN5tvEN3WcGzodjZ8FQ/2D
-         rc77tVWKb2suEq1FXkkdHm3u7JRFZFs6l94uYvOygS4pAXV9wSQq1ONl3ouqPW+Y6IvH
-         qUHA==
+        bh=0efG6sveoUWaxA+bx5KyO07/pKf3ym8QvOhAj6YpWZ0=;
+        b=xwFPbC8A2HY0sqJ26cqRSvnGhut+BhPy+Oi6pgHSDm0niimwkonpYB5Tv41ze3cJaE
+         +Y/HKKF6CAeCXBhGnbLGLeNDNp/GmJWfXUyK47XtefPs3auxc0o1+lnGO8GOVnfnvKR2
+         RpByqnD/8U8vXuJi0tF31kqRvDRra2CxRIZsSim0IgjYD+QFyicTh6NYW+zotn5ilHv3
+         D1RvBPxcv74qZtqjPCjstj6ALgDTfCn1Kq25qx4tszgBWLLMWV8tmvvmgwnWVgWW+f8f
+         Gd9ly91sGb+ISYcg+ZkVwypyTTU4nU+bzUXJYFTKmhlkMtArfhExlD6xq385QUNad+5x
+         r0MA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736928611; x=1737533411;
+        d=1e100.net; s=20230601; t=1736929245; x=1737534045;
         h=content-transfer-encoding:in-reply-to:autocrypt:content-language
          :from:references:cc:to:subject:user-agent:mime-version:date
          :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=2x8pd15zEdXV/nC469cdN0tUhzRio5oRNAxqPdMlKlY=;
-        b=Cwz7liEeDkmyrvCfJedTP/fLkkDz6GALUGFMz/57OrQ9MvkzeAg5vK7ttw65z1wTNw
-         wMzKHEF6nUJBFmyGwW78F6KKfiOc6wJNbAiG27GqefYT5tjZ7y2/U0VXEXxNmb2O8bfF
-         Fq3QGkVPZHzN/V2PfqriJc8FWcYd5a9JcX3NuvzK+Aokz85ZyGEjlr81UB8Pi7PylKv0
-         Pd5/dvHrtaAr5i8khysg4L6oeB/RfB2VnHzb3YRpG/acjsYcnSzZbIM8mgQpPep27+ER
-         6bf8gJzgY1D8rweGywFIAM3qqfP6fkqGbjZwZ6KiEOkCnGjPhUJggdzhk0RbEcX6BG/x
-         yY3g==
-X-Forwarded-Encrypted: i=1; AJvYcCWIILNVvNcpZuXiry7Y4/tgb+rv19V3JpJCqxAsp3zoMPVNygfg7mpuBkJoBXdXoQKOntDj1e3Pb960l4/i@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx+ji6XPPB4xlDD4DqY8uJ8AtEaFiFG9YH0bZ6+GYaE/VyTdtnP
-	bGyLL1FX06toDDKMgSSNsdg68y9WOdkfZGUrHMxRix2HBlhBoduBXVDP47wOI2w=
-X-Gm-Gg: ASbGncttnxTO4k5hA0iQt50Q5NP+9jwGnNHUMRzvNit6pMsuB8dh61r2QitSfo4c78u
-	9l0X+4nHkMwdSmlc2uLqVcASwn7n/tqPZ+BrgPOJsyUTGyUEXqbFEuCZVBZab4OUIeDHfK2UYmm
-	NKgy2J/KeMtrCaRg5pdOn2rIddfaFR9K33GxFPFeXurUxDuUBXSOUjIjgQsUT7XAR/5SmSajEua
-	4DCxdcsGU1TQmwdVDs7Vk9LFAHcxp0bxovjroIoM8m5nCUjfrYcacsgbP5veOoCTT5h04DvKJuH
-X-Google-Smtp-Source: AGHT+IHZpaGL9nGZhARhY/bI9CN8fg77ZL6feb3p3onUCZo34QeqSggtoso0GFqHvFB4Oq1TvYuo0w==
-X-Received: by 2002:a05:6402:370c:b0:5da:b46:9395 with SMTP id 4fb4d7f45d1cf-5da0b46943bmr853479a12.3.1736928610732;
-        Wed, 15 Jan 2025 00:10:10 -0800 (PST)
+        bh=0efG6sveoUWaxA+bx5KyO07/pKf3ym8QvOhAj6YpWZ0=;
+        b=I4u+sLz/oALcTmBLt/WCGkzltfwAuSrEDmMin9+XFw+Z1hEUXJWAVsEbz7SiS8zWw1
+         Dw1LCKb87EVSLSk5bknR+G/BfL7MHz/sIU+hfGX/OdBt2iJwRiUvg5keE7DOh9gktv/a
+         /CuOUdHSwiUAVYFP9IL724TJAtWDGPceaf/64gi+cj/mWJpsil8/HRWTDKeFh+JGPe/T
+         b4wfSiw2h5Fb4ar3/XK1i7IuJrR4xmAu++Gpbx9wg69dFB9leq0A7A1WGZc3SWH2cH4H
+         i3PYokR03RkYYaTt8bb0wYUahQGobEXeRkdD30bA6ibZAwju8vd1s5jGVtCtLyE0YRR7
+         Nb4Q==
+X-Forwarded-Encrypted: i=1; AJvYcCWMbXjQ8FDTtd6kB7F5+lbBCKp+zZsS5EM465dHwdGsWgirvvbkA9bfsMKIq3txa/zWHnLWugVV2tarbnNT@vger.kernel.org
+X-Gm-Message-State: AOJu0YyryJfjv5pIFKt8NH1IagA8Na/ICiRxC5p3A7DN2IZJW/4CrwNn
+	fVi5kZy1sukFInDNMrnowrDpUWnDktxg7LFxJLVwFcrTQyiKa6s+bQqnqvXyUCw=
+X-Gm-Gg: ASbGnct7g4Su/IFY1TqBrzamfhCSH/Z6FCpvBXJKTtG4KV2/zjuIw4bd9rQ+c+qFvst
+	DUL8QMjFqoKvI8YR2rdDXSAuP00YywIMXLE8mdJeYtbV815UgAGxnTncRQ2lzt54fkxQoMeh0D9
+	SfXRNcEM+G+Ir7EyXRArQL/gjDeENry5y3fg7RtgkS/xYErjNlDseJhK5rAnzyU9ikMP/YVLpxH
+	D5l0YkTieNt/ZCkqCi/VzjL3ryOtmgVaaWb/FzdH9QoW33uzi7bA/ejZ7eErIUxADDgi++Z8PIT
+X-Google-Smtp-Source: AGHT+IFnNs4LdDgn5hkXL2/wj94K3bSrrgWVJ2OlgTPdHqwLAfORDOLYq402mvygpSnbbRCJF55LCw==
+X-Received: by 2002:a05:600c:35c2:b0:434:941c:9df2 with SMTP id 5b1f17b1804b1-436e272c89cmr100062085e9.8.1736929245083;
+        Wed, 15 Jan 2025 00:20:45 -0800 (PST)
 Received: from [192.168.1.20] ([178.197.223.165])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5d99046a07bsm7164457a12.65.2025.01.15.00.10.09
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38be66b01c7sm1654266f8f.22.2025.01.15.00.20.43
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 15 Jan 2025 00:10:10 -0800 (PST)
-Message-ID: <29bd1baf-f1cb-4c74-9d31-051c2b8efae6@linaro.org>
-Date: Wed, 15 Jan 2025 09:10:08 +0100
+        Wed, 15 Jan 2025 00:20:44 -0800 (PST)
+Message-ID: <5af698ec-376c-4680-94a6-917ce92162f5@linaro.org>
+Date: Wed, 15 Jan 2025 09:20:43 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -81,20 +81,12 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] clk: Use str_enable_disable-like helpers
-To: Stanislav Jakubek <stano.jakubek@gmail.com>
-Cc: Michael Turquette <mturquette@baylibre.com>,
- Stephen Boyd <sboyd@kernel.org>,
- Florian Fainelli <florian.fainelli@broadcom.com>, Ray Jui
- <rjui@broadcom.com>, Scott Branden <sbranden@broadcom.com>,
- Broadcom internal kernel review list
- <bcm-kernel-feedback-list@broadcom.com>,
- Linus Walleij <linus.walleij@linaro.org>,
- Bjorn Andersson <andersson@kernel.org>, linux-clk@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
- linux-arm-msm@vger.kernel.org
-References: <20250114190612.846696-1-krzysztof.kozlowski@linaro.org>
- <Z4diEj__bbQl4ULS@standask-GA-A55M-S2HP>
+Subject: Re: [PATCH next] firmware: qcom: scm: Fix error code in probe()
+To: Dan Carpenter <dan.carpenter@linaro.org>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org,
+ linux-kernel@vger.kernel.org, kernel-janitors@vger.kernel.org
+References: <a0845467-4f83-4070-ab1e-ff7e6764609f@stanley.mountain>
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Content-Language: en-US
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
@@ -141,40 +133,20 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <Z4diEj__bbQl4ULS@standask-GA-A55M-S2HP>
+In-Reply-To: <a0845467-4f83-4070-ab1e-ff7e6764609f@stanley.mountain>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 15/01/2025 08:21, Stanislav Jakubek wrote:
-> Hi Krzysztof, 1 note below.
+On 15/01/2025 07:52, Dan Carpenter wrote:
+> Set the error code if devm_qcom_tzmem_pool_new() fails.  Don't return
+> success.
 > 
-> On Tue, Jan 14, 2025 at 08:06:12PM +0100, Krzysztof Kozlowski wrote:
->> Replace ternary (condition ? "enable" : "disable") syntax with helpers
->> from string_choices.h because:
-> 
-> [snip]
-> 
->> diff --git a/drivers/clk/clk-nomadik.c b/drivers/clk/clk-nomadik.c
->> index 06245681dac7..f3a73ac5a1b9 100644
->> --- a/drivers/clk/clk-nomadik.c
->> +++ b/drivers/clk/clk-nomadik.c
->> @@ -17,6 +17,7 @@
->>  #include <linux/debugfs.h>
->>  #include <linux/seq_file.h>
->>  #include <linux/spinlock.h>
->> +#include <linux/string_choices.h>
->>  #include <linux/reboot.h>
->>  
->>  /*
->> @@ -116,9 +117,9 @@ static void __init nomadik_src_init(void)
->>  
->>  	val = readl(src_base + SRC_XTALCR);
->>  	pr_info("SXTALO is %s\n",
->> -		(val & SRC_XTALCR_SXTALDIS) ? "disabled" : "enabled");
->> +		str_enabled_disabled(val & SRC_XTALCR_SXTALDIS));
-> 
-> It seems like you flipped the logic here. Was this intentional?
-No, overlook. Thanks for noticing.
+> Fixes: 1e76b546e6fc ("firmware: qcom: scm: Cleanup global '__scm' on probe failures")
+> Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+
+Uh, one can stare at own code for hours and never see the issue.
+
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 Best regards,
 Krzysztof
