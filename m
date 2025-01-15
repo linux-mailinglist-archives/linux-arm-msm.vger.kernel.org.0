@@ -1,86 +1,78 @@
-Return-Path: <linux-arm-msm+bounces-45120-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-45121-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 57F6DA1222D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jan 2025 12:12:39 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id AD1CBA1225C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jan 2025 12:20:02 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id F07053A85B6
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jan 2025 11:12:32 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CE678168C1A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jan 2025 11:20:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 525A71E9915;
-	Wed, 15 Jan 2025 11:12:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Tvx5DCax"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A286A1E7C27;
+	Wed, 15 Jan 2025 11:19:58 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f46.google.com (mail-lf1-f46.google.com [209.85.167.46])
+Received: from mail-pl1-f179.google.com (mail-pl1-f179.google.com [209.85.214.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 447691E98EF
-	for <linux-arm-msm@vger.kernel.org>; Wed, 15 Jan 2025 11:12:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4377B248BA4;
+	Wed, 15 Jan 2025 11:19:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736939555; cv=none; b=cOpKCMvkv6wOhZ9VoWlXWpOaMzqRM4Fh//YB/H+V+QZ+EmW6zQwnP4a1oZBKX/dDkFsE3VUJX7NvWuI29ulUKN4ubfiFUBMJli3CMvMbfgU0XrgiiX8ZoT43kKZQaLrFG5jsSeeMIugtACgCTm2uCXtF16vWcICmhAOPOGDBogs=
+	t=1736939998; cv=none; b=I2F5O76JdTVImte6K0dAb0P022OZ3Uqr0p7AWSFbuaf8DqPZMaK2HbpdgqHZr4QvwTz0sLgfxylkj2IhN6E4By1rBupI+56yZe0qwlPDwoQXPI4Vuz9T/5Z/EyhErW+NPVDYnmchAJLKz779IIAyaOjKqwIifEIT1Iv1jsbgIhw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736939555; c=relaxed/simple;
-	bh=vhImzVV58kYyHYIUkFdZkPsDkULuYsk1Gi6Hl4W7mpw=;
+	s=arc-20240116; t=1736939998; c=relaxed/simple;
+	bh=1xoY/X3t17KdWhxRXY/y/d/HeEJBR2ipsoiO2TAOE+M=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=gQxbANVzOlIjmt15VCW7BbmlUzskOW3PAH2pfi/S90JJHCI7UTsWlscBe90OJ+gosk7PPOYXxtIoNFbhLutmEcCL/34lhpkugszxA3ThkVqhtwRhzl93a3JrGYCmrJxn/XyarPfdNOpZbAmx62bSWPgujml7rYf4G2n93uxGu6A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Tvx5DCax; arc=none smtp.client-ip=209.85.167.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f46.google.com with SMTP id 2adb3069b0e04-54025432becso6362305e87.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Jan 2025 03:12:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1736939551; x=1737544351; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=+tHz1lZDZJu/vrJ3APOR11aoNkytAh6ESFiCZtI/0bQ=;
-        b=Tvx5DCaxi9sFYB99VvHE/gSoUoPfRuQQcNWKpka3gX0ljdDTA3c3sIIOwqrwgl9g7E
-         9lXWVVz9fVVae50zqz2xaMCb18CgQcg2KFXqjf/HunhVTNcIZW58VJAWA1nmVL880G0S
-         9uxNdVZ6jgd1Mmj8kICk9omNd5XWbuJyWxigM7xjdUMSeZM+qibTLz6pnn4lnlV75MKd
-         RLM0v829N/RL1RcVHDqEeU0W5uIuF6N2cA/gawQQKAgDqB9mY0GG0aqygPStpLuVb/Hc
-         oCpPQRwH060I4fMQpEtHvNIsiJYqcg5i+M1S8KZsVEaZZ/s8ueF6ZZBZ+jna/aPyY4ZF
-         RRiQ==
+	 Content-Type:Content-Disposition:In-Reply-To; b=Td170exm7mjqSV2bVCc26zSldlxq+oAD3gAVVLNix2C8FuBFZtoHLiq1A3v1G/bBR46MgMAQ0fHnLgHwR0gqXmKwZjX6fATzU0pE2MRlutRP4XYWG1AddGrOLH1xK6pgT/kBn7GPU+tCYhRy+nFipU+IoK0gb2+4hfMIPnDR93A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=linux.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.214.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=linux.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pl1-f179.google.com with SMTP id d9443c01a7336-2166022c5caso102844765ad.2;
+        Wed, 15 Jan 2025 03:19:57 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736939551; x=1737544351;
+        d=1e100.net; s=20230601; t=1736939996; x=1737544796;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=+tHz1lZDZJu/vrJ3APOR11aoNkytAh6ESFiCZtI/0bQ=;
-        b=kJV+8hisbr06Kriw5EGx6b6QQZk9bo+wqehEMODc3NVSkqR/dS8CEJAleSufF108Sh
-         GzVH5DXIp85hjOIff+KtuipegCL4JAadSFTVSLjB8QcIKIiSVci/TOOj2BHjGYojN+Ur
-         C5imu6JSK0Usu1J/e9OSQ9iPrQORDdu6BRCAbh2L/IocIZcz8a4Iry9na7NePY5tui7u
-         PEO1GFlbe7tD9bus59YNOhDDMS/GG6aFlCBDQS9O6Alew3AFp0wt4fqtfUP56e5ipMQw
-         YB7SYf4ZPWb5YHqM9wCLp8J/L2rXzj1fHoH4s5yiaD0i/jGyqamWKJtNJDV8MV3Pwnzn
-         8B/Q==
-X-Forwarded-Encrypted: i=1; AJvYcCVr5X3a3WhC2aBs7ceJJzMeYIAawWz6Ys9D1Vvxbj4wj6fege22SvbK2PDjwpCLdzGSjjOU4pRUWQgc6WOz@vger.kernel.org
-X-Gm-Message-State: AOJu0YxsgD8eoKtaOmm2tIMpCPXELTBiXRKBaOsXNIKcrCi60dNwoQ71
-	oJMY8BLKp1U1ar8qCg7B0s3acOcY69xHwVRN1U3pypF3Z5de6eexJEfO/IvSxII=
-X-Gm-Gg: ASbGncsQJIloOnPg0hn12ZUqLqXb8pz2qPbtUrBvpTJ0N2u/Clt8J7EMRxUgCmhL7Lb
-	BHkIEgrnVAx/KP5o35Lc7lUyeDSpIOlGwZ7VqvXximZA2tP+fnkNoGmez4f7mvXrZWp/ZUmHlmH
-	rWr4zRlCSPNSOIqpSdnBzNr0wEeVkDpQ5pyp7+xmXwparPaH2TmPiFE9/Tvy8H1IHmq/pSBbzlH
-	MMwr4l9wVW38CVH9vIMxCmjlVlGut0PMyWk9jEMWes47OW4L1QvCR+c75dkriwcOdIQgekkXCtS
-	24oxu5ukhyguuXSAkKnALXYyi0lqXJC4xNXa
-X-Google-Smtp-Source: AGHT+IGPnv+1mKebX/XJMc+HfyjNtFhAovM40dVLzkyMzoPPf30juxdLxbc2XPEGSlUqvqfQMtNdig==
-X-Received: by 2002:a05:6512:1281:b0:540:5b5c:c18d with SMTP id 2adb3069b0e04-542844f6d6emr8173447e87.7.1736939551222;
-        Wed, 15 Jan 2025 03:12:31 -0800 (PST)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5428bea6691sm1995380e87.132.2025.01.15.03.12.28
+        bh=CTDc6QMGekaYyeE7wEFxu6Z5thWk8YbGvyNFBNiV5a8=;
+        b=dDx4YVn1u9l3/zmz/+mMKPTnnwo8+kayfBjj8lgphHmmvfQEAGgTz5CnYys+Fw4CSV
+         Bm2xS7rlvTiTIYe9Lo7PtyaeSoKAE5NQ+YOsOrGCERubQCVgn6LSak+lRcr5mqfc6vT8
+         NIChhs6kuS5S01hqJsHXQk+betnGtECTZOBuE8pAadznNu6MRd/8u5EyHTJ6rueY4rN6
+         vY6Ij4dD9tmhvIWqTrpq+u3hdIVhSM/I8QQSo1svwurdlcAw2Myz+tGnEVkCE2m7q7dW
+         IvBfUgFciOZTkOecMfiC77HdP/XTrdSKw5xc/aqQI1jjlFG+M2xOo1x83hkvUUrbbd4Q
+         Re4Q==
+X-Forwarded-Encrypted: i=1; AJvYcCVConallyVmpgsVRtKXU3if3dCOaVGlV4y/wVHuoJg76fcjiI5wsvV2gIiPJfT8COAhoXnHviQIz0AAK+3N@vger.kernel.org, AJvYcCVDFB/KuxLFP7CHbSsmTvKui/jp73J/hX4deUNvxnzhs/DTfw9luyHL94lNE7+L1kcEqdeGrcNY+lDIamgh@vger.kernel.org, AJvYcCVTetSjrhBMKIbB7M8E+zxFGsb+DnTZqhG7tyf2rgceBolUnebTzfVlSSpVHO/5IMu6K/5k2l/rCpoA@vger.kernel.org
+X-Gm-Message-State: AOJu0YzSsKlIQD/9yVjMTMMiYKNUk1pI4gFNKvk5IMrLIvss/hO1xZTe
+	mSP4hPT8HFtq02WVZVLNOwA9ZNiGaqNPe2MZnNPf75JOJiE9zjaW
+X-Gm-Gg: ASbGncvwObZQzoads0DOCCdLSFTEExUX3dXl8WkXpl2wUC6A8HrsROH7lSC1y6UC3VU
+	aBLz3WOzqzQRRAcOlxIiu07wEUGUV6pnc0cn2tTpr75vu225Bw1Hun1OUaSXyKWoGf3WPh9onR7
+	Y7DlPvvRVB5vf3+seiStdMc+LGC+rwVLFxh7afFDrFmXPvokqT4Nn/ygzYv2eP3Rb99dzdvv/5n
+	2NkEdOC8zY5HujwaqY3MpglU9n+AmuTo9PKu4f7whyxQTb+77L8X2dzS+2UUjSFcfmgCqWWlRsM
+	3BC8kj4UbKACHGo=
+X-Google-Smtp-Source: AGHT+IE9u2Z+dWs0W1PQSRqxZBeGK7J7WB0qVFArVIy/A9e5JnJQBv0ieenCRc3uGDbRhD3/8SG2Jg==
+X-Received: by 2002:a17:902:ebc4:b0:21b:d105:26b9 with SMTP id d9443c01a7336-21bd10529e9mr102917555ad.16.1736939996489;
+        Wed, 15 Jan 2025 03:19:56 -0800 (PST)
+Received: from localhost (fpd11144dd.ap.nuro.jp. [209.17.68.221])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-21a9f10e411sm80772605ad.4.2025.01.15.03.19.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Jan 2025 03:12:29 -0800 (PST)
-Date: Wed, 15 Jan 2025 13:12:27 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
-Cc: andersson@kernel.org, konradybcio@kernel.org, robh@kernel.org, 
-	krzk+dt@kernel.org, conor+dt@kernel.org, linux-arm-msm@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, quic_srichara@quicinc.com, 
-	quic_varada@quicinc.com
-Subject: Re: [PATCH] arm64: dts: qcom: ipq9574: enable fast mode for i2c3
-Message-ID: <qq47sv4wylmwtsx6r46lmyxypv7t2q5jx7wcahv2tzwu4wkd7n@qg76zy26ruco>
-References: <20250115110142.3501140-1-quic_mmanikan@quicinc.com>
+        Wed, 15 Jan 2025 03:19:55 -0800 (PST)
+Date: Wed, 15 Jan 2025 20:19:54 +0900
+From: Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>
+To: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+Cc: Jingoo Han <jingoohan1@gmail.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+	Konrad Dybcio <konradybcio@kernel.org>, linux-pci@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	andersson@kernel.org, quic_vbadigan@quicinc.com,
+	quic_mrana@quicinc.com
+Subject: Re: [PATCH v5 0/3] PCI: dwc: Skip waiting for link up if vendor
+ drivers can detect Link up event
+Message-ID: <20250115111954.GE4176564@rocinante>
+References: <20241123-remove_wait2-v5-0-b5f9e6b794c2@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -89,37 +81,25 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250115110142.3501140-1-quic_mmanikan@quicinc.com>
+In-Reply-To: <20241123-remove_wait2-v5-0-b5f9e6b794c2@quicinc.com>
 
-On Wed, Jan 15, 2025 at 04:31:42PM +0530, Manikanta Mylavarapu wrote:
-> Configure the blsp1 i2c3 bus to operate at 400 kHz
-> for fast mode.
+Hello,
 
-This is usually a board property rather than an SoC one.
-
+> If the vendor drivers can detect the Link up event using mechanisms
+> such as Link up IRQ, then waiting for Link up during probe is not
+> needed. if the drivers can be notified when the link comes up,
+> vendor driver can enumerate downstream devices instead of waiting
+> here, which optimizes the boot time.
 > 
-> Signed-off-by: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
-> ---
->  arch/arm64/boot/dts/qcom/ipq9574.dtsi | 1 +
->  1 file changed, 1 insertion(+)
+> So skip waiting for link to be up if the driver supports 'use_linkup_irq'.
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/ipq9574.dtsi b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-> index 942290028972..b35df590a794 100644
-> --- a/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-> @@ -621,6 +621,7 @@ blsp1_i2c3: i2c@78b8000 {
->  			clocks = <&gcc GCC_BLSP1_QUP4_I2C_APPS_CLK>,
->  				 <&gcc GCC_BLSP1_AHB_CLK>;
->  			clock-names = "core", "iface";
-> +			clock-frequency = <400000>;
->  			assigned-clocks = <&gcc GCC_BLSP1_QUP4_I2C_APPS_CLK>;
->  			assigned-clock-rates = <50000000>;
->  			dmas = <&blsp_dma 18>, <&blsp_dma 19>;
-> -- 
-> 2.34.1
+> Currently, only Qcom RC driver supports the 'use_linkup_irq' as it can
+> detect the Link Up event using its own 'global IRQ' interrupt. So set
+> 'use_linkup_irq' flag for QCOM drivers.
 > 
+> And as part of the PCIe link up event, the ICC and OPP values are updated.
 
--- 
-With best wishes
-Dmitry
+Applied to controller/dwc for v6.14, thank you!
+
+	Krzysztof
 
