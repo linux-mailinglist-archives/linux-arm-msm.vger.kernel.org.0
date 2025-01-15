@@ -1,78 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-45167-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-45168-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 67ED9A12DD7
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jan 2025 22:39:31 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 08AE3A12E04
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jan 2025 23:01:30 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id BBCDF1887A7A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jan 2025 21:39:34 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2D6D51643BF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jan 2025 22:01:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D10CD1DB13B;
-	Wed, 15 Jan 2025 21:39:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9CD9C14B959;
+	Wed, 15 Jan 2025 22:01:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="yIWggTuo"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="PVJ67QqE"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9EA21D86ED
-	for <linux-arm-msm@vger.kernel.org>; Wed, 15 Jan 2025 21:39:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0ED42132C38;
+	Wed, 15 Jan 2025 22:01:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736977166; cv=none; b=jmO3P5qeU0uqiCBmn1sivLNFEBR/MK8p0ByCUChU9/Huvlup/ux0muU3T9cdHPLZMTO7kJOM9mV8BDPicWVrXR7cuHHiI0hINfV0o4Cj/hxl+0WZG9SXjzN4CF/j5pemwvfyiXQkUcxM4J1wkAjFdKfeo8FaIfQMLNjlXI1q7ag=
+	t=1736978486; cv=none; b=kf3KfZ3EWRKzBim960c6ZFBIphgxXEkfraJ1CNb/WDjefQKnDuudnbUih2EXKyxYbGnsqAAFGcOLwyuJMC6CTZKvAOwvf2iBzVBINJKoFS6DBgjpxcvsIWqBqULdynFTj6rFQ/XldJXkHFT0Q9S4qPW8KUWqRpgjGjZFRRAmkWw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736977166; c=relaxed/simple;
-	bh=kiTN4i34SMo9Tl8cxH30sylIToy8477nlqj6T77NkSs=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ms6BDcaSin2/Lb5znq02HakZZZj+Y7XeUz3wrg8pwdSqnylHEJ0FOGYYvAa5G/NCww4qqi8N5IsrUXclPKhaWj0sRrv8djUuEHi87I378rheJFxIPKrsZjobIDZxJbNNnPsaWpLMHd5I+lqLeu0Xr5XLdCDXUjXsxQgYZgQkmWk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=yIWggTuo; arc=none smtp.client-ip=209.85.221.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-38be3bfb045so854980f8f.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Jan 2025 13:39:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1736977163; x=1737581963; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=uJhEKZyR6Y1MJZG54e2XdBZbqUxpmQLLEkNR5xDci+I=;
-        b=yIWggTuo3geGEp4qwjDMN3h8Z+JbTQ6CCuRz9qCXflj2HzBDAjOZmP2NJc7PD8f5+Z
-         7swwV2lCBu+U+vdk22xuDfvdzBgTg7rRnj0o50TUmzKVowsPk92Gd6IZYK4fP1/4H28u
-         fHpiIfatFBQfkDb8FYFvQc9xjj44N5ybfNaHUQl7yCzpk/mkc2QCRCWXuun95FRdV6Oe
-         0fLr+IsxGfnYODSXn93Q8BO7XFoyUSI0GPboF20UdRicPViwk+KS+dSIMGvirjy0ByUl
-         Rshpkt5x9oMV0Aa9d0te73bi+CXgZBq+SzSgdGNaMmTCkxfQY/EZf9qtbzhIsfsUOVam
-         OD8w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736977163; x=1737581963;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=uJhEKZyR6Y1MJZG54e2XdBZbqUxpmQLLEkNR5xDci+I=;
-        b=BIlQRiCZWKFodNyPRX0au5aFrsh6c01KAbIGLrpbagfJCPoEaPAYDaoCdoFDrsmcvu
-         GQAuXxnE/m+f1OGiXXmw64lisXRr70KqRZYQT542mnUyZ159RBazkPpd164FdIOVC0ub
-         b+g8UWBBYiXM8cJBV4GO5txp8znESjbfJHCHmTrljXASfn6j2NHRoP4yId1qmFuKi/vV
-         7MKuY8ReU2wUrRIKXrRvuPSnwJlziJfFlZ1ZBpX9sd+pu4J52b42oLopNkIZkb1s4ZpL
-         Z5aoFbjjYKFpyXSQKIeWOVCzkUCe0H4oSf2iX9JfSLkOgCvbzSLf7r0h6OKq0IGsYl1R
-         c4RQ==
-X-Forwarded-Encrypted: i=1; AJvYcCU/4U0pPoljgAyO6V/N0wJBNxgQpFDIOmySd7RUtTj62qRWiEG4AYZI3ruiRQIGWtOr/ZTp9LM7kcJawqvQ@vger.kernel.org
-X-Gm-Message-State: AOJu0Yznwo3I6GHmBxcCbEVvD9tgU5ULBhjIEAYkJOQO6zWmLCw/ARUr
-	P6DZeGizlbFIKAg9bK/NttTO2KTf8TjSJeRWaM+PovLwwVTnXfcX1iOdj+v9rIY=
-X-Gm-Gg: ASbGncuTlM4Yk0ZkwORNIjxEnEfbp9O82pvnhLeY2N4WV5crPTvp/kuLcs0l0ZrseyS
-	lEWUqZ+jCJnY6aVemkti9znIV/nd5eVVD91E5Y/oGDMBsQNSujAALttmqYD+eeB6iDD+8U98Utg
-	uPaRaYsv1KCfwwUkV54VU+SKBvV6ovdCYch+vQdUcEZZyTX5Qwut1sfAOCoi38dm4stnN/7Z60k
-	eoZr79YzO37JKFHa5v8YhvmIPpr6UgitaXcf6p2jYUiVyEy2SNGjZaJXMNbBCAdowu0JQ==
-X-Google-Smtp-Source: AGHT+IFSsMFrbNHvvZc+5y6Gkp+Sw+ZvI7ZCaZxsYZP//hxfDf8z5gCzPOj7cx6FAkq04t1FZ5RjCw==
-X-Received: by 2002:a05:6000:1565:b0:38a:88d0:1c9c with SMTP id ffacd0b85a97d-38bec4fcd47mr172464f8f.17.1736977163358;
-        Wed, 15 Jan 2025 13:39:23 -0800 (PST)
-Received: from [192.168.0.35] ([176.61.106.227])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38a8e37d01dsm18513086f8f.9.2025.01.15.13.39.21
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 15 Jan 2025 13:39:22 -0800 (PST)
-Message-ID: <23c6160a-6570-4798-83ee-bf6d8bb42b07@linaro.org>
-Date: Wed, 15 Jan 2025 21:39:21 +0000
+	s=arc-20240116; t=1736978486; c=relaxed/simple;
+	bh=ccZDXx68/xHiJ62ao9FObBZW2y6tUFBDL0pD1p2pg/o=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=I2tXg6pFlq8woxFiCjSWYe6YiOYmYsyxaoUcqttFYyg4c36o/5pqmAH6YxYnhNzcO7nYwuhUNAy9Af65uKj36kBmd97k8+RyBEqbIBQJ0SUSdZwA66gQbJLWqIydHqu56WpwzKDMb89t1ekOYRXRv6mrU/rKpJlxY9Htxrh8aM8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=PVJ67QqE; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50FGn7Tb014015;
+	Wed, 15 Jan 2025 22:01:16 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	L1ePOnVq75Z40ohb+hqhXuwBLTL/7HuyM4mXKJfQo7o=; b=PVJ67QqEoZzFy0VW
+	XbNflQdvzXM/EXr7fATODu3fhSUAlUVx8EglZSkChtxD+JlOV18wzr7RHyAROa6t
+	l7K76jtEwNcqxuRRYUZwYADpWrcnhb54kpzZHvvebjSUKwan6pSSDVhkoRiFbLp8
+	Bh4Lz8kHZlJEHkKA0n2rBOEhsSnBVbwSv5UGDlSOHUEcAhYyGmcveykdxJEcItTY
+	YU5YS0U3n0zhlP5zflnWQXrVX+XFWut3wys4LF1efWocZoPSoygpxHemW5PDDFHi
+	tqToo8hBrctR4i7xf3m8AyzVv7HYkeGFxceGmFC/w83H0nXh8+6VhySNgZruB8SF
+	qwXFzQ==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 446fh20wey-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 15 Jan 2025 22:01:16 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 50FM1BDM027653
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 15 Jan 2025 22:01:11 GMT
+Received: from [10.71.108.79] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 15 Jan
+ 2025 14:01:10 -0800
+Message-ID: <a34de60c-f410-4d16-b521-2665d86c2a64@quicinc.com>
+Date: Wed, 15 Jan 2025 14:01:10 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -80,39 +65,76 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 05/16] media: qcom: camss: csiphy-3ph: Move CSIPHY
- variables to data field inside csiphy struct
-To: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
- Laurentiu Tudor <tudor.laurentiu.oss@gmail.com>,
- Depeng Shao <quic_depengs@quicinc.com>, rfoss@kernel.org,
- todor.too@gmail.com, mchehab@kernel.org, robh@kernel.org,
- krzk+dt@kernel.org, conor+dt@kernel.org, hverkuil@xs4all.nl
-Cc: quic_eberman@quicinc.com, linux-media@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, kernel@quicinc.com
-References: <20250108143733.2761200-1-quic_depengs@quicinc.com>
- <20250108143733.2761200-6-quic_depengs@quicinc.com>
- <79b3e4d6-becf-4bcd-91fa-768b4098d01d@gmail.com>
- <238411cd-1bcc-496a-9077-07bb6c4892ec@linaro.org>
- <f268a604-09ed-4150-9401-de82cc206ce7@linaro.org>
+Subject: Re: [PATCH 01/35] drm/msm/dpu: skip watchdog timer programming
+ through TOP on >= SM8450
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark
+	<robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Marijn Suijten
+	<marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Simona
+ Vetter <simona@ffwll.ch>,
+        Vinod Koul <vkoul@kernel.org>, Konrad Dybcio
+	<konradybcio@kernel.org>
+CC: <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>
+References: <20241214-dpu-drop-features-v1-0-988f0662cb7e@linaro.org>
+ <20241214-dpu-drop-features-v1-1-988f0662cb7e@linaro.org>
 Content-Language: en-US
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <f268a604-09ed-4150-9401-de82cc206ce7@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <20241214-dpu-drop-features-v1-1-988f0662cb7e@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: ffAy3NO9ClGfGyFEZsl2zmshw-KHy7Fx
+X-Proofpoint-GUID: ffAy3NO9ClGfGyFEZsl2zmshw-KHy7Fx
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-01-15_09,2025-01-15_02,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999 clxscore=1015
+ lowpriorityscore=0 suspectscore=0 phishscore=0 impostorscore=0 spamscore=0
+ priorityscore=1501 adultscore=0 mlxscore=0 bulkscore=0 malwarescore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2411120000
+ definitions=main-2501150157
 
-On 15/01/2025 21:15, Vladimir Zapolskiy wrote:
->>
->> @Hans could you possibly drop the "default avatar" when applying ?
->>
+
+
+On 12/13/2024 2:14 PM, Dmitry Baryshkov wrote:
+> The SM8450 and later chips have DPU_MDP_PERIPH_0_REMOVED feature bit
+> set, which means that those platforms have dropped some of the
+> registers, including the WD TIMER-related ones. Stop providing the
+> callback to program WD timer on those platforms.
 > 
-> FWIW this particular problem has been fixed in v9, while the v9 series
-> itself should gain some time to be reviewed/tested.
+> Fixes: 100d7ef6995d ("drm/msm/dpu: add support for SM8450")
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.c
+> index ad19330de61abd66762671cf253276695b303b32..562a3f4c5238a3ad6c8c1fa4d285b9165ada3cfd 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.c
+> @@ -272,7 +272,7 @@ static void _setup_mdp_ops(struct dpu_hw_mdp_ops *ops,
+>   
+>   	if (cap & BIT(DPU_MDP_VSYNC_SEL))
+>   		ops->setup_vsync_source = dpu_hw_setup_vsync_sel;
+> -	else
+> +	else if (!(cap & BIT(DPU_MDP_PERIPH_0_REMOVED)))
+>   		ops->setup_vsync_source = dpu_hw_setup_wd_timer;
+>   
+>   	ops->get_safe_status = dpu_hw_get_safe_status;
 
-Ah, this is V8.
 
-I didn't see.
+Yes, this has also moved to INTF starting sm8450.
 
----
-bod
+Note : wd timer programming in interface is missing, so that support 
+needs to be added as well
+
+For this change,
+
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 
