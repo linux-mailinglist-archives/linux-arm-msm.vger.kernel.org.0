@@ -1,223 +1,239 @@
-Return-Path: <linux-arm-msm+bounces-45069-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-45070-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6E868A118F7
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jan 2025 06:31:49 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 318C3A11953
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jan 2025 06:51:02 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0C6383A7EF7
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jan 2025 05:31:43 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 4385F165BCE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jan 2025 05:51:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 33A241F8F18;
-	Wed, 15 Jan 2025 05:31:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8F11C234D06;
+	Wed, 15 Jan 2025 05:49:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="l0Ttouyz"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ACkgQEHB"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89AB5156F3B;
-	Wed, 15 Jan 2025 05:31:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DA4D2309A7;
+	Wed, 15 Jan 2025 05:49:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736919105; cv=none; b=irC+eGaIOCKmIn7mt1pZAThTFV5EoB2/eLRsYikHFhS92b2e8uw9eXqBwSOQ4zE9sXlH0EP/N5H0Y/yVNMcUTunvVp9g1RFv5tEkV0eA2MKivUIAEs6qby6V+qRrWTXVZZZ0AGlSGekdaWBy41atu9youCIls/LyZGcPhsFXOZ8=
+	t=1736920153; cv=none; b=Lgnkq4/qNv7zGMAF2uCYjn2uaNbueywxp91pzFWByDwXdwLM4kg0rM9yCp/lcq7EwgzUwsszaZ7qvgeQC0IyYq4anJT6OffMqupzizU2XuKttPk7+Zj/jCcuZNR0afivbmcKtDFfTjND4a5GpAco8d3X1d5hufCXWCDcOleDjsU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736919105; c=relaxed/simple;
-	bh=GyEu2oqZvdBqms2Qa/WvMShjm8d4DSC4x/w9WPzFPQ8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=Z32ToLLeSxNxhW+iprXSetUytAtfBnNUiqhLFCDtuLqfHuynC5qdA4okPXgoGfmLS/75LWjoQRbyAIoODXxUPDSj0iq/mH/WISTHJGquGYeKyHn4/bPhXjzD3pMO5Whr9uy4YSbIApbbIVJB8xXtswdkHQmoBEeSHv53Dl6OGUY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=l0Ttouyz; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1736920153; c=relaxed/simple;
+	bh=ymbwF5m2COfxwX2733AUiNTnjTrTOsMXvlcTU+SxuB8=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=EPSUAtdZ/NZezdFVRedmSFo341zdt/IP/PCYCvBw2XJvw6cnV1PqH4d8JaZewiUUeIzYgb8gyBrrvDTnrRTCcRbzoiLCMBjQiwDPsOFINPkWXG7p5Ao98JVht6+ghLCR6SDmsr0OYpMDZheRXxqm6vrWk6n64eraBf1whqX3zA8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ACkgQEHB; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50ELbXMk011377;
-	Wed, 15 Jan 2025 05:31:35 GMT
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50F1Z6OQ008367;
+	Wed, 15 Jan 2025 05:49:07 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	B61jP3loVVZ7utWkkB9F9jw2gzA3+Gstc+30dnoSlXg=; b=l0TtouyzQ1ZrMKc/
-	QtYNO6hBWH9NVnyw4G4/KSIcCbDTwIebuWqxe0ZCcNk29zymiWka402fkeNnDoBB
-	55bjmkn/nz5E3Ws3N4NYvnyivXbDha5Yuk5nqIX8EIgXw6pGh/Q9t9DsY1bBoG/z
-	DP/QGWMAgK1qznFqQG6ua1NKF+zWbmdv83vr9wvNdD/V/4Ug4FMARpKnMK+qLTZY
-	MKNK+ErGxl/SNcMwa7tzTvagYiMwBlKeu4egA+5MFlFDvzIjunaRRrwyrZ4ONlgH
-	FiPADXWi9FkubPPiBm/toH/IdFoDTdGqDIvumCbcWBKay22r6TyrvL9LSJ78tF6R
-	gzvzxQ==
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44600p0vps-1
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=9rigf5XQsEAT71z2V3r4TnXC
+	4FYxRzPqS8GbqmboF/M=; b=ACkgQEHB92AxZQx0OLtY/tpwoW9R4z4Et8rmcmNi
+	+OyC8lfjB12tXhjUwxMl1ZyZuHsrP6dpwE9OfXjtfTfXFRstuWCaoDzy3AMTH7KI
+	gloJ5KPCZGfvTICLsQR5DC6s24V7piYyadY+GWg2qr9VbEhqWMoIsHPtvDqvEw0V
+	F+Asc/3U190onXvQgbg1TAgeM1jp+T0uRukX9NfPZV62vwsJACcXo1rcMw0mjyuq
+	Ff9e6i0r1T9i1I2K0S9Z06rrx2t2UwzunLcm0GGHAux7NNw9WUR10QDVgkq/fCA3
+	i24i8BF9uUGKrNPsYXJ/WonvzUVUqqWiLSaJO8eJJUaP5g==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4463frrgc9-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 15 Jan 2025 05:31:35 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 50F5VYvm019530
+	Wed, 15 Jan 2025 05:49:07 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 50F5n6CM017374
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 15 Jan 2025 05:31:34 GMT
-Received: from [10.151.36.43] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 14 Jan
- 2025 21:31:29 -0800
-Message-ID: <872a4b2e-26e8-1c53-72aa-9fdd02069280@quicinc.com>
-Date: Wed, 15 Jan 2025 11:01:26 +0530
+	Wed, 15 Jan 2025 05:49:06 GMT
+Received: from hu-wasimn-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Tue, 14 Jan 2025 21:48:58 -0800
+Date: Wed, 15 Jan 2025 11:18:54 +0530
+From: Wasim Nazir <quic_wasimn@quicinc.com>
+To: Krzysztof Kozlowski <krzk@kernel.org>
+CC: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Bjorn Andersson
+	<andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring
+	<robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <kernel@quicinc.com>
+Subject: Re: [PATCH v5 5/6] arm64: dts: qcom: Add support for QCS9075 Ride &
+ Ride-r3
+Message-ID: <Z4dMRjK5I8s2lT3k@hu-wasimn-hyd.qualcomm.com>
+References: <tjrg5zqggupjo36udpyv3vynsij76f4qlus6lkbqotuimusqgq@hosmksp77sif>
+ <Z3ZXWxoBtMNPJ9kk@hu-wasimn-hyd.qualcomm.com>
+ <4wmxjxcvt7un7wk5v43q3jpxqjs2jbc626mgah2fxbfuouu4q6@ptzibxe2apmx>
+ <Z3eMxl1Af8TOAQW/@hu-wasimn-hyd.qualcomm.com>
+ <xuy6tp4dmxiqbjitmoi6x5lngplgcczytnowqjvzvq5hh5zwoa@moipssfsgw3w>
+ <Z3gzezBgZhZJkxzV@hu-wasimn-hyd.qualcomm.com>
+ <37isla6xfjeofsmfvb6ertnqe6ufyu3wh3duqsyp765ivdueex@nlzqyqgnocib>
+ <67b888fb-2207-4da5-b52e-ce84a53ae1f9@kernel.org>
+ <Z3/hmncCDG8OzVkc@hu-wasimn-hyd.qualcomm.com>
+ <b0b08c81-0295-4edb-ad97-73715a88bea6@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-Subject: Re: [PATCH v5 02/12] dmaengine: add DMA_PREP_LOCK and DMA_PREP_UNLOCK
- flag
-To: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>,
-        Vinod Koul
-	<vkoul@kernel.org>
-CC: <corbet@lwn.net>, <thara.gopinath@gmail.com>,
-        <herbert@gondor.apana.org.au>, <davem@davemloft.net>,
-        <kees@kernel.org>, <dave.jiang@intel.com>, <dmaengine@vger.kernel.org>,
-        <linux-doc@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-crypto@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <quic_srichara@quicinc.com>, <quic_varada@quicinc.com>,
-        <quic_utiwari@quicinc.com>
-References: <20241212041639.4109039-1-quic_mdalam@quicinc.com>
- <20241212041639.4109039-3-quic_mdalam@quicinc.com> <Z2qOKHsYpy8kcwlv@vaman>
- <64dca613-5053-46d4-9910-7ac551fdde81@quicinc.com>
-Content-Language: en-US
-From: Md Sadre Alam <quic_mdalam@quicinc.com>
-In-Reply-To: <64dca613-5053-46d4-9910-7ac551fdde81@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <b0b08c81-0295-4edb-ad97-73715a88bea6@kernel.org>
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: G4AutCyT6UtTL1ue9XdR8rTcqNbMtxmi
-X-Proofpoint-GUID: G4AutCyT6UtTL1ue9XdR8rTcqNbMtxmi
+X-Proofpoint-ORIG-GUID: xHY1GVZxmFkLg7XWd-Z-zIeezHO6vpZ1
+X-Proofpoint-GUID: xHY1GVZxmFkLg7XWd-Z-zIeezHO6vpZ1
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
  definitions=2025-01-15_02,2025-01-13_02,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0
- mlxlogscore=999 phishscore=0 spamscore=0 impostorscore=0 adultscore=0
- lowpriorityscore=0 bulkscore=0 mlxscore=0 clxscore=1015 priorityscore=1501
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2501150038
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ bulkscore=0 mlxlogscore=999 spamscore=0 suspectscore=0 priorityscore=1501
+ mlxscore=0 impostorscore=0 phishscore=0 adultscore=0 clxscore=1015
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2501150040
 
+On Thu, Jan 09, 2025 at 05:16:25PM +0100, Krzysztof Kozlowski wrote:
+> On 09/01/2025 15:47, Wasim Nazir wrote:
+> > On Wed, Jan 08, 2025 at 03:09:09PM +0100, Krzysztof Kozlowski wrote:
+> >> On 03/01/2025 20:58, Dmitry Baryshkov wrote:
+> >>>>>>>> Initially, we included the DTS [1] file to avoid duplication. However,
+> >>>>>>>> based on Krzysztof's previous suggestion [2], we change to this format.
+> >>>>>>>>
+> >>>>>>>> Please let us know how to proceed further on this.
+> >>>>>>>
+> >>>>>>> Krzysztof asked you to include DTSI files instead of including DTS
+> >>>>>>> files. Hope this helps.
+> >>>>>>
+> >>>>>> Are you suggesting that we should also modify the 9100-ride files to
+> >>>>>> include DTSI instead of DTS for consistency between QCS9100 and QCS9075?
+> >>>>>> However, this would result in the duplication of Ethernet nodes in all
+> >>>>>> the ride board files. Would that be acceptable?
+> >>>>>
+> >>>>> git mv foo.dts foo.dtsi
+> >>>>> echo '#include "foo.dtsi"' > foo.dts
+> >>>>> git add foo.dts
+> >>>>> git commit
+> >>>>>
+> >>>>
+> >>>> We cannot convert sa8775p-ride-r3.dts and sa8775p-ride.dts to .dtsi as
+> >>>> they represent different platforms. In patch [1], we included these DTS
+> >>>> files to reuse the common hardware nodes.
+> >>>>
+> >>>> Could you please advise on how we should proceed with the following
+> >>>> approaches?
+> >>>>
+> >>>> a) Previous approach [1]:
+> >>>> Include sa8775p-ride-r3.dts and sa8775p-ride.dts in the qcs9075-ride
+> >>>> platform DTS, similar to the qcs9100-ride platform DTS. This approach
+> >>>> avoids duplicating Ethernet nodes and maintains uniformity. However, it
+> >>>> involves including the DTS file directly.
+> >>>>
+> >>>> b) Current suggestion:
+> >>>> Include sa8775p-ride.dtsi in the qcs9075-ride platform DTS and also
+> >>>> modify the qcs9100-ride platform DTS files to maintain uniformity. This
+> >>>> approach results in duplicating Ethernet nodes.
+> >>>>
+> >>>> Please let us know your recommendation to finalize the DT structure.
+> >>>
+> >>> sa8775p.dtsi
+> >>> `__sa8775p-ride.dtsi
+> >>>    `__sa8775p-ride-r2.dtsi
+> >>>       `__sa8775p-ride.dts
+> >>>       `__qcs9100-ride.dts
+> >>>       `__qcs9075-ride.dts
+> >>>    `__sa8775p-ride-r3.dtsi
+> >>>       `__sa8775p-ride-r3.dts
+> >>>       `__qcs9100-ride-r3.dts
+> >>>       `__qcs9075-ride-r3.dts
+> >>>
+> >> Wasim and all other copy-pasters of sa8775p-ride,
+> >>
+> >> Just to recap, qcs9100 contributions started this terrible pattern of
+> >> board including a board. Unfortunately qcs9100 was merged, so that ship
+> >> has sailed.
+> >>
+> >> This patchset was going the same way, because poor choices like to keep
+> >> spreading, but at one of previous versions I noticed it and objected.
+> >>
+> >> This v5 however solves above problem by duplicating the nodes.
+> >>
+> >> Apparently all these designs - sa8755p, qcs9100 and qcs9075 - use the
+> >> same board, but none of this was communicated. I checked all the commit
+> >> msgs in this patchset and nothing explained about it. What annoys me is
+> >> that you do not communicate your design forcing us to accept poor DTS or
+> >> forcing us to guess and make poor judgments.
+> >>
+> >> Come with proper hardware description and split out shared parts, like
+> >> motherboard. Look how other vendors are doing it, e.g. NXP or Renesas.
+> >> But assuming there are shared parts because I am pretty sure you will
+> >> pick my comments when it suits you without actually following them fully
+> >> and without understanding and explaining to us your own hardware.
+> >>
+> > 
+> > Hi Krzysztof,
+> > 
+> > Here is the pictorial flow showing how SoCs are derived and what all boards
+> > are supported.
+> > 
+> >   +---------------------------------------------------------------------+
+> >   |                                                                     |
+> >   |								 sa8775p                                |
+> >   |					        		|                                   |
+> >   |			+-----------------------+-----------------------+           |
+> >   |			|				  		|			    		|           |
+> >   |			v				  		|				    	v           |
+> >   |		 qcs9100			  		|		    		 qcs9075        |
+> >   |			|				  		|			    		|           |
+> >   |			v					    v						v           |
+> >   |		  (IOT)				     (AUTO)					  (IOT)         |
+> >   |	qcs9100-ride.dts		sa8775p-ride.dts		qcs9075-ride.dts    |
+> >   |	qcs9100-ride-r3.dts		sa8775p-ride-r3.dts		qcs9075-ride-r3.dts |
+> >   |													qcs9075-rb8.dts     |
+> >   |                                                                     |
+> >   +---------------------------------------------------------------------+
+> 
+> The the SoC, I am asking about the board. Why each of them is for
+> example r3?
+> 
+> So this is not sufficient explanation, nothing about the board, and
+> again just look Renesas and NXP.
+> 
 
+Hi Krzysztof,
 
-On 12/26/2024 5:38 PM, Mukesh Kumar Savaliya wrote:
+sa8775p(AUTO), qcs9100(IOT), qcs9075(IOT) are different SoCs based on
+safety capabilities and memory map, serving different purpose.
+Ride & Ride-r3 are different boards based on ethernet capabilities and
+are compatible with all the SoCs mentioned.
+
+With the combination of these 3 SoCs and 2 boards, we have 6 platforms,
+all of which we need.
+- sa8775p-ride.dts is auto grade Ride platform with safety feature.
+- qcs9100-ride.dts is IOT grade Ride platform with safety feature.
+- qcs9075-ride.dts is IOT grade Ride platform without safety feature.
+
+Since the Ride-r3 boards are essentially Ride boards with Ethernet
+modifications, we can convert the Ride-r3 DTS to overlays.
+
+Please let me know if this solution works for you.
+
 > 
-> 
-> On 12/24/2024 4:04 PM, Vinod Koul wrote:
->> On 12-12-24, 09:46, Md Sadre Alam wrote:
->>> Add lock and unlock flag support on command descriptor.
->>> Once lock set in requester pipe, then the bam controller
->>> will lock all others pipe and process the request only
->>> from requester pipe. Unlocking only can be performed from
->>> the same pipe.
->>>
->>> If DMA_PREP_LOCK flag passed in command descriptor then requester
->>> of this transaction wanted to lock the BAM controller for this
->>> transaction so BAM driver should set LOCK bit for the HW descriptor.
->>>
->>> If DMA_PREP_UNLOCK flag passed in command descriptor then requester
->>> of this transaction wanted to unlock the BAM controller.so BAM driver
->>> should set UNLOCK bit for the HW descriptor.
->>>
->>> BAM IP version 1.4.0 and above only supports this LOCK/UNLOCK
->>> feature.
->>>
->>> Signed-off-by: Md Sadre Alam <quic_mdalam@quicinc.com>
->>> ---
->>>
->>> Change in [v5]
->>>
->>> * Added DMA_PREP_LOCK and DMA_PREP_UNLOCK flag support
->>>
->>> Change in [v4]
->>>
->>> * This patch was not included in v4
->>>
->>> Change in [v3]
->>>
->>> * This patch was not included in v3
->>>
->>> Change in [v2]
->>>
->>> * This patch was not included in v2
->>> Change in [v1]
->>>
->>> * This patch was not included in v1
->>>
->>>   Documentation/driver-api/dmaengine/provider.rst | 15 +++++++++++++++
->>>   include/linux/dmaengine.h                       |  6 ++++++
->>>   2 files changed, 21 insertions(+)
->>>
->>> diff --git a/Documentation/driver-api/dmaengine/provider.rst 
->>> b/Documentation/driver-api/dmaengine/provider.rst
->>> index 3085f8b460fa..5f30c20f94f3 100644
->>> --- a/Documentation/driver-api/dmaengine/provider.rst
->>> +++ b/Documentation/driver-api/dmaengine/provider.rst
->>> @@ -628,6 +628,21 @@ DMA_CTRL_REUSE
->>>     - This flag is only supported if the channel reports the 
->>> DMA_LOAD_EOT
->>>       capability.
->>> +- DMA_PREP_LOCK
->>> +
->>> +  - If set, the BAM will lock all other pipes not related to the 
->>> current
->>
->> Why BAM, the generic API _cannot_ be implementation specific, make this
->> as a generic one please
->>
-> Yes, should be DAM to be generic.
->> Anyone can use this new method and not just BAM...
-Will change this in next revision.
->>
->>
->>> +    pipe group, and keep handling the current pipe only.
->>> +
->>> +  - All pipes not within this group will be locked by this pipe upon 
->>> lock
->>> +    event.
->>> +
->>> +  - only pipes which are in the same group and relate to the same 
->>> Environment
->>> +    Execution(EE) will not be locked by a certain pipe.
->>> +
->>> +- DMA_PREP_UNLOCK
->>> +
->>> +  - If set, BAM will release all locked pipes
->>> +
->>>   General Design Notes
->>>   ====================
->>> diff --git a/include/linux/dmaengine.h b/include/linux/dmaengine.h
->>> index 346251bf1026..8ebd43a998a7 100644
->>> --- a/include/linux/dmaengine.h
->>> +++ b/include/linux/dmaengine.h
->>> @@ -200,6 +200,10 @@ struct dma_vec {
->>>    *  transaction is marked with DMA_PREP_REPEAT will cause the new 
->>> transaction
->>>    *  to never be processed and stay in the issued queue forever. The 
->>> flag is
->>>    *  ignored if the previous transaction is not a repeated transaction.
->>> + *  @DMA_PREP_LOCK: tell the driver that there is a lock bit set on 
->>> command
->>> + *  descriptor.
->>> + *  @DMA_PREP_UNLOCK: tell the driver that there is a un-lock bit 
->>> set on command
->>> + *  descriptor.
->>>    */
->>>   enum dma_ctrl_flags {
->>>       DMA_PREP_INTERRUPT = (1 << 0),
->>> @@ -212,6 +216,8 @@ enum dma_ctrl_flags {
->>>       DMA_PREP_CMD = (1 << 7),
->>>       DMA_PREP_REPEAT = (1 << 8),
->>>       DMA_PREP_LOAD_EOT = (1 << 9),
->>> +    DMA_PREP_LOCK = (1 << 10),
->>> +    DMA_PREP_UNLOCK = (1 << 11),
->>>   };
->>>   /**
->>> -- 
->>> 2.34.1
->>
-> 
+> Best regards,
+> Krzysztof
+
+Thanks & Regards,
+Wasim
 
