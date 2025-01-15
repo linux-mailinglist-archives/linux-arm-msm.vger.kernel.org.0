@@ -1,130 +1,155 @@
-Return-Path: <linux-arm-msm+bounces-45078-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-45079-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id A8631A11ACE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jan 2025 08:22:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 655C0A11B64
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jan 2025 08:59:08 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id EDEF11887A38
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jan 2025 07:22:07 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id BC2B51882596
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jan 2025 07:59:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D3BD51DB124;
-	Wed, 15 Jan 2025 07:22:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3410F236A82;
+	Wed, 15 Jan 2025 07:58:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dtMcDbhe"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="dhtbnpdR"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f53.google.com (mail-ej1-f53.google.com [209.85.218.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1858C1DB120;
-	Wed, 15 Jan 2025 07:21:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7234B236A61;
+	Wed, 15 Jan 2025 07:58:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736925720; cv=none; b=ZayYKCCwa0aVreU3rcd2nc7INSeSMNSO7yPxMMMG1qFIFwsUGNQZqRKi0KsDcPBk9akFJP0Tupgb8Kthad80erS5Kyf9EquWmn0YCaH+RpuQQykeILe5BIZpIshW/26Pl91u9eg8kLIsLcZdo7yDvStQbA96ZPYL5z/3XTLAlTs=
+	t=1736927929; cv=none; b=U/sCnZpNbbpKeW3m25f3QjYutg21p1cyjwdCTuNrXMum/BHQXXZ4CW+ae9b2gZhkN4iTFE+BR9FhMjzpkmP5E9Yip3VZXjHUB83eaDmcqWQupks5+pqz/OZvbVfp19ZKPi6jqQUlm2bj0oAut3Y/7x7Vea8GIftprnR7JpJB43g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736925720; c=relaxed/simple;
-	bh=v3dJ11Ku/1ifs1WYwNNMtv6M6waHee+WaoC65BW/rdc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Pcq7F9B32nvtJWABp0VphBbeIaGe72AXYlDBZyoSzpl+F8XLlt+jmVD7XZ7SR8qQZUtD/lsd+Tl8UvzBH7JKbNJfHvBFZtohWgnUC9u0OpvHPdzBEMbeeS3NXs+yRx8M2AKHCSpUYfrEML0HSWSYm4DOL641dmuVmdpBZ8BV2v4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dtMcDbhe; arc=none smtp.client-ip=209.85.218.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ej1-f53.google.com with SMTP id a640c23a62f3a-aaf0f1adef8so1355230166b.3;
-        Tue, 14 Jan 2025 23:21:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1736925717; x=1737530517; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=jJOZ8iSprIsgYBR6gktJkwTdtpdLQhJkgJrSkbc8Vag=;
-        b=dtMcDbhejJHgdUD0JH1DSFVEDhm4hF5BhJzgBVnCtpOH4hwKMlgPIxZKw1sj864R3Y
-         xvFJsrmSbh/wCI+h06CXnIBx3Tn2e8OXO0hTkH19lvoGs51SSj5Ck9ohfELY6s1sYz+M
-         ggfbVNIUf5pGivFVosoYvkgR/Eh0uRi+z+oTV1T2YMjn3Qm9uWzvR/mjJkk+4VY1bZst
-         FkJ5tovsJvYJtqy5JJqkQPY4MlfIt7hWedCVuR6Cm9ltJeHDGaM7nWy6bO//WADCmhIP
-         im9VdmrA/rn8xDMMNAH7JUtNipfa/fryW3YOmCkcTEeXMKXjkIM4d9EYGESa0NE0UDzj
-         XwHA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736925717; x=1737530517;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=jJOZ8iSprIsgYBR6gktJkwTdtpdLQhJkgJrSkbc8Vag=;
-        b=XaEWLvLdw2Ps46J7Pmrwxq0rvNAkHVCPpRc7AzWZUGXmW+Wk5LWSWb1UOqpd2/ZMBI
-         9k6v/rtTFv521A4qTGjSJD6oGseCm/7yOcXqIyqtO3pChFAiGQiMTiCbW4izNaw2e6vM
-         LzEhOA4BMLszsPcB+kXcpDR1strK3oCcFmmwOBi7LiTKtuPeR+BkPxijt0K/kXS/04KY
-         M9xVlg+waURk5sSFiyQgmrR1WUCsVx4ORkaMsNMf6YCRxwmiQ1x3hUJGaM+9AOY6zZg9
-         J62C40GA/bPVhR8i86OMOzzphbnWnOX6Id7w0L7v3KGzyROTqs5NPw122qRlwdgCU92X
-         J5Zw==
-X-Forwarded-Encrypted: i=1; AJvYcCU5iZ05j6JQwpQd4lIlcdKbbGXZU8b3t0KrhswpVhc5Nowe05S1f+vBt+TFF8gheBZjkvKy9LhB2Yg+ISjY@vger.kernel.org, AJvYcCVEYxExM84ISWggDXA6vxcnpELKe3bSNwuCDj/oMklZXZPaAz7k1CONLO94+V9uIceHX0TbOolPjbiBF4RN@vger.kernel.org, AJvYcCWGWDnQtC3c5AE8HSMT7G77s3fWrUH9FAEiKUo6UC37ayDuJwhVSQogv7zDdpJ8eo/0QlVVRN4m/HCs@vger.kernel.org
-X-Gm-Message-State: AOJu0Yxwzy1apzzVTApVhO2MH+fw+VLfiI+sBYmQuQb8ytsHkgOalob6
-	GD8ptscwXkkKMYmq1ZovVrgiufa4j7XVm6A02uNec0/vQer/g0DP
-X-Gm-Gg: ASbGncsbqI9SNg3qoRDNgrQDY0EDFPQQ3C5wdP10zQxtfcculG9uSY9AcMh6yVZM36s
-	FkB8EGYX3wBSUjZ8dYE6TQtkmNdsvftv2gv1fyu21aRfMH4IxlQ9DM46YrjDAoS+riXwjVC0h49
-	iaDhDbNJLQ7fRsLxgSJMSJDQ8zLrao30vyj8D2DJ+OU0tB8IRITNLwkumTPKG6p+kHw9UNlJRVQ
-	QPeJDFmP3x7qW+eOnLf54epl/2XoQHuvxzGHIIpu4K+qZ9pRorT/n+LSgUecL30imPrt8rBk8WZ
-	lvtD0p70YZvBInmxNL45
-X-Google-Smtp-Source: AGHT+IEo1jzvdjSj4rUavMi44j/cz7y7Xxsd1KUIMl5S9cj4ZW7fgVD52s71mpMGjJigjjX+CyoeUQ==
-X-Received: by 2002:a17:907:d89:b0:ab3:3aa6:7d69 with SMTP id a640c23a62f3a-ab33aa681a2mr637798866b.41.1736925716928;
-        Tue, 14 Jan 2025 23:21:56 -0800 (PST)
-Received: from standask-GA-A55M-S2HP (lu-nat-113-247.ehs.sk. [188.123.113.247])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ab2c9563b11sm724880766b.128.2025.01.14.23.21.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 14 Jan 2025 23:21:56 -0800 (PST)
-Date: Wed, 15 Jan 2025 08:21:54 +0100
-From: Stanislav Jakubek <stano.jakubek@gmail.com>
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc: Michael Turquette <mturquette@baylibre.com>,
-	Stephen Boyd <sboyd@kernel.org>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Ray Jui <rjui@broadcom.com>, Scott Branden <sbranden@broadcom.com>,
-	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>, linux-clk@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-	linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v2] clk: Use str_enable_disable-like helpers
-Message-ID: <Z4diEj__bbQl4ULS@standask-GA-A55M-S2HP>
-References: <20250114190612.846696-1-krzysztof.kozlowski@linaro.org>
+	s=arc-20240116; t=1736927929; c=relaxed/simple;
+	bh=/dJoj0mqOTmkoV3UXIGqPt6FEKyI9UYbUD8611H/sMw=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Xl5nUMdwWmYnG5fM/Sqe/CYzWjJm2T2LR0xUDMb2zazqGL6VicEKFiPIDQOCACxxvyBqg1rZrVf7MGhxU4F4x6EAQdoaHFLyB0uLHb/+I/8aiuTOpxmZHrldTZ0oQm62TSz6JvcRVuSkJap+eNV+1KKexYsz0qllBFb0OyjAdow=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=dhtbnpdR; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50F5cPBr013921;
+	Wed, 15 Jan 2025 07:58:33 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=sLwXMdQzvWOJb4WsDCioa7Jt
+	yHeUekEJUQu8MLw0PwA=; b=dhtbnpdRaLQZUPFuV2cZaSiWLROQ0s1I2Y1ZzWvw
+	39TsTQsfepXYWwpH2whs6VPVPVoFQQFdXAEIZBAlPd/6h3zbjwmhq1RWeWRF5VsF
+	ZTo6PJiEshco8oaA9dDdw7oSZFRH92Lxdn238GsfUnjDExRWHAiW90Lw7CLhU0/R
+	jj5ZlydOr4w3LDukgWW+bokC/tjXF9G/XQIYAgDBz786uOm+EFc8lLVWv1zwZmL2
+	KTkd2MhBXlQdZH9OyeYoFXiZOFGN0Sxlra3I3zX+2Di3gcXPkDaC1EM1kiQDqpna
+	bRV2IvxeDMhX0aB69kd13gUK9hB9QhOaYt9RUBR6SWlwPw==
+Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44671q0asn-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 15 Jan 2025 07:58:33 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 50F7wXvk031194
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 15 Jan 2025 07:58:33 GMT
+Received: from hu-varada-blr.qualcomm.com (10.80.80.8) by
+ nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Tue, 14 Jan 2025 23:58:26 -0800
+Date: Wed, 15 Jan 2025 13:28:22 +0530
+From: Varadarajan Narayanan <quic_varada@quicinc.com>
+To: Bjorn Helgaas <helgaas@kernel.org>
+CC: <bhelgaas@google.com>, <lpieralisi@kernel.org>, <kw@linux.com>,
+        <manivannan.sadhasivam@linaro.org>, <robh@kernel.org>,
+        <krzk+dt@kernel.org>, <conor+dt@kernel.org>, <vkoul@kernel.org>,
+        <kishon@kernel.org>, <andersson@kernel.org>, <konradybcio@kernel.org>,
+        <p.zabel@pengutronix.de>, <quic_nsekar@quicinc.com>,
+        <dmitry.baryshkov@linaro.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-pci@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-phy@lists.infradead.org>,
+        Praveenkumar I <quic_ipkumar@quicinc.com>,
+        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Subject: Re: [PATCH v5 4/5] arm64: dts: qcom: ipq5332: Add PCIe related nodes
+Message-ID: <Z4dqnr9+MTue3VbX@hu-varada-blr.qualcomm.com>
+References: <20250102113019.1347068-5-quic_varada@quicinc.com>
+ <20250108183235.GA220566@bhelgaas>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset="us-ascii"
 Content-Disposition: inline
-In-Reply-To: <20250114190612.846696-1-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20250108183235.GA220566@bhelgaas>
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: yEiBqHoUvMPVEeVoNLX-JJ4sCL9GcypG
+X-Proofpoint-ORIG-GUID: yEiBqHoUvMPVEeVoNLX-JJ4sCL9GcypG
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-01-15_03,2025-01-15_02,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 spamscore=0
+ mlxlogscore=999 adultscore=0 clxscore=1011 priorityscore=1501
+ suspectscore=0 phishscore=0 bulkscore=0 impostorscore=0 lowpriorityscore=0
+ mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2501150059
 
-Hi Krzysztof, 1 note below.
+On Wed, Jan 08, 2025 at 12:32:35PM -0600, Bjorn Helgaas wrote:
+> On Thu, Jan 02, 2025 at 05:00:18PM +0530, Varadarajan Narayanan wrote:
+> > From: Praveenkumar I <quic_ipkumar@quicinc.com>
+> >
+> > Add phy and controller nodes for pcie0_x1 and pcie1_x2.
+>
+> > +		pcie1: pcie@18000000 {
+> > +			compatible = "qcom,pcie-ipq5332", "qcom,pcie-ipq9574";
+> > +			reg = <0x00088000 0x3000>,
+> > +			      <0x18000000 0xf1d>,
+> > +			      <0x18000f20 0xa8>,
+> > +			      <0x18001000 0x1000>,
+> > +			      <0x18100000 0x1000>,
+> > +			      <0x0008b000 0x1000>;
+> > +			reg-names = "parf",
+> > +				    "dbi",
+> > +				    "elbi",
+> > +				    "atu",
+> > +				    "config",
+> > +				    "mhi";
+> > +			device_type = "pci";
+> > +			linux,pci-domain = <1>;
+> > +			bus-range = <0x00 0xff>;
+>
+> This bus-range isn't needed, is it?  pci_parse_request_of_pci_ranges()
+> should default to 0x00-0xff if no bus-range property is present.
 
-On Tue, Jan 14, 2025 at 08:06:12PM +0100, Krzysztof Kozlowski wrote:
-> Replace ternary (condition ? "enable" : "disable") syntax with helpers
-> from string_choices.h because:
+Ok.
 
-[snip]
+>
+> > +			num-lanes = <2>;
+> > +			phys = <&pcie1_phy>;
+> > +			phy-names = "pciephy";
+>
+> I think num-lanes and PHY info are per-Root Port properties, not a
+> host controller properties, aren't they?  Some of the clock and reset
+> properties might also be per-Root Port.
+>
+> Ideally, I think per-Root Port properties should be in a child device
+> as they are here:
+> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/Documentation/devicetree/bindings/pci/mvebu-pci.txt?id=v6.12#n137
+> but it looks like the num-lanes parsing is done in
+> dw_pcie_get_resources(), which can only handle a single num-lanes per
+> DWC controller, so maybe it's impractical to add a child device here.
+>
+> But I wonder if it would be useful to at least group the per-Root Port
+> things together in the binding to help us start thinking about the
+> difference between the controller and the Root Port(s).
 
-> diff --git a/drivers/clk/clk-nomadik.c b/drivers/clk/clk-nomadik.c
-> index 06245681dac7..f3a73ac5a1b9 100644
-> --- a/drivers/clk/clk-nomadik.c
-> +++ b/drivers/clk/clk-nomadik.c
-> @@ -17,6 +17,7 @@
->  #include <linux/debugfs.h>
->  #include <linux/seq_file.h>
->  #include <linux/spinlock.h>
-> +#include <linux/string_choices.h>
->  #include <linux/reboot.h>
->  
->  /*
-> @@ -116,9 +117,9 @@ static void __init nomadik_src_init(void)
->  
->  	val = readl(src_base + SRC_XTALCR);
->  	pr_info("SXTALO is %s\n",
-> -		(val & SRC_XTALCR_SXTALDIS) ? "disabled" : "enabled");
-> +		str_enabled_disabled(val & SRC_XTALCR_SXTALDIS));
+This looks like a big change and might impact the existing
+SoCs/platforms. To minimize the impact, should we continue
+supporting the legacy method in addition to the new per-Root port
+approach. Should we take this up separately? Kindly advice.
 
-It seems like you flipped the logic here. Was this intentional?
-
-Regards,
-Stanislav
+Thanks
+Varada
 
