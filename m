@@ -1,160 +1,301 @@
-Return-Path: <linux-arm-msm+bounces-45083-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-45084-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 38A2AA11C1B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jan 2025 09:35:47 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 56A5AA11C3D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jan 2025 09:42:11 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 4B798167AF7
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jan 2025 08:35:45 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 1A7E47A2228
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jan 2025 08:42:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3FE501DB155;
-	Wed, 15 Jan 2025 08:35:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 71B861E7C16;
+	Wed, 15 Jan 2025 08:41:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="n9YRZhGs"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Uom+qddv"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f179.google.com (mail-lj1-f179.google.com [209.85.208.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 134FB23F28E;
-	Wed, 15 Jan 2025 08:35:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 110D41DB145
+	for <linux-arm-msm@vger.kernel.org>; Wed, 15 Jan 2025 08:41:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736930141; cv=none; b=NsjgVC6mFMeOaHrtxozju5t03tpFJ2aUeJkuvtbwNzn/JeJ8JYIN/Dprle0DpR56FkoMKuzwsr14W4qlEVREqmZQFr+SNH1lEqEGPHuW/uL9PBlYgglYmPmqY6gwjzDzmCJZMPxS7uM/matMXVGCV0dT/qLBpVNw0afz3U+hato=
+	t=1736930518; cv=none; b=mqAYiYOTyuXRnEM28IFsRwv014KVVuFqwzmplwqUHkNODfBHGxZOK8lEV6mrSkOQk6tnkHfHJE5YXJx3sYQJLANOQRp6g31Kxkfr52jz3sOID0qkKuB3G4cOmqRR4cSZcVNz5K7/vz9QT6obxDQ01lHl0G2WM8t18/P1+0SHyhg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736930141; c=relaxed/simple;
-	bh=4wisaHf+Hl4KOzZeEVEFxjN6kc8eMQmrepKNkzXlzDo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=r4NkYKZ6wjy2SDyVMO0P6mQfhP0B5IK87vTF5l26rsaDT+BEjCjeWfaK4jouZ4pBfJgpzCH/gWP08rIKu3/LVTxp2L14qMvXT4bIwyDsWFUwt7WPU9/i7dT80NCaMPocA2NUIX7mtyDTJ1CWCReg70ODHSNWRsob4T7Amujo+Q0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=n9YRZhGs; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCFC9C4CEE2;
-	Wed, 15 Jan 2025 08:35:36 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1736930140;
-	bh=4wisaHf+Hl4KOzZeEVEFxjN6kc8eMQmrepKNkzXlzDo=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=n9YRZhGskU1xUSTLNihp9848Xhk/cOOr0A4tP66Z/QW3qUbEJja2aj0BHRQC0rlOI
-	 vvfjneMhayt56fE7La01WFhksgtLCZhp0vbZfJ15pOJq1Ip7hz8H3S3+Km+AXum5UH
-	 4LUIr6ehQdnR8yGkhTQarQ2RbC3uK5X/oWI0BM+Eqfi/e4sfcA/QAitp0jUO7ul0JK
-	 SQj6ngjWlmM+SWeKNAty6j+JZYgLDEGExre6pbUdKiptdDplOApTwLm3jhOwMVG9oF
-	 HX767n8258hjuZ5FRJywWeB58w9jqlcjGbPlh5xNFxykNudYEGKUrNhqB8kEi4642C
-	 rcgXILmrHWdnA==
-Message-ID: <80e59b3b-2160-4e24-93f2-ab183a7cbc74@kernel.org>
-Date: Wed, 15 Jan 2025 09:35:34 +0100
+	s=arc-20240116; t=1736930518; c=relaxed/simple;
+	bh=GwCSp43xpSIHSoOGobQRkNpMWg2cTAZxds53+NVko3c=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=PCiSnzrE3uV7nl4qWzuSGcoAgB4oQwKcpxEmAf6p2kIuJ3LD9PMm7nb2MijW7OinShIosuhZVoPLtjdSSt9uSipHTeiyKC1Ll3xfYhTcgG1R89covTHYd8vvvoaYCobfr7K9VXUr5qBSkTOdQ6R4HomxAekgoNOahUII8hrFpr8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Uom+qddv; arc=none smtp.client-ip=209.85.208.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lj1-f179.google.com with SMTP id 38308e7fff4ca-3061f1e534bso28367501fa.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Jan 2025 00:41:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1736930514; x=1737535314; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=TdXKX+DElTWdQSe1iA/sdCzGpS4cDFP9391dO93DZTs=;
+        b=Uom+qddvLML2qdDWzh4R4iMS6l5rxFI1P/9HBWfCjsrlO6hC0h06GJOrs0G0/DZOwl
+         KZa6U4qd6y1A7973N0Wc/AXTCIi3QYpNdmpvRVECV8QJI4Qhc/nKzy3M3j3c5CYr/Z2J
+         GS4npjriImgesV9kwZxSZaqZiiHmQz+uA8902mLtncpGjiRI+JgUQigQYKD/eui/Xlba
+         JXmEcwfShPx2Fh2RAAA6SWyHNRrRlTjh2XHclM35ign9slHZexdAY8MSXajP5I9fi9z/
+         jkSTSwNYucLQayi101vvDxWQZ465XdTxOaZWQ4NW8ea4qSFVYmK5nuDjPdINf9hRreYT
+         K3zQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1736930514; x=1737535314;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=TdXKX+DElTWdQSe1iA/sdCzGpS4cDFP9391dO93DZTs=;
+        b=O0K9y3EKyHe0mDKijxPBHPSRIQqe2qGXAA0aDUo8zqEr2T7U6KkCHZiQUbSCqZ7Y0Q
+         aw4iUnrDZiWQyMSB5E7bdA571Vtvw2BplZbKy065t4swF5y50ogh9yUehg+/F+ngFMXc
+         8xg2aowcR0dEuvtP5rDLtGgG6dCgEMignEkP4HYsiokxQYjpERhIWMDvMHivrPCmikLU
+         sW/qmpHIuIaAVXgvPoo5V2l72cK8qLOwxg5VQ+HmkSc5iUPRBNIiQp2+yfeRQyqDdGNh
+         kFtN/9O/8pSkeYefcu4KvJuYy0iN8WVRxARrL/MLF77E5FMeyEIgx1bNaFiZQFfFpQjq
+         wxDQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXAmDHlr2BUXX6nLZXsOYWBmiZnKVqjQzEo/JyYK6cMAA4Z5fAWJeT8JqWIzHHwCIR+mauiOepqs66ak2N7@vger.kernel.org
+X-Gm-Message-State: AOJu0YzBEyyU8HKHeevD/QSDjMWzmanvXtADZUm6qx0JAJTnq8Mki9Qy
+	faPaCeG+t3+ZyZSgLqXqd9ciS8Bkz0l90Cp6sCOU2yE8M51iFaxjbD9bgWpBVtA=
+X-Gm-Gg: ASbGnctnEtHVhXTWX+zchrZVhPL77NPp5ZcAJ1mgvtWWSKX4rWo6ZudqggZDSyeZPQI
+	T1/PkrA7lc1OA8NM0HbHFd4DGtpVXXSyI7cLgfFGXpe/5NFrwUYkIrsYOSuGNRlsuHfkyj9ujsc
+	ryPkATaYMYpwc61Mmg2rR/fQbIy4M6qrSYgA5YOXwzaX1M9bOPUOpjbw4LGkFIpa2N7oIHUKOqo
+	6VJUlfjxt7OPvCr2uCJmrZFluZmiKVuqcevEDBMnGxZn4JyQp5yQijn6vOjVqcUdzH5IhMqviAP
+	PruMjzBiDbQ2a0RE5UVQV3/aa9c4ny4aM+PG
+X-Google-Smtp-Source: AGHT+IFepbkE4RMrmQ34QSMlcth3dnNyGKbzaxJER2+6cB4YSdoaV02zFA/hFD1vHxGGwE7iVc6AQQ==
+X-Received: by 2002:a2e:be8a:0:b0:302:1b18:2bfa with SMTP id 38308e7fff4ca-305f45b25e8mr98179571fa.23.1736930513860;
+        Wed, 15 Jan 2025 00:41:53 -0800 (PST)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-305ff0f6aa9sm20818371fa.57.2025.01.15.00.41.51
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 15 Jan 2025 00:41:52 -0800 (PST)
+Date: Wed, 15 Jan 2025 10:41:50 +0200
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
+	Stephen Boyd <swboyd@chromium.org>, Simona Vetter <simona.vetter@ffwll.ch>, 
+	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
+Subject: Re: [PATCH v4 8/9] drm/msm/dpu: rework core_perf debugfs overrides
+Message-ID: <2qhm7oqpbgyoghpj3txjpmb4q3tmxd23cvrdqxicw3lpmwfcwg@m5mn5flvovmp>
+References: <20250106-dpu-perf-rework-v4-0-00b248349476@linaro.org>
+ <20250106-dpu-perf-rework-v4-8-00b248349476@linaro.org>
+ <86152d89-cf42-4e2f-a188-c401de9d47df@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 5/6] arm64: dts: qcom: Add support for QCS9075 Ride &
- Ride-r3
-To: Wasim Nazir <quic_wasimn@quicinc.com>
-Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, kernel@quicinc.com
-References: <tjrg5zqggupjo36udpyv3vynsij76f4qlus6lkbqotuimusqgq@hosmksp77sif>
- <Z3ZXWxoBtMNPJ9kk@hu-wasimn-hyd.qualcomm.com>
- <4wmxjxcvt7un7wk5v43q3jpxqjs2jbc626mgah2fxbfuouu4q6@ptzibxe2apmx>
- <Z3eMxl1Af8TOAQW/@hu-wasimn-hyd.qualcomm.com>
- <xuy6tp4dmxiqbjitmoi6x5lngplgcczytnowqjvzvq5hh5zwoa@moipssfsgw3w>
- <Z3gzezBgZhZJkxzV@hu-wasimn-hyd.qualcomm.com>
- <37isla6xfjeofsmfvb6ertnqe6ufyu3wh3duqsyp765ivdueex@nlzqyqgnocib>
- <67b888fb-2207-4da5-b52e-ce84a53ae1f9@kernel.org>
- <Z3/hmncCDG8OzVkc@hu-wasimn-hyd.qualcomm.com>
- <b0b08c81-0295-4edb-ad97-73715a88bea6@kernel.org>
- <Z4dMRjK5I8s2lT3k@hu-wasimn-hyd.qualcomm.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <Z4dMRjK5I8s2lT3k@hu-wasimn-hyd.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <86152d89-cf42-4e2f-a188-c401de9d47df@quicinc.com>
 
-On 15/01/2025 06:48, Wasim Nazir wrote:
->> The the SoC, I am asking about the board. Why each of them is for
->> example r3?
->>
->> So this is not sufficient explanation, nothing about the board, and
->> again just look Renesas and NXP.
->>
+On Tue, Jan 14, 2025 at 02:02:54PM -0800, Abhinav Kumar wrote:
 > 
-> Hi Krzysztof,
 > 
-> sa8775p(AUTO), qcs9100(IOT), qcs9075(IOT) are different SoCs based on
-> safety capabilities and memory map, serving different purpose.
-> Ride & Ride-r3 are different boards based on ethernet capabilities and
-> are compatible with all the SoCs mentioned.
+> On 1/5/2025 7:07 PM, Dmitry Baryshkov wrote:
+> > Currently debugfs provides separate 'modes' to override calculated
+> > MDP_CLK rate and interconnect bandwidth votes. Change that to allow
+> > overriding individual values (e.g. one can override just clock or just
+> > average bandwidth vote). The maximum values allowed for those entries by
+> > the platform can be read from the 'max_core_ab' and 'max_core_clk_rate'
+> > files in debugfs.
+> > 
+> 
+> Apart from the concern I highlighted in the previous patch, the only issue I
+> have with this is that, this went from a one step process of using the
+> "mode" this has become a two step one.
+> 
+> There were essentially two modes we are talking about - "fixed" and
+> "minimum"
+> 
+> With respect to "fixed" this is totally fine because this is preserving that
+> functionality because to be able to set the fixed mode the end user must
+> know what values they want to try anyway.
+> 
+> With respect to "minimum" mode, is where this approach is not that great.
+> The end users of this can be non-display developers too such as our QA teams
+> who might want to perform a first level of triage on the issues and route it
+> accordingly. This is especially true for underruns and some performance lags
+> as well.
+> 
+> If you really dont like the term "modes", to preserve the "minimum" mode,
+> how about just using a bool debugfs like "max_perf_params" which internally
+> maxes out the max MDP clock and ab/ib params.
 
-Compatible? What does it mean for a board?
-
-Third time: did you look how other vendors do it?
+That's what I'm trying to avoid - having an extra debugfs file which
+overrides other files. It is much easier to work if there is no need to
+switch modes, it is easy to overlook it. I think it should be fine to
+use `cat max_foo > fix_foo` to override each of the params. After
+renaming the threshold_high to max_core_ab the names of the debugfs
+files match.
 
 > 
-> With the combination of these 3 SoCs and 2 boards, we have 6 platforms,
-> all of which we need.
-> - sa8775p-ride.dts is auto grade Ride platform with safety feature.
-> - qcs9100-ride.dts is IOT grade Ride platform with safety feature.
-> - qcs9075-ride.dts is IOT grade Ride platform without safety feature.
-> 
-> Since the Ride-r3 boards are essentially Ride boards with Ethernet
-> modifications, we can convert the Ride-r3 DTS to overlays.
-How one board can be with multiple SoCs? If it is soldered, it's close
-to impossible - that's just not the same board. If it is not soldered,
-why you are not explaining it? What is Ride board? What is there? What
-can go there? How it can be used in other SoCs? Or for which SoCs? Is
-there a datasheet available?
+> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > ---
+> >   drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c | 87 +++------------------------
+> >   drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h | 10 ---
+> >   2 files changed, 9 insertions(+), 88 deletions(-)
+> > 
+> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
+> > index 7ff3405c6867556a8dc776783b91f1da6c86ef3f..913eb4c01abe10c1ed84215fbbee50abd69e9317 100644
+> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
+> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
+> > @@ -17,20 +17,6 @@
+> >   #include "dpu_crtc.h"
+> >   #include "dpu_core_perf.h"
+> > -/**
+> > - * enum dpu_perf_mode - performance tuning mode
+> > - * @DPU_PERF_MODE_NORMAL: performance controlled by user mode client
+> > - * @DPU_PERF_MODE_MINIMUM: performance bounded by minimum setting
+> > - * @DPU_PERF_MODE_FIXED: performance bounded by fixed setting
+> > - * @DPU_PERF_MODE_MAX: maximum value, used for error checking
+> > - */
+> > -enum dpu_perf_mode {
+> > -	DPU_PERF_MODE_NORMAL,
+> > -	DPU_PERF_MODE_MINIMUM,
+> > -	DPU_PERF_MODE_FIXED,
+> > -	DPU_PERF_MODE_MAX
+> > -};
+> > -
+> >   /**
+> >    * _dpu_core_perf_calc_bw() - to calculate BW per crtc
+> >    * @perf_cfg: performance configuration
+> > @@ -215,18 +201,16 @@ static int _dpu_core_perf_crtc_update_bus(struct dpu_kms *kms,
+> >   	if (!kms->num_paths)
+> >   		return 0;
+> > -	if (kms->perf.perf_tune.mode == DPU_PERF_MODE_MINIMUM) {
+> > -		avg_bw = 0;
+> > -		peak_bw = 0;
+> > -	} else if (kms->perf.perf_tune.mode == DPU_PERF_MODE_FIXED) {
+> > +	dpu_core_perf_aggregate(crtc->dev, dpu_crtc_get_client_type(crtc), &perf);
+> > +
+> > +	avg_bw = div_u64(perf.bw_ctl, 1000); /*Bps_to_icc*/
+> > +	peak_bw = perf.max_per_pipe_ib;
+> > +
+> > +	if (kms->perf.fix_core_ab_vote)
+> >   		avg_bw = kms->perf.fix_core_ab_vote;
+> > -		peak_bw = kms->perf.fix_core_ib_vote;
+> > -	} else {
+> > -		dpu_core_perf_aggregate(crtc->dev, dpu_crtc_get_client_type(crtc), &perf);
+> > -		avg_bw = div_u64(perf.bw_ctl, 1000); /*Bps_to_icc*/
+> > -		peak_bw = perf.max_per_pipe_ib;
+> > -	}
+> > +	if (kms->perf.fix_core_ib_vote)
+> > +		peak_bw = kms->perf.fix_core_ib_vote;
+> >   	avg_bw /= kms->num_paths;
+> > @@ -275,12 +259,9 @@ static u64 _dpu_core_perf_get_core_clk_rate(struct dpu_kms *kms)
+> >   	struct drm_crtc *crtc;
+> >   	struct dpu_crtc_state *dpu_cstate;
+> > -	if (kms->perf.perf_tune.mode == DPU_PERF_MODE_FIXED)
+> > +	if (kms->perf.fix_core_clk_rate)
+> >   		return kms->perf.fix_core_clk_rate;
+> > -	if (kms->perf.perf_tune.mode == DPU_PERF_MODE_MINIMUM)
+> > -		return kms->perf.max_core_clk_rate;
+> > -
+> >   	clk_rate = 0;
+> >   	drm_for_each_crtc(crtc, kms->dev) {
+> >   		if (crtc->enabled) {
+> > @@ -396,54 +377,6 @@ int dpu_core_perf_crtc_update(struct drm_crtc *crtc,
+> >   #ifdef CONFIG_DEBUG_FS
+> > -static ssize_t _dpu_core_perf_mode_write(struct file *file,
+> > -		    const char __user *user_buf, size_t count, loff_t *ppos)
+> > -{
+> > -	struct dpu_core_perf *perf = file->private_data;
+> > -	u32 perf_mode = 0;
+> > -	int ret;
+> > -
+> > -	ret = kstrtouint_from_user(user_buf, count, 0, &perf_mode);
+> > -	if (ret)
+> > -		return ret;
+> > -
+> > -	if (perf_mode >= DPU_PERF_MODE_MAX)
+> > -		return -EINVAL;
+> > -
+> > -	if (perf_mode == DPU_PERF_MODE_FIXED) {
+> > -		DRM_INFO("fix performance mode\n");
+> > -	} else if (perf_mode == DPU_PERF_MODE_MINIMUM) {
+> > -		/* run the driver with max clk and BW vote */
+> > -		DRM_INFO("minimum performance mode\n");
+> > -	} else if (perf_mode == DPU_PERF_MODE_NORMAL) {
+> > -		/* reset the perf tune params to 0 */
+> > -		DRM_INFO("normal performance mode\n");
+> > -	}
+> > -	perf->perf_tune.mode = perf_mode;
+> > -
+> > -	return count;
+> > -}
+> > -
+> > -static ssize_t _dpu_core_perf_mode_read(struct file *file,
+> > -			char __user *buff, size_t count, loff_t *ppos)
+> > -{
+> > -	struct dpu_core_perf *perf = file->private_data;
+> > -	int len;
+> > -	char buf[128];
+> > -
+> > -	len = scnprintf(buf, sizeof(buf),
+> > -			"mode %d\n",
+> > -			perf->perf_tune.mode);
+> > -
+> > -	return simple_read_from_buffer(buff, count, ppos, buf, len);
+> > -}
+> > -
+> > -static const struct file_operations dpu_core_perf_mode_fops = {
+> > -	.open = simple_open,
+> > -	.read = _dpu_core_perf_mode_read,
+> > -	.write = _dpu_core_perf_mode_write,
+> > -};
+> > -
+> >   /**
+> >    * dpu_core_perf_debugfs_init - initialize debugfs for core performance context
+> >    * @dpu_kms: Pointer to the dpu_kms struct
+> > @@ -472,8 +405,6 @@ int dpu_core_perf_debugfs_init(struct dpu_kms *dpu_kms, struct dentry *parent)
+> >   			(u32 *)&perf->perf_cfg->min_llcc_ib);
+> >   	debugfs_create_u32("min_dram_ib", 0400, entry,
+> >   			(u32 *)&perf->perf_cfg->min_dram_ib);
+> > -	debugfs_create_file("perf_mode", 0600, entry,
+> > -			(u32 *)perf, &dpu_core_perf_mode_fops);
+> >   	debugfs_create_u64("fix_core_clk_rate", 0600, entry,
+> >   			&perf->fix_core_clk_rate);
+> >   	debugfs_create_u32("fix_core_ib_vote", 0600, entry,
+> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h
+> > index 5e07119c14c6a9ed3413d0eaddbd93df5cc3f79d..9d8516ca32d162b1e277ec88067e5c21abeb2017 100644
+> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h
+> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h
+> > @@ -24,20 +24,11 @@ struct dpu_core_perf_params {
+> >   	u64 core_clk_rate;
+> >   };
+> > -/**
+> > - * struct dpu_core_perf_tune - definition of performance tuning control
+> > - * @mode: performance mode
+> > - */
+> > -struct dpu_core_perf_tune {
+> > -	u32 mode;
+> > -};
+> > -
+> >   /**
+> >    * struct dpu_core_perf - definition of core performance context
+> >    * @perf_cfg: Platform-specific performance configuration
+> >    * @core_clk_rate: current core clock rate
+> >    * @max_core_clk_rate: maximum allowable core clock rate
+> > - * @perf_tune: debug control for performance tuning
+> >    * @enable_bw_release: debug control for bandwidth release
+> >    * @fix_core_clk_rate: fixed core clock request in Hz used in mode 2
+> >    * @fix_core_ib_vote: fixed core ib vote in bps used in mode 2
+> > @@ -47,7 +38,6 @@ struct dpu_core_perf {
+> >   	const struct dpu_perf_cfg *perf_cfg;
+> >   	u64 core_clk_rate;
+> >   	u64 max_core_clk_rate;
+> > -	struct dpu_core_perf_tune perf_tune;
+> >   	u32 enable_bw_release;
+> >   	u64 fix_core_clk_rate;
+> >   	u32 fix_core_ib_vote;
+> > 
 
-You keep repeating my about SoC and I keep responding the same: don't care.
-
-Best regards,
-Krzysztof
+-- 
+With best wishes
+Dmitry
 
