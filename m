@@ -1,118 +1,138 @@
-Return-Path: <linux-arm-msm+bounces-45076-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-45077-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id C4AE1A11A20
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jan 2025 07:53:09 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 62C47A11A36
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jan 2025 07:58:03 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 14AAA18893E3
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jan 2025 06:53:13 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id A354918892BE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jan 2025 06:58:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0B28F22FAC4;
-	Wed, 15 Jan 2025 06:53:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8552C22FACA;
+	Wed, 15 Jan 2025 06:57:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="WDj0iENJ"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="UzCmS5Up"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f41.google.com (mail-ej1-f41.google.com [209.85.218.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EE6A1D5ACF
-	for <linux-arm-msm@vger.kernel.org>; Wed, 15 Jan 2025 06:52:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F374522F392;
+	Wed, 15 Jan 2025 06:57:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736923981; cv=none; b=Y4+Nz1VxG3p6sGe1/vCzXciDRIeLAThESxo57/vy7Qw9T6LehHzwpBRi+g+Lxj3/eAV5vFmcIcQOm7siGicPRq+PFa9wV7auxmDLW9HO+AFteYP6mp6n9YgsQHZgJ7Yt8wTXccmqjZGXQSsqIYg2mZVH5VJEFKJqOZ6oY6t7yko=
+	t=1736924278; cv=none; b=CN/k/c/DrpBjOfNKj9SIwgDJ8ZIJJ5ZcGvp+EMxgcplzOI6iVlyZdsoFEFcdFMvgpQk0f40nSGxz1evba6uhYC1IOn7MmVzQJpY2q28ZNW6S9lmino/MInOsRBe3fs9DQopUTXkLHer/H8iNesknygl/lMP332iAhVde5TmxMSs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736923981; c=relaxed/simple;
-	bh=79AOjzcSmvn1KXMWF7UxMCpdAsnp+D3NfbR+NPlMBHs=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=QYFlSmM5HGuxvvDG5CbAX6dHgalGO+nc8pTmoGEUuuvXO2vplSkHuR09cC4xMYcIm35guR91issLj5tWDG5Xch31GWVXIO5F0XeUrr1Q9z59vs2UPjy6aCWwyz1U2MRFmFbhK/ZykZRS+8CTL3ryN12T1eVakAIxVlG1m1J6k0Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=WDj0iENJ; arc=none smtp.client-ip=209.85.218.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f41.google.com with SMTP id a640c23a62f3a-aaeec07b705so1001528166b.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Jan 2025 22:52:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1736923977; x=1737528777; darn=vger.kernel.org;
-        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=W6bWf/tRxO2NkxvH7Hh/kmozinexYUxPVUzSd/dk6ko=;
-        b=WDj0iENJIlJbaz1V8SG3XPzSeYeR6lxFDU6XJV2n4IuPmYnd3CI3v0E0WS086LGmsY
-         dfJDNWcu7NcAubh+pFviEKFbzSeCJwFRRhPZRQCesztcGtAljIIaSG1Gvg35gZT7H6st
-         kj6fPeG+W24dZQCMfFyYZt6ZckHFr2S7lmYZr6Tg7NTcb49QYhtM92cjjJy5xDW7Yqvy
-         aT6edbLFcc+CLwL3kwNp5Srpgwn1pQnXKkvmIHKZWaDl6CMnN63YUb7tjHZFJVfnDlSe
-         bSeePRCCb5S9VDN/swUKyp9ZSJCYzdRBUBb7VWcjkqevwq/za5+sld146GXtJhM9hS8J
-         Exig==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736923977; x=1737528777;
-        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=W6bWf/tRxO2NkxvH7Hh/kmozinexYUxPVUzSd/dk6ko=;
-        b=BKTYEs6dsCFTIeD05Wn/9y0Wx0ApgPDU3od8WG/NkTsM7IWUM3wWqldyEm2pfM7Inv
-         I8bQQR1ELESsV6mhcgPvJ5CK+af3nusprp1MJw6F2tFKxJNxPjLRSdaR12zPZAbrO5PQ
-         DQycSdpwj0Xp3nKyhYgzxKTZI2UcHPksfUKHeSpSpd+g3hFkw5XdM6p18bZJB8c4KYmp
-         9TZtolbAJL0T7BrrQlxmBwUEOIOVGFfHMRvgDdxUoccvYSjGj3UwwlLTkWTM0RYqnf/L
-         VWoqG/uN79CvSck4bOguDauWmcfPy+As7ZqxyJRYMHv6FuhBtRqJiQW6mfVLTFZ4yW+7
-         Xyzg==
-X-Forwarded-Encrypted: i=1; AJvYcCXm7SPGjkGJbcOYE8euqtnM9qIvrfNvenrTsoP+SZCVnm7xBcSN9GRR99ROQV3PamHejhXiKIYfhbtRzJ3G@vger.kernel.org
-X-Gm-Message-State: AOJu0Yyn/rjONSH6yeTBijAY/1kXxb/uJvvAvQ1O29V44FyicWLgmiM9
-	CkW51b6PUjW1QodGmByiR4m6nYWQNxrHAm7UHh2P27cwsMY5sLCRo631iieCZl4=
-X-Gm-Gg: ASbGncvyaRZbrf9xyAXTMlMscB3hexTG2jOtHgo952Os4fvPQtKDCqXnqgx5TvkmZPS
-	1QX5h8HjEfJfyGem26P91BBATU/EpD/6vX2GPC1Y7dffwlXoeOy3aBIBAEEPzvg0Wv1uNx6/aj1
-	pEsE858cYQRt+e58hzykYg8u9kr0W2/gmX5hDVwgh06V3M7f+zJbRepwHHdXur72c0FunLqF4eN
-	UuA7XHjCW7QtmYxL+R/sCwy45ovD40FweCCcoUUUQ4MxPgjLkZE8/VHc2TO7g==
-X-Google-Smtp-Source: AGHT+IGjJatczNH0yw605WtpAu9naajkVinTdTUHVkZjtvdCrzX/ldBhEFr9TVzUdaTAIFmmbt2l1A==
-X-Received: by 2002:a17:907:3e9f:b0:aae:bd4c:22c0 with SMTP id a640c23a62f3a-ab2ab70aeccmr2468597866b.19.1736923977532;
-        Tue, 14 Jan 2025 22:52:57 -0800 (PST)
-Received: from localhost ([196.207.164.177])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ab2c95b1ccasm716907266b.158.2025.01.14.22.52.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 14 Jan 2025 22:52:57 -0800 (PST)
-Date: Wed, 15 Jan 2025 09:52:53 +0300
-From: Dan Carpenter <dan.carpenter@linaro.org>
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-	kernel-janitors@vger.kernel.org
-Subject: [PATCH next] firmware: qcom: scm: Fix error code in probe()
-Message-ID: <a0845467-4f83-4070-ab1e-ff7e6764609f@stanley.mountain>
+	s=arc-20240116; t=1736924278; c=relaxed/simple;
+	bh=9ylhe8VN6RPEcVd12Whd6qqqDNqOc7amBumoDE9CDao=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=W0kbVrfwLLcxC+VqxpDxoDNCN/dfyRgesLCaPy0Wcn3meoFoABul3Y46uBCSII4u3C/8QSGYOxASFmeAfgvlXApCgKqHeeMepIMxeh3NYXJYFm3VnrxCV6EBrI4BRDp7Xb83gokBXzlIofzF/AZpv60JWdYBOlN5gK3jkL5GVN4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=UzCmS5Up; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50F1YZ6Y007853;
+	Wed, 15 Jan 2025 06:57:40 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	8Yx8n/XQSKNINcFDuWn8kaPdgeJlpCZUR09RqodhtIs=; b=UzCmS5UpOenAGWHI
+	Hch87xXQuxEftkkZEoXyr42fHzL/+iq6/wI5+4H2X2WgejlUFlsDD2MxihoWWZa7
+	06/lLmADk7N16GjJjpVnFOtRZpeI0xm0+ybmzhlYtS3rhFE/Pn2MXMB3VrQTlivf
+	ld5kPWGuds056Y5nCntt0gAUrzdydxRmWeLDanpc+dsZIcnvUlCuKAGdJWe7U1Y+
+	FDcIeDKqPYvaqpk8tWnChXl7VN/aVCNjWNp6hi1nRlKyIbKNF7S5b8P8pmD3zzxT
+	2GZHnTSTo0sxgVTcxe8FBeLBNWeZJiEb3BiHyxWQ69DXitPFlYfksFQ+seTMPida
+	NJe5fA==
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4463frrnvx-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 15 Jan 2025 06:57:40 +0000 (GMT)
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 50F6vdIg018961
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 15 Jan 2025 06:57:39 GMT
+Received: from [10.253.32.159] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 14 Jan
+ 2025 22:57:33 -0800
+Message-ID: <224f8e60-06de-4db3-9025-7ada999d676b@quicinc.com>
+Date: Wed, 15 Jan 2025 14:57:31 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-X-Mailer: git-send-email haha only kidding
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH net-next v2 12/14] net: ethernet: qualcomm: Initialize PPE
+ L2 bridge settings
+To: Andrew Lunn <andrew@lunn.ch>
+CC: Luo Jie <quic_luoj@quicinc.com>, Andrew Lunn <andrew+netdev@lunn.ch>,
+        "David S. Miller" <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>,
+        Paolo Abeni <pabeni@redhat.com>, "Rob
+ Herring" <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        "Conor
+ Dooley" <conor+dt@kernel.org>,
+        Suruchi Agarwal <quic_suruchia@quicinc.com>,
+        Pavithra R <quic_pavir@quicinc.com>, Simon Horman <horms@kernel.org>,
+        Jonathan Corbet <corbet@lwn.net>, Kees Cook <kees@kernel.org>,
+        "Gustavo A. R.
+ Silva" <gustavoars@kernel.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        <linux-arm-msm@vger.kernel.org>, <netdev@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-doc@vger.kernel.org>, <linux-hardening@vger.kernel.org>,
+        <quic_kkumarcs@quicinc.com>, <quic_linchen@quicinc.com>,
+        <srinivas.kandagatla@linaro.org>, <bartosz.golaszewski@linaro.org>,
+        <john@phrozen.org>
+References: <20250108-qcom_ipq_ppe-v2-0-7394dbda7199@quicinc.com>
+ <20250108-qcom_ipq_ppe-v2-12-7394dbda7199@quicinc.com>
+ <4dbf1550-32e9-4cce-bf0c-8b92dbd49b50@lunn.ch>
+ <c67f4510-e71b-4211-8fe2-35dabfc7b44e@quicinc.com>
+ <8bdde187-b329-480d-a745-16871276a331@lunn.ch>
+ <4599e35b-eb2b-4d12-82c7-f2a8a804e08f@quicinc.com>
+ <b7b13bba-e975-469c-ad59-6e48b5722fc7@lunn.ch>
+Content-Language: en-US
+From: Lei Wei <quic_leiwei@quicinc.com>
+In-Reply-To: <b7b13bba-e975-469c-ad59-6e48b5722fc7@lunn.ch>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: x3DXd7vF2lTHN9YzXtgbNYOhtm42Ag0i
+X-Proofpoint-GUID: x3DXd7vF2lTHN9YzXtgbNYOhtm42Ag0i
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-01-15_02,2025-01-13_02,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ bulkscore=0 mlxlogscore=999 spamscore=0 suspectscore=0 priorityscore=1501
+ mlxscore=0 impostorscore=0 phishscore=0 adultscore=0 clxscore=1015
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2501150050
 
-Set the error code if devm_qcom_tzmem_pool_new() fails.  Don't return
-success.
 
-Fixes: 1e76b546e6fc ("firmware: qcom: scm: Cleanup global '__scm' on probe failures")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
----
- drivers/firmware/qcom/qcom_scm.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/firmware/qcom/qcom_scm.c b/drivers/firmware/qcom/qcom_scm.c
-index f0569bb9411f..fc4d67e4c4a6 100644
---- a/drivers/firmware/qcom/qcom_scm.c
-+++ b/drivers/firmware/qcom/qcom_scm.c
-@@ -2301,8 +2301,8 @@ static int qcom_scm_probe(struct platform_device *pdev)
- 
- 	__scm->mempool = devm_qcom_tzmem_pool_new(__scm->dev, &pool_config);
- 	if (IS_ERR(__scm->mempool)) {
--		dev_err_probe(__scm->dev, PTR_ERR(__scm->mempool),
--			      "Failed to create the SCM memory pool\n");
-+		ret = dev_err_probe(__scm->dev, PTR_ERR(__scm->mempool),
-+				    "Failed to create the SCM memory pool\n");
- 		goto err;
- 	}
- 
--- 
-2.45.2
+On 1/14/2025 9:02 PM, Andrew Lunn wrote:
+>> I would like to clarify that representing the bridge and its slave ports
+>> inside PPE (using a VSI - virtual switch instance) is a pre-requisite before
+>> learning can take place on a port. At this point, since switchdev
+>> is not enabled, VSI is not created for port/bridge and hence FDB learning
+>> does not take place. Later when we enable switchdev and represent the
+>> bridge/slave-ports in PPE, FDB learning will automatically occur on top of
+>> this initial configuration. I will add this note in the comments and commit
+>> message to make it clear.
+> 
+> So it seems like the comment is not the best. You don't actually
+> enable learning...
+>
+
+Yes, I will update the comment to make it more clear.
+
+> 	Andrew
 
 
