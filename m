@@ -1,223 +1,160 @@
-Return-Path: <linux-arm-msm+bounces-45082-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-45083-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id AFBDBA11BEB
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jan 2025 09:28:31 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 38A2AA11C1B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jan 2025 09:35:47 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 51C263A56DD
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jan 2025 08:28:25 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 4B798167AF7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jan 2025 08:35:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9F8841EEA36;
-	Wed, 15 Jan 2025 08:27:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3FE501DB155;
+	Wed, 15 Jan 2025 08:35:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="EPXEt5Rk"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="n9YRZhGs"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f172.google.com (mail-lj1-f172.google.com [209.85.208.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66C2B1EEA4A
-	for <linux-arm-msm@vger.kernel.org>; Wed, 15 Jan 2025 08:27:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 134FB23F28E;
+	Wed, 15 Jan 2025 08:35:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736929629; cv=none; b=gi0uyexVcIds2eFdy7wy1wPw3j1KBDXY6AU0tCp/a2EH7UWoKecHgtlOlBZ1Go92wcrcp0yPWdRh/iVRu146lAyzhfJ8rRxlb2X2UBklpms/eMeCbOOYoOWX0NoLR7/uMLrNsJMJOHn5LlWdaXj39P7DWzDraplanCu1HDZt3M4=
+	t=1736930141; cv=none; b=NsjgVC6mFMeOaHrtxozju5t03tpFJ2aUeJkuvtbwNzn/JeJ8JYIN/Dprle0DpR56FkoMKuzwsr14W4qlEVREqmZQFr+SNH1lEqEGPHuW/uL9PBlYgglYmPmqY6gwjzDzmCJZMPxS7uM/matMXVGCV0dT/qLBpVNw0afz3U+hato=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736929629; c=relaxed/simple;
-	bh=91z0eTHdxpwKjSdcUwY9wm/rjZ3XvXBLWMkkElq/2nY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=nlmae7WYiEjf0h7W5HyfFnHxXmfj8B5+R7NvzeVeR5orQOv7Rgdt76ebUmjtOLFyMPRlyb/us9HiUNHYT3LS/va8E1L7I530Qd0PFLxbHvDQnCK2SSVapb3rT9/1ONys+vH71Z/f5KCVCUTdAvuL4a9F6rC7QZQSgWWCTKVDcCk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=EPXEt5Rk; arc=none smtp.client-ip=209.85.208.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f172.google.com with SMTP id 38308e7fff4ca-30613037309so38090151fa.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Jan 2025 00:27:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1736929625; x=1737534425; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=pZ4HRx7SsZZko5M+0b/vJqN2qjluOm4gJzYYS2wUfjU=;
-        b=EPXEt5RkPXykmUkl0YV9h+BERTpNxaiGp+pNKUsu2WFvR8tRXTmQ5bp7RbJ4RKszPt
-         oVmZWD8F65RclLNx7aTnJRek33gfZXmtlV4Di+o5d9aJ+Zq4XtRbj3Gmg1nvqvihm5cc
-         RPWd0VWbCymYSIhjQXn4MaIJm3UTEmCCsOHJ0DdUw0tPnIQ+YsvlWzqbc/wr5ZeAOx69
-         T2qydzjG/1voZKnwSl0f7twBsvHZMaNZje3iGi9pazqLzLlv2lUANbnaRYaoPRIJsvZ8
-         FtZkNbSUEfADSKSRb+gazEpYNod1Ze8Tf5dawqkeiOqMXIiwfiNTGpE/9OtCISq4PXUi
-         +TOQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736929625; x=1737534425;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=pZ4HRx7SsZZko5M+0b/vJqN2qjluOm4gJzYYS2wUfjU=;
-        b=tcteJBjLU2zQKPrgFAELb5a1Sn0RJc8Ajgo1MYwcl9UEuxy4TR4q2PTrbOU4HJcnb+
-         ajuB7dYeZiN/c79hgDHfEvz3AXQlKLECIyNC84IMmF0QEVrggq9vwswsfeYYQ9QPDrAN
-         Y4soIgu3RsZU4QqlRE+pv8zfS0+/v5haSQu9/dKz1cRvc0LvTg3bBEoHeDh4VTTgyDVS
-         DlT9feLX618rcpH2Crv4eO7Md3wi3m3yNFrw1lFQgxG9tQq+x72ZFbNs44Ra5hgWfwTT
-         VMs8u/WSeX1nFTmkYGkuN4SHJVqSgvs3gn0ujpAzoRmeguGr+VNrDaDliRg1i4PlnNpC
-         83AQ==
-X-Forwarded-Encrypted: i=1; AJvYcCU/ONC1YvVmJZ2OYROn33HuZWcuPF6Ekqf8Raz2MyCjRXrUwshUsKweH5WugK+fhOj+5Hk/8IaIARwKYk08@vger.kernel.org
-X-Gm-Message-State: AOJu0YxrBctDnDI322TByq5BSYQN4l4G3SaCo4+Oy5gJuYh9hOyK+WwH
-	nAJ+Bm+8rVIpZiKfmd2PPBtfsz84loT09ipQLxBFJF1h4DbAtlNJ0+AwPNKBokw=
-X-Gm-Gg: ASbGncuCBYiIEBuO7A3W/vMfY217WQuFhI5CMS60yqj4TI9MrEreV84yqgVb1XKHbJI
-	ZGtQcvkNVIa8DWsRDALagaN4s1DFhbNWwHf74BBp8J22kH2zeOsu/EJb7gc04BTP9WKa7lgVBis
-	6jGZx4RHyNVaFWJjGtA71X4mN0/8i74/wfa5v9z8rH+YkkhtBIdPttZLUGUC9/JFKiNK0SRcrjT
-	gCz+w3J4bF7q395RMlYZgyxq0ve/tTu1AtT48y+FeBX8z7pPHpE14zBmTvWRQhHZoDuWO937/CX
-	LCf1zN9apIriHB6wsaRO9xIDoEu6KsGCBqI4
-X-Google-Smtp-Source: AGHT+IEa4wTdMIRF+GsL7h99ddXXaeUlR6bj66KVo6XSmN4DdnMNkhI7iraI/KfJn24NcdFDQUy/Zw==
-X-Received: by 2002:a2e:bc1b:0:b0:302:2320:dc81 with SMTP id 38308e7fff4ca-305f4626035mr86805911fa.29.1736929625271;
-        Wed, 15 Jan 2025 00:27:05 -0800 (PST)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-305ff0cf1f8sm21006251fa.27.2025.01.15.00.27.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Jan 2025 00:27:04 -0800 (PST)
-Date: Wed, 15 Jan 2025 10:27:01 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
-	Stephen Boyd <swboyd@chromium.org>, Simona Vetter <simona.vetter@ffwll.ch>, 
-	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
-Subject: Re: [PATCH v4 7/9] drm/msm/dpu: handle perf mode in
- _dpu_core_perf_crtc_update_bus()
-Message-ID: <4quxgv6n35np7fm7iqx5bw5xnkz7gxabh3ix5rexcq5nir5k7i@xi33w2wyj7om>
-References: <20250106-dpu-perf-rework-v4-0-00b248349476@linaro.org>
- <20250106-dpu-perf-rework-v4-7-00b248349476@linaro.org>
- <459422c9-c272-4389-9b05-487a0148a082@quicinc.com>
- <ab4wkauem3xb65wh3h22bcyzlpx26rrmsicrdlewomn55ykpqi@tggrsmb6qcmf>
- <8e6b6940-d155-4ab7-bdd6-a67e9506218a@quicinc.com>
+	s=arc-20240116; t=1736930141; c=relaxed/simple;
+	bh=4wisaHf+Hl4KOzZeEVEFxjN6kc8eMQmrepKNkzXlzDo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=r4NkYKZ6wjy2SDyVMO0P6mQfhP0B5IK87vTF5l26rsaDT+BEjCjeWfaK4jouZ4pBfJgpzCH/gWP08rIKu3/LVTxp2L14qMvXT4bIwyDsWFUwt7WPU9/i7dT80NCaMPocA2NUIX7mtyDTJ1CWCReg70ODHSNWRsob4T7Amujo+Q0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=n9YRZhGs; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCFC9C4CEE2;
+	Wed, 15 Jan 2025 08:35:36 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1736930140;
+	bh=4wisaHf+Hl4KOzZeEVEFxjN6kc8eMQmrepKNkzXlzDo=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=n9YRZhGskU1xUSTLNihp9848Xhk/cOOr0A4tP66Z/QW3qUbEJja2aj0BHRQC0rlOI
+	 vvfjneMhayt56fE7La01WFhksgtLCZhp0vbZfJ15pOJq1Ip7hz8H3S3+Km+AXum5UH
+	 4LUIr6ehQdnR8yGkhTQarQ2RbC3uK5X/oWI0BM+Eqfi/e4sfcA/QAitp0jUO7ul0JK
+	 SQj6ngjWlmM+SWeKNAty6j+JZYgLDEGExre6pbUdKiptdDplOApTwLm3jhOwMVG9oF
+	 HX767n8258hjuZ5FRJywWeB58w9jqlcjGbPlh5xNFxykNudYEGKUrNhqB8kEi4642C
+	 rcgXILmrHWdnA==
+Message-ID: <80e59b3b-2160-4e24-93f2-ab183a7cbc74@kernel.org>
+Date: Wed, 15 Jan 2025 09:35:34 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <8e6b6940-d155-4ab7-bdd6-a67e9506218a@quicinc.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 5/6] arm64: dts: qcom: Add support for QCS9075 Ride &
+ Ride-r3
+To: Wasim Nazir <quic_wasimn@quicinc.com>
+Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, kernel@quicinc.com
+References: <tjrg5zqggupjo36udpyv3vynsij76f4qlus6lkbqotuimusqgq@hosmksp77sif>
+ <Z3ZXWxoBtMNPJ9kk@hu-wasimn-hyd.qualcomm.com>
+ <4wmxjxcvt7un7wk5v43q3jpxqjs2jbc626mgah2fxbfuouu4q6@ptzibxe2apmx>
+ <Z3eMxl1Af8TOAQW/@hu-wasimn-hyd.qualcomm.com>
+ <xuy6tp4dmxiqbjitmoi6x5lngplgcczytnowqjvzvq5hh5zwoa@moipssfsgw3w>
+ <Z3gzezBgZhZJkxzV@hu-wasimn-hyd.qualcomm.com>
+ <37isla6xfjeofsmfvb6ertnqe6ufyu3wh3duqsyp765ivdueex@nlzqyqgnocib>
+ <67b888fb-2207-4da5-b52e-ce84a53ae1f9@kernel.org>
+ <Z3/hmncCDG8OzVkc@hu-wasimn-hyd.qualcomm.com>
+ <b0b08c81-0295-4edb-ad97-73715a88bea6@kernel.org>
+ <Z4dMRjK5I8s2lT3k@hu-wasimn-hyd.qualcomm.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 fv0=
+In-Reply-To: <Z4dMRjK5I8s2lT3k@hu-wasimn-hyd.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Tue, Jan 14, 2025 at 01:18:26PM -0800, Abhinav Kumar wrote:
+On 15/01/2025 06:48, Wasim Nazir wrote:
+>> The the SoC, I am asking about the board. Why each of them is for
+>> example r3?
+>>
+>> So this is not sufficient explanation, nothing about the board, and
+>> again just look Renesas and NXP.
+>>
 > 
+> Hi Krzysztof,
 > 
-> On 1/14/2025 3:10 AM, Dmitry Baryshkov wrote:
-> > On Mon, Jan 13, 2025 at 07:38:16PM -0800, Abhinav Kumar wrote:
-> > > 
-> > > 
-> > > On 1/5/2025 7:07 PM, Dmitry Baryshkov wrote:
-> > > > Move perf mode handling for the bandwidth to
-> > > > _dpu_core_perf_crtc_update_bus() rather than overriding per-CRTC data
-> > > > and then aggregating known values.
-> > > > 
-> > > > Note, this changes the fix_core_ab_vote. Previously it would be
-> > > > multiplied per the CRTC number, now it will be used directly for
-> > > > interconnect voting. This better reflects user requirements in the case
-> > > > of different resolutions being set on different CRTCs: instead of using
-> > > > the same bandwidth for each CRTC (which is incorrect) user can now
-> > > > calculate overall bandwidth required by all outputs and use that value.
-> > > > 
-> > > 
-> > > There are two things this change is doing:
-> > > 
-> > > 1) Dropping the core_clk_rate setting because its already handled inside
-> > > _dpu_core_perf_get_core_clk_rate() and hence dpu_core_perf_crtc_update()
-> > > will still work.
-> > > 
-> > > and
-> > > 
-> > > 2) Then this part of moving the ab/ib setting to
-> > > _dpu_core_perf_crtc_update_bus().
-> > > 
-> > > Can we split this into two changes so that its clear that dropping
-> > > core_clk_rate setting in this change will not cause an issue.
-> > 
-> > Ack
-> > 
-> 
-> Actually I think this is incorrect.
-> 
-> If the user puts in an incorrect value beyond the bounds, earlier the code
-> will reject that by failing the in _dpu_core_perf_calc_crtc().
+> sa8775p(AUTO), qcs9100(IOT), qcs9075(IOT) are different SoCs based on
+> safety capabilities and memory map, serving different purpose.
+> Ride & Ride-r3 are different boards based on ethernet capabilities and
+> are compatible with all the SoCs mentioned.
 
-This function doesn't perform any validation nor returns an error code.
-Probably you've meant some other function.
+Compatible? What does it mean for a board?
+
+Third time: did you look how other vendors do it?
 
 > 
-> Now, if we move it to _dpu_core_perf_crtc_update_bus(), this is beyond the
-> check phase so incorrect values cannot be rejected.
+> With the combination of these 3 SoCs and 2 boards, we have 6 platforms,
+> all of which we need.
+> - sa8775p-ride.dts is auto grade Ride platform with safety feature.
+> - qcs9100-ride.dts is IOT grade Ride platform with safety feature.
+> - qcs9075-ride.dts is IOT grade Ride platform without safety feature.
 > 
-> So we will still need to preserve overriding the values in
-> _dpu_core_perf_calc_crtc().
-> 
-> > > 
-> > > 
-> > > > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > > > ---
-> > > >    drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c | 40 +++++++++++++--------------
-> > > >    1 file changed, 19 insertions(+), 21 deletions(-)
-> > > > 
-> > > > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
-> > > > index 70f43e8359caee2082f2ca9944a17a6a20aa3d49..7ff3405c6867556a8dc776783b91f1da6c86ef3f 100644
-> > > > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
-> > > > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
-> > > > @@ -118,22 +118,9 @@ static void _dpu_core_perf_calc_crtc(const struct dpu_core_perf *core_perf,
-> > > >    		return;
-> > > >    	}
-> > > > -	memset(perf, 0, sizeof(struct dpu_core_perf_params));
-> > > > -
-> > > > -	if (core_perf->perf_tune.mode == DPU_PERF_MODE_MINIMUM) {
-> > > > -		perf->bw_ctl = 0;
-> > > > -		perf->max_per_pipe_ib = 0;
-> > > > -		perf->core_clk_rate = 0;
-> > > > -	} else if (core_perf->perf_tune.mode == DPU_PERF_MODE_FIXED) {
-> > > > -		perf->bw_ctl = core_perf->fix_core_ab_vote * 1000ULL;
-> > > > -		perf->max_per_pipe_ib = core_perf->fix_core_ib_vote;
-> > > > -		perf->core_clk_rate = core_perf->fix_core_clk_rate;
-> > > > -	} else {
-> > > > -		perf->bw_ctl = _dpu_core_perf_calc_bw(perf_cfg, crtc);
-> > > > -		perf->max_per_pipe_ib = perf_cfg->min_dram_ib;
-> > > > -		perf->core_clk_rate = _dpu_core_perf_calc_clk(perf_cfg, crtc, state);
-> > > > -	}
-> > > > -
-> > > > +	perf->bw_ctl = _dpu_core_perf_calc_bw(perf_cfg, crtc);
-> > > > +	perf->max_per_pipe_ib = perf_cfg->min_dram_ib;
-> > > > +	perf->core_clk_rate = _dpu_core_perf_calc_clk(perf_cfg, crtc, state);
-> > > >    	DRM_DEBUG_ATOMIC(
-> > > >    		"crtc=%d clk_rate=%llu core_ib=%u core_ab=%u\n",
-> > > >    			crtc->base.id, perf->core_clk_rate,
-> > > > @@ -222,18 +209,29 @@ static int _dpu_core_perf_crtc_update_bus(struct dpu_kms *kms,
-> > > >    {
-> > > >    	struct dpu_core_perf_params perf = { 0 };
-> > > >    	int i, ret = 0;
-> > > > -	u64 avg_bw;
-> > > > +	u32 avg_bw;
-> > > > +	u32 peak_bw;
-> > > >    	if (!kms->num_paths)
-> > > >    		return 0;
-> > > > -	dpu_core_perf_aggregate(crtc->dev, dpu_crtc_get_client_type(crtc), &perf);
-> > > > +	if (kms->perf.perf_tune.mode == DPU_PERF_MODE_MINIMUM) {
-> > > > +		avg_bw = 0;
-> > > > +		peak_bw = 0;
-> > > > +	} else if (kms->perf.perf_tune.mode == DPU_PERF_MODE_FIXED) {
-> > > > +		avg_bw = kms->perf.fix_core_ab_vote;
-> > > > +		peak_bw = kms->perf.fix_core_ib_vote;
-> > > > +	} else {
-> > > > +		dpu_core_perf_aggregate(crtc->dev, dpu_crtc_get_client_type(crtc), &perf);
-> > > > +
-> > > > +		avg_bw = div_u64(perf.bw_ctl, 1000); /*Bps_to_icc*/
-> > > > +		peak_bw = perf.max_per_pipe_ib;
-> > > > +	}
-> > > > -	avg_bw = perf.bw_ctl;
-> > > > -	do_div(avg_bw, (kms->num_paths * 1000)); /*Bps_to_icc*/
-> > > > +	avg_bw /= kms->num_paths;
-> > > >    	for (i = 0; i < kms->num_paths; i++)
-> > > > -		icc_set_bw(kms->path[i], avg_bw, perf.max_per_pipe_ib);
-> > > > +		icc_set_bw(kms->path[i], avg_bw, peak_bw);
-> > > >    	return ret;
-> > > >    }
-> > > > 
-> > 
+> Since the Ride-r3 boards are essentially Ride boards with Ethernet
+> modifications, we can convert the Ride-r3 DTS to overlays.
+How one board can be with multiple SoCs? If it is soldered, it's close
+to impossible - that's just not the same board. If it is not soldered,
+why you are not explaining it? What is Ride board? What is there? What
+can go there? How it can be used in other SoCs? Or for which SoCs? Is
+there a datasheet available?
 
--- 
-With best wishes
-Dmitry
+You keep repeating my about SoC and I keep responding the same: don't care.
+
+Best regards,
+Krzysztof
 
