@@ -1,230 +1,178 @@
-Return-Path: <linux-arm-msm+bounces-45086-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-45087-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E6556A11C97
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jan 2025 09:58:19 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B2A20A11E0B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jan 2025 10:34:33 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 879543A1D3E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jan 2025 08:58:13 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 822DB169A4A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jan 2025 09:34:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D8F32246A08;
-	Wed, 15 Jan 2025 08:54:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2B9B7243862;
+	Wed, 15 Jan 2025 09:32:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="LrT5HDOF"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="BFhA5pyg"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f174.google.com (mail-lj1-f174.google.com [209.85.208.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C1A9240804
-	for <linux-arm-msm@vger.kernel.org>; Wed, 15 Jan 2025 08:54:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31600243843;
+	Wed, 15 Jan 2025 09:32:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736931287; cv=none; b=EJV0r43JpZVH9e7hW08KHk4Dg4Dp6INxxRpOcbRYTzcBQPM2M3B4olOTsP8LCF23CAtUU6YasReFbMNWi7IHrX1BYx/kL0PJbZT7nLs30WMkQfVQW71naHRehxpHdTQTf88K7aWRaFO+yMS9Ez/HqwLa450nPrECFYFNoUpak8I=
+	t=1736933530; cv=none; b=gcPeIuorBVxLtjx1ReBOgNMBiA1gj7+9UcGdE3Yv4hqG2IinzYdhqpGHMUP9SgcCDvPd6hJWCEp84pNrBg9g/FwruY7/rBvFWZlaPijNIP3cQJgLXS4QCXpTkQrfzjUQhU1FMlfBPxjIspi4QEcdZzI9E4BWHb8F9E+xXWmA/Xs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736931287; c=relaxed/simple;
-	bh=crCGIrWAPm3CgX29f926SsUaDye8Py5P+Ve9r02sUzQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=bjE1Lfcnz3O7iKT2t18YPGzl1V3Y9W6OGBiGxSYhXre6hF0afSfKWvZr8JC9LjVqLQz3fKdqzgMyGypGSr/z15/HZoNbdnjM1H9Pt/Dm177SBtv0NdyZ/Qpbk/kofZOKRidwF/CgyFLTAQyQhbsXjAKXIEd9S0lYaocwN3IvIzM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=LrT5HDOF; arc=none smtp.client-ip=209.85.208.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f174.google.com with SMTP id 38308e7fff4ca-30616d71bb0so34426771fa.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Jan 2025 00:54:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1736931283; x=1737536083; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=HwOpCAY+TRPX5emjLRnKQ+6GKxHIVUBxjpEXCs0EJGE=;
-        b=LrT5HDOFuJSSfkiLf1AdGHIhkhuDwx/6soxoGo+BNL9cslUtMcVZIvppf72STUTTBr
-         /DWJY+wpXreAfxyja+mpRV4iv1Id8N6l97LI8uvC3d8UPwvzH+UavMtdjOSqb2nI1GfP
-         WqmN64w+g5v8z770NRGZrFRwCBgQkE+LiI1uQ0XmhqdMZDDUeO+HiBTkW1a25jrg1dlL
-         VawJgpmoIj9DktE5NgJxVlkci9Gyjx1476dVTwiJFXKLFf14z/osRUlMB3pPCOnd65qd
-         gsvueQyQ1AIEJQ5ZXrN5EwnFSvCnq6sR9K6gTv2I5qECYYrCrxEmU061tqYmB8A9cPLN
-         BLiw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736931283; x=1737536083;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=HwOpCAY+TRPX5emjLRnKQ+6GKxHIVUBxjpEXCs0EJGE=;
-        b=KBJpxTSuhpR/apgErwDNReGigFopJLvnQVV6oNg5K9IpTiPgoNvGOGcGIok7fx/Zz4
-         JPEXEcx3/Zbh3Sx32KWALPuLGDxAmqJlA7+4nGIcxD7LBCuPrQxDMRBUjXcdPYJqCa+E
-         nfxbdqaOSxijcyH6DNcawczVL1GsRne3AEdiZwiwEv1Xk7CUXP8uThSvW1gYqThZ2atn
-         0Ye/IGqUcM3GFhc7oIqRMz20TSuerhwEXbM56JWVdthyGqFqzXMn3kjJg/Ro1U1vohsu
-         lASFjiLMr54WZ90G3Xoh1WA0lIVeRrzqx5B3MNJmCPuN3RxoZfVfRe9G8KkOw30Fgo8K
-         I39A==
-X-Forwarded-Encrypted: i=1; AJvYcCVPdjkpNKSJhRz0255ziBhffdyoRMg0IM8NdLPc77pJcsyF2grxpqc2+HVvC9ybSuF3eHLNdNIZX3Ml1/lj@vger.kernel.org
-X-Gm-Message-State: AOJu0Yyq1m/nzczMj3th9+csZZ+5O+C5J6Wm05Vte+mfVEwox1Zb3hok
-	KUJqkd+knKMHafxhZFs3bLHd1A8nnMAEKBurKWciDKAPNbu1iwAVQi9wM8EaAxU=
-X-Gm-Gg: ASbGncsWBsmoKLRMa++yAUw273FZunVpiByDoAFcUr3kTE+NbTZbrfcZxV4IoS3p+gz
-	dbtCUk47OFkgvofG1kOLuWOvLPzPEWy/2+fgnTrOZdt7Ltz3g4fZyBGLF1VYn1mhXOBAS78DQNG
-	V/TFXj/JA8HYCXWML3Wz/JSN+sKOib3u/8PYVfer6Ua3sgP3+40Uyv0+OmB0pF/7V1zsjMNoh5A
-	268gLvEWPBViVLwpHcA2X4wAJRD/pT6D4gCkfzKc3d/V9CFptuwauqrPBxBnIeJ8xqbrLJP1PqC
-	CjqbS6Hij40tMvfpKxKc6bGqQPVgbGoceYqU
-X-Google-Smtp-Source: AGHT+IHTpJ70vtWgIUw7Pg1kOPWCf5XJS2r9IyZ+i3djI4Hu/KSN2nxwCCgeiBbZ0I8fFQbv7dMdKA==
-X-Received: by 2002:a2e:a545:0:b0:300:317c:9b75 with SMTP id 38308e7fff4ca-305f45531ccmr89017481fa.12.1736931283059;
-        Wed, 15 Jan 2025 00:54:43 -0800 (PST)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-305ff0f655bsm21199611fa.53.2025.01.15.00.54.40
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Jan 2025 00:54:41 -0800 (PST)
-Date: Wed, 15 Jan 2025 10:54:39 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Manaf Meethalavalappu Pallikunhi <quic_manafm@quicinc.com>
-Cc: Wasim Nazir <quic_wasimn@quicinc.com>, 
-	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
-	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, kernel@quicinc.com, psodagud@quicinc.com
-Subject: Re: [PATCH v5 6/6] arm64: dts: qcom: Enable cpu cooling devices for
- QCS9075 platforms
-Message-ID: <cmgsyaipal33vuwhw5m2eskmxfv2s5ooxixmpyucln4j4t5jo3@xycvijqnzbun>
-References: <20241229152332.3068172-1-quic_wasimn@quicinc.com>
- <20241229152332.3068172-7-quic_wasimn@quicinc.com>
- <zn4uf3mmlmt3who474hwkr44poycfqtjtidshybbg55a3hr63y@zxefqbhiwkbg>
- <d54c6706-3c6b-211c-6acb-fa3984c30c67@quicinc.com>
- <ubasbsyspn5euygihgphyw3xg4ckveytvgnjpwdiyg4pv7degr@6y44ya4gvaqj>
- <07c41571-28ca-6f9e-bcee-899bbf77f687@quicinc.com>
- <sufmykle5inyk73i3qfmy3xqq7plgfr7txiruyahc5wgvvn6uo@kytxtb5zc3tg>
- <cf2ad828-d00d-133b-f310-1688fc0ed59b@quicinc.com>
- <6zftdu5myuporxsvxlxhojnlhnfa74pjj7nvy3wmiaw7jdsuo2@3ebcpevzvtlc>
- <59d087c3-1a4a-782f-8566-313e8355216c@quicinc.com>
+	s=arc-20240116; t=1736933530; c=relaxed/simple;
+	bh=DI1tSkxAv0Uxhv+EenHTrUbnECoxsKW7Vvxh86Y6R78=;
+	h=From:Subject:Date:Message-ID:MIME-Version:Content-Type:To:CC; b=gP0Q9QmL41F0R9+ODSQTHpwcI9R0GndvKahchurkXbudwarMGI3bgmjjlRTaaoTQXAA9G3BvtWzSzxkfjqrz+K+eCg3xUM0TNJ1PE/K4xbDcjDQSnTGZj0sLWGN14yFOZWqSzYvFqvn83LMN0ynm7KURCRDAVPP6AR8xTh5ZQ0k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=BFhA5pyg; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50F8leZA015870;
+	Wed, 15 Jan 2025 09:32:02 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=G7uwZdOna6jDkyg9O4ck8A
+	NCz51I0oS58WUuSPW2VcA=; b=BFhA5pygYdDLnOOy7j4/neq0P5aGFjsbq32PQX
+	GXcc3YFhJJrkxmCH5+fCdXVXKyjA8p08McXlEhuhZwJNcYLpOlmGx8ccyC6/usZH
+	7tHzAbQFx2xtwSczUj3Bk7q9JrthDXbHY1KAarJ9UmmmUxPxYNV1LyXlO8HFFJrF
+	6oW0IjWZGZzvq58vlGwKY0vV1mDwS0cviqZxlK1j6S0HP/JWECquWbSVDFmuatyk
+	K5qfE2idLZ6itVLycaH23VlqOAWXH4Hhpaf0sLo472tSJlX2WM0V1IGRQwaAW8ma
+	HOAwZI6DPkAM8bLEra7IeHvQ7ArSg1PUhK43cBQ9cu+AO2Yw==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4469tpr3ps-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 15 Jan 2025 09:32:02 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 50F9W1a4010693
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 15 Jan 2025 09:32:01 GMT
+Received: from hu-renjiang-sha.qualcomm.com (10.80.80.8) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Wed, 15 Jan 2025 01:31:58 -0800
+From: Renjiang Han <quic_renjiang@quicinc.com>
+Subject: [PATCH v3 0/3] Use APIs in gdsc genpd to switch gdsc mode for
+ venus v4 core
+Date: Wed, 15 Jan 2025 15:00:51 +0530
+Message-ID: <20250115-switch_gdsc_mode-v3-0-9a24d2fd724c@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <59d087c3-1a4a-782f-8566-313e8355216c@quicinc.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAEuAh2cC/23OzU7EIBSG4VtpWIvhQPnprLwPYyZwOExZtB2hV
+ s2k9y52Fsbo8iPhOe+NVSqZKjt1N1ZoyzUvcxvqoWM4+vlCPMe2mRRSCwDN63tecTxfYsXztET
+ ifkDok4+DV4a1b9dCKX8c5PPLfRd6fWvyen9kwVfiuExTXk+dUUGlJFQcwJNLzupEzvYWrQOvJ
+ STrMBJY9m2Nua5L+TxqNziwFtYDSPk3bAMuuDI6icEShiCeWgXmGR/b7YPb5A8hpfqHkI2goHE
+ wnsgY+ZvY9/0L7ciB7UEBAAA=
+X-Change-ID: 20250115-switch_gdsc_mode-a9c14fad9a36
+To: Bjorn Andersson <andersson@kernel.org>,
+        Michael Turquette
+	<mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Stanimir Varbanov
+	<stanimir.k.varbanov@gmail.com>,
+        Vikash Garodia <quic_vgarodia@quicinc.com>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Mauro Carvalho Chehab
+	<mchehab@kernel.org>
+CC: <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-media@vger.kernel.org>,
+        Renjiang Han
+	<quic_renjiang@quicinc.com>,
+        Taniya Das <quic_tdas@quicinc.com>,
+        "Dmitry
+ Baryshkov" <dmitry.baryshkov@linaro.org>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1736933518; l=2915;
+ i=quic_renjiang@quicinc.com; s=20241001; h=from:subject:message-id;
+ bh=DI1tSkxAv0Uxhv+EenHTrUbnECoxsKW7Vvxh86Y6R78=;
+ b=JBT5T1y1cPfVo9BLrcH8/poXUNprsSNO3fa0AkM/XffqOnq96WPEtPKZIODFCUrDWB6N5i54w
+ /Qq62Xd2iBKCzgOqXHW2J8LvqmUpuNnY8lPG0/5wRQk9np5yue5skGa
+X-Developer-Key: i=quic_renjiang@quicinc.com; a=ed25519;
+ pk=8N59kMJUiVH++5QxJzTyHB/wh/kG5LxQ44j9zhUvZmw=
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: ob9Hcubth0Q7igIuekZKqLVB822_OFHw
+X-Proofpoint-ORIG-GUID: ob9Hcubth0Q7igIuekZKqLVB822_OFHw
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-01-15_03,2025-01-15_02,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 phishscore=0
+ adultscore=0 spamscore=0 suspectscore=0 mlxlogscore=583 mlxscore=0
+ priorityscore=1501 clxscore=1015 impostorscore=0 lowpriorityscore=0
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2501150072
 
-On Wed, Jan 15, 2025 at 12:46:50AM +0530, Manaf Meethalavalappu Pallikunhi wrote:
-> 
-> Hi Dmitry,
-> 
-> Sorry, I was busy with some other priority tasks.
-> 
-> On 1/10/2025 5:24 AM, Dmitry Baryshkov wrote:
-> > On Wed, Jan 08, 2025 at 09:38:19PM +0530, Manaf Meethalavalappu Pallikunhi wrote:
-> > > Hi Dmitry,
-> > > 
-> > > 
-> > > On 1/8/2025 6:16 PM, Dmitry Baryshkov wrote:
-> > > > On Wed, Jan 08, 2025 at 05:57:06PM +0530, Manaf Meethalavalappu Pallikunhi wrote:
-> > > > > Hi Dmitry,
-> > > > > 
-> > > > > 
-> > > > > On 1/3/2025 11:21 AM, Dmitry Baryshkov wrote:
-> > > > > > On Tue, Dec 31, 2024 at 05:31:41PM +0530, Manaf Meethalavalappu Pallikunhi wrote:
-> > > > > > > Hi Dmitry,
-> > > > > > > 
-> > > > > > > On 12/30/2024 9:10 PM, Dmitry Baryshkov wrote:
-> > > > > > > > On Sun, Dec 29, 2024 at 08:53:32PM +0530, Wasim Nazir wrote:
-> > > > > > > > > From: Manaf Meethalavalappu Pallikunhi <quic_manafm@quicinc.com>
-> > > > > > > > > 
-> > > > > > > > > In QCS9100 SoC, the safety subsystem monitors all thermal sensors and
-> > > > > > > > > does corrective action for each subsystem based on sensor violation
-> > > > > > > > > to comply safety standards. But as QCS9075 is non-safe SoC it
-> > > > > > > > > requires conventional thermal mitigation to control thermal for
-> > > > > > > > > different subsystems.
-> > > > > > > > > 
-> > > > > > > > > The cpu frequency throttling for different cpu tsens is enabled in
-> > > > > > > > > hardware as first defense for cpu thermal control. But QCS9075 SoC
-> > > > > > > > > has higher ambient specification. During high ambient condition, even
-> > > > > > > > > lowest frequency with multi cores can slowly build heat over the time
-> > > > > > > > > and it can lead to thermal run-away situations. This patch restrict
-> > > > > > > > > cpu cores during this scenario helps further thermal control and
-> > > > > > > > > avoids thermal critical violation.
-> > > > > > > > > 
-> > > > > > > > > Add cpu idle injection cooling bindings for cpu tsens thermal zones
-> > > > > > > > > as a mitigation for cpu subsystem prior to thermal shutdown.
-> > > > > > > > > 
-> > > > > > > > > Add cpu frequency cooling devices that will be used by userspace
-> > > > > > > > > thermal governor to mitigate skin thermal management.
-> > > > > > > > Does anything prevent us from having this config as a part of the basic
-> > > > > > > > sa8775p.dtsi setup? If HW is present in the base version but it is not
-> > > > > > > > accessible for whatever reason, please move it the base device config
-> > > > > > > > and use status "disabled" or "reserved" to the respective board files.
-> > > > > > > Sure,  I will move idle injection node for each cpu to sa8775p.dtsi and keep
-> > > > > > > it disabled state. #cooling cells property for CPU, still wanted to keep it
-> > > > > > > in board files as we don't want to enable any cooling device in base DT.
-> > > > > > "we don't want" is not a proper justification. So, no.
-> > > > > As noted in the commit, thermal cooling mitigation is only necessary for
-> > > > > non-safe SoCs. Adding this cooling cell property to the CPU node in the base
-> > > > > DT (sa8775p.dtsi), which is shared by both safe and non-safe SoCs, would
-> > > > > violate the requirements for safe SoCs. Therefore, we will include it only
-> > > > > in non-safe SoC boards.
-> > > > "is only necessary" is fine. It means that it is an optional part which
-> > > > is going to be unused / ignored / duplicate functionality on the "safe"
-> > > > SoCs. What kind of requirement is going to be violated in this way?
-> > >  From the perspective of a safe SoC, any software mitigation that compromises
-> > > the safety subsystem’s compliance should not be allowed. Enabling the
-> > > cooling device also opens up the sysfs interface for userspace, which we may
-> > > not fully control.
-> > THere are a lot of interfaces exported to the userspace.
-> > 
-> > > Userspace apps or partner apps might inadvertently use
-> > > it. Therefore, we believe it is better not to expose such an interface, as
-> > > it is not required for that SoC and helps to avoid opening up an interface
-> > > that could potentially lead to a safety failure.
-> > How can thermal mitigation interface lead to safety failure? Userspace
-> > can possibly lower trip points, but it can not override existing
-> > firmware-based mitigation.
-> Both firmware and software passive mitigations (CPU/GPU) are not permitted
-> for Safe SoC.
+The Venus driver requires vcodec GDSC to be ON in SW mode for clock
+operations and move it back to HW mode to gain power benefits. Earlier,
+as there is no interface to switch the GDSC mode from GenPD framework,
+the GDSC is moved to HW control mode as part of GDSC enable callback and
+venus driver is writing to its POWER_CONTROL register to keep the GDSC ON
+from SW whereever required. But the POWER_CONTROL register addresses are
+not constant and can vary across the variants.
 
-Not permitted by whom?
+Also as per the HW recommendation, the GDSC mode switching needs to be
+controlled from respective GDSC register and this is a uniform approach
+across all the targets. Hence use dev_pm_genpd_set_hwmode() API which
+controls GDSC mode switching using its respective GDSC register.
 
-> As mentioned in the commit, it is the responsibility of the
-> safety subsystem to take corrective action for high temperatures. One of the
-> safety requirements (not a functional requirement) for Safe SoC is to avoid
-> scaling of CPUs and bus DCVS, as this could impact safety-critical
-> workloads. Therefore, Safe SoC will operate at maximum frequency with the
-> performance governor. Enabling a cooling device for the CPU would expose the
-> cooling device sysfs interface, allowing userspace to request different
-> cooling states via the cooling device cur_state sysfs, which could
-> potentially lower the frequency and violate the safety requirement.
+If only the clock patch or the venus driver patch is merged, the venus
+driver will not work properly. Although it does not affect other system
+functions, it is still recommended to wait until both the clock patch
+and the venus driver patch are reviewed and passed, and then merge them
+into the same release by their respective maintainers.
 
-So, you disable thermal mitigation controls, but your description allows
-userspace to change the CPUfreq governor through sysfs. Isn't that also
-unsafe?
+Validated this series on QCS615 and SC7180.
 
-> > And if there is a known problem with the interface, it should be fixed
-> > instead.
-> 
-> There is no interface issue, as it is not required and can be disabled for
-> Safe SoC. This approach has already been used for commercializing the
-> SA8775P, and we do not want to disrupt it now. Therefore, we believe it is
-> better not to add cpu cooling cell property (CPU cooling device) in sa8775p
-> base dtsi.
+Signed-off-by: Renjiang Han <quic_renjiang@quicinc.com>
+---
+Changes in v3:
+- 1. Update commit message.
+- 2. Add a patch to clean up the dead code for the venus driver.
+- 3. Remove vcodec_control_v4() function.
+- 4. Directly call dev_pm_genpd_set_hwmode() without vcodec_control_v4().
+- Link to v2: https://lore.kernel.org/r/20241223-switch_gdsc_mode-v2-0-eb5c96aee662@quicinc.com
 
-Okay, assuming  SA8775P may not have any thermal-related properties,
-what is the issue with having them for the IoT-related QCS9100 device?
+Changes in v2:
+- 1. Add the HW_CTRL_TRIGGER flag for the targets SM7150/SM8150 and SM8450
+video GDSCs supporting movement between HW and SW mode of the GDSC.
+(Suggested by Dmitry Baryshkov)
+- 2. There is a dependency of the clock driver introducing the new flag
+and the video driver adapting to this new API. Missing either the clock
+and video driver could potentially break the video driver.
+- Link to v1: https://lore.kernel.org/r/20241122-switch_gdsc_mode-v1-0-365f097ecbb0@quicinc.com
 
-So, you have an alternative proposal: rename sa8775p.dtsi to
-qcs9100.dtsi, defining a full set of thermal properties there and add
-sa8775p.dtsi which includes qcs9100.dtsi and just removes thermal and
-cpufreq nodes. Doing it in any other way, especially by including a
-random SoC-related include defeats the logic of the DTSI files.
+---
+Renjiang Han (2):
+      venus: pm_helpers: Use dev_pm_genpd_set_hwmode to switch GDSC mode on V4
+      venus: pm_helpers: Remove dead code and simplify power management
 
-> 
-> Best Regards,
-> 
-> Manaf
-> 
-> > 
-> > > Best Regards,
-> > > 
-> > > Manaf
-> > > 
+Taniya Das (1):
+      clk: qcom: videocc: Use HW_CTRL_TRIGGER flag for video GDSC's
 
+ drivers/clk/qcom/videocc-sc7180.c              |  2 +-
+ drivers/clk/qcom/videocc-sdm845.c              |  4 +-
+ drivers/clk/qcom/videocc-sm7150.c              |  4 +-
+ drivers/clk/qcom/videocc-sm8150.c              |  4 +-
+ drivers/clk/qcom/videocc-sm8450.c              |  4 +-
+ drivers/media/platform/qcom/venus/pm_helpers.c | 73 +++-----------------------
+ 6 files changed, 17 insertions(+), 74 deletions(-)
+---
+base-commit: 63b3ff03d91ae8f875fe8747c781a521f78cde17
+change-id: 20250115-switch_gdsc_mode-a9c14fad9a36
+
+Best regards,
 -- 
-With best wishes
-Dmitry
+Renjiang Han <quic_renjiang@quicinc.com>
+
 
