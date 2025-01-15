@@ -1,155 +1,181 @@
-Return-Path: <linux-arm-msm+bounces-45079-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-45080-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 655C0A11B64
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jan 2025 08:59:08 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0D6ADA11B92
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jan 2025 09:10:22 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id BC2B51882596
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jan 2025 07:59:05 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0A4643A33D1
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jan 2025 08:10:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3410F236A82;
-	Wed, 15 Jan 2025 07:58:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5B57E22FAE2;
+	Wed, 15 Jan 2025 08:10:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="dhtbnpdR"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="lUGBAygu"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f52.google.com (mail-ed1-f52.google.com [209.85.208.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7234B236A61;
-	Wed, 15 Jan 2025 07:58:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A5DE236A6E
+	for <linux-arm-msm@vger.kernel.org>; Wed, 15 Jan 2025 08:10:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736927929; cv=none; b=U/sCnZpNbbpKeW3m25f3QjYutg21p1cyjwdCTuNrXMum/BHQXXZ4CW+ae9b2gZhkN4iTFE+BR9FhMjzpkmP5E9Yip3VZXjHUB83eaDmcqWQupks5+pqz/OZvbVfp19ZKPi6jqQUlm2bj0oAut3Y/7x7Vea8GIftprnR7JpJB43g=
+	t=1736928614; cv=none; b=Sh8ce23WML4DW1T0oa7aSCrS4Aq2AKKzcSPqotp8Mju5xnGII8cj/hKN7yE1ZxNqvvYAiGoiItswVHbnDRDFmw2KmrdobtLSoO5503FN0x+aJwtDQKoDiOyt08pkQJF3AgYMChdl/bIJ4EHIJi/k23WcyxSWuFdyGOkyTHeFTK0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736927929; c=relaxed/simple;
-	bh=/dJoj0mqOTmkoV3UXIGqPt6FEKyI9UYbUD8611H/sMw=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Xl5nUMdwWmYnG5fM/Sqe/CYzWjJm2T2LR0xUDMb2zazqGL6VicEKFiPIDQOCACxxvyBqg1rZrVf7MGhxU4F4x6EAQdoaHFLyB0uLHb/+I/8aiuTOpxmZHrldTZ0oQm62TSz6JvcRVuSkJap+eNV+1KKexYsz0qllBFb0OyjAdow=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=dhtbnpdR; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50F5cPBr013921;
-	Wed, 15 Jan 2025 07:58:33 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=sLwXMdQzvWOJb4WsDCioa7Jt
-	yHeUekEJUQu8MLw0PwA=; b=dhtbnpdRaLQZUPFuV2cZaSiWLROQ0s1I2Y1ZzWvw
-	39TsTQsfepXYWwpH2whs6VPVPVoFQQFdXAEIZBAlPd/6h3zbjwmhq1RWeWRF5VsF
-	ZTo6PJiEshco8oaA9dDdw7oSZFRH92Lxdn238GsfUnjDExRWHAiW90Lw7CLhU0/R
-	jj5ZlydOr4w3LDukgWW+bokC/tjXF9G/XQIYAgDBz786uOm+EFc8lLVWv1zwZmL2
-	KTkd2MhBXlQdZH9OyeYoFXiZOFGN0Sxlra3I3zX+2Di3gcXPkDaC1EM1kiQDqpna
-	bRV2IvxeDMhX0aB69kd13gUK9hB9QhOaYt9RUBR6SWlwPw==
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44671q0asn-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 15 Jan 2025 07:58:33 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 50F7wXvk031194
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 15 Jan 2025 07:58:33 GMT
-Received: from hu-varada-blr.qualcomm.com (10.80.80.8) by
- nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Tue, 14 Jan 2025 23:58:26 -0800
-Date: Wed, 15 Jan 2025 13:28:22 +0530
-From: Varadarajan Narayanan <quic_varada@quicinc.com>
-To: Bjorn Helgaas <helgaas@kernel.org>
-CC: <bhelgaas@google.com>, <lpieralisi@kernel.org>, <kw@linux.com>,
-        <manivannan.sadhasivam@linaro.org>, <robh@kernel.org>,
-        <krzk+dt@kernel.org>, <conor+dt@kernel.org>, <vkoul@kernel.org>,
-        <kishon@kernel.org>, <andersson@kernel.org>, <konradybcio@kernel.org>,
-        <p.zabel@pengutronix.de>, <quic_nsekar@quicinc.com>,
-        <dmitry.baryshkov@linaro.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-pci@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-phy@lists.infradead.org>,
-        Praveenkumar I <quic_ipkumar@quicinc.com>,
-        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Subject: Re: [PATCH v5 4/5] arm64: dts: qcom: ipq5332: Add PCIe related nodes
-Message-ID: <Z4dqnr9+MTue3VbX@hu-varada-blr.qualcomm.com>
-References: <20250102113019.1347068-5-quic_varada@quicinc.com>
- <20250108183235.GA220566@bhelgaas>
+	s=arc-20240116; t=1736928614; c=relaxed/simple;
+	bh=1syB/yTFe9pOxtUgkfKTZOUhX8XikyYYbP8bmiyG/p8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=IzKJDWhT0n4NiOcAZEd01jd4tSokgdL282nzwrMV2YBdnYDfZYAcaUQwuMQy0rZrk25WkzbsPmMMcGwrKOqBzfhK2gOeeyFIZm1X/E2HdvCIW3RH6BxMpPa0vNK3jIzxBEImsEhUHuGeVsnA1HmzEqQjkRAQuEk5iBd+6Sp6SHQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=lUGBAygu; arc=none smtp.client-ip=209.85.208.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ed1-f52.google.com with SMTP id 4fb4d7f45d1cf-5d0bf4ec53fso1071308a12.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Jan 2025 00:10:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1736928611; x=1737533411; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+         :from:references:cc:to:subject:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=2x8pd15zEdXV/nC469cdN0tUhzRio5oRNAxqPdMlKlY=;
+        b=lUGBAygutaKXUnNPH5qAw9NPHRD4d4Qtz96tWqoWiabC1xRb/LE3bcPxdhS5oFiOaM
+         p3uqFDfs9c8Xxc6lgttyQyyL865sBdNJp1vVHGskcG/2tFDlUH7NKVHFeGgdpjJqA3Bg
+         Dypz+jl6xpMlzxEUPdA5LPsBiyd+29YXsf9HD5SH/sCh4tlaQVw5/9F7vtunRWckboAP
+         5vPP+b/Axf9AbwZVtg8bpguHub2tFN1IBNWsb/8SsR3kJgKN5tvEN3WcGzodjZ8FQ/2D
+         rc77tVWKb2suEq1FXkkdHm3u7JRFZFs6l94uYvOygS4pAXV9wSQq1ONl3ouqPW+Y6IvH
+         qUHA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1736928611; x=1737533411;
+        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+         :from:references:cc:to:subject:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=2x8pd15zEdXV/nC469cdN0tUhzRio5oRNAxqPdMlKlY=;
+        b=Cwz7liEeDkmyrvCfJedTP/fLkkDz6GALUGFMz/57OrQ9MvkzeAg5vK7ttw65z1wTNw
+         wMzKHEF6nUJBFmyGwW78F6KKfiOc6wJNbAiG27GqefYT5tjZ7y2/U0VXEXxNmb2O8bfF
+         Fq3QGkVPZHzN/V2PfqriJc8FWcYd5a9JcX3NuvzK+Aokz85ZyGEjlr81UB8Pi7PylKv0
+         Pd5/dvHrtaAr5i8khysg4L6oeB/RfB2VnHzb3YRpG/acjsYcnSzZbIM8mgQpPep27+ER
+         6bf8gJzgY1D8rweGywFIAM3qqfP6fkqGbjZwZ6KiEOkCnGjPhUJggdzhk0RbEcX6BG/x
+         yY3g==
+X-Forwarded-Encrypted: i=1; AJvYcCWIILNVvNcpZuXiry7Y4/tgb+rv19V3JpJCqxAsp3zoMPVNygfg7mpuBkJoBXdXoQKOntDj1e3Pb960l4/i@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx+ji6XPPB4xlDD4DqY8uJ8AtEaFiFG9YH0bZ6+GYaE/VyTdtnP
+	bGyLL1FX06toDDKMgSSNsdg68y9WOdkfZGUrHMxRix2HBlhBoduBXVDP47wOI2w=
+X-Gm-Gg: ASbGncttnxTO4k5hA0iQt50Q5NP+9jwGnNHUMRzvNit6pMsuB8dh61r2QitSfo4c78u
+	9l0X+4nHkMwdSmlc2uLqVcASwn7n/tqPZ+BrgPOJsyUTGyUEXqbFEuCZVBZab4OUIeDHfK2UYmm
+	NKgy2J/KeMtrCaRg5pdOn2rIddfaFR9K33GxFPFeXurUxDuUBXSOUjIjgQsUT7XAR/5SmSajEua
+	4DCxdcsGU1TQmwdVDs7Vk9LFAHcxp0bxovjroIoM8m5nCUjfrYcacsgbP5veOoCTT5h04DvKJuH
+X-Google-Smtp-Source: AGHT+IHZpaGL9nGZhARhY/bI9CN8fg77ZL6feb3p3onUCZo34QeqSggtoso0GFqHvFB4Oq1TvYuo0w==
+X-Received: by 2002:a05:6402:370c:b0:5da:b46:9395 with SMTP id 4fb4d7f45d1cf-5da0b46943bmr853479a12.3.1736928610732;
+        Wed, 15 Jan 2025 00:10:10 -0800 (PST)
+Received: from [192.168.1.20] ([178.197.223.165])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5d99046a07bsm7164457a12.65.2025.01.15.00.10.09
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 15 Jan 2025 00:10:10 -0800 (PST)
+Message-ID: <29bd1baf-f1cb-4c74-9d31-051c2b8efae6@linaro.org>
+Date: Wed, 15 Jan 2025 09:10:08 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <20250108183235.GA220566@bhelgaas>
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: yEiBqHoUvMPVEeVoNLX-JJ4sCL9GcypG
-X-Proofpoint-ORIG-GUID: yEiBqHoUvMPVEeVoNLX-JJ4sCL9GcypG
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-01-15_03,2025-01-15_02,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 spamscore=0
- mlxlogscore=999 adultscore=0 clxscore=1011 priorityscore=1501
- suspectscore=0 phishscore=0 bulkscore=0 impostorscore=0 lowpriorityscore=0
- mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2501150059
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] clk: Use str_enable_disable-like helpers
+To: Stanislav Jakubek <stano.jakubek@gmail.com>
+Cc: Michael Turquette <mturquette@baylibre.com>,
+ Stephen Boyd <sboyd@kernel.org>,
+ Florian Fainelli <florian.fainelli@broadcom.com>, Ray Jui
+ <rjui@broadcom.com>, Scott Branden <sbranden@broadcom.com>,
+ Broadcom internal kernel review list
+ <bcm-kernel-feedback-list@broadcom.com>,
+ Linus Walleij <linus.walleij@linaro.org>,
+ Bjorn Andersson <andersson@kernel.org>, linux-clk@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+ linux-arm-msm@vger.kernel.org
+References: <20250114190612.846696-1-krzysztof.kozlowski@linaro.org>
+ <Z4diEj__bbQl4ULS@standask-GA-A55M-S2HP>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Content-Language: en-US
+Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
+ 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
+ D2GYIS41Kv4Isx2dEFh+/Q==
+In-Reply-To: <Z4diEj__bbQl4ULS@standask-GA-A55M-S2HP>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Wed, Jan 08, 2025 at 12:32:35PM -0600, Bjorn Helgaas wrote:
-> On Thu, Jan 02, 2025 at 05:00:18PM +0530, Varadarajan Narayanan wrote:
-> > From: Praveenkumar I <quic_ipkumar@quicinc.com>
-> >
-> > Add phy and controller nodes for pcie0_x1 and pcie1_x2.
->
-> > +		pcie1: pcie@18000000 {
-> > +			compatible = "qcom,pcie-ipq5332", "qcom,pcie-ipq9574";
-> > +			reg = <0x00088000 0x3000>,
-> > +			      <0x18000000 0xf1d>,
-> > +			      <0x18000f20 0xa8>,
-> > +			      <0x18001000 0x1000>,
-> > +			      <0x18100000 0x1000>,
-> > +			      <0x0008b000 0x1000>;
-> > +			reg-names = "parf",
-> > +				    "dbi",
-> > +				    "elbi",
-> > +				    "atu",
-> > +				    "config",
-> > +				    "mhi";
-> > +			device_type = "pci";
-> > +			linux,pci-domain = <1>;
-> > +			bus-range = <0x00 0xff>;
->
-> This bus-range isn't needed, is it?  pci_parse_request_of_pci_ranges()
-> should default to 0x00-0xff if no bus-range property is present.
+On 15/01/2025 08:21, Stanislav Jakubek wrote:
+> Hi Krzysztof, 1 note below.
+> 
+> On Tue, Jan 14, 2025 at 08:06:12PM +0100, Krzysztof Kozlowski wrote:
+>> Replace ternary (condition ? "enable" : "disable") syntax with helpers
+>> from string_choices.h because:
+> 
+> [snip]
+> 
+>> diff --git a/drivers/clk/clk-nomadik.c b/drivers/clk/clk-nomadik.c
+>> index 06245681dac7..f3a73ac5a1b9 100644
+>> --- a/drivers/clk/clk-nomadik.c
+>> +++ b/drivers/clk/clk-nomadik.c
+>> @@ -17,6 +17,7 @@
+>>  #include <linux/debugfs.h>
+>>  #include <linux/seq_file.h>
+>>  #include <linux/spinlock.h>
+>> +#include <linux/string_choices.h>
+>>  #include <linux/reboot.h>
+>>  
+>>  /*
+>> @@ -116,9 +117,9 @@ static void __init nomadik_src_init(void)
+>>  
+>>  	val = readl(src_base + SRC_XTALCR);
+>>  	pr_info("SXTALO is %s\n",
+>> -		(val & SRC_XTALCR_SXTALDIS) ? "disabled" : "enabled");
+>> +		str_enabled_disabled(val & SRC_XTALCR_SXTALDIS));
+> 
+> It seems like you flipped the logic here. Was this intentional?
+No, overlook. Thanks for noticing.
 
-Ok.
-
->
-> > +			num-lanes = <2>;
-> > +			phys = <&pcie1_phy>;
-> > +			phy-names = "pciephy";
->
-> I think num-lanes and PHY info are per-Root Port properties, not a
-> host controller properties, aren't they?  Some of the clock and reset
-> properties might also be per-Root Port.
->
-> Ideally, I think per-Root Port properties should be in a child device
-> as they are here:
-> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/Documentation/devicetree/bindings/pci/mvebu-pci.txt?id=v6.12#n137
-> but it looks like the num-lanes parsing is done in
-> dw_pcie_get_resources(), which can only handle a single num-lanes per
-> DWC controller, so maybe it's impractical to add a child device here.
->
-> But I wonder if it would be useful to at least group the per-Root Port
-> things together in the binding to help us start thinking about the
-> difference between the controller and the Root Port(s).
-
-This looks like a big change and might impact the existing
-SoCs/platforms. To minimize the impact, should we continue
-supporting the legacy method in addition to the new per-Root port
-approach. Should we take this up separately? Kindly advice.
-
-Thanks
-Varada
+Best regards,
+Krzysztof
 
