@@ -1,78 +1,81 @@
-Return-Path: <linux-arm-msm+bounces-45121-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-45122-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id AD1CBA1225C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jan 2025 12:20:02 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 43F5AA1229B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jan 2025 12:35:15 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CE678168C1A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jan 2025 11:20:00 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D1D5C3A24B0
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jan 2025 11:35:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A286A1E7C27;
-	Wed, 15 Jan 2025 11:19:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 48BE01E9907;
+	Wed, 15 Jan 2025 11:35:11 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f179.google.com (mail-pl1-f179.google.com [209.85.214.179])
+Received: from mail-pl1-f177.google.com (mail-pl1-f177.google.com [209.85.214.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4377B248BA4;
-	Wed, 15 Jan 2025 11:19:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D04DD248BB5;
+	Wed, 15 Jan 2025 11:35:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736939998; cv=none; b=I2F5O76JdTVImte6K0dAb0P022OZ3Uqr0p7AWSFbuaf8DqPZMaK2HbpdgqHZr4QvwTz0sLgfxylkj2IhN6E4By1rBupI+56yZe0qwlPDwoQXPI4Vuz9T/5Z/EyhErW+NPVDYnmchAJLKz779IIAyaOjKqwIifEIT1Iv1jsbgIhw=
+	t=1736940911; cv=none; b=gJfMkuKyHeIbDYYxID5gc8iveF7FcIUKhwpelK8cBnXmDIZJD3E6a5dU6KMuupwMpqytzU8lipx2P4uP7IcaT28cP3pDlPQewPTxW+8XaOaJ4VjRQWB6GNCy6nTxmDlAbJP4WCEsoF9gzz2sKVtHXNKICuvRMSj8C/+cTOzqbT8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736939998; c=relaxed/simple;
-	bh=1xoY/X3t17KdWhxRXY/y/d/HeEJBR2ipsoiO2TAOE+M=;
+	s=arc-20240116; t=1736940911; c=relaxed/simple;
+	bh=wfx3JgQvEtAlDYyfO3Dkqkz8H8Nt+l+fznBQ6qkLPiY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Td170exm7mjqSV2bVCc26zSldlxq+oAD3gAVVLNix2C8FuBFZtoHLiq1A3v1G/bBR46MgMAQ0fHnLgHwR0gqXmKwZjX6fATzU0pE2MRlutRP4XYWG1AddGrOLH1xK6pgT/kBn7GPU+tCYhRy+nFipU+IoK0gb2+4hfMIPnDR93A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=linux.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.214.179
+	 Content-Type:Content-Disposition:In-Reply-To; b=soSg4hPqK3OSl/two7xtrvmmIWUVqIItfTJMWy/ucCMCGiISgl5d0tNVGwKxpuhZjLnZppFxotjJcuwYQOaynwdxpfsBM5+A4OaWt53218A9LMF6GgvQNpVbTwnkoPUxbDMPS6P+QE9G2L6wG6Bn3U4fhkIsaYd5XZJnYt9I+6w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=linux.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.214.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=linux.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pl1-f179.google.com with SMTP id d9443c01a7336-2166022c5caso102844765ad.2;
-        Wed, 15 Jan 2025 03:19:57 -0800 (PST)
+Received: by mail-pl1-f177.google.com with SMTP id d9443c01a7336-2165448243fso144227345ad.1;
+        Wed, 15 Jan 2025 03:35:08 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736939996; x=1737544796;
+        d=1e100.net; s=20230601; t=1736940908; x=1737545708;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=CTDc6QMGekaYyeE7wEFxu6Z5thWk8YbGvyNFBNiV5a8=;
-        b=dDx4YVn1u9l3/zmz/+mMKPTnnwo8+kayfBjj8lgphHmmvfQEAGgTz5CnYys+Fw4CSV
-         Bm2xS7rlvTiTIYe9Lo7PtyaeSoKAE5NQ+YOsOrGCERubQCVgn6LSak+lRcr5mqfc6vT8
-         NIChhs6kuS5S01hqJsHXQk+betnGtECTZOBuE8pAadznNu6MRd/8u5EyHTJ6rueY4rN6
-         vY6Ij4dD9tmhvIWqTrpq+u3hdIVhSM/I8QQSo1svwurdlcAw2Myz+tGnEVkCE2m7q7dW
-         IvBfUgFciOZTkOecMfiC77HdP/XTrdSKw5xc/aqQI1jjlFG+M2xOo1x83hkvUUrbbd4Q
-         Re4Q==
-X-Forwarded-Encrypted: i=1; AJvYcCVConallyVmpgsVRtKXU3if3dCOaVGlV4y/wVHuoJg76fcjiI5wsvV2gIiPJfT8COAhoXnHviQIz0AAK+3N@vger.kernel.org, AJvYcCVDFB/KuxLFP7CHbSsmTvKui/jp73J/hX4deUNvxnzhs/DTfw9luyHL94lNE7+L1kcEqdeGrcNY+lDIamgh@vger.kernel.org, AJvYcCVTetSjrhBMKIbB7M8E+zxFGsb+DnTZqhG7tyf2rgceBolUnebTzfVlSSpVHO/5IMu6K/5k2l/rCpoA@vger.kernel.org
-X-Gm-Message-State: AOJu0YzSsKlIQD/9yVjMTMMiYKNUk1pI4gFNKvk5IMrLIvss/hO1xZTe
-	mSP4hPT8HFtq02WVZVLNOwA9ZNiGaqNPe2MZnNPf75JOJiE9zjaW
-X-Gm-Gg: ASbGncvwObZQzoads0DOCCdLSFTEExUX3dXl8WkXpl2wUC6A8HrsROH7lSC1y6UC3VU
-	aBLz3WOzqzQRRAcOlxIiu07wEUGUV6pnc0cn2tTpr75vu225Bw1Hun1OUaSXyKWoGf3WPh9onR7
-	Y7DlPvvRVB5vf3+seiStdMc+LGC+rwVLFxh7afFDrFmXPvokqT4Nn/ygzYv2eP3Rb99dzdvv/5n
-	2NkEdOC8zY5HujwaqY3MpglU9n+AmuTo9PKu4f7whyxQTb+77L8X2dzS+2UUjSFcfmgCqWWlRsM
-	3BC8kj4UbKACHGo=
-X-Google-Smtp-Source: AGHT+IE9u2Z+dWs0W1PQSRqxZBeGK7J7WB0qVFArVIy/A9e5JnJQBv0ieenCRc3uGDbRhD3/8SG2Jg==
-X-Received: by 2002:a17:902:ebc4:b0:21b:d105:26b9 with SMTP id d9443c01a7336-21bd10529e9mr102917555ad.16.1736939996489;
-        Wed, 15 Jan 2025 03:19:56 -0800 (PST)
+        bh=ZkkB4BIMbKkZ0KmrWAf3BaqZndMd7BUpph0XZ45yvX4=;
+        b=eRFoaJLWGrMe/KxyReD4W5zyP0a9jgSSOqVDtIvw/LD0TyFVWmSS6OmNsN9OZ3EvNf
+         bsU/3DucVLLzo/S7NlM25xLdLZyJajix9HgfycZDMcfhSCt3QofaFNn2JwzIFaW4LX3C
+         3VdthM85rmW2UEa6pkKmvx1LAFwUsCesgPY/Ytk57NjKRG7M2wLVlF1VjqQgIch3QH4u
+         1P43YAq35VRmJ6NoIDdJ/OIxxxzzC8YmPTxsORWPWKYk5VyRW7t5tev/UJQMKNS305bl
+         jD5s0S7anS5s8OnxCoEDRzTLn2PTkONySQzPxDEBiJyKDxQfKW7MelYGj3Ox3PKiE9Hv
+         Pxng==
+X-Forwarded-Encrypted: i=1; AJvYcCUhNhM8LfKK6jxX2RLMvRN+gHBZbUuaeA+lVxspmAU7/Lduoacqauy29+5uG8PWVCKKSicvljXLh6dI@vger.kernel.org, AJvYcCX+FgqGCqeEGRyaiktK+5b2rXKCNApwWDaBayZ8BRaOX//UChQyZa9tlrPuuyqSCQjfKMlPp57pg0klBdBA@vger.kernel.org, AJvYcCX0YCTtgpiOcqiYMshNZeW7kOZ62YW6xtCGir5LmRQ81F773MFCuqN0u4rjoH1kpx2tXNFquzkfN6BrBdFR3g==@vger.kernel.org, AJvYcCXkqFOYRDxj+WMo3mOxJYiDz+RWWiFMlliZdRYNuzODd7C+l37tbHIO8ecn9kw/ZNrTrAAx89/ga+HX@vger.kernel.org
+X-Gm-Message-State: AOJu0Yyf8oQEQey9FincfY0kKqoNykMjtPgkkohEX2ljutHjEjrr/ZAL
+	JEuEhOFh3p8yZEAnHxFLzlP/U1zvbP5KTAladSfhrNn9Bp7IxlYt
+X-Gm-Gg: ASbGnctcDRD/C+M9vAgiKNckipYfYfgB/zYy67RXC08oIuLv0GIVkS3NowXqePnCgzB
+	IRTSIkUZVr3eMfgqfx6iY6XFeGgESwIYBsim9lwYiAzHjeBJAliCZNkl7RCxSGXA3dcTtj9r4+0
+	JKAvKwH1yk1zktHnHI0CaA21DLd/rbjKDiLPrhbGNojNuSWMkVQbpl24T+mD+elGApxUbqeIl7H
+	YqizeErcaoRZmIX7eDmxza/n15tQqlm8BgbsGcXCUszMoDRWfJ5oyPbCh7Z/PtneCKHSGbBjH/b
+	MdQHKK3VYTlNCX8=
+X-Google-Smtp-Source: AGHT+IF6rJSoS/v5enpIOoVkN0spwX/9NTrSguhcHfnBBSKsbpcSrWe35R8XcyFdySfo9fqgIOFPKg==
+X-Received: by 2002:a17:902:e950:b0:216:4853:4c0b with SMTP id d9443c01a7336-21a83f92f64mr401679715ad.33.1736940907683;
+        Wed, 15 Jan 2025 03:35:07 -0800 (PST)
 Received: from localhost (fpd11144dd.ap.nuro.jp. [209.17.68.221])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-21a9f10e411sm80772605ad.4.2025.01.15.03.19.55
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-21a9f256fe3sm81337695ad.243.2025.01.15.03.35.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Jan 2025 03:19:55 -0800 (PST)
-Date: Wed, 15 Jan 2025 20:19:54 +0900
+        Wed, 15 Jan 2025 03:35:07 -0800 (PST)
+Date: Wed, 15 Jan 2025 20:35:05 +0900
 From: Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>
-To: Krishna chaitanya chundru <quic_krichai@quicinc.com>
-Cc: Jingoo Han <jingoohan1@gmail.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+To: Neil Armstrong <neil.armstrong@linaro.org>
+Cc: Bjorn Helgaas <bhelgaas@google.com>,
 	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
-	Konrad Dybcio <konradybcio@kernel.org>, linux-pci@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	andersson@kernel.org, quic_vbadigan@quicinc.com,
-	quic_mrana@quicinc.com
-Subject: Re: [PATCH v5 0/3] PCI: dwc: Skip waiting for link up if vendor
- drivers can detect Link up event
-Message-ID: <20250115111954.GE4176564@rocinante>
-References: <20241123-remove_wait2-v5-0-b5f9e6b794c2@quicinc.com>
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/3] dt-bindings: PCI: qcom,pcie-sm8550: document
+ 'global' interrupt
+Message-ID: <20250115113505.GM4176564@rocinante>
+References: <20241126-topic-sm8x50-pcie-global-irq-v1-0-4049cfccd073@linaro.org>
+ <20241126-topic-sm8x50-pcie-global-irq-v1-1-4049cfccd073@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -81,25 +84,21 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20241123-remove_wait2-v5-0-b5f9e6b794c2@quicinc.com>
+In-Reply-To: <20241126-topic-sm8x50-pcie-global-irq-v1-1-4049cfccd073@linaro.org>
 
 Hello,
 
-> If the vendor drivers can detect the Link up event using mechanisms
-> such as Link up IRQ, then waiting for Link up during probe is not
-> needed. if the drivers can be notified when the link comes up,
-> vendor driver can enumerate downstream devices instead of waiting
-> here, which optimizes the boot time.
+> Qcom PCIe RC controllers are capable of generating 'global' SPI interrupt
+> to the host CPU. This interrupt can be used by the device driver to handle
+> PCIe link specific events such as Link up and Link down, which give the
+> driver a chance to start bus enumeration on its own when link is up and
+> initiate link training if link goes to a bad state. The PCIe driver can
+> still work without this interrupt but it will provide a nice user
+> experience when device gets plugged and removed.
 > 
-> So skip waiting for link to be up if the driver supports 'use_linkup_irq'.
-> 
-> Currently, only Qcom RC driver supports the 'use_linkup_irq' as it can
-> detect the Link Up event using its own 'global IRQ' interrupt. So set
-> 'use_linkup_irq' flag for QCOM drivers.
-> 
-> And as part of the PCIe link up event, the ICC and OPP values are updated.
+> Document the interrupt as optional for SM8550 and SM8650 platforms.
 
-Applied to controller/dwc for v6.14, thank you!
+Applied to dt-bindings for v6.14, thank you!
 
 	Krzysztof
 
