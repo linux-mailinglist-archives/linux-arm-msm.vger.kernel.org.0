@@ -1,123 +1,297 @@
-Return-Path: <linux-arm-msm+bounces-45098-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-45099-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D5EBEA11F42
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jan 2025 11:25:45 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D2BD5A11F4E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jan 2025 11:26:11 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 797D73A406F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jan 2025 10:25:39 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D7AE01685F4
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jan 2025 10:26:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2296623F28A;
-	Wed, 15 Jan 2025 10:25:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 207C623F26B;
+	Wed, 15 Jan 2025 10:26:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=cirrus.com header.i=@cirrus.com header.b="OTC7Rn79"
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="Mljgl0Dv";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="qI2Y6oN0";
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="Mljgl0Dv";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="qI2Y6oN0"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-001ae601.pphosted.com (mx0a-001ae601.pphosted.com [67.231.149.25])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50851231A49;
-	Wed, 15 Jan 2025 10:25:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=67.231.149.25
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1383F231A49;
+	Wed, 15 Jan 2025 10:26:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.130
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736936738; cv=none; b=NqADDGHijRUJrbXgMii0sI2WCujolrS2drSxMwnl3LyNlL572zqI7cuaIFJteijZemGd6aWyS0L9LmWLRjl3aKQbK6Cd21PJj/UyMVAHB7/sL3sE+FGcdm5JDfjWCGW6WWIQpGXaJmHAQ0Sz/jLHJfImtybnB4OJGRadX4oOjNY=
+	t=1736936767; cv=none; b=qjgmn5ra79TwGHpwMPAYbEYyDdQLMa5hHHERiBfRdi8arP8Re+5ZIrHSVYjdK2fkq8TT4lgR9VXJoXNwPtxidcOiQBFMEztrnes4KuH1eSl4dU/lVT4sDHvCYknDArhOefmr+lkFRDE2ZuwF+QvDrjFBYLYaefK9xbXr1uW33xU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736936738; c=relaxed/simple;
-	bh=/6gnI4FevS4kmFFgJfFIyOUpg34TMYOQPWrzA9gsD1U=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=aSmhqqNdUlJpJ6To+O3vp2m4bN30H9UavHNHLLsfQYbS2Igj6kl104nBf5sAzVgCWQFcor/ygwGmro46EjgC9NPlDJzu/lHw9F06b4PLhxrEk+dTvRNHAfkwuaxZSecPrfi8x32AcSM7XkLmNViYEA70N5xWrcv1+sAYCBw4CYw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=opensource.cirrus.com; spf=pass smtp.mailfrom=opensource.cirrus.com; dkim=pass (2048-bit key) header.d=cirrus.com header.i=@cirrus.com header.b=OTC7Rn79; arc=none smtp.client-ip=67.231.149.25
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=opensource.cirrus.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=opensource.cirrus.com
-Received: from pps.filterd (m0077473.ppops.net [127.0.0.1])
-	by mx0a-001ae601.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50F10new023378;
-	Wed, 15 Jan 2025 04:25:19 -0600
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cirrus.com; h=cc
-	:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=PODMain02222019; bh=BwBSIk74OQkD8K05wG
-	C9E85ouIOUoZbue+TY8sE50NU=; b=OTC7Rn79ZlLG9B6zXwTbutpaqqWA5IYAZn
-	xXOLqPfR3tldRuqMPbOI7fq7BjmpnwPaU+s0XEHdzBs7Poy/5JcAplJ2HK4VoQD/
-	lawzjifOmRqHrqi4CPSCnC9YOSGzjsL6YxcwgPMs3x58LugwlRY2vP7KAckUXpbh
-	XnBwWsihA3xhZKWygMp4HX18UA7J7mNqFdDPLQTgaD3l5gp2DFVTETQh1a1GX7AJ
-	ObbVJYVR7akDB55uE9ZQXxegH6MJqRzPxgp6+S5HUZqATiElf7Zcr3FqIrABeUkX
-	TzDWisNVbYg+bNwoDgaisDzutYegcuwfXoAVNprXbZkckt5OU3Wg==
-Received: from ediex02.ad.cirrus.com ([84.19.233.68])
-	by mx0a-001ae601.pphosted.com (PPS) with ESMTPS id 443px4mfaa-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 15 Jan 2025 04:25:19 -0600 (CST)
-Received: from ediex01.ad.cirrus.com (198.61.84.80) by ediex02.ad.cirrus.com
- (198.61.84.81) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.13; Wed, 15 Jan
- 2025 10:25:17 +0000
-Received: from ediswmail9.ad.cirrus.com (198.61.86.93) by
- anon-ediex01.ad.cirrus.com (198.61.84.80) with Microsoft SMTP Server id
- 15.2.1544.13 via Frontend Transport; Wed, 15 Jan 2025 10:25:17 +0000
-Received: from opensource.cirrus.com (ediswmail9.ad.cirrus.com [198.61.86.93])
-	by ediswmail9.ad.cirrus.com (Postfix) with ESMTPS id E85FA82026C;
-	Wed, 15 Jan 2025 10:25:16 +0000 (UTC)
-Date: Wed, 15 Jan 2025 10:25:15 +0000
-From: Charles Keepax <ckeepax@opensource.cirrus.com>
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-CC: Ray Jui <rjui@broadcom.com>, Scott Branden <sbranden@broadcom.com>,
-        Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Richard Fitzgerald
-	<rf@opensource.cirrus.com>,
-        Basavaraj Natikar <Basavaraj.Natikar@amd.com>,
-        Shyam Sundar S K <Shyam-sundar.S-k@amd.com>,
-        Hans Ulli Kroll
-	<ulli.kroll@googlemail.com>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        Bjorn Andersson
-	<andersson@kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        "Sylwester
- Nawrocki" <s.nawrocki@samsung.com>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        <linux-arm-kernel@lists.infradead.org>, <linux-gpio@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <patches@opensource.cirrus.com>,
-        <linux-sound@vger.kernel.org>,
-        <linux-stm32@st-md-mailman.stormreply.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-samsung-soc@vger.kernel.org>
-Subject: Re: [PATCH] pinctrl: Use str_enable_disable-like helpers
-Message-ID: <Z4eNC/wWsW5mxkmN@opensource.cirrus.com>
-References: <20250114203602.1013275-1-krzysztof.kozlowski@linaro.org>
+	s=arc-20240116; t=1736936767; c=relaxed/simple;
+	bh=DlgzPybJLohqJTRasUTNfTcIW6PVnJn4Ey+QYJaNbJ8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=ObGObsEUO30EaZ9PNU4P4G4ucPlO+YwydwRfoTxnUEqh3tiXBLMghvLd6qeBqbQtybkPB45Qpvwk7FBoxeKrqQpeMogDLxbOiV3BLrm1/ydeapu3v1yNS2cPmGkdNXKP+1rQMfvKTleLwta1P6jQzjKbXVzJX9XpEylk4ToPl9w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=Mljgl0Dv; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=qI2Y6oN0; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=Mljgl0Dv; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=qI2Y6oN0; arc=none smtp.client-ip=195.135.223.130
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-out1.suse.de (Postfix) with ESMTPS id 3A60921285;
+	Wed, 15 Jan 2025 10:26:03 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1736936763; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=o5OaTSBvndaqL7pmKVkJ0tKcrkXR4wXg7zZA1xwdifc=;
+	b=Mljgl0DvQXsyKMdMzmz5ZwZ3V789zCdVdhgaCjuMtwHrT61J2CLPcsqyigpgNfMgt5s9ED
+	NQBLa2bFnxQBC6Lh8kmGl4ElL6IbxkHaMKnpSDKgAWvZ5RgKmpAEVOTkk2jS/7Dqz07SiL
+	vCLaFHZP1mmjRXmvQ/ScFe4UhJimBB4=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1736936763;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=o5OaTSBvndaqL7pmKVkJ0tKcrkXR4wXg7zZA1xwdifc=;
+	b=qI2Y6oN0l9JxGfh+RN+mqlivvJYcBaYsV/e1PTdXmK0ZMZeCqm75AAiZVcbCx5W/dssHYm
+	9npljUHucuH2iADw==
+Authentication-Results: smtp-out1.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1736936763; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=o5OaTSBvndaqL7pmKVkJ0tKcrkXR4wXg7zZA1xwdifc=;
+	b=Mljgl0DvQXsyKMdMzmz5ZwZ3V789zCdVdhgaCjuMtwHrT61J2CLPcsqyigpgNfMgt5s9ED
+	NQBLa2bFnxQBC6Lh8kmGl4ElL6IbxkHaMKnpSDKgAWvZ5RgKmpAEVOTkk2jS/7Dqz07SiL
+	vCLaFHZP1mmjRXmvQ/ScFe4UhJimBB4=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1736936763;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=o5OaTSBvndaqL7pmKVkJ0tKcrkXR4wXg7zZA1xwdifc=;
+	b=qI2Y6oN0l9JxGfh+RN+mqlivvJYcBaYsV/e1PTdXmK0ZMZeCqm75AAiZVcbCx5W/dssHYm
+	9npljUHucuH2iADw==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id B2519139CB;
+	Wed, 15 Jan 2025 10:26:02 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+	by imap1.dmz-prg2.suse.org with ESMTPSA
+	id yds5KjqNh2dqKAAAD6G6ig
+	(envelope-from <tzimmermann@suse.de>); Wed, 15 Jan 2025 10:26:02 +0000
+Message-ID: <bc97b92e-7f8a-4b92-af8a-20fa165ead55@suse.de>
+Date: Wed, 15 Jan 2025 11:26:02 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <20250114203602.1013275-1-krzysztof.kozlowski@linaro.org>
-X-Proofpoint-ORIG-GUID: JgCM6RfomLyrgsV5M_Ad-wIhmpzVbKEd
-X-Proofpoint-GUID: JgCM6RfomLyrgsV5M_Ad-wIhmpzVbKEd
-X-Authority-Analysis: v=2.4 cv=XdhzzJ55 c=1 sm=1 tr=0 ts=67878d0f cx=c_pps a=uGhh+3tQvKmCLpEUO+DX4w==:117 a=uGhh+3tQvKmCLpEUO+DX4w==:17 a=kj9zAlcOel0A:10 a=VdSt8ZQiCzkA:10 a=KKAkSRfTAAAA:8 a=w1d2syhTAAAA:8 a=4kLLQdw-iMVuSiU5jB4A:9 a=CjuIK1q_8ugA:10
- a=cvBusfyB2V15izCimMoJ:22 a=YXXWInSmI4Sqt1AkVdoW:22
-X-Proofpoint-Spam-Reason: safe
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 25/25] drm/xlnx: Compute dumb-buffer sizes with
+ drm_mode_size_dumb()
+To: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
+ maarten.lankhorst@linux.intel.com, mripard@kernel.org, airlied@gmail.com,
+ simona@ffwll.ch
+Cc: dri-devel@lists.freedesktop.org, linux-mediatek@lists.infradead.org,
+ freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+ imx@lists.linux.dev, linux-samsung-soc@vger.kernel.org,
+ nouveau@lists.freedesktop.org, virtualization@lists.linux.dev,
+ spice-devel@lists.freedesktop.org, linux-renesas-soc@vger.kernel.org,
+ linux-rockchip@lists.infradead.org, linux-tegra@vger.kernel.org,
+ intel-xe@lists.freedesktop.org, xen-devel@lists.xenproject.org,
+ Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+References: <20250109150310.219442-1-tzimmermann@suse.de>
+ <20250109150310.219442-26-tzimmermann@suse.de>
+ <cdbe483d-0895-47aa-8c83-1c28220f4a02@ideasonboard.com>
+Content-Language: en-US
+From: Thomas Zimmermann <tzimmermann@suse.de>
+Autocrypt: addr=tzimmermann@suse.de; keydata=
+ xsBNBFs50uABCADEHPidWt974CaxBVbrIBwqcq/WURinJ3+2WlIrKWspiP83vfZKaXhFYsdg
+ XH47fDVbPPj+d6tQrw5lPQCyqjwrCPYnq3WlIBnGPJ4/jreTL6V+qfKRDlGLWFjZcsrPJGE0
+ BeB5BbqP5erN1qylK9i3gPoQjXGhpBpQYwRrEyQyjuvk+Ev0K1Jc5tVDeJAuau3TGNgah4Yc
+ hdHm3bkPjz9EErV85RwvImQ1dptvx6s7xzwXTgGAsaYZsL8WCwDaTuqFa1d1jjlaxg6+tZsB
+ 9GluwvIhSezPgnEmimZDkGnZRRSFiGP8yjqTjjWuf0bSj5rUnTGiyLyRZRNGcXmu6hjlABEB
+ AAHNJ1Rob21hcyBaaW1tZXJtYW5uIDx0emltbWVybWFubkBzdXNlLmRlPsLAjgQTAQgAOAIb
+ AwULCQgHAgYVCgkICwIEFgIDAQIeAQIXgBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftODH
+ AAoJEGgNwR1TC3ojx1wH/0hKGWugiqDgLNXLRD/4TfHBEKmxIrmfu9Z5t7vwUKfwhFL6hqvo
+ lXPJJKQpQ2z8+X2vZm/slsLn7J1yjrOsoJhKABDi+3QWWSGkaGwRJAdPVVyJMfJRNNNIKwVb
+ U6B1BkX2XDKDGffF4TxlOpSQzdtNI/9gleOoUA8+jy8knnDYzjBNOZqLG2FuTdicBXblz0Mf
+ vg41gd9kCwYXDnD91rJU8tzylXv03E75NCaTxTM+FBXPmsAVYQ4GYhhgFt8S2UWMoaaABLDe
+ 7l5FdnLdDEcbmd8uLU2CaG4W2cLrUaI4jz2XbkcPQkqTQ3EB67hYkjiEE6Zy3ggOitiQGcqp
+ j//OwE0EWznS4AEIAMYmP4M/V+T5RY5at/g7rUdNsLhWv1APYrh9RQefODYHrNRHUE9eosYb
+ T6XMryR9hT8XlGOYRwKWwiQBoWSDiTMo/Xi29jUnn4BXfI2px2DTXwc22LKtLAgTRjP+qbU6
+ 3Y0xnQN29UGDbYgyyK51DW3H0If2a3JNsheAAK+Xc9baj0LGIc8T9uiEWHBnCH+RdhgATnWW
+ GKdDegUR5BkDfDg5O/FISymJBHx2Dyoklv5g4BzkgqTqwmaYzsl8UxZKvbaxq0zbehDda8lv
+ hFXodNFMAgTLJlLuDYOGLK2AwbrS3Sp0AEbkpdJBb44qVlGm5bApZouHeJ/+n+7r12+lqdsA
+ EQEAAcLAdgQYAQgAIAIbDBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftOH6AAoJEGgNwR1T
+ C3ojVSkIALpAPkIJPQoURPb1VWjh34l0HlglmYHvZszJWTXYwavHR8+k6Baa6H7ufXNQtThR
+ yIxJrQLW6rV5lm7TjhffEhxVCn37+cg0zZ3j7zIsSS0rx/aMwi6VhFJA5hfn3T0TtrijKP4A
+ SAQO9xD1Zk9/61JWk8OysuIh7MXkl0fxbRKWE93XeQBhIJHQfnc+YBLprdnxR446Sh8Wn/2D
+ Ya8cavuWf2zrB6cZurs048xe0UbSW5AOSo4V9M0jzYI4nZqTmPxYyXbm30Kvmz0rYVRaitYJ
+ 4kyYYMhuULvrJDMjZRvaNe52tkKAvMevcGdt38H4KSVXAylqyQOW5zvPc4/sq9c=
+In-Reply-To: <cdbe483d-0895-47aa-8c83-1c28220f4a02@ideasonboard.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Spam-Level: 
+X-Spamd-Result: default: False [-2.80 / 50.00];
+	BAYES_HAM(-3.00)[100.00%];
+	SUSPICIOUS_RECIPS(1.50)[];
+	NEURAL_HAM_LONG(-1.00)[-1.000];
+	NEURAL_HAM_SHORT(-0.20)[-1.000];
+	MIME_GOOD(-0.10)[text/plain];
+	FREEMAIL_TO(0.00)[ideasonboard.com,linux.intel.com,kernel.org,gmail.com,ffwll.ch];
+	RCPT_COUNT_TWELVE(0.00)[20];
+	MIME_TRACE(0.00)[0:+];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	ARC_NA(0.00)[];
+	MID_RHS_MATCH_FROM(0.00)[];
+	FREEMAIL_ENVRCPT(0.00)[gmail.com];
+	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	FROM_EQ_ENVFROM(0.00)[];
+	FROM_HAS_DN(0.00)[];
+	TO_DN_SOME(0.00)[];
+	RCVD_TLS_ALL(0.00)[];
+	RCVD_COUNT_TWO(0.00)[2];
+	TO_MATCH_ENVRCPT_ALL(0.00)[];
+	FUZZY_BLOCKED(0.00)[rspamd.com];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email,suse.de:mid]
+X-Spam-Score: -2.80
+X-Spam-Flag: NO
 
-On Tue, Jan 14, 2025 at 09:36:02PM +0100, Krzysztof Kozlowski wrote:
-> Replace ternary (condition ? "enable" : "disable") syntax with helpers
-> from string_choices.h because:
-> 1. Simple function call with one argument is easier to read.  Ternary
->    operator has three arguments and with wrapping might lead to quite
->    long code.
-> 2. Is slightly shorter thus also easier to read.
-> 3. It brings uniformity in the text - same string.
-> 4. Allows deduping by the linker, which results in a smaller binary
->    file.
-> 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> ---
+Hi
 
-For the Lochnagar bits:
 
-Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Am 15.01.25 um 11:13 schrieb Tomi Valkeinen:
+> Hi!
+>
+> On 09/01/2025 16:57, Thomas Zimmermann wrote:
+>> Call drm_mode_size_dumb() to compute dumb-buffer scanline pitch and
+>> buffer size. Align the pitch according to hardware requirements.
+>>
+>> Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+>> Cc: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+>> Cc: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+>> ---
+>>   drivers/gpu/drm/xlnx/zynqmp_kms.c | 7 +++++--
+>>   1 file changed, 5 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/drivers/gpu/drm/xlnx/zynqmp_kms.c 
+>> b/drivers/gpu/drm/xlnx/zynqmp_kms.c
+>> index b47463473472..7ea0cd4f71d3 100644
+>> --- a/drivers/gpu/drm/xlnx/zynqmp_kms.c
+>> +++ b/drivers/gpu/drm/xlnx/zynqmp_kms.c
+>> @@ -19,6 +19,7 @@
+>>   #include <drm/drm_crtc.h>
+>>   #include <drm/drm_device.h>
+>>   #include <drm/drm_drv.h>
+>> +#include <drm/drm_dumb_buffers.h>
+>>   #include <drm/drm_encoder.h>
+>>   #include <drm/drm_fbdev_dma.h>
+>>   #include <drm/drm_fourcc.h>
+>> @@ -363,10 +364,12 @@ static int zynqmp_dpsub_dumb_create(struct 
+>> drm_file *file_priv,
+>>                       struct drm_mode_create_dumb *args)
+>>   {
+>>       struct zynqmp_dpsub *dpsub = to_zynqmp_dpsub(drm);
+>> -    unsigned int pitch = DIV_ROUND_UP(args->width * args->bpp, 8);
+>> +    int ret;
+>>         /* Enforce the alignment constraints of the DMA engine. */
+>> -    args->pitch = ALIGN(pitch, dpsub->dma_align);
+>> +    ret = drm_mode_size_dumb(drm, args, dpsub->dma_align, 0);
+>> +    if (ret)
+>> +        return ret;
+>>         return drm_gem_dma_dumb_create_internal(file_priv, drm, args);
+>>   }
+>
+> I have some trouble with this one.
+>
+> I have sent a series to add some pixel formats:
+>
+> https://lore.kernel.org/all/20250115-xilinx-formats-v2-0-160327ca652a@ideasonboard.com/ 
+>
+>
+> Let's look at XV15. It's similar to NV12, but 10 bits per component, 
+> and some packing and padding.
+>
+> First plane: 3 pixels in a 32 bit group
+> Second plane: 3 pixels in a 64 bit group, 2x2 subsampled
+>
+> So, on average, a pixel on the first plane takes 32 / 3 = 10.666... 
+> bits on a line. That's not a usable number for the 
+> DRM_IOCTL_MODE_CREATE_DUMB ioctl.
+>
+> What I did was to use the pixel group size as "bpp" for 
+> DRM_IOCTL_MODE_CREATE_DUMB. So, e.g., for 720 x 576:
+>
+> Stride for first plane: 720 * (32 / 3) / 8 = 960 bytes
+> Stride for second plane: 720 / 2 * (64 / 3) / 8 = 960 bytes
+>
+> First plane: 720 / 3 = 240 pixel groups
+> Second plane: 720 / 2 / 3 = 120 pixel groups
+>
+> So I allocated the two planes with:
+> 240 x 576 with 32 bitspp
+> 120 x 288 with 64 bitspp
+>
+> This worked, and if I look at the DRM_IOCTL_MODE_CREATE_DUMB in the 
+> docs, I can't right away see anything there that says my tactic was 
+> not allowed.
+>
+> The above doesn't work anymore with this patch, as the code calls 
+> drm_driver_color_mode_format(), which fails for 64 bitspp. It feels a 
+> bit odd that DRM_IOCTL_MODE_CREATE_DUMB will try to guess the RGB 
+> fourcc for a dumb buffer allocation.
+>
+> So, what to do here? Am I doing something silly? What's the correct 
+> way to allocate the buffers for XV15? Should I just use 32 bitspp for 
+> the plane 2 too, and double the width (this works)?
+>
+> Is DRM_IOCTL_MODE_CREATE_DUMB only meant for simple RGB formats? The 
+> xilinx driver can, of course, just not use drm_mode_size_dumb(). But 
+> if so, I guess the limitations of drm_mode_size_dumb() should be 
+> documented.
+>
+> Do we need a new dumb-alloc ioctl that takes the format and plane 
+> number as parameters? Or alternatively a simpler dumb-alloc that 
+> doesn't have width and bpp, but instead takes a stride and height as 
+> parameters? I think those would be easier for the userspace to use, 
+> instead of trying to adjust the parameters to be suitable for the kernel.
 
-Thanks,
-Charles
+These are all good points. Did you read my discussion with Andy on patch 
+2? I think it resolves all the points you have. The current CREATE_DUMB 
+ioctl is unsuited for anything but the simple RGB formats. The bpp 
+parameter is not very precise. The solution would be a new ioctl call 
+that receives the DRM format and returns a buffer for each individual plane.
+
+I provided a workaround patch that uses the bpp value directly if 
+drm_driver_color_mode_format() does not support the bpp value. 
+User-space code has to allocate a large enough buffer via the current 
+CREATE_DUMB and compute the individual planes itself. See [1] for an 
+example. [1] 
+https://gitlab.freedesktop.org/mesa/drm/-/blob/main/tests/modetest/buffers.c?ref_type=heads#L302 
+Does this work for you? Otherwise, I guess we should be talking about a 
+possible CREATE_DUMB2 that fixes these shortcomings. Best regards Thomas
+>
+>  Tomi
+>
+
+-- 
+--
+Thomas Zimmermann
+Graphics Driver Developer
+SUSE Software Solutions Germany GmbH
+Frankenstrasse 146, 90461 Nuernberg, Germany
+GF: Ivo Totev, Andrew Myers, Andrew McDonald, Boudien Moerman
+HRB 36809 (AG Nuernberg)
+
 
