@@ -1,96 +1,91 @@
-Return-Path: <linux-arm-msm+bounces-45303-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-45304-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 23963A14047
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jan 2025 18:07:51 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3153EA14053
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jan 2025 18:08:57 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7941C188E272
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jan 2025 17:07:54 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id AA70D1883856
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jan 2025 17:08:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6795E22D4C2;
-	Thu, 16 Jan 2025 17:06:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 19AC822DF80;
+	Thu, 16 Jan 2025 17:06:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="QAy0B+XM"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="IBqJfFj+"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f42.google.com (mail-ej1-f42.google.com [209.85.218.42])
+Received: from mail-ej1-f54.google.com (mail-ej1-f54.google.com [209.85.218.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B16D22D4C1
-	for <linux-arm-msm@vger.kernel.org>; Thu, 16 Jan 2025 17:06:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6B8222DF95
+	for <linux-arm-msm@vger.kernel.org>; Thu, 16 Jan 2025 17:06:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737047192; cv=none; b=iH/OKmsEHS03ChV5nBSkZtZe8yZ3IsaBDwvyl1UYho4yAvLORm0NVkipLMSXYztnm4QATX3sYkZ940+Syf0FBNIR1sRcULD1XVsT65kNf5cFZsdSpoEqrt3DJFNvMyx4HcJ32jj3H6i15HfPJsFmZJ1LrYZOt73WMh1eF6tO4X8=
+	t=1737047215; cv=none; b=OcvoBsgc7UqgaZa7KIoolhtrXWa++0wVAmk348cM9FvHl5twjD1QDa5ZP6jKDWwV/fT2ecz+Mex9pm4YNfWulNCwhdmq957rS4kfIhROzwsCXT7h7HEoirl1W3sOEr1uX5LtT7kwy7567vk6sp+ZDfdywGcv+/ms+bTWE23EeGQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737047192; c=relaxed/simple;
-	bh=W+QGc9oosMrG2hvhQQqwCmRtn0fdpGyURO0Yr4Zq1co=;
+	s=arc-20240116; t=1737047215; c=relaxed/simple;
+	bh=aphh6m6XkO1/QOWJho77jJes3uzTNDtWMNejU7q2h0s=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=qagPhODwBQGBqfRlkkU+At7KPJEleNEKLE9KdOdKsqRljZKdX6s3rGWDvfkofPRPaavRvdEsUgweaa2LqTZfQZ9pxwp3F6ciQ3Q/Ncfu/FpVnXIfjHnmrK59RqN16XyetTlVQeG1/yT0wJBe6e6lLkyJjAYqM3YApy780Z43gd0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=QAy0B+XM; arc=none smtp.client-ip=209.85.218.42
+	 Content-Type:Content-Disposition:In-Reply-To; b=h4V11nlN9WKkBInKNHme/uDmXR6W1CRHVXbRXJR26Nfh+nY1Un9rF/aCm9TfPXijfnpRBeXoegdPVdE9kiQLcCt9ZAgcsnS+vfElLqMfcE+5w68Saz2K5HewsjEKAH2xcV6roiGDd1c19RjZZPGf4bMxcXe8Iz1qYtDmy8Sl87U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=IBqJfFj+; arc=none smtp.client-ip=209.85.218.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f42.google.com with SMTP id a640c23a62f3a-aa69107179cso246761566b.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Jan 2025 09:06:30 -0800 (PST)
+Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-a9e44654ae3so190654066b.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Jan 2025 09:06:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1737047189; x=1737651989; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1737047211; x=1737652011; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=BUIr9PWzb9ez1XMOIgMRecuSTosnClxVHi549vZTFOM=;
-        b=QAy0B+XMNCd+Vld5BC8lhiUO7muW33DE7ITBNoqDuLScEIRdYgMNG+qt3W70gqpHHI
-         X2/mW0WUlBcDl15j9rBtJMoeOTPseb7dtDBiRUV3ElwBGYKJhmSHEPM47SGH2LhQGiJf
-         F0VfieJ+6+fwKTdJ1YM+eX9J3CycUFbokQlRKPikW9R49ou15DikiTped/y/250JBFgK
-         Kvi15zHErjAiOhkviT/QW0q2m2TdygueOXVrOn8S3s+sOvpIBLOs4JGdqUGRc2iD2tKK
-         Or64eT1wk+RBnPkPZnbqjvAZK/9rAGEAcMVA8a/c/b+BbdA4WPPvmT94yE97fTus7y07
-         8xvA==
+        bh=CBZP81+Y2OQEriONVbV/HDcYnpilR0Z8OHX0ifd5jC0=;
+        b=IBqJfFj+tR0i0L8HRwLLWfRmSjucu3Q/kDWhdHzknSYpfzPbGQuuLNAT566P9bo32k
+         CHU8/EUaMTXGYhFqdgZIZxeF+KI4091ImLFUZH/sESyinne9G0uyEnDDQ62hQdstUaCL
+         GUB+XI8Uf6H0xvoUe1aD3fpYyuXukX4oPQyLu/lqPvmcwje9BG7Z/uGrz3tkpQ3CYkYV
+         ARptQAEsFJebhtL0i8CsWMwFcOlNqhICv4cjqxT8R/MQnZy8t3MSIAs4mbY43QE9dRFN
+         iBqO1v/H8O26OzxspyU67/CzEZV825giYOmpAZn0h8EG8Q+yQRznCpFRHhQW7BgZvdv+
+         FOxQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1737047189; x=1737651989;
+        d=1e100.net; s=20230601; t=1737047211; x=1737652011;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=BUIr9PWzb9ez1XMOIgMRecuSTosnClxVHi549vZTFOM=;
-        b=NvpoqoUdBDZ2zHdMJkoizzi1W3vveGA4jxYYEu2thcNiRnXtO+ZP2aPKmSYYuDjQWx
-         CRadsZq8NpMg7NuOPkPBYgfzAUSm7Lb/FD8r2xBqcdgzRZqoSru2geXTgD5pfiQ4S5Qn
-         gdzMHOpbYUO1rLbrXotPo9oVFO3jaMYVzssV+OEu4UW4XlR2UsMU0gy7PbbQp1rIZEjQ
-         viC9sdD7da8SyeN6VmCR4Ktlt8qQ9LEOloHoEwD6j6/yQokK0RMIdfUYA3BmoWL9hlRg
-         ZSjN5sZReXOw0YRDv5IlDVihL6hWg4H7iY30Y5WazJCweC5lNXMgrL3ir680L+WdrsR5
-         2Fzg==
-X-Forwarded-Encrypted: i=1; AJvYcCUGxEE823zSVUDQavPiuoMQF5KR/NgdGRIT/zHB5LkXGteC3FiOL6HQDeWJX2Y2LXARya6AG1tYsMurxUUy@vger.kernel.org
-X-Gm-Message-State: AOJu0YywrQTzil6YZpVnN6e2S/LCaDvB8f1/oecWHY4AKVlvT3Znvtus
-	bRsvyvuKj35SqYraBsCdQwdivbkN5dcY8qMoQw9zDBQ4QzRq1yFRHosDLRPbVt0=
-X-Gm-Gg: ASbGncvJYBPvphN8gd+iFpVV1vDP5+d+A57MZtx4nXDSF1ZTk/CfJmRhM3H7yN95gPX
-	0w7rvrWyhDe43WeRPrdPEuM0f4P9fkxI9gr2rakRDdW08AeOezxnAWXBYjSlRKUY7NX7GV3WROI
-	rx8qogDsTaVhHIU8mFxCdWMY2ZIsdsB+GTEihqC1UgEtCF207xaXc2bwMlmVCYJLAvgY2vafmiO
-	2YOYAs2FDP3HzpRzCZRjSjPrQwdSgqdCKCqxa12V3mIrQTAKd1R1H3hGxN6DegjKpxo
-X-Google-Smtp-Source: AGHT+IEWnTHAyFXkE0XlaBZ/9fyifrzBZNDc9Ug+NzTkqqLyaR8APJQHdyWg+XE5PT7+tDEl09HKBA==
-X-Received: by 2002:a17:907:2d06:b0:ab3:47cc:a7dd with SMTP id a640c23a62f3a-ab347ccb3bdmr852600366b.25.1737047188599;
-        Thu, 16 Jan 2025 09:06:28 -0800 (PST)
+        bh=CBZP81+Y2OQEriONVbV/HDcYnpilR0Z8OHX0ifd5jC0=;
+        b=VaRisFWbKiaVGjBCUqQ1GACJE4bi9/+lFnZM37gZO5UgP+beMfoxjXngc9XPHvgyLa
+         PEPY4I4oew6ryQWla4jt3aIqOF5wczGjpH3mQOtZNtrb/EnkKg5341AziXG+NlEp5xAe
+         uqCTCJO3bSYrCniCkePL61yhhblHn/YdE/N+qUivLpwN9LCMyRe4twYL6+JwCTh23Lx6
+         dhDCwa/umfLt9TyjLerZ2WRoPDYFpXZosRe0HPiIpNypHEBYIDoOktHCo/El8rmxNRCo
+         GQctdyxUw9X/E1QJh4uOi9uajsr5CxT3jLlRKc6xUKoUiA3SLfbI59w0mOidp0R9TbpX
+         fEFA==
+X-Forwarded-Encrypted: i=1; AJvYcCUeVB7FB4eGHDEjaF3/nZa+P8bFb2ib/uwZheB5nJuvSTPMYkACEjIMgutV4Ga9UHWcOm/Y+61ILJBRQSbT@vger.kernel.org
+X-Gm-Message-State: AOJu0YwIn/QXqrE6XBwqxMQJD1p3srlAVzeVTkLUS7mgXtPCpIkUzqrY
+	p0YsYLuSjM9Brvnd/YPaLgxm3GJr5Liqf+HaTh9P/kQRR1CaGrxF9AdWWyG+0Fc=
+X-Gm-Gg: ASbGncu/mcavzVQu7gAFRRVOIDnGMAPDkoAVOuINsy8NuxJSXVWnLZ0s8vreZxoNkEZ
+	DdYFGgi/Y1ijiYEX/QaR7ooxOkWyBZEvFvUm1mrZqzS+MHb5LCpcSkH4Cs5XVWeGmHU6BembedT
+	ZaTyRSudnwIpFY2DTvRPukajtvGzvYkWiaSBAsmfPSEJeFChxu83QU+SR7iuTwvK7Xp/51KwaIk
+	zvmOKxiPnuRj3lngb6dPsB2sUN6PluZd9v2Zs3adkEF9xTizSEXHRlzaVu1Vh1OM2Ou
+X-Google-Smtp-Source: AGHT+IEpYhyUkwPqQzZjV+FBYNtsTY4wh0JTlnvjYkqLlsmjshxZnOB1qsEzAg4KpeKxEDiZEM57Pg==
+X-Received: by 2002:a17:907:d87:b0:aa6:7ec4:8bac with SMTP id a640c23a62f3a-ab2ab709c68mr3284816366b.17.1737047211028;
+        Thu, 16 Jan 2025 09:06:51 -0800 (PST)
 Received: from linaro.org ([2a02:2454:ff21:ef30:d082:eaaf:227f:16cd])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ab384f87d70sm21166266b.142.2025.01.16.09.06.27
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ab384c61e00sm22939166b.11.2025.01.16.09.06.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 16 Jan 2025 09:06:28 -0800 (PST)
-Date: Thu, 16 Jan 2025 18:06:26 +0100
+        Thu, 16 Jan 2025 09:06:50 -0800 (PST)
+Date: Thu, 16 Jan 2025 18:06:48 +0100
 From: Stephan Gerhold <stephan.gerhold@linaro.org>
-To: Melody Olvera <quic_molvera@quicinc.com>
-Cc: Thara Gopinath <thara.gopinath@gmail.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	"David S. Miller" <davem@davemloft.net>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Vinod Koul <vkoul@kernel.org>,
-	Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>,
-	Trilok Soni <quic_tsoni@quicinc.com>, linux-crypto@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Gaurav Kashyap <quic_gaurkash@quicinc.com>
-Subject: Re: [PATCH 2/6] arm64: dts: qcom: sm8750: Add QCrypto nodes
-Message-ID: <Z4k8kibtnlnpKspN@linaro.org>
-References: <20250113-sm8750_crypto_master-v1-0-d8e265729848@quicinc.com>
- <20250113-sm8750_crypto_master-v1-2-d8e265729848@quicinc.com>
+To: Md Sadre Alam <quic_mdalam@quicinc.com>
+Cc: vkoul@kernel.org, corbet@lwn.net, thara.gopinath@gmail.com,
+	herbert@gondor.apana.org.au, davem@davemloft.net,
+	martin.petersen@oracle.com, enghua.yu@intel.com,
+	u.kleine-koenig@baylibre.com, dmaengine@vger.kernel.org,
+	linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-crypto@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	quic_utiwari@quicinc.com, quic_srichara@quicinc.com,
+	quic_varada@quicinc.com
+Subject: Re: [PATCH v6 01/12] dmaengine: qcom: bam_dma: Add bam_sw_version
+ register read
+Message-ID: <Z4k8qBEEfoyl0Qj1@linaro.org>
+References: <20250115103004.3350561-1-quic_mdalam@quicinc.com>
+ <20250115103004.3350561-2-quic_mdalam@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -99,47 +94,105 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250113-sm8750_crypto_master-v1-2-d8e265729848@quicinc.com>
+In-Reply-To: <20250115103004.3350561-2-quic_mdalam@quicinc.com>
 
-On Mon, Jan 13, 2025 at 01:16:22PM -0800, Melody Olvera wrote:
-> From: Gaurav Kashyap <quic_gaurkash@quicinc.com>
+On Wed, Jan 15, 2025 at 03:59:53PM +0530, Md Sadre Alam wrote:
+> Add bam_sw_version register read. This will help to
+> differentiate b/w some new BAM features across multiple
+> BAM IP, feature like LOCK/UNLOCK of BAM pipe.
 > 
-> Add the QCE and Crypto BAM DMA nodes.
-> 
-> Signed-off-by: Gaurav Kashyap <quic_gaurkash@quicinc.com>
-> Signed-off-by: Melody Olvera <quic_molvera@quicinc.com>
+> Signed-off-by: Md Sadre Alam <quic_mdalam@quicinc.com>
 > ---
->  arch/arm64/boot/dts/qcom/sm8750.dtsi | 30 ++++++++++++++++++++++++++++++
->  1 file changed, 30 insertions(+)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sm8750.dtsi b/arch/arm64/boot/dts/qcom/sm8750.dtsi
-> index 3bbd7d18598ee0a3a0d5130c03a3166e1fc14d82..1ddb33ea83885e73bf15244c9cbd7067ae28cded 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8750.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm8750.dtsi
-> @@ -1939,6 +1939,36 @@ mmss_noc: interconnect@1780000 {
->  			#interconnect-cells = <2>;
->  		};
+> change in [v6]
+> 
+> * No change
+> 
+> change in [v5]
+> 
+> * No change
+> 
+> change in [v4]
+> 
+> * Added BAM_SW_VERSION register read
+> 
+> change in [v3]
+> 
+> * This patch was not included in [v3]
+> 
+> change in [v2]
+> 
+> * This patch was not included in [v2]
+> 
+> change in [v1]
+> 
+> * This patch was not included in [v1]
+> 
+>  drivers/dma/qcom/bam_dma.c | 8 ++++++++
+>  1 file changed, 8 insertions(+)
+> 
+> diff --git a/drivers/dma/qcom/bam_dma.c b/drivers/dma/qcom/bam_dma.c
+> index c14557efd577..daeacd5cb8e9 100644
+> --- a/drivers/dma/qcom/bam_dma.c
+> +++ b/drivers/dma/qcom/bam_dma.c
+> @@ -83,6 +83,7 @@ struct bam_async_desc {
+>  enum bam_reg {
+>  	BAM_CTRL,
+>  	BAM_REVISION,
+> +	BAM_SW_VERSION,
+>  	BAM_NUM_PIPES,
+>  	BAM_DESC_CNT_TRSHLD,
+>  	BAM_IRQ_SRCS,
+> @@ -117,6 +118,7 @@ struct reg_offset_data {
+>  static const struct reg_offset_data bam_v1_3_reg_info[] = {
+>  	[BAM_CTRL]		= { 0x0F80, 0x00, 0x00, 0x00 },
+>  	[BAM_REVISION]		= { 0x0F84, 0x00, 0x00, 0x00 },
+> +	[BAM_SW_VERSION]	= { 0x0F88, 0x00, 0x00, 0x00 },
+>  	[BAM_NUM_PIPES]		= { 0x0FBC, 0x00, 0x00, 0x00 },
+>  	[BAM_DESC_CNT_TRSHLD]	= { 0x0F88, 0x00, 0x00, 0x00 },
+>  	[BAM_IRQ_SRCS]		= { 0x0F8C, 0x00, 0x00, 0x00 },
+> @@ -146,6 +148,7 @@ static const struct reg_offset_data bam_v1_3_reg_info[] = {
+>  static const struct reg_offset_data bam_v1_4_reg_info[] = {
+>  	[BAM_CTRL]		= { 0x0000, 0x00, 0x00, 0x00 },
+>  	[BAM_REVISION]		= { 0x0004, 0x00, 0x00, 0x00 },
+> +	[BAM_SW_VERSION]	= { 0x0008, 0x00, 0x00, 0x00 },
+>  	[BAM_NUM_PIPES]		= { 0x003C, 0x00, 0x00, 0x00 },
+>  	[BAM_DESC_CNT_TRSHLD]	= { 0x0008, 0x00, 0x00, 0x00 },
+>  	[BAM_IRQ_SRCS]		= { 0x000C, 0x00, 0x00, 0x00 },
+> @@ -175,6 +178,7 @@ static const struct reg_offset_data bam_v1_4_reg_info[] = {
+>  static const struct reg_offset_data bam_v1_7_reg_info[] = {
+>  	[BAM_CTRL]		= { 0x00000, 0x00, 0x00, 0x00 },
+>  	[BAM_REVISION]		= { 0x01000, 0x00, 0x00, 0x00 },
+> +	[BAM_SW_VERSION]	= { 0x01004, 0x00, 0x00, 0x00 },
+>  	[BAM_NUM_PIPES]		= { 0x01008, 0x00, 0x00, 0x00 },
+>  	[BAM_DESC_CNT_TRSHLD]	= { 0x00008, 0x00, 0x00, 0x00 },
+>  	[BAM_IRQ_SRCS]		= { 0x03010, 0x00, 0x00, 0x00 },
+> @@ -393,6 +397,7 @@ struct bam_device {
+>  	bool controlled_remotely;
+>  	bool powered_remotely;
+>  	u32 active_channels;
+> +	u32 bam_sw_version;
 >  
-> +		cryptobam: dma-controller@1dc4000 {
-> +			compatible = "qcom,bam-v1.7.4", "qcom,bam-v1.7.0";
-> +			reg = <0x0 0x01dc4000 0x0 0x28000>;
-> +
-> +			interrupts = <GIC_SPI 272 IRQ_TYPE_LEVEL_HIGH>;
-> +
-> +			#dma-cells = <1>;
-> +
-> +			iommus = <&apps_smmu 0x480 0>,
-> +				 <&apps_smmu 0x481 0>;
+>  	const struct reg_offset_data *layout;
+>  
+> @@ -1306,6 +1311,9 @@ static int bam_dma_probe(struct platform_device *pdev)
+>  		return ret;
+>  	}
+>  
+> +	bdev->bam_sw_version = readl_relaxed(bam_addr(bdev, 0, BAM_SW_VERSION));
+> +	dev_info(bdev->dev, "BAM software version:0x%08x\n", bdev->bam_sw_version);
 
-Should be equivalent to iommus = <&apps_smmu 0x480 0x1>?
+This will cause crashes for the same reason as your other patch. During
+probe(), we can't read from BAM registers if we don't have a clock
+assigned. There is no guarantee that the BAM is powered up.
 
-> +
-> +			qcom,ee = <0>;
-> +			qcom,controlled-remotely;
+To make this work properly on all platforms, you would need to defer
+reading this register until the first channel is requested by the
+consumer driver. Or limit this functionality to the if (bdev->bamclk)
+case for now.
 
-If you don't have clocks here, you need to provide num-channels and
-qcom,num-ees. Otherwise, there is a risk this will crash if the BAM is
-not up while being probed.
+We should also prioritize fixing the existing regression before adding
+new functionality.
 
 Thanks,
 Stephan
