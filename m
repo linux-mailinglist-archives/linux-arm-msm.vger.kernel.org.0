@@ -1,327 +1,191 @@
-Return-Path: <linux-arm-msm+bounces-45290-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-45291-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 882F8A13D84
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jan 2025 16:18:37 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8F8D4A13DC7
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jan 2025 16:36:35 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 97679161E84
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jan 2025 15:18:27 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 15E4F3A474E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jan 2025 15:36:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1E44722BAAD;
-	Thu, 16 Jan 2025 15:17:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5040222B8C2;
+	Thu, 16 Jan 2025 15:36:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="s8IfgWo+"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="odykmPMC"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE2DC22B8CD
-	for <linux-arm-msm@vger.kernel.org>; Thu, 16 Jan 2025 15:17:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C2271DDC12;
+	Thu, 16 Jan 2025 15:36:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737040643; cv=none; b=HWQuPUUXOciB59+t+bhpwgIUCOFIG7YA+wsTNxOJmFLjZN6hRYXttJejapjWbEd4c6J2BE47rjnan5cMKBUx+LXVtxrF5d9XBPWYmlhwMKF99SLk5/V6GmFUxXoC0KPvyYThL33zOfuo8yiJtJMF44oH3VPt5IP0huu/S/a3SDw=
+	t=1737041773; cv=none; b=JWHhK3d+R1pA9IJi8y4jaLCwcYiRiGxU1NutX81W0hZ0BFvpf25SR4jTw045+M/0+xy+dIfYlSdLakNLTv/pir/8lTBILnJJMAg1Bx50U5IjlUFdDHWB/fewr28o7Am9Rj+TJVP98WJd6eyiLfr7rkF8y0wDXnGRX42WvHHsaOM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737040643; c=relaxed/simple;
-	bh=Hx1X+lrZTvcioCfyydb4h2gHt5QRPj15apOSr5TJtsE=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=KpO5OPtCGjpXjgiHBNJI4j976Z2Je+j/opfwMPj6vHVq/GeWvrHV4wU668nN05JNgqp8C9GQ2R1jbSzqUkB9pAq+ruYIPdoHxiQQNe5ZACpeHCs+kE2ryXx55ZEK/u6NJV22F6BsVbUGwQhSxJbBnTvVSL583rh9UooidvQV4ws=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=s8IfgWo+; arc=none smtp.client-ip=209.85.128.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
-Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-4368a290e0dso47905e9.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Jan 2025 07:17:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1737040638; x=1737645438; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=pwaNTbOXMKkPxQLJFe431ZnDyCQwmIS9FL0eLIesENM=;
-        b=s8IfgWo+18BBg44roVLX/xYodHGQp+Zn2ZpdnCR2RsdEy5sGi1GCO7Ny14O3o9OHxZ
-         evbGAwmNmnoubHtcOu+JEtLC816eolXXLnQSA/vviQhHN3Pd243jtA9/52rVhyu2dORk
-         Nte3Ma1zIBYMXKgnLPkRYxq8bK9XZA8eMOcgErcU3ky+R9QhH8VG3w5p4HAF16rm8fEt
-         U7Q/zlDaqeXcxh/ZhJZ/KsOyQyrg5i/RhOTJXbc+b+BtyjsnHVV4DCzlIEvrTYB5s62G
-         lVktK96wMq+3RSPEzQEMlZhdezqGFB1gL8gWDmEvRhCRTratxHYsbUrvV/pNdeQl4vFb
-         JS2Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1737040638; x=1737645438;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=pwaNTbOXMKkPxQLJFe431ZnDyCQwmIS9FL0eLIesENM=;
-        b=RqvEu+4bQ4QYRGS6BQ3jq/vHEKQ792RsR2ga2gHyzL7UOoDC7KksSuwsSj2JEdf2VZ
-         g2f9UjPoFgfZEuSRE5MBVHjmT8Xh3SaEnPEHGtB3Rpld1k9b0MkloA+ZF+C3BxXAtBWA
-         IxL5c2upDhASlq30cNfrSQXICtiqJlPHQPP0qFW33NnB2BTPfpydOpFgTFIMR5tCncMN
-         zXSfofILdqMuVeuT7BssH17HvCkn+T/+lAdtEYmlq+gpoH5oQpdJUPJQ8vxpovvZ5dfq
-         8PdscAgb8mF33utLZ/Zwu/gp2Od9OT3g0YbJJ9oZYNgzhx6yij07mZFTpIVFYPDhXWLz
-         nOkw==
-X-Forwarded-Encrypted: i=1; AJvYcCUgeABBYh0Gm6IjWYGepvo/+tpqFmhcPdZTAPCIjcRpfGweJeD+LWp0N6gM/nW2idCPZfMClIvNAhRRzwRj@vger.kernel.org
-X-Gm-Message-State: AOJu0YwimvMMZbfrQVVqz+fEvf1yAyaPP0p9fHu4KzQzw7nSV6W3MGqt
-	DZ4F8k9k3fdQLVsixwu5z2QDqlleLqe1DRnkMf3I1ZeL9Ggl4OHI7kdaHms258TmQ7p+aiR18hq
-	CMGMKMaTRlXqpH8PXeNr1MJG0X5uzdZslT6C4
-X-Gm-Gg: ASbGnct4n/uPS4XC6c56l05h2baK9EQ6e+Bvqw4WTXomKOcQsCtpdGPY5TJ9KwU0a/g
-	MQDtU4MauNs8geZIrsnclvKSUVGpaUdqxOE/j4Tct0pbI/zJlD2PtPXLGL70lqtnN7nk=
-X-Google-Smtp-Source: AGHT+IFerOpLUf4+Oc1OZbSE2vohcdX1NoPD5FkxnfkSCxYZgIo5kiW5QdKvBjzYNAgCUFDG5CGEZXRAhynIVt3lt/0=
-X-Received: by 2002:a05:600c:4fc1:b0:428:e6eb:1340 with SMTP id
- 5b1f17b1804b1-4388b5296bfmr1116245e9.4.1737040637800; Thu, 16 Jan 2025
- 07:17:17 -0800 (PST)
+	s=arc-20240116; t=1737041773; c=relaxed/simple;
+	bh=7N79UBDvgcTC7QrrMOnIOEMv6qZdPgkb9CZA0bY1kpU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=J0cWk8wzUyGJx/YkTYJKDObI6HXXlJQd5cbGkkJR75DVDYefXVsOOXksJM5LDMzuDcMIQTTrkmFiM1Dd3KKSIDr0i+LqgBdqY2HBra2czEtWkEMf0nSmSuCcSEH4i4sNmAMAIbpEpU8G3Zw7xesLB5tdgdTSlz+oUyvP1hI6vUs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=odykmPMC; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F00DEC4CEE1;
+	Thu, 16 Jan 2025 15:36:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1737041772;
+	bh=7N79UBDvgcTC7QrrMOnIOEMv6qZdPgkb9CZA0bY1kpU=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=odykmPMCVEDiTbV8Lfu84acuDiIWCEa41eaDl24kDvuwtDSp/Vz8/UEXi/9nlDXtC
+	 vjR1ZjJiEHL0+KZSisRJYjuyPAFrDrWh9Vm5BhjXL62eNUJArsy50oWcBwEr/tk2cv
+	 s/KcBshIcUaJNayDJLhO6mq8afYy5qY0G8KaWTkRSs9jLdufNDYyoC8ec9+toIiiSe
+	 AgBhhfGqqunlcEWd5ON2Z2oysd4npZv1Q/3MedGZluYchlrTcX8DA04XwOc6NUCfzb
+	 +d0pJ+V9dHsIF9N754al5tuFu/2N4cOJdbfAET3nLFs6KsyGFn9oFhTkISGTtBMUVl
+	 Yj2gMCJ/LPrvg==
+Date: Thu, 16 Jan 2025 16:36:07 +0100
+From: Niklas Cassel <cassel@kernel.org>
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc: kw@linux.com, gregkh@linuxfoundation.org, arnd@arndb.de,
+	lpieralisi@kernel.org, shuah@kernel.org, kishon@kernel.org,
+	linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org,
+	bhelgaas@google.com, linux-arm-msm@vger.kernel.org, robh@kernel.org,
+	linux-kselftest@vger.kernel.org
+Subject: Re: [PATCH v5 0/4] Migrate PCI Endpoint Subsystem tests to Kselftest
+Message-ID: <Z4knZyKrEvVNopeX@ryzen>
+References: <20250116135106.19143-1-manivannan.sadhasivam@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20241213164811.2006197-1-tabba@google.com> <20241213164811.2006197-14-tabba@google.com>
- <9b5a7efa-1a65-4b84-af60-e8658b18bad0@amazon.co.uk>
-In-Reply-To: <9b5a7efa-1a65-4b84-af60-e8658b18bad0@amazon.co.uk>
-From: Fuad Tabba <tabba@google.com>
-Date: Thu, 16 Jan 2025 15:16:41 +0000
-X-Gm-Features: AbW1kvaxfWYfuwd0W-V5L_bwpr8WlTsKSgGhMIK4AMPErUZAQCGO6nQZU3XdW0M
-Message-ID: <CA+EHjTyCnjnoa8ConrUYNaZyrQewvLx2_fiyG90GSktTtA9bNw@mail.gmail.com>
-Subject: Re: [RFC PATCH v4 13/14] KVM: arm64: Handle guest_memfd()-backed
- guest page faults
-To: Patrick Roy <roypat@amazon.co.uk>
-Cc: kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, 
-	pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au, 
-	anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com, 
-	aou@eecs.berkeley.edu, seanjc@google.com, viro@zeniv.linux.org.uk, 
-	brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org, 
-	xiaoyao.li@intel.com, yilun.xu@intel.com, chao.p.peng@linux.intel.com, 
-	jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com, 
-	yu.c.zhang@linux.intel.com, isaku.yamahata@intel.com, mic@digikod.net, 
-	vbabka@suse.cz, vannapurve@google.com, ackerleytng@google.com, 
-	mail@maciej.szmigiero.name, david@redhat.com, michael.roth@amd.com, 
-	wei.w.wang@intel.com, liam.merwick@oracle.com, isaku.yamahata@gmail.com, 
-	kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com, steven.price@arm.com, 
-	quic_eberman@quicinc.com, quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, 
-	quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com, 
-	quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com, 
-	james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev, 
-	maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com, 
-	shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, rientjes@google.com, 
-	jhubbard@nvidia.com, fvdl@google.com, hughd@google.com, jthoughton@google.com, 
-	"Kalyazin, Nikita" <kalyazin@amazon.co.uk>, "Manwaring, Derek" <derekmn@amazon.com>, 
-	"Cali, Marco" <xmarcalx@amazon.co.uk>, James Gowans <jgowans@amazon.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250116135106.19143-1-manivannan.sadhasivam@linaro.org>
 
-Hi Patrick,
+On Thu, Jan 16, 2025 at 07:21:02PM +0530, Manivannan Sadhasivam wrote:
+> Hi,
+> 
+> This series carries forward the effort to add Kselftest for PCI Endpoint
+> Subsystem started by Aman Gupta [1] a while ago. I reworked the initial version
+> based on another patch that fixes the return values of IOCTLs in
+> pci_endpoint_test driver and did many cleanups. Since the resulting work
+> modified the initial version substantially, I took over the authorship.
+> 
+> This series also incorporates the review comment by Shuah Khan [2] to move the
+> existing tests from 'tools/pci' to 'tools/testing/kselftest/pci_endpoint' before
+> migrating to Kselftest framework. I made sure that the tests are executable in
+> each commit and updated documentation accordingly.
+> 
+> - Mani
+> 
+> [1] https://lore.kernel.org/linux-pci/20221007053934.5188-1-aman1.gupta@samsung.com
+> [2] https://lore.kernel.org/linux-pci/b2a5db97-dc59-33ab-71cd-f591e0b1b34d@linuxfoundation.org
+> 
+> Changes in v5:
+> 
+> * Incorporated comments from Niklas
+> * Added a patch to fix the DMA MEMCPY check in pci-epf-test driver
+> * Collected tags
+> * Rebased on top of pci/next 0333f56dbbf7ef6bb46d2906766c3e1b2a04a94d
+> 
+> Changes in v4:
+> 
+> * Dropped the BAR fix patches and submitted them separately:
+>   https://lore.kernel.org/linux-pci/20241231130224.38206-1-manivannan.sadhasivam@linaro.org/
+> * Rebased on top of pci/next 9e1b45d7a5bc0ad20f6b5267992da422884b916e
+> 
+> Changes in v3:
+> 
+> * Collected tags.
+> * Added a note about failing testcase 10 and command to skip it in
+>   documentation.
+> * Removed Aman Gupta and Padmanabhan Rajanbabu from CC as their addresses are
+>   bouncing.
+> 
+> Changes in v2:
+> 
+> * Added a patch that fixes return values of IOCTL in pci_endpoint_test driver
+> * Moved the existing tests to new location before migrating
+> * Added a fix for BARs on Qcom devices
+> * Updated documentation and also added fixture variants for memcpy & DMA modes
+> 
+> 
+> Manivannan Sadhasivam (4):
+>   PCI: endpoint: pci-epf-test: Fix the check for DMA MEMCPY test
+>   misc: pci_endpoint_test: Fix the return value of IOCTL
+>   selftests: Move PCI Endpoint tests from tools/pci to Kselftests
+>   selftests: pci_endpoint: Migrate to Kselftest framework
+> 
+>  Documentation/PCI/endpoint/pci-test-howto.rst | 170 +++++------
+>  MAINTAINERS                                   |   2 +-
+>  drivers/misc/pci_endpoint_test.c              | 255 +++++++++--------
+>  drivers/pci/endpoint/functions/pci-epf-test.c |   4 +-
+>  tools/pci/Build                               |   1 -
+>  tools/pci/Makefile                            |  58 ----
+>  tools/pci/pcitest.c                           | 264 ------------------
+>  tools/pci/pcitest.sh                          |  73 -----
+>  tools/testing/selftests/Makefile              |   1 +
+>  .../testing/selftests/pci_endpoint/.gitignore |   2 +
+>  tools/testing/selftests/pci_endpoint/Makefile |   7 +
+>  tools/testing/selftests/pci_endpoint/config   |   4 +
+>  .../pci_endpoint/pci_endpoint_test.c          | 221 +++++++++++++++
+>  13 files changed, 435 insertions(+), 627 deletions(-)
+>  delete mode 100644 tools/pci/Build
+>  delete mode 100644 tools/pci/Makefile
+>  delete mode 100644 tools/pci/pcitest.c
+>  delete mode 100644 tools/pci/pcitest.sh
+>  create mode 100644 tools/testing/selftests/pci_endpoint/.gitignore
+>  create mode 100644 tools/testing/selftests/pci_endpoint/Makefile
+>  create mode 100644 tools/testing/selftests/pci_endpoint/config
+>  create mode 100644 tools/testing/selftests/pci_endpoint/pci_endpoint_test.c
+> 
+> -- 
+> 2.25.1
+> 
 
-On Thu, 16 Jan 2025 at 14:48, Patrick Roy <roypat@amazon.co.uk> wrote:
->
-> On Fri, 2024-12-13 at 16:48 +0000, Fuad Tabba wrote:
-> > Add arm64 support for resolving guest page faults on
-> > guest_memfd() backed memslots. This support is not contingent on
-> > pKVM, or other confidential computing support, and works in both
-> > VHE and nVHE modes.
-> >
-> > Without confidential computing, this support is useful forQ
-> > testing and debugging. In the future, it might also be useful
-> > should a user want to use guest_memfd() for all code, whether
-> > it's for a protected guest or not.
-> >
-> > For now, the fault granule is restricted to PAGE_SIZE.
-> >
-> > Signed-off-by: Fuad Tabba <tabba@google.com>
-> > ---
-> >  arch/arm64/kvm/mmu.c | 111 ++++++++++++++++++++++++++++++++++++++++++-
-> >  1 file changed, 109 insertions(+), 2 deletions(-)
-> >
-> > diff --git a/arch/arm64/kvm/mmu.c b/arch/arm64/kvm/mmu.c
-> > index 342a9bd3848f..1c4b3871967c 100644
-> > --- a/arch/arm64/kvm/mmu.c
-> > +++ b/arch/arm64/kvm/mmu.c
-> > @@ -1434,6 +1434,107 @@ static bool kvm_vma_mte_allowed(struct vm_area_struct *vma)
-> >         return vma->vm_flags & VM_MTE_ALLOWED;
-> >  }
-> >
-> > +static int guest_memfd_abort(struct kvm_vcpu *vcpu, phys_addr_t fault_ipa,
-> > +                            struct kvm_memory_slot *memslot, bool fault_is_perm)
-> > +{
-> > +       struct kvm_mmu_memory_cache *memcache = &vcpu->arch.mmu_page_cache;
-> > +       bool exec_fault = kvm_vcpu_trap_is_exec_fault(vcpu);
-> > +       bool logging_active = memslot_is_logging(memslot);
-> > +       struct kvm_pgtable *pgt = vcpu->arch.hw_mmu->pgt;
-> > +       enum kvm_pgtable_prot prot = KVM_PGTABLE_PROT_R;
-> > +       bool write_fault = kvm_is_write_fault(vcpu);
-> > +       struct mm_struct *mm = current->mm;
-> > +       gfn_t gfn = gpa_to_gfn(fault_ipa);
-> > +       struct kvm *kvm = vcpu->kvm;
-> > +       struct page *page;
-> > +       kvm_pfn_t pfn;
-> > +       int ret;
-> > +
-> > +       /* For now, guest_memfd() only supports PAGE_SIZE granules. */
-> > +       if (WARN_ON_ONCE(fault_is_perm &&
-> > +                        kvm_vcpu_trap_get_perm_fault_granule(vcpu) != PAGE_SIZE)) {
-> > +               return -EFAULT;
-> > +       }
-> > +
-> > +       VM_BUG_ON(write_fault && exec_fault);
-> > +
-> > +       if (fault_is_perm && !write_fault && !exec_fault) {
-> > +               kvm_err("Unexpected L2 read permission error\n");
-> > +               return -EFAULT;
-> > +       }
-> > +
-> > +       /*
-> > +        * Permission faults just need to update the existing leaf entry,
-> > +        * and so normally don't require allocations from the memcache. The
-> > +        * only exception to this is when dirty logging is enabled at runtime
-> > +        * and a write fault needs to collapse a block entry into a table.
-> > +        */
-> > +       if (!fault_is_perm || (logging_active && write_fault)) {
-> > +               ret = kvm_mmu_topup_memory_cache(memcache,
-> > +                                                kvm_mmu_cache_min_pages(vcpu->arch.hw_mmu));
-> > +               if (ret)
-> > +                       return ret;
-> > +       }
-> > +
-> > +       /*
-> > +        * Holds the folio lock until mapped in the guest and its refcount is
-> > +        * stable, to avoid races with paths that check if the folio is mapped
-> > +        * by the host.
-> > +        */
-> > +       ret = kvm_gmem_get_pfn_locked(kvm, memslot, gfn, &pfn, &page, NULL);
-> > +       if (ret)
-> > +               return ret;
-> > +
-> > +       if (!kvm_slot_gmem_is_guest_mappable(memslot, gfn)) {
-> > +               ret = -EAGAIN;
-> > +               goto unlock_page;
-> > +       }
-> > +
-> > +       /*
-> > +        * Once it's faulted in, a guest_memfd() page will stay in memory.
-> > +        * Therefore, count it as locked.
-> > +        */
-> > +       if (!fault_is_perm) {
-> > +               ret = account_locked_vm(mm, 1, true);
-> > +               if (ret)
-> > +                       goto unlock_page;
-> > +       }
-> > +
-> > +       read_lock(&kvm->mmu_lock);
-> > +       if (write_fault)
-> > +               prot |= KVM_PGTABLE_PROT_W;
-> > +
-> > +       if (exec_fault)
-> > +               prot |= KVM_PGTABLE_PROT_X;
-> > +
-> > +       if (cpus_have_final_cap(ARM64_HAS_CACHE_DIC))
-> > +               prot |= KVM_PGTABLE_PROT_X;
-> > +
-> > +       /*
-> > +        * Under the premise of getting a FSC_PERM fault, we just need to relax
-> > +        * permissions.
-> > +        */
-> > +       if (fault_is_perm)
-> > +               ret = kvm_pgtable_stage2_relax_perms(pgt, fault_ipa, prot);
-> > +       else
-> > +               ret = kvm_pgtable_stage2_map(pgt, fault_ipa, PAGE_SIZE,
-> > +                                       __pfn_to_phys(pfn), prot,
-> > +                                       memcache,
-> > +                                       KVM_PGTABLE_WALK_HANDLE_FAULT |
-> > +                                       KVM_PGTABLE_WALK_SHARED);
-> > +
-> > +       kvm_release_faultin_page(kvm, page, !!ret, write_fault);
-> > +       read_unlock(&kvm->mmu_lock);
-> > +
-> > +       if (ret && !fault_is_perm)
-> > +               account_locked_vm(mm, 1, false);
-> > +unlock_page:
-> > +       unlock_page(page);
-> > +       put_page(page);
->
-> There's a double-free of `page` here, as kvm_release_faultin_page
-> already calls put_page. I fixed it up locally with
->
-> +       unlock_page(page);
->         kvm_release_faultin_page(kvm, page, !!ret, write_fault);
->         read_unlock(&kvm->mmu_lock);
->
->         if (ret && !fault_is_perm)
->                 account_locked_vm(mm, 1, false);
-> +       goto out;
-> +
->  unlock_page:
->         unlock_page(page);
->         put_page(page);
-> -
-> +out:
->         return ret != -EAGAIN ? ret : 0;
->  }
->
-> which I'm admittedly not sure is correct either because now the locks
-> don't get released in reverse order of acquisition, but with this I
-> was able to boot simple VMs.
+I ran the test using simply:
 
-Thanks for that. You're right, I broke this code right before sending
-out the series while fixing a merge conflict. have prepared a new
-patch series (rebased on Linux 6.13-rc7), with this redone to be part
-of  user_mem_abort(), as opposed to being in its own function. Makes
-the code cleaner more maintainable.
+$ ./pci_endpoint_test
+
+and got:
+
+#  RUN           pci_ep_basic.MSIX_TEST ...
+# pci_endpoint_test.c:129:MSIX_TEST:Expected 0 (0) == ret (-110)
+# pci_endpoint_test.c:129:MSIX_TEST:Test failed for MSI-X33
+# pci_endpoint_test.c:129:MSIX_TEST:Expected 0 (0) == ret (-110)
+# pci_endpoint_test.c:129:MSIX_TEST:Test failed for MSI-X34
+# pci_endpoint_test.c:129:MSIX_TEST:Expected 0 (0) == ret (-110)
+# pci_endpoint_test.c:129:MSIX_TEST:Test failed for MSI-X35
+# pci_endpoint_test.c:129:MSIX_TEST:Expected 0 (0) == ret (-110)
+# pci_endpoint_test.c:129:MSIX_TEST:Test failed for MSI-X36
+# pci_endpoint_test.c:129:MSIX_TEST:Expected 0 (0) == ret (-110)
+# pci_endpoint_test.c:129:MSIX_TEST:Test failed for MSI-X37
+# pci_endpoint_test.c:129:MSIX_TEST:Expected 0 (0) == ret (-110)
+# pci_endpoint_test.c:129:MSIX_TEST:Test failed for MSI-X38
+# pci_endpoint_test.c:129:MSIX_TEST:Expected 0 (0) == ret (-110)
+# pci_endpoint_test.c:129:MSIX_TEST:Test failed for MSI-X39
 
 
-> > +
-> > +       return ret != -EAGAIN ? ret : 0;
-> > +}
-> > +
-> >  static int user_mem_abort(struct kvm_vcpu *vcpu, phys_addr_t fault_ipa,
-> >                           struct kvm_s2_trans *nested,
-> >                           struct kvm_memory_slot *memslot, unsigned long hva,
-> > @@ -1900,8 +2001,14 @@ int kvm_handle_guest_abort(struct kvm_vcpu *vcpu)
-> >                 goto out_unlock;
-> >         }
-> >
-> > -       ret = user_mem_abort(vcpu, fault_ipa, nested, memslot, hva,
-> > -                            esr_fsc_is_permission_fault(esr));
-> > +       if (kvm_slot_can_be_private(memslot)) {
->
-> For my setup, I needed
->
-> if (kvm_mem_is_private(vcpu->kvm, gfn))
->
-> here instead, because I am making use of KVM_GENERIC_MEMORY_ATTRIBUTES,
-> and  had a memslot with the `KVM_MEM_GUEST_MEMFD` flag set, but whose
-> gfn range wasn't actually set to KVM_MEMORY_ATTRIBUTE_PRIVATE.
->
-> If I'm reading patch 12 correctly, your memslots always set only one of
-> userspace_addr or guest_memfd, and the stage 2 table setup simply checks
-> which one is the case to decide what to fault in, so maybe to support
-> both cases, this check should be
->
-> if (kvm_mem_is_private(vcpu->kvm, gfn) || (kvm_slot_can_be_private(memslot) && !memslot->userspace_addr)
->
-> ?
+I think that you should also do:
 
-I've actually missed supporting both cases, and I think your
-suggestion is the right way to do it. I'll fix it in the respin.
+diff --git a/Documentation/PCI/endpoint/pci-test-howto.rst b/Documentation/PCI/endpoint/pci-test-howto.rst
+index 7d0dbad61456..7d5049c884dd 100644
+--- a/Documentation/PCI/endpoint/pci-test-howto.rst
++++ b/Documentation/PCI/endpoint/pci-test-howto.rst
+@@ -81,8 +81,8 @@ device, the following commands can be used::
+ 
+        # echo 0x104c > functions/pci_epf_test/func1/vendorid
+        # echo 0xb500 > functions/pci_epf_test/func1/deviceid
+-       # echo 16 > functions/pci_epf_test/func1/msi_interrupts
+-       # echo 8 > functions/pci_epf_test/func1/msix_interrupts
++       # echo 32 > functions/pci_epf_test/func1/msi_interrupts
++       # echo 2048 > functions/pci_epf_test/func1/msix_interrupts
+ 
 
-Cheers,
-/fuad
+Such that the documentation suggests values that will actually make the
+pci_endpoint_test pass without any special parameters set.
 
 
-
-
-
->
-> [1]: https://lore.kernel.org/all/20240801090117.3841080-1-tabba@google.com/
->
-> > +               ret = guest_memfd_abort(vcpu, fault_ipa, memslot,
-> > +                                       esr_fsc_is_permission_fault(esr));
-> > +       } else {
-> > +               ret = user_mem_abort(vcpu, fault_ipa, nested, memslot, hva,
-> > +                                    esr_fsc_is_permission_fault(esr));
-> > +       }
-> > +
-> >         if (ret == 0)
-> >                 ret = 1;
-> >  out:
-> > --
-> > 2.47.1.613.gc27f4b7a9f-goog
->
-> Best,
-> Patrick
->
+Other than that small nit, for the series:
+Tested-by: Niklas Cassel <cassel@kernel.org>
 
