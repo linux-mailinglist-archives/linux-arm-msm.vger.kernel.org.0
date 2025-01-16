@@ -1,94 +1,233 @@
-Return-Path: <linux-arm-msm+bounces-45188-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-45189-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6D230A130FA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jan 2025 02:57:56 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 50BBBA13179
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jan 2025 03:34:48 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 93B05165342
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jan 2025 01:57:54 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5EB203A805C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jan 2025 02:34:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0E0FD36AF5;
-	Thu, 16 Jan 2025 01:57:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A6DF37082D;
+	Thu, 16 Jan 2025 02:33:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="jIB2JxmW"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5F8CCA4E;
-	Thu, 16 Jan 2025 01:57:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89EA124A7C0;
+	Thu, 16 Jan 2025 02:33:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736992671; cv=none; b=kSm7GlploAQM89gG7TiCCulPrOCnzj6tr0WW7ZnasjDIX2d8V9ws8DgC3bchtOCOzZNQE+GrAGRqzu1mCd6Vhy4VCmfkHwaOfcYzxth9D9yvMK4IjDICBDSYRk1FDwXDguEQH3+0en1Oro4kJRaWC4kgYqvq/kn14/ySJWFzDz8=
+	t=1736994795; cv=none; b=IDJKjVLOhR4poXQ0knDuKRWUSPOGuyKO6TBk2ozqB2qpXgytC0aBKS5hX88Sz/ERrysigDFxAc6aOHPjiL7XJ+9KAdpyz9+64wIXHILDShRXsJWJS2dQqm5evleuS+5QMVP/Su8eBxLvMppnrmIX3PVfhqPd85ZgEH9t+cV0gn0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736992671; c=relaxed/simple;
-	bh=b0+FM0AZacD38mIYBRYoMoYI5QfZ28k0KCMFpcOA0co=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=aC0tCc9PfFOIu1b19FyEtsABcOe3fihZo+HwB2Iu4FOSWDM3CceDWgoV2hCV9JyMyfa9ESmJgczyxMZrvFobb2yWREqFfpzpXcP2+dlzeHRVAB+J6+P8v0IIrokN46fQRDvncv9jK4/gWVvvUf9iLJPOBoHCRPDhsZVeLVPKJko=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=linux.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.214.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=linux.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-21654fdd5daso5778495ad.1;
-        Wed, 15 Jan 2025 17:57:50 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736992670; x=1737597470;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=6hIQQdkcr6RhX/odHqB0xx/En9dMpWdJ9Q+teQgBnX0=;
-        b=Yet3UnV6akK3LjseltLPm3Zi8GPqwz/h2VAaIs/hAlt9rtS9it4efJSypMZBnhn4i+
-         3QFg76a8799j+sRfnmIaEM9UKCr/CWin9HM8QoqL/K4rpuq1nHP5LX3LSJLQgwqvTrPE
-         UxZ/XzrCJKPuCKj0B+tw03ItungX7jQbr74ZNiS3F3TWRUToH3MCKui1/A4rJHBD5K3Y
-         LiHQL1SCp6DWcYL89OHxgAmmN4GTJWvFlXC4Cy0eu25/OxNQp8l9Ibkh8CdERl2em67m
-         1w7vve5gKTB1GV190sANUfnopAre4JrHxMoZBH9h226eH8vi/jeiigwWtUElVLKPm+l2
-         jTRw==
-X-Forwarded-Encrypted: i=1; AJvYcCWj9czpxeet3HEus0NuJ6XmZzS2kdzjOIUrDFyj+R6cuI1uATcSA84rwubFRdlVP2AhTJkWCqncfdkZ9NWz@vger.kernel.org, AJvYcCWuigcZXhfu9lfH2GIIqqU/izu4g+2+BjY6hkyxHJ/8UrjiiUaJRmT34Y35PiM5f1dQ4n3dP8Gh9KbF@vger.kernel.org, AJvYcCXmyjO1YUVzTbOABJJe5qBEba+GMfWL8BaPmSd42dUMkdHc97XYPzUzAOsXyEoihFgBbA26ffSWicMoxGwS@vger.kernel.org
-X-Gm-Message-State: AOJu0YxPDgw0+JVfa3c4YN9eNjgSUKQsjQRGt5QzTlXO/MLqCVlFxpmJ
-	gIc8IoVwzyE0zrGczKTy6TabY9j8yLdlG3qtWgO7jEhSL5z0wX3n
-X-Gm-Gg: ASbGncsnfcKcMbkbgEWIDSHm6f9MBUpzzGqBiW3xjuLT6OB9PwSBUBlu2goSQMl4ieV
-	aGBaM0KPWMd5J6qcIygIrmVbmjjdIL5pisbdUtcU74Y5rkKA5HGzElp91QSA7DecZ2boX8Z6+rW
-	w/gQCpmDpGegJSTDEn/w5GaJ2u9VER0YBFk3AzZocu8XAosEbYYYh9WTJDOX7lFKHPSm2y0ZjT+
-	IZdF4COHtzVsbWue+mGJOEQLguqR3EPVXFpbjkW7M3mFb1S/++ZzqNO5jAAFu7eDBaz8YAExlFC
-	DVYrNgfKUUNEc3M=
-X-Google-Smtp-Source: AGHT+IEYuDaKngFd6JtTbSao26F3b3tTw+qkbUTAGhKxDNKR2wX6vHNAECHSF/PqZdOeZ1EPU1V75Q==
-X-Received: by 2002:a05:6a21:3399:b0:1ea:ee89:5d9b with SMTP id adf61e73a8af0-1eaee896015mr15952702637.21.1736992669964;
-        Wed, 15 Jan 2025 17:57:49 -0800 (PST)
-Received: from localhost (fpd11144dd.ap.nuro.jp. [209.17.68.221])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-72d40681bd0sm9801454b3a.150.2025.01.15.17.57.48
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Jan 2025 17:57:49 -0800 (PST)
-Date: Thu, 16 Jan 2025 10:57:47 +0900
-From: Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>
-To: Krishna Chaitanya Chundru <quic_krichai@quicinc.com>
-Cc: Jingoo Han <jingoohan1@gmail.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
-	Konrad Dybcio <konradybcio@kernel.org>, linux-pci@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	andersson@kernel.org, quic_vbadigan@quicinc.com,
-	quic_mrana@quicinc.com
-Subject: Re: [PATCH v5 0/3] PCI: dwc: Skip waiting for link up if vendor
- drivers can detect Link up event
-Message-ID: <20250116015747.GD2111792@rocinante>
-References: <20241123-remove_wait2-v5-0-b5f9e6b794c2@quicinc.com>
- <6f815dd0-f111-6f7e-16dc-80b0dad7806a@quicinc.com>
+	s=arc-20240116; t=1736994795; c=relaxed/simple;
+	bh=vYTL5eouEDpTEdn8YIBwYtdtI3LySjf+wY9fAGIszhE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=U+nd4B+4PwUWtfh+nn4BxzkZBIjIXKcp3krbmLbp8xOqiIbSeryU1HIEpexZl+JT4xuilcjSzmDgjaTYchOZEh9VtrcdKFHkivUpNdqObmFcbJUO4G6Fixcc27km9l7FIaKFtN69y3IlvBUbBkybQJZrP2jwYgA8SXcojBx2Qhc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=jIB2JxmW; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50FGn6ZX028620;
+	Thu, 16 Jan 2025 02:33:01 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	QFeN19CdtdejQCUv1aBy294fvf8Q/jBGsyEq2hnoj98=; b=jIB2JxmW22sotYvz
+	cJSVry2VzoYa8352qt3jWgMAM7SOBnErQ/KgfTTYyDHnCdW83KRdBDhGXcZjyBDP
+	PDn4iCDsCoWjNLcQgivYPaDznacnNhIVVNZjhqCSWen8atAym4O3RlM4Xu7vlniJ
+	5jaO8c4jb4UCY6evZ+J07BDdVZmT6VwBYLvTznVTsJQ/4IntX55h28NSf422lY57
+	jvDNa5HGMKT1Q8ubJKtnR2BXcwfCiILmzqbbVSAIwWVJA3Ms76BoBbvqZZqrjW/R
+	JUjJ/FZ0mBASSgy0oO7xBTH1K/kPcq1Swjqmow8b5gNEFn3k369hwU/uVEs9vJmX
+	7sxvcQ==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 446fgm1crk-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 16 Jan 2025 02:33:01 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 50G2X08p032540
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 16 Jan 2025 02:33:00 GMT
+Received: from [10.71.108.79] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 15 Jan
+ 2025 18:32:59 -0800
+Message-ID: <a92d4183-e139-479d-b33a-1ea603e941c4@quicinc.com>
+Date: Wed, 15 Jan 2025 18:32:59 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <6f815dd0-f111-6f7e-16dc-80b0dad7806a@quicinc.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 05/35] drm/msm/dpu: inline _setup_ctl_ops()
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark
+	<robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Marijn Suijten
+	<marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Simona
+ Vetter <simona@ffwll.ch>,
+        Vinod Koul <vkoul@kernel.org>, Konrad Dybcio
+	<konradybcio@kernel.org>
+CC: <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>
+References: <20241214-dpu-drop-features-v1-0-988f0662cb7e@linaro.org>
+ <20241214-dpu-drop-features-v1-5-988f0662cb7e@linaro.org>
+Content-Language: en-US
+From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <20241214-dpu-drop-features-v1-5-988f0662cb7e@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: JhfIgyMGf6aLDnSKqAMYLhT_-sEV1I9_
+X-Proofpoint-ORIG-GUID: JhfIgyMGf6aLDnSKqAMYLhT_-sEV1I9_
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-01-15_11,2025-01-15_02,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ malwarescore=0 impostorscore=0 mlxlogscore=999 bulkscore=0 suspectscore=0
+ clxscore=1015 spamscore=0 adultscore=0 priorityscore=1501 phishscore=0
+ mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2501160015
 
-Hello,
 
-> Could this series be picked up?
 
-Sorry for the delay!  We should be good for the v6.14 release, hopefully.
+On 12/13/2024 2:14 PM, Dmitry Baryshkov wrote:
+> Inline the _setup_ctl_ops() function, it makes it easier to handle
+> different conditions involving CTL configuration.
+> 
 
-	Krzysztof
+Nothing really wrong with the change. Like the previous patch, would 
+like to check the other changes to see where we are going with this and 
+get back to this one.
+
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c | 96 ++++++++++++++----------------
+>   1 file changed, 46 insertions(+), 50 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
+> index 4893f10d6a5832521808c0f4d8b231c356dbdc41..9a958a0c19f54c2ed2c204e314dfa8cd9e735111 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
+> @@ -687,55 +687,6 @@ static void dpu_hw_ctl_set_fetch_pipe_active(struct dpu_hw_ctl *ctx,
+>   	DPU_REG_WRITE(&ctx->hw, CTL_FETCH_PIPE_ACTIVE, val);
+>   }
+>   
+> -static void _setup_ctl_ops(struct dpu_hw_ctl_ops *ops,
+> -		unsigned long cap)
+> -{
+> -	if (cap & BIT(DPU_CTL_ACTIVE_CFG)) {
+> -		ops->trigger_flush = dpu_hw_ctl_trigger_flush_v1;
+> -		ops->setup_intf_cfg = dpu_hw_ctl_intf_cfg_v1;
+> -		ops->reset_intf_cfg = dpu_hw_ctl_reset_intf_cfg_v1;
+> -		ops->update_pending_flush_intf =
+> -			dpu_hw_ctl_update_pending_flush_intf_v1;
+> -
+> -		ops->update_pending_flush_periph =
+> -			dpu_hw_ctl_update_pending_flush_periph_v1;
+> -
+> -		ops->update_pending_flush_merge_3d =
+> -			dpu_hw_ctl_update_pending_flush_merge_3d_v1;
+> -		ops->update_pending_flush_wb = dpu_hw_ctl_update_pending_flush_wb_v1;
+> -		ops->update_pending_flush_dsc =
+> -			dpu_hw_ctl_update_pending_flush_dsc_v1;
+> -		ops->update_pending_flush_cdm = dpu_hw_ctl_update_pending_flush_cdm_v1;
+> -	} else {
+> -		ops->trigger_flush = dpu_hw_ctl_trigger_flush;
+> -		ops->setup_intf_cfg = dpu_hw_ctl_intf_cfg;
+> -		ops->update_pending_flush_intf =
+> -			dpu_hw_ctl_update_pending_flush_intf;
+> -		ops->update_pending_flush_wb = dpu_hw_ctl_update_pending_flush_wb;
+> -		ops->update_pending_flush_cdm = dpu_hw_ctl_update_pending_flush_cdm;
+> -	}
+> -	ops->clear_pending_flush = dpu_hw_ctl_clear_pending_flush;
+> -	ops->update_pending_flush = dpu_hw_ctl_update_pending_flush;
+> -	ops->get_pending_flush = dpu_hw_ctl_get_pending_flush;
+> -	ops->get_flush_register = dpu_hw_ctl_get_flush_register;
+> -	ops->trigger_start = dpu_hw_ctl_trigger_start;
+> -	ops->is_started = dpu_hw_ctl_is_started;
+> -	ops->trigger_pending = dpu_hw_ctl_trigger_pending;
+> -	ops->reset = dpu_hw_ctl_reset_control;
+> -	ops->wait_reset_status = dpu_hw_ctl_wait_reset_status;
+> -	ops->clear_all_blendstages = dpu_hw_ctl_clear_all_blendstages;
+> -	ops->setup_blendstage = dpu_hw_ctl_setup_blendstage;
+> -	ops->update_pending_flush_sspp = dpu_hw_ctl_update_pending_flush_sspp;
+> -	ops->update_pending_flush_mixer = dpu_hw_ctl_update_pending_flush_mixer;
+> -	if (cap & BIT(DPU_CTL_DSPP_SUB_BLOCK_FLUSH))
+> -		ops->update_pending_flush_dspp = dpu_hw_ctl_update_pending_flush_dspp_sub_blocks;
+> -	else
+> -		ops->update_pending_flush_dspp = dpu_hw_ctl_update_pending_flush_dspp;
+> -
+> -	if (cap & BIT(DPU_CTL_FETCH_ACTIVE))
+> -		ops->set_active_pipes = dpu_hw_ctl_set_fetch_pipe_active;
+> -};
+> -
+>   /**
+>    * dpu_hw_ctl_init() - Initializes the ctl_path hw driver object.
+>    * Should be called before accessing any ctl_path register.
+> @@ -761,7 +712,52 @@ struct dpu_hw_ctl *dpu_hw_ctl_init(struct drm_device *dev,
+>   	c->hw.log_mask = DPU_DBG_MASK_CTL;
+>   
+>   	c->caps = cfg;
+> -	_setup_ctl_ops(&c->ops, c->caps->features);
+> +
+> +	if (c->caps->features & BIT(DPU_CTL_ACTIVE_CFG)) {
+> +		c->ops.trigger_flush = dpu_hw_ctl_trigger_flush_v1;
+> +		c->ops.setup_intf_cfg = dpu_hw_ctl_intf_cfg_v1;
+> +		c->ops.reset_intf_cfg = dpu_hw_ctl_reset_intf_cfg_v1;
+> +		c->ops.update_pending_flush_intf =
+> +			dpu_hw_ctl_update_pending_flush_intf_v1;
+> +
+> +		c->ops.update_pending_flush_periph =
+> +			dpu_hw_ctl_update_pending_flush_periph_v1;
+> +
+> +		c->ops.update_pending_flush_merge_3d =
+> +			dpu_hw_ctl_update_pending_flush_merge_3d_v1;
+> +		c->ops.update_pending_flush_wb = dpu_hw_ctl_update_pending_flush_wb_v1;
+> +		c->ops.update_pending_flush_dsc =
+> +			dpu_hw_ctl_update_pending_flush_dsc_v1;
+> +		c->ops.update_pending_flush_cdm = dpu_hw_ctl_update_pending_flush_cdm_v1;
+> +	} else {
+> +		c->ops.trigger_flush = dpu_hw_ctl_trigger_flush;
+> +		c->ops.setup_intf_cfg = dpu_hw_ctl_intf_cfg;
+> +		c->ops.update_pending_flush_intf =
+> +			dpu_hw_ctl_update_pending_flush_intf;
+> +		c->ops.update_pending_flush_wb = dpu_hw_ctl_update_pending_flush_wb;
+> +		c->ops.update_pending_flush_cdm = dpu_hw_ctl_update_pending_flush_cdm;
+> +	}
+> +	c->ops.clear_pending_flush = dpu_hw_ctl_clear_pending_flush;
+> +	c->ops.update_pending_flush = dpu_hw_ctl_update_pending_flush;
+> +	c->ops.get_pending_flush = dpu_hw_ctl_get_pending_flush;
+> +	c->ops.get_flush_register = dpu_hw_ctl_get_flush_register;
+> +	c->ops.trigger_start = dpu_hw_ctl_trigger_start;
+> +	c->ops.is_started = dpu_hw_ctl_is_started;
+> +	c->ops.trigger_pending = dpu_hw_ctl_trigger_pending;
+> +	c->ops.reset = dpu_hw_ctl_reset_control;
+> +	c->ops.wait_reset_status = dpu_hw_ctl_wait_reset_status;
+> +	c->ops.clear_all_blendstages = dpu_hw_ctl_clear_all_blendstages;
+> +	c->ops.setup_blendstage = dpu_hw_ctl_setup_blendstage;
+> +	c->ops.update_pending_flush_sspp = dpu_hw_ctl_update_pending_flush_sspp;
+> +	c->ops.update_pending_flush_mixer = dpu_hw_ctl_update_pending_flush_mixer;
+> +	if (c->caps->features & BIT(DPU_CTL_DSPP_SUB_BLOCK_FLUSH))
+> +		c->ops.update_pending_flush_dspp = dpu_hw_ctl_update_pending_flush_dspp_sub_blocks;
+> +	else
+> +		c->ops.update_pending_flush_dspp = dpu_hw_ctl_update_pending_flush_dspp;
+> +
+> +	if (c->caps->features & BIT(DPU_CTL_FETCH_ACTIVE))
+> +		c->ops.set_active_pipes = dpu_hw_ctl_set_fetch_pipe_active;
+> +
+>   	c->idx = cfg->id;
+>   	c->mixer_count = mixer_count;
+>   	c->mixer_hw_caps = mixer;
+> 
 
