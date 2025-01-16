@@ -1,117 +1,135 @@
-Return-Path: <linux-arm-msm+bounces-45230-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-45231-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3F06DA135A7
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jan 2025 09:44:00 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id D2A28A135C5
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jan 2025 09:46:27 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 8481A7A34EC
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jan 2025 08:43:51 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 35A5C18870F5
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jan 2025 08:46:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0DA851D47BC;
-	Thu, 16 Jan 2025 08:43:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b="LEeZiJfR"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EF4721A38E1;
+	Thu, 16 Jan 2025 08:46:22 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from perceval.ideasonboard.com (perceval.ideasonboard.com [213.167.242.64])
+Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [185.203.201.7])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6273018E34A;
-	Thu, 16 Jan 2025 08:43:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.167.242.64
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FB8B1991AE
+	for <linux-arm-msm@vger.kernel.org>; Thu, 16 Jan 2025 08:46:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.203.201.7
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737017034; cv=none; b=kqh1HHPygKPc3Vr2yJaUjjYTWAirc79CdXUcyNosLzi0gJizOBvxUKZbOcGB/MFyGfyE/+kK73yTxhHaDUgC2+uj9x6WB6UnQtU+jznpeJK4j81YM85V6o/oK64CTBof9PIfFGur8XWXEXuGb5/hqNFujVoM8Fau3WJ+Q7DYwsg=
+	t=1737017182; cv=none; b=VgH7ePc3+e6t0yrrlVm6iE6ZU9QLJ50g0wPTEzkkTshNMMOJx2mXX1tPNGSkJ+32k4ckVapfaky+xqZDHzfIBwDuktEOYvoLiUHzWuBcws0QjFNrgFb3FZOmHukS/i4AgmLWZAShNVgHrS8O8C1NjRmRgLSs3CV9xxl+hF7TunY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737017034; c=relaxed/simple;
-	bh=YBJYqGqQ2U3g/glMhqBtVA7c9PNcNKm2bF2hwWN3X/8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=osWWPrdAO6iqZ6i9HBTI7MXGNRey7UcgmmScM9gB7etYLnxvqpY2Ak3b62Acf8j6+O4f3c4DfApKxVblSsC9L1GeLGExTIYMrSuBP8VmlhWOZoxVNwrCmK+QL1cVDekJakVDl1eYhrxE53RhwFx0TgS2mBun+LUYgMN6h0+ihRI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ideasonboard.com; spf=pass smtp.mailfrom=ideasonboard.com; dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b=LEeZiJfR; arc=none smtp.client-ip=213.167.242.64
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ideasonboard.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ideasonboard.com
-Received: from pendragon.ideasonboard.com (unknown [193.209.96.36])
-	by perceval.ideasonboard.com (Postfix) with ESMTPSA id 1CDD7169;
-	Thu, 16 Jan 2025 09:42:47 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
-	s=mail; t=1737016967;
-	bh=YBJYqGqQ2U3g/glMhqBtVA7c9PNcNKm2bF2hwWN3X/8=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=LEeZiJfRiaftp5JL3OuhSGJ31fbSk67YMrTfIULuryGPguJN8dhwOq+oPh23KD4oZ
-	 oDgG9Q7qiklC025s5e31jn5W8DZrWY3XLnKdac3TlZaKlReDu0jJF+McdlL4rZbfey
-	 vio2zbz4p7HYes9E+SH0Bj1kP+VRYA2cki8/bjIo=
-Date: Thu, 16 Jan 2025 10:43:40 +0200
-From: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-To: Daniel Stone <daniel@fooishbar.org>
-Cc: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	maarten.lankhorst@linux.intel.com, mripard@kernel.org,
-	airlied@gmail.com, simona@ffwll.ch, dri-devel@lists.freedesktop.org,
-	linux-mediatek@lists.infradead.org, freedreno@lists.freedesktop.org,
-	linux-arm-msm@vger.kernel.org, imx@lists.linux.dev,
-	linux-samsung-soc@vger.kernel.org, nouveau@lists.freedesktop.org,
-	virtualization@lists.linux.dev, spice-devel@lists.freedesktop.org,
-	linux-renesas-soc@vger.kernel.org,
-	linux-rockchip@lists.infradead.org, linux-tegra@vger.kernel.org,
-	intel-xe@lists.freedesktop.org, xen-devel@lists.xenproject.org,
-	Andy Yan <andyshrk@163.com>
-Subject: Re: [PATCH v2 25/25] drm/xlnx: Compute dumb-buffer sizes with
- drm_mode_size_dumb()
-Message-ID: <20250116084340.GF6754@pendragon.ideasonboard.com>
-References: <cdbe483d-0895-47aa-8c83-1c28220f4a02@ideasonboard.com>
- <bc97b92e-7f8a-4b92-af8a-20fa165ead55@suse.de>
- <f3ba05c7-6e49-4641-a3f9-ba418ebdb7c3@ideasonboard.com>
- <c6735280-7c32-4319-8ca9-a7305d8117c3@suse.de>
- <d67adb03-5cd0-4ac9-af58-cf4446dacee3@ideasonboard.com>
- <0ea6be58-0e04-4172-87cd-064a3e4a43bc@suse.de>
- <f35cb350-6be9-48ca-ad7e-e9dd418281d5@ideasonboard.com>
- <4af0b6a7-c16a-4187-bbf5-365a9c86de21@suse.de>
- <e327ad84-b5c9-4480-b873-dc3aca605538@ideasonboard.com>
- <CAPj87rOn=RQ615zyaEdFT2ADfPztU7+heVi0G34Rdg-=QO1cCw@mail.gmail.com>
+	s=arc-20240116; t=1737017182; c=relaxed/simple;
+	bh=SMS/WYXiS7wO6WMGkTraT9DMv2PEnR5eKZ+KSZvlOEs=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=HwJljY8LEUTOAGa9BW1YdkofIqnZrow182bjZyLdMrr3WAHpo8asjOxBgbhL2Vn9f7+S4Fgep3lTpw8va9Qgz3ba+11M4+gmMPTahp5zh7jbUfLDIEcQ8jB9HDlJRI3lw8XgVyMWx9K77W/3OF5GckmeGcEUlWUGYSlQcYUZ/e8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de; spf=pass smtp.mailfrom=pengutronix.de; arc=none smtp.client-ip=185.203.201.7
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pengutronix.de
+Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
+	by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+	(Exim 4.92)
+	(envelope-from <p.zabel@pengutronix.de>)
+	id 1tYLVo-0002fo-Ts; Thu, 16 Jan 2025 09:46:00 +0100
+Received: from lupine.office.stw.pengutronix.de ([2a0a:edc0:0:900:1d::4e] helo=lupine)
+	by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.96)
+	(envelope-from <p.zabel@pengutronix.de>)
+	id 1tYLVn-000DtB-0F;
+	Thu, 16 Jan 2025 09:45:59 +0100
+Received: from pza by lupine with local (Exim 4.96)
+	(envelope-from <p.zabel@pengutronix.de>)
+	id 1tYLVm-00029Z-3C;
+	Thu, 16 Jan 2025 09:45:58 +0100
+Message-ID: <9ea186e39afb4584f12758d2fa6a26a0b12389ec.camel@pengutronix.de>
+Subject: Re: [PATCH 5/7] phy: qcom: Add M31 based eUSB2 PHY driver
+From: Philipp Zabel <p.zabel@pengutronix.de>
+To: Melody Olvera <quic_molvera@quicinc.com>, Vinod Koul <vkoul@kernel.org>,
+  Kishon Vijay Abraham I <kishon@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Wesley Cheng <quic_wcheng@quicinc.com>, Greg
+ Kroah-Hartman <gregkh@linuxfoundation.org>,  Catalin Marinas
+ <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>, Bjorn Andersson
+ <andersson@kernel.org>,  Konrad Dybcio <konradybcio@kernel.org>, Satya
+ Durga Srinivasu Prabhala <quic_satyap@quicinc.com>, Trilok Soni
+ <quic_tsoni@quicinc.com>
+Cc: linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-usb@vger.kernel.org, linux-arm-kernel@lists.infradead.org
+Date: Thu, 16 Jan 2025 09:45:58 +0100
+In-Reply-To: <20250113-sm8750_usb_master-v1-5-09afe1dc2524@quicinc.com>
+References: <20250113-sm8750_usb_master-v1-0-09afe1dc2524@quicinc.com>
+	 <20250113-sm8750_usb_master-v1-5-09afe1dc2524@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.46.4-2 
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAPj87rOn=RQ615zyaEdFT2ADfPztU7+heVi0G34Rdg-=QO1cCw@mail.gmail.com>
+X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
+X-SA-Exim-Mail-From: p.zabel@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
 
-On Wed, Jan 15, 2025 at 02:34:26PM +0000, Daniel Stone wrote:
-> On Wed, 15 Jan 2025 at 14:20, Tomi Valkeinen wrote:
-> > No disagreement there, we need CREATE_DUMB2.
-> >
-> > My point is that we have the current UAPI, and we have userspace using
-> > it, but we don't have clear rules what the ioctl does with specific
-> > parameters, and we don't document how it has to be used.
-> >
-> > Perhaps the situation is bad, and all we can really say is that
-> > CREATE_DUMB only works for use with simple RGB formats, and the behavior
-> > for all other formats is platform specific. But I think even that would
-> > be valuable in the UAPI docs.
-> 
-> Yeah, CREATE_DUMB only works for use with simple RGB formats in a
-> linear layout. Not monochrome or YUV or tiled or displayed rotated or
-> whatever.
-> 
-> If it happens to accidentally work for other uses, that's fine, but
-> it's not generically reliable for anything other than simple linear
-> RGB. It's intended to let you do splash screens, consoles, recovery
-> password entries, and software-rendered compositors if you really
-> want. Anything more than that isn't 'dumb'.
+On Mo, 2025-01-13 at 13:52 -0800, Melody Olvera wrote:
+> From: Wesley Cheng <quic_wcheng@quicinc.com>
+>=20
+> On SM8750, the eUSB2 PHY used is M31 based. Add the initialization
+> sequences to bring it out of reset, and to initialize the associated eUSB=
+2
+> repeater as well.
+>=20
+> Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
+> Signed-off-by: Melody Olvera <quic_molvera@quicinc.com>
+> ---
+>  drivers/phy/qualcomm/Kconfig              |  12 +-
+>  drivers/phy/qualcomm/Makefile             |   1 +
+>  drivers/phy/qualcomm/phy-qcom-m31-eusb2.c | 269 ++++++++++++++++++++++++=
+++++++
+>  3 files changed, 281 insertions(+), 1 deletion(-)
+>=20
+[...]
+> diff --git a/drivers/phy/qualcomm/phy-qcom-m31-eusb2.c b/drivers/phy/qual=
+comm/phy-qcom-m31-eusb2.c
+> new file mode 100644
+> index 0000000000000000000000000000000000000000..e15529673e358db914936a60f=
+a605c872cd2511a
+> --- /dev/null
+> +++ b/drivers/phy/qualcomm/phy-qcom-m31-eusb2.c
+> @@ -0,0 +1,269 @@
+[...]
+> +static int m31eusb2_phy_probe(struct platform_device *pdev)
+> +{
+> +	struct phy_provider *phy_provider;
+> +	const struct m31_eusb2_priv_data *data;
+> +	struct device *dev =3D &pdev->dev;
+> +	struct m31eusb2_phy *phy;
+> +
+> +	phy =3D devm_kzalloc(dev, sizeof(*phy), GFP_KERNEL);
+> +	if (!phy)
+> +		return -ENOMEM;
+> +
+> +	data =3D of_device_get_match_data(dev);
+> +	if (IS_ERR(data))
+> +		return -EINVAL;
+> +	phy->data =3D data;
+> +
+> +	phy->base =3D devm_platform_ioremap_resource(pdev, 0);
+> +	if (IS_ERR(phy->base))
+> +		return PTR_ERR(phy->base);
+> +
+> +	phy->reset =3D devm_reset_control_get_exclusive_by_index(dev, 0);
 
-We have lots of software out there that rely on CREATE_DUMB supporting
-YUV linear formats, and lots of drivers (mostly on Arm I suppose) that
-implement YUV support in CREATE_DUMB. I'm fine replacing it with
-something better, but I think we need a standard ioctl that can create
-linear YUV buffers. I've been told many times that DRM doesn't want to
-standardize buffer allocation further than what CREATE_DUMB is made for.
-Can we reconsider this rule then ?
+The dt-bindings only specify a single reset, so there is no need to
+request by index. Just use
+	phy->reset =3D devm_reset_control_get_exclusive(dev, NULL);
 
--- 
-Regards,
-
-Laurent Pinchart
+regards
+Philipp
 
