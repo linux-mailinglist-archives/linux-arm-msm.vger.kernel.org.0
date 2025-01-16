@@ -1,446 +1,201 @@
-Return-Path: <linux-arm-msm+bounces-45253-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-45254-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 52673A137BB
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jan 2025 11:22:22 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id F204CA137CC
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jan 2025 11:27:00 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 63862163C14
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jan 2025 10:22:20 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3294F188A28C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jan 2025 10:27:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2671F1DB365;
-	Thu, 16 Jan 2025 10:22:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 84F6A1DDC0B;
+	Thu, 16 Jan 2025 10:26:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="UYyDKuON"
+	dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b="sAbVtvKb"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from perceval.ideasonboard.com (perceval.ideasonboard.com [213.167.242.64])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D526324A7C0;
-	Thu, 16 Jan 2025 10:22:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE8BC142E7C;
+	Thu, 16 Jan 2025 10:26:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.167.242.64
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737022938; cv=none; b=O+GOy3adfXshBmsJWqF1D637xuJLnC/2djBvbaD1xyLopFy5zg/mPng5rHU1xppPy/+Q36lX/Ecp1YzT6LamclkeOaSZ6O5H/nURvCqAA/ZzQWp+7qNE1H6nOWcB51G+H/rPRhOrqGFSOiCdG1KaOLJ0nnay++0ZomaVSdfM3e4=
+	t=1737023215; cv=none; b=hfJfa77IYBmPR08V97OCkcMTQMRZQofSmg3RDMrBmsCoKF3UFwDqhBYH+7KfmANeXgFj17xq9flSnp3JMyNDcmklBFbiycLoViAO+daaDWFodx1U73zie8UXJFR+jBz2RHc7EwyUhfu5P6Vy6rMRsP94RTTY6diBZRrVUF1MW1c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737022938; c=relaxed/simple;
-	bh=9agkVdPvXZKm63MhV+31RkmIoauze/xtsb5w013VQ3Y=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=GP84eMT697wd3sn+ptWaU6LJUmAjkq+QY1LsGCJgsWfqvHd2G8bEBWoP917q1B4ZttBVKIu08KFH2b+pMS3uXA9Vv4XVvLwBI6+fdN82anGqxlPnNQQJYdGpZYCm/a/kdqs60Fa2qdTqfnxVMJ2osyLODKIjCjG8EIjY06PUiCg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=UYyDKuON; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50G6i2Sp026132;
-	Thu, 16 Jan 2025 10:22:04 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	8W9/KSskqbAuWKNwr7Q3ftdIb5zQgo3ZNINCNlXenLw=; b=UYyDKuON1P1mmpZY
-	75FCmBE3U6iJRgnXjzsPP5Wt+7nUxRGXXRZw9pP0sVudMJeF7hc7Vr0nMhDiHQTQ
-	L4Lu8vNbjeH77aBlZBhuAotKoSSdinphBC22f0Ah9yIYVoLmlAJvTfujGyl1g1Sb
-	OwVN6VXUbJaJNNO82caVTcg0fL3xLTaWJb74nKDWuwvuU0SrwHN4nfS4mt10UVO4
-	ZO68FqizOEJfrAskBGhDfIoTAFlUjCyEx96/31DEya6/zbLVqCaDZiZ4kSILLwqb
-	PPNgBetD/8pPFKAjR6czjyDV/2AJ4USLxF8G/9eeNPplIb+ZBmzZHhq6m8otBrVr
-	uZ2OzA==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 446w3rgjca-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 16 Jan 2025 10:22:04 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 50GAM3Pe000887
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 16 Jan 2025 10:22:03 GMT
-Received: from [10.50.40.154] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 16 Jan
- 2025 02:21:56 -0800
-Message-ID: <054c5dcc-9bb3-3c38-9195-e9efd4189946@quicinc.com>
-Date: Thu, 16 Jan 2025 15:51:52 +0530
+	s=arc-20240116; t=1737023215; c=relaxed/simple;
+	bh=Z7ediVkgoetAGoCSEC+NS9LE30jZLpQmaH2NAmg+fKo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=mHFhL9fDUOytQ4cVTLb57vJ7fK0LlzQTZyvi1SY8QJqtTyUJKBpcJajYTVNbD/WSuUTuDYfc2loOmf7PMWblIa1jSSMkizlthlXJRK6zVorUQ7brHR2h8Y0hhXAwPLB6BJOsrl+f3/dmvjds+jWIPc/+lLUtrVo+g1KKQfG59hk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ideasonboard.com; spf=pass smtp.mailfrom=ideasonboard.com; dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b=sAbVtvKb; arc=none smtp.client-ip=213.167.242.64
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ideasonboard.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ideasonboard.com
+Received: from [192.168.88.20] (91-158-153-178.elisa-laajakaista.fi [91.158.153.178])
+	by perceval.ideasonboard.com (Postfix) with ESMTPSA id 42498526;
+	Thu, 16 Jan 2025 11:25:52 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
+	s=mail; t=1737023153;
+	bh=Z7ediVkgoetAGoCSEC+NS9LE30jZLpQmaH2NAmg+fKo=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=sAbVtvKbp7o8SfyrbwqpGIwVYmdgJpMjZmC6qEgRNe2H25LicDH6k69guisjqJioP
+	 8SncRl1CoC+3SXf6Y8cJQEuIj38aZG4lFFJrCQ0l8buZDLY37H2yUZEQna2GSs0Dn+
+	 1llb/TtQTaZKCXEOlL7x1MNtOgUhrQcJ6XdrIu2U=
+Message-ID: <710224b4-1b40-49e1-9985-3340c6e4138f@ideasonboard.com>
+Date: Thu, 16 Jan 2025 12:26:47 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [RFC PATCH v10 27/28] media: iris: enable video driver probe of
- SM8250 SoC
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 25/25] drm/xlnx: Compute dumb-buffer sizes with
+ drm_mode_size_dumb()
+To: Geert Uytterhoeven <geert@linux-m68k.org>
+Cc: Thomas Zimmermann <tzimmermann@suse.de>,
+ maarten.lankhorst@linux.intel.com, mripard@kernel.org, airlied@gmail.com,
+ simona@ffwll.ch, dri-devel@lists.freedesktop.org,
+ linux-mediatek@lists.infradead.org, freedreno@lists.freedesktop.org,
+ linux-arm-msm@vger.kernel.org, imx@lists.linux.dev,
+ linux-samsung-soc@vger.kernel.org, nouveau@lists.freedesktop.org,
+ virtualization@lists.linux.dev, spice-devel@lists.freedesktop.org,
+ linux-renesas-soc@vger.kernel.org, linux-rockchip@lists.infradead.org,
+ linux-tegra@vger.kernel.org, intel-xe@lists.freedesktop.org,
+ xen-devel@lists.xenproject.org,
+ Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+ Andy Yan <andyshrk@163.com>, Daniel Stone <daniel@fooishbar.org>
+References: <20250109150310.219442-1-tzimmermann@suse.de>
+ <20250109150310.219442-26-tzimmermann@suse.de>
+ <cdbe483d-0895-47aa-8c83-1c28220f4a02@ideasonboard.com>
+ <bc97b92e-7f8a-4b92-af8a-20fa165ead55@suse.de>
+ <f3ba05c7-6e49-4641-a3f9-ba418ebdb7c3@ideasonboard.com>
+ <c6735280-7c32-4319-8ca9-a7305d8117c3@suse.de>
+ <d67adb03-5cd0-4ac9-af58-cf4446dacee3@ideasonboard.com>
+ <0ea6be58-0e04-4172-87cd-064a3e4a43bc@suse.de>
+ <f35cb350-6be9-48ca-ad7e-e9dd418281d5@ideasonboard.com>
+ <4af0b6a7-c16a-4187-bbf5-365a9c86de21@suse.de>
+ <e327ad84-b5c9-4480-b873-dc3aca605538@ideasonboard.com>
+ <a2bbeb47-2569-4ee0-9265-92bab139bdc6@suse.de>
+ <f3833771-fcd7-45dc-9019-1525fef34429@ideasonboard.com>
+ <CAMuHMdXxYa+Na3XxpLTy=-eUL_zQ9kAiUKYu-E04u3KWApusSA@mail.gmail.com>
 Content-Language: en-US
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC: <quic_vgarodia@quicinc.com>, <quic_abhinavk@quicinc.com>,
-        <mchehab@kernel.org>, <robh@kernel.org>, <krzk+dt@kernel.org>,
-        <p.zabel@pengutronix.de>, <hverkuil@xs4all.nl>,
-        <sebastian.fricke@collabora.com>, <bryan.odonoghue@linaro.org>,
-        <neil.armstrong@linaro.org>, <nicolas@ndufresne.ca>,
-        <u.kleine-koenig@baylibre.com>, <stefan.schmidt@linaro.org>,
-        <lujianhua000@gmail.com>, <linux-arm-msm@vger.kernel.org>,
-        <linux-media@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <krzysztof.kozlowski@linaro.org>,
-        <johan@kernel.org>
-References: <20250116070234.4027116-1-quic_dikshita@quicinc.com>
- <opr6hm5ci2palw3ilj3qrotqnkxbrphngfknddd6yhgojf2ixm@kfu22wuaylek>
-From: Dikshita Agarwal <quic_dikshita@quicinc.com>
-In-Reply-To: <opr6hm5ci2palw3ilj3qrotqnkxbrphngfknddd6yhgojf2ixm@kfu22wuaylek>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 7omULrHf4ytU0GfuQo26upK5RvPmqa45
-X-Proofpoint-ORIG-GUID: 7omULrHf4ytU0GfuQo26upK5RvPmqa45
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-01-16_04,2025-01-16_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 clxscore=1015
- impostorscore=0 suspectscore=0 mlxlogscore=999 malwarescore=0 bulkscore=0
- adultscore=0 phishscore=0 mlxscore=0 lowpriorityscore=0 priorityscore=1501
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2411120000
- definitions=main-2501160076
+From: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+Autocrypt: addr=tomi.valkeinen@ideasonboard.com; keydata=
+ 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
+In-Reply-To: <CAMuHMdXxYa+Na3XxpLTy=-eUL_zQ9kAiUKYu-E04u3KWApusSA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
+Hi,
 
+On 16/01/2025 12:17, Geert Uytterhoeven wrote:
+> On Thu, Jan 16, 2025 at 11:03 AM Tomi Valkeinen
+> <tomi.valkeinen@ideasonboard.com> wrote:
+>> On 16/01/2025 10:09, Thomas Zimmermann wrote:
+>>> Am 15.01.25 um 15:20 schrieb Tomi Valkeinen:
+>>> [...]
+>>>>
+>>>> My point is that we have the current UAPI, and we have userspace using
+>>>> it, but we don't have clear rules what the ioctl does with specific
+>>>> parameters, and we don't document how it has to be used.
+>>>>
+>>>> Perhaps the situation is bad, and all we can really say is that
+>>>> CREATE_DUMB only works for use with simple RGB formats, and the
+>>>> behavior for all other formats is platform specific. But I think even
+>>>> that would be valuable in the UAPI docs.
+>>>
+>>> To be honest, I would not want to specify behavior for anything but the
+>>> linear RGB formats. If anything, I'd take Daniel's reply mail for
+>>> documentation as-is. Anyone stretching the UAPI beyond RGB is on their own.
+>>>
+>>>> Thinking about this, I wonder if this change is good for omapdrm or
+>>>> xilinx (probably other platforms too that support non-simple non-RGB
+>>>> formats via dumb buffers): without this patch, in both drivers, the
+>>>> pitch calculations just take the bpp as bit-per-pixels, align it up,
+>>>> and that's it.
+>>>>
+>>>> With this patch we end up using drm_driver_color_mode_format(), and
+>>>> aligning buffers according to RGB formats figured out via heuristics.
+>>>> It does happen to work, for the formats I tested, but it sounds like
+>>>> something that might easily not work, as it's doing adjustments based
+>>>> on wrong format.
+>>>>
+>>>> Should we have another version of drm_mode_size_dumb() which just
+>>>> calculates using the bpp, without the drm_driver_color_mode_format()
+>>>> path? Or does the drm_driver_color_mode_format() path provide some
+>>>> value for the drivers that do not currently do anything similar?
+>>>
+>>> With the RGB-only rule, using drm_driver_color_mode_format() makes
+>>> sense. It aligns dumb buffers and video=, provides error checking, and
+>>> overall harmonizes code. The fallback is only required because of the
+>>> existing odd cases that already bend the UAPI's rules.
+>>
+>> I have to disagree here.
+>>
+>> On the platforms I have been using (omap, tidss, xilinx, rcar) the dumb
+>> buffers are the only buffers you can get from the DRM driver. The dumb
+>> buffers have been used to allocate linear and multiplanar YUV buffers
+>> for a very long time on those platforms.
+>>
+>> I tried to look around, but I did not find any mentions that CREATE_DUMB
+>> should only be used for RGB buffers. Is anyone outside the core
+>> developers even aware of it?
+>>
+>> If we don't use dumb buffers there, where do we get the buffers? Maybe
+>> from a v4l2 device or from a gpu device, but often you don't have those.
+>> DMA_HEAP is there, of course.
+> 
+> Why can't there be a variant that takes a proper fourcc format instead of
+> an imprecise bpp value?
 
-On 1/16/2025 3:50 PM, Dmitry Baryshkov wrote:
-> On Thu, Jan 16, 2025 at 12:32:34PM +0530, Dikshita Agarwal wrote:
->> Initialize the platform data and enable video driver probe of SM8250
->> SoC. Add a kernel param to select between venus and iris drivers for
->> platforms supported by both drivers, for ex: SM8250.
->>
->> This is for preview only, and I will post a proper v10,
->> if everyone is OK with this RFC patch.
->>
->> Tested-by: Stefan Schmidt <stefan.schmidt@linaro.org> # x1e80100 (Dell XPS 13 9345)
->> Reviewed-by: Stefan Schmidt <stefan.schmidt@linaro.org>
->> Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8550-QRD
->> Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8550-SDK
->> Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
-> 
-> Hmm, it seems lore has only this patch from the whole series. Was it
-> sent properly?
-> 
-Sent this as RFC to avoid sending full series.
-Will send the while series v10 once everyone is happy with this patch.
->> ---
->>  drivers/media/platform/qcom/iris/Makefile     |   1 +
->>  drivers/media/platform/qcom/iris/iris_core.h  |   1 +
->>  .../platform/qcom/iris/iris_platform_common.h |   1 +
->>  .../platform/qcom/iris/iris_platform_sm8250.c | 149 ++++++++++++++++++
->>  drivers/media/platform/qcom/iris/iris_probe.c |  48 ++++++
->>  drivers/media/platform/qcom/venus/core.c      |   5 +
->>  drivers/media/platform/qcom/venus/core.h      |   1 +
->>  7 files changed, 206 insertions(+)
->>  create mode 100644 drivers/media/platform/qcom/iris/iris_platform_sm8250.c
->>
->> diff --git a/drivers/media/platform/qcom/iris/Makefile b/drivers/media/platform/qcom/iris/Makefile
->> index ca31db847273..a746681e03cd 100644
->> --- a/drivers/media/platform/qcom/iris/Makefile
->> +++ b/drivers/media/platform/qcom/iris/Makefile
->> @@ -9,6 +9,7 @@ iris-objs += iris_buffer.o \
->>               iris_hfi_gen2_packet.o \
->>               iris_hfi_gen2_response.o \
->>               iris_hfi_queue.o \
->> +             iris_platform_sm8250.o \
->>               iris_platform_sm8550.o \
->>               iris_power.o \
->>               iris_probe.o \
->> diff --git a/drivers/media/platform/qcom/iris/iris_core.h b/drivers/media/platform/qcom/iris/iris_core.h
->> index 37fb4919fecc..f2e478c25c02 100644
->> --- a/drivers/media/platform/qcom/iris/iris_core.h
->> +++ b/drivers/media/platform/qcom/iris/iris_core.h
->> @@ -107,5 +107,6 @@ struct iris_core {
->>  
->>  int iris_core_init(struct iris_core *core);
->>  void iris_core_deinit(struct iris_core *core);
->> +bool iris_should_not_bind(struct device *dev);
->>  
->>  #endif
->> diff --git a/drivers/media/platform/qcom/iris/iris_platform_common.h b/drivers/media/platform/qcom/iris/iris_platform_common.h
->> index 189dd081ad0a..af24ce4fc417 100644
->> --- a/drivers/media/platform/qcom/iris/iris_platform_common.h
->> +++ b/drivers/media/platform/qcom/iris/iris_platform_common.h
->> @@ -34,6 +34,7 @@ enum pipe_type {
->>  };
->>  
->>  extern struct iris_platform_data sm8550_data;
->> +extern struct iris_platform_data sm8250_data;
-> 
-> Keep it sorted, please.
-> 
->>  
->>  enum platform_clk_type {
->>  	IRIS_AXI_CLK,
->> diff --git a/drivers/media/platform/qcom/iris/iris_platform_sm8250.c b/drivers/media/platform/qcom/iris/iris_platform_sm8250.c
->> new file mode 100644
->> index 000000000000..b14b1c5d632c
->> --- /dev/null
->> +++ b/drivers/media/platform/qcom/iris/iris_platform_sm8250.c
->> @@ -0,0 +1,149 @@
->> +// SPDX-License-Identifier: GPL-2.0-only
->> +/*
->> + * Copyright (c) 2022-2024 Qualcomm Innovation Center, Inc. All rights reserved.
->> + */
->> +
->> +#include "iris_core.h"
->> +#include "iris_ctrls.h"
->> +#include "iris_platform_common.h"
->> +#include "iris_resources.h"
->> +#include "iris_hfi_gen1.h"
->> +#include "iris_hfi_gen1_defines.h"
->> +#include "iris_vpu_common.h"
->> +
->> +static struct platform_inst_fw_cap inst_fw_cap_sm8250[] = {
->> +	{
->> +		.cap_id = PIPE,
->> +		.min = PIPE_1,
->> +		.max = PIPE_4,
->> +		.step_or_mask = 1,
->> +		.value = PIPE_4,
->> +		.hfi_id = HFI_PROPERTY_PARAM_WORK_ROUTE,
->> +		.set = iris_set_pipe,
->> +	},
->> +	{
->> +		.cap_id = STAGE,
->> +		.min = STAGE_1,
->> +		.max = STAGE_2,
->> +		.step_or_mask = 1,
->> +		.value = STAGE_2,
->> +		.hfi_id = HFI_PROPERTY_PARAM_WORK_MODE,
->> +		.set = iris_set_stage,
->> +	},
->> +	{
->> +		.cap_id = DEBLOCK,
->> +		.min = 0,
->> +		.max = 1,
->> +		.step_or_mask = 1,
->> +		.value = 0,
->> +		.hfi_id = HFI_PROPERTY_CONFIG_VDEC_POST_LOOP_DEBLOCKER,
->> +		.set = iris_set_u32,
->> +	},
->> +};
->> +
->> +static struct platform_inst_caps platform_inst_cap_sm8250 = {
->> +	.min_frame_width = 128,
->> +	.max_frame_width = 8192,
->> +	.min_frame_height = 128,
->> +	.max_frame_height = 8192,
->> +	.max_mbpf = 138240,
->> +	.mb_cycles_vsp = 25,
->> +	.mb_cycles_vpp = 200,
->> +};
->> +
->> +static void iris_set_sm8250_preset_registers(struct iris_core *core)
->> +{
->> +	writel(0x0, core->reg_base + 0xB0088);
->> +}
->> +
->> +static const struct icc_info sm8250_icc_table[] = {
->> +	{ "cpu-cfg",    1000, 1000     },
->> +	{ "video-mem",  1000, 15000000 },
->> +};
->> +
->> +static const char * const sm8250_clk_reset_table[] = { "bus", "core" };
->> +
->> +static const struct bw_info sm8250_bw_table_dec[] = {
->> +	{ ((4096 * 2160) / 256) * 60, 2403000 },
->> +	{ ((4096 * 2160) / 256) * 30, 1224000 },
->> +	{ ((1920 * 1080) / 256) * 60,  812000 },
->> +	{ ((1920 * 1080) / 256) * 30,  416000 },
->> +};
->> +
->> +static const char * const sm8250_pmdomain_table[] = { "venus", "vcodec0" };
->> +
->> +static const char * const sm8250_opp_pd_table[] = { "mx" };
->> +
->> +static const struct platform_clk_data sm8250_clk_table[] = {
->> +	{IRIS_AXI_CLK,  "iface"        },
->> +	{IRIS_CTRL_CLK, "core"         },
->> +	{IRIS_HW_CLK,   "vcodec0_core" },
->> +};
->> +
->> +static struct tz_cp_config tz_cp_config_sm8250 = {
->> +	.cp_start = 0,
->> +	.cp_size = 0x25800000,
->> +	.cp_nonpixel_start = 0x01000000,
->> +	.cp_nonpixel_size = 0x24800000,
->> +};
->> +
->> +static const u32 sm8250_vdec_input_config_param[] = {
->> +	HFI_PROPERTY_PARAM_FRAME_SIZE,
->> +	HFI_PROPERTY_CONFIG_VIDEOCORES_USAGE,
->> +	HFI_PROPERTY_PARAM_UNCOMPRESSED_FORMAT_SELECT,
->> +	HFI_PROPERTY_PARAM_UNCOMPRESSED_PLANE_ACTUAL_CONSTRAINTS_INFO,
->> +	HFI_PROPERTY_PARAM_BUFFER_COUNT_ACTUAL,
->> +	HFI_PROPERTY_PARAM_VDEC_MULTI_STREAM,
->> +	HFI_PROPERTY_PARAM_BUFFER_SIZE_ACTUAL,
->> +	HFI_PROPERTY_PARAM_BUFFER_ALLOC_MODE,
->> +};
->> +
->> +static const u32 sm8250_dec_ip_int_buf_tbl[] = {
->> +	BUF_BIN,
->> +	BUF_SCRATCH_1,
->> +};
->> +
->> +static const u32 sm8250_dec_op_int_buf_tbl[] = {
->> +	BUF_DPB,
->> +};
->> +
->> +struct iris_platform_data sm8250_data = {
->> +	.get_instance = iris_hfi_gen1_get_instance,
->> +	.init_hfi_command_ops = &iris_hfi_gen1_command_ops_init,
->> +	.init_hfi_response_ops = iris_hfi_gen1_response_ops_init,
->> +	.vpu_ops = &iris_vpu2_ops,
->> +	.set_preset_registers = iris_set_sm8250_preset_registers,
->> +	.icc_tbl = sm8250_icc_table,
->> +	.icc_tbl_size = ARRAY_SIZE(sm8250_icc_table),
->> +	.clk_rst_tbl = sm8250_clk_reset_table,
->> +	.clk_rst_tbl_size = ARRAY_SIZE(sm8250_clk_reset_table),
->> +	.bw_tbl_dec = sm8250_bw_table_dec,
->> +	.bw_tbl_dec_size = ARRAY_SIZE(sm8250_bw_table_dec),
->> +	.pmdomain_tbl = sm8250_pmdomain_table,
->> +	.pmdomain_tbl_size = ARRAY_SIZE(sm8250_pmdomain_table),
->> +	.opp_pd_tbl = sm8250_opp_pd_table,
->> +	.opp_pd_tbl_size = ARRAY_SIZE(sm8250_opp_pd_table),
->> +	.clk_tbl = sm8250_clk_table,
->> +	.clk_tbl_size = ARRAY_SIZE(sm8250_clk_table),
->> +	/* Upper bound of DMA address range */
->> +	.dma_mask = 0xe0000000 - 1,
->> +	.fwname = "qcom/vpu-1.0/venus.mbn",
->> +	.pas_id = IRIS_PAS_ID,
->> +	.inst_caps = &platform_inst_cap_sm8250,
->> +	.inst_fw_caps = inst_fw_cap_sm8250,
->> +	.inst_fw_caps_size = ARRAY_SIZE(inst_fw_cap_sm8250),
->> +	.tz_cp_config_data = &tz_cp_config_sm8250,
->> +	.hw_response_timeout = HW_RESPONSE_TIMEOUT_VALUE,
->> +	.num_vpp_pipe = 4,
->> +	.max_session_count = 16,
->> +	.max_core_mbpf = (8192 * 4352) / 256,
->> +	.input_config_params =
->> +		sm8250_vdec_input_config_param,
->> +	.input_config_params_size =
->> +		ARRAY_SIZE(sm8250_vdec_input_config_param),
->> +
->> +	.dec_ip_int_buf_tbl = sm8250_dec_ip_int_buf_tbl,
->> +	.dec_ip_int_buf_tbl_size = ARRAY_SIZE(sm8250_dec_ip_int_buf_tbl),
->> +	.dec_op_int_buf_tbl = sm8250_dec_op_int_buf_tbl,
->> +	.dec_op_int_buf_tbl_size = ARRAY_SIZE(sm8250_dec_op_int_buf_tbl),
->> +};
->> diff --git a/drivers/media/platform/qcom/iris/iris_probe.c b/drivers/media/platform/qcom/iris/iris_probe.c
->> index 954cc7c0cc97..a9cec0d15dcb 100644
->> --- a/drivers/media/platform/qcom/iris/iris_probe.c
->> +++ b/drivers/media/platform/qcom/iris/iris_probe.c
->> @@ -189,6 +189,45 @@ static void iris_sys_error_handler(struct work_struct *work)
->>  	iris_core_init(core);
->>  }
->>  
->> +/* The venus driver supports only hfi gen1 to communicate with the firmware while
->> + * the iris driver supports both hfi gen1 and hfi gen2.
->> + * The support of hfi gen1 is added to the iris driver with the intention that
->> + * it can support old gen1 interface based firmware, while enabling gen2 based future SOCs.
->> + * With this, the plan is to migrate older SOCs from venus to iris.
->> + * As of now, since the iris driver supports only entry level features and doesn't have
->> + * feature parity with the venus driver, a runtime-selection is provided to user via
->> + * module parameter 'prefer_venus' to select the driver.
->> + * This selection is available only for the SoCs which are supported by both venus
->> + * and iris eg: SM8250.
->> + * When the feature parity is achieved, the plan is to switch the default to point to
->> + * the iris driver, then gradually start removing platforms from venus.
->> + * Hardware supported by only venus - 8916, 8996, SDM660, SDM845, SC7180, SC7280
-> 
-> Please mention that SC7280 should also be migrated to the Iris driver by
-> the interested parties.
-> 
->> + * Hardware supported by only iris - SM8550
->> + * Hardware supported by both venus and iris - SM8250
->> + */
->> +
->> +#if IS_REACHABLE(CONFIG_VIDEO_QCOM_VENUS)
->> +static bool prefer_venus = true;
->> +MODULE_PARM_DESC(prefer_venus, "Select whether venus or iris driver should be preferred");
->> +module_param(prefer_venus, bool, 0444);
->> +
->> +/* list all platforms supported by both venus and iris drivers */
->> +static const char *const venus_to_iris_migration[] = {
->> +	"qcom,sm8250-venus",
->> +	NULL,
->> +};
->> +
->> +bool iris_should_not_bind(struct device *dev)
->> +{
->> +	/* If it is in the migration list, use venus */
->> +	if (of_device_compatible_match(dev->of_node, venus_to_iris_migration))
->> +		return prefer_venus;
->> +
->> +	return false;
->> +}
->> +EXPORT_SYMBOL_GPL(iris_should_not_bind);
->> +#endif
->> +
->>  static int iris_probe(struct platform_device *pdev)
->>  {
->>  	struct device *dev = &pdev->dev;
->> @@ -196,6 +235,11 @@ static int iris_probe(struct platform_device *pdev)
->>  	u64 dma_mask;
->>  	int ret;
->>  
->> +#if IS_REACHABLE(CONFIG_VIDEO_QCOM_VENUS)
->> +	if (iris_should_not_bind(&pdev->dev))
->> +		return -ENODEV;
->> +#endif
->> +
->>  	core = devm_kzalloc(&pdev->dev, sizeof(*core), GFP_KERNEL);
->>  	if (!core)
->>  		return -ENOMEM;
->> @@ -324,6 +368,10 @@ static const struct of_device_id iris_dt_match[] = {
->>  		.compatible = "qcom,sm8550-iris",
->>  		.data = &sm8550_data,
->>  	},
->> +	{
->> +		.compatible = "qcom,sm8250-venus",
->> +		.data = &sm8250_data,
->> +	},
->>  	{ },
->>  };
->>  MODULE_DEVICE_TABLE(of, iris_dt_match);
->> diff --git a/drivers/media/platform/qcom/venus/core.c b/drivers/media/platform/qcom/venus/core.c
->> index 77d48578ecd2..9116188bfe74 100644
->> --- a/drivers/media/platform/qcom/venus/core.c
->> +++ b/drivers/media/platform/qcom/venus/core.c
->> @@ -375,6 +375,11 @@ static int venus_probe(struct platform_device *pdev)
->>  	struct venus_core *core;
->>  	int ret;
->>  
->> +#if IS_REACHABLE(CONFIG_VIDEO_QCOM_IRIS)
->> +	if (!iris_should_not_bind(&pdev->dev))
->> +		return -ENODEV;
->> +#endif
->> +
-> 
-> The practice of having preprocessor code in function body is frowned
-> upon. Please add a stub function instead.
-> 
-> Also, as I wrote earlier, this call will result in (unnecessary) runtime
-> dependency from venus to the iris module. Please add a small helper
-> module which basically contains this function (and a separate header
-> file for it). Then both iris and venus drivers can use that function.
-> 
->>  	core = devm_kzalloc(dev, sizeof(*core), GFP_KERNEL);
->>  	if (!core)
->>  		return -ENOMEM;
->> diff --git a/drivers/media/platform/qcom/venus/core.h b/drivers/media/platform/qcom/venus/core.h
->> index abeeafa86697..e2e7d8ec9807 100644
->> --- a/drivers/media/platform/qcom/venus/core.h
->> +++ b/drivers/media/platform/qcom/venus/core.h
->> @@ -570,4 +570,5 @@ is_fw_rev_or_older(struct venus_core *core, u32 vmajor, u32 vminor, u32 vrev)
->>  }
->>  
->>  void venus_close_common(struct venus_inst *inst);
->> +extern bool iris_should_not_bind(struct device *dev);
->>  #endif
->> -- 
->> 2.34.1
->>
-> 
+There can, but it's somewhat a different topic, although it's been 
+covered a bit in this thread.
+
+My specific concern here is the current CREATE_DUMB, and (not) changing 
+how it behaves.
+
+  Tomi
+
 
