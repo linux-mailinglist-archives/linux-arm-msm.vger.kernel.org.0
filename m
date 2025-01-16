@@ -1,174 +1,190 @@
-Return-Path: <linux-arm-msm+bounces-45255-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-45256-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9CC16A137EC
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jan 2025 11:31:01 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C754FA13806
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jan 2025 11:35:48 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id D2027188A78C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jan 2025 10:31:04 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 457063A14CF
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jan 2025 10:35:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9DFB11DDC1E;
-	Thu, 16 Jan 2025 10:30:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AB17D1DDC2B;
+	Thu, 16 Jan 2025 10:35:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="V8s3vsPv"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="HqHF9F/G"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f51.google.com (mail-lf1-f51.google.com [209.85.167.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 697DB1D7E4F;
-	Thu, 16 Jan 2025 10:30:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC27D1DC9A2
+	for <linux-arm-msm@vger.kernel.org>; Thu, 16 Jan 2025 10:35:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737023456; cv=none; b=Rc87et5+bX0Vz1mTfu4xKeCAnB8p0ueKGwD4p034737DajypruCs8bYaeJxt+/O9A30fg3SfqLrs/Hj1dMe84PnX0scFfqTrEqhm0PdEYG08dJ8/ioWLLzFdKnBmgRytbA2mrQOrNKURip5GEpJhMBiolSOc9gbauPBir75LZL0=
+	t=1737023742; cv=none; b=fGGR8Swaashw9zsAAUsbN5cqyTwLqokNUuuJC0xVA8wAWMrhXihigwIRH8VKRfsiMpX4cf8UXzMVGCUTrrcwUflmVubG2j/B02WfrXmkbrDjCPd14F51Fsttdr9lMjyFZTnSCijxTt4jCIv3A/3F1tMk48sP+yfsyFIYCe3RpGg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737023456; c=relaxed/simple;
-	bh=wlfP20++AfjWBWU6+BjcTU8VdaNrbUKD+zKb/eJeY+U=;
+	s=arc-20240116; t=1737023742; c=relaxed/simple;
+	bh=6DNeYuaaCEB0QmL3/61d3YZghnfgrzyOqtsXzdxA9lg=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=t3hxX87TlHKc8AQVHv9KSadQvLayeMWHidKi3CSNzAyyPQkDQe41w/w3Z/PAmCkkdw5ZHtcoL1q9WL9lttDWIy0zTc8Vzn6lnZDt8v543Q29OdjYbgiHPLJI1lEflX10xHEY17dxx7n1AX/XZkukOe505Tl14AH2ARLIFBhPt38=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=V8s3vsPv; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3E09C4CED6;
-	Thu, 16 Jan 2025 10:30:52 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1737023456;
-	bh=wlfP20++AfjWBWU6+BjcTU8VdaNrbUKD+zKb/eJeY+U=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=V8s3vsPv3bTOW64kFyd85LWHYsm/bbinKNwqixy1CuOEIRPW7AbHbFV2UtlEn+QEN
-	 jfiUgQCR/+/TOWK8z2PaionDMPUlO/TL4v06YCw/gkjgOA/Rqhy3ZZG+1VmrPmb86f
-	 bTYRHIJihtOfmdmjYSrYwg8fCEx+PJ3Wmw/1DIIUk4k9J9DQrTocnXp0a5oYguEZVh
-	 R1UuasJmEYcRxo6rxKDZ7n2dC0j/RmrFSRRuMUG5+jhYtHMnKonLyBCZl77IJ2vfyz
-	 7ONcgSccq2JfzGPyygPwhSyizvfkyBrD8eooX62G8V7NNCkgqZ/4WvLyUb2WVTupvx
-	 DfeElf3joPBUw==
-Date: Thu, 16 Jan 2025 11:30:50 +0100
-From: Niklas Cassel <cassel@kernel.org>
-To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc: Vinod Koul <vkoul@kernel.org>, kw@linux.com, gregkh@linuxfoundation.org,
-	arnd@arndb.de, lpieralisi@kernel.org, shuah@kernel.org,
-	kishon@kernel.org, linux-pci@vger.kernel.org,
-	linux-kernel@vger.kernel.org, bhelgaas@google.com,
-	linux-arm-msm@vger.kernel.org, robh@kernel.org,
-	linux-kselftest@vger.kernel.org,
-	Aman Gupta <aman1.gupta@samsung.com>,
-	Padmanabhan Rajanbabu <p.rajanbabu@samsung.com>
-Subject: Re: [PATCH v4 3/3] selftests: pci_endpoint: Migrate to Kselftest
- framework
-Message-ID: <Z4jf2s5SaUu3wdJi@ryzen>
-References: <20241231131341.39292-1-manivannan.sadhasivam@linaro.org>
- <20241231131341.39292-4-manivannan.sadhasivam@linaro.org>
- <Z3QtEihbiKIGogWA@ryzen>
- <20241231191812.ymyss2dh7naz4oda@thinkpad>
- <2C16240A-28F8-4D9B-9FD7-33E4E6F0879E@kernel.org>
- <20250102070404.aempesitsqktfnle@thinkpad>
- <Z3ahUuSjRv66L_g9@ryzen>
- <20250116044725.ooskvqlh2lpdr2xx@thinkpad>
+	 Content-Type:Content-Disposition:In-Reply-To; b=jRPsmC/g53q/FBUbE5tC8luyHRIxFzdTdXl9NhTYiEngisPJ58ci4Vj2Z3a17rdYaXyeS3euOjOp6q6dl9Xd3LIByKr+yH5lYPAi5v75zSn7b4vXygM8j7Fsxcke7yMGEeJsj5eehSnJdy+Yq8VknE0SW3u8+qrTp3q2jtebsTg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=HqHF9F/G; arc=none smtp.client-ip=209.85.167.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f51.google.com with SMTP id 2adb3069b0e04-5401c52000dso841860e87.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Jan 2025 02:35:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1737023739; x=1737628539; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=gprmJm/Cl6p6869D60XQ3XjbtrOWLJEOxZITgqe2J5o=;
+        b=HqHF9F/Go7BA24+9BcueD0XVMMvTvDq+J44+b7vfGADW5tpGa/4t+v9PQYkLyJ7LS5
+         I5NTgAsY2nEYR0j3sqD5FPuOmH/8wcG8NJuA4MPptVSw8m5Y86mgZb3KIKQ5qsUSU5nc
+         3/9bCOcbgHpzrOo5uAp4rzYofLkjRIFysY/p6S1pR2AGHnm1BFPBO45WcDCRgUxCMY+d
+         XUrPa2H9K5v0F3YZ2HGQY14qq1RHWC01KNLbe6ELLL16xSWgSxWZ1xaloo95l8E19vDv
+         LxLqCg6aE49TDSH6FHPe/0a6hRaej+LhIowvPqtUrRJa5Kv3ywpCrSx54hcEz7qp+s08
+         S3Ow==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1737023739; x=1737628539;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=gprmJm/Cl6p6869D60XQ3XjbtrOWLJEOxZITgqe2J5o=;
+        b=Zo2v41lrxkkNRh2wBbK3SP4M38zzvQyW/fjXgtaULXrdhgTVzuh/2zTPcuPoQI2lFN
+         LiLb8h9WhFL1/0RE2z3kYCMTMUz3Inxurn2rfDgZIajgIiSGwPSHWxwJz0P1160Mlazg
+         z/Zg6KpZNWrxCnJPeuqVsHP8O0Kl5mTmE/G2ofBYi+jmGvR8Hikb+Yq60H5RuEftl2Yd
+         qL4r/4nyPesMlPpUsaogiQQ1A21nMSJKr+AZMuXLL/Or027AN1MYenFnStkm7tSJ2NzR
+         cuUFt7HY70BbxD7Mxta5GFM9M54IBbf8ybZZyK0e0pZ4nHo8wjFODsT6lSWW6gaXD3da
+         o3/A==
+X-Forwarded-Encrypted: i=1; AJvYcCUZfxKwEH/LMdfJiUgFJGtELRTPuVyVIFMMxjZCTY5Z+XJK0WW/0tH3ThkPPTFV1H9l8Vlthvp8S3Ke9rsi@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw/x1jH1uKd/D2F2Q8m1Kj3TfRN6c0jqMrJW2JB+vyNuNfupGVu
+	OnprMm17+wg0sSGtjzEGftZoRQpVIrMNdoUl49O2uwfpHwJq2DDdIcKgkRVClUw=
+X-Gm-Gg: ASbGnctpVmURA3rz9Pvbv4ULHCNAR0gfSYpNVnRF4KVzDRk3JbR0Zw8p8XSHtyYZVaL
+	WF/XZWju87HMZZjS8bck9+JP18lKvVRM25M5YwGJ5CpVsnrtO2uF2WFQ46Yo1KJGKX3xaCmcMJF
+	shDM0Zefl5Fee99iFFaRMfv5JMIpbAEat2Z5bXmPGuMSbLDRu2vBYoTOTUmNkkaXcwUHUnIguqW
+	GZqvwbHC7enOMLHW+oyjG/Ur7uNXkthVvqzRmm0yGPIFrs4oqfZGSKgLL367GmAf3jFh8F3q15Q
+	kboe9Wy898G1gHf5fC5vviWXiTAGldJXG7Ip
+X-Google-Smtp-Source: AGHT+IH3G1Mnr8k23AF5/dIs7iAuJyOHJCwOMDmvWc4umnN+swRWG+FLBCp9QsFSdvm1xDWFrQeEdg==
+X-Received: by 2002:a05:6512:3d27:b0:540:20a9:9ab5 with SMTP id 2adb3069b0e04-54284824476mr9777793e87.50.1737023738809;
+        Thu, 16 Jan 2025 02:35:38 -0800 (PST)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5428be49d6esm2261466e87.50.2025.01.16.02.35.36
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 16 Jan 2025 02:35:37 -0800 (PST)
+Date: Thu, 16 Jan 2025 12:35:35 +0200
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Geert Uytterhoeven <geert@linux-m68k.org>
+Cc: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>, 
+	Thomas Zimmermann <tzimmermann@suse.de>, maarten.lankhorst@linux.intel.com, mripard@kernel.org, 
+	airlied@gmail.com, simona@ffwll.ch, dri-devel@lists.freedesktop.org, 
+	linux-mediatek@lists.infradead.org, freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org, 
+	imx@lists.linux.dev, linux-samsung-soc@vger.kernel.org, nouveau@lists.freedesktop.org, 
+	virtualization@lists.linux.dev, spice-devel@lists.freedesktop.org, 
+	linux-renesas-soc@vger.kernel.org, linux-rockchip@lists.infradead.org, linux-tegra@vger.kernel.org, 
+	intel-xe@lists.freedesktop.org, xen-devel@lists.xenproject.org, 
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>, Andy Yan <andyshrk@163.com>, Daniel Stone <daniel@fooishbar.org>
+Subject: Re: [PATCH v2 25/25] drm/xlnx: Compute dumb-buffer sizes with
+ drm_mode_size_dumb()
+Message-ID: <xz5ncq67bgmdase2jg3cfvyaxpiwhol2eqpfzow6dqpauvslo5@2w3rw27lhnxo>
+References: <f3ba05c7-6e49-4641-a3f9-ba418ebdb7c3@ideasonboard.com>
+ <c6735280-7c32-4319-8ca9-a7305d8117c3@suse.de>
+ <d67adb03-5cd0-4ac9-af58-cf4446dacee3@ideasonboard.com>
+ <0ea6be58-0e04-4172-87cd-064a3e4a43bc@suse.de>
+ <f35cb350-6be9-48ca-ad7e-e9dd418281d5@ideasonboard.com>
+ <4af0b6a7-c16a-4187-bbf5-365a9c86de21@suse.de>
+ <e327ad84-b5c9-4480-b873-dc3aca605538@ideasonboard.com>
+ <a2bbeb47-2569-4ee0-9265-92bab139bdc6@suse.de>
+ <f3833771-fcd7-45dc-9019-1525fef34429@ideasonboard.com>
+ <CAMuHMdXxYa+Na3XxpLTy=-eUL_zQ9kAiUKYu-E04u3KWApusSA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20250116044725.ooskvqlh2lpdr2xx@thinkpad>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAMuHMdXxYa+Na3XxpLTy=-eUL_zQ9kAiUKYu-E04u3KWApusSA@mail.gmail.com>
 
-On Thu, Jan 16, 2025 at 10:17:25AM +0530, Manivannan Sadhasivam wrote:
-> On Thu, Jan 02, 2025 at 03:23:14PM +0100, Niklas Cassel wrote:
-> > Hello Mani, Vinod,
-> > 
-> > On Thu, Jan 02, 2025 at 12:34:04PM +0530, Manivannan Sadhasivam wrote:
-> > > On Tue, Dec 31, 2024 at 08:33:57PM +0100, Niklas Cassel wrote:
-> > > > 
-> > > > I have some patches that adds DMA_MEMCPY to dw-edma, but I'm not sure if the DWC eDMA hardware supports having both src and dst as PCI addresses, or if only one of them can be a PCI address (with the other one being a local address).
-> > > > 
-> > > > If only one of them can be a PCI address, then I'm not sure if your suggested patch is correct.
-> > > > 
-> > > 
-> > > I don't see why that would be an issue. DMA_MEMCPY is independent of PCI/local
-> > > addresses. If a dmaengine driver support doing MEMCPY, then the dma cap should
-> > > be sufficient. As you said, if a controller supports both SLAVE and MEMCPY, the
-> > > test currently errors out, which is wrong.
-> > 
-> > While I am okay with your suggested change to pci-epf-test.c:
-> > > >-               if (epf_test->dma_private) {
-> > > >+               if (!dma_has_cap(DMA_MEMCPY, epf_test->dma_chan_tx->device->cap_mask)) {
-> > 
-> > Since this will ensure that a DMA driver implementing DMA_MEMCPY,
-> > which cannot be shared (has DMA_PRIVATE set), will not error out.
-> > 
-> > 
-> > What I'm trying to explain is that in:
-> > https://lore.kernel.org/linux-pci/Z2BW4CjdE1p50AhC@vaman/
-> > https://lore.kernel.org/linux-pci/20241217090129.6dodrgi4tn7l3cod@thinkpad/
-> > 
-> > Vinod (any you) suggested that we should add support for prep_memcpy()
-> > (which implies also setting cap DMA_MEMCPY) in the dw-edma DMA driver.
-> > 
-> > However, from section "6.3 Using the DMA" in the DWC databook,
-> > the DWC eDMA hardware only supports:
-> > - Transfer (copy) of a block of data from local memory to remote memory.
-> > - Transfer (copy) of a block of data from remote memory to local memory.
-> > 
-> > 
-> > Currently, we have:
-> > https://github.com/torvalds/linux/blob/v6.13-rc5/include/linux/dmaengine.h#L843-L844
-> > https://github.com/torvalds/linux/blob/v6.13-rc5/drivers/dma/dw-edma/dw-edma-core.c#L215-L231
-> > 
-> > Where we can expose per-channel capabilities, so we set MEM_TO_DEV/DEV_TO_MEM
-> > per channel, however, these are returned in a struct dma_slave_caps *caps,
-> > so this is AFAICT only for DMA_SLAVE, not for DMA_MEMCPY.
-> > 
-> > Looking at:
-> > https://github.com/torvalds/linux/blob/v6.13-rc5/include/linux/dmaengine.h#L975-L979
-> > it seems that DMA_MEMCPY is always assumed to be MEM_TO_MEM.
-> > 
-> > To me, it seems that we would either need a new dma_transaction_type (e.g. DMA_COPY)
-> > where we can set dir:
-> > MEM_TO_DEV, DEV_TO_MEM, or DEV_TO_DEV. (dw-edma would not support DEV_TO_DEV.)
-> > 
-> > Or, if we should stick with DMA_MEMCPY, we would need another way of telling
-> > client drivers that only src or dst can be a remote address.
-> > 
-> > Until this is solved, I think I will stop my work on adding DMA_MEMCPY to the
-> > dw-edma driver.
-> > 
+On Thu, Jan 16, 2025 at 11:17:50AM +0100, Geert Uytterhoeven wrote:
+> On Thu, Jan 16, 2025 at 11:03 AM Tomi Valkeinen
+> <tomi.valkeinen@ideasonboard.com> wrote:
+> > On 16/01/2025 10:09, Thomas Zimmermann wrote:
+> > > Am 15.01.25 um 15:20 schrieb Tomi Valkeinen:
+> > > [...]
+> > >>
+> > >> My point is that we have the current UAPI, and we have userspace using
+> > >> it, but we don't have clear rules what the ioctl does with specific
+> > >> parameters, and we don't document how it has to be used.
+> > >>
+> > >> Perhaps the situation is bad, and all we can really say is that
+> > >> CREATE_DUMB only works for use with simple RGB formats, and the
+> > >> behavior for all other formats is platform specific. But I think even
+> > >> that would be valuable in the UAPI docs.
+> > >
+> > > To be honest, I would not want to specify behavior for anything but the
+> > > linear RGB formats. If anything, I'd take Daniel's reply mail for
+> > > documentation as-is. Anyone stretching the UAPI beyond RGB is on their own.
+> > >
+> > >> Thinking about this, I wonder if this change is good for omapdrm or
+> > >> xilinx (probably other platforms too that support non-simple non-RGB
+> > >> formats via dumb buffers): without this patch, in both drivers, the
+> > >> pitch calculations just take the bpp as bit-per-pixels, align it up,
+> > >> and that's it.
+> > >>
+> > >> With this patch we end up using drm_driver_color_mode_format(), and
+> > >> aligning buffers according to RGB formats figured out via heuristics.
+> > >> It does happen to work, for the formats I tested, but it sounds like
+> > >> something that might easily not work, as it's doing adjustments based
+> > >> on wrong format.
+> > >>
+> > >> Should we have another version of drm_mode_size_dumb() which just
+> > >> calculates using the bpp, without the drm_driver_color_mode_format()
+> > >> path? Or does the drm_driver_color_mode_format() path provide some
+> > >> value for the drivers that do not currently do anything similar?
+> > >
+> > > With the RGB-only rule, using drm_driver_color_mode_format() makes
+> > > sense. It aligns dumb buffers and video=, provides error checking, and
+> > > overall harmonizes code. The fallback is only required because of the
+> > > existing odd cases that already bend the UAPI's rules.
+> >
+> > I have to disagree here.
+> >
+> > On the platforms I have been using (omap, tidss, xilinx, rcar) the dumb
+> > buffers are the only buffers you can get from the DRM driver. The dumb
+> > buffers have been used to allocate linear and multiplanar YUV buffers
+> > for a very long time on those platforms.
+> >
+> > I tried to look around, but I did not find any mentions that CREATE_DUMB
+> > should only be used for RGB buffers. Is anyone outside the core
+> > developers even aware of it?
+> >
+> > If we don't use dumb buffers there, where do we get the buffers? Maybe
+> > from a v4l2 device or from a gpu device, but often you don't have those.
+> > DMA_HEAP is there, of course.
 > 
-> I think your concern is regarding setting the DMA transfer direction for MEMCPY,
-> right? And you are saying that even if we use tx/rx channels, currently we
-> cannot set DEV_TO_DEV like directions?
+> Why can't there be a variant that takes a proper fourcc format instead of
+> an imprecise bpp value?
+
+Backwards compatibility. We can add an IOCTL for YUV / etc. But
+userspace must be able to continue allocating YUV buffers through
+CREATE_DUMB.
+
 > 
-> But I'm somewhat confused about what is blocking you from adding MEMCPY support
-> to the dw-edma driver since that driver cannot support DEV_TO_DEV. In your WIP
-> driver, you were setting the direction based on the channel. Isn't that
-> sufficient enough?
+> Gr{oetje,eeting}s,
+> 
+>                         Geert
+> 
+> -- 
+> Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
+> 
+> In personal conversations with technical people, I call myself a hacker. But
+> when I'm talking to journalists I just say "programmer" or something like that.
+>                                 -- Linus Torvalds
 
-What I did in the WIP driver patches was to set the direction to either
-DEV_TO_MEM, or MEM_TO_DEV.
-
-But that is wrong, since the prep_memcpy() API doesn't take a direction.
-
-In fact, it appears that memcpy is always assumed to be MEM_TO_MEM:
-https://github.com/torvalds/linux/blob/v6.13-rc7/include/linux/dmaengine.h#L74
-
-
-E.g. the dw-edma driver cannot have both src address and dst address as a
-local address (MEM_TO_MEM), so using DMA_MEMCPY API feels totally wrong.
-
-Either dst or src has to be a local address (MEM), and the one that isn't
-a local address has to be a PCI address (DEV). Sure, calling a PCI address
-DEV might not be 100% correct, but I cannot think of a better way...
-
-We also cannot treat a PCI address as MEM, as dw-edma cannot do PCI to PCI
-transfers.
-
-I think the best way forward would be to create a new _prep_slave_memcpy()
-or similar, that does take a direction, and thus does not require
-dmaengine_slave_config() to be called before every _prep_slave_memcpy() call,
-since that is basically what is not allowing us to have multiple transactions
-outstanding in parallel.
-
-
-Kind regards,
-Niklas
+-- 
+With best wishes
+Dmitry
 
