@@ -1,242 +1,270 @@
-Return-Path: <linux-arm-msm+bounces-45179-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-45180-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id DEEDCA1300D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jan 2025 01:35:40 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2B8EFA1301B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jan 2025 01:40:53 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 183B2188844B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jan 2025 00:35:44 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 46D1D160D7C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jan 2025 00:40:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 09DC2BA34;
-	Thu, 16 Jan 2025 00:35:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D9D3CAD23;
+	Thu, 16 Jan 2025 00:40:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="fDglf5uI"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="LhNFpZzD"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f202.google.com (mail-pl1-f202.google.com [209.85.214.202])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D4FA2582
-	for <linux-arm-msm@vger.kernel.org>; Thu, 16 Jan 2025 00:35:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.202
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D785D3C2F
+	for <linux-arm-msm@vger.kernel.org>; Thu, 16 Jan 2025 00:40:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736987737; cv=none; b=cik9luHVE2azE+4jvEjC0HkPv2AMMauTVg4tnVXyUGdsAPzgIwEW6GRVIceR27hMIY2qvdXplIUZc80EUcle2r48AwYaroS5wmkxQc+zTFbERU/qyRwt+LSqEhX7+wUdIU+fTELg+i6W1nmkWq23Nm4grbAaGGfkLpP/B5s+TGI=
+	t=1736988050; cv=none; b=gKMwkHHxUvWB61nCIDLm/ymTcCkk7lGJZ50QyuBxwIHbAUXrQj961GatayCaVhYgZB28xJdgdeGgLSrb+pKyd2Eu+Z0qNQ/tXlbkSNcfj1dCltC+paxFC/2NhAOCybUMxS4zp5oIOQVKMdgNOslfDYKcn/eVz4ppbpPG7VOEMIY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736987737; c=relaxed/simple;
-	bh=cqk7jKAnFKD3qxSp8rD+kZBaPY54HemalT1voY1isiU=;
-	h=Date:In-Reply-To:Mime-Version:Message-ID:Subject:From:To:Cc:
-	 Content-Type; b=vCvGTeUS5CYjfVvhmY9+diKvLluUqSQEtOx2XRnzBKnzdVufJ+WazskylZKttuautVA2u7Bai/uNH/iC5PYrRTdQRcSodP5nppo15Ba9QJ1DHfjkp/JroX8hlHZJs40f5upF0tgHFF0W73HRr1EeUx1wXAGAYimARaW1qHxGQgg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--ackerleytng.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=fDglf5uI; arc=none smtp.client-ip=209.85.214.202
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--ackerleytng.bounces.google.com
-Received: by mail-pl1-f202.google.com with SMTP id d9443c01a7336-21681a2c0d5so5864325ad.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Jan 2025 16:35:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1736987735; x=1737592535; darn=vger.kernel.org;
-        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=ZI95E/grQOj5lmAqAkKwCbXt2uGVrqNSdSRAEqaCEQw=;
-        b=fDglf5uIfusxnkHEnsq7mgZCSmgjL9KhPIN6EFd3Uv6dTpj6Krb+zzixUoKrh+/4Zb
-         w3iZta5mjerRz7KIOy8bVHS+qapnfp/LCn5xrPcS2iW8A51JjfvvrcP2U1JsDAGDpxh4
-         kliiHLmhNMdWUvJplIht/bgfCPi/L/CEecY/1/MS/955SaXV1NOkpPfOydFstuG07gkG
-         ZFv0ij3VjzSolW2xYlaRVZ45cdqq6FOMxuiCurhpx2LwksOaaJNgM4wyfb0QoUJs2hWY
-         l5pYCxbwRHQ7D570EYx7ksWFuOOTy6XvEjKT8ZSvxpaw+VXS53s/TzfJlTKMnoW5f/Cr
-         16Qw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736987735; x=1737592535;
-        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ZI95E/grQOj5lmAqAkKwCbXt2uGVrqNSdSRAEqaCEQw=;
-        b=FELr/1aHM2aMEpCivqOHLKvLQVAA/NKu5nMG2HtzoZ8OHVKKJPjw4LyQldh3slg6oS
-         O3OIfDwZ3c5GTk5X5Hqvmzw4Ht6tAi49THmJWJVG+NUXUYbfEQCkp7/rzayRh0TIscVi
-         BAYg6zuRQdvYSWMv39RJobMQ9jYPRQBr5T57eYEbgRMqptisaUVt6+6IogwHpSB3JPxD
-         3zWqZggQznSEKIfbPae5qOS0Eyd+2d7CdkEwOeUoCiDS5qL82+/XR+WvshBBWGEeJJik
-         65xI4hz7tTfSeaknV3OUksOaW+E6lJf/AjPEjEf8O7+1FyTr7geHMgM9N63kvKI5nHJR
-         mnwA==
-X-Forwarded-Encrypted: i=1; AJvYcCXps98zUauEoTMXAfdD7i5wjvc0F8PSXHiHmFv/34LgEUDM63eAzwohkPW1mF7R/JrA+G1EU8nJh53C7tOi@vger.kernel.org
-X-Gm-Message-State: AOJu0YxNRrAazSjvHh/KrbzDXKX/3ORdnaoESkl1Ox5PJmXgFGC8kIQ+
-	0VepnJQtX7izMFQmNuGy3/fxZnpq0pvgITi8zHkq7afFmX62SaMJ8hLwgjsRFZF61COHaMVsjvw
-	nz283zzFwDUswo/rl3DIUCw==
-X-Google-Smtp-Source: AGHT+IGAsGunK2FzDulfjw3tOwuPn1zWdFCLhFH0XiViYbpTu3Cro/+3F9g9kMYHMexKuSAzVMO8CIJzcPXKR++RZA==
-X-Received: from pgph7.prod.google.com ([2002:a65:4047:0:b0:7fe:ffa9:4e54])
- (user=ackerleytng job=prod-delivery.src-stubby-dispatcher) by
- 2002:a05:6a20:3943:b0:1e8:bd15:6819 with SMTP id adf61e73a8af0-1e8bd156be3mr30608996637.22.1736987735482;
- Wed, 15 Jan 2025 16:35:35 -0800 (PST)
-Date: Thu, 16 Jan 2025 00:35:34 +0000
-In-Reply-To: <CA+EHjTzcx=eXSERSANMByhcgRRAbUL3kPAYkeu-uUgd0nPBPPA@mail.gmail.com>
- (message from Fuad Tabba on Thu, 9 Jan 2025 16:34:42 +0000)
+	s=arc-20240116; t=1736988050; c=relaxed/simple;
+	bh=CM6OqJAC9lkw5El6NStEdsR1Azu8P4uCoppKGWb3hww=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=cklLZU86Qf39Kx59Y5N0r58kj69eQmnanQeqfAuKA5NAFYUywGqTFTXcxJfGfbAegJgtO3XmyYZRursb4atSY+F+AdGtxib4J4vpeKQkfKCmWzI2/0xANb4VghZI6Qqtf7EiO3dgdKqDA6wcw5KijNaGbL3Gju1YMDzndiJ6N64=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=LhNFpZzD; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50FGqbQU018694;
+	Thu, 16 Jan 2025 00:40:42 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	h1meRf8wD57+V9EdO92kCHnNaOOfnIxmy8gHzIkc9H4=; b=LhNFpZzDtXj/cb8W
+	Xm+J+bA4sLUULY4QeRtu9xU0+4jkHwSt6HoBmMqb577RU6ITvy9YJW92COym1ubJ
+	8C1aEk5j69ZnD5f/WO8Qw3mzLmvhprKF/TDjhBBnuZrOLRbXjyyGnw9eWaN5SoNj
+	7dmlX2W0m7wV57oSy/paOpXmMzcs2GDTm+oVMF0aG7nopGeOC2yXDuH9h3Yi8qjq
+	gNTWo8hXIVgA9xtnJGnLFCTTr045i9kowFcr6JrLk9v5Vwjt5VCyAqAGgvQ0Zx84
+	eEwmjA9fnhIV4T7tcJgUFUkdQsOYjIx1DmYF+Emw9/aMgfR9zDgib+h8dWUI9b2Q
+	4s/2lw==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 446gx38wxw-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 16 Jan 2025 00:40:41 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 50G0eeNm002443
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 16 Jan 2025 00:40:40 GMT
+Received: from [10.71.108.79] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 15 Jan
+ 2025 16:40:40 -0800
+Message-ID: <b5a49ad8-02df-4418-911c-91bc57c4d05a@quicinc.com>
+Date: Wed, 15 Jan 2025 16:40:39 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Message-ID: <diqzh65zzjc9.fsf@ackerleytng-ctop.c.googlers.com>
-Subject: Re: [RFC PATCH v4 00/14] KVM: Restricted mapping of guest_memfd at
- the host and arm64 support
-From: Ackerley Tng <ackerleytng@google.com>
-To: Fuad Tabba <tabba@google.com>
-Cc: kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, 
-	pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au, 
-	anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com, 
-	aou@eecs.berkeley.edu, seanjc@google.com, viro@zeniv.linux.org.uk, 
-	brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org, 
-	xiaoyao.li@intel.com, yilun.xu@intel.com, chao.p.peng@linux.intel.com, 
-	jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com, 
-	yu.c.zhang@linux.intel.com, isaku.yamahata@intel.com, mic@digikod.net, 
-	vbabka@suse.cz, vannapurve@google.com, mail@maciej.szmigiero.name, 
-	david@redhat.com, michael.roth@amd.com, wei.w.wang@intel.com, 
-	liam.merwick@oracle.com, isaku.yamahata@gmail.com, 
-	kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com, steven.price@arm.com, 
-	quic_eberman@quicinc.com, quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, 
-	quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com, 
-	quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com, 
-	james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev, 
-	maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com, 
-	roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, 
-	rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com, 
-	jthoughton@google.com
-Content-Type: text/plain; charset="UTF-8"
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 7/9] drm/msm/dpu: handle perf mode in
+ _dpu_core_perf_crtc_update_bus()
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Marijn
+ Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Stephen Boyd <swboyd@chromium.org>,
+        Simona Vetter <simona.vetter@ffwll.ch>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>
+References: <20250106-dpu-perf-rework-v4-0-00b248349476@linaro.org>
+ <20250106-dpu-perf-rework-v4-7-00b248349476@linaro.org>
+ <459422c9-c272-4389-9b05-487a0148a082@quicinc.com>
+ <ab4wkauem3xb65wh3h22bcyzlpx26rrmsicrdlewomn55ykpqi@tggrsmb6qcmf>
+ <8e6b6940-d155-4ab7-bdd6-a67e9506218a@quicinc.com>
+ <4quxgv6n35np7fm7iqx5bw5xnkz7gxabh3ix5rexcq5nir5k7i@xi33w2wyj7om>
+ <72c50442-5624-44ca-a954-64f7ddfa16f9@quicinc.com>
+ <mvw34ny5en3dzt5ro6556daiktk6dc2azjotq26755dqscbu3b@fq7rxjqf7fg2>
+Content-Language: en-US
+From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <mvw34ny5en3dzt5ro6556daiktk6dc2azjotq26755dqscbu3b@fq7rxjqf7fg2>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: dCm-AJho5fQTwl6YPhsLVmA_lqROuSpz
+X-Proofpoint-ORIG-GUID: dCm-AJho5fQTwl6YPhsLVmA_lqROuSpz
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-01-15_10,2025-01-15_02,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 mlxscore=0
+ adultscore=0 spamscore=0 malwarescore=0 suspectscore=0 mlxlogscore=999
+ impostorscore=0 priorityscore=1501 bulkscore=0 clxscore=1015
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2501160002
 
-Fuad Tabba <tabba@google.com> writes:
 
-> Hi,
->
-> As mentioned in the guest_memfd sync (2025-01-09), below is the state
-> diagram that uses the new states in this patch series, and how they
-> would interact with sharing/unsharing in pKVM:
->
-> https://lpc.events/event/18/contributions/1758/attachments/1457/3699/Guestmemfd%20folio%20state%20page_type.pdf
 
-Thanks Fuad!
-
-I took a look at the state diagram [1] and the branch that this patch is
-on [2], and here's what I understand about the flow:
-
-1. From state H in the state diagram, the guest can request to unshare a
-   page. When KVM handles this unsharing, KVM marks the folio
-   mappability as NONE (state J).
-2. The transition from state J to state K or I is independent of KVM -
-   userspace has to do this unmapping
-3. On the next vcpu_run() from userspace, continuing from userspace's
-   handling of the unshare request, guest_memfd will check and try to
-   register a callback if the folio's mappability is NONE. If the folio
-   is mapped, or if folio is not mapped but refcount is elevated for
-   whatever reason, vcpu_run() fails and exits to userspace. If folio is
-   not mapped and gmem holds the last refcount, set folio mappability to
-   GUEST.
-
-Here's one issue I see based on the above understanding:
-
-Registration of the folio_put() callback only happens if the VMM
-actually tries to do vcpu_run(). For 4K folios I think this is okay
-since the 4K folio can be freed via the transition state K -> state I,
-but for hugetlb folios that have been split for sharing with userspace,
-not getting a folio_put() callback means never putting the hugetlb folio
-together. Hence, relying on vcpu_run() to add the folio_put() callback
-leaves a way that hugetlb pages can be removed from the system.
-
-I think we should try and find a path forward that works for both 4K and
-hugetlb folios.
-
-IIUC page._mapcount and page.page_type works as a union because
-page_type is only set for page types that are never mapped to userspace,
-like PGTY_slab, PGTY_offline, etc.
-
-Technically PGTY_guest_memfd is only set once the page can never be
-mapped to userspace, but PGTY_guest_memfd can only be set once mapcount
-reaches 0. Since mapcount is added in the faulting process, could gmem
-perhaps use some kind of .unmap/.unfault callback, so that gmem gets
-notified of all unmaps and will know for sure that the mapcount gets to
-0?
-
-Alternatively, I took a look at the folio_is_zone_device()
-implementation, and page.flags is used to identify the page's type. IIUC
-a ZONE_DEVICE page also falls in the intersection of needing a
-folio_put() callback and can be mapped to userspace. Could we use a
-similar approach, using page.flags to identify a page as a guest_memfd
-page? That way we don't need to know when unmapping happens, and will
-always be able to get a folio_put() callback.
-
-[1] https://lpc.events/event/18/contributions/1758/attachments/1457/3699/Guestmemfd%20folio%20state%20page_type.pdf
-[2] https://android-kvm.googlesource.com/linux/+/764360863785ba16d974253a572c87abdd9fdf0b%5E%21/#F0
-
-> This patch series doesn't necessarily impose all these transitions,
-> many of them would be a matter of policy. This just happens to be the
-> current way I've done it with pKVM/arm64.
->
-> Cheers,
-> /fuad
->
-> On Fri, 13 Dec 2024 at 16:48, Fuad Tabba <tabba@google.com> wrote:
->>
->> This series adds restricted mmap() support to guest_memfd, as
->> well as support for guest_memfd on arm64. It is based on Linux
->> 6.13-rc2.  Please refer to v3 for the context [1].
->>
->> Main changes since v3:
->> - Added a new folio type for guestmem, used to register a
->>   callback when a folio's reference count reaches 0 (Matthew
->>   Wilcox, DavidH) [2]
->> - Introduce new mappability states for folios, where a folio can
->> be mappable by the host and the guest, only the guest, or by no
->> one (transient state)
->> - Rebased on Linux 6.13-rc2
->> - Refactoring and tidying up
->>
->> Cheers,
->> /fuad
->>
->> [1] https://lore.kernel.org/all/20241010085930.1546800-1-tabba@google.com/
->> [2] https://lore.kernel.org/all/20241108162040.159038-1-tabba@google.com/
->>
->> Ackerley Tng (2):
->>   KVM: guest_memfd: Make guest mem use guest mem inodes instead of
->>     anonymous inodes
->>   KVM: guest_memfd: Track mappability within a struct kvm_gmem_private
->>
->> Fuad Tabba (12):
->>   mm: Consolidate freeing of typed folios on final folio_put()
->>   KVM: guest_memfd: Introduce kvm_gmem_get_pfn_locked(), which retains
->>     the folio lock
->>   KVM: guest_memfd: Folio mappability states and functions that manage
->>     their transition
->>   KVM: guest_memfd: Handle final folio_put() of guestmem pages
->>   KVM: guest_memfd: Allow host to mmap guest_memfd() pages when shared
->>   KVM: guest_memfd: Add guest_memfd support to
->>     kvm_(read|/write)_guest_page()
->>   KVM: guest_memfd: Add KVM capability to check if guest_memfd is host
->>     mappable
->>   KVM: guest_memfd: Add a guest_memfd() flag to initialize it as
->>     mappable
->>   KVM: guest_memfd: selftests: guest_memfd mmap() test when mapping is
->>     allowed
->>   KVM: arm64: Skip VMA checks for slots without userspace address
->>   KVM: arm64: Handle guest_memfd()-backed guest page faults
->>   KVM: arm64: Enable guest_memfd private memory when pKVM is enabled
->>
->>  Documentation/virt/kvm/api.rst                |   4 +
->>  arch/arm64/include/asm/kvm_host.h             |   3 +
->>  arch/arm64/kvm/Kconfig                        |   1 +
->>  arch/arm64/kvm/mmu.c                          | 119 +++-
->>  include/linux/kvm_host.h                      |  75 +++
->>  include/linux/page-flags.h                    |  22 +
->>  include/uapi/linux/kvm.h                      |   2 +
->>  include/uapi/linux/magic.h                    |   1 +
->>  mm/debug.c                                    |   1 +
->>  mm/swap.c                                     |  28 +-
->>  tools/testing/selftests/kvm/Makefile          |   1 +
->>  .../testing/selftests/kvm/guest_memfd_test.c  |  64 +-
->>  virt/kvm/Kconfig                              |   4 +
->>  virt/kvm/guest_memfd.c                        | 579 +++++++++++++++++-
->>  virt/kvm/kvm_main.c                           | 229 ++++++-
->>  15 files changed, 1074 insertions(+), 59 deletions(-)
+On 1/15/2025 4:32 PM, Dmitry Baryshkov wrote:
+> On Wed, Jan 15, 2025 at 11:41:27AM -0800, Abhinav Kumar wrote:
 >>
 >>
->> base-commit: fac04efc5c793dccbd07e2d59af9f90b7fc0dca4
->> --
->> 2.47.1.613.gc27f4b7a9f-goog
+>> On 1/15/2025 12:27 AM, Dmitry Baryshkov wrote:
+>>> On Tue, Jan 14, 2025 at 01:18:26PM -0800, Abhinav Kumar wrote:
+>>>>
+>>>>
+>>>> On 1/14/2025 3:10 AM, Dmitry Baryshkov wrote:
+>>>>> On Mon, Jan 13, 2025 at 07:38:16PM -0800, Abhinav Kumar wrote:
+>>>>>>
+>>>>>>
+>>>>>> On 1/5/2025 7:07 PM, Dmitry Baryshkov wrote:
+>>>>>>> Move perf mode handling for the bandwidth to
+>>>>>>> _dpu_core_perf_crtc_update_bus() rather than overriding per-CRTC data
+>>>>>>> and then aggregating known values.
+>>>>>>>
+>>>>>>> Note, this changes the fix_core_ab_vote. Previously it would be
+>>>>>>> multiplied per the CRTC number, now it will be used directly for
+>>>>>>> interconnect voting. This better reflects user requirements in the case
+>>>>>>> of different resolutions being set on different CRTCs: instead of using
+>>>>>>> the same bandwidth for each CRTC (which is incorrect) user can now
+>>>>>>> calculate overall bandwidth required by all outputs and use that value.
+>>>>>>>
+>>>>>>
+>>>>>> There are two things this change is doing:
+>>>>>>
+>>>>>> 1) Dropping the core_clk_rate setting because its already handled inside
+>>>>>> _dpu_core_perf_get_core_clk_rate() and hence dpu_core_perf_crtc_update()
+>>>>>> will still work.
+>>>>>>
+>>>>>> and
+>>>>>>
+>>>>>> 2) Then this part of moving the ab/ib setting to
+>>>>>> _dpu_core_perf_crtc_update_bus().
+>>>>>>
+>>>>>> Can we split this into two changes so that its clear that dropping
+>>>>>> core_clk_rate setting in this change will not cause an issue.
+>>>>>
+>>>>> Ack
+>>>>>
+>>>>
+>>>> Actually I think this is incorrect.
+>>>>
+>>>> If the user puts in an incorrect value beyond the bounds, earlier the code
+>>>> will reject that by failing the in _dpu_core_perf_calc_crtc().
+>>>
+>>> This function doesn't perform any validation nor returns an error code.
+>>> Probably you've meant some other function.
+>>>
 >>
+>> Sorry, let me explain a little more to complete the flow I am seeing.
+>>
+>> _dpu_core_perf_calc_crtc() gets called by dpu_core_perf_crtc_check().
+>>
+>> That one checks against erroneous values.
+>>
+>>                  if (!threshold) {
+>>                          DPU_ERROR("no bandwidth limits specified\n");
+>>                          return -E2BIG;
+>>                  } else if (bw > threshold) {
+>>                          DPU_ERROR("exceeds bandwidth: %ukb > %ukb\n", bw,
+>>                                          threshold);
+>>                          return -E2BIG;
+>>                  }
+> 
+> Here we are checking that the selected set of modes doesn't overload
+> defined platform requirements. However I think that it should be
+> possible for the user to attempt to overcome predefined bandwidth
+> limitations in attempt to debug the issue. ICC framework handles that
+> perfectly (and if you check, until the sync_state is reached all BW's
+> are assumed to be UINT_MAX). Maybe I should document it in the commit
+> message that after this commit forced BWs are not a subject to the
+> catalog limitations.
+> 
+
+hmmm, yes this was the validation I was referring to.
+
+I didnt get why a user should be allowed to go beyond the platform 
+limits, what purpose does that serve , its not leading to any conclusion 
+or towards the resolution of the issue. With the platform validation not 
+only we are enforcing the limits but also making sure that random values 
+given by the user dont cause more harm than good.
+
+>>
+>>>>
+>>>> Now, if we move it to _dpu_core_perf_crtc_update_bus(), this is beyond the
+>>>> check phase so incorrect values cannot be rejected.
+>>>>
+>>>> So we will still need to preserve overriding the values in
+>>>> _dpu_core_perf_calc_crtc().
+>>>>
+>>>>>>
+>>>>>>
+>>>>>>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>>>>>>> ---
+>>>>>>>      drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c | 40 +++++++++++++--------------
+>>>>>>>      1 file changed, 19 insertions(+), 21 deletions(-)
+>>>>>>>
+>>>>>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
+>>>>>>> index 70f43e8359caee2082f2ca9944a17a6a20aa3d49..7ff3405c6867556a8dc776783b91f1da6c86ef3f 100644
+>>>>>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
+>>>>>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
+>>>>>>> @@ -118,22 +118,9 @@ static void _dpu_core_perf_calc_crtc(const struct dpu_core_perf *core_perf,
+>>>>>>>      		return;
+>>>>>>>      	}
+>>>>>>> -	memset(perf, 0, sizeof(struct dpu_core_perf_params));
+>>>>>>> -
+>>>>>>> -	if (core_perf->perf_tune.mode == DPU_PERF_MODE_MINIMUM) {
+>>>>>>> -		perf->bw_ctl = 0;
+>>>>>>> -		perf->max_per_pipe_ib = 0;
+>>>>>>> -		perf->core_clk_rate = 0;
+>>>>>>> -	} else if (core_perf->perf_tune.mode == DPU_PERF_MODE_FIXED) {
+>>>>>>> -		perf->bw_ctl = core_perf->fix_core_ab_vote * 1000ULL;
+>>>>>>> -		perf->max_per_pipe_ib = core_perf->fix_core_ib_vote;
+>>>>>>> -		perf->core_clk_rate = core_perf->fix_core_clk_rate;
+>>>>>>> -	} else {
+>>>>>>> -		perf->bw_ctl = _dpu_core_perf_calc_bw(perf_cfg, crtc);
+>>>>>>> -		perf->max_per_pipe_ib = perf_cfg->min_dram_ib;
+>>>>>>> -		perf->core_clk_rate = _dpu_core_perf_calc_clk(perf_cfg, crtc, state);
+>>>>>>> -	}
+>>>>>>> -
+>>>>>>> +	perf->bw_ctl = _dpu_core_perf_calc_bw(perf_cfg, crtc);
+>>>>>>> +	perf->max_per_pipe_ib = perf_cfg->min_dram_ib;
+>>>>>>> +	perf->core_clk_rate = _dpu_core_perf_calc_clk(perf_cfg, crtc, state);
+>>>>>>>      	DRM_DEBUG_ATOMIC(
+>>>>>>>      		"crtc=%d clk_rate=%llu core_ib=%u core_ab=%u\n",
+>>>>>>>      			crtc->base.id, perf->core_clk_rate,
+>>>>>>> @@ -222,18 +209,29 @@ static int _dpu_core_perf_crtc_update_bus(struct dpu_kms *kms,
+>>>>>>>      {
+>>>>>>>      	struct dpu_core_perf_params perf = { 0 };
+>>>>>>>      	int i, ret = 0;
+>>>>>>> -	u64 avg_bw;
+>>>>>>> +	u32 avg_bw;
+>>>>>>> +	u32 peak_bw;
+>>>>>>>      	if (!kms->num_paths)
+>>>>>>>      		return 0;
+>>>>>>> -	dpu_core_perf_aggregate(crtc->dev, dpu_crtc_get_client_type(crtc), &perf);
+>>>>>>> +	if (kms->perf.perf_tune.mode == DPU_PERF_MODE_MINIMUM) {
+>>>>>>> +		avg_bw = 0;
+>>>>>>> +		peak_bw = 0;
+>>>>>>> +	} else if (kms->perf.perf_tune.mode == DPU_PERF_MODE_FIXED) {
+>>>>>>> +		avg_bw = kms->perf.fix_core_ab_vote;
+>>>>>>> +		peak_bw = kms->perf.fix_core_ib_vote;
+>>>>>>> +	} else {
+>>>>>>> +		dpu_core_perf_aggregate(crtc->dev, dpu_crtc_get_client_type(crtc), &perf);
+>>>>>>> +
+>>>>>>> +		avg_bw = div_u64(perf.bw_ctl, 1000); /*Bps_to_icc*/
+>>>>>>> +		peak_bw = perf.max_per_pipe_ib;
+>>>>>>> +	}
+>>>>>>> -	avg_bw = perf.bw_ctl;
+>>>>>>> -	do_div(avg_bw, (kms->num_paths * 1000)); /*Bps_to_icc*/
+>>>>>>> +	avg_bw /= kms->num_paths;
+>>>>>>>      	for (i = 0; i < kms->num_paths; i++)
+>>>>>>> -		icc_set_bw(kms->path[i], avg_bw, perf.max_per_pipe_ib);
+>>>>>>> +		icc_set_bw(kms->path[i], avg_bw, peak_bw);
+>>>>>>>      	return ret;
+>>>>>>>      }
+>>>>>>>
+>>>>>
+>>>
+> 
 
