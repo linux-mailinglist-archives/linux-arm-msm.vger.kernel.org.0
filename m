@@ -1,133 +1,142 @@
-Return-Path: <linux-arm-msm+bounces-45227-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-45229-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 74CF4A13535
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jan 2025 09:19:59 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id AFA66A1355F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jan 2025 09:32:49 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id CBB9B7A00B0
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jan 2025 08:19:50 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C6387161B54
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jan 2025 08:32:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6FFCC198857;
-	Thu, 16 Jan 2025 08:19:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3A0F619CC05;
+	Thu, 16 Jan 2025 08:32:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="COJJMk0N"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Kdvh3vmJ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f47.google.com (mail-lf1-f47.google.com [209.85.167.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F42A194C75
-	for <linux-arm-msm@vger.kernel.org>; Thu, 16 Jan 2025 08:19:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFE8D197A8B;
+	Thu, 16 Jan 2025 08:32:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737015593; cv=none; b=Ay/kO9t19cAxZzp26o1q9YciBsb4+Md3xiBhLIFAdIiCstPGlMGsodfLC6lx+4Mp74Ryd+pEKYO8zMYkqKB/DICjkRqWFYmADqIeY97J/hoM/7Com85BSjb0m7QhhOdEhMt3iaVw9tK1xqoUHwHgmCwpL5FnXLhZIt6yjLu78Yo=
+	t=1737016365; cv=none; b=VLXTH7pJ3sbOOk2Sw+tNm6rMwK/oHa2bItLarHmQ6zP21k98ufWY3bX69LZt8tCNxQbfD2+q3R3LU8J+OtYweRVN5qtTlDpCGbDYWuMCq62OuiBKMG+jQXuGxIy15Xsx4sxyjxEuPpY1zhNRwj4Ws0c6IAZDgnG782tA00n7NaE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737015593; c=relaxed/simple;
-	bh=MoJx//s3XO+21LNgnZMyJ/kFuNmfvDn724YC1CfHV1Q=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=g5BPSi/AqTmhcshaIubYr+yADlRJIpSEGsZ3QhDKddOHpHLMYaYJcVFl+0DD5ql9WNL6Mony0ZqpL+DE1/PsT8eMe6T/D5+mhAwyMVU5RCXLmEtNs6zEv4Te97BIYfubqyPdQhyUB9wAoKgkhY2n7ly9356zrpQKkHMrTbjcr5o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=COJJMk0N; arc=none smtp.client-ip=209.85.167.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f47.google.com with SMTP id 2adb3069b0e04-54263b52b5aso721393e87.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Jan 2025 00:19:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1737015590; x=1737620390; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=EzvEM6Sx/Mz/fcLQKNf1rXALQX/HnytzEqDjtX99KKo=;
-        b=COJJMk0Nsfch0+bjf7+ymF+dTXNhrrjS1pX7V1jDiOe5vR9W9w2uTfy10n4Df5wK5+
-         bMyB7QhV67gIwdhlnxTOKcs4YjOtz0wE4QGXbBnpUU+YrRgnSOQ2xesHOS9L7H7C2cPR
-         QYI4jXOyC8YSN86fg0l7SrBk24l1LyLw8OyOZCutvGhlmdOm6RC8pZJ5bSaZ7gQyI9hu
-         nTSd9cdQaZR4TVMx4d2l+yzbOMkTNeUPqQIRcX1L2T/eoYH9TuolLaryUIeem+7NyDC5
-         7qLyots16/ThbJbX1HpQFfUqNh+b4pmkMRF8yRFbfSrBr4L/GgRqt1BtijytdZxMFMO0
-         zykQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1737015590; x=1737620390;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=EzvEM6Sx/Mz/fcLQKNf1rXALQX/HnytzEqDjtX99KKo=;
-        b=BTtS3PJg8BRUgbljJ5+Cj+8JYJf1a73AroURsPFn8qxL6Q4F/ziRXbwKO3uFvD0kSm
-         olraxZie2B1S/LXeSWnxHFu5LoZaPDmnfWUw0wNM3s0oPQsxXc42tMkc7pDV74vR89Cc
-         3j7gE3lRh/z9bBNAE4PorX24GSCUZrSGHD8Wvrwffj8K5Kvll8VIURF7WQlZuAhRSNoI
-         Xw9AGRaCZ2afnX/j/WaDLWOvCqJywPyt7mODgJW6bdUAv8DMuSNsFFHaUsvurCxRJY/e
-         e/Ypsd3BK8RFPOHIxDcSKTPUueYbnUG+DFhadz5KoGeidqEpVkW8vmRX8DfU/1dooRx7
-         cWLg==
-X-Forwarded-Encrypted: i=1; AJvYcCVXsgnT3ZgA5VvWRQpXDAZsXAq2O5qX2RI2qo8IqRFGRttJv59H3SlA0BJmoxdoZTatrAk2SM8SzvsKdJ2Q@vger.kernel.org
-X-Gm-Message-State: AOJu0YwZXwN/5A/M4JxYJY/bGv6y+jwt8E3d0l2y2JT4ZtTr9VGZCIB0
-	BCUT4b0n4+IkoYM42LZ/P0ZvR7ZfRgGLY6L5FoNTGKwdwSDfWDCpu+Qp+Op31NY=
-X-Gm-Gg: ASbGncs0+HYVTa8m79FQ4WjJcw2gCrlZOf556AIqnn484n16VZf+J9qwzUQYhq84bTT
-	ENgelQ9Lg/HV3S+TAHVXnYWuGhmycnSwijyTTgTIdoMvF1Tu7AKjTPxaltCX3A6ZyqOhM7mc1T5
-	WzAHMLLvG43W8qW9m8LJqqcOz6g8wKcEBMppNUESIK/UZKQrgRHxma/ENvAe7ZPJ/kp4YX51PJz
-	keCX2aCUxbf6ArTSZMotB/RAnMQ+mXsgnaSS/K2k9v/Et/kO2OUgfsvLxRzghzMECFlA5GxqXnl
-	Y/9XwMX0BJk7m7/aSeaGEDrXgasacVhw+Sm8
-X-Google-Smtp-Source: AGHT+IEW+BLFAKp5RZ8kJKPMw7gbZ80UVcR5TDbEC3UmcmTe61NigrFsJGQQDkAseKY0uUZNPZhGmw==
-X-Received: by 2002:a05:6512:158f:b0:542:28a9:dcbf with SMTP id 2adb3069b0e04-542845bac70mr9816333e87.23.1737015589596;
-        Thu, 16 Jan 2025 00:19:49 -0800 (PST)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5428bea6a5bsm2234637e87.129.2025.01.16.00.19.49
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 16 Jan 2025 00:19:49 -0800 (PST)
-Date: Thu, 16 Jan 2025 10:19:47 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Jun Nie <jun.nie@linaro.org>
-Cc: Rob Clark <robdclark@gmail.com>, 
-	Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
-	Simona Vetter <simona@ffwll.ch>, linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
-	freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v4 15/16] drm/msm/dpu: Disable SSPP multi-rect mode for
- every pair
-Message-ID: <riau5d6ndc7ujjyzgbdzwybzigot7xdg6xweewqmnsmlr4xws2@zwcg2fdngr55>
-References: <20250116-sm8650-v6-13-hmd-deckard-mdss-quad-upstream-33-v4-0-74749c6eba33@linaro.org>
- <20250116-sm8650-v6-13-hmd-deckard-mdss-quad-upstream-33-v4-15-74749c6eba33@linaro.org>
+	s=arc-20240116; t=1737016365; c=relaxed/simple;
+	bh=lTQszKWp7GEvfUb4Z2q1JNMx+Pr5PyYPE5IiSqPm4w4=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:To:CC; b=YHINCxIMnw5zKUyKVJBbJsRdsIm3n6eQStEwXBq8zOn2oRX3cLsaCiAW9y3qlIOqj+8tqDOtF0wnh/uBdBw4qR9IXHzxhquJJKMkgknbv5Lzlb7riq4U4o1Ctq6V1dhL3uMRLzy9HG4eZLF5iFCpRNDofKZUIzUrjIxAEN9b8mY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Kdvh3vmJ; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50G87o6J001541;
+	Thu, 16 Jan 2025 08:32:40 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=KagrXkCuQ+v5fEytrHLDQh
+	gL0MdV8djw5jkQW1vSdak=; b=Kdvh3vmJpZzo4Csg1tQ/tUfTQfW90JzW6IDElV
+	xyQWdrOzkw2k34ieZ/4fJ0TfcNqRjW507RfB46FuAluMFXzdDN4ddRv97+6oS69k
+	ynUiDRsLLf4N+pVAYBZwu/F7Uk1CCrj09f+lMFs462x1CWHo8g5JjtBzRDhEBRVB
+	m34dH/AhYOHPcNgofFdq6N4GbZds5RroP88VFGU0dqY1H2WoJX9KieuHE6TMUw2C
+	BPJXYaaMrPAYkBOADVs4SVZCO3ZfdJaeyw32hjL/SOwrMkOIn4KOqzUvZi/mJBf2
+	vs0ZZ11X6YjpygUM9DngraDXmBmy+8tDPMepCh9Kdq+KebpA==
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 446xay8262-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 16 Jan 2025 08:32:40 +0000 (GMT)
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+	by NASANPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 50G8WdaM017700
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 16 Jan 2025 08:32:39 GMT
+Received: from cse-cd02-lnx.ap.qualcomm.com (10.80.80.8) by
+ nasanex01c.na.qualcomm.com (10.45.79.139) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Thu, 16 Jan 2025 00:32:33 -0800
+From: Tingguo Cheng <quic_tingguoc@quicinc.com>
+Date: Thu, 16 Jan 2025 16:31:48 +0800
+Subject: [PATCH] arm64: dts: qcom: qcs615: Fix kernel test robot issue in
+ SPMI
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250116-sm8650-v6-13-hmd-deckard-mdss-quad-upstream-33-v4-15-74749c6eba33@linaro.org>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-ID: <20250116-fix-kernel-test-robot-unexpected-property-issue-v1-1-b1f4cc2c52d5@quicinc.com>
+X-B4-Tracking: v=1; b=H4sIAPTDiGcC/yWNQQ6CMBQFr0K69ie0tKBcxbCw/Q9tFIptMRrC3
+ W10ObOY2URC9EiirzYR8fLJh7mAPFTC3S7zFeS5sFC1MrWUDY3+TXfEGQ/KSJlisCHTOuO9wGU
+ wLTEsiPlDPqUVZFkex5a1stqJUl0iSuJ3PA9/jniuZZz/UthLArkwTT73leqM0VAWo+auPmrpN
+ KuaT61ru4ZhJNg2pnFi2PcvltM1Ys0AAAA=
+X-Change-ID: 20250113-fix-kernel-test-robot-unexpected-property-issue-bd18f6d42b4c
+To: <quic_fenglinw@quicinc.com>, <quic_tingweiz@quicinc.com>,
+        Bjorn Andersson
+	<andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring
+	<robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>
+CC: <kernel@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        "kernel test
+ robot" <lkp@intel.com>,
+        Tingguo Cheng <quic_tingguoc@quicinc.com>
+X-Mailer: b4 0.15-dev-dedf8
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1737016353; l=1068;
+ i=quic_tingguoc@quicinc.com; s=20240917; h=from:subject:message-id;
+ bh=lTQszKWp7GEvfUb4Z2q1JNMx+Pr5PyYPE5IiSqPm4w4=;
+ b=awCjmWcy8wzSsl0S4t1UMCVlcXAn0jjS3FVyvC/bqujJEesfpjrux6ihMCXA1BmsWZ0xRgC9V
+ NbCLOn8tmdhCM/01WtBPmGM3z53m+pLm3zDvRCqQnlIqczMwggneFe3
+X-Developer-Key: i=quic_tingguoc@quicinc.com; a=ed25519;
+ pk=PiFYQPN5GCP7O6SA43tuKfHAbl9DewSKOuQA/GiHQrI=
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01c.na.qualcomm.com (10.45.79.139)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: mBlDtMnc-zHGxxdGAPJF35uuQcNmPLq4
+X-Proofpoint-ORIG-GUID: mBlDtMnc-zHGxxdGAPJF35uuQcNmPLq4
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-01-16_03,2025-01-16_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011 bulkscore=0
+ adultscore=0 mlxlogscore=817 phishscore=0 malwarescore=0 spamscore=0
+ mlxscore=0 suspectscore=0 priorityscore=1501 impostorscore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2501160061
 
-On Thu, Jan 16, 2025 at 03:26:04PM +0800, Jun Nie wrote:
-> Currently, 2 pipes are supported at most. It is enough to check id to
-> know which pipe is in multi-rect mode and disable it. Multiple pairs
-> are used and need to check multirect_index to decide what pipes are in
-> multi-rect mode to disable them.
-> 
-> Signed-off-by: Jun Nie <jun.nie@linaro.org>
-> ---
->  drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> index d96f4405a4c26..d2e0fcfbc30cd 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> @@ -1480,7 +1480,7 @@ static void _dpu_plane_atomic_disable(struct drm_plane *plane)
->  		 * clear multirect for the right pipe so that the SSPP
->  		 * can be further reused in the solo mode
->  		 */
-> -		if (pipe->sspp && i == 1) {
-> +		if (pipe->sspp && pipe->multirect_index == DPU_SSPP_RECT_1) {
+Fix the kernel test robot issue in qcs615-ride.dtb spmi@c440000 by
+removing the unevaluated 'cell-index' property.
 
-I don't fully appreciate this change. I'd really rather keep it as
-i % PIPES_PER_STAGE != 0
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/r/202412272210.GpGmqcPC-lkp@intel.com/
+Signed-off-by: Tingguo Cheng <quic_tingguoc@quicinc.com>
+---
+ arch/arm64/boot/dts/qcom/qcs615.dtsi | 1 -
+ 1 file changed, 1 deletion(-)
 
->  			pipe->multirect_index = DPU_SSPP_RECT_SOLO;
->  			pipe->multirect_mode = DPU_SSPP_MULTIRECT_NONE;
->  
-> 
-> -- 
-> 2.34.1
-> 
+diff --git a/arch/arm64/boot/dts/qcom/qcs615.dtsi b/arch/arm64/boot/dts/qcom/qcs615.dtsi
+index fc69abff71270af591ad41f33bf893751cd7d300..7b3de4b8605722c2f24bc3dcbe9471440685745d 100644
+--- a/arch/arm64/boot/dts/qcom/qcs615.dtsi
++++ b/arch/arm64/boot/dts/qcom/qcs615.dtsi
+@@ -2964,7 +2964,6 @@ spmi_bus: spmi@c440000 {
+ 			#interrupt-cells = <4>;
+ 			#address-cells = <2>;
+ 			#size-cells = <0>;
+-			cell-index = <0>;
+ 			qcom,channel = <0>;
+ 			qcom,ee = <0>;
+ 		};
 
+---
+base-commit: 27554e2bef4d70841c4d20d96c673de51edb353c
+change-id: 20250113-fix-kernel-test-robot-unexpected-property-issue-bd18f6d42b4c
+
+Best regards,
 -- 
-With best wishes
-Dmitry
+Tingguo Cheng <quic_tingguoc@quicinc.com>
+
 
