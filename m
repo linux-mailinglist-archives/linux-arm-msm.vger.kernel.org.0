@@ -1,78 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-45175-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-45176-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id CAFDFA12ECF
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jan 2025 23:57:39 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 67BABA12F9C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jan 2025 01:22:54 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5E5F13A5885
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jan 2025 22:57:33 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7F25E163975
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jan 2025 00:22:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4B1FC1DD894;
-	Wed, 15 Jan 2025 22:57:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A79B079F2;
+	Thu, 16 Jan 2025 00:22:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="xkNM6vLd"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="j2aQ8NAj"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FA291DC9BA
-	for <linux-arm-msm@vger.kernel.org>; Wed, 15 Jan 2025 22:57:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A872612E7F;
+	Thu, 16 Jan 2025 00:22:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736981845; cv=none; b=AuBhXknjncofAoZbgThdlWPEIE655eEezvf0toqIBuVNmazsUovtjqbwK54V9N/0QpX4YxbwiF94ZQpT7e9dtc2YDtllvw2URKi62N2oCWeQbBR+OloIXHId4AVO3p6ZicwYrelTm/+nAhQ6xHHanzXEX/OtlOstl6+jV6Fe7PU=
+	t=1736986969; cv=none; b=XAly71Gdl+RJWF17VINbVuP+xatwdJfl6Q4XADCJUqQvrSshK+jjmyBCKU/rtecgs8Uup05mZ6iReMqjrjv9miBgVaNvbFmGLhISXPYdKZzO9DQ7EVTiU7iPOEEW/oDW3c3AYacxrkBfuDt0WKuzpsfjKEBLosFZud3U8PBLf+k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736981845; c=relaxed/simple;
-	bh=AXIqsu5Hf8BSMkgMuBblY3gvnAvhYz7zhN9xvTStUbE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=bUXdK2QWNW4+/wtfq/RqhqM7b6s9umbznF/SPh+/Tn7rh/p/NYezhB/gLP1tSLps5gdfgJ2Eo+akTNdLuiPEi3rGA0njoLnzGNx9bKQVpPHvRoGhBUi9djxB5untKi6Rm5y7+rDkY7GZ/F2517vlaQnIJRTwBSuQNYlNU0UAG5A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=xkNM6vLd; arc=none smtp.client-ip=209.85.128.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-43635796b48so2109385e9.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Jan 2025 14:57:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1736981842; x=1737586642; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=YI2knYab9uxJ+B0Tyt+RTtiSje6a7G9k5sDSWOOzBtk=;
-        b=xkNM6vLdU0YcPfhQY2LMI6oOTBcGt5wj1DRdGx99cfu2xPguHBIBHxjLtpDcdRqa7p
-         /UjcOORpP47YLsN9iUsKAhJ+knca/MiSqreO/LfHqzFNjB9LdAYp/3JoU52btIvUH7OY
-         o9q5nN67nVfiHEL+5x1ZkV/s+P1X/uyEhyHu5+Z47p+lTJH7SpVfwhzlb5QHbx8G5SRD
-         oKXN+ca0gefI5dI0H/CMV8oqhMmEN64bu2FX9d0NP25QKli3+Bsk6iqAoamUMbNJQ9yD
-         xI5JTL07N9YJz0TVJkWeGq6oA1ry+AOKWgeVsmev5hqWG+allvyiDc7h/yyBphUO/gp6
-         TM7w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736981842; x=1737586642;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=YI2knYab9uxJ+B0Tyt+RTtiSje6a7G9k5sDSWOOzBtk=;
-        b=F3dl8M0vw1/9hg83s1RkRiePb/t/kd5mr+mvTy9I1bA5PInZ53DhIRSFyf3HAtrfSj
-         uFo4x0+uIJoDeu4xFBaJJLqKwUTcpqaqEzoKsS2RkjtdtUfMyu6A0PdJjIehoykyy6a1
-         DUcq1EliPR3JoBvjkd93or8sWIUXNti45oBwlZ2eSAPk+VCtQiBVqVRb54SpjUDmPwwu
-         eXdMDCfT9tufWF8I1j/inck36r4N/PqJR/OgJ28+7MUyaD60WbcAoQIbGNMcLVxWKSiQ
-         clioVQBNvYcai9K2HIF4eK7wWbJmxRlOmJuvvAbrhmqpnC6ua4IjuJJtHJ2ZiEOjqAok
-         DNog==
-X-Forwarded-Encrypted: i=1; AJvYcCXgn+VxCBoqAG31tB8rKiVgD8pjlW85TvKnaXMH5Fyt6tVhlpoeJapdrSovAeQHfkTCFqt+etPB0ywSH6f6@vger.kernel.org
-X-Gm-Message-State: AOJu0YywtBIImTEGjLHFS2a8xGydMgXuk3BAtsz37WNm8QpP+LZiRNxI
-	ZZp3FBIDYbzgvb7DRJUbcBG4dtXDTAcCnsL6yvjymo7g/3XLrCqzCe3JI0MykQc=
-X-Gm-Gg: ASbGnctVXYqnVpjZzgSeRLzDruXkyuyO015O34GPMkMp5x7N+PnmuPcidYEbWT9P+KT
-	WDDbhXUTgpMaHMxvuv+30M6S3dD4QCKyBOL8Cp39uDM4tRDraSUzvfNjf6a1xBjNXrZuoDXdkhJ
-	CzVnIA6SgqCfuR4C1b3YIcmD/TFelHNqrsdJZ/LorTwdSRN9b3KF2PWDKE4DNRlRqzZpo4KDnGS
-	VhuR6tuDaHOK76EMDquTwKxqvo3uEgrLdgXWoTT3jQNpnLZ/Pdscy5axd6DNajB3Fz/uw==
-X-Google-Smtp-Source: AGHT+IEaoRvweWyXVNLgMW7PDXCusK77YXY6gpdqoMSU2lhKFWq18jM7A6ECLolxxOBokyjiRcOIuA==
-X-Received: by 2002:a05:600c:4452:b0:436:e3ea:64dd with SMTP id 5b1f17b1804b1-437c6b2dd76mr40768875e9.11.1736981841774;
-        Wed, 15 Jan 2025 14:57:21 -0800 (PST)
-Received: from [192.168.0.35] ([176.61.106.227])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-437c74ab449sm37998875e9.10.2025.01.15.14.57.19
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 15 Jan 2025 14:57:21 -0800 (PST)
-Message-ID: <f6b2f617-f111-42da-b223-4b504b272700@linaro.org>
-Date: Wed, 15 Jan 2025 22:57:19 +0000
+	s=arc-20240116; t=1736986969; c=relaxed/simple;
+	bh=bWtimwkHl2oCiMWArRPdE9sF28Fjfjh2Lsvx17l3bzs=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=AjI5YbFEmWXyesBLxff2hG+mA2ZO0qA5SlbSxGG3u6QqOEpk/e2+vgl+Y6zGXtkJDjZ4YwK22MXSPoC3r3pJ9IYp3XJIvLZK8FgbO//L+oyFd4bgcNg2R1uIdY+51KJWhngB5UPwCe6Bh0/fVjHjDSRFmAHHGgzvpPX3oWtInGA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=j2aQ8NAj; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50FKrXE0009150;
+	Thu, 16 Jan 2025 00:22:37 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	zwgXD6l+RPhppBWNecC0ZH6aE0wVTyQQuP2kFS04e4k=; b=j2aQ8NAjtG0G5AnS
+	kjGOTL/z3BUfyhBImvf4qzMW4RxD0A288ZMdWHgjLznWfKOg6gx662OxV5xkLQhN
+	ApR1DyqHzqMkyW+jf0nCxGhoXipH62YJ9bmodllhxr6sO6jQn0vSwQZ4Yp687e2A
+	X4Qj7/QMHWFft7JOrayu9CfopK8w45E32XU0dZazOBuQ8ON6TcywW9jNsyEcIEyN
+	I+Lyshk1jf1KA5cHg7c8Dl13E1onHkwbOHpVW5+9EmA03nXWS0UpdJB44uhmP7Gk
+	tZhhUasoq3eVeRmITIwaKLw5xukkHc5sERmja0qrrrt/eGI64FdO66YEk57DyCWz
+	ZV8nUg==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 446mf2gbac-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 16 Jan 2025 00:22:37 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 50G0Ma8W023665
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 16 Jan 2025 00:22:36 GMT
+Received: from [10.71.108.79] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 15 Jan
+ 2025 16:22:35 -0800
+Message-ID: <76facac9-5db8-4dac-8aeb-099b0e4bc389@quicinc.com>
+Date: Wed, 15 Jan 2025 16:22:34 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -80,69 +65,130 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v9 00/28] Qualcomm iris video decoder driver
-To: Dikshita Agarwal <quic_dikshita@quicinc.com>,
- Vikash Garodia <quic_vgarodia@quicinc.com>,
- Abhinav Kumar <quic_abhinavk@quicinc.com>,
- Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Philipp Zabel <p.zabel@pengutronix.de>
-Cc: Hans Verkuil <hverkuil@xs4all.nl>,
- Sebastian Fricke <sebastian.fricke@collabora.com>,
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Neil Armstrong <neil.armstrong@linaro.org>,
- Nicolas Dufresne <nicolas@ndufresne.ca>,
- =?UTF-8?Q?Uwe_Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
- Jianhua Lu <lujianhua000@gmail.com>,
- Stefan Schmidt <stefan.schmidt@linaro.org>, linux-media@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org,
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
- Vedang Nagar <quic_vnagar@quicinc.com>
-References: <20241212-qcom-video-iris-v9-0-e8c2c6bd4041@quicinc.com>
+Subject: Re: [PATCH 03/35] drm/msm/dpu: stop passing mdss_ver to
+ setup_timing_gen()
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark
+	<robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Marijn Suijten
+	<marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Simona
+ Vetter <simona@ffwll.ch>,
+        Vinod Koul <vkoul@kernel.org>, Konrad Dybcio
+	<konradybcio@kernel.org>
+CC: <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>
+References: <20241214-dpu-drop-features-v1-0-988f0662cb7e@linaro.org>
+ <20241214-dpu-drop-features-v1-3-988f0662cb7e@linaro.org>
 Content-Language: en-US
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <20241212-qcom-video-iris-v9-0-e8c2c6bd4041@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <20241214-dpu-drop-features-v1-3-988f0662cb7e@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 5z9Ym2VIgyLKWOQavaf9KJrmLQxh2oHC
+X-Proofpoint-GUID: 5z9Ym2VIgyLKWOQavaf9KJrmLQxh2oHC
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-01-15_10,2025-01-15_02,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 phishscore=0
+ mlxscore=0 spamscore=0 impostorscore=0 lowpriorityscore=0 malwarescore=0
+ mlxlogscore=999 priorityscore=1501 suspectscore=0 bulkscore=0
+ clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2501160001
 
-On 12/12/2024 11:51, Dikshita Agarwal wrote:
-> Introduce support for Qualcomm new video acceleration hardware i.e.
-> iris, used for video stream decoding.
 
-I'm ~happy enough~ to give a Tested-by for this series bar the 8250 
-probe selection story which I think still needs work.
 
-commit 0d78bb6e4a9190b005b3fe5746be2f42e27f6949 (HEAD -> 
-linux-media-next-25-01-15-sm8550-x1e)
-Author: Dikshita Agarwal <quic_dikshita@quicinc.com>
-Date:   Thu Dec 12 17:21:50 2024 +0530
+On 12/13/2024 2:14 PM, Dmitry Baryshkov wrote:
+> As a preparation to further MDSS-revision cleanups stop passing MDSS
+> revision to the setup_timing_gen() callback. Instead store a pointer to
+> it inside struct dpu_hw_intf and use it diretly. It's not that the MDSS
+> revision can chance between dpu_hw_intf_init() and
+> dpu_encoder_phys_vid_setup_timing_engine().
+> 
 
-uname -a
-Linux linaro-gnome 6.13.0-rc1-00197-g0d78bb6e4a91-dirty #226 SMP PREEMPT 
-Wed Jan 15 21:45:36 GMT 2025 aarch64 GNU/Linux
+Not seeing anything wrong with this patch OR the need to absolutely do 
+this either. Will revisit after rest of the series to see where we are 
+going with this as the intention is not clear.
 
-gst-launch-1.0 -vvv -e filesrc location=sample-30s.mp4 ! qtdemux ! 
-parsebin ! v4l2h264dec ! autovideosink
-
-cat /proc/interrupts | grep iris
-287:        415          0          0          0          0          0 
-        0          0    GICv3 206 Level     iris
-
-cat /proc/interrupts | grep iris
-287:        458          0          0          0          0          0 
-        0          0    GICv3 206 Level     iris
-
-I get a display of busses driving around a park and can verify the 
-decoder IRQ bumps as we do it.
-
-Please apply my:
-
-Tested-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-
-Except to the probe 8250 patch which I'm still not happy about.
-
----
-bod
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c | 3 +--
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c          | 7 ++++---
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h          | 5 +++--
+>   3 files changed, 8 insertions(+), 7 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
+> index abd6600046cb3a91bf88ca240fd9b9c306b0ea2e..3e0f1288ad17e19f6d0b7c5dcba19d3e5977a461 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
+> @@ -307,8 +307,7 @@ static void dpu_encoder_phys_vid_setup_timing_engine(
+>   
+>   	spin_lock_irqsave(phys_enc->enc_spinlock, lock_flags);
+>   	phys_enc->hw_intf->ops.setup_timing_gen(phys_enc->hw_intf,
+> -			&timing_params, fmt,
+> -			phys_enc->dpu_kms->catalog->mdss_ver);
+> +			&timing_params, fmt);
+>   	phys_enc->hw_ctl->ops.setup_intf_cfg(phys_enc->hw_ctl, &intf_cfg);
+>   
+>   	/* setup which pp blk will connect to this intf */
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
+> index fb1d25baa518057e74fec3406faffd48969d492b..1d56c21ac79095ab515aeb485346e1eb5793c260 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
+> @@ -98,8 +98,7 @@
+>   
+>   static void dpu_hw_intf_setup_timing_engine(struct dpu_hw_intf *intf,
+>   		const struct dpu_hw_intf_timing_params *p,
+> -		const struct msm_format *fmt,
+> -		const struct dpu_mdss_version *mdss_ver)
+> +		const struct msm_format *fmt)
+>   {
+>   	struct dpu_hw_blk_reg_map *c = &intf->hw;
+>   	u32 hsync_period, vsync_period;
+> @@ -180,7 +179,7 @@ static void dpu_hw_intf_setup_timing_engine(struct dpu_hw_intf *intf,
+>   
+>   	/* TODO: handle DSC+DP case, we only handle DSC+DSI case so far */
+>   	if (p->compression_en && !dp_intf &&
+> -	    mdss_ver->core_major_ver >= 7)
+> +	    intf->mdss_ver->core_major_ver >= 7)
+>   		intf_cfg2 |= INTF_CFG2_DCE_DATA_COMPRESS;
+>   
+>   	hsync_data_start_x = hsync_start_x;
+> @@ -580,6 +579,8 @@ struct dpu_hw_intf *dpu_hw_intf_init(struct drm_device *dev,
+>   	c->idx = cfg->id;
+>   	c->cap = cfg;
+>   
+> +	c->mdss_ver = mdss_rev;
+> +
+>   	c->ops.setup_timing_gen = dpu_hw_intf_setup_timing_engine;
+>   	c->ops.setup_prg_fetch  = dpu_hw_intf_setup_prg_fetch;
+>   	c->ops.get_status = dpu_hw_intf_get_status;
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h
+> index 114be272ac0ae67fe0d4dfc0c117baa4106f77c9..f31067a9aaf1d6b96c77157135122e5e8bccb7c4 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h
+> @@ -81,8 +81,7 @@ struct dpu_hw_intf_cmd_mode_cfg {
+>   struct dpu_hw_intf_ops {
+>   	void (*setup_timing_gen)(struct dpu_hw_intf *intf,
+>   			const struct dpu_hw_intf_timing_params *p,
+> -			const struct msm_format *fmt,
+> -			const struct dpu_mdss_version *mdss_ver);
+> +			const struct msm_format *fmt);
+>   
+>   	void (*setup_prg_fetch)(struct dpu_hw_intf *intf,
+>   			const struct dpu_hw_intf_prog_fetch *fetch);
+> @@ -126,6 +125,8 @@ struct dpu_hw_intf {
+>   	enum dpu_intf idx;
+>   	const struct dpu_intf_cfg *cap;
+>   
+> +	const struct dpu_mdss_version *mdss_ver;
+> +
+>   	/* ops */
+>   	struct dpu_hw_intf_ops ops;
+>   };
+> 
 
