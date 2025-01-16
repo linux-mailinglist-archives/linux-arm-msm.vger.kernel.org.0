@@ -1,273 +1,196 @@
-Return-Path: <linux-arm-msm+bounces-45238-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-45239-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9CD7DA13676
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jan 2025 10:19:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 391FDA1367D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jan 2025 10:23:01 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id D206918885C8
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jan 2025 09:20:01 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4E22218887AA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jan 2025 09:23:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EADFE1D9A50;
-	Thu, 16 Jan 2025 09:19:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C920D1D88D7;
+	Thu, 16 Jan 2025 09:22:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="xnwI3YUy"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cCo972y1"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1E0A26AF6
-	for <linux-arm-msm@vger.kernel.org>; Thu, 16 Jan 2025 09:19:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96882139566;
+	Thu, 16 Jan 2025 09:22:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737019190; cv=none; b=l4e21H/Rbgx1PoVN6iiXBRXturlCjqiRB5A0TOOkJF9R8cohqrqglFvOAp6KZhkiuoUGSwEJwwbDqDdvcVN6EpxedZAWSRJvQZxQeGDpiEjUVybX9t+kyvzq/pXPjdEd9qjQc1lI6FUPnSd4pKBetzw9RjZd7SRfcf6j+XEaMQ4=
+	t=1737019376; cv=none; b=NoRo3zUyu+yRCTev2M5W+MeAHsEVMovJ7KkTOrjywBuTTkEI2SqTxK8DFypjGBf1TJDU3TOM0CSE6UKIG/nM6TXjJoQIsml9dWhIbGFn3NVTBfQYn4xdwzG/eP69DhTqGAsUtbEeAsx86puER813zIBQ0Wb12dIxlWFoHGKwsZw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737019190; c=relaxed/simple;
-	bh=o9sTj5DM+zlnNnoDC/0h4jm3J6PO0PJuplVlGaYJvkQ=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=kuXPFWYQMkP3byicep8AJaBVmnVT7Uop9y++AKds/ET8aeOykVGzLlWW2pclwronlrB4AQqqk1XxF+n96AXURn/rw8bdU8B2aJ3MwAqcsK4wqgvYT0ZZzuwzedOsqE5m+L/R4n8Gbug45maFsRgMgyNXt7uO4nw6QTcxQaQLDcU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=xnwI3YUy; arc=none smtp.client-ip=209.85.128.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
-Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-43621d2dd4cso40435e9.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Jan 2025 01:19:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1737019186; x=1737623986; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=QOQTH7tUiMk7fJ9MtVwTdXT5DSu9exzYGVvW00E16nc=;
-        b=xnwI3YUyGrF2YOT4rzuEzYRr6igErgmlP9bK7NMjTRxexdNiptuenWek0RHYQ8lDdS
-         4rSTFzeMlS2PMkfv+vrwCLhCMGqKroW4wWQsNjOiqitfMss9H84dm4ATcfu8NmPpJV4J
-         YLFopInW/z8FxlkqBOSOUZ5GsxTh6TfhNgu5Yay5gSVbsdjY+Yml1yxy96OzjzCquYKp
-         BEBcMKU9Ofm7sdcsoPIebJzb4GDpYEeAmtpyGwItmhu9JX+5Q85lOB+QxEFIcc52eCrU
-         jRMUGjlyV9zKGU6+7iGFz3WOp3xMe0p770wspKPf+pC43JkfBZmkf0nsumNUkPTsuhh6
-         mkjQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1737019186; x=1737623986;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=QOQTH7tUiMk7fJ9MtVwTdXT5DSu9exzYGVvW00E16nc=;
-        b=GylNS2nQEOTYlisfYOANCCUm3HUpayHWBm7dzm9S00i3k1EBZqN894aKDo7a6qwZyr
-         2akscKhBx5hqI17uPNwYtRbz+Z+iwgqFpEqpJD+UgTvJnFyodB/xLYGrcNA6hBkOqJwd
-         QMBz3PlExc2GU3lpbmGkg61dLrcB2jSTR7qEQsmfqGSZTZgTOBR4Ue+qpL9jf19Vb3Ki
-         +4N2KXKC7m0371B9kvnKEbDPSVnmae+Bw3bKV8F55EIJQLOfPyzTUbpyLkbCQ8+oBwSS
-         dQK8+WAFfQ6FWrj3ODCbdMHIHr5CfT8Tod8D/4+7/9OIfHI1Wp1YcQFfwQnn8T5SWEKf
-         +Hew==
-X-Forwarded-Encrypted: i=1; AJvYcCUrv8D5kgXmYU+RnI9bH3hZ/N0FjS+VXQJD3eLryzF887P8LDKJWSeNs3GrKgEccQe/5diWHwf6VGAkez/S@vger.kernel.org
-X-Gm-Message-State: AOJu0Yzqz34lJhi81pD+RVwsg1uRJ1LFZzXBqB3ldOPrmOCnox7Uk6Q3
-	Gn6Ng/+6SEGcagCdbrxUh2YPMxEqgpW7VmLNOFLsQA+HIQ5jvVnbs+WHIWEsEeadLxxPP1e108f
-	Bqpk8P4LeLCrPs1SzfeGBdSwsdxgNgRvcmgrr
-X-Gm-Gg: ASbGncu1AU6x3ifafm/rZmfCfOzWExnKnXLGXvtpZHYStros5o1itGaCcokacMIOcU9
-	a2CZIktSX7fV46c3Q5wFnSprgtqG2wf3lTsV21gIxlZIuVFoEAM1cZzP2jupImN4PZn8=
-X-Google-Smtp-Source: AGHT+IE8aMwLow5sWY5fJzCKY+xspZ5j3Pvj+/nmGPI1JUwww3Pw+7qETN7C17jt8ym+ycXUPeSkWTSDDlDTu48ZCmI=
-X-Received: by 2002:a05:600c:19c9:b0:42c:9e35:cde6 with SMTP id
- 5b1f17b1804b1-4388b2ec3a2mr860695e9.2.1737019185907; Thu, 16 Jan 2025
- 01:19:45 -0800 (PST)
+	s=arc-20240116; t=1737019376; c=relaxed/simple;
+	bh=v0X3E64VCHaTPugml817BhH2IqWT8FThZLYh6LkYuDQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=btza+1p/ujhXlbLUwPULjL6USxyztk7cG780ifDZmFxTyZVzs5WMPem+vm0cU+8521QQ6umURi0GAZoqBuqW+GtE38Xg0LDMLRoz5wEd6hoc3keY7ar7M18tSVrsZrv9mGN0W6O7uyVN+YYzEg2/yqcE1GdXRKFRoE9tFuKM0xw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cCo972y1; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFA00C4CED6;
+	Thu, 16 Jan 2025 09:22:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1737019376;
+	bh=v0X3E64VCHaTPugml817BhH2IqWT8FThZLYh6LkYuDQ=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=cCo972y1n+x6rv0uNEhxeCjUmwmc34/EXEzkIfYaCpn8kISz2cUWOHQISkYvJGLS5
+	 xE4X8am2QPPwzpEwotK6W04PYNMxUuIvaC7uosdD2FlQHIMHJA2sNLZtpjwTU+LmNB
+	 eDNqfdYjnZ9AC50vmzm2Oe4Ld47c1GZaz8z7hi5z2H5FKKuLCWQ6VUcwPDx2tyHXKD
+	 rLNtZQ+QoGWYES4LYD37Bix5qff9y0DNG+npoU8HpWbzCr25le/ppjbLyh9WGKxPec
+	 gq0m5eNlpDRk5oMYqvQGEjZouw8az8ElYMuO0+7b9ofCSdXLdsQX6jz/srb82/3e6/
+	 hBFic51i+C2XQ==
+Message-ID: <5b419c6a-ba22-41d3-bd5e-869d422f3c5d@kernel.org>
+Date: Thu, 16 Jan 2025 10:22:47 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CA+EHjTzcx=eXSERSANMByhcgRRAbUL3kPAYkeu-uUgd0nPBPPA@mail.gmail.com>
- <diqzh65zzjc9.fsf@ackerleytng-ctop.c.googlers.com>
-In-Reply-To: <diqzh65zzjc9.fsf@ackerleytng-ctop.c.googlers.com>
-From: Fuad Tabba <tabba@google.com>
-Date: Thu, 16 Jan 2025 09:19:09 +0000
-X-Gm-Features: AbW1kvYfdnAg5jzOGsWKnus5CfXOeCmlxVqueDrpwKXgQxSqa_22kWzst03_IAY
-Message-ID: <CA+EHjTwXqUHoEp8oqiNDcWqXxCBLHU1+jAdEN8J-pHZjxKnM+A@mail.gmail.com>
-Subject: Re: [RFC PATCH v4 00/14] KVM: Restricted mapping of guest_memfd at
- the host and arm64 support
-To: Ackerley Tng <ackerleytng@google.com>
-Cc: kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, 
-	pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au, 
-	anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com, 
-	aou@eecs.berkeley.edu, seanjc@google.com, viro@zeniv.linux.org.uk, 
-	brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org, 
-	xiaoyao.li@intel.com, yilun.xu@intel.com, chao.p.peng@linux.intel.com, 
-	jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com, 
-	yu.c.zhang@linux.intel.com, isaku.yamahata@intel.com, mic@digikod.net, 
-	vbabka@suse.cz, vannapurve@google.com, mail@maciej.szmigiero.name, 
-	david@redhat.com, michael.roth@amd.com, wei.w.wang@intel.com, 
-	liam.merwick@oracle.com, isaku.yamahata@gmail.com, 
-	kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com, steven.price@arm.com, 
-	quic_eberman@quicinc.com, quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, 
-	quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com, 
-	quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com, 
-	james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev, 
-	maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com, 
-	roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, 
-	rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com, 
-	jthoughton@google.com
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 8/8] ARM: dts: msm: Use Operation Points V2 for UFS on
+ SM8650
+To: Ziqi Chen <quic_ziqichen@quicinc.com>, quic_cang@quicinc.com,
+ bvanassche@acm.org, mani@kernel.org, beanhuo@micron.com,
+ avri.altman@wdc.com, junwoo80.lee@samsung.com, martin.petersen@oracle.com,
+ quic_nguyenb@quicinc.com, quic_nitirawa@quicinc.com,
+ quic_rampraka@quicinc.com
+Cc: linux-scsi@vger.kernel.org, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>,
+ "open list:ARM/QUALCOMM SUPPORT" <linux-arm-msm@vger.kernel.org>,
+ "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS"
+ <devicetree@vger.kernel.org>, open list <linux-kernel@vger.kernel.org>
+References: <20250116091150.1167739-1-quic_ziqichen@quicinc.com>
+ <20250116091150.1167739-9-quic_ziqichen@quicinc.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 fv0=
+In-Reply-To: <20250116091150.1167739-9-quic_ziqichen@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Hi Ackerley,
+On 16/01/2025 10:11, Ziqi Chen wrote:
+> Use Operation Points V2 for UFS on SM8650 so that multi-level
+> clock/gear scaling can be possible.
+> 
+> Co-developed-by: Can Guo <quic_cang@quicinc.com>
+> Signed-off-by: Can Guo <quic_cang@quicinc.com>
+> Signed-off-by: Ziqi Chen <quic_ziqichen@quicinc.com>
 
-On Thu, 16 Jan 2025 at 00:35, Ackerley Tng <ackerleytng@google.com> wrote:
->
-> Fuad Tabba <tabba@google.com> writes:
->
-> > Hi,
-> >
-> > As mentioned in the guest_memfd sync (2025-01-09), below is the state
-> > diagram that uses the new states in this patch series, and how they
-> > would interact with sharing/unsharing in pKVM:
-> >
-> > https://lpc.events/event/18/contributions/1758/attachments/1457/3699/Guestmemfd%20folio%20state%20page_type.pdf
->
-> Thanks Fuad!
->
-> I took a look at the state diagram [1] and the branch that this patch is
-> on [2], and here's what I understand about the flow:
->
-> 1. From state H in the state diagram, the guest can request to unshare a
->    page. When KVM handles this unsharing, KVM marks the folio
->    mappability as NONE (state J).
-> 2. The transition from state J to state K or I is independent of KVM -
->    userspace has to do this unmapping
-> 3. On the next vcpu_run() from userspace, continuing from userspace's
->    handling of the unshare request, guest_memfd will check and try to
->    register a callback if the folio's mappability is NONE. If the folio
->    is mapped, or if folio is not mapped but refcount is elevated for
->    whatever reason, vcpu_run() fails and exits to userspace. If folio is
->    not mapped and gmem holds the last refcount, set folio mappability to
->    GUEST.
->
-> Here's one issue I see based on the above understanding:
->
-> Registration of the folio_put() callback only happens if the VMM
-> actually tries to do vcpu_run(). For 4K folios I think this is okay
-> since the 4K folio can be freed via the transition state K -> state I,
-> but for hugetlb folios that have been split for sharing with userspace,
-> not getting a folio_put() callback means never putting the hugetlb folio
-> together. Hence, relying on vcpu_run() to add the folio_put() callback
-> leaves a way that hugetlb pages can be removed from the system.
->
-> I think we should try and find a path forward that works for both 4K and
-> hugetlb folios.
+Please don't send downstream code directly, but fix it first. Actually -
+rework it 100%.
 
-I agree, this could be an issue, but we could find other ways to
-trigger the callback for huge folios. The important thing I was trying
-to get to is how to have the callback and be able to register it.
+Please use subject prefixes matching the subsystem. You can get them for
+example with `git log --oneline -- DIRECTORY_OR_FILE` on the directory
+your patch is touching. For bindings, the preferred subjects are
+explained here:
+https://www.kernel.org/doc/html/latest/devicetree/bindings/submitting-patches.html#i-for-patch-submitters
 
-> IIUC page._mapcount and page.page_type works as a union because
-> page_type is only set for page types that are never mapped to userspace,
-> like PGTY_slab, PGTY_offline, etc.
-
-In the last guest_memfd sync, David Hildenbrand mentioned that that
-would be a temporary restriction since the two structures would
-eventually be decoupled, work being done by Matthew Wilcox I believe.
+> ---
+>  arch/arm64/boot/dts/qcom/sm8650.dtsi | 51 +++++++++++++++++++++++-----
+>  1 file changed, 43 insertions(+), 8 deletions(-)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sm8650.dtsi b/arch/arm64/boot/dts/qcom/sm8650.dtsi
+> index 01ac3769ffa6..5466f1217f64 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8650.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm8650.dtsi
+> @@ -2557,18 +2557,11 @@ ufs_mem_hc: ufs@1d84000 {
+>  				      "tx_lane0_sync_clk",
+>  				      "rx_lane0_sync_clk",
+>  				      "rx_lane1_sync_clk";
+> -			freq-table-hz = <100000000 403000000>,
+> -					<0 0>,
+> -					<0 0>,
+> -					<100000000 403000000>,
+> -					<100000000 403000000>,
+> -					<0 0>,
+> -					<0 0>,
+> -					<0 0>;
+>  
+>  			resets = <&gcc GCC_UFS_PHY_BCR>;
+>  			reset-names = "rst";
+>  
+> +			operating-points-v2 = <&ufs_opp_table>;
+>  			interconnects = <&aggre1_noc MASTER_UFS_MEM QCOM_ICC_TAG_ALWAYS
+>  					 &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>,
+>  					<&gem_noc MASTER_APPSS_PROC QCOM_ICC_TAG_ALWAYS
+> @@ -2590,6 +2583,48 @@ &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>,
+>  			#reset-cells = <1>;
+>  
+>  			status = "disabled";
+> +
+> +			ufs_opp_table: opp-table {
+> +					   compatible = "operating-points-v2";
 
 
-> Technically PGTY_guest_memfd is only set once the page can never be
-> mapped to userspace, but PGTY_guest_memfd can only be set once mapcount
-> reaches 0. Since mapcount is added in the faulting process, could gmem
-> perhaps use some kind of .unmap/.unfault callback, so that gmem gets
-> notified of all unmaps and will know for sure that the mapcount gets to
-> 0?
+Messed indentation.
 
-I'm not sure if there is such a callback. If there were, I'm not sure
-what that would buy us really. The main pain point is the refcount
-going down to zero. The mapcount part is pretty straightforard and
-likely to be only temporary as mentioned, i.e., when it get decoupled,
-we could register the callback earlier and simplify the transition
-altogether.
+> +					   // LOW_SVS
 
-> Alternatively, I took a look at the folio_is_zone_device()
-> implementation, and page.flags is used to identify the page's type. IIUC
-> a ZONE_DEVICE page also falls in the intersection of needing a
-> folio_put() callback and can be mapped to userspace. Could we use a
-> similar approach, using page.flags to identify a page as a guest_memfd
-> page? That way we don't need to know when unmapping happens, and will
-> always be able to get a folio_put() callback.
 
-Same as above, with this being temporary, adding a new page flag might
-not be something that the rest of the community might be too excited
-about :)
+Drop
 
-Thanks for your comments!
-/fuad
+> +					   opp-100000000 {
+> +							   opp-hz = /bits/ 64 <100000000>,
+> +									   /bits/ 64 <0>,
 
-> [1] https://lpc.events/event/18/contributions/1758/attachments/1457/3699/Guestmemfd%20folio%20state%20page_type.pdf
-> [2] https://android-kvm.googlesource.com/linux/+/764360863785ba16d974253a572c87abdd9fdf0b%5E%21/#F0
->
-> > This patch series doesn't necessarily impose all these transitions,
-> > many of them would be a matter of policy. This just happens to be the
-> > current way I've done it with pKVM/arm64.
-> >
-> > Cheers,
-> > /fuad
-> >
-> > On Fri, 13 Dec 2024 at 16:48, Fuad Tabba <tabba@google.com> wrote:
-> >>
-> >> This series adds restricted mmap() support to guest_memfd, as
-> >> well as support for guest_memfd on arm64. It is based on Linux
-> >> 6.13-rc2.  Please refer to v3 for the context [1].
-> >>
-> >> Main changes since v3:
-> >> - Added a new folio type for guestmem, used to register a
-> >>   callback when a folio's reference count reaches 0 (Matthew
-> >>   Wilcox, DavidH) [2]
-> >> - Introduce new mappability states for folios, where a folio can
-> >> be mappable by the host and the guest, only the guest, or by no
-> >> one (transient state)
-> >> - Rebased on Linux 6.13-rc2
-> >> - Refactoring and tidying up
-> >>
-> >> Cheers,
-> >> /fuad
-> >>
-> >> [1] https://lore.kernel.org/all/20241010085930.1546800-1-tabba@google.com/
-> >> [2] https://lore.kernel.org/all/20241108162040.159038-1-tabba@google.com/
-> >>
-> >> Ackerley Tng (2):
-> >>   KVM: guest_memfd: Make guest mem use guest mem inodes instead of
-> >>     anonymous inodes
-> >>   KVM: guest_memfd: Track mappability within a struct kvm_gmem_private
-> >>
-> >> Fuad Tabba (12):
-> >>   mm: Consolidate freeing of typed folios on final folio_put()
-> >>   KVM: guest_memfd: Introduce kvm_gmem_get_pfn_locked(), which retains
-> >>     the folio lock
-> >>   KVM: guest_memfd: Folio mappability states and functions that manage
-> >>     their transition
-> >>   KVM: guest_memfd: Handle final folio_put() of guestmem pages
-> >>   KVM: guest_memfd: Allow host to mmap guest_memfd() pages when shared
-> >>   KVM: guest_memfd: Add guest_memfd support to
-> >>     kvm_(read|/write)_guest_page()
-> >>   KVM: guest_memfd: Add KVM capability to check if guest_memfd is host
-> >>     mappable
-> >>   KVM: guest_memfd: Add a guest_memfd() flag to initialize it as
-> >>     mappable
-> >>   KVM: guest_memfd: selftests: guest_memfd mmap() test when mapping is
-> >>     allowed
-> >>   KVM: arm64: Skip VMA checks for slots without userspace address
-> >>   KVM: arm64: Handle guest_memfd()-backed guest page faults
-> >>   KVM: arm64: Enable guest_memfd private memory when pKVM is enabled
-> >>
-> >>  Documentation/virt/kvm/api.rst                |   4 +
-> >>  arch/arm64/include/asm/kvm_host.h             |   3 +
-> >>  arch/arm64/kvm/Kconfig                        |   1 +
-> >>  arch/arm64/kvm/mmu.c                          | 119 +++-
-> >>  include/linux/kvm_host.h                      |  75 +++
-> >>  include/linux/page-flags.h                    |  22 +
-> >>  include/uapi/linux/kvm.h                      |   2 +
-> >>  include/uapi/linux/magic.h                    |   1 +
-> >>  mm/debug.c                                    |   1 +
-> >>  mm/swap.c                                     |  28 +-
-> >>  tools/testing/selftests/kvm/Makefile          |   1 +
-> >>  .../testing/selftests/kvm/guest_memfd_test.c  |  64 +-
-> >>  virt/kvm/Kconfig                              |   4 +
-> >>  virt/kvm/guest_memfd.c                        | 579 +++++++++++++++++-
-> >>  virt/kvm/kvm_main.c                           | 229 ++++++-
-> >>  15 files changed, 1074 insertions(+), 59 deletions(-)
-> >>
-> >>
-> >> base-commit: fac04efc5c793dccbd07e2d59af9f90b7fc0dca4
-> >> --
-> >> 2.47.1.613.gc27f4b7a9f-goog
-> >>
+Messed alignment.
+
+> +									   /bits/ 64 <0>,
+> +									   /bits/ 64 <100000000>,
+> +									   /bits/ 64 <0>,
+> +									   /bits/ 64 <0>,
+> +									   /bits/ 64 <0>,
+
+
+
+
+Best regards,
+Krzysztof
 
