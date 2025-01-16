@@ -1,130 +1,159 @@
-Return-Path: <linux-arm-msm+bounces-45184-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-45185-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 21DF1A1309B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jan 2025 02:17:19 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id B75E2A1309E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jan 2025 02:17:51 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 520361888B67
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jan 2025 01:17:22 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id D8EF01888968
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jan 2025 01:17:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A247C1E487;
-	Thu, 16 Jan 2025 01:17:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E710B1CD1F;
+	Thu, 16 Jan 2025 01:17:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="bjUVNhM0"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="xfyFxeK3"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f43.google.com (mail-lf1-f43.google.com [209.85.167.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBBE729A1;
-	Thu, 16 Jan 2025 01:17:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27E8822331
+	for <linux-arm-msm@vger.kernel.org>; Thu, 16 Jan 2025 01:17:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736990236; cv=none; b=Zk9f+N6zB486s9tfSp7/5GtnkVLDrea/pyg/Npjx6yZPtqjDWsZ9sUBE5tr/vzZaDLEdGcsH0kXxeBqWYOarpNWOJKgNpNWmK0a0oL6/te28kkc8nMpECzG9uOwkAvvKuBjtf4RMqIvqSdGM4WbNUYQgbqV3bhetJ9FbHDzVhNM=
+	t=1736990268; cv=none; b=r5zlLY7JJBs70agpA/htnTDsraRFrCMvraUaUC+DGVDsyU2+9SzV/jL3PCZ5oTYMU9Doyiy/e6OglNmt8PI2vM+9FKkJTVw5AwHi+aOPJ5frG9PYMkicACETjp6EU+m7SwwDl7FGLh1UBZDXW4enuq5J0YnPlfsAn2bYUo8itBo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736990236; c=relaxed/simple;
-	bh=3cskU3RhZqgeESoAtce6mw0CAomT1DZkKm6L1YXyxPc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=umoI9IzxYR9/iLwR8Gpea9iHVhS5spMYhRB/tveUQvSzChgi/q/CpOxQxWtcfH4hE7TpSawsnAaGZ0wSIrfV7DFLc5SebWhFiXm5yXX2IxaOagqNwU1P98pwUEO9QPyu33wYLbZmpH9A5o9kuAoen5OZ+kDmxYxCtq1+y/Cm5kE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=bjUVNhM0; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50FKrbJf009208;
-	Thu, 16 Jan 2025 01:17:07 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	saJ1fk4vOLxGWYtDZMmSkpZrxzipQvGL3nYDUcAsoyg=; b=bjUVNhM0NGfD3KqT
-	gk9ZypCy7lH3t/uEDa1dclcVTO5yj1WFoIOqgAVLCKtQfPpqG2tsYRHQ5YAgsjTf
-	JL5NFMv6akWIzr1dF44lDOo31PzM7S+B10QFHi172CTpEAJnn2rPRmSpCiO2z92r
-	SFQ8Tu9TovbxI5l0rwWMt3fy8kzguDjQhTWfR+iZ3L4iSKNFTD4JtU95Sa/3rBOu
-	LQbdGz4zf+0NX5h9CdUf2fFTfpFVfkgn2KYtYxEZ6nNFPsDT1a6o8laMPHLOdQJW
-	qmicfYaIJBOwZlD+Ya1hCuWpdOEc3pstXXuRkWaAt+9grUbxy8xrvtt9egNeOugO
-	ywDX5A==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 446mf2gefn-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 16 Jan 2025 01:17:07 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 50G1H6rG018181
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 16 Jan 2025 01:17:06 GMT
-Received: from [10.71.108.79] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 15 Jan
- 2025 17:17:05 -0800
-Message-ID: <4d4fcf77-8730-4c5c-bc33-53b8d8575c57@quicinc.com>
-Date: Wed, 15 Jan 2025 17:17:05 -0800
+	s=arc-20240116; t=1736990268; c=relaxed/simple;
+	bh=mOnubyS0GnJSfAnM1KwlKeEK9I0amurNeess9vv2aMc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=NoRH5nkX1cH9wt+FSg6uN/hxXcAZxj4nFRlHFeXGl9pGDI1DwpDBdcGx8yeP0FKwL26WX1SBLfxrRGziJbJM6UYzfswgMN3YtZ9gTgPEi3OXgTQbt06HVN6fcXjRdNjgKDhVycMvg+uIfQ7Iy+cfM8QEScNjP7NxDeA8NGCpzqo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=xfyFxeK3; arc=none smtp.client-ip=209.85.167.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f43.google.com with SMTP id 2adb3069b0e04-5401d3ea5a1so375240e87.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Jan 2025 17:17:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1736990265; x=1737595065; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=eNfPYyfZy53nY6eecpkazw5JP/hsMfuVMJ+lNdVWA44=;
+        b=xfyFxeK3hfXEvTSIK2qyjd1JLnFAXkyUte2Ue1OfMSY4Y50yZZm/AxqKybT8DTNjdT
+         mg+Ew7JmFik8TDlnLQhPYfxSxyQ2pmOyR19XvBvLNG52nwQCbsJg3+UhNBosCMABl2yW
+         63O7U1/Ef8qqmVBTL+ySZWPakuFRe12EDUc4buFq+Xz92LM2yGso0/FEDjcd63gY8msE
+         EKdBpzCXX9bLUCGU6MJCRe52aYXEBp6b3zwVjqIM2akIOU4V3hJyE69F0uP7ojDAhiFy
+         Webuamv6mtRHKvgF3Kjb2RcVzKp+w1ISs17QPYosfuooa3LkDx9GrHWB9YONFPIe/jjH
+         /ZSw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1736990265; x=1737595065;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=eNfPYyfZy53nY6eecpkazw5JP/hsMfuVMJ+lNdVWA44=;
+        b=DpmIwisadooZ4Jq/7ANPWFe/csLS+AlPivlBLm8/5QQXDZX9OejV9+pg8RdFhcIZMT
+         yPjwXHiuu65uoM2Bb20xfXNbXDURODF9ogHSaV2JYeN5L1tR03+TPWDGQ23v7LOKBxcW
+         FTm6gmZrbZsCFsVDaiprcHJL6fGqJsB9EL4YKuz3PLG6eoWCvAUjqTJZv4PrjSot8r5G
+         LLAnfNwfq7lvTqs4+xqCiquspSCIdkq53dKj4La0/SHfs+IeF2oNwAWvmqJ5gkYjPMmg
+         X+n/PN2ShXMYhD5zt+l5Vyk3ObV8gsfZ8eTAzFaFG1Dj/Tz6xjzaMik0REnSdTp9wi2L
+         DUtA==
+X-Forwarded-Encrypted: i=1; AJvYcCVFjI5wCNDh3/uazJzdTlc61rDTw+5PjrBVZxcMN7qUImlJwSaJwRJIHmqhG+ITP1OOWye05wy8+OQhbORm@vger.kernel.org
+X-Gm-Message-State: AOJu0YwMsNuoHlNZvCt+ciD7Z2dM7ZLegeDufWWgfYtXH2xWvCnf7T91
+	0HmWI0rxo1X9WBgB+1UPufUVfJCQUhNOmybpC4MmStD9IVcAAlffqoN25jShgoM=
+X-Gm-Gg: ASbGncuMwr0J6APAqCxK55Y37dSxriS8Su+yFfwK+4xC0OdzC7dLnwqZyAAPoE+F1dM
+	jOSUm8Nnc0AATfODf2ltNAp0L1ngK0W3lsHZRAQB3btDy81GmDXtdUceJn8GW20Z1M49eoFI7TG
+	NuqJmEYlSkuLumK66xUq1mr8aTg4pEB5DBLIlKZDOZxcFypNAH1DuoQMbS9Shbpu7xxa+3MBvzS
+	odjQ4w96jjdRYNY277fmC/J1C3g1UfQyJH3x4IEqVXdNtxSURCgHSl9kUSFp3p9KnAi3p26yhXT
+	yVxKPujMYYkD295kGjDVmQdsjTtIA+Oj4GbW
+X-Google-Smtp-Source: AGHT+IGre7SUCG88en2NKpNyc11/WQbgYt8BKjA6Aeude8fuHxTmSL2WOWwm4KnCuAjQVKdb5BXbhQ==
+X-Received: by 2002:a05:6512:3b0d:b0:542:6f2a:946a with SMTP id 2adb3069b0e04-542845070a2mr8745892e87.6.1736990265285;
+        Wed, 15 Jan 2025 17:17:45 -0800 (PST)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5428cbfc85asm2164358e87.102.2025.01.15.17.17.42
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 15 Jan 2025 17:17:44 -0800 (PST)
+Date: Thu, 16 Jan 2025 03:17:41 +0200
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Melody Olvera <quic_molvera@quicinc.com>
+Cc: Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Conor Dooley <conor@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>, Trilok Soni <quic_tsoni@quicinc.com>, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 4/4] arm64: dts: qcom: sm8750: Add LLCC node
+Message-ID: <htmo2fk7uwwyqe6dgohoyrlcrwkfflf5lewx5pmuzoqu2v7noe@om4ynknmnkhu>
+References: <20250113-sm8750_llcc_master-v1-0-5389b92e2d7a@quicinc.com>
+ <20250113-sm8750_llcc_master-v1-4-5389b92e2d7a@quicinc.com>
+ <7jo242e674fsqbia7udid4abq4euofishstmix6m7xqzdgcqiy@3zukruizim4n>
+ <a81ca6f2-2f09-4836-b614-b169d5c65bfb@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 04/35] drm/msm/dpu: drop INTF_SC7280_MASK
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark
-	<robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Marijn Suijten
-	<marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, Simona
- Vetter <simona@ffwll.ch>,
-        Vinod Koul <vkoul@kernel.org>, Konrad Dybcio
-	<konradybcio@kernel.org>
-CC: <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>
-References: <20241214-dpu-drop-features-v1-0-988f0662cb7e@linaro.org>
- <20241214-dpu-drop-features-v1-4-988f0662cb7e@linaro.org>
-Content-Language: en-US
-From: Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <20241214-dpu-drop-features-v1-4-988f0662cb7e@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: qjRL1pekM4dZOdcFhTZqeBSnYaNa5Bk4
-X-Proofpoint-GUID: qjRL1pekM4dZOdcFhTZqeBSnYaNa5Bk4
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-01-15_11,2025-01-15_02,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 phishscore=0
- mlxscore=0 spamscore=0 impostorscore=0 lowpriorityscore=0 malwarescore=0
- mlxlogscore=999 priorityscore=1501 suspectscore=0 bulkscore=0
- clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2501160007
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <a81ca6f2-2f09-4836-b614-b169d5c65bfb@quicinc.com>
 
-
-
-On 12/13/2024 2:14 PM, Dmitry Baryshkov wrote:
-> The INTF_SC7280_MASK is equal to the INTF_SC7180_MASK. Stop defining a
-> separate symbol and use the INTF_SC7180_MASK instead.
+On Wed, Jan 15, 2025 at 02:47:52PM -0800, Melody Olvera wrote:
 > 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->   .../gpu/drm/msm/disp/dpu1/catalog/dpu_10_0_sm8650.h    |  8 ++++----
->   drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h |  8 ++++----
->   drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h |  6 +++---
->   .../gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h   | 18 +++++++++---------
->   drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h |  8 ++++----
->   .../gpu/drm/msm/disp/dpu1/catalog/dpu_8_4_sa8775p.h    | 16 ++++++++--------
->   drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h |  8 ++++----
->   .../gpu/drm/msm/disp/dpu1/catalog/dpu_9_2_x1e80100.h   | 18 +++++++++---------
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c         |  2 --
->   9 files changed, 45 insertions(+), 47 deletions(-)
+> 
+> On 1/14/2025 2:59 AM, Dmitry Baryshkov wrote:
+> > On Mon, Jan 13, 2025 at 01:26:43PM -0800, Melody Olvera wrote:
+> > > Add LLCC node for SM8750 SoC.
+> > > 
+> > > Signed-off-by: Melody Olvera <quic_molvera@quicinc.com>
+> > > ---
+> > >   arch/arm64/boot/dts/qcom/sm8750.dtsi | 11 +++++++++++
+> > >   1 file changed, 11 insertions(+)
+> > > 
+> > > diff --git a/arch/arm64/boot/dts/qcom/sm8750.dtsi b/arch/arm64/boot/dts/qcom/sm8750.dtsi
+> > > index 3bbd7d18598ee0a3a0d5130c03a3166e1fc14d82..3cd7b40bdde68ac00c3dbe7fb3f20ebb2ba27045 100644
+> > > --- a/arch/arm64/boot/dts/qcom/sm8750.dtsi
+> > > +++ b/arch/arm64/boot/dts/qcom/sm8750.dtsi
+> > > @@ -2888,6 +2888,17 @@ gem_noc: interconnect@24100000 {
+> > >   			#interconnect-cells = <2>;
+> > >   		};
+> > > +		cache-controller@24800000 {
+> > > +			compatible = "qcom,sm8750-llcc";
+> > > +			reg = <0x0 0x24800000 0x0 0x200000>, <0x0 0x25800000 0x0 0x200000>,
+> > > +				<0x0 0x24C00000 0x0 0x200000>, <0x0 0x25C00000 0x0 0x200000>,
+> > > +				<0x0 0x26800000 0x0 0x200000>, <0x0 0x26C00000 0x0 0x200000>;
+> > > +			reg-names = "llcc0_base", "llcc1_base",
+> > > +				"llcc2_base", "llcc3_base",
+> > > +				"llcc_broadcast_base", "llcc_broadcast_and_base";
+> > > +			interrupts = <GIC_SPI 266 IRQ_TYPE_LEVEL_HIGH>;
+> > > +		};
+> > PLease take a look at sm8650 and change your patch accordingly.
+> > 
+> > NAK
+> 
+> Apologies; the contents of this patch are very similar to sm8650, just
+> different offsets.
+> Only major diffs I see here are the node namde (cache-controller vs
+> system-cache-controller)
+> and the formatting (two regs/line vs one reg/line). Is there anything else
+> you mean by
+> this comment that I'm missing?
+
+Formatting mostly. And the use of the uppercase hex values.
+
+> 
+> Thanks,
+> Melody
+> 
+> > 
+> > > +
+> > >   		nsp_noc: interconnect@320c0000 {
+> > >   			compatible = "qcom,sm8750-nsp-noc";
+> > >   			reg = <0x0 0x320c0000 0x0 0x13080>;
+> > > 
+> > > -- 
+> > > 2.46.1
+> > > 
 > 
 
-I think when 781452286aeb ("drm/msm/dpu: drop DPU_INTF_DATA_COMPRESS 
-from dpu catalog") was made, we had only two chipsets using those masks, 
-sc7180 and sc7280, and since then all newer ones went with 
-INTF_SC7280_MASK leading to this duplication.
-
-We can drop this now,
-
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+-- 
+With best wishes
+Dmitry
 
