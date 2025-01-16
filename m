@@ -1,135 +1,124 @@
-Return-Path: <linux-arm-msm+bounces-45231-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-45232-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id D2A28A135C5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jan 2025 09:46:27 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4B51EA1362B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jan 2025 10:08:16 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 35A5C18870F5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jan 2025 08:46:31 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 572EE16775D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jan 2025 09:08:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EF4721A38E1;
-	Thu, 16 Jan 2025 08:46:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C280D1D89FA;
+	Thu, 16 Jan 2025 09:08:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OAWKCysN"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [185.203.201.7])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FB8B1991AE
-	for <linux-arm-msm@vger.kernel.org>; Thu, 16 Jan 2025 08:46:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.203.201.7
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92EBF1D7E33;
+	Thu, 16 Jan 2025 09:08:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737017182; cv=none; b=VgH7ePc3+e6t0yrrlVm6iE6ZU9QLJ50g0wPTEzkkTshNMMOJx2mXX1tPNGSkJ+32k4ckVapfaky+xqZDHzfIBwDuktEOYvoLiUHzWuBcws0QjFNrgFb3FZOmHukS/i4AgmLWZAShNVgHrS8O8C1NjRmRgLSs3CV9xxl+hF7TunY=
+	t=1737018490; cv=none; b=kbzVH0Z3a86CpKw6jV0MOIg6s4huGovOboQ3dg+xoBKYX5ioCp+6mJgXnWScvPAWh8BIfhKfmgfAZ8yUsvX8F9D1BN8D1CfapM3X4e/iYGsRHdA2d1jGWfVfLr19XAcGugO4R6tQpLOjhWu0uTnPn6Byrx4cg9jhcXrocyTswkg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737017182; c=relaxed/simple;
-	bh=SMS/WYXiS7wO6WMGkTraT9DMv2PEnR5eKZ+KSZvlOEs=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=HwJljY8LEUTOAGa9BW1YdkofIqnZrow182bjZyLdMrr3WAHpo8asjOxBgbhL2Vn9f7+S4Fgep3lTpw8va9Qgz3ba+11M4+gmMPTahp5zh7jbUfLDIEcQ8jB9HDlJRI3lw8XgVyMWx9K77W/3OF5GckmeGcEUlWUGYSlQcYUZ/e8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de; spf=pass smtp.mailfrom=pengutronix.de; arc=none smtp.client-ip=185.203.201.7
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pengutronix.de
-Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
-	by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-	(Exim 4.92)
-	(envelope-from <p.zabel@pengutronix.de>)
-	id 1tYLVo-0002fo-Ts; Thu, 16 Jan 2025 09:46:00 +0100
-Received: from lupine.office.stw.pengutronix.de ([2a0a:edc0:0:900:1d::4e] helo=lupine)
-	by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.96)
-	(envelope-from <p.zabel@pengutronix.de>)
-	id 1tYLVn-000DtB-0F;
-	Thu, 16 Jan 2025 09:45:59 +0100
-Received: from pza by lupine with local (Exim 4.96)
-	(envelope-from <p.zabel@pengutronix.de>)
-	id 1tYLVm-00029Z-3C;
-	Thu, 16 Jan 2025 09:45:58 +0100
-Message-ID: <9ea186e39afb4584f12758d2fa6a26a0b12389ec.camel@pengutronix.de>
-Subject: Re: [PATCH 5/7] phy: qcom: Add M31 based eUSB2 PHY driver
-From: Philipp Zabel <p.zabel@pengutronix.de>
-To: Melody Olvera <quic_molvera@quicinc.com>, Vinod Koul <vkoul@kernel.org>,
-  Kishon Vijay Abraham I <kishon@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Wesley Cheng <quic_wcheng@quicinc.com>, Greg
- Kroah-Hartman <gregkh@linuxfoundation.org>,  Catalin Marinas
- <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>, Bjorn Andersson
- <andersson@kernel.org>,  Konrad Dybcio <konradybcio@kernel.org>, Satya
- Durga Srinivasu Prabhala <quic_satyap@quicinc.com>, Trilok Soni
- <quic_tsoni@quicinc.com>
-Cc: linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-usb@vger.kernel.org, linux-arm-kernel@lists.infradead.org
-Date: Thu, 16 Jan 2025 09:45:58 +0100
-In-Reply-To: <20250113-sm8750_usb_master-v1-5-09afe1dc2524@quicinc.com>
-References: <20250113-sm8750_usb_master-v1-0-09afe1dc2524@quicinc.com>
-	 <20250113-sm8750_usb_master-v1-5-09afe1dc2524@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.46.4-2 
+	s=arc-20240116; t=1737018490; c=relaxed/simple;
+	bh=3VVr5/1neKzVZa58i58OUMiFDC6AXQ+NydWmJ1JZxUQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=oRdvYvK/FzEd/CV9EfQz4rL2k40CBqd/6mIPE4JZ3tV/Jf7/KDGRUCarPEdFSlLOfbAKKbSuCRdScIXkh45cVWFdalXXwlkBYZElDbie7A2ZTGXwHfxGj0DQGn7C9zTQS6QcmV1VoOGViVNVoOYBWVaRAZb5fNdqj+zvD8GkhGU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OAWKCysN; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EE28C4CED6;
+	Thu, 16 Jan 2025 09:08:05 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1737018490;
+	bh=3VVr5/1neKzVZa58i58OUMiFDC6AXQ+NydWmJ1JZxUQ=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=OAWKCysNqPCBr4hZbWxtX5C0fV8dYf7Ok41yJaschJE6QKZYrYCNHcN2Tl24pwO2e
+	 pBQ6nv/R//QzL7xzKvF7XrumigPCgjXku5EHNrKxV1IO1vlWUeIaRAxX0/+eeRbSlh
+	 SmoS64bm07qLeESsOQTpi4UmfBq5vBQomBOp/E2r3dQJA9jl2JPae5OkZit3/mtmd7
+	 oeceY8oTWdDXfexRa1sWNpbne1uGBGZlUGt3eW1kMWRbaWL4SogyckNMEBKxYoFWjU
+	 gnbzU6N90JdwjeUFVlLeNIvNbcgVXAKDvhmVUOPXshamA45D3ztGz8eDs8RAbZx77I
+	 h0dbeS0PYW4bw==
+Message-ID: <eadbe1de-f513-4051-b7ca-5902778c5206@kernel.org>
+Date: Thu, 16 Jan 2025 10:08:03 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
-X-SA-Exim-Mail-From: p.zabel@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] arm64: dts: qcom: qcs615: Fix kernel test robot issue in
+ SPMI
+To: Tingguo Cheng <quic_tingguoc@quicinc.com>, quic_fenglinw@quicinc.com,
+ quic_tingweiz@quicinc.com, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
+Cc: kernel@quicinc.com, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ kernel test robot <lkp@intel.com>
+References: <20250116-fix-kernel-test-robot-unexpected-property-issue-v1-1-b1f4cc2c52d5@quicinc.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 fv0=
+In-Reply-To: <20250116-fix-kernel-test-robot-unexpected-property-issue-v1-1-b1f4cc2c52d5@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Mo, 2025-01-13 at 13:52 -0800, Melody Olvera wrote:
-> From: Wesley Cheng <quic_wcheng@quicinc.com>
->=20
-> On SM8750, the eUSB2 PHY used is M31 based. Add the initialization
-> sequences to bring it out of reset, and to initialize the associated eUSB=
-2
-> repeater as well.
->=20
-> Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
-> Signed-off-by: Melody Olvera <quic_molvera@quicinc.com>
-> ---
->  drivers/phy/qualcomm/Kconfig              |  12 +-
->  drivers/phy/qualcomm/Makefile             |   1 +
->  drivers/phy/qualcomm/phy-qcom-m31-eusb2.c | 269 ++++++++++++++++++++++++=
-++++++
->  3 files changed, 281 insertions(+), 1 deletion(-)
->=20
-[...]
-> diff --git a/drivers/phy/qualcomm/phy-qcom-m31-eusb2.c b/drivers/phy/qual=
-comm/phy-qcom-m31-eusb2.c
-> new file mode 100644
-> index 0000000000000000000000000000000000000000..e15529673e358db914936a60f=
-a605c872cd2511a
-> --- /dev/null
-> +++ b/drivers/phy/qualcomm/phy-qcom-m31-eusb2.c
-> @@ -0,0 +1,269 @@
-[...]
-> +static int m31eusb2_phy_probe(struct platform_device *pdev)
-> +{
-> +	struct phy_provider *phy_provider;
-> +	const struct m31_eusb2_priv_data *data;
-> +	struct device *dev =3D &pdev->dev;
-> +	struct m31eusb2_phy *phy;
-> +
-> +	phy =3D devm_kzalloc(dev, sizeof(*phy), GFP_KERNEL);
-> +	if (!phy)
-> +		return -ENOMEM;
-> +
-> +	data =3D of_device_get_match_data(dev);
-> +	if (IS_ERR(data))
-> +		return -EINVAL;
-> +	phy->data =3D data;
-> +
-> +	phy->base =3D devm_platform_ioremap_resource(pdev, 0);
-> +	if (IS_ERR(phy->base))
-> +		return PTR_ERR(phy->base);
-> +
-> +	phy->reset =3D devm_reset_control_get_exclusive_by_index(dev, 0);
+On 16/01/2025 09:31, Tingguo Cheng wrote:
+> Fix the kernel test robot issue in qcs615-ride.dtb spmi@c440000 by
+> removing the unevaluated 'cell-index' property.
+> 
+> Reported-by: kernel test robot <lkp@intel.com>
+> Closes: https://lore.kernel.org/r/202412272210.GpGmqcPC-lkp@intel.com/
 
-The dt-bindings only specify a single reset, so there is no need to
-request by index. Just use
-	phy->reset =3D devm_reset_control_get_exclusive(dev, NULL);
 
-regards
-Philipp
+Missing fixes tag.
+
+Best regards,
+Krzysztof
 
