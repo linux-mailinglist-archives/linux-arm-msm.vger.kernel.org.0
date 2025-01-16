@@ -1,125 +1,230 @@
-Return-Path: <linux-arm-msm+bounces-45266-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-45267-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7EE23A138F9
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jan 2025 12:30:54 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 938E5A139AA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jan 2025 13:02:54 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id ACCA7165D8F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jan 2025 11:30:52 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 194183A17A0
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jan 2025 12:02:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DF3CE1DE3C0;
-	Thu, 16 Jan 2025 11:30:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 741881DE3A8;
+	Thu, 16 Jan 2025 12:02:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="S5PRRw1E"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Kvb2l+YM"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.12])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F360E1990C7
-	for <linux-arm-msm@vger.kernel.org>; Thu, 16 Jan 2025 11:30:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DA8D1D90DB;
+	Thu, 16 Jan 2025 12:02:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.12
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737027048; cv=none; b=trmcksY09US91S4WCrk62EHR39KsTH3iSzzDERhtiBDUmKsJhZ8XbleO/FQlcfTN/NFmOeoSR+EIN5wSvVpi2a3AotDfZSMIW6dpjQMKC5FnSb3V0gbZHmg8T5B1A152R6EQJmisPETq1MiOoU0UGrlhSt4Bll9W+9fRKkt/PlA=
+	t=1737028969; cv=none; b=uGfocAeq8OtJBo/iVoaKUyh8sAzu+As8UZblXHCgmjtdiDlUJNPH239LIONfY8UfmRTDgLzkDSCiJ34FRiFaKi+jAAuBmvnaNcXun3w/YQgftQJGTCPW8RrTuyx6qlyeCAGIMwGmXneKUHhhLKHFPfR+M1HNqWZgc7dpMQId+dc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737027048; c=relaxed/simple;
-	bh=kzDN9dmdAK48wXWx0awduq7CrBP6vYP35O8PwR+e9qk=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=U4ypsAIFb7TH8segbQEjZbazCnW/1lZb6PNCg4Q8J3vQ7h4dRxWoiHjFj6T6d7N3zkMjWjOwr87W1dzuDcVZlzAQdGa+GDFI8Q5axnpD1wklMHkbRyQhdTc0m8KqHJ502z5AQeNuWBJbpUGD7bl0+VOEMBHhrGV4iSr2FKOC3HU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=S5PRRw1E; arc=none smtp.client-ip=209.85.221.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-385e06af753so435070f8f.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Jan 2025 03:30:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1737027045; x=1737631845; darn=vger.kernel.org;
-        h=mime-version:user-agent:content-transfer-encoding:references
-         :in-reply-to:date:cc:to:from:subject:message-id:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=kzDN9dmdAK48wXWx0awduq7CrBP6vYP35O8PwR+e9qk=;
-        b=S5PRRw1En8G+21KOJC9ZD6IqUHXgz4xQLsvIBxr/XWZPdIgRHRo/eicNlgEHSbm1kb
-         1GSs0FuwZkJWhSTbI8sRnjw4lqGhGVOHWmzZ0yxkZ199QjpJ48qSkyfwlh0J7t2cDH16
-         5O+UvF7PGwbTxzl8xtZQjUu2yIhdNvIjWZaX7uFfOqe4w24yiEAkdt1+OoG+UHZ0ii6u
-         4l9rBpEwm0MJgnEvnBvLGqAb2KXZ1W7WasebdcT1tz8uneIWS4mZcpNqQUbB3A6WCvIU
-         VaO0n04kdHOCGitjn0dYqnYnHbSiJdKfZFG5DzRhNNd9oYOuRAVQuWsx2j0NfW/la/bm
-         m4Wg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1737027045; x=1737631845;
-        h=mime-version:user-agent:content-transfer-encoding:references
-         :in-reply-to:date:cc:to:from:subject:message-id:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=kzDN9dmdAK48wXWx0awduq7CrBP6vYP35O8PwR+e9qk=;
-        b=S/pkiytsp8r+tJEmilZSe/IaG27EJiMg7qldXi6mJxjfF3rtpOMbFfxWmQwn85ipj4
-         n01q5uB2ZX9tLDeL112aODNmSAegbh+y6JJ6Zl7oTAdmgBMiGV7hDJjZS3sFrz3BcBho
-         SoYwqQeiSkhmYdQueOUCNgjifIEsM45AlWupr9XWgdSM0J+DprOCIbvyDjx8WL44dXpG
-         p9eIssl1/y46Rl2Zr8nGOpS3KODMSht82AXoZs6U+JnN0j0P/TFZQKKBzGZA5J+pwwrb
-         GP5txTo68bhjMWN46VYPgGjJet+dn7jmx/zRBsAUCPyZ1kkFFghUSaQZrx6vcCMQwmy6
-         mf/A==
-X-Forwarded-Encrypted: i=1; AJvYcCUmjy+je07l/CPByGITn3r5XHKPVdk+DAWZFd5X97SU4ro3239AgIBZoXd54RGbEUrtBwITwWWHFwNfN+Rl@vger.kernel.org
-X-Gm-Message-State: AOJu0YyiLy/F2obHrMW7Hcg3qlbtyE0TsdDp6v8M8ZZDaZd/YuUID4Yg
-	++WQFYMg1nY5910oTbBOvBUL2KThEluh+DbzH+FI6vbolqN74rP8HJbzlPKqffU=
-X-Gm-Gg: ASbGncvhPHEkC4I8Tl6015pEsW7D0yGQV0/+OJ6FXcjZwDZOpfyP19izqaGGHlralz+
-	3LUCstGQjfcN+3UI5Ri3JjV0IccVlqgNjc4WIgFVme3IKwA36HFOkLbGb3/m5P+DuIOI+JDzmYG
-	SEXgMaJlYS5Kyk7nJCpnxEp+IUf178Y4NPQqUslMDiGObPNoawC7yAqmDbX2w5x92AQJMinbXfj
-	MPFyFVhGCR2N5V5SEkjRMHohr0dsbtdq7XRA0TDBdzTezoBLKoCa9bRk28FDA==
-X-Google-Smtp-Source: AGHT+IGsW7R8SXZiI21rLVry2LB3/IZkmamq2Z2hj3KPYHeT5ENtm5n56n32F1wCYQ4Tz4sR0OmrNQ==
-X-Received: by 2002:a5d:648b:0:b0:386:3e3c:ef1 with SMTP id ffacd0b85a97d-38a87312f36mr34852486f8f.35.1737027045345;
-        Thu, 16 Jan 2025 03:30:45 -0800 (PST)
-Received: from [10.1.1.109] ([80.111.64.44])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-437c74ac707sm55516355e9.15.2025.01.16.03.30.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 16 Jan 2025 03:30:44 -0800 (PST)
-Message-ID: <941c7920a7d07496222e6e93cb338ca6df38dc33.camel@linaro.org>
-Subject: Re: [PATCH v3] scsi: ufs: fix use-after free in init error and
- remove paths
-From: =?ISO-8859-1?Q?Andr=E9?= Draszik <andre.draszik@linaro.org>
-To: Alim Akhtar <alim.akhtar@samsung.com>, Avri Altman
- <avri.altman@wdc.com>,  Bart Van Assche <bvanassche@acm.org>, "James E.J.
- Bottomley" <James.Bottomley@HansenPartnership.com>, "Martin K. Petersen"
- <martin.petersen@oracle.com>, Peter Griffin <peter.griffin@linaro.org>,
- Krzysztof Kozlowski <krzk@kernel.org>, Manivannan Sadhasivam
- <manivannan.sadhasivam@linaro.org>,  Mike Snitzer <snitzer@redhat.com>,
- Jens Axboe <axboe@kernel.dk>, Ulf Hansson <ulf.hansson@linaro.org>,  Eric
- Biggers <ebiggers@google.com>
-Cc: Tudor Ambarus <tudor.ambarus@linaro.org>, Will McVicker
- <willmcvicker@google.com>, kernel-team@android.com,
- linux-scsi@vger.kernel.org,  linux-kernel@vger.kernel.org,
- linux-samsung-soc@vger.kernel.org,  linux-arm-kernel@lists.infradead.org,
- linux-arm-msm@vger.kernel.org,  stable@vger.kernel.org
-Date: Thu, 16 Jan 2025 11:30:43 +0000
-In-Reply-To: <20250116-ufshcd-fix-v3-1-6a83004ea85c@linaro.org>
-References: <20250116-ufshcd-fix-v3-1-6a83004ea85c@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.52.1-4 
+	s=arc-20240116; t=1737028969; c=relaxed/simple;
+	bh=NgMks3iOQKzMIwQHOtA+dP88k7Mk7eu8pT4IExXYSo4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=THJwlkuX+7d5s/IST1uBkAnctFpR2cj0PuaVt3iGd7cRdbbDmq05kuYh8SOui8L++yrXjItchj8PeyuyHgd3PQQNoHje9bQP4CvS9GdJp4x4YmFDUTlyI/TPKHV18SUQ6OufkgT7YfhThFDJn5MUHBEEfVvsLOCWZB3m41RkPjw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Kvb2l+YM; arc=none smtp.client-ip=198.175.65.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1737028968; x=1768564968;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=NgMks3iOQKzMIwQHOtA+dP88k7Mk7eu8pT4IExXYSo4=;
+  b=Kvb2l+YM6Bugdk95Dpd4an3MvnFbfS6A+4wNGv6W/NZhE+ycVTdJKQqE
+   6FeKKy1UAi7mishAGwjZkmbYcNPOI/kG8pUjA50XNCO2Xb7mUncLxs63Z
+   siwrYsbJX34eJgcylU8a995MMw3AxnfRTksiiOHULi1cIBUWR8QRBFVi7
+   iRvB/2ZzZcoqZOqyu5qpbKpNKHN7nQh6rDbM7FDCZZZjidbKmRrSXQc/0
+   RbER4Ni3SrgV8EgoC3HQu/NFUNLA4U22RWjSnMV4ThAhSzlCnUqFBKWWw
+   Ryaojg8b0DHAfkKAmqaEHXFozPdxFORy27XD+8hJk3wqV/NTwgVlYfED/
+   Q==;
+X-CSE-ConnectionGUID: D4jw5TItQkKQGr19JfWq6A==
+X-CSE-MsgGUID: QPrnRmHISyqn/OlijW6mIA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11316"; a="48806107"
+X-IronPort-AV: E=Sophos;i="6.13,209,1732608000"; 
+   d="scan'208";a="48806107"
+Received: from fmviesa006.fm.intel.com ([10.60.135.146])
+  by orvoesa104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Jan 2025 04:02:47 -0800
+X-CSE-ConnectionGUID: 7XN/y71JSHqEoD3bBWgY0g==
+X-CSE-MsgGUID: vz555kR/Q5mWewTlcUEJsg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.13,209,1732608000"; 
+   d="scan'208";a="105293015"
+Received: from kuha.fi.intel.com ([10.237.72.152])
+  by fmviesa006.fm.intel.com with SMTP; 16 Jan 2025 04:02:19 -0800
+Received: by kuha.fi.intel.com (sSMTP sendmail emulation); Thu, 16 Jan 2025 14:02:18 +0200
+Date: Thu, 16 Jan 2025 14:02:18 +0200
+From: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+To: Pengyu Luo <mitltlatltl@gmail.com>
+Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Ilpo =?iso-8859-1?Q?J=E4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+	Sebastian Reichel <sre@kernel.org>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Jean Delvare <jdelvare@suse.com>,
+	Guenter Roeck <linux@roeck-us.net>, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	platform-driver-x86@vger.kernel.org, linux-pm@vger.kernel.org,
+	linux-usb@vger.kernel.org, linux-hwmon@vger.kernel.org
+Subject: Re: [PATCH v3 2/6] platform: arm64: add Huawei Matebook E Go EC
+ driver
+Message-ID: <Z4j1SicBtMZq4P9B@kuha.fi.intel.com>
+References: <20250113174945.590344-1-mitltlatltl@gmail.com>
+ <20250113175049.590511-1-mitltlatltl@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250113175049.590511-1-mitltlatltl@gmail.com>
 
-On Thu, 2025-01-16 at 11:18 +0000, Andr=C3=A9 Draszik wrote:
-> Changes in v2:
-> - completely new approach using devres action for Scsi_host cleanup, to
-> =C2=A0 ensure ordering
+Hi,
 
-Just repeating this again due to updated recipients list:
+> +static void gaokun_ec_remove(struct i2c_client *client)
+> +{
+> +	struct gaokun_ec *ec = i2c_get_clientdata(client);
+> +	hwmon_device_unregister(ec->hwmon_dev);
+> +}
 
-This new approach now means that Scsi_host cleanup (scsi_host_put)
-happens after ufshcd's hba->dev cleanup and I am not sure if this
-approach has wider implications (in particular if there is any
-underlying assumption or requirement for the Scsi_host device to
-clean up before the ufshcd device).
+You are missing black line after the declaration.
 
-Simple testing using a few iteration of manual module bind/unbind
-worked, as did the error handling / cleanup during init. But I'm
-not sure if that is sufficient testing for the changed release
-ordering.
+> +static const struct i2c_device_id gaokun_ec_id[] = {
+> +	{ "gaokun-ec", },
+> +	{ }
+> +};
+> +MODULE_DEVICE_TABLE(i2c, gaokun_ec_id);
+> +
+> +static const struct of_device_id gaokun_ec_of_match[] = {
+> +	{ .compatible = "huawei,gaokun3-ec", },
+> +	{ }
+> +};
+> +MODULE_DEVICE_TABLE(of, gaokun_ec_of_match);
+> +
+> +static const struct dev_pm_ops gaokun_ec_pm_ops = {
+> +	NOIRQ_SYSTEM_SLEEP_PM_OPS(gaokun_ec_suspend, gaokun_ec_resume)
+> +};
+> +
+> +static struct i2c_driver gaokun_ec_driver = {
+> +	.driver = {
+> +		.name = "gaokun-ec",
+> +		.of_match_table = gaokun_ec_of_match,
+> +		.pm = &gaokun_ec_pm_ops,
+> +		.dev_groups = gaokun_ec_groups,
+> +	},
+> +	.probe = gaokun_ec_probe,
+> +	.remove = gaokun_ec_remove,
+> +	.id_table = gaokun_ec_id,
+> +};
+> +module_i2c_driver(gaokun_ec_driver);
+> +
+> +MODULE_DESCRIPTION("HUAWEI Matebook E Go EC driver");
+> +MODULE_AUTHOR("Pengyu Luo <mitltlatltl@gmail.com>");
+> +MODULE_LICENSE("GPL");
+> diff --git a/include/linux/platform_data/huawei-gaokun-ec.h b/include/linux/platform_data/huawei-gaokun-ec.h
+> new file mode 100644
+> index 000000000..dfd177bd9
+> --- /dev/null
+> +++ b/include/linux/platform_data/huawei-gaokun-ec.h
+> @@ -0,0 +1,80 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
+> +/*
+> + * Huawei Matebook E Go Embedded Controller
+> + *
+> + * Copyright (C) 2024 Pengyu Luo <mitltlatltl@gmail.com>
+> + */
+> +
+> +#ifndef __HUAWEI_GAOKUN_EC_H__
+> +#define __HUAWEI_GAOKUN_EC_H__
+> +
+> +#define GAOKUN_UCSI_CCI_SIZE	4
+> +#define GAOKUN_UCSI_DATA_SIZE	16
+> +#define GAOKUN_UCSI_READ_SIZE	(GAOKUN_UCSI_CCI_SIZE + GAOKUN_UCSI_DATA_SIZE)
+> +#define GAOKUN_UCSI_WRITE_SIZE	0x18
+> +
+> +#define GAOKUN_UCSI_NO_PORT_UPDATE	(-1)
+> +
+> +#define GAOKUN_SMART_CHARGE_DATA_SIZE	4 /* mode, delay, start, end */
+> +
+> +/* -------------------------------------------------------------------------- */
+> +
+> +struct gaokun_ec;
+> +struct gaokun_ucsi_reg;
+> +struct notifier_block;
+> +
+> +#define GAOKUN_MOD_NAME			"huawei_gaokun_ec"
+> +#define GAOKUN_DEV_PSY			"psy"
+> +#define GAOKUN_DEV_UCSI			"ucsi"
+> +
+> +/* -------------------------------------------------------------------------- */
+> +/* Common API */
+> +
+> +int gaokun_ec_register_notify(struct gaokun_ec *ec,
+> +			      struct notifier_block *nb);
+> +void gaokun_ec_unregister_notify(struct gaokun_ec *ec,
+> +				 struct notifier_block *nb);
+> +
+> +int gaokun_ec_read(struct gaokun_ec *ec, const u8 *req,
+> +		   size_t resp_len, u8 *resp);
+> +int gaokun_ec_write(struct gaokun_ec *ec, u8 *req);
+> +int gaokun_ec_read_byte(struct gaokun_ec *ec, u8 *req, u8 *byte);
+> +
+> +/* -------------------------------------------------------------------------- */
+> +/* API For PSY */
+> +
+> +int gaokun_ec_psy_multi_read(struct gaokun_ec *ec, u8 reg,
+> +			     size_t resp_len, u8 *resp);
+> +
+> +static inline int gaokun_ec_psy_read_byte(struct gaokun_ec *ec,
+> +					  u8 reg, u8 *byte)
+> +{
+> +	return gaokun_ec_psy_multi_read(ec, reg, sizeof(*byte), byte);
+> +}
+> +
+> +static inline int gaokun_ec_psy_read_word(struct gaokun_ec *ec,
+> +					  u8 reg, u16 *word)
+> +{
+> +	return gaokun_ec_psy_multi_read(ec, reg, sizeof(*word), (u8 *)word);
+> +}
+> +
+> +int gaokun_ec_psy_get_smart_charge(struct gaokun_ec *ec,
+> +				   u8 data[GAOKUN_SMART_CHARGE_DATA_SIZE]);
+> +int gaokun_ec_psy_set_smart_charge(struct gaokun_ec *ec,
+> +				   u8 data[GAOKUN_SMART_CHARGE_DATA_SIZE]);
+> +
+> +int gaokun_ec_psy_get_smart_charge_enable(struct gaokun_ec *ec, bool *on);
+> +int gaokun_ec_psy_set_smart_charge_enable(struct gaokun_ec *ec, bool on);
+> +
+> +/* -------------------------------------------------------------------------- */
+> +/* API For UCSI */
+> +
+> +int gaokun_ec_ucsi_read(struct gaokun_ec *ec, u8 resp[GAOKUN_UCSI_READ_SIZE]);
+> +int gaokun_ec_ucsi_write(struct gaokun_ec *ec,
+> +			 const u8 req[GAOKUN_UCSI_WRITE_SIZE]);
+> +
+> +int gaokun_ec_ucsi_get_reg(struct gaokun_ec *ec, struct gaokun_ucsi_reg *ureg);
+> +int gaokun_ec_ucsi_pan_ack(struct gaokun_ec *ec, int port_id);
+> +
+> +
 
-Cheers,
-Andre'
+Here you have extra line.
 
+scripts/checkpatch.pl should find this kind issues for you.
+
+Br,
+
+-- 
+heikki
 
