@@ -1,230 +1,145 @@
-Return-Path: <linux-arm-msm+bounces-45267-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-45268-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 938E5A139AA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jan 2025 13:02:54 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 33145A139E3
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jan 2025 13:25:07 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 194183A17A0
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jan 2025 12:02:48 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 3E8917A12E9
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jan 2025 12:24:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 741881DE3A8;
-	Thu, 16 Jan 2025 12:02:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 94D591DE881;
+	Thu, 16 Jan 2025 12:25:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Kvb2l+YM"
+	dkim=pass (2048-bit key) header.d=fooishbar.org header.i=@fooishbar.org header.b="CFNWmXdn"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.12])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f51.google.com (mail-qv1-f51.google.com [209.85.219.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DA8D1D90DB;
-	Thu, 16 Jan 2025 12:02:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.12
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9EFB1DE4DD
+	for <linux-arm-msm@vger.kernel.org>; Thu, 16 Jan 2025 12:24:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737028969; cv=none; b=uGfocAeq8OtJBo/iVoaKUyh8sAzu+As8UZblXHCgmjtdiDlUJNPH239LIONfY8UfmRTDgLzkDSCiJ34FRiFaKi+jAAuBmvnaNcXun3w/YQgftQJGTCPW8RrTuyx6qlyeCAGIMwGmXneKUHhhLKHFPfR+M1HNqWZgc7dpMQId+dc=
+	t=1737030301; cv=none; b=QHZFyL223r6batM+/Fega0uEQVr0Fsf+1ALQMFWedOBARmi/nJZyV+M8CAYALkCaT6S7FiT4OxTxVU6rA5ST/U5PjQFauZqK0fa4PEEvPYZGAexZ17/evUws/yeNgFBTZ+PN5RtfJ4fqCMhXHL01Zcp67pd1Bs89CtN8xwsU+ng=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737028969; c=relaxed/simple;
-	bh=NgMks3iOQKzMIwQHOtA+dP88k7Mk7eu8pT4IExXYSo4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=THJwlkuX+7d5s/IST1uBkAnctFpR2cj0PuaVt3iGd7cRdbbDmq05kuYh8SOui8L++yrXjItchj8PeyuyHgd3PQQNoHje9bQP4CvS9GdJp4x4YmFDUTlyI/TPKHV18SUQ6OufkgT7YfhThFDJn5MUHBEEfVvsLOCWZB3m41RkPjw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Kvb2l+YM; arc=none smtp.client-ip=198.175.65.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1737028968; x=1768564968;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=NgMks3iOQKzMIwQHOtA+dP88k7Mk7eu8pT4IExXYSo4=;
-  b=Kvb2l+YM6Bugdk95Dpd4an3MvnFbfS6A+4wNGv6W/NZhE+ycVTdJKQqE
-   6FeKKy1UAi7mishAGwjZkmbYcNPOI/kG8pUjA50XNCO2Xb7mUncLxs63Z
-   siwrYsbJX34eJgcylU8a995MMw3AxnfRTksiiOHULi1cIBUWR8QRBFVi7
-   iRvB/2ZzZcoqZOqyu5qpbKpNKHN7nQh6rDbM7FDCZZZjidbKmRrSXQc/0
-   RbER4Ni3SrgV8EgoC3HQu/NFUNLA4U22RWjSnMV4ThAhSzlCnUqFBKWWw
-   Ryaojg8b0DHAfkKAmqaEHXFozPdxFORy27XD+8hJk3wqV/NTwgVlYfED/
-   Q==;
-X-CSE-ConnectionGUID: D4jw5TItQkKQGr19JfWq6A==
-X-CSE-MsgGUID: QPrnRmHISyqn/OlijW6mIA==
-X-IronPort-AV: E=McAfee;i="6700,10204,11316"; a="48806107"
-X-IronPort-AV: E=Sophos;i="6.13,209,1732608000"; 
-   d="scan'208";a="48806107"
-Received: from fmviesa006.fm.intel.com ([10.60.135.146])
-  by orvoesa104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Jan 2025 04:02:47 -0800
-X-CSE-ConnectionGUID: 7XN/y71JSHqEoD3bBWgY0g==
-X-CSE-MsgGUID: vz555kR/Q5mWewTlcUEJsg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.13,209,1732608000"; 
-   d="scan'208";a="105293015"
-Received: from kuha.fi.intel.com ([10.237.72.152])
-  by fmviesa006.fm.intel.com with SMTP; 16 Jan 2025 04:02:19 -0800
-Received: by kuha.fi.intel.com (sSMTP sendmail emulation); Thu, 16 Jan 2025 14:02:18 +0200
-Date: Thu, 16 Jan 2025 14:02:18 +0200
-From: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-To: Pengyu Luo <mitltlatltl@gmail.com>
-Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Hans de Goede <hdegoede@redhat.com>,
-	Ilpo =?iso-8859-1?Q?J=E4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-	Sebastian Reichel <sre@kernel.org>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Jean Delvare <jdelvare@suse.com>,
-	Guenter Roeck <linux@roeck-us.net>, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	platform-driver-x86@vger.kernel.org, linux-pm@vger.kernel.org,
-	linux-usb@vger.kernel.org, linux-hwmon@vger.kernel.org
-Subject: Re: [PATCH v3 2/6] platform: arm64: add Huawei Matebook E Go EC
- driver
-Message-ID: <Z4j1SicBtMZq4P9B@kuha.fi.intel.com>
-References: <20250113174945.590344-1-mitltlatltl@gmail.com>
- <20250113175049.590511-1-mitltlatltl@gmail.com>
+	s=arc-20240116; t=1737030301; c=relaxed/simple;
+	bh=GBwF2KOXlFDp1MGeRltem3iAJtpX3AYE0x8w+f0gonM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=uYz3kzWLC7rihWXtgU1flS5v292ivcL6fJgFgNRdPxDUlFBa9iVz6SMYI/qLs0vqnCLPnti4Vkb0+gTYdJ4ycebvAto0x9JcQrZXaYqQz5WzT+3RUoJ1htfM042He1hR1OmkVaD3kT/nU2x4Op2PwHWHJcUM+DnvGjLlNpGuUuM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=fooishbar.org; spf=pass smtp.mailfrom=fooishbar.org; dkim=pass (2048-bit key) header.d=fooishbar.org header.i=@fooishbar.org header.b=CFNWmXdn; arc=none smtp.client-ip=209.85.219.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=fooishbar.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fooishbar.org
+Received: by mail-qv1-f51.google.com with SMTP id 6a1803df08f44-6d92e457230so8661036d6.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Jan 2025 04:24:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=fooishbar.org; s=google; t=1737030298; x=1737635098; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=GBwF2KOXlFDp1MGeRltem3iAJtpX3AYE0x8w+f0gonM=;
+        b=CFNWmXdnC+15zhv1ls2VMtAtpSgohYCwADuO2mJvjl1BEsEX227eEFcUKJdvqiRShN
+         74HGg1L3I2JmQiEc6Zu4C87e18yUXpY9efN+ddLBHyiOaehx2SEYRPsk5K1OCxAjxcUG
+         TuUYYbgCpYZSSjxLHnKEoXXxqt3enit8uHA/q+XueTyTxF9xvvGZvtwaYx9ne0+6Q8Bs
+         ZyrY54cyh+CLrYKrp8OFHNqj6JbW3uX3C5Sd9uS2BmW6Ra6w/DlyJM6SfaQT0M849wwN
+         DVSom1HAdDSi/uhrIHpBTU2ZAmhPGezEFBSlyIcZlfQi/NKZ0pV+8g9YpRbcgZe0RLPd
+         wsQw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1737030298; x=1737635098;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=GBwF2KOXlFDp1MGeRltem3iAJtpX3AYE0x8w+f0gonM=;
+        b=YMaWvKYl0/7zK9Q1f20XySVysY4YWaZW3nykNm29tnqAfNTyE2v2m8yCEA+XuCfWNN
+         P54MDyiiJcyQYP7FHYN027Ww0Zj3zFkLBaIGx4R6O1p8fPW2oDibgHYBp9iHpZU2ZUrB
+         NUXAyk0M8iQeVZLMgzPf2yfh8aiVtIgBJ5ymREX+mU7zNemKwucsdNNu7AK+5358ROgm
+         ODIVZc2SnrSr2OKlLW7egCFjeRlhB/juMG7P/1bVadGHdrT7DDIDKa/djJbq0Xx5Xgr5
+         yEj65uSFwVe0uSj+HB5FYJztx1hznqWlDm5lWUYDowiGiFBl3PEmMZzqmbur5OKfj32Z
+         T22Q==
+X-Forwarded-Encrypted: i=1; AJvYcCW2WcUhKb77aTLeDn/56GnmVsxfK4BGLyuFImHoXwejMhpheO4dp021l63CtJRGjkx2RzqOslpECSPE9mJv@vger.kernel.org
+X-Gm-Message-State: AOJu0YwjztsTQ8qUQm3a4HQOsvyhKeYk60hOHymW/RT9HOBQFMDfSl5i
+	QHKGLcm6Z22cUXKoxjWea4VveH8m9Y2Jzxt7sJSrF3PeS9O02Aj+0aFLb/DLHAAH4ED7vdWHsS+
+	MmP+qFvt4H4aLA+v2cF3pjFBCqaeH/LZZHMgJBA==
+X-Gm-Gg: ASbGncs7VSnIPLpX0fq1lp4b9EGeFf9Y9p3YtVN1lMGJijdqSav0GKAAsNTY1lbY0IG
+	dhTt1Ct5qy5n8gmhHksDAIfBI6cB88SaL0fg=
+X-Google-Smtp-Source: AGHT+IHYPoThOqCGG0mIrocl9o1givl0D/RoYwWOKY0kUiZ64KPF9cSvP+6N1Rd6ke2PYtdS9xOibflODkJbaGvT990=
+X-Received: by 2002:a05:6214:528e:b0:6d9:3016:d0e7 with SMTP id
+ 6a1803df08f44-6df9b2b1a21mr442378366d6.29.1737030298608; Thu, 16 Jan 2025
+ 04:24:58 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250113175049.590511-1-mitltlatltl@gmail.com>
+References: <f3ba05c7-6e49-4641-a3f9-ba418ebdb7c3@ideasonboard.com>
+ <c6735280-7c32-4319-8ca9-a7305d8117c3@suse.de> <d67adb03-5cd0-4ac9-af58-cf4446dacee3@ideasonboard.com>
+ <0ea6be58-0e04-4172-87cd-064a3e4a43bc@suse.de> <f35cb350-6be9-48ca-ad7e-e9dd418281d5@ideasonboard.com>
+ <4af0b6a7-c16a-4187-bbf5-365a9c86de21@suse.de> <e327ad84-b5c9-4480-b873-dc3aca605538@ideasonboard.com>
+ <a2bbeb47-2569-4ee0-9265-92bab139bdc6@suse.de> <f3833771-fcd7-45dc-9019-1525fef34429@ideasonboard.com>
+ <CAMuHMdXxYa+Na3XxpLTy=-eUL_zQ9kAiUKYu-E04u3KWApusSA@mail.gmail.com> <xz5ncq67bgmdase2jg3cfvyaxpiwhol2eqpfzow6dqpauvslo5@2w3rw27lhnxo>
+In-Reply-To: <xz5ncq67bgmdase2jg3cfvyaxpiwhol2eqpfzow6dqpauvslo5@2w3rw27lhnxo>
+From: Daniel Stone <daniel@fooishbar.org>
+Date: Thu, 16 Jan 2025 12:24:47 +0000
+X-Gm-Features: AbW1kvarRJv1VyJjUo1t8ScK0brJ2o4-Qq6ABYK10edUo6rgOW2PAccCb4uQWlM
+Message-ID: <CAPj87rNS7quwfqDmxyrW8_vQ6tnrcfWUn=81aTduDXtmdVkkAg@mail.gmail.com>
+Subject: Re: [PATCH v2 25/25] drm/xlnx: Compute dumb-buffer sizes with drm_mode_size_dumb()
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Geert Uytterhoeven <geert@linux-m68k.org>, Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>, 
+	Thomas Zimmermann <tzimmermann@suse.de>, maarten.lankhorst@linux.intel.com, mripard@kernel.org, 
+	airlied@gmail.com, simona@ffwll.ch, dri-devel@lists.freedesktop.org, 
+	linux-mediatek@lists.infradead.org, freedreno@lists.freedesktop.org, 
+	linux-arm-msm@vger.kernel.org, imx@lists.linux.dev, 
+	linux-samsung-soc@vger.kernel.org, nouveau@lists.freedesktop.org, 
+	virtualization@lists.linux.dev, spice-devel@lists.freedesktop.org, 
+	linux-renesas-soc@vger.kernel.org, linux-rockchip@lists.infradead.org, 
+	linux-tegra@vger.kernel.org, intel-xe@lists.freedesktop.org, 
+	xen-devel@lists.xenproject.org, 
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>, Andy Yan <andyshrk@163.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi,
+On Thu, 16 Jan 2025 at 10:35, Dmitry Baryshkov
+<dmitry.baryshkov@linaro.org> wrote:
+> On Thu, Jan 16, 2025 at 11:17:50AM +0100, Geert Uytterhoeven wrote:
+> > On Thu, Jan 16, 2025 at 11:03=E2=80=AFAM Tomi Valkeinen
+> > <tomi.valkeinen@ideasonboard.com> wrote:
+> > > On the platforms I have been using (omap, tidss, xilinx, rcar) the du=
+mb
+> > > buffers are the only buffers you can get from the DRM driver. The dum=
+b
+> > > buffers have been used to allocate linear and multiplanar YUV buffers
+> > > for a very long time on those platforms.
+> > >
+> > > I tried to look around, but I did not find any mentions that CREATE_D=
+UMB
+> > > should only be used for RGB buffers. Is anyone outside the core
+> > > developers even aware of it?
+> > >
+> > > If we don't use dumb buffers there, where do we get the buffers? Mayb=
+e
+> > > from a v4l2 device or from a gpu device, but often you don't have tho=
+se.
+> > > DMA_HEAP is there, of course.
+> >
+> > Why can't there be a variant that takes a proper fourcc format instead =
+of
+> > an imprecise bpp value?
+>
+> Backwards compatibility. We can add an IOCTL for YUV / etc. But
+> userspace must be able to continue allocating YUV buffers through
+> CREATE_DUMB.
 
-> +static void gaokun_ec_remove(struct i2c_client *client)
-> +{
-> +	struct gaokun_ec *ec = i2c_get_clientdata(client);
-> +	hwmon_device_unregister(ec->hwmon_dev);
-> +}
+Right. If allocating YUYV dumb buffers works on AM68 today, then we
+need to keep that working. But it doesn't mean we should go out of our
+way to make CREATE_DUMB work for every YUV format on every device.
 
-You are missing black line after the declaration.
+Currently, drivers are free to implement their own ioctls for anything
+specific they have. But like Laurent said, standardising on heaps and
+how to communicate requirements to userspace wrt heap selection / size
+/ alignment / etc is imo a better path forward for something generic.
 
-> +static const struct i2c_device_id gaokun_ec_id[] = {
-> +	{ "gaokun-ec", },
-> +	{ }
-> +};
-> +MODULE_DEVICE_TABLE(i2c, gaokun_ec_id);
-> +
-> +static const struct of_device_id gaokun_ec_of_match[] = {
-> +	{ .compatible = "huawei,gaokun3-ec", },
-> +	{ }
-> +};
-> +MODULE_DEVICE_TABLE(of, gaokun_ec_of_match);
-> +
-> +static const struct dev_pm_ops gaokun_ec_pm_ops = {
-> +	NOIRQ_SYSTEM_SLEEP_PM_OPS(gaokun_ec_suspend, gaokun_ec_resume)
-> +};
-> +
-> +static struct i2c_driver gaokun_ec_driver = {
-> +	.driver = {
-> +		.name = "gaokun-ec",
-> +		.of_match_table = gaokun_ec_of_match,
-> +		.pm = &gaokun_ec_pm_ops,
-> +		.dev_groups = gaokun_ec_groups,
-> +	},
-> +	.probe = gaokun_ec_probe,
-> +	.remove = gaokun_ec_remove,
-> +	.id_table = gaokun_ec_id,
-> +};
-> +module_i2c_driver(gaokun_ec_driver);
-> +
-> +MODULE_DESCRIPTION("HUAWEI Matebook E Go EC driver");
-> +MODULE_AUTHOR("Pengyu Luo <mitltlatltl@gmail.com>");
-> +MODULE_LICENSE("GPL");
-> diff --git a/include/linux/platform_data/huawei-gaokun-ec.h b/include/linux/platform_data/huawei-gaokun-ec.h
-> new file mode 100644
-> index 000000000..dfd177bd9
-> --- /dev/null
-> +++ b/include/linux/platform_data/huawei-gaokun-ec.h
-> @@ -0,0 +1,80 @@
-> +// SPDX-License-Identifier: GPL-2.0-only
-> +/*
-> + * Huawei Matebook E Go Embedded Controller
-> + *
-> + * Copyright (C) 2024 Pengyu Luo <mitltlatltl@gmail.com>
-> + */
-> +
-> +#ifndef __HUAWEI_GAOKUN_EC_H__
-> +#define __HUAWEI_GAOKUN_EC_H__
-> +
-> +#define GAOKUN_UCSI_CCI_SIZE	4
-> +#define GAOKUN_UCSI_DATA_SIZE	16
-> +#define GAOKUN_UCSI_READ_SIZE	(GAOKUN_UCSI_CCI_SIZE + GAOKUN_UCSI_DATA_SIZE)
-> +#define GAOKUN_UCSI_WRITE_SIZE	0x18
-> +
-> +#define GAOKUN_UCSI_NO_PORT_UPDATE	(-1)
-> +
-> +#define GAOKUN_SMART_CHARGE_DATA_SIZE	4 /* mode, delay, start, end */
-> +
-> +/* -------------------------------------------------------------------------- */
-> +
-> +struct gaokun_ec;
-> +struct gaokun_ucsi_reg;
-> +struct notifier_block;
-> +
-> +#define GAOKUN_MOD_NAME			"huawei_gaokun_ec"
-> +#define GAOKUN_DEV_PSY			"psy"
-> +#define GAOKUN_DEV_UCSI			"ucsi"
-> +
-> +/* -------------------------------------------------------------------------- */
-> +/* Common API */
-> +
-> +int gaokun_ec_register_notify(struct gaokun_ec *ec,
-> +			      struct notifier_block *nb);
-> +void gaokun_ec_unregister_notify(struct gaokun_ec *ec,
-> +				 struct notifier_block *nb);
-> +
-> +int gaokun_ec_read(struct gaokun_ec *ec, const u8 *req,
-> +		   size_t resp_len, u8 *resp);
-> +int gaokun_ec_write(struct gaokun_ec *ec, u8 *req);
-> +int gaokun_ec_read_byte(struct gaokun_ec *ec, u8 *req, u8 *byte);
-> +
-> +/* -------------------------------------------------------------------------- */
-> +/* API For PSY */
-> +
-> +int gaokun_ec_psy_multi_read(struct gaokun_ec *ec, u8 reg,
-> +			     size_t resp_len, u8 *resp);
-> +
-> +static inline int gaokun_ec_psy_read_byte(struct gaokun_ec *ec,
-> +					  u8 reg, u8 *byte)
-> +{
-> +	return gaokun_ec_psy_multi_read(ec, reg, sizeof(*byte), byte);
-> +}
-> +
-> +static inline int gaokun_ec_psy_read_word(struct gaokun_ec *ec,
-> +					  u8 reg, u16 *word)
-> +{
-> +	return gaokun_ec_psy_multi_read(ec, reg, sizeof(*word), (u8 *)word);
-> +}
-> +
-> +int gaokun_ec_psy_get_smart_charge(struct gaokun_ec *ec,
-> +				   u8 data[GAOKUN_SMART_CHARGE_DATA_SIZE]);
-> +int gaokun_ec_psy_set_smart_charge(struct gaokun_ec *ec,
-> +				   u8 data[GAOKUN_SMART_CHARGE_DATA_SIZE]);
-> +
-> +int gaokun_ec_psy_get_smart_charge_enable(struct gaokun_ec *ec, bool *on);
-> +int gaokun_ec_psy_set_smart_charge_enable(struct gaokun_ec *ec, bool on);
-> +
-> +/* -------------------------------------------------------------------------- */
-> +/* API For UCSI */
-> +
-> +int gaokun_ec_ucsi_read(struct gaokun_ec *ec, u8 resp[GAOKUN_UCSI_READ_SIZE]);
-> +int gaokun_ec_ucsi_write(struct gaokun_ec *ec,
-> +			 const u8 req[GAOKUN_UCSI_WRITE_SIZE]);
-> +
-> +int gaokun_ec_ucsi_get_reg(struct gaokun_ec *ec, struct gaokun_ucsi_reg *ureg);
-> +int gaokun_ec_ucsi_pan_ack(struct gaokun_ec *ec, int port_id);
-> +
-> +
-
-Here you have extra line.
-
-scripts/checkpatch.pl should find this kind issues for you.
-
-Br,
-
--- 
-heikki
+Cheers,
+Daniel
 
