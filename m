@@ -1,314 +1,145 @@
-Return-Path: <linux-arm-msm+bounces-45281-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-45282-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 750C5A13CBD
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jan 2025 15:50:46 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 78746A13CC2
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jan 2025 15:50:56 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 4B6D816AAF2
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jan 2025 14:50:28 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 832E0188E6B9
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jan 2025 14:50:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 20CE922ACDF;
-	Thu, 16 Jan 2025 14:48:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5195622B8C6;
+	Thu, 16 Jan 2025 14:49:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=amazon.co.uk header.i=@amazon.co.uk header.b="oKkNayVd"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="S2lDYYNx"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp-fw-52004.amazon.com (smtp-fw-52004.amazon.com [52.119.213.154])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F421E22B8CD;
-	Thu, 16 Jan 2025 14:48:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=52.119.213.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1C9722B5B8
+	for <linux-arm-msm@vger.kernel.org>; Thu, 16 Jan 2025 14:49:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737038924; cv=none; b=lElGyQH2dPq/BTP82/5OrcFWOWkg3BTynlueXvZAIMNPG36BZPpNxpjGk3OLEpL8Yt55DrDOxCt+UfqWiHhmVU1O6o6mqMtb+SJNJPDU80Xr+myXUlLpKIqAfeqyO2WjN7Nl4R4UH8NffEnxEM7iD1mUDsJ8N+xyfjwsSCPQyps=
+	t=1737038969; cv=none; b=gfcKSlS+hbvt8pbttQTZxgHqCoR2zbYMoA40xaHh3LZGg0q3y0XJs1wPJhX8iVWMrF509J+bvFKbWo/wtBcxMLqggz1MNbSLck8ujZFPeHH9GDZTi7dnWkzdoNaNzro48I696ojdiJpntff9k42xqDjc9Z4ut/wPZ+8q9cheAo4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737038924; c=relaxed/simple;
-	bh=4QoNlBLBRChBVSRPM3v23xepC1bjNn8Qo5BFmw1znwI=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:CC:References:
-	 In-Reply-To:Content-Type; b=H4Rrsdgs54SYOIaypN8kUuPHXUnuu2W5zIjlwEun5/MfMpDNf5Q7ft2+Wg2b9IoDG7lARXaLt5wbHeqOR7K6IF+9owa3T+1fslwwxJUKgFBvJdg/Jcbf3cPgihRDTtQ0upaWNpLH/8DOPrDpIbgvfGrYMlwH6aU01HV9kDRJO3s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amazon.co.uk; spf=pass smtp.mailfrom=amazon.co.uk; dkim=pass (1024-bit key) header.d=amazon.co.uk header.i=@amazon.co.uk header.b=oKkNayVd; arc=none smtp.client-ip=52.119.213.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amazon.co.uk
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=amazon.co.uk
+	s=arc-20240116; t=1737038969; c=relaxed/simple;
+	bh=XVIK6P3cDh2RmjY5FPX61raR0X7pooRB+f/SKenLnGU=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=kH6vXT1uc+I4cmmDbfunnr5/hlCYW9A/bLNjjI3ESy+oh5xB+Z93hA5DA66RRmqLyOUVmmgNr3FfbmauIzc8ag/RDda8E8dEeB51CI6djiWirn2ll8y6t2o1UeNF0DaDqxXNArdWD308gbSVj3WyVnl2/0lvsCjxkqXxehCY9mY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=S2lDYYNx; arc=none smtp.client-ip=209.85.221.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-3862d6d5765so624272f8f.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Jan 2025 06:49:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=amazon.co.uk; i=@amazon.co.uk; q=dns/txt;
-  s=amazon201209; t=1737038922; x=1768574922;
-  h=message-id:date:mime-version:from:subject:to:cc:
-   references:in-reply-to:content-transfer-encoding;
-  bh=PJBYQ3uryckyAO6cux7hKD8JE0wu1xm8ATaH9PcGq0M=;
-  b=oKkNayVdyIhbI7Snnj5xkoNC0cMzfxOvb49WdBKVjDB/L+Pavz3io4uT
-   cWYQDAflvbR/3R8l0vvvyNeDJCMKNSzFNxCn/GH19JbuWQj9J9CATyEuZ
-   rghoWjTdooPg4oxRqrfUJBvJrvPTKKRfinBYOFtH1gQI3l6XCIZN0ohsM
-   s=;
-X-IronPort-AV: E=Sophos;i="6.13,209,1732579200"; 
-   d="scan'208";a="263572466"
-Received: from iad12-co-svc-p1-lb1-vlan2.amazon.com (HELO smtpout.prod.us-west-2.prod.farcaster.email.amazon.dev) ([10.43.8.2])
-  by smtp-border-fw-52004.iad7.amazon.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Jan 2025 14:48:38 +0000
-Received: from EX19MTAUWC001.ant.amazon.com [10.0.7.35:60350]
- by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.54.33:2525] with esmtp (Farcaster)
- id 9ac5c0d5-603c-496c-8529-95dcfbf67d23; Thu, 16 Jan 2025 14:48:37 +0000 (UTC)
-X-Farcaster-Flow-ID: 9ac5c0d5-603c-496c-8529-95dcfbf67d23
-Received: from EX19MTAUWB002.ant.amazon.com (10.250.64.231) by
- EX19MTAUWC001.ant.amazon.com (10.250.64.174) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.1258.39;
- Thu, 16 Jan 2025 14:48:36 +0000
-Received: from email-imr-corp-prod-iad-1box-1a-9bbde7a3.us-east-1.amazon.com
- (10.25.36.214) by mail-relay.amazon.com (10.250.64.228) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id
- 15.2.1258.39 via Frontend Transport; Thu, 16 Jan 2025 14:48:36 +0000
-Received: from [127.0.0.1] (dev-dsk-roypat-1c-dbe2a224.eu-west-1.amazon.com [172.19.88.180])
-	by email-imr-corp-prod-iad-1box-1a-9bbde7a3.us-east-1.amazon.com (Postfix) with ESMTPS id D06C142230;
-	Thu, 16 Jan 2025 14:48:28 +0000 (UTC)
-Message-ID: <9b5a7efa-1a65-4b84-af60-e8658b18bad0@amazon.co.uk>
-Date: Thu, 16 Jan 2025 14:48:27 +0000
+        d=linaro.org; s=google; t=1737038966; x=1737643766; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=fNrjqctMKz1qgAHIHsA7Z6UwsnVoB9RzOyu8rn1dpcM=;
+        b=S2lDYYNx34IPRt14H45xXsjPe56VH+HhQ6g50uuguRS/24/LQakvFKBZcq/KoBaL50
+         queYhgcLnNF1d1Yv143wxfyOK2ZjiEWGfcShK9frF+h+amlAmePw9OsBotlkSB7HXk8q
+         frt/qCLxP1o7dxCorL6sMLmGqT1BNIV0ugP7AGXNUmxxdeq98WrPNpW+RtjF3IUnX/5X
+         hFQMEabkOMkAOO1S7KQu1YdWE3pmI0IJOBTwgLw2ycZxNAGl3vjWYsJSBH8kSJ0qrdXy
+         RPK6n2cp04zg6UeLDJ5PnrzZWm0btHyjWL6otZIdaK1snki28n80fDK1F2q4Q8fcVu+v
+         mFRQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1737038966; x=1737643766;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=fNrjqctMKz1qgAHIHsA7Z6UwsnVoB9RzOyu8rn1dpcM=;
+        b=cRPJorZLSTxuLPdCijTIJsWmxBgBj2XX4s5WEZxy3SH5S4yU2MXwBqP8fqVAPGwM0O
+         VW852RtLfjz+UY4nVafs6SE20wiSGQCNDUt4rP5YwC6DI2UV8+0s42CAbPwatjsvXmF/
+         cbsbtMmUC2k6hzkG6FiXhCoa07g2O5FbAtNdVD0TdTJUM48gXg03rqApYhZ9ctvSmS/p
+         fEKfrzx4FlY1v4+ytLKAs5Cqv+l5JaoMsXlVsGw89mC1LRpCkEdjjhAlyOTA8joz4Sek
+         HDSpz0K2xLRGFJu8nyf1t/sWEXWJbL6exwdaN4JNF/3gkdkR9KG/kpLivRWpp8LmugHk
+         8y+A==
+X-Gm-Message-State: AOJu0YwD9XN74xUL/b4IjM+Rt3vmQEpwCXnHk0sJIDgo3cnucHwqK3hV
+	QZySANywJpNVfnmnOgcEytiewxcW2d76cztZDdEOUJ6+t4dTjn9fNDu7uMYARcg=
+X-Gm-Gg: ASbGnctA+AVUUNDlnvUeXBUrE1Qcc8cfUCc8ZvFPUUnXFiiUzn7+yNBJ+4PhioHPZMp
+	QhkgiiMwnltNMWQyRTcE6KRVtT9NrabyysNGfNa+RZOI09O/DGy3Q9kaAd+BKP77kZYC0qCP937
+	pSoqFH2dHuG0TvBziScDZJbRwn0LnzbOdCu6WCnludszuR8wNSavyvW5EUCdRH7dyNQDGjWfsTT
+	d46uz+yzh0tCl6L1K7uu8Glc+2lovLC75vVXc+uad4AdCJ4MfHtyRi1PC+qTaaMuZeX1hKizGID
+	7zOlvnvS/8jqe+DR2tb0nxkTqoPdu/v0JS63
+X-Google-Smtp-Source: AGHT+IHl1kBetyaeOjNXShWAh0tzmG4VVpCeXqjWskMJPe10ftzlUB/8CSFuRx56YA1k5IbFK1rVNg==
+X-Received: by 2002:a5d:64cb:0:b0:385:ee40:2d88 with SMTP id ffacd0b85a97d-38a872d2a11mr30493102f8f.3.1737038966300;
+        Thu, 16 Jan 2025 06:49:26 -0800 (PST)
+Received: from ta2.c.googlers.com (169.178.77.34.bc.googleusercontent.com. [34.77.178.169])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38bf321508esm70310f8f.10.2025.01.16.06.49.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 16 Jan 2025 06:49:25 -0800 (PST)
+From: Tudor Ambarus <tudor.ambarus@linaro.org>
+Subject: [PATCH 0/4] soc: qcom: ice: fix dev reference leaked through
+ of_qcom_ice_get
+Date: Thu, 16 Jan 2025 14:49:04 +0000
+Message-Id: <20250116-qcom-ice-fix-dev-leak-v1-0-84d937683790@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Patrick Roy <roypat@amazon.co.uk>
-Subject: Re: [RFC PATCH v4 13/14] KVM: arm64: Handle guest_memfd()-backed
- guest page faults
-To: Fuad Tabba <tabba@google.com>, <kvm@vger.kernel.org>,
-	<linux-arm-msm@vger.kernel.org>, <linux-mm@kvack.org>
-CC: <pbonzini@redhat.com>, <chenhuacai@kernel.org>, <mpe@ellerman.id.au>,
-	<anup@brainfault.org>, <paul.walmsley@sifive.com>, <palmer@dabbelt.com>,
-	<aou@eecs.berkeley.edu>, <seanjc@google.com>, <viro@zeniv.linux.org.uk>,
-	<brauner@kernel.org>, <willy@infradead.org>, <akpm@linux-foundation.org>,
-	<xiaoyao.li@intel.com>, <yilun.xu@intel.com>, <chao.p.peng@linux.intel.com>,
-	<jarkko@kernel.org>, <amoorthy@google.com>, <dmatlack@google.com>,
-	<yu.c.zhang@linux.intel.com>, <isaku.yamahata@intel.com>, <mic@digikod.net>,
-	<vbabka@suse.cz>, <vannapurve@google.com>, <ackerleytng@google.com>,
-	<mail@maciej.szmigiero.name>, <david@redhat.com>, <michael.roth@amd.com>,
-	<wei.w.wang@intel.com>, <liam.merwick@oracle.com>,
-	<isaku.yamahata@gmail.com>, <kirill.shutemov@linux.intel.com>,
-	<suzuki.poulose@arm.com>, <steven.price@arm.com>, <quic_eberman@quicinc.com>,
-	<quic_mnalajal@quicinc.com>, <quic_tsoni@quicinc.com>,
-	<quic_svaddagi@quicinc.com>, <quic_cvanscha@quicinc.com>,
-	<quic_pderrin@quicinc.com>, <quic_pheragu@quicinc.com>,
-	<catalin.marinas@arm.com>, <james.morse@arm.com>, <yuzenghui@huawei.com>,
-	<oliver.upton@linux.dev>, <maz@kernel.org>, <will@kernel.org>,
-	<qperret@google.com>, <keirf@google.com>, <shuah@kernel.org>,
-	<hch@infradead.org>, <jgg@nvidia.com>, <rientjes@google.com>,
-	<jhubbard@nvidia.com>, <fvdl@google.com>, <hughd@google.com>,
-	<jthoughton@google.com>, "Kalyazin, Nikita" <kalyazin@amazon.co.uk>,
-	"Manwaring, Derek" <derekmn@amazon.com>, "Cali, Marco"
-	<xmarcalx@amazon.co.uk>, James Gowans <jgowans@amazon.com>
-References: <20241213164811.2006197-1-tabba@google.com>
- <20241213164811.2006197-14-tabba@google.com>
-Content-Language: en-US
-Autocrypt: addr=roypat@amazon.co.uk; keydata=
- xjMEY0UgYhYJKwYBBAHaRw8BAQdA7lj+ADr5b96qBcdINFVJSOg8RGtKthL5x77F2ABMh4PN
- NVBhdHJpY2sgUm95IChHaXRodWIga2V5IGFtYXpvbikgPHJveXBhdEBhbWF6b24uY28udWs+
- wpMEExYKADsWIQQ5DAcjaM+IvmZPLohVg4tqeAbEAgUCY0UgYgIbAwULCQgHAgIiAgYVCgkI
- CwIEFgIDAQIeBwIXgAAKCRBVg4tqeAbEAmQKAQC1jMl/KT9pQHEdALF7SA1iJ9tpA5ppl1J9
- AOIP7Nr9SwD/fvIWkq0QDnq69eK7HqW14CA7AToCF6NBqZ8r7ksi+QLOOARjRSBiEgorBgEE
- AZdVAQUBAQdAqoMhGmiXJ3DMGeXrlaDA+v/aF/ah7ARbFV4ukHyz+CkDAQgHwngEGBYKACAW
- IQQ5DAcjaM+IvmZPLohVg4tqeAbEAgUCY0UgYgIbDAAKCRBVg4tqeAbEAtjHAQDkh5jZRIsZ
- 7JMNkPMSCd5PuSy0/Gdx8LGgsxxPMZwePgEAn5Tnh4fVbf00esnoK588bYQgJBioXtuXhtom
- 8hlxFQM=
-In-Reply-To: <20241213164811.2006197-14-tabba@google.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAGAciWcC/x2MWwqAIBAArxL73YJGBnWV6MPHWktvBQmkuyd9D
+ sNMhkiBKcJQZQiUOPJ5FJB1BXbRx0zIrjA0olFCSoG3PXdkS+j5QUcJN9IrGuO96nXftd5Aaa9
+ Axf/fcXrfD46tawpnAAAA
+To: Krzysztof Kozlowski <krzk@kernel.org>, 
+ Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, 
+ Adrian Hunter <adrian.hunter@intel.com>, 
+ Ulf Hansson <ulf.hansson@linaro.org>, Abel Vesa <abel.vesa@linaro.org>, 
+ Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, 
+ "James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>, 
+ "Martin K. Petersen" <martin.petersen@oracle.com>, 
+ Eric Biggers <ebiggers@google.com>
+Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ linux-mmc@vger.kernel.org, linux-scsi@vger.kernel.org, 
+ andre.draszik@linaro.org, peter.griffin@linaro.org, willmcvicker@google.com, 
+ kernel-team@android.com, Tudor Ambarus <tudor.ambarus@linaro.org>, 
+ stable@vger.kernel.org
+X-Mailer: b4 0.13.0
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1737038965; l=1305;
+ i=tudor.ambarus@linaro.org; s=20241212; h=from:subject:message-id;
+ bh=XVIK6P3cDh2RmjY5FPX61raR0X7pooRB+f/SKenLnGU=;
+ b=yULsW9f8ssEvEIwNMrzYj/f7k5qacJ3+E77jHSGJ2rn5hN6wtSPSVE4x7pLEBB2tiVmrN95Xp
+ hz0cCTM8VKID360TwWCYa3w3quENHLTqwgc4qE9guKQZPT2HIFL4Jcz
+X-Developer-Key: i=tudor.ambarus@linaro.org; a=ed25519;
+ pk=uQzE0NXo3dIjeowMTOPCpIiPHEz12IA/MbyzrZVh9WI=
 
-On Fri, 2024-12-13 at 16:48 +0000, Fuad Tabba wrote:
-> Add arm64 support for resolving guest page faults on
-> guest_memfd() backed memslots. This support is not contingent on
-> pKVM, or other confidential computing support, and works in both
-> VHE and nVHE modes.
-> 
-> Without confidential computing, this support is useful forQ
-> testing and debugging. In the future, it might also be useful
-> should a user want to use guest_memfd() for all code, whether
-> it's for a protected guest or not.
-> 
-> For now, the fault granule is restricted to PAGE_SIZE.
-> 
-> Signed-off-by: Fuad Tabba <tabba@google.com>
-> ---
->  arch/arm64/kvm/mmu.c | 111 ++++++++++++++++++++++++++++++++++++++++++-
->  1 file changed, 109 insertions(+), 2 deletions(-)
-> 
-> diff --git a/arch/arm64/kvm/mmu.c b/arch/arm64/kvm/mmu.c
-> index 342a9bd3848f..1c4b3871967c 100644
-> --- a/arch/arm64/kvm/mmu.c
-> +++ b/arch/arm64/kvm/mmu.c
-> @@ -1434,6 +1434,107 @@ static bool kvm_vma_mte_allowed(struct vm_area_struct *vma)
->         return vma->vm_flags & VM_MTE_ALLOWED;
->  }
-> 
-> +static int guest_memfd_abort(struct kvm_vcpu *vcpu, phys_addr_t fault_ipa,
-> +                            struct kvm_memory_slot *memslot, bool fault_is_perm)
-> +{
-> +       struct kvm_mmu_memory_cache *memcache = &vcpu->arch.mmu_page_cache;
-> +       bool exec_fault = kvm_vcpu_trap_is_exec_fault(vcpu);
-> +       bool logging_active = memslot_is_logging(memslot);
-> +       struct kvm_pgtable *pgt = vcpu->arch.hw_mmu->pgt;
-> +       enum kvm_pgtable_prot prot = KVM_PGTABLE_PROT_R;
-> +       bool write_fault = kvm_is_write_fault(vcpu);
-> +       struct mm_struct *mm = current->mm;
-> +       gfn_t gfn = gpa_to_gfn(fault_ipa);
-> +       struct kvm *kvm = vcpu->kvm;
-> +       struct page *page;
-> +       kvm_pfn_t pfn;
-> +       int ret;
-> +
-> +       /* For now, guest_memfd() only supports PAGE_SIZE granules. */
-> +       if (WARN_ON_ONCE(fault_is_perm &&
-> +                        kvm_vcpu_trap_get_perm_fault_granule(vcpu) != PAGE_SIZE)) {
-> +               return -EFAULT;
-> +       }
-> +
-> +       VM_BUG_ON(write_fault && exec_fault);
-> +
-> +       if (fault_is_perm && !write_fault && !exec_fault) {
-> +               kvm_err("Unexpected L2 read permission error\n");
-> +               return -EFAULT;
-> +       }
-> +
-> +       /*
-> +        * Permission faults just need to update the existing leaf entry,
-> +        * and so normally don't require allocations from the memcache. The
-> +        * only exception to this is when dirty logging is enabled at runtime
-> +        * and a write fault needs to collapse a block entry into a table.
-> +        */
-> +       if (!fault_is_perm || (logging_active && write_fault)) {
-> +               ret = kvm_mmu_topup_memory_cache(memcache,
-> +                                                kvm_mmu_cache_min_pages(vcpu->arch.hw_mmu));
-> +               if (ret)
-> +                       return ret;
-> +       }
-> +
-> +       /*
-> +        * Holds the folio lock until mapped in the guest and its refcount is
-> +        * stable, to avoid races with paths that check if the folio is mapped
-> +        * by the host.
-> +        */
-> +       ret = kvm_gmem_get_pfn_locked(kvm, memslot, gfn, &pfn, &page, NULL);
-> +       if (ret)
-> +               return ret;
-> +
-> +       if (!kvm_slot_gmem_is_guest_mappable(memslot, gfn)) {
-> +               ret = -EAGAIN;
-> +               goto unlock_page;
-> +       }
-> +
-> +       /*
-> +        * Once it's faulted in, a guest_memfd() page will stay in memory.
-> +        * Therefore, count it as locked.
-> +        */
-> +       if (!fault_is_perm) {
-> +               ret = account_locked_vm(mm, 1, true);
-> +               if (ret)
-> +                       goto unlock_page;
-> +       }
-> +
-> +       read_lock(&kvm->mmu_lock);
-> +       if (write_fault)
-> +               prot |= KVM_PGTABLE_PROT_W;
-> +
-> +       if (exec_fault)
-> +               prot |= KVM_PGTABLE_PROT_X;
-> +
-> +       if (cpus_have_final_cap(ARM64_HAS_CACHE_DIC))
-> +               prot |= KVM_PGTABLE_PROT_X;
-> +
-> +       /*
-> +        * Under the premise of getting a FSC_PERM fault, we just need to relax
-> +        * permissions.
-> +        */
-> +       if (fault_is_perm)
-> +               ret = kvm_pgtable_stage2_relax_perms(pgt, fault_ipa, prot);
-> +       else
-> +               ret = kvm_pgtable_stage2_map(pgt, fault_ipa, PAGE_SIZE,
-> +                                       __pfn_to_phys(pfn), prot,
-> +                                       memcache,
-> +                                       KVM_PGTABLE_WALK_HANDLE_FAULT |
-> +                                       KVM_PGTABLE_WALK_SHARED);
-> +
-> +       kvm_release_faultin_page(kvm, page, !!ret, write_fault);
-> +       read_unlock(&kvm->mmu_lock);
-> +
-> +       if (ret && !fault_is_perm)
-> +               account_locked_vm(mm, 1, false);
-> +unlock_page:
-> +       unlock_page(page);
-> +       put_page(page);
+Hi!
 
-There's a double-free of `page` here, as kvm_release_faultin_page
-already calls put_page. I fixed it up locally with
+I was recently pointed to this driver for an example on how consumers
+can get a pointer to the supplier's driver data and I noticed a leak.
 
-+       unlock_page(page);
- 	kvm_release_faultin_page(kvm, page, !!ret, write_fault);
- 	read_unlock(&kvm->mmu_lock);
- 
- 	if (ret && !fault_is_perm)
- 		account_locked_vm(mm, 1, false);
-+       goto out;
-+
- unlock_page:
- 	unlock_page(page);
- 	put_page(page);
--
-+out:
- 	return ret != -EAGAIN ? ret : 0;
- }
+Callers of of_qcom_ice_get() leak the device reference taken by
+of_find_device_by_node(). Introduce devm variant for of_qcom_ice_get()
+to spare consumers of an extra call to put the dev reference.
 
-which I'm admittedly not sure is correct either because now the locks
-don't get released in reverse order of acquisition, but with this I
-was able to boot simple VMs.
+This set touches mmc and scsi subsystems. Since the fix is trivial for
+them, I'd suggest taking everything through the SoC tree with Acked-by
+tags if people consider this useful. Thanks!
 
-> +
-> +       return ret != -EAGAIN ? ret : 0;
-> +}
-> +
->  static int user_mem_abort(struct kvm_vcpu *vcpu, phys_addr_t fault_ipa,
->                           struct kvm_s2_trans *nested,
->                           struct kvm_memory_slot *memslot, unsigned long hva,
-> @@ -1900,8 +2001,14 @@ int kvm_handle_guest_abort(struct kvm_vcpu *vcpu)
->                 goto out_unlock;
->         }
-> 
-> -       ret = user_mem_abort(vcpu, fault_ipa, nested, memslot, hva,
-> -                            esr_fsc_is_permission_fault(esr));
-> +       if (kvm_slot_can_be_private(memslot)) {
+Signed-off-by: Tudor Ambarus <tudor.ambarus@linaro.org>
+---
+Tudor Ambarus (4):
+      soc: qcom: ice: introduce devm_of_qcom_ice_get
+      mmc: sdhci-msm: fix dev reference leaked through of_qcom_ice_get
+      scsi: ufs: qcom: fix dev reference leaked through of_qcom_ice_get
+      soc: qcom: ice: make of_qcom_ice_get() static
 
-For my setup, I needed
+ drivers/mmc/host/sdhci-msm.c |  2 +-
+ drivers/soc/qcom/ice.c       | 37 +++++++++++++++++++++++++++++++++++--
+ drivers/ufs/host/ufs-qcom.c  |  2 +-
+ include/soc/qcom/ice.h       |  3 ++-
+ 4 files changed, 39 insertions(+), 5 deletions(-)
+---
+base-commit: b323d8e7bc03d27dec646bfdccb7d1a92411f189
+change-id: 20250110-qcom-ice-fix-dev-leak-bbff59a964fb
 
-if (kvm_mem_is_private(vcpu->kvm, gfn))
-
-here instead, because I am making use of KVM_GENERIC_MEMORY_ATTRIBUTES,
-and  had a memslot with the `KVM_MEM_GUEST_MEMFD` flag set, but whose
-gfn range wasn't actually set to KVM_MEMORY_ATTRIBUTE_PRIVATE.
-
-If I'm reading patch 12 correctly, your memslots always set only one of
-userspace_addr or guest_memfd, and the stage 2 table setup simply checks
-which one is the case to decide what to fault in, so maybe to support
-both cases, this check should be
-
-if (kvm_mem_is_private(vcpu->kvm, gfn) || (kvm_slot_can_be_private(memslot) && !memslot->userspace_addr)
-
-?
-
-[1]: https://lore.kernel.org/all/20240801090117.3841080-1-tabba@google.com/
-
-> +               ret = guest_memfd_abort(vcpu, fault_ipa, memslot,
-> +                                       esr_fsc_is_permission_fault(esr));
-> +       } else {
-> +               ret = user_mem_abort(vcpu, fault_ipa, nested, memslot, hva,
-> +                                    esr_fsc_is_permission_fault(esr));
-> +       }
-> +
->         if (ret == 0)
->                 ret = 1;
->  out:
-> --
-> 2.47.1.613.gc27f4b7a9f-goog
-
-Best,
-Patrick
+Best regards,
+-- 
+Tudor Ambarus <tudor.ambarus@linaro.org>
 
 
