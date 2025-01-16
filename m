@@ -1,167 +1,162 @@
-Return-Path: <linux-arm-msm+bounces-45222-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-45223-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 65389A134A4
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jan 2025 09:06:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 9F7D5A134B5
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jan 2025 09:08:29 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id BFED818885EF
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jan 2025 08:06:05 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id D2A161888580
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jan 2025 08:08:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F27231990B7;
-	Thu, 16 Jan 2025 08:05:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2D70A1991B2;
+	Thu, 16 Jan 2025 08:08:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="NT3wG8zu"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="WbsFinLL"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f52.google.com (mail-lf1-f52.google.com [209.85.167.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49C7B381AA;
-	Thu, 16 Jan 2025 08:05:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 319D6381AA
+	for <linux-arm-msm@vger.kernel.org>; Thu, 16 Jan 2025 08:08:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737014756; cv=none; b=EJ44wfY6Qg2DHExQjJCJgDSoL6G9X5uRiiu3ZmbCio8KfQWqCW6LnpBFpYooASxd2ToO8LKPLzJydQRgcSLBahVRoH/9NJZ8N9m/ePfFbWGGkuxlokS27DAxmswF/AAUFv/aYAwMW0JazezJDsB2Nd7bAX5xUAy5Gr/phSn3F/I=
+	t=1737014906; cv=none; b=X9AZx2ZqfbFI7y6DL+7s9AePlowyZBT9Esy5dZpRJbboDVSK3SW4QJhh5CV2Eyx0aRyJ1o/n1LIXN4uwq3pbIA9MNWR0yRR3oE+YvctYlec9vWHDf+XKAqwq+OK7Mdfn5P27xu+H9IFgxT+CVZjtfuiKPg9yww8aeJZQG0HVt14=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737014756; c=relaxed/simple;
-	bh=5rd12jR+ruZpQr+zcf+f2VHKx265Ozuy8y6gxIm+YW4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=no96MNgo1Qg6O8FmiuJNNsAoyiI5FD2x2U7h5N3mMYVACPwlISzZVvpwj8T7wl/SCFH9ASCATDgKzHgQQ7dc/4FT0RznzKeW97JYQYVKLr+aMMLJk73L7t1/JbxUCoLIqvmImaN/C3/X/ZWligyPnq4/osn4OzFk92sl4q3RGUc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=NT3wG8zu; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50G4nmO1030734;
-	Thu, 16 Jan 2025 08:05:34 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	5rd12jR+ruZpQr+zcf+f2VHKx265Ozuy8y6gxIm+YW4=; b=NT3wG8zulBWYxQcZ
-	pYTsUIpwcj2Nyb6HsToUyg555KlgNrIs72EIr+UBkmgWUVRvoThly8YU6jGMLGJi
-	3Xzi37Lgr4DzE8xF4cVa81Hd+BwSOkGEE8SHsFL87F2Vb+6wyoosUTcbVW+glPTg
-	9fnbxPJlLf9WXfj8ipXTWUuhtmOqZ1S0qC0+Y8J9JPQNhv/Lbr8oX6ZJQEJTWD5d
-	gHqp0RyYiOuybarTuAeZNLkKN6XfuvDa7Q/l+CVb+WZBXOZhmLQyNOpmHbmf9ryl
-	Z79ocHAJm3DhdCoE+akKXSrTHgYVrF/Sqv4W3tq12eqH7j4GdhVPD1c5QmzN8sEw
-	ADwL+Q==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 446ue8gdsn-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 16 Jan 2025 08:05:33 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 50G85Wgj004387
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 16 Jan 2025 08:05:32 GMT
-Received: from [10.110.84.216] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 16 Jan
- 2025 00:05:24 -0800
-Message-ID: <eef55e66-629a-46c4-822b-bce41cff51a2@quicinc.com>
-Date: Thu, 16 Jan 2025 13:35:20 +0530
+	s=arc-20240116; t=1737014906; c=relaxed/simple;
+	bh=xdvo2mP0UY5Bj8gx2DSd80+ERViqDwGLQ6Gafzt2piU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=tDj6v5dzz7s8lb+yGiTnUM80TLxFGA21xgP3JgpWBwup0+F19WQRx7vxJmnShjhWCz/cr6MlvAGfGndpv4N1rKaXLcrAqiG9Ynl2NJZ29N+6M2ZagFKeZngO4JBQNeHK4cn9dM38c+C/BcOyNKRp2h086H4+ulFfIkS7qGWlw8E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=WbsFinLL; arc=none smtp.client-ip=209.85.167.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f52.google.com with SMTP id 2adb3069b0e04-53ff1f7caaeso762414e87.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Jan 2025 00:08:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1737014902; x=1737619702; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=OvjQGS9v3GeYSYSe2LBAG448Vja+LlRvw7uplzopV8w=;
+        b=WbsFinLLKbHCkij9g8woHeJB9U47XBkhPcs03lcgQZLFiYcr1o3ewXeV6NGiUyNNSq
+         SpLFhx5PX8X1qTVkhGtnCSlg77hkDCzxlcIkAazKbyweu7duXLq46o+lFICjpgIaICVx
+         HvQ9o0KWIHnviwXypq19SbPQvpsRgpR02yxB4xqr0VQiIF+mILMSlbvhHEejJRexOhoO
+         mfzhilrmDRvsaPtKkqQwalCV5C/AjLwbF5F47/aDfGKtuh2XgbfLBCJ6qI4Nr2E2OQFg
+         B5J228uE64urAfLNScbwi7xhTNAxb0PMQRiN7bbWWNTRGnIY5VOEN8/wYwlYBL4sMKNu
+         LN+g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1737014902; x=1737619702;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=OvjQGS9v3GeYSYSe2LBAG448Vja+LlRvw7uplzopV8w=;
+        b=Vqa0mTgU6rD3A9Nq+enWhgvy7EHFaBWQ8Ac5V6msV/b+/DLQZvdLkDXfjJSg+NllGb
+         ilKEH35lBUAszvYNa7gDr9hWTwaCY1aRc+QW5b7o5Nj3RViYQ0CrYzxA2Z/hDOFjEOyG
+         mhOixvYrWTK+8lZLksDJlLlES9MZBYpOzzosl4ecIRyPGwv9aEXHjAJ+NtfRFhaGgS4f
+         /A7wUdexCDe3drQSguJZEtDyObuzAe30TYoFfwGi9vCYMpYzUVZlcg+SxxdtKxtVDqnI
+         ojrLSyqP8AQGesV0wHW6JQcyiMgIacujcUt50rmL4nqT/6DUC0oC2dCwggBZp3VhHUWl
+         M8tA==
+X-Forwarded-Encrypted: i=1; AJvYcCXkgVoOGBepqyS2zr3W1ChrF8I7RoTbhdwB+5dMDC4pYm83OtGN6NqBIQtOk5jMZsCMa+TUZ0Wr1JKeHu6u@vger.kernel.org
+X-Gm-Message-State: AOJu0YxNRjePXJrL/pFQtdqA3PT3DkyOyTtCNWhht4bYNLaCuDA4TyUP
+	0xbCrRVnbsZ2pefBEpqVU1CHbHo2GxVVxrYH5r0MGLMzFbEIxan5Zk0nrhPrNvg=
+X-Gm-Gg: ASbGncvnRbT4UGGruFFB7FGm5sZDJT7g+iVTEaWsTlo8ViMV5DmqDz+Ai/gYyxNmdoA
+	LO37hfFWeBOdL3tE+g1WX18MmLRj1e5aMgg5muaR01kN7+Qw19FSU/r3C6gUKUoACsGGoV8XYO+
+	t8MVMfHtNvtLphILT8rL7QGPWFNMsyycuNpTUyns1m1eBLnfjuALdGieB5pzW+oaYd/5xamqqqp
+	VJaslckoojlOaiwNiIhLKgfqG+wgX7ZEuI6Y5/5SobLrEmxiqH++dtwxHh4E+i2aNrPdoXfxLi5
+	wsqz0FsP9B4sigfJKmWeYbLHT1tiN6OVf0va
+X-Google-Smtp-Source: AGHT+IGEHcCQjP4XA6TrXiXXldBmt08e0Vh4nxPE4SnDPCPsbcrbar+E8zfVOYTqQoHRGtLyWIB3yw==
+X-Received: by 2002:a05:6512:a8e:b0:540:3572:1864 with SMTP id 2adb3069b0e04-542845b35b6mr9642052e87.44.1737014902298;
+        Thu, 16 Jan 2025 00:08:22 -0800 (PST)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5428bec067asm2271621e87.186.2025.01.16.00.08.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 16 Jan 2025 00:08:21 -0800 (PST)
+Date: Thu, 16 Jan 2025 10:08:18 +0200
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Jun Nie <jun.nie@linaro.org>
+Cc: Rob Clark <robdclark@gmail.com>, 
+	Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
+	Simona Vetter <simona@ffwll.ch>, linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+	freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v4 12/16] drm/msm/dpu: blend pipes per mixer pairs config
+Message-ID: <actkdpr62j55cez7sbszrsjgsax7lwzlzk4qqe7rmqfo2y3u4a@2xro4eo56a25>
+References: <20250116-sm8650-v6-13-hmd-deckard-mdss-quad-upstream-33-v4-0-74749c6eba33@linaro.org>
+ <20250116-sm8650-v6-13-hmd-deckard-mdss-quad-upstream-33-v4-12-74749c6eba33@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC v2 3/5] thermal: qcom: Add support for MBG thermal
- monitoring
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-        "Rafael J. Wysocki"
-	<rafael@kernel.org>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Zhang Rui
-	<rui.zhang@intel.com>, Lukasz Luba <lukasz.luba@arm.com>,
-        Rob Herring
-	<robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>,
-        Jonathan Cameron <jic23@kernel.org>,
-        "Lars-Peter
- Clausen" <lars@metafoo.de>, Lee Jones <lee@kernel.org>,
-        Stephen Boyd
-	<sboyd@kernel.org>, Amit Kucheria <amitk@kernel.org>,
-        Thara Gopinath
-	<thara.gopinath@gmail.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        "Konrad
- Dybcio" <konradybcio@kernel.org>
-CC: Ajit Pandey <quic_ajipan@quicinc.com>,
-        Imran Shaik
-	<quic_imrashai@quicinc.com>,
-        Taniya Das <quic_tdas@quicinc.com>,
-        "Jagadeesh
- Kona" <quic_jkona@quicinc.com>, <quic_kamalw@quicinc.com>,
-        <quic_jprakash@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <linux-pm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-iio@vger.kernel.org>
-References: <20241212-mbg-v2-support-v2-0-3249a4339b6e@quicinc.com>
- <20241212-mbg-v2-support-v2-3-3249a4339b6e@quicinc.com>
- <cf2f2510-9d27-4473-bf50-45b14725f4c5@oss.qualcomm.com>
- <c5079172-e127-4dfc-826a-b32489d852f8@quicinc.com>
- <ba764e00-2968-447f-99d1-5925e7782491@oss.qualcomm.com>
-Content-Language: en-US
-From: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
-In-Reply-To: <ba764e00-2968-447f-99d1-5925e7782491@oss.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: BbVQTR9sHQ_quzWQ50wcNfxnBKqnP-cS
-X-Proofpoint-ORIG-GUID: BbVQTR9sHQ_quzWQ50wcNfxnBKqnP-cS
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-01-16_03,2025-01-16_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- bulkscore=0 malwarescore=0 clxscore=1015 spamscore=0 adultscore=0
- priorityscore=1501 suspectscore=0 impostorscore=0 phishscore=0 mlxscore=0
- mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2501160058
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250116-sm8650-v6-13-hmd-deckard-mdss-quad-upstream-33-v4-12-74749c6eba33@linaro.org>
 
+On Thu, Jan 16, 2025 at 03:26:01PM +0800, Jun Nie wrote:
+> Currently, only 2 pipes are used at most for a plane. A stage structure
+> describes the configuration for a mixer pair. So only one stage is needed
+> for current usage cases. The quad-pipe case will be added in future and 2
+> stages are used in the case. So extend the stage to an array with array size
+> STAGES_PER_PLANE and blend pipes per mixer pair with configuration in the
+> stage structure.
+> 
+> Signed-off-by: Jun Nie <jun.nie@linaro.org>
+> ---
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c    | 42 +++++++++++++++++------------
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h |  1 +
+>  2 files changed, 26 insertions(+), 17 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+> index 81474823e6799..5ae640da53fbf 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+> @@ -401,7 +401,6 @@ static void _dpu_crtc_blend_setup_pipe(struct drm_crtc *crtc,
+>  				       struct dpu_hw_stage_cfg *stage_cfg
+>  				      )
+>  {
+> -	uint32_t lm_idx;
+>  	enum dpu_sspp sspp_idx;
+>  	struct drm_plane_state *state;
+>  
+> @@ -426,8 +425,7 @@ static void _dpu_crtc_blend_setup_pipe(struct drm_crtc *crtc,
+>  	stage_cfg->multirect_index[stage][stage_idx] = pipe->multirect_index;
+>  
+>  	/* blend config update */
+> -	for (lm_idx = 0; lm_idx < num_mixers; lm_idx++)
+> -		mixer[lm_idx].lm_ctl->ops.update_pending_flush_sspp(mixer[lm_idx].lm_ctl, sspp_idx);
+> +	mixer->lm_ctl->ops.update_pending_flush_sspp(mixer->lm_ctl, sspp_idx);
 
-On 12/30/2024 7:36 PM, Konrad Dybcio wrote:
-> On 30.12.2024 10:45 AM, Satya Priya Kakitapalli wrote:
->> On 12/13/2024 9:18 PM, Konrad Dybcio wrote:
->>> On 12.12.2024 5:11 PM, Satya Priya Kakitapalli wrote:
->>>> Add driver for the MBG thermal monitoring device. It monitors
->>>> the die temperature, and when there is a level 1 upper threshold
->>>> violation, it receives an interrupt over spmi. The driver reads
->>>> the fault status register and notifies thermal accordingly.
->>>>
->>>> Signed-off-by: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
->>>> ---
->>> [...]
->>>
->>>> +static const struct mbg_map_table map_table[] = {
->>> Is this peripheral/pmic-specific?
->>
->> Yes, peripheral specific.
-> Okay, I asked a question that I don't recall what I meant by.
->
-> To be clear, is this table specific to all instances of MBG on
-> different kinds of PMIC7, or does it only apply to PM8775
-> specifically?
+No. This is required if two LMs use different CTLs.
 
+>  }
+>  
+>  static void _dpu_crtc_blend_setup_mixer(struct drm_crtc *crtc,
 
-No it is not specific to PM8775 pmic, it is specific to MBG peripheral.
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h
+> index 5f010d36672cc..64e220987be56 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h
+> @@ -34,6 +34,7 @@
+>  #define DPU_MAX_PLANES			4
+>  #endif
+>  
+> +#define STAGES_PER_PLANE		2
 
+it's 1, not 2.
 
->>>> +    /* minT    vtemp0    tc */
->>>> +    { -60000, 4337, 1967 },
->>>> +    { -40000, 4731, 1964 },
->>>> +    { -20000, 5124, 1957  },
->>>> +    { 0,      5515, 1949 },
->>>> +    { 20000,  5905, 1940 },
->>>> +    { 40000,  6293, 1930 },
->>>> +    { 60000,  6679, 1921 },
->>>> +    { 80000,  7064, 1910 },
->>>> +    { 100000, 7446, 1896 },
->>>> +    { 120000, 7825, 1878 },
->>>> +    { 140000, 8201, 1859 },
->>>> +};
-> Konrad
+>  #define PIPES_PER_PLANE			2
+
+#define PIPES_PER_PLANE		(PIPES_PER_STAGE * STAGES_PER_PLANE)
+
+>  #define PIPES_PER_STAGE			2
+>  #ifndef DPU_MAX_DE_CURVES
+> 
+> -- 
+> 2.34.1
+> 
+
+-- 
+With best wishes
+Dmitry
 
