@@ -1,155 +1,353 @@
-Return-Path: <linux-arm-msm+bounces-45286-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-45287-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8413FA13CD5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jan 2025 15:51:46 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2F9A2A13D28
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jan 2025 16:03:13 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 55910188EA1B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jan 2025 14:51:20 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 57A011883394
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jan 2025 15:03:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id ED52022CBEA;
-	Thu, 16 Jan 2025 14:49:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 93E9A22B8BD;
+	Thu, 16 Jan 2025 15:03:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="k+paxNDI"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="e35hNg5u"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com [209.85.221.50])
+Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C1C822C9E2
-	for <linux-arm-msm@vger.kernel.org>; Thu, 16 Jan 2025 14:49:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 771F517578
+	for <linux-arm-msm@vger.kernel.org>; Thu, 16 Jan 2025 15:03:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737038973; cv=none; b=Of1QAXLGDiJJ8+fEnkCT0IRJYUmYe3d7YbSoFU+ZdI9X9IolW3EuQ8tUbVJn28Vu1r3i7eUfq+5oXiky7ZxuQCTyON7/pDEMbgCMlF68lUL7td5yGLwRVpgr9q3WBjJ9mKhZ/zoHqKMWw+t6je49oL2UJMHRhHcBZQ9aW/o9iNo=
+	t=1737039783; cv=none; b=poaVXQmm6v1eFoiC/BpPbGzx4nx5V0ZVxXWtEYdOI9KmtGmJpN4BldO9TglyqXLkOXxAhCGgtGq072D74VsL/tIZjJSqEK7XPbfuEeYtMHghr29r3y3DhjXbc2+xAWgw93H0RGtixEbit90LlhVMegF4YG35Q5E5dcOLgTQ0Bfc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737038973; c=relaxed/simple;
-	bh=SLPk0X7feJzjbp6iNB5msnLoDstFDxW+7yuOzADYOIY=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=DpvY443RxiiBQSCJZowggW1W1C3QLw2F+/oj6hprqbNMy8zwuJxfQDbxl8fNRpL4aDhGJIXoNrukaQytrg2ZeCN/4S6zw2NE5QHNJEveyiaT6pcf6x5p5LLs5iY/kpVZ7ODTq/S5MUKnvP0HBSNIxd1aquwdy5eGxjO4XQmcbxo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=k+paxNDI; arc=none smtp.client-ip=209.85.221.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f50.google.com with SMTP id ffacd0b85a97d-38634c35129so861153f8f.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Jan 2025 06:49:30 -0800 (PST)
+	s=arc-20240116; t=1737039783; c=relaxed/simple;
+	bh=A30ZctwoXfsNf3EywXJmMJRQwL/MpikPxxAnMrPE3fk=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=bZVEftrPLYyWU18tQDB1snl3hW2AMku+Y/ggXVbfYIgoXsoK44cF4EOPxLQkE/wjCANYwu2mrYZSMwGNoclsO5my0TBmWWFXCICanBVMEsu2SgVcnWSGFq8ON5SftOCWLUrLjmych2twoNiUoDe8JvTEWqu1k1Yu18C5XP7G3w4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=e35hNg5u; arc=none smtp.client-ip=209.85.128.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-4368a290e0dso46395e9.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Jan 2025 07:03:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1737038969; x=1737643769; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=e7cRMSVWB1iA1Z/E9hbzESrNuj3mM1/u3MbHi16H2W4=;
-        b=k+paxNDIjOxDJgPjAQG1KtidazknNY471iVzSHZQNe6EgPboggEra9/7VcAlUw7/o8
-         fY5tDLXNNxoIfYERctcld0qybKoLCBy5gfdMaWR2LpefZTo6J+Z9ytcHocx+O3VDxInC
-         3mqZxcLEemohTrWZBpxHrbvB8ONTmm4gUXB5vvzEr7WQXl6ESFPiuc/U2XhUZRLI/9bS
-         IPm3I83AR8ub4NYD2Z8WBUJN+aoZToBv0cvpiiNvGzhH3d6zPrEGQGFtaZt30uHSYO/9
-         q706kNsf99ulZQCS0aOYibKgTuvitR7LNS8OblVZLa3PkQLGDhGcu78k/OzPWbIrgbeH
-         u6qw==
+        d=google.com; s=20230601; t=1737039780; x=1737644580; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=kqfFof4DiRiEcVNWi8Q8TQdmOIxGyZ0otuRpv/IQwnY=;
+        b=e35hNg5uhBIL9g4rSVSVz1TGyGs9BkamhvpNsJ2kXhh1AeaZYoJS/G347SqgPdzBWy
+         g6ZLDmPluTEvTVDD2tY7dZ+Hv/qyRiC69T4qkLCU9pXfRTt24VmDH6U33UstBvIgV8Xf
+         LFD6SP8O+prBBxabTFUNcXvef8P7tT3LCKl2StwsH5DtVPa0jrrfSksBmhOUd5EmfCmo
+         IAf+rFrz01BjBAjfqk40HyLZcL2mW5wJ85ZZDTRKVm/J3AENyuZi4VrJlHCCwmcT+ObZ
+         yQTw9DOx+b6ZN33b1jnu44Au2W4ihQiz/b2QQwoy1ZX0U5jRN6H8kYekTMKvf6p1hjYh
+         IXOA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1737038969; x=1737643769;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=e7cRMSVWB1iA1Z/E9hbzESrNuj3mM1/u3MbHi16H2W4=;
-        b=GB0J4oOcZYajwNckjI5NAAW/Y5+clYufusg7lw+X306AS8QRk2MT0WsqdlGhUPr27N
-         70WJxI207QGT2cZqWmRWCDaSPdNTDMsF8rtWWRX2VzY6R3/YFBRZuSaV0eB3b6ljfalL
-         QuxVfpfBquQ9W32PcAZBZjXT5jcx/J1E8CbHQ8s5A03WFi1PdW336ArtBkP/TSWCkG3N
-         FpCRAjRCsAJ7ny6XhWLFVAMLB8imcMD6OXYHQy/PKUMsJnfXoOk13Pn0mPFEZY9VpFND
-         qdDNsiuGvV/j/0fQNw6Nifd9tPhAZHBJ3BGADRxBeOIGSYXZ0By5Hf/QMB1AI0NQTWv5
-         1uWA==
-X-Gm-Message-State: AOJu0YwTpR1mMjc6iU/WpsmR9l1hE5qCsw0N7ObsRRn/w2Vj2E6ZuE3R
-	bN03VZczwAVzrmr8U4VqieueS9kVHkh284J9BX26dTY9MYs116MqBZu4uO/dWvY=
-X-Gm-Gg: ASbGncvg7LnKq160iH7z8v/8z/zLBU+R/2zJLWn5CpI2uX0EgjnbbkUMFeVinWM8LQP
-	cNAa0T1jecYCTI6EyV5XjD7Xr1a+baJ5x8PHmrfJWGdfJWc79SYlJAAxjd8VtK3TN9GA/8Kc20p
-	+yBkAbXkvKrTclNRA36vUbvQq1vpvK3mT8szXEmNGJnf6Hr712eCuhW3Myy1STmli+N8pLIkQo4
-	l5utMQ8lmZ16Gdars+QgS6eKZGMy9y75jelE65+OKTll9rJFGABDjjflBH/MilB+G8N5XwqjGFW
-	0UkGBuYoho77uV3rARkpHaslL++x23WYcKUG
-X-Google-Smtp-Source: AGHT+IGuLmvbYhQXQ99Ngdjm7P7XXhs6Xz5bChZGEdZB5e+12utWg4WoIKuw3R2n6RN9NlrJ92GEfA==
-X-Received: by 2002:adf:a3c7:0:b0:38a:88d0:18d6 with SMTP id ffacd0b85a97d-38a88d018dcmr19384870f8f.42.1737038969571;
-        Thu, 16 Jan 2025 06:49:29 -0800 (PST)
-Received: from ta2.c.googlers.com (169.178.77.34.bc.googleusercontent.com. [34.77.178.169])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38bf321508esm70310f8f.10.2025.01.16.06.49.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 16 Jan 2025 06:49:29 -0800 (PST)
-From: Tudor Ambarus <tudor.ambarus@linaro.org>
-Date: Thu, 16 Jan 2025 14:49:08 +0000
-Subject: [PATCH 4/4] soc: qcom: ice: make of_qcom_ice_get() static
+        d=1e100.net; s=20230601; t=1737039780; x=1737644580;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=kqfFof4DiRiEcVNWi8Q8TQdmOIxGyZ0otuRpv/IQwnY=;
+        b=px8ZkUQGP36X3REPQ+xBsahJmblETrPwxGv47ebFpjGH5mpitCxAi/CPcm+85OodZT
+         PquhW03DDLyPttxs6HvY+HSE7Kb8nghIcRm1/V44DSA7fd9HgwlHsi8A5e2ZZPb/qI3M
+         47tXK6Lk+Vdw1Coty5WERA+y212l5Z3nSY8ugvrP+SLBpY7MYGyRg8YxuQF6hbDZ59TH
+         rVUZeg5tzE+VNXbxeN4DBeoswwISt49cSDcLkk6hvLqwouQu0Y/1v39MhiqUBnt8PsKF
+         T/rvYEeED1qR5t0c+0yWBlMNqtbssKqx0MrgwHNjr7R+sU1ks960+s9DplFvZHBHspsc
+         LxAQ==
+X-Forwarded-Encrypted: i=1; AJvYcCX0oo2D6sjm2q2ESowLaqjlE1m1OfWO+JHqRm8879iZtzW6qt1Sv5oBpDqOBkI5rWPm4bfjq5ANdijHMPPd@vger.kernel.org
+X-Gm-Message-State: AOJu0YwKyxGR5dSS0JcbHM/ZHftKZYBoARoXOHhbWZjMK6N/IqA3umuv
+	KGj3NUItZoy8ngo6d9x6RtgG2LOPvkhTySfeu+SN/q+ig3iC2x1vBKpeTcFbm4bkVEmZlKisGDq
+	iI9AZj5Xn6LfbKjV5/4HEP9PSgm5R6sZ3YxF+
+X-Gm-Gg: ASbGncvwVFpeiOzruqCORTWHWn6vIBPxdTcexo2wXohGnDAs/cQfdFoMl4w2xE/EfLj
+	LUsNo8+CETSnaDfS6p8sh38XFrzteJG+Duwo97zy1m/t67BhCgG+uElXeezbMzx/+oL4=
+X-Google-Smtp-Source: AGHT+IHuSl+wSG7mPzyQ8i1CvkOu3Nq8nbQwjdEsJxg1QVxRkdYoVp//rZUu/ZKT6BmKz7T5dYlDGSX92vZeFHZaEpE=
+X-Received: by 2002:a05:600c:1c84:b0:436:4e4c:7bae with SMTP id
+ 5b1f17b1804b1-4388b96edf5mr1026695e9.1.1737039777705; Thu, 16 Jan 2025
+ 07:02:57 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250116-qcom-ice-fix-dev-leak-v1-4-84d937683790@linaro.org>
-References: <20250116-qcom-ice-fix-dev-leak-v1-0-84d937683790@linaro.org>
-In-Reply-To: <20250116-qcom-ice-fix-dev-leak-v1-0-84d937683790@linaro.org>
-To: Krzysztof Kozlowski <krzk@kernel.org>, 
- Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, 
- Adrian Hunter <adrian.hunter@intel.com>, 
- Ulf Hansson <ulf.hansson@linaro.org>, Abel Vesa <abel.vesa@linaro.org>, 
- Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, 
- "James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>, 
- "Martin K. Petersen" <martin.petersen@oracle.com>, 
- Eric Biggers <ebiggers@google.com>
-Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
- linux-mmc@vger.kernel.org, linux-scsi@vger.kernel.org, 
- andre.draszik@linaro.org, peter.griffin@linaro.org, willmcvicker@google.com, 
- kernel-team@android.com, Tudor Ambarus <tudor.ambarus@linaro.org>
-X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1737038965; l=1554;
- i=tudor.ambarus@linaro.org; s=20241212; h=from:subject:message-id;
- bh=SLPk0X7feJzjbp6iNB5msnLoDstFDxW+7yuOzADYOIY=;
- b=G8iEARZbH9wv6CQbJi1hOS5u+HYxxskB3G6McP5l6dHKR3FG9vTnp5n4BD0jqXTdLl4BSdAzC
- 4JF38mDEPEmDQ7SXoKyDlewZGuD6XTgwZIpVqagkG1RWcJfa0FQRTzo
-X-Developer-Key: i=tudor.ambarus@linaro.org; a=ed25519;
- pk=uQzE0NXo3dIjeowMTOPCpIiPHEz12IA/MbyzrZVh9WI=
+References: <20241213164811.2006197-1-tabba@google.com> <31f1229d-40c8-4a75-b0f1-be315150379f@amazon.co.uk>
+In-Reply-To: <31f1229d-40c8-4a75-b0f1-be315150379f@amazon.co.uk>
+From: Fuad Tabba <tabba@google.com>
+Date: Thu, 16 Jan 2025 15:02:21 +0000
+X-Gm-Features: AbW1kvbTLlkR0MZtthgK7xg1MWWIvrDI_YynsmM_Oky84q5rjpd6sEQHrbgJ4aI
+Message-ID: <CA+EHjTzCmmOnoAkXdE8JoURUwf=8by=+PX9LpB9NrfsWe5xAwg@mail.gmail.com>
+Subject: Re: [RFC PATCH v4 00/14] KVM: Restricted mapping of guest_memfd at
+ the host and arm64 support
+To: Patrick Roy <roypat@amazon.co.uk>
+Cc: kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, 
+	pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au, 
+	anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com, 
+	aou@eecs.berkeley.edu, seanjc@google.com, viro@zeniv.linux.org.uk, 
+	brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org, 
+	xiaoyao.li@intel.com, yilun.xu@intel.com, chao.p.peng@linux.intel.com, 
+	jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com, 
+	yu.c.zhang@linux.intel.com, isaku.yamahata@intel.com, mic@digikod.net, 
+	vbabka@suse.cz, vannapurve@google.com, ackerleytng@google.com, 
+	mail@maciej.szmigiero.name, david@redhat.com, michael.roth@amd.com, 
+	wei.w.wang@intel.com, liam.merwick@oracle.com, isaku.yamahata@gmail.com, 
+	kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com, steven.price@arm.com, 
+	quic_eberman@quicinc.com, quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, 
+	quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com, 
+	quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com, 
+	james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev, 
+	maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com, 
+	shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, rientjes@google.com, 
+	jhubbard@nvidia.com, fvdl@google.com, hughd@google.com, jthoughton@google.com, 
+	"Kalyazin, Nikita" <kalyazin@amazon.co.uk>, "Manwaring, Derek" <derekmn@amazon.com>, 
+	"Cali, Marco" <xmarcalx@amazon.co.uk>, James Gowans <jgowans@amazon.com>
+Content-Type: text/plain; charset="UTF-8"
 
-There's no consumer calling it left, make the method static.
+Hi Patrick,
 
-Signed-off-by: Tudor Ambarus <tudor.ambarus@linaro.org>
----
- drivers/soc/qcom/ice.c | 3 +--
- include/soc/qcom/ice.h | 1 -
- 2 files changed, 1 insertion(+), 3 deletions(-)
+On Thu, 16 Jan 2025 at 14:48, Patrick Roy <roypat@amazon.co.uk> wrote:
+>
+> Hi Fuad!
+>
+> I finally got around to giving this patch series a spin for my non-CoCo
+> usecase. I used the below diff to expose the functionality outside of pKVM
+> (Based on Steven P.'s ARM CCA patch for custom VM types on ARM [2]).
+> There's two small things that were broken for me (will post as responses
+> to individual patches), but after fixing those, I was able to boot some
+> guests using a modified Firecracker [1].
 
-diff --git a/drivers/soc/qcom/ice.c b/drivers/soc/qcom/ice.c
-index 9cdf0acba6d1..1a2f77cc7175 100644
---- a/drivers/soc/qcom/ice.c
-+++ b/drivers/soc/qcom/ice.c
-@@ -262,7 +262,7 @@ static struct qcom_ice *qcom_ice_create(struct device *dev,
-  * Return: ICE pointer on success, NULL if there is no ICE data provided by the
-  * consumer or ERR_PTR() on error.
-  */
--struct qcom_ice *of_qcom_ice_get(struct device *dev)
-+static struct qcom_ice *of_qcom_ice_get(struct device *dev)
- {
- 	struct platform_device *pdev = to_platform_device(dev);
- 	struct qcom_ice *ice;
-@@ -323,7 +323,6 @@ struct qcom_ice *of_qcom_ice_get(struct device *dev)
- 
- 	return ice;
- }
--EXPORT_SYMBOL_GPL(of_qcom_ice_get);
- 
- static void qcom_ice_put(const struct qcom_ice *ice)
- {
-diff --git a/include/soc/qcom/ice.h b/include/soc/qcom/ice.h
-index d5f6a228df65..fdf1b5c21eb9 100644
---- a/include/soc/qcom/ice.h
-+++ b/include/soc/qcom/ice.h
-@@ -33,7 +33,6 @@ int qcom_ice_program_key(struct qcom_ice *ice,
- 			 const u8 crypto_key[], u8 data_unit_size,
- 			 int slot);
- int qcom_ice_evict_key(struct qcom_ice *ice, int slot);
--struct qcom_ice *of_qcom_ice_get(struct device *dev);
- struct qcom_ice *devm_of_qcom_ice_get(struct device *dev);
- 
- #endif /* __QCOM_ICE_H__ */
+That's great, thanks for that, and for your comments on the patches.
 
--- 
-2.48.0.rc2.279.g1de40edade-goog
+> Just wondering, are you still looking into posting a separate series
+> with just the MMU changes (e.g. something to have a bare-bones
+> KVM_SW_PROTECTED_VM on ARM, like we do for x86), like you mentioned in
+> the guest_memfd call before Christmas? We're pretty keen to
+> get our hands something like that for our non-CoCo VMs (and ofc, am
+> happy to help with any work required to get there :)
 
+Yes I am. I'm almost done with it now. That said, I need to make it
+work with attributes as well (as you mention in your comments on the
+other patch). I should to send it out next week, before the biweekly
+meeting in case we need to discuss it.
+
+Cheers,
+/fuad
+
+> Best,
+> Patrick
+>
+> [1]: https://github.com/roypat/firecracker/tree/secret-freedom-mmap
+> [2]: https://lore.kernel.org/kvm/20241004152804.72508-12-steven.price@arm.com/
+>
+> ---
+>
+> diff --git a/arch/arm64/include/asm/kvm_host.h b/arch/arm64/include/asm/kvm_host.h
+> index 8dfae9183651..0b8dfb855e51 100644
+> --- a/arch/arm64/include/asm/kvm_host.h
+> +++ b/arch/arm64/include/asm/kvm_host.h
+> @@ -380,6 +380,8 @@ struct kvm_arch {
+>          * the associated pKVM instance in the hypervisor.
+>          */
+>         struct kvm_protected_vm pkvm;
+> +
+> +       unsigned long type;
+>  };
+>
+>  struct kvm_vcpu_fault_info {
+> @@ -1529,7 +1531,11 @@ void kvm_set_vm_id_reg(struct kvm *kvm, u32 reg, u64 val);
+>  #define kvm_has_s1poe(k)                               \
+>         (kvm_has_feat((k), ID_AA64MMFR3_EL1, S1POE, IMP))
+>
+> -#define kvm_arch_has_private_mem(kvm)                                  \
+> -       (IS_ENABLED(CONFIG_KVM_PRIVATE_MEM) && is_protected_kvm_enabled())
+> +#ifdef CONFIG_KVM_PRIVATE_MEM
+> +#define kvm_arch_has_private_mem(kvm)  \
+> +       ((kvm)->arch.type == KVM_VM_TYPE_ARM_SW_PROTECTED || is_protected_kvm_enabled())
+> +#else
+> +#define kvm_arch_has_private_mem(kvm) false
+> +#endif
+>
+>  #endif /* __ARM64_KVM_HOST_H__ */
+> diff --git a/arch/arm64/kvm/Kconfig b/arch/arm64/kvm/Kconfig
+> index fe3451f244b5..2da26aa3b0b5 100644
+> --- a/arch/arm64/kvm/Kconfig
+> +++ b/arch/arm64/kvm/Kconfig
+> @@ -38,6 +38,7 @@ menuconfig KVM
+>         select HAVE_KVM_VCPU_RUN_PID_CHANGE
+>         select SCHED_INFO
+>         select GUEST_PERF_EVENTS if PERF_EVENTS
+> +       select KVM_GENERIC_PRIVATE_MEM if KVM_SW_PROTECTED_VM
+>         select KVM_GMEM_MAPPABLE
+>         help
+>           Support hosting virtualized guest machines.
+> @@ -84,4 +85,10 @@ config PTDUMP_STAGE2_DEBUGFS
+>
+>           If in doubt, say N.
+>
+> +config KVM_SW_PROTECTED_VM
+> +    bool "Enable support for KVM software-protected VMs"
+> +    depends on EXPERT
+> +    depends on KVM && ARM64
+> +    select KVM_GENERIC_PRIVATE_MEM
+> +
+>  endif # VIRTUALIZATION
+> diff --git a/arch/arm64/kvm/arm.c b/arch/arm64/kvm/arm.c
+> index a102c3aebdbc..35683868c0e4 100644
+> --- a/arch/arm64/kvm/arm.c
+> +++ b/arch/arm64/kvm/arm.c
+> @@ -181,6 +181,19 @@ int kvm_arch_init_vm(struct kvm *kvm, unsigned long type)
+>         mutex_unlock(&kvm->lock);
+>  #endif
+>
+> +       if (type & ~(KVM_VM_TYPE_ARM_MASK | KVM_VM_TYPE_ARM_IPA_SIZE_MASK))
+> +               return -EINVAL;
+> +
+> +       switch (type & KVM_VM_TYPE_ARM_MASK) {
+> +       case KVM_VM_TYPE_ARM_NORMAL:
+> +       case KVM_VM_TYPE_ARM_SW_PROTECTED:
+> +               break;
+> +       default:
+> +               return -EINVAL;
+> +       }
+> +
+> +       kvm->arch.type = type & KVM_VM_TYPE_ARM_MASK;
+> +
+>         kvm_init_nested(kvm);
+>
+>         ret = kvm_share_hyp(kvm, kvm + 1);
+> diff --git a/arch/arm64/kvm/mmu.c b/arch/arm64/kvm/mmu.c
+> index 1c4b3871967c..9dbb472eb96a 100644
+> --- a/arch/arm64/kvm/mmu.c
+> +++ b/arch/arm64/kvm/mmu.c
+> @@ -869,9 +869,6 @@ static int kvm_init_ipa_range(struct kvm_s2_mmu *mmu, unsigned long type)
+>         u64 mmfr0, mmfr1;
+>         u32 phys_shift;
+>
+> -       if (type & ~KVM_VM_TYPE_ARM_IPA_SIZE_MASK)
+> -               return -EINVAL;
+> -
+>         phys_shift = KVM_VM_TYPE_ARM_IPA_SIZE(type);
+>         if (is_protected_kvm_enabled()) {
+>                 phys_shift = kvm_ipa_limit;
+> @@ -2373,3 +2370,31 @@ void kvm_toggle_cache(struct kvm_vcpu *vcpu, bool was_enabled)
+>
+>         trace_kvm_toggle_cache(*vcpu_pc(vcpu), was_enabled, now_enabled);
+>  }
+> +
+> +#ifdef CONFIG_KVM_GENERIC_MEMORY_ATTRIBUTES
+> +bool kvm_arch_pre_set_memory_attributes(struct kvm *kvm,
+> +                                       struct kvm_gfn_range *range)
+> +{
+> +       /*
+> +        * Zap SPTEs even if the slot can't be mapped PRIVATE.  KVM only
+> +        * supports KVM_MEMORY_ATTRIBUTE_PRIVATE, and so it *seems* like KVM
+> +        * can simply ignore such slots.  But if userspace is making memory
+> +        * PRIVATE, then KVM must prevent the guest from accessing the memory
+> +        * as shared.  And if userspace is making memory SHARED and this point
+> +        * is reached, then at least one page within the range was previously
+> +        * PRIVATE, i.e. the slot's possible hugepage ranges are changing.
+> +        * Zapping SPTEs in this case ensures KVM will reassess whether or not
+> +        * a hugepage can be used for affected ranges.
+> +        */
+> +       if (WARN_ON_ONCE(!kvm_arch_has_private_mem(kvm)))
+> +               return false;
+> +
+> +       return kvm_unmap_gfn_range(kvm, range);
+> +}
+> +
+> +bool kvm_arch_post_set_memory_attributes(struct kvm *kvm,
+> +                                        struct kvm_gfn_range *range)
+> +{
+> +       return false;
+> +}
+> +#endif
+> \ No newline at end of file
+> diff --git a/include/uapi/linux/kvm.h b/include/uapi/linux/kvm.h
+> index b34aed04ffa5..214f6b5da43f 100644
+> --- a/include/uapi/linux/kvm.h
+> +++ b/include/uapi/linux/kvm.h
+> @@ -653,6 +653,13 @@ struct kvm_enable_cap {
+>   * PA size shift (i.e, log2(PA_Size)). For backward compatibility,
+>   * value 0 implies the default IPA size, 40bits.
+>   */
+> +#define KVM_VM_TYPE_ARM_SHIFT              8
+> +#define KVM_VM_TYPE_ARM_MASK               (0xfULL << KVM_VM_TYPE_ARM_SHIFT)
+> +#define KVM_VM_TYPE_ARM(_type)         \
+> +       (((_type) << KVM_VM_TYPE_ARM_SHIFT) & KVM_VM_TYPE_ARM_MASK)
+> +#define KVM_VM_TYPE_ARM_NORMAL             KVM_VM_TYPE_ARM(0)
+> +#define KVM_VM_TYPE_ARM_SW_PROTECTED    KVM_VM_TYPE_ARM(1)
+> +
+>  #define KVM_VM_TYPE_ARM_IPA_SIZE_MASK  0xffULL
+>  #define KVM_VM_TYPE_ARM_IPA_SIZE(x)            \
+>         ((x) & KVM_VM_TYPE_ARM_IPA_SIZE_MASK)
+>
+>
+> On Fri, 2024-12-13 at 16:47 +0000, Fuad Tabba wrote:
+> > This series adds restricted mmap() support to guest_memfd, as
+> > well as support for guest_memfd on arm64. It is based on Linux
+> > 6.13-rc2.  Please refer to v3 for the context [1].
+> >
+> > Main changes since v3:
+> > - Added a new folio type for guestmem, used to register a
+> >   callback when a folio's reference count reaches 0 (Matthew
+> >   Wilcox, DavidH) [2]
+> > - Introduce new mappability states for folios, where a folio can
+> > be mappable by the host and the guest, only the guest, or by no
+> > one (transient state)
+> > - Rebased on Linux 6.13-rc2
+> > - Refactoring and tidying up
+> >
+> > Cheers,
+> > /fuad
+> >
+> > [1] https://lore.kernel.org/all/20241010085930.1546800-1-tabba@google.com/
+> > [2] https://lore.kernel.org/all/20241108162040.159038-1-tabba@google.com/
+> >
+> > Ackerley Tng (2):
+> >   KVM: guest_memfd: Make guest mem use guest mem inodes instead of
+> >     anonymous inodes
+> >   KVM: guest_memfd: Track mappability within a struct kvm_gmem_private
+> >
+> > Fuad Tabba (12):
+> >   mm: Consolidate freeing of typed folios on final folio_put()
+> >   KVM: guest_memfd: Introduce kvm_gmem_get_pfn_locked(), which retains
+> >     the folio lock
+> >   KVM: guest_memfd: Folio mappability states and functions that manage
+> >     their transition
+> >   KVM: guest_memfd: Handle final folio_put() of guestmem pages
+> >   KVM: guest_memfd: Allow host to mmap guest_memfd() pages when shared
+> >   KVM: guest_memfd: Add guest_memfd support to
+> >     kvm_(read|/write)_guest_page()
+> >   KVM: guest_memfd: Add KVM capability to check if guest_memfd is host
+> >     mappable
+> >   KVM: guest_memfd: Add a guest_memfd() flag to initialize it as
+> >     mappable
+> >   KVM: guest_memfd: selftests: guest_memfd mmap() test when mapping is
+> >     allowed
+> >   KVM: arm64: Skip VMA checks for slots without userspace address
+> >   KVM: arm64: Handle guest_memfd()-backed guest page faults
+> >   KVM: arm64: Enable guest_memfd private memory when pKVM is enabled
+> >
+> >  Documentation/virt/kvm/api.rst                |   4 +
+> >  arch/arm64/include/asm/kvm_host.h             |   3 +
+> >  arch/arm64/kvm/Kconfig                        |   1 +
+> >  arch/arm64/kvm/mmu.c                          | 119 +++-
+> >  include/linux/kvm_host.h                      |  75 +++
+> >  include/linux/page-flags.h                    |  22 +
+> >  include/uapi/linux/kvm.h                      |   2 +
+> >  include/uapi/linux/magic.h                    |   1 +
+> >  mm/debug.c                                    |   1 +
+> >  mm/swap.c                                     |  28 +-
+> >  tools/testing/selftests/kvm/Makefile          |   1 +
+> >  .../testing/selftests/kvm/guest_memfd_test.c  |  64 +-
+> >  virt/kvm/Kconfig                              |   4 +
+> >  virt/kvm/guest_memfd.c                        | 579 +++++++++++++++++-
+> >  virt/kvm/kvm_main.c                           | 229 ++++++-
+> >  15 files changed, 1074 insertions(+), 59 deletions(-)
+> >
+> >
+> > base-commit: fac04efc5c793dccbd07e2d59af9f90b7fc0dca4
+> > --
+> > 2.47.1.613.gc27f4b7a9f-goog
 
