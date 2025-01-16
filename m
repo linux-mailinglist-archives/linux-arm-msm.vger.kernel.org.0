@@ -1,145 +1,179 @@
-Return-Path: <linux-arm-msm+bounces-45268-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-45269-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 33145A139E3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jan 2025 13:25:07 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0F5E3A13B24
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jan 2025 14:51:23 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 3E8917A12E9
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jan 2025 12:24:58 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 37C7B165792
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jan 2025 13:51:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 94D591DE881;
-	Thu, 16 Jan 2025 12:25:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D5A9522A7E9;
+	Thu, 16 Jan 2025 13:51:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fooishbar.org header.i=@fooishbar.org header.b="CFNWmXdn"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="JmsH+sKH"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qv1-f51.google.com (mail-qv1-f51.google.com [209.85.219.51])
+Received: from mail-pj1-f50.google.com (mail-pj1-f50.google.com [209.85.216.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9EFB1DE4DD
-	for <linux-arm-msm@vger.kernel.org>; Thu, 16 Jan 2025 12:24:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DEDD1DE4EC
+	for <linux-arm-msm@vger.kernel.org>; Thu, 16 Jan 2025 13:51:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737030301; cv=none; b=QHZFyL223r6batM+/Fega0uEQVr0Fsf+1ALQMFWedOBARmi/nJZyV+M8CAYALkCaT6S7FiT4OxTxVU6rA5ST/U5PjQFauZqK0fa4PEEvPYZGAexZ17/evUws/yeNgFBTZ+PN5RtfJ4fqCMhXHL01Zcp67pd1Bs89CtN8xwsU+ng=
+	t=1737035479; cv=none; b=sOd+U4dF84Rm8WnmMXfBlA6YDbaV8GMOWdTfgZ62xyZFvARRnfcbNFR2B3lzd8Pz7gJ7oWRwX1kVRmW5WA92HpoBrQlEuFq6bTP7MD1GenmIlZ1OXWiNudMNfzDqO5hCpPUWw81LVg2FsoXp9UJCP4Nj1PbFFsF+llswNJmf/+E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737030301; c=relaxed/simple;
-	bh=GBwF2KOXlFDp1MGeRltem3iAJtpX3AYE0x8w+f0gonM=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=uYz3kzWLC7rihWXtgU1flS5v292ivcL6fJgFgNRdPxDUlFBa9iVz6SMYI/qLs0vqnCLPnti4Vkb0+gTYdJ4ycebvAto0x9JcQrZXaYqQz5WzT+3RUoJ1htfM042He1hR1OmkVaD3kT/nU2x4Op2PwHWHJcUM+DnvGjLlNpGuUuM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=fooishbar.org; spf=pass smtp.mailfrom=fooishbar.org; dkim=pass (2048-bit key) header.d=fooishbar.org header.i=@fooishbar.org header.b=CFNWmXdn; arc=none smtp.client-ip=209.85.219.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=fooishbar.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fooishbar.org
-Received: by mail-qv1-f51.google.com with SMTP id 6a1803df08f44-6d92e457230so8661036d6.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Jan 2025 04:24:59 -0800 (PST)
+	s=arc-20240116; t=1737035479; c=relaxed/simple;
+	bh=Gp57mcKd4H6V9tMGggL9wEffpyrpwiCBzSwMuIwZN48=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=eMbAdl9ploWyZWWxlMVAZZzRzxtvDWIEHXWtmqHahOLEmMZXbof9xAbaHyTvfJugOBwZl5sVSovmYBBDJndPS5/os1t9cHlSvnWkOOB2lu70B1MkyG/wWAFcvHCAo5y9rRMKcTPfjQvDKXJSbvgQ2Cx83jH16YK6O32TAG/4h+s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=JmsH+sKH; arc=none smtp.client-ip=209.85.216.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-pj1-f50.google.com with SMTP id 98e67ed59e1d1-2eec9b3a1bbso1377492a91.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Jan 2025 05:51:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fooishbar.org; s=google; t=1737030298; x=1737635098; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=GBwF2KOXlFDp1MGeRltem3iAJtpX3AYE0x8w+f0gonM=;
-        b=CFNWmXdnC+15zhv1ls2VMtAtpSgohYCwADuO2mJvjl1BEsEX227eEFcUKJdvqiRShN
-         74HGg1L3I2JmQiEc6Zu4C87e18yUXpY9efN+ddLBHyiOaehx2SEYRPsk5K1OCxAjxcUG
-         TuUYYbgCpYZSSjxLHnKEoXXxqt3enit8uHA/q+XueTyTxF9xvvGZvtwaYx9ne0+6Q8Bs
-         ZyrY54cyh+CLrYKrp8OFHNqj6JbW3uX3C5Sd9uS2BmW6Ra6w/DlyJM6SfaQT0M849wwN
-         DVSom1HAdDSi/uhrIHpBTU2ZAmhPGezEFBSlyIcZlfQi/NKZ0pV+8g9YpRbcgZe0RLPd
-         wsQw==
+        d=linaro.org; s=google; t=1737035477; x=1737640277; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=42ozmyPbA8iS07YaIxZBxB7CkuoT27mqwYUto+/6GVQ=;
+        b=JmsH+sKHwzBWgc0Zk5iMf3QdzhWRge4yl/PxNbfW1eIjNsVV3Wm6TlYH5/4TELK6yr
+         k2v3+NokId3JPn++CvmjYzNYNeH/9aKSW3XDmQGmKjYB6lWkGCMcYQ8UitNdxR6goNO3
+         zy3UT3tbEeNFFP6bbYnJ5AAnar8f2jIW6T1wwXGf1xChwfCD6tkoENtPreR8YJmjlTtW
+         OOYH4VnEhf6REuYGPpYlrxFPhdiKb/Gow4687T5PDX2JWBmM8lYHA60sMqx1RYU3/IRA
+         nY7nIdVw8HNwX2Sq6Yn3ipqsjJ3vIKxh4QkZG8wjzjn2yZYWkwBWNFYdj0TgWwcqliMJ
+         MDog==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1737030298; x=1737635098;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=GBwF2KOXlFDp1MGeRltem3iAJtpX3AYE0x8w+f0gonM=;
-        b=YMaWvKYl0/7zK9Q1f20XySVysY4YWaZW3nykNm29tnqAfNTyE2v2m8yCEA+XuCfWNN
-         P54MDyiiJcyQYP7FHYN027Ww0Zj3zFkLBaIGx4R6O1p8fPW2oDibgHYBp9iHpZU2ZUrB
-         NUXAyk0M8iQeVZLMgzPf2yfh8aiVtIgBJ5ymREX+mU7zNemKwucsdNNu7AK+5358ROgm
-         ODIVZc2SnrSr2OKlLW7egCFjeRlhB/juMG7P/1bVadGHdrT7DDIDKa/djJbq0Xx5Xgr5
-         yEj65uSFwVe0uSj+HB5FYJztx1hznqWlDm5lWUYDowiGiFBl3PEmMZzqmbur5OKfj32Z
-         T22Q==
-X-Forwarded-Encrypted: i=1; AJvYcCW2WcUhKb77aTLeDn/56GnmVsxfK4BGLyuFImHoXwejMhpheO4dp021l63CtJRGjkx2RzqOslpECSPE9mJv@vger.kernel.org
-X-Gm-Message-State: AOJu0YwjztsTQ8qUQm3a4HQOsvyhKeYk60hOHymW/RT9HOBQFMDfSl5i
-	QHKGLcm6Z22cUXKoxjWea4VveH8m9Y2Jzxt7sJSrF3PeS9O02Aj+0aFLb/DLHAAH4ED7vdWHsS+
-	MmP+qFvt4H4aLA+v2cF3pjFBCqaeH/LZZHMgJBA==
-X-Gm-Gg: ASbGncs7VSnIPLpX0fq1lp4b9EGeFf9Y9p3YtVN1lMGJijdqSav0GKAAsNTY1lbY0IG
-	dhTt1Ct5qy5n8gmhHksDAIfBI6cB88SaL0fg=
-X-Google-Smtp-Source: AGHT+IHYPoThOqCGG0mIrocl9o1givl0D/RoYwWOKY0kUiZ64KPF9cSvP+6N1Rd6ke2PYtdS9xOibflODkJbaGvT990=
-X-Received: by 2002:a05:6214:528e:b0:6d9:3016:d0e7 with SMTP id
- 6a1803df08f44-6df9b2b1a21mr442378366d6.29.1737030298608; Thu, 16 Jan 2025
- 04:24:58 -0800 (PST)
+        d=1e100.net; s=20230601; t=1737035477; x=1737640277;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=42ozmyPbA8iS07YaIxZBxB7CkuoT27mqwYUto+/6GVQ=;
+        b=iGtGndfpsxRZZI5/IAoFAqfTNTAiJPDTsXNne6Etmc0OR53CSeVsI7JjHVcqxKLcCK
+         NC79BopaWaeCoz14VtN9dwaEyCg9UXPAtdqWAZkDf5TgcZ+Wpx5WTecSIE8bBI0UaFAC
+         qpqaZIVxn+RknFAI44HiaN+HIt875yOsjjxHrScQshtbjZpXBgQNTIvKfeJbX1wZ/X9w
+         3SWRdIzCq/fffAZ/9+V0NKzSXrG27QPw7Dkiti3FC02yiWvpA6JvELP0/5y2V41+gysd
+         JUnB6c3P6wZvfLJuqUPCLMdYGGIOs2qvpC2IUoxvSJvXDhJZE1R7k4t81YC0z3zybt1n
+         7mEQ==
+X-Forwarded-Encrypted: i=1; AJvYcCU2bYC6PLbvkBngZcxDqzrth49tONgXek5148+nFWpAbnn+14BHlyataeHe4Zh6mm+xSQNlEZUyzgK36kYo@vger.kernel.org
+X-Gm-Message-State: AOJu0YxK6BAbXrCQLSfXkPDnKgVFmEMGfJk9+ttOLoCxfNwxLKc6pQY2
+	gx+DnvHX13MaOQMtDsYXf31Q81lYCPjswectEuaYubnQhY3kwKBCFIXuJ5/RiQ==
+X-Gm-Gg: ASbGnctMKJfGDtxcRfvJQlhP1MXU/hhPROdOTuR1Of0GDO+41w05QaVxnKXiL6E76pm
+	0lBigOP3PW+FnFMjbnTvJ6PwIL5fOApzmcWyuyVZ8Dfd4TmglTyQqWZrw5hL/b+EYxOfz1SEJEY
+	3hKc/nxzb3Kb7jgo3NLWFOK4ss3N6QA0ZwHGeOyIMsq7uVCbmRdpj4XBDe1rMEv/TmIDr7Mx43P
+	FF4Lso/oSqUS//NUWkAkvhPjDHDrISTzok56RLmPQHhYUGAm7kB1gpa40v+Ons5Eagf/9q3kl7Z
+	PUDD6aE1
+X-Google-Smtp-Source: AGHT+IEX8/Ny3dsmWxBIlvJ3fzo2GZ7qHDhSMNgplIU4BNArd2U/FG0sZ8Z3ZFSCTkzPgP8y6xneUw==
+X-Received: by 2002:a17:90b:2e41:b0:2ee:96a5:721e with SMTP id 98e67ed59e1d1-2f548eb25cfmr57172567a91.12.1737035477595;
+        Thu, 16 Jan 2025 05:51:17 -0800 (PST)
+Received: from localhost.localdomain ([120.60.79.208])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2f72c1cba9csm3341229a91.24.2025.01.16.05.51.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 16 Jan 2025 05:51:17 -0800 (PST)
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To: kw@linux.com,
+	gregkh@linuxfoundation.org,
+	arnd@arndb.de,
+	lpieralisi@kernel.org,
+	shuah@kernel.org
+Cc: kishon@kernel.org,
+	linux-pci@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	bhelgaas@google.com,
+	linux-arm-msm@vger.kernel.org,
+	robh@kernel.org,
+	linux-kselftest@vger.kernel.org,
+	cassel@kernel.org,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Subject: [PATCH v5 0/4] Migrate PCI Endpoint Subsystem tests to Kselftest
+Date: Thu, 16 Jan 2025 19:21:02 +0530
+Message-Id: <20250116135106.19143-1-manivannan.sadhasivam@linaro.org>
+X-Mailer: git-send-email 2.25.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <f3ba05c7-6e49-4641-a3f9-ba418ebdb7c3@ideasonboard.com>
- <c6735280-7c32-4319-8ca9-a7305d8117c3@suse.de> <d67adb03-5cd0-4ac9-af58-cf4446dacee3@ideasonboard.com>
- <0ea6be58-0e04-4172-87cd-064a3e4a43bc@suse.de> <f35cb350-6be9-48ca-ad7e-e9dd418281d5@ideasonboard.com>
- <4af0b6a7-c16a-4187-bbf5-365a9c86de21@suse.de> <e327ad84-b5c9-4480-b873-dc3aca605538@ideasonboard.com>
- <a2bbeb47-2569-4ee0-9265-92bab139bdc6@suse.de> <f3833771-fcd7-45dc-9019-1525fef34429@ideasonboard.com>
- <CAMuHMdXxYa+Na3XxpLTy=-eUL_zQ9kAiUKYu-E04u3KWApusSA@mail.gmail.com> <xz5ncq67bgmdase2jg3cfvyaxpiwhol2eqpfzow6dqpauvslo5@2w3rw27lhnxo>
-In-Reply-To: <xz5ncq67bgmdase2jg3cfvyaxpiwhol2eqpfzow6dqpauvslo5@2w3rw27lhnxo>
-From: Daniel Stone <daniel@fooishbar.org>
-Date: Thu, 16 Jan 2025 12:24:47 +0000
-X-Gm-Features: AbW1kvarRJv1VyJjUo1t8ScK0brJ2o4-Qq6ABYK10edUo6rgOW2PAccCb4uQWlM
-Message-ID: <CAPj87rNS7quwfqDmxyrW8_vQ6tnrcfWUn=81aTduDXtmdVkkAg@mail.gmail.com>
-Subject: Re: [PATCH v2 25/25] drm/xlnx: Compute dumb-buffer sizes with drm_mode_size_dumb()
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Geert Uytterhoeven <geert@linux-m68k.org>, Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>, 
-	Thomas Zimmermann <tzimmermann@suse.de>, maarten.lankhorst@linux.intel.com, mripard@kernel.org, 
-	airlied@gmail.com, simona@ffwll.ch, dri-devel@lists.freedesktop.org, 
-	linux-mediatek@lists.infradead.org, freedreno@lists.freedesktop.org, 
-	linux-arm-msm@vger.kernel.org, imx@lists.linux.dev, 
-	linux-samsung-soc@vger.kernel.org, nouveau@lists.freedesktop.org, 
-	virtualization@lists.linux.dev, spice-devel@lists.freedesktop.org, 
-	linux-renesas-soc@vger.kernel.org, linux-rockchip@lists.infradead.org, 
-	linux-tegra@vger.kernel.org, intel-xe@lists.freedesktop.org, 
-	xen-devel@lists.xenproject.org, 
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>, Andy Yan <andyshrk@163.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-On Thu, 16 Jan 2025 at 10:35, Dmitry Baryshkov
-<dmitry.baryshkov@linaro.org> wrote:
-> On Thu, Jan 16, 2025 at 11:17:50AM +0100, Geert Uytterhoeven wrote:
-> > On Thu, Jan 16, 2025 at 11:03=E2=80=AFAM Tomi Valkeinen
-> > <tomi.valkeinen@ideasonboard.com> wrote:
-> > > On the platforms I have been using (omap, tidss, xilinx, rcar) the du=
-mb
-> > > buffers are the only buffers you can get from the DRM driver. The dum=
-b
-> > > buffers have been used to allocate linear and multiplanar YUV buffers
-> > > for a very long time on those platforms.
-> > >
-> > > I tried to look around, but I did not find any mentions that CREATE_D=
-UMB
-> > > should only be used for RGB buffers. Is anyone outside the core
-> > > developers even aware of it?
-> > >
-> > > If we don't use dumb buffers there, where do we get the buffers? Mayb=
-e
-> > > from a v4l2 device or from a gpu device, but often you don't have tho=
-se.
-> > > DMA_HEAP is there, of course.
-> >
-> > Why can't there be a variant that takes a proper fourcc format instead =
-of
-> > an imprecise bpp value?
->
-> Backwards compatibility. We can add an IOCTL for YUV / etc. But
-> userspace must be able to continue allocating YUV buffers through
-> CREATE_DUMB.
+Hi,
 
-Right. If allocating YUYV dumb buffers works on AM68 today, then we
-need to keep that working. But it doesn't mean we should go out of our
-way to make CREATE_DUMB work for every YUV format on every device.
+This series carries forward the effort to add Kselftest for PCI Endpoint
+Subsystem started by Aman Gupta [1] a while ago. I reworked the initial version
+based on another patch that fixes the return values of IOCTLs in
+pci_endpoint_test driver and did many cleanups. Since the resulting work
+modified the initial version substantially, I took over the authorship.
 
-Currently, drivers are free to implement their own ioctls for anything
-specific they have. But like Laurent said, standardising on heaps and
-how to communicate requirements to userspace wrt heap selection / size
-/ alignment / etc is imo a better path forward for something generic.
+This series also incorporates the review comment by Shuah Khan [2] to move the
+existing tests from 'tools/pci' to 'tools/testing/kselftest/pci_endpoint' before
+migrating to Kselftest framework. I made sure that the tests are executable in
+each commit and updated documentation accordingly.
 
-Cheers,
-Daniel
+- Mani
+
+[1] https://lore.kernel.org/linux-pci/20221007053934.5188-1-aman1.gupta@samsung.com
+[2] https://lore.kernel.org/linux-pci/b2a5db97-dc59-33ab-71cd-f591e0b1b34d@linuxfoundation.org
+
+Changes in v5:
+
+* Incorporated comments from Niklas
+* Added a patch to fix the DMA MEMCPY check in pci-epf-test driver
+* Collected tags
+* Rebased on top of pci/next 0333f56dbbf7ef6bb46d2906766c3e1b2a04a94d
+
+Changes in v4:
+
+* Dropped the BAR fix patches and submitted them separately:
+  https://lore.kernel.org/linux-pci/20241231130224.38206-1-manivannan.sadhasivam@linaro.org/
+* Rebased on top of pci/next 9e1b45d7a5bc0ad20f6b5267992da422884b916e
+
+Changes in v3:
+
+* Collected tags.
+* Added a note about failing testcase 10 and command to skip it in
+  documentation.
+* Removed Aman Gupta and Padmanabhan Rajanbabu from CC as their addresses are
+  bouncing.
+
+Changes in v2:
+
+* Added a patch that fixes return values of IOCTL in pci_endpoint_test driver
+* Moved the existing tests to new location before migrating
+* Added a fix for BARs on Qcom devices
+* Updated documentation and also added fixture variants for memcpy & DMA modes
+
+
+Manivannan Sadhasivam (4):
+  PCI: endpoint: pci-epf-test: Fix the check for DMA MEMCPY test
+  misc: pci_endpoint_test: Fix the return value of IOCTL
+  selftests: Move PCI Endpoint tests from tools/pci to Kselftests
+  selftests: pci_endpoint: Migrate to Kselftest framework
+
+ Documentation/PCI/endpoint/pci-test-howto.rst | 170 +++++------
+ MAINTAINERS                                   |   2 +-
+ drivers/misc/pci_endpoint_test.c              | 255 +++++++++--------
+ drivers/pci/endpoint/functions/pci-epf-test.c |   4 +-
+ tools/pci/Build                               |   1 -
+ tools/pci/Makefile                            |  58 ----
+ tools/pci/pcitest.c                           | 264 ------------------
+ tools/pci/pcitest.sh                          |  73 -----
+ tools/testing/selftests/Makefile              |   1 +
+ .../testing/selftests/pci_endpoint/.gitignore |   2 +
+ tools/testing/selftests/pci_endpoint/Makefile |   7 +
+ tools/testing/selftests/pci_endpoint/config   |   4 +
+ .../pci_endpoint/pci_endpoint_test.c          | 221 +++++++++++++++
+ 13 files changed, 435 insertions(+), 627 deletions(-)
+ delete mode 100644 tools/pci/Build
+ delete mode 100644 tools/pci/Makefile
+ delete mode 100644 tools/pci/pcitest.c
+ delete mode 100644 tools/pci/pcitest.sh
+ create mode 100644 tools/testing/selftests/pci_endpoint/.gitignore
+ create mode 100644 tools/testing/selftests/pci_endpoint/Makefile
+ create mode 100644 tools/testing/selftests/pci_endpoint/config
+ create mode 100644 tools/testing/selftests/pci_endpoint/pci_endpoint_test.c
+
+-- 
+2.25.1
+
 
