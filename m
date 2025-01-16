@@ -1,134 +1,125 @@
-Return-Path: <linux-arm-msm+bounces-45265-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-45266-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0FC3BA138CC
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jan 2025 12:20:20 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7EE23A138F9
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jan 2025 12:30:54 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 6E44A7A23DA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jan 2025 11:20:11 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id ACCA7165D8F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jan 2025 11:30:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 01B121DE2C4;
-	Thu, 16 Jan 2025 11:20:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DF3CE1DE3C0;
+	Thu, 16 Jan 2025 11:30:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EjHtwlbv"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="S5PRRw1E"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD1511A0BF3;
-	Thu, 16 Jan 2025 11:20:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F360E1990C7
+	for <linux-arm-msm@vger.kernel.org>; Thu, 16 Jan 2025 11:30:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737026410; cv=none; b=gQh1NM3zhoxfwR4IkwYsFriKpio+CBY/pFnm+UqIBpnfbtHUJ+92LwjlDwYqs4LHfFNFp/Vt7st/gCM0yqjjSXsEcf9zNjBKTtqoPAinfwFEGT7ehp3j6PE3DEkaHEWTl9gUnpVzzhMMr6KpW9X47s6MECp0WvAAY0V2Y65Ue5c=
+	t=1737027048; cv=none; b=trmcksY09US91S4WCrk62EHR39KsTH3iSzzDERhtiBDUmKsJhZ8XbleO/FQlcfTN/NFmOeoSR+EIN5wSvVpi2a3AotDfZSMIW6dpjQMKC5FnSb3V0gbZHmg8T5B1A152R6EQJmisPETq1MiOoU0UGrlhSt4Bll9W+9fRKkt/PlA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737026410; c=relaxed/simple;
-	bh=ZqULpiITHqkatACT8fU/K6ikyPgTtkNalwLYN4RqyAw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=STcspMMxFMlJIt1lIwSBJNC5tBxgKZDan8thTF6eYA83itE71BN09NLRx7UJdlQc3oHPszeGqHa87iJsinujOVFloEhjiZ6b00JwEEd7WUwClGsUvb2bJUaSm4rRC5Rn1YqxQSgeNKOaxB0e7GK3GNSMbg0IvIr4dwbuOULZ+jk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EjHtwlbv; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0357CC4CEDF;
-	Thu, 16 Jan 2025 11:20:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1737026410;
-	bh=ZqULpiITHqkatACT8fU/K6ikyPgTtkNalwLYN4RqyAw=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=EjHtwlbvA1Yjk8jveZAnOU0NL1NejpegusIGXrKYOyVEE+zY4+GemO6gfxk29kwHN
-	 TNibIqxy4YVgD8VVaioI3OP9ALmLejKAeY2TESjc6qQWfsEsL6T24bWEaLUBsmCJTB
-	 D1DX+vCypIcy1jXfl25Y5Hb0cqzHM/p67KDa2N+0j96tUdrQpkWaR2aJjMa9IcVIlI
-	 TdRb6kEAgXODKsd8PAlgx2BNZiUJV8t3xb6lBI02pavbkqymUQS9rjekgkYYryAL4/
-	 ErU09KVwEOkMdFB8BJjSQdI85Ai6DnVU1iTM6l2DpiBmBy08R2+qd5LY8Oh2zVqFyL
-	 FWql5xgyRwvWw==
-Message-ID: <0d152ea2-1512-4b12-a3c8-52715f1f1b94@kernel.org>
-Date: Thu, 16 Jan 2025 12:20:02 +0100
+	s=arc-20240116; t=1737027048; c=relaxed/simple;
+	bh=kzDN9dmdAK48wXWx0awduq7CrBP6vYP35O8PwR+e9qk=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=U4ypsAIFb7TH8segbQEjZbazCnW/1lZb6PNCg4Q8J3vQ7h4dRxWoiHjFj6T6d7N3zkMjWjOwr87W1dzuDcVZlzAQdGa+GDFI8Q5axnpD1wklMHkbRyQhdTc0m8KqHJ502z5AQeNuWBJbpUGD7bl0+VOEMBHhrGV4iSr2FKOC3HU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=S5PRRw1E; arc=none smtp.client-ip=209.85.221.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-385e06af753so435070f8f.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Jan 2025 03:30:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1737027045; x=1737631845; darn=vger.kernel.org;
+        h=mime-version:user-agent:content-transfer-encoding:references
+         :in-reply-to:date:cc:to:from:subject:message-id:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=kzDN9dmdAK48wXWx0awduq7CrBP6vYP35O8PwR+e9qk=;
+        b=S5PRRw1En8G+21KOJC9ZD6IqUHXgz4xQLsvIBxr/XWZPdIgRHRo/eicNlgEHSbm1kb
+         1GSs0FuwZkJWhSTbI8sRnjw4lqGhGVOHWmzZ0yxkZ199QjpJ48qSkyfwlh0J7t2cDH16
+         5O+UvF7PGwbTxzl8xtZQjUu2yIhdNvIjWZaX7uFfOqe4w24yiEAkdt1+OoG+UHZ0ii6u
+         4l9rBpEwm0MJgnEvnBvLGqAb2KXZ1W7WasebdcT1tz8uneIWS4mZcpNqQUbB3A6WCvIU
+         VaO0n04kdHOCGitjn0dYqnYnHbSiJdKfZFG5DzRhNNd9oYOuRAVQuWsx2j0NfW/la/bm
+         m4Wg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1737027045; x=1737631845;
+        h=mime-version:user-agent:content-transfer-encoding:references
+         :in-reply-to:date:cc:to:from:subject:message-id:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=kzDN9dmdAK48wXWx0awduq7CrBP6vYP35O8PwR+e9qk=;
+        b=S/pkiytsp8r+tJEmilZSe/IaG27EJiMg7qldXi6mJxjfF3rtpOMbFfxWmQwn85ipj4
+         n01q5uB2ZX9tLDeL112aODNmSAegbh+y6JJ6Zl7oTAdmgBMiGV7hDJjZS3sFrz3BcBho
+         SoYwqQeiSkhmYdQueOUCNgjifIEsM45AlWupr9XWgdSM0J+DprOCIbvyDjx8WL44dXpG
+         p9eIssl1/y46Rl2Zr8nGOpS3KODMSht82AXoZs6U+JnN0j0P/TFZQKKBzGZA5J+pwwrb
+         GP5txTo68bhjMWN46VYPgGjJet+dn7jmx/zRBsAUCPyZ1kkFFghUSaQZrx6vcCMQwmy6
+         mf/A==
+X-Forwarded-Encrypted: i=1; AJvYcCUmjy+je07l/CPByGITn3r5XHKPVdk+DAWZFd5X97SU4ro3239AgIBZoXd54RGbEUrtBwITwWWHFwNfN+Rl@vger.kernel.org
+X-Gm-Message-State: AOJu0YyiLy/F2obHrMW7Hcg3qlbtyE0TsdDp6v8M8ZZDaZd/YuUID4Yg
+	++WQFYMg1nY5910oTbBOvBUL2KThEluh+DbzH+FI6vbolqN74rP8HJbzlPKqffU=
+X-Gm-Gg: ASbGncvhPHEkC4I8Tl6015pEsW7D0yGQV0/+OJ6FXcjZwDZOpfyP19izqaGGHlralz+
+	3LUCstGQjfcN+3UI5Ri3JjV0IccVlqgNjc4WIgFVme3IKwA36HFOkLbGb3/m5P+DuIOI+JDzmYG
+	SEXgMaJlYS5Kyk7nJCpnxEp+IUf178Y4NPQqUslMDiGObPNoawC7yAqmDbX2w5x92AQJMinbXfj
+	MPFyFVhGCR2N5V5SEkjRMHohr0dsbtdq7XRA0TDBdzTezoBLKoCa9bRk28FDA==
+X-Google-Smtp-Source: AGHT+IGsW7R8SXZiI21rLVry2LB3/IZkmamq2Z2hj3KPYHeT5ENtm5n56n32F1wCYQ4Tz4sR0OmrNQ==
+X-Received: by 2002:a5d:648b:0:b0:386:3e3c:ef1 with SMTP id ffacd0b85a97d-38a87312f36mr34852486f8f.35.1737027045345;
+        Thu, 16 Jan 2025 03:30:45 -0800 (PST)
+Received: from [10.1.1.109] ([80.111.64.44])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-437c74ac707sm55516355e9.15.2025.01.16.03.30.44
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 16 Jan 2025 03:30:44 -0800 (PST)
+Message-ID: <941c7920a7d07496222e6e93cb338ca6df38dc33.camel@linaro.org>
+Subject: Re: [PATCH v3] scsi: ufs: fix use-after free in init error and
+ remove paths
+From: =?ISO-8859-1?Q?Andr=E9?= Draszik <andre.draszik@linaro.org>
+To: Alim Akhtar <alim.akhtar@samsung.com>, Avri Altman
+ <avri.altman@wdc.com>,  Bart Van Assche <bvanassche@acm.org>, "James E.J.
+ Bottomley" <James.Bottomley@HansenPartnership.com>, "Martin K. Petersen"
+ <martin.petersen@oracle.com>, Peter Griffin <peter.griffin@linaro.org>,
+ Krzysztof Kozlowski <krzk@kernel.org>, Manivannan Sadhasivam
+ <manivannan.sadhasivam@linaro.org>,  Mike Snitzer <snitzer@redhat.com>,
+ Jens Axboe <axboe@kernel.dk>, Ulf Hansson <ulf.hansson@linaro.org>,  Eric
+ Biggers <ebiggers@google.com>
+Cc: Tudor Ambarus <tudor.ambarus@linaro.org>, Will McVicker
+ <willmcvicker@google.com>, kernel-team@android.com,
+ linux-scsi@vger.kernel.org,  linux-kernel@vger.kernel.org,
+ linux-samsung-soc@vger.kernel.org,  linux-arm-kernel@lists.infradead.org,
+ linux-arm-msm@vger.kernel.org,  stable@vger.kernel.org
+Date: Thu, 16 Jan 2025 11:30:43 +0000
+In-Reply-To: <20250116-ufshcd-fix-v3-1-6a83004ea85c@linaro.org>
+References: <20250116-ufshcd-fix-v3-1-6a83004ea85c@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.52.1-4 
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 3/3] arm64: dts: qcom: gaokun3: Add Embedded Controller
- node
-To: Pengyu Luo <mitltlatltl@gmail.com>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Hans de Goede <hdegoede@redhat.com>,
- =?UTF-8?Q?Ilpo_J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- Jean Delvare <jdelvare@suse.com>, Guenter Roeck <linux@roeck-us.net>
-Cc: devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, platform-driver-x86@vger.kernel.org,
- linux-hwmon@vger.kernel.org
-References: <20250116111559.83641-1-mitltlatltl@gmail.com>
- <20250116111559.83641-4-mitltlatltl@gmail.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <20250116111559.83641-4-mitltlatltl@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
 
-On 16/01/2025 12:15, Pengyu Luo wrote:
-> The Embedded Controller in the Huawei Matebook E Go is accessible on &i2c15
-> and provides battery and adapter status, port orientation status, as well
-> as HPD event notifications for two USB Type-C port, etc.
-> 
-> Add the EC to the device tree and describe the relationship among
-> the type-c connectors, role switches, orientation switches and the QMP
-> combo PHY.
-> 
-> Signed-off-by: Pengyu Luo <mitltlatltl@gmail.com>
-> ---
->  .../boot/dts/qcom/sc8280xp-huawei-gaokun3.dts | 163 ++++++++++++++++++
+On Thu, 2025-01-16 at 11:18 +0000, Andr=C3=A9 Draszik wrote:
+> Changes in v2:
+> - completely new approach using devres action for Scsi_host cleanup, to
+> =C2=A0 ensure ordering
 
+Just repeating this again due to updated recipients list:
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+This new approach now means that Scsi_host cleanup (scsi_host_put)
+happens after ufshcd's hba->dev cleanup and I am not sure if this
+approach has wider implications (in particular if there is any
+underlying assumption or requirement for the Scsi_host device to
+clean up before the ufshcd device).
 
-Best regards,
-Krzysztof
+Simple testing using a few iteration of manual module bind/unbind
+worked, as did the error handling / cleanup during init. But I'm
+not sure if that is sufficient testing for the changed release
+ordering.
+
+Cheers,
+Andre'
+
 
