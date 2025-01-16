@@ -1,997 +1,578 @@
-Return-Path: <linux-arm-msm+bounces-45294-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-45295-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id B1119A13DEE
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jan 2025 16:40:14 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9ED61A13E10
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jan 2025 16:44:29 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 39D7E3A1D5E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jan 2025 15:40:05 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 626C7188C429
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jan 2025 15:44:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7470A22BADC;
-	Thu, 16 Jan 2025 15:39:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8A31A22BAA9;
+	Thu, 16 Jan 2025 15:44:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rCSzDAbz"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qqWVjF7q"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 420D022B8CB;
-	Thu, 16 Jan 2025 15:39:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4ACF322B8D9;
+	Thu, 16 Jan 2025 15:44:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737041998; cv=none; b=JVFFzyCxL2FGWTnPCL/ysxl5brSn3ydSEmVirgsOPO9kUJY/J+6cPsPJKZ9ak7t2DrOf14QzyEVXuu10VI0bYin3prC8OU3bN2DD1NfefBDbgWTX7TK3Y4riaoCfUm07AvgLq5E/AIpWhYWPRr3/s5GdjWlfo6ny7gtpq9gW9ts=
+	t=1737042257; cv=none; b=NxWEyCsyGRDYDFl9H/HLWMPtr8SqHjJh4RIbyt+1ed4SjKcEq8YF7lB2ZjM79tsKQk3hJ7odZBvZEV/nOmr+sA7i91J6EztuPadTgfT/qRaQwm04iSK1j+a/CCMDsPI8b1gbAfkD3HGqUuPktKqWXRbdDpWPVVj+GOKTibipF7Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737041998; c=relaxed/simple;
-	bh=pOqdwUpWRCYgONM/yseLRy8azVHO2y6LUa2aL7kYgd0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Sf3SybxWwAtrUuFzcRnA8b5PoYTy8UeDA2UAOX8cpDy84bxygbeT4XugeZwZxnlN09wHxQ3oaapUzpwo2K0+L2E7yzbj5GVQB7z8HqcUaj0xeRFaRaPTvNQxg1Ef8ucy12+SB3UT61qbxUk6Im9uYBo0RFMIZgcXqMiTnWHsgxo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rCSzDAbz; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C271C4CED6;
-	Thu, 16 Jan 2025 15:39:54 +0000 (UTC)
+	s=arc-20240116; t=1737042257; c=relaxed/simple;
+	bh=VGRMjq9nGOup27TqZFLY71yztP1pzJGehCHR9/bnj6U=;
+	h=Date:Content-Type:MIME-Version:From:Cc:To:In-Reply-To:References:
+	 Message-Id:Subject; b=GR6JgqFeRpRpJtBNnGLAXjyBjLCYYBaMH4fJF4uJsxIVQSgR9aOjETV0z4dHNKXModR+AuULofYxntbvwvDa9L35+qiOSJwXjL9KRVR+6k4EfM5YRtuhnCV17w/U6Xxd2MJKpMfELZmWVCNbzDitwNa4yH/LY3bJggQyDR5QE6o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qqWVjF7q; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BA3CC4CED6;
+	Thu, 16 Jan 2025 15:44:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1737041997;
-	bh=pOqdwUpWRCYgONM/yseLRy8azVHO2y6LUa2aL7kYgd0=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=rCSzDAbz86gpaw9Q5fN9U2tLF+XxSc+TKa7u+DpmS+f/Wk+I5dCIpOHkDAaA64gwf
-	 UGNr1/HapJXUGMl97lhSisqAbGfTTXyC4VugASK+NrlS0JycZc+w+apq7e+g3L2pEE
-	 ADbnRAZCgp38unkEf1Ru5Zl8ZpcBIWrf1OEjmiykyGMpcRd+bKnqTPa3iYNBseQRFt
-	 HKYc93QRzahshYJuXd9AqYyILm5ve129h4x6iTOPmXwRes68wAwppRHStMwlstwVGU
-	 68XeuePWK/BKW0oRysCBVepH6b+W1rSm431fcZHjlxhYn75gnzDPxsvwTdcCBtmxgN
-	 xxwz9+5r/zRJQ==
-Date: Thu, 16 Jan 2025 16:39:52 +0100
-From: Niklas Cassel <cassel@kernel.org>
-To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc: kw@linux.com, gregkh@linuxfoundation.org, arnd@arndb.de,
-	lpieralisi@kernel.org, shuah@kernel.org, kishon@kernel.org,
-	linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org,
-	bhelgaas@google.com, linux-arm-msm@vger.kernel.org, robh@kernel.org,
-	linux-kselftest@vger.kernel.org,
-	Aman Gupta <aman1.gupta@samsung.com>,
-	Padmanabhan Rajanbabu <p.rajanbabu@samsung.com>
-Subject: Re: [PATCH v5 4/4] selftests: pci_endpoint: Migrate to Kselftest
- framework
-Message-ID: <Z4koSMKwjDtFk_9e@ryzen>
-References: <20250116135106.19143-1-manivannan.sadhasivam@linaro.org>
- <20250116135106.19143-5-manivannan.sadhasivam@linaro.org>
+	s=k20201202; t=1737042256;
+	bh=VGRMjq9nGOup27TqZFLY71yztP1pzJGehCHR9/bnj6U=;
+	h=Date:From:Cc:To:In-Reply-To:References:Subject:From;
+	b=qqWVjF7qWQtPyxJYbdzIMbk8eDJcTZL4YBfmbJ80h9NQqF0S4F54uEsxHOVlf1VnZ
+	 82nAxLcAn8oPWLpIEz6fKW0NDbvA/3S6jO867wb1AG4nHD3QEUmWVzpfpm1nbCjy67
+	 4Wi7hNvMhU7RAwRJCkAzVTsVhd81zfSgdUPD0H4llXrNn/s+g0beTYDy9NjFoihMLd
+	 9yo4PqNlyCCF+z8XRJL//gq7PIBU1xbagkd8/RsXATlu/Nx6cqZQi7TUAixm3yOyT0
+	 aJqXHdv88QRj9xBktReFT2G8zSboZcQxj6s9mQt90crhkp0bVS79KSfKN24Y4AWIyr
+	 b6Vy1Om7iMSOg==
+Date: Thu, 16 Jan 2025 09:44:14 -0600
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250116135106.19143-5-manivannan.sadhasivam@linaro.org>
+From: "Rob Herring (Arm)" <robh@kernel.org>
+Cc: devicetree@vger.kernel.org, Bjorn Andersson <andersson@kernel.org>, 
+ linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ kernel test robot <lkp@intel.com>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, quic_fenglinw@quicinc.com, 
+ Konrad Dybcio <konradybcio@kernel.org>, kernel@quicinc.com, 
+ quic_tingweiz@quicinc.com
+To: Tingguo Cheng <quic_tingguoc@quicinc.com>
+In-Reply-To: <20250116-fix-kernel-test-robot-unexpected-property-issue-v1-1-b1f4cc2c52d5@quicinc.com>
+References: <20250116-fix-kernel-test-robot-unexpected-property-issue-v1-1-b1f4cc2c52d5@quicinc.com>
+Message-Id: <173704211854.2583033.13690426903892251830.robh@kernel.org>
+Subject: Re: [PATCH] arm64: dts: qcom: qcs615: Fix kernel test robot issue
+ in SPMI
 
-On Thu, Jan 16, 2025 at 07:21:06PM +0530, Manivannan Sadhasivam wrote:
-> Migrate the PCI endpoint test to Kselftest framework. All the tests that
-> were part of the previous pcitest.sh file were migrated.
+
+On Thu, 16 Jan 2025 16:31:48 +0800, Tingguo Cheng wrote:
+> Fix the kernel test robot issue in qcs615-ride.dtb spmi@c440000 by
+> removing the unevaluated 'cell-index' property.
 > 
-> Below is the exclusive list of tests:
-> 
-> 1. BAR0 Test
-> 2. BAR1 Test
-> 3. BAR2 Test
-> 4. BAR3 Test
-> 5. BAR4 Test
-> 6. BAR5 Test
-> 7. Consecutive BAR Tests
-> 8. Legacy IRQ Tests
-> 9. MSI Interrupt Tests (MSI1 to MSI32)
-> 10. MSI-X Interrupt Tests (MSI-X1 to MSI-X2048)
-> 11. Read Tests - MEMCPY (For 1, 1024, 1025, 1024000, 1024001 Bytes)
-> 12. Write Tests - MEMCPY (For 1, 1024, 1025, 1024000, 1024001 Bytes)
-> 13. Copy Tests - MEMCPY (For 1, 1024, 1025, 1024000, 1024001 Bytes)
-> 14. Read Tests - DMA (For 1, 1024, 1025, 1024000, 1024001 Bytes)
-> 15. Write Tests - DMA (For 1, 1024, 1025, 1024000, 1024001 Bytes)
-> 16. Copy Tests - DMA (For 1, 1024, 1025, 1024000, 1024001 Bytes)
-> 
-> BAR, DMA and MEMCPY tests are added as fixture variants and can be executed
-> separately as below:
-> 
-> $ pci_endpoint_test -v BAR0
-> $ pci_endpoint_test -v dma
-> $ pci_endpoint_test -v memcpy
-> 
-> Co-developed-by: Aman Gupta <aman1.gupta@samsung.com>
-> Signed-off-by: Aman Gupta <aman1.gupta@samsung.com>
-> Co-developed-by: Padmanabhan Rajanbabu <p.rajanbabu@samsung.com>
-> Signed-off-by: Padmanabhan Rajanbabu <p.rajanbabu@samsung.com>
-> [mani: reworked based on the IOCTL fix, cleanups, documentation, commit message]
-> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> Reported-by: kernel test robot <lkp@intel.com>
+> Closes: https://lore.kernel.org/r/202412272210.GpGmqcPC-lkp@intel.com/
+> Signed-off-by: Tingguo Cheng <quic_tingguoc@quicinc.com>
 > ---
->  Documentation/PCI/endpoint/pci-test-howto.rst | 169 +++++------
->  tools/testing/selftests/Makefile              |   1 +
->  .../testing/selftests/pci_endpoint/.gitignore |   3 +-
->  tools/testing/selftests/pci_endpoint/Build    |   1 -
->  tools/testing/selftests/pci_endpoint/Makefile |  59 +---
->  tools/testing/selftests/pci_endpoint/config   |   4 +
->  .../pci_endpoint/pci_endpoint_test.c          | 221 +++++++++++++++
->  .../testing/selftests/pci_endpoint/pcitest.c  | 265 ------------------
->  .../testing/selftests/pci_endpoint/pcitest.sh |  73 -----
->  9 files changed, 300 insertions(+), 496 deletions(-)
->  delete mode 100644 tools/testing/selftests/pci_endpoint/Build
->  create mode 100644 tools/testing/selftests/pci_endpoint/config
->  create mode 100644 tools/testing/selftests/pci_endpoint/pci_endpoint_test.c
->  delete mode 100644 tools/testing/selftests/pci_endpoint/pcitest.c
->  delete mode 100644 tools/testing/selftests/pci_endpoint/pcitest.sh
-> 
-> diff --git a/Documentation/PCI/endpoint/pci-test-howto.rst b/Documentation/PCI/endpoint/pci-test-howto.rst
-> index c4ae7af50ede..7d0dbad61456 100644
-> --- a/Documentation/PCI/endpoint/pci-test-howto.rst
-> +++ b/Documentation/PCI/endpoint/pci-test-howto.rst
-> @@ -123,9 +123,9 @@ above::
->  Using Endpoint Test function Device
->  -----------------------------------
->  
-> -pcitest.sh added in tools/testing/selftests/pci_endpoint can be used to run all
-> -the default PCI endpoint tests. To compile this tool the following commands
-> -should be used::
-> +Kselftest added in tools/testing/selftests/pci_endpoint can be used to run all
-> +the default PCI endpoint tests. To build the Kselftest for PCI endpoint
-> +subsystem, the following commands should be used::
->  
->  	# cd <kernel-dir>
->  	# make -C tools/testing/selftests/pci_endpoint
-> @@ -133,104 +133,73 @@ should be used::
->  or if you desire to compile and install in your system::
->  
->  	# cd <kernel-dir>
-> -	# make -C tools/testing/selftests/pci_endpoint install
-> +	# make -C tools/testing/selftests/pci_endpoint INSTALL_PATH=/usr/bin install
->  
-> -The tool and script will be located in <rootfs>/usr/bin/
-> +The test will be located in <rootfs>/usr/bin/
->  
-> -
-> -pcitest.sh Output
-> -~~~~~~~~~~~~~~~~~
-> +Kselftest Output
-> +~~~~~~~~~~~~~~~~
->  ::
->  
-> -	# pcitest.sh
-> -	BAR tests
-> -
-> -	BAR0:           OKAY
-> -	BAR1:           OKAY
-> -	BAR2:           OKAY
-> -	BAR3:           OKAY
-> -	BAR4:           NOT OKAY
-> -	BAR5:           NOT OKAY
-> -
-> -	Interrupt tests
-> -
-> -	SET IRQ TYPE TO LEGACY:         OKAY
-> -	LEGACY IRQ:     NOT OKAY
-> -	SET IRQ TYPE TO MSI:            OKAY
-> -	MSI1:           OKAY
-> -	MSI2:           OKAY
-> -	MSI3:           OKAY
-> -	MSI4:           OKAY
-> -	MSI5:           OKAY
-> -	MSI6:           OKAY
-> -	MSI7:           OKAY
-> -	MSI8:           OKAY
-> -	MSI9:           OKAY
-> -	MSI10:          OKAY
-> -	MSI11:          OKAY
-> -	MSI12:          OKAY
-> -	MSI13:          OKAY
-> -	MSI14:          OKAY
-> -	MSI15:          OKAY
-> -	MSI16:          OKAY
-> -	MSI17:          NOT OKAY
-> -	MSI18:          NOT OKAY
-> -	MSI19:          NOT OKAY
-> -	MSI20:          NOT OKAY
-> -	MSI21:          NOT OKAY
-> -	MSI22:          NOT OKAY
-> -	MSI23:          NOT OKAY
-> -	MSI24:          NOT OKAY
-> -	MSI25:          NOT OKAY
-> -	MSI26:          NOT OKAY
-> -	MSI27:          NOT OKAY
-> -	MSI28:          NOT OKAY
-> -	MSI29:          NOT OKAY
-> -	MSI30:          NOT OKAY
-> -	MSI31:          NOT OKAY
-> -	MSI32:          NOT OKAY
-> -	SET IRQ TYPE TO MSI-X:          OKAY
-> -	MSI-X1:         OKAY
-> -	MSI-X2:         OKAY
-> -	MSI-X3:         OKAY
-> -	MSI-X4:         OKAY
-> -	MSI-X5:         OKAY
-> -	MSI-X6:         OKAY
-> -	MSI-X7:         OKAY
-> -	MSI-X8:         OKAY
-> -	MSI-X9:         NOT OKAY
-> -	MSI-X10:        NOT OKAY
-> -	MSI-X11:        NOT OKAY
-> -	MSI-X12:        NOT OKAY
-> -	MSI-X13:        NOT OKAY
-> -	MSI-X14:        NOT OKAY
-> -	MSI-X15:        NOT OKAY
-> -	MSI-X16:        NOT OKAY
-> -	[...]
-> -	MSI-X2047:      NOT OKAY
-> -	MSI-X2048:      NOT OKAY
-> -
-> -	Read Tests
-> -
-> -	SET IRQ TYPE TO MSI:            OKAY
-> -	READ (      1 bytes):           OKAY
-> -	READ (   1024 bytes):           OKAY
-> -	READ (   1025 bytes):           OKAY
-> -	READ (1024000 bytes):           OKAY
-> -	READ (1024001 bytes):           OKAY
-> -
-> -	Write Tests
-> -
-> -	WRITE (      1 bytes):          OKAY
-> -	WRITE (   1024 bytes):          OKAY
-> -	WRITE (   1025 bytes):          OKAY
-> -	WRITE (1024000 bytes):          OKAY
-> -	WRITE (1024001 bytes):          OKAY
-> -
-> -	Copy Tests
-> -
-> -	COPY (      1 bytes):           OKAY
-> -	COPY (   1024 bytes):           OKAY
-> -	COPY (   1025 bytes):           OKAY
-> -	COPY (1024000 bytes):           OKAY
-> -	COPY (1024001 bytes):           OKAY
-> +	# pci_endpoint_test
-> +	TAP version 13
-> +	1..16
-> +	# Starting 16 tests from 9 test cases.
-> +	#  RUN           pci_ep_bar.BAR0.BAR_TEST ...
-> +	#            OK  pci_ep_bar.BAR0.BAR_TEST
-> +	ok 1 pci_ep_bar.BAR0.BAR_TEST
-> +	#  RUN           pci_ep_bar.BAR1.BAR_TEST ...
-> +	#            OK  pci_ep_bar.BAR1.BAR_TEST
-> +	ok 2 pci_ep_bar.BAR1.BAR_TEST
-> +	#  RUN           pci_ep_bar.BAR2.BAR_TEST ...
-> +	#            OK  pci_ep_bar.BAR2.BAR_TEST
-> +	ok 3 pci_ep_bar.BAR2.BAR_TEST
-> +	#  RUN           pci_ep_bar.BAR3.BAR_TEST ...
-> +	#            OK  pci_ep_bar.BAR3.BAR_TEST
-> +	ok 4 pci_ep_bar.BAR3.BAR_TEST
-> +	#  RUN           pci_ep_bar.BAR4.BAR_TEST ...
-> +	#            OK  pci_ep_bar.BAR4.BAR_TEST
-> +	ok 5 pci_ep_bar.BAR4.BAR_TEST
-> +	#  RUN           pci_ep_bar.BAR5.BAR_TEST ...
-> +	#            OK  pci_ep_bar.BAR5.BAR_TEST
-> +	ok 6 pci_ep_bar.BAR5.BAR_TEST
-> +	#  RUN           pci_ep_basic.CONSECUTIVE_BAR_TEST ...
-> +	#            OK  pci_ep_basic.CONSECUTIVE_BAR_TEST
-> +	ok 7 pci_ep_basic.CONSECUTIVE_BAR_TEST
-> +	#  RUN           pci_ep_basic.LEGACY_IRQ_TEST ...
-> +	#            OK  pci_ep_basic.LEGACY_IRQ_TEST
-> +	ok 8 pci_ep_basic.LEGACY_IRQ_TEST
-> +	#  RUN           pci_ep_basic.MSI_TEST ...
-> +	#            OK  pci_ep_basic.MSI_TEST
-> +	ok 9 pci_ep_basic.MSI_TEST
-> +	#  RUN           pci_ep_basic.MSIX_TEST ...
-> +	#            OK  pci_ep_basic.MSIX_TEST
-> +	ok 10 pci_ep_basic.MSIX_TEST
-> +	#  RUN           pci_ep_data_transfer.memcpy.READ_TEST ...
-> +	#            OK  pci_ep_data_transfer.memcpy.READ_TEST
-> +	ok 11 pci_ep_data_transfer.memcpy.READ_TEST
-> +	#  RUN           pci_ep_data_transfer.memcpy.WRITE_TEST ...
-> +	#            OK  pci_ep_data_transfer.memcpy.WRITE_TEST
-> +	ok 12 pci_ep_data_transfer.memcpy.WRITE_TEST
-> +	#  RUN           pci_ep_data_transfer.memcpy.COPY_TEST ...
-> +	#            OK  pci_ep_data_transfer.memcpy.COPY_TEST
-> +	ok 13 pci_ep_data_transfer.memcpy.COPY_TEST
-> +	#  RUN           pci_ep_data_transfer.dma.READ_TEST ...
-> +	#            OK  pci_ep_data_transfer.dma.READ_TEST
-> +	ok 14 pci_ep_data_transfer.dma.READ_TEST
-> +	#  RUN           pci_ep_data_transfer.dma.WRITE_TEST ...
-> +	#            OK  pci_ep_data_transfer.dma.WRITE_TEST
-> +	ok 15 pci_ep_data_transfer.dma.WRITE_TEST
-> +	#  RUN           pci_ep_data_transfer.dma.COPY_TEST ...
-> +	#            OK  pci_ep_data_transfer.dma.COPY_TEST
-> +	ok 16 pci_ep_data_transfer.dma.COPY_TEST
-> +	# PASSED: 16 / 16 tests passed.
-> +	# Totals: pass:16 fail:0 xfail:0 xpass:0 skip:0 error:0
-> +
-> +
-> +Testcase 16 (pci_ep_data_transfer.dma.COPY_TEST) will fail for most of the DMA
-> +capable endpoint controllers due to the absence of the MEMCPY over DMA. For such
-> +controllers, it is advisable to skip the forementioned testcase using below
-> +command::
-> +
-> +	# pci_endpoint_test -f pci_ep_bar -f pci_ep_basic -v memcpy -T COPY_TEST -v dma
-> diff --git a/tools/testing/selftests/Makefile b/tools/testing/selftests/Makefile
-> index 2401e973c359..50931cd6aff2 100644
-> --- a/tools/testing/selftests/Makefile
-> +++ b/tools/testing/selftests/Makefile
-> @@ -72,6 +72,7 @@ TARGETS += net/packetdrill
->  TARGETS += net/rds
->  TARGETS += net/tcp_ao
->  TARGETS += nsfs
-> +TARGETS += pci_endpoint
->  TARGETS += pcie_bwctrl
->  TARGETS += perf_events
->  TARGETS += pidfd
-> diff --git a/tools/testing/selftests/pci_endpoint/.gitignore b/tools/testing/selftests/pci_endpoint/.gitignore
-> index 29ab47c48484..6a4837a3e034 100644
-> --- a/tools/testing/selftests/pci_endpoint/.gitignore
-> +++ b/tools/testing/selftests/pci_endpoint/.gitignore
-> @@ -1,3 +1,2 @@
->  # SPDX-License-Identifier: GPL-2.0-only
-> -*.o
-> -pcitest
-> +pci_endpoint_test
-> diff --git a/tools/testing/selftests/pci_endpoint/Build b/tools/testing/selftests/pci_endpoint/Build
-> deleted file mode 100644
-> index c375aea21790..000000000000
-> --- a/tools/testing/selftests/pci_endpoint/Build
-> +++ /dev/null
-> @@ -1 +0,0 @@
-> -pcitest-y += pcitest.o
-> diff --git a/tools/testing/selftests/pci_endpoint/Makefile b/tools/testing/selftests/pci_endpoint/Makefile
-> index 3c6fe18e32cc..bf21ebf20b4a 100644
-> --- a/tools/testing/selftests/pci_endpoint/Makefile
-> +++ b/tools/testing/selftests/pci_endpoint/Makefile
-> @@ -1,58 +1,7 @@
->  # SPDX-License-Identifier: GPL-2.0
-> -include ../../../scripts/Makefile.include
-> +CFLAGS += -O2 -Wl,-no-as-needed -Wall $(KHDR_INCLUDES)
-> +LDFLAGS += -lrt -lpthread -lm
->  
-> -bindir ?= /usr/bin
-> +TEST_GEN_PROGS = pci_endpoint_test
->  
-> -ifeq ($(srctree),)
-> -srctree := $(patsubst %/tools/testing/selftests/,%,$(dir $(CURDIR)))
-> -endif
-> -
-> -# Do not use make's built-in rules
-> -# (this improves performance and avoids hard-to-debug behaviour);
-> -MAKEFLAGS += -r
-> -
-> -CFLAGS += -O2 -Wall -g -D_GNU_SOURCE -I$(OUTPUT)include
-> -
-> -ALL_TARGETS := pcitest
-> -ALL_PROGRAMS := $(patsubst %,$(OUTPUT)%,$(ALL_TARGETS))
-> -
-> -SCRIPTS := pcitest.sh
-> -
-> -all: $(ALL_PROGRAMS)
-> -
-> -export srctree OUTPUT CC LD CFLAGS
-> -include $(srctree)/tools/build/Makefile.include
-> -
-> -#
-> -# We need the following to be outside of kernel tree
-> -#
-> -$(OUTPUT)include/linux/: ../../../../include/uapi/linux/
-> -	mkdir -p $(OUTPUT)include/linux/ 2>&1 || true
-> -	ln -sf $(CURDIR)/../../../../include/uapi/linux/pcitest.h $@
-> -
-> -$(info ${CURDIR})
-> -prepare: $(OUTPUT)include/linux/
-> -
-> -PCITEST_IN := $(OUTPUT)pcitest-in.o
-> -$(PCITEST_IN): prepare FORCE
-> -	$(Q)$(MAKE) $(build)=pcitest
-> -$(OUTPUT)pcitest: $(PCITEST_IN)
-> -	$(QUIET_LINK)$(CC) $(CFLAGS) $(LDFLAGS) $< -o $@
-> -
-> -clean:
-> -	rm -f $(ALL_PROGRAMS)
-> -	rm -rf $(OUTPUT)include/
-> -	find $(or $(OUTPUT),.) -name '*.o' -delete -o -name '\.*.cmd' -delete -o -name '\.*.d' -delete
-> -
-> -install: $(ALL_PROGRAMS)
-> -	install -d -m 755 $(DESTDIR)$(bindir);		\
-> -	for program in $(ALL_PROGRAMS); do		\
-> -		install $$program $(DESTDIR)$(bindir);	\
-> -	done;						\
-> -	for script in $(SCRIPTS); do			\
-> -		install $$script $(DESTDIR)$(bindir);	\
-> -	done
-> -
-> -FORCE:
-> -
-> -.PHONY: all install clean FORCE prepare
-> +include ../lib.mk
-> diff --git a/tools/testing/selftests/pci_endpoint/config b/tools/testing/selftests/pci_endpoint/config
-> new file mode 100644
-> index 000000000000..7cdcf117db8d
-> --- /dev/null
-> +++ b/tools/testing/selftests/pci_endpoint/config
-> @@ -0,0 +1,4 @@
-> +CONFIG_PCI_ENDPOINT=y
-> +CONFIG_PCI_ENDPOINT_CONFIGFS=y
-> +CONFIG_PCI_EPF_TEST=m
-> +CONFIG_PCI_ENDPOINT_TEST=m
-> diff --git a/tools/testing/selftests/pci_endpoint/pci_endpoint_test.c b/tools/testing/selftests/pci_endpoint/pci_endpoint_test.c
-> new file mode 100644
-> index 000000000000..c267b822c108
-> --- /dev/null
-> +++ b/tools/testing/selftests/pci_endpoint/pci_endpoint_test.c
-> @@ -0,0 +1,221 @@
-> +// SPDX-License-Identifier: GPL-2.0
-> +/*
-> + * Kselftest for PCI Endpoint Subsystem
-> + *
-> + * Copyright (c) 2022 Samsung Electronics Co., Ltd.
-> + *             https://www.samsung.com
-> + * Author: Aman Gupta <aman1.gupta@samsung.com>
-> + *
-> + * Copyright (c) 2024, Linaro Ltd.
-> + * Author: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> + */
-> +
-> +#include <errno.h>
-> +#include <fcntl.h>
-> +#include <stdbool.h>
-> +#include <stdio.h>
-> +#include <stdlib.h>
-> +#include <sys/ioctl.h>
-> +#include <unistd.h>
-> +
-> +#include "../../../../include/uapi/linux/pcitest.h"
-> +
-> +#include "../kselftest_harness.h"
-> +
-> +#define pci_ep_ioctl(cmd, arg)			\
-> +({						\
-> +	ret = ioctl(self->fd, cmd, arg);	\
-> +	ret = ret < 0 ? -errno : 0;		\
-> +})
-> +
-> +static const char *test_device = "/dev/pci-endpoint-test.0";
-> +static const unsigned long test_size[5] = { 1, 1024, 1025, 1024000, 1024001 };
-> +
-> +FIXTURE(pci_ep_bar)
-> +{
-> +	int fd;
-> +};
-> +
-> +FIXTURE_SETUP(pci_ep_bar)
-> +{
-> +	self->fd = open(test_device, O_RDWR);
-> +
-> +	ASSERT_NE(-1, self->fd) TH_LOG("Can't open PCI Endpoint Test device");
-> +}
-> +
-> +FIXTURE_TEARDOWN(pci_ep_bar)
-> +{
-> +	close(self->fd);
-> +}
-> +
-> +FIXTURE_VARIANT(pci_ep_bar)
-> +{
-> +	int barno;
-> +};
-> +
-> +FIXTURE_VARIANT_ADD(pci_ep_bar, BAR0) { .barno = 0 };
-> +FIXTURE_VARIANT_ADD(pci_ep_bar, BAR1) { .barno = 1 };
-> +FIXTURE_VARIANT_ADD(pci_ep_bar, BAR2) { .barno = 2 };
-> +FIXTURE_VARIANT_ADD(pci_ep_bar, BAR3) { .barno = 3 };
-> +FIXTURE_VARIANT_ADD(pci_ep_bar, BAR4) { .barno = 4 };
-> +FIXTURE_VARIANT_ADD(pci_ep_bar, BAR5) { .barno = 5 };
-> +
-> +TEST_F(pci_ep_bar, BAR_TEST)
-> +{
-> +	int ret;
-> +
-> +	pci_ep_ioctl(PCITEST_BAR, variant->barno);
-> +	EXPECT_FALSE(ret) TH_LOG("Test failed for BAR%d", variant->barno);
-> +}
-> +
-> +FIXTURE(pci_ep_basic)
-> +{
-> +	int fd;
-> +};
-> +
-> +FIXTURE_SETUP(pci_ep_basic)
-> +{
-> +	self->fd = open(test_device, O_RDWR);
-> +
-> +	ASSERT_NE(-1, self->fd) TH_LOG("Can't open PCI Endpoint Test device");
-> +}
-> +
-> +FIXTURE_TEARDOWN(pci_ep_basic)
-> +{
-> +	close(self->fd);
-> +}
-> +
-> +TEST_F(pci_ep_basic, CONSECUTIVE_BAR_TEST)
-> +{
-> +	int ret;
-> +
-> +	pci_ep_ioctl(PCITEST_BARS, 0);
-> +	EXPECT_FALSE(ret) TH_LOG("Consecutive BAR test failed");
-> +}
-> +
-> +TEST_F(pci_ep_basic, LEGACY_IRQ_TEST)
-> +{
-> +	int ret;
-> +
-> +	pci_ep_ioctl(PCITEST_SET_IRQTYPE, 0);
-> +	ASSERT_EQ(0, ret) TH_LOG("Can't set Legacy IRQ type");
-> +
-> +	pci_ep_ioctl(PCITEST_LEGACY_IRQ, 0);
-> +	EXPECT_FALSE(ret) TH_LOG("Test failed for Legacy IRQ");
-> +}
-> +
-> +TEST_F(pci_ep_basic, MSI_TEST)
-> +{
-> +	int ret, i;
-> +
-> +	pci_ep_ioctl(PCITEST_SET_IRQTYPE, 1);
-> +	ASSERT_EQ(0, ret) TH_LOG("Can't set MSI IRQ type");
-> +
-> +	for (i = 1; i <= 32; i++) {
-> +		pci_ep_ioctl(PCITEST_MSI, i);
-> +		EXPECT_FALSE(ret) TH_LOG("Test failed for MSI%d", i);
-> +	}
-> +}
-> +
-> +TEST_F(pci_ep_basic, MSIX_TEST)
-> +{
-> +	int ret, i;
-> +
-> +	pci_ep_ioctl(PCITEST_SET_IRQTYPE, 2);
-> +	ASSERT_EQ(0, ret) TH_LOG("Can't set MSI-X IRQ type");
-> +
-> +	for (i = 1; i <= 2048; i++) {
-> +		pci_ep_ioctl(PCITEST_MSIX, i);
-> +		EXPECT_FALSE(ret) TH_LOG("Test failed for MSI-X%d", i);
-> +	}
-> +}
-> +
-> +FIXTURE(pci_ep_data_transfer)
-> +{
-> +	int fd;
-> +};
-> +
-> +FIXTURE_SETUP(pci_ep_data_transfer)
-> +{
-> +	self->fd = open(test_device, O_RDWR);
-> +
-> +	ASSERT_NE(-1, self->fd) TH_LOG("Can't open PCI Endpoint Test device");
-> +}
-> +
-> +FIXTURE_TEARDOWN(pci_ep_data_transfer)
-> +{
-> +	close(self->fd);
-> +}
-> +
-> +FIXTURE_VARIANT(pci_ep_data_transfer)
-> +{
-> +	bool use_dma;
-> +};
-> +
-> +FIXTURE_VARIANT_ADD(pci_ep_data_transfer, memcpy)
-> +{
-> +	.use_dma = false,
-> +};
-> +
-> +FIXTURE_VARIANT_ADD(pci_ep_data_transfer, dma)
-> +{
-> +	.use_dma = true,
-> +};
-> +
-> +TEST_F(pci_ep_data_transfer, READ_TEST)
-> +{
-> +	struct pci_endpoint_test_xfer_param param = {};
-> +	int ret, i;
-> +
-> +	if (variant->use_dma)
-> +		param.flags = PCITEST_FLAGS_USE_DMA;
-> +
-> +	pci_ep_ioctl(PCITEST_SET_IRQTYPE, 1);
-> +	ASSERT_EQ(0, ret) TH_LOG("Can't set MSI IRQ type");
-> +
-> +	for (i = 0; i < ARRAY_SIZE(test_size); i++) {
-> +		param.size = test_size[i];
-> +		pci_ep_ioctl(PCITEST_READ, &param);
-> +		EXPECT_FALSE(ret) TH_LOG("Test failed for size (%ld)",
-> +					 test_size[i]);
-> +	}
-> +}
-> +
-> +TEST_F(pci_ep_data_transfer, WRITE_TEST)
-> +{
-> +	struct pci_endpoint_test_xfer_param param = {};
-> +	int ret, i;
-> +
-> +	if (variant->use_dma)
-> +		param.flags = PCITEST_FLAGS_USE_DMA;
-> +
-> +	pci_ep_ioctl(PCITEST_SET_IRQTYPE, 1);
-> +	ASSERT_EQ(0, ret) TH_LOG("Can't set MSI IRQ type");
-> +
-> +	for (i = 0; i < ARRAY_SIZE(test_size); i++) {
-> +		param.size = test_size[i];
-> +		pci_ep_ioctl(PCITEST_WRITE, &param);
-> +		EXPECT_FALSE(ret) TH_LOG("Test failed for size (%ld)",
-> +					 test_size[i]);
-> +	}
-> +}
-> +
-> +TEST_F(pci_ep_data_transfer, COPY_TEST)
-> +{
-> +	struct pci_endpoint_test_xfer_param param = {};
-> +	int ret, i;
-> +
-> +	if (variant->use_dma)
-> +		param.flags = PCITEST_FLAGS_USE_DMA;
-> +
-> +	pci_ep_ioctl(PCITEST_SET_IRQTYPE, 1);
-> +	ASSERT_EQ(0, ret) TH_LOG("Can't set MSI IRQ type");
-> +
-> +	for (i = 0; i < ARRAY_SIZE(test_size); i++) {
-> +		param.size = test_size[i];
-> +		pci_ep_ioctl(PCITEST_COPY, &param);
-> +		EXPECT_FALSE(ret) TH_LOG("Test failed for size (%ld)",
-> +					 test_size[i]);
-> +	}
-> +}
-> +TEST_HARNESS_MAIN
-> diff --git a/tools/testing/selftests/pci_endpoint/pcitest.c b/tools/testing/selftests/pci_endpoint/pcitest.c
-> deleted file mode 100644
-> index b96cc118839b..000000000000
-> --- a/tools/testing/selftests/pci_endpoint/pcitest.c
-> +++ /dev/null
-> @@ -1,265 +0,0 @@
-> -// SPDX-License-Identifier: GPL-2.0-only
-> -/**
-> - * Userspace PCI Endpoint Test Module
-> - *
-> - * Copyright (C) 2017 Texas Instruments
-> - * Author: Kishon Vijay Abraham I <kishon@ti.com>
-> - */
-> -
-> -#include <errno.h>
-> -#include <fcntl.h>
-> -#include <stdbool.h>
-> -#include <stdio.h>
-> -#include <stdlib.h>
-> -#include <sys/ioctl.h>
-> -#include <unistd.h>
-> -
-> -#include <linux/pcitest.h>
-> -
-> -static char *irq[] = { "LEGACY", "MSI", "MSI-X" };
-> -
-> -struct pci_test {
-> -	char		*device;
-> -	char		barnum;
-> -	bool		consecutive_bar_test;
-> -	bool		legacyirq;
-> -	unsigned int	msinum;
-> -	unsigned int	msixnum;
-> -	int		irqtype;
-> -	bool		set_irqtype;
-> -	bool		get_irqtype;
-> -	bool		clear_irq;
-> -	bool		read;
-> -	bool		write;
-> -	bool		copy;
-> -	unsigned long	size;
-> -	bool		use_dma;
-> -};
-> -
-> -static int run_test(struct pci_test *test)
-> -{
-> -	struct pci_endpoint_test_xfer_param param = {};
-> -	int ret = -EINVAL;
-> -	int fd;
-> -
-> -	fd = open(test->device, O_RDWR);
-> -	if (fd < 0) {
-> -		perror("can't open PCI Endpoint Test device");
-> -		return -ENODEV;
-> -	}
-> -
-> -	if (test->barnum >= 0 && test->barnum <= 5) {
-> -		ret = ioctl(fd, PCITEST_BAR, test->barnum);
-> -		fprintf(stdout, "BAR%d:\t\t", test->barnum);
-> -		if (ret < 0)
-> -			fprintf(stdout, "NOT OKAY\n");
-> -		else
-> -			fprintf(stdout, "OKAY\n");
-> -	}
-> -
-> -	if (test->consecutive_bar_test) {
-> -		ret = ioctl(fd, PCITEST_BARS);
-> -		fprintf(stdout, "Consecutive BAR test:\t\t");
-> -		if (ret < 0)
-> -			fprintf(stdout, "NOT OKAY\n");
-> -		else
-> -			fprintf(stdout, "OKAY\n");
-> -	}
-> -
-> -	if (test->set_irqtype) {
-> -		ret = ioctl(fd, PCITEST_SET_IRQTYPE, test->irqtype);
-> -		fprintf(stdout, "SET IRQ TYPE TO %s:\t\t", irq[test->irqtype]);
-> -		if (ret < 0)
-> -			fprintf(stdout, "NOT OKAY\n");
-> -		else
-> -			fprintf(stdout, "OKAY\n");
-> -	}
-> -
-> -	if (test->get_irqtype) {
-> -		ret = ioctl(fd, PCITEST_GET_IRQTYPE);
-> -		fprintf(stdout, "GET IRQ TYPE:\t\t");
-> -		if (ret < 0) {
-> -			fprintf(stdout, "NOT OKAY\n");
-> -		} else {
-> -			fprintf(stdout, "%s\n", irq[ret]);
-> -			ret = 0;
-> -		}
-> -	}
-> -
-> -	if (test->clear_irq) {
-> -		ret = ioctl(fd, PCITEST_CLEAR_IRQ);
-> -		fprintf(stdout, "CLEAR IRQ:\t\t");
-> -		if (ret < 0)
-> -			fprintf(stdout, "NOT OKAY\n");
-> -		else
-> -			fprintf(stdout, "OKAY\n");
-> -	}
-> -
-> -	if (test->legacyirq) {
-> -		ret = ioctl(fd, PCITEST_LEGACY_IRQ, 0);
-> -		fprintf(stdout, "LEGACY IRQ:\t");
-> -		if (ret < 0)
-> -			fprintf(stdout, "NOT OKAY\n");
-> -		else
-> -			fprintf(stdout, "OKAY\n");
-> -	}
-> -
-> -	if (test->msinum > 0 && test->msinum <= 32) {
-> -		ret = ioctl(fd, PCITEST_MSI, test->msinum);
-> -		fprintf(stdout, "MSI%u:\t\t", test->msinum);
-> -		if (ret < 0)
-> -			fprintf(stdout, "NOT OKAY\n");
-> -		else
-> -			fprintf(stdout, "OKAY\n");
-> -	}
-> -
-> -	if (test->msixnum > 0 && test->msixnum <= 2048) {
-> -		ret = ioctl(fd, PCITEST_MSIX, test->msixnum);
-> -		fprintf(stdout, "MSI-X%u:\t\t", test->msixnum);
-> -		if (ret < 0)
-> -			fprintf(stdout, "NOT OKAY\n");
-> -		else
-> -			fprintf(stdout, "OKAY\n");
-> -	}
-> -
-> -	if (test->write) {
-> -		param.size = test->size;
-> -		if (test->use_dma)
-> -			param.flags = PCITEST_FLAGS_USE_DMA;
-> -		ret = ioctl(fd, PCITEST_WRITE, &param);
-> -		fprintf(stdout, "WRITE (%7lu bytes):\t\t", test->size);
-> -		if (ret < 0)
-> -			fprintf(stdout, "NOT OKAY\n");
-> -		else
-> -			fprintf(stdout, "OKAY\n");
-> -	}
-> -
-> -	if (test->read) {
-> -		param.size = test->size;
-> -		if (test->use_dma)
-> -			param.flags = PCITEST_FLAGS_USE_DMA;
-> -		ret = ioctl(fd, PCITEST_READ, &param);
-> -		fprintf(stdout, "READ (%7lu bytes):\t\t", test->size);
-> -		if (ret < 0)
-> -			fprintf(stdout, "NOT OKAY\n");
-> -		else
-> -			fprintf(stdout, "OKAY\n");
-> -	}
-> -
-> -	if (test->copy) {
-> -		param.size = test->size;
-> -		if (test->use_dma)
-> -			param.flags = PCITEST_FLAGS_USE_DMA;
-> -		ret = ioctl(fd, PCITEST_COPY, &param);
-> -		fprintf(stdout, "COPY (%7lu bytes):\t\t", test->size);
-> -		if (ret < 0)
-> -			fprintf(stdout, "NOT OKAY\n");
-> -		else
-> -			fprintf(stdout, "OKAY\n");
-> -	}
-> -
-> -	fflush(stdout);
-> -	close(fd);
-> -	return ret;
-> -}
-> -
-> -int main(int argc, char **argv)
-> -{
-> -	int c;
-> -	struct pci_test *test;
-> -
-> -	test = calloc(1, sizeof(*test));
-> -	if (!test) {
-> -		perror("Fail to allocate memory for pci_test\n");
-> -		return -ENOMEM;
-> -	}
-> -
-> -	/* since '0' is a valid BAR number, initialize it to -1 */
-> -	test->barnum = -1;
-> -
-> -	/* set default size as 100KB */
-> -	test->size = 0x19000;
-> -
-> -	/* set default endpoint device */
-> -	test->device = "/dev/pci-endpoint-test.0";
-> -
-> -	while ((c = getopt(argc, argv, "D:b:Cm:x:i:deIlhrwcs:")) != EOF)
-> -	switch (c) {
-> -	case 'D':
-> -		test->device = optarg;
-> -		continue;
-> -	case 'b':
-> -		test->barnum = atoi(optarg);
-> -		if (test->barnum < 0 || test->barnum > 5)
-> -			goto usage;
-> -		continue;
-> -	case 'C':
-> -		test->consecutive_bar_test = true;
-> -		continue;
-> -	case 'l':
-> -		test->legacyirq = true;
-> -		continue;
-> -	case 'm':
-> -		test->msinum = atoi(optarg);
-> -		if (test->msinum < 1 || test->msinum > 32)
-> -			goto usage;
-> -		continue;
-> -	case 'x':
-> -		test->msixnum = atoi(optarg);
-> -		if (test->msixnum < 1 || test->msixnum > 2048)
-> -			goto usage;
-> -		continue;
-> -	case 'i':
-> -		test->irqtype = atoi(optarg);
-> -		if (test->irqtype < 0 || test->irqtype > 2)
-> -			goto usage;
-> -		test->set_irqtype = true;
-> -		continue;
-> -	case 'I':
-> -		test->get_irqtype = true;
-> -		continue;
-> -	case 'r':
-> -		test->read = true;
-> -		continue;
-> -	case 'w':
-> -		test->write = true;
-> -		continue;
-> -	case 'c':
-> -		test->copy = true;
-> -		continue;
-> -	case 'e':
-> -		test->clear_irq = true;
-> -		continue;
-> -	case 's':
-> -		test->size = strtoul(optarg, NULL, 0);
-> -		continue;
-> -	case 'd':
-> -		test->use_dma = true;
-> -		continue;
-> -	case 'h':
-> -	default:
-> -usage:
-> -		fprintf(stderr,
-> -			"usage: %s [options]\n"
-> -			"Options:\n"
-> -			"\t-D <dev>		PCI endpoint test device {default: /dev/pci-endpoint-test.0}\n"
-> -			"\t-b <bar num>		BAR test (bar number between 0..5)\n"
-> -			"\t-C			Consecutive BAR test\n"
-> -			"\t-m <msi num>		MSI test (msi number between 1..32)\n"
-> -			"\t-x <msix num>	\tMSI-X test (msix number between 1..2048)\n"
-> -			"\t-i <irq type>	\tSet IRQ type (0 - Legacy, 1 - MSI, 2 - MSI-X)\n"
-> -			"\t-e			Clear IRQ\n"
-> -			"\t-I			Get current IRQ type configured\n"
-> -			"\t-d			Use DMA\n"
-> -			"\t-l			Legacy IRQ test\n"
-> -			"\t-r			Read buffer test\n"
-> -			"\t-w			Write buffer test\n"
-> -			"\t-c			Copy buffer test\n"
-> -			"\t-s <size>		Size of buffer {default: 100KB}\n"
-> -			"\t-h			Print this help message\n",
-> -			argv[0]);
-> -		return -EINVAL;
-> -	}
-> -
-> -	return run_test(test);
-> -}
-> diff --git a/tools/testing/selftests/pci_endpoint/pcitest.sh b/tools/testing/selftests/pci_endpoint/pcitest.sh
-> deleted file mode 100644
-> index 770f4d6df34b..000000000000
-> --- a/tools/testing/selftests/pci_endpoint/pcitest.sh
-> +++ /dev/null
-> @@ -1,73 +0,0 @@
-> -#!/bin/sh
-> -# SPDX-License-Identifier: GPL-2.0
-> -
-> -echo "BAR tests"
-> -echo
-> -
-> -bar=0
-> -
-> -while [ $bar -lt 6 ]
-> -do
-> -	pcitest -b $bar
-> -	bar=`expr $bar + 1`
-> -done
-> -pcitest -C
-> -echo
-> -
-> -echo "Interrupt tests"
-> -echo
-> -
-> -pcitest -i 0
-> -pcitest -l
-> -
-> -pcitest -i 1
-> -msi=1
-> -
-> -while [ $msi -lt 33 ]
-> -do
-> -        pcitest -m $msi
-> -        msi=`expr $msi + 1`
-> -done
-> -echo
-> -
-> -pcitest -i 2
-> -msix=1
-> -
-> -while [ $msix -lt 2049 ]
-> -do
-> -        pcitest -x $msix
-> -        msix=`expr $msix + 1`
-> -done
-> -echo
-> -
-> -echo "Read Tests"
-> -echo
-> -
-> -pcitest -i 1
-> -
-> -pcitest -r -s 1
-> -pcitest -r -s 1024
-> -pcitest -r -s 1025
-> -pcitest -r -s 1024000
-> -pcitest -r -s 1024001
-> -echo
-> -
-> -echo "Write Tests"
-> -echo
-> -
-> -pcitest -w -s 1
-> -pcitest -w -s 1024
-> -pcitest -w -s 1025
-> -pcitest -w -s 1024000
-> -pcitest -w -s 1024001
-> -echo
-> -
-> -echo "Copy Tests"
-> -echo
-> -
-> -pcitest -c -s 1
-> -pcitest -c -s 1024
-> -pcitest -c -s 1025
-> -pcitest -c -s 1024000
-> -pcitest -c -s 1024001
-> -echo
-> -- 
-> 2.25.1
+>  arch/arm64/boot/dts/qcom/qcs615.dtsi | 1 -
+>  1 file changed, 1 deletion(-)
 > 
 
-Reviewed-by: Niklas Cassel <cassel@kernel.org>
+
+My bot found new DTB warnings on the .dts files added or changed in this
+series.
+
+Some warnings may be from an existing SoC .dtsi. Or perhaps the warnings
+are fixed by another series. Ultimately, it is up to the platform
+maintainer whether these warnings are acceptable or not. No need to reply
+unless the platform maintainer has comments.
+
+If you already ran DT checks and didn't see these error(s), then
+make sure dt-schema is up to date:
+
+  pip3 install dtschema --upgrade
+
+
+New warnings running 'make CHECK_DTBS=y for arch/arm64/boot/dts/qcom/' for 20250116-fix-kernel-test-robot-unexpected-property-issue-v1-1-b1f4cc2c52d5@quicinc.com:
+
+arch/arm64/boot/dts/qcom/x1e80100-dell-xps13-9345.dtb: /soc@0/geniqup@bc0000/i2c@b8c000/typec-mux@8: failed to match any schema with compatible: ['parade,ps8830']
+arch/arm64/boot/dts/qcom/x1e80100-dell-xps13-9345.dtb: /soc@0/geniqup@bc0000/i2c@b9c000/typec-mux@8: failed to match any schema with compatible: ['parade,ps8830']
+arch/arm64/boot/dts/qcom/msm8992-xiaomi-libra.dtb: usb@f92f8800: interrupt-names:1: 'hs_phy_irq' was expected
+	from schema $id: http://devicetree.org/schemas/usb/qcom,dwc3.yaml#
+arch/arm64/boot/dts/qcom/msm8992-xiaomi-libra.dtb: usb@f92f8800: interrupt-names:2: 'dp_hs_phy_irq' was expected
+	from schema $id: http://devicetree.org/schemas/usb/qcom,dwc3.yaml#
+arch/arm64/boot/dts/qcom/msm8992-xiaomi-libra.dtb: usb@f92f8800: interrupt-names:3: 'dm_hs_phy_irq' was expected
+	from schema $id: http://devicetree.org/schemas/usb/qcom,dwc3.yaml#
+arch/arm64/boot/dts/qcom/sdm630-sony-xperia-ganges-kirin.dtb: pmic@3: led-controller@d300:compatible:0: 'qcom,pm660l-flash-led' is not one of ['qcom,pm6150l-flash-led', 'qcom,pm8150c-flash-led', 'qcom,pm8150l-flash-led', 'qcom,pm8350c-flash-led', 'qcom,pm8550-flash-led', 'qcom,pmi8998-flash-led']
+	from schema $id: http://devicetree.org/schemas/mfd/qcom,spmi-pmic.yaml#
+arch/arm64/boot/dts/qcom/sdm630-sony-xperia-ganges-kirin.dtb: led-controller@d300: compatible:0: 'qcom,pm660l-flash-led' is not one of ['qcom,pm6150l-flash-led', 'qcom,pm8150c-flash-led', 'qcom,pm8150l-flash-led', 'qcom,pm8350c-flash-led', 'qcom,pm8550-flash-led', 'qcom,pmi8998-flash-led']
+	from schema $id: http://devicetree.org/schemas/leds/qcom,spmi-flash-led.yaml#
+arch/arm64/boot/dts/qcom/sdm630-sony-xperia-ganges-kirin.dtb: /soc@0/spmi@800f000/pmic@3/led-controller@d300: failed to match any schema with compatible: ['qcom,pm660l-flash-led', 'qcom,spmi-flash-led']
+arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dtb: pmic@2: pwm:nvmem: [[345, 346]] is too short
+	from schema $id: http://devicetree.org/schemas/mfd/qcom,spmi-pmic.yaml#
+arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dtb: pwm: nvmem: [[345, 346]] is too short
+	from schema $id: http://devicetree.org/schemas/leds/leds-qcom-lpg.yaml#
+arch/arm64/boot/dts/qcom/msm8992-lg-bullhead-rev-10.dtb: usb@f92f8800: interrupt-names:1: 'hs_phy_irq' was expected
+	from schema $id: http://devicetree.org/schemas/usb/qcom,dwc3.yaml#
+arch/arm64/boot/dts/qcom/msm8992-lg-bullhead-rev-10.dtb: usb@f92f8800: interrupt-names:2: 'dp_hs_phy_irq' was expected
+	from schema $id: http://devicetree.org/schemas/usb/qcom,dwc3.yaml#
+arch/arm64/boot/dts/qcom/msm8992-lg-bullhead-rev-10.dtb: usb@f92f8800: interrupt-names:3: 'dm_hs_phy_irq' was expected
+	from schema $id: http://devicetree.org/schemas/usb/qcom,dwc3.yaml#
+arch/arm64/boot/dts/qcom/sdm630-sony-xperia-nile-discovery.dtb: pmic@3: led-controller@d300:compatible:0: 'qcom,pm660l-flash-led' is not one of ['qcom,pm6150l-flash-led', 'qcom,pm8150c-flash-led', 'qcom,pm8150l-flash-led', 'qcom,pm8350c-flash-led', 'qcom,pm8550-flash-led', 'qcom,pmi8998-flash-led']
+	from schema $id: http://devicetree.org/schemas/mfd/qcom,spmi-pmic.yaml#
+arch/arm64/boot/dts/qcom/sdm630-sony-xperia-nile-discovery.dtb: led-controller@d300: compatible:0: 'qcom,pm660l-flash-led' is not one of ['qcom,pm6150l-flash-led', 'qcom,pm8150c-flash-led', 'qcom,pm8150l-flash-led', 'qcom,pm8350c-flash-led', 'qcom,pm8550-flash-led', 'qcom,pmi8998-flash-led']
+	from schema $id: http://devicetree.org/schemas/leds/qcom,spmi-flash-led.yaml#
+arch/arm64/boot/dts/qcom/sdm630-sony-xperia-nile-discovery.dtb: /soc@0/spmi@800f000/pmic@3/led-controller@d300: failed to match any schema with compatible: ['qcom,pm660l-flash-led', 'qcom,spmi-flash-led']
+arch/arm64/boot/dts/qcom/sdm660-xiaomi-lavender.dtb: pmic@3: led-controller@d300:compatible:0: 'qcom,pm660l-flash-led' is not one of ['qcom,pm6150l-flash-led', 'qcom,pm8150c-flash-led', 'qcom,pm8150l-flash-led', 'qcom,pm8350c-flash-led', 'qcom,pm8550-flash-led', 'qcom,pmi8998-flash-led']
+	from schema $id: http://devicetree.org/schemas/mfd/qcom,spmi-pmic.yaml#
+arch/arm64/boot/dts/qcom/sdm660-xiaomi-lavender.dtb: led-controller@d300: compatible:0: 'qcom,pm660l-flash-led' is not one of ['qcom,pm6150l-flash-led', 'qcom,pm8150c-flash-led', 'qcom,pm8150l-flash-led', 'qcom,pm8350c-flash-led', 'qcom,pm8550-flash-led', 'qcom,pmi8998-flash-led']
+	from schema $id: http://devicetree.org/schemas/leds/qcom,spmi-flash-led.yaml#
+arch/arm64/boot/dts/qcom/sdm660-xiaomi-lavender.dtb: /soc@0/spmi@800f000/pmic@3/led-controller@d300: failed to match any schema with compatible: ['qcom,pm660l-flash-led', 'qcom,spmi-flash-led']
+arch/arm64/boot/dts/qcom/qcs9100-ride.dtb: dma-controller@800000: compatible: 'oneOf' conditional failed, one must be fixed:
+	['qcom,sa8775p-gpi-dma', 'qcom,sm6350-gpi-dma'] is too long
+	'qcom,sa8775p-gpi-dma' is not one of ['qcom,sdm845-gpi-dma', 'qcom,sm6350-gpi-dma']
+	'qcom,sa8775p-gpi-dma' is not one of ['qcom,qcm2290-gpi-dma', 'qcom,qdu1000-gpi-dma', 'qcom,sar2130p-gpi-dma', 'qcom,sc7280-gpi-dma', 'qcom,sdx75-gpi-dma', 'qcom,sm6115-gpi-dma', 'qcom,sm6375-gpi-dma', 'qcom,sm8350-gpi-dma', 'qcom,sm8450-gpi-dma', 'qcom,sm8550-gpi-dma', 'qcom,sm8650-gpi-dma', 'qcom,x1e80100-gpi-dma']
+	'qcom,sa8775p-gpi-dma' is not one of ['qcom,sdm670-gpi-dma', 'qcom,sm6125-gpi-dma', 'qcom,sm8150-gpi-dma', 'qcom,sm8250-gpi-dma']
+	'qcom,sdm845-gpi-dma' was expected
+	from schema $id: http://devicetree.org/schemas/dma/qcom,gpi.yaml#
+arch/arm64/boot/dts/qcom/qcs9100-ride.dtb: /soc@0/dma-controller@800000: failed to match any schema with compatible: ['qcom,sa8775p-gpi-dma', 'qcom,sm6350-gpi-dma']
+arch/arm64/boot/dts/qcom/qcs9100-ride.dtb: dma-controller@900000: compatible: 'oneOf' conditional failed, one must be fixed:
+	['qcom,sa8775p-gpi-dma', 'qcom,sm6350-gpi-dma'] is too long
+	'qcom,sa8775p-gpi-dma' is not one of ['qcom,sdm845-gpi-dma', 'qcom,sm6350-gpi-dma']
+	'qcom,sa8775p-gpi-dma' is not one of ['qcom,qcm2290-gpi-dma', 'qcom,qdu1000-gpi-dma', 'qcom,sar2130p-gpi-dma', 'qcom,sc7280-gpi-dma', 'qcom,sdx75-gpi-dma', 'qcom,sm6115-gpi-dma', 'qcom,sm6375-gpi-dma', 'qcom,sm8350-gpi-dma', 'qcom,sm8450-gpi-dma', 'qcom,sm8550-gpi-dma', 'qcom,sm8650-gpi-dma', 'qcom,x1e80100-gpi-dma']
+	'qcom,sa8775p-gpi-dma' is not one of ['qcom,sdm670-gpi-dma', 'qcom,sm6125-gpi-dma', 'qcom,sm8150-gpi-dma', 'qcom,sm8250-gpi-dma']
+	'qcom,sdm845-gpi-dma' was expected
+	from schema $id: http://devicetree.org/schemas/dma/qcom,gpi.yaml#
+arch/arm64/boot/dts/qcom/qcs9100-ride.dtb: /soc@0/dma-controller@900000: failed to match any schema with compatible: ['qcom,sa8775p-gpi-dma', 'qcom,sm6350-gpi-dma']
+arch/arm64/boot/dts/qcom/qcs9100-ride.dtb: dma-controller@a00000: compatible: 'oneOf' conditional failed, one must be fixed:
+	['qcom,sa8775p-gpi-dma', 'qcom,sm6350-gpi-dma'] is too long
+	'qcom,sa8775p-gpi-dma' is not one of ['qcom,sdm845-gpi-dma', 'qcom,sm6350-gpi-dma']
+	'qcom,sa8775p-gpi-dma' is not one of ['qcom,qcm2290-gpi-dma', 'qcom,qdu1000-gpi-dma', 'qcom,sar2130p-gpi-dma', 'qcom,sc7280-gpi-dma', 'qcom,sdx75-gpi-dma', 'qcom,sm6115-gpi-dma', 'qcom,sm6375-gpi-dma', 'qcom,sm8350-gpi-dma', 'qcom,sm8450-gpi-dma', 'qcom,sm8550-gpi-dma', 'qcom,sm8650-gpi-dma', 'qcom,x1e80100-gpi-dma']
+	'qcom,sa8775p-gpi-dma' is not one of ['qcom,sdm670-gpi-dma', 'qcom,sm6125-gpi-dma', 'qcom,sm8150-gpi-dma', 'qcom,sm8250-gpi-dma']
+	'qcom,sdm845-gpi-dma' was expected
+	from schema $id: http://devicetree.org/schemas/dma/qcom,gpi.yaml#
+arch/arm64/boot/dts/qcom/qcs9100-ride.dtb: /soc@0/dma-controller@a00000: failed to match any schema with compatible: ['qcom,sa8775p-gpi-dma', 'qcom,sm6350-gpi-dma']
+arch/arm64/boot/dts/qcom/qcs9100-ride.dtb: dma-controller@b00000: compatible: 'oneOf' conditional failed, one must be fixed:
+	['qcom,sa8775p-gpi-dma', 'qcom,sm6350-gpi-dma'] is too long
+	'qcom,sa8775p-gpi-dma' is not one of ['qcom,sdm845-gpi-dma', 'qcom,sm6350-gpi-dma']
+	'qcom,sa8775p-gpi-dma' is not one of ['qcom,qcm2290-gpi-dma', 'qcom,qdu1000-gpi-dma', 'qcom,sar2130p-gpi-dma', 'qcom,sc7280-gpi-dma', 'qcom,sdx75-gpi-dma', 'qcom,sm6115-gpi-dma', 'qcom,sm6375-gpi-dma', 'qcom,sm8350-gpi-dma', 'qcom,sm8450-gpi-dma', 'qcom,sm8550-gpi-dma', 'qcom,sm8650-gpi-dma', 'qcom,x1e80100-gpi-dma']
+	'qcom,sa8775p-gpi-dma' is not one of ['qcom,sdm670-gpi-dma', 'qcom,sm6125-gpi-dma', 'qcom,sm8150-gpi-dma', 'qcom,sm8250-gpi-dma']
+	'qcom,sdm845-gpi-dma' was expected
+	from schema $id: http://devicetree.org/schemas/dma/qcom,gpi.yaml#
+arch/arm64/boot/dts/qcom/qcs9100-ride.dtb: /soc@0/dma-controller@b00000: failed to match any schema with compatible: ['qcom,sa8775p-gpi-dma', 'qcom,sm6350-gpi-dma']
+arch/arm64/boot/dts/qcom/qcs9100-ride.dtb: display-subsystem@ae00000: Unevaluated properties are not allowed ('phy@aec2a00', 'phy@aec5a00' were unexpected)
+	from schema $id: http://devicetree.org/schemas/display/msm/qcom,sa8775p-mdss.yaml#
+arch/arm64/boot/dts/qcom/sdm670-google-sargo.dtb: iommu@5040000: compatible: 'oneOf' conditional failed, one must be fixed:
+	['qcom,sdm670-smmu-v2', 'qcom,adreno-smmu', 'qcom,smmu-v2'] is too long
+	['qcom,sdm670-smmu-v2', 'qcom,adreno-smmu', 'qcom,smmu-v2'] is too short
+	'qcom,sdm670-smmu-v2' is not one of ['qcom,msm8996-smmu-v2', 'qcom,msm8998-smmu-v2', 'qcom,sdm630-smmu-v2', 'qcom,sm6375-smmu-v2']
+	'qcom,sdm670-smmu-v2' is not one of ['qcom,qcm2290-smmu-500', 'qcom,qcs615-smmu-500', 'qcom,qcs8300-smmu-500', 'qcom,qdu1000-smmu-500', 'qcom,sa8255p-smmu-500', 'qcom,sa8775p-smmu-500', 'qcom,sar2130p-smmu-500', 'qcom,sc7180-smmu-500', 'qcom,sc7280-smmu-500', 'qcom,sc8180x-smmu-500', 'qcom,sc8280xp-smmu-500', 'qcom,sdm670-smmu-500', 'qcom,sdm845-smmu-500', 'qcom,sdx55-smmu-500', 'qcom,sdx65-smmu-500', 'qcom,sdx75-smmu-500', 'qcom,sm6115-smmu-500', 'qcom,sm6125-smmu-500', 'qcom,sm6350-smmu-500', 'qcom,sm6375-smmu-500', 'qcom,sm8150-smmu-500', 'qcom,sm8250-smmu-500', 'qcom,sm8350-smmu-500', 'qcom,sm8450-smmu-500', 'qcom,sm8550-smmu-500', 'qcom,sm8650-smmu-500', 'qcom,x1e80100-smmu-500']
+	'qcom,sdm670-smmu-v2' is not one of ['qcom,qcm2290-smmu-500', 'qcom,sc7180-smmu-500', 'qcom,sc7280-smmu-500', 'qcom,sc8180x-smmu-500', 'qcom,sc8280xp-smmu-500', 'qcom,sdm845-smmu-500', 'qcom,sm6115-smmu-500', 'qcom,sm6350-smmu-500', 'qcom,sm6375-smmu-500', 'qcom,sm8150-smmu-500', 'qcom,sm8250-smmu-500', 'qcom,sm8350-smmu-500', 'qcom,sm8450-smmu-500']
+	'qcom,sdm670-smmu-v2' is not one of ['qcom,qcm2290-smmu-500', 'qcom,sa8255p-smmu-500', 'qcom,sa8775p-smmu-500', 'qcom,sar2130p-smmu-500', 'qcom,sc7280-smmu-500', 'qcom,sc8180x-smmu-500', 'qcom,sc8280xp-smmu-500', 'qcom,sm6115-smmu-500', 'qcom,sm6125-smmu-500', 'qcom,sm8150-smmu-500', 'qcom,sm8250-smmu-500', 'qcom,sm8350-smmu-500', 'qcom,sm8450-smmu-500', 'qcom,sm8550-smmu-500', 'qcom,sm8650-smmu-500', 'qcom,x1e80100-smmu-500']
+	'qcom,sdm670-smmu-v2' is not one of ['qcom,sc7280-smmu-500', 'qcom,sm8150-smmu-500', 'qcom,sm8250-smmu-500']
+	'qcom,sdm670-smmu-v2' is not one of ['qcom,msm8996-smmu-v2', 'qcom,sc7180-smmu-v2', 'qcom,sdm630-smmu-v2', 'qcom,sdm845-smmu-v2', 'qcom,sm6350-smmu-v2', 'qcom,sm7150-smmu-v2']
+	'qcom,sdm845-smmu-v2' was expected
+	'marvell,ap806-smmu-500' was expected
+	'qcom,sdm670-smmu-v2' is not one of ['nvidia,tegra186-smmu', 'nvidia,tegra194-smmu', 'nvidia,tegra234-smmu']
+	'arm,mmu-500' was expected
+	'qcom,sdm670-smmu-v2' is not one of ['arm,mmu-400', 'arm,mmu-401']
+	'qcom,sdm670-smmu-v2' is not one of ['arm,smmu-v1', 'arm,smmu-v2', 'arm,mmu-400', 'arm,mmu-401', 'arm,mmu-500', 'cavium,smmu-v2']
+	'qcom,smmu-v2' was expected
+	'qcom,smmu-500' was expected
+	'nvidia,smmu-500' was expected
+	'arm,smmu-v2' was expected
+	'arm,smmu-v1' was expected
+	from schema $id: http://devicetree.org/schemas/iommu/arm,smmu.yaml#
+arch/arm64/boot/dts/qcom/qcs9100-ride.dtb: display-controller@ae01000: clock-names:0: 'nrt_bus' was expected
+	from schema $id: http://devicetree.org/schemas/display/msm/qcom,sm8650-dpu.yaml#
+arch/arm64/boot/dts/qcom/sdm670-google-sargo.dtb: /soc@0/iommu@5040000: failed to match any schema with compatible: ['qcom,sdm670-smmu-v2', 'qcom,adreno-smmu', 'qcom,smmu-v2']
+arch/arm64/boot/dts/qcom/qcs9100-ride.dtb: display-controller@ae01000: Unevaluated properties are not allowed ('clock-names' was unexpected)
+	from schema $id: http://devicetree.org/schemas/display/msm/qcom,sm8650-dpu.yaml#
+arch/arm64/boot/dts/qcom/sdm670-google-sargo.dtb: pmic@3: led-controller@d300:compatible:0: 'qcom,pm660l-flash-led' is not one of ['qcom,pm6150l-flash-led', 'qcom,pm8150c-flash-led', 'qcom,pm8150l-flash-led', 'qcom,pm8350c-flash-led', 'qcom,pm8550-flash-led', 'qcom,pmi8998-flash-led']
+	from schema $id: http://devicetree.org/schemas/mfd/qcom,spmi-pmic.yaml#
+arch/arm64/boot/dts/qcom/sdm670-google-sargo.dtb: led-controller@d300: compatible:0: 'qcom,pm660l-flash-led' is not one of ['qcom,pm6150l-flash-led', 'qcom,pm8150c-flash-led', 'qcom,pm8150l-flash-led', 'qcom,pm8350c-flash-led', 'qcom,pm8550-flash-led', 'qcom,pmi8998-flash-led']
+	from schema $id: http://devicetree.org/schemas/leds/qcom,spmi-flash-led.yaml#
+arch/arm64/boot/dts/qcom/sdm670-google-sargo.dtb: /soc@0/spmi@c440000/pmic@3/led-controller@d300: failed to match any schema with compatible: ['qcom,pm660l-flash-led', 'qcom,spmi-flash-led']
+arch/arm64/boot/dts/qcom/x1e001de-devkit.dtb: /soc@0/geniqup@bc0000/i2c@b84000/typec-mux@8: failed to match any schema with compatible: ['parade,ps8830']
+arch/arm64/boot/dts/qcom/x1e001de-devkit.dtb: /soc@0/geniqup@bc0000/i2c@b8c000/typec-mux@8: failed to match any schema with compatible: ['parade,ps8830']
+arch/arm64/boot/dts/qcom/ipq5424-rdp466.dtb: watchdog@f410000: compatible: 'oneOf' conditional failed, one must be fixed:
+	['qcom,apss-wdt-ipq5424', 'qcom,kpss-wdt'] is too long
+	['qcom,apss-wdt-ipq5424', 'qcom,kpss-wdt'] is too short
+	'qcom,apss-wdt-ipq5424' is not one of ['qcom,kpss-wdt-ipq4019', 'qcom,apss-wdt-ipq5018', 'qcom,apss-wdt-ipq5332', 'qcom,apss-wdt-ipq9574', 'qcom,apss-wdt-msm8226', 'qcom,apss-wdt-msm8974', 'qcom,apss-wdt-msm8994', 'qcom,apss-wdt-qcm2290', 'qcom,apss-wdt-qcs404', 'qcom,apss-wdt-sa8255p', 'qcom,apss-wdt-sa8775p', 'qcom,apss-wdt-sc7180', 'qcom,apss-wdt-sc7280', 'qcom,apss-wdt-sc8180x', 'qcom,apss-wdt-sc8280xp', 'qcom,apss-wdt-sdm845', 'qcom,apss-wdt-sdx55', 'qcom,apss-wdt-sdx65', 'qcom,apss-wdt-sm6115', 'qcom,apss-wdt-sm6350', 'qcom,apss-wdt-sm8150', 'qcom,apss-wdt-sm8250']
+	'qcom,kpss-wdt' was expected
+	'qcom,scss-timer' was expected
+	'qcom,apss-wdt-ipq5424' is not one of ['qcom,kpss-wdt-apq8064', 'qcom,kpss-wdt-ipq8064', 'qcom,kpss-wdt-mdm9615', 'qcom,kpss-wdt-msm8960']
+	'qcom,msm-timer' was expected
+	'qcom,kpss-timer' was expected
+	from schema $id: http://devicetree.org/schemas/watchdog/qcom-wdt.yaml#
+arch/arm64/boot/dts/qcom/ipq5424-rdp466.dtb: /soc@0/watchdog@f410000: failed to match any schema with compatible: ['qcom,apss-wdt-ipq5424', 'qcom,kpss-wdt']
+arch/arm64/boot/dts/qcom/x1e001de-devkit.dtb: /soc@0/geniqup@bc0000/i2c@b9c000/typec-mux@8: failed to match any schema with compatible: ['parade,ps8830']
+arch/arm64/boot/dts/qcom/sa8775p-ride.dtb: dma-controller@800000: compatible: 'oneOf' conditional failed, one must be fixed:
+	['qcom,sa8775p-gpi-dma', 'qcom,sm6350-gpi-dma'] is too long
+	'qcom,sa8775p-gpi-dma' is not one of ['qcom,sdm845-gpi-dma', 'qcom,sm6350-gpi-dma']
+	'qcom,sa8775p-gpi-dma' is not one of ['qcom,qcm2290-gpi-dma', 'qcom,qdu1000-gpi-dma', 'qcom,sar2130p-gpi-dma', 'qcom,sc7280-gpi-dma', 'qcom,sdx75-gpi-dma', 'qcom,sm6115-gpi-dma', 'qcom,sm6375-gpi-dma', 'qcom,sm8350-gpi-dma', 'qcom,sm8450-gpi-dma', 'qcom,sm8550-gpi-dma', 'qcom,sm8650-gpi-dma', 'qcom,x1e80100-gpi-dma']
+	'qcom,sa8775p-gpi-dma' is not one of ['qcom,sdm670-gpi-dma', 'qcom,sm6125-gpi-dma', 'qcom,sm8150-gpi-dma', 'qcom,sm8250-gpi-dma']
+	'qcom,sdm845-gpi-dma' was expected
+	from schema $id: http://devicetree.org/schemas/dma/qcom,gpi.yaml#
+arch/arm64/boot/dts/qcom/sa8775p-ride.dtb: /soc@0/dma-controller@800000: failed to match any schema with compatible: ['qcom,sa8775p-gpi-dma', 'qcom,sm6350-gpi-dma']
+arch/arm64/boot/dts/qcom/sa8775p-ride.dtb: dma-controller@900000: compatible: 'oneOf' conditional failed, one must be fixed:
+	['qcom,sa8775p-gpi-dma', 'qcom,sm6350-gpi-dma'] is too long
+	'qcom,sa8775p-gpi-dma' is not one of ['qcom,sdm845-gpi-dma', 'qcom,sm6350-gpi-dma']
+	'qcom,sa8775p-gpi-dma' is not one of ['qcom,qcm2290-gpi-dma', 'qcom,qdu1000-gpi-dma', 'qcom,sar2130p-gpi-dma', 'qcom,sc7280-gpi-dma', 'qcom,sdx75-gpi-dma', 'qcom,sm6115-gpi-dma', 'qcom,sm6375-gpi-dma', 'qcom,sm8350-gpi-dma', 'qcom,sm8450-gpi-dma', 'qcom,sm8550-gpi-dma', 'qcom,sm8650-gpi-dma', 'qcom,x1e80100-gpi-dma']
+	'qcom,sa8775p-gpi-dma' is not one of ['qcom,sdm670-gpi-dma', 'qcom,sm6125-gpi-dma', 'qcom,sm8150-gpi-dma', 'qcom,sm8250-gpi-dma']
+	'qcom,sdm845-gpi-dma' was expected
+	from schema $id: http://devicetree.org/schemas/dma/qcom,gpi.yaml#
+arch/arm64/boot/dts/qcom/sa8775p-ride.dtb: /soc@0/dma-controller@900000: failed to match any schema with compatible: ['qcom,sa8775p-gpi-dma', 'qcom,sm6350-gpi-dma']
+arch/arm64/boot/dts/qcom/sa8775p-ride.dtb: dma-controller@a00000: compatible: 'oneOf' conditional failed, one must be fixed:
+	['qcom,sa8775p-gpi-dma', 'qcom,sm6350-gpi-dma'] is too long
+	'qcom,sa8775p-gpi-dma' is not one of ['qcom,sdm845-gpi-dma', 'qcom,sm6350-gpi-dma']
+	'qcom,sa8775p-gpi-dma' is not one of ['qcom,qcm2290-gpi-dma', 'qcom,qdu1000-gpi-dma', 'qcom,sar2130p-gpi-dma', 'qcom,sc7280-gpi-dma', 'qcom,sdx75-gpi-dma', 'qcom,sm6115-gpi-dma', 'qcom,sm6375-gpi-dma', 'qcom,sm8350-gpi-dma', 'qcom,sm8450-gpi-dma', 'qcom,sm8550-gpi-dma', 'qcom,sm8650-gpi-dma', 'qcom,x1e80100-gpi-dma']
+	'qcom,sa8775p-gpi-dma' is not one of ['qcom,sdm670-gpi-dma', 'qcom,sm6125-gpi-dma', 'qcom,sm8150-gpi-dma', 'qcom,sm8250-gpi-dma']
+	'qcom,sdm845-gpi-dma' was expected
+	from schema $id: http://devicetree.org/schemas/dma/qcom,gpi.yaml#
+arch/arm64/boot/dts/qcom/sa8775p-ride.dtb: /soc@0/dma-controller@a00000: failed to match any schema with compatible: ['qcom,sa8775p-gpi-dma', 'qcom,sm6350-gpi-dma']
+arch/arm64/boot/dts/qcom/sa8775p-ride.dtb: dma-controller@b00000: compatible: 'oneOf' conditional failed, one must be fixed:
+	['qcom,sa8775p-gpi-dma', 'qcom,sm6350-gpi-dma'] is too long
+	'qcom,sa8775p-gpi-dma' is not one of ['qcom,sdm845-gpi-dma', 'qcom,sm6350-gpi-dma']
+	'qcom,sa8775p-gpi-dma' is not one of ['qcom,qcm2290-gpi-dma', 'qcom,qdu1000-gpi-dma', 'qcom,sar2130p-gpi-dma', 'qcom,sc7280-gpi-dma', 'qcom,sdx75-gpi-dma', 'qcom,sm6115-gpi-dma', 'qcom,sm6375-gpi-dma', 'qcom,sm8350-gpi-dma', 'qcom,sm8450-gpi-dma', 'qcom,sm8550-gpi-dma', 'qcom,sm8650-gpi-dma', 'qcom,x1e80100-gpi-dma']
+	'qcom,sa8775p-gpi-dma' is not one of ['qcom,sdm670-gpi-dma', 'qcom,sm6125-gpi-dma', 'qcom,sm8150-gpi-dma', 'qcom,sm8250-gpi-dma']
+	'qcom,sdm845-gpi-dma' was expected
+	from schema $id: http://devicetree.org/schemas/dma/qcom,gpi.yaml#
+arch/arm64/boot/dts/qcom/sa8775p-ride.dtb: /soc@0/dma-controller@b00000: failed to match any schema with compatible: ['qcom,sa8775p-gpi-dma', 'qcom,sm6350-gpi-dma']
+arch/arm64/boot/dts/qcom/x1e001de-devkit.dtb: usb@a2f8800: interrupt-names: ['pwr_event', 'dp_hs_phy_irq', 'dm_hs_phy_irq'] is too short
+	from schema $id: http://devicetree.org/schemas/usb/qcom,dwc3.yaml#
+arch/arm64/boot/dts/qcom/sa8775p-ride.dtb: display-subsystem@ae00000: Unevaluated properties are not allowed ('phy@aec2a00', 'phy@aec5a00' were unexpected)
+	from schema $id: http://devicetree.org/schemas/display/msm/qcom,sa8775p-mdss.yaml#
+arch/arm64/boot/dts/qcom/sa8775p-ride.dtb: display-controller@ae01000: clock-names:0: 'nrt_bus' was expected
+	from schema $id: http://devicetree.org/schemas/display/msm/qcom,sm8650-dpu.yaml#
+arch/arm64/boot/dts/qcom/sa8775p-ride.dtb: display-controller@ae01000: Unevaluated properties are not allowed ('clock-names' was unexpected)
+	from schema $id: http://devicetree.org/schemas/display/msm/qcom,sm8650-dpu.yaml#
+arch/arm64/boot/dts/qcom/msm8994-sony-xperia-kitakami-karin.dtb: usb@f92f8800: interrupt-names:1: 'hs_phy_irq' was expected
+	from schema $id: http://devicetree.org/schemas/usb/qcom,dwc3.yaml#
+arch/arm64/boot/dts/qcom/msm8994-sony-xperia-kitakami-karin.dtb: usb@f92f8800: interrupt-names:2: 'dp_hs_phy_irq' was expected
+	from schema $id: http://devicetree.org/schemas/usb/qcom,dwc3.yaml#
+arch/arm64/boot/dts/qcom/msm8994-sony-xperia-kitakami-karin.dtb: usb@f92f8800: interrupt-names:3: 'dm_hs_phy_irq' was expected
+	from schema $id: http://devicetree.org/schemas/usb/qcom,dwc3.yaml#
+arch/arm64/boot/dts/qcom/sdm630-sony-xperia-nile-pioneer.dtb: pmic@3: led-controller@d300:compatible:0: 'qcom,pm660l-flash-led' is not one of ['qcom,pm6150l-flash-led', 'qcom,pm8150c-flash-led', 'qcom,pm8150l-flash-led', 'qcom,pm8350c-flash-led', 'qcom,pm8550-flash-led', 'qcom,pmi8998-flash-led']
+	from schema $id: http://devicetree.org/schemas/mfd/qcom,spmi-pmic.yaml#
+arch/arm64/boot/dts/qcom/sdm630-sony-xperia-nile-pioneer.dtb: led-controller@d300: compatible:0: 'qcom,pm660l-flash-led' is not one of ['qcom,pm6150l-flash-led', 'qcom,pm8150c-flash-led', 'qcom,pm8150l-flash-led', 'qcom,pm8350c-flash-led', 'qcom,pm8550-flash-led', 'qcom,pmi8998-flash-led']
+	from schema $id: http://devicetree.org/schemas/leds/qcom,spmi-flash-led.yaml#
+arch/arm64/boot/dts/qcom/sdm630-sony-xperia-nile-pioneer.dtb: /soc@0/spmi@800f000/pmic@3/led-controller@d300: failed to match any schema with compatible: ['qcom,pm660l-flash-led', 'qcom,spmi-flash-led']
+arch/arm64/boot/dts/qcom/msm8992-lg-h815.dtb: usb@f92f8800: interrupt-names:1: 'hs_phy_irq' was expected
+	from schema $id: http://devicetree.org/schemas/usb/qcom,dwc3.yaml#
+arch/arm64/boot/dts/qcom/msm8992-lg-h815.dtb: usb@f92f8800: interrupt-names:2: 'dp_hs_phy_irq' was expected
+	from schema $id: http://devicetree.org/schemas/usb/qcom,dwc3.yaml#
+arch/arm64/boot/dts/qcom/msm8992-lg-h815.dtb: usb@f92f8800: interrupt-names:3: 'dm_hs_phy_irq' was expected
+	from schema $id: http://devicetree.org/schemas/usb/qcom,dwc3.yaml#
+arch/arm64/boot/dts/qcom/msm8994-sony-xperia-kitakami-suzuran.dtb: usb@f92f8800: interrupt-names:1: 'hs_phy_irq' was expected
+	from schema $id: http://devicetree.org/schemas/usb/qcom,dwc3.yaml#
+arch/arm64/boot/dts/qcom/msm8994-sony-xperia-kitakami-suzuran.dtb: usb@f92f8800: interrupt-names:2: 'dp_hs_phy_irq' was expected
+	from schema $id: http://devicetree.org/schemas/usb/qcom,dwc3.yaml#
+arch/arm64/boot/dts/qcom/msm8994-sony-xperia-kitakami-suzuran.dtb: usb@f92f8800: interrupt-names:3: 'dm_hs_phy_irq' was expected
+	from schema $id: http://devicetree.org/schemas/usb/qcom,dwc3.yaml#
+arch/arm64/boot/dts/qcom/qcs9100-ride-r3.dtb: dma-controller@800000: compatible: 'oneOf' conditional failed, one must be fixed:
+	['qcom,sa8775p-gpi-dma', 'qcom,sm6350-gpi-dma'] is too long
+	'qcom,sa8775p-gpi-dma' is not one of ['qcom,sdm845-gpi-dma', 'qcom,sm6350-gpi-dma']
+	'qcom,sa8775p-gpi-dma' is not one of ['qcom,qcm2290-gpi-dma', 'qcom,qdu1000-gpi-dma', 'qcom,sar2130p-gpi-dma', 'qcom,sc7280-gpi-dma', 'qcom,sdx75-gpi-dma', 'qcom,sm6115-gpi-dma', 'qcom,sm6375-gpi-dma', 'qcom,sm8350-gpi-dma', 'qcom,sm8450-gpi-dma', 'qcom,sm8550-gpi-dma', 'qcom,sm8650-gpi-dma', 'qcom,x1e80100-gpi-dma']
+	'qcom,sa8775p-gpi-dma' is not one of ['qcom,sdm670-gpi-dma', 'qcom,sm6125-gpi-dma', 'qcom,sm8150-gpi-dma', 'qcom,sm8250-gpi-dma']
+	'qcom,sdm845-gpi-dma' was expected
+	from schema $id: http://devicetree.org/schemas/dma/qcom,gpi.yaml#
+arch/arm64/boot/dts/qcom/qcs9100-ride-r3.dtb: /soc@0/dma-controller@800000: failed to match any schema with compatible: ['qcom,sa8775p-gpi-dma', 'qcom,sm6350-gpi-dma']
+arch/arm64/boot/dts/qcom/qcs9100-ride-r3.dtb: dma-controller@900000: compatible: 'oneOf' conditional failed, one must be fixed:
+	['qcom,sa8775p-gpi-dma', 'qcom,sm6350-gpi-dma'] is too long
+	'qcom,sa8775p-gpi-dma' is not one of ['qcom,sdm845-gpi-dma', 'qcom,sm6350-gpi-dma']
+	'qcom,sa8775p-gpi-dma' is not one of ['qcom,qcm2290-gpi-dma', 'qcom,qdu1000-gpi-dma', 'qcom,sar2130p-gpi-dma', 'qcom,sc7280-gpi-dma', 'qcom,sdx75-gpi-dma', 'qcom,sm6115-gpi-dma', 'qcom,sm6375-gpi-dma', 'qcom,sm8350-gpi-dma', 'qcom,sm8450-gpi-dma', 'qcom,sm8550-gpi-dma', 'qcom,sm8650-gpi-dma', 'qcom,x1e80100-gpi-dma']
+	'qcom,sa8775p-gpi-dma' is not one of ['qcom,sdm670-gpi-dma', 'qcom,sm6125-gpi-dma', 'qcom,sm8150-gpi-dma', 'qcom,sm8250-gpi-dma']
+	'qcom,sdm845-gpi-dma' was expected
+	from schema $id: http://devicetree.org/schemas/dma/qcom,gpi.yaml#
+arch/arm64/boot/dts/qcom/qcs9100-ride-r3.dtb: /soc@0/dma-controller@900000: failed to match any schema with compatible: ['qcom,sa8775p-gpi-dma', 'qcom,sm6350-gpi-dma']
+arch/arm64/boot/dts/qcom/qcs9100-ride-r3.dtb: dma-controller@a00000: compatible: 'oneOf' conditional failed, one must be fixed:
+	['qcom,sa8775p-gpi-dma', 'qcom,sm6350-gpi-dma'] is too long
+	'qcom,sa8775p-gpi-dma' is not one of ['qcom,sdm845-gpi-dma', 'qcom,sm6350-gpi-dma']
+	'qcom,sa8775p-gpi-dma' is not one of ['qcom,qcm2290-gpi-dma', 'qcom,qdu1000-gpi-dma', 'qcom,sar2130p-gpi-dma', 'qcom,sc7280-gpi-dma', 'qcom,sdx75-gpi-dma', 'qcom,sm6115-gpi-dma', 'qcom,sm6375-gpi-dma', 'qcom,sm8350-gpi-dma', 'qcom,sm8450-gpi-dma', 'qcom,sm8550-gpi-dma', 'qcom,sm8650-gpi-dma', 'qcom,x1e80100-gpi-dma']
+	'qcom,sa8775p-gpi-dma' is not one of ['qcom,sdm670-gpi-dma', 'qcom,sm6125-gpi-dma', 'qcom,sm8150-gpi-dma', 'qcom,sm8250-gpi-dma']
+	'qcom,sdm845-gpi-dma' was expected
+	from schema $id: http://devicetree.org/schemas/dma/qcom,gpi.yaml#
+arch/arm64/boot/dts/qcom/qcs9100-ride-r3.dtb: /soc@0/dma-controller@a00000: failed to match any schema with compatible: ['qcom,sa8775p-gpi-dma', 'qcom,sm6350-gpi-dma']
+arch/arm64/boot/dts/qcom/qcs9100-ride-r3.dtb: dma-controller@b00000: compatible: 'oneOf' conditional failed, one must be fixed:
+	['qcom,sa8775p-gpi-dma', 'qcom,sm6350-gpi-dma'] is too long
+	'qcom,sa8775p-gpi-dma' is not one of ['qcom,sdm845-gpi-dma', 'qcom,sm6350-gpi-dma']
+	'qcom,sa8775p-gpi-dma' is not one of ['qcom,qcm2290-gpi-dma', 'qcom,qdu1000-gpi-dma', 'qcom,sar2130p-gpi-dma', 'qcom,sc7280-gpi-dma', 'qcom,sdx75-gpi-dma', 'qcom,sm6115-gpi-dma', 'qcom,sm6375-gpi-dma', 'qcom,sm8350-gpi-dma', 'qcom,sm8450-gpi-dma', 'qcom,sm8550-gpi-dma', 'qcom,sm8650-gpi-dma', 'qcom,x1e80100-gpi-dma']
+	'qcom,sa8775p-gpi-dma' is not one of ['qcom,sdm670-gpi-dma', 'qcom,sm6125-gpi-dma', 'qcom,sm8150-gpi-dma', 'qcom,sm8250-gpi-dma']
+	'qcom,sdm845-gpi-dma' was expected
+	from schema $id: http://devicetree.org/schemas/dma/qcom,gpi.yaml#
+arch/arm64/boot/dts/qcom/qcs9100-ride-r3.dtb: /soc@0/dma-controller@b00000: failed to match any schema with compatible: ['qcom,sa8775p-gpi-dma', 'qcom,sm6350-gpi-dma']
+arch/arm64/boot/dts/qcom/qcs9100-ride-r3.dtb: display-subsystem@ae00000: Unevaluated properties are not allowed ('phy@aec2a00', 'phy@aec5a00' were unexpected)
+	from schema $id: http://devicetree.org/schemas/display/msm/qcom,sa8775p-mdss.yaml#
+arch/arm64/boot/dts/qcom/qcs9100-ride-r3.dtb: display-controller@ae01000: clock-names:0: 'nrt_bus' was expected
+	from schema $id: http://devicetree.org/schemas/display/msm/qcom,sm8650-dpu.yaml#
+arch/arm64/boot/dts/qcom/qcs9100-ride-r3.dtb: display-controller@ae01000: Unevaluated properties are not allowed ('clock-names' was unexpected)
+	from schema $id: http://devicetree.org/schemas/display/msm/qcom,sm8650-dpu.yaml#
+arch/arm64/boot/dts/qcom/msm8992-lg-bullhead-rev-101.dtb: usb@f92f8800: interrupt-names:1: 'hs_phy_irq' was expected
+	from schema $id: http://devicetree.org/schemas/usb/qcom,dwc3.yaml#
+arch/arm64/boot/dts/qcom/msm8992-lg-bullhead-rev-101.dtb: usb@f92f8800: interrupt-names:2: 'dp_hs_phy_irq' was expected
+	from schema $id: http://devicetree.org/schemas/usb/qcom,dwc3.yaml#
+arch/arm64/boot/dts/qcom/msm8992-lg-bullhead-rev-101.dtb: usb@f92f8800: interrupt-names:3: 'dm_hs_phy_irq' was expected
+	from schema $id: http://devicetree.org/schemas/usb/qcom,dwc3.yaml#
+arch/arm64/boot/dts/qcom/sar2130p-qar2130p.dtb: /soc@0/phy@1c06000: failed to match any schema with compatible: ['qcom,sar2130p-qmp-gen3x2-pcie-phy']
+arch/arm64/boot/dts/qcom/sar2130p-qar2130p.dtb: /soc@0/phy@1c0e000: failed to match any schema with compatible: ['qcom,sar2130p-qmp-gen3x2-pcie-phy']
+arch/arm64/boot/dts/qcom/sar2130p-qar2130p.dtb: /soc@0/phy@88e8000: failed to match any schema with compatible: ['qcom,sar2130p-qmp-usb3-dp-phy']
+arch/arm64/boot/dts/qcom/sar2130p-qar2130p.dtb: qfprom@221c8000: compatible:0: 'qcom,sar2130p-qfprom' is not one of ['qcom,apq8064-qfprom', 'qcom,apq8084-qfprom', 'qcom,ipq5332-qfprom', 'qcom,ipq6018-qfprom', 'qcom,ipq8064-qfprom', 'qcom,ipq8074-qfprom', 'qcom,ipq9574-qfprom', 'qcom,msm8226-qfprom', 'qcom,msm8916-qfprom', 'qcom,msm8974-qfprom', 'qcom,msm8976-qfprom', 'qcom,msm8996-qfprom', 'qcom,msm8998-qfprom', 'qcom,qcm2290-qfprom', 'qcom,qcs404-qfprom', 'qcom,sc7180-qfprom', 'qcom,sc7280-qfprom', 'qcom,sc8280xp-qfprom', 'qcom,sdm630-qfprom', 'qcom,sdm670-qfprom', 'qcom,sdm845-qfprom', 'qcom,sm6115-qfprom', 'qcom,sm6350-qfprom', 'qcom,sm6375-qfprom', 'qcom,sm8150-qfprom', 'qcom,sm8250-qfprom', 'qcom,sm8450-qfprom', 'qcom,sm8550-qfprom', 'qcom,sm8650-qfprom']
+	from schema $id: http://devicetree.org/schemas/nvmem/qcom,qfprom.yaml#
+arch/arm64/boot/dts/qcom/sar2130p-qar2130p.dtb: qfprom@221c8000: Unevaluated properties are not allowed ('compatible' was unexpected)
+	from schema $id: http://devicetree.org/schemas/nvmem/qcom,qfprom.yaml#
+arch/arm64/boot/dts/qcom/sar2130p-qar2130p.dtb: /soc@0/qfprom@221c8000: failed to match any schema with compatible: ['qcom,sar2130p-qfprom', 'qcom,qfprom']
+arch/arm64/boot/dts/qcom/sdm630-sony-xperia-nile-voyager.dtb: pmic@3: led-controller@d300:compatible:0: 'qcom,pm660l-flash-led' is not one of ['qcom,pm6150l-flash-led', 'qcom,pm8150c-flash-led', 'qcom,pm8150l-flash-led', 'qcom,pm8350c-flash-led', 'qcom,pm8550-flash-led', 'qcom,pmi8998-flash-led']
+	from schema $id: http://devicetree.org/schemas/mfd/qcom,spmi-pmic.yaml#
+arch/arm64/boot/dts/qcom/sdm630-sony-xperia-nile-voyager.dtb: led-controller@d300: compatible:0: 'qcom,pm660l-flash-led' is not one of ['qcom,pm6150l-flash-led', 'qcom,pm8150c-flash-led', 'qcom,pm8150l-flash-led', 'qcom,pm8350c-flash-led', 'qcom,pm8550-flash-led', 'qcom,pmi8998-flash-led']
+	from schema $id: http://devicetree.org/schemas/leds/qcom,spmi-flash-led.yaml#
+arch/arm64/boot/dts/qcom/sdm630-sony-xperia-nile-voyager.dtb: /soc@0/spmi@800f000/pmic@3/led-controller@d300: failed to match any schema with compatible: ['qcom,pm660l-flash-led', 'qcom,spmi-flash-led']
+arch/arm64/boot/dts/qcom/sm8350-hdk.dtb: display-subsystem@ae00000: interconnects: [[134, 7, 0, 88, 1, 0], [134, 8, 0, 88, 1, 0], [89, 2, 3, 90, 16, 3]] is too long
+	from schema $id: http://devicetree.org/schemas/display/msm/qcom,sm8350-mdss.yaml#
+arch/arm64/boot/dts/qcom/x1e80100-microsoft-romulus15.dtb: /soc@0/geniqup@bc0000/i2c@b8c000/typec-mux@8: failed to match any schema with compatible: ['parade,ps8830']
+arch/arm64/boot/dts/qcom/x1e80100-microsoft-romulus15.dtb: /soc@0/geniqup@bc0000/i2c@b9c000/typec-mux@8: failed to match any schema with compatible: ['parade,ps8830']
+arch/arm64/boot/dts/qcom/qcs615-ride.dtb: scm: compatible:0: 'qcom,scm-qcs615' is not one of ['qcom,scm-apq8064', 'qcom,scm-apq8084', 'qcom,scm-ipq4019', 'qcom,scm-ipq5018', 'qcom,scm-ipq5332', 'qcom,scm-ipq6018', 'qcom,scm-ipq806x', 'qcom,scm-ipq8074', 'qcom,scm-ipq9574', 'qcom,scm-mdm9607', 'qcom,scm-msm8226', 'qcom,scm-msm8660', 'qcom,scm-msm8916', 'qcom,scm-msm8953', 'qcom,scm-msm8960', 'qcom,scm-msm8974', 'qcom,scm-msm8976', 'qcom,scm-msm8994', 'qcom,scm-msm8996', 'qcom,scm-msm8998', 'qcom,scm-qcm2290', 'qcom,scm-qcs8300', 'qcom,scm-qdu1000', 'qcom,scm-sa8255p', 'qcom,scm-sa8775p', 'qcom,scm-sar2130p', 'qcom,scm-sc7180', 'qcom,scm-sc7280', 'qcom,scm-sc8180x', 'qcom,scm-sc8280xp', 'qcom,scm-sdm670', 'qcom,scm-sdm845', 'qcom,scm-sdx55', 'qcom,scm-sdx65', 'qcom,scm-sdx75', 'qcom,scm-sm6115', 'qcom,scm-sm6125', 'qcom,scm-sm6350', 'qcom,scm-sm6375', 'qcom,scm-sm7150', 'qcom,scm-sm8150', 'qcom,scm-sm8250', 'qcom,scm-sm8350', 'qcom,scm-sm8450', 'qcom,scm-sm8550', 'qcom,scm-sm8650', 'qc
+ om,scm-sm8750', 'qcom,scm-qcs404', 'qcom,scm-x1e80100']
+	from schema $id: http://devicetree.org/schemas/firmware/qcom,scm.yaml#
+arch/arm64/boot/dts/qcom/qcs615-ride.dtb: /firmware/scm: failed to match any schema with compatible: ['qcom,scm-qcs615', 'qcom,scm']
+arch/arm64/boot/dts/qcom/qcs615-ride.dtb: clock-controller@100000: 'clock-names' is a required property
+	from schema $id: http://devicetree.org/schemas/clock/qcom,qcs615-gcc.yaml#
+arch/arm64/boot/dts/qcom/qcs615-ride.dtb: efuse@780000: compatible:0: 'qcom,qcs615-qfprom' is not one of ['qcom,apq8064-qfprom', 'qcom,apq8084-qfprom', 'qcom,ipq5332-qfprom', 'qcom,ipq6018-qfprom', 'qcom,ipq8064-qfprom', 'qcom,ipq8074-qfprom', 'qcom,ipq9574-qfprom', 'qcom,msm8226-qfprom', 'qcom,msm8916-qfprom', 'qcom,msm8974-qfprom', 'qcom,msm8976-qfprom', 'qcom,msm8996-qfprom', 'qcom,msm8998-qfprom', 'qcom,qcm2290-qfprom', 'qcom,qcs404-qfprom', 'qcom,sc7180-qfprom', 'qcom,sc7280-qfprom', 'qcom,sc8280xp-qfprom', 'qcom,sdm630-qfprom', 'qcom,sdm670-qfprom', 'qcom,sdm845-qfprom', 'qcom,sm6115-qfprom', 'qcom,sm6350-qfprom', 'qcom,sm6375-qfprom', 'qcom,sm8150-qfprom', 'qcom,sm8250-qfprom', 'qcom,sm8450-qfprom', 'qcom,sm8550-qfprom', 'qcom,sm8650-qfprom']
+	from schema $id: http://devicetree.org/schemas/nvmem/qcom,qfprom.yaml#
+arch/arm64/boot/dts/qcom/qcs615-ride.dtb: efuse@780000: Unevaluated properties are not allowed ('compatible' was unexpected)
+	from schema $id: http://devicetree.org/schemas/nvmem/qcom,qfprom.yaml#
+arch/arm64/boot/dts/qcom/qcs615-ride.dtb: /soc@0/efuse@780000: failed to match any schema with compatible: ['qcom,qcs615-qfprom', 'qcom,qfprom']
+arch/arm64/boot/dts/qcom/qcs615-ride.dtb: dma-controller@800000: compatible: 'oneOf' conditional failed, one must be fixed:
+	['qcom,qcs615-gpi-dma', 'qcom,sdm845-gpi-dma'] is too long
+	'qcom,qcs615-gpi-dma' is not one of ['qcom,sdm845-gpi-dma', 'qcom,sm6350-gpi-dma']
+	'qcom,qcs615-gpi-dma' is not one of ['qcom,qcm2290-gpi-dma', 'qcom,qdu1000-gpi-dma', 'qcom,sar2130p-gpi-dma', 'qcom,sc7280-gpi-dma', 'qcom,sdx75-gpi-dma', 'qcom,sm6115-gpi-dma', 'qcom,sm6375-gpi-dma', 'qcom,sm8350-gpi-dma', 'qcom,sm8450-gpi-dma', 'qcom,sm8550-gpi-dma', 'qcom,sm8650-gpi-dma', 'qcom,x1e80100-gpi-dma']
+	'qcom,qcs615-gpi-dma' is not one of ['qcom,sdm670-gpi-dma', 'qcom,sm6125-gpi-dma', 'qcom,sm8150-gpi-dma', 'qcom,sm8250-gpi-dma']
+	'qcom,sm6350-gpi-dma' was expected
+	from schema $id: http://devicetree.org/schemas/dma/qcom,gpi.yaml#
+arch/arm64/boot/dts/qcom/qcs615-ride.dtb: /soc@0/dma-controller@800000: failed to match any schema with compatible: ['qcom,qcs615-gpi-dma', 'qcom,sdm845-gpi-dma']
+arch/arm64/boot/dts/qcom/qcs615-ride.dtb: dma-controller@a00000: compatible: 'oneOf' conditional failed, one must be fixed:
+	['qcom,qcs615-gpi-dma', 'qcom,sdm845-gpi-dma'] is too long
+	'qcom,qcs615-gpi-dma' is not one of ['qcom,sdm845-gpi-dma', 'qcom,sm6350-gpi-dma']
+	'qcom,qcs615-gpi-dma' is not one of ['qcom,qcm2290-gpi-dma', 'qcom,qdu1000-gpi-dma', 'qcom,sar2130p-gpi-dma', 'qcom,sc7280-gpi-dma', 'qcom,sdx75-gpi-dma', 'qcom,sm6115-gpi-dma', 'qcom,sm6375-gpi-dma', 'qcom,sm8350-gpi-dma', 'qcom,sm8450-gpi-dma', 'qcom,sm8550-gpi-dma', 'qcom,sm8650-gpi-dma', 'qcom,x1e80100-gpi-dma']
+	'qcom,qcs615-gpi-dma' is not one of ['qcom,sdm670-gpi-dma', 'qcom,sm6125-gpi-dma', 'qcom,sm8150-gpi-dma', 'qcom,sm8250-gpi-dma']
+	'qcom,sm6350-gpi-dma' was expected
+	from schema $id: http://devicetree.org/schemas/dma/qcom,gpi.yaml#
+arch/arm64/boot/dts/qcom/qcs615-ride.dtb: /soc@0/dma-controller@a00000: failed to match any schema with compatible: ['qcom,qcs615-gpi-dma', 'qcom,sdm845-gpi-dma']
+arch/arm64/boot/dts/qcom/qcs615-ride.dtb: pmu@90b6300: compatible: 'oneOf' conditional failed, one must be fixed:
+	['qcom,qcs615-cpu-bwmon', 'qcom,sdm845-bwmon'] is too long
+	'qcom,msm8998-bwmon' was expected
+	'qcom,qcs615-cpu-bwmon' is not one of ['qcom,qcm2290-cpu-bwmon', 'qcom,qcs8300-cpu-bwmon', 'qcom,sa8775p-cpu-bwmon', 'qcom,sc7180-cpu-bwmon', 'qcom,sc7280-cpu-bwmon', 'qcom,sc8280xp-cpu-bwmon', 'qcom,sdm845-cpu-bwmon', 'qcom,sm6115-cpu-bwmon', 'qcom,sm6350-llcc-bwmon', 'qcom,sm8250-cpu-bwmon', 'qcom,sm8550-cpu-bwmon', 'qcom,sm8650-cpu-bwmon', 'qcom,x1e80100-cpu-bwmon']
+	'qcom,qcs615-cpu-bwmon' is not one of ['qcom,qcs8300-llcc-bwmon', 'qcom,sa8775p-llcc-bwmon', 'qcom,sc7180-llcc-bwmon', 'qcom,sc8280xp-llcc-bwmon', 'qcom,sm6350-cpu-bwmon', 'qcom,sm8250-llcc-bwmon', 'qcom,sm8550-llcc-bwmon', 'qcom,sm8650-llcc-bwmon', 'qcom,x1e80100-llcc-bwmon']
+	'qcom,sc7280-llcc-bwmon' was expected
+	'qcom,sdm845-llcc-bwmon' was expected
+	from schema $id: http://devicetree.org/schemas/interconnect/qcom,msm8998-bwmon.yaml#
+arch/arm64/boot/dts/qcom/qcs615-ride.dtb: /soc@0/pmu@90b6300: failed to match any schema with compatible: ['qcom,qcs615-cpu-bwmon', 'qcom,sdm845-bwmon']
+arch/arm64/boot/dts/qcom/qcs615-ride.dtb: pmu@90cd000: compatible: 'oneOf' conditional failed, one must be fixed:
+	['qcom,qcs615-llcc-bwmon', 'qcom,sc7280-llcc-bwmon'] is too long
+	'qcom,msm8998-bwmon' was expected
+	'qcom,qcs615-llcc-bwmon' is not one of ['qcom,qcm2290-cpu-bwmon', 'qcom,qcs8300-cpu-bwmon', 'qcom,sa8775p-cpu-bwmon', 'qcom,sc7180-cpu-bwmon', 'qcom,sc7280-cpu-bwmon', 'qcom,sc8280xp-cpu-bwmon', 'qcom,sdm845-cpu-bwmon', 'qcom,sm6115-cpu-bwmon', 'qcom,sm6350-llcc-bwmon', 'qcom,sm8250-cpu-bwmon', 'qcom,sm8550-cpu-bwmon', 'qcom,sm8650-cpu-bwmon', 'qcom,x1e80100-cpu-bwmon']
+	'qcom,qcs615-llcc-bwmon' is not one of ['qcom,qcs8300-llcc-bwmon', 'qcom,sa8775p-llcc-bwmon', 'qcom,sc7180-llcc-bwmon', 'qcom,sc8280xp-llcc-bwmon', 'qcom,sm6350-cpu-bwmon', 'qcom,sm8250-llcc-bwmon', 'qcom,sm8550-llcc-bwmon', 'qcom,sm8650-llcc-bwmon', 'qcom,x1e80100-llcc-bwmon']
+	'qcom,sc7280-llcc-bwmon' was expected
+	'qcom,sdm845-llcc-bwmon' was expected
+	'qcom,sdm845-bwmon' was expected
+	from schema $id: http://devicetree.org/schemas/interconnect/qcom,msm8998-bwmon.yaml#
+arch/arm64/boot/dts/qcom/qcs615-ride.dtb: /soc@0/pmu@90cd000: failed to match any schema with compatible: ['qcom,qcs615-llcc-bwmon', 'qcom,sc7280-llcc-bwmon']
+arch/arm64/boot/dts/qcom/qcs615-ride.dtb: interrupt-controller@b220000: compatible:0: 'qcom,qcs615-pdc' is not one of ['qcom,qdu1000-pdc', 'qcom,sa8255p-pdc', 'qcom,sa8775p-pdc', 'qcom,sar2130p-pdc', 'qcom,sc7180-pdc', 'qcom,sc7280-pdc', 'qcom,sc8180x-pdc', 'qcom,sc8280xp-pdc', 'qcom,sdm670-pdc', 'qcom,sdm845-pdc', 'qcom,sdx55-pdc', 'qcom,sdx65-pdc', 'qcom,sdx75-pdc', 'qcom,sm4450-pdc', 'qcom,sm6350-pdc', 'qcom,sm8150-pdc', 'qcom,sm8250-pdc', 'qcom,sm8350-pdc', 'qcom,sm8450-pdc', 'qcom,sm8550-pdc', 'qcom,sm8650-pdc', 'qcom,x1e80100-pdc']
+	from schema $id: http://devicetree.org/schemas/interrupt-controller/qcom,pdc.yaml#
+arch/arm64/boot/dts/qcom/qcs615-ride.dtb: /soc@0/interrupt-controller@b220000: failed to match any schema with compatible: ['qcom,qcs615-pdc', 'qcom,pdc']
+arch/arm64/boot/dts/qcom/qcs615-ride.dtb: power-controller@c300000: compatible:0: 'qcom,qcs615-aoss-qmp' is not one of ['qcom,qcs8300-aoss-qmp', 'qcom,qdu1000-aoss-qmp', 'qcom,sa8255p-aoss-qmp', 'qcom,sa8775p-aoss-qmp', 'qcom,sar2130p-aoss-qmp', 'qcom,sc7180-aoss-qmp', 'qcom,sc7280-aoss-qmp', 'qcom,sc8180x-aoss-qmp', 'qcom,sc8280xp-aoss-qmp', 'qcom,sdx75-aoss-qmp', 'qcom,sdm845-aoss-qmp', 'qcom,sm6350-aoss-qmp', 'qcom,sm8150-aoss-qmp', 'qcom,sm8250-aoss-qmp', 'qcom,sm8350-aoss-qmp', 'qcom,sm8450-aoss-qmp', 'qcom,sm8550-aoss-qmp', 'qcom,sm8650-aoss-qmp', 'qcom,sm8750-aoss-qmp', 'qcom,x1e80100-aoss-qmp']
+	from schema $id: http://devicetree.org/schemas/soc/qcom/qcom,aoss-qmp.yaml#
+arch/arm64/boot/dts/qcom/qcs615-ride.dtb: power-controller@c300000: '#power-domain-cells' does not match any of the regexes: '^(cx|mx|ebi)$', 'pinctrl-[0-9]+'
+	from schema $id: http://devicetree.org/schemas/soc/qcom/qcom,aoss-qmp.yaml#
+arch/arm64/boot/dts/qcom/qcs615-ride.dtb: /soc@0/power-controller@c300000: failed to match any schema with compatible: ['qcom,qcs615-aoss-qmp', 'qcom,aoss-qmp']
+arch/arm64/boot/dts/qcom/qcs615-ride.dtb: mailbox@17c00000: compatible: 'oneOf' conditional failed, one must be fixed:
+	['qcom,qcs615-apss-shared', 'qcom,sdm845-apss-shared'] is too short
+	['qcom,qcs615-apss-shared', 'qcom,sdm845-apss-shared'] is too long
+	'qcom,qcs615-apss-shared' is not one of ['qcom,ipq5018-apcs-apps-global', 'qcom,ipq5332-apcs-apps-global', 'qcom,ipq8074-apcs-apps-global', 'qcom,ipq9574-apcs-apps-global']
+	'qcom,qcs615-apss-shared' is not one of ['qcom,qcs404-apcs-apps-global']
+	'qcom,qcs615-apss-shared' is not one of ['qcom,msm8974-apcs-kpss-global', 'qcom,msm8976-apcs-kpss-global']
+	'qcom,qcs615-apss-shared' is not one of ['qcom,msm8998-apcs-hmss-global', 'qcom,sdm660-apcs-hmss-global', 'qcom,sm4250-apcs-hmss-global', 'qcom,sm6115-apcs-hmss-global', 'qcom,sm6125-apcs-hmss-global']
+	'qcom,qcs615-apss-shared' is not one of ['qcom,sc7180-apss-shared', 'qcom,sc8180x-apss-shared', 'qcom,sm8150-apss-shared']
+	'qcom,qcs615-apss-shared' is not one of ['qcom,msm8916-apcs-kpss-global', 'qcom,msm8939-apcs-kpss-global', 'qcom,msm8953-apcs-kpss-global', 'qcom,msm8994-apcs-kpss-global', 'qcom,sdx55-apcs-gcc']
+	'qcom,qcs615-apss-shared' is not one of ['qcom,ipq6018-apcs-apps-global', 'qcom,msm8996-apcs-hmss-global', 'qcom,qcm2290-apcs-hmss-global', 'qcom,sdm845-apss-shared']
+	'qcom,ipq6018-apcs-apps-global' was expected
+	'qcom,msm8916-apcs-kpss-global' was expected
+	'qcom,msm8994-apcs-kpss-global' was expected
+	'syscon' was expected
+	from schema $id: http://devicetree.org/schemas/mailbox/qcom,apcs-kpss-global.yaml#
+arch/arm64/boot/dts/qcom/qcs615-ride.dtb: /soc@0/mailbox@17c00000: failed to match any schema with compatible: ['qcom,qcs615-apss-shared', 'qcom,sdm845-apss-shared']
+arch/arm64/boot/dts/qcom/qcs615-ride.dtb: watchdog@17c10000: compatible: 'oneOf' conditional failed, one must be fixed:
+	['qcom,apss-wdt-qcs615', 'qcom,kpss-wdt'] is too long
+	['qcom,apss-wdt-qcs615', 'qcom,kpss-wdt'] is too short
+	'qcom,apss-wdt-qcs615' is not one of ['qcom,kpss-wdt-ipq4019', 'qcom,apss-wdt-ipq5018', 'qcom,apss-wdt-ipq5332', 'qcom,apss-wdt-ipq9574', 'qcom,apss-wdt-msm8226', 'qcom,apss-wdt-msm8974', 'qcom,apss-wdt-msm8994', 'qcom,apss-wdt-qcm2290', 'qcom,apss-wdt-qcs404', 'qcom,apss-wdt-sa8255p', 'qcom,apss-wdt-sa8775p', 'qcom,apss-wdt-sc7180', 'qcom,apss-wdt-sc7280', 'qcom,apss-wdt-sc8180x', 'qcom,apss-wdt-sc8280xp', 'qcom,apss-wdt-sdm845', 'qcom,apss-wdt-sdx55', 'qcom,apss-wdt-sdx65', 'qcom,apss-wdt-sm6115', 'qcom,apss-wdt-sm6350', 'qcom,apss-wdt-sm8150', 'qcom,apss-wdt-sm8250']
+	'qcom,kpss-wdt' was expected
+	'qcom,scss-timer' was expected
+	'qcom,apss-wdt-qcs615' is not one of ['qcom,kpss-wdt-apq8064', 'qcom,kpss-wdt-ipq8064', 'qcom,kpss-wdt-mdm9615', 'qcom,kpss-wdt-msm8960']
+	'qcom,msm-timer' was expected
+	'qcom,kpss-timer' was expected
+	from schema $id: http://devicetree.org/schemas/watchdog/qcom-wdt.yaml#
+arch/arm64/boot/dts/qcom/qcs615-ride.dtb: /soc@0/watchdog@17c10000: failed to match any schema with compatible: ['qcom,apss-wdt-qcs615', 'qcom,kpss-wdt']
+arch/arm64/boot/dts/qcom/qcs615-ride.dtb: rsc@18200000: clock-controller:compatible:0: 'qcom,qcs615-rpmh-clk' is not one of ['qcom,qdu1000-rpmh-clk', 'qcom,sa8775p-rpmh-clk', 'qcom,sar2130p-rpmh-clk', 'qcom,sc7180-rpmh-clk', 'qcom,sc7280-rpmh-clk', 'qcom,sc8180x-rpmh-clk', 'qcom,sc8280xp-rpmh-clk', 'qcom,sdm670-rpmh-clk', 'qcom,sdm845-rpmh-clk', 'qcom,sdx55-rpmh-clk', 'qcom,sdx65-rpmh-clk', 'qcom,sdx75-rpmh-clk', 'qcom,sm4450-rpmh-clk', 'qcom,sm6350-rpmh-clk', 'qcom,sm8150-rpmh-clk', 'qcom,sm8250-rpmh-clk', 'qcom,sm8350-rpmh-clk', 'qcom,sm8450-rpmh-clk', 'qcom,sm8550-rpmh-clk', 'qcom,sm8650-rpmh-clk', 'qcom,x1e80100-rpmh-clk']
+	from schema $id: http://devicetree.org/schemas/soc/qcom/qcom,rpmh-rsc.yaml#
+arch/arm64/boot/dts/qcom/qcs615-ride.dtb: /soc@0/rsc@18200000/clock-controller: failed to match any schema with compatible: ['qcom,qcs615-rpmh-clk']
+arch/arm64/boot/dts/qcom/qcs615-ride.dtb: usb@a6f8800: compatible:0: 'qcom,qcs615-dwc3' is not one of ['qcom,ipq4019-dwc3', 'qcom,ipq5018-dwc3', 'qcom,ipq5332-dwc3', 'qcom,ipq6018-dwc3', 'qcom,ipq8064-dwc3', 'qcom,ipq8074-dwc3', 'qcom,ipq9574-dwc3', 'qcom,msm8953-dwc3', 'qcom,msm8994-dwc3', 'qcom,msm8996-dwc3', 'qcom,msm8998-dwc3', 'qcom,qcm2290-dwc3', 'qcom,qcs404-dwc3', 'qcom,qcs8300-dwc3', 'qcom,qdu1000-dwc3', 'qcom,sa8775p-dwc3', 'qcom,sar2130p-dwc3', 'qcom,sc7180-dwc3', 'qcom,sc7280-dwc3', 'qcom,sc8180x-dwc3', 'qcom,sc8180x-dwc3-mp', 'qcom,sc8280xp-dwc3', 'qcom,sc8280xp-dwc3-mp', 'qcom,sdm660-dwc3', 'qcom,sdm670-dwc3', 'qcom,sdm845-dwc3', 'qcom,sdx55-dwc3', 'qcom,sdx65-dwc3', 'qcom,sdx75-dwc3', 'qcom,sm4250-dwc3', 'qcom,sm6115-dwc3', 'qcom,sm6125-dwc3', 'qcom,sm6350-dwc3', 'qcom,sm6375-dwc3', 'qcom,sm8150-dwc3', 'qcom,sm8250-dwc3', 'qcom,sm8350-dwc3', 'qcom,sm8450-dwc3', 'qcom,sm8550-dwc3', 'qcom,sm8650-dwc3', 'qcom,x1e80100-dwc3', 'qcom,x1e80100-dwc3-mp']
+	from schema $id: http://devicetree.org/schemas/usb/qcom,dwc3.yaml#
+arch/arm64/boot/dts/qcom/qcs615-ride.dtb: /soc@0/usb@a6f8800: failed to match any schema with compatible: ['qcom,qcs615-dwc3', 'qcom,dwc3']
+arch/arm64/boot/dts/qcom/sa8775p-ride-r3.dtb: dma-controller@800000: compatible: 'oneOf' conditional failed, one must be fixed:
+	['qcom,sa8775p-gpi-dma', 'qcom,sm6350-gpi-dma'] is too long
+	'qcom,sa8775p-gpi-dma' is not one of ['qcom,sdm845-gpi-dma', 'qcom,sm6350-gpi-dma']
+	'qcom,sa8775p-gpi-dma' is not one of ['qcom,qcm2290-gpi-dma', 'qcom,qdu1000-gpi-dma', 'qcom,sar2130p-gpi-dma', 'qcom,sc7280-gpi-dma', 'qcom,sdx75-gpi-dma', 'qcom,sm6115-gpi-dma', 'qcom,sm6375-gpi-dma', 'qcom,sm8350-gpi-dma', 'qcom,sm8450-gpi-dma', 'qcom,sm8550-gpi-dma', 'qcom,sm8650-gpi-dma', 'qcom,x1e80100-gpi-dma']
+	'qcom,sa8775p-gpi-dma' is not one of ['qcom,sdm670-gpi-dma', 'qcom,sm6125-gpi-dma', 'qcom,sm8150-gpi-dma', 'qcom,sm8250-gpi-dma']
+	'qcom,sdm845-gpi-dma' was expected
+	from schema $id: http://devicetree.org/schemas/dma/qcom,gpi.yaml#
+arch/arm64/boot/dts/qcom/sa8775p-ride-r3.dtb: /soc@0/dma-controller@800000: failed to match any schema with compatible: ['qcom,sa8775p-gpi-dma', 'qcom,sm6350-gpi-dma']
+arch/arm64/boot/dts/qcom/sa8775p-ride-r3.dtb: dma-controller@900000: compatible: 'oneOf' conditional failed, one must be fixed:
+	['qcom,sa8775p-gpi-dma', 'qcom,sm6350-gpi-dma'] is too long
+	'qcom,sa8775p-gpi-dma' is not one of ['qcom,sdm845-gpi-dma', 'qcom,sm6350-gpi-dma']
+	'qcom,sa8775p-gpi-dma' is not one of ['qcom,qcm2290-gpi-dma', 'qcom,qdu1000-gpi-dma', 'qcom,sar2130p-gpi-dma', 'qcom,sc7280-gpi-dma', 'qcom,sdx75-gpi-dma', 'qcom,sm6115-gpi-dma', 'qcom,sm6375-gpi-dma', 'qcom,sm8350-gpi-dma', 'qcom,sm8450-gpi-dma', 'qcom,sm8550-gpi-dma', 'qcom,sm8650-gpi-dma', 'qcom,x1e80100-gpi-dma']
+	'qcom,sa8775p-gpi-dma' is not one of ['qcom,sdm670-gpi-dma', 'qcom,sm6125-gpi-dma', 'qcom,sm8150-gpi-dma', 'qcom,sm8250-gpi-dma']
+	'qcom,sdm845-gpi-dma' was expected
+	from schema $id: http://devicetree.org/schemas/dma/qcom,gpi.yaml#
+arch/arm64/boot/dts/qcom/sa8775p-ride-r3.dtb: /soc@0/dma-controller@900000: failed to match any schema with compatible: ['qcom,sa8775p-gpi-dma', 'qcom,sm6350-gpi-dma']
+arch/arm64/boot/dts/qcom/sa8775p-ride-r3.dtb: dma-controller@a00000: compatible: 'oneOf' conditional failed, one must be fixed:
+	['qcom,sa8775p-gpi-dma', 'qcom,sm6350-gpi-dma'] is too long
+	'qcom,sa8775p-gpi-dma' is not one of ['qcom,sdm845-gpi-dma', 'qcom,sm6350-gpi-dma']
+	'qcom,sa8775p-gpi-dma' is not one of ['qcom,qcm2290-gpi-dma', 'qcom,qdu1000-gpi-dma', 'qcom,sar2130p-gpi-dma', 'qcom,sc7280-gpi-dma', 'qcom,sdx75-gpi-dma', 'qcom,sm6115-gpi-dma', 'qcom,sm6375-gpi-dma', 'qcom,sm8350-gpi-dma', 'qcom,sm8450-gpi-dma', 'qcom,sm8550-gpi-dma', 'qcom,sm8650-gpi-dma', 'qcom,x1e80100-gpi-dma']
+	'qcom,sa8775p-gpi-dma' is not one of ['qcom,sdm670-gpi-dma', 'qcom,sm6125-gpi-dma', 'qcom,sm8150-gpi-dma', 'qcom,sm8250-gpi-dma']
+	'qcom,sdm845-gpi-dma' was expected
+	from schema $id: http://devicetree.org/schemas/dma/qcom,gpi.yaml#
+arch/arm64/boot/dts/qcom/sa8775p-ride-r3.dtb: /soc@0/dma-controller@a00000: failed to match any schema with compatible: ['qcom,sa8775p-gpi-dma', 'qcom,sm6350-gpi-dma']
+arch/arm64/boot/dts/qcom/sa8775p-ride-r3.dtb: dma-controller@b00000: compatible: 'oneOf' conditional failed, one must be fixed:
+	['qcom,sa8775p-gpi-dma', 'qcom,sm6350-gpi-dma'] is too long
+	'qcom,sa8775p-gpi-dma' is not one of ['qcom,sdm845-gpi-dma', 'qcom,sm6350-gpi-dma']
+	'qcom,sa8775p-gpi-dma' is not one of ['qcom,qcm2290-gpi-dma', 'qcom,qdu1000-gpi-dma', 'qcom,sar2130p-gpi-dma', 'qcom,sc7280-gpi-dma', 'qcom,sdx75-gpi-dma', 'qcom,sm6115-gpi-dma', 'qcom,sm6375-gpi-dma', 'qcom,sm8350-gpi-dma', 'qcom,sm8450-gpi-dma', 'qcom,sm8550-gpi-dma', 'qcom,sm8650-gpi-dma', 'qcom,x1e80100-gpi-dma']
+	'qcom,sa8775p-gpi-dma' is not one of ['qcom,sdm670-gpi-dma', 'qcom,sm6125-gpi-dma', 'qcom,sm8150-gpi-dma', 'qcom,sm8250-gpi-dma']
+	'qcom,sdm845-gpi-dma' was expected
+	from schema $id: http://devicetree.org/schemas/dma/qcom,gpi.yaml#
+arch/arm64/boot/dts/qcom/sa8775p-ride-r3.dtb: /soc@0/dma-controller@b00000: failed to match any schema with compatible: ['qcom,sa8775p-gpi-dma', 'qcom,sm6350-gpi-dma']
+arch/arm64/boot/dts/qcom/qcs8300-ride.dtb: efuse@784000: compatible:0: 'qcom,qcs8300-qfprom' is not one of ['qcom,apq8064-qfprom', 'qcom,apq8084-qfprom', 'qcom,ipq5332-qfprom', 'qcom,ipq6018-qfprom', 'qcom,ipq8064-qfprom', 'qcom,ipq8074-qfprom', 'qcom,ipq9574-qfprom', 'qcom,msm8226-qfprom', 'qcom,msm8916-qfprom', 'qcom,msm8974-qfprom', 'qcom,msm8976-qfprom', 'qcom,msm8996-qfprom', 'qcom,msm8998-qfprom', 'qcom,qcm2290-qfprom', 'qcom,qcs404-qfprom', 'qcom,sc7180-qfprom', 'qcom,sc7280-qfprom', 'qcom,sc8280xp-qfprom', 'qcom,sdm630-qfprom', 'qcom,sdm670-qfprom', 'qcom,sdm845-qfprom', 'qcom,sm6115-qfprom', 'qcom,sm6350-qfprom', 'qcom,sm6375-qfprom', 'qcom,sm8150-qfprom', 'qcom,sm8250-qfprom', 'qcom,sm8450-qfprom', 'qcom,sm8550-qfprom', 'qcom,sm8650-qfprom']
+	from schema $id: http://devicetree.org/schemas/nvmem/qcom,qfprom.yaml#
+arch/arm64/boot/dts/qcom/qcs8300-ride.dtb: efuse@784000: Unevaluated properties are not allowed ('compatible' was unexpected)
+	from schema $id: http://devicetree.org/schemas/nvmem/qcom,qfprom.yaml#
+arch/arm64/boot/dts/qcom/qcs8300-ride.dtb: /soc@0/efuse@784000: failed to match any schema with compatible: ['qcom,qcs8300-qfprom', 'qcom,qfprom']
+arch/arm64/boot/dts/qcom/qcs8300-ride.dtb: rng@10d2000: compatible: 'oneOf' conditional failed, one must be fixed:
+	['qcom,qcs8300-trng', 'qcom,trng'] is too long
+	'qcom,qcs8300-trng' is not one of ['qcom,prng', 'qcom,prng-ee']
+	'qcom,qcs8300-trng' is not one of ['qcom,sa8255p-trng', 'qcom,sa8775p-trng', 'qcom,sc7280-trng', 'qcom,sm8450-trng', 'qcom,sm8550-trng', 'qcom,sm8650-trng']
+	from schema $id: http://devicetree.org/schemas/crypto/qcom,prng.yaml#
+arch/arm64/boot/dts/qcom/qcs8300-ride.dtb: /soc@0/rng@10d2000: failed to match any schema with compatible: ['qcom,qcs8300-trng', 'qcom,trng']
+arch/arm64/boot/dts/qcom/qcs8300-ride.dtb: crypto@1dfa000: compatible: 'oneOf' conditional failed, one must be fixed:
+	['qcom,qcs8300-qce', 'qcom,qce'] is too long
+	['qcom,qcs8300-qce', 'qcom,qce'] is too short
+	'qcom,crypto-v5.1' was expected
+	'qcom,crypto-v5.4' was expected
+	'qcom,qcs8300-qce' is not one of ['qcom,ipq4019-qce', 'qcom,sm8150-qce']
+	'qcom,qcs8300-qce' is not one of ['qcom,ipq6018-qce', 'qcom,ipq8074-qce', 'qcom,ipq9574-qce', 'qcom,msm8996-qce', 'qcom,qcm2290-qce', 'qcom,sdm845-qce', 'qcom,sm6115-qce']
+	'qcom,qcs8300-qce' is not one of ['qcom,sa8775p-qce', 'qcom,sc7280-qce', 'qcom,sm6350-qce', 'qcom,sm8250-qce', 'qcom,sm8350-qce', 'qcom,sm8450-qce', 'qcom,sm8550-qce', 'qcom,sm8650-qce']
+	'qcom,ipq4019-qce' was expected
+	'qcom,sm8150-qce' was expected
+	from schema $id: http://devicetree.org/schemas/crypto/qcom-qce.yaml#
+arch/arm64/boot/dts/qcom/qcs8300-ride.dtb: /soc@0/crypto@1dfa000: failed to match any schema with compatible: ['qcom,qcs8300-qce', 'qcom,qce']
+arch/arm64/boot/dts/qcom/qcs8300-ride.dtb: crypto@1d88000: compatible:0: 'qcom,qcs8300-inline-crypto-engine' is not one of ['qcom,sa8775p-inline-crypto-engine', 'qcom,sc7180-inline-crypto-engine', 'qcom,sc7280-inline-crypto-engine', 'qcom,sm8450-inline-crypto-engine', 'qcom,sm8550-inline-crypto-engine', 'qcom,sm8650-inline-crypto-engine']
+	from schema $id: http://devicetree.org/schemas/crypto/qcom,inline-crypto-engine.yaml#
+arch/arm64/boot/dts/qcom/qcs8300-ride.dtb: /soc@0/crypto@1d88000: failed to match any schema with compatible: ['qcom,qcs8300-inline-crypto-engine', 'qcom,inline-crypto-engine']
+arch/arm64/boot/dts/qcom/qcs8300-ride.dtb: remoteproc@3000000: compatible:0: 'qcom,qcs8300-adsp-pas' is not one of ['qcom,sa8775p-adsp-pas', 'qcom,sa8775p-cdsp0-pas', 'qcom,sa8775p-cdsp1-pas', 'qcom,sa8775p-gpdsp0-pas', 'qcom,sa8775p-gpdsp1-pas']
+	from schema $id: http://devicetree.org/schemas/remoteproc/qcom,sa8775p-pas.yaml#
+arch/arm64/boot/dts/qcom/qcs8300-ride.dtb: remoteproc@3000000: compatible: ['qcom,qcs8300-adsp-pas', 'qcom,sa8775p-adsp-pas'] is too long
+	from schema $id: http://devicetree.org/schemas/remoteproc/qcom,sa8775p-pas.yaml#
+arch/arm64/boot/dts/qcom/qcs8300-ride.dtb: remoteproc@3000000: Unevaluated properties are not allowed ('compatible' was unexpected)
+	from schema $id: http://devicetree.org/schemas/remoteproc/qcom,sa8775p-pas.yaml#
+arch/arm64/boot/dts/qcom/qcs8300-ride.dtb: /soc@0/remoteproc@3000000: failed to match any schema with compatible: ['qcom,qcs8300-adsp-pas', 'qcom,sa8775p-adsp-pas']
+arch/arm64/boot/dts/qcom/sa8775p-ride-r3.dtb: display-subsystem@ae00000: Unevaluated properties are not allowed ('phy@aec2a00', 'phy@aec5a00' were unexpected)
+	from schema $id: http://devicetree.org/schemas/display/msm/qcom,sa8775p-mdss.yaml#
+arch/arm64/boot/dts/qcom/sa8775p-ride-r3.dtb: display-controller@ae01000: clock-names:0: 'nrt_bus' was expected
+	from schema $id: http://devicetree.org/schemas/display/msm/qcom,sm8650-dpu.yaml#
+arch/arm64/boot/dts/qcom/sa8775p-ride-r3.dtb: display-controller@ae01000: Unevaluated properties are not allowed ('clock-names' was unexpected)
+	from schema $id: http://devicetree.org/schemas/display/msm/qcom,sm8650-dpu.yaml#
+arch/arm64/boot/dts/qcom/qcs8300-ride.dtb: interrupt-controller@b220000: compatible:0: 'qcom,qcs8300-pdc' is not one of ['qcom,qdu1000-pdc', 'qcom,sa8255p-pdc', 'qcom,sa8775p-pdc', 'qcom,sar2130p-pdc', 'qcom,sc7180-pdc', 'qcom,sc7280-pdc', 'qcom,sc8180x-pdc', 'qcom,sc8280xp-pdc', 'qcom,sdm670-pdc', 'qcom,sdm845-pdc', 'qcom,sdx55-pdc', 'qcom,sdx65-pdc', 'qcom,sdx75-pdc', 'qcom,sm4450-pdc', 'qcom,sm6350-pdc', 'qcom,sm8150-pdc', 'qcom,sm8250-pdc', 'qcom,sm8350-pdc', 'qcom,sm8450-pdc', 'qcom,sm8550-pdc', 'qcom,sm8650-pdc', 'qcom,x1e80100-pdc']
+	from schema $id: http://devicetree.org/schemas/interrupt-controller/qcom,pdc.yaml#
+arch/arm64/boot/dts/qcom/qcs8300-ride.dtb: /soc@0/interrupt-controller@b220000: failed to match any schema with compatible: ['qcom,qcs8300-pdc', 'qcom,pdc']
+arch/arm64/boot/dts/qcom/qcs8300-ride.dtb: watchdog@17c10000: compatible: 'oneOf' conditional failed, one must be fixed:
+	['qcom,apss-wdt-qcs8300', 'qcom,kpss-wdt'] is too long
+	['qcom,apss-wdt-qcs8300', 'qcom,kpss-wdt'] is too short
+	'qcom,apss-wdt-qcs8300' is not one of ['qcom,kpss-wdt-ipq4019', 'qcom,apss-wdt-ipq5018', 'qcom,apss-wdt-ipq5332', 'qcom,apss-wdt-ipq9574', 'qcom,apss-wdt-msm8226', 'qcom,apss-wdt-msm8974', 'qcom,apss-wdt-msm8994', 'qcom,apss-wdt-qcm2290', 'qcom,apss-wdt-qcs404', 'qcom,apss-wdt-sa8255p', 'qcom,apss-wdt-sa8775p', 'qcom,apss-wdt-sc7180', 'qcom,apss-wdt-sc7280', 'qcom,apss-wdt-sc8180x', 'qcom,apss-wdt-sc8280xp', 'qcom,apss-wdt-sdm845', 'qcom,apss-wdt-sdx55', 'qcom,apss-wdt-sdx65', 'qcom,apss-wdt-sm6115', 'qcom,apss-wdt-sm6350', 'qcom,apss-wdt-sm8150', 'qcom,apss-wdt-sm8250']
+	'qcom,kpss-wdt' was expected
+	'qcom,scss-timer' was expected
+	'qcom,apss-wdt-qcs8300' is not one of ['qcom,kpss-wdt-apq8064', 'qcom,kpss-wdt-ipq8064', 'qcom,kpss-wdt-mdm9615', 'qcom,kpss-wdt-msm8960']
+	'qcom,msm-timer' was expected
+	'qcom,kpss-timer' was expected
+	from schema $id: http://devicetree.org/schemas/watchdog/qcom-wdt.yaml#
+arch/arm64/boot/dts/qcom/qcs8300-ride.dtb: /soc@0/watchdog@17c10000: failed to match any schema with compatible: ['qcom,apss-wdt-qcs8300', 'qcom,kpss-wdt']
+arch/arm64/boot/dts/qcom/qcs8300-ride.dtb: remoteproc@20c00000: compatible:0: 'qcom,qcs8300-gpdsp-pas' is not one of ['qcom,sa8775p-adsp-pas', 'qcom,sa8775p-cdsp0-pas', 'qcom,sa8775p-cdsp1-pas', 'qcom,sa8775p-gpdsp0-pas', 'qcom,sa8775p-gpdsp1-pas']
+	from schema $id: http://devicetree.org/schemas/remoteproc/qcom,sa8775p-pas.yaml#
+arch/arm64/boot/dts/qcom/qcs8300-ride.dtb: remoteproc@20c00000: compatible: ['qcom,qcs8300-gpdsp-pas', 'qcom,sa8775p-gpdsp0-pas'] is too long
+	from schema $id: http://devicetree.org/schemas/remoteproc/qcom,sa8775p-pas.yaml#
+arch/arm64/boot/dts/qcom/qcs8300-ride.dtb: remoteproc@20c00000: Unevaluated properties are not allowed ('compatible' was unexpected)
+	from schema $id: http://devicetree.org/schemas/remoteproc/qcom,sa8775p-pas.yaml#
+arch/arm64/boot/dts/qcom/qcs8300-ride.dtb: /soc@0/remoteproc@20c00000: failed to match any schema with compatible: ['qcom,qcs8300-gpdsp-pas', 'qcom,sa8775p-gpdsp0-pas']
+arch/arm64/boot/dts/qcom/qcs8300-ride.dtb: remoteproc@26300000: compatible:0: 'qcom,qcs8300-cdsp-pas' is not one of ['qcom,sa8775p-adsp-pas', 'qcom,sa8775p-cdsp0-pas', 'qcom,sa8775p-cdsp1-pas', 'qcom,sa8775p-gpdsp0-pas', 'qcom,sa8775p-gpdsp1-pas']
+	from schema $id: http://devicetree.org/schemas/remoteproc/qcom,sa8775p-pas.yaml#
+arch/arm64/boot/dts/qcom/qcs8300-ride.dtb: remoteproc@26300000: compatible: ['qcom,qcs8300-cdsp-pas', 'qcom,sa8775p-cdsp0-pas'] is too long
+	from schema $id: http://devicetree.org/schemas/remoteproc/qcom,sa8775p-pas.yaml#
+arch/arm64/boot/dts/qcom/qcs8300-ride.dtb: remoteproc@26300000: Unevaluated properties are not allowed ('compatible' was unexpected)
+	from schema $id: http://devicetree.org/schemas/remoteproc/qcom,sa8775p-pas.yaml#
+arch/arm64/boot/dts/qcom/qcs8300-ride.dtb: /soc@0/remoteproc@26300000: failed to match any schema with compatible: ['qcom,qcs8300-cdsp-pas', 'qcom,sa8775p-cdsp0-pas']
+arch/arm64/boot/dts/qcom/msm8994-sony-xperia-kitakami-sumire.dtb: usb@f92f8800: interrupt-names:1: 'hs_phy_irq' was expected
+	from schema $id: http://devicetree.org/schemas/usb/qcom,dwc3.yaml#
+arch/arm64/boot/dts/qcom/msm8994-sony-xperia-kitakami-sumire.dtb: usb@f92f8800: interrupt-names:2: 'dp_hs_phy_irq' was expected
+	from schema $id: http://devicetree.org/schemas/usb/qcom,dwc3.yaml#
+arch/arm64/boot/dts/qcom/msm8994-sony-xperia-kitakami-sumire.dtb: usb@f92f8800: interrupt-names:3: 'dm_hs_phy_irq' was expected
+	from schema $id: http://devicetree.org/schemas/usb/qcom,dwc3.yaml#
+arch/arm64/boot/dts/qcom/apq8094-sony-xperia-kitakami-karin_windy.dtb: usb@f92f8800: interrupt-names:1: 'hs_phy_irq' was expected
+	from schema $id: http://devicetree.org/schemas/usb/qcom,dwc3.yaml#
+arch/arm64/boot/dts/qcom/apq8094-sony-xperia-kitakami-karin_windy.dtb: usb@f92f8800: interrupt-names:2: 'dp_hs_phy_irq' was expected
+	from schema $id: http://devicetree.org/schemas/usb/qcom,dwc3.yaml#
+arch/arm64/boot/dts/qcom/apq8094-sony-xperia-kitakami-karin_windy.dtb: usb@f92f8800: interrupt-names:3: 'dm_hs_phy_irq' was expected
+	from schema $id: http://devicetree.org/schemas/usb/qcom,dwc3.yaml#
+arch/arm64/boot/dts/qcom/msm8994-sony-xperia-kitakami-ivy.dtb: usb@f92f8800: interrupt-names:1: 'hs_phy_irq' was expected
+	from schema $id: http://devicetree.org/schemas/usb/qcom,dwc3.yaml#
+arch/arm64/boot/dts/qcom/msm8994-sony-xperia-kitakami-ivy.dtb: usb@f92f8800: interrupt-names:2: 'dp_hs_phy_irq' was expected
+	from schema $id: http://devicetree.org/schemas/usb/qcom,dwc3.yaml#
+arch/arm64/boot/dts/qcom/msm8994-sony-xperia-kitakami-ivy.dtb: usb@f92f8800: interrupt-names:3: 'dm_hs_phy_irq' was expected
+	from schema $id: http://devicetree.org/schemas/usb/qcom,dwc3.yaml#
+arch/arm64/boot/dts/qcom/x1e80100-microsoft-romulus13.dtb: /soc@0/geniqup@bc0000/i2c@b8c000/typec-mux@8: failed to match any schema with compatible: ['parade,ps8830']
+arch/arm64/boot/dts/qcom/x1e80100-microsoft-romulus13.dtb: /soc@0/geniqup@bc0000/i2c@b9c000/typec-mux@8: failed to match any schema with compatible: ['parade,ps8830']
+arch/arm64/boot/dts/qcom/sda660-inforce-ifc6560.dtb: pmic@3: led-controller@d300:compatible:0: 'qcom,pm660l-flash-led' is not one of ['qcom,pm6150l-flash-led', 'qcom,pm8150c-flash-led', 'qcom,pm8150l-flash-led', 'qcom,pm8350c-flash-led', 'qcom,pm8550-flash-led', 'qcom,pmi8998-flash-led']
+	from schema $id: http://devicetree.org/schemas/mfd/qcom,spmi-pmic.yaml#
+arch/arm64/boot/dts/qcom/sda660-inforce-ifc6560.dtb: led-controller@d300: compatible:0: 'qcom,pm660l-flash-led' is not one of ['qcom,pm6150l-flash-led', 'qcom,pm8150c-flash-led', 'qcom,pm8150l-flash-led', 'qcom,pm8350c-flash-led', 'qcom,pm8550-flash-led', 'qcom,pmi8998-flash-led']
+	from schema $id: http://devicetree.org/schemas/leds/qcom,spmi-flash-led.yaml#
+arch/arm64/boot/dts/qcom/sda660-inforce-ifc6560.dtb: /soc@0/spmi@800f000/pmic@3/led-controller@d300: failed to match any schema with compatible: ['qcom,pm660l-flash-led', 'qcom,spmi-flash-led']
+arch/arm64/boot/dts/qcom/msm8994-sony-xperia-kitakami-satsuki.dtb: usb@f92f8800: interrupt-names:1: 'hs_phy_irq' was expected
+	from schema $id: http://devicetree.org/schemas/usb/qcom,dwc3.yaml#
+arch/arm64/boot/dts/qcom/msm8994-sony-xperia-kitakami-satsuki.dtb: usb@f92f8800: interrupt-names:2: 'dp_hs_phy_irq' was expected
+	from schema $id: http://devicetree.org/schemas/usb/qcom,dwc3.yaml#
+arch/arm64/boot/dts/qcom/msm8994-sony-xperia-kitakami-satsuki.dtb: usb@f92f8800: interrupt-names:3: 'dm_hs_phy_irq' was expected
+	from schema $id: http://devicetree.org/schemas/usb/qcom,dwc3.yaml#
+arch/arm64/boot/dts/qcom/msm8992-msft-lumia-octagon-talkman.dtb: usb@f92f8800: interrupt-names:1: 'hs_phy_irq' was expected
+	from schema $id: http://devicetree.org/schemas/usb/qcom,dwc3.yaml#
+arch/arm64/boot/dts/qcom/msm8992-msft-lumia-octagon-talkman.dtb: usb@f92f8800: interrupt-names:2: 'dp_hs_phy_irq' was expected
+	from schema $id: http://devicetree.org/schemas/usb/qcom,dwc3.yaml#
+arch/arm64/boot/dts/qcom/msm8992-msft-lumia-octagon-talkman.dtb: usb@f92f8800: interrupt-names:3: 'dm_hs_phy_irq' was expected
+	from schema $id: http://devicetree.org/schemas/usb/qcom,dwc3.yaml#
+arch/arm64/boot/dts/qcom/sdm636-sony-xperia-ganges-mermaid.dtb: pmic@3: led-controller@d300:compatible:0: 'qcom,pm660l-flash-led' is not one of ['qcom,pm6150l-flash-led', 'qcom,pm8150c-flash-led', 'qcom,pm8150l-flash-led', 'qcom,pm8350c-flash-led', 'qcom,pm8550-flash-led', 'qcom,pmi8998-flash-led']
+	from schema $id: http://devicetree.org/schemas/mfd/qcom,spmi-pmic.yaml#
+arch/arm64/boot/dts/qcom/sdm636-sony-xperia-ganges-mermaid.dtb: led-controller@d300: compatible:0: 'qcom,pm660l-flash-led' is not one of ['qcom,pm6150l-flash-led', 'qcom,pm8150c-flash-led', 'qcom,pm8150l-flash-led', 'qcom,pm8350c-flash-led', 'qcom,pm8550-flash-led', 'qcom,pmi8998-flash-led']
+	from schema $id: http://devicetree.org/schemas/leds/qcom,spmi-flash-led.yaml#
+arch/arm64/boot/dts/qcom/sdm636-sony-xperia-ganges-mermaid.dtb: /soc@0/spmi@800f000/pmic@3/led-controller@d300: failed to match any schema with compatible: ['qcom,pm660l-flash-led', 'qcom,spmi-flash-led']
+arch/arm64/boot/dts/qcom/msm8994-msft-lumia-octagon-cityman.dtb: usb@f92f8800: interrupt-names:1: 'hs_phy_irq' was expected
+	from schema $id: http://devicetree.org/schemas/usb/qcom,dwc3.yaml#
+arch/arm64/boot/dts/qcom/msm8994-msft-lumia-octagon-cityman.dtb: usb@f92f8800: interrupt-names:2: 'dp_hs_phy_irq' was expected
+	from schema $id: http://devicetree.org/schemas/usb/qcom,dwc3.yaml#
+arch/arm64/boot/dts/qcom/msm8994-msft-lumia-octagon-cityman.dtb: usb@f92f8800: interrupt-names:3: 'dm_hs_phy_irq' was expected
+	from schema $id: http://devicetree.org/schemas/usb/qcom,dwc3.yaml#
+arch/arm64/boot/dts/qcom/msm8994-huawei-angler-rev-101.dtb: usb@f92f8800: interrupt-names:1: 'hs_phy_irq' was expected
+	from schema $id: http://devicetree.org/schemas/usb/qcom,dwc3.yaml#
+arch/arm64/boot/dts/qcom/msm8994-huawei-angler-rev-101.dtb: usb@f92f8800: interrupt-names:2: 'dp_hs_phy_irq' was expected
+	from schema $id: http://devicetree.org/schemas/usb/qcom,dwc3.yaml#
+arch/arm64/boot/dts/qcom/msm8994-huawei-angler-rev-101.dtb: usb@f92f8800: interrupt-names:3: 'dm_hs_phy_irq' was expected
+	from schema $id: http://devicetree.org/schemas/usb/qcom,dwc3.yaml#
+
+
+
+
+
 
