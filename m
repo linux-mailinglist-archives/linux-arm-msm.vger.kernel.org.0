@@ -1,162 +1,239 @@
-Return-Path: <linux-arm-msm+bounces-45223-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-45224-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9F7D5A134B5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jan 2025 09:08:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 4B830A134F2
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jan 2025 09:12:44 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id D2A161888580
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jan 2025 08:08:32 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8101F1888A70
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jan 2025 08:12:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2D70A1991B2;
-	Thu, 16 Jan 2025 08:08:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1EB261DE4D8;
+	Thu, 16 Jan 2025 08:09:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="WbsFinLL"
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="guL7z/7g";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="QhcTxwz2";
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="guL7z/7g";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="QhcTxwz2"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f52.google.com (mail-lf1-f52.google.com [209.85.167.52])
+Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 319D6381AA
-	for <linux-arm-msm@vger.kernel.org>; Thu, 16 Jan 2025 08:08:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D8511DE4C7;
+	Thu, 16 Jan 2025 08:09:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.130
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737014906; cv=none; b=X9AZx2ZqfbFI7y6DL+7s9AePlowyZBT9Esy5dZpRJbboDVSK3SW4QJhh5CV2Eyx0aRyJ1o/n1LIXN4uwq3pbIA9MNWR0yRR3oE+YvctYlec9vWHDf+XKAqwq+OK7Mdfn5P27xu+H9IFgxT+CVZjtfuiKPg9yww8aeJZQG0HVt14=
+	t=1737014971; cv=none; b=j7iC1MAHRyKNjzHLBdjOT3yKbk7lLmMkIzAXJNdE42bC9uCHuf0mHpydiCyPrGQ3O+IUmPToTgJyiWiahEyfxbrPWPQpC274H5eXGLK/laxen0rudXl5KyZIamtN60eGypmmR6Nmxe9aczgHeeOP3vsuKsdPGm3bb+8LLQza0gM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737014906; c=relaxed/simple;
-	bh=xdvo2mP0UY5Bj8gx2DSd80+ERViqDwGLQ6Gafzt2piU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=tDj6v5dzz7s8lb+yGiTnUM80TLxFGA21xgP3JgpWBwup0+F19WQRx7vxJmnShjhWCz/cr6MlvAGfGndpv4N1rKaXLcrAqiG9Ynl2NJZ29N+6M2ZagFKeZngO4JBQNeHK4cn9dM38c+C/BcOyNKRp2h086H4+ulFfIkS7qGWlw8E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=WbsFinLL; arc=none smtp.client-ip=209.85.167.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f52.google.com with SMTP id 2adb3069b0e04-53ff1f7caaeso762414e87.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Jan 2025 00:08:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1737014902; x=1737619702; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=OvjQGS9v3GeYSYSe2LBAG448Vja+LlRvw7uplzopV8w=;
-        b=WbsFinLLKbHCkij9g8woHeJB9U47XBkhPcs03lcgQZLFiYcr1o3ewXeV6NGiUyNNSq
-         SpLFhx5PX8X1qTVkhGtnCSlg77hkDCzxlcIkAazKbyweu7duXLq46o+lFICjpgIaICVx
-         HvQ9o0KWIHnviwXypq19SbPQvpsRgpR02yxB4xqr0VQiIF+mILMSlbvhHEejJRexOhoO
-         mfzhilrmDRvsaPtKkqQwalCV5C/AjLwbF5F47/aDfGKtuh2XgbfLBCJ6qI4Nr2E2OQFg
-         B5J228uE64urAfLNScbwi7xhTNAxb0PMQRiN7bbWWNTRGnIY5VOEN8/wYwlYBL4sMKNu
-         LN+g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1737014902; x=1737619702;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=OvjQGS9v3GeYSYSe2LBAG448Vja+LlRvw7uplzopV8w=;
-        b=Vqa0mTgU6rD3A9Nq+enWhgvy7EHFaBWQ8Ac5V6msV/b+/DLQZvdLkDXfjJSg+NllGb
-         ilKEH35lBUAszvYNa7gDr9hWTwaCY1aRc+QW5b7o5Nj3RViYQ0CrYzxA2Z/hDOFjEOyG
-         mhOixvYrWTK+8lZLksDJlLlES9MZBYpOzzosl4ecIRyPGwv9aEXHjAJ+NtfRFhaGgS4f
-         /A7wUdexCDe3drQSguJZEtDyObuzAe30TYoFfwGi9vCYMpYzUVZlcg+SxxdtKxtVDqnI
-         ojrLSyqP8AQGesV0wHW6JQcyiMgIacujcUt50rmL4nqT/6DUC0oC2dCwggBZp3VhHUWl
-         M8tA==
-X-Forwarded-Encrypted: i=1; AJvYcCXkgVoOGBepqyS2zr3W1ChrF8I7RoTbhdwB+5dMDC4pYm83OtGN6NqBIQtOk5jMZsCMa+TUZ0Wr1JKeHu6u@vger.kernel.org
-X-Gm-Message-State: AOJu0YxNRjePXJrL/pFQtdqA3PT3DkyOyTtCNWhht4bYNLaCuDA4TyUP
-	0xbCrRVnbsZ2pefBEpqVU1CHbHo2GxVVxrYH5r0MGLMzFbEIxan5Zk0nrhPrNvg=
-X-Gm-Gg: ASbGncvnRbT4UGGruFFB7FGm5sZDJT7g+iVTEaWsTlo8ViMV5DmqDz+Ai/gYyxNmdoA
-	LO37hfFWeBOdL3tE+g1WX18MmLRj1e5aMgg5muaR01kN7+Qw19FSU/r3C6gUKUoACsGGoV8XYO+
-	t8MVMfHtNvtLphILT8rL7QGPWFNMsyycuNpTUyns1m1eBLnfjuALdGieB5pzW+oaYd/5xamqqqp
-	VJaslckoojlOaiwNiIhLKgfqG+wgX7ZEuI6Y5/5SobLrEmxiqH++dtwxHh4E+i2aNrPdoXfxLi5
-	wsqz0FsP9B4sigfJKmWeYbLHT1tiN6OVf0va
-X-Google-Smtp-Source: AGHT+IGEHcCQjP4XA6TrXiXXldBmt08e0Vh4nxPE4SnDPCPsbcrbar+E8zfVOYTqQoHRGtLyWIB3yw==
-X-Received: by 2002:a05:6512:a8e:b0:540:3572:1864 with SMTP id 2adb3069b0e04-542845b35b6mr9642052e87.44.1737014902298;
-        Thu, 16 Jan 2025 00:08:22 -0800 (PST)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5428bec067asm2271621e87.186.2025.01.16.00.08.20
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 16 Jan 2025 00:08:21 -0800 (PST)
-Date: Thu, 16 Jan 2025 10:08:18 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Jun Nie <jun.nie@linaro.org>
-Cc: Rob Clark <robdclark@gmail.com>, 
-	Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
-	Simona Vetter <simona@ffwll.ch>, linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
-	freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v4 12/16] drm/msm/dpu: blend pipes per mixer pairs config
-Message-ID: <actkdpr62j55cez7sbszrsjgsax7lwzlzk4qqe7rmqfo2y3u4a@2xro4eo56a25>
-References: <20250116-sm8650-v6-13-hmd-deckard-mdss-quad-upstream-33-v4-0-74749c6eba33@linaro.org>
- <20250116-sm8650-v6-13-hmd-deckard-mdss-quad-upstream-33-v4-12-74749c6eba33@linaro.org>
+	s=arc-20240116; t=1737014971; c=relaxed/simple;
+	bh=qutSka+w/xEAf59QNYINpaHGaAu6p4W5IyAck9GACX0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=oQQCyKEv52wEkyv1WGkhFL+IT13ijbVqH1Kb+EkP1XPPk9fjboCOqW3Rv9+qDQwiHo/GrQkjZRTM2PbqKT1vPJR4sttChUUw0As4rtokxZdwrMZqubuZ15qTHxkpKZ/CwyoYeMh8FCl9I8q3TbD1JMq245jW26mlvkgap0nGuSU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=guL7z/7g; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=QhcTxwz2; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=guL7z/7g; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=QhcTxwz2; arc=none smtp.client-ip=195.135.223.130
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-out1.suse.de (Postfix) with ESMTPS id AF679211D2;
+	Thu, 16 Jan 2025 08:09:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1737014961; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=xcxRML23Nx7RFNokQB2O02aJnU9nWJlVXpAUoW6/DUc=;
+	b=guL7z/7g3EcabgvnEePbbCuZQv7xD8Nwr9UitmLW0HdQwyFjV2SSCQgHXiJw8V8gnCT1K2
+	PWtPwlEQencxyOkZzRFYa02U7TT7cyGEKiFsdqSu4Fbz6rTKbBaplstwxqYo2gR84TVDZg
+	EoU34+EHEiZW91gRDl+FfWH9McSLkvo=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1737014961;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=xcxRML23Nx7RFNokQB2O02aJnU9nWJlVXpAUoW6/DUc=;
+	b=QhcTxwz2tTYoCTzfudp0U1RC65EHxbTx4mcJuk8sOgRjhjNV0lXRty1p1dQWnKcwWKutz2
+	DR+iY8oRFsTbZEBQ==
+Authentication-Results: smtp-out1.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1737014961; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=xcxRML23Nx7RFNokQB2O02aJnU9nWJlVXpAUoW6/DUc=;
+	b=guL7z/7g3EcabgvnEePbbCuZQv7xD8Nwr9UitmLW0HdQwyFjV2SSCQgHXiJw8V8gnCT1K2
+	PWtPwlEQencxyOkZzRFYa02U7TT7cyGEKiFsdqSu4Fbz6rTKbBaplstwxqYo2gR84TVDZg
+	EoU34+EHEiZW91gRDl+FfWH9McSLkvo=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1737014961;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=xcxRML23Nx7RFNokQB2O02aJnU9nWJlVXpAUoW6/DUc=;
+	b=QhcTxwz2tTYoCTzfudp0U1RC65EHxbTx4mcJuk8sOgRjhjNV0lXRty1p1dQWnKcwWKutz2
+	DR+iY8oRFsTbZEBQ==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 3205713A57;
+	Thu, 16 Jan 2025 08:09:21 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+	by imap1.dmz-prg2.suse.org with ESMTPSA
+	id 3VTFCrG+iGf+BAAAD6G6ig
+	(envelope-from <tzimmermann@suse.de>); Thu, 16 Jan 2025 08:09:21 +0000
+Message-ID: <a2bbeb47-2569-4ee0-9265-92bab139bdc6@suse.de>
+Date: Thu, 16 Jan 2025 09:09:20 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250116-sm8650-v6-13-hmd-deckard-mdss-quad-upstream-33-v4-12-74749c6eba33@linaro.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 25/25] drm/xlnx: Compute dumb-buffer sizes with
+ drm_mode_size_dumb()
+To: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
+ maarten.lankhorst@linux.intel.com, mripard@kernel.org, airlied@gmail.com,
+ simona@ffwll.ch
+Cc: dri-devel@lists.freedesktop.org, linux-mediatek@lists.infradead.org,
+ freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+ imx@lists.linux.dev, linux-samsung-soc@vger.kernel.org,
+ nouveau@lists.freedesktop.org, virtualization@lists.linux.dev,
+ spice-devel@lists.freedesktop.org, linux-renesas-soc@vger.kernel.org,
+ linux-rockchip@lists.infradead.org, linux-tegra@vger.kernel.org,
+ intel-xe@lists.freedesktop.org, xen-devel@lists.xenproject.org,
+ Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+ Andy Yan <andyshrk@163.com>
+References: <20250109150310.219442-1-tzimmermann@suse.de>
+ <20250109150310.219442-26-tzimmermann@suse.de>
+ <cdbe483d-0895-47aa-8c83-1c28220f4a02@ideasonboard.com>
+ <bc97b92e-7f8a-4b92-af8a-20fa165ead55@suse.de>
+ <f3ba05c7-6e49-4641-a3f9-ba418ebdb7c3@ideasonboard.com>
+ <c6735280-7c32-4319-8ca9-a7305d8117c3@suse.de>
+ <d67adb03-5cd0-4ac9-af58-cf4446dacee3@ideasonboard.com>
+ <0ea6be58-0e04-4172-87cd-064a3e4a43bc@suse.de>
+ <f35cb350-6be9-48ca-ad7e-e9dd418281d5@ideasonboard.com>
+ <4af0b6a7-c16a-4187-bbf5-365a9c86de21@suse.de>
+ <e327ad84-b5c9-4480-b873-dc3aca605538@ideasonboard.com>
+Content-Language: en-US
+From: Thomas Zimmermann <tzimmermann@suse.de>
+Autocrypt: addr=tzimmermann@suse.de; keydata=
+ xsBNBFs50uABCADEHPidWt974CaxBVbrIBwqcq/WURinJ3+2WlIrKWspiP83vfZKaXhFYsdg
+ XH47fDVbPPj+d6tQrw5lPQCyqjwrCPYnq3WlIBnGPJ4/jreTL6V+qfKRDlGLWFjZcsrPJGE0
+ BeB5BbqP5erN1qylK9i3gPoQjXGhpBpQYwRrEyQyjuvk+Ev0K1Jc5tVDeJAuau3TGNgah4Yc
+ hdHm3bkPjz9EErV85RwvImQ1dptvx6s7xzwXTgGAsaYZsL8WCwDaTuqFa1d1jjlaxg6+tZsB
+ 9GluwvIhSezPgnEmimZDkGnZRRSFiGP8yjqTjjWuf0bSj5rUnTGiyLyRZRNGcXmu6hjlABEB
+ AAHNJ1Rob21hcyBaaW1tZXJtYW5uIDx0emltbWVybWFubkBzdXNlLmRlPsLAjgQTAQgAOAIb
+ AwULCQgHAgYVCgkICwIEFgIDAQIeAQIXgBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftODH
+ AAoJEGgNwR1TC3ojx1wH/0hKGWugiqDgLNXLRD/4TfHBEKmxIrmfu9Z5t7vwUKfwhFL6hqvo
+ lXPJJKQpQ2z8+X2vZm/slsLn7J1yjrOsoJhKABDi+3QWWSGkaGwRJAdPVVyJMfJRNNNIKwVb
+ U6B1BkX2XDKDGffF4TxlOpSQzdtNI/9gleOoUA8+jy8knnDYzjBNOZqLG2FuTdicBXblz0Mf
+ vg41gd9kCwYXDnD91rJU8tzylXv03E75NCaTxTM+FBXPmsAVYQ4GYhhgFt8S2UWMoaaABLDe
+ 7l5FdnLdDEcbmd8uLU2CaG4W2cLrUaI4jz2XbkcPQkqTQ3EB67hYkjiEE6Zy3ggOitiQGcqp
+ j//OwE0EWznS4AEIAMYmP4M/V+T5RY5at/g7rUdNsLhWv1APYrh9RQefODYHrNRHUE9eosYb
+ T6XMryR9hT8XlGOYRwKWwiQBoWSDiTMo/Xi29jUnn4BXfI2px2DTXwc22LKtLAgTRjP+qbU6
+ 3Y0xnQN29UGDbYgyyK51DW3H0If2a3JNsheAAK+Xc9baj0LGIc8T9uiEWHBnCH+RdhgATnWW
+ GKdDegUR5BkDfDg5O/FISymJBHx2Dyoklv5g4BzkgqTqwmaYzsl8UxZKvbaxq0zbehDda8lv
+ hFXodNFMAgTLJlLuDYOGLK2AwbrS3Sp0AEbkpdJBb44qVlGm5bApZouHeJ/+n+7r12+lqdsA
+ EQEAAcLAdgQYAQgAIAIbDBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftOH6AAoJEGgNwR1T
+ C3ojVSkIALpAPkIJPQoURPb1VWjh34l0HlglmYHvZszJWTXYwavHR8+k6Baa6H7ufXNQtThR
+ yIxJrQLW6rV5lm7TjhffEhxVCn37+cg0zZ3j7zIsSS0rx/aMwi6VhFJA5hfn3T0TtrijKP4A
+ SAQO9xD1Zk9/61JWk8OysuIh7MXkl0fxbRKWE93XeQBhIJHQfnc+YBLprdnxR446Sh8Wn/2D
+ Ya8cavuWf2zrB6cZurs048xe0UbSW5AOSo4V9M0jzYI4nZqTmPxYyXbm30Kvmz0rYVRaitYJ
+ 4kyYYMhuULvrJDMjZRvaNe52tkKAvMevcGdt38H4KSVXAylqyQOW5zvPc4/sq9c=
+In-Reply-To: <e327ad84-b5c9-4480-b873-dc3aca605538@ideasonboard.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Spam-Level: 
+X-Spamd-Result: default: False [-2.80 / 50.00];
+	BAYES_HAM(-3.00)[100.00%];
+	SUSPICIOUS_RECIPS(1.50)[];
+	NEURAL_HAM_LONG(-1.00)[-1.000];
+	NEURAL_HAM_SHORT(-0.20)[-1.000];
+	MIME_GOOD(-0.10)[text/plain];
+	FREEMAIL_TO(0.00)[ideasonboard.com,linux.intel.com,kernel.org,gmail.com,ffwll.ch];
+	RCPT_COUNT_TWELVE(0.00)[21];
+	MIME_TRACE(0.00)[0:+];
+	RCVD_TLS_ALL(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	ARC_NA(0.00)[];
+	MID_RHS_MATCH_FROM(0.00)[];
+	FREEMAIL_ENVRCPT(0.00)[163.com,gmail.com];
+	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	FROM_HAS_DN(0.00)[];
+	FREEMAIL_CC(0.00)[lists.freedesktop.org,lists.infradead.org,vger.kernel.org,lists.linux.dev,lists.xenproject.org,ideasonboard.com,163.com];
+	TO_DN_SOME(0.00)[];
+	FROM_EQ_ENVFROM(0.00)[];
+	RCVD_COUNT_TWO(0.00)[2];
+	TO_MATCH_ENVRCPT_ALL(0.00)[];
+	FUZZY_BLOCKED(0.00)[rspamd.com];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid]
+X-Spam-Score: -2.80
+X-Spam-Flag: NO
 
-On Thu, Jan 16, 2025 at 03:26:01PM +0800, Jun Nie wrote:
-> Currently, only 2 pipes are used at most for a plane. A stage structure
-> describes the configuration for a mixer pair. So only one stage is needed
-> for current usage cases. The quad-pipe case will be added in future and 2
-> stages are used in the case. So extend the stage to an array with array size
-> STAGES_PER_PLANE and blend pipes per mixer pair with configuration in the
-> stage structure.
-> 
-> Signed-off-by: Jun Nie <jun.nie@linaro.org>
-> ---
->  drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c    | 42 +++++++++++++++++------------
->  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h |  1 +
->  2 files changed, 26 insertions(+), 17 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> index 81474823e6799..5ae640da53fbf 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> @@ -401,7 +401,6 @@ static void _dpu_crtc_blend_setup_pipe(struct drm_crtc *crtc,
->  				       struct dpu_hw_stage_cfg *stage_cfg
->  				      )
->  {
-> -	uint32_t lm_idx;
->  	enum dpu_sspp sspp_idx;
->  	struct drm_plane_state *state;
->  
-> @@ -426,8 +425,7 @@ static void _dpu_crtc_blend_setup_pipe(struct drm_crtc *crtc,
->  	stage_cfg->multirect_index[stage][stage_idx] = pipe->multirect_index;
->  
->  	/* blend config update */
-> -	for (lm_idx = 0; lm_idx < num_mixers; lm_idx++)
-> -		mixer[lm_idx].lm_ctl->ops.update_pending_flush_sspp(mixer[lm_idx].lm_ctl, sspp_idx);
-> +	mixer->lm_ctl->ops.update_pending_flush_sspp(mixer->lm_ctl, sspp_idx);
+Hi
 
-No. This is required if two LMs use different CTLs.
 
->  }
->  
->  static void _dpu_crtc_blend_setup_mixer(struct drm_crtc *crtc,
+Am 15.01.25 um 15:20 schrieb Tomi Valkeinen:
+[...]
+>
+> My point is that we have the current UAPI, and we have userspace using 
+> it, but we don't have clear rules what the ioctl does with specific 
+> parameters, and we don't document how it has to be used.
+>
+> Perhaps the situation is bad, and all we can really say is that 
+> CREATE_DUMB only works for use with simple RGB formats, and the 
+> behavior for all other formats is platform specific. But I think even 
+> that would be valuable in the UAPI docs.
 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h
-> index 5f010d36672cc..64e220987be56 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h
-> @@ -34,6 +34,7 @@
->  #define DPU_MAX_PLANES			4
->  #endif
->  
-> +#define STAGES_PER_PLANE		2
+To be honest, I would not want to specify behavior for anything but the 
+linear RGB formats. If anything, I'd take Daniel's reply mail for 
+documentation as-is. Anyone stretching the UAPI beyond RGB is on their own.
 
-it's 1, not 2.
+>
+> Thinking about this, I wonder if this change is good for omapdrm or 
+> xilinx (probably other platforms too that support non-simple non-RGB 
+> formats via dumb buffers): without this patch, in both drivers, the 
+> pitch calculations just take the bpp as bit-per-pixels, align it up, 
+> and that's it.
+>
+> With this patch we end up using drm_driver_color_mode_format(), and 
+> aligning buffers according to RGB formats figured out via heuristics. 
+> It does happen to work, for the formats I tested, but it sounds like 
+> something that might easily not work, as it's doing adjustments based 
+> on wrong format.
+>
+> Should we have another version of drm_mode_size_dumb() which just 
+> calculates using the bpp, without the drm_driver_color_mode_format() 
+> path? Or does the drm_driver_color_mode_format() path provide some 
+> value for the drivers that do not currently do anything similar?
 
->  #define PIPES_PER_PLANE			2
+With the RGB-only rule, using drm_driver_color_mode_format() makes 
+sense. It aligns dumb buffers and video=, provides error checking, and 
+overall harmonizes code. The fallback is only required because of the 
+existing odd cases that already bend the UAPI's rules.
 
-#define PIPES_PER_PLANE		(PIPES_PER_STAGE * STAGES_PER_PLANE)
+Best regards
+Thomas
 
->  #define PIPES_PER_STAGE			2
->  #ifndef DPU_MAX_DE_CURVES
-> 
-> -- 
-> 2.34.1
-> 
+>
+>  Tomi
+>
 
 -- 
-With best wishes
-Dmitry
+--
+Thomas Zimmermann
+Graphics Driver Developer
+SUSE Software Solutions Germany GmbH
+Frankenstrasse 146, 90461 Nuernberg, Germany
+GF: Ivo Totev, Andrew Myers, Andrew McDonald, Boudien Moerman
+HRB 36809 (AG Nuernberg)
+
 
