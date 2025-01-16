@@ -1,191 +1,219 @@
-Return-Path: <linux-arm-msm+bounces-45291-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-45292-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8F8D4A13DC7
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jan 2025 16:36:35 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7BC3FA13DCA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jan 2025 16:36:39 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 15E4F3A474E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jan 2025 15:36:16 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 50BD0188C668
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jan 2025 15:36:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5040222B8C2;
-	Thu, 16 Jan 2025 15:36:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B35DA22B8CA;
+	Thu, 16 Jan 2025 15:36:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="odykmPMC"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="N/2N6ix6"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f173.google.com (mail-yb1-f173.google.com [209.85.219.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C2271DDC12;
-	Thu, 16 Jan 2025 15:36:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD3E722B8BC
+	for <linux-arm-msm@vger.kernel.org>; Thu, 16 Jan 2025 15:36:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737041773; cv=none; b=JWHhK3d+R1pA9IJi8y4jaLCwcYiRiGxU1NutX81W0hZ0BFvpf25SR4jTw045+M/0+xy+dIfYlSdLakNLTv/pir/8lTBILnJJMAg1Bx50U5IjlUFdDHWB/fewr28o7Am9Rj+TJVP98WJd6eyiLfr7rkF8y0wDXnGRX42WvHHsaOM=
+	t=1737041794; cv=none; b=UH244mxwRAVq3cv7Fwt/ix09S1MI125/j1QGi5IHpsxcExebclgM67E1wvCRCIDHTVhIoRhxYbUMPH62JBfkeku98xc8Ut8PZ6hrHIgf6Q5vE8gqpaLebLqqbEXj34Lf0++W2J9va57TnyCcNWzIhjc4peq7bEbPQcnIalPc+I4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737041773; c=relaxed/simple;
-	bh=7N79UBDvgcTC7QrrMOnIOEMv6qZdPgkb9CZA0bY1kpU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=J0cWk8wzUyGJx/YkTYJKDObI6HXXlJQd5cbGkkJR75DVDYefXVsOOXksJM5LDMzuDcMIQTTrkmFiM1Dd3KKSIDr0i+LqgBdqY2HBra2czEtWkEMf0nSmSuCcSEH4i4sNmAMAIbpEpU8G3Zw7xesLB5tdgdTSlz+oUyvP1hI6vUs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=odykmPMC; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F00DEC4CEE1;
-	Thu, 16 Jan 2025 15:36:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1737041772;
-	bh=7N79UBDvgcTC7QrrMOnIOEMv6qZdPgkb9CZA0bY1kpU=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=odykmPMCVEDiTbV8Lfu84acuDiIWCEa41eaDl24kDvuwtDSp/Vz8/UEXi/9nlDXtC
-	 vjR1ZjJiEHL0+KZSisRJYjuyPAFrDrWh9Vm5BhjXL62eNUJArsy50oWcBwEr/tk2cv
-	 s/KcBshIcUaJNayDJLhO6mq8afYy5qY0G8KaWTkRSs9jLdufNDYyoC8ec9+toIiiSe
-	 AgBhhfGqqunlcEWd5ON2Z2oysd4npZv1Q/3MedGZluYchlrTcX8DA04XwOc6NUCfzb
-	 +d0pJ+V9dHsIF9N754al5tuFu/2N4cOJdbfAET3nLFs6KsyGFn9oFhTkISGTtBMUVl
-	 Yj2gMCJ/LPrvg==
-Date: Thu, 16 Jan 2025 16:36:07 +0100
-From: Niklas Cassel <cassel@kernel.org>
-To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc: kw@linux.com, gregkh@linuxfoundation.org, arnd@arndb.de,
-	lpieralisi@kernel.org, shuah@kernel.org, kishon@kernel.org,
-	linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org,
-	bhelgaas@google.com, linux-arm-msm@vger.kernel.org, robh@kernel.org,
-	linux-kselftest@vger.kernel.org
-Subject: Re: [PATCH v5 0/4] Migrate PCI Endpoint Subsystem tests to Kselftest
-Message-ID: <Z4knZyKrEvVNopeX@ryzen>
-References: <20250116135106.19143-1-manivannan.sadhasivam@linaro.org>
+	s=arc-20240116; t=1737041794; c=relaxed/simple;
+	bh=I8xGvlStNM3CsxSWyUQwiebqdcck0Nqe6NvMZqAPtno=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=RdZvYPPwmFt/NdHyHVmOpTU0LFIQWKHVmHDOjciZdwBbIyUSdibKgfvSKSqQyxuNTWTSR99jlyPTnia5kSWQWSoOkVK+cwxn+iQLFSKRenP2/Xk7lhKjOarIP2Ewoqr7wZeu3Ru2CLY4i9qq8rQ5ekd7BG+/xrSu5g4+ZlcUid8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=N/2N6ix6; arc=none smtp.client-ip=209.85.219.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yb1-f173.google.com with SMTP id 3f1490d57ef6-e3983426f80so1684158276.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Jan 2025 07:36:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1737041792; x=1737646592; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=gu0YL2cR5qf4RDKaSc6EL4rrNDHMX6AlalCb9gr7/tY=;
+        b=N/2N6ix6/00EnH1S+/dd8tu5h+Iv4c6n5p78Mct5cHjSsMdWR9Gvn/IeipTYm/vnJr
+         JQbkriitNthOLbXyzKeMjqAyixyk/KiVIvTkz5GHV8e4cymGwLlGNzGLHgY6UL+Pc8B1
+         vAfm/6HqvvapzNXwSeK6AAXBCsZuYyHTF4X6NcboQz9fGeDqQUl3xjGqnxFnh/1MDS/+
+         SeDRge4qG+SrbmHnTNpBE+esiP9NKpoz9MVG1Ty0xzoBwePMhTwX3v9SPlx9OtPKB8r7
+         9izjcXLtTImiK88S4lA7ZeMlQm2pNpE6Odh85j52cMo7NYW9O2BQeKkBIrdXqlfCMsaQ
+         mkkw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1737041792; x=1737646592;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=gu0YL2cR5qf4RDKaSc6EL4rrNDHMX6AlalCb9gr7/tY=;
+        b=N7LpNDVCUV06LE35FvzbewRJj8ub6afjq3zn8CcISlpcuUbDCr8gXPTkdj6S6STBPf
+         6+iUeWWQ4XHAgalDFM3bv0/XOV5NDefHtYvUF3JYGhtut4pnLzniRTc8kKFz4AgDGaax
+         Ud3/u4oksOxn6WoVlZK0IGzcTZl2bKcMMQmBYoF3R7++WdO/Rj7bYmXkioeIZqkNu+so
+         ILv913tcGKS1WyCfqLwHHeO76D3EUQ5qWV6fViA4qcvAs1Kii3mdFwUetv45+97qlizH
+         7i0v/1GAqIfT/oLitbiROOXcGY03hVsPblHkomewkuVkThHdKnhNZe053X9Y9dkEVJmB
+         Id4g==
+X-Forwarded-Encrypted: i=1; AJvYcCVy21JKZUEePe8zjNRlKUxdOYAKGHEo8AVs5YoKv0Il1eEk1cPEPyfcp8J6rjvKvQowhImNv16nko08QCZl@vger.kernel.org
+X-Gm-Message-State: AOJu0YzSjpQKKCb/dQUZNit2c6Y3rexi1kLdfaYh5qw/SzFiRgJmYXmS
+	j6fFFlRPhoY5QWvY+43egr9WEWG6aSL5QjYQSfQ8mN2Gcb/r/xtai/99Rc4FBStbs9fvIfyqw62
+	pXLwqTOdCGHv0KF3KE1UHhzSguspaiy42H5KTGA==
+X-Gm-Gg: ASbGnct1Cp9/WhFEG3eMacGSfd2lTlLM8nH+tBoZ9sM46aGRTF2TeLPtZ2al5uzIhS8
+	P3TJbZclaCdYo6ZB7oo3UgAPvN1WGbLrI3Yz5Ew==
+X-Google-Smtp-Source: AGHT+IE2lu1RJ+81fEpNx2WS29TXGJpZrv6nZSZo1ywtrcEHqUGGQ7ZOJqu97lvj99DQhbFcEkOqg4s+u5+aR73vUwE=
+X-Received: by 2002:a05:6902:1502:b0:e4b:25c6:54f1 with SMTP id
+ 3f1490d57ef6-e54ee1ece4fmr27894249276.33.1737041791741; Thu, 16 Jan 2025
+ 07:36:31 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250116135106.19143-1-manivannan.sadhasivam@linaro.org>
+References: <20250116-sm8650-v6-13-hmd-deckard-mdss-quad-upstream-33-v4-0-74749c6eba33@linaro.org>
+ <20250116-sm8650-v6-13-hmd-deckard-mdss-quad-upstream-33-v4-10-74749c6eba33@linaro.org>
+ <l6z2skrj2tvlnqok44yepqs32keuz3wsfpgsacesrxi3q4s4xb@oiicfia3tkef>
+ <CABymUCOdtePUgcbtY3Xtf9detcfwm=RjG1D_sfDOSbSP-EjwXA@mail.gmail.com> <gj6lxrclgabwuww3rl2ynw5qmaq4lx6xycxrazcwnnf5fbezjb@oijoszqsrdps>
+In-Reply-To: <gj6lxrclgabwuww3rl2ynw5qmaq4lx6xycxrazcwnnf5fbezjb@oijoszqsrdps>
+From: Jun Nie <jun.nie@linaro.org>
+Date: Thu, 16 Jan 2025 23:36:21 +0800
+X-Gm-Features: AbW1kvYXwuBEDYTg5kJTxrLDV19dmEanvAhgmxnLYFZRVVWyY8KWs11jybEQtzk
+Message-ID: <CABymUCPa_k7OriJcDNZmCER9zhK-vk78NaK5HpV8-+Ta+MQQMg@mail.gmail.com>
+Subject: Re: [PATCH v4 10/16] drm/msm/dpu: handle pipes as array
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+	Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, 
+	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, linux-arm-msm@vger.kernel.org, 
+	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
+	linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Thu, Jan 16, 2025 at 07:21:02PM +0530, Manivannan Sadhasivam wrote:
-> Hi,
-> 
-> This series carries forward the effort to add Kselftest for PCI Endpoint
-> Subsystem started by Aman Gupta [1] a while ago. I reworked the initial version
-> based on another patch that fixes the return values of IOCTLs in
-> pci_endpoint_test driver and did many cleanups. Since the resulting work
-> modified the initial version substantially, I took over the authorship.
-> 
-> This series also incorporates the review comment by Shuah Khan [2] to move the
-> existing tests from 'tools/pci' to 'tools/testing/kselftest/pci_endpoint' before
-> migrating to Kselftest framework. I made sure that the tests are executable in
-> each commit and updated documentation accordingly.
-> 
-> - Mani
-> 
-> [1] https://lore.kernel.org/linux-pci/20221007053934.5188-1-aman1.gupta@samsung.com
-> [2] https://lore.kernel.org/linux-pci/b2a5db97-dc59-33ab-71cd-f591e0b1b34d@linuxfoundation.org
-> 
-> Changes in v5:
-> 
-> * Incorporated comments from Niklas
-> * Added a patch to fix the DMA MEMCPY check in pci-epf-test driver
-> * Collected tags
-> * Rebased on top of pci/next 0333f56dbbf7ef6bb46d2906766c3e1b2a04a94d
-> 
-> Changes in v4:
-> 
-> * Dropped the BAR fix patches and submitted them separately:
->   https://lore.kernel.org/linux-pci/20241231130224.38206-1-manivannan.sadhasivam@linaro.org/
-> * Rebased on top of pci/next 9e1b45d7a5bc0ad20f6b5267992da422884b916e
-> 
-> Changes in v3:
-> 
-> * Collected tags.
-> * Added a note about failing testcase 10 and command to skip it in
->   documentation.
-> * Removed Aman Gupta and Padmanabhan Rajanbabu from CC as their addresses are
->   bouncing.
-> 
-> Changes in v2:
-> 
-> * Added a patch that fixes return values of IOCTL in pci_endpoint_test driver
-> * Moved the existing tests to new location before migrating
-> * Added a fix for BARs on Qcom devices
-> * Updated documentation and also added fixture variants for memcpy & DMA modes
-> 
-> 
-> Manivannan Sadhasivam (4):
->   PCI: endpoint: pci-epf-test: Fix the check for DMA MEMCPY test
->   misc: pci_endpoint_test: Fix the return value of IOCTL
->   selftests: Move PCI Endpoint tests from tools/pci to Kselftests
->   selftests: pci_endpoint: Migrate to Kselftest framework
-> 
->  Documentation/PCI/endpoint/pci-test-howto.rst | 170 +++++------
->  MAINTAINERS                                   |   2 +-
->  drivers/misc/pci_endpoint_test.c              | 255 +++++++++--------
->  drivers/pci/endpoint/functions/pci-epf-test.c |   4 +-
->  tools/pci/Build                               |   1 -
->  tools/pci/Makefile                            |  58 ----
->  tools/pci/pcitest.c                           | 264 ------------------
->  tools/pci/pcitest.sh                          |  73 -----
->  tools/testing/selftests/Makefile              |   1 +
->  .../testing/selftests/pci_endpoint/.gitignore |   2 +
->  tools/testing/selftests/pci_endpoint/Makefile |   7 +
->  tools/testing/selftests/pci_endpoint/config   |   4 +
->  .../pci_endpoint/pci_endpoint_test.c          | 221 +++++++++++++++
->  13 files changed, 435 insertions(+), 627 deletions(-)
->  delete mode 100644 tools/pci/Build
->  delete mode 100644 tools/pci/Makefile
->  delete mode 100644 tools/pci/pcitest.c
->  delete mode 100644 tools/pci/pcitest.sh
->  create mode 100644 tools/testing/selftests/pci_endpoint/.gitignore
->  create mode 100644 tools/testing/selftests/pci_endpoint/Makefile
->  create mode 100644 tools/testing/selftests/pci_endpoint/config
->  create mode 100644 tools/testing/selftests/pci_endpoint/pci_endpoint_test.c
-> 
-> -- 
-> 2.25.1
-> 
+Dmitry Baryshkov <dmitry.baryshkov@linaro.org> =E4=BA=8E2025=E5=B9=B41=E6=
+=9C=8816=E6=97=A5=E5=91=A8=E5=9B=9B 18:08=E5=86=99=E9=81=93=EF=BC=9A
+>
+> On Thu, Jan 16, 2025 at 05:49:43PM +0800, Jun Nie wrote:
+> > Dmitry Baryshkov <dmitry.baryshkov@linaro.org> =E4=BA=8E2025=E5=B9=B41=
+=E6=9C=8816=E6=97=A5=E5=91=A8=E5=9B=9B 16:00=E5=86=99=E9=81=93=EF=BC=9A
+> > >
+> > > On Thu, Jan 16, 2025 at 03:25:59PM +0800, Jun Nie wrote:
+> > > > Store pipes in array with removing dedicated r_pipe. There are
+> > > > 2 pipes in a drm plane at most currently, while 4 pipes are
+> > > > required for quad-pipe case. Generalize the handling to pipe pair
+> > > > and ease handling to another pipe pair later.
+> > >
+> > > With the first sentence being moved to the end of the commit message:
+> > >
+> > > Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > >
+> > > Minor issues below, please address them in the next version.
+> > >
+> > > >
+> > > > Signed-off-by: Jun Nie <jun.nie@linaro.org>
+> > > > ---
+> > > >  drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c  |  35 +++----
+> > > >  drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 167 +++++++++++++++++-=
+------------
+> > > >  drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h |  12 +--
+> > > >  3 files changed, 112 insertions(+), 102 deletions(-)
+> > >
+> > > > @@ -853,6 +855,9 @@ static int dpu_plane_atomic_check_nosspp(struct=
+ drm_plane *plane,
+> > > >               return -EINVAL;
+> > > >       }
+> > > >
+> > > > +     /* move the assignment here, to ease handling to another pair=
+s later */
+> > >
+> > > Is it a TODO comment? It reads like an order.
+> > >
+> > > > +     pipe_cfg =3D &pstate->pipe_cfg[0];
+> > > > +     r_pipe_cfg =3D &pstate->pipe_cfg[1];
+> > > >       /* state->src is 16.16, src_rect is not */
+> > > >       drm_rect_fp_to_int(&pipe_cfg->src_rect, &new_plane_state->src=
+);
+> > > >
+> > >
+> > > > @@ -1387,17 +1394,28 @@ static void _dpu_plane_atomic_disable(struc=
+t drm_plane *plane)
+> > > >  {
+> > > >       struct drm_plane_state *state =3D plane->state;
+> > > >       struct dpu_plane_state *pstate =3D to_dpu_plane_state(state);
+> > > > -     struct dpu_sw_pipe *r_pipe =3D &pstate->r_pipe;
+> > > > +     struct dpu_sw_pipe *pipe;
+> > > > +     int i;
+> > > >
+> > > > -     trace_dpu_plane_disable(DRMID(plane), false,
+> > > > -                             pstate->pipe.multirect_mode);
+> > > > +     for (i =3D 0; i < PIPES_PER_STAGE; i +=3D 1) {
+> > > > +             pipe =3D &pstate->pipe[i];
+> > > > +             if (!pipe->sspp)
+> > > > +                     continue;
+> > > >
+> > > > -     if (r_pipe->sspp) {
+> > > > -             r_pipe->multirect_index =3D DPU_SSPP_RECT_SOLO;
+> > > > -             r_pipe->multirect_mode =3D DPU_SSPP_MULTIRECT_NONE;
+> > > > +             trace_dpu_plane_disable(DRMID(plane), false,
+> > > > +                                     pstate->pipe[i].multirect_mod=
+e);
+> > > >
+> > > > -             if (r_pipe->sspp->ops.setup_multirect)
+> > > > -                     r_pipe->sspp->ops.setup_multirect(r_pipe);
+> > > > +             /*
+> > > > +              * clear multirect for the right pipe so that the SSP=
+P
+> > > > +              * can be further reused in the solo mode
+> > > > +              */
+> > > > +             if (pipe->sspp && i =3D=3D 1) {
+> > >
+> > > Wouldn't it be better to `&& i % 2 !=3D 0`? Then, I think, this condi=
+tion
+> > > can stay even in quad-pipe case.
+> >
+> > If all pipes are in solo mode, there is no need to test ' i %2 !=3D 0 '=
+. Below
+> > test shall be better, right?
+> > if (pipe->sspp && pipe->multirect_index =3D=3D DPU_SSPP_RECT_1)
+>
+> Again, this will not work as expected for the SSPP-sharing case as it
+> will then clear pipe 0 for the sharing planes.
+>
+> Let me think a bit... This code resets multirect for right pipes. It was
+> added back in 4.9 to fix the case of 'master' aka RECT_0 not being a
+> part of the atomic update. However I don't think this is applicable
+> anymore. We use z_pos normalization, so all planes for a CRTC are added
+> to the commit. Please drop this piece in a separate commit.
 
-I ran the test using simply:
+You mean only testing sspp as below? We have to handle the default
+ non-shared case as existing implementation. Maybe we add a flag after
+sharing SSPP among planes? Otherwise, how to distinct the shared
+SSPP case and disable multi-rect mode in non-shared case?
 
-$ ./pci_endpoint_test
+               if (pipe->sspp) {
 
-and got:
-
-#  RUN           pci_ep_basic.MSIX_TEST ...
-# pci_endpoint_test.c:129:MSIX_TEST:Expected 0 (0) == ret (-110)
-# pci_endpoint_test.c:129:MSIX_TEST:Test failed for MSI-X33
-# pci_endpoint_test.c:129:MSIX_TEST:Expected 0 (0) == ret (-110)
-# pci_endpoint_test.c:129:MSIX_TEST:Test failed for MSI-X34
-# pci_endpoint_test.c:129:MSIX_TEST:Expected 0 (0) == ret (-110)
-# pci_endpoint_test.c:129:MSIX_TEST:Test failed for MSI-X35
-# pci_endpoint_test.c:129:MSIX_TEST:Expected 0 (0) == ret (-110)
-# pci_endpoint_test.c:129:MSIX_TEST:Test failed for MSI-X36
-# pci_endpoint_test.c:129:MSIX_TEST:Expected 0 (0) == ret (-110)
-# pci_endpoint_test.c:129:MSIX_TEST:Test failed for MSI-X37
-# pci_endpoint_test.c:129:MSIX_TEST:Expected 0 (0) == ret (-110)
-# pci_endpoint_test.c:129:MSIX_TEST:Test failed for MSI-X38
-# pci_endpoint_test.c:129:MSIX_TEST:Expected 0 (0) == ret (-110)
-# pci_endpoint_test.c:129:MSIX_TEST:Test failed for MSI-X39
-
-
-I think that you should also do:
-
-diff --git a/Documentation/PCI/endpoint/pci-test-howto.rst b/Documentation/PCI/endpoint/pci-test-howto.rst
-index 7d0dbad61456..7d5049c884dd 100644
---- a/Documentation/PCI/endpoint/pci-test-howto.rst
-+++ b/Documentation/PCI/endpoint/pci-test-howto.rst
-@@ -81,8 +81,8 @@ device, the following commands can be used::
- 
-        # echo 0x104c > functions/pci_epf_test/func1/vendorid
-        # echo 0xb500 > functions/pci_epf_test/func1/deviceid
--       # echo 16 > functions/pci_epf_test/func1/msi_interrupts
--       # echo 8 > functions/pci_epf_test/func1/msix_interrupts
-+       # echo 32 > functions/pci_epf_test/func1/msi_interrupts
-+       # echo 2048 > functions/pci_epf_test/func1/msix_interrupts
- 
-
-Such that the documentation suggests values that will actually make the
-pci_endpoint_test pass without any special parameters set.
-
-
-Other than that small nit, for the series:
-Tested-by: Niklas Cassel <cassel@kernel.org>
+>
+> >
+> > >
+> > > > +                     pipe->multirect_index =3D DPU_SSPP_RECT_SOLO;
+> > > > +                     pipe->multirect_mode =3D DPU_SSPP_MULTIRECT_N=
+ONE;
+> > > > +
+> > > > +                     if (pipe->sspp->ops.setup_multirect)
+> > > > +                             pipe->sspp->ops.setup_multirect(pipe)=
+;
+> > > > +             }
+> > > >       }
+> > > >
+> > > >       pstate->pending =3D true;
+> > >
+> > > --
+> > > With best wishes
+> > > Dmitry
+>
+> --
+> With best wishes
+> Dmitry
 
