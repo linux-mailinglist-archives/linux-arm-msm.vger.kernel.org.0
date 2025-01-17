@@ -1,276 +1,170 @@
-Return-Path: <linux-arm-msm+bounces-45433-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-45434-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5120BA1541F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Jan 2025 17:21:33 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id D1043A15440
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Jan 2025 17:30:17 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 790693A21E4
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Jan 2025 16:21:26 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 397733A6D56
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Jan 2025 16:30:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6CBCF166F29;
-	Fri, 17 Jan 2025 16:21:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 31E5919DFA7;
+	Fri, 17 Jan 2025 16:30:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="CnX6rcDG"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="e4D1XtMz"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f73.google.com (mail-wm1-f73.google.com [209.85.128.73])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEFEF13AA20;
-	Fri, 17 Jan 2025 16:21:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43EA919D098
+	for <linux-arm-msm@vger.kernel.org>; Fri, 17 Jan 2025 16:30:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.73
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737130890; cv=none; b=eAgkpV6fDve26FwkBsqUW8idH9wL3NIpJ5Mdl56r9b7mdJ6LeFGuXQpoT0Q3XePBTiKsb6AxlalhsRqk4yKFZLVwIoXU0Iy+6TrisGgqgdj1NcXipqI9jIHjB/QeYrIIBjg16f/1Tbuu+rHugSpClyZj9owRlQTGNB+o78mQeas=
+	t=1737131409; cv=none; b=KpgBmvzUVp2ZE9uLT0bKBiJh5F/XLO0n0rGr7oZbVs7ctw/ZoB1djX7EUEpmKJWvSvLo4Ry++EFCP6LUIfMFXingU756A8vI+SFaKgtroQTMyKuxxb2rfVBxxbq4OzTQmKU/HuzvAhGQN93+cauE8jcsD6/poJzQV76I12voOcM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737130890; c=relaxed/simple;
-	bh=3o4yC6WUZpjTtILGebt8NwH1mKHZMbXrdilpPF3zVRk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=i9Nldgu4JoXy9yPoYarTol7ZUzPhwlxT77BrlW3xZ3vGRAA5GbT/84ivMAb77vLsAWJh35pNhnPGQ9ixEfOS8my53mDKgXvoJKUWZ130biZRQrzWkFA6R/5XuSz3L77dGxPficlGYJHN/Mv1Ang0xt8aNOfdnrqmMYRCDF06bbg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=CnX6rcDG; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50HA2Wpf008653;
-	Fri, 17 Jan 2025 16:21:21 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	KzCeRgTXHGvUFFgvDT5AjmVOYYrqf1bwBxKOOnxZkSw=; b=CnX6rcDGbxfchv0q
-	vyXFDZ2eDwrdeQW5cYWxecb0DObKf0z/O5qqwwakmcmx4qiHOwxXDqfqlrUEK3KW
-	8pmG+tOQ3NdBygbepsEwmlu4B20nshboRnGEy0GaA3de83OOQtEeTUntcQLcyL16
-	JBnrt1Aq/z8PLwD1EYkIygECo96kxqLUs9mwLeY15ZFUvJfGX9MDL2mx/x3xsM5/
-	XIfxhVnDC0/s4rOZ6gc2HvRxRa1WcPT1pIUqtChsDMwNkhFpy4eY8B7IR/daVzDk
-	ZtWP+SuTWieBNBwiIAOCXxmnz8smj/mt2GFduudDkpoKxXnCbyliwdP2nSuXdze4
-	P+Gnlg==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 447n3vrxcj-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 17 Jan 2025 16:21:21 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 50HGLKRF029381
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 17 Jan 2025 16:21:20 GMT
-Received: from [10.226.59.182] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 17 Jan
- 2025 08:21:19 -0800
-Message-ID: <9c29c3cf-d3b4-1832-960a-a72d003b71d5@quicinc.com>
-Date: Fri, 17 Jan 2025 09:21:18 -0700
+	s=arc-20240116; t=1737131409; c=relaxed/simple;
+	bh=DWGIP/qi5LWCgH8MHPzzsyVHVWs1vx0eOIEhhCoqOxs=;
+	h=Date:Mime-Version:Message-ID:Subject:From:To:Cc:Content-Type; b=t2FbPwoapioVKqlHiH26UwWRotPAo30QJsaSK3nzumNWb57fqkMM1iiYY/TKGQpNw5h4/MhXG8DWimBw1PPGLgY5p0ik4atMvArxIffJhLPG0m5UNZlHT7EGhj0NUTCYGCKHtnFLM02eZBDc8SU3BqV3rKWWeOFajKKC8+Rax9U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--tabba.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=e4D1XtMz; arc=none smtp.client-ip=209.85.128.73
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--tabba.bounces.google.com
+Received: by mail-wm1-f73.google.com with SMTP id 5b1f17b1804b1-43651b1ba8aso16682895e9.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Jan 2025 08:30:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1737131403; x=1737736203; darn=vger.kernel.org;
+        h=cc:to:from:subject:message-id:mime-version:date:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=EFi/LeK1i1oYmoH0ZXeSnoaGN0kNaricZIbeo5WyKQo=;
+        b=e4D1XtMz6YAxkwPPAnj0VQtt4vGvd1cz0Q+VKRn3Uiusi6IXovkTuA8End6m5qinGa
+         HIfaBLBgd/Fsps5T06qiTr8+bzL4gm7zFaFcHVGZrz/XaFKVruTuVTb8+ibPDMYsnIkT
+         UEB2W640LolkFamxl5RPrbAS4/h/uP2F42QA0gKYMB2zcgGNEu4a2jmbhqVS30PtPpI4
+         3xNLgDuTdViY6D0FQTjHIlCdBVEyge6OFUca5VRDiC1diZCdsiO75r8GkL2zfyJUCMzO
+         A/cfDV+pAIETxvG6I7obn+e1fTeAnLbGxLAVxWjuBeq0Rjq2QzAW2guEtP8s0Wao6pvm
+         l4Mg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1737131403; x=1737736203;
+        h=cc:to:from:subject:message-id:mime-version:date:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=EFi/LeK1i1oYmoH0ZXeSnoaGN0kNaricZIbeo5WyKQo=;
+        b=P+oLUIRzXdVHKnUaA/r7Rsws1dyDUWjE1TwmY+Opo9fA/DDgLd7TUrufpKHGk2EY1o
+         T8ObN8TH8Lfa4EUvORTMWTHxZ2gPR/pbQsiTtIOkOM0T7E1bLlxWqYrTFZpKt1B5asHH
+         fyvmZl+iQ5H49sgCKivJRY6Kp7hOCjGGuKAMXEtAjwi98hWDx5gdK2ZHU58XGwjIwQfZ
+         +vEAldQ0FsQaVbYI0XI0or5PHAPLVvkz5zsJj5bAsspt972+0M+oue7QCa0EhA/ZDyL5
+         8vdT+Y0cPcGOaLkEP//kThlUzmeJ+foxWOYKFEXwFDfEs6bw8fvpUCgCadUpQ7noQ/iJ
+         9z4A==
+X-Forwarded-Encrypted: i=1; AJvYcCWErdU2Src+YSmus9Bu3l7WH25FGonw11doczFPNI9xvLDppyH4c4IxVfdPZBOdRwNOtTQAjQ1P77PjdDrQ@vger.kernel.org
+X-Gm-Message-State: AOJu0YzqkFy5mfpK+QklVlJjSKDz2Dpa7RCZcqgwaDzI5KRxibtt1JRg
+	vxzS/ncJmevOmkVCda/C0B9i1pGgoDHkUvMnbFefcPAA0RlZz+jWGQ0MpfyhHNl+Q5hbvPpLBQ=
+	=
+X-Google-Smtp-Source: AGHT+IHisH8lFtSXqxitsVI8oE1Zn+Lbrl6gn+saOmhLPCojIr7sIXCJwyH321FPy/5mZWRxI8wmsfHN2Q==
+X-Received: from wmbbe7.prod.google.com ([2002:a05:600c:1e87:b0:436:3ea:c491])
+ (user=tabba job=prod-delivery.src-stubby-dispatcher) by 2002:adf:cf06:0:b0:385:fc8c:24b6
+ with SMTP id ffacd0b85a97d-38bf566f406mr2762576f8f.27.1737131403298; Fri, 17
+ Jan 2025 08:30:03 -0800 (PST)
+Date: Fri, 17 Jan 2025 16:29:46 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.0
-Subject: Re: [PATCH 1/7] bus: mhi: host: Refactor BHI/BHIe based firmware
- loading
-Content-Language: en-US
-To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-CC: <quic_carlv@quicinc.com>, <quic_yabdulra@quicinc.com>,
-        <quic_mattleun@quicinc.com>, <quic_thanson@quicinc.com>,
-        <ogabbay@kernel.org>, <lizhi.hou@amd.com>,
-        <jacek.lawrynowicz@linux.intel.com>, <linux-arm-msm@vger.kernel.org>,
-        <dri-devel@lists.freedesktop.org>, <mhi@lists.linux.dev>
-References: <20241213213340.2551697-1-quic_jhugo@quicinc.com>
- <20241213213340.2551697-2-quic_jhugo@quicinc.com>
- <20250108052416.cqfoxzvw42me2kub@thinkpad>
-From: Jeffrey Hugo <quic_jhugo@quicinc.com>
-In-Reply-To: <20250108052416.cqfoxzvw42me2kub@thinkpad>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: abYdJTg5IAC6fkAUS9BM4oHhMb-vAhsD
-X-Proofpoint-ORIG-GUID: abYdJTg5IAC6fkAUS9BM4oHhMb-vAhsD
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-01-17_06,2025-01-16_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 bulkscore=0
- adultscore=0 clxscore=1015 lowpriorityscore=0 mlxscore=0
- priorityscore=1501 phishscore=0 mlxlogscore=999 malwarescore=0
- impostorscore=0 spamscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2411120000 definitions=main-2501170129
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.48.0.rc2.279.g1de40edade-goog
+Message-ID: <20250117163001.2326672-1-tabba@google.com>
+Subject: [RFC PATCH v5 00/15] KVM: Restricted mapping of guest_memfd at the
+ host and arm64 support
+From: Fuad Tabba <tabba@google.com>
+To: kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org
+Cc: pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au, 
+	anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com, 
+	aou@eecs.berkeley.edu, seanjc@google.com, viro@zeniv.linux.org.uk, 
+	brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org, 
+	xiaoyao.li@intel.com, yilun.xu@intel.com, chao.p.peng@linux.intel.com, 
+	jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com, 
+	yu.c.zhang@linux.intel.com, isaku.yamahata@intel.com, mic@digikod.net, 
+	vbabka@suse.cz, vannapurve@google.com, ackerleytng@google.com, 
+	mail@maciej.szmigiero.name, david@redhat.com, michael.roth@amd.com, 
+	wei.w.wang@intel.com, liam.merwick@oracle.com, isaku.yamahata@gmail.com, 
+	kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com, steven.price@arm.com, 
+	quic_eberman@quicinc.com, quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, 
+	quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com, 
+	quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com, 
+	james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev, 
+	maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com, 
+	roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, 
+	rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com, 
+	jthoughton@google.com, tabba@google.com
+Content-Type: text/plain; charset="UTF-8"
 
-On 1/7/2025 10:24 PM, Manivannan Sadhasivam wrote:
-> On Fri, Dec 13, 2024 at 02:33:34PM -0700, Jeffrey Hugo wrote:
->> From: Matthew Leung <quic_mattleun@quicinc.com>
->>
->> Refactor the firmware loading code to have distinct helper functions for
->> BHI and BHIe operations. This lays the foundation for separating the
->> firmware loading protocol from the firmware being loaded and the EE it
->> is loaded in.
->>
->> Signed-off-by: Matthew Leung <quic_mattleun@quicinc.com>
->> Reviewed-by: Youssef Samir <quic_yabdulra@quicinc.com>
->> Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
->> Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
->> ---
->>   drivers/bus/mhi/host/boot.c | 155 +++++++++++++++++++++++++-----------
->>   1 file changed, 110 insertions(+), 45 deletions(-)
->>
->> diff --git a/drivers/bus/mhi/host/boot.c b/drivers/bus/mhi/host/boot.c
->> index e8c92972f9df..e3f3c07166ad 100644
->> --- a/drivers/bus/mhi/host/boot.c
->> +++ b/drivers/bus/mhi/host/boot.c
->> @@ -177,6 +177,37 @@ int mhi_download_rddm_image(struct mhi_controller *mhi_cntrl, bool in_panic)
->>   }
->>   EXPORT_SYMBOL_GPL(mhi_download_rddm_image);
->>   
->> +static inline void mhi_fw_load_error_dump(struct mhi_controller *mhi_cntrl)
-> 
-> No need to add 'inline' keyword in c files. You can trust the compiler.
+This series adds restricted mmap() support to guest_memfd, as
+well as support for guest_memfd on arm64. It is based on Linux
+6.13-rc7.  Please refer to v3 for the context [1].
 
-Done.
+Main changes since v4 [2]:
+- Fixed handling of guest_memfd()-backed page faults in arm64
+- Rebased on Linux 6.13-rc7
 
-> 
->> +{
->> +	struct device *dev = &mhi_cntrl->mhi_dev->dev;
->> +	rwlock_t *pm_lock = &mhi_cntrl->pm_lock;
->> +	void __iomem *base = mhi_cntrl->bhi;
->> +	int ret;
->> +	u32 val;
->> +	int i;
-> 
-> int ret, i?
+Not a change per se, but I am able to trigger/test the callback
+on the final __folio_put() using vmsplice to grab a reference
+without increasing the mapcount.
 
-Done.
+The state diagram that uses the new states in this patch series,
+and how they would interact with sharing/unsharing in pKVM [3].
 
-> 
->> +	struct {
->> +		char *name;
->> +		u32 offset;
->> +	} error_reg[] = {
->> +		{ "ERROR_CODE", BHI_ERRCODE },
->> +		{ "ERROR_DBG1", BHI_ERRDBG1 },
->> +		{ "ERROR_DBG2", BHI_ERRDBG2 },
->> +		{ "ERROR_DBG3", BHI_ERRDBG3 },
->> +		{ NULL },
->> +	};
->> +
->> +	read_lock_bh(pm_lock);
->> +	if (MHI_REG_ACCESS_VALID(mhi_cntrl->pm_state)) {
->> +		for (i = 0; error_reg[i].name; i++) {
->> +			ret = mhi_read_reg(mhi_cntrl, base, error_reg[i].offset, &val);
->> +			if (ret)
->> +				break;
->> +			dev_err(dev, "Reg: %s value: 0x%x\n", error_reg[i].name, val);
->> +		}
->> +	}
->> +	read_unlock_bh(pm_lock);
->> +}
->> +
-> 
-> [...]
-> 
->> +static int mhi_alloc_bhi_buffer(struct mhi_controller *mhi_cntrl,
->> +				struct image_info **image_info,
->> +				size_t alloc_size)
->> +{
->> +	struct image_info *img_info;
->> +	struct mhi_buf *mhi_buf;
->> +	int segments = 1;
->> +
->> +	img_info = kzalloc(sizeof(*img_info), GFP_KERNEL);
->> +	if (!img_info)
->> +		return -ENOMEM;
->> +
->> +	/* Allocate memory for entry */
->> +	img_info->mhi_buf = kcalloc(segments, sizeof(*img_info->mhi_buf),
->> +				    GFP_KERNEL);
-> 
-> Why do you need kcalloc for only 1 segment?
+Cheers,
+/fuad
 
-Symmetry with mhi_alloc_bhie_table().  Will change.
+[1] https://lore.kernel.org/all/20241010085930.1546800-1-tabba@google.com/
+[2] https://lore.kernel.org/all/20241213164811.2006197-1-tabba@google.com/
+[3] https://lpc.events/event/18/contributions/1758/attachments/1457/3699/Guestmemfd%20folio%20state%20page_type.pdf
 
-> 
->> +	if (!img_info->mhi_buf)
->> +		goto error_alloc_mhi_buf;
->> +
->> +	/* Allocate and populate vector table */
->> +	mhi_buf = img_info->mhi_buf;
->> +
->> +	mhi_buf->len = alloc_size;
->> +	mhi_buf->buf = dma_alloc_coherent(mhi_cntrl->cntrl_dev, mhi_buf->len,
->> +					  &mhi_buf->dma_addr, GFP_KERNEL);
->> +	if (!mhi_buf->buf)
->> +		goto error_alloc_segment;
->> +
->> +	img_info->bhi_vec = NULL;
->> +	img_info->entries = segments;
->> +	*image_info = img_info;
->> +
->> +	return 0;
->> +
->> +error_alloc_segment:
->> +	kfree(mhi_buf);
->> +error_alloc_mhi_buf:
->> +	kfree(img_info);
->> +
->> +	return -ENOMEM;
->> +}
->> +
->>   int mhi_alloc_bhie_table(struct mhi_controller *mhi_cntrl,
->>   			 struct image_info **image_info,
->>   			 size_t alloc_size)
->> @@ -364,9 +422,18 @@ int mhi_alloc_bhie_table(struct mhi_controller *mhi_cntrl,
->>   	return -ENOMEM;
->>   }
->>   
->> -static void mhi_firmware_copy(struct mhi_controller *mhi_cntrl,
->> -			      const u8 *buf, size_t remainder,
->> -			      struct image_info *img_info)
->> +static void mhi_firmware_copy_bhi(struct mhi_controller *mhi_cntrl,
->> +				  const u8 *buf, size_t size,
->> +				  struct image_info *img_info)
->> +{
->> +	struct mhi_buf *mhi_buf = img_info->mhi_buf;
->> +
->> +	memcpy(mhi_buf->buf, buf, size);
->> +}
->> +
->> +static void mhi_firmware_copy_bhie(struct mhi_controller *mhi_cntrl,
->> +				   const u8 *buf, size_t remainder,
->> +				   struct image_info *img_info)
->>   {
->>   	size_t to_cpy;
->>   	struct mhi_buf *mhi_buf = img_info->mhi_buf;
->> @@ -390,10 +457,9 @@ void mhi_fw_load_handler(struct mhi_controller *mhi_cntrl)
->>   	const struct firmware *firmware = NULL;
->>   	struct device *dev = &mhi_cntrl->mhi_dev->dev;
->>   	enum mhi_pm_state new_state;
->> +	struct image_info *image;
->>   	const char *fw_name;
->>   	const u8 *fw_data;
->> -	void *buf;
->> -	dma_addr_t dma_addr;
->>   	size_t size, fw_sz;
->>   	int ret;
->>   
->> @@ -452,17 +518,16 @@ void mhi_fw_load_handler(struct mhi_controller *mhi_cntrl)
->>   	fw_sz = firmware->size;
->>   
->>   skip_req_fw:
->> -	buf = dma_alloc_coherent(mhi_cntrl->cntrl_dev, size, &dma_addr,
->> -				 GFP_KERNEL);
->> -	if (!buf) {
->> +	ret = mhi_alloc_bhi_buffer(mhi_cntrl, &image, size);
->> +	if (ret) {
->>   		release_firmware(firmware);
->>   		goto error_fw_load;
->>   	}
->> +	mhi_firmware_copy_bhi(mhi_cntrl, fw_data, size, image);
-> 
-> Why can't you directly use memcpy here? I know what you want to keep symmetry
-> with mhi_firmware_copy_bhie(), but it seems unnecessary to me.
-> 
-> Adding a comment like "Load the firmware into BHI vec table" is enough.
+Ackerley Tng (2):
+  KVM: guest_memfd: Make guest mem use guest mem inodes instead of
+    anonymous inodes
+  KVM: guest_memfd: Track mappability within a struct kvm_gmem_private
 
-Just symmetry.  Jarek had the same comment.  Will inline.
+Fuad Tabba (13):
+  mm: Consolidate freeing of typed folios on final folio_put()
+  KVM: guest_memfd: Introduce kvm_gmem_get_pfn_locked(), which retains
+    the folio lock
+  KVM: guest_memfd: Folio mappability states and functions that manage
+    their transition
+  KVM: guest_memfd: Handle final folio_put() of guestmem pages
+  KVM: guest_memfd: Allow host to mmap guest_memfd() pages when shared
+  KVM: guest_memfd: Add guest_memfd support to
+    kvm_(read|/write)_guest_page()
+  KVM: guest_memfd: Add KVM capability to check if guest_memfd is host
+    mappable
+  KVM: guest_memfd: Add a guest_memfd() flag to initialize it as
+    mappable
+  KVM: guest_memfd: selftests: guest_memfd mmap() test when mapping is
+    allowed
+  KVM: arm64: Skip VMA checks for slots without userspace address
+  KVM: arm64: Refactor user_mem_abort() calculation of force_pte
+  KVM: arm64: Handle guest_memfd()-backed guest page faults
+  KVM: arm64: Enable guest_memfd private memory when pKVM is enabled
+
+ Documentation/virt/kvm/api.rst                |   4 +
+ arch/arm64/include/asm/kvm_host.h             |   3 +
+ arch/arm64/kvm/Kconfig                        |   1 +
+ arch/arm64/kvm/mmu.c                          |  98 ++-
+ include/linux/kvm_host.h                      |  80 +++
+ include/linux/page-flags.h                    |  22 +
+ include/uapi/linux/kvm.h                      |   2 +
+ include/uapi/linux/magic.h                    |   1 +
+ mm/debug.c                                    |   1 +
+ mm/swap.c                                     |  28 +-
+ tools/testing/selftests/kvm/Makefile          |   1 +
+ .../testing/selftests/kvm/guest_memfd_test.c  |  64 +-
+ virt/kvm/Kconfig                              |   4 +
+ virt/kvm/guest_memfd.c                        | 579 +++++++++++++++++-
+ virt/kvm/kvm_main.c                           | 234 ++++++-
+ 15 files changed, 1034 insertions(+), 88 deletions(-)
+
+
+base-commit: 5bc55a333a2f7316b58edc7573e8e893f7acb532
+-- 
+2.48.0.rc2.279.g1de40edade-goog
 
 
