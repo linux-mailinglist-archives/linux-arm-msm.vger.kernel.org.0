@@ -1,78 +1,78 @@
-Return-Path: <linux-arm-msm+bounces-45364-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-45365-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id E0D53A14884
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Jan 2025 04:38:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 4F871A1488D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Jan 2025 04:40:00 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1EA171889201
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Jan 2025 03:38:06 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id AC7CA188CCD0
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Jan 2025 03:40:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5EC901F63C2;
-	Fri, 17 Jan 2025 03:37:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 26BFA1E1A32;
+	Fri, 17 Jan 2025 03:39:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Bp4Oms9W"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="dcUSrJNP"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f43.google.com (mail-lf1-f43.google.com [209.85.167.43])
+Received: from mail-lf1-f46.google.com (mail-lf1-f46.google.com [209.85.167.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 399A51F5616
-	for <linux-arm-msm@vger.kernel.org>; Fri, 17 Jan 2025 03:37:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D6F625A620
+	for <linux-arm-msm@vger.kernel.org>; Fri, 17 Jan 2025 03:39:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737085077; cv=none; b=MhIibEbBzxvgw4JFgpQD0vDLqjhVlb1uuW6tPhtDmLmQ6P5qNPZp+h3kqWuvCMKxasfyTWrEYcVUUU1XdteqhrFSq8VDKeApWQejHr/hlhpMA6ttGTryTlEoopbsG0BXHW4l+8zoOLhCeweiUWDmnn6YslnHCvtiMjlXm1tfApk=
+	t=1737085197; cv=none; b=qi2x64MAWZT8pR7dwzc4EQZ7Ev2BN4n83zErENHplIUI6ZwjBUpqNXX9GtRvrk4KJFrD03v2YIiYgqfInG4FJN3CBLUQBac3r2pyn6roq4bj1S3E5IT6XalTY+cc2J4cb21ttDTgEF/1H8FOrF6E0aVWQCHOwC1GU9z1yUXu6/c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737085077; c=relaxed/simple;
-	bh=MJ3QxAbDy1kriIAHUnVZKwSdyipkUogFYOXeWkQEkfQ=;
+	s=arc-20240116; t=1737085197; c=relaxed/simple;
+	bh=YO3rR3i4AqRQEhLdRWNd1n2F0EvVcKB4ZP0pZMv8aKE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=N0XNIOWMMchjFLMcxR8BuAWywhIUkH6kqNp1OrDAX6HpxbCnw6q/EYDFQvdq8u51G7hJ3nvkNKB4U1e12OyB10RAj3K3g1JsUVveBmd0ioOm4qXV9bEodEB0colHrCtszulWRuvB+UH9DlSvOSs08MoruNhRjFDnIm2W6/dllXw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Bp4Oms9W; arc=none smtp.client-ip=209.85.167.43
+	 Content-Type:Content-Disposition:In-Reply-To; b=B9h4cJ/ruWg1LpraxOJWA3uJHTYe5djcuausoyNjqAlnKct655UInZsYtNrUlSiQpziu1GsMmESClZxhG7GhV6MV9igbDxwPkkVdCITWye3zz9r/Yg3XBp1U57UX4yKKzXbXwJQvBeJ+kZt/Wts7Vo4rt26lUgZ5NBNEfI/+BEQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=dcUSrJNP; arc=none smtp.client-ip=209.85.167.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f43.google.com with SMTP id 2adb3069b0e04-5401e6efffcso1897290e87.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Jan 2025 19:37:54 -0800 (PST)
+Received: by mail-lf1-f46.google.com with SMTP id 2adb3069b0e04-5401bd6cdb4so1756329e87.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Jan 2025 19:39:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1737085073; x=1737689873; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1737085193; x=1737689993; darn=vger.kernel.org;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=RbRhauMuE7vnNEQUajYDJYV2KJ4uJrNBBU7umCd3XAo=;
-        b=Bp4Oms9W5602pmnTEwav8VCKNTMj2X3DWvrkhVmUiPo6Ihp+PftJ4xQTd099yr5bAh
-         v9FxARMgklGbiRK6sWXFPLo/cPiADpyhL6gDpsPNVstuH1tJ1lFkww6GHb+C7Nzz1Fi+
-         LUcqAN15Y4mZrpJnRtQvonWVRI89IAnY4qnhR58QZHCGRm3h/X2zcIdqoEeyU7Nbwh9R
-         ZZgLtOhzJbDTlR9ukYuwmVmNtycOFc1DUyNj8/XLleoneMLOMPCjoWTX3W0hSbJWpGiq
-         vRSfkiZzJOo82j6RCVyDrPScOgJB2GTA5+P/dcvu/CQJiWlbJO0fofMXCaXib0rsNq6q
-         oN/w==
+        bh=a0KmIpWhOnmvP2/79nQLTbunQC6aY9KWQAhT4oyikpE=;
+        b=dcUSrJNP88k4DsXEEvk5WYKyB2AniOInEnQhsRQznFrjYF7NY211oQ010cI6tFq8DR
+         ssA9ohBhOpxVurDHlHfgihZ5pbPTPkxgaXh58LSt+7/LxZB5U2MZJ3l+2ioMqDaYvael
+         PrUBfO7vCv3qMKq1IO3Nwx14IHedR3Ny81RrSNm+BmItqA/PxTk/f3uQzV73WpZM3MCh
+         6iJMB4gVTrJltB2YeqbNZnjU5DPZAmorL0e/ZTyv9G8v2OA5ol9cbnsOAoskPXOCCT8s
+         vq0mcjIEdiD7IXbPrPiuXgDJ6+K0eJ/sgpEwncfKbmuxWt5w11ZUhHuxOkFtVPQEwOcJ
+         z7DQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1737085073; x=1737689873;
+        d=1e100.net; s=20230601; t=1737085193; x=1737689993;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=RbRhauMuE7vnNEQUajYDJYV2KJ4uJrNBBU7umCd3XAo=;
-        b=AoqTcqE5YXjp5qpjZmGo6KS9o5s6zWMlIc64VkVRFToG8/50T82LUt7Lx0Dg0hggim
-         9AtOk4as2d3KCdFbtyeTXqaH+IVdD2eHuA55Op8VBwLHCovsdCUqCUw7WTVPkzvQc/sB
-         z3+U6UxncZg0l9rvJKpVi2ZSk63A3V59qC051E4yWjmXPVBbca4N6ovzcvs2t3PovWPD
-         kOY1lJ4EBX6rvnq5/XscWB2Y4keSFwEfAoiYYjp5AxRf5DwdhmoJUvCRFnTUN9ofyFrg
-         tkrqs2HAMzMr5BT4f9RksQVjnGfR85KWN71LGyumnOwy7VYDX27D4aSG8K+axAc7r4Zd
-         pzlA==
-X-Forwarded-Encrypted: i=1; AJvYcCUuLcmJA9pD4JVLc6ajZzOmWF9Cij9EwPkXs4YGqRs5ovak/SOEHM0ByclikioXp8B0kGQGzujnXEhyJyTt@vger.kernel.org
-X-Gm-Message-State: AOJu0YxGs6C1+X/Onv/+JG0oMGKHvCphMpaQspyNiKHLa0pjU7y8rvZf
-	MB5oWn8IXWtNodpSBv+hNyLIdW35ZNqSoc7K+QaJxTpQMXAFLW4R+yC5Pqb/RZo=
-X-Gm-Gg: ASbGncsIUhH5qZrazVoxIIci92U47hsqw/i0Q9/VT8YZr1WbVCM8IFIouAD9PwjN3xl
-	KdpEHuzHC6kWPnWkjJNHebQz8rsy7Hvmn2n/jLRKvgWgaZi4Bpbd8b1IKsj1Ngz54pFMjuyYK1+
-	J/M7GRSzOnQPfpUQx+45q2FBPsT/zZcy2M6e1fBExL24owTbJwN/LZXQaOzoAta6snT/ihoy3E7
-	J25vkEbXWWARQF1dm8VXFgk05wRy5hMkwjJsdJ8to5FRUHAcY9TmTdSWR48NqtsPwIrv2jPZiqx
-	7Ho+Pxm5Ue4eFND0ZsNHAQQNSUF+Ov3pR4Tn
-X-Google-Smtp-Source: AGHT+IFOT1+RQIjsjZXqf2Cffm/N+YEVBjWGmnuiuZFzm+cpHfW+kc9gDgzw7QaN3oySnGnlkKtSug==
-X-Received: by 2002:a05:6512:ad5:b0:542:2190:9d99 with SMTP id 2adb3069b0e04-5439c22d7fcmr220660e87.6.1737085073255;
-        Thu, 16 Jan 2025 19:37:53 -0800 (PST)
+        bh=a0KmIpWhOnmvP2/79nQLTbunQC6aY9KWQAhT4oyikpE=;
+        b=byVPCy84VbNK4/Hyfw082Vj1rqebaZ0n+r5VGlFw9yAo56m4xj5wYqGhNTvbpKIiM3
+         jEXCgu122TDxGKKNeOTQOMkqJnbqABWvNrscCOZDrLKwk9PrPMi9v9bEGnBpwGuqHnSY
+         uOk8/X+ttAbE/7d3b9TLxlZM+hMhlitMsUn6YT/yd84Vb0DxinR5sikzNZQC9ej7rePb
+         RJPx6aQSplrSCM2z5GxXjeIhvqQy1xVt5XUwwxoX2fBbKy5KhlT3IofsR6tPPpOGiQeF
+         UOH5GKwJGKkyVr43BMoIh8me3cH2jtoNQUIttnGZFcmcx35ZrI+95XIOdUJjNlfyonzK
+         vAcA==
+X-Forwarded-Encrypted: i=1; AJvYcCUx028qJao4BkyFhGhZDXg6smlzi9qDijMwQSsZYcO30FiWGriIAgAIm8df7teQFcdwStsl/me2Ok9ahhHS@vger.kernel.org
+X-Gm-Message-State: AOJu0YyXEHcnHE+Bw7qB/yOGUyTW22rtyNZfRJHRwlFevn/Qtoh8Bmgh
+	dCAlggYFmBJwPd4L77B1ncnJViB4Y28I2pfQisKAic1ASJbCUWck3Hd0TvGBAQE=
+X-Gm-Gg: ASbGncuqiJfcHmJ+p0AcxRgTlmkwYIZpq2snMda8Heluen+cPmirX/KKdIJuBzL28xI
+	4IOeGN8XNr+2EebcbayKjIiURVWynXjkseSZsCWC0MEHtiV331l2M7rWdoi3RDY6LVaNH1S0nWW
+	LX2QyMzQZBkRJlUNSv2siNoHkx8E27rKCGs4x+qrAD09KWc/KMIkQO7C3oYATXAqnTZ8jrRbzA4
+	Qzoj7v6Wk2dlgBH6/m559FMtJaz2gB+ryNWHDK6Ku8bIwF1uB7Pp2lUQnvj1F5saO5cd26BcRMT
+	IZPSLwP4ihYjVWYthCkznLB7ePjMD88ulJZ0
+X-Google-Smtp-Source: AGHT+IG1i+XsSg4L26hUUv4AYoaCV/mK4bj6NtE/PFeG94iR1Z0kvDv6pvax9G0WjZar1+ZiQ+L9PQ==
+X-Received: by 2002:ac2:54b5:0:b0:542:249c:215f with SMTP id 2adb3069b0e04-5439c22a8f6mr186133e87.4.1737085193491;
+        Thu, 16 Jan 2025 19:39:53 -0800 (PST)
 Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5439af62dbdsm195439e87.144.2025.01.16.19.37.50
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5439af60992sm191506e87.155.2025.01.16.19.39.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 16 Jan 2025 19:37:51 -0800 (PST)
-Date: Fri, 17 Jan 2025 05:37:49 +0200
+        Thu, 16 Jan 2025 19:39:52 -0800 (PST)
+Date: Fri, 17 Jan 2025 05:39:49 +0200
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To: Jun Nie <jun.nie@linaro.org>
 Cc: Rob Clark <robdclark@gmail.com>, 
@@ -80,14 +80,13 @@ Cc: Rob Clark <robdclark@gmail.com>,
 	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
 	Simona Vetter <simona@ffwll.ch>, linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
 	freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v4 10/16] drm/msm/dpu: handle pipes as array
-Message-ID: <a5ezjovkywse5pvzkm6gpgxrylfzxoahld46nenhfwa4xh2vf6@dhiwwbxauvrk>
+Subject: Re: [PATCH v4 14/16] drm/msm/dpu: support SSPP assignment for
+ quad-pipe case
+Message-ID: <tae55nwbytxtmskvlelwkldy6tkgurr3mxocpfdhvniuiduxb4@qosnxo2dseu2>
 References: <20250116-sm8650-v6-13-hmd-deckard-mdss-quad-upstream-33-v4-0-74749c6eba33@linaro.org>
- <20250116-sm8650-v6-13-hmd-deckard-mdss-quad-upstream-33-v4-10-74749c6eba33@linaro.org>
- <l6z2skrj2tvlnqok44yepqs32keuz3wsfpgsacesrxi3q4s4xb@oiicfia3tkef>
- <CABymUCOdtePUgcbtY3Xtf9detcfwm=RjG1D_sfDOSbSP-EjwXA@mail.gmail.com>
- <gj6lxrclgabwuww3rl2ynw5qmaq4lx6xycxrazcwnnf5fbezjb@oijoszqsrdps>
- <CABymUCPa_k7OriJcDNZmCER9zhK-vk78NaK5HpV8-+Ta+MQQMg@mail.gmail.com>
+ <20250116-sm8650-v6-13-hmd-deckard-mdss-quad-upstream-33-v4-14-74749c6eba33@linaro.org>
+ <kqrea3es5bwyofk3p3l26wj2iswvfqadwehusfpj4mssgawdos@wombtx67llyc>
+ <CABymUCPn=u8jr_OTFwB-WBjj2nNgBeTyH5b=PvF5vLrDhCxr3Q@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -97,138 +96,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CABymUCPa_k7OriJcDNZmCER9zhK-vk78NaK5HpV8-+Ta+MQQMg@mail.gmail.com>
+In-Reply-To: <CABymUCPn=u8jr_OTFwB-WBjj2nNgBeTyH5b=PvF5vLrDhCxr3Q@mail.gmail.com>
 
-On Thu, Jan 16, 2025 at 11:36:21PM +0800, Jun Nie wrote:
-> Dmitry Baryshkov <dmitry.baryshkov@linaro.org> 于2025年1月16日周四 18:08写道：
+On Thu, Jan 16, 2025 at 10:22:07PM +0800, Jun Nie wrote:
+> Dmitry Baryshkov <dmitry.baryshkov@linaro.org> 于2025年1月16日周四 16:18写道：
 > >
-> > On Thu, Jan 16, 2025 at 05:49:43PM +0800, Jun Nie wrote:
-> > > Dmitry Baryshkov <dmitry.baryshkov@linaro.org> 于2025年1月16日周四 16:00写道：
-> > > >
-> > > > On Thu, Jan 16, 2025 at 03:25:59PM +0800, Jun Nie wrote:
-> > > > > Store pipes in array with removing dedicated r_pipe. There are
-> > > > > 2 pipes in a drm plane at most currently, while 4 pipes are
-> > > > > required for quad-pipe case. Generalize the handling to pipe pair
-> > > > > and ease handling to another pipe pair later.
-> > > >
-> > > > With the first sentence being moved to the end of the commit message:
-> > > >
-> > > > Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > > >
-> > > > Minor issues below, please address them in the next version.
-> > > >
-> > > > >
-> > > > > Signed-off-by: Jun Nie <jun.nie@linaro.org>
-> > > > > ---
-> > > > >  drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c  |  35 +++----
-> > > > >  drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 167 +++++++++++++++++-------------
-> > > > >  drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h |  12 +--
-> > > > >  3 files changed, 112 insertions(+), 102 deletions(-)
-> > > >
-> > > > > @@ -853,6 +855,9 @@ static int dpu_plane_atomic_check_nosspp(struct drm_plane *plane,
-> > > > >               return -EINVAL;
-> > > > >       }
-> > > > >
-> > > > > +     /* move the assignment here, to ease handling to another pairs later */
-> > > >
-> > > > Is it a TODO comment? It reads like an order.
-> > > >
-> > > > > +     pipe_cfg = &pstate->pipe_cfg[0];
-> > > > > +     r_pipe_cfg = &pstate->pipe_cfg[1];
-> > > > >       /* state->src is 16.16, src_rect is not */
-> > > > >       drm_rect_fp_to_int(&pipe_cfg->src_rect, &new_plane_state->src);
-> > > > >
-> > > >
-> > > > > @@ -1387,17 +1394,28 @@ static void _dpu_plane_atomic_disable(struct drm_plane *plane)
-> > > > >  {
-> > > > >       struct drm_plane_state *state = plane->state;
-> > > > >       struct dpu_plane_state *pstate = to_dpu_plane_state(state);
-> > > > > -     struct dpu_sw_pipe *r_pipe = &pstate->r_pipe;
-> > > > > +     struct dpu_sw_pipe *pipe;
-> > > > > +     int i;
-> > > > >
-> > > > > -     trace_dpu_plane_disable(DRMID(plane), false,
-> > > > > -                             pstate->pipe.multirect_mode);
-> > > > > +     for (i = 0; i < PIPES_PER_STAGE; i += 1) {
-> > > > > +             pipe = &pstate->pipe[i];
-> > > > > +             if (!pipe->sspp)
-> > > > > +                     continue;
-> > > > >
-> > > > > -     if (r_pipe->sspp) {
-> > > > > -             r_pipe->multirect_index = DPU_SSPP_RECT_SOLO;
-> > > > > -             r_pipe->multirect_mode = DPU_SSPP_MULTIRECT_NONE;
-> > > > > +             trace_dpu_plane_disable(DRMID(plane), false,
-> > > > > +                                     pstate->pipe[i].multirect_mode);
-> > > > >
-> > > > > -             if (r_pipe->sspp->ops.setup_multirect)
-> > > > > -                     r_pipe->sspp->ops.setup_multirect(r_pipe);
-> > > > > +             /*
-> > > > > +              * clear multirect for the right pipe so that the SSPP
-> > > > > +              * can be further reused in the solo mode
-> > > > > +              */
-> > > > > +             if (pipe->sspp && i == 1) {
-> > > >
-> > > > Wouldn't it be better to `&& i % 2 != 0`? Then, I think, this condition
-> > > > can stay even in quad-pipe case.
-> > >
-> > > If all pipes are in solo mode, there is no need to test ' i %2 != 0 '. Below
-> > > test shall be better, right?
-> > > if (pipe->sspp && pipe->multirect_index == DPU_SSPP_RECT_1)
+> > On Thu, Jan 16, 2025 at 03:26:03PM +0800, Jun Nie wrote:
+> > > Support SSPP assignment for quad-pipe case with unified method.
+> > > The first 2 pipes can share a set of mixer config and enable
+> > > multi-rect mode if condition is met. It is also the case for
+> > > the later 2 pipes.
 > >
-> > Again, this will not work as expected for the SSPP-sharing case as it
-> > will then clear pipe 0 for the sharing planes.
-> >
-> > Let me think a bit... This code resets multirect for right pipes. It was
-> > added back in 4.9 to fix the case of 'master' aka RECT_0 not being a
-> > part of the atomic update. However I don't think this is applicable
-> > anymore. We use z_pos normalization, so all planes for a CRTC are added
-> > to the commit. Please drop this piece in a separate commit.
+> > Missing problem description.
 > 
-> You mean only testing sspp as below? We have to handle the default
->  non-shared case as existing implementation. Maybe we add a flag after
-> sharing SSPP among planes? Otherwise, how to distinct the shared
-> SSPP case and disable multi-rect mode in non-shared case?
-> 
->                if (pipe->sspp) {
+> Is this OK?
+>     SSPP are assigned for 2 pipes at most with current implementation,
+>     while 4 pipes are required in quad-pipe usage case with involving
+>     configuration of 2 stages. Assign SSPPs for pipes of a stage in a
+>     loop with unified method. The first 2 pipes can shar a set of mixer
+>     config and enable multi-rect mode if condition is met. It is also the
+>     case for the later 2 pipes.
 
-I was thinking about dropping this piece of code completely, but we can
-do it afterwards. Note, that you check for !pipe->sspp few lines above,
-so the code can become:
-
-
- for (i = 0; i < PIPES_PER_STAGE; i++) {
-   pipe = &pstate->pipe[i];
-   if (!pipe->sspp)
-     continue;
-
-   if (i % PIPES_PER_STAGE == 0)
-     continue;
-
-   pipe->multirect_index = DPU_SSPP_RECT_SOLO;
-   ...
- }
+No. It should be problem / analysys/ solution. So, 'Assign foo' should
+become a last phrase.  Also please please perform a grammar / typos check.
 
 > 
 > >
-> > >
-> > > >
-> > > > > +                     pipe->multirect_index = DPU_SSPP_RECT_SOLO;
-> > > > > +                     pipe->multirect_mode = DPU_SSPP_MULTIRECT_NONE;
-> > > > > +
-> > > > > +                     if (pipe->sspp->ops.setup_multirect)
-> > > > > +                             pipe->sspp->ops.setup_multirect(pipe);
-> > > > > +             }
-> > > > >       }
-> > > > >
-> > > > >       pstate->pending = true;
-> > > >
-> > > > --
-> > > > With best wishes
-> > > > Dmitry
+> > Also, shouldn't this patch come before the previous one?
 > >
-> > --
-> > With best wishes
-> > Dmitry
+> Yeah, it is reasonable to prepare the assignment capability, then
+> enable the plane splitting into 4 pipes. It does not hurt actually
+> because quad-pipe is not enabled in data structure side.
+> Will reverse the sequence in next version anyway.
+
+Thanks!
 
 -- 
 With best wishes
