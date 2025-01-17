@@ -1,226 +1,196 @@
-Return-Path: <linux-arm-msm+bounces-45399-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-45400-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id B63FEA14E91
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Jan 2025 12:38:43 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4B318A15083
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Jan 2025 14:27:12 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id F249D188ACBD
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Jan 2025 11:38:46 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AB2113A130E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Jan 2025 13:27:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4E9081FE46A;
-	Fri, 17 Jan 2025 11:38:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D83581FF7BE;
+	Fri, 17 Jan 2025 13:27:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Rh6GYKSR"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Iofmf2oL"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yb1-f182.google.com (mail-yb1-f182.google.com [209.85.219.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63AE91FCFCB
-	for <linux-arm-msm@vger.kernel.org>; Fri, 17 Jan 2025 11:38:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC0121F9F55;
+	Fri, 17 Jan 2025 13:27:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737113919; cv=none; b=qcgeyh7d564SNgOCdQfDdDkUSWF8ijGonG2ZzxfVWqnBfdSDunxpV0Xfz9EKCc3OH9e8q+WPfoJK/mE/XmCNeFOlRhWOIeNci4HyGtl3hAmxvI+lh3JvdLuCSXuE7tfoz7dpHyv8RFMIP9Y6O6MpIJL/gRBmAN/CG2YryfP6fHs=
+	t=1737120427; cv=none; b=CW3Vl29vnPDp4XYZ9HN59ovB+zdlj/istwDWMj7WnC1KJQMqEOaxP3QA3I20zogj7NbVAHdxF/Lp28YyG1os/An+KBf0S8+Wf5jplmkU/SSaRhaeb6CIbhepGT1vpwYRQOT3rw6ua3UbIt2I93iMV3lrn4YrSmq8hanwdNmywIk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737113919; c=relaxed/simple;
-	bh=xLSTVg8aF+qRLDZqDFcgXTIUheIrK52yydEphPsAHpU=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=i4PvepTuBNX69OvHQ4GX6d4Xk4i2bpeLemRUwg6JUO85hb38msYnJrXbASr4cxPdMEnbCylsC9bhBXbfkm77bcuqWtzzpuA5li6ZwsWZ8q4SoLaJ1xuztZk5SJTXcV7NbxsBNV3weyyiZz9lvVk6s70030TCXbHuyHFuWjCr8X8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Rh6GYKSR; arc=none smtp.client-ip=209.85.219.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yb1-f182.google.com with SMTP id 3f1490d57ef6-e39779a268bso3213538276.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Jan 2025 03:38:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1737113916; x=1737718716; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=0mJJOlz6uR5ZkcRAiOz6gDo5saPIYLvSvvuRIdHEdog=;
-        b=Rh6GYKSRMXEZmOdsO7isruC9QZXPHY8wAu+gugwRgHjHz8rGyw3YRffuM6/fG1bV6Q
-         +LFSzWRyjy8rfTvr2qOQvkL8ub7IDhz3DGSCBhpmM4dDrsuuMHzQtvialj2EoSRIkuY1
-         4+2V2M+PH5PZbF3I6Ri/D8dJ/h7nNeNTCPweyWpokt0GfmR6G9krUDDIQN/0pvqKN61x
-         hFwdfJD2F3PktExRLjs0nlj0houWnAPttE17ndbHkIx7wcm37GGJGKw8KBnGLSCg9Urm
-         ZdBRWKkckRqm4GW8Ql5diQUH3mt3LaDsV2sIipceV1Y3sKwXCT3vnSQT5Qz5nk6ucfkH
-         44Cg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1737113916; x=1737718716;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=0mJJOlz6uR5ZkcRAiOz6gDo5saPIYLvSvvuRIdHEdog=;
-        b=gchxsv/BgZNL1h0vvN/D4mU0GV5Uk+2W4EH+Sv8duygq49Qc9wklBQOc+FYxCL9Lbf
-         0yRp+Faj0f5jkNBG7hzsVKmg5PJkPZwfqFnn1/tsiqrNuX98Ms5fMdgODolIuygx3rBV
-         CaSxFpErPWVAgLbZYk6X0lG8uQfrAL+3Shsxt8QTSC5IKqmP7KbRIr6KOUeMrPi+Es8b
-         L+5HGL656rBxF6gjrIPUQxhBsK8oAm1MMtoho5I+T/XzRCjCL47BRudvmQzfi1Ok6HJJ
-         oYYNWPeeI8WwO92ax33gafPyya53uZQ6VHBusqdrSQE5B2PeuU0YwyJAEWtplLMRiHDj
-         /19g==
-X-Forwarded-Encrypted: i=1; AJvYcCV240CFNKV7so1QWuzZpAr2LNp9RX8hDPjnwGeRtWbUwEHX5RLTCUTVc91XYikJ4ylgF5a4qKEw8xnFDY6U@vger.kernel.org
-X-Gm-Message-State: AOJu0YyM1FGNld+GOe4rHdi0Qa1KlXhLkCbhToaQI3pseelJW70uPhZo
-	hSe43Q84vZUT4f4VIRtZ7KW5kKLFL4DkW/P+XwooeZBTToHQHSgm4MM5Yl6fzPYkbBPfc5jktMR
-	8cP9A7zWLFQ8nZYl3pbHO5Gu9V6pHWLcFoFAFzg==
-X-Gm-Gg: ASbGnct2cbGDt2JWIy0YVmgL25FDQlDF+zaxVRmdMj9Dcf3+4tBNPd6svFl8ajzVOtB
-	fNsDP0GvINLB5IIWI9ACy/VjYuBFEucp2Ie0jLyI=
-X-Google-Smtp-Source: AGHT+IH6sbrHZpfPtB0gOqdesf2laUrdMqC8hmqfbSsr01XH8sLCKvLCLkKqZqEOXUkDJm6/EQUGWK7PpeDd0ls3Wq0=
-X-Received: by 2002:a25:b309:0:b0:e57:87a6:1ccb with SMTP id
- 3f1490d57ef6-e578a10f42bmr10077884276.4.1737113916359; Fri, 17 Jan 2025
- 03:38:36 -0800 (PST)
+	s=arc-20240116; t=1737120427; c=relaxed/simple;
+	bh=pZ8GrfB//8axkZeEjA8SPuZSPROwvtJF41KknQSFIYU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=mfrYhGsDrQNEnFDJf9LH+SyjcrHRM11LIShGxQveXxDfd7Y1Q+Fr6mE+EwKitj7U7pv/zEPGKnOU+mk//KfNF7Zi2IJt720tJcNbUjSL6TuhHAL1B59jxspGU/KpGsoejCYqj0Bo7ZtJKwiAGOmC2L6fOcg/4syYkMKqfnlyfjQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Iofmf2oL; arc=none smtp.client-ip=192.198.163.18
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1737120425; x=1768656425;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=pZ8GrfB//8axkZeEjA8SPuZSPROwvtJF41KknQSFIYU=;
+  b=Iofmf2oL0jKYxss/Mno3HdASo99QErehEVBgbaSIknR5i1INm4JPdDtG
+   YC5FLViPkDdsGBeNRJUfgIqyo8q63vdTA+P/CWa5+waOdnNIM5ZOS1uK8
+   RNRzPjjn3DZBE1j8RTNwmj0PwmWlMhZrzR5Y81OShow1VCJau1W13TA1r
+   NtQ43rW7N01qcSzeXajs6QaG72XEhB4ce4n4Q3GKCllk33tkKJbkKWWFd
+   YW0gn5ZdyoRysNPHgdS0MC7lCcFgtBYfMPzqUdcAm+bmW6gZL1BsjnHJx
+   rn94NxaXOzKCNv/6ibZSFLYKWuAmQwJjdUzx1DrpOSzEdk2Ewis+S1R3o
+   g==;
+X-CSE-ConnectionGUID: yi+RWNfuQDWkKHh4LknWOQ==
+X-CSE-MsgGUID: xwWI5T+BQuiGQbjb1AiYmw==
+X-IronPort-AV: E=McAfee;i="6700,10204,11318"; a="36829830"
+X-IronPort-AV: E=Sophos;i="6.13,212,1732608000"; 
+   d="scan'208";a="36829830"
+Received: from fmviesa002.fm.intel.com ([10.60.135.142])
+  by fmvoesa112.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Jan 2025 05:22:47 -0800
+X-CSE-ConnectionGUID: s6Wb8N8YR9ay6O3dr+luVA==
+X-CSE-MsgGUID: 0CgC1ijGTBaL4h4uG3coeA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; 
+   d="scan'208";a="129063946"
+Received: from lkp-server01.sh.intel.com (HELO d63d4d77d921) ([10.239.97.150])
+  by fmviesa002.fm.intel.com with ESMTP; 17 Jan 2025 05:22:42 -0800
+Received: from kbuild by d63d4d77d921 with local (Exim 4.96)
+	(envelope-from <lkp@intel.com>)
+	id 1tYmJ6-000TFX-1k;
+	Fri, 17 Jan 2025 13:22:40 +0000
+Date: Fri, 17 Jan 2025 21:22:15 +0800
+From: kernel test robot <lkp@intel.com>
+To: Pengyu Luo <mitltlatltl@gmail.com>, Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Ilpo =?iso-8859-1?Q?J=E4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+	Jean Delvare <jdelvare@suse.com>,
+	Guenter Roeck <linux@roeck-us.net>
+Cc: llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, platform-driver-x86@vger.kernel.org,
+	linux-hwmon@vger.kernel.org, Pengyu Luo <mitltlatltl@gmail.com>
+Subject: Re: [PATCH v4 2/3] platform: arm64: add Huawei Matebook E Go EC
+ driver
+Message-ID: <202501172102.HQ2qqllb-lkp@intel.com>
+References: <20250116111559.83641-3-mitltlatltl@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250114083514.258379-1-quic_yuanjiey@quicinc.com>
-In-Reply-To: <20250114083514.258379-1-quic_yuanjiey@quicinc.com>
-From: Ulf Hansson <ulf.hansson@linaro.org>
-Date: Fri, 17 Jan 2025 12:38:00 +0100
-X-Gm-Features: AbW1kvYDSuYT8nN46TY9M7sAhLbywcWar8Tg8FoAj_2a7CbnQQ-Fz-3pO9uzpN8
-Message-ID: <CAPDyKFq_QDHaDOygMp8S+9+UURyJLhc1BoegYXHOX=xvddz3VQ@mail.gmail.com>
-Subject: Re: [PATCH v4] mmc: sdhci-msm: Correctly set the load for the regulator
-To: Yuanjie Yang <quic_yuanjiey@quicinc.com>
-Cc: adrian.hunter@intel.com, linux-arm-msm@vger.kernel.org, 
-	linux-mmc@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	dmitry.baryshkov@linaro.org, andersson@kernel.org, quic_tingweiz@quicinc.com, 
-	quic_zhgao@quicinc.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250116111559.83641-3-mitltlatltl@gmail.com>
 
-On Tue, 14 Jan 2025 at 09:35, Yuanjie Yang <quic_yuanjiey@quicinc.com> wrote:
->
-> Qualcomm regulator supports two power supply modes: HPM and LPM.
-> Currently, the sdhci-msm.c driver does not set the load to adjust
-> the current for eMMC and SD. If the regulator dont't set correct
-> load in LPM state, it will lead to the inability to properly
-> initialize eMMC and SD.
->
-> Set the correct regulator current for eMMC and SD to ensure that the
-> device can work normally even when the regulator is in LPM.
->
-> Signed-off-by: Yuanjie Yang <quic_yuanjiey@quicinc.com>
+Hi Pengyu,
 
-Applied for next, thanks!
+kernel test robot noticed the following build errors:
 
-Kind regards
-Uffe
+[auto build test ERROR on b323d8e7bc03d27dec646bfdccb7d1a92411f189]
+
+url:    https://github.com/intel-lab-lkp/linux/commits/Pengyu-Luo/dt-bindings-platform-Add-Huawei-Matebook-E-Go-EC/20250116-192206
+base:   b323d8e7bc03d27dec646bfdccb7d1a92411f189
+patch link:    https://lore.kernel.org/r/20250116111559.83641-3-mitltlatltl%40gmail.com
+patch subject: [PATCH v4 2/3] platform: arm64: add Huawei Matebook E Go EC driver
+config: s390-allmodconfig (https://download.01.org/0day-ci/archive/20250117/202501172102.HQ2qqllb-lkp@intel.com/config)
+compiler: clang version 19.1.3 (https://github.com/llvm/llvm-project ab51eccf88f5321e7c60591c5546b254b6afab99)
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20250117/202501172102.HQ2qqllb-lkp@intel.com/reproduce)
+
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202501172102.HQ2qqllb-lkp@intel.com/
+
+All errors (new ones prefixed by >>):
+
+   In file included from drivers/platform/arm64/huawei-gaokun-ec.c:8:
+   In file included from include/linux/auxiliary_bus.h:11:
+   In file included from include/linux/device.h:32:
+   In file included from include/linux/device/driver.h:21:
+   In file included from include/linux/module.h:19:
+   In file included from include/linux/elf.h:6:
+   In file included from arch/s390/include/asm/elf.h:181:
+   In file included from arch/s390/include/asm/mmu_context.h:11:
+   In file included from arch/s390/include/asm/pgalloc.h:18:
+   In file included from include/linux/mm.h:2224:
+   include/linux/vmstat.h:504:43: warning: arithmetic between different enumeration types ('enum zone_stat_item' and 'enum numa_stat_item') [-Wenum-enum-conversion]
+     504 |         return vmstat_text[NR_VM_ZONE_STAT_ITEMS +
+         |                            ~~~~~~~~~~~~~~~~~~~~~ ^
+     505 |                            item];
+         |                            ~~~~
+   include/linux/vmstat.h:511:43: warning: arithmetic between different enumeration types ('enum zone_stat_item' and 'enum numa_stat_item') [-Wenum-enum-conversion]
+     511 |         return vmstat_text[NR_VM_ZONE_STAT_ITEMS +
+         |                            ~~~~~~~~~~~~~~~~~~~~~ ^
+     512 |                            NR_VM_NUMA_EVENT_ITEMS +
+         |                            ~~~~~~~~~~~~~~~~~~~~~~
+   include/linux/vmstat.h:524:43: warning: arithmetic between different enumeration types ('enum zone_stat_item' and 'enum numa_stat_item') [-Wenum-enum-conversion]
+     524 |         return vmstat_text[NR_VM_ZONE_STAT_ITEMS +
+         |                            ~~~~~~~~~~~~~~~~~~~~~ ^
+     525 |                            NR_VM_NUMA_EVENT_ITEMS +
+         |                            ~~~~~~~~~~~~~~~~~~~~~~
+>> drivers/platform/arm64/huawei-gaokun-ec.c:91:9: error: returning 'const u8 *' (aka 'const unsigned char *') from a function with result type 'void *' discards qualifiers [-Werror,-Wincompatible-pointer-types-discards-qualifiers]
+      91 |         return src + RESP_HDR_SIZE;
+         |                ^~~~~~~~~~~~~~~~~~~
+>> drivers/platform/arm64/huawei-gaokun-ec.c:112:11: error: initializing '__u8 *' (aka 'unsigned char *') with an expression of type 'const u8 *' (aka 'const unsigned char *') discards qualifiers [-Werror,-Wincompatible-pointer-types-discards-qualifiers]
+     112 |                         .buf = req,
+         |                                ^~~
+   3 warnings and 2 errors generated.
 
 
-> ---
-> Changes in v4:
-> - Optimize msm_config_vmmc_regulator and msm_config_vqmmc_regulator code logic
-> - Delete redundant return in msm_config_vmmc_regulator and msm_config_vqmmc_regulator
-> - Rebase on tag: next-20250114
-> - Link to v3: https://lore.kernel.org/linux-arm-msm/20241226031845.2574669-1-quic_yuanjiey@quicinc.com/
->
-> Changes in v3:
-> - Optimize the code logic and separate code for regulator vmmc and vqmmc
-> - Rebase on tag: next-20241217
-> - Link to v2: https://lore.kernel.org/all/20241127095029.3918290-1-quic_yuanjiey@quicinc.com/
->
-> Changes in v2:
-> - Add enum msm_reg_type to optimize the code
-> - Delete redundant emmc type judgment
-> - Link to v1: https://lore.kernel.org/linux-arm-msm/20241122075048.2006894-1-quic_yuanjiey@quicinc.com/
->
-> ---
->  drivers/mmc/host/sdhci-msm.c | 53 ++++++++++++++++++++++++++++++++++--
->  1 file changed, 51 insertions(+), 2 deletions(-)
->
-> diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
-> index 4610f067faca..e3d39311fdc7 100644
-> --- a/drivers/mmc/host/sdhci-msm.c
-> +++ b/drivers/mmc/host/sdhci-msm.c
-> @@ -134,9 +134,18 @@
->  /* Timeout value to avoid infinite waiting for pwr_irq */
->  #define MSM_PWR_IRQ_TIMEOUT_MS 5000
->
-> +/* Max load for eMMC Vdd supply */
-> +#define MMC_VMMC_MAX_LOAD_UA   570000
-> +
->  /* Max load for eMMC Vdd-io supply */
->  #define MMC_VQMMC_MAX_LOAD_UA  325000
->
-> +/* Max load for SD Vdd supply */
-> +#define SD_VMMC_MAX_LOAD_UA    800000
-> +
-> +/* Max load for SD Vdd-io supply */
-> +#define SD_VQMMC_MAX_LOAD_UA   22000
-> +
->  #define msm_host_readl(msm_host, host, offset) \
->         msm_host->var_ops->msm_readl_relaxed(host, offset)
->
-> @@ -1403,11 +1412,48 @@ static int sdhci_msm_set_pincfg(struct sdhci_msm_host *msm_host, bool level)
->         return ret;
->  }
->
-> -static int sdhci_msm_set_vmmc(struct mmc_host *mmc)
-> +static void msm_config_vmmc_regulator(struct mmc_host *mmc, bool hpm)
-> +{
-> +       int load;
-> +
-> +       if (!hpm)
-> +               load = 0;
-> +       else if (!mmc->card)
-> +               load = max(MMC_VMMC_MAX_LOAD_UA, SD_VMMC_MAX_LOAD_UA);
-> +       else if (mmc_card_mmc(mmc->card))
-> +               load = MMC_VMMC_MAX_LOAD_UA;
-> +       else if (mmc_card_sd(mmc->card))
-> +               load = SD_VMMC_MAX_LOAD_UA;
-> +       else
-> +               return;
-> +
-> +       regulator_set_load(mmc->supply.vmmc, load);
-> +}
-> +
-> +static void msm_config_vqmmc_regulator(struct mmc_host *mmc, bool hpm)
-> +{
-> +       int load;
-> +
-> +       if (!hpm)
-> +               load = 0;
-> +       else if (!mmc->card)
-> +               load = max(MMC_VQMMC_MAX_LOAD_UA, SD_VQMMC_MAX_LOAD_UA);
-> +       else if (mmc_card_sd(mmc->card))
-> +               load = SD_VQMMC_MAX_LOAD_UA;
-> +       else
-> +               return;
-> +
-> +       regulator_set_load(mmc->supply.vqmmc, load);
-> +}
-> +
-> +static int sdhci_msm_set_vmmc(struct sdhci_msm_host *msm_host,
-> +                             struct mmc_host *mmc, bool hpm)
->  {
->         if (IS_ERR(mmc->supply.vmmc))
->                 return 0;
->
-> +       msm_config_vmmc_regulator(mmc, hpm);
-> +
->         return mmc_regulator_set_ocr(mmc, mmc->supply.vmmc, mmc->ios.vdd);
->  }
->
-> @@ -1420,6 +1466,8 @@ static int msm_toggle_vqmmc(struct sdhci_msm_host *msm_host,
->         if (msm_host->vqmmc_enabled == level)
->                 return 0;
->
-> +       msm_config_vqmmc_regulator(mmc, level);
-> +
->         if (level) {
->                 /* Set the IO voltage regulator to default voltage level */
->                 if (msm_host->caps_0 & CORE_3_0V_SUPPORT)
-> @@ -1642,7 +1690,8 @@ static void sdhci_msm_handle_pwr_irq(struct sdhci_host *host, int irq)
->         }
->
->         if (pwr_state) {
-> -               ret = sdhci_msm_set_vmmc(mmc);
-> +               ret = sdhci_msm_set_vmmc(msm_host, mmc,
-> +                                        pwr_state & REQ_BUS_ON);
->                 if (!ret)
->                         ret = sdhci_msm_set_vqmmc(msm_host, mmc,
->                                         pwr_state & REQ_BUS_ON);
->
-> base-commit: dab2734f8e9ecba609d66d1dd087a392a7774c04
-> --
-> 2.34.1
->
+vim +91 drivers/platform/arm64/huawei-gaokun-ec.c
+
+    88	
+    89	static inline void *extr_resp_shallow(const u8 *src)
+    90	{
+  > 91		return src + RESP_HDR_SIZE;
+    92	}
+    93	
+    94	struct gaokun_ec {
+    95		struct i2c_client *client;
+    96		struct mutex lock; /* EC transaction lock */
+    97		struct blocking_notifier_head notifier_list;
+    98		struct device *hwmon_dev;
+    99		struct input_dev *idev;
+   100		bool suspended;
+   101	};
+   102	
+   103	static int gaokun_ec_request(struct gaokun_ec *ec, const u8 *req,
+   104				     size_t resp_len, u8 *resp)
+   105	{
+   106		struct i2c_client *client = ec->client;
+   107		struct i2c_msg msgs[2] = {
+   108			{
+   109				.addr = client->addr,
+   110				.flags = client->flags,
+   111				.len = REQ_LEN(req),
+ > 112				.buf = req,
+   113			}, {
+   114				.addr = client->addr,
+   115				.flags = client->flags | I2C_M_RD,
+   116				.len = resp_len,
+   117				.buf = resp,
+   118			},
+   119		};
+   120	
+   121		guard(mutex)(&ec->lock);
+   122		i2c_transfer(client->adapter, msgs, ARRAY_SIZE(msgs));
+   123		usleep_range(2000, 2500); /* have a break, ACPI did this */
+   124	
+   125		return *resp ? -EIO : 0;
+   126	}
+   127	
+
+-- 
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
 
