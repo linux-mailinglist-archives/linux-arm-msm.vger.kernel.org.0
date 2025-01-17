@@ -1,79 +1,79 @@
-Return-Path: <linux-arm-msm+bounces-45412-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-45413-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7F589A15189
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Jan 2025 15:19:27 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5EEB0A15194
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Jan 2025 15:19:59 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8C36C188BEAE
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Jan 2025 14:19:30 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5FE823A34F2
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Jan 2025 14:19:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A003C14883F;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F064B14F9D6;
 	Fri, 17 Jan 2025 14:19:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="RUMtBizF"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Lm4m3tOZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DD0F86333
-	for <linux-arm-msm@vger.kernel.org>; Fri, 17 Jan 2025 14:19:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDBF2139D1B
+	for <linux-arm-msm@vger.kernel.org>; Fri, 17 Jan 2025 14:19:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737123548; cv=none; b=oBrzHp5KlQ5MVfJFbb9QQpKFplgi1jIHVDHHlUX3N7eUkrwBDwkxN0RpNO+vgPHkxULWg7cLF8JNcp6YmQushxLANJ8QuZ+yTBGQxDoVQArayOmkZ0ISq8sNTUZNFNFtdqZm0Vqvc9cI+NrsQBgwcg0rt9NntxoczTjE64naV4c=
+	t=1737123548; cv=none; b=OSVmzDmzjVEiH2/0mfsjdfKrOaCVNHZ2bmUrQKoSiBOflldQgO0ZuuWs/+HBXBYUG8CT0QUgyHo0tE73xv7ZhdYKFocFLLIlWTey0ocfRV/atnkceUpo8OnywG+Wm37EvywmWhUhkeudeE4PiiM+UDHGDEZvJdKExuRULH5puKQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1737123548; c=relaxed/simple;
-	bh=GZ2r5p0dFfNcF1ZvOqiFJYmYWFEQPwiZzMJJY9diiqM=;
+	bh=oCdvQb+2nS9fJzhI+yPgqLPClQAHie77kio2g2kgZyQ=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=dQ3PPEm+jCDjX5qLIjPZ4m0U795kGipN474iFevQqXw07dlFHNPOo3SnSPG72Q5li2XHXHKY3oh6ofxkT55C+4ZjmwXG9j0WEcggtns0kKxmn+h/xL+4j4mZ3C3MSGCDFHhcaT+Am7HQvpFsTA3BdS7eIvis7rVh9om4SaPL6WA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=RUMtBizF; arc=none smtp.client-ip=209.85.128.43
+	 In-Reply-To:To:Cc; b=WjzHdRpFsvWsj6pBbcb64P4Wb7eH5GtS5EByc+m8DBYvvcQaU6X/fqO52fdN7ZSGhMAg6VlW5GMNebuNjQkA9MoKvPJl2VYuNx2NgarfC6NzR2ebo4cenrLznHxT+9hwZoPiO8SLJJNgeUWnfmdsyrnSjCYLq+euIVkmwjOHntE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Lm4m3tOZ; arc=none smtp.client-ip=209.85.128.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-4361f65ca01so20877635e9.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Jan 2025 06:19:05 -0800 (PST)
+Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-43635796b48so13816635e9.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Jan 2025 06:19:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1737123544; x=1737728344; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1737123545; x=1737728345; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=TrQMwi+hF2C0bCOO/tTN4XbolEHkOKYGtBgFZ4HZCnE=;
-        b=RUMtBizFVYX0qVr4FBO/0JwxgbuH49a0YsV1JJd5j9CQ29Lf7Rmmk7qaTi+lF+elXQ
-         h2+FrVeeNJIffu4ZwhyO5Hox1KLKtaQRmlU0H74LwrMt3H9KBoOod4P5kuLXi3PxhKVB
-         Rs/flOJ8kfJnuTXkXvdXBxFc60uztwrA6eXEVSWoqJdh5c9Dma62nhHpXJ1tjA15lqj4
-         UXYtfWtTwgoNmNXj24As2pjtYccfOBw5nUooFpbTHpMxcBKWygyR66Ld8+au+LyH4grm
-         lG1mm8Di+Ua108XhybY+rBWap5F3oHy5szKaUoix5k4ELR+SMTPNkh3yN8k7tL9LU+df
-         wdfA==
+        bh=uj4Spml5sM1tLHD2FfSBP66Bq5uP7mY7z+kcAwA1e+w=;
+        b=Lm4m3tOZgGLYku8A4Duk7FaAf91ECH+x91nGUZlOLZQK9ySCH+/GNaUwibHPg/xWCP
+         uckObVu4HbsGiZ5woqkGSowlAjQJnXiaNys1y5E6kmy+8ADRYTbq6k/QoENr6TU+ysXi
+         tDCfEwYnAJ56DSExAwIdvUR+B9k04bCow9iYH53HLpSCPIdDvCxfxaztGoW7wUnQL8Xc
+         5XVF64hudXCPCzbzRSBaphDQWBOeWcxKGT5ZsG3+0A8/LBawIRBSp6DGWbfH0pL7kTR5
+         JrcvcnNq9d1oxQ7sBDFycTmr3CvbN3e4Xj7Lj0AHT/rQHxou/r34wLybKvGalw/utGjX
+         ZI5g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1737123544; x=1737728344;
+        d=1e100.net; s=20230601; t=1737123545; x=1737728345;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=TrQMwi+hF2C0bCOO/tTN4XbolEHkOKYGtBgFZ4HZCnE=;
-        b=YGifEFbIYp6lG0mYm1jIJ67J43MUUXvFRT60Mp0GAwm2tPKbxIxkyo9eyR9nNwh8tZ
-         NQnmztvqlY6TnutjB4kJi9gUElqlmd2qOJ+6iaGCYGWc46Mkl4OjirNX52Da5eRzpv2P
-         iy0QYNnKCHAV4qCUvzTQl7VLFeyl8ItdAUhHeuB4t2rdZLC/tdgnAyH1enRI07UuIRl8
-         5xhWrScq9942yk5QsgkYN5UROtZxKREz4AL6R5hpwSGqpJTfFNI4WQDCO+t83kbcp6l9
-         GQ6c+EcJ9/ZiNkRYy30H+GBxJienHUSCkx6B4l1eP51GFvFyu+ZiWpNncEcudHrKirG6
-         8Agg==
-X-Gm-Message-State: AOJu0YzCXqHRMaw3g7antky/TikdblBozW6hJDZuWnKVdBkzUaKqUvSK
-	cNK8uyDnD6zefpDz1HzX6s9+IBYgJIcjAmwUS7nhBpWn0l0+xxDG2HDVB5bI1eQ=
-X-Gm-Gg: ASbGncssHIekbPY/9YwYUll2/qNiID8TpFEzOQUD+BtKAjLocaE/wwGdyEmM1qxoD08
-	gHLdAuaUvOPPTtGbe8QPpLYV3S31DNNCYNvHU4sLTLut2JKGuGCANOLrju+hav+8ZlIEMqUyZuc
-	9/znVDmKssp6uaYGCmUBhOm/AVVI231zwyNWnNYTGNxNVMV6fe178Wwk7RYsKNU+iluXr4/fKVL
-	6z4QAIAPaBtiW1LnLNkxov9Dsh36iqVJNwXBxy5HJfZODAaNClHlWROu5z1OMhPUC96AzxtTnq6
-	k/vgyD8lmmSOhZdsW2VKlcZksjKxl3/YckJT
-X-Google-Smtp-Source: AGHT+IEfaWlQCEKKaatnAdlw13qgkLJVr8s+K3HBqqjRbB4QuuaaO9z/foSCuP32eVd4AGEznbyiWw==
-X-Received: by 2002:a05:600c:ccc:b0:436:1bbe:f686 with SMTP id 5b1f17b1804b1-4389141c073mr23873315e9.21.1737123544308;
+        bh=uj4Spml5sM1tLHD2FfSBP66Bq5uP7mY7z+kcAwA1e+w=;
+        b=R9Eo/w34YVn75aE7rCv70TmC8GALIaNfSoc0haNUFz37iQhjptyNfXsqrhGSKUc4Zx
+         foX10Wmkglc3z32nmpwYhaUENZidF+l6k6zL2CUnO7aqigIKCTeS0NIHLEKkyksIiE8D
+         u6XvZ/Kzeaku0ZJU5r/QcrNicYzP27qNxlR3VbOP8GiCvhPsXI9yx4AiZ3W34ABRs4Bv
+         o6q+ilOTErhYHJGWhOIh+WBR3JVjMj4eGpZK3o+8OvMZn2y6+QuVafVNqfn3n4KaTl+Z
+         V1UQEYHSNYQr+V8KrV2t9VKeFxLUuSxBfUCjjX5EL4NKULKH6i2nMyYszoJ//znE+F6a
+         8jfw==
+X-Gm-Message-State: AOJu0Yx0XiN3Do+2GsdE8HuYE2foLrEhDvTTxvfnOBeqxStI7eXlQ1bW
+	VeTqCPTNe0FOluHYxrg4i76MkO4zdn50eP/G2xpYZn0b5SAdrN6kYBfhaF+3kOo=
+X-Gm-Gg: ASbGncu8FU97EsKQ49sXC0xvX85GebjQ+XbsZspnglrzj2FvN9q0Y2V4aqMSO8Lm/Kn
+	uUZpDDSasZ2GZUW6z6TzrWm/nxLLHXMGeDbiBLTakdtBbRTtvqKUCsrKLO4Q8VdBCBL5KuWahmb
+	icPiB7FmA8+7pia/r2EOOCDX3qDyTkX00D5schSytj9potuO7WFF/Lh1fjtEruOsQFHwwi90VXL
+	G7cgHpql6/3t2w2vD6PcJNBceNQZIiu/62VvfCKTT3rrCQSydUKH6IUG9K+F67KBcuVEGq4wvex
+	LBe973a7al0YcY4avmrC0ZYsexsPNO+Y79tA
+X-Google-Smtp-Source: AGHT+IHtJFuj1A/6iNliKs9eQH9rrj4V+OnOFmOpiyVc7p4nqfhLVN5vCbRzSx6Je0dj2NPJh1Qeww==
+X-Received: by 2002:a05:600c:698c:b0:434:f9ad:7222 with SMTP id 5b1f17b1804b1-438918d3bdcmr26936585e9.7.1737123544993;
         Fri, 17 Jan 2025 06:19:04 -0800 (PST)
 Received: from ta2.c.googlers.com (169.178.77.34.bc.googleusercontent.com. [34.77.178.169])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-437c74995f6sm96764195e9.1.2025.01.17.06.19.03
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-437c74995f6sm96764195e9.1.2025.01.17.06.19.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 17 Jan 2025 06:19:03 -0800 (PST)
+        Fri, 17 Jan 2025 06:19:04 -0800 (PST)
 From: Tudor Ambarus <tudor.ambarus@linaro.org>
-Date: Fri, 17 Jan 2025 14:18:51 +0000
-Subject: [PATCH v2 2/4] mmc: sdhci-msm: fix dev reference leaked through
+Date: Fri, 17 Jan 2025 14:18:52 +0000
+Subject: [PATCH v2 3/4] scsi: ufs: qcom: fix dev reference leaked through
  of_qcom_ice_get
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
@@ -83,7 +83,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250117-qcom-ice-fix-dev-leak-v2-2-1ffa5b6884cb@linaro.org>
+Message-Id: <20250117-qcom-ice-fix-dev-leak-v2-3-1ffa5b6884cb@linaro.org>
 References: <20250117-qcom-ice-fix-dev-leak-v2-0-1ffa5b6884cb@linaro.org>
 In-Reply-To: <20250117-qcom-ice-fix-dev-leak-v2-0-1ffa5b6884cb@linaro.org>
 To: Krzysztof Kozlowski <krzk@kernel.org>, 
@@ -102,33 +102,32 @@ Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
  stable@vger.kernel.org, 
  Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1737123541; l=1054;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1737123541; l=948;
  i=tudor.ambarus@linaro.org; s=20241212; h=from:subject:message-id;
- bh=GZ2r5p0dFfNcF1ZvOqiFJYmYWFEQPwiZzMJJY9diiqM=;
- b=45d3iiXT7ApSj86eCeo8o+vCQk8H9LTCNmewvtv437mzQ3nPnN5PwM2jJJAI++4mdsjm8dOa+
- C8c22bdPYz+B52Him4FeCPJNwliX9YaycwJvlhaqizsV5BZY8YMv59M
+ bh=oCdvQb+2nS9fJzhI+yPgqLPClQAHie77kio2g2kgZyQ=;
+ b=163Vcmfi+CsUVQeVZqwtnnkJb23luP5Bc+ZhUo0gynzhVHSf6qNM8NDwwDFi+n47kS2Sd6yOD
+ wnJaevqnGsfBUfI2PFwXCIqHHI8DVN8amrNysqTsb/QFG8nJx2n07F5
 X-Developer-Key: i=tudor.ambarus@linaro.org; a=ed25519;
  pk=uQzE0NXo3dIjeowMTOPCpIiPHEz12IA/MbyzrZVh9WI=
 
 The driver leaks the device reference taken with
 of_find_device_by_node(). Fix the leak by using devm_of_qcom_ice_get().
 
-Fixes: c7eed31e235c ("mmc: sdhci-msm: Switch to the new ICE API")
+Fixes: 56541c7c4468 ("scsi: ufs: ufs-qcom: Switch to the new ICE API")
 Cc: stable@vger.kernel.org
 Signed-off-by: Tudor Ambarus <tudor.ambarus@linaro.org>
 Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Acked-by: Ulf Hansson <ulf.hansson@linaro.org>
 ---
- drivers/mmc/host/sdhci-msm.c | 2 +-
+ drivers/ufs/host/ufs-qcom.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
-index 4610f067faca..559ea5af27f2 100644
---- a/drivers/mmc/host/sdhci-msm.c
-+++ b/drivers/mmc/host/sdhci-msm.c
-@@ -1824,7 +1824,7 @@ static int sdhci_msm_ice_init(struct sdhci_msm_host *msm_host,
- 	if (!(cqhci_readl(cq_host, CQHCI_CAP) & CQHCI_CAP_CS))
- 		return 0;
+diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
+index 23b9f6efa047..a455a95f65fc 100644
+--- a/drivers/ufs/host/ufs-qcom.c
++++ b/drivers/ufs/host/ufs-qcom.c
+@@ -125,7 +125,7 @@ static int ufs_qcom_ice_init(struct ufs_qcom_host *host)
+ 	int err;
+ 	int i;
  
 -	ice = of_qcom_ice_get(dev);
 +	ice = devm_of_qcom_ice_get(dev);
