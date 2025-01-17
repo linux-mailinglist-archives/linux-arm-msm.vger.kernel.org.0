@@ -1,79 +1,78 @@
-Return-Path: <linux-arm-msm+bounces-45392-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-45393-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id B4DFFA14D7C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Jan 2025 11:25:35 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 89B1BA14D9B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Jan 2025 11:32:25 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 27FE03A6D26
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Jan 2025 10:25:29 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A74DB166B30
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Jan 2025 10:32:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BC8E01FCCE6;
-	Fri, 17 Jan 2025 10:25:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A31EC1FA254;
+	Fri, 17 Jan 2025 10:32:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="xjkQqZwu"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="SPWNYRnG"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
+Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03C1F1FC0FC
-	for <linux-arm-msm@vger.kernel.org>; Fri, 17 Jan 2025 10:25:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBE5B1F63ED
+	for <linux-arm-msm@vger.kernel.org>; Fri, 17 Jan 2025 10:32:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737109523; cv=none; b=ZRCvki2BMf3uE8kE8o2r0s+a3JIVLuoYCVqV8oto2cgbMPKrSMSJIHgQ24/UEOlXxkxkCMUVVLeDFNk+0KDlQpmpbjCrTn1QciCzSay80N1VbccLlrtc0oO7+sISyPUrkap/NlBDTjCy8oojHIOv+de45ozsgddioxo15dzLiTk=
+	t=1737109942; cv=none; b=jCCMMFLz16voWI3CfOqYe3XrkemepmR8pBzyIvf/EWJxYg13YugYaEea014HtrhGq0RBvl3D2ager6nlQwjafueSDKDbvu6YxBRMiSU2Yq7bSgf1VzVH1CBlCvW/EBw6tWCYZKsntujRuCBF0YM8sjgIiLmAtH5ZK39QyMFX/BY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737109523; c=relaxed/simple;
-	bh=q/nN/WiCZeyxTX8vPRtvY+0LU60DeiKLc5hOr1qUdFg=;
+	s=arc-20240116; t=1737109942; c=relaxed/simple;
+	bh=usxKX/bq+qqlj5S9Kv1IxI4efxTMwXfcJQVp97tlIL8=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=JlIvfSUrrRacKNu2MDbW44/VsJHxMHcT7yVjQna/p+fOEi1LKc461Fkh8F1+Zlb0nOfMMwJ4LCFyUUwuSWHaB+UCglDsTNwSsQmD5JnZ/moekQK7a7F6Q/mr2tTiYDB8SX+jEoWbmIIzSodzi4BC6EKqe93O/l+qPp2LRRDEYsw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=xjkQqZwu; arc=none smtp.client-ip=209.85.128.46
+	 In-Reply-To:Content-Type; b=LrGqIJ+4UWoh4cptm57WS+JOMR+sYXAgejAxx67q/HRpd8bFXmB9nNjkaDR85GDAmHVBlk96K/2oAvzuuAYPINNEZfQ47TYs3phAHJ2kA+g8w9kNOJbCL7I5Bn8pV+cvc//y/91XNfNY0x3PRuH5zWBN5kn2XyyEIVlN9iNEFF8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=SPWNYRnG; arc=none smtp.client-ip=209.85.221.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-4361dc6322fso12171175e9.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Jan 2025 02:25:21 -0800 (PST)
+Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-3862d161947so1043487f8f.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Jan 2025 02:32:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1737109520; x=1737714320; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1737109939; x=1737714739; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=AuyZog7HTl0jURH59KuN4aP3Mv7PVs0SAeDjI1tKXiA=;
-        b=xjkQqZwuW+5djwjo5/P1a/wlQG87HRFtgs6PUAJySqXcLkfXibIw8VDZb9Gh8imZaj
-         /PxCf/ddvJ5qaeWuFzvBKUHRS9Rf2gbwvosjK/con73fHpOo9jl/tYvYfJaU3Dj6wN1s
-         HHEeTtlt5XxI2WMVroZ2FLJK4lhYEG+q61u8831CLjdak5yMsSzIShOKEQQxWckRIwZz
-         gWNAJSjLaS2Qo5PpHpdhbSVPEyLqAgBDfHHX/9zlfQ+wzhSGrvW+H7XiFcuslVMqT/Ip
-         TB7c6CZlH181b2bNmB4IMSPGBLt0fvmPL4sd2h7IIg2H2UMna8PFCL9Ncv0imric4xDf
-         Z8EA==
+        bh=HksGXKs+oXl9+VmDEVOiawBWVGC/PHhWQk+TriN1KVo=;
+        b=SPWNYRnGeR83yO40FNqkDIDHQANAeZhA3YdcNJcx2Xx97rpzs53+OUqiRaFwckdOUC
+         P/RnqDTNt+raumEqSs4swSlntOQiBEQXPvN+nI0lNtyQTLSeuIDzZFOpPieqnm90nzLS
+         WyfQWOT6I7rzPjVKpwiCITIUiyNHvebVCRM8rrSghF9Yk1VqWaWeWQ4eLwq/nIWMP+kf
+         iEshZa7xBzDVPAHHdCI1ce2nxeqG3Oc1pBGtgAJQnvDQ3RPE9B1XJfpxa1Y0jI6xFCU7
+         EdWtuFnQnCeT6DcBj6kG00BU7Aq3F4fncOK/2HZ92MM9E5FvFKx22DIDKsqHHqHvk7/D
+         t4Zw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1737109520; x=1737714320;
+        d=1e100.net; s=20230601; t=1737109939; x=1737714739;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=AuyZog7HTl0jURH59KuN4aP3Mv7PVs0SAeDjI1tKXiA=;
-        b=O3sr98TGgtFJRmJk+VrVGjRMY1FUtBOhXJ4HAxBK2gk/QofLGCiedEK69F6gupkX7H
-         QyUDjj9gs845DDKC+f/fQrgWJNQF4P3iASXbCHgpe0Lk+7D48wks3lAH3ifX1E0u75yb
-         sRApuHBrkF9balhvZPgmSyprLd2Na9u+ZxbU1rsnoDCUXe3KRCA5iLZBrMlhdpdfb78z
-         Ur2krRq2NAzqwiV5FiGpCX+y64pWynj4MEpOjYD9cxPCIjzSHs/IFbbybHNzxn3fSU8l
-         kn5dFnwsxYpqaTgH+pRcRwZxHVwzVkfsHrUZJ9s4YX9qksX4fZidtYKKNH4E1Ymz+CZQ
-         286g==
-X-Forwarded-Encrypted: i=1; AJvYcCWvwUEM4xFAf5drngUPuNXhRXMXc2NosjHXpcdjrelCZE+8W1Ajej1SpA6z1di9pkEDSMtFVegFykhRB2VC@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz/yhmE1gXHMt2mYnMw/aBCqQ3PwjGmLIV993P7TgYaJ6tZ6zQN
-	WCB83AAEL1+NobzEa31f01OCze0MoJWoEB4/5VwciUsKA9mmGw4CJBaDfYg2t8n3r6X5FK7uQXu
-	TIa8=
-X-Gm-Gg: ASbGnctnbelDiE5chLxKrwPgzBr0W/obeDw6YLfuxMlfhKjiZzHnr0Fhsuw+4PuuXFJ
-	0u0IN3gNrbc1wDkrcRYyd6lqhcgoHBghs/Uh1v+kCE86HRN29dH8hwsEzHsNua2sDa5dsQ5m//r
-	iSfOROV7+YSXfcfa3nGn5fEShxfGiqx/iLYhggTiuXnC9mAohEdu1Ke91W9WgFEI9Yetoz45wGs
-	eDwqkO+OnslG4YrrbHjBfOncaxJrsvRKrqHfesksIqil8IWYSDLq9DXniIN+mBqMz/5mw==
-X-Google-Smtp-Source: AGHT+IFMdHIo3hLDXgRf7TiH8FxEI+sqFiJFDa4eqUh4eXr2VBNPBxbAhK8vVgaHtALTy3+mKyBL3A==
-X-Received: by 2002:a05:600c:3149:b0:434:f270:a513 with SMTP id 5b1f17b1804b1-4389144e70fmr19855415e9.29.1737109520209;
-        Fri, 17 Jan 2025 02:25:20 -0800 (PST)
+        bh=HksGXKs+oXl9+VmDEVOiawBWVGC/PHhWQk+TriN1KVo=;
+        b=qKjCNz8kWDySrsuao84ZzIzF5Kp0hQnHUS6mW1PLDot9W455bsS1QGXyWEURHrlYAa
+         PolhuuUJjHOzwwoh7qPu5YhtnGuQddrjtMaVB4xB1YRV6I1umqmQvCJmoibis511uzme
+         ogVd3i8oB3odHGiV+JMca0xKM5KkOwJgfne68dkuTnIzwUCBpL1EXdXNAtzmzoN5COa0
+         52PCZyWHHMutZgtzIBrxbA8JjwjBAl//OeV+gfZonLfu6IWbQaDDrsPdtnt168s2v3r7
+         xs+VAX8NJRijhrXv9BEqA6z4rcuuob1q7uLJiBCLiymHsnztwkYHBLHjm7l3NP7YxrZX
+         0w9w==
+X-Forwarded-Encrypted: i=1; AJvYcCXSW9jFfG3d/hoblLaszDq9GNTSsZkaxy7TmVsoemWQkqGDTiO+xqV4FLOKt13MYFuMQxoTY3tbJyCEnGyA@vger.kernel.org
+X-Gm-Message-State: AOJu0Yzc1hyLMCACXIVHVk95qvFvwZ4+TkpmFR8NN7SrzhzpsjIo3SJi
+	SAHa3qkhvEFFMXRdRSve/8z4vhS0Zilq48zwQ7y6ML5AngrJKgDgDtC0evTnkZg=
+X-Gm-Gg: ASbGncsd0Uw+nzlzEfhoUFH1jncJ3tqdg5O0ApLDWokqZGgr7dYbe4MWTmWygRrnunQ
+	a4t782pNfC2T289U1YmhOYF+E/3ER/WzPULgxTUKvlQjaBXpsl/r9vBKuXteaxBYTeWJ8TckUBA
+	xsnj4Yb+AWjsUIn2yMybZDTTBViTr1z3rI46vA7le0ddZSQcH6CctfvvebuXlkKH1I0VhsN94Fr
+	aHs/1sF/WoJ0WD8YvvPxiVrvrEoOZ5qaQw5hHMNixzuZn5vdGSj1n0J/Dnbr3LIXwIaJQ==
+X-Google-Smtp-Source: AGHT+IG7Rquzi6WwJgROhsE/JHaxo92uKlPy8ctz5KPUZeEVLYQDkbB3Dqa5Mk08B3VGfm3jM2JWmg==
+X-Received: by 2002:a5d:4845:0:b0:385:f573:1f78 with SMTP id ffacd0b85a97d-38bf566e2b2mr1467481f8f.24.1737109939033;
+        Fri, 17 Jan 2025 02:32:19 -0800 (PST)
 Received: from [192.168.0.35] ([176.61.106.227])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43890408a66sm29182285e9.5.2025.01.17.02.25.19
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38bf3275562sm2191384f8f.66.2025.01.17.02.32.18
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 17 Jan 2025 02:25:19 -0800 (PST)
-Message-ID: <4cfc1fe1-2fab-4256-9ce2-b4a0aad1069e@linaro.org>
-Date: Fri, 17 Jan 2025 10:25:18 +0000
+        Fri, 17 Jan 2025 02:32:18 -0800 (PST)
+Message-ID: <0eab7323-ce86-40c7-9737-06eedcdf492d@linaro.org>
+Date: Fri, 17 Jan 2025 10:32:17 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -81,7 +80,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] media: venus: fix OOB read issue due to double read
+Subject: Re: [PATCH 2/2] media: venus: fix OOB access issue while reading
+ sequence changed events
 To: Vedang Nagar <quic_vnagar@quicinc.com>,
  Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
  Vikash Garodia <quic_vgarodia@quicinc.com>,
@@ -89,42 +89,75 @@ To: Vedang Nagar <quic_vnagar@quicinc.com>,
 Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
  linux-kernel@vger.kernel.org
 References: <20250104-venus-security-fixes-v1-0-9d0dd4594cb4@quicinc.com>
- <20250104-venus-security-fixes-v1-1-9d0dd4594cb4@quicinc.com>
- <f18c1277-0d72-4f7c-b325-5f19cfb0ab98@linaro.org>
- <13259345-02b0-47ff-94a8-530a17c50b97@quicinc.com>
+ <20250104-venus-security-fixes-v1-2-9d0dd4594cb4@quicinc.com>
+ <2b0528f5-f9fa-4cfd-abda-a0e95ba4a2f1@linaro.org>
+ <7a782ea9-f227-4f46-a757-b4b69f5c287f@quicinc.com>
 Content-Language: en-US
 From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <13259345-02b0-47ff-94a8-530a17c50b97@quicinc.com>
+In-Reply-To: <7a782ea9-f227-4f46-a757-b4b69f5c287f@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
 On 17/01/2025 08:39, Vedang Nagar wrote:
-> Below is the first read where dwords is being validated properly with the checks.
-> dwords = *rd_ptr >> 2;
+> Hi Bryan,
 > 
-> Whereas the same address is being read for the second time:
-> memcpy(pkt, rd_ptr, dwords << 2);
-> 
-> For the second read the value is not validated which may get updated from the firmware
-> leading to incorrect memcpy into the packet and may lead to OOB read access while accessing
-> the packet.
+> On 1/6/2025 5:36 AM, Bryan O'Donoghue wrote:
+>> On 04/01/2025 05:41, Vedang Nagar wrote:
+>>> num_properties_changed is being read from the message queue but is
+>>> not validated. Value can be corrupted from the firmware leading to
+>>> OOB read access issues. Add fix to read the size of the packets as
+>>> well and crosscheck before reading from the packet.
+>>>
+>>> Signed-off-by: Vedang Nagar <quic_vnagar@quicinc.com>
+>> Please see Vikash's series on this.
+>>
+>> https://lore.kernel.org/linux-arm-msm/20241128-venus_oob_2-v2-2-483ae0a464b8@quicinc.com/
+>>
+>> it seems to have exactly the same patch title ?
+>>
+>> Is this patch supposed to be a follow-up to that patch ?
+>>
+>> https://lore.kernel.org/linux-arm-msm/20241128-venus_oob_2-v2-0-483ae0a464b8@quicinc.com/
+>>
+>> Expecting to see a V3 of the above. If the intention is to supersede that patch or some of those patches you should make clear here.
+> No, this is a different series having OOB fixes similar to ones posted by Vikash.
 
-So you are saying that pkt points to memory that the firmware and host 
-can simultaneously access.
+OK, please use a different patch title.
 
-The question is - if the length value can change between one read and 
-another read - how do you trust the _content_ of the packet ?
+I understand the motive to repeat the patch title but, its confusing. If 
+you added some text to make the OOB more specific then it would be 
+possible to differentiate between.
 
-Surely the right thing to do is to take a _copy_ of the entire frame and 
-act on that frame exclusively on the host side ?
+"fix OOB access issue while reading sequence changed events 'in some 
+location' || 'on some path'"
 
-If I receive a frame, and read length X.
 
-Then I need to re-read that frame because length may now by X+3.
+>>
+>> On the switch statement I'd have two comments.
+>>
+>> #1 is everything really a " -= sizeof(u32)" ?
+> Yes, it's everytime " -= sizeof(u32) " since the first the first word read is ptype of size u32
+>> #2 if so then this ought to be factored out into a function
+>>     => functional decomposition
+> Sure, will fix this with decomposition into functions.
 
-This implies the _data_ in the frame has changed.
+Is firmware sending a change event or updating a packet already in memory ?
 
-What exactly is the valid lifetime of this data from HFI RX interrupt ?
+What is the nature of the change event and how do you guarantee the 
+second read is valid when the first read can be considered invalid ?
+
+i.e.
+
+- Read - derive read value X.
+- Do some stuff.
+- Read - again to make sure length value is still X.
+- Do all sorts of other processing.
+
+At which point is the sequence considered complete and the data 
+considered "locked" and valid ?
+
+What happens if you get a subsequent change event once this procedure 
+has completed ?
 
 ---
 bod
