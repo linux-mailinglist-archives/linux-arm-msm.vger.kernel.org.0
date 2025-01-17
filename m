@@ -1,237 +1,320 @@
-Return-Path: <linux-arm-msm+bounces-45389-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-45390-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3D109A14C72
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Jan 2025 10:51:19 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id D2F6AA14D5C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Jan 2025 11:16:19 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 839F5188B881
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Jan 2025 09:51:22 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id F12C7168664
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Jan 2025 10:16:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 556EE1FC7D8;
-	Fri, 17 Jan 2025 09:51:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 865F21FC10F;
+	Fri, 17 Jan 2025 10:15:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="JXdGbcOT"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Sm5peN9B"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f48.google.com (mail-lf1-f48.google.com [209.85.167.48])
+Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 218181F91EC
-	for <linux-arm-msm@vger.kernel.org>; Fri, 17 Jan 2025 09:50:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F7391FC0F5
+	for <linux-arm-msm@vger.kernel.org>; Fri, 17 Jan 2025 10:15:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737107460; cv=none; b=jBACpBYFJr+tuADk/h8L3UcpWNriEtBarTalA+3161LFldZbZ+K9jA6xbUotPPdvS6IqvHHe/VWuPndUMGZ5wh/d7leHOB3QBcIGvcl9HebOjzDwW3TtQ1jE98QjUtpSwcEVLv/NmgwsOeSX6Rzhnzjty7NsXJy1/O5CrGF4iGo=
+	t=1737108956; cv=none; b=jOKUTPOJfx4zcR4BQcRIC8O9sRSMJd1UsyjgZAwTm+rO3ccBhfl0SDiWYc1sVwJbx0bV6jnGP4LIoXWc+fnFYBM/aB1YCi3w3aq07Q8F0lwRCWIp9pGRWUOG4jtr4zWR389oTpkLFgEBUlOudkCgwptx8CG2yMW+TE8m7UUExlk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737107460; c=relaxed/simple;
-	bh=BVyrY3hYhzJCVJmvW+IxebCDsuJx/AtqO3kdpzmwFEQ=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=aoOJyWf2K9nxdgOwwR02V0MdWaIQ4jOTs86pLaqkZQP2wZe/zps3TerYJTID3IaMA6WOARWBlxBX1Qfm5iDkvKBSCquoV8KUWMVpqLF0rCvOQCbkGNbq8lBS12TlaE5ljuHvq5TiTviJVq3x8f2zLMaPs+Iuz3eQA0RmvC/njA0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=JXdGbcOT; arc=none smtp.client-ip=209.85.167.48
+	s=arc-20240116; t=1737108956; c=relaxed/simple;
+	bh=z17GZLIUwhzQeO9wUYNevMqU27jp9roZDzlvI9yzbGE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=lFmIe+PNex0Glb4S8MCw8qy8Ki/qodqRpRzJNAut/ADgBq15Qt3qCEwEEry9BmU/6b5VKvuL91sRgG1oQWH342UVlkE9U/uHW7p+7AIFTgK0SHcxuDidnRMlTfATJFlp25sMfKCudSQUQ0siZ+AZoqvm/CdcOJiOMJ8b1uoIq7E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Sm5peN9B; arc=none smtp.client-ip=209.85.221.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f48.google.com with SMTP id 2adb3069b0e04-540201cfedbso1659751e87.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Jan 2025 01:50:57 -0800 (PST)
+Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-385dece873cso1037890f8f.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Jan 2025 02:15:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1737107456; x=1737712256; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=l6F/Qq3d3Zbuu/ir75ukBi8dSYuZyZSR4oRI6lz02Ow=;
-        b=JXdGbcOTDrbFN8j+1gciJJ3mksc0Xh9LT7UOXZYUZukVeb22NA4PDJmVrwwA0OcOJv
-         L35ZQ/5nRlV++4yUlexCGjR0NXBtqfizh5mHJYBiaKcyGwnG17SXApYERX4MMT3Y5JOP
-         qVPmFVjiGNR1FGW7MJF6kTtklOxTXLQqX0zTtjjBh4LS8+K6Q93AsHh5lwzcKv6hQzuO
-         WW2dwfTI52UQQRe/co6GG469W3lHkxjHiHfhW7OsfeN3TGuG+to906jS0IO2MoRX8KU+
-         8u0jSi6zImYjBeAznM9O9cldMFPX+k8TJ8mNZPol25IJ05kbgqRrcjAUn1Iv+p73cy7Z
-         PmAA==
+        d=linaro.org; s=google; t=1737108952; x=1737713752; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=NSGeOswWqTUep3DX2Dkchbn4WoRD6ZXOIbfl/0X97bs=;
+        b=Sm5peN9BdoWDBrUaRAX9Ug/85nxiRxTqnTdAvfExZ4+kRvU2+eVjXOhASg0kvaI/sE
+         3NFSoyvMyRsZHYXtyD+ztLSYr49zZf2MkU7hWcK+Iy/cKF+blVqV/Nbwwij9zZNtTq8w
+         +S5skKuwtFhcG+mvgSsBSu8LBsPkrYYfpoPAGAtwmK7EvBKo8n0DAyNC6Z23sUOTUm6T
+         oYyNy6luIWsUjf+TDBlPFeJd3khkDMhaUnSjkCeJpYLBww3lluflnWlGVVNcVQC0MTuK
+         f+2dVSEszIqtMqTlOz5yGKJOnfN1UB3WaToKmitlU63RE5lsKbvd/A8E0eHCutnVVWl0
+         kdgw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1737107456; x=1737712256;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=l6F/Qq3d3Zbuu/ir75ukBi8dSYuZyZSR4oRI6lz02Ow=;
-        b=pzeUd4/kFl2agoaTafspeFo2uzcDeHB4OaLwZVzqHW22sP0EFzjS1EMbiJA7cF+N07
-         oVYflIJVK9J/ki2UH6ps3Hn8oU1c800obIhIg121VZuUyKu3f8+Mn4PX6K/OGB/vTxBH
-         EL4If/cJqsLdNwZoLvGDlO/9WPBu8/e5BJ/11G0UHV9BB1UuU82XdMc3r1IP+DRzraDJ
-         29GAO4GSavThfsBcXGuqa3HhYVEy4cQqaYK2c5GAttb8OXL8zKABIi6ZjTz7aRGybj5t
-         bsxgE3j9kLk2XAUI5j5MYjvgoPHbXtmA0HXleQSNDhwmIq4TsxFM6j5icN1u+km0cCLL
-         P/LQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUo7IoHEfS8Ly2m+bov2jg8WbCob/Yn6eJUXwe3iH2oKbvEHZt14otw5pHygVBN/eV9GyPtm384iEZwsQgM@vger.kernel.org
-X-Gm-Message-State: AOJu0YwHderREyDoUJk6cIbLysMujTrfOO5y8uDh9A1OgGFX2nMd4R2D
-	SX0GT9+ZrEejNnsrzIlok/XHA1jvOYouMWHV2E23sbm0EqkJtCzg20uaU8DP7MI=
-X-Gm-Gg: ASbGncteJT1iqySha7eU1FiO+OsaRjfFDfNopoKpvnijXb9lF4URgaZ+Tdz5K1gbxSi
-	SWlXbwUyjiv9kwjFR/yr7i5nNuShTP7G1oANonGg81RW3nanuO1hgq2PZBBpJRXa16tWxM8S6yj
-	ECoSZm97GocnHyagh5SCRsJrXoivP6eXOGyqr7ix0CqogcZ6VufMC0PvI7C8h1Qe1oS7y23lJfW
-	XpujWJ0K7nXe/Yf/Sw/AgNH86JaIBg7G4LF8atYxwTtCQFEl48PuMTXV8nJKPVa
-X-Google-Smtp-Source: AGHT+IHJcEHFfl8KbJTI7826EF6H1lRVnlWh7o1f+pZojli98vvrH7/CjvwMD7ZRCtQd4oUKf3C+IA==
-X-Received: by 2002:a2e:be91:0:b0:300:2ddb:aaa5 with SMTP id 38308e7fff4ca-3072cb0df40mr5881951fa.30.1737107456043;
-        Fri, 17 Jan 2025 01:50:56 -0800 (PST)
-Received: from umbar.lan ([192.130.178.90])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-3072a34489fsm3450971fa.29.2025.01.17.01.50.53
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 17 Jan 2025 01:50:54 -0800 (PST)
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Fri, 17 Jan 2025 11:50:50 +0200
-Subject: [PATCH v3] drm/bridge-connector: handle subconnector types
+        d=1e100.net; s=20230601; t=1737108952; x=1737713752;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=NSGeOswWqTUep3DX2Dkchbn4WoRD6ZXOIbfl/0X97bs=;
+        b=J3DYJ/Pn4gFGqnOr2V24yhFSEc/6ovusj5SkypRIYyK48cYKl7VUBSIPhqei18s4B+
+         kCd6PoCMnUP0UDitNQGqviZxB9kZO3zh2CWozt3ZrEUKwS/Df2r2QwyE5Sjz/FbYj2+K
+         JhTPnJUpSYwz9QGSJDrOpL1M7sSSrT2vLjrbKbqOG0zbQF60MCXvhM02CEl5dl1mhgTR
+         KlvNzSSGHTKgSrZ2rzM15XY5LaXR3WkFGctCtTyhZZYGiUKZ8PI2ryHsTNdtw0OiV70U
+         RJ9Qx8eWqG2X07HfcSOPnHmdqUphBWkxndZFUgraG+tT5nxiPUAwLLCwEX0rTJ1Nu0Xi
+         HamQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUUzHa+2/hU9ZvtyIU07lBNVUpoc1duCIu37l/OoFOZzEVLavsKfqghf62Mj19RHPFTaDiyhsyOeYU+27uS@vger.kernel.org
+X-Gm-Message-State: AOJu0YwddFMkYweweyfiQs46gJOCKLiTB6sTNlBBeX4kIQ5R4N+2D+x7
+	3Wj/4dw1vlcABjOy4OZ8JpISL4ELh88WqFS2b7htyrSB2+nrcWY71wUzlz4F7DA=
+X-Gm-Gg: ASbGncv5Esfrd+0WO6WfGF8om9cFNiYe2V2q5thfx6ynwX7eZu2QKPQMOF0FOvPnGJl
+	0j9bVUR+E5bZc1OGvAJAfvEUo6iMrMMPD2N+lm196UDIdXCAr2m/gzr/4NaSs2eXkPLuwA2u0tV
+	NPpg1FJGTaYbE3U8n0b+Vfn+NbUK1bc3K3PkWrQNgKprUc8DYQ6lNh/xsuY4ebVfWkOyeMqqKDS
+	RnBTu/y53G7iDRNrwhndlg6fvcHgpF0nK/GOfajbq1hYXMfeTYBeoAwh9P6Ql1wj6GynA==
+X-Google-Smtp-Source: AGHT+IG/l/zai1zyszaJHPWLtmLgsmMVK0tKqPhRQpbDko4Lin2PTxTY0mByVoFmCxwmZrma9jp6QQ==
+X-Received: by 2002:a5d:4243:0:b0:386:2a3b:8aa with SMTP id ffacd0b85a97d-38bf57b3f56mr1433700f8f.37.1737108952542;
+        Fri, 17 Jan 2025 02:15:52 -0800 (PST)
+Received: from [192.168.0.35] ([176.61.106.227])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-438904621cdsm28622085e9.27.2025.01.17.02.15.51
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 17 Jan 2025 02:15:52 -0800 (PST)
+Message-ID: <0a6c6586-3dd9-4af9-85f3-376f2788b21a@linaro.org>
+Date: Fri, 17 Jan 2025 10:15:51 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250117-subconnector-v3-1-1e241c13e576@linaro.org>
-X-B4-Tracking: v=1; b=H4sIAPknimcC/53OTQ6CMBCG4auQri3pHz915T0MiwIDbZTWTJFIC
- He3kHgBl+9inm82EgEdRHLNNoKwuOiCTyEvGems8SNQ16cmgomCcV7R+G674D10c0AqVNmWAyi
- t6pqkkxfC4D4nd29SDxgmOlsE80Mk00wKrrRUuairShSactpPbsY1bw2u0T7Ccns6bzDkAceDt
- S6mtfV8chEH/h/V7Pv+BfOxB3byAAAA
-X-Change-ID: 20250117-subconnector-246b6fe49488
-To: Andrzej Hajda <andrzej.hajda@intel.com>, 
- Neil Armstrong <neil.armstrong@linaro.org>, Robert Foss <rfoss@kernel.org>, 
- Laurent Pinchart <Laurent.pinchart@ideasonboard.com>, 
- Jonas Karlman <jonas@kwiboo.se>, Jernej Skrabec <jernej.skrabec@gmail.com>, 
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
- Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
- Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>
-Cc: dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
- linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=4842;
- i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
- bh=BVyrY3hYhzJCVJmvW+IxebCDsuJx/AtqO3kdpzmwFEQ=;
- b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBniif9fNPU4d0sQFESZpjYoMfPrnwTQTvCFTXdd
- yw6j+JsBeaJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZ4on/QAKCRCLPIo+Aiko
- 1YnVB/4v0rW4vHVX8JkTtKt78TaM7Ja07Y8IbKIl7tvEBEmUpChompmd9DpOd0Yg/TKbodNV5ho
- +hKdV2oqkZU59nB14qslKmAaeDw+mHR1V/kX0dygoBkn7JI/R09lpDprBjJT7PWQ/kHuWVpQjo1
- mbes34w1gaaJCYkn9unRex0CaV6Wp9x2TB00ZklYfn3YL9JRp1mF5XhsPlwcB5vCO0K0cugrBiE
- Un5zjwrMnyvdJxWKFRI5uYPQTt6NK/yQE4gpK0iQKgR53YdrnRIhoAVZ/1r1GUjEhvpIMezr11N
- 7KwlCPIg8kdInzI3mmLOJ3BuXXBQl9K7WfHHCm8srjBkvJZp
-X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
- fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 2/3] platform: arm64: add Huawei Matebook E Go EC
+ driver
+To: Pengyu Luo <mitltlatltl@gmail.com>
+Cc: andersson@kernel.org, conor+dt@kernel.org, devicetree@vger.kernel.org,
+ hdegoede@redhat.com, ilpo.jarvinen@linux.intel.com, jdelvare@suse.com,
+ konradybcio@kernel.org, krzk+dt@kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-hwmon@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux@roeck-us.net, platform-driver-x86@vger.kernel.org, robh@kernel.org
+References: <65dc7d7f-cee5-4eff-9ab7-153b12be4f26@linaro.org>
+ <20250116181532.134250-1-mitltlatltl@gmail.com>
+Content-Language: en-US
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <20250116181532.134250-1-mitltlatltl@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-If the created connector type supports subconnector type property,
-create and attach corresponding it. The default subtype value is 0,
-which maps to the DRM_MODE_SUBCONNECTOR_Unknown type. Also remove
-subconnector creation from the msm_dp driver to prevent having duplicate
-properties on the DP connectors.
+On 16/01/2025 18:15, Pengyu Luo wrote:
+> On Fri, Jan 17, 2025 at 1:31 AM Bryan O'Donoghue <bryan.odonoghue@linaro.org> wrote:
+>> On 16/01/2025 11:15, Pengyu Luo wrote:
+>>> +
+>>> +     guard(mutex)(&ec->lock);
+>>> +     i2c_transfer(client->adapter, msgs, ARRAY_SIZE(msgs));
+>>
+>> You should trap the result code of i2c_transfer() and push it up the
+>> call stack.
+>>
+> 
+> This EC uses SMBus Protocol, I guess. Qualcomm I2C driver doesn't support
+> this though. The response structure define by SMBus I mentioned them above
+> (Please also check ACPI specification 13.2.5)
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+What difference does that make ? The i2c controller itself can return 
+error codes via i2c_transfer().
+
+You should trap those error codes and take action if they happen.
+
+> 
+> +/*
+> + * For rx, data sequences are arranged as
+> + * {status, data_len(unreliable), data_seq}
+> + */
+> 
+> So the first byte is status code.
+> 
+>>> +     usleep_range(2000, 2500); /* have a break, ACPI did this */
+>>> +
+>>> +     return *resp ? -EIO : 0;
+>>
+>> If the value @ *resp is non-zero return -EIO ?
+>>
+>> Why ?
+>>
+> 
+> Mentioned above.
+
+Right, please try to take the result code of i2c_transfer() and if it 
+indicates error, transmit that error up the call stack.
+
+
+> 
+>>> +}
+>>> +
+>>> +/* -------------------------------------------------------------------------- */
+>>> +/* Common API */
+>>> +
+>>> +/**
+>>> + * gaokun_ec_read - Read from EC
+>>> + * @ec: The gaokun_ec structure
+>>> + * @req: The sequence to request
+>>> + * @resp_len: The size to read
+>>> + * @resp: The buffer to store response sequence
+>>> + *
+>>> + * This function is used to read data after writing a magic sequence to EC.
+>>> + * All EC operations depend on this function.
+>>> + *
+>>> + * Huawei uses magic sequences everywhere to complete various functions, all
+>>> + * these sequences are passed to ECCD(a ACPI method which is quiet similar
+>>> + * to gaokun_ec_request), there is no good abstraction to generalize these
+>>> + * sequences, so just wrap it for now. Almost all magic sequences are kept
+>>> + * in this file.
+>>> + *
+>>> + * Return: 0 on success or negative error code.
+>>> + */
+>>> +int gaokun_ec_read(struct gaokun_ec *ec, const u8 *req,
+>>> +                size_t resp_len, u8 *resp)
+>>> +{
+>>> +     return gaokun_ec_request(ec, req, resp_len, resp);
+>>> +}
+>>> +EXPORT_SYMBOL_GPL(gaokun_ec_read);
+>>> +
+>>> +/**
+>>> + * gaokun_ec_write - Write to EC
+>>> + * @ec: The gaokun_ec structure
+>>> + * @req: The sequence to request
+>>> + *
+>>> + * This function has no big difference from gaokun_ec_read. When caller care
+>>> + * only write status and no actual data are returned, then use it.
+>>> + *
+>>> + * Return: 0 on success or negative error code.
+>>> + */
+>>> +int gaokun_ec_write(struct gaokun_ec *ec, const u8 *req)
+>>> +{
+>>> +     u8 ec_resp[] = MKRESP(0);
+>>> +
+>>> +     return gaokun_ec_request(ec, req, sizeof(ec_resp), ec_resp);
+>>> +}
+>>> +EXPORT_SYMBOL_GPL(gaokun_ec_write);
+>>> +
+>>> +int gaokun_ec_read_byte(struct gaokun_ec *ec, const u8 *req, u8 *byte)
+>>> +{
+>>> +     int ret;
+>>> +     u8 ec_resp[] = MKRESP(sizeof(*byte));
+>>> +
+>>> +     ret = gaokun_ec_read(ec, req, sizeof(ec_resp), ec_resp);
+>>> +     extr_resp_byte(byte, ec_resp);
+>>> +
+>>> +     return ret;
+>>> +}
+>>> +EXPORT_SYMBOL_GPL(gaokun_ec_read_byte);
+>>> +
+>>> +/**
+>>> + * gaokun_ec_register_notify - Register a notifier callback for EC events.
+>>> + * @ec: The gaokun_ec structure
+>>> + * @nb: Notifier block pointer to register
+>>> + *
+>>> + * Return: 0 on success or negative error code.
+>>> + */
+>>> +int gaokun_ec_register_notify(struct gaokun_ec *ec, struct notifier_block *nb)
+>>> +{
+>>> +     return blocking_notifier_chain_register(&ec->notifier_list, nb);
+>>> +}
+>>> +EXPORT_SYMBOL_GPL(gaokun_ec_register_notify);
+>>> +
+>>> +/**
+>>> + * gaokun_ec_unregister_notify - Unregister notifier callback for EC events.
+>>> + * @ec: The gaokun_ec structure
+>>> + * @nb: Notifier block pointer to unregister
+>>> + *
+>>> + * Unregister a notifier callback that was previously registered with
+>>> + * gaokun_ec_register_notify().
+>>> + */
+>>> +void gaokun_ec_unregister_notify(struct gaokun_ec *ec, struct notifier_block *nb)
+>>> +{
+>>> +     blocking_notifier_chain_unregister(&ec->notifier_list, nb);
+>>> +}
+>>> +EXPORT_SYMBOL_GPL(gaokun_ec_unregister_notify);
+>>> +
+>>> +/* -------------------------------------------------------------------------- */
+>>> +/* API for PSY */
+>>> +
+>>> +/**
+>>> + * gaokun_ec_psy_multi_read - Read contiguous registers
+>>> + * @ec: The gaokun_ec structure
+>>> + * @reg: The start register
+>>> + * @resp_len: The number of registers to be read
+>>> + * @resp: The buffer to store response sequence
+>>> + *
+>>> + * Return: 0 on success or negative error code.
+>>> + */
+>>> +int gaokun_ec_psy_multi_read(struct gaokun_ec *ec, u8 reg,
+>>> +                          size_t resp_len, u8 *resp)
+>>> +{
+>>> +     u8 ec_req[] = MKREQ(0x02, EC_READ, 1, 0);
+>>> +     u8 ec_resp[] = MKRESP(1);
+>>> +     int i, ret;
+>>> +
+>>> +     for (i = 0; i < resp_len; ++i, reg++) {
+>>> +             refill_req_byte(ec_req, &reg);
+>>> +             ret = gaokun_ec_read(ec, ec_req, sizeof(ec_resp), ec_resp);
+>>> +             if (ret)
+>>> +                     return ret;
+>>> +             extr_resp_byte(&resp[i], ec_resp);
+>>> +     }
+>>> +
+>>> +     return 0;
+>>> +}
+>>> +EXPORT_SYMBOL_GPL(gaokun_ec_psy_multi_read);
+>>> +
+>>> +/* Smart charge */
+>>> +
+>>> +/**
+>>> + * gaokun_ec_psy_get_smart_charge - Get smart charge data from EC
+>>> + * @ec: The gaokun_ec structure
+>>> + * @resp: The buffer to store response sequence (mode, delay, start, end)
+>>> + *
+>>> + * Return: 0 on success or negative error code.
+>>> + */
+>>> +int gaokun_ec_psy_get_smart_charge(struct gaokun_ec *ec,
+>>> +                                u8 resp[GAOKUN_SMART_CHARGE_DATA_SIZE])
+>>> +{
+>>> +     /* GBCM */
+>>> +     u8 ec_req[] = MKREQ(0x02, 0xE4, 0);
+>>> +     u8 ec_resp[] = MKRESP(GAOKUN_SMART_CHARGE_DATA_SIZE);
+>>> +     int ret;
+>>> +
+>>> +     ret = gaokun_ec_read(ec, ec_req, sizeof(ec_resp), ec_resp);
+>>> +     if (ret)
+>>> +             return ret;
+>>> +
+>>> +     extr_resp(resp, ec_resp, GAOKUN_SMART_CHARGE_DATA_SIZE);
+>>> +
+>>> +     return 0;
+>>> +}
+>>> +EXPORT_SYMBOL_GPL(gaokun_ec_psy_get_smart_charge);
+>>> +
+>>> +static inline bool are_thresholds_valid(u8 start, u8 end)
+>>> +{
+>>> +     return end != 0 && start <= end && end <= 100;
+>>
+>> Why 100 ? Still feels like an arbitrary number.
+>>
+>> Could you add a comment to explain where 100 comes from ?
+>>
+> 
+> You may don't get it. It is just a battery percentage, greater than 100 is
+> invalid.
+
+100 meaning maximum capacity, good stuff.
+
+Please use a define with a descriptive name. That way the meaning is 
+obvious.
+
+In fact if the name of the function related to battery capacity then the 
+meaning of the numbers would be more obvious.
+
+static inline bool validate_battery_threshold_range(u8 start, u8 end) {
+	return end != 0 && start <= end && end <= 100;
+}
+
+> 
+> start: The battery percentage at which charging starts (0-100).
+> stop: The battery percentage at which charging stops (1-100).
+
+Or just add this comment directly above the function.
+
 ---
-This is a leftover of my previous attempt to implement USB-C DisplayPort
-uABI. The idea was dropped, but I consider this part still to be useful,
-as it allows one to register corresponding subconnector properties and
-also to export the subconnector type.
----
-Changes in v3:
-- Rebased on top of linux-next
-- Drop subconnector property from msm_dp driver
-- Link to v2: https://lore.kernel.org/r/20230903214934.2877259-1-dmitry.baryshkov@linaro.org
-
-Changes in v2:
-- Dropped all DP and USB-related patches
-- Dropped the patch adding default subtype to
-  drm_connector_attach_dp_subconnector_property()
-- Replaced creation of TV subconnector property with the check that it
-  was created beforehand (Neil, Laurent)
-- Link to v1: https://lore.kernel.org/r/20230729004913.215872-1-dmitry.baryshkov@linaro.org/
----
- drivers/gpu/drm/display/drm_bridge_connector.c | 28 +++++++++++++++++++++++++-
- drivers/gpu/drm/msm/dp/dp_drm.c                |  3 ---
- include/drm/drm_bridge.h                       |  4 ++++
- 3 files changed, 31 insertions(+), 4 deletions(-)
-
-diff --git a/drivers/gpu/drm/display/drm_bridge_connector.c b/drivers/gpu/drm/display/drm_bridge_connector.c
-index 0397e62f9cbc93321caeae99982f5e3c66d308c5..4b616dba4dd8c2dc1725a8d7562d0a37e1557dc8 100644
---- a/drivers/gpu/drm/display/drm_bridge_connector.c
-+++ b/drivers/gpu/drm/display/drm_bridge_connector.c
-@@ -523,6 +523,7 @@ struct drm_connector *drm_bridge_connector_init(struct drm_device *drm,
- 	struct drm_bridge *bridge, *panel_bridge = NULL;
- 	unsigned int supported_formats = BIT(HDMI_COLORSPACE_RGB);
- 	unsigned int max_bpc = 8;
-+	enum drm_mode_subconnector subconnector;
- 	int connector_type;
- 	int ret;
- 
-@@ -576,8 +577,10 @@ struct drm_connector *drm_bridge_connector_init(struct drm_device *drm,
- 				max_bpc = bridge->max_bpc;
- 		}
- 
--		if (!drm_bridge_get_next_bridge(bridge))
-+		if (!drm_bridge_get_next_bridge(bridge)) {
- 			connector_type = bridge->type;
-+			subconnector = bridge->subtype;
-+		}
- 
- #ifdef CONFIG_OF
- 		if (!drm_bridge_get_next_bridge(bridge) &&
-@@ -643,6 +646,29 @@ struct drm_connector *drm_bridge_connector_init(struct drm_device *drm,
- 	if (panel_bridge)
- 		drm_panel_bridge_set_orientation(connector, panel_bridge);
- 
-+	if (connector_type == DRM_MODE_CONNECTOR_DisplayPort) {
-+		drm_connector_attach_dp_subconnector_property(connector);
-+	} else if (connector_type == DRM_MODE_CONNECTOR_DVII) {
-+		ret = drm_mode_create_dvi_i_properties(drm);
-+		if (ret)
-+			return ERR_PTR(ret);
-+
-+		drm_object_attach_property(&connector->base,
-+					   drm->mode_config.dvi_i_subconnector_property,
-+					   subconnector);
-+	} else if (connector_type == DRM_MODE_CONNECTOR_TV) {
-+		/*
-+		 * We do not know which modes are supported by the HW, so the
-+		 * property should be created in advance.
-+		 */
-+		if (!drm->mode_config.tv_subconnector_property)
-+			return ERR_PTR(-EINVAL);
-+
-+		drm_object_attach_property(&connector->base,
-+					   drm->mode_config.tv_subconnector_property,
-+					   subconnector);
-+	}
-+
- 	return connector;
- }
- EXPORT_SYMBOL_GPL(drm_bridge_connector_init);
-diff --git a/drivers/gpu/drm/msm/dp/dp_drm.c b/drivers/gpu/drm/msm/dp/dp_drm.c
-index d3e241ea6941615b8e274dd17426c2f8557f09b5..d8e3ec9fd4825916e03ced9011f460c2f32f3912 100644
---- a/drivers/gpu/drm/msm/dp/dp_drm.c
-+++ b/drivers/gpu/drm/msm/dp/dp_drm.c
-@@ -361,9 +361,6 @@ struct drm_connector *msm_dp_drm_connector_init(struct msm_dp *msm_dp_display,
- 	if (IS_ERR(connector))
- 		return connector;
- 
--	if (!msm_dp_display->is_edp)
--		drm_connector_attach_dp_subconnector_property(connector);
--
- 	drm_connector_attach_encoder(connector, encoder);
- 
- 	return connector;
-diff --git a/include/drm/drm_bridge.h b/include/drm/drm_bridge.h
-index 4b84faf14e368310dd20aa964e8178ec80aa6fa7..27a4c9aa3475cefe0137f0a7d01b808651125ac5 100644
---- a/include/drm/drm_bridge.h
-+++ b/include/drm/drm_bridge.h
-@@ -850,6 +850,10 @@ struct drm_bridge {
- 	 * identifies the type of connected display.
- 	 */
- 	int type;
-+	/**
-+	 * @subtype: the subtype of the connector for the DP/TV/DVI-I cases.
-+	 */
-+	enum drm_mode_subconnector subtype;
- 	/**
- 	 * @interlace_allowed: Indicate that the bridge can handle interlaced
- 	 * modes.
-
----
-base-commit: 8defad9f57376a89914d16757717a27b567de04e
-change-id: 20250117-subconnector-246b6fe49488
-
-Best regards,
--- 
-Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-
+bod
 
