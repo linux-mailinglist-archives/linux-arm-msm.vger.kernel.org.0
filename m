@@ -1,643 +1,277 @@
-Return-Path: <linux-arm-msm+bounces-45459-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-45460-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 84250A15571
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Jan 2025 18:11:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id BDE09A15699
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Jan 2025 19:30:27 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id D1386188B258
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Jan 2025 17:11:14 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 18DDB188A701
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Jan 2025 18:30:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3A0E31A239E;
-	Fri, 17 Jan 2025 17:10:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EBA901A726B;
+	Fri, 17 Jan 2025 18:30:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="aTbjyaf1"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="ixAvVGxr"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.20])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 331BC19F487;
-	Fri, 17 Jan 2025 17:10:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06CD81A4F0C;
+	Fri, 17 Jan 2025 18:30:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.20
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737133823; cv=none; b=UUHGMlyoXEAp2iMeOa9iCM5BZlGyAaMOBFPRG2vmtgIS7sF5pO8/NZT/QQgj3YZB3HczKKevtTvWDFzNF8RHUctPFizEuwYABp0HnA6ZDkx5aeAnOjcNF1QUIJFYacyNZM5ByvTVSzhtuMKioA7QXDWoerKHNKW1XvoVxLovJys=
+	t=1737138625; cv=none; b=ExWlnPqkpQLYoxLc4ttkJgrS9Fr2oSVXN3dpanTFLRlZv8iozQhWgswl4R2D/yxQwrEalQtLF7Es1ASFEzDvfw85xEQjQc69nt+/6VkT89lVkKv+o+1a2rcULLKyrrE5PvvyCj4GXh9IzU5Sae3oMt9MiplvvBRcKrM9q57KY0M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737133823; c=relaxed/simple;
-	bh=3jrL4uBpdIgYIPgWv6R8CXhp5Ro194jo7sETIpIr2sw=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=OwxU+P3YuxqEAhuj5rEeEd7Z2/zsyI+HZgV9oJuPID+vPwgvvTCpE/EiV+NRI4Sg08bgsPD+ijzHHLsrWJgcJlt//Z7RY9JrOOHERWBcHmU1m4lmeFS18yvyFIlbWqcbue6PYW85Tw2VnV8bfRNAqG8koKLuBJ5ST86288tSiK4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=aTbjyaf1; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50H9JgBn031270;
-	Fri, 17 Jan 2025 17:10:11 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	Ha/YSzYvy6WhwKQXJCDy9OPXnIkfEti3hR9O7wEMde8=; b=aTbjyaf12Efrerx4
-	gmB8li0fiCkp5IsI7tHhIUFmRqhoVlChl/TLvqx+uks31rVqN5fP5w7PrYiTdbuj
-	TyX7tNOPcsFYEvO7S0xye7Uv8WFq69CUwsev+XxNDF043OnOwEL14wloRCXZJwnn
-	Mx/aTgv2td+g+V7l1yIfv421CaDa2GQ24ac6O9fcoSmo7N1GUlzRsZdDp6J0M1yB
-	LZ2xdsjo8K+hEk1v9yRQtYVKFf1MQW69+lrBkXIg9OB/uzCrhaj25jgmaVL2Cy0o
-	JYy3icgeP39IKvegG3meJiMfIjyvYR5vHXW3GrrvGpXAW6jqlKgTxc4jWvW8bZWv
-	ou7fXg==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 447mfcs6ky-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 17 Jan 2025 17:10:10 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 50HHAAi2030772
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 17 Jan 2025 17:10:10 GMT
-Received: from jhugo-lnx.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Fri, 17 Jan 2025 09:10:09 -0800
-From: Jeffrey Hugo <quic_jhugo@quicinc.com>
-To: <quic_carlv@quicinc.com>, <manivannan.sadhasivam@linaro.org>,
-        <quic_yabdulra@quicinc.com>, <quic_mattleun@quicinc.com>,
-        <quic_thanson@quicinc.com>
-CC: <ogabbay@kernel.org>, <lizhi.hou@amd.com>,
-        <jacek.lawrynowicz@linux.intel.com>, <linux-arm-msm@vger.kernel.org>,
-        <dri-devel@lists.freedesktop.org>, <mhi@lists.linux.dev>,
-        Jeffrey Hugo
-	<quic_jhugo@quicinc.com>
-Subject: [PATCH v2 7/7] accel/qaic: Add AIC200 support
-Date: Fri, 17 Jan 2025 10:09:43 -0700
-Message-ID: <20250117170943.2643280-8-quic_jhugo@quicinc.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20250117170943.2643280-1-quic_jhugo@quicinc.com>
-References: <20250117170943.2643280-1-quic_jhugo@quicinc.com>
+	s=arc-20240116; t=1737138625; c=relaxed/simple;
+	bh=f8cAEq+ekutiXA8y00ycva89kbJIgBSuD+TagmH4Oxo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=EJ5LGV0ugVc4Ps1wa75FItl2iXSaqdOVPWIF0QByCw//i3fYODy1qKrDF5hhntYSRx0ndbXiJlfSZ2UskJ3TMffBW+ytMuOGJ3H/XzydQzIxsmEMDt2Y05az59HqOX6VuNKq/Kr3RYirbllv4ifFNt/RYXPR97lf8ndJ/Bay8Po=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=ixAvVGxr; arc=none smtp.client-ip=198.175.65.20
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1737138623; x=1768674623;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=f8cAEq+ekutiXA8y00ycva89kbJIgBSuD+TagmH4Oxo=;
+  b=ixAvVGxrdeKA4sLMqjKKSA8DZCqEhDTi+292ed8l5vfavVwNJzmXNAd+
+   o/Gs1Q5Oa/EdSrpithMRkSOqEAV9V9syRnC8B20B8Y5jbzZI3e3N8Qr+e
+   BS0YZZ1RFzgmVhoi9RSpUNYr+zQpQ1+/IXyQNCmtBm1JOoHDV4OQ7d2o8
+   AWR/0kLZWymqXLO3eN3D3UWCE/QSPhMppHwSzagzvizpHZGIEvhSsSB0d
+   +FJc6ymk0B3SVoeZI0+61q8z7MR5/akKDvFn4J4+N4mcA8utvuyS+k33C
+   f0yF2WegRt2iSFydeitX1r6EveaV9CJbtryCoqyJGFCUQPlpEPHahAK4o
+   g==;
+X-CSE-ConnectionGUID: kl4LpH7kQf6yOhGRiJ4T/Q==
+X-CSE-MsgGUID: txZnBnkST6SMBL781Eb4YQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11318"; a="37272516"
+X-IronPort-AV: E=Sophos;i="6.13,212,1732608000"; 
+   d="scan'208";a="37272516"
+Received: from fmviesa009.fm.intel.com ([10.60.135.149])
+  by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Jan 2025 10:30:22 -0800
+X-CSE-ConnectionGUID: gJ1ujV3FSOm/sXeqXFyLlg==
+X-CSE-MsgGUID: N4OI+Tr/SombvVB9vl2CzQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.13,212,1732608000"; 
+   d="scan'208";a="106470713"
+Received: from lkp-server01.sh.intel.com (HELO d63d4d77d921) ([10.239.97.150])
+  by fmviesa009.fm.intel.com with ESMTP; 17 Jan 2025 10:30:20 -0800
+Received: from kbuild by d63d4d77d921 with local (Exim 4.96)
+	(envelope-from <lkp@intel.com>)
+	id 1tYr6n-000TZX-1z;
+	Fri, 17 Jan 2025 18:30:17 +0000
+Date: Sat, 18 Jan 2025 02:29:41 +0800
+From: kernel test robot <lkp@intel.com>
+To: Melody Olvera <quic_molvera@quicinc.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Conor Dooley <conor@kernel.org>, Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
+	Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>,
+	Trilok Soni <quic_tsoni@quicinc.com>
+Cc: oe-kbuild-all@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	Melody Olvera <quic_molvera@quicinc.com>
+Subject: Re: [PATCH 2/4] soc: qcom: llcc-qcom: Add support for LLCC V6
+Message-ID: <202501180248.1JzWcFb9-lkp@intel.com>
+References: <20250113-sm8750_llcc_master-v1-2-5389b92e2d7a@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: RjRSvnS7diijCsqiFw6c8XOhUjZQuAXM
-X-Proofpoint-ORIG-GUID: RjRSvnS7diijCsqiFw6c8XOhUjZQuAXM
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-01-17_06,2025-01-16_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
- lowpriorityscore=0 mlxlogscore=999 spamscore=0 mlxscore=0 impostorscore=0
- phishscore=0 bulkscore=0 malwarescore=0 priorityscore=1501 clxscore=1015
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2501170134
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250113-sm8750_llcc_master-v1-2-5389b92e2d7a@quicinc.com>
 
-Add basic support for the new AIC200 product. The PCIe Device ID is
-0xa110. With this, we can turn on the lights for AIC200 by leveraging
-much of the existing driver.
+Hi Melody,
 
-Co-developed-by: Youssef Samir <quic_yabdulra@quicinc.com>
-Signed-off-by: Youssef Samir <quic_yabdulra@quicinc.com>
-Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
-Reviewed-by: Lizhi Hou <lizhi.hou@amd.com>
----
- drivers/accel/qaic/mhi_controller.c | 360 ++++++++++++++++++++++++++--
- drivers/accel/qaic/mhi_controller.h |   2 +-
- drivers/accel/qaic/qaic.h           |   1 +
- drivers/accel/qaic/qaic_drv.c       |  11 +-
- drivers/accel/qaic/sahara.c         |  39 ++-
- 5 files changed, 395 insertions(+), 18 deletions(-)
+kernel test robot noticed the following build warnings:
 
-diff --git a/drivers/accel/qaic/mhi_controller.c b/drivers/accel/qaic/mhi_controller.c
-index 8ab82e78dd94..13a14c6c6168 100644
---- a/drivers/accel/qaic/mhi_controller.c
-+++ b/drivers/accel/qaic/mhi_controller.c
-@@ -20,6 +20,11 @@ static unsigned int mhi_timeout_ms = 2000; /* 2 sec default */
- module_param(mhi_timeout_ms, uint, 0600);
- MODULE_PARM_DESC(mhi_timeout_ms, "MHI controller timeout value");
- 
-+static const char *fw_image_paths[FAMILY_MAX] = {
-+	[FAMILY_AIC100] = "qcom/aic100/sbl.bin",
-+	[FAMILY_AIC200] = "qcom/aic200/sbl.bin",
-+};
-+
- static const struct mhi_channel_config aic100_channels[] = {
- 	{
- 		.name = "QAIC_LOOPBACK",
-@@ -439,6 +444,297 @@ static const struct mhi_channel_config aic100_channels[] = {
- 	},
- };
- 
-+static const struct mhi_channel_config aic200_channels[] = {
-+	{
-+		.name = "QAIC_LOOPBACK",
-+		.num = 0,
-+		.num_elements = 32,
-+		.local_elements = 0,
-+		.event_ring = 0,
-+		.dir = DMA_TO_DEVICE,
-+		.ee_mask = MHI_CH_EE_AMSS,
-+		.pollcfg = 0,
-+		.doorbell = MHI_DB_BRST_DISABLE,
-+		.lpm_notify = false,
-+		.offload_channel = false,
-+		.doorbell_mode_switch = false,
-+		.auto_queue = false,
-+		.wake_capable = false,
-+	},
-+	{
-+		.name = "QAIC_LOOPBACK",
-+		.num = 1,
-+		.num_elements = 32,
-+		.local_elements = 0,
-+		.event_ring = 0,
-+		.dir = DMA_FROM_DEVICE,
-+		.ee_mask = MHI_CH_EE_AMSS,
-+		.pollcfg = 0,
-+		.doorbell = MHI_DB_BRST_DISABLE,
-+		.lpm_notify = false,
-+		.offload_channel = false,
-+		.doorbell_mode_switch = false,
-+		.auto_queue = false,
-+		.wake_capable = false,
-+	},
-+	{
-+		.name = "QAIC_SAHARA",
-+		.num = 2,
-+		.num_elements = 32,
-+		.local_elements = 0,
-+		.event_ring = 0,
-+		.dir = DMA_TO_DEVICE,
-+		.ee_mask = MHI_CH_EE_SBL,
-+		.pollcfg = 0,
-+		.doorbell = MHI_DB_BRST_DISABLE,
-+		.lpm_notify = false,
-+		.offload_channel = false,
-+		.doorbell_mode_switch = false,
-+		.auto_queue = false,
-+		.wake_capable = false,
-+	},
-+	{
-+		.name = "QAIC_SAHARA",
-+		.num = 3,
-+		.num_elements = 32,
-+		.local_elements = 0,
-+		.event_ring = 0,
-+		.dir = DMA_FROM_DEVICE,
-+		.ee_mask = MHI_CH_EE_SBL,
-+		.pollcfg = 0,
-+		.doorbell = MHI_DB_BRST_DISABLE,
-+		.lpm_notify = false,
-+		.offload_channel = false,
-+		.doorbell_mode_switch = false,
-+		.auto_queue = false,
-+		.wake_capable = false,
-+	},
-+	{
-+		.name = "QAIC_SSR",
-+		.num = 6,
-+		.num_elements = 32,
-+		.local_elements = 0,
-+		.event_ring = 0,
-+		.dir = DMA_TO_DEVICE,
-+		.ee_mask = MHI_CH_EE_AMSS,
-+		.pollcfg = 0,
-+		.doorbell = MHI_DB_BRST_DISABLE,
-+		.lpm_notify = false,
-+		.offload_channel = false,
-+		.doorbell_mode_switch = false,
-+		.auto_queue = false,
-+		.wake_capable = false,
-+	},
-+	{
-+		.name = "QAIC_SSR",
-+		.num = 7,
-+		.num_elements = 32,
-+		.local_elements = 0,
-+		.event_ring = 0,
-+		.dir = DMA_FROM_DEVICE,
-+		.ee_mask = MHI_CH_EE_AMSS,
-+		.pollcfg = 0,
-+		.doorbell = MHI_DB_BRST_DISABLE,
-+		.lpm_notify = false,
-+		.offload_channel = false,
-+		.doorbell_mode_switch = false,
-+		.auto_queue = false,
-+		.wake_capable = false,
-+	},
-+	{
-+		.name = "QAIC_CONTROL",
-+		.num = 10,
-+		.num_elements = 128,
-+		.local_elements = 0,
-+		.event_ring = 0,
-+		.dir = DMA_TO_DEVICE,
-+		.ee_mask = MHI_CH_EE_AMSS,
-+		.pollcfg = 0,
-+		.doorbell = MHI_DB_BRST_DISABLE,
-+		.lpm_notify = false,
-+		.offload_channel = false,
-+		.doorbell_mode_switch = false,
-+		.auto_queue = false,
-+		.wake_capable = false,
-+	},
-+	{
-+		.name = "QAIC_CONTROL",
-+		.num = 11,
-+		.num_elements = 128,
-+		.local_elements = 0,
-+		.event_ring = 0,
-+		.dir = DMA_FROM_DEVICE,
-+		.ee_mask = MHI_CH_EE_AMSS,
-+		.pollcfg = 0,
-+		.doorbell = MHI_DB_BRST_DISABLE,
-+		.lpm_notify = false,
-+		.offload_channel = false,
-+		.doorbell_mode_switch = false,
-+		.auto_queue = false,
-+		.wake_capable = false,
-+	},
-+	{
-+		.name = "QAIC_LOGGING",
-+		.num = 12,
-+		.num_elements = 32,
-+		.local_elements = 0,
-+		.event_ring = 0,
-+		.dir = DMA_TO_DEVICE,
-+		.ee_mask = MHI_CH_EE_SBL,
-+		.pollcfg = 0,
-+		.doorbell = MHI_DB_BRST_DISABLE,
-+		.lpm_notify = false,
-+		.offload_channel = false,
-+		.doorbell_mode_switch = false,
-+		.auto_queue = false,
-+		.wake_capable = false,
-+	},
-+	{
-+		.name = "QAIC_LOGGING",
-+		.num = 13,
-+		.num_elements = 32,
-+		.local_elements = 0,
-+		.event_ring = 0,
-+		.dir = DMA_FROM_DEVICE,
-+		.ee_mask = MHI_CH_EE_SBL,
-+		.pollcfg = 0,
-+		.doorbell = MHI_DB_BRST_DISABLE,
-+		.lpm_notify = false,
-+		.offload_channel = false,
-+		.doorbell_mode_switch = false,
-+		.auto_queue = false,
-+		.wake_capable = false,
-+	},
-+	{
-+		.name = "QAIC_STATUS",
-+		.num = 14,
-+		.num_elements = 32,
-+		.local_elements = 0,
-+		.event_ring = 0,
-+		.dir = DMA_TO_DEVICE,
-+		.ee_mask = MHI_CH_EE_AMSS,
-+		.pollcfg = 0,
-+		.doorbell = MHI_DB_BRST_DISABLE,
-+		.lpm_notify = false,
-+		.offload_channel = false,
-+		.doorbell_mode_switch = false,
-+		.auto_queue = false,
-+		.wake_capable = false,
-+	},
-+	{
-+		.name = "QAIC_STATUS",
-+		.num = 15,
-+		.num_elements = 32,
-+		.local_elements = 0,
-+		.event_ring = 0,
-+		.dir = DMA_FROM_DEVICE,
-+		.ee_mask = MHI_CH_EE_AMSS,
-+		.pollcfg = 0,
-+		.doorbell = MHI_DB_BRST_DISABLE,
-+		.lpm_notify = false,
-+		.offload_channel = false,
-+		.doorbell_mode_switch = false,
-+		.auto_queue = false,
-+		.wake_capable = false,
-+	},
-+	{
-+		.name = "QAIC_TELEMETRY",
-+		.num = 16,
-+		.num_elements = 32,
-+		.local_elements = 0,
-+		.event_ring = 0,
-+		.dir = DMA_TO_DEVICE,
-+		.ee_mask = MHI_CH_EE_AMSS,
-+		.pollcfg = 0,
-+		.doorbell = MHI_DB_BRST_DISABLE,
-+		.lpm_notify = false,
-+		.offload_channel = false,
-+		.doorbell_mode_switch = false,
-+		.auto_queue = false,
-+		.wake_capable = false,
-+	},
-+	{
-+		.name = "QAIC_TELEMETRY",
-+		.num = 17,
-+		.num_elements = 32,
-+		.local_elements = 0,
-+		.event_ring = 0,
-+		.dir = DMA_FROM_DEVICE,
-+		.ee_mask = MHI_CH_EE_AMSS,
-+		.pollcfg = 0,
-+		.doorbell = MHI_DB_BRST_DISABLE,
-+		.lpm_notify = false,
-+		.offload_channel = false,
-+		.doorbell_mode_switch = false,
-+		.auto_queue = false,
-+		.wake_capable = false,
-+	},
-+	{
-+		.name = "QAIC_TIMESYNC_PERIODIC",
-+		.num = 22,
-+		.num_elements = 32,
-+		.local_elements = 0,
-+		.event_ring = 0,
-+		.dir = DMA_TO_DEVICE,
-+		.ee_mask = MHI_CH_EE_AMSS,
-+		.pollcfg = 0,
-+		.doorbell = MHI_DB_BRST_DISABLE,
-+		.lpm_notify = false,
-+		.offload_channel = false,
-+		.doorbell_mode_switch = false,
-+		.auto_queue = false,
-+		.wake_capable = false,
-+	},
-+	{
-+		.name = "QAIC_TIMESYNC_PERIODIC",
-+		.num = 23,
-+		.num_elements = 32,
-+		.local_elements = 0,
-+		.event_ring = 0,
-+		.dir = DMA_FROM_DEVICE,
-+		.ee_mask = MHI_CH_EE_AMSS,
-+		.pollcfg = 0,
-+		.doorbell = MHI_DB_BRST_DISABLE,
-+		.lpm_notify = false,
-+		.offload_channel = false,
-+		.doorbell_mode_switch = false,
-+		.auto_queue = false,
-+		.wake_capable = false,
-+	},
-+	{
-+		.name = "IPCR",
-+		.num = 24,
-+		.num_elements = 32,
-+		.local_elements = 0,
-+		.event_ring = 0,
-+		.dir = DMA_TO_DEVICE,
-+		.ee_mask = MHI_CH_EE_AMSS,
-+		.pollcfg = 0,
-+		.doorbell = MHI_DB_BRST_DISABLE,
-+		.lpm_notify = false,
-+		.offload_channel = false,
-+		.doorbell_mode_switch = false,
-+		.auto_queue = false,
-+		.wake_capable = false,
-+	},
-+	{
-+		.name = "IPCR",
-+		.num = 25,
-+		.num_elements = 32,
-+		.local_elements = 0,
-+		.event_ring = 0,
-+		.dir = DMA_FROM_DEVICE,
-+		.ee_mask = MHI_CH_EE_AMSS,
-+		.pollcfg = 0,
-+		.doorbell = MHI_DB_BRST_DISABLE,
-+		.lpm_notify = false,
-+		.offload_channel = false,
-+		.doorbell_mode_switch = false,
-+		.auto_queue = true,
-+		.wake_capable = false,
-+	},
-+};
-+
- static struct mhi_event_config aic100_events[] = {
- 	{
- 		.num_elements = 32,
-@@ -454,16 +750,44 @@ static struct mhi_event_config aic100_events[] = {
- 	},
- };
- 
--static struct mhi_controller_config aic100_config = {
--	.max_channels = 128,
--	.timeout_ms = 0, /* controlled by mhi_timeout */
--	.buf_len = 0,
--	.num_channels = ARRAY_SIZE(aic100_channels),
--	.ch_cfg = aic100_channels,
--	.num_events = ARRAY_SIZE(aic100_events),
--	.event_cfg = aic100_events,
--	.use_bounce_buf = false,
--	.m2_no_db = false,
-+static struct mhi_event_config aic200_events[] = {
-+	{
-+		.num_elements = 32,
-+		.irq_moderation_ms = 0,
-+		.irq = 0,
-+		.channel = U32_MAX,
-+		.priority = 1,
-+		.mode = MHI_DB_BRST_DISABLE,
-+		.data_type = MHI_ER_CTRL,
-+		.hardware_event = false,
-+		.client_managed = false,
-+		.offload_channel = false,
-+	},
-+};
-+
-+static struct mhi_controller_config mhi_cntrl_configs[] = {
-+	[FAMILY_AIC100] = {
-+		.max_channels = 128,
-+		.timeout_ms = 0, /* controlled by mhi_timeout */
-+		.buf_len = 0,
-+		.num_channels = ARRAY_SIZE(aic100_channels),
-+		.ch_cfg = aic100_channels,
-+		.num_events = ARRAY_SIZE(aic100_events),
-+		.event_cfg = aic100_events,
-+		.use_bounce_buf = false,
-+		.m2_no_db = false,
-+	},
-+	[FAMILY_AIC200] = {
-+		.max_channels = 128,
-+		.timeout_ms = 0, /* controlled by mhi_timeout */
-+		.buf_len = 0,
-+		.num_channels = ARRAY_SIZE(aic200_channels),
-+		.ch_cfg = aic200_channels,
-+		.num_events = ARRAY_SIZE(aic200_events),
-+		.event_cfg = aic200_events,
-+		.use_bounce_buf = false,
-+		.m2_no_db = false,
-+	},
- };
- 
- static int mhi_read_reg(struct mhi_controller *mhi_cntrl, void __iomem *addr, u32 *out)
-@@ -545,8 +869,9 @@ static int mhi_reset_and_async_power_up(struct mhi_controller *mhi_cntrl)
- }
- 
- struct mhi_controller *qaic_mhi_register_controller(struct pci_dev *pci_dev, void __iomem *mhi_bar,
--						    int mhi_irq, bool shared_msi)
-+						    int mhi_irq, bool shared_msi, int family)
- {
-+	struct mhi_controller_config mhi_config = mhi_cntrl_configs[family];
- 	struct mhi_controller *mhi_cntrl;
- 	int ret;
- 
-@@ -581,11 +906,18 @@ struct mhi_controller *qaic_mhi_register_controller(struct pci_dev *pci_dev, voi
- 	if (shared_msi) /* MSI shared with data path, no IRQF_NO_SUSPEND */
- 		mhi_cntrl->irq_flags = IRQF_SHARED;
- 
--	mhi_cntrl->fw_image = "qcom/aic100/sbl.bin";
-+	mhi_cntrl->fw_image = fw_image_paths[family];
-+
-+	if (family == FAMILY_AIC200) {
-+		mhi_cntrl->name = "AIC200";
-+		mhi_cntrl->seg_len = SZ_512K;
-+	} else {
-+		mhi_cntrl->name = "AIC100";
-+	}
- 
- 	/* use latest configured timeout */
--	aic100_config.timeout_ms = mhi_timeout_ms;
--	ret = mhi_register_controller(mhi_cntrl, &aic100_config);
-+	mhi_config.timeout_ms = mhi_timeout_ms;
-+	ret = mhi_register_controller(mhi_cntrl, &mhi_config);
- 	if (ret) {
- 		pci_err(pci_dev, "mhi_register_controller failed %d\n", ret);
- 		return ERR_PTR(ret);
-diff --git a/drivers/accel/qaic/mhi_controller.h b/drivers/accel/qaic/mhi_controller.h
-index 500e7f4af2af..8939f6ae185e 100644
---- a/drivers/accel/qaic/mhi_controller.h
-+++ b/drivers/accel/qaic/mhi_controller.h
-@@ -8,7 +8,7 @@
- #define MHICONTROLLERQAIC_H_
- 
- struct mhi_controller *qaic_mhi_register_controller(struct pci_dev *pci_dev, void __iomem *mhi_bar,
--						    int mhi_irq, bool shared_msi);
-+						    int mhi_irq, bool shared_msi, int family);
- void qaic_mhi_free_controller(struct mhi_controller *mhi_cntrl, bool link_up);
- void qaic_mhi_start_reset(struct mhi_controller *mhi_cntrl);
- void qaic_mhi_reset_done(struct mhi_controller *mhi_cntrl);
-diff --git a/drivers/accel/qaic/qaic.h b/drivers/accel/qaic/qaic.h
-index cf97fd9a7e70..0dbb8e32e4b9 100644
---- a/drivers/accel/qaic/qaic.h
-+++ b/drivers/accel/qaic/qaic.h
-@@ -34,6 +34,7 @@
- 
- enum aic_families {
- 	FAMILY_AIC100,
-+	FAMILY_AIC200,
- 	FAMILY_MAX,
- };
- 
-diff --git a/drivers/accel/qaic/qaic_drv.c b/drivers/accel/qaic/qaic_drv.c
-index 4e63e475b389..3b415e2c9431 100644
---- a/drivers/accel/qaic/qaic_drv.c
-+++ b/drivers/accel/qaic/qaic_drv.c
-@@ -36,6 +36,7 @@ MODULE_IMPORT_NS("DMA_BUF");
- 
- #define PCI_DEVICE_ID_QCOM_AIC080	0xa080
- #define PCI_DEVICE_ID_QCOM_AIC100	0xa100
-+#define PCI_DEVICE_ID_QCOM_AIC200	0xa110
- #define QAIC_NAME			"qaic"
- #define QAIC_DESC			"Qualcomm Cloud AI Accelerators"
- #define CNTL_MAJOR			5
-@@ -66,6 +67,13 @@ static const struct qaic_device_config aic100_config = {
- 	.dbc_bar_idx = 2,
- };
- 
-+static const struct qaic_device_config aic200_config = {
-+	.family = FAMILY_AIC200,
-+	.bar_mask = BIT(0) | BIT(1) | BIT(2) | BIT(4),
-+	.mhi_bar_idx = 1,
-+	.dbc_bar_idx = 2,
-+};
-+
- bool datapath_polling;
- module_param(datapath_polling, bool, 0400);
- MODULE_PARM_DESC(datapath_polling, "Operate the datapath in polling mode");
-@@ -568,7 +576,7 @@ static int qaic_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
- 		return ret;
- 
- 	qdev->mhi_cntrl = qaic_mhi_register_controller(pdev, qdev->bar_mhi, mhi_irq,
--						       qdev->single_msi);
-+						       qdev->single_msi, config->family);
- 	if (IS_ERR(qdev->mhi_cntrl)) {
- 		ret = PTR_ERR(qdev->mhi_cntrl);
- 		qaic_destroy_drm_device(qdev, QAIC_NO_PARTITION);
-@@ -637,6 +645,7 @@ static struct mhi_driver qaic_mhi_driver = {
- static const struct pci_device_id qaic_ids[] = {
- 	{ PCI_DEVICE_DATA(QCOM, AIC080, (kernel_ulong_t)&aic080_config), },
- 	{ PCI_DEVICE_DATA(QCOM, AIC100, (kernel_ulong_t)&aic100_config), },
-+	{ PCI_DEVICE_DATA(QCOM, AIC200, (kernel_ulong_t)&aic200_config), },
- 	{ }
- };
- MODULE_DEVICE_TABLE(pci, qaic_ids);
-diff --git a/drivers/accel/qaic/sahara.c b/drivers/accel/qaic/sahara.c
-index 09c8b055aa81..3ebcc1f7ff58 100644
---- a/drivers/accel/qaic/sahara.c
-+++ b/drivers/accel/qaic/sahara.c
-@@ -188,6 +188,34 @@ static const char * const aic100_image_table[] = {
- 	[10] = "qcom/aic100/fw10.bin",
- };
- 
-+static const char * const aic200_image_table[] = {
-+	[5]  = "qcom/aic200/uefi.elf",
-+	[12] = "qcom/aic200/aic200-nsp.bin",
-+	[23] = "qcom/aic200/aop.mbn",
-+	[32] = "qcom/aic200/tz.mbn",
-+	[33] = "qcom/aic200/hypvm.mbn",
-+	[39] = "qcom/aic200/aic200_abl.elf",
-+	[40] = "qcom/aic200/apdp.mbn",
-+	[41] = "qcom/aic200/devcfg.mbn",
-+	[42] = "qcom/aic200/sec.elf",
-+	[43] = "qcom/aic200/aic200-hlos.elf",
-+	[49] = "qcom/aic200/shrm.elf",
-+	[50] = "qcom/aic200/cpucp.elf",
-+	[51] = "qcom/aic200/aop_devcfg.mbn",
-+	[57] = "qcom/aic200/cpucp_dtbs.elf",
-+	[62] = "qcom/aic200/uefi_dtbs.elf",
-+	[63] = "qcom/aic200/xbl_ac_config.mbn",
-+	[64] = "qcom/aic200/tz_ac_config.mbn",
-+	[65] = "qcom/aic200/hyp_ac_config.mbn",
-+	[66] = "qcom/aic200/pdp.elf",
-+	[67] = "qcom/aic200/pdp_cdb.elf",
-+	[68] = "qcom/aic200/sdi.mbn",
-+	[69] = "qcom/aic200/dcd.mbn",
-+	[73] = "qcom/aic200/gearvm.mbn",
-+	[74] = "qcom/aic200/sti.bin",
-+	[75] = "qcom/aic200/pvs.bin",
-+};
-+
- static int sahara_find_image(struct sahara_context *context, u32 image_id)
- {
- 	int ret;
-@@ -748,8 +776,15 @@ static int sahara_mhi_probe(struct mhi_device *mhi_dev, const struct mhi_device_
- 	context->mhi_dev = mhi_dev;
- 	INIT_WORK(&context->fw_work, sahara_processing);
- 	INIT_WORK(&context->dump_work, sahara_dump_processing);
--	context->image_table = aic100_image_table;
--	context->table_size = ARRAY_SIZE(aic100_image_table);
-+
-+	if (!strcmp(mhi_dev->mhi_cntrl->name, "AIC200")) {
-+		context->image_table = aic200_image_table;
-+		context->table_size = ARRAY_SIZE(aic200_image_table);
-+	} else {
-+		context->image_table = aic100_image_table;
-+		context->table_size = ARRAY_SIZE(aic100_image_table);
-+	}
-+
- 	context->active_image_id = SAHARA_IMAGE_ID_NONE;
- 	dev_set_drvdata(&mhi_dev->dev, context);
- 
+[auto build test WARNING on 37136bf5c3a6f6b686d74f41837a6406bec6b7bc]
+
+url:    https://github.com/intel-lab-lkp/linux/commits/Melody-Olvera/dt-bindings-cache-qcom-llcc-Document-SM8750-LLCC-block/20250114-053146
+base:   37136bf5c3a6f6b686d74f41837a6406bec6b7bc
+patch link:    https://lore.kernel.org/r/20250113-sm8750_llcc_master-v1-2-5389b92e2d7a%40quicinc.com
+patch subject: [PATCH 2/4] soc: qcom: llcc-qcom: Add support for LLCC V6
+config: mips-randconfig-r073-20250117 (https://download.01.org/0day-ci/archive/20250118/202501180248.1JzWcFb9-lkp@intel.com/config)
+compiler: mips-linux-gcc (GCC) 14.2.0
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20250118/202501180248.1JzWcFb9-lkp@intel.com/reproduce)
+
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202501180248.1JzWcFb9-lkp@intel.com/
+
+All warnings (new ones prefixed by >>):
+
+   drivers/soc/qcom/llcc-qcom.c: In function '_qcom_llcc_cfg_program_v6':
+>> drivers/soc/qcom/llcc-qcom.c:3937:13: warning: variable 'sz' set but not used [-Wunused-but-set-variable]
+    3937 |         u32 sz = 0;
+         |             ^~
+>> drivers/soc/qcom/llcc-qcom.c:3936:41: warning: variable 'slice_cfg' set but not used [-Wunused-but-set-variable]
+    3936 |         const struct llcc_slice_config *slice_cfg;
+         |                                         ^~~~~~~~~
+   drivers/soc/qcom/llcc-qcom.c: At top level:
+   drivers/soc/qcom/llcc-qcom.c:3223:18: warning: 'llcc_v6_reg_offset' defined but not used [-Wunused-const-variable=]
+    3223 | static const u32 llcc_v6_reg_offset[] = {
+         |                  ^~~~~~~~~~~~~~~~~~
+   drivers/soc/qcom/llcc-qcom.c:3183:42: warning: 'llcc_v6_edac_reg_offset' defined but not used [-Wunused-const-variable=]
+    3183 | static const struct llcc_edac_reg_offset llcc_v6_edac_reg_offset = {
+         |                                          ^~~~~~~~~~~~~~~~~~~~~~~
+
+
+vim +/sz +3937 drivers/soc/qcom/llcc-qcom.c
+
+  3924	
+  3925	static int _qcom_llcc_cfg_program_v6(const struct llcc_slice_config *config,
+  3926					  const struct qcom_llcc_config *cfg)
+  3927	{
+  3928		int ret;
+  3929		u32 attr0_cfg, attr1_cfg, attr2_cfg, attr3_cfg;
+  3930		u32 attr0_val, attr1_val, attr2_val, attr3_val;
+  3931		u32 disable_cap_alloc, wren, wr_cache_en;
+  3932		u32 stale_en, stale_cap_en, mru_uncap_en, mru_rollover;
+  3933		u32 alloc_oneway_en, ovcap_en, ovcap_prio, vict_prio;
+  3934		u32 slice_offset, reg_offset;
+  3935		struct llcc_slice_desc *desc;
+> 3936		const struct llcc_slice_config *slice_cfg;
+> 3937		u32 sz = 0;
+  3938	
+  3939		slice_cfg = cfg->sct_data;
+  3940		sz = cfg->size;
+  3941	
+  3942		attr0_cfg = LLCC_V6_TRP_ATTR0_CFGn(config->slice_id);
+  3943		attr1_cfg = LLCC_V6_TRP_ATTR1_CFGn(config->slice_id);
+  3944		attr2_cfg = LLCC_V6_TRP_ATTR2_CFGn(config->slice_id);
+  3945		attr3_cfg = LLCC_V6_TRP_ATTR3_CFGn(config->slice_id);
+  3946	
+  3947		attr0_val = config->res_ways;
+  3948		attr1_val = config->bonus_ways;
+  3949		attr2_val = config->cache_mode;
+  3950		attr2_val |= config->probe_target_ways << ATTR2_PROBE_TARGET_WAYS_SHIFT;
+  3951		attr2_val |= config->fixed_size << ATTR2_FIXED_SIZE_SHIFT;
+  3952		attr2_val |= config->priority << ATTR2_PRIORITY_SHIFT;
+  3953	
+  3954		attr3_val = MAX_CAP_TO_BYTES(config->max_cap);
+  3955		attr3_val /= drv_data->num_banks;
+  3956		attr3_val >>= CACHE_LINE_SIZE_SHIFT;
+  3957	
+  3958		ret = regmap_write(drv_data->bcast_regmap, attr0_cfg, attr0_val);
+  3959		if (ret)
+  3960			return ret;
+  3961	
+  3962		ret = regmap_write(drv_data->bcast_regmap, attr1_cfg, attr1_val);
+  3963		if (ret)
+  3964			return ret;
+  3965	
+  3966		ret = regmap_write(drv_data->bcast_regmap, attr2_cfg, attr2_val);
+  3967		if (ret)
+  3968			return ret;
+  3969	
+  3970		ret = regmap_write(drv_data->bcast_regmap, attr3_cfg, attr3_val);
+  3971		if (ret)
+  3972			return ret;
+  3973	
+  3974		slice_offset = config->slice_id % 32;
+  3975		reg_offset = (config->slice_id / 32) * 4;
+  3976	
+  3977		if (!cfg->skip_llcc_cfg) {
+  3978			disable_cap_alloc = config->dis_cap_alloc << slice_offset;
+  3979			ret = regmap_write(drv_data->bcast_regmap,
+  3980				LLCC_V6_TRP_SCID_DIS_CAP_ALLOC + reg_offset,
+  3981				disable_cap_alloc);
+  3982	
+  3983			if (ret)
+  3984				return ret;
+  3985		}
+  3986	
+  3987		wren = config->write_scid_en << slice_offset;
+  3988		ret = regmap_update_bits(drv_data->bcast_regmap,
+  3989				LLCC_V6_TRP_WRSC_EN + reg_offset,
+  3990				BIT(slice_offset), wren);
+  3991		if (ret)
+  3992			return ret;
+  3993	
+  3994		wr_cache_en = config->write_scid_cacheable_en << slice_offset;
+  3995		ret = regmap_update_bits(drv_data->bcast_regmap,
+  3996				LLCC_V6_TRP_WRSC_CACHEABLE_EN + reg_offset,
+  3997				BIT(slice_offset), wr_cache_en);
+  3998		if (ret)
+  3999			return ret;
+  4000	
+  4001		stale_en = config->stale_en << slice_offset;
+  4002		ret = regmap_update_bits(drv_data->bcast_regmap,
+  4003				LLCC_V6_TRP_ALGO_CFG1 + reg_offset,
+  4004				BIT(slice_offset), stale_en);
+  4005		if (ret)
+  4006			return ret;
+  4007	
+  4008		stale_cap_en = config->stale_cap_en << slice_offset;
+  4009		ret = regmap_update_bits(drv_data->bcast_regmap,
+  4010				LLCC_V6_TRP_ALGO_CFG2 + reg_offset,
+  4011				BIT(slice_offset), stale_cap_en);
+  4012		if (ret)
+  4013			return ret;
+  4014	
+  4015		mru_uncap_en = config->mru_uncap_en << slice_offset;
+  4016		ret = regmap_update_bits(drv_data->bcast_regmap,
+  4017				LLCC_V6_TRP_ALGO_CFG3 + reg_offset,
+  4018				BIT(slice_offset), mru_uncap_en);
+  4019		if (ret)
+  4020			return ret;
+  4021	
+  4022		mru_rollover = config->mru_rollover << slice_offset;
+  4023		ret = regmap_update_bits(drv_data->bcast_regmap,
+  4024				LLCC_V6_TRP_ALGO_CFG4 + reg_offset,
+  4025				BIT(slice_offset), mru_rollover);
+  4026		if (ret)
+  4027			return ret;
+  4028	
+  4029		alloc_oneway_en = config->alloc_oneway_en << slice_offset;
+  4030		ret = regmap_update_bits(drv_data->bcast_regmap,
+  4031				LLCC_V6_TRP_ALGO_CFG5 + reg_offset,
+  4032				BIT(slice_offset), alloc_oneway_en);
+  4033		if (ret)
+  4034			return ret;
+  4035	
+  4036		ovcap_en = config->ovcap_en << slice_offset;
+  4037		ret = regmap_update_bits(drv_data->bcast_regmap,
+  4038				LLCC_V6_TRP_ALGO_CFG6 + reg_offset,
+  4039				BIT(slice_offset), ovcap_en);
+  4040		if (ret)
+  4041			return ret;
+  4042	
+  4043		ovcap_prio = config->ovcap_prio << slice_offset;
+  4044		ret = regmap_update_bits(drv_data->bcast_regmap,
+  4045				LLCC_V6_TRP_ALGO_CFG7 + reg_offset,
+  4046				BIT(slice_offset), ovcap_prio);
+  4047		if (ret)
+  4048			return ret;
+  4049	
+  4050		vict_prio = config->vict_prio << slice_offset;
+  4051		ret = regmap_update_bits(drv_data->bcast_regmap,
+  4052				LLCC_V6_TRP_ALGO_CFG8 + reg_offset,
+  4053				BIT(slice_offset), vict_prio);
+  4054		if (ret)
+  4055			return ret;
+  4056	
+  4057		if (config->activate_on_init) {
+  4058			desc = llcc_slice_getd(config->usecase_id);
+  4059			if (PTR_ERR_OR_ZERO(desc))
+  4060				return -EINVAL;
+  4061	
+  4062			ret = llcc_slice_activate(desc);
+  4063		}
+  4064	
+  4065		return ret;
+  4066	}
+  4067	
+
 -- 
-2.34.1
-
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
 
