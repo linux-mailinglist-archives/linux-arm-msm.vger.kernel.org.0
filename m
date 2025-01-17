@@ -1,136 +1,208 @@
-Return-Path: <linux-arm-msm+bounces-45368-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-45369-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id DB7A5A148D1
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Jan 2025 05:19:34 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id DCE9DA148DD
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Jan 2025 05:33:06 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 9B46B7A2644
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Jan 2025 04:19:25 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E0723167D6D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Jan 2025 04:33:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 182481F63F5;
-	Fri, 17 Jan 2025 04:19:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A83ED1F63C6;
+	Fri, 17 Jan 2025 04:33:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="fHVyaP8f"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Q2K0LB/F"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88DB88C11;
-	Fri, 17 Jan 2025 04:19:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCD4125A625;
+	Fri, 17 Jan 2025 04:32:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737087568; cv=none; b=ShRoTzFuHHEqbm8h40m8Nlj5iMHCgaohtEFmAxtuT+D5ARZOFhlgBCNPdyAupYOuuI3Ghv8eAwodpMwvY4jpol63CGHeBfj4owb66EpNAvFnWUBWZepbPE6wJZJ1LtZ0oX2OwAOy7Vl/j/OujLACo3iH3bFByEVltwMaBXAs8wg=
+	t=1737088380; cv=none; b=uNe2zbKbge0DgLIMk+DEhkhug9vQMCC1eJ9ExkMgj0XK61qWyP/o1h9z4u8LptIw1G99oFsog2CIScoXXhRCZ7BZ+YTxmiHZcLw3RhSr2fWNfxjjQz9nU9LqOU9RBhmOn+9fC5frZXDhVuE3pLPH2Xia/k1EfpFNF+h8rXjaJHE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737087568; c=relaxed/simple;
-	bh=tcYuEPSKRCDOaAfEM4RsAb/aFOItACt4qYonsbGh0tw=;
+	s=arc-20240116; t=1737088380; c=relaxed/simple;
+	bh=t2s+b306xBuPXhhO060s6Y1zY0B3W/TLAKbVcsgTtN8=;
 	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=cLC62ix35iFVb2dbS4iSqzxVx3y8kEdQAABAWv1WaeTnRbnIadMzp0NiZ9mEP+iEtjfcRELOfDg9dXEyI8yTN79xt4nKxwI7qjVeatfXSD1z/EbL5osibvZIN4F0MBJzRiM5CR/F+JsukelZWvhI2EnNIF6TSc8xqFnnVimNnnk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=fHVyaP8f; arc=none smtp.client-ip=205.220.168.131
+	 In-Reply-To:Content-Type; b=LpCz+nXBuPVPuGeALOg59hgrXawP0BdAe2DXUoAKTzvKieo2pygu1knwTze32FCQkcAMUuammAUjFTzPuS7RHWuTtPOWc6ivEkiXlY2v5L9w2sWYGzKocvutrLSyplNf6crWV8J8vQdBwp5kQ6LNWKBlsyYJUnfvipf2BqKwfRA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Q2K0LB/F; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50H2RfhO029937;
-	Fri, 17 Jan 2025 04:19:22 GMT
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50GNrclX022936;
+	Fri, 17 Jan 2025 04:32:47 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	l2Gf2lqgRpvXBvObpk3qN9rn65jdML/GqNCByWAgmIs=; b=fHVyaP8f8bEBtYlB
-	BDR6JJeDNaKp0o4JR/Hcg1aBfjzIrxuA0P/taCsLmi4q+N0nNHaxCGf18J6WTu6Z
-	WZHXnjrv1x9esKgQOnNJRMPw6apAQF5j7CgVXgmQviVnxOmd+/kMw6Yha4KckAAS
-	d4gF6Lm2bsLjjiuWx8mVjgt/krJMzhc+vjEskjdsM2Nw2Yph4cew+CfQhi0tBzPO
-	h/AIXJ3eNXnuImgY+pXaZ8ZnxckTWSbNp+981HXXauG4JofDxKgy9qw89FlrLSzP
-	rgpe4X71WOdBhx/rzx/QpbZc6nmiSWkEvvKAxRB/Ku/Ae4z6An1z+2h2UxxJhBBw
-	GVwE5g==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 447eemr6nu-1
+	4X9oiOlfPcHcM/j4pCvyOH4pDrGLCn+uoioBjZvHMF8=; b=Q2K0LB/FPovfEn0B
+	TTrwap76VS66qvnBLmG04cUq6nezqFEBR+Gpioh/M1Jpg+chWAVxDMZsFpi77obU
+	d+noaljV4YPsnKPwFHil0jdHJvvW6K50wx5LaRdCH+I7MtB2xsSQK0GkBdRWsvXo
+	qwRuRFoupHKDpJzzwxkhdYoPIbGN0R2L+ymGxxLtqzrmQa7hRXwbdTjaxDcdBLl2
+	HrfwcghmrNEnFSKnKvZ8UCtcWfLzFuRWi/H+sbpJm8b4DuTOJg5IxJ8bloVtA0zg
+	wDH1jKB4zuGQsDph9RdVacBG5FuK5MAvOD1Pln28RoJN0TAq96iNLaF6U6zKDZy5
+	V4Bvxw==
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 447c6fgfu8-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 17 Jan 2025 04:19:21 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 50H4JLAI004168
+	Fri, 17 Jan 2025 04:32:46 +0000 (GMT)
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 50H4Wkhu024051
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 17 Jan 2025 04:19:21 GMT
-Received: from [10.231.216.103] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+	Fri, 17 Jan 2025 04:32:46 GMT
+Received: from [10.151.36.43] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 16 Jan
- 2025 20:19:18 -0800
-Message-ID: <a359ae5c-863e-4cad-a2a9-b2dc4f162e6e@quicinc.com>
-Date: Fri, 17 Jan 2025 12:19:16 +0800
+ 2025 20:32:40 -0800
+Message-ID: <3d0ef611-2b21-d22e-8dbc-f092c36ceb1d@quicinc.com>
+Date: Fri, 17 Jan 2025 10:02:37 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 2/3] venus: pm_helpers: Use dev_pm_genpd_set_hwmode to
- switch GDSC mode on V4
-To: Bjorn Andersson <andersson@kernel.org>,
-        Bryan O'Donoghue
-	<bryan.odonoghue@linaro.org>
-CC: Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd
-	<sboyd@kernel.org>,
-        Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
-        "Vikash Garodia" <quic_vgarodia@quicinc.com>,
-        Mauro Carvalho Chehab
-	<mchehab@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-media@vger.kernel.org>
-References: <20250115-switch_gdsc_mode-v3-0-9a24d2fd724c@quicinc.com>
- <20250115-switch_gdsc_mode-v3-2-9a24d2fd724c@quicinc.com>
- <8322416c-5762-4b64-80aa-7ef1b0b0287c@linaro.org>
- <hlre46s5jz7kro34w5ah3pvxvkdnplukoiubkptx6oeepdx2ox@mh6geaqspa6l>
- <lo2zma6ch6av3obo4mj5hpua6hpi4dn6fl5cjnmwpplu66v6mf@nkfegdca5mzu>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.1
+Subject: Re: [PATCH v6 01/12] dmaengine: qcom: bam_dma: Add bam_sw_version
+ register read
 Content-Language: en-US
-From: Renjiang Han <quic_renjiang@quicinc.com>
-In-Reply-To: <lo2zma6ch6av3obo4mj5hpua6hpi4dn6fl5cjnmwpplu66v6mf@nkfegdca5mzu>
+To: Stephan Gerhold <stephan.gerhold@linaro.org>
+CC: <vkoul@kernel.org>, <corbet@lwn.net>, <thara.gopinath@gmail.com>,
+        <herbert@gondor.apana.org.au>, <davem@davemloft.net>,
+        <martin.petersen@oracle.com>, <enghua.yu@intel.com>,
+        <u.kleine-koenig@baylibre.com>, <dmaengine@vger.kernel.org>,
+        <linux-doc@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-crypto@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <quic_utiwari@quicinc.com>, <quic_srichara@quicinc.com>,
+        <quic_varada@quicinc.com>
+References: <20250115103004.3350561-1-quic_mdalam@quicinc.com>
+ <20250115103004.3350561-2-quic_mdalam@quicinc.com>
+ <Z4k8qBEEfoyl0Qj1@linaro.org>
+From: Md Sadre Alam <quic_mdalam@quicinc.com>
+In-Reply-To: <Z4k8qBEEfoyl0Qj1@linaro.org>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: mQaXxrQ3mFkmFOv6nA_QLVWzLgzits7Q
-X-Proofpoint-ORIG-GUID: mQaXxrQ3mFkmFOv6nA_QLVWzLgzits7Q
+X-Proofpoint-GUID: 5kLSQpzao_W0Ag7DMtXkqQcxXneuGaLP
+X-Proofpoint-ORIG-GUID: 5kLSQpzao_W0Ag7DMtXkqQcxXneuGaLP
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
  definitions=2025-01-17_01,2025-01-16_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999 adultscore=0
- priorityscore=1501 mlxscore=0 lowpriorityscore=0 malwarescore=0
- bulkscore=0 clxscore=1015 spamscore=0 phishscore=0 impostorscore=0
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2501170030
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 bulkscore=0
+ impostorscore=0 mlxlogscore=999 spamscore=0 suspectscore=0 phishscore=0
+ adultscore=0 lowpriorityscore=0 priorityscore=1501 malwarescore=0
+ clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2501170032
 
 
-On 1/16/2025 4:36 AM, Bjorn Andersson wrote:
-> On Wed, Jan 15, 2025 at 02:22:11PM -0600, Bjorn Andersson wrote:
->> On Wed, Jan 15, 2025 at 12:02:31PM +0000, Bryan O'Donoghue wrote:
->>> On 15/01/2025 09:30, Renjiang Han wrote:
->>>> The POWER_CONTROL register addresses are not constant and can vary across
->>>> the variants. Also as per the HW recommendation, the GDSC mode switching
->>>> needs to be controlled from respective GDSC register and this is a uniform
->>>> approach across all the targets. Hence use dev_pm_genpd_set_hwmode() API
->>>> which controls GDSC mode switching using its respective GDSC register.
->>> This paragraph is difficult to read and understand. Try something a bit more
->>> like "Use dev_pm_genpd_set_hwmode() API to control GDSC mode switching. Do
->>> that because of reason x, y z"
->> No, follow https://docs.kernel.org/process/submitting-patches.html#describe-your-changes
+
+On 1/16/2025 10:36 PM, Stephan Gerhold wrote:
+> On Wed, Jan 15, 2025 at 03:59:53PM +0530, Md Sadre Alam wrote:
+>> Add bam_sw_version register read. This will help to
+>> differentiate b/w some new BAM features across multiple
+>> BAM IP, feature like LOCK/UNLOCK of BAM pipe.
 >>
->> It says "describe your problem, then describe your solution". "Use "
->> isn't a good start of any problem description that I can think of.
+>> Signed-off-by: Md Sadre Alam <quic_mdalam@quicinc.com>
+>> ---
 >>
-> But just to clarify, I have no concern with your request for
-> improvements to the description of the problem being addressed.
->
-> Regards,
-> Bjorn
-Thanks Bjorn and Bryan. I'll update this message.
+>> change in [v6]
+>>
+>> * No change
+>>
+>> change in [v5]
+>>
+>> * No change
+>>
+>> change in [v4]
+>>
+>> * Added BAM_SW_VERSION register read
+>>
+>> change in [v3]
+>>
+>> * This patch was not included in [v3]
+>>
+>> change in [v2]
+>>
+>> * This patch was not included in [v2]
+>>
+>> change in [v1]
+>>
+>> * This patch was not included in [v1]
+>>
+>>   drivers/dma/qcom/bam_dma.c | 8 ++++++++
+>>   1 file changed, 8 insertions(+)
+>>
+>> diff --git a/drivers/dma/qcom/bam_dma.c b/drivers/dma/qcom/bam_dma.c
+>> index c14557efd577..daeacd5cb8e9 100644
+>> --- a/drivers/dma/qcom/bam_dma.c
+>> +++ b/drivers/dma/qcom/bam_dma.c
+>> @@ -83,6 +83,7 @@ struct bam_async_desc {
+>>   enum bam_reg {
+>>   	BAM_CTRL,
+>>   	BAM_REVISION,
+>> +	BAM_SW_VERSION,
+>>   	BAM_NUM_PIPES,
+>>   	BAM_DESC_CNT_TRSHLD,
+>>   	BAM_IRQ_SRCS,
+>> @@ -117,6 +118,7 @@ struct reg_offset_data {
+>>   static const struct reg_offset_data bam_v1_3_reg_info[] = {
+>>   	[BAM_CTRL]		= { 0x0F80, 0x00, 0x00, 0x00 },
+>>   	[BAM_REVISION]		= { 0x0F84, 0x00, 0x00, 0x00 },
+>> +	[BAM_SW_VERSION]	= { 0x0F88, 0x00, 0x00, 0x00 },
+>>   	[BAM_NUM_PIPES]		= { 0x0FBC, 0x00, 0x00, 0x00 },
+>>   	[BAM_DESC_CNT_TRSHLD]	= { 0x0F88, 0x00, 0x00, 0x00 },
+>>   	[BAM_IRQ_SRCS]		= { 0x0F8C, 0x00, 0x00, 0x00 },
+>> @@ -146,6 +148,7 @@ static const struct reg_offset_data bam_v1_3_reg_info[] = {
+>>   static const struct reg_offset_data bam_v1_4_reg_info[] = {
+>>   	[BAM_CTRL]		= { 0x0000, 0x00, 0x00, 0x00 },
+>>   	[BAM_REVISION]		= { 0x0004, 0x00, 0x00, 0x00 },
+>> +	[BAM_SW_VERSION]	= { 0x0008, 0x00, 0x00, 0x00 },
+>>   	[BAM_NUM_PIPES]		= { 0x003C, 0x00, 0x00, 0x00 },
+>>   	[BAM_DESC_CNT_TRSHLD]	= { 0x0008, 0x00, 0x00, 0x00 },
+>>   	[BAM_IRQ_SRCS]		= { 0x000C, 0x00, 0x00, 0x00 },
+>> @@ -175,6 +178,7 @@ static const struct reg_offset_data bam_v1_4_reg_info[] = {
+>>   static const struct reg_offset_data bam_v1_7_reg_info[] = {
+>>   	[BAM_CTRL]		= { 0x00000, 0x00, 0x00, 0x00 },
+>>   	[BAM_REVISION]		= { 0x01000, 0x00, 0x00, 0x00 },
+>> +	[BAM_SW_VERSION]	= { 0x01004, 0x00, 0x00, 0x00 },
+>>   	[BAM_NUM_PIPES]		= { 0x01008, 0x00, 0x00, 0x00 },
+>>   	[BAM_DESC_CNT_TRSHLD]	= { 0x00008, 0x00, 0x00, 0x00 },
+>>   	[BAM_IRQ_SRCS]		= { 0x03010, 0x00, 0x00, 0x00 },
+>> @@ -393,6 +397,7 @@ struct bam_device {
+>>   	bool controlled_remotely;
+>>   	bool powered_remotely;
+>>   	u32 active_channels;
+>> +	u32 bam_sw_version;
+>>   
+>>   	const struct reg_offset_data *layout;
+>>   
+>> @@ -1306,6 +1311,9 @@ static int bam_dma_probe(struct platform_device *pdev)
+>>   		return ret;
+>>   	}
+>>   
+>> +	bdev->bam_sw_version = readl_relaxed(bam_addr(bdev, 0, BAM_SW_VERSION));
+>> +	dev_info(bdev->dev, "BAM software version:0x%08x\n", bdev->bam_sw_version);
+> 
+> This will cause crashes for the same reason as your other patch. During
+> probe(), we can't read from BAM registers if we don't have a clock
+> assigned. There is no guarantee that the BAM is powered up.
+> 
+> To make this work properly on all platforms, you would need to defer
+> reading this register until the first channel is requested by the
+> consumer driver. Or limit this functionality to the if (bdev->bamclk)
+> case for now.
+Sure thanks for suggestion. Will fix in next revision.
+> 
+> We should also prioritize fixing the existing regression before adding
+> new functionality.
+Sure, I am working on it will post quickly.
 
--- 
-Best Regards,
-Renjiang
-
+Thanks,
+Alam.
 
