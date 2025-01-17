@@ -1,137 +1,153 @@
-Return-Path: <linux-arm-msm+bounces-45379-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-45380-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3C8B7A14B4D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Jan 2025 09:39:59 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id B6885A14B8F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Jan 2025 09:56:57 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 843683A80B5
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Jan 2025 08:39:51 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2DCEE18879F0
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Jan 2025 08:56:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 68CC21F8EF1;
-	Fri, 17 Jan 2025 08:39:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8C5D31F91DA;
+	Fri, 17 Jan 2025 08:56:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="oel8crqH"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="NOEu0u/F"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f169.google.com (mail-lj1-f169.google.com [209.85.208.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B39D21F791B;
-	Fri, 17 Jan 2025 08:39:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85F501F91D9
+	for <linux-arm-msm@vger.kernel.org>; Fri, 17 Jan 2025 08:56:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737103190; cv=none; b=DiTdLvY/+0631ydIp5Tr1n0kd9NTEMq/2Q+NZPgsjvAMp3rpC2eiH600cnw7T8e8+rjtpGFfLtiuGFmxP8KnKiitZRi2VXW5eSnZ3q3C2BZ292+yk/2t/qJMZAmon2Fqj0lNiq+7bq45hl7TQ2cA1PeZdGRk+vCIffRAUCMAkQc=
+	t=1737104204; cv=none; b=tfjRy9we+SNwtcgD+NJOPb+LTo4zj//LwghXjbFN2ik6mrpYk3orrzdalg/VtyDiQpHiO+edPo8gqV8gudXODHwqQU6tbrhm3py4a/zCH3HECgIxNV1aPnyPGotg9Sz6boBg8gH6rIlzw86FSS1zbwhfSoF1OJGecw7GG8ne+e0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737103190; c=relaxed/simple;
-	bh=RmI/SvTohP+pfTEfaWJxFe1M7/+Gp3uh0nXTvWxppX0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=EeXlbTmJi4v+tnUSUnaacD0VGYY5xrPTpTOjbK7RJas7zzZxXo59oK31Ra/0+RCr5OZ5xtUSh0923OLYF5uglDA32T/Y1nAglYnEvlGAJO2ja5O+zjZM3yYE3YPW54EnkJttoTQxOnaLt1MeSxoDPO+o9xvInx1CZ/HC/vl3Kys=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=oel8crqH; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50H2kKwV022665;
-	Fri, 17 Jan 2025 08:39:44 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	5g8BF3IbtjnjhhJuU0EXM1c5dpi4a1gzVPV+T8iKvho=; b=oel8crqHjKoX4Om7
-	kKbmt7TH3COhdsJoCgkF0vIrtNiF/C/Up8oHQZgHJhYZ1Cqb+aWQhuLB5SI00naq
-	pXevLN8L3K5W2kMP9i5VVI9qYJSD6recl9I8I0u0UIoL11FlfH59+8Ig+LjTERQ/
-	ioZ1JnFriHamyVrtRNR7IAjHC8iP+C25Y1mTOtbnniH+y5BwxGjyluQ8+bdqMI6U
-	/aBLfIYCnC6b6fUadISmMc814ZQPN6/8z1XC6T5RYXAzheo48HjIkejn0ZEcCT2+
-	Oeh3MUEXcIGYSxf22uLX05H7YAsGOu8hjc9wCKYQVdSL5MxE5bjv9kUtCLkIrIex
-	VsszbQ==
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 447eq30rmx-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 17 Jan 2025 08:39:44 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 50H8dhu5000706
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 17 Jan 2025 08:39:43 GMT
-Received: from [10.216.55.47] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 17 Jan
- 2025 00:39:40 -0800
-Message-ID: <7a782ea9-f227-4f46-a757-b4b69f5c287f@quicinc.com>
-Date: Fri, 17 Jan 2025 14:09:37 +0530
+	s=arc-20240116; t=1737104204; c=relaxed/simple;
+	bh=nP4VV30rpvduxunGABbo7dBWD4cMiSH8HcV1Q+o2kbk=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=js1W3VW/PnAikp8MGn0R7ygz32I1rcI9DUagP7EVGXNa603KnEJfhzR7W02GaNeUtHnCmiiKyQdCSw7f76VTpPjajDiIayWWf0r23UxbfuFGRWOOVdHGbxS2H/wB+9awJlawETlpePzd03Gd0HtD+U4qy+wwHeGkU48CGihouko=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=NOEu0u/F; arc=none smtp.client-ip=209.85.208.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lj1-f169.google.com with SMTP id 38308e7fff4ca-30229d5b21cso15995581fa.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Jan 2025 00:56:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1737104201; x=1737709001; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=y0ikR3MG5Dad5PLWtZu4J5E6aw45hxShewolJAGb8WY=;
+        b=NOEu0u/FlxY1dKAAsCwTra0Tc5I+UCLMK9YdBEvYr7XMzR6H6k9JULn9WIUfT1Cffa
+         Ox4PEG50g9+9ZFiswdQDTeTxZ6lHhlrN+R41L/5BiOp20j+LbCAmM5c+3UP6idoU7vZH
+         oszfgdC5TFcU0WYUylU7/NLlkKI0NAUxS7FWztubWzCzmvpYjzAy3+DQnv/F8GbQgb5b
+         9zqbthpRfaTy80BQPCQFyTT1h2h6ZJq9RhiYFC82mwJe5ViNtc0WCycQoAq3B+WsiVut
+         PBGJylKRm9L35UPP69vRRJqZyTKPhFcLlgdtRJvYzqFrOapTvBmEdOsFGA9rEhOHDXG+
+         rd5Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1737104201; x=1737709001;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=y0ikR3MG5Dad5PLWtZu4J5E6aw45hxShewolJAGb8WY=;
+        b=AQBXZ9/d/YzNjRgAYjlM2UaQ1pEoSrdBD5yafsLMd1f47zyFwLa9Ll6aQKZzlGIfwK
+         aZ7K7CmY+50c/q8pNa/TUYK1axOW5/PHZblYIGBN9dV8S+2JyypUfftRwNI7xGF1p83i
+         IrnBZ9guuGd6sWKY45rpDU8OFn+XcJBs0i9pGOwcwA/af7suYEFmsxzGSRYAcp9C9p1G
+         WdU8+ex7gVmg/jcmie+uBXVO7sj3ByBxEnfmynWRxJZ3nxyOeNnUwZXy6vR3UR39oKYo
+         t1Y6Z6HxjmFnZWs7D+4nucpB/a9hCjX+ZaOCysoad3U/0mlg9kH1yquwXoi4+GWc+bUY
+         SgXw==
+X-Forwarded-Encrypted: i=1; AJvYcCWjDRDqUdDWPY/nIG33mC6omdplPi3uGVD1ohzpGPR5z9hLvl2jhTyaEHB58shqCV0sqUYqoSfeyH+Rzdgh@vger.kernel.org
+X-Gm-Message-State: AOJu0YynSBsjGA5A2fl3P17n2lB3sVtF3d4ONyK0+b9L2LLcvle+PIRd
+	/s/i+g6gzGRh0mE4Ln2BL1Dp7sYtl8f5EVP/MnPlpgWo+11qp+jcaKRGIfk/KrU=
+X-Gm-Gg: ASbGncvtDSKkiU5GOFpSIRYcZ4eIzkvAdlRi9zyll8UXIynLxoHtw1YA04H0F/gGEhz
+	AlRN+z5yoHlZFqFJkxEIuNoh/Ivcf1rgevQUhOch8U1fcMaWXp9XE6kXymSy93NwX6cvqXmd2y2
+	3icuUCrnSQfNiz+94AVbztcbl6VSoBqVRUrmf4e24khxG7PmXhVIKxHeu/g3Tbo6TqXS5ZKBGZh
+	ERomJz0nh0PT5vEFQQbB9LG3XtKvyYNpbGpK9dRdysmy+FjN6zikuBo8Dhrzs8f
+X-Google-Smtp-Source: AGHT+IHFY25drW5Lw2ZVshUT8i1rMR2KHN40GDh6zDnX9NGy7k5yQuInYG8L/p0IYq+WtTkiEafV6Q==
+X-Received: by 2002:a2e:a265:0:b0:307:2ae8:14b with SMTP id 38308e7fff4ca-3072cacabd5mr4867911fa.12.1737104200598;
+        Fri, 17 Jan 2025 00:56:40 -0800 (PST)
+Received: from umbar.lan ([192.130.178.90])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-3072a330764sm3402101fa.3.2025.01.17.00.56.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 17 Jan 2025 00:56:39 -0800 (PST)
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Subject: [PATCH RFC 0/7] drm/display: dp: add new DPCD access functions
+Date: Fri, 17 Jan 2025 10:56:35 +0200
+Message-Id: <20250117-drm-rework-dpcd-access-v1-0-7fc020e04dbc@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] media: venus: fix OOB access issue while reading
- sequence changed events
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Stanimir Varbanov
-	<stanimir.k.varbanov@gmail.com>,
-        Vikash Garodia <quic_vgarodia@quicinc.com>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>
-CC: <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <20250104-venus-security-fixes-v1-0-9d0dd4594cb4@quicinc.com>
- <20250104-venus-security-fixes-v1-2-9d0dd4594cb4@quicinc.com>
- <2b0528f5-f9fa-4cfd-abda-a0e95ba4a2f1@linaro.org>
-Content-Language: en-US
-From: Vedang Nagar <quic_vnagar@quicinc.com>
-In-Reply-To: <2b0528f5-f9fa-4cfd-abda-a0e95ba4a2f1@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: f6KKJobMGCSswGsA6MNgxz21IVTQhjWA
-X-Proofpoint-ORIG-GUID: f6KKJobMGCSswGsA6MNgxz21IVTQhjWA
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-01-17_03,2025-01-16_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 adultscore=0
- malwarescore=0 suspectscore=0 clxscore=1015 mlxscore=0 spamscore=0
- priorityscore=1501 mlxlogscore=999 impostorscore=0 phishscore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2501170068
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAEMbimcC/x3MQQqDQAxA0atI1gacUSy4LfQAbsWFJrGGUpUEW
+ kG8u4PLt/j/ABdTcWiyA0x+6rouCSHPgOZheQsqJ0MsYhViGZDtiyb/1T7IGzEOROKOYzFRlOr
+ BdSghxZvJpPs97qB9PaE/zwu8bAqObQAAAA==
+X-Change-ID: 20241231-drm-rework-dpcd-access-b0fc2e47d613
+To: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
+ Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+ Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, 
+ Jani Nikula <jani.nikula@linux.intel.com>
+Cc: dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
+ linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1984;
+ i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
+ bh=nP4VV30rpvduxunGABbo7dBWD4cMiSH8HcV1Q+o2kbk=;
+ b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBnihtE7QvRxYCJ8RauLnkCML+SkHt7cVuLLC0Ji
+ Orr8qLbQPSJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZ4obRAAKCRCLPIo+Aiko
+ 1dwnCACEdI8fIo784cI7usBp7nXSWiMDaIt9E8T5+m1FE4EeARrYjouNWNKnDV0m/yUFOHqfyM6
+ Y0KoZRuABDGps8N6ZXbX5YtfwAau409DiIEv62yELDA2ENp776PZ1LNcXG2nTQ5Vuz6SIC/A8oH
+ MrE8/0T54dqOVZgjYU6oFdoTyVQAvwK4xqk4bDRbI84rQ/tHznrq/Nkzij4KzQ+KOjM/RB5RT6l
+ Wmrac3yaT2WHjuVhr4FCZ2ukZIHpIXINoz4HP9SrquYJO8h+i0UXDOLO2g7dL4b4r3Ktg2HTETE
+ NT2EN92LHPs/CEd/qc/W+vxoGjaTmiboJ1aGo6fwxGw0jubz
+X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
+ fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
 
-Hi Bryan,
+Existing DPCD access functions return an error code or the number of
+bytes being read / write in case of partial access. However a lot of
+drivers either (incorrectly) ignore partial access or mishandle error
+codes. In other cases this results in a boilerplate code which compares
+returned value with the size.
 
-On 1/6/2025 5:36 AM, Bryan O'Donoghue wrote:
-> On 04/01/2025 05:41, Vedang Nagar wrote:
->> num_properties_changed is being read from the message queue but is
->> not validated. Value can be corrupted from the firmware leading to
->> OOB read access issues. Add fix to read the size of the packets as
->> well and crosscheck before reading from the packet.
->>
->> Signed-off-by: Vedang Nagar <quic_vnagar@quicinc.com>
-> Please see Vikash's series on this.
-> 
-> https://lore.kernel.org/linux-arm-msm/20241128-venus_oob_2-v2-2-483ae0a464b8@quicinc.com/
-> 
-> it seems to have exactly the same patch title ?
-> 
-> Is this patch supposed to be a follow-up to that patch ?
-> 
-> https://lore.kernel.org/linux-arm-msm/20241128-venus_oob_2-v2-0-483ae0a464b8@quicinc.com/
-> 
-> Expecting to see a V3 of the above. If the intention is to supersede that patch or some of those patches you should make clear here.
-No, this is a different series having OOB fixes similar to ones posted by Vikash.
-> 
-> On the switch statement I'd have two comments.
-> 
-> #1 is everything really a " -= sizeof(u32)" ?
-Yes, it's everytime " -= sizeof(u32) " since the first the first word read is ptype of size u32
-> #2 if so then this ought to be factored out into a function
->    => functional decomposition
-Sure, will fix this with decomposition into functions.
+As suggested by Jani implement new set of DPCD access helpers, which
+ignore partial access, always return 0 or an error code. Reimplement
+existing helpers using the new functions to ensure backwards
+compatibility.
 
-Regards,
-Vedang Nagar
-> 
-> ---
-> bod
+This series targets only the DRM helpers code. If the approach is found
+to be acceptable, each of the drivers should be converted on its own.
+
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+---
+Dmitry Baryshkov (7):
+      drm/display: dp: change drm_dp_dpcd_read_link_status() return
+      drm/display: dp: implement new access helpers
+      drm/display: dp: use new DCPD access helpers
+      drm/display: dp-aux-dev: use new DCPD access helpers
+      drm/display: dp-cec: use new DCPD access helpers
+      drm/display: dp-mst-topology: use new DCPD access helpers
+      drm/display: dp-tunnel: use new DCPD access helpers
+
+ drivers/gpu/drm/display/drm_dp_aux_dev.c      |  12 +-
+ drivers/gpu/drm/display/drm_dp_cec.c          |  37 ++-
+ drivers/gpu/drm/display/drm_dp_helper.c       | 345 +++++++++++---------------
+ drivers/gpu/drm/display/drm_dp_mst_topology.c | 132 +++++-----
+ drivers/gpu/drm/display/drm_dp_tunnel.c       |  20 +-
+ drivers/gpu/drm/msm/dp/dp_ctrl.c              |  45 ++--
+ drivers/gpu/drm/msm/dp/dp_link.c              |  17 +-
+ include/drm/display/drm_dp_helper.h           |  81 +++++-
+ include/drm/display/drm_dp_mst_helper.h       |  10 +-
+ 9 files changed, 354 insertions(+), 345 deletions(-)
+---
+base-commit: 440aaf479c9aaf5ecea9a463eb826ec243d5f1cf
+change-id: 20241231-drm-rework-dpcd-access-b0fc2e47d613
+
+Best regards,
+-- 
+Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
 
