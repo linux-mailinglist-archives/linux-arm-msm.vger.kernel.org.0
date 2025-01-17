@@ -1,137 +1,121 @@
-Return-Path: <linux-arm-msm+bounces-45365-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-45366-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4F871A1488D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Jan 2025 04:40:00 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 37FCCA148A8
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Jan 2025 05:01:29 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id AC7CA188CCD0
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Jan 2025 03:40:03 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 90A83188AFF7
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Jan 2025 04:01:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 26BFA1E1A32;
-	Fri, 17 Jan 2025 03:39:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7B1531F63E6;
+	Fri, 17 Jan 2025 04:01:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="dcUSrJNP"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ACQ8smAi"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f46.google.com (mail-lf1-f46.google.com [209.85.167.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D6F625A620
-	for <linux-arm-msm@vger.kernel.org>; Fri, 17 Jan 2025 03:39:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F26E8B67F;
+	Fri, 17 Jan 2025 04:01:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737085197; cv=none; b=qi2x64MAWZT8pR7dwzc4EQZ7Ev2BN4n83zErENHplIUI6ZwjBUpqNXX9GtRvrk4KJFrD03v2YIiYgqfInG4FJN3CBLUQBac3r2pyn6roq4bj1S3E5IT6XalTY+cc2J4cb21ttDTgEF/1H8FOrF6E0aVWQCHOwC1GU9z1yUXu6/c=
+	t=1737086483; cv=none; b=lBqHP9DPNcbe3fbsJalDnDSK+DI/XXTMMbI/qlg+xukyIscLxJCgl8dVZzdJd2ss5ii18Qe0Q69lC5cWXX0/jqKsvih8bA/tryL0rRRrEsm7vRsaXr39ufTlx6S4ENQUbMh4IrFUQ5ganmIjkIHl3ElwQx1vDz86uMiWl4mTZPg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737085197; c=relaxed/simple;
-	bh=YO3rR3i4AqRQEhLdRWNd1n2F0EvVcKB4ZP0pZMv8aKE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=B9h4cJ/ruWg1LpraxOJWA3uJHTYe5djcuausoyNjqAlnKct655UInZsYtNrUlSiQpziu1GsMmESClZxhG7GhV6MV9igbDxwPkkVdCITWye3zz9r/Yg3XBp1U57UX4yKKzXbXwJQvBeJ+kZt/Wts7Vo4rt26lUgZ5NBNEfI/+BEQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=dcUSrJNP; arc=none smtp.client-ip=209.85.167.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f46.google.com with SMTP id 2adb3069b0e04-5401bd6cdb4so1756329e87.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Jan 2025 19:39:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1737085193; x=1737689993; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=a0KmIpWhOnmvP2/79nQLTbunQC6aY9KWQAhT4oyikpE=;
-        b=dcUSrJNP88k4DsXEEvk5WYKyB2AniOInEnQhsRQznFrjYF7NY211oQ010cI6tFq8DR
-         ssA9ohBhOpxVurDHlHfgihZ5pbPTPkxgaXh58LSt+7/LxZB5U2MZJ3l+2ioMqDaYvael
-         PrUBfO7vCv3qMKq1IO3Nwx14IHedR3Ny81RrSNm+BmItqA/PxTk/f3uQzV73WpZM3MCh
-         6iJMB4gVTrJltB2YeqbNZnjU5DPZAmorL0e/ZTyv9G8v2OA5ol9cbnsOAoskPXOCCT8s
-         vq0mcjIEdiD7IXbPrPiuXgDJ6+K0eJ/sgpEwncfKbmuxWt5w11ZUhHuxOkFtVPQEwOcJ
-         z7DQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1737085193; x=1737689993;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=a0KmIpWhOnmvP2/79nQLTbunQC6aY9KWQAhT4oyikpE=;
-        b=byVPCy84VbNK4/Hyfw082Vj1rqebaZ0n+r5VGlFw9yAo56m4xj5wYqGhNTvbpKIiM3
-         jEXCgu122TDxGKKNeOTQOMkqJnbqABWvNrscCOZDrLKwk9PrPMi9v9bEGnBpwGuqHnSY
-         uOk8/X+ttAbE/7d3b9TLxlZM+hMhlitMsUn6YT/yd84Vb0DxinR5sikzNZQC9ej7rePb
-         RJPx6aQSplrSCM2z5GxXjeIhvqQy1xVt5XUwwxoX2fBbKy5KhlT3IofsR6tPPpOGiQeF
-         UOH5GKwJGKkyVr43BMoIh8me3cH2jtoNQUIttnGZFcmcx35ZrI+95XIOdUJjNlfyonzK
-         vAcA==
-X-Forwarded-Encrypted: i=1; AJvYcCUx028qJao4BkyFhGhZDXg6smlzi9qDijMwQSsZYcO30FiWGriIAgAIm8df7teQFcdwStsl/me2Ok9ahhHS@vger.kernel.org
-X-Gm-Message-State: AOJu0YyXEHcnHE+Bw7qB/yOGUyTW22rtyNZfRJHRwlFevn/Qtoh8Bmgh
-	dCAlggYFmBJwPd4L77B1ncnJViB4Y28I2pfQisKAic1ASJbCUWck3Hd0TvGBAQE=
-X-Gm-Gg: ASbGncuqiJfcHmJ+p0AcxRgTlmkwYIZpq2snMda8Heluen+cPmirX/KKdIJuBzL28xI
-	4IOeGN8XNr+2EebcbayKjIiURVWynXjkseSZsCWC0MEHtiV331l2M7rWdoi3RDY6LVaNH1S0nWW
-	LX2QyMzQZBkRJlUNSv2siNoHkx8E27rKCGs4x+qrAD09KWc/KMIkQO7C3oYATXAqnTZ8jrRbzA4
-	Qzoj7v6Wk2dlgBH6/m559FMtJaz2gB+ryNWHDK6Ku8bIwF1uB7Pp2lUQnvj1F5saO5cd26BcRMT
-	IZPSLwP4ihYjVWYthCkznLB7ePjMD88ulJZ0
-X-Google-Smtp-Source: AGHT+IG1i+XsSg4L26hUUv4AYoaCV/mK4bj6NtE/PFeG94iR1Z0kvDv6pvax9G0WjZar1+ZiQ+L9PQ==
-X-Received: by 2002:ac2:54b5:0:b0:542:249c:215f with SMTP id 2adb3069b0e04-5439c22a8f6mr186133e87.4.1737085193491;
-        Thu, 16 Jan 2025 19:39:53 -0800 (PST)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5439af60992sm191506e87.155.2025.01.16.19.39.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 16 Jan 2025 19:39:52 -0800 (PST)
-Date: Fri, 17 Jan 2025 05:39:49 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Jun Nie <jun.nie@linaro.org>
-Cc: Rob Clark <robdclark@gmail.com>, 
-	Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
-	Simona Vetter <simona@ffwll.ch>, linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
-	freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v4 14/16] drm/msm/dpu: support SSPP assignment for
- quad-pipe case
-Message-ID: <tae55nwbytxtmskvlelwkldy6tkgurr3mxocpfdhvniuiduxb4@qosnxo2dseu2>
-References: <20250116-sm8650-v6-13-hmd-deckard-mdss-quad-upstream-33-v4-0-74749c6eba33@linaro.org>
- <20250116-sm8650-v6-13-hmd-deckard-mdss-quad-upstream-33-v4-14-74749c6eba33@linaro.org>
- <kqrea3es5bwyofk3p3l26wj2iswvfqadwehusfpj4mssgawdos@wombtx67llyc>
- <CABymUCPn=u8jr_OTFwB-WBjj2nNgBeTyH5b=PvF5vLrDhCxr3Q@mail.gmail.com>
+	s=arc-20240116; t=1737086483; c=relaxed/simple;
+	bh=IaoP05f0zh0Xis0KyriM4CA8A8KSmsTi/urMLrxFSVo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=og3OUgpnxN/V0pWqxwP1b2d24FY1hAv/HC4X3tLEiFrcAcTj0Ga0n4VhEdGUEwrwX2Zak8aLkZYzCzrW0QM5mEumuHGAIR2xNRZ8uYVrrnQjyNF4sKiO+xwIjR280SWMJxGlOozCklBNwq/3hY0mNUPmggMk8e4pbW6BYXvDXsM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ACQ8smAi; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50H1sSiH012464;
+	Fri, 17 Jan 2025 04:01:15 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	SEwMYzQzLGpWYNbsk106OsKba0yHpQIdRtjiuRg3qDc=; b=ACQ8smAi3fGTHS58
+	7uEibGh4DC9+QfLY/tqqua0AfBabe8M9CT09ebOK4ui1l/0I7IZubwGzxVJzOKOq
+	zrhPH24gODi+282Hgu26qChe4IZAxZ6RNR/znrVG2LL9ygtbIBhzQY6pBXVCbDv9
+	KSO92Fax2p6B3LUMxuDpH5emB+IyWh91nm8sthP0otUGNVLWzjv3zZSpOcmibrPK
+	BL0Xj0EVkEPlcRPYoFfDkJZFuTTm4AKDO7+YxffOfYy2a4jWwboGCdAEDTlMAJDd
+	z9hgtIoGEVpFRGcY4e/E7F1B2TZWldsOI9kORQbo/yQ6aIy5uq4SlN8Hhk7ERSHR
+	WaqNtA==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 447dy4g7wr-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 17 Jan 2025 04:01:15 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 50H41Ej4004598
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 17 Jan 2025 04:01:14 GMT
+Received: from [10.231.216.103] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 16 Jan
+ 2025 20:01:11 -0800
+Message-ID: <b121536b-5c56-4e5f-a5ec-d5bd844057c9@quicinc.com>
+Date: Fri, 17 Jan 2025 12:01:09 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CABymUCPn=u8jr_OTFwB-WBjj2nNgBeTyH5b=PvF5vLrDhCxr3Q@mail.gmail.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 3/3] venus: pm_helpers: Remove dead code and simplify
+ power management
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC: Bjorn Andersson <andersson@kernel.org>,
+        Michael Turquette
+	<mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Stanimir Varbanov
+	<stanimir.k.varbanov@gmail.com>,
+        Vikash Garodia <quic_vgarodia@quicinc.com>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Mauro Carvalho Chehab
+	<mchehab@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-media@vger.kernel.org>
+References: <20250115-switch_gdsc_mode-v3-0-9a24d2fd724c@quicinc.com>
+ <20250115-switch_gdsc_mode-v3-3-9a24d2fd724c@quicinc.com>
+ <a6qhm6viuldidhtc32l7qajx24yh6wrntxi63jm4n4cvp7ktmu@sum7w5cwpbms>
+Content-Language: en-US
+From: Renjiang Han <quic_renjiang@quicinc.com>
+In-Reply-To: <a6qhm6viuldidhtc32l7qajx24yh6wrntxi63jm4n4cvp7ktmu@sum7w5cwpbms>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 4q63wQ2ULeZb5gZ2oTbbhm1-iRFJbNQq
+X-Proofpoint-ORIG-GUID: 4q63wQ2ULeZb5gZ2oTbbhm1-iRFJbNQq
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-01-17_01,2025-01-16_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 adultscore=0
+ suspectscore=0 malwarescore=0 lowpriorityscore=0 spamscore=0
+ priorityscore=1501 bulkscore=0 mlxlogscore=793 phishscore=0
+ impostorscore=0 clxscore=1015 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2411120000 definitions=main-2501170027
 
-On Thu, Jan 16, 2025 at 10:22:07PM +0800, Jun Nie wrote:
-> Dmitry Baryshkov <dmitry.baryshkov@linaro.org> 于2025年1月16日周四 16:18写道：
-> >
-> > On Thu, Jan 16, 2025 at 03:26:03PM +0800, Jun Nie wrote:
-> > > Support SSPP assignment for quad-pipe case with unified method.
-> > > The first 2 pipes can share a set of mixer config and enable
-> > > multi-rect mode if condition is met. It is also the case for
-> > > the later 2 pipes.
-> >
-> > Missing problem description.
-> 
-> Is this OK?
->     SSPP are assigned for 2 pipes at most with current implementation,
->     while 4 pipes are required in quad-pipe usage case with involving
->     configuration of 2 stages. Assign SSPPs for pipes of a stage in a
->     loop with unified method. The first 2 pipes can shar a set of mixer
->     config and enable multi-rect mode if condition is met. It is also the
->     case for the later 2 pipes.
 
-No. It should be problem / analysys/ solution. So, 'Assign foo' should
-become a last phrase.  Also please please perform a grammar / typos check.
-
-> 
-> >
-> > Also, shouldn't this patch come before the previous one?
-> >
-> Yeah, it is reasonable to prepare the assignment capability, then
-> enable the plane splitting into 4 pipes. It does not hurt actually
-> because quad-pipe is not enabled in data structure side.
-> Will reverse the sequence in next version anyway.
-
-Thanks!
+On 1/15/2025 6:01 PM, Dmitry Baryshkov wrote:
+>>   
+>> -	vcodec_control_v4(core, VIDC_CORE_ID_2, false);
+>> +	dev_pm_genpd_set_hwmode(core->pmdomains->pd_devs[VIDC_CORE_ID_2], true);
+> Check for the error here.
+Sure, thanks for pointing it out. I'll update it!
+>
+>>   
+>>   	return ret;
 
 -- 
-With best wishes
-Dmitry
+Best Regards,
+Renjiang
+
 
