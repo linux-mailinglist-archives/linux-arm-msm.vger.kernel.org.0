@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-45375-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-45376-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8CCD1A14A3F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Jan 2025 08:44:21 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id E423CA14A58
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Jan 2025 08:45:28 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id AEB9B16A6EB
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Jan 2025 07:44:19 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5B46A188895A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Jan 2025 07:45:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0378E1F6687;
-	Fri, 17 Jan 2025 07:44:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7EB231F75AB;
+	Fri, 17 Jan 2025 07:45:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="d6D4zDqU"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="A4vPnjZq"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF282155300;
-	Fri, 17 Jan 2025 07:44:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DC6B1F6679;
+	Fri, 17 Jan 2025 07:45:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737099856; cv=none; b=O9/Znm6a6tyrsblN0BkoRf1/5PVhPlVPK7HxLlk9otPUvT/k4IiOyZxTJkvJ14L6abCDPy504KqMzX5q4o5i1SYMeh2sLsSKDaNS3mXkyjDpqWiGCHMkyYg/Yf7SGfQTnljJAH//VArV1PiM+4dFI/yPTpG/Aw7Dkc8i/Y0ij4s=
+	t=1737099924; cv=none; b=VGHh/cnvk49iXaXkH5cXtQAtxYHvYTnLQ2IqIeWkAa2BQZAhpEhb9/8g6Saltde12AJp2asRgttGpiKohsMxpW6LYLLnFDe82WeYQISkqQkGNKWk7y46K1zztfWTIFi9Bqcm7+Wpm+6Og5jD6HOH9NX4gnOhK31AW9hYst9g+WM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737099856; c=relaxed/simple;
-	bh=0hSO/evMTIJGZo0wFc9AQIID7hT4m8vho2x7WLdo16E=;
+	s=arc-20240116; t=1737099924; c=relaxed/simple;
+	bh=PwJGixOrKUpcfEK06xNqnWtQAmBumS63X4h6iYMMMg0=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=l7VxFSy0LNme3DdQ9aFMW6mpw9CSJ6Aisp/VNNKn3EIGr/HvLT5UN1t9KnrEIlkISVDtzpTS8ZJ1rH13dPLubQ6S33A9g/sIlaEGMLUn8twQnooId6UGikD5GNdGFGoCPZKzKfLq3dCig8NwTnL0IABBzu1zesTeqY8c/jIEXtg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=d6D4zDqU; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6ACA5C4CEDD;
-	Fri, 17 Jan 2025 07:44:11 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=hF+BTE9NjhE8GWACeDsNR5GYY637U+e8D6hgP4Gu7SddEcIAfCBE1H/ndD1Sq4q0obE4Y3NShcykoeYFF5npGoPX4CPdqt3CNpckOWYdBEpRci81bNv1gBz6RcGEPh4/P5blzTK3HUM+FL2UJHYBJa+vrKWvmor3Qq3m2nIm3Tw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=A4vPnjZq; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20D50C4CEDD;
+	Fri, 17 Jan 2025 07:45:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1737099856;
-	bh=0hSO/evMTIJGZo0wFc9AQIID7hT4m8vho2x7WLdo16E=;
+	s=k20201202; t=1737099923;
+	bh=PwJGixOrKUpcfEK06xNqnWtQAmBumS63X4h6iYMMMg0=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=d6D4zDqUbhGRW15Mnn4YmYD1BFS0zmrIjTUUDtYHb+KV8bGy7NQa8vcisF4ePIczJ
-	 ZzakZ0B+6l7aiCJWL+TxDgfchFqE5MeIZn8BguCQGNFM1xvtw/i7duLOh3XceKVXem
-	 4GZTH5zfZ2uJfu7Hs/TTWUCOsFZwDvpyPlErGdR/Kl0i0L1PZiF6ppfE32Vy1ZKLZo
-	 F6cFNq7QiLGSJ/HXCzPvpOOFoJ6YiEXHSCqt4FVxr8faHLWCLtA9ghRbuz6M1qGms8
-	 G+/YdsjmmTqhr2fLr7Ce/S4szFGFtQJQjX09zgE+g6+D4jvL2jzgz5mVuJzfFOJZNz
-	 sERGwXxm6x/5Q==
-Message-ID: <5462e7e2-cddd-478f-8cfa-ea5772abe99e@kernel.org>
-Date: Fri, 17 Jan 2025 08:44:08 +0100
+	b=A4vPnjZqIPKsS+yylZHeNtbSrIHnu1MJ9STIV6gmvex2vGCKld3TqoqgxeZafOWo2
+	 Q7BvM1mJ5F2X5Ouk90rrtjQZJfWrbCBNr8akTOsVfcQf2MebsCJudvsTx4qgyfi8hW
+	 e2hz/7+5xIbFMhqvBVqMop285wY+PWfZmHXM0wXg7N6RLqZlVWnIU7g8OYN0mnRHtK
+	 QjOA5TC+8NgPdsWcj9+KJCCvWYALUfQPQRG0JcDqMhDD54SrScT7Lc+ntn4ypSHVCk
+	 LFSri80Iq1nW+W8lFhrvjGA9HPk6QdwRtlSgMbZ0K5B00nHh01ZsU/AF/bHef7BUaF
+	 kFJpqmLS7ifFw==
+Message-ID: <30f3701b-86ea-40ee-afe4-b85578c7e4a8@kernel.org>
+Date: Fri, 17 Jan 2025 08:45:17 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,8 +50,7 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/4] scsi: ufs: qcom: fix dev reference leaked through
- of_qcom_ice_get
+Subject: Re: [PATCH 4/4] soc: qcom: ice: make of_qcom_ice_get() static
 To: Tudor Ambarus <tudor.ambarus@linaro.org>,
  Bjorn Andersson <andersson@kernel.org>,
  Konrad Dybcio <konradybcio@kernel.org>,
@@ -64,9 +63,9 @@ To: Tudor Ambarus <tudor.ambarus@linaro.org>,
 Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
  linux-mmc@vger.kernel.org, linux-scsi@vger.kernel.org,
  andre.draszik@linaro.org, peter.griffin@linaro.org, willmcvicker@google.com,
- kernel-team@android.com, stable@vger.kernel.org
+ kernel-team@android.com
 References: <20250116-qcom-ice-fix-dev-leak-v1-0-84d937683790@linaro.org>
- <20250116-qcom-ice-fix-dev-leak-v1-3-84d937683790@linaro.org>
+ <20250116-qcom-ice-fix-dev-leak-v1-4-84d937683790@linaro.org>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -112,23 +111,28 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20250116-qcom-ice-fix-dev-leak-v1-3-84d937683790@linaro.org>
+In-Reply-To: <20250116-qcom-ice-fix-dev-leak-v1-4-84d937683790@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 16/01/2025 15:49, Tudor Ambarus wrote:
-> The driver leaks the device reference taken with
-> of_find_device_by_node(). Fix the leak by using devm_of_qcom_ice_get().
-> 
-> Fixes: 56541c7c4468 ("scsi: ufs: ufs-qcom: Switch to the new ICE API")
-> Cc: stable@vger.kernel.org
-> Signed-off-by: Tudor Ambarus <tudor.ambarus@linaro.org>
-> ---
->  drivers/ufs/host/ufs-qcom.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
+> -EXPORT_SYMBOL_GPL(of_qcom_ice_get);
+>  
+>  static void qcom_ice_put(const struct qcom_ice *ice)
+>  {
+> diff --git a/include/soc/qcom/ice.h b/include/soc/qcom/ice.h
+> index d5f6a228df65..fdf1b5c21eb9 100644
+> --- a/include/soc/qcom/ice.h
+> +++ b/include/soc/qcom/ice.h
+> @@ -33,7 +33,6 @@ int qcom_ice_program_key(struct qcom_ice *ice,
+>  			 const u8 crypto_key[], u8 data_unit_size,
+>  			 int slot);
+>  int qcom_ice_evict_key(struct qcom_ice *ice, int slot);
+> -struct qcom_ice *of_qcom_ice_get(struct device *dev);
+>  struct qcom_ice *devm_of_qcom_ice_get(struct device *dev);
 
-Your cover letter should mention the dependency on the first patch.
+So this explains why you did not export the put(). Mention the reason
+for missing put() in the first commit.
 
 Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
