@@ -1,161 +1,131 @@
-Return-Path: <linux-arm-msm+bounces-45391-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-45392-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id F09CCA14D63
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Jan 2025 11:17:14 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id B4DFFA14D7C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Jan 2025 11:25:35 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 1ED2B7A0464
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Jan 2025 10:17:06 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 27FE03A6D26
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Jan 2025 10:25:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 920EE197A92;
-	Fri, 17 Jan 2025 10:17:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BC8E01FCCE6;
+	Fri, 17 Jan 2025 10:25:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="cL19o9w+"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="xjkQqZwu"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f176.google.com (mail-lj1-f176.google.com [209.85.208.176])
+Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA0A61F63D6
-	for <linux-arm-msm@vger.kernel.org>; Fri, 17 Jan 2025 10:17:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03C1F1FC0FC
+	for <linux-arm-msm@vger.kernel.org>; Fri, 17 Jan 2025 10:25:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737109029; cv=none; b=TqpMw6QM/tpxPE+wOUtQ2xWK78hlyuAzquUk2FUGpBtdKpT3Xwzr7jAlnxQXekgGvQ5akT+vfJZH1WBZaw1c6azlsr4RRS3naqW7p3WTMZaebqztN/6kFiSoNvZ7exn67NF1yVzBUzGT5L53cX7FWf87FePiKBgEUH/rY1Ii7G0=
+	t=1737109523; cv=none; b=ZRCvki2BMf3uE8kE8o2r0s+a3JIVLuoYCVqV8oto2cgbMPKrSMSJIHgQ24/UEOlXxkxkCMUVVLeDFNk+0KDlQpmpbjCrTn1QciCzSay80N1VbccLlrtc0oO7+sISyPUrkap/NlBDTjCy8oojHIOv+de45ozsgddioxo15dzLiTk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737109029; c=relaxed/simple;
-	bh=/HEbNf1Ro9YgF4R1T7Nvqh0UP1b8QAiB/ETowmozyXo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=pgI+KPoo1b3d6cJBkRCL7urkzhMY15ojE6drR9AIdroGhOkdojt6wvO2UX0Vm9mR6j0sb/DtiImUhnUaBiTi7BWw8g3J/dlVpxnnvWwf0lFy2FtHFoNhxB4BOqkjw+Ivx0r4FGLBnlQapDsHsxAz8WR0l7OUvlx1bJNLwxtHe9E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=cL19o9w+; arc=none smtp.client-ip=209.85.208.176
+	s=arc-20240116; t=1737109523; c=relaxed/simple;
+	bh=q/nN/WiCZeyxTX8vPRtvY+0LU60DeiKLc5hOr1qUdFg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=JlIvfSUrrRacKNu2MDbW44/VsJHxMHcT7yVjQna/p+fOEi1LKc461Fkh8F1+Zlb0nOfMMwJ4LCFyUUwuSWHaB+UCglDsTNwSsQmD5JnZ/moekQK7a7F6Q/mr2tTiYDB8SX+jEoWbmIIzSodzi4BC6EKqe93O/l+qPp2LRRDEYsw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=xjkQqZwu; arc=none smtp.client-ip=209.85.128.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f176.google.com with SMTP id 38308e7fff4ca-3061513d353so19123511fa.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Jan 2025 02:17:07 -0800 (PST)
+Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-4361dc6322fso12171175e9.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Jan 2025 02:25:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1737109026; x=1737713826; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=UCME0WrlU1H0nyJTDCQLugSxkWOknxDVprqMSMXYaGw=;
-        b=cL19o9w+XGzc8/lPWnweD4ln2v7UqJ3n5xU+2pywfIxRkpD0P+Yp4kGF1HnR7rGgsJ
-         RsVWEMGS80nYuo0RfaqMqjC9yGTXvqFSzSMM7cHKp2gEO05Ko73eHpHAbWOu90ZgdscT
-         tPU9A+dOsqlN6k7q7OlQWbV0zREIAfZvHdbS42wFV6iJLfIPNZZqT6J6UDUrddOTu+2u
-         0J0P0AoITCs8Ck6yeB25DmjlSRetHOYnUF80Gd4BuNKiXB43Rncpn3tO2AXMldA0vFM3
-         WrD2dE9pWcRrIvdqgmBBmwVd3nt702BBAa8k7CMNySxULuDq15rEs7dC7tkfK0YGqoKW
-         LRHA==
+        d=linaro.org; s=google; t=1737109520; x=1737714320; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=AuyZog7HTl0jURH59KuN4aP3Mv7PVs0SAeDjI1tKXiA=;
+        b=xjkQqZwuW+5djwjo5/P1a/wlQG87HRFtgs6PUAJySqXcLkfXibIw8VDZb9Gh8imZaj
+         /PxCf/ddvJ5qaeWuFzvBKUHRS9Rf2gbwvosjK/con73fHpOo9jl/tYvYfJaU3Dj6wN1s
+         HHEeTtlt5XxI2WMVroZ2FLJK4lhYEG+q61u8831CLjdak5yMsSzIShOKEQQxWckRIwZz
+         gWNAJSjLaS2Qo5PpHpdhbSVPEyLqAgBDfHHX/9zlfQ+wzhSGrvW+H7XiFcuslVMqT/Ip
+         TB7c6CZlH181b2bNmB4IMSPGBLt0fvmPL4sd2h7IIg2H2UMna8PFCL9Ncv0imric4xDf
+         Z8EA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1737109026; x=1737713826;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
+        d=1e100.net; s=20230601; t=1737109520; x=1737714320;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=UCME0WrlU1H0nyJTDCQLugSxkWOknxDVprqMSMXYaGw=;
-        b=o8QDK9UIntWlWuBzgUltx1nTTeCIzTOQxYpSWoP+tXD9krjPxzlZxlNdjrrd3rdNHB
-         vl6wfrV00R5LgDvTWYyzNHkny8cofXPcw5SedqQtBhwFkx/ms+sYLanfaHwzF8ssMPeI
-         lI9ys0q8w3vj4AVBKlJf6ikL4gFrtp51uLMw/A1+fHZj2+XBcIDRD8eGjAadF/lznx2n
-         8++9oJUZuqwrEqNwg7xXIIrKB2a/8J0UHAuoRq8Q4pffOLGo56eUAFi649T+D99lZ3dH
-         9DtcyJcg+OXYGhzcks/gqX7yMC1W8yOgvxyEfCXizgc7MdNqG6LccftE8Qqqi4IaUuza
-         K4Fg==
-X-Forwarded-Encrypted: i=1; AJvYcCWCqvGakZA7nXqszZ5LcFlSl5Do8Q38MldcSPduHP7PQJePWqQ660rmEKwn+AE936Rt67e6jWL8zRaoO8Wg@vger.kernel.org
-X-Gm-Message-State: AOJu0YyR49ifWK/BbmskVzdErYsZvQ6n0rFwr1okN0TSziu1ISSg/ydC
-	72Vmz7myHGgeE69cQqJlV0kDBVKMkNmoF0O66VBhNRaPOyf0rdMKnFtmN9e780o=
-X-Gm-Gg: ASbGncsYKD4BwuCzDsNoVhzKYQY4TBbsZaBl1fZbG/MQmzk4nQXZrNSRXEl5aNti9vS
-	VKU2w3ZfYfQr0C3+pFOaFuAH8zJXAsFUwVn096lRVi2zvptuOK8iZVPeCIlShoIUC5nqsiDHJ8D
-	HlPcAvv+kV2cJ7c+o04NqJOrJlkXZOQ5kdCe26e6Fi3HVET2ktqtsKO4WhUtHvDwAUrnusroB8x
-	kgqnpOe2SkRUQYuhpd2g7fYSZdcoQT1p8wwHSHmOLWPx3uJotA2RQPAWqd/Zv2rpO5iOEw1XDKl
-	3KxpQMYWTG+hRkTwfKRWztZF+9SPrQdHybnd
-X-Google-Smtp-Source: AGHT+IF77IBzYQonMfNeuElN1UvWqUjRoXcTNWAo0Nb5IVz/wYH50H38fEarrgL/9qMCoXJ63HVVKg==
-X-Received: by 2002:a2e:b5cf:0:b0:2fe:e44d:6162 with SMTP id 38308e7fff4ca-3072cb0def3mr6912161fa.26.1737109025888;
-        Fri, 17 Jan 2025 02:17:05 -0800 (PST)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-3072a35a919sm3625971fa.54.2025.01.17.02.17.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 17 Jan 2025 02:17:04 -0800 (PST)
-Date: Fri, 17 Jan 2025 12:17:02 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Yuanfang Zhang <quic_yuanfang@quicinc.com>
-Cc: neil.armstrong@linaro.org, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, kernel@quicinc.com, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v4] arm64: dts: qcom: Add coresight node for SM8650
-Message-ID: <cchokycqaigagaoqbfb5bxt6zq5dd4le7bpirl4lu5em7byqv5@cpjgz5dbsdxq>
-References: <20250107-sm8650-cs-dt-v4-1-2113b18754ea@quicinc.com>
- <be7b0acc-495b-4bb6-91e1-5db8e301503d@linaro.org>
- <28eec718-2950-40b5-b5b7-b4ecb5699a6b@quicinc.com>
+        bh=AuyZog7HTl0jURH59KuN4aP3Mv7PVs0SAeDjI1tKXiA=;
+        b=O3sr98TGgtFJRmJk+VrVGjRMY1FUtBOhXJ4HAxBK2gk/QofLGCiedEK69F6gupkX7H
+         QyUDjj9gs845DDKC+f/fQrgWJNQF4P3iASXbCHgpe0Lk+7D48wks3lAH3ifX1E0u75yb
+         sRApuHBrkF9balhvZPgmSyprLd2Na9u+ZxbU1rsnoDCUXe3KRCA5iLZBrMlhdpdfb78z
+         Ur2krRq2NAzqwiV5FiGpCX+y64pWynj4MEpOjYD9cxPCIjzSHs/IFbbybHNzxn3fSU8l
+         kn5dFnwsxYpqaTgH+pRcRwZxHVwzVkfsHrUZJ9s4YX9qksX4fZidtYKKNH4E1Ymz+CZQ
+         286g==
+X-Forwarded-Encrypted: i=1; AJvYcCWvwUEM4xFAf5drngUPuNXhRXMXc2NosjHXpcdjrelCZE+8W1Ajej1SpA6z1di9pkEDSMtFVegFykhRB2VC@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz/yhmE1gXHMt2mYnMw/aBCqQ3PwjGmLIV993P7TgYaJ6tZ6zQN
+	WCB83AAEL1+NobzEa31f01OCze0MoJWoEB4/5VwciUsKA9mmGw4CJBaDfYg2t8n3r6X5FK7uQXu
+	TIa8=
+X-Gm-Gg: ASbGnctnbelDiE5chLxKrwPgzBr0W/obeDw6YLfuxMlfhKjiZzHnr0Fhsuw+4PuuXFJ
+	0u0IN3gNrbc1wDkrcRYyd6lqhcgoHBghs/Uh1v+kCE86HRN29dH8hwsEzHsNua2sDa5dsQ5m//r
+	iSfOROV7+YSXfcfa3nGn5fEShxfGiqx/iLYhggTiuXnC9mAohEdu1Ke91W9WgFEI9Yetoz45wGs
+	eDwqkO+OnslG4YrrbHjBfOncaxJrsvRKrqHfesksIqil8IWYSDLq9DXniIN+mBqMz/5mw==
+X-Google-Smtp-Source: AGHT+IFMdHIo3hLDXgRf7TiH8FxEI+sqFiJFDa4eqUh4eXr2VBNPBxbAhK8vVgaHtALTy3+mKyBL3A==
+X-Received: by 2002:a05:600c:3149:b0:434:f270:a513 with SMTP id 5b1f17b1804b1-4389144e70fmr19855415e9.29.1737109520209;
+        Fri, 17 Jan 2025 02:25:20 -0800 (PST)
+Received: from [192.168.0.35] ([176.61.106.227])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43890408a66sm29182285e9.5.2025.01.17.02.25.19
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 17 Jan 2025 02:25:19 -0800 (PST)
+Message-ID: <4cfc1fe1-2fab-4256-9ce2-b4a0aad1069e@linaro.org>
+Date: Fri, 17 Jan 2025 10:25:18 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <28eec718-2950-40b5-b5b7-b4ecb5699a6b@quicinc.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/2] media: venus: fix OOB read issue due to double read
+To: Vedang Nagar <quic_vnagar@quicinc.com>,
+ Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+ Vikash Garodia <quic_vgarodia@quicinc.com>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>
+Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20250104-venus-security-fixes-v1-0-9d0dd4594cb4@quicinc.com>
+ <20250104-venus-security-fixes-v1-1-9d0dd4594cb4@quicinc.com>
+ <f18c1277-0d72-4f7c-b325-5f19cfb0ab98@linaro.org>
+ <13259345-02b0-47ff-94a8-530a17c50b97@quicinc.com>
+Content-Language: en-US
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <13259345-02b0-47ff-94a8-530a17c50b97@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Fri, Jan 17, 2025 at 04:20:01PM +0800, Yuanfang Zhang wrote:
+On 17/01/2025 08:39, Vedang Nagar wrote:
+> Below is the first read where dwords is being validated properly with the checks.
+> dwords = *rd_ptr >> 2;
 > 
+> Whereas the same address is being read for the second time:
+> memcpy(pkt, rd_ptr, dwords << 2);
 > 
-> On 1/16/2025 11:57 PM, neil.armstrong@linaro.org wrote:
-> > Hi,
-> > 
-> > On 07/01/2025 09:48, Yuanfang Zhang wrote:
-> >> Add coresight components: Funnel, ETE and ETF for SM8650.
-> >>
-> >> Signed-off-by: Yuanfang Zhang <quic_yuanfang@quicinc.com>
-> >> ---
-> >> Changes in v4:
-> >> - Re-sort these nodes by address.
-> >> - Link to v3: https://lore.kernel.org/r/20250103-sm8650-cs-dt-v3-1-759a3f6a3cc8@quicinc.com
-> >>
-> >> Changes in v3:
-> >> - Move ete0 and funnel-ete to /.
-> >> - Update coding style.
-> >> - Link to v2: https://lore.kernel.org/r/20241210-sm8650-cs-dt-v2-1-cf24c6c9bddc@quicinc.com
-> >>
-> >> Changes in v2:
-> >> - Update compatible for funnel and etf.
-> >> - remove unnecessary property: reg-names and arm,primecell-periphid.
-> >> - Link to v1: https://lore.kernel.org/r/20241210-sm8650-cs-dt-v1-1-269693451584@quicinc.com
-> >> ---
-> >>   arch/arm64/boot/dts/qcom/sm8650.dtsi | 166 +++++++++++++++++++++++++++++++++++
-> >>   1 file changed, 166 insertions(+)
-> >>
-> >> diff --git a/arch/arm64/boot/dts/qcom/sm8650.dtsi b/arch/arm64/boot/dts/qcom/sm8650.dtsi
-> >> index 25e47505adcb790d09f1d2726386438487255824..49d6567fbd2e68b66b517d8d9180c7443f8bf611 100644
-> >> --- a/arch/arm64/boot/dts/qcom/sm8650.dtsi
-> >> +++ b/arch/arm64/boot/dts/qcom/sm8650.dtsi
-> >> @@ -365,6 +365,40 @@ cluster_sleep_1: cluster-sleep-1 {
-> >>           };
-> >>       };
-> >>   +    ete0 {
-> >> +        compatible = "arm,embedded-trace-extension";
-> >> +
-> >> +        cpu = <&cpu0>;
-> >> +
-> >> +        out-ports {
-> >> +            port {
-> >> +                ete0_out_funnel_ete: endpoint {
-> >> +                    remote-endpoint = <&funnel_ete_in_ete0>;
-> >> +                };
-> >> +            };
-> >> +        };
-> >> +    };
-> > 
-> > Why only the cpu0 ete has been added ?
-> > 
-> > And why are the other components (TPDA, TPDM, STM, CTI...) missing ?
-> > 
-> > Neil
-> > 
-> At present, only ete0 is used, and other components can be added later if need.
+> For the second read the value is not validated which may get updated from the firmware
+> leading to incorrect memcpy into the packet and may lead to OOB read access while accessing
+> the packet.
 
-Please describe the hardware, not the usecase. If there are other trace
-cells, please add them.
+So you are saying that pkt points to memory that the firmware and host 
+can simultaneously access.
 
--- 
-With best wishes
-Dmitry
+The question is - if the length value can change between one read and 
+another read - how do you trust the _content_ of the packet ?
+
+Surely the right thing to do is to take a _copy_ of the entire frame and 
+act on that frame exclusively on the host side ?
+
+If I receive a frame, and read length X.
+
+Then I need to re-read that frame because length may now by X+3.
+
+This implies the _data_ in the frame has changed.
+
+What exactly is the valid lifetime of this data from HFI RX interrupt ?
+
+---
+bod
 
