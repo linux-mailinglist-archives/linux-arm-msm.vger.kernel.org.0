@@ -1,208 +1,162 @@
-Return-Path: <linux-arm-msm+bounces-45466-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-45467-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B2F7AA15838
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Jan 2025 20:35:12 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7C78FA15881
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Jan 2025 21:27:19 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0EC103A4228
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Jan 2025 19:35:06 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id A04507A320D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Jan 2025 20:27:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9B6A21B21B7;
-	Fri, 17 Jan 2025 19:34:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 15DD41A9B35;
+	Fri, 17 Jan 2025 20:27:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WePJh3Pd"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7E72F1AB511
-	for <linux-arm-msm@vger.kernel.org>; Fri, 17 Jan 2025 19:34:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0295187550;
+	Fri, 17 Jan 2025 20:27:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737142474; cv=none; b=gLc017Wa3ECQh/9B8Ljd58ijoFtROaWVpZHRVQkN+z5hHfqaIecYwEvcs+6qRdLA2MqmLloXzPeuSMkSzYZGbk1iIYIIn5qmbN+iInZmtA27x3ffrZTlyskC64nwLDEqjcRvbF/4t5kLRJaK44+sesJr98tMcFr75eNksmx3wcI=
+	t=1737145631; cv=none; b=t/UQgskh6Cvet4cxH5FpPbcsVkVV8TMJHEH3/2/m+ZS0GFVToYjKQx78l7ZjNvOGWuzZNIlo1GNCOjpITXbCJo0Oz5IgJm+vMTK/PeTwDYF8ss38fAagJq+2QyhEBNgHGhTv4aZfXmxmYkrOtNtlfb1db1PKTHAOTPFzbcbdn4A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737142474; c=relaxed/simple;
-	bh=1tHrQSGLG+q4auP9qbQlJ95IEIz6kv8rW9SVgpeyH2g=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=qHWhJs6PZSkuUozcVsTe6RsGhjI0/HZH6j6IFHAhtwpvjOTwIW4KOgnBVWO0N3ahvLJaR6qpu0EmJYmbMspWes0P46Vr+YsBasI4d5BIoeCjwV+gl4qEDRb98CgLMjVGX0tW7u9bZAn8gLo2ScnUPDOwXKUUTm+GpTfiE6nP6RM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id D32A01476;
-	Fri, 17 Jan 2025 11:34:53 -0800 (PST)
-Received: from [10.57.7.182] (unknown [10.57.7.182])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 485B63F73F;
-	Fri, 17 Jan 2025 11:34:23 -0800 (PST)
-Message-ID: <64ab28fc-adba-4193-beac-4af482b12699@arm.com>
-Date: Fri, 17 Jan 2025 19:34:20 +0000
+	s=arc-20240116; t=1737145631; c=relaxed/simple;
+	bh=Ct2YwrpPXaoKNAMpYvMgQTLQEkb+M++rRR9iD27FrGs=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To; b=m+S0dKtkOWJa6FpVeRY/NGLQ5+udBaLxlK4zGM8xoTYfy7MdPDnCkjDywzeiBId8SiR+2AvOFaQDQ4FZmTiRmJ2Oyw1NNnto+6yxiWFGC1ZLGaxKTkcS/Bn4ZHP8NghfFe/pM28CabyK921A89bQnwws38JpUoKjnPYstH3LvRQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WePJh3Pd; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23304C4CEDD;
+	Fri, 17 Jan 2025 20:27:10 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1737145630;
+	bh=Ct2YwrpPXaoKNAMpYvMgQTLQEkb+M++rRR9iD27FrGs=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:From;
+	b=WePJh3Pd3VRkENxPcR2AjlfdrFrhh6XiJCNEs5yil1pXBj1r7qSUqyRAAIhUr0tTe
+	 yLw/0awyrdE0kFMpTrQUxFAHKNV6rb8Ld7SwKsxUt+uFTcW2pH5vvZhn3u7a9ZlQuL
+	 E1DiIf54u25Wha4Kcx5n0D2YsLVfey3VtB4rr7wVybECAUi1jWc5IQ8xMvciQsbDW+
+	 fLgcAocAs2EC0a2398UniivYGe/K1iqxkqCzPzhIV8tF7AW9JBL/vS7RIoSWTSvVPq
+	 0ExGWvIVc/F2vO4/QYxNCoCpmiSBVycmx0sYSfTQxlA6ULNVU9ihg+yd52bJtEcQAw
+	 u5f9J7U4tAyCg==
+Date: Fri, 17 Jan 2025 14:27:08 -0600
+From: Bjorn Helgaas <helgaas@kernel.org>
+To: Varadarajan Narayanan <quic_varada@quicinc.com>
+Cc: bhelgaas@google.com, lpieralisi@kernel.org, kw@linux.com,
+	manivannan.sadhasivam@linaro.org, robh@kernel.org,
+	krzk+dt@kernel.org, conor+dt@kernel.org, vkoul@kernel.org,
+	kishon@kernel.org, andersson@kernel.org, konradybcio@kernel.org,
+	p.zabel@pengutronix.de, quic_nsekar@quicinc.com,
+	dmitry.baryshkov@linaro.org, linux-arm-msm@vger.kernel.org,
+	linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org,
+	Praveenkumar I <quic_ipkumar@quicinc.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Subject: Re: [PATCH v5 4/5] arm64: dts: qcom: ipq5332: Add PCIe related nodes
+Message-ID: <20250117202708.GA655559@bhelgaas>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] iommu/arm-smmu: Fix spurious interrupts with
- stall-on-fault
-To: Connor Abbott <cwabbott0@gmail.com>, Rob Clark <robdclark@gmail.com>,
- Will Deacon <will@kernel.org>, Joerg Roedel <joro@8bytes.org>,
- Sean Paul <sean@poorly.run>, Konrad Dybcio <konradybcio@kernel.org>,
- Abhinav Kumar <quic_abhinavk@quicinc.com>,
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Marijn Suijten <marijn.suijten@somainline.org>
-Cc: iommu@lists.linux.dev, linux-arm-msm@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org, freedreno@lists.freedesktop.org
-References: <20250117-msm-gpu-fault-fixes-next-v1-0-bc9b332b5d0b@gmail.com>
- <20250117-msm-gpu-fault-fixes-next-v1-1-bc9b332b5d0b@gmail.com>
-From: Robin Murphy <robin.murphy@arm.com>
-Content-Language: en-GB
-In-Reply-To: <20250117-msm-gpu-fault-fixes-next-v1-1-bc9b332b5d0b@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <Z4dqnr9+MTue3VbX@hu-varada-blr.qualcomm.com>
 
-On 2025-01-17 6:47 pm, Connor Abbott wrote:
-> On some SMMUv2 implementations, including MMU-500, SMMU_CBn_FSR.SS
-> asserts an interrupt. The only way to clear that bit is to resume the
-> transaction by writing SMMU_CBn_RESUME, but typically resuming the
-> transaction requires complex operations (copying in pages, etc.) that
-> can't be done in IRQ context. drm/msm already has a problem, because
-> its fault handler sometimes schedules a job to dump the GPU state and
-> doesn't resume translation until this is complete.
+On Wed, Jan 15, 2025 at 01:28:22PM +0530, Varadarajan Narayanan wrote:
+> On Wed, Jan 08, 2025 at 12:32:35PM -0600, Bjorn Helgaas wrote:
+> > On Thu, Jan 02, 2025 at 05:00:18PM +0530, Varadarajan Narayanan wrote:
+> > > From: Praveenkumar I <quic_ipkumar@quicinc.com>
+> > >
+> > > Add phy and controller nodes for pcie0_x1 and pcie1_x2.
+
+> > > +		pcie1: pcie@18000000 {
+> > > +			compatible = "qcom,pcie-ipq5332", "qcom,pcie-ipq9574";
+> > > +			reg = <0x00088000 0x3000>,
+> > > +			      <0x18000000 0xf1d>,
+> > > +			      <0x18000f20 0xa8>,
+> > > +			      <0x18001000 0x1000>,
+> > > +			      <0x18100000 0x1000>,
+> > > +			      <0x0008b000 0x1000>;
+> > > +			reg-names = "parf",
+> > > +				    "dbi",
+> > > +				    "elbi",
+> > > +				    "atu",
+> > > +				    "config",
+> > > +				    "mhi";
+> > > +			device_type = "pci";
+> > > +			linux,pci-domain = <1>;
+> > > +			bus-range = <0x00 0xff>;
+
+> > > +			num-lanes = <2>;
+> > > +			phys = <&pcie1_phy>;
+> > > +			phy-names = "pciephy";
+> >
+> > I think num-lanes and PHY info are per-Root Port properties, not a
+> > host controller properties, aren't they?  Some of the clock and reset
+> > properties might also be per-Root Port.
+> >
+> > Ideally, I think per-Root Port properties should be in a child device
+> > as they are here:
+> > https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/Documentation/devicetree/bindings/pci/mvebu-pci.txt?id=v6.12#n137
+> > but it looks like the num-lanes parsing is done in
+> > dw_pcie_get_resources(), which can only handle a single num-lanes per
+> > DWC controller, so maybe it's impractical to add a child device here.
+> >
+> > But I wonder if it would be useful to at least group the per-Root Port
+> > things together in the binding to help us start thinking about the
+> > difference between the controller and the Root Port(s).
 > 
-> Work around this by disabling context fault interrupts until after the
-> transaction is resumed. Because other context banks can share an IRQ
-> line, we may still get an interrupt intended for another context bank,
-> but in this case only SMMU_CBn_FSR.SS will be asserted and we can skip
-> it assuming that interrupts are disabled which is accomplished by
-> removing the bit from ARM_SMMU_CB_FSR_FAULT.
-> 
-> Signed-off-by: Connor Abbott <cwabbott0@gmail.com>
-> ---
->   drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 15 +++++++++++++-
->   drivers/iommu/arm/arm-smmu/arm-smmu.c      | 32 ++++++++++++++++++++++++++++++
->   drivers/iommu/arm/arm-smmu/arm-smmu.h      |  2 +-
->   3 files changed, 47 insertions(+), 2 deletions(-)
-> 
-> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-> index 59d02687280e8d37b5e944619fcfe4ebd1bd6926..ee2fdf7e79a6d04bc2700e454253c96b573c5569 100644
-> --- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-> @@ -125,12 +125,25 @@ static void qcom_adreno_smmu_resume_translation(const void *cookie, bool termina
->   	struct arm_smmu_domain *smmu_domain = (void *)cookie;
->   	struct arm_smmu_cfg *cfg = &smmu_domain->cfg;
->   	struct arm_smmu_device *smmu = smmu_domain->smmu;
-> -	u32 reg = 0;
-> +	u32 reg = 0, sctlr;
-> +	unsigned long flags;
->   
->   	if (terminate)
->   		reg |= ARM_SMMU_RESUME_TERMINATE;
->   
-> +	spin_lock_irqsave(&smmu_domain->stall_lock, flags);
-> +
->   	arm_smmu_cb_write(smmu, cfg->cbndx, ARM_SMMU_CB_RESUME, reg);
-> +
-> +	/*
-> +	 * Re-enable interrupts after they were disabled by
-> +	 * arm_smmu_context_fault().
-> +	 */
-> +	sctlr = arm_smmu_cb_read(smmu, cfg->cbndx, ARM_SMMU_CB_SCTLR);
-> +	sctlr |= ARM_SMMU_SCTLR_CFIE;
-> +	arm_smmu_cb_write(smmu, cfg->cbndx, ARM_SMMU_CB_SCTLR, sctlr);
-> +
-> +	spin_unlock_irqrestore(&smmu_domain->stall_lock, flags);
->   }
->   
->   static void qcom_adreno_smmu_set_prr_bit(const void *cookie, bool set)
-> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu.c b/drivers/iommu/arm/arm-smmu/arm-smmu.c
-> index 79afc92e1d8b984dd35c469a3f283ad0c78f3d26..c92de760940ee2872f22dbe1b2519e02766aa143 100644
-> --- a/drivers/iommu/arm/arm-smmu/arm-smmu.c
-> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu.c
-> @@ -457,12 +457,43 @@ static irqreturn_t arm_smmu_context_fault(int irq, void *dev)
->   				      DEFAULT_RATELIMIT_BURST);
->   	int idx = smmu_domain->cfg.cbndx;
->   	int ret;
-> +	unsigned long flags;
->   
->   	arm_smmu_read_context_fault_info(smmu, idx, &cfi);
->   
->   	if (!(cfi.fsr & ARM_SMMU_CB_FSR_FAULT))
->   		return IRQ_NONE;
->   
-> +	/*
-> +	 * On some implementations FSR.SS asserts a context fault
-> +	 * interrupt. We do not want this behavior, because resolving the
-> +	 * original context fault typically requires operations that cannot be
-> +	 * performed in IRQ context but leaving the stall unacknowledged will
-> +	 * immediately lead to another spurious interrupt as FSR.SS is still
-> +	 * set. Work around this by disabling interrupts for this context bank.
-> +	 * It's expected that interrupts are re-enabled after resuming the
-> +	 * translation.
-> +	 *
-> +	 * We have to do this before report_iommu_fault() so that we don't
-> +	 * leave interrupts disabled in case the downstream user decides the
-> +	 * fault can be resolved inside its fault handler.
-> +	 *
-> +	 * There is a possible race if there are multiple context banks sharing
-> +	 * the same interrupt and both signal an interrupt in between writing
-> +	 * RESUME and SCTLR. We could disable interrupts here before we
-> +	 * re-enable them in the resume handler, leaving interrupts enabled.
-> +	 * Lock the write to serialize it with the resume handler.
-> +	 */
-> +	if (cfi.fsr & ARM_SMMU_CB_FSR_SS) {
-> +		u32 val;
-> +
-> +		spin_lock_irqsave(&smmu_domain->stall_lock, flags);
+> This looks like a big change and might impact the existing
+> SoCs/platforms. To minimize the impact, should we continue
+> supporting the legacy method in addition to the new per-Root port
+> approach. Should we take this up separately? Kindly advice.
 
-No need for _irqsave - if this IRQ handler could preempt itself, locking 
-would be the least of our worries ;)
+I just meant to change the order they're listed in the binding, not
+add any new device stanzas.
 
-Also I'd be inclined to just use cb_lock for this rather than add a new 
-one. I guess there's an argument for granularity, but there's also an 
-argument that CFIE manipulation is just another context bank operation 
-which needs serialising against itself, and significantly rarer than the 
-others we have already.
+E.g., maybe it could be arranged like this, where things that apply to
+the Root Complex as a whole (bus-range, #address-cells, #size-cells,
+ranges, etc) are listed first, and the Root Port-related things
+(num-lanes, phys, etc) are listed later:
 
-Cheers,
-Robin.
++               pcie1: pcie@18000000 {
++                       compatible = "qcom,pcie-ipq5332", "qcom,pcie-ipq9574";
++                       device_type = "pci";
++                       linux,pci-domain = <1>;
++                       bus-range = <0x00 0xff>;
++                       #address-cells = <3>;
++                       #size-cells = <2>;
++
++                       ranges = <0x01000000 0 0x18200000 0x18200000 0 0x00100000>,
++                                <0x02000000 0 0x18300000 0x18300000 0 0x07d00000>;
++                       interrupts = <GIC_SPI 403 IRQ_TYPE_LEVEL_HIGH>, ...
++                       clocks = <&gcc GCC_PCIE3X2_AXI_M_CLK>, ...
++                       resets = <&gcc GCC_PCIE3X2_PIPE_ARES>, ...
++                       interconnects = <&gcc MASTER_SNOC_PCIE3_2_M ...
 
-> +		val = arm_smmu_cb_read(smmu, idx, ARM_SMMU_CB_SCTLR);
-> +		val &= ~ARM_SMMU_SCTLR_CFIE;
-> +		arm_smmu_cb_write(smmu, idx, ARM_SMMU_CB_SCTLR, val);
-> +		spin_unlock_irqrestore(&smmu_domain->stall_lock, flags);
-> +	}
-> +
->   	ret = report_iommu_fault(&smmu_domain->domain, NULL, cfi.iova,
->   		cfi.fsynr & ARM_SMMU_CB_FSYNR0_WNR ? IOMMU_FAULT_WRITE : IOMMU_FAULT_READ);
->   
-> @@ -921,6 +952,7 @@ static struct iommu_domain *arm_smmu_domain_alloc_paging(struct device *dev)
->   
->   	mutex_init(&smmu_domain->init_mutex);
->   	spin_lock_init(&smmu_domain->cb_lock);
-> +	spin_lock_init(&smmu_domain->stall_lock);
->   
->   	return &smmu_domain->domain;
->   }
-> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu.h b/drivers/iommu/arm/arm-smmu/arm-smmu.h
-> index 2dbf3243b5ad2db01e17fb26c26c838942a491be..153fac131b2484d468fd482ffbf130efc8cfb8f6 100644
-> --- a/drivers/iommu/arm/arm-smmu/arm-smmu.h
-> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu.h
-> @@ -216,7 +216,6 @@ enum arm_smmu_cbar_type {
->   					 ARM_SMMU_CB_FSR_TLBLKF)
->   
->   #define ARM_SMMU_CB_FSR_FAULT		(ARM_SMMU_CB_FSR_MULTI |	\
-> -					 ARM_SMMU_CB_FSR_SS |		\
->   					 ARM_SMMU_CB_FSR_UUT |		\
->   					 ARM_SMMU_CB_FSR_EF |		\
->   					 ARM_SMMU_CB_FSR_PF |		\
-> @@ -384,6 +383,7 @@ struct arm_smmu_domain {
->   	enum arm_smmu_domain_stage	stage;
->   	struct mutex			init_mutex; /* Protects smmu pointer */
->   	spinlock_t			cb_lock; /* Serialises ATS1* ops and TLB syncs */
-> +	spinlock_t                      stall_lock;
->   	struct iommu_domain		domain;
->   };
->   
-> 
+Everything above is potentially shared; everything below applies to a
+single (the only one in this case) Root Port.
 
++                       num-lanes = <2>;
++                       phys = <&pcie1_phy>;
++
++                       status = "disabled";
++               };
+
+I want people to think about which things belong to the Root Port and
+which are shared for the whole Root Complex.
+
+For new drivers, I think we should actually add "pcie@1,0" stanzas for
+each Root Port, even if there is only one.
+
+But for existing drivers that would have to be modified to comprehend
+new stanzas, collecting the Root Port things so they are together in
+the PCI controller stanza would be a good start (unless the order of
+properties in the DT makes a functional difference, of course).
+
+Bjorn
 
