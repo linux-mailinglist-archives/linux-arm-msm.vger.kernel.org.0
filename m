@@ -1,181 +1,125 @@
-Return-Path: <linux-arm-msm+bounces-45360-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-45361-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id BB790A147DF
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Jan 2025 03:04:07 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0ABBAA147E7
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Jan 2025 03:07:56 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1EA293AA620
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Jan 2025 02:04:01 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 35BE7166AFE
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Jan 2025 02:07:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 707B01F55FC;
-	Fri, 17 Jan 2025 02:04:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D7E9B1E1022;
+	Fri, 17 Jan 2025 02:07:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="BkW9Ql5I"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="gOwlnqBp"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f182.google.com (mail-lj1-f182.google.com [209.85.208.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FB4233F6;
-	Fri, 17 Jan 2025 02:04:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D66DF17084F
+	for <linux-arm-msm@vger.kernel.org>; Fri, 17 Jan 2025 02:07:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737079442; cv=none; b=lvheH18BNPYfCASfClQmzHKPCpKyhd83icSPPexecdDPM3X7gNJam5D16XsdtAZCT9pVtVWQxaXEe9EQUhquJp2Mv2aF1SdD/ad/VReSdPm1W8ifo/fRXa0BJ675qPzhkef08/lvZGKhcwOeSzr1+wEhwCimLLwtEr0pDu1NFbI=
+	t=1737079673; cv=none; b=pmu1Q++oxaJvfPL2/aiYDg1tR3cltk1tkUU9u+NyEZwQ9B+a7aofT6oeF7yLtvtdJyeQ+DDnY8IZSvZRNrLa5xxRoB1QVogl0PCiKA9RXh2TY7TsMfzOWgNZ36AT3+73nnjR6aXeRSZhvRdOU5DUl4iRTdiYN+cD399dTeIeu5Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737079442; c=relaxed/simple;
-	bh=wR2INxkuOGGDp9t7gBJ0CUM7H+oNmLqz3krSTuo6UtE=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:CC:References:
-	 In-Reply-To:Content-Type; b=auK1o4pcbvJP1MLcj5fTpXf8lslJmwCnubDF0CNm288cyoV9xl8D+HVQ+dxIOw2IPC9dfvtFaWrQ2hzDdt6ao3UPLCSkKBAo1tzFqz8KcoeH8GIn8N6bpwOaKwotGJ9toBIERkiCTClqyhFNNHaAfEnGpL94dAY/cSaHmR/XQ9M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=BkW9Ql5I; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50GEJemt006599;
-	Fri, 17 Jan 2025 02:03:35 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	N9lW5XlSTbQ+1H7ZCO4nlJExxoH6oapBl21taiQGACw=; b=BkW9Ql5ITlOVMwlL
-	Axgx1HplWrz1vmdbCL+oe1tsJX9KGQwFtX2415QT3AoulcV0fPWqyYM8YnE8MTxf
-	pctE4EieTd5itcYCdK8t33Tm1pyvtD1UhlxpC8cW5PQniwf3SCO9Bf5fOrQmxVAQ
-	/78kMhm8uYjHSTygq08Z6jspWJqaPhqPLLYYD6GiGSzdNSUO+Fcxt0gCv+bn4sAC
-	pReYDlZCPL5dZ6Gn0G7pTopB0Rq5Zfar5Mg/vQAnq5Gw2bTxvk5HdSwa+RKzZwIs
-	7j3HheNSwj5ukkkCCdG7wO2fJMRSMfj0zU9e5NbDbmNu/Z4DJX+WomsEFC9gCjco
-	d7bJ7g==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4473se1g5g-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 17 Jan 2025 02:03:35 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 50H23Yis016774
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 17 Jan 2025 02:03:34 GMT
-Received: from [10.110.17.128] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 16 Jan
- 2025 18:03:33 -0800
-Message-ID: <85b83e2a-bbb0-4dbb-aa8b-ca6e4e5806c2@quicinc.com>
-Date: Thu, 16 Jan 2025 18:03:32 -0800
+	s=arc-20240116; t=1737079673; c=relaxed/simple;
+	bh=zRUZWtNVk6J4oeX0It2KSfmevrS5KQ144QULZI/pFAU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=f9J3krFd5c9mVVuD3Vi4w6/u06pO2GEebI/hbzobb5cDrecYgrTmP43vMzqSXlVu7ls91V7+2xq8XdtyrGX34mWzlM3+N8NX+oABlmWLk1XPnAGwiNFnSdFptjpuHr9P8xLvJZ4yXFBUlk7zVHWutbBgXMoqEk8tJEulz5Lgpmc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=gOwlnqBp; arc=none smtp.client-ip=209.85.208.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lj1-f182.google.com with SMTP id 38308e7fff4ca-3047818ac17so15047341fa.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Jan 2025 18:07:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1737079670; x=1737684470; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=UmNBaJ9flAoGVL3CjStFJ3qiZfXYpirOf7AF7gGIp/8=;
+        b=gOwlnqBpc5o235AwLbP5XIptHKO3jd8dQ4SPvU4hL4n0Hq4aGvQQpUqdtOUFRySaG6
+         LtcSjM6z13UTrdANpRB7vUy05XqEtJhVLTt2oPTvTrWWH9cArGIDqO1w0hXMjmHReV53
+         +cfDCn/0BP/W0LWSbLDgwaQ5JCW5km0GtZoVrbcwiZ2zEjNRW6+0kCj9vUGDNu6m9XUy
+         BP/Q0578pscZblzgO2UIBWsZvyK00A4Dvxy6ChV9W72+R7fGVtXHV49MoS7M5RbQLkgp
+         Ry3syQ73NS/2J/SPsn8kXP4cq2zeHdQPVQXHaPsSudrnh1+hsamwF5MvC/K1aEH0Tz8R
+         KyFQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1737079670; x=1737684470;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=UmNBaJ9flAoGVL3CjStFJ3qiZfXYpirOf7AF7gGIp/8=;
+        b=j/ivB6BSryJc5F94QPU6JbLKIgMxCKSGzZnUUfKybiotydw6X7kDHVnE4PPPY7nRQK
+         8P8RV22uVou1OjRVla6AiWcYUNJHZFNbNARzflXhko57GPVWqVra9vw3G6ZazAP5N0DO
+         c/L9IESXc4NxlJTm+RsTp+xmSkWPo34QoLBavfOn/lfsOn+NFPelxmGl5M6sh7czIbyX
+         0bQ+5HhKsYi2S139P7Bh5Oxvi8rJufQyqAuM3c9i0cwiNpPdmTz6+vI7p8eXoMaWUxLZ
+         MVaHpB2mnaZx3AR24q3a9aUDixp6DVC9DGlf0U1OBwY2KUB0fPy3ZlwJ1l55BxqU18Ss
+         ilZg==
+X-Forwarded-Encrypted: i=1; AJvYcCVn8X0/0r3jaskYWRkR/8i/8lY4zli70XhoxbjX+9Tp680FZMR96DXAQQXme7qZtp70uDUlQhsc6qghIIBt@vger.kernel.org
+X-Gm-Message-State: AOJu0YxyYnK+EtV/nd034p7h27ApEQMR4UIv0rFNFSo+q+c5PGjVJDVc
+	yCNNJ10nyP1z3oraC9LtIVqFf3S4GENEpB1hTXPDsup7+Sz+yoQQ0l0/l6R0FX0=
+X-Gm-Gg: ASbGncvfIofVtCp5TilA+d0vx8EK3hsAIgaDKnuO9tnoSrhT8s7a8aeS5po9mxKCJtZ
+	aXSOkFvk9hSCwoFgmD1b5hm2axN+3Wu/VX+UC5YnL2wWQzB0HOOODxFZt35WMK5JwoL62UX7p+x
+	FAjOiCNksFL2xiRTDCbpbHIkfU/U+bqQt5gQmZGbJDXBKbW7PoGnKFABS12ttEVoJOyS7DebAyX
+	JsMYtrnFmQgCJ/uZqhQ7v3B+kBwA/2V9/6ED0q7L+n3a4FVKE9BPyBo4UiaPUmrMRq32nPQGCt9
+	LVd6WRZzgBRc0C3w0NnuhuLhId/P/cG4KYq8
+X-Google-Smtp-Source: AGHT+IE3mDy1UnCtfClC2GekVgCffh6WY4c88pU3oWTVLE5HIlhZvn/lG3F8S5lbrmtMtSxTxX1gaw==
+X-Received: by 2002:a2e:be0d:0:b0:304:588a:99e1 with SMTP id 38308e7fff4ca-3072cb0a4a0mr2949731fa.26.1737079669918;
+        Thu, 16 Jan 2025 18:07:49 -0800 (PST)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-3072a331124sm2083161fa.21.2025.01.16.18.07.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 16 Jan 2025 18:07:49 -0800 (PST)
+Date: Fri, 17 Jan 2025 04:07:47 +0200
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Jun Nie <jun.nie@linaro.org>
+Cc: Rob Clark <robdclark@gmail.com>, 
+	Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
+	Simona Vetter <simona@ffwll.ch>, linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+	freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v4 01/16] drm/msm/dpu: check every pipe per capability
+Message-ID: <2mtcnk7sg7zymdbkmucby3q7uwxhb4jde5r3ym5xdwkzjw6jc5@vv6fomz45ltl>
+References: <20250116-sm8650-v6-13-hmd-deckard-mdss-quad-upstream-33-v4-0-74749c6eba33@linaro.org>
+ <20250116-sm8650-v6-13-hmd-deckard-mdss-quad-upstream-33-v4-1-74749c6eba33@linaro.org>
+ <ra4uugpcufctn2j2sosrwxewlwpivsmc6tidadf4kuostv4cq6@ev4di2547lla>
+ <CABymUCPc5z+9SLeKy04Rg79B9sZUPUf9osJ6UJMKiv2cTXynxA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v33 30/31] ALSA: usb-audio: qcom: Add USB offload route
- kcontrol
-From: Wesley Cheng <quic_wcheng@quicinc.com>
-To: Randy Dunlap <rdunlap@infradead.org>, <srinivas.kandagatla@linaro.org>,
-        <mathias.nyman@intel.com>, <perex@perex.cz>, <conor+dt@kernel.org>,
-        <dmitry.torokhov@gmail.com>, <corbet@lwn.net>, <broonie@kernel.org>,
-        <lgirdwood@gmail.com>, <tiwai@suse.com>, <krzk+dt@kernel.org>,
-        <pierre-louis.bossart@linux.dev>, <Thinh.Nguyen@synopsys.com>,
-        <robh@kernel.org>, <gregkh@linuxfoundation.org>
-CC: <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-sound@vger.kernel.org>, <linux-input@vger.kernel.org>,
-        <linux-usb@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-doc@vger.kernel.org>
-References: <20250116232824.3748438-1-quic_wcheng@quicinc.com>
- <20250116232824.3748438-31-quic_wcheng@quicinc.com>
- <9c266af7-b377-4f3e-8a6d-f7d4fa44d465@infradead.org>
- <8dd379a7-68a7-4305-afe4-4a754224847a@quicinc.com>
-Content-Language: en-US
-In-Reply-To: <8dd379a7-68a7-4305-afe4-4a754224847a@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 1Jy10Ik_bCDTE97DHBZn7HSyDUvjujTe
-X-Proofpoint-ORIG-GUID: 1Jy10Ik_bCDTE97DHBZn7HSyDUvjujTe
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-01-16_11,2025-01-16_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- spamscore=0 adultscore=0 mlxscore=0 bulkscore=0 impostorscore=0
- malwarescore=0 suspectscore=0 mlxlogscore=999 lowpriorityscore=0
- clxscore=1015 phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2501170014
+In-Reply-To: <CABymUCPc5z+9SLeKy04Rg79B9sZUPUf9osJ6UJMKiv2cTXynxA@mail.gmail.com>
 
-Hi Randy,
+On Thu, Jan 16, 2025 at 10:38:33PM +0800, Jun Nie wrote:
+> Dmitry Baryshkov <dmitry.baryshkov@linaro.org> 于2025年1月16日周四 15:44写道：
+> 
+> >
+> > On Thu, Jan 16, 2025 at 03:25:50PM +0800, Jun Nie wrote:
+> > > Move requreiment check to routine of every pipe check. As sblk
+> > > and pipe_hw_caps of r_pipe are not checked in current implementation.
+> >
+> How about this version?
+>     The capability stored in sblk and pipe_hw_caps is checked only for
+>     SSPP of the first pipe in the pair with current implementation. That
+>     of the 2nd pipe, r_pipe, is not checked and may violate hardware
+>     capability. Move requirement check to dpu_plane_atomic_check_pipe()
+>     for the check of every pipe.
 
-On 1/16/2025 5:45 PM, Wesley Cheng wrote:
-> Hi Randy,
->
-> On 1/16/2025 4:08 PM, Randy Dunlap wrote:
->> On 1/16/25 3:28 PM, Wesley Cheng wrote:
->>> In order to allow userspace/applications know about USB offloading status,
->>> expose a sound kcontrol that fetches information about which sound card
->>> and PCM index the USB device is mapped to for supporting offloading.  In
->>> the USB audio offloading framework, the ASoC BE DAI link is the entity
->>> responsible for registering to the SOC USB layer.
->>>
->>> It is expected for the USB SND offloading driver to add the kcontrol to the
->>> sound card associated with the USB audio device.  An example output would
->>> look like:
->>>
->>> tinymix -D 1 get 'USB Offload Playback Route PCM#0'
->>> -1, -1 (range -1->255)
->>>
->>> This example signifies that there is no mapped ASoC path available for the
->>> USB SND device.
->>>
->>> tinymix -D 1 get 'USB Offload Playback Route PCM#0'
->>> 0, 0 (range -1->255)
->>>
->>> This example signifies that the offload path is available over ASoC sound
->>> card index#0 and PCM device#0.
->>>
->>> The USB offload kcontrol will be added in addition to the existing
->>> kcontrols identified by the USB SND mixer.  The kcontrols used to modify
->>> the USB audio device specific parameters are still valid and expected to be
->>> used.  These parameters are not mirrored to the ASoC subsystem.
->>>
->>> Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
->>> ---
->>>  sound/usb/Kconfig                  |  10 ++
->>>  sound/usb/qcom/Makefile            |   4 +
->>>  sound/usb/qcom/mixer_usb_offload.c | 158 +++++++++++++++++++++++++++++
->>>  sound/usb/qcom/mixer_usb_offload.h |  17 ++++
->>>  sound/usb/qcom/qc_audio_offload.c  |   2 +
->>>  5 files changed, 191 insertions(+)
->>>  create mode 100644 sound/usb/qcom/mixer_usb_offload.c
->>>  create mode 100644 sound/usb/qcom/mixer_usb_offload.h
->>>
->>> diff --git a/sound/usb/qcom/mixer_usb_offload.c b/sound/usb/qcom/mixer_usb_offload.c
->>> new file mode 100644
->>> index 000000000000..2696eb145ef5
->>> --- /dev/null
->>> +++ b/sound/usb/qcom/mixer_usb_offload.c
->>> @@ -0,0 +1,158 @@
->>> +// SPDX-License-Identifier: GPL-2.0
->>> +/*
->>> + * Copyright (c) 2022-2025 Qualcomm Innovation Center, Inc. All rights reserved.
->>> + */
->>> +
->>> +#include <linux/usb.h>
->>> +
->> [snip]
->>
->>> +
->>> +/**
->>> + * snd_usb_offload_create_ctl() - Add USB offload bounded mixer
->>> + * @chip - USB SND chip device
->> Use ':' instead of '-'.
->
-> So to clarify, the ':' separator should be used for both structs and function descriptions?  Just want to clarify, so I can fix them in all the spots.
->
->
-
-Sorry, ignore this, I figured out what needs to be changed.  You want the argument definition to use ":"
+... Move SSPP feature checks to dpu_plane_atomic_check_pipe() in order
+to verify requirements for every pipe.
 
 
-Thanks
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-Wesley Cheng
 
+-- 
+With best wishes
+Dmitry
 
