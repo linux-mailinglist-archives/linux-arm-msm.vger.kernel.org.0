@@ -1,79 +1,79 @@
-Return-Path: <linux-arm-msm+bounces-45403-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-45404-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 87756A15101
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Jan 2025 14:54:34 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id A27E8A15102
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Jan 2025 14:54:36 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id D30D01887760
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Jan 2025 13:54:37 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 155C21887587
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Jan 2025 13:54:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 448F8201001;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7FE66201012;
 	Fri, 17 Jan 2025 13:54:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="olwd0Whf"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="SnVR3NzC"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
+Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com [209.85.221.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A13351FFC40
-	for <linux-arm-msm@vger.kernel.org>; Fri, 17 Jan 2025 13:54:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE3E6200106
+	for <linux-arm-msm@vger.kernel.org>; Fri, 17 Jan 2025 13:54:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737122055; cv=none; b=hWUq97PRkC72BpbNXpkkgc8E7NczrlXhAsjC2QpeYcwk84vObPKSZ9Rim27VqMx1sC+IlrWr8ZR09P+GEmIhw0YJ25+1q9hmrtK3gMlLTnBHXOFHf6SRvELKCvdo75UkWbTnk72aSEB06+aih6tNrWhvRwP/txWCF3WER9caEg0=
+	t=1737122055; cv=none; b=R1fZukeAq4Zp1/qQ+F6Mm4VRlff27LSVePaaTmGMfbw+rpS7NcEuf7kdrDpYzyjq68cMdGU/Y6Jc8ANoVzCBXICKiasW8r0uHJ2613i7aLkjQm0Y0f6Evp38uA6axMzeCl+oCEm5QcPud846iAWWUgsfcgW+ZUwcXOaBCNEAMco=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1737122055; c=relaxed/simple;
-	bh=MAgPHU1Bz2sNDNZOkc4tcdXK0ulAsoRdPInzeOCBuFw=;
+	bh=1bB7zeKYEAvds04CMWVz2vrkT1T8fqTENFgm3Croh80=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=MNHMB529OinilSVEz0KHJyHR+4jRQkkDdQCqCFiJREfU3+DZcZfWi3zvxVkDliUJsMONwVJFLm8c7JtZ0BS3UxuaCjvMykYSCh1YPQ1jH0vvZNuoFBmAtRPqrA9R6gDdumWrJ8rTKPtTRRKDLsYbmeKb5gQGObCclMqYAPnEazs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=olwd0Whf; arc=none smtp.client-ip=209.85.221.53
+	 In-Reply-To:To:Cc; b=QEkrl5W0E6GYdW6f1N9E1j+71xc8SPZm4XzThlJ5NWpZXk7CrucvDA/Zr5QFIi7z5zeOJbt3k5aL0u9XXJCfVhwiOgKBKTluNNTISB2rKxfaNxGGoAlltrVHlPFBoCjzw23HHFGXJICji0P6ogLD5b3AoKvnXsnrYxBX7AQ8FCg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=SnVR3NzC; arc=none smtp.client-ip=209.85.221.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-385de59c1a0so1196305f8f.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Jan 2025 05:54:12 -0800 (PST)
+Received: by mail-wr1-f50.google.com with SMTP id ffacd0b85a97d-386329da1d9so1142572f8f.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Jan 2025 05:54:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1737122051; x=1737726851; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1737122052; x=1737726852; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=XTx7trlO+qhAIZBVr4sCxA6UgBBZ6iW+pqhCeQ0jUHA=;
-        b=olwd0WhfJHs1nlCt7ZFpe26jJ5Fkc0+UG1ZoPVuauVKFqw614ula0o2e8kqa05C8GK
-         lTkjqnUWlff1TFbBcl5ijSIQGM/DeEqbAsZKbtBCoc4F1yoFr46Qe5MGhLpoedtZZDPf
-         yd4S3oBpjHl3ft6NZAMIdoEn5FdNjuxbtEL0MyHyHF86YjyOtX9hU5dwAuvv2LNTsLLZ
-         c2WSMtUkqFwoYlXjGcekGE0WNDADEWJlvdZM2sUFliy8XQFfCQXe4my2wXpbzk6g/qOT
-         gHwVXPV5HCF6RTZdA0gaJu8gQNFm4leIgxf6bBgIkDgwqoTAFGRHe31x7KOjvz8FZOlP
-         ArFw==
+        bh=ZqX0V1eNStAoo4sPWKD9j/tGcT46bicfpPkCKdYvW2Y=;
+        b=SnVR3NzCUmvpXnDtqZd4tKvH5ne1HlBhOpgAJL2Zaul60AYcGOB9AXg3ih0s7oRjBo
+         PBS8FO89JcWfyBsXcu+6A3ZDv0f8MAYdN7kM26ll1KZugsJoUj37Ep9ne5LdWf2a1lgy
+         a+APGVmxaEo2yVpUPDagg6qT8eRPopp6ydRtESrro88FE4afh6Yu0BTI7WaP3XFLpxAQ
+         Dps66CkoTEvkCpnWwCWWma+KaX/dVaD4VNLBDbm/fXupn5NS3xZ7xfVXAiU3Kg3q5Cdm
+         0A2rxYE48MFGW2kXnJuIw2fCQNIGtRxI+G76yQL423vIpbFjLtFHxH5kvesqjoqI7qD1
+         gt7g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1737122051; x=1737726851;
+        d=1e100.net; s=20230601; t=1737122052; x=1737726852;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=XTx7trlO+qhAIZBVr4sCxA6UgBBZ6iW+pqhCeQ0jUHA=;
-        b=Y/0Hm2wBOS0soS6zzDGdKA+jK7dZ6cKmXpAHSDsrfmmCeZpVeDlULGcmBSeRsn+OGs
-         V+MqTM85+cAKGGEfNaZbnfMvEYiiyOORVbhhiPL4gMtu3KYtGMJLuKdXYaNi3cghfCGo
-         s0xSBbOVi9TGYiX6SBZv9Co44ZaltBA14nmpwKs1O2LYk4uY1pNLuGEgokYp8nv77tK2
-         BF3ljdW4ymp2tlGR79o4hTCC/g/33AgXBzQhKqwZZg3woJZED3vPONReQn1lE8PGoAx8
-         eRUSY9ljd1S/uWcrwvFjgvZV+SeiDGFwP7hEm/AElVw769y+V93KpWzUeSdajSLQHVJ4
-         ZQGg==
-X-Gm-Message-State: AOJu0YzjBP0mL+dkqCBjpVZ1yhfHh7/3BCqCD4nctwGjltK52OOppI04
-	ek1lVwKWj4LuqBLpLbSSgcq3f7zN4YUF71AOUbi3sF9f0G1kKFxMfBMBGPIaf5o=
-X-Gm-Gg: ASbGncvqw3eS4XR458jn1Bpz53iT5zyNIPtkLEK5LUV8QmnXuJE0VxWZbTDa7cNlLWj
-	KbAygJJocXC2jgDm7qmO04vH62UsitagKEohsH30ZK8OrDprm4wcQx7/BVfaAkFzJzTBePkxTFx
-	E3EcIm3b4RIIkWOvPVTtr2UGLHRPIKcpFhOc4ZQ6+tbOouGCuQlmudZu7idd64HZrcuAU86hTQN
-	pQuzHWeQ1MKlGa4XmV63P5910M644MwTVuTL0uSUKtkyyIS/5IY5cEKzweofDpBiw==
-X-Google-Smtp-Source: AGHT+IEDPXdDbnFx8QRaTJCrevmOYsul85rv9RHdhHqFBMauSQzaP+fCqw7xsorGDbZRjoKdq/HThQ==
-X-Received: by 2002:a05:6000:4021:b0:38a:a055:8498 with SMTP id ffacd0b85a97d-38bf57a9436mr2476005f8f.42.1737122050978;
-        Fri, 17 Jan 2025 05:54:10 -0800 (PST)
+        bh=ZqX0V1eNStAoo4sPWKD9j/tGcT46bicfpPkCKdYvW2Y=;
+        b=t8OJC+EE5G2g6U5MHzfjFzJ4AV+oOT58Rwaj4q6yrhJaXMazYTJ9Fdsm+7OkR99SYN
+         7qiAl9+7Y/EPcMQD2GQsBrbb8yrQIMHklp6d/4s8M87q6eSEIdV9KkH2VY1Kx2z4qiOE
+         2VIQKRDSlZEmLDm/9pbFeNURaiP6JI/bHe7OUu1WvRvsLVhahWgz1GjSyO33Zt3oMtos
+         AkdVp2XznbtZyy1Sy94PWslnEkfs4q2S9TsjE97AaRAVUfcVtlbYqyJDS/X3VD68Ai+n
+         nOHjHRl+TwnSXniQIE2yae6M4At7Eovl/Y2k37xfIKsWhIwEY7mF2aKcZcSrfOEG+rZb
+         lfOQ==
+X-Gm-Message-State: AOJu0Ywd0wXkUUv0ckpK0xe3m7r7uSO9cVIx6PowIgRFGY146Z8KvZjs
+	3ib1Taq90lOVptPkBhBpcM9mvIIRbM0Y+ZaE1+Yv+82k0m1sUGjn7H6uQgaFmrI=
+X-Gm-Gg: ASbGncsCIGG3g1jl9ll9SL8wICPd/l4IJF+WMpkJtDgaMQ/2mRlQNrqAbSz458MhX3q
+	MktgHkJYlpkZgkB+L827UhvhFX1+iyOwCprfyc/RSONh2kn300wD7Mw0yJxqMmM5SKZztJ4qwmo
+	wuzRaE4meaeTcTlgp4FoJSULC304udZB8ASod1D2LCtu11ryfU7fTIp3luxW5wPcjEAIfs/VTNZ
+	qxjWIOUxqHdgMkRoqXPz7B/K8Q0cEwIWb8eLV7nJrHSvN3PhyWJHqL5GEgl1xVsWQ==
+X-Google-Smtp-Source: AGHT+IERIKprTfj4TGtNFTV+dziWvvun8Na1x5lCmNRgusK6uCzT/L4ml4i+lIBUsBATJIfoN1WugA==
+X-Received: by 2002:a05:6000:1445:b0:38a:418e:21c7 with SMTP id ffacd0b85a97d-38bf57c0546mr2616282f8f.53.1737122052049;
+        Fri, 17 Jan 2025 05:54:12 -0800 (PST)
 Received: from [127.0.1.1] ([176.61.106.227])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38bf3221bf0sm2545279f8f.28.2025.01.17.05.54.10
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38bf3221bf0sm2545279f8f.28.2025.01.17.05.54.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 17 Jan 2025 05:54:10 -0800 (PST)
+        Fri, 17 Jan 2025 05:54:11 -0800 (PST)
 From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Date: Fri, 17 Jan 2025 13:54:08 +0000
-Subject: [PATCH v10 2/4] clk: qcom: gdsc: Capture pm_genpd_add_subdomain
- result code
+Date: Fri, 17 Jan 2025 13:54:09 +0000
+Subject: [PATCH v10 3/4] clk: qcom: common: Add support for power-domain
+ attachment
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -82,7 +82,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250117-b4-linux-next-24-11-18-clock-multiple-power-domains-v10-2-13f2bb656dad@linaro.org>
+Message-Id: <20250117-b4-linux-next-24-11-18-clock-multiple-power-domains-v10-3-13f2bb656dad@linaro.org>
 References: <20250117-b4-linux-next-24-11-18-clock-multiple-power-domains-v10-0-13f2bb656dad@linaro.org>
 In-Reply-To: <20250117-b4-linux-next-24-11-18-clock-multiple-power-domains-v10-0-13f2bb656dad@linaro.org>
 To: Bjorn Andersson <andersson@kernel.org>, 
@@ -92,92 +92,47 @@ To: Bjorn Andersson <andersson@kernel.org>,
  Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>, 
  Rajendra Nayak <quic_rjendra@quicinc.com>
 Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Bryan O'Donoghue <bryan.odonoghue@linaro.org>, 
- stable@vger.kernel.org
+ linux-kernel@vger.kernel.org, Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 X-Mailer: b4 0.15-dev-1b0d6
 
-Adding a new clause to this if/else I noticed the existing usage of
-pm_genpd_add_subdomain() wasn't capturing and returning the result code.
+Right now we support one power-domain per clock controller.
+These single power-domains are switched on by the driver platform logic.
 
-pm_genpd_add_subdomain() returns an int and can fail. Capture that result
-code and throw it up the call stack if something goes wrong.
+However when we have multiple power-domains attached to a clock-controller
+that list of power-domains must be handled outside of driver platform
+logic.
 
-Fixes: 1b771839de05 ("clk: qcom: gdsc: enable optional power domain support")
-Cc: stable@vger.kernel.org
+Use devm_pm_domain_attach_list() to automatically hook the list of given
+power-domains in the dtsi for the clock-controller driver.
+
 Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 ---
- drivers/clk/qcom/gdsc.c | 40 +++++++++++++++++++++++++++-------------
- 1 file changed, 27 insertions(+), 13 deletions(-)
+ drivers/clk/qcom/common.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/clk/qcom/gdsc.c b/drivers/clk/qcom/gdsc.c
-index bc1b1e37bf4222017c172b77603f8dedba961ed5..fdedf6dfe7b90c074b200353fc0c2b897863c79f 100644
---- a/drivers/clk/qcom/gdsc.c
-+++ b/drivers/clk/qcom/gdsc.c
-@@ -506,6 +506,23 @@ static int gdsc_init(struct gdsc *sc)
- 	return ret;
- }
+diff --git a/drivers/clk/qcom/common.c b/drivers/clk/qcom/common.c
+index 33cc1f73c69d1f875a193aea0552902268dc8716..b79e6a73b53a4113ca324d102d7be5504a9fe85e 100644
+--- a/drivers/clk/qcom/common.c
++++ b/drivers/clk/qcom/common.c
+@@ -22,6 +22,7 @@ struct qcom_cc {
+ 	struct qcom_reset_controller reset;
+ 	struct clk_regmap **rclks;
+ 	size_t num_rclks;
++	struct dev_pm_domain_list *pd_list;
+ };
  
-+static void gdsc_pm_subdomain_remove(struct gdsc_desc *desc, size_t num)
-+{
-+	struct device *dev = desc->dev;
-+	struct gdsc **scs = desc->scs;
-+	int i;
+ const
+@@ -299,6 +300,10 @@ int qcom_cc_really_probe(struct device *dev,
+ 	if (!cc)
+ 		return -ENOMEM;
+ 
++	ret = devm_pm_domain_attach_list(dev, NULL, &cc->pd_list);
++	if (ret < 0 && ret != -EEXIST)
++		return ret;
 +
-+	/* Remove subdomains */
-+	for (i = num - 1; i >= 0; i--) {
-+		if (!scs[i])
-+			continue;
-+		if (scs[i]->parent)
-+			pm_genpd_remove_subdomain(scs[i]->parent, &scs[i]->pd);
-+		else if (!IS_ERR_OR_NULL(dev->pm_domain))
-+			pm_genpd_remove_subdomain(pd_to_genpd(dev->pm_domain), &scs[i]->pd);
-+	}
-+}
-+
- int gdsc_register(struct gdsc_desc *desc,
- 		  struct reset_controller_dev *rcdev, struct regmap *regmap)
- {
-@@ -555,30 +572,27 @@ int gdsc_register(struct gdsc_desc *desc,
- 		if (!scs[i])
- 			continue;
- 		if (scs[i]->parent)
--			pm_genpd_add_subdomain(scs[i]->parent, &scs[i]->pd);
-+			ret = pm_genpd_add_subdomain(scs[i]->parent, &scs[i]->pd);
- 		else if (!IS_ERR_OR_NULL(dev->pm_domain))
--			pm_genpd_add_subdomain(pd_to_genpd(dev->pm_domain), &scs[i]->pd);
-+			ret = pm_genpd_add_subdomain(pd_to_genpd(dev->pm_domain), &scs[i]->pd);
-+		if (ret)
-+			goto err_pm_subdomain_remove;
- 	}
- 
- 	return of_genpd_add_provider_onecell(dev->of_node, data);
-+
-+err_pm_subdomain_remove:
-+	gdsc_pm_subdomain_remove(desc, i);
-+
-+	return ret;
- }
- 
- void gdsc_unregister(struct gdsc_desc *desc)
- {
--	int i;
- 	struct device *dev = desc->dev;
--	struct gdsc **scs = desc->scs;
- 	size_t num = desc->num;
- 
--	/* Remove subdomains */
--	for (i = num - 1; i >= 0; i--) {
--		if (!scs[i])
--			continue;
--		if (scs[i]->parent)
--			pm_genpd_remove_subdomain(scs[i]->parent, &scs[i]->pd);
--		else if (!IS_ERR_OR_NULL(dev->pm_domain))
--			pm_genpd_remove_subdomain(pd_to_genpd(dev->pm_domain), &scs[i]->pd);
--	}
-+	gdsc_pm_subdomain_remove(desc, num);
- 	of_genpd_del_provider(dev->of_node);
- }
- 
+ 	reset = &cc->reset;
+ 	reset->rcdev.of_node = dev->of_node;
+ 	reset->rcdev.ops = &qcom_reset_ops;
 
 -- 
 2.47.1
