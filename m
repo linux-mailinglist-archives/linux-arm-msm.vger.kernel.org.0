@@ -1,79 +1,79 @@
-Return-Path: <linux-arm-msm+bounces-45402-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-45403-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id BC8ADA150FA
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Jan 2025 14:54:22 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 87756A15101
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Jan 2025 14:54:34 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2D35D3A9822
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Jan 2025 13:54:16 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id D30D01887760
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Jan 2025 13:54:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A8F28200100;
-	Fri, 17 Jan 2025 13:54:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 448F8201001;
+	Fri, 17 Jan 2025 13:54:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="mwrVVWG8"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="olwd0Whf"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
+Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACAA01FF7D6
-	for <linux-arm-msm@vger.kernel.org>; Fri, 17 Jan 2025 13:54:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A13351FFC40
+	for <linux-arm-msm@vger.kernel.org>; Fri, 17 Jan 2025 13:54:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737122053; cv=none; b=OHRtlxfW6CdWSg3pmTipriAdedyox0K7IjF4ow8dqecbga2g8VgaroBy1MEjJ2rXe2CD6jmpQssF8hMkdCwJzHmQnJ0U0EBGgcQxpuVNHWEqljHULYL8v4UdwtNOnW3hJe81VypwjIR6JjByTbuZl475qY4g9S2r/mTYGFthNJU=
+	t=1737122055; cv=none; b=hWUq97PRkC72BpbNXpkkgc8E7NczrlXhAsjC2QpeYcwk84vObPKSZ9Rim27VqMx1sC+IlrWr8ZR09P+GEmIhw0YJ25+1q9hmrtK3gMlLTnBHXOFHf6SRvELKCvdo75UkWbTnk72aSEB06+aih6tNrWhvRwP/txWCF3WER9caEg0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737122053; c=relaxed/simple;
-	bh=omQ0q5abBpkqFmtYz9fwRWfVIX08QuZYwIw+MD/b79k=;
+	s=arc-20240116; t=1737122055; c=relaxed/simple;
+	bh=MAgPHU1Bz2sNDNZOkc4tcdXK0ulAsoRdPInzeOCBuFw=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=k6KGE7LQetVMzwONHYO8Z0mr//DjSQYynkR/LVep9KaDoZWR2dVwE8zsBBltPNalrlhmp/rLvfAP5lqg2cqa5ovx1eIFI/5tQBIQBXKq59rGDMnD/YrMn8T/GeGktwkMTJGmBnYRtS8vfChStaDKhDtyIXL5HTDNAw8LFgw7vt4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=mwrVVWG8; arc=none smtp.client-ip=209.85.221.54
+	 In-Reply-To:To:Cc; b=MNHMB529OinilSVEz0KHJyHR+4jRQkkDdQCqCFiJREfU3+DZcZfWi3zvxVkDliUJsMONwVJFLm8c7JtZ0BS3UxuaCjvMykYSCh1YPQ1jH0vvZNuoFBmAtRPqrA9R6gDdumWrJ8rTKPtTRRKDLsYbmeKb5gQGObCclMqYAPnEazs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=olwd0Whf; arc=none smtp.client-ip=209.85.221.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-385df53e559so1646166f8f.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Jan 2025 05:54:11 -0800 (PST)
+Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-385de59c1a0so1196305f8f.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Jan 2025 05:54:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1737122050; x=1737726850; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1737122051; x=1737726851; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=15Ks6wACBMUt+4Fhjb6F/swKHnhyTvT40HtN0zm9yGU=;
-        b=mwrVVWG8w/RSivIzMfzqWiK5Qcb3+bwgwMj5kQ6uixnvHpWThQXSYwRvlgf2936N3N
-         UlCoDENsk3KKsOgRGEp4RuptBjLEN9ODcIuUDmvH6cHTYvTaJwF/Mjj8MJq3h5FoloA4
-         PeRnVgXFpACxnGIOieCtHGoUaT+pPQDmwILSkbRAqnpTx/A61tOrCa7u7lG+uFSfI8bN
-         28zA4QFbHfYl5z283A03ZnqiVRlfahQrn0pVE7veTR64DJNMgmQ5zSyg0JAO6ePYm9rX
-         2KTjjSxBQGynbesuaHX3b5x7w7M/L3bDvL07gGvWLOTtFHGunDAIu5ckeL7cwLCFLGzZ
-         7pug==
+        bh=XTx7trlO+qhAIZBVr4sCxA6UgBBZ6iW+pqhCeQ0jUHA=;
+        b=olwd0WhfJHs1nlCt7ZFpe26jJ5Fkc0+UG1ZoPVuauVKFqw614ula0o2e8kqa05C8GK
+         lTkjqnUWlff1TFbBcl5ijSIQGM/DeEqbAsZKbtBCoc4F1yoFr46Qe5MGhLpoedtZZDPf
+         yd4S3oBpjHl3ft6NZAMIdoEn5FdNjuxbtEL0MyHyHF86YjyOtX9hU5dwAuvv2LNTsLLZ
+         c2WSMtUkqFwoYlXjGcekGE0WNDADEWJlvdZM2sUFliy8XQFfCQXe4my2wXpbzk6g/qOT
+         gHwVXPV5HCF6RTZdA0gaJu8gQNFm4leIgxf6bBgIkDgwqoTAFGRHe31x7KOjvz8FZOlP
+         ArFw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1737122050; x=1737726850;
+        d=1e100.net; s=20230601; t=1737122051; x=1737726851;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=15Ks6wACBMUt+4Fhjb6F/swKHnhyTvT40HtN0zm9yGU=;
-        b=Lh0SZNKLnUESnyecHVpLMMm0psmpm/INwhuQXiTO3Ly/tgYmA2/UG02Abywt4gn6l2
-         mjGKzv76/ZIuuud9Gw14h3l7/RuVaOfySM/VY9UB0Dzp6HsLJZFhAJ5Pd6qlc8SdKfJ+
-         RcyERCFbUzOc3mRhlPQscGvQaZ5QSSiwoDoCDkrVunc8BffOtDMPIqvwOJpSqWlavULW
-         /HmQ/En8hpR0I4tH8peyeSt7YUtXQclvzKmFiKBkgNc1iYAndO4S9y1TwLbJTibo42P+
-         vCZocf7E3J8+Hc61z8r7Ug+qzbgapbMB/x1EjxQfRm8JK2KdrvAdi9VTrg4hmlxCfOFC
-         5B6g==
-X-Gm-Message-State: AOJu0YwpRz1RSU7QWWniiPV0UUEPUgZYJqu2i9jbmoJK2o6H2n5Eyt0l
-	Ru/io4tE8gC3cpgMNBMMeDe3TkHE/TYXMxTvki5pub7qPG3OTtypdLDbFvfjYyc=
-X-Gm-Gg: ASbGncse7deJFDfI/CF5Umm67wFcGPfE1rDS5v0ilO82K06JXOh071JNkyfxvXdeDXI
-	4S7apZryhOBaK+2eFE0i4WuKFVcWxhMZTwvlChzn+B2BWf9GKK5+GM06Avxzdpyo5QCv6uvAOSI
-	Qmb7NE9kHNKH+TrrNc6S2ZeCNoSFk6M0vLleDe0X4XeyYkTtu6ob8ihX/B5dXct/nqYZBRuXXNW
-	+XFlfvRxUT42upS90HDXZrrjvndtiqCnJmXZu8TytBSZZ7pJp5L3s7zQ9WCeYupGg==
-X-Google-Smtp-Source: AGHT+IHNmLQm1j06TtGNOkJWIFaFS+c+vU1YTf1B5SrEFcW5N5PbHLEVJA/tlx1fts1YuOCHHCZpgQ==
-X-Received: by 2002:a05:6000:1faa:b0:38b:f04c:25e6 with SMTP id ffacd0b85a97d-38bf56626d4mr3033027f8f.14.1737122050037;
+        bh=XTx7trlO+qhAIZBVr4sCxA6UgBBZ6iW+pqhCeQ0jUHA=;
+        b=Y/0Hm2wBOS0soS6zzDGdKA+jK7dZ6cKmXpAHSDsrfmmCeZpVeDlULGcmBSeRsn+OGs
+         V+MqTM85+cAKGGEfNaZbnfMvEYiiyOORVbhhiPL4gMtu3KYtGMJLuKdXYaNi3cghfCGo
+         s0xSBbOVi9TGYiX6SBZv9Co44ZaltBA14nmpwKs1O2LYk4uY1pNLuGEgokYp8nv77tK2
+         BF3ljdW4ymp2tlGR79o4hTCC/g/33AgXBzQhKqwZZg3woJZED3vPONReQn1lE8PGoAx8
+         eRUSY9ljd1S/uWcrwvFjgvZV+SeiDGFwP7hEm/AElVw769y+V93KpWzUeSdajSLQHVJ4
+         ZQGg==
+X-Gm-Message-State: AOJu0YzjBP0mL+dkqCBjpVZ1yhfHh7/3BCqCD4nctwGjltK52OOppI04
+	ek1lVwKWj4LuqBLpLbSSgcq3f7zN4YUF71AOUbi3sF9f0G1kKFxMfBMBGPIaf5o=
+X-Gm-Gg: ASbGncvqw3eS4XR458jn1Bpz53iT5zyNIPtkLEK5LUV8QmnXuJE0VxWZbTDa7cNlLWj
+	KbAygJJocXC2jgDm7qmO04vH62UsitagKEohsH30ZK8OrDprm4wcQx7/BVfaAkFzJzTBePkxTFx
+	E3EcIm3b4RIIkWOvPVTtr2UGLHRPIKcpFhOc4ZQ6+tbOouGCuQlmudZu7idd64HZrcuAU86hTQN
+	pQuzHWeQ1MKlGa4XmV63P5910M644MwTVuTL0uSUKtkyyIS/5IY5cEKzweofDpBiw==
+X-Google-Smtp-Source: AGHT+IEDPXdDbnFx8QRaTJCrevmOYsul85rv9RHdhHqFBMauSQzaP+fCqw7xsorGDbZRjoKdq/HThQ==
+X-Received: by 2002:a05:6000:4021:b0:38a:a055:8498 with SMTP id ffacd0b85a97d-38bf57a9436mr2476005f8f.42.1737122050978;
         Fri, 17 Jan 2025 05:54:10 -0800 (PST)
 Received: from [127.0.1.1] ([176.61.106.227])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38bf3221bf0sm2545279f8f.28.2025.01.17.05.54.09
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38bf3221bf0sm2545279f8f.28.2025.01.17.05.54.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 17 Jan 2025 05:54:09 -0800 (PST)
+        Fri, 17 Jan 2025 05:54:10 -0800 (PST)
 From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Date: Fri, 17 Jan 2025 13:54:07 +0000
-Subject: [PATCH v10 1/4] clk: qcom: gdsc: Release pm subdomains in reverse
- add order
+Date: Fri, 17 Jan 2025 13:54:08 +0000
+Subject: [PATCH v10 2/4] clk: qcom: gdsc: Capture pm_genpd_add_subdomain
+ result code
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -82,7 +82,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250117-b4-linux-next-24-11-18-clock-multiple-power-domains-v10-1-13f2bb656dad@linaro.org>
+Message-Id: <20250117-b4-linux-next-24-11-18-clock-multiple-power-domains-v10-2-13f2bb656dad@linaro.org>
 References: <20250117-b4-linux-next-24-11-18-clock-multiple-power-domains-v10-0-13f2bb656dad@linaro.org>
 In-Reply-To: <20250117-b4-linux-next-24-11-18-clock-multiple-power-domains-v10-0-13f2bb656dad@linaro.org>
 To: Bjorn Andersson <andersson@kernel.org>, 
@@ -96,32 +96,88 @@ Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
  stable@vger.kernel.org
 X-Mailer: b4 0.15-dev-1b0d6
 
-gdsc_unregister() should release subdomains in the reverse order to the
-order in which those subdomains were added.
+Adding a new clause to this if/else I noticed the existing usage of
+pm_genpd_add_subdomain() wasn't capturing and returning the result code.
 
-I've made this patch a standalone patch because it facilitates a subsequent
-fix to stable.
+pm_genpd_add_subdomain() returns an int and can fail. Capture that result
+code and throw it up the call stack if something goes wrong.
 
 Fixes: 1b771839de05 ("clk: qcom: gdsc: enable optional power domain support")
 Cc: stable@vger.kernel.org
 Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 ---
- drivers/clk/qcom/gdsc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/clk/qcom/gdsc.c | 40 +++++++++++++++++++++++++++-------------
+ 1 file changed, 27 insertions(+), 13 deletions(-)
 
 diff --git a/drivers/clk/qcom/gdsc.c b/drivers/clk/qcom/gdsc.c
-index fa5fe4c2a2ee7786c2e8858f3e41301f639e5d59..bc1b1e37bf4222017c172b77603f8dedba961ed5 100644
+index bc1b1e37bf4222017c172b77603f8dedba961ed5..fdedf6dfe7b90c074b200353fc0c2b897863c79f 100644
 --- a/drivers/clk/qcom/gdsc.c
 +++ b/drivers/clk/qcom/gdsc.c
-@@ -571,7 +571,7 @@ void gdsc_unregister(struct gdsc_desc *desc)
- 	size_t num = desc->num;
+@@ -506,6 +506,23 @@ static int gdsc_init(struct gdsc *sc)
+ 	return ret;
+ }
  
- 	/* Remove subdomains */
--	for (i = 0; i < num; i++) {
++static void gdsc_pm_subdomain_remove(struct gdsc_desc *desc, size_t num)
++{
++	struct device *dev = desc->dev;
++	struct gdsc **scs = desc->scs;
++	int i;
++
++	/* Remove subdomains */
 +	for (i = num - 1; i >= 0; i--) {
++		if (!scs[i])
++			continue;
++		if (scs[i]->parent)
++			pm_genpd_remove_subdomain(scs[i]->parent, &scs[i]->pd);
++		else if (!IS_ERR_OR_NULL(dev->pm_domain))
++			pm_genpd_remove_subdomain(pd_to_genpd(dev->pm_domain), &scs[i]->pd);
++	}
++}
++
+ int gdsc_register(struct gdsc_desc *desc,
+ 		  struct reset_controller_dev *rcdev, struct regmap *regmap)
+ {
+@@ -555,30 +572,27 @@ int gdsc_register(struct gdsc_desc *desc,
  		if (!scs[i])
  			continue;
  		if (scs[i]->parent)
+-			pm_genpd_add_subdomain(scs[i]->parent, &scs[i]->pd);
++			ret = pm_genpd_add_subdomain(scs[i]->parent, &scs[i]->pd);
+ 		else if (!IS_ERR_OR_NULL(dev->pm_domain))
+-			pm_genpd_add_subdomain(pd_to_genpd(dev->pm_domain), &scs[i]->pd);
++			ret = pm_genpd_add_subdomain(pd_to_genpd(dev->pm_domain), &scs[i]->pd);
++		if (ret)
++			goto err_pm_subdomain_remove;
+ 	}
+ 
+ 	return of_genpd_add_provider_onecell(dev->of_node, data);
++
++err_pm_subdomain_remove:
++	gdsc_pm_subdomain_remove(desc, i);
++
++	return ret;
+ }
+ 
+ void gdsc_unregister(struct gdsc_desc *desc)
+ {
+-	int i;
+ 	struct device *dev = desc->dev;
+-	struct gdsc **scs = desc->scs;
+ 	size_t num = desc->num;
+ 
+-	/* Remove subdomains */
+-	for (i = num - 1; i >= 0; i--) {
+-		if (!scs[i])
+-			continue;
+-		if (scs[i]->parent)
+-			pm_genpd_remove_subdomain(scs[i]->parent, &scs[i]->pd);
+-		else if (!IS_ERR_OR_NULL(dev->pm_domain))
+-			pm_genpd_remove_subdomain(pd_to_genpd(dev->pm_domain), &scs[i]->pd);
+-	}
++	gdsc_pm_subdomain_remove(desc, num);
+ 	of_genpd_del_provider(dev->of_node);
+ }
+ 
 
 -- 
 2.47.1
