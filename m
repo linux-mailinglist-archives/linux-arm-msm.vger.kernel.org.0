@@ -1,135 +1,89 @@
-Return-Path: <linux-arm-msm+bounces-45473-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-45474-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 300A3A15D30
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Jan 2025 14:31:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 537A6A15D67
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Jan 2025 15:44:57 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8DC791887BF4
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Jan 2025 13:31:33 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id CCA8C1887F7A
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Jan 2025 14:45:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4B6BD18872F;
-	Sat, 18 Jan 2025 13:31:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5374418FDB1;
+	Sat, 18 Jan 2025 14:44:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DJcK3Cw4"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="scEhG96P"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E5712F50;
-	Sat, 18 Jan 2025 13:31:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EA4C18BC20;
+	Sat, 18 Jan 2025 14:44:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737207084; cv=none; b=NEyeWOoormdRMnf7/kg2631E+QPGWoMxJgtJNfJWRGIZFrnDG5ImPR3nOg2hQibNAnTTOY4Q8l4BOQw3JZr1u5zAe87wmI4WufGDWJ/Ly5Fw/0AYGgoJj4UCUQm4X8SuHMgdl2SXYl+Q51Xz2k5hNkFaGsrEhQKvcQ7qEsyiHIc=
+	t=1737211493; cv=none; b=MWnMqggyWBw2T5STubaH+UvwQmTA7be5salOR2k35dhCnfc/UYCcK3lsYpja0JONE/KM6pzRQHUzaNdtFOEyKlHlxXQKS28NRT3fwbUKBaroZdgsnlDfy0B33thpIKHnQkWek4dnqMnCBcShaPdJf5Z+CKOUycNGhQ/lqXzPikQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737207084; c=relaxed/simple;
-	bh=FG4edJESgZt7GKM71wYwm9Eud73t07AkVXKhlI/vKfI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=jNNbVtE0gEiKZzd+X2izOaaOvpuT1xSE7K5hh5io0XZcLqp0QGtz5TwY9whBXciro+xOKhsCUkigO+SdbrnOQU8z+1na9eHZCiLISMYAfaHuiIjRhy4QDT6DA0q6FN0Yg9wvS6lnjh69LN2jzSY7zqmrbb/wwgnO6Bc35Utaofc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DJcK3Cw4; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3EFCC4CED1;
-	Sat, 18 Jan 2025 13:31:18 +0000 (UTC)
+	s=arc-20240116; t=1737211493; c=relaxed/simple;
+	bh=yzyYeRsnULL3tlm7okdtyouKJWANz7x87jxQKcldjnY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=jYwQgb4zyCOt6hPKVjx3oAlH+Q3Aag+nfbTmUAFfAFCZ+WGBSNgjjoPI86UD+trMR3BT/pj+IcQ/JGEvFub0Lk4qD77vvESDYqKf86ihIjMD7L5D9fh97mLPkBC5x+7EECsWCJSR+ThPVBWmmyzoO/e6dZTCO+eFE1mzR86fCRc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=scEhG96P; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B04C0C4CED1;
+	Sat, 18 Jan 2025 14:44:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1737207083;
-	bh=FG4edJESgZt7GKM71wYwm9Eud73t07AkVXKhlI/vKfI=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=DJcK3Cw4+vXoJYZngVZMlSHSKMH6w01UUttqv0GgSNCcMgbJ3wdfGMZwEMz9cyceT
-	 PnzFX1yJdENp8Lhc2XhkjfZ5ZVK734XS6gthLiE6aOVjnFfNEZo6++3xvdLrMmQ1J+
-	 NYZ14F83TskVfBdjg/C1JOLJ0bHMHPe7/BpEq5RiCswoyQj46t3qyd/nXhfcCzTSo5
-	 qZCow53qE6j7Wxm9O3qH46+oua+WVe6hFF+0Z88RfZXVEULsyKAe2sks/MFntZVSfp
-	 wKA1obOgIgrDayvvE2qATb7KjlTF0pTTWlSAgWuCAREeon09Dq26c40fxxhSgasT2R
-	 mBWJI2yEcy7MQ==
-Message-ID: <78cabce3-c623-43fc-8de5-fd6a093b61c3@kernel.org>
-Date: Sat, 18 Jan 2025 14:31:16 +0100
+	s=k20201202; t=1737211492;
+	bh=yzyYeRsnULL3tlm7okdtyouKJWANz7x87jxQKcldjnY=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=scEhG96PAbqb49mM4Y/7uYqd2h3X5wx9lpS03Mw2SpwwZJPeiG9cDTIyK9BE/wU9g
+	 WB7AznEvt4moVwwhcpqbXxCV7a8sGlpLc65OBKN1u2Wb0K01Z06AjLEInfn5TgywtB
+	 Jwjo65AeQIqXA9CEEjEqDydchgMQi0G3KfGq+8c55d6R+wgduDyk6NA4qZRk6axbLk
+	 TuPPgDe/s9G65CagDhOUbS37PVyZ7wmtji0B1H1eF+VLviAsYeG9j1R58RxGkN09LG
+	 FERM5tRctvmm7hIMtPE65Ez45SF7vvwFFYBwiiLi3iYF8TKs2SFkvjRQTu0Q0H4WSG
+	 X8wOBDFVyYdlQ==
+Date: Sat, 18 Jan 2025 15:44:49 +0100
+From: Krzysztof Kozlowski <krzk@kernel.org>
+To: Melody Olvera <quic_molvera@quicinc.com>
+Cc: Vinod Koul <vkoul@kernel.org>, 
+	Kishon Vijay Abraham I <kishon@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, Alim Akhtar <alim.akhtar@samsung.com>, 
+	Avri Altman <avri.altman@wdc.com>, Bart Van Assche <bvanassche@acm.org>, 
+	Bjorn Andersson <andersson@kernel.org>, Andy Gross <agross@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>, 
+	Trilok Soni <quic_tsoni@quicinc.com>, linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, linux-scsi@vger.kernel.org, 
+	Nitin Rawat <quic_nitirawa@quicinc.com>
+Subject: Re: [PATCH 1/5] dt-bindings: phy: qcom,sc8280xp-qmp-ufs-phy:
+ Document the SM8750 QMP UFS PHY
+Message-ID: <20250118-uptight-crocodile-of-music-2becee@krzk-bin>
+References: <20250113-sm8750_ufs_master-v1-0-b3774120eb8c@quicinc.com>
+ <20250113-sm8750_ufs_master-v1-1-b3774120eb8c@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/4] soc: qcom: ice: introduce devm_of_qcom_ice_get
-To: Tudor Ambarus <tudor.ambarus@linaro.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>,
- Adrian Hunter <adrian.hunter@intel.com>, Ulf Hansson
- <ulf.hansson@linaro.org>, Abel Vesa <abel.vesa@linaro.org>,
- Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
- "James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>,
- "Martin K. Petersen" <martin.petersen@oracle.com>,
- Eric Biggers <ebiggers@google.com>
-Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-mmc@vger.kernel.org, linux-scsi@vger.kernel.org,
- andre.draszik@linaro.org, peter.griffin@linaro.org, willmcvicker@google.com,
- kernel-team@android.com
-References: <20250117-qcom-ice-fix-dev-leak-v2-0-1ffa5b6884cb@linaro.org>
- <20250117-qcom-ice-fix-dev-leak-v2-1-1ffa5b6884cb@linaro.org>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <20250117-qcom-ice-fix-dev-leak-v2-1-1ffa5b6884cb@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20250113-sm8750_ufs_master-v1-1-b3774120eb8c@quicinc.com>
 
-On 17/01/2025 15:18, Tudor Ambarus wrote:
-> Callers of of_qcom_ice_get() leak the device reference taken by
-> of_find_device_by_node(). Introduce devm variant for of_qcom_ice_get().
-> Existing consumers need the ICE instance for the entire life of their
-> device, thus exporting qcom_ice_put() is not required.
+On Mon, Jan 13, 2025 at 01:46:24PM -0800, Melody Olvera wrote:
+> From: Nitin Rawat <quic_nitirawa@quicinc.com>
 > 
-> Signed-off-by: Tudor Ambarus <tudor.ambarus@linaro.org>
-> ---
->  drivers/soc/qcom/ice.c | 48 ++++++++++++++++++++++++++++++++++++++++++++++++
->  include/soc/qcom/ice.h |  2 ++
->  2 files changed, 50 insertions(+)
+> Document the QMP UFS PHY on the SM8750 Platform.
 
+Pretty obvious commit msg, duplicating subject. Say something useful,
+e.g. why this is not compatible with sm8650.
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> 
+> Signed-off-by: Nitin Rawat <quic_nitirawa@quicinc.com>
+> Signed-off-by: Melody Olvera <quic_molvera@quicinc.com>
+
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 Best regards,
 Krzysztof
+
 
