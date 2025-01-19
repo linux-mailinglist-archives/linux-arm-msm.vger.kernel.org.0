@@ -1,138 +1,220 @@
-Return-Path: <linux-arm-msm+bounces-45521-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-45522-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E9784A162A0
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 19 Jan 2025 16:27:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 415AAA162DE
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 19 Jan 2025 17:26:52 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2AE8D162047
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 19 Jan 2025 15:27:07 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 69EEB164AB9
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 19 Jan 2025 16:26:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 89E4C1DF746;
-	Sun, 19 Jan 2025 15:27:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E2D9B1DEFF1;
+	Sun, 19 Jan 2025 16:26:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="NaVBpdMZ"
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="rSN8t36G"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pj1-f46.google.com (mail-pj1-f46.google.com [209.85.216.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from out-183.mta1.migadu.com (out-183.mta1.migadu.com [95.215.58.183])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3CD01DF26F
-	for <linux-arm-msm@vger.kernel.org>; Sun, 19 Jan 2025 15:27:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 689F61552E3;
+	Sun, 19 Jan 2025 16:26:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737300425; cv=none; b=of3pkzQbQGVkIICduhYMPoTFe4wlqURTi70YuK+ZGooPiE0uoz3URLMa/6Af4ZSD5xqBGxO4PqEunQwoplqFOV24hYptYZY8DQ3h1RtMcaodQFO7fxF23IKaaoWdTBTQvgm5VzaOp9bNq71MBRumQF0D87rEWNIHW3hqsR4rNoc=
+	t=1737304009; cv=none; b=CxyEpEZj80Ga0o95lKdF0qivnk6MAQ/ZLDz3u5NZC5EXo/RmfkqMLzRYFaDE+te+M9AcXLcu5EDjfriidssyX3KUekaSJR3FJqmOn8mFaMb7bvI6zTfq47Wnzwt46UJXJtClj27IDHWw/l0rbPpaPRRESMe+nlVuAD6DqBC/Itw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737300425; c=relaxed/simple;
-	bh=PWQpcLhH7Zeo4/EFrlP2gfivfal9zzDPsCLUkRO16zE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=OXDrDycT7m7tYQdkDGdPIyw+Wfi+hN4CodgpNUWcK7YY7noFVKty+otfGwsJX3wPBgb9zS1Zzk5H654b4mBA9l63weV+Pd49R5Slce+TFF8/4EQDRsyPr6CnaiKrorNfvyO9lcgIUxTfkcM8ZH3zdFd3vYWF2ICxC4RoTeSqAdk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=NaVBpdMZ; arc=none smtp.client-ip=209.85.216.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pj1-f46.google.com with SMTP id 98e67ed59e1d1-2ef8c012913so4698248a91.3
-        for <linux-arm-msm@vger.kernel.org>; Sun, 19 Jan 2025 07:27:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1737300423; x=1737905223; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=gWLJNtDh2M0LrWGMJ4uX5maH7/SrzMNwJbKx9WRcHPQ=;
-        b=NaVBpdMZI071+K9NmczBY5/PxLIwgGaruZottqEB8NFCgAq8RhXj954FscI2pRExkb
-         p0LSrisa6Mg/UaptV6v3Sgh7rcGu9AEm5ycGJP4ibVVsWolIVH8Z6fByE96OWSvUqTiR
-         +G6ErRdgHBotP7cPXALTm1IjdCusqq9IdvglxWMvw/Ehhh8noMJAQ+Y5VdJoJpgrUuJb
-         zwaQQgwQqff+35EoUXqqZbwUpq9sWOcu0y9QPi1yjt5uxJN9LVYlqnkHwk7mQnFtpTHp
-         ay94PoY4+VX3Zy29LJF7gpyVa9G63ljcrOzXXx+khLrbjQOhcWjOj+lIkE0bgHNTXfm1
-         AIkA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1737300423; x=1737905223;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=gWLJNtDh2M0LrWGMJ4uX5maH7/SrzMNwJbKx9WRcHPQ=;
-        b=Fyj2ylO5gvBBHjLMkkd4DiWFXy5qeqlcfywg3GUrG8KpsuUprUQxCkQjI0ZBo+Fs4G
-         5ueG9+XUmLpTrk96a3jsq3nQ+8aL78oTeM+892RVox4tQLKtz0rZVQRvz9Zy3aKBMLu7
-         ugdfjsqf2mNou/TrxlJOFvxNq4hRnsM+zakoSmNRvnEJ3Fd4nWRsZCmbsz9I4cbkZoAP
-         0vu0u92TaIDzqakiJxL11eghucd6PetY0PJSdd9vMmV4jfHkvNQGVJ4H4uHrzVynFIqp
-         YdJ5KKBPBg/CE90V14y22KvtJvTMpLsrRo8VMJLDk8IjWUpkpCB72/vlY/cjy3HpfB5Z
-         lJ+A==
-X-Forwarded-Encrypted: i=1; AJvYcCXm/iyW7wgDV5X295SJUZ/n22rmMHuc6+I1fRvimwL8clqT6qgaPLPyhv2p76z9XTqMF7WVoj35Je9ozpcQ@vger.kernel.org
-X-Gm-Message-State: AOJu0YzApj4H6zVQh1y4fof/UlgCqYwv6jyW+7+J4plf/uPmkzgFaudy
-	sOhqYVK8jjrd0uKoNqORlDzK9mEAOqy93f5AlDLg/38Hfak8UCIXGDpcBnvTWQ==
-X-Gm-Gg: ASbGncu6HwuVoyUB/O6K97l3kLxpuLI2ZBx16oV712TTNsElV2LgIevxuqv2mXV8/GB
-	r7mS7uSrfgH7iv0fO5F+nJzETZbnoEJ8zqKddzfUJEXMR13uHlfjalUlqtH83ZtBsGOKFWDvIgJ
-	ZF26NKJrNgOdppLPx8u+yKl+TPFFDSW7s9mGNKeQRZJYUHs3OZE6l4WEyiWKqXxDK32pTq+ICDE
-	k0juDuwqM16BOXUb+c1p/Vbiq6jLpox4zjKwvus5o1fjoQT2EfiR9l3q/M4QTtg5ImA74CoUx4D
-	gAJJLQ==
-X-Google-Smtp-Source: AGHT+IENWqIH7vPK9qo4kAByRAYKRm1YyPEDyBpffvJczNdBlZH+Y7lmOf7IJkBmPUxBttv2OPLC8A==
-X-Received: by 2002:a17:90a:7141:b0:2ee:dd9b:e402 with SMTP id 98e67ed59e1d1-2f782c70237mr16844568a91.12.1737300423171;
-        Sun, 19 Jan 2025 07:27:03 -0800 (PST)
-Received: from thinkpad ([120.56.195.253])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2f77611a162sm5861697a91.2.2025.01.19.07.26.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 19 Jan 2025 07:27:02 -0800 (PST)
-Date: Sun, 19 Jan 2025 20:56:55 +0530
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: Neil Armstrong <neil.armstrong@linaro.org>
-Cc: Bjorn Helgaas <bhelgaas@google.com>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 0/3] PCI: qcom-sm8[56]50: document and add 'global'
- interrupt
-Message-ID: <20250119152655.g2w4evteqqastil2@thinkpad>
-References: <20241126-topic-sm8x50-pcie-global-irq-v1-0-4049cfccd073@linaro.org>
+	s=arc-20240116; t=1737304009; c=relaxed/simple;
+	bh=B4rvTJW7ff21w1JZwgT0/LIrPNJS+x3zveTVYIlEO8U=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=BhapuBWt5ownA2t1jvfAhQeGHtbPj6M6L967vvvzK/qEaYhZCbKhKYZ9oWoWbohqA6K84oyj6Raljik7iXVBv/N9+5uNHOgPbNCFGAJ+LZDMtVJMs9taCphUGXt13W8KrFJ1qSMPFBg6JO5M+6QhGGL0SK9X2ZmjH4HVmL3pN0c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=rSN8t36G; arc=none smtp.client-ip=95.215.58.183
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+Message-ID: <8234927e-0d12-4655-813d-8ec94179b737@linux.dev>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+	t=1737304005;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=vk3LJPYAEJumDCHfvyn+0B3wt+JaPCGDzjEcWZxdF60=;
+	b=rSN8t36GlcqKWcSry2NAS7uuPoSokjl/moVcZQqfvubYqsOYH01D0yN3RMsNHteHhtpLti
+	kVL97c93wJmSXin/dBnch03Cy9RjtJi2PzJmt0HI9IluiFQUnxKcft+J/Ya7YtZG1krPc+
+	YGBCQ0RrYcucM6qjwpDCjNrgG9sTpfk=
+Date: Mon, 20 Jan 2025 00:26:30 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Subject: Re: [PATCH v2 25/25] drm/xlnx: Compute dumb-buffer sizes with
+ drm_mode_size_dumb()
+To: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Geert Uytterhoeven <geert@linux-m68k.org>
+Cc: Thomas Zimmermann <tzimmermann@suse.de>,
+ maarten.lankhorst@linux.intel.com, mripard@kernel.org, airlied@gmail.com,
+ simona@ffwll.ch, dri-devel@lists.freedesktop.org,
+ linux-mediatek@lists.infradead.org, freedreno@lists.freedesktop.org,
+ linux-arm-msm@vger.kernel.org, imx@lists.linux.dev,
+ linux-samsung-soc@vger.kernel.org, nouveau@lists.freedesktop.org,
+ virtualization@lists.linux.dev, spice-devel@lists.freedesktop.org,
+ linux-renesas-soc@vger.kernel.org, linux-rockchip@lists.infradead.org,
+ linux-tegra@vger.kernel.org, intel-xe@lists.freedesktop.org,
+ xen-devel@lists.xenproject.org,
+ Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+ Andy Yan <andyshrk@163.com>, Daniel Stone <daniel@fooishbar.org>
+References: <f3ba05c7-6e49-4641-a3f9-ba418ebdb7c3@ideasonboard.com>
+ <c6735280-7c32-4319-8ca9-a7305d8117c3@suse.de>
+ <d67adb03-5cd0-4ac9-af58-cf4446dacee3@ideasonboard.com>
+ <0ea6be58-0e04-4172-87cd-064a3e4a43bc@suse.de>
+ <f35cb350-6be9-48ca-ad7e-e9dd418281d5@ideasonboard.com>
+ <4af0b6a7-c16a-4187-bbf5-365a9c86de21@suse.de>
+ <e327ad84-b5c9-4480-b873-dc3aca605538@ideasonboard.com>
+ <a2bbeb47-2569-4ee0-9265-92bab139bdc6@suse.de>
+ <f3833771-fcd7-45dc-9019-1525fef34429@ideasonboard.com>
+ <CAMuHMdXxYa+Na3XxpLTy=-eUL_zQ9kAiUKYu-E04u3KWApusSA@mail.gmail.com>
+ <xz5ncq67bgmdase2jg3cfvyaxpiwhol2eqpfzow6dqpauvslo5@2w3rw27lhnxo>
+ <b97fcd2f-516a-4172-aef3-631418564cfa@linux.dev>
+ <ef52dab0-058f-408f-a298-c4b2453a3d2f@ideasonboard.com>
+ <f4562dbf-b132-4cfd-8f7e-43cd69f2673f@linux.dev>
+ <cf34be39-ce92-4ea5-b548-03008c163d31@ideasonboard.com>
+Content-Language: en-US
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: Sui Jingfeng <sui.jingfeng@linux.dev>
+In-Reply-To: <cf34be39-ce92-4ea5-b548-03008c163d31@ideasonboard.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20241126-topic-sm8x50-pcie-global-irq-v1-0-4049cfccd073@linaro.org>
+X-Migadu-Flow: FLOW_OUT
 
-On Tue, Nov 26, 2024 at 11:22:48AM +0100, Neil Armstrong wrote:
-> Following [1], document the global irq for the PCIe RC and
-> add the interrupt for the SM8550 & SM8650 PCIe RC nodes.
-> 
-> Tested on SM8550-QRD, SM8650-QRD and SM8650-HDK.
-> 
-> [1] https://lore.kernel.org/all/20240731-pci-qcom-hotplug-v3-0-a1426afdee3b@linaro.org/
-> 
-> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Hi,
 
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+On 2025/1/19 23:22, Tomi Valkeinen wrote:
+> On 19/01/2025 16:59, Sui Jingfeng wrote:
+>
+>>>>> But userspace must be able to continue allocating YUV buffers through
+>>>>> CREATE_DUMB.
+>>>>
+>>>> I think, allocating YUV buffers through CREATE_DUMB interface is just
+>>>> an *abuse* and *misuse* of this API for now.
+>>>>
+>>>> Take the NV12 format as an example, NV12 is YUV420 planar format, have
+>>>> two planar: the Y-planar and the UV-planar. The Y-planar appear first
+>>>> in memory as an array of unsigned char values. The Y-planar is 
+>>>> followed
+>>>> immediately by the UV-planar, which is also an array of unsigned char
+>>>> values that contains packed U (Cb) and V (Cr) samples.
+>>>>
+>>>> But the 'drm_mode_create_dumb' structure is only intend to provide
+>>>> descriptions for *one* planar.
+>>>>
+>>>> struct drm_mode_create_dumb {
+>>>>      __u32 height;
+>>>>      __u32 width;
+>>>>      __u32 bpp;
+>>>>      __u32 flags;
+>>>>      __u32 handle;
+>>>>      __u32 pitch;
+>>>>      __u64 size;
+>>>> };
+>>>>
+>>>> An width x height NV12 image takes up width*height*(1 + 1/4 + 1/4) 
+>>>> bytes.
+>>>>
+>>>> So we can allocate an *equivalent* sized buffer to store the NV12 
+>>>> raw data.
+>>>>
+>>>> Either 'width * (height * 3/2)' where each pixel take up 8 bits,
+>>>> or just 'with * height' where each pixels take up 12 bits.
+>>>>
+>>>> However, all those math are just equivalents description to the 
+>>>> original
+>>>> NV12 format, neither are concrete correct physical description.
+>>>
+>>> I don't see the problem. Allocating dumb buffers, if we don't have 
+>>> any heuristics related to RGB behind it, is essentially just 
+>>> allocating a specific amount of memory, defined by width, height and 
+>>> bitsperpixel.
+>>>
+>> I think, the problem will be that the 'width', 'height' and 'bpp'
+>> are originally used to describe one plane. Those three parameters
+>> has perfectly defined physical semantics.
+>>
+>> But with multi planar formats, take NV12 image as an example,
+>> for a 2×2 square of pixels, there are 4 Y samples but only 1 U
+>> sample and 1 V sample. This format requires 4x8+1x8+1x8=48 bits
+>> to store the 2x2 square.
+>>
+>> So its depth is 12 bits per pixel (48 / (2 * 2)).
+>>
+>> so my problem is that the mentioned 12bpp in this example only
+>> make sense in mathematics, it doesn't has a good physical
+>> interpret. Do you agree with me on this technique point?
+>>
+>>> If I want to create an NV12 framebuffer, I allocate two dumb 
+>>> buffers, one for Y and one for UV planes, and size them accordingly. 
+>>> And then create the DRM framebuffer with those.
+>>>
+>> Then how you fill the value of the 'width', 'height' and 'bpp' of 
+>> each dumb buffers?
+>
+> For 640x480-NV12:
+> plane 0: width = 640, height = 480, bpp = 8
+> plane 1: width = 640 / 2, height = 480 / 2, bpp = 16
+>
+But i think this should be hardware dependent. The hardware I'm using
+load NV12  raw data as a whole. I only need to feed gpuva of the backing
+memory to the hardware register once.
 
-- Mani
+Not familiar with your hardware, so I can't talk more on this software
+design. Perhaps someone know more could have a comment on this.
 
-> ---
-> Neil Armstrong (3):
->       dt-bindings: PCI: qcom,pcie-sm8550: document 'global' interrupt
->       arm64: dts: qcom: sm8550: Add 'global' interrupt to the PCIe RC nodes
->       arm64: dts: qcom: sm8650: Add 'global' interrupt to the PCIe RC nodes
-> 
->  Documentation/devicetree/bindings/pci/qcom,pcie-sm8550.yaml |  9 ++++++---
->  arch/arm64/boot/dts/qcom/sm8550.dtsi                        | 12 ++++++++----
->  arch/arm64/boot/dts/qcom/sm8650.dtsi                        | 12 ++++++++----
->  3 files changed, 22 insertions(+), 11 deletions(-)
-> ---
-> base-commit: adc218676eef25575469234709c2d87185ca223a
-> change-id: 20241126-topic-sm8x50-pcie-global-irq-712d678b5226
-> 
-> Best regards,
-> -- 
-> Neil Armstrong <neil.armstrong@linaro.org>
-> 
+>> Why not allocate storage for the whole on one shoot?
+>
+> You can, if you adjust the parameters accordingly. However, if the 
+> strides of the planes are not equal, I guess it might cause problems 
+> on some platforms.
+>
+> But I think it's usually simpler to allocate one buffer per plane, and 
+> perhaps even better as it doesn't require as large contiguous memory 
+> area.
+>
+>> The modetest in libdrm can be an good example, send it[1] to you as 
+>> an reference.
+>
+> Right, so modetest already does it successfully. So... What is the issue?
+>
+But then, the problem will become that it override the 'height' parameter.
+What's the physical interpretation of the 'height' parameter when creating
+an NV12 image with the dump API then?
 
+I guess, solving complex problems with simple APIs may see the limitation,
+sooner or later. But I not very sure and might be wrong. So other peoples
+can override me words.
+
+
+> Everyone agrees that CREATE_DUMB is not the best ioctl to allocate 
+> buffers, and one can't consider it to work identically across the 
+> platforms. But it's what we have and what has been used for ages.
+>
+Yeah, your request are not unreasonable. It can be seen as a kind of rigid demand.
+Since GEM DMA helpers doesn't export an more advanced interface to userspace so far.
+As a result, drivers that employing GEM DMA has no other choice, but to abuse the
+dumb buffer API to do allocation for the more complex format buffers.
+
+The dumb buffer API doesn't support to specify buffer format, tile status and
+placement etc. The more advance drivers has been exposed the xxx_create_gem()
+to user-space. It seems that a few more experienced programmers hint us to
+create an new ioctl at above thread, so that we can keep employing simple API
+to do simple things and to suit complex needs with the more advanced APIs.
+
+
+>  Tomi
+>
 -- 
-மணிவண்ணன் சதாசிவம்
+Best regards,
+Sui
+
 
