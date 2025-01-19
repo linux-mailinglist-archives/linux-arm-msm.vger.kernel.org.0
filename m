@@ -1,102 +1,192 @@
-Return-Path: <linux-arm-msm+bounces-45478-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-45479-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5FF84A15E6C
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Jan 2025 18:55:11 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2C94AA15F68
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 19 Jan 2025 01:55:05 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8749916631F
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Jan 2025 17:55:09 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8D87C1885DC5
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 19 Jan 2025 00:55:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 655FC19CC33;
-	Sat, 18 Jan 2025 17:55:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9318E63CB;
+	Sun, 19 Jan 2025 00:55:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Z2KzREKb"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ZXnssyyG"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 326E2173;
-	Sat, 18 Jan 2025 17:55:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E6B3D2FF
+	for <linux-arm-msm@vger.kernel.org>; Sun, 19 Jan 2025 00:54:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737222906; cv=none; b=ZHOkACf+3Ry8sLfUOvUfHiWJ8ou3WhSbBhuWOogss4A6Yl4wDe7VOrwGzX7T5Ss9GEQg/WNmop16X7p3W3UpCozmKIuMDjdvnzoy5Z0UcmZq8lwVKC31X8neYodEzl0orY9+Kt8ScrC8HKmaInukKHeLoL6OE6c/AKElfk17yxY=
+	t=1737248101; cv=none; b=n7ObW20AV36K847lEEDvtUgSzwv8vvSMAI37neObnr37dTd9fS61x+s5St3MFxhztQl9mbaxxXV1j3e/oB7yJaY63DqHXsGt9rsqsrM7rrE1FAnA6i79ey/YbM/fPtAPrsVMfybfG9xZqMSNDjLzGlZvylEauKeMptmYAhMB5Ic=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737222906; c=relaxed/simple;
-	bh=p3XFn+yR7jJf+lI7IYd80f8frBv7zbx+c8ek2QZPPI0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=d+QXYyEp6tjrme0sLSrMiGAkGwuFvfvq7vVuxiLIZetS0nAbgWVQS4r5PtRUMN3GdxqhfUj9t3yUKMjx+DikuAOf1R6SFzmCyfwc1m22Pud3GPDND+2hKA+X4kRphTEVGbyAO0v+n3SW9agBRyOfurCeLUGl7PBkkn8ai+AePYQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Z2KzREKb; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EB47C4CED1;
-	Sat, 18 Jan 2025 17:55:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1737222904;
-	bh=p3XFn+yR7jJf+lI7IYd80f8frBv7zbx+c8ek2QZPPI0=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=Z2KzREKbZQcE/fDtvU4qaWOZVOVq57U/rnGKdkds5VJSKvmV/UR4kSbr90KZYe68X
-	 Hadzlc4JKoivp508nbOWZI7x1FDiUn0y96Wrb3seb45Xo9grgXiOjOjCIXwiZeidtz
-	 OEBq6mzTdbVq50UL10IxG4spFu5qAnJYLzX38lJCF5GjHR95bNJnQHRbDDlBZk+81Y
-	 gZRW3iXKY4BZ9VSRhlFFJqeHdc/59QMTJpWYNEZ+3Y/ZPrN5fGCP+AI+2YCsBZ9JVX
-	 I8w02ZEJ4GNK7SFsiqbkfg2qz8um4CRL81Yto1ReJl638NfAAynenkP7f+yEUbSf71
-	 srzHS9qlmxx6w==
-Date: Sat, 18 Jan 2025 09:55:02 -0800
-From: Eric Biggers <ebiggers@kernel.org>
-To: Bartosz Golaszewski <brgl@bgdev.pl>
-Cc: neil.armstrong@linaro.org, linux-crypto@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-	Thara Gopinath <thara.gopinath@gmail.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	"David S. Miller" <davem@davemloft.net>,
-	Stanimir Varbanov <svarbanov@mm-sol.com>
-Subject: Re: [PATCH 9/9] crypto: qce - switch to using a mutex
-Message-ID: <20250118175502.GA66612@sol.localdomain>
-References: <20241203-crypto-qce-refactor-v1-0-c5901d2dd45c@linaro.org>
- <20241203-crypto-qce-refactor-v1-9-c5901d2dd45c@linaro.org>
- <d6220576-eaf5-4415-b25f-b5984255ab78@linaro.org>
- <CAMRc=MevaM4tUNQUs_LjFYaUtDH=YqE-t2gBponGqtK5xE9Gpw@mail.gmail.com>
- <20250118080604.GA721573@sol.localdomain>
- <CAMRc=MeFMYzMY4pU9D6fEpg9bQuuzqg4rQhBU8=z_2eMU+Py-g@mail.gmail.com>
+	s=arc-20240116; t=1737248101; c=relaxed/simple;
+	bh=VFtYwX07oZvHGxiVg/5uqQZa1Rz1XByvclsQUprLecg=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=ceEVCpClg0zcnGAArC8KwUtPXfHM6Z9J7iLePNQLAbxtWOuaovt830/dJKditwOzAR2DuCo8MqxwfxCk/O6SMEUTJ5R8gqUMrEm1eIezqGTrOgEyZSh7j7aQFkzUq8duNgx1cS71ZG4Z28g/2+pR2dfIXVth4k9Ea0lGrokr7TM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ZXnssyyG; arc=none smtp.client-ip=209.85.221.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f51.google.com with SMTP id ffacd0b85a97d-38634c35129so2698668f8f.3
+        for <linux-arm-msm@vger.kernel.org>; Sat, 18 Jan 2025 16:54:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1737248098; x=1737852898; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=sPVy2TZ7nxNOnPzYmR2/3BBjXksk2FPEQABRuEps/hI=;
+        b=ZXnssyyG9sM7nECFu5g+PTqS54/M93wzP/RPV96DF6Gh+KinkDtFeeu9YGnbJ0O2Pu
+         +xxTxeB3LPYfIZycV9Sjf5Ih/ZvfayqkuO1LdCIJJnlR/h8FsG6st2so28xCkQiLzrOV
+         ikqFe1kDd0lq3UrjMbfdood7PCHtHG+ncLuRJwq4hnIDHWSNRZ8BwLTTrKL0itYfELHH
+         ImKkAKqp7IlzBh4QwRhFzE0yIRSmeBXGsYP7Rn4HxhzVMzWGn28l2Tyf6kueZ5gpruo5
+         rY4E2NM1C2zK3QjzSpjAcl8IJcXYfLFrafOBaxalYb04rgWsUpAcaYDDOJTIUBOuqq5h
+         qw8Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1737248098; x=1737852898;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=sPVy2TZ7nxNOnPzYmR2/3BBjXksk2FPEQABRuEps/hI=;
+        b=PRpPWo/OpXivx5rjAUiXDktRLBC1dKEmps9WWRe7tAJNxwdu7TbypU7vZPzq/n4Vfv
+         6lObHpf7tW8xV4TYP6xwD13KWyVAAzkbbNtp766rrYw/Mp0tCdN/HIAY7oGAPCQWo+d/
+         TzEQf/fQJgezvcRIqSIqWYx2aQ73YQztiJfSKeH3NpWiXpL6KkigA6WaEU6/Mj4sQvOg
+         8Y+Am4WyycdrvASPws/TVP3cy2uk9l4J/AfeaWFe4KhdPs2NV8pXy3w9mn8VSx8HvmAx
+         N9y8PDT29UWhuiuyDfEwV3X3ndHN89yDQwj4RdZde2f8PAx8t3vZx31LCRU9Cv1NFOqc
+         gYpA==
+X-Forwarded-Encrypted: i=1; AJvYcCXy7vsVumEegpXWgC0kcFOI5rMRG+4xi0ZItZzDm2/jYaqz8n1h2F0DwRm37GNl+pBbk0F7iUD6hdtynV8s@vger.kernel.org
+X-Gm-Message-State: AOJu0YyzL5d9EtOOedN6zerxO36z4OUxUyZVKaqtC6bWYAhwiE9zM+xF
+	EONUtQsuZezXaVb1D9jrjD9jDZFd26H95McY4rbZoIJCilQy+yTKmcKu8d1mKXQ=
+X-Gm-Gg: ASbGnctOX1vr2EhTACGRdIIcKkYXgzoGVkEheBA8hQfRiIA+eCW5n/FDwBwlfWaKfVh
+	dTQzMUid3mYe+oZzy8GbF6wpn8vTLURO0eMqvkbF6kfrCbSNJFTtstrH0tFnj8ou369tZs0oU3s
+	F56Rr/WIikwQ1Un/z64yjxa5b5ZVVbS/bpcf+Cn5OJuHUND6RS2oxxSiDU7x5JmMF4TRv1adnNI
+	fS/DdODap09UiuUM4oNPZB8SfpcZ5X8PDUj6hxBmKNjirmKIhPBeYiSaxjsv3xuzNEOgh3j7lYs
+	viM=
+X-Google-Smtp-Source: AGHT+IGtOaL5Zt6V5dTGsVlWfUStNwZWdqma2iCttMpY56KqQ7XHBLD+8DWgwoEHOAJDPekrodr5Eg==
+X-Received: by 2002:adf:fec5:0:b0:38a:88d0:18d6 with SMTP id ffacd0b85a97d-38bf58e8fa8mr4691530f8f.42.1737248097750;
+        Sat, 18 Jan 2025 16:54:57 -0800 (PST)
+Received: from [127.0.1.1] ([176.61.106.227])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38bf322aa40sm6339241f8f.45.2025.01.18.16.54.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 18 Jan 2025 16:54:56 -0800 (PST)
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Subject: [PATCH v4 0/4] Add dt-bindings and dtsi changes for CAMSS on
+ x1e80100 silicon
+Date: Sun, 19 Jan 2025 00:54:52 +0000
+Message-Id: <20250119-b4-linux-next-24-11-18-dtsi-x1e80100-camss-v4-0-c2964504131c@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAMRc=MeFMYzMY4pU9D6fEpg9bQuuzqg4rQhBU8=z_2eMU+Py-g@mail.gmail.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAFxNjGcC/53NwUrEMBDG8VdZcnZkZppJqiffQzykmXQ3oK0kt
+ VSWvrvZBRHxtB6/gfn9z6amklM1j4ezKWnNNc9TG/buYOIpTMcEWds2jGyJ6AEGC695+thgSts
+ CbIEIqAddaoaNUo+ECDG81Qo9B9f5zil6Ng18L2nM2zX2/NL2KddlLp/X9kqX678yKwGCWPSiX
+ kYn9ql9hjLfz+VoLp2Vf2xmf5PNzUY3qkrwKsPwx+6+bWlvfJPdNTsOzqmIMsb4y973/QuC+Ft
+ InQEAAA==
+X-Change-ID: 20241119-b4-linux-next-24-11-18-dtsi-x1e80100-camss-82a63736d072
+To: Loic Poulain <loic.poulain@linaro.org>, Robert Foss <rfoss@kernel.org>, 
+ Andi Shyti <andi.shyti@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Todor Tomov <todor.too@gmail.com>, 
+ Mauro Carvalho Chehab <mchehab@kernel.org>, 
+ Bjorn Andersson <andersson@kernel.org>, 
+ Michael Turquette <mturquette@baylibre.com>, 
+ Stephen Boyd <sboyd@kernel.org>, 
+ Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>, 
+ Jagadeesh Kona <quic_jkona@quicinc.com>, 
+ Konrad Dybcio <konradybcio@kernel.org>
+Cc: linux-i2c@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ linux-media@vger.kernel.org, linux-clk@vger.kernel.org, 
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
+ Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+X-Mailer: b4 0.15-dev-33ea6
 
-On Sat, Jan 18, 2025 at 10:28:26AM +0100, Bartosz Golaszewski wrote:
-> I was testing with kcapi-speed and cryptsetup benchmark. I've never
-> seen any errors.
-> 
-> Is this after my changes only or did it exist before? You're testing
-> with the tcrypt module? How are you inserting it exactly? What params?
+v4:
+- Applies RB from Konrad
+- Adds the second CCI I2C bus to CCI commit log description.
+  I previously considered leaving out the always on pins but, decided
+  to include them in the end and forgot to align the commit log.
+- Alphabetises the camcc.h included in the dtsi. - Vlad
+- Link to v3: https://lore.kernel.org/r/20250102-b4-linux-next-24-11-18-dtsi-x1e80100-camss-v3-0-cb66d55d20cc@linaro.org
 
-Those are all benchmarks, not tests.  The tests run at registration time if you
-just enable the kconfig options for them:
+v3:
+- Fixes ordering of headers in dtsi - Vlad
+- Changes camcc to always on - Vlad
+- Applies RB as indicated - Krzysztof, Konrad
+- Link to v2: https://lore.kernel.org/r/20241227-b4-linux-next-24-11-18-dtsi-x1e80100-camss-v2-0-06fdd5a7d5bb@linaro.org
 
-    # CONFIG_CRYPTO_MANAGER_DISABLE_TESTS is not set
-    CONFIG_CRYPTO_MANAGER_EXTRA_TESTS=y
+v2:
 
-The test failures and KASAN error occur on mainline too, so yes they occur
-before your patchset too.
+I've gone through each comment and implemented each suggestion since IMO
+they were all good/correct comments.
 
-> >
-> > I personally still struggle to understand how this driver could plausibly be
-> > useful when the software crypto has no issues, is much faster, and is much
-> > better tested.  What is motivating having this driver in the kernel?
-> 
-> We want to use it in conjunction with the upcoming scminvoke (for
-> loading TAs and invoking objects - used to program the keys into the
-> QCE) to support the DRM use-case for decrypting streaming data inside
-> secure buffers upstream.
+Detail:
 
-Notably lacking is any claim that any of the current features of the driver are
-actually useful.
+- Moves x1e80100 camcc to its own yaml - Krzysztof
+- csid_wrapper comes first because it is the most relevant
+  register set - configuring all CSID blocks subordinate to it - bod, Krzysztof
+- Fixes missing commit log - Krz
+- Updates to latest format established @ sc7280 - bod
+- Includes CSID lite which I forgot to add @ v1 - Konrad, bod
+- Replaces static ICC parameters with defines - Konrad
+- Drops newlines between x and x-name - Konrad
+- Drops redundant iommu extents - Konrad
+- Leaves CAMERA_AHB_CLK as-is - Kronrad, Dmitry
+  Link: https://lore.kernel.org/r/3f1a960f-062e-4c29-ae7d-126192f35a8b@oss.qualcomm.com
+- Interrupt EDGE_RISING - Vladimir
+- Implements suggested regulator names pending refactor to PHY API - Vladimir
+- Drop slow_ahb_src clock - Vladimir
 
-- Eric
+Link to v1:
+https://lore.kernel.org/r/20241119-b4-linux-next-24-11-18-dtsi-x1e80100-camss-v1-0-54075d75f654@linaro.org
+
+Working tree:
+https://git.codelinaro.org/bryan.odonoghue/kernel/-/tree/arm-laptop/wip/x1e80100-6.13-rc3
+
+v1:
+
+This series adds dt-bindings and dtsi for CAMSS on x1e80100.
+
+The primary difference between x1e80100 and other platforms is a new VFE
+and CSID pair at version 680.
+
+Some minor driver churn will be required to support outside of the new VFE
+and CSID blocks but nothing too major.
+
+The CAMCC in this silicon requires two, not one power-domain requiring
+either this fix I've proposed here or something similar:
+
+https://lore.kernel.org/linux-arm-msm/bad60452-41b3-42fb-acba-5b7226226d2d@linaro.org/T/#t
+
+That doesn't gate adoption of the binding description though.
+
+A working tree in progress can be found here:
+https://git.codelinaro.org/bryan.odonoghue/kernel/-/tree/x1e80100-6.12-rc7+camss?ref_type=heads
+
+Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+---
+Bryan O'Donoghue (4):
+      dt-bindings: media: Add qcom,x1e80100-camss
+      arm64: dts: qcom: x1e80100: Add CAMCC block definition
+      arm64: dts: qcom: x1e80100: Add CCI definitions
+      arm64: dts: qcom: x1e80100: Add CAMSS block definition
+
+ .../bindings/media/qcom,x1e80100-camss.yaml        | 367 +++++++++++++++++++++
+ arch/arm64/boot/dts/qcom/x1e80100.dtsi             | 351 ++++++++++++++++++++
+ 2 files changed, 718 insertions(+)
+---
+base-commit: 0907e7fb35756464aa34c35d6abb02998418164b
+change-id: 20241119-b4-linux-next-24-11-18-dtsi-x1e80100-camss-82a63736d072
+
+Best regards,
+-- 
+Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+
 
