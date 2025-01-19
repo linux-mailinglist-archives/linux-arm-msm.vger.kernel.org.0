@@ -1,138 +1,132 @@
-Return-Path: <linux-arm-msm+bounces-45526-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-45527-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id CB512A16315
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 19 Jan 2025 18:00:01 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id A8D2AA16325
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 19 Jan 2025 18:09:14 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0ECB5164189
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 19 Jan 2025 17:00:00 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id CE14B3A3CE0
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 19 Jan 2025 17:09:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2484A1DF980;
-	Sun, 19 Jan 2025 16:59:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A72671DF962;
+	Sun, 19 Jan 2025 17:09:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="NKaV1550"
+	dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b="OBw1pvsH"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from perceval.ideasonboard.com (perceval.ideasonboard.com [213.167.242.64])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2880F1DF974
-	for <linux-arm-msm@vger.kernel.org>; Sun, 19 Jan 2025 16:59:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAA851DF254;
+	Sun, 19 Jan 2025 17:09:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.167.242.64
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737305993; cv=none; b=hgxVLN3BdID9udTEJmIvEAl+Aumsu3T7UKSp0qp9XKNU68vr8A2PngIiKtvrnEk/uBis9j95UjsV8H0Pr3Psb/JvSz3I/fQT4z452qpO6YmsPHb77j+JNKtPUEZsnp0Nl4YxNgOrRoCuno+uuWEg7YQ2bSwZ99RyimqdsR4jqUE=
+	t=1737306551; cv=none; b=XiRBEnlMTnpFjK4dLeoQf9Dj/L2ZnsQRp9JKbwwGqZWzeIi0nqmL+KYN1og1wkM388VyNhuKPzilmLGFHFXNuuqtTGNMnIhMcFCwJqNh6RlbCK9BQ/XWxVbiLctgRpRO5lVSKPFeZEbD/gw1bFfP/nJKkrG4BMFwnb+qfB+1CnI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737305993; c=relaxed/simple;
-	bh=moQ4Sx1R9uDF15Ros1s1+SmGuBjFhQZ7Ns8wG2ntmxU=;
+	s=arc-20240116; t=1737306551; c=relaxed/simple;
+	bh=aJRfXAoIvGiK3DbkqnVQeu1PiaXDKaiA9Gr69mpEeis=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=mWsnxOBjJadYOKepV0nQWz0oXcujTf8rjoQDionoNjZdI/wRw6sRFm57QuNhr8pfVZXGIZrmWRTI+Cd5NozsFi08ECBWekzQLlEobuekmuqq8EGkWwAOuS0Z5PCfs8wGhNIFy4dIkpSNr03NQwBupRVxdpT/xtExVX5njMkV9ks=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=NKaV1550; arc=none smtp.client-ip=209.85.128.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-437a92d7b96so36516105e9.2
-        for <linux-arm-msm@vger.kernel.org>; Sun, 19 Jan 2025 08:59:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1737305989; x=1737910789; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=gU2K4r4ZzM/BRR+Tyo710S/yU02b9d5jbFwsNMfd6eQ=;
-        b=NKaV1550pNQjUbFDK6asjoj7qqXbwZ3MOAucx0FuXEkIQHLix1SuyidZnP9cjtrque
-         URgsqlqYkf/SXwhMB6xyf9d5eHop8jgyWcoy3+Fhk7Xur2023UBq1nfQOrKRkbVOdYN3
-         3Hd5tkWS8rFwkdlF8ndBkURsYNlFqRtjWJfgHd0nCFLnjhT3gTLZ4Z4UWrKaZP7qJa/z
-         98r6SruD/3BuHT76vhsgUzGEZR0k9zysLqM6TRWOC/w2CkcEAexcS1DLVZdFZaM0Jfhx
-         KIzMIv7FK4tE/DcDd8VzuAc1Rhs+MJTFAOMZWFAnUmg5jo3nSXjh4UEKRdZLqDac09ly
-         nNFQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1737305989; x=1737910789;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=gU2K4r4ZzM/BRR+Tyo710S/yU02b9d5jbFwsNMfd6eQ=;
-        b=qLePRDRKu7x6vTpoxtE+vlQ3BBQGyvEbWAsGpc9Zyb0gFcJgDQRM1cnclRQj2BvDOT
-         V2hS3Yhx1m/gHLo+7U4Mgwyuv6iBTBmt3ISFMwo+dqIMscpsyKgCfFn8UhwF6f+XNX2l
-         cTbYbmLz+Y2qGxZuwgTtGRF4DKx+n1cTo+3SvivVA4YUH7LWOLjZkwIkgAUkizSTg5yy
-         8Nabf6uzBoA+9FP6vZKfM8npWZtZTrvugo1/tzbj7ps7BSj65li99SHvJU/1UCtaLmaL
-         B68K/bVmyMnR3Pby0soFxIESwzjOlClsFDO/Wzvs1Jeub/xc9+eLf4nM3XnpDMSMV3YZ
-         aRUg==
-X-Forwarded-Encrypted: i=1; AJvYcCUOvSRrUM9IzXHzegMnV+08YYiwHDKKTkKMSrPJ8xFxGex0Y/nYgtCJWMaQeA5qyxnANkic5N42yC5EQeyW@vger.kernel.org
-X-Gm-Message-State: AOJu0YzZ6iHll+FrcPFmXp0eWdxeqroyb0dCrTBA5JYBMqXk2i9yJom0
-	Mi2zpC5eOAT0F6rquNxeaQSap37OmRzMEdLK4+jgMos2roANdB75n6gLxf+Wnyg=
-X-Gm-Gg: ASbGncsmYXjPbcvK35K+uOfpaO+T8kXBkIvx3sHqHXSenBiGmWMvsmhEbRAv3hIsH7q
-	xRQYSDSKhZT9vVk7jdwv5869m34S28Gn9Oh8mGS1fWb5SOTOkGI9u8+idI78AsA1ejpoJ49aYDG
-	KZEgS54tHyeUIBLY5RX928gv5GLSCeTl00KPxgO63dfW53uN/5L3P/4FHQey4NXKaR1O3V1NWLF
-	xcn8Tw9BKlGGCLAGKTJKnlEh7+CSlthS6c3psMPnNoIYqnSBVYfWPr2alHaO8Yjokzp
-X-Google-Smtp-Source: AGHT+IGecv9i+IP+93WZa2OpzfUcrFBdgsvIOe06ZTegWk6SGd3ckOy9AuooWsDdbYCE9mFC7/pmGQ==
-X-Received: by 2002:a05:600c:4510:b0:434:a30b:5455 with SMTP id 5b1f17b1804b1-4389144f671mr88149435e9.27.1737305989481;
-        Sun, 19 Jan 2025 08:59:49 -0800 (PST)
-Received: from linaro.org ([86.123.96.125])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38bf3221b5asm7939547f8f.21.2025.01.19.08.59.47
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 19 Jan 2025 08:59:48 -0800 (PST)
-Date: Sun, 19 Jan 2025 18:59:47 +0200
-From: Abel Vesa <abel.vesa@linaro.org>
-To: Tudor Ambarus <tudor.ambarus@linaro.org>
-Cc: Krzysztof Kozlowski <krzk@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	"James E.J. Bottomley" <James.Bottomley@hansenpartnership.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	Eric Biggers <ebiggers@google.com>, linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-mmc@vger.kernel.org,
-	linux-scsi@vger.kernel.org, andre.draszik@linaro.org,
-	peter.griffin@linaro.org, willmcvicker@google.com,
-	kernel-team@android.com, stable@vger.kernel.org,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: Re: [PATCH v2 2/4] mmc: sdhci-msm: fix dev reference leaked through
- of_qcom_ice_get
-Message-ID: <Z40vg9CZQ60HRBoa@linaro.org>
-References: <20250117-qcom-ice-fix-dev-leak-v2-0-1ffa5b6884cb@linaro.org>
- <20250117-qcom-ice-fix-dev-leak-v2-2-1ffa5b6884cb@linaro.org>
+	 Content-Type:Content-Disposition:In-Reply-To; b=PO6pPt0HPhMleTaBgU0F9DDzgrgG8TLWSLGciPiWOc56EjKPEre44SsdnrmMUguRV5lmYmhyxDuLvkAz9ixKn5j9Kzw7wjLw43bLFG6dPjo7U5Zz5UJP5VryJqcNfsUhdkCLewYEaiOqHFSA3fYhQD8Ki6Ts8JB7sMMh70UrZtA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ideasonboard.com; spf=pass smtp.mailfrom=ideasonboard.com; dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b=OBw1pvsH; arc=none smtp.client-ip=213.167.242.64
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ideasonboard.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ideasonboard.com
+Received: from pendragon.ideasonboard.com (81-175-209-231.bb.dnainternet.fi [81.175.209.231])
+	by perceval.ideasonboard.com (Postfix) with ESMTPSA id 89E37A44;
+	Sun, 19 Jan 2025 18:08:05 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
+	s=mail; t=1737306485;
+	bh=aJRfXAoIvGiK3DbkqnVQeu1PiaXDKaiA9Gr69mpEeis=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=OBw1pvsHcR2BweZX/KU1szcB/w7FtiRtRW7yb+DznyFivWl1EatIqP+ePhHYSjEzj
+	 woJcak3Nj+IU95kPpPRovUwkyjiuPwG5ekSoIX5uH93MQlfYfUlHPU6r5/ncEIxZV4
+	 QiCXHGtqYYzymRcOpqSQO1hNMGBl60pFLxpvCuJY=
+Date: Sun, 19 Jan 2025 19:08:59 +0200
+From: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+To: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+Cc: Daniel Stone <daniel@fooishbar.org>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	maarten.lankhorst@linux.intel.com, mripard@kernel.org,
+	airlied@gmail.com, simona@ffwll.ch, dri-devel@lists.freedesktop.org,
+	linux-mediatek@lists.infradead.org, freedreno@lists.freedesktop.org,
+	linux-arm-msm@vger.kernel.org, imx@lists.linux.dev,
+	linux-samsung-soc@vger.kernel.org, nouveau@lists.freedesktop.org,
+	virtualization@lists.linux.dev, spice-devel@lists.freedesktop.org,
+	linux-renesas-soc@vger.kernel.org,
+	linux-rockchip@lists.infradead.org, linux-tegra@vger.kernel.org,
+	intel-xe@lists.freedesktop.org, xen-devel@lists.xenproject.org,
+	Andy Yan <andyshrk@163.com>
+Subject: Re: [PATCH v2 25/25] drm/xlnx: Compute dumb-buffer sizes with
+ drm_mode_size_dumb()
+Message-ID: <20250119170859.GA2467@pendragon.ideasonboard.com>
+References: <c6735280-7c32-4319-8ca9-a7305d8117c3@suse.de>
+ <d67adb03-5cd0-4ac9-af58-cf4446dacee3@ideasonboard.com>
+ <0ea6be58-0e04-4172-87cd-064a3e4a43bc@suse.de>
+ <f35cb350-6be9-48ca-ad7e-e9dd418281d5@ideasonboard.com>
+ <4af0b6a7-c16a-4187-bbf5-365a9c86de21@suse.de>
+ <e327ad84-b5c9-4480-b873-dc3aca605538@ideasonboard.com>
+ <CAPj87rOn=RQ615zyaEdFT2ADfPztU7+heVi0G34Rdg-=QO1cCw@mail.gmail.com>
+ <20250116084340.GF6754@pendragon.ideasonboard.com>
+ <20250116093854.GG6754@pendragon.ideasonboard.com>
+ <e8125edc-928a-47b4-80a3-224c945f6d68@ideasonboard.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20250117-qcom-ice-fix-dev-leak-v2-2-1ffa5b6884cb@linaro.org>
+In-Reply-To: <e8125edc-928a-47b4-80a3-224c945f6d68@ideasonboard.com>
 
-On 25-01-17 14:18:51, Tudor Ambarus wrote:
-> The driver leaks the device reference taken with
-> of_find_device_by_node(). Fix the leak by using devm_of_qcom_ice_get().
+On Thu, Jan 16, 2025 at 12:07:49PM +0200, Tomi Valkeinen wrote:
+> On 16/01/2025 11:38, Laurent Pinchart wrote:
+> > On Thu, Jan 16, 2025 at 10:43:40AM +0200, Laurent Pinchart wrote:
+> >> On Wed, Jan 15, 2025 at 02:34:26PM +0000, Daniel Stone wrote:
+> >>> On Wed, 15 Jan 2025 at 14:20, Tomi Valkeinen wrote:
+> >>>> No disagreement there, we need CREATE_DUMB2.
+> >>>>
+> >>>> My point is that we have the current UAPI, and we have userspace using
+> >>>> it, but we don't have clear rules what the ioctl does with specific
+> >>>> parameters, and we don't document how it has to be used.
+> >>>>
+> >>>> Perhaps the situation is bad, and all we can really say is that
+> >>>> CREATE_DUMB only works for use with simple RGB formats, and the behavior
+> >>>> for all other formats is platform specific. But I think even that would
+> >>>> be valuable in the UAPI docs.
+> >>>
+> >>> Yeah, CREATE_DUMB only works for use with simple RGB formats in a
+> >>> linear layout. Not monochrome or YUV or tiled or displayed rotated or
+> >>> whatever.
+> >>>
+> >>> If it happens to accidentally work for other uses, that's fine, but
+> >>> it's not generically reliable for anything other than simple linear
+> >>> RGB. It's intended to let you do splash screens, consoles, recovery
+> >>> password entries, and software-rendered compositors if you really
+> >>> want. Anything more than that isn't 'dumb'.
+> >>
+> >> We have lots of software out there that rely on CREATE_DUMB supporting
+> >> YUV linear formats, and lots of drivers (mostly on Arm I suppose) that
+> >> implement YUV support in CREATE_DUMB. I'm fine replacing it with
+> >> something better, but I think we need a standard ioctl that can create
+> >> linear YUV buffers. I've been told many times that DRM doesn't want to
+> >> standardize buffer allocation further than what CREATE_DUMB is made for.
+> >> Can we reconsider this rule then ?
+> > 
+> > Actually... Instead of adding a CREATE_DUMB2, it would be best on trying
+> > to leverage DMA heaps and deprecate allocating from the KMS device.
 > 
-> Fixes: c7eed31e235c ("mmc: sdhci-msm: Switch to the new ICE API")
-> Cc: stable@vger.kernel.org
-> Signed-off-by: Tudor Ambarus <tudor.ambarus@linaro.org>
-> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> Acked-by: Ulf Hansson <ulf.hansson@linaro.org>
+> If we allocate from DMA heaps, I think we then need a DRM ioctl which 
+> will tell you how big buffer(s) you need, based on the size and format.
 
-Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
+We will at least a kernel API to expose constraints to userspace.
+Whether that should calculate the buffer size for a given format, or
+expose information to userspace to enable that calculation, I'm not
+sure. But regardless of which option we pick, I agree we likely need a
+new API to enable usage of DMA heaps as allocators.
 
-> ---
->  drivers/mmc/host/sdhci-msm.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
-> index 4610f067faca..559ea5af27f2 100644
-> --- a/drivers/mmc/host/sdhci-msm.c
-> +++ b/drivers/mmc/host/sdhci-msm.c
-> @@ -1824,7 +1824,7 @@ static int sdhci_msm_ice_init(struct sdhci_msm_host *msm_host,
->  	if (!(cqhci_readl(cq_host, CQHCI_CAP) & CQHCI_CAP_CS))
->  		return 0;
->  
-> -	ice = of_qcom_ice_get(dev);
-> +	ice = devm_of_qcom_ice_get(dev);
->  	if (ice == ERR_PTR(-EOPNOTSUPP)) {
->  		dev_warn(dev, "Disabling inline encryption support\n");
->  		ice = NULL;
-> 
-> -- 
-> 2.48.0.rc2.279.g1de40edade-goog
-> 
+-- 
+Regards,
+
+Laurent Pinchart
 
