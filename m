@@ -1,73 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-45487-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-45488-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4E725A160AF
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 19 Jan 2025 08:11:46 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6BD2DA160B5
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 19 Jan 2025 08:22:20 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id D59991886748
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 19 Jan 2025 07:11:49 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 6834B7A2C83
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 19 Jan 2025 07:22:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C14AA188714;
-	Sun, 19 Jan 2025 07:11:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BF545170A1B;
+	Sun, 19 Jan 2025 07:22:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BYbvbHU9"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fl7MOd5j"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FA1623C9;
-	Sun, 19 Jan 2025 07:11:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9533F143888;
+	Sun, 19 Jan 2025 07:22:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737270703; cv=none; b=CTAi0ph4MSQzttYpm2qCRfuu1IjoT28CefscZ0XUSsBudFl5eXWF9zzs5lKDjQDTT7epIIxl8pQypicYgeHu+UOUG59cSXCRk8aMAWYx0sWvkBXGKgpjVXsLcnrkK2DlnIm5uuXD+ZkQE/J5Qi457DW210EFsdTfTJ5GDlHH5G0=
+	t=1737271333; cv=none; b=kbP2FvEkOs/22c/49/vdItpd2GIxMFhexVGcaIwvoZS+JcIGuvCdUSNjzBounnsN+S92oAlaNy0hUwCjrYDsYS3fk380CAfrxWPXn3+tLVvuwxzrYMqNBO8icIVzKsY/z8/iKwlDbYspkLqqYSehYKgfCUB+JgcdszvBmMpi3Q0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737270703; c=relaxed/simple;
-	bh=rcm2VwhfL9VG1j4iZLHkUBMlqKdH3x7wY84FhttghM8=;
+	s=arc-20240116; t=1737271333; c=relaxed/simple;
+	bh=6pYOfD6v1g8uXxUKDP/fNNAt8mYrvBdcxD1SNnOO9Os=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Mgt6qsSUeP/s7EL94DD0bmeo32CS5gwl9dzJtNIEjwyStXZ6sPx5gVbVIjMlPaxT4C2CV3VRbdtTfvwlwQtZL3fyHtm4ui6TKXU02036LtY75aqvT7k2km/CrMFKUIucZT2l81JYC4Bot5FIhQOFRgPQpxKv6NVFqHJ4H4YB81o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BYbvbHU9; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DF5AC4CED6;
-	Sun, 19 Jan 2025 07:11:35 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=VVyHDA4Q9AvsSweRWVXWKMAznhbzyjpBWnKgvUqJBsY5l7lTJQn3LUSEo6pwrFMXSG/fYApmeInjoaKC1NuVj8vs1PdpFqXBMDtFFFdqPd6xYYpw9kxHgHJJDCA7BaEkAKG5HR6LuqE3mEFQ9AHiIkQGQeYaZ1CN+xE2to4RNGU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fl7MOd5j; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36A87C4CED6;
+	Sun, 19 Jan 2025 07:22:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1737270702;
-	bh=rcm2VwhfL9VG1j4iZLHkUBMlqKdH3x7wY84FhttghM8=;
+	s=k20201202; t=1737271333;
+	bh=6pYOfD6v1g8uXxUKDP/fNNAt8mYrvBdcxD1SNnOO9Os=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=BYbvbHU9ebBwBZKrpJI57XOvVEc109zi5V31RWS1F+59cYE1HtHBsH0wVb+8z11s9
-	 UOHmgTpv0xdN8QsAAnQe5kUEIsYPTTfSkXecBkUVlvvpQ54fjcqUMIWRYJg60rtLF3
-	 lP02qYIvhtQdnEAP6yrPV/OP7Bbfrmbd1maGxG5CGyygvGmz2ReO9DMtKNL0qy2AbP
-	 GzJQ3xej/hyRQaTWoP0ndssB1pBLB8CU3+9JJRtAvvwsYLNzEWvx05eKCKrOVlcSjX
-	 LZ9OVlYqXrnBmgHbLjAHjt7EEuKlBZfpo/mEvmew7JQkDVyfQoS4ziFt6p4vr1bGQS
-	 gTcCvxhjUuX3A==
-Date: Sun, 19 Jan 2025 12:41:31 +0530
+	b=fl7MOd5jPReu8n7aV1WIs5fJIy/QzsR2JhkUZLisjR58Js0ktAxB0r4gsEtBtEMkg
+	 HFSxvJ53/c5gr/df3wSxFmwqIQ+BqsabFZP/w2qfwPbOTqMooLWZkrs7sIOrtuCQ6F
+	 TdLM8sDaOYpZT1ro1lN50nxvylt8nr55A/pLe7weCKh/0CkRbA2e775hBtKbJ4bOSf
+	 mftwz/O/jjXoDkE5Rm6LYrODcg3j6pJFG1lgBCNZp8pe+NOB9x2UM8JKeU+N3YYOcZ
+	 hq1OoDMRtOe57/Rh+DhH0es8v8sdMoNuWNViKiy6rjoapdvYxIpnr7JcXlzSZuATZg
+	 WtLMFHrecxanQ==
+Date: Sun, 19 Jan 2025 12:52:04 +0530
 From: Manivannan Sadhasivam <mani@kernel.org>
 To: Ziqi Chen <quic_ziqichen@quicinc.com>
 Cc: quic_cang@quicinc.com, bvanassche@acm.org, beanhuo@micron.com,
 	avri.altman@wdc.com, junwoo80.lee@samsung.com,
 	martin.petersen@oracle.com, quic_nguyenb@quicinc.com,
 	quic_nitirawa@quicinc.com, quic_rampraka@quicinc.com,
-	linux-scsi@vger.kernel.org, Alim Akhtar <alim.akhtar@samsung.com>,
-	"James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>,
-	Peter Wang <peter.wang@mediatek.com>,
-	Stanley Jhu <chu.stanley@gmail.com>,
+	linux-scsi@vger.kernel.org,
 	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Matthias Brugger <matthias.bgg@gmail.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Andrew Halaney <ahalaney@redhat.com>,
-	Maramaina Naresh <quic_mnaresh@quicinc.com>,
-	Eric Biggers <ebiggers@google.com>,
-	Minwoo Im <minwoo.im@samsung.com>,
-	open list <linux-kernel@vger.kernel.org>,
-	"moderated list:UNIVERSAL FLASH STORAGE HOST CONTROLLER DRIVER..." <linux-mediatek@lists.infradead.org>,
+	"James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>,
 	"open list:UNIVERSAL FLASH STORAGE HOST CONTROLLER DRIVER..." <linux-arm-msm@vger.kernel.org>,
-	"moderated list:ARM/Mediatek SoC support:Keyword:mediatek" <linux-arm-kernel@lists.infradead.org>
-Subject: Re: [PATCH 1/8] scsi: ufs: core: Pass target_freq to
- clk_scale_notify() vops
-Message-ID: <20250119071131.4hepn6msmh76npi7@thinkpad>
+	open list <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH 2/8] scsi: ufs: qcom: Pass target_freq to clk scale pre
+ and post change
+Message-ID: <20250119072204.6arlcagxzdgawb4n@thinkpad>
 References: <20250116091150.1167739-1-quic_ziqichen@quicinc.com>
- <20250116091150.1167739-2-quic_ziqichen@quicinc.com>
+ <20250116091150.1167739-3-quic_ziqichen@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -77,127 +67,79 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250116091150.1167739-2-quic_ziqichen@quicinc.com>
+In-Reply-To: <20250116091150.1167739-3-quic_ziqichen@quicinc.com>
 
-On Thu, Jan 16, 2025 at 05:11:42PM +0800, Ziqi Chen wrote:
+On Thu, Jan 16, 2025 at 05:11:43PM +0800, Ziqi Chen wrote:
 > From: Can Guo <quic_cang@quicinc.com>
 > 
 > If OPP V2 is used, devfreq clock scaling may scale clock amongst more than
-> two freqs,
+> two freqs.
 
-'amongst more than two freqs': I couldn't parse this.
+Same comment as previous patch.
 
-> so just passing up/down to vops clk_scale_notify() is not enough
-> to cover the intermediate clock freqs between the min and max freqs. Hence
-> pass the target_freq to clk_scale_notify() to allow the vops to perform
-> corresponding configurations with regard to the clock freqs.
+> In the case of scaling up, the devfreq may decide to scale the
+> clock to an intermidiate freq base on load, but the clock scale up pre
+> change operation uses settings for the max clock freq unconditionally. Fix
+> it by passing the target_freq to clock scale up pre change so that the
+> correct settings for the target_freq can be used.
 > 
-
-Add a note that the 'target_freq' is not used in this commit.
-
+> In the case of scaling down, the clock scale down post change operation
+> is doing fine, because it reads the actual clock rate to tell freq, but to
+> keep symmetry with clock scale up pre change operation, just use the
+> target_freq instead of reading clock rate.
+> 
 > Co-developed-by: Ziqi Chen <quic_ziqichen@quicinc.com>
 > Signed-off-by: Ziqi Chen <quic_ziqichen@quicinc.com>
 > Signed-off-by: Can Guo <quic_cang@quicinc.com>
-
-Signed-off-by tag order is not correct here. This implies that Ziqi originally
-worked on it, then Can took over and submitted. But it seems the reverse.
-
-- Mani
-
 > ---
->  drivers/ufs/core/ufshcd-priv.h  | 7 ++++---
->  drivers/ufs/core/ufshcd.c       | 4 ++--
->  drivers/ufs/host/ufs-mediatek.c | 1 +
->  drivers/ufs/host/ufs-qcom.c     | 5 +++--
->  include/ufs/ufshcd.h            | 2 +-
->  5 files changed, 11 insertions(+), 8 deletions(-)
+>  drivers/ufs/host/ufs-qcom.c | 23 ++++++++++++-----------
+>  1 file changed, 12 insertions(+), 11 deletions(-)
 > 
-> diff --git a/drivers/ufs/core/ufshcd-priv.h b/drivers/ufs/core/ufshcd-priv.h
-> index 9ffd94ddf8c7..0549b65f71ed 100644
-> --- a/drivers/ufs/core/ufshcd-priv.h
-> +++ b/drivers/ufs/core/ufshcd-priv.h
-> @@ -117,11 +117,12 @@ static inline u32 ufshcd_vops_get_ufs_hci_version(struct ufs_hba *hba)
->  	return ufshcd_readl(hba, REG_UFS_VERSION);
->  }
->  
-> -static inline int ufshcd_vops_clk_scale_notify(struct ufs_hba *hba,
-> -			bool up, enum ufs_notify_change_status status)
-> +static inline int ufshcd_vops_clk_scale_notify(struct ufs_hba *hba, bool up,
-> +					       unsigned long target_freq,
-> +					       enum ufs_notify_change_status status)
->  {
->  	if (hba->vops && hba->vops->clk_scale_notify)
-> -		return hba->vops->clk_scale_notify(hba, up, status);
-> +		return hba->vops->clk_scale_notify(hba, up, target_freq, status);
->  	return 0;
->  }
->  
-> diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
-> index acc3607bbd9c..8d295cc827cc 100644
-> --- a/drivers/ufs/core/ufshcd.c
-> +++ b/drivers/ufs/core/ufshcd.c
-> @@ -1157,7 +1157,7 @@ static int ufshcd_scale_clks(struct ufs_hba *hba, unsigned long freq,
->  	int ret = 0;
->  	ktime_t start = ktime_get();
->  
-> -	ret = ufshcd_vops_clk_scale_notify(hba, scale_up, PRE_CHANGE);
-> +	ret = ufshcd_vops_clk_scale_notify(hba, scale_up, freq, PRE_CHANGE);
->  	if (ret)
->  		goto out;
->  
-> @@ -1168,7 +1168,7 @@ static int ufshcd_scale_clks(struct ufs_hba *hba, unsigned long freq,
->  	if (ret)
->  		goto out;
->  
-> -	ret = ufshcd_vops_clk_scale_notify(hba, scale_up, POST_CHANGE);
-> +	ret = ufshcd_vops_clk_scale_notify(hba, scale_up, freq, POST_CHANGE);
->  	if (ret) {
->  		if (hba->use_pm_opp)
->  			ufshcd_opp_set_rate(hba,
-> diff --git a/drivers/ufs/host/ufs-mediatek.c b/drivers/ufs/host/ufs-mediatek.c
-> index 135cd78109e2..977dd0caaef6 100644
-> --- a/drivers/ufs/host/ufs-mediatek.c
-> +++ b/drivers/ufs/host/ufs-mediatek.c
-> @@ -1643,6 +1643,7 @@ static void ufs_mtk_clk_scale(struct ufs_hba *hba, bool scale_up)
->  }
->  
->  static int ufs_mtk_clk_scale_notify(struct ufs_hba *hba, bool scale_up,
-> +				    unsigned long target_freq,
->  				    enum ufs_notify_change_status status)
->  {
->  	if (!ufshcd_is_clkscaling_supported(hba))
 > diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
-> index 68040b2ab5f8..b6eef975dc46 100644
+> index b6eef975dc46..1e8a23eb8c13 100644
 > --- a/drivers/ufs/host/ufs-qcom.c
 > +++ b/drivers/ufs/host/ufs-qcom.c
-> @@ -1333,8 +1333,9 @@ static int ufs_qcom_clk_scale_down_post_change(struct ufs_hba *hba)
->  	return ufs_qcom_set_core_clk_ctrl(hba, false);
+> @@ -97,7 +97,7 @@ static const struct __ufs_qcom_bw_table {
+>  };
+>  
+>  static void ufs_qcom_get_default_testbus_cfg(struct ufs_qcom_host *host);
+> -static int ufs_qcom_set_core_clk_ctrl(struct ufs_hba *hba, bool is_scale_up);
+> +static int ufs_qcom_set_core_clk_ctrl(struct ufs_hba *hba, unsigned long freq);
+>  
+>  static struct ufs_qcom_host *rcdev_to_ufs_host(struct reset_controller_dev *rcd)
+>  {
+> @@ -524,7 +524,7 @@ static int ufs_qcom_link_startup_notify(struct ufs_hba *hba,
+>  			return -EINVAL;
+>  		}
+>  
+> -		err = ufs_qcom_set_core_clk_ctrl(hba, true);
+> +		err = ufs_qcom_set_core_clk_ctrl(hba, ULONG_MAX);
+>  		if (err)
+>  			dev_err(hba->dev, "cfg core clk ctrl failed\n");
+>  		/*
+> @@ -1231,7 +1231,7 @@ static int ufs_qcom_set_clk_40ns_cycles(struct ufs_hba *hba,
+>  	return ufshcd_dme_set(hba, UIC_ARG_MIB(PA_VS_CORE_CLK_40NS_CYCLES), reg);
 >  }
 >  
-> -static int ufs_qcom_clk_scale_notify(struct ufs_hba *hba,
-> -		bool scale_up, enum ufs_notify_change_status status)
-> +static int ufs_qcom_clk_scale_notify(struct ufs_hba *hba, bool scale_up,
-> +				     unsigned long target_freq,
-> +				     enum ufs_notify_change_status status)
+> -static int ufs_qcom_set_core_clk_ctrl(struct ufs_hba *hba, bool is_scale_up)
+> +static int ufs_qcom_set_core_clk_ctrl(struct ufs_hba *hba, unsigned long freq)
 >  {
 >  	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
->  	int err;
-> diff --git a/include/ufs/ufshcd.h b/include/ufs/ufshcd.h
-> index d7aca9e61684..a4dac897a169 100644
-> --- a/include/ufs/ufshcd.h
-> +++ b/include/ufs/ufshcd.h
-> @@ -344,7 +344,7 @@ struct ufs_hba_variant_ops {
->  	void    (*exit)(struct ufs_hba *);
->  	u32	(*get_ufs_hci_version)(struct ufs_hba *);
->  	int	(*set_dma_mask)(struct ufs_hba *);
-> -	int	(*clk_scale_notify)(struct ufs_hba *, bool,
-> +	int (*clk_scale_notify)(struct ufs_hba *, bool, unsigned long,
->  				    enum ufs_notify_change_status);
->  	int	(*setup_clocks)(struct ufs_hba *, bool,
->  				enum ufs_notify_change_status);
-> -- 
-> 2.34.1
-> 
+>  	struct list_head *head = &hba->clk_list_head;
+> @@ -1245,10 +1245,11 @@ static int ufs_qcom_set_core_clk_ctrl(struct ufs_hba *hba, bool is_scale_up)
+>  		    !strcmp(clki->name, "core_clk_unipro")) {
+>  			if (!clki->max_freq)
+>  				cycles_in_1us = 150; /* default for backwards compatibility */
+> -			else if (is_scale_up)
+> +			else if (freq == ULONG_MAX)
+>  				cycles_in_1us = ceil(clki->max_freq, (1000 * 1000));
+>  			else
+> -				cycles_in_1us = ceil(clk_get_rate(clki->clk), (1000 * 1000));
+> +				cycles_in_1us = ceil(freq, (1000 * 1000));
+
+Consider switching to HZ_PER_MHZ in a separate patch later.
+
+- Mani
 
 -- 
 மணிவண்ணன் சதாசிவம்
