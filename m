@@ -1,222 +1,234 @@
-Return-Path: <linux-arm-msm+bounces-45519-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-45520-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 79F9CA16292
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 19 Jan 2025 16:23:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 4E39FA1629E
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 19 Jan 2025 16:25:52 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E4504164CDF
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 19 Jan 2025 15:23:02 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 77C96164D59
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 19 Jan 2025 15:25:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8EE631DF731;
-	Sun, 19 Jan 2025 15:23:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6DC711DF74B;
+	Sun, 19 Jan 2025 15:25:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b="vWU1A4F9"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="d4Pkol1d"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from perceval.ideasonboard.com (perceval.ideasonboard.com [213.167.242.64])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f180.google.com (mail-pl1-f180.google.com [209.85.214.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6FA81DF27D;
-	Sun, 19 Jan 2025 15:22:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.167.242.64
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A4FE1DF26F
+	for <linux-arm-msm@vger.kernel.org>; Sun, 19 Jan 2025 15:25:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737300180; cv=none; b=BF7OFqmin4aHHC9u0xtbbP+m3dd7tZ0SqD0PSqV5NIMEMVXgcJT/WkkpcntMiRrJJyZJSBVJUTWVxJDVid5nq+vRrcaIVurN1O+E4VHqit8d94jbG2rMdk/xBK6qUSsg/ZtBaYRNAvhnwL3HFxXek/dr0XCBH0bWOvO8jQ4H3Gw=
+	t=1737300345; cv=none; b=uy6y/rySZKI2aPFbcmLstPrUZSZSt8tHscXNQuahjEmfILw3MhpS7yF+70IxunDN+mH/OelTIvL1nPEYGpH1J25t7Ww4+ZoSQntYcAPQKSV6Hx32tOO0lfY/Nl1d5DgleJdSdG3wtoqBFGx5WY3Ka7s5xJwuVkE3rx58KcmrHCk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737300180; c=relaxed/simple;
-	bh=CTvWZ10sB6Bpu7OwRCTU/O0pKZ8mB6w+tH5Yr4dSd4E=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=fGfEv4RorOIEu4hURb3IYfPXTgIbQD5HxlYWszOjSAsK0aVr2mqL7LwVO8bzS9a+OwrIoi9b2E5qSH4GzjTLtEZ0h6CsP/5qn2SkxhyjSldHyTb48evT/8kpk7WTneClQuYlJhPx+7wXwF2XsQVjbzKEw0/umxQRoiH4D8U8lqI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ideasonboard.com; spf=pass smtp.mailfrom=ideasonboard.com; dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b=vWU1A4F9; arc=none smtp.client-ip=213.167.242.64
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ideasonboard.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ideasonboard.com
-Received: from [192.168.88.20] (91-158-153-178.elisa-laajakaista.fi [91.158.153.178])
-	by perceval.ideasonboard.com (Postfix) with ESMTPSA id EAD45446;
-	Sun, 19 Jan 2025 16:21:53 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
-	s=mail; t=1737300115;
-	bh=CTvWZ10sB6Bpu7OwRCTU/O0pKZ8mB6w+tH5Yr4dSd4E=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=vWU1A4F9YgGtIhbdQyreotqH6d1Ml2MZ0LSMmJD+E3aF7hT7Iyt2tb7DnjVNF+Pxr
-	 Ur2IAlVdyYB0u9eTY9nLS1iOqf1rbDS74NQte5xiZiorKZzIDc2ltm+dCMDxo3gGnD
-	 tQCGpMKCUDl0+FP1sNJGb4wT3uTFLGuXW16Hvc0Q=
-Message-ID: <cf34be39-ce92-4ea5-b548-03008c163d31@ideasonboard.com>
-Date: Sun, 19 Jan 2025 17:22:51 +0200
+	s=arc-20240116; t=1737300345; c=relaxed/simple;
+	bh=Cy+qEt2NXA08rztWXxtWOUDQnA+zPs8tkSV/b/YP8cg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=OJOO9OsLXdQSvGzTumrHBr5BqDfSPWvulLQnxG1LNOiVpqD0WavgaRGjXShW0faEsu/BCJ1M0FCF/dUOOTYkU8c6FF77JXgriGd0oFK41ZgYHsPgTu9ranzoQYkueiY2jFLrpx1coE/qZp0nCP6G55l3/WyHEyPmfxmEruEDFMg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=d4Pkol1d; arc=none smtp.client-ip=209.85.214.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-pl1-f180.google.com with SMTP id d9443c01a7336-2165448243fso82858385ad.1
+        for <linux-arm-msm@vger.kernel.org>; Sun, 19 Jan 2025 07:25:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1737300342; x=1737905142; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=/Xaz6uw75PCkZ9efkLrpzdDAN7b8HSpOlZoyxfAfNzA=;
+        b=d4Pkol1dokuOH1MaNAvFMBMBooHtTRQ9Ysh3eHP43FUrR+2juI4Uk2/KRkKTV/Jkoa
+         02qE9NKcRqMGR0F8VMDIXCdW1u7CSwG2pCeDlHsl/sPvzCvYYSLTC5nsaitlpp3GGRhp
+         HfwycpvJfp1jigJXKYAA+NtiC5jEW4eVtPn1hVtIKfRvemxqH4lqXPl7R8fKQOdzoUZ2
+         UBqdn0P2N4JwYL5mOVCXVBQbY6HdsIASDYtPy4mb/LchFBMnsPDR57xVAUkWJ1mC60BO
+         q0/EDPwFg2NzoD4UEXFnlb+jBkpcHcjBH9ZIkrfMA4bDTuWWrzQPZyMQHmZZ13YJZPes
+         nhsQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1737300342; x=1737905142;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=/Xaz6uw75PCkZ9efkLrpzdDAN7b8HSpOlZoyxfAfNzA=;
+        b=Lf/iIvQJZ6nyEEr7W5dZU9NiciucceW9ecLfj8B8oe/dWVliqHs/zgesygj+dWoPKy
+         sWEmgr+N1LHNqKrJWO03YGJEPNijpU6MXEwfD5YSGmq6ZyarPtEWBq8/fU3yTmIRBJ8v
+         Lssg+d268SKO7lvEmnhL1KofoU7axV7BmlLTptcx78P5ZBPm8w8Q548oXcUi4amuU8Hv
+         0Ae+wZcPVc00yy6f5xIh/fmgWcyF0P+dVMz+iReYusHTn2kvFHdJk4jO+poDo4RwLqH/
+         w4HoEQbACQR8j77377xcuPvf8JZsHS8NMtOK0wjJay+T2GISkjWLDYLNWTrd8QRLsl0p
+         IOCA==
+X-Forwarded-Encrypted: i=1; AJvYcCXlODr48oI4kg11ae6layVuroiX5zoTjM4/5TN0OAX6STloG6VkccFtdWFGmZm8/uU3fUGJwTvyMGZd/lJr@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy8FA71AsANQGK4In9VHSxL4aafRG9xfhqp/uX6Mrb3dPlsPLN3
+	1o83wiei2BiKO3GVb+QrPE5dwFN5HHEd9h0+bKfKiFSz4Y0I4OqE4Qb4MyZinQ==
+X-Gm-Gg: ASbGncsHhQw9S5Nxr6P7fotK/z2wPvb9jLnv+9nmpULkWNvhdSskxS4/DyKdazodYoE
+	M6glFPf1sDLY5AblpTJGZ4UEnmMPhXL21F4ne4vw4xGqmDYdjWAdw8f7H8wJAz2HkWTuJ67hC7i
+	Z+ddHY572nstz+4iB/Ug9w2TmaXOze7s5qwAfA6GnQdb46bES01QmrH7js7bl7e/1VMrU2XRXkl
+	MFsEM1jx+jnn1VV6zZU0h8wHd3uoEtVSMVt5nKA8GV9GgY9JxQm3e1uL/D+lmFWameVqIO51Lm1
+	Y4Rmlw==
+X-Google-Smtp-Source: AGHT+IFwl8xnvKB2lpUjrtIYdeNsW1GvDBlcIZmazybTfoK6NpRu6tzeYc5RWcWJiKkCBQ9HdBR63w==
+X-Received: by 2002:a05:6a20:2585:b0:1d8:a9c0:8853 with SMTP id adf61e73a8af0-1eb214b22c8mr14523957637.23.1737300341700;
+        Sun, 19 Jan 2025 07:25:41 -0800 (PST)
+Received: from thinkpad ([120.56.195.253])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-72dab9c8e37sm5275988b3a.119.2025.01.19.07.25.37
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 19 Jan 2025 07:25:41 -0800 (PST)
+Date: Sun, 19 Jan 2025 20:55:34 +0530
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To: Bjorn Helgaas <helgaas@kernel.org>
+Cc: Rob Herring <robh+dt@kernel.org>, Rob Herring <robh@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	cros-qcom-dts-watchers@chromium.org, linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	=?utf-8?B?TsOtY29sYXMgRi4gUi4gQS4=?= Prado <nfraprado@collabora.com>
+Subject: Re: [PATCH v2 01/21] arm64: dts: qcom: sm8250: Add PCIe bridge node
+Message-ID: <20250119152534.d6berucbb2wbbi3z@thinkpad>
+References: <20250115175918.2isv2at337cfgvjd@thinkpad>
+ <20250115181340.GA539092@bhelgaas>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 25/25] drm/xlnx: Compute dumb-buffer sizes with
- drm_mode_size_dumb()
-To: Sui Jingfeng <sui.jingfeng@linux.dev>,
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Geert Uytterhoeven <geert@linux-m68k.org>
-Cc: Thomas Zimmermann <tzimmermann@suse.de>,
- maarten.lankhorst@linux.intel.com, mripard@kernel.org, airlied@gmail.com,
- simona@ffwll.ch, dri-devel@lists.freedesktop.org,
- linux-mediatek@lists.infradead.org, freedreno@lists.freedesktop.org,
- linux-arm-msm@vger.kernel.org, imx@lists.linux.dev,
- linux-samsung-soc@vger.kernel.org, nouveau@lists.freedesktop.org,
- virtualization@lists.linux.dev, spice-devel@lists.freedesktop.org,
- linux-renesas-soc@vger.kernel.org, linux-rockchip@lists.infradead.org,
- linux-tegra@vger.kernel.org, intel-xe@lists.freedesktop.org,
- xen-devel@lists.xenproject.org,
- Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
- Andy Yan <andyshrk@163.com>, Daniel Stone <daniel@fooishbar.org>
-References: <f3ba05c7-6e49-4641-a3f9-ba418ebdb7c3@ideasonboard.com>
- <c6735280-7c32-4319-8ca9-a7305d8117c3@suse.de>
- <d67adb03-5cd0-4ac9-af58-cf4446dacee3@ideasonboard.com>
- <0ea6be58-0e04-4172-87cd-064a3e4a43bc@suse.de>
- <f35cb350-6be9-48ca-ad7e-e9dd418281d5@ideasonboard.com>
- <4af0b6a7-c16a-4187-bbf5-365a9c86de21@suse.de>
- <e327ad84-b5c9-4480-b873-dc3aca605538@ideasonboard.com>
- <a2bbeb47-2569-4ee0-9265-92bab139bdc6@suse.de>
- <f3833771-fcd7-45dc-9019-1525fef34429@ideasonboard.com>
- <CAMuHMdXxYa+Na3XxpLTy=-eUL_zQ9kAiUKYu-E04u3KWApusSA@mail.gmail.com>
- <xz5ncq67bgmdase2jg3cfvyaxpiwhol2eqpfzow6dqpauvslo5@2w3rw27lhnxo>
- <b97fcd2f-516a-4172-aef3-631418564cfa@linux.dev>
- <ef52dab0-058f-408f-a298-c4b2453a3d2f@ideasonboard.com>
- <f4562dbf-b132-4cfd-8f7e-43cd69f2673f@linux.dev>
-Content-Language: en-US
-From: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
-Autocrypt: addr=tomi.valkeinen@ideasonboard.com; keydata=
- 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
-In-Reply-To: <f4562dbf-b132-4cfd-8f7e-43cd69f2673f@linux.dev>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <20250115181340.GA539092@bhelgaas>
 
-On 19/01/2025 16:59, Sui Jingfeng wrote:
-
->>>> But userspace must be able to continue allocating YUV buffers through
->>>> CREATE_DUMB.
->>>
->>> I think, allocating YUV buffers through CREATE_DUMB interface is just
->>> an *abuse* and *misuse* of this API for now.
->>>
->>> Take the NV12 format as an example, NV12 is YUV420 planar format, have
->>> two planar: the Y-planar and the UV-planar. The Y-planar appear first
->>> in memory as an array of unsigned char values. The Y-planar is followed
->>> immediately by the UV-planar, which is also an array of unsigned char
->>> values that contains packed U (Cb) and V (Cr) samples.
->>>
->>> But the 'drm_mode_create_dumb' structure is only intend to provide
->>> descriptions for *one* planar.
->>>
->>> struct drm_mode_create_dumb {
->>>      __u32 height;
->>>      __u32 width;
->>>      __u32 bpp;
->>>      __u32 flags;
->>>      __u32 handle;
->>>      __u32 pitch;
->>>      __u64 size;
->>> };
->>>
->>> An width x height NV12 image takes up width*height*(1 + 1/4 + 1/4) 
->>> bytes.
->>>
->>> So we can allocate an *equivalent* sized buffer to store the NV12 raw 
->>> data.
->>>
->>> Either 'width * (height * 3/2)' where each pixel take up 8 bits,
->>> or just 'with * height' where each pixels take up 12 bits.
->>>
->>> However, all those math are just equivalents description to the original
->>> NV12 format, neither are concrete correct physical description.
->>
->> I don't see the problem. Allocating dumb buffers, if we don't have any 
->> heuristics related to RGB behind it, is essentially just allocating a 
->> specific amount of memory, defined by width, height and bitsperpixel.
->>
-> I think, the problem will be that the 'width', 'height' and 'bpp'
-> are originally used to describe one plane. Those three parameters
-> has perfectly defined physical semantics.
+On Wed, Jan 15, 2025 at 12:13:40PM -0600, Bjorn Helgaas wrote:
+> On Wed, Jan 15, 2025 at 11:29:18PM +0530, Manivannan Sadhasivam wrote:
+> > On Wed, Jan 15, 2025 at 11:42:10AM -0600, Bjorn Helgaas wrote:
+> > > On Wed, Jan 15, 2025 at 04:24:31PM +0530, Manivannan Sadhasivam wrote:
+> > > > On Mon, Jan 06, 2025 at 05:07:05PM -0600, Bjorn Helgaas wrote:
+> > > > > On Sun, Jan 05, 2025 at 03:46:12PM +0530, Manivannan Sadhasivam wrote:
+> > > > > > On Fri, Jan 03, 2025 at 03:05:31PM -0600, Bjorn Helgaas wrote:
+> > > > > > > On Thu, Mar 21, 2024 at 04:46:21PM +0530, Manivannan Sadhasivam wrote:
+> > > > > > > > On Qcom SoCs, the PCIe host bridge is connected to a single PCIe bridge
+> > > > > > > > for each controller instance. Hence, add a node to represent the bridge.
+> > > > > > > > 
+> > > > > > > > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> > > > > > > > ---
+> > > > > > > >  arch/arm64/boot/dts/qcom/sm8250.dtsi | 30 ++++++++++++++++++++++++++++++
+> > > > > > > >  1 file changed, 30 insertions(+)
+> > > > > > > > 
+> > > > > > > > diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+> > > > > > > > index 39bd8f0eba1e..fe5485256b22 100644
+> > > > > > > > --- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
+> > > > > > > > +++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+> > > > > > > > @@ -2203,6 +2203,16 @@ pcie0: pcie@1c00000 {
+> > > > > > > >  			dma-coherent;
+> > > > > > > >  
+> > > > > > > >  			status = "disabled";
+> > > > > > > > +
+> > > > > > > > +			pcie@0 {
+> > > > > > > > +				device_type = "pci";
+> > > > > > > > +				reg = <0x0 0x0 0x0 0x0 0x0>;
+> > > > > > > > +				bus-range = <0x01 0xff>;
+> > > > > > > 
+> > > > > > > Hi Mani, most or all of the patches in this series add this
+> > > > > > > "bus-range" property.  IIUC, these are all Root Ports and hence the
+> > > > > > > secondary/subordinate bus numbers should be programmable.
+> > > > > > 
+> > > > > > Right. It is not a functional dependency.
+> > > > > > 
+> > > > > > > If that's the case, I don't think we need to include "bus-range" in DT
+> > > > > > > for them, do we?
+> > > > > > 
+> > > > > > We mostly include it to silence the below bindings check for the
+> > > > > > endpoint device node:
+> > > > > > 
+> > > > > > Warning (pci_device_bus_num): /soc@0/pcie@1c00000/pcie@0/wifi@0: PCI bus number 1 out of range, expected (0 - 0)
+> > > > > > 
+> > > > > > DTC check is happy if the 'bus-range' property is absent in the
+> > > > > > bridge node. But while validating the endpoint node (if defined), it
+> > > > > > currently relies on the parent 'bus-range' property to verify the
+> > > > > > bus number provided in the endpoint 'reg' property.
+> > > > > > 
+> > > > > > I don't know else the check can verify the correctness of the
+> > > > > > endpoint bus number. So deferring to Rob here.
+> > > > > 
+> > > > > I should know more about how this works in DT, but I don't.
+> > > > > 
+> > > > > I guess https://git.kernel.org/linus/83d2a0a1e2b9 ("arm64: dts: qcom:
+> > > > > sm8250: Add PCIe bridge node") added this (subsequently renamed to
+> > > > > "pcieport0"):
+> > > > > 
+> > > > >   +			pcie@0 {
+> > > > >   +				device_type = "pci";
+> > > > >   +				reg = <0x0 0x0 0x0 0x0 0x0>;
+> > > > >   +				bus-range = <0x01 0xff>;
+> > > > > 
+> > > > > which is used at places like
+> > > > > https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts?id=v6.12#n788:
+> > > > > 
+> > > > >   &pcieport0 {
+> > > > > 	  wifi@0 {
+> > > > > 		  compatible = "pci17cb,1101";
+> > > > > 		  reg = <0x10000 0x0 0x0 0x0 0x0>;
+> > > > > 
+> > > > > Based on
+> > > > > https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/Documentation/devicetree/bindings/pci/pci.txt?id=v6.12#n46
+> > > > > (which is written for Root Ports and Switch Ports, but presumably
+> > > > > applies to endpoints like wifi as well), "reg" contains the device's
+> > > > > bus/device/function:
+> > > > > 
+> > > > >   - reg:
+> > > > >      Identifies the PCI-PCI bridge. As defined in the IEEE Std 1275-1994
+> > > > >      document, it is a five-cell address encoded as (phys.hi phys.mid
+> > > > >      phys.lo size.hi size.lo). phys.hi should contain the device's BDF as
+> > > > >      0b00000000 bbbbbbbb dddddfff 00000000. The other cells should be zero.
+> > > > > 
+> > > > > So 0x10000 would decode to 01:00.0, which matches the <1 1> bus-range.
+> > > > > 
+> > > > > I don't know the reason for requiring the BDF there, but the venerable
+> > > > > https://www.devicetree.org/open-firmware/bindings/pci/pci2_1.pdf, sec
+> > > > > 4.1.1, says "reg" is mandatory for PCI Child Nodes, and the first
+> > > > > entry must be the config space address (bus/device/function).
+> > > > > 
+> > > > > I suppose maybe the BDF is needed to associate the properties with the
+> > > > > correct device, and if the OS were to reprogram the bridge secondary
+> > > > > bus number, it would have to remember the original value to preserve
+> > > > > this association.  I don't think Linux *does* remember that, but it
+> > > > > also generally leaves the bridge bus numbers alone.
+> > > > 
+> > > > Device drivers need to parse the properties defined in the device DT
+> > > > node. And the only way to identify the node is by using its 'reg'
+> > > > property which has the BDF identifier. This is common to other
+> > > > busses where the device address is encoded in the 'reg' property.
+> > > 
+> > > Does this assume there is some firmware to configure these bridges
+> > > before Linux boots?
+> > 
+> > No.
+> > 
+> > >  If bridges are completely unconfigured after
+> > > power-on, their secondary and subordinate bus numbers will be zero, so
+> > > a bus-range property for the bridge can only be an assumption about
+> > > what Linux will do.
+> > 
+> > Secondary bus number for sure is not an assumption as it depends on
+> > the hardware topology which linux would know from DT. But
+> > subordinate number could be considered as an assumption.
 > 
-> But with multi planar formats, take NV12 image as an example,
-> for a 2×2 square of pixels, there are 4 Y samples but only 1 U
-> sample and 1 V sample. This format requires 4x8+1x8+1x8=48 bits
-> to store the 2x2 square.
+> If there's no firmware and the secondary bus number is 0 when Linux
+> enumerates the bridge, does Linux know how to get the bus-range from
+> DT and program the bridge's secondary bus?
 > 
-> So its depth is 12 bits per pixel (48 / (2 * 2)).
+
+Linux doesn't seem to make use of the secondary bus number from DT node of a
+bridge, but there is no guarantee that other OSes making use of DT won't do.
+
+> And does Linux know how to update the subordinate bus number in the
+> case where several Root Ports specify 0xff in bus-range?
 > 
-> so my problem is that the mentioned 12bpp in this example only
-> make sense in mathematics, it doesn't has a good physical
-> interpret. Do you agree with me on this technique point?
-> 
->> If I want to create an NV12 framebuffer, I allocate two dumb buffers, 
->> one for Y and one for UV planes, and size them accordingly. And then 
->> create the DRM framebuffer with those.
->>
-> Then how you fill the value of the 'width', 'height' and 'bpp' of each 
-> dumb buffers?
 
-For 640x480-NV12:
-plane 0: width = 640, height = 480, bpp = 8
-plane 1: width = 640 / 2, height = 480 / 2, bpp = 16
+Same answer as above.
 
-> Why not allocate storage for the whole on one shoot?
+- Mani
 
-You can, if you adjust the parameters accordingly. However, if the 
-strides of the planes are not equal, I guess it might cause problems on 
-some platforms.
-
-But I think it's usually simpler to allocate one buffer per plane, and 
-perhaps even better as it doesn't require as large contiguous memory area.
-
-> The modetest in libdrm can be an good example, send it[1] to you as an 
-> reference.
-
-Right, so modetest already does it successfully. So... What is the issue?
-
-Everyone agrees that CREATE_DUMB is not the best ioctl to allocate 
-buffers, and one can't consider it to work identically across the 
-platforms. But it's what we have and what has been used for ages.
-
-  Tomi
-
+-- 
+மணிவண்ணன் சதாசிவம்
 
