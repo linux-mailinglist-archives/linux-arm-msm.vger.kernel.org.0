@@ -1,161 +1,249 @@
-Return-Path: <linux-arm-msm+bounces-45517-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-45518-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E3880A1624A
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 19 Jan 2025 15:51:03 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id CF7F5A16259
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 19 Jan 2025 15:59:58 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 155A83A5C24
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 19 Jan 2025 14:50:57 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B8ECC7A1B4B
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 19 Jan 2025 14:59:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0D31F1DF254;
-	Sun, 19 Jan 2025 14:50:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A44791DEFF5;
+	Sun, 19 Jan 2025 14:59:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TEkkyN31"
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="heGdHto3"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from out-172.mta1.migadu.com (out-172.mta1.migadu.com [95.215.58.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFA3C19E967;
-	Sun, 19 Jan 2025 14:50:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8E6463CB
+	for <linux-arm-msm@vger.kernel.org>; Sun, 19 Jan 2025 14:59:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737298256; cv=none; b=hNdLb2L3qP5HalpWa21ocYSu7/cUJYLx964P355S5YogY+FjzF1Gtkvkw11LJ4dV/rsqslhSNlm3fr4LOPhSy/a957P0f0shMWrXnw6E+VY0THvppCX1InDNaXCIMnIGaLCULHe/Kb9m044EDESJnEocW8LA4Uh6XvJ+VuZDlyI=
+	t=1737298793; cv=none; b=awcuaBJwfXJiOtHyV4rq1/A273I7Hbiw8gVrZeUijlLDxwLo+dEEAzXvHCNztDfNAQPvAEyS1XWGH0FLkFk1u5kqvObdD3azwPlpSsFXh+VzIpQcjza/C40m4HRZmACCmMwMDHK27sUHWnDpZuhToftWIEE2nmtecqhdY/Gd0P0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737298256; c=relaxed/simple;
-	bh=FAYG5b65m7C2q/5T4+WU8WSDz8J3TLJWqWDUEBUC91I=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=VStrmoSQ6Ugzeximutq3TAJA342F5YGoM0CtGlkgWA8064/Qx+RzU7krUQqGFcJ1KZUDhfWYRUJ98WO+3pQ5i7wbrqUoQyVlkRPump5caFaCCTukKWWCtXLeycD8BFWOlwpIRtTVkv4E8HPcoC+uAuDxsrZWiA/Ag9KGNGJN/0k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TEkkyN31; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 631FBC4CEE0;
-	Sun, 19 Jan 2025 14:50:56 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1737298256;
-	bh=FAYG5b65m7C2q/5T4+WU8WSDz8J3TLJWqWDUEBUC91I=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=TEkkyN31niknrYfZXsefov/1vn0Cb6f5noXcQgEwtIKFBPHJTKL6TomgMwvbFn1F+
-	 /fRS1scv9mHH5uF9chn2ya+ygKlSw6+w+hoPwocDOby1WdHGH2HPFWF/6vIszieBmV
-	 V2oHi3RL0VS6z5juwKvWHiL+gaW60LB8OQZNNt/gmkU7BCXGQWhPMmYIiemZbB/bLY
-	 t/uKEWqsZIBfyodtlWAANxgxFB2cGJMS+0bpgvzKpxvFwc8zJthNTtARKo6mwEywnO
-	 UizY1OcQTzZotlc4cBwihGnn/8NUsPLlqrm4/syQmrfn8i8VShYOpxPPFV6T8KcVpu
-	 Nlxj2/T9ct0vQ==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 55581C0218B;
-	Sun, 19 Jan 2025 14:50:56 +0000 (UTC)
-From: Maud Spierings via B4 Relay <devnull+maud_spierings.hotmail.com@kernel.org>
-Date: Sun, 19 Jan 2025 15:50:52 +0100
-Subject: [PATCH 2/2] arm64: dts: qcom: x1e80100-vivobook-s15: Enable
- micro-sd card reader
+	s=arc-20240116; t=1737298793; c=relaxed/simple;
+	bh=oa61zSkN6HC2Zt2ifFeXc5/CCWBufUQHmzBbmRXCz38=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=YIq9pfj2Om/bKjXDAvddMx+lOfk1+rkEmfG2ByG8PZ2pqO/BjTvnHfGTdxPo1SbXKwTep38dTxxHuRj9csZkrmOduruEmbRHzWw+I/NDkZW6fnbbA+L8e/1bCirBEIrhTQ0c+1vhuwrzMtNWz0XBIBSQjP7V8xpbjBwaqTuo1GA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=heGdHto3; arc=none smtp.client-ip=95.215.58.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+Message-ID: <f4562dbf-b132-4cfd-8f7e-43cd69f2673f@linux.dev>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+	t=1737298788;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=zNY9fo693oU2B1dKi7Yad0MtryDjxzNQa/7Ip1S7xnQ=;
+	b=heGdHto3F+5K7JCqIvHDGXf1N0wnwZf1k6Vn1a+AfaN8emD7p116EZNmNhdoe3qOiN8MSL
+	BAskCcm13dLRGLlnl2OBU60SLqXM+CELdtyiknyOyqOXKvH7THRFFzoAh4sZgSEp9q/ASO
+	MFarzvKjz35Ws/S8kauuETysIOP9JiM=
+Date: Sun, 19 Jan 2025 22:59:36 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250119-usb_a_micro_sd-v1-2-01eb7502ae05@hotmail.com>
-References: <20250119-usb_a_micro_sd-v1-0-01eb7502ae05@hotmail.com>
-In-Reply-To: <20250119-usb_a_micro_sd-v1-0-01eb7502ae05@hotmail.com>
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Maud Spierings <maud_spierings@hotmail.com>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1737298255; l=1805;
- i=maud_spierings@hotmail.com; s=20241110; h=from:subject:message-id;
- bh=qEagHCN4mp21iK7xTZ9rdbXZ95q3ftiIVYE+wWP/Qys=;
- b=mRJxbTQ8UQcOnifr4c0sNJ1GMXjvTA8gQs78OsAvmkTEWPbKTcgqhafeEaHusblvuEiGlfGDs
- P8ZZWl3jTh3CORgC+JAoXa7bCIkJuzZ2GCKOrDNhlW0soF/ERKS17Dg
-X-Developer-Key: i=maud_spierings@hotmail.com; a=ed25519;
- pk=CeFKVnZvRfX2QjB1DpdiAe2N+MEjwLEB9Yhx/OAcxRc=
-X-Endpoint-Received: by B4 Relay for maud_spierings@hotmail.com/20241110
- with auth_id=273
-X-Original-From: Maud Spierings <maud_spierings@hotmail.com>
-Reply-To: maud_spierings@hotmail.com
+Subject: Re: [PATCH v2 25/25] drm/xlnx: Compute dumb-buffer sizes with
+ drm_mode_size_dumb()
+To: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Geert Uytterhoeven <geert@linux-m68k.org>
+Cc: Thomas Zimmermann <tzimmermann@suse.de>,
+ maarten.lankhorst@linux.intel.com, mripard@kernel.org, airlied@gmail.com,
+ simona@ffwll.ch, dri-devel@lists.freedesktop.org,
+ linux-mediatek@lists.infradead.org, freedreno@lists.freedesktop.org,
+ linux-arm-msm@vger.kernel.org, imx@lists.linux.dev,
+ linux-samsung-soc@vger.kernel.org, nouveau@lists.freedesktop.org,
+ virtualization@lists.linux.dev, spice-devel@lists.freedesktop.org,
+ linux-renesas-soc@vger.kernel.org, linux-rockchip@lists.infradead.org,
+ linux-tegra@vger.kernel.org, intel-xe@lists.freedesktop.org,
+ xen-devel@lists.xenproject.org,
+ Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+ Andy Yan <andyshrk@163.com>, Daniel Stone <daniel@fooishbar.org>
+References: <f3ba05c7-6e49-4641-a3f9-ba418ebdb7c3@ideasonboard.com>
+ <c6735280-7c32-4319-8ca9-a7305d8117c3@suse.de>
+ <d67adb03-5cd0-4ac9-af58-cf4446dacee3@ideasonboard.com>
+ <0ea6be58-0e04-4172-87cd-064a3e4a43bc@suse.de>
+ <f35cb350-6be9-48ca-ad7e-e9dd418281d5@ideasonboard.com>
+ <4af0b6a7-c16a-4187-bbf5-365a9c86de21@suse.de>
+ <e327ad84-b5c9-4480-b873-dc3aca605538@ideasonboard.com>
+ <a2bbeb47-2569-4ee0-9265-92bab139bdc6@suse.de>
+ <f3833771-fcd7-45dc-9019-1525fef34429@ideasonboard.com>
+ <CAMuHMdXxYa+Na3XxpLTy=-eUL_zQ9kAiUKYu-E04u3KWApusSA@mail.gmail.com>
+ <xz5ncq67bgmdase2jg3cfvyaxpiwhol2eqpfzow6dqpauvslo5@2w3rw27lhnxo>
+ <b97fcd2f-516a-4172-aef3-631418564cfa@linux.dev>
+ <ef52dab0-058f-408f-a298-c4b2453a3d2f@ideasonboard.com>
+Content-Language: en-US
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: Sui Jingfeng <sui.jingfeng@linux.dev>
+In-Reply-To: <ef52dab0-058f-408f-a298-c4b2453a3d2f@ideasonboard.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Migadu-Flow: FLOW_OUT
 
-From: Maud Spierings <maud_spierings@hotmail.com>
+Hi,
 
-The asus vivobook s15 has a micro-sd card reader attached to usb_2.
+On 2025/1/19 20:18, Tomi Valkeinen wrote:
+> Hi,
+>
+> On 19/01/2025 13:29, Sui Jingfeng wrote:
+>> Hi,
+>>
+>> On 2025/1/16 18:35, Dmitry Baryshkov wrote:
+>>> On Thu, Jan 16, 2025 at 11:17:50AM +0100, Geert Uytterhoeven wrote:
+>>>> On Thu, Jan 16, 2025 at 11:03 AM Tomi Valkeinen
+>>>> <tomi.valkeinen@ideasonboard.com> wrote:
+>>>>> On 16/01/2025 10:09, Thomas Zimmermann wrote:
+>>>>>> Am 15.01.25 um 15:20 schrieb Tomi Valkeinen:
+>>>>>> [...]
+>>>>>>> My point is that we have the current UAPI, and we have userspace 
+>>>>>>> using
+>>>>>>> it, but we don't have clear rules what the ioctl does with specific
+>>>>>>> parameters, and we don't document how it has to be used.
+>>>>>>>
+>>>>>>> Perhaps the situation is bad, and all we can really say is that
+>>>>>>> CREATE_DUMB only works for use with simple RGB formats, and the
+>>>>>>> behavior for all other formats is platform specific. But I think 
+>>>>>>> even
+>>>>>>> that would be valuable in the UAPI docs.
+>>>>>> To be honest, I would not want to specify behavior for anything 
+>>>>>> but the
+>>>>>> linear RGB formats. If anything, I'd take Daniel's reply mail for
+>>>>>> documentation as-is. Anyone stretching the UAPI beyond RGB is on 
+>>>>>> their own.
+>>>>>>
+>>>>>>> Thinking about this, I wonder if this change is good for omapdrm or
+>>>>>>> xilinx (probably other platforms too that support non-simple 
+>>>>>>> non-RGB
+>>>>>>> formats via dumb buffers): without this patch, in both drivers, the
+>>>>>>> pitch calculations just take the bpp as bit-per-pixels, align it 
+>>>>>>> up,
+>>>>>>> and that's it.
+>>>>>>>
+>>>>>>> With this patch we end up using drm_driver_color_mode_format(), and
+>>>>>>> aligning buffers according to RGB formats figured out via 
+>>>>>>> heuristics.
+>>>>>>> It does happen to work, for the formats I tested, but it sounds 
+>>>>>>> like
+>>>>>>> something that might easily not work, as it's doing adjustments 
+>>>>>>> based
+>>>>>>> on wrong format.
+>>>>>>>
+>>>>>>> Should we have another version of drm_mode_size_dumb() which just
+>>>>>>> calculates using the bpp, without the 
+>>>>>>> drm_driver_color_mode_format()
+>>>>>>> path? Or does the drm_driver_color_mode_format() path provide some
+>>>>>>> value for the drivers that do not currently do anything similar?
+>>>>>> With the RGB-only rule, using drm_driver_color_mode_format() makes
+>>>>>> sense. It aligns dumb buffers and video=, provides error 
+>>>>>> checking, and
+>>>>>> overall harmonizes code. The fallback is only required because of 
+>>>>>> the
+>>>>>> existing odd cases that already bend the UAPI's rules.
+>>>>> I have to disagree here.
+>>>>>
+>>>>> On the platforms I have been using (omap, tidss, xilinx, rcar) the 
+>>>>> dumb
+>>>>> buffers are the only buffers you can get from the DRM driver. The 
+>>>>> dumb
+>>>>> buffers have been used to allocate linear and multiplanar YUV buffers
+>>>>> for a very long time on those platforms.
+>>>>>
+>>>>> I tried to look around, but I did not find any mentions that 
+>>>>> CREATE_DUMB
+>>>>> should only be used for RGB buffers. Is anyone outside the core
+>>>>> developers even aware of it?
+>>>>>
+>>>>> If we don't use dumb buffers there, where do we get the buffers? 
+>>>>> Maybe
+>>>>> from a v4l2 device or from a gpu device, but often you don't have 
+>>>>> those.
+>>>>> DMA_HEAP is there, of course.
+>>>> Why can't there be a variant that takes a proper fourcc format 
+>>>> instead of
+>>>> an imprecise bpp value?
+>>> Backwards compatibility. We can add an IOCTL for YUV / etc.
+>>
+>> [...]
+>>
+>>> But userspace must be able to continue allocating YUV buffers through
+>>> CREATE_DUMB.
+>>
+>> I think, allocating YUV buffers through CREATE_DUMB interface is just
+>> an *abuse* and *misuse* of this API for now.
+>>
+>> Take the NV12 format as an example, NV12 is YUV420 planar format, have
+>> two planar: the Y-planar and the UV-planar. The Y-planar appear first
+>> in memory as an array of unsigned char values. The Y-planar is followed
+>> immediately by the UV-planar, which is also an array of unsigned char
+>> values that contains packed U (Cb) and V (Cr) samples.
+>>
+>> But the 'drm_mode_create_dumb' structure is only intend to provide
+>> descriptions for *one* planar.
+>>
+>> struct drm_mode_create_dumb {
+>>      __u32 height;
+>>      __u32 width;
+>>      __u32 bpp;
+>>      __u32 flags;
+>>      __u32 handle;
+>>      __u32 pitch;
+>>      __u64 size;
+>> };
+>>
+>> An width x height NV12 image takes up width*height*(1 + 1/4 + 1/4) 
+>> bytes.
+>>
+>> So we can allocate an *equivalent* sized buffer to store the NV12 raw 
+>> data.
+>>
+>> Either 'width * (height * 3/2)' where each pixel take up 8 bits,
+>> or just 'with * height' where each pixels take up 12 bits.
+>>
+>> However, all those math are just equivalents description to the original
+>> NV12 format, neither are concrete correct physical description.
+>
+> I don't see the problem. Allocating dumb buffers, if we don't have any 
+> heuristics related to RGB behind it, is essentially just allocating a 
+> specific amount of memory, defined by width, height and bitsperpixel.
+>
+I think, the problem will be that the 'width', 'height' and 'bpp'
+are originally used to describe one plane. Those three parameters
+has perfectly defined physical semantics.
 
-Enable usb_2 to enable this reader.
+But with multi planar formats, take NV12 image as an example,
+for a 2×2 square of pixels, there are 4 Y samples but only 1 U
+sample and 1 V sample. This format requires 4x8+1x8+1x8=48 bits
+to store the 2x2 square.
 
-Signed-off-by: Maud Spierings <maud_spierings@hotmail.com>
----
- .../boot/dts/qcom/x1e80100-asus-vivobook-s15.dts   | 39 ++++++++++++++++++++++
- 1 file changed, 39 insertions(+)
+So its depth is 12 bits per pixel (48 / (2 * 2)).
 
-diff --git a/arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dts b/arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dts
-index b66d03ee3ff30561e8665be6ad34919f89a79572..fb9567817be6f887c9214cafbfbabda8b8cb8203 100644
---- a/arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dts
-+++ b/arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dts
-@@ -422,6 +422,20 @@ keyboard@3a {
- 		wakeup-source;
- 	};
- 
-+	eusb5_repeater: redriver@43 {
-+		compatible = "nxp,ptn3222";
-+		reg = <0x43>;
-+		#phy-cells = <0>;
-+
-+		vdd3v3-supply = <&vreg_l13b_3p0>;
-+		vdd1v8-supply = <&vreg_l4b_1p8>;
-+
-+		reset-gpios = <&tlmm 7 GPIO_ACTIVE_LOW>;
-+
-+		pinctrl-0 = <&eusb5_reset_n>;
-+		pinctrl-names = "default";
-+	};
-+
- 	eusb3_repeater: redriver@47 {
- 		compatible = "nxp,ptn3222";
- 		reg = <0x47>;
-@@ -620,6 +634,14 @@ eusb3_reset_n: eusb3-reset-n-state {
- 		output-low;
- 	};
- 
-+	eusb5_reset_n: eusb5-reset-n-state {
-+		pins = "gpio7";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-pull-up;
-+		output-low;
-+	};
-+
- 	eusb6_reset_n: eusb6-reset-n-state {
- 		pins = "gpio184";
- 		function = "gpio";
-@@ -764,6 +786,23 @@ &usb_1_ss1_qmpphy_out {
- 	remote-endpoint = <&pmic_glink_ss1_ss_in>;
- };
- 
-+&usb_2 {
-+	status = "okay";
-+};
-+
-+&usb_2_dwc3 {
-+	dr_mode = "host";
-+};
-+
-+&usb_2_hsphy {
-+	vdd-supply = <&vreg_l2e_0p8>;
-+	vdda12-supply = <&vreg_l3e_1p2>;
-+
-+	phys = <&eusb5_repeater>;
-+
-+	status = "okay";
-+};
-+
- &usb_mp {
- 	status = "okay";
- };
+so my problem is that the mentioned 12bpp in this example only
+make sense in mathematics, it doesn't has a good physical
+interpret. Do you agree with me on this technique point?
+     
+
+> If I want to create an NV12 framebuffer, I allocate two dumb buffers, 
+> one for Y and one for UV planes, and size them accordingly. And then 
+> create the DRM framebuffer with those.
+>
+Then how you fill the value of the 'width', 'height' and 'bpp' of each dumb buffers?
+
+Why not allocate storage for the whole on one shoot?
+
+The modetest in libdrm can be an good example, send it[1] to you as an reference.
+
+[1] https://gitlab.freedesktop.org/mesa/drm/-/blob/main/tests/modetest/buffers.c?ref_type=heads#L114
 
 -- 
-2.47.1
 
+Best regards,
+Sui
 
 
