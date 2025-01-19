@@ -1,220 +1,201 @@
-Return-Path: <linux-arm-msm+bounces-45522-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-45523-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 415AAA162DE
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 19 Jan 2025 17:26:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id E27F0A16308
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 19 Jan 2025 17:57:43 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 69EEB164AB9
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 19 Jan 2025 16:26:50 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 107EC164156
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 19 Jan 2025 16:57:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E2D9B1DEFF1;
-	Sun, 19 Jan 2025 16:26:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7A7111DF973;
+	Sun, 19 Jan 2025 16:57:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="rSN8t36G"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="QytANKqB"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from out-183.mta1.migadu.com (out-183.mta1.migadu.com [95.215.58.183])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 689F61552E3;
-	Sun, 19 Jan 2025 16:26:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.183
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B3761DF742
+	for <linux-arm-msm@vger.kernel.org>; Sun, 19 Jan 2025 16:57:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737304009; cv=none; b=CxyEpEZj80Ga0o95lKdF0qivnk6MAQ/ZLDz3u5NZC5EXo/RmfkqMLzRYFaDE+te+M9AcXLcu5EDjfriidssyX3KUekaSJR3FJqmOn8mFaMb7bvI6zTfq47Wnzwt46UJXJtClj27IDHWw/l0rbPpaPRRESMe+nlVuAD6DqBC/Itw=
+	t=1737305859; cv=none; b=TFsAyWsncKdu+dIVnDh89XBFID10sGMFYl8LnJ+5IazWTpajCIrjJSU3/o2opywAPZDNbTMOMJorjDd6wJnzwmra1RbCj8m7yqlw07tvmPUPfwxjvDDsL+SX2nsrGvpKr3e2bx3NsX/v+n7DRWPgGMqvHn0SC+zzMPYCVlg41l0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737304009; c=relaxed/simple;
-	bh=B4rvTJW7ff21w1JZwgT0/LIrPNJS+x3zveTVYIlEO8U=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=BhapuBWt5ownA2t1jvfAhQeGHtbPj6M6L967vvvzK/qEaYhZCbKhKYZ9oWoWbohqA6K84oyj6Raljik7iXVBv/N9+5uNHOgPbNCFGAJ+LZDMtVJMs9taCphUGXt13W8KrFJ1qSMPFBg6JO5M+6QhGGL0SK9X2ZmjH4HVmL3pN0c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=rSN8t36G; arc=none smtp.client-ip=95.215.58.183
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
-Message-ID: <8234927e-0d12-4655-813d-8ec94179b737@linux.dev>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1737304005;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=vk3LJPYAEJumDCHfvyn+0B3wt+JaPCGDzjEcWZxdF60=;
-	b=rSN8t36GlcqKWcSry2NAS7uuPoSokjl/moVcZQqfvubYqsOYH01D0yN3RMsNHteHhtpLti
-	kVL97c93wJmSXin/dBnch03Cy9RjtJi2PzJmt0HI9IluiFQUnxKcft+J/Ya7YtZG1krPc+
-	YGBCQ0RrYcucM6qjwpDCjNrgG9sTpfk=
-Date: Mon, 20 Jan 2025 00:26:30 +0800
+	s=arc-20240116; t=1737305859; c=relaxed/simple;
+	bh=OXYO0T7rIEvVXR1OPVg2/XaOdqsk7JqB0nHWGkAq3C0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=DsHCqJXBl/SiTEmXcsGtBKFwUMSctPfyGy8WjaDFhrnXpgXSJfPLmF7jOiGHZr0eiDrlK4tTwHDsxF3uXngZb7XKj8G2LsXPpZQ3ZsfgNOcQycJSnMUNFXUAZYenOX85QdJAsnpG8WurvcD2ENWt5WXSiueCrxIGSWJ40MyX5rk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=QytANKqB; arc=none smtp.client-ip=209.85.128.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-43618283d48so25630495e9.1
+        for <linux-arm-msm@vger.kernel.org>; Sun, 19 Jan 2025 08:57:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1737305856; x=1737910656; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=qmmb4zqZ9p+siFdSZXdznAkxBlMcr3SpDaxiDo2SWyU=;
+        b=QytANKqBNlhgeQUeujFznb2OissSo02RNtBCnzCZxx27YQD1qgVOA54c1ckXBlg52o
+         mDxOkRy44Z8/XgLS9EGVHplM+Geljq/TzsFx3nlZm/jwhxNO8Xdatcc6v8Vnol0f37It
+         MPpeEcwPk+wQ2XNUbV1XsMC0qZRDCFr88GA9zNEc5nNf18zzI48cBPz0Uk9BvKntt1l3
+         pACuYSykRTCEWjvDeHle2pue/ky27x/fpcdp/3B/hoArQ0Wex9Kz3JBtSMtdgvYqsvpV
+         rjGquyAnKyHH90txJXEPm0uFMGQR1qP0IKs9/FXAq3Afget/dL5LlhY09WOUtrfB98Ev
+         IBtg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1737305856; x=1737910656;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=qmmb4zqZ9p+siFdSZXdznAkxBlMcr3SpDaxiDo2SWyU=;
+        b=wH6pQrSfrl1rSLoSPwFYMx83EwoCD9jVjRlrHJgRTF7vfwlVwsRYO58bzIYKZzszx5
+         SWROVg+KX5WjjfYjF5RMlACmJZQ1sc6qAImiSnC1BIsFZmqlxGXpp9VcIfcAPsPqdK42
+         O1DiocD9kGhmZ24UmaIvzlolPKVb8AuAW7oBZlYYPWKW8hvgMiHsMGi3dfnlM0rM/dmn
+         Tj41stdph9cyNsaE+aChU4Yi18i6xp7N+tOuC/yzF6ZxMZhkPIDwJtxBzWNsq6oghxig
+         fIY89ByhLmZcqfuCvX6NJTtpkPK1SEE0grV6UdKKvudNx0VDsuct1E3jlIpqLTN+mWLZ
+         eziQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWeqVn45WWSlHq5z50gTGPa/+upy5DAWtE6Kb+Sdr6gJjnw/a+Q7kszURKG2jBFKHwq12Z8fijLmecYjo2W@vger.kernel.org
+X-Gm-Message-State: AOJu0YwS+W454zAtMX5ihdvsOvb/E7CU8n/s+F1CFZ7Xqt52X92MgEBY
+	iOHWourFqLXlYVONj8f4v0M8K/BJCXJyrebtIOy+rqMb2wnWpIuknXN8FBaXTaQ=
+X-Gm-Gg: ASbGncu17pg7lvaDL11DDVUhf/I/G5raV9ytNwEUQShChTUtXrHv6TdpuQ4Q0B+yyAf
+	UPtuxeuKt1RwUwGoeY1ekhjxm9UEyVrIyL+SoPF2AY7cVFRfehKviZF0dVQwddpde7PRQ1Oc6vp
+	EX79WyXRNXHIKFzKPowcx4NVssbq0oVAqy/I2w+mjeZ6N9DJ76JRFp4g7omHZWbIlsmdsEreGl8
+	JuArvjCJnRVzhZ9hFdlpGiOpIUy0FvjamPSlB+NxGBofgwpCvlE1i3Uob7zzbI4CaPi
+X-Google-Smtp-Source: AGHT+IFIEiBSMQ4j5lMnpSAdnhTiXrPNymMtDHfM0cHBf/ZM58+IWBa3SM92dBvbDqsFvOWiTieU0Q==
+X-Received: by 2002:a05:600c:510c:b0:434:a1e7:27b0 with SMTP id 5b1f17b1804b1-438913ccd4amr117549975e9.11.1737305855586;
+        Sun, 19 Jan 2025 08:57:35 -0800 (PST)
+Received: from linaro.org ([86.123.96.125])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4389041fe29sm107187745e9.22.2025.01.19.08.57.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 19 Jan 2025 08:57:34 -0800 (PST)
+Date: Sun, 19 Jan 2025 18:57:32 +0200
+From: Abel Vesa <abel.vesa@linaro.org>
+To: Tudor Ambarus <tudor.ambarus@linaro.org>
+Cc: Krzysztof Kozlowski <krzk@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	"James E.J. Bottomley" <James.Bottomley@hansenpartnership.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Eric Biggers <ebiggers@google.com>, linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-mmc@vger.kernel.org,
+	linux-scsi@vger.kernel.org, andre.draszik@linaro.org,
+	peter.griffin@linaro.org, willmcvicker@google.com,
+	kernel-team@android.com
+Subject: Re: [PATCH v2 1/4] soc: qcom: ice: introduce devm_of_qcom_ice_get
+Message-ID: <Z40u/DkEQIK9naI2@linaro.org>
+References: <20250117-qcom-ice-fix-dev-leak-v2-0-1ffa5b6884cb@linaro.org>
+ <20250117-qcom-ice-fix-dev-leak-v2-1-1ffa5b6884cb@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Subject: Re: [PATCH v2 25/25] drm/xlnx: Compute dumb-buffer sizes with
- drm_mode_size_dumb()
-To: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Geert Uytterhoeven <geert@linux-m68k.org>
-Cc: Thomas Zimmermann <tzimmermann@suse.de>,
- maarten.lankhorst@linux.intel.com, mripard@kernel.org, airlied@gmail.com,
- simona@ffwll.ch, dri-devel@lists.freedesktop.org,
- linux-mediatek@lists.infradead.org, freedreno@lists.freedesktop.org,
- linux-arm-msm@vger.kernel.org, imx@lists.linux.dev,
- linux-samsung-soc@vger.kernel.org, nouveau@lists.freedesktop.org,
- virtualization@lists.linux.dev, spice-devel@lists.freedesktop.org,
- linux-renesas-soc@vger.kernel.org, linux-rockchip@lists.infradead.org,
- linux-tegra@vger.kernel.org, intel-xe@lists.freedesktop.org,
- xen-devel@lists.xenproject.org,
- Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
- Andy Yan <andyshrk@163.com>, Daniel Stone <daniel@fooishbar.org>
-References: <f3ba05c7-6e49-4641-a3f9-ba418ebdb7c3@ideasonboard.com>
- <c6735280-7c32-4319-8ca9-a7305d8117c3@suse.de>
- <d67adb03-5cd0-4ac9-af58-cf4446dacee3@ideasonboard.com>
- <0ea6be58-0e04-4172-87cd-064a3e4a43bc@suse.de>
- <f35cb350-6be9-48ca-ad7e-e9dd418281d5@ideasonboard.com>
- <4af0b6a7-c16a-4187-bbf5-365a9c86de21@suse.de>
- <e327ad84-b5c9-4480-b873-dc3aca605538@ideasonboard.com>
- <a2bbeb47-2569-4ee0-9265-92bab139bdc6@suse.de>
- <f3833771-fcd7-45dc-9019-1525fef34429@ideasonboard.com>
- <CAMuHMdXxYa+Na3XxpLTy=-eUL_zQ9kAiUKYu-E04u3KWApusSA@mail.gmail.com>
- <xz5ncq67bgmdase2jg3cfvyaxpiwhol2eqpfzow6dqpauvslo5@2w3rw27lhnxo>
- <b97fcd2f-516a-4172-aef3-631418564cfa@linux.dev>
- <ef52dab0-058f-408f-a298-c4b2453a3d2f@ideasonboard.com>
- <f4562dbf-b132-4cfd-8f7e-43cd69f2673f@linux.dev>
- <cf34be39-ce92-4ea5-b548-03008c163d31@ideasonboard.com>
-Content-Language: en-US
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: Sui Jingfeng <sui.jingfeng@linux.dev>
-In-Reply-To: <cf34be39-ce92-4ea5-b548-03008c163d31@ideasonboard.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Migadu-Flow: FLOW_OUT
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250117-qcom-ice-fix-dev-leak-v2-1-1ffa5b6884cb@linaro.org>
 
-Hi,
+On 25-01-17 14:18:50, Tudor Ambarus wrote:
+> Callers of of_qcom_ice_get() leak the device reference taken by
+> of_find_device_by_node(). Introduce devm variant for of_qcom_ice_get().
+> Existing consumers need the ICE instance for the entire life of their
+> device, thus exporting qcom_ice_put() is not required.
+> 
+> Signed-off-by: Tudor Ambarus <tudor.ambarus@linaro.org>
 
-On 2025/1/19 23:22, Tomi Valkeinen wrote:
-> On 19/01/2025 16:59, Sui Jingfeng wrote:
->
->>>>> But userspace must be able to continue allocating YUV buffers through
->>>>> CREATE_DUMB.
->>>>
->>>> I think, allocating YUV buffers through CREATE_DUMB interface is just
->>>> an *abuse* and *misuse* of this API for now.
->>>>
->>>> Take the NV12 format as an example, NV12 is YUV420 planar format, have
->>>> two planar: the Y-planar and the UV-planar. The Y-planar appear first
->>>> in memory as an array of unsigned char values. The Y-planar is 
->>>> followed
->>>> immediately by the UV-planar, which is also an array of unsigned char
->>>> values that contains packed U (Cb) and V (Cr) samples.
->>>>
->>>> But the 'drm_mode_create_dumb' structure is only intend to provide
->>>> descriptions for *one* planar.
->>>>
->>>> struct drm_mode_create_dumb {
->>>>      __u32 height;
->>>>      __u32 width;
->>>>      __u32 bpp;
->>>>      __u32 flags;
->>>>      __u32 handle;
->>>>      __u32 pitch;
->>>>      __u64 size;
->>>> };
->>>>
->>>> An width x height NV12 image takes up width*height*(1 + 1/4 + 1/4) 
->>>> bytes.
->>>>
->>>> So we can allocate an *equivalent* sized buffer to store the NV12 
->>>> raw data.
->>>>
->>>> Either 'width * (height * 3/2)' where each pixel take up 8 bits,
->>>> or just 'with * height' where each pixels take up 12 bits.
->>>>
->>>> However, all those math are just equivalents description to the 
->>>> original
->>>> NV12 format, neither are concrete correct physical description.
->>>
->>> I don't see the problem. Allocating dumb buffers, if we don't have 
->>> any heuristics related to RGB behind it, is essentially just 
->>> allocating a specific amount of memory, defined by width, height and 
->>> bitsperpixel.
->>>
->> I think, the problem will be that the 'width', 'height' and 'bpp'
->> are originally used to describe one plane. Those three parameters
->> has perfectly defined physical semantics.
->>
->> But with multi planar formats, take NV12 image as an example,
->> for a 2×2 square of pixels, there are 4 Y samples but only 1 U
->> sample and 1 V sample. This format requires 4x8+1x8+1x8=48 bits
->> to store the 2x2 square.
->>
->> So its depth is 12 bits per pixel (48 / (2 * 2)).
->>
->> so my problem is that the mentioned 12bpp in this example only
->> make sense in mathematics, it doesn't has a good physical
->> interpret. Do you agree with me on this technique point?
->>
->>> If I want to create an NV12 framebuffer, I allocate two dumb 
->>> buffers, one for Y and one for UV planes, and size them accordingly. 
->>> And then create the DRM framebuffer with those.
->>>
->> Then how you fill the value of the 'width', 'height' and 'bpp' of 
->> each dumb buffers?
->
-> For 640x480-NV12:
-> plane 0: width = 640, height = 480, bpp = 8
-> plane 1: width = 640 / 2, height = 480 / 2, bpp = 16
->
-But i think this should be hardware dependent. The hardware I'm using
-load NV12  raw data as a whole. I only need to feed gpuva of the backing
-memory to the hardware register once.
+Good catch. LGTM.
 
-Not familiar with your hardware, so I can't talk more on this software
-design. Perhaps someone know more could have a comment on this.
+Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
 
->> Why not allocate storage for the whole on one shoot?
->
-> You can, if you adjust the parameters accordingly. However, if the 
-> strides of the planes are not equal, I guess it might cause problems 
-> on some platforms.
->
-> But I think it's usually simpler to allocate one buffer per plane, and 
-> perhaps even better as it doesn't require as large contiguous memory 
-> area.
->
->> The modetest in libdrm can be an good example, send it[1] to you as 
->> an reference.
->
-> Right, so modetest already does it successfully. So... What is the issue?
->
-But then, the problem will become that it override the 'height' parameter.
-What's the physical interpretation of the 'height' parameter when creating
-an NV12 image with the dump API then?
-
-I guess, solving complex problems with simple APIs may see the limitation,
-sooner or later. But I not very sure and might be wrong. So other peoples
-can override me words.
-
-
-> Everyone agrees that CREATE_DUMB is not the best ioctl to allocate 
-> buffers, and one can't consider it to work identically across the 
-> platforms. But it's what we have and what has been used for ages.
->
-Yeah, your request are not unreasonable. It can be seen as a kind of rigid demand.
-Since GEM DMA helpers doesn't export an more advanced interface to userspace so far.
-As a result, drivers that employing GEM DMA has no other choice, but to abuse the
-dumb buffer API to do allocation for the more complex format buffers.
-
-The dumb buffer API doesn't support to specify buffer format, tile status and
-placement etc. The more advance drivers has been exposed the xxx_create_gem()
-to user-space. It seems that a few more experienced programmers hint us to
-create an new ioctl at above thread, so that we can keep employing simple API
-to do simple things and to suit complex needs with the more advanced APIs.
-
-
->  Tomi
->
--- 
-Best regards,
-Sui
-
+> ---
+>  drivers/soc/qcom/ice.c | 48 ++++++++++++++++++++++++++++++++++++++++++++++++
+>  include/soc/qcom/ice.h |  2 ++
+>  2 files changed, 50 insertions(+)
+> 
+> diff --git a/drivers/soc/qcom/ice.c b/drivers/soc/qcom/ice.c
+> index 393d2d1d275f..79e04bff3e33 100644
+> --- a/drivers/soc/qcom/ice.c
+> +++ b/drivers/soc/qcom/ice.c
+> @@ -11,6 +11,7 @@
+>  #include <linux/cleanup.h>
+>  #include <linux/clk.h>
+>  #include <linux/delay.h>
+> +#include <linux/device.h>
+>  #include <linux/iopoll.h>
+>  #include <linux/of.h>
+>  #include <linux/of_platform.h>
+> @@ -324,6 +325,53 @@ struct qcom_ice *of_qcom_ice_get(struct device *dev)
+>  }
+>  EXPORT_SYMBOL_GPL(of_qcom_ice_get);
+>  
+> +static void qcom_ice_put(const struct qcom_ice *ice)
+> +{
+> +	struct platform_device *pdev = to_platform_device(ice->dev);
+> +
+> +	if (!platform_get_resource_byname(pdev, IORESOURCE_MEM, "ice"))
+> +		platform_device_put(pdev);
+> +}
+> +
+> +static void devm_of_qcom_ice_put(struct device *dev, void *res)
+> +{
+> +	qcom_ice_put(*(struct qcom_ice **)res);
+> +}
+> +
+> +/**
+> + * devm_of_qcom_ice_get() - Devres managed helper to get an ICE instance from
+> + * a DT node.
+> + * @dev: device pointer for the consumer device.
+> + *
+> + * This function will provide an ICE instance either by creating one for the
+> + * consumer device if its DT node provides the 'ice' reg range and the 'ice'
+> + * clock (for legacy DT style). On the other hand, if consumer provides a
+> + * phandle via 'qcom,ice' property to an ICE DT, the ICE instance will already
+> + * be created and so this function will return that instead.
+> + *
+> + * Return: ICE pointer on success, NULL if there is no ICE data provided by the
+> + * consumer or ERR_PTR() on error.
+> + */
+> +struct qcom_ice *devm_of_qcom_ice_get(struct device *dev)
+> +{
+> +	struct qcom_ice *ice, **dr;
+> +
+> +	dr = devres_alloc(devm_of_qcom_ice_put, sizeof(*dr), GFP_KERNEL);
+> +	if (!dr)
+> +		return ERR_PTR(-ENOMEM);
+> +
+> +	ice = of_qcom_ice_get(dev);
+> +	if (!IS_ERR_OR_NULL(ice)) {
+> +		*dr = ice;
+> +		devres_add(dev, dr);
+> +	} else {
+> +		devres_free(dr);
+> +	}
+> +
+> +	return ice;
+> +}
+> +EXPORT_SYMBOL_GPL(devm_of_qcom_ice_get);
+> +
+>  static int qcom_ice_probe(struct platform_device *pdev)
+>  {
+>  	struct qcom_ice *engine;
+> diff --git a/include/soc/qcom/ice.h b/include/soc/qcom/ice.h
+> index 5870a94599a2..d5f6a228df65 100644
+> --- a/include/soc/qcom/ice.h
+> +++ b/include/soc/qcom/ice.h
+> @@ -34,4 +34,6 @@ int qcom_ice_program_key(struct qcom_ice *ice,
+>  			 int slot);
+>  int qcom_ice_evict_key(struct qcom_ice *ice, int slot);
+>  struct qcom_ice *of_qcom_ice_get(struct device *dev);
+> +struct qcom_ice *devm_of_qcom_ice_get(struct device *dev);
+> +
+>  #endif /* __QCOM_ICE_H__ */
+> 
+> -- 
+> 2.48.0.rc2.279.g1de40edade-goog
+> 
 
