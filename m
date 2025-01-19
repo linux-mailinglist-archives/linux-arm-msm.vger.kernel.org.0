@@ -1,113 +1,115 @@
-Return-Path: <linux-arm-msm+bounces-45485-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-45486-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id C8F3AA16039
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 19 Jan 2025 05:49:44 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 551C9A1605E
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 19 Jan 2025 06:41:18 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1A3003A2CDC
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 19 Jan 2025 04:49:38 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7A3F83A1188
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 19 Jan 2025 05:41:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D2D931465B8;
-	Sun, 19 Jan 2025 04:49:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 85114502B1;
+	Sun, 19 Jan 2025 05:41:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=hmeau.com header.i=@hmeau.com header.b="qDI93WsX"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="TJ1me90m"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from abb.hmeau.com (abb.hmeau.com [144.6.53.87])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f43.google.com (mail-pj1-f43.google.com [209.85.216.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2056229415;
-	Sun, 19 Jan 2025 04:49:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=144.6.53.87
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF90342A92
+	for <linux-arm-msm@vger.kernel.org>; Sun, 19 Jan 2025 05:41:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737262181; cv=none; b=kQfbOfz6OrLifQC6Bf/G0zjUCYMKE9VCmtB0xd/0CMqUJOGxqQXbwSlwU9yvAlhpEr5vlBiLzzLprrjPYrK7GTKPq4Br6Bf1xaNw6BnF+EK/FRg4xO+zIGMlHpxM3i8YGa1wSZnmOSEi6NZiiUiwo2mvDrRalaXioKD+JrsqUXk=
+	t=1737265273; cv=none; b=saAIE0kCK0ARwva1dSgBeTKRpNZqjAV1HiJ7fXaNNwOxl6B06pvWawNfpdCG7tBh5MP7Lw4Ak9hZhHAyB34i0hG7n5VSZGcYUBT2cIgfI8dNv7wXMzizuHOWJZjwBOZYqLNkeWO723M/HP/5GnYLvxQ9H+IGhCRLUmKd1JPnSY4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737262181; c=relaxed/simple;
-	bh=G0mEtf6sFabey0h87yztrKXIZJyk9owgdja9gfqrOo8=;
+	s=arc-20240116; t=1737265273; c=relaxed/simple;
+	bh=7wiEiBO65qt8hUOF1czRxQtBtxWFL3rfJ9lF5CVTyn0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=KdWCnKNvqH8QI+IxthXSh9KpRSJopbEV2Pr/oEEWaqGk308bz0P3YKKQBBk7v5xiPZXRcAW5i9Jy/m7Q6jfM9+xhPO20PkKJ1w00ub2NBVnuhkvbs0Alb/vk2uppKYJXdV9rEvMUlCO+kGgEB1YXbJGeLXhu818/orXlENXS3Fk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gondor.apana.org.au; spf=pass smtp.mailfrom=gondor.apana.org.au; dkim=pass (2048-bit key) header.d=hmeau.com header.i=@hmeau.com header.b=qDI93WsX; arc=none smtp.client-ip=144.6.53.87
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gondor.apana.org.au
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gondor.apana.org.au
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=hmeau.com;
-	s=formenos; h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:
-	Subject:Cc:To:From:Date:Sender:Reply-To:Content-Transfer-Encoding:Content-ID:
-	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-	:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
-	List-Post:List-Owner:List-Archive;
-	bh=hn8TvoF3M0nwEiuHQZPt0xbeO5eOxJ2Yib43ffBbvXA=; b=qDI93WsXDo8iNYf84/liTTHzk3
-	PEMSuN4LZ5vZsyv+ot/iluYCEbpxi+TBaCQs1wTpBMYX0oyoYvU87qru84X4Mx6JWwhvJ4I2Pomu7
-	V7nwcu7TTAy3HqGz+o2KvLb+JvrUud+X1jEpNo0Wvi7XaPhmdpgSPSztFlfY249ko18Vl0iG7h4dS
-	bLz5tfMJA8dmHy4kG2lbvjhfxRCHAUM3CqDGAN/dzIY2HQqUAnf6spKrIMvDHM5Q4hUvELoiRX69S
-	AhrOtknaszu6sY2yBv3LXbLrP+3Tkv0oow1Nn+nlA44TmTy0tbM01HAOwFIldwZmGSU9Djidnqvpg
-	bdK6ndFQ==;
-Received: from loth.rohan.me.apana.org.au ([192.168.167.2])
-	by formenos.hmeau.com with smtp (Exim 4.96 #2 (Debian))
-	id 1tZN2h-00AVZB-0p;
-	Sun, 19 Jan 2025 12:49:33 +0800
-Received: by loth.rohan.me.apana.org.au (sSMTP sendmail emulation); Sun, 19 Jan 2025 12:49:31 +0800
-Date: Sun, 19 Jan 2025 12:49:31 +0800
-From: Herbert Xu <herbert@gondor.apana.org.au>
-To: Melody Olvera <quic_molvera@quicinc.com>
-Cc: Thara Gopinath <thara.gopinath@gmail.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Vinod Koul <vkoul@kernel.org>,
-	Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>,
-	Trilok Soni <quic_tsoni@quicinc.com>, linux-crypto@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Gaurav Kashyap <quic_gaurkash@quicinc.com>
-Subject: Re: [PATCH 0/6] arm64: dts: qcom: sm8750: Introduce crypto support
- for SM8750
-Message-ID: <Z4yEW4M_dqhEPxJC@gondor.apana.org.au>
-References: <20250113-sm8750_crypto_master-v1-0-d8e265729848@quicinc.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=glssHhP55M3eImX9OzhoADz5trr1s97YUUZ/Bi5pCZZtj5dNQauxKgVSa6LEALy7WQ2+xWGJBPg0JVi6ED/o09WfrnAneAY7ZSHcT/FVUog/3tAqvhrlZT2SVq7Ii72wEkNhziEqr4Y7sDc6Ob/L3aT1+lt8sjvjoJMUn+HgAD0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=TJ1me90m; arc=none smtp.client-ip=209.85.216.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-pj1-f43.google.com with SMTP id 98e67ed59e1d1-2efded08c79so4750957a91.0
+        for <linux-arm-msm@vger.kernel.org>; Sat, 18 Jan 2025 21:41:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1737265271; x=1737870071; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=Q0hiYAmC1NBHRz5E16AsSt6i/zS8INIR8RO6iwr/sB0=;
+        b=TJ1me90mrf9p0V1PbgDGpdW9+1EKXfdNLuEWoW1v+Q+E6beduVF248+e/tJU5cg8OC
+         eTlaA1K18X/KHljglcp/X4NW91Q18mMn9ZN868xyV+HlDstRygvOZbZ5/inbEjZVX24b
+         YWd7kG5uziSYnpd2CC+DUY2m+1Ef2NcRhCmUC1gqOFnoCPKGmItcYzkwSm+lxcCzJFU+
+         DAAIbFuECSkQKvf/2AjhojZRXqgwbU7F97//Iy/P59cCQvGOVO1ZU4r6KdjYafBFV6/s
+         Zngq+FFIXo1JJ8+u3Ti44W8wS1t1Lw0lHS76uTHUuMEzxtOAO1gYappH1un3lmqczpKr
+         zi7w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1737265271; x=1737870071;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Q0hiYAmC1NBHRz5E16AsSt6i/zS8INIR8RO6iwr/sB0=;
+        b=OkH2AGgJpH1gux2omXNRTDtjYec2K5tNcelTpJmCpPT/duIvJu6D3ejMbWHj71jbzM
+         RDu1ZQIoEdbERXuWvKFcnlR7o1SVPGp6CPPwSHoBdhaIve0glGRc30ZeLBCUb0o6ricV
+         dsF0v0K8F3iZebnXYl+6RgPaaJQ4ofo+QyOzuILy6uSwNMFBEO7mYAk4mabWQAsM4Nk/
+         4OvDBIzQl/+OtV8t+CeakNfUJ8sFgiFCPdUn+FrWlBueJ+jJjTa26J2lPZup7/ew8pWV
+         LqjrUX/NGFiGZlxBfsEOtt8c/aWt3nd7F9kfEi3Om0BCPzUGJ3hl+qDS47lLxnCrWb/y
+         w4Qg==
+X-Forwarded-Encrypted: i=1; AJvYcCW2Qo88tbFHQgBr/YN0wy9kJRZGswUFPxyZ3ldd1tJ+efNEglHxUrkorkpvpltHfDWXGSCwZ/8AKIfaYiXD@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy5Q5Vankp8LUSDKBrcxCBa3lMtmg/cExucheqHVrUKVpnDYbqF
+	jaSRcEj/yZrig8rSPzbGqOJyr+6jqzamd1qSUWmO9m8LBa1f0idfP0dXcoxhFA==
+X-Gm-Gg: ASbGnctWJOZsj0YdbC+YztvsGzAkVA3v5ij7XRXstyQFDDS+wqE2V6nozr76GSOk6V8
+	XwTTUTERYIHRhRc+zoX9RlETkZFjY0lzk2xCJSsgm8lz+MmNOTEse+APmbWttXAY+2dZy71IzCS
+	kIH3TUNzBVW6aPQ65eoX3VbmONyhdwyHLCRd/MrZZ+dgbAoRXjMMYphw+4haHG6JJ1Vn1siy6UO
+	rxuQ6fdHn3SOwsRMGc48wSDfaM5ZqtaW7bfPcPgu4OD+EJFQa5M5pHa0UZEWWpg436XScDNKSVW
+	R4BxKA==
+X-Google-Smtp-Source: AGHT+IFTPFAuCVR47CqJZ5aE1a4b2WBsAqSxOx0hT2JepHYK9FHRggwrPcIYivOgfSXepJdzgdFTgw==
+X-Received: by 2002:a17:90b:4b82:b0:2f4:423a:8fb2 with SMTP id 98e67ed59e1d1-2f782cbf6a3mr12954407a91.20.1737265271093;
+        Sat, 18 Jan 2025 21:41:11 -0800 (PST)
+Received: from thinkpad ([120.60.143.204])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2f7762acd87sm4995908a91.43.2025.01.18.21.41.07
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 18 Jan 2025 21:41:10 -0800 (PST)
+Date: Sun, 19 Jan 2025 11:11:05 +0530
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To: Md Sadre Alam <quic_mdalam@quicinc.com>
+Cc: vkoul@kernel.org, robin.murphy@arm.com, linux-arm-msm@vger.kernel.org,
+	dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
+	quic_varada@quicinc.com, quic_srichara@quicinc.com
+Subject: Re: [PATCH v2] dmaengine: qcom: bam_dma: Fix BAM_RIVISON register
+ handling
+Message-ID: <20250119054105.rhsathhdqapirszh@thinkpad>
+References: <20250117111302.2073993-1-quic_mdalam@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20250113-sm8750_crypto_master-v1-0-d8e265729848@quicinc.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20250117111302.2073993-1-quic_mdalam@quicinc.com>
 
-On Mon, Jan 13, 2025 at 01:16:20PM -0800, Melody Olvera wrote:
-> Document and describe the crypto engines and random number generators
-> on the SM8750 SoC.
-> 
-> Signed-off-by: Melody Olvera <quic_molvera@quicinc.com>
-> ---
-> Gaurav Kashyap (6):
->       dt-bindings: crypto: qcom-qce: Document the SM8750 crypto engine
->       arm64: dts: qcom: sm8750: Add QCrypto nodes
->       dt-bindings: crypto: qcom,prng: Document SM8750 RNG
->       arm64: dts: qcom: sm8750: Add TRNG nodes
->       dt-bindings: crypto: qcom,inline-crypto-engine: Document the SM8750 ICE
->       arm64: dts: qcom: sm8750: Add ICE nodes
-> 
->  .../bindings/crypto/qcom,inline-crypto-engine.yaml |  1 +
->  .../devicetree/bindings/crypto/qcom,prng.yaml      |  1 +
->  .../devicetree/bindings/crypto/qcom-qce.yaml       |  1 +
->  arch/arm64/boot/dts/qcom/sm8750.dtsi               | 43 ++++++++++++++++++++++
->  4 files changed, 46 insertions(+)
-> ---
-> base-commit: 37136bf5c3a6f6b686d74f41837a6406bec6b7bc
-> change-id: 20250107-sm8750_crypto_master-12e2fc2fcf32
-> 
-> Best regards,
-> -- 
-> Melody Olvera <quic_molvera@quicinc.com>
+On Fri, Jan 17, 2025 at 04:43:02PM +0530, Md Sadre Alam wrote:
+> This patch resolves a bug from the previous commit where the
+> BAM_DESC_CNT_TRSHLD register was conditionally written based on BAM-NDP
+> mode. It also fixes an issue where reading the BAM_REVISION register
 
-Patches 1/3/5 applied.  Thanks.
+The 'also' sounds like the patch is fixing 2 issues, but it is just fixing one.
+
+> would hang if num-ees was not zero, which occurs when the SoCs power on
+> BAM remotely. The BAM_REVISION register read has been moved to inside if
+> condition.
+> 
+> Cc: stable@vger.kernel.org
+
+The offending commit is just in the -next branch. So CCing stable is pointless.
+
+- Mani
+
 -- 
-Email: Herbert Xu <herbert@gondor.apana.org.au>
-Home Page: http://gondor.apana.org.au/~herbert/
-PGP Key: http://gondor.apana.org.au/~herbert/pubkey.txt
+மணிவண்ணன் சதாசிவம்
 
