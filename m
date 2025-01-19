@@ -1,231 +1,132 @@
-Return-Path: <linux-arm-msm+bounces-45514-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-45515-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id A2991A16241
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 19 Jan 2025 15:40:40 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 23E64A16245
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 19 Jan 2025 15:51:02 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 17B5C18843E9
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 19 Jan 2025 14:40:44 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5AA981645F0
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 19 Jan 2025 14:51:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1E8BF1DF24A;
-	Sun, 19 Jan 2025 14:40:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 088C61DEFF5;
+	Sun, 19 Jan 2025 14:50:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="pBcAjeCU"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BzANnSus"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32D4C1DED70
-	for <linux-arm-msm@vger.kernel.org>; Sun, 19 Jan 2025 14:40:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF9B363CB;
+	Sun, 19 Jan 2025 14:50:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737297637; cv=none; b=B0us1F65LzdQ5yMlljnV/2GmrvhCOAgtnnvKMjCZF+XKbiDWt7ifQXbzvSdo+K/mN2Cy3VQ+2TVHXkvqXcWq/aecCD3LWGVMNI9O0WQRmrJq1IbC3Ik2Zk0pRt9TOKnfVP+5Cr1hu6gWqVbkM36n7P4fIyx6jkfuHlaaf42Vas0=
+	t=1737298256; cv=none; b=rhlPHvi5KijMch4pzJa45E7hJofRQc9B+X7gWRbxy3lYpZh5OV/RIuneTTTdoVFCLlLgDEoBF6MpGMJtuIZinWBictKDH9OLcrTYFsICwtir3OGy9eboiqXTqTpc2yfjOVU5l4LjQbjIAkVlf46rd6Bm9HifKcjXNnYs0TIuy3I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737297637; c=relaxed/simple;
-	bh=iK+QlwMaOkaHjaTHgJGJg0BIN7roOg7rWdqeebnpM5g=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Rv6Xy5vAovkM1WAGi1vjjRBMeGJj81vGSAD0tMVDTKqiZ1+MppyPIygpFyrna0OjWdwSRcOWjD+SSKjp3qbJuFm3T912RITDXpAuBbeR0AL3+ORB+FCcTWL+HysnWIqnNYt6SCbpUkf45ftaUM0dyhk5nPVEFa/jL5AkgggAOUA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=pBcAjeCU; arc=none smtp.client-ip=209.85.128.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
-Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-4368a290e0dso39225e9.1
-        for <linux-arm-msm@vger.kernel.org>; Sun, 19 Jan 2025 06:40:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1737297633; x=1737902433; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=yozjyOOVjvWJnBqKBHEFXaWCaRf+nsltbh0VmuJU/AU=;
-        b=pBcAjeCUDtnUjMsD0aTv4hHJBWRea9ag3fMUgJ/ZqrFjNdkUiPMHujfq55jvdxRK61
-         0+UW4NCx8fimu7d4Oa44H6rmVsOjfaVKNdazNqiuSajt/aN2Otg1igcunYBSDQ6WW0UU
-         IKAaiCxOdSh3x891qC1F/rocWdS74MkWDS2zeXDRjfVbeXTrh/nruwIiT5WcJ240qjJS
-         jqU7a6k7vwqSbFbwJiJTpBZ/tjgD6kt0bai+rUOgCjTeXXZK+zZe8VHft+aLQEHqo74B
-         N23BgDqj6vUwEIxexFC2YTdYMjekpOalYKjvradSFrPHSM9egZ4R3ypp+Qc6S12oUc1r
-         9FvA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1737297633; x=1737902433;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=yozjyOOVjvWJnBqKBHEFXaWCaRf+nsltbh0VmuJU/AU=;
-        b=CFHqvwOA1WUe5qijMxpCNY2OHmc4DOmul/XtS12J4tMMGWt39WIBCd8T7wYlse+Sqv
-         BX4ApIWA7mNlA4ZOWBjw8Be0gbFI9YH4x84vFnRjChigSI9pzZj11dwjwnJs7ZwWAaky
-         hk5DakN1CLeOHlYmRMEmVHMRg0NSE21EAGm4P1q5f+9ZkvpSQfbxN49JWi9sW7JnuPeF
-         +809ZTdHT9nKmv1tqilt+YyF62JbA2Be7+k1iQ9jZeufFqpYMktVQN8ASDkITCnhwTIa
-         Gyz+TEvZRhEYDyoLvzzDSfQ2SaDvI9HHK57WdgijPo25VsvSgVjwML7gnMmbGJKOc1Qf
-         cWxw==
-X-Forwarded-Encrypted: i=1; AJvYcCXf2Kw+Ye+3sSr5IgtwFX9XrgltPk02xIlUCvnhnox1MWaGyyeBEacKeGC/AOriJZq1xnS2jR6TDk5lWoo3@vger.kernel.org
-X-Gm-Message-State: AOJu0YzD4CZKbsb8qrrw04M+DSHczg1OjPWtN9lIIzxujfzks5jI3rhu
-	d/t29qJlWzt7feyUgb305Un4J3HSbZmpNC56nT9Z5gwGaOL8yXkCtZZumJ+NyUnwUXTMlvLvIkK
-	jNOUdJQrvLQb6dg2o03XBy6KjPOXrX1RmITxW
-X-Gm-Gg: ASbGncvvo4AEXwO/sLMIyEFhLU+jViCovOPtLzz3tElK73dWLneg2xU3oBW4M6Nrto+
-	W3GYxuvr6it6SnWYm9e1Q9d/YlngWpSjIfCQq1ECofZRWiO+GJA==
-X-Google-Smtp-Source: AGHT+IF9OmfsYNYAh14f5gkDAcnJeYGVY4k5QEJJiVg1RDgOf/8pqrGM2vF1v1I2qBCXAIbPAuAEY0CEq6gZ99y9swk=
-X-Received: by 2002:a7b:c8d0:0:b0:436:1811:a79c with SMTP id
- 5b1f17b1804b1-438a0f45bc4mr1415995e9.5.1737297633182; Sun, 19 Jan 2025
- 06:40:33 -0800 (PST)
+	s=arc-20240116; t=1737298256; c=relaxed/simple;
+	bh=AX5VJfJx56rXXVQSO+9NkM/PmYBy4kqrprJ7LvyVVn0=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=hrwu0dzFxvFXta/f7a2t6q0ZQ40QmaCdrGW4w4k29si1WX09l7E4g3modaLMnvkbCGiHp06tVw1y9YgzCRUOGna83HGr8xh+Vhl1/RrYv0CxLefDRr5NMRns5+r8DnZb+OrbcXS5UNzYK9zMoDhPPTKjTq2/YBEeNITV2gwn/+4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BzANnSus; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 49D94C4CED6;
+	Sun, 19 Jan 2025 14:50:56 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1737298256;
+	bh=AX5VJfJx56rXXVQSO+9NkM/PmYBy4kqrprJ7LvyVVn0=;
+	h=From:Subject:Date:To:Cc:Reply-To:From;
+	b=BzANnSusYi2ZxWui+ucxnK0XhEdjWmauDeZuygWnkxssJD2MmVaAHhWStwdlPPlWa
+	 Pgci+jusvgJzxY+IxW8fzHMt1maZHdkBheseq3XuXQ+hPUjruk/MlOOdiaCbzt5Lpp
+	 XniRpfY2rQcpQl8VkbO75vbddm3C39qlAp8jiJEwxI8Kvzo6djv/m67X3ZEOd7SZmr
+	 rcObQWsEKretFx8wvtmuDdGOI8OpeVEOKpT29E1HyIRlrwoxe6wBoNToMlt6EybiAq
+	 S84+I+2J1pvoO6pGHIe/vOpe9MICknh+qoUUT4YlRJ5NeSSB10qYOrneSU6P50iP9x
+	 PQ3umJVmJ7BrQ==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 388EEC02187;
+	Sun, 19 Jan 2025 14:50:56 +0000 (UTC)
+From: Maud Spierings via B4 Relay <devnull+maud_spierings.hotmail.com@kernel.org>
+Subject: [PATCH 0/2] arm64: dts: qcom: x1e80100-vivobook-s15: Add usb a and
+ sd-card reader
+Date: Sun, 19 Jan 2025 15:50:50 +0100
+Message-Id: <20250119-usb_a_micro_sd-v1-0-01eb7502ae05@hotmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250117163001.2326672-1-tabba@google.com> <20250117163001.2326672-2-tabba@google.com>
- <20250117135917364-0800.eberman@hu-eberman-lv.qualcomm.com>
-In-Reply-To: <20250117135917364-0800.eberman@hu-eberman-lv.qualcomm.com>
-From: Fuad Tabba <tabba@google.com>
-Date: Sun, 19 Jan 2025 14:39:56 +0000
-X-Gm-Features: AbW1kvYFuoqqzdPWDUOJX5ZIcY6cxxqPuz3h9GeI5OeA0p3MfrZ12_kY3H6B7Hw
-Message-ID: <CA+EHjTxQ5r_ybMhKBQvj9ep4pZnHo2K+aLMT+9uVyfanV_bZxw@mail.gmail.com>
-Subject: Re: [RFC PATCH v5 01/15] mm: Consolidate freeing of typed folios on
- final folio_put()
-To: Elliot Berman <elliot.berman@oss.qualcomm.com>
-Cc: kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, 
-	pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au, 
-	anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com, 
-	aou@eecs.berkeley.edu, seanjc@google.com, viro@zeniv.linux.org.uk, 
-	brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org, 
-	xiaoyao.li@intel.com, yilun.xu@intel.com, chao.p.peng@linux.intel.com, 
-	jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com, 
-	yu.c.zhang@linux.intel.com, isaku.yamahata@intel.com, mic@digikod.net, 
-	vbabka@suse.cz, vannapurve@google.com, ackerleytng@google.com, 
-	mail@maciej.szmigiero.name, david@redhat.com, michael.roth@amd.com, 
-	wei.w.wang@intel.com, liam.merwick@oracle.com, isaku.yamahata@gmail.com, 
-	kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com, steven.price@arm.com, 
-	quic_eberman@quicinc.com, quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, 
-	quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com, 
-	quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com, 
-	james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev, 
-	maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com, 
-	roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, 
-	rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com, 
-	jthoughton@google.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAEoRjWcC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDI1MDQ0NL3dLipPjE+NzM5KL8+OIUXZNkE3Oz1ERzM8skQyWgpoKi1LTMCrC
+ B0bG1tQAlmMaJYAAAAA==
+X-Change-ID: 20250119-usb_a_micro_sd-4c476ea769b1
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Maud Spierings <maud_spierings@hotmail.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1737298255; l=2119;
+ i=maud_spierings@hotmail.com; s=20241110; h=from:subject:message-id;
+ bh=AX5VJfJx56rXXVQSO+9NkM/PmYBy4kqrprJ7LvyVVn0=;
+ b=kx/NfvnPmOYQw+KpxvPD8lyMcKVtHa8QDaSo3OM8h2zwU8uwivmDT0bxQEI/CA5XMHdoeVvc2
+ JQzN9bV4x4/BkBEjSiPAwWZfjZRFWcLOhAvLESNheEu/3pFxhs8uSgf
+X-Developer-Key: i=maud_spierings@hotmail.com; a=ed25519;
+ pk=CeFKVnZvRfX2QjB1DpdiAe2N+MEjwLEB9Yhx/OAcxRc=
+X-Endpoint-Received: by B4 Relay for maud_spierings@hotmail.com/20241110
+ with auth_id=273
+X-Original-From: Maud Spierings <maud_spierings@hotmail.com>
+Reply-To: maud_spierings@hotmail.com
 
-On Fri, 17 Jan 2025 at 22:05, Elliot Berman
-<elliot.berman@oss.qualcomm.com> wrote:
->
-> On Fri, Jan 17, 2025 at 04:29:47PM +0000, Fuad Tabba wrote:
-> > Some folio types, such as hugetlb, handle freeing their own
-> > folios. Moreover, guest_memfd will require being notified once a
-> > folio's reference count reaches 0 to facilitate shared to private
-> > folio conversion, without the folio actually being freed at that
-> > point.
-> >
-> > As a first step towards that, this patch consolidates freeing
-> > folios that have a type. The first user is hugetlb folios. Later
-> > in this patch series, guest_memfd will become the second user of
-> > this.
-> >
-> > Suggested-by: David Hildenbrand <david@redhat.com>
-> > Signed-off-by: Fuad Tabba <tabba@google.com>
-> > ---
-> >  include/linux/page-flags.h | 15 +++++++++++++++
-> >  mm/swap.c                  | 24 +++++++++++++++++++-----
-> >  2 files changed, 34 insertions(+), 5 deletions(-)
-> >
-> > diff --git a/include/linux/page-flags.h b/include/linux/page-flags.h
-> > index 691506bdf2c5..6615f2f59144 100644
-> > --- a/include/linux/page-flags.h
-> > +++ b/include/linux/page-flags.h
-> > @@ -962,6 +962,21 @@ static inline bool page_has_type(const struct page *page)
-> >       return page_mapcount_is_type(data_race(page->page_type));
-> >  }
-> >
-> > +static inline int page_get_type(const struct page *page)
-> > +{
-> > +     return page->page_type >> 24;
-> > +}
-> > +
-> > +static inline bool folio_has_type(const struct folio *folio)
-> > +{
-> > +     return page_has_type(&folio->page);
-> > +}
-> > +
-> > +static inline int folio_get_type(const struct folio *folio)
-> > +{
-> > +     return page_get_type(&folio->page);
-> > +}
-> > +
-> >  #define FOLIO_TYPE_OPS(lname, fname)                                 \
-> >  static __always_inline bool folio_test_##fname(const struct folio *folio) \
-> >  {                                                                    \
-> > diff --git a/mm/swap.c b/mm/swap.c
-> > index 10decd9dffa1..6f01b56bce13 100644
-> > --- a/mm/swap.c
-> > +++ b/mm/swap.c
-> > @@ -94,6 +94,20 @@ static void page_cache_release(struct folio *folio)
-> >               unlock_page_lruvec_irqrestore(lruvec, flags);
-> >  }
-> >
-> > +static void free_typed_folio(struct folio *folio)
-> > +{
-> > +     switch (folio_get_type(folio)) {
->
-> I think you need:
->
-> +#if IS_ENABLED(CONFIG_HUGETLBFS)
-> > +     case PGTY_hugetlb:
-> > +             free_huge_folio(folio);
-> > +             return;
-> +#endif
->
-> I think this worked before because folio_test_hugetlb was defined by:
-> FOLIO_TEST_FLAG_FALSE(hugetlb)
-> and evidently compiler optimizes out the free_huge_folio(folio) before
-> linking.
->
-> You'll probably want to do the same for the PGTY_guestmem in the later
-> patch!
+The Asus Vivobook s15 has 2 5gbps usb A ports on the right side which
+are controlled by the usb_mp controller enable them and the retimers
+required.
 
-Thanks Elliot. This will keep the kernel test robot happy when I respin.
+There is also a micro sd-card reader on the left side below the two
+usb-c ports, this one is attached to the usb_2 controller. Enable it and
+the retimer to enable the micro sd-card reader.
 
-Cheers,
-/fuad
+The micro sd-card reader seems to have so interesting behaviour, on my
+machine and someone elses it kind of half works, but not really, the
+same under windows, unusable. Either we both got unlucky with a hardware
+defect or there is something else going on, however two other people did
+succesfully test it, one of which on (free?)bsd instead of linux even.
+One hypothesis is that this area is where the charging circuitry is,
+which gets *very* hot while charging and might damage this bit of
+hardware. However this is very much speculation and not based on
+anything concrete.
 
->
-> > +     case PGTY_offline:
-> > +             /* Nothing to do, it's offline. */
-> > +             return;
-> > +     default:
-> > +             WARN_ON_ONCE(1);
-> > +     }
-> > +}
-> > +
-> >  void __folio_put(struct folio *folio)
-> >  {
-> >       if (unlikely(folio_is_zone_device(folio))) {
-> > @@ -101,8 +115,8 @@ void __folio_put(struct folio *folio)
-> >               return;
-> >       }
-> >
-> > -     if (folio_test_hugetlb(folio)) {
-> > -             free_huge_folio(folio);
-> > +     if (unlikely(folio_has_type(folio))) {
-> > +             free_typed_folio(folio);
-> >               return;
-> >       }
-> >
-> > @@ -934,13 +948,13 @@ void folios_put_refs(struct folio_batch *folios, unsigned int *refs)
-> >               if (!folio_ref_sub_and_test(folio, nr_refs))
-> >                       continue;
-> >
-> > -             /* hugetlb has its own memcg */
-> > -             if (folio_test_hugetlb(folio)) {
-> > +             if (unlikely(folio_has_type(folio))) {
-> > +                     /* typed folios have their own memcg, if any */
-> >                       if (lruvec) {
-> >                               unlock_page_lruvec_irqrestore(lruvec, flags);
-> >                               lruvec = NULL;
-> >                       }
-> > -                     free_huge_folio(folio);
-> > +                     free_typed_folio(folio);
-> >                       continue;
-> >               }
-> >               folio_unqueue_deferred_split(folio);
-> > --
-> > 2.48.0.rc2.279.g1de40edade-goog
-> >
+Symptoms of dysfunctional sd-card reader:
+The sd card will get detected, a usb device will appear as "Genesys Logic
+STORAGE DEVICE" 05e3:0747
+
+log:
+[ 2456.648075] usb 1-1: new high-speed USB device number 3 using xhci-hcd
+[ 2456.792703] usb-storage 1-1:1.0: USB Mass Storage device detected
+[ 2456.795530] scsi host0: usb-storage 1-1:1.0
+[ 2457.840518] scsi 0:0:0:0: Direct-Access     Generic  MassStorageClass
+2402 PQ: 0 ANSI: 6
+[ 2458.072281] sd 0:0:0:0: [sda] Media removed, stopped polling
+[ 2458.073001] sd 0:0:0:0: [sda] Attached SCSI removable disk
+
+/dev/sda will appear, but it will not do anything, fdisk rejects it etc
+
+Signed-off-by: Maud Spierings <maud_spierings@hotmail.com>
+---
+Maud Spierings (2):
+      arm64: dts: qcom: x1e80100-vivobook-s15: Enable USB-A ports
+      arm64: dts: qcom: x1e80100-vivobook-s15: Enable micro-sd card reader
+
+ .../boot/dts/qcom/x1e80100-asus-vivobook-s15.dts   | 142 ++++++++++++++++++++-
+ 1 file changed, 141 insertions(+), 1 deletion(-)
+---
+base-commit: 0907e7fb35756464aa34c35d6abb02998418164b
+change-id: 20250119-usb_a_micro_sd-4c476ea769b1
+
+Best regards,
+-- 
+Maud Spierings <maud_spierings@hotmail.com>
+
+
 
