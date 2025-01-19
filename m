@@ -1,232 +1,89 @@
-Return-Path: <linux-arm-msm+bounces-45528-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-45529-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id F40DDA163D3
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 19 Jan 2025 21:14:56 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id C1627A16409
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 19 Jan 2025 22:51:23 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 28134163F70
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 19 Jan 2025 20:14:55 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6AD7E18845D0
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 19 Jan 2025 21:51:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AFD411A2846;
-	Sun, 19 Jan 2025 20:14:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9913D1DF747;
+	Sun, 19 Jan 2025 21:51:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b="SS+99s7t"
+	dkim=pass (2048-bit key) header.d=xs4all.nl header.i=@xs4all.nl header.b="DDikOSGz"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from perceval.ideasonboard.com (perceval.ideasonboard.com [213.167.242.64])
+Received: from ewsoutbound.kpnmail.nl (ewsoutbound.kpnmail.nl [195.121.94.183])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC77410A1F;
-	Sun, 19 Jan 2025 20:14:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.167.242.64
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65C63199E9A
+	for <linux-arm-msm@vger.kernel.org>; Sun, 19 Jan 2025 21:51:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.121.94.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737317693; cv=none; b=ma1OMiPABaOMbW9ff61W4uCkEuOt39jkx3DYEJkHC2uDhNoD719NYD/u4e/deEBCbO5k/phyzP7AX1RwZ07hSBt0Yx7cXo6Tx9qVEyK8dyNPMLBukhOiVaDApf2hj0gFuiwvWy+sQ4uGVvAyUfYjEjco3hd0zeM8Dc1QKmX85II=
+	t=1737323480; cv=none; b=keBfyd6aysOCTVSZvES4dc3LrJOxusTMAoKwKPfC5AII34vo8JBfpQU/c6wZcS3LvMnWMDgGsyNFJ+4Ho7e1FWulmisJ0gxM0wCttM00SbWfWYYFj8Py0xp974g/nVyHNReRlUpCk+E6xUeCTOByVJ+M4ZIWJpG0pr/S/WkDjKE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737317693; c=relaxed/simple;
-	bh=Ur5TiuDT0KV1E3ES7k+/3Zr4hEwwAAPuNmpmijHxcE0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=NVjmHumvIgxD7H9NEqBb5B4HzCW2alfRrByajWOEyiEimxc6sOu9lxXnezJLj30GVutjRtoNhb7HGHTodDKev5g7ynLdrFq3a850HlsL9z+xFPRR1fVvb/Vg49T4F6ZmgImSfX6SdDmZdtbStCU4TqWF6Jo9cg40obvFj73kywM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ideasonboard.com; spf=pass smtp.mailfrom=ideasonboard.com; dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b=SS+99s7t; arc=none smtp.client-ip=213.167.242.64
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ideasonboard.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ideasonboard.com
-Received: from pendragon.ideasonboard.com (81-175-209-231.bb.dnainternet.fi [81.175.209.231])
-	by perceval.ideasonboard.com (Postfix) with ESMTPSA id 85456928;
-	Sun, 19 Jan 2025 21:13:48 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
-	s=mail; t=1737317628;
-	bh=Ur5TiuDT0KV1E3ES7k+/3Zr4hEwwAAPuNmpmijHxcE0=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=SS+99s7tpuo+gPcxMER5jdDaof5TicjCpzG4c3b8L9QjuYGIwEIGNxOpvhm9TbJ1K
-	 WDQ8UU3Os41Ewzy+4kV7y7CeQXv55XGw/jZbTqWOQI9B6aQfo6jbIU+WwUmbNEjidS
-	 k9ILi43LKurT0oL3MNbHe4TD8sUVaA21oTrP0eCY=
-Date: Sun, 19 Jan 2025 22:14:43 +0200
-From: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-To: Sui Jingfeng <sui.jingfeng@linux.dev>
-Cc: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Geert Uytterhoeven <geert@linux-m68k.org>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	maarten.lankhorst@linux.intel.com, mripard@kernel.org,
-	airlied@gmail.com, simona@ffwll.ch, dri-devel@lists.freedesktop.org,
-	linux-mediatek@lists.infradead.org, freedreno@lists.freedesktop.org,
-	linux-arm-msm@vger.kernel.org, imx@lists.linux.dev,
-	linux-samsung-soc@vger.kernel.org, nouveau@lists.freedesktop.org,
-	virtualization@lists.linux.dev, spice-devel@lists.freedesktop.org,
-	linux-renesas-soc@vger.kernel.org,
-	linux-rockchip@lists.infradead.org, linux-tegra@vger.kernel.org,
-	intel-xe@lists.freedesktop.org, xen-devel@lists.xenproject.org,
-	Andy Yan <andyshrk@163.com>, Daniel Stone <daniel@fooishbar.org>
-Subject: Re: [PATCH v2 25/25] drm/xlnx: Compute dumb-buffer sizes with
- drm_mode_size_dumb()
-Message-ID: <20250119201443.GB2467@pendragon.ideasonboard.com>
-References: <e327ad84-b5c9-4480-b873-dc3aca605538@ideasonboard.com>
- <a2bbeb47-2569-4ee0-9265-92bab139bdc6@suse.de>
- <f3833771-fcd7-45dc-9019-1525fef34429@ideasonboard.com>
- <CAMuHMdXxYa+Na3XxpLTy=-eUL_zQ9kAiUKYu-E04u3KWApusSA@mail.gmail.com>
- <xz5ncq67bgmdase2jg3cfvyaxpiwhol2eqpfzow6dqpauvslo5@2w3rw27lhnxo>
- <b97fcd2f-516a-4172-aef3-631418564cfa@linux.dev>
- <ef52dab0-058f-408f-a298-c4b2453a3d2f@ideasonboard.com>
- <f4562dbf-b132-4cfd-8f7e-43cd69f2673f@linux.dev>
- <cf34be39-ce92-4ea5-b548-03008c163d31@ideasonboard.com>
- <8234927e-0d12-4655-813d-8ec94179b737@linux.dev>
+	s=arc-20240116; t=1737323480; c=relaxed/simple;
+	bh=DtHbQQN+qVTDsVHdhO5QpCYGiksuFoWrqfYahD/OEms=;
+	h=Date:Message-Id:From:To:Cc:In-Reply-To:Subject:References; b=aKOwZ6TlzMeSiIKT/2EPCmWZ+eKrAQ2S3BOxBniVJfYWEo6jxG2oISrJmigzYwpnhEur+VRDyOnBLpQic6wuXKZ1P9XyM44wWNZ+dV2Dc3Sso/wh7FtP/VXUulrWVLHgdInwpvIOqe+s6HkzAO0HAWyFvcTsqRQZwcwAPo5Aa2I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=xs4all.nl; spf=pass smtp.mailfrom=xs4all.nl; dkim=pass (2048-bit key) header.d=xs4all.nl header.i=@xs4all.nl header.b=DDikOSGz; arc=none smtp.client-ip=195.121.94.183
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=xs4all.nl
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=xs4all.nl
+X-KPN-MessageId: 59d6fa3a-d6af-11ef-bc52-005056992ed3
+Received: from smtp.kpnmail.nl (unknown [10.31.155.8])
+	by ewsoutbound.so.kpn.org (Halon) with ESMTPS
+	id 59d6fa3a-d6af-11ef-bc52-005056992ed3;
+	Sun, 19 Jan 2025 22:50:08 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+	d=xs4all.nl; s=xs4all01;
+	h=subject:to:from:message-id:date;
+	bh=Ba+oCcEXwRAfeJ+hCcqMoI8w20KBjX5hL4oVTPNGrsg=;
+	b=DDikOSGzMwRBX3YSstQIjDwS/Re68zPvyC58NwxZBA37yI+jaFClAmlgbAXpC1V+9b3t3BZborJ2J
+	 fYb9DDf+a946Hyis1uw9kZeUDIlG5M91AA0qFFw8pzsssoNDo0QwFRJlib7SoEBOwa36YrLQcjLM+V
+	 AlRikun5T3zgo3r6vQk6VhEFfkrc4PP/U+A6PGLlGJ1v2vhKbGzS7s8W1kiNCBtEIrFBGCHPGpUzpH
+	 Dmz6ia6FlQNj9M+9o32mYf7tW7/0Y2ejFj5x3j/MLkzorHl2JxvjD0Q3wYZV+G/KdcKjp2ZwzgyB/q
+	 MAawlKgCcBV5OE4zcVBC+3y6R0EslVQ==
+X-KPN-MID: 33|IYx1PdsHTsPFw3DqoHAWrgWwfav/+LTWqgpnY2WqnjFVJA5YV9I/mOaV9/m8Zwr
+ tqWABf0Cm0zlB4J2zNlBHvm444fHBSVRpfJ5r0y0BB9Y=
+X-KPN-VerifiedSender: Yes
+X-CMASSUN: 33|ExaAR9L9F4aQnMlEU0YOoNQVZt1ixV4vs3xnkoInPkDm53uKE7dqPNdHLkwou8g
+ Gzi5aoSR4xZag5cFHSGzwfA==
+Received: from bloch.sibelius.xs4all.nl (80-61-163-207.fixed.kpn.net [80.61.163.207])
+	by smtp.xs4all.nl (Halon) with ESMTPSA
+	id 59da0722-d6af-11ef-8950-00505699d6e5;
+	Sun, 19 Jan 2025 22:50:09 +0100 (CET)
+Date: Sun, 19 Jan 2025 22:50:08 +0100
+Message-Id: <87ed0ytqwf.fsf@bloch.sibelius.xs4all.nl>
+From: Mark Kettenis <mark.kettenis@xs4all.nl>
+To: Maud Spierings <maud_spierings@hotmail.com>
+Cc: andersson@kernel.org, konradybcio@kernel.org, robh@kernel.org,
+	krzk+dt@kernel.org, conor+dt@kernel.org,
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org, maud_spierings@hotmail.com
+In-Reply-To: <20250119-usb_a_micro_sd-v1-1-01eb7502ae05@hotmail.com> (message
+	from Maud Spierings on Sun, 19 Jan 2025 15:50:51 +0100)
+Subject: Re: [PATCH 1/2] arm64: dts: qcom: x1e80100-vivobook-s15: Enable USB-A
+ ports
+References: <20250119-usb_a_micro_sd-v1-0-01eb7502ae05@hotmail.com> <20250119-usb_a_micro_sd-v1-1-01eb7502ae05@hotmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <8234927e-0d12-4655-813d-8ec94179b737@linux.dev>
 
-On Mon, Jan 20, 2025 at 12:26:30AM +0800, Sui Jingfeng wrote:
-> On 2025/1/19 23:22, Tomi Valkeinen wrote:
-> > On 19/01/2025 16:59, Sui Jingfeng wrote:
-> >
-> >>>>> But userspace must be able to continue allocating YUV buffers through
-> >>>>> CREATE_DUMB.
-> >>>>
-> >>>> I think, allocating YUV buffers through CREATE_DUMB interface is just
-> >>>> an *abuse* and *misuse* of this API for now.
-> >>>>
-> >>>> Take the NV12 format as an example, NV12 is YUV420 planar format, have
-> >>>> two planar: the Y-planar and the UV-planar. The Y-planar appear first
-> >>>> in memory as an array of unsigned char values. The Y-planar is followed
-> >>>> immediately by the UV-planar, which is also an array of unsigned char
-> >>>> values that contains packed U (Cb) and V (Cr) samples.
-> >>>>
-> >>>> But the 'drm_mode_create_dumb' structure is only intend to provide
-> >>>> descriptions for *one* planar.
-> >>>>
-> >>>> struct drm_mode_create_dumb {
-> >>>>      __u32 height;
-> >>>>      __u32 width;
-> >>>>      __u32 bpp;
-> >>>>      __u32 flags;
-> >>>>      __u32 handle;
-> >>>>      __u32 pitch;
-> >>>>      __u64 size;
-> >>>> };
-> >>>>
-> >>>> An width x height NV12 image takes up width*height*(1 + 1/4 + 1/4) 
-> >>>> bytes.
-> >>>>
-> >>>> So we can allocate an *equivalent* sized buffer to store the NV12 
-> >>>> raw data.
-> >>>>
-> >>>> Either 'width * (height * 3/2)' where each pixel take up 8 bits,
-> >>>> or just 'with * height' where each pixels take up 12 bits.
-> >>>>
-> >>>> However, all those math are just equivalents description to the original
-> >>>> NV12 format, neither are concrete correct physical description.
-> >>>
-> >>> I don't see the problem. Allocating dumb buffers, if we don't have 
-> >>> any heuristics related to RGB behind it, is essentially just 
-> >>> allocating a specific amount of memory, defined by width, height and 
-> >>> bitsperpixel.
-> >>>
-> >> I think, the problem will be that the 'width', 'height' and 'bpp'
-> >> are originally used to describe one plane. Those three parameters
-> >> has perfectly defined physical semantics.
-> >>
-> >> But with multi planar formats, take NV12 image as an example,
-> >> for a 2×2 square of pixels, there are 4 Y samples but only 1 U
-> >> sample and 1 V sample. This format requires 4x8+1x8+1x8=48 bits
-> >> to store the 2x2 square.
-> >>
-> >> So its depth is 12 bits per pixel (48 / (2 * 2)).
-> >>
-> >> so my problem is that the mentioned 12bpp in this example only
-> >> make sense in mathematics, it doesn't has a good physical
-> >> interpret. Do you agree with me on this technique point?
-> >>
-> >>> If I want to create an NV12 framebuffer, I allocate two dumb 
-> >>> buffers, one for Y and one for UV planes, and size them accordingly. 
-> >>> And then create the DRM framebuffer with those.
-> >>>
-> >> Then how you fill the value of the 'width', 'height' and 'bpp' of 
-> >> each dumb buffers?
-> >
-> > For 640x480-NV12:
-> > plane 0: width = 640, height = 480, bpp = 8
-> > plane 1: width = 640 / 2, height = 480 / 2, bpp = 16
->
-> But i think this should be hardware dependent. The hardware I'm using
-> load NV12  raw data as a whole. I only need to feed gpuva of the backing
-> memory to the hardware register once.
+> From: Maud Spierings <maud_spierings@hotmail.com>
+> Date: Sun, 19 Jan 2025 15:50:51 +0100
 > 
-> Not familiar with your hardware, so I can't talk more on this software
-> design. Perhaps someone know more could have a comment on this.
-
-Layout of planes in memory is just one hardware constraint, the same way
-we have constraints on alignment and strides. Some devices require the
-planes to be contiguous (likely with some alignment constraints), some
-can work with planes being in discontiguous pieces of memory, and even
-require them to be discontiguous and located in separate DRAM banks.
-
-> >> Why not allocate storage for the whole on one shoot?
-> >
-> > You can, if you adjust the parameters accordingly. However, if the 
-> > strides of the planes are not equal, I guess it might cause problems 
-> > on some platforms.
-> >
-> > But I think it's usually simpler to allocate one buffer per plane, and 
-> > perhaps even better as it doesn't require as large contiguous memory 
-> > area.
-> >
-> >> The modetest in libdrm can be an good example, send it[1] to you as 
-> >> an reference.
-> >
-> > Right, so modetest already does it successfully. So... What is the issue?
->
-> But then, the problem will become that it override the 'height' parameter.
-> What's the physical interpretation of the 'height' parameter when creating
-> an NV12 image with the dump API then?
-
-I wouldn't be too concerned about physical interpretations. Yes, the
-height, width and bpp parameters were likely designed with RGB formats
-in mind. Yes, using DUMB_CREATE for YUV formats is probably something
-that the original authors didn't envision. And yes, from that point of
-view, it could be seen by the original authors as an abuse of the API.
-But I don't think that's a problem as such.
-
-An API is just an API. True, it would be nicer if the usage of the ioctl
-parameters was more intuitive for YUV formats, but I believe we could
-still standardize how the existing parameters map to linear scanout YUV
-formats without causing the world to end. As has been said before, lots
-of drivers are using DUMB_CREATE for this purpose, and we can't change
-that.
-
-This doesn't mean we shouldn't work on improving memory allocation, but
-I see that as a separate issue.
-
-> I guess, solving complex problems with simple APIs may see the limitation,
-> sooner or later. But I not very sure and might be wrong. So other peoples
-> can override me words.
+> The asus vivobook has 2 USB type A ports on the right side, enable them
 > 
-> > Everyone agrees that CREATE_DUMB is not the best ioctl to allocate 
-> > buffers, and one can't consider it to work identically across the 
-> > platforms. But it's what we have and what has been used for ages.
->
-> Yeah, your request are not unreasonable. It can be seen as a kind of rigid demand.
-> Since GEM DMA helpers doesn't export an more advanced interface to userspace so far.
-> As a result, drivers that employing GEM DMA has no other choice, but to abuse the
-> dumb buffer API to do allocation for the more complex format buffers.
+> Signed-off-by: Maud Spierings <maud_spierings@hotmail.com>
+> ---
+>  .../boot/dts/qcom/x1e80100-asus-vivobook-s15.dts   | 103 ++++++++++++++++++++-
+>  1 file changed, 102 insertions(+), 1 deletion(-)
 > 
-> The dumb buffer API doesn't support to specify buffer format, tile status and
-> placement etc. The more advance drivers has been exposed the xxx_create_gem()
-> to user-space. It seems that a few more experienced programmers hint us to
-> create an new ioctl at above thread, so that we can keep employing simple API
-> to do simple things and to suit complex needs with the more advanced APIs.
 
-I'd really like to explore adding new ioctls to exposure memory
-allocation constraints, and allocating the memory itself from DMA heaps.
+Makes those ports work with OpenBSD as well.
 
--- 
-Regards,
-
-Laurent Pinchart
+Reviewed-by: Mark Kettenis <kettenis@openbsd.org>
 
