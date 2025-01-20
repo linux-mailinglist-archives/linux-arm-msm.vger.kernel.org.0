@@ -1,96 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-45558-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-45559-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B674EA16884
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Jan 2025 09:57:53 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id DA5A1A168E9
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Jan 2025 10:08:36 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E1AE61632F2
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Jan 2025 08:57:51 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5C223188135D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Jan 2025 09:08:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1C25A19D06B;
-	Mon, 20 Jan 2025 08:57:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CD2EF19CC20;
+	Mon, 20 Jan 2025 09:08:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="kW3Pr8f9";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="VlO1OePa";
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="kW3Pr8f9";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="VlO1OePa"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="fAh7oNwB"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49E6B199EB7;
-	Mon, 20 Jan 2025 08:57:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18CA319D881;
+	Mon, 20 Jan 2025 09:08:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737363462; cv=none; b=NSJImID5qDcIpsK9TyN6ON39Njvr66/TDpPZAhot+0+qIpfTkZB2rpyIYOwyKd/sRS8MI34kMUDm/eU5buz5PNhyiOtpmrRtFwP207Jj9vVCiS4tOFZZ+f9xdpAyrUbryXvWUPZ53dbTibXg3rkRHTZZRBASoqBTZK1fQJ2K4Wk=
+	t=1737364113; cv=none; b=ouP3sCTAlBpecTK8OOOAQUlwYgAJqt62p1xhFBAFcZe0JU+G6T+4U6gN5gFho641dtTm6EM44Natd8FSHjFOuntpBgmNRj01MZ9GkdRkUtiWjnwz+W6P0FEghu9Wjyv5DYAdk9zJ9P0cegMAvB/hkKPrxB8O8Zgv5gR+z7W+Mg4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737363462; c=relaxed/simple;
-	bh=N5+Ilq+6Sl0BRyXz6K2xEcdVj95XrvSfSot0ouTatYY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ebqkyqb5+cIbYUrLYtlidzyJGktKbRicM4qNSQW18WdCGuvHq0GQr40rfljH19q8SWCme2FfZ+3pN/oLcJd5Xen5ZsZf5fgmylIFVK02o5T4ExIOg3QooSVMpiNbxb49rrFl/Ej0j0Fw4hmws8soz28QxAEy2FTWh0VwvwKh/e0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=kW3Pr8f9; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=VlO1OePa; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=kW3Pr8f9; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=VlO1OePa; arc=none smtp.client-ip=195.135.223.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id 45D501F7A5;
-	Mon, 20 Jan 2025 08:57:38 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1737363458; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=UxuzgDcZRRA2/FviISYwEq2AIPpj8Irf9o88aWv1Nug=;
-	b=kW3Pr8f901Z7ow0UHFahd4SLynjHr1wROdXiToHoUzdZtS0UDlBfei6zyIhlrIvzjk3tTp
-	1yl9BBLd/wW4AIbYNxR4/K1qnpxSQzwOXdAtcjJfXqEvwzk6HOTU7pxJDjvQKvk3vSEC+G
-	+gkt4/bJ2a6edrgg2+jIR/ApD6tqgY4=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1737363458;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=UxuzgDcZRRA2/FviISYwEq2AIPpj8Irf9o88aWv1Nug=;
-	b=VlO1OePapx4jPwQ9JJ2gQmbCi/5qM66D0h4jEtVFfdhS3PQIpAi47mvrbt89crlhSXbRc0
-	E8Wy/g/yidV+kRBQ==
-Authentication-Results: smtp-out2.suse.de;
-	dkim=pass header.d=suse.de header.s=susede2_rsa header.b=kW3Pr8f9;
-	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=VlO1OePa
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1737363458; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=UxuzgDcZRRA2/FviISYwEq2AIPpj8Irf9o88aWv1Nug=;
-	b=kW3Pr8f901Z7ow0UHFahd4SLynjHr1wROdXiToHoUzdZtS0UDlBfei6zyIhlrIvzjk3tTp
-	1yl9BBLd/wW4AIbYNxR4/K1qnpxSQzwOXdAtcjJfXqEvwzk6HOTU7pxJDjvQKvk3vSEC+G
-	+gkt4/bJ2a6edrgg2+jIR/ApD6tqgY4=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1737363458;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=UxuzgDcZRRA2/FviISYwEq2AIPpj8Irf9o88aWv1Nug=;
-	b=VlO1OePapx4jPwQ9JJ2gQmbCi/5qM66D0h4jEtVFfdhS3PQIpAi47mvrbt89crlhSXbRc0
-	E8Wy/g/yidV+kRBQ==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id B6E2E139CB;
-	Mon, 20 Jan 2025 08:57:37 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
-	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id GIpkKwEQjmc1bAAAD6G6ig
-	(envelope-from <tzimmermann@suse.de>); Mon, 20 Jan 2025 08:57:37 +0000
-Message-ID: <dce0191b-8df0-4239-bdee-08a34c4b28d2@suse.de>
-Date: Mon, 20 Jan 2025 09:57:37 +0100
+	s=arc-20240116; t=1737364113; c=relaxed/simple;
+	bh=hFB3PSVa/F+n3n//zozwY6R1j2j1kcMrXo7Ds38U9D4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=efwbUYX4tUVWIOlWaceeGcGIOlQHCm2TOtpbvA10GruFPr59SxVuaiLtfi7yH0xSd0MR/Rp3X6dXXUFiwhSWpkNn8icrLmYDMDlxDPf8edSeLxMqLRpZ5jFAb0HcZ1et1CIlH3wYDQV9CZqm7BFT+aIJTnK6B/i1WulNIdXibTc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=fAh7oNwB; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50K6gxTe007185;
+	Mon, 20 Jan 2025 09:07:56 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	h+vNN5xoXznfhtWxbNTpB0BOmc+kHjlUL1TlQ4NcoLk=; b=fAh7oNwBtqeKxsr/
+	fAGGaGIlv45aqyoUZ1uuLXsvMK6RLqfuK0MmO+v6SbdHOqcx1APVSidPeZYptY3w
+	+VVmvRBKOJpjaB3LKJwz5s9Lp41AQLP0iRLs8cdtfuf4quDBvapyyPVmk7zokJhR
+	VAv+66oTnyyGc46nBmVxXdreukpthVekIeQqq+3eE5SCkj5tHYxWs3UxiVLHW22O
+	KEofz6aBebzUOuZVQvWlfvuMlkIIsClv4+9HH8PMo+ZALonRKj3+Em8VFaqRTv0+
+	eFMgVlCiNS/n2e2FLAHBGFc5W1k5PuNzmzwq/qUIbstcXJ1lP9Mb1ucgBP6HAYtz
+	WWcQ6Q==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 449hfb0b61-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 20 Jan 2025 09:07:55 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 50K97sMP024218
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 20 Jan 2025 09:07:54 GMT
+Received: from [10.253.35.93] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 20 Jan
+ 2025 01:07:48 -0800
+Message-ID: <5bc3f4e0-6c3f-412c-a825-54707c70f779@quicinc.com>
+Date: Mon, 20 Jan 2025 17:07:44 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -98,141 +65,144 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 25/25] drm/xlnx: Compute dumb-buffer sizes with
- drm_mode_size_dumb()
-To: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
- maarten.lankhorst@linux.intel.com, mripard@kernel.org, airlied@gmail.com,
- simona@ffwll.ch
-Cc: dri-devel@lists.freedesktop.org, linux-mediatek@lists.infradead.org,
- freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
- imx@lists.linux.dev, linux-samsung-soc@vger.kernel.org,
- nouveau@lists.freedesktop.org, virtualization@lists.linux.dev,
- spice-devel@lists.freedesktop.org, linux-renesas-soc@vger.kernel.org,
- linux-rockchip@lists.infradead.org, linux-tegra@vger.kernel.org,
- intel-xe@lists.freedesktop.org, xen-devel@lists.xenproject.org,
- Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
- Andy Yan <andyshrk@163.com>, Daniel Stone <daniel@fooishbar.org>
-References: <20250109150310.219442-1-tzimmermann@suse.de>
- <20250109150310.219442-26-tzimmermann@suse.de>
- <cdbe483d-0895-47aa-8c83-1c28220f4a02@ideasonboard.com>
- <bc97b92e-7f8a-4b92-af8a-20fa165ead55@suse.de>
- <f3ba05c7-6e49-4641-a3f9-ba418ebdb7c3@ideasonboard.com>
- <c6735280-7c32-4319-8ca9-a7305d8117c3@suse.de>
- <d67adb03-5cd0-4ac9-af58-cf4446dacee3@ideasonboard.com>
- <0ea6be58-0e04-4172-87cd-064a3e4a43bc@suse.de>
- <f35cb350-6be9-48ca-ad7e-e9dd418281d5@ideasonboard.com>
- <4af0b6a7-c16a-4187-bbf5-365a9c86de21@suse.de>
- <e327ad84-b5c9-4480-b873-dc3aca605538@ideasonboard.com>
- <a2bbeb47-2569-4ee0-9265-92bab139bdc6@suse.de>
- <f3833771-fcd7-45dc-9019-1525fef34429@ideasonboard.com>
- <156804a9-3095-4c93-888f-d9041f523da6@suse.de>
- <469daa7f-123b-41cb-a99c-4441436d82dc@ideasonboard.com>
+Subject: Re: [PATCH 2/3] net: stmmac: qcom-ethqos: Enable RX programmable swap
+ on qcs615
+To: Andrew Lunn <andrew@lunn.ch>
+CC: Krzysztof Kozlowski <krzk@kernel.org>, Vinod Koul <vkoul@kernel.org>,
+        Andrew Lunn <andrew+netdev@lunn.ch>,
+        "David S. Miller" <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>,
+        Paolo
+ Abeni <pabeni@redhat.com>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski
+	<krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Bjorn Andersson
+	<andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        Alexandre
+ Torgue <alexandre.torgue@foss.st.com>,
+        Jose Abreu <joabreu@synopsys.com>,
+        Maxime Coquelin <mcoquelin.stm32@gmail.com>, <netdev@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>,
+        <linux-stm32@st-md-mailman.stormreply.com>,
+        <linux-arm-kernel@lists.infradead.org>
+References: <20241225-support_10m100m-v1-0-4b52ef48b488@quicinc.com>
+ <20241225-support_10m100m-v1-2-4b52ef48b488@quicinc.com>
+ <4b4ef1c1-a20b-4b65-ad37-b9aabe074ae1@kernel.org>
+ <278de6e8-de8f-458a-a4b9-92b3eb81fa77@quicinc.com>
+ <e47f3b5c-9efa-4b71-b854-3a5124af06d7@lunn.ch>
+ <87a7729d-ccdd-46f0-bcfd-3915452344fd@quicinc.com>
+ <7e046761-7787-4f01-b47b-9374402489ac@lunn.ch>
 Content-Language: en-US
-From: Thomas Zimmermann <tzimmermann@suse.de>
-Autocrypt: addr=tzimmermann@suse.de; keydata=
- xsBNBFs50uABCADEHPidWt974CaxBVbrIBwqcq/WURinJ3+2WlIrKWspiP83vfZKaXhFYsdg
- XH47fDVbPPj+d6tQrw5lPQCyqjwrCPYnq3WlIBnGPJ4/jreTL6V+qfKRDlGLWFjZcsrPJGE0
- BeB5BbqP5erN1qylK9i3gPoQjXGhpBpQYwRrEyQyjuvk+Ev0K1Jc5tVDeJAuau3TGNgah4Yc
- hdHm3bkPjz9EErV85RwvImQ1dptvx6s7xzwXTgGAsaYZsL8WCwDaTuqFa1d1jjlaxg6+tZsB
- 9GluwvIhSezPgnEmimZDkGnZRRSFiGP8yjqTjjWuf0bSj5rUnTGiyLyRZRNGcXmu6hjlABEB
- AAHNJ1Rob21hcyBaaW1tZXJtYW5uIDx0emltbWVybWFubkBzdXNlLmRlPsLAjgQTAQgAOAIb
- AwULCQgHAgYVCgkICwIEFgIDAQIeAQIXgBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftODH
- AAoJEGgNwR1TC3ojx1wH/0hKGWugiqDgLNXLRD/4TfHBEKmxIrmfu9Z5t7vwUKfwhFL6hqvo
- lXPJJKQpQ2z8+X2vZm/slsLn7J1yjrOsoJhKABDi+3QWWSGkaGwRJAdPVVyJMfJRNNNIKwVb
- U6B1BkX2XDKDGffF4TxlOpSQzdtNI/9gleOoUA8+jy8knnDYzjBNOZqLG2FuTdicBXblz0Mf
- vg41gd9kCwYXDnD91rJU8tzylXv03E75NCaTxTM+FBXPmsAVYQ4GYhhgFt8S2UWMoaaABLDe
- 7l5FdnLdDEcbmd8uLU2CaG4W2cLrUaI4jz2XbkcPQkqTQ3EB67hYkjiEE6Zy3ggOitiQGcqp
- j//OwE0EWznS4AEIAMYmP4M/V+T5RY5at/g7rUdNsLhWv1APYrh9RQefODYHrNRHUE9eosYb
- T6XMryR9hT8XlGOYRwKWwiQBoWSDiTMo/Xi29jUnn4BXfI2px2DTXwc22LKtLAgTRjP+qbU6
- 3Y0xnQN29UGDbYgyyK51DW3H0If2a3JNsheAAK+Xc9baj0LGIc8T9uiEWHBnCH+RdhgATnWW
- GKdDegUR5BkDfDg5O/FISymJBHx2Dyoklv5g4BzkgqTqwmaYzsl8UxZKvbaxq0zbehDda8lv
- hFXodNFMAgTLJlLuDYOGLK2AwbrS3Sp0AEbkpdJBb44qVlGm5bApZouHeJ/+n+7r12+lqdsA
- EQEAAcLAdgQYAQgAIAIbDBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftOH6AAoJEGgNwR1T
- C3ojVSkIALpAPkIJPQoURPb1VWjh34l0HlglmYHvZszJWTXYwavHR8+k6Baa6H7ufXNQtThR
- yIxJrQLW6rV5lm7TjhffEhxVCn37+cg0zZ3j7zIsSS0rx/aMwi6VhFJA5hfn3T0TtrijKP4A
- SAQO9xD1Zk9/61JWk8OysuIh7MXkl0fxbRKWE93XeQBhIJHQfnc+YBLprdnxR446Sh8Wn/2D
- Ya8cavuWf2zrB6cZurs048xe0UbSW5AOSo4V9M0jzYI4nZqTmPxYyXbm30Kvmz0rYVRaitYJ
- 4kyYYMhuULvrJDMjZRvaNe52tkKAvMevcGdt38H4KSVXAylqyQOW5zvPc4/sq9c=
-In-Reply-To: <469daa7f-123b-41cb-a99c-4441436d82dc@ideasonboard.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Rspamd-Queue-Id: 45D501F7A5
-X-Spam-Level: 
-X-Spamd-Result: default: False [-3.01 / 50.00];
-	BAYES_HAM(-3.00)[100.00%];
-	SUSPICIOUS_RECIPS(1.50)[];
-	NEURAL_HAM_LONG(-1.00)[-1.000];
-	R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	NEURAL_HAM_SHORT(-0.20)[-1.000];
-	MIME_GOOD(-0.10)[text/plain];
-	MX_GOOD(-0.01)[];
-	FUZZY_BLOCKED(0.00)[rspamd.com];
-	FREEMAIL_ENVRCPT(0.00)[163.com,gmail.com];
-	RCVD_TLS_ALL(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	ARC_NA(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[22];
-	MIME_TRACE(0.00)[0:+];
-	FREEMAIL_TO(0.00)[ideasonboard.com,linux.intel.com,kernel.org,gmail.com,ffwll.ch];
-	MID_RHS_MATCH_FROM(0.00)[];
-	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	FROM_HAS_DN(0.00)[];
-	FREEMAIL_CC(0.00)[lists.freedesktop.org,lists.infradead.org,vger.kernel.org,lists.linux.dev,lists.xenproject.org,ideasonboard.com,163.com,fooishbar.org];
-	TO_DN_SOME(0.00)[];
-	FROM_EQ_ENVFROM(0.00)[];
-	TO_MATCH_ENVRCPT_ALL(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:mid,imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns];
-	RCVD_COUNT_TWO(0.00)[2];
-	DKIM_TRACE(0.00)[suse.de:+]
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Rspamd-Action: no action
-X-Spam-Score: -3.01
-X-Spam-Flag: NO
-
-Hi
+From: Yijie Yang <quic_yijiyang@quicinc.com>
+In-Reply-To: <7e046761-7787-4f01-b47b-9374402489ac@lunn.ch>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: NP9eBnT9zEvKqkraLR4B_uiSrrYEmpmo
+X-Proofpoint-ORIG-GUID: NP9eBnT9zEvKqkraLR4B_uiSrrYEmpmo
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-01-20_01,2025-01-20_02,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 phishscore=0
+ lowpriorityscore=0 mlxscore=0 suspectscore=0 priorityscore=1501
+ malwarescore=0 adultscore=0 mlxlogscore=615 bulkscore=0 spamscore=0
+ clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2501200075
 
 
-Am 20.01.25 um 09:51 schrieb Tomi Valkeinen:
-> Hi,
->
-> On 20/01/2025 09:49, Thomas Zimmermann wrote:
->> Hi
+
+On 2025-01-08 21:29, Andrew Lunn wrote:
+>>> Why is it specific to this board? Does the board have a PHY which is
+>>> broken and requires this property? What we are missing are the details
+>>> needed to help you get to the correct way to solve the problem you are
+>>> facing.
+>>>
 >>
+>> Let me clarify why this bit is necessary and why it's board-specific. The RX
+>> programming swap bit can introduce a time delay of half a clock cycle. This
+>> bit, along with the clock delay adjustment functionality, is implemented by
+>> a module called 'IO Macro.' This is a Qualcomm-specific hardware design
+>> located between the MAC and PHY in the SoC, serving the RGMII interface. The
+>> bit works in conjunction with delay adjustment to meet the sampling
+>> requirements. The sampling of RX data is also handled by this module.
 >>
->> Am 16.01.25 um 11:03 schrieb Tomi Valkeinen:
->> [...]
->>> Aligning video= and dumb buffers almost sounds like going backwards. 
->>> video= parameter is bad,
->>
->> Who told you that? Video= is still the way to specify an initial 
->> display mode to the kernel and it will remain so.
->
-> You did =). "It aligns dumb buffers and video=". 
+>> During the board design stage, the RGMII requirements may not have been
+>> strictly followed, leading to uncertainty in the relationship between the
+>> clock and data waveforms when they reach the IO Macro.
+> 
+> So this indicates any board might need this feature, not just this one
+> board. Putting the board name in the driver then does not scale.
+> 
 
-I did not tell you "video= parameter is bad".
+Should I ignore this if I choose to use the following standard properties?
 
-Best regards
-Thomas
+>> This means the time
+>> delay introduced by the PC board may not be zero. Therefore, it's necessary
+>> for software developers to tune both the RX programming swap bit and the
+>> delay to ensure correct sampling.
+> 
+> O.K. Now look at how other boards tune their delays. There are
+> standard properties for this:
+> 
+>          rx-internal-delay-ps:
+>            description:
+>              RGMII Receive Clock Delay defined in pico seconds. This is used for
+>              controllers that have configurable RX internal delays. If this
+>              property is present then the MAC applies the RX delay.
+>          tx-internal-delay-ps:
+>            description:
+>              RGMII Transmit Clock Delay defined in pico seconds. This is used for
+>              controllers that have configurable TX internal delays. If this
+>              property is present then the MAC applies the TX delay.
+> 
+> I think you can use these properties, maybe with an additional comment
+> in the binding. RGMII running at 1G has a clock of 125MHz. That is a
+> period of 8ns. So a half clock cycle delay is then 4ns.
+> 
+> So an rx-internal-delay-ps of 0-2000 means this clock invert should be
+> disabled. A rx-internal-delay-ps of 4000-6000 means the clock invert
+> should be enabled.
 
-> I understand the need for drm_driver_color_mode_format() for video=. 
-> But I think it's bad for CREATE_DUMB, at least for the platforms which 
-> have never aimed for "RGB-only".
->
-> So you're not in favor of a drm_mode_size_dumb() version that does not 
-> use drm_driver_color_mode_format(), for these platforms? I'm still at 
-> loss as to why we would want to change the behavior of CREATE_DUMB. I 
-> see no upside, but I see the chance of regressions.
->
->  Tomi
->
+This board was designed to operate at different speed rates, not a fixed 
+speed, and the clock rate varies for each speed. Thus, the delay 
+introduced by inverting the clock is not fixed. Additionally, I noticed 
+that some vendors apply the same routine for this property across all 
+speeds in their driver code. Can this property be used just as a flag, 
+regardless of its actual value?
+
+> 
+> Now, ideally, you want the PHY to add the RGMII delays, that is what i
+> request all MAC/PHY pairs do, so we have a uniform setup across all
+> boards. So unless the PHY does not support RGMII delays, you would
+> expect rx-internal-delay-ps to be either just a small number of
+> picoseconds for fine tuning, or a small number of picoseconds + 4ns
+> for fine tuning.
+
+The delay for both TX and RX sides is added by the MAC in the Qualcomm 
+driver, which was introduced by the initial patch. I believe there may 
+be a refactor in the future to ensure it follows the requirements.
+
+> 
+> This scales, since it can be used by an board with poor design, and it
+> does not require anything proprietary to Qualcomm, except the extended
+> range, and hopefully nobody except Qualcomms broken RDK will require
+> it, because obviously you will document the issue with the RDK and
+> tell customers how to correctly design their board to be RGMII
+> compliant with the clocks.
+
+Yes, I will make a note of it.
+
+> 
+> 	Andrew
 
 -- 
---
-Thomas Zimmermann
-Graphics Driver Developer
-SUSE Software Solutions Germany GmbH
-Frankenstrasse 146, 90461 Nuernberg, Germany
-GF: Ivo Totev, Andrew Myers, Andrew McDonald, Boudien Moerman
-HRB 36809 (AG Nuernberg)
+Best Regards,
+Yijie
 
 
