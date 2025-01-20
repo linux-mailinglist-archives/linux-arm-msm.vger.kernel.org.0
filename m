@@ -1,216 +1,171 @@
-Return-Path: <linux-arm-msm+bounces-45637-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-45636-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id A1BEDA17526
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Jan 2025 01:01:36 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 25ABFA17500
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Jan 2025 00:25:21 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 965A41887B15
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Jan 2025 00:01:39 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0FED93A8C7A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Jan 2025 23:25:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3503AA55;
-	Tue, 21 Jan 2025 00:01:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 564B91EC019;
+	Mon, 20 Jan 2025 23:25:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="QhVUiYti"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from relay06.th.seeweb.it (relay06.th.seeweb.it [5.144.164.167])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f169.google.com (mail-yb1-f169.google.com [209.85.219.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75E90819
-	for <linux-arm-msm@vger.kernel.org>; Tue, 21 Jan 2025 00:01:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.144.164.167
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 183A319B5B4
+	for <linux-arm-msm@vger.kernel.org>; Mon, 20 Jan 2025 23:25:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737417693; cv=none; b=QMK9M1jVzJNzDMpp7l8YWlVGBp1H4q0pVo2PzWaDx6R5NIL964s1ufDeyCanEA73UA+IE2byZU+qaZ8SGnNZ9bYDg+ww1spW5XfY+iqMDMUexnq1pndKzoPG+n5dqQ/UbN7MMHnqG1rSg7H6CY26X+CR9Nk9RvVHrvQpSOmwjko=
+	t=1737415513; cv=none; b=PbLieTTeYt9aGTLGfEcYiPbMf5uSHnvexRLbj8/E4KRbPVxyq5im+x6i2+4RT6zpMecoewItPZFxGvDXfSAVO7NGK+yc26eNqpQ2aHnAyHPWqfjF3IX8yz69wX/GvXfR9ulyRJSM5YJf+uU+uQDOey3ifRhQLlz3gVcDqM2PtCc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737417693; c=relaxed/simple;
-	bh=x6YM04caIr+QNGcZcKJzRVmJyNc6WfrpwCRhHy2/nvo=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=BWZEszI4FQ+nXeZKm2Ij6w+PJy7SZThfvqAeJNWqu/fjX6UBousWE4RjidAoXDztazbQINo5JbwptJ1bMoNkKLfjBLYh76HX6OtAkfqZFcYCA8a7c/eApln2gkN1eV4mDXJ0tgDpkTVEHslQhSfNXG4KqfBJlBuqOJBCK5N9maQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=somainline.org; spf=pass smtp.mailfrom=somainline.org; arc=none smtp.client-ip=5.144.164.167
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=somainline.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=somainline.org
-Received: from Marijn-Arch-PC.localdomain (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by m-r2.th.seeweb.it (Postfix) with ESMTPSA id A3E093FBF6;
-	Tue, 21 Jan 2025 00:06:16 +0100 (CET)
-From: Marijn Suijten <marijn.suijten@somainline.org>
-Date: Tue, 21 Jan 2025 00:06:15 +0100
-Subject: [PATCH RFC] drm/msm/dpu: Fall back to a single DSC encoder (1:1:1)
- on small SoCs
+	s=arc-20240116; t=1737415513; c=relaxed/simple;
+	bh=Tx1rYKKOJKkU2K0XBMuMSvRlBVMRzwjOc/bweFSaQaQ=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=tIGIm5Yl1V4TO3bLiBllkjtWrXnaIPXU8TN9+OEH3PTolQjJRYkgNCCX1pBgRnGU7XPkv41fy1QIW420L75RVtHhwx595lmEmQ/5Q2SdKeVKa5EKYiC4eR2HeeK3bqkNLAzVuoPChNIbFfBfqPHiFXj2H+6muPIWkXS6MIXMoho=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=QhVUiYti; arc=none smtp.client-ip=209.85.219.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yb1-f169.google.com with SMTP id 3f1490d57ef6-e398484b60bso7325480276.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Jan 2025 15:25:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1737415509; x=1738020309; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=u3K4n54rL+8zAM59g2r+WZLNP4o+zWfFr7g2g8lZuIE=;
+        b=QhVUiYtigx6Pju3YDzjICoOsi2ildCRASYleBrN9EoNBnm3qLkYgPyyBrzZlX4l6WM
+         LpWWxO0ba7cdOl1tAbYAekoq888DZpvSbCcG+tjG8eXZixzAwpat00X6/lBSSiRaYD6h
+         i/1HptLNc1nYdoIUeJtnvJmtY1c1fAP3AuoKVy+3BMnKQ20AtH+qjSjmDg+Z0I/L3JMR
+         BhHpuZJNDulIAmvD0nePTz+755l26quhZlVun9ls/kCpOv0noyElN26wXPpKFPHBJUPh
+         9B/W4xSbTw1R3opLmmITsh3MBgOHQmoWlBYZbNJsVIhRzezsDcWUoJ8oOGEbNdNtqZnG
+         RUQw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1737415509; x=1738020309;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=u3K4n54rL+8zAM59g2r+WZLNP4o+zWfFr7g2g8lZuIE=;
+        b=Rw3Zxkn5+Sxq6fzZVl90CG+oPbovn0tc56A6xuRm60zlBPW8tMjwEVQgASILe8T6Tp
+         pU5v+vQ0Rccuisa0faOysm7lH9zD9yIzakIMMKeqAr99LYU0PG/cZUoxefTyZN/tv3eN
+         Eaf7+H9sMhML3erVsjWm8/LpfZW+fzHvryG0c5AdqUtfpjuO4y5NqakfFk4+LLxGe5xu
+         imRtePganrftqJXGc10U6eP6xtlEHzi3QwbWi/2wjcrQp8ApX0kM/Q4XGjzP0NrVKtS4
+         gSTrzPwd/1n8XvEK7Z0eSc9lZLFjdfAyfXvZyrwsWuz+Lz6QdZ3HmTSmJ60ZfSOvX2FR
+         zBWA==
+X-Forwarded-Encrypted: i=1; AJvYcCWc1Jejj1iF02cHv9MzTqweFlvG0TUBPxzJiZCnAnaNBkfKUJAeK5VzA2gAv9zr3pEp8H3jUuMmqxUyx+61@vger.kernel.org
+X-Gm-Message-State: AOJu0Yws4qls+dY8ivZ3EMAPDQ5L2cYA1kpIPGF5uyQxkXQV84QBKbO3
+	ALRm65BXj6Y6hHd+Z8zOfqxMMo/SGkn3q5jmvbK7ZrWKk+zr7PV9cUOM9jIu6inytYBxgKrOdr+
+	wXnWZIOg/1Zbzw9kJ50Pa6geYyVeaClYdhhPe0A==
+X-Gm-Gg: ASbGncsB6c7FV8nxoVvzJj3V1ZSo1RnaG1HqLPWKJR6EwExDB2JLQBGRQT9rHsjU945
+	qnwzvph5aFLdkWi5zRW2Eienwrj11t951yCilLV2m1NDLR1iKNg==
+X-Google-Smtp-Source: AGHT+IGm1c0IGKgVC6DLGYrBRuOWXwI+xePGXQTc896moba7ai4TGKvAfmuOwpvFx/4v6WNLwRBA/G7NVG8/Ni/Otfk=
+X-Received: by 2002:a05:690c:3703:b0:6f6:ca9a:30d2 with SMTP id
+ 00721157ae682-6f6eb6b58ecmr119970797b3.22.1737415508949; Mon, 20 Jan 2025
+ 15:25:08 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250121-dpu-111-topology-v1-1-d01987205c53@somainline.org>
-X-B4-Tracking: v=1; b=H4sIAObWjmcC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
- vPSU3UzU4B8JSMDIxMDIwMT3ZSCUl1DQ0PdkvyC/Jz89ErdJEOjZMOUVAujZItEJaC2gqLUtMw
- KsJHRSkFuzkqxtbUALuIjS2cAAAA=
-X-Change-ID: 20240204-dpu-111-topology-b12c1de82c8a
-To: Rob Clark <robdclark@gmail.com>, 
- Abhinav Kumar <quic_abhinavk@quicinc.com>, 
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Sean Paul <sean@poorly.run>, 
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>
-Cc: ~postmarketos/upstreaming@lists.sr.ht, 
- AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, 
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
- Martin Botka <martin.botka@somainline.org>, 
- Jami Kettunen <jami.kettunen@somainline.org>, linux-arm-msm@vger.kernel.org, 
- dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
- linux-kernel@vger.kernel.org, Luca Weiss <luca.weiss@fairphone.com>, 
- Marijn Suijten <marijn.suijten@somainline.org>
-X-Mailer: b4 0.14.2
+References: <20250118-sm8650-v6-13-hmd-deckard-mdss-quad-upstream-33-v5-0-9701a16340da@linaro.org>
+ <20250118-sm8650-v6-13-hmd-deckard-mdss-quad-upstream-33-v5-8-9701a16340da@linaro.org>
+ <6n655caflr2snsgmqtmpzxt4jynrwjqdjurnixujfuefldxhxj@uunzpzfezfqy>
+In-Reply-To: <6n655caflr2snsgmqtmpzxt4jynrwjqdjurnixujfuefldxhxj@uunzpzfezfqy>
+From: Jun Nie <jun.nie@linaro.org>
+Date: Mon, 20 Jan 2025 15:24:58 -0800
+X-Gm-Features: AbW1kvb8c5L96IpOkU0MvYJy9U4O8cLtv8Vu7rlOigF1727zF2y-_YzwepU20HY
+Message-ID: <CABymUCMbWW9TAo=LfB7Aad+8hBSjJmMVytNN7b6R-AWMeB6E0Q@mail.gmail.com>
+Subject: Re: [PATCH v5 08/15] drm/msm/dpu: bind correct pingpong for quad pipe
+To: Marijn Suijten <marijn.suijten@somainline.org>
+Cc: Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Sean Paul <sean@poorly.run>, 
+	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, linux-arm-msm@vger.kernel.org, 
+	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
+	linux-kernel@vger.kernel.org, Jessica Zhang <quic_jesszhan@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Some SoCs such as SC7280 (used in the FairPhone 5) have only a single
-DSC "hard slice" encoder.  The current hardcoded use of 2:2:1 topology
-(2 LM and 2 DSC for a single interface) make it impossible to use
-Display Stream Compression panels with mainline, which is exactly what's
-installed on the FairPhone 5.
+Marijn Suijten <marijn.suijten@somainline.org> =E4=BA=8E2025=E5=B9=B41=E6=
+=9C=8820=E6=97=A5=E5=91=A8=E4=B8=80 05:15=E5=86=99=E9=81=93=EF=BC=9A
+>
+> On 2025-01-18 00:00:51, Jun Nie wrote:
+> > There are 2 interfaces and 4 pingpong in quad pipe. Map the 2nd
+> > interface to 3rd PP instead of the 2nd PP.
+>
+> Can you explain why this patch uses the number of LMs, instead of dividin=
+g the
+> number of PPs divided by the number of physical encoders?  This detail is=
+ not
+> explained at all, or that we're filling hw_lm now for no other reason.
+>
+> - Marijn
 
-By loosening the hardcoded `num_dsc = 2` to fall back to `num_dsc =
-1` when the catalog only contains one entry, we can trivially support
-this phone and unblock further panel enablement on mainline.  A few
-more supporting changes in this patch ensure hardcoded constants of 2
-DSC encoders are replaced to count or read back the actual number of
-DSC hardware blocks that are enabled for the given virtual encoder.
-Likewise DSC_MODE_SPLIT_PANEL can no longer be unconditionally enabled.
+I see LM is 1:1 with PP in catalog header files. So assume their
+number are identical
+and 1:1 bounded. Using PP number is more formal for sure. Will try to
+replace it in
+next version.
 
-Cc: Luca Weiss <luca.weiss@fairphone.com>
-Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
----
-Note that this doesn't paint the full picture in case there are SoCs
-with more DSC hardware blocks, but when multiple virtual encoders
-have already allocated most of them.  My initial plan was to code
-ahead for dynamically tracking and reallocating these blocks in RM, if
-some virtual encoder could potentially be using too many DSC encoders
-which, while "power optimal", may not be able to support the number of
-requested displays/interfaces.  Such a solution would automatically
-ensure DSCmerge is *not* used when there are not enough hardware blocks
-available in the first place.
----
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 47 +++++++++++++++--------------
- 1 file changed, 25 insertions(+), 22 deletions(-)
-
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-index 5172ab4dea995a154cd88d05c3842d7425fc34ce..dcf17b5e8ac8eb76f5ba038fcce48e47f32299d5 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-@@ -622,9 +622,10 @@ bool dpu_encoder_use_dsc_merge(struct drm_encoder *drm_enc)
- 		if (dpu_enc->phys_encs[i])
- 			intf_count++;
- 
--	/* See dpu_encoder_get_topology, we only support 2:2:1 topology */
- 	if (dpu_enc->dsc)
--		num_dsc = 2;
-+		for (i = 0; i < MAX_CHANNELS_PER_ENC; i++)
-+			if (dpu_enc->hw_dsc[i])
-+				num_dsc++;
- 
- 	return (num_dsc > 0) && (num_dsc > intf_count);
- }
-@@ -664,7 +665,7 @@ static struct msm_display_topology dpu_encoder_get_topology(
- 	/* Datapath topology selection
- 	 *
- 	 * Dual display
--	 * 2 LM, 2 INTF ( Split display using 2 interfaces)
-+	 * 2 LM, 2 INTF (split display using 2 interfaces)
- 	 *
- 	 * Single display
- 	 * 1 LM, 1 INTF
-@@ -686,13 +687,19 @@ static struct msm_display_topology dpu_encoder_get_topology(
- 
- 	if (dsc) {
- 		/*
--		 * In case of Display Stream Compression (DSC), we would use
--		 * 2 DSC encoders, 2 layer mixers and 1 interface
--		 * this is power optimal and can drive up to (including) 4k
--		 * screens
-+		 * Use 2 DSC encoders and 2 layer mixers per single interface
-+		 * when Display Stream Compression (DSC) is enabled,
-+		 * and when enough DSC blocks are available.
-+		 * This is power-optimal and can drive up to (including) 4k
-+		 * screens.
- 		 */
--		topology.num_dsc = 2;
--		topology.num_lm = 2;
-+		if (dpu_kms->catalog->dsc_count >= 2) {
-+			topology.num_dsc = 2;
-+			topology.num_lm = 2;
-+		} else {
-+			topology.num_dsc = 1;
-+			topology.num_lm = 1;
-+		}
- 		topology.num_intf = 1;
- 	}
- 
-@@ -2020,32 +2027,32 @@ static void dpu_encoder_dsc_pipe_cfg(struct dpu_hw_ctl *ctl,
- static void dpu_encoder_prep_dsc(struct dpu_encoder_virt *dpu_enc,
- 				 struct drm_dsc_config *dsc)
- {
--	/* coding only for 2LM, 2enc, 1 dsc config */
- 	struct dpu_encoder_phys *enc_master = dpu_enc->cur_master;
- 	struct dpu_hw_ctl *ctl = enc_master->hw_ctl;
- 	struct dpu_hw_dsc *hw_dsc[MAX_CHANNELS_PER_ENC];
- 	struct dpu_hw_pingpong *hw_pp[MAX_CHANNELS_PER_ENC];
- 	int this_frame_slices;
- 	int intf_ip_w, enc_ip_w;
--	int dsc_common_mode;
-+	int dsc_common_mode = 0;
- 	int pic_width;
- 	u32 initial_lines;
-+	int num_dsc = 0;
- 	int i;
- 
- 	for (i = 0; i < MAX_CHANNELS_PER_ENC; i++) {
- 		hw_pp[i] = dpu_enc->hw_pp[i];
- 		hw_dsc[i] = dpu_enc->hw_dsc[i];
- 
--		if (!hw_pp[i] || !hw_dsc[i]) {
--			DPU_ERROR_ENC(dpu_enc, "invalid params for DSC\n");
--			return;
--		}
-+		if (!hw_pp[i] || !hw_dsc[i])
-+			break;
-+		num_dsc++;
- 	}
- 
- 	dsc_common_mode = 0;
- 	pic_width = dsc->pic_width;
- 
--	dsc_common_mode = DSC_MODE_SPLIT_PANEL;
-+	if (num_dsc > 1)
-+		dsc_common_mode |= DSC_MODE_SPLIT_PANEL;
- 	if (dpu_encoder_use_dsc_merge(enc_master->parent))
- 		dsc_common_mode |= DSC_MODE_MULTIPLEX;
- 	if (enc_master->intf_mode == INTF_MODE_VIDEO)
-@@ -2054,14 +2061,10 @@ static void dpu_encoder_prep_dsc(struct dpu_encoder_virt *dpu_enc,
- 	this_frame_slices = pic_width / dsc->slice_width;
- 	intf_ip_w = this_frame_slices * dsc->slice_width;
- 
--	/*
--	 * dsc merge case: when using 2 encoders for the same stream,
--	 * no. of slices need to be same on both the encoders.
--	 */
--	enc_ip_w = intf_ip_w / 2;
-+	enc_ip_w = intf_ip_w / num_dsc;
- 	initial_lines = dpu_encoder_dsc_initial_line_calc(dsc, enc_ip_w);
- 
--	for (i = 0; i < MAX_CHANNELS_PER_ENC; i++)
-+	for (i = 0; i < num_dsc; i++)
- 		dpu_encoder_dsc_pipe_cfg(ctl, hw_dsc[i], hw_pp[i],
- 					 dsc, dsc_common_mode, initial_lines);
- }
-
----
-base-commit: 1573c8d4cb206a2d1454ff711e79f8df2353290b
-change-id: 20240204-dpu-111-topology-b12c1de82c8a
-
-Best regards,
--- 
-Marijn Suijten <marijn.suijten@somainline.org>
-
+Jun
+>
+> > Signed-off-by: Jun Nie <jun.nie@linaro.org>
+> > Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > Reviewed-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+> > ---
+> >  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 15 +++++++++++++--
+> >  1 file changed, 13 insertions(+), 2 deletions(-)
+> >
+> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/=
+drm/msm/disp/dpu1/dpu_encoder.c
+> > index 018a1a49ca7d1..b0cab3ccbb57c 100644
+> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> > @@ -1220,7 +1220,8 @@ static void dpu_encoder_virt_atomic_mode_set(stru=
+ct drm_encoder *drm_enc,
+> >       struct dpu_hw_blk *hw_pp[MAX_CHANNELS_PER_ENC];
+> >       struct dpu_hw_blk *hw_ctl[MAX_CHANNELS_PER_ENC];
+> >       struct dpu_hw_blk *hw_dsc[MAX_CHANNELS_PER_ENC];
+> > -     int num_ctl, num_pp, num_dsc;
+> > +     struct dpu_hw_blk *hw_lm[MAX_CHANNELS_PER_ENC];
+> > +     int num_lm, num_ctl, num_pp, num_dsc, num_pp_per_intf;
+> >       unsigned int dsc_mask =3D 0;
+> >       int i;
+> >
+> > @@ -1275,11 +1276,21 @@ static void dpu_encoder_virt_atomic_mode_set(st=
+ruct drm_encoder *drm_enc,
+> >               dpu_enc->cur_master->hw_cdm =3D hw_cdm ? to_dpu_hw_cdm(hw=
+_cdm) : NULL;
+> >       }
+> >
+> > +     num_lm =3D dpu_rm_get_assigned_resources(&dpu_kms->rm, global_sta=
+te,
+> > +             drm_enc->crtc, DPU_HW_BLK_LM, hw_lm, ARRAY_SIZE(hw_lm));
+> > +
+> > +
+> > +     /*
+> > +      * There may be 4 PP and 2 INTF for quad pipe case, so INTF is no=
+t
+> > +      * mapped to PP 1:1. Let's calculate the stride with pipe/INTF
+> > +      */
+> > +     num_pp_per_intf =3D num_lm / dpu_enc->num_phys_encs;
+> > +
+> >       for (i =3D 0; i < dpu_enc->num_phys_encs; i++) {
+> >               struct dpu_encoder_phys *phys =3D dpu_enc->phys_encs[i];
+> >               struct dpu_hw_ctl *ctl0 =3D to_dpu_hw_ctl(hw_ctl[0]);
+> >
+> > -             phys->hw_pp =3D dpu_enc->hw_pp[i];
+> > +             phys->hw_pp =3D dpu_enc->hw_pp[num_pp_per_intf * i];
+> >               if (!phys->hw_pp) {
+> >                       DPU_ERROR_ENC(dpu_enc,
+> >                               "no pp block assigned at idx: %d\n", i);
+> >
+> > --
+> > 2.34.1
+> >
 
