@@ -1,239 +1,164 @@
-Return-Path: <linux-arm-msm+bounces-45545-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-45546-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1F1E5A166D9
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Jan 2025 08:05:26 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 51E4FA166E8
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Jan 2025 08:09:34 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 383D73A7936
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Jan 2025 07:05:19 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7C42F168FAD
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Jan 2025 07:09:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DB08B188734;
-	Mon, 20 Jan 2025 07:05:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 62879188907;
+	Mon, 20 Jan 2025 07:09:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="H42Z2l+U"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="SrivZyOB"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from out-188.mta0.migadu.com (out-188.mta0.migadu.com [91.218.175.188])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DF0C35968
-	for <linux-arm-msm@vger.kernel.org>; Mon, 20 Jan 2025 07:05:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.188
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFEFF35968;
+	Mon, 20 Jan 2025 07:09:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737356722; cv=none; b=F8RNsSxzjnon+tDykZaiMAfOFDz01dueYNLX/8ZEbKCCIA0H1js806oRM34YB6OMRn23F4zBuaO7VJeTiVmLM8+SLuSzh/VISSjCyhGjTM5QRKFQwkj9UIRkG9kctIZzMOrbT++9fmd+aYAN9fIVZ65fl3DTw9PWlmzUmAQmTNo=
+	t=1737356960; cv=none; b=VMu85ZSxN8kjV86TTQ5Q5hRD5yWLx7bzdEsKqoEMZc86khi0vA7U10WHwSXVksj2shlaXhoRRLGAlSV+TUCSbXt9Rf8VmfVgykpl33Xu+uVgUVWKAj7HAn0NdCk7mrmasPoqNaOXtplBYtKgfo7eXsIaesOu3M3UQqOaSz1pBG0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737356722; c=relaxed/simple;
-	bh=YHwhOhlln+ZBW4bsRMLXZlhX9KD0bxvWtNvYlkSCv3s=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=tejnwKuTUhiD4jCJg9XijUa10m8TpoNwFX3QIK7rMPmFYDrxknwo8CJCkcOobf2UybOMtLtHgKjxblSlo0SSJpImICHYCLte2cJne2pWLriTTfxfKqgufoDOfV3YbwzWftdRCc6WpphCcWWb8p2ylyD1KULOXHkrOjk8Ii426hc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=H42Z2l+U; arc=none smtp.client-ip=91.218.175.188
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
-Message-ID: <84adda72-24c1-428d-9c55-8bb9ec189584@linux.dev>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1737356708;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=s4k8B9SqdOW/b4nXIri28MHaonby69L1MPYqhyNKUX0=;
-	b=H42Z2l+UXNpZWYWEmHERkXyThqLsthOt2Tl1gQlgH7BXsUNxeI/rr3PfiugdYdU7zHqpvq
-	dLqd9siDrRP2RNM9ARbxgV6zGEqcH+5CdCKOZz1TBdC0GDysb1JYpX1OOzaYOnjlwgwB22
-	siLOW8pFM6wtm6a+laFnQN1GQRPRQXE=
-Date: Mon, 20 Jan 2025 15:04:56 +0800
+	s=arc-20240116; t=1737356960; c=relaxed/simple;
+	bh=iTiU+sR8Q5ot0sGS+V/cSaGPgjcmwcVWfWk9+3LioY0=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:To:CC; b=ownWiANuK/o6lGXDqkbMKkxIt0mNqieUWitIUohnliJIVXn+OfgEkNbPziaI8DnSGNqZMLCo1lIuTTvQ+3GrFUeOM2sMHp1t8h4cKB+VhtClCnrghBlPV4lUJQNhZmJnSY8qNeFyNZZ87h1xKtMCNG5lblGcvI0+GB9yulqoIgI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=SrivZyOB; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50K3CE9N032476;
+	Mon, 20 Jan 2025 07:09:05 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=0RsIGrCbgvaSePTwM6ujYK
+	ggcuA52rwAq3bp/VilRXA=; b=SrivZyOBWLklj+Z8XG19LqC5UsqDsshjw8W0db
+	GxzUOR2ieUAwKPHR4gMyyJT6hk3d0lCZrL3ZUmFXJhWVYzPM3WvX/tEfVhG+15mb
+	vkHwAywZuvy4d/Vh8kqH2j9lueHN802ZKmUmYfUn3vP8Y1EeM+umh51A98i4hp9x
+	dXOCKxvvR3vKsWb1qc/4cvs1yUvvN8QsGdSuadRzbBg47ztdR2e8Hn+yMMpqh2TH
+	XVV3IojM++py3rY89wpajahII70SJ/VnpAO/auB2BhVe9rJlKAF0QVwTbRhvBWOA
+	RnptpIrZph8LCS7eE3x7P054LsrwrbAP56vXe03mmWix+IOQ==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 449ecb0hd3-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 20 Jan 2025 07:09:04 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 50K793Ih003439
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 20 Jan 2025 07:09:03 GMT
+Received: from yijiyang-gv.ap.qualcomm.com (10.80.80.8) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Sun, 19 Jan 2025 23:08:59 -0800
+From: Yijie Yang <quic_yijiyang@quicinc.com>
+Date: Mon, 20 Jan 2025 15:08:28 +0800
+Subject: [PATCH v4] dt-bindings: net: qcom,ethqos: Correct fallback
+ compatible for qcom,qcs615-ethqos
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Subject: Re: [PATCH v2 25/25] drm/xlnx: Compute dumb-buffer sizes with
- drm_mode_size_dumb()
-To: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Cc: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Geert Uytterhoeven <geert@linux-m68k.org>,
- Thomas Zimmermann <tzimmermann@suse.de>, maarten.lankhorst@linux.intel.com,
- mripard@kernel.org, airlied@gmail.com, simona@ffwll.ch,
- dri-devel@lists.freedesktop.org, linux-mediatek@lists.infradead.org,
- freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
- imx@lists.linux.dev, linux-samsung-soc@vger.kernel.org,
- nouveau@lists.freedesktop.org, virtualization@lists.linux.dev,
- spice-devel@lists.freedesktop.org, linux-renesas-soc@vger.kernel.org,
- linux-rockchip@lists.infradead.org, linux-tegra@vger.kernel.org,
- intel-xe@lists.freedesktop.org, xen-devel@lists.xenproject.org,
- Andy Yan <andyshrk@163.com>, Daniel Stone <daniel@fooishbar.org>
-References: <e327ad84-b5c9-4480-b873-dc3aca605538@ideasonboard.com>
- <a2bbeb47-2569-4ee0-9265-92bab139bdc6@suse.de>
- <f3833771-fcd7-45dc-9019-1525fef34429@ideasonboard.com>
- <CAMuHMdXxYa+Na3XxpLTy=-eUL_zQ9kAiUKYu-E04u3KWApusSA@mail.gmail.com>
- <xz5ncq67bgmdase2jg3cfvyaxpiwhol2eqpfzow6dqpauvslo5@2w3rw27lhnxo>
- <b97fcd2f-516a-4172-aef3-631418564cfa@linux.dev>
- <ef52dab0-058f-408f-a298-c4b2453a3d2f@ideasonboard.com>
- <f4562dbf-b132-4cfd-8f7e-43cd69f2673f@linux.dev>
- <cf34be39-ce92-4ea5-b548-03008c163d31@ideasonboard.com>
- <8234927e-0d12-4655-813d-8ec94179b737@linux.dev>
- <20250119201443.GB2467@pendragon.ideasonboard.com>
-Content-Language: en-US
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: Sui Jingfeng <sui.jingfeng@linux.dev>
-In-Reply-To: <20250119201443.GB2467@pendragon.ideasonboard.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Migadu-Flow: FLOW_OUT
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-ID: <20250120-schema_qcs615-v4-1-d9d122f89e64@quicinc.com>
+X-B4-Tracking: v=1; b=H4sIAGz2jWcC/22PwU7DMBBEfyXyGaO145CmJ/4DIWSv12QPcagdo
+ qKq/46dFBCC4+zOm9FcRKbElMWxuYhEK2eeYxHmrhE42vhKkn3RQoPuQKlWZhxpsi8nzA+qk87
+ 3rvUHjTpYUZi3RIHPW97Tc9HOZpIu2YhjTdnhahw5L3P62HpXVe21wijQw61Crq1UMjhPnRrIB
+ oDH0zsjR7zHeRI1fdU/oNbmG9QSJACQHcAYNMNfsP0C/xu1FfvOuQBEB3T9b/6670xUrpmXfey
+ +tPwnXo5NpPMib+l9Ia6fPdZrY2gBAAA=
+X-Change-ID: 20250113-schema_qcs615-bd7b3d82c2fa
+To: Vinod Koul <vkoul@kernel.org>, Andrew Lunn <andrew+netdev@lunn.ch>,
+        "David
+ S. Miller" <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>,
+        "Jakub
+ Kicinski" <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+        Rob Herring
+	<robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio
+	<konradybcio@kernel.org>
+CC: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        <netdev@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        Yijie Yang
+	<quic_yijiyang@quicinc.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1737356938; l=1797;
+ i=quic_yijiyang@quicinc.com; s=20240408; h=from:subject:message-id;
+ bh=iTiU+sR8Q5ot0sGS+V/cSaGPgjcmwcVWfWk9+3LioY0=;
+ b=JjV75oFv47b+arzPWf+UnQlVFPQyi5BhLkSTdXMSA/zb78ronnFcLrUV4GLSThystNbmyM8+O
+ NadYCJqemVKDgUVUWFMmQJqgbWW60tvktRst+kKSSo8Oo4xDAqTXhsB
+X-Developer-Key: i=quic_yijiyang@quicinc.com; a=ed25519;
+ pk=XvMv0rxjrXLYFdBXoFjTdOdAwDT5SPbQ5uAKGESDihk=
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: oSsUS-bdSA2PNpAOOhf3LOg6bI9dVyk2
+X-Proofpoint-GUID: oSsUS-bdSA2PNpAOOhf3LOg6bI9dVyk2
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-01-20_01,2025-01-16_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 mlxlogscore=921
+ mlxscore=0 suspectscore=0 bulkscore=0 phishscore=0 adultscore=0
+ spamscore=0 impostorscore=0 malwarescore=0 lowpriorityscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2501200058
 
-Hi,
+The qcs615-ride utilizes the same EMAC as the qcs404, rather than the
+sm8150. The current incorrect fallback could result in packet loss.
+The Ethernet on qcs615-ride is currently not utilized by anyone. Therefore,
+there is no need to worry about any ABI impact.
 
-On 2025/1/20 04:14, Laurent Pinchart wrote:
-> On Mon, Jan 20, 2025 at 12:26:30AM +0800, Sui Jingfeng wrote:
->> On 2025/1/19 23:22, Tomi Valkeinen wrote:
->>> On 19/01/2025 16:59, Sui Jingfeng wrote:
->>>
->>>>>>> But userspace must be able to continue allocating YUV buffers through
->>>>>>> CREATE_DUMB.
->>>>>> I think, allocating YUV buffers through CREATE_DUMB interface is just
->>>>>> an *abuse* and *misuse* of this API for now.
->>>>>>
->>>>>> Take the NV12 format as an example, NV12 is YUV420 planar format, have
->>>>>> two planar: the Y-planar and the UV-planar. The Y-planar appear first
->>>>>> in memory as an array of unsigned char values. The Y-planar is followed
->>>>>> immediately by the UV-planar, which is also an array of unsigned char
->>>>>> values that contains packed U (Cb) and V (Cr) samples.
->>>>>>
->>>>>> But the 'drm_mode_create_dumb' structure is only intend to provide
->>>>>> descriptions for *one* planar.
->>>>>>
->>>>>> struct drm_mode_create_dumb {
->>>>>>       __u32 height;
->>>>>>       __u32 width;
->>>>>>       __u32 bpp;
->>>>>>       __u32 flags;
->>>>>>       __u32 handle;
->>>>>>       __u32 pitch;
->>>>>>       __u64 size;
->>>>>> };
->>>>>>
->>>>>> An width x height NV12 image takes up width*height*(1 + 1/4 + 1/4)
->>>>>> bytes.
->>>>>>
->>>>>> So we can allocate an *equivalent* sized buffer to store the NV12
->>>>>> raw data.
->>>>>>
->>>>>> Either 'width * (height * 3/2)' where each pixel take up 8 bits,
->>>>>> or just 'with * height' where each pixels take up 12 bits.
->>>>>>
->>>>>> However, all those math are just equivalents description to the original
->>>>>> NV12 format, neither are concrete correct physical description.
->>>>> I don't see the problem. Allocating dumb buffers, if we don't have
->>>>> any heuristics related to RGB behind it, is essentially just
->>>>> allocating a specific amount of memory, defined by width, height and
->>>>> bitsperpixel.
->>>>>
->>>> I think, the problem will be that the 'width', 'height' and 'bpp'
->>>> are originally used to describe one plane. Those three parameters
->>>> has perfectly defined physical semantics.
->>>>
->>>> But with multi planar formats, take NV12 image as an example,
->>>> for a 2×2 square of pixels, there are 4 Y samples but only 1 U
->>>> sample and 1 V sample. This format requires 4x8+1x8+1x8=48 bits
->>>> to store the 2x2 square.
->>>>
->>>> So its depth is 12 bits per pixel (48 / (2 * 2)).
->>>>
->>>> so my problem is that the mentioned 12bpp in this example only
->>>> make sense in mathematics, it doesn't has a good physical
->>>> interpret. Do you agree with me on this technique point?
->>>>
->>>>> If I want to create an NV12 framebuffer, I allocate two dumb
->>>>> buffers, one for Y and one for UV planes, and size them accordingly.
->>>>> And then create the DRM framebuffer with those.
->>>>>
->>>> Then how you fill the value of the 'width', 'height' and 'bpp' of
->>>> each dumb buffers?
->>> For 640x480-NV12:
->>> plane 0: width = 640, height = 480, bpp = 8
->>> plane 1: width = 640 / 2, height = 480 / 2, bpp = 16
->> But i think this should be hardware dependent. The hardware I'm using
->> load NV12  raw data as a whole. I only need to feed gpuva of the backing
->> memory to the hardware register once.
->>
->> Not familiar with your hardware, so I can't talk more on this software
->> design. Perhaps someone know more could have a comment on this.
-> Layout of planes in memory is just one hardware constraint, the same way
-> we have constraints on alignment and strides. Some devices require the
-> planes to be contiguous (likely with some alignment constraints), some
-> can work with planes being in discontiguous pieces of memory, and even
-> require them to be discontiguous and located in separate DRAM banks.
+Fixes: 32535b9410b8 ("dt-bindings: net: qcom,ethqos: add description for qcs615")
+Signed-off-by: Yijie Yang <quic_yijiyang@quicinc.com>
+---
+Changes in v4:
+- Update the base commit to next-20250117.
+- Update the commit description for better clarity and understanding.
+- Link to v3: https://lore.kernel.org/r/20250113-schema_qcs615-v3-1-d5bbf0ee8cb7@quicinc.com
+---
+ Documentation/devicetree/bindings/net/qcom,ethqos.yaml | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-Right.
+diff --git a/Documentation/devicetree/bindings/net/qcom,ethqos.yaml b/Documentation/devicetree/bindings/net/qcom,ethqos.yaml
+index f117471fb06fb3b507df811d55d41d0b610ac15f..e7ee0d9efed8330f5cf62e6c0ea41066572415aa 100644
+--- a/Documentation/devicetree/bindings/net/qcom,ethqos.yaml
++++ b/Documentation/devicetree/bindings/net/qcom,ethqos.yaml
+@@ -22,12 +22,12 @@ properties:
+     oneOf:
+       - items:
+           - enum:
+-              - qcom,qcs8300-ethqos
+-          - const: qcom,sa8775p-ethqos
++              - qcom,qcs615-ethqos
++          - const: qcom,qcs404-ethqos
+       - items:
+           - enum:
+-              - qcom,qcs615-ethqos
+-          - const: qcom,sm8150-ethqos
++              - qcom,qcs8300-ethqos
++          - const: qcom,sa8775p-ethqos
+       - enum:
+           - qcom,qcs404-ethqos
+           - qcom,sa8775p-ethqos
 
+---
+base-commit: 29ef83bb05764c31613d839f62474aa54b39e7d4
+change-id: 20250113-schema_qcs615-bd7b3d82c2fa
 
->>>> Why not allocate storage for the whole on one shoot?
->>> You can, if you adjust the parameters accordingly. However, if the
->>> strides of the planes are not equal, I guess it might cause problems
->>> on some platforms.
->>>
->>> But I think it's usually simpler to allocate one buffer per plane, and
->>> perhaps even better as it doesn't require as large contiguous memory
->>> area.
->>>
->>>> The modetest in libdrm can be an good example, send it[1] to you as
->>>> an reference.
->>> Right, so modetest already does it successfully. So... What is the issue?
->> But then, the problem will become that it override the 'height' parameter.
->> What's the physical interpretation of the 'height' parameter when creating
->> an NV12 image with the dump API then?
-> I wouldn't be too concerned about physical interpretations. Yes, the
-> height, width and bpp parameters were likely designed with RGB formats
-> in mind. Yes, using DUMB_CREATE for YUV formats is probably something
-> that the original authors didn't envision. And yes, from that point of
-> view, it could be seen by the original authors as an abuse of the API.
-> But I don't think that's a problem as such.
-
-Sometimes there may have 2D GPU or Image Process Unit get involved.
-Setting the dimension, the clip window and pitch etc parameters to the
-hardware are needed.
-
-The value of bpp affects pitch, bigger pitch may cause the hardware load
-more bytes than it should on one line. While the 'height' may affect the
-size of the clip window, depend on the calculation method.
-
-But I have no strong opinion toward with this and agree with you in overall.
-
-> An API is just an API. True, it would be nicer if the usage of the ioctl
-> parameters was more intuitive for YUV formats, but I believe we could
-> still standardize how the existing parameters map to linear scanout YUV
-> formats without causing the world to end. As has been said before, lots
-> of drivers are using DUMB_CREATE for this purpose, and we can't change
-> that.
->
-> This doesn't mean we shouldn't work on improving memory allocation, but
-> I see that as a separate issue.
->
->> I guess, solving complex problems with simple APIs may see the limitation,
->> sooner or later. But I not very sure and might be wrong. So other peoples
->> can override me words.
->>
->>> Everyone agrees that CREATE_DUMB is not the best ioctl to allocate
->>> buffers, and one can't consider it to work identically across the
->>> platforms. But it's what we have and what has been used for ages.
->> Yeah, your request are not unreasonable. It can be seen as a kind of rigid demand.
->> Since GEM DMA helpers doesn't export an more advanced interface to userspace so far.
->> As a result, drivers that employing GEM DMA has no other choice, but to abuse the
->> dumb buffer API to do allocation for the more complex format buffers.
->>
->> The dumb buffer API doesn't support to specify buffer format, tile status and
->> placement etc. The more advance drivers has been exposed the xxx_create_gem()
->> to user-space. It seems that a few more experienced programmers hint us to
->> create an new ioctl at above thread, so that we can keep employing simple API
->> to do simple things and to suit complex needs with the more advanced APIs.
-> I'd really like to explore adding new ioctls to exposure memory
-> allocation constraints, and allocating the memory itself from DMA heaps.
->
--- 
 Best regards,
-Sui
+-- 
+Yijie Yang <quic_yijiyang@quicinc.com>
 
 
