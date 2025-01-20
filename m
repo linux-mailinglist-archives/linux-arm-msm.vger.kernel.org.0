@@ -1,65 +1,47 @@
-Return-Path: <linux-arm-msm+bounces-45548-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-45549-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id A40F7A16756
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Jan 2025 08:29:37 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 59044A16768
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Jan 2025 08:37:09 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id DB557164FD6
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Jan 2025 07:29:35 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 76C303A79A9
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Jan 2025 07:37:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 716F518FC83;
-	Mon, 20 Jan 2025 07:29:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EIli/PuD"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6D90118FDD0;
+	Mon, 20 Jan 2025 07:37:04 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4173C18FDA9;
-	Mon, 20 Jan 2025 07:29:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4351E481CD;
+	Mon, 20 Jan 2025 07:37:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737358173; cv=none; b=tMojOiOIqbq4ce0z+AQX9XzXHE9vWeBZetzNAejSshkH9kLCS7X7hxnBFM9Cl3wlzDYIWzCfq0WsyhLGdLqb1phZWTF1WhFyFoKiAP/qKj2qVm+wDmZUdem9AEbUNPlijtIqQlORu5ufiXdXJAUs3pg51Kiv0aIdSZFnDLo0GoA=
+	t=1737358624; cv=none; b=IKMow12uaj2N7jLZiydOF8GDFdTrOqrV8K4LZoSM8wd8QuVIu4Q0J7Tp9Ob1JP/cV4WQVyI2SOL926x9T/pb3NLn9Jx3hIXO3AX033AD1RNy6xrpU60TNTHFstgHO826S52GKmlDlx3KeQT4uORw//BMhVEnI8xmQaoCacXFX7c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737358173; c=relaxed/simple;
-	bh=QYLdcOf2omnC+tqf+1HFeg9aqbpCJGX+M3S2jzNrCQ8=;
+	s=arc-20240116; t=1737358624; c=relaxed/simple;
+	bh=gYhUzyz8zAQ6BxXBkdFPV2xAx8nj/FfFfr3eRiwaoSs=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=RGg3l0cehNKx85XzwW137iA3vYeVCodi9IEHdKCM6FArXHfmzjrhJZi4SF2mWGm6pMJJAsiwNnssj/nS3+ipiXVCIGIOp8n07667m6nnM/f9UF+w7QIsQ5f9eYmpWxvvrwYDEb/TepiABpMViXDxBJ23ljZ40I7/Goyyr9o5d58=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EIli/PuD; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E89CC4CEDD;
-	Mon, 20 Jan 2025 07:29:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1737358173;
-	bh=QYLdcOf2omnC+tqf+1HFeg9aqbpCJGX+M3S2jzNrCQ8=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=EIli/PuDTXfGXU+5D8nizOFQsN2ScphpfdASkjSpaIFqViocpmuNsPJHUWRigCbYk
-	 maREfl2cMtpzeTgRcBiKk2Ev7n/NPajVuqX/gNEO8AKMiU5DUXpT/aaM/Pa3M++EsG
-	 bKoRcTOA7BxlgMhzN4YVK418RBwhU+egttzvV36sjkW04rYaVqd3UWjyVuiJeJ0w0s
-	 hFCjDHo7Wsx554dhm7rHjOjarfidtKhr+FiYyrTVsZvHGXFhN3X78uQbTpV37misfw
-	 e/cBrEFH0mKLAJveNQfYRQ2erwCZc5AlRwpunKPx7oJ20ccveuBXM1a3CuzQQsoqIW
-	 ILMRlJexxGdug==
-Date: Mon, 20 Jan 2025 08:29:29 +0100
-From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Yongxing Mou <quic_yongmou@quicinc.com>
-Cc: Rob Clark <robdclark@gmail.com>, 
-	Abhinav Kumar <quic_abhinavk@quicinc.com>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
-	Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, 
-	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
-	Thomas Zimmermann <tzimmermann@suse.de>, Rob Herring <robh@kernel.org>, 
+	 Content-Type:Content-Disposition:In-Reply-To; b=UZ9Imf7KKuCpP0J9QbFYkbk0+H9yrGX40b2JZ7TR/ndWYFVNLncZTu9L8PvQ4pFDEc5MvzT+4J1x+XJl3Kdhs4+mIEg2PeY8zo8g3RwlC90NwNxeFAGOfTpHLtm1wOlHPVEBKWuvUFhxVE/69kTGA3eyCBUkl6wOzYHc0KOHAKQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB87BC4CEDD;
+	Mon, 20 Jan 2025 07:37:02 +0000 (UTC)
+Date: Mon, 20 Jan 2025 08:37:00 +0100
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To: Yijie Yang <quic_yijiyang@quicinc.com>
+Cc: Vinod Koul <vkoul@kernel.org>, Andrew Lunn <andrew+netdev@lunn.ch>, 
+	"David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, 
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, Rob Herring <robh@kernel.org>, 
 	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Neil Armstrong <neil.armstrong@linaro.org>, Kuogee Hsieh <quic_khsieh@quicinc.com>, 
-	Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I <kishon@kernel.org>, 
-	Bjorn Andersson <andersson@kernel.org>, linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
-	freedreno@lists.freedesktop.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-phy@lists.infradead.org
-Subject: Re: [PATCH v4 3/4] dt-bindings: display/msm: Document MDSS on QCS8300
-Message-ID: <20250120-economic-sawfly-of-agreement-541c8a@krzk-bin>
-References: <20250120-mdssdt_qcs8300-v4-0-1687e7842125@quicinc.com>
- <20250120-mdssdt_qcs8300-v4-3-1687e7842125@quicinc.com>
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, netdev@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v4] dt-bindings: net: qcom,ethqos: Correct fallback
+ compatible for qcom,qcs615-ethqos
+Message-ID: <20250120-melodic-unselfish-toucanet-a556df@krzk-bin>
+References: <20250120-schema_qcs615-v4-1-d9d122f89e64@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -68,18 +50,16 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20250120-mdssdt_qcs8300-v4-3-1687e7842125@quicinc.com>
+In-Reply-To: <20250120-schema_qcs615-v4-1-d9d122f89e64@quicinc.com>
 
-On Mon, Jan 20, 2025 at 11:49:20AM +0800, Yongxing Mou wrote:
-> Document the MDSS hardware found on the Qualcomm QCS8300 platform.
-> QCS8300 use the same DPU hardware version as SA8775P, so we reuse it's
-> driver. But QCS8300 only have one DP controller, and offset is same with
-> sm8650, so dp controller reuse the sm8650's driver.
+On Mon, Jan 20, 2025 at 03:08:28PM +0800, Yijie Yang wrote:
+> The qcs615-ride utilizes the same EMAC as the qcs404, rather than the
+> sm8150. The current incorrect fallback could result in packet loss.
+> The Ethernet on qcs615-ride is currently not utilized by anyone. Therefore,
+> there is no need to worry about any ABI impact.
 > 
-> Signed-off-by: Yongxing Mou <quic_yongmou@quicinc.com>
-> ---
->  .../bindings/display/msm/qcom,qcs8300-mdss.yaml    | 244 +++++++++++++++++++++
->  1 file changed, 244 insertions(+)
+> Fixes: 32535b9410b8 ("dt-bindings: net: qcom,ethqos: add description for qcs615")
+> Signed-off-by: Yijie Yang <quic_yijiyang@quicinc.com>
 
 Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
