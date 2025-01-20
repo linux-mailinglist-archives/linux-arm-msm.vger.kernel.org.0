@@ -1,141 +1,98 @@
-Return-Path: <linux-arm-msm+bounces-45591-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-45592-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9B157A16DB3
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Jan 2025 14:47:01 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id E8533A16DF9
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Jan 2025 15:01:35 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 94E977A28BD
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Jan 2025 13:46:52 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6096D3A5904
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Jan 2025 14:00:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AD1CA372;
-	Mon, 20 Jan 2025 13:46:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="glF0BiAO"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CBD151E3DE3;
+	Mon, 20 Jan 2025 14:00:23 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f179.google.com (mail-lj1-f179.google.com [209.85.208.179])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail-m155101.qiye.163.com (mail-m155101.qiye.163.com [101.71.155.101])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA0DB1DFD8
-	for <linux-arm-msm@vger.kernel.org>; Mon, 20 Jan 2025 13:46:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DA051E0DBA;
+	Mon, 20 Jan 2025 14:00:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=101.71.155.101
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737380816; cv=none; b=HxBcs8Z5Qk3hBT1Fg0p9/YB9KSfov6zmBtixeUtSODZFmTPLIlcMYpQnfT4VzmjQuUjDobAQS0cmrGNwGAXoHZ3w4wf5/kcTAXAcc7MIFK8DVb7EQFcXDP/GHxzepZNChPj2BOSmNZBEphTH/sX4NUpvXcFu1qlqCW4zOuNPZig=
+	t=1737381623; cv=none; b=WLllChdCEwbOLI9uoNsREDShsi1d2/6JZgOLLlCEJh4uH7lvA0kxrEQolkUde47feBbxo6/Q5tV08gLrOoceRjrBMrRilTPZZDPXAQ9cJ2vIFNSb3vdjmeUI/yZJvOFLILE6bk/l1/oA+E98GovoXCYokW9xkD+OVyPegVDUKH4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737380816; c=relaxed/simple;
-	bh=vdaZayPM67nF/4Tn0WCZcfScGglX0NHRO8C3emddbL4=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=DdQTY6MuZgTVv7thOB9JT6kkBQvtStdPyUiC3jrX62O7/ioWhqQ+YUyfyGmDvWa5F4mnKIR2VgGcSarPze5H/52yrq/4uqspy0GgDiHpv5/1peJyMFtEBKrcOOuBt3O10v1QmdQLiiUdy/xjT5SWvUYDScH3lWqmiaAa90tZj2g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=glF0BiAO; arc=none smtp.client-ip=209.85.208.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
-Received: by mail-lj1-f179.google.com with SMTP id 38308e7fff4ca-3061f1e534bso44863641fa.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Jan 2025 05:46:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1737380813; x=1737985613; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=O7uWym8aviUECTT7NP343rKz7l6AiGEcMJ6zJloUFKk=;
-        b=glF0BiAOrO09M02qRo93wBo2eSSg925tV8xA011LlxTUkk4hS/8DkLMvp+a+B9pVHj
-         rxsJpc4NPsPhyUud+srxrdSIGoJmak0gzqFdVB5cyGiBrPKrGGcyvO1xdo5/ouhgaV2T
-         ui42LVJBOHSx9sjxtiunxtQmF4B6OtZmwipO9l8OmYFC/wyY3rDNCj4cEYC0Po2bS7kP
-         YPwlKRXThhSyEluIkeSe7Xg/dzUqNHF/Ia3U3KcameXlWFV4xgPDvP6Pdt2SMUzDPldt
-         Oh1Z1zU3B6Xcy9Sfd3zitpDCwOlWADKsdOES5rKaJGHhJEud0aueLDsOqZ+Z9LiVUdSo
-         P3cA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1737380813; x=1737985613;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=O7uWym8aviUECTT7NP343rKz7l6AiGEcMJ6zJloUFKk=;
-        b=igH3fEds7S44NN149pFWdFQMxjdjE0juDKEzByc5c0CxrOp2SNGBHwSKy2AW/Raz6V
-         Q1wmouWZRPrLw1tvExL0u5FX9JYfR2KLCkcSxUWQJA148RY8RbLPzHxoNO4NOiSKPAG4
-         rFOvEfnbXZe2M/Ai2kKPNaOroMbVhGdWn+cgzd8TBtmBdITBKxGjphhTFBRRirVtjKN/
-         F/qWPNjLeyWTICDmCjSJcjWv0+T1+2dL85Vhjt1od9D9UPYPY7u9DkuPORQgJWJI2dzB
-         jV88XlY2AcwMgw4/oDrmqQ1wMRHUwD2/ypwHSXchWTvHzs4tbWJ2DsGhNpaWmOdJAsOv
-         Wfiw==
-X-Forwarded-Encrypted: i=1; AJvYcCVXyRhKIlnPu5Po6rNbjXYnLUDdnGzMX4uHt1jNJDuHkkVFDsIvD2/quZZZfGnB3jkJphWwreq+gf/spgKC@vger.kernel.org
-X-Gm-Message-State: AOJu0YwNeP4Hgin9rnZquc/0h95Mh8Qr3rb6Bx9kvpZJVcebNynbO0Xg
-	tj3k++63b+jp84WSJ6zOYauJ5PhI+JYEyPF4QKSGiy6gAsLTMOtvnr889K5CyNSfvanfnU9vCqe
-	jqvvn0rNCIBVjrZPvmnH+XriFOgDNlT3cQhvZcg==
-X-Gm-Gg: ASbGncvmRaPOYD4ZpjhvHUQz3IxzSiDOnz0Zob2AHzL+4owteUuBXmDEWFDzPEBOjXd
-	j/2p+h7So7SQ/L1LLaJoPXJ+x055LFyrP+vh0oJ9URRHjvEPMoshu40rM20yKdvx7OyBqXHcPdg
-	TkLqWzyew=
-X-Google-Smtp-Source: AGHT+IGQFrCMm8vyRK8vl4hzwtqFf/36t7jhpPxV0M0zp0y+Zz7oKVbBwOYsm8AIgJwc3bHgZHJIcWkIRU9kVfObBko=
-X-Received: by 2002:a2e:8e76:0:b0:2ff:c67f:5197 with SMTP id
- 38308e7fff4ca-3072ca6a6bfmr38519261fa.13.1737380812745; Mon, 20 Jan 2025
- 05:46:52 -0800 (PST)
+	s=arc-20240116; t=1737381623; c=relaxed/simple;
+	bh=if1IJBgPQjMinB/E/gXbZAHRlKlanEcd/bK1JE83Izs=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=TEFoN46YsZFiAQUS3l2YUhQAawA/ijNffgK1mLnDfr6ogdkMfuKF0VGEhUFTyoMQolhgu/o2g8CGeGasXkR8zORtd0tuSb/NVt5ZFNjVVdL1mZOX2JsyGTKzJE5co5CCnw+HchH96nBenJsZyFTU39K08TCzn6zyxXnCd/ca5/8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=jmu.edu.cn; spf=pass smtp.mailfrom=jmu.edu.cn; arc=none smtp.client-ip=101.71.155.101
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=jmu.edu.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jmu.edu.cn
+Received: from amadeus-Vostro-3710.lan (unknown [119.122.212.126])
+	by smtp.qiye.163.com (Hmail) with ESMTP id 93577297;
+	Mon, 20 Jan 2025 22:00:10 +0800 (GMT+08:00)
+From: Chukun Pan <amadeus@jmu.edu.cn>
+To: Bjorn Andersson <andersson@kernel.org>
+Cc: Konrad Dybcio <konradybcio@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	Chukun Pan <amadeus@jmu.edu.cn>
+Subject: [PATCH v5 0/5] arm64: dts: qcom: ipq6018: rework CPU Frequency
+Date: Mon, 20 Jan 2025 22:00:01 +0800
+Message-Id: <20250120140006.655463-1-amadeus@jmu.edu.cn>
+X-Mailer: git-send-email 2.25.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20241203-crypto-qce-refactor-v1-0-c5901d2dd45c@linaro.org>
- <20241203-crypto-qce-refactor-v1-9-c5901d2dd45c@linaro.org>
- <d6220576-eaf5-4415-b25f-b5984255ab78@linaro.org> <CAMRc=MevaM4tUNQUs_LjFYaUtDH=YqE-t2gBponGqtK5xE9Gpw@mail.gmail.com>
- <20250118080604.GA721573@sol.localdomain> <CAMRc=MeFMYzMY4pU9D6fEpg9bQuuzqg4rQhBU8=z_2eMU+Py-g@mail.gmail.com>
- <20250118175502.GA66612@sol.localdomain>
-In-Reply-To: <20250118175502.GA66612@sol.localdomain>
-From: Bartosz Golaszewski <brgl@bgdev.pl>
-Date: Mon, 20 Jan 2025 14:46:41 +0100
-X-Gm-Features: AbW1kvadA5qf4pLYrGVbYIj86oGONAxbZ9gOjq4aNXiA4bcW9hoyMMQqNC0e_GE
-Message-ID: <CAMRc=MdR-8AnwAsMzHn8zj2awZUumO32C_S1-CkjBEqbuKPdeg@mail.gmail.com>
-Subject: Re: [PATCH 9/9] crypto: qce - switch to using a mutex
-To: Eric Biggers <ebiggers@kernel.org>
-Cc: neil.armstrong@linaro.org, linux-crypto@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, Thara Gopinath <thara.gopinath@gmail.com>, 
-	Herbert Xu <herbert@gondor.apana.org.au>, "David S. Miller" <davem@davemloft.net>, 
-	Stanimir Varbanov <svarbanov@mm-sol.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
+X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
+	tZV1koWUFITzdXWS1ZQUlXWQ8JGhUIEh9ZQVkaS00aVhoZHktJGU5DGhlCGFYeHw5VEwETFhoSFy
+	QUDg9ZV1kYEgtZQVlKSkJVSklJVUlKSVVKSU1ZV1kWGg8SFR0UWUFZT0tIVUpLSEpOTE5VSktLVU
+	pCS0tZBg++
+X-HM-Tid: 0a948403826d03a2kunm93577297
+X-HM-MType: 10
+X-HM-Sender-Digest: e1kMHhlZQR0aFwgeV1kSHx4VD1lBWUc6PE06Eww6KzIcKDZRIQ9OKks0
+	HgtPChdVSlVKTEhMSENKTUpLTENJVTMWGhIXVRoWGh8eDgg7ERYOVR4fDlUYFUVZV1kSC1lBWUpK
+	QlVKSUlVSUpJVUpJTVlXWQgBWUFKSU9KNwY+
 
-On Sat, Jan 18, 2025 at 6:55=E2=80=AFPM Eric Biggers <ebiggers@kernel.org> =
-wrote:
->
-> On Sat, Jan 18, 2025 at 10:28:26AM +0100, Bartosz Golaszewski wrote:
-> > I was testing with kcapi-speed and cryptsetup benchmark. I've never
-> > seen any errors.
-> >
-> > Is this after my changes only or did it exist before? You're testing
-> > with the tcrypt module? How are you inserting it exactly? What params?
->
-> Those are all benchmarks, not tests.  The tests run at registration time =
-if you
-> just enable the kconfig options for them:
->
->     # CONFIG_CRYPTO_MANAGER_DISABLE_TESTS is not set
->     CONFIG_CRYPTO_MANAGER_EXTRA_TESTS=3Dy
->
-> The test failures and KASAN error occur on mainline too, so yes they occu=
-r
-> before your patchset too.
->
-> > >
-> > > I personally still struggle to understand how this driver could plaus=
-ibly be
-> > > useful when the software crypto has no issues, is much faster, and is=
- much
-> > > better tested.  What is motivating having this driver in the kernel?
-> >
-> > We want to use it in conjunction with the upcoming scminvoke (for
-> > loading TAs and invoking objects - used to program the keys into the
-> > QCE) to support the DRM use-case for decrypting streaming data inside
-> > secure buffers upstream.
->
-> Notably lacking is any claim that any of the current features of the driv=
-er are
-> actually useful.
->
+Changes in v5:
+  Collect Reviewed-by
+  Change the aliases of mp5496 regulator from ipq6018 to mp5496
 
-Noted. I'm still quite early into working on the upstream-bound code
-supporting the streaming use-case but I will consider a proposal to
-remove existing features that are better provided by ARM CE.
+Changes in v4:
+  Modify the commit message to further explain CPU Frequency of IPQ6000
+  Rename ipq6018-rdp.dtsi to ipq6018-mp5496.dtsi (inherit ipq6018.dtsi)
 
-Thanks,
-Bartosz
+Changes in v3:
+  Modify the commit message to further explain CPU Frequency of IPQ6000
+  Rename ipq6018-mp5496.dtsi to ipq6018-rdp.dtsi (common for RDP board)
+
+Changes in v2:
+  Add more CPU Frequencies in ipq6018.dtsi
+  Move mp5496 regulator to ipq6018-mp5496.dtsi
+  Add LDOA2 regulator to support SDCC voltage scaling
+
+Chukun Pan (5):
+  arm64: dts: qcom: ipq6018: add 1.2GHz CPU Frequency
+  arm64: dts: qcom: ipq6018: add 1.5GHz CPU Frequency
+  arm64: dts: qcom: ipq6018: move mp5496 regulator out of soc dtsi
+  arm64: dts: qcom: ipq6018: rename aliases of mp5496 regulator
+  arm64: dts: qcom: ipq6018: add LDOA2 regulator
+
+ arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dts |  2 +-
+ arch/arm64/boot/dts/qcom/ipq6018-mp5496.dtsi | 44 ++++++++++++++++++++
+ arch/arm64/boot/dts/qcom/ipq6018.dtsi        | 28 ++++++-------
+ 3 files changed, 59 insertions(+), 15 deletions(-)
+ create mode 100644 arch/arm64/boot/dts/qcom/ipq6018-mp5496.dtsi
+
+-- 
+2.25.1
+
 
