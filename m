@@ -1,214 +1,167 @@
-Return-Path: <linux-arm-msm+bounces-45561-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-45562-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5AFF3A169B3
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Jan 2025 10:36:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 0E8DEA16A13
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Jan 2025 10:58:23 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 865AC1625C4
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Jan 2025 09:36:51 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 4927A16353F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Jan 2025 09:58:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 36AF318FDC8;
-	Mon, 20 Jan 2025 09:36:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7585E19DF4A;
+	Mon, 20 Jan 2025 09:58:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="haRbdh1u"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="LN2oev/L"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70DEE149DF0
-	for <linux-arm-msm@vger.kernel.org>; Mon, 20 Jan 2025 09:36:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D38C818801A;
+	Mon, 20 Jan 2025 09:58:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737365811; cv=none; b=jQLrYYkEumCe3HRckbj+mnVAdenjtDlyu+RW1kGQMgMMrd/uVMRBnUkva+zsrTgo59oQ/A0knktS9lCDSRJuQcwG9wc0cwCg/PFV88UQTiy+YmgBL0RmnqurP2xhYfI9s+kYeyRmf4RfJ6CKTuV3X4f7xvJnH9QbGkYWPCituB4=
+	t=1737367100; cv=none; b=gtxX2GV4qjDXwdDe7BhdlA8fJh+q7ESknYvLTAds+sxvljq+KUW4neB0kpe6Ed1qukheifnIhbk2JOkxplwNYm5hUtKLkAB1wYaOaFzDvNdvYfYcmGYU1xM/6yofDC8X3FDQXpmt+6Ub4KexpE36dXl2yA48YlFGMQZrUzqiprU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737365811; c=relaxed/simple;
-	bh=23Kf015An1Fan6/UvXAQGQ+mwej8Fwp9q6KD5aNCEA4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=aaAWbPUrBEw9VvWAkkV20ZhUFAtY6XclExuJelIpVjh4RwRUcEoqG1Rz5Mlu+GXnLVwVL90atCxHkUfleo9DaLBcYimLyCsCXFsRevodQA4piX3OBbik8LLwD52YVLoXD8OaJ6g1KTI/pS/afeRWlV8GanwkzbN8K8fmBAtOr7s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=haRbdh1u; arc=none smtp.client-ip=170.10.129.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1737365808;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=ldmgrsMiqHT+HGEQTFsUnj3a6/bVnZQe/bjJTNIQxGw=;
-	b=haRbdh1u5GWegrMy9ylN1U1V+LYwqT8wQw9SqBNhNsU4I/CAMmwPLtBEqSKOwkR+RqMepG
-	FbF2NbhaTSJqFcWFU+a12eWnPy7APCJIIEfj3FRe3FlUhX8ZQnTe/4oS/d72Pw8e86FLDA
-	+bzJqENUfHi/Rj5KtHryN62HRCUiIpo=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-125-RkD-tMvuMMmTcNT2guv0bw-1; Mon, 20 Jan 2025 04:36:46 -0500
-X-MC-Unique: RkD-tMvuMMmTcNT2guv0bw-1
-X-Mimecast-MFC-AGG-ID: RkD-tMvuMMmTcNT2guv0bw
-Received: by mail-wr1-f69.google.com with SMTP id ffacd0b85a97d-385ed79291eso2474512f8f.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Jan 2025 01:36:46 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1737365806; x=1737970606;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:from:references:cc:to:subject:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=ldmgrsMiqHT+HGEQTFsUnj3a6/bVnZQe/bjJTNIQxGw=;
-        b=Wk+KjP1fU8Si11tHqLrVnyrMcqYjn1pb7AB0i2u56qQ3z6Sou2wZKYn05nhYhJrv2D
-         G5dJAUDRNMTZB3+CqruOjfQY1/QqbTbiTZSVKYR4yli72eBzrlHnZ9UqwMiGpK1C7i+u
-         THwHoxNvogeyYxMkDbs2j7oZjVeLwXOFkKjA2DSP3qtFrZaZFYY8/HNFtVs1Vdy3pwO/
-         SqZ1OgSGyMaq6gcBXqmFahYknU+dsTRatWA3/tCGcXjIUhj84NvC+NApUcuOu/QGsRhV
-         zn3TODKXP0mTZxNF5KfQgN9+SV4npG3S34wKcNwJ57h7thgaaV0HVWqMHd+RquZXb72x
-         yupw==
-X-Forwarded-Encrypted: i=1; AJvYcCVZs6PQMN3se0BJYJ8Eb26VeDeAXm3JozpOCzDCtSUbu5+8xLYINgoVo0AjDXRSlRzvUh+qHP03qFXxYKob@vger.kernel.org
-X-Gm-Message-State: AOJu0YzfnjAXmLJzkiTfSJ3xJxlMBGIk7D7bUysvinK8J/0jPbTyDw8K
-	+nlw2wDI6X8Gpticuedw7CTOjGHhI31ohhGjE1HdJiAeb4BxRVxV9SoDG8O1P/1rhA74WA3XJa5
-	Pzq6iJajj9/ITkSI2f6/raWL7kgbeewNKgBHqMJYOwlldqIc7EuCw6kDQwO35Xgg=
-X-Gm-Gg: ASbGnctL5adHFDWeuxW7gJ9tCCbMo0F13//9wYxCbEv49AEExKIRpIrIU95MqRCGFUK
-	wl2IUo/McwV4waCCdTnUaU8KKhNDQX944MQkP2xpM+1CbJ9y9TrlK9nz6S6izs2e1aqns0ZlUTc
-	2e7ZInM1GpVNpfha4dD+A0NWC0jUbfN81dOVoDxDEg86eWvJTrDUMktnNwG9UvL5XU1ZNoXp51r
-	fbGkaUnXCZE1Q9fnka8Rwa0883af9fRjIwSh5PD/pmGU33hUspb1DfdOb4XmG35zp1UdBrgwDoP
-	qp0uu3UUXkI3y/3YD8+kaLP9XtusgFdUo7LmboGFS63q0bc5bAwOpNn1vuxE5Qparw63ZwFIAhN
-	ZM/I7fm3LjYfueUnXrmI6AA==
-X-Received: by 2002:a05:6000:1869:b0:38a:5d7d:4bd6 with SMTP id ffacd0b85a97d-38bf5b0aa37mr12039387f8f.25.1737365805671;
-        Mon, 20 Jan 2025 01:36:45 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IH0E9CUT29svEJmXx/7AZEXIsb6reL3Fit+w065iTZ35U5QvjnXudB5eErXd1/HETWI9txW6Q==
-X-Received: by 2002:a05:6000:1869:b0:38a:5d7d:4bd6 with SMTP id ffacd0b85a97d-38bf5b0aa37mr12039345f8f.25.1737365805208;
-        Mon, 20 Jan 2025 01:36:45 -0800 (PST)
-Received: from ?IPV6:2003:d8:2f22:1000:d72d:fd5f:4118:c70b? (p200300d82f221000d72dfd5f4118c70b.dip0.t-ipconnect.de. [2003:d8:2f22:1000:d72d:fd5f:4118:c70b])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38bf327df79sm10028340f8f.91.2025.01.20.01.36.42
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 20 Jan 2025 01:36:44 -0800 (PST)
-Message-ID: <ef53e99b-862d-4285-b86b-908fd60070c3@redhat.com>
-Date: Mon, 20 Jan 2025 10:36:42 +0100
+	s=arc-20240116; t=1737367100; c=relaxed/simple;
+	bh=5GPpJhmUBIfhYoB8yxu0DhjKWbmPWT7lDCwNC2s9RGc=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=WmlQZCluDcNs8Y0tbpk3ad6x25hbAHnWv7uPfVAObQfA4Igw1vZxVDTcfS/IEPdn3w0FPU8p63MCqbH57JJP7wmccVb07A0A+DBAZGiBg/qMXj1fj2hLVs75zOad9PuaCfCy/fe6WK3Mk1BMjaOf4c64U57XLM+/WiAgZof+KKk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=LN2oev/L; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50K6gxaN007185;
+	Mon, 20 Jan 2025 09:58:12 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-type:date:from:message-id:mime-version:subject:to; s=
+	qcppdkim1; bh=nLz/GzCMRPuM71qBBVKXfuXubdgaybSk3JA4GxjpB9Q=; b=LN
+	2oev/L6MJjw27yOzNo7BboQWVFigL9IxLdTVVYeNZX0g1n10/7pneGcpCjmMyYwr
+	GamGa9Bbh3oTcU4yVkE7mxwD2j93RpMArxSvT3JL4BJX1SmiX4hABYgdfw1EUFaY
+	YUpT1oJXuWXWxae0xI45/WETCJEoRCISuNPd5ex7QzIQNvmiUaKTifEkUp1eZtS6
+	VwbHACIzljJ1ryFRKnWMjrBrRh4/940jU4crzLmS3TXf8xr+2/t0DMd49juxG8Rl
+	bzlXuJ383umMKN24RzRiAwWBGm9rHCkeCGbgY0+J6zEDYPNxOWDr6SGoV5jyopk5
+	dc/eIxEmq9AHCauO9Y5w==
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 449hfb0fjr-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 20 Jan 2025 09:58:12 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 50K9wB0O015288
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 20 Jan 2025 09:58:11 GMT
+Received: from hu-jseerapu-hyd.qualcomm.com (10.80.80.8) by
+ nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Mon, 20 Jan 2025 01:58:06 -0800
+From: Jyothi Kumar Seerapu <quic_jseerapu@quicinc.com>
+To: Vinod Koul <vkoul@kernel.org>, Andi Shyti <andi.shyti@kernel.org>,
+        "Sumit
+ Semwal" <sumit.semwal@linaro.org>,
+        =?UTF-8?q?Christian=20K=C3=B6nig?=
+	<christian.koenig@amd.com>
+CC: <linux-arm-msm@vger.kernel.org>, <dmaengine@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-i2c@vger.kernel.org>,
+        <linux-media@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <linaro-mm-sig@lists.linaro.org>, <quic_msavaliy@quicinc.com>,
+        <quic_vtanuku@quicinc.com>
+Subject: [PATCH v5 0/2] Add Block event interrupt support for I2C protocol
+Date: Mon, 20 Jan 2025 15:27:51 +0530
+Message-ID: <20250120095753.25539-1-quic_jseerapu@quicinc.com>
+X-Mailer: git-send-email 2.17.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v4 00/14] KVM: Restricted mapping of guest_memfd at
- the host and arm64 support
-To: Vlastimil Babka <vbabka@suse.cz>, Fuad Tabba <tabba@google.com>,
- Ackerley Tng <ackerleytng@google.com>
-Cc: kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org,
- pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au,
- anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com,
- aou@eecs.berkeley.edu, seanjc@google.com, viro@zeniv.linux.org.uk,
- brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org,
- xiaoyao.li@intel.com, yilun.xu@intel.com, chao.p.peng@linux.intel.com,
- jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com,
- yu.c.zhang@linux.intel.com, isaku.yamahata@intel.com, mic@digikod.net,
- vannapurve@google.com, mail@maciej.szmigiero.name, michael.roth@amd.com,
- wei.w.wang@intel.com, liam.merwick@oracle.com, isaku.yamahata@gmail.com,
- kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com,
- steven.price@arm.com, quic_eberman@quicinc.com, quic_mnalajal@quicinc.com,
- quic_tsoni@quicinc.com, quic_svaddagi@quicinc.com,
- quic_cvanscha@quicinc.com, quic_pderrin@quicinc.com,
- quic_pheragu@quicinc.com, catalin.marinas@arm.com, james.morse@arm.com,
- yuzenghui@huawei.com, oliver.upton@linux.dev, maz@kernel.org,
- will@kernel.org, qperret@google.com, keirf@google.com, roypat@amazon.co.uk,
- shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, rientjes@google.com,
- jhubbard@nvidia.com, fvdl@google.com, hughd@google.com, jthoughton@google.com
-References: <CA+EHjTzcx=eXSERSANMByhcgRRAbUL3kPAYkeu-uUgd0nPBPPA@mail.gmail.com>
- <diqzh65zzjc9.fsf@ackerleytng-ctop.c.googlers.com>
- <CA+EHjTwXqUHoEp8oqiNDcWqXxCBLHU1+jAdEN8J-pHZjxKnM+A@mail.gmail.com>
- <e49e3e78-1fb9-44b8-af11-69f7c39f5820@suse.cz>
-From: David Hildenbrand <david@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=david@redhat.com; keydata=
- xsFNBFXLn5EBEAC+zYvAFJxCBY9Tr1xZgcESmxVNI/0ffzE/ZQOiHJl6mGkmA1R7/uUpiCjJ
- dBrn+lhhOYjjNefFQou6478faXE6o2AhmebqT4KiQoUQFV4R7y1KMEKoSyy8hQaK1umALTdL
- QZLQMzNE74ap+GDK0wnacPQFpcG1AE9RMq3aeErY5tujekBS32jfC/7AnH7I0v1v1TbbK3Gp
- XNeiN4QroO+5qaSr0ID2sz5jtBLRb15RMre27E1ImpaIv2Jw8NJgW0k/D1RyKCwaTsgRdwuK
- Kx/Y91XuSBdz0uOyU/S8kM1+ag0wvsGlpBVxRR/xw/E8M7TEwuCZQArqqTCmkG6HGcXFT0V9
- PXFNNgV5jXMQRwU0O/ztJIQqsE5LsUomE//bLwzj9IVsaQpKDqW6TAPjcdBDPLHvriq7kGjt
- WhVhdl0qEYB8lkBEU7V2Yb+SYhmhpDrti9Fq1EsmhiHSkxJcGREoMK/63r9WLZYI3+4W2rAc
- UucZa4OT27U5ZISjNg3Ev0rxU5UH2/pT4wJCfxwocmqaRr6UYmrtZmND89X0KigoFD/XSeVv
- jwBRNjPAubK9/k5NoRrYqztM9W6sJqrH8+UWZ1Idd/DdmogJh0gNC0+N42Za9yBRURfIdKSb
- B3JfpUqcWwE7vUaYrHG1nw54pLUoPG6sAA7Mehl3nd4pZUALHwARAQABzSREYXZpZCBIaWxk
- ZW5icmFuZCA8ZGF2aWRAcmVkaGF0LmNvbT7CwZgEEwEIAEICGwMGCwkIBwMCBhUIAgkKCwQW
- AgMBAh4BAheAAhkBFiEEG9nKrXNcTDpGDfzKTd4Q9wD/g1oFAl8Ox4kFCRKpKXgACgkQTd4Q
- 9wD/g1oHcA//a6Tj7SBNjFNM1iNhWUo1lxAja0lpSodSnB2g4FCZ4R61SBR4l/psBL73xktp
- rDHrx4aSpwkRP6Epu6mLvhlfjmkRG4OynJ5HG1gfv7RJJfnUdUM1z5kdS8JBrOhMJS2c/gPf
- wv1TGRq2XdMPnfY2o0CxRqpcLkx4vBODvJGl2mQyJF/gPepdDfcT8/PY9BJ7FL6Hrq1gnAo4
- 3Iv9qV0JiT2wmZciNyYQhmA1V6dyTRiQ4YAc31zOo2IM+xisPzeSHgw3ONY/XhYvfZ9r7W1l
- pNQdc2G+o4Di9NPFHQQhDw3YTRR1opJaTlRDzxYxzU6ZnUUBghxt9cwUWTpfCktkMZiPSDGd
- KgQBjnweV2jw9UOTxjb4LXqDjmSNkjDdQUOU69jGMUXgihvo4zhYcMX8F5gWdRtMR7DzW/YE
- BgVcyxNkMIXoY1aYj6npHYiNQesQlqjU6azjbH70/SXKM5tNRplgW8TNprMDuntdvV9wNkFs
- 9TyM02V5aWxFfI42+aivc4KEw69SE9KXwC7FSf5wXzuTot97N9Phj/Z3+jx443jo2NR34XgF
- 89cct7wJMjOF7bBefo0fPPZQuIma0Zym71cP61OP/i11ahNye6HGKfxGCOcs5wW9kRQEk8P9
- M/k2wt3mt/fCQnuP/mWutNPt95w9wSsUyATLmtNrwccz63XOwU0EVcufkQEQAOfX3n0g0fZz
- Bgm/S2zF/kxQKCEKP8ID+Vz8sy2GpDvveBq4H2Y34XWsT1zLJdvqPI4af4ZSMxuerWjXbVWb
- T6d4odQIG0fKx4F8NccDqbgHeZRNajXeeJ3R7gAzvWvQNLz4piHrO/B4tf8svmRBL0ZB5P5A
- 2uhdwLU3NZuK22zpNn4is87BPWF8HhY0L5fafgDMOqnf4guJVJPYNPhUFzXUbPqOKOkL8ojk
- CXxkOFHAbjstSK5Ca3fKquY3rdX3DNo+EL7FvAiw1mUtS+5GeYE+RMnDCsVFm/C7kY8c2d0G
- NWkB9pJM5+mnIoFNxy7YBcldYATVeOHoY4LyaUWNnAvFYWp08dHWfZo9WCiJMuTfgtH9tc75
- 7QanMVdPt6fDK8UUXIBLQ2TWr/sQKE9xtFuEmoQGlE1l6bGaDnnMLcYu+Asp3kDT0w4zYGsx
- 5r6XQVRH4+5N6eHZiaeYtFOujp5n+pjBaQK7wUUjDilPQ5QMzIuCL4YjVoylWiBNknvQWBXS
- lQCWmavOT9sttGQXdPCC5ynI+1ymZC1ORZKANLnRAb0NH/UCzcsstw2TAkFnMEbo9Zu9w7Kv
- AxBQXWeXhJI9XQssfrf4Gusdqx8nPEpfOqCtbbwJMATbHyqLt7/oz/5deGuwxgb65pWIzufa
- N7eop7uh+6bezi+rugUI+w6DABEBAAHCwXwEGAEIACYCGwwWIQQb2cqtc1xMOkYN/MpN3hD3
- AP+DWgUCXw7HsgUJEqkpoQAKCRBN3hD3AP+DWrrpD/4qS3dyVRxDcDHIlmguXjC1Q5tZTwNB
- boaBTPHSy/Nksu0eY7x6HfQJ3xajVH32Ms6t1trDQmPx2iP5+7iDsb7OKAb5eOS8h+BEBDeq
- 3ecsQDv0fFJOA9ag5O3LLNk+3x3q7e0uo06XMaY7UHS341ozXUUI7wC7iKfoUTv03iO9El5f
- XpNMx/YrIMduZ2+nd9Di7o5+KIwlb2mAB9sTNHdMrXesX8eBL6T9b+MZJk+mZuPxKNVfEQMQ
- a5SxUEADIPQTPNvBewdeI80yeOCrN+Zzwy/Mrx9EPeu59Y5vSJOx/z6OUImD/GhX7Xvkt3kq
- Er5KTrJz3++B6SH9pum9PuoE/k+nntJkNMmQpR4MCBaV/J9gIOPGodDKnjdng+mXliF3Ptu6
- 3oxc2RCyGzTlxyMwuc2U5Q7KtUNTdDe8T0uE+9b8BLMVQDDfJjqY0VVqSUwImzTDLX9S4g/8
- kC4HRcclk8hpyhY2jKGluZO0awwTIMgVEzmTyBphDg/Gx7dZU1Xf8HFuE+UZ5UDHDTnwgv7E
- th6RC9+WrhDNspZ9fJjKWRbveQgUFCpe1sa77LAw+XFrKmBHXp9ZVIe90RMe2tRL06BGiRZr
- jPrnvUsUUsjRoRNJjKKA/REq+sAnhkNPPZ/NNMjaZ5b8Tovi8C0tmxiCHaQYqj7G2rgnT0kt
- WNyWQQ==
-Organization: Red Hat
-In-Reply-To: <e49e3e78-1fb9-44b8-af11-69f7c39f5820@suse.cz>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: Br1-mwRJmev4zFMInKLy5UsacosqXNXA
+X-Proofpoint-ORIG-GUID: Br1-mwRJmev4zFMInKLy5UsacosqXNXA
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-01-20_02,2025-01-20_02,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 phishscore=0
+ lowpriorityscore=0 mlxscore=0 suspectscore=0 priorityscore=1501
+ malwarescore=0 adultscore=0 mlxlogscore=999 bulkscore=0 spamscore=0
+ clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2501200082
 
-On 20.01.25 10:26, Vlastimil Babka wrote:
-> On 1/16/25 10:19, Fuad Tabba wrote:
->> Hi Ackerley,
->>
->> On Thu, 16 Jan 2025 at 00:35, Ackerley Tng <ackerleytng@google.com> wrote:
->>>
->>> Registration of the folio_put() callback only happens if the VMM
->>> actually tries to do vcpu_run(). For 4K folios I think this is okay
->>> since the 4K folio can be freed via the transition state K -> state I,
->>> but for hugetlb folios that have been split for sharing with userspace,
->>> not getting a folio_put() callback means never putting the hugetlb folio
->>> together. Hence, relying on vcpu_run() to add the folio_put() callback
->>> leaves a way that hugetlb pages can be removed from the system.
->>>
->>> I think we should try and find a path forward that works for both 4K and
->>> hugetlb folios.
->>
->> I agree, this could be an issue, but we could find other ways to
->> trigger the callback for huge folios. The important thing I was trying
->> to get to is how to have the callback and be able to register it.
->>
->>> IIUC page._mapcount and page.page_type works as a union because
->>> page_type is only set for page types that are never mapped to userspace,
->>> like PGTY_slab, PGTY_offline, etc.
->>
->> In the last guest_memfd sync, David Hildenbrand mentioned that that
->> would be a temporary restriction since the two structures would
->> eventually be decoupled, work being done by Matthew Wilcox I believe.
-> 
-> Note the "temporary" might be few years still, it's a long-term project.
+The I2C driver gets an interrupt upon transfer completion.
+When handling multiple messages in a single transfer, this
+results in N interrupts for N messages, leading to significant
+software interrupt latency.
 
-Right, nobody knows how long it will actually take. Willy thinks the 
-part that would be required here might be feasible in the nearer future: 
-"'d like to lay out some goals for the coming year. I think we can 
-accomplish a big goal this year" [1]
+To mitigate this latency, utilize Block Event Interrupt (BEI)
+mechanism. Enabling BEI instructs the hardware to prevent interrupt
+generation and BEI is disabled when an interrupt is necessary.
 
-[1] https://lore.kernel.org/all/Z37pxbkHPbLYnDKn@casper.infradead.org/T/#u
+Large I2C transfer can be divided into chunks of 8 messages internally.
+Interrupts are not expected for the first 7 message completions, only
+the last message triggers an interrupt, indicating the completion of
+8 messages. This BEI mechanism enhances overall transfer efficiency.
+
+This optimization reduces transfer time from 168 ms to 48 ms for a
+series of 200 I2C write messages in a single transfer, with a
+clock frequency support of 100 kHz.
+
+BEI optimizations are currently implemented for I2C write transfers only,
+as there is no use case for multiple I2C read messages in a single transfer
+at this time.
+
+v4 -> v5:
+   -  BEI flag naming changed from flags to bei_flag.  
+   -  QCOM_GPI_BLOCK_EVENT_IRQ macro is removed from qcom-gpi-dma.h
+      file, and Block event support is checked with bei_flag.
+   -  Documentation added for "struct geni_i2c_dev".
+
+v3 -> v4:
+  - API's added for Block event interrupt with multi descriptor support is
+    moved from qcom-gpi-dma.h file to I2C geni qcom driver file.
+  - gpi_multi_xfer_timeout_handler function is moved from GPI driver to
+    I2C driver.
+  - geni_i2c_gpi_multi_desc_xfer structure is added as a member of
+    struct geni_i2c_dev.
+  - Removed the changes of making I2C driver is dependent on GPI driver.
+
+v2 -> v3:
+  - Updated commit description
+  - In I2C GENI driver, for i2c_gpi_cb_result moved the logic of
+    "!is_tx_multi_xfer" to else part.
+  - MIN_NUM_OF_MSGS_MULTI_DESC changed from 4 to 2
+  - Changes of I2C GENI driver to depend on the GPI driver moved
+    to patch3.
+  - Renamed gpi_multi_desc_process to gpi_multi_xfer_timeout_handler
+  - Added description for newly added changes in "qcom-gpi-dma.h" file.
+
+v1 -> v2:
+  - DT changes are reverted for adding dma channel size as a new arg of
+    dma-cells property.
+  - DT binding change reveted for dma channel size as a new arg of
+    dma-cells property.
+  - In GPI driver, reverted the changes to parse the channel TRE size
+    from device tree.
+  - Made the changes in QCOM I2C geni driver to support the BEI
+    functionality with the existing TRE size of 64.
+  - Made changes in QCOM I2C geni driver as per the review comments.
+  - Fixed Kernel test robot reported compiltion issues.
+
+
+Jyothi Kumar Seerapu (2):
+  dmaengine: qcom: gpi: Add GPI Block event interrupt support
+  i2c: i2c-qcom-geni: Add Block event interrupt support
+
+ drivers/dma/qcom/gpi.c             |   3 +
+ drivers/i2c/busses/i2c-qcom-geni.c | 304 ++++++++++++++++++++++++++---
+ include/linux/dma/qcom-gpi-dma.h   |   2 +
+ 3 files changed, 284 insertions(+), 25 deletions(-)
 
 -- 
-Cheers,
-
-David / dhildenb
+base-commit: 55bcd2e0d04c1171d382badef1def1fd04ef66c5
+2.17.1
 
 
