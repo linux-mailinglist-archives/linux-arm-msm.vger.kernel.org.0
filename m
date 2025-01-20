@@ -1,81 +1,81 @@
-Return-Path: <linux-arm-msm+bounces-45624-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-45626-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 971A1A16F9C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Jan 2025 16:48:14 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 21D76A16FA5
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Jan 2025 16:49:06 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2D7FA1884D3B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Jan 2025 15:48:18 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 0888A7A27EC
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Jan 2025 15:48:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 41D7C1EE029;
-	Mon, 20 Jan 2025 15:47:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 88CB61EF0AD;
+	Mon, 20 Jan 2025 15:47:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="sThvMp9F"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="K6z3Kh3K"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FCC71EBA18
-	for <linux-arm-msm@vger.kernel.org>; Mon, 20 Jan 2025 15:47:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E2CC1EC011
+	for <linux-arm-msm@vger.kernel.org>; Mon, 20 Jan 2025 15:47:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737388032; cv=none; b=S4mnx4YmLZtkqM/x8KSMKGU8UsTBOB1GPkxrjxNqrrLldUMN4ZdQ64//PPk+KBd64tdVq2te2uGY3Z2eaEwtlS/nAy2oJRMmPFglgHA+Z6Pa9WfQGZucnf7cxZT2zN/hcu7SAmsIiU4ZGIKLU6OiOx+ifmgrTw/lN7FxNvHm+jA=
+	t=1737388035; cv=none; b=Tv+50vXPCLitM5KyquRhDWNXXWMuOY7zyqsFY76est0kcsVShHk7FaK+Fmi3svh1G7lQ37HhWmsoFgyA3lPB581JuW32e/Ve/9K/pA6RoxXiOniIgE0av8dVWn5lgPdiwb9sv1ucd55nI04gktG1Ek4GEhDcPZHgsEfNlutYD/8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737388032; c=relaxed/simple;
-	bh=Tig4b8DwHn6GPDd8+yeRD5jWv09mdXQjJnOdhHhToro=;
+	s=arc-20240116; t=1737388035; c=relaxed/simple;
+	bh=rN0mUh8xSSzoQH6SIK5f07uULeQhnDD8arxTDYv+hQ4=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=FY5lYQXAqndDgHzUnrpR7WH00btgA+4OBOIRkVE0gWrlNW2mJaiHK3bEfBJKAIp7+ZRe/UmXBFjUnLGGh+QBxqvQPsv4Wmo7bcHb4vAw7nAA6SXAYgQgosTN9u11w7+sW31G4zvsp3ZjeWWhO4u9Evqv+4fgcGcUSrzqGS6Jqpg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=sThvMp9F; arc=none smtp.client-ip=209.85.128.52
+	 In-Reply-To:To:Cc; b=TXTtSQir3HWi4mVkha6RNrBeWc9BD1hAVzcCnLeiPViOU8og5piDp90GGLFH4EFrf29zKRJU3Ziath5zCZ9EzeEIHx5jNFQRIXDVPBJpa7NTrolTiuwV/JE9z88f44l1kEmUYkodERUfRY6ZVfNCYW3UL6jReBV/c4HkzVx4yV4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=K6z3Kh3K; arc=none smtp.client-ip=209.85.128.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-4363dc916ceso35161715e9.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Jan 2025 07:47:09 -0800 (PST)
+Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-436281c8a38so33147565e9.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Jan 2025 07:47:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1737388028; x=1737992828; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1737388029; x=1737992829; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=bfwTMT+W2gawbofsJjieWy7Ovl5Yn41GdLM1z438F58=;
-        b=sThvMp9F+AsADYw5hk4Iah5HKjXyjF8cp1Ht584oGI2SG6qdCX7Mcu7cEWYMjymc++
-         hOD2A2bsp51r5g47u7cVb0iOiWNSy1m/7a3B0LQeGieI4vGWLIwp2ZrCIXdmGoQQhWiz
-         X8TBRmPExk+qDzFqRInA4TTOgJfKMdW0CYaiujDFJ+1w5P2r7eZb9vSkzPIzDm5EYeNJ
-         KxgLGK4dobBRc0JLl+BbrpmpZllf6ozA50dY+bUaOQTjPKhh3AQ+EZzKe7pPpJ9y5wjJ
-         BvQaYE19KOZ0D61Jauq5ofEiutZOuI3gVXEErC7RoX6kgDf6jVs/JAYGX0n+K0rZQ3v8
-         tEcQ==
+        bh=FNkS8iEEupB1QIvi0LaSATcY3VaqLaa0UnXwOKyimeg=;
+        b=K6z3Kh3KHbVH4VZivDhZHhmGM9+RxDMFI38EuadA3uUK7ZOvFL0fkVEcGe8sT/eYm0
+         yVOPoBvPJr5zgjwKRmHUITVJtT5PgbhUf6Lqds5XCZfSKhbPnkm0l9OXWVZS3Bb1l3fK
+         +r7mUfEyqy41E1YBYpykeSCyodHIi6ANLXowWv3mB/MFeOdwiGd75sd7UyX/kQtRxWrz
+         /N5XB66knh7alD9QdSAF0WKyTqRDklSPF4lkJNrX0UsN4+vXqSuABtkAP2SMZexPMtm4
+         GdL+t9brlF0+ejJjqbGZvleIgNCpHytKo5wemayqjDqNJbDFNeMko8A+WKpG01UNvfjC
+         FWjA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1737388028; x=1737992828;
+        d=1e100.net; s=20230601; t=1737388029; x=1737992829;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=bfwTMT+W2gawbofsJjieWy7Ovl5Yn41GdLM1z438F58=;
-        b=rcejpV8YNyotE/eXYDDtt5JuAubeUefRGGQ132vTh3QEb5P9GSe/K2MWnYjDuEMHW6
-         3YYyzRo2i3sVTmkBgK7DaLGRu0rO20VhfELJaCRmrydn5UBqJ7bbb8p/Age8N7aTs8rz
-         +fF1nBuH4WGDyVbXu+9icPEYw8Ap6Qx83RqjMj+sJDUUe+8Mcipdrmm1k6qvo/6zcwKz
-         fshcTXVa2KPLnnyh3eeUT1u1+g3enuPKsnZuW+R2hTvxJYcT4snfoiiUOj8K6zpFv6Se
-         xuNlYEvBpux2QbDk3+76LdsHRddSDH60kfYnyGqxnnFrrrk/poKoQGo7PcrVlrUDwuHa
-         msaQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXa3FmluMQ8Stm1V+WsawQxhfgKGhIFT6kQQDagAjl0Ye2cLME1fQ0pdL0OXiwssXEUKv2e3sT8yM2scTP7@vger.kernel.org
-X-Gm-Message-State: AOJu0YwX3W4k/EXYxQ0qHkZdyIj3NwUEenSvHT5lIsi+HSlVfGEtiNrT
-	Lxl7FarJRxfu7LwVqEWicyl0BtW5HPuXoDg57N2Qk6stTpRzk/WvEdSKRvVZjQI=
-X-Gm-Gg: ASbGncuOXnTZLzedtc9w8pvcvIsW/xYJdZHXQCHekvzAZ+Q9vAdz21iwRl2j4ajivwG
-	457Uw6aFx6vl+dt6zq92+Q4hZjfD9dVvkmHh1Nkqts5tCuxqnGUdnoahHaHT00Y7ZZQajUnrocg
-	FjcniTEBUFkSsh6aCmQRWgJNfMMHV+lxRCRalfpGA7OMW6GimPREn5aSqdk1G7vHuAt7uJwZUnT
-	H3aIlTPZx2bQcWlP+gpx7hAW1GH7GrlclLyVn/yGToAMxOJpKG17xMExBri0SbldF7IuJsq84sc
-	PSc=
-X-Google-Smtp-Source: AGHT+IHDyBPHjisNwezpUfedhSgePvQdtTP6r1TY19GmwNRwlHH0ZhDlrdbKnpZ73HvGRsSpgZdtrQ==
-X-Received: by 2002:a05:600c:4f53:b0:434:fa73:a906 with SMTP id 5b1f17b1804b1-438918c5d0fmr112856545e9.4.1737388028274;
-        Mon, 20 Jan 2025 07:47:08 -0800 (PST)
+        bh=FNkS8iEEupB1QIvi0LaSATcY3VaqLaa0UnXwOKyimeg=;
+        b=IM2x0d6ttKPvzaFtM1PobbD/ZlCJzR2099GIvIQAmd9BbooY7aWrPs1/4b9rbEs7ak
+         wDnhARGzKJGZz5z3lobWUW8WpYepABcPYDAQDzKAko34PPNpiFfmQhq7j/kETrQQkEM/
+         zYqB+5AKx+VBrnDs9iN2YBEwTyclPVZ9+zPYMuA9sHcKNk6LJWSOwueWL+tgmjTeP/qb
+         2b2qgiN75u1pedsITZ3iYVaYwATqAyUNJ1yNX2+67SSSlsY4gYw7bBRL3C9mrrEiwDiz
+         FTcuFMGJHviqBRfrARXxgX03gkWvLrQBSZAkRhoyBWSzc7CSIcIVoAMha4Sk2fzEGhCC
+         xQLw==
+X-Forwarded-Encrypted: i=1; AJvYcCWQLAnYCfxAAkqiHKZUoZCCUiE0+lXFmj9xxD6V00D9PH5j8M3icE3klVVtrdl3NQvLIFWBO3G5OlQdbRDE@vger.kernel.org
+X-Gm-Message-State: AOJu0YyPV3qWFGLl2/WWeSEPql7M+IoZhrAeyf2K4M4u6YcoyIv6K7su
+	aBmqr7gurVw5IsYRq1QKkcSRWsEefboMOxiy9Kbb+PKegy5BWDPIrl139lFHcqM=
+X-Gm-Gg: ASbGncsOAZNuCuxegil2pWThAjGe58xoO20gKZWuTRMAIYZZNsq6MUeVVzvbQVjh/Jx
+	5yDD8AQAljFFWUg4q4Puc5RXHkY1HkaoeXHxQctCwPAQxYfemO7GzlpnF3f8+DTWJCEjN9nxz+q
+	3ZTCqFqCToX8YKWvudSx5zLTe8ML2su7YnKSiwptezVMeHxYTtqixqXyclquLZfZaS+R8QkrWCs
+	xLG7bxDmH3RHsr8YiBSWHwatlcpvDXmCZub2LIjdd59WT/6sMUKADz7WN9Eb30YhZ4r57iCO51+
+	z00=
+X-Google-Smtp-Source: AGHT+IGGhga1fvX6C53DMfp80vMmu5od1cu+K8nITn1gg7G3mvKcbeB3m95dt/kkQETQja2mGLTZkQ==
+X-Received: by 2002:a05:600c:3484:b0:434:f8e5:1bb with SMTP id 5b1f17b1804b1-438913e48fdmr131484835e9.12.1737388029267;
+        Mon, 20 Jan 2025 07:47:09 -0800 (PST)
 Received: from [127.0.1.1] ([176.61.106.227])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38bf3221b70sm10645766f8f.26.2025.01.20.07.47.07
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38bf3221b70sm10645766f8f.26.2025.01.20.07.47.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 20 Jan 2025 07:47:07 -0800 (PST)
+        Mon, 20 Jan 2025 07:47:08 -0800 (PST)
 From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Date: Mon, 20 Jan 2025 15:47:02 +0000
-Subject: [PATCH 5/7] media: qcom: camss: Add support for 3ph CSIPHY write
- settle delay
+Date: Mon, 20 Jan 2025 15:47:03 +0000
+Subject: [PATCH 6/7] media: qcom: camss: csiphy-3ph: Add 4nm CSIPHY 2ph
+ 5Gbps DPHY v2.1.2 init sequence
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -84,7 +84,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250120-linux-next-25-01-19-x1e80100-camss-driver-v1-5-44c62a0edcd2@linaro.org>
+Message-Id: <20250120-linux-next-25-01-19-x1e80100-camss-driver-v1-6-44c62a0edcd2@linaro.org>
 References: <20250120-linux-next-25-01-19-x1e80100-camss-driver-v1-0-44c62a0edcd2@linaro.org>
 In-Reply-To: <20250120-linux-next-25-01-19-x1e80100-camss-driver-v1-0-44c62a0edcd2@linaro.org>
 To: Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>, 
@@ -97,56 +97,168 @@ Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
  Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 X-Mailer: b4 0.15-dev-33ea6
 
-Currently we have an s32 value called delay which has been inherited from
-the CamX code for PHY init. This unused value relates to a post-write delay
-latching time.
+For various SoC skews at 4nm CSIPHY 2.1.2 is used. Add in the init sequence
+with base control reg offset of 0x1000.
 
-In the silicon test-bench which provides the basis for the CamX code the
-write settle times are specified in nanoseconds.
-
-In the upstream kernel we currently take no notice of the delay value and
-use all zero in any case.
-
-Nanosecond granularity timing from the perspective of the kernel is total
-overkill, however for some PHY init sequences introduction of a settle
-delay has a use.
-
-Add support to the 3ph init sequence for microsecond level delay. A
-readback of written data would probably accomplish the same thing but,
-since the PHY init sequences in the wild provide a delay value - we can
-just add support here for that delay and consume the values given.
-
-Generally these delays are probably not necessary but, they do speak to a
-theoretical delay that silicon test-benches utilise and therefore are
-worthwhile to replicate if the given PHY init sequence has the data.
+This initial version will support X1E80100. Take the silicon verification
+PHY init parameters as a first/best guess pass.
 
 Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 ---
- drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ .../platform/qcom/camss/camss-csiphy-3ph-1-0.c     | 126 +++++++++++++++++++++
+ 1 file changed, 126 insertions(+)
 
 diff --git a/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c b/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
-index a6cc957b986e1..b44939686e4bb 100644
+index b44939686e4bb..fc624a3da1c43 100644
 --- a/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
 +++ b/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
-@@ -59,7 +59,7 @@
+@@ -55,6 +55,7 @@
+ #define CSIPHY_DNP_PARAMS		4
+ #define CSIPHY_2PH_REGS			5
+ #define CSIPHY_3PH_REGS			6
++#define CSIPHY_SKEW_CAL			7
+ 
  struct csiphy_lane_regs {
  	s32 reg_addr;
- 	s32 reg_data;
--	s32 delay;
-+	u32 delay_us;
- 	u32 csiphy_param_type;
+@@ -423,6 +424,130 @@ csiphy_lane_regs lane_regs_sm8550[] = {
+ 	{0x0C64, 0x7F, 0x00, CSIPHY_DEFAULT_PARAMS},
  };
  
-@@ -600,6 +600,8 @@ static void csiphy_gen2_config_lanes(struct csiphy_device *csiphy,
++/* 4nm 2PH v 2.1.2 2p5Gbps 4 lane DPHY mode */
++static const struct
++csiphy_lane_regs lane_regs_x1e80100[] = {
++	/* Power up lanes 2ph mode */
++	{0x1014, 0xD5, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x101C, 0x7A, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x1018, 0x01, 0x00, CSIPHY_DEFAULT_PARAMS},
++
++	{0x0094, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x00A0, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x0090, 0x0f, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x0098, 0x08, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x0094, 0x07, 0x01, CSIPHY_DEFAULT_PARAMS},
++	{0x0030, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x0000, 0x8E, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x0038, 0xFE, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x002C, 0x01, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x0034, 0x0F, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x001C, 0x0A, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x0014, 0x60, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x003C, 0xB8, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x0004, 0x0C, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x0020, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x0008, 0x10, 0x00, CSIPHY_SETTLE_CNT_LOWER_BYTE},
++	{0x0010, 0x52, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x0094, 0xD7, 0x00, CSIPHY_SKEW_CAL},
++	{0x005C, 0x00, 0x00, CSIPHY_SKEW_CAL},
++	{0x0060, 0xBD, 0x00, CSIPHY_SKEW_CAL},
++	{0x0064, 0x7F, 0x00, CSIPHY_SKEW_CAL},
++	{0x0064, 0x7F, 0x00, CSIPHY_SKEW_CAL},
++
++	{0x0E94, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x0EA0, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x0E90, 0x0f, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x0E98, 0x08, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x0E94, 0x07, 0x01, CSIPHY_DEFAULT_PARAMS},
++	{0x0E30, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x0E28, 0x04, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x0E00, 0x80, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x0E0C, 0xFF, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x0E38, 0x1F, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x0E2C, 0x01, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x0E34, 0x0F, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x0E1C, 0x0A, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x0E14, 0x60, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x0E3C, 0xB8, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x0E04, 0x0C, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x0E20, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x0E08, 0x10, 0x00, CSIPHY_SETTLE_CNT_LOWER_BYTE},
++	{0x0E10, 0x52, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x0E10, 0x52, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x0E10, 0x52, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x0E10, 0x52, 0x00, CSIPHY_DEFAULT_PARAMS},
++
++	{0x0494, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x04A0, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x0490, 0x0f, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x0498, 0x08, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x0494, 0x07, 0x01, CSIPHY_DEFAULT_PARAMS},
++	{0x0430, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x0400, 0x8E, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x0438, 0xFE, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x042C, 0x01, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x0434, 0x0F, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x041C, 0x0A, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x0414, 0x60, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x043C, 0xB8, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x0404, 0x0C, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x0420, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x0408, 0x10, 0x00, CSIPHY_SETTLE_CNT_LOWER_BYTE},
++	{0x0410, 0x52, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x0494, 0xD7, 0x00, CSIPHY_SKEW_CAL},
++	{0x045C, 0x00, 0x00, CSIPHY_SKEW_CAL},
++	{0x0460, 0xBD, 0x00, CSIPHY_SKEW_CAL},
++	{0x0464, 0x7F, 0x00, CSIPHY_SKEW_CAL},
++	{0x0464, 0x7F, 0x00, CSIPHY_SKEW_CAL},
++
++	{0x0894, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x08A0, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x0890, 0x0f, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x0898, 0x08, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x0894, 0x07, 0x01, CSIPHY_DEFAULT_PARAMS},
++	{0x0830, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x0800, 0x8E, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x0838, 0xFE, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x082C, 0x01, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x0834, 0x0F, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x081C, 0x0A, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x0814, 0x60, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x083C, 0xB8, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x0804, 0x0C, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x0820, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x0808, 0x10, 0x00, CSIPHY_SETTLE_CNT_LOWER_BYTE},
++	{0x0810, 0x52, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x0894, 0xD7, 0x00, CSIPHY_SKEW_CAL},
++	{0x085C, 0x00, 0x00, CSIPHY_SKEW_CAL},
++	{0x0860, 0xBD, 0x00, CSIPHY_SKEW_CAL},
++	{0x0864, 0x7F, 0x00, CSIPHY_SKEW_CAL},
++	{0x0864, 0x7F, 0x00, CSIPHY_SKEW_CAL},
++
++	{0x0C94, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x0CA0, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x0C90, 0x0f, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x0C98, 0x08, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x0C94, 0x07, 0x01, CSIPHY_DEFAULT_PARAMS},
++	{0x0C30, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x0C00, 0x8E, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x0C38, 0xFE, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x0C2C, 0x01, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x0C34, 0x0F, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x0C1C, 0x0A, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x0C14, 0x60, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x0C3C, 0xB8, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x0C04, 0x0C, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x0C20, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x0C08, 0x10, 0x00, CSIPHY_SETTLE_CNT_LOWER_BYTE},
++	{0x0C10, 0x52, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x0C94, 0xD7, 0x00, CSIPHY_SKEW_CAL},
++	{0x0C5C, 0x00, 0x00, CSIPHY_SKEW_CAL},
++	{0x0C60, 0xBD, 0x00, CSIPHY_SKEW_CAL},
++	{0x0C64, 0x7F, 0x00, CSIPHY_SKEW_CAL},
++	{0x0C64, 0x7F, 0x00, CSIPHY_SKEW_CAL},
++};
++
+ static void csiphy_hw_version_read(struct csiphy_device *csiphy,
+ 				   struct device *dev)
+ {
+@@ -594,6 +719,7 @@ static void csiphy_gen2_config_lanes(struct csiphy_device *csiphy,
+ 			val = settle_cnt & 0xff;
  			break;
- 		}
- 		writel_relaxed(val, csiphy->base + r->reg_addr);
-+		if (r->delay_us)
-+			udelay(r->delay_us);
- 	}
- }
- 
+ 		case CSIPHY_DNP_PARAMS:
++		case CSIPHY_SKEW_CAL:
+ 			continue;
+ 		default:
+ 			val = r->reg_data;
 
 -- 
 2.47.1
