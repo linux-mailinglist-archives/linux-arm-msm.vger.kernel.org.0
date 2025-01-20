@@ -1,124 +1,168 @@
-Return-Path: <linux-arm-msm+bounces-45543-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-45544-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A5CCDA166AF
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Jan 2025 07:33:24 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 41C53A166BF
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Jan 2025 07:45:34 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C50E23A7D3A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Jan 2025 06:33:17 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id BBE6E188976D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Jan 2025 06:45:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C8EA8537E9;
-	Mon, 20 Jan 2025 06:33:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 784B515666D;
+	Mon, 20 Jan 2025 06:45:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="lXjridMP"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="KCUaQKgR"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25E45224EA
-	for <linux-arm-msm@vger.kernel.org>; Mon, 20 Jan 2025 06:33:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBE3E3209;
+	Mon, 20 Jan 2025 06:45:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737354801; cv=none; b=STm8/9o1VGECoxHNLek9iAP4tdjFwnOCRajA74/tj1Y+FJzXyISo0xT4Y57ktGS2pdIEBvZ3bKdhfHggH0Xgju6de5+wrw5RIzUzi/1G6QZVtG6DLfyq/OH/4i6Tvw4aJoX5gCaxUils1ID3HEZtivTo6WixxGrcDJP2y0YTXO0=
+	t=1737355529; cv=none; b=eVKFDsN0zcw5gzbf7QPYtChjouFxdq583g8ScGZlFpS1prZMSu0Nj3jzXtKL3HwcFABBR1GwBIgnnvmytZxduL9YSGG8z5Kvp1hKm+bq9Wbd3qrsNrdJiUn6EI3z1XT+cuQvUaobhLm8WtNuUl4NOFN3AjA0KrIwgdFF7D3AyyQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737354801; c=relaxed/simple;
-	bh=lkXkcVBs5Oz7RxmRyrycSBaOllOusJb5t5AmGaecgK4=;
-	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=C4fF+sxfL4An9t6w4YZeK90UXGDNJxuRGqXFdS3PP9OYpuVunFxpFdA8ig5sQrW7Lvl5cEhzBIAJFnnLT1pmtGfNeJKLpvdFgr7SR/hdv2B0u+KGBDLCw/8T//DlW+G3QqL2lUezYkbh7W2+VES0kbCt/hn3ZRdjEgDpKSJsKYs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=lXjridMP; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50K32Gih012464
-	for <linux-arm-msm@vger.kernel.org>; Mon, 20 Jan 2025 06:33:13 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=uVp3XNn+9poXy5mSRevBQr0o
-	dexdzyW+I7EJrxu33e8=; b=lXjridMPaFP7/q5kZOjxgungdaJJwpjreH0azpn9
-	D6HMiS5NOjcoAiMQskdyIOkFJW7tW05cDepN35nCBX/ocMb3wG4jnCyYi86yeVZe
-	wDGxPOEPlzMClA0aWcv0DWP6gfSbZ74CBMiitHBmTMWkPPUMzjWJVAp1C2Vi6iSf
-	nWphNvQV7hBBZl7GQlQJe4iC60npXMClJBvsQ3PQH48MLQ6CUF4BD9tEW+NuvqRy
-	NF6zXEFUE1fgOZpem0N8dZDVkDw2Udp39Mw01IjcewOYe8mcTYoMvAH6VBRNmVR5
-	/Sjm8YaX0BmXeU1CvkT+2AmydWB4ZKrBQYwHRQwtf1fLdg==
-Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com [209.85.216.69])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 449e7j0e50-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 20 Jan 2025 06:33:13 +0000 (GMT)
-Received: by mail-pj1-f69.google.com with SMTP id 98e67ed59e1d1-2ef9204f898so7525559a91.2
-        for <linux-arm-msm@vger.kernel.org>; Sun, 19 Jan 2025 22:33:13 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1737354792; x=1737959592;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=uVp3XNn+9poXy5mSRevBQr0odexdzyW+I7EJrxu33e8=;
-        b=pBV5rDTWdBWT/fuhUPltIvKScjKPc7/A7P+m2QkCkjDf8uggzjdFzFuaeKCd4icCv6
-         TryaAJ8eIwuipQMlOiXXOcy6QfjXGJASBW5x48JowKYWnTehTOUJogwQy74hJ1B1j/LI
-         f3X/b6GQcgsTDdfascEO5y2CuLcn4+vjIRwdUvXAY1BwDF/TOuk+FGCTKEQkVMPnuvyX
-         cjNuLCwnMh5QzOAc8B/B6Q9CqG8ZEuAMQ2Fx+qA6gjTIdGgs5/xZVtIoSX0YL0RAcfJc
-         viiX3nXbxLNnTXtMgfzW/RPvhapep7ZiAKN5UZ3dBEjNN1ODr+SC+d8w+j5cWE/L6fsq
-         z1cg==
-X-Forwarded-Encrypted: i=1; AJvYcCURUM0wvMMOpfX9SjOwTwNS1zj/d6plYSZeUCoQbneE0+OQUcaRVgHeJjyN8Kq/Xht+WtcoPCra0WxqFpLA@vger.kernel.org
-X-Gm-Message-State: AOJu0YyiEq0y3aPoKSlUFK5RdU+8updr7GI56qMy7XBA2tXrPmm+qEGz
-	Zo+Pg4FxQh7JSN9pqeKKmh7kRgou7jzvYydwVs3dQKoenok0VHixe+0i3SfxHnNdRBzq05Wbuh4
-	VdAQC7aApySgJhz71s4DSqSz7kilyJuQPaNVxdfjHk7hByrDckhZwGh3/6HQzXY+T
-X-Gm-Gg: ASbGncu/QEn8SVTpeoIR/OulLjYuqd2XErw8BYjzct7Gp6oyzYDEA5tj+cXgIW+3l/u
-	UatlgALVbow+WnZSoVGkL2mHBRVJQ379i3Tf9PEyNs/7WHDaPUHYtdS2WOh85jjClPVJHfptiO6
-	deZOkLphJYDh2eaSiV6tV6kLknRZ8UpyEEa+1t6R6FUY4idiIzAIYqiNApqHy3Pq6S5X/5a65i3
-	s3gnSi/b+7yM4fsO/+mkVFjvf5zcuPImLax4C1tO7l8aAKNIjbjFCnq8+/C0/Z2y7jOOGO2fCvQ
-	5aU9ziMefwmKUcSgXLYeqg==
-X-Received: by 2002:a05:6a00:2d8a:b0:725:1d37:ebff with SMTP id d2e1a72fcca58-72dafadbcc0mr15486002b3a.22.1737354792618;
-        Sun, 19 Jan 2025 22:33:12 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IE+QbAuKn4OjWr1W2rbrpDJoX3PStAkVif1e/WDg5glmLJWH2Rs5SlcxjvgCPSJjIJxpRqOvg==
-X-Received: by 2002:a05:6a00:2d8a:b0:725:1d37:ebff with SMTP id d2e1a72fcca58-72dafadbcc0mr15485982b3a.22.1737354792187;
-        Sun, 19 Jan 2025 22:33:12 -0800 (PST)
-Received: from hu-mojha-hyd.qualcomm.com ([202.46.23.25])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-72dab9c8d7csm6375779b3a.101.2025.01.19.22.33.10
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 19 Jan 2025 22:33:11 -0800 (PST)
-Date: Mon, 20 Jan 2025 12:03:08 +0530
-From: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
-To: manivannan.sadhasivam@linaro.org, jassisinghbrar@gmail.com,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2] mailbox: qcom-ipcc: Reset CLEAR_ON_RECV_RD if set
- from boot firmware
-Message-ID: <Z43uJHn7Yhm3k3XV@hu-mojha-hyd.qualcomm.com>
-References: <20241230075425.2534765-1-mukesh.ojha@oss.qualcomm.com>
+	s=arc-20240116; t=1737355529; c=relaxed/simple;
+	bh=2RU1m/ff7eJ3TisGzpUJ/KAiJxQrccbAK3esuXgXH2Y=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=oIi6FqFJ+BcGvN0qDrl3pqWvAEylcp8z3TfwpMBGUu3Rjh+5NhutZtpSeI2tCAXFWFtqrzt8s3C2GR+FdORLzX+6M6slc60FVQd8ey17Rn7JSjCyPLpBzXeEG0fx6W3VS4ITboLkeD3scCULMnzbgmgdQ5h1ScQib0f3k1Qf1bA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=KCUaQKgR; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50K6csbK025070;
+	Mon, 20 Jan 2025 06:45:24 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=OskXaOr54kcQrJbfMrOTUT
+	mc7h81FbMISesu7qBNXEM=; b=KCUaQKgRbWnKOIpYTgt5HUJWntL8iJSC7A87jz
+	nKIBmxo1GO1z16T7FIzBaeBabf6TndgUjMmL6bdfBgp3HWiq4m1HSokXknp49f+w
+	6qoxBwH6zmY0hKLcLumyDgh5mQnyaj4I2Q5CE0HlK4JIyyiPDQqh4B8FNaT2qo2F
+	N6zX9dWtu30GNjH4KQOjTLYNPqrbwQXW08R46Exn/q8OyQAOTqcQk2v9758MCAjN
+	YZOPxjLvWHGj+/dEFpM0bqbMOfV0rE9S9Guawzo+jgK1Dh8opr+EAERnBZ3I/SJ7
+	BAkcK+GRTIo1irTf3P/ebCc7LB6XnBsQgkFkUhIct+nQQx6g==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 449hdbg0ja-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 20 Jan 2025 06:45:24 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 50K6jNbs027570
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 20 Jan 2025 06:45:23 GMT
+Received: from hu-mmanikan-blr.qualcomm.com (10.80.80.8) by
+ nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Sun, 19 Jan 2025 22:45:19 -0800
+From: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
+To: <andersson@kernel.org>, <konradybcio@kernel.org>, <robh@kernel.org>,
+        <krzk+dt@kernel.org>, <conor+dt@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+CC: <quic_srichara@quicinc.com>, <quic_varada@quicinc.com>
+Subject: [PATCH] arm64: dts: qcom: ipq5424: enable GPIO based LEDs and Buttons
+Date: Mon, 20 Jan 2025 12:15:08 +0530
+Message-ID: <20250120064508.2722341-1-quic_mmanikan@quicinc.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241230075425.2534765-1-mukesh.ojha@oss.qualcomm.com>
-X-Proofpoint-ORIG-GUID: Sa_UA2Pd_ch8eGs2zmmGQPXTPJawMDU2
-X-Proofpoint-GUID: Sa_UA2Pd_ch8eGs2zmmGQPXTPJawMDU2
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 5tbpHQ1_rUanj5plQnAvgcUSg9esI4-K
+X-Proofpoint-ORIG-GUID: 5tbpHQ1_rUanj5plQnAvgcUSg9esI4-K
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
  definitions=2025-01-20_01,2025-01-16_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 phishscore=0
- priorityscore=1501 impostorscore=0 suspectscore=0 spamscore=0
- malwarescore=0 mlxlogscore=699 mlxscore=0 adultscore=0 lowpriorityscore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2501200053
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ impostorscore=0 malwarescore=0 lowpriorityscore=0 phishscore=0 mlxscore=0
+ bulkscore=0 suspectscore=0 clxscore=1015 adultscore=0 spamscore=0
+ mlxlogscore=833 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2501200054
 
-On Mon, Dec 30, 2024 at 01:24:25PM +0530, Mukesh Ojha wrote:
-> For some SoCs, boot firmware is using the same IPCC instance used
-> by Linux and it has kept CLEAR_ON_RECV_RD set which basically means
-> interrupt pending registers are cleared when RECV_ID is read and the
-> register automatically updates to the next pending interrupt/client
-> status based on priority.
-> 
-> Clear the CLEAR_ON_RECV_RD if it is set from the boot firmware.
-> 
-> Signed-off-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+Add support for wlan-2g LED on GPIO 42 and wps buttons on GPIO 19.
 
-Resurfacing this in case it was missed during the New Year vacation period.
+Signed-off-by: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
+---
+ arch/arm64/boot/dts/qcom/ipq5424-rdp466.dts | 43 +++++++++++++++++++++
+ 1 file changed, 43 insertions(+)
 
--Mukesh
+diff --git a/arch/arm64/boot/dts/qcom/ipq5424-rdp466.dts b/arch/arm64/boot/dts/qcom/ipq5424-rdp466.dts
+index b6e4bb3328b3..3c842aafca4f 100644
+--- a/arch/arm64/boot/dts/qcom/ipq5424-rdp466.dts
++++ b/arch/arm64/boot/dts/qcom/ipq5424-rdp466.dts
+@@ -7,6 +7,8 @@
+ 
+ /dts-v1/;
+ 
++#include <dt-bindings/input/input.h>
++#include <dt-bindings/leds/common.h>
+ #include "ipq5424.dtsi"
+ 
+ / {
+@@ -17,6 +19,33 @@ aliases {
+ 		serial0 = &uart1;
+ 	};
+ 
++	gpio-keys {
++		compatible = "gpio-keys";
++		pinctrl-0 = <&gpio_keys_default>;
++		pinctrl-names = "default";
++
++		button-wps {
++			label = "wps";
++			linux,code = <KEY_WPS_BUTTON>;
++			gpios = <&tlmm 19 GPIO_ACTIVE_LOW>;
++			debounce-interval = <60>;
++		};
++	};
++
++	leds {
++		compatible = "gpio-leds";
++		pinctrl-0 = <&gpio_leds_default>;
++		pinctrl-names = "default";
++
++		led-0 {
++			color = <LED_COLOR_ID_GREEN>;
++			function = LED_FUNCTION_WLAN;
++			gpios = <&tlmm 42 GPIO_ACTIVE_HIGH>;
++			linux,default-trigger = "phy0tx";
++			default-state = "off";
++		};
++	};
++
+ 	vreg_misc_3p3: regulator-usb-3p3 {
+ 		compatible = "regulator-fixed";
+ 		regulator-min-microvolt = <3300000>;
+@@ -95,6 +124,20 @@ &ssphy_0 {
+ };
+ 
+ &tlmm {
++	gpio_keys_default: gpio-keys-default-state {
++		pins = "gpio19";
++		function = "gpio";
++		drive-strength = <8>;
++		bias-pull-up;
++	};
++
++	gpio_leds_default: gpio-leds-default-state {
++		pins = "gpio42";
++		function = "gpio";
++		drive-strength = <8>;
++		bias-pull-down;
++	};
++
+ 	spi0_default_state: spi0-default-state {
+ 		clk-pins {
+ 			pins = "gpio6";
+-- 
+2.34.1
+
 
