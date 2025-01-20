@@ -1,63 +1,95 @@
-Return-Path: <linux-arm-msm+bounces-45576-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-45577-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4B23AA16B30
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Jan 2025 12:05:26 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 79B4AA16B4E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Jan 2025 12:13:05 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 015A11885674
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Jan 2025 11:05:30 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B073A3A94D8
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Jan 2025 11:12:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 920CD1BC066;
-	Mon, 20 Jan 2025 11:05:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C24461CCEDB;
+	Mon, 20 Jan 2025 11:12:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="RZWc1hai"
+	dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b="I6dJkrnI";
+	dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b="nNliDUoe";
+	dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b="GYujxr/L";
+	dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b="S+I+aq/Z"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6D1533981;
-	Mon, 20 Jan 2025 11:05:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFD1D33981;
+	Mon, 20 Jan 2025 11:12:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737371121; cv=none; b=jy/gsaQW8XwkGSCx2COL/qE/FHJDnyUdi/4DdK09UAIECom8OOnGyIj3yXzhrUqBHkohu9WlsshUKnPmdRMow4td4P5b0Rh8VSkj3J9NlCOP5VQSDgWh6YfApAR+Os0td3632ec32BMd/Cdq6uO8djAxjekNKuQ6p2VTxgAfMFc=
+	t=1737371579; cv=none; b=AApdy4geFo72ipaEXRsQBBqtEWYg9lcRirfkggrMlvYOKCLpYSC6ToTqOoJObMCc8p52/FeF7vdqb38blh2WfALjsGd4Ygn5zFFCmW65SbLCY1Nm5IeZQ4nKEB/RXwEwH5HWw+83FjKTATZZH9pe7bavcbkblJxEiB8QJW+r1Mc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737371121; c=relaxed/simple;
-	bh=vjIjQ5qumXaC5V/OLUgg8GC0PYyG7dv07vfpzYg5EdA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=WlVyVCN9gJv0slUHSgz1wnrumplJ25TSxtMf0QNvl7IWKP5FzENXpcggCq+MFTbkWWAzWyb2iQknwc1yLjc5XiXOlG3ERHyPIMHiuRA3nIaWd8Y6rCJWBF7ckWW4C7DuoO4FjqSW2SJLRzRNa0MlO5XPC5Lpbbtmz7NGQLQ4eq8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=RZWc1hai; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50KAB3OR021554;
-	Mon, 20 Jan 2025 11:05:09 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	IJHNqYMWw4G3jyIRWFyd7ysmaSfI/0yW59LUGHBiP/U=; b=RZWc1haiVtTdBk+O
-	adrF858NIewy4HX2uZSpYoDzteqaTTmqjCAHIi/YtXfEsHh9RXPRnMkzdFCKQvZQ
-	McX3+QD9v9LqTVX0mT9sKBWsr8FEVvIuO+3bk7OBkMuXY6D7ZPgeYKVYS2a1ZZr6
-	YwX2MEwxFVmhbIGLHDV+1KmH09wCbWxNgurZjj9o/Wtybn59lYDXIpAuXyKFcWpR
-	EBnjhkdWkirSb9eN/FY60lBup9xgUZ2pSw2sujPl2Fb5Npoj/4RwArZBeHRUbwz3
-	v7gW+yJPf/KaFiZvlOSryrjHHHWnOMvXjdpL4yaMCXdeUNRzXzXV/7bkXOLtiuFg
-	KIJI3Q==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 449mgpg46e-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 20 Jan 2025 11:05:09 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 50KB58UB017257
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 20 Jan 2025 11:05:08 GMT
-Received: from [10.217.217.81] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 20 Jan
- 2025 03:05:03 -0800
-Message-ID: <2e4a4305-526b-4faa-9e56-3f2f11bc7365@quicinc.com>
-Date: Mon, 20 Jan 2025 16:35:00 +0530
+	s=arc-20240116; t=1737371579; c=relaxed/simple;
+	bh=lD0Ig86RLIsTFZ2EPZ22jqi0abPMHnRVQIC686Ry15E=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=mDeH9jkpZIBSX8RB0ba1vOxS5+e/A4PeiXIMf0Tc1rf/g/Xracy1W+NCp+KKq9CRiqKXoShpTSqyFJJQvlwxLeXyZtuhS6RA3OYPWBnyvBcetn4SUWF/hH/PgVXwVvYaRbqPzcb/HKY07uboY6AfsSRWouqVhf7WMiZ1JGnMW+Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=suse.cz; spf=pass smtp.mailfrom=suse.cz; dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b=I6dJkrnI; dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b=nNliDUoe; dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b=GYujxr/L; dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b=S+I+aq/Z; arc=none smtp.client-ip=195.135.223.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=suse.cz
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.cz
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-out2.suse.de (Postfix) with ESMTPS id EF2601F7AF;
+	Mon, 20 Jan 2025 11:12:54 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
+	t=1737371576; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=hmzfmHG5SrRsILfNfCu81mvIDnWwpjgL/LFdN4utbVQ=;
+	b=I6dJkrnIArK+IGlbDKzz5+swVIZzb4RlQUAKkMFZEplBAe96RxvqGnTnA9aMiYiwfrq0y6
+	cHTkbKdQqEW2hiTKnZpzvJt4IYlfjcjUaQTaalNagR5Pu4O5dow9gxRcB6DGycVXcZViKz
+	FlGs3kNsL/+4Xu6VyYsAVr+UHCLnWfU=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
+	s=susede2_ed25519; t=1737371576;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=hmzfmHG5SrRsILfNfCu81mvIDnWwpjgL/LFdN4utbVQ=;
+	b=nNliDUoe68ewU2ExiDkcD3FunOiYgQR9Lms1ASQU2YIUHoRGkufFDMhWm2Wttk627Wf063
+	nuJYeYgPEqbt5NDg==
+Authentication-Results: smtp-out2.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
+	t=1737371574; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=hmzfmHG5SrRsILfNfCu81mvIDnWwpjgL/LFdN4utbVQ=;
+	b=GYujxr/LSS3X1G2UjIBfk2LLZQNm/2TMW+uuEkIPk3hLydgZJzjuoat/EsGz4AWf45jDPD
+	hrpsqsAeJPAV+qCg5o5HyECUDQFCO5L3+p+VVADx1XoPrxBh0OIdiARRt6whfMoOIAFHKn
+	e/ceo0PoIjUAlT4lEx8yqSRmuQcu7is=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
+	s=susede2_ed25519; t=1737371574;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=hmzfmHG5SrRsILfNfCu81mvIDnWwpjgL/LFdN4utbVQ=;
+	b=S+I+aq/Zw3y/7crVCgXF6EuFnuXPB2siprFokc2/N2ZjaGJRKrLIcCAsLBEtkWLsjUQtnQ
+	oqkWzdVm5s4dcTDQ==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 7A18B1393E;
+	Mon, 20 Jan 2025 11:12:54 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+	by imap1.dmz-prg2.suse.org with ESMTPSA
+	id 4z1XG7Yvjmd+YAAAD6G6ig
+	(envelope-from <vbabka@suse.cz>); Mon, 20 Jan 2025 11:12:54 +0000
+Message-ID: <7e7d0b56-8d75-4f7a-83df-3f1177548da3@suse.cz>
+Date: Mon, 20 Jan 2025 12:12:54 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,85 +97,144 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 04/10] dt-bindings: clock: Add Qualcomm QCS615 Display
- clock controller
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC: "Rob Herring (Arm)" <robh@kernel.org>, Will Deacon <will@kernel.org>,
-        "Ajit Pandey" <quic_ajipan@quicinc.com>,
-        <linux-arm-kernel@lists.infradead.org>,
-        Catalin Marinas
-	<catalin.marinas@arm.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Michael Turquette
-	<mturquette@baylibre.com>,
-        Jagadeesh Kona <quic_jkona@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>, <linux-clk@vger.kernel.org>,
-        <devicetree@vger.kernel.org>,
-        "Krzysztof Kozlowski" <krzk+dt@kernel.org>,
-        Imran Shaik <quic_imrashai@quicinc.com>,
-        Bjorn Andersson
-	<andersson@kernel.org>
-References: <20250119-qcs615-mm-v4-clockcontroller-v4-0-5d1bdb5a140c@quicinc.com>
- <20250119-qcs615-mm-v4-clockcontroller-v4-4-5d1bdb5a140c@quicinc.com>
- <173728731976.808036.168078560019330137.robh@kernel.org>
- <a646b3af-9957-4720-893e-9013b2dca43a@quicinc.com>
- <czxiikfvffnfljngec6gdwoapx2khtvltauzhezexkxxitclfn@7pfnj7jtyfil>
+Subject: Re: [RFC PATCH v5 01/15] mm: Consolidate freeing of typed folios on
+ final folio_put()
+From: Vlastimil Babka <vbabka@suse.cz>
+To: David Hildenbrand <david@redhat.com>, Fuad Tabba <tabba@google.com>,
+ kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org
+Cc: pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au,
+ anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com,
+ aou@eecs.berkeley.edu, seanjc@google.com, viro@zeniv.linux.org.uk,
+ brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org,
+ xiaoyao.li@intel.com, yilun.xu@intel.com, chao.p.peng@linux.intel.com,
+ jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com,
+ yu.c.zhang@linux.intel.com, isaku.yamahata@intel.com, mic@digikod.net,
+ vannapurve@google.com, ackerleytng@google.com, mail@maciej.szmigiero.name,
+ michael.roth@amd.com, wei.w.wang@intel.com, liam.merwick@oracle.com,
+ isaku.yamahata@gmail.com, kirill.shutemov@linux.intel.com,
+ suzuki.poulose@arm.com, steven.price@arm.com, quic_eberman@quicinc.com,
+ quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com,
+ quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com,
+ quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com,
+ james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev,
+ maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com,
+ roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com,
+ rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com,
+ jthoughton@google.com
+References: <20250117163001.2326672-1-tabba@google.com>
+ <20250117163001.2326672-2-tabba@google.com>
+ <0f588655-62c0-46c3-bd15-01016615953f@redhat.com>
+ <176781cc-75b8-449b-bd56-06d1c25e2276@suse.cz>
 Content-Language: en-US
-From: Taniya Das <quic_tdas@quicinc.com>
-In-Reply-To: <czxiikfvffnfljngec6gdwoapx2khtvltauzhezexkxxitclfn@7pfnj7jtyfil>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+Autocrypt: addr=vbabka@suse.cz; keydata=
+ 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
+ EP+ylKVEKb0Q2A==
+In-Reply-To: <176781cc-75b8-449b-bd56-06d1c25e2276@suse.cz>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: dOpV_QNsSYTcD6SkUJnP5egmlknj2ULT
-X-Proofpoint-GUID: dOpV_QNsSYTcD6SkUJnP5egmlknj2ULT
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-01-20_02,2025-01-20_03,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0
- impostorscore=0 phishscore=0 priorityscore=1501 mlxlogscore=878
- lowpriorityscore=0 spamscore=0 bulkscore=0 adultscore=0 clxscore=1015
- mlxscore=0 suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2501200092
+X-Spam-Score: -2.80
+X-Spamd-Result: default: False [-2.80 / 50.00];
+	BAYES_HAM(-3.00)[100.00%];
+	SUSPICIOUS_RECIPS(1.50)[];
+	NEURAL_HAM_LONG(-1.00)[-1.000];
+	NEURAL_HAM_SHORT(-0.20)[-1.000];
+	MIME_GOOD(-0.10)[text/plain];
+	TAGGED_RCPT(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	ARC_NA(0.00)[];
+	MID_RHS_MATCH_FROM(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	RCVD_TLS_ALL(0.00)[];
+	DKIM_SIGNED(0.00)[suse.cz:s=susede2_rsa,suse.cz:s=susede2_ed25519];
+	FUZZY_BLOCKED(0.00)[rspamd.com];
+	FROM_HAS_DN(0.00)[];
+	FREEMAIL_CC(0.00)[redhat.com,kernel.org,ellerman.id.au,brainfault.org,sifive.com,dabbelt.com,eecs.berkeley.edu,google.com,zeniv.linux.org.uk,infradead.org,linux-foundation.org,intel.com,linux.intel.com,digikod.net,maciej.szmigiero.name,amd.com,oracle.com,gmail.com,arm.com,quicinc.com,huawei.com,linux.dev,amazon.co.uk,nvidia.com];
+	TO_DN_SOME(0.00)[];
+	FROM_EQ_ENVFROM(0.00)[];
+	RCVD_COUNT_TWO(0.00)[2];
+	TO_MATCH_ENVRCPT_SOME(0.00)[];
+	RCPT_COUNT_GT_50(0.00)[60];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo]
+X-Spam-Flag: NO
+X-Spam-Level: 
 
-
-
-On 1/20/2025 2:22 PM, Dmitry Baryshkov wrote:
-> On Mon, Jan 20, 2025 at 10:10:11AM +0530, Taniya Das wrote:
->>
->>
->> On 1/19/2025 5:23 PM, Rob Herring (Arm) wrote:
->>> y bot found errors running 'make dt_binding_check' on your patch:
->>>
->>> yamllint warnings/errors:
->>>
->>> dtschema/dtc warnings/errors:
->>> Documentation/devicetree/bindings/clock/qcom,qcs615-dispcc.example.dts:19:18: fatal error: dt-bindings/clock/qcom,qcs615-gcc.h: No such file or directory
->>>      19 |         #include <dt-bindings/clock/qcom,qcs615-gcc.h>
->>>         |                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
->>> compilation terminated.
->>> make[2]: *** [scripts/Makefile.dtbs:131: Documentation/devicetree/bindings/clock/qcom,qcs615-dispcc.example.dtb] Error 1
->>> make[2]: *** Waiting for unfinished jobs....
->>> make[1]: *** [/builds/robherring/dt-review-ci/linux/Makefile:1506: dt_binding_check] Error 2
->>> make: *** [Makefile:251: __sub-make] Error 2
->>
->> The code https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/tree/include/dt-bindings/clock/qcom,qcs615-gcc.h
->>
->> The cover letter also has the series mentioned.
+On 1/20/25 11:43, Vlastimil Babka wrote:
+> On 1/20/25 11:39, David Hildenbrand wrote:
+>> On 17.01.25 17:29, Fuad Tabba wrote:
+>>> diff --git a/mm/swap.c b/mm/swap.c
+>>> index 10decd9dffa1..6f01b56bce13 100644
+>>> --- a/mm/swap.c
+>>> +++ b/mm/swap.c
+>>> @@ -94,6 +94,20 @@ static void page_cache_release(struct folio *folio)
+>>>   		unlock_page_lruvec_irqrestore(lruvec, flags);
+>>>   }
+>>>   
+>>> +static void free_typed_folio(struct folio *folio)
+>>> +{
+>>> +	switch (folio_get_type(folio)) {
+>>> +	case PGTY_hugetlb:
+>>> +		free_huge_folio(folio);
+>>> +		return;
+>>> +	case PGTY_offline:
+>>> +		/* Nothing to do, it's offline. */
+>>> +		return;
+>> 
+>> Please drop the PGTY_offline part for now, it was rather to highlight 
+>> what could be done.
+>> 
+>> But the real goal will be to not make offline pages
+>> use the refcount at all (frozen).
+>> 
+>> If we really want the temporary PGTY_offline change, it should be 
+>> introduced separately.
+>> 
+>> Apart from that LGTM!
 > 
-> Please. Stop using bindings for clock controllers in DT bindings for
-> other devices. It provides no benefits and complicates merging.
-> 
+> I gues you mean the WARN_ON_ONCE(1) should be dropped from the default:
+> handler as well, right? IIUC offline pages are not not yet frozen so there
+> will be warnings otherwise. And I haven't check if the other types are
+> frozen (I know slab is, very recently :)
 
-Sure, I agree we should not refer the bindings, but I hope this is 
-agreed upon and I could remove such references in upcoming bindings.
+Oh and also free_typed_folio() would have to become bool and if it returns
+false, the normal freeing proceeds?
 
--- 
-Thanks & Regards,
-Taniya Das.
+
+
 
 
