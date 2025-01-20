@@ -1,480 +1,242 @@
-Return-Path: <linux-arm-msm+bounces-45625-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-45627-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 14577A16FA3
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Jan 2025 16:48:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 61CB2A170A1
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Jan 2025 17:47:30 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 24FBB3A488A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Jan 2025 15:48:43 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6FFB83A06B6
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Jan 2025 16:47:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C6FD81EF096;
-	Mon, 20 Jan 2025 15:47:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DD8521E9B2F;
+	Mon, 20 Jan 2025 16:47:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="RnkbOXwP"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eDloANTR"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
+Received: from mail-pl1-f170.google.com (mail-pl1-f170.google.com [209.85.214.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21C461EE013
-	for <linux-arm-msm@vger.kernel.org>; Mon, 20 Jan 2025 15:47:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 374D31B87DB;
+	Mon, 20 Jan 2025 16:47:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737388034; cv=none; b=esH+chhOsbkoQeL2s/wjn7HaXsLZzFwmTjPTN9/0tw0RcEtRgAbTq3BQHmLhK/UVra8JfbEZ2WlcHkuxXgkVNYGJH2I8zR0Uhx+0FzlYPsUu66BKssvJjMcadiQoGtbH3IQcYab5vKLYsDc6uHKOfAnhvCHj+m0PRxKmjpAXls4=
+	t=1737391644; cv=none; b=KgxBE9apB9c0Gz54I5y4xbQelYgFoJYM0FIcArFeI7dbGGhRfaA/QCPSSxm0RFNbHJygYFeoGPQ+nK7/MVmpGhC9dF9V8tLHYWZNPrhaWIhiNPt3dmHCZgNt+v70VGoFkhLl8R+rD1ed8lyCNDnKtVHdqnfzr9gDqpDCtlnPlUs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737388034; c=relaxed/simple;
-	bh=w3R74BaBkfWv6/gs5HkZ+GN7B/D/n3Ira0ZO8St8Ttw=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=kvOH19y5UZPGdD/7UIl7RFpoVb613axjAd9XaQ0zfxglB+OHP+G3BMt1xnzCAnr/M3my2fNpkcQMYF7mTPwVpDKjJbQWk2TFQC4mI7oruo1IvPf7mNhg9hKQhpPiqmO9n8ZZnJVkSVbZrKdzLSOM5OCmTF1VnQyiI77nQnD2qVs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=RnkbOXwP; arc=none smtp.client-ip=209.85.221.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-3862f32a33eso2103659f8f.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Jan 2025 07:47:11 -0800 (PST)
+	s=arc-20240116; t=1737391644; c=relaxed/simple;
+	bh=/BRqQQRQVKG6vw0CPMQDoo5DHvOmcsihcx8/9lseyYE=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=rnA+KbQajMpFSLZn6hw7cApb4y6BLCahTKU16CIgNFp0vsZFEQ0PLlmipkZZeLelSl1TS2Buvs2fuK5v7aPQh8pV0DRUOihezHxSJ8mYcEEB3qPs0KL2c6c/6OGTcVxMNeGsw+DK4htDH9Zn0AHLq02s/+uQey68hcQPQMXDIkE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eDloANTR; arc=none smtp.client-ip=209.85.214.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pl1-f170.google.com with SMTP id d9443c01a7336-2164b662090so84328395ad.1;
+        Mon, 20 Jan 2025 08:47:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1737388030; x=1737992830; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=dlbfgbMP4TlW1lPU13Kg+FtoOjGMZvKdb8QxriksIXE=;
-        b=RnkbOXwP/zNbMEoIvEjinOhPQZzg4XxTXoWWT3QCfVAr+7R/ABZYF8hPOpyjWCHHJD
-         4cTS8jQukrCdxyInJJC8jvz37oDp2JEEmmstw2Dd4kn4D8CX/Y7d9fai3Cm4Vpxw+pUF
-         IHwHqEs6bTCPIR510jwbX0qclacxXw9cOKNWETimWB/3UORxG+iyOkjUTzP9DNOk3bNd
-         ekEPemyKk7mH5YUqOq2NVNoCHvP7uZO08iFbTSK6utqIO9VNDcfNVBN0nWRQjw+hqCtb
-         tpapTahgC15zZ1TKoYUJ4MZOz7l7IueBpHrLgMuJs62yRPh+blXQzPE3lAwxbb6bP/mv
-         ehqA==
+        d=gmail.com; s=20230601; t=1737391642; x=1737996442; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=r/xe7VYeW/MlUkO2Ilz+rV7mCFB6lDVm5giwjRxBd3w=;
+        b=eDloANTRiFYSBqQbRhkEdbz05T/NiUc7qlvDxStOdJVCvWx1lRy2LIGNwWBzntNB7S
+         fBsmGs5l6CZPueCFfoMFdOe28IO4OA7Mc9euPByjXozHUOtpxmNCuhekMDX7HO2IWEWS
+         KTWb9ilLE9GES59+Y2gCiYt7ufyFBjCktppx7bD6hePVdkv1KIVNa2lzNS4i7W511AlT
+         AQnIy9lKoAXowirNWuT9d6oPVNi/PDlNztVDr5rSwRgzh0T9gQbRHFI0qFRzcxEU01Qi
+         U1LtGpye5KqMGLjuvNnxXNGnOXQ82V01odSATbwK+XeYRsKTcEy5SOuYhzKUPHZXWYNs
+         /nuw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1737388030; x=1737992830;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=dlbfgbMP4TlW1lPU13Kg+FtoOjGMZvKdb8QxriksIXE=;
-        b=qnvNJ5cDUm+Lv1tuChhSMiHeFTqlrA8jzInkCaD0nAV7q4W+5IIqnmvFsUDAqHsObc
-         7mQf8PX647NUAaCyfpL8vweEWNKkiZXayB3/3nxBUQN91hlYBIdCuUMlsm3mlQjmHPdM
-         xcHnQbtT/lgs3WGZnykYALa/XBHHiR7+EpYJqFUK7lueKrcPPxYKfeSww3ZN1rROg4RW
-         c2xKCR1JfNu44FqZanDD06Mr58Z5rZ15enDmmvxcDhhPyg08iaSyaXRKvcyhl8piSzRj
-         /36HrGxCYe6HlRDgUVIQEdtKp44NOrf3ZO96mh7c0lCpTFz1PGw3Ix7kNi3N8RziTRos
-         0IqA==
-X-Forwarded-Encrypted: i=1; AJvYcCUm2+pCL8Pg8WBqpw7FLLOK5GiR6gfgbfsWRPK6gGV0HswR39ninHES21mni0f8LfVAy+3MYr0A1XP11n5w@vger.kernel.org
-X-Gm-Message-State: AOJu0YwYTQ2mZM8I5HOPi0tvg5FOj1op1p63DNSYLxECRWmmTx6ikhdJ
-	DtJvNU1GmsYRpAx6FyUZjr3kJevNAex2iw+kEDKieyo0HDUFVr18jiHwJHgEyho=
-X-Gm-Gg: ASbGncuZnv459Gb5z9tgc+eK8qRkoc5bslZhVEZjTDTeruBC6UwSqvrf+lQKReKamie
-	9V7qd97nDkf3vvev8AILkY0vXGTYFAV1ytK7yx7Jwig1IZm7ttVltZHsjt4Ewbh2gN1UD5mfwq4
-	efv8d9Jtt+NoUyn1MLX1Cf6qRDl9fFtAxthTuZLl3D8ITQsZLwbmgWt/i7D8H2O/7bzOueRH3zD
-	LpXh3FuI1kTRVYAn+jiO+FaVDIBzGBw/pJ2Lp8ToOiB8KGIvDxbeXp9lvHI91GUKTGQ3YvGtqtP
-	mIc=
-X-Google-Smtp-Source: AGHT+IEjAuygC/EX+XK7ApY/+FyQ99t76VxiNzEuMeI4fS4vGaTa6OLrfRDJfPl/9iSs7F/F5z9JGQ==
-X-Received: by 2002:a5d:47cf:0:b0:38c:1270:f964 with SMTP id ffacd0b85a97d-38c1270fbaamr1640338f8f.47.1737388030397;
-        Mon, 20 Jan 2025 07:47:10 -0800 (PST)
-Received: from [127.0.1.1] ([176.61.106.227])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38bf3221b70sm10645766f8f.26.2025.01.20.07.47.09
+        d=1e100.net; s=20230601; t=1737391642; x=1737996442;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=r/xe7VYeW/MlUkO2Ilz+rV7mCFB6lDVm5giwjRxBd3w=;
+        b=jvTbhsWVty9nkuXyXFXOYo50mVSbR6Lv2AC7YBQNPeG/xjD27UYeHQdy2XqXPlfy2v
+         n7rEQgZ6GDEy5qKAonIXMyFwsw88fSFT/zZRK1vstnlFLWAtkubt73RIU2un++5MA8BS
+         BBQ087FrRp6DydsDQcOP8HKT08Z6Osix8OWIoQO1HnJZqB93lPAjWawxyToLu2x21Jll
+         TE6nFSUH1W1JYma/7h2WtctbhHzAwbwm8fHzyuW5Z2hKoE9G/G8HioobDgCjqWLNMf7Q
+         nnfVIgtzFTe4rMwlWvOp1AVLiDJOtv9OZmFyBDmYSZ7jj8hdyekOt2z45QbpqtZKHxIk
+         e02w==
+X-Forwarded-Encrypted: i=1; AJvYcCUhax+sB6A6p6ltcUTLrB82i/hbRxNO6t0RbLoBaJuOAmo5UCSw+J63lL5bu8MaIGiQRTGp2HGrEM/2slNWt0LzyisT5Q==@vger.kernel.org, AJvYcCUxvQjVOkTnCutcj+ZRSnjNpcmoZ3LIivWFyhkDp9ADlP3ogQDb0/YXbeGeg5oVYFV/HgKy4/Ld/SjDiYs=@vger.kernel.org, AJvYcCVrZyYWWLUqx0oL4XQfUZUE5GdXxj/IFf9uCn/vXqDFJEIXSBFjE1n93Cc505nXB1JrH/B0u+Wo2mxZa1xh@vger.kernel.org, AJvYcCXT5lg6Pv5+sHYEXNEsXISSOCpJEzTTwcjD/igI8VJfhqKkF2zz+/deKp7P3+Sls2O9G4IkvgzmchTjjsv4@vger.kernel.org
+X-Gm-Message-State: AOJu0YxUubhb3+EZocp3Uy6sResM/7Xl14WbF4zjY1fAEYPO3qa8dN5q
+	8fvrrmRYJdehhDSSx845DsPogVP05yjEResmQHaWfCMcnqqsBllH
+X-Gm-Gg: ASbGncvxpWozEUFraDll/wMo5ipHNGXWDt+StdC0Qwq6ghp/9nqddMfDe/lL0r//8//
+	vsueSDCGUE0O+H7pgKoFC+sYCBkRjeKhjdE6s6VzBueSxdTNNzD26y1mF6/Caa1RUWpAhvcxWSy
+	r6lYzeXmAB2U6Lnp/rVLQCrcJjXKBUAw3gPh7XXjeqVkll7c7jD/JjXrngLdCj29csB9ZbwvaPc
+	U2R4yuUYMNBmzBwx8Nmsphp/t44sTGBM07xir2U58l3iUKgzZ24QiRrIE4NdOPGBVQ7VTc=
+X-Google-Smtp-Source: AGHT+IFDWawL2sk9cWU6NwA9ckJBDcTLFpiPCr7KNj5da17y7tOkvdi2a1rHKe4eMVASRy5sq8K7MQ==
+X-Received: by 2002:a05:6a20:9149:b0:1e5:ddac:1ed7 with SMTP id adf61e73a8af0-1eb2147ea8dmr20536491637.12.1737391642402;
+        Mon, 20 Jan 2025 08:47:22 -0800 (PST)
+Received: from SC8280XP.. ([144.202.86.13])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-a9bcaa3a97dsm6017266a12.9.2025.01.20.08.47.15
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 20 Jan 2025 07:47:10 -0800 (PST)
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Date: Mon, 20 Jan 2025 15:47:04 +0000
-Subject: [PATCH 7/7] media: qcom: camss: Add x1e80100 specific support
+        Mon, 20 Jan 2025 08:47:21 -0800 (PST)
+From: Pengyu Luo <mitltlatltl@gmail.com>
+To: Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Hans de Goede <hdegoede@redhat.com>,
+	=?UTF-8?q?Ilpo=20J=C3=83=C2=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+	Jean Delvare <jdelvare@suse.com>,
+	Guenter Roeck <linux@roeck-us.net>
+Cc: devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	platform-driver-x86@vger.kernel.org,
+	linux-hwmon@vger.kernel.org,
+	Pengyu Luo <mitltlatltl@gmail.com>
+Subject: [PATCH RESEND v5 0/3] platform: arm64: Huawei Matebook E Go embedded controller
+Date: Tue, 21 Jan 2025 00:46:58 +0800
+Message-ID: <20250120164701.7918-1-mitltlatltl@gmail.com>
+X-Mailer: git-send-email 2.47.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250120-linux-next-25-01-19-x1e80100-camss-driver-v1-7-44c62a0edcd2@linaro.org>
-References: <20250120-linux-next-25-01-19-x1e80100-camss-driver-v1-0-44c62a0edcd2@linaro.org>
-In-Reply-To: <20250120-linux-next-25-01-19-x1e80100-camss-driver-v1-0-44c62a0edcd2@linaro.org>
-To: Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>, 
- Mauro Carvalho Chehab <mchehab@kernel.org>
-Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
- linux-kernel@vger.kernel.org, 
- Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>, 
- Depeng Shao <quic_depengs@quicinc.com>, 
- Vikram Sharma <quic_vikramsa@quicinc.com>, 
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-X-Mailer: b4 0.15-dev-33ea6
+Content-Transfer-Encoding: 8bit
 
-Populate CAMSS with x1e80100 specific hooks.
+This adds binding, drivers and the DT support for the Huawei Matebook E Go
+(sc8280xp-based) Embedded Controller which is also found in Huawei Matebook
+E Go LTE (sc8180x-based), but I don't have the sc8180x one to perform
+tests, so this series enable support for sc8280xp variant only, this series
+provides the following features:
 
-Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+- battery and charger information report
+- charging thresholds control
+- FN lock (An alternative method)
+- LID switch detection
+- Temperature sensors
+- USB Type-C altmode
+- USB Type-C PD(high power)
+
+Thanks to the work of Bjorn and Dmitry([1]), the work of Nikita([2]),
+writing a EC driver won't be suffering. This work refers a lot to their
+work, also, many other works. I mentioned them in commit messages.
+
+Depends: https://lore.kernel.org/linux-arm-msm/20241220160530.444864-1-mitltlatltl@gmail.com
+
+[1] https://lore.kernel.org/all/20240614-yoga-ec-driver-v7-0-9f0b9b40ae76@linaro.org/
+[2] https://lore.kernel.org/all/20240315-aspire1-ec-v5-0-f93381deff39@trvn.ru/
+
+base-commit: 1573c8d4cb206a2d1454ff711e79f8df2353290b
+
+Signed-off-by: Pengyu Luo <mitltlatltl@gmail.com>
 ---
- .../platform/qcom/camss/camss-csiphy-3ph-1-0.c     |   6 +
- drivers/media/platform/qcom/camss/camss-vfe.c      |   2 +
- drivers/media/platform/qcom/camss/camss.c          | 286 +++++++++++++++++++++
- drivers/media/platform/qcom/camss/camss.h          |   1 +
- 4 files changed, 295 insertions(+)
+Changes in v5 RESEND:
+- Rebased on tag next-20250120
+- Link to v5: https://lore.kernel.org/linux-arm-msm/20250117140348.180681-1-mitltlatltl@gmail.com
 
-diff --git a/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c b/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
-index fc624a3da1c43..24dd20de014e0 100644
---- a/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
-+++ b/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
-@@ -754,6 +754,7 @@ static bool csiphy_is_gen2(u32 version)
- 	case CAMSS_8280XP:
- 	case CAMSS_845:
- 	case CAMSS_8550:
-+	case CAMSS_X1E80100:
- 		ret = true;
- 		break;
- 	}
-@@ -842,6 +843,11 @@ static int csiphy_init(struct csiphy_device *csiphy)
- 		regs->lane_regs = &lane_regs_sc8280xp[0];
- 		regs->lane_array_size = ARRAY_SIZE(lane_regs_sc8280xp);
- 		break;
-+	case CAMSS_X1E80100:
-+		regs->lane_regs = &lane_regs_x1e80100[0];
-+		regs->lane_array_size = ARRAY_SIZE(lane_regs_x1e80100);
-+		regs->offset = 0x1000;
-+		break;
- 	case CAMSS_8550:
- 		regs->lane_regs = &lane_regs_sm8550[0];
- 		regs->lane_array_size = ARRAY_SIZE(lane_regs_sm8550);
-diff --git a/drivers/media/platform/qcom/camss/camss-vfe.c b/drivers/media/platform/qcom/camss/camss-vfe.c
-index 9ffa6bc72cf1e..4f7a559f9992c 100644
---- a/drivers/media/platform/qcom/camss/camss-vfe.c
-+++ b/drivers/media/platform/qcom/camss/camss-vfe.c
-@@ -346,6 +346,7 @@ static u32 vfe_src_pad_code(struct vfe_line *line, u32 sink_code,
- 	case CAMSS_8280XP:
- 	case CAMSS_845:
- 	case CAMSS_8550:
-+	case CAMSS_X1E80100:
- 		switch (sink_code) {
- 		case MEDIA_BUS_FMT_YUYV8_1X16:
- 		{
-@@ -1972,6 +1973,7 @@ static int vfe_bpl_align(struct vfe_device *vfe)
- 	case CAMSS_8280XP:
- 	case CAMSS_845:
- 	case CAMSS_8550:
-+	case CAMSS_X1E80100:
- 		ret = 16;
- 		break;
- 	default:
-diff --git a/drivers/media/platform/qcom/camss/camss.c b/drivers/media/platform/qcom/camss/camss.c
-index a128b1d1c6d57..02fc49ff46d18 100644
---- a/drivers/media/platform/qcom/camss/camss.c
-+++ b/drivers/media/platform/qcom/camss/camss.c
-@@ -2294,6 +2294,276 @@ static const struct resources_icc icc_res_sm8550[] = {
- 	},
- };
- 
-+static const struct camss_subdev_resources csiphy_res_x1e80100[] = {
-+	/* CSIPHY0 */
-+	{
-+		.regulators = { "vdd-csiphy-0p8-supply",
-+				"vdd-csiphy-1p2-supply" },
-+		.clock = { "csiphy0", "csiphy0_timer" },
-+		.clock_rate = { { 300000000, 400000000, 480000000 },
-+				{ 266666667, 400000000 } },
-+		.reg = { "csiphy0" },
-+		.interrupt = { "csiphy0" },
-+		.csiphy = {
-+			.id = 0,
-+			.hw_ops = &csiphy_ops_3ph_1_0,
-+			.formats = &csiphy_formats_sdm845
-+		},
-+	},
-+	/* CSIPHY1 */
-+	{
-+		.regulators = { "vdd-csiphy-0p8-supply",
-+				"vdd-csiphy-1p2-supply" },
-+		.clock = { "csiphy1", "csiphy1_timer" },
-+		.clock_rate = { { 300000000, 400000000, 480000000 },
-+				{ 266666667, 400000000 } },
-+		.reg = { "csiphy1" },
-+		.interrupt = { "csiphy1" },
-+		.csiphy = {
-+			.id = 1,
-+			.hw_ops = &csiphy_ops_3ph_1_0,
-+			.formats = &csiphy_formats_sdm845
-+		},
-+	},
-+	/* CSIPHY2 */
-+	{
-+		.regulators = { "vdd-csiphy-0p8-supply",
-+				"vdd-csiphy-1p2-supply" },
-+		.clock = { "csiphy2", "csiphy2_timer" },
-+		.clock_rate = { { 300000000, 400000000, 480000000 },
-+				{ 266666667, 400000000 } },
-+		.reg = { "csiphy2" },
-+		.interrupt = { "csiphy2" },
-+		.csiphy = {
-+			.id = 2,
-+			.hw_ops = &csiphy_ops_3ph_1_0,
-+			.formats = &csiphy_formats_sdm845
-+		},
-+	},
-+	/* CSIPHY4 */
-+	{
-+		.regulators = { "vdd-csiphy-0p8-supply",
-+				"vdd-csiphy-1p2-supply" },
-+		.clock = { "csiphy4", "csiphy4_timer" },
-+		.clock_rate = { { 300000000, 400000000, 480000000 },
-+				{ 266666667, 400000000 } },
-+		.reg = { "csiphy4" },
-+		.interrupt = { "csiphy4" },
-+		.csiphy = {
-+			.id = 4,
-+			.hw_ops = &csiphy_ops_3ph_1_0,
-+			.formats = &csiphy_formats_sdm845
-+		},
-+	},
-+};
-+
-+static const struct camss_subdev_resources csid_res_x1e80100[] = {
-+	/* CSID0 */
-+	{
-+		.regulators = {},
-+		.clock = { "gcc_axi_hf", "gcc_axi_sf", "cpas_ahb",
-+			   "cpas_fast_ahb", "csid", "csid_csiphy_rx" },
-+		.clock_rate = { { 0 },
-+				{ 0 },
-+				{ 64000000, 80000000 },
-+				{ 80000000,  100000000, 200000000,
-+				  300000000, 400000000 },
-+				{ 300000000, 400000000, 480000000 },
-+				{ 300000000, 400000000, 480000000 }, },
-+		.reg = { "csid0" },
-+		.interrupt = { "csid0" },
-+		.csid = {
-+			.hw_ops = &csid_ops_680,
-+			.parent_dev_ops = &vfe_parent_dev_ops,
-+			.formats = &csid_formats_gen2
-+		},
-+	},
-+	/* CSID1 */
-+	{
-+		.regulators = {},
-+		.clock = { "gcc_axi_hf", "gcc_axi_sf", "cpas_ahb",
-+			   "cpas_fast_ahb", "csid", "csid_csiphy_rx" },
-+		.clock_rate = { { 0 },
-+				{ 0 },
-+				{ 64000000, 80000000 },
-+				{ 80000000,  100000000, 200000000,
-+				  300000000, 400000000 },
-+				{ 300000000, 400000000, 480000000 },
-+				{ 300000000, 400000000, 480000000 }, },
-+		.reg = { "csid1" },
-+		.interrupt = { "csid1" },
-+		.csid = {
-+			.hw_ops = &csid_ops_680,
-+			.parent_dev_ops = &vfe_parent_dev_ops,
-+			.formats = &csid_formats_gen2
-+		},
-+	},
-+	/* CSID2 */
-+	{
-+		.regulators = {},
-+		.clock = { "gcc_axi_hf", "gcc_axi_sf", "cpas_ahb",
-+			   "cpas_fast_ahb", "csid", "csid_csiphy_rx" },
-+		.clock_rate = { { 0 },
-+				{ 0 },
-+				{ 64000000, 80000000 },
-+				{ 80000000,  100000000, 200000000,
-+				  300000000, 400000000 },
-+				{ 300000000, 400000000, 480000000 },
-+				{ 300000000, 400000000, 480000000 }, },
-+		.reg = { "csid2" },
-+		.interrupt = { "csid2" },
-+		.csid = {
-+			.hw_ops = &csid_ops_680,
-+			.parent_dev_ops = &vfe_parent_dev_ops,
-+			.formats = &csid_formats_gen2
-+		},
-+	},
-+	/* CSID_LITE0 */
-+	{
-+		.regulators = {},
-+		.clock = { "gcc_axi_hf", "gcc_axi_sf", "cpas_ahb",
-+			   "cpas_fast_ahb", "csid", "csid_csiphy_rx" },
-+		.clock_rate = { { 0 },
-+				{ 0 },
-+				{ 64000000, 80000000 },
-+				{ 80000000,  100000000, 200000000,
-+				  300000000, 400000000 },
-+				{ 300000000, 400000000, 480000000 },
-+				{ 300000000, 400000000, 480000000 }, },
-+		.reg = { "csid_lite0" },
-+		.interrupt = { "csid_lite0" },
-+		.csid = {
-+			.is_lite = true,
-+			.hw_ops = &csid_ops_680,
-+			.parent_dev_ops = &vfe_parent_dev_ops,
-+			.formats = &csid_formats_gen2
-+		}
-+	},
-+	/* CSID_LITE1 */
-+	{
-+		.regulators = {},
-+		.clock = { "gcc_axi_hf", "gcc_axi_sf", "cpas_ahb",
-+			   "cpas_fast_ahb", "csid", "csid_csiphy_rx" },
-+		.clock_rate = { { 0 },
-+				{ 0 },
-+				{ 64000000, 80000000 },
-+				{ 80000000,  100000000, 200000000,
-+				  300000000, 400000000 },
-+				{ 300000000, 400000000, 480000000 },
-+				{ 300000000, 400000000, 480000000 }, },
-+
-+		.reg = { "csid_lite1" },
-+		.interrupt = { "csid_lite1" },
-+		.csid = {
-+			.is_lite = true,
-+			.hw_ops = &csid_ops_680,
-+			.parent_dev_ops = &vfe_parent_dev_ops,
-+			.formats = &csid_formats_gen2
-+		}
-+	},
-+};
-+
-+static const struct camss_subdev_resources vfe_res_x1e80100[] = {
-+	/* IFE0 */
-+	{
-+		.regulators = {},
-+		.clock = {"camnoc_rt_axi", "camnoc_nrt_axi", "cpas_ahb",
-+			  "cpas_fast_ahb", "cpas_vfe0", "vfe0_fast_ahb",
-+			  "vfe0" },
-+		.clock_rate = { { 0 },
-+				{ 0 },
-+				{ 0 },
-+				{ 0 },
-+				{ 0 },
-+				{ 0 },
-+				{ 345600000, 432000000, 594000000, 675000000,
-+				  727000000 }, },
-+		.reg = { "vfe0" },
-+		.interrupt = { "vfe0" },
-+		.vfe = {
-+			.line_num = 4,
-+			.pd_name = "ife0",
-+			.hw_ops = &vfe_ops_680,
-+			.formats_rdi = &vfe_formats_rdi_845,
-+			.formats_pix = &vfe_formats_pix_845
-+		},
-+	},
-+	/* IFE1 */
-+	{
-+		.regulators = {},
-+		.clock = { "camnoc_rt_axi", "camnoc_nrt_axi", "cpas_ahb",
-+			   "cpas_fast_ahb", "cpas_vfe1", "vfe1_fast_ahb",
-+			   "vfe1"  },
-+		.clock_rate = { { 0 },
-+				{ 0 },
-+				{ 0 },
-+				{ 0 },
-+				{ 0 },
-+				{ 0 },
-+				{ 345600000, 432000000, 594000000, 675000000,
-+				  727000000 }, },
-+		.reg = { "vfe1" },
-+		.interrupt = { "vfe1" },
-+		.vfe = {
-+			.line_num = 4,
-+			.pd_name = "ife1",
-+			.hw_ops = &vfe_ops_680,
-+			.formats_rdi = &vfe_formats_rdi_845,
-+			.formats_pix = &vfe_formats_pix_845
-+		},
-+	},
-+	/* IFE_LITE_0 */
-+	{
-+		.regulators = {},
-+		.clock = { "camnoc_rt_axi", "camnoc_nrt_axi", "cpas_ahb",
-+			   "vfe_lite_ahb", "cpas_vfe_lite", "vfe_lite",
-+			   "vfe_lite_csid" },
-+		.clock_rate = { { 0 },
-+				{ 0 },
-+				{ 0 },
-+				{ 0 },
-+				{ 0 },
-+				{ 266666667, 400000000, 480000000 },
-+				{ 266666667, 400000000, 480000000 }, },
-+		.reg = { "vfe_lite0" },
-+		.interrupt = { "vfe_lite0" },
-+		.vfe = {
-+			.is_lite = true,
-+			.line_num = 4,
-+			.hw_ops = &vfe_ops_680,
-+			.formats_rdi = &vfe_formats_rdi_845,
-+			.formats_pix = &vfe_formats_pix_845
-+		},
-+	},
-+	/* IFE_LITE_1 */
-+	{
-+		.regulators = {},
-+		.clock = { "camnoc_rt_axi", "camnoc_nrt_axi", "cpas_ahb",
-+			   "vfe_lite_ahb", "cpas_vfe_lite", "vfe_lite",
-+			   "vfe_lite_csid" },
-+		.clock_rate = { { 0 },
-+				{ 0 },
-+				{ 0 },
-+				{ 0 },
-+				{ 0 },
-+				{ 266666667, 400000000, 480000000 },
-+				{ 266666667, 400000000, 480000000 }, },
-+		.reg = { "vfe_lite1" },
-+		.interrupt = { "vfe_lite1" },
-+		.vfe = {
-+			.is_lite = true,
-+			.line_num = 4,
-+			.hw_ops = &vfe_ops_680,
-+			.formats_rdi = &vfe_formats_rdi_845,
-+			.formats_pix = &vfe_formats_pix_845
-+		},
-+	},
-+};
-+
-+static const struct resources_wrapper csid_wrapper_res_x1e80100 = {
-+	.reg = "csid_wrapper",
-+};
-+
- /*
-  * camss_add_clock_margin - Add margin to clock frequency rate
-  * @rate: Clock frequency rate
-@@ -3346,6 +3616,21 @@ static const struct camss_resources sm8550_resources = {
- 	.link_entities = camss_link_entities
- };
- 
-+static const struct camss_resources x1e80100_resources = {
-+	.version = CAMSS_X1E80100,
-+	.pd_name = "top",
-+	.csiphy_res = csiphy_res_x1e80100,
-+	.csid_res = csid_res_x1e80100,
-+	.vfe_res = vfe_res_x1e80100,
-+	.csid_wrapper_res = &csid_wrapper_res_x1e80100,
-+	.icc_res = icc_res_sc8280xp,
-+	.icc_path_num = ARRAY_SIZE(icc_res_sc8280xp),
-+	.csiphy_num = ARRAY_SIZE(csiphy_res_x1e80100),
-+	.csid_num = ARRAY_SIZE(csid_res_x1e80100),
-+	.vfe_num = ARRAY_SIZE(vfe_res_x1e80100),
-+	.link_entities = camss_link_entities
-+};
-+
- static const struct of_device_id camss_dt_match[] = {
- 	{ .compatible = "qcom,msm8916-camss", .data = &msm8916_resources },
- 	{ .compatible = "qcom,msm8953-camss", .data = &msm8953_resources },
-@@ -3356,6 +3641,7 @@ static const struct of_device_id camss_dt_match[] = {
- 	{ .compatible = "qcom,sdm845-camss", .data = &sdm845_resources },
- 	{ .compatible = "qcom,sm8250-camss", .data = &sm8250_resources },
- 	{ .compatible = "qcom,sm8550-camss", .data = &sm8550_resources },
-+	{ .compatible = "qcom,x1e80100-camss", .data = &x1e80100_resources },
- 	{ }
- };
- 
-diff --git a/drivers/media/platform/qcom/camss/camss.h b/drivers/media/platform/qcom/camss/camss.h
-index 58fc61e7cf7ad..426e80f1c4b52 100644
---- a/drivers/media/platform/qcom/camss/camss.h
-+++ b/drivers/media/platform/qcom/camss/camss.h
-@@ -86,6 +86,7 @@ enum camss_version {
- 	CAMSS_8280XP,
- 	CAMSS_845,
- 	CAMSS_8550,
-+	CAMSS_X1E80100,
- };
- 
- enum icc_count {
+Changes in v5:
+- handle return code of i2c_transfer() (Bryan)
+- rename threshold validatition function (Bryan)
+- add enumerates and defines for registers (Bryan)
+- drop extra line in header (Heikki)
+- Link to v4: https://lore.kernel.org/linux-arm-msm/20250116111559.83641-1-mitltlatltl@gmail.com
+
+Changes in v4:
+- use new API to register hwmon device instead of the deprecated one. (Guenter)
+- add Reviewed-by tag for dt-binding (Krzysztof)
+- drop unnecessary header (Ilpo)
+- use guard mutex (Ilpo)
+- improve comments and naming (Ilpo)
+- add a shallow copy version of extr_resp() (Ilpo)
+- add functions to handle resp and req whose size is 1
+- drop PSY and UCSI subdrivers, commit them once the base driver is upstreamed
+- Link to v3: https://lore.kernel.org/linux-arm-msm/20250113175049.590511-1-mitltlatltl@gmail.com
+
+Changes in v3:
+- Link to v2: https://lore.kernel.org/linux-arm-msm/20250105174159.227831-1-mitltlatltl@gmail.com
+
+dt-binding:
+- drop generic compatibles. (Krzysztof)
+- remove '+' to use literal block style. (Krzysztof)
+
+ec:
+- take struct gaokun_ucsi_reg as parameter (Heikki)
+- add almost all kernel doc comments (Krzysztof, Heikki)
+
+ucsi:
+- drop unnecessary ucsi quirks (Dmitry)
+- add UCSI v1.0 to ucsi.h (Heikki)
+- use gaokun_ucsi_read_cci() to read cci directly (Heikki)
+- drop unnecessary gaokun_ucsi_get_port_num (Heikki)
+- rename member port_num => num_ports (Heikki)
+- fix completion, forgot to signal threads in previous version
+
+dt:
+- fix indentation (Konrad)
+- add a link between role switch and connector
+
+Changes in v2:
+- Link to v1: https://lore.kernel.org/linux-arm-msm/20241227171353.404432-1-mitltlatltl@gmail.com
+
+global:
+- drop qcom's products(i.e. sc8180x, sx8280xp) everywhere, use 'product'-based instead(Krzysztof, Bryan)
+- drop Cc Nikita Travkin, we had discussed the device in PM.
+- add myself to MAINTAINERS
+
+dt-binding:
+- fix building (Rob Herring (Arm))
+- remove unnecessary code (Krzysztof)
+- add bugzilla documentation, insights of gaokun(see [1] or patch[1/5]) (Krzysztof, Aiqun(Maria))
+- explain the difference between PMIC GLink and gaokun EC (Aiqun(Maria))
+
+ec:
+- use Linux style comments (Krzysztof)
+- add a comment for mutex lock (Krzysztof)
+- add more kerneldoc for exported functions (Krzysztof)
+- eliminate unnecessary conditions (Bryan)
+- add a macro for check thresholds (Bryan)
+- improve English (Bryan)
+- use existing sysfs interface(hwmon, psy) whenever possible (Krzysztof)
+- use __le16 and related endianess conversion function for temp data (Ilpo)
+- drop alias for packet headers (Ilpo)
+- avoid hardcoding i2c msgs size (Aiqun(Maria))
+- add a comment for the sleep in critial region (Bryan, Aiqun(Maria))
+- use macro to construct packet (Bryan, Aiqun(Maria))
+
+wmi:
+- dropped
+
+ucsi:
+- reorder headers (Bryan)
+- a comment for the orientation map macro (Bryan)
+- make mux mode map more explicit(minus six is very clear now) (Bryan, Dmitry)
+- handle port update exceptions return (Bryan)
+- a comment for the UCSI quirks (Dmitry)
+- use the inline hint for the short register function (Dmitry)
+- use the API with delay to handle register instead of a direct sleep (Bryan)
+- handle unfinished initialization early
+
+psy:
+- add charging related sysfs to here (Krzysztof, Dmitry)
+- document ABI for power_supply sysfs (Krzysztof)
+- drop charging threshold, use smart charging instead
+
+dts:
+- correct indentation, properties' order. (Konrad)
+
+Pengyu Luo (3):
+  dt-bindings: platform: Add Huawei Matebook E Go EC
+  platform: arm64: add Huawei Matebook E Go EC driver
+  arm64: dts: qcom: gaokun3: Add Embedded Controller node
+
+ .../bindings/platform/huawei,gaokun-ec.yaml   | 124 +++
+ MAINTAINERS                                   |   7 +
+ .../boot/dts/qcom/sc8280xp-huawei-gaokun3.dts | 163 ++++
+ drivers/platform/arm64/Kconfig                |  21 +
+ drivers/platform/arm64/Makefile               |   1 +
+ drivers/platform/arm64/huawei-gaokun-ec.c     | 822 ++++++++++++++++++
+ .../linux/platform_data/huawei-gaokun-ec.h    |  79 ++
+ 7 files changed, 1217 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/platform/huawei,gaokun-ec.yaml
+ create mode 100644 drivers/platform/arm64/huawei-gaokun-ec.c
+ create mode 100644 include/linux/platform_data/huawei-gaokun-ec.h
 
 -- 
-2.47.1
+2.48.1
 
 
