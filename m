@@ -1,53 +1,82 @@
-Return-Path: <linux-arm-msm+bounces-45588-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-45590-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4C59EA16D37
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Jan 2025 14:16:28 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 99927A16D97
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Jan 2025 14:44:36 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 66AC13A2A97
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Jan 2025 13:15:40 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id CDCE07A20F0
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Jan 2025 13:44:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E09BD1E1C3B;
-	Mon, 20 Jan 2025 13:15:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 594371E22F8;
+	Mon, 20 Jan 2025 13:44:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="GDI7XxNI"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from relay03.th.seeweb.it (relay03.th.seeweb.it [5.144.164.164])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.14])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE3091E1C03;
-	Mon, 20 Jan 2025 13:15:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.144.164.164
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76DE51E1C32;
+	Mon, 20 Jan 2025 13:44:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.14
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737378920; cv=none; b=isfm2Sp/Aw8uBh3pZMOA1qxTFE7NCYaAbpSTieKC2RiZz1A6Wbu5F2GGe8pa3DtyL+he+IQ96DjU9g1PQ+gfR8Lq5X64KAJosZRJ2u6p7azQ43PXGmsWYA49P+RuHHquzre5djSp5vY4JBjflSisBORthfPjivtXgrd4c8fG5ys=
+	t=1737380666; cv=none; b=E+TyjI29/Oe5NcZg3ZcdO9oBg4/hbDRvOI1uMvb7+lfy/xcT4DLQUNUK99cGvjYFAJ19tE+PMSuVW8M22EHdtu3LFze8g9UYm8DA8fYheMNdjDm1IJ5Tjaceh+3jUjLFC+L+cYLBo2rNjF5hkx9G8WZQFvT6oxwsukcAG4gK28U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737378920; c=relaxed/simple;
-	bh=qQmFBnOdsh3eOhYVBYKnv643wOTpBuLnPTaD6AtInMI=;
+	s=arc-20240116; t=1737380666; c=relaxed/simple;
+	bh=cgcjeJqRGJz4GlV5cJ3RHuisU44Rm/xRJru7KeMM8fc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=qMj86eClB03FfaZwmM4UgJ+TcAS3+2jEKw3Ka5uIQXql5w70T7pz8cEhh936hjIROL89mOLMXIKiWWQ2wCHcxuKLXoo18KZRpVFcS72Imtq0eBIULfOf/5EtV4wk9WZG5s4VXg2/lGGcH7U55XOdyVEZkiQzqX6QxuvOfJF6u/U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=somainline.org; spf=pass smtp.mailfrom=somainline.org; arc=none smtp.client-ip=5.144.164.164
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=somainline.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=somainline.org
-Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 34FBD201E9;
-	Mon, 20 Jan 2025 14:15:15 +0100 (CET)
-Date: Mon, 20 Jan 2025 14:15:13 +0100
-From: Marijn Suijten <marijn.suijten@somainline.org>
-To: Jun Nie <jun.nie@linaro.org>
-Cc: Rob Clark <robdclark@gmail.com>, 
-	Abhinav Kumar <quic_abhinavk@quicinc.com>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
-	Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>, 
-	Simona Vetter <simona@ffwll.ch>, linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
-	freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
-	Jessica Zhang <quic_jesszhan@quicinc.com>
-Subject: Re: [PATCH v5 08/15] drm/msm/dpu: bind correct pingpong for quad pipe
-Message-ID: <6n655caflr2snsgmqtmpzxt4jynrwjqdjurnixujfuefldxhxj@uunzpzfezfqy>
-References: <20250118-sm8650-v6-13-hmd-deckard-mdss-quad-upstream-33-v5-0-9701a16340da@linaro.org>
- <20250118-sm8650-v6-13-hmd-deckard-mdss-quad-upstream-33-v5-8-9701a16340da@linaro.org>
+	 Content-Type:Content-Disposition:In-Reply-To; b=JrWEH55qB+DEpbkmPGWxbvEczU6JhloGE0KEquM2woitJ3lTUduwRoFPOCehyIToNCwi0YWtPHXxeKYvRc/HrhxLHcS2bJ0DcnyW4sOUueqZstDm4OcMds5n2V66+kDUfuyLpxvdK+SB3tDVbG3jEcnIHgm07Wn3fOCAWvIGnqI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=GDI7XxNI; arc=none smtp.client-ip=198.175.65.14
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1737380665; x=1768916665;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=cgcjeJqRGJz4GlV5cJ3RHuisU44Rm/xRJru7KeMM8fc=;
+  b=GDI7XxNIZZQ1BqBLVB6SHVeBrGdkwJr4rQhcpCk2IIIL+UNZgHcLReQs
+   aYGYr/cv5ts0PAa6zgNLjlCtk2K0VpOXEVAJysNxKxeFklPmQKg4WYmu9
+   l9JrLWSXT02jb7e/Qgyk03VP0VSCQCgdIP7sy1UZzM2ll/d3Q4jdyrfns
+   r4uQ3U1l08vKU7BanhUOrH7+12TdBe0HdPVtNAlGncd0aOG5aKXg2BiB8
+   3e6XdvkWkb4Xj/mgBeEukHA651Q91Pyd24kK4gh4v1dKpSRjnoEpU9hha
+   t3vnGq0fuWuGLX3q8+hWZ4EGU4bh6ylXMYOL9tynzBYP7rbfSWguuiLOq
+   Q==;
+X-CSE-ConnectionGUID: QXAZXx5XRuyetjo64vD4Mw==
+X-CSE-MsgGUID: Xqf9imSBS6m/YGwVG9HPkA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11321"; a="41534325"
+X-IronPort-AV: E=Sophos;i="6.13,219,1732608000"; 
+   d="scan'208";a="41534325"
+Received: from fmviesa001.fm.intel.com ([10.60.135.141])
+  by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Jan 2025 05:44:24 -0800
+X-CSE-ConnectionGUID: 3FqYEmPEScyjJjUUcYzsGQ==
+X-CSE-MsgGUID: NZzcij3ZT6mfY+EkgX3RUw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; 
+   d="scan'208";a="137417816"
+Received: from lkp-server01.sh.intel.com (HELO d63d4d77d921) ([10.239.97.150])
+  by fmviesa001.fm.intel.com with ESMTP; 20 Jan 2025 05:44:20 -0800
+Received: from kbuild by d63d4d77d921 with local (Exim 4.96)
+	(envelope-from <lkp@intel.com>)
+	id 1tZs4g-000War-0f;
+	Mon, 20 Jan 2025 13:44:18 +0000
+Date: Mon, 20 Jan 2025 21:43:45 +0800
+From: kernel test robot <lkp@intel.com>
+To: Jyothi Kumar Seerapu <quic_jseerapu@quicinc.com>,
+	Vinod Koul <vkoul@kernel.org>, Andi Shyti <andi.shyti@kernel.org>,
+	Sumit Semwal <sumit.semwal@linaro.org>,
+	Christian =?iso-8859-1?Q?K=F6nig?= <christian.koenig@amd.com>
+Cc: oe-kbuild-all@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+	dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-i2c@vger.kernel.org, linux-media@vger.kernel.org,
+	dri-devel@lists.freedesktop.org, linaro-mm-sig@lists.linaro.org,
+	quic_msavaliy@quicinc.com, quic_vtanuku@quicinc.com
+Subject: Re: [PATCH v5 2/2] i2c: i2c-qcom-geni: Add Block event interrupt
+ support
+Message-ID: <202501202159.wLRVO16t-lkp@intel.com>
+References: <20250120095753.25539-3-quic_jseerapu@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -56,64 +85,78 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250118-sm8650-v6-13-hmd-deckard-mdss-quad-upstream-33-v5-8-9701a16340da@linaro.org>
+In-Reply-To: <20250120095753.25539-3-quic_jseerapu@quicinc.com>
 
-On 2025-01-18 00:00:51, Jun Nie wrote:
-> There are 2 interfaces and 4 pingpong in quad pipe. Map the 2nd
-> interface to 3rd PP instead of the 2nd PP.
+Hi Jyothi,
 
-Can you explain why this patch uses the number of LMs, instead of dividing the
-number of PPs divided by the number of physical encoders?  This detail is not
-explained at all, or that we're filling hw_lm now for no other reason.
+kernel test robot noticed the following build warnings:
 
-- Marijn
+[auto build test WARNING on 55bcd2e0d04c1171d382badef1def1fd04ef66c5]
 
-> Signed-off-by: Jun Nie <jun.nie@linaro.org>
-> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> Reviewed-by: Jessica Zhang <quic_jesszhan@quicinc.com>
-> ---
->  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 15 +++++++++++++--
->  1 file changed, 13 insertions(+), 2 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> index 018a1a49ca7d1..b0cab3ccbb57c 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> @@ -1220,7 +1220,8 @@ static void dpu_encoder_virt_atomic_mode_set(struct drm_encoder *drm_enc,
->  	struct dpu_hw_blk *hw_pp[MAX_CHANNELS_PER_ENC];
->  	struct dpu_hw_blk *hw_ctl[MAX_CHANNELS_PER_ENC];
->  	struct dpu_hw_blk *hw_dsc[MAX_CHANNELS_PER_ENC];
-> -	int num_ctl, num_pp, num_dsc;
-> +	struct dpu_hw_blk *hw_lm[MAX_CHANNELS_PER_ENC];
-> +	int num_lm, num_ctl, num_pp, num_dsc, num_pp_per_intf;
->  	unsigned int dsc_mask = 0;
->  	int i;
->  
-> @@ -1275,11 +1276,21 @@ static void dpu_encoder_virt_atomic_mode_set(struct drm_encoder *drm_enc,
->  		dpu_enc->cur_master->hw_cdm = hw_cdm ? to_dpu_hw_cdm(hw_cdm) : NULL;
->  	}
->  
-> +	num_lm = dpu_rm_get_assigned_resources(&dpu_kms->rm, global_state,
-> +		drm_enc->crtc, DPU_HW_BLK_LM, hw_lm, ARRAY_SIZE(hw_lm));
-> +
-> +
-> +	/*
-> +	 * There may be 4 PP and 2 INTF for quad pipe case, so INTF is not
-> +	 * mapped to PP 1:1. Let's calculate the stride with pipe/INTF
-> +	 */
-> +	num_pp_per_intf = num_lm / dpu_enc->num_phys_encs;
-> +
->  	for (i = 0; i < dpu_enc->num_phys_encs; i++) {
->  		struct dpu_encoder_phys *phys = dpu_enc->phys_encs[i];
->  		struct dpu_hw_ctl *ctl0 = to_dpu_hw_ctl(hw_ctl[0]);
->  
-> -		phys->hw_pp = dpu_enc->hw_pp[i];
-> +		phys->hw_pp = dpu_enc->hw_pp[num_pp_per_intf * i];
->  		if (!phys->hw_pp) {
->  			DPU_ERROR_ENC(dpu_enc,
->  				"no pp block assigned at idx: %d\n", i);
-> 
-> -- 
-> 2.34.1
-> 
+url:    https://github.com/intel-lab-lkp/linux/commits/Jyothi-Kumar-Seerapu/dmaengine-qcom-gpi-Add-GPI-Block-event-interrupt-support/20250120-180058
+base:   55bcd2e0d04c1171d382badef1def1fd04ef66c5
+patch link:    https://lore.kernel.org/r/20250120095753.25539-3-quic_jseerapu%40quicinc.com
+patch subject: [PATCH v5 2/2] i2c: i2c-qcom-geni: Add Block event interrupt support
+config: arc-randconfig-001-20250120 (https://download.01.org/0day-ci/archive/20250120/202501202159.wLRVO16t-lkp@intel.com/config)
+compiler: arceb-elf-gcc (GCC) 13.2.0
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20250120/202501202159.wLRVO16t-lkp@intel.com/reproduce)
+
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202501202159.wLRVO16t-lkp@intel.com/
+
+All warnings (new ones prefixed by >>):
+
+>> drivers/i2c/busses/i2c-qcom-geni.c:599: warning: Excess function parameter 'dev' description in 'geni_i2c_gpi_multi_desc_unmap'
+
+Kconfig warnings: (for reference only)
+   WARNING: unmet direct dependencies detected for OMAP2PLUS_MBOX
+   Depends on [n]: MAILBOX [=y] && (ARCH_OMAP2PLUS || ARCH_K3)
+   Selected by [m]:
+   - TI_K3_M4_REMOTEPROC [=m] && REMOTEPROC [=y] && (ARCH_K3 || COMPILE_TEST [=y])
+
+
+vim +599 drivers/i2c/busses/i2c-qcom-geni.c
+
+   589	
+   590	/**
+   591	 * geni_i2c_gpi_multi_desc_unmap() - unmaps the buffers post multi message TX transfers
+   592	 * @dev: pointer to the corresponding dev node
+   593	 * @gi2c: i2c dev handle
+   594	 * @msgs: i2c messages array
+   595	 * @peripheral: pointer to the gpi_i2c_config
+   596	 */
+   597	static void geni_i2c_gpi_multi_desc_unmap(struct geni_i2c_dev *gi2c, struct i2c_msg msgs[],
+   598						  struct gpi_i2c_config *peripheral)
+ > 599	{
+   600		u32 msg_xfer_cnt, wr_idx = 0;
+   601		struct geni_i2c_gpi_multi_desc_xfer *tx_multi_xfer = &gi2c->i2c_multi_desc_config;
+   602	
+   603		/*
+   604		 * In error case, need to unmap all messages based on the msg_idx_cnt.
+   605		 * Non-error case unmap all the processed messages.
+   606		 */
+   607		if (gi2c->err)
+   608			msg_xfer_cnt = tx_multi_xfer->msg_idx_cnt;
+   609		else
+   610			msg_xfer_cnt = tx_multi_xfer->irq_cnt * QCOM_I2C_GPI_NUM_MSGS_PER_IRQ;
+   611	
+   612		/* Unmap the processed DMA buffers based on the received interrupt count */
+   613		for (; tx_multi_xfer->unmap_msg_cnt < msg_xfer_cnt; tx_multi_xfer->unmap_msg_cnt++) {
+   614			if (tx_multi_xfer->unmap_msg_cnt == gi2c->num_msgs)
+   615				break;
+   616			wr_idx = tx_multi_xfer->unmap_msg_cnt % QCOM_I2C_GPI_MAX_NUM_MSGS;
+   617			geni_i2c_gpi_unmap(gi2c, &msgs[tx_multi_xfer->unmap_msg_cnt],
+   618					   tx_multi_xfer->dma_buf[wr_idx],
+   619					   tx_multi_xfer->dma_addr[wr_idx],
+   620					   NULL, (dma_addr_t)NULL);
+   621			tx_multi_xfer->freed_msg_cnt++;
+   622		}
+   623	}
+   624	
+
+-- 
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
 
