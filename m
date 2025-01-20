@@ -1,129 +1,157 @@
-Return-Path: <linux-arm-msm+bounces-45598-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-45600-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6A5E9A16E16
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Jan 2025 15:06:37 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 727BEA16E92
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Jan 2025 15:43:00 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 785C33A3179
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Jan 2025 14:06:30 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 81AC33A83E1
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Jan 2025 14:42:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 96C581E2842;
-	Mon, 20 Jan 2025 14:06:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3EE6A1E3DEC;
+	Mon, 20 Jan 2025 14:42:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="D9J5ISfQ"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="b44zenXk"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.18])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8CC818BBAE;
-	Mon, 20 Jan 2025 14:06:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DFE71E3DD1;
+	Mon, 20 Jan 2025 14:42:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737381992; cv=none; b=R2nAELLPWYIC+GzyIg+toVw1grwHx5I2Pdbb1WlBZTOOH87ijZgwxZry1kVAEXIdFAkI6b3FJ8PliFjAOG2fktEJFd619PEaYoz3Txjm4rP1ytTVepO5MDzKF/PWEfGxRlVdcIdusco9K1Yp1gPn78137GpG/iwOhxkJO6Arl4s=
+	t=1737384168; cv=none; b=AMA+ssazgMVdL08ZWrRfAIlHFQuL8fuW54tLmXqqS8MEcv4F8o32FgP08HVl3k5zrU+yhPd/4kf9jNo3Hf0odRTHP6PuI/Y12qHW+xxhfl4oM3h93xiuF9CJVNnoNS94aVGvadNWF1Li6LKl6OwswbMllJaAwKbVGGHGc0mOOW0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737381992; c=relaxed/simple;
-	bh=1uS4z3qSW4B3HL0w5ziOk7BdN1z2O3FF9kgKHr+m/4k=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=OVyagtFgEFXH32us7Zm+bO9kH/X6pxWuwSNyXPfg0F3emNpItFxLwIWsqFaab7DFqZMIsL1HQof/La1gYdMBeasV4NGUkSUM+Dc8kftkuZW7XcGgJZCKG0ZjLIlDJy9lwAtGe61QovXNYfN/lM5TAIDsaJveBATiAM/oBNCLK0c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=D9J5ISfQ; arc=none smtp.client-ip=198.175.65.18
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1737381990; x=1768917990;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=1uS4z3qSW4B3HL0w5ziOk7BdN1z2O3FF9kgKHr+m/4k=;
-  b=D9J5ISfQEeP9bTaaFkxsYGcHYAsyJr9x7D11F6n+lXwyqDPdTlM+TSlw
-   b65HPlDleT0KV2Abm76A9e4xK3PqRV8T1CnHe3706/i20Fpkry6l8amRi
-   4mlLEh3W8ap0wQynsbBIriq9ojyOiUYXO6n86z0lL/3kw15Dzwm+mAUiq
-   KHAK6G+mRYUQIYYKbrBeGFt2DXzVBgbyi95oy5a7Upg4Cd7fTr4jhXzUk
-   VbZlqRCSAOVJdH4/skjSXccb1oDR1lNtK5tni4/91oi9xjCG8szUD5LFE
-   TxJN5y2TncYCey4Q29OVN4/WbbJdzPww6c5MUkOrxs1slspuklW3D6F5Q
-   w==;
-X-CSE-ConnectionGUID: 7YWAAOWmRquehg5HuEez8Q==
-X-CSE-MsgGUID: Dagr0fzWQWC2zoft+/RV5g==
-X-IronPort-AV: E=McAfee;i="6700,10204,11314"; a="37890061"
-X-IronPort-AV: E=Sophos;i="6.12,310,1728975600"; 
-   d="scan'208";a="37890061"
-Received: from fmviesa005.fm.intel.com ([10.60.135.145])
-  by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Jan 2025 06:06:30 -0800
-X-CSE-ConnectionGUID: BltcJRoiQXyKctIw3LJ4Dg==
-X-CSE-MsgGUID: /biOkYpVQ+iV2JxF+iZWTA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; 
-   d="scan'208";a="111154052"
-Received: from lkp-server01.sh.intel.com (HELO d63d4d77d921) ([10.239.97.150])
-  by fmviesa005.fm.intel.com with ESMTP; 20 Jan 2025 06:06:24 -0800
-Received: from kbuild by d63d4d77d921 with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1tZsQ2-000WcZ-1a;
-	Mon, 20 Jan 2025 14:06:22 +0000
-Date: Mon, 20 Jan 2025 22:05:59 +0800
-From: kernel test robot <lkp@intel.com>
-To: Taniya Das <quic_tdas@quicinc.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Michael Turquette <mturquette@baylibre.com>,
-	Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
+	s=arc-20240116; t=1737384168; c=relaxed/simple;
+	bh=LDSCxrJ3sEs97UkYuOGchEHijm9NPMDhmIJiAVmfn+Q=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=hBiXEG6wu65Su+JHF5hU48snpRuDpCZd6KV32LjA4m6riVB1eAa6+sq06NuG2iL/nh6VE7jJqKluaVgKjY0uz4Uh7pb75e8RgGCmVoWf5bJkob5VwKmUSK/x8Rlh+VBiAMgWb5l65tqAxlo95CiidAGtVzI3ehTAOiMhrSXH5fI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=b44zenXk; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57C2BC4CEDD;
+	Mon, 20 Jan 2025 14:42:47 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1737384167;
+	bh=LDSCxrJ3sEs97UkYuOGchEHijm9NPMDhmIJiAVmfn+Q=;
+	h=From:To:Cc:Subject:Date:From;
+	b=b44zenXk/QYs726WU9W9BHOqoZLbK4jl+FhPIh2UaWK8odSsoI0uzU+jdtX95Lzi2
+	 R3x1lKl1PtaI85mk7KVR7lfxeHwDs7T33OEL0aqW26tWKtEBTqBpw/ocYliGQ3Z7wa
+	 7MncJV7RBiV1DbvzJfTJtOq0Vwz5a6SLSF9X29M0Xmp8rn65wNWnJufZz+RP+VZvV2
+	 4/yK8B8UEvn3cHV3BZfBRyoNmSkIiaHVhO2PWbmKNp/n/Y/OVko8Md1o36UoOGJEOZ
+	 tzSMWCOHpKZK44PrFOg67LAZCH2066DqxS8d/CiAH7N77uyYCRWQOtr6HfntvQzn5x
+	 VoTHt+dtPczTw==
+Received: from johan by xi.lan with local (Exim 4.97.1)
+	(envelope-from <johan+linaro@kernel.org>)
+	id 1tZszK-0000000037w-27J7;
+	Mon, 20 Jan 2025 15:42:51 +0100
+From: Johan Hovold <johan+linaro@kernel.org>
+To: Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Bjorn Andersson <andersson@kernel.org>
+Cc: Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Will Deacon <will@kernel.org>
-Cc: Paul Gazzillo <paul@pgazz.com>,
-	Necip Fazil Yildiran <fazilyildiran@gmail.com>,
-	oe-kbuild-all@lists.linux.dev,
-	Ajit Pandey <quic_ajipan@quicinc.com>,
-	Imran Shaik <quic_imrashai@quicinc.com>,
-	Jagadeesh Kona <quic_jkona@quicinc.com>,
-	linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-	linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	Taniya Das <quic_tdas@quicinc.com>,
-	Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Subject: Re: [PATCH v4 09/10] clk: qcom: videocc-qcs615: Add QCS615 video
- clock controller driver
-Message-ID: <202501202157.Aasnvf5L-lkp@intel.com>
-References: <20250119-qcs615-mm-v4-clockcontroller-v4-9-5d1bdb5a140c@quicinc.com>
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Jonathan Marek <jonathan@marek.ca>,
+	linux-arm-msm@vger.kernel.org,
+	linux-rtc@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Johan Hovold <johan+linaro@kernel.org>
+Subject: [PATCH 0/7] arm64: dts: qcom: x1e80100: enable rtc
+Date: Mon, 20 Jan 2025 15:41:45 +0100
+Message-ID: <20250120144152.11949-1-johan+linaro@kernel.org>
+X-Mailer: git-send-email 2.45.2
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250119-qcs615-mm-v4-clockcontroller-v4-9-5d1bdb5a140c@quicinc.com>
+Content-Transfer-Encoding: 8bit
 
-Hi Taniya,
+This series adds support for utilising the UEFI firmware RTC offset to
+the Qualcomm PMIC RTC driver and uses that to enable the RTC on all X
+Elite machines.
 
-kernel test robot noticed the following build warnings:
+Included is also a patch to switch the Lenovo ThinkPad X13s over to
+using the UEFI offset.
 
-[auto build test WARNING on 0907e7fb35756464aa34c35d6abb02998418164b]
+The RTCs in many Qualcomm devices are effectively broken due to the time
+registers being read-only. Instead some other non-volatile memory can be
+used to store an offset which a driver can take into account. On Windows
+on Arm laptops, the UEFI firmware (and Windows) use a UEFI variable for
+storing such an offset.
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Taniya-Das/clk-qcom-clk-alpha-pll-Add-support-for-dynamic-update-for-slewing-PLLs/20250119-182754
-base:   0907e7fb35756464aa34c35d6abb02998418164b
-patch link:    https://lore.kernel.org/r/20250119-qcs615-mm-v4-clockcontroller-v4-9-5d1bdb5a140c%40quicinc.com
-patch subject: [PATCH v4 09/10] clk: qcom: videocc-qcs615: Add QCS615 video clock controller driver
-config: arm-kismet-CONFIG_QCS_GCC_615-CONFIG_QCS_VIDEOCC_615-0-0 (https://download.01.org/0day-ci/archive/20250120/202501202157.Aasnvf5L-lkp@intel.com/config)
-reproduce: (https://download.01.org/0day-ci/archive/20250120/202501202157.Aasnvf5L-lkp@intel.com/reproduce)
+When RTC support for the X13s was added two years ago we did not yet
+have UEFI variable support for these machines in mainline and there were
+also some concerns regarding flash wear. [1] As not all Qualcomm
+platforms have UEFI firmware anyway, we instead opted to use a PMIC
+scratch register for storing the offset. [2]
 
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202501202157.Aasnvf5L-lkp@intel.com/
+On the UEFI machines in question this is however arguable not correct
+as it means that the RTC time can differ between the UEFI firmware (and
+Windows) and Linux.
 
-kismet warnings: (new ones prefixed by >>)
->> kismet: WARNING: unmet direct dependencies detected for QCS_GCC_615 when selected by QCS_VIDEOCC_615
-   WARNING: unmet direct dependencies detected for QCS_GCC_615
-     Depends on [n]: COMMON_CLK [=y] && COMMON_CLK_QCOM [=y] && (ARM64 || COMPILE_TEST [=n])
-     Selected by [y]:
-     - QCS_VIDEOCC_615 [=y] && COMMON_CLK [=y] && COMMON_CLK_QCOM [=y]
+Now that the (reverse engineered) UEFI variable implementation has been
+merged and thoroughly tested, let's switch to using that to store the
+RTC offset also on Linux. The flash wear concerns can be mitigated by
+deferring writes due to clock drift until shutdown.
+
+Note that this also avoids having to wait for months for Qualcomm to
+provide a free PMIC SDAM scratch register for X1E and future platforms,
+and specifically allows us to enable the RTC on X1E laptops today.
+
+Rob had some concerns about adding a DT property for indicating that a
+machine uses UEFI for storing the offset and suggested that the driver
+should probe for this instead. Unfortunately, this is easier said than
+done given that UEFI variable support itself is probed for and may not
+be available until after the RTC driver probes.
+
+Hopefully this all goes away (for future platforms) once Qualcomm fix
+their UEFI implementation so that the UEFI time (and variable) services
+can be used directly.
+
+Johan
+
+
+Changes since UEFI offset RFC [1]:
+ - clarify that UEFI variable format is not arbitrary (Alexandre)
+ - add missing use_uefi kernel doc
+ - use dev_dbg() instead of dev_err() (Alexandre)
+ - rename epoch define RTC_TIMESTAMP_EPOCH_GPS (Alexandre)
+ - mitigate flash wear by deferring writes due to clock drift until
+   shutdown
+
+Changes since Jonathan's X1E series v3 [3]:
+ - tweak qcom,no-alarm binding update (and drop Krystzof's Reviewed-by tag)
+ - drop no-alarm flag and restructure probe() to clear feature flag before
+   registering RTC
+ - use UEFI variable offset on X1E
+
+[1] https://lore.kernel.org/lkml/20230126142057.25715-1-johan+linaro@kernel.org/
+[2] https://lore.kernel.org/lkml/20230202155448.6715-1-johan+linaro@kernel.org/
+[3] https://lore.kernel.org/lkml/20241015004945.3676-1-jonathan@marek.ca/
+
+
+Johan Hovold (5):
+  dt-bindings: rtc: qcom-pm8xxx: add uefi-variable offset
+  rtc: pm8xxx: add support for uefi offset
+  rtc: pm8xxx: mitigate flash wear
+  arm64: dts: qcom: sc8280xp-x13s: switch to uefi rtc offset
+  arm64: dts: qcom: x1e80100: enable rtc
+
+Jonathan Marek (2):
+  dt-bindings: rtc: qcom-pm8xxx: document qcom,no-alarm flag
+  rtc: pm8xxx: implement qcom,no-alarm flag for non-HLOS owned alarm
+
+ .../bindings/rtc/qcom-pm8xxx-rtc.yaml         |  11 +
+ .../qcom/sc8280xp-lenovo-thinkpad-x13s.dts    |  11 +-
+ arch/arm64/boot/dts/qcom/x1e80100-pmics.dtsi  |   4 +-
+ drivers/rtc/rtc-pm8xxx.c                      | 194 +++++++++++++++---
+ include/linux/rtc.h                           |   1 +
+ 5 files changed, 185 insertions(+), 36 deletions(-)
 
 -- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+2.45.2
+
 
