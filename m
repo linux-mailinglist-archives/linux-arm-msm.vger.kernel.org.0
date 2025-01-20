@@ -1,114 +1,139 @@
-Return-Path: <linux-arm-msm+bounces-45607-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-45609-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1F90FA16ED3
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Jan 2025 15:52:02 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7DCC5A16F0A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Jan 2025 16:11:01 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 44F44169FD3
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Jan 2025 14:51:56 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9D3B5169047
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Jan 2025 15:10:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 36DBF1E633C;
-	Mon, 20 Jan 2025 14:51:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EBCFB1E5702;
+	Mon, 20 Jan 2025 15:10:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ODAIjziA"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bjIGIDca"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03F0C1E5738;
-	Mon, 20 Jan 2025 14:51:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB7211B4F02;
+	Mon, 20 Jan 2025 15:10:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737384684; cv=none; b=jjI1Zm8BwK7I1GA76hZ7F7/J3Eh1FHZWxk5vgJ11kb+hByWvYdFInThtv7N1bydty8YH0mGQSXOt5wQO5ji7hKt7AtHyzB5c8YM9i87/OuPkvNhb6MxCC04tlXawSq6ztEbJyhQAS65AUEckOWm7cf6NebPOqzAKXsSMdBHyY8U=
+	t=1737385856; cv=none; b=eyWBcwk9kjcgyhN2fhw/68nUGqcS6W625/BX395RnrUOeHNMfIPhVdlKmR83uIqADmI8/fwPaEJFoRptWlIzs/5Tp8/G/ZRRlXxkOqMpVgxzzLfhTCv3EIzKlJxWHJKqhv1w2ux1l8w31nhqBixdPcwpmhlCFNUhW2Hx1alY3Bg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737384684; c=relaxed/simple;
-	bh=Cq9uXnbecisUvPYlPRYj++5pXhuwoHDwBi8w9Ktnumk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=JXX8+c1FEwFcULpU/4Gsk5Lt+2uQznkm4xsUxZdLoxUBFoDAVl278ARYdYGLYo0nrTxXSF8nTqXtQs3LKn/zQEJfrs6xCqxRxIDKAqrmORW1u30jYOBz4vZv+DSSLBG5srlDDy2bSS3ZH+ZlNRckWNoNKq5bXpsUM3eBVT600es=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ODAIjziA; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B6FEC4CEDD;
-	Mon, 20 Jan 2025 14:51:23 +0000 (UTC)
+	s=arc-20240116; t=1737385856; c=relaxed/simple;
+	bh=6ZwK+wzhierXb8EDYkagmDzg4l+1lODP+tkjuW0DeeI=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=rHsbAarMgiPwOtpt3DpKgx3WNSVcE2jFW4s7ri3jIWFYMm+l8ttdlMSM8kiSlQf0KinfNjkB1l6R57Kf3DPv1OxJzxEYBR3e0jlP0mCyS49mP96iLwiYJJpRhaGalcK93H+546QVdSf1dyoHuOaLaBqB3mrAmoXt9jSs7DY8JKc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bjIGIDca; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D679C4CEDD;
+	Mon, 20 Jan 2025 15:10:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1737384683;
-	bh=Cq9uXnbecisUvPYlPRYj++5pXhuwoHDwBi8w9Ktnumk=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=ODAIjziAkQ8NZFgb91Ky1bkIO3YNrM3AWcFRQgGtb2r9njL7W9vrtdiO3k7qn1Apr
-	 64QX6A7YjlG0uToR4QoyvgKiyck/UElWHCTttOg4SjcN8wCZcEpWBczXUr7BpKBF6U
-	 j3s2SEZ/gzh1bEHxoQI/mqHzeZnx9cEpF0gEfYBFq5CPHGyrX04GNcqDZPKqurq15/
-	 cPPw6MSUoI0e4HsXvKJMEtQNi0kejTWoCSNuPh/KMcwhH/H8EB1EvsZZWOloImqAKk
-	 zM2LX3NgzZBglaQakMsAum37L4IymOCkK974rRiO0jDvofrB8Sl8qenLS5mdthn6RC
-	 3h9IcBTsn9Arg==
+	s=k20201202; t=1737385856;
+	bh=6ZwK+wzhierXb8EDYkagmDzg4l+1lODP+tkjuW0DeeI=;
+	h=From:To:Cc:Subject:Date:From;
+	b=bjIGIDcae9LEftF+M+GKAp5TOuPD5ZClv99hjZx3x/kKz+fMupdcqyEfw9BxLLv2N
+	 ds4RHGDR8pvcdaX5/W7K50SjNBLSk6pOKepEAWBS7+cdlqUXouPONQNX5QiFyUWWyj
+	 XnIvWOqBUU138mXoB/V9+kLNsd+IM7dEPCZvQ+h8F8vMes/RNgoSTKfcyn0NUnGCUq
+	 Ze2B/JtqqBs0Ns0FOHGV3vbli0ljo7oW1pxaTOvElVaaCzZbJsOs5a1emxlCv4F/T0
+	 cUCQSUrDPvLAJJ5oPbCHoQRCGY3gL+FmTljk6DxWnpoLd/GFVapZBJcazzAEiiJagm
+	 tOh9skRMw2rpQ==
 Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan@kernel.org>)
-	id 1tZt7f-000000003H3-1LWA;
-	Mon, 20 Jan 2025 15:51:27 +0100
-Date: Mon, 20 Jan 2025 15:51:27 +0100
-From: Johan Hovold <johan@kernel.org>
-To: Alexandre Belloni <alexandre.belloni@bootlin.com>,
-	Jonathan Marek <jonathan@marek.ca>
-Cc: linux-arm-msm@vger.kernel.org, Bjorn Andersson <andersson@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	"open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" <devicetree@vger.kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	open list <linux-kernel@vger.kernel.org>,
-	"open list:REAL TIME CLOCK (RTC) SUBSYSTEM" <linux-rtc@vger.kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Satya Priya <quic_c_skakit@quicinc.com>
-Subject: Re: [PATCH v3 0/5] x1e80100 RTC support
-Message-ID: <Z45i7zOsATLzCxYf@hovoldconsulting.com>
-References: <20241015004945.3676-1-jonathan@marek.ca>
- <202501122335384a545895@mail.local>
+	(envelope-from <johan+linaro@kernel.org>)
+	id 1tZtQZ-000000003co-2IDx;
+	Mon, 20 Jan 2025 16:11:00 +0100
+From: Johan Hovold <johan+linaro@kernel.org>
+To: Maximilian Luz <luzmaximilian@gmail.com>,
+	Bjorn Andersson <andersson@kernel.org>
+Cc: Konrad Dybcio <konradybcio@kernel.org>,
+	Elliot Berman <quic_eberman@quicinc.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Johan Hovold <johan+linaro@kernel.org>,
+	stable@vger.kernel.org
+Subject: [PATCH] firmware: qcom: uefisecapp: fix efivars registration race
+Date: Mon, 20 Jan 2025 16:10:00 +0100
+Message-ID: <20250120151000.13870-1-johan+linaro@kernel.org>
+X-Mailer: git-send-email 2.45.2
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <202501122335384a545895@mail.local>
+Content-Transfer-Encoding: 8bit
 
-Hi Alexandre and Jonathan,
+Since the conversion to using the TZ allocator, the efivars service is
+registered before the memory pool has been allocated, something which
+can lead to a NULL-pointer dereference in case of a racing EFI variable
+access.
 
-On Mon, Jan 13, 2025 at 12:35:38AM +0100, Alexandre Belloni wrote:
-> Did I miss v4 of this series?
+Make sure that all resources have been set up before registering the
+efivars.
 
-We are still waiting for Qualcomm to provide a free and safe-to-use
-allocation for the RTC offset in the PMIC.
+Fixes: 6612103ec35a ("firmware: qcom: qseecom: convert to using the TZ allocator")
+Cc: stable@vger.kernel.org	# 6.11
+Cc: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+---
 
-I got tired of reminding the Qualcomm folks about this and instead
-revived my patches for using the UEFI variable that the firmware (and
-Windows) use for the offset.
+Note that commit 40289e35ca52 ("firmware: qcom: scm: enable the TZ mem
+allocator") looks equally broken as it allocates the tzmem pool only
+after qcom_scm_is_available() returns true and other driver can start
+making SCM calls.
 
-I included Jonathan's v3 series after making the changes that we
-discussed here (and a few more).
-
-The result is here:
-
-	https://lore.kernel.org/lkml/20250120144152.11949-1-johan+linaro@kernel.org/
-
-and should allow us to enable the RTC on X1E today (and also avoids
-running into the same SDAM allocation issue for the next platform).
-
-> On 14/10/2024 20:47:25-0400, Jonathan Marek wrote:
-> > x1e80100 needs a workaround because the RTC alarm is not owned by HLOS.
-> > It also needs the same offset workaround as sc8280xp/etc.
-> > 
-> > v2: remove duplicated ops and use RTC_FEATURE_ALARM instead
-> > v3:
-> >  - renamed flag to qcom,no-alarm
-> >  - don't remove alarm registers/interrupt from dts
-> > 
-> > Jonathan Marek (5):
-> >   rtc: pm8xxx: implement qcom,no-alarm flag for non-HLOS owned alarm
-> >   dt-bindings: rtc: qcom-pm8xxx: document qcom,no-alarm flag
-> >   arm64: dts: qcom: x1e80100-pmics: enable RTC
-> >   arm64: dts: qcom: x1e80100-crd: add rtc offset to set rtc time
-> >   arm64: dts: qcom: x1e78100-t14s: add rtc offset to set rtc time
+That one appears to be a bit harder to fix as qcom_tzmem_enable()
+currently depends on SCM being available, but someone should definitely
+look into untangling that mess.
 
 Johan
+
+
+
+
+ .../firmware/qcom/qcom_qseecom_uefisecapp.c    | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
+
+diff --git a/drivers/firmware/qcom/qcom_qseecom_uefisecapp.c b/drivers/firmware/qcom/qcom_qseecom_uefisecapp.c
+index 447246bd04be..98a463e9774b 100644
+--- a/drivers/firmware/qcom/qcom_qseecom_uefisecapp.c
++++ b/drivers/firmware/qcom/qcom_qseecom_uefisecapp.c
+@@ -814,15 +814,6 @@ static int qcom_uefisecapp_probe(struct auxiliary_device *aux_dev,
+ 
+ 	qcuefi->client = container_of(aux_dev, struct qseecom_client, aux_dev);
+ 
+-	auxiliary_set_drvdata(aux_dev, qcuefi);
+-	status = qcuefi_set_reference(qcuefi);
+-	if (status)
+-		return status;
+-
+-	status = efivars_register(&qcuefi->efivars, &qcom_efivar_ops);
+-	if (status)
+-		qcuefi_set_reference(NULL);
+-
+ 	memset(&pool_config, 0, sizeof(pool_config));
+ 	pool_config.initial_size = SZ_4K;
+ 	pool_config.policy = QCOM_TZMEM_POLICY_MULTIPLIER;
+@@ -833,6 +824,15 @@ static int qcom_uefisecapp_probe(struct auxiliary_device *aux_dev,
+ 	if (IS_ERR(qcuefi->mempool))
+ 		return PTR_ERR(qcuefi->mempool);
+ 
++	auxiliary_set_drvdata(aux_dev, qcuefi);
++	status = qcuefi_set_reference(qcuefi);
++	if (status)
++		return status;
++
++	status = efivars_register(&qcuefi->efivars, &qcom_efivar_ops);
++	if (status)
++		qcuefi_set_reference(NULL);
++
+ 	return status;
+ }
+ 
+-- 
+2.45.2
+
 
