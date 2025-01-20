@@ -1,87 +1,87 @@
-Return-Path: <linux-arm-msm+bounces-45571-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-45573-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2FB92A16AF2
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Jan 2025 11:41:32 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6E9B6A16AF6
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Jan 2025 11:44:01 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 45C903A4E35
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Jan 2025 10:41:25 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id E51657A348B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Jan 2025 10:43:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 075971B4F15;
-	Mon, 20 Jan 2025 10:41:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EC61C1B87D6;
+	Mon, 20 Jan 2025 10:43:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="P0GktQo7"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="4fNYZGUh"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
+Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3175C14387B
-	for <linux-arm-msm@vger.kernel.org>; Mon, 20 Jan 2025 10:41:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D225194147
+	for <linux-arm-msm@vger.kernel.org>; Mon, 20 Jan 2025 10:43:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737369689; cv=none; b=fbMtQAH48D92aXMyad1iBJM7fymv1qiJKGfDFyvxHYDSWRznXci8Ojzr+fDk0ZR8xukkN/d+4mjPv19mSJasaoJPArvLmnLnbvWspVPleEB2dK/N7l4dN3OiVXm48MX9ojMpetdXynqSDFubAoocz1AUVkeckUJEvauMAflrZPI=
+	t=1737369826; cv=none; b=tR4DjwYj/gQ7ndPHp7wBN4iJM9zpwP3vXGFweFtBc29nvHqXFLYCuSrUpxS7k/Sn91Rs82JPScCGTvx7Au50WafGK7W+JvZ/OdmwYCmoPRieWMbJDZpVf6neUlF1iOHrYuaoodbEXZ51HouYiB4xZLfDcJyf4YpFmnKRhiStfug=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737369689; c=relaxed/simple;
-	bh=X6rzbi/DOyJt96CiJTUfqNxFG+FmcgUKxIxrzmRXXAg=;
+	s=arc-20240116; t=1737369826; c=relaxed/simple;
+	bh=9FfZVe4b3vhg+Sfn5IiARIE7pS6oqmRvc1QDczltBuo=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=bqv+WAG3j9CrQw8wXjlh9P0UHXRYkgooj7ua2/tzSMWa+k1Ub/zAsdnPJeVpl55SakK1G28EMgr2zjGx1eCAOP4w4TluNM2EIaDgCL5RoLJSAO8rChrR0dF8ehrj6ASgv2waH2MblJxLTN8jot83AH2lAdY9Il2ICKjDzT8f588=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=P0GktQo7; arc=none smtp.client-ip=209.85.128.54
+	 To:Cc:Content-Type; b=rb+lpWZjF/5FWz/ocfWFuFq/pqG2g2jDEGejpqO3nPyrhN9yOCCKmTOmYdzZjf/sJhpmEo2RdsaWW+Ysk66JN41ll4qZryZ+LicKvXI6YrlPObJxv/rTW5GebzytjnMJA7i1N5eAEiu3X5SwZrceFQu58xrs4XqKeiOlLJBTioE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=4fNYZGUh; arc=none smtp.client-ip=209.85.128.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
-Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-43621d2dd4cso74815e9.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Jan 2025 02:41:27 -0800 (PST)
+Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-435b0df5dbdso73165e9.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Jan 2025 02:43:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1737369686; x=1737974486; darn=vger.kernel.org;
+        d=google.com; s=20230601; t=1737369823; x=1737974623; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=wa8U7ekwRqzLAwTlgofMJWDrrrDutQV4QhHlQEndWGc=;
-        b=P0GktQo70YZrnF3DFzME+2I73sivY8UF7L86bpdiFSvMB3qT5satnYvBnzij8HzNxl
-         WErIC8GdWZ0dsenVyWl+aUA4VFEdmosmR5+tduKEEt9YBomywfqTYHfQQzzU/xisSD7Q
-         nEsjXN8cCny0y2ei0MwAzD9h/6JFhEi6FbeeH38H9vlOg5G5Vjf1cGMQ3zWL8Z0b6Viu
-         YMNTkeKnkwH1ToYjzMQk/QI4y0WSSNV8Nfcorcmjo9jVPwe6zkemckAczLj0Yc8uJlY/
-         Xy3xkAOLsz6V8xbLuf9mnpHbr+VGOEnTBpzmwAnEPwFEdI47/DYPvBr1fC1/E1MKfImX
-         amxw==
+        bh=gtyHizTgd9OfFYLkI8lyOfPyBAyYNnRj5gwYAtdvydI=;
+        b=4fNYZGUh9ScYp/gzs+YDc/RxDMrRj6o2QMlet0TT1qIeoBC0Noll0u3CjfmGWYi0ck
+         vLYiLyJB6+5BP9V+kAymv+rrfRD64yLhW+JWF9HQOi8rv7mLsL+LvC7UOsPanHy1i0wK
+         5gL9CaYIR6fyT/tVtzM9/ChfwTs7NilkJVwRwg6jZboXx3/GYQMDShF0LRF71FzXHHUB
+         a2xEBliDWoc5ct5LYWAjiSnMBBOFNb2EnLbCdioz9Ed1NzTVTPHNyKTNxboEY0DxKqmL
+         nbyXi2+81H1vCrLaSMsSTQLPKAm81QTv+ktIO7CU7A/OBOYbNp5qQr9itP5zS+75J4ZC
+         arjw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1737369686; x=1737974486;
+        d=1e100.net; s=20230601; t=1737369823; x=1737974623;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=wa8U7ekwRqzLAwTlgofMJWDrrrDutQV4QhHlQEndWGc=;
-        b=Vh3YAMsEfY6su3/EPnz8Lcs7JD9FNjs2Egm2VIfCEO3yKadZUcF+wto+uiMw7k9c5p
-         VoYhoiU+NGWxyMLRFXsHcwQ5qYb6Gb/CXx4KlTuQlexCwzJO3zDEvuJID4HqT0k9BDLn
-         Yfi7FHQiGX9S35PyhfiWKxIbok9+xWNG8syJDdgwPIsw+EsYRxSNDXaJ+a8BWIrr9wN5
-         UV0YEbFREaz5lXtWz8+0H8kbNo0ioX3Z+zTPqlekzdCzcnRzX7jp7qi79BWa6b9WLag/
-         /Sq/EH4qToJL4xRuYOJRYPfP1WojIjnI+JtUtgvy81XTZLZ0qOXRexc9i9lQ7CKRMfuK
-         2tyQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUMT9vUuLNY1QQMaxFM8DUS0jkJCz1j92jBnisxFg8ad2bWMh1UjTD6SosIrcpYkY9U5SflnSmaoAgBGbf4@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz98i04USYShY63/21vEJlNd0XvSiLOTvwKJ9nd493/FwNykBmM
-	MIma6MRKY8RvedgcnjTvcJRqa2zBAoUXNsAvaA3EMWgZJdo4igN1Lm0NpV2QzEb+VT4nhBW9we5
-	1uxgXbL19zNRhFXMl1eZcxNuxin6pj5kuXFQY
-X-Gm-Gg: ASbGnctV7AX/u9OCaBAFDAWxeS1U2DX+8ku/nAyk7Ejv6Ui/MOIsz3mECvhG1Fo/pg9
-	Va8jM9i7cXNvA7dEyj8bCBi7/XPojAF160S70tqtuu0bJ4nOoqA==
-X-Google-Smtp-Source: AGHT+IH8V90wUWmza7AHfIRy6XGoAOzH/BHgH1iFvRMewjUCt2v1FkW0WfzG9YSgoTPWS8RLVSaEKE3KU2xpoH2YkDs=
-X-Received: by 2002:a05:600c:160a:b0:42c:9e35:cde6 with SMTP id
- 5b1f17b1804b1-438a08f2f4amr2342115e9.2.1737369686185; Mon, 20 Jan 2025
- 02:41:26 -0800 (PST)
+        bh=gtyHizTgd9OfFYLkI8lyOfPyBAyYNnRj5gwYAtdvydI=;
+        b=IhKN6itrRQY5vY2+SisBg3fA6/sBuhivLsjP+bLUFuYxCzqvdXx0jdZmqwyj+/Bpbd
+         z7Bq41tyT5iyAh1gTw1P/bwJkZOSkGhtwUZBqUPwCLHgDzN9C43aLW2RXa1Ne4JwW2wA
+         nbZ22+xFx7692AXonAbMZSSgjM6TLrLtyB8a4yGEypl75Hk04itH/SQdTo1wdmMnl+Cd
+         D8CbrMRWzdyVCv6D1hZMwyKwQDjSbAujZ6NaLRRJ8TSZaEJX/EMNYCQ4jcFrP7sA3jVq
+         sFNBq1YkU/YswKhyoo2lov5jqUq1IVlyd7kyF0B30v7lQnHtwZLiepM1B23G8WSUe8rg
+         1LAg==
+X-Forwarded-Encrypted: i=1; AJvYcCWcoR/HlvC7KP1sPQNeYbv2wM7gsUPC5yjsiiJzb+QRwZgU2HjFs0cdbbmnFjyrfUo4PhTGBxAf5ot6YU3k@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw5fZ9jmCNJMf1O+jCIrkKaTm7eI9LBDkCIeugJO8KYdej60lo6
+	R56smFSr2UrdWYTIamMpAngR4BF0syPeS3FsxHERNvp2mNbnHNgpF/0kFkOChMk2pnLHw99X8jh
+	+x/48RJiDkfJyHUhOh0WRTiNPTVzUc0PASM6N
+X-Gm-Gg: ASbGncvOyoCvxt++KjdfXgnV3CWSx7t3B5WOv4W3hLEwhDTXPg7j6jPEy9Y8LrX2Nt1
+	fX8NGwnNP7mK6um42hga2reHzKR0wdRG+qUyR1O2+fruc8CHdZg==
+X-Google-Smtp-Source: AGHT+IEFtQ6XvmXZuX/8tACQygJkjqQww0pl9ZAAKVz9eTLzDlyCLWLq0l2L6OY8U+uEiBnaF1CwVJq7Ea7mRykWRo8=
+X-Received: by 2002:a05:600c:3b9c:b0:436:186e:13a6 with SMTP id
+ 5b1f17b1804b1-438a0c4c155mr2424435e9.6.1737369823127; Mon, 20 Jan 2025
+ 02:43:43 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250117163001.2326672-1-tabba@google.com> <20250117163001.2326672-6-tabba@google.com>
- <r425iid27x5ybtm4awz3gx2sxibuhlsr6me3e6e3kjtl5nuwia@2xgh3frgoovs>
-In-Reply-To: <r425iid27x5ybtm4awz3gx2sxibuhlsr6me3e6e3kjtl5nuwia@2xgh3frgoovs>
+References: <20250117163001.2326672-1-tabba@google.com> <20250117163001.2326672-2-tabba@google.com>
+ <0f588655-62c0-46c3-bd15-01016615953f@redhat.com>
+In-Reply-To: <0f588655-62c0-46c3-bd15-01016615953f@redhat.com>
 From: Fuad Tabba <tabba@google.com>
-Date: Mon, 20 Jan 2025 10:40:49 +0000
-X-Gm-Features: AbW1kvY0Ctf9m93HrlbiEv-nOB8N3ILayL1LhKZu0dv-V19y4dKMdkR14DjXPsg
-Message-ID: <CA+EHjTzRnGoY_bPcV4VFb-ORi5Z4qYTdQ-w4A0nsB91bUAOuAg@mail.gmail.com>
-Subject: Re: [RFC PATCH v5 05/15] KVM: guest_memfd: Folio mappability states
- and functions that manage their transition
-To: "Kirill A. Shutemov" <kirill@shutemov.name>
+Date: Mon, 20 Jan 2025 10:43:06 +0000
+X-Gm-Features: AbW1kvZLQbxvixcsMAGSfw-d4tIbwHt3wKcd2__DJ7I2f8BhUWRabX-EZuB6KlU
+Message-ID: <CA+EHjTwxeEwN4RV_ga+qd_cOQut+_Ry8RA_ROK9jYkspSW1nqA@mail.gmail.com>
+Subject: Re: [RFC PATCH v5 01/15] mm: Consolidate freeing of typed folios on
+ final folio_put()
+To: David Hildenbrand <david@redhat.com>
 Cc: kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, 
 	pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au, 
 	anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com, 
@@ -91,8 +91,8 @@ Cc: kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org,
 	jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com, 
 	yu.c.zhang@linux.intel.com, isaku.yamahata@intel.com, mic@digikod.net, 
 	vbabka@suse.cz, vannapurve@google.com, ackerleytng@google.com, 
-	mail@maciej.szmigiero.name, david@redhat.com, michael.roth@amd.com, 
-	wei.w.wang@intel.com, liam.merwick@oracle.com, isaku.yamahata@gmail.com, 
+	mail@maciej.szmigiero.name, michael.roth@amd.com, wei.w.wang@intel.com, 
+	liam.merwick@oracle.com, isaku.yamahata@gmail.com, 
 	kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com, steven.price@arm.com, 
 	quic_eberman@quicinc.com, quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, 
 	quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com, 
@@ -104,90 +104,91 @@ Cc: kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org,
 	jthoughton@google.com
 Content-Type: text/plain; charset="UTF-8"
 
-On Mon, 20 Jan 2025 at 10:30, Kirill A. Shutemov <kirill@shutemov.name> wrote:
+On Mon, 20 Jan 2025 at 10:39, David Hildenbrand <david@redhat.com> wrote:
 >
-> On Fri, Jan 17, 2025 at 04:29:51PM +0000, Fuad Tabba wrote:
-> > +/*
-> > + * Marks the range [start, end) as not mappable by the host. If the host doesn't
-> > + * have any references to a particular folio, then that folio is marked as
-> > + * mappable by the guest.
-> > + *
-> > + * However, if the host still has references to the folio, then the folio is
-> > + * marked and not mappable by anyone. Marking it is not mappable allows it to
-> > + * drain all references from the host, and to ensure that the hypervisor does
-> > + * not transition the folio to private, since the host still might access it.
-> > + *
-> > + * Usually called when guest unshares memory with the host.
-> > + */
-> > +static int gmem_clear_mappable(struct inode *inode, pgoff_t start, pgoff_t end)
+> On 17.01.25 17:29, Fuad Tabba wrote:
+> > Some folio types, such as hugetlb, handle freeing their own
+> > folios. Moreover, guest_memfd will require being notified once a
+> > folio's reference count reaches 0 to facilitate shared to private
+> > folio conversion, without the folio actually being freed at that
+> > point.
+> >
+> > As a first step towards that, this patch consolidates freeing
+> > folios that have a type. The first user is hugetlb folios. Later
+> > in this patch series, guest_memfd will become the second user of
+> > this.
+> >
+> > Suggested-by: David Hildenbrand <david@redhat.com>
+> > Signed-off-by: Fuad Tabba <tabba@google.com>
+> > ---
+> >   include/linux/page-flags.h | 15 +++++++++++++++
+> >   mm/swap.c                  | 24 +++++++++++++++++++-----
+> >   2 files changed, 34 insertions(+), 5 deletions(-)
+> >
+> > diff --git a/include/linux/page-flags.h b/include/linux/page-flags.h
+> > index 691506bdf2c5..6615f2f59144 100644
+> > --- a/include/linux/page-flags.h
+> > +++ b/include/linux/page-flags.h
+> > @@ -962,6 +962,21 @@ static inline bool page_has_type(const struct page *page)
+> >       return page_mapcount_is_type(data_race(page->page_type));
+> >   }
+> >
+> > +static inline int page_get_type(const struct page *page)
 > > +{
-> > +     struct xarray *mappable_offsets = &kvm_gmem_private(inode)->mappable_offsets;
-> > +     void *xval_guest = xa_mk_value(KVM_GMEM_GUEST_MAPPABLE);
-> > +     void *xval_none = xa_mk_value(KVM_GMEM_NONE_MAPPABLE);
-> > +     pgoff_t i;
-> > +     int r = 0;
+> > +     return page->page_type >> 24;
+> > +}
 > > +
-> > +     filemap_invalidate_lock(inode->i_mapping);
-> > +     for (i = start; i < end; i++) {
-> > +             struct folio *folio;
-> > +             int refcount = 0;
+> > +static inline bool folio_has_type(const struct folio *folio)
+> > +{
+> > +     return page_has_type(&folio->page);
+> > +}
 > > +
-> > +             folio = filemap_lock_folio(inode->i_mapping, i);
-> > +             if (!IS_ERR(folio)) {
-> > +                     refcount = folio_ref_count(folio);
-> > +             } else {
-> > +                     r = PTR_ERR(folio);
-> > +                     if (WARN_ON_ONCE(r != -ENOENT))
-> > +                             break;
+> > +static inline int folio_get_type(const struct folio *folio)
+> > +{
+> > +     return page_get_type(&folio->page);
+> > +}
 > > +
-> > +                     folio = NULL;
-> > +             }
-> > +
-> > +             /* +1 references are expected because of filemap_lock_folio(). */
-> > +             if (folio && refcount > folio_nr_pages(folio) + 1) {
+> >   #define FOLIO_TYPE_OPS(lname, fname)                                        \
+> >   static __always_inline bool folio_test_##fname(const struct folio *folio) \
+> >   {                                                                   \
+> > diff --git a/mm/swap.c b/mm/swap.c
+> > index 10decd9dffa1..6f01b56bce13 100644
+> > --- a/mm/swap.c
+> > +++ b/mm/swap.c
+> > @@ -94,6 +94,20 @@ static void page_cache_release(struct folio *folio)
+> >               unlock_page_lruvec_irqrestore(lruvec, flags);
+> >   }
+> >
+> > +static void free_typed_folio(struct folio *folio)
+> > +{
+> > +     switch (folio_get_type(folio)) {
+> > +     case PGTY_hugetlb:
+> > +             free_huge_folio(folio);
+> > +             return;
+> > +     case PGTY_offline:
+> > +             /* Nothing to do, it's offline. */
+> > +             return;
 >
-> Looks racy.
->
-> What prevent anybody from obtaining a reference just after check?
->
-> Lock on folio doesn't stop random filemap_get_entry() from elevating the
-> refcount.
->
-> folio_ref_freeze() might be required.
+> Please drop the PGTY_offline part for now, it was rather to highlight
+> what could be done.
 
-I thought the folio lock would be sufficient, but you're right,
-nothing prevents getting a reference after the check. I'll use a
-folio_ref_freeze() when I respin.
+Will do.
 
 Thanks,
 /fuad
 
-> > +                     /*
-> > +                      * Outstanding references, the folio cannot be faulted
-> > +                      * in by anyone until they're dropped.
-> > +                      */
-> > +                     r = xa_err(xa_store(mappable_offsets, i, xval_none, GFP_KERNEL));
-> > +             } else {
-> > +                     /*
-> > +                      * No outstanding references. Transition the folio to
-> > +                      * guest mappable immediately.
-> > +                      */
-> > +                     r = xa_err(xa_store(mappable_offsets, i, xval_guest, GFP_KERNEL));
-> > +             }
-> > +
-> > +             if (folio) {
-> > +                     folio_unlock(folio);
-> > +                     folio_put(folio);
-> > +             }
-> > +
-> > +             if (WARN_ON_ONCE(r))
-> > +                     break;
-> > +     }
-> > +     filemap_invalidate_unlock(inode->i_mapping);
-> > +
-> > +     return r;
-> > +}
+>
+> But the real goal will be to not make offline pages
+> use the refcount at all (frozen).
+>
+> If we really want the temporary PGTY_offline change, it should be
+> introduced separately.
+>
+> Apart from that LGTM!
 >
 > --
->   Kiryl Shutsemau / Kirill A. Shutemov
+> Cheers,
+>
+> David / dhildenb
+>
 
