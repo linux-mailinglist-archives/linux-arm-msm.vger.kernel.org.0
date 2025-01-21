@@ -1,87 +1,89 @@
-Return-Path: <linux-arm-msm+bounces-45676-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-45677-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id B0C1AA17C55
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Jan 2025 11:55:17 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D9100A17C8E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Jan 2025 12:01:08 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7780A3AAC06
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Jan 2025 10:55:01 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 756927A0431
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Jan 2025 11:00:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AC7CC1F0E50;
-	Tue, 21 Jan 2025 10:55:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0BD581F0E5C;
+	Tue, 21 Jan 2025 11:01:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Hi3IJUlj"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="tM6RtouH"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f45.google.com (mail-lf1-f45.google.com [209.85.167.45])
+Received: from mail-lf1-f53.google.com (mail-lf1-f53.google.com [209.85.167.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 104A31EE02F
-	for <linux-arm-msm@vger.kernel.org>; Tue, 21 Jan 2025 10:54:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 308C41B4137
+	for <linux-arm-msm@vger.kernel.org>; Tue, 21 Jan 2025 11:00:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737456902; cv=none; b=HTq0fx8uCdmOLQr0CwS2D0Mu+rGxINN07mcaMvRaATq2hy2mNeIRIBIvRt7s6PhLKXhEQ/lUcqKYudXlGbsKZU79uNRM/pGaSFMQf7tHIeFrqZIZCQ+CHPoVkyc+MylDEVZUnUcE8vnWRJbfBLaGjr3NJ99bH+mMX4OfYdfaEm8=
+	t=1737457259; cv=none; b=nHd1ffRb101saKnJfMeSchaGcRK2AQ0pgQwO/EBLJlXxLYa9JbwA00snMg3OJl0QpBESHucFdx3PS8mflpvBGGH9U7zY56KGDFw4GnZYxavNDa3ObhGuO8TnVkUnBUGcw0kY5gaSaApH9RuB8VUZAhd4vtNC+WPLBIpzgpnuCgE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737456902; c=relaxed/simple;
-	bh=suqN2ZHLOyvnJ0tEJG+a+/bAxC2+XOOpTblkLaQ0/c0=;
+	s=arc-20240116; t=1737457259; c=relaxed/simple;
+	bh=7t5zcBFeWpXAYM63z2r3g3/O5AF3W9a9XGM/zJFVLY0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=lFuIeozu0JBDkgVghAZ0kFKzUl1oFztZo2tr4QQG3HeDEnS8vmjU71Tw/0f8t8Gn9BF7sXqoQ4imRxjXCBSUhZrN3C9zHPUhlJecjXkVpp4giNtPwWFqbyBNEfpKeS9D+ODFkCr/4QHlt4dNDHEDTHZMecFVsbjlxujr1dl4QZM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Hi3IJUlj; arc=none smtp.client-ip=209.85.167.45
+	 Content-Type:Content-Disposition:In-Reply-To; b=P7BNmpqZBnf6wT/4in4zd84VkXT7jQpGvl1RvSJtn9OmEbo37FBW6Q/UMBEsFcWXOw4m92eju4JeNNGAtF4n+HsAzeJwIwQMYic05t+9rBdHEBWAuqOecWqLRD8gsq3pnQ0BJvYccK3/fUCQVooukF9h+Wq0tetSTZlRq5yHE90=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=tM6RtouH; arc=none smtp.client-ip=209.85.167.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-53df80eeeedso5480395e87.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Jan 2025 02:54:59 -0800 (PST)
+Received: by mail-lf1-f53.google.com with SMTP id 2adb3069b0e04-53f22fd6832so5768099e87.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Jan 2025 03:00:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1737456898; x=1738061698; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1737457255; x=1738062055; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=OdPCNN0jYghlYbdGF2QDtzVKgPUcQQH5ilSSdrg5tIs=;
-        b=Hi3IJUlj3Nedk5CndIMcLELEtRV17lFVrdvkQmQyZMMP2Ha4XlyK/1jIao6PpknDvS
-         QxuK2cNu0AXu28F/YGg1txWElJpT+0sACAWmrPQl43uEYjBYdGAdvHph4E7QjTvQh8bd
-         RyuELhcuFHU+6b8I1BYrZr5MwYq30+OjE63WlpzZWJABH6Dt7Y66prFCi6qDhhOSben8
-         EngxWFK53G2uBeU6j/M3EO8lion44cwjUxVJLQCdecgUHLzwfT1ewHQo7o3hRJLqMGaC
-         nrmUSDDwIm8BT939fdlpw9n8d4/6FwpqwVz+aPb+lnpg/20env/7sVwZyhw4a/dvarsB
-         ex+w==
+        bh=yUJ9VGxm2f2ND6SfmvCg1T6YHXm+1DnqS1Cjcy8gePw=;
+        b=tM6RtouH5R3eLF18c9P8kQue/9IpxHeTuk2IjHpWPrbbb8Q1RKirN8A4BccvDZdfIr
+         l6ZDj63SMbWHfUW8naV0dh9X4zTIoTZTVMXvB3BbB2UxbLXgOdhjTMDE9AsenTE9XKBF
+         vAk8TnChbDJj+2V4c1qDKp2rdlCxrXGi8TromLibdddo/dpuXqRfHPUdUUDkKKg/gQ4L
+         Vugke/n2Pq63yAz+5TgxOorJKgegYzu4TuV7AMUkphjMSR+QIcN5KX2V8JhqVKjIXRgM
+         OaKx4vG5ZhF4KkXgMnQi56URMfs+Yq3qEkbBOdK2PHNvz6SDu+jfBfyY4U1bu70P01mc
+         km7w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1737456898; x=1738061698;
+        d=1e100.net; s=20230601; t=1737457255; x=1738062055;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=OdPCNN0jYghlYbdGF2QDtzVKgPUcQQH5ilSSdrg5tIs=;
-        b=GEYuGyJk1rG8VrEQWWDO/LkoGAuv2fOnUODZW/hIrYvejC3ESzsCtBeeKeqZGHO3H9
-         yHH6srGzo4FjXEqwUSb5ZXrXKnPXFTnfS6sm0eHPFeDSpX+oAFAhL49vART269vHOkEp
-         08MAtC6EsxQHDtsVzN05vtvHMQXYYPpEZ/+MqVoL3ZR3qVK0SN/tIDlkE/Is3XJRiIaC
-         te+A4tsSmhQi1WBZY1QRkuGopXXDeQl5BTc+yfISkLhFTNplBHCLfXwCA9khjpnvcg7i
-         fSWNLJUAUR+rOKPtD5QuK3PojMt34yBh2d5TcTok0EDrjTI0LzhGVg6iTi+THC4pDOeT
-         aa4A==
-X-Forwarded-Encrypted: i=1; AJvYcCU8tMy6MKcJIqUf8SIo9LKKZE7Q7h0SJLNLTnGmZUcl1Ye70wTxHpG5qVviOMLTAJWe3JqXV2kfNSXRO7zz@vger.kernel.org
-X-Gm-Message-State: AOJu0YwWy/3XiKdYctHm8W53EY/BJFUf9IkJJWR2DNYA2WyXAemoGz+b
-	9Shnql9VJ06aM+LEI+OcIrdyKKYAsBAYbeazQxARRck8MTRdPYL+gr1E2G3A4mOV0dKnqSMe4SB
-	YGQA=
-X-Gm-Gg: ASbGnctFJbwgW6Jb13PSIeifF0hKCgsmrNjC+DE+IqUoqof8vIYvHNJEDaaSwsQGxLi
-	p+VWALAe3k6J6OL7e+Co+QBSo43/afZV/NV9CmiYEbpT71onPgopQr3b1ninoY3SdlL8v4OzBAR
-	6kuulROeh4ozhbnfREGJgjjKqCv41LrynqGZH4tL76e1mRfBQbdJPpCEf1RxqkUhlqRiNIoD8V+
-	xuhqXy52M4HRV0WUNMczPZaEAw6yUkyI0YxrvJ/8LYOrW8J0FvdxYSDrAAH9uQ0n6Ld4vp7Budw
-	fEC2I2V8LJ5Dl/wrbzj380pRzBIC/qyJFP7a6xEqLR8inxqlJA==
-X-Google-Smtp-Source: AGHT+IFLUhwiFrI3r8Ts8Y2LzxmuODFGe2bP585A/BiMX2EBYDp+GEEGfcOtuoPp/9NtEAw1iqdAKQ==
-X-Received: by 2002:a05:6512:4887:b0:542:8da7:242f with SMTP id 2adb3069b0e04-5439c21f218mr4503926e87.10.1737456898023;
-        Tue, 21 Jan 2025 02:54:58 -0800 (PST)
+        bh=yUJ9VGxm2f2ND6SfmvCg1T6YHXm+1DnqS1Cjcy8gePw=;
+        b=e3RV32p4k4O4L3q9XKh7DRpeGKKXNeDYXyU3HwTjel6X7OZhYqky1O8Rr9vzsLOWVu
+         7qseeQlui6jVJIQvcNMOO8o/2ZN+XRJvXZjyWQvZdhpC2+ARjNTe575cnWd9l7YwRnOr
+         2KzSHF09QQOdP/EupoXV67lQ19kH8LKCJqiemVWNnnhLillfaS1lzoFpb30v3g1u9HnI
+         oBSTohmnPLLEvx1J1xN29qjI73vMVq6s5kgfwjc38JWi18XEVliC1F7NxVfhA4cteeZp
+         c0K2Th+foxzBKm0m5h2RXvoUL2bWvqyZJMoc4LSsMd+TTvh0QC6KZl+Xl9HN4wstKRRc
+         AHUQ==
+X-Forwarded-Encrypted: i=1; AJvYcCV1WGgWzlR3qFOLvjyZjBc4d0Sjo0hnF65qILyCDemL4UowYv2L9ATAmnV0fSruQzG+yCRFBEwJYifjzez1@vger.kernel.org
+X-Gm-Message-State: AOJu0YyEVZyHGgeBe38kqlgZ+nsf425UhFhm0kI/+bInp0tWTVSOehE3
+	0uNyRufmTklHIv+lQO6lpGZjz4zemts0se6XzQgAher8ip2E0AeGPUQuGJsSsUOXDyuV8SRXfhA
+	Yu/4=
+X-Gm-Gg: ASbGncv87x1O9fOYjqkCNIMzP/lX5+cf9SHPZwiC+5ypOQwWpz4Sx5WnW8JOZdGtQVc
+	TcVqVaDhxTaIR1JEk/niMRFWXit7mkzcwtXFFg2DQjG2FfQa0ii56NcDE2Biq3mkfWJCdvvJfVi
+	aQ3NM3Tm3Y9mBNujxZcVqHK2FM6Wt+czbTquiGAcN4iOjbj3jAQUCI8gG0R7tx9ofkbgHhrg8uO
+	VOQYLWE4cYewyTmguBwDpItXkME4jzQAI/ii4dqyI1n+S2Cs0+LM6ndoWrdSmdAUD7RDUjjBUOd
+	4XUWFXztVk2bA/Z6ploD/HgbHdQl8VZDPmHr0K05BUNT050Ysw==
+X-Google-Smtp-Source: AGHT+IF/4CV/h0ok4NQiia2tIo8sTH9wsJWy0DxL7KKHiRI7CPOolPiToKbAfH3+6UTqhbyBH0p6WQ==
+X-Received: by 2002:a05:6512:3e03:b0:540:1f7d:8bc0 with SMTP id 2adb3069b0e04-5439c287470mr6386525e87.49.1737457255180;
+        Tue, 21 Jan 2025 03:00:55 -0800 (PST)
 Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5439af78c2csm1764126e87.226.2025.01.21.02.54.57
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5439af78d62sm1765544e87.241.2025.01.21.03.00.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 21 Jan 2025 02:54:57 -0800 (PST)
-Date: Tue, 21 Jan 2025 12:54:56 +0200
+        Tue, 21 Jan 2025 03:00:53 -0800 (PST)
+Date: Tue, 21 Jan 2025 13:00:51 +0200
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Md Sadre Alam <quic_mdalam@quicinc.com>
-Cc: vkoul@kernel.org, kees@kernel.org, fenghua.yu@intel.com, 
-	linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	djakov@kernel.org, quic_srichara@quicinc.com, quic_varada@quicinc.com
-Subject: Re: [PATCH v3] dmaengine: qcom: bam_dma: Fix BAM_RIVISON register
- handling
-Message-ID: <okiy7n5nvjadbfczmnn2eoxwe36ilug5xutben3rg2nkvpehb5@kr2t4hvidaht>
-References: <20250121091241.2646532-1-quic_mdalam@quicinc.com>
+To: Chukun Pan <amadeus@jmu.edu.cn>
+Cc: Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+	Conor Dooley <conor+dt@kernel.org>, Rob Herring <robh@kernel.org>, linux-arm-msm@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH v5 3/5] arm64: dts: qcom: ipq6018: move mp5496 regulator
+ out of soc dtsi
+Message-ID: <z6vspyykbj7e55uequibwacdx7uuwubtuabnsxagcudmqrfwn3@4gfna5rqiimc>
+References: <20250120140006.655463-1-amadeus@jmu.edu.cn>
+ <20250120140006.655463-4-amadeus@jmu.edu.cn>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -90,75 +92,134 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250121091241.2646532-1-quic_mdalam@quicinc.com>
+In-Reply-To: <20250120140006.655463-4-amadeus@jmu.edu.cn>
 
-On Tue, Jan 21, 2025 at 02:42:41PM +0530, Md Sadre Alam wrote:
-> This patch resolves a bug from the previous commit where the
+On Mon, Jan 20, 2025 at 10:00:04PM +0800, Chukun Pan wrote:
+> Some IPQ60xx SoCs don't come with the mp5496 pmic chip. The mp5496
+> pmic was never part of the IPQ60xx SoC, it's optional, so we moved
+> it out of the soc dtsi.
 
-Please check Documentation/process/submitting-patches.rst, 'This
-patch...'
-
-> BAM_DESC_CNT_TRSHLD register was conditionally written based on BAM-NDP
-> mode. The issue was reading the BAM_REVISION register hanging if num-ees
-
-First start with the issue description, then proceed to the changes
-description.
-
-> was not zero, which occurs when the SoCs power on BAM remotely. So the
-> BAM_REVISION register read has been moved to inside if condition.
-
-Imperative language, please. While we are at it, please also fix commit
-subject.
+Wouldn't it be better to move it to the board file without having
+intermediate include files?
 
 > 
-> Fixes: 57a7138d0627 ("dmaengine: qcom: bam_dma: Avoid writing unavailable register")
-> Reported-by: Georgi Djakov <djakov@kernel.org>
-> Link: https://lore.kernel.org/lkml/9ef3daa8-cdb1-49f2-8d19-a72d6210ff3a@kernel.org/
-> Signed-off-by: Md Sadre Alam <quic_mdalam@quicinc.com>
+> Signed-off-by: Chukun Pan <amadeus@jmu.edu.cn>
 > ---
+>  arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dts |  2 +-
+>  arch/arm64/boot/dts/qcom/ipq6018-mp5496.dtsi | 35 ++++++++++++++++++++
+>  arch/arm64/boot/dts/qcom/ipq6018.dtsi        | 14 --------
+>  3 files changed, 36 insertions(+), 15 deletions(-)
+>  create mode 100644 arch/arm64/boot/dts/qcom/ipq6018-mp5496.dtsi
 > 
-> Change in [v3]
-> 
-> * Revised commit details
-> 
-> Change in [v2]
-> 
-> * Removed unnecessary if checks.
-> * Relocated the BAM_REVISION register read within the if condition.
-> 
-> Change in [v1]
-> 
-> * https://lore.kernel.org/lkml/1a5fc7e9-39fe-e527-efc3-1ea990bbb53b@quicinc.com/
-> * Posted initial fixup for BAM revision register read handling
->  drivers/dma/qcom/bam_dma.c | 8 ++++----
->  1 file changed, 4 insertions(+), 4 deletions(-)
-> 
-> diff --git a/drivers/dma/qcom/bam_dma.c b/drivers/dma/qcom/bam_dma.c
-> index c14557efd577..d227b4f5b6b9 100644
-> --- a/drivers/dma/qcom/bam_dma.c
-> +++ b/drivers/dma/qcom/bam_dma.c
-> @@ -1199,11 +1199,11 @@ static int bam_init(struct bam_device *bdev)
->  	u32 val;
+> diff --git a/arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dts b/arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dts
+> index f5f4827c0e17..9c69d3027b43 100644
+> --- a/arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dts
+> +++ b/arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dts
+> @@ -7,7 +7,7 @@
 >  
->  	/* read revision and configuration information */
-
-Please extend the comment, mentioning why the register is read only in
-!num_ees case. BTW: how do we get revision if num_ees != 0?
-
-> -	val = readl_relaxed(bam_addr(bdev, 0, BAM_REVISION));
-> -	if (!bdev->num_ees)
-> +	if (!bdev->num_ees) {
-> +		val = readl_relaxed(bam_addr(bdev, 0, BAM_REVISION));
->  		bdev->num_ees = (val >> NUM_EES_SHIFT) & NUM_EES_MASK;
+>  /dts-v1/;
+>  
+> -#include "ipq6018.dtsi"
+> +#include "ipq6018-mp5496.dtsi"
+>  
+>  / {
+>  	model = "Qualcomm Technologies, Inc. IPQ6018/AP-CP01-C1";
+> diff --git a/arch/arm64/boot/dts/qcom/ipq6018-mp5496.dtsi b/arch/arm64/boot/dts/qcom/ipq6018-mp5496.dtsi
+> new file mode 100644
+> index 000000000000..fe2152df69f4
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/ipq6018-mp5496.dtsi
+> @@ -0,0 +1,35 @@
+> +// SPDX-License-Identifier: (GPL-2.0+ OR BSD-3-Clause)
+> +/*
+> + * ipq6018-mp5496.dtsi describes common properties (e.g. regulators) that
+> + * apply to most devices that make use of the IPQ6018 SoC and MP5496 PMIC.
+> + */
+> +
+> +#include "ipq6018.dtsi"
+> +
+> +&cpu0 {
+> +	cpu-supply = <&ipq6018_s2>;
+> +};
+> +
+> +&cpu1 {
+> +	cpu-supply = <&ipq6018_s2>;
+> +};
+> +
+> +&cpu2 {
+> +	cpu-supply = <&ipq6018_s2>;
+> +};
+> +
+> +&cpu3 {
+> +	cpu-supply = <&ipq6018_s2>;
+> +};
+> +
+> +&rpm_requests {
+> +	regulators {
+> +		compatible = "qcom,rpm-mp5496-regulators";
+> +
+> +		ipq6018_s2: s2 {
+> +			regulator-min-microvolt = <725000>;
+> +			regulator-max-microvolt = <1062500>;
+> +			regulator-always-on;
+> +		};
+> +	};
+> +};
+> diff --git a/arch/arm64/boot/dts/qcom/ipq6018.dtsi b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
+> index 7514919132b6..a02aa641cb90 100644
+> --- a/arch/arm64/boot/dts/qcom/ipq6018.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
+> @@ -43,7 +43,6 @@ cpu0: cpu@0 {
+>  			clocks = <&apcs_glb APCS_ALIAS0_CORE_CLK>;
+>  			clock-names = "cpu";
+>  			operating-points-v2 = <&cpu_opp_table>;
+> -			cpu-supply = <&ipq6018_s2>;
+>  			#cooling-cells = <2>;
+>  		};
+>  
+> @@ -56,7 +55,6 @@ cpu1: cpu@1 {
+>  			clocks = <&apcs_glb APCS_ALIAS0_CORE_CLK>;
+>  			clock-names = "cpu";
+>  			operating-points-v2 = <&cpu_opp_table>;
+> -			cpu-supply = <&ipq6018_s2>;
+>  			#cooling-cells = <2>;
+>  		};
+>  
+> @@ -69,7 +67,6 @@ cpu2: cpu@2 {
+>  			clocks = <&apcs_glb APCS_ALIAS0_CORE_CLK>;
+>  			clock-names = "cpu";
+>  			operating-points-v2 = <&cpu_opp_table>;
+> -			cpu-supply = <&ipq6018_s2>;
+>  			#cooling-cells = <2>;
+>  		};
+>  
+> @@ -82,7 +79,6 @@ cpu3: cpu@3 {
+>  			clocks = <&apcs_glb APCS_ALIAS0_CORE_CLK>;
+>  			clock-names = "cpu";
+>  			operating-points-v2 = <&cpu_opp_table>;
+> -			cpu-supply = <&ipq6018_s2>;
+>  			#cooling-cells = <2>;
+>  		};
+>  
+> @@ -184,16 +180,6 @@ glink-edge {
+>  			rpm_requests: rpm-requests {
+>  				compatible = "qcom,rpm-ipq6018", "qcom,glink-smd-rpm";
+>  				qcom,glink-channels = "rpm_requests";
 > -
-> -	bdev->bam_revision = val & REVISION_MASK;
-> +		bdev->bam_revision = val & REVISION_MASK;
-> +	}
->  
->  	/* check that configured EE is within range */
->  	if (bdev->ee >= bdev->num_ees)
+> -				regulators {
+> -					compatible = "qcom,rpm-mp5496-regulators";
+> -
+> -					ipq6018_s2: s2 {
+> -						regulator-min-microvolt = <725000>;
+> -						regulator-max-microvolt = <1062500>;
+> -						regulator-always-on;
+> -					};
+> -				};
+>  			};
+>  		};
+>  	};
 > -- 
-> 2.34.1
+> 2.25.1
 > 
 
 -- 
