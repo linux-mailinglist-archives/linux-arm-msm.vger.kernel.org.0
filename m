@@ -1,148 +1,134 @@
-Return-Path: <linux-arm-msm+bounces-45708-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-45710-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 00ADFA182E1
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Jan 2025 18:29:59 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id AAA7DA184C6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Jan 2025 19:11:37 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id C5BE3188B3AE
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Jan 2025 17:30:03 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id A22AD7A605D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Jan 2025 18:08:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 96F231F4E56;
-	Tue, 21 Jan 2025 17:29:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 522171F7578;
+	Tue, 21 Jan 2025 18:08:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YePZzvfP"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="n39phQWz"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6427F187FE4;
-	Tue, 21 Jan 2025 17:29:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68DB01F5439;
+	Tue, 21 Jan 2025 18:08:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737480595; cv=none; b=NvO97LXhSA+j5UUxl1BZoHTnl2XyPjpN08ol4Fn9nQF0Mphqk8B4+7RhXvCMK+/lr7yhpR5SZTaSbODNRlwuyfcPvTtiQIiwcfMh4wHDYy9U32bXf87zJIJvtCPmYIcyZQnPyB4v0NmOmsLgFHMGrsf5snT5WM9/C/Fd7t1t7X4=
+	t=1737482917; cv=none; b=ZJCZ0yL2Qn6jAKWNpAVSnoK9qSrTa3kUI0Np1lauP7YaRCsETsD9B7Vk5TgIjtSQMoQuaR0yibRrIbHvHHWZw8+9fTYdIGLE7qEpBPjqi95qXYTqT5s1i2M7oCE+IS67Cj3Vn79hJ9a/fuF1Y/4krSS745o8hn4UuEgTFa14h6c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737480595; c=relaxed/simple;
-	bh=ZNQDrxrgWnzAEj1xBjQLCMfPlE421PdpUxtDRAkLv64=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To; b=FSrP1qYpvsuw+gdY5HI+GJnSH+IwN8/xUfyaqiAPVove0acuo00AuWIXy+livolLIfh03UnuWVQjl5uYst54hCOEenKFQ2Z8J58+B5dtR3MbYzXUqfWg2K5EmWkaEDxOFTp3J4xw8nvIn1ELdbZvZHPMGreGL06Gx+7C0rrT2eM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YePZzvfP; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B584CC4CEDF;
-	Tue, 21 Jan 2025 17:29:54 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1737480594;
-	bh=ZNQDrxrgWnzAEj1xBjQLCMfPlE421PdpUxtDRAkLv64=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:From;
-	b=YePZzvfPzaQyWhC8fKBd5tjQ8FsqWlQMCipEheA9mQj/P3CmZHHv3bc9G/IkTBKHG
-	 h7wcxKpoYFov/3fNOwRSInDkGCguSKRyxI7htVTs6aDf9ouxs/xl/wNz/WRN4iCHVP
-	 DQwuFKGEoY72OMOUGPoC93PiSpff3CeRZu8xWdMDnBmKNQdpIX5WXHP92CMHd/sq6l
-	 /vISDXl8aJLLF09OYSbjjg+SKyaShW5pZ8Makv9FS36ag4tuK0L6Qj0NJWrdvsvnq9
-	 wpGJ7xzmjQ9pa39SzFeOSQl7hdl8gaqgKCNaJYBc7N94aDkXJKPdSTGdMJXAPQdbIw
-	 /0enXIe9HDPBw==
-Date: Tue, 21 Jan 2025 11:29:53 -0600
-From: Bjorn Helgaas <helgaas@kernel.org>
-To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc: kw@linux.com, gregkh@linuxfoundation.org, arnd@arndb.de,
-	lpieralisi@kernel.org, shuah@kernel.org, kishon@kernel.org,
-	linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org,
-	bhelgaas@google.com, linux-arm-msm@vger.kernel.org, robh@kernel.org,
-	linux-kselftest@vger.kernel.org, cassel@kernel.org
-Subject: Re: [PATCH v6 0/4] Migrate PCI Endpoint Subsystem tests to Kselftest
-Message-ID: <20250121172953.GA968517@bhelgaas>
+	s=arc-20240116; t=1737482917; c=relaxed/simple;
+	bh=GvQ80gPNfFPgDmMSMVObIsVLL7jW5m79h2mybf7vbkA=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=C91Q9n82R9C2QBeYBs19XasBFSYoNIJXBgAVAOMx1UrkiptmZFzPEf7a4i2Yv+pEHjurymrOqDqPpS5A/EoUoz69fzjgqMj/re9vzWNi9bY9k8uMkotxJ7XoCJkeRK2YuGif2KOgbR/VleXPACGCyxgAOjQRTZGGrlU+rTs6muc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=n39phQWz; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50LH3fwV001671;
+	Tue, 21 Jan 2025 18:08:13 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=knco0MIQTXRNrrudeSCOiW
+	yXlInlVY2HacStlFZpdsc=; b=n39phQWzrzIIytWzy1tcBvfSBLnIqCwM0mJ+pi
+	j71THLbZQ6rFMowl8HLm0KNROv+80ZmtWx2ogU+JLAUXLCCxOdfNGc0iVXBX+Na2
+	+4BU4BscVvBAXzVohn9zHWfHLfjM8XJRorL7/nisQhzDGfg0o6PH+5zQDUadrHyU
+	YkZnM7qGsMNLVgYKWGrqzI0el8NUFpBBPC40+t83v0o/frH5H146AAWuDjODfKFl
+	ONL6CySXlNknDdXpZ7qC+jTBLjq4hCDLvNH1TMXtMz1pb6uZT7vvW/z1t9pvi5ub
+	JZp/zA2XIQA2Tj11xAJC5NgWt22MauVhjqOk4sVkN0eNiDXw==
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44a866su5u-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 21 Jan 2025 18:08:12 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 50LI8BJf010435
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 21 Jan 2025 18:08:11 GMT
+Received: from hu-vikramsa-hyd.qualcomm.com (10.80.80.8) by
+ nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Tue, 21 Jan 2025 10:08:02 -0800
+From: Vikram Sharma <quic_vikramsa@quicinc.com>
+To: <rfoss@kernel.org>, <todor.too@gmail.com>, <bryan.odonoghue@linaro.org>,
+        <mchehab@kernel.org>, <robh@kernel.org>, <krzk+dt@kernel.org>,
+        <conor+dt@kernel.org>, <akapatra@quicinc.com>, <hariramp@quicinc.com>,
+        <andersson@kernel.org>, <konradybcio@kernel.org>,
+        <hverkuil-cisco@xs4all.nl>, <cros-qcom-dts-watchers@chromium.org>,
+        <catalin.marinas@arm.com>, <will@kernel.org>
+CC: <linux-arm-kernel@lists.infradead.org>, <quic_vikramsa@quicinc.com>,
+        <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <kernel@quicinc.com>
+Subject: [PATCH v2 0/2] Update clocks for sc7280-camss 
+Date: Tue, 21 Jan 2025 23:37:44 +0530
+Message-ID: <20250121180746.1989996-1-quic_vikramsa@quicinc.com>
+X-Mailer: git-send-email 2.25.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250116171650.33585-1-manivannan.sadhasivam@linaro.org>
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: WuO4tfAZ3JTy-77qyFmNea2H5a_OkedA
+X-Proofpoint-ORIG-GUID: WuO4tfAZ3JTy-77qyFmNea2H5a_OkedA
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-01-21_07,2025-01-21_03,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 mlxscore=0
+ mlxlogscore=999 lowpriorityscore=0 phishscore=0 malwarescore=0 spamscore=0
+ adultscore=0 suspectscore=0 impostorscore=0 clxscore=1015
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2501210145
 
-On Thu, Jan 16, 2025 at 10:46:46PM +0530, Manivannan Sadhasivam wrote:
-> Hi,
-> 
-> This series carries forward the effort to add Kselftest for PCI Endpoint
-> Subsystem started by Aman Gupta [1] a while ago. I reworked the initial version
-> based on another patch that fixes the return values of IOCTLs in
-> pci_endpoint_test driver and did many cleanups. Since the resulting work
-> modified the initial version substantially, I took over the authorship.
-> 
-> This series also incorporates the review comment by Shuah Khan [2] to move the
-> existing tests from 'tools/pci' to 'tools/testing/kselftest/pci_endpoint' before
-> migrating to Kselftest framework. I made sure that the tests are executable in
-> each commit and updated documentation accordingly.
-> 
-> - Mani
-> 
-> [1] https://lore.kernel.org/linux-pci/20221007053934.5188-1-aman1.gupta@samsung.com
-> [2] https://lore.kernel.org/linux-pci/b2a5db97-dc59-33ab-71cd-f591e0b1b34d@linuxfoundation.org
-> 
-> Changes in v6:
-> 
-> * Fixed the documentation to pass max MSI and MSI-X count to configfs
-> * Collected tags
-> 
-> Changes in v5:
-> 
-> * Incorporated comments from Niklas
-> * Added a patch to fix the DMA MEMCPY check in pci-epf-test driver
-> * Collected tags
-> * Rebased on top of pci/next 0333f56dbbf7ef6bb46d2906766c3e1b2a04a94d
-> 
-> Changes in v4:
-> 
-> * Dropped the BAR fix patches and submitted them separately:
->   https://lore.kernel.org/linux-pci/20241231130224.38206-1-manivannan.sadhasivam@linaro.org/
-> * Rebased on top of pci/next 9e1b45d7a5bc0ad20f6b5267992da422884b916e
-> 
-> Changes in v3:
-> 
-> * Collected tags.
-> * Added a note about failing testcase 10 and command to skip it in
->   documentation.
-> * Removed Aman Gupta and Padmanabhan Rajanbabu from CC as their addresses are
->   bouncing.
-> 
-> Changes in v2:
-> 
-> * Added a patch that fixes return values of IOCTL in pci_endpoint_test driver
-> * Moved the existing tests to new location before migrating
-> * Added a fix for BARs on Qcom devices
-> * Updated documentation and also added fixture variants for memcpy & DMA modes
-> 
-> 
-> Manivannan Sadhasivam (4):
->   PCI: endpoint: pci-epf-test: Fix the check for DMA MEMCPY test
->   misc: pci_endpoint_test: Fix the return value of IOCTL
->   selftests: Move PCI Endpoint tests from tools/pci to Kselftests
->   selftests: pci_endpoint: Migrate to Kselftest framework
-> 
->  Documentation/PCI/endpoint/pci-test-howto.rst | 174 +++++-------
->  MAINTAINERS                                   |   2 +-
->  drivers/misc/pci_endpoint_test.c              | 255 +++++++++--------
->  drivers/pci/endpoint/functions/pci-epf-test.c |   4 +-
->  tools/pci/Build                               |   1 -
->  tools/pci/Makefile                            |  58 ----
->  tools/pci/pcitest.c                           | 264 ------------------
->  tools/pci/pcitest.sh                          |  73 -----
->  tools/testing/selftests/Makefile              |   1 +
->  .../testing/selftests/pci_endpoint/.gitignore |   2 +
->  tools/testing/selftests/pci_endpoint/Makefile |   7 +
->  tools/testing/selftests/pci_endpoint/config   |   4 +
->  .../pci_endpoint/pci_endpoint_test.c          | 221 +++++++++++++++
->  13 files changed, 437 insertions(+), 629 deletions(-)
->  delete mode 100644 tools/pci/Build
->  delete mode 100644 tools/pci/Makefile
->  delete mode 100644 tools/pci/pcitest.c
->  delete mode 100644 tools/pci/pcitest.sh
->  create mode 100644 tools/testing/selftests/pci_endpoint/.gitignore
->  create mode 100644 tools/testing/selftests/pci_endpoint/Makefile
->  create mode 100644 tools/testing/selftests/pci_endpoint/config
->  create mode 100644 tools/testing/selftests/pci_endpoint/pci_endpoint_test.c
+Update clock names as follow-up change for series.
+https://lore.kernel.org/linux-arm-msm/20241206191900.2545069-1-quic_vikramsa@quicinc.com/
+We have got comments on our dtsi change to update clock names as
+- GCC_CAMERA_AHB_CLK is always enabled clock so it can be removed.
+- Change clock name from gcc_cam_hf_axi to `gcc_axi_hf` for consistency.
+- Add gcc_axi_sf as missing to enable it can have undefined hw behaviour.
 
-I collected the other endpoint test patches on pci/endpoint-test and
-applied this series on top for v6.14, thanks!
+To handle these comments in our base series we need to update
+documentaion and driver (already merged) to work with dtsi.
+
+We are not breaking ABI here because the ABI hasn't been cemented yet as the dtsi
+changes are not merged yet also there are no users for this driver as of now. 
+
+Used following tools for the sanity check of these changes.
+- make CHECK_DTBS=y W=1 DT_SCHEMA_FILES=media/qcom,sc7280-camss.yaml
+- make DT_CHECKER_FLAGS=-m W=1
+DT_SCHEMA_FILES=media/qcom,sc7280-camss.yaml dt_binding_check
+- make -j32 W=1
+- ./scripts/checkpatch.pl
+
+Changes in V2:
+- Updated commit text to explain the reason behind this change.
+- Updated commit text to use imperative mood.
+- Updated commit text to utilize 75 character limit properly.
+- Link to v1: https://lore.kernel.org/linux-arm-msm/20250121120901.1841142-1-quic_vikramsa@quicinc.com/
+
+Signed-off-by: Vikram Sharma <quic_vikramsa@quicinc.com>
+
+Vikram Sharma (2):
+  media: dt-bindings: update clocks for sc7280-camss
+  media: qcom: camss: update clock names for sc7280
+
+ .../bindings/media/qcom,sc7280-camss.yaml         | 10 +++++-----
+ drivers/media/platform/qcom/camss/camss.c         | 15 ++++++++++-----
+ 2 files changed, 15 insertions(+), 10 deletions(-)
+
+-- 
+2.25.1
+
 
