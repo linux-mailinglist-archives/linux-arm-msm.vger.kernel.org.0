@@ -1,113 +1,129 @@
-Return-Path: <linux-arm-msm+bounces-45706-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-45707-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id ED688A182C6
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Jan 2025 18:21:06 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 22820A182DB
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Jan 2025 18:26:34 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BC4EE3ABEBA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Jan 2025 17:20:51 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id DD6FC188BF39
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Jan 2025 17:26:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 010C31F4E37;
-	Tue, 21 Jan 2025 17:20:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7D1671F5405;
+	Tue, 21 Jan 2025 17:26:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="GRXxJQ4L"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="bxxK3te7"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 001371F4727;
-	Tue, 21 Jan 2025 17:20:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=156.67.10.101
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6BC81F4E4E;
+	Tue, 21 Jan 2025 17:26:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737480054; cv=none; b=iaTKwdgS7o4HXuc4nyq8GvD6wIneXpi8ex3rpUM4LX5KhSLhySVoEtfsSIWQIq/qFDai5OQOHxTqAyfxl+QeUVvGf7ZtkDrBcSlYURiS6lLfForYRnywPmMPzevUg43YO3Y4Wozdv8ms+7Vt63+HUAd53FNRWJ8NzMLVrjQ+dNI=
+	t=1737480388; cv=none; b=qHgn5vfsB77hzXTyznoeQ6b2UKxr5jr/tbaNsfj/qulJvfZ1zHKuQR3Tuas9njm8Cb7VwC4J6jAsFJXldJwKwwQN9VV+/cM9Q7wXilELIRY4y3L1ji7v9iPM7Udp3/g+K5VabvL8HI9O3EOU5m+7941M10LJ7fp8MeM4rq6qdFI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737480054; c=relaxed/simple;
-	bh=awQsp/zga7f9a/85M78VuqjOd6AVQILOYmdeMCjgkoI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Lj6envgAArS/ls1hqry5nPDsA4xjNrhXeaG6O3Zd6EtBBVR21W+L11vTsVgXb2rpIXR3uRBvoKCGO42tcTuBZduyj0eObhHRnkUKio1ic9sS4BaaShq4ngKQOPB5r4EdMTBVESgj5n+2rOMVQtvwh/Goj3mN0UckBg32Vb/WJfY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch; spf=pass smtp.mailfrom=lunn.ch; dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b=GRXxJQ4L; arc=none smtp.client-ip=156.67.10.101
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lunn.ch
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
-	s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
-	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
-	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
-	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
-	bh=cfxHIP2j1h5TjSDYNb52YqchEUxPxLg0EzNjEnekIY0=; b=GRXxJQ4LdAcU77S49gb/McXylm
-	wGu48QsKPDJ8A3s6VtzXXKTgxQbxucgXzN7JzcOtUs9RE17Yn75khm2QFbQAAry5YXLmqLYV+PIKk
-	QdT4sOMZxW0v83+CJcFsiLPxF55e1E/elrHpvCHmimZjErMJ9ymcDd+SCNi9NSmNw1r4=;
-Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
-	(envelope-from <andrew@lunn.ch>)
-	id 1taHvZ-006hXW-Kq; Tue, 21 Jan 2025 18:20:37 +0100
-Date: Tue, 21 Jan 2025 18:20:37 +0100
-From: Andrew Lunn <andrew@lunn.ch>
-To: Yijie Yang <quic_yijiyang@quicinc.com>
-Cc: Andrew Lunn <andrew+netdev@lunn.ch>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, Vinod Koul <vkoul@kernel.org>,
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Richard Cochran <richardcochran@gmail.com>, netdev@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	linux-stm32@st-md-mailman.stormreply.com,
-	linux-arm-kernel@lists.infradead.org
-Subject: Re: [PATCH v3 2/4] net: stmmac: dwmac-qcom-ethqos: Mask PHY mode if
- configured with rgmii-id
-Message-ID: <717d77d1-43a4-4914-8d7d-a70c89cb1822@lunn.ch>
-References: <20250121-dts_qcs615-v3-0-fa4496950d8a@quicinc.com>
- <20250121-dts_qcs615-v3-2-fa4496950d8a@quicinc.com>
+	s=arc-20240116; t=1737480388; c=relaxed/simple;
+	bh=Y4/8zhwmZYp0mDh5f1nS8B9ZXN6qGUvK7RrWNU+bYlY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=ItL65upaxjGW3OYBL5CpCg2o/fCMRsHC4n2/b02d2DBdMAv85ey5hBJtS4tJU67UKk5o0Uca4vkXk0H7WKz6qlNTf9rg50vnl7sqyONy9YMfCq7yOAeiQOTPhGONTATUkdma7f+FKyPofVYL9RIfC/EZPOa3ZIemsuRNEDOdj8Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=bxxK3te7; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50LERgCD010199;
+	Tue, 21 Jan 2025 17:26:20 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	NH5vFqueXGx+u5FUmRbpqL7fuKOgWinlCETXY4uHbs8=; b=bxxK3te7Kgw8jGKF
+	c2AOL2pDnl6O5oQA7qgO/DVK/+2JJigcJ9LRzh5/A6TUxnY5v8H6JEwRAj6o3wB3
+	VWBt2eBzJOoLVd4r7PULWQP6+l/+UswtCBTBCjwfZlyzOF/2JTLjcn7FB4QYz9Jk
+	HFytsg7plOhcMEjyScUd5QydOkU614Mv6CNJS7iGPLcVMTiUySTX1AgUX2rdB4Qa
+	Bhaz2CNHAQgVsFu2tflchuAiUmsOxJD6xo+QdSiVkMW7N8vZf/msCSb4r6whIqON
+	aC72t/hza0RIW/VXsUHeX2/TrIkBb4RIuEpu0bX0RjQD57O82IXOGZKu/QEtnjDh
+	aYS+BQ==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44adc48evm-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 21 Jan 2025 17:26:20 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 50LHQ5DI028250
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 21 Jan 2025 17:26:05 GMT
+Received: from [10.226.59.182] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 21 Jan
+ 2025 09:26:04 -0800
+Message-ID: <516ec099-b382-44d2-dcd3-68f495a09aca@quicinc.com>
+Date: Tue, 21 Jan 2025 10:26:03 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250121-dts_qcs615-v3-2-fa4496950d8a@quicinc.com>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.0
+Subject: Re: [PATCH v2 7/7] accel/qaic: Add AIC200 support
+Content-Language: en-US
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+CC: <quic_carlv@quicinc.com>, <quic_yabdulra@quicinc.com>,
+        <quic_mattleun@quicinc.com>, <quic_thanson@quicinc.com>,
+        <ogabbay@kernel.org>, <lizhi.hou@amd.com>,
+        <jacek.lawrynowicz@linux.intel.com>, <linux-arm-msm@vger.kernel.org>,
+        <dri-devel@lists.freedesktop.org>, <mhi@lists.linux.dev>
+References: <20250117170943.2643280-1-quic_jhugo@quicinc.com>
+ <20250117170943.2643280-8-quic_jhugo@quicinc.com>
+ <20250121051624.nhest7s6iyh2ll4m@thinkpad>
+ <dbf3e688-d7fc-06ab-aee6-3ed1095148c8@quicinc.com>
+ <20250121170606.ribist6ayw75bzlv@thinkpad>
+From: Jeffrey Hugo <quic_jhugo@quicinc.com>
+In-Reply-To: <20250121170606.ribist6ayw75bzlv@thinkpad>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: s66M2IW14-YkxwG0nHq74yirpDKUfmPE
+X-Proofpoint-ORIG-GUID: s66M2IW14-YkxwG0nHq74yirpDKUfmPE
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-01-21_07,2025-01-21_03,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0
+ priorityscore=1501 lowpriorityscore=0 spamscore=0 impostorscore=0
+ suspectscore=0 adultscore=0 mlxscore=0 phishscore=0 malwarescore=0
+ clxscore=1015 mlxlogscore=929 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2411120000 definitions=main-2501210140
 
-On Tue, Jan 21, 2025 at 03:54:54PM +0800, Yijie Yang wrote:
-> The Qualcomm board always chooses the MAC to provide the delay instead of
-> the PHY, which is completely opposite to the suggestion of the Linux
-> kernel. The usage of phy-mode in legacy DTS was also incorrect. Change the
-> phy_mode passed from the DTS to the driver from PHY_INTERFACE_MODE_RGMII_ID
-> to PHY_INTERFACE_MODE_RGMII to ensure correct operation and adherence to
-> the definition.
-> To address the ABI compatibility issue between the kernel and DTS caused by
-> this change, handle the compatible string 'qcom,qcs404-evb-4000' in the
-> code, as it is the only legacy board that mistakenly uses the 'rgmii'
-> phy-mode.
+On 1/21/2025 10:06 AM, Manivannan Sadhasivam wrote:
+> On Tue, Jan 21, 2025 at 08:29:32AM -0700, Jeffrey Hugo wrote:
+>> On 1/20/2025 10:16 PM, Manivannan Sadhasivam wrote:
+>>> On Fri, Jan 17, 2025 at 10:09:43AM -0700, Jeffrey Hugo wrote:
+>>>> Add basic support for the new AIC200 product. The PCIe Device ID is
+>>>> 0xa110. With this, we can turn on the lights for AIC200 by leveraging
+>>>> much of the existing driver.
+>>>>
+>>>> Co-developed-by: Youssef Samir <quic_yabdulra@quicinc.com>
+>>>> Signed-off-by: Youssef Samir <quic_yabdulra@quicinc.com>
+>>>> Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+>>>
+>>> Acked-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+>>
+>> Thanks for the reviews/ack.
+>>
+>> Do you have thoughts on merging the series? I think I could take everything
+>> through drm-misc, you could take everything through the MHI tree, or we
+>> could split the series by tree with a phased approach.
+>>
 > 
-> Signed-off-by: Yijie Yang <quic_yijiyang@quicinc.com>
-> ---
->  .../net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c    | 18 +++++++++++++-----
->  1 file changed, 13 insertions(+), 5 deletions(-)
-> 
-> diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
-> index 2a5b38723635b5ef9233ca4709e99dd5ddf06b77..e228a62723e221d58d8c4f104109e0dcf682d06d 100644
-> --- a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
-> +++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
-> @@ -401,14 +401,11 @@ static int ethqos_dll_configure(struct qcom_ethqos *ethqos)
->  static int ethqos_rgmii_macro_init(struct qcom_ethqos *ethqos)
->  {
->  	struct device *dev = &ethqos->pdev->dev;
-> -	int phase_shift;
-> +	int phase_shift = 0;
->  	int loopback;
->  
->  	/* Determine if the PHY adds a 2 ns TX delay or the MAC handles it */
+> You can take the entire series through drm-misc. I don't forsee any core changes
+> to the MHI host stack next cycle, so it should be fine. If something pops up in
+> the middle, we can do an immutable branch.
 
-Please think about this comment.
+Will do.  Thanks!
 
-       Andrew
+-Jeff
 
