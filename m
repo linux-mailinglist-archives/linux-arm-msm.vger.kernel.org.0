@@ -1,316 +1,353 @@
-Return-Path: <linux-arm-msm+bounces-45641-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-45642-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id EB83BA17681
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Jan 2025 05:28:45 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id EAD4DA176B2
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Jan 2025 05:52:25 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id ACFAF7A34CB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Jan 2025 04:28:36 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 75F0C1889A3C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Jan 2025 04:52:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6BFB418E743;
-	Tue, 21 Jan 2025 04:28:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 245AD185955;
+	Tue, 21 Jan 2025 04:52:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="y+JL9k3u"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="vySFzxyN"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yb1-f169.google.com (mail-yb1-f169.google.com [209.85.219.169])
+Received: from mail-pj1-f43.google.com (mail-pj1-f43.google.com [209.85.216.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65E521891AB
-	for <linux-arm-msm@vger.kernel.org>; Tue, 21 Jan 2025 04:28:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 368472CAB
+	for <linux-arm-msm@vger.kernel.org>; Tue, 21 Jan 2025 04:52:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737433719; cv=none; b=WgOhzsPq+2U1DwJpg2B2P4w4fbsuXOd6nOLtDxtEJ5MVPXqnKtSSsFDs6Ga8wvZKECElf0hmFGeLeWBpxPn9ddsDqBQs8PHrqIRaSI48ezEIP4iz14tK8ODPjTbKPzdYAH/dJjjnEsc8BXLBQio9/FNalzrzSbT6rjNF0m/fVZM=
+	t=1737435142; cv=none; b=F6vwnJ5gC21iaNT7ZjoddJV2FpdZCQrcGel8iQmOwAuNXIjEFv07Dr372qcygFcCUSMkl5+9q2nISFubSe4gdl51MPqTTcy7i9c3gvPIFMBu/9IVwvlDYR/TnKmmQBhfPCODEntKmGD+Y8tZgYagRjI2zFhOqeoVrk/qyXYCHj4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737433719; c=relaxed/simple;
-	bh=JS96n9a8Ew/ZcOsqRQwMWuGWPKG/zGbXusccEo448v8=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=EmfrcfCi87957GmgzKr+ZJHONxAhrzEb/Gte8Iyh0wMhC2fHJlbcI1xKF+Vj87lvaB1DTmOC+aAmZqKyQQv7i7/UuBeDKhdKpDlshFTjBq35ytklqMbgATt36mJmK1lJ9arcEBHjdh/A1YPCrNjxC8iAPYn0fzpsTAzkj5D+Dx0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=y+JL9k3u; arc=none smtp.client-ip=209.85.219.169
+	s=arc-20240116; t=1737435142; c=relaxed/simple;
+	bh=ry0jEP5XbmTbIN3yEdWYp/5XjVkVhLO1m5rN8v7tdZQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=D+hmtWrhI5lt1iqk4p1oPIx2wA5QcLTUB+y5U0BFcHAtFkW7B4yHTW7CMstCEeAQr/fYWPbe2cpNRJEPDNjW/HMFbyv6+uI3gbr4K+sZhma6xmUQWnoRPD1E2vv22zDJTx/ITr5N/2Iwtxr05Xk+h51pVHvYUIxCgI4nTuCz29g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=vySFzxyN; arc=none smtp.client-ip=209.85.216.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yb1-f169.google.com with SMTP id 3f1490d57ef6-e573136107bso8550471276.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Jan 2025 20:28:37 -0800 (PST)
+Received: by mail-pj1-f43.google.com with SMTP id 98e67ed59e1d1-2ef760a1001so8916089a91.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Jan 2025 20:52:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1737433716; x=1738038516; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=OZSNB6g5UtUoImhML+UGNfXWXkjaOAV6MUUxlrXnbfE=;
-        b=y+JL9k3u3tp6BQ8B0vlUyTh02fuTxGjIlw+VkVoGxPsZDZ06ZoZaeGDp34VormF5pv
-         rQwtsU8M+VClIgE6fHfi0dWkMysfbglaU8nyPuSlrKHaCp9D6XekV6XLCr0sXECb5Vov
-         coMCF7sgqLxJMUFvJOuS44d9EyfW8cVt+nSgr5a02aOMTU4nvqV6BB9zLDb5th8nINal
-         upAGU2d1TLJCu3AKvKFCV1WPjBnfyOPS46xRO1EYLWGSXwrnf7mNSghM3P4HtK+iWeMu
-         v4FSP4aTLvddhMJlv/oRhEvkYrz8pCe5lRxRN2FNa9nDTgHeBK48E34KVBlb79vyxl4c
-         aLng==
+        d=linaro.org; s=google; t=1737435139; x=1738039939; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=6tyLr89Oro7K4WmxXil5fUnVrn0buPsx3daOJhuEBhU=;
+        b=vySFzxyNIsds8HZ4JieSW94zD7jfbfzXavpWedcNgEJR1zRVU9u5OytG8PuUhYae8B
+         S9zhioGvwd1pRlece9j+BGTjspJOAn1aXqRiSAPDVVADOaVSNlZZiLdwPoO3Md0kAFhL
+         f+nUPbBZiLNZ7OXjll8ZTgZ1nJjtKBYUUQqKFjBWlO5k6cctuCDKLJNTfnWbH0YkKnuU
+         hunneqYjkxgiNHGY9xofXCRD5UOy3EPBEz8TcSvxdw2VyxlKS6rnAaVMypg7DZs5khKy
+         6LpkdAO5+aOEHdPDN91bvET4R6rjcGnJFDyOhH0O6Beug3GCD4KuFrGqJdYdqgBB9Won
+         DnPQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1737433716; x=1738038516;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=OZSNB6g5UtUoImhML+UGNfXWXkjaOAV6MUUxlrXnbfE=;
-        b=he8lNOl1IaF3Tttpq7ANLCi/lrcWPJkhCjEbg3+7SiickZK8zTbWBgvbHO1+NQp9SY
-         Dub+XZdFCWEU7sljoLX+036noV8XLJsoupkTg72/o6K6MdbHhwNltjAH4W9QxsmT8slj
-         C6k0SZVFNFsZ6FAAIiLo94IhCYTnZOPKf94KFWOMbGa2mgGOBK72SPtRde3aFuP0Oipm
-         dMfsj/3vW3l2rc7M8+vVdhQDnRNWYbtVqqMdksxq59e28g1LikIwnD3wBB4/USaDG2PB
-         902A4+eQLIjKrsZu21y1MQovMTedg10XJ+pzNZsbxy5OnkQD60skS0G2ZWfQd1P+a3Pa
-         2MTg==
-X-Forwarded-Encrypted: i=1; AJvYcCWbarYkUOxqeMUYRZWnDuSr0PIMpnkN55OIVB29yItEP8qeJYd8oBk17Q6O3cyDhdHid+PzznNKETjSyBjC@vger.kernel.org
-X-Gm-Message-State: AOJu0Yyi7sXRuDTuSr+j6/2r7nlk1LQkGQSHkvE4so3+/a5zpR9weYIq
-	12S6Kpca7JsC/p36HwlhnVRLMQy2lz9sl+R5dro79inyRnm69kNzAOAwlMaAkzyxcuhbWjHIlxh
-	gCY9eD+JTdfNUF7la+66V8LMqpEOZudzRkqMZeovjgIG9GwbuZQW4Rw==
-X-Gm-Gg: ASbGncvF+ipicSADLF4Mu7uU2qpyI9FF62uxILWBbfV/5njkrV/kO+KYsikmByVkZTa
-	dneKT2AZ9M2rryipQmRT9Q2uQJ02YF3iED1zXF7Rih+a2eD/J55g4mg==
-X-Google-Smtp-Source: AGHT+IGq/MHXBnnIFfgM/13ju/i+ES42JwboBmO2dRvRxF/fPN5yr5dACgnwRZOQCQDqbtKLPqHPHxnGRY22awQjXhE=
-X-Received: by 2002:a05:690c:ed4:b0:6f6:ccef:ef4f with SMTP id
- 00721157ae682-6f6eb659ce5mr124991237b3.2.1737433716183; Mon, 20 Jan 2025
- 20:28:36 -0800 (PST)
+        d=1e100.net; s=20230601; t=1737435139; x=1738039939;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=6tyLr89Oro7K4WmxXil5fUnVrn0buPsx3daOJhuEBhU=;
+        b=RYbOSWfCeEAO6Q03+iHInhun25KebaQYUh9U3VvYEIZxCYZ0/OWgdvZBdSC+dZ1qGb
+         nETT54x16s3kAY9RduhW13QfEQZxZVU2HMrVsSlVp2mXAtPx07oUk1oFqTCdOeUCGdLR
+         6sXLtiPBsrZGN6wa6am2ZBE/gJWYlrsVA8ZQYEedRqFr+/xuEsOnj0gvtE1OVMJkBS78
+         z4J22yp0l5ssGKv6o0QhXctheYIg7KXcokSjzUtQt/54Lw9cDmloAVbmVyatNLZC2YFW
+         rKHJJUikaTSIDkQQWV+/bvPpIt5o77inriK1t6Wqy7WRtCYqjxUPKqeTbRQ8m4xHEIux
+         Nrpg==
+X-Forwarded-Encrypted: i=1; AJvYcCUbjAjILBlw1drsVEiCHG9yunNVmZMXXJD/jwIPpUCL6/9CcTE7WrFFUe1CSYkJre5rVkVX9Krxaj3PzUWu@vger.kernel.org
+X-Gm-Message-State: AOJu0YxEpyNR1C9N8u1nhdalfeJQQ4+/xnK6XFz6rgkfmnbed6NHsa9J
+	Wmcvblm3nbUMfUSi9SjnFMkVwZEZyLoFNxcr30+vCnrY4sQslMLfDl1Y53cuZg==
+X-Gm-Gg: ASbGnctb1oSK/AhXaKOAVmPF/5th0T1LsJbzvN/Dji+i2w0hgUCs0rbGaCWoKTm34S3
+	RjGFLCYhoUYVoKfopFuy2DgsMMs30Lx+XCRRmxOibxme+BTrLPSYuLON2egf+c698O58uUj6ziq
+	J5rRHQOWukD+VO3A5FSZ+mm9mmaK6FjyH4nskBzYTiXFWwjoI6QjlWbJLqx4QAn5o8i43encyw3
+	SHhiY+YZqLjFIOBPYCN6DW5JBc5DmRUhFFfZsiEtGJ03s+SBigd6V0cnCq1rujYNVSHjWesyIZW
+	8JL+b2k=
+X-Google-Smtp-Source: AGHT+IFSWF/3fxqQyQ4PQAR3oXpx/J8EguJMfXK4TSYqPEZ0xRHtpPEOOVb2sMjou628AnuBYq4BxA==
+X-Received: by 2002:a05:6a00:3c8a:b0:727:3c37:d5fb with SMTP id d2e1a72fcca58-72dafb6fef4mr22643451b3a.16.1737435139390;
+        Mon, 20 Jan 2025 20:52:19 -0800 (PST)
+Received: from thinkpad ([117.213.102.234])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-72dabacdbd5sm8099841b3a.180.2025.01.20.20.52.16
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 20 Jan 2025 20:52:18 -0800 (PST)
+Date: Tue, 21 Jan 2025 10:22:12 +0530
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To: Jeffrey Hugo <quic_jhugo@quicinc.com>
+Cc: quic_carlv@quicinc.com, quic_yabdulra@quicinc.com,
+	quic_mattleun@quicinc.com, quic_thanson@quicinc.com,
+	ogabbay@kernel.org, lizhi.hou@amd.com,
+	jacek.lawrynowicz@linux.intel.com, linux-arm-msm@vger.kernel.org,
+	dri-devel@lists.freedesktop.org, mhi@lists.linux.dev
+Subject: Re: [PATCH v2 1/7] bus: mhi: host: Refactor BHI/BHIe based firmware
+ loading
+Message-ID: <20250121045212.jo5fi37n44lqab7u@thinkpad>
+References: <20250117170943.2643280-1-quic_jhugo@quicinc.com>
+ <20250117170943.2643280-2-quic_jhugo@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250116-sm8650-v6-13-hmd-deckard-mdss-quad-upstream-33-v4-0-74749c6eba33@linaro.org>
- <20250116-sm8650-v6-13-hmd-deckard-mdss-quad-upstream-33-v4-16-74749c6eba33@linaro.org>
- <mw7zc4ljagxs6sjpl2wfjicq56w7ru2dd43u55rrtwyux62bb5@3w4zayfqxlai>
- <CABymUCMnYy-L2Bd6dgYzPTB+qzpFLbU-LyCLDKxCSWy19x_A5g@mail.gmail.com> <6ds6wxlf56kt3lislorxubwbjldpknz74c76smglynzh4jxcpq@dcr2ptutaopa>
-In-Reply-To: <6ds6wxlf56kt3lislorxubwbjldpknz74c76smglynzh4jxcpq@dcr2ptutaopa>
-From: Jun Nie <jun.nie@linaro.org>
-Date: Mon, 20 Jan 2025 20:28:24 -0800
-X-Gm-Features: AbW1kvb-DeFP6oG56gSKdFoJx3QfWKxrxchTK43xDe6e8I2Ayaxn3a_6GSbRAjA
-Message-ID: <CABymUCPviHNEhjV8sp7_dFDXNa5HMOMC+c0V83pyhRQND_0p8A@mail.gmail.com>
-Subject: Re: [PATCH v4 16/16] drm/msm/dpu: Enable quad-pipe for DSC and
- dual-DSI case
-To: Marijn Suijten <marijn.suijten@somainline.org>
-Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Rob Clark <robdclark@gmail.com>, 
-	Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>, 
-	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, linux-arm-msm@vger.kernel.org, 
-	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
-	linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20250117170943.2643280-2-quic_jhugo@quicinc.com>
 
-Marijn Suijten <marijn.suijten@somainline.org> =E4=BA=8E2025=E5=B9=B41=E6=
-=9C=8820=E6=97=A5=E5=91=A8=E4=B8=80 04:58=E5=86=99=E9=81=93=EF=BC=9A
->
-> On 2025-01-17 15:32:44, Jun Nie wrote:
-> > Dmitry Baryshkov <dmitry.baryshkov@linaro.org> =E4=BA=8E2025=E5=B9=B41=
-=E6=9C=8816=E6=97=A5=E5=91=A8=E5=9B=9B 16:32=E5=86=99=E9=81=93=EF=BC=9A
-> > >
-> > > On Thu, Jan 16, 2025 at 03:26:05PM +0800, Jun Nie wrote:
-> > > > Request 4 mixers and 4 DSC for the case that both dual-DSI and DSC =
-are
-> > > > enabled.
-> > >
-> > > Why? What is the issue that you are solving?
-> >
-> >     To support high-resolution cases that exceed the width limitation o=
-f
->
-> How high is high?  Some Sony phones use a bonded 2:2:2 setup.
+On Fri, Jan 17, 2025 at 10:09:37AM -0700, Jeffrey Hugo wrote:
+> From: Matthew Leung <quic_mattleun@quicinc.com>
+> 
+> Refactor the firmware loading code to have distinct helper functions for
+> BHI and BHIe operations. This lays the foundation for separating the
+> firmware loading protocol from the firmware being loaded and the EE it
+> is loaded in.
+> 
+> Signed-off-by: Matthew Leung <quic_mattleun@quicinc.com>
+> Reviewed-by: Youssef Samir <quic_yabdulra@quicinc.com>
+> Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+> Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
 
-The high resolution here means the capability of 2 SSPP without multi-rect =
-mode,
-or the clock rate requirement exceed the SoC capability. It depends on spec=
-ific
-SoC spec.
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
->
-> >     a pair of SSPPs, or scenarios that surpass the maximum MDP clock ra=
-te,
-> >     additional pipes are necessary to enable parallel data processing
-> >     within the SSPP width constraints and MDP clock rate.
-> >
-> >     Request 4 mixers and 4 DSCs for high-resolution cases where both DS=
-C
-> >     and dual interfaces are enabled. More use cases can be incorporated
-> >     later if quad-pipe capabilities are required.
-> >
-> > >
-> > > > 4 pipes are preferred for dual DSI case for it is power optimal
-> > > > for DSC.
-> > > >
-> > > > Signed-off-by: Jun Nie <jun.nie@linaro.org>
-> > > > ---
-> > > >  drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c         |  2 +-
-> > > >  drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h         |  6 ++---
-> > > >  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c      | 29 ++++++++++++=
-++++++------
-> > > >  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h |  2 +-
-> > > >  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h   |  2 +-
-> > > >  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h      |  2 +-
-> > > >  6 files changed, 29 insertions(+), 14 deletions(-)
-> > > >
-> > >
-> > > > @@ -664,15 +664,20 @@ static struct msm_display_topology dpu_encode=
-r_get_topology(
-> > > >
-> > > >       /* Datapath topology selection
-> > > >        *
-> > > > -      * Dual display
-> > > > +      * Dual display without DSC
-> > > >        * 2 LM, 2 INTF ( Split display using 2 interfaces)
-> > > >        *
-> > > > +      * Dual display with DSC
-> > > > +      * 2 LM, 2 INTF ( Split display using 2 interfaces)
-> > > > +      * 4 LM, 2 INTF ( Split display using 2 interfaces)
->
-> Are these always bonded (i.e. single display with dual-DSI link), or can =
-it be
-> two independent panels?
+- Mani
 
-It can be two independent panels.
->
-> > > > +      *
-> > > >        * Single display
-> > > >        * 1 LM, 1 INTF
-> > > >        * 2 LM, 1 INTF (stream merge to support high resolution inte=
-rfaces)
-> > > >        *
-> > > >        * Add dspps to the reservation requirements if ctm is reques=
-ted
-> > > >        */
-> > > > +
-> > >
-> > > irrlevant extra line, please drop.
-> > >
-> > > >       if (intf_count =3D=3D 2)
-> > > >               topology.num_lm =3D 2;
-> > > >       else if (!dpu_kms->catalog->caps->has_3d_merge)
-> > > > @@ -691,10 +696,20 @@ static struct msm_display_topology dpu_encode=
-r_get_topology(
-> > > >                * 2 DSC encoders, 2 layer mixers and 1 interface
-> > > >                * this is power optimal and can drive up to (includi=
-ng) 4k
-> > > >                * screens
-> > > > +              * But for dual display case, we prefer 4 layer mixer=
-s. Because
-> > > > +              * the resolution is always high in the case and 4 DS=
-Cs are more
-> > > > +              * power optimal.
-> > >
-> > > I think this part is thought about in a wrong way. If it was just abo=
-ut
-> > > power efficiency, we wouldn't have to add quad pipe support.
-> > > Please correct me if I'm wrong, but I think it is about the maximum
-> > > width supported by a particular topology being too low for a requeste=
-d
-> > > resolution. So, if there is a DSC and mode width is higher than 5120
-> > > (8.x+) / 4096 ( <=3D 7.x), then we have to use quad pipe. Likewise if
-> > > there is no DSC in play, the limitation should be 2 * max_mixer_width=
-.
-> >
-> > Both width limitation and clock rate contribute to pipe number decision=
-.
-> > To support high resolution, the MDP clock may be required to overclock
-> > to a higher rate than the safe rate. Current implementation does not
-> > support checking clock rate when deciding topology. We can add the
-> > clock rate check later with a new patch.
-> > >
-> > > >                */
-> > > > -             topology.num_dsc =3D 2;
-> > > > -             topology.num_lm =3D 2;
-> > > > -             topology.num_intf =3D 1;
-> > > > +
-> > > > +             if (intf_count =3D=3D 2) {
-> > > > +                     topology.num_dsc =3D dpu_kms->catalog->dsc_co=
-unt >=3D 4 ? 4 : 2;
->
-> What if there are other encoders that have already reserved DSC blocks, r=
-educing
-> the current available number of DSC blocks?  This patch seems to cover mu=
-ltiple
-> panels/interfaces on a single virtual encoder, how does one get to such a
-> scenario?  Bonded display?  If one or more DP panel is connected, do they=
- use
-> their own virtual encoder, and hence miss out on logic that properly divi=
-des
-> available DSC blocks?
+> ---
+>  drivers/bus/mhi/host/boot.c | 144 +++++++++++++++++++++++++-----------
+>  1 file changed, 99 insertions(+), 45 deletions(-)
+> 
+> diff --git a/drivers/bus/mhi/host/boot.c b/drivers/bus/mhi/host/boot.c
+> index e8c92972f9df..9fe13d3f09f0 100644
+> --- a/drivers/bus/mhi/host/boot.c
+> +++ b/drivers/bus/mhi/host/boot.c
+> @@ -177,6 +177,36 @@ int mhi_download_rddm_image(struct mhi_controller *mhi_cntrl, bool in_panic)
+>  }
+>  EXPORT_SYMBOL_GPL(mhi_download_rddm_image);
+>  
+> +static void mhi_fw_load_error_dump(struct mhi_controller *mhi_cntrl)
+> +{
+> +	struct device *dev = &mhi_cntrl->mhi_dev->dev;
+> +	rwlock_t *pm_lock = &mhi_cntrl->pm_lock;
+> +	void __iomem *base = mhi_cntrl->bhi;
+> +	int ret, i;
+> +	u32 val;
+> +	struct {
+> +		char *name;
+> +		u32 offset;
+> +	} error_reg[] = {
+> +		{ "ERROR_CODE", BHI_ERRCODE },
+> +		{ "ERROR_DBG1", BHI_ERRDBG1 },
+> +		{ "ERROR_DBG2", BHI_ERRDBG2 },
+> +		{ "ERROR_DBG3", BHI_ERRDBG3 },
+> +		{ NULL },
+> +	};
+> +
+> +	read_lock_bh(pm_lock);
+> +	if (MHI_REG_ACCESS_VALID(mhi_cntrl->pm_state)) {
+> +		for (i = 0; error_reg[i].name; i++) {
+> +			ret = mhi_read_reg(mhi_cntrl, base, error_reg[i].offset, &val);
+> +			if (ret)
+> +				break;
+> +			dev_err(dev, "Reg: %s value: 0x%x\n", error_reg[i].name, val);
+> +		}
+> +	}
+> +	read_unlock_bh(pm_lock);
+> +}
+> +
+>  static int mhi_fw_load_bhie(struct mhi_controller *mhi_cntrl,
+>  			    const struct mhi_buf *mhi_buf)
+>  {
+> @@ -226,24 +256,13 @@ static int mhi_fw_load_bhie(struct mhi_controller *mhi_cntrl,
+>  }
+>  
+>  static int mhi_fw_load_bhi(struct mhi_controller *mhi_cntrl,
+> -			   dma_addr_t dma_addr,
+> -			   size_t size)
+> +			    const struct mhi_buf *mhi_buf)
+>  {
+> -	u32 tx_status, val, session_id;
+> -	int i, ret;
+> -	void __iomem *base = mhi_cntrl->bhi;
+> -	rwlock_t *pm_lock = &mhi_cntrl->pm_lock;
+>  	struct device *dev = &mhi_cntrl->mhi_dev->dev;
+> -	struct {
+> -		char *name;
+> -		u32 offset;
+> -	} error_reg[] = {
+> -		{ "ERROR_CODE", BHI_ERRCODE },
+> -		{ "ERROR_DBG1", BHI_ERRDBG1 },
+> -		{ "ERROR_DBG2", BHI_ERRDBG2 },
+> -		{ "ERROR_DBG3", BHI_ERRDBG3 },
+> -		{ NULL },
+> -	};
+> +	rwlock_t *pm_lock = &mhi_cntrl->pm_lock;
+> +	void __iomem *base = mhi_cntrl->bhi;
+> +	u32 tx_status, session_id;
+> +	int ret;
+>  
+>  	read_lock_bh(pm_lock);
+>  	if (!MHI_REG_ACCESS_VALID(mhi_cntrl->pm_state)) {
+> @@ -255,11 +274,9 @@ static int mhi_fw_load_bhi(struct mhi_controller *mhi_cntrl,
+>  	dev_dbg(dev, "Starting image download via BHI. Session ID: %u\n",
+>  		session_id);
+>  	mhi_write_reg(mhi_cntrl, base, BHI_STATUS, 0);
+> -	mhi_write_reg(mhi_cntrl, base, BHI_IMGADDR_HIGH,
+> -		      upper_32_bits(dma_addr));
+> -	mhi_write_reg(mhi_cntrl, base, BHI_IMGADDR_LOW,
+> -		      lower_32_bits(dma_addr));
+> -	mhi_write_reg(mhi_cntrl, base, BHI_IMGSIZE, size);
+> +	mhi_write_reg(mhi_cntrl, base, BHI_IMGADDR_HIGH, upper_32_bits(mhi_buf->dma_addr));
+> +	mhi_write_reg(mhi_cntrl, base, BHI_IMGADDR_LOW, lower_32_bits(mhi_buf->dma_addr));
+> +	mhi_write_reg(mhi_cntrl, base, BHI_IMGSIZE, mhi_buf->len);
+>  	mhi_write_reg(mhi_cntrl, base, BHI_IMGTXDB, session_id);
+>  	read_unlock_bh(pm_lock);
+>  
+> @@ -274,18 +291,7 @@ static int mhi_fw_load_bhi(struct mhi_controller *mhi_cntrl,
+>  
+>  	if (tx_status == BHI_STATUS_ERROR) {
+>  		dev_err(dev, "Image transfer failed\n");
+> -		read_lock_bh(pm_lock);
+> -		if (MHI_REG_ACCESS_VALID(mhi_cntrl->pm_state)) {
+> -			for (i = 0; error_reg[i].name; i++) {
+> -				ret = mhi_read_reg(mhi_cntrl, base,
+> -						   error_reg[i].offset, &val);
+> -				if (ret)
+> -					break;
+> -				dev_err(dev, "Reg: %s value: 0x%x\n",
+> -					error_reg[i].name, val);
+> -			}
+> -		}
+> -		read_unlock_bh(pm_lock);
+> +		mhi_fw_load_error_dump(mhi_cntrl);
+>  		goto invalid_pm_state;
+>  	}
+>  
+> @@ -296,6 +302,16 @@ static int mhi_fw_load_bhi(struct mhi_controller *mhi_cntrl,
+>  	return -EIO;
+>  }
+>  
+> +static void mhi_free_bhi_buffer(struct mhi_controller *mhi_cntrl,
+> +				struct image_info *image_info)
+> +{
+> +	struct mhi_buf *mhi_buf = image_info->mhi_buf;
+> +
+> +	dma_free_coherent(mhi_cntrl->cntrl_dev, mhi_buf->len, mhi_buf->buf, mhi_buf->dma_addr);
+> +	kfree(image_info->mhi_buf);
+> +	kfree(image_info);
+> +}
+> +
+>  void mhi_free_bhie_table(struct mhi_controller *mhi_cntrl,
+>  			 struct image_info *image_info)
+>  {
+> @@ -310,6 +326,45 @@ void mhi_free_bhie_table(struct mhi_controller *mhi_cntrl,
+>  	kfree(image_info);
+>  }
+>  
+> +static int mhi_alloc_bhi_buffer(struct mhi_controller *mhi_cntrl,
+> +				struct image_info **image_info,
+> +				size_t alloc_size)
+> +{
+> +	struct image_info *img_info;
+> +	struct mhi_buf *mhi_buf;
+> +
+> +	img_info = kzalloc(sizeof(*img_info), GFP_KERNEL);
+> +	if (!img_info)
+> +		return -ENOMEM;
+> +
+> +	/* Allocate memory for entry */
+> +	img_info->mhi_buf = kzalloc(sizeof(*img_info->mhi_buf), GFP_KERNEL);
+> +	if (!img_info->mhi_buf)
+> +		goto error_alloc_mhi_buf;
+> +
+> +	/* Allocate and populate vector table */
+> +	mhi_buf = img_info->mhi_buf;
+> +
+> +	mhi_buf->len = alloc_size;
+> +	mhi_buf->buf = dma_alloc_coherent(mhi_cntrl->cntrl_dev, mhi_buf->len,
+> +					  &mhi_buf->dma_addr, GFP_KERNEL);
+> +	if (!mhi_buf->buf)
+> +		goto error_alloc_segment;
+> +
+> +	img_info->bhi_vec = NULL;
+> +	img_info->entries = 1;
+> +	*image_info = img_info;
+> +
+> +	return 0;
+> +
+> +error_alloc_segment:
+> +	kfree(mhi_buf);
+> +error_alloc_mhi_buf:
+> +	kfree(img_info);
+> +
+> +	return -ENOMEM;
+> +}
+> +
+>  int mhi_alloc_bhie_table(struct mhi_controller *mhi_cntrl,
+>  			 struct image_info **image_info,
+>  			 size_t alloc_size)
+> @@ -364,9 +419,9 @@ int mhi_alloc_bhie_table(struct mhi_controller *mhi_cntrl,
+>  	return -ENOMEM;
+>  }
+>  
+> -static void mhi_firmware_copy(struct mhi_controller *mhi_cntrl,
+> -			      const u8 *buf, size_t remainder,
+> -			      struct image_info *img_info)
+> +static void mhi_firmware_copy_bhie(struct mhi_controller *mhi_cntrl,
+> +				   const u8 *buf, size_t remainder,
+> +				   struct image_info *img_info)
+>  {
+>  	size_t to_cpy;
+>  	struct mhi_buf *mhi_buf = img_info->mhi_buf;
+> @@ -390,10 +445,9 @@ void mhi_fw_load_handler(struct mhi_controller *mhi_cntrl)
+>  	const struct firmware *firmware = NULL;
+>  	struct device *dev = &mhi_cntrl->mhi_dev->dev;
+>  	enum mhi_pm_state new_state;
+> +	struct image_info *image;
+>  	const char *fw_name;
+>  	const u8 *fw_data;
+> -	void *buf;
+> -	dma_addr_t dma_addr;
+>  	size_t size, fw_sz;
+>  	int ret;
+>  
+> @@ -452,17 +506,17 @@ void mhi_fw_load_handler(struct mhi_controller *mhi_cntrl)
+>  	fw_sz = firmware->size;
+>  
+>  skip_req_fw:
+> -	buf = dma_alloc_coherent(mhi_cntrl->cntrl_dev, size, &dma_addr,
+> -				 GFP_KERNEL);
+> -	if (!buf) {
+> +	ret = mhi_alloc_bhi_buffer(mhi_cntrl, &image, size);
+> +	if (ret) {
+>  		release_firmware(firmware);
+>  		goto error_fw_load;
+>  	}
+> +	/* Load the firmware into BHI vec table */
+> +	memcpy(image->mhi_buf->buf, fw_data, size);
+>  
+>  	/* Download image using BHI */
+> -	memcpy(buf, fw_data, size);
+> -	ret = mhi_fw_load_bhi(mhi_cntrl, dma_addr, size);
+> -	dma_free_coherent(mhi_cntrl->cntrl_dev, size, buf, dma_addr);
+> +	ret = mhi_fw_load_bhi(mhi_cntrl, image->mhi_buf);
+> +	mhi_free_bhi_buffer(mhi_cntrl, image);
+>  
+>  	/* Error or in EDL mode, we're done */
+>  	if (ret) {
+> @@ -493,7 +547,7 @@ void mhi_fw_load_handler(struct mhi_controller *mhi_cntrl)
+>  		}
+>  
+>  		/* Load the firmware into BHIE vec table */
+> -		mhi_firmware_copy(mhi_cntrl, fw_data, fw_sz, mhi_cntrl->fbc_image);
+> +		mhi_firmware_copy_bhie(mhi_cntrl, fw_data, fw_sz, mhi_cntrl->fbc_image);
+>  	}
+>  
+>  	release_firmware(firmware);
+> -- 
+> 2.34.1
+> 
 
-Yes, it's bonded display. Your point is valid. The scenario will fail
-at the resource
-allocation stage and CRTC pipe fails to be setup if there is not
-enough DSC block
-available. But it should fail gracefully, so not a big issue. It is
-always possible
-that resource cannot support a usage scenario.
-
->
-> That idea is what's been holding back a quick hack to support 1:1:1
-> topology for sc7280 / FairPhone 5 to perform a similar workaround:
->
->         if (catalog->dsc_count < 2)
->                 num_dsc =3D num_lm =3D 1;.
-
-Actually, I do not see issue here. Could you help point me the link
-for this change?
-Checking the discussion history helps on understanding more aspects of
-this change.
->
-> > >
-> > > This assumes that the driver can support 2:2:2. Is it the case?
-> >
-> > The code falls back to 2:2:2 case here. But I guess 2:2:2 does not work=
- yet.
-> > How about below code for DSC case?
->
-> I've been working on 2:2:2 support [1] but have stalled it to see how you=
-r
-> series here pans out.  Doesn't look like it's heading in a compatible dir=
-ection
-> though, going for quick wins rather than redesigning how DSC blocks are
-> allocated (to name one of the many topics).
->
-> [1]: https://lore.kernel.org/linux-arm-msm/20240417-drm-msm-initial-dualp=
-ipe-dsc-fixes-v1-0-78ae3ee9a697@somainline.org/
->
-> - Marijn
-
-Glad to know that a 2:2:2 case can be enabled. That can be supported with
-code structure of quad-pipe in theory and we can co-work on that. But I wou=
-ld
-not call the quad-pipe patch set a quick wins, as I cannot cover a usage ca=
-se
-that's not supported by mainline yet, and I do not have hardware to support
-2:2:2 neither. What I can do is to add new usage case and make sure
-existing usage cases are not broken. More and more usage cases can be
-added later this way.
-Could you help elaborate what do you mean by how DSC blocks are allocated?
-I see DSC is allocated just as other resources. Maybe you mean how the
-topology is decided. While that's about adding new usage case without
-breaking existing usage cases.
-
-Regards,
-Jun
->
-> >
-> >                  if (intf_count =3D=3D 2 && dpu_kms->catalog->dsc_count=
- >=3D 4) {
-> >                          topology.num_dsc =3D 4;
-> >                          topology.num_lm =3D 4;
-> >                          topology.num_intf =3D 2;
-> >                  } else {
-> >                          topology.num_dsc =3D 2;
-> >                          topology.num_lm =3D 2;
-> >                          topology.num_intf =3D 1;
-> >                  }
-> >
-> > >
-> > > > +                     topology.num_lm =3D topology.num_dsc;
-> > > > +                     topology.num_intf =3D 2;
-> > > > +             } else {
-> > > > +                     topology.num_dsc =3D 2;
-> > > > +                     topology.num_lm =3D 2;
-> > > > +                     topology.num_intf =3D 1;
-> > > > +             }
-> > > >       }
-> > > >
-> > > >       return topology;
-> > >
-> > > --
-> > > With best wishes
-> > > Dmitry
+-- 
+மணிவண்ணன் சதாசிவம்
 
