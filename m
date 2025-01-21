@@ -1,171 +1,104 @@
-Return-Path: <linux-arm-msm+bounces-45636-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-45638-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 25ABFA17500
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Jan 2025 00:25:21 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0C795A1765F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Jan 2025 04:48:46 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0FED93A8C7A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Jan 2025 23:25:14 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 8AB137A2255
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Jan 2025 03:48:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 564B91EC019;
-	Mon, 20 Jan 2025 23:25:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4C18815278E;
+	Tue, 21 Jan 2025 03:48:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="QhVUiYti"
+	dkim=pass (1024-bit key) header.d=jms.id.au header.i=@jms.id.au header.b="TUbCz3hi"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yb1-f169.google.com (mail-yb1-f169.google.com [209.85.219.169])
+Received: from mail-ed1-f42.google.com (mail-ed1-f42.google.com [209.85.208.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 183A319B5B4
-	for <linux-arm-msm@vger.kernel.org>; Mon, 20 Jan 2025 23:25:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FC4D3208;
+	Tue, 21 Jan 2025 03:48:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737415513; cv=none; b=PbLieTTeYt9aGTLGfEcYiPbMf5uSHnvexRLbj8/E4KRbPVxyq5im+x6i2+4RT6zpMecoewItPZFxGvDXfSAVO7NGK+yc26eNqpQ2aHnAyHPWqfjF3IX8yz69wX/GvXfR9ulyRJSM5YJf+uU+uQDOey3ifRhQLlz3gVcDqM2PtCc=
+	t=1737431319; cv=none; b=JxcWJHV8/gM2Md/5tNVy5kc8q4T48q+4WUJoUKnubCCLAIbWYRIXRYeadTRpwipNtdq231l63nXizE7SPIbkoPE/fKLz+5o9iJ+S5WcmfGW+oWpw6IswDvnwgVSSGua89ypmaQpU1dNg+WtCn5Z3HdEsvfLwx6u9J5v824/o0I8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737415513; c=relaxed/simple;
-	bh=Tx1rYKKOJKkU2K0XBMuMSvRlBVMRzwjOc/bweFSaQaQ=;
+	s=arc-20240116; t=1737431319; c=relaxed/simple;
+	bh=nXeR4WCU1+fTpqluUqiiZxteQYC3c2jVgdFHmwxlQ5c=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=tIGIm5Yl1V4TO3bLiBllkjtWrXnaIPXU8TN9+OEH3PTolQjJRYkgNCCX1pBgRnGU7XPkv41fy1QIW420L75RVtHhwx595lmEmQ/5Q2SdKeVKa5EKYiC4eR2HeeK3bqkNLAzVuoPChNIbFfBfqPHiFXj2H+6muPIWkXS6MIXMoho=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=QhVUiYti; arc=none smtp.client-ip=209.85.219.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yb1-f169.google.com with SMTP id 3f1490d57ef6-e398484b60bso7325480276.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Jan 2025 15:25:09 -0800 (PST)
+	 To:Cc:Content-Type; b=UkLqWnvg9uGoeftqwvGqAUyYvx9SJ30PFsI0crY7EJH+XmeMIde0QjYqxa+4WVWOAgM2DI1VyKxwzkoSLE7XtUFDtoUM3GI4MPGV4R0rOtQhk0wZpUw4Hqw0RNQy/rqdAvBrjnHiFqGBUEEtG9BezH9HhPx0eQEb0mdp94A3cFQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jms.id.au; spf=pass smtp.mailfrom=gmail.com; dkim=pass (1024-bit key) header.d=jms.id.au header.i=@jms.id.au header.b=TUbCz3hi; arc=none smtp.client-ip=209.85.208.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jms.id.au
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-ed1-f42.google.com with SMTP id 4fb4d7f45d1cf-5d9f0a6ad83so1333357a12.2;
+        Mon, 20 Jan 2025 19:48:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1737415509; x=1738020309; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=u3K4n54rL+8zAM59g2r+WZLNP4o+zWfFr7g2g8lZuIE=;
-        b=QhVUiYtigx6Pju3YDzjICoOsi2ildCRASYleBrN9EoNBnm3qLkYgPyyBrzZlX4l6WM
-         LpWWxO0ba7cdOl1tAbYAekoq888DZpvSbCcG+tjG8eXZixzAwpat00X6/lBSSiRaYD6h
-         i/1HptLNc1nYdoIUeJtnvJmtY1c1fAP3AuoKVy+3BMnKQ20AtH+qjSjmDg+Z0I/L3JMR
-         BhHpuZJNDulIAmvD0nePTz+755l26quhZlVun9ls/kCpOv0noyElN26wXPpKFPHBJUPh
-         9B/W4xSbTw1R3opLmmITsh3MBgOHQmoWlBYZbNJsVIhRzezsDcWUoJ8oOGEbNdNtqZnG
-         RUQw==
+        d=jms.id.au; s=google; t=1737431314; x=1738036114; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=aB6kMUwc3sdr22D03Cs6X1hTCEIAljfWSL5/SAqjcnA=;
+        b=TUbCz3hiLKG9I4iGJ2bY8KTOAzHaiSE2L+Vno7ZMT7uYodbRcDPQrdHrhNUXM5MfMB
+         R68RMhBHJQYI6bLhMT5Cg4+ZuMSblCFKDL4ZQfeVr4b0QZ9uUvKThWLOUtUnoCOmlme6
+         k8/+DKtdgJLx0uI8/rBAweoXTA1lU+qb4uhqE=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1737415509; x=1738020309;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=u3K4n54rL+8zAM59g2r+WZLNP4o+zWfFr7g2g8lZuIE=;
-        b=Rw3Zxkn5+Sxq6fzZVl90CG+oPbovn0tc56A6xuRm60zlBPW8tMjwEVQgASILe8T6Tp
-         pU5v+vQ0Rccuisa0faOysm7lH9zD9yIzakIMMKeqAr99LYU0PG/cZUoxefTyZN/tv3eN
-         Eaf7+H9sMhML3erVsjWm8/LpfZW+fzHvryG0c5AdqUtfpjuO4y5NqakfFk4+LLxGe5xu
-         imRtePganrftqJXGc10U6eP6xtlEHzi3QwbWi/2wjcrQp8ApX0kM/Q4XGjzP0NrVKtS4
-         gSTrzPwd/1n8XvEK7Z0eSc9lZLFjdfAyfXvZyrwsWuz+Lz6QdZ3HmTSmJ60ZfSOvX2FR
-         zBWA==
-X-Forwarded-Encrypted: i=1; AJvYcCWc1Jejj1iF02cHv9MzTqweFlvG0TUBPxzJiZCnAnaNBkfKUJAeK5VzA2gAv9zr3pEp8H3jUuMmqxUyx+61@vger.kernel.org
-X-Gm-Message-State: AOJu0Yws4qls+dY8ivZ3EMAPDQ5L2cYA1kpIPGF5uyQxkXQV84QBKbO3
-	ALRm65BXj6Y6hHd+Z8zOfqxMMo/SGkn3q5jmvbK7ZrWKk+zr7PV9cUOM9jIu6inytYBxgKrOdr+
-	wXnWZIOg/1Zbzw9kJ50Pa6geYyVeaClYdhhPe0A==
-X-Gm-Gg: ASbGncsB6c7FV8nxoVvzJj3V1ZSo1RnaG1HqLPWKJR6EwExDB2JLQBGRQT9rHsjU945
-	qnwzvph5aFLdkWi5zRW2Eienwrj11t951yCilLV2m1NDLR1iKNg==
-X-Google-Smtp-Source: AGHT+IGm1c0IGKgVC6DLGYrBRuOWXwI+xePGXQTc896moba7ai4TGKvAfmuOwpvFx/4v6WNLwRBA/G7NVG8/Ni/Otfk=
-X-Received: by 2002:a05:690c:3703:b0:6f6:ca9a:30d2 with SMTP id
- 00721157ae682-6f6eb6b58ecmr119970797b3.22.1737415508949; Mon, 20 Jan 2025
- 15:25:08 -0800 (PST)
+        d=1e100.net; s=20230601; t=1737431314; x=1738036114;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=aB6kMUwc3sdr22D03Cs6X1hTCEIAljfWSL5/SAqjcnA=;
+        b=jduK6lBD+UEfnqFgXMXCm4ixbmlZTz5J3U/afxLzWNq9rV28egM7K0nIEDa5T1EjqJ
+         jT3VKjqP6eYV3Le9fg1lkWw6PMrkaCTHye11lmYRmelGcjZiDRHpSU6ljz9hkxwTs2WO
+         vUYDYdoPIOBLkitzx4RceSjDxl2rtquTFDPdo354COn3zKkDQsFaSWzj45eNV/7Mfz9E
+         ZPk9QTgYkjbpkjOIibw8cCW+UCdYeNdnmV1eBsM6Uw/Co76sjLEdZjYHaLTYox1BZ6lu
+         ieSSh8Dz5vjc9Qm481OLfIz0pSWjKP7/xnOBR2TQHTNRgghpBtYwoFW+GppNNTIR7d39
+         aMRA==
+X-Forwarded-Encrypted: i=1; AJvYcCUM4P8lls07R+SavYTRSu1zu4MDT8L1WJtehQC3dCEB+pdK+hZJnnER8+eWIfqK3oo0ioPmOvmIVOUD@vger.kernel.org, AJvYcCUljR44e0qf1ZQl1CTolnHde1ETgwYbgDZqxYjXfh/cvuU7yasgvLzRiKrMzd5WOAHxRB759v3O3jMIzwZ0@vger.kernel.org, AJvYcCXKmyZ05JRMtB4jNzezTeOg9zOZRMTOAI4tWhNOiCUf/Y+/sAJFk/yLncVWvem/LkielKlVEhntDAa8sof14A==@vger.kernel.org, AJvYcCXXR9qvtJSO4pZ+K6Z0TRDDMAm5AXo64LbKUGhMbRdZpW8ENAUPIhajY7+liWZ8UIEbgWDXD5gvdDP5@vger.kernel.org
+X-Gm-Message-State: AOJu0YzpZAa/ivtEiQ4BhC0u55Qy1GdI+s2YOFGK64pVeob13YNcyovq
+	5Ny7i1ZERgzmC8Cy0Brvz17EvKFzOmFWm7oC55w0jGyPXuRwRx1icD3kk9N7XC4TMY/sWkfJmYa
+	li1Yr+eNPIYMubfM/x1AnWYfH4d4=
+X-Gm-Gg: ASbGncvzzg+rzXKzZ8HaNLQT4nwQ0NrvTtMQbt8ndCMrWT6p7fZNzN0zF4iRT8mc+GB
+	6mPNgclTS7EVYxslAbiRWL6FLnhenZDVw6v7EHI7FzNxg0Rx3bQuZ
+X-Google-Smtp-Source: AGHT+IEioTHynGNYPsBVBnXk2SJD7rsah+5RbvpgkTjY5HEFTlzZP30VOKUh54KqdkWiyoFZdCv9DfqyjzNkT2br8Ag=
+X-Received: by 2002:a17:907:94cc:b0:aa6:85a4:31f8 with SMTP id
+ a640c23a62f3a-ab38b32ad1fmr1332346666b.33.1737431313488; Mon, 20 Jan 2025
+ 19:48:33 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250118-sm8650-v6-13-hmd-deckard-mdss-quad-upstream-33-v5-0-9701a16340da@linaro.org>
- <20250118-sm8650-v6-13-hmd-deckard-mdss-quad-upstream-33-v5-8-9701a16340da@linaro.org>
- <6n655caflr2snsgmqtmpzxt4jynrwjqdjurnixujfuefldxhxj@uunzpzfezfqy>
-In-Reply-To: <6n655caflr2snsgmqtmpzxt4jynrwjqdjurnixujfuefldxhxj@uunzpzfezfqy>
-From: Jun Nie <jun.nie@linaro.org>
-Date: Mon, 20 Jan 2025 15:24:58 -0800
-X-Gm-Features: AbW1kvb8c5L96IpOkU0MvYJy9U4O8cLtv8Vu7rlOigF1727zF2y-_YzwepU20HY
-Message-ID: <CABymUCMbWW9TAo=LfB7Aad+8hBSjJmMVytNN7b6R-AWMeB6E0Q@mail.gmail.com>
-Subject: Re: [PATCH v5 08/15] drm/msm/dpu: bind correct pingpong for quad pipe
-To: Marijn Suijten <marijn.suijten@somainline.org>
-Cc: Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Sean Paul <sean@poorly.run>, 
-	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, linux-arm-msm@vger.kernel.org, 
-	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
-	linux-kernel@vger.kernel.org, Jessica Zhang <quic_jesszhan@quicinc.com>
+References: <20250120144152.11949-1-johan+linaro@kernel.org>
+In-Reply-To: <20250120144152.11949-1-johan+linaro@kernel.org>
+From: Joel Stanley <joel@jms.id.au>
+Date: Tue, 21 Jan 2025 14:18:21 +1030
+X-Gm-Features: AbW1kvZyewKuudLcQbNpI1AM_h2bKq-qxMhskJ_sh8Oo0pf4MbyF0KncgPdAk_Q
+Message-ID: <CACPK8XftgBDoy1echN7VKx9Te0o37PvdqCUiJN7YGpkdK-3fJQ@mail.gmail.com>
+Subject: Re: [PATCH 0/7] arm64: dts: qcom: x1e80100: enable rtc
+To: Johan Hovold <johan+linaro@kernel.org>
+Cc: Alexandre Belloni <alexandre.belloni@bootlin.com>, Bjorn Andersson <andersson@kernel.org>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Jonathan Marek <jonathan@marek.ca>, 
+	linux-arm-msm@vger.kernel.org, linux-rtc@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-Marijn Suijten <marijn.suijten@somainline.org> =E4=BA=8E2025=E5=B9=B41=E6=
-=9C=8820=E6=97=A5=E5=91=A8=E4=B8=80 05:15=E5=86=99=E9=81=93=EF=BC=9A
+On Tue, 21 Jan 2025 at 01:14, Johan Hovold <johan+linaro@kernel.org> wrote:
 >
-> On 2025-01-18 00:00:51, Jun Nie wrote:
-> > There are 2 interfaces and 4 pingpong in quad pipe. Map the 2nd
-> > interface to 3rd PP instead of the 2nd PP.
->
-> Can you explain why this patch uses the number of LMs, instead of dividin=
-g the
-> number of PPs divided by the number of physical encoders?  This detail is=
- not
-> explained at all, or that we're filling hw_lm now for no other reason.
->
-> - Marijn
+> This series adds support for utilising the UEFI firmware RTC offset to
+> the Qualcomm PMIC RTC driver and uses that to enable the RTC on all X
+> Elite machines.
 
-I see LM is 1:1 with PP in catalog header files. So assume their
-number are identical
-and 1:1 bounded. Using PP number is more formal for sure. Will try to
-replace it in
-next version.
+Looks good on a Surface Laptop 7 / romulus:
 
-Jun
->
-> > Signed-off-by: Jun Nie <jun.nie@linaro.org>
-> > Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > Reviewed-by: Jessica Zhang <quic_jesszhan@quicinc.com>
-> > ---
-> >  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 15 +++++++++++++--
-> >  1 file changed, 13 insertions(+), 2 deletions(-)
-> >
-> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/=
-drm/msm/disp/dpu1/dpu_encoder.c
-> > index 018a1a49ca7d1..b0cab3ccbb57c 100644
-> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> > @@ -1220,7 +1220,8 @@ static void dpu_encoder_virt_atomic_mode_set(stru=
-ct drm_encoder *drm_enc,
-> >       struct dpu_hw_blk *hw_pp[MAX_CHANNELS_PER_ENC];
-> >       struct dpu_hw_blk *hw_ctl[MAX_CHANNELS_PER_ENC];
-> >       struct dpu_hw_blk *hw_dsc[MAX_CHANNELS_PER_ENC];
-> > -     int num_ctl, num_pp, num_dsc;
-> > +     struct dpu_hw_blk *hw_lm[MAX_CHANNELS_PER_ENC];
-> > +     int num_lm, num_ctl, num_pp, num_dsc, num_pp_per_intf;
-> >       unsigned int dsc_mask =3D 0;
-> >       int i;
-> >
-> > @@ -1275,11 +1276,21 @@ static void dpu_encoder_virt_atomic_mode_set(st=
-ruct drm_encoder *drm_enc,
-> >               dpu_enc->cur_master->hw_cdm =3D hw_cdm ? to_dpu_hw_cdm(hw=
-_cdm) : NULL;
-> >       }
-> >
-> > +     num_lm =3D dpu_rm_get_assigned_resources(&dpu_kms->rm, global_sta=
-te,
-> > +             drm_enc->crtc, DPU_HW_BLK_LM, hw_lm, ARRAY_SIZE(hw_lm));
-> > +
-> > +
-> > +     /*
-> > +      * There may be 4 PP and 2 INTF for quad pipe case, so INTF is no=
-t
-> > +      * mapped to PP 1:1. Let's calculate the stride with pipe/INTF
-> > +      */
-> > +     num_pp_per_intf =3D num_lm / dpu_enc->num_phys_encs;
-> > +
-> >       for (i =3D 0; i < dpu_enc->num_phys_encs; i++) {
-> >               struct dpu_encoder_phys *phys =3D dpu_enc->phys_encs[i];
-> >               struct dpu_hw_ctl *ctl0 =3D to_dpu_hw_ctl(hw_ctl[0]);
-> >
-> > -             phys->hw_pp =3D dpu_enc->hw_pp[i];
-> > +             phys->hw_pp =3D dpu_enc->hw_pp[num_pp_per_intf * i];
-> >               if (!phys->hw_pp) {
-> >                       DPU_ERROR_ENC(dpu_enc,
-> >                               "no pp block assigned at idx: %d\n", i);
-> >
-> > --
-> > 2.34.1
-> >
+Tested-by: Joel Stanley <joel@jms.id.au>
+
+[    0.407844] rtc-pm8xxx c42d000.spmi:pmic@0:rtc@6100: registered as rtc0
+[    0.407876] rtc-pm8xxx c42d000.spmi:pmic@0:rtc@6100: setting system
+clock to 2025-01-21T03:34:06 UTC (1737430446)
+
+Cheers,
+
+Joel
 
