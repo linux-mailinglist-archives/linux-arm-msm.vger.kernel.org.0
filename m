@@ -1,136 +1,215 @@
-Return-Path: <linux-arm-msm+bounces-45745-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-45746-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id ECAF7A1875B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Jan 2025 22:33:16 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5F4D9A1882D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jan 2025 00:11:38 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id B65B2188A0F1
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Jan 2025 21:33:20 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4F4193A4508
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Jan 2025 23:11:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3EDDB1B4233;
-	Tue, 21 Jan 2025 21:33:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8B4C31F8ADD;
+	Tue, 21 Jan 2025 23:11:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XKi3ecmz"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TBWVX3xm"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pj1-f50.google.com (mail-pj1-f50.google.com [209.85.216.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA3FF1B6D15
-	for <linux-arm-msm@vger.kernel.org>; Tue, 21 Jan 2025 21:33:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5799554764;
+	Tue, 21 Jan 2025 23:11:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737495194; cv=none; b=shLGqkBbr6JdcVwt0XyrypQKGrtW2Pi4uRXdSaFGQvmXKwlDAFaASYrQrfwg1uznVSPNkAyIvFMsuPFXC2Q0xPDaprZkfrsPPU7bENJL8IOUwf69nEQpElY/aoot9pJNacu8KkLhFDhhdTacrycI9eTNpelRYaUW0AVbHZM2JRA=
+	t=1737501093; cv=none; b=GftaVWitXdd8LZfbWYQzVjbrMViO1I3AhA4PaTmMqmjFyIc86T2na0FcURLPbLmpcpcc4ZWbh8aBB8uGFB+LIohBPNCeruHDeOvIV6rRRYRBZohdjCdirIbHaeQxq8EBncCRPznqw/TrSsR51rmxDHJwo+ejaRB0cdGdPdsmgdQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737495194; c=relaxed/simple;
-	bh=DFUI3MpGGkbseTkztZ+yIQpjol+PGIuUpMv3ocf4nfE=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=FHQFI4tzmQ9w7Qq7zePx83qqJaCVKVJTvwh/3JQ/Bvnn7Kguabu5frhsqW0GnDLyWqupqqCZEF4hgiRRHxQwZtiUw4dNFtSzauSoPWeUgXJGeV9mQuOIXRfnPSbhfm8GvqsvaNGYJXk8V2Ao0dshFKmyDiTUJkedYMm0GslqhW8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XKi3ecmz; arc=none smtp.client-ip=209.85.216.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pj1-f50.google.com with SMTP id 98e67ed59e1d1-2ee4b72d4d8so1267645a91.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Jan 2025 13:33:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1737495192; x=1738099992; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=DFUI3MpGGkbseTkztZ+yIQpjol+PGIuUpMv3ocf4nfE=;
-        b=XKi3ecmz+MB28mpAeBqWyZ7VXqh+wF/Cazu4X3A2UMv1NWPBz8kXKSQAapa6WiZvta
-         EeW5sCiXL9UAflCM2Uo61+2Qfip1AULYsa6efUeuLOE8AVaC/MMT5Si3/74l5W6pE2qa
-         0Ru0m3sH5EVUHaSUD2/rXVYk31Y7pdSDAfgxXc836v/3ihHjBe2Iayc860VW2VrBmhcz
-         xswfpwD8+ys9d5yLy9qKTIl+8sQ/+119sP+EBH4Pvz1gEBv1Dx9PS8Js9zxmCSUp+nND
-         j/RU2s7dBA9z+qDQpt35eFZTGTUQXpMRKnB5KWPUTjFvbO8mAiQbwHX2tIYojDroTf9H
-         4z/Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1737495192; x=1738099992;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=DFUI3MpGGkbseTkztZ+yIQpjol+PGIuUpMv3ocf4nfE=;
-        b=cMbOe+yh4xHS6l/mZ9CSEvCVA7+zu+BBuy8LptqqlXPT0SUULHzWflai17yWKMtUzv
-         mbgNdXQz5BbAR5wC5NnpDdM5ufFQJcFhm3Ef7haOaZ+fsBj9eZyWJCdUqf9TIkBfkTs9
-         bjMf+GZtRCNQmGmfgOSqAG6/zmGeuFTestzRqIoDbP1vhP6e2X2dNzuOjZP70TkXs6K/
-         gR6OXlcaO3PpIq6a8tkvudHN7O6ShE1Xak4h5RYed3g3PIp5qk14jwVdK6sYcCnqinNd
-         AbQ+uefdunMz1loqqPKI+wh57j0uIPCIVDOQnKFOeruLyskjYDP2mb7LiTJjICehpF86
-         9w5g==
-X-Forwarded-Encrypted: i=1; AJvYcCXTASn8FgmiIUfTFoHzpB77bFVr3TJVhgN3RMlJqjMQJSfBYI/yBk43e4+ap1tyMxAZmKiglFQbDhyfKo8b@vger.kernel.org
-X-Gm-Message-State: AOJu0YxojVct0nut3+PhxnDPLQ+Cp6a4QNWEb+Y3KRDjc2pnpl9CWKwI
-	plfhSCYnukI0AueOrJAeBnvZ8JHNsavegCpCg1DtHdrPXnJfppsfZd5QmllgcrjfspKwh1c/v68
-	csuN4Q+UUMmSBLCmPi09UMVQxBWA=
-X-Gm-Gg: ASbGnctEf9JpZGvXWS6bb82R3/SMIWhwPxDyrwEUboJ6Ewpkx7WZj07WIdGXJ/r4VQA
-	86BuVliyZD2UUSUv9gcShsc3aA4eVQz7rTEeHCQqRWce8ilsCJGA=
-X-Google-Smtp-Source: AGHT+IEcjzdGu7qYqGn5N4xEYIBOsyWiwpCUBMJHTPuLbHn2zBtCvYF5lxRNHxNZ86fRxljxMK5FHYvAnIcG7/4OKIA=
-X-Received: by 2002:a05:6a00:2e14:b0:725:e499:5b9d with SMTP id
- d2e1a72fcca58-72f6ab9b6f0mr666087b3a.3.1737495191872; Tue, 21 Jan 2025
- 13:33:11 -0800 (PST)
+	s=arc-20240116; t=1737501093; c=relaxed/simple;
+	bh=zZSINEPZzqM8Mt9OhG5M2OkXDH1RF2bDf5jiszECFCo=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To; b=XkCzywfl3W9xEQH+0XZ5DB+7P6qsuAThgtrulnYAw62+K7e9oob5oJr3PyJr/tkpziqvPi2yucGPJOzxTjqcA1ZtbUhjZIFz7kkhepop0ns7VhVTEnBUyOsVkOeTiI20BogInoYizwLb3iqWxuMtlZbpy56dWBviPI0gvrnhZkQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TBWVX3xm; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE328C4CEDF;
+	Tue, 21 Jan 2025 23:11:32 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1737501093;
+	bh=zZSINEPZzqM8Mt9OhG5M2OkXDH1RF2bDf5jiszECFCo=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:From;
+	b=TBWVX3xm7rhxupv47RiLyM4sk3O3t+IAzV+psMEeiLcmyvHt1Qf9ifRRayBhu4Vjb
+	 ZQKMOSgqlfpFjUmILAQyqZxNl6+g3v3aGLt6IrrO4BOPb4FeeFP2XxX8aKn8E/0pqt
+	 j8e3xd8Y/xGQVtW/Y6Ume5zslkxTW5oPMt/6mOSiD0peITKBhg2bQqF2oWrXX7Upul
+	 QG9dqTAmdWvG9EUDc99gDNtBEZSkFOohSOJtXT2c4Tsx7DpI0WifmJgeDuqoVVD7cK
+	 zFDWNWR+EpLAn+DtwTHN3ubCNk+7/+noqm0dnhoZ+8kRUI0v54TSmFDzSyQYMed7t3
+	 G+NOwQ27rPT6Q==
+Date: Tue, 21 Jan 2025 17:11:31 -0600
+From: Bjorn Helgaas <helgaas@kernel.org>
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc: Rob Herring <robh+dt@kernel.org>, Rob Herring <robh@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	cros-qcom-dts-watchers@chromium.org, linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	=?utf-8?B?TsOtY29sYXMgRi4gUi4gQS4=?= Prado <nfraprado@collabora.com>
+Subject: Re: [PATCH v2 01/21] arm64: dts: qcom: sm8250: Add PCIe bridge node
+Message-ID: <20250121231131.GA996473@bhelgaas>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250120-msm-gpu-fault-fixes-next-v2-0-d636c4027042@gmail.com>
- <20250120-msm-gpu-fault-fixes-next-v2-3-d636c4027042@gmail.com> <20250121210818.GS674319@ziepe.ca>
-In-Reply-To: <20250121210818.GS674319@ziepe.ca>
-From: Connor Abbott <cwabbott0@gmail.com>
-Date: Tue, 21 Jan 2025 16:33:01 -0500
-X-Gm-Features: AbW1kvb6ejz0Edpb-LSeUnSnuaoYq5_MYqcriJkrf00pfJrPDWvH4y-7_JTCMIM
-Message-ID: <CACu1E7EgYzsU1AJfi7MJ9QjX8mypPw0mxcCkX-H59hSaDFnd5Q@mail.gmail.com>
-Subject: Re: [PATCH v2 3/3] drm/msm: Temporarily disable stall-on-fault after
- a page fault
-To: Jason Gunthorpe <jgg@ziepe.ca>
-Cc: Rob Clark <robdclark@gmail.com>, Will Deacon <will@kernel.org>, 
-	Robin Murphy <robin.murphy@arm.com>, Joerg Roedel <joro@8bytes.org>, Sean Paul <sean@poorly.run>, 
-	Konrad Dybcio <konradybcio@kernel.org>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, iommu@lists.linux.dev, 
-	linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
-	freedreno@lists.freedesktop.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250119152534.d6berucbb2wbbi3z@thinkpad>
 
-On Tue, Jan 21, 2025 at 4:08=E2=80=AFPM Jason Gunthorpe <jgg@ziepe.ca> wrot=
-e:
->
-> On Mon, Jan 20, 2025 at 10:46:47AM -0500, Connor Abbott wrote:
->
-> > To work around these problem, disable stall-on-fault as soon as we get =
-a
-> > page fault until a cooldown period after pagefaults stop. This allows
-> > the GMU some guaranteed time to continue working. We also keep it
-> > disabled so long as the current devcoredump hasn't been deleted, becaus=
-e
-> > in that case we likely won't capture another one if there's a fault.
->
-> I don't have any particular interest here, but I'm surprised to read
-> this paragraph, maybe you could explain this some more in the commit
-> message?
->
-> I would think terminating transactions and returning a failure to the
-> GPU would be fatal to the GPU operating model when the entire point of
-> stall and fault handling is to make OS paging transparent to the GPU??
->
-> What happens on the GPU side when it gets this spurious failure?
->
-> Jason
+On Sun, Jan 19, 2025 at 08:55:34PM +0530, Manivannan Sadhasivam wrote:
+> On Wed, Jan 15, 2025 at 12:13:40PM -0600, Bjorn Helgaas wrote:
+> > On Wed, Jan 15, 2025 at 11:29:18PM +0530, Manivannan Sadhasivam wrote:
+> > > On Wed, Jan 15, 2025 at 11:42:10AM -0600, Bjorn Helgaas wrote:
+> > > > On Wed, Jan 15, 2025 at 04:24:31PM +0530, Manivannan Sadhasivam wrote:
+> > > > > On Mon, Jan 06, 2025 at 05:07:05PM -0600, Bjorn Helgaas wrote:
+> > > > > > On Sun, Jan 05, 2025 at 03:46:12PM +0530, Manivannan Sadhasivam wrote:
+> > > > > > > On Fri, Jan 03, 2025 at 03:05:31PM -0600, Bjorn Helgaas wrote:
+> > > > > > > > On Thu, Mar 21, 2024 at 04:46:21PM +0530, Manivannan Sadhasivam wrote:
+> > > > > > > > > On Qcom SoCs, the PCIe host bridge is connected to a single PCIe bridge
+> > > > > > > > > for each controller instance. Hence, add a node to represent the bridge.
+> > > > > > > > > 
+> > > > > > > > > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> > > > > > > > > ---
+> > > > > > > > >  arch/arm64/boot/dts/qcom/sm8250.dtsi | 30 ++++++++++++++++++++++++++++++
+> > > > > > > > >  1 file changed, 30 insertions(+)
+> > > > > > > > > 
+> > > > > > > > > diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+> > > > > > > > > index 39bd8f0eba1e..fe5485256b22 100644
+> > > > > > > > > --- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
+> > > > > > > > > +++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+> > > > > > > > > @@ -2203,6 +2203,16 @@ pcie0: pcie@1c00000 {
+> > > > > > > > >  			dma-coherent;
+> > > > > > > > >  
+> > > > > > > > >  			status = "disabled";
+> > > > > > > > > +
+> > > > > > > > > +			pcie@0 {
+> > > > > > > > > +				device_type = "pci";
+> > > > > > > > > +				reg = <0x0 0x0 0x0 0x0 0x0>;
+> > > > > > > > > +				bus-range = <0x01 0xff>;
+> > > > > > > > 
+> > > > > > > > Hi Mani, most or all of the patches in this series add this
+> > > > > > > > "bus-range" property.  IIUC, these are all Root Ports and hence the
+> > > > > > > > secondary/subordinate bus numbers should be programmable.
+> > > > > > > 
+> > > > > > > Right. It is not a functional dependency.
+> > > > > > > 
+> > > > > > > > If that's the case, I don't think we need to include "bus-range" in DT
+> > > > > > > > for them, do we?
+> > > > > > > 
+> > > > > > > We mostly include it to silence the below bindings check for the
+> > > > > > > endpoint device node:
+> > > > > > > 
+> > > > > > > Warning (pci_device_bus_num): /soc@0/pcie@1c00000/pcie@0/wifi@0: PCI bus number 1 out of range, expected (0 - 0)
+> > > > > > > 
+> > > > > > > DTC check is happy if the 'bus-range' property is absent in the
+> > > > > > > bridge node. But while validating the endpoint node (if defined), it
+> > > > > > > currently relies on the parent 'bus-range' property to verify the
+> > > > > > > bus number provided in the endpoint 'reg' property.
+> > > > > > > 
+> > > > > > > I don't know else the check can verify the correctness of the
+> > > > > > > endpoint bus number. So deferring to Rob here.
+> > > > > > 
+> > > > > > I should know more about how this works in DT, but I don't.
+> > > > > > 
+> > > > > > I guess https://git.kernel.org/linus/83d2a0a1e2b9 ("arm64: dts: qcom:
+> > > > > > sm8250: Add PCIe bridge node") added this (subsequently renamed to
+> > > > > > "pcieport0"):
+> > > > > > 
+> > > > > >   +			pcie@0 {
+> > > > > >   +				device_type = "pci";
+> > > > > >   +				reg = <0x0 0x0 0x0 0x0 0x0>;
+> > > > > >   +				bus-range = <0x01 0xff>;
+> > > > > > 
+> > > > > > which is used at places like
+> > > > > > https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts?id=v6.12#n788:
+> > > > > > 
+> > > > > >   &pcieport0 {
+> > > > > > 	  wifi@0 {
+> > > > > > 		  compatible = "pci17cb,1101";
+> > > > > > 		  reg = <0x10000 0x0 0x0 0x0 0x0>;
+> > > > > > 
+> > > > > > Based on
+> > > > > > https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/Documentation/devicetree/bindings/pci/pci.txt?id=v6.12#n46
+> > > > > > (which is written for Root Ports and Switch Ports, but presumably
+> > > > > > applies to endpoints like wifi as well), "reg" contains the device's
+> > > > > > bus/device/function:
+> > > > > > 
+> > > > > >   - reg:
+> > > > > >      Identifies the PCI-PCI bridge. As defined in the IEEE Std 1275-1994
+> > > > > >      document, it is a five-cell address encoded as (phys.hi phys.mid
+> > > > > >      phys.lo size.hi size.lo). phys.hi should contain the device's BDF as
+> > > > > >      0b00000000 bbbbbbbb dddddfff 00000000. The other cells should be zero.
+> > > > > > 
+> > > > > > So 0x10000 would decode to 01:00.0, which matches the <1 1> bus-range.
+> > > > > > 
+> > > > > > I don't know the reason for requiring the BDF there, but the venerable
+> > > > > > https://www.devicetree.org/open-firmware/bindings/pci/pci2_1.pdf, sec
+> > > > > > 4.1.1, says "reg" is mandatory for PCI Child Nodes, and the first
+> > > > > > entry must be the config space address (bus/device/function).
+> > > > > > 
+> > > > > > I suppose maybe the BDF is needed to associate the properties with the
+> > > > > > correct device, and if the OS were to reprogram the bridge secondary
+> > > > > > bus number, it would have to remember the original value to preserve
+> > > > > > this association.  I don't think Linux *does* remember that, but it
+> > > > > > also generally leaves the bridge bus numbers alone.
+> > > > > 
+> > > > > Device drivers need to parse the properties defined in the device DT
+> > > > > node. And the only way to identify the node is by using its 'reg'
+> > > > > property which has the BDF identifier. This is common to other
+> > > > > busses where the device address is encoded in the 'reg' property.
+> > > > 
+> > > > Does this assume there is some firmware to configure these bridges
+> > > > before Linux boots?
+> > > 
+> > > No.
+> > > 
+> > > >  If bridges are completely unconfigured after
+> > > > power-on, their secondary and subordinate bus numbers will be zero, so
+> > > > a bus-range property for the bridge can only be an assumption about
+> > > > what Linux will do.
+> > > 
+> > > Secondary bus number for sure is not an assumption as it depends on
+> > > the hardware topology which linux would know from DT. But
+> > > subordinate number could be considered as an assumption.
+> > 
+> > If there's no firmware and the secondary bus number is 0 when Linux
+> > enumerates the bridge, does Linux know how to get the bus-range from
+> > DT and program the bridge's secondary bus?
+> 
+> Linux doesn't seem to make use of the secondary bus number from DT node of a
+> bridge, but there is no guarantee that other OSes making use of DT won't do.
+> 
+> > And does Linux know how to update the subordinate bus number in the
+> > case where several Root Ports specify 0xff in bus-range?
+> 
+> Same answer as above.
 
-It's touched on in an earlier commit, but OS paging is not (yet?)
-transparent to the GPU, and we aren't using stall-on-fault for that.
-Instead we're (ab)using it to stall the GPU while we capture a
-devcoredump with the state of the GPU when it first faults. Stalling
-prevents the GPU from moving onto another job while we capture the
-devcoredump. We only keep one devcoredump at a time, so we don't care
-about subsequent faults until it's read and deleted by userspace. This
-idea is taken directly from downstream, which I suspect is why the old
-Qualcomm MMU used before MMU-500 violates spec and terminates
-subsequent transactions after the first one stalls - it's helping
-downstream implement devcoredump without this workaround.
+Let me back up; I don't think we're understanding each other.  This
+DT:
 
-I can add some of that context to the commit message.
+  pcie@0 {
+    bus-range = <0x01 0xff>;
 
-Connor
+    &pcieport0 {
+      wifi@0 {
+	reg = <0x10000 0x0 0x0 0x0 0x0>;
+
+says that wifi@0 is at 01:00.0, which is only true if the pcie@0
+secondary bus number is 01.  The power-up default is 00, so it's only
+01 if either firmware or Linux has programmed it that way.
+
+I claim this DT assumes the pcie@0 secondary bus number is programmed
+either by firmware or Linux.  This makes me a bit nervous because
+AFAIK there's nothing that guarantees Linux would choose bus 01.
+
+Maybe Linux just needs to get smarter and program it based on the
+start of the DT bus-range?
 
