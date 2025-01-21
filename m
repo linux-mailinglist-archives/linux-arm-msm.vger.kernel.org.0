@@ -1,137 +1,128 @@
-Return-Path: <linux-arm-msm+bounces-45673-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-45674-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id ADD11A17BA7
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Jan 2025 11:29:32 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id C070FA17BFA
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Jan 2025 11:37:42 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6D84116176C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Jan 2025 10:28:24 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0973F3A2497
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Jan 2025 10:37:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3BAD71BD018;
-	Tue, 21 Jan 2025 10:28:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7C5B51BD018;
+	Tue, 21 Jan 2025 10:36:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="YHgEiTpw"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="hSUvFLEh"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
+Received: from mail-yb1-f172.google.com (mail-yb1-f172.google.com [209.85.219.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57220139B
-	for <linux-arm-msm@vger.kernel.org>; Tue, 21 Jan 2025 10:28:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7EC01F2385
+	for <linux-arm-msm@vger.kernel.org>; Tue, 21 Jan 2025 10:36:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737455304; cv=none; b=luU7E17JyaMKhI6YI09vz61KOEuWgI0dFxO/9ST4MJ02zId63Q+rvCWvFvwaTbYbZLuWdx2TxYcUewxRWuCmMPOg5ul+rujdf+q9gzuRMNWe8iHFmYKPEy1YyFpVZ8kxORzI7T50XraDH6lcL0JjoPrFI+MjT5C61XvkrTzpbYI=
+	t=1737455801; cv=none; b=g4cNTpB928OoEhGSPd0CYf7124VKKPD8U0IZOaaQ0QAxOMJ69JQhi4fUrFmwA3C2LSJsrDqKPPkDS7Ot301Js+a04crSnjBUeaaFUWnJFjZrVoDNCSRbY1ft2GJerZcXaDGrG8qeK5L8EZuRC3BFQjB+IH7y5Xw5mOqfBL0dVEo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737455304; c=relaxed/simple;
-	bh=wQrpa8GS8kWaeHHTuydinL+EYq/LIZeo7muVMGQGY58=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=V7lWt1tSrtnGyx3oPeOMUn91bFyBUVclgT0dpGkd+LEchCuawB53UeaE+SSwhT9k0y3fBeJwfB1FDV9SiHLGnDPAxCEcMvGKpUoFARsBqBkE76INJONkESoi6kUZ8+JwD/yHRg7YTjhlOhRLwWTTQczCag9kbfBpT57lUsnBPkU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=YHgEiTpw; arc=none smtp.client-ip=209.85.128.41
+	s=arc-20240116; t=1737455801; c=relaxed/simple;
+	bh=WJs1a7YvghNKMt//gsZ5tp+QXMnKHykuOV3SsJyGLKM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=oDIxxoqiGEWBBX5+9nhTo3alLQS7CuRLwGRAes5Q9yUIn/7LNQhtQzy9Dm0O9AnWaJNQCUD0Rg40UBWpV0fPXXUBfkewmMpnnX+4zWX7fic3c8adv3Oq38A1Tv7MdrjyYpyvoGoM6jBz3yLlA+ptXv8B73KGnBptB62tdZRddTE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=hSUvFLEh; arc=none smtp.client-ip=209.85.219.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-436230de7a3so7881525e9.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Jan 2025 02:28:22 -0800 (PST)
+Received: by mail-yb1-f172.google.com with SMTP id 3f1490d57ef6-e53c9035003so8418010276.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Jan 2025 02:36:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1737455301; x=1738060101; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=+UwcbP5S9WykIwHHqTseJxUbQ5fCZisz/OQPi9djEpE=;
-        b=YHgEiTpwWvH0iTarvzOxSb2Q4sfHJ22ktPpMnPGniNmf5RU01CMoRaefAg/peYJzoS
-         CqSvZPbd8lA6kh998ZoZTeZBb1vtQQvgAigC/qDEwiVCc3DPuFaz4o6PPGpGK+GTBOzv
-         89co2DPDpN43c1uBkm9lWEdutRrdgTnMA0No3b7X4RRttey6/BHvYfg92oPrLU3jEi+2
-         oO7r2urp21szbC4bNI6ee7oZ1zyMV1Bfw4cIH7mq2QDdSneIoWgamxojxV/m3YbGM7d4
-         1WW8FecloFy+nygC/0Xwt6INn2Tik3rkuPZrbYmde1uwzBWf+rxwyl4nBRMHAvsf+5Zv
-         QSgQ==
+        d=linaro.org; s=google; t=1737455798; x=1738060598; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=uYsSfRqNJj8o50shO4MnohJQTF0XWyzFd4qo9Nzg2zA=;
+        b=hSUvFLEhbkVi+y7iI3MGWT/LczKJEd+gSDWBPwcsP+KnokQFyGS4r4KrLMgP/a837X
+         RwRvXWcpYiguOp61eDQ175x/hnxn8rzUL+AVDPeQAfCO9s+6j96YKxLIUsl0QilNrbBk
+         uEjE2J8DDTqRiNo1oxJ2jNYOjH3pT9tAR9x0ECV9Zx1uhdYWyvcijuH7Vf3pUeaby3OC
+         CTbQt/4aZyGsgPDcJOlEll58ia5+megqIRXseD1mBoU68h+IiyITbF+gIxxHkw6hbepn
+         R7DCCueUm7sMAh9oLCJNcB/BYIYHffMEE9SW0vpmaHUPY/cK3Ac0SAh1mXrUkbdnRWzq
+         rB4Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1737455301; x=1738060101;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20230601; t=1737455798; x=1738060598;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=+UwcbP5S9WykIwHHqTseJxUbQ5fCZisz/OQPi9djEpE=;
-        b=CHd+v9npMVH101feX0NSL6NCNotMxdbxcpOzfYFQiD4xMbroHNmhw9r5YamWNDb+v9
-         ec2zVGrZ1Mbu7WpqN+quCKAuIPYARXNlM2tDsc0BRMfSf6/kWbP3WuixHtURhrCvZZqk
-         sRumei/j3kwnAKbcwn25BUBsszrq0eWHyA55atBZpdEZ2/y9zKBjoCZNC1F902AUaCEY
-         /8Je7t18zfxSftC6ybAW8iMoRQDMDE0VO4ccOfmBh/bFSE9SGS/9DS4j4ggZgqVc4qhE
-         8oyfm4+C1/yW7r1Cvx+k5qyFIatAdT+ySln5AyXAOJpS6wDaWBfZxW7YI3Ow8BJMrkhI
-         s8sw==
-X-Forwarded-Encrypted: i=1; AJvYcCX56D/yDQZnGCcRObyLZD0lO/NC7GxRs1SxTmqPi423f5dYaF5DL/7WuZxfJjY3RDotXVUgStJ2tmX8OxBV@vger.kernel.org
-X-Gm-Message-State: AOJu0YwEJyzT3o0Cr2C8Q7I9FbVf29EBWF+GK+4dsLiL3vTsnHTbJzas
-	xHk9OEwAyzb7DJ7FEzLJ8OFlTQUkDXalVGAkHnWRUIvnGIqmNy0bjfO76in5W88=
-X-Gm-Gg: ASbGnctPRtw2TLthbLVzc/O8+GbbJe5UnhT7Oh8La+sPR/T36UtlEEGqGEIJxeoNXW6
-	EU268ROIR+3L/cWSFEkxPoEMe25EsMDD8MYTCXBHQVfbjUXTDwsMWtTkYQcfdEYd381jYYgkodk
-	005cwxncnaLRsEeiR/wkJ1RDAI1/tL15+tfJMSVUSCNulcgiwMvnITX+XEJeQW+xltbNaxCZW6C
-	M9fn4TWLcHBYPnFtffID8LWqXrO0GqM+KNuT112wgEizyZZQxC+wxlFxChzCx2q5BMk1Dc/gh8S
-	FKkzXY5y
-X-Google-Smtp-Source: AGHT+IGL6uv0owpIehl8E5S3svyTt4yRH0CqejpKrKr4Trgu+zf/RK1Q5dsKzuwa6rhro1K+PQ7aoQ==
-X-Received: by 2002:a05:600c:4fd6:b0:434:f1d5:144a with SMTP id 5b1f17b1804b1-438912d37d8mr60446625e9.0.1737455300745;
-        Tue, 21 Jan 2025 02:28:20 -0800 (PST)
-Received: from krzk-bin.. ([178.197.223.165])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-438904625e5sm175204685e9.32.2025.01.21.02.28.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 21 Jan 2025 02:28:19 -0800 (PST)
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH] soc: qcom: Do not expose internal servreg_location_entry_ei array
-Date: Tue, 21 Jan 2025 11:28:17 +0100
-Message-ID: <20250121102817.68577-1-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.43.0
+        bh=uYsSfRqNJj8o50shO4MnohJQTF0XWyzFd4qo9Nzg2zA=;
+        b=qg4kb9TsPn4kgXt1DOb3xBwhrkDY7Ns7CTQbjozUkzhZ41uqiTO5EP8FDggKAG+unP
+         z2tzNyUPKEmJKuo+A0DkOBaNCwGsboMqbaDGk8pBQmEUrOsp3U5jouce/4pldiWcKU9w
+         DVPJd0EcPD4/qYsLhmNHS/T3suYiWFdffGjJJOxa5ro/Ufio3Ces56xOrmFJQNSjhmiQ
+         cWJkbJb1WqGWqPFS/IrnCkefz4HEjgBCB2Qv/1V2v4+kogzLVw3A5c5/BQKhR21ufaJC
+         NySRdpHJWBEGzU+Nos6ChAabXxa4mx2XyCknDavcii0yqtDECfps18dIz+iR5j1MVFo2
+         KedQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXBQwyevGkxVx8FBXn1ayfNix1fJuXRFFxn+BNbfqK8r9eaGBloxpkPei0OSQXmQWoqj8NTJQZCIQTqDYas@vger.kernel.org
+X-Gm-Message-State: AOJu0YzWlF+2LUVhzZeeQp4oX6tlcAKRCq4Twob2mtrpConF/57peShh
+	f4mHlH9xNZ1YeCMu0zDDMIh5oIlFesgqpZPZ/pg4CmpEUbDL+KWPQFnI8+tJ/Fqa+9f45pkhKyd
+	Hpgbi5u1RtUm39F2ENlds4zxMaQbWO5wktir18Q==
+X-Gm-Gg: ASbGncs7+mUSLCY0KbxY9KCURlEB2vo8g+aMAWdt/nG8ZkzeUwSr5JwggizcGF/EWbf
+	Tf3I07cHzXW+W18hCQLWxYt8s/W9iLAOThXw/BVSiG/Lok4z198rShjdwlDKLu9bz5w==
+X-Google-Smtp-Source: AGHT+IGgc5DuaN4EVnKxaaNEieV/Lsus7ZftrBH6yEeXwAV7YxRfKF3ABKJD1IwgaQXrf81aL3myamAyLAsDHtu6Hno=
+X-Received: by 2002:a05:690c:6b0a:b0:6ea:7b00:4aa5 with SMTP id
+ 00721157ae682-6f6eb93266dmr122701137b3.33.1737455798645; Tue, 21 Jan 2025
+ 02:36:38 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20250121094140.4006801-1-quic_wenbyao@quicinc.com> <20250121094140.4006801-3-quic_wenbyao@quicinc.com>
+In-Reply-To: <20250121094140.4006801-3-quic_wenbyao@quicinc.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Tue, 21 Jan 2025 12:36:27 +0200
+X-Gm-Features: AbW1kvaQ-0WRKtcJxgbDZ6H35o106sf53x8vunv0kmHF65XxhI3rh4OAJPGvtrk
+Message-ID: <CAA8EJppXQpDrdXzJsTE7HWs=POt7yFAw0JVZFabN6Ks3fhZiWQ@mail.gmail.com>
+Subject: Re: [PATCH 2/2] phy: qcom: qmp-pcie: Add PHY register retention support
+To: Wenbin Yao <quic_wenbyao@quicinc.com>
+Cc: vkoul@kernel.org, kishon@kernel.org, p.zabel@pengutronix.de, 
+	abel.vesa@linaro.org, quic_qianyu@quicinc.com, neil.armstrong@linaro.org, 
+	manivannan.sadhasivam@linaro.org, quic_devipriy@quicinc.com, 
+	konrad.dybcio@oss.qualcomm.com, linux-arm-msm@vger.kernel.org, 
+	linux-phy@lists.infradead.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-'struct qmi_elem_info servreg_location_entry_ei' is used only internally
-in qcom_pdr_msg.c, so drop the extern declaration to make headers
-smaller and code more obvious about intention.
+On Tue, 21 Jan 2025 at 11:43, Wenbin Yao <quic_wenbyao@quicinc.com> wrote:
+>
+> From: Qiang Yu <quic_qianyu@quicinc.com>
+>
+> Currently, BCR reset and PHY register setting are mandatory for every port
+> before link training. However, some QCOM PCIe PHYs support no_csr reset.
+> Different than BCR reset that is used to reset entire PHY including
+> hardware and register, once no_csr reset is toggled, only PHY hardware will
+> be reset but PHY registers will be retained,
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
----
- drivers/soc/qcom/pdr_internal.h | 1 -
- drivers/soc/qcom/qcom_pdr_msg.c | 3 +--
- 2 files changed, 1 insertion(+), 3 deletions(-)
+I'm sorry, I can't parse this.
 
-diff --git a/drivers/soc/qcom/pdr_internal.h b/drivers/soc/qcom/pdr_internal.h
-index 8d17f7fb79e7..039508c1bbf7 100644
---- a/drivers/soc/qcom/pdr_internal.h
-+++ b/drivers/soc/qcom/pdr_internal.h
-@@ -91,7 +91,6 @@ struct servreg_loc_pfr_resp {
- 	struct qmi_response_type_v01 rsp;
- };
- 
--extern const struct qmi_elem_info servreg_location_entry_ei[];
- extern const struct qmi_elem_info servreg_get_domain_list_req_ei[];
- extern const struct qmi_elem_info servreg_get_domain_list_resp_ei[];
- extern const struct qmi_elem_info servreg_register_listener_req_ei[];
-diff --git a/drivers/soc/qcom/qcom_pdr_msg.c b/drivers/soc/qcom/qcom_pdr_msg.c
-index bf3e4a47165e..ca98932140d8 100644
---- a/drivers/soc/qcom/qcom_pdr_msg.c
-+++ b/drivers/soc/qcom/qcom_pdr_msg.c
-@@ -8,7 +8,7 @@
- 
- #include "pdr_internal.h"
- 
--const struct qmi_elem_info servreg_location_entry_ei[] = {
-+static const struct qmi_elem_info servreg_location_entry_ei[] = {
- 	{
- 		.data_type      = QMI_STRING,
- 		.elem_len       = SERVREG_NAME_LENGTH + 1,
-@@ -47,7 +47,6 @@ const struct qmi_elem_info servreg_location_entry_ei[] = {
- 	},
- 	{}
- };
--EXPORT_SYMBOL_GPL(servreg_location_entry_ei);
- 
- const struct qmi_elem_info servreg_get_domain_list_req_ei[] = {
- 	{
+> which means PHY setting can
+> be skipped during PHY init if PCIe link was enabled in booltloader and only
+> no_csr is toggled after that.
+>
+> Hence, determine whether the PHY has been enabled in bootloader by
+> verifying QPHY_START_CTRL register. If it is programmed and no_csr reset is
+> present, skip BCR reset and PHY register setting, so that PCIe link can be
+> established with no_csr reset only.
+
+This doesn't tell us why we want to do so. The general rule is not to
+depend on the bootloaders at all. The reason is pretty simple: it is
+hard to update bootloaders, while it is relatively easy to update the
+kernel. If the hardware team issues any kind of changes to the
+programming tables, the kernel will get them earlier than the
+bootloader.
+
+>
+> Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
+> Signed-off-by: Wenbin Yao <quic_wenbyao@quicinc.com>
+> ---
+>  drivers/phy/qualcomm/phy-qcom-qmp-pcie.c | 91 +++++++++++++++---------
+>  1 file changed, 58 insertions(+), 33 deletions(-)
+>
 -- 
-2.43.0
-
+With best wishes
+Dmitry
 
