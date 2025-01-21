@@ -1,89 +1,68 @@
-Return-Path: <linux-arm-msm+bounces-45668-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-45669-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2E18FA17A98
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Jan 2025 10:55:35 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 121EBA17AFC
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Jan 2025 11:06:30 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 03CEB3A3C9D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Jan 2025 09:55:26 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id EEE717A11F4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Jan 2025 10:06:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 067201BD9CE;
-	Tue, 21 Jan 2025 09:55:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C0D131E47B4;
+	Tue, 21 Jan 2025 10:06:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Fn8OvIBw"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="izfXe+4k"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0566ED2FB
-	for <linux-arm-msm@vger.kernel.org>; Tue, 21 Jan 2025 09:55:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D5AF1B87C2;
+	Tue, 21 Jan 2025 10:06:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737453318; cv=none; b=IUt0IAGlWMP6/2pFex90/yB6fwN+oTmKfa50LML1ZbVuB6drGjlEGtL6POUuVMeGDJvcmQ0nj5vn+6CO1u7vbu9hBrUv4eQYDyhWdJkk9AxzCaZ/SZ0uf66bxiBKcZ/O5tisdrxnf5u8zKUMOvMAhAx0zBSGO43qR3O0xofFkTY=
+	t=1737453982; cv=none; b=q274KfIq0RPBuNzKqRKavNZjrBFFB62SQAYVOTTcALZw6zBmUSWY6X3FmSvYiDDUlSaoPR5BqESa9Am6jLPhV1nJgAVAxffR25UkcymAX8K7c3/sdKwfoJaGEQ6Qb/6o8re1EHejMzUliSjODeClXTpLWI2ZRfzxNRke3t8Z5dg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737453318; c=relaxed/simple;
-	bh=1i70z0fw9u5mjAwug0G9jRMjriIh6lEP5kexsFa1yLQ=;
+	s=arc-20240116; t=1737453982; c=relaxed/simple;
+	bh=7FWr/ORFioTWE9cjlvGZ8zTlAMHhOvAw8UExX9n1Zm4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=CwGyahzief6Qcm3RtW9kQG8en/HRcd6ZY0Q9OfcdKPU12V+Y3fIDoVkt3FXxp1cO5/TbWIqbLlvSYvRhW/455fka1U5VJOG0KPY8bYo5qNu1GIV/dEara5+Ngc8MRDesrsmVcRZbusYl90S53Tl8jafBsY2CcrVM3vPC+GB2/9g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Fn8OvIBw; arc=none smtp.client-ip=209.85.128.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-436a39e4891so36595385e9.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Jan 2025 01:55:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1737453315; x=1738058115; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=BJEfTvcXUOg/2RMScN4VNlvtaWh5a7Q7ooc2IyVfYw8=;
-        b=Fn8OvIBwLz2E6FFjrQR9afbMPE6dluFQHQnxLFqPC0sK4aPhINN1Y3EzEY2aZ2U4Ke
-         nVR/sKixoM7P4LU4GTNoR9ZA5/swHaiEqw2QQ8WKdhn8gtD8F+WQ3t93X11bZZAp9cls
-         s2z9DI24iI4xwTuf5sVnxDPGrhhvEKXAaUrGxRvTkh3bIzdBkbCLYZnRR2wmH/CGHurD
-         0TsWT9UMGDVhUXGJl6byKhzwLdeYAhrcQos3hurOG6Ajw2g2Syc0AXujXgfe8Z1bbo7a
-         7UVLveevXGUd9zXbUrq1ANJxWO8f3yPcZyHNxq/qtMc5re2k9n/ban3jZJB20BZbAEPE
-         S39Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1737453315; x=1738058115;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=BJEfTvcXUOg/2RMScN4VNlvtaWh5a7Q7ooc2IyVfYw8=;
-        b=kDmkAIJ151ebhg2GcFGzhgdNqJnk2GJrCEnxZQvXDemapPnIBoCkRcVoS9HPSXjyPV
-         JniegHpARNAhfS8Nih2e59zkaBee6gx7s9ruTmn6V/cxhyoRk9RWvMe82A9F18Ze89ys
-         KzrSNcriIxptLC/2Wrm9sYaRB8X2406UX5QLDxYWs6RNSiDQGapMlK6/GKOgwGAuO4yQ
-         VdTQyMhdgSrFqP4IN7KUn7FTQ7RRJgWbPvtEgDUFMti7dm4j+/yJJcmNly8s55mgfiJM
-         OvL/d4pWcu4lGY0EX2V4r93wqV660Yi0JOLbVa/b9J1tuiJq3Ks/hit1FjltKyDFK7ZX
-         Unuw==
-X-Forwarded-Encrypted: i=1; AJvYcCWW9pwr3mhibsqM9u3KhvCmysUGOT///8p+S/vY2EgNpDx7XweUxSjl8HIST+2SRf858guvcqKwlG4IJWeo@vger.kernel.org
-X-Gm-Message-State: AOJu0YxCfd6Rk7/eHwnSZaskEO+uz08VLAFMMetg22MkOrpYzi4SYY49
-	CTh4zKGBEMrRtEUOMjvTJmIL4gheSs2DMwpxnT5pK3DMsdALFGyJ9egcdSotEko=
-X-Gm-Gg: ASbGnctAH36VLLjAkExSVoA3VV96ecOJmbKpwe06nB6jYAKpktSf43ABLHV8jXtoagM
-	VG4sRWeq9uWGbdPsQUrsapSGNYueAVdJVoL7KgFkR0UOiSHS8s5bcG6xrTsbeY4E+4pwoRNwh43
-	jEKdjvbic7XKlf62SLLOSR8PxXYTwxxUq+3Ll4a6AmvktBi3e3VdHPUPbn4xaUh65Mer+2aIAKK
-	9Gbm9V/8jOuoTwHNdbGL0pcH6BzMqTYrP8WJf+8E4apwIMt6wyJRyB5saERUKSjwrEG
-X-Google-Smtp-Source: AGHT+IFN+/Ulyj4CwXzze+VR77TqlAAim9U99xctcP1kZZn/i+KqjTbOyWR88Y+G5DoLrMkVoNvbDg==
-X-Received: by 2002:a5d:4f0b:0:b0:385:e0d6:fb73 with SMTP id ffacd0b85a97d-38bf56624a8mr12912498f8f.15.1737453315261;
-        Tue, 21 Jan 2025 01:55:15 -0800 (PST)
-Received: from linaro.org ([86.123.96.125])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38bf3275562sm13166638f8f.66.2025.01.21.01.55.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 21 Jan 2025 01:55:14 -0800 (PST)
-Date: Tue, 21 Jan 2025 11:55:13 +0200
-From: Abel Vesa <abel.vesa@linaro.org>
-To: Wenbin Yao <quic_wenbyao@quicinc.com>
-Cc: vkoul@kernel.org, kishon@kernel.org, p.zabel@pengutronix.de,
-	dmitry.baryshkov@linaro.org, quic_qianyu@quicinc.com,
-	neil.armstrong@linaro.org, manivannan.sadhasivam@linaro.org,
-	quic_devipriy@quicinc.com, konrad.dybcio@oss.qualcomm.com,
-	linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+	 Content-Type:Content-Disposition:In-Reply-To; b=fq9Hfk9a8Uvclalb2wYz/MDVbOqSpwHl1WjvMADSEHY37nkU3mfEvQ4RZN9/XomML2qT6NcUw98pJ2LdRVUpJUVI77FKM8i8lvpDWyhVd8d4QBF3QTDWXPgh0iYeeom+P25D1boEdQFgLR7r6q67JKL0DbIbqCzA3qZdBZQhiy4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=izfXe+4k; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D12DC4CEDF;
+	Tue, 21 Jan 2025 10:06:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1737453982;
+	bh=7FWr/ORFioTWE9cjlvGZ8zTlAMHhOvAw8UExX9n1Zm4=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=izfXe+4k+9UoFvXiMcp814+3fmb5qOrEWwBW+la2LZmTEMMJWnQKxJ+C3objx88wZ
+	 z/cyQWl0ZTAszBuE5gL64PeThsuY3are3Qjc3pkNZrsHoRMWIaPDJlitsALXBkmNri
+	 kz1oe72HbnlQiEJmtVbnRDTO1+79LtK+hdUBuek8MxEHsnotZciz55BL4Mc45dRpC0
+	 ghyjNtmb16ebNzVDL6wICONFNBY8RMHACniLm+PdUmELqxvBLTLZYpUbMbaj4ur5YZ
+	 XXcKXIgRdU7TW51WCteyS0/pqvJONNF4zqbgeQdxvQSbYF42Hj8XXSD2m9XrIR3mxb
+	 sAA1b5cFy1EzQ==
+Received: from johan by xi.lan with local (Exim 4.97.1)
+	(envelope-from <johan@kernel.org>)
+	id 1taB9N-000000008F2-3jtU;
+	Tue, 21 Jan 2025 11:06:25 +0100
+Date: Tue, 21 Jan 2025 11:06:25 +0100
+From: Johan Hovold <johan@kernel.org>
+To: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
+Cc: Johan Hovold <johan+linaro@kernel.org>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Jonathan Marek <jonathan@marek.ca>, linux-arm-msm@vger.kernel.org,
+	linux-rtc@vger.kernel.org, devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 1/2] phy: qcom: pcie: Determine has_nocsr_reset
- dynamically
-Message-ID: <Z49vAXdhROVm93TW@linaro.org>
-References: <20250121094140.4006801-1-quic_wenbyao@quicinc.com>
- <20250121094140.4006801-2-quic_wenbyao@quicinc.com>
+Subject: Re: [PATCH 7/7] arm64: dts: qcom: x1e80100: enable rtc
+Message-ID: <Z49xoSvzZ_hCGZP-@hovoldconsulting.com>
+References: <20250120144152.11949-1-johan+linaro@kernel.org>
+ <20250120144152.11949-8-johan+linaro@kernel.org>
+ <d6ff6f2e-9280-4fd0-af4c-f50b35652800@oldschoolsolutions.biz>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -92,100 +71,15 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250121094140.4006801-2-quic_wenbyao@quicinc.com>
+In-Reply-To: <d6ff6f2e-9280-4fd0-af4c-f50b35652800@oldschoolsolutions.biz>
 
-On 25-01-21 17:41:39, Wenbin Yao wrote:
-> From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-> 
-> Decide the in-driver logic based on whether the nocsr reset is present
-> and defer checking the appropriateness of that to dt-bindings to save
-> on boilerplate.
-> 
-> Reset controller APIs are fine consuming a nullptr, so no additional
-> checks are necessary there.
-> 
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-> Signed-off-by: Wenbin Yao <quic_wenbyao@quicinc.com>
+On Mon, Jan 20, 2025 at 07:12:05PM +0100, Jens Glathe wrote:
 
-Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
+> works nicely on SnapDragon Dev Kit X1E001DE. Thank you!
+> 
+> Tested-by: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
 
-> ---
->  drivers/phy/qualcomm/phy-qcom-qmp-pcie.c | 18 +++++++-----------
->  1 file changed, 7 insertions(+), 11 deletions(-)
-> 
-> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-> index 873f2f9844c6..ac42e4b01065 100644
-> --- a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-> @@ -2793,8 +2793,6 @@ struct qmp_phy_cfg {
->  
->  	bool skip_start_delay;
->  
-> -	bool has_nocsr_reset;
-> -
->  	/* QMP PHY pipe clock interface rate */
->  	unsigned long pipe_clock_rate;
->  
-> @@ -3685,7 +3683,6 @@ static const struct qmp_phy_cfg sm8550_qmp_gen4x2_pciephy_cfg = {
->  
->  	.pwrdn_ctrl		= SW_PWRDN | REFCLK_DRV_DSBL,
->  	.phy_status		= PHYSTATUS_4_20,
-> -	.has_nocsr_reset	= true,
->  
->  	/* 20MHz PHY AUX Clock */
->  	.aux_clock_rate		= 20000000,
-> @@ -3718,7 +3715,6 @@ static const struct qmp_phy_cfg sm8650_qmp_gen4x2_pciephy_cfg = {
->  
->  	.pwrdn_ctrl		= SW_PWRDN | REFCLK_DRV_DSBL,
->  	.phy_status		= PHYSTATUS_4_20,
-> -	.has_nocsr_reset	= true,
->  
->  	/* 20MHz PHY AUX Clock */
->  	.aux_clock_rate		= 20000000,
-> @@ -3836,7 +3832,6 @@ static const struct qmp_phy_cfg x1e80100_qmp_gen4x2_pciephy_cfg = {
->  
->  	.pwrdn_ctrl		= SW_PWRDN | REFCLK_DRV_DSBL,
->  	.phy_status		= PHYSTATUS_4_20,
-> -	.has_nocsr_reset	= true,
->  };
->  
->  static const struct qmp_phy_cfg x1e80100_qmp_gen4x4_pciephy_cfg = {
-> @@ -3870,7 +3865,6 @@ static const struct qmp_phy_cfg x1e80100_qmp_gen4x4_pciephy_cfg = {
->  
->  	.pwrdn_ctrl		= SW_PWRDN | REFCLK_DRV_DSBL,
->  	.phy_status		= PHYSTATUS_4_20,
-> -	.has_nocsr_reset	= true,
->  };
->  
->  static const struct qmp_phy_cfg x1e80100_qmp_gen4x8_pciephy_cfg = {
-> @@ -3902,7 +3896,6 @@ static const struct qmp_phy_cfg x1e80100_qmp_gen4x8_pciephy_cfg = {
->  
->  	.pwrdn_ctrl		= SW_PWRDN | REFCLK_DRV_DSBL,
->  	.phy_status		= PHYSTATUS_4_20,
-> -	.has_nocsr_reset	= true,
->  };
->  
->  static void qmp_pcie_init_port_b(struct qmp_pcie *qmp, const struct qmp_phy_cfg_tbls *tbls)
-> @@ -4203,11 +4196,14 @@ static int qmp_pcie_reset_init(struct qmp_pcie *qmp)
->  	if (ret)
->  		return dev_err_probe(dev, ret, "failed to get resets\n");
->  
-> -	if (cfg->has_nocsr_reset) {
-> -		qmp->nocsr_reset = devm_reset_control_get_exclusive(dev, "phy_nocsr");
-> -		if (IS_ERR(qmp->nocsr_reset))
-> +	qmp->nocsr_reset = devm_reset_control_get_exclusive(dev, "phy_nocsr");
-> +	if (IS_ERR(qmp->nocsr_reset)) {
-> +		if (PTR_ERR(qmp->nocsr_reset) == -ENOENT ||
-> +		    PTR_ERR(qmp->nocsr_reset) == -EINVAL)
-> +			qmp->nocsr_reset = NULL;
-> +		else
->  			return dev_err_probe(dev, PTR_ERR(qmp->nocsr_reset),
-> -						"failed to get no-csr reset\n");
-> +					     "failed to get no-csr reset\n");
->  	}
->  
->  	return 0;
-> -- 
-> 2.34.1
-> 
+Thanks for testing.
+
+Johan
 
