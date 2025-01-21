@@ -1,133 +1,118 @@
-Return-Path: <linux-arm-msm+bounces-45698-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-45699-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 35164A17FE7
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Jan 2025 15:34:44 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 34D09A18127
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Jan 2025 16:30:04 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 08F9218843A6
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Jan 2025 14:34:47 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 11CAB3AB173
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Jan 2025 15:29:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 63CE11F3D59;
-	Tue, 21 Jan 2025 14:34:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1B1FE1F4705;
+	Tue, 21 Jan 2025 15:29:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="gEupoOAP"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="d71jjJca"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AD491F1508;
-	Tue, 21 Jan 2025 14:34:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=156.67.10.101
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 470801F4299;
+	Tue, 21 Jan 2025 15:29:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737470077; cv=none; b=WG9ke0W0UWrUixmEMeECZujHxFDEQdGIDjvE8vYPxJGcmxa3sv98jfI+wIE+yVVSPFQXyVlU1ljYpBKdubeVkn2DcuEzoPBcGKgMgNKcqA/ThlE2/JQBtaXpN8lXUqy75pm5j3UWVpjDOKv1wiK5qfFIhmjSZMjqR9azMn7yxm4=
+	t=1737473386; cv=none; b=Gfo+CSRzbrsBNPIdyYxol64V1tzArSnMZOkz4AXyKz+IPRMWP1P9hCg8Jf/1Ku0GzsLq32zshFxW+SR3XDseMXn4GhRnkMFYpuXkux05wtfEpJQYMsMrHfVNjy6JmxmajKfH5OcO+SO3mC/AMW8ZLRcEBkM6E/MnwCks5Fy38ts=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737470077; c=relaxed/simple;
-	bh=KI4hyPnJz8LjTimAis5H99w6OwrSz7DrW76BQAXYScM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=airL7Y/IZCiso/uP5Fv/UZ/mIgqYRI/A5ViWXfOpX4sx9fxnz5v4dsAC7bFaWdfevGpa0YDN1NG7R7XPxpQYNN8RjJLJ71du1dyZNc3Yggf9rHwrqUTtvMfSKfvszsTD8/m9sA+aK2BsJ8wSltA6SdkiLyxeFGqCIAeTPOY9U6c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch; spf=pass smtp.mailfrom=lunn.ch; dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b=gEupoOAP; arc=none smtp.client-ip=156.67.10.101
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lunn.ch
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
-	s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
-	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
-	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
-	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
-	bh=5MfTDBXKnfQgtBuHJqYH787sbTmGoB/81OUCCryIhhg=; b=gEupoOAP7LxUmTZs8ih/lPQx+i
-	wUawPIwk0bYMEQK3Z66L6KQowqftXS6uuEiU2QO1fkwWu50PRRBamuVf7fcweqfXwhjeG5q6Jeh5m
-	VdhQUHHCvED6l70O75wAiLkX4ycCNm0PkyBRgKonlciLC0XgnteJFOioUSjqJPK7akWo=;
-Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
-	(envelope-from <andrew@lunn.ch>)
-	id 1taFKd-006enL-3z; Tue, 21 Jan 2025 15:34:19 +0100
-Date: Tue, 21 Jan 2025 15:34:19 +0100
-From: Andrew Lunn <andrew@lunn.ch>
-To: Yijie Yang <quic_yijiyang@quicinc.com>
-Cc: Krzysztof Kozlowski <krzk@kernel.org>, Vinod Koul <vkoul@kernel.org>,
-	Andrew Lunn <andrew+netdev@lunn.ch>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>,
-	Jose Abreu <joabreu@synopsys.com>,
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>, netdev@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-stm32@st-md-mailman.stormreply.com,
-	linux-arm-kernel@lists.infradead.org
-Subject: Re: [PATCH 2/3] net: stmmac: qcom-ethqos: Enable RX programmable
- swap on qcs615
-Message-ID: <ebf3238c-12ec-4da7-bcdf-594bbe070a82@lunn.ch>
-References: <20241225-support_10m100m-v1-0-4b52ef48b488@quicinc.com>
- <20241225-support_10m100m-v1-2-4b52ef48b488@quicinc.com>
- <4b4ef1c1-a20b-4b65-ad37-b9aabe074ae1@kernel.org>
- <278de6e8-de8f-458a-a4b9-92b3eb81fa77@quicinc.com>
- <e47f3b5c-9efa-4b71-b854-3a5124af06d7@lunn.ch>
- <87a7729d-ccdd-46f0-bcfd-3915452344fd@quicinc.com>
- <7e046761-7787-4f01-b47b-9374402489ac@lunn.ch>
- <5bc3f4e0-6c3f-412c-a825-54707c70f779@quicinc.com>
- <0fe23cfd-9326-4664-9c94-cf010aec882c@lunn.ch>
- <89d4df79-a202-407a-bcfd-6af5315c403c@quicinc.com>
+	s=arc-20240116; t=1737473386; c=relaxed/simple;
+	bh=hZUVhBT9ZVscOAlnCeZiXzX8lMVxX6KBc7liCxqVgYQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=Zp6QYdirq/YhzN3jMYEPfx2SH0X6lKJXf9zvs5YWPKG3p0w49ic7xBoa/797IppKeUYfIIxDnKC+k4cgSNFSuzzmG1U6Anm8NF/l0LlfLDBftNNkPfs/eG3rstiETsdC7afbfjz5bNXconztg3LJX0sjlNrpQmB8xV2eBeJElKg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=d71jjJca; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50L9Hfhc006606;
+	Tue, 21 Jan 2025 15:29:35 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	XRaedevMSORfkAEjpYG6dBAlSk0930ZbG6DAT5O4hjI=; b=d71jjJcaZgCmvWV/
+	boTG2KmKVMPbN/wfuY3Kd59WoVlr8jrWBYWImzjElBFkgmsjQXYJj033daPPZLwS
+	5mSeC5TfL6DnKmA0FIePnmrmL7AijoDSinZzyyfCj6sN3mNsybj7Uy+edVuUvDUa
+	rmuEPjgfA0EUPk1+81eUY5vW1rauKA4hWYExjGwUYPpbY8X7f+l/yApt3Iw1ltGn
+	SHMO+5bvislg0v0Fq3xCM9GxmdYCu36h4BGpBA2nY6Ed9r+JrzCGiHRgPu4FTtXO
+	GLcIJ4ZVo/Ll133rWlXDNoIt0cjn5VKsMmVeTviPzzs1DHfAs9RWyl33pcD7xCcg
+	GJBBGg==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44a8tuh6jf-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 21 Jan 2025 15:29:34 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 50LFTX8S029595
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 21 Jan 2025 15:29:33 GMT
+Received: from [10.226.59.182] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 21 Jan
+ 2025 07:29:32 -0800
+Message-ID: <dbf3e688-d7fc-06ab-aee6-3ed1095148c8@quicinc.com>
+Date: Tue, 21 Jan 2025 08:29:32 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <89d4df79-a202-407a-bcfd-6af5315c403c@quicinc.com>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.0
+Subject: Re: [PATCH v2 7/7] accel/qaic: Add AIC200 support
+Content-Language: en-US
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+CC: <quic_carlv@quicinc.com>, <quic_yabdulra@quicinc.com>,
+        <quic_mattleun@quicinc.com>, <quic_thanson@quicinc.com>,
+        <ogabbay@kernel.org>, <lizhi.hou@amd.com>,
+        <jacek.lawrynowicz@linux.intel.com>, <linux-arm-msm@vger.kernel.org>,
+        <dri-devel@lists.freedesktop.org>, <mhi@lists.linux.dev>
+References: <20250117170943.2643280-1-quic_jhugo@quicinc.com>
+ <20250117170943.2643280-8-quic_jhugo@quicinc.com>
+ <20250121051624.nhest7s6iyh2ll4m@thinkpad>
+From: Jeffrey Hugo <quic_jhugo@quicinc.com>
+In-Reply-To: <20250121051624.nhest7s6iyh2ll4m@thinkpad>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: QZ8m3zlp2BF81syHGF_36z3fy4GUrIB-
+X-Proofpoint-ORIG-GUID: QZ8m3zlp2BF81syHGF_36z3fy4GUrIB-
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-01-21_06,2025-01-21_03,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 adultscore=0
+ clxscore=1015 lowpriorityscore=0 phishscore=0 priorityscore=1501
+ impostorscore=0 mlxscore=0 spamscore=0 malwarescore=0 suspectscore=0
+ mlxlogscore=856 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2501210126
 
-> > Maybe you should go read the RGMII standard, and then think about how
-> > your hardware actually works.
-> > 
-> > RGMII always has a variable clock, with different clock speeds for
-> > 10/100/1G. So your board design is just plain normal, not
-> > special. Does the standard talk about different delays for different
-> > speeds? As you say, other drivers apply the same delay for all
-> > speeds. Why should your hardware be special?
-> > 
-> > RGMII has been around for 25 years. Do you really think your RGMII
-> > implementation needs something special which no other implementation
-> > has needed in the last 25 years?
+On 1/20/2025 10:16 PM, Manivannan Sadhasivam wrote:
+> On Fri, Jan 17, 2025 at 10:09:43AM -0700, Jeffrey Hugo wrote:
+>> Add basic support for the new AIC200 product. The PCIe Device ID is
+>> 0xa110. With this, we can turn on the lights for AIC200 by leveraging
+>> much of the existing driver.
+>>
+>> Co-developed-by: Youssef Samir <quic_yabdulra@quicinc.com>
+>> Signed-off-by: Youssef Samir <quic_yabdulra@quicinc.com>
+>> Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
 > 
-> I do not intend to violate the regulations of the RGMII standard and aim to
-> maintain the same delay across all speeds. But the RX programming swap bit
-> can only introduce a delay of 180 degrees. Should I assume the 1G speed
-> clock to calculate and determine if this bit should be enabled for all
-> speeds?
+> Acked-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-Lets rewind a bit.
+Thanks for the reviews/ack.
 
-The RGMII standard specified which edge you sample on. Since it is
-defined, no other driver has a configuration like this, they just
-setup there hardware to be standards compliant.
+Do you have thoughts on merging the series? I think I could take 
+everything through drm-misc, you could take everything through the MHI 
+tree, or we could split the series by tree with a phased approach.
 
-Why do you need the ability to break the standard, and sample on the
-wrong edge?
-
-I can think of two reasons:
-
-1) You have a PHY which is broken, it also samples on the wrong
-edge. This is a workaround for that broken PHY.
-
-2) You have a board with a clock line driver inserted between the
-RGMII output pins and the PHY, and this line driver includes a NOT?
-This line driver is causing the clocking to break the RGMII
-standard. You are working around this broken board design by getting
-the MAC to invert the clock.
-
-Is there a third reason?
-
-Lets first understand the details of why you need to be able to invert
-the clock.
-
-	Andrew
+-Jeff
 
