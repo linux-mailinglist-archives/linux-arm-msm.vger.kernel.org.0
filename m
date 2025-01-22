@@ -1,79 +1,79 @@
-Return-Path: <linux-arm-msm+bounces-45806-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-45807-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8A0F8A19284
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jan 2025 14:30:58 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id C95D8A192A1
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jan 2025 14:33:55 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3C5B2188292B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jan 2025 13:31:02 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 1A9941620D9
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jan 2025 13:33:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1978C54782;
-	Wed, 22 Jan 2025 13:30:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 940FF43AA8;
+	Wed, 22 Jan 2025 13:33:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="KvrQYSiZ"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="AagZ32jl"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com [209.85.221.50])
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AECF825761
-	for <linux-arm-msm@vger.kernel.org>; Wed, 22 Jan 2025 13:30:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C89771BDCF
+	for <linux-arm-msm@vger.kernel.org>; Wed, 22 Jan 2025 13:33:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737552644; cv=none; b=RsJo0D8kg1FepaWJPn0vMs0qAOgvCxt/AAsElYofjc/GR9lTYGbBmMPlZrGelUCemTuGtrynIFu+BURxu5FP9I76pBD+6MXQwPvGBJqOPrTFtb+o9ANVjqwZch+YcF8aHE0lAjXay4QUaJYtJJ+L+f8QukMSonakT0Uf0CM35pw=
+	t=1737552829; cv=none; b=apnu/YPCgGydwjkwUGIRaEeBAMuzL4TCo0cyJqA4oO3Fta7BLZoWuPKO0zTMdGLwuDh9M4aT+d1jI3z7pES/iRaphtkr2xgovkcKPUlPH5nAzPfdPN70Ma7ymVg/VQOP1H6C755lG6ILMXkkUQTO/+r38JfLvewPDBCORwucQEA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737552644; c=relaxed/simple;
-	bh=nQ+EfzcRSwtzPf/2Sjx6eJs4I6cX9R80znntCwpy21c=;
+	s=arc-20240116; t=1737552829; c=relaxed/simple;
+	bh=m00pGdrdiUbcfAFkoBJjrGn9EGlSBh3Nl74U3KWth1A=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Uc9UErL10yOuqVPbdnZZlKGMDQzU/Od0hgViA34Uh/aCReIhYGrHPCDpWn2Qzy32gKWd2f+gLlkMwo9vYu3BVgGBtdJfLVkYbSeXXYJFN+nzAjpWaemAnbCCIeow3zVg4eIpMVjHiEY/huFjqkEoztVf+sfQBuLAAQN6BuBSMbA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=KvrQYSiZ; arc=none smtp.client-ip=209.85.221.50
+	 In-Reply-To:Content-Type; b=RWExw1KYsxw7PhOGfWNU51/i7l17dkX4sAPywzaqojQ+p3jDRPgtghXEwZ+SfbhLq7VRG/Du6IZ1I+fy1t2XJ8x5Hl8iziBS0dFCOFJSH7HPWSnV10IZR6PpAc5tCEQJfouCSVzw+lwKlJwKH5qrjCEHWM3xpu620IJ+F6ZFKtw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=AagZ32jl; arc=none smtp.client-ip=209.85.128.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f50.google.com with SMTP id ffacd0b85a97d-38a8b17d7a7so3485036f8f.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Jan 2025 05:30:41 -0800 (PST)
+Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-4361f664af5so79452525e9.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Jan 2025 05:33:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1737552640; x=1738157440; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1737552826; x=1738157626; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=PsT5ZgwViolUdUf4pKeCqLICO/10Zy8qj04pN0k9tFs=;
-        b=KvrQYSiZU1WBLdFJNaulz8Fe3RapypBt1FULEDR3KSK5FPL5qDwJV202UGKKsxSjsM
-         +NZYU0CQjkOt6Q5xD3YJJ/TgsoH/khuA6OO09upybgG0HU2t0M3Svs0rQ/eyV4I8QDA1
-         houhd4bP004ExDUkGSqnYgiEE82f4fuu1+OBv0FC7/AiFnfgxAjhgNkY4AAh45piBOKi
-         9wdXn92P4gcCUcpaSUWJPcdbL1JogQGfLgNOWO7Huou5+i8FUCtFbgizQiBQc5YOg4V0
-         0r1+O+fOMbWX7viitlHfQGboVK0pd5CcWdweHCS/RxcvODLmfX7BtughD3XE4ONGqf1c
-         P3Zg==
+        bh=d3zmeBfIC61RiU96YsBq5R1wU/zQYsnrBBTYvAI31yc=;
+        b=AagZ32jlKQJrXYTe2M9OfxBYmxrL2T9W9BanVkf50dWIv5zElHA8QyH5Zly+/oy9oY
+         Xq+8JzdioR04x2SyIAZY4xhPufD3tiRqRoFZS8LVU71HoyDXEnNAUBF34Am/tUGU9vc3
+         xoHkJUTKgJXl5DibgtOiSXSqFW3w/Wt6xvdsLHpODQohtAud4DeSw7yt+t4ck46PHgjW
+         ycN2JZrNEfYbb2lfLvMS5Kaqz771QcbGCg1HFw4fk3Ixny3f+tQcJUenJMtSLUzfsa6Y
+         EahQ3e/7qshmysyBaXuey/Ti09XdrPT09jiI/yhU8B1KdGsklhUyYVzAet/ki9cZ7gfS
+         qmYA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1737552640; x=1738157440;
+        d=1e100.net; s=20230601; t=1737552826; x=1738157626;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=PsT5ZgwViolUdUf4pKeCqLICO/10Zy8qj04pN0k9tFs=;
-        b=sgYC0dkDgwquXLgiC8bUMa2llpcR2/um9mYGCdPoWp24ZpMMSHJO03fNMlUb8GIKs1
-         0s/uKaXqq3yp3G5n//hVqAIp5X1k9XZQKyBwA0v044760Ke3DUxiO3ExMTzE+kKAZ9d1
-         6pOCanA9Rbqm4wP3LuS1AjvijhA5W8lkR+XDM0n6ZXx0osBWO5dsY3EU8JsMb7ZHtzba
-         OmJKDU1TOx42eeKSvGPA49RRb+uHj5Dr5pqyx0H6yhD4tJNbbYepDwy0xT2F0PS/2zRW
-         iP/da7yXSjH70wJWiK01wbYn2YUFEKQr56A3ZdmZxnmY9jGrCQR7cT/Qnt12w4wKwp9g
-         l7+Q==
-X-Forwarded-Encrypted: i=1; AJvYcCX8BWUPtHLpctNG0pBWDJNZcn9h/KNgxc8X9n0TGfkm0DIVWLyIzqZDQ2ARZJY93PoJojufSzfiPsRmBfwH@vger.kernel.org
-X-Gm-Message-State: AOJu0YyUdqr4whL0r/N5lbY+iHaf1jDGWO/aVWJpZ6agSw+YGyDPavt4
-	zzIbsk7kkB8Bsl4tcUHRXQuxCkdT2uXDQjLJ7+rceNztNm0rezoIGwr/968XSzw=
-X-Gm-Gg: ASbGnct5P/lCsAW5AJO3wef3rgSYR0e5lP3AOg7z8HK5ZHOSJY26hjjj8hEBy6eetp9
-	YdcliWzIkvUnLjaDsb3aHzHnx8by5bHSGglgcdP65/mSaDF1e8ogodafQaGZkQ41/KN+EbfXuPD
-	mOIjXqVKSH5E7+Y9q/RdqC3iksfz3bcYI9sbKHQ7PIAsURo+l4pHNpb+2Zelt4Y+vUzhUPYq64v
-	gjwlIyegsmxlWSYGalxIaEXJIG50xKoWNNaT0nkiqFT6aeQFoHRoUHt11gEktFK8STsIz0rb7Fo
-	VZNYpR8=
-X-Google-Smtp-Source: AGHT+IHGz3oZZDXrd7dn+W7Dx6QiFyDmlY7D2ck63M0pEtyL+pVpGkX33GNbY2T81rXpW5skMbhNiw==
-X-Received: by 2002:a05:6000:1f88:b0:386:459e:e138 with SMTP id ffacd0b85a97d-38bf57a604amr16210415f8f.36.1737552639966;
-        Wed, 22 Jan 2025 05:30:39 -0800 (PST)
+        bh=d3zmeBfIC61RiU96YsBq5R1wU/zQYsnrBBTYvAI31yc=;
+        b=hjAQ3mc3mkaY8Iw6bQjRhlDJic4e40mCKzgnLkAW9oh5o2BnHU6sLrP64MmtOJcz7H
+         +sORXfv4VIfwOELxXYyolWwy5mUC5z7c4kuKWiq9LwH0bQxyaHPLB/MwxYEa0K6FOefV
+         nWGRw1OjhlhIb3XXmAOWBr+cHf4RrKzv6rbRkG35P921KOA0Kx2zuhenB7PZEiZgz8fy
+         pg9/+BJ2a40xUSpcvsXQfE8IW5Mu112X8cJnaB5Zl4YYgys68wU5tXC9crIqY9ozp4zm
+         dv+Miw2+ZW6nZp/8754MxUUvgt2pNhoMOHyl6ZejMrd/5WgqmvvjgWGqkpfdecxurqO3
+         ccrA==
+X-Forwarded-Encrypted: i=1; AJvYcCUGrqsuRbyVpLTgyUmChLuIE0EgB3YFb0paI3Tx3rciUnPxkNLJea/7/o5aTr1ap2+OPLUj75ikjRYAJN2x@vger.kernel.org
+X-Gm-Message-State: AOJu0YzTRxka1MJ4TY+OJgO7UywhOt0sWXDxjH6yE5Tvm8zkgRDVcwwe
+	pujhhIGO7drf9+dXahi2QmSDTas3eGp6xkHIonZeSRVv3Nc6FnuSSzsb5nL8lic=
+X-Gm-Gg: ASbGncuva6JISoyrYdcpPdFS8HDfz14aq0rIBT6IhtgAAyMrOxMGoRJ7ajHxOIzthb6
+	V8HIHS/5Cv5g61tfG329QFYkfidealJf0uVhsb8y34oJFLNy7vRNtcj3ZZhz/pIXDSzVDbEGy4b
+	Z+m/wAX5l3+xG55YIre12ncczSsx7AsJDNQ5MzuGgktq5XXNSN5kZo25teufOqqiZ6nkDJcDL65
+	RPE3RN1t9cE2rIRfL//qooxpPnwe2vRWrGQ2AqycV9mZNEnscaQcFmvKDR/JsheVuPuCLW0S77P
+	jyjqGHk=
+X-Google-Smtp-Source: AGHT+IHBSIsZ3dHZTyI5GvgwLt2i3aIBO7yUOm44moO+c0qsisQdHFooBLIXj5yWn+ZKDMN/HfTtAw==
+X-Received: by 2002:a05:600c:4684:b0:434:ff25:19a0 with SMTP id 5b1f17b1804b1-4389141c420mr164276075e9.21.1737552825969;
+        Wed, 22 Jan 2025 05:33:45 -0800 (PST)
 Received: from [192.168.0.35] ([176.61.106.227])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38bf322a838sm16081440f8f.48.2025.01.22.05.30.38
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38bf3221c30sm16572315f8f.32.2025.01.22.05.33.45
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 22 Jan 2025 05:30:39 -0800 (PST)
-Message-ID: <93be5858-6c1e-4a09-bfe3-ac89d458a892@linaro.org>
-Date: Wed, 22 Jan 2025 13:30:38 +0000
+        Wed, 22 Jan 2025 05:33:45 -0800 (PST)
+Message-ID: <c36425d5-a131-447c-9ffc-ed90d8e18fc3@linaro.org>
+Date: Wed, 22 Jan 2025 13:33:44 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -81,109 +81,31 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/2] media: qcom: camss: update clock names for sc7280
-To: Vikram Sharma <quic_vikramsa@quicinc.com>, rfoss@kernel.org,
- todor.too@gmail.com, mchehab@kernel.org, robh@kernel.org,
- krzk+dt@kernel.org, conor+dt@kernel.org, akapatra@quicinc.com,
- hariramp@quicinc.com, andersson@kernel.org, konradybcio@kernel.org,
- hverkuil-cisco@xs4all.nl, cros-qcom-dts-watchers@chromium.org,
- catalin.marinas@arm.com, will@kernel.org
-Cc: linux-arm-kernel@lists.infradead.org, linux-media@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, kernel@quicinc.com
-References: <20250121180746.1989996-1-quic_vikramsa@quicinc.com>
- <20250121180746.1989996-3-quic_vikramsa@quicinc.com>
+Subject: Re: [PATCH 3/7] media: qcom: camss: Add CSID 680 support
+To: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+ Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>
+Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-kernel@vger.kernel.org, Depeng Shao <quic_depengs@quicinc.com>,
+ Vikram Sharma <quic_vikramsa@quicinc.com>
+References: <20250120-linux-next-25-01-19-x1e80100-camss-driver-v1-0-44c62a0edcd2@linaro.org>
+ <20250120-linux-next-25-01-19-x1e80100-camss-driver-v1-3-44c62a0edcd2@linaro.org>
+ <62913113-e3de-48d1-9977-537d84ca8312@linaro.org>
 Content-Language: en-US
 From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <20250121180746.1989996-3-quic_vikramsa@quicinc.com>
+In-Reply-To: <62913113-e3de-48d1-9977-537d84ca8312@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 21/01/2025 18:07, Vikram Sharma wrote:
-> Update clock names to make them consistent with existing platform i.e
-> sc8280xp. Rename gcc_cam_hf_axi to gcc_axi_hf and add gcc_axi_sf.
+On 22/01/2025 00:05, Vladimir Zapolskiy wrote:
 > 
-> Signed-off-by: Vikram Sharma <quic_vikramsa@quicinc.com>
-> ---
->   drivers/media/platform/qcom/camss/camss.c | 15 ++++++++++-----
->   1 file changed, 10 insertions(+), 5 deletions(-)
-> 
-> diff --git a/drivers/media/platform/qcom/camss/camss.c b/drivers/media/platform/qcom/camss/camss.c
-> index a85e9df0f301..b1358457c66e 100644
-> --- a/drivers/media/platform/qcom/camss/camss.c
-> +++ b/drivers/media/platform/qcom/camss/camss.c
-> @@ -1443,12 +1443,13 @@ static const struct camss_subdev_resources vfe_res_7280[] = {
->   		.regulators = {},
->   
->   		.clock = { "camnoc_axi", "cpas_ahb", "icp_ahb", "vfe0",
-> -			   "vfe0_axi", "gcc_cam_hf_axi" },
-> +			   "vfe0_axi", "gcc_axi_hf", "gcc_axi_sf" },
->   		.clock_rate = { { 150000000, 240000000, 320000000, 400000000, 480000000 },
->   				{ 80000000 },
->   				{ 0 },
->   				{ 380000000, 510000000, 637000000, 760000000 },
->   				{ 0 },
-> +				{ 0 },
->   				{ 0 } },
->   
->   		.reg = { "vfe0" },
-> @@ -1468,12 +1469,13 @@ static const struct camss_subdev_resources vfe_res_7280[] = {
->   		.regulators = {},
->   
->   		.clock = { "camnoc_axi", "cpas_ahb", "icp_ahb", "vfe1",
-> -			   "vfe1_axi", "gcc_cam_hf_axi" },
-> +			   "vfe1_axi", "gcc_axi_hf", "gcc_axi_sf" },
->   		.clock_rate = { { 150000000, 240000000, 320000000, 400000000, 480000000 },
->   				{ 80000000 },
->   				{ 0 },
->   				{ 380000000, 510000000, 637000000, 760000000 },
->   				{ 0 },
-> +				{ 0 },
->   				{ 0 } },
->   
->   		.reg = { "vfe1" },
-> @@ -1493,12 +1495,13 @@ static const struct camss_subdev_resources vfe_res_7280[] = {
->   		.regulators = {},
->   
->   		.clock = { "camnoc_axi", "cpas_ahb", "icp_ahb", "vfe2",
-> -			   "vfe2_axi", "gcc_cam_hf_axi" },
-> +			   "vfe2_axi", "gcc_axi_hf", "gcc_axi_sf" },
->   		.clock_rate = { { 150000000, 240000000, 320000000, 400000000, 480000000 },
->   				{ 80000000 },
->   				{ 0 },
->   				{ 380000000, 510000000, 637000000, 760000000 },
->   				{ 0 },
-> +				{ 0 },
->   				{ 0 } },
->   
->   		.reg = { "vfe2" },
-> @@ -1516,11 +1519,12 @@ static const struct camss_subdev_resources vfe_res_7280[] = {
->   	/* VFE3 (lite) */
->   	{
->   		.clock = { "camnoc_axi", "cpas_ahb", "icp_ahb",
-> -			   "vfe_lite0", "gcc_cam_hf_axi" },
-> +			   "vfe_lite0", "gcc_axi_hf", "gcc_axi_sf" },
->   		.clock_rate = { { 150000000, 240000000, 320000000, 400000000, 480000000 },
->   				{ 80000000 },
->   				{ 0 },
->   				{ 320000000, 400000000, 480000000, 600000000 },
-> +				{ 0 },
->   				{ 0 } },
->   
->   		.regulators = {},
-> @@ -1537,11 +1541,12 @@ static const struct camss_subdev_resources vfe_res_7280[] = {
->   	/* VFE4 (lite) */
->   	{
->   		.clock = { "camnoc_axi", "cpas_ahb", "icp_ahb",
-> -			   "vfe_lite1", "gcc_cam_hf_axi" },
-> +			   "vfe_lite1", "gcc_axi_hf", "gcc_axi_sf" },
->   		.clock_rate = { { 150000000, 240000000, 320000000, 400000000, 480000000 },
->   				{ 80000000 },
->   				{ 0 },
->   				{ 320000000, 400000000, 480000000, 600000000 },
-> +				{ 0 },
->   				{ 0 } },
->   
->   		.regulators = {},
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> Sorting order is not preserved by a preceding changeset, unfortunately.
+
+No its not.
+
+I'll just add a patch to fix it myself, no need to hold up Depeng any 
+further.
+
+---
+bod
 
