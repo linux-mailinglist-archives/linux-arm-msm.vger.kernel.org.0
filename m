@@ -1,135 +1,144 @@
-Return-Path: <linux-arm-msm+bounces-45772-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-45773-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 80DC8A18C80
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jan 2025 08:01:44 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 63CC6A18CA6
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jan 2025 08:18:05 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 43BD87A2466
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jan 2025 07:01:35 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id D8CB9188A2C3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jan 2025 07:18:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0BA3D19341F;
-	Wed, 22 Jan 2025 07:01:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5B18C18FC86;
+	Wed, 22 Jan 2025 07:17:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="eWLmSVc4"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="jdVhzhik"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f45.google.com (mail-lf1-f45.google.com [209.85.167.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E0E51865E5
-	for <linux-arm-msm@vger.kernel.org>; Wed, 22 Jan 2025 07:01:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B49A033991;
+	Wed, 22 Jan 2025 07:17:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737529297; cv=none; b=PEUYQBDik9DWWP/TZT+zD4eWhkHMm5tJyGWPCi960c9+nKjyJE1k7TjM3kOMV6Yb4HPCSElWldFNNC7mQbQIChcvYs3i48ZdTmU5jDUgrwAwA8sAJbI2+Mxsg1nSIQ3WJDJf0LV4SkEuZln/MjetUQtoF2jCR4R2uIPg5R5VmW4=
+	t=1737530279; cv=none; b=bkiYB0lo91mWHrUqdf8NFEMQPQFdjjpSONXk7Nazjfc5D7MlLepM51OmUnqZ7BOvKFqkoeHVfb58RyPsBt/3Us0kUykywBZ1/VZ6b1rEXD62WEZrUoSOf+4wbgonDY41vhsB8tQXYxUWOdG+dVlxdj82uq58TwluPl0Yk8y8ie8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737529297; c=relaxed/simple;
-	bh=0ncMhmiWDDyDcDoaCjFkumTi0iies/xdgm4nwy/AcjI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=WB5rFX17LyYxkI8ReQMumY6mupVF6koGSIiQL7DiH+NGlhcs4Ogvy2AJKgwiNuToK4O06TsBLhVLjFBBdeBxa8xBU9qMx4Q1HkSRYq4F4t7Vd74s3c92DLgGyv3DHwTpyOcPEOOuiNt3y97LlKUx8IYGm5XgYsx6qkdFuaXtBy0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=eWLmSVc4; arc=none smtp.client-ip=209.85.167.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-5426f48e501so988189e87.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Jan 2025 23:01:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1737529294; x=1738134094; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Ac1gxGfqa902ustpLEaMMtfCYXH3SBTFhan9QqkMWHQ=;
-        b=eWLmSVc4JI0nlzXDLIeaTku9z94Dhnr29MB+2GNFpgFLSGSbTDuI9Rd6IXDIVVL40j
-         HIColpsFeHh4NV0Ah9LYpBRcVdNfnpZsQA/4FmfaHG+kOv/rnf2mJfdVAQwqMdJvqd+N
-         s00XitFK1gPQ0QIPEd95zC+X1ZHyl7VMAIW1GCqeIdWVo+kpMTK59hb0RcHrB04i5HcJ
-         sFRPbIzNimdD4V9PJjyQ5WN7qG8ZlbeQOxKOH2JjyGHq5Kp6luYuM2SL5DnOojEbiwLz
-         mCsfkMaJEkTtHtmzGKVuvriigGmbcu/E9uPvBClGC39fpcXzq4TRWqBFs0G0Z99AD4p1
-         nG1Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1737529294; x=1738134094;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Ac1gxGfqa902ustpLEaMMtfCYXH3SBTFhan9QqkMWHQ=;
-        b=VIn0ygRVRpLfE2b5nDQMJ4T27pGxdiQzDzh0fpfwQV7XnibOWFucr0WYHegp0dP0qf
-         vbeMzErrdWDDpl52w8QpQFj6RLwo6fowICgEWEwJoVyG/yLHueiByofNd5Ke3ptfNuGu
-         2EEsd0NHmquwZjf9MzV3CbbdUMAys/7/kIkmva51h8sWfYLkdml+LZ12tSjlo0twokYs
-         8dIauAjQwEsJdAjRkYHAsJBdGBvt5lcGTCdf4cfqfquSLa/odj8KhNrMY4/qPnYyYm/R
-         V8lDVIcwgxinhwQzt/rnzkofJyp29dCqdpKvmp1yONXr095RoSEub44INMHvNRXmZcl6
-         C8lQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVZaBbGgfW03zKo+H0KIEeVYfvrdrpdCQWbKwhekbZ8k7jOikZA9son3oefDHdAgQCRBT22tkXrpt9xj5se@vger.kernel.org
-X-Gm-Message-State: AOJu0YzYSgg6qVb/t8Ut/IrvLpUYCIkvkLvu9Ls19+p6sBO+p+u0+AFv
-	OXpPnpiHE4FMhasyyJqVOyUwwbytLOkgDvcKG/dqaGHUVmlYp3sDI7oh8k5/ecGTAxx9rgIQSiv
-	F
-X-Gm-Gg: ASbGncsC7+UMJa2EAZr4PG+rwtG5qxoAsmuIAKDXIvsN4obBxoALb4+jeuGoKlbxoIc
-	Ufhol70IMsrpL4IDwSI5ERpTsUSGVN8UuKaq5k3Lll9EXclkZ68FqOVE4QSfQmSaebDdj6wawWS
-	U6tq8tIQEiXmqZeUSZyqhaIAyHYLrpaSJ786NaCB0J5wz9SAKEaiPdN4HY7ZfLnhTEQ6VVvzFEQ
-	Dg/vr6RVdFVdQ+O+XDV58jWUMsY93BRW0a1ONg1uPWZZudWe6UcBvJijMmjmdfvEN7sIvXCff1B
-	J8R4hKGdABone5mcMOJ1AA7wzq3h5bw3K2Hthph77+FYwTlf
-X-Google-Smtp-Source: AGHT+IE8RKQTrH8l/x/rnVSgr23pLF4p4DF9w4yQ3qsCIFk/+CBX3a2lnUTrQWg+AJh8JdHAc2B2cw==
-X-Received: by 2002:a05:6512:4018:b0:542:1137:612d with SMTP id 2adb3069b0e04-5439c2537d6mr2367482e87.7.1737529294223;
-        Tue, 21 Jan 2025 23:01:34 -0800 (PST)
-Received: from [192.168.1.4] (88-112-131-206.elisa-laajakaista.fi. [88.112.131.206])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-307587bbe26sm2814751fa.66.2025.01.21.23.01.31
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 21 Jan 2025 23:01:32 -0800 (PST)
-Message-ID: <b708832b-a0c2-4a1b-88a8-0257b1d22fda@linaro.org>
-Date: Wed, 22 Jan 2025 09:01:30 +0200
+	s=arc-20240116; t=1737530279; c=relaxed/simple;
+	bh=nvxzusxcTGOudgyLTBF218zRe9XV7IzBS0QgUlwjYSk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=S2hW7NrCTomGnELMQBQAKxjbju7O38N5bboVfk+co8S0/le1L4nEmm2OVChPE7Fi/mb8MRF/cHL+6PXwqNRktpOK66Ft1mwShO8yQakgVkHYjrTN1fVtl3ycfv4x9V100AgdacIasIeG+A904HMnlcJiX+jAt5qLSkDQyPDY6vA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=jdVhzhik; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50M4v7jo016650;
+	Wed, 22 Jan 2025 07:17:46 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	hQWCtf7PInicrDfp0nAasjIsePxmC5ygcZFbarK3vj4=; b=jdVhzhikUlaN9zwP
+	xqFjJMcjbGJVsaW1irnTl3VaY/DYSaz/QOJkPm4vt28N3nsxGVybwU8CLTv7zRLl
+	EePBLCBY2ONptDitKNgRDssii+JqusIzAm4svLw9jbqOct/m8vdtX/RJUGW8MsSm
+	rrjwtTMmsWTfxnMuHzhxBEtpn4hnmaVvhXhUXm98BWjSmMXLbWQfR8C8qh07Jya5
+	ky/xdVlOHuhYJFQQJ07lDOVEKi/Uufe63E4EVcDWeHrzniPWBOLx2KXN0HEOV0Pc
+	murl0GhoBnfEwVRuq/7aWgZFARaJkqTn0XIdvqBttp3ntLVflDF1Y38tnqPh4Mmy
+	ZXDUkQ==
+Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44at3g09yu-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 22 Jan 2025 07:17:46 +0000 (GMT)
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+	by NASANPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 50M7Hj1N001838
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 22 Jan 2025 07:17:45 GMT
+Received: from [10.239.28.138] (10.80.80.8) by nasanex01c.na.qualcomm.com
+ (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 21 Jan
+ 2025 23:17:42 -0800
+Message-ID: <a2cc5a5a-6cbd-7564-a8df-8af2a652de2f@quicinc.com>
+Date: Wed, 22 Jan 2025 15:17:39 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1] i2c: qcom-geni: Update i2c frequency table to match
- hardware guidance
-Content-Language: ru-RU
-To: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>, andi.shyti@kernel.org,
- linux-arm-msm@vger.kernel.org, linux-i2c@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20250122064634.2864432-1-quic_msavaliy@quicinc.com>
-From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-In-Reply-To: <20250122064634.2864432-1-quic_msavaliy@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.8.0
+Subject: Re: [PATCH 2/2] phy: qcom: qmp-pcie: Add PHY register retention
+ support
+Content-Language: en-US
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC: <vkoul@kernel.org>, <kishon@kernel.org>, <p.zabel@pengutronix.de>,
+        <abel.vesa@linaro.org>, <quic_qianyu@quicinc.com>,
+        <neil.armstrong@linaro.org>, <manivannan.sadhasivam@linaro.org>,
+        <quic_devipriy@quicinc.com>, <konrad.dybcio@oss.qualcomm.com>,
+        <linux-arm-msm@vger.kernel.org>, <linux-phy@lists.infradead.org>,
+        <linux-kernel@vger.kernel.org>
+References: <20250121094140.4006801-1-quic_wenbyao@quicinc.com>
+ <20250121094140.4006801-3-quic_wenbyao@quicinc.com>
+ <CAA8EJppXQpDrdXzJsTE7HWs=POt7yFAw0JVZFabN6Ks3fhZiWQ@mail.gmail.com>
+From: "Wenbin Yao (Consultant)" <quic_wenbyao@quicinc.com>
+In-Reply-To: <CAA8EJppXQpDrdXzJsTE7HWs=POt7yFAw0JVZFabN6Ks3fhZiWQ@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01c.na.qualcomm.com (10.45.79.139)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: s9e3olYmDeQCkhQb6dolveUQsyVngebI
+X-Proofpoint-GUID: s9e3olYmDeQCkhQb6dolveUQsyVngebI
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-01-22_03,2025-01-22_02,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0
+ priorityscore=1501 malwarescore=0 bulkscore=0 mlxlogscore=999 phishscore=0
+ clxscore=1015 mlxscore=0 lowpriorityscore=0 impostorscore=0 spamscore=0
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2501220051
 
-On 1/22/25 08:46, Mukesh Kumar Savaliya wrote:
-> With the current settings, the I2C buses are achieving around 370KHz
-> instead of the expected 400KHz. For 100KHz and 1MHz, the settings are
-> now more compliant and adhere to the Qualcomm’s internal programming
-> guide.
-> 
-> Update the I2C frequency table to align with the recommended values
-> outlined in the I2C hardware programming guide, ensuring proper
-> communication and performance.
-> 
-> Signed-off-by: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
-> ---
->   drivers/i2c/busses/i2c-qcom-geni.c | 6 +++---
->   1 file changed, 3 insertions(+), 3 deletions(-)
-> 
-> diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-qcom-geni.c
-> index 7a22e1f46e60..cc0c683febbb 100644
-> --- a/drivers/i2c/busses/i2c-qcom-geni.c
-> +++ b/drivers/i2c/busses/i2c-qcom-geni.c
-> @@ -148,9 +148,9 @@ struct geni_i2c_clk_fld {
->    * source_clock = 19.2 MHz
->    */
->   static const struct geni_i2c_clk_fld geni_i2c_clk_map_19p2mhz[] = {
-> -	{KHZ(100), 7, 10, 11, 26},
-> -	{KHZ(400), 2,  5, 12, 24},
-> -	{KHZ(1000), 1, 3,  9, 18},
-> +	{KHZ(100), 7, 10, 12, 26},
-> +	{KHZ(400), 2,  5, 11, 22},
-> +	{KHZ(1000), 1, 2,  8, 18},
->   	{},
->   };
->   
-
-Reviewed-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-
---
-Best wishes,
-Vladimir
+On 1/21/2025 6:36 PM, Dmitry Baryshkov wrote:
+> On Tue, 21 Jan 2025 at 11:43, Wenbin Yao <quic_wenbyao@quicinc.com> wrote:
+>> From: Qiang Yu <quic_qianyu@quicinc.com>
+>>
+>> Currently, BCR reset and PHY register setting are mandatory for every port
+>> before link training. However, some QCOM PCIe PHYs support no_csr reset.
+>> Different than BCR reset that is used to reset entire PHY including
+>> hardware and register, once no_csr reset is toggled, only PHY hardware will
+>> be reset but PHY registers will be retained,
+> I'm sorry, I can't parse this.
+The difference between no_csr reset and bcr reset is that no_csr reset
+doesn't reset the phy registers. If a phy is enabled in UEFI, its registers
+are programed. After Linux boot up, the registers will not be reset but
+keep the value programmed by UEFI if we only do no_csr reset, so we can
+skip phy setting.
+>
+>> which means PHY setting can
+>> be skipped during PHY init if PCIe link was enabled in booltloader and only
+>> no_csr is toggled after that.
+>>
+>> Hence, determine whether the PHY has been enabled in bootloader by
+>> verifying QPHY_START_CTRL register. If it is programmed and no_csr reset is
+>> present, skip BCR reset and PHY register setting, so that PCIe link can be
+>> established with no_csr reset only.
+> This doesn't tell us why we want to do so. The general rule is not to
+> depend on the bootloaders at all. The reason is pretty simple: it is
+> hard to update bootloaders, while it is relatively easy to update the
+> kernel. If the hardware team issues any kind of changes to the
+> programming tables, the kernel will get them earlier than the
+> bootloader.
+With this change, we don't need to upstream phy setting for all phys
+support no_csr reset, this will save a great deal of efforts and simplify
+the phy driver. Our goal is to remove proprietary PCIe firmware operations
+from kernel. PHY is just the start and will be followed by controller,
+clocks, regulators, etc. If program table need to be changed, the place to
+do that will be UEFI.
+>
+>> Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
+>> Signed-off-by: Wenbin Yao <quic_wenbyao@quicinc.com>
+>> ---
+>>   drivers/phy/qualcomm/phy-qcom-qmp-pcie.c | 91 +++++++++++++++---------
+>>   1 file changed, 58 insertions(+), 33 deletions(-)
+>>
 
