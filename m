@@ -1,79 +1,40 @@
-Return-Path: <linux-arm-msm+bounces-45808-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-45809-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 71D55A192C6
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jan 2025 14:41:45 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D66F2A1930C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jan 2025 14:53:52 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2E85F1882965
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jan 2025 13:41:49 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 207713AD96E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jan 2025 13:53:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 96E7F213237;
-	Wed, 22 Jan 2025 13:41:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="f79E9XLu"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B90442135DB;
+	Wed, 22 Jan 2025 13:52:53 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7534338DF9
-	for <linux-arm-msm@vger.kernel.org>; Wed, 22 Jan 2025 13:41:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4C6352135D5
+	for <linux-arm-msm@vger.kernel.org>; Wed, 22 Jan 2025 13:52:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737553299; cv=none; b=s+iqrKw/XYgn1BygscCw+6KHveaSk7ij+gflvP8YlRa7OODFEqDg5nayIkMCBvAShQ/A2NuoSeXyJqnDuYN1xnZhPtIEUnpYL4+MrQH1C5Q6jfS/SGhtWcz9EVz7Mx0J1HrZpBVOeilnS1NGMT/CiTr4i3qVe3wNtD84pQYBSow=
+	t=1737553973; cv=none; b=IxiN8uJe8KNTxXwiQgykmaoJLKL2UOTmO27KAI1QyHpHj4kyAmi1g/NwZJDCEJIQI27EXgzmi1fWzfO0Vfg/PusGYxykDWItS1sCJkIBYjxB2NekGzc+ZqC3qkn+Yqk2t2iefXuzD9rhXw3bXHfzs1tuZinqGFSDEpgJPdLRtlo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737553299; c=relaxed/simple;
-	bh=Wgk8zZZUNvg9MP1jdfxaZ+8M8oxx6ykIpXlu++Rubog=;
+	s=arc-20240116; t=1737553973; c=relaxed/simple;
+	bh=bCZQUPgbAAU9qPX5h5uFUJDAeWiyMGqVWreCFXQ+PWc=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=t4K1pATzCr08TzB8SRQ4/qHIU6R/bRzDcb1WtMzGMCCBylUBHaNujSqshmLlIWjnKaqTrfU7m8IziIfrql86p3FGvUPcxZhNq/+cVp4g+I9it1G9vo3V8Jr80gkzVFAgwvM4yKKM82EP/3jd352myn6NICEj6DpjMM/MRBh7pBY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=f79E9XLu; arc=none smtp.client-ip=209.85.128.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-4361b6f9faeso6082925e9.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Jan 2025 05:41:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1737553295; x=1738158095; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Tv7xQXPsVhsp/qFSdjJTcBJiPV5vkVbgwyiggEpJzIg=;
-        b=f79E9XLuSx9ZqgyFkjag4/fpgDnzIMdv5iC3+a/Lo/xHRvMIAWikeFEFSWXbEIcSd9
-         fltmJAiNqDC8njTrN1aW7AMd7HRqc3FDxA0mxfUEUZMeklkdKd/lRC7TGKrqgtzu4VSj
-         RLHGUy3NUl4+D7J4/c9ZaZsuXJ7k1Al5JTyf/fB0zZKiyF3RzSxiapmAQcLxw0D8QTkO
-         teDcsbPdxExTwI/iATN204/EndsJJbA+N3yOn1Q4RL4G6qS7O7GzPsmUSnldkr4M+wFg
-         56sckO/euI/8H6hXXoZSf/7v47itFWhexxgmyYsSrzQJDerMnFwkMi7OOcRyz7wNFbsB
-         o1Hg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1737553295; x=1738158095;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Tv7xQXPsVhsp/qFSdjJTcBJiPV5vkVbgwyiggEpJzIg=;
-        b=a1S8qN8Hq4pUdO1xZfoMkHXb+Kj6lU+dZ3X3AI/Pjrcfdl7D1I55WVRkuwi+cefyeD
-         5o0TqvR5Uw3DPjLEMTyWhDxwbF8QCVY1jLq4VHHcLfpwzfN7TGai/3nNcR0xiim2UnFz
-         9hQ/QhlO+Ia3ahufwOwXl4ePU1zsv6dJiDBsTAq0Y0wM0a6SmpIlqBEdnyAzb1Sitgx9
-         sajEf0cGaMyFal8oMk579pjyBet2dlEUT/ifYs7roTAApZJYuI1Wd8g5h5LmIVW/Y1TX
-         dbFDpkKbRtk8sNyTlbUKuzz1cStbK1GVpPquiPAciHdkcXofYzxbKMV3shiqPimMrBz2
-         Bviw==
-X-Forwarded-Encrypted: i=1; AJvYcCV15mt7jcjHvYD7YlYcjdSr6E3r5f7sLUwJTuW/bOTS/YkKR1rZoQ9MluqnPdAFvyr2bnT8AkFSwa49neO2@vger.kernel.org
-X-Gm-Message-State: AOJu0YyOBPn9vJyYXMVTO41ueaTUZ1zjpk/P5z29EN5+QTiNewsEqchM
-	cgayr500oLY4TL4us2wTIykq2VryTVg+FgShsU5dEtElz/hobImXge734vJ1wRs=
-X-Gm-Gg: ASbGncv5SJA9LTtXqtOmLoHW1V2ajjycXqtfJQDeY1CPMr16zrUjN+nvKmbTezianMR
-	7otYBA1yAe3SGulDoQrcD9Ai2zmLF2k6yvh3NGjLKJGc68Hb2TpKE5QMr7U3PcO3EKHngI2Wo9f
-	Uawvyi4Tsh4DjwWoNcjqy50eLs0eFRy3WPLSFteTV5OpNw66dGIg76tjgayO/mKjC8pCyfIu50q
-	6sCwyBvFZPepv0oSqGHvHD63AUXAoMdrWvbrbQqbjDaxK3BylrV9LAI7SERkdl1eKIj0Db9rmP9
-	Aats7T8=
-X-Google-Smtp-Source: AGHT+IGuPXvmCQONvi9I2qMckgrQaufMKySAeB9Dd+evPEakzske0rFxtu9ojMMm8/alwj20y1oEBA==
-X-Received: by 2002:a05:600c:1381:b0:434:fc5d:179c with SMTP id 5b1f17b1804b1-43891905c1fmr196346695e9.13.1737553294654;
-        Wed, 22 Jan 2025 05:41:34 -0800 (PST)
-Received: from [192.168.0.35] ([176.61.106.227])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-438b31df435sm25438275e9.34.2025.01.22.05.41.33
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 22 Jan 2025 05:41:34 -0800 (PST)
-Message-ID: <ff081020-6e6f-472e-823a-12b2cd2c9a72@linaro.org>
-Date: Wed, 22 Jan 2025 13:41:33 +0000
+	 In-Reply-To:Content-Type; b=EbJ8WZiHxXz7GeX296/o5sYc7PBrBAHowfg9v79suk7+wIJPmrf01aII0hObm81I3LXe2cUoSX8ZTizTmGOtfV9iKGTselOxq8Y9mLv2O/9bpZwaxDHGD9EJjZ8ibK+q4zqdgTGYXK4zU0eA9yVIZfKEhu6S6ba661ZpCion44w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id D8A5C1007;
+	Wed, 22 Jan 2025 05:53:18 -0800 (PST)
+Received: from [10.57.6.202] (unknown [10.57.6.202])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 3D0933F738;
+	Wed, 22 Jan 2025 05:52:48 -0800 (PST)
+Message-ID: <79061537-9550-45ad-8bd3-26fe7423f16f@arm.com>
+Date: Wed, 22 Jan 2025 13:52:46 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -81,237 +42,139 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6/7] media: qcom: camss: csiphy-3ph: Add 4nm CSIPHY 2ph
- 5Gbps DPHY v2.1.2 init sequence
-To: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
- Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
- Mauro Carvalho Chehab <mchehab@kernel.org>
-Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- linux-kernel@vger.kernel.org, Depeng Shao <quic_depengs@quicinc.com>,
- Vikram Sharma <quic_vikramsa@quicinc.com>
-References: <20250120-linux-next-25-01-19-x1e80100-camss-driver-v1-0-44c62a0edcd2@linaro.org>
- <20250120-linux-next-25-01-19-x1e80100-camss-driver-v1-6-44c62a0edcd2@linaro.org>
- <00989990-85dd-46d7-a100-c986fc1fb066@linaro.org>
-Content-Language: en-US
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <00989990-85dd-46d7-a100-c986fc1fb066@linaro.org>
+Subject: Re: [PATCH v2 1/3] iommu/arm-smmu: Fix spurious interrupts with
+ stall-on-fault
+To: Connor Abbott <cwabbott0@gmail.com>, Rob Clark <robdclark@gmail.com>,
+ Will Deacon <will@kernel.org>, Joerg Roedel <joro@8bytes.org>,
+ Sean Paul <sean@poorly.run>, Konrad Dybcio <konradybcio@kernel.org>,
+ Abhinav Kumar <quic_abhinavk@quicinc.com>,
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Marijn Suijten <marijn.suijten@somainline.org>
+Cc: iommu@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org, freedreno@lists.freedesktop.org
+References: <20250120-msm-gpu-fault-fixes-next-v2-0-d636c4027042@gmail.com>
+ <20250120-msm-gpu-fault-fixes-next-v2-1-d636c4027042@gmail.com>
+From: Robin Murphy <robin.murphy@arm.com>
+Content-Language: en-GB
+In-Reply-To: <20250120-msm-gpu-fault-fixes-next-v2-1-d636c4027042@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
-On 22/01/2025 00:29, Vladimir Zapolskiy wrote:
-> Hi Bryan.
+On 2025-01-20 3:46 pm, Connor Abbott wrote:
+> On some SMMUv2 implementations, including MMU-500, SMMU_CBn_FSR.SS
+> asserts an interrupt. The only way to clear that bit is to resume the
+> transaction by writing SMMU_CBn_RESUME, but typically resuming the
+> transaction requires complex operations (copying in pages, etc.) that
+> can't be done in IRQ context. drm/msm already has a problem, because
+> its fault handler sometimes schedules a job to dump the GPU state and
+> doesn't resume translation until this is complete.
 > 
-> On 1/20/25 17:47, Bryan O'Donoghue wrote:
->> For various SoC skews at 4nm CSIPHY 2.1.2 is used. Add in the init 
->> sequence
->> with base control reg offset of 0x1000.
->>
->> This initial version will support X1E80100. Take the silicon verification
->> PHY init parameters as a first/best guess pass.
->>
->> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
->> ---
->>   .../platform/qcom/camss/camss-csiphy-3ph-1-0.c     | 126 +++++++++++ 
->> ++++++++++
->>   1 file changed, 126 insertions(+)
->>
->> diff --git a/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c 
->> b/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
->> index b44939686e4bb..fc624a3da1c43 100644
->> --- a/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
->> +++ b/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
->> @@ -55,6 +55,7 @@
->>   #define CSIPHY_DNP_PARAMS        4
->>   #define CSIPHY_2PH_REGS            5
->>   #define CSIPHY_3PH_REGS            6
->> +#define CSIPHY_SKEW_CAL            7
+> Work around this by disabling context fault interrupts until after the
+> transaction is resumed. Because other context banks can share an IRQ
+> line, we may still get an interrupt intended for another context bank,
+> but in this case only SMMU_CBn_FSR.SS will be asserted and we can skip
+> it assuming that interrupts are disabled which is accomplished by
+> removing the bit from ARM_SMMU_CB_FSR_FAULT.
+
+...and we won't see SS set *unless* an external user has gone out of 
+their way to set CFCFG, so it's fair to assume they must have a fault 
+handler and expect it to reenable CFIE. Good enough for me (and thanks 
+for a nice comprehensive writeup). Now let's see how many more bugs we 
+might uncover in MMU-500 and/or QCom firmware's emulation thereof :)
+
+Reviewed-by Robin Murphy <robin.murphy@arm.com>
+
+> Signed-off-by: Connor Abbott <cwabbott0@gmail.com>
+> ---
+>   drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 15 ++++++++++++++-
+>   drivers/iommu/arm/arm-smmu/arm-smmu.c      | 30 ++++++++++++++++++++++++++++++
+>   drivers/iommu/arm/arm-smmu/arm-smmu.h      |  1 -
+>   3 files changed, 44 insertions(+), 2 deletions(-)
 > 
-> This one is not needed, having CSIPHY_DNP_PARAMS only is good enough.
+> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+> index 59d02687280e8d37b5e944619fcfe4ebd1bd6926..7d86e9972094eb4d304b24259f4ed9a4820cabc7 100644
+> --- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+> @@ -125,12 +125,25 @@ static void qcom_adreno_smmu_resume_translation(const void *cookie, bool termina
+>   	struct arm_smmu_domain *smmu_domain = (void *)cookie;
+>   	struct arm_smmu_cfg *cfg = &smmu_domain->cfg;
+>   	struct arm_smmu_device *smmu = smmu_domain->smmu;
+> -	u32 reg = 0;
+> +	u32 reg = 0, sctlr;
+> +	unsigned long flags;
+>   
+>   	if (terminate)
+>   		reg |= ARM_SMMU_RESUME_TERMINATE;
+>   
+> +	spin_lock_irqsave(&smmu_domain->cb_lock, flags);
+> +
+>   	arm_smmu_cb_write(smmu, cfg->cbndx, ARM_SMMU_CB_RESUME, reg);
+> +
+> +	/*
+> +	 * Re-enable interrupts after they were disabled by
+> +	 * arm_smmu_context_fault().
+> +	 */
+> +	sctlr = arm_smmu_cb_read(smmu, cfg->cbndx, ARM_SMMU_CB_SCTLR);
+> +	sctlr |= ARM_SMMU_SCTLR_CFIE;
+> +	arm_smmu_cb_write(smmu, cfg->cbndx, ARM_SMMU_CB_SCTLR, sctlr);
+> +
+> +	spin_unlock_irqrestore(&smmu_domain->cb_lock, flags);
+>   }
+>   
+>   static void qcom_adreno_smmu_set_prr_bit(const void *cookie, bool set)
+> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu.c b/drivers/iommu/arm/arm-smmu/arm-smmu.c
+> index 79afc92e1d8b984dd35c469a3f283ad0c78f3d26..fe3d77984533eb1a0e0e211021598bc808f2a6b2 100644
+> --- a/drivers/iommu/arm/arm-smmu/arm-smmu.c
+> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu.c
+> @@ -463,6 +463,36 @@ static irqreturn_t arm_smmu_context_fault(int irq, void *dev)
+>   	if (!(cfi.fsr & ARM_SMMU_CB_FSR_FAULT))
+>   		return IRQ_NONE;
+>   
+> +	/*
+> +	 * On some implementations FSR.SS asserts a context fault
+> +	 * interrupt. We do not want this behavior, because resolving the
+> +	 * original context fault typically requires operations that cannot be
+> +	 * performed in IRQ context but leaving the stall unacknowledged will
+> +	 * immediately lead to another spurious interrupt as FSR.SS is still
+> +	 * set. Work around this by disabling interrupts for this context bank.
+> +	 * It's expected that interrupts are re-enabled after resuming the
+> +	 * translation.
+> +	 *
+> +	 * We have to do this before report_iommu_fault() so that we don't
+> +	 * leave interrupts disabled in case the downstream user decides the
+> +	 * fault can be resolved inside its fault handler.
+> +	 *
+> +	 * There is a possible race if there are multiple context banks sharing
+> +	 * the same interrupt and both signal an interrupt in between writing
+> +	 * RESUME and SCTLR. We could disable interrupts here before we
+> +	 * re-enable them in the resume handler, leaving interrupts enabled.
+> +	 * Lock the write to serialize it with the resume handler.
+> +	 */
+> +	if (cfi.fsr & ARM_SMMU_CB_FSR_SS) {
+> +		u32 val;
+> +
+> +		spin_lock(&smmu_domain->cb_lock);
+> +		val = arm_smmu_cb_read(smmu, idx, ARM_SMMU_CB_SCTLR);
+> +		val &= ~ARM_SMMU_SCTLR_CFIE;
+> +		arm_smmu_cb_write(smmu, idx, ARM_SMMU_CB_SCTLR, val);
+> +		spin_unlock(&smmu_domain->cb_lock);
+> +	}
+> +
+>   	ret = report_iommu_fault(&smmu_domain->domain, NULL, cfi.iova,
+>   		cfi.fsynr & ARM_SMMU_CB_FSYNR0_WNR ? IOMMU_FAULT_WRITE : IOMMU_FAULT_READ);
+>   
+> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu.h b/drivers/iommu/arm/arm-smmu/arm-smmu.h
+> index 2dbf3243b5ad2db01e17fb26c26c838942a491be..789c64ff3eb9944c8af37426e005241a8288da20 100644
+> --- a/drivers/iommu/arm/arm-smmu/arm-smmu.h
+> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu.h
+> @@ -216,7 +216,6 @@ enum arm_smmu_cbar_type {
+>   					 ARM_SMMU_CB_FSR_TLBLKF)
+>   
+>   #define ARM_SMMU_CB_FSR_FAULT		(ARM_SMMU_CB_FSR_MULTI |	\
+> -					 ARM_SMMU_CB_FSR_SS |		\
+>   					 ARM_SMMU_CB_FSR_UUT |		\
+>   					 ARM_SMMU_CB_FSR_EF |		\
+>   					 ARM_SMMU_CB_FSR_PF |		\
 > 
->>   struct csiphy_lane_regs {
->>       s32 reg_addr;
->> @@ -423,6 +424,130 @@ csiphy_lane_regs lane_regs_sm8550[] = {
->>       {0x0C64, 0x7F, 0x00, CSIPHY_DEFAULT_PARAMS},
->>   };
->> +/* 4nm 2PH v 2.1.2 2p5Gbps 4 lane DPHY mode */
->> +static const struct
->> +csiphy_lane_regs lane_regs_x1e80100[] = {
->> +    /* Power up lanes 2ph mode */
->> +    {0x1014, 0xD5, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +    {0x101C, 0x7A, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +    {0x1018, 0x01, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +
->> +    {0x0094, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +    {0x00A0, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +    {0x0090, 0x0f, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +    {0x0098, 0x08, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +    {0x0094, 0x07, 0x01, CSIPHY_DEFAULT_PARAMS},
->> +    {0x0030, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +    {0x0000, 0x8E, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +    {0x0038, 0xFE, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +    {0x002C, 0x01, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +    {0x0034, 0x0F, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +    {0x001C, 0x0A, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +    {0x0014, 0x60, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +    {0x003C, 0xB8, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +    {0x0004, 0x0C, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +    {0x0020, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +    {0x0008, 0x10, 0x00, CSIPHY_SETTLE_CNT_LOWER_BYTE},
->> +    {0x0010, 0x52, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +    {0x0094, 0xD7, 0x00, CSIPHY_SKEW_CAL},
->> +    {0x005C, 0x00, 0x00, CSIPHY_SKEW_CAL},
->> +    {0x0060, 0xBD, 0x00, CSIPHY_SKEW_CAL},
->> +    {0x0064, 0x7F, 0x00, CSIPHY_SKEW_CAL},
->> +    {0x0064, 0x7F, 0x00, CSIPHY_SKEW_CAL},
-> 
-> Double write record, which is anyway ignored, but one should
-> be enough.
 
-Yes except having the SKEW_CAL definition allows us to import the 
-downstream init sequence unmodified.
-
->> +
->> +    {0x0E94, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +    {0x0EA0, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +    {0x0E90, 0x0f, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +    {0x0E98, 0x08, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +    {0x0E94, 0x07, 0x01, CSIPHY_DEFAULT_PARAMS},
->> +    {0x0E30, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +    {0x0E28, 0x04, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +    {0x0E00, 0x80, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +    {0x0E0C, 0xFF, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +    {0x0E38, 0x1F, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +    {0x0E2C, 0x01, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +    {0x0E34, 0x0F, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +    {0x0E1C, 0x0A, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +    {0x0E14, 0x60, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +    {0x0E3C, 0xB8, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +    {0x0E04, 0x0C, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +    {0x0E20, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +    {0x0E08, 0x10, 0x00, CSIPHY_SETTLE_CNT_LOWER_BYTE},
->> +    {0x0E10, 0x52, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +    {0x0E10, 0x52, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +    {0x0E10, 0x52, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +    {0x0E10, 0x52, 0x00, CSIPHY_DEFAULT_PARAMS},
-> 
-> Writing the same value to a register 4 times in a row, apparently
-> it's not needed, one time write is sufficient.
-
-To be honest I just took the downstream sequence verbatim.
-
-I'll see if the 4 x has an effect though.
-
->> +
->> +    {0x0494, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +    {0x04A0, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +    {0x0490, 0x0f, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +    {0x0498, 0x08, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +    {0x0494, 0x07, 0x01, CSIPHY_DEFAULT_PARAMS},
->> +    {0x0430, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +    {0x0400, 0x8E, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +    {0x0438, 0xFE, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +    {0x042C, 0x01, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +    {0x0434, 0x0F, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +    {0x041C, 0x0A, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +    {0x0414, 0x60, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +    {0x043C, 0xB8, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +    {0x0404, 0x0C, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +    {0x0420, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +    {0x0408, 0x10, 0x00, CSIPHY_SETTLE_CNT_LOWER_BYTE},
->> +    {0x0410, 0x52, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +    {0x0494, 0xD7, 0x00, CSIPHY_SKEW_CAL},
->> +    {0x045C, 0x00, 0x00, CSIPHY_SKEW_CAL},
->> +    {0x0460, 0xBD, 0x00, CSIPHY_SKEW_CAL},
->> +    {0x0464, 0x7F, 0x00, CSIPHY_SKEW_CAL},
->> +    {0x0464, 0x7F, 0x00, CSIPHY_SKEW_CAL},
-> 
-> Two equal "ignored" writes.
-
-Again I think these init sequences "do no harm" and its at least 
-possible we can improve the logic of our upstream init sequences to make 
-these NOPs mean more...
-
-At they very least they consume time in the APSS wrt the next writes..
-
-
-> 
->> +
->> +    {0x0894, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +    {0x08A0, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +    {0x0890, 0x0f, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +    {0x0898, 0x08, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +    {0x0894, 0x07, 0x01, CSIPHY_DEFAULT_PARAMS},
->> +    {0x0830, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +    {0x0800, 0x8E, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +    {0x0838, 0xFE, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +    {0x082C, 0x01, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +    {0x0834, 0x0F, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +    {0x081C, 0x0A, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +    {0x0814, 0x60, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +    {0x083C, 0xB8, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +    {0x0804, 0x0C, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +    {0x0820, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +    {0x0808, 0x10, 0x00, CSIPHY_SETTLE_CNT_LOWER_BYTE},
->> +    {0x0810, 0x52, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +    {0x0894, 0xD7, 0x00, CSIPHY_SKEW_CAL},
->> +    {0x085C, 0x00, 0x00, CSIPHY_SKEW_CAL},
->> +    {0x0860, 0xBD, 0x00, CSIPHY_SKEW_CAL},
->> +    {0x0864, 0x7F, 0x00, CSIPHY_SKEW_CAL},
->> +    {0x0864, 0x7F, 0x00, CSIPHY_SKEW_CAL},
-> 
-> Two equal "ignored" writes.
-> 
->> +
->> +    {0x0C94, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +    {0x0CA0, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +    {0x0C90, 0x0f, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +    {0x0C98, 0x08, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +    {0x0C94, 0x07, 0x01, CSIPHY_DEFAULT_PARAMS},
->> +    {0x0C30, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +    {0x0C00, 0x8E, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +    {0x0C38, 0xFE, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +    {0x0C2C, 0x01, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +    {0x0C34, 0x0F, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +    {0x0C1C, 0x0A, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +    {0x0C14, 0x60, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +    {0x0C3C, 0xB8, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +    {0x0C04, 0x0C, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +    {0x0C20, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +    {0x0C08, 0x10, 0x00, CSIPHY_SETTLE_CNT_LOWER_BYTE},
->> +    {0x0C10, 0x52, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +    {0x0C94, 0xD7, 0x00, CSIPHY_SKEW_CAL},
->> +    {0x0C5C, 0x00, 0x00, CSIPHY_SKEW_CAL},
->> +    {0x0C60, 0xBD, 0x00, CSIPHY_SKEW_CAL},
->> +    {0x0C64, 0x7F, 0x00, CSIPHY_SKEW_CAL},
->> +    {0x0C64, 0x7F, 0x00, CSIPHY_SKEW_CAL},
-> 
-> Two equal "ignored" writes.
-> 
->> +};
->> +
->>   static void csiphy_hw_version_read(struct csiphy_device *csiphy,
->>                      struct device *dev)
->>   {
->> @@ -594,6 +719,7 @@ static void csiphy_gen2_config_lanes(struct 
->> csiphy_device *csiphy,
->>               val = settle_cnt & 0xff;
->>               break;
->>           case CSIPHY_DNP_PARAMS:
->> +        case CSIPHY_SKEW_CAL:
-> 
-> Having CSIPHY_DNP_PARAMS is good enough, no need to add another
-> "dummy" write type.
-
-True but, I'd like to be able to bring in unmodified init sequences from 
-downstream.
-
-I think there is value in being able to setup the PHYs in the exact same 
-configuration.
-
-So, I think we should keep the SKEW_CAL support and I'm open to 
-experiment reducing repeated DNP/SKEW downwards, perhaps defining a real 
-number for the delay instead.
-
----
-bod
 
