@@ -1,212 +1,179 @@
-Return-Path: <linux-arm-msm+bounces-45785-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-45786-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id EBC23A18EC0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jan 2025 10:49:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 25B0BA18EC9
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jan 2025 10:51:03 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 99ACD188C19D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jan 2025 09:49:28 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id C1D3218828A6
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jan 2025 09:51:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BD8361F8662;
-	Wed, 22 Jan 2025 09:49:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 153BE20FA8F;
+	Wed, 22 Jan 2025 09:50:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jTz51/je"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="fEhtFgBR"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f51.google.com (mail-lf1-f51.google.com [209.85.167.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B2FB2101A1;
-	Wed, 22 Jan 2025 09:49:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFA681F8679
+	for <linux-arm-msm@vger.kernel.org>; Wed, 22 Jan 2025 09:50:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737539347; cv=none; b=ouPnaHNp9BB2gQfZTp88Lok1KN58pbVqCHajeRRfd0doiBa3J14YD+psS+IVyk8BxkHInlxj5DUF5Ghc4NIMDQ7s1EJWYu+UYxuEQFZwoZP3Prz5wk0L3zRJevUuSvaw9TZq+CvnzLwZ2DZsl34ARH5eBvM/q8BBZjbi1D3zYQs=
+	t=1737539458; cv=none; b=nltzkBzyt9YURRsxzRqYv85ZB81E0JYBoXbUSimA0KQwi9mPFBMmqI69Q3uJF7tMokpkYASzv0o+hSeV4AJlfw9KNSxEPYZH4oXEOIkfDFSIwp73HujcLeKJZQZyc6gG4YTn3ZH60kxnpqMBV06hmQNWkj3/KXNkQQItR33DpqY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737539347; c=relaxed/simple;
-	bh=Fy3OsI4EP/JY36FAr8INgu6Giqe1hb34w2b8bIPYiWs=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=OJbLd/62H5w3vByUOpWBoFoziFNiL5O1bJsEGh0OkUEmIAcurKcJBX+1w/BOYPaRFD++gKzPMptIQ9pYmsKWVddyCHjKfdTJKrU6bXcbfxVp6ttdTtJ4UdUbj0wlyjrRsa75R+2Eq4NRycUiSHmA4L7I0cTvLAr3rnNzMuzA5ZQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jTz51/je; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52DD3C4CED6;
-	Wed, 22 Jan 2025 09:48:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1737539346;
-	bh=Fy3OsI4EP/JY36FAr8INgu6Giqe1hb34w2b8bIPYiWs=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=jTz51/jeWFOWhwWVZvd0vft9o9KWH6kJmD+shWzhciaM8iBVFK4tuEqwtFOXDaNS0
-	 UchAJIMYDVIoISU0kk4xWpz8TXwW0qRxIbZ4vk35c4UnXfFUGs85EUgtP3B2yvgke0
-	 XJ3gepjbzy4uDJglS4DScytZVFztVgNMXDiyiNcafS0furvXN7EJ/T5yELZ9UFtkEl
-	 lDf27aAyDyoWbJclm7Ko8v2t6XJlkxHigp30ZVoO1VjTNUPzDFaf1zzfaQgAvHZmNR
-	 VXJMvc7yU7/0Sglk8bv+xsJTbCTTtQC3xwNWUJQHguuIzCkKCUT8YPOI8ESEp0Lns5
-	 /YMPuIiHT0qRQ==
-Message-ID: <2bd19e9e-775d-41b0-99d4-accb9ae8262d@kernel.org>
-Date: Wed, 22 Jan 2025 10:48:57 +0100
+	s=arc-20240116; t=1737539458; c=relaxed/simple;
+	bh=fNqbO3rfKLiDL9gSz6Rvd6JmUVwHrmKELjpnIWXw3EE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=L1Mw5IChClB9IchDSK9VioIfgUKRJoNKvD2a6KvzoGamFY+wDm9YkpwjaQznyO8n0ueSOlXBhM8qWnkG96OM896FIFSJcaDwROeA9bJ46+JTTL5N5eD22LEHVg27vR88Csnm5sbG8uddE+1y84HiM8m8/p+jTwyflPxa2W6wJbM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=fEhtFgBR; arc=none smtp.client-ip=209.85.167.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f51.google.com with SMTP id 2adb3069b0e04-54287a3ba3cso672526e87.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Jan 2025 01:50:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1737539454; x=1738144254; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=lBCHEf/C9ggUMnYZG2kd8fp8JybeLJM7ogvfrNNENjE=;
+        b=fEhtFgBRH9KQhQoMgzhi0xCUHZSrVrr0Uf0ThcV/YPWueBV4CpOOspA2GYQb00CNro
+         pxRMwCJ9oW19Z7+drPiJyxUYLkhc12uTucdHFg2XRLeDcVamZQ5sOnhHAmOmJBAuu5We
+         hWbpFtMmH8DZBT+YfXNVtSPQyc82LeHosb+d2Qong6iXq/5Vdb/9FAs6eJNsq+PWz9LI
+         KZ0l9jwDheCYZm45Say1aMFH5Dioolz8P2zFBIRG0bCJn+lWYWMzFctTGJnOzNxbJQ/E
+         S0+wC0E7MJlsf9AlPj/8qF7CWK6lPpG5QzwXgTU5KBohGKpGeBAh99l2QGZ2dWnQTmo5
+         Wo4w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1737539454; x=1738144254;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=lBCHEf/C9ggUMnYZG2kd8fp8JybeLJM7ogvfrNNENjE=;
+        b=dzD1gW+Viw8X4Rl3O40f6bktMjdpAxn7MTIN7Zc/CXKSNmIHTD5ORGkA+YNyihZdVR
+         jdRQY+JcireTmUyTor61BUjrrD2LczLmt/n5HhNHmk82b497sXEQ0CuSxtq/5WihN2or
+         dEJcNasup3Cksicnds2ceED1yBxSuKTy7bJFd2sNpJyqToPSwZoayt4e4gwlzE2k6O/S
+         SYh7q3cqGKlIraLxlw5fMsNqdjU2V3tJUKwoq48ZU89nUGtW3EigseGKX1ul24Lw2DA4
+         oKZA5BTxe2nXD9CKEEKi4D5/yKFIBpjm9Ngr/GeuJDo6HabVUSkUJPa4cj6DP+ZkWghe
+         nx0Q==
+X-Forwarded-Encrypted: i=1; AJvYcCU951QKDMdgPakq8/0F+tXMfxXwGYdPTlYe/4eyApl54cO1dnvPn36C/xoIKH4/Pmw4S/vjc7/QZ6QWrZQt@vger.kernel.org
+X-Gm-Message-State: AOJu0YyZlTn4rO/Uz9nDqBNXsoKncvUFl2KWlAgnfKU7OqwAHI7PKdHZ
+	P+0f+hO//cv3SDUyLXFcvaDPKphcrdfn8rq0Reqz9W+01DCqpcTxX1nkcR0Cqw0gLzQWhSPUI9N
+	Fzb0=
+X-Gm-Gg: ASbGnctmREmAlUoNyUWmV9ip+x2GxSDVvSNPMjauX5R2H74in+zA8yljlBF/eBPpuYi
+	jYvnD5z5ydCeQ6Uet+ewg63eukKKBQFpb8cy3apTRrmJAxY8R/Fhq5pzQvDOikWdR1mVErGlQtp
+	MEsBt6LSLz51MXR3GCMzu0o5SMwa9QzwR4A/qr5lat2S2cbDZ2ruyJFUS1U7ZJ9kRNIn6jPa5ax
+	MFcEk3nzZuXNuh8cM0Wo5fNkyB1E/Zo4I5+uSY+wW3B3guTicz4XdmcKBgUawGJbc7BOGg64i4f
+	uHY8JdeXcwHlDGrIghEJ7ELAZnYO1mHpg1K5W7zhCbBPyxFNeGAY/0WTM53J
+X-Google-Smtp-Source: AGHT+IFRfMhjsVpefV6maB7xCVKP12Ct+Hkn4E3vIkBFc99WFVI8/tbDsA5csZ+BezazKNFBtqnU6A==
+X-Received: by 2002:a05:651c:1508:b0:2fa:c185:ac4e with SMTP id 38308e7fff4ca-3063066d162mr113898521fa.13.1737539453989;
+        Wed, 22 Jan 2025 01:50:53 -0800 (PST)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-3072a330cdcsm25502911fa.11.2025.01.22.01.50.53
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 22 Jan 2025 01:50:53 -0800 (PST)
+Date: Wed, 22 Jan 2025 11:50:52 +0200
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Sachin Gupta <quic_sachgupt@quicinc.com>
+Cc: Adrian Hunter <adrian.hunter@intel.com>, 
+	Ulf Hansson <ulf.hansson@linaro.org>, linux-arm-msm@vger.kernel.org, linux-mmc@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, quic_cang@quicinc.com, quic_nguyenb@quicinc.com, 
+	quic_bhaskarv@quicinc.com, quic_mapa@quicinc.com, quic_narepall@quicinc.com, 
+	quic_nitirawa@quicinc.com, quic_rampraka@quicinc.com, quic_sartgarg@quicinc.com
+Subject: Re: [PATCH V2 2/2] mmc: sdhci-msm: Rectify DLL programming sequence
+ for SDCC
+Message-ID: <d5ykzwuk3wrwycol3wpeontfp5t7h7vfrfcxnmxei3qs74xsp7@ihtzne5wbytf>
+References: <20241218091057.15625-1-quic_sachgupt@quicinc.com>
+ <20241218091057.15625-3-quic_sachgupt@quicinc.com>
+ <a2mnkliubpdryxdwsd33kccvnlb4fnyzik5ywxw4xhnimwdwsm@oxe34zogzfot>
+ <bb60a145-1e8f-4004-b266-9f26a11440b9@quicinc.com>
+ <otfof56qvqxyjaq6onor2f3egrt57h2xazncias72qnn4xjgz5@2aj2pyj5xmyl>
+ <a885b32c-c59f-4fb6-b2cb-7955d2d3ae69@quicinc.com>
+ <mpuyg4ndd7xvfpwd6oubn7zmzkuienyrig5pmkrd4badlpebvf@h6weyimpcfv2>
+ <769268c2-9a7f-4b6e-aabd-a6cf5a744d5b@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 2/4] net: stmmac: dwmac-qcom-ethqos: Mask PHY mode if
- configured with rgmii-id
-To: Yijie Yang <quic_yijiyang@quicinc.com>,
- Andrew Lunn <andrew+netdev@lunn.ch>, "David S. Miller"
- <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>,
- Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Vinod Koul <vkoul@kernel.org>,
- Maxime Coquelin <mcoquelin.stm32@gmail.com>,
- Alexandre Torgue <alexandre.torgue@foss.st.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>,
- Richard Cochran <richardcochran@gmail.com>
-Cc: netdev@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- linux-stm32@st-md-mailman.stormreply.com,
- linux-arm-kernel@lists.infradead.org
-References: <20250121-dts_qcs615-v3-0-fa4496950d8a@quicinc.com>
- <20250121-dts_qcs615-v3-2-fa4496950d8a@quicinc.com>
- <30450f09-83d4-4ff0-96b2-9f251f0c0896@kernel.org>
- <48ce7924-bbb7-4a0f-9f56-681c8b2a21bd@quicinc.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <48ce7924-bbb7-4a0f-9f56-681c8b2a21bd@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <769268c2-9a7f-4b6e-aabd-a6cf5a744d5b@quicinc.com>
 
-On 22/01/2025 09:56, Yijie Yang wrote:
+On Wed, Jan 22, 2025 at 02:57:59PM +0530, Sachin Gupta wrote:
 > 
 > 
-> On 2025-01-21 20:47, Krzysztof Kozlowski wrote:
->> On 21/01/2025 08:54, Yijie Yang wrote:
->>> The Qualcomm board always chooses the MAC to provide the delay instead of
->>> the PHY, which is completely opposite to the suggestion of the Linux
->>> kernel.
->>
->>
->> How does the Linux kernel suggest it?
->>
->>> The usage of phy-mode in legacy DTS was also incorrect. Change the
->>> phy_mode passed from the DTS to the driver from PHY_INTERFACE_MODE_RGMII_ID
->>> to PHY_INTERFACE_MODE_RGMII to ensure correct operation and adherence to
->>> the definition.
->>> To address the ABI compatibility issue between the kernel and DTS caused by
->>> this change, handle the compatible string 'qcom,qcs404-evb-4000' in the
->>> code, as it is the only legacy board that mistakenly uses the 'rgmii'
->>> phy-mode.
->>>
->>> Signed-off-by: Yijie Yang <quic_yijiyang@quicinc.com>
->>> ---
->>>   .../net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c    | 18 +++++++++++++-----
->>>   1 file changed, 13 insertions(+), 5 deletions(-)
->>>
->>> diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
->>> index 2a5b38723635b5ef9233ca4709e99dd5ddf06b77..e228a62723e221d58d8c4f104109e0dcf682d06d 100644
->>> --- a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
->>> +++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
->>> @@ -401,14 +401,11 @@ static int ethqos_dll_configure(struct qcom_ethqos *ethqos)
->>>   static int ethqos_rgmii_macro_init(struct qcom_ethqos *ethqos)
->>>   {
->>>   	struct device *dev = &ethqos->pdev->dev;
->>> -	int phase_shift;
->>> +	int phase_shift = 0;
->>>   	int loopback;
->>>   
->>>   	/* Determine if the PHY adds a 2 ns TX delay or the MAC handles it */
->>> -	if (ethqos->phy_mode == PHY_INTERFACE_MODE_RGMII_ID ||
->>> -	    ethqos->phy_mode == PHY_INTERFACE_MODE_RGMII_TXID)
->>> -		phase_shift = 0;
->>> -	else
->>> +	if (ethqos->phy_mode == PHY_INTERFACE_MODE_RGMII_ID)
->>>   		phase_shift = RGMII_CONFIG2_TX_CLK_PHASE_SHIFT_EN;
->>>   
->>>   	/* Disable loopback mode */
->>> @@ -810,6 +807,17 @@ static int qcom_ethqos_probe(struct platform_device *pdev)
->>>   	ret = of_get_phy_mode(np, &ethqos->phy_mode);
->>>   	if (ret)
->>>   		return dev_err_probe(dev, ret, "Failed to get phy mode\n");
->>> +
->>> +	root = of_find_node_by_path("/");
->>> +	if (root && of_device_is_compatible(root, "qcom,qcs404-evb-4000"))
->>
->>
->> First, just check if machine is compatible, don't open code it.
->>
->> Second, drivers should really, really not rely on the machine. I don't
->> think how this resolves ABI break for other users at all.
+> On 1/7/2025 8:38 PM, Dmitry Baryshkov wrote:
+> > On Tue, Jan 07, 2025 at 11:13:32AM +0530, Sachin Gupta wrote:
+> > > 
+> > > 
+> > > On 12/27/2024 12:23 AM, Dmitry Baryshkov wrote:
+> > > > On Thu, Dec 26, 2024 at 11:22:40AM +0530, Sachin Gupta wrote:
+> > > > > 
+> > > > > 
+> > > > > On 12/19/2024 11:24 AM, Dmitry Baryshkov wrote:
+> > > > > > On Wed, Dec 18, 2024 at 02:40:57PM +0530, Sachin Gupta wrote:
+
+> > > > > > > +
+> > > > > > > +static unsigned int sdhci_msm_get_clk_rate(struct sdhci_host *host, u32 req_clk)
+> > > > > > > +{
+> > > > > > > +	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
+> > > > > > > +	struct sdhci_msm_host *msm_host = sdhci_pltfm_priv(pltfm_host);
+> > > > > > > +	struct clk *core_clk = msm_host->bulk_clks[0].clk;
+> > > > > > > +	unsigned int sup_clk;
+> > > > > > > +
+> > > > > > > +	if (req_clk < sdhci_msm_get_min_clock(host))
+> > > > > > > +		return sdhci_msm_get_min_clock(host);
+> > > > > > > +
+> > > > > > > +	sup_clk = clk_round_rate(core_clk, clk_get_rate(core_clk));
+> > > > > > > +
+> > > > > > > +	if (host->clock != msm_host->clk_rate)
+> > > > > > > +		sup_clk = sup_clk / 2;
+> > > > > > > +
+> > > > > > > +	return sup_clk;
+> > > > > > 
+> > > > > > Why?
+> > > > > 
+> > > > > Sorry, I did not understand your question. Can you please explain in detail.
+> > > > 
+> > > > Please explain the maths. You get the rate from the clock, then you
+> > > > round it, but it is the rate that has just been returned, so there
+> > > > should be no need to round it. And after that there a division by two
+> > > > for some reason. So I've asked for an explanation for that code.
+> > > > 
+> > > 
+> > > clk_round_rate is used in case of over clocking issue we can round it to the
+> > > usable frequency.
+> > 
+> > If it is a frequency _returned_ by the clock driver, why do you need to
+> > round it? It sounds like that freq should be usable anyway.
+> > 
 > 
-> As detailed in the commit description, some boards mistakenly use the 
-> 'rgmii' phy-mode, and the MAC driver has also incorrectly parsed and 
-
-That's a kind of an ABI now, assuming it worked fine.
-
-> added the delay for it. This code aims to prevent breaking these boards 
-> while correcting the erroneous parsing. This issue is similar to the one 
-> discussed in another thread:
-> https://lore.kernel.org/all/20241225-support_10m100m-v1-2-4b52ef48b488@quicinc.com/
+> I agree, rounding will be taken care by clock driver. Will remove in my next
+> patch.
 > 
->>
->> You need to check what the ABI is here and do not break it.
+> > > Divide by 2 is used as for HS400 the tuning happens in
+> > > HS200 mode only so to update the frequency to 192 Mhz.
+> > 
+> > Again, is it really 192 MHz? Or 19.2 MHz?
+> > Also if it is for HS400, then shouldn't /2 be limited to that mode?
+> > 
 > 
-> If board compatible string matching is not recommended, can I address 
+> Yes, It is 192 MHz.
 
-And what if affected board does not match the compatible, because you
-did not include it here? I said this code does not prevent breaking ABI
-and you did not address it. To my comment you need to consider ABI, you
-repeat the same, so kind of something irrelevant. I have feelings you
-want to push your code, just like in the past several of your
-colleagues. Learning from past mistakes I will not engage in such
-discussions, so please really rethink the concept and comments you
-received here.
+Good, thanks for the confirmation.
 
-That's a NAK.
+> As part of eMMC Init, driver will try to init with the best mode supported
+> by controller and device. In this case it is HS400 mode, But as part of
+> HS400 mode, we perform Tuning in HS200 mode only where we need to configure
+> half of the clock.
 
-Best regards,
-Krzysztof
+This isn't an answer to the question. Let me rephrase it for you: if the
+/2 is only used for HS400, why should it be attempted in all other
+modes? Please limit the /2 just to HS400.
+
+-- 
+With best wishes
+Dmitry
 
