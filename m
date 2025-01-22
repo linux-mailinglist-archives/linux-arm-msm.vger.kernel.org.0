@@ -1,77 +1,77 @@
-Return-Path: <linux-arm-msm+bounces-45789-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-45790-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3F764A18F05
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jan 2025 10:58:13 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id E9096A18F10
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jan 2025 11:00:14 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 22EFB3A4098
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jan 2025 09:58:06 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id A08C1188C0E2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jan 2025 10:00:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 17FEC210190;
-	Wed, 22 Jan 2025 09:58:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6F18A21348;
+	Wed, 22 Jan 2025 10:00:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="hscZqSrU"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Mi4fsSHc"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f48.google.com (mail-lf1-f48.google.com [209.85.167.48])
+Received: from mail-lf1-f51.google.com (mail-lf1-f51.google.com [209.85.167.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 661A120FAB2
-	for <linux-arm-msm@vger.kernel.org>; Wed, 22 Jan 2025 09:58:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8783C1B4F3E
+	for <linux-arm-msm@vger.kernel.org>; Wed, 22 Jan 2025 10:00:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737539887; cv=none; b=fbU6LWY7QxFeiyMlD0KjwWRHVq5Zh864/S2iV5sxRJBzj//nE4S2reiysjHY4NKHc+ULR8lhRzaKVGVIoVU/HfgpfIIoF5pLZWK3olT+y+R83YkMVJfnwG+UqPVES2V8Q0rZTvnXVp0p+VeWVeh8CEgu3ABFIKAAzKkKapZLXKc=
+	t=1737540012; cv=none; b=USxJZP4+XOSEkXC3xgyVABAWQiiLWtjBlzZrzBI7JqaLDqs14C5OaMflW+IIwVdrR+hrmHqWesZkIjzNNtJTz+6mOS6xe3odfI3EPCiRlwRvskmpUMqvC2CyNHx8YVTqpT+wh0urfjGiRk4XRDmM/STTdg0p8Y7725/lD5R/tCI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737539887; c=relaxed/simple;
-	bh=0t93RCDXl/7xUXDW5W9vqPWXCfpMB16UsYpP/NqJ6Vc=;
+	s=arc-20240116; t=1737540012; c=relaxed/simple;
+	bh=+wsrOd0qHRtyMX2kOTNMRykr4F2eirOjoPKRdQiARJE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=uUprUKvdQprkxX7++/MBmIbzIojBYhKB6Ifrb/vTHkwOSTtLLSJyQUB9gMRCowKjHoepYZu91FEhrH7IgxExS7xfMAW0NIudyg7AbQFdqXoXf51I/C5fF84/3RwC+uqihNUsq6XAn15UDHqxXUXQmCsSiUrJmGAa0qgkOn0gG1Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=hscZqSrU; arc=none smtp.client-ip=209.85.167.48
+	 Content-Type:Content-Disposition:In-Reply-To; b=rwH9FnzALkKtnMRQsxvN4N6rqTYbYNGrOWB01dqec6U8y6onD13qjnADzzYBWLn2CHKk/H+aAM1hAUD5HYskawwIemGO3OWo5NJQvgs0chp2d4IZNw3lzr/PTlw4BMiPCrL0g27elW/s4cEaD2Olj0SVkJ7vOkhVvOZHeD4xCIQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Mi4fsSHc; arc=none smtp.client-ip=209.85.167.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f48.google.com with SMTP id 2adb3069b0e04-5401b7f7141so6010900e87.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Jan 2025 01:58:04 -0800 (PST)
+Received: by mail-lf1-f51.google.com with SMTP id 2adb3069b0e04-54026562221so6750451e87.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Jan 2025 02:00:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1737539882; x=1738144682; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1737540008; x=1738144808; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=lt+7T/OfDgu/+TjLQdN9iffz+QngVPZRwwA8knqRWaI=;
-        b=hscZqSrUBpsdDJlvGazLsFUbKQwp1m+j+Ena3k9KzDptbkDyIYvkp4UNh8aIkBVZLI
-         8r/6MHfVQkrFZQHyw3qPHX6SKSZRfoZ4RnEO+C0hTNjP/jLXCuYF/Vwlo0azMReoTQTS
-         V3bPU9MBGXLS2ydWMPdxXWP3tMhVFyEpI2jsUla+a/kdlWDXbwX46wdVEM28/Arusq6k
-         Gpv0ekeTK9HNC+uvD9dvpRjTP8M3oO8RXkF/AfFy/Iam+YcZg57shlU5c21BUSQUn8DZ
-         YAg2ztwdL4rDU8l653TDwGFaxu8wo+3VcCLlJLMGskpBwaVSG/WvMUmMx3WKH7ePYz39
-         7+CQ==
+        bh=zEFQawktjxbGhtjeAIH260ijjFGtUtPD1lmxQwfvD70=;
+        b=Mi4fsSHc9t17v7yTy4JA2cGAgJm19YSEczZLyhjNz82mSMD8DaMIchB+tVifCzxu2t
+         dIg646+wxrz5UHQkIAPlA/WjkT1vlaO/zPgB/TCEpAGAGp7bL/Z+7l9P/aELRO8qDoxS
+         cIGSWel4xG+oTJ93VrcECT9286DtjjGTZPeVYGxCp529EsCVMs6oYlgmDwwSCJ7Dgrbu
+         MnfVN8EoH1YYatg2NtgliamWQ2qGlLXIspFx5eeXT0wnqQnNnK/iAw1WqE/hCrtrEkRC
+         1MK9OZJloCAlK19Hoq3qVz9g7GwFitImOeitEC4D7ozqdFM0ZvOB5ta7haTMjwJVgWW8
+         SwZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1737539882; x=1738144682;
+        d=1e100.net; s=20230601; t=1737540008; x=1738144808;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=lt+7T/OfDgu/+TjLQdN9iffz+QngVPZRwwA8knqRWaI=;
-        b=ffxKbOtPxtLD0zS3CF2Ikveu4lzLSDGxsRVCQOOGAcseanGf1ZK8MKgkFkm3pUVnqL
-         N0ZVUvPqsdBjnw+DbRmUqsiDPbLsC/FkEKMtnCawhb2HHNpEmLsDBuSkkIMpZu3viiRg
-         KvEPsyJ2FNHp0Odg5gg+l+L0aA66d6RIKEw1z33z7YqkvyNqPpBjGUmYkvRtiH4IuqWf
-         VUzXpisGBphSzTOqX1HPybDzDOMpqP13SfoID2DYHXgIK89MO7zyJ2nuTvPaIXwwZb1l
-         1+thTCRHO4Ncw8WH5SMGOt8zSqsuzGi5g0uJTRW7avjAvoOQIbw0d5zOfB/aW4XnMqh+
-         pQ1A==
-X-Forwarded-Encrypted: i=1; AJvYcCWu/lHq7dUXYdhY5a0eBf3rw5VSOhWBw/aoh4JwRK9fEQi2uwngY52KRZE3RLaLQriTTtPUEBCtDTkCGbUt@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz92ubgNn1Q4dk1XsMQ7EMd+pFec0Vc472h4qcGFMDK8ZGdtNFO
-	nsDM4kgRN2+sMmU7fPQs6c0qSznqjZ9uVq13ajPypqAquKx/1ujGxrOAcUG7KxY=
-X-Gm-Gg: ASbGncvuOI7f2e30TM7EBf847VoGI12aBvi2wiTtneCVrQXoZBhqiHiGuphUvplPRDc
-	6D1LC0PaDkqt2264lMsY01rxpu2m2loubUCiikgkiiK1ZQMdlTBVA3wpeDkpCDRVQHYnkJjjslz
-	bMIazxZLjZ027V9FAe3e5453/1BQ5Bc5CyMkHVa+M2sAen87E/9ApukM2mMb+UeevP4igLj8DmN
-	uCEaU4kjqDxGY9ltoQrTuAB3ScjvFHf21WwwTPBK4yA4UZYI0/iZ2mITnB4VKZX24lq7LjZAbnJ
-	HHfOCN8fN5PqCowEh6al0Ax+NbT2/0Fk6IUwzcfsr0uh4hrdWg==
-X-Google-Smtp-Source: AGHT+IHSPoERHwXBAu/mWABs14CcJsopKYTMwQjU2ZihLtIIx69YnItSD8BMvZFUb9/vqhUAaBtVuA==
-X-Received: by 2002:a05:6512:1084:b0:542:29b6:9c26 with SMTP id 2adb3069b0e04-5439c27d0c5mr7863371e87.47.1737539882463;
-        Wed, 22 Jan 2025 01:58:02 -0800 (PST)
+        bh=zEFQawktjxbGhtjeAIH260ijjFGtUtPD1lmxQwfvD70=;
+        b=Jf/vStHMVcO4wFQlOojtvsNnVv1napzdGUZzs8d7hhRrPS7ZOhUEZGRZPYXd3BjVIL
+         36UuwYr06+UcSFiqKxTxRsxGH2MJRPzaODJTdjXNyMQIuAMLOig1N4FJUo8SJU2vRevw
+         OP5Gy5e32kVC36bBSJsWYkd8hPfqI83kYoD/E5VaS9AhtAMA6IvXOs0r8R499uVydk6A
+         9B1nDSfODzFfg5yVD2MvxkNvmNUaZfLTrnmyFc6Nvn4vKA5unAhT5sY9Eo4Vbos5AtE1
+         X6x8opqgLBgdDD821Z9ZlVX1pjNvjgS79TunpZYxLjek+UjE+pJgE5FPhI/ZiH/0Q/c9
+         fkaQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUZXc8z7ie9Y4oaY61KTOwM0/bXB0gGZ02yrhgVOs4fzOoDvA5pGEQQIF5mZ92mecq7940K7cW9zRzQ4Wng@vger.kernel.org
+X-Gm-Message-State: AOJu0YwEU2UogNJegZ9c+VRFz2nhCdB5pKPeKKqbXcgAcR7MoGjuq1KZ
+	mpDLjqKmcSJY9EunJL6t3Mtw91fCDT+d7hjfjvg7pmX3zlP5l76WjhvvrJ9PHs4=
+X-Gm-Gg: ASbGncubPqfOXtk8/9sxyt1/nYxqewHny7NibyXPpuNjavxL7Elx3+d6EABdEJvVk4/
+	hS5Id1p8/rZHAl8QErQMPEtZXBvkclVHIG+ar1qAvy97O1xof3doTZXAiesT0ZDi+xNLSbyFAUC
+	r9X/pCAbqhcWzFYCm+36+g99s7X58Vp0o+HtISZVKoMBfm3395pidsuQIWzVZSQ0v5ZKRdv74R1
+	ewnng0IIGGx6CdHDevIx2P1F4CgCNOvhYUTXE9rD8sycwcP/l2utz4bEJb9xGJds9/fBrI1majr
+	xnOP5mbrl9Hbl8esvCwl6Dg3E8qBZ727uc0Fm6Y1N1hoVnzpOQ==
+X-Google-Smtp-Source: AGHT+IEzUj8d1CjaJ2+hjasjv+g9ctm8BlZOjITBAX5i3FJQn+c/3JTOFqKIBY7RUuTDcdqTjs92zg==
+X-Received: by 2002:ac2:5497:0:b0:542:2a20:e699 with SMTP id 2adb3069b0e04-5439c21f31fmr5489633e87.9.1737540007532;
+        Wed, 22 Jan 2025 02:00:07 -0800 (PST)
 Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5439af7364esm2166480e87.162.2025.01.22.01.58.00
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5439af0e8ffsm2174384e87.59.2025.01.22.02.00.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 22 Jan 2025 01:58:01 -0800 (PST)
-Date: Wed, 22 Jan 2025 11:57:59 +0200
+        Wed, 22 Jan 2025 02:00:06 -0800 (PST)
+Date: Wed, 22 Jan 2025 12:00:03 +0200
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To: Sachin Gupta <quic_sachgupt@quicinc.com>
 Cc: Ulf Hansson <ulf.hansson@linaro.org>, Rob Herring <robh@kernel.org>, 
@@ -81,11 +81,11 @@ Cc: Ulf Hansson <ulf.hansson@linaro.org>, Rob Herring <robh@kernel.org>,
 	linux-arm-msm@vger.kernel.org, quic_cang@quicinc.com, quic_nguyenb@quicinc.com, 
 	quic_bhaskarv@quicinc.com, quic_mapa@quicinc.com, quic_narepall@quicinc.com, 
 	quic_nitirawa@quicinc.com, quic_rampraka@quicinc.com, quic_sartgarg@quicinc.com
-Subject: Re: [PATCH V3 3/4] mmc: sdhci-msm: Add Device tree parsing logic for
- DLL settings
-Message-ID: <6xvsnmbnnvpmlgvmi42pt4d3ugkrxhrgrkp56szqhgh2foxe72@z4ildfxufq7j>
+Subject: Re: [PATCH V3 4/4] mmc: sdhci-msm: Rectify DLL programming sequence
+ for SDCC
+Message-ID: <nmsm6bb5biptmzruggs4f3mweq7d7hcmwqjdidf6bi7gyoliw2@x4yitguzz6zx>
 References: <20250122094707.24859-1-quic_sachgupt@quicinc.com>
- <20250122094707.24859-4-quic_sachgupt@quicinc.com>
+ <20250122094707.24859-5-quic_sachgupt@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -94,153 +94,96 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250122094707.24859-4-quic_sachgupt@quicinc.com>
+In-Reply-To: <20250122094707.24859-5-quic_sachgupt@quicinc.com>
 
-On Wed, Jan 22, 2025 at 03:17:06PM +0530, Sachin Gupta wrote:
-> This update introduces the capability to configure HS200
-> and HS400 DLL settings via the device tree and parsing it.
+On Wed, Jan 22, 2025 at 03:17:07PM +0530, Sachin Gupta wrote:
+> With the current DLL sequence stability issues for data
+> transfer seen in HS400 and HS200 modes.
+> 
+> "mmc0: cqhci: error IRQ status: 0x00000000 cmd error -84
+> data error 0"
+> 
+> Rectify the DLL programming sequence as per latest hardware
+> programming guide
 > 
 > Signed-off-by: Sachin Gupta <quic_sachgupt@quicinc.com>
 > ---
->  drivers/mmc/host/sdhci-msm.c | 86 ++++++++++++++++++++++++++++++++++++
->  1 file changed, 86 insertions(+)
+>  drivers/mmc/host/sdhci-msm.c | 270 ++++++++++++++++++++++++++++++++---
+>  1 file changed, 252 insertions(+), 18 deletions(-)
 > 
 > diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
-> index 2a5e588779fc..cc7756a59c55 100644
+> index cc7756a59c55..17f17a635d83 100644
 > --- a/drivers/mmc/host/sdhci-msm.c
 > +++ b/drivers/mmc/host/sdhci-msm.c
-> @@ -256,6 +256,19 @@ struct sdhci_msm_variant_info {
->  	const struct sdhci_msm_offset *offset;
+> @@ -28,6 +28,7 @@
+>  #define CORE_VERSION_MAJOR_SHIFT	28
+>  #define CORE_VERSION_MAJOR_MASK		(0xf << CORE_VERSION_MAJOR_SHIFT)
+>  #define CORE_VERSION_MINOR_MASK		0xff
+> +#define SDHCI_MSM_MIN_V_7FF		0x6e
+>  
+>  #define CORE_MCI_GENERICS		0x70
+>  #define SWITCHABLE_SIGNALING_VOLTAGE	BIT(29)
+> @@ -118,7 +119,8 @@
+>  #define CORE_PWRSAVE_DLL	BIT(3)
+>  
+>  #define DDR_CONFIG_POR_VAL	0x80040873
+> -
+> +#define DLL_CONFIG_3_POR_VAL	0x10
+> +#define TCXO_FREQ               19200000
+>  
+>  #define INVALID_TUNING_PHASE	-1
+>  #define SDHCI_MSM_MIN_CLOCK	400000
+> @@ -309,6 +311,16 @@ struct sdhci_msm_host {
+>  	bool artanis_dll;
 >  };
 >  
-> +/*
-> + * DLL registers which needs be programmed with HSR settings.
-> + * Add any new register only at the end and don't change the
-> + * sequence.
-> + */
-> +struct sdhci_msm_dll {
-> +	u32 dll_config[2];
-> +	u32 dll_config_2[2];
-> +	u32 dll_config_3[2];
-> +	u32 dll_usr_ctl[2];
-> +	u32 ddr_config[2];
+> +enum dll_init_context {
+> +	DLL_INIT_NORMAL,
+> +	DLL_INIT_FROM_CX_COLLAPSE_EXIT,
 > +};
 > +
->  struct sdhci_msm_host {
->  	struct platform_device *pdev;
->  	void __iomem *core_mem;	/* MSM SDCC mapped address */
-> @@ -264,6 +277,7 @@ struct sdhci_msm_host {
->  	struct clk *xo_clk;	/* TCXO clk needed for FLL feature of cm_dll*/
->  	/* core, iface, cal and sleep clocks */
->  	struct clk_bulk_data bulk_clks[4];
-> +	struct sdhci_msm_dll dll;
->  #ifdef CONFIG_MMC_CRYPTO
->  	struct qcom_ice *ice;
->  #endif
-> @@ -292,6 +306,7 @@ struct sdhci_msm_host {
->  	u32 dll_config;
->  	u32 ddr_config;
->  	bool vqmmc_enabled;
-> +	bool artanis_dll;
->  };
->  
+> +enum mode {
+> +	HS400, // equivalent to SDR104 mode for DLL.
+> +	HS200, // equivalent to SDR50 mode for DLL.
+> +};
+> +
 >  static const struct sdhci_msm_offset *sdhci_priv_msm_offset(struct sdhci_host *host)
-> @@ -2400,6 +2415,74 @@ static int sdhci_msm_gcc_reset(struct device *dev, struct sdhci_host *host)
->  	return ret;
+>  {
+>  	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
+> @@ -793,6 +805,211 @@ static int msm_init_cm_dll(struct sdhci_host *host)
+>  	return 0;
 >  }
 >  
-> +static int sdhci_msm_dt_get_array(struct device *dev, const char *prop_name,
-> +				  u32 **bw_vecs, int *len)
-
-It just reads an array from the DT, please rename the bw_vecs param
-which is inaccurate in this case.
-
+> +static unsigned int sdhci_msm_get_min_clock(struct sdhci_host *host)
 > +{
-> +	struct device_node *np = dev->of_node;
-> +	u32 *arr = NULL;
-> +	int ret = 0;
-> +	int sz;
-> +
-> +	if (!np)
-> +		return -ENODEV;
-> +
-> +	if (!of_get_property(np, prop_name, &sz))
-> +		return -EINVAL;
-> +
-> +	sz = sz / sizeof(*arr);
-> +	if (sz <= 0)
-> +		return -EINVAL;
-> +
-> +	arr = devm_kzalloc(dev, sz * sizeof(*arr), GFP_KERNEL);
-> +	if (!arr)
-> +		return -ENOMEM;
-> +
-> +	ret = of_property_read_u32_array(np, prop_name, arr, sz);
-> +	if (ret) {
-> +		dev_err(dev, "%s failed reading array %d\n", prop_name, ret);
-> +		*len = 0;
-> +		return ret;
-> +	}
-> +
-> +	*bw_vecs = arr;
-> +	*len = sz;
-> +	ret = 0;
-> +
-> +	return ret;
+> +	return SDHCI_MSM_MIN_CLOCK;
 > +}
 > +
-> +static int sdhci_msm_dt_parse_dll_info(struct device *dev, struct sdhci_msm_host *msm_host)
+> +static unsigned int sdhci_msm_get_clk_rate(struct sdhci_host *host, u32 req_clk)
 > +{
-> +	int dll_table_len, dll_reg_count;
-> +	u32 *dll_table = NULL;
-> +	int i;
+> +	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
+> +	struct sdhci_msm_host *msm_host = sdhci_pltfm_priv(pltfm_host);
+> +	struct clk *core_clk = msm_host->bulk_clks[0].clk;
+> +	unsigned int sup_clk;
 > +
-> +	msm_host->artanis_dll = false;
+> +	if (req_clk < sdhci_msm_get_min_clock(host))
+> +		return sdhci_msm_get_min_clock(host);
 > +
-> +	if (sdhci_msm_dt_get_array(dev, "qcom,dll-hsr-list",
-> +				   &dll_table, &dll_table_len))
-> +		return -EINVAL;
+> +	sup_clk = clk_get_rate(core_clk);
 > +
-> +	dll_reg_count = sizeof(struct sdhci_msm_dll) / sizeof(u32);
-> +
-> +	if (dll_table_len != dll_reg_count) {
-> +		dev_err(dev, "Number of HSR entries are not matching\n");
-> +		return -EINVAL;
-> +	}
-> +
-> +	for (i = 0; i < 2; i++) {
-> +		msm_host->dll.dll_config[i] = dll_table[i];
-> +		msm_host->dll.dll_config_2[i] = dll_table[i + 1];
-> +		msm_host->dll.dll_config_3[i] = dll_table[i + 2];
-> +		msm_host->dll.dll_usr_ctl[i] = dll_table[i + 3];
-> +		msm_host->dll.ddr_config[i] = dll_table[i + 4];
-> +	}
-> +
-> +	msm_host->artanis_dll = true;
+> +	if (host->clock != msm_host->clk_rate)
+> +		sup_clk = sup_clk / 2;
 
-And the pointer to dll_table is lost, lingering for the driver lifetime.
-Please drop the devm_ part and kfree() it once it is not used anymore.
+Please resolve previous discussions before sending new versions. Just
+sending a response and then sending next iteration of the patchset is
+not a proper way to communicate.
+
+NAK until the discussion is resolved in the previous thread.
 
 > +
-> +	return 0;
+> +	return sup_clk;
 > +}
 > +
->  static int sdhci_msm_probe(struct platform_device *pdev)
->  {
->  	struct sdhci_host *host;
-> @@ -2446,6 +2529,9 @@ static int sdhci_msm_probe(struct platform_device *pdev)
->  
->  	msm_host->saved_tuning_phase = INVALID_TUNING_PHASE;
->  
-> +	if (sdhci_msm_dt_parse_dll_info(&pdev->dev, msm_host))
-> +		goto pltfm_free;
-> +
->  	ret = sdhci_msm_gcc_reset(&pdev->dev, host);
->  	if (ret)
->  		goto pltfm_free;
-> -- 
-> 2.17.1
-> 
 
 -- 
 With best wishes
