@@ -1,147 +1,154 @@
-Return-Path: <linux-arm-msm+bounces-45872-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-45873-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id DEB93A19ABC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jan 2025 23:14:52 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id A3794A19AC3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jan 2025 23:16:56 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B53503AB58D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jan 2025 22:14:45 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5796B1889568
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jan 2025 22:17:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 32D101C9B9B;
-	Wed, 22 Jan 2025 22:14:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B27251C461F;
+	Wed, 22 Jan 2025 22:16:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="GDlRtJ22"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="GVpznsGm"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f182.google.com (mail-lj1-f182.google.com [209.85.208.182])
+Received: from mail-pl1-f202.google.com (mail-pl1-f202.google.com [209.85.214.202])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F8581CAA66
-	for <linux-arm-msm@vger.kernel.org>; Wed, 22 Jan 2025 22:14:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 430AC4C9F
+	for <linux-arm-msm@vger.kernel.org>; Wed, 22 Jan 2025 22:16:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.202
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737584083; cv=none; b=Cz943Fy1HyYTBfD2dKfnQEuxeMcV3jTLQXjixB9tKMyGPSRNhkZyUmzsNqXZ1+NnH/jTRH9SNm/XWkWcqMEFyJGS7VUYXgOgdVOK1mPFJl3H4FwqJocZVoH4MbiQk/qTAUygBK7GClr+bKN10J8LZhoYT2gMkdUPiiQJgdTDux0=
+	t=1737584213; cv=none; b=LY49uTvdbbDWjS6T/h9Rd018L9JaQgExiH4tJeQCyUIYJK8RO4STS2EncoFWfCp24mwHgjg9xpKH8RTbSEFhFjCS8YB07nYBKekcAOOhtaJas0fFBZxc6Vj/H/SiVPFTYpGUvGddW8Xp7LqungEAuFYaJv2pd8sYf0+xZDLG9xg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737584083; c=relaxed/simple;
-	bh=xHnt4GFQCIQSuiR4bwSRKt54t/sjVBI8NQmJKJltCaw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=W4p2zZRlWLjjBt/osgQ88WGCtXxNJ3x/uJlzIB7P5bBHUXwJK4mTCBpBdAb8X3+lsH5WyM/lw/D1sqBFq2fPZUofnUI3b9uxHYzNYJbLxhVxPIRXoIdETayqjZ0eeqINyO6jNctT0M8a1CSAu5gkgd9BVoyszkRE2lcqhKcChqY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=GDlRtJ22; arc=none smtp.client-ip=209.85.208.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f182.google.com with SMTP id 38308e7fff4ca-30225b2586cso14434251fa.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Jan 2025 14:14:40 -0800 (PST)
+	s=arc-20240116; t=1737584213; c=relaxed/simple;
+	bh=YRBj9r1/vH8+ADkRAd/xRm3bNslcVk24kKUS21NY9Ok=;
+	h=Date:In-Reply-To:Mime-Version:Message-ID:Subject:From:To:Cc:
+	 Content-Type; b=mezAdd1c9mMVOgGIn+lqBPCMRFG9mqkluTI0fubHl/TW3OYoZzbl81yak7z3a0K4ZZMNkzERBdxVCs4rSekbisNc+2kG0cIcRjQC/mKA0ySAeEb7lrDfZIiWNZkMSs68t9cRdhoTfnfQc2cONMkXxvz0IZoYHr3m2nrtz5BZyeo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--ackerleytng.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=GVpznsGm; arc=none smtp.client-ip=209.85.214.202
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--ackerleytng.bounces.google.com
+Received: by mail-pl1-f202.google.com with SMTP id d9443c01a7336-2161d185f04so2517385ad.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Jan 2025 14:16:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1737584079; x=1738188879; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=jwZtc77vhcVJuVM8Re9KLoWSMRTvcITBEPJQXYppitQ=;
-        b=GDlRtJ22l6s+ySIfZdIoDZtemOtsaYaGSYlRtHbabSWJoL1odvYihc+PxTFNqyGPyj
-         OS+4WUZfJ6zF51kE7mhTl1OKe6h1VK0ate+AiJ/gbaiNhM9VG0bMcu37yeSRTvL1P/zb
-         xrG0MOZ974DXwpt+dpZpFpMcJqdaVopiPicfIAzOq01nvE46oREYKukhl+jhk92/epPm
-         f9OmPBVSwJcU+19z1vlP8hhVhIiZjro0ZtNp5A2MkCSgImp3XryUPpjpG2X6hRkWMpY1
-         2LJ3FG1fVwBuWj3m6yInkVPHuxdQgLNu37RtNsUrW1hJdJC4rx0NNmnXT7EuN6sV7OUB
-         zMVQ==
+        d=google.com; s=20230601; t=1737584211; x=1738189011; darn=vger.kernel.org;
+        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=l3V32wmuFdo3eyYq3ItjWLe5TmAQhDXOPpNz76RK2rI=;
+        b=GVpznsGmzj9rnZ/j1XSVzUZ8f3vZwlw4A88OBya4wtYH1As6k5/qzjrYoxPjxeWq5P
+         BrL5ibvINg5FmRDhEP3uxlH69QSKUBtazxBevoh1637D/O+byatT4OQmvjOvL8KkzkD8
+         /zTE/BgymQwnRoNLiYkQik4Qo1lmYg9x2fVQ5OganGy5R5QMtSwSQr2IGtgaOZc9frAa
+         8I9HC4eY5tPzqYus/30YBqvkJql7VKw+SG8mI8vHRX492f5gjcb48AJAAF4timEp3nLe
+         h40lxy/9mwBxXMLxU6ASp9Ov63rT6tRNYSx1X7DUEVIr+MT38oMSm0K7AHOdbaFjV071
+         GTMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1737584079; x=1738188879;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=jwZtc77vhcVJuVM8Re9KLoWSMRTvcITBEPJQXYppitQ=;
-        b=TMVLnXxEbaNy/PlVMciETg6mEnoviDGeXeaMpd+dwsgIrvj4tuxjdKhSH/nUuGCysg
-         ehdHL4hyMHdw61m1a+hBU3R6yLLUzkXXbAssZ1XSotzJb27YYPoewAQZV2b70PkHVaaQ
-         wSh7o+hhTy8cNJSBb08/RR+67tOFWG3Z4nlDPNlRv2tuAjvueU8xjHFFH+mjN8qdm8aN
-         j+6wH7wCxO+s9UKhhTGtLe46lLWkZq2oyzB1GKRiV6uIg59zsxwzV0nQNeSF68OhjhfD
-         2U6CE/7c6iHpSILSXyil5VM1Z/qLwsG2Sr2juD2GjQYFpiB9PjkUIu7Y0MMpTPEsQdsG
-         oWLQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXyNYZ3M0oIenP+N/bqoCvwWAvpGM4/TCtaXe0O1lMwF9nTs+VoXevBNDc4/jAWyl+1XxrL+aqOTsSpWaOS@vger.kernel.org
-X-Gm-Message-State: AOJu0YzoI1JITKLRHyhv6ELHfu6dfyy7mrQq4XOV9x7wrA9IyEGUSffq
-	UFIlIrMY1sWdtCaDhoea12Y5VojWoPoOChCGK9sr9P+W+xhcUu6Qoc5N6/jzeyI=
-X-Gm-Gg: ASbGncvHpqftvfL4pyNzaXjxiMxq5IJxGkQViE5uuTIc0OpuftnMdmpaa+gS5weOvzS
-	P46liUywHjhhxWlHkc/4NcTYn7CXsi32IcEEOxIdDxAuZQNwaKO0xTb6CXurSotpmQiuVYyIDCA
-	yHa7wH12KLYLY8axJeA3+GHCO2fdH/7KeXBr8l7bZO+Eepgd6jBUGLdF+RI/IycsHZoMPTQxZLb
-	YTxnGu/I71SnsKRns1YDyUz7oz+6x9RncTBZkwl4SPwJYwYNkx3oBvdQvTfvuk/67b4teczSsPF
-	FLdQbqp6DPNnpIX7MQVAAOsJzxtFk8PpzP6btAUe3MnpO1zO54X6mMQ/lUb1
-X-Google-Smtp-Source: AGHT+IFK/4GQM98jZZ/5OPlTud8xH7WRoXr9IJVmyofaZZMHWNRpLmTWDBbwwb5fKkA6+eFoKUKwWg==
-X-Received: by 2002:a05:651c:410d:b0:300:3307:389f with SMTP id 38308e7fff4ca-307619c49c8mr1819821fa.0.1737584079129;
-        Wed, 22 Jan 2025 14:14:39 -0800 (PST)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-3072a4ed2d2sm27708361fa.74.2025.01.22.14.14.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 22 Jan 2025 14:14:37 -0800 (PST)
-Date: Thu, 23 Jan 2025 00:14:35 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
-	Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
-	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, Rob Clark <robdclark@gmail.com>, 
-	Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, Jani Nikula <jani.nikula@linux.intel.com>
-Cc: dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org
-Subject: Re: [PATCH RFC 0/7] drm/display: dp: add new DPCD access functions
-Message-ID: <ctla3nt6o3osdxek63zyidyuofzgq3mgshh2azong3ntcqevhi@3rrzr3hrzbor>
-References: <20250117-drm-rework-dpcd-access-v1-0-7fc020e04dbc@linaro.org>
+        d=1e100.net; s=20230601; t=1737584211; x=1738189011;
+        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=l3V32wmuFdo3eyYq3ItjWLe5TmAQhDXOPpNz76RK2rI=;
+        b=hUqHW/BTetEocJeNjup2Cj1v/dIgppNORRoOaTjGPfQeyrDWvhj/TmVHzmLmjX8qSe
+         6D9Jw1LBwUgRvB0hrOUk5vbKvb7Y/tjSJRaOdErd6GsYLnkUXRo9XScMfFOebWdxAY8l
+         8m0KcxmGgerz8YYNi4qCfXTEJLOjv3mGHtRHpvL3mbBmK5W22cgMVatVM695bJUIKYQU
+         O/M04PpDEdBz7djflroXrwhDGPqvUMVp1ZHB0f2eyqVtr5xL3P1z2qagkzLMAjwMdVKp
+         YOonnPtBC+LaMEmHDTsxzozSSzquRxlgO46YSaZu1yhr7gUaF2dURmaVgzVDinv01Pk/
+         yHWg==
+X-Forwarded-Encrypted: i=1; AJvYcCVNK8dYVnc26eRlJTL/hVhnUkvk5wreG+YdFYjUleMH4GeE2SwQ24l8XOB92wj7meU3/Hg/YYWwsl/1qmYr@vger.kernel.org
+X-Gm-Message-State: AOJu0YyyQXsl56kIaxeGTVvPXYhYxZGDMx1bR42cBoHROhn9dmhN8Sgd
+	sxBGeVuNXZr7lmD12L6wzbGoNqV9f9/2nqhlH6/2GCKGznb6psLY1GGTqeAlHdNfUBeBuGnS8/L
+	vSHsFIRfYRnY4sQNY2EQngA==
+X-Google-Smtp-Source: AGHT+IHawiM1cnWjjBgTMESBdCjxT4zEuIO00j/eJjzTR5bXkQ6p3w/HrFV8L27JfxuD2cLer72tmGSBr5cfS1Cwuw==
+X-Received: from pfbjc33.prod.google.com ([2002:a05:6a00:6ca1:b0:728:e508:8a48])
+ (user=ackerleytng job=prod-delivery.src-stubby-dispatcher) by
+ 2002:a05:6a20:8412:b0:1e1:96d9:a7db with SMTP id adf61e73a8af0-1eb2147021cmr35174465637.4.1737584211338;
+ Wed, 22 Jan 2025 14:16:51 -0800 (PST)
+Date: Wed, 22 Jan 2025 22:16:49 +0000
+In-Reply-To: <20250117163001.2326672-7-tabba@google.com> (message from Fuad
+ Tabba on Fri, 17 Jan 2025 16:29:52 +0000)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250117-drm-rework-dpcd-access-v1-0-7fc020e04dbc@linaro.org>
+Mime-Version: 1.0
+Message-ID: <diqzikq6sdda.fsf@ackerleytng-ctop.c.googlers.com>
+Subject: Re: [RFC PATCH v5 06/15] KVM: guest_memfd: Handle final folio_put()
+ of guestmem pages
+From: Ackerley Tng <ackerleytng@google.com>
+To: Fuad Tabba <tabba@google.com>
+Cc: kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, 
+	pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au, 
+	anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com, 
+	aou@eecs.berkeley.edu, seanjc@google.com, viro@zeniv.linux.org.uk, 
+	brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org, 
+	xiaoyao.li@intel.com, yilun.xu@intel.com, chao.p.peng@linux.intel.com, 
+	jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com, 
+	yu.c.zhang@linux.intel.com, isaku.yamahata@intel.com, mic@digikod.net, 
+	vbabka@suse.cz, vannapurve@google.com, mail@maciej.szmigiero.name, 
+	david@redhat.com, michael.roth@amd.com, wei.w.wang@intel.com, 
+	liam.merwick@oracle.com, isaku.yamahata@gmail.com, 
+	kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com, steven.price@arm.com, 
+	quic_eberman@quicinc.com, quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, 
+	quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com, 
+	quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com, 
+	james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev, 
+	maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com, 
+	roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, 
+	rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com, 
+	jthoughton@google.com, tabba@google.com
+Content-Type: text/plain; charset="UTF-8"
 
-On Fri, Jan 17, 2025 at 10:56:35AM +0200, Dmitry Baryshkov wrote:
-> Existing DPCD access functions return an error code or the number of
-> bytes being read / write in case of partial access. However a lot of
-> drivers either (incorrectly) ignore partial access or mishandle error
-> codes. In other cases this results in a boilerplate code which compares
-> returned value with the size.
-> 
-> As suggested by Jani implement new set of DPCD access helpers, which
-> ignore partial access, always return 0 or an error code. Reimplement
-> existing helpers using the new functions to ensure backwards
-> compatibility.
-> 
-> This series targets only the DRM helpers code. If the approach is found
-> to be acceptable, each of the drivers should be converted on its own.
+Fuad Tabba <tabba@google.com> writes:
 
-Gracious ping for the series, it's been posted a week ago.
+Hey Fuad, I'm still working on verifying all this but for now this is
+one issue. I think this can be fixed by checking if the folio->mapping
+is NULL. If it's NULL, then the folio has been disassociated from the
+inode, and during the dissociation (removal from filemap), the
+mappability can also either
 
-> 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
-> Dmitry Baryshkov (7):
->       drm/display: dp: change drm_dp_dpcd_read_link_status() return
->       drm/display: dp: implement new access helpers
->       drm/display: dp: use new DCPD access helpers
->       drm/display: dp-aux-dev: use new DCPD access helpers
->       drm/display: dp-cec: use new DCPD access helpers
->       drm/display: dp-mst-topology: use new DCPD access helpers
->       drm/display: dp-tunnel: use new DCPD access helpers
-> 
->  drivers/gpu/drm/display/drm_dp_aux_dev.c      |  12 +-
->  drivers/gpu/drm/display/drm_dp_cec.c          |  37 ++-
->  drivers/gpu/drm/display/drm_dp_helper.c       | 345 +++++++++++---------------
->  drivers/gpu/drm/display/drm_dp_mst_topology.c | 132 +++++-----
->  drivers/gpu/drm/display/drm_dp_tunnel.c       |  20 +-
->  drivers/gpu/drm/msm/dp/dp_ctrl.c              |  45 ++--
->  drivers/gpu/drm/msm/dp/dp_link.c              |  17 +-
->  include/drm/display/drm_dp_helper.h           |  81 +++++-
->  include/drm/display/drm_dp_mst_helper.h       |  10 +-
->  9 files changed, 354 insertions(+), 345 deletions(-)
-> ---
-> base-commit: 440aaf479c9aaf5ecea9a463eb826ec243d5f1cf
-> change-id: 20241231-drm-rework-dpcd-access-b0fc2e47d613
-> 
-> Best regards,
-> -- 
-> Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> 
+1. Be unset so that the default mappability can be set up based on
+   GUEST_MEMFD_FLAG_INIT_MAPPABLE, or
+2. Be directly restored based on GUEST_MEMFD_FLAG_INIT_MAPPABLE
 
--- 
-With best wishes
-Dmitry
+> <snip>
+>
+> +
+> +/*
+> + * Callback function for __folio_put(), i.e., called when all references by the
+> + * host to the folio have been dropped. This allows gmem to transition the state
+> + * of the folio to mappable by the guest, and allows the hypervisor to continue
+> + * transitioning its state to private, since the host cannot attempt to access
+> + * it anymore.
+> + */
+> +void kvm_gmem_handle_folio_put(struct folio *folio)
+> +{
+> +	struct xarray *mappable_offsets;
+> +	struct inode *inode;
+> +	pgoff_t index;
+> +	void *xval;
+> +
+> +	inode = folio->mapping->host;
+
+IIUC this will be a NULL pointer dereference if the folio had been
+removed from the filemap, either through truncation or if the
+guest_memfd file got closed.
+
+> +	index = folio->index;
+
+And if removed from the filemap folio->index is probably invalid.
+
+> +	mappable_offsets = &kvm_gmem_private(inode)->mappable_offsets;
+> +	xval = xa_mk_value(KVM_GMEM_GUEST_MAPPABLE);
+> +
+> +	filemap_invalidate_lock(inode->i_mapping);
+> +	__kvm_gmem_restore_pending_folio(folio);
+> +	WARN_ON_ONCE(xa_err(xa_store(mappable_offsets, index, xval, GFP_KERNEL)));
+> +	filemap_invalidate_unlock(inode->i_mapping);
+> +}
+> +
+>  static bool gmem_is_mappable(struct inode *inode, pgoff_t pgoff)
+>  {
+>  	struct xarray *mappable_offsets = &kvm_gmem_private(inode)->mappable_offsets;
 
