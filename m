@@ -1,80 +1,79 @@
-Return-Path: <linux-arm-msm+bounces-45750-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-45751-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A442CA188CD
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jan 2025 01:17:57 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id BBE73A188E7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jan 2025 01:23:13 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 191173AA70F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jan 2025 00:17:49 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8692A18879D8
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jan 2025 00:23:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5A90A4A18;
-	Wed, 22 Jan 2025 00:17:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A0E0C4A24;
+	Wed, 22 Jan 2025 00:23:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="SNJYe6Z4"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="s6nfezr3"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f181.google.com (mail-lj1-f181.google.com [209.85.208.181])
+Received: from mail-lj1-f171.google.com (mail-lj1-f171.google.com [209.85.208.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC9F4442C
-	for <linux-arm-msm@vger.kernel.org>; Wed, 22 Jan 2025 00:17:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B642A182CD
+	for <linux-arm-msm@vger.kernel.org>; Wed, 22 Jan 2025 00:23:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737505074; cv=none; b=KJqGtrnfrNGAV1aU1u9vpwrv75X7tM0F1f1qEBTbhg1VbqVg0jY7sd3eBOHTj3oD3aYBvPNbkfyVwlcq6SXcamSRPLTX+IUh7tij+3Ki+q6mHR0FP0gqYEqqV66JLW5XUUs/OUj03EK1jE25aVLSF0NvJfdX1ddjQbyDFpCfwWo=
+	t=1737505390; cv=none; b=NKz7H/FEAMXHG3GuvvsmpSRiyWZXjyu9txF+D9grmYdOK11wVDvZCBt+j6dEMftMCsLsjdCmBXabkke4JA5ymc98Savz3+bi94mhH13l2fsMQsKkqJUUHBo3a0DHr9B/Zwj9eJxDkPM3JYP4Mf7vtMzNdx+Obc0+cmWt5vUe2fo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737505074; c=relaxed/simple;
-	bh=VUpIePeb/S9D1VtlCwLFcfSbWOeLMMCd0OWwlBjaI84=;
+	s=arc-20240116; t=1737505390; c=relaxed/simple;
+	bh=4yCpljMzPlAVYGrTlq8EYb2mmWKfdU7nrndVdkCBQKQ=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=eowluUzsvaRVKdeeROb4VnbW1eXNTdhHdlUhGO2Zq2Dk/XgPJHs9TgwNBFBuFD+hphgo7W/uSuq0jvNihkSd7H0o3DPO7wCx05xmCrphuldqMVgjyGYGPVDzYwbfbteRfb3REtsCezAVdoGw62cQxmbgYZMjL+uvIFdT68Wqgg0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=SNJYe6Z4; arc=none smtp.client-ip=209.85.208.181
+	 In-Reply-To:Content-Type; b=d8FxOcgR6KTLLZcccoAtXyi9LTnmd5tafrsoE/aQAYQNywl6oxibqegDluZCj/ghUX8qcuZNWZPk0yI7uhzJdbefssuy3/8ycl/3DE4V8/r2QusEqlhTR3zNhVQ7HQRohSJu7Zkq8H711fEqAk3oiVnfa35CKCRwoFL0K6OeYMw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=s6nfezr3; arc=none smtp.client-ip=209.85.208.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f181.google.com with SMTP id 38308e7fff4ca-3001f1232e5so5085571fa.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Jan 2025 16:17:51 -0800 (PST)
+Received: by mail-lj1-f171.google.com with SMTP id 38308e7fff4ca-30167f66717so4414881fa.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Jan 2025 16:23:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1737505070; x=1738109870; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1737505387; x=1738110187; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=+AJ2ms5IRYJajdLQ0jNImK+TGHhs25Ve/MnhVjRYS4s=;
-        b=SNJYe6Z45K9IW++LeRu54fQz/eKt11qPPtzq+AfsOWBtudTbPpK9QfJdaCHZLmHMxe
-         zzkNRqqVjAgld8fwyAoCdhW1Kx5mV74En+eM7uHd6PCW9xt8e+cu5i1wPxZub1kUyU1e
-         BRxdoZdSfK3ARsuc2vRMtqGw0Y4SO3wltjCvKJYEgg4QUlFYDg0cgXSKoYk79ut61PQJ
-         edlB+t/oMps1/HNK2vXkyUCdvXHORJSzh8CGcb0ka21GymMDMtynq5d183CIlUTCGFEN
-         D3All0L3D7F5tJNLhdjpcTZKlCRmvo8YfYqoelMN8AxqaemOMej39Q+Z01ZEQq8+gYEr
-         QulQ==
+        bh=u0HJqNUI3/7Fv7C3ghrvDvyETXZbWbMIAg+sHqC9AMM=;
+        b=s6nfezr37lPhkB6njjLcE6VP7emBUg/LpKFDIGcW9DDdeZ7rvdgTFia64rMNNamGUu
+         YaBlXCzFq6ks5NWnUKT/FiBqkd3dy+upMBoDUoaoZ1S6NCBDJ3yAiAxEf5Aa9iKy9n41
+         RCTCQXwXR3PEpXdCkpeMnT+9AzlSumV6J2aAJsG/LSbjLolIjc39RoUoAUflydfx8RVZ
+         J0dH3fAQGqxHnmERYyXi76ryxcEe71dFA+LGp/QuepSZ2zbd3qqXxCbXc+UNBFeFGP+8
+         MQQDqAarjQoQelOVgW9fV8VlYcrapveocn7cMaLgabPGQTFIH55a9q1y5QqK0vF1lYYe
+         HnsQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1737505070; x=1738109870;
+        d=1e100.net; s=20230601; t=1737505387; x=1738110187;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=+AJ2ms5IRYJajdLQ0jNImK+TGHhs25Ve/MnhVjRYS4s=;
-        b=tiIoIWbTxzn4mATCEZ5qmbd1v0QIvZtcIM1VjBQ9uy5mfN3LE9+gSWb5birpF04u+Y
-         8gPreetp46yZy6br1UDc/K50A+6g31TdZ3ll/PPps8u6uvJwzonHBFi2b1h6CHwJMyGc
-         wXQQPQ+VKTQqX5Jr4xsyMmZvux6POA/Kq2s5LJ6r9vgdTEDOq9f5oiqJhGpYX8ykQXT/
-         WEfxe6hTjbeXgO+Mg6QPhGQnMUKl1uQW/Sa48cIXuDb3n2jbxjRECagL0SjwOE9XjZvG
-         dBdFU3I4xSNMBJ9LD9Iz0INay0+PqccuuoELxTRYv/03tBYNq+x/5n/QHHxzf8dj0M4j
-         xXmA==
-X-Forwarded-Encrypted: i=1; AJvYcCXRVBaJ5+gAf6vv3U/VxEc3E0jP19A8Fda/+FyuSWxRdsb5WUxlycYouzWqpfaGMI5ffqIxocirkLhoxUe2@vger.kernel.org
-X-Gm-Message-State: AOJu0YwinhfMf6bP2LPFtvKg+w2DxgmktQBV/KDdFY7EyueFvBJLn6Nc
-	tfO4SrB70RY+XXhiKDR4vh9GMIb9VYPrAuqCzQuC6aw89Y9DDmakKoo7/Nv3CLuCeHBgHdcylGD
-	9
-X-Gm-Gg: ASbGncvKDxaglSXQYdDrTbSazvsfvg0y7zlpW1x0LDbfWkVhwgltz/1+k2eERsnYne2
-	uTOwUpfdfyIxY5PEuua+fj+Ff3cRy9QH5/T48Zdszgg/18rjUu6bszGrUfQZDcztW+jBdJWhXYd
-	YOJ9hwCQzIFE2dic1vJn51dLlxfa6fif1WqIRdv4a70duWDa27MhYibsejMZGSLIA8P0B1dBEUR
-	ti0S/x9uXLvvOkGc3wlWiIv/pnMMFaJzkp5hab1U8NHd1eFNymSOMi7CMaFD8rzQ3An4lyPWt+U
-	YwmzM1p5ohWwc9p6BnnMZTg/Yp+EogJaaM4miFaVBIJ2/1eG
-X-Google-Smtp-Source: AGHT+IGFxoi7i+NV5trKtt6G9SmJSTrYA4deWLkcd0VxYDZp9jD5kwoQC1GUBMis9Tv8P12sIq9pbQ==
-X-Received: by 2002:a05:6512:1083:b0:542:19ef:9878 with SMTP id 2adb3069b0e04-5439c2815a7mr2046543e87.8.1737505069924;
-        Tue, 21 Jan 2025 16:17:49 -0800 (PST)
+        bh=u0HJqNUI3/7Fv7C3ghrvDvyETXZbWbMIAg+sHqC9AMM=;
+        b=HVdbyz6WaDp1yJue7FGm3w8t76ulfTvlS+gcYX14RNn8mVhzcrtGrM9niRaxZLcS7u
+         LLy534W14lDRyViYu2fJmNdPAjwk2Tjo0rifBFLWse3XssRqRB3urHXzIrxC5jIkZumF
+         Gs4vCGQUpxma44xX1Dln5q4VWaMi6IiuW8NUj8N3QTmxx/BHyxI/edBpke9407Kwv9Sz
+         c5zQ9lKQympVxgAC3ynZnF5ok7Zitwy87bibhhC+r584EGCnOlfw66GOzLXYJ2JsIKA6
+         GgpLdTvYTShI1Sl3sjBZJCdMNtN8D5tqCyclMlbstJEbhrH0EGtV7eCP1AkNqzXibLzT
+         nAsw==
+X-Forwarded-Encrypted: i=1; AJvYcCVudJYuqTRe1G/D9tp4Ah7hp+atU31TwoKR267zeNyeEZR73TOKbneHXkoi5c3UFhRFZwWBOGUv36Xk6m24@vger.kernel.org
+X-Gm-Message-State: AOJu0YxBz0Jkaj1Y0l8uT3GLCx4lGoR0fWKa+3OiGXCllhm5RP0yFnOQ
+	nDgYrGXAV3t0m3ebunDFlJHUpzZZSgI6fntRGzHwxrePQ2pAuHjTS0oZ1cv50sw=
+X-Gm-Gg: ASbGnculnhmgD3dbptcllMRs7EZrGowrvHoANykToYlHUa2S2Aq6gcEis7nemtjccD5
+	wK17jssw1L5+60HgNIpyLkEw6gi2qyOfqzwLr6XoqgsDWezhcngWjEWJDs61iLRgjfppMaEYwIn
+	CiZJb+TFLPozBhYZiPWrbUtXsb+npjcTXQ8RSA1pP96INjSgsdNVkuYjLRjWG9q4vifOAkg0pcW
+	a7wb5wTGoBlG8nScTQeougjGDi676v8NRmYcn758Z/r0gxomFbrckuu2VBprQZuGVBQ/ZuCqkuQ
+	NyqtP+uEg5lAEAK51m4OKk8qR56xSlyPkRqidRteZHZ7EIh1
+X-Google-Smtp-Source: AGHT+IGehczE7c0uuAo0Zo0nBz5xQR/MBgNuOF0Q3+9sCbYo6xr1LGkNlCSvRELQ1OyRp1ZW7lODuA==
+X-Received: by 2002:a05:651c:221e:b0:300:c10:7c33 with SMTP id 38308e7fff4ca-3072caffef9mr24267851fa.7.1737505386792;
+        Tue, 21 Jan 2025 16:23:06 -0800 (PST)
 Received: from [192.168.1.4] (88-112-131-206.elisa-laajakaista.fi. [88.112.131.206])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5439af78f43sm2021910e87.244.2025.01.21.16.17.46
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-3072a3446c8sm23683521fa.27.2025.01.21.16.23.04
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 21 Jan 2025 16:17:48 -0800 (PST)
-Message-ID: <9056111d-c69d-48d7-a462-484642766166@linaro.org>
-Date: Wed, 22 Jan 2025 02:17:46 +0200
+        Tue, 21 Jan 2025 16:23:05 -0800 (PST)
+Message-ID: <f6fa8949-6c49-4aa2-8b3d-1ce23ca73f96@linaro.org>
+Date: Wed, 22 Jan 2025 02:23:03 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -82,7 +81,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/7] media: qcom: camss: Add VFE680 support
+Subject: Re: [PATCH 5/7] media: qcom: camss: Add support for 3ph CSIPHY write
+ settle delay
 Content-Language: ru-RU
 To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
  Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
@@ -91,313 +91,39 @@ Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
  linux-kernel@vger.kernel.org, Depeng Shao <quic_depengs@quicinc.com>,
  Vikram Sharma <quic_vikramsa@quicinc.com>
 References: <20250120-linux-next-25-01-19-x1e80100-camss-driver-v1-0-44c62a0edcd2@linaro.org>
- <20250120-linux-next-25-01-19-x1e80100-camss-driver-v1-4-44c62a0edcd2@linaro.org>
+ <20250120-linux-next-25-01-19-x1e80100-camss-driver-v1-5-44c62a0edcd2@linaro.org>
 From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-In-Reply-To: <20250120-linux-next-25-01-19-x1e80100-camss-driver-v1-4-44c62a0edcd2@linaro.org>
+In-Reply-To: <20250120-linux-next-25-01-19-x1e80100-camss-driver-v1-5-44c62a0edcd2@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-Hi Bryan.
-
 On 1/20/25 17:47, Bryan O'Donoghue wrote:
-> Add silicon enabling support for VFE680 as found on sm8450, x1e and
-> derivatives thereof.
+> Currently we have an s32 value called delay which has been inherited from
+> the CamX code for PHY init. This unused value relates to a post-write delay
+> latching time.
 > 
-> References previous work from Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+> In the silicon test-bench which provides the basis for the CamX code the
+> write settle times are specified in nanoseconds.
+> 
+> In the upstream kernel we currently take no notice of the delay value and
+> use all zero in any case.
+> 
+> Nanosecond granularity timing from the perspective of the kernel is total
+> overkill, however for some PHY init sequences introduction of a settle
+> delay has a use.
+> 
+> Add support to the 3ph init sequence for microsecond level delay. A
+> readback of written data would probably accomplish the same thing but,
+> since the PHY init sequences in the wild provide a delay value - we can
+> just add support here for that delay and consume the values given.
+> 
+> Generally these delays are probably not necessary but, they do speak to a
+> theoretical delay that silicon test-benches utilise and therefore are
+> worthwhile to replicate if the given PHY init sequence has the data.
 > 
 > Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> ---
->   drivers/media/platform/qcom/camss/Makefile        |   1 +
->   drivers/media/platform/qcom/camss/camss-vfe-680.c | 243 ++++++++++++++++++++++
->   drivers/media/platform/qcom/camss/camss-vfe.h     |   1 +
->   3 files changed, 245 insertions(+)
-> 
-> diff --git a/drivers/media/platform/qcom/camss/Makefile b/drivers/media/platform/qcom/camss/Makefile
-> index 71797745f2f71..d26a9c24a430a 100644
-> --- a/drivers/media/platform/qcom/camss/Makefile
-> +++ b/drivers/media/platform/qcom/camss/Makefile
-> @@ -18,6 +18,7 @@ qcom-camss-objs += \
->   		camss-vfe-4-8.o \
->   		camss-vfe-17x.o \
->   		camss-vfe-480.o \
-> +		camss-vfe-680.o \
->   		camss-vfe-780.o \
->   		camss-vfe-gen1.o \
->   		camss-vfe.o \
-> diff --git a/drivers/media/platform/qcom/camss/camss-vfe-680.c b/drivers/media/platform/qcom/camss/camss-vfe-680.c
-> new file mode 100644
-> index 0000000000000..1b2aa2c98887a
-> --- /dev/null
-> +++ b/drivers/media/platform/qcom/camss/camss-vfe-680.c
-> @@ -0,0 +1,243 @@
-> +// SPDX-License-Identifier: GPL-2.0
-> +/*
-> + * camss-vfe-680.c
-> + *
-> + * Qualcomm MSM Camera Subsystem - VFE (Video Front End) Module v680
-> + *
-> + * Copyright (C) 2024 Linaro Ltd.
 
-Please add 2025 also, and may be some earlier years to add here.
-
-> + */
-> +
-> +#include <linux/delay.h>
-> +#include <linux/interrupt.h>
-> +#include <linux/io.h>
-> +#include <linux/iopoll.h>
-> +
-> +#include "camss.h"
-> +#include "camss-vfe.h"
-> +
-> +#define VFE_TOP_IRQn_STATUS(vfe, n)		((vfe_is_lite(vfe) ? 0x1c : 0x44) + (n) * 4)
-> +#define VFE_TOP_IRQn_MASK(vfe, n)		((vfe_is_lite(vfe) ? 0x24 : 0x34) + (n) * 4)
-> +#define VFE_TOP_IRQn_CLEAR(vfe, n)		((vfe_is_lite(vfe) ? 0x2c : 0x3c) + (n) * 4)
-> +#define		VFE_IRQ1_SOF(vfe, rdi)		((vfe_is_lite(vfe) ? BIT(2) : BIT(8)) << ((rdi) * 2))
-> +#define		VFE_IRQ1_EOF(vfe, rdi)		((vfe_is_lite(vfe) ? BIT(3) : BIT(9)) << ((rdi) * 2))
-> +#define VFE_TOP_IRQ_CMD(vfe)			(vfe_is_lite(vfe) ? 0x38 : 0x30)
-> +#define		VFE_TOP_IRQ_CMD_GLOBAL_CLEAR	BIT(0)
-> +#define VFE_TOP_DIAG_CONFIG			(vfe_is_lite(vfe) ? 0x40 : 0x50)
-> +
-> +#define VFE_TOP_DEBUG_11(vfe)			(vfe_is_lite(vfe) ? 0x40 : 0xcc)
-> +#define VFE_TOP_DEBUG_12(vfe)			(vfe_is_lite(vfe) ? 0x40 : 0xd0)
-> +#define VFE_TOP_DEBUG_13(vfe)			(vfe_is_lite(vfe) ? 0x40 : 0xd4)
-
-Those registers are unused, and it's unclear how to use them properly.
-
-I would suggest to remove definitions of at least the VFE_TOP_DEBUG_*
-registers.
-
-> +
-> +#define VFE_BUS_IRQn_MASK(vfe, n)		((vfe_is_lite(vfe) ? 0x218 : 0xc18) + (n) * 4)
-> +#define VFE_BUS_IRQn_CLEAR(vfe, n)		((vfe_is_lite(vfe) ? 0x220 : 0xc20) + (n) * 4)
-> +#define VFE_BUS_IRQn_STATUS(vfe, n)		((vfe_is_lite(vfe) ? 0x228 : 0xc28) + (n) * 4)
-> +#define VFE_BUS_IRQ_GLOBAL_CLEAR(vfe)		(vfe_is_lite(vfe) ? 0x230 : 0xc30)
-> +#define VFE_BUS_WR_VIOLATION_STATUS(vfe)	(vfe_is_lite(vfe) ? 0x264 : 0xc64)
-> +#define VFE_BUS_WR_OVERFLOW_STATUS(vfe)		(vfe_is_lite(vfe) ? 0x268 : 0xc68)
-> +#define VFE_BUS_WR_IMAGE_VIOLATION_STATUS(vfe)	(vfe_is_lite(vfe) ? 0x270 : 0xc70)
-> +
-> +#define VFE_BUS_CFG(vfe, c)			((vfe_is_lite(vfe) ? 0x400 : 0xe00) + (c) * 0x100)
-> +#define VFE_BUS_IMAGE_ADDR(vfe, c)		((vfe_is_lite(vfe) ? 0x404 : 0xe04) + (c) * 0x100)
-> +#define VFE_BUS_FRAME_INCR(vfe, c)		((vfe_is_lite(vfe) ? 0x408 : 0xe08) + (c) * 0x100)
-> +#define VFE_BUS_IMAGE_CFG0(vfe, c)		((vfe_is_lite(vfe) ? 0x40c : 0xe0c) + (c) * 0x100)
-> +#define		VFE_BUS_IMAGE_CFG0_DATA(h, s)	(((h) << 16) | ((s) >> 4))
-> +#define WM_IMAGE_CFG_0_DEFAULT_WIDTH		(0xFFFF)
-> +
-> +#define VFE_BUS_IMAGE_CFG1(vfe, c)		((vfe_is_lite(vfe) ? 0x410 : 0xe10) + (c) * 0x100)
-> +#define VFE_BUS_IMAGE_CFG2(vfe, c)		((vfe_is_lite(vfe) ? 0x414 : 0xe14) + (c) * 0x100)
-> +#define VFE_BUS_PACKER_CFG(vfe, c)		((vfe_is_lite(vfe) ? 0x418 : 0xe18) + (c) * 0x100)
-> +#define VFE_BUS_IRQ_SUBSAMPLE_PERIOD(vfe, c)	((vfe_is_lite(vfe) ? 0x430 : 0xe30) + (c) * 0x100)
-> +#define VFE_BUS_IRQ_SUBSAMPLE_PATTERN(vfe, c)	((vfe_is_lite(vfe) ? 0x434 : 0xe34) + (c) * 0x100)
-> +#define VFE_BUS_FRAMEDROP_PERIOD(vfe, c)	((vfe_is_lite(vfe) ? 0x438 : 0xe38) + (c) * 0x100)
-> +#define VFE_BUS_FRAMEDROP_PATTERN(vfe, c)	((vfe_is_lite(vfe) ? 0x43c : 0xe3c) + (c) * 0x100)
-> +#define VFE_BUS_MMU_PREFETCH_CFG(vfe, c)	((vfe_is_lite(vfe) ? 0x460 : 0xe60) + (c) * 0x100)
-> +#define		VFE_BUS_MMU_PREFETCH_CFG_EN	BIT(0)
-> +#define VFE_BUS_MMU_PREFETCH_MAX_OFFSET(vfe, c)	((vfe_is_lite(vfe) ? 0x464 : 0xe64) + (c) * 0x100)
-> +#define VFE_BUS_ADDR_STATUS0(vfe, c)		((vfe_is_lite(vfe) ? 0x470 : 0xe70) + (c) * 0x100)
-> +
-> +/*
-> + * TODO: differentiate the port id based on requested type of RDI, BHIST etc
-> + *
-> + * IFE write master IDs
-> + *
-> + * VIDEO_FULL_Y		0
-> + * VIDEO_FULL_C		1
-> + * VIDEO_DS_4:1		2
-> + * VIDEO_DS_16:1	3
-> + * DISPLAY_FULL_Y	4
-> + * DISPLAY_FULL_C	5
-> + * DISPLAY_DS_4:1	6
-> + * DISPLAY_DS_16:1	7
-> + * FD_Y			8
-> + * FD_C			9
-> + * PIXEL_RAW		10
-> + * STATS_BE0		11
-> + * STATS_BHIST0		12
-> + * STATS_TINTLESS_BG	13
-> + * STATS_AWB_BG		14
-> + * STATS_AWB_BFW	15
-> + * STATS_BAF		16
-> + * STATS_BHIST		17
-> + * STATS_RS		18
-> + * STATS_IHIST		19
-> + * SPARSE_PD		20
-> + * PDAF_V2.0_PD_DATA	21
-> + * PDAF_V2.0_SAD	22
-> + * LCR			23
-> + * RDI0			24
-> + * RDI1			25
-> + * RDI2			26
-> + * LTM_STATS		27
-> + *
-> + * IFE Lite write master IDs
-> + *
-> + * RDI0			0
-> + * RDI1			1
-> + * RDI2			2
-> + * RDI3			3
-> + * GAMMA		4
-> + * BE			5
-> + */
-> +
-> +/* TODO: assign an ENUM in resources and use the provided master
-> + *       id directly for RDI, STATS, AWB_BG, BHIST.
-> + *       This macro only works because RDI is all we support right now.
-> + */
-> +#define RDI_WM(n)			((vfe_is_lite(vfe) ? 0 : 24) + (n))
-> +
-> +static void vfe_global_reset(struct vfe_device *vfe)
-> +{
-> +	/* VFE680 has no global reset, simply report a completion */
-> +	complete(&vfe->reset_complete);
-> +}
-> +
-> +/*
-> + * vfe_isr - VFE module interrupt handler
-> + * @irq: Interrupt line
-> + * @dev: VFE device
-> + *
-> + * Return IRQ_HANDLED on success
-> + */
-> +static irqreturn_t vfe_isr(int irq, void *dev)
-> +{
-> +	return IRQ_HANDLED;
-> +}
-> +
-> +/*
-> + * vfe_halt - Trigger halt on VFE module and wait to complete
-> + * @vfe: VFE device
-> + *
-> + * Return 0 on success or a negative error code otherwise
-> + */
-> +static int vfe_halt(struct vfe_device *vfe)
-> +{
-> +	/* rely on vfe_disable_output() to stop the VFE */
-> +	return 0;
-> +}
-> +
-> +static void vfe_disable_irq(struct vfe_device *vfe)
-> +{
-> +	writel(0u, vfe->base + VFE_TOP_IRQn_MASK(vfe, 0));
-> +	writel(0u, vfe->base + VFE_TOP_IRQn_MASK(vfe, 1));
-> +	writel(0u, vfe->base + VFE_BUS_IRQn_MASK(vfe, 0));
-> +	writel(0u, vfe->base + VFE_BUS_IRQn_MASK(vfe, 1));
-> +}
-> +
-> +static void vfe_wm_update(struct vfe_device *vfe, u8 rdi, u32 addr,
-> +			  struct vfe_line *line)
-> +{
-> +	u8 wm = RDI_WM(rdi);
-> +
-> +	writel(addr, vfe->base + VFE_BUS_IMAGE_ADDR(vfe, wm));
-> +}
-> +
-> +static void vfe_wm_start(struct vfe_device *vfe, u8 rdi, struct vfe_line *line)
-> +{
-> +	struct v4l2_pix_format_mplane *pix =
-> +		&line->video_out.active_fmt.fmt.pix_mp;
-> +	u32 stride = pix->plane_fmt[0].bytesperline;
-> +	u32 cfg;
-> +	u8 wm;
-> +
-> +	cfg = VFE_BUS_IMAGE_CFG0_DATA(pix->height, stride);
-> +	wm = RDI_WM(rdi);
-> +
-> +	writel(cfg, vfe->base + VFE_BUS_IMAGE_CFG0(vfe, wm));
-> +	writel(0, vfe->base + VFE_BUS_IMAGE_CFG1(vfe, wm));
-> +	writel(stride, vfe->base + VFE_BUS_IMAGE_CFG2(vfe, wm));
-> +	writel(0, vfe->base + VFE_BUS_PACKER_CFG(vfe, wm));
-> +
-> +	/* Set total frame increment value */
-> +	writel(pix->plane_fmt[0].bytesperline * pix->height,
-> +	       vfe->base + VFE_BUS_FRAME_INCR(vfe, wm));
-> +
-> +	/* MMU */
-> +	writel(VFE_BUS_MMU_PREFETCH_CFG_EN, vfe->base + VFE_BUS_MMU_PREFETCH_CFG(vfe, wm));
-> +	writel(~0u, vfe->base + VFE_BUS_MMU_PREFETCH_MAX_OFFSET(vfe, wm));
-> +
-> +	/* no dropped frames, one irq per frame */
-> +	writel(1, vfe->base + VFE_BUS_FRAMEDROP_PATTERN(vfe, wm));
-> +	writel(0, vfe->base + VFE_BUS_FRAMEDROP_PERIOD(vfe, wm));
-> +	writel(1, vfe->base + VFE_BUS_IRQ_SUBSAMPLE_PATTERN(vfe, wm));
-> +	writel(0, vfe->base + VFE_BUS_IRQ_SUBSAMPLE_PERIOD(vfe, wm));
-> +
-> +	/* We don't process IRQs for VFE in RDI mode at the moment */
-> +	vfe_disable_irq(vfe);
-> +
-> +	/* Enable WM */
-> +	writel(BIT(0), vfe->base + VFE_BUS_CFG(vfe, wm));
-
-Please add a macro for this BIT(0).
-
-> +
-> +	dev_dbg(vfe->camss->dev, "RDI%d WM:%d width %d height %d\n",
-> +		rdi, wm, pix->width, pix->height);
-> +	dev_dbg(vfe->camss->dev, "WM:%d stride %d\n", wm, stride);
-> +}
-> +
-> +static void vfe_wm_stop(struct vfe_device *vfe, u8 rdi)
-> +{
-> +	u8 wm = RDI_WM(rdi);
-> +
-> +	writel(0, vfe->base + VFE_BUS_CFG(vfe, wm));
-> +}
-> +
-> +static const struct camss_video_ops vfe_video_ops_680 = {
-> +	.queue_buffer = vfe_queue_buffer_v2,
-> +	.flush_buffers = vfe_flush_buffers,
-> +};
-> +
-> +static void vfe_subdev_init(struct device *dev, struct vfe_device *vfe)
-> +{
-> +	vfe->video_ops = vfe_video_ops_680;
-> +}
-> +
-> +static void vfe_reg_update(struct vfe_device *vfe, enum vfe_line_id line_id)
-> +{
-> +	int port_id = line_id;
-> +
-> +	camss_reg_update(vfe->camss, vfe->id, port_id, false);
-> +}
-> +
-> +static inline void vfe_reg_update_clear(struct vfe_device *vfe,
-> +					enum vfe_line_id line_id)
-> +{
-> +	int port_id = line_id;
-> +
-> +	camss_reg_update(vfe->camss, vfe->id, port_id, true);
-> +}
-> +
-> +const struct vfe_hw_ops vfe_ops_680 = {
-> +	.global_reset = vfe_global_reset,
-> +	.hw_version = vfe_hw_version,
-> +	.isr = vfe_isr,
-> +	.pm_domain_off = vfe_pm_domain_off,
-> +	.pm_domain_on = vfe_pm_domain_on,
-> +	.subdev_init = vfe_subdev_init,
-> +	.vfe_disable = vfe_disable,
-> +	.vfe_enable = vfe_enable_v2,
-> +	.vfe_halt = vfe_halt,
-> +	.vfe_wm_start = vfe_wm_start,
-> +	.vfe_wm_stop = vfe_wm_stop,
-> +	.vfe_buf_done = vfe_buf_done,
-> +	.vfe_wm_update = vfe_wm_update,
-> +	.reg_update = vfe_reg_update,
-> +	.reg_update_clear = vfe_reg_update_clear,
-> +};
-> diff --git a/drivers/media/platform/qcom/camss/camss-vfe.h b/drivers/media/platform/qcom/camss/camss-vfe.h
-> index 9dec5bc0d1b14..a23f666be7531 100644
-> --- a/drivers/media/platform/qcom/camss/camss-vfe.h
-> +++ b/drivers/media/platform/qcom/camss/camss-vfe.h
-> @@ -243,6 +243,7 @@ extern const struct vfe_hw_ops vfe_ops_4_7;
->   extern const struct vfe_hw_ops vfe_ops_4_8;
->   extern const struct vfe_hw_ops vfe_ops_170;
->   extern const struct vfe_hw_ops vfe_ops_480;
-> +extern const struct vfe_hw_ops vfe_ops_680;
->   extern const struct vfe_hw_ops vfe_ops_780;
->   
->   int vfe_get(struct vfe_device *vfe);
-> 
+Reviewed-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
 
 --
 Best wishes,
