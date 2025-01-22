@@ -1,63 +1,79 @@
-Return-Path: <linux-arm-msm+bounces-45752-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-45753-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id BD797A188F0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jan 2025 01:28:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id EC455A188F4
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jan 2025 01:29:26 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CD164167320
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jan 2025 00:28:22 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2AE4416759D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jan 2025 00:29:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7182C4C74;
-	Wed, 22 Jan 2025 00:28:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4CA3F15AF6;
+	Wed, 22 Jan 2025 00:29:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="DXESWNyk"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ZC03cXb9"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f172.google.com (mail-lj1-f172.google.com [209.85.208.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7709C8F0;
-	Wed, 22 Jan 2025 00:28:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEE9438384
+	for <linux-arm-msm@vger.kernel.org>; Wed, 22 Jan 2025 00:29:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737505700; cv=none; b=kkm4NQLp6a+ImEZF5ujakb3Vlw+hBmDZCOrGwsj5psc7MWTOMXRArNji5rKn8UwDESyS0FeKYVvuydfszyyH0rFVkkF4NccRAQ1DR4jLHEmJMRp4GmtGOLROVC3FTU3rkZ9Nd8N5MUuLJHqdtmodp4sXm3yC1cZtwwQxikarR60=
+	t=1737505758; cv=none; b=KmDQa4odMucKVQgN/YcWgVm+0JCuoHYPf81EW6s2HpzFjg1wcsLpnIOg5HY0chhNa9YHw31vOa0lFm8IJNmkBOvT4qV1I5fCsJ0NuBUrFBa7HQXdONV5y03OxqCajbwCZuS/Ob8OdXWHtWQc0GZhSTHr7P53VObbRT7Vf68JeIw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737505700; c=relaxed/simple;
-	bh=BNxjaCgKfUOw5ZKrKIepF+ygHXy0YiwGYvEp9HRXQM8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=PtkqcWee4UX26rdXeQItE5s42M5iacf8QnTiWKh1WC+3Gaa5hA85DqWSvKEz/BbewWe3brxwZrf93l4Wcq3TGBh/q/6XD4YMN0nY8eLEZFhjPqPJAW/0pNE1dEawr1evWDwTGAAhqGbxt4qCp8B6GHWT2+UjwKk7dkpJlWR2iRo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=DXESWNyk; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50LFdpWl019831;
-	Wed, 22 Jan 2025 00:28:08 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	qsQyLq+K2cDDPS6/OCgMg6zW40dmZR2lhOuLh4Pu5sI=; b=DXESWNyk1r7ZAjGF
-	SOr1sFCujStqAdt2ZJDAYtqCrGNb1B7ooqQ5U4wU/DGx9hJGNG5kzElER5JhzV9E
-	f5TNfKAPH1Nfy7spYhkW1uZSgMkfc6WIq7x5FaY/hBQV+XnPPWYm2WRPtpkl5fS+
-	BQVfeRHWZ2wKIP/ocHEObJfkvyF5NfE4bEHpl2cXXLA58O3ERqzKhhTN459RZD4f
-	g9gQE+0XswhI3zAin8zLD6wsm9LjRSwbqE4eG44GL0F4zQvQF87ytVpM6m+lgkGZ
-	jNv0Ci6KC0eFyWD/MP4i68ZX22kvon9sc8knh3gpdojwRl1S4wctCA6ezEPDc66m
-	L/U8yQ==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44aedvh5gc-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 22 Jan 2025 00:28:08 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 50M0S76e030796
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 22 Jan 2025 00:28:07 GMT
-Received: from [10.110.82.191] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 21 Jan
- 2025 16:28:06 -0800
-Message-ID: <b75ded72-f1b5-4e7e-b0b4-0720ef90b60f@quicinc.com>
-Date: Tue, 21 Jan 2025 16:28:06 -0800
+	s=arc-20240116; t=1737505758; c=relaxed/simple;
+	bh=bcwXAskIqGr1StGwxVlB9b7rUxJv3MdpM1sJzy34Ca0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=mi1Vb49N5G26pOeQB03sGVdgbf94xHUMczOcPXcD2CUI0wZie5uVFhXJq+O6ZUVaTB7g6p601MK8pXKCB8+ZPRSTWF/Do0SZoC2hN6jbZCJ9ZTGIGc0k0WbinLN8BWN7/YBqFl5250FxMNyPFfKmMthm1p2f2zqUow8UVuXBSF0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ZC03cXb9; arc=none smtp.client-ip=209.85.208.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lj1-f172.google.com with SMTP id 38308e7fff4ca-302217866b5so4902971fa.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Jan 2025 16:29:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1737505753; x=1738110553; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=0CCcgB3VhUvKOT2h2jpUk2KSrzV7zZ3MNXEHDhSA4U4=;
+        b=ZC03cXb9ODy7l4b8l8cIhqtIrUGk0JoK67qth5jlbAac0GEhazaN+tapt/Pmt7EmdZ
+         VHvGwPtCN6rK5dQlrpD9ubHohdM02DxrgdZhNuSysSc8R64i5mYkAJctsm24Cdiag1uM
+         JpAXD3suKRxYs9FQJ6oDF8nRwFzM5PgJ1slfgPd9VCHOM4MbVtp8V2tICjNm52kvdO2M
+         6wUvhKJtey+CFa+TUU/BjD0wnTZnAM5osds5FExkZ59V5nRDPGBVZQJ+9+4m63yBxfbz
+         D0fTnXLWeKlUhdv2OWo+Y1y7hxcprbweowh2VZnmqGn65Lr31b2vp78CCZ5Anf9VIUsh
+         XFrw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1737505753; x=1738110553;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=0CCcgB3VhUvKOT2h2jpUk2KSrzV7zZ3MNXEHDhSA4U4=;
+        b=a33JoLCqL9PLZPGFoKd9at3L9yJ/2XCZ4cs9TBYM3UxbeaeSHUs2ubz58aixFlBeJY
+         igqFJzo4IxwReghTmSDGJAm67MaOAwBOocz5rrRLn9cALsFMrvpD1NxUBu9aKt8BTTTM
+         jMeJYI4elnS03zbFhTCtD5Gun3H256kJpCpR+ecN2HNe0qpjdR05MxPv4uZQsO0hzQPP
+         aMqkTom8XN6EE/f7FAiekX/gLG7W+lGFp5kI0Zb6qNoqX+fTkVtAhSR/Dxmae9XqFUs5
+         sLFuHIJ9eIcGI1b8V/6XxWzzD56tEK4Nh8NbKaiJ7UL4rx9QgqmOH2NmxfBlZl9oY2VW
+         fS4g==
+X-Forwarded-Encrypted: i=1; AJvYcCV5v401e+wuxwLfzwzMBjuJLMl/Yil8WqPxhS7+NfE6/uu7E/MLLQ4WNseOXEcc3yPyVnMRIB2oRw9K4ebg@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz3iM9IGrAXnlvUvNuza7KiQo570+kARFFW1azs9HOKAcJSwapN
+	ytHU6l0Eb4H1GLxRk2cV8WMhimARV7x124QXzcOMOp2uwn1KcYhDp1+BY69qMxM=
+X-Gm-Gg: ASbGncvoRTh3+UdNxA6je1fHbRd0We7/MSnU/xhuRD3aJR3jWmsxUoUmSUrGN6bTU5r
+	GMnKTEpe6+LkcrX2QzEJfMFTSM6afUMUWtkt1g9zalFpd2gAp8RqtnGzhXVM1bYr3ZIss3hmZ3C
+	NKCWdSKHjvz6bUYqQKH4zaUAgr0Iq9vEey9HjQFZM0ujtnxj/Mz1peOoa4mmr0+6g+rl+EIFFsf
+	8M3mT6dkDCaFC0ZsV1HJAt0mkqjxygKztGtZgcp47kr96baBGMS6Fm5MMz5A18Ni7J4gMyvV56N
+	S/YSO6Hc7kGn989pdEYaH2NFcA8Xf+7mIQc8QGxrspUjhhkO
+X-Google-Smtp-Source: AGHT+IF7mcEikAAqzQurIt0klgWl/Kv3joNL8utk6/DOwSEAOdrnD4QmUkP3MnIQQmIPhmc2Hja2aA==
+X-Received: by 2002:a2e:be9c:0:b0:302:27c6:fc98 with SMTP id 38308e7fff4ca-3072ca8c496mr21689281fa.4.1737505752745;
+        Tue, 21 Jan 2025 16:29:12 -0800 (PST)
+Received: from [192.168.1.4] (88-112-131-206.elisa-laajakaista.fi. [88.112.131.206])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-3072a33092asm24397481fa.2.2025.01.21.16.29.10
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 21 Jan 2025 16:29:11 -0800 (PST)
+Message-ID: <00989990-85dd-46d7-a100-c986fc1fb066@linaro.org>
+Date: Wed, 22 Jan 2025 02:29:09 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,102 +81,214 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 09/35] drm/msm/dpu: remove DSPP_SC7180_MASK
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark
-	<robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Marijn Suijten
-	<marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, Simona
- Vetter <simona@ffwll.ch>,
-        Vinod Koul <vkoul@kernel.org>, Konrad Dybcio
-	<konradybcio@kernel.org>
-CC: <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>
-References: <20241214-dpu-drop-features-v1-0-988f0662cb7e@linaro.org>
- <20241214-dpu-drop-features-v1-9-988f0662cb7e@linaro.org>
-Content-Language: en-US
-From: Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <20241214-dpu-drop-features-v1-9-988f0662cb7e@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+Subject: Re: [PATCH 6/7] media: qcom: camss: csiphy-3ph: Add 4nm CSIPHY 2ph
+ 5Gbps DPHY v2.1.2 init sequence
+Content-Language: ru-RU
+To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+ Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>
+Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-kernel@vger.kernel.org, Depeng Shao <quic_depengs@quicinc.com>,
+ Vikram Sharma <quic_vikramsa@quicinc.com>
+References: <20250120-linux-next-25-01-19-x1e80100-camss-driver-v1-0-44c62a0edcd2@linaro.org>
+ <20250120-linux-next-25-01-19-x1e80100-camss-driver-v1-6-44c62a0edcd2@linaro.org>
+From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+In-Reply-To: <20250120-linux-next-25-01-19-x1e80100-camss-driver-v1-6-44c62a0edcd2@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: w3Od4ThtrObs4Aq0NbcuA_wO_C7cwle0
-X-Proofpoint-ORIG-GUID: w3Od4ThtrObs4Aq0NbcuA_wO_C7cwle0
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-01-21_10,2025-01-21_03,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- spamscore=0 lowpriorityscore=0 malwarescore=0 clxscore=1015 bulkscore=0
- adultscore=0 mlxscore=0 mlxlogscore=999 phishscore=0 suspectscore=0
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2501220001
 
+Hi Bryan.
 
-
-On 12/13/2024 2:14 PM, Dmitry Baryshkov wrote:
-> Stop declaring DPU_DSPP_PCC as a part of the DSPP features, use the
-> presence of the PCC sblk to check whether PCC is present in the hardware
-> or not.
+On 1/20/25 17:47, Bryan O'Donoghue wrote:
+> For various SoC skews at 4nm CSIPHY 2.1.2 is used. Add in the init sequence
+> with base control reg offset of 0x1000.
 > 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> This initial version will support X1E80100. Take the silicon verification
+> PHY init parameters as a first/best guess pass.
+> 
+> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 > ---
->   drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_10_0_sm8650.h  | 4 ----
->   drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_1_14_msm8937.h | 1 -
->   drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_1_15_msm8917.h | 1 -
->   drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_1_16_msm8953.h | 1 -
->   drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_1_7_msm8996.h  | 2 --
->   drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h  | 2 --
->   drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_2_sdm660.h   | 2 --
->   drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_3_sdm630.h   | 1 -
->   drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h   | 4 ----
->   drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h   | 4 ----
->   drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h  | 4 ----
->   drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_2_sm7150.h   | 2 --
->   drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_4_sm6125.h   | 1 -
->   drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h   | 4 ----
->   drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_2_sc7180.h   | 1 -
->   drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_3_sm6115.h   | 1 -
->   drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_4_sm6350.h   | 1 -
->   drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_5_qcm2290.h  | 1 -
->   drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_9_sm6375.h   | 1 -
->   drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h   | 4 ----
->   drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h   | 1 -
->   drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h | 4 ----
->   drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h   | 4 ----
->   drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_4_sa8775p.h  | 4 ----
->   drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h   | 4 ----
->   drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_2_x1e80100.h | 4 ----
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c           | 2 --
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dspp.c              | 2 +-
->   28 files changed, 1 insertion(+), 66 deletions(-)
+>   .../platform/qcom/camss/camss-csiphy-3ph-1-0.c     | 126 +++++++++++++++++++++
+>   1 file changed, 126 insertions(+)
 > 
+> diff --git a/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c b/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
+> index b44939686e4bb..fc624a3da1c43 100644
+> --- a/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
+> +++ b/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
+> @@ -55,6 +55,7 @@
+>   #define CSIPHY_DNP_PARAMS		4
+>   #define CSIPHY_2PH_REGS			5
+>   #define CSIPHY_3PH_REGS			6
+> +#define CSIPHY_SKEW_CAL			7
 
-<snip>
+This one is not needed, having CSIPHY_DNP_PARAMS only is good enough.
 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dspp.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dspp.c
-> index 0f5a74398e66642fba48c112db41ffc75ae2a79f..11fb1bc54fa92a5d9926addb437bc4b8f283723b 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dspp.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dspp.c
-> @@ -90,7 +90,7 @@ struct dpu_hw_dspp *dpu_hw_dspp_init(struct drm_device *dev,
->   	/* Assign ops */
->   	c->idx = cfg->id;
->   	c->cap = cfg;
-> -	if (test_bit(DPU_DSPP_PCC, &c->cap->features))
-> +	if (c->cap->sblk->pcc.base)
->   		c->ops.setup_pcc = dpu_setup_dspp_pcc;
 >   
->   	return c;
+>   struct csiphy_lane_regs {
+>   	s32 reg_addr;
+> @@ -423,6 +424,130 @@ csiphy_lane_regs lane_regs_sm8550[] = {
+>   	{0x0C64, 0x7F, 0x00, CSIPHY_DEFAULT_PARAMS},
+>   };
+>   
+> +/* 4nm 2PH v 2.1.2 2p5Gbps 4 lane DPHY mode */
+> +static const struct
+> +csiphy_lane_regs lane_regs_x1e80100[] = {
+> +	/* Power up lanes 2ph mode */
+> +	{0x1014, 0xD5, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x101C, 0x7A, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x1018, 0x01, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +
+> +	{0x0094, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x00A0, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x0090, 0x0f, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x0098, 0x08, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x0094, 0x07, 0x01, CSIPHY_DEFAULT_PARAMS},
+> +	{0x0030, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x0000, 0x8E, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x0038, 0xFE, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x002C, 0x01, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x0034, 0x0F, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x001C, 0x0A, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x0014, 0x60, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x003C, 0xB8, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x0004, 0x0C, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x0020, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x0008, 0x10, 0x00, CSIPHY_SETTLE_CNT_LOWER_BYTE},
+> +	{0x0010, 0x52, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x0094, 0xD7, 0x00, CSIPHY_SKEW_CAL},
+> +	{0x005C, 0x00, 0x00, CSIPHY_SKEW_CAL},
+> +	{0x0060, 0xBD, 0x00, CSIPHY_SKEW_CAL},
+> +	{0x0064, 0x7F, 0x00, CSIPHY_SKEW_CAL},
+> +	{0x0064, 0x7F, 0x00, CSIPHY_SKEW_CAL},
+
+Double write record, which is anyway ignored, but one should
+be enough.
+
+> +
+> +	{0x0E94, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x0EA0, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x0E90, 0x0f, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x0E98, 0x08, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x0E94, 0x07, 0x01, CSIPHY_DEFAULT_PARAMS},
+> +	{0x0E30, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x0E28, 0x04, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x0E00, 0x80, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x0E0C, 0xFF, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x0E38, 0x1F, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x0E2C, 0x01, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x0E34, 0x0F, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x0E1C, 0x0A, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x0E14, 0x60, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x0E3C, 0xB8, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x0E04, 0x0C, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x0E20, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x0E08, 0x10, 0x00, CSIPHY_SETTLE_CNT_LOWER_BYTE},
+> +	{0x0E10, 0x52, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x0E10, 0x52, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x0E10, 0x52, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x0E10, 0x52, 0x00, CSIPHY_DEFAULT_PARAMS},
+
+Writing the same value to a register 4 times in a row, apparently
+it's not needed, one time write is sufficient.
+
+> +
+> +	{0x0494, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x04A0, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x0490, 0x0f, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x0498, 0x08, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x0494, 0x07, 0x01, CSIPHY_DEFAULT_PARAMS},
+> +	{0x0430, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x0400, 0x8E, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x0438, 0xFE, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x042C, 0x01, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x0434, 0x0F, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x041C, 0x0A, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x0414, 0x60, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x043C, 0xB8, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x0404, 0x0C, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x0420, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x0408, 0x10, 0x00, CSIPHY_SETTLE_CNT_LOWER_BYTE},
+> +	{0x0410, 0x52, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x0494, 0xD7, 0x00, CSIPHY_SKEW_CAL},
+> +	{0x045C, 0x00, 0x00, CSIPHY_SKEW_CAL},
+> +	{0x0460, 0xBD, 0x00, CSIPHY_SKEW_CAL},
+> +	{0x0464, 0x7F, 0x00, CSIPHY_SKEW_CAL},
+> +	{0x0464, 0x7F, 0x00, CSIPHY_SKEW_CAL},
+
+Two equal "ignored" writes.
+
+> +
+> +	{0x0894, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x08A0, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x0890, 0x0f, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x0898, 0x08, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x0894, 0x07, 0x01, CSIPHY_DEFAULT_PARAMS},
+> +	{0x0830, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x0800, 0x8E, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x0838, 0xFE, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x082C, 0x01, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x0834, 0x0F, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x081C, 0x0A, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x0814, 0x60, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x083C, 0xB8, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x0804, 0x0C, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x0820, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x0808, 0x10, 0x00, CSIPHY_SETTLE_CNT_LOWER_BYTE},
+> +	{0x0810, 0x52, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x0894, 0xD7, 0x00, CSIPHY_SKEW_CAL},
+> +	{0x085C, 0x00, 0x00, CSIPHY_SKEW_CAL},
+> +	{0x0860, 0xBD, 0x00, CSIPHY_SKEW_CAL},
+> +	{0x0864, 0x7F, 0x00, CSIPHY_SKEW_CAL},
+> +	{0x0864, 0x7F, 0x00, CSIPHY_SKEW_CAL},
+
+Two equal "ignored" writes.
+
+> +
+> +	{0x0C94, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x0CA0, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x0C90, 0x0f, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x0C98, 0x08, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x0C94, 0x07, 0x01, CSIPHY_DEFAULT_PARAMS},
+> +	{0x0C30, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x0C00, 0x8E, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x0C38, 0xFE, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x0C2C, 0x01, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x0C34, 0x0F, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x0C1C, 0x0A, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x0C14, 0x60, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x0C3C, 0xB8, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x0C04, 0x0C, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x0C20, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x0C08, 0x10, 0x00, CSIPHY_SETTLE_CNT_LOWER_BYTE},
+> +	{0x0C10, 0x52, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x0C94, 0xD7, 0x00, CSIPHY_SKEW_CAL},
+> +	{0x0C5C, 0x00, 0x00, CSIPHY_SKEW_CAL},
+> +	{0x0C60, 0xBD, 0x00, CSIPHY_SKEW_CAL},
+> +	{0x0C64, 0x7F, 0x00, CSIPHY_SKEW_CAL},
+> +	{0x0C64, 0x7F, 0x00, CSIPHY_SKEW_CAL},
+
+Two equal "ignored" writes.
+
+> +};
+> +
+>   static void csiphy_hw_version_read(struct csiphy_device *csiphy,
+>   				   struct device *dev)
+>   {
+> @@ -594,6 +719,7 @@ static void csiphy_gen2_config_lanes(struct csiphy_device *csiphy,
+>   			val = settle_cnt & 0xff;
+>   			break;
+>   		case CSIPHY_DNP_PARAMS:
+> +		case CSIPHY_SKEW_CAL:
+
+Having CSIPHY_DNP_PARAMS is good enough, no need to add another
+"dummy" write type.
+
+>   			continue;
+>   		default:
+>   			val = r->reg_data;
 > 
 
-Change LGTM, only one note (hopefully has already been taken into 
-consideration). There are  two different versions of PCC, one with 
-version 0x10007 and the other 0x40000.
-
-If for some reason we need to distinguish these two versions while 
-programming, is the plan to use version to distinguish them? Because the 
-presence of PCC alone is not enough for using the "correct" PCC.
+--
+Best wishes,
+Vladimir
 
