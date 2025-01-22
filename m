@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-45802-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-45803-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5108DA18FAC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jan 2025 11:26:46 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id BC713A1904E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jan 2025 12:10:45 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 85E9F166C36
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jan 2025 10:26:44 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0B67516B913
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jan 2025 11:10:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BD35D210F6B;
-	Wed, 22 Jan 2025 10:26:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DB5AC211707;
+	Wed, 22 Jan 2025 11:10:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rqGK1pdQ"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZtB885qZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A38320F970;
-	Wed, 22 Jan 2025 10:26:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7FEB18AE2;
+	Wed, 22 Jan 2025 11:10:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737541601; cv=none; b=sRn4/XnK95yZaGXfy4vsCrYB7/FvhYh/H7BEsT7vHQz7sCBJS7gxrZpu3fJEaXHK+begq0CPMx6yTh+M6UZp07Qt0VbrHYy/bT1E5DxX72WvjYcLqpVN+BJ4sROMAVdjby77ycJ6zjJ9hEcftgl9+P+f0RS2YfHj0z6h+7fgzOU=
+	t=1737544241; cv=none; b=HoD8pzlkBdYNxsErnPNCM30Dk/N7zh73ahI0K3XCn9W9M3uS1FwAVdPD2i/Eb0ST9wMc6NFNeOvBEVt3qmbAR1ZOqziKtem9JtRWf0t61IEkvOXFYsxyeHT7pc8LLMbA1Ki/pmnHNdRSY+UZLn/eveS4bgHbt+u/+/iyf5iXlUw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737541601; c=relaxed/simple;
-	bh=7O4gjdkCaJQFUj6tNYvH0Zabd8akDH3evmzWVP671I8=;
+	s=arc-20240116; t=1737544241; c=relaxed/simple;
+	bh=sha+GUGBFXllFMGCqTKwYG2vdQHzbAGAeu0MdskknyQ=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=PTRx0YpfMTZJ4okVkCX7Nn6oUnth+L4EKW2/rpMRLZe1zW4/5syTss48YxlDYm7vrogkyYG9Pn2xEJjr6irJuTURFezbFAZgqEH9C6bhbibPB4R9uemftsmC3j7/K3bvb++MC+fMSYTeGEl9jERUlKjOSbOhgdiE5ZGi9c34oeU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rqGK1pdQ; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DEDEC4CED6;
-	Wed, 22 Jan 2025 10:26:35 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=GIL6OvCnWqvrSONIpFxhJgB4cqLEjzekMuQHLPyqlegHxA+9u0QZ27HGjINbCU4BM5KtfLyu9ShSeIdRdRPcVHecO1PDXCihrGqoD5FipWiyEoC/90EfluMUtBqexsOduO0ajbgwiYoeF2N1q5dq2cIv7JnNyR1+7uXub5uduhM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZtB885qZ; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0095C4CED6;
+	Wed, 22 Jan 2025 11:10:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1737541601;
-	bh=7O4gjdkCaJQFUj6tNYvH0Zabd8akDH3evmzWVP671I8=;
+	s=k20201202; t=1737544240;
+	bh=sha+GUGBFXllFMGCqTKwYG2vdQHzbAGAeu0MdskknyQ=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=rqGK1pdQtFyMeYBuWGtTJ7wVMx7R7k2RLR8vBo3isWOEH5xf+wGyoG6aw07zpmVoT
-	 jttR+qimxK+nwJmdBdYHBLIij5Wek5f92clx3uBz5xSByHeXYRgG2OfDDRqiwNs0X5
-	 6UQ8yVSPVlNpqJ4KO29wmdvzmZEEAOuk7mrXB3PuIIVY8o0QJTQr3BFEzvnbjpNzd/
-	 pFZsoeeSCZcgWy4DKOV93xmofo7Vn6NzV8DYyP6d66Hf7lLaTlol+02E4IT4Yd9gwX
-	 +WxxI2rC2y5mn6jwT+9jGnjz99cg1Nx+dSRzp3nd9JmnRiB2w1qmIxwbIa0uCH9Xv3
-	 eo0rVsWXzuCyQ==
-Message-ID: <72b02fd1-5195-4bb0-b01d-5481b49a5680@kernel.org>
-Date: Wed, 22 Jan 2025 11:26:32 +0100
+	b=ZtB885qZNpe0KOpS9U19t/JUWuLXhoY+DCIA+xxfJSQz3V8THQvmvLNVqz32lj3RO
+	 dLuDOIuqKk4F3Bj3ut8GuQ9DRMHtMQExoVYC2T/K2AqLpKffI3QVYhRYALjtjWdvym
+	 sZcWku9QMXdnZUu3/OMxM+Ys9ARqpRO2bnD9oFWLEcKtn7fgQsQaCaTiLAO2h/1nxm
+	 tpAVRiosbPWsQ+4FInO/wyXH1sNFFkJgvOVVaXC9QgUmrA2hvABgbccmlc02Cf1uCK
+	 kxp0MkV813MnxcUi9mQgbdF9y5yScg9Lfsv27k4WzI2ptrbr2cw+QklkkULcp2ESPP
+	 ioVqq5UbyBb8w==
+Message-ID: <2a443cb2-45a9-4524-aaad-0adca5f39977@kernel.org>
+Date: Wed, 22 Jan 2025 12:10:31 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,20 +50,24 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V3 1/4] dt-bindings: mmc: Add dll-hsr-list for HS400 and
- HS200 modes
-To: Sachin Gupta <quic_sachgupt@quicinc.com>,
- Ulf Hansson <ulf.hansson@linaro.org>, Rob Herring <robh@kernel.org>,
+Subject: Re: [PATCH 7/7] arm64: dts: qcom: sm8750: Add USB support to SM8750
+ platforms
+To: Melody Olvera <quic_molvera@quicinc.com>, Vinod Koul <vkoul@kernel.org>,
+ Kishon Vijay Abraham I <kishon@kernel.org>, Rob Herring <robh@kernel.org>,
  Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Adrian Hunter <adrian.hunter@intel.com>,
- Bhupesh Sharma <bhupesh.sharma@linaro.org>
-Cc: linux-mmc@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- quic_cang@quicinc.com, quic_nguyenb@quicinc.com, quic_bhaskarv@quicinc.com,
- quic_mapa@quicinc.com, quic_narepall@quicinc.com, quic_nitirawa@quicinc.com,
- quic_rampraka@quicinc.com, quic_sartgarg@quicinc.com
-References: <20250122094707.24859-1-quic_sachgupt@quicinc.com>
- <20250122094707.24859-2-quic_sachgupt@quicinc.com>
+ <conor+dt@kernel.org>, Wesley Cheng <quic_wcheng@quicinc.com>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ Philipp Zabel <p.zabel@pengutronix.de>,
+ Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>,
+ Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>,
+ Trilok Soni <quic_tsoni@quicinc.com>
+Cc: linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-usb@vger.kernel.org, linux-arm-kernel@lists.infradead.org
+References: <20250113-sm8750_usb_master-v1-0-09afe1dc2524@quicinc.com>
+ <20250113-sm8750_usb_master-v1-7-09afe1dc2524@quicinc.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -109,38 +113,23 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20250122094707.24859-2-quic_sachgupt@quicinc.com>
+In-Reply-To: <20250113-sm8750_usb_master-v1-7-09afe1dc2524@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 22/01/2025 10:47, Sachin Gupta wrote:
-> Document the 'dll-hsr-list' property for MMC device tree bindings.
-> The 'dll-hsr-list' property defines the DLL configurations for HS400
-> and HS200 modes.
+On 13/01/2025 22:52, Melody Olvera wrote:
+> From: Wesley Cheng <quic_wcheng@quicinc.com>
 > 
-> Signed-off-by: Sachin Gupta <quic_sachgupt@quicinc.com>
-> ---
->  Documentation/devicetree/bindings/mmc/sdhci-msm.yaml | 5 +++++
->  1 file changed, 5 insertions(+)
+> Enable USB support on SM8750 MTP and QRD variants. SM8750 has a QMP combo
+> PHY for the SSUSB path, and a M31 eUSB2 PHY for the HSUSB path.
 > 
-> diff --git a/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml b/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml
-> index 8b393e26e025..65dc3053df75 100644
-> --- a/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml
-> +++ b/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml
-> @@ -133,6 +133,11 @@ properties:
->      $ref: /schemas/types.yaml#/definitions/uint32
->      description: platform specific settings for DLL_CONFIG reg.
->  
-> +  qcom,dll-hsr-list:
-> +    maxItems: 10
-> +    $ref: /schemas/types.yaml#/definitions/uint32
+> Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
+> Signed-off-by: Melody Olvera <quic_molvera@quicinc.com>
 
-uint32 has only one item. Anyway, there is already DLL there, so don't
-duplicate or explain why this is different. Explain also why this is not
-deducible from the compatible.
-
-Please provide here link to DTS user so we can validate how you use it.
-
+This does not apply on next. Way you combine series and split DTS into 5
+different patchsets is not making it easier. I say it makes it close to
+impossible to actually test your patches, especially considering no
+cross references at all.
 
 Best regards,
 Krzysztof
