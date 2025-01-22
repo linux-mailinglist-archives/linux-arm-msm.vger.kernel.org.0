@@ -1,89 +1,91 @@
-Return-Path: <linux-arm-msm+bounces-45787-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-45788-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id B2863A18EDA
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jan 2025 10:53:46 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 685CFA18EE8
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jan 2025 10:56:12 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E7E6716B90B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jan 2025 09:53:44 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id AA81B16B9F9
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jan 2025 09:56:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 76FCC1F76B5;
-	Wed, 22 Jan 2025 09:53:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9775220FAB2;
+	Wed, 22 Jan 2025 09:55:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="nmatiDBr"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="mZ65s2Fn"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f180.google.com (mail-lj1-f180.google.com [209.85.208.180])
+Received: from mail-lj1-f171.google.com (mail-lj1-f171.google.com [209.85.208.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8170B13213E
-	for <linux-arm-msm@vger.kernel.org>; Wed, 22 Jan 2025 09:53:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A881D210F4B
+	for <linux-arm-msm@vger.kernel.org>; Wed, 22 Jan 2025 09:55:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737539624; cv=none; b=caoaE+vsJg/1OHTMbM651H5J3H36uXloZqtW5OOJbGlZVWx0iUIUAPs5TUWBfPzowEMq4u41Lf4TBc7Nsgt3rWE3HBEp3QuaEiVk0dpuh4D8s7MptiK6OkjQs8tRTy8tWpoo/xasZJRvdBArYLKnNWc0o7Fu1fxivVnu2Yyrd14=
+	t=1737539737; cv=none; b=Ntxocv4TXcMWYVu4QNauKu2BmRiEAJBdcCAfTYOdrnIDMSwclmP2T0LxMvPjaG6tyBP7xeFmoj+L4AMo25DjEny9Z2m+0nig8PhdIy6dSORXzEFdApThj88gSv2n15SgcUd3LAhAbOHgYdGqAw0vEYjgl8Ak6Ppzg5NsCAqe6LQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737539624; c=relaxed/simple;
-	bh=otEwY9PZ8xf7EHllsGtAYinVSKR0ZmARdbeEi6W1k4A=;
+	s=arc-20240116; t=1737539737; c=relaxed/simple;
+	bh=A7skF+DaxCykLOeAdbWIBEemfXQfKaF/hi2Lg/ra9b8=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=NLNHCGoUW5TF2VCErs4WYxvXPjw52ZZgILUtcxPu4xxeCbnyWjTYnPS33XEhOEo6Ec3SVYOMzovnHwZx7ZGPA4lm2MJ0FfJU4CPMJAPytTE83q1xr3zM7jHwICLTLQfLOcwa3Db/H6xXt3GwNYBNrKTti64JDkibnjwxbnKC8ZM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=nmatiDBr; arc=none smtp.client-ip=209.85.208.180
+	 Content-Type:Content-Disposition:In-Reply-To; b=G5dLul6PYasTpjPsCiN4SezAQCj4lh+stZ5hKK9/auUqvgLkIPJz6u8PnNJ4K1RdT7NVpo0W3T1MwjNXPzPaFsIw0AUm5sXv3HKLTwgUO2fAz5rQxvu7CNk+YHcmigp04F29GschGm+jhW6OJWMBVTz5ktEb4kgVvLgR6W6bqm0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=mZ65s2Fn; arc=none smtp.client-ip=209.85.208.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f180.google.com with SMTP id 38308e7fff4ca-306007227d3so67424921fa.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Jan 2025 01:53:41 -0800 (PST)
+Received: by mail-lj1-f171.google.com with SMTP id 38308e7fff4ca-305d843d925so56425561fa.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Jan 2025 01:55:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1737539619; x=1738144419; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1737539734; x=1738144534; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=iRgf+4Gq7ci+Ro2VkxNsjuyLNd/CJ4xAOCwqSJx115Q=;
-        b=nmatiDBrh5Xs90ostgyRYlROsuOvy8IWJorwDtILcNb7FMdaBQ4NFtQFXOJPDmNS5x
-         rul7ncxN0fEH+FgHEl3Qol7YZYnELrhr8n2XmVX81/512Lg8n8RvsrIGcJ4t/i7crzHp
-         ernpvNLpQnzOiWP0mfmfYHKtA46UY15qtVRlLIONm3i/tpqu0qKu7rjRlmuoH2p+Gdo+
-         qK3HdRKvQnHUnbbg5IWWVFxqMAk+SOzQI8JYIapWgvnicj6CwpsFVyyp4y8sTO+tAH5Z
-         UJGvW50wpLiKoFNR7wLwa2MlkUGyHeG4aVfS1BR91SHpvETrtx7u9hIqOfDg47xNGbxd
-         Llhw==
+        bh=scV0mTsOi7ZzfUvIFazmqCl77AdAA0xM0waC6G2ecgo=;
+        b=mZ65s2FnOLQS37AXtF5gwU9InMa9kgOJzws6pSdQt5jc77Ah0J8jq7DmAsbdTlRrIs
+         wn+L1Ve8xc1aIymUv+ZOsfsN59h1FmIYfZQMOcegvxJJCzjXFF7718RUcTryHKXK9SIV
+         9mbeo1MleUOnutEO5TgK+hiMOdPY1JaftpWtOEr1q8e4r/Z0ZXr2psEgvOd/BHQR+AsT
+         7iEWY7+TMaSPIMVXPAHyV4ZRKcGRYiwzxVkG65JvjksIrnSZ+1SfyUH9ynwNF21W2RI5
+         mX4CAGYdSVsWTGjVOJR62csqHV91/FStO5pqLz7IYJyW8Eb9/Lqh+nWWeGCU/hWI5IvF
+         FaLQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1737539619; x=1738144419;
+        d=1e100.net; s=20230601; t=1737539734; x=1738144534;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=iRgf+4Gq7ci+Ro2VkxNsjuyLNd/CJ4xAOCwqSJx115Q=;
-        b=hJA1RSh/0c9xFC17SDPl7GeNTjxZQ8FRSgC4ZzLmYikv8XXo0djlEf1PAdsa4BUsPQ
-         IPaplWwoPRvIMOX33oUgLPXpWKvAjw2jP8uvyqqs0woAkJx7twSLFBHwrcNDLzcMd4lp
-         CpNp7uNFyzyVlpdNSGNwofepNBc0SgK/gRbe+otkJIchbggBWpLHE/uMEP0thO8U/T0D
-         1Tg2JuAmBY2lk8XuGPuNRLQ3i8badqaJ0/rIfHSiuz33EuIw8oKR9d8zmTFM/FnyJmMk
-         4T+8nzNXdggurr23JOn+B3Qes4O/ydx1kPjKhKdLY2PCGjuTSvGsBVfubIOJk/mXn9Mv
-         TJ2w==
-X-Forwarded-Encrypted: i=1; AJvYcCVJaPoIR4Xq2+g2musfXDBAL8tV9FaO3Q8w5pQ8tX//DtaxkM4miy8KrmmW3DuYWiSv0iHTEIbsUkj6gTOk@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw0nj+cdxaCiBPzIwsL+hAumOWzOS0syNtNGi0u/iZhxqo1JtDr
-	b3s2nXhyRi3llvLWHq8Cg9xZ/CMRndkm9KQM2tRgUfp58eXfQmRtwCl7tOJiZ1k=
-X-Gm-Gg: ASbGncs0tE3Fiqv9u61YOSIvvrWXkQRQvl6PlnAavRSx1A1bgQ7IpDZx6emVI3x/4Mk
-	miOu4iAUqJ/R1mjLexq/93/I2nxd4Nru7iSqiJy8xVHao0O85W19ky0t0cC+J8auwHXCp6snzWq
-	VpcFWsFFOxMVz7Y9RDm7rhgWCMW/Y2Vkm3acZQeFPjySCBsdfLBv5y9AqyLY8BwHImeVBwYSY0c
-	qIDa+vsAxyLIFZBsgjeY452Gf+ylNPcvhQqEIM679vmVGMzH0/laPSpep3FEMkIJp1coOIV/Pj0
-	jTW46nkLl2YJp7OGCD58ii+0/p8L8eIQrQbb6rZa7pzxXfCh/w==
-X-Google-Smtp-Source: AGHT+IHLb2Jy8LJxpPjgGgMRTl/2bf+lFr1P6PyDavfCYaMiwjULwOKsJk+FZolKdDj43k4KykRThw==
-X-Received: by 2002:a05:651c:e1b:b0:307:46f3:4e92 with SMTP id 38308e7fff4ca-30746f34f8cmr32037541fa.32.1737539619493;
-        Wed, 22 Jan 2025 01:53:39 -0800 (PST)
+        bh=scV0mTsOi7ZzfUvIFazmqCl77AdAA0xM0waC6G2ecgo=;
+        b=HjsazvjmIkxMmhNO2VOf5/5lG/w4kuUZyyRNKmLAscgLIQ1wUjy848AzUI7UeftY16
+         Y+2yYJqzXWVQO3bPQ+SPphQ/QMMm6325CAMMfY3zlcnmLiqWGT97yruVaBV3j6HWzERu
+         kK8JBxNWvdOrVN0Q9+SnRUfU7F/hGeAWeQ/YNZNll44BIhJ115KR9jAX7QB5/FKykIGO
+         h51mwbJ9hDJykDZE+PwqQCocfa0axKUioR2b7boDsjmeES5FonF2B/XRerTn8s23SfYD
+         bFM3jZ3tYK5lPyVb27wz6zju4gnqxLG2BxNd/LAVgjHB8yXgmAwpsC1fIWhU55uc0NB5
+         h2Gw==
+X-Forwarded-Encrypted: i=1; AJvYcCUrg0ZVA8Ikk6J8ac1j5NNtIYldH6QlHQzXauCx0O61gOO+zBAGtO1pUOurbGtpwXwcm7EfQPbcNObjZGWH@vger.kernel.org
+X-Gm-Message-State: AOJu0YzZDNcC+k3rZhPDeSIQ06LUIakEs5jDIhBBwxXl0o29CDE+jlGf
+	t8MXgV3FmMJ4cB+9n32XpsY5GuFpVM8udTwBTMARJ51VijGkrW0EK7HRGKJi5xc=
+X-Gm-Gg: ASbGncs0A//VF+7mGXkNS76XQugkUaDEyQvEAk1j6dqe69MG3B++Q2fMrEDbdJLBeTr
+	6UyTvvn1ArMISMGwgTEPxSI6tRHKdnW6IeoR2+jBoQva/IixLrt8R3Rjax7x2LflvNKDql00nCk
+	vYdIjtUQ/aRzJb+5Khsrfxjgko97sdy16Rt2AkQtPBvW1imrQVGTrT/S8HeN8IvIas2tKtulDNT
+	6p8OPMGJBtyfkgN6kXvPrlpkjhnPuvlN3fFm9ov8NwNCuLqVMsHlN0Ku/E+8WjRE2NHUKTKf2+E
+	XLGm8M3FEHrgFFeFGY6OonPcodXRzF3KhDZJ9Pn2CiohsHribw==
+X-Google-Smtp-Source: AGHT+IEyVRLyus5hXslfncouru7d589DBCXm5XQ6Y4wWqmqqzrIjL4zImkrlqZfNjmApRZhoecA7yw==
+X-Received: by 2002:a2e:bd89:0:b0:307:2bc6:5eae with SMTP id 38308e7fff4ca-3072c990274mr76013791fa.0.1737539733757;
+        Wed, 22 Jan 2025 01:55:33 -0800 (PST)
 Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-3072a330180sm25104611fa.23.2025.01.22.01.53.37
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-3072a5013aesm25703591fa.89.2025.01.22.01.55.33
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 22 Jan 2025 01:53:38 -0800 (PST)
-Date: Wed, 22 Jan 2025 11:53:35 +0200
+        Wed, 22 Jan 2025 01:55:33 -0800 (PST)
+Date: Wed, 22 Jan 2025 11:55:31 +0200
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
-	Simona Vetter <simona@ffwll.ch>, Vinod Koul <vkoul@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
-	freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 11/35] drm/msm/dpu: get rid of DPU_CTL_ACTIVE_CFG
-Message-ID: <obrwhv2a4ubg4updrimszy7b7dwjsixuwzf5gutjahgdim6nxh@pin7heiwmco7>
-References: <20241214-dpu-drop-features-v1-0-988f0662cb7e@linaro.org>
- <20241214-dpu-drop-features-v1-11-988f0662cb7e@linaro.org>
- <9d86517e-b05c-4cd6-925e-11c859fcb91d@quicinc.com>
+To: Sachin Gupta <quic_sachgupt@quicinc.com>
+Cc: Ulf Hansson <ulf.hansson@linaro.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Adrian Hunter <adrian.hunter@intel.com>, Bhupesh Sharma <bhupesh.sharma@linaro.org>, 
+	linux-mmc@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, quic_cang@quicinc.com, quic_nguyenb@quicinc.com, 
+	quic_bhaskarv@quicinc.com, quic_mapa@quicinc.com, quic_narepall@quicinc.com, 
+	quic_nitirawa@quicinc.com, quic_rampraka@quicinc.com, quic_sartgarg@quicinc.com
+Subject: Re: [PATCH V3 2/4] mmc: sdhci-msm: Add core_major, minor to msm_host
+ structure
+Message-ID: <rvu75rn2m32eyjr4ogwz5tmns2bkv3mp4gaz562gjmxztnejsl@deslghsvjhmi>
+References: <20250122094707.24859-1-quic_sachgupt@quicinc.com>
+ <20250122094707.24859-3-quic_sachgupt@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -92,75 +94,51 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <9d86517e-b05c-4cd6-925e-11c859fcb91d@quicinc.com>
+In-Reply-To: <20250122094707.24859-3-quic_sachgupt@quicinc.com>
 
-On Tue, Jan 21, 2025 at 04:58:03PM -0800, Abhinav Kumar wrote:
-> 
-> 
-> On 12/13/2024 2:14 PM, Dmitry Baryshkov wrote:
-> > Continue migration to the MDSS-revision based checks and replace
-> > DPU_CTL_ACTIVE_CFG feature bit with the core_major_ver >= 5 check.
-> > 
-> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > ---
-> >   drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h  | 8 ++------
-> >   drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h | 8 ++------
-> >   drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_2_sm7150.h  | 8 ++------
-> >   drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_4_sm6125.h  | 6 ------
-> >   drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h  | 8 ++------
-> >   drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_2_sc7180.h  | 3 ---
-> >   drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_3_sm6115.h  | 1 -
-> >   drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_4_sm6350.h  | 4 ----
-> >   drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_5_qcm2290.h | 1 -
-> >   drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_9_sm6375.h  | 1 -
-> >   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c    | 2 +-
-> >   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c     | 7 ++-----
-> >   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c          | 3 +--
-> >   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h          | 1 -
-> >   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c              | 2 +-
-> >   15 files changed, 13 insertions(+), 50 deletions(-)
-> > 
-> 
-> <snip>
-> 
-> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
-> > index e9bbccc44dad8b391cd51daf902307105b2598fc..e16b0a0c57da4a1aa77064ca2214e37cd9ee4baa 100644
-> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
-> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
-> > @@ -66,7 +66,7 @@ static void _dpu_encoder_phys_cmd_update_intf_cfg(
-> >   	ctl->ops.setup_intf_cfg(ctl, &intf_cfg);
-> >   	/* setup which pp blk will connect to this intf */
-> > -	if (test_bit(DPU_CTL_ACTIVE_CFG, &ctl->caps->features) && phys_enc->hw_intf->ops.bind_pingpong_blk)
-> > +	if (phys_enc->hw_intf->ops.bind_pingpong_blk)
-> >   		phys_enc->hw_intf->ops.bind_pingpong_blk(
-> >   				phys_enc->hw_intf,
-> >   				phys_enc->hw_pp->idx);
-> 
-> Was it intentional to drop the DPU_CTL_ACTIVE_CFG here but not replace it
-> with core_major_rev >= 5?
+On Wed, Jan 22, 2025 at 03:17:05PM +0530, Sachin Gupta wrote:
+> This change adds the core_major and core_minor variables to
 
-The bind_pingpong_blk is only defined for 5.x+ platforms, so the check
-is useless.
+Please see Documentation/process/submitting-patches.rst, look for "[This
+patch] makes xyzzy do frotz", then update your internal documentation so
+that other engineers stop making the same mistake.
 
+> the msm_host structure, allowing these variables to be
+> accessed more easily throughout the msm_host context.
+> This update is necessary for an upcoming follow-up patch.
 > 
-> <snip>
+> Signed-off-by: Sachin Gupta <quic_sachgupt@quicinc.com>
+> ---
+>  drivers/mmc/host/sdhci-msm.c | 6 ++++++
+>  1 file changed, 6 insertions(+)
 > 
-> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
-> > index 5f9cd09589bb403746d48af6f8555cd224bf3195..59d25916d2d412113768d71a76a6aed4c879299a 100644
-> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
-> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
-> > @@ -716,7 +716,7 @@ struct dpu_hw_ctl *dpu_hw_ctl_init(struct drm_device *dev,
-> >   	c->caps = cfg;
-> >   	c->mdss_ver = mdss_ver;
-> > -	if (c->caps->features & BIT(DPU_CTL_ACTIVE_CFG)) {
-> > +	if (mdss_ver->core_major_ver >= 5) {
-> >   		c->ops.trigger_flush = dpu_hw_ctl_trigger_flush_v1;
-> >   		c->ops.setup_intf_cfg = dpu_hw_ctl_intf_cfg_v1;
-> >   		c->ops.reset_intf_cfg = dpu_hw_ctl_reset_intf_cfg_v1;
-> > 
+> diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
+> index e00208535bd1..2a5e588779fc 100644
+> --- a/drivers/mmc/host/sdhci-msm.c
+> +++ b/drivers/mmc/host/sdhci-msm.c
+> @@ -273,6 +273,8 @@ struct sdhci_msm_host {
+>  	bool tuning_done;
+>  	bool calibration_done;
+>  	u8 saved_tuning_phase;
+> +	u8 core_major;
+> +	u16 core_minor;
+>  	bool use_cdclp533;
+>  	u32 curr_pwr_state;
+>  	u32 curr_io_level;
+> @@ -2557,6 +2559,10 @@ static int sdhci_msm_probe(struct platform_device *pdev)
+>  	core_major = (core_version & CORE_VERSION_MAJOR_MASK) >>
+>  		      CORE_VERSION_MAJOR_SHIFT;
+>  	core_minor = core_version & CORE_VERSION_MINOR_MASK;
+> +
+> +	msm_host->core_major = core_major;
+> +	msm_host->core_minor = core_minor;
+> +
+>  	dev_dbg(&pdev->dev, "MCI Version: 0x%08x, major: 0x%04x, minor: 0x%02x\n",
+>  		core_version, core_major, core_minor);
+>  
+> -- 
+> 2.17.1
 > 
-> DPU ver 5 introduced active_cfg, so this part is correct. Hence overall
-> change is fine.
 
 -- 
 With best wishes
