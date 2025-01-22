@@ -1,154 +1,109 @@
-Return-Path: <linux-arm-msm+bounces-45873-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-45874-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id A3794A19AC3
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jan 2025 23:16:56 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5B77EA19AD6
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jan 2025 23:23:20 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5796B1889568
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jan 2025 22:17:00 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 365823AA34D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jan 2025 22:23:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B27251C461F;
-	Wed, 22 Jan 2025 22:16:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 81D131C760A;
+	Wed, 22 Jan 2025 22:23:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="GVpznsGm"
+	dkim=pass (1024-bit key) header.d=amazon.com header.i=@amazon.com header.b="ETF222R+"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f202.google.com (mail-pl1-f202.google.com [209.85.214.202])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp-fw-2101.amazon.com (smtp-fw-2101.amazon.com [72.21.196.25])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 430AC4C9F
-	for <linux-arm-msm@vger.kernel.org>; Wed, 22 Jan 2025 22:16:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.202
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9E7D1C5D5E;
+	Wed, 22 Jan 2025 22:23:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=72.21.196.25
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737584213; cv=none; b=LY49uTvdbbDWjS6T/h9Rd018L9JaQgExiH4tJeQCyUIYJK8RO4STS2EncoFWfCp24mwHgjg9xpKH8RTbSEFhFjCS8YB07nYBKekcAOOhtaJas0fFBZxc6Vj/H/SiVPFTYpGUvGddW8Xp7LqungEAuFYaJv2pd8sYf0+xZDLG9xg=
+	t=1737584596; cv=none; b=TPJoSOwgL9ofNnRaPBOjs47/YQulAu28hvpoDMBeH8w/m56y76To7Y+vVfNbCrjt+WB3h33K+PTi8JYw3DjTQdK9sfsLvMvr3snRzbU8l1rGJLGVQvCS0p4HdkWa8/2nhlXPgaMaEgyIJvqK8ouoIN8Ryw/S2JmHB6A+bBri5tI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737584213; c=relaxed/simple;
-	bh=YRBj9r1/vH8+ADkRAd/xRm3bNslcVk24kKUS21NY9Ok=;
-	h=Date:In-Reply-To:Mime-Version:Message-ID:Subject:From:To:Cc:
-	 Content-Type; b=mezAdd1c9mMVOgGIn+lqBPCMRFG9mqkluTI0fubHl/TW3OYoZzbl81yak7z3a0K4ZZMNkzERBdxVCs4rSekbisNc+2kG0cIcRjQC/mKA0ySAeEb7lrDfZIiWNZkMSs68t9cRdhoTfnfQc2cONMkXxvz0IZoYHr3m2nrtz5BZyeo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--ackerleytng.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=GVpznsGm; arc=none smtp.client-ip=209.85.214.202
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--ackerleytng.bounces.google.com
-Received: by mail-pl1-f202.google.com with SMTP id d9443c01a7336-2161d185f04so2517385ad.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Jan 2025 14:16:51 -0800 (PST)
+	s=arc-20240116; t=1737584596; c=relaxed/simple;
+	bh=SCS1mNCqtZoQ6NMPPF/BiXVQyiamgdh7VtWlNvTYK5g=;
+	h=Subject:Date:From:To:CC:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=CG01b9IPzIperytAKK6XH22pqN1BZ8HGRbSD003X5ogi6ZhWN6QKJ/Y1JzhfmQtEBeR/vFHmibCHCVZrUIf8iGsBQrYIENI0vN4bcvj0YI/TYfsWsOghVjXRevZ6x6e87WMBxNTRjdYYrohSBIsS+FxYxDBV/15RljKM7CRg4NY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amazon.com; spf=pass smtp.mailfrom=amazon.com; dkim=pass (1024-bit key) header.d=amazon.com header.i=@amazon.com header.b=ETF222R+; arc=none smtp.client-ip=72.21.196.25
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amazon.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=amazon.com
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1737584211; x=1738189011; darn=vger.kernel.org;
-        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=l3V32wmuFdo3eyYq3ItjWLe5TmAQhDXOPpNz76RK2rI=;
-        b=GVpznsGmzj9rnZ/j1XSVzUZ8f3vZwlw4A88OBya4wtYH1As6k5/qzjrYoxPjxeWq5P
-         BrL5ibvINg5FmRDhEP3uxlH69QSKUBtazxBevoh1637D/O+byatT4OQmvjOvL8KkzkD8
-         /zTE/BgymQwnRoNLiYkQik4Qo1lmYg9x2fVQ5OganGy5R5QMtSwSQr2IGtgaOZc9frAa
-         8I9HC4eY5tPzqYus/30YBqvkJql7VKw+SG8mI8vHRX492f5gjcb48AJAAF4timEp3nLe
-         h40lxy/9mwBxXMLxU6ASp9Ov63rT6tRNYSx1X7DUEVIr+MT38oMSm0K7AHOdbaFjV071
-         GTMg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1737584211; x=1738189011;
-        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=l3V32wmuFdo3eyYq3ItjWLe5TmAQhDXOPpNz76RK2rI=;
-        b=hUqHW/BTetEocJeNjup2Cj1v/dIgppNORRoOaTjGPfQeyrDWvhj/TmVHzmLmjX8qSe
-         6D9Jw1LBwUgRvB0hrOUk5vbKvb7Y/tjSJRaOdErd6GsYLnkUXRo9XScMfFOebWdxAY8l
-         8m0KcxmGgerz8YYNi4qCfXTEJLOjv3mGHtRHpvL3mbBmK5W22cgMVatVM695bJUIKYQU
-         O/M04PpDEdBz7djflroXrwhDGPqvUMVp1ZHB0f2eyqVtr5xL3P1z2qagkzLMAjwMdVKp
-         YOonnPtBC+LaMEmHDTsxzozSSzquRxlgO46YSaZu1yhr7gUaF2dURmaVgzVDinv01Pk/
-         yHWg==
-X-Forwarded-Encrypted: i=1; AJvYcCVNK8dYVnc26eRlJTL/hVhnUkvk5wreG+YdFYjUleMH4GeE2SwQ24l8XOB92wj7meU3/Hg/YYWwsl/1qmYr@vger.kernel.org
-X-Gm-Message-State: AOJu0YyyQXsl56kIaxeGTVvPXYhYxZGDMx1bR42cBoHROhn9dmhN8Sgd
-	sxBGeVuNXZr7lmD12L6wzbGoNqV9f9/2nqhlH6/2GCKGznb6psLY1GGTqeAlHdNfUBeBuGnS8/L
-	vSHsFIRfYRnY4sQNY2EQngA==
-X-Google-Smtp-Source: AGHT+IHawiM1cnWjjBgTMESBdCjxT4zEuIO00j/eJjzTR5bXkQ6p3w/HrFV8L27JfxuD2cLer72tmGSBr5cfS1Cwuw==
-X-Received: from pfbjc33.prod.google.com ([2002:a05:6a00:6ca1:b0:728:e508:8a48])
- (user=ackerleytng job=prod-delivery.src-stubby-dispatcher) by
- 2002:a05:6a20:8412:b0:1e1:96d9:a7db with SMTP id adf61e73a8af0-1eb2147021cmr35174465637.4.1737584211338;
- Wed, 22 Jan 2025 14:16:51 -0800 (PST)
-Date: Wed, 22 Jan 2025 22:16:49 +0000
-In-Reply-To: <20250117163001.2326672-7-tabba@google.com> (message from Fuad
- Tabba on Fri, 17 Jan 2025 16:29:52 +0000)
+  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazon201209;
+  t=1737584595; x=1769120595;
+  h=date:from:to:cc:message-id:references:mime-version:
+   in-reply-to:subject;
+  bh=k2PyUGZRVj9Wc94nV8/QttjMwv5rG5Z32qJhix/WhPE=;
+  b=ETF222R+0NzKTJME6lI54KGUlFv4UAu/Flz75V4QLW3oHvyPJLMSdmEA
+   MulDj6PqHpl4KyuE2No/NcNdgGKin0eCkYJF/G2Hkhqiy2wf3c4PrDUqS
+   4A6nRgizbp5+/p2ZcCDMyaDJVP8b+aZ2AxL313o5kIHhIxqStU06fWIJT
+   E=;
+X-IronPort-AV: E=Sophos;i="6.13,226,1732579200"; 
+   d="scan'208";a="460839371"
+Subject: Re: [PATCH] clk: qcom: camcc-sm8250: Use clk_rcg2_shared_ops for some RCGs
+Received: from iad12-co-svc-p1-lb1-vlan3.amazon.com (HELO smtpout.prod.us-east-1.prod.farcaster.email.amazon.dev) ([10.43.8.6])
+  by smtp-border-fw-2101.iad2.amazon.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Jan 2025 22:23:14 +0000
+Received: from EX19MTAUEA002.ant.amazon.com [10.0.44.209:22014]
+ by smtpin.naws.us-east-1.prod.farcaster.email.amazon.dev [10.0.10.122:2525] with esmtp (Farcaster)
+ id 6bff06ea-1c19-45d4-8e41-626b3671df8a; Wed, 22 Jan 2025 22:23:13 +0000 (UTC)
+X-Farcaster-Flow-ID: 6bff06ea-1c19-45d4-8e41-626b3671df8a
+Received: from EX19EXOUEA001.ant.amazon.com (10.252.134.47) by
+ EX19MTAUEA002.ant.amazon.com (10.252.134.9) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.1258.39;
+ Wed, 22 Jan 2025 22:23:11 +0000
+Received: from EX19MTAUEA002.ant.amazon.com (10.252.134.9) by
+ EX19EXOUEA001.ant.amazon.com (10.252.134.47) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.1258.39;
+ Wed, 22 Jan 2025 22:23:03 +0000
+Received: from email-imr-corp-prod-iad-1box-1a-9bbde7a3.us-east-1.amazon.com
+ (10.43.8.2) by mail-relay.amazon.com (10.252.134.34) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id
+ 15.2.1258.39 via Frontend Transport; Wed, 22 Jan 2025 22:23:03 +0000
+Received: from dev-dsk-jorcrous-2c-c78924fd.us-west-2.amazon.com (dev-dsk-jorcrous-2c-c78924fd.us-west-2.amazon.com [172.23.179.86])
+	by email-imr-corp-prod-iad-1box-1a-9bbde7a3.us-east-1.amazon.com (Postfix) with ESMTP id 9A3EF405C4;
+	Wed, 22 Jan 2025 22:23:03 +0000 (UTC)
+Received: by dev-dsk-jorcrous-2c-c78924fd.us-west-2.amazon.com (Postfix, from userid 14178300)
+	id 5DB8310E4; Wed, 22 Jan 2025 22:23:03 +0000 (UTC)
+Date: Wed, 22 Jan 2025 22:23:03 +0000
+From: Jordan Crouse <jorcrous@amazon.com>
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC: <linux-arm-msm@vger.kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+	Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>,
+	<linux-clk@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+Message-ID: <20250122222303.GA29229@amazon.com>
+References: <20250122213427.28169-1-jorcrous@amazon.com>
+ <fye2hzgb7pbd7mc7txdl6c57uohrs224ivicgwy3xxqzximard@gvwsey2yqgin>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Message-ID: <diqzikq6sdda.fsf@ackerleytng-ctop.c.googlers.com>
-Subject: Re: [RFC PATCH v5 06/15] KVM: guest_memfd: Handle final folio_put()
- of guestmem pages
-From: Ackerley Tng <ackerleytng@google.com>
-To: Fuad Tabba <tabba@google.com>
-Cc: kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, 
-	pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au, 
-	anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com, 
-	aou@eecs.berkeley.edu, seanjc@google.com, viro@zeniv.linux.org.uk, 
-	brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org, 
-	xiaoyao.li@intel.com, yilun.xu@intel.com, chao.p.peng@linux.intel.com, 
-	jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com, 
-	yu.c.zhang@linux.intel.com, isaku.yamahata@intel.com, mic@digikod.net, 
-	vbabka@suse.cz, vannapurve@google.com, mail@maciej.szmigiero.name, 
-	david@redhat.com, michael.roth@amd.com, wei.w.wang@intel.com, 
-	liam.merwick@oracle.com, isaku.yamahata@gmail.com, 
-	kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com, steven.price@arm.com, 
-	quic_eberman@quicinc.com, quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, 
-	quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com, 
-	quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com, 
-	james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev, 
-	maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com, 
-	roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, 
-	rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com, 
-	jthoughton@google.com, tabba@google.com
-Content-Type: text/plain; charset="UTF-8"
+MIME-Version: 1.0
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <fye2hzgb7pbd7mc7txdl6c57uohrs224ivicgwy3xxqzximard@gvwsey2yqgin>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 
-Fuad Tabba <tabba@google.com> writes:
+On Thu, Jan 23, 2025 at 12:12:46AM +0200, Dmitry Baryshkov wrote:
+> CAUTION: This email originated from outside of the organization. Do not click links or open attachments unless you can confirm the sender and know the content is safe.
+> 
+> 
+> 
+> On Wed, Jan 22, 2025 at 09:34:27PM +0000, Jordan Crouse wrote:
+> > Update some RCGs on the sm8250 camera clock controller to use
+> > clk_rcg2_shared_ops. The shared_ops ensure the RCGs get parked
+> > to the XO during clock disable to prevent the clocks from locking up
+> > when the GDSC is enabled. These mirror similar fixes for other controllers
+> > such as commit 8d4025943e13 ("clk: qcom: camcc-sc7180: Use runtime PM ops
+> > instead of clk ones").
+> 
+> I'm not sure, how the mentioned commit is relevant to this fix.
+> Did you mean e5c359f70e4b ("clk: qcom: camcc: Update the clock ops for the SC7180")?
 
-Hey Fuad, I'm still working on verifying all this but for now this is
-one issue. I think this can be fixed by checking if the folio->mapping
-is NULL. If it's NULL, then the folio has been disassociated from the
-inode, and during the dissociation (removal from filemap), the
-mappability can also either
+Oops, yep. Great catch. v2 coming.
 
-1. Be unset so that the default mappability can be set up based on
-   GUEST_MEMFD_FLAG_INIT_MAPPABLE, or
-2. Be directly restored based on GUEST_MEMFD_FLAG_INIT_MAPPABLE
-
-> <snip>
->
-> +
-> +/*
-> + * Callback function for __folio_put(), i.e., called when all references by the
-> + * host to the folio have been dropped. This allows gmem to transition the state
-> + * of the folio to mappable by the guest, and allows the hypervisor to continue
-> + * transitioning its state to private, since the host cannot attempt to access
-> + * it anymore.
-> + */
-> +void kvm_gmem_handle_folio_put(struct folio *folio)
-> +{
-> +	struct xarray *mappable_offsets;
-> +	struct inode *inode;
-> +	pgoff_t index;
-> +	void *xval;
-> +
-> +	inode = folio->mapping->host;
-
-IIUC this will be a NULL pointer dereference if the folio had been
-removed from the filemap, either through truncation or if the
-guest_memfd file got closed.
-
-> +	index = folio->index;
-
-And if removed from the filemap folio->index is probably invalid.
-
-> +	mappable_offsets = &kvm_gmem_private(inode)->mappable_offsets;
-> +	xval = xa_mk_value(KVM_GMEM_GUEST_MAPPABLE);
-> +
-> +	filemap_invalidate_lock(inode->i_mapping);
-> +	__kvm_gmem_restore_pending_folio(folio);
-> +	WARN_ON_ONCE(xa_err(xa_store(mappable_offsets, index, xval, GFP_KERNEL)));
-> +	filemap_invalidate_unlock(inode->i_mapping);
-> +}
-> +
->  static bool gmem_is_mappable(struct inode *inode, pgoff_t pgoff)
->  {
->  	struct xarray *mappable_offsets = &kvm_gmem_private(inode)->mappable_offsets;
+Jordan
 
