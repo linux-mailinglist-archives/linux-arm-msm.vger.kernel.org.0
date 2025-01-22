@@ -1,70 +1,70 @@
-Return-Path: <linux-arm-msm+bounces-45828-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-45829-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id E6231A1952B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jan 2025 16:28:29 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9EE0FA1952F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jan 2025 16:28:41 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id B07D3188430E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jan 2025 15:28:28 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C0D3B3ACE79
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jan 2025 15:28:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6D7F1214811;
-	Wed, 22 Jan 2025 15:27:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F18282144CD;
+	Wed, 22 Jan 2025 15:27:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="iUVfoERM"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="1IjkoAP2"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mail-wm1-f73.google.com (mail-wm1-f73.google.com [209.85.128.73])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B364D214819
-	for <linux-arm-msm@vger.kernel.org>; Wed, 22 Jan 2025 15:27:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B7DB214A71
+	for <linux-arm-msm@vger.kernel.org>; Wed, 22 Jan 2025 15:27:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.73
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737559672; cv=none; b=lUvnb6TzDI1wDifUo15pSWZ1LyoXjAxWa4xl1JO9qP36KRkksNGngxW8OF3hJahVMZqrKsKUGKR9210mW59v3DMxxXHcnT3sDayCvkr94ty4ObidZplI/XzwKKS9NcTJWV+6PMIT9bzUeaiiZJbWPxadkp5Y/wK96Lo7C2GUBDA=
+	t=1737559674; cv=none; b=f4Nhqlx+weBTfpvJZytkXupd4RsLNeTrdTReSI+Jq14eB8Iya/HdRGZFUEhjOPVIj4HiMW4ETAnUf3M1BqA+lVyliOSWDkkwX2JWbN6Kq5xM2CYBCB4XjfnSrxeouWEWSBVu4UU1iuI3TZpPuF24T+lb1+gC9BsAloHNcngM4W4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737559672; c=relaxed/simple;
-	bh=AZIZbGt3cG7dsQD7VkDSL1oTcXw0BOhbINqYhNgXLqY=;
+	s=arc-20240116; t=1737559674; c=relaxed/simple;
+	bh=Ob6kypo+rDvvEe1SpVMk9She7l8fCRqMuFfEC3q0tDc=;
 	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=FWQr5GgByqjAfYqkW5uT//0hTQ8KJ7XBx5v7jIdsxl+g9dnlMaxlfTkKtu/D79eMnoyLEfcAU3Xmsl27sQm04C32XEFc26wiL9TmA2ZcNoMUwG4zL330QTHQnIICWt5dGsZcBfF08RYN7QjDWMDaUAYGPLaz3srYh0tiFtNbRjU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--tabba.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=iUVfoERM; arc=none smtp.client-ip=209.85.128.73
+	 To:Cc:Content-Type; b=f3sVKrIhTOMaEsMop3aul+/qSQEvXY2wzCdJzEPNUpQwYEE6ST/e7jH8jKAmpsHU+nJoPCS9fLDtdLuVqEyqxyu5MQe3Ee5tzt+7U2Njt0NUAVZwCQO9Aye2KZpNjux21ZS2xWpwfEvfw5infGWZxpaDRX2MeFk1PP+itmDRFOM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--tabba.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=1IjkoAP2; arc=none smtp.client-ip=209.85.128.73
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--tabba.bounces.google.com
-Received: by mail-wm1-f73.google.com with SMTP id 5b1f17b1804b1-43628594d34so38940375e9.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Jan 2025 07:27:50 -0800 (PST)
+Received: by mail-wm1-f73.google.com with SMTP id 5b1f17b1804b1-4362f893bfaso38287615e9.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Jan 2025 07:27:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1737559669; x=1738164469; darn=vger.kernel.org;
+        d=google.com; s=20230601; t=1737559671; x=1738164471; darn=vger.kernel.org;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=shrLyHvMMRQKlPtYXYDSAaDe6YKxFfwFxlxNmwxqD3g=;
-        b=iUVfoERMeIlQBBxcy8V1/QzTu0kIljJbMKFKoXRr8w9qECzKM8vHKneweSzVrlsiWL
-         +BYphtSp2Zu2ioCsLWVXWRsp5XTJDRJxf6kRdJMmgAQ4FPLPOHfnBdZcwjzeV58yt0+b
-         1GFSxDgT8jyJb3dUT1wCpLQA3fRhXJm5fmycJGD19/0WKywwDDCEwcuMGaxomSMTVy/o
-         huj5zd5Id/fN5pzyZjpVZjh47gE3ym1etp54mhTTfTQxeZDAcXyqOG2wjszX7l/HuR/G
-         Hx/QhAwYysfjKLmJnFwkpG7kfmR3DzyTEFreUim9Y501UAraSqlpeen1QVXDBN8XX3gg
-         9tZw==
+        bh=3HB24ys9olZtoFbzLvLFGPKqOLdaE1YgibZ0bUHAkc0=;
+        b=1IjkoAP24puaPpwiSGRHgpwZCnfQofIhC4NEu/3Fdv1v6hHs9Qc0VTDyn5RvA2Uvef
+         0JivjRBZGJ/akd3w7xfAP01IGdoBoV3A50Rsc64LS1HVHGAyfn+QczyzGJhooG0YQBZM
+         dzpfD8wnGHTGI7TYp8/MRl7ZuNQhvsVd4qjiTOJHWxkoKERHwIfb5bNE+WyURYiC17pP
+         kZMzkCT3Q+tQIQ1U8k262U6eT/F81WZqhZWBMutgV1OW/q1fyGMoqxIUhJzU3WqRnnuk
+         4+rlwOvIpHGk/h/sYQNT7uWlFqYv7mNWt34hvQZTro/0DCYIVz16r9380t+Y1imZbaQ2
+         /L/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1737559669; x=1738164469;
+        d=1e100.net; s=20230601; t=1737559671; x=1738164471;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=shrLyHvMMRQKlPtYXYDSAaDe6YKxFfwFxlxNmwxqD3g=;
-        b=ub3ngQs6kZi9X4jrAFgrmWMGorr6eedurOPNYP3dH/pC3xjsUnCdjgbfl2FnAN7Oxu
-         HQsYtQfaSsrhwNsqvuqWGYc2mDgkn6AeYHqqo2rOu3Fjn1NTsJ5DnRrQqiT9Z7Aluvch
-         lkwpDhY33jM75YjmppO4dHAhCKo1xGnUJOp6IwKGsMNgd4WhjI58sWS/G27prMNsIpey
-         YnDT8LJQzY6Tpo5VAML+0NFTN3IB7FYdi4VVpmQLirJdPGTTdvuAHqD6ADBrpHJrDvXR
-         ia5eTL40/GPY5+kiBB3Cdrin9jlYBaN4OdpQEfmhhBAb7LDC0yJ45Bm0/2awjAc4aKXA
-         G26A==
-X-Forwarded-Encrypted: i=1; AJvYcCXucy1KY/cvGWClbwl3Iz/8ErsKbttsMA74LYN1X8cyQVIMzaY9ApBjl5mfoZIuGck5kuSPZqAAZVVVP3FK@vger.kernel.org
-X-Gm-Message-State: AOJu0YwmD4wFmj/4UNQVJP8s9+ZVyNtPUSGp2B0zrKMQ2uUaR9nKunUZ
-	HvCp0OrJqEr8QlIn7SmcO15CQnu8MmgEy/t/eipmj6h6ZS4auglMJzyJPRamvJBXG0DCRPpqgA=
+        bh=3HB24ys9olZtoFbzLvLFGPKqOLdaE1YgibZ0bUHAkc0=;
+        b=QQEvIwv+/xdT3tacjZ2C3izQi+WDEgXry1xtUzTdiaVmPi1lWEJdcc4qDE4LnA4kyc
+         zRHNYf5G48KpkICY3M+kgjOAefTIxxZ/K3cDhVn1EcltPTAAJJCbJWM4SucQ0BurutRD
+         p9hDEfjk/QXJgfyZTutFnRTMqRKOwPclfwjW8N6l0VhFbg8RlMkQ/tfv3KFBXnfu+jdD
+         XIIS5y42W+HuCYfNeDPasTo8c/nzrhH4BEvrhB54jFUq1ja4j/tZe/XxQ+lM8p2EFWr6
+         NUMNaQOl9XcNIiKBcR/lPfbtcrAW6fwvJD3qeep7ow4A6/p3cp/NDpGKc/+Dl3F2FAvq
+         1q0w==
+X-Forwarded-Encrypted: i=1; AJvYcCVPQfrvJOfRTqdoGjcnmombDRDbSWE4C4NoMt6aGBQr/vCF8paGBk2jGc5Nrgxp6geeyecm+MbsrgMKKRJx@vger.kernel.org
+X-Gm-Message-State: AOJu0YzzWi8ynkgST4phb3uarLsBHLBG3NX0Pj9T7oMPPJJMSoQ5o0kx
+	kckjD2qmsZLF1CQHYN8n+mMRE15RUzbUxJ3bMQcYYipzTr0pNzE1YL68snh3gAYRpe9KhvDMYA=
 	=
-X-Google-Smtp-Source: AGHT+IHTlIkTn1+cn775KydFPeyXeNoykYbZ6JOdiKLvBv9T8k9MPGDx/xX8UX12ynhVUVVwAikKzSjQIA==
-X-Received: from wmee10.prod.google.com ([2002:a05:600c:218a:b0:434:f1d0:7dc9])
- (user=tabba job=prod-delivery.src-stubby-dispatcher) by 2002:a05:600c:3585:b0:434:f297:8e85
- with SMTP id 5b1f17b1804b1-438913d5da1mr237493785e9.10.1737559669276; Wed, 22
- Jan 2025 07:27:49 -0800 (PST)
-Date: Wed, 22 Jan 2025 15:27:33 +0000
+X-Google-Smtp-Source: AGHT+IGcoJWLBW4MQy/zV2gFico8bxDEFCQzZhOhvpQ0d8FBU2ybuc79Jv0oLXdNK7/4bqI1+6VtomwTiA==
+X-Received: from wmbjv16.prod.google.com ([2002:a05:600c:5710:b0:436:e723:5be6])
+ (user=tabba job=prod-delivery.src-stubby-dispatcher) by 2002:a05:600c:5112:b0:434:a5bc:70fc
+ with SMTP id 5b1f17b1804b1-438913cfa0emr202083105e9.8.1737559671492; Wed, 22
+ Jan 2025 07:27:51 -0800 (PST)
+Date: Wed, 22 Jan 2025 15:27:34 +0000
 In-Reply-To: <20250122152738.1173160-1-tabba@google.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
@@ -74,9 +74,9 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 Mime-Version: 1.0
 References: <20250122152738.1173160-1-tabba@google.com>
 X-Mailer: git-send-email 2.48.0.rc2.279.g1de40edade-goog
-Message-ID: <20250122152738.1173160-5-tabba@google.com>
-Subject: [RFC PATCH v1 4/9] KVM: arm64: Skip VMA checks for slots without
- userspace address
+Message-ID: <20250122152738.1173160-6-tabba@google.com>
+Subject: [RFC PATCH v1 5/9] KVM: arm64: Refactor user_mem_abort() calculation
+ of force_pte
 From: Fuad Tabba <tabba@google.com>
 To: kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org
 Cc: pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au, 
@@ -100,44 +100,56 @@ Cc: pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au,
 	jthoughton@google.com, tabba@google.com
 Content-Type: text/plain; charset="UTF-8"
 
-Memory slots backed by guest memory might be created with no
-intention of being mapped by the host. These are recognized by
-not having a userspace address in the memory slot.
-
-VMA checks are neither possible nor necessary for this kind of
-slot, so skip them.
+To simplify the code and to make the assumptions clearer,
+refactor user_mem_abort() by immediately setting force_pte to
+true if logging_active is true. Also, add a check to ensure that
+the assumption that logging_active is guaranteed to never be true
+for VM_PFNMAP memslot is true.
 
 Signed-off-by: Fuad Tabba <tabba@google.com>
 ---
- arch/arm64/kvm/mmu.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ arch/arm64/kvm/mmu.c | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
 diff --git a/arch/arm64/kvm/mmu.c b/arch/arm64/kvm/mmu.c
-index c9d46ad57e52..342a9bd3848f 100644
+index 342a9bd3848f..9b1921c1a1a0 100644
 --- a/arch/arm64/kvm/mmu.c
 +++ b/arch/arm64/kvm/mmu.c
-@@ -988,6 +988,10 @@ static void stage2_unmap_memslot(struct kvm *kvm,
- 	phys_addr_t size = PAGE_SIZE * memslot->npages;
- 	hva_t reg_end = hva + size;
- 
-+	/* Host will not map this private memory without a userspace address. */
-+	if (kvm_slot_can_be_private(memslot) && !hva)
-+		return;
+@@ -1440,7 +1440,7 @@ static int user_mem_abort(struct kvm_vcpu *vcpu, phys_addr_t fault_ipa,
+ 			  bool fault_is_perm)
+ {
+ 	int ret = 0;
+-	bool write_fault, writable, force_pte = false;
++	bool write_fault, writable;
+ 	bool exec_fault, mte_allowed;
+ 	bool device = false, vfio_allow_any_uc = false;
+ 	unsigned long mmu_seq;
+@@ -1452,6 +1452,7 @@ static int user_mem_abort(struct kvm_vcpu *vcpu, phys_addr_t fault_ipa,
+ 	gfn_t gfn;
+ 	kvm_pfn_t pfn;
+ 	bool logging_active = memslot_is_logging(memslot);
++	bool force_pte = logging_active;
+ 	long vma_pagesize, fault_granule;
+ 	enum kvm_pgtable_prot prot = KVM_PGTABLE_PROT_R;
+ 	struct kvm_pgtable *pgt;
+@@ -1497,12 +1498,13 @@ static int user_mem_abort(struct kvm_vcpu *vcpu, phys_addr_t fault_ipa,
+ 	 * logging_active is guaranteed to never be true for VM_PFNMAP
+ 	 * memslots.
+ 	 */
+-	if (logging_active) {
+-		force_pte = true;
++	if (WARN_ON_ONCE(logging_active && (vma->vm_flags & VM_PFNMAP)))
++		return -EFAULT;
 +
- 	/*
- 	 * A memory region could potentially cover multiple VMAs, and any holes
- 	 * between them, so iterate over all of them to find out if we should
-@@ -2133,6 +2137,10 @@ int kvm_arch_prepare_memory_region(struct kvm *kvm,
- 	hva = new->userspace_addr;
- 	reg_end = hva + (new->npages << PAGE_SHIFT);
++	if (force_pte)
+ 		vma_shift = PAGE_SHIFT;
+-	} else {
++	else
+ 		vma_shift = get_vma_page_shift(vma, hva);
+-	}
  
-+	/* Host will not map this private memory without a userspace address. */
-+	if ((kvm_slot_can_be_private(new)) && !hva)
-+		return 0;
-+
- 	mmap_read_lock(current->mm);
- 	/*
- 	 * A memory region could potentially cover multiple VMAs, and any holes
+ 	switch (vma_shift) {
+ #ifndef __PAGETABLE_PMD_FOLDED
 -- 
 2.48.0.rc2.279.g1de40edade-goog
 
