@@ -1,146 +1,130 @@
-Return-Path: <linux-arm-msm+bounces-45770-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-45771-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 07E70A18C39
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jan 2025 07:42:03 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id B4E88A18C44
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jan 2025 07:47:18 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E07D13A4EA6
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jan 2025 06:41:55 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0D45C163A7F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jan 2025 06:47:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 80A0C19259F;
-	Wed, 22 Jan 2025 06:41:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 73CCA17B50F;
+	Wed, 22 Jan 2025 06:47:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KcVa3c2y"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="mi0mQVDF"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46DD9F9FE;
-	Wed, 22 Jan 2025 06:41:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B154D199384;
+	Wed, 22 Jan 2025 06:47:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737528118; cv=none; b=BDRIOnJFAFLImIkb+1m/VQolfueiMAH4SsvEqdYYq1m2+ZlRWKG5Tjtfpbq7lnWMh+mG1x0+YMzTtWv3LyNVj5fC3NuN/cPUXT/gzKYa6zjeyirX1Ud1V6DEoPk5GycddJsbe/UT4FVyVyQDn5hlXTcDIk0J2+u75c3V6S4MDNs=
+	t=1737528434; cv=none; b=rCKgHmi8E0Qlb8PuQb6cvO3HH11MXTbpqt0Oqb27x1KsSwHazqpc20POSKDIYVIrmPyui7ombr6u4twBl6OiWsqsiaYBu9Mwx+yJEceaC1vCvNnImflug122yLR1V03uTi5uOw7RIfsBOzYdyzQx/I5i6i21gw9Czhj5oWlR9xg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737528118; c=relaxed/simple;
-	bh=o2Ds8W/m2InNF3M1j5TAYTwXIjtOUpiFdJKz7QS6PlQ=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=LOPm4q8nW9JqmfzO9pDuv/unColnZTo0VEbKaNqIM7ulFM08rHtLmKLmBvpQc/5i10PAvWp9oIG9yf46BZFvOPvWheDzTzx2lsTxRware93isbVEqK/Lna80TLHmpv24ceQHvvCEOZ7oUNxhBluROqWF87VuHJCxuYXwaXbQ7BM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KcVa3c2y; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id B2C66C4CED6;
-	Wed, 22 Jan 2025 06:41:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1737528117;
-	bh=o2Ds8W/m2InNF3M1j5TAYTwXIjtOUpiFdJKz7QS6PlQ=;
-	h=From:Date:Subject:To:Cc:Reply-To:From;
-	b=KcVa3c2yGSKQDbe+yEjuw76b45wqFurRz7gXOCAGFHn/Sj1HlrcaxrEcytgy11VFn
-	 2OWMd3Ug6i6rtonFsaChHJBGrLIqZOXbZQzYR8qg04Z6lFL6NsiLtZJeRtVFR3oG8c
-	 bGo/o2K8X03CTsZ2zCiJr/vI+s4T/B8hQaBvp2fYBTBSrC7sd7CVxjL+wienDS1arW
-	 l45G2ABtejeFdZia20h/AhDYb4JcnZ3aKkqwCyRiJ4TAFidWxpetpFEGjmOTcC1MfB
-	 RhZWvM0l//yhPa2EBw8uuYGeeUkCuNDVv964L5CaY0OGV/V0m6DYtMCo5FOx/wE62R
-	 dzCWvYXXZ+LVg==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9E657C02181;
-	Wed, 22 Jan 2025 06:41:57 +0000 (UTC)
-From: Jens Glathe via B4 Relay <devnull+jens.glathe.oldschoolsolutions.biz@kernel.org>
-Date: Wed, 22 Jan 2025 07:41:56 +0100
-Subject: [PATCH] arm64: dts: qcom: sc8280xp-blackrock: switch to uefi rtc
- offset
+	s=arc-20240116; t=1737528434; c=relaxed/simple;
+	bh=JLHY4rnuggNTEK2QGWkaQ3m7sVers72Ws4/W0DUPkN8=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version:Content-Type; b=jT6pwnZZrfC8IH15Fa8LJ47Uzod0g0HjFvjiWh0HRtI55bg5cJxAMZOMnB2ZmVkk2TpY1Ebr8Jo125VkPSOgSpgT1GBFIHdk/RA++PprfSR8cYyC+ZK0E9T6cGWuWxGKuFPDjlwhmH2eU89qW5mgfY6tl34Fk0yORw0NQpVFm6o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=mi0mQVDF; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50M45KZe027023;
+	Wed, 22 Jan 2025 06:47:04 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=iJnUutolXGy7sPzaMxKOI2
+	+AmHLyRXoRjhbohBOxg08=; b=mi0mQVDFEgkfcKpIMHf3A9ItTuYFiujwLiQEuq
+	3LDdUEKi0Iwb2rtFEbgrxKcie5nTItAINmxtdeuTzrHjVMNEW5IWw7mEjRMz3LlB
+	uMH7dhquzJbtrA/aW8+lUgjUxWoafHJnraw2sxguP5NtIYn0OGm1ZAEZZVJs9r7V
+	TxuD9phKRK9OY+kxNtncLKuPNM4FQUAKwwXZm02mlJ7qlZZFijIg9IrjkJ7N6e3W
+	G0F404JuEOMUcVxN3DUP3eMDIKjHqBw9cQUnWeL3CK1mCQRw7Tw5auSqEsSU4667
+	EFmLlQiUplzbCpvBebYKZyIj1C4qG+QEKHvBtR6fczYrSNzw==
+Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44asbf8abx-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 22 Jan 2025 06:47:04 +0000 (GMT)
+Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+	by APBLRPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 50M6l1Vm028937;
+	Wed, 22 Jan 2025 06:47:01 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 4485ckvx6w-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 22 Jan 2025 06:47:01 +0000
+Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 50M6l1Ar028932;
+	Wed, 22 Jan 2025 06:47:01 GMT
+Received: from hu-maiyas-hyd.qualcomm.com (hu-msavaliy-hyd.qualcomm.com [10.213.110.207])
+	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 50M6l0nK028931
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 22 Jan 2025 06:47:01 +0000
+Received: by hu-maiyas-hyd.qualcomm.com (Postfix, from userid 429934)
+	id 229C7242E7; Wed, 22 Jan 2025 12:17:00 +0530 (+0530)
+From: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
+To: andi.shyti@kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-i2c@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
+Subject: [PATCH v1] i2c: qcom-geni: Update i2c frequency table to match hardware guidance
+Date: Wed, 22 Jan 2025 12:16:34 +0530
+Message-Id: <20250122064634.2864432-1-quic_msavaliy@quicinc.com>
+X-Mailer: git-send-email 2.25.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250122-jg-blackrock-rtc-v1-1-3b05cd85bdfa@oldschoolsolutions.biz>
-X-B4-Tracking: v=1; b=H4sIADOTkGcC/x3M3QpAQBBA4VfRXJva3fzEq8iFHYNBaFZS8u42l
- 9/FOQ8EVuEAdfKA8iVB9i3CpgnQ1G0jo/TR4IzLjXUG5xH92tGiOy2oJ6HPKlty4YmrDGJ2KA9
- y/8umfd8PgwYjlWIAAAA=
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Johan Hovold <johan@kernel.org>, 
- Jens Glathe <jens.glathe@oldschoolsolutions.biz>
-X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1737528116; l=1921;
- i=jens.glathe@oldschoolsolutions.biz; s=20240919;
- h=from:subject:message-id;
- bh=4fIfQMa3HqpPjSmfIw1qUNksE48aZP+ZpYp1h1ftNbI=;
- b=5uy6wYE1C3rG3cAXw5pTu1FPBjpNikCW0xrJ5P6YbdxkwJh8AxZZy2TMeo9WLBW8OOfSYOgCn
- +AFQlqZvYe5AOARybBO1c+h/mfAwyx0Ud0ZF6xd2g1H2D0x9aaEMnYf
-X-Developer-Key: i=jens.glathe@oldschoolsolutions.biz; a=ed25519;
- pk=JcRJqJc/y8LsxOlPakALD3juGfOKmFBWtO+GfELMJVg=
-X-Endpoint-Received: by B4 Relay for
- jens.glathe@oldschoolsolutions.biz/20240919 with auth_id=216
-X-Original-From: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
-Reply-To: jens.glathe@oldschoolsolutions.biz
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: P8NawMUnUwi7Y4maUbBMKFYtcqxKKseA
+X-Proofpoint-GUID: P8NawMUnUwi7Y4maUbBMKFYtcqxKKseA
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-01-22_02,2025-01-22_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 phishscore=0
+ impostorscore=0 lowpriorityscore=0 bulkscore=0 suspectscore=0 spamscore=0
+ clxscore=1015 adultscore=0 malwarescore=0 mlxlogscore=999
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2501220047
 
-From: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
+With the current settings, the I2C buses are achieving around 370KHz
+instead of the expected 400KHz. For 100KHz and 1MHz, the settings are
+now more compliant and adhere to the Qualcomm’s internal programming
+guide.
 
-On many Qualcomm platforms the PMIC RTC control and time registers are
-read-only so that the RTC time can not be updated. Instead an offset
-needs be stored in some machine-specific non-volatile memory, which a
-driver can take into account.
+Update the I2C frequency table to align with the recommended values
+outlined in the I2C hardware programming guide, ensuring proper
+communication and performance.
 
-Switch to using the Qualcomm specific UEFI variable that is used by the
-UEFI firmware (and Windows) to store the RTC offset.
-
-This specifically means that the RTC time will be synchronised between
-the UEFI firmware setup (or UEFI shell), Windows and Linux.
-
-Note however that Windows stores the RTC time in local time by default,
-while Linux typically uses UTC (i.e. as on X86).
-
-Based on a patch by Johan Hovold. [1]
-
-Link: https://lore.kernel.org/all/20250120144152.11949-7-johan+linaro@kernel.org/ # [1]
-Signed-off-by: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
+Signed-off-by: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
 ---
-This is a patch to switch the Windows Dev Kit 2023 over to
-using the UEFI offset.
----
- arch/arm64/boot/dts/qcom/sc8280xp-microsoft-blackrock.dts | 11 +----------
- 1 file changed, 1 insertion(+), 10 deletions(-)
+ drivers/i2c/busses/i2c-qcom-geni.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-microsoft-blackrock.dts b/arch/arm64/boot/dts/qcom/sc8280xp-microsoft-blackrock.dts
-index fa9d941050522..aaea2fa3c6c0a 100644
---- a/arch/arm64/boot/dts/qcom/sc8280xp-microsoft-blackrock.dts
-+++ b/arch/arm64/boot/dts/qcom/sc8280xp-microsoft-blackrock.dts
-@@ -762,20 +762,11 @@ &pmk8280_pon_resin {
+diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-qcom-geni.c
+index 7a22e1f46e60..cc0c683febbb 100644
+--- a/drivers/i2c/busses/i2c-qcom-geni.c
++++ b/drivers/i2c/busses/i2c-qcom-geni.c
+@@ -148,9 +148,9 @@ struct geni_i2c_clk_fld {
+  * source_clock = 19.2 MHz
+  */
+ static const struct geni_i2c_clk_fld geni_i2c_clk_map_19p2mhz[] = {
+-	{KHZ(100), 7, 10, 11, 26},
+-	{KHZ(400), 2,  5, 12, 24},
+-	{KHZ(1000), 1, 3,  9, 18},
++	{KHZ(100), 7, 10, 12, 26},
++	{KHZ(400), 2,  5, 11, 22},
++	{KHZ(1000), 1, 2,  8, 18},
+ 	{},
  };
  
- &pmk8280_rtc {
--	nvmem-cells = <&rtc_offset>;
--	nvmem-cell-names = "offset";
-+	qcom,uefi-rtc-info;
- 
- 	status = "okay";
- };
- 
--&pmk8280_sdam_6 {
--	status = "okay";
--
--	rtc_offset: rtc-offset@bc {
--		reg = <0xbc 0x4>;
--	};
--};
--
- &pmk8280_vadc {
- 	channel@144 {
- 		reg = <PM8350_ADC7_AMUX_THM1_100K_PU(1)>;
-
----
-base-commit: 232f121837ad8b1c21cc80f2c8842a4090c5a2a0
-change-id: 20250120-jg-blackrock-rtc-b4917e6bce94
-
-Best regards,
 -- 
-Jens Glathe <jens.glathe@oldschoolsolutions.biz>
-
+2.25.1
 
 
