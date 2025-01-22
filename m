@@ -1,151 +1,228 @@
-Return-Path: <linux-arm-msm+bounces-45849-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-45850-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 41C65A19794
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jan 2025 18:26:42 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6F066A19814
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jan 2025 18:53:22 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7F3F33A38DF
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jan 2025 17:26:21 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2CC351880154
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jan 2025 17:53:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 95E462153CF;
-	Wed, 22 Jan 2025 17:25:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C5B22214A73;
+	Wed, 22 Jan 2025 17:53:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AECjqbSR"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="hDpEz7MQ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58C602153C6;
-	Wed, 22 Jan 2025 17:25:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED47B212D65;
+	Wed, 22 Jan 2025 17:53:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737566747; cv=none; b=asrgZ3gz8X8IiyZgz2yX8Hr1VZo4wpJhKYpkoSP652OVlg6fpqg3RrWPe2FEZE2UkcX4GDXPA2VA8JakHOAgZH4bajoEjOllhF9jHe+gHuqEXb3SshwEwsviLY5u3TfNULhRk1dPT7Md/93BSlHyLnjamK1OORnHIHBUh2AYEeg=
+	t=1737568399; cv=none; b=ZpdU0AAiD+0rSJ3XaFGbZ16a7MRq3dsg/ZHj2BwkkoOFdzrXrn0w9oajTBaL9i/mSa02S7LKOQnUkwZUJuiMl95T/46595VuVz1VWFzIHv2Nqu9wczNu9j5pJru3/nLT/Te3cBRdWKqqjhw+1mv85jkmCsqRqH2/SFbn8Bt+3Dk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737566747; c=relaxed/simple;
-	bh=LWiOetpLYWj2C9G4oYP4XduNRB4PwJbMWrmJI504OZc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=YUzhlG2ed4Yno5QfRsN1f6Lz0nT8FnRAvqewEQLlTh74cCR4+NaPzOun8DdSs9PqMWgZRsmjb2HbYFHSgVT8p6RaL2O4PaZ23P3c5GFakXoppSzT89K9JQc56Xtp2pHNXW3H7D0odE5Ysa/ZltPfEykNDsNOCCc3reXrev3crlY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AECjqbSR; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B79A7C4CED2;
-	Wed, 22 Jan 2025 17:25:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1737566746;
-	bh=LWiOetpLYWj2C9G4oYP4XduNRB4PwJbMWrmJI504OZc=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=AECjqbSRoylzOg99N7HHnH4L7nZlP01GDR5u3/stuxPD5A1z2wgyy25382cMfRkkE
-	 mpeu2n1wpFZfaBylK0B/1voGzdJ5kEJ8n49leN4rxeHXgUJ03E+D9QAxj9iHD2ROEM
-	 lURR02gRvAV5yTMbaSPv81ZuCdKVHyoXymL/QZXKg5qM6/OujiEN0TUwyvV4yUTOew
-	 9gEePS0VY/gFRDIXiZe1cwfyBdTi6NJfP33G+EcsYli1fsZDycDJ5W2XVPLzN73VUo
-	 D6puM5Vc8O0krk4WF6uo9EWgPeiIJ/dDLQhKe63rO/Cf54thkYqTvYNdEEzF4HiKwc
-	 j0GnNAzYxeXmw==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan@kernel.org>)
-	id 1taeUB-000000002TY-3MDU;
-	Wed, 22 Jan 2025 18:25:51 +0100
-Date: Wed, 22 Jan 2025 18:25:51 +0100
-From: Johan Hovold <johan@kernel.org>
-To: manivannan.sadhasivam@linaro.org
-Cc: mhi@lists.linux.dev, Loic Poulain <loic.poulain@linaro.org>,
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-	stable@vger.kernel.org
-Subject: Re: [PATCH 2/2] bus: mhi: host: pci_generic: Recover the device
- synchronously from mhi_pci_runtime_resume()
-Message-ID: <Z5EqH95TWIGJhPG9@hovoldconsulting.com>
-References: <20250108-mhi_recovery_fix-v1-0-a0a00a17da46@linaro.org>
- <20250108-mhi_recovery_fix-v1-2-a0a00a17da46@linaro.org>
- <Z5ENq9EMPlNvxNOF@hovoldconsulting.com>
+	s=arc-20240116; t=1737568399; c=relaxed/simple;
+	bh=Z+5gZtne44q0YMTpC2u70HuVtYm8sZKPXO3aVOZnLKg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=iecWMMuQhb9z2OvjKE1/3olI+uPRQecKI7/g5lR2VV3qrdqWekBE+UOaF3zzhC0AKcIUb1avsRtdKCN/hjRMO2D2F6BdXPJssRUOYX5vaH6SBcg9oAAAMlKBrU4ureCgw/tOauJeOKREhink7nXbLPShFlTwOxT19f6y2BMvdys=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=hDpEz7MQ; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50MABm5W024635;
+	Wed, 22 Jan 2025 17:53:09 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	LmLs7WybEVpW/PC2uDnZrzP0C9ObxBpW7g22hCyhug8=; b=hDpEz7MQlsdqqgiD
+	4WA1XqUmL1tAU3QFx3ASblkp/z+eP0fGOHVRFBxdaDcynwdTUDI/Z+kxvTZycUT/
+	In2LXIXqqVuTvLylStUopFhR1nu49iO3MxmQbNNSN5a6cvI0ONUc9oPP29mj6wUR
+	x29gVEdqAE/fCzJPhaXFdRizQ3Ve+6rw59i0dHsyvYAZCXHrEzcZ3/0yxKlpR56h
+	hPJlIcPtEHiy0g2KwZcpCTwbJFHHcQHoEbQd92Pjf+50JUkn8qq0Wt7J3WFPWffI
+	AZ0tdt9lMYTxaMuxwp5NvUcQiZe8Qg2zsjVxs/kjzSn5Pb8zouKMVZMJ3W1k0X9T
+	+3aVww==
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44axq6h3sc-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 22 Jan 2025 17:53:09 +0000 (GMT)
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 50MHr8De000636
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 22 Jan 2025 17:53:08 GMT
+Received: from [10.216.26.78] (10.80.80.8) by nasanex01c.na.qualcomm.com
+ (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 22 Jan
+ 2025 09:53:00 -0800
+Message-ID: <04bee338-2828-44e2-9ee8-8a94b4433ca9@quicinc.com>
+Date: Wed, 22 Jan 2025 23:22:57 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Z5ENq9EMPlNvxNOF@hovoldconsulting.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 0/7] Add support to load QUP SE firmware from
+To: Caleb Connolly <caleb.connolly@linaro.org>,
+        Viken Dadhaniya
+	<quic_vdadhani@quicinc.com>, <andi.shyti@kernel.org>,
+        <robh@kernel.org>, <krzk+dt@kernel.org>, <conor+dt@kernel.org>,
+        <gregkh@linuxfoundation.org>, <jirislaby@kernel.org>,
+        <broonie@kernel.or>, <andersson@kernel.org>, <konradybcio@kernel.org>,
+        <johan+linaro@kernel.org>, <dianders@chromium.org>,
+        <agross@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-i2c@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-serial@vger.kernel.org>,
+        <linux-spi@vger.kernel.org>
+CC: <quic_anupkulk@quicinc.com>
+References: <20241204150326.1470749-1-quic_vdadhani@quicinc.com>
+ <66fb0c6d-472c-4131-bd25-83266cf497e4@linaro.org>
+ <17138798-b72b-4e78-8fad-419e1a63fa5b@quicinc.com>
+ <56ef1276-9d58-4a94-ae89-5faf5870c10c@linaro.org>
+Content-Language: en-US
+From: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
+In-Reply-To: <56ef1276-9d58-4a94-ae89-5faf5870c10c@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01c.na.qualcomm.com (10.45.79.139)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: ra9ZqRO8hX-60US13JsBtFzDJEaPRYtW
+X-Proofpoint-ORIG-GUID: ra9ZqRO8hX-60US13JsBtFzDJEaPRYtW
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-01-22_08,2025-01-22_02,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 suspectscore=0
+ mlxlogscore=999 lowpriorityscore=0 mlxscore=0 spamscore=0
+ priorityscore=1501 phishscore=0 bulkscore=0 clxscore=1015 impostorscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2501220131
 
-On Wed, Jan 22, 2025 at 04:24:27PM +0100, Johan Hovold wrote:
-> On Wed, Jan 08, 2025 at 07:09:28PM +0530, Manivannan Sadhasivam via B4 Relay wrote:
-> > From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> > 
-> > Currently, in mhi_pci_runtime_resume(), if the resume fails, recovery_work
-> > is started asynchronously and success is returned. But this doesn't align
-> > with what PM core expects as documented in
-> > Documentation/power/runtime_pm.rst:
+Hi Caleb, we shall update for latest ask and will check how to enable 
+validation on required board.
 
-> > Cc: stable@vger.kernel.org # 5.13
-> > Reported-by: Johan Hovold <johan@kernel.org>
-> > Closes: https://lore.kernel.org/mhi/Z2PbEPYpqFfrLSJi@hovoldconsulting.com
-> > Fixes: d3800c1dce24 ("bus: mhi: pci_generic: Add support for runtime PM")
-> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+On 1/22/2025 8:53 PM, Caleb Connolly wrote:
+> Hi Mukesh,
 > 
-> Reasoning above makes sense, and I do indeed see resume taking five
-> seconds longer with this patch as Loic suggested it would.
-
-I forgot to mention the following warnings that now show up when system
-resume succeeds. Recovery was run also before this patch but the "parent
-mhi0 should not be sleeping" warnings are new:
-
-[   68.753288] qcom_mhi_qrtr mhi0_IPCR: failed to prepare for autoqueue transfer -22
-[   68.761109] qcom_mhi_qrtr mhi0_IPCR: PM: dpm_run_callback(): qcom_mhi_qrtr_pm_resume_early [qrtr_mhi] returns -22
-[   68.771804] qcom_mhi_qrtr mhi0_IPCR: PM: failed to resume early: error -22
-[   68.795053] mhi-pci-generic 0005:01:00.0: mhi_pci_resume
-[   68.800709] mhi-pci-generic 0005:01:00.0: mhi_pci_runtime_resume
-[   68.800794] mhi mhi0: Resuming from non M3 state (RESET)
-[   68.800804] mhi-pci-generic 0005:01:00.0: failed to resume device: -22
-[   68.819517] mhi-pci-generic 0005:01:00.0: device recovery started
-[   68.819532] mhi-pci-generic 0005:01:00.0: __mhi_power_down
-[   68.819543] mhi-pci-generic 0005:01:00.0: __mhi_power_down - pm mutex taken
-[   68.819554] mhi-pci-generic 0005:01:00.0: __mhi_power_down - pm lock taken
-[   68.820060] wwan wwan0: port wwan0qcdm0 disconnected
-[   68.824839] nvme nvme0: 12/0/0 default/read/poll queues
-[   68.857908] wwan wwan0: port wwan0mbim0 disconnected
-[   68.864012] wwan wwan0: port wwan0qmi0 disconnected
-[   68.943307] mhi-pci-generic 0005:01:00.0: __mhi_power_down - returns
-[   68.956253] mhi mhi0: Requested to power ON
-[   68.960753] mhi mhi0: Power on setup success
-[   68.965262] mhi-pci-generic 0005:01:00.0: mhi_sync_power_up - wait event timeout_ms = 8000
-[   73.183086] mhi mhi0: Wait for device to enter SBL or Mission mode
-[   73.653462] mhi-pci-generic 0005:01:00.0: mhi_sync_power_up - wait event returns, ret = 0
-[   73.653752] mhi mhi0_DIAG: PM: parent mhi0 should not be sleeping
-[   73.661955] mhi-pci-generic 0005:01:00.0: mhi_sync_power_up - returns
-[   73.668461] mhi mhi0_MBIM: PM: parent mhi0 should not be sleeping
-[   73.674950] mhi-pci-generic 0005:01:00.0: Recovery completed
-[   73.681428] mhi mhi0_QMI: PM: parent mhi0 should not be sleeping
-[   74.315919] OOM killer enabled.
-[   74.316475] wwan wwan0: port wwan0qcdm0 attached
-[   74.319206] Restarting tasks ...
-[   74.322825] done.
-[   74.322870] random: crng reseeded on system resumption
-[   74.325956] wwan wwan0: port wwan0mbim0 attached
-[   74.334467] wwan wwan0: port wwan0qmi0 attached
-
-> Unfortunately, something else is broken as the recovery code now
-> deadlocks again when the modem fails to resume (with both patches
-> applied):
+> On 10/01/2025 07:56, Mukesh Kumar Savaliya wrote:
+>> Thanks Caleb for your testing and sharing results. Since Viken is on
+>> leave, i am following on this.
+>>
+>> On 1/7/2025 4:55 PM, Caleb Connolly wrote:
+>>> Hi Viken,
+>>>
+>>> On 04/12/2024 16:03, Viken Dadhaniya wrote:
+>>>> In Qualcomm SoCs, firmware loading for Serial Engines (SE) in the QUP
+>>>> hardware has traditionally been managed by TrustZone (TZ). This setup
+>>>> handled Serial Engines(SE) assignments and access control permissions,
+>>>> ensuring a high level of security but limiting flexibility and
+>>>> accessibility.
+>>>>    This limitation poses a significant challenge for developers who
+>>>> need more
+>>>> flexibility to enable any protocol on any of the SEs within the QUP
+>>>> hardware.
+>>>>    To address this, we are introducing a change that opens the firmware
+>>>> loading mechanism to the Linux environment. This enhancement increases
+>>>> flexibility and allows for more streamlined and efficient management. We
+>>>> can now handle SE assignments and access control permissions directly
+>>>> within Linux, eliminating the dependency on TZ.
+>>>>    We propose an alternative method for firmware loading and SE
+>>>> ownership/transfer mode configuration based on device tree
+>>>> configuration.
+>>>> This method does not rely on other execution environments, making it
+>>>> accessible to all developers.
+>>>>    For SEs used prior to the kernel, their firmware will be loaded by the
+>>>> respective image drivers (e.g., Debug UART, Secure or trusted SE).
+>>>> Additionally, the GSI firmware, which is common to all SEs per QUPV3
+>>>> core,
+>>>> will not be loaded by Linux driver but TZ only. At the kernel level,
+>>>> only
+>>>> the SE protocol driver should load the respective protocol firmware.
+>>>
+>>> I gave this series a spin on the RB3 Gen 2 with U-Boot.
+>>>
+>> Is it possible to try on RB8 board ? Because that's where this support
+>> is enabled. It also needs respective TZ configuration to allow FW
+>> loading from Linux.
 > 
-> [  729.833701] PM: suspend entry (deep)
-> [  729.841377] Filesystems sync: 0.000 seconds
-> [  729.867672] Freezing user space processes
-> [  729.869494] Freezing user space processes completed (elapsed 0.001 seconds)
-> [  729.869499] OOM killer disabled.
-> [  729.869501] Freezing remaining freezable tasks
-> [  729.870882] Freezing remaining freezable tasks completed (elapsed 0.001 seconds)
-> [  730.184254] mhi-pci-generic 0005:01:00.0: mhi_pci_runtime_resume
-> [  730.190643] mhi mhi0: Resuming from non M3 state (SYS ERROR)
-> [  730.196587] mhi-pci-generic 0005:01:00.0: failed to resume device: -22
-> [  730.203412] mhi-pci-generic 0005:01:00.0: device recovery started
+> I don't have access to RB8, so no... This support will also be useful on
+> RB3 Gen 2 for U-Boot support, can the next tz release for this platform
+> include the necessary changes?
+Let us evaluate and review TZ configs and changes. This was meant for 
+only development boards. I will check internally and review for RB3 Gen2 
+and update.
+>>
+>>
+>>> After fixing the compilation errors, it seems like there is a consistent
+>>> hard crash (the board freezes and resets) at some point during i2c
+>>> controller init with this series.
+>>>
+>> Can you please share exact repro steps ? We can try locally and check
+>> what's wrong and also review in future how we make it working for U-boot
+>> combination.
 > 
-> I've reproduced this three times in three different paths (runtime
-> resume before suspend; runtime resume during suspend; and during system
-> resume).
+> If it's true that tz changes are needed that would certainly explain the
+> crash.
 > 
-> I didn't try to figure what causes the deadlock this time (and lockdep
-> does not trigger), but you should be able to reproduce this by
-> instrumenting a resume failure.
+yes
+> Unfortunately it isn't currently possible to boot QC Linux via U-Boot
+> since the ESP uses a 512 byte sector size on 4k block size UFS which is
+> not supported.
+> 
+> If you build an image with a correct ESP (mkfs.vfat -S 4096) then you
+> can boot U-Boot from upstream by following the RB3 Gen 2 documentation
+> 
+We need to check this and update back.
+> https://docs.u-boot.org/en/latest/board/qualcomm/rb3gen2.html
+> 
+> You'll also need to apply this patch to fix a boot regression
+> https://lore.kernel.org/u-boot/20250122-qcom-parse-memory-updates-v2-0-98dfcac821d7@samcday.com/
+> 
+> On the Linux/DTS side, apply this series, add the appropriate properties
+> to enable fw loading as-per the dt-bindings added by this series and
+> place the qupv3fw.elf file.
+> 
+Sure, got it.
+> Kind regards,
+>>> I noticed a similar issue with this same logic implemented in U-Boot.
+>>>
+>>> Could you clarify which xfer mode is appropriate for the i2c controllers
+>>> on the RB3 Gen 2 and maybe give this a try yourself, or let me know what
+>>> other info you'd need to debug this.
+>>>
+>> Yes, please share the procedure , we will try internally.
+>> is there any DTSI change done as part of your testing ?
+>>> Thanks and kind regards,
+>>>>
+>>>> Viken Dadhaniya (7):
+>>>>     dt-bindings: i2c: qcom,i2c-geni: Document DT properties for QUP
+>>>>       firmware loading
+>>>>     spi: dt-bindings: Document DT properties for QUP firmware loading
+>>>>     dt-bindings: serial: Document DT properties for QUP firmware loading
+>>>>     soc: qcom: geni-se:: Add support to load QUP SE Firmware via Linux
+>>>>       subsystem
+>>>>     i2c: qcom-geni: Load i2c qup Firmware from linux side
+>>>>     spi: geni-qcom: Load spi qup Firmware from linux side
+>>>>     serial: qcom-geni: Load UART qup Firmware from linux side
+>>>>
+>>>>    .../bindings/i2c/qcom,i2c-geni-qcom.yaml      |  11 +
+>>>>    .../serial/qcom,serial-geni-qcom.yaml         |  12 +
+>>>>    .../bindings/spi/qcom,spi-geni-qcom.yaml      |  11 +
+>>>>    drivers/i2c/busses/i2c-qcom-geni.c            |  11 +-
+>>>>    drivers/soc/qcom/qcom-geni-se.c               | 445 ++++++++++++++++++
+>>>>    drivers/spi/spi-geni-qcom.c                   |   7 +-
+>>>>    drivers/tty/serial/qcom_geni_serial.c         |   7 +-
+>>>>    include/linux/soc/qcom/geni-se.h              |  17 +
+>>>>    include/linux/soc/qcom/qup-fw-load.h          | 179 +++++++
+>>>>    9 files changed, 692 insertions(+), 8 deletions(-)
+>>>>    create mode 100644 include/linux/soc/qcom/qup-fw-load.h
+>>>>
+>>>
+>>
+> 
 
-Johan
 
