@@ -1,63 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-45891-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-45892-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8739AA19E10
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jan 2025 06:47:48 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id A5F28A19E7A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jan 2025 07:28:53 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 12EC13ADE76
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jan 2025 05:47:41 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CA36416B8C2
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jan 2025 06:28:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D5C6D15D5B8;
-	Thu, 23 Jan 2025 05:47:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 519821C2324;
+	Thu, 23 Jan 2025 06:28:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="hHA7jfiS"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="HBovaO+H"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AC10C2FD;
-	Thu, 23 Jan 2025 05:47:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0A5B2F3B;
+	Thu, 23 Jan 2025 06:28:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737611264; cv=none; b=u18DD5Y1ibaYa15y2Q/23FqRwTcVRX3k8a9E8v5KVUYc3hJIyow5MS1YGdjUTaYV1saHsMlx7AQfUsWWz+BszaTctgEGJR3OziwUKb6BRhIkg4L4viqT0KI0XUF2+UWAGoB6xBKEs2VFtiJbiQFCFWoLxk9vxtf9TzKgRZL4YOo=
+	t=1737613729; cv=none; b=R9Tx0tHMyPfPOrjlB+8tveh4KstIxZUJCP6ytj06OKzwW6mYTgwyH3ixOUY74g/hcBkmkT/oZa3ZT86Or82UuaO1Bb38zzFBDOA7OQPRc0Gutf7i6Nxjn4DUyWGbG9iHNi01s25uvHkqxVsvSYI9WWkXTFvFElgSbr2n3dYMWc4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737611264; c=relaxed/simple;
-	bh=VMt5WLJ/ewZmOUdHtp/jTIzwWeVvXGXtswOFv/KbxF4=;
+	s=arc-20240116; t=1737613729; c=relaxed/simple;
+	bh=WFD3nzfDNCJlo4F83dLz6aQY69TwPTXfKxZp/dT+aCI=;
 	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=jK9LhpbA7oS2ScqFTqyLPOLD9/CyibY2ACjqqEuowzyMJpXXMmLb0HTNtR1YDncGYAPp8cVAjwtC8Qb6wB2VLZPKcPHN9HgWasZmQmbfZTFmUcUyrSFLBM5Iywy4NDxQGnXRS9Lh0pQS0r7LrvgDmH3zPP8N6mFIehe3Nwz1Tgg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=hHA7jfiS; arc=none smtp.client-ip=205.220.180.131
+	 In-Reply-To:Content-Type; b=U7esO8VQCCZAOtB7JZ5sRN1eNb3XDWjz4b2AQvwzB7X/Z1mExUb0aAe2+oEMNy+/u6CdkUC9nE6PUAKrrJjISn2A8ZC1xgS7nUbVjUTsw3E1OQMs2s/33kYa/k12CTm7QSXh/gAhgTyxOTgwS7roDHdz+Dv8NaZ1UP6sHxE2svM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=HBovaO+H; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50N0cA6r031390;
-	Thu, 23 Jan 2025 05:46:48 GMT
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50N5c2u9028593;
+	Thu, 23 Jan 2025 06:28:22 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	P1qOnL/Q4KgrcwuymeCuZ1tXIPS4RMKus+0rJkmaTH4=; b=hHA7jfiSul9OKPP3
-	ZIcKdJthDuwqKE6xlXEKlD/9llqvIhP24fNiiZfxBsXvdZyE8pFaiFrmWQBc4piP
-	Exis1VzSlPUrTz8TXrBz2TLSY2J+190R2T/LJz/iyvdYaGWJDHxDYKdFB5dbrj4w
-	vTSs84sw84J/SFdlvCtgbPITbPNhUJEQqY/xW99ewHtBRdQo4ajfu0VlVywa+iFs
-	df7IEPITD1kjcZmKW01FFoCHCgTqxw+YeDt7mdRtyqqVxGXE4lBzxlY2xrdskB3w
-	BnpQvKzXO69djnky69pd5JtJV7IF4IxGpc6nTrsbbig19O2vmAMGVio/SAmIzaXM
-	tP0XdA==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44bbd2ghkb-1
+	7WC21fMlTInqYiLcMSPo1ZtjpwFoaCwm6yGK3q19RVg=; b=HBovaO+HO/ZE2Ghc
+	r/h691lmVPkbGKxC9O8EFAgCKdT5Ju1ek6+q7hAbvsCuYTxxouccb4weWBT7i2yl
+	m/F1T8stg0LB7esOetfCQ66fVfmMqt89mTyM1v7oB062EtNdJZ54SccBz1XTREQC
+	T9hPuMy7InHwUL2ZxQTtLd8vpkA8+eiCV3fCswO0tOKYkZhwPPq0RK9dP3J3t2Cq
+	5b1LCjXXL0ChrRoGP87WPFGg8oH9pl3cZQcodgmNDpKwNwILTkq9jrSFjRs7Ord4
+	6mIU7UsFndIgOvYTvvkiMGJUB4MM/e/gzps02khIDbAuE22VMl/+cgfYTOciM7XN
+	yuPWFw==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44bfss03ay-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 23 Jan 2025 05:46:48 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 50N5klkR027764
+	Thu, 23 Jan 2025 06:28:22 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 50N6SLe2003026
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 23 Jan 2025 05:46:47 GMT
-Received: from [10.204.65.49] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+	Thu, 23 Jan 2025 06:28:21 GMT
+Received: from [10.64.68.153] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 22 Jan
- 2025 21:46:44 -0800
-Message-ID: <53ce4792-6eca-42ae-b5d7-24d524697344@quicinc.com>
-Date: Thu, 23 Jan 2025 11:16:41 +0530
+ 2025 22:28:15 -0800
+Message-ID: <d0c19d60-1043-4ac3-904f-c5b70ed32138@quicinc.com>
+Date: Thu, 23 Jan 2025 14:28:13 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,384 +65,787 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 1/4] misc: fastrpc: Add CRC support using invokeV2
- request
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC: <srinivas.kandagatla@linaro.org>, <linux-arm-msm@vger.kernel.org>,
-        <gregkh@linuxfoundation.org>, <quic_bkumar@quicinc.com>,
-        <linux-kernel@vger.kernel.org>, <quic_chennak@quicinc.com>,
-        <dri-devel@lists.freedesktop.org>, <arnd@arndb.de>
-References: <20241007084518.3649876-1-quic_ekangupt@quicinc.com>
- <20241007084518.3649876-2-quic_ekangupt@quicinc.com>
- <bmg5em2f673vis6wwtjx6ibkhee7d3zocwesgoafsgt5jxbfqn@w73y6gmzbamj>
+Subject: Re: [PATCH v8 2/5] Coresight: Add trace_id function to retrieving the
+ trace ID
+To: James Clark <james.clark@linaro.org>
+CC: Jinlong Mao <quic_jinlmao@quicinc.com>, <coresight@lists.linaro.org>,
+        <linux-arm-kernel@lists.infradead.org>, <linux-kernel@vger.kernel.org>,
+        <devicetree@vger.kernel.org>,
+        Tingwei Zhang <quic_tingweiz@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>,
+        <linux-stm32@st-md-mailman.stormreply.com>,
+        Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Mike Leach
+	<mike.leach@linaro.org>,
+        Alexander Shishkin
+	<alexander.shishkin@linux.intel.com>,
+        Maxime Coquelin
+	<mcoquelin.stm32@gmail.com>,
+        Alexandre Torgue <alexandre.torgue@foss.st.com>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>
+References: <20241226011022.1477160-1-quic_jiegan@quicinc.com>
+ <20241226011022.1477160-3-quic_jiegan@quicinc.com>
+ <64731493-4bd1-4707-9452-5ca86744875b@linaro.org>
 Content-Language: en-US
-From: Ekansh Gupta <quic_ekangupt@quicinc.com>
-In-Reply-To: <bmg5em2f673vis6wwtjx6ibkhee7d3zocwesgoafsgt5jxbfqn@w73y6gmzbamj>
-Content-Type: text/plain; charset="UTF-8"
+From: Jie Gan <quic_jiegan@quicinc.com>
+In-Reply-To: <64731493-4bd1-4707-9452-5ca86744875b@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
 X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
+ nalasex01c.na.qualcomm.com (10.47.97.35)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: vsAUfHyj84cLBrvn5R2O-DgGkdhtb3ZN
-X-Proofpoint-ORIG-GUID: vsAUfHyj84cLBrvn5R2O-DgGkdhtb3ZN
+X-Proofpoint-GUID: mF1cm7sgOTkUrDjcdt8e9yxYEtNihDS3
+X-Proofpoint-ORIG-GUID: mF1cm7sgOTkUrDjcdt8e9yxYEtNihDS3
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
  definitions=2025-01-23_02,2025-01-22_02,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- impostorscore=0 bulkscore=0 malwarescore=0 spamscore=0 phishscore=0
- lowpriorityscore=0 clxscore=1015 mlxscore=0 mlxlogscore=999 suspectscore=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 phishscore=0
+ priorityscore=1501 suspectscore=0 clxscore=1015 malwarescore=0
+ impostorscore=0 mlxscore=0 mlxlogscore=999 spamscore=0 lowpriorityscore=0
  adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2501230043
+ engine=8.19.0-2411120000 definitions=main-2501230048
 
 
 
-
-On 10/7/2024 7:27 PM, Dmitry Baryshkov wrote:
-> On Mon, Oct 07, 2024 at 02:15:15PM GMT, Ekansh Gupta wrote:
->> InvokeV2 request is intended to support multiple enhanced invoke
->> requests like CRC check, performance counter enablement and polling
->> mode for RPC invocations. CRC check is getting enabled as part of
->> this patch. CRC check for input and output argument helps in ensuring
->> data consistency over a remote call. If user intends to enable CRC
->> check, first local user CRC is calculated at user end and a CRC buffer
->> is passed to DSP to capture remote CRC values. DSP is expected to
->> write to the remote CRC buffer which is then compared at user level
->> with the local CRC values.
-> This doesn't explain why this is necessary. Why do you need to checksum
-> arguments?
-This helps if the user suspects any data inconsistencies in the buffers passed to DSP over
-remote call. This is not enabled by default and user can enable it as per their reqirement.
-I'll add this information.
->
-> Also, what if the DSP firmware doesn't support CRC? How should userspace
-> know that?
-CRC support on DSP is there since long time(>6years). From user space CRC check failure is
-not fatal and is printed as a warning. But if copy of CRC to user fails, it will result in remote
-call failure. Should I keep it as fatal considering that ever very old DSP support this or should
-I consider the copy failure as non-fatal as userspace is treating this as a warning?
->
->> Signed-off-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
+On 1/13/2025 8:02 PM, James Clark wrote:
+> 
+> 
+> On 26/12/2024 1:10 am, Jie Gan wrote:
+>> Add 'trace_id' function pointer in ops. It's responsible for
+>> retrieving the device's trace ID.
+>>
+>> Add 'struct cs_sink_data' to store the data that is needed by
+>> coresight_enable_path/coresight_disable_path. The structure
+>> will be transmitted to the helper and sink device to enable
+>> related funcationalities.
+>>
+> 
+> The new cs_sink_data struct is quite specific to this change. Can we 
+> start passing the path around to enable/disable functions, that will 
+> allow devices to gather anything they want in the future. Because we 
+> already have coresight_get_sink(path), coresight_get_source(path) etc.
+> 
+> And see below, but for this case we can also change the path struct to 
+> contain the trace ID. Then all the new functions, allocations and 
+> searches for the trace ID are unecessary. The CTCU will have access to 
+> the path, and by the time its enable function is called the trace ID is 
+> already assigned.
+> 
+> It's also easier to understand at which point a trace ID is allocated, 
+> rather than adding the trace_id() callbacks from everywhere which could 
+> potentially either read or allocate. I suppose that's "safer" because 
+> maybe it's not allocated, but I can't see what case it would happen in 
+> reverse.
+> 
+>> Signed-off-by: Jie Gan <quic_jiegan@quicinc.com>
 >> ---
->>  drivers/misc/fastrpc.c      | 161 ++++++++++++++++++++++++------------
->>  include/uapi/misc/fastrpc.h |   7 ++
->>  2 files changed, 116 insertions(+), 52 deletions(-)
+>>   drivers/hwtracing/coresight/coresight-core.c  | 59 +++++++++++++++----
+>>   drivers/hwtracing/coresight/coresight-etb10.c |  3 +-
+>>   .../hwtracing/coresight/coresight-etm-perf.c  | 37 ++++++++++--
+>>   .../coresight/coresight-etm3x-core.c          | 30 ++++++++++
+>>   .../coresight/coresight-etm4x-core.c          | 29 +++++++++
+>>   drivers/hwtracing/coresight/coresight-priv.h  | 13 +++-
+>>   drivers/hwtracing/coresight/coresight-stm.c   | 22 +++++++
+>>   drivers/hwtracing/coresight/coresight-sysfs.c | 24 +++++++-
+>>   .../hwtracing/coresight/coresight-tmc-etf.c   |  3 +-
+>>   .../hwtracing/coresight/coresight-tmc-etr.c   |  6 +-
+>>   drivers/hwtracing/coresight/coresight-tpda.c  | 20 +++++++
+>>   drivers/hwtracing/coresight/coresight-trbe.c  |  4 +-
+>>   drivers/hwtracing/coresight/ultrasoc-smb.c    |  3 +-
+>>   include/linux/coresight.h                     |  6 ++
+>>   14 files changed, 234 insertions(+), 25 deletions(-)
 >>
->> diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
->> index 74181b8c386b..8e817a763d1d 100644
->> --- a/drivers/misc/fastrpc.c
->> +++ b/drivers/misc/fastrpc.c
->> @@ -573,13 +573,15 @@ static void fastrpc_get_buff_overlaps(struct fastrpc_invoke_ctx *ctx)
->>  
->>  static struct fastrpc_invoke_ctx *fastrpc_context_alloc(
->>  			struct fastrpc_user *user, u32 kernel, u32 sc,
->> -			struct fastrpc_invoke_args *args)
->> +			struct fastrpc_invoke_v2 *inv2)
->>  {
->>  	struct fastrpc_channel_ctx *cctx = user->cctx;
->>  	struct fastrpc_invoke_ctx *ctx = NULL;
->> +	struct fastrpc_invoke_args *args = NULL;
-> Why do you need to init to NULL if you are going to set it two lines
-> below?
->
->>  	unsigned long flags;
->>  	int ret;
->>  
->> +	args = (struct fastrpc_invoke_args *)inv2->inv.args;
-> Why does it need a typecast?
->
->>  	ctx = kzalloc(sizeof(*ctx), GFP_KERNEL);
->>  	if (!ctx)
->>  		return ERR_PTR(-ENOMEM);
->> @@ -611,6 +613,7 @@ static struct fastrpc_invoke_ctx *fastrpc_context_alloc(
->>  	/* Released in fastrpc_context_put() */
->>  	fastrpc_channel_ctx_get(cctx);
->>  
->> +	ctx->crc = (u32 *)(uintptr_t)inv2->crc;
-> Oh, but why? Also is it a user pointer or in-kernel data? If it's a
-> user-based pointer, where is the accessiblity check? Why isn't it
-> annotated properly?
-This is a user pointer where the crc data is expected to be copied. There is no
-other access to this pointer from kernel. I'm planning to change the data type
-for crc as (void __user*) inside fastrpc_invoke_ctx structure.
->
->>  	ctx->sc = sc;
->>  	ctx->retval = -1;
->>  	ctx->pid = current->pid;
->> @@ -1070,6 +1073,7 @@ static int fastrpc_put_args(struct fastrpc_invoke_ctx *ctx,
->>  	struct fastrpc_invoke_buf *list;
->>  	struct fastrpc_phy_page *pages;
->>  	u64 *fdlist;
->> +	u32 *crclist;
->>  	int i, inbufs, outbufs, handles;
->>  
->>  	inbufs = REMOTE_SCALARS_INBUFS(ctx->sc);
->> @@ -1078,6 +1082,7 @@ static int fastrpc_put_args(struct fastrpc_invoke_ctx *ctx,
->>  	list = fastrpc_invoke_buf_start(rpra, ctx->nscalars);
->>  	pages = fastrpc_phy_page_start(list, ctx->nscalars);
->>  	fdlist = (uint64_t *)(pages + inbufs + outbufs + handles);
->> +	crclist = (u32 *)(fdlist + FASTRPC_MAX_FDLIST);
-> I think we should rewrite this parsing somehow. Is the format of data
-> documented somewhere?
-fdlist, crclist and poll(planned) are the only pointers that is being used. I'm planning
-to store these pointers to ctx structure and directly use it wherever needed. This will
-clean-up this unnecessary calculations at multiple places.
->
->>  
->>  	for (i = inbufs; i < ctx->nbufs; ++i) {
->>  		if (!ctx->maps[i]) {
->> @@ -1102,6 +1107,12 @@ static int fastrpc_put_args(struct fastrpc_invoke_ctx *ctx,
->>  			fastrpc_map_put(mmap);
->>  	}
->>  
->> +	if (ctx->crc && crclist && rpra) {
->> +		if (copy_to_user((void __user *)ctx->crc, crclist,
->> +				FASTRPC_MAX_CRCLIST * sizeof(u32)))
-> Oh, so it's a user pointer. Then u32* was completely incorrect.
-> Also you are copying FASTRPC_MAX_CRCLIST elements. Are all of them
-> filled? Or are we leaking some data to userspace?
-Yes, right. Planning clean-up in next patch.
-
-All of FASTRPC_MAX_CRCLIST is filled with crc data by DSP so copying should be fine.
->
->> +			return -EFAULT;
->> +	}
->> +
->>  	return 0;
->>  }
->>  
->> @@ -1137,13 +1148,12 @@ static int fastrpc_invoke_send(struct fastrpc_session_ctx *sctx,
->>  
->>  }
->>  
->> -static int fastrpc_internal_invoke(struct fastrpc_user *fl,  u32 kernel,
->> -				   u32 handle, u32 sc,
->> -				   struct fastrpc_invoke_args *args)
->> +static int fastrpc_internal_invoke(struct fastrpc_user *fl,  u32 kernel, struct fastrpc_invoke_v2 *inv2)
-> Please don't touch what doesn't need to be touched. You are replacing
-> handle/sc/args with inv2, not touching the first line.
-Ack.
->
->>  {
->>  	struct fastrpc_invoke_ctx *ctx = NULL;
->>  	struct fastrpc_buf *buf, *b;
->> -
->> +	struct fastrpc_invoke inv;
->> +	u32 handle, sc;
->>  	int err = 0;
->>  
->>  	if (!fl->sctx)
->> @@ -1152,12 +1162,15 @@ static int fastrpc_internal_invoke(struct fastrpc_user *fl,  u32 kernel,
->>  	if (!fl->cctx->rpdev)
->>  		return -EPIPE;
->>  
->> +	inv = inv2->inv;
->> +	handle = inv.handle;
->> +	sc = inv.sc;
->>  	if (handle == FASTRPC_INIT_HANDLE && !kernel) {
->>  		dev_warn_ratelimited(fl->sctx->dev, "user app trying to send a kernel RPC message (%d)\n",  handle);
->>  		return -EPERM;
->>  	}
->>  
->> -	ctx = fastrpc_context_alloc(fl, kernel, sc, args);
->> +	ctx = fastrpc_context_alloc(fl, kernel, sc, inv2);
->>  	if (IS_ERR(ctx))
->>  		return PTR_ERR(ctx);
->>  
->> @@ -1239,6 +1252,7 @@ static int fastrpc_init_create_static_process(struct fastrpc_user *fl,
->>  {
->>  	struct fastrpc_init_create_static init;
->>  	struct fastrpc_invoke_args *args;
->> +	struct fastrpc_invoke_v2 ioctl = {0};
-> Why do you need to init it?
-Ack.
->
->>  	struct fastrpc_phy_page pages[1];
->>  	char *name;
->>  	int err;
->> @@ -1248,7 +1262,6 @@ static int fastrpc_init_create_static_process(struct fastrpc_user *fl,
->>  		u32 namelen;
->>  		u32 pageslen;
->>  	} inbuf;
->> -	u32 sc;
->>  
->>  	args = kcalloc(FASTRPC_CREATE_STATIC_PROCESS_NARGS, sizeof(*args), GFP_KERNEL);
->>  	if (!args)
->> @@ -1313,10 +1326,10 @@ static int fastrpc_init_create_static_process(struct fastrpc_user *fl,
->>  	args[2].length = sizeof(*pages);
->>  	args[2].fd = -1;
->>  
->> -	sc = FASTRPC_SCALARS(FASTRPC_RMID_INIT_CREATE_STATIC, 3, 0);
->> -
->> -	err = fastrpc_internal_invoke(fl, true, FASTRPC_INIT_HANDLE,
->> -				      sc, args);
->> +	ioctl.inv.handle = FASTRPC_INIT_HANDLE;
->> +	ioctl.inv.sc = FASTRPC_SCALARS(FASTRPC_RMID_INIT_CREATE_STATIC, 3, 0);
->> +	ioctl.inv.args = (u64)args;
-> Can you pass it as is, without typecasts?
-Cleaned up in refactoring change.
->
->> +	err = fastrpc_internal_invoke(fl, true, &ioctl);
->>  	if (err)
->>  		goto err_invoke;
->>  
->> @@ -1357,6 +1370,7 @@ static int fastrpc_init_create_process(struct fastrpc_user *fl,
->>  {
->>  	struct fastrpc_init_create init;
->>  	struct fastrpc_invoke_args *args;
->> +	struct fastrpc_invoke_v2 ioctl = {0};
->>  	struct fastrpc_phy_page pages[1];
->>  	struct fastrpc_map *map = NULL;
->>  	struct fastrpc_buf *imem = NULL;
->> @@ -1370,7 +1384,6 @@ static int fastrpc_init_create_process(struct fastrpc_user *fl,
->>  		u32 attrs;
->>  		u32 siglen;
->>  	} inbuf;
->> -	u32 sc;
->>  	bool unsigned_module = false;
->>  
->>  	args = kcalloc(FASTRPC_CREATE_PROCESS_NARGS, sizeof(*args), GFP_KERNEL);
->> @@ -1444,12 +1457,12 @@ static int fastrpc_init_create_process(struct fastrpc_user *fl,
->>  	args[5].length = sizeof(inbuf.siglen);
->>  	args[5].fd = -1;
->>  
->> -	sc = FASTRPC_SCALARS(FASTRPC_RMID_INIT_CREATE, 4, 0);
->> +	ioctl.inv.handle = FASTRPC_INIT_HANDLE;
->> +	ioctl.inv.sc = FASTRPC_SCALARS(FASTRPC_RMID_INIT_CREATE, 4, 0);
->>  	if (init.attrs)
->> -		sc = FASTRPC_SCALARS(FASTRPC_RMID_INIT_CREATE_ATTR, 4, 0);
->> -
->> -	err = fastrpc_internal_invoke(fl, true, FASTRPC_INIT_HANDLE,
->> -				      sc, args);
->> +		ioctl.inv.sc = FASTRPC_SCALARS(FASTRPC_RMID_INIT_CREATE_ATTR, 4, 0);
-> if (init.attrs)
->     ioctl.inv.sc = FASTRPC_SCALARS(FASTRPC_RMID_INIT_CREATE_ATTR, 4, 0);
-> else
->     ioctl.inv.sc = FASTRPC_SCALARS(FASTRPC_RMID_INIT_CREATE, 4, 0);
->
->> +	ioctl.inv.args = (u64)args;
->> +	err = fastrpc_internal_invoke(fl, true, &ioctl);
->>  	if (err)
->>  		goto err_invoke;
->>  
->> @@ -1501,17 +1514,18 @@ static void fastrpc_session_free(struct fastrpc_channel_ctx *cctx,
->>  static int fastrpc_release_current_dsp_process(struct fastrpc_user *fl)
->>  {
->>  	struct fastrpc_invoke_args args[1];
->> +	struct fastrpc_invoke_v2 ioctl = {0};
->>  	int tgid = 0;
->> -	u32 sc;
->>  
->>  	tgid = fl->tgid;
->>  	args[0].ptr = (u64)(uintptr_t) &tgid;
->>  	args[0].length = sizeof(tgid);
->>  	args[0].fd = -1;
->> -	sc = FASTRPC_SCALARS(FASTRPC_RMID_INIT_RELEASE, 1, 0);
->>  
->> -	return fastrpc_internal_invoke(fl, true, FASTRPC_INIT_HANDLE,
->> -				       sc, &args[0]);
->> +	ioctl.inv.handle = FASTRPC_INIT_HANDLE;
->> +	ioctl.inv.sc = FASTRPC_SCALARS(FASTRPC_RMID_INIT_RELEASE, 1, 0);
->> +	ioctl.inv.args = (u64)args;
->> +	return fastrpc_internal_invoke(fl, true, &ioctl);
->>  }
->>  
->>  static int fastrpc_device_release(struct inode *inode, struct file *file)
->> @@ -1647,45 +1661,77 @@ static int fastrpc_dmabuf_alloc(struct fastrpc_user *fl, char __user *argp)
->>  static int fastrpc_init_attach(struct fastrpc_user *fl, int pd)
->>  {
->>  	struct fastrpc_invoke_args args[1];
->> +	struct fastrpc_invoke_v2 ioctl = {0};
->>  	int tgid = fl->tgid;
->> -	u32 sc;
->>  
->>  	args[0].ptr = (u64)(uintptr_t) &tgid;
->>  	args[0].length = sizeof(tgid);
->>  	args[0].fd = -1;
->> -	sc = FASTRPC_SCALARS(FASTRPC_RMID_INIT_ATTACH, 1, 0);
->>  	fl->pd = pd;
->>  
->> -	return fastrpc_internal_invoke(fl, true, FASTRPC_INIT_HANDLE,
->> -				       sc, &args[0]);
->> +	ioctl.inv.handle = FASTRPC_INIT_HANDLE;
->> +	ioctl.inv.sc = FASTRPC_SCALARS(FASTRPC_RMID_INIT_ATTACH, 1, 0);
->> +	ioctl.inv.args = (u64)args;
->> +	return fastrpc_internal_invoke(fl, true, &ioctl);
->>  }
->>  
->> -static int fastrpc_invoke(struct fastrpc_user *fl, char __user *argp)
->> +static int fastrpc_copy_args(struct fastrpc_invoke *inv)
->>  {
->>  	struct fastrpc_invoke_args *args = NULL;
->> -	struct fastrpc_invoke inv;
->>  	u32 nscalars;
->> -	int err;
->> -
->> -	if (copy_from_user(&inv, argp, sizeof(inv)))
->> -		return -EFAULT;
->>  
->>  	/* nscalars is truncated here to max supported value */
->> -	nscalars = REMOTE_SCALARS_LENGTH(inv.sc);
->> +	nscalars = REMOTE_SCALARS_LENGTH(inv->sc);
->>  	if (nscalars) {
->>  		args = kcalloc(nscalars, sizeof(*args), GFP_KERNEL);
->>  		if (!args)
->>  			return -ENOMEM;
->>  
->> -		if (copy_from_user(args, (void __user *)(uintptr_t)inv.args,
->> +		if (copy_from_user(args, (void __user *)(uintptr_t)inv->args,
-> Wait... So inv->args is a user pointer? Then how can you assign a
-> kernel-based pointer to the same field? I think you need to sanitize
-> your structures. One is userspace-facing. It should be using userspace
-> data pointers, etc. Another one is a kernel representation of the ioctl
-> args. It might have a different structure, it shouldn't contain __user
-> data, etc.
-I'm planning to have a new structure to carry ctx specific data which will be saved in
-fastrpc_invoke_ctx structure during fastrpc_context_alloc.
-
-Something like this:
-struct fastrpc_ctx_args {
-    struct fastrpc_invoke_args *args;  /* Carries args that is copied from ioctl structure */
-    void __user *crc; /* Carries CRC user pointer where the crcdata from DSP will be copied for user to read */
-    u64 poll_timeout; /* Carried context specific poll_timeout information */
-};
-
-Do you see any problem with this?
->
->>  				   nscalars * sizeof(*args))) {
->>  			kfree(args);
->>  			return -EFAULT;
->>  		}
->>  	}
->> +	inv->args = args;
->>  
->> -	err = fastrpc_internal_invoke(fl, false, inv.handle, inv.sc, args);
->> -	kfree(args);
->> +	return 0;
->> +}
-> Looking at the rest of the code, I think the patch needs to be split.
-> CRC is the minor issue at this point, please focus on getting existing
-> data being handled correctly while refactoring the code to use new
-> structure. I'd suggest seeing two struct definitions: one for the
-> userspace and another one for the kernel space.
-I've made changes for refactoring where instead of using userspace structure, I'm
-planning to use fastrpc_ctx_args structure mentioned above.
->
->> +
->> +static int fastrpc_invoke(struct fastrpc_user *fl, char __user *argp)
+>> diff --git a/drivers/hwtracing/coresight/coresight-core.c b/drivers/ 
+>> hwtracing/coresight/coresight-core.c
+>> index 0a9380350fb5..2e560b425fd4 100644
+>> --- a/drivers/hwtracing/coresight/coresight-core.c
+>> +++ b/drivers/hwtracing/coresight/coresight-core.c
+>> @@ -23,6 +23,7 @@
+>>   #include "coresight-etm-perf.h"
+>>   #include "coresight-priv.h"
+>>   #include "coresight-syscfg.h"
+>> +#include "coresight-trace-id.h"
+>>   /*
+>>    * Mutex used to lock all sysfs enable and disable actions and 
+>> loading and
+>> @@ -331,12 +332,12 @@ static int coresight_enable_helper(struct 
+>> coresight_device *csdev,
+>>       return helper_ops(csdev)->enable(csdev, mode, data);
+>>   }
+>> -static void coresight_disable_helper(struct coresight_device *csdev)
+>> +static void coresight_disable_helper(struct coresight_device *csdev, 
+>> void *data)
+>>   {
+>> -    helper_ops(csdev)->disable(csdev, NULL);
+>> +    helper_ops(csdev)->disable(csdev, data);
+>>   }
+>> -static void coresight_disable_helpers(struct coresight_device *csdev)
+>> +static void coresight_disable_helpers(struct coresight_device *csdev, 
+>> void *data)
+>>   {
+>>       int i;
+>>       struct coresight_device *helper;
+>> @@ -344,7 +345,7 @@ static void coresight_disable_helpers(struct 
+>> coresight_device *csdev)
+>>       for (i = 0; i < csdev->pdata->nr_outconns; ++i) {
+>>           helper = csdev->pdata->out_conns[i]->dest_dev;
+>>           if (helper && coresight_is_helper(helper))
+>> -            coresight_disable_helper(helper);
+>> +            coresight_disable_helper(helper, data);
+>>       }
+>>   }
+>> @@ -361,7 +362,7 @@ static void coresight_disable_helpers(struct 
+>> coresight_device *csdev)
+>>   void coresight_disable_source(struct coresight_device *csdev, void 
+>> *data)
+>>   {
+>>       source_ops(csdev)->disable(csdev, data);
+>> -    coresight_disable_helpers(csdev);
+>> +    coresight_disable_helpers(csdev, NULL);
+>>   }
+>>   EXPORT_SYMBOL_GPL(coresight_disable_source);
+>> @@ -371,7 +372,8 @@ EXPORT_SYMBOL_GPL(coresight_disable_source);
+>>    * disabled.
+>>    */
+>>   static void coresight_disable_path_from(struct list_head *path,
+>> -                    struct coresight_node *nd)
+>> +                    struct coresight_node *nd,
+>> +                    void *sink_data)
+>>   {
+>>       u32 type;
+>>       struct coresight_device *csdev, *parent, *child;
+>> @@ -417,13 +419,13 @@ static void coresight_disable_path_from(struct 
+>> list_head *path,
+>>           }
+>>           /* Disable all helpers adjacent along the path last */
+>> -        coresight_disable_helpers(csdev);
+>> +        coresight_disable_helpers(csdev, sink_data);
+>>       }
+>>   }
+>> -void coresight_disable_path(struct list_head *path)
+>> +void coresight_disable_path(struct list_head *path, void *sink_data)
+>>   {
+>> -    coresight_disable_path_from(path, NULL);
+>> +    coresight_disable_path_from(path, NULL, sink_data);
+>>   }
+>>   EXPORT_SYMBOL_GPL(coresight_disable_path);
+>> @@ -505,10 +507,47 @@ int coresight_enable_path(struct list_head 
+>> *path, enum cs_mode mode,
+>>   out:
+>>       return ret;
+>>   err:
+>> -    coresight_disable_path_from(path, nd);
+>> +    coresight_disable_path_from(path, nd, sink_data);
+>>       goto out;
+>>   }
+>> +int coresight_read_traceid(struct list_head *path, enum cs_mode mode,
+>> +               struct coresight_trace_id_map *id_map)
 >> +{
->> +	struct fastrpc_invoke_v2 ioctl = {0};
->> +	struct fastrpc_invoke inv;
->> +	int err;
+>> +    int trace_id, type;
+>> +    struct coresight_device *csdev;
+>> +    struct coresight_node *nd;
 >> +
->> +	if (copy_from_user(&inv, argp, sizeof(inv)))
->> +		return -EFAULT;
+>> +    list_for_each_entry(nd, path, link) {
+> 
+> What do you think about also changing the path to this:
+> 
+>   struct coresight_path {
+>     struct list_head *path,
+>     u8 trace_id
+>   };
+> 
+> That would avoid having to traverse the path on every enable and would 
+> remove this function. You could also cache the trace ID in the CTCU for 
+> a similar benefit, but it wouldn't remove the need to call this at least 
+> once.
+> 
+> The expensive part should be the create path part, after that enable and 
+> disable should be cheap because they happen on schedule for Perf mode. 
+> We should be avoiding allocations and searches.
+> 
+>> +        csdev = nd->csdev;
+>> +        type = csdev->type;
 >> +
->> +	err = fastrpc_copy_args(&inv);
->> +	if (err)
->>
->> -- 
->> 2.34.1
->>
+>> +        switch (type) {
+>> +        case CORESIGHT_DEV_TYPE_SOURCE:
+>> +            if (source_ops(csdev)->trace_id != NULL) {
+>> +                trace_id = source_ops(csdev)->trace_id(csdev,
+>> +                                       mode,
+>> +                                       id_map);
+>> +                if (IS_VALID_CS_TRACE_ID(trace_id))
+>> +                    goto out;
+>> +            }
+>> +            break;
+>> +        case CORESIGHT_DEV_TYPE_LINK:
+>> +            if (link_ops(csdev)->trace_id != NULL) {
+>> +                trace_id = link_ops(csdev)->trace_id(csdev);
+>> +                if (IS_VALID_CS_TRACE_ID(trace_id))
+>> +                    goto out;
+>> +            }
+>> +            break;
+>> +        default:
+>> +            break;
+>> +        }
+>> +    }
+>> +    return -EINVAL;
+>> +out:
+>> +    return trace_id;
+>> +}
+>> +
+>>   struct coresight_device *coresight_get_sink(struct list_head *path)
+>>   {
+>>       struct coresight_device *csdev;
+>> diff --git a/drivers/hwtracing/coresight/coresight-etb10.c b/drivers/ 
+>> hwtracing/coresight/coresight-etb10.c
+>> index aea9ac9c4bd0..904b5531c256 100644
+>> --- a/drivers/hwtracing/coresight/coresight-etb10.c
+>> +++ b/drivers/hwtracing/coresight/coresight-etb10.c
+>> @@ -173,7 +173,8 @@ static int etb_enable_perf(struct coresight_device 
+>> *csdev, void *data)
+>>       pid_t pid;
+>>       unsigned long flags;
+>>       struct etb_drvdata *drvdata = dev_get_drvdata(csdev->dev.parent);
+>> -    struct perf_output_handle *handle = data;
+>> +    struct cs_sink_data *sink_data = (struct cs_sink_data *)data;
+>> +    struct perf_output_handle *handle = sink_data->handle;
+>>       struct cs_buffers *buf = etm_perf_sink_config(handle);
+>>       spin_lock_irqsave(&drvdata->spinlock, flags);
+>> diff --git a/drivers/hwtracing/coresight/coresight-etm-perf.c b/ 
+>> drivers/hwtracing/coresight/coresight-etm-perf.c
+>> index ad6a8f4b70b6..e676edd42ddc 100644
+>> --- a/drivers/hwtracing/coresight/coresight-etm-perf.c
+>> +++ b/drivers/hwtracing/coresight/coresight-etm-perf.c
+>> @@ -459,6 +459,7 @@ static void etm_event_start(struct perf_event 
+>> *event, int flags)
+>>       struct perf_output_handle *handle = &ctxt->handle;
+>>       struct coresight_device *sink, *csdev = per_cpu(csdev_src, cpu);
+>>       struct list_head *path;
+>> +    struct cs_sink_data *sink_data = NULL;
+>>       u64 hw_id;
+>>       u8 trace_id;
+>> @@ -498,9 +499,20 @@ static void etm_event_start(struct perf_event 
+>> *event, int flags)
+>>       if (WARN_ON_ONCE(!sink))
+>>           goto fail_end_stop;
+>> +    sink_data = kzalloc(sizeof(*sink_data), GFP_KERNEL);
+> 
+> kzalloc can't be called from here. Check dmesg for the warning. That's 
+> another reason to do this change on the path. Because the path is 
+> allocated on etm_setup_aux() where allocations are allowed.
+> 
+Hi, James
+I just tried with following command and did not observe any warning info 
+from dmesg, may I ask what's the issue may suffered here?
+
+root@qemuarm64:/data# ./perf record -e cs_etm/@tmc_etr0/ --per-thread ls
+configs        kernel.txt     logs           lost+found     misc 
+   perf           perf.data      perf.data.old  root           time 
+      tzstorage      weston
+[ perf record: Woken up 1 times to write data ]
+[ perf record: Captured and wrote 0.145 MB perf.data ]
+
+For the new patch version, I implemented an 8-bit hash table in the CTCU 
+driver data to handle situations where multiple TPDMs are connected to 
+the same TPDA device have been enabled. As we know, TPDMs share the 
+trace_id of the TPDA device they are connected to. If we reset the bit 
+based on the trace_id without checking the enabled refcount, it causes 
+an issue where trace data from other enabled TPDM devices (sharing the 
+same trace_id) cannot enter the ETR buffer, as it gets filtered out by 
+the CTCU.
+
+I need allocate memory when implement hash table(add/remove key entry) 
+in coresight_enable_path flow, but you mentioned we cannot call kzalloc 
+from here.
+
+Thanks,
+Jie
+
+>> +    if (!sink_data)
+>> +        goto fail_end_stop;
+>> +
+>> +    sink_data->sink = sink;
+>> +    sink_data->traceid = coresight_read_traceid(path, CS_MODE_PERF,
+>> +                            &sink->perf_sink_id_map);
+>> +    sink_data->handle = handle;
+>> +
+>>       /* Nothing will happen without a path */
+>> -    if (coresight_enable_path(path, CS_MODE_PERF, handle))
+>> +    if (coresight_enable_path(path, CS_MODE_PERF, sink_data)) {
+>> +        kfree(sink_data);
+>>           goto fail_end_stop;
+>> +    }
+>>       /* Finally enable the tracer */
+>>       if (source_ops(csdev)->enable(csdev, event, CS_MODE_PERF,
+>> @@ -526,6 +538,7 @@ static void etm_event_start(struct perf_event 
+>> *event, int flags)
+>>           perf_report_aux_output_id(event, hw_id);
+>>       }
+>> +    kfree(sink_data);
+>>   out:
+>>       /* Tell the perf core the event is alive */
+>>       event->hw.state = 0;
+>> @@ -534,7 +547,8 @@ static void etm_event_start(struct perf_event 
+>> *event, int flags)
+>>       return;
+>>   fail_disable_path:
+>> -    coresight_disable_path(path);
+>> +    coresight_disable_path(path, sink_data);
+>> +    kfree(sink_data);
+>>   fail_end_stop:
+>>       /*
+>>        * Check if the handle is still associated with the event,
+>> @@ -559,6 +573,7 @@ static void etm_event_stop(struct perf_event 
+>> *event, int mode)
+>>       struct perf_output_handle *handle = &ctxt->handle;
+>>       struct etm_event_data *event_data;
+>>       struct list_head *path;
+>> +    struct cs_sink_data *sink_data = NULL;
+>>       /*
+>>        * If we still have access to the event_data via handle,
+>> @@ -603,6 +618,10 @@ static void etm_event_stop(struct perf_event 
+>> *event, int mode)
+>>       if (!sink)
+>>           return;
+>> +    sink_data = kzalloc(sizeof(*sink_data), GFP_KERNEL);
+> 
+> Same problem as above.
+> 
+>> +    if (!sink_data)
+>> +        return;
+>> +
+>>       /* stop tracer */
+>>       coresight_disable_source(csdev, event);
+>> @@ -616,12 +635,16 @@ static void etm_event_stop(struct perf_event 
+>> *event, int mode)
+>>        * have to do anything here.
+>>        */
+>>       if (handle->event && (mode & PERF_EF_UPDATE)) {
+>> -        if (WARN_ON_ONCE(handle->event != event))
+>> +        if (WARN_ON_ONCE(handle->event != event)) {
+>> +            kfree(sink_data);
+>>               return;
+>> +        }
+>>           /* update trace information */
+>> -        if (!sink_ops(sink)->update_buffer)
+>> +        if (!sink_ops(sink)->update_buffer) {
+>> +            kfree(sink_data);
+>>               return;
+>> +        }
+>>           size = sink_ops(sink)->update_buffer(sink, handle,
+>>                             event_data->snk_config);
+>> @@ -642,8 +665,12 @@ static void etm_event_stop(struct perf_event 
+>> *event, int mode)
+>>               WARN_ON(size);
+>>       }
+>> +    sink_data->sink = sink;
+>> +    sink_data->traceid = coresight_read_traceid(path, CS_MODE_PERF,
+>> +                            &sink->perf_sink_id_map);
+>>       /* Disabling the path make its elements available to other 
+>> sessions */
+>> -    coresight_disable_path(path);
+>> +    coresight_disable_path(path, sink_data);
+>> +    kfree(sink_data);
+>>   }
+>>   static int etm_event_add(struct perf_event *event, int mode)
+>> diff --git a/drivers/hwtracing/coresight/coresight-etm3x-core.c b/ 
+>> drivers/hwtracing/coresight/coresight-etm3x-core.c
+>> index c103f4c70f5d..0f095fab7e0a 100644
+>> --- a/drivers/hwtracing/coresight/coresight-etm3x-core.c
+>> +++ b/drivers/hwtracing/coresight/coresight-etm3x-core.c
+>> @@ -697,10 +697,40 @@ static void etm_disable(struct coresight_device 
+>> *csdev,
+>>           coresight_set_mode(csdev, CS_MODE_DISABLED);
+>>   }
+>> +static int etm_trace_id(struct coresight_device *csdev,
+>> +            enum cs_mode mode,
+>> +            struct coresight_trace_id_map *id_map)
+>> +{
+>> +    int trace_id;
+>> +    struct etm_drvdata *drvdata;
+>> +
+>> +    if (csdev == NULL)
+>> +        return -EINVAL;
+>> +
+>> +    drvdata = dev_get_drvdata(csdev->dev.parent);
+>> +    switch (mode) {
+>> +    case CS_MODE_SYSFS:
+>> +        trace_id = etm_read_alloc_trace_id(drvdata);
+>> +        break;
+>> +    case CS_MODE_PERF:
+>> +        trace_id = coresight_trace_id_read_cpu_id_map(drvdata->cpu, 
+>> id_map);
+>> +        if (IS_VALID_CS_TRACE_ID(trace_id))
+>> +            drvdata->traceid = (u8)trace_id;
+>> +        break;
+>> +    default:
+>> +        trace_id = -EINVAL;
+>> +        break;
+>> +    }
+>> +
+>> +    return trace_id;
+>> +}
+>> +
+>> +
+>>   static const struct coresight_ops_source etm_source_ops = {
+>>       .cpu_id        = etm_cpu_id,
+>>       .enable        = etm_enable,
+>>       .disable    = etm_disable,
+>> +    .trace_id    = etm_trace_id,
+>>   };
+>>   static const struct coresight_ops etm_cs_ops = {
+>> diff --git a/drivers/hwtracing/coresight/coresight-etm4x-core.c b/ 
+>> drivers/hwtracing/coresight/coresight-etm4x-core.c
+>> index dd8c74f893db..bac9ea371688 100644
+>> --- a/drivers/hwtracing/coresight/coresight-etm4x-core.c
+>> +++ b/drivers/hwtracing/coresight/coresight-etm4x-core.c
+>> @@ -1025,10 +1025,39 @@ static void etm4_disable(struct 
+>> coresight_device *csdev,
+>>           coresight_set_mode(csdev, CS_MODE_DISABLED);
+>>   }
+>> +static int etm4_trace_id(struct coresight_device *csdev,
+>> +             enum cs_mode mode,
+>> +             struct coresight_trace_id_map *id_map)
+>> +{
+>> +    int trace_id;
+>> +    struct etmv4_drvdata *drvdata;
+>> +
+>> +    if (csdev == NULL)
+>> +        return -EINVAL;
+>> +
+>> +    drvdata = dev_get_drvdata(csdev->dev.parent);
+>> +    switch (mode) {
+>> +    case CS_MODE_SYSFS:
+>> +        trace_id = etm4_read_alloc_trace_id(drvdata);
+>> +        break;
+>> +    case CS_MODE_PERF:
+>> +        trace_id = coresight_trace_id_read_cpu_id_map(drvdata->cpu, 
+>> id_map);
+>> +        if (IS_VALID_CS_TRACE_ID(trace_id))
+>> +            drvdata->trcid = (u8)trace_id;
+>> +        break;
+>> +    default:
+>> +        trace_id = -EINVAL;
+>> +        break;
+>> +    }
+>> +
+>> +    return trace_id;
+>> +}
+>> +
+>>   static const struct coresight_ops_source etm4_source_ops = {
+>>       .cpu_id        = etm4_cpu_id,
+>>       .enable        = etm4_enable,
+>>       .disable    = etm4_disable,
+>> +    .trace_id    = etm4_trace_id,
+>>   };
+>>   static const struct coresight_ops etm4_cs_ops = {
+>> diff --git a/drivers/hwtracing/coresight/coresight-priv.h b/drivers/ 
+>> hwtracing/coresight/coresight-priv.h
+>> index 05f891ca6b5c..6a95a3ba9339 100644
+>> --- a/drivers/hwtracing/coresight/coresight-priv.h
+>> +++ b/drivers/hwtracing/coresight/coresight-priv.h
+>> @@ -105,6 +105,15 @@ struct cs_buffers {
+>>       void            **data_pages;
+>>   };
+>> +/**
+>> + * struct cs_sink_data - data used by coresight_enable_path/ 
+>> coresight_disable_path
+>> + */
+>> +struct cs_sink_data {
+>> +    struct perf_output_handle    *handle;
+>> +    struct coresight_device        *sink;
+>> +    u8                traceid;
+>> +};
+>> +
+>>   static inline void coresight_insert_barrier_packet(void *buf)
+>>   {
+>>       if (buf)
+>> @@ -129,9 +138,11 @@ static inline void CS_UNLOCK(void __iomem *addr)
+>>       } while (0);
+>>   }
+>> -void coresight_disable_path(struct list_head *path);
+>> +void coresight_disable_path(struct list_head *path, void *sink_data);
+>>   int coresight_enable_path(struct list_head *path, enum cs_mode mode,
+>>                 void *sink_data);
+>> +int coresight_read_traceid(struct list_head *path, enum cs_mode mode,
+>> +               struct coresight_trace_id_map *id_map);
+>>   struct coresight_device *coresight_get_sink(struct list_head *path);
+>>   struct coresight_device *coresight_get_sink_by_id(u32 id);
+>>   struct coresight_device *
+>> diff --git a/drivers/hwtracing/coresight/coresight-stm.c b/drivers/ 
+>> hwtracing/coresight/coresight-stm.c
+>> index b581a30a1cd9..5709eda77d9b 100644
+>> --- a/drivers/hwtracing/coresight/coresight-stm.c
+>> +++ b/drivers/hwtracing/coresight/coresight-stm.c
+>> @@ -281,9 +281,31 @@ static void stm_disable(struct coresight_device 
+>> *csdev,
+>>       }
+>>   }
+>> +static int stm_trace_id(struct coresight_device *csdev,
+>> +            enum cs_mode mode,
+>> +            struct coresight_trace_id_map *id_map)
+>> +{
+>> +    int trace_id;
+>> +    struct stm_drvdata *drvdata;
+>> +
+>> +    if (csdev == NULL)
+>> +        return -EINVAL;
+>> +
+>> +    drvdata = dev_get_drvdata(csdev->dev.parent);
+>> +    trace_id = drvdata->traceid;
+>> +    if (!IS_VALID_CS_TRACE_ID(trace_id)) {
+> 
+> Trace ID is static and always set for STM so this isn't necessary, just 
+> return drvdata->traceid which would already be valid otherwise the 
+> device wouldn't be registered.
+> 
+>> +        trace_id = coresight_trace_id_get_system_id();
+>> +        if (IS_VALID_CS_TRACE_ID(trace_id))
+>> +            drvdata->traceid = (u8)trace_id;
+>> +    }
+>> +
+>> +    return trace_id;
+>> +}
+>> +
+>>   static const struct coresight_ops_source stm_source_ops = {
+>>       .enable        = stm_enable,
+>>       .disable    = stm_disable,
+>> +    .trace_id    = stm_trace_id,
+>>   };
+>>   static const struct coresight_ops stm_cs_ops = {
+>> diff --git a/drivers/hwtracing/coresight/coresight-sysfs.c b/drivers/ 
+>> hwtracing/coresight/coresight-sysfs.c
+>> index a01c9e54e2ed..8816bccba374 100644
+>> --- a/drivers/hwtracing/coresight/coresight-sysfs.c
+>> +++ b/drivers/hwtracing/coresight/coresight-sysfs.c
+>> @@ -168,6 +168,7 @@ int coresight_enable_sysfs(struct coresight_device 
+>> *csdev)
+>>       int cpu, ret = 0;
+>>       struct coresight_device *sink;
+>>       struct list_head *path;
+>> +    struct cs_sink_data *sink_data;
+>>       enum coresight_dev_subtype_source subtype;
+>>       u32 hash;
+>> @@ -209,7 +210,14 @@ int coresight_enable_sysfs(struct 
+>> coresight_device *csdev)
+>>           goto out;
+>>       }
+>> -    ret = coresight_enable_path(path, CS_MODE_SYSFS, NULL);
+>> +    sink_data = kzalloc(sizeof(*sink_data), GFP_KERNEL);
+>> +    if (!sink_data) {
+>> +        ret = -ENOMEM;
+>> +        goto out;
+>> +    }
+>> +    sink_data->traceid = coresight_read_traceid(path, CS_MODE_SYSFS, 
+>> NULL);
+>> +    sink_data->sink = sink;
+>> +    ret = coresight_enable_path(path, CS_MODE_SYSFS, sink_data);
+>>       if (ret)
+>>           goto err_path;
+>> @@ -246,15 +254,17 @@ int coresight_enable_sysfs(struct 
+>> coresight_device *csdev)
+>>           break;
+>>       }
+>> +    kfree(sink_data);
+>>   out:
+>>       mutex_unlock(&coresight_mutex);
+>>       return ret;
+>>   err_source:
+>> -    coresight_disable_path(path);
+>> +    coresight_disable_path(path, sink_data);
+>>   err_path:
+>>       coresight_release_path(path);
+>> +    kfree(sink_data);
+>>       goto out;
+>>   }
+>>   EXPORT_SYMBOL_GPL(coresight_enable_sysfs);
+>> @@ -263,6 +273,7 @@ void coresight_disable_sysfs(struct 
+>> coresight_device *csdev)
+>>   {
+>>       int cpu, ret;
+>>       struct list_head *path = NULL;
+>> +    struct cs_sink_data *sink_data = NULL;
+>>       u32 hash;
+>>       mutex_lock(&coresight_mutex);
+>> @@ -274,6 +285,10 @@ void coresight_disable_sysfs(struct 
+>> coresight_device *csdev)
+>>       if (!coresight_disable_source_sysfs(csdev, NULL))
+>>           goto out;
+>> +    sink_data = kzalloc(sizeof(*sink_data), GFP_KERNEL);
+>> +    if (!sink_data)
+>> +        goto out;
+>> +
+>>       switch (csdev->subtype.source_subtype) {
+>>       case CORESIGHT_DEV_SUBTYPE_SOURCE_PROC:
+>>           cpu = source_ops(csdev)->cpu_id(csdev);
+>> @@ -297,8 +312,11 @@ void coresight_disable_sysfs(struct 
+>> coresight_device *csdev)
+>>           break;
+>>       }
+>> -    coresight_disable_path(path);
+>> +    sink_data->sink = coresight_find_activated_sysfs_sink(csdev);
+>> +    sink_data->traceid = coresight_read_traceid(path, CS_MODE_SYSFS, 
+>> NULL);
+>> +    coresight_disable_path(path, sink_data);
+>>       coresight_release_path(path);
+>> +    kfree(sink_data);
+>>   out:
+>>       mutex_unlock(&coresight_mutex);
+>> diff --git a/drivers/hwtracing/coresight/coresight-tmc-etf.c b/ 
+>> drivers/hwtracing/coresight/coresight-tmc-etf.c
+>> index d4f641cd9de6..7dc536eba3e2 100644
+>> --- a/drivers/hwtracing/coresight/coresight-tmc-etf.c
+>> +++ b/drivers/hwtracing/coresight/coresight-tmc-etf.c
+>> @@ -250,7 +250,8 @@ static int tmc_enable_etf_sink_perf(struct 
+>> coresight_device *csdev, void *data)
+>>       pid_t pid;
+>>       unsigned long flags;
+>>       struct tmc_drvdata *drvdata = dev_get_drvdata(csdev->dev.parent);
+>> -    struct perf_output_handle *handle = data;
+>> +    struct cs_sink_data *sink_data = (struct cs_sink_data *)data;
+>> +    struct perf_output_handle *handle = sink_data->handle;
+>>       struct cs_buffers *buf = etm_perf_sink_config(handle);
+>>       spin_lock_irqsave(&drvdata->spinlock, flags);
+>> diff --git a/drivers/hwtracing/coresight/coresight-tmc-etr.c b/ 
+>> drivers/hwtracing/coresight/coresight-tmc-etr.c
+>> index a48bb85d0e7f..90a4058c9959 100644
+>> --- a/drivers/hwtracing/coresight/coresight-tmc-etr.c
+>> +++ b/drivers/hwtracing/coresight/coresight-tmc-etr.c
+>> @@ -1254,7 +1254,8 @@ static int tmc_enable_etr_sink_sysfs(struct 
+>> coresight_device *csdev)
+>>   struct etr_buf *tmc_etr_get_buffer(struct coresight_device *csdev,
+>>                      enum cs_mode mode, void *data)
+>>   {
+>> -    struct perf_output_handle *handle = data;
+>> +    struct cs_sink_data *sink_data = (struct cs_sink_data *)data;
+>> +    struct perf_output_handle *handle = sink_data->handle;
+>>       struct etr_perf_buffer *etr_perf;
+>>       switch (mode) {
+>> @@ -1648,7 +1649,8 @@ static int tmc_enable_etr_sink_perf(struct 
+>> coresight_device *csdev, void *data)
+>>       pid_t pid;
+>>       unsigned long flags;
+>>       struct tmc_drvdata *drvdata = dev_get_drvdata(csdev->dev.parent);
+>> -    struct perf_output_handle *handle = data;
+>> +    struct cs_sink_data *sink_data = (struct cs_sink_data *)data;
+>> +    struct perf_output_handle *handle = sink_data->handle;
+>>       struct etr_perf_buffer *etr_perf = etm_perf_sink_config(handle);
+>>       spin_lock_irqsave(&drvdata->spinlock, flags);
+>> diff --git a/drivers/hwtracing/coresight/coresight-tpda.c b/drivers/ 
+>> hwtracing/coresight/coresight-tpda.c
+>> index 189a4abc2561..05622333f2d2 100644
+>> --- a/drivers/hwtracing/coresight/coresight-tpda.c
+>> +++ b/drivers/hwtracing/coresight/coresight-tpda.c
+>> @@ -241,9 +241,29 @@ static void tpda_disable(struct coresight_device 
+>> *csdev,
+>>       dev_dbg(drvdata->dev, "TPDA inport %d disabled\n", in->dest_port);
+>>   }
+>> +static int tpda_trace_id(struct coresight_device *csdev)
+>> +{
+>> +    int trace_id;
+>> +    struct tpda_drvdata *drvdata;
+>> +
+>> +    if (csdev == NULL)
+>> +        return -EINVAL;
+>> +
+>> +    drvdata = dev_get_drvdata(csdev->dev.parent);
+>> +    trace_id = drvdata->atid;
+>> +    if (!IS_VALID_CS_TRACE_ID(trace_id)) {
+> 
+> Same comment as STM. This is always set so no ned to try to assign 
+> another one.
+> 
+>> +        trace_id = coresight_trace_id_get_system_id();
+>> +        if (IS_VALID_CS_TRACE_ID(trace_id))
+>> +            drvdata->atid = (u8)trace_id;
+>> +    }
+>> +
+>> +    return trace_id;
+>> +}
+>> +
+>>   static const struct coresight_ops_link tpda_link_ops = {
+>>       .enable        = tpda_enable,
+>>       .disable    = tpda_disable,
+>> +    .trace_id    = tpda_trace_id,
+>>   };
+>>   static const struct coresight_ops tpda_cs_ops = {
+>> diff --git a/drivers/hwtracing/coresight/coresight-trbe.c b/drivers/ 
+>> hwtracing/coresight/coresight-trbe.c
+>> index 919804b12a67..6680d3c69906 100644
+>> --- a/drivers/hwtracing/coresight/coresight-trbe.c
+>> +++ b/drivers/hwtracing/coresight/coresight-trbe.c
+>> @@ -21,6 +21,7 @@
+>>   #include "coresight-self-hosted-trace.h"
+>>   #include "coresight-trbe.h"
+>> +#include "coresight-priv.h"
+>>   #define PERF_IDX2OFF(idx, buf) ((idx) % ((buf)->nr_pages << 
+>> PAGE_SHIFT))
+>> @@ -1012,7 +1013,8 @@ static int arm_trbe_enable(struct 
+>> coresight_device *csdev, enum cs_mode mode,
+>>   {
+>>       struct trbe_drvdata *drvdata = dev_get_drvdata(csdev->dev.parent);
+>>       struct trbe_cpudata *cpudata = dev_get_drvdata(&csdev->dev);
+>> -    struct perf_output_handle *handle = data;
+>> +    struct cs_sink_data *sink_data = (struct cs_sink_data *)data;
+>> +    struct perf_output_handle *handle = sink_data->handle;
+>>       struct trbe_buf *buf = etm_perf_sink_config(handle);
+>>       WARN_ON(cpudata->cpu != smp_processor_id());
+>> diff --git a/drivers/hwtracing/coresight/ultrasoc-smb.c b/drivers/ 
+>> hwtracing/coresight/ultrasoc-smb.c
+>> index dc3c9504dd7c..99e0eb33c01f 100644
+>> --- a/drivers/hwtracing/coresight/ultrasoc-smb.c
+>> +++ b/drivers/hwtracing/coresight/ultrasoc-smb.c
+>> @@ -216,7 +216,8 @@ static void smb_enable_sysfs(struct 
+>> coresight_device *csdev)
+>>   static int smb_enable_perf(struct coresight_device *csdev, void *data)
+>>   {
+>>       struct smb_drv_data *drvdata = dev_get_drvdata(csdev->dev.parent);
+>> -    struct perf_output_handle *handle = data;
+>> +    struct cs_sink_data *sink_data = (struct cs_sink_data *)data;
+>> +    struct perf_output_handle *handle = sink_data->handle;
+>>       struct cs_buffers *buf = etm_perf_sink_config(handle);
+>>       pid_t pid;
+>> diff --git a/include/linux/coresight.h b/include/linux/coresight.h
+>> index 157c4bd009a1..1929f0088c0f 100644
+>> --- a/include/linux/coresight.h
+>> +++ b/include/linux/coresight.h
+>> @@ -368,6 +368,7 @@ struct coresight_ops_sink {
+>>    * Operations available for links.
+>>    * @enable:    enables flow between iport and oport.
+>>    * @disable:    disables flow between iport and oport.
+>> + * @trace_id:    Collect the traceid.
+>>    */
+>>   struct coresight_ops_link {
+>>       int (*enable)(struct coresight_device *csdev,
+>> @@ -376,6 +377,7 @@ struct coresight_ops_link {
+>>       void (*disable)(struct coresight_device *csdev,
+>>               struct coresight_connection *in,
+>>               struct coresight_connection *out);
+>> +    int (*trace_id)(struct coresight_device *csdev);
+>>   };
+>>   /**
+>> @@ -385,6 +387,7 @@ struct coresight_ops_link {
+>>    *        is associated to.
+>>    * @enable:    enables tracing for a source.
+>>    * @disable:    disables tracing for a source.
+>> + * @trace_id:    collect the traceid.
+>>    */
+>>   struct coresight_ops_source {
+>>       int (*cpu_id)(struct coresight_device *csdev);
+>> @@ -392,6 +395,9 @@ struct coresight_ops_source {
+>>                 enum cs_mode mode, struct coresight_trace_id_map 
+>> *id_map);
+>>       void (*disable)(struct coresight_device *csdev,
+>>               struct perf_event *event);
+>> +    int (*trace_id)(struct coresight_device *csdev,
+>> +            enum cs_mode mode,
+>> +            struct coresight_trace_id_map *id_map);
+>>   };
+>>   /**
+> 
 
 
