@@ -1,79 +1,80 @@
-Return-Path: <linux-arm-msm+bounces-45952-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-45953-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id AAD7EA1A2FF
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jan 2025 12:32:22 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id D1821A1A30A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jan 2025 12:34:37 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E703E169062
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jan 2025 11:32:20 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 910EB1880274
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jan 2025 11:34:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B441320E331;
-	Thu, 23 Jan 2025 11:32:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5423420E020;
+	Thu, 23 Jan 2025 11:34:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=nexus-software-ie.20230601.gappssmtp.com header.i=@nexus-software-ie.20230601.gappssmtp.com header.b="feLEUCE4"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="W2xN2ZnF"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
+Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DC4320E314
-	for <linux-arm-msm@vger.kernel.org>; Thu, 23 Jan 2025 11:32:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 690C4381AF
+	for <linux-arm-msm@vger.kernel.org>; Thu, 23 Jan 2025 11:34:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737631924; cv=none; b=Yi6eMUqx+zc5wS49zlfXFyGOICiJ4mtv5fDOsHYOQPcHq/dNmQr7Zbaxs+PyfnnfczFTH27/YMrPQs7Gzj43XHuRsUV6RLBPTxkUvHT2whXG16sd9v/P99jFJPA4dANXnOEd8BJ8Gwp5tBBg3926Def/tWhoUGHkWTa+PyVwq54=
+	t=1737632074; cv=none; b=NQjQMzEUN+BpvtXs0/BvyZ1wQsmPBJjTufJObA4GN+n/Xx85yAyjHWYv8qB9SG+zC6ztLAxTpkqtXt1qN+yhAY6GmX17U2ip9+zbah9obxMW8Dhr6+LHvo4/eEkfSTfosplYmESglmO5EeOd+TNU6NNCe2Y5nYamK+IEyia1r8k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737631924; c=relaxed/simple;
-	bh=c1x3wOL/Jg/CxqmpfvXlIfxTazE833rR3Za4g0QHXGs=;
+	s=arc-20240116; t=1737632074; c=relaxed/simple;
+	bh=QA3tANgsy43WsyRsNZKbw0iwwQBQDTp1/vxbKJfETUY=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=kXVD3sYudRq4D67Rm/M6QsGFiVqzeEzE0KUnDgd9nNUOnC/r3F+SnN/P25grsv5wLUS0+pCByo6ZLJE9h5f9OP+a/UZRa2AbJlv0X1RJysWQt37xlMhw3TPby+Zjkhn16PCkFtPIuAi0S4Ddu49LjWAOW4DaWqj0oHcajrHp0HU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexus-software.ie; spf=none smtp.mailfrom=nexus-software.ie; dkim=pass (2048-bit key) header.d=nexus-software-ie.20230601.gappssmtp.com header.i=@nexus-software-ie.20230601.gappssmtp.com header.b=feLEUCE4; arc=none smtp.client-ip=209.85.128.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexus-software.ie
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=nexus-software.ie
-Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-43621d27adeso5069355e9.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Jan 2025 03:32:00 -0800 (PST)
+	 In-Reply-To:Content-Type; b=M2Sr2wmXc93gKrgWSYJXy+jpAR4z4Zyq99A44xfpO3nIcgXGiATmY0pwwCpVfgSmlP73ZYDZsjunN7SKmCKVvUxL+unmHXSz64jHVP4NhnY+MvDDIY4a90lCJImSzYpgj+LN1XqJwU4Ty5siFVEtTHZ8oHhAY9tJdbm5LRdUYaU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=W2xN2ZnF; arc=none smtp.client-ip=209.85.128.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-436203f1203so595955e9.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Jan 2025 03:34:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=nexus-software-ie.20230601.gappssmtp.com; s=20230601; t=1737631919; x=1738236719; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=tkzdprg0mUGbGqhZY3kXquNpxLnOQ+rAcPKbs65QhXA=;
-        b=feLEUCE4xOl4/S6REbbmzJ2I5cqXeV728tqB7yF/+31mBTmv5ciiRY5p0RNdMn5l2g
-         3nP8uIaj0ZkuupG15iCJ9kJoxMykLJV/93eaZzQYiZRkXzpYrAMOwC4oAjj8s6zKL9R0
-         Afc6aGzs2SNOwDx4sg3Zg5jsvXW6lGS8CCF6fEHOeTaNSG+8d6Ayux75OCXu9kNjjCBi
-         AKf52yHJOfqA+QCJb01Xv9kE9b4xnxMc02X+39L6sg5fs+6P0J2blO5U8Qo/D+lHfB10
-         h5PHRVeMljwThvGS8Qp3puX2JCxRNq++0JYTqL5jXNwpiP+7/X4Lg38WrBkqv2rwd6Wy
-         huMA==
+        d=linaro.org; s=google; t=1737632071; x=1738236871; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+         :from:references:cc:to:subject:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=nXZb5O0gwPGCkkfFlyz2rT23SqUdYp/zsp0IQnTJndQ=;
+        b=W2xN2ZnFZN9y/0R/qSe54kR+jzioHtUfWQWPs2ADZy90eYPVLMDb5wyUAqD0a+ZmS8
+         q4VE/OqLGA1SJy8Pv/mzKeCzVQ3+lRUciBQTxV9YY4N4+jqDVFDparkRD01zh4wYezmT
+         aJQMEH4LqNfPguoSt2LPvTeaKslW5SuAsJWVTh7M/LFh/rFc6hiSO9SMRAAiS71Z1GHo
+         g7eT6/bAYlEC4OYHsClQAUOZflfGuN/H/IN8cFar/qJ5pJHV5u6J2GYqwUkGRtTUy6M2
+         d2Y5AW9IoFo2J2nPfIebCQUF6sVNnYKOc62hRaZQTv9T5KD0d1ITXwVGmNwU6IkxWho5
+         patQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1737631919; x=1738236719;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=tkzdprg0mUGbGqhZY3kXquNpxLnOQ+rAcPKbs65QhXA=;
-        b=IGk9iCatUvo969GkPgFpZrr62FwiFlgHPTAuetMW9JPJxFx89rVvtx1dEu6K8u9GHK
-         G2e6qH9b6Tzv0oRplOHR+p1B3vQI/Po2oi/6tvJaBK1VDPcrei4bRxE+A4cRQR4Y5ATs
-         29CpwhQvaECwanql7EeOYSXgJqQyg40HPLj2Tlaed/oSgUYMze/cWxTQxFiORBfPL72t
-         +eZhSWqZUGvip2F2sZ9TK5aNwLL6hKNSnsBbQZeo7xb2kTtU2lJT8jplt005Hcg7FQjD
-         uYVuMc8h/Dct2/E2Jxl6GbHn2IfZxXM8UK4dj7TkeGfa9Wpw4mGbvbYr7GXHxb0yChts
-         3CZA==
-X-Forwarded-Encrypted: i=1; AJvYcCXpO31VFspMv7wQrluvDyu2yjMDroYpKNRIo7ejvkEvQVZPCKNFYOVoDEeaXVDAMyEn8MjCyRXhlpa8Mk34@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw8I3POQ3EcClfyuCKFEvsElTTHarcfbSfcPiVYxszbBLBlWG8m
-	5rVGE8kMNclJU3SH5Su1UewrfG4V0+uRqcut4FYJJuG/jWNLxpxi10Fm1CcOhDM=
-X-Gm-Gg: ASbGncsJ767Cttu9zkZs6e/dAlU6f91JxHD4Y5vBGlM1FIo3MnDBgf4wSzVyLEAPFX7
-	rXIBFi4NgrFHnnBsKz4SjWnNocTYkjxFjjJJaxwdOmJNdaBGOwsPHZo55Vmc/OIA25l5ZeUb6Fg
-	ML6M5oDafr5BwrbqdKmJwJxhVkeaoluP2sirTWEwvtglYpPqzrKZLCkyp7mWuIImfy46lSjCMHU
-	LmiYxl3AKvwuiXdsDqKEvZXplK23pZR/9Ot3+giTsi0ZZ0DJrbFmWKhzHeLd0/YLBbH3LHfubkM
-	pHT5SvfjvwWpwy4XHjzB
-X-Google-Smtp-Source: AGHT+IFiwhNji8Lf/iwS/ygWq2vKMB+3GZnN8Ve/tOSfQIqp9x7RXP66a/ZU5FmQMIv4WX+dRn8Uuw==
-X-Received: by 2002:a05:600c:1d14:b0:436:46f9:4fc6 with SMTP id 5b1f17b1804b1-438913d63cfmr233979795e9.8.1737631919110;
-        Thu, 23 Jan 2025 03:31:59 -0800 (PST)
-Received: from [192.168.0.35] ([176.61.106.227])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-438b3189ba8sm60603645e9.5.2025.01.23.03.31.58
+        d=1e100.net; s=20230601; t=1737632071; x=1738236871;
+        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+         :from:references:cc:to:subject:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=nXZb5O0gwPGCkkfFlyz2rT23SqUdYp/zsp0IQnTJndQ=;
+        b=V7xiCscpQv9Axo8dpfYKJqvLR658nD4KK52+XbdqdIz4LcB+ja5vcS4HtwHzUf0p1n
+         hmGdzw+6yKidNbfz3gJR5m4e5wPkgNiCxNATzaEwBAkdEyvqYZs8LbKWp/URT0EOoVwF
+         UtwKeQ5WI+6aDoG/OCff2KHgWn8ZSYyVmQksoDDfCthYk0SOgvJll0YmNovmNup6xlZQ
+         WlrKONbQ8HMaTYL6zWLAzIqlI9TYVQ3D4slSLo9Px3xTbALV2pmL3r12hH139NS+qP5w
+         9Boj9kC+HZhnOIADHFfjEtPH6HafylOKGGczv/wabYKaWoK+pLhzM0OigPQFkr+Qn4JO
+         gv6Q==
+X-Forwarded-Encrypted: i=1; AJvYcCXGS1Q05eyNe5efwNCZlQQa+e9XOVwzAaStXYqxLxM7DQTKg2NV/qJ9mMCv8gYxOmCxxxqCayfXiYPvuezR@vger.kernel.org
+X-Gm-Message-State: AOJu0YwD6OpQIJinWADDDWhKYm/GZaIOnv/Ngw/FcBgdjSf5hC0LkahM
+	muK1oLLhV79C2Or2VV7HF8+Mn+4lUVJTjKOo2lqiy1K1SjfZrRxXWuc+cwBdKqY=
+X-Gm-Gg: ASbGncuuUOjju8ImoU1V/oZ+CtYKpFABTOAQx+SnJluy0pOaMwTh7ixNCOZpuOmV9Lp
+	sSN7DzNMIy+UnRsdkGVJB8nQasJyJwRghazqAkAxt/rZlLfFUswereWRE35qLacSkC7EVv51gIK
+	6u7v6vx+mM4dM6R1sQCGRIuqJfbMVxkI8HYAT5nWzo48QV9/gQR6lCI4uwcfURmyR7u8DlWIf54
+	9VCufUHKaX8GBAaCvHxszDWrpesy0mZXK0JqJFv/zh56tEVQJTkcDXjhKZ/3xw67UgpfXlql4fZ
+	svqscHkuzlJEkPQAgERb3A7e
+X-Google-Smtp-Source: AGHT+IEplQo8k4ESuQwnk9n5v8xpB7niSmitxukd+9xIdozfLnof1API0E5tJnDMixKh/mzKG4dzPQ==
+X-Received: by 2002:a05:600c:4512:b0:434:a30b:5433 with SMTP id 5b1f17b1804b1-438b17cf71dmr27769285e9.5.1737632070617;
+        Thu, 23 Jan 2025 03:34:30 -0800 (PST)
+Received: from [192.168.1.20] ([178.197.223.165])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-438b31d9871sm60568405e9.25.2025.01.23.03.34.28
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 23 Jan 2025 03:31:58 -0800 (PST)
-Message-ID: <d4aa6903-f350-4130-a915-7a8d2916f1e0@nexus-software.ie>
-Date: Thu, 23 Jan 2025 11:31:57 +0000
+        Thu, 23 Jan 2025 03:34:29 -0800 (PST)
+Message-ID: <4adeffe7-ca07-4441-86fe-10a4891b7b4b@linaro.org>
+Date: Thu, 23 Jan 2025 12:34:28 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -81,288 +82,169 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] clk: qcom: camcc-sm8250: Use clk_rcg2_shared_ops for some
- RCGs
-To: Jordan Crouse <jorcrous@amazon.com>, linux-arm-msm@vger.kernel.org
-Cc: Bjorn Andersson <andersson@kernel.org>,
- Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
- <sboyd@kernel.org>, linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20250122213427.28169-1-jorcrous@amazon.com>
+Subject: Re: [PATCH RFC 08/11] drm/msm/dsi: Add support for SM8750
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Rob Clark <robdclark@gmail.com>, Abhinav Kumar
+ <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>,
+ Marijn Suijten <marijn.suijten@somainline.org>,
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>,
+ Krishna Manikandan <quic_mkrishn@quicinc.com>,
+ Jonathan Marek <jonathan@marek.ca>, Kuogee Hsieh <quic_khsieh@quicinc.com>,
+ Neil Armstrong <neil.armstrong@linaro.org>, linux-arm-msm@vger.kernel.org,
+ dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ Srini Kandagatla <srinivas.kandagatla@linaro.org>
+References: <20250109-b4-sm8750-display-v1-0-b3f15faf4c97@linaro.org>
+ <20250109-b4-sm8750-display-v1-8-b3f15faf4c97@linaro.org>
+ <3p7kjok5jzwvgt7dxuad26xgdkjd52v4gbtuudvgkeoj33skqn@afl2ddtsq7s2>
+ <4fc7fdd5-36cd-42e6-af4a-e0e429f9f50b@linaro.org>
+ <7eupqawhdrbjgsj2p7e3ky7uj62m252i6dzkb6y23btocedp3q@qmw72nmbk2c4>
+ <6ee02d22-7a00-4c7c-a5e9-63e91d7d84ba@linaro.org>
+ <uyidfuh5ul5kcg4keeev6yagmjc5ksun626dyb6kdgwegc76d7@iu7ggdhgt5qr>
+ <7255ae24-983d-452c-bd6d-85804c367f8f@linaro.org>
+ <5irzvm4socrdjx3zqdxnogpai3bmfb52f63ddr3pisn5aa4jgf@mbc42kb3gyqd>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Content-Language: en-US
-From: Bryan O'Donoghue <pure.logic@nexus-software.ie>
-In-Reply-To: <20250122213427.28169-1-jorcrous@amazon.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
+ 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
+ D2GYIS41Kv4Isx2dEFh+/Q==
+In-Reply-To: <5irzvm4socrdjx3zqdxnogpai3bmfb52f63ddr3pisn5aa4jgf@mbc42kb3gyqd>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 22/01/2025 21:34, Jordan Crouse wrote:
-> Update some RCGs on the sm8250 camera clock controller to use
-> clk_rcg2_shared_ops. The shared_ops ensure the RCGs get parked
-> to the XO during clock disable to prevent the clocks from locking up
-> when the GDSC is enabled. These mirror similar fixes for other controllers
-> such as commit 8d4025943e13 ("clk: qcom: camcc-sc7180: Use runtime PM ops
-> instead of clk ones").
+On 13/01/2025 13:13, Dmitry Baryshkov wrote:
+> On Mon, Jan 13, 2025 at 12:02:54PM +0100, Krzysztof Kozlowski wrote:
+>> On 13/01/2025 09:29, Dmitry Baryshkov wrote:
+>>> On Fri, Jan 10, 2025 at 01:43:28PM +0100, Krzysztof Kozlowski wrote:
+>>>> On 10/01/2025 10:17, Dmitry Baryshkov wrote:
+>>>>> On Fri, Jan 10, 2025 at 09:59:26AM +0100, Krzysztof Kozlowski wrote:
+>>>>>> On 10/01/2025 00:18, Dmitry Baryshkov wrote:
+>>>>>>> On Thu, Jan 09, 2025 at 02:08:35PM +0100, Krzysztof Kozlowski wrote:
+>>>>>>>> Add support for DSI PHY v7.0 on Qualcomm SM8750 SoC which comes with two
+>>>>>>>> differences worth noting:
+>>>>>>>>
+>>>>>>>> 1. ICODE_ACCUM_STATUS_LOW and ALOG_OBSV_BUS_STATUS_1 registers - their
+>>>>>>>>    offsets were just switched.  Currently these registers are not used
+>>>>>>>>    in the driver, so the easiest is to document both but keep them
+>>>>>>>>    commented out to avoid conflict.
+>>>>>>>>
+>>>>>>>> 2. DSI PHY PLLs, the parents of pixel and byte clocks, cannot be used as
+>>>>>>>>    parents before they are prepared and initial rate is set.  Therefore
+>>>>>>>>    assigned-clock-parents are not working here and driver is responsible
+>>>>>>>>    for reparenting clocks with proper procedure: see dsi_clk_init_6g_v2_9().
+>>>>>>>
+>>>>>>> Isn't it a description of CLK_SET_PARENT_GATE and/or
+>>>>>>
+>>>>>> No - must be gated accross reparent - so opposite.
+>>>>>>
+>>>>>>> CLK_OPS_PARENT_ENABLE ?
+>>>>>>
+>>>>>> Yes, but does not work. Probably enabling parent, before
+>>>>>> assigned-clocks-parents, happens still too early:
+>>>>>>
+>>>>>> [    1.623554] DSI PLL(0) lock failed, status=0x00000000
+>>>>>> [    1.623556] PLL(0) lock failed
+>>>>>> [    1.624650] ------------[ cut here ]------------
+>>>>>> [    1.624651] disp_cc_mdss_byte0_clk_src: rcg didn't update its
+>>>>>> configuration.
+>>>>>>
+>>>>>> Or maybe something is missing in the DSI PHY PLL driver?
+>>>>>
+>>>>> Do you have the no-zero-freq workaround?
+>>>>
+>>>> Yes, it is necessary also for my variant. I did not include it here, but
+>>>> I should mention it in the cover letter.
+>>>
+>>> Could you please possibly backtrace the corresponding enable() calls?
+>>
+>>
+>> It's the same backtrace I shared some time ago in internal discussions:
+>> https://pastebin.com/kxUFgzD9
+>> Unless you ask for some other backtrace?
+>>
+>>> I'd let Stephen and/or Bjorn or Konrad to correct me, but I think that
+>>> such requirement should be handled by the framework instead of having
+>>> the drivers to manually reparent the clocks.
+>>
+>> I don't know how exactly you would like to solve it. The clocks can be
+>> reparented only after some other device specific enable sequence. It's
+>> the third device here, but not reflected in the clocks hierarchy. Maybe
+>> it's the result how entire Display device nodes were designed in the
+>> first place?
+>>
+>> Assigned clocks are between DSI PHY and DISP cc, but they are a property
+>> of DSI controller. This looks exactly too specific for core to handle
+>> and drivers, not framework, should manually reparent such clocks.
+>> Otherwise we need
+>> "clk_pre_prepare_callback_if_we_are_called_when_phy_is_disabled" sort of
+>> callback.
 > 
-> Signed-off-by: Jordan Crouse <jorcrous@amazon.com>
-> ---
+> What kind of PHY programming is required? Is enabling the PLL enough or
+> does it need anything else? Are the PLL supplies properly enabled at
+> this point?
 > 
->   drivers/clk/qcom/camcc-sm8250.c | 56 ++++++++++++++++-----------------
->   1 file changed, 28 insertions(+), 28 deletions(-)
-> 
-> diff --git a/drivers/clk/qcom/camcc-sm8250.c b/drivers/clk/qcom/camcc-sm8250.c
-> index 34d2f17520dc..450ddbebd35f 100644
-> --- a/drivers/clk/qcom/camcc-sm8250.c
-> +++ b/drivers/clk/qcom/camcc-sm8250.c
-> @@ -411,7 +411,7 @@ static struct clk_rcg2 cam_cc_bps_clk_src = {
->   		.parent_data = cam_cc_parent_data_0,
->   		.num_parents = ARRAY_SIZE(cam_cc_parent_data_0),
->   		.flags = CLK_SET_RATE_PARENT,
-> -		.ops = &clk_rcg2_ops,
-> +		.ops = &clk_rcg2_shared_ops,
->   	},
->   };
->   
-> @@ -433,7 +433,7 @@ static struct clk_rcg2 cam_cc_camnoc_axi_clk_src = {
->   		.parent_data = cam_cc_parent_data_0,
->   		.num_parents = ARRAY_SIZE(cam_cc_parent_data_0),
->   		.flags = CLK_SET_RATE_PARENT,
-> -		.ops = &clk_rcg2_ops,
-> +		.ops = &clk_rcg2_shared_ops,
->   	},
->   };
->   
-> @@ -454,7 +454,7 @@ static struct clk_rcg2 cam_cc_cci_0_clk_src = {
->   		.parent_data = cam_cc_parent_data_0,
->   		.num_parents = ARRAY_SIZE(cam_cc_parent_data_0),
->   		.flags = CLK_SET_RATE_PARENT,
-> -		.ops = &clk_rcg2_ops,
-> +		.ops = &clk_rcg2_shared_ops,
->   	},
->   };
->   
-> @@ -469,7 +469,7 @@ static struct clk_rcg2 cam_cc_cci_1_clk_src = {
->   		.parent_data = cam_cc_parent_data_0,
->   		.num_parents = ARRAY_SIZE(cam_cc_parent_data_0),
->   		.flags = CLK_SET_RATE_PARENT,
-> -		.ops = &clk_rcg2_ops,
-> +		.ops = &clk_rcg2_shared_ops,
->   	},
->   };
->   
-> @@ -490,7 +490,7 @@ static struct clk_rcg2 cam_cc_cphy_rx_clk_src = {
->   		.parent_data = cam_cc_parent_data_0,
->   		.num_parents = ARRAY_SIZE(cam_cc_parent_data_0),
->   		.flags = CLK_SET_RATE_PARENT,
-> -		.ops = &clk_rcg2_ops,
-> +		.ops = &clk_rcg2_shared_ops,
->   	},
->   };
->   
-> @@ -511,7 +511,7 @@ static struct clk_rcg2 cam_cc_csi0phytimer_clk_src = {
->   		.parent_data = cam_cc_parent_data_0,
->   		.num_parents = ARRAY_SIZE(cam_cc_parent_data_0),
->   		.flags = CLK_SET_RATE_PARENT,
-> -		.ops = &clk_rcg2_ops,
-> +		.ops = &clk_rcg2_shared_ops,
->   	},
->   };
->   
-> @@ -526,7 +526,7 @@ static struct clk_rcg2 cam_cc_csi1phytimer_clk_src = {
->   		.parent_data = cam_cc_parent_data_0,
->   		.num_parents = ARRAY_SIZE(cam_cc_parent_data_0),
->   		.flags = CLK_SET_RATE_PARENT,
-> -		.ops = &clk_rcg2_ops,
-> +		.ops = &clk_rcg2_shared_ops,
->   	},
->   };
->   
-> @@ -556,7 +556,7 @@ static struct clk_rcg2 cam_cc_csi3phytimer_clk_src = {
->   		.parent_data = cam_cc_parent_data_0,
->   		.num_parents = ARRAY_SIZE(cam_cc_parent_data_0),
->   		.flags = CLK_SET_RATE_PARENT,
-> -		.ops = &clk_rcg2_ops,
-> +		.ops = &clk_rcg2_shared_ops,
->   	},
->   };
->   
-> @@ -571,7 +571,7 @@ static struct clk_rcg2 cam_cc_csi4phytimer_clk_src = {
->   		.parent_data = cam_cc_parent_data_0,
->   		.num_parents = ARRAY_SIZE(cam_cc_parent_data_0),
->   		.flags = CLK_SET_RATE_PARENT,
-> -		.ops = &clk_rcg2_ops,
-> +		.ops = &clk_rcg2_shared_ops,
->   	},
->   };
->   
-> @@ -586,7 +586,7 @@ static struct clk_rcg2 cam_cc_csi5phytimer_clk_src = {
->   		.parent_data = cam_cc_parent_data_0,
->   		.num_parents = ARRAY_SIZE(cam_cc_parent_data_0),
->   		.flags = CLK_SET_RATE_PARENT,
-> -		.ops = &clk_rcg2_ops,
-> +		.ops = &clk_rcg2_shared_ops,
->   	},
->   };
->   
-> @@ -611,7 +611,7 @@ static struct clk_rcg2 cam_cc_fast_ahb_clk_src = {
->   		.parent_data = cam_cc_parent_data_0,
->   		.num_parents = ARRAY_SIZE(cam_cc_parent_data_0),
->   		.flags = CLK_SET_RATE_PARENT,
-> -		.ops = &clk_rcg2_ops,
-> +		.ops = &clk_rcg2_shared_ops,
->   	},
->   };
->   
-> @@ -634,7 +634,7 @@ static struct clk_rcg2 cam_cc_fd_core_clk_src = {
->   		.parent_data = cam_cc_parent_data_0,
->   		.num_parents = ARRAY_SIZE(cam_cc_parent_data_0),
->   		.flags = CLK_SET_RATE_PARENT,
-> -		.ops = &clk_rcg2_ops,
-> +		.ops = &clk_rcg2_shared_ops,
->   	},
->   };
->   
-> @@ -649,7 +649,7 @@ static struct clk_rcg2 cam_cc_icp_clk_src = {
->   		.parent_data = cam_cc_parent_data_0,
->   		.num_parents = ARRAY_SIZE(cam_cc_parent_data_0),
->   		.flags = CLK_SET_RATE_PARENT,
-> -		.ops = &clk_rcg2_ops,
-> +		.ops = &clk_rcg2_shared_ops,
->   	},
->   };
->   
-> @@ -673,7 +673,7 @@ static struct clk_rcg2 cam_cc_ife_0_clk_src = {
->   		.parent_data = cam_cc_parent_data_2,
->   		.num_parents = ARRAY_SIZE(cam_cc_parent_data_2),
->   		.flags = CLK_SET_RATE_PARENT,
-> -		.ops = &clk_rcg2_ops,
-> +		.ops = &clk_rcg2_shared_ops,
->   	},
->   };
->   
-> @@ -710,7 +710,7 @@ static struct clk_rcg2 cam_cc_ife_0_csid_clk_src = {
->   		.parent_data = cam_cc_parent_data_0,
->   		.num_parents = ARRAY_SIZE(cam_cc_parent_data_0),
->   		.flags = CLK_SET_RATE_PARENT,
-> -		.ops = &clk_rcg2_ops,
-> +		.ops = &clk_rcg2_shared_ops,
->   	},
->   };
->   
-> @@ -734,7 +734,7 @@ static struct clk_rcg2 cam_cc_ife_1_clk_src = {
->   		.parent_data = cam_cc_parent_data_3,
->   		.num_parents = ARRAY_SIZE(cam_cc_parent_data_3),
->   		.flags = CLK_SET_RATE_PARENT,
-> -		.ops = &clk_rcg2_ops,
-> +		.ops = &clk_rcg2_shared_ops,
->   	},
->   };
->   
-> @@ -749,7 +749,7 @@ static struct clk_rcg2 cam_cc_ife_1_csid_clk_src = {
->   		.parent_data = cam_cc_parent_data_0,
->   		.num_parents = ARRAY_SIZE(cam_cc_parent_data_0),
->   		.flags = CLK_SET_RATE_PARENT,
-> -		.ops = &clk_rcg2_ops,
-> +		.ops = &clk_rcg2_shared_ops,
->   	},
->   };
->   
-> @@ -771,7 +771,7 @@ static struct clk_rcg2 cam_cc_ife_lite_clk_src = {
->   		.parent_data = cam_cc_parent_data_0,
->   		.num_parents = ARRAY_SIZE(cam_cc_parent_data_0),
->   		.flags = CLK_SET_RATE_PARENT,
-> -		.ops = &clk_rcg2_ops,
-> +		.ops = &clk_rcg2_shared_ops,
->   	},
->   };
->   
-> @@ -786,7 +786,7 @@ static struct clk_rcg2 cam_cc_ife_lite_csid_clk_src = {
->   		.parent_data = cam_cc_parent_data_0,
->   		.num_parents = ARRAY_SIZE(cam_cc_parent_data_0),
->   		.flags = CLK_SET_RATE_PARENT,
-> -		.ops = &clk_rcg2_ops,
-> +		.ops = &clk_rcg2_shared_ops,
->   	},
->   };
->   
-> @@ -810,7 +810,7 @@ static struct clk_rcg2 cam_cc_ipe_0_clk_src = {
->   		.parent_data = cam_cc_parent_data_4,
->   		.num_parents = ARRAY_SIZE(cam_cc_parent_data_4),
->   		.flags = CLK_SET_RATE_PARENT,
-> -		.ops = &clk_rcg2_ops,
-> +		.ops = &clk_rcg2_shared_ops,
->   	},
->   };
->   
-> @@ -825,7 +825,7 @@ static struct clk_rcg2 cam_cc_jpeg_clk_src = {
->   		.parent_data = cam_cc_parent_data_0,
->   		.num_parents = ARRAY_SIZE(cam_cc_parent_data_0),
->   		.flags = CLK_SET_RATE_PARENT,
-> -		.ops = &clk_rcg2_ops,
-> +		.ops = &clk_rcg2_shared_ops,
->   	},
->   };
->   
-> @@ -847,7 +847,7 @@ static struct clk_rcg2 cam_cc_mclk0_clk_src = {
->   		.parent_data = cam_cc_parent_data_1,
->   		.num_parents = ARRAY_SIZE(cam_cc_parent_data_1),
->   		.flags = CLK_SET_RATE_PARENT,
-> -		.ops = &clk_rcg2_ops,
-> +		.ops = &clk_rcg2_shared_ops,
->   	},
->   };
->   
-> @@ -862,7 +862,7 @@ static struct clk_rcg2 cam_cc_mclk1_clk_src = {
->   		.parent_data = cam_cc_parent_data_1,
->   		.num_parents = ARRAY_SIZE(cam_cc_parent_data_1),
->   		.flags = CLK_SET_RATE_PARENT,
-> -		.ops = &clk_rcg2_ops,
-> +		.ops = &clk_rcg2_shared_ops,
->   	},
->   };
->   
-> @@ -877,7 +877,7 @@ static struct clk_rcg2 cam_cc_mclk2_clk_src = {
->   		.parent_data = cam_cc_parent_data_1,
->   		.num_parents = ARRAY_SIZE(cam_cc_parent_data_1),
->   		.flags = CLK_SET_RATE_PARENT,
-> -		.ops = &clk_rcg2_ops,
-> +		.ops = &clk_rcg2_shared_ops,
->   	},
->   };
->   
-> @@ -892,7 +892,7 @@ static struct clk_rcg2 cam_cc_mclk3_clk_src = {
->   		.parent_data = cam_cc_parent_data_1,
->   		.num_parents = ARRAY_SIZE(cam_cc_parent_data_1),
->   		.flags = CLK_SET_RATE_PARENT,
-> -		.ops = &clk_rcg2_ops,
-> +		.ops = &clk_rcg2_shared_ops,
->   	},
->   };
->   
-> @@ -907,7 +907,7 @@ static struct clk_rcg2 cam_cc_mclk4_clk_src = {
->   		.parent_data = cam_cc_parent_data_1,
->   		.num_parents = ARRAY_SIZE(cam_cc_parent_data_1),
->   		.flags = CLK_SET_RATE_PARENT,
-> -		.ops = &clk_rcg2_ops,
-> +		.ops = &clk_rcg2_shared_ops,
->   	},
->   };
->   
-> @@ -922,7 +922,7 @@ static struct clk_rcg2 cam_cc_mclk5_clk_src = {
->   		.parent_data = cam_cc_parent_data_1,
->   		.num_parents = ARRAY_SIZE(cam_cc_parent_data_1),
->   		.flags = CLK_SET_RATE_PARENT,
-> -		.ops = &clk_rcg2_ops,
-> +		.ops = &clk_rcg2_shared_ops,
->   	},
->   };
->   
-> @@ -993,7 +993,7 @@ static struct clk_rcg2 cam_cc_slow_ahb_clk_src = {
->   		.parent_data = cam_cc_parent_data_0,
->   		.num_parents = ARRAY_SIZE(cam_cc_parent_data_0),
->   		.flags = CLK_SET_RATE_PARENT,
-> -		.ops = &clk_rcg2_ops,
-> +		.ops = &clk_rcg2_shared_ops,
->   	},
->   };
->   
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+
+I don't know exactly and checking is tricky. I tried to use
+CLK_OPS_PARENT_ENABLE - with equivalent code, setting proper parents but
+without enabling the DSI PHY PLL manually just with
+CLK_OPS_PARENT_ENABLE - but then you have multiple:
+
+dsi0_pll_bit_clk: Zero divisor and CLK_DIVIDER_ALLOW_ZERO not set
+
+So how do you supposed to test it? Any assigned-clocks-xxx will be way
+too early. Moving code around? Well, if I move preparing the DSI PLL
+clocks out of dsi_link_clk_set_rate_6g, then dsi_link_clk_set_rate_6g()
+will fail. Always and CLK_OPS_PARENT_ENABLE does not help because of above.
+
+If you have specific code in mind, I can try it, but I don't see easy
+methods to see what has to be enabled exactly because of how everything
+is entangled together.
+
+Best regards,
+Krzysztof
 
