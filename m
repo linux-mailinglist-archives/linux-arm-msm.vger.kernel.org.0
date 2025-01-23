@@ -1,193 +1,308 @@
-Return-Path: <linux-arm-msm+bounces-45889-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-45890-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id CFB1BA19DA8
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jan 2025 05:30:48 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id CDDB4A19DBA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jan 2025 05:36:53 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 05E303AEE3A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jan 2025 04:30:34 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 85DB8188E83C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jan 2025 04:36:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 91CA5155759;
-	Thu, 23 Jan 2025 04:30:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4EFAD14831D;
+	Thu, 23 Jan 2025 04:36:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="MkAKXSHV"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="AilSfgDe"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1ED313D891;
-	Thu, 23 Jan 2025 04:30:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737606608; cv=none; b=ndpR+9cV4o2bfpKF2lPsSADBwiGTzPf6RWAu/YcKLtUynVjW+ru13OIRI/m7xZlbCSrTd+Om0b9T5Pln4f1zBChJr2EtVqfrEiR0gv7x2mA4DgZdMh3UFRUQL2lhVf/7ZX4kPZ0eHny7rGSJf7vZpdRaZrzH1ZK0O5vdxt6n5bc=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737606608; c=relaxed/simple;
-	bh=yeGxGu0KhtknpHr886EPeD+iNW/+V2HZU5gWGa4D7sM=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=sW3uUV667kFsaH/+PbFjx5hz1uhEi3Iurz9jwvyXdN+vw2nTrNVVIVQqKl/xsQLI1iOpf4gdSOvlD8PO13Tnw78YrMvMAxLL6z4bAnF2mb1bzXXY2bMDtA2xsO2EbjEu3S6TfKnveWvSLJtzY1k2h86Eb4ADautmc6ouwCEnX9E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=MkAKXSHV; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50N3x3Q2017365;
-	Thu, 23 Jan 2025 04:29:49 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	ligYFU7Sa/psO/SUdItVaMwY6zrDfDkqL/knIzvGNkg=; b=MkAKXSHVhmW9FcTh
-	AZ+/X5bcmxPvxAqToRgcvtNQaTlzAW0YOmuBx1t/sGugaP7HbPiZJstjfFfbAkhL
-	3o958IxMliKTqUunzvMy6hFe87fIruWA0pv5uHY1CXPmEzK/xmt5KYvxbx3J3WzR
-	ADaz2bFRm+XV401eFlk125bGk260ozdjtLQPqy5SJjVUz749wTDJnoHskS1FmxX2
-	J9Ei5cT4ZsiJHY1onTo6RNg2uz3Ov7ZMjDi0yxpVisV0wkB3RSjzaMw6SR+iU/HZ
-	BO3jgUAOG/vGXqVspGuKEKmp16fhXPokM3tlrqLO/S6bX9me63rRRZNkV09lOoCG
-	yVGWtA==
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44bebbg1ne-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 23 Jan 2025 04:29:49 +0000 (GMT)
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-	by NASANPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 50N4Tm72001652
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 23 Jan 2025 04:29:48 GMT
-Received: from hu-mohs-hyd.qualcomm.com (10.80.80.8) by
- nasanex01c.na.qualcomm.com (10.45.79.139) with Microsoft SMTP Server
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 336A01E871;
+	Thu, 23 Jan 2025 04:36:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=198.175.65.12
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1737607010; cv=fail; b=iNzKgWAHnx/WCoFFVlvRkdvxQqtjMkbMgGmFZFUqP565F5zipw7wYJkjyAtc0+nBCmtthXRSlZE+dTIVHNgw2lVap8qxDPTQmnbcWofeYf03YwHHkY+i4sBTiNtX+y8d4o81mY3AGmi6syLs1aVVg6JnilA2eTDDV8lqmmZ7hn0=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1737607010; c=relaxed/simple;
+	bh=OU7P3PTModJOacF6/4MJaySOhoz32Ve7E9hB0+SSAh8=;
+	h=Date:From:To:CC:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=mMXgf/L0MeZ6WyYGDBIIKucXxIGQ/Z4X7yQi7c7AIoI5TTV7wS2PsovUjyyEwIE15qP/c4d8iG788HCnIn2ZCBj1PTd9RQTMfau85Z0g3dV3NtBhN1eKbV/BXxp3262bkQFAPhz1Ccm+zziloQgu/YzmJl+13g9AZi65Z9lW2so=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=AilSfgDe; arc=fail smtp.client-ip=198.175.65.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1737607009; x=1769143009;
+  h=date:from:to:cc:subject:message-id:references:
+   in-reply-to:mime-version;
+  bh=OU7P3PTModJOacF6/4MJaySOhoz32Ve7E9hB0+SSAh8=;
+  b=AilSfgDeN2SOSG4HXY9b6EtuoljQxNxw/0wUqy2SsTt3iKrTyM1cFYSX
+   bZowzascp5l4zRkZV1roAEje+Cf4uu8xO6wHEumF7oKjAbLJaaZ8vGhn5
+   AetAq9Be/lRUtY4bR5L1neDXL7DncqXgHAW85TpKzcfF2ULlAReW/yIzL
+   +A0qlXhfNhxRdEfvO14e5xhbGjWgeQ1mjyQ95B/8ZsgjJttaFSMuhtDpt
+   +eN3OjYfm3Cp1EtVWU1aGzuxXT++1hhzxH6/yoMBespa26v+PhwM1zk2P
+   9Jk+IGj1AR0cxKauPL8v0tSCzcfeaNFYwxE+n5+RficEtTk+zyfcNE4UI
+   w==;
+X-CSE-ConnectionGUID: MnVgLxcESqe6G5LFBeETLQ==
+X-CSE-MsgGUID: UVitexGITtWCCeO9tCmmpQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11323"; a="49486957"
+X-IronPort-AV: E=Sophos;i="6.13,227,1732608000"; 
+   d="scan'208";a="49486957"
+Received: from fmviesa001.fm.intel.com ([10.60.135.141])
+  by orvoesa104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Jan 2025 20:36:47 -0800
+X-CSE-ConnectionGUID: N/K957vKQM+Rum8HSqFr5w==
+X-CSE-MsgGUID: yHa5HCbxTmmp087f34vhjg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; 
+   d="scan'208";a="138215734"
+Received: from orsmsx601.amr.corp.intel.com ([10.22.229.14])
+  by fmviesa001.fm.intel.com with ESMTP/TLS/AES256-GCM-SHA384; 22 Jan 2025 20:36:45 -0800
+Received: from orsmsx601.amr.corp.intel.com (10.22.229.14) by
+ ORSMSX601.amr.corp.intel.com (10.22.229.14) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.44; Wed, 22 Jan 2025 20:36:44 -0800
+Received: from ORSEDG601.ED.cps.intel.com (10.7.248.6) by
+ orsmsx601.amr.corp.intel.com (10.22.229.14) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.44 via Frontend Transport; Wed, 22 Jan 2025 20:36:44 -0800
+Received: from NAM12-BN8-obe.outbound.protection.outlook.com (104.47.55.173)
+ by edgegateway.intel.com (134.134.137.102) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Wed, 22 Jan 2025 20:29:40 -0800
-From: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
-To: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Liam Girdwood
-	<lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
-        Rob Herring
-	<robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>, Vinod Koul <vkoul@kernel.org>,
-        Bard Liao
-	<yung-chuan.liao@linux.intel.com>,
-        Jaroslav Kysela <perex@perex.cz>, "Takashi
- Iwai" <tiwai@suse.com>
-CC: Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>,
-        Sanyog Kale
-	<sanyog.r.kale@intel.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-sound@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <quic_pkumpatl@quicinc.com>, <kernel@quicinc.com>,
-        Mohammad Rafi Shaik <quic_mohs@quicinc.com>
-Subject: [RESEND v5 4/4] ASoC: qcom: sdw: Add get and set channel maps support from codec to cpu dais
-Date: Thu, 23 Jan 2025 09:58:23 +0530
-Message-ID: <20250123042823.2067740-5-quic_mohs@quicinc.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20250123042823.2067740-1-quic_mohs@quicinc.com>
-References: <20250123042823.2067740-1-quic_mohs@quicinc.com>
+ 15.1.2507.44; Wed, 22 Jan 2025 20:36:44 -0800
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=gDPwlZPTIB5y2aUVUVXmASjCgDgFsTrigh/Cajp3Sq1qp89+kSSzeHx+dKlBQs/G1Jh9sr+YLuN4Eosc2yT5JbSlhN50LqKyAD+LUgZEkL1WdV49Bgjinzzt8AC/Qd5ERPTuoigwZ+MGHDzijuMbHgt5pcsp61EQf5koRx3TuB0K/eNDyRJUIxv7tu57ucdquBP9AG2xMmqqKaWoBSMvH6IVpUQJC146txlFuNSWhuz4Qpcty8jUo27q08kcZV7x9QYXN1m1QNkjOjhZnYJqAUwB8tJBEYcksioNABGVHZXjsoxFWDlSrhOdUk2qhXA8hr2tLjmH40qXUyNapVxMPw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=+Lfqlt1MM3/Ts+hjojnYCT4Ml1RcA+mYRAIrO+7uSDI=;
+ b=IcmZemJHLF/6gj1zZEwiJWzu31L0yx1HMGk7ZUfy+jymxmuVH6boS3/95t5Si6m/13voKpWIWVgIwPdF22VINfBQyUp2TOIriGdf+yi4xc1MtGVm9i4vMtGNCuwOAoZDJCNR23eCQu11bP8gIvrchUPhMoGG0aZ9cq38L+oJdP04NbsFksdwZa3iLIkJwzo8fguwvHOOz6t3dc8MHmsZ+XTqRpOSUJ+wY+uvt+qZ+93/3B9NsJtlpSvlllBXnEPWV+Bj7tf6JtaZFWxDPLb8+EG/hb9xcZd5L93l1PERpOG3dMNilIsbFMANoMTjKqdo2ch6yFG9sGXE+XOzqyEnhQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+Received: from PH7PR11MB6522.namprd11.prod.outlook.com (2603:10b6:510:212::12)
+ by CO1PR11MB4851.namprd11.prod.outlook.com (2603:10b6:303:9b::13) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8356.22; Thu, 23 Jan
+ 2025 04:36:42 +0000
+Received: from PH7PR11MB6522.namprd11.prod.outlook.com
+ ([fe80::9e94:e21f:e11a:332]) by PH7PR11MB6522.namprd11.prod.outlook.com
+ ([fe80::9e94:e21f:e11a:332%4]) with mapi id 15.20.8356.020; Thu, 23 Jan 2025
+ 04:36:41 +0000
+Date: Wed, 22 Jan 2025 20:37:34 -0800
+From: Matthew Brost <matthew.brost@intel.com>
+To: Boris Brezillon <boris.brezillon@collabora.com>
+CC: Tvrtko Ursulin <tursulin@ursulin.net>, Philipp Stanner
+	<phasta@kernel.org>, Alex Deucher <alexander.deucher@amd.com>, Christian
+ =?iso-8859-1?Q?K=F6nig?= <christian.koenig@amd.com>, Xinhui Pan
+	<Xinhui.Pan@amd.com>, David Airlie <airlied@gmail.com>, Simona Vetter
+	<simona@ffwll.ch>, Lucas Stach <l.stach@pengutronix.de>, Russell King
+	<linux+etnaviv@armlinux.org.uk>, Christian Gmeiner
+	<christian.gmeiner@gmail.com>, Frank Binns <frank.binns@imgtec.com>, "Matt
+ Coster" <matt.coster@imgtec.com>, Maarten Lankhorst
+	<maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>,
+	Thomas Zimmermann <tzimmermann@suse.de>, Qiang Yu <yuq825@gmail.com>, "Rob
+ Clark" <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, Konrad Dybcio
+	<konradybcio@kernel.org>, Abhinav Kumar <quic_abhinavk@quicinc.com>, "Dmitry
+ Baryshkov" <dmitry.baryshkov@linaro.org>, Marijn Suijten
+	<marijn.suijten@somainline.org>, Karol Herbst <kherbst@redhat.com>, "Lyude
+ Paul" <lyude@redhat.com>, Danilo Krummrich <dakr@kernel.org>, Rob Herring
+	<robh@kernel.org>, Steven Price <steven.price@arm.com>, Liviu Dudau
+	<liviu.dudau@arm.com>, Luben Tuikov <ltuikov89@gmail.com>, Philipp Stanner
+	<pstanner@redhat.com>, Melissa Wen <mwen@igalia.com>,
+	=?iso-8859-1?Q?Ma=EDra?= Canal <mcanal@igalia.com>, Lucas De Marchi
+	<lucas.demarchi@intel.com>, Thomas =?iso-8859-1?Q?Hellstr=F6m?=
+	<thomas.hellstrom@linux.intel.com>, Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Sunil Khatri <sunil.khatri@amd.com>, Lijo Lazar <lijo.lazar@amd.com>, "Mario
+ Limonciello" <mario.limonciello@amd.com>, Ma Jun <Jun.Ma2@amd.com>, "Yunxiang
+ Li" <Yunxiang.Li@amd.com>, <amd-gfx@lists.freedesktop.org>,
+	<dri-devel@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
+	<etnaviv@lists.freedesktop.org>, <lima@lists.freedesktop.org>,
+	<linux-arm-msm@vger.kernel.org>, <freedreno@lists.freedesktop.org>,
+	<nouveau@lists.freedesktop.org>, <intel-xe@lists.freedesktop.org>
+Subject: Re: [PATCH] drm/sched: Use struct for drm_sched_init() params
+Message-ID: <Z5HHjnTzhNX9j05U@lstrano-desk.jf.intel.com>
+References: <20250122140818.45172-3-phasta@kernel.org>
+ <20250122165104.536c4143@collabora.com>
+ <ce6bd1f3-8d7c-4b3c-af07-b8c9e0912f51@ursulin.net>
+ <20250122180353.7ef8fbc1@collabora.com>
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <20250122180353.7ef8fbc1@collabora.com>
+X-ClientProxiedBy: MW4PR04CA0129.namprd04.prod.outlook.com
+ (2603:10b6:303:84::14) To PH7PR11MB6522.namprd11.prod.outlook.com
+ (2603:10b6:510:212::12)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: fH4JCrN9_0NZmkVVYoiOO_-daiyIw-6e
-X-Proofpoint-ORIG-GUID: fH4JCrN9_0NZmkVVYoiOO_-daiyIw-6e
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-01-23_01,2025-01-22_02,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- impostorscore=0 malwarescore=0 adultscore=0 spamscore=0 lowpriorityscore=0
- bulkscore=0 mlxlogscore=999 clxscore=1015 suspectscore=0 mlxscore=0
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2501230032
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: PH7PR11MB6522:EE_|CO1PR11MB4851:EE_
+X-MS-Office365-Filtering-Correlation-Id: fcf72efe-e94b-4eaf-eb85-08dd3b6788ae
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|7416014|376014|1800799024;
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?HUXOKzKf1Mr/jo+Ltm5FQHIPEmr5OqAkA7yB93cV9YtVFztlN8Q6bYJfTvnN?=
+ =?us-ascii?Q?eUmCmKld5QSWZW40Dwdz6PFESTGw4syQnLgTfz6hR3x9boXuFK8o8ZDNjSJ6?=
+ =?us-ascii?Q?vsiWT/UlZBQMp/3LQ1oSROPl65CfDnIOYyQUp0mULKKniJM+jCSIAyc8i0qN?=
+ =?us-ascii?Q?gaitANxIyJ6dVw8RxxVhxe9vYzgyTU9o9ViWKrU1lkjXw5xPJ89JWQZ1AH6x?=
+ =?us-ascii?Q?3Hwo38HXkGmaaBDoUWMSQ1CgAAJ9ng/FUqtrQcxlDCytzTf6O//AtGDuJKT+?=
+ =?us-ascii?Q?dITyetYxJZESSXQveSF91XPs4e4lI10vu4i43gL45qC67v/8uoBPpg3/jx90?=
+ =?us-ascii?Q?OrG5oJ49nfMxutUsDgB2A8RuUSm62KlXCHSDb3vDLly37zwoaNrXhiRo7iV7?=
+ =?us-ascii?Q?jBjIxoG8bdHiTHdoFb07WdZ6BYp7mwRYhBCnaVbYSHo1SfpnvaNLEsJpFrrV?=
+ =?us-ascii?Q?/Be9SoLndgOD8a/ZuifVOcat5e4vClypv0QcddZgDKa09XcUa2awfF8d9ZaA?=
+ =?us-ascii?Q?obYePwNAr/v0qMiunYbUUIJVgq5qeLxPZWj4s1IsRES0yW9pAvAogqNwH4bm?=
+ =?us-ascii?Q?Di/e6TRAz2jgWezHnBKPSGNYjMOdKU0R6zwG8RSyCapLhEJ6+cvU+6y1660/?=
+ =?us-ascii?Q?12pY+QhcHqsxxVpmPd1NROOG4lmFdmWZRJX7RPAveM4tbo6tjCHc/iFFbC1+?=
+ =?us-ascii?Q?AIrNFk1ceJenF1VnWPZdLxGkHHMdGCIG3QTCc0CGoqiIJcJCc8u3fFpkqieb?=
+ =?us-ascii?Q?zIySLpstPyIgJozb8Dh0TXdrdJUWnPNj7zzbEq15IjwjJDBZYkc6Tk3rlqDz?=
+ =?us-ascii?Q?5Qd+r1A7pVSDUx3xiv622EZnRgXRlJvddLgKFRzomBwXqOKTV1qqExpqTUex?=
+ =?us-ascii?Q?XSVPriwM+q2NISbRT4pb+VAdflftdmh4K+ZestGqpLi8nVjPr4MQzIfZoAen?=
+ =?us-ascii?Q?y+WxKUjukoW2y3eXH0dmZW34zgaPS3uSabuc+Dfas5+4HOPsSJNODwEjrMOh?=
+ =?us-ascii?Q?9kXuglqseVxK0Xrikq290Lz87l83GEzmhD40IUHBPvFHAMyxvTGCWn8ZEWAA?=
+ =?us-ascii?Q?ip5iJs3NmH2zx6e0G+3S/vxcQGJHOqGs/9pfrKN5zvGJfZqE6U5m3CZ4CElY?=
+ =?us-ascii?Q?jJOm7AMpPKXs7KjxOfXpKZZ0qs5LYn1lryo6DQNbusJO4Gy0pbSvy+sN2qnt?=
+ =?us-ascii?Q?PJWd7EEMEF5uptOJGBJa0mTzwY8wYEvvlXglMcT+YWA1136Bt+akfYEwh2/e?=
+ =?us-ascii?Q?2aSM92TJec/NDo6l6HktFNdxTm5N0ktH2r2SnDRwnJqMOV+CcXkOxMvye2h/?=
+ =?us-ascii?Q?xV+KMjdY7fUuqNyCn9URofBwY4rK6g4P7yCMEllhTB4ExfBt7VuyXA+BL+8z?=
+ =?us-ascii?Q?YqZrLvPivzqZDR4dth19hl7oMdPP?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PH7PR11MB6522.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(7416014)(376014)(1800799024);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?4bY6wCiuw2/xXCQZURrPYjhetUkeKNJLbTsu8WOiikGPg/SpIAYlOVjKQ5RK?=
+ =?us-ascii?Q?9BN7f8W6t4ZdtA5hB7O5P1HETnScQ4sj28hP6ZKwrW9WUT4EIMJxGUQ9BrdV?=
+ =?us-ascii?Q?NNma1InUoTe27FXo1dmpuF8+mcftkEnaQyZIj51W4jJLgcjEx5qQrBwEAXfk?=
+ =?us-ascii?Q?vA8AcV0uEAgZgQMx0nkb92QvFwxVK7uXx0Z6CDDm1+kkP2PmYJfLyx6dBevP?=
+ =?us-ascii?Q?/WPhgxXKDsLDvFIayREmkoLCktq5aMB4CyZihzERuw8tk6MiykrjJQAlge9s?=
+ =?us-ascii?Q?yJpA5EcYVZ/N7Wf0DPWtVoypHywkse/hdx4bojJEOFdH/e/cM+dw874qDK8l?=
+ =?us-ascii?Q?RrAAlKQYKX1HlLZMee5U4gNVQm3XIoNuO718ACSOdkKj8kGEwDNP7SGaDhNl?=
+ =?us-ascii?Q?93IG+V2295UFKvB2cUyLxFwR5kREo46ubP8bHJqLYHksT4w7RjYSOPdInH8I?=
+ =?us-ascii?Q?lXVqMnyVdGh+bmzCmwGY2dnOHnBl9wduHvz/FbYzK2D7d9sAtBKNVyilBjjM?=
+ =?us-ascii?Q?o0SeJBd5ZjqPhJ7BTIjZIB2UNoVicnXW9XviMMDEKqaSg7smhTuh1C/iBE6Q?=
+ =?us-ascii?Q?/5M/+XJYEY2A3nM+pYSDqmyxwJAsylJsgKdraVZzXJuMStRxhrgM8JDqZSZc?=
+ =?us-ascii?Q?UtK1zMayy7GCc9V6i4/RkCZBls20lNUhjrg24Eq2k4//yeF1F4uF65cJmAXJ?=
+ =?us-ascii?Q?qGD5BUKe7CmaEKpjRfUmivP5agQ4Q9JTw/Uc0uw+46z1zT+XDIyVBK29Cfy1?=
+ =?us-ascii?Q?jAD0tNWFoVEN9nlcefupht3NvRK+AU2uOxZn5P9rm9aHyEocTarUtGV0vsOX?=
+ =?us-ascii?Q?+H3THN92WH5yOFjZvs0W6cbDXVZcc3RehoM45ajbRxVt04j0iCCyZQg26aXR?=
+ =?us-ascii?Q?T1niy2zniv0o6HqJIqVqIdSYGcuWUxbOY8i4tyhBSMaDw7UH38FYF7RAJMN5?=
+ =?us-ascii?Q?zqAup2rlFAu2ciQouWlzOMD9z3igxqk3LwaIglRkTtx1oMNwV4ANHYSY7kqX?=
+ =?us-ascii?Q?LJET1ivf2lk/kJA5Sk2vFFnu3BUT4Hzqg1A6i83Ist+e1KgRmFLgH5Fri1Fg?=
+ =?us-ascii?Q?arn28DsYVAHY//6K/yJwdinDTC59vYGi9LiBdifiLfIpgXc0TLYC4QIaaWt0?=
+ =?us-ascii?Q?71KtIG+yEN2KipDs+NJjaPUL9LLea8CxjKS9CWbnnR+8Bhhmv/ZGFcxwxHAF?=
+ =?us-ascii?Q?m94SWa2yHkwUgEpUokwYpqDNzDZIf4FSWnLZWqgCd/cu/9pCJ25611hoFUlE?=
+ =?us-ascii?Q?H0Dex8XQv4qLdZAJihKm5MrPcU+PEKTvqke9TLgENAk5vi4fddwIc8BWwMya?=
+ =?us-ascii?Q?ROqmeHPv8H6YVxUDMiOo1b+ZWtnGQtV57RZFzjgKzPEePdla3X2zbbfX0Bvw?=
+ =?us-ascii?Q?KnPnaSKU3J4T+yZ2UzHMLfWY0aqhXlkL0izCH1ubFpKrAHsa8JM/6+EPdM2F?=
+ =?us-ascii?Q?S5LVrPB0yBmgFD7hqdGzhGsU+miRf8TfEurs/8l27ypVENbRQVamyXDfIJqX?=
+ =?us-ascii?Q?lrxbWnKwb0RjeIvZFgqeAJuad5aXSlfmnGT+8KH9Cc1fYP0fvB3KsE4KVGUs?=
+ =?us-ascii?Q?sCFN9/tbGsuKtscqIqcgc7VoK//liEOV9yPy/DqxJXBlbPFjYDrXVWuBmezg?=
+ =?us-ascii?Q?fA=3D=3D?=
+X-MS-Exchange-CrossTenant-Network-Message-Id: fcf72efe-e94b-4eaf-eb85-08dd3b6788ae
+X-MS-Exchange-CrossTenant-AuthSource: PH7PR11MB6522.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 23 Jan 2025 04:36:41.8684
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: RwzrbRGL1SKvRz7HEdxSkvukN/fgFf+oKLHI8lpdyDmlsw7kfmAE3ZSSlZW85qRRG0/lTfxTo8UIEG61ZMoCUQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CO1PR11MB4851
+X-OriginatorOrg: intel.com
 
-Add get and set channel maps support from codec to cpu dais.
+On Wed, Jan 22, 2025 at 06:04:58PM +0100, Boris Brezillon wrote:
+> On Wed, 22 Jan 2025 16:14:59 +0000
+> Tvrtko Ursulin <tursulin@ursulin.net> wrote:
+> 
+> > On 22/01/2025 15:51, Boris Brezillon wrote:
+> > > On Wed, 22 Jan 2025 15:08:20 +0100
+> > > Philipp Stanner <phasta@kernel.org> wrote:
+> > >   
+> > >> --- a/drivers/gpu/drm/panthor/panthor_sched.c
+> > >> +++ b/drivers/gpu/drm/panthor/panthor_sched.c
+> > >> @@ -3272,6 +3272,7 @@ group_create_queue(struct panthor_group *group,
+> > >>   		   const struct drm_panthor_queue_create *args)
+> > >>   {
+> > >>   	struct drm_gpu_scheduler *drm_sched;
+> > >> +	struct drm_sched_init_params sched_params;  
+> > > 
+> > > nit: Could we use a struct initializer instead of a
+> > > memset(0)+field-assignment?
+> > > 
+> > > 	struct drm_sched_init_params sched_params = {
+> 
+> Actually, you can even make it const if it's not modified after the
+> declaration.
+> 
+> > > 		.ops = &panthor_queue_sched_ops,
+> > > 		.submit_wq = group->ptdev->scheduler->wq,
+> > > 		.num_rqs = 1,
+> > > 		.credit_limit = args->ringbuf_size / sizeof(u64),
+> > > 		.hang_limit = 0,
+> > > 		.timeout = msecs_to_jiffies(JOB_TIMEOUT_MS),
+> > > 		.timeout_wq = group->ptdev->reset.wq,
+> > > 		.name = "panthor-queue",
+> > > 		.dev = group->ptdev->base.dev,
+> > >          };  
+> > 
 
-Implemented logic to get the channel map in case of only sdw stream and
-set channel map only for specific cpu dais.
++2
 
-Signed-off-by: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
----
- drivers/soundwire/qcom.c |  5 ++---
- sound/soc/qcom/sdw.c     | 34 +++++++++++++++++++++++++++++++---
- 2 files changed, 33 insertions(+), 6 deletions(-)
+Matt
 
-diff --git a/drivers/soundwire/qcom.c b/drivers/soundwire/qcom.c
-index 0183e1ad4853..295a46dc2be7 100644
---- a/drivers/soundwire/qcom.c
-+++ b/drivers/soundwire/qcom.c
-@@ -1276,11 +1276,10 @@ static void *qcom_swrm_get_sdw_stream(struct snd_soc_dai *dai, int direction)
- }
- 
- static int qcom_swrm_set_channel_map(struct snd_soc_dai *dai,
--				     unsigned int tx_num, unsigned int *tx_slot,
--				     unsigned int rx_num, unsigned int *rx_slot)
-+				     unsigned int tx_num, const unsigned int *tx_slot,
-+				     unsigned int rx_num, const unsigned int *rx_slot)
- {
- 	struct qcom_swrm_ctrl *ctrl = dev_get_drvdata(dai->dev);
--	struct sdw_stream_runtime *sruntime = ctrl->sruntime[dai->id];
- 	int i;
- 
- 	if (tx_slot) {
-diff --git a/sound/soc/qcom/sdw.c b/sound/soc/qcom/sdw.c
-index f2eda2ff46c0..d4d8ed46e6ff 100644
---- a/sound/soc/qcom/sdw.c
-+++ b/sound/soc/qcom/sdw.c
-@@ -25,7 +25,9 @@ int qcom_snd_sdw_startup(struct snd_pcm_substream *substream)
- 	struct snd_soc_dai *cpu_dai = snd_soc_rtd_to_cpu(rtd, 0);
- 	struct sdw_stream_runtime *sruntime;
- 	struct snd_soc_dai *codec_dai;
--	int ret, i;
-+	int ret, i, j;
-+	u32 rx_ch[SDW_MAX_PORTS], tx_ch[SDW_MAX_PORTS];
-+	u32 rx_ch_cnt = 0, tx_ch_cnt = 0;
- 
- 	sruntime = sdw_alloc_stream(cpu_dai->name);
- 	if (!sruntime)
-@@ -35,9 +37,35 @@ int qcom_snd_sdw_startup(struct snd_pcm_substream *substream)
- 		ret = snd_soc_dai_set_stream(codec_dai, sruntime,
- 					     substream->stream);
- 		if (ret < 0 && ret != -ENOTSUPP) {
--			dev_err(rtd->dev, "Failed to set sdw stream on %s\n",
--				codec_dai->name);
-+			dev_err(rtd->dev, "Failed to set sdw stream on %s\n", codec_dai->name);
- 			goto err_set_stream;
-+		} else if (ret == -ENOTSUPP) {
-+			/* Ignore unsupported */
-+			continue;
-+		}
-+
-+		ret = snd_soc_dai_get_channel_map(codec_dai, &tx_ch_cnt, tx_ch,
-+						  &rx_ch_cnt, rx_ch);
-+		if (ret != 0 && ret != -ENOTSUPP) {
-+			dev_err(rtd->dev, "Failed to get codec chan map %s\n", codec_dai->name);
-+			goto err_set_stream;
-+		} else if (ret == -ENOTSUPP) {
-+			/* Ignore unsupported */
-+			continue;
-+		}
-+	}
-+
-+	switch (cpu_dai->id) {
-+	case RX_CODEC_DMA_RX_0:
-+	case TX_CODEC_DMA_TX_3:
-+		if (tx_ch_cnt || rx_ch_cnt) {
-+			for_each_rtd_codec_dais(rtd, j, codec_dai) {
-+				ret = snd_soc_dai_set_channel_map(codec_dai,
-+								  tx_ch_cnt, tx_ch,
-+								  rx_ch_cnt, rx_ch);
-+				if (ret != 0 && ret != -ENOTSUPP)
-+					goto err_set_stream;
-+			}
- 		}
- 	}
- 
--- 
-2.34.1
-
+> > +1 on this as a general approach for the whole series. And I'd drop the 
+> > explicit zeros and NULLs. Memsets could then go too.
+> > 
+> > Regards,
+> > 
+> > Tvrtko
+> > 
+> > > 
+> > > The same comment applies the panfrost changes BTW.
+> > >   
+> > >>   	struct panthor_queue *queue;
+> > >>   	int ret;
+> > >>   
+> > >> @@ -3289,6 +3290,8 @@ group_create_queue(struct panthor_group *group,
+> > >>   	if (!queue)
+> > >>   		return ERR_PTR(-ENOMEM);
+> > >>   
+> > >> +	memset(&sched_params, 0, sizeof(struct drm_sched_init_params));
+> > >> +
+> > >>   	queue->fence_ctx.id = dma_fence_context_alloc(1);
+> > >>   	spin_lock_init(&queue->fence_ctx.lock);
+> > >>   	INIT_LIST_HEAD(&queue->fence_ctx.in_flight_jobs);
+> > >> @@ -3341,17 +3344,23 @@ group_create_queue(struct panthor_group *group,
+> > >>   	if (ret)
+> > >>   		goto err_free_queue;
+> > >>   
+> > >> +	sched_params.ops = &panthor_queue_sched_ops;
+> > >> +	sched_params.submit_wq = group->ptdev->scheduler->wq;
+> > >> +	sched_params.num_rqs = 1;
+> > >>   	/*
+> > >> -	 * Credit limit argument tells us the total number of instructions
+> > >> +	 * The credit limit argument tells us the total number of instructions
+> > >>   	 * across all CS slots in the ringbuffer, with some jobs requiring
+> > >>   	 * twice as many as others, depending on their profiling status.
+> > >>   	 */
+> > >> -	ret = drm_sched_init(&queue->scheduler, &panthor_queue_sched_ops,
+> > >> -			     group->ptdev->scheduler->wq, 1,
+> > >> -			     args->ringbuf_size / sizeof(u64),
+> > >> -			     0, msecs_to_jiffies(JOB_TIMEOUT_MS),
+> > >> -			     group->ptdev->reset.wq,
+> > >> -			     NULL, "panthor-queue", group->ptdev->base.dev);
+> > >> +	sched_params.credit_limit = args->ringbuf_size / sizeof(u64);
+> > >> +	sched_params.hang_limit = 0;
+> > >> +	sched_params.timeout = msecs_to_jiffies(JOB_TIMEOUT_MS);
+> > >> +	sched_params.timeout_wq = group->ptdev->reset.wq;
+> > >> +	sched_params.score = NULL;
+> > >> +	sched_params.name = "panthor-queue";
+> > >> +	sched_params.dev = group->ptdev->base.dev;
+> > >> +
+> > >> +	ret = drm_sched_init(&queue->scheduler, &sched_params);
+> > >>   	if (ret)
+> > >>   		goto err_free_queue;  
+> 
 
