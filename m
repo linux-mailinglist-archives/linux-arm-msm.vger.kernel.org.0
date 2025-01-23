@@ -1,132 +1,109 @@
-Return-Path: <linux-arm-msm+bounces-45957-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-45954-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B79BFA1A359
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jan 2025 12:43:39 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4750AA1A310
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jan 2025 12:37:02 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 51C841662BC
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jan 2025 11:43:01 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 91AC4161265
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jan 2025 11:37:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CCFFC20E6FA;
-	Thu, 23 Jan 2025 11:39:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9BB1820E314;
+	Thu, 23 Jan 2025 11:36:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="HlMEm15d"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ruBZpmjx"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pj1-f43.google.com (mail-pj1-f43.google.com [209.85.216.43])
+Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48BD8215F5A
-	for <linux-arm-msm@vger.kernel.org>; Thu, 23 Jan 2025 11:39:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0B2B20CCC3
+	for <linux-arm-msm@vger.kernel.org>; Thu, 23 Jan 2025 11:36:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737632354; cv=none; b=hufuod588KFt9QrWmIH5Kz2NHw5/ULECBF0qPz9swXX7wSEWhz2XYbI2UIaaRN4HKyZu2mEAKsxpuElEagz0hD/p9nG/w3vQjzkuGbXeEx2qaXKk3jzm16XjkeHeAoOLpRmwlB2GavLi6/+Izmg3EOyP2QBNvGmTO5RlT8L+QfA=
+	t=1737632218; cv=none; b=AzSU5QX7T7Hy53euEAlZA8pP9tC21lpVgFlAbpxqo5xg/Mi1lt7XTIO0ytAXcwYj8UDo41iHrhYg/5ezKcvz960WDUYmVUVdR59nrF88HjHvmlHW+yOv3XzdKxC3hzgZODz6r006ZlUlqUG92Iv3ONcL5v3QxRNjMmcaix/x2Yw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737632354; c=relaxed/simple;
-	bh=0vuFyrpowJWXJ+EgmQo075OCUAokbqO688arZlJgNwE=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=ZuFX72xgwYEjNOsw5PO57lBBFmpRYkc917QPXyquuAkh4zUWUjGWalt4ibYTbsSOcsWl60cPfB2reFTIKgQPXoJMHuXwE6WQTmUqxIQQ7zHvqautxP7nrcBS5DxFvbMj/R1CGXjX8pBM1BIXeDmeh0XCAOrjNfoL17Lv9F3nujA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=HlMEm15d; arc=none smtp.client-ip=209.85.216.43
+	s=arc-20240116; t=1737632218; c=relaxed/simple;
+	bh=RdI6IJceYHWNDjwXbPHhGrnfntTwaSLvqJY46KDpWw0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=VGxxpLF/cSFQ9PjHgEObSD2r6aaEFeE8QfLRnqmVpXMdWNm39utTVpn2oIZcEsPe3teQwlW8BIBouMzek9EUDdgFzB1dwyoEDJ+C+vBJaNqzV37C4qlLsKxRUX1h8amh30j6FqcnYUbABr3A2z7/9YZTc38SNPibYNpn+D2MvIY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ruBZpmjx; arc=none smtp.client-ip=209.85.128.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pj1-f43.google.com with SMTP id 98e67ed59e1d1-2f78a4ca5deso1137534a91.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Jan 2025 03:39:12 -0800 (PST)
+Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-4361f796586so8003475e9.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Jan 2025 03:36:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1737632352; x=1738237152; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=pfFWpe84qglq/TtVYEMV6ZHL0gX6mGnPHNUCBfXIIJs=;
-        b=HlMEm15dy4WZlJDIFyZD3ccFVVQ8zml48ro3I4mFTiykgduqdehXhBkf50wkI6lDyR
-         tUXp1EpGnwNGRs/1sD98wnosfM/CT4CgLF7StQE7/MF+U0B4B97xyxfTGqj04lSFfmSh
-         oA9mt3ONYLMMGYWwtEVyIlLviAuFB3gOAbVu1SwBRwtIbG7191lRpubwP1G6Iomhp07S
-         UOi06IDJNlN/Q0cOuQOA1cJkwnc9QOwAINH1Th/l3f75AGgcOzCacgM5TrI+pVaFWmPJ
-         7oAWddiKxJOrVEKPiyA1UyvjGzyJLuaEv0AU5WjQmD+zG6iDNBvnLi4wGcuKOGH89oc0
-         ZVPg==
+        d=linaro.org; s=google; t=1737632215; x=1738237015; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=RdI6IJceYHWNDjwXbPHhGrnfntTwaSLvqJY46KDpWw0=;
+        b=ruBZpmjxkoV7rFM04585/V49ThTQUAvaUoPIQlGJWzO0nun0ewjdroUriFWzt1Lc+J
+         0oz5R6UpXdGTTutIbdN1FSY2bAa9HbGnDMgosAj3hVzXMICzRUQRoNYHHZjSurEiAGN5
+         j6CfxreKvhybXuVx2oY++gxygIOc+qpDt+SOkQ1AodfLMzPwPhdr99/gcfFwQ1T1C4u9
+         YiiPlUCVr6H5RRgI66JSxopX2dXm/TGa/AcE1Dt4BNVDzp3NgdAUzAGUW2hF6Ko+7v2s
+         TXZ/PDYoPuenvzpPcuyHFClX+0Fq1hvVzWb0cwno0Nuz0djvsaazkigH4fSA9uh8fw/F
+         RRcA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1737632352; x=1738237152;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=pfFWpe84qglq/TtVYEMV6ZHL0gX6mGnPHNUCBfXIIJs=;
-        b=qs8vOrtzSTaDzVKrPvPZDM/zEgXMKcA1pGQX+f0BweAbWIWWMmrvLvtOwHI+0P6sdV
-         nrAUgbVogUlwTxEjFs8nDTVqOxz2aLToDLtapCHOYiMcqOiXJ8UfPG2CBr7Gd9qSctBp
-         qYJj4UK4dF3oT0G5tcApwVZM6CEofVo3lE4dK6bBSBBFYFv0EDT72HawE/EWKj3VOrsh
-         N5FaGUfo2LOFXF+6Ui+zjXpKvNapCAOqSxFzuayoxDvwB/cxqsDBNoo7/h9oPMug45Hn
-         jXleuN9WKquBlQws3t5hWjGJeoGTFXYYZaJipTWZdpBVw8MspW179rYxmHfcIADXweKb
-         bDNQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXNKqJ/WPu4aMW6H6SBB2zetN0IUU7mTxZMwS3XFFRqPIhBh2nWfiE7yTjyVBCEMqN/IUvR18Vrk2f3n7N7@vger.kernel.org
-X-Gm-Message-State: AOJu0YxXDr7+iA7V/CanF54fmeyH1jv811RchQwwUWMXhMDmySzkObA6
-	r2BVvF3RB8L2HcF/Shcf0O7BSMnama1hwr1QnRFyg00cZN8Nl1Sy9s5QPZmQqKM=
-X-Gm-Gg: ASbGnctM0K8ZxrVleqpIf+RB1xT/YkwDoxRmNkFDc53+Ion7WBpP+huugWu/HYSoDea
-	tpSaLHYUci8Bt59C+P21Ne5D4Lmq01wWoDOjjA+mDq4DfMzAIJ7LcDyOn7MS5zLgDYD6LCulqyB
-	JCN36j28TsMvOYY3+Cu1fG/Le0C3oVMykq1tvMBRsEZZ7LyJIv2iS5vBnW21DpwobjLLg8FMkeK
-	xvA7axxlvzkl4Dnhs3GFkinutWMOHAbzLzmwBi9jZqbOK1OqJGq4At84gEBf7jDuObBtw/s7VNi
-	sYohOX4=
-X-Google-Smtp-Source: AGHT+IHlclUl4YrIQK3CJ0/Pzuudje5vfVTFEO6w99Udj/Vlk9RQblNRiPVYs/2jxiDc+XWZQoS5zQ==
-X-Received: by 2002:a05:6a00:2e9e:b0:725:e1de:c0bf with SMTP id d2e1a72fcca58-72daf9483fdmr33058325b3a.9.1737632352436;
-        Thu, 23 Jan 2025 03:39:12 -0800 (PST)
-Received: from localhost ([122.172.84.139])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-72dab7f1ae0sm12995670b3a.24.2025.01.23.03.39.11
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 23 Jan 2025 03:39:11 -0800 (PST)
-From: Viresh Kumar <viresh.kumar@linaro.org>
-To: "Rafael J. Wysocki" <rafael@kernel.org>,
-	Viresh Kumar <viresh.kumar@linaro.org>
-Cc: linux-pm@vger.kernel.org,
-	Vincent Guittot <vincent.guittot@linaro.org>,
-	linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH 21/33] cpufreq: qcom: Stop setting cpufreq_driver->attr field
-Date: Thu, 23 Jan 2025 17:05:57 +0530
-Message-Id: <2e582722386a1ea89ecd8b174e758e054da86555.1737631669.git.viresh.kumar@linaro.org>
-X-Mailer: git-send-email 2.31.1.272.g89b43f80a514
-In-Reply-To: <cover.1737631669.git.viresh.kumar@linaro.org>
-References: <cover.1737631669.git.viresh.kumar@linaro.org>
+        d=1e100.net; s=20230601; t=1737632215; x=1738237015;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=RdI6IJceYHWNDjwXbPHhGrnfntTwaSLvqJY46KDpWw0=;
+        b=TK3UYKaFhfPvxskjxveZ5N5ZunC4CKugjIiPS0Y2HjHCLFI4QoiVPs4MYXiMyKwYMz
+         auG35cbdJ/ryrrFJIB4pB/J2VhWqLkBgYfCYS+WZOWavHz01FJG8ZdmvGBoJ7N8u4huo
+         Kc9bV8mLRve3kN5C+5x4exO6au/TuqWNKsDPCiGi3tfYLwT9QXL9MalxxKdpNwc0eP4i
+         MuHQvyhZJ9ur9kpo656zXBalYsyxm+mKI5s8vx7wHvzQBcOe8T/FcMKtVmsa1KbjNWnq
+         oRI9CmCtGtXOUI5h35mQnLFz9ANSF9gD4J1xc89HnSfIY7+jkiJHCgxvF8ImG7VggN0H
+         nkJQ==
+X-Gm-Message-State: AOJu0Ywo6Ktrg7iawCA6jjn2rHUh5wgfDrHfAe27lKgEOzWNhOKP1uTz
+	epOCDyTECHFzxi/sGzuORjWzJKk+tNYxasex+/tlGYlGY9O25L8aqxWdNXA6vUc=
+X-Gm-Gg: ASbGncvH/r5ul/e2VD2hIuK49/hVfdFbPE+ynDc1uJ2axi9xhQdICE0kQv5QmuJRE1K
+	HzBpHayIec21+KKMmKB+y6DkqH7ADzmE042R1D+7jQ99k3e6zF68dC/hzYYbbddKKiYCwpCwJtH
+	hmV+Zgd658gOOTglu1GqIff+cesAMR8Z02MwXSE2Sr84CHx682Efx8FTMXoGYKWLybJnxOEJXzC
+	lfOg6qgTon/hULu1O4Rn2Wyhv0HXLOXnMFlOHGMkbEIKYZYFwBej5vzD5y53n5zrUOA+KcNft33
+	e1Kl96OiqPn7+CS1rQ==
+X-Google-Smtp-Source: AGHT+IELUBxDoirlNG9SA4nq62ZMYmDw/0cKfHcaM4E/mFo7d2pn8cQOe4FUQ9oLCcMRfxLaJHQO3g==
+X-Received: by 2002:a05:600c:3548:b0:434:a1d3:a321 with SMTP id 5b1f17b1804b1-438913c6150mr239518495e9.3.1737632215254;
+        Thu, 23 Jan 2025 03:36:55 -0800 (PST)
+Received: from [192.168.0.35] ([176.61.106.227])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-438b31c6fbasm58088275e9.33.2025.01.23.03.36.54
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 23 Jan 2025 03:36:54 -0800 (PST)
+Message-ID: <7f8bb83f-aa15-4a58-baf4-6241b479b412@linaro.org>
+Date: Thu, 23 Jan 2025 11:36:53 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 8/8] ABI: sysfs-driver-ufs: Add missing UFS sysfs
+ addributes
+To: Ziqi Chen <quic_ziqichen@quicinc.com>, quic_cang@quicinc.com,
+ bvanassche@acm.org, mani@kernel.org, beanhuo@micron.com,
+ avri.altman@wdc.com, junwoo80.lee@samsung.com, martin.petersen@oracle.com,
+ quic_nguyenb@quicinc.com, quic_nitirawa@quicinc.com,
+ quic_rampraka@quicinc.com
+Cc: linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
+ Keoseong Park <keosung.park@samsung.com>,
+ open list <linux-kernel@vger.kernel.org>
+References: <20250122100214.489749-1-quic_ziqichen@quicinc.com>
+ <20250122100214.489749-9-quic_ziqichen@quicinc.com>
+Content-Language: en-US
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <20250122100214.489749-9-quic_ziqichen@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-The cpufreq core handles this for basic attributes now, the driver can skip
-setting them.
+On 22/01/2025 10:02, Ziqi Chen wrote:
+> Add UFS driver sysfs addributes clkscale_enable, clkgate_enable and
+> clkgate_delay_ms to this doucment.
 
-Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
+I'm 99% sure you mean "attributes" not "addributes"
+
 ---
- drivers/cpufreq/qcom-cpufreq-hw.c | 7 -------
- 1 file changed, 7 deletions(-)
-
-diff --git a/drivers/cpufreq/qcom-cpufreq-hw.c b/drivers/cpufreq/qcom-cpufreq-hw.c
-index b2e7e89feaac..7d83d7d2ccc8 100644
---- a/drivers/cpufreq/qcom-cpufreq-hw.c
-+++ b/drivers/cpufreq/qcom-cpufreq-hw.c
-@@ -595,12 +595,6 @@ static void qcom_cpufreq_ready(struct cpufreq_policy *policy)
- 		enable_irq(data->throttle_irq);
- }
- 
--static struct freq_attr *qcom_cpufreq_hw_attr[] = {
--	&cpufreq_freq_attr_scaling_available_freqs,
--	&cpufreq_freq_attr_scaling_boost_freqs,
--	NULL
--};
--
- static struct cpufreq_driver cpufreq_qcom_hw_driver = {
- 	.flags		= CPUFREQ_NEED_INITIAL_FREQ_CHECK |
- 			  CPUFREQ_HAVE_GOVERNOR_PER_POLICY |
-@@ -615,7 +609,6 @@ static struct cpufreq_driver cpufreq_qcom_hw_driver = {
- 	.register_em	= cpufreq_register_em_with_opp,
- 	.fast_switch    = qcom_cpufreq_hw_fast_switch,
- 	.name		= "qcom-cpufreq-hw",
--	.attr		= qcom_cpufreq_hw_attr,
- 	.ready		= qcom_cpufreq_ready,
- };
- 
--- 
-2.31.1.272.g89b43f80a514
-
+bod
 
