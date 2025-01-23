@@ -1,250 +1,212 @@
-Return-Path: <linux-arm-msm+bounces-45958-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-45959-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 35875A1A374
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jan 2025 12:46:32 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1DA80A1A36E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jan 2025 12:45:50 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9D1911662DB
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jan 2025 11:45:18 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id EFAE5188BE24
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jan 2025 11:45:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 826D3218858;
-	Thu, 23 Jan 2025 11:39:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6473020F06C;
+	Thu, 23 Jan 2025 11:42:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="cqb1DBJf"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="DVsp65uR"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f49.google.com (mail-lf1-f49.google.com [209.85.167.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D6B3218821
-	for <linux-arm-msm@vger.kernel.org>; Thu, 23 Jan 2025 11:39:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AFF620E32F
+	for <linux-arm-msm@vger.kernel.org>; Thu, 23 Jan 2025 11:42:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737632393; cv=none; b=nb4F8Xr6Q71FOI28sLp0871cCQVO675vCjsXpbKc/BQL7x0glwyJTFv7kz7dDsnHw7Nak2P+uZL2qILwx3A9ZoVP+CUxQl32Ycp9XcvpP5bmg4dgPRv/TBgx/j2GJhxvoXOJTU63BqeI/+sGwQpJ4UZBTdVCBDG0SxySJ9Wu8V8=
+	t=1737632569; cv=none; b=Kaz9n4VpvKVyEHy3jIV9I0fc4svDe41peOSnlVNKSZRrtnoEtLTfoJ+sLxrEXXf4e+x5lRv223dv+shKSaxNGMO+unxcSI5/5K+Ox8Umvq4pzdg95XnGmjLjZAjbCtheUmmJbO330anfeUWqVcWHeYMCwDCuVBFQTckChG+f4U0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737632393; c=relaxed/simple;
-	bh=yRmruWwZAlGMnjNKWS6o5Wf6vBBNO7FO6a4CyXrm1wE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=BLXk7N0649bbx/5QT3t/FcpwPfIvRLzDHwbEOXEclnwvl+qttr+JChK9ZP2aiyQxr+NuXvBgx2uH3aigGvTrVEPwmTCJAXuu09J1NPZcVozMuDVOJXhXUuR2MG88KQBQIJi6Fd8AIu6txJ8FlL1E3FTNJOLhISustavyfIRiKlU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=cqb1DBJf; arc=none smtp.client-ip=170.10.133.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1737632390;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=26sJp6LLr853+l42FCxrIN7KhwPqa68kRd/qGpcZQT8=;
-	b=cqb1DBJf3g2IUT+1FGkEqCR9M4xeTg8hImdfR2hTQ0Lfx0c2DFWujqeIP8R5XmOPt5zqAd
-	DYsLOAxdc30FGSwoSaZmouMHhiaywb5JWa51rxomwHuJ/O8jusqbHJknXkKY6C9UFIev6+
-	Xi4iX9ylVkS6+dTmwiYuSSOiNalLVg0=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-440-nGV-p9qKMjuVRBy9H2-ZlQ-1; Thu, 23 Jan 2025 06:39:49 -0500
-X-MC-Unique: nGV-p9qKMjuVRBy9H2-ZlQ-1
-X-Mimecast-MFC-AGG-ID: nGV-p9qKMjuVRBy9H2-ZlQ
-Received: by mail-wr1-f70.google.com with SMTP id ffacd0b85a97d-3862f3ccf4fso343998f8f.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Jan 2025 03:39:49 -0800 (PST)
+	s=arc-20240116; t=1737632569; c=relaxed/simple;
+	bh=ud3tE0h7JjyTq6IApBzsJSox04IZQvJRJRP626++F0Y=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ss6NTg130wHv2j3NOTlMillrHPOkvEXcN89gIovrBzAPBFL9qBCaE/Hc/n9OxELfpSkjpIk6urYjWvEsGY6IvEIKEJpBoJaCb+XVLmQMX45nq/P71Wtu1738WDBUtYayR220tmVhPZSfAWsYg5hyMjpm2VYcHvhP/7dZFVMbKE8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=DVsp65uR; arc=none smtp.client-ip=209.85.167.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f49.google.com with SMTP id 2adb3069b0e04-5401c52000fso678902e87.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Jan 2025 03:42:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1737632565; x=1738237365; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=i3P39NTqsEmG+qD3A8uUKR2alt74v//DeAhcZsNNbA0=;
+        b=DVsp65uRnzFSZ6tx7C3PFaQk4ja0QqxSeJw20LBBSs129/B9AHQT732RS7euG6TTLf
+         sxAoHTJiN6K6+NfxaafvDy4idrFpjcdFFpvfl2Z9czUc7yOPFW3wBZ2jvfLOUnx+g1yi
+         xorRejfFtYu5eK/IEwV5J5wr+aPUuNJccpwJueey5OwEjHf1Urd6ELT2A01i50SGjV0S
+         Dq+3SRPWgOpkpW47P5+szIfVBhMdGFKqPvL/dG9OSANXJLYwzsCc3KemYSNv9eAHg3QQ
+         yg0afYD3lFXb3mMHbmo1rmVK2Hpp949es49sMTzWtNU/Py6TpV36htRh5kJBbbw6MCRu
+         fX3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1737632388; x=1738237188;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:from:references:cc:to:subject:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=26sJp6LLr853+l42FCxrIN7KhwPqa68kRd/qGpcZQT8=;
-        b=ExXxxo4pcmuDOlSLHdcsomMHS+qXMlUf4E/nFa1wQ+zvgg8HCmNLr3t1UegtXuQmnL
-         ifbe/JbaTv0ZyP9iTO9UP4lBDlxMFv2J8AT9pTKd96XD9reBmB+fikPULy0zG7nRseAK
-         thRb/5cJlTaLFqSUsQ6KiTDkkQEdNakpX46xN//9SqgPFSVrDReofKdcalhjFUeFMR4e
-         ta7PHLzy1KMujNoBkRQYvLv4MJz31gYzkkE7mFzNI31iUJGie73fl6lM/52mW7Sg6FOI
-         LVCk8ijGWr+lQejYtdyqwme5bpp8MuHIsWs+efvbzvaXJA1I6J6iisto5xwKT7kaidjv
-         NtRg==
-X-Forwarded-Encrypted: i=1; AJvYcCX41uNFzVpC7xkRhhZr68rvpmjHk0A617dkAEyqPX/lawu6Y7Qwe0T2DRynHD7gfTrSCgaH4Fr+TztgYK9h@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy/LN3SvCSMUeCFqJQiJuhVJWUhk6sprQlJe6DaEb6VC0cZL91w
-	oCyGT8Iw4TrKPTyNDP7mno3PwMxBWmkk8imL8cmppm/IAmK2CDKKK09e5a9DytEE/JQ/R5WkPxh
-	qKMIGAfMevmZLif0CYEfQV2gv7l6JqjR4slusqbE0UcNJRV0VBCSCN+4TnA5tN9w=
-X-Gm-Gg: ASbGnctGUhRUMJGjEE9LdU30h8kEiSszGqnjGZDp/OtoqlrHY6yGsw7Z0WTYD4wH182
-	0NHVMRjnlUEnfVaHjUA/2t990F9ld5sHp/HcB8VxW2L1WHs+0lKzaQde7fGlIkiBE9f3dn/Vyud
-	CL+lLh4t0LrUP4c5750q4ywYDSoPHMEOKA92lLRzs8o+TUgKQQLWfN1T0m3AtyEAmIYaMZQX99e
-	kHA84QgBiRZ/cbcfY8c6xD04myAAa5DqCwklbJIqux4gyi3Ib4rCI35iKmWhXBHFm/q+/XKtNjP
-	2HFRUsdhRY6hzdrl6/KItaPBSk6M427fv0P9XXCW0KNZqVEvm35Uz5RG4PhczljPrWzGMnSMQZ7
-	yxWOiTx+/voO76VahocQoBA==
-X-Received: by 2002:a05:6000:186f:b0:38a:8647:3dac with SMTP id ffacd0b85a97d-38bf57a68aemr21941684f8f.34.1737632387841;
-        Thu, 23 Jan 2025 03:39:47 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEOdqnws9Ojo4ed6tHwT2TPMkSJHd3gT/xgbU599QXRB2REcnN3KIZ7uuGKPDeYqeZC5/UPlw==
-X-Received: by 2002:a05:6000:186f:b0:38a:8647:3dac with SMTP id ffacd0b85a97d-38bf57a68aemr21941653f8f.34.1737632387364;
-        Thu, 23 Jan 2025 03:39:47 -0800 (PST)
-Received: from ?IPV6:2003:cb:c70b:b400:e20a:6d03:7ac8:f97d? (p200300cbc70bb400e20a6d037ac8f97d.dip0.t-ipconnect.de. [2003:cb:c70b:b400:e20a:6d03:7ac8:f97d])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-438b31d9a39sm58733405e9.31.2025.01.23.03.39.44
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 23 Jan 2025 03:39:46 -0800 (PST)
-Message-ID: <82d8d3a3-6f06-4904-9d94-6f92bba89dbc@redhat.com>
-Date: Thu, 23 Jan 2025 12:39:43 +0100
+        d=1e100.net; s=20230601; t=1737632565; x=1738237365;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=i3P39NTqsEmG+qD3A8uUKR2alt74v//DeAhcZsNNbA0=;
+        b=l1ic5pDzdHhWMQ6CEJNUJELIvTsXqsgNkjEa2o1+mM1S5b95t/LttZKRQz9IcifjHX
+         Qx566SuwRHRX43sW3DLDg6IAGkTokYdadUz1x+US2vPRIW0OSbhwvtaKSiRg5BXmD7U+
+         stGttlV07zu8RVe7SejhlQo8IMj/D+lSKdIvVpAW8igKPe6EEL0Bah3lXLtyWRUImW5I
+         9pOVP0w371Ed23XatLqNsS+lN9ohQFE7UY7K/aAqaFmBSKgGZ1HqbWunlNunbfXe7LBJ
+         Am52QwBtBIHgM+IO0o6EHqVGL2rgVIbKIxwTm63hD0LFHv/mimkF6MCaF738Djh8tLtn
+         dSlg==
+X-Forwarded-Encrypted: i=1; AJvYcCVoadTQ75cHvn+FUOifi0Zwf/5TTgdYe2ip2ad2YYmFUnJV3ln9zZg8WhM8AgGpkImME86wyWO9NGHsmrp0@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy0OepQ0SOE2V7yUbj7Sht/MSKe4FZIIDwIJrPz+HRAGBmXYvsV
+	D/g5m4cuE2r8smDjc7RmVgwj7Yt81ie2K4AiOCfdCEjvip8jsblV7JZlOJ215yk=
+X-Gm-Gg: ASbGncsZe4UDiydIFPZiU9lAxnbx6aYthgQMnJV+61NNYOQq6y02mc3k450IHOZ7Z8c
+	n+Z1tyfJNY1K40X3Ip6ZYrAdayXe+tN9a4ZglgiVAk6oGQVV+qm+wrcDkBqWbbQDhbvNfoAhXqd
+	6Y1T8osUToIK3XBNAFaii3xmEOWsazK6kissnUo6WfkSNWj8+Bg9Ai9+6nn6sqho/Ur664Puz+5
+	sFWlIhNLXP4OqHqMOXGE8p0d2W/rN6bd4MzHJ+1vuUr/7UN0qpIHPevRxUmdnvAw+At1PQTRjNN
+	ZDFcQLkjf+H+M4EEOxXhIiEepnCT9mIpnvVNcmNwLdR3OvnfMz7ruSqpX1H2
+X-Google-Smtp-Source: AGHT+IE+Ia87Yzw0G3ah3eRZORLnjYGt9PngsTrMv1Yrk3tLzpNB1AsQiaezzDF9LgUfWKQxNA3NSg==
+X-Received: by 2002:a05:651c:896:b0:306:10d6:28b3 with SMTP id 38308e7fff4ca-3072ca5da94mr102237171fa.1.1737632565289;
+        Thu, 23 Jan 2025 03:42:45 -0800 (PST)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-3072a344579sm29966991fa.28.2025.01.23.03.42.44
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 23 Jan 2025 03:42:44 -0800 (PST)
+Date: Thu, 23 Jan 2025 13:42:43 +0200
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc: Rob Clark <robdclark@gmail.com>, 
+	Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
+	Simona Vetter <simona@ffwll.ch>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+	Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+	Conor Dooley <conor+dt@kernel.org>, Krishna Manikandan <quic_mkrishn@quicinc.com>, 
+	Jonathan Marek <jonathan@marek.ca>, Kuogee Hsieh <quic_khsieh@quicinc.com>, 
+	Neil Armstrong <neil.armstrong@linaro.org>, linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+	freedreno@lists.freedesktop.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	Srini Kandagatla <srinivas.kandagatla@linaro.org>
+Subject: Re: [PATCH RFC 08/11] drm/msm/dsi: Add support for SM8750
+Message-ID: <uqolptkewqkavtnb6wkc5o6hq6nmqe62mi7y43uu7td7vz722d@ddouvp2z46ti>
+References: <20250109-b4-sm8750-display-v1-0-b3f15faf4c97@linaro.org>
+ <20250109-b4-sm8750-display-v1-8-b3f15faf4c97@linaro.org>
+ <3p7kjok5jzwvgt7dxuad26xgdkjd52v4gbtuudvgkeoj33skqn@afl2ddtsq7s2>
+ <4fc7fdd5-36cd-42e6-af4a-e0e429f9f50b@linaro.org>
+ <7eupqawhdrbjgsj2p7e3ky7uj62m252i6dzkb6y23btocedp3q@qmw72nmbk2c4>
+ <6ee02d22-7a00-4c7c-a5e9-63e91d7d84ba@linaro.org>
+ <uyidfuh5ul5kcg4keeev6yagmjc5ksun626dyb6kdgwegc76d7@iu7ggdhgt5qr>
+ <7255ae24-983d-452c-bd6d-85804c367f8f@linaro.org>
+ <5irzvm4socrdjx3zqdxnogpai3bmfb52f63ddr3pisn5aa4jgf@mbc42kb3gyqd>
+ <4adeffe7-ca07-4441-86fe-10a4891b7b4b@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v1 2/9] KVM: guest_memfd: Add guest_memfd support to
- kvm_(read|/write)_guest_page()
-To: Fuad Tabba <tabba@google.com>
-Cc: kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org,
- pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au,
- anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com,
- aou@eecs.berkeley.edu, seanjc@google.com, viro@zeniv.linux.org.uk,
- brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org,
- xiaoyao.li@intel.com, yilun.xu@intel.com, chao.p.peng@linux.intel.com,
- jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com,
- yu.c.zhang@linux.intel.com, isaku.yamahata@intel.com, mic@digikod.net,
- vbabka@suse.cz, vannapurve@google.com, ackerleytng@google.com,
- mail@maciej.szmigiero.name, michael.roth@amd.com, wei.w.wang@intel.com,
- liam.merwick@oracle.com, isaku.yamahata@gmail.com,
- kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com,
- steven.price@arm.com, quic_eberman@quicinc.com, quic_mnalajal@quicinc.com,
- quic_tsoni@quicinc.com, quic_svaddagi@quicinc.com,
- quic_cvanscha@quicinc.com, quic_pderrin@quicinc.com,
- quic_pheragu@quicinc.com, catalin.marinas@arm.com, james.morse@arm.com,
- yuzenghui@huawei.com, oliver.upton@linux.dev, maz@kernel.org,
- will@kernel.org, qperret@google.com, keirf@google.com, roypat@amazon.co.uk,
- shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, rientjes@google.com,
- jhubbard@nvidia.com, fvdl@google.com, hughd@google.com, jthoughton@google.com
-References: <20250122152738.1173160-1-tabba@google.com>
- <20250122152738.1173160-3-tabba@google.com>
- <e6ea48d2-959f-4fbb-a170-0beaaf37f867@redhat.com>
- <CA+EHjTxNEoQ3MtZPi603=366vxt=SmBwetS4mFkvTK2r6u=UHw@mail.gmail.com>
-From: David Hildenbrand <david@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=david@redhat.com; keydata=
- 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
- WNyWQQ==
-Organization: Red Hat
-In-Reply-To: <CA+EHjTxNEoQ3MtZPi603=366vxt=SmBwetS4mFkvTK2r6u=UHw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <4adeffe7-ca07-4441-86fe-10a4891b7b4b@linaro.org>
 
-On 23.01.25 10:48, Fuad Tabba wrote:
-> On Wed, 22 Jan 2025 at 22:10, David Hildenbrand <david@redhat.com> wrote:
->>
->> On 22.01.25 16:27, Fuad Tabba wrote:
->>> Make kvm_(read|/write)_guest_page() capable of accessing guest
->>> memory for slots that don't have a userspace address, but only if
->>> the memory is mappable, which also indicates that it is
->>> accessible by the host.
->>
->> Interesting. So far my assumption was that, for shared memory, user
->> space would simply mmap() guest_memdd and pass it as userspace address
->> to the same memslot that has this guest_memfd for private memory.
->>
->> Wouldn't that be easier in the first shot? (IOW, not require this patch
->> with the cost of faulting the shared page into the page table on access)
+On Thu, Jan 23, 2025 at 12:34:28PM +0100, Krzysztof Kozlowski wrote:
+> On 13/01/2025 13:13, Dmitry Baryshkov wrote:
+> > On Mon, Jan 13, 2025 at 12:02:54PM +0100, Krzysztof Kozlowski wrote:
+> >> On 13/01/2025 09:29, Dmitry Baryshkov wrote:
+> >>> On Fri, Jan 10, 2025 at 01:43:28PM +0100, Krzysztof Kozlowski wrote:
+> >>>> On 10/01/2025 10:17, Dmitry Baryshkov wrote:
+> >>>>> On Fri, Jan 10, 2025 at 09:59:26AM +0100, Krzysztof Kozlowski wrote:
+> >>>>>> On 10/01/2025 00:18, Dmitry Baryshkov wrote:
+> >>>>>>> On Thu, Jan 09, 2025 at 02:08:35PM +0100, Krzysztof Kozlowski wrote:
+> >>>>>>>> Add support for DSI PHY v7.0 on Qualcomm SM8750 SoC which comes with two
+> >>>>>>>> differences worth noting:
+> >>>>>>>>
+> >>>>>>>> 1. ICODE_ACCUM_STATUS_LOW and ALOG_OBSV_BUS_STATUS_1 registers - their
+> >>>>>>>>    offsets were just switched.  Currently these registers are not used
+> >>>>>>>>    in the driver, so the easiest is to document both but keep them
+> >>>>>>>>    commented out to avoid conflict.
+> >>>>>>>>
+> >>>>>>>> 2. DSI PHY PLLs, the parents of pixel and byte clocks, cannot be used as
+> >>>>>>>>    parents before they are prepared and initial rate is set.  Therefore
+> >>>>>>>>    assigned-clock-parents are not working here and driver is responsible
+> >>>>>>>>    for reparenting clocks with proper procedure: see dsi_clk_init_6g_v2_9().
+> >>>>>>>
+> >>>>>>> Isn't it a description of CLK_SET_PARENT_GATE and/or
+> >>>>>>
+> >>>>>> No - must be gated accross reparent - so opposite.
+> >>>>>>
+> >>>>>>> CLK_OPS_PARENT_ENABLE ?
+> >>>>>>
+> >>>>>> Yes, but does not work. Probably enabling parent, before
+> >>>>>> assigned-clocks-parents, happens still too early:
+> >>>>>>
+> >>>>>> [    1.623554] DSI PLL(0) lock failed, status=0x00000000
+> >>>>>> [    1.623556] PLL(0) lock failed
+> >>>>>> [    1.624650] ------------[ cut here ]------------
+> >>>>>> [    1.624651] disp_cc_mdss_byte0_clk_src: rcg didn't update its
+> >>>>>> configuration.
+> >>>>>>
+> >>>>>> Or maybe something is missing in the DSI PHY PLL driver?
+> >>>>>
+> >>>>> Do you have the no-zero-freq workaround?
+> >>>>
+> >>>> Yes, it is necessary also for my variant. I did not include it here, but
+> >>>> I should mention it in the cover letter.
+> >>>
+> >>> Could you please possibly backtrace the corresponding enable() calls?
+> >>
+> >>
+> >> It's the same backtrace I shared some time ago in internal discussions:
+> >> https://pastebin.com/kxUFgzD9
+> >> Unless you ask for some other backtrace?
+> >>
+> >>> I'd let Stephen and/or Bjorn or Konrad to correct me, but I think that
+> >>> such requirement should be handled by the framework instead of having
+> >>> the drivers to manually reparent the clocks.
+> >>
+> >> I don't know how exactly you would like to solve it. The clocks can be
+> >> reparented only after some other device specific enable sequence. It's
+> >> the third device here, but not reflected in the clocks hierarchy. Maybe
+> >> it's the result how entire Display device nodes were designed in the
+> >> first place?
+> >>
+> >> Assigned clocks are between DSI PHY and DISP cc, but they are a property
+> >> of DSI controller. This looks exactly too specific for core to handle
+> >> and drivers, not framework, should manually reparent such clocks.
+> >> Otherwise we need
+> >> "clk_pre_prepare_callback_if_we_are_called_when_phy_is_disabled" sort of
+> >> callback.
+> > 
+> > What kind of PHY programming is required? Is enabling the PLL enough or
+> > does it need anything else? Are the PLL supplies properly enabled at
+> > this point?
+> > 
 > 
+> I don't know exactly and checking is tricky. I tried to use
+> CLK_OPS_PARENT_ENABLE - with equivalent code, setting proper parents but
+> without enabling the DSI PHY PLL manually just with
+> CLK_OPS_PARENT_ENABLE - but then you have multiple:
+> 
+> dsi0_pll_bit_clk: Zero divisor and CLK_DIVIDER_ALLOW_ZERO not set
 
-In light of:
+This really looks as if a part of the DSI PHY is unpowered. If you are
+sure about your DSI and DSI PHY supplies (and power domains) then I also
+have no other ideas.
 
-https://lkml.kernel.org/r/20250117190938.93793-4-imbrenda@linux.ibm.com
-
-there can, in theory, be memslots that start at address 0 and have a 
-"valid" mapping. This case is done from the kernel (and on special s390x 
-hardware), though, so it does not apply here at all so far.
-
-In practice, getting address 0 as a valid address is unlikely, because 
-the default:
-
-$ sysctl  vm.mmap_min_addr
-vm.mmap_min_addr = 65536
-
-usually prohibits it for good reason.
-
-> This has to do more with the ABI I had for pkvm and shared memory
-> implementations, in which you don't need to specify the userspace
-> address for memory in a guestmem memslot. The issue is there is no
-> obvious address to map it to. This would be the case in kvm:arm64 for
-> tracking paravirtualized time, which the userspace doesn't necessarily
-> need to interact with, but kvm does.
-
-So I understand correctly: userspace wouldn't have to mmap it because it 
-is not interested in accessing it, but there is nothing speaking against 
-mmaping it, at least in the first shot.
-
-I assume it would not be a private memslot (so far, my understanding is 
-that internal memslots never have a guest_memfd attached). 
-kvm_gmem_create() is only called via KVM_CREATE_GUEST_MEMFD, to be set 
-on user-created memslots.
+Abhinav? Any input from your side? Or from Taniya Das?
 
 > 
-> That said, we could always have a userspace address dedicated to
-> mapping shared locations, and use that address when the necessity
-> arises. Or we could always require that memslots have a userspace
-> address, even if not used. I don't really have a strong preference.
-
-So, the simpler version where user space would simply mmap guest_memfd 
-to provide the address via userspace_addr would at least work for the 
-use case of paravirtualized time?
-
-It would get rid of the immediate need for this patch and patch #4 to 
-get it flying.
-
-
-One interesting question is: when would you want shared memory in 
-guest_memfd and *not* provide it as part of the same memslot.
-
-
-One nice thing about the mmap might be that access go via user-space 
-page tables: E.g., __kvm_read_guest_page can just access the memory 
-without requiring the folio lock and an additional temporary folio 
-reference on every access -- it's handled implicitly via the mapcount.
-
-(of course, to map the page we still need that once on the fault path)
+> So how do you supposed to test it? Any assigned-clocks-xxx will be way
+> too early. Moving code around? Well, if I move preparing the DSI PLL
+> clocks out of dsi_link_clk_set_rate_6g, then dsi_link_clk_set_rate_6g()
+> will fail. Always and CLK_OPS_PARENT_ENABLE does not help because of above.
+> 
+> If you have specific code in mind, I can try it, but I don't see easy
+> methods to see what has to be enabled exactly because of how everything
+> is entangled together.
+> 
+> Best regards,
+> Krzysztof
 
 -- 
-Cheers,
-
-David / dhildenb
-
+With best wishes
+Dmitry
 
