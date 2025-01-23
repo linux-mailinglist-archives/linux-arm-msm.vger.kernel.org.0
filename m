@@ -1,257 +1,192 @@
-Return-Path: <linux-arm-msm+bounces-45990-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-45991-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C2E80A1A55E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jan 2025 15:00:35 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 253A2A1A58E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jan 2025 15:15:50 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 48C977A4440
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jan 2025 14:00:26 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 57C131637E0
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jan 2025 14:15:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8F00E20F976;
-	Thu, 23 Jan 2025 14:00:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 462C120F09C;
+	Thu, 23 Jan 2025 14:15:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WCfE0VQr"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="hE64tbS2"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pj1-f46.google.com (mail-pj1-f46.google.com [209.85.216.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF531B66E
-	for <linux-arm-msm@vger.kernel.org>; Thu, 23 Jan 2025 14:00:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0E9520E711
+	for <linux-arm-msm@vger.kernel.org>; Thu, 23 Jan 2025 14:15:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737640831; cv=none; b=RDoI9Aydmc3S26Ik/7Q4PTbXSwsUOL7FRn31+A8ZNWMIgPi1MnItYyoWGQ6L5gs7+flBRgjVKcJzPvOX3uztwn+zontuVL9zpT+4I7CEdAZsi7AvABH7Ktbi0ezCvg2nAz8zuDozy69I1/Efn/qiaQd31hYelXMpmNW5Ytbu4O8=
+	t=1737641745; cv=none; b=eV3Khl70RuJchUP6m9xHNZEt2bkMbeiL2V5neAmtjd3TEe5PpSGybAjiGzUxVofCGHoD25SD3cbKrFnnty7R4PlqyaSMxUpw08+nzH2M1hD0oJmB8+CUCD+CvVhXuJv5VEDJ1185Uzn5OJyiIzSgU9k46yZGldnwo5MQSaPPTms=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737640831; c=relaxed/simple;
-	bh=yr581SX12QudKxpuGtild8L1zEYyc/XAPG0plxE2FCE=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=FX9+YSK6Nhs4kthjigqzoaWJ3l02LqYS7QyXCi9pKfoRtJq/Byu4ZMkNOZVzAaT79BqNu3iWRS1EQSP3gJLOukgaymTfLdxjj0VfxtC9CZtkt7k2MJVJbPBANWetWugTXwI3b4ZtEf4Soa/7nKdLWZfRh767L4uGi6r4r4XCu3c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WCfE0VQr; arc=none smtp.client-ip=209.85.216.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pj1-f46.google.com with SMTP id 98e67ed59e1d1-2ef79243680so229194a91.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Jan 2025 06:00:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1737640829; x=1738245629; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=KrivE+jXCcpkJfX31hjpK5tPlRP7KoKj2mnULiizYXQ=;
-        b=WCfE0VQro6psuaWIPem464FU5/7BASuJqQ5ClNhWcpHNIbFYkivIf+rQiuOWIQ3S4z
-         aeKy4Uyqm4lKJImR1gdB0DeoWDiBlZF088YGuEQPIOGlkY2vBBSNNQgZVqLdNJV13yP1
-         Z9JgFaiCdaTfSlc2MOn6HNrJc9OCLurlH8bDb1SxdjOw3yj6NQPqObSuYIu2Rn5W/jYK
-         jzrbifpHPY2hAoJWZJrUaFoTriuXJVskWYsUll+Gtm0E6GLthizp9MQPobHgrA+9Jj9h
-         SymNXS++rCIzAZhKlWdpGLbRwL+dR7N6hMsHE7QFXHeA/34mWkmzzv5xVuaAP3+zOZyT
-         v3qg==
+	s=arc-20240116; t=1737641745; c=relaxed/simple;
+	bh=j/jQWP3jevXbvE1wR+V6hZa7c8QKp3Zc7S35t/vecls=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=CDoWErQiJKvF/G5OX9ZrpkP35e/ShGtD5Xr9V1f3anEs7wRjxdPivkqxGYu5xzyyuUspPyNH6JBj0YR62PIGGjFGv/XnsM7xbZDrz8nFlABCcgAn22yZuRaaYTGGD0dZ/3CpZGln6CYKWCRPqROu8Yq/9mUPXN0vFv3NWU/3h9Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=hE64tbS2; arc=none smtp.client-ip=170.10.133.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1737641742;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=Wrx1YQaV4jHrUT1GhyIwTMPOmbXf+GTlJTfZ94QWVzg=;
+	b=hE64tbS2Uy9gKbpKcA/baPUMF7oh4FCAUfmPoeD1Rz3ySc5JsuPg0hwe6oxbkIAXaTvdsw
+	1aIAKiJVg1ntLZZPgnJx1UpxVhl1WVGXj9Ue2GxuSzTrDHPnmEcjVZ4RTySWRoyxbXfG4f
+	Z9mZocfFaS2r0Yi/rtgBG4olQ2osuqA=
+Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
+ [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-182-tyclnSJHPXuRnNCDZzVxDQ-1; Thu, 23 Jan 2025 09:15:40 -0500
+X-MC-Unique: tyclnSJHPXuRnNCDZzVxDQ-1
+X-Mimecast-MFC-AGG-ID: tyclnSJHPXuRnNCDZzVxDQ
+Received: by mail-ej1-f72.google.com with SMTP id a640c23a62f3a-ab39f65dc10so102544166b.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Jan 2025 06:15:40 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1737640829; x=1738245629;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=KrivE+jXCcpkJfX31hjpK5tPlRP7KoKj2mnULiizYXQ=;
-        b=sT7i71FL8EX8gNbbV15Zjbhg5V3kuJcY1R+p9OGeaUQGMCvNu3aRXGAmmQOxY9n3/u
-         kw3+s2raDH+cv2PHjI7u+0DeQQyU4VxR/J9WgNYYgpvhXhddRxSAc+EBGUArXrBqSSkP
-         kwiCwc20KfYlB0WDQD9H1ch5Q7a1/EDwyo0lbP1kBltfrJLfm2BIcD3qa0eAMM10R9Qh
-         lrLUQWK99sr6Lnub6dKh65PtTZVldgt4gaSD8qJ3xsRfyemFbho2ap+ePiaTGUaGj5r/
-         Eh/PMLXdNc8eMVYQrLrE56MIeH5Gd2Tsj2ZXHdaJEhJwReidMTM/FV9jm5vkJOwBD0sB
-         jkUQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWBe5zs+D/ENckgKP82GfUAk5/P/PA5NPLFP5YRufq1tMhpoifuJJf0sWpi+1+goozj9sRB/85yODV8BAxj@vger.kernel.org
-X-Gm-Message-State: AOJu0YyVbJ7lsAQLFgSVUVkACqWOVrKaOmdBKcOr9p/FE0TaTO1Db8yf
-	hdrRFdNQig0s3DDRUNo3d6Nqlqf4UvMKZ0rLzPolEHKtpMDE1wG4bGx/3732llV5OnYDDnDo/8Y
-	0BtPfjkniQUQF1rTUEEkplJU95/E=
-X-Gm-Gg: ASbGncuN3HK5m08lHFbUgfMHIxpcPmSBzMU7biFO/31HLQmo7Cp/fHEcGTAomag2ExH
-	fEYXxMoPogJc0niSAkNCAgbeoG73OgvXIewXLBg6u4u9Uokn4DHdq2EoKkZYJgg==
-X-Google-Smtp-Source: AGHT+IFmTC6qmDF4oUBj7xpD8an7Qpq8DoBkwz2IBfRe4cVvkaz/pes+WZH4kbi478o6Q0jVZbaKQwuX1r2P0uDuuGQ=
-X-Received: by 2002:a05:6a00:2406:b0:72a:a7a4:99ca with SMTP id
- d2e1a72fcca58-72daf973e78mr14767252b3a.2.1737640828927; Thu, 23 Jan 2025
- 06:00:28 -0800 (PST)
+        d=1e100.net; s=20230601; t=1737641739; x=1738246539;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:from:references:cc:to:subject:user-agent
+         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=Wrx1YQaV4jHrUT1GhyIwTMPOmbXf+GTlJTfZ94QWVzg=;
+        b=HY2rKsNTR7ZXHMCSwWwUdOIaeVuW6ICp2WgDwRZaNgsXgktp9iQPL09a26/yT7miH8
+         tA7gzZd4+lZ/K9adWiZZWjEePqqEVwA3hQ+IY/Ksb/K+hPEDeXQQawNOrzfrH36PGrrQ
+         m1f6adXTaOww0kALe8KOJ3/0rpcC6ZhoY8qqTT2jql+rl7bO3nRGLZ0VNvciSNt1aF7W
+         U8mI/wRIhpQquJxnECXcz+bxdMFiSEHGjsoA7lVaEAICeT3xpqk1dOVLbnj4XUuqipYn
+         9IghWKx+hkpCYh7rn3emAB8yMvWx7NdqNPyhyuDIF/g3cel91BeGCOlWJ4f2OSoSrDrV
+         jgfQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXJV3Iy+qIaliUZVIn6lhcbQ0fjcQ+hTOiRK6639ZbYvYhgpx7mUfaptI9TJSQo2RSuMEoBHAApQMJU5bkv@vger.kernel.org
+X-Gm-Message-State: AOJu0YwmXYw8JSB379MV/yPwjLZLwtiirAwiz8qMICzACQjkXx8TU67/
+	Uhsx1J+VPl/F5KCI0ZyGJ3uAqsPGAAAEdFAb8hZ9DzjndL61PpIwaWLHtNWenesHEaKvruXnJrD
+	cMnwKc61cYhmKpkTEKOiFXe8JaPc4TOMsUZ+q/dIugyGe2FCn8b8rjzJhtaj7dmI=
+X-Gm-Gg: ASbGncs3jxzLaAisAR41si+mAO82RduAg2mpj9nqmNCD+WKIGMZpLwlq+C/ruhqFZxU
+	Nk7+VFyvX9tlnrHaLksl0iSq8msU8Y1NkSAF8fL8K7tZ5nv0atuJC+ZbhwP900bZjalXvUJDnEE
+	+3BBOJpCDaRVKQ4pKyC/stZ3n9IxfiANSJ4z3pDqNqGelGpm6IbB0v4Gxcs83hIX098ZbYdMBEr
+	f2iSdcJQRW6eVqDJLKvX0yIze3ts2re/P3ISsILFwxRAQG8C7F36x0xQtm/8+E64RzVcfGuXk3v
+	WkKJrPNDnZJy/G2Lgy8+Greeb8rv0TWqC2muVGguK0P66A22RgqkVGecJGx2RnEV4WhLNCbxJSC
+	rqn4ArTJen95ijtnjUe6g6Q==
+X-Received: by 2002:a17:907:1ca8:b0:aaf:ab71:bf79 with SMTP id a640c23a62f3a-ab38b11281cmr2086878966b.19.1737641739549;
+        Thu, 23 Jan 2025 06:15:39 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFcTUAuhVq/2s4i9/2RbGuCuGUVrgeqSO8BAAm2hdqg4twU0s2Aq/JfxjSXVgW37YmagHr1yw==
+X-Received: by 2002:a17:907:1ca8:b0:aaf:ab71:bf79 with SMTP id a640c23a62f3a-ab38b11281cmr2086872966b.19.1737641739076;
+        Thu, 23 Jan 2025 06:15:39 -0800 (PST)
+Received: from ?IPV6:2003:cb:c70b:b400:e20a:6d03:7ac8:f97d? (p200300cbc70bb400e20a6d037ac8f97d.dip0.t-ipconnect.de. [2003:cb:c70b:b400:e20a:6d03:7ac8:f97d])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ab384f290a9sm1081240066b.101.2025.01.23.06.15.34
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 23 Jan 2025 06:15:37 -0800 (PST)
+Message-ID: <12286d1d-7671-4c0f-bede-53524ed94f0e@redhat.com>
+Date: Thu, 23 Jan 2025 15:15:34 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250122-msm-gpu-fault-fixes-next-v3-0-0afa00158521@gmail.com>
- <20250122-msm-gpu-fault-fixes-next-v3-1-0afa00158521@gmail.com> <Z5IjsqQ6vTdUXiGt@hu-guptap-hyd.qualcomm.com>
-In-Reply-To: <Z5IjsqQ6vTdUXiGt@hu-guptap-hyd.qualcomm.com>
-From: Connor Abbott <cwabbott0@gmail.com>
-Date: Thu, 23 Jan 2025 09:00:17 -0500
-X-Gm-Features: AWEUYZkhKWn32H9Mkt-2dMmko580derQXOamfCI9VPysLRLbJNJBREOXqAVlk7w
-Message-ID: <CACu1E7H5X2EfY9AG=xceaoZJkbumwnrsU4QvNbxd_A2wgVVOaQ@mail.gmail.com>
-Subject: Re: [PATCH v3 1/3] iommu/arm-smmu: Fix spurious interrupts with stall-on-fault
-To: Prakash Gupta <quic_guptap@quicinc.com>
-Cc: Rob Clark <robdclark@gmail.com>, Will Deacon <will@kernel.org>, 
-	Robin Murphy <robin.murphy@arm.com>, Joerg Roedel <joro@8bytes.org>, Sean Paul <sean@poorly.run>, 
-	Konrad Dybcio <konradybcio@kernel.org>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, iommu@lists.linux.dev, 
-	linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
-	freedreno@lists.freedesktop.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH v1 2/9] KVM: guest_memfd: Add guest_memfd support to
+ kvm_(read|/write)_guest_page()
+To: Fuad Tabba <tabba@google.com>
+Cc: kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org,
+ pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au,
+ anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com,
+ aou@eecs.berkeley.edu, seanjc@google.com, viro@zeniv.linux.org.uk,
+ brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org,
+ xiaoyao.li@intel.com, yilun.xu@intel.com, chao.p.peng@linux.intel.com,
+ jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com,
+ yu.c.zhang@linux.intel.com, isaku.yamahata@intel.com, mic@digikod.net,
+ vbabka@suse.cz, vannapurve@google.com, ackerleytng@google.com,
+ mail@maciej.szmigiero.name, michael.roth@amd.com, wei.w.wang@intel.com,
+ liam.merwick@oracle.com, isaku.yamahata@gmail.com,
+ kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com,
+ steven.price@arm.com, quic_eberman@quicinc.com, quic_mnalajal@quicinc.com,
+ quic_tsoni@quicinc.com, quic_svaddagi@quicinc.com,
+ quic_cvanscha@quicinc.com, quic_pderrin@quicinc.com,
+ quic_pheragu@quicinc.com, catalin.marinas@arm.com, james.morse@arm.com,
+ yuzenghui@huawei.com, oliver.upton@linux.dev, maz@kernel.org,
+ will@kernel.org, qperret@google.com, keirf@google.com, roypat@amazon.co.uk,
+ shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, rientjes@google.com,
+ jhubbard@nvidia.com, fvdl@google.com, hughd@google.com, jthoughton@google.com
+References: <20250122152738.1173160-1-tabba@google.com>
+ <20250122152738.1173160-3-tabba@google.com>
+ <e6ea48d2-959f-4fbb-a170-0beaaf37f867@redhat.com>
+ <CA+EHjTxNEoQ3MtZPi603=366vxt=SmBwetS4mFkvTK2r6u=UHw@mail.gmail.com>
+ <82d8d3a3-6f06-4904-9d94-6f92bba89dbc@redhat.com>
+ <CA+EHjTzZoGuUcZTNUzx2e3PNOOEtOJT5rUEhSSmYQ-kcoZQiYQ@mail.gmail.com>
+From: David Hildenbrand <david@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=david@redhat.com; keydata=
+ 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
+ WNyWQQ==
+Organization: Red Hat
+In-Reply-To: <CA+EHjTzZoGuUcZTNUzx2e3PNOOEtOJT5rUEhSSmYQ-kcoZQiYQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Thu, Jan 23, 2025 at 6:10=E2=80=AFAM Prakash Gupta <quic_guptap@quicinc.=
-com> wrote:
->
-> On Wed, Jan 22, 2025 at 03:00:58PM -0500, Connor Abbott wrote:
->
-> > @@ -125,12 +125,25 @@ static void qcom_adreno_smmu_resume_translation(c=
-onst void *cookie, bool termina
-> >       struct arm_smmu_domain *smmu_domain =3D (void *)cookie;
-> >       struct arm_smmu_cfg *cfg =3D &smmu_domain->cfg;
-> >       struct arm_smmu_device *smmu =3D smmu_domain->smmu;
-> > -     u32 reg =3D 0;
-> > +     u32 reg =3D 0, sctlr;
-> > +     unsigned long flags;
-> >
-> >       if (terminate)
-> >               reg |=3D ARM_SMMU_RESUME_TERMINATE;
-> >
-> > +     spin_lock_irqsave(&smmu_domain->cb_lock, flags);
-> > +
-> >       arm_smmu_cb_write(smmu, cfg->cbndx, ARM_SMMU_CB_RESUME, reg);
-> > +
-> At this point further transaction can be processed but SCTLR.CFIE is
-> cleared so subequent context fault will not generate interrupt till
-> SCTLR.CFIE is set.
+>>
+>> One interesting question is: when would you want shared memory in
+>> guest_memfd and *not* provide it as part of the same memslot.
+>>
+> 
+> My original thinking wasn't that we wouldn't _want_ to, rather that we
+> don't _need_ to. I mistakenly thought that it would simplify things,
+> but, especially after this discussion, I now realize that it makes
+> things more complicated instead.
 
-If you're asking why the spin lock is there, it's because this isn't
-true if there's another context bank, they share an interrupt line,
-and it happens to fault around the same time. I haven't checked if
-that's actually the case for Adreno, but in case this gets used by
-other drivers and moved into common code I want it to be as robust as
-possible. This is explained in the comment added to
-arm_smmu_context_fault(). Also the next commit toggles CFCFG and we
-want to serialize against that.
+Right, and it's not off the table: we could always add support for this 
+"no mmaped shared guest_memfd" memory later if there is good reason to 
+have it.
 
->
-> > +     /*
-> > +      * Re-enable interrupts after they were disabled by
-> > +      * arm_smmu_context_fault().
-> > +      */
-> > +     sctlr =3D arm_smmu_cb_read(smmu, cfg->cbndx, ARM_SMMU_CB_SCTLR);
-> > +     sctlr |=3D ARM_SMMU_SCTLR_CFIE;
-> > +     arm_smmu_cb_write(smmu, cfg->cbndx, ARM_SMMU_CB_SCTLR, sctlr);
-> > +
-> > +     spin_unlock_irqrestore(&smmu_domain->cb_lock, flags);
-> >  }
-> >
-> >  static void qcom_adreno_smmu_set_prr_bit(const void *cookie, bool set)
-> > diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu.c b/drivers/iommu/arm/=
-arm-smmu/arm-smmu.c
-> > index 79afc92e1d8b984dd35c469a3f283ad0c78f3d26..ca1ff59015a63912f0f9c52=
-56452b2b2efa928f1 100644
-> > --- a/drivers/iommu/arm/arm-smmu/arm-smmu.c
-> > +++ b/drivers/iommu/arm/arm-smmu/arm-smmu.c
-> > @@ -463,13 +463,52 @@ static irqreturn_t arm_smmu_context_fault(int irq=
-, void *dev)
-> >       if (!(cfi.fsr & ARM_SMMU_CB_FSR_FAULT))
-> >               return IRQ_NONE;
-> >
-> > +     /*
-> > +      * On some implementations FSR.SS asserts a context fault
-> > +      * interrupt. We do not want this behavior, because resolving the
-> > +      * original context fault typically requires operations that cann=
-ot be
-> > +      * performed in IRQ context but leaving the stall unacknowledged =
-will
-> > +      * immediately lead to another spurious interrupt as FSR.SS is st=
-ill
-> > +      * set. Work around this by disabling interrupts for this context=
- bank.
-> > +      * It's expected that interrupts are re-enabled after resuming th=
-e
-> > +      * translation.
-> > +      *
-> > +      * We have to do this before report_iommu_fault() so that we don'=
-t
-> > +      * leave interrupts disabled in case the downstream user decides =
-the
-> > +      * fault can be resolved inside its fault handler.
-> > +      *
-> > +      * There is a possible race if there are multiple context banks s=
-haring
-> > +      * the same interrupt and both signal an interrupt in between wri=
-ting
-> > +      * RESUME and SCTLR. We could disable interrupts here before we
-> > +      * re-enable them in the resume handler, leaving interrupts enabl=
-ed.
-> > +      * Lock the write to serialize it with the resume handler.
-> > +      */
-> > +     if (cfi.fsr & ARM_SMMU_CB_FSR_SS) {
-> > +             u32 val;
-> > +
-> > +             spin_lock(&smmu_domain->cb_lock);
-> > +             val =3D arm_smmu_cb_read(smmu, idx, ARM_SMMU_CB_SCTLR);
-> > +             val &=3D ~ARM_SMMU_SCTLR_CFIE;
-> > +             arm_smmu_cb_write(smmu, idx, ARM_SMMU_CB_SCTLR, val);
-> > +             spin_unlock(&smmu_domain->cb_lock);
-> > +     }
-> > +
-> > +     /*
-> > +      * The SMMUv2 architecture specification says that if stall-on-fa=
-ult is
-> > +      * enabled the correct sequence is to write to SMMU_CBn_FSR to cl=
-ear
-> > +      * the fault and then write to SMMU_CBn_RESUME. Clear the interru=
-pt
-> > +      * first before running the user's fault handler to make sure we =
-follow
-> > +      * this sequence. It should be ok if there is another fault in th=
-e
-> > +      * meantime because we have already read the fault info.
-> > +      */
-> The context would remain stalled till we write to CBn_RESUME. Which is do=
-ne
-> in qcom_adreno_smmu_resume_translation(). For a stalled context further
-> transactions are not processed and we shouldn't see further faults and
-> or fault inerrupts. Do you observe faults with stalled context?
+-- 
+Cheers,
 
-Yes. I've observed that on MMU-500 writing RESUME before the interrupt
-has been cleared doesn't clear SS. This happened with v2 in the case
-where there was already a devcoredump and drm/msm called
-qcom_adreno_smmu_resume_translation() immediately from its fault
-handler, and we'd get a storm of unhandled interrupts until it was
-disabled. Given that the architecture spec says we're supposed to
-clear the interrupt first this may have been an attempt to "help"
-developers.
+David / dhildenb
 
->
-> > +     arm_smmu_cb_write(smmu, idx, ARM_SMMU_CB_FSR, cfi.fsr);
-> > +
-> >       ret =3D report_iommu_fault(&smmu_domain->domain, NULL, cfi.iova,
-> >               cfi.fsynr & ARM_SMMU_CB_FSYNR0_WNR ? IOMMU_FAULT_WRITE : =
-IOMMU_FAULT_READ);
-> >
-> >       if (ret =3D=3D -ENOSYS && __ratelimit(&rs))
-> >               arm_smmu_print_context_fault_info(smmu, idx, &cfi);
-> >
-> > -     arm_smmu_cb_write(smmu, idx, ARM_SMMU_CB_FSR, cfi.fsr);
-> >       return IRQ_HANDLED;
-> >  }
-> >
-> > diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu.h b/drivers/iommu/arm/=
-arm-smmu/arm-smmu.h
-> > index 2dbf3243b5ad2db01e17fb26c26c838942a491be..789c64ff3eb9944c8af3742=
-6e005241a8288da20 100644
-> > --- a/drivers/iommu/arm/arm-smmu/arm-smmu.h
-> > +++ b/drivers/iommu/arm/arm-smmu/arm-smmu.h
-> > @@ -216,7 +216,6 @@ enum arm_smmu_cbar_type {
-> >                                        ARM_SMMU_CB_FSR_TLBLKF)
-> >
-> >  #define ARM_SMMU_CB_FSR_FAULT                (ARM_SMMU_CB_FSR_MULTI | =
-       \
-> > -                                      ARM_SMMU_CB_FSR_SS |           \
-> Given writing to FSR.SS doesn't clear this bit but write to CBn_RESUME
-> does, this seems right. This but can be taken as separate patch.
->
-> >                                        ARM_SMMU_CB_FSR_UUT |          \
-> >                                        ARM_SMMU_CB_FSR_EF |           \
-> >                                        ARM_SMMU_CB_FSR_PF |           \
-> >
-> > --
-> > 2.47.1
-> >
 
