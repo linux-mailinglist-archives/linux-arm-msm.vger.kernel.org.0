@@ -1,63 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-45932-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-45933-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4D6FAA1A19F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jan 2025 11:13:00 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id C3491A1A1CC
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jan 2025 11:26:42 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AC5483A5C8C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jan 2025 10:12:47 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0B65D16C5D6
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jan 2025 10:26:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E7D3620D515;
-	Thu, 23 Jan 2025 10:12:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E049920DD41;
+	Thu, 23 Jan 2025 10:26:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="XLhjLF+r"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="H612sPhO"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.12])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0328320CCCC;
-	Thu, 23 Jan 2025 10:12:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.12
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1637920DD6F;
+	Thu, 23 Jan 2025 10:26:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737627172; cv=none; b=d/XeRmrknUuLj6bO49T+0PYyGlLvvNFmAKZw21zhUKZynS4YTLiXDmXyM4+Po49X4pDjeyWb/kCmq2QajRPWlMRbhIM9bqZrB1ebph5ZhKP6bJHYf2jzFQYZj17TP/YVArOlwIG8BchjugoqcJkewt2RTBmwk53c3As/ygNgYLU=
+	t=1737627996; cv=none; b=K8LN209FFsV/SB3O9TqPonvir782oZMPU7PKurG9wl1QJsLxIwbYAEig2v0gXsX6xgOaj7I8zEcas6Hf/R7PAbBFY68c+RHbNOJGuW96+wqnj/IxpY4qozoymi+PdviUZl7GpDaymEYv/wtNtnAJmwTBAi3IrGcP2qVY3fZOrAY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737627172; c=relaxed/simple;
-	bh=eJuT2i1OQ/n/dl6VjfKxG9lcaZkbxzsrBgcEVMBaYbU=;
+	s=arc-20240116; t=1737627996; c=relaxed/simple;
+	bh=QREHT56/rPn1OVWAQjftr5gaogHIkErP83e1Ihi4wBQ=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=YVnDjaMn3EmWSO5VeuccwfftKAozRhRHnBBrspZ+X3Ooul9qJyC9n8N95tJ8dFE5mdHGQCzdlCO8ilw1NQkwiX0Zz4hpfR81leNh8TV/6SSOa/e84CjwFEDHo4NUz1h+U27KirXbn0B9ihH8MEV3tH4OElc4Upb6H/kDVE+ct6A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=XLhjLF+r; arc=none smtp.client-ip=198.175.65.12
+	 MIME-Version:Content-Type; b=fLrvr5l+PKZnh7NyDRvsFVKYgPlfm/KTm1twNuVGjXyLXtnnkmKDA+Athq6kje3gnZVcCvYkXxNQZK860WKiTL/VTZBtq7k9LuslgsXvOB9wrOA+rF/OEYDKgfNqUNJoveBkAxvh3p3oU102NiYi1kcK8HitkriKH/8+MHLw4PQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=H612sPhO; arc=none smtp.client-ip=192.198.163.18
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1737627171; x=1769163171;
+  t=1737627994; x=1769163994;
   h=from:to:cc:subject:in-reply-to:references:date:
    message-id:mime-version;
-  bh=eJuT2i1OQ/n/dl6VjfKxG9lcaZkbxzsrBgcEVMBaYbU=;
-  b=XLhjLF+rlWxKwwHFV6PKiU4UaotLl7xxf8K9OBTYldIJSpkr62Gh05Hg
-   y5QBSBNCIfY7JnoOaQE9VWBBZY+I0d3sO04pY70kdEyeo/Yw4SzaOnr8o
-   TOObqSTka3g3rqrz7jOy4FwY3h3iM8ut1KO586enrJWogkeK0LitfwPF7
-   Ww1R4mnLXi7d8H/3R56Bc1OPjVWet19l5nWOiQginF9xO1VWYzjQNbZln
-   W5tsIHxKHdKHA3tH22cBJ8y6AqNMah9G4d3o6AswdIL9utiJUe/GSXx/O
-   CGy85WPSBfhnscukcVmjgV03C6EVQxEXEeEeGE6TflxWCoyzD3jbePKTG
-   Q==;
-X-CSE-ConnectionGUID: 4Tld4blzStGMbwD7FMsn9g==
-X-CSE-MsgGUID: cibrXtLgSyGr10JHABXjOA==
-X-IronPort-AV: E=McAfee;i="6700,10204,11323"; a="49512212"
+  bh=QREHT56/rPn1OVWAQjftr5gaogHIkErP83e1Ihi4wBQ=;
+  b=H612sPhO7kLF+YBzZ5vL/GDkaPrK1q9LCf2FNNjv0oOJvF7zSPkJDvil
+   Wou3O26+lWTmYtqfe1p3vOSX9W/nj2SLsBXF1ecoV1g/NxUZRCKndnmQH
+   PKPnJ8zoT18v+ksdkOkycI0D9oKCTALgBB+A1U96QyvCL7H/SEtTWcY3k
+   3xQ/sEOcAywnX4b3Nk00I8EXQUnja3z2lsQdyPNR3iUEaET1ZZ0pgjMVU
+   0OHLGIK3hbJTFrRVoU5GGmXpwvRHA2TIFwJ8qkV+DWqZmC9dueObXLHVQ
+   rbKc/m/MWYlRxa2xI4zqbqSdoecTKMnPeeYnanCIWmrp9zo2HRxeVOGpq
+   w==;
+X-CSE-ConnectionGUID: I+ZgPXobQwmMB5N7de2i5Q==
+X-CSE-MsgGUID: DtaMTBSnR1mpw7xz+PaMJg==
+X-IronPort-AV: E=McAfee;i="6700,10204,11323"; a="37378532"
 X-IronPort-AV: E=Sophos;i="6.13,228,1732608000"; 
-   d="scan'208";a="49512212"
-Received: from fmviesa003.fm.intel.com ([10.60.135.143])
-  by orvoesa104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Jan 2025 02:12:50 -0800
-X-CSE-ConnectionGUID: twj7RcuZRLWVJdo7S3/DrA==
-X-CSE-MsgGUID: t5iE9bT0RVWsz75r397Oyw==
+   d="scan'208";a="37378532"
+Received: from orviesa002.jf.intel.com ([10.64.159.142])
+  by fmvoesa112.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Jan 2025 02:26:33 -0800
+X-CSE-ConnectionGUID: S1PKAmDESN+o5C/ByVIEEQ==
+X-CSE-MsgGUID: J0+vRFyLQ9qJcuxmTGu6xw==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; 
-   d="scan'208";a="111432042"
+X-IronPort-AV: E=Sophos;i="6.13,228,1732608000"; 
+   d="scan'208";a="138283782"
 Received: from bergbenj-mobl1.ger.corp.intel.com (HELO localhost) ([10.245.246.98])
-  by fmviesa003-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Jan 2025 02:12:46 -0800
+  by orviesa002-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Jan 2025 02:26:28 -0800
 From: Jani Nikula <jani.nikula@linux.intel.com>
 To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Maarten Lankhorst
  <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>,
@@ -67,13 +67,13 @@ To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Maarten Lankhorst
  Suijten <marijn.suijten@somainline.org>
 Cc: dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
  linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org
-Subject: Re: [PATCH RFC 0/7] drm/display: dp: add new DPCD access functions
-In-Reply-To: <ctla3nt6o3osdxek63zyidyuofzgq3mgshh2azong3ntcqevhi@3rrzr3hrzbor>
+Subject: Re: [PATCH RFC 2/7] drm/display: dp: implement new access helpers
+In-Reply-To: <20250117-drm-rework-dpcd-access-v1-2-7fc020e04dbc@linaro.org>
 Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
 References: <20250117-drm-rework-dpcd-access-v1-0-7fc020e04dbc@linaro.org>
- <ctla3nt6o3osdxek63zyidyuofzgq3mgshh2azong3ntcqevhi@3rrzr3hrzbor>
-Date: Thu, 23 Jan 2025 12:12:43 +0200
-Message-ID: <87r04tn8is.fsf@intel.com>
+ <20250117-drm-rework-dpcd-access-v1-2-7fc020e04dbc@linaro.org>
+Date: Thu, 23 Jan 2025 12:26:25 +0200
+Message-ID: <87o6zxn7vy.fsf@intel.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -82,70 +82,366 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-On Thu, 23 Jan 2025, Dmitry Baryshkov <dmitry.baryshkov@linaro.org> wrote:
-> On Fri, Jan 17, 2025 at 10:56:35AM +0200, Dmitry Baryshkov wrote:
->> Existing DPCD access functions return an error code or the number of
->> bytes being read / write in case of partial access. However a lot of
->> drivers either (incorrectly) ignore partial access or mishandle error
->> codes. In other cases this results in a boilerplate code which compares
->> returned value with the size.
->> 
->> As suggested by Jani implement new set of DPCD access helpers, which
->> ignore partial access, always return 0 or an error code. Reimplement
->> existing helpers using the new functions to ensure backwards
->> compatibility.
->> 
->> This series targets only the DRM helpers code. If the approach is found
->> to be acceptable, each of the drivers should be converted on its own.
+On Fri, 17 Jan 2025, Dmitry Baryshkov <dmitry.baryshkov@linaro.org> wrote:
+> Existing DPCD access functions return an error code or the number of
+> bytes being read / write in case of partial access. However a lot of
+> drivers either (incorrectly) ignore partial access or mishandle error
+> codes. In other cases this results in a boilerplate code which compares
+> returned value with the size.
 >
-> Gracious ping for the series, it's been posted a week ago.
-
-It's a bit of a bummer the names become longer. I don't have a better
-suggestion, though.
-
-I do like it that the error handling becomes easier and more uniform
-overall, and this actually fixes many places that only checked for < 0
-with the old functions.
-
-I glanced through the series, I didn't spot anything obviously wrong,
-but didn't do a thorough review either. I can do once we have wider
-buy-in for the idea in general, so the effort won't be wasted.
-
-For now,
-
-Acked-by: Jani Nikula <jani.nikula@intel.com>
-
+> Implement new set of DPCD access helpers, which ignore partial access,
+> always return 0 or an error code. Implement existing helpers using the
+> new functions to ensure backwards compatibility.
 >
->> 
->> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->> ---
->> Dmitry Baryshkov (7):
->>       drm/display: dp: change drm_dp_dpcd_read_link_status() return
->>       drm/display: dp: implement new access helpers
->>       drm/display: dp: use new DCPD access helpers
->>       drm/display: dp-aux-dev: use new DCPD access helpers
->>       drm/display: dp-cec: use new DCPD access helpers
->>       drm/display: dp-mst-topology: use new DCPD access helpers
->>       drm/display: dp-tunnel: use new DCPD access helpers
->> 
->>  drivers/gpu/drm/display/drm_dp_aux_dev.c      |  12 +-
->>  drivers/gpu/drm/display/drm_dp_cec.c          |  37 ++-
->>  drivers/gpu/drm/display/drm_dp_helper.c       | 345 +++++++++++---------------
->>  drivers/gpu/drm/display/drm_dp_mst_topology.c | 132 +++++-----
->>  drivers/gpu/drm/display/drm_dp_tunnel.c       |  20 +-
->>  drivers/gpu/drm/msm/dp/dp_ctrl.c              |  45 ++--
->>  drivers/gpu/drm/msm/dp/dp_link.c              |  17 +-
->>  include/drm/display/drm_dp_helper.h           |  81 +++++-
->>  include/drm/display/drm_dp_mst_helper.h       |  10 +-
->>  9 files changed, 354 insertions(+), 345 deletions(-)
->> ---
->> base-commit: 440aaf479c9aaf5ecea9a463eb826ec243d5f1cf
->> change-id: 20241231-drm-rework-dpcd-access-b0fc2e47d613
->> 
->> Best regards,
->> -- 
->> Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->> 
+> Suggested-by: Jani Nikula <jani.nikula@linux.intel.com>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>  drivers/gpu/drm/display/drm_dp_helper.c       | 42 +++++++-------
+>  drivers/gpu/drm/display/drm_dp_mst_topology.c | 27 +++++----
+>  include/drm/display/drm_dp_helper.h           | 81 ++++++++++++++++++++++++++-
+>  include/drm/display/drm_dp_mst_helper.h       | 10 ++--
+>  4 files changed, 119 insertions(+), 41 deletions(-)
+>
+> diff --git a/drivers/gpu/drm/display/drm_dp_helper.c b/drivers/gpu/drm/display/drm_dp_helper.c
+> index 809c65dcb58983693fb335b88759a66919410114..5a693f2779284467e2d05b9d8b2c2bee0ad6c112 100644
+> --- a/drivers/gpu/drm/display/drm_dp_helper.c
+> +++ b/drivers/gpu/drm/display/drm_dp_helper.c
+> @@ -495,13 +495,13 @@ EXPORT_SYMBOL(drm_dp_bw_code_to_link_rate);
+>  
+>  static inline void
+>  drm_dp_dump_access(const struct drm_dp_aux *aux,
+> -		   u8 request, uint offset, void *buffer, int ret)
+> +		   u8 request, uint offset, void *buffer, size_t size, int ret)
+>  {
+>  	const char *arrow = request == DP_AUX_NATIVE_READ ? "->" : "<-";
+>  
+> -	if (ret > 0)
+> +	if (ret == 0)
+>  		drm_dbg_dp(aux->drm_dev, "%s: 0x%05x AUX %s (ret=%3d) %*ph\n",
+> -			   aux->name, offset, arrow, ret, min(ret, 20), buffer);
+> +			   aux->name, offset, arrow, ret, min_t(int, size, 20), buffer);
+>  	else
+>  		drm_dbg_dp(aux->drm_dev, "%s: 0x%05x AUX %s (ret=%3d)\n",
+>  			   aux->name, offset, arrow, ret);
+> @@ -559,8 +559,10 @@ static int drm_dp_dpcd_access(struct drm_dp_aux *aux, u8 request,
+>  		if (ret >= 0) {
+>  			native_reply = msg.reply & DP_AUX_NATIVE_REPLY_MASK;
+>  			if (native_reply == DP_AUX_NATIVE_REPLY_ACK) {
+> -				if (ret == size)
+> +				if (ret == size) {
+> +					ret = 0;
+>  					goto unlock;
+> +				}
+>  
+>  				ret = -EPROTO;
+>  			} else
+> @@ -602,9 +604,9 @@ int drm_dp_dpcd_probe(struct drm_dp_aux *aux, unsigned int offset)
+>  	int ret;
+>  
+>  	ret = drm_dp_dpcd_access(aux, DP_AUX_NATIVE_READ, offset, &buffer, 1);
+> -	WARN_ON(ret == 0);
+> +	WARN_ON(ret == -EPROTO);
+>  
+> -	drm_dp_dump_access(aux, DP_AUX_NATIVE_READ, offset, &buffer, ret);
+> +	drm_dp_dump_access(aux, DP_AUX_NATIVE_READ, offset, &buffer, 1, ret);
+>  
+>  	return ret < 0 ? ret : 0;
+>  }
+> @@ -634,21 +636,21 @@ void drm_dp_dpcd_set_powered(struct drm_dp_aux *aux, bool powered)
+>  EXPORT_SYMBOL(drm_dp_dpcd_set_powered);
+>  
+>  /**
+> - * drm_dp_dpcd_read() - read a series of bytes from the DPCD
+> + * drm_dp_dpcd_read_data() - read a series of bytes from the DPCD
+>   * @aux: DisplayPort AUX channel (SST or MST)
+>   * @offset: address of the (first) register to read
+>   * @buffer: buffer to store the register values
+>   * @size: number of bytes in @buffer
+>   *
+> - * Returns the number of bytes transferred on success, or a negative error
+> + * Returns zero (0) on success, or a negative error
+>   * code on failure. -EIO is returned if the request was NAKed by the sink or
+>   * if the retry count was exceeded. If not all bytes were transferred, this
+>   * function returns -EPROTO. Errors from the underlying AUX channel transfer
+>   * function, with the exception of -EBUSY (which causes the transaction to
+>   * be retried), are propagated to the caller.
+>   */
+> -ssize_t drm_dp_dpcd_read(struct drm_dp_aux *aux, unsigned int offset,
+> -			 void *buffer, size_t size)
+> +int drm_dp_dpcd_read_data(struct drm_dp_aux *aux, unsigned int offset,
+> +			  void *buffer, size_t size)
+>  {
+>  	int ret;
+>  
+> @@ -671,45 +673,45 @@ ssize_t drm_dp_dpcd_read(struct drm_dp_aux *aux, unsigned int offset,
+>  	}
+>  
+>  	if (aux->is_remote)
+> -		ret = drm_dp_mst_dpcd_read(aux, offset, buffer, size);
+> +		ret = drm_dp_mst_dpcd_read_data(aux, offset, buffer, size);
+>  	else
+>  		ret = drm_dp_dpcd_access(aux, DP_AUX_NATIVE_READ, offset,
+>  					 buffer, size);
+>  
+> -	drm_dp_dump_access(aux, DP_AUX_NATIVE_READ, offset, buffer, ret);
+> +	drm_dp_dump_access(aux, DP_AUX_NATIVE_READ, offset, buffer, size, ret);
+>  	return ret;
+>  }
+> -EXPORT_SYMBOL(drm_dp_dpcd_read);
+> +EXPORT_SYMBOL(drm_dp_dpcd_read_data);
+>  
+>  /**
+> - * drm_dp_dpcd_write() - write a series of bytes to the DPCD
+> + * drm_dp_dpcd_write_data() - write a series of bytes to the DPCD
+>   * @aux: DisplayPort AUX channel (SST or MST)
+>   * @offset: address of the (first) register to write
+>   * @buffer: buffer containing the values to write
+>   * @size: number of bytes in @buffer
+>   *
+> - * Returns the number of bytes transferred on success, or a negative error
+> + * Returns zero (0) on success, or a negative error
+>   * code on failure. -EIO is returned if the request was NAKed by the sink or
+>   * if the retry count was exceeded. If not all bytes were transferred, this
+>   * function returns -EPROTO. Errors from the underlying AUX channel transfer
+>   * function, with the exception of -EBUSY (which causes the transaction to
+>   * be retried), are propagated to the caller.
+>   */
+> -ssize_t drm_dp_dpcd_write(struct drm_dp_aux *aux, unsigned int offset,
+> -			  void *buffer, size_t size)
+> +int drm_dp_dpcd_write_data(struct drm_dp_aux *aux, unsigned int offset,
+> +			   void *buffer, size_t size)
+>  {
+>  	int ret;
+>  
+>  	if (aux->is_remote)
+> -		ret = drm_dp_mst_dpcd_write(aux, offset, buffer, size);
+> +		ret = drm_dp_mst_dpcd_write_data(aux, offset, buffer, size);
+>  	else
+>  		ret = drm_dp_dpcd_access(aux, DP_AUX_NATIVE_WRITE, offset,
+>  					 buffer, size);
+>  
+> -	drm_dp_dump_access(aux, DP_AUX_NATIVE_WRITE, offset, buffer, ret);
+> +	drm_dp_dump_access(aux, DP_AUX_NATIVE_WRITE, offset, buffer, size, ret);
+>  	return ret;
+>  }
+> -EXPORT_SYMBOL(drm_dp_dpcd_write);
+> +EXPORT_SYMBOL(drm_dp_dpcd_write_data);
+>  
+>  /**
+>   * drm_dp_dpcd_read_link_status() - read DPCD link status (bytes 0x202-0x207)
+> diff --git a/drivers/gpu/drm/display/drm_dp_mst_topology.c b/drivers/gpu/drm/display/drm_dp_mst_topology.c
+> index f8cd094efa3c0bd6f75b52a0410b0910d8026a76..f8db5be53a33e87e94b864ba48151354e091f5aa 100644
+> --- a/drivers/gpu/drm/display/drm_dp_mst_topology.c
+> +++ b/drivers/gpu/drm/display/drm_dp_mst_topology.c
+> @@ -2128,20 +2128,20 @@ drm_dp_port_set_pdt(struct drm_dp_mst_port *port, u8 new_pdt,
+>  }
+>  
+>  /**
+> - * drm_dp_mst_dpcd_read() - read a series of bytes from the DPCD via sideband
+> + * drm_dp_mst_dpcd_read_data() - read a series of bytes from the DPCD via sideband
+>   * @aux: Fake sideband AUX CH
+>   * @offset: address of the (first) register to read
+>   * @buffer: buffer to store the register values
+>   * @size: number of bytes in @buffer
+>   *
+>   * Performs the same functionality for remote devices via
+> - * sideband messaging as drm_dp_dpcd_read() does for local
+> + * sideband messaging as drm_dp_dpcd_read_data() does for local
+>   * devices via actual AUX CH.
+>   *
+> - * Return: Number of bytes read, or negative error code on failure.
+> + * Return: Zero (0) on success, or negative error code on failure.
+>   */
+> -ssize_t drm_dp_mst_dpcd_read(struct drm_dp_aux *aux,
+> -			     unsigned int offset, void *buffer, size_t size)
+> +int drm_dp_mst_dpcd_read_data(struct drm_dp_aux *aux,
+> +			      unsigned int offset, void *buffer, size_t size)
+>  {
+>  	struct drm_dp_mst_port *port = container_of(aux, struct drm_dp_mst_port,
+>  						    aux);
+> @@ -2151,20 +2151,20 @@ ssize_t drm_dp_mst_dpcd_read(struct drm_dp_aux *aux,
+>  }
+>  
+>  /**
+> - * drm_dp_mst_dpcd_write() - write a series of bytes to the DPCD via sideband
+> + * drm_dp_mst_dpcd_write_data() - write a series of bytes to the DPCD via sideband
+>   * @aux: Fake sideband AUX CH
+>   * @offset: address of the (first) register to write
+>   * @buffer: buffer containing the values to write
+>   * @size: number of bytes in @buffer
+>   *
+>   * Performs the same functionality for remote devices via
+> - * sideband messaging as drm_dp_dpcd_write() does for local
+> + * sideband messaging as drm_dp_dpcd_write_data() does for local
+>   * devices via actual AUX CH.
+>   *
+> - * Return: number of bytes written on success, negative error code on failure.
+> + * Return: zero (0) on success, negative error code on failure.
+>   */
+> -ssize_t drm_dp_mst_dpcd_write(struct drm_dp_aux *aux,
+> -			      unsigned int offset, void *buffer, size_t size)
+> +int drm_dp_mst_dpcd_write_data(struct drm_dp_aux *aux,
+> +			       unsigned int offset, void *buffer, size_t size)
+>  {
+>  	struct drm_dp_mst_port *port = container_of(aux, struct drm_dp_mst_port,
+>  						    aux);
+> @@ -3490,9 +3490,8 @@ static int drm_dp_send_dpcd_read(struct drm_dp_mst_topology_mgr *mgr,
+>  		goto fail_free;
+>  	}
+>  
+> -	ret = min_t(size_t, txmsg->reply.u.remote_dpcd_read_ack.num_bytes,
+> -		    size);
+> -	memcpy(bytes, txmsg->reply.u.remote_dpcd_read_ack.bytes, ret);
+> +	memcpy(bytes, txmsg->reply.u.remote_dpcd_read_ack.bytes, size);
+> +	ret = 0;
+>  
+>  fail_free:
+>  	kfree(txmsg);
+> @@ -3530,7 +3529,7 @@ static int drm_dp_send_dpcd_write(struct drm_dp_mst_topology_mgr *mgr,
+>  		if (txmsg->reply.reply_type == DP_SIDEBAND_REPLY_NAK)
+>  			ret = -EIO;
+>  		else
+> -			ret = size;
+> +			ret = 0;
+>  	}
+>  
+>  	kfree(txmsg);
+> diff --git a/include/drm/display/drm_dp_helper.h b/include/drm/display/drm_dp_helper.h
+> index 8f4054a560396a43750570a8c2e95624039ab8ad..548237a81ef0359dab1ed7df6ef0fd1e0c76e0c5 100644
+> --- a/include/drm/display/drm_dp_helper.h
+> +++ b/include/drm/display/drm_dp_helper.h
+> @@ -522,10 +522,85 @@ struct drm_dp_aux {
+>  
+>  int drm_dp_dpcd_probe(struct drm_dp_aux *aux, unsigned int offset);
+>  void drm_dp_dpcd_set_powered(struct drm_dp_aux *aux, bool powered);
+> -ssize_t drm_dp_dpcd_read(struct drm_dp_aux *aux, unsigned int offset,
+> -			 void *buffer, size_t size);
+> -ssize_t drm_dp_dpcd_write(struct drm_dp_aux *aux, unsigned int offset,
+> +
+> +int drm_dp_dpcd_read_data(struct drm_dp_aux *aux, unsigned int offset,
+>  			  void *buffer, size_t size);
+> +int drm_dp_dpcd_write_data(struct drm_dp_aux *aux, unsigned int offset,
+> +			   void *buffer, size_t size);
+> +
+> +/**
+> + * drm_dp_dpcd_read() - read a series of bytes from the DPCD
+> + * @aux: DisplayPort AUX channel (SST or MST)
+> + * @offset: address of the (first) register to read
+> + * @buffer: buffer to store the register values
+> + * @size: number of bytes in @buffer
+> + *
+> + * Deprecated wrapper around drm_dp_dpcd_read().
+> + * Returns the number of bytes transferred on success, or a negative error
+> + * code on failure.
+> + */
+> +static inline ssize_t drm_dp_dpcd_read(struct drm_dp_aux *aux,
+> +				       unsigned int offset,
+> +				       void *buffer, size_t size)
+> +{
+> +	int ret = drm_dp_dpcd_read_data(aux, offset, buffer, size);
+> +
+> +	if (ret < 0)
+> +		return ret;
+> +
+> +	return size;
+> +}
+> +
+> +/**
+> + * drm_dp_dpcd_read_byte() - read a single byte from the DPCD
+> + * @aux: DisplayPort AUX channel
+> + * @offset: address of the register to read
+> + * @valuep: location where the value of the register will be stored
+> + *
+> + * Returns zero (0) on success, or a negative error code on failure.
+> + */
+> +static inline int drm_dp_dpcd_read_byte(struct drm_dp_aux *aux,
+> +					unsigned int offset, u8 *valuep)
+> +{
+> +	return drm_dp_dpcd_read_data(aux, offset, valuep, 1);
+> +}
+> +
+> +/**
+> + * drm_dp_dpcd_write_byte() - write a single byte to the DPCD
+> + * @aux: DisplayPort AUX channel
+> + * @offset: address of the register to write
+> + * @value: value to write to the register
+> + *
+> + * Returns zero (0) on success, or a negative error code on failure.
+> + */
+> +static inline int drm_dp_dpcd_write_byte(struct drm_dp_aux *aux,
+> +					 unsigned int offset, u8 value)
+> +{
+> +	return drm_dp_dpcd_write_data(aux, offset, &value, 1);
+> +}
+> +
+> +/**
+> + * drm_dp_dpcd_write() - write a series of bytes from the DPCD
+> + * @aux: DisplayPort AUX channel (SST or MST)
+> + * @offset: address of the (first) register to write
+> + * @buffer: buffer containing the values to write
+> + * @size: number of bytes in @buffer
+> + *
+> + * Deprecated wrapper around drm_dp_dpcd_write().
+> + * Returns the number of bytes transferred on success, or a negative error
+> + * code on failure.
+> + */
+> +static inline ssize_t drm_dp_dpcd_write(struct drm_dp_aux *aux,
+> +					unsigned int offset,
+> +					void *buffer, size_t size)
+> +{
+> +	int ret = drm_dp_dpcd_write_data(aux, offset, buffer, size);
+> +
+> +	if (ret < 0)
+> +		return ret;
+
+I just realized this changes behaviour. This no longer returns the
+number of bytes transferred when it's less than size. It'll always be an
+error.
+
+Now, if we were to accept this change, I wonder if we could do that as a
+standalone change first, within the current functions? Return either
+size or negative error, nothing between [0..size).
+
+After that, we could change all the return checks for "!= size" or "<
+size" to "< 0" (because they would be the same thing). When all the
+places have been changed, we could eventually switch from returning size
+to returning 0 on success when nobody depends on it anymore, and keep
+the same function names.
+
+I think this does have a certain appeal to it. Thoughts?
+
+
+BR,
+Jani.
+
+
+> +
+> +	return size;
+> +}
+>  
+>  /**
+>   * drm_dp_dpcd_readb() - read a single byte from the DPCD
+> diff --git a/include/drm/display/drm_dp_mst_helper.h b/include/drm/display/drm_dp_mst_helper.h
+> index a80ba457a858f36ac2110a6fdd91d8a1570b58e1..d527b323a7a8c92b93280fcc8cd3025e21cdcf02 100644
+> --- a/include/drm/display/drm_dp_mst_helper.h
+> +++ b/include/drm/display/drm_dp_mst_helper.h
+> @@ -899,10 +899,12 @@ int __must_check
+>  drm_dp_mst_topology_mgr_resume(struct drm_dp_mst_topology_mgr *mgr,
+>  			       bool sync);
+>  
+> -ssize_t drm_dp_mst_dpcd_read(struct drm_dp_aux *aux,
+> -			     unsigned int offset, void *buffer, size_t size);
+> -ssize_t drm_dp_mst_dpcd_write(struct drm_dp_aux *aux,
+> -			      unsigned int offset, void *buffer, size_t size);
+> +int drm_dp_mst_dpcd_read_data(struct drm_dp_aux *aux,
+> +			      unsigned int offset,
+> +			      void *buffer, size_t size);
+> +int drm_dp_mst_dpcd_write_data(struct drm_dp_aux *aux,
+> +			       unsigned int offset,
+> +			       void *buffer, size_t size);
+>  
+>  int drm_dp_mst_connector_late_register(struct drm_connector *connector,
+>  				       struct drm_dp_mst_port *port);
 
 -- 
 Jani Nikula, Intel
