@@ -1,207 +1,184 @@
-Return-Path: <linux-arm-msm+bounces-46008-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46009-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 695DAA1AA73
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jan 2025 20:41:18 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2BD5DA1AB01
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jan 2025 21:13:43 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id E6F4E7A0FE0
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jan 2025 19:41:08 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AA4213A8D21
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jan 2025 20:13:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 049521AA1DC;
-	Thu, 23 Jan 2025 19:41:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 722E51BDAB5;
+	Thu, 23 Jan 2025 20:12:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GE9Gsa7i"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="AeOzzXiM"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f43.google.com (mail-pj1-f43.google.com [209.85.216.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3E6D155A59;
-	Thu, 23 Jan 2025 19:41:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E5721BD504
+	for <linux-arm-msm@vger.kernel.org>; Thu, 23 Jan 2025 20:12:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737661268; cv=none; b=CPyl1xjhZ8cmjQm08UUuT8atB2puCqPvlY7KgHwDLkBQAWrlOnDU5SYf+wUPU2GRzJAfEAEbKuZ+gFAIdlWAWsjXttd2mNgUVg5pd3ktSD6X4FLSF3HIBsOkVm2IeIaKWXYxAuqqSxQ4MmmSzoI6u8H0Bzew3CZqU9ThYPvUo54=
+	t=1737663162; cv=none; b=hve3Rh26LkBnRiHb+bPfI/dJQQv6tKfI9BV3OLJzVnpYwLqknuFDSmbOR/t1WqA1CFlOH9p+JH64Quxk1jnMEa36pUULb27IKlduzNNU7yHDNogVzgkSgqj5iNRe5y34EvmWXcHCpIswlbeWiyXDaLlNiM5YDl+HxFP/km44Mig=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737661268; c=relaxed/simple;
-	bh=FzgMlZoMTVJxW0DtNfnaS6A9Ohe9wUCQbfRzCAOE11Y=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=d5yJkdbMzFBUwiURHwk7H15e7CcavO9ccgEtONlvHTpgX5OF+wmkTKw3jbhpUdf31yie+grKV4kqZrDeVtRlDBmAa7Oo60UNBt/4vdX1DDs4R65hHvCDOLL4YuyVuZE1yZO3BIbodlV/9xy1Eijn+HI5LoOEoU1Cr8wB5FG4nMA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GE9Gsa7i; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36B1EC4CEE8;
-	Thu, 23 Jan 2025 19:41:08 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1737661268;
-	bh=FzgMlZoMTVJxW0DtNfnaS6A9Ohe9wUCQbfRzCAOE11Y=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=GE9Gsa7iiU444KpkYxrogoBdZowGSjkyO0k7laPoPcoq6g3XxCe0poALteq4R4Zph
-	 tZ3ytakM0acv90IqA3t/Tq+HIhgvttRHrxIMc4+ftcYx59CQekJex95lkIBya9MuSj
-	 e8hgK78Mvi+bBQYrsrlD41mZ7vaA3+PkczkIp5mOMTvpFuEkiNLQOfTC7I53w3Jpp9
-	 jdf7sxICX3pGKHys55ON+N8sg3msEwZ1hAbYoGP7MqRskWyhGBaMTolzt8pF6nm7po
-	 ccEaxXFbs1MchzhtSnnv0PMPk6yc1GTQLhaCumG8Mkicq84A+N5GxqwlpPfo2bFwbT
-	 FHvlAO5Y9gebg==
-Received: by mail-oi1-f170.google.com with SMTP id 5614622812f47-3eb6b16f1a0so381760b6e.3;
-        Thu, 23 Jan 2025 11:41:08 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AJvYcCU2bTlj6IVKbuv5x4EDSvIGRNanZEIUIV4SY+QkTaO6HwK/WZwL9jHwYBs2fQujagHbv5Fl4Rk7vg==@vger.kernel.org, AJvYcCU7V9C0oHkHsOVNWQeSvds5ZB8Zn8ipMme4T/huVg9TUgBRpKr+5NaHQYnojJFNhxSDxKO0U0hPJAvOgA==@vger.kernel.org, AJvYcCVEOpZpIgnhBd9S709wE8X4SLZV4MHZf38NtgUP0cnkpBGSemOkDX18VwXTl84d6J/ljVpya1xIjKbdDt4=@vger.kernel.org, AJvYcCVVLQzQuckYdqBT7vUAi4h2DLKBPW9GwDjB2JN0RIZRhPehhbHgqzYvUQNhaucAEnAgRHD+vix08Yg=@vger.kernel.org, AJvYcCWjHOipYRO8UWvtWC0574+bR1bdO46PQ11F0elZ6iqzUQ6jBBPaS+uegoI1APLmurCYvTlxEvTYyMtJpJoyzA==@vger.kernel.org, AJvYcCWvRZSXABQ8XXFzYzwIGUIWfijyPt5c52qC2wYjyR/3kBZ6j25cTQFQLXOp3FqOJAZ2d/NJY+jtGVGFOXLz@vger.kernel.org, AJvYcCXi2n6hf0bY/K155NUMwZYNdSb4z4QoAhQ5WJ/l66Ll9IDc4xZiDjtLYJ3IZNNJyuE8vAbh2izAid/i6g==@vger.kernel.org
-X-Gm-Message-State: AOJu0YwQydVp45kHcUik6JLwug7mf4qMP/UNhJLmvII6DDCas2muRxJR
-	P6p1l0vK1GhRheXmhwqox3of9az6GWpA1DrW6Z45Oq3mnm3J6cpe3dalQ6GO/OjcjoEFinLpvUQ
-	33Gsjx+lEXpCZAMR8typKsusTkT8=
-X-Google-Smtp-Source: AGHT+IFEZLpokzQrSZWtE1aUlhzheSpv16W1XbXdM7wOE5P8c+MPFR4VPEp6oVT06Ebj/5DfcgalM7sIG87OhMAknWU=
-X-Received: by 2002:a05:6808:309c:b0:3ea:519e:cc71 with SMTP id
- 5614622812f47-3f19fd7beb4mr15987065b6e.39.1737661267410; Thu, 23 Jan 2025
- 11:41:07 -0800 (PST)
+	s=arc-20240116; t=1737663162; c=relaxed/simple;
+	bh=tD3t0EVHQXX3xHkHgVtxQbFbDuBtCGUSth1cuCd+JYA=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=J5U0sz1GFup8g7Az9JVTf1Dz7Z94ms2hQDPE0kve293UsqD9kXijT9BkD4Daleum0tQwSlkKRpBkjEkiE30eL1MxxUr9RqcOV2/Tah6hnAj5v45v3dqq20LK8TP5dltOyq5hJMbzWpvUWRWLJ94JS6tToSmoi1k5r5WIrS0KLVA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=AeOzzXiM; arc=none smtp.client-ip=209.85.216.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-pj1-f43.google.com with SMTP id 98e67ed59e1d1-2ef6c56032eso1925390a91.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Jan 2025 12:12:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1737663158; x=1738267958; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Majoph8E+cCh21U54jZPyu++uXYCQ8kOGOIWq+E+Nk0=;
+        b=AeOzzXiML1PO07LtpQ3b+niz04BPa/Q9a9eRqXvyubtGgpNkLkkRGQN/btDi4GvfOe
+         d20b7HXbrIxkzXRYomB2J/lQAANtLeanXBsw6sr9/9/+U8QPeKT0Hafd0MdBzfsylH+Y
+         6hwYgZ+l+FDCFreMdMwPZiM4+HJ5YQbXKrKswg6AR980nH+PBAJJCrQXEqjuGBzWnYlo
+         u1KHC7qLvOY6aGvr/eNNoDYl3NqlE+qpnNLH/jzCkBpUeyWpTjAknpeHlOnfHM/xXnLl
+         uTd6ftX4jd/6vvoCgegiKTgiRkmgAT99Y2rixMk31dSDIoAIFNI1NdwaXTf40DakZ8cb
+         TbHg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1737663158; x=1738267958;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=Majoph8E+cCh21U54jZPyu++uXYCQ8kOGOIWq+E+Nk0=;
+        b=GR27HXvUDtDlG/xaXyKWw1NH5os/sWCQklvrkdihysnZ2SSIN7r6F4fA4hSnibFH04
+         LtdaUQ7FL0nfF+KcUYDPN846v3BQyq/VpNYf08mifGiurjHD4NZm6F0ljdq58M18NtXM
+         3c69FS9OALeASyZRISE+Spbd8+AGrSMS7qMN5eb/4XDXZdFlwiYtRgpIhtAdy/e9vDxk
+         axfQU5+ABn6vN3sbIn09GlCPWPwXiA/TUVY92BfUU4EF5ZY/u1JKFj5kdLW7pDnZkuvn
+         3oMsDTUV0d5PN3Ps0PNIZeEKdxPD4c3fNAl6ZGudb6AZfuKamrq8/2WdtUtpmX7uXG5j
+         RBuQ==
+X-Gm-Message-State: AOJu0Yyhpnv3fcweePz3crdsaNqgLrDbOZTfVmsGxkAdenXRlWbgVx8a
+	jQ2mDPrikULgntNYf+dpGud8Pu0ZnEnpQdD6eLcQD74Yi/ZJ+GxW2Zr1dxoP7z8=
+X-Gm-Gg: ASbGnctbqTD/ulCHRLng0QoCyGWl8lhcVsOBWsXbEQnC7I/CpGQN+DnFrEc9NMX7Ssj
+	rSnFZ8Vs0R26xUcqScjcg20ICA35YzNDm1B0yiqxhum6PkvO6/Oop92Jl6j/nV7pRw0zNVKYcRz
+	y6bSUmSITsZCOfkoXWK9Z30BVeg3zPsXymF40/HT1Iymg6ufb3vjyI26YJ3pEz2/JcLXzgGdktg
+	NK3LAkPRVbHbHRGWg3TkWvhuomXrasRqS5rNlvonI39QIbZShIf9GOPxgV/PuivNGfa6us4GD+W
+	KlLbwd9Q+iQh/TQ=
+X-Google-Smtp-Source: AGHT+IGjYLbdTkDtVsKIemv83lRYfSaqRItS6634hiKj+p4fMBDbSMDFpjyvf11Hf9VpoP3IInSiyA==
+X-Received: by 2002:a17:90a:c2c7:b0:2ef:2d9f:8e55 with SMTP id 98e67ed59e1d1-2f782ca1fffmr43193938a91.17.1737663158301;
+        Thu, 23 Jan 2025 12:12:38 -0800 (PST)
+Received: from [192.168.5.187] ([4.16.227.147])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2f7ffa54a83sm122332a91.11.2025.01.23.12.12.36
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 23 Jan 2025 12:12:37 -0800 (PST)
+Message-ID: <d4881156-a003-41fe-824e-4c29e279fbb7@linaro.org>
+Date: Thu, 23 Jan 2025 21:12:36 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <cover.1737631669.git.viresh.kumar@linaro.org>
-In-Reply-To: <cover.1737631669.git.viresh.kumar@linaro.org>
-From: "Rafael J. Wysocki" <rafael@kernel.org>
-Date: Thu, 23 Jan 2025 20:40:56 +0100
-X-Gmail-Original-Message-ID: <CAJZ5v0gQDxb0-a5HiEa0vyWCGz01esQBy1fJ4vNXDZJ=GW1W+Q@mail.gmail.com>
-X-Gm-Features: AWEUYZmJBrMCqL-riW-i0DlJyFI1cRh2mxShaIBztS2B8ipvq-I9aavy-zqQjVc
-Message-ID: <CAJZ5v0gQDxb0-a5HiEa0vyWCGz01esQBy1fJ4vNXDZJ=GW1W+Q@mail.gmail.com>
-Subject: Re: [PATCH 00/33] cpufreq: manage common sysfs attributes from core
-To: Viresh Kumar <viresh.kumar@linaro.org>
-Cc: "Rafael J. Wysocki" <rafael@kernel.org>, Alyssa Rosenzweig <alyssa@rosenzweig.io>, 
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, 
-	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>, 
-	Christophe Leroy <christophe.leroy@csgroup.eu>, Cristian Marussi <cristian.marussi@arm.com>, 
-	Fabio Estevam <festevam@gmail.com>, Florian Fainelli <florian.fainelli@broadcom.com>, 
-	Hector Martin <marcan@marcan.st>, Huacai Chen <chenhuacai@kernel.org>, 
-	Jiaxun Yang <jiaxun.yang@flygoat.com>, Jonathan Hunter <jonathanh@nvidia.com>, 
-	Kevin Hilman <khilman@kernel.org>, Madhavan Srinivasan <maddy@linux.ibm.com>, 
-	Markus Mayer <mmayer@broadcom.com>, Matthias Brugger <matthias.bgg@gmail.com>, 
-	Michael Ellerman <mpe@ellerman.id.au>, Naveen N Rao <naveen@kernel.org>, 
-	Nicholas Piggin <npiggin@gmail.com>, Pengutronix Kernel Team <kernel@pengutronix.de>, 
-	Sascha Hauer <s.hauer@pengutronix.de>, Shawn Guo <shawnguo@kernel.org>, 
-	Sudeep Holla <sudeep.holla@arm.com>, Sven Peter <sven@svenpeter.dev>, 
-	Thierry Reding <thierry.reding@gmail.com>, WANG Xuerui <kernel@xen0n.name>, linux-pm@vger.kernel.org, 
-	Vincent Guittot <vincent.guittot@linaro.org>, arm-scmi@vger.kernel.org, 
-	asahi@lists.linux.dev, imx@lists.linux.dev, 
-	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-mediatek@lists.infradead.org, 
-	linux-mips@vger.kernel.org, linux-omap@vger.kernel.org, 
-	linuxppc-dev@lists.ozlabs.org, linux-tegra@vger.kernel.org, 
-	loongarch@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+From: neil.armstrong@linaro.org
+Reply-To: neil.armstrong@linaro.org
+Subject: Re: [PATCH v2 0/8] Support Multi-frequency scale for UFS
+To: Ziqi Chen <quic_ziqichen@quicinc.com>, quic_cang@quicinc.com,
+ bvanassche@acm.org, mani@kernel.org, beanhuo@micron.com,
+ avri.altman@wdc.com, junwoo80.lee@samsung.com, martin.petersen@oracle.com,
+ quic_nguyenb@quicinc.com, quic_nitirawa@quicinc.com,
+ quic_rampraka@quicinc.com
+Cc: linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
+ Matthias Brugger <matthias.bgg@gmail.com>,
+ AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+ "open list:ARM/Mediatek SoC support:Keyword:mediatek"
+ <linux-kernel@vger.kernel.org>,
+ "moderated list:ARM/Mediatek SoC support:Keyword:mediatek"
+ <linux-arm-kernel@lists.infradead.org>,
+ "moderated list:ARM/Mediatek SoC support:Keyword:mediatek"
+ <linux-mediatek@lists.infradead.org>
+References: <20250122100214.489749-1-quic_ziqichen@quicinc.com>
+Content-Language: en-US, fr
+Autocrypt: addr=neil.armstrong@linaro.org; keydata=
+ xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
+ GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
+ BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
+ qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
+ 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
+ AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
+ OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
+ Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
+ YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
+ GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
+ UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
+ GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
+ yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
+ QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
+ SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
+ 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
+ Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
+ oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
+ M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
+ 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
+ KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
+ 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
+ QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
+Organization: Linaro
+In-Reply-To: <20250122100214.489749-1-quic_ziqichen@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Thu, Jan 23, 2025 at 12:38=E2=80=AFPM Viresh Kumar <viresh.kumar@linaro.=
-org> wrote:
->
-> Hello,
->
-> Most of the drivers add available and boost frequencies related attribute=
-s. This
-> patch series tries to avoid duplication and simplify driver's code by man=
-aging
-> these from core code.
->
-> A quick search revealed that only the drivers that set the
-> policy->freq_table field, enable these attributes. Which makes sense as
-> well, since the show_available_freqs() helper works only if the
-> freq_table is present.
->
-> In order to simplify drivers, create the relevant sysfs files forcefully
-> from cpufreq core.
->
-> Pushed here:
->
-> git://git.kernel.org/pub/scm/linux/kernel/git/vireshk/pm.git cpufreq/core=
--attr
+Hi,
 
-Acked-by: Rafael J. Wysocki <rafael@kernel.org>
+On 22/01/2025 11:02, Ziqi Chen wrote:
+> With OPP V2 enabled, devfreq can scale clocks amongst multiple frequency
+> plans. However, the gear speed is only toggled between min and max during
+> clock scaling. Enable multi-level gear scaling by mapping clock frequencies
+> to gear speeds, so that when devfreq scales clock frequencies we can put
+> the UFS link at the appropraite gear speeds accordingly.
+> 
+> This series has been tested on below platforms -
+> sm8550 mtp + UFS3.1
+> SM8650 MTP + UFS3.1
+> SM8750 MTP + UFS4.0
 
-for the series.
+Thanks, could you be more precise on how you tested this feature ? how did you exercise the gear changes and check that is cales correctly ?
 
-Thanks!
+Thanks,
+Neil
 
-> --
-> Viresh
->
-> Viresh Kumar (33):
->   cpufreq: Always create freq-table related sysfs file
->   cpufreq: dt: Stop setting cpufreq_driver->attr field
->   cpufreq: acpi: Stop setting common freq attributes
->   cpufreq: apple: Stop setting cpufreq_driver->attr field
->   cpufreq: bmips: Stop setting cpufreq_driver->attr field
->   cpufreq: brcmstb: Stop setting common freq attributes
->   cpufreq: davinci: Stop setting cpufreq_driver->attr field
->   cpufreq: e_powersaver: Stop setting cpufreq_driver->attr field
->   cpufreq: elanfreq: Stop setting cpufreq_driver->attr field
->   cpufreq: imx6q: Stop setting cpufreq_driver->attr field
->   cpufreq: kirkwood: Stop setting cpufreq_driver->attr field
->   cpufreq: longhaul: Stop setting cpufreq_driver->attr field
->   cpufreq: loongson: Stop setting cpufreq_driver->attr field
->   cpufreq: mediatek: Stop setting cpufreq_driver->attr field
->   cpufreq: omap: Stop setting cpufreq_driver->attr field
->   cpufreq: p4: Stop setting cpufreq_driver->attr field
->   cpufreq: pasemi: Stop setting cpufreq_driver->attr field
->   cpufreq: pmac: Stop setting cpufreq_driver->attr field
->   cpufreq: powernow: Stop setting cpufreq_driver->attr field
->   cpufreq: powernv: Stop setting common freq attributes
->   cpufreq: qcom: Stop setting cpufreq_driver->attr field
->   cpufreq: qoriq: Stop setting cpufreq_driver->attr field
->   cpufreq: sc520_freq: Stop setting cpufreq_driver->attr field
->   cpufreq: scmi: Stop setting cpufreq_driver->attr field
->   cpufreq: scpi: Stop setting cpufreq_driver->attr field
->   cpufreq: sh: Stop setting cpufreq_driver->attr field
->   cpufreq: spear: Stop setting cpufreq_driver->attr field
->   cpufreq: speedstep: Stop setting cpufreq_driver->attr field
->   cpufreq: tegra: Stop setting cpufreq_driver->attr field
->   cpufreq: vexpress: Stop setting cpufreq_driver->attr field
->   cpufreq: virtual: Stop setting cpufreq_driver->attr field
->   cpufreq: Remove cpufreq_generic_attrs
->   cpufreq: Stop checking for duplicate available/boost freq attributes
->
->  drivers/cpufreq/acpi-cpufreq.c         |  1 -
->  drivers/cpufreq/apple-soc-cpufreq.c    |  8 --------
->  drivers/cpufreq/bmips-cpufreq.c        |  1 -
->  drivers/cpufreq/brcmstb-avs-cpufreq.c  |  1 -
->  drivers/cpufreq/cpufreq-dt.c           |  8 --------
->  drivers/cpufreq/cpufreq.c              | 15 +++++++++++++++
->  drivers/cpufreq/davinci-cpufreq.c      |  1 -
->  drivers/cpufreq/e_powersaver.c         |  1 -
->  drivers/cpufreq/elanfreq.c             |  1 -
->  drivers/cpufreq/freq_table.c           |  8 --------
->  drivers/cpufreq/imx6q-cpufreq.c        |  1 -
->  drivers/cpufreq/kirkwood-cpufreq.c     |  1 -
->  drivers/cpufreq/longhaul.c             |  1 -
->  drivers/cpufreq/loongson2_cpufreq.c    |  1 -
->  drivers/cpufreq/loongson3_cpufreq.c    |  1 -
->  drivers/cpufreq/mediatek-cpufreq-hw.c  |  1 -
->  drivers/cpufreq/mediatek-cpufreq.c     |  1 -
->  drivers/cpufreq/omap-cpufreq.c         |  1 -
->  drivers/cpufreq/p4-clockmod.c          |  1 -
->  drivers/cpufreq/pasemi-cpufreq.c       |  1 -
->  drivers/cpufreq/pmac32-cpufreq.c       |  1 -
->  drivers/cpufreq/pmac64-cpufreq.c       |  1 -
->  drivers/cpufreq/powernow-k6.c          |  1 -
->  drivers/cpufreq/powernow-k7.c          |  1 -
->  drivers/cpufreq/powernow-k8.c          |  1 -
->  drivers/cpufreq/powernv-cpufreq.c      |  2 --
->  drivers/cpufreq/qcom-cpufreq-hw.c      |  7 -------
->  drivers/cpufreq/qoriq-cpufreq.c        |  1 -
->  drivers/cpufreq/sc520_freq.c           |  1 -
->  drivers/cpufreq/scmi-cpufreq.c         |  8 --------
->  drivers/cpufreq/scpi-cpufreq.c         |  1 -
->  drivers/cpufreq/sh-cpufreq.c           |  1 -
->  drivers/cpufreq/spear-cpufreq.c        |  1 -
->  drivers/cpufreq/speedstep-centrino.c   |  1 -
->  drivers/cpufreq/speedstep-ich.c        |  1 -
->  drivers/cpufreq/speedstep-smi.c        |  1 -
->  drivers/cpufreq/tegra186-cpufreq.c     |  1 -
->  drivers/cpufreq/tegra194-cpufreq.c     |  1 -
->  drivers/cpufreq/vexpress-spc-cpufreq.c |  1 -
->  drivers/cpufreq/virtual-cpufreq.c      |  1 -
->  include/linux/cpufreq.h                |  1 -
->  41 files changed, 15 insertions(+), 75 deletions(-)
->
-> --
-> 2.31.1.272.g89b43f80a514
->
+> 
+> v1 -> v2:
+> 1. Withdraw old patch 8/8 "ARM: dts: msm: Use Operation Points V2 for UFS on SM8650"
+> 2. Add new patch 8/8 "ABI: sysfs-driver-ufs: Add missing UFS sysfs addributes"
+> 3. Modify commit message for  "scsi: ufs: core: Pass target_freq to clk_scale_notify() vops" and "scsi: ufs: qcom: Pass target_freq to clk scale pre and post change"
+> 4. In "scsi: ufs: qcom: Pass target_freq to clk scale pre and post change", use common Macro HZ_PER_MHZ in function ufs_qcom_set_core_clk_ctrl()
+> 5. In "scsi: ufs: qcom: Implement the freq_to_gear_speed() vops", print out freq and gear info as debugging message
+> 6. In "scsi: ufs: core: Enable multi-level gear scaling", rename the lable "do_pmc" to "config_pwr_mode"
+> 7. In "scsi: ufs: core: Toggle Write Booster during clock", initialize the local variables "wb_en" as "false"
+> 
+> Can Guo (6):
+>    scsi: ufs: core: Pass target_freq to clk_scale_notify() vops
+>    scsi: ufs: qcom: Pass target_freq to clk scale pre and post change
+>    scsi: ufs: core: Add a vops to map clock frequency to gear speed
+>    scsi: ufs: qcom: Implement the freq_to_gear_speed() vops
+>    scsi: ufs: core: Enable multi-level gear scaling
+>    scsi: ufs: core: Toggle Write Booster during clock scaling base on
+>      gear speed
+> 
+> Ziqi Chen (2):
+>    scsi: ufs: core: Check if scaling up is required when disable clkscale
+>    ABI: sysfs-driver-ufs: Add missing UFS sysfs addributes
+> 
+>   Documentation/ABI/testing/sysfs-driver-ufs | 31 ++++++++++
+>   drivers/ufs/core/ufshcd-priv.h             | 17 +++++-
+>   drivers/ufs/core/ufshcd.c                  | 71 ++++++++++++++++------
+>   drivers/ufs/host/ufs-mediatek.c            |  1 +
+>   drivers/ufs/host/ufs-qcom.c                | 66 +++++++++++++++-----
+>   include/ufs/ufshcd.h                       |  8 ++-
+>   6 files changed, 159 insertions(+), 35 deletions(-)
+> 
+
 
