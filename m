@@ -1,258 +1,217 @@
-Return-Path: <linux-arm-msm+bounces-45947-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-45948-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 556D5A1A2AB
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jan 2025 12:11:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 284F8A1A2AD
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jan 2025 12:11:25 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6CC66188EDA2
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jan 2025 11:11:14 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 317E9188F17B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jan 2025 11:11:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 17DE520E032;
-	Thu, 23 Jan 2025 11:11:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6577120E035;
+	Thu, 23 Jan 2025 11:11:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b="N8+etfwD"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="icwXhJWv"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from fanzine2.igalia.com (fanzine.igalia.com [178.60.130.6])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9BE820E028;
-	Thu, 23 Jan 2025 11:11:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=178.60.130.6
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE9A920E31C
+	for <linux-arm-msm@vger.kernel.org>; Thu, 23 Jan 2025 11:11:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737630668; cv=none; b=GBSdbJMY29eXw9x86DLUviac+b/z8it+t0uoSjABkHWXBWKUm04Xg1woHKM5AP0qN6jMWV7LvKQscdeB0UFSH467DNOWt+Jm0kaxTYtXIm6PY9DAI1Wei8D5qZ+/wmBRnFfLWJWWln1QyJRIuxlF4Wd55h1SWoGQa//2yDWQgI4=
+	t=1737630673; cv=none; b=UrFy6alCDM1Zc/aeAIX1usfX62SiBBGpVRhTldEQoQGbABlH2q2hX53+qOozqy85MP12kUBmAb6MTJ/8ulNsnAEBcnxfMFlVxOs6jjIulwqKeyGRIqy4UPICuvDg0DPsk2oXuTEJ9YtdUf5r67fsbFy8Miw2LuucMB4M5XWUezw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737630668; c=relaxed/simple;
-	bh=gvKK0iAYTUhkfLeENN5HIW+Tf8qSk857lgHOxoc8KvE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=umwylMO1C13y9xgaMGZS1Wlr48Bt5Knak1lQ5+YZjEGPM0XDnmWucwZISCO1XWAWNSy7tLEMz1+0rpmuEXMg/21jU+U01dQwy3uL2XpVZg8zuA8u8jqaIulxNV2abROhVT0XiQip7Lb9Uex77fxqMczPsX6PnHWrxyqG22nQFA4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=igalia.com; spf=pass smtp.mailfrom=igalia.com; dkim=pass (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b=N8+etfwD; arc=none smtp.client-ip=178.60.130.6
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=igalia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=igalia.com
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com;
-	s=20170329; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
-	References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender:Reply-To:
-	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=9lBrwvrvwnBKB2UGwpPVeuf/hT7Rag2nWolvnU4A/UQ=; b=N8+etfwDMmqS+gD9DfogntFxZm
-	URtu0Wo1qGGEc7NT+HPmrOz71vTwEEBEuxqwIgJYJM4iI9vRe30/Vh1aubFGjfdDPKSCvaMsyV8JP
-	PkNtAw7H1+WL9qLDE0tYMyXUd5q71FpQUZW8vhQMFxFSYpHsUq2WMek3E/uvcVXfHgryIxvzYGXk5
-	4G13UU5xf9JS1iRJSXXD/0Q0c4b8jGFKcspUKSfNvV32tUh3FrtcR+OF2AOKwWBHmrQaoBZw06dbx
-	WZ/RBAKtat0k5/xCZNzS/bueUCbKIfXV0lbkH7jb7xY7/9tiiXn4hlMalVhYIsKLiiRamNz88aepP
-	eqf9EoeQ==;
-Received: from [187.36.213.55] (helo=[192.168.1.103])
-	by fanzine2.igalia.com with esmtpsa 
-	(Cipher TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_128_GCM:128) (Exim)
-	id 1tav6K-001ASW-M5; Thu, 23 Jan 2025 12:10:20 +0100
-Message-ID: <ec4bb0f6-c366-40e7-a1df-332458b08eec@igalia.com>
-Date: Thu, 23 Jan 2025 08:10:01 -0300
+	s=arc-20240116; t=1737630673; c=relaxed/simple;
+	bh=GPYd+SOXicBgtHlFCS4lxEfXfYcfwoRlrkG4Pk5aLyU=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=UzX+FJWkere4FAnFEhV7N7FmFvFjPhkkYwA/gn+Plx2PqHbSeuE9oYCjXBcS17RufSk6SoMO7z7ZWcrI33vlGpoUCFrZrCSrvzTPqqOD3m4fpmPzTFJfLnhqf8oLuARuN5ZgZHT8x7YuZdpx3OETiFjI4m+y9s49Ko/0rmgWGjo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=icwXhJWv; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50NB6mWx020763;
+	Thu, 23 Jan 2025 11:10:52 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=UT3j3qSIkXMcC9Q30eMDBmk8
+	xJmqOafhvDidnYdAr8A=; b=icwXhJWvNm7O470+3AF2Wgfng+0hkasev+8czbvf
+	fJ0F3KtLYlcNbwh7dFJ5Y9O3Idnpgk0Qw6Tb8C5S9CdhJ9xuQiDeOnYKOp1eDmus
+	L55BPa5Owe5wG87ORijBdUfY/mOnOsjEjdOlOrvIbUOtuSBArxlYg7+dvDbEssho
+	usUxhe/bD9PaB4Ce3Vdkug3o0mKwWEljoBy0h3sYkalUepIKk3d3GDvDQSn9SWBv
+	AqCrwC61MxxMy/0ya+NePh7Hqx8MG2FI6IR3jKrCv51L7J6ipSYbHEvM7SpKfZgG
+	QYElZ7SJeK8FIuqCN7GzwMjwu9UWAlGExIydef2XcB4npQ==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44bmm100a1-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 23 Jan 2025 11:10:51 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 50NBAoS3025420
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 23 Jan 2025 11:10:50 GMT
+Received: from hu-guptap-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Thu, 23 Jan 2025 03:10:46 -0800
+Date: Thu, 23 Jan 2025 16:40:42 +0530
+From: Prakash Gupta <quic_guptap@quicinc.com>
+To: Connor Abbott <cwabbott0@gmail.com>
+CC: Rob Clark <robdclark@gmail.com>, Will Deacon <will@kernel.org>,
+        "Robin
+ Murphy" <robin.murphy@arm.com>, Joerg Roedel <joro@8bytes.org>,
+        Sean Paul
+	<sean@poorly.run>, Konrad Dybcio <konradybcio@kernel.org>,
+        Abhinav Kumar
+	<quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        <iommu@lists.linux.dev>, <linux-arm-msm@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <freedreno@lists.freedesktop.org>
+Subject: Re: [PATCH v3 1/3] iommu/arm-smmu: Fix spurious interrupts with
+ stall-on-fault
+Message-ID: <Z5IjsqQ6vTdUXiGt@hu-guptap-hyd.qualcomm.com>
+References: <20250122-msm-gpu-fault-fixes-next-v3-0-0afa00158521@gmail.com>
+ <20250122-msm-gpu-fault-fixes-next-v3-1-0afa00158521@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] drm/sched: Use struct for drm_sched_init() params
-To: Philipp Stanner <pstanner@redhat.com>, Philipp Stanner
- <phasta@kernel.org>, Alex Deucher <alexander.deucher@amd.com>,
- =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
- Xinhui Pan <Xinhui.Pan@amd.com>, David Airlie <airlied@gmail.com>,
- Simona Vetter <simona@ffwll.ch>, Lucas Stach <l.stach@pengutronix.de>,
- Russell King <linux+etnaviv@armlinux.org.uk>,
- Christian Gmeiner <christian.gmeiner@gmail.com>,
- Frank Binns <frank.binns@imgtec.com>, Matt Coster <matt.coster@imgtec.com>,
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
- Qiang Yu <yuq825@gmail.com>, Rob Clark <robdclark@gmail.com>,
- Sean Paul <sean@poorly.run>, Konrad Dybcio <konradybcio@kernel.org>,
- Abhinav Kumar <quic_abhinavk@quicinc.com>,
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Marijn Suijten <marijn.suijten@somainline.org>,
- Karol Herbst <kherbst@redhat.com>, Lyude Paul <lyude@redhat.com>,
- Danilo Krummrich <dakr@kernel.org>,
- Boris Brezillon <boris.brezillon@collabora.com>,
- Rob Herring <robh@kernel.org>, Steven Price <steven.price@arm.com>,
- Liviu Dudau <liviu.dudau@arm.com>, Luben Tuikov <ltuikov89@gmail.com>,
- Matthew Brost <matthew.brost@intel.com>, Melissa Wen <mwen@igalia.com>,
- Lucas De Marchi <lucas.demarchi@intel.com>,
- =?UTF-8?Q?Thomas_Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
- Rodrigo Vivi <rodrigo.vivi@intel.com>, Sunil Khatri <sunil.khatri@amd.com>,
- Lijo Lazar <lijo.lazar@amd.com>,
- Mario Limonciello <mario.limonciello@amd.com>, Ma Jun <Jun.Ma2@amd.com>,
- Yunxiang Li <Yunxiang.Li@amd.com>
-Cc: amd-gfx@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
- linux-kernel@vger.kernel.org, etnaviv@lists.freedesktop.org,
- lima@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
- freedreno@lists.freedesktop.org, nouveau@lists.freedesktop.org,
- intel-xe@lists.freedesktop.org
-References: <20250122140818.45172-3-phasta@kernel.org>
- <24f1c52f-1768-47de-88e3-d4104969d0a9@igalia.com>
- <9713798aa175aef2041e6d688ac4814006f789bc.camel@redhat.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Ma=C3=ADra_Canal?= <mcanal@igalia.com>
-In-Reply-To: <9713798aa175aef2041e6d688ac4814006f789bc.camel@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <20250122-msm-gpu-fault-fixes-next-v3-1-0afa00158521@gmail.com>
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: Lt27H7KZofmV_4BR5CfTaMMx6Gnw6lyi
+X-Proofpoint-GUID: Lt27H7KZofmV_4BR5CfTaMMx6Gnw6lyi
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-01-23_04,2025-01-22_02,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 malwarescore=0
+ priorityscore=1501 mlxscore=0 lowpriorityscore=0 suspectscore=0
+ clxscore=1011 mlxlogscore=426 impostorscore=0 spamscore=0 phishscore=0
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2501230084
 
-Hi Philipp,
+On Wed, Jan 22, 2025 at 03:00:58PM -0500, Connor Abbott wrote:
+ 
+> @@ -125,12 +125,25 @@ static void qcom_adreno_smmu_resume_translation(const void *cookie, bool termina
+>  	struct arm_smmu_domain *smmu_domain = (void *)cookie;
+>  	struct arm_smmu_cfg *cfg = &smmu_domain->cfg;
+>  	struct arm_smmu_device *smmu = smmu_domain->smmu;
+> -	u32 reg = 0;
+> +	u32 reg = 0, sctlr;
+> +	unsigned long flags;
+>  
+>  	if (terminate)
+>  		reg |= ARM_SMMU_RESUME_TERMINATE;
+>  
+> +	spin_lock_irqsave(&smmu_domain->cb_lock, flags);
+> +
+>  	arm_smmu_cb_write(smmu, cfg->cbndx, ARM_SMMU_CB_RESUME, reg);
+> +
+At this point further transaction can be processed but SCTLR.CFIE is
+cleared so subequent context fault will not generate interrupt till
+SCTLR.CFIE is set.
 
-On 23/01/25 05:10, Philipp Stanner wrote:
-> On Wed, 2025-01-22 at 19:07 -0300, Maíra Canal wrote:
->> Hi Philipp,
->>
->> On 22/01/25 11:08, Philipp Stanner wrote:
->>> drm_sched_init() has a great many parameters and upcoming new
->>> functionality for the scheduler might add even more. Generally, the
->>> great number of parameters reduces readability and has already
->>> caused
->>> one missnaming in:
->>>
->>> commit 6f1cacf4eba7 ("drm/nouveau: Improve variable name in
->>> nouveau_sched_init()").
->>>
->>> Introduce a new struct for the scheduler init parameters and port
->>> all
->>> users.
->>>
->>> Signed-off-by: Philipp Stanner <phasta@kernel.org>
+> +	/*
+> +	 * Re-enable interrupts after they were disabled by
+> +	 * arm_smmu_context_fault().
+> +	 */
+> +	sctlr = arm_smmu_cb_read(smmu, cfg->cbndx, ARM_SMMU_CB_SCTLR);
+> +	sctlr |= ARM_SMMU_SCTLR_CFIE;
+> +	arm_smmu_cb_write(smmu, cfg->cbndx, ARM_SMMU_CB_SCTLR, sctlr);
+> +
+> +	spin_unlock_irqrestore(&smmu_domain->cb_lock, flags);
+>  }
+>  
+>  static void qcom_adreno_smmu_set_prr_bit(const void *cookie, bool set)
+> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu.c b/drivers/iommu/arm/arm-smmu/arm-smmu.c
+> index 79afc92e1d8b984dd35c469a3f283ad0c78f3d26..ca1ff59015a63912f0f9c5256452b2b2efa928f1 100644
+> --- a/drivers/iommu/arm/arm-smmu/arm-smmu.c
+> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu.c
+> @@ -463,13 +463,52 @@ static irqreturn_t arm_smmu_context_fault(int irq, void *dev)
+>  	if (!(cfi.fsr & ARM_SMMU_CB_FSR_FAULT))
+>  		return IRQ_NONE;
+>  
+> +	/*
+> +	 * On some implementations FSR.SS asserts a context fault
+> +	 * interrupt. We do not want this behavior, because resolving the
+> +	 * original context fault typically requires operations that cannot be
+> +	 * performed in IRQ context but leaving the stall unacknowledged will
+> +	 * immediately lead to another spurious interrupt as FSR.SS is still
+> +	 * set. Work around this by disabling interrupts for this context bank.
+> +	 * It's expected that interrupts are re-enabled after resuming the
+> +	 * translation.
+> +	 *
+> +	 * We have to do this before report_iommu_fault() so that we don't
+> +	 * leave interrupts disabled in case the downstream user decides the
+> +	 * fault can be resolved inside its fault handler.
+> +	 *
+> +	 * There is a possible race if there are multiple context banks sharing
+> +	 * the same interrupt and both signal an interrupt in between writing
+> +	 * RESUME and SCTLR. We could disable interrupts here before we
+> +	 * re-enable them in the resume handler, leaving interrupts enabled.
+> +	 * Lock the write to serialize it with the resume handler.
+> +	 */
+> +	if (cfi.fsr & ARM_SMMU_CB_FSR_SS) {
+> +		u32 val;
+> +
+> +		spin_lock(&smmu_domain->cb_lock);
+> +		val = arm_smmu_cb_read(smmu, idx, ARM_SMMU_CB_SCTLR);
+> +		val &= ~ARM_SMMU_SCTLR_CFIE;
+> +		arm_smmu_cb_write(smmu, idx, ARM_SMMU_CB_SCTLR, val);
+> +		spin_unlock(&smmu_domain->cb_lock);
+> +	}
+> +
+> +	/*
+> +	 * The SMMUv2 architecture specification says that if stall-on-fault is
+> +	 * enabled the correct sequence is to write to SMMU_CBn_FSR to clear
+> +	 * the fault and then write to SMMU_CBn_RESUME. Clear the interrupt
+> +	 * first before running the user's fault handler to make sure we follow
+> +	 * this sequence. It should be ok if there is another fault in the
+> +	 * meantime because we have already read the fault info.
+> +	 */
+The context would remain stalled till we write to CBn_RESUME. Which is done
+in qcom_adreno_smmu_resume_translation(). For a stalled context further
+transactions are not processed and we shouldn't see further faults and
+or fault inerrupts. Do you observe faults with stalled context?
 
-[...]
+> +	arm_smmu_cb_write(smmu, idx, ARM_SMMU_CB_FSR, cfi.fsr);
+> +
+>  	ret = report_iommu_fault(&smmu_domain->domain, NULL, cfi.iova,
+>  		cfi.fsynr & ARM_SMMU_CB_FSYNR0_WNR ? IOMMU_FAULT_WRITE : IOMMU_FAULT_READ);
+>  
+>  	if (ret == -ENOSYS && __ratelimit(&rs))
+>  		arm_smmu_print_context_fault_info(smmu, idx, &cfi);
+>  
+> -	arm_smmu_cb_write(smmu, idx, ARM_SMMU_CB_FSR, cfi.fsr);
+>  	return IRQ_HANDLED;
+>  }
+>  
+> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu.h b/drivers/iommu/arm/arm-smmu/arm-smmu.h
+> index 2dbf3243b5ad2db01e17fb26c26c838942a491be..789c64ff3eb9944c8af37426e005241a8288da20 100644
+> --- a/drivers/iommu/arm/arm-smmu/arm-smmu.h
+> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu.h
+> @@ -216,7 +216,6 @@ enum arm_smmu_cbar_type {
+>  					 ARM_SMMU_CB_FSR_TLBLKF)
+>  
+>  #define ARM_SMMU_CB_FSR_FAULT		(ARM_SMMU_CB_FSR_MULTI |	\
+> -					 ARM_SMMU_CB_FSR_SS |		\
+Given writing to FSR.SS doesn't clear this bit but write to CBn_RESUME
+does, this seems right. This but can be taken as separate patch.
 
->>
->>> diff --git a/drivers/gpu/drm/v3d/v3d_sched.c
->>> b/drivers/gpu/drm/v3d/v3d_sched.c
->>> index 99ac4995b5a1..716e6d074d87 100644
->>> --- a/drivers/gpu/drm/v3d/v3d_sched.c
->>> +++ b/drivers/gpu/drm/v3d/v3d_sched.c
->>> @@ -814,67 +814,124 @@ static const struct drm_sched_backend_ops
->>> v3d_cpu_sched_ops = {
->>>    	.free_job = v3d_cpu_job_free
->>>    };
->>>    
->>> +/*
->>> + * v3d's scheduler instances are all identical, except for ops and
->>> name.
->>> + */
->>> +static void
->>> +v3d_common_sched_init(struct drm_sched_init_params *params, struct
->>> device *dev)
->>> +{
->>> +	memset(params, 0, sizeof(struct drm_sched_init_params));
->>> +
->>> +	params->submit_wq = NULL; /* Use the system_wq. */
->>> +	params->num_rqs = DRM_SCHED_PRIORITY_COUNT;
->>> +	params->credit_limit = 1;
->>> +	params->hang_limit = 0;
->>> +	params->timeout = msecs_to_jiffies(500);
->>> +	params->timeout_wq = NULL; /* Use the system_wq. */
->>> +	params->score = NULL;
->>> +	params->dev = dev;
->>> +}
->>
->> Could we use only one function that takes struct v3d_dev *v3d, enum
->> v3d_queue, and sched_ops as arguments (instead of one function per
->> queue)? You can get the name of the scheduler by concatenating "v3d_"
->> to
->> the return of v3d_queue_to_string().
->>
->> I believe it would make the code much simpler.
+>  					 ARM_SMMU_CB_FSR_UUT |		\
+>  					 ARM_SMMU_CB_FSR_EF |		\
+>  					 ARM_SMMU_CB_FSR_PF |		\
 > 
-> Hello,
+> -- 
+> 2.47.1
 > 
-> so just to get that right:
-> You'd like to have one universal function that switch-cases over an
-> enum, sets the ops and creates the name with string concatenation?
-> 
-> I'm not convinced that this is simpler than a few small functions, but
-> it's not my component, so…
-> 
-> Whatever we'll do will be simpler than the existing code, though. Right
-> now no reader can see at first glance whether all those schedulers are
-> identically parametrized or not.
-> 
-
-This is my proposal (just a quick draft, please check if it compiles):
-
-diff --git a/drivers/gpu/drm/v3d/v3d_sched.c 
-b/drivers/gpu/drm/v3d/v3d_sched.c
-index 961465128d80..7cc45a0c6ca0 100644
---- a/drivers/gpu/drm/v3d/v3d_sched.c
-+++ b/drivers/gpu/drm/v3d/v3d_sched.c
-@@ -820,67 +820,62 @@ static const struct drm_sched_backend_ops 
-v3d_cpu_sched_ops = {
-         .free_job = v3d_cpu_job_free
-  };
-
-+static int
-+v3d_sched_queue_init(struct v3d_dev *v3d, enum v3d_queue queue,
-+                    const struct drm_sched_backend_ops *ops, const char 
-*name)
-+{
-+       struct drm_sched_init_params params = {
-+               .submit_wq = NULL,
-+               .num_rqs = DRM_SCHED_PRIORITY_COUNT,
-+               .credit_limit = 1,
-+               .hang_limit = 0,
-+               .timeout = msecs_to_jiffies(500),
-+               .timeout_wq = NULL,
-+               .score = NULL,
-+               .dev = v3d->drm.dev,
-+       };
-+
-+       params.ops = ops;
-+       params.name = name;
-+
-+       return drm_sched_init(&v3d->queue[queue].sched, &params);
-+}
-+
-  int
-  v3d_sched_init(struct v3d_dev *v3d)
-  {
--       int hw_jobs_limit = 1;
--       int job_hang_limit = 0;
--       int hang_limit_ms = 500;
-         int ret;
-
--       ret = drm_sched_init(&v3d->queue[V3D_BIN].sched,
--                            &v3d_bin_sched_ops, NULL,
--                            DRM_SCHED_PRIORITY_COUNT,
--                            hw_jobs_limit, job_hang_limit,
--                            msecs_to_jiffies(hang_limit_ms), NULL,
--                            NULL, "v3d_bin", v3d->drm.dev);
-+       ret = v3d_sched_queue_init(v3d, V3D_BIN, &v3d_bin_sched_ops,
-+                                  "v3d_bin");
-         if (ret)
-                 return ret;
-
--       ret = drm_sched_init(&v3d->queue[V3D_RENDER].sched,
--                            &v3d_render_sched_ops, NULL,
--                            DRM_SCHED_PRIORITY_COUNT,
--                            hw_jobs_limit, job_hang_limit,
--                            msecs_to_jiffies(hang_limit_ms), NULL,
--                            NULL, "v3d_render", v3d->drm.dev);
-+       ret = v3d_sched_queue_init(v3d, V3D_RENDER, &v3d_render_sched_ops,
-+                                  "v3d_render");
-         if (ret)
-                 goto fail;
-
-[...]
-
-At least for me, this looks much simpler than one function for each
-V3D queue.
-
-Best Regards,
-- Maíra
-
-> P.
-> 
-> 
->>
->> Best Regards,
->> - Maíra
->>
-
 
