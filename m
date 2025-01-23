@@ -1,247 +1,257 @@
-Return-Path: <linux-arm-msm+bounces-45989-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-45990-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id E1F00A1A554
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jan 2025 14:57:57 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C2E80A1A55E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jan 2025 15:00:35 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 507093A384E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jan 2025 13:57:50 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 48C977A4440
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jan 2025 14:00:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EE94E21128D;
-	Thu, 23 Jan 2025 13:57:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8F00E20F976;
+	Thu, 23 Jan 2025 14:00:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=amazon.co.uk header.i=@amazon.co.uk header.b="k92sKvSG"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WCfE0VQr"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp-fw-52003.amazon.com (smtp-fw-52003.amazon.com [52.119.213.152])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f46.google.com (mail-pj1-f46.google.com [209.85.216.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4D6E210F7E;
-	Thu, 23 Jan 2025 13:57:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=52.119.213.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF531B66E
+	for <linux-arm-msm@vger.kernel.org>; Thu, 23 Jan 2025 14:00:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737640675; cv=none; b=JsV5Idvf/GoOAR7aoL0qsFkSNehf57qLEyL4MdSw8LuNoxECstCZf6cvXZvuH+VQnyjAqFBEuYVw2zJjsqo06vI3Qu3GpxiFsJZZTkKA5cVn3KJ6mRT7X2S3MEfNEJ1lya7vFbxT0nyQYiEmxL+T/V4c0JSiNjRmwpO+y3UumMg=
+	t=1737640831; cv=none; b=RDoI9Aydmc3S26Ik/7Q4PTbXSwsUOL7FRn31+A8ZNWMIgPi1MnItYyoWGQ6L5gs7+flBRgjVKcJzPvOX3uztwn+zontuVL9zpT+4I7CEdAZsi7AvABH7Ktbi0ezCvg2nAz8zuDozy69I1/Efn/qiaQd31hYelXMpmNW5Ytbu4O8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737640675; c=relaxed/simple;
-	bh=NTRJc1vNNrSsKGxWubxtdZH3pNm7h5AtVOvJDIs0kTg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=KkRI8PaP2ecS2jAqGihX1ImGypMyYAZA0sRkPeDVlPugaVsK3dmEqiGwvNj/+QuCjD35LunpdNArhLZdcbySWPC3d+Z5gLVGXDyvaCIdzFTFU5z+2Jrb29HZyuydlLxMxdBRemO/7TpnDGjQkX0Bx8KvyXGbm5cOGu68HRHfCbQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amazon.co.uk; spf=pass smtp.mailfrom=amazon.co.uk; dkim=pass (1024-bit key) header.d=amazon.co.uk header.i=@amazon.co.uk header.b=k92sKvSG; arc=none smtp.client-ip=52.119.213.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amazon.co.uk
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=amazon.co.uk
+	s=arc-20240116; t=1737640831; c=relaxed/simple;
+	bh=yr581SX12QudKxpuGtild8L1zEYyc/XAPG0plxE2FCE=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=FX9+YSK6Nhs4kthjigqzoaWJ3l02LqYS7QyXCi9pKfoRtJq/Byu4ZMkNOZVzAaT79BqNu3iWRS1EQSP3gJLOukgaymTfLdxjj0VfxtC9CZtkt7k2MJVJbPBANWetWugTXwI3b4ZtEf4Soa/7nKdLWZfRh767L4uGi6r4r4XCu3c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WCfE0VQr; arc=none smtp.client-ip=209.85.216.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pj1-f46.google.com with SMTP id 98e67ed59e1d1-2ef79243680so229194a91.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Jan 2025 06:00:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=amazon.co.uk; i=@amazon.co.uk; q=dns/txt;
-  s=amazon201209; t=1737640675; x=1769176675;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=0jTJgN8GxO5zlDk/fEj26ROo4npw/UxB9CSrdOxz2Ic=;
-  b=k92sKvSG/duzyA0TEZJ40k4/ZlmezIX91th0LmlO3ai334tY7PIXhTw5
-   OZjectrqw5WBr2RB/qTB1elbj6pLS54Nm0Z2Pkv3Jaq8Dul7OWzdW/rqf
-   21Ddez51ciSBm2w0r0CZXrrRfVIyG/E+7G8dIZFrN6DlPVcR0Omcy9zmH
-   k=;
-X-IronPort-AV: E=Sophos;i="6.13,228,1732579200"; 
-   d="scan'208";a="59960098"
-Received: from iad12-co-svc-p1-lb1-vlan3.amazon.com (HELO smtpout.prod.us-west-2.prod.farcaster.email.amazon.dev) ([10.43.8.6])
-  by smtp-border-fw-52003.iad7.amazon.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Jan 2025 13:57:50 +0000
-Received: from EX19MTAUWC002.ant.amazon.com [10.0.38.20:10688]
- by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.32.70:2525] with esmtp (Farcaster)
- id ebf92873-7030-453e-8184-9a40e78536fc; Thu, 23 Jan 2025 13:57:48 +0000 (UTC)
-X-Farcaster-Flow-ID: ebf92873-7030-453e-8184-9a40e78536fc
-Received: from EX19MTAUWB001.ant.amazon.com (10.250.64.248) by
- EX19MTAUWC002.ant.amazon.com (10.250.64.143) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.1258.39;
- Thu, 23 Jan 2025 13:57:48 +0000
-Received: from email-imr-corp-prod-iad-all-1a-6ea42a62.us-east-1.amazon.com
- (10.25.36.214) by mail-relay.amazon.com (10.250.64.254) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id
- 15.2.1258.39 via Frontend Transport; Thu, 23 Jan 2025 13:57:48 +0000
-Received: from [127.0.0.1] (dev-dsk-roypat-1c-dbe2a224.eu-west-1.amazon.com [172.19.88.180])
-	by email-imr-corp-prod-iad-all-1a-6ea42a62.us-east-1.amazon.com (Postfix) with ESMTPS id 7B86D40497;
-	Thu, 23 Jan 2025 13:57:41 +0000 (UTC)
-Message-ID: <bc59a2ec-7467-4a4e-8d73-9c4126b1c98b@amazon.co.uk>
-Date: Thu, 23 Jan 2025 13:57:40 +0000
+        d=gmail.com; s=20230601; t=1737640829; x=1738245629; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=KrivE+jXCcpkJfX31hjpK5tPlRP7KoKj2mnULiizYXQ=;
+        b=WCfE0VQro6psuaWIPem464FU5/7BASuJqQ5ClNhWcpHNIbFYkivIf+rQiuOWIQ3S4z
+         aeKy4Uyqm4lKJImR1gdB0DeoWDiBlZF088YGuEQPIOGlkY2vBBSNNQgZVqLdNJV13yP1
+         Z9JgFaiCdaTfSlc2MOn6HNrJc9OCLurlH8bDb1SxdjOw3yj6NQPqObSuYIu2Rn5W/jYK
+         jzrbifpHPY2hAoJWZJrUaFoTriuXJVskWYsUll+Gtm0E6GLthizp9MQPobHgrA+9Jj9h
+         SymNXS++rCIzAZhKlWdpGLbRwL+dR7N6hMsHE7QFXHeA/34mWkmzzv5xVuaAP3+zOZyT
+         v3qg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1737640829; x=1738245629;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=KrivE+jXCcpkJfX31hjpK5tPlRP7KoKj2mnULiizYXQ=;
+        b=sT7i71FL8EX8gNbbV15Zjbhg5V3kuJcY1R+p9OGeaUQGMCvNu3aRXGAmmQOxY9n3/u
+         kw3+s2raDH+cv2PHjI7u+0DeQQyU4VxR/J9WgNYYgpvhXhddRxSAc+EBGUArXrBqSSkP
+         kwiCwc20KfYlB0WDQD9H1ch5Q7a1/EDwyo0lbP1kBltfrJLfm2BIcD3qa0eAMM10R9Qh
+         lrLUQWK99sr6Lnub6dKh65PtTZVldgt4gaSD8qJ3xsRfyemFbho2ap+ePiaTGUaGj5r/
+         Eh/PMLXdNc8eMVYQrLrE56MIeH5Gd2Tsj2ZXHdaJEhJwReidMTM/FV9jm5vkJOwBD0sB
+         jkUQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWBe5zs+D/ENckgKP82GfUAk5/P/PA5NPLFP5YRufq1tMhpoifuJJf0sWpi+1+goozj9sRB/85yODV8BAxj@vger.kernel.org
+X-Gm-Message-State: AOJu0YyVbJ7lsAQLFgSVUVkACqWOVrKaOmdBKcOr9p/FE0TaTO1Db8yf
+	hdrRFdNQig0s3DDRUNo3d6Nqlqf4UvMKZ0rLzPolEHKtpMDE1wG4bGx/3732llV5OnYDDnDo/8Y
+	0BtPfjkniQUQF1rTUEEkplJU95/E=
+X-Gm-Gg: ASbGncuN3HK5m08lHFbUgfMHIxpcPmSBzMU7biFO/31HLQmo7Cp/fHEcGTAomag2ExH
+	fEYXxMoPogJc0niSAkNCAgbeoG73OgvXIewXLBg6u4u9Uokn4DHdq2EoKkZYJgg==
+X-Google-Smtp-Source: AGHT+IFmTC6qmDF4oUBj7xpD8an7Qpq8DoBkwz2IBfRe4cVvkaz/pes+WZH4kbi478o6Q0jVZbaKQwuX1r2P0uDuuGQ=
+X-Received: by 2002:a05:6a00:2406:b0:72a:a7a4:99ca with SMTP id
+ d2e1a72fcca58-72daf973e78mr14767252b3a.2.1737640828927; Thu, 23 Jan 2025
+ 06:00:28 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v1 2/9] KVM: guest_memfd: Add guest_memfd support to
- kvm_(read|/write)_guest_page()
-To: Fuad Tabba <tabba@google.com>
-CC: David Hildenbrand <david@redhat.com>, <kvm@vger.kernel.org>,
-	<linux-arm-msm@vger.kernel.org>, <linux-mm@kvack.org>, <pbonzini@redhat.com>,
-	<chenhuacai@kernel.org>, <mpe@ellerman.id.au>, <anup@brainfault.org>,
-	<paul.walmsley@sifive.com>, <palmer@dabbelt.com>, <aou@eecs.berkeley.edu>,
-	<seanjc@google.com>, <viro@zeniv.linux.org.uk>, <brauner@kernel.org>,
-	<willy@infradead.org>, <akpm@linux-foundation.org>, <xiaoyao.li@intel.com>,
-	<yilun.xu@intel.com>, <chao.p.peng@linux.intel.com>, <jarkko@kernel.org>,
-	<amoorthy@google.com>, <dmatlack@google.com>, <yu.c.zhang@linux.intel.com>,
-	<isaku.yamahata@intel.com>, <mic@digikod.net>, <vbabka@suse.cz>,
-	<vannapurve@google.com>, <ackerleytng@google.com>,
-	<mail@maciej.szmigiero.name>, <michael.roth@amd.com>, <wei.w.wang@intel.com>,
-	<liam.merwick@oracle.com>, <isaku.yamahata@gmail.com>,
-	<kirill.shutemov@linux.intel.com>, <suzuki.poulose@arm.com>,
-	<steven.price@arm.com>, <quic_eberman@quicinc.com>,
-	<quic_mnalajal@quicinc.com>, <quic_tsoni@quicinc.com>,
-	<quic_svaddagi@quicinc.com>, <quic_cvanscha@quicinc.com>,
-	<quic_pderrin@quicinc.com>, <quic_pheragu@quicinc.com>,
-	<catalin.marinas@arm.com>, <james.morse@arm.com>, <yuzenghui@huawei.com>,
-	<oliver.upton@linux.dev>, <maz@kernel.org>, <will@kernel.org>,
-	<qperret@google.com>, <keirf@google.com>, <shuah@kernel.org>,
-	<hch@infradead.org>, <jgg@nvidia.com>, <rientjes@google.com>,
-	<jhubbard@nvidia.com>, <fvdl@google.com>, <hughd@google.com>,
-	<jthoughton@google.com>
-References: <20250122152738.1173160-1-tabba@google.com>
- <20250122152738.1173160-3-tabba@google.com>
- <e6ea48d2-959f-4fbb-a170-0beaaf37f867@redhat.com>
- <CA+EHjTxNEoQ3MtZPi603=366vxt=SmBwetS4mFkvTK2r6u=UHw@mail.gmail.com>
- <82d8d3a3-6f06-4904-9d94-6f92bba89dbc@redhat.com>
- <ef864674-bbcf-457b-a4e3-fec272fc2d8a@amazon.co.uk>
- <CA+EHjTxc0AwX2=htwC9to7+fYbFJsfVGT5d+BtEYVPncMgq1Mw@mail.gmail.com>
-From: Patrick Roy <roypat@amazon.co.uk>
-Content-Language: en-US
-Autocrypt: addr=roypat@amazon.co.uk; keydata=
- xjMEY0UgYhYJKwYBBAHaRw8BAQdA7lj+ADr5b96qBcdINFVJSOg8RGtKthL5x77F2ABMh4PN
- NVBhdHJpY2sgUm95IChHaXRodWIga2V5IGFtYXpvbikgPHJveXBhdEBhbWF6b24uY28udWs+
- wpMEExYKADsWIQQ5DAcjaM+IvmZPLohVg4tqeAbEAgUCY0UgYgIbAwULCQgHAgIiAgYVCgkI
- CwIEFgIDAQIeBwIXgAAKCRBVg4tqeAbEAmQKAQC1jMl/KT9pQHEdALF7SA1iJ9tpA5ppl1J9
- AOIP7Nr9SwD/fvIWkq0QDnq69eK7HqW14CA7AToCF6NBqZ8r7ksi+QLOOARjRSBiEgorBgEE
- AZdVAQUBAQdAqoMhGmiXJ3DMGeXrlaDA+v/aF/ah7ARbFV4ukHyz+CkDAQgHwngEGBYKACAW
- IQQ5DAcjaM+IvmZPLohVg4tqeAbEAgUCY0UgYgIbDAAKCRBVg4tqeAbEAtjHAQDkh5jZRIsZ
- 7JMNkPMSCd5PuSy0/Gdx8LGgsxxPMZwePgEAn5Tnh4fVbf00esnoK588bYQgJBioXtuXhtom
- 8hlxFQM=
-In-Reply-To: <CA+EHjTxc0AwX2=htwC9to7+fYbFJsfVGT5d+BtEYVPncMgq1Mw@mail.gmail.com>
+References: <20250122-msm-gpu-fault-fixes-next-v3-0-0afa00158521@gmail.com>
+ <20250122-msm-gpu-fault-fixes-next-v3-1-0afa00158521@gmail.com> <Z5IjsqQ6vTdUXiGt@hu-guptap-hyd.qualcomm.com>
+In-Reply-To: <Z5IjsqQ6vTdUXiGt@hu-guptap-hyd.qualcomm.com>
+From: Connor Abbott <cwabbott0@gmail.com>
+Date: Thu, 23 Jan 2025 09:00:17 -0500
+X-Gm-Features: AWEUYZkhKWn32H9Mkt-2dMmko580derQXOamfCI9VPysLRLbJNJBREOXqAVlk7w
+Message-ID: <CACu1E7H5X2EfY9AG=xceaoZJkbumwnrsU4QvNbxd_A2wgVVOaQ@mail.gmail.com>
+Subject: Re: [PATCH v3 1/3] iommu/arm-smmu: Fix spurious interrupts with stall-on-fault
+To: Prakash Gupta <quic_guptap@quicinc.com>
+Cc: Rob Clark <robdclark@gmail.com>, Will Deacon <will@kernel.org>, 
+	Robin Murphy <robin.murphy@arm.com>, Joerg Roedel <joro@8bytes.org>, Sean Paul <sean@poorly.run>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, iommu@lists.linux.dev, 
+	linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+	freedreno@lists.freedesktop.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: quoted-printable
 
+On Thu, Jan 23, 2025 at 6:10=E2=80=AFAM Prakash Gupta <quic_guptap@quicinc.=
+com> wrote:
+>
+> On Wed, Jan 22, 2025 at 03:00:58PM -0500, Connor Abbott wrote:
+>
+> > @@ -125,12 +125,25 @@ static void qcom_adreno_smmu_resume_translation(c=
+onst void *cookie, bool termina
+> >       struct arm_smmu_domain *smmu_domain =3D (void *)cookie;
+> >       struct arm_smmu_cfg *cfg =3D &smmu_domain->cfg;
+> >       struct arm_smmu_device *smmu =3D smmu_domain->smmu;
+> > -     u32 reg =3D 0;
+> > +     u32 reg =3D 0, sctlr;
+> > +     unsigned long flags;
+> >
+> >       if (terminate)
+> >               reg |=3D ARM_SMMU_RESUME_TERMINATE;
+> >
+> > +     spin_lock_irqsave(&smmu_domain->cb_lock, flags);
+> > +
+> >       arm_smmu_cb_write(smmu, cfg->cbndx, ARM_SMMU_CB_RESUME, reg);
+> > +
+> At this point further transaction can be processed but SCTLR.CFIE is
+> cleared so subequent context fault will not generate interrupt till
+> SCTLR.CFIE is set.
 
+If you're asking why the spin lock is there, it's because this isn't
+true if there's another context bank, they share an interrupt line,
+and it happens to fault around the same time. I haven't checked if
+that's actually the case for Adreno, but in case this gets used by
+other drivers and moved into common code I want it to be as robust as
+possible. This is explained in the comment added to
+arm_smmu_context_fault(). Also the next commit toggles CFCFG and we
+want to serialize against that.
 
-On Thu, 2025-01-23 at 12:28 +0000, Fuad Tabba wrote:
-> Hi Patrick,
-> 
-> On Thu, 23 Jan 2025 at 11:57, Patrick Roy <roypat@amazon.co.uk> wrote:
->>
->>
->>
->> On Thu, 2025-01-23 at 11:39 +0000, David Hildenbrand wrote:
->>> On 23.01.25 10:48, Fuad Tabba wrote:
->>>> On Wed, 22 Jan 2025 at 22:10, David Hildenbrand <david@redhat.com> wrote:
->>>>>
->>>>> On 22.01.25 16:27, Fuad Tabba wrote:
->>>>>> Make kvm_(read|/write)_guest_page() capable of accessing guest
->>>>>> memory for slots that don't have a userspace address, but only if
->>>>>> the memory is mappable, which also indicates that it is
->>>>>> accessible by the host.
->>>>>
->>>>> Interesting. So far my assumption was that, for shared memory, user
->>>>> space would simply mmap() guest_memdd and pass it as userspace address
->>>>> to the same memslot that has this guest_memfd for private memory.
->>>>>
->>>>> Wouldn't that be easier in the first shot? (IOW, not require this patch
->>>>> with the cost of faulting the shared page into the page table on access)
->>>>
->>>
->>> In light of:
->>>
->>> https://lkml.kernel.org/r/20250117190938.93793-4-imbrenda@linux.ibm.com
->>>
->>> there can, in theory, be memslots that start at address 0 and have a
->>> "valid" mapping. This case is done from the kernel (and on special s390x
->>> hardware), though, so it does not apply here at all so far.
->>>
->>> In practice, getting address 0 as a valid address is unlikely, because
->>> the default:
->>>
->>> $ sysctl  vm.mmap_min_addr
->>> vm.mmap_min_addr = 65536
->>>
->>> usually prohibits it for good reason.
->>>
->>>> This has to do more with the ABI I had for pkvm and shared memory
->>>> implementations, in which you don't need to specify the userspace
->>>> address for memory in a guestmem memslot. The issue is there is no
->>>> obvious address to map it to. This would be the case in kvm:arm64 for
->>>> tracking paravirtualized time, which the userspace doesn't necessarily
->>>> need to interact with, but kvm does.
->>>
->>> So I understand correctly: userspace wouldn't have to mmap it because it
->>> is not interested in accessing it, but there is nothing speaking against
->>> mmaping it, at least in the first shot.
->>>
->>> I assume it would not be a private memslot (so far, my understanding is
->>> that internal memslots never have a guest_memfd attached).
->>> kvm_gmem_create() is only called via KVM_CREATE_GUEST_MEMFD, to be set
->>> on user-created memslots.
->>>
->>>>
->>>> That said, we could always have a userspace address dedicated to
->>>> mapping shared locations, and use that address when the necessity
->>>> arises. Or we could always require that memslots have a userspace
->>>> address, even if not used. I don't really have a strong preference.
->>>
->>> So, the simpler version where user space would simply mmap guest_memfd
->>> to provide the address via userspace_addr would at least work for the
->>> use case of paravirtualized time?
->>
->> fwiw, I'm currently prototyping something like this for x86 (although
->> not by putting the gmem address into userspace_addr, but by adding a new
->> field to memslots, so that memory attributes continue working), based on
->> what we talked about at the last guest_memfd sync meeting (the whole
->> "how to get MMIO emulation working for non-CoCo VMs in guest_memfd"
->> story). So I guess if we're going down this route for x86, maybe it
->> makes sense to do the same on ARM, for consistency?
->>
->>> It would get rid of the immediate need for this patch and patch #4 to
->>> get it flying.
->>>
->>>
->>> One interesting question is: when would you want shared memory in
->>> guest_memfd and *not* provide it as part of the same memslot.
->>
->> In my testing of non-CoCo gmem VMs on ARM, I've been able to get quite
->> far without giving KVM a way to internally access shared parts of gmem -
->> it's why I was probing Fuad for this simplified series, because
->> KVM_SW_PROTECTED_VM + mmap (for loading guest kernel) is enough to get a
->> working non-CoCo VM on ARM (although I admittedly never looked at clocks
->> inside the guest - maybe that's one thing that breaks if KVM can't
->> access gmem. How to guest and host agree on the guest memory range
->> used to exchange paravirtual timekeeping information? Could that exchange
->> be intercepted in userspace, and set to shared via memory attributes (e.g.
->> placed outside gmem)? That's the route I'm going down the paravirtual
->> time on x86).
-> 
-> For an idea of what it looks like on arm64, here's how kvmtool handles it:
-> https://github.com/kvmtool/kvmtool/blob/master/arm/aarch64/pvtime.c
-> 
-> Cheers,
-> /fuad
- 
-Thanks! In that example, kvmtool actually allocates a separate memslot for
-the pvclock stuff, so I guess it's always possible to simply put it into
-a non-gmem memslot, which indeed sidesteps this issue as you mention in
-your reply to David :D
-  
->>> One nice thing about the mmap might be that access go via user-space
->>> page tables: E.g., __kvm_read_guest_page can just access the memory
->>> without requiring the folio lock and an additional temporary folio
->>> reference on every access -- it's handled implicitly via the mapcount.
->>>
->>> (of course, to map the page we still need that once on the fault path)
->>
->> Doing a direct map access in kvm_{read,write}_guest() and friends will
->> also get tricky if guest_memfd folios ever don't have direct map
->> entries. On-demand restoration is painful, both complexity and
->> performance wise [1], while going through a userspace mapping of
->> guest_memfd would "just work".
->>
->>> --
->>> Cheers,
->>>
->>> David / dhildenb
->>>
+>
+> > +     /*
+> > +      * Re-enable interrupts after they were disabled by
+> > +      * arm_smmu_context_fault().
+> > +      */
+> > +     sctlr =3D arm_smmu_cb_read(smmu, cfg->cbndx, ARM_SMMU_CB_SCTLR);
+> > +     sctlr |=3D ARM_SMMU_SCTLR_CFIE;
+> > +     arm_smmu_cb_write(smmu, cfg->cbndx, ARM_SMMU_CB_SCTLR, sctlr);
+> > +
+> > +     spin_unlock_irqrestore(&smmu_domain->cb_lock, flags);
+> >  }
+> >
+> >  static void qcom_adreno_smmu_set_prr_bit(const void *cookie, bool set)
+> > diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu.c b/drivers/iommu/arm/=
+arm-smmu/arm-smmu.c
+> > index 79afc92e1d8b984dd35c469a3f283ad0c78f3d26..ca1ff59015a63912f0f9c52=
+56452b2b2efa928f1 100644
+> > --- a/drivers/iommu/arm/arm-smmu/arm-smmu.c
+> > +++ b/drivers/iommu/arm/arm-smmu/arm-smmu.c
+> > @@ -463,13 +463,52 @@ static irqreturn_t arm_smmu_context_fault(int irq=
+, void *dev)
+> >       if (!(cfi.fsr & ARM_SMMU_CB_FSR_FAULT))
+> >               return IRQ_NONE;
+> >
+> > +     /*
+> > +      * On some implementations FSR.SS asserts a context fault
+> > +      * interrupt. We do not want this behavior, because resolving the
+> > +      * original context fault typically requires operations that cann=
+ot be
+> > +      * performed in IRQ context but leaving the stall unacknowledged =
+will
+> > +      * immediately lead to another spurious interrupt as FSR.SS is st=
+ill
+> > +      * set. Work around this by disabling interrupts for this context=
+ bank.
+> > +      * It's expected that interrupts are re-enabled after resuming th=
+e
+> > +      * translation.
+> > +      *
+> > +      * We have to do this before report_iommu_fault() so that we don'=
+t
+> > +      * leave interrupts disabled in case the downstream user decides =
+the
+> > +      * fault can be resolved inside its fault handler.
+> > +      *
+> > +      * There is a possible race if there are multiple context banks s=
+haring
+> > +      * the same interrupt and both signal an interrupt in between wri=
+ting
+> > +      * RESUME and SCTLR. We could disable interrupts here before we
+> > +      * re-enable them in the resume handler, leaving interrupts enabl=
+ed.
+> > +      * Lock the write to serialize it with the resume handler.
+> > +      */
+> > +     if (cfi.fsr & ARM_SMMU_CB_FSR_SS) {
+> > +             u32 val;
+> > +
+> > +             spin_lock(&smmu_domain->cb_lock);
+> > +             val =3D arm_smmu_cb_read(smmu, idx, ARM_SMMU_CB_SCTLR);
+> > +             val &=3D ~ARM_SMMU_SCTLR_CFIE;
+> > +             arm_smmu_cb_write(smmu, idx, ARM_SMMU_CB_SCTLR, val);
+> > +             spin_unlock(&smmu_domain->cb_lock);
+> > +     }
+> > +
+> > +     /*
+> > +      * The SMMUv2 architecture specification says that if stall-on-fa=
+ult is
+> > +      * enabled the correct sequence is to write to SMMU_CBn_FSR to cl=
+ear
+> > +      * the fault and then write to SMMU_CBn_RESUME. Clear the interru=
+pt
+> > +      * first before running the user's fault handler to make sure we =
+follow
+> > +      * this sequence. It should be ok if there is another fault in th=
+e
+> > +      * meantime because we have already read the fault info.
+> > +      */
+> The context would remain stalled till we write to CBn_RESUME. Which is do=
+ne
+> in qcom_adreno_smmu_resume_translation(). For a stalled context further
+> transactions are not processed and we shouldn't see further faults and
+> or fault inerrupts. Do you observe faults with stalled context?
 
+Yes. I've observed that on MMU-500 writing RESUME before the interrupt
+has been cleared doesn't clear SS. This happened with v2 in the case
+where there was already a devcoredump and drm/msm called
+qcom_adreno_smmu_resume_translation() immediately from its fault
+handler, and we'd get a storm of unhandled interrupts until it was
+disabled. Given that the architecture spec says we're supposed to
+clear the interrupt first this may have been an attempt to "help"
+developers.
+
+>
+> > +     arm_smmu_cb_write(smmu, idx, ARM_SMMU_CB_FSR, cfi.fsr);
+> > +
+> >       ret =3D report_iommu_fault(&smmu_domain->domain, NULL, cfi.iova,
+> >               cfi.fsynr & ARM_SMMU_CB_FSYNR0_WNR ? IOMMU_FAULT_WRITE : =
+IOMMU_FAULT_READ);
+> >
+> >       if (ret =3D=3D -ENOSYS && __ratelimit(&rs))
+> >               arm_smmu_print_context_fault_info(smmu, idx, &cfi);
+> >
+> > -     arm_smmu_cb_write(smmu, idx, ARM_SMMU_CB_FSR, cfi.fsr);
+> >       return IRQ_HANDLED;
+> >  }
+> >
+> > diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu.h b/drivers/iommu/arm/=
+arm-smmu/arm-smmu.h
+> > index 2dbf3243b5ad2db01e17fb26c26c838942a491be..789c64ff3eb9944c8af3742=
+6e005241a8288da20 100644
+> > --- a/drivers/iommu/arm/arm-smmu/arm-smmu.h
+> > +++ b/drivers/iommu/arm/arm-smmu/arm-smmu.h
+> > @@ -216,7 +216,6 @@ enum arm_smmu_cbar_type {
+> >                                        ARM_SMMU_CB_FSR_TLBLKF)
+> >
+> >  #define ARM_SMMU_CB_FSR_FAULT                (ARM_SMMU_CB_FSR_MULTI | =
+       \
+> > -                                      ARM_SMMU_CB_FSR_SS |           \
+> Given writing to FSR.SS doesn't clear this bit but write to CBn_RESUME
+> does, this seems right. This but can be taken as separate patch.
+>
+> >                                        ARM_SMMU_CB_FSR_UUT |          \
+> >                                        ARM_SMMU_CB_FSR_EF |           \
+> >                                        ARM_SMMU_CB_FSR_PF |           \
+> >
+> > --
+> > 2.47.1
+> >
 
