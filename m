@@ -1,184 +1,254 @@
-Return-Path: <linux-arm-msm+bounces-46009-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46010-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2BD5DA1AB01
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jan 2025 21:13:43 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 56B52A1AB08
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jan 2025 21:14:35 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AA4213A8D21
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jan 2025 20:13:04 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 159703A34D4
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jan 2025 20:14:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 722E51BDAB5;
-	Thu, 23 Jan 2025 20:12:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 265CB1B2194;
+	Thu, 23 Jan 2025 20:14:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="AeOzzXiM"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aSR0h3k8"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pj1-f43.google.com (mail-pj1-f43.google.com [209.85.216.43])
+Received: from mail-pl1-f171.google.com (mail-pl1-f171.google.com [209.85.214.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E5721BD504
-	for <linux-arm-msm@vger.kernel.org>; Thu, 23 Jan 2025 20:12:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72AAB1607B4
+	for <linux-arm-msm@vger.kernel.org>; Thu, 23 Jan 2025 20:14:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737663162; cv=none; b=hve3Rh26LkBnRiHb+bPfI/dJQQv6tKfI9BV3OLJzVnpYwLqknuFDSmbOR/t1WqA1CFlOH9p+JH64Quxk1jnMEa36pUULb27IKlduzNNU7yHDNogVzgkSgqj5iNRe5y34EvmWXcHCpIswlbeWiyXDaLlNiM5YDl+HxFP/km44Mig=
+	t=1737663270; cv=none; b=ZK9UTKU7T36xuQ/zP2OgoGqcNwu5lXaxDv02VKsPyLA6xwPKctuG5hbUZrxwunnTrtAhVSISb2ugf5zijBpyQy8hsPbaVreqbrFU3MCZ8ycFBRQ+XYoJ1G549txBdBf5ePGbUTnzxflqWe9Qbec6ifb1qQtG1+z0Hz1LLmQwU1I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737663162; c=relaxed/simple;
-	bh=tD3t0EVHQXX3xHkHgVtxQbFbDuBtCGUSth1cuCd+JYA=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=J5U0sz1GFup8g7Az9JVTf1Dz7Z94ms2hQDPE0kve293UsqD9kXijT9BkD4Daleum0tQwSlkKRpBkjEkiE30eL1MxxUr9RqcOV2/Tah6hnAj5v45v3dqq20LK8TP5dltOyq5hJMbzWpvUWRWLJ94JS6tToSmoi1k5r5WIrS0KLVA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=AeOzzXiM; arc=none smtp.client-ip=209.85.216.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pj1-f43.google.com with SMTP id 98e67ed59e1d1-2ef6c56032eso1925390a91.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Jan 2025 12:12:38 -0800 (PST)
+	s=arc-20240116; t=1737663270; c=relaxed/simple;
+	bh=rnkBDxgN27V5XHsTTpwcFrxjosDqs8mDy4czBasu/Wo=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=XslmaHhJKMXTzd7YQECIVOsk6YVhIDmOce8X9R2Q131Awwd+INaHzYr+ELToAh7fLQoq+QlEZ5G57gpl3/svm2VLa/OJ++87v2FVa0fzXN3JUJ/upvX76rzTpkLbIMvaO3ZCIBIvqg/vnG3fB9ZXdFIbASZDuhcD/3jNlKJfH+Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aSR0h3k8; arc=none smtp.client-ip=209.85.214.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pl1-f171.google.com with SMTP id d9443c01a7336-216406238f9so2806565ad.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Jan 2025 12:14:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1737663158; x=1738267958; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Majoph8E+cCh21U54jZPyu++uXYCQ8kOGOIWq+E+Nk0=;
-        b=AeOzzXiML1PO07LtpQ3b+niz04BPa/Q9a9eRqXvyubtGgpNkLkkRGQN/btDi4GvfOe
-         d20b7HXbrIxkzXRYomB2J/lQAANtLeanXBsw6sr9/9/+U8QPeKT0Hafd0MdBzfsylH+Y
-         6hwYgZ+l+FDCFreMdMwPZiM4+HJ5YQbXKrKswg6AR980nH+PBAJJCrQXEqjuGBzWnYlo
-         u1KHC7qLvOY6aGvr/eNNoDYl3NqlE+qpnNLH/jzCkBpUeyWpTjAknpeHlOnfHM/xXnLl
-         uTd6ftX4jd/6vvoCgegiKTgiRkmgAT99Y2rixMk31dSDIoAIFNI1NdwaXTf40DakZ8cb
-         TbHg==
+        d=gmail.com; s=20230601; t=1737663268; x=1738268068; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=/2QDlQ7ciLXyACEdbXlxDxDDAFIjM/sxdbl1ogTU8Rc=;
+        b=aSR0h3k8IqoeUBpCYXm63GxvSS+0K3Ge+biJwjEK7hPjV8gY+vCXxtKTAgRaPEWTZZ
+         GIXc3EFy1QpdVflS6QIJIXzT1CAGhOqQ+wtTikp2AgWlHUTLwL3U26EMHaTqYSvxynlI
+         lu6SyN18JSnZYNLDCN08GsUUHCLfsZvE3tG44rjpZ+oMHZvmN82aLOFL0a2BN3gflslq
+         sCxweoRgHSkqGt/qa8GfEB8Ih5IIdz1DidenTDasMv76mJ4oHTy8vJQlr9wjBJT61tao
+         p795dWXsf2KO6k1I3/NGSXBfI9uoiNJ2bM+wKYIS+SL0a8ng89hKHrBS6zb+vbsqbyxv
+         4NzA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1737663158; x=1738267958;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=Majoph8E+cCh21U54jZPyu++uXYCQ8kOGOIWq+E+Nk0=;
-        b=GR27HXvUDtDlG/xaXyKWw1NH5os/sWCQklvrkdihysnZ2SSIN7r6F4fA4hSnibFH04
-         LtdaUQ7FL0nfF+KcUYDPN846v3BQyq/VpNYf08mifGiurjHD4NZm6F0ljdq58M18NtXM
-         3c69FS9OALeASyZRISE+Spbd8+AGrSMS7qMN5eb/4XDXZdFlwiYtRgpIhtAdy/e9vDxk
-         axfQU5+ABn6vN3sbIn09GlCPWPwXiA/TUVY92BfUU4EF5ZY/u1JKFj5kdLW7pDnZkuvn
-         3oMsDTUV0d5PN3Ps0PNIZeEKdxPD4c3fNAl6ZGudb6AZfuKamrq8/2WdtUtpmX7uXG5j
-         RBuQ==
-X-Gm-Message-State: AOJu0Yyhpnv3fcweePz3crdsaNqgLrDbOZTfVmsGxkAdenXRlWbgVx8a
-	jQ2mDPrikULgntNYf+dpGud8Pu0ZnEnpQdD6eLcQD74Yi/ZJ+GxW2Zr1dxoP7z8=
-X-Gm-Gg: ASbGnctbqTD/ulCHRLng0QoCyGWl8lhcVsOBWsXbEQnC7I/CpGQN+DnFrEc9NMX7Ssj
-	rSnFZ8Vs0R26xUcqScjcg20ICA35YzNDm1B0yiqxhum6PkvO6/Oop92Jl6j/nV7pRw0zNVKYcRz
-	y6bSUmSITsZCOfkoXWK9Z30BVeg3zPsXymF40/HT1Iymg6ufb3vjyI26YJ3pEz2/JcLXzgGdktg
-	NK3LAkPRVbHbHRGWg3TkWvhuomXrasRqS5rNlvonI39QIbZShIf9GOPxgV/PuivNGfa6us4GD+W
-	KlLbwd9Q+iQh/TQ=
-X-Google-Smtp-Source: AGHT+IGjYLbdTkDtVsKIemv83lRYfSaqRItS6634hiKj+p4fMBDbSMDFpjyvf11Hf9VpoP3IInSiyA==
-X-Received: by 2002:a17:90a:c2c7:b0:2ef:2d9f:8e55 with SMTP id 98e67ed59e1d1-2f782ca1fffmr43193938a91.17.1737663158301;
-        Thu, 23 Jan 2025 12:12:38 -0800 (PST)
-Received: from [192.168.5.187] ([4.16.227.147])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2f7ffa54a83sm122332a91.11.2025.01.23.12.12.36
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 23 Jan 2025 12:12:37 -0800 (PST)
-Message-ID: <d4881156-a003-41fe-824e-4c29e279fbb7@linaro.org>
-Date: Thu, 23 Jan 2025 21:12:36 +0100
+        d=1e100.net; s=20230601; t=1737663268; x=1738268068;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=/2QDlQ7ciLXyACEdbXlxDxDDAFIjM/sxdbl1ogTU8Rc=;
+        b=CbCOft24xOn/v5n73Utfx2m/fNaysmfli52nqtdr9wmbrajPaCu5W8Irm1CvkJLGIp
+         ucR5OhU0jK2lNjKjeas+Gv3hMBB8deLAOIuyixbKAbMBsVLU7QrfH2FRVJ75gbgeAtVZ
+         +91OvjXiYpUrVtzEs5trf1pFcgtFLQjy7wlj1984/NVgBmcNAc9d3YTqbRSCXdVhNjgm
+         Mza3VcwQPek/aaYxI8YcZQCbiQjAyRFFHbX78H8kIv2xnMAgU14EPBfP+P2jbwnk3eZI
+         FZT/YTK0ryoXL4yH/D5ZB5TApaWL84vl3xaYUACfwxnPaPJmyhuKA7Grj+SPmysykijE
+         tGQA==
+X-Forwarded-Encrypted: i=1; AJvYcCVIC0/Nrqqqy7GswA17cl3oJYyB1J5ELjKIU3P7f/h9ZpdjoQNtHJ4Y1aGfdu9HbHQzlnwPrXQYSyO9AUzY@vger.kernel.org
+X-Gm-Message-State: AOJu0YxbGHsK/TvuBCtQt924btnsQaGG8LXrvx4PIJ8/178xIBgteqc6
+	sUdxTMl2EA5ro6oeypBdFdCXazJeeK3GrJmG0fy4BDciZhc6zH48oqBeM+5fPpNAy27XcTK0k2U
+	VjhOpItDNg5//Ixgx6XycdfvO6oY=
+X-Gm-Gg: ASbGncvqMSalU+vwB/ls1HWYRDt7YvJXqVHvG92UUOxrNs1W0rRmsi0Z9urxM/FkYYf
+	XoxWob8t5VAxVsXV1R4ib8PcaONLV1F6DTwI8mg3x55OSG7vfSqstgdpP85Df//Ve7vOQtiH5
+X-Google-Smtp-Source: AGHT+IF9WRUJHlC8pSwIAj8cVYowT1BAbQRT46w/zBvudQ5hCUtVjX57p1AYxilwi3P5ZVSk1dKDYES+SrAcrckfCwM=
+X-Received: by 2002:a05:6a21:9215:b0:1e1:c26d:d81a with SMTP id
+ adf61e73a8af0-1eb5d21c42cmr6183007637.8.1737663267550; Thu, 23 Jan 2025
+ 12:14:27 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: neil.armstrong@linaro.org
-Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH v2 0/8] Support Multi-frequency scale for UFS
-To: Ziqi Chen <quic_ziqichen@quicinc.com>, quic_cang@quicinc.com,
- bvanassche@acm.org, mani@kernel.org, beanhuo@micron.com,
- avri.altman@wdc.com, junwoo80.lee@samsung.com, martin.petersen@oracle.com,
- quic_nguyenb@quicinc.com, quic_nitirawa@quicinc.com,
- quic_rampraka@quicinc.com
-Cc: linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
- Matthias Brugger <matthias.bgg@gmail.com>,
- AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
- "open list:ARM/Mediatek SoC support:Keyword:mediatek"
- <linux-kernel@vger.kernel.org>,
- "moderated list:ARM/Mediatek SoC support:Keyword:mediatek"
- <linux-arm-kernel@lists.infradead.org>,
- "moderated list:ARM/Mediatek SoC support:Keyword:mediatek"
- <linux-mediatek@lists.infradead.org>
-References: <20250122100214.489749-1-quic_ziqichen@quicinc.com>
-Content-Language: en-US, fr
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro
-In-Reply-To: <20250122100214.489749-1-quic_ziqichen@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <20250122-msm-gpu-fault-fixes-next-v3-0-0afa00158521@gmail.com>
+ <20250122-msm-gpu-fault-fixes-next-v3-1-0afa00158521@gmail.com>
+ <Z5IjsqQ6vTdUXiGt@hu-guptap-hyd.qualcomm.com> <CACu1E7H5X2EfY9AG=xceaoZJkbumwnrsU4QvNbxd_A2wgVVOaQ@mail.gmail.com>
+ <Z5KXwNPrdirVUn8Z@hu-guptap-hyd.qualcomm.com>
+In-Reply-To: <Z5KXwNPrdirVUn8Z@hu-guptap-hyd.qualcomm.com>
+From: Connor Abbott <cwabbott0@gmail.com>
+Date: Thu, 23 Jan 2025 15:14:16 -0500
+X-Gm-Features: AWEUYZm4s0a1_xJx4E19lGpX9b_gFH6RT3FcZVLxCaBZ0uPB-4Bak4CDyfFUWL4
+Message-ID: <CACu1E7GOS+_biN=AuQwYK47ApRPFGygyD+U5X9d_4ReXKrzbfw@mail.gmail.com>
+Subject: Re: [PATCH v3 1/3] iommu/arm-smmu: Fix spurious interrupts with stall-on-fault
+To: Prakash Gupta <quic_guptap@quicinc.com>
+Cc: Rob Clark <robdclark@gmail.com>, Will Deacon <will@kernel.org>, 
+	Robin Murphy <robin.murphy@arm.com>, Joerg Roedel <joro@8bytes.org>, Sean Paul <sean@poorly.run>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, iommu@lists.linux.dev, 
+	linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+	freedreno@lists.freedesktop.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi,
+On Thu, Jan 23, 2025 at 2:26=E2=80=AFPM Prakash Gupta <quic_guptap@quicinc.=
+com> wrote:
+>
+> On Thu, Jan 23, 2025 at 09:00:17AM -0500, Connor Abbott wrote:
+> > On Thu, Jan 23, 2025 at 6:10=E2=80=AFAM Prakash Gupta <quic_guptap@quic=
+inc.com> wrote:
+> > >
+> > > On Wed, Jan 22, 2025 at 03:00:58PM -0500, Connor Abbott wrote:
+> > >
+> > > > +     /*
+> > > > +      * On some implementations FSR.SS asserts a context fault
+> > > > +      * interrupt. We do not want this behavior, because resolving=
+ the
+> > > > +      * original context fault typically requires operations that =
+cannot be
+> > > > +      * performed in IRQ context but leaving the stall unacknowled=
+ged will
+> > > > +      * immediately lead to another spurious interrupt as FSR.SS i=
+s still
+> > > > +      * set. Work around this by disabling interrupts for this con=
+text bank.
+> > > > +      * It's expected that interrupts are re-enabled after resumin=
+g the
+> > > > +      * translation.
+> > > > +      *
+> > > > +      * We have to do this before report_iommu_fault() so that we =
+don't
+> > > > +      * leave interrupts disabled in case the downstream user deci=
+des the
+> > > > +      * fault can be resolved inside its fault handler.
+> > > > +      *
+> > > > +      * There is a possible race if there are multiple context ban=
+ks sharing
+> > > > +      * the same interrupt and both signal an interrupt in between=
+ writing
+> > > > +      * RESUME and SCTLR. We could disable interrupts here before =
+we
+> Not sure if multiple context bank with shared interrupt supported for
+> arm-smmu driver, but even if does than context fault handler they would
+> operate on their respective context register space, so I don't see the ra=
+ce
+> at context register update.
 
-On 22/01/2025 11:02, Ziqi Chen wrote:
-> With OPP V2 enabled, devfreq can scale clocks amongst multiple frequency
-> plans. However, the gear speed is only toggled between min and max during
-> clock scaling. Enable multi-level gear scaling by mapping clock frequencies
-> to gear speeds, so that when devfreq scales clock frequencies we can put
-> the UFS link at the appropraite gear speeds accordingly.
-> 
-> This series has been tested on below platforms -
-> sm8550 mtp + UFS3.1
-> SM8650 MTP + UFS3.1
-> SM8750 MTP + UFS4.0
+Let's say CB1 enables stall-on-fault. The sequence is something like this:
 
-Thanks, could you be more precise on how you tested this feature ? how did you exercise the gear changes and check that is cales correctly ?
+- CB0 faults, context fault handler for CB0 runs first
+- resume handler writes RESUME for CB1
+- CB1 faults on some other pending transaction
+- context fault handler for CB1 runs due to the fault from CB0 on
+shared interrupt line, discovers there is an additional fault because
+we just wrote RESUME
+- context fault handler for CB1 writes SCTLR disabling CFIE
+- resume handler writes SCTLR enabling CFIE
 
-Thanks,
-Neil
+At the end CFIE is incorrectly enabled while the second CB1 fault is
+pending and we get an interrupt storm.
 
-> 
-> v1 -> v2:
-> 1. Withdraw old patch 8/8 "ARM: dts: msm: Use Operation Points V2 for UFS on SM8650"
-> 2. Add new patch 8/8 "ABI: sysfs-driver-ufs: Add missing UFS sysfs addributes"
-> 3. Modify commit message for  "scsi: ufs: core: Pass target_freq to clk_scale_notify() vops" and "scsi: ufs: qcom: Pass target_freq to clk scale pre and post change"
-> 4. In "scsi: ufs: qcom: Pass target_freq to clk scale pre and post change", use common Macro HZ_PER_MHZ in function ufs_qcom_set_core_clk_ctrl()
-> 5. In "scsi: ufs: qcom: Implement the freq_to_gear_speed() vops", print out freq and gear info as debugging message
-> 6. In "scsi: ufs: core: Enable multi-level gear scaling", rename the lable "do_pmc" to "config_pwr_mode"
-> 7. In "scsi: ufs: core: Toggle Write Booster during clock", initialize the local variables "wb_en" as "false"
-> 
-> Can Guo (6):
->    scsi: ufs: core: Pass target_freq to clk_scale_notify() vops
->    scsi: ufs: qcom: Pass target_freq to clk scale pre and post change
->    scsi: ufs: core: Add a vops to map clock frequency to gear speed
->    scsi: ufs: qcom: Implement the freq_to_gear_speed() vops
->    scsi: ufs: core: Enable multi-level gear scaling
->    scsi: ufs: core: Toggle Write Booster during clock scaling base on
->      gear speed
-> 
-> Ziqi Chen (2):
->    scsi: ufs: core: Check if scaling up is required when disable clkscale
->    ABI: sysfs-driver-ufs: Add missing UFS sysfs addributes
-> 
->   Documentation/ABI/testing/sysfs-driver-ufs | 31 ++++++++++
->   drivers/ufs/core/ufshcd-priv.h             | 17 +++++-
->   drivers/ufs/core/ufshcd.c                  | 71 ++++++++++++++++------
->   drivers/ufs/host/ufs-mediatek.c            |  1 +
->   drivers/ufs/host/ufs-qcom.c                | 66 +++++++++++++++-----
->   include/ufs/ufshcd.h                       |  8 ++-
->   6 files changed, 159 insertions(+), 35 deletions(-)
-> 
+Realistically this is only going to happen if the resume handler gets
+interrupted in between the two register writes, otherwise it will
+probably win the race and write SCTLR before CB1 can run its context
+fault handler. But technically we need the spinlock.
 
+>
+> > > > +      * re-enable them in the resume handler, leaving interrupts e=
+nabled.
+> > > > +      * Lock the write to serialize it with the resume handler.
+> > > > +      */
+> > > > +     if (cfi.fsr & ARM_SMMU_CB_FSR_SS) {
+> > > > +             u32 val;
+> > > > +
+> > > > +             spin_lock(&smmu_domain->cb_lock);
+> > > > +             val =3D arm_smmu_cb_read(smmu, idx, ARM_SMMU_CB_SCTLR=
+);
+> > > > +             val &=3D ~ARM_SMMU_SCTLR_CFIE;
+> > > > +             arm_smmu_cb_write(smmu, idx, ARM_SMMU_CB_SCTLR, val);
+> > > > +             spin_unlock(&smmu_domain->cb_lock);
+> > > > +     }
+> > > > +
+> > > > +     /*
+> > > > +      * The SMMUv2 architecture specification says that if stall-o=
+n-fault is
+> > > > +      * enabled the correct sequence is to write to SMMU_CBn_FSR t=
+o clear
+> > > > +      * the fault and then write to SMMU_CBn_RESUME. Clear the int=
+errupt
+> > > > +      * first before running the user's fault handler to make sure=
+ we follow
+> > > > +      * this sequence. It should be ok if there is another fault i=
+n the
+> > > > +      * meantime because we have already read the fault info.
+> > > > +      */
+> qcom_adreno_smmu_get_fault_info() reads the fault info as part of client
+> fault hanlder. So it would not be ok to clear FSR before reporting the
+> fault to client.
+>
+> > > The context would remain stalled till we write to CBn_RESUME. Which i=
+s done
+> > > in qcom_adreno_smmu_resume_translation(). For a stalled context furth=
+er
+> > > transactions are not processed and we shouldn't see further faults an=
+d
+> > > or fault inerrupts. Do you observe faults with stalled context?
+> >
+> > Yes. I've observed that on MMU-500 writing RESUME before the interrupt
+> > has been cleared doesn't clear SS. This happened with v2 in the case
+> > where there was already a devcoredump and drm/msm called
+> > qcom_adreno_smmu_resume_translation() immediately from its fault
+> > handler, and we'd get a storm of unhandled interrupts until it was
+> > disabled. Given that the architecture spec says we're supposed to
+> > clear the interrupt first this may have been an attempt to "help"
+> > developers.
+> >
+>
+> Just to clarify, present sequence is:
+> 1. context fault with stall enable. FSR.SS set.
+> 2. Report fault to client
+> 3. resume/terminate stalled transaction
+> 4. clear FSR
+>
+> At what point when you try #2->#3->#4 or #4->#2->#3 sequence, is FSR.SS
+> cleared and interrupt storm is observed.
+
+With #2->#3->#4 FSR.SS is *not* cleared and there is a subsequent
+interrupt storm with only FSR.SS asserted. With #4->#2->#3 there is no
+interrupt storm. From this we conclude that MMU-500 does not clear
+FSR.SS unless #4 happens before #3.
+
+> The way CFIE disable is helping
+> with current patch indicates write FSR is unstalling context and subseque=
+nt
+> transactions are faulted.
+
+No, it does not indicate that. The interrupt storm happens even when
+there is exactly one context fault, and when the interrupt storm
+happens *only* FSR.SS is asserted. I've verified this with debug
+prints. Once more, MMU-500 will assert an interrupt when only FSR.SS
+is asserted. This has nothing to do with subsequent transactions.
+
+> Do you stop getting interrupt storm after write
+> RESUME.
+
+Yes, as long as the write to RESUME happens after all other bits in
+FSR are cleared.
+
+> If you can mention your SCTLR configuration and FSR state in test
+> sequence, it would be clearer.
+
+SCTLR has both HUPCF and CFCFG enabled.
+
+>
+> An aside, If reducing delay between FSR and RESUME write helps then both
+> can be done as part of qcom_adreno_smmu_resume_translation(). This will
+> follow spec recommendation and also make sure fault registers are not
+> cleared before reporting fault to client.
+>
+> Thanks,
+> Prakash
 
