@@ -1,211 +1,222 @@
-Return-Path: <linux-arm-msm+bounces-45973-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-45974-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id C7C19A1A3FF
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jan 2025 13:13:50 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 35884A1A40A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jan 2025 13:17:12 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 942B71881C0D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jan 2025 12:13:54 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 62C3D188336B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jan 2025 12:17:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E978E20E307;
-	Thu, 23 Jan 2025 12:13:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5A768288CC;
+	Thu, 23 Jan 2025 12:17:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b="gnpKJjIm"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="RoyszFv4"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mout-p-101.mailbox.org (mout-p-101.mailbox.org [80.241.56.151])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f171.google.com (mail-qt1-f171.google.com [209.85.160.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB40820CCCF;
-	Thu, 23 Jan 2025 12:13:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.241.56.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8011020E318
+	for <linux-arm-msm@vger.kernel.org>; Thu, 23 Jan 2025 12:17:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737634425; cv=none; b=NLleYues392/z+m/ox0RCYtKlwDDc2D2ZccJBTyeDL99gdAMDKS7aLJpjgiy8bT5YF4xUjvDFOFOQCSVBJrAP2H1ADG8g7reFg2dOPwqthd+RKYz4jGiokswzAacOm9MjKwLHL2sGYyVKtOZiLUPm+7gULKFgpbjJUIWuXf+J4o=
+	t=1737634628; cv=none; b=Zk9A8mdDYlJaFQbVl3ChsesVjRNQ2NQ9DCO2tbJ6OWUMDcYjuwZ0MSCaGFqI8ScDB9Fvfvh2Z2YIqHOKlmzmco1rj//2e3jFsXlPZHAXZ/5dCW65owbnMXxJyALhbJ6BiQ0L62dWeyDsmBYR8xEYiXVu8hKtC4ZL9SDcufHdJ2g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737634425; c=relaxed/simple;
-	bh=0+7fVHRTKElHIrMWMKEDgFUHTZ0B53rnunyjSKs1E10=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=jj68W0bpCMbkrkVDue3YyqDrDMDUZlffhOAjF9LEI+TaiU3iyUy9e8loqKNPQmgYrgyE1licKya1v49DOCHQYp06sTKTIZsWMRJ/pqGs8dqmVpm6ITaS7vZT3oq7dqIJVOWFm3PfdanpAkwzWfR3pshj2/YjjER7eP4+JK70Xt4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mailbox.org; spf=pass smtp.mailfrom=mailbox.org; dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b=gnpKJjIm; arc=none smtp.client-ip=80.241.56.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mailbox.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mailbox.org
-Received: from smtp2.mailbox.org (smtp2.mailbox.org [IPv6:2001:67c:2050:b231:465::2])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by mout-p-101.mailbox.org (Postfix) with ESMTPS id 4Yf0GW75cTz9sX2;
-	Thu, 23 Jan 2025 13:13:39 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mailbox.org; s=mail20150812;
-	t=1737634420; h=from:from:reply-to:reply-to:subject:subject:date:date:
-	 message-id:message-id:to:to:cc:cc:mime-version:mime-version:
-	 content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=0+7fVHRTKElHIrMWMKEDgFUHTZ0B53rnunyjSKs1E10=;
-	b=gnpKJjImu/YQ19v6Zpg9rBZulFKUFHnD/GH5+YNRjv2tZbJk2lBEyPvR5aXVjSjuxsHmyL
-	azsdywWxONg3ylq7gFjBaDOErXHVrhsqAvdXndqulHzRKQ10SdEEzagz+4Z3dgtmUZHQil
-	I+nHCW3ihPnRWxn1mJe3pP6lFPkc+JZl2G5umz8Ll84v3PMDEbrjzcDI9be4qNqj+ObLda
-	viFV7BRw8Cjy5quxQKLqLMHeyOAnkgU1NJ2y3vmG3c06U9vzddGxWwO4eJtqtLrzjk33IQ
-	RwlUQiV+HeVyh5daGwiSGWff1zHBxod4PkdwLjLgeaUowmil0D34K11LE0+Y3A==
-Message-ID: <e7414579afbfc25d4027471bc265ee48e7d25932.camel@mailbox.org>
-Subject: Re: [PATCH] drm/sched: Use struct for drm_sched_init() params
-From: Philipp Stanner <phasta@mailbox.org>
-Reply-To: phasta@kernel.org
-To: =?ISO-8859-1?Q?Ma=EDra?= Canal <mcanal@igalia.com>, Philipp Stanner
- <phasta@kernel.org>, Alex Deucher <alexander.deucher@amd.com>, Christian
- =?ISO-8859-1?Q?K=F6nig?= <christian.koenig@amd.com>, Xinhui Pan
- <Xinhui.Pan@amd.com>, David Airlie <airlied@gmail.com>, Simona Vetter
- <simona@ffwll.ch>, Lucas Stach <l.stach@pengutronix.de>, Russell King
- <linux+etnaviv@armlinux.org.uk>,  Christian Gmeiner
- <christian.gmeiner@gmail.com>, Frank Binns <frank.binns@imgtec.com>, Matt
- Coster <matt.coster@imgtec.com>, Maarten Lankhorst
- <maarten.lankhorst@linux.intel.com>,  Maxime Ripard <mripard@kernel.org>,
- Thomas Zimmermann <tzimmermann@suse.de>, Qiang Yu <yuq825@gmail.com>,  Rob
- Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, Konrad Dybcio
- <konradybcio@kernel.org>,  Abhinav Kumar <quic_abhinavk@quicinc.com>,
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Marijn Suijten
- <marijn.suijten@somainline.org>, Karol Herbst <kherbst@redhat.com>, Lyude
- Paul <lyude@redhat.com>, Danilo Krummrich <dakr@kernel.org>, Boris
- Brezillon <boris.brezillon@collabora.com>, Rob Herring <robh@kernel.org>,
- Steven Price <steven.price@arm.com>, Liviu Dudau <liviu.dudau@arm.com>,
- Luben Tuikov <ltuikov89@gmail.com>, Matthew Brost
- <matthew.brost@intel.com>, Melissa Wen <mwen@igalia.com>, Lucas De Marchi
- <lucas.demarchi@intel.com>, Thomas =?ISO-8859-1?Q?Hellstr=F6m?=
- <thomas.hellstrom@linux.intel.com>, Rodrigo Vivi <rodrigo.vivi@intel.com>,
- Sunil Khatri <sunil.khatri@amd.com>,  Lijo Lazar <lijo.lazar@amd.com>,
- Mario Limonciello <mario.limonciello@amd.com>, Ma Jun <Jun.Ma2@amd.com>, 
- Yunxiang Li <Yunxiang.Li@amd.com>
-Cc: amd-gfx@lists.freedesktop.org, dri-devel@lists.freedesktop.org, 
-	linux-kernel@vger.kernel.org, etnaviv@lists.freedesktop.org, 
-	lima@lists.freedesktop.org, linux-arm-msm@vger.kernel.org, 
-	freedreno@lists.freedesktop.org, nouveau@lists.freedesktop.org, 
-	intel-xe@lists.freedesktop.org
-Date: Thu, 23 Jan 2025 13:13:25 +0100
-In-Reply-To: <ec4bb0f6-c366-40e7-a1df-332458b08eec@igalia.com>
-References: <20250122140818.45172-3-phasta@kernel.org>
-	 <24f1c52f-1768-47de-88e3-d4104969d0a9@igalia.com>
-	 <9713798aa175aef2041e6d688ac4814006f789bc.camel@redhat.com>
-	 <ec4bb0f6-c366-40e7-a1df-332458b08eec@igalia.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: base64
+	s=arc-20240116; t=1737634628; c=relaxed/simple;
+	bh=PP+gahMXQFB6TzKfhC6Dy2Zg4ehr5p/q5K2aXgevRO0=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=iRsoRtO7gscCGm7UEdBrQYc+mjC9Uzg+1CIWVFo/G96Y7KRARWAJWVxZjHc04eyiqaaZeDv8eE4Er4epcRkCMKpc2DhJocA9hmm9cYWvj9EbTkYD9kyuTJC4wMCcJEbOYFTLPMooWp1WgAxsP6TuWtj/JcjM2IUftLUnX/yr8Ng=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=RoyszFv4; arc=none smtp.client-ip=209.85.160.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+Received: by mail-qt1-f171.google.com with SMTP id d75a77b69052e-467896541e1so236351cf.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Jan 2025 04:17:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1737634625; x=1738239425; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=u7c2X9kc5POGVPycCORkuD5RHSMR1gSNujIx7A9z99U=;
+        b=RoyszFv4ihCOhBgc5ec2EA8DKbacfmNQJnU4xSAaa6iphwLYRQy3t27R1T/4aQFvu6
+         lph2R96lBqnud00CArgsWiOSdKREBU5Il5aURzMld4WmBmRoBxF5j8sjZB12dX+y8m2q
+         AIrilBdRmHTLybVnIch1KrarJDwsKdhRAXVz/4AM01iwsrpQJmy31dNZlnmShEvvGGnV
+         aTDyGLgbhKF4p3IBiMyaqLkj7TvEpqZR8L3lqE3NtXKQAcjvGb94CodDncuJyQtHvRhC
+         gVXHpXgvOvOWYHsgwrpcyyXaoGgOdnSlth1Cn1tVcec+E+KEXuZoFnbv+4tGuxgR42gd
+         mQKg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1737634625; x=1738239425;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=u7c2X9kc5POGVPycCORkuD5RHSMR1gSNujIx7A9z99U=;
+        b=vKHfblJmRjn0w8aPZFF6UvBJGZgtTZm3x6efbgIwcma34Ldqu1r6ZpMEgEXp6Fv+0G
+         BBGS/VNvpLghZsD+pqcELO1/LObvAzXfcVRQSFZTeEca1DpOzw68WmBFaVPEgL4CXhgj
+         DoNtIw0qHLCzwKrAWF/oNmQ/LMeXv0J0kQJc6+n1P0fhCWa0/6jEqotP+mPo0Cj/Y1zd
+         Aqxx1f/HPvVvO07VMWbjf4+rScavCXC3wDaZR94h/mKZDe7OBlpyP2M4s8dzLFAhWYLa
+         k0LZKlexeHMif167lOFeSxL5qN9SALAyvr/Ze2+KSbwf8g7KPmIX5YoDW4f3X8Y4KhOZ
+         RStg==
+X-Forwarded-Encrypted: i=1; AJvYcCU/sgOP/o/81G3MkyA7KSx6EyIB0IbONIBxUgOQvVvoUCZLxXdfBg2eFYfCmdl4VO9KYxhZ2+trJebMtpX0@vger.kernel.org
+X-Gm-Message-State: AOJu0YzrYE9k73/AVtvzP8ZeXoMFMT72xlbNejZdBhrP65Hy17R133Ox
+	vVU85vGbV+Xuys3skZka5PixDRnriKpGUAEORsUaKyLq7WAS/+Tb8tJRIcQSI2FDQJTcrp64hol
+	ASO7tl9fEU95HCt1k7KqreCQK5wAk0UKk09GQ
+X-Gm-Gg: ASbGnctbbDjlhibckqj8cW8gKY+eVYOatSAkJm3y4womE/biij/RHbLo+g3KYbn73Lf
+	pWZEU8Jf8hSeLVDNzSmn+qZQWVpGt61ObiaTQv7bCiM1GJjybNNd6f1bTLMLkYgoj8JqeLxiVst
+	3XTq51qyCMSutw3w==
+X-Google-Smtp-Source: AGHT+IHg41VKduTv3xsbtO3UMFx2kzshM1QFv1Op/0w7ulZd5Nozoq7Hnn3XMZmqKWZNJuLvb6blkPsJkFfwWIaYc6Q=
+X-Received: by 2002:a05:622a:1183:b0:465:18f3:79cc with SMTP id
+ d75a77b69052e-46e5dacd7b5mr2799021cf.11.1737634625022; Thu, 23 Jan 2025
+ 04:17:05 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-MBO-RS-META: atku7wpwx957w9o4ftqprfosj6p5jofp
-X-MBO-RS-ID: d9273a22f3a7c793cfc
+References: <20250122152738.1173160-1-tabba@google.com> <20250122152738.1173160-3-tabba@google.com>
+ <e6ea48d2-959f-4fbb-a170-0beaaf37f867@redhat.com> <CA+EHjTxNEoQ3MtZPi603=366vxt=SmBwetS4mFkvTK2r6u=UHw@mail.gmail.com>
+ <82d8d3a3-6f06-4904-9d94-6f92bba89dbc@redhat.com>
+In-Reply-To: <82d8d3a3-6f06-4904-9d94-6f92bba89dbc@redhat.com>
+From: Fuad Tabba <tabba@google.com>
+Date: Thu, 23 Jan 2025 12:16:28 +0000
+X-Gm-Features: AWEUYZmQL5kkD90_YRmG3RYm8qDIgmqchmZqRaBczok1nfibbnLskD3572ozPos
+Message-ID: <CA+EHjTzZoGuUcZTNUzx2e3PNOOEtOJT5rUEhSSmYQ-kcoZQiYQ@mail.gmail.com>
+Subject: Re: [RFC PATCH v1 2/9] KVM: guest_memfd: Add guest_memfd support to kvm_(read|/write)_guest_page()
+To: David Hildenbrand <david@redhat.com>
+Cc: kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, 
+	pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au, 
+	anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com, 
+	aou@eecs.berkeley.edu, seanjc@google.com, viro@zeniv.linux.org.uk, 
+	brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org, 
+	xiaoyao.li@intel.com, yilun.xu@intel.com, chao.p.peng@linux.intel.com, 
+	jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com, 
+	yu.c.zhang@linux.intel.com, isaku.yamahata@intel.com, mic@digikod.net, 
+	vbabka@suse.cz, vannapurve@google.com, ackerleytng@google.com, 
+	mail@maciej.szmigiero.name, michael.roth@amd.com, wei.w.wang@intel.com, 
+	liam.merwick@oracle.com, isaku.yamahata@gmail.com, 
+	kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com, steven.price@arm.com, 
+	quic_eberman@quicinc.com, quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, 
+	quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com, 
+	quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com, 
+	james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev, 
+	maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com, 
+	roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, 
+	rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com, 
+	jthoughton@google.com
+Content-Type: text/plain; charset="UTF-8"
 
-T24gVGh1LCAyMDI1LTAxLTIzIGF0IDA4OjEwIC0wMzAwLCBNYcOtcmEgQ2FuYWwgd3JvdGU6Cj4g
-SGkgUGhpbGlwcCwKPiAKPiBPbiAyMy8wMS8yNSAwNToxMCwgUGhpbGlwcCBTdGFubmVyIHdyb3Rl
-Ogo+ID4gT24gV2VkLCAyMDI1LTAxLTIyIGF0IDE5OjA3IC0wMzAwLCBNYcOtcmEgQ2FuYWwgd3Jv
-dGU6Cj4gPiA+IEhpIFBoaWxpcHAsCj4gPiA+IAo+ID4gPiBPbiAyMi8wMS8yNSAxMTowOCwgUGhp
-bGlwcCBTdGFubmVyIHdyb3RlOgo+ID4gPiA+IGRybV9zY2hlZF9pbml0KCkgaGFzIGEgZ3JlYXQg
-bWFueSBwYXJhbWV0ZXJzIGFuZCB1cGNvbWluZyBuZXcKPiA+ID4gPiBmdW5jdGlvbmFsaXR5IGZv
-ciB0aGUgc2NoZWR1bGVyIG1pZ2h0IGFkZCBldmVuIG1vcmUuIEdlbmVyYWxseSwKPiA+ID4gPiB0
-aGUKPiA+ID4gPiBncmVhdCBudW1iZXIgb2YgcGFyYW1ldGVycyByZWR1Y2VzIHJlYWRhYmlsaXR5
-IGFuZCBoYXMgYWxyZWFkeQo+ID4gPiA+IGNhdXNlZAo+ID4gPiA+IG9uZSBtaXNzbmFtaW5nIGlu
-Ogo+ID4gPiA+IAo+ID4gPiA+IGNvbW1pdCA2ZjFjYWNmNGViYTcgKCJkcm0vbm91dmVhdTogSW1w
-cm92ZSB2YXJpYWJsZSBuYW1lIGluCj4gPiA+ID4gbm91dmVhdV9zY2hlZF9pbml0KCkiKS4KPiA+
-ID4gPiAKPiA+ID4gPiBJbnRyb2R1Y2UgYSBuZXcgc3RydWN0IGZvciB0aGUgc2NoZWR1bGVyIGlu
-aXQgcGFyYW1ldGVycyBhbmQKPiA+ID4gPiBwb3J0Cj4gPiA+ID4gYWxsCj4gPiA+ID4gdXNlcnMu
-Cj4gPiA+ID4gCj4gPiA+ID4gU2lnbmVkLW9mZi1ieTogUGhpbGlwcCBTdGFubmVyIDxwaGFzdGFA
-a2VybmVsLm9yZz4KPiAKPiBbLi4uXQo+IAo+ID4gPiAKPiA+ID4gPiBkaWZmIC0tZ2l0IGEvZHJp
-dmVycy9ncHUvZHJtL3YzZC92M2Rfc2NoZWQuYwo+ID4gPiA+IGIvZHJpdmVycy9ncHUvZHJtL3Yz
-ZC92M2Rfc2NoZWQuYwo+ID4gPiA+IGluZGV4IDk5YWM0OTk1YjVhMS4uNzE2ZTZkMDc0ZDg3IDEw
-MDY0NAo+ID4gPiA+IC0tLSBhL2RyaXZlcnMvZ3B1L2RybS92M2QvdjNkX3NjaGVkLmMKPiA+ID4g
-PiArKysgYi9kcml2ZXJzL2dwdS9kcm0vdjNkL3YzZF9zY2hlZC5jCj4gPiA+ID4gQEAgLTgxNCw2
-NyArODE0LDEyNCBAQCBzdGF0aWMgY29uc3Qgc3RydWN0Cj4gPiA+ID4gZHJtX3NjaGVkX2JhY2tl
-bmRfb3BzCj4gPiA+ID4gdjNkX2NwdV9zY2hlZF9vcHMgPSB7Cj4gPiA+ID4gwqDCoMKgCS5mcmVl
-X2pvYiA9IHYzZF9jcHVfam9iX2ZyZWUKPiA+ID4gPiDCoMKgIH07Cj4gPiA+ID4gwqDCoCAKPiA+
-ID4gPiArLyoKPiA+ID4gPiArICogdjNkJ3Mgc2NoZWR1bGVyIGluc3RhbmNlcyBhcmUgYWxsIGlk
-ZW50aWNhbCwgZXhjZXB0IGZvciBvcHMKPiA+ID4gPiBhbmQKPiA+ID4gPiBuYW1lLgo+ID4gPiA+
-ICsgKi8KPiA+ID4gPiArc3RhdGljIHZvaWQKPiA+ID4gPiArdjNkX2NvbW1vbl9zY2hlZF9pbml0
-KHN0cnVjdCBkcm1fc2NoZWRfaW5pdF9wYXJhbXMgKnBhcmFtcywKPiA+ID4gPiBzdHJ1Y3QKPiA+
-ID4gPiBkZXZpY2UgKmRldikKPiA+ID4gPiArewo+ID4gPiA+ICsJbWVtc2V0KHBhcmFtcywgMCwg
-c2l6ZW9mKHN0cnVjdAo+ID4gPiA+IGRybV9zY2hlZF9pbml0X3BhcmFtcykpOwo+ID4gPiA+ICsK
-PiA+ID4gPiArCXBhcmFtcy0+c3VibWl0X3dxID0gTlVMTDsgLyogVXNlIHRoZSBzeXN0ZW1fd3Eu
-ICovCj4gPiA+ID4gKwlwYXJhbXMtPm51bV9ycXMgPSBEUk1fU0NIRURfUFJJT1JJVFlfQ09VTlQ7
-Cj4gPiA+ID4gKwlwYXJhbXMtPmNyZWRpdF9saW1pdCA9IDE7Cj4gPiA+ID4gKwlwYXJhbXMtPmhh
-bmdfbGltaXQgPSAwOwo+ID4gPiA+ICsJcGFyYW1zLT50aW1lb3V0ID0gbXNlY3NfdG9famlmZmll
-cyg1MDApOwo+ID4gPiA+ICsJcGFyYW1zLT50aW1lb3V0X3dxID0gTlVMTDsgLyogVXNlIHRoZSBz
-eXN0ZW1fd3EuICovCj4gPiA+ID4gKwlwYXJhbXMtPnNjb3JlID0gTlVMTDsKPiA+ID4gPiArCXBh
-cmFtcy0+ZGV2ID0gZGV2Owo+ID4gPiA+ICt9Cj4gPiA+IAo+ID4gPiBDb3VsZCB3ZSB1c2Ugb25s
-eSBvbmUgZnVuY3Rpb24gdGhhdCB0YWtlcyBzdHJ1Y3QgdjNkX2RldiAqdjNkLAo+ID4gPiBlbnVt
-Cj4gPiA+IHYzZF9xdWV1ZSwgYW5kIHNjaGVkX29wcyBhcyBhcmd1bWVudHMgKGluc3RlYWQgb2Yg
-b25lIGZ1bmN0aW9uCj4gPiA+IHBlcgo+ID4gPiBxdWV1ZSk/IFlvdSBjYW4gZ2V0IHRoZSBuYW1l
-IG9mIHRoZSBzY2hlZHVsZXIgYnkgY29uY2F0ZW5hdGluZwo+ID4gPiAidjNkXyIKPiA+ID4gdG8K
-PiA+ID4gdGhlIHJldHVybiBvZiB2M2RfcXVldWVfdG9fc3RyaW5nKCkuCj4gPiA+IAo+ID4gPiBJ
-IGJlbGlldmUgaXQgd291bGQgbWFrZSB0aGUgY29kZSBtdWNoIHNpbXBsZXIuCj4gPiAKPiA+IEhl
-bGxvLAo+ID4gCj4gPiBzbyBqdXN0IHRvIGdldCB0aGF0IHJpZ2h0Ogo+ID4gWW91J2QgbGlrZSB0
-byBoYXZlIG9uZSB1bml2ZXJzYWwgZnVuY3Rpb24gdGhhdCBzd2l0Y2gtY2FzZXMgb3ZlciBhbgo+
-ID4gZW51bSwgc2V0cyB0aGUgb3BzIGFuZCBjcmVhdGVzIHRoZSBuYW1lIHdpdGggc3RyaW5nIGNv
-bmNhdGVuYXRpb24/Cj4gPiAKPiA+IEknbSBub3QgY29udmluY2VkIHRoYXQgdGhpcyBpcyBzaW1w
-bGVyIHRoYW4gYSBmZXcgc21hbGwgZnVuY3Rpb25zLAo+ID4gYnV0Cj4gPiBpdCdzIG5vdCBteSBj
-b21wb25lbnQsIHNv4oCmCj4gPiAKPiA+IFdoYXRldmVyIHdlJ2xsIGRvIHdpbGwgYmUgc2ltcGxl
-ciB0aGFuIHRoZSBleGlzdGluZyBjb2RlLCB0aG91Z2guCj4gPiBSaWdodAo+ID4gbm93IG5vIHJl
-YWRlciBjYW4gc2VlIGF0IGZpcnN0IGdsYW5jZSB3aGV0aGVyIGFsbCB0aG9zZSBzY2hlZHVsZXJz
-Cj4gPiBhcmUKPiA+IGlkZW50aWNhbGx5IHBhcmFtZXRyaXplZCBvciBub3QuCj4gPiAKPiAKPiBU
-aGlzIGlzIG15IHByb3Bvc2FsIChqdXN0IGEgcXVpY2sgZHJhZnQsIHBsZWFzZSBjaGVjayBpZiBp
-dAo+IGNvbXBpbGVzKToKPiAKPiBkaWZmIC0tZ2l0IGEvZHJpdmVycy9ncHUvZHJtL3YzZC92M2Rf
-c2NoZWQuYyAKPiBiL2RyaXZlcnMvZ3B1L2RybS92M2QvdjNkX3NjaGVkLmMKPiBpbmRleCA5NjE0
-NjUxMjhkODAuLjdjYzQ1YTBjNmNhMCAxMDA2NDQKPiAtLS0gYS9kcml2ZXJzL2dwdS9kcm0vdjNk
-L3YzZF9zY2hlZC5jCj4gKysrIGIvZHJpdmVycy9ncHUvZHJtL3YzZC92M2Rfc2NoZWQuYwo+IEBA
-IC04MjAsNjcgKzgyMCw2MiBAQCBzdGF0aWMgY29uc3Qgc3RydWN0IGRybV9zY2hlZF9iYWNrZW5k
-X29wcyAKPiB2M2RfY3B1X3NjaGVkX29wcyA9IHsKPiDCoMKgwqDCoMKgwqDCoMKgIC5mcmVlX2pv
-YiA9IHYzZF9jcHVfam9iX2ZyZWUKPiDCoCB9Owo+IAo+ICtzdGF0aWMgaW50Cj4gK3YzZF9zY2hl
-ZF9xdWV1ZV9pbml0KHN0cnVjdCB2M2RfZGV2ICp2M2QsIGVudW0gdjNkX3F1ZXVlIHF1ZXVlLAo+
-ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCBjb25zdCBzdHJ1Y3QgZHJt
-X3NjaGVkX2JhY2tlbmRfb3BzICpvcHMsIGNvbnN0CgpJcyBpdCBhIHF1ZXVlLCB0aG91Z2g/CgpI
-b3cgYWJvdXQgX3YzZF9zY2hlZF9pbml0KCk/CgpQLgoKPiBjaGFyIAo+ICpuYW1lKQo+ICt7Cj4g
-K8KgwqDCoMKgwqDCoCBzdHJ1Y3QgZHJtX3NjaGVkX2luaXRfcGFyYW1zIHBhcmFtcyA9IHsKPiAr
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCAuc3VibWl0X3dxID0gTlVMTCwKPiArwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoCAubnVtX3JxcyA9IERSTV9TQ0hFRF9QUklPUklUWV9DT1VO
-VCwKPiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCAuY3JlZGl0X2xpbWl0ID0gMSwKPiAr
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCAuaGFuZ19saW1pdCA9IDAsCj4gK8KgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqAgLnRpbWVvdXQgPSBtc2Vjc190b19qaWZmaWVzKDUwMCksCj4g
-K8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgLnRpbWVvdXRfd3EgPSBOVUxMLAo+ICvCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIC5zY29yZSA9IE5VTEwsCj4gK8KgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqAgLmRldiA9IHYzZC0+ZHJtLmRldiwKPiArwqDCoMKgwqDCoMKgIH07Cj4g
-Kwo+ICvCoMKgwqDCoMKgwqAgcGFyYW1zLm9wcyA9IG9wczsKPiArwqDCoMKgwqDCoMKgIHBhcmFt
-cy5uYW1lID0gbmFtZTsKPiArCj4gK8KgwqDCoMKgwqDCoCByZXR1cm4gZHJtX3NjaGVkX2luaXQo
-JnYzZC0+cXVldWVbcXVldWVdLnNjaGVkLCAmcGFyYW1zKTsKPiArfQo+ICsKPiDCoCBpbnQKPiDC
-oCB2M2Rfc2NoZWRfaW5pdChzdHJ1Y3QgdjNkX2RldiAqdjNkKQo+IMKgIHsKPiAtwqDCoMKgwqDC
-oMKgIGludCBod19qb2JzX2xpbWl0ID0gMTsKPiAtwqDCoMKgwqDCoMKgIGludCBqb2JfaGFuZ19s
-aW1pdCA9IDA7Cj4gLcKgwqDCoMKgwqDCoCBpbnQgaGFuZ19saW1pdF9tcyA9IDUwMDsKPiDCoMKg
-wqDCoMKgwqDCoMKgIGludCByZXQ7Cj4gCj4gLcKgwqDCoMKgwqDCoCByZXQgPSBkcm1fc2NoZWRf
-aW5pdCgmdjNkLT5xdWV1ZVtWM0RfQklOXS5zY2hlZCwKPiAtwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgICZ2M2RfYmluX3NjaGVkX29wcywgTlVM
-TCwKPiAtwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgIERSTV9TQ0hFRF9QUklPUklUWV9DT1VOVCwKPiAtwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIGh3X2pvYnNfbGltaXQsIGpvYl9oYW5nX2xp
-bWl0LAo+IC3CoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqAgbXNlY3NfdG9famlmZmllcyhoYW5nX2xpbWl0X21zKSwgTlVMTCwKPiAtwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIE5VTEwsICJ2M2Rf
-YmluIiwgdjNkLT5kcm0uZGV2KTsKPiArwqDCoMKgwqDCoMKgIHJldCA9IHYzZF9zY2hlZF9xdWV1
-ZV9pbml0KHYzZCwgVjNEX0JJTiwgJnYzZF9iaW5fc2NoZWRfb3BzLAo+ICvCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgInYz
-ZF9iaW4iKTsKPiDCoMKgwqDCoMKgwqDCoMKgIGlmIChyZXQpCj4gwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqAgcmV0dXJuIHJldDsKPiAKPiAtwqDCoMKgwqDCoMKgIHJldCA9IGRybV9z
-Y2hlZF9pbml0KCZ2M2QtPnF1ZXVlW1YzRF9SRU5ERVJdLnNjaGVkLAo+IC3CoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgJnYzZF9yZW5kZXJfc2No
-ZWRfb3BzLCBOVUxMLAo+IC3CoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqAgRFJNX1NDSEVEX1BSSU9SSVRZX0NPVU5ULAo+IC3CoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgaHdfam9ic19saW1pdCwg
-am9iX2hhbmdfbGltaXQsCj4gLcKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoCBtc2Vjc190b19qaWZmaWVzKGhhbmdfbGltaXRfbXMpLCBOVUxMLAo+
-IC3CoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAg
-TlVMTCwgInYzZF9yZW5kZXIiLCB2M2QtPmRybS5kZXYpOwo+ICvCoMKgwqDCoMKgwqAgcmV0ID0g
-djNkX3NjaGVkX3F1ZXVlX2luaXQodjNkLCBWM0RfUkVOREVSLAo+ICZ2M2RfcmVuZGVyX3NjaGVk
-X29wcywKPiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgICJ2M2RfcmVuZGVyIik7Cj4gwqDCoMKgwqDCoMKgwqDCoCBpZiAo
-cmV0KQo+IMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIGdvdG8gZmFpbDsKPiAKPiBb
-Li4uXQo+IAo+IEF0IGxlYXN0IGZvciBtZSwgdGhpcyBsb29rcyBtdWNoIHNpbXBsZXIgdGhhbiBv
-bmUgZnVuY3Rpb24gZm9yIGVhY2gKPiBWM0QgcXVldWUuCj4gCj4gQmVzdCBSZWdhcmRzLAo+IC0g
-TWHDrXJhCj4gCj4gPiBQLgo+ID4gCj4gPiAKPiA+ID4gCj4gPiA+IEJlc3QgUmVnYXJkcywKPiA+
-ID4gLSBNYcOtcmEKPiA+ID4gCj4gCgo=
+Hi David,
 
+On Thu, 23 Jan 2025 at 11:39, David Hildenbrand <david@redhat.com> wrote:
+>
+> On 23.01.25 10:48, Fuad Tabba wrote:
+> > On Wed, 22 Jan 2025 at 22:10, David Hildenbrand <david@redhat.com> wrote:
+> >>
+> >> On 22.01.25 16:27, Fuad Tabba wrote:
+> >>> Make kvm_(read|/write)_guest_page() capable of accessing guest
+> >>> memory for slots that don't have a userspace address, but only if
+> >>> the memory is mappable, which also indicates that it is
+> >>> accessible by the host.
+> >>
+> >> Interesting. So far my assumption was that, for shared memory, user
+> >> space would simply mmap() guest_memdd and pass it as userspace address
+> >> to the same memslot that has this guest_memfd for private memory.
+> >>
+> >> Wouldn't that be easier in the first shot? (IOW, not require this patch
+> >> with the cost of faulting the shared page into the page table on access)
+> >
+
+Before answering your questions in detail, in light of this
+discussion, and in other discussions I've had, I think the more
+reasonable thing to do is to let the memslot for in-place shared
+memory look the same as the other guest_memfd memslots, i.e., have a
+userspace address regardless if it's needed or not. This makes the
+interface the same across all guest_memfd implementations, and avoids
+the need for patches such as this one, at least initially until we
+realize that we need it.
+
+That said...
+
+>
+> In light of:
+>
+> https://lkml.kernel.org/r/20250117190938.93793-4-imbrenda@linux.ibm.com
+>
+> there can, in theory, be memslots that start at address 0 and have a
+> "valid" mapping. This case is done from the kernel (and on special s390x
+> hardware), though, so it does not apply here at all so far.
+>
+> In practice, getting address 0 as a valid address is unlikely, because
+> the default:
+>
+> $ sysctl  vm.mmap_min_addr
+> vm.mmap_min_addr = 65536
+>
+> usually prohibits it for good reason.
+
+Ack.
+
+> > This has to do more with the ABI I had for pkvm and shared memory
+> > implementations, in which you don't need to specify the userspace
+> > address for memory in a guestmem memslot. The issue is there is no
+> > obvious address to map it to. This would be the case in kvm:arm64 for
+> > tracking paravirtualized time, which the userspace doesn't necessarily
+> > need to interact with, but kvm does.
+>
+> So I understand correctly: userspace wouldn't have to mmap it because it
+> is not interested in accessing it, but there is nothing speaking against
+> mmaping it, at least in the first shot.
+
+That's right.
+
+> I assume it would not be a private memslot (so far, my understanding is
+> that internal memslots never have a guest_memfd attached).
+> kvm_gmem_create() is only called via KVM_CREATE_GUEST_MEMFD, to be set
+> on user-created memslots.
+
+Right, it wouldn't be a private memslot, but a user created one.
+
+> >
+> > That said, we could always have a userspace address dedicated to
+> > mapping shared locations, and use that address when the necessity
+> > arises. Or we could always require that memslots have a userspace
+> > address, even if not used. I don't really have a strong preference.
+>
+> So, the simpler version where user space would simply mmap guest_memfd
+> to provide the address via userspace_addr would at least work for the
+> use case of paravirtualized time?
+>
+> It would get rid of the immediate need for this patch and patch #4 to
+> get it flying.
+
+I agree now.
+
+>
+> One interesting question is: when would you want shared memory in
+> guest_memfd and *not* provide it as part of the same memslot.
+>
+
+My original thinking wasn't that we wouldn't _want_ to, rather that we
+don't _need_ to. I mistakenly thought that it would simplify things,
+but, especially after this discussion, I now realize that it makes
+things more complicated instead.
+
+> One nice thing about the mmap might be that access go via user-space
+> page tables: E.g., __kvm_read_guest_page can just access the memory
+> without requiring the folio lock and an additional temporary folio
+> reference on every access -- it's handled implicitly via the mapcount.
+>
+> (of course, to map the page we still need that once on the fault path)
+
+Ack.
+
+Thanks,
+/fuad
+
+
+> --
+> Cheers,
+>
+> David / dhildenb
+>
 
