@@ -1,117 +1,133 @@
-Return-Path: <linux-arm-msm+bounces-45882-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-45883-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 35771A19C0F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jan 2025 02:03:48 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2C775A19D1F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jan 2025 04:08:07 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 202231882806
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jan 2025 01:03:52 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0A4453AB63A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jan 2025 03:07:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 29CCC9461;
-	Thu, 23 Jan 2025 01:03:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 291E935280;
+	Thu, 23 Jan 2025 03:07:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="cEI9bIe9"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Voku3886"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD39A1CA84;
-	Thu, 23 Jan 2025 01:03:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAA43136E21;
+	Thu, 23 Jan 2025 03:07:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737594224; cv=none; b=tW5CTik7PtTcyn2ID3A04Nv5yx+nKLRLPCCVrxkZgLUd4VK8r8Z7ZOwa48EqywuqJiLaLErwIofdgxz/hAAwtUCoRUz4zi/0jwOt1K/kfUOrDUolIsR++1YKfbKd5p3VFQ/0orxqMKZGM/u3Bk0jIC/4qvUiL6Yy0nCdvl9avuM=
+	t=1737601668; cv=none; b=TpHLHRsTwDicG17sSK3dLL+s4yQA67BXMCPcT9wSOij6CZ5W19d+BjcuJvXFpXiYY3gqoVMVUWMnD+D69I0W76xgGwa8JlKjMH4f+VGo7HuyJMM58RKs0IyxWmNfb2sMsTA5D8a9/IeNkcv4O73Blzx3dXGyO6ZxVe3/olNfuDE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737594224; c=relaxed/simple;
-	bh=/XaE8KE9p6VDxTXiaM9r2Xwxc/AeMl3s9+fePVqKZs0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=i7Z0t/WeTaHH3+EWs5ThmIcAVfYM2H7OLgqkfgn493BFAR8/LE5S5fjGoevf5Wq/75MoDGqCFav1qKqpMkxkQ5m/o2hCHV0BifXy4PlNrBd4gSkwQ2jDeeVpfNp8SrI20MvJ6mxtqJ7Fn/cgMLPIUhdG+qGUkjKiQdJ58OrtHFQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=cEI9bIe9; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50MIrYRd025443;
-	Thu, 23 Jan 2025 01:03:33 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	l7V1RU5bTxHZ8DphHD0rJ/HhLwrtYbTZ+H9UyEUFKl8=; b=cEI9bIe9pDJLWk0U
-	zWc189l/Ewpp3XzkoljtfZKQ6Ttl4Uf9utyAjYryWPK6mMmRg9bRAibFzCJtGRbq
-	s+5EMeGA4kyAf6kh/E1uzlpBpHzTH05TrghYijTEK3OtRiUvYmycM5zd/RmQX7eR
-	Z8Kqfm9Lf8taMTBwoMicVkMUKqEkEXpYWPQw6SwdvUxg1lGtVurtD+S2EMg2yHcx
-	hDZQZy5dJE30QuPn3z1oW9YGns4EM6S10LNBbt0ZnVtf/V1+3UokiDJ5ZcXs7hzL
-	UAnXEkatoNsisl11wPNQ+NZ2AtIV7FUdjuNeFvW77jUMl8afq/xJvMRL6TCecBKN
-	JMl/NA==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44b6bsgmk1-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 23 Jan 2025 01:03:33 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 50N13X0k007108
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 23 Jan 2025 01:03:33 GMT
-Received: from [10.110.95.241] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 22 Jan
- 2025 17:03:32 -0800
-Message-ID: <e9435ad3-45d6-48bb-ade5-6482fe2d0bf2@quicinc.com>
-Date: Wed, 22 Jan 2025 17:03:32 -0800
+	s=arc-20240116; t=1737601668; c=relaxed/simple;
+	bh=rgtIFMiDIGqDWDGfRmYETONKbMpImQPUu0l1rbUiXXA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=t/TUcEQu4OAOycjhYJyzt4igczlUARX88f8JoYgR6yy2VEse84y4szzPYjfiuGv5+cD5vdjUzOmTuAKrgrz6sAcog9Dql8tDBrc/TkVdPH669mCXAaRZuygjikPtMSJuT46AU+4ss9H4sbFWngCxlNBK4zs2+zDcFvdEM1a9wlM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Voku3886; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15589C4CED2;
+	Thu, 23 Jan 2025 03:07:45 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1737601667;
+	bh=rgtIFMiDIGqDWDGfRmYETONKbMpImQPUu0l1rbUiXXA=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=Voku3886LdDgNvBgjrXcs+wowXM05eUmbfczA5ah9Kl42LgXhz1y2KcqlSzMujK3y
+	 hr1KJdWu0lDnTyTpntR/iHFvqyUGMV+kpnZFXaatouOrY+CofI099tuFkie8rSdyJw
+	 uZok8QaUUXPqf2Rb9pVdIhOxhdZcYaE7sV8MT6Uei1MXTdE2Efo7jSfLEZ1wxaq0hw
+	 X5MW7VGChFYP98hTTxDBjCRe+Clj4Xyr8gzMQoYCImS/85Xrpf/4DVqH1IYuAAnr08
+	 7yY/sbHjoRzERxryrj24kWYzUwkGIXQRw4JhBEixc3jVWH42Y70uk0SHwh790DXh9t
+	 vOxQ/VQC2EzoQ==
+Date: Wed, 22 Jan 2025 21:07:43 -0600
+From: Bjorn Andersson <andersson@kernel.org>
+To: Rob Herring <robh@kernel.org>
+Cc: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>, 
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+	Conor Dooley <conor+dt@kernel.org>, Felipe Balbi <balbi@kernel.org>, 
+	Wesley Cheng <quic_wcheng@quicinc.com>, Saravana Kannan <saravanak@google.com>, 
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>, Philipp Zabel <p.zabel@pengutronix.de>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Frank Li <Frank.li@nxp.com>, linux-arm-msm@vger.kernel.org, 
+	linux-usb@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3 00/12] usb: dwc3: qcom: Flatten dwc3 structure
+Message-ID: <3kuydb3b3ky4gczh5dyjjdcka2xlzgcv3ged4d432fgrprx7hr@byi7eg5fdvop>
+References: <20250113-dwc3-refactor-v3-0-d1722075df7b@oss.qualcomm.com>
+ <20250114174452.GB1414434-robh@kernel.org>
+ <srhxu3r4sxy5ntx53nicf7l43sdjpiwavzd2qsgq2ovquzvt3u@cskcthmqznex>
+ <CAL_Jsq+4qzfy3kY+8LwPvGs4FkFKoregTAYu4-buJQZHkqJwyA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 15/35] drm/msm/dpu: get rid of DPU_DATA_HCTL_EN
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark
-	<robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Marijn Suijten
-	<marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, Simona
- Vetter <simona@ffwll.ch>,
-        Vinod Koul <vkoul@kernel.org>, Konrad Dybcio
-	<konradybcio@kernel.org>
-CC: <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>
-References: <20241214-dpu-drop-features-v1-0-988f0662cb7e@linaro.org>
- <20241214-dpu-drop-features-v1-15-988f0662cb7e@linaro.org>
-Content-Language: en-US
-From: Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <20241214-dpu-drop-features-v1-15-988f0662cb7e@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: saOot5qwqnZ01Vki0dy2KvlWCw90Y78B
-X-Proofpoint-GUID: saOot5qwqnZ01Vki0dy2KvlWCw90Y78B
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-01-22_11,2025-01-22_02,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 clxscore=1015
- bulkscore=0 phishscore=0 adultscore=0 spamscore=0 priorityscore=1501
- suspectscore=0 impostorscore=0 malwarescore=0 lowpriorityscore=0
- mlxlogscore=872 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2501230006
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAL_Jsq+4qzfy3kY+8LwPvGs4FkFKoregTAYu4-buJQZHkqJwyA@mail.gmail.com>
 
-
-
-On 12/13/2024 2:14 PM, Dmitry Baryshkov wrote:
-> Continue migration to the MDSS-revision based checks and replace
-> DPU_DATA_HCTL_EN feature bit with the core_major_ver >= 5 check.
+On Wed, Jan 15, 2025 at 12:51:42PM -0600, Rob Herring wrote:
+> On Tue, Jan 14, 2025 at 5:04 PM Bjorn Andersson <andersson@kernel.org> wrote:
+> >
+> > On Tue, Jan 14, 2025 at 11:44:52AM -0600, Rob Herring wrote:
+> > > On Mon, Jan 13, 2025 at 09:11:33PM -0800, Bjorn Andersson wrote:
+> > > > The USB IP-block found in most Qualcomm platforms is modelled in the
+> > > > Linux kernel as 3 different independent device drivers, but as shown by
+> > > > the already existing layering violations in the Qualcomm glue driver
+> > > > they can not be operated independently.
+> > > >
+> > > > With the current implementation, the glue driver registers the core and
+> > > > has no way to know when this is done. As a result, e.g. the suspend
+> > > > callbacks needs to guard against NULL pointer dereferences when trying
+> > > > to peek into the struct dwc3 found in the drvdata of the child.
+> > > >
+> > > > Missing from the upstream Qualcomm USB support is proper handling of
+> > > > role switching, in which the glue needs to be notified upon DRD mode
+> > > > changes. Several attempts has been made through the years to register
+> > > > callbacks etc, but they always fall short when it comes to handling of
+> > > > the core's probe deferral on resources etc.
+> > > >
+> > > > Furhtermore, the DeviceTree binding is a direct representation of the
+> > > > Linux driver model, and doesn't necessarily describe "the USB IP-block".
+> > > >
+> > > > This series therefor attempts to flatten the driver split, and operate
+> > > > the glue and core out of the same platform_device instance. And in order
+> > > > to do this, the DeviceTree representation of the IP block is flattened.
+> > > >
+> > > > To avoid littering the dwc3-qcom driver with the migration code - which
+> > > > we should be able to drop again in a LTS or two - this is now placed in
+> > > > drivers/of/overlays.
+> > > >
+> > > > A patch to convert a single platform - sc8280xp - is included in the
+> > > > series. The broader conversion will be submitted in a follow up series.
+> > >
+> > > Is it not possible to use the same overlays also fixup the .dts files at
+> > > build time?
+> > >
+> >
+> > I presume so. What would the benefit of that be, over fixing up the
+> > source asap?
 > 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c | 3 +--
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h | 3 ---
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c    | 2 +-
->   3 files changed, 2 insertions(+), 6 deletions(-)
+> The overlays would live with all the other dts files (I think kbuild
+> can add built-in dtbs from arch/*/boot/dts/). We can test at build
+> time they actually apply, and ensure the new dtb matches what the
+> fixup overlay creates.
 > 
 
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+That does sounds tempting, in particular since it sounds like it would
+provide  us with dt-validation of the end result.
+
+But, the build-time overlaid dtb files wouldn't be complete, as I
+programmatically transition some of the properties - to "fix" that I'd
+have to provide an overlay per board.
+
+Second, it was my intention to transition all the boards to the new
+binding as soon as possible, to avoid adding more overlays when new
+boards are added. So any support-system we build up for this, would be
+immediately obsoleted.
+
+Regards,
+Bjorn
 
