@@ -1,133 +1,123 @@
-Return-Path: <linux-arm-msm+bounces-45912-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-45913-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1FF9DA19FD8
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jan 2025 09:24:57 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 43145A19FEA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jan 2025 09:27:58 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id C8C2E1883E3D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jan 2025 08:24:41 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 11DF43A0847
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jan 2025 08:27:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4E2A620C022;
-	Thu, 23 Jan 2025 08:23:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 732E620C02E;
+	Thu, 23 Jan 2025 08:27:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="mVh7Ask+"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="S4HSz4dd"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from bali.collaboradmins.com (bali.collaboradmins.com [148.251.105.195])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 406E120C016;
-	Thu, 23 Jan 2025 08:23:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.251.105.195
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FF5E320B;
+	Thu, 23 Jan 2025 08:27:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737620634; cv=none; b=tjTt1GRzPWWkqAVUpDm3pG6bajIXUgQSa6yQ7MjLaB20Z4wo6L391hRIK2B8I0zg+xnUg0Ae19G4i5jO+p8Ae0jdTiGWiB63dGGUS3JymQXPbTs3mkmAqXDr3870wpkJTWPdI+g+VmEEOX37FjmLgFu2wGj/4fmO/O0eZRk5/qM=
+	t=1737620873; cv=none; b=R7zP7tG0FyqpxQ2p32hhA3/xA0szYjEY8LnbWxlSq92Xf+VYM9u0tbbyGKrSmitEACgSIiBI1SK3BbAP7cQy2kkGtvIAR6hDU3OsaMU3C6azVt2+C4sSAJLxeJB8irO99qQ2gWK6bvqIJM1ge0/3kvd0rfO3wcuRbc55DwHeT4k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737620634; c=relaxed/simple;
-	bh=iGapPRqeW9iytt4zWZgelyigNEmJBdm6omiCHg2ZP1A=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=WnoS3B9s6V0PeDXfRlS4Uk7NeUrXA1vwxPt49ijxcmYiVGRclfLbGtm5odAm9Qcg5pg3svThmXC/ADlQstJ+/pdagQAmvCAUQL5Oyk4v2bWbsfuhkyanudq3BhjyhsNwySlzCvf0Jh14yTOsxVClD3r9FTKCTDRhJ1f1qq5Kz/A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=mVh7Ask+; arc=none smtp.client-ip=148.251.105.195
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-	s=mail; t=1737620630;
-	bh=iGapPRqeW9iytt4zWZgelyigNEmJBdm6omiCHg2ZP1A=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=mVh7Ask+1N4gj26x77vJDnBb/CRcjQQST7WjyiL9lpQae4ceo73pdXGTPT5F6A/ak
-	 SARsaQtedT/vNbJaKkHKyQgWZgLQFSMiaN4ev+VMP9soz813yc8snAY3XWIUuRGUAD
-	 /CWPoexi7i0Ek3xUO2oWWsAMfpGL647bwniAYUzsLJpSn/boxHJkX8t3+alT6zkF6x
-	 h5Px+Tmzy3B0ykrvcefV8osisg7jmvfkNVzLcUTji3sHINES4+cI1ibgiI8biQv6hk
-	 RasyaG15bB8u/tgNdQ6ozkl1/CkTk1ZE4xMYD8kwBvyfJQ2ajQcvSAPJoVDHHFkgPw
-	 8HvLt4fITM3vA==
-Received: from localhost (unknown [IPv6:2a01:e0a:2c:6930:5cf4:84a1:2763:fe0d])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: bbrezillon)
-	by bali.collaboradmins.com (Postfix) with ESMTPSA id 506C817E0E57;
-	Thu, 23 Jan 2025 09:23:48 +0100 (CET)
-Date: Thu, 23 Jan 2025 09:23:41 +0100
-From: Boris Brezillon <boris.brezillon@collabora.com>
-To: Philipp Stanner <phasta@mailbox.org>
-Cc: phasta@kernel.org, Alex Deucher <alexander.deucher@amd.com>, Christian
- =?UTF-8?B?S8O2bmln?= <christian.koenig@amd.com>, Xinhui Pan
- <Xinhui.Pan@amd.com>, David Airlie <airlied@gmail.com>, Simona Vetter
- <simona@ffwll.ch>, Lucas Stach <l.stach@pengutronix.de>, Russell King
- <linux+etnaviv@armlinux.org.uk>, Christian Gmeiner
- <christian.gmeiner@gmail.com>, Frank Binns <frank.binns@imgtec.com>, Matt
- Coster <matt.coster@imgtec.com>, Maarten Lankhorst
- <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>,
- Thomas Zimmermann <tzimmermann@suse.de>, Qiang Yu <yuq825@gmail.com>, Rob
- Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, Konrad Dybcio
- <konradybcio@kernel.org>, Abhinav Kumar <quic_abhinavk@quicinc.com>, Dmitry
- Baryshkov <dmitry.baryshkov@linaro.org>, Marijn Suijten
- <marijn.suijten@somainline.org>, Karol Herbst <kherbst@redhat.com>, Lyude
- Paul <lyude@redhat.com>, Danilo Krummrich <dakr@kernel.org>, Rob Herring
- <robh@kernel.org>, Steven Price <steven.price@arm.com>, Liviu Dudau
- <liviu.dudau@arm.com>, Luben Tuikov <ltuikov89@gmail.com>, Matthew Brost
- <matthew.brost@intel.com>, Melissa Wen <mwen@igalia.com>, =?UTF-8?B?TWE=?=
- =?UTF-8?B?w61yYQ==?= Canal <mcanal@igalia.com>, Lucas De Marchi
- <lucas.demarchi@intel.com>, Thomas =?UTF-8?B?SGVsbHN0csO2bQ==?=
- <thomas.hellstrom@linux.intel.com>, Rodrigo Vivi <rodrigo.vivi@intel.com>,
- Sunil Khatri <sunil.khatri@amd.com>, Lijo Lazar <lijo.lazar@amd.com>, Mario
- Limonciello <mario.limonciello@amd.com>, Ma Jun <Jun.Ma2@amd.com>, Yunxiang
- Li <Yunxiang.Li@amd.com>, amd-gfx@lists.freedesktop.org,
- dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
- etnaviv@lists.freedesktop.org, lima@lists.freedesktop.org,
- linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
- nouveau@lists.freedesktop.org, intel-xe@lists.freedesktop.org
-Subject: Re: [PATCH] drm/sched: Use struct for drm_sched_init() params
-Message-ID: <20250123092341.579f7b72@collabora.com>
-In-Reply-To: <af5aac800f7d2153aa3c315584f70c55378c1b2b.camel@mailbox.org>
-References: <20250122140818.45172-3-phasta@kernel.org>
-	<20250122181227.491b7881@collabora.com>
-	<af5aac800f7d2153aa3c315584f70c55378c1b2b.camel@mailbox.org>
-Organization: Collabora
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
+	s=arc-20240116; t=1737620873; c=relaxed/simple;
+	bh=vofYtrvUAsVCwLeaIG0II6eDROdU24GRLHxAawTP16s=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=SsUUl/sevgZgcSS2zU1/T+z+k8HojIwpmlhAe6LvzCidfghVO9FmJowuEyaSWxaKekoXwnVHT9BCCvGTZItYpD6sIv4WB09gQljr463a6/FqMR28XlAAXpPjqrPJJn9zMmk4X+KUOsITzr+HFura4mojdYl+7DSRPTgrp1P0crQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=S4HSz4dd; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20DB0C4CED3;
+	Thu, 23 Jan 2025 08:27:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1737620872;
+	bh=vofYtrvUAsVCwLeaIG0II6eDROdU24GRLHxAawTP16s=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=S4HSz4ddizmKXlDfUpbexL5lqDvisjBwughjiTIiqpetYPrA0KTYHafRPjopFgPeq
+	 Dnrt9LMSzVtO5AGqPoJK61sy3jGz7f9HXGBTIhqldeJi0CWcBBqSsWHtksjOk0Xn+0
+	 25yghJlZrwZwtM5KzCjVaoiWTHpb8sgZdMEG1Dly2Ce3Ff7+dRWZV3v94hClNKnHUH
+	 W80Ow9VoChYP3gCRnpynbeK6rHMXNDks0t1stCSJAUHVW7P+zBgagGM4UTUXqEcxCc
+	 bcyvyzRSo93wrzlC+5/8N4+JF5GOEjea1o7f3jp9A8Ul0k0FWjL5QLTL38GjHyqrlG
+	 QwUkQlo4449yw==
+Date: Thu, 23 Jan 2025 09:27:49 +0100
+From: Krzysztof Kozlowski <krzk@kernel.org>
+To: Varadarajan Narayanan <quic_varada@quicinc.com>
+Cc: bhelgaas@google.com, lpieralisi@kernel.org, kw@linux.com, 
+	manivannan.sadhasivam@linaro.org, robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, 
+	vkoul@kernel.org, kishon@kernel.org, andersson@kernel.org, konradybcio@kernel.org, 
+	p.zabel@pengutronix.de, dmitry.baryshkov@linaro.org, quic_nsekar@quicinc.com, 
+	linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org
+Subject: Re: [PATCH v7 5/7] dt-bindings: PCI: qcom: Document the IPQ5332 PCIe
+ controller
+Message-ID: <20250123-stereotyped-chupacabra-of-mathematics-10d9ce@krzk-bin>
+References: <20250122063411.3503097-1-quic_varada@quicinc.com>
+ <20250122063411.3503097-6-quic_varada@quicinc.com>
+ <20250123-red-unicorn-of-piety-3c7de5@krzk-bin>
+ <Z5H4UPhRjKhbbP9/@hu-varada-blr.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <Z5H4UPhRjKhbbP9/@hu-varada-blr.qualcomm.com>
 
-On Thu, 23 Jan 2025 08:33:01 +0100
-Philipp Stanner <phasta@mailbox.org> wrote:
+On Thu, Jan 23, 2025 at 01:35:36PM +0530, Varadarajan Narayanan wrote:
+> On Thu, Jan 23, 2025 at 08:58:29AM +0100, Krzysztof Kozlowski wrote:
+> > On Wed, Jan 22, 2025 at 12:04:09PM +0530, Varadarajan Narayanan wrote:
+> > > Document the PCIe controller on IPQ5332 platform. IPQ5332 will
+> > > use IPQ9574 as the fall back compatible.
+> > >
+> > > Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
+> > > ---
+> > > v7: Moved ipq9574 related changes to a separate patch
+> > >     Add 'global' interrupt
+> > >
+> > > v6: Commit message update only. Add info regarding the moving of
+> > >     ipq9574 from 5 "reg" definition to 5 or 6 reg definition.
+> > >
+> > > v5: Re-arrange 5332 and 9574 compatibles to handle fallback usage in dts
+> > >
+> > > v4: * v3 reused ipq9574 bindings for ipq5332. Instead add one for ipq5332
+> > >     * DTS uses ipq9574 compatible as fallback. Hence move ipq9574 to be able
+> > >       to use the 'reg' section for both ipq5332 and ipq9574. Else, dtbs_check
+> > >       and dt_binding_check flag errors.
+> > > ---
+> > >  .../devicetree/bindings/pci/qcom,pcie.yaml          | 13 +++++++++++--
+> > >  1 file changed, 11 insertions(+), 2 deletions(-)
+> > >
+> > > diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
+> > > index 413c6b76c26c..ead97286fd41 100644
+> > > --- a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
+> > > +++ b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
+> > > @@ -34,6 +34,10 @@ properties:
+> > >        - items:
+> > >            - const: qcom,pcie-msm8998
+> > >            - const: qcom,pcie-msm8996
+> > > +      - items:
+> > > +          - enum:
+> > > +              - qcom,pcie-ipq5332
+> > > +          - const: qcom,pcie-ipq9574
+> >
+> > Repeated many times on reviews to qcom: don't add to the end of the
+> > lists. In case of multiple items, these are ordered by fallback, so this
+> > goes next to other ipq entry... wait, that's already qcom,pcie-ipq9574,
+> > so why are you duplicating?
+> >
+> > On what tree are you working?
+> 
+> Looks like ipq5424 changes got merged between the time I cloned
+> linux-next, tested and posted the patch. Will fix this and post
+> a new one.
 
-> On Wed, 2025-01-22 at 18:16 +0100, Boris Brezillon wrote:
-> > On Wed, 22 Jan 2025 15:08:20 +0100
-> > Philipp Stanner <phasta@kernel.org> wrote:
-> >  =20
-> > > =C2=A0int drm_sched_init(struct drm_gpu_scheduler *sched,
-> > > - =C2=A0=C2=A0 const struct drm_sched_backend_ops *ops,
-> > > - =C2=A0=C2=A0 struct workqueue_struct *submit_wq,
-> > > - =C2=A0=C2=A0 u32 num_rqs, u32 credit_limit, unsigned int hang_limit,
-> > > - =C2=A0=C2=A0 long timeout, struct workqueue_struct *timeout_wq,
-> > > - =C2=A0=C2=A0 atomic_t *score, const char *name, struct device *dev);
-> > > + const struct drm_sched_init_params *params); =20
-> >=20
-> >=20
-> > Another nit: indenting is messed up here. =20
->=20
-> That was done on purpose.
->=20
-> I never got why so many like to intend to the opening brackets,
-> because:
->    1. The kernel coding guide line does not demand it
->    2. It mixes tabs with spaces
->    3. It doesn't create an identical level of intendation
->    4. It wastes huge amount of space and does not solve the problem of
->       long names, but might even make it worse:
->       https://elixir.bootlin.com/linux/v6.13-
->       rc3/source/drivers/gpu/drm/scheduler/sched_main.c#L1296
+Yeah, that would explain. Please grow the enum instead.
 
-It's mostly a matter of keeping things consistent in a code base. I
-don't really have strong opinions when it comes to coding style, but I
-always try to follow the rules in place in the file/subsystem/project
-I'm contributing to, and clearly the pattern in this file is to align
-the extra lines of arguments on the first argument...
+Best regards,
+Krzysztof
+
 
