@@ -1,122 +1,228 @@
-Return-Path: <linux-arm-msm+bounces-46005-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46006-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 20293A1A94D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jan 2025 19:03:01 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 44BEDA1A96C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jan 2025 19:09:51 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id CDF963A83AD
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jan 2025 18:02:53 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id C8D60188BDA9
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jan 2025 18:09:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DA35215625A;
-	Thu, 23 Jan 2025 18:02:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 593FB153835;
+	Thu, 23 Jan 2025 18:09:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=acm.org header.i=@acm.org header.b="PJVt9p5Z"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kW6mm4tu"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from 008.lax.mailroute.net (008.lax.mailroute.net [199.89.1.11])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f47.google.com (mail-pj1-f47.google.com [209.85.216.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38B9E154C07;
-	Thu, 23 Jan 2025 18:02:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=199.89.1.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B26FC5FEE6
+	for <linux-arm-msm@vger.kernel.org>; Thu, 23 Jan 2025 18:09:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737655373; cv=none; b=Jkzd5LTyfmhqrj4fJjgf4X450TyzVn123Av0rZWVxSbEjxFOa0YSDhCW1GqHqd5UfDj7b/eOG+Q5IakOTs/GzJXEb2rW6WxnwZWWGWxDkitzYsZVZuTxp7rocbY3HOxmRlIsS9clHwau3aGxfXUKfwGrG2bBfdOBuuKyTJN0J5s=
+	t=1737655787; cv=none; b=OswA6mhin1kWSf50XI7UxvHMxiBVcKbtsLU+dTEZwkrmglw6KBLbkRSFkdlXKw6C5hsOXn8+Soscmq82IbYDTu0OlypPMvvQa2MzouJaDDeXNsQDyWucsVSjyv2b0wduwBlZCuPdGbfkPUMZRkPwGQkJdlSi7uW1QB5aBQWtONg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737655373; c=relaxed/simple;
-	bh=IQ23k7DgELJHPisXJDjODcjTmt8fE5b1E3B+SAErn54=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=QP2b4lTOyzGWPUHBgtyrTTcvN8X64ESz+YkKLFzU4im2IK2Qpwu2IRiGsmDY6HkHOq0+cYIby6ENcLx38UVMn2H38D48C8JYcuYMNT7d9+8UTEokNsgRdwJjniw75feLzIYe7bMbPevPvNuFvysYvr4fgJpa7VH05AkJuR+QV5Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=acm.org; spf=pass smtp.mailfrom=acm.org; dkim=pass (2048-bit key) header.d=acm.org header.i=@acm.org header.b=PJVt9p5Z; arc=none smtp.client-ip=199.89.1.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=acm.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=acm.org
-Received: from localhost (localhost [127.0.0.1])
-	by 008.lax.mailroute.net (Postfix) with ESMTP id 4Yf81R3QKMz6CmQtD;
-	Thu, 23 Jan 2025 18:02:51 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=acm.org; h=
-	content-transfer-encoding:content-type:content-type:in-reply-to
-	:from:from:content-language:references:subject:subject
-	:user-agent:mime-version:date:date:message-id:received:received;
-	 s=mr01; t=1737655362; x=1740247363; bh=WIJVbTEo0h5RhJGwRqPjf0Bs
-	0I+xKtRiGutiyLdgKfA=; b=PJVt9p5Z0ol5VAp/vtzqbnyfHrTuC+GFspSIboLY
-	CKi6TbkDiQ+4S/MKPd7G5Xow+Sqk5OmLmROf76Z78e/6k9MmCkblR4gQgrw0+rP5
-	6S2hR/YBX7PlQm/ajKp4I8P3RIMVwLq3yJTQ4W3IxsSmmn7Zjup04lsqxGLMdt+Y
-	CGVH++zhFdHud5UWmYgz+D+qovGyBXxp/wPmIcbWsFHS1uGTJB6L0Jkd4/FtVr+2
-	hy4UL3Ph6HW8j6YwA2s3ectd1oe1SMV1NDutGGktxPkyznTVZ4fEhFf4Qw/lLRk3
-	talt2XGQ8cjN5bz5y/m+CK6cKrQPiH5UuzEUVzJkXpOHVw==
-X-Virus-Scanned: by MailRoute
-Received: from 008.lax.mailroute.net ([127.0.0.1])
- by localhost (008.lax [127.0.0.1]) (mroute_mailscanner, port 10029) with LMTP
- id 6RkP4OS1-S08; Thu, 23 Jan 2025 18:02:42 +0000 (UTC)
-Received: from [192.168.50.14] (c-73-231-117-72.hsd1.ca.comcast.net [73.231.117.72])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: bvanassche@acm.org)
-	by 008.lax.mailroute.net (Postfix) with ESMTPSA id 4Yf8154CYZz6CmQyM;
-	Thu, 23 Jan 2025 18:02:32 +0000 (UTC)
-Message-ID: <9337b005-f468-471c-97e1-f4059ed4283d@acm.org>
-Date: Thu, 23 Jan 2025 10:02:32 -0800
+	s=arc-20240116; t=1737655787; c=relaxed/simple;
+	bh=eNwgn6ZLmHc8pxNg3e34+QuWfh+bej1rf0MzQIEo6U0=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=b8R62f2m3KHQ/2tSRmuu8s0m9eHoTpajxlsFgSwKjzNytlMUjK7873RFBRoU/fNYKXL0sDHHGLofZMe8Jg1zG6tOhY+pfowP/Y10yh4waqk2DZPqYiHOasS5NCp4r6zIaLB+MtXpA/HqGiwp2NAa3fEn9dC3be6yGZ3Ou6vVNIY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kW6mm4tu; arc=none smtp.client-ip=209.85.216.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pj1-f47.google.com with SMTP id 98e67ed59e1d1-2f440e152fdso289929a91.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Jan 2025 10:09:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1737655785; x=1738260585; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=nyKfEZgI2q04ubHRnQeM6mRxNH8f7N8tmMhgcpNLYwE=;
+        b=kW6mm4tut1hPw+9D26LkNzlyBLjjmNiLhv/0XJyay/gVrq6ofi0OHkIbjPqWWL8Djr
+         JjPyHjXT1L9lXnrBRXyg8pxBFyq4+uoAoVv0DYkRoteeNeaxyeuRNlLtWqtvkVg47T8x
+         WwTn05z1sBhPBcatKgKzrebXY83D+mi5BfaLwNZ1feNgUcv8zS6VFjwLrfUwLpcQ7VPc
+         Hur9jeKr1bRiyM4zSPflu5OW+Q2g2oh4SzV19jpLQtLZJrUGOteWPjHrBMLCJuiJd7M5
+         i3naSZ/zdpgCQwZvsYLvAsOUEefBT7EbcrjmSHdRLrlU0mrNPcrsN5fc3cc9EvpkKEk0
+         gKow==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1737655785; x=1738260585;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=nyKfEZgI2q04ubHRnQeM6mRxNH8f7N8tmMhgcpNLYwE=;
+        b=oLsqHmmkfcRsjloCNjBU0dahcb8jU7Dktxtrx0PawY6C6ksiUj8xmoGOIo0Z7t1wwy
+         NUCmS3yAMSH0Z75yZoqQ/7XleGRHj2jbN146wSbNFgNFCMLgt7ROJnbWLvNyoGneZm48
+         nIf12giQRKppNwxOU4YFVNIo6eKJAJck81YSO8g2AEjxQXtzFmESpCOnB0mKBjAYIfHY
+         pxdsqRXEtnLQW9BKDCH35SuYbiJRtOCBMaWk/M/zS72P33CAExcQZqD8qDtn1s25V6fC
+         67+Xj/S53tV1Sk0IAv6trWHo46/7JETMq+CCa8UJ4ezLXdrqUE4eJaEhGsDj4X3Vogyg
+         +wWw==
+X-Forwarded-Encrypted: i=1; AJvYcCUdC1fkZfKa6FDhY2HKFDMP6Yn/A+rWOjcsKvSo/c1jW+FVQNPtlPmjhGAzu3zYH+UK/0VJw2TLO7ng0suA@vger.kernel.org
+X-Gm-Message-State: AOJu0YyhsrnqGDKQMxZmb8WLDAUsYVgEivtQxiDl5w40RmW/s5YXTnoI
+	sgfE/f5QY5juEVyT50QCGom+iP/chaMM/PUupvhcz9DP2SxrdqiwHn0TERoOSFGfdf0nENq0Txk
+	GJpkZurxSw6WyhFqxQzsIuUmIU/g=
+X-Gm-Gg: ASbGncs1uAb8Jo6g6oBtfuDWtN9Q1CLGrvtWcdIWvV0ORQ9YLJLTClM9+hJXkkApitK
+	kbd/7seN9FEdjJXMq0AVvnuolewdsjKVQHVhIXzX1BKbP8IrYP8V5jLKBVGaseg==
+X-Google-Smtp-Source: AGHT+IEEH3PHsFVxMvB++p2z2cLrzhfGijMDaM+Tji/bw29FKBGdgLy//H/LRds0MsXyeSdRL2jN0EV6I288KPRLGZ0=
+X-Received: by 2002:a05:6a00:850:b0:725:d9b6:3938 with SMTP id
+ d2e1a72fcca58-72dafb71a44mr14883468b3a.3.1737655784773; Thu, 23 Jan 2025
+ 10:09:44 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 5/8] scsi: ufs: core: Enable multi-level gear scaling
-To: Ziqi Chen <quic_ziqichen@quicinc.com>, quic_cang@quicinc.com,
- mani@kernel.org, beanhuo@micron.com, avri.altman@wdc.com,
- junwoo80.lee@samsung.com, martin.petersen@oracle.com,
- quic_nguyenb@quicinc.com, quic_nitirawa@quicinc.com,
- quic_rampraka@quicinc.com
-Cc: linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
- Alim Akhtar <alim.akhtar@samsung.com>,
- "James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>,
- Peter Wang <peter.wang@mediatek.com>,
- Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
- Andrew Halaney <ahalaney@redhat.com>,
- Maramaina Naresh <quic_mnaresh@quicinc.com>,
- open list <linux-kernel@vger.kernel.org>
-References: <20250122100214.489749-1-quic_ziqichen@quicinc.com>
- <20250122100214.489749-6-quic_ziqichen@quicinc.com>
- <da2df1b2-5d32-4fcf-8298-6d045b4f7d42@acm.org>
- <bd7f88a8-8e59-464b-ac2d-3c75739076ae@quicinc.com>
-Content-Language: en-US
-From: Bart Van Assche <bvanassche@acm.org>
-In-Reply-To: <bd7f88a8-8e59-464b-ac2d-3c75739076ae@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <20250122-msm-gpu-fault-fixes-next-v3-0-0afa00158521@gmail.com>
+ <20250122-msm-gpu-fault-fixes-next-v3-1-0afa00158521@gmail.com>
+ <Z5IjsqQ6vTdUXiGt@hu-guptap-hyd.qualcomm.com> <b593ac5e-cb29-473a-af1b-214168968679@arm.com>
+ <Z5J9wpooIH5/Ccrt@hu-guptap-hyd.qualcomm.com>
+In-Reply-To: <Z5J9wpooIH5/Ccrt@hu-guptap-hyd.qualcomm.com>
+From: Connor Abbott <cwabbott0@gmail.com>
+Date: Thu, 23 Jan 2025 13:09:33 -0500
+X-Gm-Features: AbW1kvYGAg-AyeJwPcNQQ2QOH2zEJ2YL7TOxF-zPnlJpiWV2i8GmCg2Npquk7J4
+Message-ID: <CACu1E7EUQxWxGB_OY+CifUufYZzaomn8nMYrmRvfrr5Oqx5XSw@mail.gmail.com>
+Subject: Re: [PATCH v3 1/3] iommu/arm-smmu: Fix spurious interrupts with stall-on-fault
+To: Prakash Gupta <quic_guptap@quicinc.com>
+Cc: Robin Murphy <robin.murphy@arm.com>, Rob Clark <robdclark@gmail.com>, 
+	Will Deacon <will@kernel.org>, Joerg Roedel <joro@8bytes.org>, Sean Paul <sean@poorly.run>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, iommu@lists.linux.dev, 
+	linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+	freedreno@lists.freedesktop.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 1/22/25 11:41 PM, Ziqi Chen wrote:
-> We use memcpy() here is due to memcpy() can be faster than direct 
-> assignment. We don't worry about safety because they are same struct 
-> "ufs_pa_layer_attr" so that we can ensure the accuracy of number of 
-> bytes and member type.
+On Thu, Jan 23, 2025 at 12:35=E2=80=AFPM Prakash Gupta <quic_guptap@quicinc=
+.com> wrote:
+>
+> On Thu, Jan 23, 2025 at 11:51:27AM +0000, Robin Murphy wrote:
+> > On 2025-01-23 11:10 am, Prakash Gupta wrote:
+> > > On Wed, Jan 22, 2025 at 03:00:58PM -0500, Connor Abbott wrote:
+> > > > + /*
+> > > > +  * The SMMUv2 architecture specification says that if stall-on-fa=
+ult is
+> > > > +  * enabled the correct sequence is to write to SMMU_CBn_FSR to cl=
+ear
+> > > > +  * the fault and then write to SMMU_CBn_RESUME. Clear the interru=
+pt
+> > > > +  * first before running the user's fault handler to make sure we =
+follow
+> > > > +  * this sequence. It should be ok if there is another fault in th=
+e
+> > > > +  * meantime because we have already read the fault info.
+> > > > +  */
+> > > The context would remain stalled till we write to CBn_RESUME. Which i=
+s done
+> > > in qcom_adreno_smmu_resume_translation(). For a stalled context furth=
+er
+> > > transactions are not processed and we shouldn't see further faults an=
+d
+> > > or fault inerrupts. Do you observe faults with stalled context?
+> >
+> > This aspect isn't exclusive to stalled contexts though - even for "norm=
+al"
+> > terminated faults, clearing the FSR as soon as we've sampled all the
+> > associated fault registers is no bad thing, since if a second fault doe=
+s
+> > occur while we're still reporting the first, we're then more likely to =
+get a
+> > full syndrome rather than just the FSR.MULTI bit.
+> >
+> ARM SMMUv2 spec recommends, in case of reported fault sw should first
+> correct the condition which casued the fault, I would interpret this as
+> reporting fault to client using callback, and then write CBn_FSR and
+> CBn_RESUME in this order. Even in case of reported fault where context is
+> not stalled, the first step, IMO, I see no reason why should be any
+> different.  I agree that delaying fault clearance can result in FSR.MULTI
+> being set, but clearning fault before  prevent clients to use SCTLR.HUPCF
+> on subsequent transactions while they take any debug action. The client
+> should be reported fault in the same state it occured. Please refer
+> qcom_smmu_context_fault() for this sequence.
 
-The memcpy() call we are discussing is not in the hot path so it doesn't
-have to be hyper-optimized. Making the compiler perform type checking is
-more important in this code path than micro-optimizing the code.
+It's not possible to implement it the way the spec describes because
+correcting the condition which caused the fault cannot always be done
+in the client's callback. Sometimes it has to be deferred to a handler
+not in IRQ context. However we must clear FSR (except for the SS bit)
+before leaving the fault handler because while the transaction is
+pending we want to be able to distinguish between a subsequent fault
+in another context bank (only FSR.SS will be set and we can ignore and
+return IRQ_NONE) and this context bank if they share an interrupt
+line. So, moving this up generally doesn't hurt and fixes the case
+where the client does resume the transaction inside its handler. I
+don't think there's really another way to implement this.
 
-Additionally, please do not try to be smarter than the compiler. 
-Compilers are able to convert struct assignments into a memcpy() call if
-there are good reasons to assume that the memcpy() call will be faster.
+And I have no idea why you think this prevents clients from using
+HUPCF, we already use HUPCF in drm/msm and it works fine with this
+series.
 
-Given the small size of struct ufs_pa_layer_attr (7 * 4 = 28 bytes),
-memberwise assignment probably is faster than a memcpy() call. The trunk
-version of gcc (ARM64) translates a memberwise assignment of struct 
-ufs_pa_layer_attr into the following four assembler instructions (x0 and
-x1 point to struct ufs_pa_layer_attr instances, q30 and q31 are 128 bit
-registers):
+>
+> > > > + arm_smmu_cb_write(smmu, idx, ARM_SMMU_CB_FSR, cfi.fsr);
+> > > > +
+> > > >           ret =3D report_iommu_fault(&smmu_domain->domain, NULL, cf=
+i.iova,
+> > > >                   cfi.fsynr & ARM_SMMU_CB_FSYNR0_WNR ? IOMMU_FAULT_=
+WRITE : IOMMU_FAULT_READ);
+> > > >           if (ret =3D=3D -ENOSYS && __ratelimit(&rs))
+> > > >                   arm_smmu_print_context_fault_info(smmu, idx, &cfi=
+);
+> > > > - arm_smmu_cb_write(smmu, idx, ARM_SMMU_CB_FSR, cfi.fsr);
+> > > >           return IRQ_HANDLED;
+> > > >   }
+> > > > diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu.h b/drivers/iommu/=
+arm/arm-smmu/arm-smmu.h
+> > > > index 2dbf3243b5ad2db01e17fb26c26c838942a491be..789c64ff3eb9944c8af=
+37426e005241a8288da20 100644
+> > > > --- a/drivers/iommu/arm/arm-smmu/arm-smmu.h
+> > > > +++ b/drivers/iommu/arm/arm-smmu/arm-smmu.h
+> > > > @@ -216,7 +216,6 @@ enum arm_smmu_cbar_type {
+> > > >                                            ARM_SMMU_CB_FSR_TLBLKF)
+> > > >   #define ARM_SMMU_CB_FSR_FAULT           (ARM_SMMU_CB_FSR_MULTI | =
+       \
+> > > > -                                  ARM_SMMU_CB_FSR_SS |           \
+> > > Given writing to FSR.SS doesn't clear this bit but write to CBn_RESUM=
+E
+> > > does, this seems right. This but can be taken as separate patch.
+> >
+> > This change on its own isn't really useful - all that would achieve is =
+that
+> > instead of constantly re-reporting the FSR.SS "fault", the interrupt go=
+es
+> > unhandled and the IRQ core ends up disabling it permanently. If anythin=
+g
+> > that's arguably worse, since the storm of context fault reports does at
+> > least give a fairly clear indication of what's gone wrong, rather than
+> > having to deduce the cause of an "irq n: nobody cared" message entirely=
+ by
+> > code inspection.
+> >
+> Does spec allow or do we see reported fault with just FSR.SS bit.
 
-         ldr     q30, [x1]
-         ldr     q31, [x1, 12]
-         str     q30, [x0]
-         str     q31, [x0, 12]
+Yes, the spec allows it and we do see it in practice. After this patch
+we may still see it in the case where multiple context banks share an
+interrupt and the other bank faults, but the correct action is to
+ignore it because we've disabled CFIE for this bank already. This is
+why this hunk has to be in this patch.
 
-Thanks,
-
-Bart.
-
+> If answer
+> is no then Keeping FSR_SS would be misleading. Here ARM_SMMU_CB_FSR_FAULT
+> is used to clear fault bits or check valid faults. Also validity of this
+> is not based on rest of the change.
+>
+> Thanks,
+> Prakash
+>
+> > >
+> > > >                                            ARM_SMMU_CB_FSR_UUT |   =
+       \
+> > > >                                            ARM_SMMU_CB_FSR_EF |    =
+       \
+> > > >                                            ARM_SMMU_CB_FSR_PF |    =
+       \
+> > > >
+> > > > --
+> > > > 2.47.1
+> > > >
+> >
 
