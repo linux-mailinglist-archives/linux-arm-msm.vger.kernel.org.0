@@ -1,139 +1,222 @@
-Return-Path: <linux-arm-msm+bounces-45950-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-45951-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 30AD6A1A2BF
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jan 2025 12:16:57 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2DF46A1A2C6
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jan 2025 12:18:34 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 23DD018831B1
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jan 2025 11:17:01 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7336C169402
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jan 2025 11:18:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E139820E00F;
-	Thu, 23 Jan 2025 11:16:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 684B420E01B;
+	Thu, 23 Jan 2025 11:18:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="SHqaqb1g"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="nDEzVfw0"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f46.google.com (mail-lf1-f46.google.com [209.85.167.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5714D145A16;
-	Thu, 23 Jan 2025 11:16:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5790D20DD7F
+	for <linux-arm-msm@vger.kernel.org>; Thu, 23 Jan 2025 11:18:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737631012; cv=none; b=CB2MrvvObjIu6j6DHyEyWgFUr+7oMVOqZLKpbjU3bhpyrPBBg4uTOSRfJ2vwFUpHOXQLN1a5Wt8MtSC1VsQU02LHILTfO/5SNyXTcXGogu/CzkLKtA/FGhispa2C9x83srE/kiPalA8yRt9tUL0OLmijJXf9NI23wovSWea0no4=
+	t=1737631110; cv=none; b=i9S3TyTzfd/6Am8D8dbyM0MSSWYYTRODwBLavt5YMxaA2VAO4majoiRNeB+H0mGJ7wh8PvRC32QJNepEq5UZ0OCt3VU9ZN5BgyQMTvw/LUjcekCdwYuRn+tRrziae6GwMCC/INNMBPXWIF9SAFhNyWfNOERDKZipzKnfCW+r0d4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737631012; c=relaxed/simple;
-	bh=mrukQwvTv99nXrlLk0C+HKWYnzaKoBLYPgJiCns7NLI=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=k7WahZzoevkMUmgr1oLOZF/s0yZoKJ3DUKJKw88o4szozuflu1AvuhFuZta+5zTT0kquGsPH3J4goPesUviIadQTAA/ZcUQ/siHcXdocxuZSLMn9z6doXBUodg4d+GVcWHb5+GpRtvkSLX68qBL+jtAzsHRnP9FxSkoKj2t9k7M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=SHqaqb1g; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50NA2d5w015501;
-	Thu, 23 Jan 2025 11:16:47 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:message-id
-	:mime-version:subject:to; s=qcppdkim1; bh=27HmRAv23tCc6Veb5as0+h
-	xBdx8B2mj4c9z+c3VuVaw=; b=SHqaqb1gd2jSm7+UXSvqJ/6Jso8fLwPHwcDYQO
-	i2jhjmr0E15u51h69diPksySrZtORePwq/lEFzXh1zE6TGWfUH2JVTZJOGa/BjAi
-	oLsrQ56DXAeFG3CdiqdbVl0PXWZOpWw6QV3XJtLvVdjhcIyCUVsdKfFUEBTAOblB
-	+m6vBmVYv00OIfK8pgTfIfdm6+vw+gHbS4CIts23RWz76j8mwbWrVJpaLTrt8pTb
-	IhtBEa8VMo8N69lUG7L+NFi5yBrwWrQGY01xH/aaPzPf3sj5d9IrZaq+FsFoF8xc
-	s8N8v/gATUHKRFovKYFWTX2pxvvAxfAk/tB2CkefZhrUNbNA==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44bknxg5qf-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 23 Jan 2025 11:16:47 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 50NBGkTq010370
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 23 Jan 2025 11:16:46 GMT
-Received: from hu-mmanikan-blr.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Thu, 23 Jan 2025 03:16:43 -0800
-From: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
-To: <andersson@kernel.org>, <mturquette@baylibre.com>, <sboyd@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-CC: <quic_srichara@quicinc.com>, <quic_varada@quicinc.com>
-Subject: [PATCH] clk: qcom: ipq5424: fix software and hardware flow control error of UART
-Date: Thu, 23 Jan 2025 16:46:18 +0530
-Message-ID: <20250123111618.1048461-1-quic_mmanikan@quicinc.com>
-X-Mailer: git-send-email 2.34.1
+	s=arc-20240116; t=1737631110; c=relaxed/simple;
+	bh=eBwW5zbv71K8qutX45hfPZ0zNtq+BiuyqeqEee7WwnA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Z7WlcGsnHJbL3ZgF2AvxY8KJvV7MLptwQoZknQHs5FKDoYptI7cKtCs2KODCW2EJI8gqwRwEslL+J2kpm5wGki/ktgmxETE2X6yhQak506aHBm2f+ZT8DWj1n8aq+chRn4up7bQaJb028jPGFAXI3IIj8XqaUw5O5eqb9Vz1EM4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=nDEzVfw0; arc=none smtp.client-ip=209.85.167.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f46.google.com with SMTP id 2adb3069b0e04-5401bd6ccadso865394e87.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Jan 2025 03:18:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1737631106; x=1738235906; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=UvEVwvuAYsxT5Y9x89jkQ1Jw6WguxWcG6Luy7dy5Nuc=;
+        b=nDEzVfw0jXtucQCo/qzIPFy8CvZm8072/B72wlYzU9mmtH7wOJdg2Fu6RFcZQGY9+h
+         hIX6ZhP63/vTgbB8fk8CzmMF2opkA+GxO8hyIk8V1QXn3nFATJHn1QQfR3Qj6Bn6YUb3
+         59Z0he9Lpb3LeAfzKzmGogi3hOaZzt6ZEDvVhE7ua81WQritXW8Vcufb81XgjXMbFQaX
+         7Km6Coo5huLkRYazfND2m4af84PthZHo41lSGcQ4garTbCt/UnNxJmqe6jKbmT7ToWvp
+         aHGXbs6bNyCfBpjqgbtOGWyf26cAi+riwhWzYG6MkWHqZjNlrPyTZ2oHAyCjqtmR3P2o
+         Mnxg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1737631106; x=1738235906;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=UvEVwvuAYsxT5Y9x89jkQ1Jw6WguxWcG6Luy7dy5Nuc=;
+        b=lEaV7uopO+e4rzYJOAloNaYL0qUwRkSVtuKPcJ+iTUOwE5Ahk1U/5d8C0bD8OPDZgW
+         FLYtwj9BwNUevQWCj+XI0rmpP3IpHs64hCCZYFiARR8CC/22EkMfwER2Pvy2ERcYuG8U
+         CPdU02BuRJu2eUvApeMG9LlMTOcl6w/imTSmDehhQEcoy/raV6Ul05duXxKE7ij0QHP0
+         J6OHSSKGabtVa+WAfklRdugjZk7ToLfaAUgH9XaBKZxvXvbfKGgLllzWYPKJWEWGSdVe
+         asx+dpLbyfuVwX+fGV09bjyDM/G/6zERHvy658PjKGkNc/RWkuj8gzSld0tx8bU12RmJ
+         aAsQ==
+X-Forwarded-Encrypted: i=1; AJvYcCU2ArY0QHxXj7HTfsTYvgw6b1UNoU1LnQWShJ0th7nsSa4fn6QnkdraJn2LGC3CQ0iityczjsVo+OEwKwd5@vger.kernel.org
+X-Gm-Message-State: AOJu0Yyd0rXlPf5o5W+OjnezrOMaDfV9B6x2b6Z4R4gM3+2cOgPnOtD+
+	HtUwhW40giJ8dQ6LZ4c6yyAjMGkJ/QrKAhprKom2oPz7zcjFfMELm2L/sEj3cdY=
+X-Gm-Gg: ASbGnctdW44CvWqccCdypg8RcveQXPXtdGO4q8AaVk+UwGGOq3um7168cxAV/joDl5f
+	kTgn+Av6ukHetnATtICKVWfZoX649ZBvHH471Q8IXa1QzCulscmt+CL9pJt8Dfv/0vnYfW/36bj
+	GJuMXeyrH2rNTNr/8DgaFM41XufBkffHNLBwQJrqoL3L8nZUOTj+/8dJMmrgSR+pfFl2oaikesz
+	PYyK2bGf7Llf18lxBU1OjsZDRiv91bnx2XWZeagQb5BdNMXI4BX7CNL+UtdgwgAgf90hvBakA2n
+	0J1GNLxubcI606TkvL4ddDvJYU2LRLiOw4tqkrwBOUCShZd8ZHFUh/Vfc8h+DArzfUX7hA4=
+X-Google-Smtp-Source: AGHT+IENy2Ug3csppkeopHh9QbwrZvqfkc5vnEYWdk97w8lHzVFPclfePClt1P3xTF7uC8Sx8ny0gw==
+X-Received: by 2002:a05:6512:b24:b0:540:2a92:7daa with SMTP id 2adb3069b0e04-5439c282032mr8212120e87.42.1737631106312;
+        Thu, 23 Jan 2025 03:18:26 -0800 (PST)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5439af1483fsm2613034e87.106.2025.01.23.03.18.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 23 Jan 2025 03:18:25 -0800 (PST)
+Date: Thu, 23 Jan 2025 13:18:23 +0200
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: "Nirmesh Kumar Singh (Temp)" <quic_nkumarsi@quicinc.com>
+Cc: kernel@quicinc.com, andersson@kernel.org, konradybcio@kernel.org, 
+	robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, quic_akdwived@quicinc.com, 
+	quic_uchheda@quicinc.com, Sahil Chandna <quic_chandna@quicinc.com>
+Subject: Re: [PATCH v3] arm64: dts: qcom: Add industrial mezzanine support
+ for qcs6490-rb3gen2
+Message-ID: <q4fyimr2wydbwb7x6mhzip2wsixifhd4okxe3noqxzn366oq7i@nkecmifs2y4f>
+References: <20250122101424.1810844-1-quic_nkumarsi@quicinc.com>
+ <f4xffmfwkwrenulklmwzjjmdfdhcf5cwundyfen54e2codrmlj@htzjpvk5vopp>
+ <2acb758f-c1ff-426d-a363-befb8f97323f@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: M1SrIPCAtk0p4JmBUE6nObn-fDVmkvWV
-X-Proofpoint-GUID: M1SrIPCAtk0p4JmBUE6nObn-fDVmkvWV
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-01-23_04,2025-01-22_02,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- lowpriorityscore=0 clxscore=1015 phishscore=0 spamscore=0 adultscore=0
- mlxscore=0 suspectscore=0 impostorscore=0 mlxlogscore=999 bulkscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2501230085
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <2acb758f-c1ff-426d-a363-befb8f97323f@quicinc.com>
 
-The UART’s software and hardware flow control are currently not
-functioning correctly.
+On Thu, Jan 23, 2025 at 04:35:34PM +0530, Nirmesh Kumar Singh (Temp) wrote:
+> 
+> On 1/23/2025 12:16 AM, Dmitry Baryshkov wrote:
+> > On Wed, Jan 22, 2025 at 03:44:24PM +0530, Nirmesh Kumar Singh wrote:
+> > > Add DTS support for Qualcomm qcs6490-rb3gen2 industrial mezzanine board.
+> > > 
+> > > Signed-off-by: Sahil Chandna <quic_chandna@quicinc.com>
+> > > Signed-off-by: Nirmesh Kumar Singh <quic_nkumarsi@quicinc.com>
+> > > 
+> > > ---
+> > > Changes in v3:
+> > > - Fixed tpm pinctrl node label.
+> > > - Addressed comments by Dmitry.
+> > Which ones? Pleas be more specific in changelogs.
+> Ack
+> > 
+> > > - Improved indentation/formatting.
+> > > - Link to V2: https://lore.kernel.org/all/20250102190155.2593453-1-quic_nkumarsi@quicinc.com/
+> > > 
+> > > Changes in V2:
+> > > - Addressed comment by Konrad.
+> > > - Validated dts bindings with dtb_checks suggested by Krzysztof.
+> > > - Improved indentation/formatting.
+> > > - Fixed bug encountered during testing.
+> > > - Added dtb entry in makefile.
+> > > - Link to V1: https://lore.kernel.org/all/20241206065156.2573-1-quic_chandna@quicinc.com/
+> > > ---
+> > >   arch/arm64/boot/dts/qcom/Makefile             |  4 +++
+> > >   .../qcs6490-rb3gen2-industrial-mezzanine.dtso | 35 +++++++++++++++++++
+> > >   2 files changed, 39 insertions(+)
+> > >   create mode 100644 arch/arm64/boot/dts/qcom/qcs6490-rb3gen2-industrial-mezzanine.dtso
+> > > 
+> > > diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+> > > index 6ca8db4b8afe..16ac008c58d2 100644
+> > > --- a/arch/arm64/boot/dts/qcom/Makefile
+> > > +++ b/arch/arm64/boot/dts/qcom/Makefile
+> > > @@ -111,6 +111,10 @@ dtb-$(CONFIG_ARCH_QCOM)	+= qcm6490-shift-otter.dtb
+> > >   dtb-$(CONFIG_ARCH_QCOM)	+= qcs404-evb-1000.dtb
+> > >   dtb-$(CONFIG_ARCH_QCOM)	+= qcs404-evb-4000.dtb
+> > >   dtb-$(CONFIG_ARCH_QCOM)	+= qcs6490-rb3gen2.dtb
+> > > +
+> > > +qcs6490-rb3gen2-industrial-mezzanine-dtbs	:= qcs6490-rb3gen2.dtb qcs6490-rb3gen2-industrial-mezzanine.dtbo
+> > > +
+> > > +dtb-$(CONFIG_ARCH_QCOM)	+= qcs6490-rb3gen2-industrial-mezzanine.dtb
+> > >   dtb-$(CONFIG_ARCH_QCOM)	+= qcs8550-aim300-aiot.dtb
+> > >   dtb-$(CONFIG_ARCH_QCOM)	+= qcs9100-ride.dtb
+> > >   dtb-$(CONFIG_ARCH_QCOM)	+= qcs9100-ride-r3.dtb
+> > > diff --git a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2-industrial-mezzanine.dtso b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2-industrial-mezzanine.dtso
+> > > new file mode 100644
+> > > index 000000000000..1498f32bd069
+> > > --- /dev/null
+> > > +++ b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2-industrial-mezzanine.dtso
+> > > @@ -0,0 +1,35 @@
+> > > +// SPDX-License-Identifier: BSD-3-Clause
+> > > +/*
+> > > + * Copyright (c) 2025, Qualcomm Innovation Center, Inc. All rights reserved.
+> > > +*/
+> > > +
+> > > +/dts-v1/;
+> > > +/plugin/;
+> > > +#include <dt-bindings/clock/qcom,gcc-sc7280.h>
+> > > +#include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
+> > > +
+> > > +&pm7250b_gpios {
+> > > +	tpm_spi_reset: tpm-spi-reset-state {
+> > > +		pins = "gpio5";
+> > > +		function = "normal";
+> > > +		power-source = <1>;
+> > > +		output-high;
+> > > +		input-disable;
+> > > +		bias-pull-up;
+> > > +		qcom,drive-strength = <3>;
+> > > +	};
+> > > +};
+> > > +
+> > > +&spi11 {
+> > > +	#address-cells = <1>;
+> > > +	#size-cells = <0>;
+> > > +	status = "okay";
+> > > +
+> > > +	st33htpm0: tpm@0 {
+> > > +		compatible = "st,st33htpm-spi", "tcg,tpm_tis-spi";
+> > > +		reg = <0>;
+> > > +		spi-max-frequency = <20000000>;
+> > > +		pinctrl-names = "default";
+> > > +		pinctrl-0 = <&tpm_spi_reset>;
+> > Missing reset-gpios property. Otherwise there is no point in specifying
+> > the pinctrl.
+> The community previously rejected the GPIO reset function in the TPM driver
+> (tpm_tis_core.c). You can refer to the discussion [1].
+> 
+> From what I understand from the discussion in the patch, this decision was
+> made to prevent software from executing an incorrect reset sequence, which
+> could potentially reset the PCR banks of TPM chip.
+> 
+> However, a pinctrl node is necessary to ensure the PMIC GPIO is in the
+> correct state as required by the TPM chip.
 
-For software flow control, the following error is encountered:
-qcom_geni_serial 1a80000.serial: Couldn't find suitable
-clock rate for 56000000, 3500000, 2500000, 1152000, 921600, 19200
+No, pinctrl is not a replacement for GPIO calls. Please don't force GPIO
+levels using pinctrl.
 
-During hardware flow control testing, a “Retry 0: Got ZCAN error” is
-observed.
+Also, at least tpm-common.yaml defines reset-gpios. So declaring a GPIO
+using that property is a proper course of actions.
 
-To address these issues, update the UART frequency table to include all
-supported frequencies according to the frequency plan.
+The discussion clearly stated: if the GPIO is under software control,
+then it should be clear that PCRs do not work in such a system. Please
+consider implementing that suggestion.
 
-Signed-off-by: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
----
- drivers/clk/qcom/gcc-ipq5424.c | 16 +++++++++++-----
- 1 file changed, 11 insertions(+), 5 deletions(-)
+> 
+> [1] https://lore.kernel.org/lkml/20220407111849.5676-1-LinoSanfilippo@gmx.de/T/#m726d477dbce48c9e345e245f93d60f0aaa6f0994
+> 
+> Thanks,
+> 
+> Nirmesh
+> 
+> > 
+> > > +	};
+> > > +};
+> > > -- 
+> > > 2.34.1
+> > > 
 
-diff --git a/drivers/clk/qcom/gcc-ipq5424.c b/drivers/clk/qcom/gcc-ipq5424.c
-index d5b218b76e29..37b1a3ff8f4e 100644
---- a/drivers/clk/qcom/gcc-ipq5424.c
-+++ b/drivers/clk/qcom/gcc-ipq5424.c
-@@ -592,13 +592,19 @@ static struct clk_rcg2 gcc_qupv3_spi1_clk_src = {
- };
- 
- static const struct freq_tbl ftbl_gcc_qupv3_uart0_clk_src[] = {
--	F(960000, P_XO, 10, 2, 5),
--	F(4800000, P_XO, 5, 0, 0),
--	F(9600000, P_XO, 2, 4, 5),
--	F(16000000, P_GPLL0_OUT_MAIN, 10, 1, 5),
-+	F(3686400,  P_GCC_GPLL0_OUT_MAIN_DIV_CLK_SRC, 1, 144, 15625),
-+	F(7372800,  P_GCC_GPLL0_OUT_MAIN_DIV_CLK_SRC, 1, 288, 15625),
-+	F(14745600, P_GCC_GPLL0_OUT_MAIN_DIV_CLK_SRC, 1, 576, 15625),
- 	F(24000000, P_XO, 1, 0, 0),
- 	F(25000000, P_GPLL0_OUT_MAIN, 16, 1, 2),
--	F(50000000, P_GPLL0_OUT_MAIN, 16, 0, 0),
-+	F(32000000, P_GPLL0_OUT_MAIN, 1, 1, 25),
-+	F(40000000, P_GPLL0_OUT_MAIN, 1, 1, 20),
-+	F(46400000, P_GPLL0_OUT_MAIN, 1, 29, 500),
-+	F(48000000, P_GPLL0_OUT_MAIN, 1, 3, 50),
-+	F(51200000, P_GPLL0_OUT_MAIN, 1, 8, 125),
-+	F(56000000, P_GPLL0_OUT_MAIN, 1, 7, 100),
-+	F(58982400, P_GPLL0_OUT_MAIN, 1, 1152, 15625),
-+	F(60000000, P_GPLL0_OUT_MAIN, 1, 3, 40),
- 	F(64000000, P_GPLL0_OUT_MAIN, 12.5, 0, 0),
- 	{ }
- };
 -- 
-2.34.1
-
+With best wishes
+Dmitry
 
