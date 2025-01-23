@@ -1,181 +1,116 @@
-Return-Path: <linux-arm-msm+bounces-46003-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46004-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3FE88A1A8FA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jan 2025 18:35:43 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id ABD1FA1A93D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jan 2025 18:51:02 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 01B723ACBA4
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jan 2025 17:35:36 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5B9683ACA7F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jan 2025 17:50:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E99C113D882;
-	Thu, 23 Jan 2025 17:35:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6E1431C549E;
+	Thu, 23 Jan 2025 17:49:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="CnWxtVDZ"
+	dkim=pass (2048-bit key) header.d=acm.org header.i=@acm.org header.b="mjgcItbL"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from 008.lax.mailroute.net (008.lax.mailroute.net [199.89.1.11])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25884EC5
-	for <linux-arm-msm@vger.kernel.org>; Thu, 23 Jan 2025 17:35:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C4771BD9E7;
+	Thu, 23 Jan 2025 17:49:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=199.89.1.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737653740; cv=none; b=YkdH1hRY63yF6JzYikrS/osOYZJYw0K9rHWfUh18m3snOtI41sS3D3TiOlH7JtJDU4L/e1dApFNJY3fs1TNj69Qm24g2QcfHZ0TJhXa1V8DZQPXoAz6WwHJEyN8bGlUdbxgXv8OIbpwdHOqBgst5vvMRUwNP/NS0VTD3Y7DL2yo=
+	t=1737654575; cv=none; b=JIWw57TxXv6+3XJfY6X3fabVrCdydbnlyE/7rdnPquRTQYuReUZHHWewDKvdJAHpd1Q6VtTUeX0xgLxRPI+ULNMPiyBtJNemsCFSGVkg/J/ewuwJNmc/R4kg5yAYgtVaKb/gqAPDjiaWoiIAqgsUxaTiSiNI6ouMO4ZaqmaYjjw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737653740; c=relaxed/simple;
-	bh=OOBTytmDaQ6UJzTPi1jox3V/5m4DQwpCEO0KPegpU2s=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=usOjujYKtvlQdfcnQ4CWI19GhF66Ze+hpvFLxpNB/4+Sf4RYKlPrm2RTsJP6EoYff6wFiq7c65MTqjNds/FJbvI9jYT+O7ZorohQo8wmr8haDWqNlDA2+hnajsNNYcYkrtYjbb8TZJeBeSvpWmNHSeaqpXKDN99A00HKe0jNniU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=CnWxtVDZ; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50NFr2iw031618;
-	Thu, 23 Jan 2025 17:35:18 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=3sAObRTPJYOicvuINKNxbQAM
-	Lh+X34dr0zItcLyQyQ8=; b=CnWxtVDZsoW06382hhUrxkUCZN6PsICjBsshSBM7
-	Dky1GYeFZ3yh3IkoNzfbUprCb/UjdidwYmFrtKByGeHBcXM1zd8aTaO3AHbMbxy8
-	qLbOCjWGiiYCs5qAjIDDbmgj80IV/DnYvsou60wwA8KeWuFhsFvwyvFy4reQgn0R
-	OjPXipHokqwj2jID6Qn0/1uqI20Z3RSVjTIo/iE/4xpfgecx8dYJBmtLapgxwQIN
-	Mt3RkIXH569SnzKV9Mt4XZJIBDZFo/hhyiJOCKtK5hVkCtEzaaqZL0R6G4JDbtIF
-	BRrWyRkKgqt61qoaJSMo6UochB36Z0NXUhFFIz//OLmvMw==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44brsyg93v-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 23 Jan 2025 17:35:17 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 50NHZGA4031330
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 23 Jan 2025 17:35:16 GMT
-Received: from hu-guptap-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Thu, 23 Jan 2025 09:35:12 -0800
-Date: Thu, 23 Jan 2025 23:04:58 +0530
-From: Prakash Gupta <quic_guptap@quicinc.com>
-To: Robin Murphy <robin.murphy@arm.com>
-CC: Connor Abbott <cwabbott0@gmail.com>, Rob Clark <robdclark@gmail.com>,
-        "Will Deacon" <will@kernel.org>, Joerg Roedel <joro@8bytes.org>,
-        Sean Paul
-	<sean@poorly.run>, Konrad Dybcio <konradybcio@kernel.org>,
-        Abhinav Kumar
-	<quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        <iommu@lists.linux.dev>, <linux-arm-msm@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <freedreno@lists.freedesktop.org>
-Subject: Re: [PATCH v3 1/3] iommu/arm-smmu: Fix spurious interrupts with
- stall-on-fault
-Message-ID: <Z5J9wpooIH5/Ccrt@hu-guptap-hyd.qualcomm.com>
-References: <20250122-msm-gpu-fault-fixes-next-v3-0-0afa00158521@gmail.com>
- <20250122-msm-gpu-fault-fixes-next-v3-1-0afa00158521@gmail.com>
- <Z5IjsqQ6vTdUXiGt@hu-guptap-hyd.qualcomm.com>
- <b593ac5e-cb29-473a-af1b-214168968679@arm.com>
+	s=arc-20240116; t=1737654575; c=relaxed/simple;
+	bh=miVVr580sYZE66njxD8FvNJvRkUXu7CmYi66iMZyhIg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=OvqJuW6oNro5mTgwqAxMPUM9Lg8ClAGYin6kZzMz33SDAWtcZ4/mEL9eiZro26aZqqZqfRt3oa9S+yL//u5a2GHqQiLMZ0yzcQUORwT1nX3OZWQnE+Am0sdss5KqSs64bHfpUSgxz+rB9WdlwzUsKT9e3bKKmwRLAXE60ZDvcwE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=acm.org; spf=pass smtp.mailfrom=acm.org; dkim=pass (2048-bit key) header.d=acm.org header.i=@acm.org header.b=mjgcItbL; arc=none smtp.client-ip=199.89.1.11
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=acm.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=acm.org
+Received: from localhost (localhost [127.0.0.1])
+	by 008.lax.mailroute.net (Postfix) with ESMTP id 4Yf7jy6KL1z6CmQwN;
+	Thu, 23 Jan 2025 17:49:26 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=acm.org; h=
+	content-transfer-encoding:content-type:content-type:in-reply-to
+	:from:from:content-language:references:subject:subject
+	:user-agent:mime-version:date:date:message-id:received:received;
+	 s=mr01; t=1737654557; x=1740246558; bh=zwgguoJUxh3EORdVSnm84eN3
+	F+KG5CH+2yFVSvOvd2I=; b=mjgcItbLpHTh/dXs3MO7rjHZpO+jcEnRiPObAB4I
+	yS6geIpgM/k1rawdPa8nKWEeBpn61mnqitv5djss1ZWij85Q4kdbYWgxV+bOnQzl
+	c9eW4Z1Jx/0m5OosoYv6nvm7mqVYbRIXA/+O2mHfvQxd3Db0UipNj9Mq4dAkwMBj
+	jEl0/kSzq77WgeD60SrOY28nHUsetAatxEW8Kb5h1SroSYZ/1AXKt9T/JRLHSL6S
+	1LVxxOQbkElmP/8Jry82SDyAmuI3FVlD55HT8p2OcO/MfcpDdvnxFb2gEcf0Vf/T
+	49LmcwGCWyFR4e6BM5sn/2LPGx8BX1804/U8suOdc67/iA==
+X-Virus-Scanned: by MailRoute
+Received: from 008.lax.mailroute.net ([127.0.0.1])
+ by localhost (008.lax [127.0.0.1]) (mroute_mailscanner, port 10029) with LMTP
+ id btafVZT1akpc; Thu, 23 Jan 2025 17:49:17 +0000 (UTC)
+Received: from [192.168.50.14] (c-73-231-117-72.hsd1.ca.comcast.net [73.231.117.72])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: bvanassche@acm.org)
+	by 008.lax.mailroute.net (Postfix) with ESMTPSA id 4Yf7jf1DXsz6CmR08;
+	Thu, 23 Jan 2025 17:49:09 +0000 (UTC)
+Message-ID: <cc07ebd1-fa93-46be-991b-c14e4222750c@acm.org>
+Date: Thu, 23 Jan 2025 09:49:07 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <b593ac5e-cb29-473a-af1b-214168968679@arm.com>
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: QM4dPC_sVTC_fOBkeECY6Kk1472-TJ67
-X-Proofpoint-ORIG-GUID: QM4dPC_sVTC_fOBkeECY6Kk1472-TJ67
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-01-23_07,2025-01-23_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 suspectscore=0
- lowpriorityscore=0 mlxlogscore=494 spamscore=0 mlxscore=0 clxscore=1015
- impostorscore=0 malwarescore=0 adultscore=0 priorityscore=1501
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2501230129
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 3/8] scsi: ufs: core: Add a vops to map clock frequency
+ to gear speed
+To: Ziqi Chen <quic_ziqichen@quicinc.com>, quic_cang@quicinc.com,
+ mani@kernel.org, beanhuo@micron.com, avri.altman@wdc.com,
+ junwoo80.lee@samsung.com, martin.petersen@oracle.com,
+ quic_nguyenb@quicinc.com, quic_nitirawa@quicinc.com,
+ quic_rampraka@quicinc.com
+Cc: linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
+ Alim Akhtar <alim.akhtar@samsung.com>,
+ "James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>,
+ Peter Wang <peter.wang@mediatek.com>,
+ Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+ Eric Biggers <ebiggers@google.com>, Minwoo Im <minwoo.im@samsung.com>,
+ open list <linux-kernel@vger.kernel.org>
+References: <20250122100214.489749-1-quic_ziqichen@quicinc.com>
+ <20250122100214.489749-4-quic_ziqichen@quicinc.com>
+ <a0359746-2cf0-4db3-891d-b4cb4ff6c163@acm.org>
+ <b998f9b5-9965-4cc5-9e76-4ae743596f6b@quicinc.com>
+Content-Language: en-US
+From: Bart Van Assche <bvanassche@acm.org>
+In-Reply-To: <b998f9b5-9965-4cc5-9e76-4ae743596f6b@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Thu, Jan 23, 2025 at 11:51:27AM +0000, Robin Murphy wrote:
-> On 2025-01-23 11:10 am, Prakash Gupta wrote:
-> > On Wed, Jan 22, 2025 at 03:00:58PM -0500, Connor Abbott wrote:
-> > > +	/*
-> > > +	 * The SMMUv2 architecture specification says that if stall-on-fault is
-> > > +	 * enabled the correct sequence is to write to SMMU_CBn_FSR to clear
-> > > +	 * the fault and then write to SMMU_CBn_RESUME. Clear the interrupt
-> > > +	 * first before running the user's fault handler to make sure we follow
-> > > +	 * this sequence. It should be ok if there is another fault in the
-> > > +	 * meantime because we have already read the fault info.
-> > > +	 */
-> > The context would remain stalled till we write to CBn_RESUME. Which is done
-> > in qcom_adreno_smmu_resume_translation(). For a stalled context further
-> > transactions are not processed and we shouldn't see further faults and
-> > or fault inerrupts. Do you observe faults with stalled context?
-> 
-> This aspect isn't exclusive to stalled contexts though - even for "normal"
-> terminated faults, clearing the FSR as soon as we've sampled all the
-> associated fault registers is no bad thing, since if a second fault does
-> occur while we're still reporting the first, we're then more likely to get a
-> full syndrome rather than just the FSR.MULTI bit.
-> 
-ARM SMMUv2 spec recommends, in case of reported fault sw should first
-correct the condition which casued the fault, I would interpret this as
-reporting fault to client using callback, and then write CBn_FSR and
-CBn_RESUME in this order. Even in case of reported fault where context is
-not stalled, the first step, IMO, I see no reason why should be any
-different.  I agree that delaying fault clearance can result in FSR.MULTI
-being set, but clearning fault before  prevent clients to use SCTLR.HUPCF
-on subsequent transactions while they take any debug action. The client
-should be reported fault in the same state it occured. Please refer
-qcom_smmu_context_fault() for this sequence.
+On 1/22/25 11:40 PM, Ziqi Chen wrote:
+> In ufshcd-priv.h , the function name of all vop wrapping APIs have the 
+> same prefix "ufshcd_vops", I need to use the same format as them.
 
-> > > +	arm_smmu_cb_write(smmu, idx, ARM_SMMU_CB_FSR, cfi.fsr);
-> > > +
-> > >   	ret = report_iommu_fault(&smmu_domain->domain, NULL, cfi.iova,
-> > >   		cfi.fsynr & ARM_SMMU_CB_FSYNR0_WNR ? IOMMU_FAULT_WRITE : IOMMU_FAULT_READ);
-> > >   	if (ret == -ENOSYS && __ratelimit(&rs))
-> > >   		arm_smmu_print_context_fault_info(smmu, idx, &cfi);
-> > > -	arm_smmu_cb_write(smmu, idx, ARM_SMMU_CB_FSR, cfi.fsr);
-> > >   	return IRQ_HANDLED;
-> > >   }
-> > > diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu.h b/drivers/iommu/arm/arm-smmu/arm-smmu.h
-> > > index 2dbf3243b5ad2db01e17fb26c26c838942a491be..789c64ff3eb9944c8af37426e005241a8288da20 100644
-> > > --- a/drivers/iommu/arm/arm-smmu/arm-smmu.h
-> > > +++ b/drivers/iommu/arm/arm-smmu/arm-smmu.h
-> > > @@ -216,7 +216,6 @@ enum arm_smmu_cbar_type {
-> > >   					 ARM_SMMU_CB_FSR_TLBLKF)
-> > >   #define ARM_SMMU_CB_FSR_FAULT		(ARM_SMMU_CB_FSR_MULTI |	\
-> > > -					 ARM_SMMU_CB_FSR_SS |		\
-> > Given writing to FSR.SS doesn't clear this bit but write to CBn_RESUME
-> > does, this seems right. This but can be taken as separate patch.
-> 
-> This change on its own isn't really useful - all that would achieve is that
-> instead of constantly re-reporting the FSR.SS "fault", the interrupt goes
-> unhandled and the IRQ core ends up disabling it permanently. If anything
-> that's arguably worse, since the storm of context fault reports does at
-> least give a fairly clear indication of what's gone wrong, rather than
-> having to deduce the cause of an "irq n: nobody cared" message entirely by
-> code inspection.
-> 
-Does spec allow or do we see reported fault with just FSR.SS bit. If answer
-is no then Keeping FSR_SS would be misleading. Here ARM_SMMU_CB_FSR_FAULT
-is used to clear fault bits or check valid faults. Also validity of this
-is not based on rest of the change. 
+That sounds fair to me.
+
+> As for return the gear value as the function result. In our original 
+> design, we also return gear result for this function, but finally we 
+> want to use return value to indicate the status , e.g,, if vendor 
+> doesn't implement this vop, we return -EOPNOTSUPP , if there is no 
+> matched gear to the freq , we return -EINVAL. Although we didn't check 
+> the return value in this series, we still want to preserve this 
+> extensibility in case this function be used to other where in the future.
+
+There are many functions in the Linux kernel that either return a
+negative error code or a positive value in case of success. Regarding
+future extensibility, we can't know how this function will evolve in the
+future. This is not an argument to keep the approach of separate error
+codes (return value) and gear values (gear argument).
 
 Thanks,
-Prakash
- 
-> > 
-> > >   					 ARM_SMMU_CB_FSR_UUT |		\
-> > >   					 ARM_SMMU_CB_FSR_EF |		\
-> > >   					 ARM_SMMU_CB_FSR_PF |		\
-> > > 
-> > > -- 
-> > > 2.47.1
-> > > 
-> 
+
+Bart.
+
 
