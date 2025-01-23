@@ -1,109 +1,103 @@
-Return-Path: <linux-arm-msm+bounces-45954-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-45956-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4750AA1A310
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jan 2025 12:37:02 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id E56D6A1A355
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jan 2025 12:43:28 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 91AC4161265
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jan 2025 11:37:00 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 28A483AFBD5
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jan 2025 11:42:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9BB1820E314;
-	Thu, 23 Jan 2025 11:36:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D45E1215F40;
+	Thu, 23 Jan 2025 11:39:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ruBZpmjx"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="J73Lrn6s"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0B2B20CCC3
-	for <linux-arm-msm@vger.kernel.org>; Thu, 23 Jan 2025 11:36:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4C34215786;
+	Thu, 23 Jan 2025 11:39:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737632218; cv=none; b=AzSU5QX7T7Hy53euEAlZA8pP9tC21lpVgFlAbpxqo5xg/Mi1lt7XTIO0ytAXcwYj8UDo41iHrhYg/5ezKcvz960WDUYmVUVdR59nrF88HjHvmlHW+yOv3XzdKxC3hzgZODz6r006ZlUlqUG92Iv3ONcL5v3QxRNjMmcaix/x2Yw=
+	t=1737632352; cv=none; b=QnCbWlWVDQ8jljG9QYc2XPQ0RavI6svPnxMM5H+NffZvmmx4U1zT2BYY+zIOBLhJ0dUNeaM8fgO15IPKSGfY7s0p5wJSEAkT3lR0vHq0VN/kYkILPnomIcIrzXdBAX02/+WDy4Lz1z8SMHnx5ossp1C08ez292D6Ya9WCC3THrk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737632218; c=relaxed/simple;
-	bh=RdI6IJceYHWNDjwXbPHhGrnfntTwaSLvqJY46KDpWw0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=VGxxpLF/cSFQ9PjHgEObSD2r6aaEFeE8QfLRnqmVpXMdWNm39utTVpn2oIZcEsPe3teQwlW8BIBouMzek9EUDdgFzB1dwyoEDJ+C+vBJaNqzV37C4qlLsKxRUX1h8amh30j6FqcnYUbABr3A2z7/9YZTc38SNPibYNpn+D2MvIY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ruBZpmjx; arc=none smtp.client-ip=209.85.128.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-4361f796586so8003475e9.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Jan 2025 03:36:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1737632215; x=1738237015; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=RdI6IJceYHWNDjwXbPHhGrnfntTwaSLvqJY46KDpWw0=;
-        b=ruBZpmjxkoV7rFM04585/V49ThTQUAvaUoPIQlGJWzO0nun0ewjdroUriFWzt1Lc+J
-         0oz5R6UpXdGTTutIbdN1FSY2bAa9HbGnDMgosAj3hVzXMICzRUQRoNYHHZjSurEiAGN5
-         j6CfxreKvhybXuVx2oY++gxygIOc+qpDt+SOkQ1AodfLMzPwPhdr99/gcfFwQ1T1C4u9
-         YiiPlUCVr6H5RRgI66JSxopX2dXm/TGa/AcE1Dt4BNVDzp3NgdAUzAGUW2hF6Ko+7v2s
-         TXZ/PDYoPuenvzpPcuyHFClX+0Fq1hvVzWb0cwno0Nuz0djvsaazkigH4fSA9uh8fw/F
-         RRcA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1737632215; x=1738237015;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=RdI6IJceYHWNDjwXbPHhGrnfntTwaSLvqJY46KDpWw0=;
-        b=TK3UYKaFhfPvxskjxveZ5N5ZunC4CKugjIiPS0Y2HjHCLFI4QoiVPs4MYXiMyKwYMz
-         auG35cbdJ/ryrrFJIB4pB/J2VhWqLkBgYfCYS+WZOWavHz01FJG8ZdmvGBoJ7N8u4huo
-         Kc9bV8mLRve3kN5C+5x4exO6au/TuqWNKsDPCiGi3tfYLwT9QXL9MalxxKdpNwc0eP4i
-         MuHQvyhZJ9ur9kpo656zXBalYsyxm+mKI5s8vx7wHvzQBcOe8T/FcMKtVmsa1KbjNWnq
-         oRI9CmCtGtXOUI5h35mQnLFz9ANSF9gD4J1xc89HnSfIY7+jkiJHCgxvF8ImG7VggN0H
-         nkJQ==
-X-Gm-Message-State: AOJu0Ywo6Ktrg7iawCA6jjn2rHUh5wgfDrHfAe27lKgEOzWNhOKP1uTz
-	epOCDyTECHFzxi/sGzuORjWzJKk+tNYxasex+/tlGYlGY9O25L8aqxWdNXA6vUc=
-X-Gm-Gg: ASbGncvH/r5ul/e2VD2hIuK49/hVfdFbPE+ynDc1uJ2axi9xhQdICE0kQv5QmuJRE1K
-	HzBpHayIec21+KKMmKB+y6DkqH7ADzmE042R1D+7jQ99k3e6zF68dC/hzYYbbddKKiYCwpCwJtH
-	hmV+Zgd658gOOTglu1GqIff+cesAMR8Z02MwXSE2Sr84CHx682Efx8FTMXoGYKWLybJnxOEJXzC
-	lfOg6qgTon/hULu1O4Rn2Wyhv0HXLOXnMFlOHGMkbEIKYZYFwBej5vzD5y53n5zrUOA+KcNft33
-	e1Kl96OiqPn7+CS1rQ==
-X-Google-Smtp-Source: AGHT+IELUBxDoirlNG9SA4nq62ZMYmDw/0cKfHcaM4E/mFo7d2pn8cQOe4FUQ9oLCcMRfxLaJHQO3g==
-X-Received: by 2002:a05:600c:3548:b0:434:a1d3:a321 with SMTP id 5b1f17b1804b1-438913c6150mr239518495e9.3.1737632215254;
-        Thu, 23 Jan 2025 03:36:55 -0800 (PST)
-Received: from [192.168.0.35] ([176.61.106.227])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-438b31c6fbasm58088275e9.33.2025.01.23.03.36.54
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 23 Jan 2025 03:36:54 -0800 (PST)
-Message-ID: <7f8bb83f-aa15-4a58-baf4-6241b479b412@linaro.org>
-Date: Thu, 23 Jan 2025 11:36:53 +0000
+	s=arc-20240116; t=1737632352; c=relaxed/simple;
+	bh=B9YQbPf3Aney4L/BwO4hzMNTk/gCvSRwKxwEWoRFhwQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=FoiF016tjTn6pVsibSpNYMZg182hCbSn/RuklK7Q0oHzMYRqrJo97dTK55FsDtGR5rkZG7egK5rF2aD7ZEEOefj8H6TQFeCVIgDvydy2iVwyavCIyNQPf6fYPAdUzihk0O14ifOizggJyZjy5DyH8W0X5TVX/rcSHOsmniValaA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=J73Lrn6s; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C92DC4CED3;
+	Thu, 23 Jan 2025 11:39:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1737632352;
+	bh=B9YQbPf3Aney4L/BwO4hzMNTk/gCvSRwKxwEWoRFhwQ=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=J73Lrn6sNhagrrmaH3k1zv1gjH6PtTI4zgAmn7DJBAIiFEhq5wPQp1kYclkKGkzyX
+	 4ULhXXzRxhlWBej0wQiCt5l0BfuZpN8ohPJrUoABOB2CvwB56SCQziZhGygQe1vvR8
+	 Oa7300bSXR0KCH6x0K5CsLdUBbeljOXobbtfwHbv5UVPYwYyjrRX6+//8uUNHeeeg3
+	 YoY/st8dOdw0rXGMrQVMt+dtklxMJhWBB7eIRFzzguxk+f4h5wJOW6qHGXMybjFYvJ
+	 ZDvnKQSsC3+J/v/se1vWI66QBmiGY23ryacZ9hPhlpB9pJ9H2Jgrr6te1wLsBeywaG
+	 O+ZVw6DuoaugA==
+Received: from johan by xi.lan with local (Exim 4.97.1)
+	(envelope-from <johan@kernel.org>)
+	id 1tavYL-000000002Ut-1JOu;
+	Thu, 23 Jan 2025 12:39:18 +0100
+Date: Thu, 23 Jan 2025 12:39:17 +0100
+From: Johan Hovold <johan@kernel.org>
+To: Johan Hovold <johan+linaro@kernel.org>
+Cc: Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Jonathan Marek <jonathan@marek.ca>, linux-arm-msm@vger.kernel.org,
+	linux-rtc@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 4/7] rtc: pm8xxx: mitigate flash wear
+Message-ID: <Z5IqZcRbd1vkyp-Z@hovoldconsulting.com>
+References: <20250120144152.11949-1-johan+linaro@kernel.org>
+ <20250120144152.11949-5-johan+linaro@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 8/8] ABI: sysfs-driver-ufs: Add missing UFS sysfs
- addributes
-To: Ziqi Chen <quic_ziqichen@quicinc.com>, quic_cang@quicinc.com,
- bvanassche@acm.org, mani@kernel.org, beanhuo@micron.com,
- avri.altman@wdc.com, junwoo80.lee@samsung.com, martin.petersen@oracle.com,
- quic_nguyenb@quicinc.com, quic_nitirawa@quicinc.com,
- quic_rampraka@quicinc.com
-Cc: linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
- Keoseong Park <keosung.park@samsung.com>,
- open list <linux-kernel@vger.kernel.org>
-References: <20250122100214.489749-1-quic_ziqichen@quicinc.com>
- <20250122100214.489749-9-quic_ziqichen@quicinc.com>
-Content-Language: en-US
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <20250122100214.489749-9-quic_ziqichen@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250120144152.11949-5-johan+linaro@kernel.org>
 
-On 22/01/2025 10:02, Ziqi Chen wrote:
-> Add UFS driver sysfs addributes clkscale_enable, clkgate_enable and
-> clkgate_delay_ms to this doucment.
+On Mon, Jan 20, 2025 at 03:41:49PM +0100, Johan Hovold wrote:
+> On many Qualcomm platforms the PMIC RTC control and time registers are
+> read-only so that the RTC time can not be updated. Instead an offset
+> needs be stored in some machine-specific non-volatile memory, which the
+> driver can take into account.
+> 
+> On machines like the Lenovo ThinkPad X14s the PMIC RTC drifts about one
 
-I'm 99% sure you mean "attributes" not "addributes"
+s/X14s/X13s/
 
----
-bod
+> second every 3.5 hours, something which leads to repeated updates of the
+> offset when NTP synchronisation is enabled.
+> 
+> Reduce wear of the underlying flash storage (used for UEFI variables) by
+> deferring writes until shutdown in case they appear to be due to clock
+> drift.
+> 
+> As an example, allowing the on-flash offset to differ up to 30 s reduces
+
+And this was supposed to say:
+
+	As an example, deferring writes when the new offset differs up
+	to 30 s from the previous one reduces
+	
+> the number of writes on the X13s during a ten day session with the
+> machine not suspending for more than four days in a row from up to 68
+> writes (every 3.5 h) to at most two (boot and shutdown).
+
+Johan
 
