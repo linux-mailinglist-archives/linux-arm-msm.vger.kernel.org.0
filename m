@@ -1,222 +1,368 @@
-Return-Path: <linux-arm-msm+bounces-45951-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-45952-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2DF46A1A2C6
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jan 2025 12:18:34 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id AAD7EA1A2FF
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jan 2025 12:32:22 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7336C169402
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jan 2025 11:18:32 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E703E169062
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jan 2025 11:32:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 684B420E01B;
-	Thu, 23 Jan 2025 11:18:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B441320E331;
+	Thu, 23 Jan 2025 11:32:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="nDEzVfw0"
+	dkim=pass (2048-bit key) header.d=nexus-software-ie.20230601.gappssmtp.com header.i=@nexus-software-ie.20230601.gappssmtp.com header.b="feLEUCE4"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f46.google.com (mail-lf1-f46.google.com [209.85.167.46])
+Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5790D20DD7F
-	for <linux-arm-msm@vger.kernel.org>; Thu, 23 Jan 2025 11:18:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DC4320E314
+	for <linux-arm-msm@vger.kernel.org>; Thu, 23 Jan 2025 11:32:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737631110; cv=none; b=i9S3TyTzfd/6Am8D8dbyM0MSSWYYTRODwBLavt5YMxaA2VAO4majoiRNeB+H0mGJ7wh8PvRC32QJNepEq5UZ0OCt3VU9ZN5BgyQMTvw/LUjcekCdwYuRn+tRrziae6GwMCC/INNMBPXWIF9SAFhNyWfNOERDKZipzKnfCW+r0d4=
+	t=1737631924; cv=none; b=Yi6eMUqx+zc5wS49zlfXFyGOICiJ4mtv5fDOsHYOQPcHq/dNmQr7Zbaxs+PyfnnfczFTH27/YMrPQs7Gzj43XHuRsUV6RLBPTxkUvHT2whXG16sd9v/P99jFJPA4dANXnOEd8BJ8Gwp5tBBg3926Def/tWhoUGHkWTa+PyVwq54=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737631110; c=relaxed/simple;
-	bh=eBwW5zbv71K8qutX45hfPZ0zNtq+BiuyqeqEee7WwnA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Z7WlcGsnHJbL3ZgF2AvxY8KJvV7MLptwQoZknQHs5FKDoYptI7cKtCs2KODCW2EJI8gqwRwEslL+J2kpm5wGki/ktgmxETE2X6yhQak506aHBm2f+ZT8DWj1n8aq+chRn4up7bQaJb028jPGFAXI3IIj8XqaUw5O5eqb9Vz1EM4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=nDEzVfw0; arc=none smtp.client-ip=209.85.167.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f46.google.com with SMTP id 2adb3069b0e04-5401bd6ccadso865394e87.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Jan 2025 03:18:27 -0800 (PST)
+	s=arc-20240116; t=1737631924; c=relaxed/simple;
+	bh=c1x3wOL/Jg/CxqmpfvXlIfxTazE833rR3Za4g0QHXGs=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=kXVD3sYudRq4D67Rm/M6QsGFiVqzeEzE0KUnDgd9nNUOnC/r3F+SnN/P25grsv5wLUS0+pCByo6ZLJE9h5f9OP+a/UZRa2AbJlv0X1RJysWQt37xlMhw3TPby+Zjkhn16PCkFtPIuAi0S4Ddu49LjWAOW4DaWqj0oHcajrHp0HU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexus-software.ie; spf=none smtp.mailfrom=nexus-software.ie; dkim=pass (2048-bit key) header.d=nexus-software-ie.20230601.gappssmtp.com header.i=@nexus-software-ie.20230601.gappssmtp.com header.b=feLEUCE4; arc=none smtp.client-ip=209.85.128.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexus-software.ie
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=nexus-software.ie
+Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-43621d27adeso5069355e9.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Jan 2025 03:32:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1737631106; x=1738235906; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=UvEVwvuAYsxT5Y9x89jkQ1Jw6WguxWcG6Luy7dy5Nuc=;
-        b=nDEzVfw0jXtucQCo/qzIPFy8CvZm8072/B72wlYzU9mmtH7wOJdg2Fu6RFcZQGY9+h
-         hIX6ZhP63/vTgbB8fk8CzmMF2opkA+GxO8hyIk8V1QXn3nFATJHn1QQfR3Qj6Bn6YUb3
-         59Z0he9Lpb3LeAfzKzmGogi3hOaZzt6ZEDvVhE7ua81WQritXW8Vcufb81XgjXMbFQaX
-         7Km6Coo5huLkRYazfND2m4af84PthZHo41lSGcQ4garTbCt/UnNxJmqe6jKbmT7ToWvp
-         aHGXbs6bNyCfBpjqgbtOGWyf26cAi+riwhWzYG6MkWHqZjNlrPyTZ2oHAyCjqtmR3P2o
-         Mnxg==
+        d=nexus-software-ie.20230601.gappssmtp.com; s=20230601; t=1737631919; x=1738236719; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=tkzdprg0mUGbGqhZY3kXquNpxLnOQ+rAcPKbs65QhXA=;
+        b=feLEUCE4xOl4/S6REbbmzJ2I5cqXeV728tqB7yF/+31mBTmv5ciiRY5p0RNdMn5l2g
+         3nP8uIaj0ZkuupG15iCJ9kJoxMykLJV/93eaZzQYiZRkXzpYrAMOwC4oAjj8s6zKL9R0
+         Afc6aGzs2SNOwDx4sg3Zg5jsvXW6lGS8CCF6fEHOeTaNSG+8d6Ayux75OCXu9kNjjCBi
+         AKf52yHJOfqA+QCJb01Xv9kE9b4xnxMc02X+39L6sg5fs+6P0J2blO5U8Qo/D+lHfB10
+         h5PHRVeMljwThvGS8Qp3puX2JCxRNq++0JYTqL5jXNwpiP+7/X4Lg38WrBkqv2rwd6Wy
+         huMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1737631106; x=1738235906;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=UvEVwvuAYsxT5Y9x89jkQ1Jw6WguxWcG6Luy7dy5Nuc=;
-        b=lEaV7uopO+e4rzYJOAloNaYL0qUwRkSVtuKPcJ+iTUOwE5Ahk1U/5d8C0bD8OPDZgW
-         FLYtwj9BwNUevQWCj+XI0rmpP3IpHs64hCCZYFiARR8CC/22EkMfwER2Pvy2ERcYuG8U
-         CPdU02BuRJu2eUvApeMG9LlMTOcl6w/imTSmDehhQEcoy/raV6Ul05duXxKE7ij0QHP0
-         J6OHSSKGabtVa+WAfklRdugjZk7ToLfaAUgH9XaBKZxvXvbfKGgLllzWYPKJWEWGSdVe
-         asx+dpLbyfuVwX+fGV09bjyDM/G/6zERHvy658PjKGkNc/RWkuj8gzSld0tx8bU12RmJ
-         aAsQ==
-X-Forwarded-Encrypted: i=1; AJvYcCU2ArY0QHxXj7HTfsTYvgw6b1UNoU1LnQWShJ0th7nsSa4fn6QnkdraJn2LGC3CQ0iityczjsVo+OEwKwd5@vger.kernel.org
-X-Gm-Message-State: AOJu0Yyd0rXlPf5o5W+OjnezrOMaDfV9B6x2b6Z4R4gM3+2cOgPnOtD+
-	HtUwhW40giJ8dQ6LZ4c6yyAjMGkJ/QrKAhprKom2oPz7zcjFfMELm2L/sEj3cdY=
-X-Gm-Gg: ASbGnctdW44CvWqccCdypg8RcveQXPXtdGO4q8AaVk+UwGGOq3um7168cxAV/joDl5f
-	kTgn+Av6ukHetnATtICKVWfZoX649ZBvHH471Q8IXa1QzCulscmt+CL9pJt8Dfv/0vnYfW/36bj
-	GJuMXeyrH2rNTNr/8DgaFM41XufBkffHNLBwQJrqoL3L8nZUOTj+/8dJMmrgSR+pfFl2oaikesz
-	PYyK2bGf7Llf18lxBU1OjsZDRiv91bnx2XWZeagQb5BdNMXI4BX7CNL+UtdgwgAgf90hvBakA2n
-	0J1GNLxubcI606TkvL4ddDvJYU2LRLiOw4tqkrwBOUCShZd8ZHFUh/Vfc8h+DArzfUX7hA4=
-X-Google-Smtp-Source: AGHT+IENy2Ug3csppkeopHh9QbwrZvqfkc5vnEYWdk97w8lHzVFPclfePClt1P3xTF7uC8Sx8ny0gw==
-X-Received: by 2002:a05:6512:b24:b0:540:2a92:7daa with SMTP id 2adb3069b0e04-5439c282032mr8212120e87.42.1737631106312;
-        Thu, 23 Jan 2025 03:18:26 -0800 (PST)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5439af1483fsm2613034e87.106.2025.01.23.03.18.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 23 Jan 2025 03:18:25 -0800 (PST)
-Date: Thu, 23 Jan 2025 13:18:23 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: "Nirmesh Kumar Singh (Temp)" <quic_nkumarsi@quicinc.com>
-Cc: kernel@quicinc.com, andersson@kernel.org, konradybcio@kernel.org, 
-	robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, quic_akdwived@quicinc.com, 
-	quic_uchheda@quicinc.com, Sahil Chandna <quic_chandna@quicinc.com>
-Subject: Re: [PATCH v3] arm64: dts: qcom: Add industrial mezzanine support
- for qcs6490-rb3gen2
-Message-ID: <q4fyimr2wydbwb7x6mhzip2wsixifhd4okxe3noqxzn366oq7i@nkecmifs2y4f>
-References: <20250122101424.1810844-1-quic_nkumarsi@quicinc.com>
- <f4xffmfwkwrenulklmwzjjmdfdhcf5cwundyfen54e2codrmlj@htzjpvk5vopp>
- <2acb758f-c1ff-426d-a363-befb8f97323f@quicinc.com>
+        d=1e100.net; s=20230601; t=1737631919; x=1738236719;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=tkzdprg0mUGbGqhZY3kXquNpxLnOQ+rAcPKbs65QhXA=;
+        b=IGk9iCatUvo969GkPgFpZrr62FwiFlgHPTAuetMW9JPJxFx89rVvtx1dEu6K8u9GHK
+         G2e6qH9b6Tzv0oRplOHR+p1B3vQI/Po2oi/6tvJaBK1VDPcrei4bRxE+A4cRQR4Y5ATs
+         29CpwhQvaECwanql7EeOYSXgJqQyg40HPLj2Tlaed/oSgUYMze/cWxTQxFiORBfPL72t
+         +eZhSWqZUGvip2F2sZ9TK5aNwLL6hKNSnsBbQZeo7xb2kTtU2lJT8jplt005Hcg7FQjD
+         uYVuMc8h/Dct2/E2Jxl6GbHn2IfZxXM8UK4dj7TkeGfa9Wpw4mGbvbYr7GXHxb0yChts
+         3CZA==
+X-Forwarded-Encrypted: i=1; AJvYcCXpO31VFspMv7wQrluvDyu2yjMDroYpKNRIo7ejvkEvQVZPCKNFYOVoDEeaXVDAMyEn8MjCyRXhlpa8Mk34@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw8I3POQ3EcClfyuCKFEvsElTTHarcfbSfcPiVYxszbBLBlWG8m
+	5rVGE8kMNclJU3SH5Su1UewrfG4V0+uRqcut4FYJJuG/jWNLxpxi10Fm1CcOhDM=
+X-Gm-Gg: ASbGncsJ767Cttu9zkZs6e/dAlU6f91JxHD4Y5vBGlM1FIo3MnDBgf4wSzVyLEAPFX7
+	rXIBFi4NgrFHnnBsKz4SjWnNocTYkjxFjjJJaxwdOmJNdaBGOwsPHZo55Vmc/OIA25l5ZeUb6Fg
+	ML6M5oDafr5BwrbqdKmJwJxhVkeaoluP2sirTWEwvtglYpPqzrKZLCkyp7mWuIImfy46lSjCMHU
+	LmiYxl3AKvwuiXdsDqKEvZXplK23pZR/9Ot3+giTsi0ZZ0DJrbFmWKhzHeLd0/YLBbH3LHfubkM
+	pHT5SvfjvwWpwy4XHjzB
+X-Google-Smtp-Source: AGHT+IFiwhNji8Lf/iwS/ygWq2vKMB+3GZnN8Ve/tOSfQIqp9x7RXP66a/ZU5FmQMIv4WX+dRn8Uuw==
+X-Received: by 2002:a05:600c:1d14:b0:436:46f9:4fc6 with SMTP id 5b1f17b1804b1-438913d63cfmr233979795e9.8.1737631919110;
+        Thu, 23 Jan 2025 03:31:59 -0800 (PST)
+Received: from [192.168.0.35] ([176.61.106.227])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-438b3189ba8sm60603645e9.5.2025.01.23.03.31.58
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 23 Jan 2025 03:31:58 -0800 (PST)
+Message-ID: <d4aa6903-f350-4130-a915-7a8d2916f1e0@nexus-software.ie>
+Date: Thu, 23 Jan 2025 11:31:57 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <2acb758f-c1ff-426d-a363-befb8f97323f@quicinc.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] clk: qcom: camcc-sm8250: Use clk_rcg2_shared_ops for some
+ RCGs
+To: Jordan Crouse <jorcrous@amazon.com>, linux-arm-msm@vger.kernel.org
+Cc: Bjorn Andersson <andersson@kernel.org>,
+ Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
+ <sboyd@kernel.org>, linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20250122213427.28169-1-jorcrous@amazon.com>
+Content-Language: en-US
+From: Bryan O'Donoghue <pure.logic@nexus-software.ie>
+In-Reply-To: <20250122213427.28169-1-jorcrous@amazon.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Thu, Jan 23, 2025 at 04:35:34PM +0530, Nirmesh Kumar Singh (Temp) wrote:
+On 22/01/2025 21:34, Jordan Crouse wrote:
+> Update some RCGs on the sm8250 camera clock controller to use
+> clk_rcg2_shared_ops. The shared_ops ensure the RCGs get parked
+> to the XO during clock disable to prevent the clocks from locking up
+> when the GDSC is enabled. These mirror similar fixes for other controllers
+> such as commit 8d4025943e13 ("clk: qcom: camcc-sc7180: Use runtime PM ops
+> instead of clk ones").
 > 
-> On 1/23/2025 12:16 AM, Dmitry Baryshkov wrote:
-> > On Wed, Jan 22, 2025 at 03:44:24PM +0530, Nirmesh Kumar Singh wrote:
-> > > Add DTS support for Qualcomm qcs6490-rb3gen2 industrial mezzanine board.
-> > > 
-> > > Signed-off-by: Sahil Chandna <quic_chandna@quicinc.com>
-> > > Signed-off-by: Nirmesh Kumar Singh <quic_nkumarsi@quicinc.com>
-> > > 
-> > > ---
-> > > Changes in v3:
-> > > - Fixed tpm pinctrl node label.
-> > > - Addressed comments by Dmitry.
-> > Which ones? Pleas be more specific in changelogs.
-> Ack
-> > 
-> > > - Improved indentation/formatting.
-> > > - Link to V2: https://lore.kernel.org/all/20250102190155.2593453-1-quic_nkumarsi@quicinc.com/
-> > > 
-> > > Changes in V2:
-> > > - Addressed comment by Konrad.
-> > > - Validated dts bindings with dtb_checks suggested by Krzysztof.
-> > > - Improved indentation/formatting.
-> > > - Fixed bug encountered during testing.
-> > > - Added dtb entry in makefile.
-> > > - Link to V1: https://lore.kernel.org/all/20241206065156.2573-1-quic_chandna@quicinc.com/
-> > > ---
-> > >   arch/arm64/boot/dts/qcom/Makefile             |  4 +++
-> > >   .../qcs6490-rb3gen2-industrial-mezzanine.dtso | 35 +++++++++++++++++++
-> > >   2 files changed, 39 insertions(+)
-> > >   create mode 100644 arch/arm64/boot/dts/qcom/qcs6490-rb3gen2-industrial-mezzanine.dtso
-> > > 
-> > > diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-> > > index 6ca8db4b8afe..16ac008c58d2 100644
-> > > --- a/arch/arm64/boot/dts/qcom/Makefile
-> > > +++ b/arch/arm64/boot/dts/qcom/Makefile
-> > > @@ -111,6 +111,10 @@ dtb-$(CONFIG_ARCH_QCOM)	+= qcm6490-shift-otter.dtb
-> > >   dtb-$(CONFIG_ARCH_QCOM)	+= qcs404-evb-1000.dtb
-> > >   dtb-$(CONFIG_ARCH_QCOM)	+= qcs404-evb-4000.dtb
-> > >   dtb-$(CONFIG_ARCH_QCOM)	+= qcs6490-rb3gen2.dtb
-> > > +
-> > > +qcs6490-rb3gen2-industrial-mezzanine-dtbs	:= qcs6490-rb3gen2.dtb qcs6490-rb3gen2-industrial-mezzanine.dtbo
-> > > +
-> > > +dtb-$(CONFIG_ARCH_QCOM)	+= qcs6490-rb3gen2-industrial-mezzanine.dtb
-> > >   dtb-$(CONFIG_ARCH_QCOM)	+= qcs8550-aim300-aiot.dtb
-> > >   dtb-$(CONFIG_ARCH_QCOM)	+= qcs9100-ride.dtb
-> > >   dtb-$(CONFIG_ARCH_QCOM)	+= qcs9100-ride-r3.dtb
-> > > diff --git a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2-industrial-mezzanine.dtso b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2-industrial-mezzanine.dtso
-> > > new file mode 100644
-> > > index 000000000000..1498f32bd069
-> > > --- /dev/null
-> > > +++ b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2-industrial-mezzanine.dtso
-> > > @@ -0,0 +1,35 @@
-> > > +// SPDX-License-Identifier: BSD-3-Clause
-> > > +/*
-> > > + * Copyright (c) 2025, Qualcomm Innovation Center, Inc. All rights reserved.
-> > > +*/
-> > > +
-> > > +/dts-v1/;
-> > > +/plugin/;
-> > > +#include <dt-bindings/clock/qcom,gcc-sc7280.h>
-> > > +#include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
-> > > +
-> > > +&pm7250b_gpios {
-> > > +	tpm_spi_reset: tpm-spi-reset-state {
-> > > +		pins = "gpio5";
-> > > +		function = "normal";
-> > > +		power-source = <1>;
-> > > +		output-high;
-> > > +		input-disable;
-> > > +		bias-pull-up;
-> > > +		qcom,drive-strength = <3>;
-> > > +	};
-> > > +};
-> > > +
-> > > +&spi11 {
-> > > +	#address-cells = <1>;
-> > > +	#size-cells = <0>;
-> > > +	status = "okay";
-> > > +
-> > > +	st33htpm0: tpm@0 {
-> > > +		compatible = "st,st33htpm-spi", "tcg,tpm_tis-spi";
-> > > +		reg = <0>;
-> > > +		spi-max-frequency = <20000000>;
-> > > +		pinctrl-names = "default";
-> > > +		pinctrl-0 = <&tpm_spi_reset>;
-> > Missing reset-gpios property. Otherwise there is no point in specifying
-> > the pinctrl.
-> The community previously rejected the GPIO reset function in the TPM driver
-> (tpm_tis_core.c). You can refer to the discussion [1].
+> Signed-off-by: Jordan Crouse <jorcrous@amazon.com>
+> ---
 > 
-> From what I understand from the discussion in the patch, this decision was
-> made to prevent software from executing an incorrect reset sequence, which
-> could potentially reset the PCR banks of TPM chip.
+>   drivers/clk/qcom/camcc-sm8250.c | 56 ++++++++++++++++-----------------
+>   1 file changed, 28 insertions(+), 28 deletions(-)
 > 
-> However, a pinctrl node is necessary to ensure the PMIC GPIO is in the
-> correct state as required by the TPM chip.
-
-No, pinctrl is not a replacement for GPIO calls. Please don't force GPIO
-levels using pinctrl.
-
-Also, at least tpm-common.yaml defines reset-gpios. So declaring a GPIO
-using that property is a proper course of actions.
-
-The discussion clearly stated: if the GPIO is under software control,
-then it should be clear that PCRs do not work in such a system. Please
-consider implementing that suggestion.
-
-> 
-> [1] https://lore.kernel.org/lkml/20220407111849.5676-1-LinoSanfilippo@gmx.de/T/#m726d477dbce48c9e345e245f93d60f0aaa6f0994
-> 
-> Thanks,
-> 
-> Nirmesh
-> 
-> > 
-> > > +	};
-> > > +};
-> > > -- 
-> > > 2.34.1
-> > > 
-
--- 
-With best wishes
-Dmitry
+> diff --git a/drivers/clk/qcom/camcc-sm8250.c b/drivers/clk/qcom/camcc-sm8250.c
+> index 34d2f17520dc..450ddbebd35f 100644
+> --- a/drivers/clk/qcom/camcc-sm8250.c
+> +++ b/drivers/clk/qcom/camcc-sm8250.c
+> @@ -411,7 +411,7 @@ static struct clk_rcg2 cam_cc_bps_clk_src = {
+>   		.parent_data = cam_cc_parent_data_0,
+>   		.num_parents = ARRAY_SIZE(cam_cc_parent_data_0),
+>   		.flags = CLK_SET_RATE_PARENT,
+> -		.ops = &clk_rcg2_ops,
+> +		.ops = &clk_rcg2_shared_ops,
+>   	},
+>   };
+>   
+> @@ -433,7 +433,7 @@ static struct clk_rcg2 cam_cc_camnoc_axi_clk_src = {
+>   		.parent_data = cam_cc_parent_data_0,
+>   		.num_parents = ARRAY_SIZE(cam_cc_parent_data_0),
+>   		.flags = CLK_SET_RATE_PARENT,
+> -		.ops = &clk_rcg2_ops,
+> +		.ops = &clk_rcg2_shared_ops,
+>   	},
+>   };
+>   
+> @@ -454,7 +454,7 @@ static struct clk_rcg2 cam_cc_cci_0_clk_src = {
+>   		.parent_data = cam_cc_parent_data_0,
+>   		.num_parents = ARRAY_SIZE(cam_cc_parent_data_0),
+>   		.flags = CLK_SET_RATE_PARENT,
+> -		.ops = &clk_rcg2_ops,
+> +		.ops = &clk_rcg2_shared_ops,
+>   	},
+>   };
+>   
+> @@ -469,7 +469,7 @@ static struct clk_rcg2 cam_cc_cci_1_clk_src = {
+>   		.parent_data = cam_cc_parent_data_0,
+>   		.num_parents = ARRAY_SIZE(cam_cc_parent_data_0),
+>   		.flags = CLK_SET_RATE_PARENT,
+> -		.ops = &clk_rcg2_ops,
+> +		.ops = &clk_rcg2_shared_ops,
+>   	},
+>   };
+>   
+> @@ -490,7 +490,7 @@ static struct clk_rcg2 cam_cc_cphy_rx_clk_src = {
+>   		.parent_data = cam_cc_parent_data_0,
+>   		.num_parents = ARRAY_SIZE(cam_cc_parent_data_0),
+>   		.flags = CLK_SET_RATE_PARENT,
+> -		.ops = &clk_rcg2_ops,
+> +		.ops = &clk_rcg2_shared_ops,
+>   	},
+>   };
+>   
+> @@ -511,7 +511,7 @@ static struct clk_rcg2 cam_cc_csi0phytimer_clk_src = {
+>   		.parent_data = cam_cc_parent_data_0,
+>   		.num_parents = ARRAY_SIZE(cam_cc_parent_data_0),
+>   		.flags = CLK_SET_RATE_PARENT,
+> -		.ops = &clk_rcg2_ops,
+> +		.ops = &clk_rcg2_shared_ops,
+>   	},
+>   };
+>   
+> @@ -526,7 +526,7 @@ static struct clk_rcg2 cam_cc_csi1phytimer_clk_src = {
+>   		.parent_data = cam_cc_parent_data_0,
+>   		.num_parents = ARRAY_SIZE(cam_cc_parent_data_0),
+>   		.flags = CLK_SET_RATE_PARENT,
+> -		.ops = &clk_rcg2_ops,
+> +		.ops = &clk_rcg2_shared_ops,
+>   	},
+>   };
+>   
+> @@ -556,7 +556,7 @@ static struct clk_rcg2 cam_cc_csi3phytimer_clk_src = {
+>   		.parent_data = cam_cc_parent_data_0,
+>   		.num_parents = ARRAY_SIZE(cam_cc_parent_data_0),
+>   		.flags = CLK_SET_RATE_PARENT,
+> -		.ops = &clk_rcg2_ops,
+> +		.ops = &clk_rcg2_shared_ops,
+>   	},
+>   };
+>   
+> @@ -571,7 +571,7 @@ static struct clk_rcg2 cam_cc_csi4phytimer_clk_src = {
+>   		.parent_data = cam_cc_parent_data_0,
+>   		.num_parents = ARRAY_SIZE(cam_cc_parent_data_0),
+>   		.flags = CLK_SET_RATE_PARENT,
+> -		.ops = &clk_rcg2_ops,
+> +		.ops = &clk_rcg2_shared_ops,
+>   	},
+>   };
+>   
+> @@ -586,7 +586,7 @@ static struct clk_rcg2 cam_cc_csi5phytimer_clk_src = {
+>   		.parent_data = cam_cc_parent_data_0,
+>   		.num_parents = ARRAY_SIZE(cam_cc_parent_data_0),
+>   		.flags = CLK_SET_RATE_PARENT,
+> -		.ops = &clk_rcg2_ops,
+> +		.ops = &clk_rcg2_shared_ops,
+>   	},
+>   };
+>   
+> @@ -611,7 +611,7 @@ static struct clk_rcg2 cam_cc_fast_ahb_clk_src = {
+>   		.parent_data = cam_cc_parent_data_0,
+>   		.num_parents = ARRAY_SIZE(cam_cc_parent_data_0),
+>   		.flags = CLK_SET_RATE_PARENT,
+> -		.ops = &clk_rcg2_ops,
+> +		.ops = &clk_rcg2_shared_ops,
+>   	},
+>   };
+>   
+> @@ -634,7 +634,7 @@ static struct clk_rcg2 cam_cc_fd_core_clk_src = {
+>   		.parent_data = cam_cc_parent_data_0,
+>   		.num_parents = ARRAY_SIZE(cam_cc_parent_data_0),
+>   		.flags = CLK_SET_RATE_PARENT,
+> -		.ops = &clk_rcg2_ops,
+> +		.ops = &clk_rcg2_shared_ops,
+>   	},
+>   };
+>   
+> @@ -649,7 +649,7 @@ static struct clk_rcg2 cam_cc_icp_clk_src = {
+>   		.parent_data = cam_cc_parent_data_0,
+>   		.num_parents = ARRAY_SIZE(cam_cc_parent_data_0),
+>   		.flags = CLK_SET_RATE_PARENT,
+> -		.ops = &clk_rcg2_ops,
+> +		.ops = &clk_rcg2_shared_ops,
+>   	},
+>   };
+>   
+> @@ -673,7 +673,7 @@ static struct clk_rcg2 cam_cc_ife_0_clk_src = {
+>   		.parent_data = cam_cc_parent_data_2,
+>   		.num_parents = ARRAY_SIZE(cam_cc_parent_data_2),
+>   		.flags = CLK_SET_RATE_PARENT,
+> -		.ops = &clk_rcg2_ops,
+> +		.ops = &clk_rcg2_shared_ops,
+>   	},
+>   };
+>   
+> @@ -710,7 +710,7 @@ static struct clk_rcg2 cam_cc_ife_0_csid_clk_src = {
+>   		.parent_data = cam_cc_parent_data_0,
+>   		.num_parents = ARRAY_SIZE(cam_cc_parent_data_0),
+>   		.flags = CLK_SET_RATE_PARENT,
+> -		.ops = &clk_rcg2_ops,
+> +		.ops = &clk_rcg2_shared_ops,
+>   	},
+>   };
+>   
+> @@ -734,7 +734,7 @@ static struct clk_rcg2 cam_cc_ife_1_clk_src = {
+>   		.parent_data = cam_cc_parent_data_3,
+>   		.num_parents = ARRAY_SIZE(cam_cc_parent_data_3),
+>   		.flags = CLK_SET_RATE_PARENT,
+> -		.ops = &clk_rcg2_ops,
+> +		.ops = &clk_rcg2_shared_ops,
+>   	},
+>   };
+>   
+> @@ -749,7 +749,7 @@ static struct clk_rcg2 cam_cc_ife_1_csid_clk_src = {
+>   		.parent_data = cam_cc_parent_data_0,
+>   		.num_parents = ARRAY_SIZE(cam_cc_parent_data_0),
+>   		.flags = CLK_SET_RATE_PARENT,
+> -		.ops = &clk_rcg2_ops,
+> +		.ops = &clk_rcg2_shared_ops,
+>   	},
+>   };
+>   
+> @@ -771,7 +771,7 @@ static struct clk_rcg2 cam_cc_ife_lite_clk_src = {
+>   		.parent_data = cam_cc_parent_data_0,
+>   		.num_parents = ARRAY_SIZE(cam_cc_parent_data_0),
+>   		.flags = CLK_SET_RATE_PARENT,
+> -		.ops = &clk_rcg2_ops,
+> +		.ops = &clk_rcg2_shared_ops,
+>   	},
+>   };
+>   
+> @@ -786,7 +786,7 @@ static struct clk_rcg2 cam_cc_ife_lite_csid_clk_src = {
+>   		.parent_data = cam_cc_parent_data_0,
+>   		.num_parents = ARRAY_SIZE(cam_cc_parent_data_0),
+>   		.flags = CLK_SET_RATE_PARENT,
+> -		.ops = &clk_rcg2_ops,
+> +		.ops = &clk_rcg2_shared_ops,
+>   	},
+>   };
+>   
+> @@ -810,7 +810,7 @@ static struct clk_rcg2 cam_cc_ipe_0_clk_src = {
+>   		.parent_data = cam_cc_parent_data_4,
+>   		.num_parents = ARRAY_SIZE(cam_cc_parent_data_4),
+>   		.flags = CLK_SET_RATE_PARENT,
+> -		.ops = &clk_rcg2_ops,
+> +		.ops = &clk_rcg2_shared_ops,
+>   	},
+>   };
+>   
+> @@ -825,7 +825,7 @@ static struct clk_rcg2 cam_cc_jpeg_clk_src = {
+>   		.parent_data = cam_cc_parent_data_0,
+>   		.num_parents = ARRAY_SIZE(cam_cc_parent_data_0),
+>   		.flags = CLK_SET_RATE_PARENT,
+> -		.ops = &clk_rcg2_ops,
+> +		.ops = &clk_rcg2_shared_ops,
+>   	},
+>   };
+>   
+> @@ -847,7 +847,7 @@ static struct clk_rcg2 cam_cc_mclk0_clk_src = {
+>   		.parent_data = cam_cc_parent_data_1,
+>   		.num_parents = ARRAY_SIZE(cam_cc_parent_data_1),
+>   		.flags = CLK_SET_RATE_PARENT,
+> -		.ops = &clk_rcg2_ops,
+> +		.ops = &clk_rcg2_shared_ops,
+>   	},
+>   };
+>   
+> @@ -862,7 +862,7 @@ static struct clk_rcg2 cam_cc_mclk1_clk_src = {
+>   		.parent_data = cam_cc_parent_data_1,
+>   		.num_parents = ARRAY_SIZE(cam_cc_parent_data_1),
+>   		.flags = CLK_SET_RATE_PARENT,
+> -		.ops = &clk_rcg2_ops,
+> +		.ops = &clk_rcg2_shared_ops,
+>   	},
+>   };
+>   
+> @@ -877,7 +877,7 @@ static struct clk_rcg2 cam_cc_mclk2_clk_src = {
+>   		.parent_data = cam_cc_parent_data_1,
+>   		.num_parents = ARRAY_SIZE(cam_cc_parent_data_1),
+>   		.flags = CLK_SET_RATE_PARENT,
+> -		.ops = &clk_rcg2_ops,
+> +		.ops = &clk_rcg2_shared_ops,
+>   	},
+>   };
+>   
+> @@ -892,7 +892,7 @@ static struct clk_rcg2 cam_cc_mclk3_clk_src = {
+>   		.parent_data = cam_cc_parent_data_1,
+>   		.num_parents = ARRAY_SIZE(cam_cc_parent_data_1),
+>   		.flags = CLK_SET_RATE_PARENT,
+> -		.ops = &clk_rcg2_ops,
+> +		.ops = &clk_rcg2_shared_ops,
+>   	},
+>   };
+>   
+> @@ -907,7 +907,7 @@ static struct clk_rcg2 cam_cc_mclk4_clk_src = {
+>   		.parent_data = cam_cc_parent_data_1,
+>   		.num_parents = ARRAY_SIZE(cam_cc_parent_data_1),
+>   		.flags = CLK_SET_RATE_PARENT,
+> -		.ops = &clk_rcg2_ops,
+> +		.ops = &clk_rcg2_shared_ops,
+>   	},
+>   };
+>   
+> @@ -922,7 +922,7 @@ static struct clk_rcg2 cam_cc_mclk5_clk_src = {
+>   		.parent_data = cam_cc_parent_data_1,
+>   		.num_parents = ARRAY_SIZE(cam_cc_parent_data_1),
+>   		.flags = CLK_SET_RATE_PARENT,
+> -		.ops = &clk_rcg2_ops,
+> +		.ops = &clk_rcg2_shared_ops,
+>   	},
+>   };
+>   
+> @@ -993,7 +993,7 @@ static struct clk_rcg2 cam_cc_slow_ahb_clk_src = {
+>   		.parent_data = cam_cc_parent_data_0,
+>   		.num_parents = ARRAY_SIZE(cam_cc_parent_data_0),
+>   		.flags = CLK_SET_RATE_PARENT,
+> -		.ops = &clk_rcg2_ops,
+> +		.ops = &clk_rcg2_shared_ops,
+>   	},
+>   };
+>   
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 
