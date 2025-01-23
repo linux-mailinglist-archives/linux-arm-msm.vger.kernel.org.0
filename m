@@ -1,219 +1,143 @@
-Return-Path: <linux-arm-msm+bounces-46011-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46012-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2FAB2A1AB79
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jan 2025 21:35:05 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 28552A1ABD8
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jan 2025 22:23:05 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E37283AEE3E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jan 2025 20:32:31 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 18A57188E619
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jan 2025 21:23:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AD5481D88A6;
-	Thu, 23 Jan 2025 20:29:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C08501C5D5C;
+	Thu, 23 Jan 2025 21:23:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Xq3iN89f"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fDU378yG"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pj1-f48.google.com (mail-pj1-f48.google.com [209.85.216.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE5571DA0EB
-	for <linux-arm-msm@vger.kernel.org>; Thu, 23 Jan 2025 20:29:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FABF1CAA63;
+	Thu, 23 Jan 2025 21:23:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737664192; cv=none; b=nBdY/rl1Z9aNcJW5F5U/6KcWzoZg4LPgNU1cKg6DYXS4X/Zwr9A6SqxucHFn8FMpmc0Zjl0cuEIcPDir0Vwc2cJ9YWqOVRNZUKYczDPKHbdvSMWeSS0pyra6TiKAufo4YGAFWevrmEhxM7Jhqf2dCxhS07FzUXe7rS0wSGx3b10=
+	t=1737667381; cv=none; b=mryL1R4Y5ADyqC9dP+0BCEjZ4fBDmcin0OKkpsiLWdWaFG2fW0jrQPYYvkj3cSVrpnLtFyokHsiv8GjIRgGFN0xvZAlCmLmG9RDzrJrKQ2Og8oentkol/Klr/1RtM2Q6HSy5dLvBZf/mdcaH/LnV/cPMEqBOBZjQHCRDNv61V7o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737664192; c=relaxed/simple;
-	bh=WEUi/YG2MoWUOF6uCxNlvX3lwljvYvy8G2P6b5wr7cE=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=YVsSFxt7NcL+DV5lMSwbQsrRlRWVhmP6XoFcrQ+w1dEtsjWEPosu1uadjRHWQrlEM4foMJZ/+wx3dQfT75jA8p2wOeAIHtbmGZeR9nf3TDClmu8nTDRrhn90+kJXJuiXetXSa37enL7Izl8sRZ0z2ZtwdrIdwPDrugcAZNaVuuk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Xq3iN89f; arc=none smtp.client-ip=209.85.216.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pj1-f48.google.com with SMTP id 98e67ed59e1d1-2f2f5e91393so313639a91.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Jan 2025 12:29:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1737664190; x=1738268990; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=xhXUcAh2hlUnon67PlT/agcOsGJGx82H3mKA5T5zmFk=;
-        b=Xq3iN89f3WiToaWvvgwaAeQKCK2aNAEvnsRH5FgfJgNSC3hH5JmFnJGWJtuTNLEFeO
-         tViyALTFItmj7Jm9g1i4eP9MvJBnaMMsEUYMOOmRsSIlWeiBPVYJp57NKlOYmYg4BwL3
-         H1RC1YgbboV3AZMpTRTeNEMCm9gLW979mpPxyUy/qaUNwaBuTBz62nTOkKYbfqfBydkr
-         IEr/McmN+O8y8ypO+COcO81zpvgjygJvh4gnGYcd6IKWMypCfVoKamGXK1R+LixSfrDP
-         GXCHAjxHaEuYFBzDcWVyt9l2x6bgQxblgfdcOfajnkXRf/gu3Ho9HDyI4qTsZZP0O1Gu
-         ocfA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1737664190; x=1738268990;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=xhXUcAh2hlUnon67PlT/agcOsGJGx82H3mKA5T5zmFk=;
-        b=vJD2ngtoFxKY6N9W/l+N98xHpC8jr2Pz3Ykaz8TYCyl1T22Go3X3Q8eBmv7JP/CgIf
-         HTqfc+dlQU+PQHNKpDWtQAycgl0fHCGH8ocM7MxFkkbc27trVp1lCnjCZh1t2WIOSTBs
-         36jdVEedVVvEaLxEl7wj3PJTBrwuO1D/ohCUyT3iueikG97Jd4dPb9nzMcVdJhdo0AMS
-         wGDAsyuSqj49ts317qqhorkE/i4vR0+G9jE4qyCWXJZ638I8HVFYFiYMtCBuGyEkez4A
-         Os8G9rvJDWNHuqmsoWyUVU2bhfEV9ae9rDAx5LYhvKLHoV/y1KZ8Y9Hm6FXZwAy9214I
-         iw3Q==
-X-Forwarded-Encrypted: i=1; AJvYcCVkpztIpHdnGgcGsNA7RxeJ9CUfdCi5880fTJt0Euj1S7+HTJj01pZxKSgzpD1hsI+0U6L+GPseLjnnCV4G@vger.kernel.org
-X-Gm-Message-State: AOJu0YyVP6ABKpzF+xy7OC09CPs1f/ubX1HzBBfPjEkz4en+HVhIBi+k
-	tFUssdhAcfDOexpfRceairIwuSkoqb42baeW+aab2IaFodTV2Sz3oPqvj/R1D1XKDdF34WwN6R6
-	/mIeTWS1k9kaXCH5+AIgoc5OxUQ8=
-X-Gm-Gg: ASbGncukdP94yjvuJZj5k0uLALyxN4yV0CIA3c4/PxaIlS4mUlfyT64CcGfxBX6YzG0
-	GyJinnnU2yThVD6Nhe84Y5WGe9A0IINlhrfHQE7ECKYlEOcUUikodhSUEU5RsOw==
-X-Google-Smtp-Source: AGHT+IEl/Vyc8QmUbX/0GWfiscTSIPf6SvYZLBKkQKTl7lLUFAx/A3wbK7xRIXAG5nlkFHCAISdwVSqrdyt6dZww7dM=
-X-Received: by 2002:a05:6a00:3a1d:b0:72d:8a01:bb6c with SMTP id
- d2e1a72fcca58-72daf7a1db7mr13737192b3a.0.1737664189916; Thu, 23 Jan 2025
- 12:29:49 -0800 (PST)
+	s=arc-20240116; t=1737667381; c=relaxed/simple;
+	bh=Pqn0b9u+oiewcWbHAYxeu1Vc50G/8MYxNovN2Y3irTQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=RJpeypFuTwq7uKqSzd0engaz8WzTeLJRh1pnaMaGJP3erKIAxeMdVSWBWEhhp5CztB46ZXfuurYML3EH+5eX/IpHpv5RvI9cfTQ8sTSx+cZezS5kGcIxoMxfsGW7/GFGm1QACDRRKpco+TzMDgVRDvDvt91DZkh6IEYKfIpBI/Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fDU378yG; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEE66C4CED3;
+	Thu, 23 Jan 2025 21:23:00 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1737667381;
+	bh=Pqn0b9u+oiewcWbHAYxeu1Vc50G/8MYxNovN2Y3irTQ=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=fDU378yGsz+RgFBSk/vYkjkT4hMhGrHx/t07ufKOX5hD0/lBUjUAhC224aip1PlJq
+	 aZmdhs+x95e3adyGo+K863swSuI0+Xrhz4Uu+wCzH8KjijV8SgC7raU01nMJuBJrDU
+	 Mmt/1oQI7DzcJqOuaeK2oVhulbE0iX/UWbUsCHtScvaF5Av5Tzd2xexKT4RD8CNzhK
+	 4SUUA4ubrEQ73hhzlNORFB3xfGgNihN9AGVj0BxRKPOQ/dOoVuCBgr276rG4Qb25aG
+	 FRvZ2F/dOqcW6k5TnRLDcQ3WrohkkoKmn8yC6zlJTZubiqaaCCd4njviaCxSwYDgyl
+	 ZZrl23MNP9NLg==
+Date: Thu, 23 Jan 2025 15:22:59 -0600
+From: Rob Herring <robh@kernel.org>
+To: Bjorn Andersson <andersson@kernel.org>
+Cc: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, Felipe Balbi <balbi@kernel.org>,
+	Wesley Cheng <quic_wcheng@quicinc.com>,
+	Saravana Kannan <saravanak@google.com>,
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+	Philipp Zabel <p.zabel@pengutronix.de>,
+	Konrad Dybcio <konradybcio@kernel.org>, Frank Li <Frank.li@nxp.com>,
+	linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3 00/12] usb: dwc3: qcom: Flatten dwc3 structure
+Message-ID: <20250123212259.GA381176-robh@kernel.org>
+References: <20250113-dwc3-refactor-v3-0-d1722075df7b@oss.qualcomm.com>
+ <20250114174452.GB1414434-robh@kernel.org>
+ <srhxu3r4sxy5ntx53nicf7l43sdjpiwavzd2qsgq2ovquzvt3u@cskcthmqznex>
+ <CAL_Jsq+4qzfy3kY+8LwPvGs4FkFKoregTAYu4-buJQZHkqJwyA@mail.gmail.com>
+ <3kuydb3b3ky4gczh5dyjjdcka2xlzgcv3ged4d432fgrprx7hr@byi7eg5fdvop>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250122-msm-gpu-fault-fixes-next-v3-0-0afa00158521@gmail.com>
- <20250122-msm-gpu-fault-fixes-next-v3-1-0afa00158521@gmail.com>
- <Z5IjsqQ6vTdUXiGt@hu-guptap-hyd.qualcomm.com> <CACu1E7H5X2EfY9AG=xceaoZJkbumwnrsU4QvNbxd_A2wgVVOaQ@mail.gmail.com>
- <Z5KXwNPrdirVUn8Z@hu-guptap-hyd.qualcomm.com>
-In-Reply-To: <Z5KXwNPrdirVUn8Z@hu-guptap-hyd.qualcomm.com>
-From: Connor Abbott <cwabbott0@gmail.com>
-Date: Thu, 23 Jan 2025 15:29:38 -0500
-X-Gm-Features: AWEUYZlzwCzK_Ns_Li_73IXsL90hsOwVuugbU7LWSAnvDp0ILCSA2EsoYowsZGM
-Message-ID: <CACu1E7Hw3WxNzwdA2A8hG2yWNVMLy=r=68_X0C3tkVttgRzXVQ@mail.gmail.com>
-Subject: Re: [PATCH v3 1/3] iommu/arm-smmu: Fix spurious interrupts with stall-on-fault
-To: Prakash Gupta <quic_guptap@quicinc.com>
-Cc: Rob Clark <robdclark@gmail.com>, Will Deacon <will@kernel.org>, 
-	Robin Murphy <robin.murphy@arm.com>, Joerg Roedel <joro@8bytes.org>, Sean Paul <sean@poorly.run>, 
-	Konrad Dybcio <konradybcio@kernel.org>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, iommu@lists.linux.dev, 
-	linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
-	freedreno@lists.freedesktop.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <3kuydb3b3ky4gczh5dyjjdcka2xlzgcv3ged4d432fgrprx7hr@byi7eg5fdvop>
 
-On Thu, Jan 23, 2025 at 2:26=E2=80=AFPM Prakash Gupta <quic_guptap@quicinc.=
-com> wrote:
->
-> On Thu, Jan 23, 2025 at 09:00:17AM -0500, Connor Abbott wrote:
-> > On Thu, Jan 23, 2025 at 6:10=E2=80=AFAM Prakash Gupta <quic_guptap@quic=
-inc.com> wrote:
+On Wed, Jan 22, 2025 at 09:07:43PM -0600, Bjorn Andersson wrote:
+> On Wed, Jan 15, 2025 at 12:51:42PM -0600, Rob Herring wrote:
+> > On Tue, Jan 14, 2025 at 5:04 PM Bjorn Andersson <andersson@kernel.org> wrote:
 > > >
-> > > On Wed, Jan 22, 2025 at 03:00:58PM -0500, Connor Abbott wrote:
+> > > On Tue, Jan 14, 2025 at 11:44:52AM -0600, Rob Herring wrote:
+> > > > On Mon, Jan 13, 2025 at 09:11:33PM -0800, Bjorn Andersson wrote:
+> > > > > The USB IP-block found in most Qualcomm platforms is modelled in the
+> > > > > Linux kernel as 3 different independent device drivers, but as shown by
+> > > > > the already existing layering violations in the Qualcomm glue driver
+> > > > > they can not be operated independently.
+> > > > >
+> > > > > With the current implementation, the glue driver registers the core and
+> > > > > has no way to know when this is done. As a result, e.g. the suspend
+> > > > > callbacks needs to guard against NULL pointer dereferences when trying
+> > > > > to peek into the struct dwc3 found in the drvdata of the child.
+> > > > >
+> > > > > Missing from the upstream Qualcomm USB support is proper handling of
+> > > > > role switching, in which the glue needs to be notified upon DRD mode
+> > > > > changes. Several attempts has been made through the years to register
+> > > > > callbacks etc, but they always fall short when it comes to handling of
+> > > > > the core's probe deferral on resources etc.
+> > > > >
+> > > > > Furhtermore, the DeviceTree binding is a direct representation of the
+> > > > > Linux driver model, and doesn't necessarily describe "the USB IP-block".
+> > > > >
+> > > > > This series therefor attempts to flatten the driver split, and operate
+> > > > > the glue and core out of the same platform_device instance. And in order
+> > > > > to do this, the DeviceTree representation of the IP block is flattened.
+> > > > >
+> > > > > To avoid littering the dwc3-qcom driver with the migration code - which
+> > > > > we should be able to drop again in a LTS or two - this is now placed in
+> > > > > drivers/of/overlays.
+> > > > >
+> > > > > A patch to convert a single platform - sc8280xp - is included in the
+> > > > > series. The broader conversion will be submitted in a follow up series.
+> > > >
+> > > > Is it not possible to use the same overlays also fixup the .dts files at
+> > > > build time?
+> > > >
 > > >
-> > > > +     /*
-> > > > +      * On some implementations FSR.SS asserts a context fault
-> > > > +      * interrupt. We do not want this behavior, because resolving=
- the
-> > > > +      * original context fault typically requires operations that =
-cannot be
-> > > > +      * performed in IRQ context but leaving the stall unacknowled=
-ged will
-> > > > +      * immediately lead to another spurious interrupt as FSR.SS i=
-s still
-> > > > +      * set. Work around this by disabling interrupts for this con=
-text bank.
-> > > > +      * It's expected that interrupts are re-enabled after resumin=
-g the
-> > > > +      * translation.
-> > > > +      *
-> > > > +      * We have to do this before report_iommu_fault() so that we =
-don't
-> > > > +      * leave interrupts disabled in case the downstream user deci=
-des the
-> > > > +      * fault can be resolved inside its fault handler.
-> > > > +      *
-> > > > +      * There is a possible race if there are multiple context ban=
-ks sharing
-> > > > +      * the same interrupt and both signal an interrupt in between=
- writing
-> > > > +      * RESUME and SCTLR. We could disable interrupts here before =
-we
-> Not sure if multiple context bank with shared interrupt supported for
-> arm-smmu driver, but even if does than context fault handler they would
-> operate on their respective context register space, so I don't see the ra=
-ce
-> at context register update.
->
-> > > > +      * re-enable them in the resume handler, leaving interrupts e=
-nabled.
-> > > > +      * Lock the write to serialize it with the resume handler.
-> > > > +      */
-> > > > +     if (cfi.fsr & ARM_SMMU_CB_FSR_SS) {
-> > > > +             u32 val;
-> > > > +
-> > > > +             spin_lock(&smmu_domain->cb_lock);
-> > > > +             val =3D arm_smmu_cb_read(smmu, idx, ARM_SMMU_CB_SCTLR=
-);
-> > > > +             val &=3D ~ARM_SMMU_SCTLR_CFIE;
-> > > > +             arm_smmu_cb_write(smmu, idx, ARM_SMMU_CB_SCTLR, val);
-> > > > +             spin_unlock(&smmu_domain->cb_lock);
-> > > > +     }
-> > > > +
-> > > > +     /*
-> > > > +      * The SMMUv2 architecture specification says that if stall-o=
-n-fault is
-> > > > +      * enabled the correct sequence is to write to SMMU_CBn_FSR t=
-o clear
-> > > > +      * the fault and then write to SMMU_CBn_RESUME. Clear the int=
-errupt
-> > > > +      * first before running the user's fault handler to make sure=
- we follow
-> > > > +      * this sequence. It should be ok if there is another fault i=
-n the
-> > > > +      * meantime because we have already read the fault info.
-> > > > +      */
-> qcom_adreno_smmu_get_fault_info() reads the fault info as part of client
-> fault hanlder. So it would not be ok to clear FSR before reporting the
-> fault to client.
+> > > I presume so. What would the benefit of that be, over fixing up the
+> > > source asap?
+> > 
+> > The overlays would live with all the other dts files (I think kbuild
+> > can add built-in dtbs from arch/*/boot/dts/). We can test at build
+> > time they actually apply, and ensure the new dtb matches what the
+> > fixup overlay creates.
+> > 
+> 
+> That does sounds tempting, in particular since it sounds like it would
+> provide  us with dt-validation of the end result.
+> 
+> But, the build-time overlaid dtb files wouldn't be complete, as I
+> programmatically transition some of the properties - to "fix" that I'd
+> have to provide an overlay per board.
+> 
+> Second, it was my intention to transition all the boards to the new
+> binding as soon as possible, to avoid adding more overlays when new
+> boards are added. So any support-system we build up for this, would be
+> immediately obsoleted.
 
-That's a good point, but as long as stall-on-fault is enabled it
-doesn't matter because subsequent transactions that fault will be
-stalled. Patch 3 of this series disables stall-on-fault after the
-first fault in drm/msm, but we don't care as much about the accuracy
-of those subsequent faults.
+Ok, fair enough.
 
->
-> > > The context would remain stalled till we write to CBn_RESUME. Which i=
-s done
-> > > in qcom_adreno_smmu_resume_translation(). For a stalled context furth=
-er
-> > > transactions are not processed and we shouldn't see further faults an=
-d
-> > > or fault inerrupts. Do you observe faults with stalled context?
-> >
-> > Yes. I've observed that on MMU-500 writing RESUME before the interrupt
-> > has been cleared doesn't clear SS. This happened with v2 in the case
-> > where there was already a devcoredump and drm/msm called
-> > qcom_adreno_smmu_resume_translation() immediately from its fault
-> > handler, and we'd get a storm of unhandled interrupts until it was
-> > disabled. Given that the architecture spec says we're supposed to
-> > clear the interrupt first this may have been an attempt to "help"
-> > developers.
-> >
->
-> Just to clarify, present sequence is:
-> 1. context fault with stall enable. FSR.SS set.
-> 2. Report fault to client
-> 3. resume/terminate stalled transaction
-> 4. clear FSR
->
-> At what point when you try #2->#3->#4 or #4->#2->#3 sequence, is FSR.SS
-> cleared and interrupt storm is observed.  The way CFIE disable is helping
-> with current patch indicates write FSR is unstalling context and subseque=
-nt
-> transactions are faulted.  Do you stop getting interrupt storm after writ=
-e
-> RESUME. If you can mention your SCTLR configuration and FSR state in test
-> sequence, it would be clearer.
->
-> An aside, If reducing delay between FSR and RESUME write helps then both
-> can be done as part of qcom_adreno_smmu_resume_translation(). This will
-> follow spec recommendation and also make sure fault registers are not
-> cleared before reporting fault to client.
->
-> Thanks,
-> Prakash
+I would still prefer the overlays live in arch/*/boot/dts/qcom/ even if 
+we don't do the rest.
+
+Rob
 
