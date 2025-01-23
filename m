@@ -1,47 +1,47 @@
-Return-Path: <linux-arm-msm+bounces-46000-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46001-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 51163A1A761
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jan 2025 16:57:47 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id E6DD9A1A763
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jan 2025 16:57:55 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 147373A2055
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jan 2025 15:57:40 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id BF6477A23C0
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jan 2025 15:57:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4A418212D86;
-	Thu, 23 Jan 2025 15:57:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 853CF21322E;
+	Thu, 23 Jan 2025 15:57:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CY33gm/k"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Hy7nN4an"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D8E7211A24;
-	Thu, 23 Jan 2025 15:57:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56A4D212FAC;
+	Thu, 23 Jan 2025 15:57:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737647865; cv=none; b=BLMCPzmSpSA6IaFzpNkXrUlLv26fR0/Cfjhn9pX8gAbnARt/8JnksL6U9rMcwnK9ZSCWYmEq7rdrBVDDI9RWJY9ZozmxKxHPU1qunWXwO2Ebr6Amo4KaOKQvmNNERRegYohoXpf0PSbUxpwrxvDFCBgWqFuAFavxsNEv7Pq/brQ=
+	t=1737647866; cv=none; b=bjwrqDZ5qTJ/SlnY/yamrAkmdQTr2NZ1B40MEtIEBVkKvdvARM+ee6Ruih89c7GbICaUMG37wjmdHikKNS9TWPuCDEhB0PxkBQ8sofNqH1h3MLKIc/U5Vcc06RVCgF6L1BdR2LuY8iJKizUWHU88Ofat+EsAANydr10lM53vt8g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737647865; c=relaxed/simple;
-	bh=xPKTNBGlWG8mSfsD25hwwuOv+dlF9h+/MmfEKiyv2c0=;
+	s=arc-20240116; t=1737647866; c=relaxed/simple;
+	bh=FPoRGmjzqY7kjf8l67wTrBxrM/eEufKrizteXMLv4GY=;
 	h=Date:Content-Type:MIME-Version:From:Cc:To:In-Reply-To:References:
-	 Message-Id:Subject; b=YVUyb8aoiut5pedcpgagF48QyTv4695PZgQIaN40+7hzdsWEex3t4eZIZ7BvQlrkfBxThJMzVI9Q3Q6KURtPo2xgbORUZ2JOgPRHFDTV+em6IkluUgxLCSvbu1vOisbfZPBYDNzonPipPE2T1TbzKKr8CW/JcwAzxi85rN3eU7E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CY33gm/k; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BA04C4CED3;
-	Thu, 23 Jan 2025 15:57:44 +0000 (UTC)
+	 Message-Id:Subject; b=drinRHyRpZj7tiYvHNhcflTCGXC4gyviElIzPsYU05aXZsJsIMlZeIsAXo4HlnbxMNbfOJVyMZCN0VH2BuRGW/9RecOS+CzAJ+fz+pibtnShRMWbh1dtY3L9rmlk6TCBRR/CauA3nE73BOhm2wY02XiD5EoEuF/06hhI8n/9Muo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Hy7nN4an; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98493C4CEDD;
+	Thu, 23 Jan 2025 15:57:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1737647864;
-	bh=xPKTNBGlWG8mSfsD25hwwuOv+dlF9h+/MmfEKiyv2c0=;
+	s=k20201202; t=1737647865;
+	bh=FPoRGmjzqY7kjf8l67wTrBxrM/eEufKrizteXMLv4GY=;
 	h=Date:From:Cc:To:In-Reply-To:References:Subject:From;
-	b=CY33gm/kmmzzCO8BrQpX/9Y3eAb3f7WKRNmT+BXjiLHweaIj5Q+pRsW4BOOpdr2pk
-	 5sbBPQuBvI3HbFputYHP55CjwBHQIHEQAudcXzisY3R/TqUZ1SzPz2bx7S5sAfagIu
-	 JC1lvG/EZ596fonV9+zwSzrz2FoIfhHcSnr7ztq1fKFp8quRv3GUggbNMcW+ojBRCT
-	 OONkznqwl8GK6QYnOumqfYf5X+kFBbUXtfzVeuwWVjbxKk5uepmTcgAkjevEW2vrRe
-	 SkJxmfoQ00TN/J1DdNvwXJzTSfVhP9w8v9hRH/0K2M/88MNsQm/IWaf6O8Qhpjklhr
-	 CWUuwCEHX539Q==
-Date: Thu, 23 Jan 2025 09:57:43 -0600
+	b=Hy7nN4an9w5o3Pqyq6XgPerIxU8Hi8BsS5sCvEn43s7ynDweBehaJ0OrAb3R6/buQ
+	 cotaD55FR841DKPsdESrvLiCM684GA8yJJQF5uLPDe92QU5PY0OCtTtBiPMa8uOVMz
+	 7+8H2z2S3PeNjhV3tbQxajkPpbjyaNo1PehJ0CGoTFU9Cnb9HMz0gdyFxw2k4lp+eC
+	 lA4EHj6dEubqEB1SWZWmm+HSo0QUMDWhkg3n61UoPAFnLTOplTivfkvyvagd2wdd9f
+	 qqyPErLlG90lDM9BxI+Uwog5b2m4wIpxhH6HxZl7L7oIdcBG5H1XC3FmDchBD2refL
+	 sJFd7/t92yS7g==
+Date: Thu, 23 Jan 2025 09:57:44 -0600
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
@@ -51,60 +51,169 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 From: "Rob Herring (Arm)" <robh@kernel.org>
-Cc: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, linux-kernel@vger.kernel.org, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, devicetree@vger.kernel.org, 
- Ajit Pandey <quic_ajipan@quicinc.com>, Conor Dooley <conor+dt@kernel.org>, 
- Imran Shaik <quic_imrashai@quicinc.com>, linux-arm-msm@vger.kernel.org, 
- Jagadeesh Kona <quic_jkona@quicinc.com>
-To: Taniya Das <quic_tdas@quicinc.com>
-In-Reply-To: <20250119-qcs615-mm-v2-dt-nodes-v2-0-c46ab4080989@quicinc.com>
-References: <20250119-qcs615-mm-v2-dt-nodes-v2-0-c46ab4080989@quicinc.com>
-Message-Id: <173764774317.3793366.6830351550089320440.robh@kernel.org>
-Subject: Re: [PATCH v2 0/2] Add support for clock controllers and CPU
- scaling for QCS615
+Cc: akapatra@quicinc.com, todor.too@gmail.com, krzk+dt@kernel.org, 
+ catalin.marinas@arm.com, mchehab@kernel.org, devicetree@vger.kernel.org, 
+ bryan.odonoghue@linaro.org, linux-kernel@vger.kernel.org, 
+ cros-qcom-dts-watchers@chromium.org, hverkuil-cisco@xs4all.nl, 
+ kernel@quicinc.com, conor+dt@kernel.org, rfoss@kernel.org, 
+ konradybcio@kernel.org, will@kernel.org, linux-media@vger.kernel.org, 
+ linux-arm-kernel@lists.infradead.org, hariramp@quicinc.com, 
+ andersson@kernel.org, linux-arm-msm@vger.kernel.org
+To: Vikram Sharma <quic_vikramsa@quicinc.com>
+In-Reply-To: <20250121125010.1853269-1-quic_vikramsa@quicinc.com>
+References: <20250121125010.1853269-1-quic_vikramsa@quicinc.com>
+Message-Id: <173764774673.3793413.12753318541761077535.robh@kernel.org>
+Subject: Re: [PATCH v11 0/2] media: qcom: camss: Add sc7280 support
 
 
-On Sun, 19 Jan 2025 17:30:26 +0530, Taniya Das wrote:
-> Add the video, camera, display and gpu clock controller nodes and the
-> cpufreq-hw node to support cpu scaling.
+On Tue, 21 Jan 2025 18:20:08 +0530, Vikram Sharma wrote:
+> SC7280 is a Qualcomm SoC. This series adds support to bring up the CSIPHY,
+> CSID, VFE/RDI interfaces in SC7280.
 > 
-> Clock Dependency:
-> https://lore.kernel.org/all/20250119-qcs615-mm-v4-clockcontroller-v4-0-5d1bdb5a140c@quicinc.com/
+> SC7280 provides
+> - 3 x VFE, 3 RDI per VFE
+> - 2 x VFE Lite, 4 RDI per VFE
+> - 3 x CSID
+> - 2 x CSID Lite
+> - 5 x CSI PHY
 > 
-> Changes in v2:
-> - pad address field to 8 digits [Dmitry]
-> - Replace cpu/CPU in commit [Dmitry]
-> - Update the binding to use SC7180 compatible, as QCS615 uses the same
->   hardware version.
-> - Link to v1: https://lore.kernel.org/r/20241108-qcs615-mm-dt-nodes-v1-0-b2669cac0624@quicinc.com
+> This change is dependent on below series as we have updated clock names
+> in yaml and driver.
+> https://lore.kernel.org/linux-arm-msm/20250121120901.1841142-1-quic_vikramsa@quicinc.com/
 > 
-> Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
-> ---
-> Taniya Das (2):
->       arm64: dts: qcom: qcs615: Add clock nodes for multimedia clock
->       arm64: dts: qcom: qcs615: Add CPU scaling clock node
+> We have tested this on qcs6490-rb3gen2-vision-mezzanine board having IMX577
+> sensor.
 > 
->  arch/arm64/boot/dts/qcom/qcs615.dtsi | 79 ++++++++++++++++++++++++++++++++++++
->  1 file changed, 79 insertions(+)
-> ---
-> base-commit: 0907e7fb35756464aa34c35d6abb02998418164b
-> change-id: 20250119-qcs615-mm-v2-dt-nodes-d5d924bee55e
-> prerequisite-message-id: <20250119-qcs615-mm-v4-clockcontroller-v4-0-5d1bdb5a140c@quicinc.com>
-> prerequisite-patch-id: 72a894a3b19fdbd431e1cec9397365bc5b27abfe
-> prerequisite-patch-id: 7fa9f2a44f98280ae6639924c8ce08a89457170d
-> prerequisite-patch-id: b9e3a2663e27dc60be0eff97baf3739db8516eeb
-> prerequisite-patch-id: cb93e5798f6bfe8cc3044c4ce973e3ae5f20dc6b
-> prerequisite-patch-id: faf0d569634dad432f67acd073343e47add0ee68
-> prerequisite-patch-id: 807019bedabd47c04f7ac78e9461d0b5a6e9131b
-> prerequisite-patch-id: 1a1dbf7144745dfbc60c0f2efcad188d1fc26779
-> prerequisite-patch-id: 125bb8cb367109ba22cededf6e78754579e1ed03
-> prerequisite-patch-id: b12e39a6a0763b8ec23c99c82f3ac6acdca26f85
-> prerequisite-patch-id: 71f0eb0fb98c3177dcbe6736c120cba4efef0c33
+> Used following tools for the sanity check of these changes.
 > 
-> Best regards,
+> - make CHECK_DTBS=y W=1 DT_SCHEMA_FILES=media/qcom,sc7280-camss.yaml
+> qcom/qcs6490-rb3gen2-vision-mezzanine.dtb
+> - make DT_CHECKER_FLAGS=-m W=1
+> DT_SCHEMA_FILES=media/qcom,sc7280-camss.yaml dt_binding_check
+> - Smatch: make CHECK="smatch --full-path" M=drivers/media/platform/qcom/camss/
+> - coccicheck : make coccicheck M=drivers/media/platform/qcom/camss/
+> - make -j32 W=1
+> - ./scripts/checkpatch.pl
+> 
+> Changes in V11:
+> - Moved [PATCH v10 1/4] and [PATCH v10 2/4] as a separate series.
+> - Marked dependency on
+>   https://lore.kernel.org/linux-arm-msm/20250121120901.1841142-1-quic_vikramsa@quicinc.com/
+> - Sorted the header files alphabetically in dtso.
+> - Removed invalid property for sensor.
+> - Removed rst-pin from default and suspend states of pinctrl. We have verified
+>   that for imx412 sensor there are no SET_SYSTEM_SLEEP_PM_OPS added.
+>   So removing rst-pin does not make any difference in power management.
+> - Link to v10: https://lore.kernel.org/linux-arm-msm/20241217140656.965235-1-quic_vikramsa@quicinc.com/
+> 
+> Changes in V10:
+> - Updated cover letter to add link for v8 under changes in v9.
+> - No change in the patches w.r.t V9
+> - Link to v9: https://lore.kernel.org/linux-arm-msm/20241217133955.946426-1-quic_vikramsa@quicinc.com/
+> 
+> Changes in V9:
+> - Removed GCC_CAMERA_AHB_CLK as its always enabled.
+> - Added GCC_CAMERA_SF_AXI_CLK.
+> - Renamed gcc_cam_hf_axi to gcc_axi_hf.
+> - V8 had 5 patches and V9 have 4 patches.
+> - First 3 patches of V8 are already promoted to linux-next
+> i.e
+>   media: dt-bindings: Add qcom,sc7280-camss
+>   media: qcom: camss: Sort camss version enums and compatible strings
+>   media: qcom: camss: Add support for camss driver on sc7280
+> - 2 new patches are added to handle new comments from Konrad on
+>   "Patch v8 4/5 arm64: dts: qcom: sc7280: Add support for camss"
+>   1 of the 2 new patches make changes in yaml and other one is making
+>   change in camss driver to handle new comments in dtsi.
+> - for "Patch v8 4/5 arm64: dts: qcom: sc7280: Add support for camss" I got
+>   comments from Konrad to make changes for clock names so I had to make
+>   respective changes in "bindings/media/qcom,sc7280-camss.yaml". As dtsi
+>   changes are not merged yet, so there is no issues with backward
+>   compatibility and I am assuming this should be acceptable.
+> - Link to v8: https://lore.kernel.org/linux-arm-msm/20241206191900.2545069-1-quic_vikramsa@quicinc.com/
+> 
+> Changes in V8:
+> - Changed node name from camss to isp.
+> - Added QCOM_ICC_TAG_ACTIVE_ONLY and QCOM_ICC_TAG_ALWAYS tags for
+>   interconnects.
+> - Added blank lines when required.
+> - Modified power-domain-names from horizontal to vertical list.
+> - Sorted pinctrl nodes based on gpio index.
+> - Link to v7: https://lore.kernel.org/linux-arm-msm/20241204100003.300123-1-quic_vikramsa@quicinc.com/
+> 
+> Changes in V7:
+> - Changed unit address for camss in documention and dts.
+> - Added avdd-supply and dvdd-supply for sensor.
+> - Changed reg/clocks/interrupts name for vfe_lite and csid_lite.
+> - Link to v6: https://lore.kernel.org/linux-arm-msm/20241127100421.3447601-1-quic_vikramsa@quicinc.com/
+> 
+> Changes in V6:
+> - Changed order of properties in Documentation [PATCH 1/5].
+> - Updated description for ports in Documentaion [PATCH 1/5].
+> - Moved regulators from csid to csiphy [PATCH 3/5].
+> - Link to v5: https://lore.kernel.org/linux-arm-msm/20241112173032.2740119-1-quic_vikramsa@quicinc.com/
+> 
+> Changes in V5:
+> - Updated Commit text for [PATCH v5 1/6].
+> - Moved reg after compatible string.
+> - Renamed csi'x' clocks to vfe'x'_csid
+> - Removed [PATCH v4 4/6] and raised a seprate series for this one.
+> - Moved gpio states to mezzanine dtso.
+> - Added more clock levels to address TPG related issues.
+> - Renamed power-domains-names -> power-domain-names.
+> - Link to v4: https://lore.kernel.org/linux-arm-msm/20241030105347.2117034-1-quic_vikramsa@quicinc.com/
+> 
+> Changes in V4:
+> - V3 had 8 patches and V4 is reduced to 6.
+> - Removed [Patch v3 2/8] as binding change is not required for dtso.
+> - Removed [Patch v3 3/8] as the fix is already taken care in latest
+>   kernel tip.
+> - Updated alignment for dtsi and dt-bindings.
+> - Adding qcs6490-rb3gen2-vision-mezzanine as overlay.
+> - Link to v3: https://lore.kernel.org/linux-arm-msm/20241011140932.1744124-1-quic_vikramsa@quicinc.com/
+> 
+> Changes in V3:
+> - Added missed subject line for cover letter of V2.
+> - Updated Alignment, indentation and properties order.
+> - edit commit text for [PATCH 02/10] and [PATCH 03/10].
+> - Refactor camss_link_entities.
+> - Removed camcc enablement changes as it already done.
+> - Link to v2: https://lore.kernel.org/linux-arm-msm/20240904-camss_on_sc7280_rb3gen2_vision_v2_patches-v1-0-b18ddcd7d9df@quicinc.com/
+> 
+> Changes in V2:
+> - Improved indentation/formatting.
+> - Removed _src clocks and misleading code comments.
+> - Added name fields for power domains and csid register offset in DTSI.
+> - Dropped minItems field from YAML file.
+> - Listed changes in alphabetical order.
+> - Updated description and commit text to reflect changes
+> - Changed the compatible string from imx412 to imx577.
+> - Added board-specific enablement changes in the newly created vision
+>   board DTSI file.
+> - Fixed bug encountered during testing.
+> - Moved logically independent changes to a new/seprate patch.
+> - Removed cci0 as no sensor is on this port and MCLK2, which was a
+>   copy-paste error from the RB5 board reference.
+> - Added power rails, referencing the RB5 board.
+> - Discarded Patch 5/6 completely (not required).
+> - Removed unused enums.
+> - Link to v1: https://lore.kernel.org/linux-arm-msm/20240629-camss_first_post_linux_next-v1-0-bc798edabc3a@quicinc.com/
+> 
+> Signed-off-by: Vikram Sharma <quic_vikramsa@quicinc.com>
+> 
+> Vikram Sharma (2):
+>   arm64: dts: qcom: sc7280: Add support for camss
+>   arm64: dts: qcom: qcs6490-rb3gen2-vision-mezzanine: Add vision
+>     mezzanine
+> 
+>  arch/arm64/boot/dts/qcom/Makefile             |   4 +
+>  .../qcs6490-rb3gen2-vision-mezzanine.dtso     |  93 +++++++++
+>  arch/arm64/boot/dts/qcom/sc7280.dtsi          | 178 ++++++++++++++++++
+>  3 files changed, 275 insertions(+)
+>  create mode 100644 arch/arm64/boot/dts/qcom/qcs6490-rb3gen2-vision-mezzanine.dtso
+> 
 > --
-> Taniya Das <quic_tdas@quicinc.com>
+> 2.25.1
 > 
 > 
 > 
@@ -124,297 +233,88 @@ make sure dt-schema is up to date:
   pip3 install dtschema --upgrade
 
 
-New warnings running 'make CHECK_DTBS=y for arch/arm64/boot/dts/qcom/' for 20250119-qcs615-mm-v2-dt-nodes-v2-0-c46ab4080989@quicinc.com:
+New warnings running 'make CHECK_DTBS=y for arch/arm64/boot/dts/qcom/' for 20250121125010.1853269-1-quic_vikramsa@quicinc.com:
 
-Error: arch/arm64/boot/dts/qcom/qcs615.dtsi:3731.42-43 syntax error
-FATAL ERROR: Unable to parse input tree
-make[3]: *** [scripts/Makefile.dtbs:131: arch/arm64/boot/dts/qcom/qcs615-ride.dtb] Error 1
-make[2]: *** [scripts/Makefile.build:463: arch/arm64/boot/dts/qcom] Error 2
-make[2]: Target 'arch/arm64/boot/dts/qcom/qcs615-ride.dtb' not remade because of errors.
-make[1]: *** [/home/rob/proj/linux-dt-testing/Makefile:1464: qcom/qcs615-ride.dtb] Error 2
-make: *** [Makefile:251: __sub-make] Error 2
-make: Target 'qcom/apq8096-ifc6640.dtb' not remade because of errors.
-make: Target 'qcom/msm8916-samsung-j3ltetw.dtb' not remade because of errors.
-make: Target 'qcom/msm8998-fxtec-pro1.dtb' not remade because of errors.
-make: Target 'qcom/sm7325-nothing-spacewar.dtb' not remade because of errors.
-make: Target 'qcom/sm7125-xiaomi-curtana.dtb' not remade because of errors.
-make: Target 'qcom/x1e80100-dell-xps13-9345.dtb' not remade because of errors.
-make: Target 'qcom/msm8998-mtp.dtb' not remade because of errors.
-make: Target 'qcom/msm8916-samsung-a5u-eur.dtb' not remade because of errors.
-make: Target 'qcom/sc8280xp-lenovo-thinkpad-x13s.dtb' not remade because of errors.
-make: Target 'qcom/sc7180-trogdor-lazor-r3-lte.dtb' not remade because of errors.
-make: Target 'qcom/sc7280-herobrine-crd-pro.dtb' not remade because of errors.
-make: Target 'qcom/sm6115p-lenovo-j606f.dtb' not remade because of errors.
-make: Target 'qcom/msm8998-sony-xperia-yoshino-maple.dtb' not remade because of errors.
-make: Target 'qcom/ipq9574-rdp454.dtb' not remade because of errors.
-make: Target 'qcom/qcs6490-rb3gen2.dtb' not remade because of errors.
-make: Target 'qcom/msm8992-xiaomi-libra.dtb' not remade because of errors.
-make: Target 'qcom/sc7180-trogdor-lazor-limozeen-r4.dtb' not remade because of errors.
-make: Target 'qcom/sdm450-motorola-ali.dtb' not remade because of errors.
-make: Target 'qcom/sc7180-trogdor-quackingstick-r0.dtb' not remade because of errors.
-make: Target 'qcom/sc7180-trogdor-pazquel360-wifi.dtb' not remade because of errors.
-make: Target 'qcom/sdm630-sony-xperia-ganges-kirin.dtb' not remade because of errors.
-make: Target 'qcom/sc7180-trogdor-coachz-r1-lte.dtb' not remade because of errors.
-make: Target 'qcom/sdm845-lg-judyp.dtb' not remade because of errors.
-make: Target 'qcom/sdm845-cheza-r3.dtb' not remade because of errors.
-make: Target 'qcom/msm8939-wingtech-wt82918.dtb' not remade because of errors.
-make: Target 'qcom/qrb2210-rb1.dtb' not remade because of errors.
-make: Target 'qcom/msm8996-mtp.dtb' not remade because of errors.
-make: Target 'qcom/sm8750-mtp.dtb' not remade because of errors.
-make: Target 'qcom/sc7280-herobrine-zombie.dtb' not remade because of errors.
-make: Target 'qcom/msm8992-lg-bullhead-rev-10.dtb' not remade because of errors.
-make: Target 'qcom/qrb5165-rb5.dtb' not remade because of errors.
-make: Target 'qcom/x1e80100-lenovo-yoga-slim7x.dtb' not remade because of errors.
-make: Target 'qcom/sm8550-qrd.dtb' not remade because of errors.
-make: Target 'qcom/sdm630-sony-xperia-nile-discovery.dtb' not remade because of errors.
-make: Target 'qcom/sm8550-sony-xperia-yodo-pdx234.dtb' not remade because of errors.
-make: Target 'qcom/msm8939-huawei-kiwi.dtb' not remade because of errors.
-make: Target 'qcom/sc7180-trogdor-wormdingler-rev1-inx.dtb' not remade because of errors.
-make: Target 'qcom/sc8280xp-microsoft-arcata.dtb' not remade because of errors.
-make: Target 'qcom/sdm845-oneplus-fajita.dtb' not remade because of errors.
-make: Target 'qcom/sc7180-trogdor-lazor-limozeen-nots-r4.dtb' not remade because of errors.
-make: Target 'qcom/sdm660-xiaomi-lavender.dtb' not remade because of errors.
-make: Target 'qcom/sc7180-trogdor-coachz-r1.dtb' not remade because of errors.
-make: Target 'qcom/sc7180-trogdor-lazor-r10.dtb' not remade because of errors.
-make: Target 'qcom/msm8939-wingtech-wt82918hd.dtb' not remade because of errors.
-make: Target 'qcom/ipq6018-cp01-c1.dtb' not remade because of errors.
-make: Target 'qcom/msm8916-motorola-surnia.dtb' not remade because of errors.
-make: Target 'qcom/sm8350-microsoft-surface-duo2.dtb' not remade because of errors.
-make: Target 'qcom/qcm6490-idp.dtb' not remade because of errors.
-make: Target 'qcom/sm8550-mtp.dtb' not remade because of errors.
-make: Target 'qcom/msm8916-samsung-a3u-eur.dtb' not remade because of errors.
-make: Target 'qcom/sdm845-sony-xperia-tama-akari.dtb' not remade because of errors.
-make: Target 'qcom/sm8250-mtp.dtb' not remade because of errors.
-make: Target 'qcom/sc7180-trogdor-lazor-limozeen-nots-r9.dtb' not remade because of errors.
-make: Target 'qcom/sm8250-xiaomi-elish-csot.dtb' not remade because of errors.
-make: Target 'qcom/msm8916-wingtech-wt88047.dtb' not remade because of errors.
-make: Target 'qcom/msm8916-thwc-ufi001c.dtb' not remade because of errors.
-make: Target 'qcom/msm8998-xiaomi-sagit.dtb' not remade because of errors.
-make: Target 'qcom/qcs8550-aim300-aiot.dtb' not remade because of errors.
-make: Target 'qcom/sdm450-lenovo-tbx605f.dtb' not remade because of errors.
-make: Target 'qcom/sm8250-xiaomi-elish-boe.dtb' not remade because of errors.
-make: Target 'qcom/qcs404-evb-4000.dtb' not remade because of errors.
-make: Target 'qcom/qcs9100-ride.dtb' not remade because of errors.
-make: Target 'qcom/msm8996-sony-xperia-tone-kagura.dtb' not remade because of errors.
-make: Target 'qcom/sm8150-sony-xperia-kumano-griffin.dtb' not remade because of errors.
-make: Target 'qcom/sdm670-google-sargo.dtb' not remade because of errors.
-make: Target 'qcom/x1e001de-devkit.dtb' not remade because of errors.
-make: Target 'qcom/sa8775p-ride.dtb' not remade because of errors.
-make: Target 'qcom/sc7280-herobrine-crd.dtb' not remade because of errors.
-make: Target 'qcom/ipq5424-rdp466.dtb' not remade because of errors.
-make: Target 'qcom/sc8180x-lenovo-flex-5g.dtb' not remade because of errors.
-make: Target 'qcom/sdm845-lg-judyln.dtb' not remade because of errors.
-make: Target 'qcom/sc7180-trogdor-lazor-r3-kb.dtb' not remade because of errors.
-make: Target 'qcom/msm8916-motorola-osprey.dtb' not remade because of errors.
-make: Target 'qcom/sm8250-xiaomi-pipa.dtb' not remade because of errors.
-make: Target 'qcom/sdm845-oneplus-enchilada.dtb' not remade because of errors.
-make: Target 'qcom/msm8956-sony-xperia-loire-suzu.dtb' not remade because of errors.
-make: Target 'qcom/sc7280-idp.dtb' not remade because of errors.
-make: Target 'qcom/sc7280-herobrine-evoker-lte.dtb' not remade because of errors.
-make: Target 'qcom/sc7180-trogdor-homestar-r4.dtb' not remade because of errors.
-make: Target 'qcom/msm8916-samsung-rossa.dtb' not remade because of errors.
-make: Target 'qcom/apq8039-t2.dtb' not remade because of errors.
-make: Target 'qcom/msm8916-motorola-harpia.dtb' not remade because of errors.
-make: Target 'qcom/msm8916-samsung-e5.dtb' not remade because of errors.
-make: Target 'qcom/sc7280-idp2.dtb' not remade because of errors.
-make: Target 'qcom/apq8016-sbc-d3-camera-mezzanine.dtb' not remade because of errors.
-make: Target 'qcom/msm8939-sony-xperia-kanuti-tulip.dtb' not remade because of errors.
-make: Target 'qcom/ipq8074-hk01.dtb' not remade because of errors.
-make: Target 'qcom/sm8150-mtp.dtb' not remade because of errors.
-make: Target 'qcom/ipq9574-rdp433.dtb' not remade because of errors.
-make: Target 'qcom/sdm845-sony-xperia-tama-apollo.dtb' not remade because of errors.
-make: Target 'qcom/msm8998-lenovo-miix-630.dtb' not remade because of errors.
-make: Target 'qcom/msm8994-sony-xperia-kitakami-karin.dtb' not remade because of errors.
-make: Target 'qcom/sdm630-sony-xperia-nile-pioneer.dtb' not remade because of errors.
-make: Target 'qcom/msm8916-samsung-grandmax.dtb' not remade because of errors.
-make: Target 'qcom/msm8916-alcatel-idol347.dtb' not remade because of errors.
-make: Target 'qcom/ipq9574-rdp453.dtb' not remade because of errors.
-make: Target 'qcom/sc7180-acer-aspire1.dtb' not remade because of errors.
-make: Target 'qcom/sc7180-trogdor-r1.dtb' not remade because of errors.
-make: Target 'qcom/msm8916-samsung-e7.dtb' not remade because of errors.
-make: Target 'qcom/ipq5018-rdp432-c2.dtb' not remade because of errors.
-make: Target 'qcom/apq8016-schneider-hmibsc.dtb' not remade because of errors.
-make: Target 'qcom/qrb4210-rb2.dtb' not remade because of errors.
-make: Target 'qcom/ipq5018-tplink-archer-ax55-v1.dtb' not remade because of errors.
-make: Target 'qcom/sc7280-herobrine-evoker.dtb' not remade because of errors.
-make: Target 'qcom/sc7180-trogdor-kingoftown.dtb' not remade because of errors.
-make: Target 'qcom/sm4450-qrd.dtb' not remade because of errors.
-make: Target 'qcom/msm8916-samsung-j5.dtb' not remade because of errors.
-make: Target 'qcom/msm8998-asus-novago-tp370ql.dtb' not remade because of errors.
-make: Target 'qcom/sc7180-trogdor-pompom-r2-lte.dtb' not remade because of errors.
-make: Target 'qcom/msm8992-lg-h815.dtb' not remade because of errors.
-make: Target 'qcom/sdx75-idp.dtb' not remade because of errors.
-make: Target 'qcom/sm8350-sony-xperia-sagami-pdx215.dtb' not remade because of errors.
-make: Target 'qcom/apq8096-db820c.dtb' not remade because of errors.
-make: Target 'qcom/msm8996-sony-xperia-tone-keyaki.dtb' not remade because of errors.
-make: Target 'qcom/msm8916-longcheer-l8150.dtb' not remade because of errors.
-make: Target 'qcom/msm8994-sony-xperia-kitakami-suzuran.dtb' not remade because of errors.
-make: Target 'qcom/sdm845-mtp.dtb' not remade because of errors.
-make: Target 'qcom/sm6375-sony-xperia-murray-pdx225.dtb' not remade because of errors.
-make: Target 'qcom/msm8916-yiming-uz801v3.dtb' not remade because of errors.
-make: Target 'qcom/qcs9100-ride-r3.dtb' not remade because of errors.
-make: Target 'qcom/x1e80100-hp-omnibook-x14.dtb' not remade because of errors.
-make: Target 'qcom/msm8953-xiaomi-vince.dtb' not remade because of errors.
-make: Target 'qcom/sdm845-cheza-r2.dtb' not remade because of errors.
-make: Target 'qcom/ipq5332-rdp441.dtb' not remade because of errors.
-make: Target 'qcom/msm8992-lg-bullhead-rev-101.dtb' not remade because of errors.
-make: Target 'qcom/msm8917-xiaomi-riva.dtb' not remade because of errors.
-make: Target 'qcom/msm8996-xiaomi-gemini.dtb' not remade because of errors.
-make: Target 'qcom/sc7180-trogdor-lazor-limozeen-r9.dtb' not remade because of errors.
-make: Target 'qcom/msm8998-sony-xperia-yoshino-lilac.dtb' not remade because of errors.
-make: Target 'qcom/msm8916-samsung-gprimeltecan.dtb' not remade because of errors.
-make: Target 'qcom/sc7180-trogdor-pazquel360-lte.dtb' not remade because of errors.
-make: Target 'qcom/sdm845-shift-axolotl.dtb' not remade because of errors.
-make: Target 'qcom/msm8996-oneplus3t.dtb' not remade because of errors.
-make: Target 'qcom/sc7280-herobrine-zombie-lte.dtb' not remade because of errors.
-make: Target 'qcom/sc7180-trogdor-lazor-r3.dtb' not remade because of errors.
-make: Target 'qcom/sar2130p-qar2130p.dtb' not remade because of errors.
-make: Target 'qcom/sm8650-hdk.dtb' not remade because of errors.
-make: Target 'qcom/sc7280-herobrine-herobrine-r1.dtb' not remade because of errors.
-make: Target 'qcom/msm8916-longcheer-l8910.dtb' not remade because of errors.
-make: Target 'qcom/sdm630-sony-xperia-nile-voyager.dtb' not remade because of errors.
-make: Target 'qcom/sm8450-hdk.dtb' not remade because of errors.
-make: Target 'qcom/msm8929-wingtech-wt82918hd.dtb' not remade because of errors.
-make: Target 'qcom/sm8250-sony-xperia-edo-pdx203.dtb' not remade because of errors.
-make: Target 'qcom/sm8350-hdk.dtb' not remade because of errors.
-make: Target 'qcom/ipq8074-hk10-c1.dtb' not remade because of errors.
-make: Target 'qcom/sm8450-qrd.dtb' not remade because of errors.
-make: Target 'qcom/msm8916-lg-c50.dtb' not remade because of errors.
-make: Target 'qcom/sm8250-sony-xperia-edo-pdx206.dtb' not remade because of errors.
-make: Target 'qcom/sm7225-fairphone-fp4.dtb' not remade because of errors.
-make: Target 'qcom/sa8155p-adp.dtb' not remade because of errors.
-make: Target 'qcom/x1e80100-qcp.dtb' not remade because of errors.
-make: Target 'qcom/sc7180-trogdor-lazor-r1-kb.dtb' not remade because of errors.
-make: Target 'qcom/msm8916-samsung-grandprimelte.dtb' not remade because of errors.
-make: Target 'qcom/sc7280-herobrine-zombie-nvme-lte.dtb' not remade because of errors.
-make: Target 'qcom/sc7180-trogdor-homestar-r3.dtb' not remade because of errors.
-make: Target 'qcom/ipq5332-rdp474.dtb' not remade because of errors.
-make: Target 'qcom/x1e80100-asus-vivobook-s15.dtb' not remade because of errors.
-make: Target 'qcom/sm8150-microsoft-surface-duo.dtb' not remade because of errors.
-make: Target 'qcom/msm8996pro-xiaomi-scorpio.dtb' not remade because of errors.
-make: Target 'qcom/x1e78100-lenovo-thinkpad-t14s.dtb' not remade because of errors.
-make: Target 'qcom/sm8150-hdk.dtb' not remade because of errors.
-make: Target 'qcom/sc8180x-primus.dtb' not remade because of errors.
-make: Target 'qcom/sc7180-trogdor-lazor-r10-lte.dtb' not remade because of errors.
-make: Target 'qcom/msm8916-samsung-j5x.dtb' not remade because of errors.
-make: Target 'qcom/sc7180-idp.dtb' not remade because of errors.
-make: Target 'qcom/msm8916-mtp.dtb' not remade because of errors.
-make: Target 'qcom/sc7180-trogdor-lazor-limozeen-r10.dtb' not remade because of errors.
-make: Target 'qcom/sc7280-herobrine-zombie-nvme.dtb' not remade because of errors.
-make: Target 'qcom/x1e80100-microsoft-romulus15.dtb' not remade because of errors.
-make: Target 'qcom/qru1000-idp.dtb' not remade because of errors.
-make: Target 'qcom/msm8998-hp-envy-x2.dtb' not remade because of errors.
-make: Target 'qcom/sc7180-trogdor-wormdingler-rev1-boe-rt5682s.dtb' not remade because of errors.
-make: Target 'qcom/sc7180-trogdor-pazquel-parade.dtb' not remade because of errors.
-make: Target 'qcom/sc7180-trogdor-lazor-r9-kb.dtb' not remade because of errors.
-make: Target 'qcom/sc7180-trogdor-wormdingler-rev1-boe.dtb' not remade because of errors.
-make: Target 'qcom/qcs615-ride.dtb' not remade because of errors.
-make: Target 'qcom/sc7180-trogdor-coachz-r3-lte.dtb' not remade because of errors.
-make: Target 'qcom/sc7280-crd-r3.dtb' not remade because of errors.
-make: Target 'qcom/msm8916-samsung-gt58.dtb' not remade because of errors.
-make: Target 'qcom/sa8775p-ride-r3.dtb' not remade because of errors.
-make: Target 'qcom/sc7280-herobrine-villager-r1.dtb' not remade because of errors.
-make: Target 'qcom/sc7180-trogdor-pazquel-ti.dtb' not remade because of errors.
-make: Target 'qcom/qcm6490-shift-otter.dtb' not remade because of errors.
-make: Target 'qcom/qcs8300-ride.dtb' not remade because of errors.
-make: Target 'qcom/apq8016-sbc.dtb' not remade because of errors.
-make: Target 'qcom/msm8996pro-xiaomi-natrium.dtb' not remade because of errors.
-make: Target 'qcom/sdm845-samsung-starqltechn.dtb' not remade because of errors.
-make: Target 'qcom/sc7180-trogdor-pompom-r1-lte.dtb' not remade because of errors.
-make: Target 'qcom/msm8953-xiaomi-tissot.dtb' not remade because of errors.
-make: Target 'qcom/sc7180-trogdor-lazor-r9.dtb' not remade because of errors.
-make: Target 'qcom/sm6125-xiaomi-laurel-sprout.dtb' not remade because of errors.
-make: Target 'qcom/msm8994-sony-xperia-kitakami-sumire.dtb' not remade because of errors.
-make: Target 'qcom/msm8916-samsung-serranove.dtb' not remade because of errors.
-make: Target 'qcom/sc7180-trogdor-coachz-r3.dtb' not remade because of errors.
-make: Target 'qcom/sdm845-sony-xperia-tama-akatsuki.dtb' not remade because of errors.
-make: Target 'qcom/ipq9574-rdp449.dtb' not remade because of errors.
-make: Target 'qcom/sc7180-trogdor-r1-lte.dtb' not remade because of errors.
-make: Target 'qcom/msm8916-lg-m216.dtb' not remade because of errors.
-make: Target 'qcom/x1e80100-crd.dtb' not remade because of errors.
-make: Target 'qcom/apq8094-sony-xperia-kitakami-karin_windy.dtb' not remade because of errors.
-make: Target 'qcom/sc7180-trogdor-lazor-r9-lte.dtb' not remade because of errors.
-make: Target 'qcom/sc7180-trogdor-pazquel-lte-ti.dtb' not remade because of errors.
-make: Target 'qcom/msm8996-sony-xperia-tone-dora.dtb' not remade because of errors.
-make: Target 'qcom/sa8295p-adp.dtb' not remade because of errors.
-make: Target 'qcom/msm8994-sony-xperia-kitakami-ivy.dtb' not remade because of errors.
-make: Target 'qcom/sdm845-xiaomi-beryllium-ebbg.dtb' not remade because of errors.
-make: Target 'qcom/sc7180-trogdor-pompom-r3.dtb' not remade because of errors.
-make: Target 'qcom/msm8998-oneplus-dumpling.dtb' not remade because of errors.
-make: Target 'qcom/sm8650-mtp.dtb' not remade because of errors.
-make: Target 'qcom/msm8996-oneplus3.dtb' not remade because of errors.
-make: Target 'qcom/sm8550-hdk.dtb' not remade because of errors.
-make: Target 'qcom/x1e80100-microsoft-romulus13.dtb' not remade because of errors.
-make: Target 'qcom/sc7180-trogdor-lazor-r1-lte.dtb' not remade because of errors.
-make: Target 'qcom/msm8939-samsung-a7.dtb' not remade because of errors.
-make: Target 'qcom/qcm6490-fairphone-fp5.dtb' not remade because of errors.
-make: Target 'qcom/sc8280xp-huawei-gaokun3.dtb' not remade because of errors.
-make: Target 'qcom/sc7180-trogdor-wormdingler-rev1-inx-rt5682s.dtb' not remade because of errors.
-make: Target 'qcom/msm8953-xiaomi-mido.dtb' not remade because of errors.
-make: Target 'qcom/msm8916-asus-z00l.dtb' not remade because of errors.
-make: Target 'qcom/sc7180-trogdor-pompom-r2.dtb' not remade because of errors.
-make: Target 'qcom/sm6350-sony-xperia-lena-pdx213.dtb' not remade because of errors.
-make: Target 'qcom/sdm632-fairphone-fp3.dtb' not remade because of errors.
-make: Target 'qcom/msm8953-motorola-potter.dtb' not remade because of errors.
-make: Target 'qcom/sda660-inforce-ifc6560.dtb' not remade because of errors.
-make: Target 'qcom/sm8150-sony-xperia-kumano-bahamut.dtb' not remade because of errors.
-make: Target 'qcom/sc7180-trogdor-pazquel-lte-parade.dtb' not remade because of errors.
-make: Target 'qcom/sc7180-trogdor-homestar-r2.dtb' not remade because of errors.
-make: Target 'qcom/sm8250-hdk.dtb' not remade because of errors.
-make: Target 'qcom/sm8650-qrd.dtb' not remade because of errors.
-make: Target 'qcom/sc8280xp-microsoft-blackrock.dtb' not remade because of errors.
-make: Target 'qcom/ipq8074-hk10-c2.dtb' not remade because of errors.
-make: Target 'qcom/msm8953-xiaomi-daisy.dtb' not remade because of errors.
-make: Target 'qcom/sc8280xp-crd.dtb' not remade because of errors.
-make: Target 'qcom/sdm850-samsung-w737.dtb' not remade because of errors.
-make: Target 'qcom/sc7180-trogdor-lazor-limozeen-nots-r5.dtb' not remade because of errors.
-make: Target 'qcom/msm8916-samsung-gt510.dtb' not remade because of errors.
-make: Target 'qcom/sdm850-lenovo-yoga-c630.dtb' not remade because of errors.
-make: Target 'qcom/msm8916-thwc-uf896.dtb' not remade because of errors.
-make: Target 'qcom/sc7180-trogdor-lazor-r10-kb.dtb' not remade because of errors.
-make: Target 'qcom/msm8994-sony-xperia-kitakami-satsuki.dtb' not remade because of errors.
-make: Target 'qcom/sdm632-motorola-ocean.dtb' not remade because of errors.
-make: Target 'qcom/sc7280-herobrine-villager-r1-lte.dtb' not remade because of errors.
-make: Target 'qcom/sm6115-fxtec-pro1x.dtb' not remade because of errors.
-make: Target 'qcom/sc7180-trogdor-pompom-r3-lte.dtb' not remade because of errors.
-make: Target 'qcom/msm8998-sony-xperia-yoshino-poplar.dtb' not remade because of errors.
-make: Target 'qcom/msm8916-huawei-g7.dtb' not remade because of errors.
-make: Target 'qcom/msm8916-wingtech-wt86518.dtb' not remade because of errors.
-make: Target 'qcom/sm8350-sony-xperia-sagami-pdx214.dtb' not remade because of errors.
-make: Target 'qcom/msm8916-wingtech-wt86528.dtb' not remade because of errors.
-make: Target 'qcom/sdm845-db845c.dtb' not remade because of errors.
-make: Target 'qcom/sa8540p-ride.dtb' not remade because of errors.
-make: Target 'qcom/msm8939-longcheer-l9100.dtb' not remade because of errors.
-make: Target 'qcom/qdu1000-idp.dtb' not remade because of errors.
-make: Target 'qcom/sm8550-samsung-q5q.dtb' not remade because of errors.
-make: Target 'qcom/msm8992-msft-lumia-octagon-talkman.dtb' not remade because of errors.
-make: Target 'qcom/msm8916-gplus-fl8005a.dtb' not remade because of errors.
-make: Target 'qcom/sm8350-mtp.dtb' not remade because of errors.
-make: Target 'qcom/msm8956-sony-xperia-loire-kugo.dtb' not remade because of errors.
-make: Target 'qcom/sc7180-trogdor-lazor-r1.dtb' not remade because of errors.
-make: Target 'qcom/sc7180-trogdor-pompom-r1.dtb' not remade because of errors.
-make: Target 'qcom/msm8998-oneplus-cheeseburger.dtb' not remade because of errors.
-make: Target 'qcom/sc7280-herobrine-villager-r0.dtb' not remade because of errors.
-make: Target 'qcom/sm8750-qrd.dtb' not remade because of errors.
-make: Target 'qcom/sm4250-oneplus-billie2.dtb' not remade because of errors.
-make: Target 'qcom/sdm636-sony-xperia-ganges-mermaid.dtb' not remade because of errors.
-make: Target 'qcom/qcs404-evb-1000.dtb' not remade because of errors.
-make: Target 'qcom/ipq5332-rdp442.dtb' not remade because of errors.
-make: Target 'qcom/sdm845-cheza-r1.dtb' not remade because of errors.
-make: Target 'qcom/msm8994-msft-lumia-octagon-cityman.dtb' not remade because of errors.
-make: Target 'qcom/msm8916-acer-a1-724.dtb' not remade because of errors.
-make: Target 'qcom/sdm845-xiaomi-beryllium-tianma.dtb' not remade because of errors.
-make: Target 'qcom/sm6125-sony-xperia-seine-pdx201.dtb' not remade because of errors.
-make: Target 'qcom/sdm845-xiaomi-polaris.dtb' not remade because of errors.
-make: Target 'qcom/ipq9574-rdp418.dtb' not remade because of errors.
-make: Target 'qcom/msm8216-samsung-fortuna3g.dtb' not remade because of errors.
-make: Target 'qcom/sm8450-sony-xperia-nagara-pdx223.dtb' not remade because of errors.
-make: Target 'qcom/sm8450-sony-xperia-nagara-pdx224.dtb' not remade because of errors.
-make: Target 'qcom/sm7125-xiaomi-joyeuse.dtb' not remade because of errors.
-make: Target 'qcom/msm8994-huawei-angler-rev-101.dtb' not remade because of errors.
-make: Target 'qcom/ipq5332-rdp468.dtb' not remade because of errors.
-make: Target 'qcom/sc7180-trogdor-lazor-limozeen-nots-r10.dtb' not remade because of errors.
-make: Target 'qcom/sc7180-trogdor-quackingstick-r0-lte.dtb' not remade because of errors.
+arch/arm64/boot/dts/qcom/sm7325-nothing-spacewar.dtb: isp@acb3000: clock-names:12: 'gcc_camera_ahb' was expected
+	from schema $id: http://devicetree.org/schemas/media/qcom,sc7280-camss.yaml#
+arch/arm64/boot/dts/qcom/sm7325-nothing-spacewar.dtb: isp@acb3000: clock-names:13: 'gcc_cam_hf_axi' was expected
+	from schema $id: http://devicetree.org/schemas/media/qcom,sc7280-camss.yaml#
+arch/arm64/boot/dts/qcom/sc7280-herobrine-crd-pro.dtb: isp@acb3000: clock-names:12: 'gcc_camera_ahb' was expected
+	from schema $id: http://devicetree.org/schemas/media/qcom,sc7280-camss.yaml#
+arch/arm64/boot/dts/qcom/sc7280-herobrine-crd-pro.dtb: isp@acb3000: clock-names:13: 'gcc_cam_hf_axi' was expected
+	from schema $id: http://devicetree.org/schemas/media/qcom,sc7280-camss.yaml#
+arch/arm64/boot/dts/qcom/sc7280-herobrine-zombie.dtb: isp@acb3000: clock-names:12: 'gcc_camera_ahb' was expected
+	from schema $id: http://devicetree.org/schemas/media/qcom,sc7280-camss.yaml#
+arch/arm64/boot/dts/qcom/sc7280-herobrine-zombie.dtb: isp@acb3000: clock-names:13: 'gcc_cam_hf_axi' was expected
+	from schema $id: http://devicetree.org/schemas/media/qcom,sc7280-camss.yaml#
+arch/arm64/boot/dts/qcom/qcm6490-idp.dtb: isp@acb3000: clock-names:12: 'gcc_camera_ahb' was expected
+	from schema $id: http://devicetree.org/schemas/media/qcom,sc7280-camss.yaml#
+arch/arm64/boot/dts/qcom/qcm6490-idp.dtb: isp@acb3000: clock-names:13: 'gcc_cam_hf_axi' was expected
+	from schema $id: http://devicetree.org/schemas/media/qcom,sc7280-camss.yaml#
+arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dtb: isp@acb3000: clock-names:12: 'gcc_camera_ahb' was expected
+	from schema $id: http://devicetree.org/schemas/media/qcom,sc7280-camss.yaml#
+arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dtb: isp@acb3000: clock-names:13: 'gcc_cam_hf_axi' was expected
+	from schema $id: http://devicetree.org/schemas/media/qcom,sc7280-camss.yaml#
+arch/arm64/boot/dts/qcom/sc7280-idp.dtb: isp@acb3000: clock-names:12: 'gcc_camera_ahb' was expected
+	from schema $id: http://devicetree.org/schemas/media/qcom,sc7280-camss.yaml#
+arch/arm64/boot/dts/qcom/sc7280-idp.dtb: isp@acb3000: clock-names:13: 'gcc_cam_hf_axi' was expected
+	from schema $id: http://devicetree.org/schemas/media/qcom,sc7280-camss.yaml#
+arch/arm64/boot/dts/qcom/sc7280-herobrine-evoker-lte.dtb: isp@acb3000: clock-names:12: 'gcc_camera_ahb' was expected
+	from schema $id: http://devicetree.org/schemas/media/qcom,sc7280-camss.yaml#
+arch/arm64/boot/dts/qcom/sc7280-herobrine-evoker-lte.dtb: isp@acb3000: clock-names:13: 'gcc_cam_hf_axi' was expected
+	from schema $id: http://devicetree.org/schemas/media/qcom,sc7280-camss.yaml#
+arch/arm64/boot/dts/qcom/sc7280-herobrine-crd.dtb: isp@acb3000: clock-names:12: 'gcc_camera_ahb' was expected
+	from schema $id: http://devicetree.org/schemas/media/qcom,sc7280-camss.yaml#
+arch/arm64/boot/dts/qcom/sc7280-herobrine-crd.dtb: isp@acb3000: clock-names:13: 'gcc_cam_hf_axi' was expected
+	from schema $id: http://devicetree.org/schemas/media/qcom,sc7280-camss.yaml#
+arch/arm64/boot/dts/qcom/sc7280-idp2.dtb: isp@acb3000: clock-names:12: 'gcc_camera_ahb' was expected
+	from schema $id: http://devicetree.org/schemas/media/qcom,sc7280-camss.yaml#
+arch/arm64/boot/dts/qcom/sc7280-idp2.dtb: isp@acb3000: clock-names:13: 'gcc_cam_hf_axi' was expected
+	from schema $id: http://devicetree.org/schemas/media/qcom,sc7280-camss.yaml#
+arch/arm64/boot/dts/qcom/sc7280-herobrine-evoker.dtb: isp@acb3000: clock-names:12: 'gcc_camera_ahb' was expected
+	from schema $id: http://devicetree.org/schemas/media/qcom,sc7280-camss.yaml#
+arch/arm64/boot/dts/qcom/sc7280-herobrine-evoker.dtb: isp@acb3000: clock-names:13: 'gcc_cam_hf_axi' was expected
+	from schema $id: http://devicetree.org/schemas/media/qcom,sc7280-camss.yaml#
+arch/arm64/boot/dts/qcom/sc7280-herobrine-zombie-lte.dtb: isp@acb3000: clock-names:12: 'gcc_camera_ahb' was expected
+	from schema $id: http://devicetree.org/schemas/media/qcom,sc7280-camss.yaml#
+arch/arm64/boot/dts/qcom/sc7280-herobrine-zombie-lte.dtb: isp@acb3000: clock-names:13: 'gcc_cam_hf_axi' was expected
+	from schema $id: http://devicetree.org/schemas/media/qcom,sc7280-camss.yaml#
+arch/arm64/boot/dts/qcom/sc7280-herobrine-herobrine-r1.dtb: isp@acb3000: clock-names:12: 'gcc_camera_ahb' was expected
+	from schema $id: http://devicetree.org/schemas/media/qcom,sc7280-camss.yaml#
+arch/arm64/boot/dts/qcom/sc7280-herobrine-herobrine-r1.dtb: isp@acb3000: clock-names:13: 'gcc_cam_hf_axi' was expected
+	from schema $id: http://devicetree.org/schemas/media/qcom,sc7280-camss.yaml#
+arch/arm64/boot/dts/qcom/sc7280-herobrine-zombie-nvme-lte.dtb: isp@acb3000: clock-names:12: 'gcc_camera_ahb' was expected
+	from schema $id: http://devicetree.org/schemas/media/qcom,sc7280-camss.yaml#
+arch/arm64/boot/dts/qcom/sc7280-herobrine-zombie-nvme-lte.dtb: isp@acb3000: clock-names:13: 'gcc_cam_hf_axi' was expected
+	from schema $id: http://devicetree.org/schemas/media/qcom,sc7280-camss.yaml#
+arch/arm64/boot/dts/qcom/sc7280-crd-r3.dtb: isp@acb3000: clock-names:12: 'gcc_camera_ahb' was expected
+	from schema $id: http://devicetree.org/schemas/media/qcom,sc7280-camss.yaml#
+arch/arm64/boot/dts/qcom/sc7280-crd-r3.dtb: isp@acb3000: clock-names:13: 'gcc_cam_hf_axi' was expected
+	from schema $id: http://devicetree.org/schemas/media/qcom,sc7280-camss.yaml#
+arch/arm64/boot/dts/qcom/sc7280-herobrine-zombie-nvme.dtb: isp@acb3000: clock-names:12: 'gcc_camera_ahb' was expected
+	from schema $id: http://devicetree.org/schemas/media/qcom,sc7280-camss.yaml#
+arch/arm64/boot/dts/qcom/sc7280-herobrine-zombie-nvme.dtb: isp@acb3000: clock-names:13: 'gcc_cam_hf_axi' was expected
+	from schema $id: http://devicetree.org/schemas/media/qcom,sc7280-camss.yaml#
+arch/arm64/boot/dts/qcom/sc7280-herobrine-villager-r1.dtb: isp@acb3000: clock-names:12: 'gcc_camera_ahb' was expected
+	from schema $id: http://devicetree.org/schemas/media/qcom,sc7280-camss.yaml#
+arch/arm64/boot/dts/qcom/sc7280-herobrine-villager-r1.dtb: isp@acb3000: clock-names:13: 'gcc_cam_hf_axi' was expected
+	from schema $id: http://devicetree.org/schemas/media/qcom,sc7280-camss.yaml#
+arch/arm64/boot/dts/qcom/qcm6490-shift-otter.dtb: isp@acb3000: clock-names:12: 'gcc_camera_ahb' was expected
+	from schema $id: http://devicetree.org/schemas/media/qcom,sc7280-camss.yaml#
+arch/arm64/boot/dts/qcom/qcm6490-shift-otter.dtb: isp@acb3000: clock-names:13: 'gcc_cam_hf_axi' was expected
+	from schema $id: http://devicetree.org/schemas/media/qcom,sc7280-camss.yaml#
+arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dtb: isp@acb3000: clock-names:12: 'gcc_camera_ahb' was expected
+	from schema $id: http://devicetree.org/schemas/media/qcom,sc7280-camss.yaml#
+arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dtb: isp@acb3000: clock-names:13: 'gcc_cam_hf_axi' was expected
+	from schema $id: http://devicetree.org/schemas/media/qcom,sc7280-camss.yaml#
+arch/arm64/boot/dts/qcom/sc7280-herobrine-villager-r1-lte.dtb: isp@acb3000: clock-names:12: 'gcc_camera_ahb' was expected
+	from schema $id: http://devicetree.org/schemas/media/qcom,sc7280-camss.yaml#
+arch/arm64/boot/dts/qcom/sc7280-herobrine-villager-r1-lte.dtb: isp@acb3000: clock-names:13: 'gcc_cam_hf_axi' was expected
+	from schema $id: http://devicetree.org/schemas/media/qcom,sc7280-camss.yaml#
+arch/arm64/boot/dts/qcom/sc7280-herobrine-villager-r0.dtb: isp@acb3000: clock-names:12: 'gcc_camera_ahb' was expected
+	from schema $id: http://devicetree.org/schemas/media/qcom,sc7280-camss.yaml#
+arch/arm64/boot/dts/qcom/sc7280-herobrine-villager-r0.dtb: isp@acb3000: clock-names:13: 'gcc_cam_hf_axi' was expected
+	from schema $id: http://devicetree.org/schemas/media/qcom,sc7280-camss.yaml#
 
 
 
