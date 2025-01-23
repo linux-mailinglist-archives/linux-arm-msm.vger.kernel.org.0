@@ -1,67 +1,86 @@
-Return-Path: <linux-arm-msm+bounces-45964-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-45965-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 15153A1A3A8
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jan 2025 12:57:40 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 98DCDA1A3AD
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jan 2025 12:59:43 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 87F287A11B5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jan 2025 11:57:30 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5B71B18819A9
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jan 2025 11:59:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3148920D4F2;
-	Thu, 23 Jan 2025 11:57:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 27BE520E306;
+	Thu, 23 Jan 2025 11:59:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=amazon.co.uk header.i=@amazon.co.uk header.b="MA4Rlu3E"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="DCozjR71"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp-fw-80009.amazon.com (smtp-fw-80009.amazon.com [99.78.197.220])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4871229B0;
-	Thu, 23 Jan 2025 11:57:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=99.78.197.220
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A186229B0
+	for <linux-arm-msm@vger.kernel.org>; Thu, 23 Jan 2025 11:59:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737633455; cv=none; b=JdvG6KkdqQOfNWZTW9XgE3Lvg+Sq+czYQXD8V6+/mZpqtp5eQDjJUXq9WaMHqDxezrCrgquND63b1b6GH/sEQh/CJkP0zebF1tnyT1YlPdDnmKkpTeZFt0Dag2wTwbO35R59Xox6bdKQBkhz9ZKYPhbnrfnts92QW7udFhDV85Y=
+	t=1737633581; cv=none; b=BgUOC1OQ9t+H9QPDYAN/9UIth0ZafvmLC78T5no6tXCY3ELrRlQlt80azWMNYyE7tjJzC64IIOWFd5XZaKIzyBrz2p5r0urBt9tPCuzObYS2tH9+TMGyD0wSwXXSgAeizlBq1LWEsC22uu3XSY0QRuS2YXLkwvVsHgO6B2aGkpg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737633455; c=relaxed/simple;
-	bh=+u2UYFgqgOSGz04sLrSBDVoAHxdcRHvP6boh889RNws=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=EU3X/CWgM7D7Jn7sRZLDimX537xmXuLLs13ixQ+IyI2ClZGMSqZZQBFf/6pj+5hEzHIOZ6o0eK6kQj2ulXgAqLxu/a1qOqdDDO4vYcZWQxHC9aZ7CoUOsTF1Y+iErK3rH7X9pOb9O7uivpkZYHXZwqkZg1p3e/nU53yLICX1Wjg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amazon.co.uk; spf=pass smtp.mailfrom=amazon.co.uk; dkim=pass (1024-bit key) header.d=amazon.co.uk header.i=@amazon.co.uk header.b=MA4Rlu3E; arc=none smtp.client-ip=99.78.197.220
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amazon.co.uk
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=amazon.co.uk
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=amazon.co.uk; i=@amazon.co.uk; q=dns/txt;
-  s=amazon201209; t=1737633453; x=1769169453;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=9P/WI2TxBNhrzdT8yDOgB87cpcW0wU2g0ZhcVkOr4h4=;
-  b=MA4Rlu3El5JGADeFzHBxJeeeTs0T220/gft8FT9tXPmhGoGbqcKMzVBW
-   GJJnIhNcX7fPhFAuVFzAsJ4/M/S0hfgMBIBW5ChXpL090q0WkPYKIv4/P
-   3LsaCNqg7fOOhw7FlvqexwavTpql/1HDCbZl3VG0sSXYUzqQu8tVT1NyV
-   M=;
-X-IronPort-AV: E=Sophos;i="6.13,228,1732579200"; 
-   d="scan'208";a="166394565"
-Received: from pdx4-co-svc-p1-lb2-vlan2.amazon.com (HELO smtpout.prod.us-east-1.prod.farcaster.email.amazon.dev) ([10.25.36.210])
-  by smtp-border-fw-80009.pdx80.corp.amazon.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Jan 2025 11:57:30 +0000
-Received: from EX19MTAUEC001.ant.amazon.com [10.0.44.209:55325]
- by smtpin.naws.us-east-1.prod.farcaster.email.amazon.dev [10.0.8.105:2525] with esmtp (Farcaster)
- id 85c0e4b1-62e6-4ea9-811e-22b15e9320a9; Thu, 23 Jan 2025 11:57:30 +0000 (UTC)
-X-Farcaster-Flow-ID: 85c0e4b1-62e6-4ea9-811e-22b15e9320a9
-Received: from EX19MTAUEB002.ant.amazon.com (10.252.135.47) by
- EX19MTAUEC001.ant.amazon.com (10.252.135.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.1258.39;
- Thu, 23 Jan 2025 11:57:30 +0000
-Received: from email-imr-corp-prod-pdx-all-2b-5ec155c2.us-west-2.amazon.com
- (10.43.8.2) by mail-relay.amazon.com (10.252.135.97) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id
- 15.2.1258.39 via Frontend Transport; Thu, 23 Jan 2025 11:57:30 +0000
-Received: from [127.0.0.1] (dev-dsk-roypat-1c-dbe2a224.eu-west-1.amazon.com [172.19.88.180])
-	by email-imr-corp-prod-pdx-all-2b-5ec155c2.us-west-2.amazon.com (Postfix) with ESMTPS id AB40540C9C;
-	Thu, 23 Jan 2025 11:57:17 +0000 (UTC)
-Message-ID: <ef864674-bbcf-457b-a4e3-fec272fc2d8a@amazon.co.uk>
-Date: Thu, 23 Jan 2025 11:57:16 +0000
+	s=arc-20240116; t=1737633581; c=relaxed/simple;
+	bh=lQiYTjEY3RXRkLXX0bIfEPjtCykBnhhJXIG9IIm2IEo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=N6U30xub2bEAKcNWWR062nNVsnOiBAxWEMTz6OzH+Ube4O7HF+ciLSGInqO9dtAusPXY+ddTaiTBfe30w7Zk5SHhHMNaSVuPRb98iJP0emgEoxSx+vIrmPw2PGRkeOnUQURIKnLqK2/kurahJen1gi/go+haVBEd981i2uSUOGo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=DCozjR71; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50NA7h5G010919
+	for <linux-arm-msm@vger.kernel.org>; Thu, 23 Jan 2025 11:59:38 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	wXGd4w7cLYLsVkVkk1t8XotN4LpsoRfXv7P5SgJ0Zs0=; b=DCozjR717wo0iRWC
+	ygObWPDSrnNO7hn+Ku/H2CiwQLgFOpczLPU99s/qZexZarO+u48jdneM0rgRVc6i
+	w9v9+jQl0F1zn9JSYqd1AddVA5HltM9FNDnAin35cvAZsOcFCuzL90SZId9kPaOs
+	WEN4aUAGsGBsDOtrvAeHQ7YtdkRa4/nLZ0VVXp/jbT8PZi9lIue+csRM9MVM/tSl
+	p0AwskVBDJd1bTWPMogoYXN3FYld9uT1XI2SNOYTbltE4485nOCtNn1Lx+3yuTyB
+	EJBwkCw9Q7s6N/8R77ONEI5lG9ZExOEaGXzno6daevr0E+M9f3q8rTas5EvGMeh8
+	LPj1Ig==
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com [209.85.219.71])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44bkr8g8fg-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 23 Jan 2025 11:59:38 +0000 (GMT)
+Received: by mail-qv1-f71.google.com with SMTP id 6a1803df08f44-6d881a3e466so1128346d6.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Jan 2025 03:59:38 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1737633577; x=1738238377;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=wXGd4w7cLYLsVkVkk1t8XotN4LpsoRfXv7P5SgJ0Zs0=;
+        b=j2GJv8iu2YYNhDdL1ush2DqORInphGozDQ4+TtGWqgGEx/u6Qi0NX7XkGbbswYgj7+
+         cTZaD5FmIWTsd6e1Iqb15nn3JyUQukdQH40q/vOfetoVZSQslTW00L4kSHqjpAXuIaOO
+         Kc/RpO36xOIZe0kQcXAPF1VWlgsi7gSywjR2mkpSJZyl3DAqnIjtbWPSKntvlFCtNWoR
+         hB/JM+o7y6n4HbWMESlL7AHaJFkFZm5NQD+sTJTH8dRw3XfYKdIafTb5HbNFD0DsGGov
+         xAqFLwXlrkflC4ovkXLprgzcTB0ATquEA3I/voGavyAxU1I+dqan99znbSBTDQCJrZKI
+         4bvA==
+X-Gm-Message-State: AOJu0YyKoa9C+BhERjlddaqiZgDiF2kB16b1qSvlktMtxxiXCmfninSc
+	IFa4j/+r+NvZH/GqRnLXKGtjcvfiT1DZpPSraKmM2s8C5+p17+YK2yPP+FWvuX4eFu1BPLDrjWY
+	cs+YA79ZeIhzw7k3axVtxxFOfQcjwIicOajyphgTAjR4Ds/Zied1X6cZKbRes8xEfritmPB+L
+X-Gm-Gg: ASbGncvtvykluOkFOuF0ea8j4joq2D/BWkHpXaVi1q3sNVotk10zRxNu0lwXbg7HkMW
+	vNdPb3ZTkC+jxgxh9vXP/75T+l+EdTIYZ/G0fpDXs+psonrZeLJOGc39qM6lScmF2PpCGvDxArF
+	GgNYZzkUkHBlzvLT4wXYDTn3OdkPV1G8fXNAsaKEi66yhXgp5oE8u42BODBYedb6ts7svKf6Xss
+	QZ5zoBMT2lJzH5smcEtHfFbWivVekydc/p04CM+uFHlGFb+pk+KLPHbON+PsUwTLUvEDrtV8nP3
+	i1nGWRT+pH9F0Vt6kpz5/Q33pJt9/hS4bJvBIeyduSQutNBb
+X-Received: by 2002:a05:6214:528a:b0:6d8:a67e:b2ff with SMTP id 6a1803df08f44-6e1ee731234mr38969176d6.8.1737633577355;
+        Thu, 23 Jan 2025 03:59:37 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IF8W42bndH+Tx3Rpbi9b1HXVwp/kXbpWQSwyBro1jIhQlIiJW0rfoo+cJ05uocTDr1+hfh0HQ==
+X-Received: by 2002:a05:6214:528a:b0:6d8:a67e:b2ff with SMTP id 6a1803df08f44-6e1ee731234mr38969076d6.8.1737633577014;
+        Thu, 23 Jan 2025 03:59:37 -0800 (PST)
+Received: from [192.168.65.90] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ab384f22c75sm1042610966b.88.2025.01.23.03.59.35
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 23 Jan 2025 03:59:36 -0800 (PST)
+Message-ID: <bc0f90e4-dc66-470b-a771-e52e451aaec4@oss.qualcomm.com>
+Date: Thu, 23 Jan 2025 12:59:34 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -69,158 +88,62 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v1 2/9] KVM: guest_memfd: Add guest_memfd support to
- kvm_(read|/write)_guest_page()
-To: David Hildenbrand <david@redhat.com>, Fuad Tabba <tabba@google.com>
-CC: <kvm@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-	<linux-mm@kvack.org>, <pbonzini@redhat.com>, <chenhuacai@kernel.org>,
-	<mpe@ellerman.id.au>, <anup@brainfault.org>, <paul.walmsley@sifive.com>,
-	<palmer@dabbelt.com>, <aou@eecs.berkeley.edu>, <seanjc@google.com>,
-	<viro@zeniv.linux.org.uk>, <brauner@kernel.org>, <willy@infradead.org>,
-	<akpm@linux-foundation.org>, <xiaoyao.li@intel.com>, <yilun.xu@intel.com>,
-	<chao.p.peng@linux.intel.com>, <jarkko@kernel.org>, <amoorthy@google.com>,
-	<dmatlack@google.com>, <yu.c.zhang@linux.intel.com>,
-	<isaku.yamahata@intel.com>, <mic@digikod.net>, <vbabka@suse.cz>,
-	<vannapurve@google.com>, <ackerleytng@google.com>,
-	<mail@maciej.szmigiero.name>, <michael.roth@amd.com>, <wei.w.wang@intel.com>,
-	<liam.merwick@oracle.com>, <isaku.yamahata@gmail.com>,
-	<kirill.shutemov@linux.intel.com>, <suzuki.poulose@arm.com>,
-	<steven.price@arm.com>, <quic_eberman@quicinc.com>,
-	<quic_mnalajal@quicinc.com>, <quic_tsoni@quicinc.com>,
-	<quic_svaddagi@quicinc.com>, <quic_cvanscha@quicinc.com>,
-	<quic_pderrin@quicinc.com>, <quic_pheragu@quicinc.com>,
-	<catalin.marinas@arm.com>, <james.morse@arm.com>, <yuzenghui@huawei.com>,
-	<oliver.upton@linux.dev>, <maz@kernel.org>, <will@kernel.org>,
-	<qperret@google.com>, <keirf@google.com>, <shuah@kernel.org>,
-	<hch@infradead.org>, <jgg@nvidia.com>, <rientjes@google.com>,
-	<jhubbard@nvidia.com>, <fvdl@google.com>, <hughd@google.com>,
-	<jthoughton@google.com>
-References: <20250122152738.1173160-1-tabba@google.com>
- <20250122152738.1173160-3-tabba@google.com>
- <e6ea48d2-959f-4fbb-a170-0beaaf37f867@redhat.com>
- <CA+EHjTxNEoQ3MtZPi603=366vxt=SmBwetS4mFkvTK2r6u=UHw@mail.gmail.com>
- <82d8d3a3-6f06-4904-9d94-6f92bba89dbc@redhat.com>
-From: Patrick Roy <roypat@amazon.co.uk>
+Subject: Re: [PATCH v2 2/2] arm64: dts: qcom: sm8650: setup gpu thermal with
+ higher temperatures
+To: Akhil P Oommen <quic_akhilpo@quicinc.com>,
+        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20250110-topic-sm8650-thermal-cpu-idle-v2-0-5787ad79abbb@linaro.org>
+ <20250110-topic-sm8650-thermal-cpu-idle-v2-2-5787ad79abbb@linaro.org>
+ <8fc3b958-5c2f-4c79-8dc0-d1eec9f5e47d@quicinc.com>
+ <56023e4f-d60b-41c3-a3c9-ba768613e9b2@oss.qualcomm.com>
+ <de6a6943-11eb-468a-b6c1-406929c576d3@quicinc.com>
 Content-Language: en-US
-Autocrypt: addr=roypat@amazon.co.uk; keydata=
- xjMEY0UgYhYJKwYBBAHaRw8BAQdA7lj+ADr5b96qBcdINFVJSOg8RGtKthL5x77F2ABMh4PN
- NVBhdHJpY2sgUm95IChHaXRodWIga2V5IGFtYXpvbikgPHJveXBhdEBhbWF6b24uY28udWs+
- wpMEExYKADsWIQQ5DAcjaM+IvmZPLohVg4tqeAbEAgUCY0UgYgIbAwULCQgHAgIiAgYVCgkI
- CwIEFgIDAQIeBwIXgAAKCRBVg4tqeAbEAmQKAQC1jMl/KT9pQHEdALF7SA1iJ9tpA5ppl1J9
- AOIP7Nr9SwD/fvIWkq0QDnq69eK7HqW14CA7AToCF6NBqZ8r7ksi+QLOOARjRSBiEgorBgEE
- AZdVAQUBAQdAqoMhGmiXJ3DMGeXrlaDA+v/aF/ah7ARbFV4ukHyz+CkDAQgHwngEGBYKACAW
- IQQ5DAcjaM+IvmZPLohVg4tqeAbEAgUCY0UgYgIbDAAKCRBVg4tqeAbEAtjHAQDkh5jZRIsZ
- 7JMNkPMSCd5PuSy0/Gdx8LGgsxxPMZwePgEAn5Tnh4fVbf00esnoK588bYQgJBioXtuXhtom
- 8hlxFQM=
-In-Reply-To: <82d8d3a3-6f06-4904-9d94-6f92bba89dbc@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <de6a6943-11eb-468a-b6c1-406929c576d3@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
+X-Proofpoint-ORIG-GUID: b4-dHqDH4S_7652ogin3tBVBk8i6Pi5E
+X-Proofpoint-GUID: b4-dHqDH4S_7652ogin3tBVBk8i6Pi5E
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-01-23_05,2025-01-22_02,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 phishscore=0
+ priorityscore=1501 suspectscore=0 bulkscore=0 clxscore=1015
+ lowpriorityscore=0 mlxlogscore=999 impostorscore=0 malwarescore=0
+ mlxscore=0 spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2501230091
 
-
-
-On Thu, 2025-01-23 at 11:39 +0000, David Hildenbrand wrote:
-> On 23.01.25 10:48, Fuad Tabba wrote:
->> On Wed, 22 Jan 2025 at 22:10, David Hildenbrand <david@redhat.com> wrote:
+On 22.01.2025 3:09 PM, Akhil P Oommen wrote:
+> On 1/17/2025 2:50 AM, Konrad Dybcio wrote:
+>> On 13.01.2025 11:28 AM, Akhil P Oommen wrote:
+>>> On 1/10/2025 4:06 PM, Neil Armstrong wrote:
+>>>> On the SM8650, the dynamic clock and voltage scaling (DCVS) for the GPU
+>>>> is done in an hardware controlled loop by the GPU Management Unit (GMU).
+>>>>
+>>>> Since the GMU does a better job at maintaining the GPUs temperature in an
+>>>> acceptable range by taking in account more parameters like the die
+>>>> characteristics or other internal sensors, it makes no sense to try
+>>>> and reproduce a similar set of constraints with the Linux devfreq thermal
+>>>> core.
 >>>
->>> On 22.01.25 16:27, Fuad Tabba wrote:
->>>> Make kvm_(read|/write)_guest_page() capable of accessing guest
->>>> memory for slots that don't have a userspace address, but only if
->>>> the memory is mappable, which also indicates that it is
->>>> accessible by the host.
->>>
->>> Interesting. So far my assumption was that, for shared memory, user
->>> space would simply mmap() guest_memdd and pass it as userspace address
->>> to the same memslot that has this guest_memfd for private memory.
->>>
->>> Wouldn't that be easier in the first shot? (IOW, not require this patch
->>> with the cost of faulting the shared page into the page table on access)
+>>> Just FYI, this description is incorrect. SM8650's GMU doesn't do any
+>>> sort of thermal management.
+>>
+>> What's this for then? Just reacting to thermal pressure?
+>>
+>> https://git.codelinaro.org/clo/le/platform/vendor/qcom/opensource/graphics-kernel/-/commit/e4387d101d14965c8f2c67e10a6a9499c1a88af4
 >>
 > 
-> In light of:
-> 
-> https://lkml.kernel.org/r/20250117190938.93793-4-imbrenda@linux.ibm.com
-> 
-> there can, in theory, be memslots that start at address 0 and have a
-> "valid" mapping. This case is done from the kernel (and on special s390x
-> hardware), though, so it does not apply here at all so far.
-> 
-> In practice, getting address 0 as a valid address is unlikely, because
-> the default:
-> 
-> $ sysctl  vm.mmap_min_addr
-> vm.mmap_min_addr = 65536
-> 
-> usually prohibits it for good reason.
-> 
->> This has to do more with the ABI I had for pkvm and shared memory
->> implementations, in which you don't need to specify the userspace
->> address for memory in a guestmem memslot. The issue is there is no
->> obvious address to map it to. This would be the case in kvm:arm64 for
->> tracking paravirtualized time, which the userspace doesn't necessarily
->> need to interact with, but kvm does.
-> 
-> So I understand correctly: userspace wouldn't have to mmap it because it
-> is not interested in accessing it, but there is nothing speaking against
-> mmaping it, at least in the first shot.
-> 
-> I assume it would not be a private memslot (so far, my understanding is
-> that internal memslots never have a guest_memfd attached).
-> kvm_gmem_create() is only called via KVM_CREATE_GUEST_MEMFD, to be set
-> on user-created memslots.
-> 
->>
->> That said, we could always have a userspace address dedicated to
->> mapping shared locations, and use that address when the necessity
->> arises. Or we could always require that memslots have a userspace
->> address, even if not used. I don't really have a strong preference.
-> 
-> So, the simpler version where user space would simply mmap guest_memfd
-> to provide the address via userspace_addr would at least work for the
-> use case of paravirtualized time?
+> I don't think those TSENSE configs matters on SM8650 in production.
 
-fwiw, I'm currently prototyping something like this for x86 (although
-not by putting the gmem address into userspace_addr, but by adding a new
-field to memslots, so that memory attributes continue working), based on
-what we talked about at the last guest_memfd sync meeting (the whole
-"how to get MMIO emulation working for non-CoCo VMs in guest_memfd"
-story). So I guess if we're going down this route for x86, maybe it
-makes sense to do the same on ARM, for consistency?
+OK, thanks 
 
-> It would get rid of the immediate need for this patch and patch #4 to
-> get it flying.
-> 
-> 
-> One interesting question is: when would you want shared memory in
-> guest_memfd and *not* provide it as part of the same memslot. 
-
-In my testing of non-CoCo gmem VMs on ARM, I've been able to get quite
-far without giving KVM a way to internally access shared parts of gmem - 
-it's why I was probing Fuad for this simplified series, because
-KVM_SW_PROTECTED_VM + mmap (for loading guest kernel) is enough to get a
-working non-CoCo VM on ARM (although I admittedly never looked at clocks
-inside the guest - maybe that's one thing that breaks if KVM can't
-access gmem. How to guest and host agree on the guest memory range
-used to exchange paravirtual timekeeping information? Could that exchange
-be intercepted in userspace, and set to shared via memory attributes (e.g.
-placed outside gmem)? That's the route I'm going down the paravirtual
-time on x86).
-
-> One nice thing about the mmap might be that access go via user-space
-> page tables: E.g., __kvm_read_guest_page can just access the memory
-> without requiring the folio lock and an additional temporary folio
-> reference on every access -- it's handled implicitly via the mapcount.
-> 
-> (of course, to map the page we still need that once on the fault path)
-
-Doing a direct map access in kvm_{read,write}_guest() and friends will
-also get tricky if guest_memfd folios ever don't have direct map
-entries. On-demand restoration is painful, both complexity and
-performance wise [1], while going through a userspace mapping of
-guest_memfd would "just work".
-
-> -- 
-> Cheers,
-> 
-> David / dhildenb
-> 
+Konrad
 
