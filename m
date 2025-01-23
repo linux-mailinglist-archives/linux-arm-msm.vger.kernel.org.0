@@ -1,228 +1,300 @@
-Return-Path: <linux-arm-msm+bounces-45979-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-45980-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 10BE7A1A438
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jan 2025 13:29:22 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8CC47A1A450
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jan 2025 13:31:01 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 4AE4C161063
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jan 2025 12:29:20 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4AD7A3A339F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jan 2025 12:30:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6B63320E715;
-	Thu, 23 Jan 2025 12:29:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C378820E32D;
+	Thu, 23 Jan 2025 12:30:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="O4JJ9UzA"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b="XYGI59eM"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qt1-f176.google.com (mail-qt1-f176.google.com [209.85.160.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fanzine2.igalia.com (fanzine.igalia.com [178.60.130.6])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE43420E6F2
-	for <linux-arm-msm@vger.kernel.org>; Thu, 23 Jan 2025 12:29:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 245423596B;
+	Thu, 23 Jan 2025 12:30:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=178.60.130.6
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737635359; cv=none; b=qMfjKI/0vOy3MhMaF7b23FC4ZtOGSSickw3G179JZoLNfKdRVC6uEQMCo2vOnoLRzEbbHjqcw116PnMrqEUkaWP31ql+HP6scCI8gjanvVDODGxQEzeXb+ertJkYASPTFGqs+a2n2FGeWsdK/re+Qs7ckbvhLPz76Je1GVnbssk=
+	t=1737635458; cv=none; b=iCVs3pwqInnlT6HjJEYnDhs0RdfWR41W8tuUgYEAVBAVlYXFrSi5xSNypDmkZ22/g3N0p8wRp1LWPwemSSJbKMa/hqGmcqHm8ahT3D9uLFLrYdL+BjH5zyi9nRjfXvs2dNXay4liLOBcAKKUg8I9XksqTZ4C6SIliJlIn45EzFQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737635359; c=relaxed/simple;
-	bh=TKIc+BSqUxTWDRXQBflfAo2GLT0I+z93EFcFnisGVl0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ftuDnHk5DVyIydxWiuEoN12gPtel5ZlgzQmWWCb2dF2e2EC7JmufVPjoaR3PYshGpLBjepw2XdmrUiy0r1IAmQxlPovuM9X+vJ46c3AAzKspm1MoRvxrvW/MgVTlIoXI10w59zKshkFpf3OYRJ5xhZ8MO6glRqYQZw7Q031h6Xc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=O4JJ9UzA; arc=none smtp.client-ip=209.85.160.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
-Received: by mail-qt1-f176.google.com with SMTP id d75a77b69052e-467abce2ef9so232961cf.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Jan 2025 04:29:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1737635356; x=1738240156; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=j5Uvwp8iLFnxoJglCUJNCQCFMuDYn+JUgCWP0ESBOZs=;
-        b=O4JJ9UzAY1qyj/+zFqeNn8PsNxTBNbs9EGXdDSh9kmzuks5w83jEW7A7GjswifPIT1
-         FodIVNCS1DFX8Ytb0R9eYSEM2x46/BxdUqhJY5E+3jD/F5+qWw+vRJ9fScHwkwT7fljF
-         6uQOm5u3DUa6OZJv3NpDHTOfM3zvn27BePwwfaKxgnuC44xxcsfyOMnjvCgWKhT8PxOC
-         NDaJIXKjXiB5RkYyFjvFEjFgezZ769z7dTMzsH0ptBVoHRgHKdswOa1OEgCtsf/kXRsY
-         xwo8BUEgPjrDASdXc/6X8xT5FIORo/7PGAjoU55TUedcuTEGqsAerGx3gEEJXXGm3NiO
-         xz9w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1737635356; x=1738240156;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=j5Uvwp8iLFnxoJglCUJNCQCFMuDYn+JUgCWP0ESBOZs=;
-        b=nTT6Ej+K6XLRk1lIbd8p+C+rexoiH5i34OEwlBKlvYijrMW46IAeJagNcYUlVKPLZA
-         /mxY8MwiSDHefmzaFCcuqGVepNLvI3ay0Ni8tZaZSDJRFQGPDDksRqBBofpWUZ9bt5aQ
-         Ur6lKe9RP84myHRgnUqaVzRj4O1DP6va7bPz88PYtoCuDh/pw8M4avWmzWSrovEUf32F
-         3FHHpK/ugdSBgJcsT6GkxPAxLPjPwvdHviIxUcWuA5PI00nOog8KDwQboomr6dhVptrU
-         9eaGd9o52xtDRGsvxhC/cXuaSHEQfZziqg3Ta7gOKQNJP5DZwLceZ89jOCVjTFif2wvl
-         Nlkg==
-X-Forwarded-Encrypted: i=1; AJvYcCUt6gErgWd/QwSVlwqpqUK2S4m4TV5+xHFPyOOx9PhZvOhEpt3mKIHktOZkw71G9t5D0w0x0r5Ud8res/a/@vger.kernel.org
-X-Gm-Message-State: AOJu0YybP7T+N/BkfdVc2Rl4uCdF2ZtKrakaatEEj6uxgxoTCVaUr7TF
-	73KSmQoEDEjR8HaVx9NiInz1u3EyG0ZRvyzUDX/fPQHcgfJUpRzZk3mKqBjUeRZnPxsiAhxo8HZ
-	8l+GM9KfIt1j45FM8k5ht/uXmzuOZd9qJCm5k
-X-Gm-Gg: ASbGncvMaM6Ct6/FdgLSDTfnXvCAeBjHZPY9Qvaloy2JIqD9C1PaF9l+85A0idPwSQR
-	UEwV6sWGqjamExWjFPUtQGr0GQSDIMj8zDLSaurotLpa76CLzrIXUNmiqjgcTFKny+gIn4I3wC/
-	okHXX9fVe+KZpopQ==
-X-Google-Smtp-Source: AGHT+IFo7gHEqkSt24ROLr+rcgOB4gwt3zbzIxCW0GBek3MCCfZMWVQPp/KG8PZ3z3viNEVgM3hoDHsXK0zFnQOGj2c=
-X-Received: by 2002:a05:622a:1342:b0:466:9af1:5a35 with SMTP id
- d75a77b69052e-46e5c11b2fdmr3773451cf.10.1737635356102; Thu, 23 Jan 2025
- 04:29:16 -0800 (PST)
+	s=arc-20240116; t=1737635458; c=relaxed/simple;
+	bh=6Q+2dHBFkjD8NMH5kO88+Hmvg957BWftNl5RCe17ADM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=CuOueMSct6ju+W95wNcdNquoTCBwbgduaWhKhjtBAE+WkDIMXcSHBNBTd1qtkDIJYRzYFPHDa9krex4wQqXlKTZfgPUurioQTi4LBI/Pg95//huZfjibbrIgfm2y18IxwhUqWr8j581uK5gBkFPAXOfdU2ZLpDD+qglmTIyjfZc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=igalia.com; spf=pass smtp.mailfrom=igalia.com; dkim=pass (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b=XYGI59eM; arc=none smtp.client-ip=178.60.130.6
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=igalia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=igalia.com
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com;
+	s=20170329; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
+	References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender:Reply-To:
+	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=Z8XUxzm8dLi8p/kAybuPHg87486j0vTg3MwMyxsqGrU=; b=XYGI59eM5sIdZT+1c4SFmCibW7
+	RRE+aVBPBmsDmfNDKoRUqCep+gcU1Ft51Kl6Y6ZAf1xmC8NVPIIaW9D9hHF+9rX+ldxCDZLDFzp+n
+	qqQoo8nzU9NTkiZYzSYN3tO9xWSldqg8/Fp1G5reECLGSox+YMlp07KtvSCfDJgc07FgDCw9BzHsy
+	d2YUzFCg2sjwf77nMZK8DVdXUBKLLm/dANiOqqwxZjoOF/ybUVWF2G0O3K2vp7A6WQhWS20Y2Slzc
+	zLeoQUd0u4rjxt1/2oNGIx73fdAOdUurYFIwFQCj7oVrz4Z+nJwgQmKIP4rEMzHKQIS8IeWMJBQpZ
+	kOkflMXg==;
+Received: from [187.36.213.55] (helo=[192.168.1.103])
+	by fanzine2.igalia.com with esmtpsa 
+	(Cipher TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_128_GCM:128) (Exim)
+	id 1tawLh-001C6o-BU; Thu, 23 Jan 2025 13:30:17 +0100
+Message-ID: <a58da040-2bef-4af0-afae-f2447896080e@igalia.com>
+Date: Thu, 23 Jan 2025 09:29:57 -0300
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250122152738.1173160-1-tabba@google.com> <20250122152738.1173160-3-tabba@google.com>
- <e6ea48d2-959f-4fbb-a170-0beaaf37f867@redhat.com> <CA+EHjTxNEoQ3MtZPi603=366vxt=SmBwetS4mFkvTK2r6u=UHw@mail.gmail.com>
- <82d8d3a3-6f06-4904-9d94-6f92bba89dbc@redhat.com> <ef864674-bbcf-457b-a4e3-fec272fc2d8a@amazon.co.uk>
-In-Reply-To: <ef864674-bbcf-457b-a4e3-fec272fc2d8a@amazon.co.uk>
-From: Fuad Tabba <tabba@google.com>
-Date: Thu, 23 Jan 2025 12:28:38 +0000
-X-Gm-Features: AWEUYZlk27iu21ce658i7eF8nK3E5OgorA0dDMLJ2rxkwcmmmUKAFqWMqXFFLV8
-Message-ID: <CA+EHjTxc0AwX2=htwC9to7+fYbFJsfVGT5d+BtEYVPncMgq1Mw@mail.gmail.com>
-Subject: Re: [RFC PATCH v1 2/9] KVM: guest_memfd: Add guest_memfd support to kvm_(read|/write)_guest_page()
-To: Patrick Roy <roypat@amazon.co.uk>
-Cc: David Hildenbrand <david@redhat.com>, kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	linux-mm@kvack.org, pbonzini@redhat.com, chenhuacai@kernel.org, 
-	mpe@ellerman.id.au, anup@brainfault.org, paul.walmsley@sifive.com, 
-	palmer@dabbelt.com, aou@eecs.berkeley.edu, seanjc@google.com, 
-	viro@zeniv.linux.org.uk, brauner@kernel.org, willy@infradead.org, 
-	akpm@linux-foundation.org, xiaoyao.li@intel.com, yilun.xu@intel.com, 
-	chao.p.peng@linux.intel.com, jarkko@kernel.org, amoorthy@google.com, 
-	dmatlack@google.com, yu.c.zhang@linux.intel.com, isaku.yamahata@intel.com, 
-	mic@digikod.net, vbabka@suse.cz, vannapurve@google.com, 
-	ackerleytng@google.com, mail@maciej.szmigiero.name, michael.roth@amd.com, 
-	wei.w.wang@intel.com, liam.merwick@oracle.com, isaku.yamahata@gmail.com, 
-	kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com, steven.price@arm.com, 
-	quic_eberman@quicinc.com, quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, 
-	quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com, 
-	quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com, 
-	james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev, 
-	maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com, 
-	shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, rientjes@google.com, 
-	jhubbard@nvidia.com, fvdl@google.com, hughd@google.com, jthoughton@google.com
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] drm/sched: Use struct for drm_sched_init() params
+To: phasta@kernel.org, Alex Deucher <alexander.deucher@amd.com>,
+ =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
+ Xinhui Pan <Xinhui.Pan@amd.com>, David Airlie <airlied@gmail.com>,
+ Simona Vetter <simona@ffwll.ch>, Lucas Stach <l.stach@pengutronix.de>,
+ Russell King <linux+etnaviv@armlinux.org.uk>,
+ Christian Gmeiner <christian.gmeiner@gmail.com>,
+ Frank Binns <frank.binns@imgtec.com>, Matt Coster <matt.coster@imgtec.com>,
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
+ Qiang Yu <yuq825@gmail.com>, Rob Clark <robdclark@gmail.com>,
+ Sean Paul <sean@poorly.run>, Konrad Dybcio <konradybcio@kernel.org>,
+ Abhinav Kumar <quic_abhinavk@quicinc.com>,
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Marijn Suijten <marijn.suijten@somainline.org>,
+ Karol Herbst <kherbst@redhat.com>, Lyude Paul <lyude@redhat.com>,
+ Danilo Krummrich <dakr@kernel.org>,
+ Boris Brezillon <boris.brezillon@collabora.com>,
+ Rob Herring <robh@kernel.org>, Steven Price <steven.price@arm.com>,
+ Liviu Dudau <liviu.dudau@arm.com>, Luben Tuikov <ltuikov89@gmail.com>,
+ Matthew Brost <matthew.brost@intel.com>, Melissa Wen <mwen@igalia.com>,
+ Lucas De Marchi <lucas.demarchi@intel.com>,
+ =?UTF-8?Q?Thomas_Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
+ Rodrigo Vivi <rodrigo.vivi@intel.com>, Sunil Khatri <sunil.khatri@amd.com>,
+ Lijo Lazar <lijo.lazar@amd.com>,
+ Mario Limonciello <mario.limonciello@amd.com>, Ma Jun <Jun.Ma2@amd.com>,
+ Yunxiang Li <Yunxiang.Li@amd.com>
+Cc: amd-gfx@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
+ linux-kernel@vger.kernel.org, etnaviv@lists.freedesktop.org,
+ lima@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+ freedreno@lists.freedesktop.org, nouveau@lists.freedesktop.org,
+ intel-xe@lists.freedesktop.org, mcanal@igalia.com
+References: <20250122140818.45172-3-phasta@kernel.org>
+ <24f1c52f-1768-47de-88e3-d4104969d0a9@igalia.com>
+ <9713798aa175aef2041e6d688ac4814006f789bc.camel@redhat.com>
+ <ec4bb0f6-c366-40e7-a1df-332458b08eec@igalia.com>
+ <e7414579afbfc25d4027471bc265ee48e7d25932.camel@mailbox.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Ma=C3=ADra_Canal?= <mcanal@igalia.com>
+In-Reply-To: <e7414579afbfc25d4027471bc265ee48e7d25932.camel@mailbox.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-Hi Patrick,
+Hi Philipp,
 
-On Thu, 23 Jan 2025 at 11:57, Patrick Roy <roypat@amazon.co.uk> wrote:
->
->
->
-> On Thu, 2025-01-23 at 11:39 +0000, David Hildenbrand wrote:
-> > On 23.01.25 10:48, Fuad Tabba wrote:
-> >> On Wed, 22 Jan 2025 at 22:10, David Hildenbrand <david@redhat.com> wrote:
-> >>>
-> >>> On 22.01.25 16:27, Fuad Tabba wrote:
-> >>>> Make kvm_(read|/write)_guest_page() capable of accessing guest
-> >>>> memory for slots that don't have a userspace address, but only if
-> >>>> the memory is mappable, which also indicates that it is
-> >>>> accessible by the host.
-> >>>
-> >>> Interesting. So far my assumption was that, for shared memory, user
-> >>> space would simply mmap() guest_memdd and pass it as userspace address
-> >>> to the same memslot that has this guest_memfd for private memory.
-> >>>
-> >>> Wouldn't that be easier in the first shot? (IOW, not require this patch
-> >>> with the cost of faulting the shared page into the page table on access)
-> >>
-> >
-> > In light of:
-> >
-> > https://lkml.kernel.org/r/20250117190938.93793-4-imbrenda@linux.ibm.com
-> >
-> > there can, in theory, be memslots that start at address 0 and have a
-> > "valid" mapping. This case is done from the kernel (and on special s390x
-> > hardware), though, so it does not apply here at all so far.
-> >
-> > In practice, getting address 0 as a valid address is unlikely, because
-> > the default:
-> >
-> > $ sysctl  vm.mmap_min_addr
-> > vm.mmap_min_addr = 65536
-> >
-> > usually prohibits it for good reason.
-> >
-> >> This has to do more with the ABI I had for pkvm and shared memory
-> >> implementations, in which you don't need to specify the userspace
-> >> address for memory in a guestmem memslot. The issue is there is no
-> >> obvious address to map it to. This would be the case in kvm:arm64 for
-> >> tracking paravirtualized time, which the userspace doesn't necessarily
-> >> need to interact with, but kvm does.
-> >
-> > So I understand correctly: userspace wouldn't have to mmap it because it
-> > is not interested in accessing it, but there is nothing speaking against
-> > mmaping it, at least in the first shot.
-> >
-> > I assume it would not be a private memslot (so far, my understanding is
-> > that internal memslots never have a guest_memfd attached).
-> > kvm_gmem_create() is only called via KVM_CREATE_GUEST_MEMFD, to be set
-> > on user-created memslots.
-> >
-> >>
-> >> That said, we could always have a userspace address dedicated to
-> >> mapping shared locations, and use that address when the necessity
-> >> arises. Or we could always require that memslots have a userspace
-> >> address, even if not used. I don't really have a strong preference.
-> >
-> > So, the simpler version where user space would simply mmap guest_memfd
-> > to provide the address via userspace_addr would at least work for the
-> > use case of paravirtualized time?
->
-> fwiw, I'm currently prototyping something like this for x86 (although
-> not by putting the gmem address into userspace_addr, but by adding a new
-> field to memslots, so that memory attributes continue working), based on
-> what we talked about at the last guest_memfd sync meeting (the whole
-> "how to get MMIO emulation working for non-CoCo VMs in guest_memfd"
-> story). So I guess if we're going down this route for x86, maybe it
-> makes sense to do the same on ARM, for consistency?
->
-> > It would get rid of the immediate need for this patch and patch #4 to
-> > get it flying.
-> >
-> >
-> > One interesting question is: when would you want shared memory in
-> > guest_memfd and *not* provide it as part of the same memslot.
->
-> In my testing of non-CoCo gmem VMs on ARM, I've been able to get quite
-> far without giving KVM a way to internally access shared parts of gmem -
-> it's why I was probing Fuad for this simplified series, because
-> KVM_SW_PROTECTED_VM + mmap (for loading guest kernel) is enough to get a
-> working non-CoCo VM on ARM (although I admittedly never looked at clocks
-> inside the guest - maybe that's one thing that breaks if KVM can't
-> access gmem. How to guest and host agree on the guest memory range
-> used to exchange paravirtual timekeeping information? Could that exchange
-> be intercepted in userspace, and set to shared via memory attributes (e.g.
-> placed outside gmem)? That's the route I'm going down the paravirtual
-> time on x86).
+On 23/01/25 09:13, Philipp Stanner wrote:
+> On Thu, 2025-01-23 at 08:10 -0300, Maíra Canal wrote:
+>> Hi Philipp,
+>>
+>> On 23/01/25 05:10, Philipp Stanner wrote:
+>>> On Wed, 2025-01-22 at 19:07 -0300, Maíra Canal wrote:
+>>>> Hi Philipp,
+>>>>
+>>>> On 22/01/25 11:08, Philipp Stanner wrote:
+>>>>> drm_sched_init() has a great many parameters and upcoming new
+>>>>> functionality for the scheduler might add even more. Generally,
+>>>>> the
+>>>>> great number of parameters reduces readability and has already
+>>>>> caused
+>>>>> one missnaming in:
+>>>>>
+>>>>> commit 6f1cacf4eba7 ("drm/nouveau: Improve variable name in
+>>>>> nouveau_sched_init()").
+>>>>>
+>>>>> Introduce a new struct for the scheduler init parameters and
+>>>>> port
+>>>>> all
+>>>>> users.
+>>>>>
+>>>>> Signed-off-by: Philipp Stanner <phasta@kernel.org>
+>>
+>> [...]
+>>
+>>>>
+>>>>> diff --git a/drivers/gpu/drm/v3d/v3d_sched.c
+>>>>> b/drivers/gpu/drm/v3d/v3d_sched.c
+>>>>> index 99ac4995b5a1..716e6d074d87 100644
+>>>>> --- a/drivers/gpu/drm/v3d/v3d_sched.c
+>>>>> +++ b/drivers/gpu/drm/v3d/v3d_sched.c
+>>>>> @@ -814,67 +814,124 @@ static const struct
+>>>>> drm_sched_backend_ops
+>>>>> v3d_cpu_sched_ops = {
+>>>>>     	.free_job = v3d_cpu_job_free
+>>>>>     };
+>>>>>     
+>>>>> +/*
+>>>>> + * v3d's scheduler instances are all identical, except for ops
+>>>>> and
+>>>>> name.
+>>>>> + */
+>>>>> +static void
+>>>>> +v3d_common_sched_init(struct drm_sched_init_params *params,
+>>>>> struct
+>>>>> device *dev)
+>>>>> +{
+>>>>> +	memset(params, 0, sizeof(struct
+>>>>> drm_sched_init_params));
+>>>>> +
+>>>>> +	params->submit_wq = NULL; /* Use the system_wq. */
+>>>>> +	params->num_rqs = DRM_SCHED_PRIORITY_COUNT;
+>>>>> +	params->credit_limit = 1;
+>>>>> +	params->hang_limit = 0;
+>>>>> +	params->timeout = msecs_to_jiffies(500);
+>>>>> +	params->timeout_wq = NULL; /* Use the system_wq. */
+>>>>> +	params->score = NULL;
+>>>>> +	params->dev = dev;
+>>>>> +}
+>>>>
+>>>> Could we use only one function that takes struct v3d_dev *v3d,
+>>>> enum
+>>>> v3d_queue, and sched_ops as arguments (instead of one function
+>>>> per
+>>>> queue)? You can get the name of the scheduler by concatenating
+>>>> "v3d_"
+>>>> to
+>>>> the return of v3d_queue_to_string().
+>>>>
+>>>> I believe it would make the code much simpler.
+>>>
+>>> Hello,
+>>>
+>>> so just to get that right:
+>>> You'd like to have one universal function that switch-cases over an
+>>> enum, sets the ops and creates the name with string concatenation?
+>>>
+>>> I'm not convinced that this is simpler than a few small functions,
+>>> but
+>>> it's not my component, so…
+>>>
+>>> Whatever we'll do will be simpler than the existing code, though.
+>>> Right
+>>> now no reader can see at first glance whether all those schedulers
+>>> are
+>>> identically parametrized or not.
+>>>
+>>
+>> This is my proposal (just a quick draft, please check if it
+>> compiles):
+>>
+>> diff --git a/drivers/gpu/drm/v3d/v3d_sched.c
+>> b/drivers/gpu/drm/v3d/v3d_sched.c
+>> index 961465128d80..7cc45a0c6ca0 100644
+>> --- a/drivers/gpu/drm/v3d/v3d_sched.c
+>> +++ b/drivers/gpu/drm/v3d/v3d_sched.c
+>> @@ -820,67 +820,62 @@ static const struct drm_sched_backend_ops
+>> v3d_cpu_sched_ops = {
+>>           .free_job = v3d_cpu_job_free
+>>    };
+>>
+>> +static int
+>> +v3d_sched_queue_init(struct v3d_dev *v3d, enum v3d_queue queue,
+>> +                    const struct drm_sched_backend_ops *ops, const
+> 
+> Is it a queue, though?
 
-For an idea of what it looks like on arm64, here's how kvmtool handles it:
-https://github.com/kvmtool/kvmtool/blob/master/arm/aarch64/pvtime.c
+In V3D, we use the abstraction of a queue for everything related to job
+submission. For each queue, we have a scheduler instance, a different
+IOCTL and such. The queues work independently and the synchronization
+between them can be done through syncobjs.
 
-Cheers,
-/fuad
+> 
+> How about _v3d_sched_init()?
+> 
 
+I'd prefer if you use a function name related to "queue", as it would
+make more sense semantically.
 
+Best Regards,
+- Maíra
 
+> P.
+> 
+>> char
+>> *name)
+>> +{
+>> +       struct drm_sched_init_params params = {
+>> +               .submit_wq = NULL,
+>> +               .num_rqs = DRM_SCHED_PRIORITY_COUNT,
+>> +               .credit_limit = 1,
+>> +               .hang_limit = 0,
+>> +               .timeout = msecs_to_jiffies(500),
+>> +               .timeout_wq = NULL,
+>> +               .score = NULL,
+>> +               .dev = v3d->drm.dev,
+>> +       };
+>> +
+>> +       params.ops = ops;
+>> +       params.name = name;
+>> +
+>> +       return drm_sched_init(&v3d->queue[queue].sched, &params);
+>> +}
+>> +
+>>    int
+>>    v3d_sched_init(struct v3d_dev *v3d)
+>>    {
+>> -       int hw_jobs_limit = 1;
+>> -       int job_hang_limit = 0;
+>> -       int hang_limit_ms = 500;
+>>           int ret;
+>>
+>> -       ret = drm_sched_init(&v3d->queue[V3D_BIN].sched,
+>> -                            &v3d_bin_sched_ops, NULL,
+>> -                            DRM_SCHED_PRIORITY_COUNT,
+>> -                            hw_jobs_limit, job_hang_limit,
+>> -                            msecs_to_jiffies(hang_limit_ms), NULL,
+>> -                            NULL, "v3d_bin", v3d->drm.dev);
+>> +       ret = v3d_sched_queue_init(v3d, V3D_BIN, &v3d_bin_sched_ops,
+>> +                                  "v3d_bin");
+>>           if (ret)
+>>                   return ret;
+>>
+>> -       ret = drm_sched_init(&v3d->queue[V3D_RENDER].sched,
+>> -                            &v3d_render_sched_ops, NULL,
+>> -                            DRM_SCHED_PRIORITY_COUNT,
+>> -                            hw_jobs_limit, job_hang_limit,
+>> -                            msecs_to_jiffies(hang_limit_ms), NULL,
+>> -                            NULL, "v3d_render", v3d->drm.dev);
+>> +       ret = v3d_sched_queue_init(v3d, V3D_RENDER,
+>> &v3d_render_sched_ops,
+>> +                                  "v3d_render");
+>>           if (ret)
+>>                   goto fail;
+>>
+>> [...]
+>>
+>> At least for me, this looks much simpler than one function for each
+>> V3D queue.
+>>
+>> Best Regards,
+>> - Maíra
+>>
+>>> P.
+>>>
+>>>
+>>>>
+>>>> Best Regards,
+>>>> - Maíra
+>>>>
+>>
+> 
 
-
-> > One nice thing about the mmap might be that access go via user-space
-> > page tables: E.g., __kvm_read_guest_page can just access the memory
-> > without requiring the folio lock and an additional temporary folio
-> > reference on every access -- it's handled implicitly via the mapcount.
-> >
-> > (of course, to map the page we still need that once on the fault path)
->
-> Doing a direct map access in kvm_{read,write}_guest() and friends will
-> also get tricky if guest_memfd folios ever don't have direct map
-> entries. On-demand restoration is painful, both complexity and
-> performance wise [1], while going through a userspace mapping of
-> guest_memfd would "just work".
->
-> > --
-> > Cheers,
-> >
-> > David / dhildenb
-> >
 
