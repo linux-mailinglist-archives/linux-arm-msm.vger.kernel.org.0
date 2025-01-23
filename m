@@ -1,193 +1,207 @@
-Return-Path: <linux-arm-msm+bounces-46007-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46008-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id F1F47A1AA4E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jan 2025 20:26:50 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 695DAA1AA73
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jan 2025 20:41:18 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id B89C0188AD00
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jan 2025 19:26:54 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id E6F4E7A0FE0
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jan 2025 19:41:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3C7C2192B69;
-	Thu, 23 Jan 2025 19:26:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 049521AA1DC;
+	Thu, 23 Jan 2025 19:41:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="B8NUcHj0"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GE9Gsa7i"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88D741BC4E
-	for <linux-arm-msm@vger.kernel.org>; Thu, 23 Jan 2025 19:26:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3E6D155A59;
+	Thu, 23 Jan 2025 19:41:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737660407; cv=none; b=OTU/OHtVghemGpyLYb0Vn6MRjzzOEDYv9oCPO+quWQDXLNHGlWEaqgAS1wKWKBbZXpE8D4AC+pshWxFdDWd+9GosY/VpSSv3alyzQ6yKYWLk4lSF5gjGaQFoCvd++BM0OmBJj5ncYe5Ds5AFEVuKzIkefyq8ne9myiQVustzAuU=
+	t=1737661268; cv=none; b=CPyl1xjhZ8cmjQm08UUuT8atB2puCqPvlY7KgHwDLkBQAWrlOnDU5SYf+wUPU2GRzJAfEAEbKuZ+gFAIdlWAWsjXttd2mNgUVg5pd3ktSD6X4FLSF3HIBsOkVm2IeIaKWXYxAuqqSxQ4MmmSzoI6u8H0Bzew3CZqU9ThYPvUo54=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737660407; c=relaxed/simple;
-	bh=5db58c5dg0ySVECwNpTWJvf8PNP5Uf+onN97MrC/7l4=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=AjCc+DJgIjQZEFQdBGOr3c+Scfuz9jzjGArdUN8QOdbLBeGdYjaGzxeK4DolnxYoVJLbh9+bDRZNiK5vDLqx3wS2QhRhxk4ORpeaRrXOeMdreISnYI/w+q8gxc6H0FC97zrVYjPVHB7NZAHVA/1Jeomtdowh5m/ZhY5F8LyZgRI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=B8NUcHj0; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50NDsI5s029652;
-	Thu, 23 Jan 2025 19:26:18 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	xbPxKwFgsEnv6VNL5xU4bAl2nRy0Cg3dN5HZEfeLACc=; b=B8NUcHj0AdZFf6hd
-	E+2f5JiMjkEuDXf74j7gu1AvZ3YsxRV79nNnlDFHUt/A2/ReT0JM/f1n9m02vDh6
-	oaTIaciBdpbOct9MiWZUevcQqH1MLk+oJKqY7OrU07/k3Ad0iObv64ownWQJD4Vj
-	EhmHAsBzbGHM35vV+JVD1Euuic3iCeCmh7q6PDOdl6ud88v1FDu/ru0cxUc39NQJ
-	WGI90ZM4OXr+55JcVRAaYSkkwGhKFIIMcTPCfzOu9MGj7wspR/jRQZmGuZ8SUttx
-	hJlC1TwBtz6/cDx1ruq+Y0v6iWnMm2Y2nHHQ4yjiHBYcpY1w6jD1MtphAj0zkAsI
-	4yyBfw==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44bq2crs02-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 23 Jan 2025 19:26:18 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 50NJQHXJ031213
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 23 Jan 2025 19:26:17 GMT
-Received: from hu-guptap-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Thu, 23 Jan 2025 11:26:13 -0800
-Date: Fri, 24 Jan 2025 00:55:52 +0530
-From: Prakash Gupta <quic_guptap@quicinc.com>
-To: Connor Abbott <cwabbott0@gmail.com>
-CC: Rob Clark <robdclark@gmail.com>, Will Deacon <will@kernel.org>,
-        "Robin
- Murphy" <robin.murphy@arm.com>, Joerg Roedel <joro@8bytes.org>,
-        Sean Paul
-	<sean@poorly.run>, Konrad Dybcio <konradybcio@kernel.org>,
-        Abhinav Kumar
-	<quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        <iommu@lists.linux.dev>, <linux-arm-msm@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <freedreno@lists.freedesktop.org>
-Subject: Re: [PATCH v3 1/3] iommu/arm-smmu: Fix spurious interrupts with
- stall-on-fault
-Message-ID: <Z5KXwNPrdirVUn8Z@hu-guptap-hyd.qualcomm.com>
-References: <20250122-msm-gpu-fault-fixes-next-v3-0-0afa00158521@gmail.com>
- <20250122-msm-gpu-fault-fixes-next-v3-1-0afa00158521@gmail.com>
- <Z5IjsqQ6vTdUXiGt@hu-guptap-hyd.qualcomm.com>
- <CACu1E7H5X2EfY9AG=xceaoZJkbumwnrsU4QvNbxd_A2wgVVOaQ@mail.gmail.com>
+	s=arc-20240116; t=1737661268; c=relaxed/simple;
+	bh=FzgMlZoMTVJxW0DtNfnaS6A9Ohe9wUCQbfRzCAOE11Y=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=d5yJkdbMzFBUwiURHwk7H15e7CcavO9ccgEtONlvHTpgX5OF+wmkTKw3jbhpUdf31yie+grKV4kqZrDeVtRlDBmAa7Oo60UNBt/4vdX1DDs4R65hHvCDOLL4YuyVuZE1yZO3BIbodlV/9xy1Eijn+HI5LoOEoU1Cr8wB5FG4nMA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GE9Gsa7i; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36B1EC4CEE8;
+	Thu, 23 Jan 2025 19:41:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1737661268;
+	bh=FzgMlZoMTVJxW0DtNfnaS6A9Ohe9wUCQbfRzCAOE11Y=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=GE9Gsa7iiU444KpkYxrogoBdZowGSjkyO0k7laPoPcoq6g3XxCe0poALteq4R4Zph
+	 tZ3ytakM0acv90IqA3t/Tq+HIhgvttRHrxIMc4+ftcYx59CQekJex95lkIBya9MuSj
+	 e8hgK78Mvi+bBQYrsrlD41mZ7vaA3+PkczkIp5mOMTvpFuEkiNLQOfTC7I53w3Jpp9
+	 jdf7sxICX3pGKHys55ON+N8sg3msEwZ1hAbYoGP7MqRskWyhGBaMTolzt8pF6nm7po
+	 ccEaxXFbs1MchzhtSnnv0PMPk6yc1GTQLhaCumG8Mkicq84A+N5GxqwlpPfo2bFwbT
+	 FHvlAO5Y9gebg==
+Received: by mail-oi1-f170.google.com with SMTP id 5614622812f47-3eb6b16f1a0so381760b6e.3;
+        Thu, 23 Jan 2025 11:41:08 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCU2bTlj6IVKbuv5x4EDSvIGRNanZEIUIV4SY+QkTaO6HwK/WZwL9jHwYBs2fQujagHbv5Fl4Rk7vg==@vger.kernel.org, AJvYcCU7V9C0oHkHsOVNWQeSvds5ZB8Zn8ipMme4T/huVg9TUgBRpKr+5NaHQYnojJFNhxSDxKO0U0hPJAvOgA==@vger.kernel.org, AJvYcCVEOpZpIgnhBd9S709wE8X4SLZV4MHZf38NtgUP0cnkpBGSemOkDX18VwXTl84d6J/ljVpya1xIjKbdDt4=@vger.kernel.org, AJvYcCVVLQzQuckYdqBT7vUAi4h2DLKBPW9GwDjB2JN0RIZRhPehhbHgqzYvUQNhaucAEnAgRHD+vix08Yg=@vger.kernel.org, AJvYcCWjHOipYRO8UWvtWC0574+bR1bdO46PQ11F0elZ6iqzUQ6jBBPaS+uegoI1APLmurCYvTlxEvTYyMtJpJoyzA==@vger.kernel.org, AJvYcCWvRZSXABQ8XXFzYzwIGUIWfijyPt5c52qC2wYjyR/3kBZ6j25cTQFQLXOp3FqOJAZ2d/NJY+jtGVGFOXLz@vger.kernel.org, AJvYcCXi2n6hf0bY/K155NUMwZYNdSb4z4QoAhQ5WJ/l66Ll9IDc4xZiDjtLYJ3IZNNJyuE8vAbh2izAid/i6g==@vger.kernel.org
+X-Gm-Message-State: AOJu0YwQydVp45kHcUik6JLwug7mf4qMP/UNhJLmvII6DDCas2muRxJR
+	P6p1l0vK1GhRheXmhwqox3of9az6GWpA1DrW6Z45Oq3mnm3J6cpe3dalQ6GO/OjcjoEFinLpvUQ
+	33Gsjx+lEXpCZAMR8typKsusTkT8=
+X-Google-Smtp-Source: AGHT+IFEZLpokzQrSZWtE1aUlhzheSpv16W1XbXdM7wOE5P8c+MPFR4VPEp6oVT06Ebj/5DfcgalM7sIG87OhMAknWU=
+X-Received: by 2002:a05:6808:309c:b0:3ea:519e:cc71 with SMTP id
+ 5614622812f47-3f19fd7beb4mr15987065b6e.39.1737661267410; Thu, 23 Jan 2025
+ 11:41:07 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CACu1E7H5X2EfY9AG=xceaoZJkbumwnrsU4QvNbxd_A2wgVVOaQ@mail.gmail.com>
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: fBRnQJYsHzIeNqRvZGODuPo4dLE3j9Os
-X-Proofpoint-ORIG-GUID: fBRnQJYsHzIeNqRvZGODuPo4dLE3j9Os
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-01-23_08,2025-01-23_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=1 impostorscore=0 adultscore=0
- priorityscore=1501 suspectscore=0 bulkscore=0 phishscore=0 spamscore=1
- lowpriorityscore=0 malwarescore=0 mlxlogscore=222 mlxscore=1 clxscore=1015
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2411120000
- definitions=main-2501230141
+References: <cover.1737631669.git.viresh.kumar@linaro.org>
+In-Reply-To: <cover.1737631669.git.viresh.kumar@linaro.org>
+From: "Rafael J. Wysocki" <rafael@kernel.org>
+Date: Thu, 23 Jan 2025 20:40:56 +0100
+X-Gmail-Original-Message-ID: <CAJZ5v0gQDxb0-a5HiEa0vyWCGz01esQBy1fJ4vNXDZJ=GW1W+Q@mail.gmail.com>
+X-Gm-Features: AWEUYZmJBrMCqL-riW-i0DlJyFI1cRh2mxShaIBztS2B8ipvq-I9aavy-zqQjVc
+Message-ID: <CAJZ5v0gQDxb0-a5HiEa0vyWCGz01esQBy1fJ4vNXDZJ=GW1W+Q@mail.gmail.com>
+Subject: Re: [PATCH 00/33] cpufreq: manage common sysfs attributes from core
+To: Viresh Kumar <viresh.kumar@linaro.org>
+Cc: "Rafael J. Wysocki" <rafael@kernel.org>, Alyssa Rosenzweig <alyssa@rosenzweig.io>, 
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, 
+	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>, 
+	Christophe Leroy <christophe.leroy@csgroup.eu>, Cristian Marussi <cristian.marussi@arm.com>, 
+	Fabio Estevam <festevam@gmail.com>, Florian Fainelli <florian.fainelli@broadcom.com>, 
+	Hector Martin <marcan@marcan.st>, Huacai Chen <chenhuacai@kernel.org>, 
+	Jiaxun Yang <jiaxun.yang@flygoat.com>, Jonathan Hunter <jonathanh@nvidia.com>, 
+	Kevin Hilman <khilman@kernel.org>, Madhavan Srinivasan <maddy@linux.ibm.com>, 
+	Markus Mayer <mmayer@broadcom.com>, Matthias Brugger <matthias.bgg@gmail.com>, 
+	Michael Ellerman <mpe@ellerman.id.au>, Naveen N Rao <naveen@kernel.org>, 
+	Nicholas Piggin <npiggin@gmail.com>, Pengutronix Kernel Team <kernel@pengutronix.de>, 
+	Sascha Hauer <s.hauer@pengutronix.de>, Shawn Guo <shawnguo@kernel.org>, 
+	Sudeep Holla <sudeep.holla@arm.com>, Sven Peter <sven@svenpeter.dev>, 
+	Thierry Reding <thierry.reding@gmail.com>, WANG Xuerui <kernel@xen0n.name>, linux-pm@vger.kernel.org, 
+	Vincent Guittot <vincent.guittot@linaro.org>, arm-scmi@vger.kernel.org, 
+	asahi@lists.linux.dev, imx@lists.linux.dev, 
+	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-mediatek@lists.infradead.org, 
+	linux-mips@vger.kernel.org, linux-omap@vger.kernel.org, 
+	linuxppc-dev@lists.ozlabs.org, linux-tegra@vger.kernel.org, 
+	loongarch@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Thu, Jan 23, 2025 at 09:00:17AM -0500, Connor Abbott wrote:
-> On Thu, Jan 23, 2025 at 6:10 AM Prakash Gupta <quic_guptap@quicinc.com> wrote:
-> >
-> > On Wed, Jan 22, 2025 at 03:00:58PM -0500, Connor Abbott wrote:
-> >
-> > > +     /*
-> > > +      * On some implementations FSR.SS asserts a context fault
-> > > +      * interrupt. We do not want this behavior, because resolving the
-> > > +      * original context fault typically requires operations that cannot be
-> > > +      * performed in IRQ context but leaving the stall unacknowledged will
-> > > +      * immediately lead to another spurious interrupt as FSR.SS is still
-> > > +      * set. Work around this by disabling interrupts for this context bank.
-> > > +      * It's expected that interrupts are re-enabled after resuming the
-> > > +      * translation.
-> > > +      *
-> > > +      * We have to do this before report_iommu_fault() so that we don't
-> > > +      * leave interrupts disabled in case the downstream user decides the
-> > > +      * fault can be resolved inside its fault handler.
-> > > +      *
-> > > +      * There is a possible race if there are multiple context banks sharing
-> > > +      * the same interrupt and both signal an interrupt in between writing
-> > > +      * RESUME and SCTLR. We could disable interrupts here before we
-Not sure if multiple context bank with shared interrupt supported for
-arm-smmu driver, but even if does than context fault handler they would
-operate on their respective context register space, so I don't see the race
-at context register update. 
+On Thu, Jan 23, 2025 at 12:38=E2=80=AFPM Viresh Kumar <viresh.kumar@linaro.=
+org> wrote:
+>
+> Hello,
+>
+> Most of the drivers add available and boost frequencies related attribute=
+s. This
+> patch series tries to avoid duplication and simplify driver's code by man=
+aging
+> these from core code.
+>
+> A quick search revealed that only the drivers that set the
+> policy->freq_table field, enable these attributes. Which makes sense as
+> well, since the show_available_freqs() helper works only if the
+> freq_table is present.
+>
+> In order to simplify drivers, create the relevant sysfs files forcefully
+> from cpufreq core.
+>
+> Pushed here:
+>
+> git://git.kernel.org/pub/scm/linux/kernel/git/vireshk/pm.git cpufreq/core=
+-attr
 
-> > > +      * re-enable them in the resume handler, leaving interrupts enabled.
-> > > +      * Lock the write to serialize it with the resume handler.
-> > > +      */
-> > > +     if (cfi.fsr & ARM_SMMU_CB_FSR_SS) {
-> > > +             u32 val;
-> > > +
-> > > +             spin_lock(&smmu_domain->cb_lock);
-> > > +             val = arm_smmu_cb_read(smmu, idx, ARM_SMMU_CB_SCTLR);
-> > > +             val &= ~ARM_SMMU_SCTLR_CFIE;
-> > > +             arm_smmu_cb_write(smmu, idx, ARM_SMMU_CB_SCTLR, val);
-> > > +             spin_unlock(&smmu_domain->cb_lock);
-> > > +     }
-> > > +
-> > > +     /*
-> > > +      * The SMMUv2 architecture specification says that if stall-on-fault is
-> > > +      * enabled the correct sequence is to write to SMMU_CBn_FSR to clear
-> > > +      * the fault and then write to SMMU_CBn_RESUME. Clear the interrupt
-> > > +      * first before running the user's fault handler to make sure we follow
-> > > +      * this sequence. It should be ok if there is another fault in the
-> > > +      * meantime because we have already read the fault info.
-> > > +      */
-qcom_adreno_smmu_get_fault_info() reads the fault info as part of client
-fault hanlder. So it would not be ok to clear FSR before reporting the
-fault to client.
+Acked-by: Rafael J. Wysocki <rafael@kernel.org>
 
-> > The context would remain stalled till we write to CBn_RESUME. Which is done
-> > in qcom_adreno_smmu_resume_translation(). For a stalled context further
-> > transactions are not processed and we shouldn't see further faults and
-> > or fault inerrupts. Do you observe faults with stalled context?
-> 
-> Yes. I've observed that on MMU-500 writing RESUME before the interrupt
-> has been cleared doesn't clear SS. This happened with v2 in the case
-> where there was already a devcoredump and drm/msm called
-> qcom_adreno_smmu_resume_translation() immediately from its fault
-> handler, and we'd get a storm of unhandled interrupts until it was
-> disabled. Given that the architecture spec says we're supposed to
-> clear the interrupt first this may have been an attempt to "help"
-> developers.
-> 
+for the series.
 
-Just to clarify, present sequence is:
-1. context fault with stall enable. FSR.SS set.
-2. Report fault to client
-3. resume/terminate stalled transaction
-4. clear FSR
+Thanks!
 
-At what point when you try #2->#3->#4 or #4->#2->#3 sequence, is FSR.SS
-cleared and interrupt storm is observed.  The way CFIE disable is helping
-with current patch indicates write FSR is unstalling context and subsequent
-transactions are faulted.  Do you stop getting interrupt storm after write
-RESUME. If you can mention your SCTLR configuration and FSR state in test
-sequence, it would be clearer. 
-
-An aside, If reducing delay between FSR and RESUME write helps then both
-can be done as part of qcom_adreno_smmu_resume_translation(). This will
-follow spec recommendation and also make sure fault registers are not
-cleared before reporting fault to client.
-
-Thanks,
-Prakash
+> --
+> Viresh
+>
+> Viresh Kumar (33):
+>   cpufreq: Always create freq-table related sysfs file
+>   cpufreq: dt: Stop setting cpufreq_driver->attr field
+>   cpufreq: acpi: Stop setting common freq attributes
+>   cpufreq: apple: Stop setting cpufreq_driver->attr field
+>   cpufreq: bmips: Stop setting cpufreq_driver->attr field
+>   cpufreq: brcmstb: Stop setting common freq attributes
+>   cpufreq: davinci: Stop setting cpufreq_driver->attr field
+>   cpufreq: e_powersaver: Stop setting cpufreq_driver->attr field
+>   cpufreq: elanfreq: Stop setting cpufreq_driver->attr field
+>   cpufreq: imx6q: Stop setting cpufreq_driver->attr field
+>   cpufreq: kirkwood: Stop setting cpufreq_driver->attr field
+>   cpufreq: longhaul: Stop setting cpufreq_driver->attr field
+>   cpufreq: loongson: Stop setting cpufreq_driver->attr field
+>   cpufreq: mediatek: Stop setting cpufreq_driver->attr field
+>   cpufreq: omap: Stop setting cpufreq_driver->attr field
+>   cpufreq: p4: Stop setting cpufreq_driver->attr field
+>   cpufreq: pasemi: Stop setting cpufreq_driver->attr field
+>   cpufreq: pmac: Stop setting cpufreq_driver->attr field
+>   cpufreq: powernow: Stop setting cpufreq_driver->attr field
+>   cpufreq: powernv: Stop setting common freq attributes
+>   cpufreq: qcom: Stop setting cpufreq_driver->attr field
+>   cpufreq: qoriq: Stop setting cpufreq_driver->attr field
+>   cpufreq: sc520_freq: Stop setting cpufreq_driver->attr field
+>   cpufreq: scmi: Stop setting cpufreq_driver->attr field
+>   cpufreq: scpi: Stop setting cpufreq_driver->attr field
+>   cpufreq: sh: Stop setting cpufreq_driver->attr field
+>   cpufreq: spear: Stop setting cpufreq_driver->attr field
+>   cpufreq: speedstep: Stop setting cpufreq_driver->attr field
+>   cpufreq: tegra: Stop setting cpufreq_driver->attr field
+>   cpufreq: vexpress: Stop setting cpufreq_driver->attr field
+>   cpufreq: virtual: Stop setting cpufreq_driver->attr field
+>   cpufreq: Remove cpufreq_generic_attrs
+>   cpufreq: Stop checking for duplicate available/boost freq attributes
+>
+>  drivers/cpufreq/acpi-cpufreq.c         |  1 -
+>  drivers/cpufreq/apple-soc-cpufreq.c    |  8 --------
+>  drivers/cpufreq/bmips-cpufreq.c        |  1 -
+>  drivers/cpufreq/brcmstb-avs-cpufreq.c  |  1 -
+>  drivers/cpufreq/cpufreq-dt.c           |  8 --------
+>  drivers/cpufreq/cpufreq.c              | 15 +++++++++++++++
+>  drivers/cpufreq/davinci-cpufreq.c      |  1 -
+>  drivers/cpufreq/e_powersaver.c         |  1 -
+>  drivers/cpufreq/elanfreq.c             |  1 -
+>  drivers/cpufreq/freq_table.c           |  8 --------
+>  drivers/cpufreq/imx6q-cpufreq.c        |  1 -
+>  drivers/cpufreq/kirkwood-cpufreq.c     |  1 -
+>  drivers/cpufreq/longhaul.c             |  1 -
+>  drivers/cpufreq/loongson2_cpufreq.c    |  1 -
+>  drivers/cpufreq/loongson3_cpufreq.c    |  1 -
+>  drivers/cpufreq/mediatek-cpufreq-hw.c  |  1 -
+>  drivers/cpufreq/mediatek-cpufreq.c     |  1 -
+>  drivers/cpufreq/omap-cpufreq.c         |  1 -
+>  drivers/cpufreq/p4-clockmod.c          |  1 -
+>  drivers/cpufreq/pasemi-cpufreq.c       |  1 -
+>  drivers/cpufreq/pmac32-cpufreq.c       |  1 -
+>  drivers/cpufreq/pmac64-cpufreq.c       |  1 -
+>  drivers/cpufreq/powernow-k6.c          |  1 -
+>  drivers/cpufreq/powernow-k7.c          |  1 -
+>  drivers/cpufreq/powernow-k8.c          |  1 -
+>  drivers/cpufreq/powernv-cpufreq.c      |  2 --
+>  drivers/cpufreq/qcom-cpufreq-hw.c      |  7 -------
+>  drivers/cpufreq/qoriq-cpufreq.c        |  1 -
+>  drivers/cpufreq/sc520_freq.c           |  1 -
+>  drivers/cpufreq/scmi-cpufreq.c         |  8 --------
+>  drivers/cpufreq/scpi-cpufreq.c         |  1 -
+>  drivers/cpufreq/sh-cpufreq.c           |  1 -
+>  drivers/cpufreq/spear-cpufreq.c        |  1 -
+>  drivers/cpufreq/speedstep-centrino.c   |  1 -
+>  drivers/cpufreq/speedstep-ich.c        |  1 -
+>  drivers/cpufreq/speedstep-smi.c        |  1 -
+>  drivers/cpufreq/tegra186-cpufreq.c     |  1 -
+>  drivers/cpufreq/tegra194-cpufreq.c     |  1 -
+>  drivers/cpufreq/vexpress-spc-cpufreq.c |  1 -
+>  drivers/cpufreq/virtual-cpufreq.c      |  1 -
+>  include/linux/cpufreq.h                |  1 -
+>  41 files changed, 15 insertions(+), 75 deletions(-)
+>
+> --
+> 2.31.1.272.g89b43f80a514
+>
 
