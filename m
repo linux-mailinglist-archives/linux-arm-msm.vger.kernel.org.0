@@ -1,63 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-45967-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-45968-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A127CA1A3BE
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jan 2025 13:04:17 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4AFEFA1A3C8
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jan 2025 13:07:56 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6925E3A32B4
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jan 2025 12:04:10 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 87E7A167948
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jan 2025 12:07:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DF6A720D51C;
-	Thu, 23 Jan 2025 12:04:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B326020E6F1;
+	Thu, 23 Jan 2025 12:07:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="HIPmquDR"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="iYo1yVEU"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D73D21D432F;
-	Thu, 23 Jan 2025 12:04:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0356420DD72;
+	Thu, 23 Jan 2025 12:07:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737633854; cv=none; b=iQJ0f4FAodhvnPTaMpXWO0DNGsqPj07zNS3+5yAKmexHaTbOrmJg9+Rutz0eAKigULWHVpias5NfQoqijbmvX6ksus1qfJmf0UeaT10RbnIMCcsfmarA1EhuJxmqZ9/CllPiw49covBaxXp8f3OK06N7u72LRGsTTJl3q0YV28E=
+	t=1737634072; cv=none; b=R12qPZZPBcZUv/wcckbVuEBvA7OZd69REu/KFoYWikl6jpOWO/+1weqgnROIMAQh0KVZh91QW1SVJBsLj715W0Cxvk3DOeM17t/8iu+lPw4yTWwQ6qQ8IwJDgrbRakce/cQjxex3+LTLfVO5dLq5VLtqCKE103XGusQT8IZDnh8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737633854; c=relaxed/simple;
-	bh=pyX1c8volQbUzg+au4qU1SLF8Ol+v/GDbu2P/wEZexY=;
+	s=arc-20240116; t=1737634072; c=relaxed/simple;
+	bh=ZeIexN4amvexFLjXrqE9Kp1pHIHLK4d1flWZyFgJQgQ=;
 	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=KGRNiAdKR5Y5tWM1Polbya8BsltZ+9lSbIRKVQ8VTkILGnyaBxlrFpT4RyjgCsNFv3Kzn2zTbcEOjZzGgjWVbAs8wbOB3g9rXwIbv+es0tCM+hm98PvVXUOciwkX3/SElGmS8hscfRhgcj9iDyzBe1mTVy/+pgE/V4zHA0UECjI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=HIPmquDR; arc=none smtp.client-ip=205.220.168.131
+	 In-Reply-To:Content-Type; b=FFQZuQ2FFN3dTQnHznm5u7SCCi5Xliyo8KmKPA9IgllWUTE0cxodECFdil2tC1egsnl05ON2efsc3tFjwO497bLiBZl47z1PjKfO9f0II8tuJk2rRS6zhM/9yjYAecNqqrf0isUWYKMV6jKWQZaZnMqBsnIJkxw5/AJ6iB5gbwE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=iYo1yVEU; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50NAo2cW024913;
-	Thu, 23 Jan 2025 12:04:08 GMT
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50NAqKLL015837;
+	Thu, 23 Jan 2025 12:07:47 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	BI5W7Z2ZrIQvLeHFUmfQOkX/MBi1TlTcLAvf4/S7OIg=; b=HIPmquDRSpu8X0x0
-	pJ+P1gGjd+hGernFAz6Os61TJ9KtpsK1+5gU4Buy02KEH8BMBzcdzu2wjMgLv7p7
-	6d2336qreazY1GwT4W0tPvygZqzARcdhb4khmUtMNUyu4WgyXWL/diDq2LeaFCRB
-	dkXJ45aAoP4fb82D/3jRQwm+873oCCdoC4ecq4GI62oiJfv6yW7eupPMarLLHmyR
-	wf3wKu3Hf0C1Wy4lsLmlZejF715d02DRn425BfUq+VQl1EOoK00Wb/fmxXi0wEL7
-	RJhOYaOiRFdXce3mF0ULHhqRNJ8QqcAZg44bx7rpXHyxJTmkA5OtB3jE+tsHOFmC
-	Glqvaw==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44bmbg85pq-1
+	ciwA2MPCleiFiaVjg17UfNND6tZ6x9t2suDc4aTpQjg=; b=iYo1yVEUG4XYWaHc
+	Id8gVgGExXKDO794alaBLCBqQUrLvyT/aWl26bWYUA/kbOVledp4xzy1hOMdpOjM
+	jjS20kP+INMG70lyHGoxjdZkTNCOqYXn/FbEe0HcZtIHBJ55/TZ2aDt8zS9TXhk4
+	PoXvWWQt6bcpr54jdYBQPXxqN94/3DstL0GsQntdogEcO9jqORUoubsDX45d8gEE
+	htMwdkh+Va0OyPC9YBUuNDvAbarA32eWIiHRNxDdrjZgFCvL4oEQdwzFOKU4JVI5
+	fVP1bGUnXKdNYO0rCUgHT9YU21Nd/ep2Iho7Mb3nuzOj3OIO+ydymiCfwQu3FP+C
+	dRf37g==
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44bmcvg5pv-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 23 Jan 2025 12:04:07 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 50NC462A029991
+	Thu, 23 Jan 2025 12:07:47 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 50NC7kYx010160
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 23 Jan 2025 12:04:06 GMT
-Received: from [10.204.65.49] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+	Thu, 23 Jan 2025 12:07:46 GMT
+Received: from [10.216.27.253] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 23 Jan
- 2025 04:04:03 -0800
-Message-ID: <41fb5e93-2d77-48e5-92e0-8e82ee4d27ce@quicinc.com>
-Date: Thu, 23 Jan 2025 17:34:00 +0530
+ 2025 04:07:40 -0800
+Message-ID: <08916876-2e24-4b4d-89ad-c0a6203bffd2@quicinc.com>
+Date: Thu, 23 Jan 2025 17:37:36 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,220 +65,111 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 1/4] misc: fastrpc: Add CRC support using invokeV2
- request
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC: <srinivas.kandagatla@linaro.org>, <linux-arm-msm@vger.kernel.org>,
-        <gregkh@linuxfoundation.org>, <quic_bkumar@quicinc.com>,
-        <linux-kernel@vger.kernel.org>, <quic_chennak@quicinc.com>,
-        <dri-devel@lists.freedesktop.org>, <arnd@arndb.de>
-References: <20241007084518.3649876-1-quic_ekangupt@quicinc.com>
- <20241007084518.3649876-2-quic_ekangupt@quicinc.com>
- <bmg5em2f673vis6wwtjx6ibkhee7d3zocwesgoafsgt5jxbfqn@w73y6gmzbamj>
- <53ce4792-6eca-42ae-b5d7-24d524697344@quicinc.com>
- <fm4wxyu7dv7wzz6szwtz4vyukzxmzajtzqlidaed4hcrabhpe2@eqw6vimhzkjm>
- <0dd43d4f-0399-454b-96fd-2d4f5f36ea14@quicinc.com>
- <drh2ikzku37tblmpkjbcdqjllynb3shsfogljfkhq2vcsej2ga@4ex36yehg2e6>
+Subject: Re: [PATCH V7 3/5] dt-bindings: interconnect: Add EPSS L3 compatible
+ for SA8775P
+To: Krzysztof Kozlowski <krzk@kernel.org>
+CC: Georgi Djakov <djakov@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio
+	<konradybcio@kernel.org>,
+        Odelu Kukatla <quic_okukatla@quicinc.com>,
+        "Mike
+ Tipton" <mdtipton@quicinc.com>,
+        Vivek Aknurwar <viveka@quicinc.com>,
+        "Sibi
+ Sankar" <quic_sibis@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <linux-pm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+References: <20250111161429.51-1-quic_rlaggysh@quicinc.com>
+ <20250111161429.51-4-quic_rlaggysh@quicinc.com>
+ <273w3qr5wix4srdum5qmrqdzzaw3uprqhhfmmgrwycrb6wlyqf@txuxzzyjyhfk>
 Content-Language: en-US
-From: Ekansh Gupta <quic_ekangupt@quicinc.com>
-In-Reply-To: <drh2ikzku37tblmpkjbcdqjllynb3shsfogljfkhq2vcsej2ga@4ex36yehg2e6>
+From: Raviteja Laggyshetty <quic_rlaggysh@quicinc.com>
+In-Reply-To: <273w3qr5wix4srdum5qmrqdzzaw3uprqhhfmmgrwycrb6wlyqf@txuxzzyjyhfk>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: kmqbJATJU9xXcChWD_Nb31yw6ah7lfSZ
-X-Proofpoint-ORIG-GUID: kmqbJATJU9xXcChWD_Nb31yw6ah7lfSZ
+X-Proofpoint-ORIG-GUID: Bkl84Gqqbn2xsRhxFRQjjOE-MACOuFIT
+X-Proofpoint-GUID: Bkl84Gqqbn2xsRhxFRQjjOE-MACOuFIT
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
  definitions=2025-01-23_05,2025-01-22_02,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 clxscore=1015
- phishscore=0 priorityscore=1501 lowpriorityscore=0 mlxscore=0
- suspectscore=0 malwarescore=0 impostorscore=0 mlxlogscore=999 adultscore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2501230091
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ clxscore=1015 malwarescore=0 impostorscore=0 mlxscore=0 bulkscore=0
+ phishscore=0 spamscore=0 suspectscore=0 adultscore=0 priorityscore=1501
+ mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2501230092
 
 
 
+On 1/12/2025 3:01 PM, Krzysztof Kozlowski wrote:
+> On Sat, Jan 11, 2025 at 04:14:27PM +0000, Raviteja Laggyshetty wrote:
+>> Add Epoch Subsystem (EPSS) L3 interconnect provider binding on
+>> SA8775P SoCs.
+> 
+> 1. And why is this not compatible with sm8250? There was lengthy
+> discussion and no outcome of it managed to get to commit msg. Really, so
+> we are going to repeat everything again and you will not get any acks.
+> 
+sa8775p is compatible with sm8250, but only difference is sa8775p has
+two instances of L3 EPSS. Initial patches were posted with two
+compatibles for supporting two instances.
+Later there was a comment to reuse the existing and avoid growing the
+compatibles in the driver.
 
-On 1/23/2025 4:43 PM, Dmitry Baryshkov wrote:
-> On Thu, Jan 23, 2025 at 03:19:21PM +0530, Ekansh Gupta wrote:
+Initially we thought to have separate generic compatible
+"qcom,epss-l3-perf" for SoCs which support L3 voting through
+EPSS_L3_PERF state register. But actually, it is already supported in
+the driver for sm8250 and sc7280. We can reuse sm8250 or sc7280
+compatible for sa8775p.
+
+I will update the commit text with details in the next patch revision.
+
+
+> You have entire commit msg to explain things but instead you repeat what
+> the patch does. We can read the diff for that.
+> 
+> 2. Binding *ALWAYS* comes before the user.
+
+Sure, I will update the patch order to bindings, driver and dt in next
+patch revision and will follow the same for future patchsets.
+> 
 >>
+>> Signed-off-by: Raviteja Laggyshetty <quic_rlaggysh@quicinc.com>
+>> ---
+>>  Documentation/devicetree/bindings/interconnect/qcom,osm-l3.yaml | 1 +
+>>  1 file changed, 1 insertion(+)
 >>
->> On 1/23/2025 1:18 PM, Dmitry Baryshkov wrote:
->>> On Thu, Jan 23, 2025 at 11:16:41AM +0530, Ekansh Gupta wrote:
->>>>
->>>> On 10/7/2024 7:27 PM, Dmitry Baryshkov wrote:
->>>>> On Mon, Oct 07, 2024 at 02:15:15PM GMT, Ekansh Gupta wrote:
->>>>>> InvokeV2 request is intended to support multiple enhanced invoke
->>>>>> requests like CRC check, performance counter enablement and polling
->>>>>> mode for RPC invocations. CRC check is getting enabled as part of
->>>>>> this patch. CRC check for input and output argument helps in ensuring
->>>>>> data consistency over a remote call. If user intends to enable CRC
->>>>>> check, first local user CRC is calculated at user end and a CRC buffer
->>>>>> is passed to DSP to capture remote CRC values. DSP is expected to
->>>>>> write to the remote CRC buffer which is then compared at user level
->>>>>> with the local CRC values.
->>>>> This doesn't explain why this is necessary. Why do you need to checksum
->>>>> arguments?
->>>> This helps if the user suspects any data inconsistencies in the buffers passed to DSP over
->>>> remote call. This is not enabled by default and user can enable it as per their reqirement.
->>>> I'll add this information.
->>> An inconsistency where? Between the kernel and the DSP? Between the user
->>> and the DSP? Does it cover buffer contents or just the addresses?
->> Inconsistency between user and DSP. crc_user is calculated at user library before
->> making ioctl call and it is compared against the crc data which is filled by DSP and
->> copied to user.
->> This covers inconsistency in buffer contents.
-> What is the reason for possible inconsistencies? Is it a debugging
-> feature?
-This is a debugging feature. Buffer data corruption might result in inconsistency.
->
->>>>> Also, what if the DSP firmware doesn't support CRC? How should userspace
->>>>> know that?
->>>> CRC support on DSP is there since long time(>6years).
->>> This doesn't give us a lot. Upstream kernel supports fastrpc since
->>> MSM8916 and MSM8996. Do those platforms support CRC?
->> The metadata buffer as of today also carries space for CRC information:
->> https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/tree/drivers/misc/fastrpc.c#n877
->>
->> So this is common across all platforms.
->>
->> In case CRC is not supported on any older platform, it would result in crc mismatch at user library.
->> As of now a warning is getting logged there, I can add the information suggesting the failure might
->> also occur if CRC is not supported.
-> Logs go to /dev/null, they are ignored by users, etc. So either there
-> should be an actual error being returned by the kernel / library, or it
-> can be completely ignored and skipped.
->
-> So, do MSM8916 / MSM8996 / SDM845 support CRC? If not, that must be
-> handled somehow.
-I see it's supported on SDM845 but not on MSM89##. I'll just send the new patch version for now
-as CRC mismatch failures are getting ignored.
->
->>> And if they do, why do we need the invoke_v2? Can we modify existing
->>> code instead?
->> invoke_v2 is needed because there is a need to pass user crc pointer over ioctl call which
->> cannot be achieved using existing code. Also there are plans to add more features to this
->> invoke_v2 request which will carry some information from user.
-> Is it really extensible without breaking the ABI?
-I'm planning to keep reserved bits in uapi struct for the same. Do you see any
-problem with this?
->>>> From user space CRC check failure is
->>>> not fatal and is printed as a warning. But if copy of CRC to user fails, it will result in remote
->>>> call failure. Should I keep it as fatal considering that ever very old DSP support this or should
->>>> I consider the copy failure as non-fatal as userspace is treating this as a warning?
->>> warnings can remain unseen for a long time. Consider a GUI app. Nobody
->>> is there to view kernel warnings or library output.
->> Let me see if this can be done. Are you suggesting that the app will be somewhat tracking
->> if there is any crc check mismatch failures?
-> I suggest returning -EIO to the app.
-I'll check this.
->
->>>>>> Signed-off-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
->>>>>> ---
->>>>>>  drivers/misc/fastrpc.c      | 161 ++++++++++++++++++++++++------------
->>>>>>  include/uapi/misc/fastrpc.h |   7 ++
->>>>>>  2 files changed, 116 insertions(+), 52 deletions(-)
->>>>>>
->>>>>> diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
->>>>>> index 74181b8c386b..8e817a763d1d 100644
->>>>>> --- a/drivers/misc/fastrpc.c
->>>>>> +++ b/drivers/misc/fastrpc.c
->>>>>> @@ -573,13 +573,15 @@ static void fastrpc_get_buff_overlaps(struct fastrpc_invoke_ctx *ctx)
->>>>>>  
->>>>>>  static struct fastrpc_invoke_ctx *fastrpc_context_alloc(
->>>>>>  			struct fastrpc_user *user, u32 kernel, u32 sc,
->>>>>> -			struct fastrpc_invoke_args *args)
->>>>>> +			struct fastrpc_invoke_v2 *inv2)
->>>>>>  {
->>>>>>  	struct fastrpc_channel_ctx *cctx = user->cctx;
->>>>>>  	struct fastrpc_invoke_ctx *ctx = NULL;
->>>>>> +	struct fastrpc_invoke_args *args = NULL;
->>>>> Why do you need to init to NULL if you are going to set it two lines
->>>>> below?
->>>>>
->>>>>>  	unsigned long flags;
->>>>>>  	int ret;
->>>>>>  
->>>>>> +	args = (struct fastrpc_invoke_args *)inv2->inv.args;
->>>>> Why does it need a typecast?
->>>>>
->>>>>>  	ctx = kzalloc(sizeof(*ctx), GFP_KERNEL);
->>>>>>  	if (!ctx)
->>>>>>  		return ERR_PTR(-ENOMEM);
->>>>>> @@ -611,6 +613,7 @@ static struct fastrpc_invoke_ctx *fastrpc_context_alloc(
->>>>>>  	/* Released in fastrpc_context_put() */
->>>>>>  	fastrpc_channel_ctx_get(cctx);
->>>>>>  
->>>>>> +	ctx->crc = (u32 *)(uintptr_t)inv2->crc;
->>>>> Oh, but why? Also is it a user pointer or in-kernel data? If it's a
->>>>> user-based pointer, where is the accessiblity check? Why isn't it
->>>>> annotated properly?
->>>> This is a user pointer where the crc data is expected to be copied. There is no
->>>> other access to this pointer from kernel. I'm planning to change the data type
->>>> for crc as (void __user*) inside fastrpc_invoke_ctx structure.
->>> Yes, please. Also make sure that sparse doesn't add any warnings
->>> regarding pointer conversions.
->> Ack.
->>>>>>  	ctx->sc = sc;
->>>>>>  	ctx->retval = -1;
->>>>>>  	ctx->pid = current->pid;
->>>>>> @@ -1070,6 +1073,7 @@ static int fastrpc_put_args(struct fastrpc_invoke_ctx *ctx,
->>>>>>  	struct fastrpc_invoke_buf *list;
->>>>>>  	struct fastrpc_phy_page *pages;
->>>>>>  	u64 *fdlist;
->>>>>> +	u32 *crclist;
->>>>>>  	int i, inbufs, outbufs, handles;
->>>>>>  
->>>>>>  	inbufs = REMOTE_SCALARS_INBUFS(ctx->sc);
->>>>>> @@ -1078,6 +1082,7 @@ static int fastrpc_put_args(struct fastrpc_invoke_ctx *ctx,
->>>>>>  	list = fastrpc_invoke_buf_start(rpra, ctx->nscalars);
->>>>>>  	pages = fastrpc_phy_page_start(list, ctx->nscalars);
->>>>>>  	fdlist = (uint64_t *)(pages + inbufs + outbufs + handles);
->>>>>> +	crclist = (u32 *)(fdlist + FASTRPC_MAX_FDLIST);
->>>>> I think we should rewrite this parsing somehow. Is the format of data
->>>>> documented somewhere?
->>>> fdlist, crclist and poll(planned) are the only pointers that is being used. I'm planning
->>>> to store these pointers to ctx structure and directly use it wherever needed. This will
->>>> clean-up this unnecessary calculations at multiple places.
->>> Please do. Nevertheless, the format also must be documented.
->> Ack.
->>>>>>  
->>>>>>  	for (i = inbufs; i < ctx->nbufs; ++i) {
->>>>>>  		if (!ctx->maps[i]) {
->>>>>> @@ -1102,6 +1107,12 @@ static int fastrpc_put_args(struct fastrpc_invoke_ctx *ctx,
->>>>>>  			fastrpc_map_put(mmap);
->>>>>>  	}
->>>>>>  
->>>>>> +	if (ctx->crc && crclist && rpra) {
->>>>>> +		if (copy_to_user((void __user *)ctx->crc, crclist,
->>>>>> +				FASTRPC_MAX_CRCLIST * sizeof(u32)))
->>>>> Oh, so it's a user pointer. Then u32* was completely incorrect.
->>>>> Also you are copying FASTRPC_MAX_CRCLIST elements. Are all of them
->>>>> filled? Or are we leaking some data to userspace?
->>>> Yes, right. Planning clean-up in next patch.
->>>>
->>>> All of FASTRPC_MAX_CRCLIST is filled with crc data by DSP so copying should be fine.
->>> Huh? I definitely want to see documentation for function arguments.
->> Sure. I'll also modify the metadata layout doc here to add fdlist, CRC and other planned contents.
->> https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/tree/drivers/misc/fastrpc.c#n842
-> This is not a documentation. E.g. I can not write code using that
-> description. For example, it mentions neither FDLIST nor CRC.
-I'm planning to add complete documentation for CRC and polling mode in user library project.
-If I need to add documentation in driver, can you pls suggest what is the right place to add
-the information?
+>> diff --git a/Documentation/devicetree/bindings/interconnect/qcom,osm-l3.yaml b/Documentation/devicetree/bindings/interconnect/qcom,osm-l3.yaml
+>> index 21dae0b92819..94f7f283787a 100644
+>> --- a/Documentation/devicetree/bindings/interconnect/qcom,osm-l3.yaml
+>> +++ b/Documentation/devicetree/bindings/interconnect/qcom,osm-l3.yaml
+>> @@ -33,6 +33,7 @@ properties:
+>>                - qcom,sm6375-cpucp-l3
+>>                - qcom,sm8250-epss-l3
+>>                - qcom,sm8350-epss-l3
+>> +              - qcom,sa8775p-epss-l3
+>>            - const: qcom,epss-l3
+> 
+> Your driver suggests this is not really true - it is not compatible with
+> qcom,epss-l3. Maybe it is, maybe not, no clue, commit explains nothing.
 
-Thanks for your comments.
-
---ekansh
->
->>>>>> +			return -EFAULT;
->>>>>> +	}
->>>>>> +
->>>>>>  	return 0;
->>>>>>  }
->>>>>>  
+"qcom,epss-l3" is generic compatible introduced for EPSS H/W from sm8250
+SoC.  sm8250, sa8775p and sc7280 SoCs have same EPSS H/W and use
+EPSS_L3_PERF register for configuring the perf level. We thought to add
+generic compatible "qcom,epss-l3-perf" for configuring perf level
+through EPSS_L3_PERF register.
+ Later, as suggested by reviewers, looks like using a different register
+cannot be a reason to have different generic compatible as the EPSS H/W
+is still same on all the SoCs.
+> 
+> Best regards,
+> Krzysztof
+> 
 
 
