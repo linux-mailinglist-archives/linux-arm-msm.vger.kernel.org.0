@@ -1,63 +1,87 @@
-Return-Path: <linux-arm-msm+bounces-45893-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-45894-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 14FA7A19E7D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jan 2025 07:35:32 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id DCC82A19EA5
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jan 2025 08:00:47 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id CB3521889332
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jan 2025 06:35:35 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2343A16CFBF
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jan 2025 07:00:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B1945170A2C;
-	Thu, 23 Jan 2025 06:35:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 579832046BE;
+	Thu, 23 Jan 2025 07:00:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ci+8Xw7o"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="b1IeRc1s"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D77A629B0;
-	Thu, 23 Jan 2025 06:35:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6A7D204689
+	for <linux-arm-msm@vger.kernel.org>; Thu, 23 Jan 2025 07:00:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737614127; cv=none; b=TOmjF4QbuJT9yUD5ER88jR5hqRSFjAPIDyypO7fs5W1AOqRNeN/NVG9Fxc6VUTDdh1Y1YbIoi6qk0sBWuOBc+hZZ56jtEDWCL8o6E/EuLD6FHo2ByaZqF0RGN8F5thgCFGZ5nTH/Lh8IZ1ylf9i6kdpUbhoPTlvIythMn1qC+qg=
+	t=1737615640; cv=none; b=JkhKNEhT1HuJ32BIoTkaV4wgHjL3by3GECdLdAIdkS7lcHlS2//hpnJXrD6NqktgjgxtjbB6STdXsoFnHB8yQnlc33TM6o6oKIyWtRNfaG4K6MtsXnLYZd2LLNN31mb6kec8CcxGL3/T3cHuTGuw2XrkeHLucuQs+piBk4Cq0wo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737614127; c=relaxed/simple;
-	bh=TEuoW8F8Vnvt9XVu5AALuEI0uF1tXuYk3zLXCDDcWg8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=P2NIO4YP5iZuvD9brK4i/i/i4eHfcga/xuvgCNX8He8f+QYzuop9sFPXP0uuO3cEOxV5FF8qe08XjApVXAn8MR1K80in5diecE8drzRsk1SQ5mWxU/jcXHF3tMdgPJDbuGSTulXpHXMamF/Cf7mhagn9idOU88jicrRY4ZvjFr0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ci+8Xw7o; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50N6ViUa008792;
-	Thu, 23 Jan 2025 06:35:14 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	s=arc-20240116; t=1737615640; c=relaxed/simple;
+	bh=iGEmou8YXPBnjgo/+uSyYUyeD1Wyd+0w0MC/QEz49tM=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=Sq3g0FSyuqatz3XBwwd/FLA4BTdne+fNt+yVvVQXid2q7H+P9Mza6lJOZkJ808XDDdDSAY+8sfE4HCFnD+bfxA9PJxcrb5+vE40LE2UIMMh9wgqBKX58medH1fi+XaMg9ggjPBMr+rIScefGe9O1omHm22ylB8bcJDnwxocdmhk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=b1IeRc1s; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50N4rw00023879
+	for <linux-arm-msm@vger.kernel.org>; Thu, 23 Jan 2025 07:00:32 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	Gr9MUpSBK8n6hKp8fqGkmExMBG6XbEbZ7h/w/BY3tPE=; b=ci+8Xw7o6vxRrtHu
-	0o72ccHE3Oi1dOdFXNoJdEg+q8QLmHgTeAt/ccLbag1ze/CZATf4VBy9/oP17PGZ
-	ENqDF7kFc4HFECZkRmqVLMzIqY9MJKmVmUQqb5C5Qx79z1zPdtFr9cRl6QRePuzV
-	qTVkk5pe4Ut2AaPc0JD7YBwK7+2qXmXTJPD8nKw3ZIeIAxxmwEr/ix8NoEqIDZUa
-	f52uNQwu8tj6UgGLj8TGiccs+PDI23/WO3Nz9Cbkyt1GrRCUAV7ThfloF6wI35r+
-	L1KnPh81iNT/crkgHQx8gXC05dEQS51GXA9O8c39LMVDauasaHEJDnX86yjJmTFW
-	zpj8jw==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44bgk1g087-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 23 Jan 2025 06:35:14 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 50N6ZDAM014555
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 23 Jan 2025 06:35:13 GMT
-Received: from [10.152.195.140] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 22 Jan
- 2025 22:35:08 -0800
-Message-ID: <9206e44c-da4f-4bdb-850f-fac511f4ddc7@quicinc.com>
-Date: Thu, 23 Jan 2025 12:05:04 +0530
+	lLn0ZtrJED7RhWi4kHyBZkUHUNX/qZUfzSOJZgWhM0k=; b=b1IeRc1sjY0SB1vB
+	nE496pnBziEdFoL+LY0oXyyfWqAFcC3LuKjzTWdkmHbwzVN1RMvnM12ybBGZmmRh
+	cAZmAAguXVKonhowybrw9tfLMDJ3SljqiTr2yTdCYmkN9CIugSfadkAecLrtauHH
+	WDx4sHBR+/DsrczAVQbiZqgx7LHu6JYPfKBPg6Rqrn0v+zh6inMyQ/mO8WwDB+WQ
+	aobb85E96jjacwPf3Kbkafm3eU9yDB1J4woOp51KfhS9QoOilMaWHnX3Y4PcCPF+
+	ZiSfGfRZBk7un25i/ARWGt/ZcO9sBoQZvwj+g5nrk/CWdXvC2tJCKbT7wBnvDjBh
+	0RQHBg==
+Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com [209.85.216.70])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44bf51887q-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 23 Jan 2025 07:00:31 +0000 (GMT)
+Received: by mail-pj1-f70.google.com with SMTP id 98e67ed59e1d1-2ee86953aeaso1363608a91.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Jan 2025 23:00:31 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1737615631; x=1738220431;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:from:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=lLn0ZtrJED7RhWi4kHyBZkUHUNX/qZUfzSOJZgWhM0k=;
+        b=IDKu6wBJv2KsuXXPgAL1fQG7hRhvV6UnmDw18nU6g5c/VfgCNW6JiXuyq13z3AyZgb
+         j0eKGNvnQ1Vy70xuJd3FxJrIytKYCKdbh+ZX/yGbJmf05rfRx92ll6EPvtBJoucAysS2
+         6XLYnOVzNAi4UZ9/Nu6hukTkhocTkIKsbYcufU/U/R9qkRBLnteScrVoNEXTcs+yG3Qd
+         c4o8innq6zF/OFxEROYXCmYBH6LKl9Gu+MjtJIVPMAvALX3LQiOrPtrZQs5A4CxiRIBl
+         ivPapiKrTs5ZhTCUrPg35IGIvisbgbaRq7vieeQR83S4x891ZbkWSdz3LQJiVneR6Y3g
+         uosQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVlSAW5RqiXXp1WX0SXcOXh7L1CuYUJLA9wCNO9pMjjokCWydDXxCucH0gng5Wt6HoLfO4lRV01570S/7pD@vger.kernel.org
+X-Gm-Message-State: AOJu0YxMyfJNNiKnsWo0NPSIIb58wDwoGCc0nXp7GMgZkP3t3w/TDIWE
+	UrUBehH2u9d859Facaq5S6CxPOJcQykbMWuL7XLZwr97gDw46JuIWuycjc9NlwfEblX0J91uDvd
+	dNwSu5CuF5Mub5qqeSbbE4C7om+mdwcZphE6ebY24NyfLfsTCK8IXL+gmDRh692s7
+X-Gm-Gg: ASbGnctQBmkwVvJSR6P611vYjZHALlPFQ2nyDtx9jeIQMuedXAxqbXYxpnJ7H7JXfWH
+	Hy+tDR3mBxtxm5k6XE/ZLLrh91FNnzhSn7dkrg1BtcMk3EcRi5ZuiaRoKT4GHsSxB3gUJbxjco4
+	SNeBdYEnL+ZcvLvnnNFk4gneFhEJLyB+NjELX+H7l3rs+KrtfzsPif89LB3Bn1ZXgn/7jdAbDNO
+	zXWE7L6GAljhh06x6M7szSR01wKoguIUa2aUhT2gs2/MROQgguTFFdGtmRTkIVGHHHlpdCwdzZ1
+	Xb9wXHQL1Kj64vtNPIahmk9D
+X-Received: by 2002:a05:6a20:8423:b0:1e1:ca27:89f0 with SMTP id adf61e73a8af0-1eb215bec54mr40615270637.37.1737615630973;
+        Wed, 22 Jan 2025 23:00:30 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEZ6pMT4A88Fdmsz/cNXQ9PxRhY0+FNHVX1QOqxLkCD3YyRypW/6C9+UUpI2loS7HZ7xJvTqw==
+X-Received: by 2002:a05:6a20:8423:b0:1e1:ca27:89f0 with SMTP id adf61e73a8af0-1eb215bec54mr40615194637.37.1737615630406;
+        Wed, 22 Jan 2025 23:00:30 -0800 (PST)
+Received: from [10.92.167.45] ([202.46.23.19])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-aa84ed133fdsm9486272a12.17.2025.01.22.23.00.26
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 22 Jan 2025 23:00:30 -0800 (PST)
+Message-ID: <f607aa9b-018c-4df6-9921-725693353f65@oss.qualcomm.com>
+Date: Thu, 23 Jan 2025 12:30:25 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,219 +89,111 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/3] arm64: dts: qcom: ipq5424: Add PCIe PHYs and
- controller nodes
-To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-CC: <lpieralisi@kernel.org>, <kw@linux.com>, <robh@kernel.org>,
-        <bhelgaas@google.com>, <krzk+dt@kernel.org>, <conor+dt@kernel.org>,
-        <andersson@kernel.org>, <konradybcio@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-pci@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <quic_srichara@quicinc.com>, <quic_varada@quicinc.com>
-References: <20250115064747.3302912-1-quic_mmanikan@quicinc.com>
- <20250115064747.3302912-3-quic_mmanikan@quicinc.com>
- <20250119124551.nl5272bz36ozvlqu@thinkpad>
+Subject: Re: (subset) [PATCH v3 0/3] Add support for USB controllers on QCS615
+From: Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>
+To: Vinod Koul <vkoul@kernel.org>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        Johan Hovold <johan+linaro@kernel.org>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-phy@lists.infradead.org,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+References: <20241224084621.4139021-1-krishna.kurapati@oss.qualcomm.com>
+ <173505391861.950293.11120368190852109172.b4-ty@kernel.org>
+ <anfqf3jvh7timbvbfqfidylb4iro47cdinbb2y64fdalbiszum@2s3n7axnxixb>
+ <Z2sJK9g7hiHnPwYA@vaman>
+ <i7gptvn2fitpqypycjhsyjnp63s2w5omx4jtpubylfc3hx3m5l@jbuin5uvxuoc>
+ <Z2sOl9ltv0ug4d82@vaman>
+ <318620fc-e174-4ef3-808a-69fe1d4e1df5@oss.qualcomm.com>
 Content-Language: en-US
-From: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
-In-Reply-To: <20250119124551.nl5272bz36ozvlqu@thinkpad>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: TVwJr429VuGs63ODSIZI0Oigcnfr1Zqi
-X-Proofpoint-ORIG-GUID: TVwJr429VuGs63ODSIZI0Oigcnfr1Zqi
+In-Reply-To: <318620fc-e174-4ef3-808a-69fe1d4e1df5@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-ORIG-GUID: QHpp9w4fx2abRXW6l2Us49U1LaXeSg9c
+X-Proofpoint-GUID: QHpp9w4fx2abRXW6l2Us49U1LaXeSg9c
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
  definitions=2025-01-23_02,2025-01-22_02,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 mlxlogscore=999
- phishscore=0 spamscore=0 impostorscore=0 priorityscore=1501 malwarescore=0
- clxscore=1015 suspectscore=0 adultscore=0 lowpriorityscore=0 mlxscore=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 clxscore=1015
+ lowpriorityscore=0 bulkscore=0 phishscore=0 priorityscore=1501 spamscore=0
+ impostorscore=0 suspectscore=0 mlxlogscore=999 mlxscore=0 adultscore=0
  classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2411120000
- definitions=main-2501230049
+ definitions=main-2501230052
 
 
 
-On 1/19/2025 6:15 PM, Manivannan Sadhasivam wrote:
-> On Wed, Jan 15, 2025 at 12:17:46PM +0530, Manikanta Mylavarapu wrote:
->> Add PCIe0, PCIe1, PCIe2, PCIe3 (and corresponding PHY) devices
->> found on IPQ5424 platform. The PCIe0 & PCIe1 are 1-lane Gen3
->> host whereas PCIe2 & PCIe3 are 2-lane Gen3 host.
+On 12/25/2024 2:01 PM, Krishna Kurapati wrote:
+> 
+> 
+> On 12/25/2024 1:12 AM, Vinod Koul wrote:
+>> On 24-12-24, 21:33, Dmitry Baryshkov wrote:
+>>> On Wed, Dec 25, 2024 at 12:49:07AM +0530, Vinod Koul wrote:
+>>>> On 24-12-24, 17:38, Dmitry Baryshkov wrote:
+>>>>> On Tue, Dec 24, 2024 at 08:55:18PM +0530, Vinod Koul wrote:
+>>>>>>
+>>>>>> On Tue, 24 Dec 2024 14:16:18 +0530, Krishna Kurapati wrote:
+>>>>>>> This series aims at enabling USB on QCS615 which has 2 USB 
+>>>>>>> controllers.
+>>>>>>> The primary controller is SuperSpeed capable and secondary one is
+>>>>>>> High Speed only capable. The High Speed Phy is a QUSB2 phy and the
+>>>>>>> SuperSpeed Phy is a QMP Uni Phy which supports non-concurrent DP.
+>>>>>>>
+>>>>>>> Link to v1:
+>>>>>>> https://lore.kernel.org/all/20241014084432.3310114-1-quic_kriskura@quicinc.com/
+>>>>>>>
+>>>>>>> [...]
+>>>>>>
+>>>>>> Applied, thanks!
+>>>>>>
+>>>>>> [2/3] phy: qcom-qusb2: Add support for QCS615
+>>>>>>        commit: 8adbf20e05025f588d68fb5b0fbbdab4e9a6f97ecommit 
+>>>>>> e1b2772ea957c91694aa91b90e4c0a1d7b0fb144
+> Author: Krishna Kurapati <quic_kriskura@quicinc.com>
+> Date:   Mon Oct 14 14:14:30 2024 +0530
+> 
+>      dt-bindings: phy: qcom,msm8998-qmp-usb3-phy: Add support for QCS615
+> 
+> 
+>>>>>
+>>>>> Is there any issue with the two remaining patches?
+>>>>
+>>>> Something wrong with b4... I have applied 2 & 3
+>>>> Patch 1 should go thru USB tree
+>>>
+>>> Hmm, strange. But then, please excuse my ignorance, do we have bindings
+>>> for these two patches?
 >>
->> Signed-off-by: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
->> ---
->> Changes in V2:
->> 	- Add a newline above status in all pcie nodes.
->> 	- Changed reg-names to a vertical list format in
->> 	  all pcie nodes.
->> 	- Updated the order of pcie phy clocks in gcc node,
->> 	  move the <0> entry to the end of clock list.
->> 	- Updated the ranges property in the soc@0 node to align
->> 	  with the linux-next tip.
+>> I see to have missed one!
 >>
->>  arch/arm64/boot/dts/qcom/ipq5424.dtsi | 500 +++++++++++++++++++++++++-
->>  1 file changed, 496 insertions(+), 4 deletions(-)
+>> This one is documented see:
+>> d146d384222e dt-bindings: phy: qcom,qusb2: Add bindings for QCS615
 >>
->> diff --git a/arch/arm64/boot/dts/qcom/ipq5424.dtsi b/arch/arm64/boot/dts/qcom/ipq5424.dtsi
->> index 7034d378b1ef..708cd709a495 100644
->> --- a/arch/arm64/boot/dts/qcom/ipq5424.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/ipq5424.dtsi
->> @@ -9,6 +9,7 @@
->>  #include <dt-bindings/interrupt-controller/arm-gic.h>
->>  #include <dt-bindings/clock/qcom,ipq5424-gcc.h>
->>  #include <dt-bindings/reset/qcom,ipq5424-gcc.h>
->> +#include <dt-bindings/interconnect/qcom,ipq5424.h>
->>  #include <dt-bindings/gpio/gpio.h>
->>  
->>  / {
->> @@ -152,6 +153,98 @@ soc@0 {
->>  		#size-cells = <2>;
->>  		ranges = <0 0 0 0 0x10 0>;
->>  
->> +		pcie0_phy: phy@84000 {
->> +			compatible = "qcom,ipq5424-qmp-gen3x1-pcie-phy",
->> +				     "qcom,ipq9574-qmp-gen3x1-pcie-phy";
->> +			reg = <0 0x00084000 0 0x2000>;
+>> but, the third patch is sadly not... I am dropping the third patch
+>>
 > 
-> Use 0x0 for consistency. Here and everywhere.
+> Hi Dmitry, Vinod,
 > 
->> +			clocks = <&gcc GCC_PCIE0_AUX_CLK>,
->> +				 <&gcc GCC_PCIE0_AHB_CLK>,
->> +				 <&gcc GCC_PCIE0_PIPE_CLK>;
->> +			clock-names = "aux", "cfg_ahb", "pipe";
->> +
->> +			assigned-clocks = <&gcc GCC_PCIE0_AUX_CLK>;
->> +			assigned-clock-rates = <20000000>;
->> +
->> +			resets = <&gcc GCC_PCIE0_PHY_BCR>,
->> +				 <&gcc GCC_PCIE0PHY_PHY_BCR>;
->> +			reset-names = "phy", "common";
->> +
->> +			#clock-cells = <0>;
->> +			clock-output-names = "gcc_pcie0_pipe_clk_src";
->> +
->> +			#phy-cells = <0>;
->> +			status = "disabled";
->> +		};
+>   I see the bindings for QMP PHY in linux next as follows:
 > 
-> [...]
+> commit e1b2772ea957c91694aa91b90e4c0a1d7b0fb144
+> Author: Krishna Kurapati <quic_kriskura@quicinc.com>
+> Date:   Mon Oct 14 14:14:30 2024 +0530
 > 
->> +		pcie3: pcie@40000000 {
->> +			compatible = "qcom,pcie-ipq5424",
->> +				     "qcom,pcie-ipq9574";
+>      dt-bindings: phy: qcom,msm8998-qmp-usb3-phy: Add support for QCS615
 > 
-> Put it in previous line itself.
-> 
->> +			reg = <0 0x40000000 0 0xf1d>,
->> +			      <0 0x40000f20 0 0xa8>,
->> +			      <0 0x40001000 0 0x1000>,
->> +			      <0 0x000f8000 0 0x3000>,
->> +			      <0 0x40100000 0 0x1000>;
->> +			reg-names = "dbi",
->> +				    "elbi",
->> +				    "atu",
->> +				    "parf",
->> +				    "config";
->> +			device_type = "pci";
->> +			linux,pci-domain = <3>;
->> +			bus-range = <0x00 0xff>;
->> +			num-lanes = <2>;
->> +			#address-cells = <3>;
->> +			#size-cells = <2>;
->> +
->> +			ranges = <0x01000000 0x0 0x00000000 0x0 0x40200000 0x0 0x00100000>,
->> +				 <0x02000000 0x0 0x40300000 0x0 0x40300000 0x0 0x0fd00000>;
->> +			interrupts = <GIC_SPI 470 IRQ_TYPE_LEVEL_HIGH>,
->> +				     <GIC_SPI 471 IRQ_TYPE_LEVEL_HIGH>,
->> +				     <GIC_SPI 472 IRQ_TYPE_LEVEL_HIGH>,
->> +				     <GIC_SPI 473 IRQ_TYPE_LEVEL_HIGH>,
->> +				     <GIC_SPI 474 IRQ_TYPE_LEVEL_HIGH>,
->> +				     <GIC_SPI 475 IRQ_TYPE_LEVEL_HIGH>,
->> +				     <GIC_SPI 476 IRQ_TYPE_LEVEL_HIGH>,
->> +				     <GIC_SPI 477 IRQ_TYPE_LEVEL_HIGH>;
->> +			interrupt-names = "msi0",
->> +					  "msi1",
->> +					  "msi2",
->> +					  "msi3",
->> +					  "msi4",
->> +					  "msi5",
->> +					  "msi6",
->> +					  "msi7";
-> 
-> Define the 'global' interrupt if it exists in hw.
-> 
->> +
->> +			#interrupt-cells = <1>;
->> +			interrupt-map-mask = <0 0 0 0x7>;
->> +			interrupt-map = <0 0 0 1 &intc 0 479 IRQ_TYPE_LEVEL_HIGH>,
->> +					<0 0 0 2 &intc 0 480 IRQ_TYPE_LEVEL_HIGH>,
->> +					<0 0 0 3 &intc 0 481 IRQ_TYPE_LEVEL_HIGH>,
->> +					<0 0 0 4 &intc 0 482 IRQ_TYPE_LEVEL_HIGH>;
->> +
->> +			clocks = <&gcc GCC_PCIE3_AXI_M_CLK>,
->> +				 <&gcc GCC_PCIE3_AXI_S_CLK>,
->> +				 <&gcc GCC_PCIE3_AXI_S_BRIDGE_CLK>,
->> +				 <&gcc GCC_PCIE3_RCHNG_CLK>,
->> +				 <&gcc GCC_PCIE3_AHB_CLK>,
->> +				 <&gcc GCC_PCIE3_AUX_CLK>;
->> +			clock-names = "axi_m",
->> +				      "axi_s",
->> +				      "axi_bridge",
->> +				      "rchng",
->> +				      "ahb",
->> +				      "aux";
->> +
->> +			assigned-clocks = <&gcc GCC_PCIE3_AHB_CLK>,
->> +					  <&gcc GCC_PCIE3_AUX_CLK>,
->> +					  <&gcc GCC_PCIE3_AXI_M_CLK>,
->> +					  <&gcc GCC_PCIE3_AXI_S_BRIDGE_CLK>,
->> +					  <&gcc GCC_PCIE3_AXI_S_CLK>,
->> +					  <&gcc GCC_PCIE3_RCHNG_CLK>;
->> +			assigned-clock-rates = <100000000>,
->> +					       <20000000>,
->> +					       <266666666>,
->> +					       <240000000>,
->> +					       <240000000>,
->> +					       <100000000>;
-> 
-> Why does this platform has to assign clock rate for all the clocks?
-> 
+> As mentioned in the cover letter, the bindings of phy have been merged 
+> from v1.
 
-Only the RCHNG clock requires rate configuration.
-The other clocks have already been set according to the frequency plan.
-Therefore, I will exclude all clocks except the RCHNG clock.
+Hi Vinod,
 
->> +
->> +			resets = <&gcc GCC_PCIE3_PIPE_ARES>,
->> +				 <&gcc GCC_PCIE3_CORE_STICKY_RESET>,
->> +				 <&gcc GCC_PCIE3_AXI_S_STICKY_RESET>,
->> +				 <&gcc GCC_PCIE3_AXI_S_ARES>,
->> +				 <&gcc GCC_PCIE3_AXI_M_STICKY_RESET>,
->> +				 <&gcc GCC_PCIE3_AXI_M_ARES>,
->> +				 <&gcc GCC_PCIE3_AUX_ARES>,
->> +				 <&gcc GCC_PCIE3_AHB_ARES>;
->> +			reset-names = "pipe",
->> +				      "sticky",
->> +				      "axi_s_sticky",
->> +				      "axi_s",
->> +				      "axi_m_sticky",
->> +				      "axi_m",
->> +				      "aux",
->> +				      "ahb";
->> +
->> +			msi-map = <0x0 &intc 0x0 0x1000>;
->> +
->> +			phys = <&pcie3_phy>;
->> +			phy-names = "pciephy";
->> +			interconnects = <&gcc MASTER_ANOC_PCIE3 &gcc SLAVE_ANOC_PCIE3>,
->> +					<&gcc MASTER_CNOC_PCIE3 &gcc SLAVE_CNOC_PCIE3>;
-> 
-> Define icc tags also.
-> 
+  Can you help in taking in the patch-3. As mentioned in previous mail, 
+the bindings are merged and present in linux-next.
 
-Okay, sure.
-
-Thanks & Regards,
-Manikanta.
+Regards,
+Krishna,
 
