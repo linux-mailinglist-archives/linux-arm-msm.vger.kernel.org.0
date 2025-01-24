@@ -1,63 +1,85 @@
-Return-Path: <linux-arm-msm+bounces-46022-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46023-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4698CA1AF5C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Jan 2025 05:19:29 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 501ADA1AF65
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Jan 2025 05:26:27 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id D0F247A3EDE
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Jan 2025 04:19:19 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A070A3A6778
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Jan 2025 04:26:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E5C5B1D63E1;
-	Fri, 24 Jan 2025 04:19:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AFBE61D63F8;
+	Fri, 24 Jan 2025 04:26:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="cBAV/VFl"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="fjEf/eQ2"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 041E845016;
-	Fri, 24 Jan 2025 04:19:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD43923B0
+	for <linux-arm-msm@vger.kernel.org>; Fri, 24 Jan 2025 04:26:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737692363; cv=none; b=s/yU5curtq3Q1O09yhc/kZj66L4lL9g6eEBHBxPr8jK9uqs2N7w6dRJbxH9+v9TDzOdiynUHzU0FKrxcuNa/fbdu4XIImguvwcZpya4EeUY4/FhSuMrIWq3ySmethmJteF4NmDht4EJRz6ASaNfnYrJWyl6vWJCMiatMp263r98=
+	t=1737692784; cv=none; b=ek2Tihg5g1MQpxshUAcNiTkUmAHqP4M4Nbj5fl8iBkQK4O6OzgtfZRdfT3NjdeOxiXFQtx1Jr+r6m+Xgmu+eWgQiE87osy1WQcG23i7BVVeWgV011D3TgQ9KyGxsW7gvRGZWjUbV2kIwbgpOA8f8w/b+MnlUAfdd4dpNf/0sd/E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737692363; c=relaxed/simple;
-	bh=1qniZwlYYf0Wj6nSbVCNbWQrtDUK7PNE1TUiuuwqgKI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=lXJ0ZNACIA0xEOK6L/tAgrDCYV5duhVjbhuP8+7ZhXprCRvwvKoyCwkhXj6uF4C0Bff+Hj3uMtp5YnaZDqbDAQB0bbnijCY+ynHHhD7B/BggJHW8csVxfZ7mHzvQNhQEZeEtUGLpdm/UxJfSpw56/2cee9NmwwypIWJYmLRUJxk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=cBAV/VFl; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50O3FdnG004662;
-	Fri, 24 Jan 2025 04:19:12 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	LKTPtG6GWE3pwIsWi/KDKSC/EsRSnBdmvKR7q13O0Pk=; b=cBAV/VFlS1gngMxi
-	ejb3vpYRFQUXtj28onrWBxLo0Hv8mL0WbWndDfOfIy1CfVkpIj8wfolZ9hFl2xWo
-	u4IdEEhcXzVH0iYY4vCzme+888sr0lb6wUxow5W6ogWoGviNgwssP5JC+Yden0HI
-	l0LlsXQUixLlsZq7UpwurPDxVvLJljFN9Z7aGjzHzZo/RHAp35bbgZCsEXscFrII
-	QVCO0+mHXDh/W6zbhOEdb3SxTgDQsnvYEoT1g+2gtrb4W/1k8sqxIiIs56HV6sMG
-	tac4fch/yhIh96Iwm25ZDiE6x4SkMqicH5RQMaEtTjcXog9+7iPwibkMMhkJg8zM
-	rwgfPQ==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44c2t483rm-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 24 Jan 2025 04:19:12 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 50O4JBwH022350
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 24 Jan 2025 04:19:11 GMT
-Received: from [10.204.65.49] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 23 Jan
- 2025 20:19:08 -0800
-Message-ID: <96b94322-7d5c-451a-be76-cd1a9292c903@quicinc.com>
-Date: Fri, 24 Jan 2025 09:49:05 +0530
+	s=arc-20240116; t=1737692784; c=relaxed/simple;
+	bh=aXa8G+UwR4b+grlTDq708P7uJ8uZWjkDDEo0FNlieAg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=KFA6AlnJBJFJQNaNpyDQD4fRt+KyWSrVRQGUoJfbaeEKinSXjnyvSGYfsp+7yIMuqsu2NUI0IDZVrlWu+z6q1lVIfVTJarKUM79CWD4epuQNKet687kmp+Qfp9JifCFHjKn/1QbCP2J1MW/bucjqSJrgG/tuyEmWt0KBhnzYQLw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=fjEf/eQ2; arc=none smtp.client-ip=170.10.133.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1737692781;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=W4x8wgZEyKuHwORGDCpsHEEkdJ39AEqwRDp8OAcY8lk=;
+	b=fjEf/eQ2lUPaiDzosDXPhlLKyrdAjRGieUbo6oRDknxJxrlUad6/a18hPJ07+hWdWvQzWx
+	bJ90RAAN+cCj5fVk0y7kCDIpe3+es8dnwx/x6LqFbJ5rFLxMCEqVM7xwPgdFfSQ4c3Wg0v
+	gQFjmYAYrH1Sdm9rAPlVpWBLzfaUacc=
+Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com
+ [209.85.216.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-416-Mg05sPC8PSyGghJcu8ODiQ-1; Thu, 23 Jan 2025 23:26:19 -0500
+X-MC-Unique: Mg05sPC8PSyGghJcu8ODiQ-1
+X-Mimecast-MFC-AGG-ID: Mg05sPC8PSyGghJcu8ODiQ
+Received: by mail-pj1-f69.google.com with SMTP id 98e67ed59e1d1-2ef9864e006so4875728a91.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Jan 2025 20:26:19 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1737692779; x=1738297579;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=W4x8wgZEyKuHwORGDCpsHEEkdJ39AEqwRDp8OAcY8lk=;
+        b=Rst1o1NkW4AGu4YPR588C9Lkiuk6E40SIJOVPHNVAvqcQOeSI5iCo7+e0dfgrr7rNr
+         2+Z4Ey7lYHfc6C1FABIgEUdgLAMMmwNbpZmwQJyQiB18ZRwsOtS1sPwJMnQByhEKMxZj
+         zOXdIOx9U9V65pq2FyKfGw0zdXwaLez5UoIKBwMaW6IzEbxqT4w9847y4/TGd9F9XSc9
+         8Yfjp707hI/FMpOkZTOHaA38f66PJkxQoI5wwUkS4u+V7uXy76i0FagrG33P/Muar1SA
+         2Z2swjukp7qhprnDHsynGiAhmzX4UGfdasejAt6OrfDfVrni1+vL95QpeWzHmjLBkhXx
+         N/og==
+X-Forwarded-Encrypted: i=1; AJvYcCVjr/dWrmHsr/m4tLELl3u9GBSGZ+iCWQEAm5f7+jZ32q+auaYvcRlX3cm+rkaugnOPsufp4pXC/acBFwJi@vger.kernel.org
+X-Gm-Message-State: AOJu0YwuHa12OmC+ejIDzUq6ZuRn6W9nTHiZd6gvjrRy57lI/QS9ncaV
+	NDc/d2sbFRHfXwGDEls1jrVGjr4OeHtx0wHDpfLS5ea73xzwskeieqGW/jT55w1PuuQG9qqEU8E
+	txb/xIlX6NaLbVgkgDIJZtRBk16gZA6Kr9Sh1qg8Lj5hqVgTS5NSQLRAvqIU7YEE=
+X-Gm-Gg: ASbGnct1+XyVLE++q1LxNjzzPUlcVHkcKDF4bbIZjtKgm6DU+vLhzTJbRU4oJLjdqZM
+	/OtuVZL1ZffnDwRFLBhTwNafX92o803RrMVe+OGhkGfjibHMZDm0+lj45UgDCjIrUJzrIBrNb4N
+	YAqS9Tvo6mFf3Bn/nyOeWgz+IzgWDSp2f1RaWsUPKFGBaHGwUkSazMAYELgTbto0CM9MNuPXSfn
+	NruNaN7xvCQe9hYYQf8CrNcsWgfeik394FO9eZ8Ig5bgdyv9IfjQ9r/YNP5lOgcon7UVDM=
+X-Received: by 2002:a17:90b:4d05:b0:2ee:5958:828 with SMTP id 98e67ed59e1d1-2f782c70176mr42890447a91.9.1737692778682;
+        Thu, 23 Jan 2025 20:26:18 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHF0DJWclieG8GIGsCzjY2k/MI/u8GaqIVA2CIVqY1sh8z4aaIMUWu09AlsDTA/tx+z6nHtoQ==
+X-Received: by 2002:a17:90b:4d05:b0:2ee:5958:828 with SMTP id 98e67ed59e1d1-2f782c70176mr42890346a91.9.1737692777958;
+        Thu, 23 Jan 2025 20:26:17 -0800 (PST)
+Received: from [192.168.68.55] ([180.233.125.64])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2f7ffa5bbfbsm591962a91.19.2025.01.23.20.25.59
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 23 Jan 2025 20:26:16 -0800 (PST)
+Message-ID: <186047ea-a782-494b-bfcf-f5088806bbb4@redhat.com>
+Date: Fri, 24 Jan 2025 14:25:56 +1000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,237 +87,272 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 1/4] misc: fastrpc: Add CRC support using invokeV2
- request
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC: <srinivas.kandagatla@linaro.org>, <linux-arm-msm@vger.kernel.org>,
-        <gregkh@linuxfoundation.org>, <quic_bkumar@quicinc.com>,
-        <linux-kernel@vger.kernel.org>, <quic_chennak@quicinc.com>,
-        <dri-devel@lists.freedesktop.org>, <arnd@arndb.de>
-References: <20241007084518.3649876-1-quic_ekangupt@quicinc.com>
- <20241007084518.3649876-2-quic_ekangupt@quicinc.com>
- <bmg5em2f673vis6wwtjx6ibkhee7d3zocwesgoafsgt5jxbfqn@w73y6gmzbamj>
- <53ce4792-6eca-42ae-b5d7-24d524697344@quicinc.com>
- <fm4wxyu7dv7wzz6szwtz4vyukzxmzajtzqlidaed4hcrabhpe2@eqw6vimhzkjm>
- <0dd43d4f-0399-454b-96fd-2d4f5f36ea14@quicinc.com>
- <drh2ikzku37tblmpkjbcdqjllynb3shsfogljfkhq2vcsej2ga@4ex36yehg2e6>
- <41fb5e93-2d77-48e5-92e0-8e82ee4d27ce@quicinc.com>
- <yjvjq657cfqzfcvusox5ykpyhzsi37certamb4p35eowohwwoz@cjcujhkrt2tx>
+Subject: Re: [RFC PATCH v5 02/15] KVM: guest_memfd: Make guest mem use guest
+ mem inodes instead of anonymous inodes
+To: Fuad Tabba <tabba@google.com>, kvm@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, linux-mm@kvack.org
+Cc: pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au,
+ anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com,
+ aou@eecs.berkeley.edu, seanjc@google.com, viro@zeniv.linux.org.uk,
+ brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org,
+ xiaoyao.li@intel.com, yilun.xu@intel.com, chao.p.peng@linux.intel.com,
+ jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com,
+ yu.c.zhang@linux.intel.com, isaku.yamahata@intel.com, mic@digikod.net,
+ vbabka@suse.cz, vannapurve@google.com, ackerleytng@google.com,
+ mail@maciej.szmigiero.name, david@redhat.com, michael.roth@amd.com,
+ wei.w.wang@intel.com, liam.merwick@oracle.com, isaku.yamahata@gmail.com,
+ kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com,
+ steven.price@arm.com, quic_eberman@quicinc.com, quic_mnalajal@quicinc.com,
+ quic_tsoni@quicinc.com, quic_svaddagi@quicinc.com,
+ quic_cvanscha@quicinc.com, quic_pderrin@quicinc.com,
+ quic_pheragu@quicinc.com, catalin.marinas@arm.com, james.morse@arm.com,
+ yuzenghui@huawei.com, oliver.upton@linux.dev, maz@kernel.org,
+ will@kernel.org, qperret@google.com, keirf@google.com, roypat@amazon.co.uk,
+ shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, rientjes@google.com,
+ jhubbard@nvidia.com, fvdl@google.com, hughd@google.com, jthoughton@google.com
+References: <20250117163001.2326672-1-tabba@google.com>
+ <20250117163001.2326672-3-tabba@google.com>
 Content-Language: en-US
-From: Ekansh Gupta <quic_ekangupt@quicinc.com>
-In-Reply-To: <yjvjq657cfqzfcvusox5ykpyhzsi37certamb4p35eowohwwoz@cjcujhkrt2tx>
-Content-Type: text/plain; charset="UTF-8"
+From: Gavin Shan <gshan@redhat.com>
+In-Reply-To: <20250117163001.2326672-3-tabba@google.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: G9OOk5CA07p5jV_78NelLnmL6cASsSn2
-X-Proofpoint-GUID: G9OOk5CA07p5jV_78NelLnmL6cASsSn2
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-01-24_01,2025-01-23_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 bulkscore=0
- clxscore=1015 malwarescore=0 mlxscore=0 lowpriorityscore=0 mlxlogscore=999
- suspectscore=0 priorityscore=1501 phishscore=0 impostorscore=0
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2501240028
+
+Hi Fuad,
+
+On 1/18/25 2:29 AM, Fuad Tabba wrote:
+> From: Ackerley Tng <ackerleytng@google.com>
+> 
+> Using guest mem inodes allows us to store metadata for the backing
+> memory on the inode. Metadata will be added in a later patch to
+> support HugeTLB pages.
+> 
+> Metadata about backing memory should not be stored on the file, since
+> the file represents a guest_memfd's binding with a struct kvm, and
+> metadata about backing memory is not unique to a specific binding and
+> struct kvm.
+> 
+> Signed-off-by: Ackerley Tng <ackerleytng@google.com>
+> Signed-off-by: Fuad Tabba <tabba@google.com>
+> ---
+>   include/uapi/linux/magic.h |   1 +
+>   virt/kvm/guest_memfd.c     | 119 ++++++++++++++++++++++++++++++-------
+>   2 files changed, 100 insertions(+), 20 deletions(-)
+> 
+> diff --git a/include/uapi/linux/magic.h b/include/uapi/linux/magic.h
+> index bb575f3ab45e..169dba2a6920 100644
+> --- a/include/uapi/linux/magic.h
+> +++ b/include/uapi/linux/magic.h
+> @@ -103,5 +103,6 @@
+>   #define DEVMEM_MAGIC		0x454d444d	/* "DMEM" */
+>   #define SECRETMEM_MAGIC		0x5345434d	/* "SECM" */
+>   #define PID_FS_MAGIC		0x50494446	/* "PIDF" */
+> +#define GUEST_MEMORY_MAGIC	0x474d454d	/* "GMEM" */
+>   
+>   #endif /* __LINUX_MAGIC_H__ */
+> diff --git a/virt/kvm/guest_memfd.c b/virt/kvm/guest_memfd.c
+> index 47a9f68f7b24..198554b1f0b5 100644
+> --- a/virt/kvm/guest_memfd.c
+> +++ b/virt/kvm/guest_memfd.c
+> @@ -1,12 +1,17 @@
+>   // SPDX-License-Identifier: GPL-2.0
+> +#include <linux/fs.h>
+> +#include <linux/mount.h>
+
+This can be dropped since "linux/mount.h" has been included to "linux/fs.h".
+
+>   #include <linux/backing-dev.h>
+>   #include <linux/falloc.h>
+>   #include <linux/kvm_host.h>
+> +#include <linux/pseudo_fs.h>
+>   #include <linux/pagemap.h>
+>   #include <linux/anon_inodes.h>
+>   
+>   #include "kvm_mm.h"
+>   
+> +static struct vfsmount *kvm_gmem_mnt;
+> +
+>   struct kvm_gmem {
+>   	struct kvm *kvm;
+>   	struct xarray bindings;
+> @@ -307,6 +312,38 @@ static pgoff_t kvm_gmem_get_index(struct kvm_memory_slot *slot, gfn_t gfn)
+>   	return gfn - slot->base_gfn + slot->gmem.pgoff;
+>   }
+>   
+> +static const struct super_operations kvm_gmem_super_operations = {
+> +	.statfs		= simple_statfs,
+> +};
+> +
+> +static int kvm_gmem_init_fs_context(struct fs_context *fc)
+> +{
+> +	struct pseudo_fs_context *ctx;
+> +
+> +	if (!init_pseudo(fc, GUEST_MEMORY_MAGIC))
+> +		return -ENOMEM;
+> +
+> +	ctx = fc->fs_private;
+> +	ctx->ops = &kvm_gmem_super_operations;
+> +
+> +	return 0;
+> +}
+> +
+> +static struct file_system_type kvm_gmem_fs = {
+> +	.name		 = "kvm_guest_memory",
+> +	.init_fs_context = kvm_gmem_init_fs_context,
+> +	.kill_sb	 = kill_anon_super,
+> +};
+> +
+> +static void kvm_gmem_init_mount(void)
+> +{
+> +	kvm_gmem_mnt = kern_mount(&kvm_gmem_fs);
+> +	BUG_ON(IS_ERR(kvm_gmem_mnt));
+> +
+> +	/* For giggles. Userspace can never map this anyways. */
+> +	kvm_gmem_mnt->mnt_flags |= MNT_NOEXEC;
+> +}
+> +
+>   static struct file_operations kvm_gmem_fops = {
+>   	.open		= generic_file_open,
+>   	.release	= kvm_gmem_release,
+> @@ -316,6 +353,8 @@ static struct file_operations kvm_gmem_fops = {
+>   void kvm_gmem_init(struct module *module)
+>   {
+>   	kvm_gmem_fops.owner = module;
+> +
+> +	kvm_gmem_init_mount();
+>   }
+>   
+>   static int kvm_gmem_migrate_folio(struct address_space *mapping,
+> @@ -397,11 +436,67 @@ static const struct inode_operations kvm_gmem_iops = {
+>   	.setattr	= kvm_gmem_setattr,
+>   };
+>   
+> +static struct inode *kvm_gmem_inode_make_secure_inode(const char *name,
+> +						      loff_t size, u64 flags)
+> +{
+> +	const struct qstr qname = QSTR_INIT(name, strlen(name));
+> +	struct inode *inode;
+> +	int err;
+> +
+> +	inode = alloc_anon_inode(kvm_gmem_mnt->mnt_sb);
+> +	if (IS_ERR(inode))
+> +		return inode;
+> +
+> +	err = security_inode_init_security_anon(inode, &qname, NULL);
+> +	if (err) {
+> +		iput(inode);
+> +		return ERR_PTR(err);
+> +	}
+> +
+> +	inode->i_private = (void *)(unsigned long)flags;
+> +	inode->i_op = &kvm_gmem_iops;
+> +	inode->i_mapping->a_ops = &kvm_gmem_aops;
+> +	inode->i_mode |= S_IFREG;
+> +	inode->i_size = size;
+> +	mapping_set_gfp_mask(inode->i_mapping, GFP_HIGHUSER);
+> +	mapping_set_inaccessible(inode->i_mapping);
+> +	/* Unmovable mappings are supposed to be marked unevictable as well. */
+> +	WARN_ON_ONCE(!mapping_unevictable(inode->i_mapping));
+> +
+> +	return inode;
+> +}
+> +
+> +static struct file *kvm_gmem_inode_create_getfile(void *priv, loff_t size,
+> +						  u64 flags)
+> +{
+> +	static const char *name = "[kvm-gmem]";
+> +	struct inode *inode;
+> +	struct file *file;
+> +
+> +	if (kvm_gmem_fops.owner && !try_module_get(kvm_gmem_fops.owner))
+> +		return ERR_PTR(-ENOENT);
+> +
+
+The validation on 'kvm_gmem_fops.owner' can be removed since try_module_get()
+and module_put() are friendly to a NULL parameter, even when CONFIG_MODULE_UNLOAD == N
+
+A module_put(kvm_gmem_fops.owner) is needed in the various erroneous cases in
+this function. Otherwise, the reference count of the owner (module) will become
+imbalanced on any errors.
 
 
+> +	inode = kvm_gmem_inode_make_secure_inode(name, size, flags);
+> +	if (IS_ERR(inode))
+> +		return ERR_CAST(inode);
+> +
 
+ERR_CAST may be dropped since there is nothing to be casted or converted?
 
-On 1/23/2025 6:03 PM, Dmitry Baryshkov wrote:
-> On Thu, Jan 23, 2025 at 05:34:00PM +0530, Ekansh Gupta wrote:
->>
->>
->> On 1/23/2025 4:43 PM, Dmitry Baryshkov wrote:
->>> On Thu, Jan 23, 2025 at 03:19:21PM +0530, Ekansh Gupta wrote:
->>>>
->>>> On 1/23/2025 1:18 PM, Dmitry Baryshkov wrote:
->>>>> On Thu, Jan 23, 2025 at 11:16:41AM +0530, Ekansh Gupta wrote:
->>>>>> On 10/7/2024 7:27 PM, Dmitry Baryshkov wrote:
->>>>>>> On Mon, Oct 07, 2024 at 02:15:15PM GMT, Ekansh Gupta wrote:
->>>>>>>> InvokeV2 request is intended to support multiple enhanced invoke
->>>>>>>> requests like CRC check, performance counter enablement and polling
->>>>>>>> mode for RPC invocations. CRC check is getting enabled as part of
->>>>>>>> this patch. CRC check for input and output argument helps in ensuring
->>>>>>>> data consistency over a remote call. If user intends to enable CRC
->>>>>>>> check, first local user CRC is calculated at user end and a CRC buffer
->>>>>>>> is passed to DSP to capture remote CRC values. DSP is expected to
->>>>>>>> write to the remote CRC buffer which is then compared at user level
->>>>>>>> with the local CRC values.
->>>>>>> This doesn't explain why this is necessary. Why do you need to checksum
->>>>>>> arguments?
->>>>>> This helps if the user suspects any data inconsistencies in the buffers passed to DSP over
->>>>>> remote call. This is not enabled by default and user can enable it as per their reqirement.
->>>>>> I'll add this information.
->>>>> An inconsistency where? Between the kernel and the DSP? Between the user
->>>>> and the DSP? Does it cover buffer contents or just the addresses?
->>>> Inconsistency between user and DSP. crc_user is calculated at user library before
->>>> making ioctl call and it is compared against the crc data which is filled by DSP and
->>>> copied to user.
->>>> This covers inconsistency in buffer contents.
->>> What is the reason for possible inconsistencies? Is it a debugging
->>> feature?
->> This is a debugging feature. Buffer data corruption might result in inconsistency.
->>>>>>> Also, what if the DSP firmware doesn't support CRC? How should userspace
->>>>>>> know that?
->>>>>> CRC support on DSP is there since long time(>6years).
->>>>> This doesn't give us a lot. Upstream kernel supports fastrpc since
->>>>> MSM8916 and MSM8996. Do those platforms support CRC?
->>>> The metadata buffer as of today also carries space for CRC information:
->>>> https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/tree/drivers/misc/fastrpc.c#n877
->>>>
->>>> So this is common across all platforms.
->>>>
->>>> In case CRC is not supported on any older platform, it would result in crc mismatch at user library.
->>>> As of now a warning is getting logged there, I can add the information suggesting the failure might
->>>> also occur if CRC is not supported.
->>> Logs go to /dev/null, they are ignored by users, etc. So either there
->>> should be an actual error being returned by the kernel / library, or it
->>> can be completely ignored and skipped.
->>>
->>> So, do MSM8916 / MSM8996 / SDM845 support CRC? If not, that must be
->>> handled somehow.
->> I see it's supported on SDM845 but not on MSM89##. I'll just send the new patch version for now
->> as CRC mismatch failures are getting ignored.
-> Please clearly document which platforms don't support CRC feature, the
-> implications and the possible (userspace) impact. E.g. if the kernel
-> logs a message for each call with failed CRC case, then this might cause
-> a serious slowdown. Likewise a userspace lib might cause a slowdown.
->
-> In fact, if CRC is a debugging feature, is it going to be enabled or
-> disabled by default?
->
->>>>> And if they do, why do we need the invoke_v2? Can we modify existing
->>>>> code instead?
->>>> invoke_v2 is needed because there is a need to pass user crc pointer over ioctl call which
->>>> cannot be achieved using existing code. Also there are plans to add more features to this
->>>> invoke_v2 request which will carry some information from user.
->>> Is it really extensible without breaking the ABI?
->> I'm planning to keep reserved bits in uapi struct for the same. Do you see any
->> problem with this?
-> Please keep Greg's comment in mind - verify that all reserved fields are
-> zero.
-Yes, I'll be ensuring checks for reserved fields.
->
->>>>>> From user space CRC check failure is
->>>>>> not fatal and is printed as a warning. But if copy of CRC to user fails, it will result in remote
->>>>>> call failure. Should I keep it as fatal considering that ever very old DSP support this or should
->>>>>> I consider the copy failure as non-fatal as userspace is treating this as a warning?
->>>>> warnings can remain unseen for a long time. Consider a GUI app. Nobody
->>>>> is there to view kernel warnings or library output.
->>>> Let me see if this can be done. Are you suggesting that the app will be somewhat tracking
->>>> if there is any crc check mismatch failures?
->>> I suggest returning -EIO to the app.
->> I'll check this.
->>>>>>>> Signed-off-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
->>>>>>>> ---
->>>>>>>>  drivers/misc/fastrpc.c      | 161 ++++++++++++++++++++++++------------
->>>>>>>>  include/uapi/misc/fastrpc.h |   7 ++
->>>>>>>>  2 files changed, 116 insertions(+), 52 deletions(-)
->>>>>>>>
->>>>>>>> diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
->>>>>>>> index 74181b8c386b..8e817a763d1d 100644
->>>>>>>> --- a/drivers/misc/fastrpc.c
->>>>>>>> +++ b/drivers/misc/fastrpc.c
->>>>>>>> @@ -573,13 +573,15 @@ static void fastrpc_get_buff_overlaps(struct fastrpc_invoke_ctx *ctx)
->>>>>>>>  
->>>>>>>>  static struct fastrpc_invoke_ctx *fastrpc_context_alloc(
->>>>>>>>  			struct fastrpc_user *user, u32 kernel, u32 sc,
->>>>>>>> -			struct fastrpc_invoke_args *args)
->>>>>>>> +			struct fastrpc_invoke_v2 *inv2)
->>>>>>>>  {
->>>>>>>>  	struct fastrpc_channel_ctx *cctx = user->cctx;
->>>>>>>>  	struct fastrpc_invoke_ctx *ctx = NULL;
->>>>>>>> +	struct fastrpc_invoke_args *args = NULL;
->>>>>>> Why do you need to init to NULL if you are going to set it two lines
->>>>>>> below?
->>>>>>>
->>>>>>>>  	unsigned long flags;
->>>>>>>>  	int ret;
->>>>>>>>  
->>>>>>>> +	args = (struct fastrpc_invoke_args *)inv2->inv.args;
->>>>>>> Why does it need a typecast?
->>>>>>>
->>>>>>>>  	ctx = kzalloc(sizeof(*ctx), GFP_KERNEL);
->>>>>>>>  	if (!ctx)
->>>>>>>>  		return ERR_PTR(-ENOMEM);
->>>>>>>> @@ -611,6 +613,7 @@ static struct fastrpc_invoke_ctx *fastrpc_context_alloc(
->>>>>>>>  	/* Released in fastrpc_context_put() */
->>>>>>>>  	fastrpc_channel_ctx_get(cctx);
->>>>>>>>  
->>>>>>>> +	ctx->crc = (u32 *)(uintptr_t)inv2->crc;
->>>>>>> Oh, but why? Also is it a user pointer or in-kernel data? If it's a
->>>>>>> user-based pointer, where is the accessiblity check? Why isn't it
->>>>>>> annotated properly?
->>>>>> This is a user pointer where the crc data is expected to be copied. There is no
->>>>>> other access to this pointer from kernel. I'm planning to change the data type
->>>>>> for crc as (void __user*) inside fastrpc_invoke_ctx structure.
->>>>> Yes, please. Also make sure that sparse doesn't add any warnings
->>>>> regarding pointer conversions.
->>>> Ack.
->>>>>>>>  	ctx->sc = sc;
->>>>>>>>  	ctx->retval = -1;
->>>>>>>>  	ctx->pid = current->pid;
->>>>>>>> @@ -1070,6 +1073,7 @@ static int fastrpc_put_args(struct fastrpc_invoke_ctx *ctx,
->>>>>>>>  	struct fastrpc_invoke_buf *list;
->>>>>>>>  	struct fastrpc_phy_page *pages;
->>>>>>>>  	u64 *fdlist;
->>>>>>>> +	u32 *crclist;
->>>>>>>>  	int i, inbufs, outbufs, handles;
->>>>>>>>  
->>>>>>>>  	inbufs = REMOTE_SCALARS_INBUFS(ctx->sc);
->>>>>>>> @@ -1078,6 +1082,7 @@ static int fastrpc_put_args(struct fastrpc_invoke_ctx *ctx,
->>>>>>>>  	list = fastrpc_invoke_buf_start(rpra, ctx->nscalars);
->>>>>>>>  	pages = fastrpc_phy_page_start(list, ctx->nscalars);
->>>>>>>>  	fdlist = (uint64_t *)(pages + inbufs + outbufs + handles);
->>>>>>>> +	crclist = (u32 *)(fdlist + FASTRPC_MAX_FDLIST);
->>>>>>> I think we should rewrite this parsing somehow. Is the format of data
->>>>>>> documented somewhere?
->>>>>> fdlist, crclist and poll(planned) are the only pointers that is being used. I'm planning
->>>>>> to store these pointers to ctx structure and directly use it wherever needed. This will
->>>>>> clean-up this unnecessary calculations at multiple places.
->>>>> Please do. Nevertheless, the format also must be documented.
->>>> Ack.
->>>>>>>>  
->>>>>>>>  	for (i = inbufs; i < ctx->nbufs; ++i) {
->>>>>>>>  		if (!ctx->maps[i]) {
->>>>>>>> @@ -1102,6 +1107,12 @@ static int fastrpc_put_args(struct fastrpc_invoke_ctx *ctx,
->>>>>>>>  			fastrpc_map_put(mmap);
->>>>>>>>  	}
->>>>>>>>  
->>>>>>>> +	if (ctx->crc && crclist && rpra) {
->>>>>>>> +		if (copy_to_user((void __user *)ctx->crc, crclist,
->>>>>>>> +				FASTRPC_MAX_CRCLIST * sizeof(u32)))
->>>>>>> Oh, so it's a user pointer. Then u32* was completely incorrect.
->>>>>>> Also you are copying FASTRPC_MAX_CRCLIST elements. Are all of them
->>>>>>> filled? Or are we leaking some data to userspace?
->>>>>> Yes, right. Planning clean-up in next patch.
->>>>>>
->>>>>> All of FASTRPC_MAX_CRCLIST is filled with crc data by DSP so copying should be fine.
->>>>> Huh? I definitely want to see documentation for function arguments.
->>>> Sure. I'll also modify the metadata layout doc here to add fdlist, CRC and other planned contents.
->>>> https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/tree/drivers/misc/fastrpc.c#n842
->>> This is not a documentation. E.g. I can not write code using that
->>> description. For example, it mentions neither FDLIST nor CRC.
->> I'm planning to add complete documentation for CRC and polling mode in user library project.
->> If I need to add documentation in driver, can you pls suggest what is the right place to add
->> the information?
-> Library should be fine. We don't require documenting all hardware in the
-> kernel. But the uAPI of the driver should be properly described.
-Understood, thanks.
+> +	file = alloc_file_pseudo(inode, kvm_gmem_mnt, name, O_RDWR,
+> +				 &kvm_gmem_fops);
+> +	if (IS_ERR(file)) {
+> +		iput(inode);
+> +		return file;
+> +	}
+> +
+> +	file->f_mapping = inode->i_mapping;
+> +	file->f_flags |= O_LARGEFILE;
+> +	file->private_data = priv;
+> +
 
---ekansh
->
->> Thanks for your comments.
->>
->> --ekansh
->>>>>>>> +			return -EFAULT;
->>>>>>>> +	}
->>>>>>>> +
->>>>>>>>  	return 0;
->>>>>>>>  }
->>>>>>>>  
+'file->f_mapping = inode->i_mapping' may be dropped since it's already correctly
+set by alloc_file_pseudo().
+
+alloc_file_pseudo
+   alloc_path_pseudo
+   alloc_file
+     alloc_empty_file
+     file_init_path         // Set by this function
+   
+
+> +	return file;
+> +}
+> +
+>   static int __kvm_gmem_create(struct kvm *kvm, loff_t size, u64 flags)
+>   {
+> -	const char *anon_name = "[kvm-gmem]";
+>   	struct kvm_gmem *gmem;
+> -	struct inode *inode;
+>   	struct file *file;
+>   	int fd, err;
+>   
+> @@ -415,32 +510,16 @@ static int __kvm_gmem_create(struct kvm *kvm, loff_t size, u64 flags)
+>   		goto err_fd;
+>   	}
+>   
+> -	file = anon_inode_create_getfile(anon_name, &kvm_gmem_fops, gmem,
+> -					 O_RDWR, NULL);
+> +	file = kvm_gmem_inode_create_getfile(gmem, size, flags);
+>   	if (IS_ERR(file)) {
+>   		err = PTR_ERR(file);
+>   		goto err_gmem;
+>   	}
+>   
+> -	file->f_flags |= O_LARGEFILE;
+> -
+> -	inode = file->f_inode;
+> -	WARN_ON(file->f_mapping != inode->i_mapping);
+> -
+> -	inode->i_private = (void *)(unsigned long)flags;
+> -	inode->i_op = &kvm_gmem_iops;
+> -	inode->i_mapping->a_ops = &kvm_gmem_aops;
+> -	inode->i_mode |= S_IFREG;
+> -	inode->i_size = size;
+> -	mapping_set_gfp_mask(inode->i_mapping, GFP_HIGHUSER);
+> -	mapping_set_inaccessible(inode->i_mapping);
+> -	/* Unmovable mappings are supposed to be marked unevictable as well. */
+> -	WARN_ON_ONCE(!mapping_unevictable(inode->i_mapping));
+> -
+>   	kvm_get_kvm(kvm);
+>   	gmem->kvm = kvm;
+>   	xa_init(&gmem->bindings);
+> -	list_add(&gmem->entry, &inode->i_mapping->i_private_list);
+> +	list_add(&gmem->entry, &file_inode(file)->i_mapping->i_private_list);
+>   
+>   	fd_install(fd, file);
+>   	return fd;
+
+Thanks,
+Gavin
 
 
