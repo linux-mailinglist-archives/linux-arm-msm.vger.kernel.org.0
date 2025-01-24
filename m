@@ -1,146 +1,122 @@
-Return-Path: <linux-arm-msm+bounces-46100-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46101-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4D00DA1B955
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Jan 2025 16:33:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 2DE7CA1B959
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Jan 2025 16:34:04 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6965116F7F6
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Jan 2025 15:28:47 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3574916FFFD
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Jan 2025 15:29:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7A73521B91F;
-	Fri, 24 Jan 2025 15:24:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0DA1A1CCEEC;
+	Fri, 24 Jan 2025 15:26:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="LepAtf9M"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="U4A738mc"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BE2921B905;
-	Fri, 24 Jan 2025 15:24:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC3AE165F18;
+	Fri, 24 Jan 2025 15:26:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737732288; cv=none; b=X2dPXJkMYScIDt13lTRcf6DzL0wTjQ7/IcFb0DMC23YOXadTXnyeQMaiNMmY+fDR+8flVTAjI6LLYZyExc2rUGJCHz3mIXM1RZUJyg7N+JALNSBSVtA7wvX3SnowhlhhiTMT0DCizX0EU3fE5RVyO9EgCzRrl7fP37g0DnJAWGA=
+	t=1737732406; cv=none; b=oR/ocYq33wMI1fKCkow0/jZg1pXo5EX1HZMX3awImTZt4ohsbfEKeg4khuuVID8E8+ukwcTzhFXLPXKJDJX3TnGevYjz/Xw/7N+l1O51pjcyJfElLZ0IErqlvof9lfZgoRYQRn73W2qE5BD26DRX7p3z+XLPVYRHhPYI3bPZ4KQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737732288; c=relaxed/simple;
-	bh=imFL5R+8tjW9nqG9MSwMdY0/9AKf8+BYg88n3+b4YE0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=Jt67isfG9oJ1D+dipqbSwHGBlyQkmiRw4zSntDDRAFCiTeBkwJGnWGT58TAnKZdII4fbmSU96udHYWhfhHTCZFk1Ig8au4JoVk3iRTnvqTRXj6gbIfaLpPVzBwL0564tIb7q5yEQItWNyPTCkQxvN5j7wfUd9E4T83Qq5bjinxY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=LepAtf9M; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50OAKRoI018282;
-	Fri, 24 Jan 2025 15:24:41 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	ET8tXNLLKrCfhT/dhVNQHzs0wuHOfse/qmJ60kS6k2Q=; b=LepAtf9M97vIs+39
-	YjLeR2hHHHDFGqi+lsJ7W1ibNvYl1Ni82/TEg3k5BgxVrdRQ3yLpj2SCOip4grqy
-	0Fb/NYvqBNwqnsaSO3Bk0uO5Ds2dIIMfYPn9P6O+jJuD+kPZnD5aeNdBIRsbB4SX
-	ZvbRlpV0ZCfAjaG6ff65rcMSq+Rrb01cdcF0MVSMoOjVSShH7smzOlFrgecXJ66j
-	+LHz/DwKPDk3gPRSoI00taHmdcu5+fa0OyW05d/qrOBcF/QA3+sC1SZRlqcpWsGM
-	m0TvsjAwczBtr4cZf7h5nXeJzlMeBrXKpp8uZw6jY+Ku7EVv3imvjoPYntBcKUCb
-	fFnvzg==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44c91agsve-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 24 Jan 2025 15:24:40 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 50OFOdZ7008866
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 24 Jan 2025 15:24:39 GMT
-Received: from [10.216.19.102] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 24 Jan
- 2025 07:24:33 -0800
-Message-ID: <08545d45-bfe6-45e4-b7be-503c318315af@quicinc.com>
-Date: Fri, 24 Jan 2025 20:54:30 +0530
+	s=arc-20240116; t=1737732406; c=relaxed/simple;
+	bh=I4B5vKu/OpviD5xTex6t7kYbehRnv7GHY2vV2m5BMRg=;
+	h=Date:Content-Type:MIME-Version:From:Cc:To:In-Reply-To:References:
+	 Message-Id:Subject; b=oadxx3N9FOqKfLlqhjguK6jlBkpBNy85+vwqnsLB680jukauM2AJp3BdZHo9j1ZzQF6EArWaGUvVWzCg6Du+6nyWaxCzlbWG+s2ypkA3jCzq6Wmx+fHoBYs6iVHb3bvpF15HGuMD30axAQ2Sllg3l7XRSPppb+HDQJ9+E+1m8h4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=U4A738mc; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28016C4CED2;
+	Fri, 24 Jan 2025 15:26:46 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1737732406;
+	bh=I4B5vKu/OpviD5xTex6t7kYbehRnv7GHY2vV2m5BMRg=;
+	h=Date:From:Cc:To:In-Reply-To:References:Subject:From;
+	b=U4A738mcAAEIs7r19RonddZcsikZAB02tsGwV+vgsHqOIr1CJKvcbqYBt6HZ7H3Ae
+	 kvZyZ03DkiKpdbj24Z7WAnY+NfQSccmUKRFoo+5yIeUQfgsqx63YqKllghGVxCrzlv
+	 xPCdeJHmED5PeUfhQ8fUxr0sQbD9VROBp0Tczs4eaa1HLgWz8ZaVw/k1kr7mc4WQyp
+	 h365gT01aFavd/RRG9zB7O5hJwNXYKB4LRlJPFHQk3ByWuCCbXKxEhkJ3qSAq2iJb0
+	 W3WCGsk2lWslbpVkmGLq1bOxRHE+1LIIXRdnobP866laWLObhWQ3O5KKO780+W7SCB
+	 t1SawWHHG7jww==
+Date: Fri, 24 Jan 2025 09:26:45 -0600
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 6/8] i2c: qcom-geni: Load i2c qup Firmware from linux
- side
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC: <andi.shyti@kernel.org>, <robh@kernel.org>, <krzk+dt@kernel.org>,
-        <conor+dt@kernel.org>, <gregkh@linuxfoundation.org>,
-        <jirislaby@kernel.org>, <broonie@kernel.or>, <andersson@kernel.org>,
-        <konradybcio@kernel.org>, <johan+linaro@kernel.org>,
-        <dianders@chromium.org>, <agross@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-i2c@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-serial@vger.kernel.org>, <linux-spi@vger.kernel.org>,
-        <quic_msavaliy@quicinc.com>, <quic_anupkulk@quicinc.com>
-References: <20250124105309.295769-1-quic_vdadhani@quicinc.com>
- <20250124105309.295769-7-quic_vdadhani@quicinc.com>
- <d3tydp3m7pehhiphupwybjlol5v2u3sabqotqximxmnswjlczb@jmdzpbrcrgou>
-Content-Language: en-US
-From: Viken Dadhaniya <quic_vdadhani@quicinc.com>
-In-Reply-To: <d3tydp3m7pehhiphupwybjlol5v2u3sabqotqximxmnswjlczb@jmdzpbrcrgou>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: IifrpbkiE1laDfES6spHOtwly77cZwum
-X-Proofpoint-GUID: IifrpbkiE1laDfES6spHOtwly77cZwum
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-01-24_06,2025-01-23_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0
- priorityscore=1501 impostorscore=0 mlxscore=0 suspectscore=0
- lowpriorityscore=0 mlxlogscore=999 spamscore=0 phishscore=0 clxscore=1015
- bulkscore=0 malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2501240108
+From: "Rob Herring (Arm)" <robh@kernel.org>
+Cc: andersson@kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, krzk+dt@kernel.org, quic_jprakash@quicinc.com, 
+ quic_kamalw@quicinc.com, conor+dt@kernel.org, linux-arm-msm@vger.kernel.org, 
+ konradybcio@kernel.org
+To: Rakesh Kota <quic_kotarake@quicinc.com>
+In-Reply-To: <20250124070200.3969230-1-quic_kotarake@quicinc.com>
+References: <20250124070200.3969230-1-quic_kotarake@quicinc.com>
+Message-Id: <173773232224.1805161.13299626383351520341.robh@kernel.org>
+Subject: Re: [PATCH] arm64: dts: qcs6490-rb3gen2: Add vadc and adc-tm
+ channels
 
 
-
-On 1/24/2025 8:34 PM, Dmitry Baryshkov wrote:
-> On Fri, Jan 24, 2025 at 04:23:07PM +0530, Viken Dadhaniya wrote:
->> Add provision to load firmware of Serial engine for I2C protocol from
->> Linux Execution Environment on running on APPS processor.
->>
->> Co-developed-by: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
->> Signed-off-by: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
->> Signed-off-by: Viken Dadhaniya <quic_vdadhani@quicinc.com>
->> ---
->>   drivers/i2c/busses/i2c-qcom-geni.c | 7 +++++--
->>   1 file changed, 5 insertions(+), 2 deletions(-)
->>
->> diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-qcom-geni.c
->> index 7bbd478171e0..9ad3b8c9a224 100644
->> --- a/drivers/i2c/busses/i2c-qcom-geni.c
->> +++ b/drivers/i2c/busses/i2c-qcom-geni.c
->> @@ -872,8 +872,11 @@ static int geni_i2c_probe(struct platform_device *pdev)
->>   	}
->>   	proto = geni_se_read_proto(&gi2c->se);
->>   	if (proto != GENI_SE_I2C) {
->> -		ret = dev_err_probe(dev, -ENXIO, "Invalid proto %d\n", proto);
->> -		goto err_resources;
->> +		ret = geni_load_se_firmware(&gi2c->se, GENI_SE_I2C);
+On Fri, 24 Jan 2025 12:32:00 +0530, Rakesh Kota wrote:
+> Add support for vadc and adc-tm channels which are used for
+> monitoring thermistors present on the platform.
 > 
-> Hmm, so if the SE has been configured to e.g. SPI by the TZ, can we
-> switch it to the I2C?
-
-No, in the current design, TZ will not load the SE firmware.
-
+> - Add the necessary includes for qcom,spmi-adc7-pm7325 and
+>   qcom,spmi-adc7-pmk8350.
+> - Add thermal zones for quiet-thermal, sdm-skin-thermal, and
+>   xo-thermal, and define their polling delays and thermal sensors.
+> - Configure the pm7325_temp_alarm node to use the pmk8350_vadc
+>   channel for thermal monitoring.
+> - Configure the pmk8350_adc_tm node to enable its thermal sensors
+>   and define their registers and settings.
+> - Configure the pmk8350_vadc node to define its channels and settings
 > 
->> +		if (ret) {
->> +			dev_err(gi2c->se.dev, "i2c firmware load failed ret: %d\n", ret);
->> +			goto err_resources;
->> +		}
->>   	}
->>   
->>   	if (desc && desc->no_dma_support)
->> -- 
->> 2.34.1
->>
+> Signed-off-by: Rakesh Kota <quic_kotarake@quicinc.com>
+> ---
+>  arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts | 114 +++++++++++++++++++
+>  1 file changed, 114 insertions(+)
 > 
+
+
+My bot found new DTB warnings on the .dts files added or changed in this
+series.
+
+Some warnings may be from an existing SoC .dtsi. Or perhaps the warnings
+are fixed by another series. Ultimately, it is up to the platform
+maintainer whether these warnings are acceptable or not. No need to reply
+unless the platform maintainer has comments.
+
+If you already ran DT checks and didn't see these error(s), then
+make sure dt-schema is up to date:
+
+  pip3 install dtschema --upgrade
+
+
+New warnings running 'make CHECK_DTBS=y for arch/arm64/boot/dts/qcom/' for 20250124070200.3969230-1-quic_kotarake@quicinc.com:
+
+arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dtb: pmic@2: pwm:nvmem: [[346, 347]] is too short
+	from schema $id: http://devicetree.org/schemas/mfd/qcom,spmi-pmic.yaml#
+arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dtb: pwm: nvmem: [[346, 347]] is too short
+	from schema $id: http://devicetree.org/schemas/leds/leds-qcom-lpg.yaml#
+arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dtb: pmic@0: adc@3100: 'oneOf' conditional failed, one must be fixed:
+	'#address-cells', '#size-cells', 'channel@103', 'channel@144', 'channel@146', 'channel@44', 'pmk8350-die-temp@3' do not match any of the regexes: 'pinctrl-[0-9]+'
+	'#address-cells', '#size-cells', 'channel@103', 'channel@144', 'channel@146', 'channel@44', 'interrupts', 'pmk8350-die-temp@3' do not match any of the regexes: 'pinctrl-[0-9]+'
+	'pmk8350-die-temp@3' does not match any of the regexes: '^channel@[0-9a-f]+$', 'pinctrl-[0-9]+'
+	['qcom,spmi-adc7'] is too short
+	'qcom,spmi-adc7' is not one of ['qcom,pm8226-iadc', 'qcom,pm8941-iadc']
+	'qcom,spmi-adc7' is not one of ['qcom,pmi8998-rradc', 'qcom,pm660-rradc']
+	from schema $id: http://devicetree.org/schemas/mfd/qcom,spmi-pmic.yaml#
+arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dtb: adc@3100: 'pmk8350-die-temp@3' does not match any of the regexes: '^channel@[0-9a-f]+$', 'pinctrl-[0-9]+'
+	from schema $id: http://devicetree.org/schemas/iio/adc/qcom,spmi-vadc.yaml#
+
+
+
+
+
 
