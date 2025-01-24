@@ -1,153 +1,254 @@
-Return-Path: <linux-arm-msm+bounces-46103-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46104-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id E2446A1B9BD
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Jan 2025 16:55:40 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id E4F36A1BA12
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Jan 2025 17:14:34 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 622BB3A5852
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Jan 2025 15:55:33 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8D4A73A7D6A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Jan 2025 16:14:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6CF6215853A;
-	Fri, 24 Jan 2025 15:55:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5DB4E16F8E9;
+	Fri, 24 Jan 2025 16:14:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="s7zZ3quV"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="b+SkvFqH"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yb1-f180.google.com (mail-yb1-f180.google.com [209.85.219.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.12])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90664157472
-	for <linux-arm-msm@vger.kernel.org>; Fri, 24 Jan 2025 15:55:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BF2617108A;
+	Fri, 24 Jan 2025 16:14:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.12
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737734135; cv=none; b=ZE0uu2EiX4GRI2BEaQOdP7K4vGCKb40aCe7ZcSVZPPgQC2lxTtHFNpCJYcEkBVJTw4cSAV3/LLoapwEmWmloc7q0KKDL+F5Tsn+qplX6+ug0b6z+VIzxkXNZem8l0ZsG/5zSHoY91Qh1S5oZcqkynNYukLGy0yjXwV3HDS1JoQk=
+	t=1737735272; cv=none; b=sPOjNvJqEEFZK1yXleV8R77jhZ1O2lZuoLkorvPU1ecbk79SEvQx96H0jyxUENIW4wi4rM3xyYsVxgZKHD+b9E8wdj3lAWGcjjuK/K2Pmu5zlIxu78jLcns3Q1pUN0ko8zB0fL21CdPi2PgrYOLbmRa5Km3bMkzNiRiE2fKgNHo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737734135; c=relaxed/simple;
-	bh=s/jO4NPWKOieyxzi6luyHh+P5ju9zoKIC7bH0SB8o4s=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=R8AGUFHKTvZcjryVQY9grTuDtjf02uylwp0RWfgprZvG7+th+WzEjbKGWeQRy8YoDoW6HRgb4imk0PA440/fdryOV5knyxSWD/UOzGby5AFs0gMTHSFQZhKd9Z24Ec6RYmzytdEWhmwrsYoy/NlY/1yJAZsPRmil3sNf2HRTfQg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=s7zZ3quV; arc=none smtp.client-ip=209.85.219.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yb1-f180.google.com with SMTP id 3f1490d57ef6-e4419a47887so3175785276.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Jan 2025 07:55:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1737734131; x=1738338931; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=ilPZPULNnLI6UK/uv5dVV+2Dss3A/uBmwkDVQdaY3K0=;
-        b=s7zZ3quV6sSGQi23hJ8dEM4EP7tlS0VnAiaxBv3lK2wpY8qVBS+nv0u+LtSgG3zm7a
-         3jC/AeebNiMJTjl0CVRjs0C+ZCprv/VSwLRNaAB+dBzP91o0J1unli1foSINTUIjCnrN
-         WHlsm/odmDIZNdqV4J+p6YtC9wuZ+t6FP+ZlBqLaLju/eWO3BGhQmaL8HMcSn3NxA5uM
-         wozOiTvrTWMH9N0FeRUT9N3m3ZjyqmTfRJlH4vvuzIdATqdDi3VjBVvW1VdVijcrWkOK
-         N5FZhjLj2bhGl8EF8f1n+WVssM5PB9NIxCkKwnRfCaN37YqkH2LBT4uq39WZsLnGIbfF
-         Dgpg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1737734131; x=1738338931;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=ilPZPULNnLI6UK/uv5dVV+2Dss3A/uBmwkDVQdaY3K0=;
-        b=BiZfin4IOgm7jeiBrzvnGgqRp7zrTwiLQzo9Kvvdcr4uhDu4/oJ7p8dq5MWryOQMN3
-         K2qIjqN910VBDLBjRIyLWQocvGEpisbL3ZfbIuOGEkS8c58xdFJC1Jk3b5tOQUPJ8JcI
-         HskByVSwJAcx6q6cOqyp/EH2Z56gY3I6IxV+UIotAHS3mkPCL2itfnHWMCz0+OarRDLh
-         RjdaDxsDFXT7ApKZQ8R3WAX36ofVc0iBYkn9YtyH6AG+Cv/Sl9ooXAsdgTdI3Jtuhqvs
-         P0ha3Q/N+1vwBvgZobF+bULnaSZ8nqCxf+uBGkhldlHAwh0ffwd5PBWa/wHp2rwtEYd7
-         DLwg==
-X-Forwarded-Encrypted: i=1; AJvYcCUEJYB0DEA5V8gjwgx19ukpKo+qMZUUdGYvB/Usamt/XLhcKJTDv2nhmktWm5ql08WhWUezE72ercxPQQop@vger.kernel.org
-X-Gm-Message-State: AOJu0Yww7DTUOKztvGBJq7r0K6CWJEpMUyjydW8N2geCG/7HZ1IK4O7b
-	j99dXHPtOoehsNU5WKQyzbEUYICW/1+PUDbKRcqgzKCvgmVBBuYVKbTZ5q/0tCp/VOXV67wWgT9
-	s8N1j/23F106bi7zdHoLUaQl1l70R2usZaT7etA==
-X-Gm-Gg: ASbGncs26/eg5E3KriZZ4M0keX+5D8MhLCZk7CnLd35Ii4ok2Uf5HUvAuG+OV/Qjn+/
-	sm+ZdqhBV3LAbjx23mnEBp8lODYN8qQJKv0LNVmFaUbzn6EXPcd3kyapw59befzs2YPfEOMvb3m
-	LS4dkSAo4r2WFVf7okWw==
-X-Google-Smtp-Source: AGHT+IE5CrP20lwY9b957F+q8FfX4UrWyqpcD5u1RzqaZ3UIpMjXmbJiX0igSbAvphxXL+FBMTlukLRROvc9N2dsUB8=
-X-Received: by 2002:a05:690c:3701:b0:6f6:d4bf:d01a with SMTP id
- 00721157ae682-6f6eb940fb8mr246220177b3.34.1737734131503; Fri, 24 Jan 2025
- 07:55:31 -0800 (PST)
+	s=arc-20240116; t=1737735272; c=relaxed/simple;
+	bh=R/dRMuxP5wgdeb43MyrhWkWxBuCDZuLh033znv6nNiU=;
+	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Lel+Tj3pbNfKuOTHzhMnBZJNAzTwHpk+EpRAbMRJZhJWVUNvgD28AQICTPfuPfkjoJDAtinszqvOZJePSm2VvfxHOYTXv+XUuq3Nibz2z6j2i7y+Rh9Z6YoPV0mtceRR8iRMpZbKWr/uZKRIRPurgi9jXO8hc/zofe80qq04Zcw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=b+SkvFqH; arc=none smtp.client-ip=192.198.163.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1737735270; x=1769271270;
+  h=date:from:to:subject:message-id:references:mime-version:
+   content-transfer-encoding:in-reply-to;
+  bh=R/dRMuxP5wgdeb43MyrhWkWxBuCDZuLh033znv6nNiU=;
+  b=b+SkvFqHYY+MoEey+7gRYQRSn9IJviWlgSxFyUj3dMmEXOWDhVb9GMOO
+   dH+FFZvBUGWMPc3YsDkdUEiC1h04UprLzGx8WX9Czwa/Snt/6vXj5NLzh
+   eG69VCNfiOROjiztE2OtMv3QbqFnk4CivNTfuYhwCUOMDAV0WPgebSblY
+   GKmUBXE0Dm62PqqagmXR6hv0aH+bnQ6gPzTVmCVhg3IQ5L0memofSPW2X
+   JqS4E+/yZOSK+Zo0BeQH8zqK3kIavVKgK9k1Y+53BJG5nJbWeXly/gRxl
+   G2o5RConQ/j8HbuZJJsDqLzH+7HX6GmEKNb0xtWuZc2kXSWE7EmdZ+pa1
+   Q==;
+X-CSE-ConnectionGUID: lQDrxBb7QHCMtXNfWQw1yA==
+X-CSE-MsgGUID: AzEbVUNNRauPpwi51KaRXw==
+X-IronPort-AV: E=McAfee;i="6700,10204,11325"; a="42198350"
+X-IronPort-AV: E=Sophos;i="6.13,231,1732608000"; 
+   d="scan'208";a="42198350"
+Received: from fmviesa008.fm.intel.com ([10.60.135.148])
+  by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Jan 2025 08:14:30 -0800
+X-CSE-ConnectionGUID: rTpXLy7xRoyhH7S6HkcIbw==
+X-CSE-MsgGUID: 1LbnTiR5SwirLQopPlQmVg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.13,231,1732608000"; 
+   d="scan'208";a="107923480"
+Received: from stinkpipe.fi.intel.com (HELO stinkbox) ([10.237.72.74])
+  by fmviesa008.fm.intel.com with SMTP; 24 Jan 2025 08:14:24 -0800
+Received: by stinkbox (sSMTP sendmail emulation); Fri, 24 Jan 2025 18:14:23 +0200
+Date: Fri, 24 Jan 2025 18:14:23 +0200
+From: Ville =?iso-8859-1?Q?Syrj=E4l=E4?= <ville.syrjala@linux.intel.com>
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+	Dave Airlie <airlied@redhat.com>,
+	Jocelyn Falempe <jfalempe@redhat.com>,
+	Rob Clark <robdclark@gmail.com>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Sean Paul <sean@poorly.run>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	Kalyan Thota <quic_kalyant@quicinc.com>,
+	dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org
+Subject: Re: [PATCH 0/6] drm: introduce atomic_needs_modeset() callbacks
+Message-ID: <Z5O8XwIWnvBObyd6@intel.com>
+References: <20250124-atomic-needs-modeset-v1-0-b0c05c9eda0f@linaro.org>
+ <Z5ODTg9iTjNKggzN@intel.com>
+ <Z5OOo9yR7PVXXIj4@phenom.ffwll.local>
+ <Z5ORyQ_49ZNmAxtq@intel.com>
+ <Z5OzwxBUjEDr00w6@phenom.ffwll.local>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250124105309.295769-1-quic_vdadhani@quicinc.com>
- <20250124105309.295769-7-quic_vdadhani@quicinc.com> <d3tydp3m7pehhiphupwybjlol5v2u3sabqotqximxmnswjlczb@jmdzpbrcrgou>
- <08545d45-bfe6-45e4-b7be-503c318315af@quicinc.com>
-In-Reply-To: <08545d45-bfe6-45e4-b7be-503c318315af@quicinc.com>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Fri, 24 Jan 2025 17:55:20 +0200
-X-Gm-Features: AWEUYZm4pYCNJdHGiPnsyF_MnRCwaJQzJ4L3pN0DCmSTM3Gxdme16eoXtL4QfTk
-Message-ID: <CAA8EJprSZx9Bx7EXA_RpwZdhieOLtrTARqXSuo-gO9sVMdK5Qg@mail.gmail.com>
-Subject: Re: [PATCH v2 6/8] i2c: qcom-geni: Load i2c qup Firmware from linux side
-To: Viken Dadhaniya <quic_vdadhani@quicinc.com>
-Cc: andi.shyti@kernel.org, robh@kernel.org, krzk+dt@kernel.org, 
-	conor+dt@kernel.org, gregkh@linuxfoundation.org, jirislaby@kernel.org, 
-	broonie@kernel.or, andersson@kernel.org, konradybcio@kernel.org, 
-	johan+linaro@kernel.org, dianders@chromium.org, agross@kernel.org, 
-	linux-arm-msm@vger.kernel.org, linux-i2c@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-serial@vger.kernel.org, linux-spi@vger.kernel.org, 
-	quic_msavaliy@quicinc.com, quic_anupkulk@quicinc.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <Z5OzwxBUjEDr00w6@phenom.ffwll.local>
+X-Patchwork-Hint: comment
 
-On Fri, 24 Jan 2025 at 17:24, Viken Dadhaniya <quic_vdadhani@quicinc.com> wrote:
->
->
->
-> On 1/24/2025 8:34 PM, Dmitry Baryshkov wrote:
-> > On Fri, Jan 24, 2025 at 04:23:07PM +0530, Viken Dadhaniya wrote:
-> >> Add provision to load firmware of Serial engine for I2C protocol from
-> >> Linux Execution Environment on running on APPS processor.
-> >>
-> >> Co-developed-by: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
-> >> Signed-off-by: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
-> >> Signed-off-by: Viken Dadhaniya <quic_vdadhani@quicinc.com>
-> >> ---
-> >>   drivers/i2c/busses/i2c-qcom-geni.c | 7 +++++--
-> >>   1 file changed, 5 insertions(+), 2 deletions(-)
-> >>
-> >> diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-qcom-geni.c
-> >> index 7bbd478171e0..9ad3b8c9a224 100644
-> >> --- a/drivers/i2c/busses/i2c-qcom-geni.c
-> >> +++ b/drivers/i2c/busses/i2c-qcom-geni.c
-> >> @@ -872,8 +872,11 @@ static int geni_i2c_probe(struct platform_device *pdev)
-> >>      }
-> >>      proto = geni_se_read_proto(&gi2c->se);
-> >>      if (proto != GENI_SE_I2C) {
-> >> -            ret = dev_err_probe(dev, -ENXIO, "Invalid proto %d\n", proto);
-> >> -            goto err_resources;
-> >> +            ret = geni_load_se_firmware(&gi2c->se, GENI_SE_I2C);
-> >
-> > Hmm, so if the SE has been configured to e.g. SPI by the TZ, can we
-> > switch it to the I2C?
->
-> No, in the current design, TZ will not load the SE firmware.
+On Fri, Jan 24, 2025 at 04:37:39PM +0100, Simona Vetter wrote:
+> On Fri, Jan 24, 2025 at 03:12:41PM +0200, Ville Syrjälä wrote:
+> > On Fri, Jan 24, 2025 at 01:59:15PM +0100, Simona Vetter wrote:
+> > > On Fri, Jan 24, 2025 at 02:10:54PM +0200, Ville Syrjälä wrote:
+> > > > On Fri, Jan 24, 2025 at 01:14:18PM +0200, Dmitry Baryshkov wrote:
+> > > > > There are several drivers which attempt to upgrading the commit to the
+> > > > > full mode set from their per-object atomic_check() callbacks without
+> > > > > calling the drm_atomic_helper_check_modeset() or
+> > > > > drm_atomic_helper_check() again (as requested by those functions).
+> > > > 
+> > > > I don't really understand why any of that is supposedly necessary.
+> > > > drm_atomic_helper_check_modeset() is really all about the
+> > > > connector routing stuff, so if none of that is changing then there
+> > > > is no point in calling it again. Eg. in i915 we call it just at
+> > > > the start, and later on we flag internal modesets all over the
+> > > > place, but none of those need drm_atomic_helper_check_modeset()
+> > > > because nothing routing related will have changed.
+> > > 
+> > > i915 doesn't need this because as you say, it doesn't rely on the atomic
+> > > helper modeset tracking much at all, but it's all internal. This is for
+> > > drivers which rely more or less entirely on
+> > > drm_atomic_crtc_needs_modeset().
+> > > 
+> > > Also note that it's not just about connector routing, but about adding all
+> > > the necessary additional states with
+> > > drm_atomic_add_affected_connectors/planes and re-running all the various
+> > > state computation hooks for those. Again i915 hand-rolls that all.
+> > 
+> > IIRC it only runs the connectors' atomic_check(),
+> > nothing else really. But maybe that's changed since I last
+> > looked at it.
+> 
+> It calls into connector/bridge/crtc callbacks related to modesets and mode
+> validation.
 
-But that's what your patch is doing: if the protocol is not I2C, try
-switching to I2C.
+The pre-atomic mode_fixup stuff? Are people still using that in
+atomic drivers? Hmm, it does look like someone added some real
+atomic_check() calls in there, which is a slightly surprising
+place to find them.
 
-Instead it should be 'if unconfigured, try loading I2C'.
+> 
+> The thing is a few hundred lines in total if you include all the split out
+> subfunctions. Like the kerneldoc pretty clearly spells out that it does a
+> lot more than what you've listed here. Just i915 doesn't used most of
+> that.
 
->
-> >
-> >> +            if (ret) {
-> >> +                    dev_err(gi2c->se.dev, "i2c firmware load failed ret: %d\n", ret);
-> >> +                    goto err_resources;
-> >> +            }
-> >>      }
-> >>
-> >>      if (desc && desc->no_dma_support)
-> >> --
-> >> 2.34.1
-> >>
-> >
+In my book a function should do one thing. And if you do have some
+kind of massive dispatcher function then it should be very abstract
+and just call some smaller functions to do each step.
+tldr; I don't like any function that doesn't fit on my screen.
 
+Anyways, my main worry is that someone adds some new logic/checks
+somewhere that assumes that you can't flag modesets later without
+calling the helper. Which is clearly not correct. Eg. most of the
+modesets we do are just done to get the hardware turned off while
+we reprogram some global resource that doesn't know how to
+synchronize with active pipes, not because anything changed that
+would need further checks/recomputation/etc.
 
+> 
+> > Anyways it feels like we're throwing everything and the
+> > kitchen sink into a single function here. Maybe it should be
+> > split into two or more functions with clear responsibilities?
+> 
+> I'm not sure you can split it up much, because modesetting is complicated.
+> Like even if you'd want to split out just the routing update logic that's
+> a pretty big mess with a bunch of callbacks so that we can pick the right
+> encoders to add the right bridges. And then have a 2nd function that does
+> the actual state computation/validation.
+> 
+> Not sure that's worth it, since only benefit would be for drivers like
+> i915 that almost entirely hand-roll their own atomic check flow and really
+> only need the connector routing bits. I guess if you're bored you could
+> give it a stab.
+
+Yeah, I guess I could try to carve it up a bit when I get bored
+with other stuff.
+
+> -Sima
+> 
+> > 
+> > > 
+> > > So yeah i915 doesn't need this.
+> > > -Sima
+> > > 
+> > > > 
+> > > > > 
+> > > > > As discussed on IRC, add separate atomic_needs_modeset() callbacks,
+> > > > > whose only purpose is to allow the plane, connector, encoder or CRTC to
+> > > > > specify that for whatever reasons corresponding CRTC should undergo a
+> > > > > full modeset. The helpers will call these callbacks in a proper place,
+> > > > > adding affected objects and calling required functions as required.
+> > > > > 
+> > > > > The MSM patches depend on the msm-next tree and the series at [1]. The
+> > > > > plan is to land core changes through drm-misc, then merge drm-misc-next
+> > > > > into msm-next and merge remaining msm-specific patches through the
+> > > > > msm-next tree.
+> > > > > 
+> > > > > [1] https://lore.kernel.org/dri-devel/20250123-drm-dirty-modeset-v2-0-bbfd3a6cd1a4@linaro.org/
+> > > > > 
+> > > > > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > > > > ---
+> > > > > Dmitry Baryshkov (6):
+> > > > >       drm/atomic-helper: add atomic_needs_modeset callbacks
+> > > > >       drm/mgag200: move format check to drm_plane_helper.atomic_needs_modeset
+> > > > >       drm/msm/dpu: stop upgrading commits by enabling allow_modeset
+> > > > >       drm/msm/dpu: move CTM check to drm_crtc_helper.atomic_needs_modeset
+> > > > >       drm/msm/dpu: use atomic_needs_modeset for CDM check
+> > > > >       drm/msm: drop msm_atomic_check wrapper
+> > > > > 
+> > > > >  drivers/gpu/drm/drm_atomic_helper.c         | 59 ++++++++++++++++++
+> > > > >  drivers/gpu/drm/mgag200/mgag200_drv.h       |  2 +
+> > > > >  drivers/gpu/drm/mgag200/mgag200_mode.c      | 27 ++++++---
+> > > > >  drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c    | 15 +++++
+> > > > >  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 44 +++++++++-----
+> > > > >  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h |  4 --
+> > > > >  drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c     | 26 --------
+> > > > >  drivers/gpu/drm/msm/msm_atomic.c            | 29 ---------
+> > > > >  drivers/gpu/drm/msm/msm_drv.h               |  1 -
+> > > > >  drivers/gpu/drm/msm/msm_kms.c               |  2 +-
+> > > > >  drivers/gpu/drm/msm/msm_kms.h               |  7 ---
+> > > > >  include/drm/drm_modeset_helper_vtables.h    | 92 +++++++++++++++++++++++++++++
+> > > > >  12 files changed, 219 insertions(+), 89 deletions(-)
+> > > > > ---
+> > > > > base-commit: 0936f0e54426177b0f0263ddf806ed5e13487db6
+> > > > > change-id: 20250123-atomic-needs-modeset-8f6a8243a3f7
+> > > > > prerequisite-change-id: 20241222-drm-dirty-modeset-88079bd27ae6:v2
+> > > > > prerequisite-patch-id: 0c61aabfcd13651203f476985380cbf4d3c299e6
+> > > > > prerequisite-patch-id: c6026f08011c288fd301676e9fa6f46d0cc1dab7
+> > > > > prerequisite-patch-id: b0cb06d5c88791d6e4755d879ced0d5050aa3cbf
+> > > > > prerequisite-patch-id: fd72ddde9dba0df053113bc505c213961a9760da
+> > > > > 
+> > > > > Best regards,
+> > > > > -- 
+> > > > > Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > > > 
+> > > > -- 
+> > > > Ville Syrjälä
+> > > > Intel
+> > > 
+> > > -- 
+> > > Simona Vetter
+> > > Software Engineer, Intel Corporation
+> > > http://blog.ffwll.ch
+> > 
+> > -- 
+> > Ville Syrjälä
+> > Intel
+> 
+> -- 
+> Simona Vetter
+> Software Engineer, Intel Corporation
+> http://blog.ffwll.ch
 
 -- 
-With best wishes
-Dmitry
+Ville Syrjälä
+Intel
 
