@@ -1,69 +1,55 @@
-Return-Path: <linux-arm-msm+bounces-46045-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46046-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9F82CA1B101
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Jan 2025 08:39:16 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id D736BA1B12A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Jan 2025 08:57:05 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 92DFA188998E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Jan 2025 07:39:20 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 89C527A52AB
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Jan 2025 07:56:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8E3791D8E1D;
-	Fri, 24 Jan 2025 07:39:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0EEB11DB136;
+	Fri, 24 Jan 2025 07:56:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="m299zHQB"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EQcHf4oQ"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5668B13AC1;
-	Fri, 24 Jan 2025 07:39:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9A0F156991;
+	Fri, 24 Jan 2025 07:56:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737704352; cv=none; b=XHjHxtimQdfwq/PANglQTdKlCT33/Qh+2uf6NcQiXIV/tG7ZykZYSuqTAlcDl1z3MuHhbrODGAMm/vkZbGXjECDKFt2GvZlT5iZLPBfaBssCH+WdzTpVMYEMjyTlCf8F4OMMb/I1mXI/cEB4aKCGP3RXrws1c50rZvQwoLXNyRg=
+	t=1737705418; cv=none; b=VqwNDrCZySzTTxJD+OxamOWKGukGa5bI4XX43MiPCTgFcq/CK8R+edCD5OCER+eQztvzBw92YVjQI4JCtBGle8GsY6NwqLRZBgXYSBfAe0VoOd1h1REyeNhS74qaV6vHYMtodnF+nV8/84fCKe/GpQmhymOm3oi02fSU0YFeg30=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737704352; c=relaxed/simple;
-	bh=G8q15h6IsDOD4LQJQB5VGPoicFwDLIJTNfZolKmAslI=;
+	s=arc-20240116; t=1737705418; c=relaxed/simple;
+	bh=vbeiH3HbXIS31pOEKzNCYB77KdhQTfpTyuE8IUc2HEA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=RGdFoH82ODgp25RIspgnvtMucGs8rYHhjcA4T+alKBmwdJelBW19BqqBZxZZLlBGPUBDo2VuWFvVwKIZ6mtSzaRXW4xC5zGVJk9ary27gDAwFoeAgHuG5cIlufnhHx/+vzjeoBj+nCYT2QeklTwYhMjd4Eb/3JX4XuYCCHMfWY8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=m299zHQB; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17CF9C4CEE1;
-	Fri, 24 Jan 2025 07:39:04 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=Zyc2zYklnzr8pxjnTDIokEVFdXyPu+rXbpwFP3368EVPeGOrFxkuec5oMlfcn/0zZ2ye/bTQO7iQKGs3yqrBEuTxTqJyA4Kh7/71CgGyePB1UlVufdPau6rQmTxPSXP/pNLBXzsQqOQhT2AivwMYTvzx2pXaxpJrDGsMTThiy4Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EQcHf4oQ; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98F05C4CED2;
+	Fri, 24 Jan 2025 07:56:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1737704352;
-	bh=G8q15h6IsDOD4LQJQB5VGPoicFwDLIJTNfZolKmAslI=;
+	s=k20201202; t=1737705418;
+	bh=vbeiH3HbXIS31pOEKzNCYB77KdhQTfpTyuE8IUc2HEA=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=m299zHQBNHTeNuZe7VNB+LF7p7kkvbO6hOTPO+lJEXxWflhGCP7PfjAyksjh7ZFtr
-	 zVBMQXpSfdAMGULjTa/TeiskIvyYNus3JaqXfvj6BAlFIeOOaUlqSKcfinh1Q3mDt4
-	 dF91iFkYoDk3UiGmYMoZW2WH7XSR2z1TXf5BWpvQp0rxP10d4rgLv2OcLGSZRIYYa/
-	 ZTC1k2SfY02I6sZBiyahZj2BrJbiWUSekzEjdGQGBqwui2VARkTZoC+5s9aqfHxW85
-	 oN/E8967beb12RZ2B2HCLNAdqiX7wQxjl4h1K9s4/HSPnv9IuJEWVlxOX/927ZYb5E
-	 yLtNJHthUOciQ==
-Date: Fri, 24 Jan 2025 13:08:57 +0530
+	b=EQcHf4oQ7NHRPG4QeHwMYKqkGtMvFKiq4gApAg6ZPzmhaMeFbNXCD8VWiTKrlLYtQ
+	 hCYo1mVCPMAOPVOlRxz2swo47saEvRX1Zqt+UzdiAfzIxpgXo4H7qdgzDuitnmlpxB
+	 0YVmkS+9Ko1INJbf79lV2Yr1eOYPTRBAYQrbF3H4iq9CY5xQIKII+r3LWMvdjHcHYP
+	 y9qKhYKDkHyTKiSt1oDz06ZfhCAuwXNTfMWpUDSnEOFtQyEV3SgIhXAKhLYRtk24Zk
+	 NvvBryntAb72VPDXJdB3D+EHS8IBQ7KVzricch7h16AGVC5dRHMh1S0vXg1Zcct4PU
+	 dhjxwkf6CdL3A==
+Date: Fri, 24 Jan 2025 13:26:46 +0530
 From: Manivannan Sadhasivam <mani@kernel.org>
-To: Tudor Ambarus <tudor.ambarus@linaro.org>,
-	"@thinkpad"@web.codeaurora.org
-Cc: Krzysztof Kozlowski <krzk@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
-	Abel Vesa <abel.vesa@linaro.org>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	"James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	Eric Biggers <ebiggers@google.com>, linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-mmc@vger.kernel.org,
-	linux-scsi@vger.kernel.org, andre.draszik@linaro.org,
-	peter.griffin@linaro.org, willmcvicker@google.com,
-	kernel-team@android.com, stable@vger.kernel.org,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: Re: [PATCH v2 0/4] soc: qcom: ice: fix dev reference leaked through
- of_qcom_ice_get
-Message-ID: <20250124073857.qwnl4ozccsictom5@thinkpad>
-References: <20250117-qcom-ice-fix-dev-leak-v2-0-1ffa5b6884cb@linaro.org>
+To: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+Cc: manivannan.sadhasivam@linaro.org, jassisinghbrar@gmail.com,
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2] mailbox: qcom-ipcc: Reset CLEAR_ON_RECV_RD if set
+ from boot firmware
+Message-ID: <20250124075646.oc6ni5gp6c23ozp7@thinkpad>
+References: <20241230075425.2534765-1-mukesh.ojha@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -73,60 +59,73 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250117-qcom-ice-fix-dev-leak-v2-0-1ffa5b6884cb@linaro.org>
+In-Reply-To: <20241230075425.2534765-1-mukesh.ojha@oss.qualcomm.com>
 
-On Fri, Jan 17, 2025 at 02:18:49PM +0000, Tudor Ambarus wrote:
-> Hi!
+On Mon, Dec 30, 2024 at 01:24:25PM +0530, Mukesh Ojha wrote:
+> For some SoCs, boot firmware is using the same IPCC instance used
+> by Linux and it has kept CLEAR_ON_RECV_RD set which basically means
+> interrupt pending registers are cleared when RECV_ID is read and the
+> register automatically updates to the next pending interrupt/client
+> status based on priority.
 > 
-> Recently I've been pointed to this driver for an example on how consumers
-> can get a pointer to the supplier's driver data and I noticed a leak.
+> Clear the CLEAR_ON_RECV_RD if it is set from the boot firmware.
 > 
-> Callers of of_qcom_ice_get() leak the device reference taken by
-> of_find_device_by_node(). Introduce devm_of_qcom_ice_get().
-> Exporting qcom_ice_put() is not done intentionally as the consumers need
-> the ICE intance for the entire life of their device. Update the consumers
-> to use the devm variant and make of_qcom_ice_get() static afterwards.
-> 
-> This set touches mmc and scsi subsystems. Since the fix is trivial for
-> them, I'd suggest taking everything through the SoC tree with Acked-by
-> tags if people consider this fine. Note that the mmc and scsi patches
-> depend on the first patch that introduces devm_of_qcom_ice_get().
-> 
-> Thanks!
-> 
-> Signed-off-by: Tudor Ambarus <tudor.ambarus@linaro.org>
 
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Any user visible implications due to this?
+
+> Signed-off-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+> ---
+> Change in v2:
+>  - Corrected email id in the Sob.
+> 
+>  drivers/mailbox/qcom-ipcc.c | 16 ++++++++++++++++
+>  1 file changed, 16 insertions(+)
+> 
+> diff --git a/drivers/mailbox/qcom-ipcc.c b/drivers/mailbox/qcom-ipcc.c
+> index 14c7907c6632..0b17a38ea6bf 100644
+> --- a/drivers/mailbox/qcom-ipcc.c
+> +++ b/drivers/mailbox/qcom-ipcc.c
+> @@ -14,6 +14,7 @@
+>  #include <dt-bindings/mailbox/qcom-ipcc.h>
+>  
+>  /* IPCC Register offsets */
+> +#define IPCC_REG_CONFIG			0x08
+>  #define IPCC_REG_SEND_ID		0x0c
+>  #define IPCC_REG_RECV_ID		0x10
+>  #define IPCC_REG_RECV_SIGNAL_ENABLE	0x14
+> @@ -21,6 +22,7 @@
+>  #define IPCC_REG_RECV_SIGNAL_CLEAR	0x1c
+>  #define IPCC_REG_CLIENT_CLEAR		0x38
+>  
+> +#define IPCC_CLEAR_ON_RECV_RD		BIT(0)
+>  #define IPCC_SIGNAL_ID_MASK		GENMASK(15, 0)
+>  #define IPCC_CLIENT_ID_MASK		GENMASK(31, 16)
+>  
+> @@ -274,6 +276,7 @@ static int qcom_ipcc_pm_resume(struct device *dev)
+>  static int qcom_ipcc_probe(struct platform_device *pdev)
+>  {
+>  	struct qcom_ipcc *ipcc;
+> +	u32 config_value;
+>  	static int id;
+>  	char *name;
+>  	int ret;
+> @@ -288,6 +291,19 @@ static int qcom_ipcc_probe(struct platform_device *pdev)
+>  	if (IS_ERR(ipcc->base))
+>  		return PTR_ERR(ipcc->base);
+>  
+> +	/*
+> +	 * It is possible that boot firmware is using the same IPCC instance
+> +	 * as of the HLOS and it has kept CLEAR_ON_RECV_RD set which basically
+> +	 * means Interrupt pending registers are cleared when RECV_ID is read.
+> +	 * The register automatically updates to the next pending interrupt/client
+> +	 * status based on priority.
+> +	 */
+> +	config_value = readl(ipcc->base + IPCC_REG_CONFIG);
+> +	if (config_value & IPCC_CLEAR_ON_RECV_RD) {
+
+Can't you just clear this bit always?
 
 - Mani
-
-> ---
-> Changes in v2:
-> - add kernel doc for newly introduced devm_of_qcom_ice_get().
-> - update cover letter and commit message of first patch.
-> - collect R-b and A-b tags.
-> - Link to v1: https://lore.kernel.org/r/20250116-qcom-ice-fix-dev-leak-v1-0-84d937683790@linaro.org
-> 
-> ---
-> Tudor Ambarus (4):
->       soc: qcom: ice: introduce devm_of_qcom_ice_get
->       mmc: sdhci-msm: fix dev reference leaked through of_qcom_ice_get
->       scsi: ufs: qcom: fix dev reference leaked through of_qcom_ice_get
->       soc: qcom: ice: make of_qcom_ice_get() static
-> 
->  drivers/mmc/host/sdhci-msm.c |  2 +-
->  drivers/soc/qcom/ice.c       | 51 ++++++++++++++++++++++++++++++++++++++++++--
->  drivers/ufs/host/ufs-qcom.c  |  2 +-
->  include/soc/qcom/ice.h       |  3 ++-
->  4 files changed, 53 insertions(+), 5 deletions(-)
-> ---
-> base-commit: b323d8e7bc03d27dec646bfdccb7d1a92411f189
-> change-id: 20250110-qcom-ice-fix-dev-leak-bbff59a964fb
-> 
-> Best regards,
-> -- 
-> Tudor Ambarus <tudor.ambarus@linaro.org>
-> 
 
 -- 
 மணிவண்ணன் சதாசிவம்
