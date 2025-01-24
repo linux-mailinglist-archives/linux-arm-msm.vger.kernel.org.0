@@ -1,174 +1,262 @@
-Return-Path: <linux-arm-msm+bounces-46024-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46025-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A25EEA1AFD0
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Jan 2025 06:19:58 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id D41A2A1AFE0
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Jan 2025 06:32:35 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 55D743AE66D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Jan 2025 05:19:51 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 1B47E16D769
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Jan 2025 05:32:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 663501D63C5;
-	Fri, 24 Jan 2025 05:19:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7B4FB1D79A3;
+	Fri, 24 Jan 2025 05:32:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="z0GxDbnW"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="PAsNv9K1"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f46.google.com (mail-lf1-f46.google.com [209.85.167.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 634711D5CF2
-	for <linux-arm-msm@vger.kernel.org>; Fri, 24 Jan 2025 05:19:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0CCAE573
+	for <linux-arm-msm@vger.kernel.org>; Fri, 24 Jan 2025 05:32:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737695995; cv=none; b=tzfKsNHD3ORCZ0Wz3oVlRS1rTGDmomiXUcwsOGjTq8LUVplF6Xti/8pz5DGwwz+9Yk4D8+hIIakMp2z/JQirgp6IjEDfjU2L74nCsZMtmfiF93ZmJJ6HqieTBzS3sK4H9raV+w02tvrUxXAEB9Oxw7g05jwKPZxwKRoBCPEOQxY=
+	t=1737696747; cv=none; b=Hdn9ECgqsQvtDeNnxAMwGNllFeFN+8fh1k0dFGfRaMyI98rSna9Sr56ABUEoEeqZYp7PFBK57HUAGymLF/piOoFqdYQSP3IeW0AEf76JSkalJz3jOXUwfpbuj2GxPpllm5dEAp1dFSXK2O/mYEvdYu7j4WiGmJqzcYsaWzJjucM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737695995; c=relaxed/simple;
-	bh=DJW/yYlznm4mkiuFT2VmQaKq7Zj3CaWKyRoc3MPk/kw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=rZ0EyMyQMkIL2f0nrALBQDdxOCsWDbIa5irmZdv7aYSdaw7VcyIv+VonmX4OgBVG7oXe62RkbqTuydlB2L45RaO0R/ODIaXbMIwOdfJLPXBXQmwUE+QWGjk72rNMlA5Ar5MuhqrFdMthb3iIboprQz+xpgotdYcNLIRvpNpTda0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=z0GxDbnW; arc=none smtp.client-ip=209.85.167.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f46.google.com with SMTP id 2adb3069b0e04-5401c52000fso1408037e87.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Jan 2025 21:19:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1737695991; x=1738300791; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=3o8gTZu6BR29eomWLMiFERLH4W2XG5CknLwAkj4XFWs=;
-        b=z0GxDbnWfy1UKvOkFA8uUYaccT52i0PPbSvhitg0qVRF6V1K4Ady9RoVjehKuj4C5E
-         dsskYctvqcuSnxzXA2fTDj9XPTFWEMo47TLDEMvA58/P78V/0DtfSempbu8e6ZHjeCIH
-         NnkdmiZ9fPpYrG65wDYefeSwXev6E7vLf++thCiAN9iVU5PIH1l/YlNL2f1b1Wcy93bq
-         TOTm5CuDieuTWmmf3YcmJf0OKEWR1Vd/bjGeFKIFY/u+MUjxcGoTiFhE0WDMDSewKWWM
-         gNlVi91pwjDigh88mTAsMfzDWVycLqmlPWtfWCjgvwH8EQTtrlswyZlbsSf2KmNbblUc
-         XyLA==
+	s=arc-20240116; t=1737696747; c=relaxed/simple;
+	bh=/nAMaLIJE3OA+tTLrtrMtWBBmmKw6odEO1dmDd9Kt1Q=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=C+kqOSMMWUfmnSQddznobB3yE84uVbKSN1Gh6Qyo+K1lMIP8pTNE8BVI4x8xrbG1aG6A70061opGx4rVC3DAP1QPC/9pFqOEWfKNTb/VZIVwoRnKkM21idMNVt86VO8eJlwwe960LRn1XOP67GaXgoh0jp9sK5kzrhOvd1/r2Po=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=PAsNv9K1; arc=none smtp.client-ip=170.10.129.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1737696743;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=V43monYRek4i4a9qcZNzucxU9HOMr2YAU2s1SvTctS4=;
+	b=PAsNv9K1uBjWJ7NnHYcCBNd75JS0zmtFhPjrDbLn59Djp8x3KailazMkNW+LLCbjDFj8kC
+	nSxWcKDrxJ7WaCE4mSNITxElzO4T+Nb+H8m6ST5ulsKMiFNbLCuafAXH53s6kjuGbNdXJM
+	k8XbKcT65squvhu7U3f3QNGUKgIjMmU=
+Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com
+ [209.85.214.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-59-f9PRnbieOwymURDeO3FVew-1; Fri, 24 Jan 2025 00:32:19 -0500
+X-MC-Unique: f9PRnbieOwymURDeO3FVew-1
+X-Mimecast-MFC-AGG-ID: f9PRnbieOwymURDeO3FVew
+Received: by mail-pl1-f197.google.com with SMTP id d9443c01a7336-2165433e229so34543765ad.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Jan 2025 21:32:19 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1737695991; x=1738300791;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
+        d=1e100.net; s=20230601; t=1737696738; x=1738301538;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=3o8gTZu6BR29eomWLMiFERLH4W2XG5CknLwAkj4XFWs=;
-        b=muMKgBrRq+uyhIDTPkW/hslgLDUUaRGxtXKqAcUKYBkvI4gFUVTbH04BSGALKhxdeS
-         Uq0VZ+HC9RtZy3eUkR+igpAAHD/4+aAbJZIqOwSmDD6S0c+DuqdYrgBIbHlPY1sYmJVN
-         kWv1DoIxud8JBFascnvvAaYEnEb02rMIDWC5rpR9p3npw5IJ2C3JYrMTVqG/NxmwHvLj
-         RfOhaLeBMrgiZ/4FJReqHiZ+XSSw3dWnaPtU0ADzxZTf65yUzgcBXffMUn1U02u4M4gQ
-         ATOiyvVRnz0ipPzeqZQ2K4O4cB6kE6bdHX7Qqd4pmwCzfrOKznOj7gZTJ6qKQcT6IWgj
-         XzeQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUjDWbdBk9BS1YyxqjRzlMJWpf1Hi5aK0Wme6mePTmfTJpEYn6FyPS6GEDYH207o10ncBaB3Ec4cW5tZE0O@vger.kernel.org
-X-Gm-Message-State: AOJu0YweB3lU/R+Gaar+mld7J2NpRp79LrKewwn8nF847mugGZM6wQpC
-	LVyDalmqYMMZPBRh+NEkpmNMuYDTAWdIjx4uWaYKRl1HBm5RZjGMWrwdhe5Z+yU=
-X-Gm-Gg: ASbGnct6G81374JOxRmXUdsvT9vh1d82coPBPhY7LqXw1h2RMTQ/lHqEnzx8BD5PaNr
-	5Tv+89/oHdC4Ou7N2luphUs0EJluS/VStkTN/JcIbGh0DhjtM8NwglioVBGiF1Sfp/kHQX7BGTz
-	hP+0lvCoE6TI3S8SZR4/dHE2Q5RSGP5yc8KwYQ+RHXWseFCMy4kepIQE17GWZO/DSGqzAaK8cuw
-	JKpqOIWdRnCfi8l2NbuepOA8RiEYRjGsd1wmnZlCGvcAApYZWVNvMtySX7o+t3ZMCxqUfutGb0k
-	O5Ax1/uOHED03PrBd1qo4Blf3UwEJxdNNo4S0LWcS40MN+FTFT1TUxNY2HZs
-X-Google-Smtp-Source: AGHT+IEwnJ9j1k553+NJYN6NU1urekTvAiaOkFEFC2RQFT0hhnn33FzgCNI1K9Ys6RSk3s/xp4ZF6A==
-X-Received: by 2002:ac2:550a:0:b0:53e:38fd:7518 with SMTP id 2adb3069b0e04-5439c22d6e5mr9306949e87.3.1737695991441;
-        Thu, 23 Jan 2025 21:19:51 -0800 (PST)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-543c8379953sm166799e87.187.2025.01.23.21.19.48
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 23 Jan 2025 21:19:50 -0800 (PST)
-Date: Fri, 24 Jan 2025 07:19:47 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
-	Simona Vetter <simona@ffwll.ch>, Vinod Koul <vkoul@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
-	freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 18/35] drm/msm/dpu: get rid of DPU_PINGPONG_DSC
-Message-ID: <esyb2hdp3rutcoiblqnxshta3x47ymdyotphasliprmkp643ic@eyopzwlihcpk>
-References: <20241214-dpu-drop-features-v1-0-988f0662cb7e@linaro.org>
- <20241214-dpu-drop-features-v1-18-988f0662cb7e@linaro.org>
- <1b429f3f-2fff-45bb-86dd-48b1d164ccc8@quicinc.com>
- <c3c70f9a-7a1c-4575-af93-b519117d0084@quicinc.com>
+        bh=V43monYRek4i4a9qcZNzucxU9HOMr2YAU2s1SvTctS4=;
+        b=iMLUeD0fbOVaCGWrPlcMulMVGgV+ktA4IkoEMfCwXrezx7Q6K9JIhdPJ+vsX8Eyxpw
+         4B59OaR9Id52AJ+htBVj999hQvcLChfUwSkTeaCM4PICbzhmjx8qiUIJK9azP4KGqiHh
+         fnwxJcilFDJjSojlPsGQV8H5753xNwGihdOHP0isFSz4Hgulp/7AwyyO9WN8FMDNkrYC
+         dQqAraZAlvcKsM/5UnigWFU3wUpE+YeqnS52KM7RLK8DygFc6XinrvxSy52G3kVeYe5m
+         3Lz9wgQaLRYQJERtbjqx/FxzHVBpC1cHCJ1Klj1GxnFzN+DkC5zM8646Ajamu/cQE99k
+         Sa/g==
+X-Forwarded-Encrypted: i=1; AJvYcCWgEcBxdg9WwwBYVZpEkKbeHdPl8I+GLmQRatQ1Js21B/UN80iRorZTZih3nWs5/15HCyRo404JLQm0+im1@vger.kernel.org
+X-Gm-Message-State: AOJu0Yxr/DjRdoH1ICt5ts3QgVVwP+e0g5V1oNtDYTun+Ucdroj/bcA8
+	f+B6uSPvRt/t8Lf7DkjbNO8R4b5jpy61m8qjrK9pQorRGyMeocwI+bxEkFv1cotrDYvoyBZJW34
+	iraHV60CfMTSXuoOY8ooWkufoReeVtYSZ+Nafamml68GwsQy3oc2AFOOLbI0f2SU=
+X-Gm-Gg: ASbGncuGjdYlVBo6cmo0TLQJh7zmW0HTl0Kp9GdH7wDo+dQYCD6otr+JzMfO585OWRg
+	KL9TILCqptYUs2ipM9crL2FFkWhC2ROd3MDrjyfpGsCyLkU04JNS8e6tehj0iA9tx+sDin9Aceq
+	EUbEZKw0iEjbXOxyuySKncDEBrDC8qFh0Lq6tOnBzYr/O34BnTNHXcpxVg/lV47m9vEFX8FC9kx
+	s9VlYeTCnY0DT6ncKcSeWlwz9rznro2b3GvkTqCUbZfX3srIcoiG80FiWD2RZHq/CPpX/o=
+X-Received: by 2002:a05:6a20:244d:b0:1db:e464:7b69 with SMTP id adf61e73a8af0-1eb214e82damr43379272637.20.1737696738399;
+        Thu, 23 Jan 2025 21:32:18 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHqtpZFSrhtF7huOze/hKmkOEqq4y/TfOMaysezICpsnQmSYkT3LOCtGnO0n3WPfw/BdJZyHQ==
+X-Received: by 2002:a05:6a20:244d:b0:1db:e464:7b69 with SMTP id adf61e73a8af0-1eb214e82damr43379243637.20.1737696737997;
+        Thu, 23 Jan 2025 21:32:17 -0800 (PST)
+Received: from [192.168.68.55] ([180.233.125.64])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-72f8a77c4ecsm909347b3a.121.2025.01.23.21.31.59
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 23 Jan 2025 21:32:17 -0800 (PST)
+Message-ID: <3e1780db-6e39-4508-8ce5-4d28771400e8@redhat.com>
+Date: Fri, 24 Jan 2025 15:31:56 +1000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <c3c70f9a-7a1c-4575-af93-b519117d0084@quicinc.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH v5 04/15] KVM: guest_memfd: Track mappability within a
+ struct kvm_gmem_private
+To: Fuad Tabba <tabba@google.com>, kvm@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, linux-mm@kvack.org
+Cc: pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au,
+ anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com,
+ aou@eecs.berkeley.edu, seanjc@google.com, viro@zeniv.linux.org.uk,
+ brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org,
+ xiaoyao.li@intel.com, yilun.xu@intel.com, chao.p.peng@linux.intel.com,
+ jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com,
+ yu.c.zhang@linux.intel.com, isaku.yamahata@intel.com, mic@digikod.net,
+ vbabka@suse.cz, vannapurve@google.com, ackerleytng@google.com,
+ mail@maciej.szmigiero.name, david@redhat.com, michael.roth@amd.com,
+ wei.w.wang@intel.com, liam.merwick@oracle.com, isaku.yamahata@gmail.com,
+ kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com,
+ steven.price@arm.com, quic_eberman@quicinc.com, quic_mnalajal@quicinc.com,
+ quic_tsoni@quicinc.com, quic_svaddagi@quicinc.com,
+ quic_cvanscha@quicinc.com, quic_pderrin@quicinc.com,
+ quic_pheragu@quicinc.com, catalin.marinas@arm.com, james.morse@arm.com,
+ yuzenghui@huawei.com, oliver.upton@linux.dev, maz@kernel.org,
+ will@kernel.org, qperret@google.com, keirf@google.com, roypat@amazon.co.uk,
+ shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, rientjes@google.com,
+ jhubbard@nvidia.com, fvdl@google.com, hughd@google.com, jthoughton@google.com
+References: <20250117163001.2326672-1-tabba@google.com>
+ <20250117163001.2326672-5-tabba@google.com>
+Content-Language: en-US
+From: Gavin Shan <gshan@redhat.com>
+In-Reply-To: <20250117163001.2326672-5-tabba@google.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Thu, Jan 23, 2025 at 01:41:14PM -0800, Abhinav Kumar wrote:
-> 
-> 
-> On 1/23/2025 1:32 PM, Abhinav Kumar wrote:
-> > 
-> > 
-> > On 12/13/2024 2:14 PM, Dmitry Baryshkov wrote:
-> > > Continue migration to the MDSS-revision based checks and replace
-> > > DPU_PINGPONG_DSC feature bit with the core_major_ver < 7 check.
-> > > 
-> > > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > > ---
-> > >   drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_1_14_msm8937.h |  2 --
-> > >   drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_1_15_msm8917.h |  1 -
-> > >   drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_1_16_msm8953.h |  2 --
-> > >   drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_1_7_msm8996.h  |  6 ++----
-> > >   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c           | 10
-> > > ++--------
-> > >   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h           |  2 --
-> > >   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c          |  2 +-
-> > >   7 files changed, 5 insertions(+), 20 deletions(-)
-> > > 
-> > 
-> > <snip>
-> > 
-> > > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c
-> > > b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c
-> > > index 36c0ec775b92036eaab26e1fa5331579651ac27c..49e03ecee9e8b567a3f809b977deb83731006ac0
-> > > 100644
-> > > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c
-> > > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c
-> > > @@ -319,7 +319,7 @@ struct dpu_hw_pingpong
-> > > *dpu_hw_pingpong_init(struct drm_device *dev,
-> > >           c->ops.disable_autorefresh = dpu_hw_pp_disable_autorefresh;
-> > >       }
-> > > -    if (test_bit(DPU_PINGPONG_DSC, &cfg->features)) {
-> > > +    if (mdss_rev->core_major_ver < 7) {
-> > >           c->ops.setup_dsc = dpu_hw_pp_setup_dsc;
-> > >           c->ops.enable_dsc = dpu_hw_pp_dsc_enable;
-> > >           c->ops.disable_dsc = dpu_hw_pp_dsc_disable;
-> > > 
-> > 
-> > So far in this series, we replaced the feature bits with >= checks of
-> > core_revisions. That kind of works as usually feature bits get added
-> > after a specific version.
-> > 
-> > With this patch and later, whenever we use < checks it gets a bit tricky
-> > as we might also need an upper bound. Feature bits gave individual
-> > control of chipsets but generalizing that all chipsets < 7 have PP DSC
-> > is also not correct. I have to really cross-check but there could be
-> > some old chipsets which do not have DSC at all.
-> 
-> This raises another question as well.
-> 
-> what if some register was introduced >= X version but was then dropped in a
-> newer chipset.
-> 
-> Is it not difficult for the user to go back to the files of each of the
-> sub-blocks and alter these checks rather than just fixing up the catalog.
+Hi Fuad,
 
-Well, the obvious example we are going to have is the CTL_LAYER_EXT4,
-but if I understand correctly the whole block is going to be dropped, so
-maybe it's not that relevant.
+On 1/18/25 2:29 AM, Fuad Tabba wrote:
+> From: Ackerley Tng <ackerleytng@google.com>
+> 
+> Track whether guest_memfd memory can be mapped within the inode,
+> since it is property of the guest_memfd's memory contents.
+> 
+> The guest_memfd PRIVATE memory attribute is not used for two
+> reasons. First because it reflects the userspace expectation for
+> that memory location, and therefore can be toggled by userspace.
+> The second is, although each guest_memfd file has a 1:1 binding
+> with a KVM instance, the plan is to allow multiple files per
+> inode, e.g. to allow intra-host migration to a new KVM instance,
+> without destroying guest_memfd.
+> 
+> Signed-off-by: Ackerley Tng <ackerleytng@google.com>
+> Co-developed-by: Vishal Annapurve <vannapurve@google.com>
+> Signed-off-by: Vishal Annapurve <vannapurve@google.com>
+> Co-developed-by: Fuad Tabba <tabba@google.com>
+> Signed-off-by: Fuad Tabba <tabba@google.com>
+> ---
+>   virt/kvm/guest_memfd.c | 56 ++++++++++++++++++++++++++++++++++++++----
+>   1 file changed, 51 insertions(+), 5 deletions(-)
+> 
+> diff --git a/virt/kvm/guest_memfd.c b/virt/kvm/guest_memfd.c
+> index 6453658d2650..0a7b6cf8bd8f 100644
+> --- a/virt/kvm/guest_memfd.c
+> +++ b/virt/kvm/guest_memfd.c
+> @@ -18,6 +18,17 @@ struct kvm_gmem {
+>   	struct list_head entry;
+>   };
+>   
+> +struct kvm_gmem_inode_private {
+> +#ifdef CONFIG_KVM_GMEM_MAPPABLE
+> +	struct xarray mappable_offsets;
+> +#endif
+> +};
+> +
+> +static struct kvm_gmem_inode_private *kvm_gmem_private(struct inode *inode)
+> +{
+> +	return inode->i_mapping->i_private_data;
+> +}
+> +
+>   /**
+>    * folio_file_pfn - like folio_file_page, but return a pfn.
+>    * @folio: The folio which contains this index.
+> @@ -312,8 +323,28 @@ static pgoff_t kvm_gmem_get_index(struct kvm_memory_slot *slot, gfn_t gfn)
+>   	return gfn - slot->base_gfn + slot->gmem.pgoff;
+>   }
+>   
+> +static void kvm_gmem_evict_inode(struct inode *inode)
+> +{
+> +	struct kvm_gmem_inode_private *private = kvm_gmem_private(inode);
+> +
+> +#ifdef CONFIG_KVM_GMEM_MAPPABLE
+> +	/*
+> +	 * .evict_inode can be called before private data is set up if there are
+> +	 * issues during inode creation.
+> +	 */
+> +	if (private)
+> +		xa_destroy(&private->mappable_offsets);
+> +#endif
+> +
+> +	truncate_inode_pages_final(inode->i_mapping);
+> +
+> +	kfree(private);
+> +	clear_inode(inode);
+> +}
+> +
+>   static const struct super_operations kvm_gmem_super_operations = {
+> -	.statfs		= simple_statfs,
+> +	.statfs         = simple_statfs,
+> +	.evict_inode	= kvm_gmem_evict_inode,
+>   };
+>   
 
-Another example might be CWB, where we are going to have 5.x-7.x and
-8.x+ DPU ranges.
+As I understood, ->destroy_inode() may be more suitable place where the xarray is
+released. ->evict_inode() usually detach the inode from the existing struct, to make
+it offline. ->destroy_inode() is actually the place where the associated resource
+(memory) is relased.
 
-Basically, yes, when adding support for a new platform we have to audit
-HW blocks. But this applied even beforehand, where new platforms could
-be drooping existing regs (8.x+ dropping a part of the TOP region).
+Another benefit with ->destroy_inode() is we're not concerned to truncate_inode_pages_final()
+and clear_inode().
 
--- 
-With best wishes
-Dmitry
+
+>   static int kvm_gmem_init_fs_context(struct fs_context *fc)
+> @@ -440,6 +471,7 @@ static struct inode *kvm_gmem_inode_make_secure_inode(const char *name,
+>   						      loff_t size, u64 flags)
+>   {
+>   	const struct qstr qname = QSTR_INIT(name, strlen(name));
+> +	struct kvm_gmem_inode_private *private;
+>   	struct inode *inode;
+>   	int err;
+>   
+> @@ -448,10 +480,19 @@ static struct inode *kvm_gmem_inode_make_secure_inode(const char *name,
+>   		return inode;
+>   
+>   	err = security_inode_init_security_anon(inode, &qname, NULL);
+> -	if (err) {
+> -		iput(inode);
+> -		return ERR_PTR(err);
+> -	}
+> +	if (err)
+> +		goto out;
+> +
+> +	err = -ENOMEM;
+> +	private = kzalloc(sizeof(*private), GFP_KERNEL);
+> +	if (!private)
+> +		goto out;
+> +
+> +#ifdef CONFIG_KVM_GMEM_MAPPABLE
+> +	xa_init(&private->mappable_offsets);
+> +#endif
+> +
+> +	inode->i_mapping->i_private_data = private;
+>   
+
+The whole block of code needs to be guarded by CONFIG_KVM_GMEM_MAPPABLE because
+kzalloc(sizeof(...)) is translated to kzalloc(0) when CONFIG_KVM_GMEM_MAPPABLE
+is disabled, and kzalloc() will always fail. It will lead to unusable guest-memfd
+if CONFIG_KVM_GMEM_MAPPABLE is disabled.
+
+>   	inode->i_private = (void *)(unsigned long)flags;
+>   	inode->i_op = &kvm_gmem_iops;
+> @@ -464,6 +505,11 @@ static struct inode *kvm_gmem_inode_make_secure_inode(const char *name,
+>   	WARN_ON_ONCE(!mapping_unevictable(inode->i_mapping));
+>   
+>   	return inode;
+> +
+> +out:
+> +	iput(inode);
+> +
+> +	return ERR_PTR(err);
+>   }
+>   
+>   static struct file *kvm_gmem_inode_create_getfile(void *priv, loff_t size,
+
+Thanks,
+Gavin
+
 
