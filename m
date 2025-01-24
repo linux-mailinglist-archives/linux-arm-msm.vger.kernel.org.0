@@ -1,262 +1,193 @@
-Return-Path: <linux-arm-msm+bounces-46025-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46026-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id D41A2A1AFE0
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Jan 2025 06:32:35 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 43360A1AFEF
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Jan 2025 06:35:42 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 1B47E16D769
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Jan 2025 05:32:34 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id F28E73AEB6F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Jan 2025 05:35:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7B4FB1D79A3;
-	Fri, 24 Jan 2025 05:32:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="PAsNv9K1"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 470A813A879;
+	Fri, 24 Jan 2025 05:35:38 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0CCAE573
-	for <linux-arm-msm@vger.kernel.org>; Fri, 24 Jan 2025 05:32:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2504B17FE;
+	Fri, 24 Jan 2025 05:35:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737696747; cv=none; b=Hdn9ECgqsQvtDeNnxAMwGNllFeFN+8fh1k0dFGfRaMyI98rSna9Sr56ABUEoEeqZYp7PFBK57HUAGymLF/piOoFqdYQSP3IeW0AEf76JSkalJz3jOXUwfpbuj2GxPpllm5dEAp1dFSXK2O/mYEvdYu7j4WiGmJqzcYsaWzJjucM=
+	t=1737696938; cv=none; b=Gs9rDiPEwzvSvyXu3NLkzfGxg1nq9RqKLgt8YExi19QZJcATmTL6GulgRJ0XZ4mlr5QFkqiAujv/TGsWHqX+shbLlD3VSlxiNboqO3O8crTd1tWpOHO0eVZ2OtmrKIdO+U9zW8RITA+YKDFe9EvT6qSVMbdPMOCOUEuzCtM73iI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737696747; c=relaxed/simple;
-	bh=/nAMaLIJE3OA+tTLrtrMtWBBmmKw6odEO1dmDd9Kt1Q=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=C+kqOSMMWUfmnSQddznobB3yE84uVbKSN1Gh6Qyo+K1lMIP8pTNE8BVI4x8xrbG1aG6A70061opGx4rVC3DAP1QPC/9pFqOEWfKNTb/VZIVwoRnKkM21idMNVt86VO8eJlwwe960LRn1XOP67GaXgoh0jp9sK5kzrhOvd1/r2Po=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=PAsNv9K1; arc=none smtp.client-ip=170.10.129.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1737696743;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=V43monYRek4i4a9qcZNzucxU9HOMr2YAU2s1SvTctS4=;
-	b=PAsNv9K1uBjWJ7NnHYcCBNd75JS0zmtFhPjrDbLn59Djp8x3KailazMkNW+LLCbjDFj8kC
-	nSxWcKDrxJ7WaCE4mSNITxElzO4T+Nb+H8m6ST5ulsKMiFNbLCuafAXH53s6kjuGbNdXJM
-	k8XbKcT65squvhu7U3f3QNGUKgIjMmU=
-Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com
- [209.85.214.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-59-f9PRnbieOwymURDeO3FVew-1; Fri, 24 Jan 2025 00:32:19 -0500
-X-MC-Unique: f9PRnbieOwymURDeO3FVew-1
-X-Mimecast-MFC-AGG-ID: f9PRnbieOwymURDeO3FVew
-Received: by mail-pl1-f197.google.com with SMTP id d9443c01a7336-2165433e229so34543765ad.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Jan 2025 21:32:19 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1737696738; x=1738301538;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=V43monYRek4i4a9qcZNzucxU9HOMr2YAU2s1SvTctS4=;
-        b=iMLUeD0fbOVaCGWrPlcMulMVGgV+ktA4IkoEMfCwXrezx7Q6K9JIhdPJ+vsX8Eyxpw
-         4B59OaR9Id52AJ+htBVj999hQvcLChfUwSkTeaCM4PICbzhmjx8qiUIJK9azP4KGqiHh
-         fnwxJcilFDJjSojlPsGQV8H5753xNwGihdOHP0isFSz4Hgulp/7AwyyO9WN8FMDNkrYC
-         dQqAraZAlvcKsM/5UnigWFU3wUpE+YeqnS52KM7RLK8DygFc6XinrvxSy52G3kVeYe5m
-         3Lz9wgQaLRYQJERtbjqx/FxzHVBpC1cHCJ1Klj1GxnFzN+DkC5zM8646Ajamu/cQE99k
-         Sa/g==
-X-Forwarded-Encrypted: i=1; AJvYcCWgEcBxdg9WwwBYVZpEkKbeHdPl8I+GLmQRatQ1Js21B/UN80iRorZTZih3nWs5/15HCyRo404JLQm0+im1@vger.kernel.org
-X-Gm-Message-State: AOJu0Yxr/DjRdoH1ICt5ts3QgVVwP+e0g5V1oNtDYTun+Ucdroj/bcA8
-	f+B6uSPvRt/t8Lf7DkjbNO8R4b5jpy61m8qjrK9pQorRGyMeocwI+bxEkFv1cotrDYvoyBZJW34
-	iraHV60CfMTSXuoOY8ooWkufoReeVtYSZ+Nafamml68GwsQy3oc2AFOOLbI0f2SU=
-X-Gm-Gg: ASbGncuGjdYlVBo6cmo0TLQJh7zmW0HTl0Kp9GdH7wDo+dQYCD6otr+JzMfO585OWRg
-	KL9TILCqptYUs2ipM9crL2FFkWhC2ROd3MDrjyfpGsCyLkU04JNS8e6tehj0iA9tx+sDin9Aceq
-	EUbEZKw0iEjbXOxyuySKncDEBrDC8qFh0Lq6tOnBzYr/O34BnTNHXcpxVg/lV47m9vEFX8FC9kx
-	s9VlYeTCnY0DT6ncKcSeWlwz9rznro2b3GvkTqCUbZfX3srIcoiG80FiWD2RZHq/CPpX/o=
-X-Received: by 2002:a05:6a20:244d:b0:1db:e464:7b69 with SMTP id adf61e73a8af0-1eb214e82damr43379272637.20.1737696738399;
-        Thu, 23 Jan 2025 21:32:18 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHqtpZFSrhtF7huOze/hKmkOEqq4y/TfOMaysezICpsnQmSYkT3LOCtGnO0n3WPfw/BdJZyHQ==
-X-Received: by 2002:a05:6a20:244d:b0:1db:e464:7b69 with SMTP id adf61e73a8af0-1eb214e82damr43379243637.20.1737696737997;
-        Thu, 23 Jan 2025 21:32:17 -0800 (PST)
-Received: from [192.168.68.55] ([180.233.125.64])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-72f8a77c4ecsm909347b3a.121.2025.01.23.21.31.59
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 23 Jan 2025 21:32:17 -0800 (PST)
-Message-ID: <3e1780db-6e39-4508-8ce5-4d28771400e8@redhat.com>
-Date: Fri, 24 Jan 2025 15:31:56 +1000
+	s=arc-20240116; t=1737696938; c=relaxed/simple;
+	bh=LD259O69EjZIwR7GKds0hX/13kux6dbH6gMPQnv4gcE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=KEQZGFkcCTWo1Ah6bJ7+0FZE8D4EJT34bI8jkwgnPB8JrWHkY6g0wLB+0PrAJnMo5LtBJzX9sYRiMJeJH+CfIo2/qNBuOp5qqgKfVCEr+7iddpqCaIoCormQMFQIdjItnjyq+H8Y7Gus7F9Q2OFeKmJiqImY+vgbZRQwkibTCIg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3993C4CED2;
+	Fri, 24 Jan 2025 05:35:32 +0000 (UTC)
+Date: Fri, 24 Jan 2025 11:05:25 +0530
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To: Ziqi Chen <quic_ziqichen@quicinc.com>
+Cc: Manivannan Sadhasivam <mani@kernel.org>, quic_cang@quicinc.com,
+	bvanassche@acm.org, beanhuo@micron.com, avri.altman@wdc.com,
+	junwoo80.lee@samsung.com, martin.petersen@oracle.com,
+	quic_nguyenb@quicinc.com, quic_nitirawa@quicinc.com,
+	quic_rampraka@quicinc.com, linux-scsi@vger.kernel.org,
+	"James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>,
+	"open list:ARM/QUALCOMM MAILING LIST" <linux-arm-msm@vger.kernel.org>,
+	open list <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH 4/8] scsi: ufs: qcom: Implement the freq_to_gear_speed()
+ vops
+Message-ID: <20250124053525.2sbefy4jitmzr6so@thinkpad>
+References: <20250116091150.1167739-1-quic_ziqichen@quicinc.com>
+ <20250116091150.1167739-5-quic_ziqichen@quicinc.com>
+ <20250119073056.houuz5xjyeen7nw5@thinkpad>
+ <e0207040-bebd-4e59-abd8-dee16edcc5b9@quicinc.com>
+ <20250120154135.xhrrmy37xdr6asmu@thinkpad>
+ <12f4234b-91ca-48e2-8638-771acc15a7be@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v5 04/15] KVM: guest_memfd: Track mappability within a
- struct kvm_gmem_private
-To: Fuad Tabba <tabba@google.com>, kvm@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, linux-mm@kvack.org
-Cc: pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au,
- anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com,
- aou@eecs.berkeley.edu, seanjc@google.com, viro@zeniv.linux.org.uk,
- brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org,
- xiaoyao.li@intel.com, yilun.xu@intel.com, chao.p.peng@linux.intel.com,
- jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com,
- yu.c.zhang@linux.intel.com, isaku.yamahata@intel.com, mic@digikod.net,
- vbabka@suse.cz, vannapurve@google.com, ackerleytng@google.com,
- mail@maciej.szmigiero.name, david@redhat.com, michael.roth@amd.com,
- wei.w.wang@intel.com, liam.merwick@oracle.com, isaku.yamahata@gmail.com,
- kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com,
- steven.price@arm.com, quic_eberman@quicinc.com, quic_mnalajal@quicinc.com,
- quic_tsoni@quicinc.com, quic_svaddagi@quicinc.com,
- quic_cvanscha@quicinc.com, quic_pderrin@quicinc.com,
- quic_pheragu@quicinc.com, catalin.marinas@arm.com, james.morse@arm.com,
- yuzenghui@huawei.com, oliver.upton@linux.dev, maz@kernel.org,
- will@kernel.org, qperret@google.com, keirf@google.com, roypat@amazon.co.uk,
- shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, rientjes@google.com,
- jhubbard@nvidia.com, fvdl@google.com, hughd@google.com, jthoughton@google.com
-References: <20250117163001.2326672-1-tabba@google.com>
- <20250117163001.2326672-5-tabba@google.com>
-Content-Language: en-US
-From: Gavin Shan <gshan@redhat.com>
-In-Reply-To: <20250117163001.2326672-5-tabba@google.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <12f4234b-91ca-48e2-8638-771acc15a7be@quicinc.com>
 
-Hi Fuad,
-
-On 1/18/25 2:29 AM, Fuad Tabba wrote:
-> From: Ackerley Tng <ackerleytng@google.com>
+On Tue, Jan 21, 2025 at 11:52:42AM +0800, Ziqi Chen wrote:
 > 
-> Track whether guest_memfd memory can be mapped within the inode,
-> since it is property of the guest_memfd's memory contents.
 > 
-> The guest_memfd PRIVATE memory attribute is not used for two
-> reasons. First because it reflects the userspace expectation for
-> that memory location, and therefore can be toggled by userspace.
-> The second is, although each guest_memfd file has a 1:1 binding
-> with a KVM instance, the plan is to allow multiple files per
-> inode, e.g. to allow intra-host migration to a new KVM instance,
-> without destroying guest_memfd.
+> On 1/20/2025 11:41 PM, Manivannan Sadhasivam wrote:
+> > On Mon, Jan 20, 2025 at 08:07:07PM +0800, Ziqi Chen wrote:
+> > > Hi Mani，
+> > > 
+> > > Thanks for your comments~
+> > > 
+> > > On 1/19/2025 3:30 PM, Manivannan Sadhasivam wrote:
+> > > > On Thu, Jan 16, 2025 at 05:11:45PM +0800, Ziqi Chen wrote:
+> > > > > From: Can Guo <quic_cang@quicinc.com>
+> > > > > 
+> > > > > Implement the freq_to_gear_speed() vops to map the unipro core clock
+> > > > > frequency to the corresponding maximum supported gear speed.
+> > > > > 
+> > > > > Co-developed-by: Ziqi Chen <quic_ziqichen@quicinc.com>
+> > > > > Signed-off-by: Ziqi Chen <quic_ziqichen@quicinc.com>
+> > > > > Signed-off-by: Can Guo <quic_cang@quicinc.com>
+> > > > > ---
+> > > > >    drivers/ufs/host/ufs-qcom.c | 32 ++++++++++++++++++++++++++++++++
+> > > > >    1 file changed, 32 insertions(+)
+> > > > > 
+> > > > > diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
+> > > > > index 1e8a23eb8c13..64263fa884f5 100644
+> > > > > --- a/drivers/ufs/host/ufs-qcom.c
+> > > > > +++ b/drivers/ufs/host/ufs-qcom.c
+> > > > > @@ -1803,6 +1803,37 @@ static int ufs_qcom_config_esi(struct ufs_hba *hba)
+> > > > >    	return ret;
+> > > > >    }
+> > > > > +static int ufs_qcom_freq_to_gear_speed(struct ufs_hba *hba, unsigned long freq, u32 *gear)
+> > > > > +{
+> > > > > +	int ret = 0 >
+> > > > Please do not initialize ret with 0. Return the actual value directly.
+> > > > 
+> > > 
+> > > If we don't initialize ret here, for the cases of freq matched in the table,
+> > > it will return an unknown ret value. It is not make sense, right?
+> > > 
+> > > Or you may want to say we don't need “ret” , just need to return gear value?
+> > > But we need this "ret" to check whether the freq is invalid.
+> > > 
+> > 
+> > I meant to say that you can just return 0 directly in success case and -EINVAL
+> > in the case of error.
+> > 
+> Hi Mani,
 > 
-> Signed-off-by: Ackerley Tng <ackerleytng@google.com>
-> Co-developed-by: Vishal Annapurve <vannapurve@google.com>
-> Signed-off-by: Vishal Annapurve <vannapurve@google.com>
-> Co-developed-by: Fuad Tabba <tabba@google.com>
-> Signed-off-by: Fuad Tabba <tabba@google.com>
-> ---
->   virt/kvm/guest_memfd.c | 56 ++++++++++++++++++++++++++++++++++++++----
->   1 file changed, 51 insertions(+), 5 deletions(-)
+> If we don't print freq here , I think your suggestion is very good. If we
+> print freq in this function , using "ret" to indicate success case and
+> failure case and print freq an the end of this function is the way to avoid
+> code bloat.
 > 
-> diff --git a/virt/kvm/guest_memfd.c b/virt/kvm/guest_memfd.c
-> index 6453658d2650..0a7b6cf8bd8f 100644
-> --- a/virt/kvm/guest_memfd.c
-> +++ b/virt/kvm/guest_memfd.c
-> @@ -18,6 +18,17 @@ struct kvm_gmem {
->   	struct list_head entry;
->   };
->   
-> +struct kvm_gmem_inode_private {
-> +#ifdef CONFIG_KVM_GMEM_MAPPABLE
-> +	struct xarray mappable_offsets;
-> +#endif
-> +};
-> +
-> +static struct kvm_gmem_inode_private *kvm_gmem_private(struct inode *inode)
-> +{
-> +	return inode->i_mapping->i_private_data;
-> +}
-> +
->   /**
->    * folio_file_pfn - like folio_file_page, but return a pfn.
->    * @folio: The folio which contains this index.
-> @@ -312,8 +323,28 @@ static pgoff_t kvm_gmem_get_index(struct kvm_memory_slot *slot, gfn_t gfn)
->   	return gfn - slot->base_gfn + slot->gmem.pgoff;
->   }
->   
-> +static void kvm_gmem_evict_inode(struct inode *inode)
-> +{
-> +	struct kvm_gmem_inode_private *private = kvm_gmem_private(inode);
-> +
-> +#ifdef CONFIG_KVM_GMEM_MAPPABLE
-> +	/*
-> +	 * .evict_inode can be called before private data is set up if there are
-> +	 * issues during inode creation.
-> +	 */
-> +	if (private)
-> +		xa_destroy(&private->mappable_offsets);
-> +#endif
-> +
-> +	truncate_inode_pages_final(inode->i_mapping);
-> +
-> +	kfree(private);
-> +	clear_inode(inode);
-> +}
-> +
->   static const struct super_operations kvm_gmem_super_operations = {
-> -	.statfs		= simple_statfs,
-> +	.statfs         = simple_statfs,
-> +	.evict_inode	= kvm_gmem_evict_inode,
->   };
->   
+> How do you think about it?
+> 
 
-As I understood, ->destroy_inode() may be more suitable place where the xarray is
-released. ->evict_inode() usually detach the inode from the existing struct, to make
-it offline. ->destroy_inode() is actually the place where the associated resource
-(memory) is relased.
+I don't understand how code bloat comes into picture here. I'm just asking for
+this:
 
-Another benefit with ->destroy_inode() is we're not concerned to truncate_inode_pages_final()
-and clear_inode().
+static int ufs_qcom_freq_to_gear_speed(struct ufs_hba *hba, unsigned long freq, u32 *gear)
+{
+	switch (freq) {
+	case 403000000:
+		*gear = UFS_HS_G5;
+		break;
+	...
 
+	default:
+		dev_err(hba->dev, "Unsupported clock freq: %ld\n", freq);
+		return -EINVAL;
+	}
+	
+	return 0;
+}
 
->   static int kvm_gmem_init_fs_context(struct fs_context *fc)
-> @@ -440,6 +471,7 @@ static struct inode *kvm_gmem_inode_make_secure_inode(const char *name,
->   						      loff_t size, u64 flags)
->   {
->   	const struct qstr qname = QSTR_INIT(name, strlen(name));
-> +	struct kvm_gmem_inode_private *private;
->   	struct inode *inode;
->   	int err;
->   
-> @@ -448,10 +480,19 @@ static struct inode *kvm_gmem_inode_make_secure_inode(const char *name,
->   		return inode;
->   
->   	err = security_inode_init_security_anon(inode, &qname, NULL);
-> -	if (err) {
-> -		iput(inode);
-> -		return ERR_PTR(err);
-> -	}
-> +	if (err)
-> +		goto out;
-> +
-> +	err = -ENOMEM;
-> +	private = kzalloc(sizeof(*private), GFP_KERNEL);
-> +	if (!private)
-> +		goto out;
-> +
-> +#ifdef CONFIG_KVM_GMEM_MAPPABLE
-> +	xa_init(&private->mappable_offsets);
-> +#endif
-> +
-> +	inode->i_mapping->i_private_data = private;
->   
+> > > > > +
+> > > > > +	switch (freq) {
+> > > > > +	case 403000000:
+> > > > > +		*gear = UFS_HS_G5;
+> > > > > +		break;
+> > > > > +	case 300000000:
+> > > > > +		*gear = UFS_HS_G4;
+> > > > > +		break;
+> > > > > +	case 201500000:
+> > > > > +		*gear = UFS_HS_G3;
+> > > > > +		break;
+> > > > > +	case 150000000:
+> > > > > +	case 100000000:
+> > > > > +		*gear = UFS_HS_G2;
+> > > > > +		break;
+> > > > > +	case 75000000:
+> > > > > +	case 37500000:
+> > > > > +		*gear = UFS_HS_G1;
+> > > > > +		break;
+> > > > > +	default:
+> > > > > +		ret = -EINVAL;
+> > > > > +		dev_err(hba->dev, "Unsupported clock freq\n");
+> > > > 
+> > > > Print the freq.
+> > > 
+> > > Ok, thank for your suggestion, we can print freq with dev_dbg() in next
+> > > version.
+> > > 
+> > 
+> > No, use dev_err() with the freq. >
+> > - Mani
+> > 
+> I think use dev_err() here does not make sense:
+> 
+> 1. This print is not an error message , just an information print. Using
+> dev_err() reduces the readability of this code.
 
-The whole block of code needs to be guarded by CONFIG_KVM_GMEM_MAPPABLE because
-kzalloc(sizeof(...)) is translated to kzalloc(0) when CONFIG_KVM_GMEM_MAPPABLE
-is disabled, and kzalloc() will always fail. It will lead to unusable guest-memfd
-if CONFIG_KVM_GMEM_MAPPABLE is disabled.
+Then why it was dev_err() in the first place?
 
->   	inode->i_private = (void *)(unsigned long)flags;
->   	inode->i_op = &kvm_gmem_iops;
-> @@ -464,6 +505,11 @@ static struct inode *kvm_gmem_inode_make_secure_inode(const char *name,
->   	WARN_ON_ONCE(!mapping_unevictable(inode->i_mapping));
->   
->   	return inode;
-> +
-> +out:
-> +	iput(inode);
-> +
-> +	return ERR_PTR(err);
->   }
->   
->   static struct file *kvm_gmem_inode_create_getfile(void *priv, loff_t size,
+> 2. This prints will be print very frequent, I afraid it will increase the
+> latency of clock scaling.
+> 
 
-Thanks,
-Gavin
+First you need to decide whether this print should warn user or not. It is
+telling users that the OPP table supplied a frequency that doesn't match the
+gear speed. This can happen if there is a discrepancy between DT and the driver.
+In that case, the users *should* be warned to fix the driver/DT. If you bury it
+with dev_dbg(), no one will notice it.
 
+If your concern is with the frequency of logs, then use dev_err_ratelimited().
+
+- Mani
+
+-- 
+மணிவண்ணன் சதாசிவம்
 
