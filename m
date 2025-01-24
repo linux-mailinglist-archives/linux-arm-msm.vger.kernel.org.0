@@ -1,63 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-46016-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46017-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 058DCA1AD84
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Jan 2025 00:46:44 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 63EEDA1AEC3
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Jan 2025 03:42:02 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 458D516990C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jan 2025 23:46:42 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 322E718901A0
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Jan 2025 02:41:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 988241D54FA;
-	Thu, 23 Jan 2025 23:46:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BC4EE1D5AA7;
+	Fri, 24 Jan 2025 02:40:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="DR6tb8vu"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="iE44FkBV"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF14D1D5144;
-	Thu, 23 Jan 2025 23:46:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B22B640BF5;
+	Fri, 24 Jan 2025 02:40:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737675999; cv=none; b=r7JfHyhDAEQP4uwfXqz6rFbRZnj+ewbRHCR2Tzxm9vW7xFn7z1iM0FzHxIf5qWW9yDw8HJwE/qp8kdEJ+53xXNgbzK+c5yskWPe/VjdRpjrEv/EBnHv6utmwsGPJ+LVEi/Q/h6jLolTF3nXkC69COkY8PJwD2cC6RVDWHUQ6hI4=
+	t=1737686424; cv=none; b=UR/K1zL4rzG4SFrb8UqMopblDNmemOUvHxqQgnt44v24HQsoDiJLbqXqKw/WE/JjKuFVymHmxCoWgc7M9hQhAEoeeVmb/zJX0C/xYk6YoWz6yUm1NPMxT0oqOncEx8drhAjnXQEZRKhMb+Xa0DS44GNEmnQH98FU+OlifNMpyUE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737675999; c=relaxed/simple;
-	bh=ePSrqOOMU/XUnMn9vo+ssODP5ZjzHwKJ3nKr/TWS9q8=;
+	s=arc-20240116; t=1737686424; c=relaxed/simple;
+	bh=eEPhkTwHGyNHX//+3d4UUEemufJEgLVDpC9rwvp02UE=;
 	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=poqxgpfsJ0nEAhtjm4OWLx1CJr3J6r9auqqNmuSEk/qfTXt8ym38X3YsLNz/Yp6/UkDMYFUmX/Aks+P828HTGZpqPRcFaSpZYgRAXSZCUrHP92zsEmCYI2oe9BcsN90axgBJLmEI2ek/4nzamvf7BOv2F6v261Xe+OvS0TtAF88=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=DR6tb8vu; arc=none smtp.client-ip=205.220.168.131
+	 In-Reply-To:Content-Type; b=i9YXrn1Zd4Mzyxn97x6/wmgSJctt8B27cJPvJOIc6QzlQRBtz7UvuzOBp47aSoWML7hM0+yo3Ho59G2pyL31hkS2wI8AVcAVq8ZND7WyoGT87Jwaz/5O1xSP//fgAoImbHAoH0JTH0HM2IriBsDAB3z1/6WKRDUoI9YiycehJmc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=iE44FkBV; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50NDs18q029423;
-	Thu, 23 Jan 2025 23:46:24 GMT
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50NNvh8s025590;
+	Fri, 24 Jan 2025 02:39:05 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	3ihYuTKzuDB2YmVsRmxQh+o4gFIQlnPGAHE5UXcwc28=; b=DR6tb8vuWj5DGdBp
-	agsb3mrXTALmimF+xokPrsUYACNOZebUdzP/NK43Pj3bQjGO5D869EKV7slIMmz+
-	mfLyaSU45fz2C2JhyW/z4WczK/Obq8G/rjDWetVmQSUXW5zHJWtF4CS5tjrramaS
-	bjNNNBrieOMLhwj5qU6E8Kv5kt2+leJq0fmdh56k88jrQ3ydxBNitaeRXYfPkzIJ
-	vj9/Db9HNfPmafi+r6QX6u7Vyiyh3OsI2vO/4jSZOgx6nHlqHPJzRcG3bxUMsStg
-	5GzebCe2XUQNW7dQ+HFuTWkd6IPLo0K4THEhZHR2o2HABrShVmcd0XjWMCY73w7K
-	UA7PcQ==
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44bq2cs6q6-1
+	GujXHfe2/olmjRRDiVpSdvoVMOjJ62T2U+enR2tRdXo=; b=iE44FkBVPGjhVyK/
+	cepYNPwSTuHCDNI93laCf3K5NyZs0uSG/cvFJAaC4wj5ZnQbzbV94DeBjVG8QDuM
+	7bX0DbGc7yUGMu155QMK2Ojghzk/3UyU61DA8+m3nAV7OaMCuSJE9+WUQy+zdWQX
+	+DdQSlpmWc9TT3vPR+hHE0deXmaA49/jJdXzrwNAU3TIW1iEu61q9/Zg+Fm6Js+i
+	6gFYCmAac27XeHDPVas5ihFRTRtWcOIRfKdvIOZmOu1nPgujBm8qPPPWTvQ2A3W4
+	e8leslfHg9JiXn2DT4v/vmggZ5IabFQjdCqjcETP418WGaoBFX9endgiR2mZI7YT
+	R3yCag==
+Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44bywc08ay-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 23 Jan 2025 23:46:24 +0000 (GMT)
+	Fri, 24 Jan 2025 02:39:05 +0000 (GMT)
 Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 50NNkNYs026439
+	by NASANPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 50O2d4pw005269
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 23 Jan 2025 23:46:23 GMT
-Received: from [10.134.70.212] (10.80.80.8) by nasanex01b.na.qualcomm.com
+	Fri, 24 Jan 2025 02:39:04 GMT
+Received: from [10.239.155.136] (10.80.80.8) by nasanex01b.na.qualcomm.com
  (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 23 Jan
- 2025 15:46:23 -0800
-Message-ID: <df532786-1cbe-45d8-bd9c-f70eaed0492b@quicinc.com>
-Date: Thu, 23 Jan 2025 15:46:22 -0800
+ 2025 18:38:59 -0800
+Message-ID: <f09421c8-e6db-4189-9c1a-6ae0a863ae40@quicinc.com>
+Date: Fri, 24 Jan 2025 10:38:57 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,211 +65,77 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] drm/msm/dpu: Fall back to a single DSC encoder (1:1:1)
- on small SoCs
+Subject: Re: [PATCH v2 3/8] scsi: ufs: core: Add a vops to map clock frequency
+ to gear speed
+To: Bart Van Assche <bvanassche@acm.org>, <quic_cang@quicinc.com>,
+        <mani@kernel.org>, <beanhuo@micron.com>, <avri.altman@wdc.com>,
+        <junwoo80.lee@samsung.com>, <martin.petersen@oracle.com>,
+        <quic_nguyenb@quicinc.com>, <quic_nitirawa@quicinc.com>,
+        <quic_rampraka@quicinc.com>
+CC: <linux-arm-msm@vger.kernel.org>, <linux-scsi@vger.kernel.org>,
+        Alim Akhtar
+	<alim.akhtar@samsung.com>,
+        "James E.J. Bottomley"
+	<James.Bottomley@HansenPartnership.com>,
+        Peter Wang
+	<peter.wang@mediatek.com>,
+        Manivannan Sadhasivam
+	<manivannan.sadhasivam@linaro.org>,
+        Eric Biggers <ebiggers@google.com>, Minwoo Im <minwoo.im@samsung.com>,
+        open list <linux-kernel@vger.kernel.org>
+References: <20250122100214.489749-1-quic_ziqichen@quicinc.com>
+ <20250122100214.489749-4-quic_ziqichen@quicinc.com>
+ <a0359746-2cf0-4db3-891d-b4cb4ff6c163@acm.org>
+ <b998f9b5-9965-4cc5-9e76-4ae743596f6b@quicinc.com>
+ <cc07ebd1-fa93-46be-991b-c14e4222750c@acm.org>
 Content-Language: en-US
-To: Marijn Suijten <marijn.suijten@somainline.org>,
-        Rob Clark
-	<robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        "Dmitry
- Baryshkov" <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, "David
- Airlie" <airlied@gmail.com>,
-        Simona Vetter <simona@ffwll.ch>
-CC: <~postmarketos/upstreaming@lists.sr.ht>,
-        AngeloGioacchino Del Regno
-	<angelogioacchino.delregno@collabora.com>,
-        Konrad Dybcio
-	<konrad.dybcio@oss.qualcomm.com>,
-        Martin Botka <martin.botka@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
-        Luca Weiss
-	<luca.weiss@fairphone.com>
-References: <20250122-dpu-111-topology-v2-1-505e95964af9@somainline.org>
-From: Jessica Zhang <quic_jesszhan@quicinc.com>
-In-Reply-To: <20250122-dpu-111-topology-v2-1-505e95964af9@somainline.org>
+From: Ziqi Chen <quic_ziqichen@quicinc.com>
+In-Reply-To: <cc07ebd1-fa93-46be-991b-c14e4222750c@acm.org>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nasanex01b.na.qualcomm.com (10.46.141.250)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: XcbhqTtVy5weSh9zasBVNUQPHlrsN_p6
-X-Proofpoint-ORIG-GUID: XcbhqTtVy5weSh9zasBVNUQPHlrsN_p6
+X-Proofpoint-ORIG-GUID: KcnIGAbTP111X2mXAKTMG8YlFA6LDYQB
+X-Proofpoint-GUID: KcnIGAbTP111X2mXAKTMG8YlFA6LDYQB
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-01-23_10,2025-01-23_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 adultscore=0
- priorityscore=1501 suspectscore=0 bulkscore=0 phishscore=0 spamscore=0
- lowpriorityscore=0 malwarescore=0 mlxlogscore=999 mlxscore=0 clxscore=1011
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2411120000
- definitions=main-2501230172
+ definitions=2025-01-24_01,2025-01-23_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 adultscore=0
+ malwarescore=0 mlxscore=0 bulkscore=0 suspectscore=0 impostorscore=0
+ spamscore=0 lowpriorityscore=0 mlxlogscore=999 priorityscore=1501
+ clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2501240017
 
 
 
-On 1/22/2025 8:23 AM, Marijn Suijten wrote:
-> Some SoCs such as SC7280 (used in the Fairphone 5) have only a single
-> DSC "hard slice" encoder.  The current hardcoded use of 2:2:1 topology
-> (2 LM and 2 DSC for a single interface) make it impossible to use
-> Display Stream Compression panels with mainline, which is exactly what's
-> installed on the Fairphone 5.
+On 1/24/2025 1:49 AM, Bart Van Assche wrote:
+> On 1/22/25 11:40 PM, Ziqi Chen wrote:
+>> In ufshcd-priv.h , the function name of all vop wrapping APIs have the 
+>> same prefix "ufshcd_vops", I need to use the same format as them.
 > 
-> By loosening the hardcoded `num_dsc = 2` to fall back to `num_dsc =
-> 1` when the catalog only contains one entry, we can trivially support
-> this phone and unblock further panel enablement on mainline.  A few
-> more supporting changes in this patch ensure hardcoded constants of 2
-> DSC encoders are replaced to count or read back the actual number of
-> DSC hardware blocks that are enabled for the given virtual encoder.
-> Likewise DSC_MODE_SPLIT_PANEL can no longer be unconditionally enabled.
+> That sounds fair to me.
 > 
-> Cc: Luca Weiss <luca.weiss@fairphone.com>
-> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
-
-Hi Marijn,
-
-Thanks for the patch. LGTM
-
-Reviewed-by: Jessica Zhang <quic_jesszhan@quicinc.com>
-
-Thanks,
-
-Jessica Zhang
-
-> ---
-> Note that this doesn't paint the full picture in case there are SoCs
-> with more DSC hardware blocks, but when multiple virtual encoders
-> have already allocated most of them.  My initial plan was to code
-> ahead for dynamically tracking and reallocating these blocks in RM, if
-> some virtual encoder could potentially be using too many DSC encoders
-> which, while "power optimal", may not be able to support the number of
-> requested displays/interfaces.  Such a solution would automatically
-> ensure DSCmerge is *not* used when there are not enough hardware blocks
-> available in the first place.
-> ---
-> Changes in v2:
-> - Fairphone is one word, lowercase the P from phone (Luca);
-> - Skip unnecessary if (dpu_enc->dsc) check and always count the number
->    of non-NULL dpu_enc->hw_dsc[i] instead (Dmitry);
-> - Revert irrelevant whitespace cleanup in DSC comment, even if
->    worthless enough to send separately (Dmitry);
-> - Drop dsc_common_mode=0 initialization and move existing 0-assignment
->    from a random place in the function down to where this variable is
->    actually being updated (Dmitry);
-> - Link to v1: https://lore.kernel.org/r/20250121-dpu-111-topology-v1-1-d01987205c53@somainline.org
-> ---
->   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 47 +++++++++++++++--------------
->   1 file changed, 25 insertions(+), 22 deletions(-)
+>> As for return the gear value as the function result. In our original 
+>> design, we also return gear result for this function, but finally we 
+>> want to use return value to indicate the status , e.g,, if vendor 
+>> doesn't implement this vop, we return -EOPNOTSUPP , if there is no 
+>> matched gear to the freq , we return -EINVAL. Although we didn't check 
+>> the return value in this series, we still want to preserve this 
+>> extensibility in case this function be used to other where in the future.
 > 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> index 5172ab4dea995a154cd88d05c3842d7425fc34ce..b585cd17462345f94bcc2ddd57902cc7c312ae63 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> @@ -622,9 +622,9 @@ bool dpu_encoder_use_dsc_merge(struct drm_encoder *drm_enc)
->   		if (dpu_enc->phys_encs[i])
->   			intf_count++;
->   
-> -	/* See dpu_encoder_get_topology, we only support 2:2:1 topology */
-> -	if (dpu_enc->dsc)
-> -		num_dsc = 2;
-> +	for (i = 0; i < MAX_CHANNELS_PER_ENC; i++)
-> +		if (dpu_enc->hw_dsc[i])
-> +			num_dsc++;
->   
->   	return (num_dsc > 0) && (num_dsc > intf_count);
->   }
-> @@ -686,13 +686,19 @@ static struct msm_display_topology dpu_encoder_get_topology(
->   
->   	if (dsc) {
->   		/*
-> -		 * In case of Display Stream Compression (DSC), we would use
-> -		 * 2 DSC encoders, 2 layer mixers and 1 interface
-> -		 * this is power optimal and can drive up to (including) 4k
-> -		 * screens
-> +		 * Use 2 DSC encoders and 2 layer mixers per single interface
-> +		 * when Display Stream Compression (DSC) is enabled,
-> +		 * and when enough DSC blocks are available.
-> +		 * This is power-optimal and can drive up to (including) 4k
-> +		 * screens.
->   		 */
-> -		topology.num_dsc = 2;
-> -		topology.num_lm = 2;
-> +		if (dpu_kms->catalog->dsc_count >= 2) {
-> +			topology.num_dsc = 2;
-> +			topology.num_lm = 2;
-> +		} else {
-> +			topology.num_dsc = 1;
-> +			topology.num_lm = 1;
-> +		}
->   		topology.num_intf = 1;
->   	}
->   
-> @@ -2020,7 +2026,6 @@ static void dpu_encoder_dsc_pipe_cfg(struct dpu_hw_ctl *ctl,
->   static void dpu_encoder_prep_dsc(struct dpu_encoder_virt *dpu_enc,
->   				 struct drm_dsc_config *dsc)
->   {
-> -	/* coding only for 2LM, 2enc, 1 dsc config */
->   	struct dpu_encoder_phys *enc_master = dpu_enc->cur_master;
->   	struct dpu_hw_ctl *ctl = enc_master->hw_ctl;
->   	struct dpu_hw_dsc *hw_dsc[MAX_CHANNELS_PER_ENC];
-> @@ -2030,22 +2035,24 @@ static void dpu_encoder_prep_dsc(struct dpu_encoder_virt *dpu_enc,
->   	int dsc_common_mode;
->   	int pic_width;
->   	u32 initial_lines;
-> +	int num_dsc = 0;
->   	int i;
->   
->   	for (i = 0; i < MAX_CHANNELS_PER_ENC; i++) {
->   		hw_pp[i] = dpu_enc->hw_pp[i];
->   		hw_dsc[i] = dpu_enc->hw_dsc[i];
->   
-> -		if (!hw_pp[i] || !hw_dsc[i]) {
-> -			DPU_ERROR_ENC(dpu_enc, "invalid params for DSC\n");
-> -			return;
-> -		}
-> +		if (!hw_pp[i] || !hw_dsc[i])
-> +			break;
-> +
-> +		num_dsc++;
->   	}
->   
-> -	dsc_common_mode = 0;
->   	pic_width = dsc->pic_width;
->   
-> -	dsc_common_mode = DSC_MODE_SPLIT_PANEL;
-> +	dsc_common_mode = 0;
-> +	if (num_dsc > 1)
-> +		dsc_common_mode |= DSC_MODE_SPLIT_PANEL;
->   	if (dpu_encoder_use_dsc_merge(enc_master->parent))
->   		dsc_common_mode |= DSC_MODE_MULTIPLEX;
->   	if (enc_master->intf_mode == INTF_MODE_VIDEO)
-> @@ -2054,14 +2061,10 @@ static void dpu_encoder_prep_dsc(struct dpu_encoder_virt *dpu_enc,
->   	this_frame_slices = pic_width / dsc->slice_width;
->   	intf_ip_w = this_frame_slices * dsc->slice_width;
->   
-> -	/*
-> -	 * dsc merge case: when using 2 encoders for the same stream,
-> -	 * no. of slices need to be same on both the encoders.
-> -	 */
-> -	enc_ip_w = intf_ip_w / 2;
-> +	enc_ip_w = intf_ip_w / num_dsc;
->   	initial_lines = dpu_encoder_dsc_initial_line_calc(dsc, enc_ip_w);
->   
-> -	for (i = 0; i < MAX_CHANNELS_PER_ENC; i++)
-> +	for (i = 0; i < num_dsc; i++)
->   		dpu_encoder_dsc_pipe_cfg(ctl, hw_dsc[i], hw_pp[i],
->   					 dsc, dsc_common_mode, initial_lines);
->   }
+> There are many functions in the Linux kernel that either return a
+> negative error code or a positive value in case of success. Regarding
+> future extensibility, we can't know how this function will evolve in the
+> future. This is not an argument to keep the approach of separate error
+> codes (return value) and gear values (gear argument).
 > 
-> ---
-> base-commit: 1573c8d4cb206a2d1454ff711e79f8df2353290b
-> change-id: 20240204-dpu-111-topology-b12c1de82c8a
+> Thanks,
 > 
-> Best regards,
-> -- 
-> Marijn Suijten <marijn.suijten@somainline.org>
+> Bart.
 > 
+OK , Bart, let me improve it and please review again in my next version.
 
+-Ziqi
 
