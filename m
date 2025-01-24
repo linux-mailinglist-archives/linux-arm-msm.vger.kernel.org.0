@@ -1,63 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-46021-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46022-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9A291A1AF26
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Jan 2025 04:50:30 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4698CA1AF5C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Jan 2025 05:19:29 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id DA64A16921E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Jan 2025 03:50:28 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id D0F247A3EDE
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Jan 2025 04:19:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A7A2B1D63C7;
-	Fri, 24 Jan 2025 03:50:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E5C5B1D63E1;
+	Fri, 24 Jan 2025 04:19:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="MdY5fsvG"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="cBAV/VFl"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA67A29A5;
-	Fri, 24 Jan 2025 03:50:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 041E845016;
+	Fri, 24 Jan 2025 04:19:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737690626; cv=none; b=OvBpRrZaKFyeneiI2SR2Irtn64S9HkbnVINOmdTIWtOVb9RZNA+3IfEbXjsf1Cw6jj5lD0PK7h0o1MadyTbCjUkumrQYx+rPSQR4cdJ9b0UCUdkyhmkK5Ir1d8uqrPqT1iNzvq/PWAd831XlM2aB+6uQWfWXjSyi7AFX3kD88lQ=
+	t=1737692363; cv=none; b=s/yU5curtq3Q1O09yhc/kZj66L4lL9g6eEBHBxPr8jK9uqs2N7w6dRJbxH9+v9TDzOdiynUHzU0FKrxcuNa/fbdu4XIImguvwcZpya4EeUY4/FhSuMrIWq3ySmethmJteF4NmDht4EJRz6ASaNfnYrJWyl6vWJCMiatMp263r98=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737690626; c=relaxed/simple;
-	bh=jz/DAF/DOdi7AEjDgAtxUvzHzBqmVOCK9WQo8aVsiCY=;
+	s=arc-20240116; t=1737692363; c=relaxed/simple;
+	bh=1qniZwlYYf0Wj6nSbVCNbWQrtDUK7PNE1TUiuuwqgKI=;
 	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=jM9y97xo2OKKQevW67aRTu07vBCOXHfc/rxO8qZgSp38h3O0ktHCWjtXVn9NqZ8sPyou9w1yQyDciZw7Z+VZmF+ASDD/nBrbg4696pjf68VR61ykSFRZ1liK44yE/XlFTv6GqEupRA4MLkyL/UxflR4MIEo/1ukHetXNgHyB/nY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=MdY5fsvG; arc=none smtp.client-ip=205.220.168.131
+	 In-Reply-To:Content-Type; b=lXJ0ZNACIA0xEOK6L/tAgrDCYV5duhVjbhuP8+7ZhXprCRvwvKoyCwkhXj6uF4C0Bff+Hj3uMtp5YnaZDqbDAQB0bbnijCY+ynHHhD7B/BggJHW8csVxfZ7mHzvQNhQEZeEtUGLpdm/UxJfSpw56/2cee9NmwwypIWJYmLRUJxk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=cBAV/VFl; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50NK1bwe025017;
-	Fri, 24 Jan 2025 03:50:07 GMT
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50O3FdnG004662;
+	Fri, 24 Jan 2025 04:19:12 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	UsOSr255hsze50L8MIH369hi7fncpzVLWcWcM0n4BCw=; b=MdY5fsvGqrkk09id
-	qu/JAKNKUkXaA0NcuZeQAfZOgUP3XntcdHRl1MgsOM4NCCmNmHgpYL/kQCSZDq0b
-	PPuA2I6W7/d+RhU7iO/83Vj3yuGw3uF9pt9G5Ej8YdMiOpkEmroMRPD/7SvPoSS1
-	/urid3pcxbBU/hVSaLwMW4vGkQ1ZVWS4Ys5MT0Ln5W1X/mK7Aw9fnUpqEb5J62zY
-	N/lqWGNqqBjAHaGW0+OgSkf8DGARWGJ5tlDqaSv3pgDMCbY2Otb/Akz8C4rsjN1z
-	3+C3K7efCPj0ZX3Fec1uj89pQLyfprpQatJ/kbIXIsUwvpFy8HRNWXz/yXrDlHiE
-	R5jFZQ==
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44bvengru6-1
+	LKTPtG6GWE3pwIsWi/KDKSC/EsRSnBdmvKR7q13O0Pk=; b=cBAV/VFlS1gngMxi
+	ejb3vpYRFQUXtj28onrWBxLo0Hv8mL0WbWndDfOfIy1CfVkpIj8wfolZ9hFl2xWo
+	u4IdEEhcXzVH0iYY4vCzme+888sr0lb6wUxow5W6ogWoGviNgwssP5JC+Yden0HI
+	l0LlsXQUixLlsZq7UpwurPDxVvLJljFN9Z7aGjzHzZo/RHAp35bbgZCsEXscFrII
+	QVCO0+mHXDh/W6zbhOEdb3SxTgDQsnvYEoT1g+2gtrb4W/1k8sqxIiIs56HV6sMG
+	tac4fch/yhIh96Iwm25ZDiE6x4SkMqicH5RQMaEtTjcXog9+7iPwibkMMhkJg8zM
+	rwgfPQ==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44c2t483rm-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 24 Jan 2025 03:50:07 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 50O3o6bk007904
+	Fri, 24 Jan 2025 04:19:12 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 50O4JBwH022350
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 24 Jan 2025 03:50:06 GMT
-Received: from [10.239.155.136] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+	Fri, 24 Jan 2025 04:19:11 GMT
+Received: from [10.204.65.49] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 23 Jan
- 2025 19:50:02 -0800
-Message-ID: <de0a80f0-f6b8-4213-8687-7111e6ad7aba@quicinc.com>
-Date: Fri, 24 Jan 2025 11:50:00 +0800
+ 2025 20:19:08 -0800
+Message-ID: <96b94322-7d5c-451a-be76-cd1a9292c903@quicinc.com>
+Date: Fri, 24 Jan 2025 09:49:05 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,191 +65,237 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/8] Support Multi-frequency scale for UFS
-To: <neil.armstrong@linaro.org>, <quic_cang@quicinc.com>, <bvanassche@acm.org>,
-        <mani@kernel.org>, <beanhuo@micron.com>, <avri.altman@wdc.com>,
-        <junwoo80.lee@samsung.com>, <martin.petersen@oracle.com>,
-        <quic_nguyenb@quicinc.com>, <quic_nitirawa@quicinc.com>,
-        <quic_rampraka@quicinc.com>
-CC: <linux-arm-msm@vger.kernel.org>, <linux-scsi@vger.kernel.org>,
-        "Matthias
- Brugger" <matthias.bgg@gmail.com>,
-        AngeloGioacchino Del Regno
-	<angelogioacchino.delregno@collabora.com>,
-        "open list:ARM/Mediatek SoC
- support:Keyword:mediatek" <linux-kernel@vger.kernel.org>,
-        "moderated
- list:ARM/Mediatek SoC support:Keyword:mediatek"
-	<linux-arm-kernel@lists.infradead.org>,
-        "moderated list:ARM/Mediatek SoC
- support:Keyword:mediatek" <linux-mediatek@lists.infradead.org>
-References: <20250122100214.489749-1-quic_ziqichen@quicinc.com>
- <d4881156-a003-41fe-824e-4c29e279fbb7@linaro.org>
+Subject: Re: [PATCH v1 1/4] misc: fastrpc: Add CRC support using invokeV2
+ request
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC: <srinivas.kandagatla@linaro.org>, <linux-arm-msm@vger.kernel.org>,
+        <gregkh@linuxfoundation.org>, <quic_bkumar@quicinc.com>,
+        <linux-kernel@vger.kernel.org>, <quic_chennak@quicinc.com>,
+        <dri-devel@lists.freedesktop.org>, <arnd@arndb.de>
+References: <20241007084518.3649876-1-quic_ekangupt@quicinc.com>
+ <20241007084518.3649876-2-quic_ekangupt@quicinc.com>
+ <bmg5em2f673vis6wwtjx6ibkhee7d3zocwesgoafsgt5jxbfqn@w73y6gmzbamj>
+ <53ce4792-6eca-42ae-b5d7-24d524697344@quicinc.com>
+ <fm4wxyu7dv7wzz6szwtz4vyukzxmzajtzqlidaed4hcrabhpe2@eqw6vimhzkjm>
+ <0dd43d4f-0399-454b-96fd-2d4f5f36ea14@quicinc.com>
+ <drh2ikzku37tblmpkjbcdqjllynb3shsfogljfkhq2vcsej2ga@4ex36yehg2e6>
+ <41fb5e93-2d77-48e5-92e0-8e82ee4d27ce@quicinc.com>
+ <yjvjq657cfqzfcvusox5ykpyhzsi37certamb4p35eowohwwoz@cjcujhkrt2tx>
 Content-Language: en-US
-From: Ziqi Chen <quic_ziqichen@quicinc.com>
-In-Reply-To: <d4881156-a003-41fe-824e-4c29e279fbb7@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
+From: Ekansh Gupta <quic_ekangupt@quicinc.com>
+In-Reply-To: <yjvjq657cfqzfcvusox5ykpyhzsi37certamb4p35eowohwwoz@cjcujhkrt2tx>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: LdKnsDhDlDeLqdLLFYQQD0jKSqhLeu_e
-X-Proofpoint-ORIG-GUID: LdKnsDhDlDeLqdLLFYQQD0jKSqhLeu_e
+X-Proofpoint-ORIG-GUID: G9OOk5CA07p5jV_78NelLnmL6cASsSn2
+X-Proofpoint-GUID: G9OOk5CA07p5jV_78NelLnmL6cASsSn2
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
  definitions=2025-01-24_01,2025-01-23_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999
- suspectscore=0 adultscore=0 spamscore=0 priorityscore=1501 impostorscore=0
- mlxscore=0 bulkscore=0 clxscore=1015 malwarescore=0 phishscore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2501240025
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 bulkscore=0
+ clxscore=1015 malwarescore=0 mlxscore=0 lowpriorityscore=0 mlxlogscore=999
+ suspectscore=0 priorityscore=1501 phishscore=0 impostorscore=0
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2501240028
 
 
 
-On 1/24/2025 4:12 AM, neil.armstrong@linaro.org wrote:
-> Hi,
-> 
-> On 22/01/2025 11:02, Ziqi Chen wrote:
->> With OPP V2 enabled, devfreq can scale clocks amongst multiple frequency
->> plans. However, the gear speed is only toggled between min and max during
->> clock scaling. Enable multi-level gear scaling by mapping clock 
->> frequencies
->> to gear speeds, so that when devfreq scales clock frequencies we can put
->> the UFS link at the appropraite gear speeds accordingly.
+
+On 1/23/2025 6:03 PM, Dmitry Baryshkov wrote:
+> On Thu, Jan 23, 2025 at 05:34:00PM +0530, Ekansh Gupta wrote:
 >>
->> This series has been tested on below platforms -
->> sm8550 mtp + UFS3.1
->> SM8650 MTP + UFS3.1
->> SM8750 MTP + UFS4.0
-> 
-> Thanks, could you be more precise on how you tested this feature ? how 
-> did you exercise the gear changes and check that is cales correctly ?
-> 
-> Thanks,
-> Neil
-> 
-
-Hi Neil,
-
-I made a Debugging patch that track the freq and gear in UFS devfreq and 
-clkscale path. I do data transfer from userspace and print out devfreq 
-target freq , clkscale recommended freq , final clkscale freq and gear 
-value of before and after clkscale.
-
-For example, we can get such logs on SM8550 as below:
-
-[    5.424720] [DEBUG]ufshcd_devfreq_target: target freq = 75000000
-[    5.509541] [DEBUG]ufshcd_devfreq_target: recommended freq = 75000000
-[    5.525463] [DEBUG]ufshcd_devfreq_target: final freq = 75000000
-[    5.525464] [DEBUG]ufshcd_devfreq_target: scaling DOWN from freq 
-300000000 to freq 75000000
-[    5.525468] [DEBUG]ufshcd_devfreq_scale: freq 75000000 mapped to gear 
-1 , caller: ufshcd_devfreq_target+0x298/0x3e4
-[    5.525531] [DEBUG]ufshcd_devfreq_scale: scaling DOWN gear from 4 -> 1
-[    5.728018] [DEBUG]ufshcd_devfreq_target: updated target freq to 75000000
-
-
-.. G1 -> G4...
-
-[  261.068843] [DEBUG]ufshcd_devfreq_target: target freq = 300000000
-[  261.075242] [DEBUG]ufshcd_devfreq_target: recommended freq = 300000000
-[  261.082055] [DEBUG]ufshcd_devfreq_target: final freq = 300000000
-[  261.088280] [DEBUG]ufshcd_devfreq_target: scaling UP from freq 
-75000000 to freq 300000000
-[  261.096743] ufshcd-qcom 1d84000.ufshc: 
-ufshcd_is_devfreq_scaling_required: req_freq= 300000000, target_freq = 
-75000000
-[  261.107814] [DEBUG]ufshcd_devfreq_scale: freq 300000000 mapped to 
-gear 4 , caller: ufshcd_devfreq_target+0x298/0x3e4
-[  261.126922] [DEBUG]ufshcd_devfreq_scale: scaling UP gear from 1 -> 4
-[  261.134810] [DEBUG]ufshcd_devfreq_target: updated target freq to 
-300000000
-[  261.196460] [DEBUG]ufshcd_devfreq_target: target freq = 244755397
-[  261.210039] [DEBUG]ufshcd_devfreq_target: recommended freq = 300000000
-[  261.216900] [DEBUG]ufshcd_devfreq_target: final freq = 300000000
-[  261.223135] [DEBUG]ufshcd_devfreq_target: scaling DOWN from freq 
-300000000 to freq 300000000
-[  261.231872] ufshcd-qcom 1d84000.ufshc: 
-ufshcd_is_devfreq_scaling_required: req_freq= 300000000, target_freq = 
-300000000
-[  261.243017] [DEBUG]ufshcd_devfreq_target: scaling DOWN from freq 
-300000000 to freq 300000000 not required
-
-
-.. G4 -> G2...
-
-[  455.604414] [DEBUG]ufshcd_devfreq_target: target freq = 149736604
-[  455.617895] [DEBUG]ufshcd_devfreq_target: recommended freq = 150000000
-[  455.624702] [DEBUG]ufshcd_devfreq_target: final freq = 150000000
-[  455.630936] [DEBUG]ufshcd_devfreq_target: scaling DOWN from freq 
-300000000 to freq 150000000
-[  455.639656] ufshcd-qcom 1d84000.ufshc: 
-ufshcd_is_devfreq_scaling_required: req_freq= 150000000, target_freq = 
-300000000
-[  455.650838] [DEBUG]ufshcd_devfreq_scale: freq 150000000 mapped to 
-gear 2 , caller: ufshcd_devfreq_target+0x298/0x3e4
-[  455.661809] [DEBUG]ufshcd_devfreq_scale: scaling DOWN gear from 4 -> 2
-[  455.670529] [DEBUG]ufshcd_devfreq_target: updated target freq to 
-150000000
-
-
-...G2 -> G1
-
-[  548.484492] [DEBUG]ufshcd_devfreq_target: target freq = 75000000
-[  548.497957] [DEBUG]ufshcd_devfreq_target: recommended freq = 75000000
-[  548.504801] [DEBUG]ufshcd_devfreq_target: final freq = 75000000
-[  548.510949] [DEBUG]ufshcd_devfreq_target: scaling DOWN from freq 
-150000000 to freq 75000000
-[  548.519590] ufshcd-qcom 1d84000.ufshc: 
-ufshcd_is_devfreq_scaling_required: req_freq= 75000000, target_freq = 
-150000000
-[  548.530725] [DEBUG]ufshcd_devfreq_scale: freq 75000000 mapped to gear 
-1 , caller: ufshcd_devfreq_target+0x298/0x3e4
-[  548.552850] [DEBUG]ufshcd_devfreq_scale: scaling DOWN gear from 2 -> 1
-
-
--Ziqi
-
 >>
->> v1 -> v2:
->> 1. Withdraw old patch 8/8 "ARM: dts: msm: Use Operation Points V2 for 
->> UFS on SM8650"
->> 2. Add new patch 8/8 "ABI: sysfs-driver-ufs: Add missing UFS sysfs 
->> addributes"
->> 3. Modify commit message for  "scsi: ufs: core: Pass target_freq to 
->> clk_scale_notify() vops" and "scsi: ufs: qcom: Pass target_freq to clk 
->> scale pre and post change"
->> 4. In "scsi: ufs: qcom: Pass target_freq to clk scale pre and post 
->> change", use common Macro HZ_PER_MHZ in function 
->> ufs_qcom_set_core_clk_ctrl()
->> 5. In "scsi: ufs: qcom: Implement the freq_to_gear_speed() vops", 
->> print out freq and gear info as debugging message
->> 6. In "scsi: ufs: core: Enable multi-level gear scaling", rename the 
->> lable "do_pmc" to "config_pwr_mode"
->> 7. In "scsi: ufs: core: Toggle Write Booster during clock", initialize 
->> the local variables "wb_en" as "false"
+>> On 1/23/2025 4:43 PM, Dmitry Baryshkov wrote:
+>>> On Thu, Jan 23, 2025 at 03:19:21PM +0530, Ekansh Gupta wrote:
+>>>>
+>>>> On 1/23/2025 1:18 PM, Dmitry Baryshkov wrote:
+>>>>> On Thu, Jan 23, 2025 at 11:16:41AM +0530, Ekansh Gupta wrote:
+>>>>>> On 10/7/2024 7:27 PM, Dmitry Baryshkov wrote:
+>>>>>>> On Mon, Oct 07, 2024 at 02:15:15PM GMT, Ekansh Gupta wrote:
+>>>>>>>> InvokeV2 request is intended to support multiple enhanced invoke
+>>>>>>>> requests like CRC check, performance counter enablement and polling
+>>>>>>>> mode for RPC invocations. CRC check is getting enabled as part of
+>>>>>>>> this patch. CRC check for input and output argument helps in ensuring
+>>>>>>>> data consistency over a remote call. If user intends to enable CRC
+>>>>>>>> check, first local user CRC is calculated at user end and a CRC buffer
+>>>>>>>> is passed to DSP to capture remote CRC values. DSP is expected to
+>>>>>>>> write to the remote CRC buffer which is then compared at user level
+>>>>>>>> with the local CRC values.
+>>>>>>> This doesn't explain why this is necessary. Why do you need to checksum
+>>>>>>> arguments?
+>>>>>> This helps if the user suspects any data inconsistencies in the buffers passed to DSP over
+>>>>>> remote call. This is not enabled by default and user can enable it as per their reqirement.
+>>>>>> I'll add this information.
+>>>>> An inconsistency where? Between the kernel and the DSP? Between the user
+>>>>> and the DSP? Does it cover buffer contents or just the addresses?
+>>>> Inconsistency between user and DSP. crc_user is calculated at user library before
+>>>> making ioctl call and it is compared against the crc data which is filled by DSP and
+>>>> copied to user.
+>>>> This covers inconsistency in buffer contents.
+>>> What is the reason for possible inconsistencies? Is it a debugging
+>>> feature?
+>> This is a debugging feature. Buffer data corruption might result in inconsistency.
+>>>>>>> Also, what if the DSP firmware doesn't support CRC? How should userspace
+>>>>>>> know that?
+>>>>>> CRC support on DSP is there since long time(>6years).
+>>>>> This doesn't give us a lot. Upstream kernel supports fastrpc since
+>>>>> MSM8916 and MSM8996. Do those platforms support CRC?
+>>>> The metadata buffer as of today also carries space for CRC information:
+>>>> https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/tree/drivers/misc/fastrpc.c#n877
+>>>>
+>>>> So this is common across all platforms.
+>>>>
+>>>> In case CRC is not supported on any older platform, it would result in crc mismatch at user library.
+>>>> As of now a warning is getting logged there, I can add the information suggesting the failure might
+>>>> also occur if CRC is not supported.
+>>> Logs go to /dev/null, they are ignored by users, etc. So either there
+>>> should be an actual error being returned by the kernel / library, or it
+>>> can be completely ignored and skipped.
+>>>
+>>> So, do MSM8916 / MSM8996 / SDM845 support CRC? If not, that must be
+>>> handled somehow.
+>> I see it's supported on SDM845 but not on MSM89##. I'll just send the new patch version for now
+>> as CRC mismatch failures are getting ignored.
+> Please clearly document which platforms don't support CRC feature, the
+> implications and the possible (userspace) impact. E.g. if the kernel
+> logs a message for each call with failed CRC case, then this might cause
+> a serious slowdown. Likewise a userspace lib might cause a slowdown.
+>
+> In fact, if CRC is a debugging feature, is it going to be enabled or
+> disabled by default?
+>
+>>>>> And if they do, why do we need the invoke_v2? Can we modify existing
+>>>>> code instead?
+>>>> invoke_v2 is needed because there is a need to pass user crc pointer over ioctl call which
+>>>> cannot be achieved using existing code. Also there are plans to add more features to this
+>>>> invoke_v2 request which will carry some information from user.
+>>> Is it really extensible without breaking the ABI?
+>> I'm planning to keep reserved bits in uapi struct for the same. Do you see any
+>> problem with this?
+> Please keep Greg's comment in mind - verify that all reserved fields are
+> zero.
+Yes, I'll be ensuring checks for reserved fields.
+>
+>>>>>> From user space CRC check failure is
+>>>>>> not fatal and is printed as a warning. But if copy of CRC to user fails, it will result in remote
+>>>>>> call failure. Should I keep it as fatal considering that ever very old DSP support this or should
+>>>>>> I consider the copy failure as non-fatal as userspace is treating this as a warning?
+>>>>> warnings can remain unseen for a long time. Consider a GUI app. Nobody
+>>>>> is there to view kernel warnings or library output.
+>>>> Let me see if this can be done. Are you suggesting that the app will be somewhat tracking
+>>>> if there is any crc check mismatch failures?
+>>> I suggest returning -EIO to the app.
+>> I'll check this.
+>>>>>>>> Signed-off-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
+>>>>>>>> ---
+>>>>>>>>  drivers/misc/fastrpc.c      | 161 ++++++++++++++++++++++++------------
+>>>>>>>>  include/uapi/misc/fastrpc.h |   7 ++
+>>>>>>>>  2 files changed, 116 insertions(+), 52 deletions(-)
+>>>>>>>>
+>>>>>>>> diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
+>>>>>>>> index 74181b8c386b..8e817a763d1d 100644
+>>>>>>>> --- a/drivers/misc/fastrpc.c
+>>>>>>>> +++ b/drivers/misc/fastrpc.c
+>>>>>>>> @@ -573,13 +573,15 @@ static void fastrpc_get_buff_overlaps(struct fastrpc_invoke_ctx *ctx)
+>>>>>>>>  
+>>>>>>>>  static struct fastrpc_invoke_ctx *fastrpc_context_alloc(
+>>>>>>>>  			struct fastrpc_user *user, u32 kernel, u32 sc,
+>>>>>>>> -			struct fastrpc_invoke_args *args)
+>>>>>>>> +			struct fastrpc_invoke_v2 *inv2)
+>>>>>>>>  {
+>>>>>>>>  	struct fastrpc_channel_ctx *cctx = user->cctx;
+>>>>>>>>  	struct fastrpc_invoke_ctx *ctx = NULL;
+>>>>>>>> +	struct fastrpc_invoke_args *args = NULL;
+>>>>>>> Why do you need to init to NULL if you are going to set it two lines
+>>>>>>> below?
+>>>>>>>
+>>>>>>>>  	unsigned long flags;
+>>>>>>>>  	int ret;
+>>>>>>>>  
+>>>>>>>> +	args = (struct fastrpc_invoke_args *)inv2->inv.args;
+>>>>>>> Why does it need a typecast?
+>>>>>>>
+>>>>>>>>  	ctx = kzalloc(sizeof(*ctx), GFP_KERNEL);
+>>>>>>>>  	if (!ctx)
+>>>>>>>>  		return ERR_PTR(-ENOMEM);
+>>>>>>>> @@ -611,6 +613,7 @@ static struct fastrpc_invoke_ctx *fastrpc_context_alloc(
+>>>>>>>>  	/* Released in fastrpc_context_put() */
+>>>>>>>>  	fastrpc_channel_ctx_get(cctx);
+>>>>>>>>  
+>>>>>>>> +	ctx->crc = (u32 *)(uintptr_t)inv2->crc;
+>>>>>>> Oh, but why? Also is it a user pointer or in-kernel data? If it's a
+>>>>>>> user-based pointer, where is the accessiblity check? Why isn't it
+>>>>>>> annotated properly?
+>>>>>> This is a user pointer where the crc data is expected to be copied. There is no
+>>>>>> other access to this pointer from kernel. I'm planning to change the data type
+>>>>>> for crc as (void __user*) inside fastrpc_invoke_ctx structure.
+>>>>> Yes, please. Also make sure that sparse doesn't add any warnings
+>>>>> regarding pointer conversions.
+>>>> Ack.
+>>>>>>>>  	ctx->sc = sc;
+>>>>>>>>  	ctx->retval = -1;
+>>>>>>>>  	ctx->pid = current->pid;
+>>>>>>>> @@ -1070,6 +1073,7 @@ static int fastrpc_put_args(struct fastrpc_invoke_ctx *ctx,
+>>>>>>>>  	struct fastrpc_invoke_buf *list;
+>>>>>>>>  	struct fastrpc_phy_page *pages;
+>>>>>>>>  	u64 *fdlist;
+>>>>>>>> +	u32 *crclist;
+>>>>>>>>  	int i, inbufs, outbufs, handles;
+>>>>>>>>  
+>>>>>>>>  	inbufs = REMOTE_SCALARS_INBUFS(ctx->sc);
+>>>>>>>> @@ -1078,6 +1082,7 @@ static int fastrpc_put_args(struct fastrpc_invoke_ctx *ctx,
+>>>>>>>>  	list = fastrpc_invoke_buf_start(rpra, ctx->nscalars);
+>>>>>>>>  	pages = fastrpc_phy_page_start(list, ctx->nscalars);
+>>>>>>>>  	fdlist = (uint64_t *)(pages + inbufs + outbufs + handles);
+>>>>>>>> +	crclist = (u32 *)(fdlist + FASTRPC_MAX_FDLIST);
+>>>>>>> I think we should rewrite this parsing somehow. Is the format of data
+>>>>>>> documented somewhere?
+>>>>>> fdlist, crclist and poll(planned) are the only pointers that is being used. I'm planning
+>>>>>> to store these pointers to ctx structure and directly use it wherever needed. This will
+>>>>>> clean-up this unnecessary calculations at multiple places.
+>>>>> Please do. Nevertheless, the format also must be documented.
+>>>> Ack.
+>>>>>>>>  
+>>>>>>>>  	for (i = inbufs; i < ctx->nbufs; ++i) {
+>>>>>>>>  		if (!ctx->maps[i]) {
+>>>>>>>> @@ -1102,6 +1107,12 @@ static int fastrpc_put_args(struct fastrpc_invoke_ctx *ctx,
+>>>>>>>>  			fastrpc_map_put(mmap);
+>>>>>>>>  	}
+>>>>>>>>  
+>>>>>>>> +	if (ctx->crc && crclist && rpra) {
+>>>>>>>> +		if (copy_to_user((void __user *)ctx->crc, crclist,
+>>>>>>>> +				FASTRPC_MAX_CRCLIST * sizeof(u32)))
+>>>>>>> Oh, so it's a user pointer. Then u32* was completely incorrect.
+>>>>>>> Also you are copying FASTRPC_MAX_CRCLIST elements. Are all of them
+>>>>>>> filled? Or are we leaking some data to userspace?
+>>>>>> Yes, right. Planning clean-up in next patch.
+>>>>>>
+>>>>>> All of FASTRPC_MAX_CRCLIST is filled with crc data by DSP so copying should be fine.
+>>>>> Huh? I definitely want to see documentation for function arguments.
+>>>> Sure. I'll also modify the metadata layout doc here to add fdlist, CRC and other planned contents.
+>>>> https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/tree/drivers/misc/fastrpc.c#n842
+>>> This is not a documentation. E.g. I can not write code using that
+>>> description. For example, it mentions neither FDLIST nor CRC.
+>> I'm planning to add complete documentation for CRC and polling mode in user library project.
+>> If I need to add documentation in driver, can you pls suggest what is the right place to add
+>> the information?
+> Library should be fine. We don't require documenting all hardware in the
+> kernel. But the uAPI of the driver should be properly described.
+Understood, thanks.
+
+--ekansh
+>
+>> Thanks for your comments.
 >>
->> Can Guo (6):
->>    scsi: ufs: core: Pass target_freq to clk_scale_notify() vops
->>    scsi: ufs: qcom: Pass target_freq to clk scale pre and post change
->>    scsi: ufs: core: Add a vops to map clock frequency to gear speed
->>    scsi: ufs: qcom: Implement the freq_to_gear_speed() vops
->>    scsi: ufs: core: Enable multi-level gear scaling
->>    scsi: ufs: core: Toggle Write Booster during clock scaling base on
->>      gear speed
->>
->> Ziqi Chen (2):
->>    scsi: ufs: core: Check if scaling up is required when disable clkscale
->>    ABI: sysfs-driver-ufs: Add missing UFS sysfs addributes
->>
->>   Documentation/ABI/testing/sysfs-driver-ufs | 31 ++++++++++
->>   drivers/ufs/core/ufshcd-priv.h             | 17 +++++-
->>   drivers/ufs/core/ufshcd.c                  | 71 ++++++++++++++++------
->>   drivers/ufs/host/ufs-mediatek.c            |  1 +
->>   drivers/ufs/host/ufs-qcom.c                | 66 +++++++++++++++-----
->>   include/ufs/ufshcd.h                       |  8 ++-
->>   6 files changed, 159 insertions(+), 35 deletions(-)
->>
-> 
+>> --ekansh
+>>>>>>>> +			return -EFAULT;
+>>>>>>>> +	}
+>>>>>>>> +
+>>>>>>>>  	return 0;
+>>>>>>>>  }
+>>>>>>>>  
+
 
