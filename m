@@ -1,161 +1,181 @@
-Return-Path: <linux-arm-msm+bounces-46087-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46088-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 92789A1B55A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Jan 2025 13:11:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 005ECA1B5A5
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Jan 2025 13:22:52 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CB5CF16BD81
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Jan 2025 12:11:06 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 50438160245
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Jan 2025 12:22:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 269D11D5CF5;
-	Fri, 24 Jan 2025 12:11:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8C1D221B1BE;
+	Fri, 24 Jan 2025 12:22:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="MoIne5Pk"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="kBiFRCYN"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.15])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59F951B3948;
-	Fri, 24 Jan 2025 12:11:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.15
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D090221B19F;
+	Fri, 24 Jan 2025 12:22:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737720664; cv=none; b=Geh1oGzvnzHNgTJJD19sISYF32T6ANK825Xe7b6J7Zk3NSLIPH+2zEWqEC62Uv7xPaTsdRfbKxx5CggWy1Tf7LmH1VUflp2ASg4rnu3VKAFpr8QzhaEbphj9AJFAY2MywkpSjj620SRit+j+c7A5Xk4hrjqNvLA/4nTqGVxwtF4=
+	t=1737721362; cv=none; b=bLRMp+opkjm66xCDAPhEMw2vLXEiVBAawMSd8TbBJInv/mWbPBGk1L2b956c/IHNucabHblAOuTltGEQQftLtS1OzSFFSmZ9cTOgkMBLafDRi1oD9+Dt/X8qepLqL+fH7olRzQHDJ+buzRhw6ox09qntpSoXvorKH72q1labZvQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737720664; c=relaxed/simple;
-	bh=qptnCHNMB73+vqIXSqvEAVXSysWH2Gf5geZ/NcRp2VA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=EzNaBE4VuEHp7kvUxlBJNiDbYW81EtBfUCBQj6TP6gK2OxgkGLZxL70Nd+YPeS6Tx9368EnqsUz3lkpuPXjxs8XOtZmno1y0HlTTAIIqnKAcrL7Xx09YcIj7u9oMYp7HqPIHNGMT2WSx0XSXztrTMjYnAIqi+rV9dd8cwISvBRA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=MoIne5Pk; arc=none smtp.client-ip=192.198.163.15
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1737720663; x=1769256663;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:content-transfer-encoding:in-reply-to;
-  bh=qptnCHNMB73+vqIXSqvEAVXSysWH2Gf5geZ/NcRp2VA=;
-  b=MoIne5PkkFMs8PSaTInIVke9i6OBXlwVwgIKKl8PDsXrMuw3YWz5kp3Q
-   bVt9bK4TaTtn+1c1gHlqcrCXQMkMbyHBwSyDw9cHu+Qfa4SmcdcTMxWxS
-   +wHmM+dRxYE3qTuaxHorRbJWw1/MP6Z30xZ3AyrCWXfRexdVi0JvBsMgw
-   5wWMdBhWHDZbEP4u0NlZaCb+lUpmRNS91/FfTN5qOcCIvKq5yAPpSnDSe
-   r9ODnU18XkZMzlk2TOJgDxxCDMkiKQ+buLznQ5KPwVboZRDEbJ8u9GQLr
-   96TsZsfxSlJ3JWO60/tYUGYN6boBzjrIzCYcJHDdDnZ4H2EJQpGxB98m2
-   Q==;
-X-CSE-ConnectionGUID: 4ynDvOruQDyIWW4ed8bfDg==
-X-CSE-MsgGUID: V1XHPLkpRr2dua3DPvAiUw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11325"; a="38417205"
-X-IronPort-AV: E=Sophos;i="6.13,231,1732608000"; 
-   d="scan'208";a="38417205"
-Received: from fmviesa008.fm.intel.com ([10.60.135.148])
-  by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Jan 2025 04:11:02 -0800
-X-CSE-ConnectionGUID: zgn7aJ5lTUeOnvcWQlEo0A==
-X-CSE-MsgGUID: FI4smmPdShGeyJd1O7Vhtw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.13,231,1732608000"; 
-   d="scan'208";a="107877689"
-Received: from stinkpipe.fi.intel.com (HELO stinkbox) ([10.237.72.74])
-  by fmviesa008.fm.intel.com with SMTP; 24 Jan 2025 04:10:55 -0800
-Received: by stinkbox (sSMTP sendmail emulation); Fri, 24 Jan 2025 14:10:54 +0200
-Date: Fri, 24 Jan 2025 14:10:54 +0200
-From: Ville =?iso-8859-1?Q?Syrj=E4l=E4?= <ville.syrjala@linux.intel.com>
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-	Dave Airlie <airlied@redhat.com>,
-	Jocelyn Falempe <jfalempe@redhat.com>,
-	Rob Clark <robdclark@gmail.com>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Sean Paul <sean@poorly.run>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	Kalyan Thota <quic_kalyant@quicinc.com>,
-	dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
-	Simona Vetter <simona.vetter@ffwll.ch>
-Subject: Re: [PATCH 0/6] drm: introduce atomic_needs_modeset() callbacks
-Message-ID: <Z5ODTg9iTjNKggzN@intel.com>
-References: <20250124-atomic-needs-modeset-v1-0-b0c05c9eda0f@linaro.org>
+	s=arc-20240116; t=1737721362; c=relaxed/simple;
+	bh=3070F8k4oMWQWeOnpNtigrjl5rR5EysvkU4DqoFDD3M=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=m0EkHXgL0hNHajiCU5ct17k9Xp8mdZxQMjU2tBsV5wZUFMpB+LcwlChjXQH8bdfGWvVZ+gV1Rs7uQs6ezx2KGLr2Yke2hj6AjfmtMKhcRemOgOuJNbEVAPJkf+q2yS2KRgbow1/AHnrPsPLDicb12Q1/D/59XYIcEgG23l/TYzA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=kBiFRCYN; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50OBrbji008568;
+	Fri, 24 Jan 2025 12:22:35 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	mF0lG9JJJ/RmBA+CiPEn9CWgwPAiC83uRRhPGJMn/is=; b=kBiFRCYNuKVS7Yg7
+	5V5Iqg9weLeA32R0baeqpyrue0oK5cgvgBFBDgo7ffmQucsXN+Yz09+qDLl4wBda
+	LJ3GimSwRRDsqavDKZQiXts31VTOEzsROR7G8Q1DeAAdDptTpRVnSynsp3yA6+qA
+	tfWH68Qx6u6hyBzkjn4VauQST/M5eBVAy4p/bQkXITbF/wJEpdJ9HLWVHcbIoBe8
+	isx1iLXzRalSNaprZw2iYNaEhJ+CG7czOpSw2IJ8TetPmUx13aSqUbVjkBAREDA+
+	ElCd52DQWlt95wOPQbT5WpcXLsKDfg3oz0AtIILXbsJ3avYrsDKWOjZbP/4n7YuE
+	v867kw==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44cacr82au-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 24 Jan 2025 12:22:35 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 50OCMYpO012957
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 24 Jan 2025 12:22:34 GMT
+Received: from [10.216.19.102] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 24 Jan
+ 2025 04:22:28 -0800
+Message-ID: <da7b9678-76cc-4e45-89e9-4e8d9c9a2005@quicinc.com>
+Date: Fri, 24 Jan 2025 17:52:24 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250124-atomic-needs-modeset-v1-0-b0c05c9eda0f@linaro.org>
-X-Patchwork-Hint: comment
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 2/8] dt-bindings: i2c: qcom,i2c-geni: Add support for
+ selecting data transfer mode
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC: <andi.shyti@kernel.org>, <robh@kernel.org>, <krzk+dt@kernel.org>,
+        <conor+dt@kernel.org>, <gregkh@linuxfoundation.org>,
+        <jirislaby@kernel.org>, <broonie@kernel.or>, <andersson@kernel.org>,
+        <konradybcio@kernel.org>, <johan+linaro@kernel.org>,
+        <dianders@chromium.org>, <agross@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-i2c@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-serial@vger.kernel.org>, <linux-spi@vger.kernel.org>,
+        <quic_msavaliy@quicinc.com>, <quic_anupkulk@quicinc.com>
+References: <20250124105309.295769-1-quic_vdadhani@quicinc.com>
+ <20250124105309.295769-3-quic_vdadhani@quicinc.com>
+ <r4zfoaub3dwkirdbsolbl56xxa7ax5eusb2256c7ezlyl2s3vh@hit4g5cpzijw>
+Content-Language: en-US
+From: Viken Dadhaniya <quic_vdadhani@quicinc.com>
+In-Reply-To: <r4zfoaub3dwkirdbsolbl56xxa7ax5eusb2256c7ezlyl2s3vh@hit4g5cpzijw>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 97DMXRCQ8BgMIphNNQ6Lb3ZJdMOGO9vB
+X-Proofpoint-ORIG-GUID: 97DMXRCQ8BgMIphNNQ6Lb3ZJdMOGO9vB
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-01-24_05,2025-01-23_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999 adultscore=0
+ impostorscore=0 phishscore=0 mlxscore=0 malwarescore=0 clxscore=1015
+ bulkscore=0 lowpriorityscore=0 spamscore=0 suspectscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2501240090
 
-On Fri, Jan 24, 2025 at 01:14:18PM +0200, Dmitry Baryshkov wrote:
-> There are several drivers which attempt to upgrading the commit to the
-> full mode set from their per-object atomic_check() callbacks without
-> calling the drm_atomic_helper_check_modeset() or
-> drm_atomic_helper_check() again (as requested by those functions).
 
-I don't really understand why any of that is supposedly necessary.
-drm_atomic_helper_check_modeset() is really all about the
-connector routing stuff, so if none of that is changing then there
-is no point in calling it again. Eg. in i915 we call it just at
-the start, and later on we flag internal modesets all over the
-place, but none of those need drm_atomic_helper_check_modeset()
-because nothing routing related will have changed.
+
+On 1/24/2025 4:48 PM, Dmitry Baryshkov wrote:
+> On Fri, Jan 24, 2025 at 04:23:03PM +0530, Viken Dadhaniya wrote:
+>> Data transfer mode is fixed by TrustZone (TZ), which currently restricts
+>> developers from modifying the transfer mode from the APPS side.
+>>
+>> Document the 'qcom,xfer-mode' properties to select the data transfer mode,
+>> either GPI DMA (Generic Packet Interface) or non-GPI mode (PIO/CPU DMA).
+>>
+>> I2C controller can operate in one of two modes based on the
+>> 'qcom,xfer-mode' property, and the firmware is loaded accordingly.
+> 
+> Is it possible to load the firmware after it being loaded by TZ? Is it
+> possible to change the mode at runtime too?
+
+No, firmware can be loaded either from the TZ side or APPS side.
+
+In non-GPI mode, the transfer mode will change runtime between PIO and 
+CPU DMA based on the data length.
+
+We need to update the device tree property(qcom,xfer-mode) to change the 
+mode between non-GPI and GPI.
 
 > 
-> As discussed on IRC, add separate atomic_needs_modeset() callbacks,
-> whose only purpose is to allow the plane, connector, encoder or CRTC to
-> specify that for whatever reasons corresponding CRTC should undergo a
-> full modeset. The helpers will call these callbacks in a proper place,
-> adding affected objects and calling required functions as required.
+>>
+>> Co-developed-by: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
+>> Signed-off-by: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
+>> Signed-off-by: Viken Dadhaniya <quic_vdadhani@quicinc.com>
+>> ---
+>>
+>> v1 -> v2:
+>>
+>> - Drop 'qcom,load-firmware' property and add 'firmware-name' property in
+>>    qup common driver.
+>> - Update commit log.
+>>
+>> v1 Link: https://lore.kernel.org/linux-kernel/20241204150326.1470749-2-quic_vdadhani@quicinc.com/
+>> ---
+>> ---
+>>   .../devicetree/bindings/i2c/qcom,i2c-geni-qcom.yaml        | 7 +++++++
+>>   1 file changed, 7 insertions(+)
+>>
+>> diff --git a/Documentation/devicetree/bindings/i2c/qcom,i2c-geni-qcom.yaml b/Documentation/devicetree/bindings/i2c/qcom,i2c-geni-qcom.yaml
+>> index 9f66a3bb1f80..68e4bf0c84d1 100644
+>> --- a/Documentation/devicetree/bindings/i2c/qcom,i2c-geni-qcom.yaml
+>> +++ b/Documentation/devicetree/bindings/i2c/qcom,i2c-geni-qcom.yaml
+>> @@ -66,6 +66,12 @@ properties:
+>>     required-opps:
+>>       maxItems: 1
+>>   
+>> +  qcom,xfer-mode:
+>> +    description: Set the value to 1 for non-GPI (FIFO/CPU DMA) mode and 3 for GPI DMA mode.
+>> +      The default mode is FIFO.
+>> +    $ref: /schemas/types.yaml#/definitions/uint32
+>> +    enum: [1, 3]
+>> +
+>>   required:
+>>     - compatible
+>>     - interrupts
+>> @@ -142,5 +148,6 @@ examples:
+>>           interconnect-names = "qup-core", "qup-config", "qup-memory";
+>>           power-domains = <&rpmhpd SC7180_CX>;
+>>           required-opps = <&rpmhpd_opp_low_svs>;
+>> +        qcom,xfer-mode = <1>;
 > 
-> The MSM patches depend on the msm-next tree and the series at [1]. The
-> plan is to land core changes through drm-misc, then merge drm-misc-next
-> into msm-next and merge remaining msm-specific patches through the
-> msm-next tree.
-> 
-> [1] https://lore.kernel.org/dri-devel/20250123-drm-dirty-modeset-v2-0-bbfd3a6cd1a4@linaro.org/
-> 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
-> Dmitry Baryshkov (6):
->       drm/atomic-helper: add atomic_needs_modeset callbacks
->       drm/mgag200: move format check to drm_plane_helper.atomic_needs_modeset
->       drm/msm/dpu: stop upgrading commits by enabling allow_modeset
->       drm/msm/dpu: move CTM check to drm_crtc_helper.atomic_needs_modeset
->       drm/msm/dpu: use atomic_needs_modeset for CDM check
->       drm/msm: drop msm_atomic_check wrapper
-> 
->  drivers/gpu/drm/drm_atomic_helper.c         | 59 ++++++++++++++++++
->  drivers/gpu/drm/mgag200/mgag200_drv.h       |  2 +
->  drivers/gpu/drm/mgag200/mgag200_mode.c      | 27 ++++++---
->  drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c    | 15 +++++
->  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 44 +++++++++-----
->  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h |  4 --
->  drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c     | 26 --------
->  drivers/gpu/drm/msm/msm_atomic.c            | 29 ---------
->  drivers/gpu/drm/msm/msm_drv.h               |  1 -
->  drivers/gpu/drm/msm/msm_kms.c               |  2 +-
->  drivers/gpu/drm/msm/msm_kms.h               |  7 ---
->  include/drm/drm_modeset_helper_vtables.h    | 92 +++++++++++++++++++++++++++++
->  12 files changed, 219 insertions(+), 89 deletions(-)
-> ---
-> base-commit: 0936f0e54426177b0f0263ddf806ed5e13487db6
-> change-id: 20250123-atomic-needs-modeset-8f6a8243a3f7
-> prerequisite-change-id: 20241222-drm-dirty-modeset-88079bd27ae6:v2
-> prerequisite-patch-id: 0c61aabfcd13651203f476985380cbf4d3c299e6
-> prerequisite-patch-id: c6026f08011c288fd301676e9fa6f46d0cc1dab7
-> prerequisite-patch-id: b0cb06d5c88791d6e4755d879ced0d5050aa3cbf
-> prerequisite-patch-id: fd72ddde9dba0df053113bc505c213961a9760da
-> 
-> Best regards,
-> -- 
-> Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> What does <1> mean? Please provide corresponding defines.
 
--- 
-Ville Syrjälä
-Intel
+Do we need to add a string instead of a number, like 
+include/dt-bindings/dma/qcom-gpi.h?
+
+> 
+>>       };
+>>   ...
+>> -- 
+>> 2.34.1
+>>
+> 
 
