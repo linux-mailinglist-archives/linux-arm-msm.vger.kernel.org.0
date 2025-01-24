@@ -1,319 +1,197 @@
-Return-Path: <linux-arm-msm+bounces-46105-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46106-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 43462A1BA28
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Jan 2025 17:17:00 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B0EDAA1BBD4
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Jan 2025 19:00:46 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 23B74188ECDC
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Jan 2025 16:17:04 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id EA18F16E442
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Jan 2025 18:00:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DAAFE18E057;
-	Fri, 24 Jan 2025 16:16:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F0A601D6DA8;
+	Fri, 24 Jan 2025 18:00:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="qwwZg5/c"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="nukJZVwj"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f180.google.com (mail-lj1-f180.google.com [209.85.208.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85B19156649
-	for <linux-arm-msm@vger.kernel.org>; Fri, 24 Jan 2025 16:16:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19620154435;
+	Fri, 24 Jan 2025 18:00:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737735382; cv=none; b=HcZ4kenAoXIvgtRO46j+7TV/ZKcm6Y0Mc9Sust7YLBdMDGQn5gZotc1a4TVEFvFHY48+0FgAuRZpUKIaWj1PbKristqwFnw7mQ9/NtLH2Q7XIRma+4WlbRvhI/sq2AqKqXB+kuY0XR+c3swFRDgMOglyjyqGctZANebiaUhHJes=
+	t=1737741642; cv=none; b=RNoVq542ncoDULv7s0tR3RSne33Prfemt7YRlDeGgROd2NXbAFeK5pj/DVaSOJ7lDQUscaQYuI4u/r4PtyKjJ8JORp10XofY5/MRr1QINd05H34E792CQ97udr82LTGVhj1yzy4ld+iv42XRIY3b3kqmCn4b7zpruNiE/paLfPA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737735382; c=relaxed/simple;
-	bh=tPiKxvdW4QIfgwE1yL88PQ8mPjsbrvlWdVp5z2N7i7A=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Oub1xJCVdbdENVYxd6Cd42vvpftlpVv43QKu4sUV++UZzZTSLa9NFiPJNJlaLjHWv860Ia21zxaeUISkwgqXZ2evuVQiBenWIOMzHMhUR5P0kgV8jiHdC4aD+w6eeKbqbHPKuzfeuuhaX+TgHZVkn0KR5nFwOo+MZqnjSmpo44k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=qwwZg5/c; arc=none smtp.client-ip=209.85.208.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f180.google.com with SMTP id 38308e7fff4ca-30762598511so23409211fa.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Jan 2025 08:16:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1737735378; x=1738340178; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=oYp13GB+TgpIfTeDyYURucWo4oKSuneBn3ZxtgkJtuA=;
-        b=qwwZg5/cmVVICuRf6U4bwaOQ/ixZSG2Gt1pnlhDW2QPL/9se4yp+9TCwhPx5T1tv9M
-         5oncN+s22oJdr4P0cGaCiN1QDg2/GpzpfFsOYjbvbCe0uV10LvMiydgc6FqNgNkTGn12
-         0PkaaACl9ByyNQGtII6CeqUHeU+ParQ8vT7tRDyqH6BnkYPLS59ceh1PsXQJcilpHwxO
-         XYBu/soqddeOHxDb5VdEhQafeJAUVIcyYOpjYAcSoAlACX7CL6XKXXwkKa+yDNaMED4+
-         eg4+K2TpJN1mGfLt+u9UZL7awNEpLyKmN4Y2frUu3f2mZ69GphfIm9aDWyWZ63JCkVoF
-         4Nsw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1737735378; x=1738340178;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=oYp13GB+TgpIfTeDyYURucWo4oKSuneBn3ZxtgkJtuA=;
-        b=OZbFFTwKqLebkoWQ0z1Nl8THCiyH5jXP6M8N1flJsgWXs/SFz2b77386tIVGuULyLO
-         9qXrJV9olvA0gxUL6E60hl63uHrWEktKkbAXmJkcHSE9yfQhhvk/xqVZWHYY9sc1wDjO
-         Lk9arrTmsf5ecIv7gBMzmAS0XZ1idO2c5OVLgfbuhoRzujdS+09u8QS4XzJQMkvZ4iYs
-         Z/+0kBoXVrsEtLpRZAZ6gJVjeVOaj4PdVIH/HgNrPjCQ9zoRuXx/PtRLcctPKJBOLA5g
-         m7WxnKIoOHSpD3rV17TOO+dDG2zqz8jjDeOhNBrhhXUGpV4/6pK5QTFcWbEpYZC3O0iG
-         agTg==
-X-Forwarded-Encrypted: i=1; AJvYcCXcSmOwK4GZixjfav2tNav024NVO33hK+3TMxY5Msq2qlaV2e6xXanfNFEpXx54f2T36BaG5i2gAdyBMcl2@vger.kernel.org
-X-Gm-Message-State: AOJu0YxRMNPy478JLbFoaFKnZ2b1VU5oOvBNGDTeKC0+rzQDfW+QkZqg
-	QBRwXo781QizcM3RlGlzExnZ+yDcopRIgje2LNoXGxXyjFTw9FZYU1ZEAXwk8y4=
-X-Gm-Gg: ASbGncv01gg136+sirvwjYvdW3qKAOK/wjYK3XZi3wo/tQaypjWXvGBKFaEeJcvrMFL
-	ylEFh5xlPr3D/wz39cHGoFh4R3AUyBvTY73HYkBAAKSuFrSIRWDd4LjneQLGCAKwBG0L7/2qWpe
-	J/xdepAVlAoGyIP2DoTKjuD6cosMsTqJl+YSQGXs0Pp5lcXjQRHMkJx8M8MiG+7xUjkee9U7sdF
-	oGJg/+qATbW6mrw06AzxtzEpP2Xp+TUDLpgl4pLeSUOzrtm6IxKM5pLIyMezDP13OhKrXes1rnV
-	/fo/dO8H342BP61qvgSB1Wi3hZzXxn0wvGMfvtB7OB4+VpEunX6OejU88/GU
-X-Google-Smtp-Source: AGHT+IE05LEIYAGdtPAyN3h4mkJG1nuHtfXByoOnPKvKHQpV53DUp8K1ls1Oh3PCeiaUvWPtS22Glg==
-X-Received: by 2002:a05:651c:2126:b0:2ff:e5fa:1ae7 with SMTP id 38308e7fff4ca-3072caa15a3mr113430121fa.21.1737735378457;
-        Fri, 24 Jan 2025 08:16:18 -0800 (PST)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-3076bc1981esm4111411fa.75.2025.01.24.08.16.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 24 Jan 2025 08:16:17 -0800 (PST)
-Date: Fri, 24 Jan 2025 18:16:14 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Ville =?utf-8?B?U3lyasOkbMOk?= <ville.syrjala@linux.intel.com>
-Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
-	Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
-	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
-	Dave Airlie <airlied@redhat.com>, Jocelyn Falempe <jfalempe@redhat.com>, 
-	Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
-	Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, 
-	Kalyan Thota <quic_kalyant@quicinc.com>, dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org
-Subject: Re: [PATCH 0/6] drm: introduce atomic_needs_modeset() callbacks
-Message-ID: <it2puzcitkui2inz4tmvkpig47jyz2efeq3udzffnqwomf3r3v@5sylpgnvqdxk>
-References: <20250124-atomic-needs-modeset-v1-0-b0c05c9eda0f@linaro.org>
- <Z5ODTg9iTjNKggzN@intel.com>
- <Z5OOo9yR7PVXXIj4@phenom.ffwll.local>
- <Z5ORyQ_49ZNmAxtq@intel.com>
+	s=arc-20240116; t=1737741642; c=relaxed/simple;
+	bh=Ut25sPY/jq2lNAg8RzPPbfAW5fhnL1MOHp9uU+GpdIc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=c4OSS/r3It66WXGB2o/pi0Xf3WziW/wFgtCh/sZmbMwiIwAPJ2KgO9bAUQv/x5odJVaHUz3LeW7f7RK6A+CMIm4/QgyognvhjwZm7iF8ZfjxpzapC8bZMGEObAseXonjp9S5O03A90UBgy986JIn2N2glPCyLaw1bJ+WUtKY7ao=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=nukJZVwj; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50OHviD1029133;
+	Fri, 24 Jan 2025 18:00:29 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	bRqYvvjafC3zRbhVTU+2nn7evtZjF+X+K+jbko36NJQ=; b=nukJZVwj+yVljCUo
+	/9xSK10ivhta3A30QuspT+Q2rpX9SY6pVEMJWFr8c8YL4IDPWgHCv9ROmlKrt2Hg
+	M0HXlAL9kQDU1k+ilHsSc7Mse1vhYM04f+hPy3pZRDoDnGcb1K72sEUqatJ7dkAZ
+	cW1YyXgbgdmL+AZy7OmqavSLm2i0VVZm2EX4Wy/sjahgK9L+hAoWPLVg1zqDSstj
+	aKxQAwqQpfnKzwv75oyc3CFsDgJcp3lqnzLEb1JRSa3QIB1x0DB1uzbPoXXAhbj3
+	TgR/cZ2HxZ1bdMuTQs5nqp7jDUPVE6YdVKEjrsaMU/yFtgrYY40BnQmze0j1j7XM
+	UC4Niw==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44cfqjg07u-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 24 Jan 2025 18:00:29 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 50OI0ShG021338
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 24 Jan 2025 18:00:28 GMT
+Received: from [10.81.24.74] (10.49.16.6) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 24 Jan
+ 2025 10:00:27 -0800
+Message-ID: <4b624830-00eb-46e8-ae5a-b822e32b2005@quicinc.com>
+Date: Fri, 24 Jan 2025 10:00:26 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <Z5ORyQ_49ZNmAxtq@intel.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH V3 0/8] Add new driver for WCSS secure PIL loading
+To: Gokul Sriram Palanisamy <quic_gokulsri@quicinc.com>,
+        <jassisinghbrar@gmail.com>, <robh@kernel.org>, <krzk+dt@kernel.org>,
+        <conor+dt@kernel.org>, <andersson@kernel.org>,
+        <mathieu.poirier@linaro.org>, <konradybcio@kernel.org>,
+        <quic_mmanikan@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-remoteproc@vger.kernel.org>, <dmitry.baryshkov@linaro.org>
+CC: <quic_viswanat@quicinc.com>, <quic_srichara@quicinc.com>
+References: <20250107101647.2087358-1-quic_gokulsri@quicinc.com>
+From: Jeff Johnson <quic_jjohnson@quicinc.com>
+Content-Language: en-US
+In-Reply-To: <20250107101647.2087358-1-quic_gokulsri@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nalasex01b.na.qualcomm.com (10.47.209.197) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: B6EiwzRgYidXimNZv5hrR-PvB2XBliki
+X-Proofpoint-GUID: B6EiwzRgYidXimNZv5hrR-PvB2XBliki
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-01-24_07,2025-01-23_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 suspectscore=0
+ mlxlogscore=999 lowpriorityscore=0 priorityscore=1501 mlxscore=0
+ malwarescore=0 phishscore=0 impostorscore=0 clxscore=1011 adultscore=0
+ spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2501240125
 
-On Fri, Jan 24, 2025 at 03:12:41PM +0200, Ville Syrjälä wrote:
-> On Fri, Jan 24, 2025 at 01:59:15PM +0100, Simona Vetter wrote:
-> > On Fri, Jan 24, 2025 at 02:10:54PM +0200, Ville Syrjälä wrote:
-> > > On Fri, Jan 24, 2025 at 01:14:18PM +0200, Dmitry Baryshkov wrote:
-> > > > There are several drivers which attempt to upgrading the commit to the
-> > > > full mode set from their per-object atomic_check() callbacks without
-> > > > calling the drm_atomic_helper_check_modeset() or
-> > > > drm_atomic_helper_check() again (as requested by those functions).
-> > > 
-> > > I don't really understand why any of that is supposedly necessary.
-> > > drm_atomic_helper_check_modeset() is really all about the
-> > > connector routing stuff, so if none of that is changing then there
-> > > is no point in calling it again. Eg. in i915 we call it just at
-> > > the start, and later on we flag internal modesets all over the
-> > > place, but none of those need drm_atomic_helper_check_modeset()
-> > > because nothing routing related will have changed.
-> > 
-> > i915 doesn't need this because as you say, it doesn't rely on the atomic
-> > helper modeset tracking much at all, but it's all internal. This is for
-> > drivers which rely more or less entirely on
-> > drm_atomic_crtc_needs_modeset().
-> > 
-> > Also note that it's not just about connector routing, but about adding all
-> > the necessary additional states with
-> > drm_atomic_add_affected_connectors/planes and re-running all the various
-> > state computation hooks for those. Again i915 hand-rolls that all.
+On 1/7/25 02:16, Gokul Sriram Palanisamy wrote:
+> This series depends on Sricharan's tmel-qmp mailbox driver series v2 [1].
 > 
-> IIRC it only runs the connectors' atomic_check(),
-> nothing else really. But maybe that's changed since I last
-> looked at it.
-
-It also calls encoder's atomic_check() or mode_fixup() callbacks (see
-the mode_fixup() call at the end of the helper). And the other function,
-drm_atomic_helper_check() calls drm_atomic_helper_check_modeset() and
-then calls atomic_check() for the planes and for the CRTCs that are a
-part of the state.
-
-For example, if the the encoder requires a modeset change on the CRTC,
-then that CRTC (and all connected planes) should also be added to the
-state. However with the default code flow it's already too late. Even if
-we just split those functions, it's still too late, as mode_fixup()
-comes after adding of the CRTC and planes.
-
-Likewise, if the plane wants to upgrade the commit, then all other
-planes blended on the corresponding CRTC must also be added to the
-state.
-
-> Anyways it feels like we're throwing everything and the
-> kitchen sink into a single function here. Maybe it should be
-> split into two or more functions with clear responsibilities?
-
-I'm not sure, what do you mean. Do you mean splitting those two
-drm_atomic_helper functions? It is possible, but it will also result in
-a higher amount of boilerplate code (and still being easy to break). For
-example, the mentioned depdency series adds this kind of 'oh, do we need
-a modeset?' call to the DPU driver. But then each other driver needs
-similar code.
-
-I did a quick non-comprehensive grepping (also I skipped i915 and AMDGPU
-drivers, too complicated to analyse):
-
-+ malidp, malidp_crtc_atomic_check_gamma(),
-	manually calls drm_atomic_helper_check_modeset() again
-		good citizen
-
-+ GUD: gud_pipe_check(),
-	plane setting mode_changed,
-		pardoned, single plane on a CRTC
-+ mcde, mcde_display_check(),
-	plane setting mode_changed
-		pardoned, single plane on a CRTC
-+ mgag200, mgag200_primary_plane_helper_atomic_check(),
-	plane setting mode_changed
-		pardoned, single plane on a CRTC
-+ tilcdc, tilcdc_plane_atomic_check()
-	plane setting mode_changed
-		pardoned, single plane on a CRTC
-+ pl111, pl111_display_check(),
-	plane setting mode_changed
-		pardoned, single plane on a CRTC
-+ tve200, tve200_display_check(),
-	plane setting mode_changed
-		pardoned, single plane on a CRTC
-
-+ IPUv3, ipu_plane_atomic_check(),
-	plane setting mode_changed
-		no excuse, it can come from the overlay plane
-+ ingenic, ingenic_ipu_plane_atomic_check()
-	plane setting mode_changed
-		no idea
-+ ingenic, ingenic_drm_plane_atomic_check(),
-	plane setting mode_changed
-		no idea
-
-+ nouveau/nv50, nv50_outp_atomic_check_view(),
-	encoder setting mode_changed
-		no idea of the possible impact
-+ msm, dpu_encoder_virt_atomic_check()
-	encoder setting mode_changed
-		possible issues once resource allocation is moved to
-		CRTC
-
-+ imx/lcdcl: imx_lcdc_pipe_update(),
-	ignores crtc_state->mode_changed,
-	forces mode_set on its own
-		no excuse? needs to be refactored anyway?
-
-+ meson, meson_encoder_hdmi_atomic_check()
-	bridge setting mode_changed
-		no idea of the possible impact
-+ nwl-dsp, nwl_dsi_bridge_atomic_check()
-	bridge upgrading active_changed to mode_changed
-		no idea of the possible impact
-
-+ drm_atomic_helper_connector_tv_check()
-	connector setting mode_changed
-		should be okay...
-+ drm_atomic_helper_connector_hdmi_check()
-	connector setting mode_changed
-		should be okay...
-+ cadence, cdns_mhdp_connector_atomic_check()
-	connector setting mode_changed
-		should be okay...
-+ synopsis, dw_hdmi_connector_atomic_check
-	connector setting mode_changed
-		should be okay...
-+ vc4, vc4_hdmi_connector_atomic_check()
-	connector setting mode_changed
-		should be okay...
-+ vmwgfx, vmw_stdu_connector_atomic_check()
-	connector setting mode_changed
-		should be okay...
-
-+ msm, dpu_crtc_atomic_check()
-	CRTC upgrading active_changed to mode_changed
-		patch pending
-
-+ drm_dp_mst_add_affected_dsc_crtcs()
-	when is it supposed to be called at all?
-
-Please note, that those 'pardoned' or 'should be okay' drivers are
-breaking the defined function API and might stop functioning at some
-point.
-
+> - Secure PIL is signed, split firmware images which only TrustZone (TZ)
+>   can authenticate and load. Linux kernel will send a request to TZ to
+>   authenticate and load the PIL images.
 > 
-> > 
-> > So yeah i915 doesn't need this.
-> > -Sima
-> > 
-> > > 
-> > > > 
-> > > > As discussed on IRC, add separate atomic_needs_modeset() callbacks,
-> > > > whose only purpose is to allow the plane, connector, encoder or CRTC to
-> > > > specify that for whatever reasons corresponding CRTC should undergo a
-> > > > full modeset. The helpers will call these callbacks in a proper place,
-> > > > adding affected objects and calling required functions as required.
-> > > > 
-> > > > The MSM patches depend on the msm-next tree and the series at [1]. The
-> > > > plan is to land core changes through drm-misc, then merge drm-misc-next
-> > > > into msm-next and merge remaining msm-specific patches through the
-> > > > msm-next tree.
-> > > > 
-> > > > [1] https://lore.kernel.org/dri-devel/20250123-drm-dirty-modeset-v2-0-bbfd3a6cd1a4@linaro.org/
-> > > > 
-> > > > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > > > ---
-> > > > Dmitry Baryshkov (6):
-> > > >       drm/atomic-helper: add atomic_needs_modeset callbacks
-> > > >       drm/mgag200: move format check to drm_plane_helper.atomic_needs_modeset
-> > > >       drm/msm/dpu: stop upgrading commits by enabling allow_modeset
-> > > >       drm/msm/dpu: move CTM check to drm_crtc_helper.atomic_needs_modeset
-> > > >       drm/msm/dpu: use atomic_needs_modeset for CDM check
-> > > >       drm/msm: drop msm_atomic_check wrapper
-> > > > 
-> > > >  drivers/gpu/drm/drm_atomic_helper.c         | 59 ++++++++++++++++++
-> > > >  drivers/gpu/drm/mgag200/mgag200_drv.h       |  2 +
-> > > >  drivers/gpu/drm/mgag200/mgag200_mode.c      | 27 ++++++---
-> > > >  drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c    | 15 +++++
-> > > >  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 44 +++++++++-----
-> > > >  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h |  4 --
-> > > >  drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c     | 26 --------
-> > > >  drivers/gpu/drm/msm/msm_atomic.c            | 29 ---------
-> > > >  drivers/gpu/drm/msm/msm_drv.h               |  1 -
-> > > >  drivers/gpu/drm/msm/msm_kms.c               |  2 +-
-> > > >  drivers/gpu/drm/msm/msm_kms.h               |  7 ---
-> > > >  include/drm/drm_modeset_helper_vtables.h    | 92 +++++++++++++++++++++++++++++
-> > > >  12 files changed, 219 insertions(+), 89 deletions(-)
-> > > > ---
-> > > > base-commit: 0936f0e54426177b0f0263ddf806ed5e13487db6
-> > > > change-id: 20250123-atomic-needs-modeset-8f6a8243a3f7
-> > > > prerequisite-change-id: 20241222-drm-dirty-modeset-88079bd27ae6:v2
-> > > > prerequisite-patch-id: 0c61aabfcd13651203f476985380cbf4d3c299e6
-> > > > prerequisite-patch-id: c6026f08011c288fd301676e9fa6f46d0cc1dab7
-> > > > prerequisite-patch-id: b0cb06d5c88791d6e4755d879ced0d5050aa3cbf
-> > > > prerequisite-patch-id: fd72ddde9dba0df053113bc505c213961a9760da
-> > > > 
-> > > > Best regards,
-> > > > -- 
-> > > > Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > > 
-> > > -- 
-> > > Ville Syrjälä
-> > > Intel
-> > 
-> > -- 
-> > Simona Vetter
-> > Software Engineer, Intel Corporation
-> > http://blog.ffwll.ch
+> - When secure PIL support was added to the existing wcss PIL driver
+>   earlier in [2], Bjorn suggested not to overload the existing WCSS
+>   rproc driver, instead post a new driver for PAS based IPQ WCSS driver.
+>   This series adds a new secure PIL driver for the same.
 > 
-> -- 
-> Ville Syrjälä
-> Intel
+> - Also adds changes to scm to pass metadata size as required for IPQ5332,
+>   reposted from [3].
+> 
+> [1]
+> https://patchwork.kernel.org/project/linux-arm-msm/cover/20241231054900.2144961-1-quic_srichara@quicinc.com/
+> 
+> [2]
+> https://patchwork.kernel.org/project/linux-arm-msm/patch/1611984013-10201-3-git-send-email-gokulsri@codeaurora.org/
+> 
+> [3]
+> https://patchwork.kernel.org/project/linux-arm-msm/patch/20240820055618.267554-6-quic_gokulsri@quicinc.com/
+> 
+> changes in v3:
+> 	- fixed copyright years and markings based on Jeff's comments.
+> 	- replaced devm_ioremap_wc() with ioremap_wc() in
+> 	  wcss_sec_copy_segment().
+> 	- replaced rproc_alloc() and rproc_add() with their devres
+> 	  counterparts.
+> 	- added mailbox call to tmelcom for secure image authentication
+> 	  as required for IPQ5424. Added ipq5424 APCS comatible required. 
+> 	- added changes to scm call to pass metadata size as equired for
+> 	  IPQ5332.
+> 
+> changes in v2:
+> 	- Removed dependency of this series to q6 clock removal series
+> 	  as recommended by Krzysztof
+> 
+> Gokul Sriram Palanisamy (3):
+>   dt-bindings: mailbox: qcom: Add IPQ5424 APCS compatible
+>   mailbox: qcom: Add support for IPQ5424 APCS IPC
+>   arm64: dts: qcom: ipq5424: add nodes to bring up q6
+> 
+> Manikanta Mylavarapu (4):
+>   firmware: qcom_scm: ipq5332: add support to pass metadata size
+>   dt-bindings: remoteproc: qcom: document hexagon based WCSS secure PIL
+>   arm64: dts: qcom: ipq5332: add nodes to bringup q6
+>   arm64: dts: qcom: ipq9574: add nodes to bring up q6
+> 
+> Vignesh Viswanathan (1):
+>   remoteproc: qcom: add hexagon based WCSS secure PIL driver
+> 
+>  .../mailbox/qcom,apcs-kpss-global.yaml        |   1 +
+>  .../remoteproc/qcom,wcss-sec-pil.yaml         | 131 ++++++
+>  arch/arm64/boot/dts/qcom/ipq5332.dtsi         |  64 ++-
+>  arch/arm64/boot/dts/qcom/ipq5424.dtsi         |  80 +++-
+>  arch/arm64/boot/dts/qcom/ipq9574.dtsi         |  60 ++-
+>  drivers/firmware/qcom/qcom_scm.c              |  13 +-
+>  drivers/firmware/qcom/qcom_scm.h              |   1 +
+>  drivers/mailbox/qcom-apcs-ipc-mailbox.c       |   1 +
+>  drivers/remoteproc/Kconfig                    |  22 +
+>  drivers/remoteproc/Makefile                   |   1 +
+>  drivers/remoteproc/qcom_q6v5_wcss_sec.c       | 406 ++++++++++++++++++
+>  11 files changed, 775 insertions(+), 5 deletions(-)
+>  create mode 100644 Documentation/devicetree/bindings/remoteproc/qcom,wcss-sec-pil.yaml
+>  create mode 100644 drivers/remoteproc/qcom_q6v5_wcss_sec.c
+> 
 
--- 
-With best wishes
-Dmitry
+This series is listed as a dependency of a WLAN series, and when I pull this
+series using my automation I see the following kernel-doc warnings. I don't
+know if these are existing issues, or issues introduced by the series, since
+the automation runs kernel-doc on all of the patched files.
+
+drivers/firmware/qcom/qcom_scm.c:302: warning: No description found for return value of 'qcom_scm_call'
+drivers/firmware/qcom/qcom_scm.c:328: warning: No description found for return value of 'qcom_scm_call_atomic'
+drivers/firmware/qcom/qcom_scm.c:425: warning: No description found for return value of 'qcom_scm_set_warm_boot_addr'
+drivers/firmware/qcom/qcom_scm.c:438: warning: No description found for return value of 'qcom_scm_set_cold_boot_addr'
+drivers/firmware/qcom/qcom_scm.c:675: warning: No description found for return value of 'qcom_scm_pas_mem_setup'
+drivers/firmware/qcom/qcom_scm.c:714: warning: No description found for return value of 'qcom_scm_pas_auth_and_reset'
+drivers/firmware/qcom/qcom_scm.c:750: warning: No description found for return value of 'qcom_scm_pas_shutdown'
+drivers/firmware/qcom/qcom_scm.c:787: warning: No description found for return value of 'qcom_scm_pas_supported'
+drivers/firmware/qcom/qcom_scm.c:892: warning: No description found for return value of 'qcom_scm_restore_sec_cfg_available'
+drivers/firmware/qcom/qcom_scm.c:1070: warning: No description found for return value of 'qcom_scm_assign_mem'
+drivers/firmware/qcom/qcom_scm.c:1141: warning: No description found for return value of 'qcom_scm_ocmem_lock_available'
+drivers/firmware/qcom/qcom_scm.c:1158: warning: No description found for return value of 'qcom_scm_ocmem_lock'
+drivers/firmware/qcom/qcom_scm.c:1182: warning: No description found for return value of 'qcom_scm_ocmem_unlock'
+drivers/firmware/qcom/qcom_scm.c:1298: warning: No description found for return value of 'qcom_scm_hdcp_available'
+drivers/firmware/qcom/qcom_scm.c:1323: warning: No description found for return value of 'qcom_scm_hdcp_req'
+drivers/firmware/qcom/qcom_scm.c:1879: warning: No description found for return value of 'qcom_scm_is_available'
+drivers/firmware/qcom/qcom_scm.h:47: warning: missing initial short description on line:
+ * struct qcom_scm_desc
+drivers/firmware/qcom/qcom_scm.h:57: warning: Function parameter or struct member 'svc' not described in 'qcom_scm_desc'
+drivers/firmware/qcom/qcom_scm.h:57: warning: Function parameter or struct member 'cmd' not described in 'qcom_scm_desc'
+drivers/firmware/qcom/qcom_scm.h:57: warning: Function parameter or struct member 'owner' not described in 'qcom_scm_desc'
+drivers/firmware/qcom/qcom_scm.h:60: warning: missing initial short description on line:
+ * struct qcom_scm_res
+21 warnings as Errors
+
 
