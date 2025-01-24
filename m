@@ -1,117 +1,131 @@
-Return-Path: <linux-arm-msm+bounces-46019-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46020-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id A6A06A1AED3
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Jan 2025 03:44:44 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 059B7A1AF21
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Jan 2025 04:48:48 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7AB533AFA83
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Jan 2025 02:44:28 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 00E60188E5BC
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Jan 2025 03:48:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 49B831D5CD7;
-	Fri, 24 Jan 2025 02:44:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6067D1D63D0;
+	Fri, 24 Jan 2025 03:48:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="i3G1f+oQ"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="iYSjCxE5"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.15])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B616A40BF5;
-	Fri, 24 Jan 2025 02:44:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A3E029A5;
+	Fri, 24 Jan 2025 03:48:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.15
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737686671; cv=none; b=p+Bnv4SezuFXzituCKJrtfBQspO7HT/4XgJwVVzrXlzH7cXFdC7RhlyhgB/TwLn7bB/jdRZfPl6OfYETujKb9ZMYetrXh3RB28MG2Ue5hNgenlweatbcDQjhQOcgB7PHYdaLUeYD9bG9EPz3Sm8lmvLEtvZGSEeJl8HzipSDhDw=
+	t=1737690523; cv=none; b=mRDBBf/BkVTe9Z5rFdlI6/hnZGGUQGI0Kjtt20bx2SWYVDHwG2b8bRE7eUDJ/ShuCiTGVbPlSGW3PNIqohgGj/NDYnt4qL1i0fBS5ewklqXI4K6GlW0Ww+h/a857kQlUMC70oEIgI8O++0dLy6eJ7bAEgnmaE5EiCCpD15pM/ZI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737686671; c=relaxed/simple;
-	bh=gtOKiJivTZejSqA/I3FkEuHO3V7THMg8F6c0J127uOE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=QCqtgtt1ebYWtHOxGvnrk4M1hFGwPcjYAicFIk+3lDrBUAIlk1JucTMYOSXUVo51+0Na+lb7Y5v24A3pBc12uqSdaNX5bm4zCRpgnDInAuh2L4/uxO4ExXypvNqmzjObf3WEsk0tdHEK7942Sd5ULudqHIIUe19ueDNt75I6fJk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=i3G1f+oQ; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50O1Kqnq021747;
-	Fri, 24 Jan 2025 02:44:18 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	9IxpUJ7xynlV8PUBAf4VpQB+vOKa6dRl6VdjY4kOdFs=; b=i3G1f+oQgDbqC5HV
-	cCwBi/TNahH+IeUMxziVHiTl9h0ULJBQ7iPN0GBJPOFRxmU12oFcJuWkhqwYG27U
-	OHxMmciFJPKLgKGwgR/rxUYZtJ9agxNGZvk50y21TmTPh9ZqxeESaJieQAMfCMQw
-	G/mL+rpRa2KGCIa3RzQTPaDV0upORFDv7R4nvrBAzv8kbBlC3x4P2f7oTpR9q1Mf
-	liuoCa0BbXhNfC9PQNAZjf1rHubhFQf53XcIOkq9KOUjUDuPVKDSXnTv7UJIUnUP
-	Ar/RqjZvEbhi2c7uOQGLlT66+k59eqbZhOq6FqHiOY7U+0qxGoK0QJT4m9Mqnph8
-	478Szg==
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44c14884th-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 24 Jan 2025 02:44:17 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 50O2iHb0021864
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 24 Jan 2025 02:44:17 GMT
-Received: from [10.239.155.136] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 23 Jan
- 2025 18:44:13 -0800
-Message-ID: <1bef8d3c-7d30-4586-8624-794e6329488c@quicinc.com>
-Date: Fri, 24 Jan 2025 10:44:10 +0800
+	s=arc-20240116; t=1737690523; c=relaxed/simple;
+	bh=ESESZlbmbscGyg08fJZIcgd/7xsDYidU9KIpFT/rdAY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=JkgRjS+Fm8Dem/aB4Egx8+L64ElgfOLZqqsZEDd9foefceF1DxAuvTpqXpZ00bqEX7QANMzRwkNft6NgGKYaxIAQ/YOk8vU/m0MOD7QvXYnC3mU+ky2UqtU1X8/93+opoDBSzex5MEMeN63Muyr6Db166RV0Mf19+aKuQ/qkIs0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=iYSjCxE5; arc=none smtp.client-ip=198.175.65.15
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1737690522; x=1769226522;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=ESESZlbmbscGyg08fJZIcgd/7xsDYidU9KIpFT/rdAY=;
+  b=iYSjCxE5Q8+ua1qyg5uhDzzxqqbg/nlL1dC5nA9os9Y9qHfgAEC7HKwq
+   O2miXbUzyynPiILb2BMOkYrMCqI5VI9oP/R6vDxeCkZ1zPCTlQ2QtAX9n
+   qks55q/KoPer+p+c8BSVoez/kG4estTrD7FwdNmWRPVayNYYk/P7PhgJa
+   w9Gv6BQSzI8GUrQlx4Lww30JN3Yms029shROYMuQE2vQG/K+cDvKWsC+M
+   2oylZ66gQN4iGS2LxTDkfkBybk9yFoBAbNRbGkP7QNb2bSo/WujGlncFp
+   Z8nYe6JDVLaecvNhN5CcMa4j0myar8sx4fnzNNSQITwEvyKA/njp4cUZ9
+   g==;
+X-CSE-ConnectionGUID: 2zltuufAS0GPJ8mc2qFc+Q==
+X-CSE-MsgGUID: fRMAXE1dQiGH3uD8X5iyfA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11324"; a="41883734"
+X-IronPort-AV: E=Sophos;i="6.13,230,1732608000"; 
+   d="scan'208";a="41883734"
+Received: from orviesa002.jf.intel.com ([10.64.159.142])
+  by orvoesa107.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Jan 2025 19:48:42 -0800
+X-CSE-ConnectionGUID: FcaMMzkpTRiK0gGgdkLT9w==
+X-CSE-MsgGUID: SIwu+aytSZuzIOueLOhRyQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.13,230,1732608000"; 
+   d="scan'208";a="138528984"
+Received: from lkp-server01.sh.intel.com (HELO d63d4d77d921) ([10.239.97.150])
+  by orviesa002.jf.intel.com with ESMTP; 23 Jan 2025 19:48:37 -0800
+Received: from kbuild by d63d4d77d921 with local (Exim 4.96)
+	(envelope-from <lkp@intel.com>)
+	id 1tbAgM-000c63-2F;
+	Fri, 24 Jan 2025 03:48:34 +0000
+Date: Fri, 24 Jan 2025 11:48:16 +0800
+From: kernel test robot <lkp@intel.com>
+To: Taniya Das <quic_tdas@quicinc.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Will Deacon <will@kernel.org>
+Cc: oe-kbuild-all@lists.linux.dev, Ajit Pandey <quic_ajipan@quicinc.com>,
+	Imran Shaik <quic_imrashai@quicinc.com>,
+	Jagadeesh Kona <quic_jkona@quicinc.com>,
+	linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+	linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	Taniya Das <quic_tdas@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Subject: Re: [PATCH v4 07/10] clk: qcom: gpucc-qcs615: Add QCS615 graphics
+ clock controller driver
+Message-ID: <202501241339.AZK5Ob8e-lkp@intel.com>
+References: <20250119-qcs615-mm-v4-clockcontroller-v4-7-5d1bdb5a140c@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 8/8] ABI: sysfs-driver-ufs: Add missing UFS sysfs
- addributes
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>, <quic_cang@quicinc.com>,
-        <bvanassche@acm.org>, <mani@kernel.org>, <beanhuo@micron.com>,
-        <avri.altman@wdc.com>, <junwoo80.lee@samsung.com>,
-        <martin.petersen@oracle.com>, <quic_nguyenb@quicinc.com>,
-        <quic_nitirawa@quicinc.com>, <quic_rampraka@quicinc.com>
-CC: <linux-arm-msm@vger.kernel.org>, <linux-scsi@vger.kernel.org>,
-        "Keoseong
- Park" <keosung.park@samsung.com>,
-        open list <linux-kernel@vger.kernel.org>
-References: <20250122100214.489749-1-quic_ziqichen@quicinc.com>
- <20250122100214.489749-9-quic_ziqichen@quicinc.com>
- <7f8bb83f-aa15-4a58-baf4-6241b479b412@linaro.org>
-Content-Language: en-US
-From: Ziqi Chen <quic_ziqichen@quicinc.com>
-In-Reply-To: <7f8bb83f-aa15-4a58-baf4-6241b479b412@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: G1LAzTf2MuEy0pW_9INpLhTdfSVY-8u6
-X-Proofpoint-ORIG-GUID: G1LAzTf2MuEy0pW_9INpLhTdfSVY-8u6
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-01-24_01,2025-01-23_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 malwarescore=0
- suspectscore=0 clxscore=1011 mlxlogscore=773 phishscore=0
- priorityscore=1501 spamscore=0 bulkscore=0 mlxscore=0 lowpriorityscore=0
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2501240018
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250119-qcs615-mm-v4-clockcontroller-v4-7-5d1bdb5a140c@quicinc.com>
 
+Hi Taniya,
 
+kernel test robot noticed the following build warnings:
 
-On 1/23/2025 7:36 PM, Bryan O'Donoghue wrote:
-> On 22/01/2025 10:02, Ziqi Chen wrote:
->> Add UFS driver sysfs addributes clkscale_enable, clkgate_enable and
->> clkgate_delay_ms to this doucment.
-> 
-> I'm 99% sure you mean "attributes" not "addributes"
-> 
-> ---
-> bod
+[auto build test WARNING on 0907e7fb35756464aa34c35d6abb02998418164b]
 
-Yes , thanks for point it out, bod.
+url:    https://github.com/intel-lab-lkp/linux/commits/Taniya-Das/clk-qcom-clk-alpha-pll-Add-support-for-dynamic-update-for-slewing-PLLs/20250119-182754
+base:   0907e7fb35756464aa34c35d6abb02998418164b
+patch link:    https://lore.kernel.org/r/20250119-qcs615-mm-v4-clockcontroller-v4-7-5d1bdb5a140c%40quicinc.com
+patch subject: [PATCH v4 07/10] clk: qcom: gpucc-qcs615: Add QCS615 graphics clock controller driver
+config: nios2-randconfig-r111-20250124 (https://download.01.org/0day-ci/archive/20250124/202501241339.AZK5Ob8e-lkp@intel.com/config)
+compiler: nios2-linux-gcc (GCC) 14.2.0
+reproduce: (https://download.01.org/0day-ci/archive/20250124/202501241339.AZK5Ob8e-lkp@intel.com/reproduce)
 
--Ziqi
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202501241339.AZK5Ob8e-lkp@intel.com/
+
+sparse warnings: (new ones prefixed by >>)
+>> drivers/clk/qcom/gpucc-qcs615.c:394:15: sparse: sparse: symbol 'gpu_cc_sm6150_hws' was not declared. Should it be static?
+
+vim +/gpu_cc_sm6150_hws +394 drivers/clk/qcom/gpucc-qcs615.c
+
+   393	
+ > 394	struct clk_hw *gpu_cc_sm6150_hws[] = {
+   395		[CRC_DIV_PLL0] = &crc_div_pll0.hw,
+   396		[CRC_DIV_PLL1] = &crc_div_pll1.hw,
+   397	};
+   398	
+
+-- 
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
 
