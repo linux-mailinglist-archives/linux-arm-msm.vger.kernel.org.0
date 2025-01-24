@@ -1,305 +1,177 @@
-Return-Path: <linux-arm-msm+bounces-46049-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46050-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id BEE03A1B1A8
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Jan 2025 09:25:57 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 70593A1B1B2
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Jan 2025 09:27:02 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0E02E3AE5C1
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Jan 2025 08:25:43 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id F184C7A589E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Jan 2025 08:26:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6585F218E9F;
-	Fri, 24 Jan 2025 08:25:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 45120219A64;
+	Fri, 24 Jan 2025 08:26:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KwOU5Box"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Y7Nw/TS3"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A14A218AD7;
-	Fri, 24 Jan 2025 08:25:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D166218E99;
+	Fri, 24 Jan 2025 08:26:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737707139; cv=none; b=t4nKwRIW+LB3vINVlJcQ5H9uPa5l/R9ie7Q/oJKEvPnWprcFiu/Z4RhZhWM1wU4KKI1M3V2TM1CsbdRk91p4QIz6rnlKcx9xphFsqOgHddTt40N8Cj3FSWTs32xLXjB3gsDyjkHgdp9i296zAGRrgQVJfaM0mwX00nno2TX9pJo=
+	t=1737707204; cv=none; b=vBL/NMcsiTjXiKg+4E+AINPcpyOTO0aNbh9ilQiCHRzMBSHauCKPSFlBb0DyGCjw9exUibF8ziWBpSSNDiwk4VUvdHZEwu0KladOKG+yZxLFtSRlgQ4b3nemqsKsD8heozf4JpKyJo6Lz5Z2Uw5Vr8KXvVdd7/Fz/08P6Rx7fhY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737707139; c=relaxed/simple;
-	bh=x26BlNIlodJcFOTbs1Ak7gzDS8ZSUxVog8qPx6PkJOU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=lt+kGb2lGefyh7wZ6463a1sjAVk+QqTDn6XKGQvlFHPFb9Yuy0JjPzcsy5gKoLP+/BtZZ5YWM7QF0nPgwZWenXDTp25CG7L5brnL4d0ualdm7nsQvKk4Cth+FFayKqqUOmqoREBoU3kL7M1LqGb5McGfqulWNA4E6vR7klbuqzE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KwOU5Box; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0817FC4CED2;
-	Fri, 24 Jan 2025 08:25:31 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1737707138;
-	bh=x26BlNIlodJcFOTbs1Ak7gzDS8ZSUxVog8qPx6PkJOU=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=KwOU5BoxiuL2w9OJRXglPvu/vUssSQnDY50Nh85vPzUEtETR+jCiAlFLrGrfmEf8R
-	 ZxdiEK7ElK/67c5nxrXZyhtQtdU3wkcSL6SmWNr8erMfladBbPs/3pkc7IZtZZMQMR
-	 mfS97IxieYkbUx2H29Pgwr0hknhKwVJrj8xdK08WooqruWi0gtnVGFexMJGzdLUvRQ
-	 9A1y+c4u7QduuPReR7lIWrplunI8THOGxR0cjwy8p3YT/FnKtsHtwsN+xGAIhyEjKK
-	 7xmGpWxmk4ygoDE0wZ17XE5sBXOWQ8P7UsRQRdJu7dVrHyp8IPHi7hJOvRSHpfR+Yu
-	 g163vCinRtfAg==
-Date: Fri, 24 Jan 2025 13:55:25 +0530
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: =?utf-8?B?QW5kcsOp?= Draszik <andre.draszik@linaro.org>
-Cc: Alim Akhtar <alim.akhtar@samsung.com>,
-	Avri Altman <avri.altman@wdc.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	"James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	Peter Griffin <peter.griffin@linaro.org>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Mike Snitzer <snitzer@redhat.com>, Jens Axboe <axboe@kernel.dk>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
-	Satya Tangirala <satyat@google.com>,
-	Eric Biggers <ebiggers@google.com>,
-	Tudor Ambarus <tudor.ambarus@linaro.org>,
-	Will McVicker <willmcvicker@google.com>, kernel-team@android.com,
-	linux-scsi@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-samsung-soc@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-	stable@vger.kernel.org
-Subject: Re: [PATCH v3] scsi: ufs: fix use-after free in init error and
- remove paths
-Message-ID: <20250124082525.ejkftp7vvrq6ua4x@thinkpad>
-References: <20250116-ufshcd-fix-v3-1-6a83004ea85c@linaro.org>
+	s=arc-20240116; t=1737707204; c=relaxed/simple;
+	bh=Dv1vAXZI8vsRs4O+g2BpElnnLuNaKougAOdum6jfCUE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=vBUDV3m/8AlswjZQ1tcYxg00LIbbDop3hCa20hRc2+KW5EUzBd3P8qMwei+0bv+Qzzs9TSMf2XWwce1W6bTeRCHEtjAIVz2gZyPlyZPYNkqUBH/Dv8B/egThLVzfJwFX6WAJknq1FP29WETznf78SnIicgh9egZzXQ7VWkxLt9M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Y7Nw/TS3; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50O82bLg032689;
+	Fri, 24 Jan 2025 08:26:35 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	sjbcESiU6USB4wlS8JMciyTQKB0lub0M2yPt8IZm/AE=; b=Y7Nw/TS3DMnI+06k
+	x4URVuBACUMf9aV7YXw1RbWp0ZWUuqR4gLMPgH5KFdEZC78k3DSetBSHmxSY8HZy
+	2GA5Id98KD5tdDHoDuSm8a7ndTMpkt6TYylrtN3gVH7imyt5X+QJ8R5JzSocLaF1
+	h+we/IkMWCHbYFWLOEHhmGFj526bawBOotijqztYrLMpSLzciniFq9ryxijR4mjQ
+	gjgofZV9AF9P4XnxOVSKroMEKD2jw2jRmQL7O+nhnLyuOpC9/8CMsR4sEheRzOlm
+	8JuAEM9hA+LmaazcM1QGO9p792efJX3OdQdRRCP/QaBFqJIr8j1+6Pwhi/POZNt/
+	Qr4kfA==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44c70ng21w-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 24 Jan 2025 08:26:35 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 50O8QYYr015205
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 24 Jan 2025 08:26:34 GMT
+Received: from [10.216.14.228] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 24 Jan
+ 2025 00:26:28 -0800
+Message-ID: <6e35eea5-2c7b-5d71-f39d-f9196a3c1b76@quicinc.com>
+Date: Fri, 24 Jan 2025 13:56:25 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250116-ufshcd-fix-v3-1-6a83004ea85c@linaro.org>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.1
+Subject: Re: [PATCH v3 3/4] PCI: dwc: Reduce DT reads by allocating host
+ bridge via DWC glue driver
+Content-Language: en-US
+To: Manivannan Sadhasivam <mani@kernel.org>,
+        Krishna Chaitanya Chundru
+	<krishna.chundru@oss.qualcomm.com>
+CC: <cros-qcom-dts-watchers@chromium.org>,
+        Bjorn Andersson
+	<andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring
+	<robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        =?UTF-8?Q?Krzysztof_Wilczy=c5=84ski?= <kw@linux.com>,
+        Manivannan Sadhasivam
+	<manivannan.sadhasivam@linaro.org>,
+        Bjorn Helgaas <bhelgaas@google.com>, Jingoo Han <jingoohan1@gmail.com>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-pci@vger.kernel.org>,
+        <quic_vbadigan@quicinc.com>, <quic_vpernami@quicinc.com>,
+        <quic_mrana@quicinc.com>, <mmareddy@quicinc.com>
+References: <20250121-enable_ecam-v3-0-cd84d3b2a7ba@oss.qualcomm.com>
+ <20250121-enable_ecam-v3-3-cd84d3b2a7ba@oss.qualcomm.com>
+ <20250124061828.ncycdpxqd6fqpjib@thinkpad>
+From: Krishna Chaitanya Chundru <quic_krichai@quicinc.com>
+In-Reply-To: <20250124061828.ncycdpxqd6fqpjib@thinkpad>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: KzrbjIr4tr0Nq9uV4eq3G75CKKG6k1P0
+X-Proofpoint-ORIG-GUID: KzrbjIr4tr0Nq9uV4eq3G75CKKG6k1P0
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-01-24_03,2025-01-23_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ phishscore=0 adultscore=0 mlxscore=0 lowpriorityscore=0 impostorscore=0
+ bulkscore=0 spamscore=0 mlxlogscore=984 clxscore=1015 suspectscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2501240060
 
-On Thu, Jan 16, 2025 at 11:18:08AM +0000, André Draszik wrote:
-> devm_blk_crypto_profile_init() registers a cleanup handler to run when
-> the associated (platform-) device is being released. For UFS, the
-> crypto private data and pointers are stored as part of the ufs_hba's
-> data structure 'struct ufs_hba::crypto_profile'. This structure is
-> allocated as part of the underlying ufshd allocation.
-> 
-> During driver release or during error handling in ufshcd_pltfrm_init(),
-> this structure is released as part of ufshcd_dealloc_host() before the
-> (platform-) device associated with the crypto call above is released.
-> Once this device is released, the crypto cleanup code will run, using
-> the just-released 'struct ufs_hba::crypto_profile'. This causes a
-> use-after-free situation:
-> 
->     exynos-ufshc 14700000.ufs: ufshcd_pltfrm_init() failed -11
->     exynos-ufshc 14700000.ufs: probe with driver exynos-ufshc failed with error -11
->     Unable to handle kernel paging request at virtual address 01adafad6dadad88
->     Mem abort info:
->       ESR = 0x0000000096000004
->       EC = 0x25: DABT (current EL), IL = 32 bits
->       SET = 0, FnV = 0
->       EA = 0, S1PTW = 0
->       FSC = 0x04: level 0 translation fault
->     Data abort info:
->       ISV = 0, ISS = 0x00000004, ISS2 = 0x00000000
->       CM = 0, WnR = 0, TnD = 0, TagAccess = 0
->       GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
->     [01adafad6dadad88] address between user and kernel address ranges
->     Internal error: Oops: 0000000096000004 [#1] PREEMPT SMP
->     Modules linked in:
->     CPU: 0 UID: 0 PID: 1 Comm: swapper/0 Tainted: G        W          6.13.0-rc5-next-20250106+ #70
->     Tainted: [W]=WARN
->     Hardware name: Oriole (DT)
->     pstate: 20400005 (nzCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
->     pc : kfree+0x60/0x2d8
->     lr : kvfree+0x44/0x60
->     sp : ffff80008009ba80
->     x29: ffff80008009ba90 x28: 0000000000000000 x27: ffffbcc6591e0130
->     x26: ffffbcc659309960 x25: ffffbcc658f89c50 x24: ffffbcc659539d80
->     x23: ffff22e000940040 x22: ffff22e001539010 x21: ffffbcc65714b22c
->     x20: 6b6b6b6b6b6b6b6b x19: 01adafad6dadad80 x18: 0000000000000000
->     x17: ffffbcc6579fbac8 x16: ffffbcc657a04300 x15: ffffbcc657a027f4
->     x14: ffffbcc656f969cc x13: ffffbcc6579fdc80 x12: ffffbcc6579fb194
->     x11: ffffbcc6579fbc34 x10: 0000000000000000 x9 : ffffbcc65714b22c
->     x8 : ffff80008009b880 x7 : 0000000000000000 x6 : ffff80008009b940
->     x5 : ffff80008009b8c0 x4 : ffff22e000940518 x3 : ffff22e006f54f40
->     x2 : ffffbcc657a02268 x1 : ffff80007fffffff x0 : ffffc1ffc0000000
 
-You can strip these register dump and abort info.
 
->     Call trace:
->      kfree+0x60/0x2d8 (P)
->      kvfree+0x44/0x60
->      blk_crypto_profile_destroy_callback+0x28/0x70
->      devm_action_release+0x1c/0x30
->      release_nodes+0x6c/0x108
->      devres_release_all+0x98/0x100
->      device_unbind_cleanup+0x20/0x70
->      really_probe+0x218/0x2d0
+On 1/24/2025 11:48 AM, Manivannan Sadhasivam wrote:
+> On Tue, Jan 21, 2025 at 02:32:21PM +0530, Krishna Chaitanya Chundru wrote:
+>> Allow DWC glue drivers to allocate the host bridge, avoiding redundant
+>> device tree reads primarily in dw_pcie_ecam_supported().
+>>
 > 
-> In other words, the initialisation code flow is:
+> I don't understand what you mean by 'redundant device tree reads'. Please
+> explain.
 > 
->   platform-device probe
->     ufshcd_pltfrm_init()
->       ufshcd_alloc_host()
->         scsi_host_alloc()
->           allocation of struct ufs_hba
->           creation of scsi-host devices
->     devm_blk_crypto_profile_init()
->       devm registration of cleanup handler using platform-device
-> 
-> and during error handling of ufshcd_pltfrm_init() or during driver
-> removal:
-> 
->   ufshcd_dealloc_host()
->     scsi_host_put()
->       put_device(scsi-host)
->         release of struct ufs_hba
->   put_device(platform-device)
->     crypto cleanup handler
-> 
-> To fix this use-after free, change ufshcd_alloc_host() to register a
-> devres action to automatically cleanup the underlying SCSI device on
-> ufshcd destruction, without requiring explicit calls to
-> ufshcd_dealloc_host(). This way:
-> 
->     * the crypto profile and all other ufs_hba-owned resources are
->       destroyed before SCSI (as they've been registered after)
->     * a memleak is plugged in tc-dwc-g210-pci.c remove() as a
->       side-effect
->     * EXPORT_SYMBOL_GPL(ufshcd_dealloc_host) can be removed fully as
->       it's not needed anymore
->     * no future drivers using ufshcd_alloc_host() could ever forget
->       adding the cleanup
-> 
-> Fixes: cb77cb5abe1f ("blk-crypto: rename blk_keyslot_manager to blk_crypto_profile")
-> Fixes: d76d9d7d1009 ("scsi: ufs: use devm_blk_ksm_init()")
-> Cc: stable@vger.kernel.org
-> Signed-off-by: André Draszik <andre.draszik@linaro.org>
-> ---
-> Changes in v3:
-> - rename devres action handler to ufshcd_devres_release() (Bart)
-> - Link to v2: https://lore.kernel.org/r/20250114-ufshcd-fix-v2-1-2dc627590a4a@linaro.org
-> 
-> Changes in v2:
-> - completely new approach using devres action for Scsi_host cleanup, to
->   ensure ordering
-> - add Fixes: and CC: stable tags (Eric)
-> - Link to v1: https://lore.kernel.org/r/20250113-ufshcd-fix-v1-1-ca63d1d4bd55@linaro.org
-> ---
-> In my case, as per above trace I initially encountered an error in
-> ufshcd_verify_dev_init(), which made me notice this problem both during
-> error handling and release. For reproducing, it'd be possible to change
-> that function to just return an error, or rmmod the platform glue
-> driver.
-> 
-> Other approaches for solving this issue I see are the following, but I
-> believe this one here is the cleanest:
-> 
-> * turn 'struct ufs_hba::crypto_profile' into a dynamically allocated
->   pointer, in which case it doesn't matter if cleanup runs after
->   scsi_host_put()
-> * add an explicit devm_blk_crypto_profile_deinit() to be called by API
->   users when necessary, e.g. before ufshcd_dealloc_host() in this case
-> * register the crypto cleanup handler against the scsi-host device
->   instead, like in v1 of this patch
-> ---
->  drivers/ufs/core/ufshcd.c        | 27 +++++++++++++++++----------
->  drivers/ufs/host/ufshcd-pci.c    |  2 --
->  drivers/ufs/host/ufshcd-pltfrm.c | 11 ++++-------
->  include/ufs/ufshcd.h             |  1 -
->  4 files changed, 21 insertions(+), 20 deletions(-)
-> 
-> diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
-> index 43ddae7318cb..8351795296bb 100644
-> --- a/drivers/ufs/core/ufshcd.c
-> +++ b/drivers/ufs/core/ufshcd.c
-> @@ -10279,16 +10279,6 @@ int ufshcd_system_thaw(struct device *dev)
->  EXPORT_SYMBOL_GPL(ufshcd_system_thaw);
->  #endif /* CONFIG_PM_SLEEP  */
->  
-> -/**
-> - * ufshcd_dealloc_host - deallocate Host Bus Adapter (HBA)
-> - * @hba: pointer to Host Bus Adapter (HBA)
-> - */
-> -void ufshcd_dealloc_host(struct ufs_hba *hba)
-> -{
-> -	scsi_host_put(hba->host);
-> -}
-> -EXPORT_SYMBOL_GPL(ufshcd_dealloc_host);
-> -
->  /**
->   * ufshcd_set_dma_mask - Set dma mask based on the controller
->   *			 addressing capability
-> @@ -10307,6 +10297,16 @@ static int ufshcd_set_dma_mask(struct ufs_hba *hba)
->  	return dma_set_mask_and_coherent(hba->dev, DMA_BIT_MASK(32));
->  }
->  
-> +/**
-> + * ufshcd_devres_release - devres cleanup handler, invoked during release of
-> + *			   hba->dev
-> + * @host: pointer to SCSI host
-> + */
-> +static void ufshcd_devres_release(void *host)
-> +{
-> +	scsi_host_put(host);
-> +}
-> +
->  /**
->   * ufshcd_alloc_host - allocate Host Bus Adapter (HBA)
+In dw_pcie_ecam_supported () we are trying to read bus-range to find
+maximum bus range value. devm_pci_alloc_host_bridge() is already reading
+bus range it. If we move devm_pci_alloc_host_bridge() to start of the
+controller probe we can avoid reading the dt and use values stored in 
+the host bridge.
+This was recommended by bjorn in the v2.
 
-Please update the kdoc too.
-
->   * @dev: pointer to device handle
-> @@ -10334,6 +10334,13 @@ int ufshcd_alloc_host(struct device *dev, struct ufs_hba **hba_handle)
->  		err = -ENOMEM;
->  		goto out_error;
->  	}
-> +
-> +	err = devm_add_action_or_reset(dev, ufshcd_devres_release,
-> +				       host);
-> +	if (err)
-> +		return dev_err_probe(dev, err,
-> +				     "failed to add ufshcd dealloc action\n");
-> +
->  	host->nr_maps = HCTX_TYPE_POLL + 1;
->  	hba = shost_priv(host);
->  	hba->host = host;
-> diff --git a/drivers/ufs/host/ufshcd-pci.c b/drivers/ufs/host/ufshcd-pci.c
-> index ea39c5d5b8cf..9cfcaad23cf9 100644
-> --- a/drivers/ufs/host/ufshcd-pci.c
-> +++ b/drivers/ufs/host/ufshcd-pci.c
-> @@ -562,7 +562,6 @@ static void ufshcd_pci_remove(struct pci_dev *pdev)
->  	pm_runtime_forbid(&pdev->dev);
->  	pm_runtime_get_noresume(&pdev->dev);
->  	ufshcd_remove(hba);
-> -	ufshcd_dealloc_host(hba);
->  }
->  
->  /**
-> @@ -605,7 +604,6 @@ ufshcd_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
->  	err = ufshcd_init(hba, mmio_base, pdev->irq);
->  	if (err) {
->  		dev_err(&pdev->dev, "Initialization failed\n");
-> -		ufshcd_dealloc_host(hba);
->  		return err;
->  	}
->  
-> diff --git a/drivers/ufs/host/ufshcd-pltfrm.c b/drivers/ufs/host/ufshcd-pltfrm.c
-> index 505572d4fa87..adb0a65d9df5 100644
-> --- a/drivers/ufs/host/ufshcd-pltfrm.c
-> +++ b/drivers/ufs/host/ufshcd-pltfrm.c
-> @@ -488,13 +488,13 @@ int ufshcd_pltfrm_init(struct platform_device *pdev,
->  	if (err) {
->  		dev_err(dev, "%s: clock parse failed %d\n",
->  				__func__, err);
-> -		goto dealloc_host;
-> +		goto out;
-
-This 'goto out' is pointless now. Please return the errno directly.
-
-- Mani
-
--- 
-மணிவண்ணன் சதாசிவம்
+I will update the commit text in the next series.
+> - Mani
+> 
+>> Signed-off-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+>> ---
+>>   drivers/pci/controller/dwc/pcie-designware-host.c | 13 +++++++------
+>>   1 file changed, 7 insertions(+), 6 deletions(-)
+>>
+>> diff --git a/drivers/pci/controller/dwc/pcie-designware-host.c b/drivers/pci/controller/dwc/pcie-designware-host.c
+>> index 3888f9fe5af1..0acf9db44f2c 100644
+>> --- a/drivers/pci/controller/dwc/pcie-designware-host.c
+>> +++ b/drivers/pci/controller/dwc/pcie-designware-host.c
+>> @@ -484,8 +484,8 @@ int dw_pcie_host_init(struct dw_pcie_rp *pp)
+>>   	struct device *dev = pci->dev;
+>>   	struct device_node *np = dev->of_node;
+>>   	struct platform_device *pdev = to_platform_device(dev);
+>> +	struct pci_host_bridge *bridge = pp->bridge;
+>>   	struct resource_entry *win;
+>> -	struct pci_host_bridge *bridge;
+>>   	struct resource *res;
+>>   	int ret;
+>>   
+>> @@ -497,11 +497,12 @@ int dw_pcie_host_init(struct dw_pcie_rp *pp)
+>>   		return -ENODEV;
+>>   	}
+>>   
+>> -	bridge = devm_pci_alloc_host_bridge(dev, 0);
+>> -	if (!bridge)
+>> -		return -ENOMEM;
+>> -
+>> -	pp->bridge = bridge;
+>> +	if (!pp->bridge) {
+>> +		bridge = devm_pci_alloc_host_bridge(dev, 0);
+>> +		if (!bridge)
+>> +			return -ENOMEM;
+>> +		pp->bridge = bridge;
+>> +	}
+>>   
+>>   	pp->cfg0_size = resource_size(res);
+>>   	pp->cfg0_base = res->start;
+>>
+>> -- 
+>> 2.34.1
+>>
+> 
 
