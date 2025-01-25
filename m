@@ -1,77 +1,77 @@
-Return-Path: <linux-arm-msm+bounces-46135-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46136-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 272C9A1C49B
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Jan 2025 18:30:33 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3434CA1C4A1
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Jan 2025 18:32:28 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A6A323A8D13
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Jan 2025 17:30:25 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 40ECA1888A27
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Jan 2025 17:32:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 248F725A62A;
-	Sat, 25 Jan 2025 17:30:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7960C43172;
+	Sat, 25 Jan 2025 17:32:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="VuXKvog3"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="DExYhZgF"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f181.google.com (mail-lj1-f181.google.com [209.85.208.181])
+Received: from mail-lf1-f44.google.com (mail-lf1-f44.google.com [209.85.167.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42134C148
-	for <linux-arm-msm@vger.kernel.org>; Sat, 25 Jan 2025 17:30:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98E28F4FA
+	for <linux-arm-msm@vger.kernel.org>; Sat, 25 Jan 2025 17:32:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737826230; cv=none; b=p9RpzoWI9Pj51oBwGxCvib6nDtQ9HfvrvwqX/9aPGsdU2Bqv+Jzfap2j3nQdhbU5a6PRp/3RVk6aZ29c9DT9DEOvCGJpsmEDXRcLE2hcVAjWXELXlvZkVBtBVAcagm6RyLqeTmoV0gk2cVWU595qv7a5yEVlXbkAP9JqoNuz2Vo=
+	t=1737826343; cv=none; b=ggb3LVbpafOobwRVT3giUw5nTQKUD6f6oizvR9vx24LvqEzOJW2pK8PQSE2MVweG0ywyZVD1IrxA7AU98jmvhhuXiNMlGGQtt57O59rE+0S4eSUX6IuGH0VeIhNQKu8s16q/Utykjva3SHhByaJUMfCrOPKEulICthna1GDvrrc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737826230; c=relaxed/simple;
-	bh=s7ieX5CKFHuwQrcOmb8RVPW9HCuCK4jl6dIVeQLv2Pc=;
+	s=arc-20240116; t=1737826343; c=relaxed/simple;
+	bh=+CncgCx12/7s9Aqe57tDdzmN7kxUIZdrXndsgAgPZCg=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=eqMarzTgkC7spTJD4CSjY7E8KM3vDZJg0uJMqJQHclR49soaBQXxVjCjK+ZM2u7DzeRyJOZpKAodnAEvU19d3LCB8P4nKPaTgi1qdJwhAWEI4vsv7Z81YMwY0acxFw1N6fhQrLAd306g6yEgF431+k9AL4U4sE5PghxF7eIdmsE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=VuXKvog3; arc=none smtp.client-ip=209.85.208.181
+	 Content-Type:Content-Disposition:In-Reply-To; b=f1F9ayMX9RVtD2s23mNLxnfVYcB+iejJz3FbCRCUlxoYbH5AIcsfmYAMYKk8wpY5Sa39VkmZYK97cpKutqhF5P/McI2ud2pdJBuzLjaHGzzG7hyVzYfB5F7PhrBGPd6LlhFajDgsUR/TA5kZQHtv7s2kA5FyBAP60/p3mvl3Puk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=DExYhZgF; arc=none smtp.client-ip=209.85.167.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f181.google.com with SMTP id 38308e7fff4ca-30613802a59so34173761fa.0
-        for <linux-arm-msm@vger.kernel.org>; Sat, 25 Jan 2025 09:30:27 -0800 (PST)
+Received: by mail-lf1-f44.google.com with SMTP id 2adb3069b0e04-54287a3ba3cso3934947e87.0
+        for <linux-arm-msm@vger.kernel.org>; Sat, 25 Jan 2025 09:32:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1737826226; x=1738431026; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1737826340; x=1738431140; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=US0EnBiHsIYKJlqPkzCqVbNBc2Ls+ZuNd0+qd6Uqb/Y=;
-        b=VuXKvog3DgVwxznx9B8ObJAM1jFUii/suSe7R/rhkbqcsC0QshYpVe91tC+jNavJxY
-         3ehpcIgs6GUk7QQg32uCYXITbq5RbnAeE7SqAh0JVctgFQQQz2ie4ESJvVRbQB6lIPca
-         CJMXc5HDExzo3NzuWdK5oSVHlrID0gj2Db74tu4hFpLtZB8OG4tEMUqt9nnCFIV7j76n
-         8es1IsAuNdeWwLq37feT1uT6widku+XlGX/m5UUGQrFsat+z4sIJj32zdk0UIUgqWNXe
-         e04ofljHYn0XMjvUUUdvgApobytLeqozZwoyld5Ge9d7FJz05xmVbvsaSQPu03mGNqxW
-         tQKA==
+        bh=9VTKxkEAePwEPt+V7eEDuXn6aqMYuyS335t11P98dTo=;
+        b=DExYhZgF0EuvzTv8WLj8fa4GwAI9psPiP4d2NNPLXH0Ik1VFwAZ591E4US0KDlWn07
+         sAJUIE/lVL/RojNqhc+0k1O4sysEiAUiZkCkpLK1jXd/mJkAEnOaFWwLOBPBIarZGaiv
+         +zFFT3wII2yuV9xWwKQATa+aLkiR66Pqg8uFm9RDzqiNZCt/IwDKdmbYVeqNUocC1wpY
+         3LFavCT1tRLs1eFooJ0wcu0MmY1E7OkLPYPqMicGpb1Y0wVjkJUUjHGZn/xH2YdFrBSy
+         89U9wn3tjavdI5xXuI3Y/vfEQqTu6CHXdvaLynRPzHJv8271s38ShJUumRMc6OL6MESG
+         VHOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1737826226; x=1738431026;
+        d=1e100.net; s=20230601; t=1737826340; x=1738431140;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=US0EnBiHsIYKJlqPkzCqVbNBc2Ls+ZuNd0+qd6Uqb/Y=;
-        b=mJ9qF3gCIGBFrUwuT5sekWJMElAY9IPFt2z9ZjE1y4gKKnLqTz7FQpHjZtdcX58sWY
-         2Xv9OKeZKTubeNgZ/m+sKfnfmsP3ONVRXH3QnVLC67Ih8P0UKdxMCW0DrHzAGfI1iZfj
-         vR2xPlwdMM5bg6lgUvo0NNNpXFl6xetm0f20KJOOalz0KHKbqaGNhEJxcr3rb2fnW4s5
-         +bqVxpZKgrsLGDo4IS+Pu5kb2+aHyp49GfbLAJENNw1V43Ypf9WriIIU8r2qG5nJkIRY
-         ICBYXEOUWwVDKNDvgV8fg1pAoEfhSQdrLyrJBpj/dnTNJUZGmO3ailbbOIoLioENs8KU
-         HbTg==
-X-Forwarded-Encrypted: i=1; AJvYcCWWGT0fmyZEcGO5KyaFhpboJ/KVH4yLkWTEqbPm6eNo+RjCLFFbMNeQ1CF2VLlmnD95FJ9LW+TSAFP1uXjc@vger.kernel.org
-X-Gm-Message-State: AOJu0YxYh58+ua+to2FSwjYganyyEbf0uxwp8xs1Js3IrInjVGYRce9i
-	ipLZUJChMtwD7+efWJYqTog8WpLySgDVOHu4lwUiK71D7FccgTDj35wRnCOT2zM=
-X-Gm-Gg: ASbGncspxRIklHZUOhmB8e2lZHmlfT/QV2yTJnR2+LF1z5QMavbpZEhz2ChDOE3hNWs
-	aMUsZCkWqIkylIpketBNhUhfUbqGmheZY1nrKJ28tzMaY0VRO9/z3bFuzCppfEiIxWh68qK6Cn6
-	8GVHh7IaATE/o006s0fUFixSjpFup+dFF4VHTKBTz1vaxt2LEUx3DbEYrXLPHs8FEbRhdg2XmA8
-	hficV80UADVZs5Y+1hpOzlAQ5jjiGJrJdXDgMz00MQunCdClZo6/HBPgiEVLMezuFFZ2L+/SsMd
-	/xqIfAJ1Q3y970WozjZiXnlGtLjoTvJngCiAjWNp4BNbRaLRrGyXQBUGPD2F
-X-Google-Smtp-Source: AGHT+IEJdOGBDBJSDCvFhU2PUzzZMFjItFiSFpgzHyoEnKNXwK9asBOtQ13f6ME37s/+fooYaxI9aA==
-X-Received: by 2002:a2e:be04:0:b0:302:3ff6:c8c6 with SMTP id 38308e7fff4ca-3072cb3cd60mr129216181fa.33.1737826226314;
-        Sat, 25 Jan 2025 09:30:26 -0800 (PST)
+        bh=9VTKxkEAePwEPt+V7eEDuXn6aqMYuyS335t11P98dTo=;
+        b=Wv86YZxp7d45MH9I1BfbgxqL1Zs/jo7ZXGusd+DnmKa9HDnpoFbCqnkPJFzGqDMwVo
+         K9aQdqlrJYwcQ7az5wubCWwYUno3N8Xafepmyg5vRyMrOKUX6w1vcMtFrpUJahYKIkEH
+         FHkITUwr8vOE5CLuRQBOU3ZC6aKhTz9ZTjPjDWn+nlzeRcASzRglBQXJqHUwTZKrNMC0
+         RCgZQ0esgICBaAKTVaToSlK8U5gO2GgscFH4efHXP6uHGTPbiWaf/hM8V9wib9vBEp9y
+         oB7CnR/Q/CCM4D3GREiep6nUB2wX16AinaobTx/pwRi1xdN09j2AMH40uYxuzWL7IIzF
+         L16A==
+X-Forwarded-Encrypted: i=1; AJvYcCWKfCbpEA5fIshk1DChLoKLsT3WqJlfe1ykE4F/Y0VPSikLoB2rXEecKt6zrtQWHkTzfmlCUdyBQvvqddcM@vger.kernel.org
+X-Gm-Message-State: AOJu0YwRznAsjJqUH37omSsDcZXwdq24/SW3XklcWRiDlxiJJiVjvwbs
+	uWlhzFpMzkNB4bMk5+8cKbKVQ52WVitUAGVLqyuj5J5BZfF0TXvAX7hkW8aPm0U=
+X-Gm-Gg: ASbGncuu3O+1hJVayy1P4w4SzE+ZQ/DrHAmAaMXCoByAiPhT2sXqvHferp/7uhWftji
+	O/JJF3lYi7iIHqtYvGQ3HTEjhDjU0s9IM4qBBQL6384NX8rRq6EmuwUuGwkDqOyuSzMkPAR0vPP
+	5ewkqQkloX2aMT0CIaUcpagXgrjj7G49rMmFh7+7snjmSgJVWMq2DRp41BwJtx+d3qyLpa3WMJt
+	m7FJav43PNcYP3Ub1E7dOs09ilWtcm/uSXYKDzq6TfPWMwyhla4tC81ohRtG8B4LSal5uEEgGFm
+	/4OA0qXMjc4VMKZOYIulsCuwV79a6fkn5FylNNBj2wAEE0fqnCL/mkueAY4V
+X-Google-Smtp-Source: AGHT+IHM/qxpChUH+UJCNurb4Af2EPjax/Hj650FqV7s35DU657fh9sG+7Ox+WQZxY3Bclz1CNSomQ==
+X-Received: by 2002:a05:6512:3f0e:b0:542:1bdb:9a61 with SMTP id 2adb3069b0e04-543c222feb5mr4471511e87.19.1737826339672;
+        Sat, 25 Jan 2025 09:32:19 -0800 (PST)
 Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-3076bacb2bfsm7581241fa.29.2025.01.25.09.30.24
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-543c83682ffsm666153e87.115.2025.01.25.09.32.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 25 Jan 2025 09:30:25 -0800 (PST)
-Date: Sat, 25 Jan 2025 19:30:23 +0200
+        Sat, 25 Jan 2025 09:32:18 -0800 (PST)
+Date: Sat, 25 Jan 2025 19:32:15 +0200
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To: Konrad Dybcio <konradybcio@kernel.org>
 Cc: Vinod Koul <vkoul@kernel.org>, 
@@ -80,10 +80,11 @@ Cc: Vinod Koul <vkoul@kernel.org>,
 	Bjorn Andersson <andersson@kernel.org>, Marijn Suijten <marijn.suijten@somainline.org>, 
 	linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org, devicetree@vger.kernel.org, 
 	linux-kernel@vger.kernel.org, Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Subject: Re: [PATCH 3/6] phy: qcom: qmp-pcie: Add X1P42100 Gen4x4 PHY
-Message-ID: <h6zfhxkc4dj2ueaxipha6prbvmv7pnqglghtjs7vkhlc2s7ndi@vhbj4uojlzwd>
+Subject: Re: [PATCH 4/6] arm64: dts: qcom: x1e80100: Wire up PCIe PHY NOCSR
+ resets
+Message-ID: <s3d4tc3rstno6rtzlmpab6jho4dixjljo3u4b64r7luaszqlmp@3djmby5d3gij>
 References: <20250125-topic-x1p4_dts-v1-0-02659a08b044@oss.qualcomm.com>
- <20250125-topic-x1p4_dts-v1-3-02659a08b044@oss.qualcomm.com>
+ <20250125-topic-x1p4_dts-v1-4-02659a08b044@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -92,29 +93,24 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250125-topic-x1p4_dts-v1-3-02659a08b044@oss.qualcomm.com>
+In-Reply-To: <20250125-topic-x1p4_dts-v1-4-02659a08b044@oss.qualcomm.com>
 
-On Sat, Jan 25, 2025 at 04:31:19AM +0100, Konrad Dybcio wrote:
+On Sat, Jan 25, 2025 at 04:31:20AM +0100, Konrad Dybcio wrote:
 > From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 > 
-> Add a new, common configuration for Gen4x4 V6 PHYs without an init
-> sequence.
+> Asserting the NOCSR reset line keeps the PHY registers in tact.
+> This allows us to avoid programming long tables of magic values in the
+> operating system.
 > 
-> The bootloader configures the hardware once and the OS retains that
-> configuration by using the NOCSR reset line (which doesn't drop
-> register state on assert) in place of the "full reset" one.
-
-I know your opinion, but my 2c would still be for not depending on the
-bootloader. I think that was the rule for ages for many possible
-reasons.
-
-> 
-> Use this new configuration for X1P42100's Gen4x4 PHY.
+> Wire up these resets to PCIe PHY4 and 5 (it's there on the others).
 > 
 > Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 > ---
->  drivers/phy/qualcomm/phy-qcom-qmp-pcie.c | 18 ++++++++++++++++++
->  1 file changed, 18 insertions(+)
+>  arch/arm64/boot/dts/qcom/x1e80100.dtsi | 12 ++++++++----
+>  1 file changed, 8 insertions(+), 4 deletions(-)
+> 
+
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
 -- 
 With best wishes
