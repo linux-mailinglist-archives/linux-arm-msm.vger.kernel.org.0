@@ -1,50 +1,49 @@
-Return-Path: <linux-arm-msm+bounces-46120-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46121-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 88AF4A1C0B1
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Jan 2025 04:31:57 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 67E73A1C0B5
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Jan 2025 04:32:18 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8D880167E03
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Jan 2025 03:31:55 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 414F01888EDC
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Jan 2025 03:32:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 96B76155C96;
-	Sat, 25 Jan 2025 03:31:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0002B2066E8;
+	Sat, 25 Jan 2025 03:31:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="V7AkTryK"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mxu4swP5"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B3DE3595E;
-	Sat, 25 Jan 2025 03:31:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7F223595E;
+	Sat, 25 Jan 2025 03:31:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737775895; cv=none; b=awauIJzXVfaQ9c4kOtLiwQk0fMdSoUwY40ST2YOoYDMWsgZ1cOQd0N4mekx3dwl2k520GSrvxeDa9lDPZFZ7W2WiAiX+aOZaKpMjRPVhsCIimH1LtRPTfyWiG9KGsuoBF6VSviSnvoGUNEexF5UywRVuovdJm+k3G4Xla6MBLO4=
+	t=1737775898; cv=none; b=jeOqOCpKzyfXf9uS0tGJ3+RigvvwjFZvkaK+v+8XlF7M/TwUjGQdtF+G0Zbk/v/6weQI0HR+jph/empc7Yyf+rjpQMWjjdyRJjLpQpFFUnYevJJzmEgXeHC5QlOzMs+9z4Jvi4/bPfBVXz0oy1YrxAXYZvVUeWTsxi2emffVHFA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737775895; c=relaxed/simple;
-	bh=yQ4WZAL+HjPTJalu92xDn4gcmnU/eJvKNpSHwXuCHcE=;
+	s=arc-20240116; t=1737775898; c=relaxed/simple;
+	bh=9bWNkRroU63nU3KiE7zz4lmrFAcVbebubnHxCwCouEQ=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=rTOMrxbpjp+JDXufFAS0UufxSRVBI2Pcpl1OYbPwxhwOZ8MNlu3nGufn08fbAPR/+j6uMzrNiAP8tssoTwr23ZIcNnlyz/aZM8rbxbwyYi5aAeQ1/U6RnNj6x1c32DEKHocm4ZYp1Xg+aqnQSXBZY/JxgZ9hqQ6marbkCA0QkXg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=V7AkTryK; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0A73C4CED6;
-	Sat, 25 Jan 2025 03:31:31 +0000 (UTC)
+	 In-Reply-To:To:Cc; b=TnJkTClvY2znMdughAioAxCbkLWMRW8VZLaltlKg8KrkTPPC+FKbE3dohQ/4wWyNnGdUB1v5ubfV3zCJMgn97mtj0bzjmvOghp2eh6AU+r0dPR4wgCj1kcrIkwoC1J5fd4EJ9tCRdjIdE3MgeKWv1a+/D4s3U66juRhhNNdDkKA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mxu4swP5; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 696EBC4CEDD;
+	Sat, 25 Jan 2025 03:31:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1737775894;
-	bh=yQ4WZAL+HjPTJalu92xDn4gcmnU/eJvKNpSHwXuCHcE=;
+	s=k20201202; t=1737775898;
+	bh=9bWNkRroU63nU3KiE7zz4lmrFAcVbebubnHxCwCouEQ=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
-	b=V7AkTryKVx8hTgqLFyX6Igbv9FxtIV4wWZbgRDVoo1EwOhLg+USluawNNEYo8nW+d
-	 kTU3Qk4j2jR7YcyPXoIaR3U4mf53uTADsqTOl1TFr2jQuQh8QHmBDuz9TcCJ+HW56R
-	 uWXknQNtcGMaEF5zmH1K0f+KL1iooZom5Aj6mGINztyGOU0neSshWhJ4EVVFsEgdRm
-	 zQtBXlgqHP0yJTLqbBs7NZtNiF/Tpxvb9Y1UdzgnO2Iqlchch83IMOJ8bCp7Bd+YaL
-	 OimKpkyP7Ogb8S/YxNMQRvE/F8UgtFzk1CtqtMkCxPd14JQuHwPO+qdXFUjmwWjUg4
-	 1ulTDGld4ckvQ==
+	b=mxu4swP5IH0rQT5ONJw4tf/4nhl3OoJj2/uRRVxu/VeF94/2McCUEjxIgjoM26jvZ
+	 xkUraZryJvMa/LTY+dn+gFQbFJJxt3BwcZdHq+4joYc4Xa01D0rVXV2UXvsJ27HPoQ
+	 9twhpWOaxImuEp/wOwRyVLSSoj66ZTh4JoYqPH8m6ay8e3MkQunoYs9lWLSmATDw2m
+	 K3SQH0vOP/+NKBJkREaCPw/6Cin4R60DeCjdoV7kSNXSCoA7UnunZj0ar+126PufkJ
+	 K+QH/vIkmiAq8Scb+RSRPoEjsetBcB8GigjZdjsRlX1YEC+48AKnSm48FAKvkFiSpd
+	 1emA3AaV8puTA==
 From: Konrad Dybcio <konradybcio@kernel.org>
-Date: Sat, 25 Jan 2025 04:31:18 +0100
-Subject: [PATCH 2/6] dt-bindings: phy: qcom,qmp-pcie: Drop reset number
- constraints
+Date: Sat, 25 Jan 2025 04:31:19 +0100
+Subject: [PATCH 3/6] phy: qcom: qmp-pcie: Add X1P42100 Gen4x4 PHY
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -53,7 +52,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250125-topic-x1p4_dts-v1-2-02659a08b044@oss.qualcomm.com>
+Message-Id: <20250125-topic-x1p4_dts-v1-3-02659a08b044@oss.qualcomm.com>
 References: <20250125-topic-x1p4_dts-v1-0-02659a08b044@oss.qualcomm.com>
 In-Reply-To: <20250125-topic-x1p4_dts-v1-0-02659a08b044@oss.qualcomm.com>
 To: Vinod Koul <vkoul@kernel.org>, 
@@ -66,64 +65,66 @@ Cc: Marijn Suijten <marijn.suijten@somainline.org>,
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
  Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1737775883; l=1746;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1737775883; l=1932;
  i=konrad.dybcio@oss.qualcomm.com; s=20230215; h=from:subject:message-id;
- bh=nIktw7MgGIgFnnkILzM1v07X3q5bcgjMMy7JANg0KiM=;
- b=en9NgYiXNZOek7cdDDhnfeAx+QO/5xZ7gwvv6mZtCP0QPIO+jM34GdWMAS53xSezFDrH/3IJs
- KogOTKPXYwSA3ls2HXzlDquuNbgUGHrL7vlAcfzF1ULiCyBzEruYMMh
+ bh=gcbUb/R2HEswdsbX0ctwFYMYlcTBRiL80fLYyi/m0fo=;
+ b=ufWUmvHanITNco0RZydJHi5NtQHtZThaL5HkTkHN2PSzFhf+hiRkm5vpufl6sXgA8/U0oc1DI
+ AkY24bC1ZW1BGbGItHtE5f6o7a/mNMJSIKcD7evvpjTt9INTB89v0L+
 X-Developer-Key: i=konrad.dybcio@oss.qualcomm.com; a=ed25519;
  pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 
 From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 
-(Almost?) all QMP PHYs come with both a "full reset" ("phy") and a
-"retain certain registers" one ("phy_nocsr").
+Add a new, common configuration for Gen4x4 V6 PHYs without an init
+sequence.
 
-Drop the maxItems=1 constraint for resets and reset_names as we go
-ahead and straighten out the DT usage. After that's done (which
-will involve modifying some clock drivers etc.), we may set
-*min*Items to 2, bar some possible exceptions.
+The bootloader configures the hardware once and the OS retains that
+configuration by using the NOCSR reset line (which doesn't drop
+register state on assert) in place of the "full reset" one.
+
+Use this new configuration for X1P42100's Gen4x4 PHY.
 
 Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 ---
- .../bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml   | 24 ----------------------
- 1 file changed, 24 deletions(-)
+ drivers/phy/qualcomm/phy-qcom-qmp-pcie.c | 18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml
-index f1ffc3d5cae44b8a9c96cdcd749a6e54533c94f6..c42143bd139e30d1beabc9099d0dde17128413bf 100644
---- a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml
-+++ b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml
-@@ -204,30 +204,6 @@ allOf:
-         clock-names:
-           minItems: 7
+diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+index 58103e87540ad84faca708debf61d79fe9f9ac54..68befe2901944b7f39e5adc12208c4b5578d94b1 100644
+--- a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
++++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+@@ -4150,6 +4150,21 @@ static const struct qmp_phy_cfg x1e80100_qmp_gen4x8_pciephy_cfg = {
+ 	.phy_status		= PHYSTATUS_4_20,
+ };
  
--  - if:
--      properties:
--        compatible:
--          contains:
--            enum:
--              - qcom,sm8550-qmp-gen4x2-pcie-phy
--              - qcom,sm8650-qmp-gen4x2-pcie-phy
--              - qcom,x1e80100-qmp-gen4x2-pcie-phy
--              - qcom,x1e80100-qmp-gen4x4-pcie-phy
--              - qcom,x1e80100-qmp-gen4x8-pcie-phy
--              - qcom,x1p42100-qmp-gen4x4-pcie-phy
--    then:
--      properties:
--        resets:
--          minItems: 2
--        reset-names:
--          minItems: 2
--    else:
--      properties:
--        resets:
--          maxItems: 1
--        reset-names:
--          maxItems: 1
--
-   - if:
-       properties:
-         compatible:
++static const struct qmp_phy_cfg qmp_v6_gen4x4_pciephy_cfg = {
++	.lanes = 4,
++
++	.offsets                = &qmp_pcie_offsets_v6_20,
++
++	.reset_list             = sdm845_pciephy_reset_l,
++	.num_resets             = ARRAY_SIZE(sdm845_pciephy_reset_l),
++	.vreg_list              = qmp_phy_vreg_l,
++	.num_vregs              = ARRAY_SIZE(qmp_phy_vreg_l),
++	.regs                   = pciephy_v6_regs_layout,
++
++	.pwrdn_ctrl             = SW_PWRDN | REFCLK_DRV_DSBL,
++	.phy_status             = PHYSTATUS_4_20,
++};
++
+ static void qmp_pcie_init_port_b(struct qmp_pcie *qmp, const struct qmp_phy_cfg_tbls *tbls)
+ {
+ 	const struct qmp_phy_cfg *cfg = qmp->cfg;
+@@ -4981,6 +4996,9 @@ static const struct of_device_id qmp_pcie_of_match_table[] = {
+ 	}, {
+ 		.compatible = "qcom,x1e80100-qmp-gen4x8-pcie-phy",
+ 		.data = &x1e80100_qmp_gen4x8_pciephy_cfg,
++	}, {
++		.compatible = "qcom,x1p42100-qmp-gen4x4-pcie-phy",
++		.data = &qmp_v6_gen4x4_pciephy_cfg,
+ 	},
+ 	{ },
+ };
 
 -- 
 2.48.1
