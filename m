@@ -1,50 +1,50 @@
-Return-Path: <linux-arm-msm+bounces-46119-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46120-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 91080A1C0AF
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Jan 2025 04:31:45 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 88AF4A1C0B1
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Jan 2025 04:31:57 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3B0071886EE5
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Jan 2025 03:31:49 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8D880167E03
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Jan 2025 03:31:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F09562063F0;
-	Sat, 25 Jan 2025 03:31:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 96B76155C96;
+	Sat, 25 Jan 2025 03:31:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RDzc58GL"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="V7AkTryK"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C302D3595E;
-	Sat, 25 Jan 2025 03:31:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B3DE3595E;
+	Sat, 25 Jan 2025 03:31:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737775891; cv=none; b=JcUinnAO+wkGYbU2n9PunvNBejf4YiP150+QWfQV7LQmBsOslBGHDHBjubKnS2YOJSg++0jZpIMKLdRNKMfmmHu+tLS2co/kEeziIku2D0Sqt65w5WwcHtPNuMwzsfX8TfL0jhsap28BhKoJRBM1nrN8YKG+iPu5uj0jxUffc5I=
+	t=1737775895; cv=none; b=awauIJzXVfaQ9c4kOtLiwQk0fMdSoUwY40ST2YOoYDMWsgZ1cOQd0N4mekx3dwl2k520GSrvxeDa9lDPZFZ7W2WiAiX+aOZaKpMjRPVhsCIimH1LtRPTfyWiG9KGsuoBF6VSviSnvoGUNEexF5UywRVuovdJm+k3G4Xla6MBLO4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737775891; c=relaxed/simple;
-	bh=14JNtwzaggko4px4AFo91MrUKHtzGL+tdB0lfg7xYR0=;
+	s=arc-20240116; t=1737775895; c=relaxed/simple;
+	bh=yQ4WZAL+HjPTJalu92xDn4gcmnU/eJvKNpSHwXuCHcE=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=s/wmbE24GDQb1U5ulfYMbJKAS0SHFK934QTk3MCu5nsQvs6/HfuL6SedLn8zuQCgXwA3UsxhPHdEkjoQ/QBjoSZG2wqUmJ7V+ojNeiMe7tcjH8h2K+9pPQHr3P1XNgoukR59qtSbYbtyMOo3Sf1Ew5FvKGW6F7bPWmcBpY7hv4E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RDzc58GL; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A8A2C4CEE1;
-	Sat, 25 Jan 2025 03:31:28 +0000 (UTC)
+	 In-Reply-To:To:Cc; b=rTOMrxbpjp+JDXufFAS0UufxSRVBI2Pcpl1OYbPwxhwOZ8MNlu3nGufn08fbAPR/+j6uMzrNiAP8tssoTwr23ZIcNnlyz/aZM8rbxbwyYi5aAeQ1/U6RnNj6x1c32DEKHocm4ZYp1Xg+aqnQSXBZY/JxgZ9hqQ6marbkCA0QkXg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=V7AkTryK; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0A73C4CED6;
+	Sat, 25 Jan 2025 03:31:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1737775891;
-	bh=14JNtwzaggko4px4AFo91MrUKHtzGL+tdB0lfg7xYR0=;
+	s=k20201202; t=1737775894;
+	bh=yQ4WZAL+HjPTJalu92xDn4gcmnU/eJvKNpSHwXuCHcE=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
-	b=RDzc58GLcn57z7WBTgDycEYErYO0dy7MkZyZW5V2Ef5pYdxhRPhEVqgo/UPjohoj7
-	 JGG9LvlNyQveFOjq0/gHzTLT5QYrMb17rmMS7Osf2ookvQNrruNciQyRoLDDkglZkB
-	 fgplGfCFEXxEAQjiy9gDoIzsFXUTGFFVlz6WuhMIBYnm8J96S65bQ7SfCjONBDsE10
-	 F5ugwpumpJszp+XICHIW9uLJdobqUju2IHS+lRNIfzrfv31GD8iKp5HCYBvqJDhaFo
-	 SXultECkYkWN1RT6z0wyrkCzqaGW644SxMHXrFMJw7HRks6vJtpm0TAECbZTDxV0P0
-	 AgBBGDgfHeFDQ==
+	b=V7AkTryKVx8hTgqLFyX6Igbv9FxtIV4wWZbgRDVoo1EwOhLg+USluawNNEYo8nW+d
+	 kTU3Qk4j2jR7YcyPXoIaR3U4mf53uTADsqTOl1TFr2jQuQh8QHmBDuz9TcCJ+HW56R
+	 uWXknQNtcGMaEF5zmH1K0f+KL1iooZom5Aj6mGINztyGOU0neSshWhJ4EVVFsEgdRm
+	 zQtBXlgqHP0yJTLqbBs7NZtNiF/Tpxvb9Y1UdzgnO2Iqlchch83IMOJ8bCp7Bd+YaL
+	 OimKpkyP7Ogb8S/YxNMQRvE/F8UgtFzk1CtqtMkCxPd14JQuHwPO+qdXFUjmwWjUg4
+	 1ulTDGld4ckvQ==
 From: Konrad Dybcio <konradybcio@kernel.org>
-Date: Sat, 25 Jan 2025 04:31:17 +0100
-Subject: [PATCH 1/6] dt-bindings: phy: qcom,qmp-pcie: Add X1P42100 PCIe
- Gen4x4 PHY
+Date: Sat, 25 Jan 2025 04:31:18 +0100
+Subject: [PATCH 2/6] dt-bindings: phy: qcom,qmp-pcie: Drop reset number
+ constraints
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -53,7 +53,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250125-topic-x1p4_dts-v1-1-02659a08b044@oss.qualcomm.com>
+Message-Id: <20250125-topic-x1p4_dts-v1-2-02659a08b044@oss.qualcomm.com>
 References: <20250125-topic-x1p4_dts-v1-0-02659a08b044@oss.qualcomm.com>
 In-Reply-To: <20250125-topic-x1p4_dts-v1-0-02659a08b044@oss.qualcomm.com>
 To: Vinod Koul <vkoul@kernel.org>, 
@@ -66,64 +66,64 @@ Cc: Marijn Suijten <marijn.suijten@somainline.org>,
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
  Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1737775883; l=1914;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1737775883; l=1746;
  i=konrad.dybcio@oss.qualcomm.com; s=20230215; h=from:subject:message-id;
- bh=FYdx44lQWbzJYhduHK5Q+z5D4BL0BELlO06f6qXTvOg=;
- b=VCpNB5nnYTaxeOVLRWolLA/p3Ry3SlxgqlIUULYP+91T72hwooVFVDu6p4/UvYrMCzo5xg7Ms
- dFkff5bLYRNBkQO//tfeJ92l9Ix8PwIMF3Pdj6DeyXgBY8EdCJX3PhD
+ bh=nIktw7MgGIgFnnkILzM1v07X3q5bcgjMMy7JANg0KiM=;
+ b=en9NgYiXNZOek7cdDDhnfeAx+QO/5xZ7gwvv6mZtCP0QPIO+jM34GdWMAS53xSezFDrH/3IJs
+ KogOTKPXYwSA3ls2HXzlDquuNbgUGHrL7vlAcfzF1ULiCyBzEruYMMh
 X-Developer-Key: i=konrad.dybcio@oss.qualcomm.com; a=ed25519;
  pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 
 From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 
-X1P42100 has two Gen4x4 PHYs instead of one Gen4x4 and one Gen4x8.
+(Almost?) all QMP PHYs come with both a "full reset" ("phy") and a
+"retain certain registers" one ("phy_nocsr").
 
-They are mostly identical to X1E80100's Gen4x4 PHY, but there are some
-minor details in the programming sequences.
-
-Introduce a new compatible for this flavor of the PHY.
+Drop the maxItems=1 constraint for resets and reset_names as we go
+ahead and straighten out the DT usage. After that's done (which
+will involve modifying some clock drivers etc.), we may set
+*min*Items to 2, bar some possible exceptions.
 
 Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 ---
- Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml | 4 ++++
- 1 file changed, 4 insertions(+)
+ .../bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml   | 24 ----------------------
+ 1 file changed, 24 deletions(-)
 
 diff --git a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml
-index 89391649e0b5cb7e778b51fe61fb445d1f17eaf5..f1ffc3d5cae44b8a9c96cdcd749a6e54533c94f6 100644
+index f1ffc3d5cae44b8a9c96cdcd749a6e54533c94f6..c42143bd139e30d1beabc9099d0dde17128413bf 100644
 --- a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml
 +++ b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml
-@@ -45,6 +45,7 @@ properties:
-       - qcom,x1e80100-qmp-gen4x2-pcie-phy
-       - qcom,x1e80100-qmp-gen4x4-pcie-phy
-       - qcom,x1e80100-qmp-gen4x8-pcie-phy
-+      - qcom,x1p42100-qmp-gen4x4-pcie-phy
+@@ -204,30 +204,6 @@ allOf:
+         clock-names:
+           minItems: 7
  
-   reg:
-     minItems: 1
-@@ -124,6 +125,7 @@ allOf:
-             enum:
-               - qcom,sc8280xp-qmp-gen3x4-pcie-phy
-               - qcom,x1e80100-qmp-gen4x4-pcie-phy
-+              - qcom,x1p42100-qmp-gen4x4-pcie-phy
-     then:
+-  - if:
+-      properties:
+-        compatible:
+-          contains:
+-            enum:
+-              - qcom,sm8550-qmp-gen4x2-pcie-phy
+-              - qcom,sm8650-qmp-gen4x2-pcie-phy
+-              - qcom,x1e80100-qmp-gen4x2-pcie-phy
+-              - qcom,x1e80100-qmp-gen4x4-pcie-phy
+-              - qcom,x1e80100-qmp-gen4x8-pcie-phy
+-              - qcom,x1p42100-qmp-gen4x4-pcie-phy
+-    then:
+-      properties:
+-        resets:
+-          minItems: 2
+-        reset-names:
+-          minItems: 2
+-    else:
+-      properties:
+-        resets:
+-          maxItems: 1
+-        reset-names:
+-          maxItems: 1
+-
+   - if:
        properties:
-         reg:
-@@ -180,6 +182,7 @@ allOf:
-               - qcom,x1e80100-qmp-gen4x2-pcie-phy
-               - qcom,x1e80100-qmp-gen4x4-pcie-phy
-               - qcom,x1e80100-qmp-gen4x8-pcie-phy
-+              - qcom,x1p42100-qmp-gen4x4-pcie-phy
-     then:
-       properties:
-         clocks:
-@@ -211,6 +214,7 @@ allOf:
-               - qcom,x1e80100-qmp-gen4x2-pcie-phy
-               - qcom,x1e80100-qmp-gen4x4-pcie-phy
-               - qcom,x1e80100-qmp-gen4x8-pcie-phy
-+              - qcom,x1p42100-qmp-gen4x4-pcie-phy
-     then:
-       properties:
-         resets:
+         compatible:
 
 -- 
 2.48.1
