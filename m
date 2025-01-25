@@ -1,117 +1,122 @@
-Return-Path: <linux-arm-msm+bounces-46134-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46135-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4C20CA1C457
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Jan 2025 17:32:25 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 272C9A1C49B
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Jan 2025 18:30:33 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 94E80166C5D
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Jan 2025 16:32:23 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A6A323A8D13
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Jan 2025 17:30:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DC0C235973;
-	Sat, 25 Jan 2025 16:32:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 248F725A62A;
+	Sat, 25 Jan 2025 17:30:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="COhqfYvT"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="VuXKvog3"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f52.google.com (mail-ej1-f52.google.com [209.85.218.52])
+Received: from mail-lj1-f181.google.com (mail-lj1-f181.google.com [209.85.208.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2488018E2A;
-	Sat, 25 Jan 2025 16:32:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42134C148
+	for <linux-arm-msm@vger.kernel.org>; Sat, 25 Jan 2025 17:30:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737822740; cv=none; b=MhmGFSOwow757W/YJXR1+yTHzU7wNHWZcF2Us0pWFogRFm11vskbT6b5SjLhDwVjJSAsmZFzhQw3zDOV0DJky5qSiXc6LNIhRo85Eq03BQ0jnoSbkBg3NU273L3SJ0R1V8yg7yNwT98gMBtw8am8CwXSrNcEo3qdRC/PIobJxTw=
+	t=1737826230; cv=none; b=p9RpzoWI9Pj51oBwGxCvib6nDtQ9HfvrvwqX/9aPGsdU2Bqv+Jzfap2j3nQdhbU5a6PRp/3RVk6aZ29c9DT9DEOvCGJpsmEDXRcLE2hcVAjWXELXlvZkVBtBVAcagm6RyLqeTmoV0gk2cVWU595qv7a5yEVlXbkAP9JqoNuz2Vo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737822740; c=relaxed/simple;
-	bh=agl+h4mfWoesS+L4jbjlZohaO7qzQP48q9807FlKlWs=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=R62MGcHZ88pN+2YBqyL5oomEmElB0y2sC6931fr3abDq0o+azRpeN59/x+yKv8IuLEoGKHfoyUpvwsBpHgyLmp/DR1y3lt5Tc3LkhiNZBWWUPBx2NUH1/QXcklbyu7NuimAw5hRtLgErDPwk/dEK0pcQtWcydRZPgviJxNmDzw0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=COhqfYvT; arc=none smtp.client-ip=209.85.218.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ej1-f52.google.com with SMTP id a640c23a62f3a-aaf0f1adef8so533359266b.3;
-        Sat, 25 Jan 2025 08:32:18 -0800 (PST)
+	s=arc-20240116; t=1737826230; c=relaxed/simple;
+	bh=s7ieX5CKFHuwQrcOmb8RVPW9HCuCK4jl6dIVeQLv2Pc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=eqMarzTgkC7spTJD4CSjY7E8KM3vDZJg0uJMqJQHclR49soaBQXxVjCjK+ZM2u7DzeRyJOZpKAodnAEvU19d3LCB8P4nKPaTgi1qdJwhAWEI4vsv7Z81YMwY0acxFw1N6fhQrLAd306g6yEgF431+k9AL4U4sE5PghxF7eIdmsE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=VuXKvog3; arc=none smtp.client-ip=209.85.208.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lj1-f181.google.com with SMTP id 38308e7fff4ca-30613802a59so34173761fa.0
+        for <linux-arm-msm@vger.kernel.org>; Sat, 25 Jan 2025 09:30:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1737822737; x=1738427537; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=ugy2QSb0uIyKELP1ousTbxuIfCCnVKUEMqsw6Hi8uGA=;
-        b=COhqfYvT8Rj2YB4yuRXWgyj0uYmgrZ3BsLsueDguZNGUZQeXkbNvHlKqY64R8w8akf
-         7O6e+ySIV7s+Xk9WVLokRwR1utrZ8iScatWIcVQzEMSw/xS9itKw+pVKq9Y0ED8mY13y
-         zlokpZS5YXuOlIxia2X61NBi3DFJan6NfLpQt2BX96cbo1MdMn/OO/BWSxm2ObqYo3BK
-         4owhIyh5YE+riJnt/7n3+Bay/SBqRzybc5jRm8R0K9gPEsZC+QZjMao5hpIPqj8Pl+eE
-         A576Sg4oy8vd7+SDmiGPXcKWxRFXBcVoH1qTwk3WvzQWTgEMVQsjW6/LPibGm2QrSIhz
-         FZDQ==
+        d=linaro.org; s=google; t=1737826226; x=1738431026; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=US0EnBiHsIYKJlqPkzCqVbNBc2Ls+ZuNd0+qd6Uqb/Y=;
+        b=VuXKvog3DgVwxznx9B8ObJAM1jFUii/suSe7R/rhkbqcsC0QshYpVe91tC+jNavJxY
+         3ehpcIgs6GUk7QQg32uCYXITbq5RbnAeE7SqAh0JVctgFQQQz2ie4ESJvVRbQB6lIPca
+         CJMXc5HDExzo3NzuWdK5oSVHlrID0gj2Db74tu4hFpLtZB8OG4tEMUqt9nnCFIV7j76n
+         8es1IsAuNdeWwLq37feT1uT6widku+XlGX/m5UUGQrFsat+z4sIJj32zdk0UIUgqWNXe
+         e04ofljHYn0XMjvUUUdvgApobytLeqozZwoyld5Ge9d7FJz05xmVbvsaSQPu03mGNqxW
+         tQKA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1737822737; x=1738427537;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ugy2QSb0uIyKELP1ousTbxuIfCCnVKUEMqsw6Hi8uGA=;
-        b=CL9Hc4vlra7Zm7yWO+xC5oIdbQzlwp8rSeOWBCk8oPFA1ZQTu/JMMLrE3gEPebdn61
-         SouOAh6IUZ1hB/IEn4O9fFWEoUMR0Yyvjlu1ePTY93PkrMCC22JNnIYj3Wz0TYoDiJyM
-         82HDSxMzIN51wQ5UPhF7OQTmKU/LU/kal4n88xfRdP9scr+npo2k3mNX2f5FiQsi/Bl/
-         YOe47kr2xAtM1oxuEc0bLvy2m9UrC6x+o9rmc7uS9TNKke0emLbyFwtYjDFiRu5hRunw
-         gpkBrWaVe7T8iQCWqW/C2NJi+Ur1A26du/uWuq6J3fw9M+w+kEjjPsvREJ1hJMdLzAXJ
-         ROiw==
-X-Forwarded-Encrypted: i=1; AJvYcCVomFmN6FJykB7Zq7BKPluPkjelucTLm0HjjSjmQgwArERTi62iHKWIO0ROAQRenvf4XOm/tLQa2CJkDSVu@vger.kernel.org, AJvYcCXOPZtCiviwqtuaJCK+vC98C6Ez4z3Z59xhBgNA9Dlap5IfanplCagBZ7zoSk6b/hkLgGEUWCd3@vger.kernel.org, AJvYcCXP0qo1WDZ8DwWjyVw8vn35z4Ub5k8Gq9Jsx8DlYekA63ZOMWBUx/lMDttbT5XDp5ODO+tW015HYj0OErux@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw7ETQvZVo1ngZSS+eD24FAsVLG2hgByD7sZVrHTodSN1NsluMB
-	6CVGynoulXhKWcGDTQEtesbEmMexHw90aFyMOFPhxy4QTYYZlIm+
-X-Gm-Gg: ASbGncuzIdon8wVVw2gIHCqoP2D6QuXnZkA8QH8QNVwImmf+/jI0PkDs7IR2e7ytmgO
-	PQdwx9GyIjgBoWvdohs+o2ZmC5gqTGNAdPm2z4hptb3irHKALZ7VBnvrCCJqeDLcbBOwwaoZLXe
-	B/cO+FvFFLjflGAIRETKs4hK3oUnH6KTMFV0SMcdzg/iY45IfIN/j3Ie4VQqqcYXJ5Lhae3vGUE
-	ETRp2y4Y8NLwCoDRnye8LXqhBtC9Hf6u0HMMEY8XFhOU0luZ0mDhjEjHDgtKpbCafPzgnKpRcPC
-	ugVlya85lJOuocCDlXeVNUgB03AymaNfoqP9FfsL4qqwmOVBnQxwMT4ykw==
-X-Google-Smtp-Source: AGHT+IEBCc+S+yKbpQ1xLe36qobhxtaaWs5E8H3claBAHtwwCMI0d8ZKQPtEi/imxO0V5ykzK8ZACQ==
-X-Received: by 2002:a17:907:d1b:b0:aa6:6fa5:65b3 with SMTP id a640c23a62f3a-ab38b3c495bmr3111650766b.47.1737822737091;
-        Sat, 25 Jan 2025 08:32:17 -0800 (PST)
-Received: from ?IPV6:2a02:8071:b783:140:927c:82ba:d32d:99c1? ([2a02:8071:b783:140:927c:82ba:d32d:99c1])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ab675e8a72csm308683566b.79.2025.01.25.08.32.16
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 25 Jan 2025 08:32:16 -0800 (PST)
-Message-ID: <f838ff5d-a80c-413b-b32b-766ec4667892@gmail.com>
-Date: Sat, 25 Jan 2025 17:32:15 +0100
+        d=1e100.net; s=20230601; t=1737826226; x=1738431026;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=US0EnBiHsIYKJlqPkzCqVbNBc2Ls+ZuNd0+qd6Uqb/Y=;
+        b=mJ9qF3gCIGBFrUwuT5sekWJMElAY9IPFt2z9ZjE1y4gKKnLqTz7FQpHjZtdcX58sWY
+         2Xv9OKeZKTubeNgZ/m+sKfnfmsP3ONVRXH3QnVLC67Ih8P0UKdxMCW0DrHzAGfI1iZfj
+         vR2xPlwdMM5bg6lgUvo0NNNpXFl6xetm0f20KJOOalz0KHKbqaGNhEJxcr3rb2fnW4s5
+         +bqVxpZKgrsLGDo4IS+Pu5kb2+aHyp49GfbLAJENNw1V43Ypf9WriIIU8r2qG5nJkIRY
+         ICBYXEOUWwVDKNDvgV8fg1pAoEfhSQdrLyrJBpj/dnTNJUZGmO3ailbbOIoLioENs8KU
+         HbTg==
+X-Forwarded-Encrypted: i=1; AJvYcCWWGT0fmyZEcGO5KyaFhpboJ/KVH4yLkWTEqbPm6eNo+RjCLFFbMNeQ1CF2VLlmnD95FJ9LW+TSAFP1uXjc@vger.kernel.org
+X-Gm-Message-State: AOJu0YxYh58+ua+to2FSwjYganyyEbf0uxwp8xs1Js3IrInjVGYRce9i
+	ipLZUJChMtwD7+efWJYqTog8WpLySgDVOHu4lwUiK71D7FccgTDj35wRnCOT2zM=
+X-Gm-Gg: ASbGncspxRIklHZUOhmB8e2lZHmlfT/QV2yTJnR2+LF1z5QMavbpZEhz2ChDOE3hNWs
+	aMUsZCkWqIkylIpketBNhUhfUbqGmheZY1nrKJ28tzMaY0VRO9/z3bFuzCppfEiIxWh68qK6Cn6
+	8GVHh7IaATE/o006s0fUFixSjpFup+dFF4VHTKBTz1vaxt2LEUx3DbEYrXLPHs8FEbRhdg2XmA8
+	hficV80UADVZs5Y+1hpOzlAQ5jjiGJrJdXDgMz00MQunCdClZo6/HBPgiEVLMezuFFZ2L+/SsMd
+	/xqIfAJ1Q3y970WozjZiXnlGtLjoTvJngCiAjWNp4BNbRaLRrGyXQBUGPD2F
+X-Google-Smtp-Source: AGHT+IEJdOGBDBJSDCvFhU2PUzzZMFjItFiSFpgzHyoEnKNXwK9asBOtQ13f6ME37s/+fooYaxI9aA==
+X-Received: by 2002:a2e:be04:0:b0:302:3ff6:c8c6 with SMTP id 38308e7fff4ca-3072cb3cd60mr129216181fa.33.1737826226314;
+        Sat, 25 Jan 2025 09:30:26 -0800 (PST)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-3076bacb2bfsm7581241fa.29.2025.01.25.09.30.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 25 Jan 2025 09:30:25 -0800 (PST)
+Date: Sat, 25 Jan 2025 19:30:23 +0200
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Konrad Dybcio <konradybcio@kernel.org>
+Cc: Vinod Koul <vkoul@kernel.org>, 
+	Kishon Vijay Abraham I <kishon@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Bjorn Andersson <andersson@kernel.org>, Marijn Suijten <marijn.suijten@somainline.org>, 
+	linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Subject: Re: [PATCH 3/6] phy: qcom: qmp-pcie: Add X1P42100 Gen4x4 PHY
+Message-ID: <h6zfhxkc4dj2ueaxipha6prbvmv7pnqglghtjs7vkhlc2s7ndi@vhbj4uojlzwd>
+References: <20250125-topic-x1p4_dts-v1-0-02659a08b044@oss.qualcomm.com>
+ <20250125-topic-x1p4_dts-v1-3-02659a08b044@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] firmware: qcom: uefisecapp: fix efivars registration race
-To: Johan Hovold <johan+linaro@kernel.org>,
- Bjorn Andersson <andersson@kernel.org>
-Cc: Konrad Dybcio <konradybcio@kernel.org>,
- Elliot Berman <quic_eberman@quicinc.com>,
- Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
- linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
- stable@vger.kernel.org
-References: <20250120151000.13870-1-johan+linaro@kernel.org>
-Content-Language: en-US
-From: Maximilian Luz <luzmaximilian@gmail.com>
-In-Reply-To: <20250120151000.13870-1-johan+linaro@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250125-topic-x1p4_dts-v1-3-02659a08b044@oss.qualcomm.com>
 
-On 1/20/25 4:10 PM, Johan Hovold wrote:
-> Since the conversion to using the TZ allocator, the efivars service is
-> registered before the memory pool has been allocated, something which
-> can lead to a NULL-pointer dereference in case of a racing EFI variable
-> access.
+On Sat, Jan 25, 2025 at 04:31:19AM +0100, Konrad Dybcio wrote:
+> From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 > 
-> Make sure that all resources have been set up before registering the
-> efivars.
+> Add a new, common configuration for Gen4x4 V6 PHYs without an init
+> sequence.
 > 
-> Fixes: 6612103ec35a ("firmware: qcom: qseecom: convert to using the TZ allocator")
-> Cc: stable@vger.kernel.org	# 6.11
-> Cc: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+> The bootloader configures the hardware once and the OS retains that
+> configuration by using the NOCSR reset line (which doesn't drop
+> register state on assert) in place of the "full reset" one.
+
+I know your opinion, but my 2c would still be for not depending on the
+bootloader. I think that was the rule for ages for many possible
+reasons.
+
+> 
+> Use this new configuration for X1P42100's Gen4x4 PHY.
+> 
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 > ---
+>  drivers/phy/qualcomm/phy-qcom-qmp-pcie.c | 18 ++++++++++++++++++
+>  1 file changed, 18 insertions(+)
 
-Looks good to me.
-
-Reviewed-by: Maximilian Luz <luzmaximilian@gmail.com>
+-- 
+With best wishes
+Dmitry
 
