@@ -1,118 +1,117 @@
-Return-Path: <linux-arm-msm+bounces-46136-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46137-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3434CA1C4A1
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Jan 2025 18:32:28 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 21896A1C4F6
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Jan 2025 19:46:27 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 40ECA1888A27
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Jan 2025 17:32:32 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6699518889A2
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Jan 2025 18:46:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7960C43172;
-	Sat, 25 Jan 2025 17:32:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B8B388633A;
+	Sat, 25 Jan 2025 18:46:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="DExYhZgF"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tZzJY5dQ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f44.google.com (mail-lf1-f44.google.com [209.85.167.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98E28F4FA
-	for <linux-arm-msm@vger.kernel.org>; Sat, 25 Jan 2025 17:32:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 837667083D;
+	Sat, 25 Jan 2025 18:46:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737826343; cv=none; b=ggb3LVbpafOobwRVT3giUw5nTQKUD6f6oizvR9vx24LvqEzOJW2pK8PQSE2MVweG0ywyZVD1IrxA7AU98jmvhhuXiNMlGGQtt57O59rE+0S4eSUX6IuGH0VeIhNQKu8s16q/Utykjva3SHhByaJUMfCrOPKEulICthna1GDvrrc=
+	t=1737830779; cv=none; b=Grq+ViMMj4f0aAzVkfZGiL1WDzpXm0gQNOEp9QZvJXvMdsJ8TpD4QAnoEb3/NXmiRv9a441bgaVtuQ1zLPTZMq0rgmVRsPgl3K3Ch9VTxh8Q1x21ZdGbqAXX7PYx0/ojNuvwvw0mTpWu/6JOnbB/sVKtKz5tskafV+2WG/OskMI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737826343; c=relaxed/simple;
-	bh=+CncgCx12/7s9Aqe57tDdzmN7kxUIZdrXndsgAgPZCg=;
+	s=arc-20240116; t=1737830779; c=relaxed/simple;
+	bh=H8QwGyV0uR+W7rIUL6aSwdgYBF4gwlvwp7RqlTEl5fE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=f1F9ayMX9RVtD2s23mNLxnfVYcB+iejJz3FbCRCUlxoYbH5AIcsfmYAMYKk8wpY5Sa39VkmZYK97cpKutqhF5P/McI2ud2pdJBuzLjaHGzzG7hyVzYfB5F7PhrBGPd6LlhFajDgsUR/TA5kZQHtv7s2kA5FyBAP60/p3mvl3Puk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=DExYhZgF; arc=none smtp.client-ip=209.85.167.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f44.google.com with SMTP id 2adb3069b0e04-54287a3ba3cso3934947e87.0
-        for <linux-arm-msm@vger.kernel.org>; Sat, 25 Jan 2025 09:32:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1737826340; x=1738431140; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=9VTKxkEAePwEPt+V7eEDuXn6aqMYuyS335t11P98dTo=;
-        b=DExYhZgF0EuvzTv8WLj8fa4GwAI9psPiP4d2NNPLXH0Ik1VFwAZ591E4US0KDlWn07
-         sAJUIE/lVL/RojNqhc+0k1O4sysEiAUiZkCkpLK1jXd/mJkAEnOaFWwLOBPBIarZGaiv
-         +zFFT3wII2yuV9xWwKQATa+aLkiR66Pqg8uFm9RDzqiNZCt/IwDKdmbYVeqNUocC1wpY
-         3LFavCT1tRLs1eFooJ0wcu0MmY1E7OkLPYPqMicGpb1Y0wVjkJUUjHGZn/xH2YdFrBSy
-         89U9wn3tjavdI5xXuI3Y/vfEQqTu6CHXdvaLynRPzHJv8271s38ShJUumRMc6OL6MESG
-         VHOw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1737826340; x=1738431140;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=9VTKxkEAePwEPt+V7eEDuXn6aqMYuyS335t11P98dTo=;
-        b=Wv86YZxp7d45MH9I1BfbgxqL1Zs/jo7ZXGusd+DnmKa9HDnpoFbCqnkPJFzGqDMwVo
-         K9aQdqlrJYwcQ7az5wubCWwYUno3N8Xafepmyg5vRyMrOKUX6w1vcMtFrpUJahYKIkEH
-         FHkITUwr8vOE5CLuRQBOU3ZC6aKhTz9ZTjPjDWn+nlzeRcASzRglBQXJqHUwTZKrNMC0
-         RCgZQ0esgICBaAKTVaToSlK8U5gO2GgscFH4efHXP6uHGTPbiWaf/hM8V9wib9vBEp9y
-         oB7CnR/Q/CCM4D3GREiep6nUB2wX16AinaobTx/pwRi1xdN09j2AMH40uYxuzWL7IIzF
-         L16A==
-X-Forwarded-Encrypted: i=1; AJvYcCWKfCbpEA5fIshk1DChLoKLsT3WqJlfe1ykE4F/Y0VPSikLoB2rXEecKt6zrtQWHkTzfmlCUdyBQvvqddcM@vger.kernel.org
-X-Gm-Message-State: AOJu0YwRznAsjJqUH37omSsDcZXwdq24/SW3XklcWRiDlxiJJiVjvwbs
-	uWlhzFpMzkNB4bMk5+8cKbKVQ52WVitUAGVLqyuj5J5BZfF0TXvAX7hkW8aPm0U=
-X-Gm-Gg: ASbGncuu3O+1hJVayy1P4w4SzE+ZQ/DrHAmAaMXCoByAiPhT2sXqvHferp/7uhWftji
-	O/JJF3lYi7iIHqtYvGQ3HTEjhDjU0s9IM4qBBQL6384NX8rRq6EmuwUuGwkDqOyuSzMkPAR0vPP
-	5ewkqQkloX2aMT0CIaUcpagXgrjj7G49rMmFh7+7snjmSgJVWMq2DRp41BwJtx+d3qyLpa3WMJt
-	m7FJav43PNcYP3Ub1E7dOs09ilWtcm/uSXYKDzq6TfPWMwyhla4tC81ohRtG8B4LSal5uEEgGFm
-	/4OA0qXMjc4VMKZOYIulsCuwV79a6fkn5FylNNBj2wAEE0fqnCL/mkueAY4V
-X-Google-Smtp-Source: AGHT+IHM/qxpChUH+UJCNurb4Af2EPjax/Hj650FqV7s35DU657fh9sG+7Ox+WQZxY3Bclz1CNSomQ==
-X-Received: by 2002:a05:6512:3f0e:b0:542:1bdb:9a61 with SMTP id 2adb3069b0e04-543c222feb5mr4471511e87.19.1737826339672;
-        Sat, 25 Jan 2025 09:32:19 -0800 (PST)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-543c83682ffsm666153e87.115.2025.01.25.09.32.17
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 25 Jan 2025 09:32:18 -0800 (PST)
-Date: Sat, 25 Jan 2025 19:32:15 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Konrad Dybcio <konradybcio@kernel.org>
-Cc: Vinod Koul <vkoul@kernel.org>, 
-	Kishon Vijay Abraham I <kishon@kernel.org>, Rob Herring <robh@kernel.org>, 
+	 Content-Type:Content-Disposition:In-Reply-To; b=onh959ivlAcpKd74Ka5fOBQ/WcsiA7PIRvPdAPXZfD6Qe6NaGwLK8EZdvZikuXddUIcK9besfHsDoa6ixXHyRii/Q6/sEf0uDFjOPAmWH3e37gb0IVbOXDWNXLH/CuCAxLPpWKNfnoe2fRR2N3M92s71PjBo729OBgQA1INNgYo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tZzJY5dQ; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD7FFC4CED6;
+	Sat, 25 Jan 2025 18:46:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1737830779;
+	bh=H8QwGyV0uR+W7rIUL6aSwdgYBF4gwlvwp7RqlTEl5fE=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=tZzJY5dQYZBNtN69P02xWQLG0SlpQfLphrFx1Qa/zehiCeiSIiyB5h2aR8ZRoiXj2
+	 BjqoVfmiNC54kC1V/xbDHpvRS74QGU+zwaMHxP+qidhWejw1XBK4hf+dOx4QwtFNeC
+	 zRIVMjiiNnyUsfKgDJ3xm3RiLnzxnLCls6LQU4LCz3rYXYemBz2ruIAnuUy0JvvjGC
+	 xDwdDwtwpmpURF0WNBDf/DyaKmUtifhXdaV/Rvz/RA5qscAz0vQzQ6CBgTz8H2+aeC
+	 6MT9EC/upOd2PTCLuvzMTFN8aB+k7rBZnH/TW/ycVKsP678VrSM7p0CcfGWBPtX5BO
+	 VYBDu+Vpi0r/w==
+Received: by venus (Postfix, from userid 1000)
+	id B59D318389A; Sat, 25 Jan 2025 19:46:16 +0100 (CET)
+Date: Sat, 25 Jan 2025 19:46:16 +0100
+From: Sebastian Reichel <sre@kernel.org>
+To: Johan Hovold <johan+linaro@kernel.org>
+Cc: Alexandre Belloni <alexandre.belloni@bootlin.com>, 
+	Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>, 
 	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Bjorn Andersson <andersson@kernel.org>, Marijn Suijten <marijn.suijten@somainline.org>, 
-	linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Subject: Re: [PATCH 4/6] arm64: dts: qcom: x1e80100: Wire up PCIe PHY NOCSR
- resets
-Message-ID: <s3d4tc3rstno6rtzlmpab6jho4dixjljo3u4b64r7luaszqlmp@3djmby5d3gij>
-References: <20250125-topic-x1p4_dts-v1-0-02659a08b044@oss.qualcomm.com>
- <20250125-topic-x1p4_dts-v1-4-02659a08b044@oss.qualcomm.com>
+	Konrad Dybcio <konradybcio@kernel.org>, Jonathan Marek <jonathan@marek.ca>, 
+	linux-arm-msm@vger.kernel.org, linux-rtc@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 0/7] arm64: dts: qcom: x1e80100: enable rtc
+Message-ID: <lxmbrjscksvvq63o4w2vehiubuseajyu4ruqxpb3mcvrebekc5@vzwhpg5j2p2o>
+References: <20250120144152.11949-1-johan+linaro@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="twmgl5q7xfyqqjth"
 Content-Disposition: inline
-In-Reply-To: <20250125-topic-x1p4_dts-v1-4-02659a08b044@oss.qualcomm.com>
+In-Reply-To: <20250120144152.11949-1-johan+linaro@kernel.org>
 
-On Sat, Jan 25, 2025 at 04:31:20AM +0100, Konrad Dybcio wrote:
-> From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-> 
-> Asserting the NOCSR reset line keeps the PHY registers in tact.
-> This allows us to avoid programming long tables of magic values in the
-> operating system.
-> 
-> Wire up these resets to PCIe PHY4 and 5 (it's there on the others).
-> 
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-> ---
->  arch/arm64/boot/dts/qcom/x1e80100.dtsi | 12 ++++++++----
->  1 file changed, 8 insertions(+), 4 deletions(-)
-> 
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+--twmgl5q7xfyqqjth
+Content-Type: text/plain; protected-headers=v1; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+Subject: Re: [PATCH 0/7] arm64: dts: qcom: x1e80100: enable rtc
+MIME-Version: 1.0
 
--- 
-With best wishes
-Dmitry
+Hi,
+
+On Mon, Jan 20, 2025 at 03:41:45PM +0100, Johan Hovold wrote:
+> This series adds support for utilising the UEFI firmware RTC offset to
+> the Qualcomm PMIC RTC driver and uses that to enable the RTC on all X
+> Elite machines.
+>=20
+> Included is also a patch to switch the Lenovo ThinkPad X13s over to
+> using the UEFI offset.
+
+I've been using this series for the last few days and it seems to
+work well.
+
+Tested-by: Sebastian Reichel <sre@kernel.org> # Lenovo T14s Gen6
+
+Greetings,
+
+-- Sebastian
+
+--twmgl5q7xfyqqjth
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEE72YNB0Y/i3JqeVQT2O7X88g7+poFAmeVMXAACgkQ2O7X88g7
++po3sQ/+K8NMmf84/+Ka/THBmL37nNwGSk9jkKIM1pbfE2VE4+iucxmCcptX9uxo
+W3SDUosI80ZvSZv0BuUJZqE9ON7GVR14pMVcx8LxCvyQ0oYzRu8ti4T/0rCCO0Uo
+23Ku8afn1PhXpuwssHRiPoHX9atJ+0MUKKmjNYq01xstoqZcv7EUFoFMRwMbwdH7
+H/RQ6I7rQcsmkPN3M0yUiOL1dtR5CvhfgDvkCnBMy5e+hOXXrNy7Xku5C96SdCoN
+KMVTxtCuYyzxBK8CztyP9ycJ6Oy8abiN/WDvD/XyXEAWQdmx5pdPBgU744DdD6rK
+0K2eTT9Lfid9m2A3jN3EIghTPXx5PlmkoITyvNXMJn5b0S1iyl5sdWpzb7Ombh7d
+AmwXtk3Y05fxv1vEsMVkywEa4kmDuwlBamEGLFy8KfnEwYr/53L2nL+3+ugkHLnk
+yzP3HiaJarz9pLhzG3U59XXuCKGkcOdyoexP+BJuyKKWykOAvnfk3smnNKeTRJpH
+a+WoI/o/A5yOiSzirE+Mj6suuo5DKclQy0NgrozWP5nfNu4lUbM7wnJzZLPV6q2T
+V5rdOQUaCMfw3oZghVv7nRVQ+ojbPBXZYWjXfMVIHgGNqu9n9jZ2o+fGqYUd3rj5
+SYtKNutlLQ0tn2/zYrBDoQQmUwwxrnmhiSGzMpfrm9lnzErLQMI=
+=ukGj
+-----END PGP SIGNATURE-----
+
+--twmgl5q7xfyqqjth--
 
