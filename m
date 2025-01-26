@@ -1,46 +1,46 @@
-Return-Path: <linux-arm-msm+bounces-46152-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46153-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 76AFEA1CC1D
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 26 Jan 2025 17:03:20 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id EAE55A1CC3B
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 26 Jan 2025 17:05:10 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 94D1A165859
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 26 Jan 2025 15:59:07 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id A211D1883F9F
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 26 Jan 2025 16:01:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DF4A423237F;
-	Sun, 26 Jan 2025 15:08:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A24D3237A4D;
+	Sun, 26 Jan 2025 15:08:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GOp5L6OM"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Cc3RtTQK"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEF29232376;
-	Sun, 26 Jan 2025 15:08:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77521237A45;
+	Sun, 26 Jan 2025 15:08:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737904096; cv=none; b=N5Y5MBCHHbGp9hpDjTgLxdO+N7gaMx+wjjK6SHQYt4F9A+ZPyvbg+czHXkco3bumndBxxbMWVbuthJJKM6OQSck4v10pJKHWhMGshzJeDTzyyAS5XZHJX+zHKMNpT9kSN9tkLtu9TGOLnCRLZi+PzpacYJJxTEpW6GxGA7IEZew=
+	t=1737904124; cv=none; b=uC6Y5FlmEqGpXUrqP8fUo/PWDV/psqArTAcsl7P3ONHmO/uKD9QyHEk7rhLHHHWhxug2nQgVKHq6BWJpbYmnpOLeVsuNuei3hzb/iTuiEsH8W3afx9ZyDn0fIzbKgvHQ+6MRkNmb8WIZqGtdTFXRQvtwMnP3xYMFlLi1KaRwCno=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737904096; c=relaxed/simple;
-	bh=wU4p/1jhFmOpkLwYEez7JQ4/M7aI4yao+Hq6x1njINs=;
+	s=arc-20240116; t=1737904124; c=relaxed/simple;
+	bh=1ztisbHwpmkKSTOlDKaozWadrVEdSWR7WX4DbSoZdkY=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=hQSLAtotugNCTxWCvljRGJc4COsBECiN+n5uNwDmFodm4ukF3Oja91rlGJvNaIohB9QBB8b1Tq9JiM1x1e19G+ojHn9ArnK25kjDgOgaBVPtBpYgSfrnBS9Clf8lqjoW2BmaEynBpTlsfHahL3Y3oAxAuDlPAD4OcPh030kdzP4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GOp5L6OM; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64F0DC4CEE2;
-	Sun, 26 Jan 2025 15:08:15 +0000 (UTC)
+	 MIME-Version; b=BdLh+o8OaZyLYosL0Ye0PQiVXhP2hliyNrjIgenhCaluEXxdX1nj2FKZk8vPu2pRF5W4jREsCEoPjy4B+KoeHH1eZGYUoYRhy7rSTRe/v/qjeatuFkysx5ej7N3Asd+uyZq3xbqbf6f7H4EtIEs17IUINVRuRWNA6c2cWq+3huk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Cc3RtTQK; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20FE9C4CEE3;
+	Sun, 26 Jan 2025 15:08:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1737904096;
-	bh=wU4p/1jhFmOpkLwYEez7JQ4/M7aI4yao+Hq6x1njINs=;
+	s=k20201202; t=1737904124;
+	bh=1ztisbHwpmkKSTOlDKaozWadrVEdSWR7WX4DbSoZdkY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GOp5L6OM4wVDh1s+xSL1DRfSgmYJB/iZLOxusQ8l/9jrHKWkKcypxWJd2LiXRf+eZ
-	 5haWKU6tm8YuHrNw7Frw0TOp+LjS3SWGMaYODqjcx45DJl5DB2LIhpEGIkcHrLKyih
-	 KtOFZIreDsFKtgHDJ32qv2AfmL6YUD+iZugULefpFnK9R2yFRcj6zI7ifr9u0uSafl
-	 AY8hoHnSj1uKIxaxP7zycqanT7ETyxcfFg/3x5qXtIYmN+cxPuNdp6wkXi9iKPGLHM
-	 gOSjess8MvhGBu33LpaNrAovnPD6Iu01DoLZ8dRQxanUTPko076/4dRLJe3JEAGW74
-	 JQswOcTQEJZxw==
+	b=Cc3RtTQKNGtdhOov1AZn0BjhNrJ6K1qUt+HT+HZJNAfzzLd6kJhGt5ymxzjCjIdFN
+	 Ila0jc/J3jEizQROAaiqBcjUdUClBc8RuwfX0bIiqQpNg5c2Pv/BsMLbYX4I+B4LW/
+	 vTyW4+3CNgTeaALXmsAj3ez5U0iojmVEMiOUUOJzQdi0bWASeIZQG4AqP7d5YpKGvA
+	 B9PvLR/YCa9aVESIq03Va9AVRG06OMjfU+1b+ZGFxQtdEQndqc2VnPTlVdgWdMpxHo
+	 65Nqq0ma/s30dd7Z0qMcJRsqqfnBJeacjVe3qMwer0LA9IUsCT1vkmlsUvilDZbXJ9
+	 5fBrPiJfRNFOg==
 From: Sasha Levin <sashal@kernel.org>
 To: linux-kernel@vger.kernel.org,
 	stable@vger.kernel.org
@@ -53,12 +53,12 @@ Cc: Richard Acayan <mailingradian@gmail.com>,
 	iommu@lists.linux.dev,
 	linux-arm-msm@vger.kernel.org,
 	linux-arm-kernel@lists.infradead.org
-Subject: [PATCH AUTOSEL 6.12 04/14] iommu/arm-smmu-qcom: add sdm670 adreno iommu compatible
-Date: Sun, 26 Jan 2025 10:07:51 -0500
-Message-Id: <20250126150803.962459-4-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.6 2/9] iommu/arm-smmu-qcom: add sdm670 adreno iommu compatible
+Date: Sun, 26 Jan 2025 10:08:30 -0500
+Message-Id: <20250126150839.962669-2-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20250126150803.962459-1-sashal@kernel.org>
-References: <20250126150803.962459-1-sashal@kernel.org>
+In-Reply-To: <20250126150839.962669-1-sashal@kernel.org>
+References: <20250126150839.962669-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -67,7 +67,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
-X-stable-base: Linux 6.12.11
+X-stable-base: Linux 6.6.74
 Content-Transfer-Encoding: 8bit
 
 From: Richard Acayan <mailingradian@gmail.com>
@@ -97,10 +97,10 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 1 insertion(+)
 
 diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-index 6372f3e25c4bc..601fb878d0ef2 100644
+index d491589360197..e6b4bab0dde2e 100644
 --- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
 +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-@@ -567,6 +567,7 @@ static const struct of_device_id __maybe_unused qcom_smmu_impl_of_match[] = {
+@@ -554,6 +554,7 @@ static const struct of_device_id __maybe_unused qcom_smmu_impl_of_match[] = {
  	{ .compatible = "qcom,sc8180x-smmu-500", .data = &qcom_smmu_500_impl0_data },
  	{ .compatible = "qcom,sc8280xp-smmu-500", .data = &qcom_smmu_500_impl0_data },
  	{ .compatible = "qcom,sdm630-smmu-v2", .data = &qcom_smmu_v2_data },
