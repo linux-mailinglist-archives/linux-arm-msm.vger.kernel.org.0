@@ -1,46 +1,46 @@
-Return-Path: <linux-arm-msm+bounces-46151-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46152-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id C56DBA1CC03
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 26 Jan 2025 16:59:49 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 76AFEA1CC1D
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 26 Jan 2025 17:03:20 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id BC265161BF2
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 26 Jan 2025 15:55:55 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 94D1A165859
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 26 Jan 2025 15:59:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 152031F76CB;
-	Sun, 26 Jan 2025 15:07:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DF4A423237F;
+	Sun, 26 Jan 2025 15:08:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mL3cegW/"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GOp5L6OM"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB21D1F76C5;
-	Sun, 26 Jan 2025 15:07:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEF29232376;
+	Sun, 26 Jan 2025 15:08:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737904060; cv=none; b=bjQ5slN8UVBLtoVRForwIqNr5bft5HhAp5DLPdDpaW3MH1X9JBOHjPCVRo+DfAf7kJ1bOsGQaf09uhtlUlK0XfIpNksjnuLO5eIm4qU7IOqv144jyvhJjJp32M9iBrdBCm3miVtRa8BybSM6IaVlNg2SbcIuPMljQCvwItHJ5Gg=
+	t=1737904096; cv=none; b=N5Y5MBCHHbGp9hpDjTgLxdO+N7gaMx+wjjK6SHQYt4F9A+ZPyvbg+czHXkco3bumndBxxbMWVbuthJJKM6OQSck4v10pJKHWhMGshzJeDTzyyAS5XZHJX+zHKMNpT9kSN9tkLtu9TGOLnCRLZi+PzpacYJJxTEpW6GxGA7IEZew=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737904060; c=relaxed/simple;
+	s=arc-20240116; t=1737904096; c=relaxed/simple;
 	bh=wU4p/1jhFmOpkLwYEez7JQ4/M7aI4yao+Hq6x1njINs=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=Ed/aOkR0YarwOnA0NZ4SjAfOj6CMQizs/bhInjsNBGdl1vt5hkQZRKeCJ3S9Vdtq69N2fbAYHQWOM4R4KeCWwxC30FOT5OAc5nml2W0T/jn61uM+NneEId1KU8Uyn1jmgw9t+drdMlvmhmLP55ZlxeP27AVzA8IY0MSEV0MJjFQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mL3cegW/; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A570C4CED3;
-	Sun, 26 Jan 2025 15:07:38 +0000 (UTC)
+	 MIME-Version; b=hQSLAtotugNCTxWCvljRGJc4COsBECiN+n5uNwDmFodm4ukF3Oja91rlGJvNaIohB9QBB8b1Tq9JiM1x1e19G+ojHn9ArnK25kjDgOgaBVPtBpYgSfrnBS9Clf8lqjoW2BmaEynBpTlsfHahL3Y3oAxAuDlPAD4OcPh030kdzP4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GOp5L6OM; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64F0DC4CEE2;
+	Sun, 26 Jan 2025 15:08:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1737904059;
+	s=k20201202; t=1737904096;
 	bh=wU4p/1jhFmOpkLwYEez7JQ4/M7aI4yao+Hq6x1njINs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mL3cegW/bXM2txhFZa7BL+PQ8WUt9Ew9W9xNTzcw9INy9UbyjbpB/Cbh5MOUG2Rkb
-	 dkiUbz6HKIl4b0vM9dzno7RmdrlZDZsApA3hXOl1r2N/VRkGESPp7BL8bEelCtFeZs
-	 4CmCST6js0faHpzQEw12CGIM0JOJkJ+bUxiEhBPhZ4ULhGYnMZ/NgNNR+2IXqxaXz5
-	 5nZSTAM/2bUnad1rNpfcZTCP9wWG9rGT+bvE9iE7TUZWNbph3fD9htEaQK86VOW/Vs
-	 pY37rEmvrakc0TrEtYfXDkQxGEFCWyQVOdZ7M+Pjj5Wj3pCq1P9tfYj9/ADjAlEci0
-	 JVWXGUZcfTQAg==
+	b=GOp5L6OM4wVDh1s+xSL1DRfSgmYJB/iZLOxusQ8l/9jrHKWkKcypxWJd2LiXRf+eZ
+	 5haWKU6tm8YuHrNw7Frw0TOp+LjS3SWGMaYODqjcx45DJl5DB2LIhpEGIkcHrLKyih
+	 KtOFZIreDsFKtgHDJ32qv2AfmL6YUD+iZugULefpFnK9R2yFRcj6zI7ifr9u0uSafl
+	 AY8hoHnSj1uKIxaxP7zycqanT7ETyxcfFg/3x5qXtIYmN+cxPuNdp6wkXi9iKPGLHM
+	 gOSjess8MvhGBu33LpaNrAovnPD6Iu01DoLZ8dRQxanUTPko076/4dRLJe3JEAGW74
+	 JQswOcTQEJZxw==
 From: Sasha Levin <sashal@kernel.org>
 To: linux-kernel@vger.kernel.org,
 	stable@vger.kernel.org
@@ -53,12 +53,12 @@ Cc: Richard Acayan <mailingradian@gmail.com>,
 	iommu@lists.linux.dev,
 	linux-arm-msm@vger.kernel.org,
 	linux-arm-kernel@lists.infradead.org
-Subject: [PATCH AUTOSEL 6.13 05/16] iommu/arm-smmu-qcom: add sdm670 adreno iommu compatible
-Date: Sun, 26 Jan 2025 10:07:07 -0500
-Message-Id: <20250126150720.961959-5-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.12 04/14] iommu/arm-smmu-qcom: add sdm670 adreno iommu compatible
+Date: Sun, 26 Jan 2025 10:07:51 -0500
+Message-Id: <20250126150803.962459-4-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20250126150720.961959-1-sashal@kernel.org>
-References: <20250126150720.961959-1-sashal@kernel.org>
+In-Reply-To: <20250126150803.962459-1-sashal@kernel.org>
+References: <20250126150803.962459-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -67,7 +67,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
-X-stable-base: Linux 6.13
+X-stable-base: Linux 6.12.11
 Content-Transfer-Encoding: 8bit
 
 From: Richard Acayan <mailingradian@gmail.com>
