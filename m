@@ -1,117 +1,142 @@
-Return-Path: <linux-arm-msm+bounces-46137-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46138-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 21896A1C4F6
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Jan 2025 19:46:27 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id A79F4A1C6A2
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 26 Jan 2025 08:30:05 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6699518889A2
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Jan 2025 18:46:28 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id AE659188736E
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 26 Jan 2025 07:30:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B8B388633A;
-	Sat, 25 Jan 2025 18:46:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D29E019D080;
+	Sun, 26 Jan 2025 07:30:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tZzJY5dQ"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="LcGcUO2e"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f175.google.com (mail-pl1-f175.google.com [209.85.214.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 837667083D;
-	Sat, 25 Jan 2025 18:46:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39E9D19C575
+	for <linux-arm-msm@vger.kernel.org>; Sun, 26 Jan 2025 07:29:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737830779; cv=none; b=Grq+ViMMj4f0aAzVkfZGiL1WDzpXm0gQNOEp9QZvJXvMdsJ8TpD4QAnoEb3/NXmiRv9a441bgaVtuQ1zLPTZMq0rgmVRsPgl3K3Ch9VTxh8Q1x21ZdGbqAXX7PYx0/ojNuvwvw0mTpWu/6JOnbB/sVKtKz5tskafV+2WG/OskMI=
+	t=1737876600; cv=none; b=GeTe8AV818EZAY9/WpxjJtH9JnjCMqU6m8BfbSkd4qfTl9AWd3NA46fwyTBZhF9pA5hL0tZX6TVqSfq+BVCc8JggWnsPhll+Phq2xSjFXM55Ik/dFCIhJ3s6/MTel8LKQd9tHi/5CFiYs9cqJtfQZIzilETEF2GuhxdPvCVzD18=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737830779; c=relaxed/simple;
-	bh=H8QwGyV0uR+W7rIUL6aSwdgYBF4gwlvwp7RqlTEl5fE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=onh959ivlAcpKd74Ka5fOBQ/WcsiA7PIRvPdAPXZfD6Qe6NaGwLK8EZdvZikuXddUIcK9besfHsDoa6ixXHyRii/Q6/sEf0uDFjOPAmWH3e37gb0IVbOXDWNXLH/CuCAxLPpWKNfnoe2fRR2N3M92s71PjBo729OBgQA1INNgYo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tZzJY5dQ; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD7FFC4CED6;
-	Sat, 25 Jan 2025 18:46:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1737830779;
-	bh=H8QwGyV0uR+W7rIUL6aSwdgYBF4gwlvwp7RqlTEl5fE=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=tZzJY5dQYZBNtN69P02xWQLG0SlpQfLphrFx1Qa/zehiCeiSIiyB5h2aR8ZRoiXj2
-	 BjqoVfmiNC54kC1V/xbDHpvRS74QGU+zwaMHxP+qidhWejw1XBK4hf+dOx4QwtFNeC
-	 zRIVMjiiNnyUsfKgDJ3xm3RiLnzxnLCls6LQU4LCz3rYXYemBz2ruIAnuUy0JvvjGC
-	 xDwdDwtwpmpURF0WNBDf/DyaKmUtifhXdaV/Rvz/RA5qscAz0vQzQ6CBgTz8H2+aeC
-	 6MT9EC/upOd2PTCLuvzMTFN8aB+k7rBZnH/TW/ycVKsP678VrSM7p0CcfGWBPtX5BO
-	 VYBDu+Vpi0r/w==
-Received: by venus (Postfix, from userid 1000)
-	id B59D318389A; Sat, 25 Jan 2025 19:46:16 +0100 (CET)
-Date: Sat, 25 Jan 2025 19:46:16 +0100
-From: Sebastian Reichel <sre@kernel.org>
-To: Johan Hovold <johan+linaro@kernel.org>
-Cc: Alexandre Belloni <alexandre.belloni@bootlin.com>, 
-	Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, Jonathan Marek <jonathan@marek.ca>, 
-	linux-arm-msm@vger.kernel.org, linux-rtc@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 0/7] arm64: dts: qcom: x1e80100: enable rtc
-Message-ID: <lxmbrjscksvvq63o4w2vehiubuseajyu4ruqxpb3mcvrebekc5@vzwhpg5j2p2o>
-References: <20250120144152.11949-1-johan+linaro@kernel.org>
+	s=arc-20240116; t=1737876600; c=relaxed/simple;
+	bh=Cj3am8EY8dyXip8njKWY5dUo1Uu06z/0Iuv1BTsliLM=;
+	h=Date:From:To:CC:Subject:In-Reply-To:References:Message-ID:
+	 MIME-Version:Content-Type; b=R1izZvpK6YpghN2rdHXg/GiyC1A8nE5OSYHQGJt8yiJ7QTfSypFCcBtZ0tXJ0KyKOPPc0iOvB6mMmTzxGowWeSQCw3f0woH+PeTYwyHBPXy4isvjaGzLQCNDD+CPcnQjsINV5DPqsTMh+nA3FnMXWqxUnXSGHKEMwNY0ZONkFxg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=LcGcUO2e; arc=none smtp.client-ip=209.85.214.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-pl1-f175.google.com with SMTP id d9443c01a7336-216401de828so60661025ad.3
+        for <linux-arm-msm@vger.kernel.org>; Sat, 25 Jan 2025 23:29:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1737876598; x=1738481398; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:references
+         :in-reply-to:user-agent:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=lWEYm1Wvugz22VZTmmCSh9dWYssFgpGfT0lCZXzX6jQ=;
+        b=LcGcUO2e9+mTI3hvOkjXTMttCUujWo0ylX/oJuGLzmrluT9zZFrFv3PA4yuhXJpuGt
+         Fk02yhn1AYhl1z4UUXPhPgoF4spu9eKsP7Q2SCSX1oj5mNqiTbyy7c13rPGf78IoRLBU
+         V48mhwYJUt1U3E+bHmOlixyXK8rCdQvxrYklYFSJAXlgUIgW+vIxpwNRFnwYGDVcAyy+
+         CHICGq0UesWGb0c21WEgZYuFO+UBguNvEwrCbGtWSbfNU59vzE77z2Pc8dhujrFbKqqL
+         4LwAjRsWwBLON0NmvsJPaGoWil6Zv1Sgr81h70JSam6zGA4S7cLjE+kj/xgESTRTyThj
+         wTJw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1737876598; x=1738481398;
+        h=content-transfer-encoding:mime-version:message-id:references
+         :in-reply-to:user-agent:subject:cc:to:from:date:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=lWEYm1Wvugz22VZTmmCSh9dWYssFgpGfT0lCZXzX6jQ=;
+        b=WbXo1bnj7pnErHHBNIIqPl5tTdEUBh2uv9W7O5fSeMZ2tRdYprbW7Sdo2LN0kOOoPT
+         vaZl1+jznB/bjmWApNsT7iWHDCrWsX7U7u3aI5xEnrg9QISIXwJbZrxdiYvqEoIPYsZk
+         UdZfhG7jpVffpdYAAS31qLuOZANSgmq93k54wyuK7ZdsCgZLVznMgvPsEmpSs7Z6lUco
+         YRwR19A2+K0KOJRImlRRdGhqGWXM/MC9DSS3341Qvo7y9HVOmSTtpqaa4hz5v1nVnSfT
+         l4xpnZI1bQGiZtNnVc10FdTVSqNL+gp2ly1hwDq9ldaFG5pxhnT2IE/ZRr12HQqpMqHb
+         FOUQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUhpptQS2kobGxlGg1ZIffUzAt7tTFcOnKpiSeL210Nm583gdpffyBHnXUfLDHUwh54POS2B4IPvFxxEyHl@vger.kernel.org
+X-Gm-Message-State: AOJu0Yyc52a9OgLBpjOLG/KCGU+8AF+YAFeaN8jA1u/uZJ6LBwhPn5dZ
+	jmOMsnNLbhUhi76bn3cbSwRPsdSSFcCB8tmdqgVtARI2UKfWV45PabokGqN6xA==
+X-Gm-Gg: ASbGncupnzoixMJ/LEzZbTmEHi81uvIXiZOe/uDzJ9I61SyG4G26tyFj4HnGgeCQpmV
+	U0Gxts+zJ6eDMp9IyTQCg+Ys1eWsr41NKmWHOfy3e0tZBFk3HUQCEy4Mdnw/+FN97H3upLYLKFI
+	LdLfNGGmTkK8bRUb2z+yJ/mPiGPS97PxaeXW8lg8yO2FzQj70tSptcChdz/fxehNjUTe7bAyjlH
+	XRUg5SpjPFLkFLRv1UuS8msDTO1gp503ML3q0QSzGJBnZ7HDuXX9NkDEpASEMp+ROpEMalxmSp4
+	Xi+B
+X-Google-Smtp-Source: AGHT+IFD0g9cKNN5kJkF+EtlX2a/2RSBTYh3J6vZZB5CmCmj+BPQyEJoszp2cnYSPKR9enWkHM+YrQ==
+X-Received: by 2002:a05:6a20:9191:b0:1e6:8f10:8ba2 with SMTP id adf61e73a8af0-1eb2145eab3mr55988433637.9.1737876598420;
+        Sat, 25 Jan 2025 23:29:58 -0800 (PST)
+Received: from ?IPv6:::1? ([2409:40f4:3047:1c2c:8000::])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-72f8a78ee7bsm4940924b3a.170.2025.01.25.23.29.57
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 25 Jan 2025 23:29:58 -0800 (PST)
+Date: Sun, 26 Jan 2025 12:59:52 +0530
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Konrad Dybcio <konradybcio@kernel.org>
+CC: Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I <kishon@kernel.org>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Marijn Suijten <marijn.suijten@somainline.org>,
+ linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Subject: Re: [PATCH 3/6] phy: qcom: qmp-pcie: Add X1P42100 Gen4x4 PHY
+User-Agent: K-9 Mail for Android
+In-Reply-To: <h6zfhxkc4dj2ueaxipha6prbvmv7pnqglghtjs7vkhlc2s7ndi@vhbj4uojlzwd>
+References: <20250125-topic-x1p4_dts-v1-0-02659a08b044@oss.qualcomm.com> <20250125-topic-x1p4_dts-v1-3-02659a08b044@oss.qualcomm.com> <h6zfhxkc4dj2ueaxipha6prbvmv7pnqglghtjs7vkhlc2s7ndi@vhbj4uojlzwd>
+Message-ID: <A64B8332-78F2-4B76-908E-4119E4A54BAE@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="twmgl5q7xfyqqjth"
-Content-Disposition: inline
-In-Reply-To: <20250120144152.11949-1-johan+linaro@kernel.org>
-
-
---twmgl5q7xfyqqjth
-Content-Type: text/plain; protected-headers=v1; charset=us-ascii
-Content-Disposition: inline
+Content-Type: text/plain;
+ charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Subject: Re: [PATCH 0/7] arm64: dts: qcom: x1e80100: enable rtc
-MIME-Version: 1.0
 
-Hi,
 
-On Mon, Jan 20, 2025 at 03:41:45PM +0100, Johan Hovold wrote:
-> This series adds support for utilising the UEFI firmware RTC offset to
-> the Qualcomm PMIC RTC driver and uses that to enable the RTC on all X
-> Elite machines.
->=20
-> Included is also a patch to switch the Lenovo ThinkPad X13s over to
-> using the UEFI offset.
 
-I've been using this series for the last few days and it seems to
-work well.
+On January 25, 2025 11:00:23 PM GMT+05:30, Dmitry Baryshkov <dmitry=2Ebary=
+shkov@linaro=2Eorg> wrote:
+>On Sat, Jan 25, 2025 at 04:31:19AM +0100, Konrad Dybcio wrote:
+>> From: Konrad Dybcio <konrad=2Edybcio@oss=2Equalcomm=2Ecom>
+>>=20
+>> Add a new, common configuration for Gen4x4 V6 PHYs without an init
+>> sequence=2E
+>>=20
+>> The bootloader configures the hardware once and the OS retains that
+>> configuration by using the NOCSR reset line (which doesn't drop
+>> register state on assert) in place of the "full reset" one=2E
+>
+>I know your opinion, but my 2c would still be for not depending on the
+>bootloader=2E I think that was the rule for ages for many possible
+>reasons=2E
+>
 
-Tested-by: Sebastian Reichel <sre@kernel.org> # Lenovo T14s Gen6
+But if Linux or other OS can trust the bootloader, then it makes perfect s=
+ense to rely on them=2E Obviously, the question here is that on which platf=
+orms this level of trust should be established=2E And the answer I got was =
+starting from the compute platforms (atleast X1E)=2E
 
-Greetings,
+So let's take it on an experimental basis and see how it goes? If at all a=
+ny problem arises, we can always resort to in kernel sequences=2E
 
--- Sebastian
+- Mani
 
---twmgl5q7xfyqqjth
-Content-Type: application/pgp-signature; name="signature.asc"
+>>=20
+>> Use this new configuration for X1P42100's Gen4x4 PHY=2E
+>>=20
+>> Signed-off-by: Konrad Dybcio <konrad=2Edybcio@oss=2Equalcomm=2Ecom>
+>> ---
+>>  drivers/phy/qualcomm/phy-qcom-qmp-pcie=2Ec | 18 ++++++++++++++++++
+>>  1 file changed, 18 insertions(+)
+>
 
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEE72YNB0Y/i3JqeVQT2O7X88g7+poFAmeVMXAACgkQ2O7X88g7
-+po3sQ/+K8NMmf84/+Ka/THBmL37nNwGSk9jkKIM1pbfE2VE4+iucxmCcptX9uxo
-W3SDUosI80ZvSZv0BuUJZqE9ON7GVR14pMVcx8LxCvyQ0oYzRu8ti4T/0rCCO0Uo
-23Ku8afn1PhXpuwssHRiPoHX9atJ+0MUKKmjNYq01xstoqZcv7EUFoFMRwMbwdH7
-H/RQ6I7rQcsmkPN3M0yUiOL1dtR5CvhfgDvkCnBMy5e+hOXXrNy7Xku5C96SdCoN
-KMVTxtCuYyzxBK8CztyP9ycJ6Oy8abiN/WDvD/XyXEAWQdmx5pdPBgU744DdD6rK
-0K2eTT9Lfid9m2A3jN3EIghTPXx5PlmkoITyvNXMJn5b0S1iyl5sdWpzb7Ombh7d
-AmwXtk3Y05fxv1vEsMVkywEa4kmDuwlBamEGLFy8KfnEwYr/53L2nL+3+ugkHLnk
-yzP3HiaJarz9pLhzG3U59XXuCKGkcOdyoexP+BJuyKKWykOAvnfk3smnNKeTRJpH
-a+WoI/o/A5yOiSzirE+Mj6suuo5DKclQy0NgrozWP5nfNu4lUbM7wnJzZLPV6q2T
-V5rdOQUaCMfw3oZghVv7nRVQ+ojbPBXZYWjXfMVIHgGNqu9n9jZ2o+fGqYUd3rj5
-SYtKNutlLQ0tn2/zYrBDoQQmUwwxrnmhiSGzMpfrm9lnzErLQMI=
-=ukGj
------END PGP SIGNATURE-----
-
---twmgl5q7xfyqqjth--
+=E0=AE=AE=E0=AE=A3=E0=AE=BF=E0=AE=B5=E0=AE=A3=E0=AF=8D=E0=AE=A3=E0=AE=A9=
+=E0=AF=8D =E0=AE=9A=E0=AE=A4=E0=AE=BE=E0=AE=9A=E0=AE=BF=E0=AE=B5=E0=AE=AE=
+=E0=AF=8D
 
