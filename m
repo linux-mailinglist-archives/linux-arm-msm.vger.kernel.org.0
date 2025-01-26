@@ -1,114 +1,151 @@
-Return-Path: <linux-arm-msm+bounces-46153-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46154-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id EAE55A1CC3B
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 26 Jan 2025 17:05:10 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 63B94A1CCA5
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 26 Jan 2025 17:32:38 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id A211D1883F9F
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 26 Jan 2025 16:01:47 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 97D36162B09
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 26 Jan 2025 16:32:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A24D3237A4D;
-	Sun, 26 Jan 2025 15:08:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DA2EB14B080;
+	Sun, 26 Jan 2025 16:32:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Cc3RtTQK"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="pp4B73xx"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f171.google.com (mail-pl1-f171.google.com [209.85.214.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77521237A45;
-	Sun, 26 Jan 2025 15:08:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 376A213CF9C
+	for <linux-arm-msm@vger.kernel.org>; Sun, 26 Jan 2025 16:32:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737904124; cv=none; b=uC6Y5FlmEqGpXUrqP8fUo/PWDV/psqArTAcsl7P3ONHmO/uKD9QyHEk7rhLHHHWhxug2nQgVKHq6BWJpbYmnpOLeVsuNuei3hzb/iTuiEsH8W3afx9ZyDn0fIzbKgvHQ+6MRkNmb8WIZqGtdTFXRQvtwMnP3xYMFlLi1KaRwCno=
+	t=1737909153; cv=none; b=TnFDuaOepEJfCXbAtRXVY6xD5cjRfVd6kjPf3T//Q/CwyTAF4bB6YBC4L4iRlrPle6UskY3xbEIZfHiU0B4A7nn/o8sI4iqOBzEsSNDbfmmJAeMrFLuQKx4Yv/Y7QYTylNUX4dVPnyEIXoSlvowah/JAyg37okHi7DHNIegjsXo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737904124; c=relaxed/simple;
-	bh=1ztisbHwpmkKSTOlDKaozWadrVEdSWR7WX4DbSoZdkY=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=BdLh+o8OaZyLYosL0Ye0PQiVXhP2hliyNrjIgenhCaluEXxdX1nj2FKZk8vPu2pRF5W4jREsCEoPjy4B+KoeHH1eZGYUoYRhy7rSTRe/v/qjeatuFkysx5ej7N3Asd+uyZq3xbqbf6f7H4EtIEs17IUINVRuRWNA6c2cWq+3huk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Cc3RtTQK; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20FE9C4CEE3;
-	Sun, 26 Jan 2025 15:08:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1737904124;
-	bh=1ztisbHwpmkKSTOlDKaozWadrVEdSWR7WX4DbSoZdkY=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Cc3RtTQKNGtdhOov1AZn0BjhNrJ6K1qUt+HT+HZJNAfzzLd6kJhGt5ymxzjCjIdFN
-	 Ila0jc/J3jEizQROAaiqBcjUdUClBc8RuwfX0bIiqQpNg5c2Pv/BsMLbYX4I+B4LW/
-	 vTyW4+3CNgTeaALXmsAj3ez5U0iojmVEMiOUUOJzQdi0bWASeIZQG4AqP7d5YpKGvA
-	 B9PvLR/YCa9aVESIq03Va9AVRG06OMjfU+1b+ZGFxQtdEQndqc2VnPTlVdgWdMpxHo
-	 65Nqq0ma/s30dd7Z0qMcJRsqqfnBJeacjVe3qMwer0LA9IUsCT1vkmlsUvilDZbXJ9
-	 5fBrPiJfRNFOg==
-From: Sasha Levin <sashal@kernel.org>
-To: linux-kernel@vger.kernel.org,
-	stable@vger.kernel.org
-Cc: Richard Acayan <mailingradian@gmail.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Will Deacon <will@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	robdclark@gmail.com,
-	joro@8bytes.org,
-	iommu@lists.linux.dev,
-	linux-arm-msm@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org
-Subject: [PATCH AUTOSEL 6.6 2/9] iommu/arm-smmu-qcom: add sdm670 adreno iommu compatible
-Date: Sun, 26 Jan 2025 10:08:30 -0500
-Message-Id: <20250126150839.962669-2-sashal@kernel.org>
-X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20250126150839.962669-1-sashal@kernel.org>
-References: <20250126150839.962669-1-sashal@kernel.org>
+	s=arc-20240116; t=1737909153; c=relaxed/simple;
+	bh=jtSpTmRd14dGeM1nscXI3NZz05G5U5hkjF5piFg2+Qo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=bEFByiNkLIIGxS716HMN7SluutDniMpIbyhUTTLLngFI8hvNNjmWV0c3bMZvBXrlP5l30EW+q6MnPXjHLyW0Lfcm5erzuwqPbsgt1faWSPE0GRG1vhTe1ikl/0RiaZa8deGJKtITFntyK9X1+ERDgXjJ476SP+vWf/qFGQfwb/4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=pp4B73xx; arc=none smtp.client-ip=209.85.214.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-pl1-f171.google.com with SMTP id d9443c01a7336-21634338cfdso85782145ad.2
+        for <linux-arm-msm@vger.kernel.org>; Sun, 26 Jan 2025 08:32:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1737909151; x=1738513951; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=a2/x7HsME78QH5GItm6A7JG5Awy99g+RmpskMFT3HS4=;
+        b=pp4B73xxs4MF19GRKgxUkBCwB68RbWPzIzRlKNNsiwg5ixeM68BgLgxzRgLT4qnHiu
+         LqdobHl2ocz5hylmHNnYhtOHGxTxSyrZ1ALltEoyXJA/5GV5cIloVbWFKGl4y0GfqlTl
+         Q9rq8ZBjjxRPUltVSwex8JCOFj0N8UaVAjUi/67q2lvKBSsjCjO7Pny5Fr+1LvRz23JS
+         OGv/RXmLqBKJCoaTY4J6gCgfPdI3FFcaK700zSsI+ErSUVAEZEy5BrGz3jP9c9ndDWs0
+         BI3YG9xTF9Aj50o02tWia71oj82TmFPg9KIwRww1sKqfeXjwKYzZCyGGaBQ9Viv6PaXD
+         dddg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1737909151; x=1738513951;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=a2/x7HsME78QH5GItm6A7JG5Awy99g+RmpskMFT3HS4=;
+        b=pnaeb4Rup/BC2kjkB93tCedYSCPCOuacOth2TfXFNGXgjXtRWfHPRxi2zSLMs3J6vr
+         YtmhSx9522zkbikBRSn3CRPfKVgUtQ/v7ombUV2HEPeNY8g4oBwduSpDPrz/mBIkBMbk
+         L32ZvyA5a9Z5KaGeOgwLVFALreXNYHCBpLLcy2odMqBWwiVAitG+BpxkbJSncOfznzsl
+         BXBa1qzxyYqMT17JfyZgbxcP9IvZkuJvFXR6ftFa+GqojSX4tmy7oQYOUKURuIycR6Gy
+         CjgwrPWH035cYPvuHhuS6sdlETLCMkLO76LqDPljKnlyMd866UIko5d794Pywc+Uhp2g
+         A+Qg==
+X-Forwarded-Encrypted: i=1; AJvYcCW1yTMRkiiTehznswi2LcrXFL0IUco58sNb2/xoCFkcnu24K45pA6cy+GiPMREJ/mbKk+SrAWWuqTdeHhQb@vger.kernel.org
+X-Gm-Message-State: AOJu0YwLTL71KrhWEDznzb0W3uUaOqHxLhPLMynBB1U2sla0WKHiNQAs
+	yG4Clcj5yQv7lvHlLGQKMP9v9jw7SgvxcvRudDbga3zoNOtac0OmclAjTRsU1Q==
+X-Gm-Gg: ASbGncsAX4ZzI02cX8XvjuIWcrzHUotAKqSBh0lsLytrhR8+PsRYd0tpLK3dKlKejDH
+	dQfleFSXgX9STFzcXoETHnv787ZgxZ1fJYwLubxCh5PdNYFD6IIG5g0v7wZMwjSh4c6YBoSDjMY
+	NvhMrNRSXxxvIDQE6rBOPOL32Y4o2qUUPzrqakWrIdqcajN7BJz7vt9uG+EJg0Q0VaVrYGmTcE6
+	vPLMLtjsYUgwRgBgP59UhKovcLDNZcPk6tP2XTVfNJMX/CaCRpW//J9XqgxWgcsipVX+do4sW/f
+	37MKabych+UwrA==
+X-Google-Smtp-Source: AGHT+IHWZ+glvl+mJSsUGZ6jx+icgq8knmen0W99ZVY+enJ/56I1feVryXG/4cV/Fv3EXPoE5i5z5w==
+X-Received: by 2002:a17:902:e747:b0:216:4b1f:499 with SMTP id d9443c01a7336-21c35623dc0mr481233015ad.31.1737909151476;
+        Sun, 26 Jan 2025 08:32:31 -0800 (PST)
+Received: from thinkpad ([120.60.50.31])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-21da414cc20sm47994605ad.165.2025.01.26.08.32.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 26 Jan 2025 08:32:31 -0800 (PST)
+Date: Sun, 26 Jan 2025 22:02:22 +0530
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Konrad Dybcio <konradybcio@kernel.org>, Vinod Koul <vkoul@kernel.org>,
+	Kishon Vijay Abraham I <kishon@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Subject: Re: [PATCH 3/6] phy: qcom: qmp-pcie: Add X1P42100 Gen4x4 PHY
+Message-ID: <20250126163222.nhcxvr4m2vncwi23@thinkpad>
+References: <20250125-topic-x1p4_dts-v1-0-02659a08b044@oss.qualcomm.com>
+ <20250125-topic-x1p4_dts-v1-3-02659a08b044@oss.qualcomm.com>
+ <h6zfhxkc4dj2ueaxipha6prbvmv7pnqglghtjs7vkhlc2s7ndi@vhbj4uojlzwd>
+ <A64B8332-78F2-4B76-908E-4119E4A54BAE@linaro.org>
+ <cy3x35h4id3gegwb23j6rwblx2pecpw7ffjpri5ddqdd35kzrt@bxdmaumb6bbp>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-X-stable-base: Linux 6.6.74
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <cy3x35h4id3gegwb23j6rwblx2pecpw7ffjpri5ddqdd35kzrt@bxdmaumb6bbp>
 
-From: Richard Acayan <mailingradian@gmail.com>
+On Sun, Jan 26, 2025 at 01:39:05PM +0200, Dmitry Baryshkov wrote:
+> On Sun, Jan 26, 2025 at 12:59:52PM +0530, Manivannan Sadhasivam wrote:
+> > 
+> > 
+> > On January 25, 2025 11:00:23 PM GMT+05:30, Dmitry Baryshkov <dmitry.baryshkov@linaro.org> wrote:
+> > >On Sat, Jan 25, 2025 at 04:31:19AM +0100, Konrad Dybcio wrote:
+> > >> From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+> > >> 
+> > >> Add a new, common configuration for Gen4x4 V6 PHYs without an init
+> > >> sequence.
+> > >> 
+> > >> The bootloader configures the hardware once and the OS retains that
+> > >> configuration by using the NOCSR reset line (which doesn't drop
+> > >> register state on assert) in place of the "full reset" one.
+> > >
+> > >I know your opinion, but my 2c would still be for not depending on the
+> > >bootloader. I think that was the rule for ages for many possible
+> > >reasons.
+> > >
+> > 
+> > But if Linux or other OS can trust the bootloader, then it makes perfect sense to rely on them. Obviously, the question here is that on which platforms this level of trust should be established. And the answer I got was starting from the compute platforms (atleast X1E).
+> 
+> Is there any way how those values can be lost that we still might want
+> to support ? The GDSC going to the OFF state? Some deep sleep state or a
+> power collapse? Actual suspend to RAM (instead of current S2Idle)?
+> 
 
-[ Upstream commit 42314738906380cbd3b6e9caf3ad34e1b2d66035 ]
+As per Konrad's reply to my identical question, PHY register state is supposed
+to be maintained by MX domain even during CX PC. This seem to be case on X1E
+based platforms (compute).
 
-Add the compatible for the separate IOMMU on SDM670 for the Adreno GPU.
+> > 
+> > So let's take it on an experimental basis and see how it goes? If at all any problem arises, we can always resort to in kernel sequences.
+> 
+> Sounds like a good proposal. Can possibly have a corresponding 'do not
+> merge' patch with actual init tables?
+> 
 
-This IOMMU has the compatible strings:
+I don't find it really required. If the init sequences are really needed, we
+know where to find them.
 
-	"qcom,sdm670-smmu-v2", "qcom,adreno-smmu", "qcom,smmu-v2"
+- Mani
 
-While the SMMU 500 doesn't need an entry for this specific SoC, the
-SMMU v2 compatible should have its own entry, as the fallback entry in
-arm-smmu.c handles "qcom,smmu-v2" without per-process page table support
-unless there is an entry here. This entry can't be the
-"qcom,adreno-smmu" compatible because dedicated GPU IOMMUs can also be
-SMMU 500 with different handling.
-
-Signed-off-by: Richard Acayan <mailingradian@gmail.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://lore.kernel.org/r/20241114004713.42404-6-mailingradian@gmail.com
-Signed-off-by: Will Deacon <will@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-index d491589360197..e6b4bab0dde2e 100644
---- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-+++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-@@ -554,6 +554,7 @@ static const struct of_device_id __maybe_unused qcom_smmu_impl_of_match[] = {
- 	{ .compatible = "qcom,sc8180x-smmu-500", .data = &qcom_smmu_500_impl0_data },
- 	{ .compatible = "qcom,sc8280xp-smmu-500", .data = &qcom_smmu_500_impl0_data },
- 	{ .compatible = "qcom,sdm630-smmu-v2", .data = &qcom_smmu_v2_data },
-+	{ .compatible = "qcom,sdm670-smmu-v2", .data = &qcom_smmu_v2_data },
- 	{ .compatible = "qcom,sdm845-smmu-v2", .data = &qcom_smmu_v2_data },
- 	{ .compatible = "qcom,sdm845-smmu-500", .data = &sdm845_smmu_500_data },
- 	{ .compatible = "qcom,sm6115-smmu-500", .data = &qcom_smmu_500_impl0_data},
 -- 
-2.39.5
-
+மணிவண்ணன் சதாசிவம்
 
