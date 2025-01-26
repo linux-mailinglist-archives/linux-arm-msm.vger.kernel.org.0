@@ -1,46 +1,46 @@
-Return-Path: <linux-arm-msm+bounces-46149-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46150-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B968EA1CBB8
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 26 Jan 2025 16:53:29 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9C620A1CC1C
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 26 Jan 2025 17:03:05 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3BB3B165EF0
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 26 Jan 2025 15:49:25 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AC0B23A41D8
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 26 Jan 2025 15:52:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EC7BC22A7E2;
-	Sun, 26 Jan 2025 15:04:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9921922DF9C;
+	Sun, 26 Jan 2025 15:05:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Y7FEhVSX"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KfdW3O7r"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C126422A4FC;
-	Sun, 26 Jan 2025 15:04:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B4CE22DF99;
+	Sun, 26 Jan 2025 15:05:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737903896; cv=none; b=AzKKW1eJb6bS6vEOX5Rv8JJBopYqQlCmV/Y4FIMg9yEI0Rabn1IbPho5QnfG3O+oxfjId+PQToA85+N01515rGq4g0zsK0eVdpblylio1/7icCHfaGZbYt6P8JckKdLmi8ZVcOZ1K/ZpqXsngUdXuYh6dEy9oqfH/UCM5rRNmOg=
+	t=1737903923; cv=none; b=FCGm0SskSri6WMPnV6wfr291g1XNCLObXCpplHm5OlIqdp040Vtp9Le7/fUqgqNJfuHHk3hUB5C0fLLEjItHokPpifrwvkZ6gr4Qm3LhtkCO6MQsOPMyfNQpLSoQEXKbYIRrxUlHMYUkSw1HEQUP+jcAfNwzTShD0hyNbDno3F0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737903896; c=relaxed/simple;
-	bh=ulasWiEEufsTARnAgjfdvbig7fSmeJ8Mu6m5TNACgUc=;
+	s=arc-20240116; t=1737903923; c=relaxed/simple;
+	bh=IiKW+UkiLWjH6M1dG6Fe+sXBe6dLKnN/lbCEWXXoFDk=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=mLPeX0VQKkEMNuFHL7laKscmfvq31Ob3jzs80u1s0Z+PF8SYWg//kx9BtwDG1SLHXfmCXwuUl9YiUGuxgtGz1qmiUEaqjUgx3c+8lMmBAwg8neWN6Eo1WofSponqn0e4SmwqHe2JOVzgm1f0YKhuPFQVjEBWqaKUKLrPKkRFsk8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Y7FEhVSX; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 560E3C4CEE2;
-	Sun, 26 Jan 2025 15:04:55 +0000 (UTC)
+	 MIME-Version; b=Sd/yUeir/0sUHesno2RFwagfPHBtOXX16KsdFI4KWmbRbLBZQHchGvdplATQYwRhhFAmcck/T0dGrkMtUxuR9M9tiv+1tRs+7U0xXL8CRijmINqufnUDXUTiSPtHZID7qDkcpTrBh55ESkyiUkF/aRI8sfUWsdNuyLtRvibZ12E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KfdW3O7r; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CCC2C4CED3;
+	Sun, 26 Jan 2025 15:05:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1737903896;
-	bh=ulasWiEEufsTARnAgjfdvbig7fSmeJ8Mu6m5TNACgUc=;
+	s=k20201202; t=1737903923;
+	bh=IiKW+UkiLWjH6M1dG6Fe+sXBe6dLKnN/lbCEWXXoFDk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y7FEhVSXnJvFM+MEAFE9abj681aaEuj4el9+TpT1AxhiFaHHqkv1gIMSCt3BZAEH5
-	 Gnao8HZjM9XLcfgJUBSjS6NVYoBvj1W7uelPd9vvnlwqtu5dGPLsnEgB1sZZvGI3qc
-	 bru2ii0exI/xLFWI3J2LpILM08qLfxR7OAZs92TcsNkkA/48OE1QiI1+3IaYcRAoHS
-	 k/2J5rLGjeKt9Gz62opxGZJwRNXZFnnUi9GC1XW4KQvZv7AeWoVKlK0C3SMnz+R6Qk
-	 CQ+18CCPrGGmHeUJfaZ9K5zjbXwr89X2Gwy8TUoMs3QKd2AN1YRNjmPYzTNcF9lZ7I
-	 8Nk+tEGkfeFtQ==
+	b=KfdW3O7rqsntK7qPQHRM9wBsFQ+OJ3avSLHZrmqkfao0h35i2pF4dRmeBGAdtIq7Z
+	 Cs7u6kcji7UrtvByxLkFPqyHVQ0pt16nETh0hUlRcVMNibm9nWZl1g9mmOwQ+8F7gp
+	 fkntnuA+EUWYqieHpCxKIk36SQ/2fYUwJB0Q/bkgBPSQe/afZkA7UJ7sbR3YgeGl8R
+	 KNUY/T7zL5m23oqEOsVaLA3aDvhshQsubkgF0e0mnNKm80tpwAV8wVdPTsI9sz678Y
+	 HuBFeZOycyYFprJISy8v3xsDfG/YO+NMgFzOYoi+kQ8PbO9uvA9sCmllph1B4PznBe
+	 in00OEpd5EPfA==
 From: Sasha Levin <sashal@kernel.org>
 To: linux-kernel@vger.kernel.org,
 	stable@vger.kernel.org
@@ -51,12 +51,12 @@ Cc: Yuanjie Yang <quic_yuanjiey@quicinc.com>,
 	adrian.hunter@intel.com,
 	linux-mmc@vger.kernel.org,
 	linux-arm-msm@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.15 12/14] mmc: sdhci-msm: Correctly set the load for the regulator
-Date: Sun, 26 Jan 2025 10:04:28 -0500
-Message-Id: <20250126150430.958708-12-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 5.10 10/12] mmc: sdhci-msm: Correctly set the load for the regulator
+Date: Sun, 26 Jan 2025 10:04:58 -0500
+Message-Id: <20250126150500.959521-10-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20250126150430.958708-1-sashal@kernel.org>
-References: <20250126150430.958708-1-sashal@kernel.org>
+In-Reply-To: <20250126150500.959521-1-sashal@kernel.org>
+References: <20250126150500.959521-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,7 +65,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
-X-stable-base: Linux 5.15.177
+X-stable-base: Linux 5.10.233
 Content-Transfer-Encoding: 8bit
 
 From: Yuanjie Yang <quic_yuanjiey@quicinc.com>
@@ -91,10 +91,10 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 51 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
-index 943fc7b7f4fb5..4b727754d8e3c 100644
+index 3366956a4ff18..c9298a986ef0a 100644
 --- a/drivers/mmc/host/sdhci-msm.c
 +++ b/drivers/mmc/host/sdhci-msm.c
-@@ -132,9 +132,18 @@
+@@ -131,9 +131,18 @@
  /* Timeout value to avoid infinite waiting for pwr_irq */
  #define MSM_PWR_IRQ_TIMEOUT_MS 5000
  
@@ -113,7 +113,7 @@ index 943fc7b7f4fb5..4b727754d8e3c 100644
  #define msm_host_readl(msm_host, host, offset) \
  	msm_host->var_ops->msm_readl_relaxed(host, offset)
  
-@@ -1399,11 +1408,48 @@ static int sdhci_msm_set_pincfg(struct sdhci_msm_host *msm_host, bool level)
+@@ -1383,11 +1392,48 @@ static int sdhci_msm_set_pincfg(struct sdhci_msm_host *msm_host, bool level)
  	return ret;
  }
  
@@ -163,7 +163,7 @@ index 943fc7b7f4fb5..4b727754d8e3c 100644
  	return mmc_regulator_set_ocr(mmc, mmc->supply.vmmc, mmc->ios.vdd);
  }
  
-@@ -1416,6 +1462,8 @@ static int msm_toggle_vqmmc(struct sdhci_msm_host *msm_host,
+@@ -1400,6 +1446,8 @@ static int msm_toggle_vqmmc(struct sdhci_msm_host *msm_host,
  	if (msm_host->vqmmc_enabled == level)
  		return 0;
  
@@ -172,7 +172,7 @@ index 943fc7b7f4fb5..4b727754d8e3c 100644
  	if (level) {
  		/* Set the IO voltage regulator to default voltage level */
  		if (msm_host->caps_0 & CORE_3_0V_SUPPORT)
-@@ -1638,7 +1686,8 @@ static void sdhci_msm_handle_pwr_irq(struct sdhci_host *host, int irq)
+@@ -1622,7 +1670,8 @@ static void sdhci_msm_handle_pwr_irq(struct sdhci_host *host, int irq)
  	}
  
  	if (pwr_state) {
