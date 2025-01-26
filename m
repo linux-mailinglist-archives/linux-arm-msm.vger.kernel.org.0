@@ -1,169 +1,115 @@
-Return-Path: <linux-arm-msm+bounces-46171-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46172-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id CCF4EA1CED3
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 26 Jan 2025 22:43:54 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 48D01A1CEF5
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 26 Jan 2025 23:00:37 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0DA543A6511
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 26 Jan 2025 21:43:47 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 755BB1884FD4
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 26 Jan 2025 22:00:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B40BE176AC5;
-	Sun, 26 Jan 2025 21:43:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CEDB7469D;
+	Sun, 26 Jan 2025 22:00:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="YxZ25F/O"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TZ0aiknH"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yb1-f173.google.com (mail-yb1-f173.google.com [209.85.219.173])
+Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com [209.85.221.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0795F25A645
-	for <linux-arm-msm@vger.kernel.org>; Sun, 26 Jan 2025 21:43:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24BD05684;
+	Sun, 26 Jan 2025 22:00:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737927829; cv=none; b=JawSp0wZQfBi+AvBWrgkR7v2v0Xlu7e72NtHaF3p/r6lwl1IgUfWdkmkfBRkshgBGqoOjlUsCI9cFFTs8PE+NjWIiBZb8DlmJRrgPIyv41zc4kQ4Vq1HvDB/SRpXSjfQfGZSwjnlGT/4tLsjsmBHyRc0PsR6bLMk9oxuIhQ6fxU=
+	t=1737928834; cv=none; b=u+uTekt4o7Cq1duF6VmrNBl0Cz1rh0u1L0jMEvPD1MJzuEvE8LuSAL0JDKbgO0v+IeyQlM1N4o+aycPZbEr5a8JbO865DZiZUy9vMLHA2akW5K05OUFvHlkaRyquDqgU35vwKEm7QOlWWzOvM6ym9b1Dbb/679q+J+qXH/vGjoQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737927829; c=relaxed/simple;
-	bh=xpMRXpe3m5PVKuKjzBgshZO9KI7/GnFo9rP4PGbVZNA=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=n7sJJJl5Kkyn/7J1t75qfwRCJaJ5Nm0e1S1Nj28Rsyym6/eQeteybQpwV6O9Rk2JX1h/GvpKUFQ0cXOcC2fSzvlUgvC3CqJPL9yQvqGE2gO1t7qaEBuuJM0oqzrEIJXELVhvJopclDPhkalmSa3WhIbpF/t0Oj18A54OOh8y/Dw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=YxZ25F/O; arc=none smtp.client-ip=209.85.219.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yb1-f173.google.com with SMTP id 3f1490d57ef6-e3a0acba5feso5189049276.2
-        for <linux-arm-msm@vger.kernel.org>; Sun, 26 Jan 2025 13:43:47 -0800 (PST)
+	s=arc-20240116; t=1737928834; c=relaxed/simple;
+	bh=4DdbTStKVkTb7WFrUrJoNlbv7lkdF9Cm9SPJk5oqJFw=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=hu3Sdx++XzJ9b/amtySmY6oMwMr5wkQFovVLH3IpNerklgYyyRXOVsvz34m8zVexZxHrj99CU0txE4i5tEwSjI7D4wIXPDWjXO07/XRlxagWKBtOaN7hZd1Wly+zGnqW9HvUWvOSoRcRpo7ImRRntZxiYbfhoHenFftJzAQHxNY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TZ0aiknH; arc=none smtp.client-ip=209.85.221.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-wr1-f50.google.com with SMTP id ffacd0b85a97d-3863703258fso3023457f8f.1;
+        Sun, 26 Jan 2025 14:00:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1737927827; x=1738532627; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=xpMRXpe3m5PVKuKjzBgshZO9KI7/GnFo9rP4PGbVZNA=;
-        b=YxZ25F/O1v4VLoLHv/rEtqrw1bYe1j0yFLEefFvZDwFBFWrKc4tN4zLDe7/XARrgC0
-         TGTKz/yl26rP1d8lLAnisrCq3s9iLXUWzHBs5Kaj6l7rVSJ58nMaB3r+NyAhlGeLEQ1V
-         TgNIx+MZp/+iGbANxqoRNQQxCGlmplbjdSEDc7CaxCCIsUN+TTYlVkC6dBIAD+ymF9aT
-         tqEmi2yYmocDev2GKrDA4x9MxLCYsOnCHUwQ7h88YVTeA2s+pkGb4vGbmmNuMLGYFYrR
-         aEIzk4q7y99ht6/JEX+fZi0hZZfkdwzfUkvtX0Tx3TUTC9VwhfC1BEI9ql/9MP/iA4UB
-         9g+w==
+        d=gmail.com; s=20230601; t=1737928831; x=1738533631; darn=vger.kernel.org;
+        h=mime-version:user-agent:content-transfer-encoding:references
+         :in-reply-to:date:cc:to:from:subject:message-id:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=4DdbTStKVkTb7WFrUrJoNlbv7lkdF9Cm9SPJk5oqJFw=;
+        b=TZ0aiknH8vc531izZlOS8WibXHPKNIcCWNvZSMiYXAXvHyJ031jtOKJ+1q6DqE4MHF
+         QbxsJYaR+64Gwx+tBkxeGZmf5v85/DaMMyv0hA475WxfebxxcENYkEu8ou7EmS/Rp1+y
+         HFuhV3A6Rmra9w1RuZKs+ZI0IV3nLCKSbjZV+pQbdVDSaKIxlst2hjDSDE/7Djxz3PKp
+         vwqOIZBILN3tm0afn0wg/B2ZjalP6JOHHopX1mShsrXopVzJOp86WLWwML5c/oyLZGdu
+         9Qa5F7PnJrYWp+Zk24JO5LkpxiLUYS9hwMwPg/Z3wUsZFpcJm0a4vTRX6dFxBWbHM1aG
+         SrFw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1737927827; x=1738532627;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=xpMRXpe3m5PVKuKjzBgshZO9KI7/GnFo9rP4PGbVZNA=;
-        b=mTpsps/eECXvA1FA6NXIYHJGb/k/+uTovcygD+Kx+J0jhwZKBuMkaX3843+lSTZGdq
-         57nxXV7uDTDqWvXBr60aKB35ItnAgPkTEFkkG6p5Lfd+NJfmKC590oL5HOKxnzn9zsv+
-         AVLwGdMkSeLA/RAwDQeM7EewE0nS/a/SMB/Ujn5MgzXipL1cT3fS4ZOCfdxj9U6W1DqE
-         7MX9OYDhehW01Isq7+FqrMrpDlvIUQv31D5TOuoV20mdhqXoL9nzKcf38nK/slCIpogO
-         8emW//wC5/V6Mdk+vm2UiGJK2RqDftgaftgnIKFiPu2F9BB4GoJ9kycnWqXl+ZaqVn+t
-         G8cA==
-X-Forwarded-Encrypted: i=1; AJvYcCUSe0Jkhpas2DLg0fhkH/2Jk9mrpgVEGScND9j7ashI/nExekMyN+yunihMWOh4lr1VWnSs78QAcUBKwq1g@vger.kernel.org
-X-Gm-Message-State: AOJu0YxMvet/nJ67dPsQFyGKj0BpWWHCOdGEKw1Mq8WMwMN14+svOGMO
-	sLXysCuD44O6T45y3BqywlGvbObzulC0l4kUD1xnQNfSMqG6qx1os2okzCFfGxE7ffKY+oRNX9o
-	TItdbzFFDdCr/P8F6sOKSEfDE/ps2c+idJitH5w==
-X-Gm-Gg: ASbGncsCEq0WKAbY2UobqNn4WYmA1pE6SHhOQ314a7fbskh+GfUqJ51yN1rW5GV2UEr
-	wKjTuuNRhA6dGG2+9W3cc5a4IOJjeqVjXn0l+3Pd7nT/d4621iBqFxxxYMVU9ROFSBJokTi/WOf
-	/5UT2sTmjoAYqHbX7O/kE=
-X-Google-Smtp-Source: AGHT+IED1fOe+VPdEMF1l8voPxPWe0ESJkMKTkKmUiZ4jzWziPmagBg1bn3j8UK591ZwCsArMWcAfvtOn2xjwmIhMAs=
-X-Received: by 2002:a05:690c:6a04:b0:6ef:4a1f:36b7 with SMTP id
- 00721157ae682-6f6eb908ed8mr286092907b3.25.1737927826972; Sun, 26 Jan 2025
- 13:43:46 -0800 (PST)
+        d=1e100.net; s=20230601; t=1737928831; x=1738533631;
+        h=mime-version:user-agent:content-transfer-encoding:references
+         :in-reply-to:date:cc:to:from:subject:message-id:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=4DdbTStKVkTb7WFrUrJoNlbv7lkdF9Cm9SPJk5oqJFw=;
+        b=tf2GbDRotRwXJgB4lQaULAViZlm9COIah8qaDR+EeFw4rfIi5kMkvBaXIRfKr0QA0m
+         sHwj3d7+Lu0wfUlLwQaMMl/WZhywsIsb/5jfOLBB5YoDVFQ4PhBnDWCUDc8EMDYqWe4/
+         Vd+2kuGji2SEbOByJsyamTPQIjoExvY2MwIqEA/xikGjKtAa3T+R8IbI5ndjphpDX1iG
+         8k3rzTE/3fXwudZIQaqAON55oLANm+3g6zKV73c/xHk6VQ/vCy3kYJTq3oJxdzhpF/h6
+         Pye6UB4hMd0XiqVQ4cAS9ZDv6dH+m4ftcnaXnbX2UpXw8JDs96ENP89Xi+/YwMQQ0Iq0
+         WOzA==
+X-Forwarded-Encrypted: i=1; AJvYcCU2A+ns00IecNB2FwippvLBHmerjWUe2tyZk5nSc1QSv3V72mylXJNdlWBFm6oLxLsS+cBDf3MTj6tLxKVewSuHsVU=@vger.kernel.org, AJvYcCUj5UuAbBY35QWPCVabRyr/aBEzgqgL4cs1ZE0rfjRj39JVpkRNGXzsU1sryPgV3K61KgFIFH4YW72/ObM/@vger.kernel.org, AJvYcCVfVtJ77jpDXB97tjKnK1XIM/qOG6jquAiCpbu7qZ8aB8+GMEMz+BejciDW3yDLr59VsVz2WXbPW/jWpQ==@vger.kernel.org, AJvYcCW9niv/imvUY6PY4usn+Ll1ziPKfAgtzGIrWA+W82QXyLkS/dWne02tB8a+QRVnco6PVoPl+sJXcWtjmf8p@vger.kernel.org, AJvYcCX1CeTMJyWoVg0uvs/XUOyL2LWHj9EANU8wRn5gGlP0pprycrGB5ZE0LjFStbJ2G4IIMNKeMklm@vger.kernel.org
+X-Gm-Message-State: AOJu0YyCax6s1OepPDjFSrrFjz3WzPbnelracm+BSFysFqAcXbpVs5Cd
+	I2UygH2jpCbrIhKqpXha6GXjrLlLjlkrBjFuZkDTjcj07TtJSv23
+X-Gm-Gg: ASbGncsqZkIJ47Tr+h8bxqOFwyDJITUfdUwAli1fPFat3Tr5WYv2a6Qzw2/MmZgHQog
+	KCTn0iGu1mRhRwLEiwGyEXjN75/9ZeSHy2kdA9vQ7WlZ9FewqjztsMotE1pgZY20vNe/0q/ik4K
+	EqYZMItpCRb+GHoQyj3/h04okgMEneZvJEzrVzjk6b3e0gmu6FGnX8H0oXiAXrbAFM/ikQwpqqK
+	+2ixO8Smt1r0iPb3ExIHXH3ZRVo/KliDRDIixlzJCnMGGJ1RE8XUiauO4dvspRFKyKCbtN1DEFf
+	YBXvRicxT8V81U64pDX7CrCArh9dgFqzEGCioswn/sjUdG5X1Hdbb6GKw0MEgXhfc2f1N7JRYHI
+	6f6i8/TJKLFWRprQdrC/Gky/aZZs/ZCubThVlTcmE3F++
+X-Google-Smtp-Source: AGHT+IGsZIr2STvVAqncSIrcbBNbIGfPo1HDsn0GMZTH13nRBH3HPa/wKJc6AIwOxi8bTdK3IydwYQ==
+X-Received: by 2002:a05:6000:401f:b0:38a:8b34:76b0 with SMTP id ffacd0b85a97d-38c2b7d12a7mr8375865f8f.27.1737928831040;
+        Sun, 26 Jan 2025 14:00:31 -0800 (PST)
+Received: from p200300c5871e95f7cf8ec2b454ca4b5c.dip0.t-ipconnect.de (p200300c5871e95f7cf8ec2b454ca4b5c.dip0.t-ipconnect.de. [2003:c5:871e:95f7:cf8e:c2b4:54ca:4b5c])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38c2a1baf3esm9290068f8f.75.2025.01.26.14.00.29
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 26 Jan 2025 14:00:29 -0800 (PST)
+Message-ID: <76ddd6b18a35a19d284496345e41f5a22866f171.camel@gmail.com>
+Subject: Re: [PATCH v4] scsi: ufs: fix use-after free in init error and
+ remove paths
+From: Bean Huo <huobean@gmail.com>
+To: =?ISO-8859-1?Q?Andr=E9?= Draszik <andre.draszik@linaro.org>, Alim Akhtar
+ <alim.akhtar@samsung.com>, Avri Altman <avri.altman@wdc.com>, Bart Van
+ Assche <bvanassche@acm.org>, "James E.J. Bottomley"
+ <James.Bottomley@HansenPartnership.com>, "Martin K. Petersen"
+ <martin.petersen@oracle.com>, Peter Griffin <peter.griffin@linaro.org>, 
+ Krzysztof Kozlowski <krzk@kernel.org>, Manivannan Sadhasivam
+ <manivannan.sadhasivam@linaro.org>,  Mike Snitzer <snitzer@redhat.com>,
+ Jens Axboe <axboe@kernel.dk>, Ulf Hansson <ulf.hansson@linaro.org>,  Satya
+ Tangirala <satyat@google.com>, Eric Biggers <ebiggers@google.com>
+Cc: Tudor Ambarus <tudor.ambarus@linaro.org>, Will McVicker
+ <willmcvicker@google.com>, kernel-team@android.com,
+ linux-scsi@vger.kernel.org,  linux-kernel@vger.kernel.org,
+ linux-samsung-soc@vger.kernel.org,  linux-arm-kernel@lists.infradead.org,
+ linux-arm-msm@vger.kernel.org,  stable@vger.kernel.org
+Date: Sun, 26 Jan 2025 23:00:28 +0100
+In-Reply-To: <20250124-ufshcd-fix-v4-1-c5d0144aae59@linaro.org>
+References: <20250124-ufshcd-fix-v4-1-c5d0144aae59@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.44.4-0ubuntu2 
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250125-topic-x1p4_dts-v1-0-02659a08b044@oss.qualcomm.com>
- <20250125-topic-x1p4_dts-v1-3-02659a08b044@oss.qualcomm.com>
- <h6zfhxkc4dj2ueaxipha6prbvmv7pnqglghtjs7vkhlc2s7ndi@vhbj4uojlzwd>
- <A64B8332-78F2-4B76-908E-4119E4A54BAE@linaro.org> <cy3x35h4id3gegwb23j6rwblx2pecpw7ffjpri5ddqdd35kzrt@bxdmaumb6bbp>
- <20250126163222.nhcxvr4m2vncwi23@thinkpad>
-In-Reply-To: <20250126163222.nhcxvr4m2vncwi23@thinkpad>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Sun, 26 Jan 2025 23:43:38 +0200
-X-Gm-Features: AWEUYZnvKJ4Ll6Bi_q1ledtl7hY-Y2l5gnW9ImWZn2oAiWKheStXl7ROs8IdqJs
-Message-ID: <CAA8EJpq-aNVhSc0fTf4zD63VgrzDokR5uvdGiPvecaBHXYtd+Q@mail.gmail.com>
-Subject: Re: [PATCH 3/6] phy: qcom: qmp-pcie: Add X1P42100 Gen4x4 PHY
-To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc: Konrad Dybcio <konradybcio@kernel.org>, Vinod Koul <vkoul@kernel.org>, 
-	Kishon Vijay Abraham I <kishon@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Bjorn Andersson <andersson@kernel.org>, Marijn Suijten <marijn.suijten@somainline.org>, 
-	linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-On Sun, 26 Jan 2025 at 18:32, Manivannan Sadhasivam
-<manivannan.sadhasivam@linaro.org> wrote:
->
-> On Sun, Jan 26, 2025 at 01:39:05PM +0200, Dmitry Baryshkov wrote:
-> > On Sun, Jan 26, 2025 at 12:59:52PM +0530, Manivannan Sadhasivam wrote:
-> > >
-> > >
-> > > On January 25, 2025 11:00:23 PM GMT+05:30, Dmitry Baryshkov <dmitry.b=
-aryshkov@linaro.org> wrote:
-> > > >On Sat, Jan 25, 2025 at 04:31:19AM +0100, Konrad Dybcio wrote:
-> > > >> From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-> > > >>
-> > > >> Add a new, common configuration for Gen4x4 V6 PHYs without an init
-> > > >> sequence.
-> > > >>
-> > > >> The bootloader configures the hardware once and the OS retains tha=
-t
-> > > >> configuration by using the NOCSR reset line (which doesn't drop
-> > > >> register state on assert) in place of the "full reset" one.
-> > > >
-> > > >I know your opinion, but my 2c would still be for not depending on t=
-he
-> > > >bootloader. I think that was the rule for ages for many possible
-> > > >reasons.
-> > > >
-> > >
-> > > But if Linux or other OS can trust the bootloader, then it makes perf=
-ect sense to rely on them. Obviously, the question here is that on which pl=
-atforms this level of trust should be established. And the answer I got was=
- starting from the compute platforms (atleast X1E).
-> >
-> > Is there any way how those values can be lost that we still might want
-> > to support ? The GDSC going to the OFF state? Some deep sleep state or =
-a
-> > power collapse? Actual suspend to RAM (instead of current S2Idle)?
-> >
->
-> As per Konrad's reply to my identical question, PHY register state is sup=
-posed
-> to be maintained by MX domain even during CX PC. This seem to be case on =
-X1E
-> based platforms (compute).
+On Fri, 2025-01-24 at 15:09 +0000, Andr=C3=A9 Draszik wrote:
+> Fixes: cb77cb5abe1f ("blk-crypto: rename blk_keyslot_manager to
+> blk_crypto_profile")
+> Fixes: d76d9d7d1009 ("scsi: ufs: use devm_blk_ksm_init()")
+> Cc: stable@vger.kernel.org
+> Signed-off-by: Andr=C3=A9 Draszik <andre.draszik@linaro.org>
 
-Is MX on during S2RAM?
-
->
-> > >
-> > > So let's take it on an experimental basis and see how it goes? If at =
-all any problem arises, we can always resort to in kernel sequences.
-> >
-> > Sounds like a good proposal. Can possibly have a corresponding 'do not
-> > merge' patch with actual init tables?
-> >
->
-> I don't find it really required. If the init sequences are really needed,=
- we
-> know where to find them.
->
-> - Mani
->
-> --
-> =E0=AE=AE=E0=AE=A3=E0=AE=BF=E0=AE=B5=E0=AE=A3=E0=AF=8D=E0=AE=A3=E0=AE=A9=
-=E0=AF=8D =E0=AE=9A=E0=AE=A4=E0=AE=BE=E0=AE=9A=E0=AE=BF=E0=AE=B5=E0=AE=AE=
-=E0=AF=8D
-
-
-
---=20
-With best wishes
-Dmitry
+Reviewed-by: Bean Huo <beanhuo@micron.com>
 
