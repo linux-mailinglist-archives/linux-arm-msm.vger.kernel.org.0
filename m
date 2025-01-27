@@ -1,110 +1,151 @@
-Return-Path: <linux-arm-msm+bounces-46292-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46293-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 52BEDA200BE
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Jan 2025 23:40:55 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 67D41A200D9
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Jan 2025 23:46:53 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B22B8165081
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Jan 2025 22:40:53 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id A46D81884F34
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Jan 2025 22:46:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E22451DBB19;
-	Mon, 27 Jan 2025 22:40:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1BA121DB365;
+	Mon, 27 Jan 2025 22:46:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ohpJOPhh"
+	dkim=pass (1024-bit key) header.d=lucaweiss.eu header.i=@lucaweiss.eu header.b="2rKzb7d8"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from ahti.lucaweiss.eu (ahti.lucaweiss.eu [128.199.32.197])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B093A1D90B1;
-	Mon, 27 Jan 2025 22:40:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A96B1EB2A;
+	Mon, 27 Jan 2025 22:46:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=128.199.32.197
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738017653; cv=none; b=k9Lm8Z6R0zdLCz5zBoqorG3E7pKKQhNF7/+IzdTH5Cs8LW/VqO3xuTd/6jTWslJ17cJm7irYObeukdYE8rtiqw9HThSFbik2HdOGPocgq4Fmy6nFj56LXx5V0PRPJ7Wrv+nwDOSa2fGUpwzJyzuhwC2TCAxLZSVa3GE9jePnYmQ=
+	t=1738017999; cv=none; b=mIO1wL7IvlvcxOB6TyloqLtjXb59jfA5j42nJFhjRa6VX+UMAKRzKLX2uI2zT3zDcKlPhQiMg1qRZhNkCbnHkeHixTQpwIwipj0q/H13mwqPzexrIb2trVPwkRnbLNYo+MncFvXHu2Cw/FyOZFEOm5ccSy5tVB2Aut2sw3+toV8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738017653; c=relaxed/simple;
-	bh=8n6GFq2wSsDW3UJiuOFend+qwj0qBJNXurbpJnrEFGY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=TzzsBsHkor5bfJmuFQoLw/pIT+mxNgUmpWuEkN7awGtpKXHTyGcPULo0x0ggUhyfxfY1NS8rvhlU9aOMMD6IX1sei5nm1cmE6oN37e7lUab33l1ZpQ0mbnMNUAi/+7YCYapEzz2EeihPRYA2QUqzJbIb36CHQtwQkZKxVADjFHM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ohpJOPhh; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB268C4CED2;
-	Mon, 27 Jan 2025 22:40:51 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1738017653;
-	bh=8n6GFq2wSsDW3UJiuOFend+qwj0qBJNXurbpJnrEFGY=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=ohpJOPhhj8jAFO655veGMIMxliz9kaesGQVF5VL6+7F5BqBXW4u4qQSBBJXDBtXxr
-	 apYbv9TPCKrf4WX09+K+RiquAl8cyDrw3vHsVWEhcFR9lrZaRXa+19n5eUc6RoGUpa
-	 miXj2dtTDf13Q8HmBY07woVRhn0n1SzgfC8dpgjsSZ+61Hj1YC2PS50zbhzGZw7Hwn
-	 +l/Hh6jSarFT7I6GLNUKC0BcdpZljClIcoe5IGmbc65uLER7aWrb+XkI1waAK7Sozq
-	 7Rx4xAq7EttpFoGQTwEyNC5rCth1qjUObYxA8ZIYA5ryhSK22fRU+SN3bjo/BsJVs0
-	 ztTRL2NHgxmhQ==
-Date: Mon, 27 Jan 2025 16:40:50 -0600
-From: Bjorn Andersson <andersson@kernel.org>
-To: Stephan Gerhold <stephan.gerhold@linaro.org>
-Cc: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>, 
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Felipe Balbi <balbi@kernel.org>, Wesley Cheng <quic_wcheng@quicinc.com>, 
-	Saravana Kannan <saravanak@google.com>, Thinh Nguyen <Thinh.Nguyen@synopsys.com>, 
-	Philipp Zabel <p.zabel@pengutronix.de>, Konrad Dybcio <konradybcio@kernel.org>, 
-	Frank Li <Frank.li@nxp.com>, linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3 00/12] usb: dwc3: qcom: Flatten dwc3 structure
-Message-ID: <hn5lcdbdmvdntmufgvzju2xsvxwplxeoechzgtxgmqkcswooxc@6zuqbfyriqnc>
-References: <20250113-dwc3-refactor-v3-0-d1722075df7b@oss.qualcomm.com>
- <Z5fJFRMHIvKoN4cE@linaro.org>
+	s=arc-20240116; t=1738017999; c=relaxed/simple;
+	bh=mz4F9G5v+qaOh/zHTlbczsUUXskgo0bJ7o8PjuVuwx0=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=nOlPd8S5hZn0V82KgDJuu/XGI8VcUgh9CPjbGdHhv7RvE36BKSDhAodvtEusjSNxnjXYZRg1DlLIQgD3IWke+SmlJv/6163h5onhMINjCrTVzkX4CKS7L3HMBnyXfFiKOELQoewgOzcUdWOHK/JSXkH8q8NK/lxxFDd/DzDxGKk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=lucaweiss.eu; spf=pass smtp.mailfrom=lucaweiss.eu; dkim=pass (1024-bit key) header.d=lucaweiss.eu header.i=@lucaweiss.eu header.b=2rKzb7d8; arc=none smtp.client-ip=128.199.32.197
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=lucaweiss.eu
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lucaweiss.eu
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=lucaweiss.eu; s=s1;
+	t=1738017995; bh=mz4F9G5v+qaOh/zHTlbczsUUXskgo0bJ7o8PjuVuwx0=;
+	h=From:Subject:Date:To:Cc;
+	b=2rKzb7d8SNbexcj0m4iMahjyd3pyJKflVuFe5glK7knEexi7/7zeEiHacVXD9ahjn
+	 en9aygW104jJi/SzT3PB6dGQoDhRXVUrUTSr2QklwF0aYc3Ea0n7V+Iu+56JbUyiOK
+	 XqjcbrMWtkc7j+rZBXd3msUdJkCRk1F+h3WTXz9E=
+From: Luca Weiss <luca@lucaweiss.eu>
+Subject: [PATCH v3 00/13] Modem support for MSM8226
+Date: Mon, 27 Jan 2025 23:45:32 +0100
+Message-Id: <20250127-msm8226-modem-v3-0-67e968787eef@lucaweiss.eu>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Z5fJFRMHIvKoN4cE@linaro.org>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-B4-Tracking: v=1; b=H4sIAIwMmGcC/1XMQQ6CMBCF4auQWVvTVimNK+5hWDR0KpNYajqCG
+ sLdLcSNy/8l71uAMRMyXKoFMs7ElMYSp0MF/eDGGwrypUFLXUslGxE5Wq2NiMljFEHVTqEJ1ts
+ zlM8jY6D37l270gPxM+XPzs96W3/SJvxJsxZSoLW+Md54F0J7n3r3QmI+4gTduq5fT/Rpia0AA
+ AA=
+X-Change-ID: 20250107-msm8226-modem-f15a1e6f8d84
+To: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, 
+ Bjorn Andersson <andersson@kernel.org>, 
+ Mathieu Poirier <mathieu.poirier@linaro.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Stephan Gerhold <stephan@gerhold.net>, 
+ Konrad Dybcio <konradybcio@kernel.org>, 
+ =?utf-8?q?Matti_Lehtim=C3=A4ki?= <matti.lehtimaki@gmail.com>
+Cc: linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org, 
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ Luca Weiss <luca@lucaweiss.eu>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
+ Stephan Gerhold <stephan.gerhold@linaro.org>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3076; i=luca@lucaweiss.eu;
+ h=from:subject:message-id; bh=mz4F9G5v+qaOh/zHTlbczsUUXskgo0bJ7o8PjuVuwx0=;
+ b=owEBbQKS/ZANAwAIAXLYQ7idTddWAcsmYgBnmAy7IdRHI7lK5mL2in7CNTqJHn2GGo77WTw6N
+ It9HOK903OJAjMEAAEIAB0WIQQ5utIvCCzakboVj/py2EO4nU3XVgUCZ5gMuwAKCRBy2EO4nU3X
+ VtVoEACb9IJHAm/d6rtu96UIxJtVVIS9HyvdU7TLWsW5ckZWIQ92MRSMehhcqyQX8fKmZVh94aP
+ jpYd3nA9ZL8nEOIjlKciihbOhLzn7SXGj1aH0jGScmD+MOiSCKSQctYqXlBRcFTst37Jpw+W1zV
+ yEiaC7JShp2lODUuF3wnLECyrxshSyaWfG1jq6hMpVpwWiT1x890Lh1fy/kdczNC3Kh4KfInCKL
+ PQ1TTi7N0lTla1xzvnwktX9vTUsADLgB4Sg5JrS41saRZ1RiusoVl1Eldyb37+26THyfPWqmZ+o
+ vXA//EahbYa0QdvcgN7COfyl+VwMQhHqvqxWNsrqZ8vAKks1x+Oz7y4PxzwIeilkSj9fYjvmq7U
+ NWQO0gaZgZGbAOZPxlu14cIEQ7aZyrea9S4sSisQy8g56PRyZSLJTliBGXG2Q9dFwn8iqxmGCoJ
+ sOY8T7E87mdPjgVuW8P+m6PYovudtbbcG4BFeFoV+f+lxASMNbLkFJsfM8uJjIxI32H5mGhIZpx
+ OpZFW1qh8E5vO7sYqWI4EHGmNIZi2+TVBAg7tCOgFODjqqoe0GzinJvJVapGaaUE1Q7IjgTc1U/
+ rsYuzEQudUrpnLPpMgvNRsHEOmqbFuWoGAUO2zYdGwRzWiBJzuK5MVnHANK/cmAGxW0j9OaMoMQ
+ R0RaiyOdz6lhEZQ==
+X-Developer-Key: i=luca@lucaweiss.eu; a=openpgp;
+ fpr=BD04DA24C971B8D587B2B8D7FAF69CF6CD2D02CD
 
-On Mon, Jan 27, 2025 at 06:57:41PM +0100, Stephan Gerhold wrote:
-> On Mon, Jan 13, 2025 at 09:11:33PM -0800, Bjorn Andersson wrote:
-[..]
-> >  118 files changed, 8389 insertions(+), 670 deletions(-)
-> > ---
-> 
-> This is quite a lot of code and new files for a temporary migration.
-> It's also difficult to test these changes fully, since there are
-> separate overlays for each SoC and sometimes even each board.
-> 
-> Would it be easier to just duplicate the dwc3-qcom driver for now?
-> Making a copy of the current dwc3-qcom.c would be just 1000 lines of
-> extra code, compared to more than 7000 for the overlay approach.
-> 
-> The copy (e.g. dwc3-qcom-legacy.c) would keep handling the old bindings
-> with the existing code (that is known to work to some extent). We can
-> then improve upon the main version without risk of breaking any old
-> DTBs. If we decide to drop support for the old DTBs at some point, we
-> can just drop dwc3-qcom-legacy.
-> 
-> This approach is also not pretty, but I think the risk and effort would
-> be lower than making sure the overlay approach works on all the affected
-> targets.
-> 
+This series adds support for modem remoteproc found on MSM8226.
+It also adds needed device tree nodes and enables modem used for
+location service on matisse-wifi.
 
-I like this suggestion.
+Also bam-dmux node is added for mobile data which is used on
+3G/4G-enabled devices.
 
-It's much more isolated and we know the current state of the driver
-works with the current dtbs out there - so backwards compatibility would
-be handled. I also did end up having to use separate compatibles for the
-old and new binding/driver, so this should be quite clean - i.e.
-nicer than the overlay-based path...
+Signed-off-by: Luca Weiss <luca@lucaweiss.eu>
+---
+Changes in v3:
+- Include dt-bindings & driver patch for MSM8926 modem which is slightly
+  different
+- Include patch to add msm8926.dtsi with modified modem
+- Include patch to enable modem on MSM8926 HTC memul
+- In single-pd driver patch modify if conditions to only trigger for
+  8226, even for misconfigured dts (Stephan)
+- Don't /delete-node/ & /delete-property/ for no-modem smartwatches,
+  just make mpss_region & mba_region be disabled by default (Stephan)
+- Configure matisselts mss-supply correctly (Stephan)
+- Pick up tags
+- Link to v2: https://lore.kernel.org/r/20250126-msm8226-modem-v2-0-e88d76d6daff@lucaweiss.eu
 
-The one drawback would be that devices that isn't updated to a new dtb
-would not gain the upcoming improved support for role switching, or any
-of the improvements in pm_runtime-support (as I assume we'd only care
-about the new driver). But I think that's worth the saving in
-complexity.
+---
+Luca Weiss (8):
+      dt-bindings: remoteproc: qcom,msm8916-mss-pil: Add MSM8926
+      remoteproc: qcom_q6v5_mss: Handle platforms with one power domain
+      remoteproc: qcom_q6v5_mss: Add modem support on MSM8226
+      remoteproc: qcom_q6v5_mss: Add modem support on MSM8926
+      ARM: dts: qcom: msm8226: Add modem remoteproc node
+      ARM: dts: qcom: msm8226: Add BAM DMUX Ethernet/IP device
+      ARM: dts: qcom: Introduce dtsi for LTE-capable MSM8926
+      ARM: dts: qcom: msm8926-htc-memul: Enable modem
 
-Regards,
-Bjorn
+Matti Lehtimäki (5):
+      dt-bindings: remoteproc: qcom,msm8916-mss-pil: Support platforms with one power domain
+      dt-bindings: remoteproc: qcom,msm8916-mss-pil: Add MSM8226
+      ARM: dts: qcom: msm8226: Add node for TCSR halt regs
+      ARM: dts: qcom: msm8226: Add smsm node
+      ARM: dts: qcom: msm8226-samsung-matisse-common: Enable modem
+
+ .../bindings/remoteproc/qcom,msm8916-mss-pil.yaml  |  64 +++++++-
+ arch/arm/boot/dts/qcom/msm8926.dtsi                |  11 ++
+ .../dts/qcom/qcom-apq8026-samsung-matisse-wifi.dts |   1 +
+ .../dts/qcom/qcom-apq8026-samsung-milletwifi.dts   |   2 +
+ .../dts/qcom/qcom-msm8226-microsoft-common.dtsi    |   6 +-
+ .../dts/qcom/qcom-msm8226-microsoft-dempsey.dts    |   1 +
+ .../dts/qcom/qcom-msm8226-microsoft-makepeace.dts  |   1 +
+ .../dts/qcom/qcom-msm8226-microsoft-moneypenny.dts |   1 +
+ .../qcom/qcom-msm8226-samsung-matisse-common.dtsi  |  19 ++-
+ arch/arm/boot/dts/qcom/qcom-msm8226.dtsi           | 147 +++++++++++++++++
+ arch/arm/boot/dts/qcom/qcom-msm8926-htc-memul.dts  |  14 +-
+ .../qcom/qcom-msm8926-microsoft-superman-lte.dts   |   1 +
+ .../boot/dts/qcom/qcom-msm8926-microsoft-tesla.dts |   1 +
+ .../dts/qcom/qcom-msm8926-motorola-peregrine.dts   |   2 +-
+ .../dts/qcom/qcom-msm8926-samsung-matisselte.dts   |   5 +
+ drivers/remoteproc/qcom_q6v5_mss.c                 | 181 ++++++++++++++++++++-
+ 16 files changed, 443 insertions(+), 14 deletions(-)
+---
+base-commit: 15fbefd533c38e72315c25ae3746005fddb4b8e3
+change-id: 20250107-msm8226-modem-f15a1e6f8d84
+
+Best regards,
+-- 
+Luca Weiss <luca@lucaweiss.eu>
+
 
