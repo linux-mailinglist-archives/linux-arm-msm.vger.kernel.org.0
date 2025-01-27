@@ -1,80 +1,87 @@
-Return-Path: <linux-arm-msm+bounces-46271-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46272-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id BB5B6A1D888
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Jan 2025 15:37:21 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id F2F54A1D88F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Jan 2025 15:40:32 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id DE9811885D8E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Jan 2025 14:37:25 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 344421631B1
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Jan 2025 14:40:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2953C2D7BF;
-	Mon, 27 Jan 2025 14:37:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5FE431F957;
+	Mon, 27 Jan 2025 14:40:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="XtLSBLQL"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="e9l5Upco"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52512C8C7
-	for <linux-arm-msm@vger.kernel.org>; Mon, 27 Jan 2025 14:37:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9157C3D64
+	for <linux-arm-msm@vger.kernel.org>; Mon, 27 Jan 2025 14:40:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737988633; cv=none; b=NdYvTxN6MMhsJx7qjNU9c4eBKXALz/mJVnJBawy2HBVTAczpccK2rQUrucmkCck0hnRpGdm2YYT4V5PNJFzzOJp+GIPQZeFsYBdYif+uYsUYE2HjlFqtGTgLGxG52MJUENrdXjvYoppdX2VntnMgfF1xIuiP2oY8+aIwf4722kI=
+	t=1737988830; cv=none; b=lJrtp5m03jMY0+4s1SpRv5J+YT3EIF0LCBdJ9m/YZPbSkG4lcapkgikUuDCF11p82sYnNrqg1R2UzivtYK0UJEn661OEyc27fh0oonyL2e1W9wDb8jDmsWYpPsvFZLTbfW5Lo2DZScXBVk1ri9uZgHQdtvm98Qw+EDbLQrHAmGE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737988633; c=relaxed/simple;
-	bh=V8U3uWMoTBpz84xCteNBmdNyAPu+B+T+tW18jdXjSWM=;
+	s=arc-20240116; t=1737988830; c=relaxed/simple;
+	bh=XCuwwPpwNHaso4f/We58QgAX+P74MXMk8okJSiKhnYU=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=F27lTZ02YMi+pRzH/kCi1fwaEQn6U6BSRumNz9RsReiwB+G+rU6N83wdlQ4MpqFTUXJtgixyWvIUP5itUH2w/MMMwp3qS540UN3xoATM1r8/vNVe4jL4aWpmkQPYb/zmRbbpSXyZyumnU2cltGRAT6hIEzYkA1cXZFNC94m+Vgc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=XtLSBLQL; arc=none smtp.client-ip=209.85.221.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-3862e570832so624638f8f.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Jan 2025 06:37:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1737988628; x=1738593428; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
-         :from:references:cc:to:subject:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=0Mgmvx7qMUfxppC0GnNZyd9TXM/c1npLJP/jRYaybk0=;
-        b=XtLSBLQLFi+N6yIgTbNHPJ5xue6ZbxNFnrOrEreH6ES/HSTG2lqEozST8/nZUHHGs7
-         G2gb+47VmuYuiaAp5hNU5FLSOPKMy06Ug2lM2lSOozNFnXkA4uZcnWMxV51m8O4/1fMM
-         tOqGj3VQm0HbF7RxS25UTjIGgKDPP3c+OfLkIUQkToTCiew9p1eL9EGPZA9xeTgHWlIA
-         rxaAjCSpU3DP1ADPHx0GSf3vOSx6CnU4QBwtj6AiTnmxFh5Ug5AuN7N6VZkRvcswJh9/
-         PZyrnYYO9p/sYaJhjpEbzxgCWy88gIGvLHOXCtgZRrMDUdDF7dDWUp8O3TYbU/Pzl5iY
-         HdTQ==
+	 In-Reply-To:Content-Type; b=OEJrQsrA0iI/5n/vF9+JGUg2jR4dHSCqnBI8/dlO1OHvVd/EZuTxOUofrNO3Q/U93UYjcHgdeWE7IMBy6CE/+HewMOzObZY61Qriy4nd96Uh9KnOFxKvl00H2GItZCZplG3XWonyR+VF1yVefBpXyR2T9rmsKNg1keXRDWUwjbM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=e9l5Upco; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50RCigCu009738
+	for <linux-arm-msm@vger.kernel.org>; Mon, 27 Jan 2025 14:40:27 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	RPkIgots0pbMhl+JSUZMZ4MYf8G99bd6y5VP+rDeF6Y=; b=e9l5UpcoUP3ewewm
+	JfWDprbdFLnu/Or61gDN+jHrjuYsIAN80Fp9gjfJntvVUDe6LtryY8vYocjp7yK5
+	yLRAXR0KObaM3SUPO7dd5AfRQ1odL+Oiwb1yYb5ipd8o63lzoRNw+cnoRY5JPsau
+	tEModkmXAO1utJwesZ1RArRYu23QsxyqV8qwznkaXLSpYTjEHDl36DGyOuomqP6t
+	CDrUAlzE/ATB8q9jBy+8FFOOKDGZ2Wj/S/aYy5sPkpljHs2VsqL7OC3FixtqqUgH
+	3mR6Jt2UryeGrxH97m67diw+4uylK4YLIU8WnY542ODERKeLL0gemMNiPwdNnQSS
+	eIzZSg==
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com [209.85.219.71])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44eadvr78d-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 27 Jan 2025 14:40:27 +0000 (GMT)
+Received: by mail-qv1-f71.google.com with SMTP id 6a1803df08f44-6d8e7016630so10511986d6.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Jan 2025 06:40:27 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1737988628; x=1738593428;
-        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
-         :from:references:cc:to:subject:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=0Mgmvx7qMUfxppC0GnNZyd9TXM/c1npLJP/jRYaybk0=;
-        b=jNqvIo0y8CFFVG7OmgDZArAF2If3OD2G3nDfmsZnZvfEQXDtie+3/2tck2EfmgYOAK
-         QeBFI6kZtc43XSGDuEpae0GBQLj3AU/1CPCDsRzGW1xK/pCIrc5nZqrou+/1oOVcbAym
-         hkrUven5dbiI+zz+g1XR+TgtXMX1t9hWZh+IrO1LvBMXPp9VD1FFeomNk31U/1OYa24q
-         AwOGZt5q4FKfnoMFu8su5xZIccvD7sFhHGrpGwFU09ucw3Y/58/mYKZtwnBDPe2aY2r2
-         MqsbZt636YshIZKvOXt5Dosmt8wE8Hr2uyG/i8PpG4HDrbpmgXJf9y8YDyNuhcqCG36i
-         a3Sw==
-X-Forwarded-Encrypted: i=1; AJvYcCXjgp9pgeajFL8k6egwCt9I/XKXItBQqdqXG8f7fGhROg8nr23X7NTdayBKvd5lvrHfX3W4kQXvFP4kR82l@vger.kernel.org
-X-Gm-Message-State: AOJu0YxJdT4zPX4BJPam/M7vbzx1EPISMvcBkXaFVOWqfIZXalkxhlSi
-	KMPmwCYegwky5uCiIcTc3jxxSYKkulG69b9tau9n7eGhl3GAH5egFsX9u0z/nhc=
-X-Gm-Gg: ASbGnctvZJxAHUyUFsZf1EyS9bXbfX7F9L9Ch2OU4x4EPSBlCIOdFTF51E/M3o1bJWG
-	9Ao6BRidz7Fe8BqW3pHLJiCwrx812cBm/nYpKDJdLPsV4Ue/nU94O3kGq4CVBayGJk0aUlJD75h
-	mZRG1HaNkXh9kwAmvEkeMUEYYVqFQ+Orj1aUF+ZnoKLHh3/f/dB+PWQbBjVkx/eE4qDJKCvjyyY
-	wcdrC32+B9hYqyn2iu4JzljPLV+UttndqVtumtO5xQEajAnLartJDA/J4uwIgJaBPwQ4hDjVr8e
-	FKUAnBsc/FDfUNjebdF1Y4BZRf1o7QR8gg==
-X-Google-Smtp-Source: AGHT+IENuP2Rt5tOjWZU4PEZeGsfKlhVaK+H06dVS97mfTD04yvo4YEOsPpfj4rxnyHPSjUgjLDcew==
-X-Received: by 2002:a5d:588a:0:b0:385:edb7:69cc with SMTP id ffacd0b85a97d-38bf57bf3efmr14586098f8f.12.1737988628534;
-        Mon, 27 Jan 2025 06:37:08 -0800 (PST)
-Received: from [192.168.1.20] ([178.197.218.98])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38c2a176490sm11036310f8f.1.2025.01.27.06.37.06
+        d=1e100.net; s=20230601; t=1737988826; x=1738593626;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=RPkIgots0pbMhl+JSUZMZ4MYf8G99bd6y5VP+rDeF6Y=;
+        b=kk9wY39CFRRzeUEH1GMkYbQqvNcuw3QG+XfMgqLnJa0jTSs+kW3nCklQJ1QIxsOLkQ
+         a00nJhalIa/B+oRveQsfIkf7dNr3Ex8Pa2yJ7bcxM5UMXBIB06H1LqQkn1EBS8xO+8uz
+         S0vn6aCOVhWm5p9LMN+SE+gtQC/x+SuWV4lj8JOsm2KihcfaTKaSHj0CB8Ylz0mfes5z
+         /tEkBKqmIYWU/FVnwEJfSbD+KNgUa2MveLQSyq5q3kHSoDWlWkfkv6PE/idInNkuGPKb
+         D7nwx65NqFbyFqtYxLc3fqQqTChXxEmPpLLA8MEGuGE3NonyG/7i7emtyQSsrz+9ENzN
+         dCcA==
+X-Gm-Message-State: AOJu0YzWXpArWN8bNM/Ww2QkCdGIA4lktT7c7ao4z6VxMSGmKmMbQO+9
+	SFO/LQzibYYZPJh3VV/U3461WuHB6LaYB7MreDSFlbLjwmOOvtlITd2VzZVqSgqes6FdZt4tgr0
+	lhjhS+JbjciZBp22LHMnDrsIa7vT2riGs9NWc9ny8cscuOz2/3bET0Gj+WnskH2Vh
+X-Gm-Gg: ASbGncsF8GGnqIkqXg9DfCylWR+Y32Xvf6im/MjqVl3VSuRgu/UPCbR0TrgY131sSyt
+	NyVlfUAbQmw4Zt9pj3WsFgVqW0qt0D6lUFz6axdLOEdzy1Fs4WOKzY95CW+SGNkQ4xIWur0KKd6
+	n8PMXZnGOtLgL6GODP/wFYL0BjOX8g7/mUTa1Q0Od4UeUrhSW/rXC5HC1GofeExduj5mblPyCkb
+	Sg2kf6hbJl62KnTcfT6w54xjJMS2nyYHV5zXJREbYpxziVM5XLpd/L3s5OCrJSmVikEO51yY4A3
+	owFXi6DApokNxdUS0OUMj/TWgfOvVAgGvzNAjQ9Venm4sxGFbvt0QEVphp0=
+X-Received: by 2002:ac8:5814:0:b0:46d:e2b9:c4c with SMTP id d75a77b69052e-46e12a15fe4mr242073441cf.3.1737988826411;
+        Mon, 27 Jan 2025 06:40:26 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFB5QSW6Vl9WIoBikGlKqgJprzNBrhUbANmTuFMlk3hctUFIAzozH7WKpPXAFk/5uF1MvjFcw==
+X-Received: by 2002:ac8:5814:0:b0:46d:e2b9:c4c with SMTP id d75a77b69052e-46e12a15fe4mr242073241cf.3.1737988825896;
+        Mon, 27 Jan 2025 06:40:25 -0800 (PST)
+Received: from [192.168.65.90] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ab675e1367csm599033666b.16.2025.01.27.06.40.23
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 27 Jan 2025 06:37:08 -0800 (PST)
-Message-ID: <7038f0a5-f7ae-44da-abee-bd04fecf74b4@linaro.org>
-Date: Mon, 27 Jan 2025 15:37:05 +0100
+        Mon, 27 Jan 2025 06:40:25 -0800 (PST)
+Message-ID: <0e0d730d-66b9-4b00-a3ed-eb11ace9a79a@oss.qualcomm.com>
+Date: Mon, 27 Jan 2025 15:40:23 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -82,122 +89,163 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] dt-bindings: display/msm/dsi-phy: Add header with
- exposed clock IDs
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Rob Clark <robdclark@gmail.com>, Abhinav Kumar
- <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>,
- Marijn Suijten <marijn.suijten@somainline.org>,
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
- <sboyd@kernel.org>, Krishna Manikandan <quic_mkrishn@quicinc.com>,
- linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
- freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org
-References: <20250127132105.107138-1-krzysztof.kozlowski@linaro.org>
- <4vy6tjdvhkplly3uqqekdmz6brkcbac6pijrn6gdyz4x3hralr@meeugoua2ats>
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: Re: [PATCH 1/8] dt-bindings: soc: qcom: eud: Add phy related bindings
+To: Krzysztof Kozlowski <krzk@kernel.org>,
+        Elson Serrao <quic_eserrao@quicinc.com>, andersson@kernel.org,
+        robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
+        gregkh@linuxfoundation.org
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-usb@vger.kernel.org
+References: <20240730222439.3469-1-quic_eserrao@quicinc.com>
+ <20240730222439.3469-2-quic_eserrao@quicinc.com>
+ <63cf3198-fb79-466f-b80a-024e970e400a@kernel.org>
+ <5275651f-4075-4dac-bba0-da88f5836459@quicinc.com>
+ <0b007a32-00be-40ae-9d96-d7a02b4534bf@kernel.org>
 Content-Language: en-US
-Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
- 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
- D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <4vy6tjdvhkplly3uqqekdmz6brkcbac6pijrn6gdyz4x3hralr@meeugoua2ats>
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ JDZelR9Xqh8=
+In-Reply-To: <0b007a32-00be-40ae-9d96-d7a02b4534bf@kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
+X-Proofpoint-ORIG-GUID: rYXz_Y1GIp4gN5Ify9CHH09oBukoGIJ7
+X-Proofpoint-GUID: rYXz_Y1GIp4gN5Ify9CHH09oBukoGIJ7
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-01-27_07,2025-01-27_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 bulkscore=0
+ phishscore=0 impostorscore=0 malwarescore=0 adultscore=0 mlxlogscore=999
+ clxscore=1015 lowpriorityscore=0 suspectscore=0 spamscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2501270117
 
-On 27/01/2025 14:56, Dmitry Baryshkov wrote:
-> On Mon, Jan 27, 2025 at 02:21:04PM +0100, Krzysztof Kozlowski wrote:
->> DSI phys, from earliest (28 nm) up to newest (3 nm) generation, provide
->> two clocks.  The respective clock ID is used by drivers and DTS, so it
->> should be documented as explicit ABI.
+On 1.08.2024 9:45 AM, Krzysztof Kozlowski wrote:
+> On 01/08/2024 00:23, Elson Serrao wrote:
 >>
->> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 >>
->> ---
+>> On 7/30/2024 10:33 PM, Krzysztof Kozlowski wrote:
+>>> On 31/07/2024 00:24, Elson Roy Serrao wrote:
+>>>> Embedded USB Debugger(EUD) being a High-Speed USB  hub needs
+>>>> HS-Phy support for it's operation. Hence document phy bindings
+>>>> to support this.
+>>>>
+>>>> Signed-off-by: Elson Roy Serrao <quic_eserrao@quicinc.com>
+>>>
+>>> A nit, subject: drop second/last, redundant "bindings". The
+>>> "dt-bindings" prefix is already stating that these are bindings.
+>>> See also:
+>>> https://elixir.bootlin.com/linux/v6.7-rc8/source/Documentation/devicetree/bindings/submitting-patches.rst#L18
+>>>
+>> Ack
+>>>> ---
+>>>>  .../devicetree/bindings/soc/qcom/qcom,eud.yaml       | 12 ++++++++++++
+>>>>  1 file changed, 12 insertions(+)
+>>>>
+>>>> diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,eud.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,eud.yaml
+>>>> index f2c5ec7e6437..fca5b608ec63 100644
+>>>> --- a/Documentation/devicetree/bindings/soc/qcom/qcom,eud.yaml
+>>>> +++ b/Documentation/devicetree/bindings/soc/qcom/qcom,eud.yaml
+>>>> @@ -29,6 +29,14 @@ properties:
+>>>>      description: EUD interrupt
+>>>>      maxItems: 1
+>>>>  
+>>>> +  phys:
+>>>> +    items:
+>>>> +      - description: USB2/HS PHY needed for EUD functionality
+>>>> +
+>>>> +  phy-names:
+>>>> +    items:
+>>>> +      - const: usb2-phy
+>>>> +
+>>>>    ports:
+>>>>      $ref: /schemas/graph.yaml#/properties/ports
+>>>>      description:
+>>>> @@ -48,6 +56,8 @@ properties:
+>>>>  required:
+>>>>    - compatible
+>>>>    - reg
+>>>> +  - phys
+>>>> +  - phy-names
+>>>
+>>> That's an ABI break and nothing in commit msg justified it.
+>>>
 >>
->> Patch for Display tree, although with Ack from clock.
->> ---
->>  .../devicetree/bindings/display/msm/dsi-phy-common.yaml  | 2 ++
->>  MAINTAINERS                                              | 1 +
->>  include/dt-bindings/clock/qcom,dsi-phy-28nm.h            | 9 +++++++++
->>  3 files changed, 12 insertions(+)
->>  create mode 100644 include/dt-bindings/clock/qcom,dsi-phy-28nm.h
+>> Hi Krzysztof
 >>
+>> Thank you for the review.
+>> I see that the only user for EUD as of now is QC sc7280 SoC where phy property
 > 
->> diff --git a/include/dt-bindings/clock/qcom,dsi-phy-28nm.h b/include/dt-bindings/clock/qcom,dsi-phy-28nm.h
->> new file mode 100644
->> index 000000000000..ab94d58377a1
->> --- /dev/null
->> +++ b/include/dt-bindings/clock/qcom,dsi-phy-28nm.h
+> Did you ask all customers and all users of Linux kernel?
+
+Unfortunately, the PDF agrees - the current description is inherently incomplete
+and the driver seems to have been upstreamed in a rather "i need this specific
+part of it for my usecase" manner..
+
+The driver must be aware of all USB state changes (as EUD is essentially a mux+hub
+sitting between the PHYs and the USB controllers).
+
+Additionally, AFAICU, all device-mode-capable USB ports may potentially be used
+for debug purposes (one at a time), so it's not just a matter of a single
+controller here. Plug events / their suspend state must be monitored to program
+the EUD (which again, sits in the middle of all this) in a specific manner.
+
+EUD is present on all non-ancient SoCs and by default it's on in bypass mode, so
+you can ignore its existence. That is, unless you want to use the features it
+provides, which we absolutely do.
+
+>> is missing and EUD node is disabled. As described in my cover letter, HS phy
+>> support is needed for EUD functionality and this is applicable to all SoCs
+>> where EUD is to be enabled. Hence phy would be a required property.
 > 
-> I think this should be dt-bindings/phy/qcom,foo.h
+> Nothing in commit msg explained that, but I have a bit hard time to
+> believe that this never worked. If that's the case, say it explicitly in
+> commit msg - this was always broken.
 
+Even if it does work, it does so on a specific class of boards, relying on
+specific setup from a previous stage bootloader.
 
-Both options - clock or phy - work for me, although with slight
-preference of keeping foo constants only in foo (so clock -> clock)
-because then clock maintainer sees it as well. Also because I would
-judge by type of constants (so again clock constants -> clock
-directory), not type of device. We have several MFD devices, like PMICs,
-which have a clock, so bindings should go to mfd? But mfd is not a real
-device, but Linux subsystem.
+>> Given that the changes in this series are directly applicable to sc7280 as well,
+>> I will re-enable/rectify EUD feature on sc7280 SoC first, by adhering it to this binding
+>> requirement. That would address the ABI break. 
+> 
+> I don't understand what you are saying here.
+> 
+>> Once the base framework is set I shall extend it to sm8450 SoC.
 
-For many other archs, e.g Mediatek, pretty often even for the same
-device, the binding headers are split between clock and reset. I know
-that Qualcomm GCC has it in one file, with exceptions (ipq, qca8k). Also
-these other archs have bindings file in e.g. soc or arm, but the header
-in respective subsystem
+tldr, we should fix both the bindings and the 7280 dt for it
 
-With exceptions of am654 and pisatchio-usb headers, we don't store clock
-constants in phy.
-
-Unless someone insists or there is existing qcom convention, then I
-rather prefer to keep it in clock.
-
-Best regards,
-Krzysztof
+Konrad
 
