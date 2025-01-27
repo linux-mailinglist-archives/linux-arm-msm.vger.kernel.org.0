@@ -1,213 +1,195 @@
-Return-Path: <linux-arm-msm+bounces-46234-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46235-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3B820A1D681
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Jan 2025 14:21:36 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 03D3FA1D6A8
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Jan 2025 14:25:55 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 90C803A2201
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Jan 2025 13:21:25 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BF27F3A1EBF
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Jan 2025 13:25:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A0D621FF7DE;
-	Mon, 27 Jan 2025 13:21:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2A4A51FF7D4;
+	Mon, 27 Jan 2025 13:25:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="uQbHqjSm"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="QSGUOvEZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.15])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E484E1FF7A4
-	for <linux-arm-msm@vger.kernel.org>; Mon, 27 Jan 2025 13:21:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCDFA1FF7B4;
+	Mon, 27 Jan 2025 13:25:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.15
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737984075; cv=none; b=VZ59Ff/WquykcleSW1XHQ71o8e/zmNWepCJKBsA0FaHfgVtQSIa/+fuAkP/bqA1jgqjdspoGB4aev+uvpVGHuyp4DZiEfjlwaIXZZFkZoIPR0ZXgz+lUuewTq844oVMINrOJ1k2xLq9yRnfcNN42Ze94BzMWlrZqjkTtwSEsPTM=
+	t=1737984332; cv=none; b=odp24p0j+3utK+dhrDZp54Fqr5Vng5pVzNhMZP+6uWvNhaM5NdV3jnReXtHuLUHJ9+p6rObv2tN+KeceJ6ciDNuxculzSKgTCu3dOcTJhiFY4oV+ZkCrZ4Fo+Q3u7JVQz7ZaYMsyzG5qXlOrxlbJbWiuFkVQ7s7emVdSVz3ikUY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737984075; c=relaxed/simple;
-	bh=IUbaxPS+HQnJ43himjlEznUpNzuts8QFvAEId8JRW6E=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WAO94S6vsAkIIbpdaA45ah4JshA4l8e8Wueq0rCZgUzKx2jPxWFWKE4MrMKX96ZNzSSVGRNRb//hLJPMDRFEGqDLfu5kCEwobVieP9yMiID3w8Ga7x28yeD6sAqd+Y9pbeVah2/WpPxIEabt1qsOPon3Mrwh64fZMbYoJ9gqlTc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=uQbHqjSm; arc=none smtp.client-ip=209.85.128.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-436381876e2so2767675e9.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Jan 2025 05:21:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1737984071; x=1738588871; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=1lrk19+x0xCyWtNAM9zqIl3MR0fAbQ4p3LHFnpdDhys=;
-        b=uQbHqjSmL3xY6zOmgponX/GjfcHJVTbPqMZ3SXL4jNsl238sUGEDNNS9etdIemPEqk
-         fu9g279Ktu7veueqXUM7YmwotHehJgfSL43vMD7czk4ox7B5Clo4CovdpnxPDrrL+Cvh
-         vEKgwLn/zDNs+a/n19P+/zSU0aou247ln6Sbeuqqp38OVklvCJaFmAhRYZEMpr9Ejmh4
-         evSeeHWffJIKHjg7YXfgCNX5fyr2ODPEmLsVX8NKElrbBL2uk1JD6zuRePd3OBuQTzQF
-         P7wAnrtvr2yzoiGGIizlAVRndxyaFia4VFoS4YcI0FdnnesOHVwdKQB3s6BtbIzPac3R
-         xAdw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1737984071; x=1738588871;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=1lrk19+x0xCyWtNAM9zqIl3MR0fAbQ4p3LHFnpdDhys=;
-        b=ZyYpnkKxUAvQfQQa+EdSoYMmgBtCfAt0j+TNM6CIXX8uLKOGRngj0XVudo3j7VWpzF
-         pYEOVdftkYqMaa0MUxofD06gc+8IjlKV8Jf2eWLjLuU6ezho+bD+RMk5zziccH0sP9p0
-         P+OLYoBaHpOgxWc8Ju0NPUjNpitL+DNJjuWwSGgO0JVCquICiNlWjeZkPuFJNlJfW9a1
-         TJDw7x/mcqj1zWAAI5FmqWrxl1sqtaeB30rxub5TqRZB0U1bkgUFl6Rvt9+ftdG3sV5Q
-         BnUX6BM9frXxirNWoA/owJA3MLFWFFCuRH+TvfJOb0/MMFBNGsTjxOAGuxNZnxUF5OzP
-         Km1A==
-X-Forwarded-Encrypted: i=1; AJvYcCXk7vD3iMdbyI8HXoVv4JPZiyY1rQ0D6zCmEmZFATPcuxFKRWvd0HfyxeoXuyGDuvVonyn7lfgqU9xSoLEX@vger.kernel.org
-X-Gm-Message-State: AOJu0YxJg3ncefPpYA2hCqxChFPPkRGuSI/pKMmQrhsMvtTH/EMhfW+S
-	zx3dO6Mtfwk87VO7z+yo6+Blssa2pbkdZ75lmTonnNZJ7NdwUTf1bScL69hWiTQ=
-X-Gm-Gg: ASbGnctTD1cCldYfjgkcVhU3dr8qpjbXjAARIBJV/6RtwSO1wdyCE72bNUS77D6d7gU
-	+KBBcD2kTUtRSoP9HydZYpXuaL008I+Nsq12Da0lzYStoNbfRBbsdirQOQZcv/Iaa2qt5DmSkFg
-	alJSup76Eg7HhUb988RsH4ilmiH9nvfNSHMi6pTUeCgsrPnEeHkhZGAOk+YlImAGuVM2jppvSre
-	CjS51GeSIDiFqu9HPrWLLq/hIuBBUGE41tyqK54lSb5q7f5AigXI3jPJpKimOWOm/V/un67fdGn
-	X0PJW3w/r+5D8+DGEw==
-X-Google-Smtp-Source: AGHT+IFQ3yteVkt9TcZzs8X17uQXuOmJxl9Leoqq2TKqJE6nDiurSR7kDwbdcXBuU+CbDYLyoR4UeQ==
-X-Received: by 2002:a05:600c:1f10:b0:436:fb10:d595 with SMTP id 5b1f17b1804b1-438b1763eeemr80946485e9.1.1737984070644;
-        Mon, 27 Jan 2025 05:21:10 -0800 (PST)
-Received: from krzk-bin.. ([178.197.218.98])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-438bd4b9977sm132386105e9.25.2025.01.27.05.21.09
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 27 Jan 2025 05:21:10 -0800 (PST)
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To: Rob Clark <robdclark@gmail.com>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Sean Paul <sean@poorly.run>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	David Airlie <airlied@gmail.com>,
-	Simona Vetter <simona@ffwll.ch>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
+	s=arc-20240116; t=1737984332; c=relaxed/simple;
+	bh=RjFj+btLOrA1I0c/0XDEPot6dd9rNyckywxmgkJzq3o=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=aEfhAR3RlQYiSsb42lAOvxkw+nUntoz6q6DHAY0pQYX9yAkuDsIcFi/ef/RPnfCGfMo6aaLv5F7HtRLQF2WK23ejmtY2BNY7EEaLm0JP2UncX78LDNu5Z20MP1wE0lxRljio5NohTrvoN6ZN1daJdMi5M+IsFEMnMgznBw9oovI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=QSGUOvEZ; arc=none smtp.client-ip=198.175.65.15
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1737984330; x=1769520330;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=RjFj+btLOrA1I0c/0XDEPot6dd9rNyckywxmgkJzq3o=;
+  b=QSGUOvEZzlCLg52m+Lkyf/+kcHVE68FvAFk33+V3UhwIx/K/THbEuyid
+   qJ438VnvterjDhGelKR5fP6BxrrxRkqifOI54cau6t1t8osjTRna9hBxM
+   No2vFYIs3XvcsO1WP4e5Biv+WmJTB68gdx3/u0mrAfgwMTVAD015W4iZ3
+   /IS6Kq3c9DS8MxtJuSPO9pAimIX5JPT9iSW8d4LmXW3YyQJxw6TCZ90TZ
+   /GjxSPzYFVZHfh4LDTMcdRhtiKIjHF1pelA8u+BGatnQUd04z2t7ouweY
+   lN5ljcLdmzwZ6ey8werqdArXQ+hfBfCOql1cBQHnUxfs2OPHqKl0LQjSz
+   w==;
+X-CSE-ConnectionGUID: WXPLNx9wSDWvyiA2ZoPUwA==
+X-CSE-MsgGUID: Ov3TekHxTxuVTp8Y/oIV5g==
+X-IronPort-AV: E=McAfee;i="6700,10204,11328"; a="42105354"
+X-IronPort-AV: E=Sophos;i="6.13,238,1732608000"; 
+   d="scan'208";a="42105354"
+Received: from fmviesa002.fm.intel.com ([10.60.135.142])
+  by orvoesa107.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Jan 2025 05:25:22 -0800
+X-CSE-ConnectionGUID: oOw//HyuRH2sXbDiVD3/cA==
+X-CSE-MsgGUID: F7vXYkyrSx2N1gt4t3xT9A==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; 
+   d="scan'208";a="131730368"
+Received: from smile.fi.intel.com ([10.237.72.58])
+  by fmviesa002.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Jan 2025 05:25:02 -0800
+Received: from andy by smile.fi.intel.com with local (Exim 4.98)
+	(envelope-from <andriy.shevchenko@intel.com>)
+	id 1tcP6l-00000005jpm-3fIe;
+	Mon, 27 Jan 2025 15:24:55 +0200
+Date: Mon, 27 Jan 2025 15:24:55 +0200
+From: Andy Shevchenko <andriy.shevchenko@intel.com>
+To: Arnd Bergmann <arnd@kernel.org>
+Cc: linux-kernel@vger.kernel.org, Arnd Bergmann <arnd@arndb.de>,
+	Michael Ellerman <mpe@ellerman.id.au>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Damien Le Moal <dlemoal@kernel.org>, Jiri Kosina <jikos@kernel.org>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Corey Minyard <minyard@acm.org>, Peter Huewe <peterhuewe@gmx.de>,
+	Jarkko Sakkinen <jarkko@kernel.org>,
+	Tero Kristo <kristo@kernel.org>, Stephen Boyd <sboyd@kernel.org>,
+	Ian Abbott <abbotti@mev.co.uk>,
+	H Hartley Sweeten <hsweeten@visionengravers.com>,
+	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
+	Len Brown <lenb@kernel.org>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
+	John Allen <john.allen@amd.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	Vinod Koul <vkoul@kernel.org>, Ard Biesheuvel <ardb@kernel.org>,
 	Bjorn Andersson <andersson@kernel.org>,
-	Michael Turquette <mturquette@baylibre.com>,
-	Stephen Boyd <sboyd@kernel.org>,
-	Krishna Manikandan <quic_mkrishn@quicinc.com>,
-	linux-arm-msm@vger.kernel.org,
-	dri-devel@lists.freedesktop.org,
-	freedreno@lists.freedesktop.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-clk@vger.kernel.org
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH 2/2] drm/msm/dsi/phy: Use the header with clock IDs
-Date: Mon, 27 Jan 2025 14:21:05 +0100
-Message-ID: <20250127132105.107138-2-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250127132105.107138-1-krzysztof.kozlowski@linaro.org>
-References: <20250127132105.107138-1-krzysztof.kozlowski@linaro.org>
+	Moritz Fischer <mdf@kernel.org>, Liviu Dudau <liviu.dudau@arm.com>,
+	Benjamin Tissoires <benjamin.tissoires@redhat.com>,
+	Andi Shyti <andi.shyti@kernel.org>,
+	Michael Hennerich <michael.hennerich@analog.com>,
+	Peter Rosin <peda@axentia.se>, Lars-Peter Clausen <lars@metafoo.de>,
+	Jonathan Cameron <jic23@kernel.org>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Markuss Broks <markuss.broks@gmail.com>,
+	Alexandre Torgue <alexandre.torgue@foss.st.com>,
+	Lee Jones <lee@kernel.org>, Jakub Kicinski <kuba@kernel.org>,
+	Shyam Sundar S K <Shyam-sundar.S-k@amd.com>,
+	Iyappan Subramanian <iyappan@os.amperecomputing.com>,
+	Yisen Zhuang <yisen.zhuang@huawei.com>,
+	Stanislaw Gruszka <stf_xl@wp.pl>, Kalle Valo <kvalo@kernel.org>,
+	Sebastian Reichel <sre@kernel.org>,
+	Tony Lindgren <tony@atomide.com>, Mark Brown <broonie@kernel.org>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Xiang Chen <chenxiang66@hisilicon.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Heiko Stuebner <heiko@sntech.de>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Vaibhav Hiremath <hvaibhav.linux@gmail.com>,
+	Alex Elder <elder@kernel.org>, Jiri Slaby <jirislaby@kernel.org>,
+	Jacky Huang <ychuang3@nuvoton.com>, Helge Deller <deller@gmx.de>,
+	Christoph Hellwig <hch@lst.de>, Robin Murphy <robin.murphy@arm.com>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Kees Cook <keescook@chromium.org>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Anna Schumaker <anna@kernel.org>,
+	Masahiro Yamada <masahiroy@kernel.org>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Takashi Iwai <tiwai@suse.com>, linuxppc-dev@lists.ozlabs.org,
+	linux-ide@vger.kernel.org, openipmi-developer@lists.sourceforge.net,
+	linux-integrity@vger.kernel.org, linux-omap@vger.kernel.org,
+	linux-clk@vger.kernel.org, linux-pm@vger.kernel.org,
+	linux-crypto@vger.kernel.org, dmaengine@vger.kernel.org,
+	linux-efi@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	linux-fpga@vger.kernel.org, dri-devel@lists.freedesktop.org,
+	linux-input@vger.kernel.org, linux-i2c@vger.kernel.org,
+	linux-iio@vger.kernel.org, linux-stm32@st-md-mailman.stormreply.com,
+	linux-arm-kernel@lists.infradead.org, netdev@vger.kernel.org,
+	linux-leds@vger.kernel.org, linux-wireless@vger.kernel.org,
+	linux-rtc@vger.kernel.org, linux-scsi@vger.kernel.org,
+	linux-spi@vger.kernel.org, linux-amlogic@lists.infradead.org,
+	linux-rockchip@lists.infradead.org,
+	linux-samsung-soc@vger.kernel.org, greybus-dev@lists.linaro.org,
+	linux-staging@lists.linux.dev, linux-serial@vger.kernel.org,
+	linux-usb@vger.kernel.org, linux-fbdev@vger.kernel.org,
+	iommu@lists.linux.dev, linux-trace-kernel@vger.kernel.org,
+	kasan-dev@googlegroups.com, linux-hardening@vger.kernel.org,
+	linux-nfs@vger.kernel.org, linux-kbuild@vger.kernel.org,
+	alsa-devel@alsa-project.org, linux-sound@vger.kernel.org
+Subject: Re: [PATCH 00/34] address all -Wunused-const warnings
+Message-ID: <Z5eJJ199QwL0HVJT@smile.fi.intel.com>
+References: <20240403080702.3509288-1-arnd@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240403080702.3509288-1-arnd@kernel.org>
+Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
 
-Use the header with clock IDs to bind the interface between driver and
-DTS.
+On Wed, Apr 03, 2024 at 10:06:18AM +0200, Arnd Bergmann wrote:
+> From: Arnd Bergmann <arnd@arndb.de>
+> 
+> Compilers traditionally warn for unused 'static' variables, but not
+> if they are constant. The reason here is a custom for C++ programmers
+> to define named constants as 'static const' variables in header files
+> instead of using macros or enums.
+> 
+> In W=1 builds, we get warnings only static const variables in C
+> files, but not in headers, which is a good compromise, but this still
+> produces warning output in at least 30 files. These warnings are
+> almost all harmless, but also trivial to fix, and there is no
+> good reason to warn only about the non-const variables being unused.
+> 
+> I've gone through all the files that I found using randconfig and
+> allmodconfig builds and created patches to avoid these warnings,
+> with the goal of retaining a clean build once the option is enabled
+> by default.
+> 
+> Unfortunately, there is one fairly large patch ("drivers: remove
+> incorrect of_match_ptr/ACPI_PTR annotations") that touches
+> 34 individual drivers that all need the same one-line change.
+> If necessary, I can split it up by driver or by subsystem,
+> but at least for reviewing I would keep it as one piece for
+> the moment.
+> 
+> Please merge the individual patches through subsystem trees.
+> I expect that some of these will have to go through multiple
+> revisions before they are picked up, so anything that gets
+> applied early saves me from resending.
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
----
- drivers/gpu/drm/msm/dsi/phy/dsi_phy.h           | 5 ++---
- drivers/gpu/drm/msm/dsi/phy/dsi_phy_10nm.c      | 1 +
- drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c      | 1 +
- drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.c      | 1 +
- drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm_8960.c | 1 +
- drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c       | 1 +
- 6 files changed, 7 insertions(+), 3 deletions(-)
+Arnd, can you refresh this one? It seems some misses still...
+I have got 3+ 0-day reports against one of the mux drivers.
 
-diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h
-index fdb6c648e16f..7541ffde6521 100644
---- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h
-+++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h
-@@ -6,6 +6,7 @@
- #ifndef __DSI_PHY_H__
- #define __DSI_PHY_H__
- 
-+#include <dt-bindings/clock/qcom,dsi-phy-28nm.h>
- #include <linux/clk-provider.h>
- #include <linux/delay.h>
- #include <linux/regulator/consumer.h>
-@@ -85,9 +86,7 @@ struct msm_dsi_dphy_timing {
- 	u8 hs_halfbyte_en_ckln;
- };
- 
--#define DSI_BYTE_PLL_CLK		0
--#define DSI_PIXEL_PLL_CLK		1
--#define NUM_PROVIDED_CLKS		2
-+#define NUM_PROVIDED_CLKS		(DSI_PIXEL_PLL_CLK + 1)
- 
- #define DSI_LANE_MAX			5
- 
-diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_10nm.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_10nm.c
-index 677c62571811..9812b4d69197 100644
---- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_10nm.c
-+++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_10nm.c
-@@ -3,6 +3,7 @@
-  * Copyright (c) 2018, The Linux Foundation
-  */
- 
-+#include <dt-bindings/clock/qcom,dsi-phy-28nm.h>
- #include <linux/clk.h>
- #include <linux/clk-provider.h>
- #include <linux/iopoll.h>
-diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c
-index 2c3cbe0f2870..3a1c8ece6657 100644
---- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c
-+++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c
-@@ -3,6 +3,7 @@
-  * Copyright (c) 2016, The Linux Foundation. All rights reserved.
-  */
- 
-+#include <dt-bindings/clock/qcom,dsi-phy-28nm.h>
- #include <linux/clk.h>
- #include <linux/clk-provider.h>
- #include <linux/delay.h>
-diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.c
-index 1383e3a4e050..90348a2af3e9 100644
---- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.c
-+++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.c
-@@ -3,6 +3,7 @@
-  * Copyright (c) 2015, The Linux Foundation. All rights reserved.
-  */
- 
-+#include <dt-bindings/clock/qcom,dsi-phy-28nm.h>
- #include <linux/clk.h>
- #include <linux/clk-provider.h>
- 
-diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm_8960.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm_8960.c
-index 5311ab7f3c70..f3643320ff2f 100644
---- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm_8960.c
-+++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm_8960.c
-@@ -3,6 +3,7 @@
-  * Copyright (c) 2012-2015, The Linux Foundation. All rights reserved.
-  */
- 
-+#include <dt-bindings/clock/qcom,dsi-phy-28nm.h>
- #include <linux/clk-provider.h>
- #include <linux/delay.h>
- 
-diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
-index ed8192d56b06..305042c29b2b 100644
---- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
-+++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
-@@ -3,6 +3,7 @@
-  * Copyright (c) 2018, The Linux Foundation
-  */
- 
-+#include <dt-bindings/clock/qcom,dsi-phy-28nm.h>
- #include <linux/clk.h>
- #include <linux/clk-provider.h>
- #include <linux/iopoll.h>
+https://lore.kernel.org/all/?q=adg792a.c
+
 -- 
-2.43.0
+With Best Regards,
+Andy Shevchenko
+
 
 
