@@ -1,86 +1,86 @@
-Return-Path: <linux-arm-msm+bounces-46222-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46223-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5B6CFA1D447
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Jan 2025 11:20:57 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id AB75AA1D455
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Jan 2025 11:23:39 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B42B03A76CE
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Jan 2025 10:20:49 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id B9FA318882B9
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Jan 2025 10:23:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4660D1FDE22;
-	Mon, 27 Jan 2025 10:20:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 293811FDE15;
+	Mon, 27 Jan 2025 10:23:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="jpMv7jNo"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="DJFwnw47"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A396A1FDA6F
-	for <linux-arm-msm@vger.kernel.org>; Mon, 27 Jan 2025 10:20:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A37AA1FDA6D
+	for <linux-arm-msm@vger.kernel.org>; Mon, 27 Jan 2025 10:23:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737973252; cv=none; b=oWblEpyaFXvY+g4HUDUTcHEAaYe9a5jzcY12F0Gup0DyG20IGhSKjraGNcAaHn7dYN8xDYYUoWB09nHl5gH9aFFVu/Wfrl8+m45oGt8EBHFC9x2PrW4edyUQn6jhAvKkTk30aLTYA15e00bn6TQmlseYe6zTXL+/M8jj8O6pUWM=
+	t=1737973413; cv=none; b=txEbH6UyylxXngzeHbi6qnf+XE26Wy0Gev7ZFUAeNpJMglwsu0fSOwV7MaM7kaElKXsuOXQQHghcEkVNHm4aK6SALUO3kCTM58nNVuoV+ZxnqGB0CRfAxLciUXUArHTTHQBCIjNbwvYRPAf7efCEh0CyDDlpbL61ktC9n+SuuC0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737973252; c=relaxed/simple;
-	bh=Hxw8IyGjQ5J3gtUl3IIP44BkHPVhF2xScdnF9smecmw=;
+	s=arc-20240116; t=1737973413; c=relaxed/simple;
+	bh=/ziQCxNO8jspCZEWeweEbldQZWZOoyzeslfitT30Ucs=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=l4/CW+IcCXTPTgdjZuym0Onn7idwZ5fhj7wM+kwwXvab6h8PJHZLC1bf1kf7Xbt1Od4Gv+nevSJNkKEgxS7pEENGdwTLV0NneI3Oyd4u3Ky0nBtHE7bqqQ9qPrYqCz8uRdmRmYaksLva36yAYFD1IssBOTQXVvBebisq8FCSY3U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=jpMv7jNo; arc=none smtp.client-ip=205.220.180.131
+	 In-Reply-To:Content-Type; b=OzLrlFpYT0TCiAxkjQRUzCJlTCmLJKm8U/BZOmbmR2TVflMKB38qzdgtmsNAt0SJwo8wH9Qay+qH+21HT0Gkxe3/fBxXl6GAuZsKZC+gLWRA5SlbRabPk29PTQJTmJ4mdIsoZpZM6uy1P5PTssDGq4POtcsNgd5uGrKDWZ1baDg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=DJFwnw47; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50R0nKXv025380
-	for <linux-arm-msm@vger.kernel.org>; Mon, 27 Jan 2025 10:20:49 GMT
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50R2UFj7015989
+	for <linux-arm-msm@vger.kernel.org>; Mon, 27 Jan 2025 10:23:31 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	iRHY/8aTKLk5Axq/TaQ4eFvrRO/9DYyZjmqiQ/7+6XU=; b=jpMv7jNoRqDLEUbW
-	JdFEZR1Q5XmRERgVr8OVhbMxQmEBVForyNHaKjSMz1+t8p4KhnvMdQ0ym5wGDA2i
-	YdW4GLAlPh3d5FF0HtJ/IT/rXOH3MF+k4KLf/K0HD6yFuZzazaM/rbztt83f2MFT
-	H4Myw5tS1Zcy1jlm3LW2FBpddicV6lkHabeKh6Q/oDF2mq469tuHhNXehUX1riWs
-	9kjmeGVcM76NXoSv7QQMaeliBNYSM1zXBj8L+EMyhF+TnWFSvMpiEdjAAYqn2WCa
-	AZ5PfAqR0SwvDBQjXRPpWp9tIgDLKoSqk04RwwhsQOYxTk4pE/xUKN/gnU9CDUBd
-	LSzJ3g==
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com [209.85.160.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44dtn2h67n-1
+	hGB5OVb68LNt8gE8AS+bpnEVv8dQ+ZWfbCKV+Fgql1s=; b=DJFwnw47aPPLlcK9
+	HWN/KcRu8+0A34vgbRvLmEldSMPh61ljyB/ekcDy+FL3+geO6HqAyWgMRDuI0fYb
+	yLY+szCFQQD60ymx13gFrE2Wgd+fapD/uLeu0jBCL4+cZCmcnujYIis3+SMoVj/v
+	d0RHHqAZ8+IgKFt2juXwKcQrrCiZ2mp+Hbejtc5HTir3FdL7S5YIFKPNVYKiaQmC
+	VZVoefqy5JaV8/K1eGqSln3oDHCSBMrsi3gz8/+JxdR/HvIxhfDGIDhnQp8NgtTB
+	qIYLtgHRfUasMIxWRJO8KZvcwRTGmutW3QUbeAJNnP2aRo5QvnLRHTBdkHqBBSQH
+	lJo43A==
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com [209.85.160.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44dsav1a13-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 27 Jan 2025 10:20:49 +0000 (GMT)
-Received: by mail-qt1-f198.google.com with SMTP id d75a77b69052e-46e4842dbd0so14130531cf.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Jan 2025 02:20:49 -0800 (PST)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 27 Jan 2025 10:23:30 +0000 (GMT)
+Received: by mail-qt1-f199.google.com with SMTP id d75a77b69052e-467a437e5feso12436641cf.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Jan 2025 02:23:30 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1737973248; x=1738578048;
+        d=1e100.net; s=20230601; t=1737973409; x=1738578209;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=iRHY/8aTKLk5Axq/TaQ4eFvrRO/9DYyZjmqiQ/7+6XU=;
-        b=Ko4H9rmyK88bvqQqGaduj06pD/jy7M5CB9gqrr9TcgLXrOpgq6+gKAtxEhxkAHCaz8
-         uTxmKRjaGuUQgUx7WAoODjJUaShTBxsOOH7Az9O534PSAEb6h6kb5l8SfGgZtTYCccGF
-         ljbQJAUzUv/8WmkSWfg9EfG3PlHTR9orEHGgVY/GaOx75CrneOR9JlP7JFrgntJOxcvT
-         X+YLowwkI1QpDbHCBT9dE6MRpt1lkuZVYZogrTf8S49ja2lRYEAb/d7nAQr0wCO1FAeX
-         6VA5qHJSVVQBHRTizFEDHNFAbTbziuOOzSn2KwONVTScYMxRX7HicxPtMxUp2EO2NpH1
-         TZLw==
-X-Gm-Message-State: AOJu0YxM3OOGCRxaOz4+7AGkWT3cPgBvdzAvK6AzcaXz9xYL+F/9bca4
-	fvuB97pmfSjtngbdaNro5Q0nvgQsya6BGyOOLizPelSzRu2z6c2MdmN/t1kjnuAGXQy2vhoMdJt
-	1sVJE5GJf909ToJpfUYGSg/IUDtftr8W/LPDAjYMvulT1TkybsvsUrwxI5aHfzUcM
-X-Gm-Gg: ASbGncua80YtMg34X+gNuVWe/qBsyv+zA3V1q5ecmF7c5W+X+LEDIfgHKNl9DtKuB5W
-	EYWSVLSxnWFZ9wppfu42WKYkgZ5zj5lp/z2nYe03F+7aVi1/dmVWMeGZS+XINfOJrmkNyvgFFm3
-	G//8AEZ+GrVaN8YarTiabP6grWSgjGpXFJc90/mAtQ8QOziRdPDuU+KfuOLYZp/OtiCjOzOVd5+
-	OEdlwvEdQrtVcNrZdSyiPFlqIrokGlETCV2RsLZu2hE54BebiNK7zAtP5cOS7r+iEsQqKpn4PmJ
-	8cb1EEyLaO/tI9ozwsqPnlFOgUIGYg1q/aKXq3WWVzvYqhqI+UYIXaNSeC0=
-X-Received: by 2002:a05:620a:6884:b0:7b6:6b55:887a with SMTP id af79cd13be357-7be631f49cfmr2438124985a.6.1737973248510;
-        Mon, 27 Jan 2025 02:20:48 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHuECCNFGoubW/Ui1yA1XWf9mVhKR81xmqRhv+HGsGJHLDgTBaX/glpXBzB7yhX5w+9mKrFPQ==
-X-Received: by 2002:a05:620a:6884:b0:7b6:6b55:887a with SMTP id af79cd13be357-7be631f49cfmr2438104185a.6.1737973248048;
-        Mon, 27 Jan 2025 02:20:48 -0800 (PST)
+        bh=hGB5OVb68LNt8gE8AS+bpnEVv8dQ+ZWfbCKV+Fgql1s=;
+        b=SIDLV53xaqXCZi15A6m+14boB6DqSvlG8jGLjrEBf1EwAgwUYLT+DXPHppekNnKC9F
+         e4KhgxNkl+fKH7Ftvswddgb4HRVvw+iFxy5q8q2olciWvaSpZsAChE1qgHwfm/l4x2Tr
+         huEi3TKa0zTkxamNQz1qACwCy/NnU2KQ9fooZFm3K4Pf6qtEotHMBl2nBpoK54Ci6cIQ
+         e+Cob7/D8pzF+hYL6ByrGJ63XQruo53OnHJz1VOVvIQgObAJeXmkVrC65ejnPtQs92Ef
+         R5op16OlxU9xOWsVIXvu2PhWonWMAc52YLCtxPLb0vxqUdy9JBaCioAr8xSxmmpgDxIv
+         Cqtg==
+X-Gm-Message-State: AOJu0YyYVtZK0Y926yWQZG+AVzFrFXdc4TnK6dnUKhlbp2wS2Lv34Afy
+	A/6nSNh3mw/VQ7kG285cFG9XhSKd3YNrEnfqoqt0czJt6rnznwDhIZRc+RaZuxUYPb1ACE7Xm6K
+	lkv/XXVgFVYK8ityQevp32qOnjfWbMlHXeAbVdbDDkWQkcM/CtZknTJGPCPkeuuXa
+X-Gm-Gg: ASbGncvUxFm59ejJG317P5+suOK2B1BrHobAlX81xlbhzlcvPAG1JPXVsAgDfOC5z6b
+	9i0xcMJbmIr6Ajr38iWb0LnjpcVnekfaDzNtP2dDD46//jUJL1lk2g5GSlqTFXKfmA556TpoXXm
+	dUv324BsUKICl/B1pLn2FEbnuQ+PnlcBhRzORZxjjfIz0/3R2HgUM2UqYlIR9n1GDZQUjcRBJ4I
+	SYceRMMLcb55M+mDntWceXSS/1ZqmuKddwB6gsJ8Mtsq6iQuXMcpKZTNH+U1GFKopJmIILkYmL4
+	IrkZwTpocggKnosbI/z9uhHdVw2zBHI7cZmEvJVCaHUPbVE2n4W7m8BC/2U=
+X-Received: by 2002:a05:622a:1aa0:b0:467:825e:133b with SMTP id d75a77b69052e-46e12ba1478mr227274561cf.13.1737973409375;
+        Mon, 27 Jan 2025 02:23:29 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHhhZmUefm+tAZLgJqV2ZW+k6GYLfZ7Ycaf8L6tOGjzPWuZ8gyIBxlMk/OY2hdBHc96AIiM+Q==
+X-Received: by 2002:a05:622a:1aa0:b0:467:825e:133b with SMTP id d75a77b69052e-46e12ba1478mr227274371cf.13.1737973408993;
+        Mon, 27 Jan 2025 02:23:28 -0800 (PST)
 Received: from [192.168.65.90] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5dc186b319asm5333483a12.49.2025.01.27.02.20.45
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ab675e11a1esm562672266b.33.2025.01.27.02.23.26
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 27 Jan 2025 02:20:47 -0800 (PST)
-Message-ID: <f11012b5-f387-4144-a4f2-b9d629a4c53e@oss.qualcomm.com>
-Date: Mon, 27 Jan 2025 11:20:44 +0100
+        Mon, 27 Jan 2025 02:23:28 -0800 (PST)
+Message-ID: <3ed5858c-3030-4edc-847d-28ff54ea5aea@oss.qualcomm.com>
+Date: Mon, 27 Jan 2025 11:23:25 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -88,8 +88,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5/5] arm64: dts: qcom: sm8750: Add UFS nodes for SM8750
- QRD and MTP boards
+Subject: Re: [PATCH 4/5] arm64: dts: qcom: sm8750: Add UFS nodes for SM8750
+ SoC
 To: Melody Olvera <quic_molvera@quicinc.com>, Vinod Koul <vkoul@kernel.org>,
         Kishon Vijay Abraham I <kishon@kernel.org>,
         Rob Herring <robh@kernel.org>,
@@ -110,27 +110,27 @@ Cc: linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
         linux-scsi@vger.kernel.org, Nitin Rawat <quic_nitirawa@quicinc.com>,
         Manish Pandey <quic_mapa@quicinc.com>
 References: <20250113-sm8750_ufs_master-v1-0-b3774120eb8c@quicinc.com>
- <20250113-sm8750_ufs_master-v1-5-b3774120eb8c@quicinc.com>
+ <20250113-sm8750_ufs_master-v1-4-b3774120eb8c@quicinc.com>
 Content-Language: en-US
 From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <20250113-sm8750_ufs_master-v1-5-b3774120eb8c@quicinc.com>
+In-Reply-To: <20250113-sm8750_ufs_master-v1-4-b3774120eb8c@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-ORIG-GUID: _Q77AFulDV7qlj_H8hqEiSsPm2LeRN30
-X-Proofpoint-GUID: _Q77AFulDV7qlj_H8hqEiSsPm2LeRN30
+X-Proofpoint-GUID: 4KyScLnqtmcq7UktVvX3ategAJrAUVv7
+X-Proofpoint-ORIG-GUID: 4KyScLnqtmcq7UktVvX3ategAJrAUVv7
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
  definitions=2025-01-27_04,2025-01-27_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=699
- priorityscore=1501 malwarescore=0 spamscore=0 mlxscore=0 impostorscore=0
- bulkscore=0 adultscore=0 clxscore=1015 phishscore=0 lowpriorityscore=0
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 impostorscore=0
+ priorityscore=1501 bulkscore=0 phishscore=0 clxscore=1015 mlxscore=0
+ lowpriorityscore=0 suspectscore=0 malwarescore=0 spamscore=0
+ mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.19.0-2411120000 definitions=main-2501270083
 
 On 13.01.2025 10:46 PM, Melody Olvera wrote:
 > From: Nitin Rawat <quic_nitirawa@quicinc.com>
 > 
-> Add UFS host controller and PHY nodes for SM8750 QRD and MTP boards.
+> Add UFS host controller and PHY nodes for SM8750 SoC.
 > 
 > Co-developed-by: Manish Pandey <quic_mapa@quicinc.com>
 > Signed-off-by: Manish Pandey <quic_mapa@quicinc.com>
@@ -138,7 +138,52 @@ On 13.01.2025 10:46 PM, Melody Olvera wrote:
 > Signed-off-by: Melody Olvera <quic_molvera@quicinc.com>
 > ---
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+I don't see anything wrong per se here, just some style nits
+atop the other replies:
+
+[...]
+
+> +		ufs_mem_hc: ufs@1d84000 {
+> +			compatible = "qcom,sm8750-ufshc", "qcom,ufshc", "jedec,ufs-2.0";
+
+1 compatible per lines, please
+
+> +			reg = <0x0 0x01d84000 0x0 0x3000>;
+> +
+> +			interrupts = <GIC_SPI 265 IRQ_TYPE_LEVEL_HIGH>;
+> +
+> +			clocks = <&gcc GCC_UFS_PHY_AXI_CLK>,
+> +				 <&gcc GCC_AGGRE_UFS_PHY_AXI_CLK>,
+> +				 <&gcc GCC_UFS_PHY_AHB_CLK>,
+> +				 <&gcc GCC_UFS_PHY_UNIPRO_CORE_CLK>,
+> +				 <&rpmhcc RPMH_LN_BB_CLK3>,
+> +				 <&gcc GCC_UFS_PHY_TX_SYMBOL_0_CLK>,
+> +				 <&gcc GCC_UFS_PHY_RX_SYMBOL_0_CLK>,
+> +				 <&gcc GCC_UFS_PHY_RX_SYMBOL_1_CLK>;
+> +			clock-names = "core_clk",
+> +				      "bus_aggr_clk",
+> +				      "iface_clk",
+> +				      "core_clk_unipro",
+> +				      "ref_clk",
+> +				      "tx_lane0_sync_clk",
+> +				      "rx_lane0_sync_clk",
+> +				      "rx_lane1_sync_clk";
+> +			freq-table-hz = <100000000 403000000>,
+> +					<0 0>,
+> +					<0 0>,
+> +					<100000000 403000000>,
+> +					<100000000 403000000>,
+> +					<0 0>,
+> +					<0 0>,
+> +					<0 0>;
+> +
+> +			resets = <&gcc GCC_UFS_PHY_BCR>;
+> +			reset-names = "rst";
+> +
+> +
+> +
+
+stray double \n
 
 Konrad
 
