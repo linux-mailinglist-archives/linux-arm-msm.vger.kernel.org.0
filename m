@@ -1,205 +1,153 @@
-Return-Path: <linux-arm-msm+bounces-46268-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46269-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 702F6A1D7B7
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Jan 2025 15:06:08 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 19447A1D83F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Jan 2025 15:25:08 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A6CB63A5550
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Jan 2025 14:06:00 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D7AB1160E0D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Jan 2025 14:24:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3F35B1FF609;
-	Mon, 27 Jan 2025 14:06:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 42CDFEED7;
+	Mon, 27 Jan 2025 14:24:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="iCS7nPIc"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="xpdyJH/5"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
+Received: from mail-lf1-f54.google.com (mail-lf1-f54.google.com [209.85.167.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF42125A643
-	for <linux-arm-msm@vger.kernel.org>; Mon, 27 Jan 2025 14:05:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54E45EEA9
+	for <linux-arm-msm@vger.kernel.org>; Mon, 27 Jan 2025 14:24:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737986760; cv=none; b=ZA/2xxv1m8EOJVzooX0va7QdoCEDuwc0JbE3QEI5gGRv5KDc6Lc7bGw40g5SePjuHB0vbPM/A0aefEZVGp88LpLKXeTL08wc5wHvcSTULxTwTVk3QdfyDoQH2dLXMObUS6gW8+j8tmmNNzcBl5zrnFQc9agNVJ3Q/tzPn1HAYVs=
+	t=1737987893; cv=none; b=BHIa/6KObMXVEVRDfm7px0HbfPwIkgkZnzkpjRDCJFBc+0eEScksIYOVpA4NcjQqSloJKtG+n0sKjXCxhbjNGpp41UPGu8LoS2YN7CKmutebY5/vspS9xWQLVEnFalAXVfE9w7GUz1SL/yom3eTzW/ssyhrqc92XHlEftmqgkng=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737986760; c=relaxed/simple;
-	bh=SND6uGvEPvfnUqX/+92sbJDudJspWViGzgfQq8nn0SM=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=hp1+zBwO8QeP2U3XvZa6KL37Ka7fWK0UYZp+EcYeQY5dWbRtpz+OlRFmk6gYC8ebA0lxUYj9WHHegkXp8z9uJUN036VmFYZgNaw53jiRb4UBewk9MnI5g+L85ffXGhqkugmfIuCJW3gNHkHAppJAImXE8pD0dtSEix/zrTRUAK4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=iCS7nPIc; arc=none smtp.client-ip=209.85.128.47
+	s=arc-20240116; t=1737987893; c=relaxed/simple;
+	bh=EyhPBwBiQ91M0zxVRGX9by3jICKOXEvrxtDR0/vOi4g=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=cNX+t6rWVDPY3N70ETZPQPA7tBr16popHvnZxLUuJlXBXpGl53eiQZbr22yYPKVIxbkrePlzV5SGeCamd8DTiDSqOuxRmohkfO4DupSulQrP44oJqnIW66Qc534/OkHR5dUBUNQYRdtvv/tr0pNbIEBZFiO6CqI3yzTwHoytnOs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=xpdyJH/5; arc=none smtp.client-ip=209.85.167.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-4361f65ca01so47789835e9.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Jan 2025 06:05:56 -0800 (PST)
+Received: by mail-lf1-f54.google.com with SMTP id 2adb3069b0e04-5401bd6ccadso4766666e87.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Jan 2025 06:24:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1737986755; x=1738591555; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=YmIECpzivJaX0vHkARDWli/xyjmyuprRkzh5c2QSGfE=;
-        b=iCS7nPIchSL+6YOF2YsJxRpZm+8nMMuCL8QZgZWRqJ/2Xh3Y4WeN2ZJHOT2ZWjt2Sw
-         Q32b9yo7oHXswBO0z58n67HP+V/hKCwufzYEJdsX++UvtDdsnRpplKEzfSnHThVdcDaT
-         E96Dh8nC5Ha4mDvLDBxZD83KBS/eZ734UjCLKH5BlP9fIQo3cK0/X9WwjQet2+fbofyr
-         Et2lwUChDmIVsqEzEI0WOG9K2DE+5gnDx9vhU+Nkbu87cq2aHCS5NpHsjZcAY6+LMbYP
-         Wx2WQ9nx07wCNlhbc9qKi6qb/IkGbEKhaLDweuyGB+rQmXe6ce7OisWxjaZyGdWorMbk
-         +Edw==
+        d=linaro.org; s=google; t=1737987889; x=1738592689; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=aDxxOWu3fI3iDcdEKWaJuUs9DgyAIUQG7oziGiW6Sn8=;
+        b=xpdyJH/52xmhtCh/XjIQjWJhD2fF9bfpn1Mzb6l2kjoXN6FDDCePIR0ryFDaNsVYug
+         hXH1SgRwZ53rCsI1o+HQ9cCpPeA2hUFZo3oqmwEO2D2IuASLneolqfpQu4mIPGHvU2J6
+         q2dL9a4Gx7UzCo33+BgnWyfdv2FOeRLOVoI3a7HgFULho7T3228iATBzHk4YKImV3oAQ
+         MsRG9YERNCBDT0xf8RB7DYhHrVcWQAJkuco5G7OWVR4VuWGOsbPZf8q6uf0Z5wU7K/rU
+         Hao6718//diSaMNrnhxK/mwumRxuQxqGCxRNNolQeL5SOtDCGFUDbyDhy2r7lH0lfXhc
+         z9yw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1737986755; x=1738591555;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=YmIECpzivJaX0vHkARDWli/xyjmyuprRkzh5c2QSGfE=;
-        b=LMObB9rdfGvPAbnNU6WzMbEvYadkoxK42CYKebSENwyPLKAjMzaZr07+9YWSJCa0bx
-         /tjiOlwR6VuOXA5744qpaB/ciayge2b9VKTFptj6HpOFGeCy1spLLCOj18vxWw18jcYS
-         SxNL1HVdySwGdQis3LI6+byAoP9XqwPDMmWJUTEOHQ5DnAOU9deg/X7FdoEsr/cSG62p
-         4d3LxcHDXfkAzSsHT0/ZGyiYr6jEz8aVnDL/tRA8WnVoSiVEfV6lcLV+PyMGgYJzr2rz
-         BqHn/aepX8Clyi3CW0hPkWWneoxnItI5lmiZNOHeTmGDyGZjdSpI6pBaUjH0HaFE43IN
-         qjUw==
-X-Gm-Message-State: AOJu0YyI+B0QRFvPT6y8HpyKDXIEy1+Eer+8J42dSr05ftRSevK2vBEn
-	/2z6s1mMul+HBjfusvj8o9tO9GZxJD3lZpnMZEJhfG8fVaEubiWROtVoZA5Q94g=
-X-Gm-Gg: ASbGncsO6mfdIR2cP8O4XivfoONugEgJVQjFJt/xStzno0kQKN+6ApHVITrAPDCl+2a
-	2UgOtyuDMvDDNI+7akEHilhKkd0+4GWwWHveR9aNgSmnMxvYPRDsF9baCeglRR4e7pBFyWKa6YI
-	O2GyWQ2BaM/8k66RiV6ZLWNqTCxx+Pac6Owf6ki2Ny7gCCAU5qiclr6XNnd9xG0+/36HDkDpvJm
-	+8E11oB9rhbUfpWyNmVrqsEW/sTcY4xqQXjZngf3q0ZBCJHWW06gG7islep7iAEsHoCmDtZbMip
-	PxGy5AVEpFExVECiXYiyfQK72oK3V+x4sHfI+mNxwZqGXYXRIUAPGpQ=
-X-Google-Smtp-Source: AGHT+IEuX53cl5AhvFl6UxR4rx7guKL6qOB7LkFsvvryRf/3+O4uJts8oX0v2xXNAulQf8f7Q55JgA==
-X-Received: by 2002:a05:600c:1c83:b0:434:a746:9c82 with SMTP id 5b1f17b1804b1-438913be56bmr369166745e9.5.1737986755009;
-        Mon, 27 Jan 2025 06:05:55 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:982:cbb0:d5a2:c9a1:da0:83a4? ([2a01:e0a:982:cbb0:d5a2:c9a1:da0:83a4])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-438bd48ae29sm137326215e9.22.2025.01.27.06.05.54
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 27 Jan 2025 06:05:54 -0800 (PST)
-Message-ID: <d4c1958a-1454-4b71-a006-6bd108781b09@linaro.org>
-Date: Mon, 27 Jan 2025 15:05:53 +0100
+        d=1e100.net; s=20230601; t=1737987889; x=1738592689;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=aDxxOWu3fI3iDcdEKWaJuUs9DgyAIUQG7oziGiW6Sn8=;
+        b=LKly8wYVfNjbVSmmoqnf8sNjLf8ziFXzFLZyLTY68YSCPLWrJr94cYQz2YzqttnzJb
+         ctiZLTfmL0+sO+0esjy84Qn4hyA4VJxrLpK0YFxfbBEoMiCPIelGsUwDxGXVBHOga1vT
+         RKmC/gbRLX/BRxtXk/CELh1EXmQFbHV2z69v3u2hfIlccq8aM5kGM1FkPhQEa3R43Wfm
+         JCWHx7UNvATAELrYkxHDYL64REGs+29kkfBZ+un/mrHRTwbheXoTrMFIEXpU+pM1Q5MF
+         JA+de/iIx5+7mIxUfX2hVvHsE/50LdSrRQX+/NEOZ8s0VoYrlrnWLsayMtEf3XmcfDvL
+         mDkw==
+X-Forwarded-Encrypted: i=1; AJvYcCVIw1q4eXRFuij5Seo/6iqf6xE/AdAg6TkGX07BezKVZU0OCf6KMXqMq1EVnnQUaqpOvtRRHB/zfTr+UbJp@vger.kernel.org
+X-Gm-Message-State: AOJu0YyOVQ1TUJS35mdw9gmcosbgICQBsyTBiTla3bXV5AsrUoSicFD3
+	RchFubYNR+ZNpdfG+ZxVsWKKswF8tVD+pei2KBV4buWaoyQVORN7gqUHrCQYy1I=
+X-Gm-Gg: ASbGncuRHzsQJATvNwFXJTlPHKCAdgeav9HSIlZvDrBW5fY4akYKxyn361Xz/K9dzpR
+	w1ublB88EVRnsebtbEfk3lA93LFS5IMOi5u1nQFCYPSFJjHROPcIwTWEllesuEbVxNh9egilUtC
+	fkxrplO0Dj5g+lKfX/dbVdpEgXRECkQpUN0AOOsNe+aTS46h50Qz5jPcKB4HtEUZap76PrAZIkb
+	tg4T6xpjO9okG6eif/TGLteJ9Jpxwo961mnUJ1yw0XgxmdpD83MysK1F8bZA6rBHJKLN6hUhJby
+	vDc0BFfgxrg3zgKcq2YYCm985uGyZW9lAogAEtE+Uwj71heBE4Ugu21pvQ/D
+X-Google-Smtp-Source: AGHT+IESqlrJFUd8o4WG3EsJg0NRnzgOO2V6+BjsGL/z8+RmKae0D4aialVzIoEWPr5okG7c9idrFA==
+X-Received: by 2002:a05:6512:b81:b0:542:29ec:d5be with SMTP id 2adb3069b0e04-5439c21f256mr14299786e87.10.1737987889271;
+        Mon, 27 Jan 2025 06:24:49 -0800 (PST)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-543c822935csm1308558e87.3.2025.01.27.06.24.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 27 Jan 2025 06:24:47 -0800 (PST)
+Date: Mon, 27 Jan 2025 16:24:45 +0200
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc: Konrad Dybcio <konradybcio@kernel.org>, Vinod Koul <vkoul@kernel.org>, 
+	Kishon Vijay Abraham I <kishon@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Bjorn Andersson <andersson@kernel.org>, Marijn Suijten <marijn.suijten@somainline.org>, 
+	linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Subject: Re: [PATCH 3/6] phy: qcom: qmp-pcie: Add X1P42100 Gen4x4 PHY
+Message-ID: <vranblkrzxcb33pyjqw5nwvef7fepx32r6wilobrmfyjlt5uic@udhfkej5u6zp>
+References: <20250125-topic-x1p4_dts-v1-0-02659a08b044@oss.qualcomm.com>
+ <20250125-topic-x1p4_dts-v1-3-02659a08b044@oss.qualcomm.com>
+ <h6zfhxkc4dj2ueaxipha6prbvmv7pnqglghtjs7vkhlc2s7ndi@vhbj4uojlzwd>
+ <A64B8332-78F2-4B76-908E-4119E4A54BAE@linaro.org>
+ <cy3x35h4id3gegwb23j6rwblx2pecpw7ffjpri5ddqdd35kzrt@bxdmaumb6bbp>
+ <20250126163222.nhcxvr4m2vncwi23@thinkpad>
+ <CAA8EJpq-aNVhSc0fTf4zD63VgrzDokR5uvdGiPvecaBHXYtd+Q@mail.gmail.com>
+ <20250127053412.anbdj6hgwcmkildf@thinkpad>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: neil.armstrong@linaro.org
-Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH 00/24] ARM / arm64: dts: qcom: Use the header with DSI phy
- clock IDs
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, cros-qcom-dts-watchers@chromium.org
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20250127-dts-qcom-dsi-phy-clocks-v1-0-9d8ddbcb1c7f@linaro.org>
-Content-Language: en-US, fr
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro
-In-Reply-To: <20250127-dts-qcom-dsi-phy-clocks-v1-0-9d8ddbcb1c7f@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250127053412.anbdj6hgwcmkildf@thinkpad>
 
-On 27/01/2025 14:47, Krzysztof Kozlowski wrote:
-> Use the header with DSI phy clock IDs to make code more readable.
-> Changes done with sed with alignment/wrapping fixups. Verified with
-> dtx_diff.
+On Mon, Jan 27, 2025 at 11:04:12AM +0530, Manivannan Sadhasivam wrote:
+> On Sun, Jan 26, 2025 at 11:43:38PM +0200, Dmitry Baryshkov wrote:
+> > On Sun, 26 Jan 2025 at 18:32, Manivannan Sadhasivam
+> > <manivannan.sadhasivam@linaro.org> wrote:
+> > >
+> > > On Sun, Jan 26, 2025 at 01:39:05PM +0200, Dmitry Baryshkov wrote:
+> > > > On Sun, Jan 26, 2025 at 12:59:52PM +0530, Manivannan Sadhasivam wrote:
+> > > > >
+> > > > >
+> > > > > On January 25, 2025 11:00:23 PM GMT+05:30, Dmitry Baryshkov <dmitry.baryshkov@linaro.org> wrote:
+> > > > > >On Sat, Jan 25, 2025 at 04:31:19AM +0100, Konrad Dybcio wrote:
+> > > > > >> From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+> > > > > >>
+> > > > > >> Add a new, common configuration for Gen4x4 V6 PHYs without an init
+> > > > > >> sequence.
+> > > > > >>
+> > > > > >> The bootloader configures the hardware once and the OS retains that
+> > > > > >> configuration by using the NOCSR reset line (which doesn't drop
+> > > > > >> register state on assert) in place of the "full reset" one.
+> > > > > >
+> > > > > >I know your opinion, but my 2c would still be for not depending on the
+> > > > > >bootloader. I think that was the rule for ages for many possible
+> > > > > >reasons.
+> > > > > >
+> > > > >
+> > > > > But if Linux or other OS can trust the bootloader, then it makes perfect sense to rely on them. Obviously, the question here is that on which platforms this level of trust should be established. And the answer I got was starting from the compute platforms (atleast X1E).
+> > > >
+> > > > Is there any way how those values can be lost that we still might want
+> > > > to support ? The GDSC going to the OFF state? Some deep sleep state or a
+> > > > power collapse? Actual suspend to RAM (instead of current S2Idle)?
+> > > >
+> > >
+> > > As per Konrad's reply to my identical question, PHY register state is supposed
+> > > to be maintained by MX domain even during CX PC. This seem to be case on X1E
+> > > based platforms (compute).
+> > 
+> > Is MX on during S2RAM?
+> > 
 > 
-> Depends on:
-> https://lore.kernel.org/all/20250127132105.107138-1-krzysztof.kozlowski@linaro.org/
-> 
-> Please wait with merging till this hit mainline.
-> 
-> Best regards,
-> Krzysztof
-> 
-> ---
-> Krzysztof Kozlowski (24):
->        ARM: dts: qcom: msm8226: Use the header with DSI phy clock IDs
->        ARM: dts: qcom: msm8974: Use the header with DSI phy clock IDs
->        ARM: dts: qcom: msm8916: Use the header with DSI phy clock IDs
->        arm64: dts: qcom: msm8917: Use the header with DSI phy clock IDs
->        arm64: dts: qcom: msm8939: Use the header with DSI phy clock IDs
->        arm64: dts: qcom: msm8953: Use the header with DSI phy clock IDs
->        arm64: dts: qcom: msm8976: Use the header with DSI phy clock IDs
->        arm64: dts: qcom: msm8996: Use the header with DSI phy clock IDs
->        arm64: dts: qcom: msm8998: Use the header with DSI phy clock IDs
->        arm64: dts: qcom: qcm2290: Use the header with DSI phy clock IDs
->        arm64: dts: qcom: sc7180: Use the header with DSI phy clock IDs
->        arm64: dts: qcom: sc8180x: Use the header with DSI phy clock IDs
->        arm64: dts: qcom: sdm630: Use the header with DSI phy clock IDs
->        arm64: dts: qcom: sdm670: Use the header with DSI phy clock IDs
->        arm64: dts: qcom: sdm845: Use the header with DSI phy clock IDs
->        arm64: dts: qcom: sm6115: Use the header with DSI phy clock IDs
->        arm64: dts: qcom: sm6125: Use the header with DSI phy clock IDs
->        arm64: dts: qcom: sm6350: Use the header with DSI phy clock IDs
->        arm64: dts: qcom: sm8150: Use the header with DSI phy clock IDs
->        arm64: dts: qcom: sm8250: Use the header with DSI phy clock IDs
->        arm64: dts: qcom: sm8350: Use the header with DSI phy clock IDs
->        arm64: dts: qcom: sm8450: Use the header with DSI phy clock IDs
->        arm64: dts: qcom: sm8550: Use the header with DSI phy clock IDs
->        arm64: dts: qcom: sm8650: Use the header with DSI phy clock IDs
-> 
->   arch/arm/boot/dts/qcom/qcom-msm8226.dtsi            |  9 +++++----
->   arch/arm/boot/dts/qcom/qcom-msm8974.dtsi            | 21 +++++++++++++--------
->   arch/arm64/boot/dts/qcom/msm8916.dtsi               |  9 +++++----
->   arch/arm64/boot/dts/qcom/msm8917.dtsi               |  9 +++++----
->   arch/arm64/boot/dts/qcom/msm8939.dtsi               | 13 +++++++------
->   arch/arm64/boot/dts/qcom/msm8953.dtsi               | 17 +++++++++--------
->   arch/arm64/boot/dts/qcom/msm8976.dtsi               | 17 +++++++++--------
->   arch/arm64/boot/dts/qcom/msm8996.dtsi               | 21 +++++++++++++--------
->   arch/arm64/boot/dts/qcom/msm8998.dtsi               | 17 +++++++++--------
->   arch/arm64/boot/dts/qcom/qcm2290.dtsi               |  9 +++++----
->   arch/arm64/boot/dts/qcom/sc7180.dtsi                | 11 +++++++----
->   arch/arm64/boot/dts/qcom/sc8180x.dtsi               |  9 +++++----
->   arch/arm64/boot/dts/qcom/sdm630.dtsi                |  9 +++++----
->   arch/arm64/boot/dts/qcom/sdm660.dtsi                | 12 ++++++------
->   arch/arm64/boot/dts/qcom/sdm670.dtsi                | 16 +++++++++-------
->   arch/arm64/boot/dts/qcom/sdm845-db845c.dts          |  3 ++-
->   arch/arm64/boot/dts/qcom/sdm845-mtp.dts             |  3 ++-
->   arch/arm64/boot/dts/qcom/sdm845.dtsi                | 21 +++++++++++++--------
->   arch/arm64/boot/dts/qcom/sm6115.dtsi                |  8 +++++---
->   arch/arm64/boot/dts/qcom/sm6125.dtsi                |  8 +++++---
->   arch/arm64/boot/dts/qcom/sm6350.dtsi                |  8 +++++---
->   arch/arm64/boot/dts/qcom/sm8150-hdk.dts             |  3 ++-
->   arch/arm64/boot/dts/qcom/sm8150.dtsi                | 17 +++++++++--------
->   .../boot/dts/qcom/sm8250-xiaomi-elish-common.dtsi   |  3 ++-
->   arch/arm64/boot/dts/qcom/sm8250.dtsi                | 21 +++++++++++++--------
->   arch/arm64/boot/dts/qcom/sm8350.dtsi                | 15 +++++++++------
->   arch/arm64/boot/dts/qcom/sm8450.dtsi                | 21 +++++++++++++--------
->   arch/arm64/boot/dts/qcom/sm8550.dtsi                | 17 +++++++++--------
->   arch/arm64/boot/dts/qcom/sm8650.dtsi                | 17 +++++++++--------
->   29 files changed, 210 insertions(+), 154 deletions(-)
-> ---
-> base-commit: 1df6c90cce2d90ca54e18b498e7d8928d07ee0dd
-> change-id: 20250127-dts-qcom-dsi-phy-clocks-79c6968df235
-> 
-> Best regards,
+> Qcom says that their current s2idle implementation is equal to S2RAM (when CX PC
+> is achieved). In that sense, yes, MX is ON during S2RAM. Do note that, on
+> majority of the platforms, MX is the AON (Always ON) domain.
 
-Thanks !
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+
+Acked-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+
+
+-- 
+With best wishes
+Dmitry
 
