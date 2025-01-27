@@ -1,241 +1,147 @@
-Return-Path: <linux-arm-msm+bounces-46218-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46219-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id D2D0AA1D380
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Jan 2025 10:33:02 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 806A6A1D3C0
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Jan 2025 10:44:36 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D8E10164C0B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Jan 2025 09:32:53 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 30F263A4F52
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Jan 2025 09:44:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4BCB51FE47A;
-	Mon, 27 Jan 2025 09:32:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 214551FC7F3;
+	Mon, 27 Jan 2025 09:44:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="UqhyNiAV"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="oxs1J9uH"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f42.google.com (mail-ej1-f42.google.com [209.85.218.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACD111FDA9C;
-	Mon, 27 Jan 2025 09:32:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC4681FDA78
+	for <linux-arm-msm@vger.kernel.org>; Mon, 27 Jan 2025 09:44:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737970332; cv=none; b=r/7oAe0BcoHkIndQ1KMkC753eJ2L9MUGpEXIQVraLnvg52b74EKVw5bwfMTRa2+TufoN/it8xVauAvnP3Uh1xxN8GLPy9Sego8WIjBc2IVKvGdDvMwh1YSmfH8ThGZbThaXMHrI0bXQYF2ultR75uV8Cf6aSIihFQPrnJT3seHM=
+	t=1737971067; cv=none; b=bRn0wzducNJ21WD6UwEHvrj3QdscFm8pd87znogVzvuUOy+i5KYNcLqzxktMbMHziStXzvDUp9DugmIwDP3jAj16YNhNfXA0WvUcVt8tJkwRC2mQ4V4BkXDA5ja3hozHLn0Ezwt/sGnOG7sI9tnWKDlCpCTJfuQHdK6d+HZq3YQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737970332; c=relaxed/simple;
-	bh=CDckDTWRVbLLHVsSqCmObMMPBHpC3XZ8+xevYDfnDTk=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=PTo9ny3E8jKqwhxZSwF7Luc32fjD3Xb2INjO1kTTOFWy/jvDvmGjaEaoMa+ir348sVPm80kFPgmQSsoGxPEdyUe3Nbe8jKRUVs9bNMXIS+I4hcT6wejissh+hK7pOFK7uzQ5YqUTEw1rHpegwiaTU6xj/SbCUmuOTtH74d9aAQs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=UqhyNiAV; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50R1hUrc008471;
-	Mon, 27 Jan 2025 09:32:06 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	xrwZitG5Pruqvw3YvFX++HaCjin3bRg7HvX3tHo6OZc=; b=UqhyNiAVzSsoKGl+
-	0LFaJXEzGfK5xZ+cVCOn0Qe85Orvu2h4LEqubCzPPI18EdmRFU85PE4W3+XgvK6m
-	YSAV0gxT+wUYrvaiqWZjDduPq8O9nQVHX4X2YYwLhpW0b4JBY1wW5GDIpI/DhhJN
-	rzPwibwzAi3eB7Y57FGbLCmyWusfWmcc0SjbqxY/h3poJVFZyhLCtjgiIdaOz8lc
-	g9f7Jd4ouC/je745wZ/5B93z73h5qcO3jmu6sviivvJNu3102vpcY+0lhLfRFwIH
-	gu2Ng4WCHA8WFsYNjVvTeRVoTc1cmzmDbKhWwESk38Ceokb8TJcaWzxBEEJ0eSvR
-	2Po4Pg==
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44dhu9hq4c-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 27 Jan 2025 09:32:06 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 50R9W5S9030866
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 27 Jan 2025 09:32:05 GMT
-Received: from hu-srichara-blr.qualcomm.com (10.80.80.8) by
- nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Mon, 27 Jan 2025 01:32:01 -0800
-From: Sricharan R <quic_srichara@quicinc.com>
-To: <andersson@kernel.org>, <mturquette@baylibre.com>, <sboyd@kernel.org>,
-        <robh@kernel.org>, <krzk+dt@kernel.org>, <conor+dt@kernel.org>,
-        <konradybcio@kernel.org>, <rafael@kernel.org>,
-        <viresh.kumar@linaro.org>, <ilia.lin@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-pm@vger.kernel.org>
-CC: <quic_srichara@quicinc.com>
-Subject: [PATCH 4/4] arm64: dts: qcom: ipq5424: Enable cpufreq support
-Date: Mon, 27 Jan 2025 15:01:28 +0530
-Message-ID: <20250127093128.2611247-5-quic_srichara@quicinc.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20250127093128.2611247-1-quic_srichara@quicinc.com>
-References: <20250127093128.2611247-1-quic_srichara@quicinc.com>
+	s=arc-20240116; t=1737971067; c=relaxed/simple;
+	bh=9jJZyeUyg0zikH4UtIlg5nWLIpseFqe533l5KP1qBOI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=IzkEBUosok6zxRDlSSIXRscLdM72eQ9LFoS2EIq15v4RdD7K5raSU5tdniGvKx8LL/IMRNvwlGsIM0YELjEZ6IkE/n87BUIwyxzVzmIGHqx4wfiTbqYkQNVJJI0gXMvUGQRMut0suRWHZbedXQTtUOV90XPg83UkDFZLSZ8QB6s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=oxs1J9uH; arc=none smtp.client-ip=209.85.218.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ej1-f42.google.com with SMTP id a640c23a62f3a-ab2b29dfc65so675916966b.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Jan 2025 01:44:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1737971062; x=1738575862; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=+g42ZZsF9uGOWVqjqCc38LCDEOFw2n1iiO+fEJtZ9qs=;
+        b=oxs1J9uH0IVQoHJLkYHDlqMJIoofT6NLaOvnxREbuLRyh2SqtlSmHmHapfriyEXK1/
+         ihUHtVNfTFrYBWoCDMtIvaBmVhmprvrXiL040FNxbFkz7ONi/zna4EhA+xvDPYnG2Isn
+         5daFUTCTpPDWp7XRe2CjeZVEe1l0DgSOxh2bVT0HWNes6u+CKSSuboj14sFQg3ABBnCZ
+         Dl0BbJjS0USAQ89xn8Iaccgwvl4Ut6s7qBwEBSpnZc367FfQY5vROIuIZYY5RugzpG0Y
+         3BxE7q9Lsa1+ojPraFqmkJ3GSRTelkWv2UOq+C84XNOXqR4qmBQpdkJs+sFgElNzXbR8
+         Tzhg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1737971062; x=1738575862;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=+g42ZZsF9uGOWVqjqCc38LCDEOFw2n1iiO+fEJtZ9qs=;
+        b=SfKpqRV0pRHelFvEJe/sbvby+/m5yMgfFNx/yrV+VdSMtQjhXGSwv6M7EM3wYnS/e4
+         XEhswVveR/Hnn4E8TNxf2X0LYmHG3IvaK4kbCPJ9icAL/FVSj7rpQP0ApnxTYzDl6HBV
+         Chuc3lL4UeuPFppolUbdULgzEld3VtQZi0XduspzwvZHg/qYOQnh4WJKj7aQYSQywfFF
+         uGYVjbG90KGxRQpIcNhWPRTpR1k6KIGWl4xyj6Ud9XEuzAJ2ZLdAbC4QrID/T7/sVFFv
+         NmC7uHxdWC5kMek+x5USsmq0U/uZDfEn19r+vH7zIkFfTEtCgU7QlgoIvZmUsh4duhM2
+         Ztew==
+X-Forwarded-Encrypted: i=1; AJvYcCV+zfZH/BvbA/opZCFq8HPjw7nfmpMRQEVAz11z+ufV3sZrkYDkAiWDiIOq4S9BT6k9t1qfyWmrCEUhpTh8@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz4k/RZA4Mgmqpcq0tS05UMry/+2b04KgLUTKjw1qyTd2P2aCi7
+	zJRbNrsJx5zIGiDdf8Zkw8wMjDbHShrTkEc5uhnvEANI5ncAzkD+8K+hwdWwEEo=
+X-Gm-Gg: ASbGncuQm2A3GDz9xyxSA6XvFrMLdDzye+M6+XmMYW68ikYYp25eDbcjdWHG2DK4FRf
+	/hjqMc4eDTEvDV2jm1hNALwc2u+VGL0mQs5E5RcElqgeixFvyphqWG0VlWAhLRyn7QS2D2AsJSW
+	hsm2lx3FU9AQclPcVxkx2DrRSF794kOuv2/yqFeAkso0zZMKl3RPYkPe/4+Fd5gEzLgUMcD7o9i
+	322ecdgI1ACZJLefoau5FxwW+IyodIQ8NomaYQc98I96H/yNgszvBakI6tHtnsdoCqJqae3IDUg
+	RFCq6aRs+T/cYAE4
+X-Google-Smtp-Source: AGHT+IGSnkZoIxf5l4DY7TrfG+TC93Dg72qOcjfSrizHd0Z/5y8zaPbCHfMSy2ZUXYKHJebPCxzUHA==
+X-Received: by 2002:a17:907:d1b:b0:aab:cd45:5d3c with SMTP id a640c23a62f3a-ab38b3c7729mr3974838666b.50.1737971062028;
+        Mon, 27 Jan 2025 01:44:22 -0800 (PST)
+Received: from linaro.org ([2a02:2454:ff21:ef30:f64e:7d70:e55f:6da8])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ab675e67814sm551424566b.74.2025.01.27.01.44.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 27 Jan 2025 01:44:21 -0800 (PST)
+Date: Mon, 27 Jan 2025 10:44:19 +0100
+From: Stephan Gerhold <stephan.gerhold@linaro.org>
+To: Luca Weiss <luca@lucaweiss.eu>
+Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+	Bjorn Andersson <andersson@kernel.org>,
+	Mathieu Poirier <mathieu.poirier@linaro.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Stephan Gerhold <stephan@gerhold.net>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Matti =?iso-8859-1?Q?Lehtim=E4ki?= <matti.lehtimaki@gmail.com>,
+	linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 9/9] ARM: dts: qcom: msm8226-samsung-matisse-common:
+ Enable modem
+Message-ID: <Z5dVc9yTynAsPDcZ@linaro.org>
+References: <20250126-msm8226-modem-v2-0-e88d76d6daff@lucaweiss.eu>
+ <20250126-msm8226-modem-v2-9-e88d76d6daff@lucaweiss.eu>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 4r0cpW53rfduI2Ln8-Nftt1L49yWmm0X
-X-Proofpoint-ORIG-GUID: 4r0cpW53rfduI2Ln8-Nftt1L49yWmm0X
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-01-27_04,2025-01-27_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 impostorscore=0
- phishscore=0 adultscore=0 mlxlogscore=999 suspectscore=0 malwarescore=0
- clxscore=1011 mlxscore=0 lowpriorityscore=0 bulkscore=0 priorityscore=1501
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2411120000
- definitions=main-2501270076
+In-Reply-To: <20250126-msm8226-modem-v2-9-e88d76d6daff@lucaweiss.eu>
 
-From: Sricharan Ramabadhran <quic_srichara@quicinc.com>
+On Sun, Jan 26, 2025 at 09:57:28PM +0100, Luca Weiss wrote:
+> From: Matti Lehtimäki <matti.lehtimaki@gmail.com>
+> 
+> Enable modem remoteproc on samsung,matisse-wifi & matisselte.
+> 
+> Signed-off-by: Matti Lehtimäki <matti.lehtimaki@gmail.com>
+> Signed-off-by: Luca Weiss <luca@lucaweiss.eu>
+> ---
+>  arch/arm/boot/dts/qcom/qcom-msm8226-samsung-matisse-common.dtsi | 7 +++++++
+>  1 file changed, 7 insertions(+)
+> 
+> diff --git a/arch/arm/boot/dts/qcom/qcom-msm8226-samsung-matisse-common.dtsi b/arch/arm/boot/dts/qcom/qcom-msm8226-samsung-matisse-common.dtsi
+> index fbd568c7d6b7415d240aa1a2329d07cf9135274c..4155bfb2136022f2a85d69451c34f06ed2a700ac 100644
+> --- a/arch/arm/boot/dts/qcom/qcom-msm8226-samsung-matisse-common.dtsi
+> +++ b/arch/arm/boot/dts/qcom/qcom-msm8226-samsung-matisse-common.dtsi
+> @@ -225,6 +225,13 @@ &blsp1_uart3 {
+>  	status = "okay";
+>  };
+>  
+> +&modem {
+> +	mx-supply = <&pm8226_l3>;
+> +	pll-supply = <&pm8226_l8>;
 
-Add the qfprom, cpu clocks, A53 PLL and cpu-opp-table required for
-CPU clock scaling.
+Hmmmmm, so I was looking at msm8926.dtsi downstream and it seems to
+override the msm8226.dtsi modem/mss definition [1]:
 
-Signed-off-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
----
- arch/arm64/boot/dts/qcom/ipq5424.dtsi | 71 +++++++++++++++++++++++++++
- 1 file changed, 71 insertions(+)
+ 1. ext-bhs-reg is dropped
+ 2. vdd_mss-supply is added
 
-diff --git a/arch/arm64/boot/dts/qcom/ipq5424.dtsi b/arch/arm64/boot/dts/qcom/ipq5424.dtsi
-index 577b88cd5172..3c07f7c28c4a 100644
---- a/arch/arm64/boot/dts/qcom/ipq5424.dtsi
-+++ b/arch/arm64/boot/dts/qcom/ipq5424.dtsi
-@@ -7,6 +7,7 @@
-  */
- 
- #include <dt-bindings/interrupt-controller/arm-gic.h>
-+#include <dt-bindings/clock/qcom,apss-ipq.h>
- #include <dt-bindings/clock/qcom,ipq5424-gcc.h>
- #include <dt-bindings/reset/qcom,ipq5424-gcc.h>
- #include <dt-bindings/gpio/gpio.h>
-@@ -38,6 +39,11 @@ cpu0: cpu@0 {
- 			reg = <0x0>;
- 			enable-method = "psci";
- 			next-level-cache = <&l2_0>;
-+			clocks = <&apss_clk APSS_SILVER_CORE_CLK>,
-+				 <&apss_clk L3_CORE_CLK>;
-+			clock-names = "cpu", "l3_core";
-+			operating-points-v2 = <&cpu_opp_table>;
-+
- 			l2_0: l2-cache {
- 				compatible = "cache";
- 				cache-level = <2>;
-@@ -58,6 +64,10 @@ cpu1: cpu@100 {
- 			enable-method = "psci";
- 			reg = <0x100>;
- 			next-level-cache = <&l2_100>;
-+			clocks = <&apss_clk APSS_SILVER_CORE_CLK>,
-+				 <&apss_clk L3_CORE_CLK>;
-+			clock-names = "cpu", "l3_core";
-+			operating-points-v2 = <&cpu_opp_table>;
- 
- 			l2_100: l2-cache {
- 				compatible = "cache";
-@@ -73,6 +83,10 @@ cpu2: cpu@200 {
- 			enable-method = "psci";
- 			reg = <0x200>;
- 			next-level-cache = <&l2_200>;
-+			clocks = <&apss_clk APSS_SILVER_CORE_CLK>,
-+				 <&apss_clk L3_CORE_CLK>;
-+			clock-names = "cpu", "l3_core";
-+			operating-points-v2 = <&cpu_opp_table>;
- 
- 			l2_200: l2-cache {
- 				compatible = "cache";
-@@ -88,6 +102,10 @@ cpu3: cpu@300 {
- 			enable-method = "psci";
- 			reg = <0x300>;
- 			next-level-cache = <&l2_300>;
-+			clocks = <&apss_clk APSS_SILVER_CORE_CLK>,
-+				 <&apss_clk L3_CORE_CLK>;
-+			clock-names = "cpu", "l3_core";
-+			operating-points-v2 = <&cpu_opp_table>;
- 
- 			l2_300: l2-cache {
- 				compatible = "cache";
-@@ -98,6 +116,39 @@ l2_300: l2-cache {
- 		};
- 	};
- 
-+	cpu_opp_table: opp-table-cpu {
-+		compatible = "operating-points-v2-kryo-cpu";
-+		opp-shared;
-+		nvmem-cells = <&cpu_speed_bin>;
-+
-+		/*
-+		 * CPU supports two frequencies and the fuse has LValue instead
-+		 * of limits. As only two frequencies are supported, considering
-+		 * zero Lvalue as no limit and Lvalue as 1.4GHz limit.
-+		 * ------------------------------------------------------------
-+		 * Frequency     BIT1    BIT0    opp-supported-hw
-+		 *	      1.4GHz  No Limit
-+		 * ------------------------------------------------------------
-+		 * 1416000000      1       1	    0x3
-+		 * 1800000000      0       1	    0x1
-+		 * ------------------------------------------------------------
-+		 */
-+
-+		opp-1416000000 {
-+			opp-hz = /bits/ 64 <1416000000>;
-+			opp-microvolt = <1>;
-+			opp-supported-hw = <0x3>;
-+			clock-latency-ns = <200000>;
-+		};
-+
-+		opp-1800000000 {
-+			opp-hz = /bits/ 64 <1800000000>;
-+			opp-microvolt = <2>;
-+			opp-supported-hw = <0x1>;
-+			clock-latency-ns = <200000>;
-+		};
-+	};
-+
- 	memory@80000000 {
- 		device_type = "memory";
- 		/* We expect the bootloader to fill in the size */
-@@ -151,6 +202,18 @@ soc@0 {
- 		#size-cells = <2>;
- 		ranges = <0 0 0 0 0x10 0>;
- 
-+		qfprom@a6000 {
-+			compatible = "qcom,qfprom";
-+			reg = <0x0 0xa6000 0x0 0x1000>;
-+			#address-cells = <1>;
-+			#size-cells = <1>;
-+
-+			cpu_speed_bin: cpu-speed-bin@234 {
-+				reg = <0x234 0x1>;
-+				bits = <0 8>;
-+			};
-+		};
-+
- 		tlmm: pinctrl@1000000 {
- 			compatible = "qcom,ipq5424-tlmm";
- 			reg = <0 0x01000000 0 0x300000>;
-@@ -363,6 +426,14 @@ frame@f42d000 {
- 			};
- 		};
- 
-+		apss_clk: apss-clock@fa80000 {
-+			compatible = "qcom,ipq5424-apss-clk";
-+			reg = <0x0 0x0fa80000 0x0 0x20000>;
-+			clocks = <&xo_board>, <&gcc GPLL0>;
-+			clock-names = "xo", "gpll0";
-+			#clock-cells = <1>;
-+		};
-+
- 		tmel_qmp: qmp@32090000 {
- 			compatible = "qcom,ipq5424-tmel-qmp", "qcom,tmel-qmp";
- 			reg = <0 0x32090000 0 0x2000>;
--- 
-2.34.1
+This common include seems to cover both apq8026 (matissewifi) and
+msm8926 (matisselte).
 
+Do we need to handle this difference?
+
+First time I see such a difference between variants of a single SoC.
+Looking at all the overrides in msm8926.dtsi, it seems like they made
+quite some rework for the "LTE variant".
+
+Thanks,
+Stephan
+
+[1]: https://github.com/GalaxyTab4/android_kernel_samsung_matissewifi/blob/45f97bab323176fead18c8ddc20dc57d979904a3/arch/arm/boot/dts/msm8226/msm8926.dtsi#L32-L40
 
