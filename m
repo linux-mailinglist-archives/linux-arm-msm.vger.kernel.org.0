@@ -1,115 +1,118 @@
-Return-Path: <linux-arm-msm+bounces-46172-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46173-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 48D01A1CEF5
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 26 Jan 2025 23:00:37 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id DE0E8A1CF4A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Jan 2025 01:20:33 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 755BB1884FD4
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 26 Jan 2025 22:00:41 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 30AB2165DF7
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Jan 2025 00:20:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CEDB7469D;
-	Sun, 26 Jan 2025 22:00:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9DF5825A628;
+	Mon, 27 Jan 2025 00:20:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TZ0aiknH"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FNtV65Di"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com [209.85.221.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24BD05684;
-	Sun, 26 Jan 2025 22:00:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66AAB10E3;
+	Mon, 27 Jan 2025 00:20:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737928834; cv=none; b=u+uTekt4o7Cq1duF6VmrNBl0Cz1rh0u1L0jMEvPD1MJzuEvE8LuSAL0JDKbgO0v+IeyQlM1N4o+aycPZbEr5a8JbO865DZiZUy9vMLHA2akW5K05OUFvHlkaRyquDqgU35vwKEm7QOlWWzOvM6ym9b1Dbb/679q+J+qXH/vGjoQ=
+	t=1737937228; cv=none; b=Pg10mRdqHvftC2UVlrpj6ZSQ6O6ks6YB8Fl7QW3C9bU12nitmZNPg15H3q3vE+ijvKRTXfewbBcn4VpwwSgg041ILBXI9WuVCpvFqTnOuV06voaAEKOgTktJrTE2da1LlQ0sFNtzmABLBTSO2lzG/+a24zSXN0tspwuS91dNkX8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737928834; c=relaxed/simple;
-	bh=4DdbTStKVkTb7WFrUrJoNlbv7lkdF9Cm9SPJk5oqJFw=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=hu3Sdx++XzJ9b/amtySmY6oMwMr5wkQFovVLH3IpNerklgYyyRXOVsvz34m8zVexZxHrj99CU0txE4i5tEwSjI7D4wIXPDWjXO07/XRlxagWKBtOaN7hZd1Wly+zGnqW9HvUWvOSoRcRpo7ImRRntZxiYbfhoHenFftJzAQHxNY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TZ0aiknH; arc=none smtp.client-ip=209.85.221.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-wr1-f50.google.com with SMTP id ffacd0b85a97d-3863703258fso3023457f8f.1;
-        Sun, 26 Jan 2025 14:00:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1737928831; x=1738533631; darn=vger.kernel.org;
-        h=mime-version:user-agent:content-transfer-encoding:references
-         :in-reply-to:date:cc:to:from:subject:message-id:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=4DdbTStKVkTb7WFrUrJoNlbv7lkdF9Cm9SPJk5oqJFw=;
-        b=TZ0aiknH8vc531izZlOS8WibXHPKNIcCWNvZSMiYXAXvHyJ031jtOKJ+1q6DqE4MHF
-         QbxsJYaR+64Gwx+tBkxeGZmf5v85/DaMMyv0hA475WxfebxxcENYkEu8ou7EmS/Rp1+y
-         HFuhV3A6Rmra9w1RuZKs+ZI0IV3nLCKSbjZV+pQbdVDSaKIxlst2hjDSDE/7Djxz3PKp
-         vwqOIZBILN3tm0afn0wg/B2ZjalP6JOHHopX1mShsrXopVzJOp86WLWwML5c/oyLZGdu
-         9Qa5F7PnJrYWp+Zk24JO5LkpxiLUYS9hwMwPg/Z3wUsZFpcJm0a4vTRX6dFxBWbHM1aG
-         SrFw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1737928831; x=1738533631;
-        h=mime-version:user-agent:content-transfer-encoding:references
-         :in-reply-to:date:cc:to:from:subject:message-id:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=4DdbTStKVkTb7WFrUrJoNlbv7lkdF9Cm9SPJk5oqJFw=;
-        b=tf2GbDRotRwXJgB4lQaULAViZlm9COIah8qaDR+EeFw4rfIi5kMkvBaXIRfKr0QA0m
-         sHwj3d7+Lu0wfUlLwQaMMl/WZhywsIsb/5jfOLBB5YoDVFQ4PhBnDWCUDc8EMDYqWe4/
-         Vd+2kuGji2SEbOByJsyamTPQIjoExvY2MwIqEA/xikGjKtAa3T+R8IbI5ndjphpDX1iG
-         8k3rzTE/3fXwudZIQaqAON55oLANm+3g6zKV73c/xHk6VQ/vCy3kYJTq3oJxdzhpF/h6
-         Pye6UB4hMd0XiqVQ4cAS9ZDv6dH+m4ftcnaXnbX2UpXw8JDs96ENP89Xi+/YwMQQ0Iq0
-         WOzA==
-X-Forwarded-Encrypted: i=1; AJvYcCU2A+ns00IecNB2FwippvLBHmerjWUe2tyZk5nSc1QSv3V72mylXJNdlWBFm6oLxLsS+cBDf3MTj6tLxKVewSuHsVU=@vger.kernel.org, AJvYcCUj5UuAbBY35QWPCVabRyr/aBEzgqgL4cs1ZE0rfjRj39JVpkRNGXzsU1sryPgV3K61KgFIFH4YW72/ObM/@vger.kernel.org, AJvYcCVfVtJ77jpDXB97tjKnK1XIM/qOG6jquAiCpbu7qZ8aB8+GMEMz+BejciDW3yDLr59VsVz2WXbPW/jWpQ==@vger.kernel.org, AJvYcCW9niv/imvUY6PY4usn+Ll1ziPKfAgtzGIrWA+W82QXyLkS/dWne02tB8a+QRVnco6PVoPl+sJXcWtjmf8p@vger.kernel.org, AJvYcCX1CeTMJyWoVg0uvs/XUOyL2LWHj9EANU8wRn5gGlP0pprycrGB5ZE0LjFStbJ2G4IIMNKeMklm@vger.kernel.org
-X-Gm-Message-State: AOJu0YyCax6s1OepPDjFSrrFjz3WzPbnelracm+BSFysFqAcXbpVs5Cd
-	I2UygH2jpCbrIhKqpXha6GXjrLlLjlkrBjFuZkDTjcj07TtJSv23
-X-Gm-Gg: ASbGncsqZkIJ47Tr+h8bxqOFwyDJITUfdUwAli1fPFat3Tr5WYv2a6Qzw2/MmZgHQog
-	KCTn0iGu1mRhRwLEiwGyEXjN75/9ZeSHy2kdA9vQ7WlZ9FewqjztsMotE1pgZY20vNe/0q/ik4K
-	EqYZMItpCRb+GHoQyj3/h04okgMEneZvJEzrVzjk6b3e0gmu6FGnX8H0oXiAXrbAFM/ikQwpqqK
-	+2ixO8Smt1r0iPb3ExIHXH3ZRVo/KliDRDIixlzJCnMGGJ1RE8XUiauO4dvspRFKyKCbtN1DEFf
-	YBXvRicxT8V81U64pDX7CrCArh9dgFqzEGCioswn/sjUdG5X1Hdbb6GKw0MEgXhfc2f1N7JRYHI
-	6f6i8/TJKLFWRprQdrC/Gky/aZZs/ZCubThVlTcmE3F++
-X-Google-Smtp-Source: AGHT+IGsZIr2STvVAqncSIrcbBNbIGfPo1HDsn0GMZTH13nRBH3HPa/wKJc6AIwOxi8bTdK3IydwYQ==
-X-Received: by 2002:a05:6000:401f:b0:38a:8b34:76b0 with SMTP id ffacd0b85a97d-38c2b7d12a7mr8375865f8f.27.1737928831040;
-        Sun, 26 Jan 2025 14:00:31 -0800 (PST)
-Received: from p200300c5871e95f7cf8ec2b454ca4b5c.dip0.t-ipconnect.de (p200300c5871e95f7cf8ec2b454ca4b5c.dip0.t-ipconnect.de. [2003:c5:871e:95f7:cf8e:c2b4:54ca:4b5c])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38c2a1baf3esm9290068f8f.75.2025.01.26.14.00.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 26 Jan 2025 14:00:29 -0800 (PST)
-Message-ID: <76ddd6b18a35a19d284496345e41f5a22866f171.camel@gmail.com>
-Subject: Re: [PATCH v4] scsi: ufs: fix use-after free in init error and
- remove paths
-From: Bean Huo <huobean@gmail.com>
-To: =?ISO-8859-1?Q?Andr=E9?= Draszik <andre.draszik@linaro.org>, Alim Akhtar
- <alim.akhtar@samsung.com>, Avri Altman <avri.altman@wdc.com>, Bart Van
- Assche <bvanassche@acm.org>, "James E.J. Bottomley"
- <James.Bottomley@HansenPartnership.com>, "Martin K. Petersen"
- <martin.petersen@oracle.com>, Peter Griffin <peter.griffin@linaro.org>, 
- Krzysztof Kozlowski <krzk@kernel.org>, Manivannan Sadhasivam
- <manivannan.sadhasivam@linaro.org>,  Mike Snitzer <snitzer@redhat.com>,
- Jens Axboe <axboe@kernel.dk>, Ulf Hansson <ulf.hansson@linaro.org>,  Satya
- Tangirala <satyat@google.com>, Eric Biggers <ebiggers@google.com>
-Cc: Tudor Ambarus <tudor.ambarus@linaro.org>, Will McVicker
- <willmcvicker@google.com>, kernel-team@android.com,
- linux-scsi@vger.kernel.org,  linux-kernel@vger.kernel.org,
- linux-samsung-soc@vger.kernel.org,  linux-arm-kernel@lists.infradead.org,
- linux-arm-msm@vger.kernel.org,  stable@vger.kernel.org
-Date: Sun, 26 Jan 2025 23:00:28 +0100
-In-Reply-To: <20250124-ufshcd-fix-v4-1-c5d0144aae59@linaro.org>
-References: <20250124-ufshcd-fix-v4-1-c5d0144aae59@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.44.4-0ubuntu2 
+	s=arc-20240116; t=1737937228; c=relaxed/simple;
+	bh=pvbhsvlel3bVPxM0Y048DFc6UY6hgAQodODCIgqQqbg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Y/A6E6pIOvwOA5p7hG0HQpYo6huO+NtmDY53li1GXNQoeMI+g71yvGk5ZG85k3j/Dw/4yii8L7P4jIPBKkWrH0I+noiRMGlzXSfp4wM08plABSgLMSluxnQb2CgYfYN8vjaIwXs2pFif319agwKZxjwlBC4yi26CbTRXNVyG04o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FNtV65Di; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8010EC4CED3;
+	Mon, 27 Jan 2025 00:20:27 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1737937227;
+	bh=pvbhsvlel3bVPxM0Y048DFc6UY6hgAQodODCIgqQqbg=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=FNtV65DiPS+iHf2jLd8v9TJWlrzIXfObbR52fjtOenBTdGXmbYNyt49PqNTXADrFs
+	 2fftvfdeHLRViAoXKpgr37EwF0xK03whe/0hjiXkI+Ms03NFUOqUtVDBMV2BWPw+K/
+	 YE117Ah9BkqbcZKKzyzrwH2Z99tb/YkZokizvcakHxJcAqaEN3QF38DxgHq3hk7l/G
+	 XJCcvIldQoD1HpLlQz9gAE32aduMLfuo8fYFmQ8p9KuHvLVI2fNuNmpfBRQeDx5dvi
+	 MONJYgKFgWNBoWTnX7yHi2nfHNmOhzVWZGgErikRuKh8Hg+w7q5Ezb1FPz4o3ZExHc
+	 yr60JaJyzB4aA==
+Date: Sun, 26 Jan 2025 18:20:26 -0600
+From: Rob Herring <robh@kernel.org>
+To: Johan Hovold <johan+linaro@kernel.org>
+Cc: Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Jonathan Marek <jonathan@marek.ca>, linux-arm-msm@vger.kernel.org,
+	linux-rtc@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 0/7] arm64: dts: qcom: x1e80100: enable rtc
+Message-ID: <20250127002026.GA2534668-robh@kernel.org>
+References: <20250120144152.11949-1-johan+linaro@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250120144152.11949-1-johan+linaro@kernel.org>
 
-On Fri, 2025-01-24 at 15:09 +0000, Andr=C3=A9 Draszik wrote:
-> Fixes: cb77cb5abe1f ("blk-crypto: rename blk_keyslot_manager to
-> blk_crypto_profile")
-> Fixes: d76d9d7d1009 ("scsi: ufs: use devm_blk_ksm_init()")
-> Cc: stable@vger.kernel.org
-> Signed-off-by: Andr=C3=A9 Draszik <andre.draszik@linaro.org>
+On Mon, Jan 20, 2025 at 03:41:45PM +0100, Johan Hovold wrote:
+> This series adds support for utilising the UEFI firmware RTC offset to
+> the Qualcomm PMIC RTC driver and uses that to enable the RTC on all X
+> Elite machines.
+> 
+> Included is also a patch to switch the Lenovo ThinkPad X13s over to
+> using the UEFI offset.
+> 
+> The RTCs in many Qualcomm devices are effectively broken due to the time
+> registers being read-only. Instead some other non-volatile memory can be
+> used to store an offset which a driver can take into account. On Windows
+> on Arm laptops, the UEFI firmware (and Windows) use a UEFI variable for
+> storing such an offset.
+> 
+> When RTC support for the X13s was added two years ago we did not yet
+> have UEFI variable support for these machines in mainline and there were
+> also some concerns regarding flash wear. [1] As not all Qualcomm
+> platforms have UEFI firmware anyway, we instead opted to use a PMIC
+> scratch register for storing the offset. [2]
+> 
+> On the UEFI machines in question this is however arguable not correct
+> as it means that the RTC time can differ between the UEFI firmware (and
+> Windows) and Linux.
+> 
+> Now that the (reverse engineered) UEFI variable implementation has been
+> merged and thoroughly tested, let's switch to using that to store the
+> RTC offset also on Linux. The flash wear concerns can be mitigated by
+> deferring writes due to clock drift until shutdown.
+> 
+> Note that this also avoids having to wait for months for Qualcomm to
+> provide a free PMIC SDAM scratch register for X1E and future platforms,
+> and specifically allows us to enable the RTC on X1E laptops today.
+> 
+> Rob had some concerns about adding a DT property for indicating that a
+> machine uses UEFI for storing the offset and suggested that the driver
+> should probe for this instead. Unfortunately, this is easier said than
+> done given that UEFI variable support itself is probed for and may not
+> be available until after the RTC driver probes.
 
-Reviewed-by: Bean Huo <beanhuo@micron.com>
+This information would be useful in the binding commit...
+
+Seems like something I would say, but this is v1 and I have no memory of 
+discussing this. I would also say probe ordering is not a DT problem, 
+but sounds like an OS problem. Aren't there other things needing EFI 
+variables earlyish too? Do you really want to have to update the DT to 
+enable this?
+
+OTOH, it's one property, meh.
+
+Rob
 
