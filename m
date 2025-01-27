@@ -1,62 +1,62 @@
-Return-Path: <linux-arm-msm+bounces-46286-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46287-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id D1A81A1DBBC
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Jan 2025 19:00:39 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 02BA0A1DC9A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Jan 2025 20:19:14 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2CC521884049
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Jan 2025 18:00:42 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4830218850C7
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Jan 2025 19:19:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 066C818C337;
-	Mon, 27 Jan 2025 18:00:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AF6BA18DF64;
+	Mon, 27 Jan 2025 19:19:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kwRBOSpw"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BJtK6kBZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C86BB18B48B;
-	Mon, 27 Jan 2025 18:00:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 735B517B50A;
+	Mon, 27 Jan 2025 19:19:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738000828; cv=none; b=ERPDbknxl/y1ZYv+ibWOWWNAyVBkv10pEAsXb3xwhuzoAfJ4yMP5IsTEjFh9QqC25qbVMxeD3PPiKi2Q04kXC4A9Jpv7uU6EZk0UVq7Yl9YT3u+uOgHZaXqGME7E9tG/530SHeuuPij1SVhdjTXZfyE540PX3ObcsOzmhpESeiU=
+	t=1738005548; cv=none; b=aRFLr4BYkSPz4TJb11IwIAMrrb+P37BAYUypdpcKpPnY1La9JIBYU6dOn41Eh+fM4MybHTxQVjLQ701gHdgfnbtYV4k4otMrpXqH1Zm7TAXZM4iVE4IeRBdr9Sc+2f/ohLZFvbkddzVODdWqPTwInpvoT/iRctyYZeO73H11iXs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738000828; c=relaxed/simple;
-	bh=46MM4+5JRn0cpDs6bLnICSZXnvQ6YkR3OrnqzcdZnsg=;
+	s=arc-20240116; t=1738005548; c=relaxed/simple;
+	bh=SqI1KbVFdalLEwk0SH3vc66dMLl3ElqNrXqEzL5h/HM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=AAwacv5ZgtufgAoIny5BuxDAJH0knp1L6csvKumYS1Wn+S8Fi6r8bmXARjRXXQwQRiiSS192fqp3HVNw66WITUjn7Ia7KQ0lR2wBPYYHB1c+q/8BN1c8JfoO6oBKrnoL4OWbx7FWAfXtiWvoupSo748DE75FnQCyCtBYWxThv0E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kwRBOSpw; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AD2DC4CEE0;
-	Mon, 27 Jan 2025 18:00:28 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=N+MJ9auLEuVO+XYmDa2BVqimJVo+ZjUTmQQnNedlAzWQhFR1/mf4EUZFHac1f8zLLFbtwga84uhEm/PWY8Utv83Ftrnm/2UqcIgLSxCtqy+HHQQ5QBCZ7tBE/lJYYgSUBr5ggwpjFWMFXCXWlFaMkFfs2vWhEWEht2F/xGc3ap0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BJtK6kBZ; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9ACEC4CED2;
+	Mon, 27 Jan 2025 19:19:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1738000828;
-	bh=46MM4+5JRn0cpDs6bLnICSZXnvQ6YkR3OrnqzcdZnsg=;
+	s=k20201202; t=1738005547;
+	bh=SqI1KbVFdalLEwk0SH3vc66dMLl3ElqNrXqEzL5h/HM=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=kwRBOSpwt7hCsv1k1jcYSgAy8tFJL1iDXlvdKOYENfzr/+6PsmmfUEEXTM6xcIc+Y
-	 fSq+37dib1m9fLSymvxt/HZoc2mArT586nOSh+72O3pSzJQyMrPbKdTFOhJcR9UxKG
-	 9/Ze/8XxsVX+OLPuuKPTJetdRPJCNt1tt8KJvdca/pz7PlsZgHaWkRV4zUA90jeSdA
-	 yG1aono+hVgXx4ZmNYFWBnFXa5GNLXMaQgLfnIOmik2YAwC02blYgYQd93gnau+d1w
-	 n9EoYauZOAIxKO3BaA55DUi+0KrQrukm4Gnj5ZSapXX19oKxSBF42OoDKxM+y+K9Hh
-	 lWiFXOxYX6Ldg==
-Date: Mon, 27 Jan 2025 12:00:27 -0600
-From: "Rob Herring (Arm)" <robh@kernel.org>
-To: Johan Hovold <johan+linaro@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Jonathan Marek <jonathan@marek.ca>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
-	linux-rtc@vger.kernel.org, Conor Dooley <conor+dt@kernel.org>,
-	linux-kernel@vger.kernel.org,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>
-Subject: Re: [PATCH 2/7] dt-bindings: rtc: qcom-pm8xxx: document
- qcom,no-alarm flag
-Message-ID: <173800082586.538050.18039812124468938594.robh@kernel.org>
-References: <20250120144152.11949-1-johan+linaro@kernel.org>
- <20250120144152.11949-3-johan+linaro@kernel.org>
+	b=BJtK6kBZpRiUGZfqgbJTc/udEd1XWuf9oMolAVnW/3MUyzr/VpFnPVC5/7Z+C2ZW5
+	 H4xZFEKHvEL65IT298wqlKAk3od1QxNgzouDgBSEeezkJbzO8kmxz9+NxJTx6B4tW7
+	 sMPLHejjRK8U2J4OwZ61VrWD9wWrOA2NfkU2kByBK8PffuDP1uFcznH4clbYjJEZx/
+	 F6I1dI+eNv6P4r5ejps4HQ4IN2q8nzIcnt32TPj5Rhf8JOwkT2YqxGvad8PCYYksIz
+	 xXMPOS3cEykoIugGXphW0ZcZhtLKSzPkYBsstJiJq7GcxhKdNyYUseaBsC3ASg/OlG
+	 zRQSVTyOCzqiQ==
+Date: Mon, 27 Jan 2025 13:19:06 -0600
+From: Rob Herring <robh@kernel.org>
+To: Varadarajan Narayanan <quic_varada@quicinc.com>
+Cc: lpieralisi@kernel.org, kw@linux.com, manivannan.sadhasivam@linaro.org,
+	bhelgaas@google.com, krzk+dt@kernel.org, conor+dt@kernel.org,
+	vkoul@kernel.org, kishon@kernel.org, andersson@kernel.org,
+	konradybcio@kernel.org, p.zabel@pengutronix.de,
+	dmitry.baryshkov@linaro.org, quic_nsekar@quicinc.com,
+	linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-phy@lists.infradead.org
+Subject: Re: [PATCH v8 5/7] dt-bindings: PCI: qcom: Document the IPQ5332 PCIe
+ controller
+Message-ID: <20250127191906.GA704182-robh@kernel.org>
+References: <20250127072850.3777975-1-quic_varada@quicinc.com>
+ <20250127072850.3777975-6-quic_varada@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,27 +65,106 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250120144152.11949-3-johan+linaro@kernel.org>
+In-Reply-To: <20250127072850.3777975-6-quic_varada@quicinc.com>
 
-
-On Mon, 20 Jan 2025 15:41:47 +0100, Johan Hovold wrote:
-> From: Jonathan Marek <jonathan@marek.ca>
+On Mon, Jan 27, 2025 at 12:58:48PM +0530, Varadarajan Narayanan wrote:
+> Document the PCIe controller on IPQ5332 platform. IPQ5332 will
+> use IPQ9574 as the fall back compatible.
 > 
-> Qualcomm x1e80100 firmware sets the ownership of the RTC alarm to ADSP.
-> Thus writing to RTC alarm registers and receiving alarm interrupts is not
-> possible.
-> 
-> Add a qcom,no-alarm flag to support RTC on this platform.
-> 
-> Signed-off-by: Jonathan Marek <jonathan@marek.ca>
-> Link: https://lore.kernel.org/r/20241015004945.3676-3-jonathan@marek.ca
-> [ johan: move vendor property; use boolean; reword description ]
-> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
 > ---
->  Documentation/devicetree/bindings/rtc/qcom-pm8xxx-rtc.yaml | 5 +++++
->  1 file changed, 5 insertions(+)
+> v8: Use ipq9574 as fallback compatible for ipq5332 along with ipq5424
 > 
+> v7: Moved ipq9574 related changes to a separate patch
+>     Add 'global' interrupt
+> 
+> v6: Commit message update only. Add info regarding the moving of
+>     ipq9574 from 5 "reg" definition to 5 or 6 reg definition.
+> 
+> v5: Re-arrange 5332 and 9574 compatibles to handle fallback usage in dts
+> 
+> v4: * v3 reused ipq9574 bindings for ipq5332. Instead add one for ipq5332
+>     * DTS uses ipq9574 compatible as fallback. Hence move ipq9574 to be able
+>       to use the 'reg' section for both ipq5332 and ipq9574. Else, dtbs_check
+>       and dt_binding_check flag errors.
+> ---
+>  Documentation/devicetree/bindings/pci/qcom,pcie.yaml | 10 ++++++++--
+>  1 file changed, 8 insertions(+), 2 deletions(-)
+> 
+> diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
+> index 4b4927178abc..2ffa8480a665 100644
+> --- a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
+> +++ b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
+> @@ -33,6 +33,7 @@ properties:
+>            - qcom,pcie-sdx55
+>        - items:
+>            - enum:
+> +              - qcom,pcie-ipq5332
+>                - qcom,pcie-ipq5424
+>            - const: qcom,pcie-ipq9574
+>        - items:
+> @@ -49,11 +50,11 @@ properties:
+>  
+>    interrupts:
+>      minItems: 1
+> -    maxItems: 8
+> +    maxItems: 9
+>  
+>    interrupt-names:
+>      minItems: 1
+> -    maxItems: 8
+> +    maxItems: 9
+>  
+>    iommu-map:
+>      minItems: 1
+> @@ -209,6 +210,7 @@ allOf:
+>          compatible:
+>            contains:
+>              enum:
+> +              - qcom,pcie-ipq5332
+>                - qcom,pcie-ipq9574
 
-Acked-by: Rob Herring (Arm) <robh@kernel.org>
+As both of these compatibles will be present, you don't need to add 
+ipq5332 here.
 
+>                - qcom,pcie-sdx55
+>      then:
+> @@ -411,6 +413,7 @@ allOf:
+>          compatible:
+>            contains:
+>              enum:
+> +              - qcom,pcie-ipq5332
+>                - qcom,pcie-ipq9574
+
+Same here.
+
+>      then:
+>        properties:
+> @@ -443,6 +446,7 @@ allOf:
+>          interrupts:
+>            minItems: 8
+>          interrupt-names:
+> +          minItems: 8
+>            items:
+>              - const: msi0
+>              - const: msi1
+> @@ -452,6 +456,7 @@ allOf:
+>              - const: msi5
+>              - const: msi6
+>              - const: msi7
+> +            - const: global
+>  
+>    - if:
+>        properties:
+> @@ -559,6 +564,7 @@ allOf:
+>                enum:
+>                  - qcom,pcie-apq8064
+>                  - qcom,pcie-ipq4019
+> +                - qcom,pcie-ipq5332
+>                  - qcom,pcie-ipq8064
+>                  - qcom,pcie-ipq8064v2
+>                  - qcom,pcie-ipq8074
+> -- 
+> 2.34.1
+> 
 
