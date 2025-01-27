@@ -1,154 +1,165 @@
-Return-Path: <linux-arm-msm+bounces-46183-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46184-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 53AD8A1D0AD
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Jan 2025 06:34:31 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B4BD0A1D0B4
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Jan 2025 06:40:52 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A86463A656C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Jan 2025 05:34:23 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B618A7A30EC
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Jan 2025 05:40:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E2CBF15696E;
-	Mon, 27 Jan 2025 05:34:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 34AD21FBEB7;
+	Mon, 27 Jan 2025 05:40:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="kVr78fZG"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="V86gR8Sn"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f173.google.com (mail-pl1-f173.google.com [209.85.214.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55C8225A638
-	for <linux-arm-msm@vger.kernel.org>; Mon, 27 Jan 2025 05:34:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73E6725A638;
+	Mon, 27 Jan 2025 05:40:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737956065; cv=none; b=riI7ijf7zPHR2DoQy8Jl5B5wXMCcW9hvbA3qxEYyi28OsItOfIFH/K7PFu6yWRH4hBW8+n4dGtMDyzIdU+l0Vz0KNtSWmmyFWBVeKYSTZCgeU+b3l2wdU/05Kg8Jb5kelHwuH+evwJQZ6oN1hCDxd4S9LeZ52jCcY+oXA28Falg=
+	t=1737956445; cv=none; b=OjxHaBNSoiEwqQD6rMD+IEO8+MIqqbluGl/5Zx9m0xk3Ljrm9wC87AmtSPeWudY6dnCBRKIXqFugxsva7gcL9JjIcE84mltRwGP+n3vZYfl9L0f20hco6qpGtMqZtdm8aibgWbiYK/B8XhznsJHf428Fl+8e5ahZw+zRob0Lfbo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737956065; c=relaxed/simple;
-	bh=GBGBjMhgsFdTiGft+y8/1jivaBQZgN9QkGKZbY65T98=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=JLWk/n3vpMrBplmmbXynw6aadcB+t/ZmGGpV/FNzP3KfwFVtD3WSoW36kRvTpGZaKfnE80kgfFs1DEK018144ElStpnc7JDO7vh0lI1Skp2PwvUkHEbiTX5v9M8QfJts4lXJBFq3vAGfrZU7rtY4HqKMRoRBfUtyXXPnnuR8sEQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=kVr78fZG; arc=none smtp.client-ip=209.85.214.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pl1-f173.google.com with SMTP id d9443c01a7336-215770613dbso48581835ad.2
-        for <linux-arm-msm@vger.kernel.org>; Sun, 26 Jan 2025 21:34:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1737956063; x=1738560863; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=LYrDkx9vO5H0pWQvLKCfpCZMVAnzkpiFqaoqphbY3jQ=;
-        b=kVr78fZGoC5uvOxlyRqwEvINFGIXopMqiBJc5wV3cfuCklB3i9P0YK7D2pRqS6SQPm
-         2W7MFL5fbHxiI2rDNtDDm3VFCpOtu5O5IUii5Ev8u9YEMoAhpqBIXH74BB2puh0ukWXg
-         TglKbfRJrJH4VJhwAwimZFLQcGrAkavHWyJYmFrkEYSXQGF1C9hYE0TBm+yZ/PAnDtI9
-         O+E3JIHP1rw5kY9swa3cpb+yyStaP8IN196HZoEg7Lj4ylx5aHzVOD0ujbtnu6CQcqEo
-         uHTT/fC09eDtcQ90bpoN/1YqmHoMde6ctJoi18FeAb1MqYaOWwhcYVQ7NdGvvPDeckx1
-         DW5A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1737956063; x=1738560863;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=LYrDkx9vO5H0pWQvLKCfpCZMVAnzkpiFqaoqphbY3jQ=;
-        b=jT05fWs0L1c08wW7gIfQtZm5cEMulQVbt84GDqqn1A7qCyz1XjXjqg59lNGBekC4yP
-         QTZswkb9Faz9u3YclNQUhxEtIc9qYFqLeBF4bgOf3aHQUCjChDOvTq11KuB6Sp1Wqmod
-         K7bWg48SIisrJrO8pa3EnA6SRe8Gr61LUObqlDzZL29qBi8qMdW1cPgpDzkV1FfibiGH
-         OuaT6+AJY8Y8ldwqe7d8r5LwSw3rjRraK4qSo/8LxZsk6sNyLBgWDCcBQhB+QQr1wDnL
-         pKj8cOc51UpiyWGVMxJqPgHOK3xKg+Mbsdfyb4QKX8Jbtx2PKBhPNZLtSoVbMCbCKo3x
-         qtRg==
-X-Forwarded-Encrypted: i=1; AJvYcCXrETGxpTHgbB1wakyMfWZdd/lxQ3+v1umk5e/ZjWR5QlLZbQMvJW2wmJVP4cfnAm1QtBhWcIYoOfZmosNO@vger.kernel.org
-X-Gm-Message-State: AOJu0YywL1SBvZ4d1FW3LSJAlQfWLqwtzBzeoOIvkpcQIgf4+ZQD/Wqv
-	nJs49IcY+haLC+AXLJOmasy+zZANmWjlYkd/3KMnAoT/vkEqL0u9w2MeY5vKNQ==
-X-Gm-Gg: ASbGncvcuSYDuIrLAxuscBYF33yvXsCeFfN07f8cndRIucRpQiNXUdPNJB3DrmFZeCC
-	u/SJByXbHWhDtrKyJUZEFzia0HPiw7fbTxYkikYvMtu+Cqp7G6df8Eit0QDgQHwSLOXB1VD1X4j
-	FuKNcOYnEj8y5IfcDS9iMiw7QgTWcfAu+vrSWT8M9UX6B+SkFRbf2rfUCGWLzN1AlOMFyImkpe6
-	oXYDxGOGRWtBDs0N87ZpG9UEjLa9KOGUTyUnoZFD0CuKAircv2FATAU9PLTrlG1goVioyvwKmOr
-	zJh16jDbGvjsZtA=
-X-Google-Smtp-Source: AGHT+IF23Vozd3CbI/d3xt3xyb44QrIyJVEbk6LiztTlg7LAAGEdExVb14y+5qQXhhQn+eUfWxjVDQ==
-X-Received: by 2002:a17:902:f28b:b0:215:9bc2:42ec with SMTP id d9443c01a7336-21c356092ecmr385990925ad.47.1737956063641;
-        Sun, 26 Jan 2025 21:34:23 -0800 (PST)
-Received: from thinkpad ([120.60.139.80])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-21da4141baesm54005795ad.144.2025.01.26.21.34.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 26 Jan 2025 21:34:23 -0800 (PST)
-Date: Mon, 27 Jan 2025 11:04:12 +0530
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Konrad Dybcio <konradybcio@kernel.org>, Vinod Koul <vkoul@kernel.org>,
-	Kishon Vijay Abraham I <kishon@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Subject: Re: [PATCH 3/6] phy: qcom: qmp-pcie: Add X1P42100 Gen4x4 PHY
-Message-ID: <20250127053412.anbdj6hgwcmkildf@thinkpad>
-References: <20250125-topic-x1p4_dts-v1-0-02659a08b044@oss.qualcomm.com>
- <20250125-topic-x1p4_dts-v1-3-02659a08b044@oss.qualcomm.com>
- <h6zfhxkc4dj2ueaxipha6prbvmv7pnqglghtjs7vkhlc2s7ndi@vhbj4uojlzwd>
- <A64B8332-78F2-4B76-908E-4119E4A54BAE@linaro.org>
- <cy3x35h4id3gegwb23j6rwblx2pecpw7ffjpri5ddqdd35kzrt@bxdmaumb6bbp>
- <20250126163222.nhcxvr4m2vncwi23@thinkpad>
- <CAA8EJpq-aNVhSc0fTf4zD63VgrzDokR5uvdGiPvecaBHXYtd+Q@mail.gmail.com>
+	s=arc-20240116; t=1737956445; c=relaxed/simple;
+	bh=UVoxVBRRkEf6al2Feuha/ctYDq9a+/ugd5XVwlqeGww=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=HyJitnAjMcykAq7e6yVvqeDhFJpEGuZsHlZm7KZYEM9wQzw193adbiGzM5bpw46cgX7SvJEqp2iqXcFN/DeN3UNDLIUT16Rgt+028aP1jsLIRnMecTuHouD9AAGAW0s8z9DnBrZGkJYZPxw7Pl4El8mqcnKDljqFEweFQfvvT/Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=V86gR8Sn; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50R174C9025528;
+	Mon, 27 Jan 2025 05:40:37 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	0tru79ZpQyPOHviE3ZFZeMsHTNfXYnnaWdfLU3a0/vs=; b=V86gR8SnOmRA5RcF
+	PZ0rjwcL2E2OKVvLWW1OelR1nOsyMV/hbN6gju0+Wpzx/oDiB0ELQthJPrzrl3wB
+	xR7A7UZ0zrFrK4T7q+Es3AHqkl5WIVLxsrBMxSHR16v2/02bMuG8FT1APV75Vemb
+	yEjk+vE3mDH2q8iWlUD+wRTshq6l95kVGHA5+1Wkl0ydvXZfSJxb3v/i3v+KByax
+	2TATzQQoB8T2/ncnUarht589RWA3WZKP4VwazSDRhaCbw0AFnrHdPjiW/n4I0UJJ
+	Ux0ccihpUnPniew5blnMJJEItiPcVZ5w50yOgj76JXmSFpZJfny/W4xe2zz0xunT
+	Sdsp4Q==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44cs1ptv28-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 27 Jan 2025 05:40:36 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 50R5eYYS029607
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 27 Jan 2025 05:40:34 GMT
+Received: from [10.216.31.13] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Sun, 26 Jan
+ 2025 21:40:28 -0800
+Message-ID: <d3447c17-e035-4021-a199-9ff2f4715e1e@quicinc.com>
+Date: Mon, 27 Jan 2025 11:10:24 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAA8EJpq-aNVhSc0fTf4zD63VgrzDokR5uvdGiPvecaBHXYtd+Q@mail.gmail.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 6/8] i2c: qcom-geni: Load i2c qup Firmware from linux
+ side
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC: <andi.shyti@kernel.org>, <robh@kernel.org>, <krzk+dt@kernel.org>,
+        <conor+dt@kernel.org>, <gregkh@linuxfoundation.org>,
+        <jirislaby@kernel.org>, <broonie@kernel.or>, <andersson@kernel.org>,
+        <konradybcio@kernel.org>, <johan+linaro@kernel.org>,
+        <dianders@chromium.org>, <agross@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-i2c@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-serial@vger.kernel.org>, <linux-spi@vger.kernel.org>,
+        <quic_msavaliy@quicinc.com>, <quic_anupkulk@quicinc.com>
+References: <20250124105309.295769-1-quic_vdadhani@quicinc.com>
+ <20250124105309.295769-7-quic_vdadhani@quicinc.com>
+ <d3tydp3m7pehhiphupwybjlol5v2u3sabqotqximxmnswjlczb@jmdzpbrcrgou>
+ <08545d45-bfe6-45e4-b7be-503c318315af@quicinc.com>
+ <CAA8EJprSZx9Bx7EXA_RpwZdhieOLtrTARqXSuo-gO9sVMdK5Qg@mail.gmail.com>
+Content-Language: en-US
+From: Viken Dadhaniya <quic_vdadhani@quicinc.com>
+In-Reply-To: <CAA8EJprSZx9Bx7EXA_RpwZdhieOLtrTARqXSuo-gO9sVMdK5Qg@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: g7Y7vdvRJbv63W2SHWkQQcIEBj_piKfb
+X-Proofpoint-ORIG-GUID: g7Y7vdvRJbv63W2SHWkQQcIEBj_piKfb
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-01-27_02,2025-01-27_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999
+ suspectscore=0 phishscore=0 priorityscore=1501 lowpriorityscore=0
+ mlxscore=0 adultscore=0 bulkscore=0 clxscore=1015 spamscore=0
+ malwarescore=0 impostorscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2411120000 definitions=main-2501270043
 
-On Sun, Jan 26, 2025 at 11:43:38PM +0200, Dmitry Baryshkov wrote:
-> On Sun, 26 Jan 2025 at 18:32, Manivannan Sadhasivam
-> <manivannan.sadhasivam@linaro.org> wrote:
-> >
-> > On Sun, Jan 26, 2025 at 01:39:05PM +0200, Dmitry Baryshkov wrote:
-> > > On Sun, Jan 26, 2025 at 12:59:52PM +0530, Manivannan Sadhasivam wrote:
-> > > >
-> > > >
-> > > > On January 25, 2025 11:00:23 PM GMT+05:30, Dmitry Baryshkov <dmitry.baryshkov@linaro.org> wrote:
-> > > > >On Sat, Jan 25, 2025 at 04:31:19AM +0100, Konrad Dybcio wrote:
-> > > > >> From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-> > > > >>
-> > > > >> Add a new, common configuration for Gen4x4 V6 PHYs without an init
-> > > > >> sequence.
-> > > > >>
-> > > > >> The bootloader configures the hardware once and the OS retains that
-> > > > >> configuration by using the NOCSR reset line (which doesn't drop
-> > > > >> register state on assert) in place of the "full reset" one.
-> > > > >
-> > > > >I know your opinion, but my 2c would still be for not depending on the
-> > > > >bootloader. I think that was the rule for ages for many possible
-> > > > >reasons.
-> > > > >
-> > > >
-> > > > But if Linux or other OS can trust the bootloader, then it makes perfect sense to rely on them. Obviously, the question here is that on which platforms this level of trust should be established. And the answer I got was starting from the compute platforms (atleast X1E).
-> > >
-> > > Is there any way how those values can be lost that we still might want
-> > > to support ? The GDSC going to the OFF state? Some deep sleep state or a
-> > > power collapse? Actual suspend to RAM (instead of current S2Idle)?
-> > >
-> >
-> > As per Konrad's reply to my identical question, PHY register state is supposed
-> > to be maintained by MX domain even during CX PC. This seem to be case on X1E
-> > based platforms (compute).
+
+
+On 1/24/2025 9:25 PM, Dmitry Baryshkov wrote:
+> On Fri, 24 Jan 2025 at 17:24, Viken Dadhaniya <quic_vdadhani@quicinc.com> wrote:
+>>
+>>
+>>
+>> On 1/24/2025 8:34 PM, Dmitry Baryshkov wrote:
+>>> On Fri, Jan 24, 2025 at 04:23:07PM +0530, Viken Dadhaniya wrote:
+>>>> Add provision to load firmware of Serial engine for I2C protocol from
+>>>> Linux Execution Environment on running on APPS processor.
+>>>>
+>>>> Co-developed-by: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
+>>>> Signed-off-by: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
+>>>> Signed-off-by: Viken Dadhaniya <quic_vdadhani@quicinc.com>
+>>>> ---
+>>>>    drivers/i2c/busses/i2c-qcom-geni.c | 7 +++++--
+>>>>    1 file changed, 5 insertions(+), 2 deletions(-)
+>>>>
+>>>> diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-qcom-geni.c
+>>>> index 7bbd478171e0..9ad3b8c9a224 100644
+>>>> --- a/drivers/i2c/busses/i2c-qcom-geni.c
+>>>> +++ b/drivers/i2c/busses/i2c-qcom-geni.c
+>>>> @@ -872,8 +872,11 @@ static int geni_i2c_probe(struct platform_device *pdev)
+>>>>       }
+>>>>       proto = geni_se_read_proto(&gi2c->se);
+>>>>       if (proto != GENI_SE_I2C) {
+>>>> -            ret = dev_err_probe(dev, -ENXIO, "Invalid proto %d\n", proto);
+>>>> -            goto err_resources;
+>>>> +            ret = geni_load_se_firmware(&gi2c->se, GENI_SE_I2C);
+>>>
+>>> Hmm, so if the SE has been configured to e.g. SPI by the TZ, can we
+>>> switch it to the I2C?
+>>
+>> No, in the current design, TZ will not load the SE firmware.
 > 
-> Is MX on during S2RAM?
+> But that's what your patch is doing: if the protocol is not I2C, try
+> switching to I2C.
 > 
+> Instead it should be 'if unconfigured, try loading I2C'.
 
-Qcom says that their current s2idle implementation is equal to S2RAM (when CX PC
-is achieved). In that sense, yes, MX is ON during S2RAM. Do note that, on
-majority of the platforms, MX is the AON (Always ON) domain.
+Sure, I will update it in the next patch.
 
-- Mani
-
--- 
-மணிவண்ணன் சதாசிவம்
+> 
+>>
+>>>
+>>>> +            if (ret) {
+>>>> +                    dev_err(gi2c->se.dev, "i2c firmware load failed ret: %d\n", ret);
+>>>> +                    goto err_resources;
+>>>> +            }
+>>>>       }
+>>>>
+>>>>       if (desc && desc->no_dma_support)
+>>>> --
+>>>> 2.34.1
+>>>>
+>>>
+> 
+> 
+> 
 
