@@ -1,87 +1,87 @@
-Return-Path: <linux-arm-msm+bounces-46276-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46277-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id C2753A1D919
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Jan 2025 16:12:17 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 963B3A1D957
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Jan 2025 16:17:32 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D2E17165CCC
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Jan 2025 15:12:15 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A7DAE3A7ADD
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Jan 2025 15:16:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7FD3313A88A;
-	Mon, 27 Jan 2025 15:12:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B520F84A35;
+	Mon, 27 Jan 2025 15:16:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="KGG265+9"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="lRybVIDH"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF66B139CF2
-	for <linux-arm-msm@vger.kernel.org>; Mon, 27 Jan 2025 15:12:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D5265FDA7
+	for <linux-arm-msm@vger.kernel.org>; Mon, 27 Jan 2025 15:16:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737990732; cv=none; b=o0gpp01boxPmS/8o3BRsXahQfHOnvGrbuaoR9+X3VQXzyQORRskJpQkkNxE8Y82lAmyJt+xfLzT6OeFsfjmWha86HO+NY2Nn/jjSZyw3mlhhUxozjYyampUoJa/HboE8bMUlrGFOpF1DjZtIaj7/Lbe7FVDaiX6XDCZlK9IyoDQ=
+	t=1737990999; cv=none; b=TrMNNvZPmyQf/0QzNl7TzoIBB0NtofbooKxiMB8c/ifOKPycgEuFs4gIqM100WdzKRocTi2SWWhqjWqOtzLsVHeBgAvKgIS1kn4Has27zTH0Zf9t+DrjVS4z720e7OZ3D08gMQ+UcYvXfdIVSLW72zZL4Rp5sQG2mp5IZNOgyq4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737990732; c=relaxed/simple;
-	bh=0/2bJnEnDs8um6XYYODDkPZ2omRK56ST66i1OlyJEKA=;
+	s=arc-20240116; t=1737990999; c=relaxed/simple;
+	bh=XXWwenXnSMIfC4eeFgueYgwPm2Um/6LbxvB2XdF7djg=;
 	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=lXEeuQelt1XyPYdNZScAPJvyiYo+CMqE6mvCL45xUukFemSM2x7xCPuwK1v5HySxG2o2iWpmArieiKAOxHO1+06AeCJGLLNLAXSOI+VVzgJqSCjIsLksO0nUuhlBlrBZn3J+zoGsVaziPumwNhXSRh8ueRLKs5xpeLoEGdpxP0E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=KGG265+9; arc=none smtp.client-ip=205.220.168.131
+	 In-Reply-To:Content-Type; b=DlKL7xMw4EHGRdnLM40HOpBIl0KdYcHYLhAWduKbRqWT0PWuo4YpPBcxMocFmduI43j53MY7YJaVP4/mg/C6U8VjmXEaJs8M3qQZr7R3DKTWk4hSRkJbEgEjNNZe2iMmH0NpdVra5BNlHe+2DS7PcI3uVfRCVI3E3HvQRIYT2C8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=lRybVIDH; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50RCTQ3u020960
-	for <linux-arm-msm@vger.kernel.org>; Mon, 27 Jan 2025 15:12:10 GMT
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50RCTZ4E021040
+	for <linux-arm-msm@vger.kernel.org>; Mon, 27 Jan 2025 15:16:37 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	dQpvtI6u3lxTYx1xzlqCxqIm9uDJhDvieISDzIxyB3U=; b=KGG265+9kok1dsaT
-	jn6yay7UsmHlM/Z8GeR6dq0lOj8NRdcbVnkCK9FjAgc3tAtygj884BfBU/Y4duZb
-	mAXtAxfG1N2FPdjXGLFHUxV4wf1zWn1YDYibnQLOlvw7OayBOOgtyoNDv8dco2mk
-	0F7Tmw0NOeJUz7SbgEXcBRbHfGi9GFQ/iNh+MbHy++Ghsr8jKLvRvUBVuqyVuXOV
-	uBhYWn7rBrnJSv/tDYBYL27oRJXd7ixngJkN9WnhNZNKuTiWIKxAPLl2CVNmGde/
-	evcctEhYbEKA64Y+lA/s5bonhY3+b58n5Vp1TPM6RkwN4gNpSks69TV10fbfc5DV
-	VQwpKw==
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com [209.85.222.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44ea6s0a2w-1
+	eiOVlvy8O2sljdqhnTACcFcT/c+BYziyN9TVv9igCSg=; b=lRybVIDH/erv8Rke
+	Huf178CITEZwh89jtxljjRNIzq6MtfNnY4DVt2h63q73kCiKDAD/gTfsXj+FB+Uj
+	pRbtnxm1o92a6I+EFD3TM09Vl7nAXJuH6mKMZ5PGytMUDTvq+2CAZuF1SYuMOHAJ
+	3CXyD920lvofbQB5GAEUzG5ZirwLhTgj/puBfkJ78x47kTAiGvsiitML7n/CuW3c
+	MFnJ9bhqy8rx+Z5eo4VWGUIKTRuBQZE3Di5UNlz41238pNf3f9R1k3OZGYZUw3ZT
+	sjp7NRj0cfSNM5IKTMushd+UqASJL0axMZz1mxgfknjiaetChpWnxHoIKfIDhw6L
+	b/jS6g==
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com [209.85.222.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44ea6s0acb-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 27 Jan 2025 15:12:09 +0000 (GMT)
-Received: by mail-qk1-f200.google.com with SMTP id af79cd13be357-7b6f28dc247so85865685a.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Jan 2025 07:12:09 -0800 (PST)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 27 Jan 2025 15:16:37 +0000 (GMT)
+Received: by mail-qk1-f199.google.com with SMTP id af79cd13be357-7b6e43ed084so90807885a.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Jan 2025 07:16:37 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1737990728; x=1738595528;
+        d=1e100.net; s=20230601; t=1737990996; x=1738595796;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=dQpvtI6u3lxTYx1xzlqCxqIm9uDJhDvieISDzIxyB3U=;
-        b=XqtQ8GsDslO0YHQpmN2LHxPSbzqdQStSrAZtlEeuhypY4n675T87M78guyKmk0h7VP
-         5tcbC4cFDju/kcLwMdYXg4dHq9gWRofuNnyM5bBNsWv6Moa4oy5ZuFAdL+MVme3ODKgD
-         EN+l9mpb9w9UBgKM0gb66PYgBZWYNDXDJ+z+WZv5ipxFQRq1RCHFsXM7IHXcTX8lYaZV
-         keBneny49skZwdQf9EkcnJQyWb/HyZaHz2EYUJ+eTlwimlwY4biBnRXG+dYpCfQd/6r6
-         OpfCXrvgrUMhNRWhpcLqVbl4nIC8255my+bp6OEJnxmr0MF14xiu9fBBK4eMRlaOBKjP
-         nXSg==
-X-Forwarded-Encrypted: i=1; AJvYcCVxDAAlSjaNu+uelolabIMHqdK7h7pXhrvBYGQ/MBVPw4ySEVo3wlO70nBSYYOrznt6GvAP4WRIjBQsFFxx@vger.kernel.org
-X-Gm-Message-State: AOJu0YzHbYN6E6KVL/jAtxUSMgACshedLOLa08M9JL2ugSJu8bDICiuD
-	lykyKdEMZi9CkVGWRMmDCAdA4CMbBy/ctf4ZQifVFE8MGVOf3iipD6kPd8QMdHne7SWeaHcMIr2
-	unfMG+WvZ81uf1eIYeJ60ctdeZUN1FT1Nx7cDU5qdRvrmg6n+PrGKqHT1huuUN3MM
-X-Gm-Gg: ASbGncuMz+9ZXVRDo1fPlP4t+aqs0f/2GQQ6HYB15e1xUoMsBq99x3API+Vl5ssilmk
-	60tOjkmA9ln8Mt0g6QVjuEgFE4BGYcKDGO6r9RC/9tzr4BrEJ/J2986/zdCTZX8TfGpDLF3VYE0
-	u0UP0M5FtfzaGzNn6vP/EQWEBYvsYMlYu/DnaOc38YjDKrTsVhXZGHPm7aYyt87ThZ1C2+FVp8T
-	/K7U7HCXx75b/Vu9mGXakg4iew2NwpbUejWVnW81zI2g89KBs+oDdb72FlV7iM1191HPvtDDZoK
-	/ZaLNzASZBaHAKnNVQp8tfMhKOdd8y5JIWz0GCeh1j3HstLy9YHjmIvTYx8=
-X-Received: by 2002:a05:622a:1b92:b0:467:692b:754f with SMTP id d75a77b69052e-46e12ba7bbcmr222256441cf.13.1737990728548;
-        Mon, 27 Jan 2025 07:12:08 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGAXSyKsvfmhX3h/ssch181jhsbqIKNv4LNE3vkPaU53NS6RVkISKb6uv5OLWtSlIdF4nr7xQ==
-X-Received: by 2002:a05:622a:1b92:b0:467:692b:754f with SMTP id d75a77b69052e-46e12ba7bbcmr222256191cf.13.1737990727978;
-        Mon, 27 Jan 2025 07:12:07 -0800 (PST)
+        bh=eiOVlvy8O2sljdqhnTACcFcT/c+BYziyN9TVv9igCSg=;
+        b=vuv1+ECHCD2lJFbEl7S7qzHTDQRbCcZ8H4dV+venLVuHCmI7XuMXeYx/3UgbCPzcTT
+         6aVq37vfjbtAbeTR40/0TUzveagB1nj1gx6GA3iY1lr/7GJc55zww/2F/rgytWJHiPit
+         w1etbh0q1J/RTiFCpb/YnJb6WDjVB8MWuWT8Vluv7c11ufNkR/E8WwwCHktoQeiVTdDv
+         8NEsddqxQ1M10/C/X0pen9eOftFWovUTnN4AIO0EcD0s2JA+LFjwVkqCrABpdzvLOm3M
+         b6gp9I+q3RYup6m+qLNQTrPloOiByFXKVywhSS4BhDRhjsQD1TQzw90lJsm2sDyVg38c
+         4yrw==
+X-Forwarded-Encrypted: i=1; AJvYcCWgZ5kcDp7wy5kv4d1D+eqS7CHexsPx6ieaO+BV/dTXhIu0RS8ei1R6Um4cNNpfATzRkOSa44frb6jY1T3A@vger.kernel.org
+X-Gm-Message-State: AOJu0YwQbzjuNiEKxuGo49JKfrBQBapCIcHX90/M18OU1XAw65G6W7lX
+	X4fmlH4QJkfata1dmsAPWDLMtqlK9OGdmpOB4wb2paJVpD5s2bPGJYUWRlpJIh5glJgQKEoewjk
+	YWc49s6vo7TsYkM+wbuWy8qUiSsUuJMA1e4C6wnsgOmf4zvyGli/WuBOgk9BA6IK4
+X-Gm-Gg: ASbGncscX0cAY93+lA0BPPP37w2CrVtWfrN2iXoWrp64FTtxPCmuXCk4MWA1lDzD6Mr
+	oFDeCVlmytkEyMjiEIAgLoZ6MsqSsmExzKPIY03kxGCa1wn/DT6UAhCCjahQCOzRqwhrjEoyukV
+	tB63ugt3p6u5p7AbaCi0n+SUD+5dZRpi9w71K/M2V25Rr5uyViVkX0EanAeqXMgP3o67L2BcnDM
+	NpKGjwCwOcW83L4nKjOccD7OyqTXreX6qSZCiy26AC1SCccOPL1k2RS5aRGlP6wXCuJfHRswrqC
+	7ufrNttFPkLxb6Z5tD/5gia49k7ht+ajONrVsSMa6aAuxTocGiOXV9XU3O0=
+X-Received: by 2002:a05:622a:1a23:b0:467:85f9:2a67 with SMTP id d75a77b69052e-46e12a940b8mr232903671cf.8.1737990995894;
+        Mon, 27 Jan 2025 07:16:35 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHHbQBaClGLDjf47vJiIgHk5bysqAnHMsfctaPHSAVkHPdBSwDmwLdwjqjUQMvLgQ8TfbrmWw==
+X-Received: by 2002:a05:622a:1a23:b0:467:85f9:2a67 with SMTP id d75a77b69052e-46e12a940b8mr232903471cf.8.1737990995484;
+        Mon, 27 Jan 2025 07:16:35 -0800 (PST)
 Received: from [192.168.65.90] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ab6760ab363sm598975666b.114.2025.01.27.07.12.06
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5dc186b37b6sm5388019a12.56.2025.01.27.07.16.32
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 27 Jan 2025 07:12:07 -0800 (PST)
-Message-ID: <7e118726-b22b-4c7b-9966-07c3b1ff709c@oss.qualcomm.com>
-Date: Mon, 27 Jan 2025 16:12:05 +0100
+        Mon, 27 Jan 2025 07:16:35 -0800 (PST)
+Message-ID: <60d02c55-0d18-4704-9126-8b8ffef5bd68@oss.qualcomm.com>
+Date: Mon, 27 Jan 2025 16:16:32 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -89,23 +89,25 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/4] cpufreq: qcom-nvmem: Enable cpufreq for ipq5424
-To: Sricharan R <quic_srichara@quicinc.com>, andersson@kernel.org,
-        mturquette@baylibre.com, sboyd@kernel.org, robh@kernel.org,
-        krzk+dt@kernel.org, conor+dt@kernel.org, konradybcio@kernel.org,
-        rafael@kernel.org, viresh.kumar@linaro.org, ilia.lin@kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+Subject: Re: [PATCH v8 2/7] phy: qcom: Introduce PCIe UNIPHY 28LP driver
+To: Varadarajan Narayanan <quic_varada@quicinc.com>, lpieralisi@kernel.org,
+        kw@linux.com, manivannan.sadhasivam@linaro.org, robh@kernel.org,
+        bhelgaas@google.com, krzk+dt@kernel.org, conor+dt@kernel.org,
+        vkoul@kernel.org, kishon@kernel.org, andersson@kernel.org,
+        konradybcio@kernel.org, p.zabel@pengutronix.de,
+        dmitry.baryshkov@linaro.org, quic_nsekar@quicinc.com,
+        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-pm@vger.kernel.org
-References: <20250127093128.2611247-1-quic_srichara@quicinc.com>
- <20250127093128.2611247-4-quic_srichara@quicinc.com>
+        linux-phy@lists.infradead.org
+References: <20250127072850.3777975-1-quic_varada@quicinc.com>
+ <20250127072850.3777975-3-quic_varada@quicinc.com>
 Content-Language: en-US
 From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <20250127093128.2611247-4-quic_srichara@quicinc.com>
+In-Reply-To: <20250127072850.3777975-3-quic_varada@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: ba0__87Ur2DQr_e3NIfdyM0Pucs5cj5v
-X-Proofpoint-ORIG-GUID: ba0__87Ur2DQr_e3NIfdyM0Pucs5cj5v
+X-Proofpoint-GUID: fDpvh6b8BgGGC-gnUvgSEDymXO-XzVHq
+X-Proofpoint-ORIG-GUID: fDpvh6b8BgGGC-gnUvgSEDymXO-XzVHq
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
  definitions=2025-01-27_07,2025-01-27_01,2024-11-22_01
@@ -113,62 +115,59 @@ X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogs
  phishscore=0 suspectscore=0 mlxscore=0 impostorscore=0 priorityscore=1501
  adultscore=0 malwarescore=0 clxscore=1015 spamscore=0 lowpriorityscore=0
  classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2411120000
- definitions=main-2501270121
+ definitions=main-2501270122
 
-On 27.01.2025 10:31 AM, Sricharan R wrote:
-> From: Md Sadre Alam <quic_mdalam@quicinc.com>
+On 27.01.2025 8:28 AM, Varadarajan Narayanan wrote:
+> From: Nitheesh Sekar <quic_nsekar@quicinc.com>
 > 
-> IPQ5424 have different OPPs available for the CPU based on
-> SoC variant. This can be determined through use of an eFuse
-> register present in the silicon.
+> Add Qualcomm PCIe UNIPHY 28LP driver support present
+> in Qualcomm IPQ5332 SoC and the phy init sequence.
 > 
-> Added support for ipq5424 on nvmem driver which helps to
-> determine OPPs at runtime based on the eFuse register which
-> has the CPU frequency limits. opp-supported-hw dt binding
-> can be used to indicate the available OPPs for each limit.
-> 
-> nvmem driver also creates the "cpufreq-dt" platform_device after
-> passing the version matching data to the OPP framework so that the
-> cpufreq-dt handles the actual cpufreq implementation.
-> 
-> Signed-off-by: Md Sadre Alam <quic_mdalam@quicinc.com>
-> Signed-off-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
+> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Signed-off-by: Nitheesh Sekar <quic_nsekar@quicinc.com>
+> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
 > ---
->  drivers/cpufreq/cpufreq-dt-platdev.c | 1 +
->  drivers/cpufreq/qcom-cpufreq-nvmem.c | 5 +++++
->  2 files changed, 6 insertions(+)
-> 
-> diff --git a/drivers/cpufreq/cpufreq-dt-platdev.c b/drivers/cpufreq/cpufreq-dt-platdev.c
-> index 9c198bd4f7e9..4045bc3ce805 100644
-> --- a/drivers/cpufreq/cpufreq-dt-platdev.c
-> +++ b/drivers/cpufreq/cpufreq-dt-platdev.c
-> @@ -187,6 +187,7 @@ static const struct of_device_id blocklist[] __initconst = {
->  	{ .compatible = "ti,am62p5", },
->  
->  	{ .compatible = "qcom,ipq5332", },
-> +	{ .compatible = "qcom,ipq5424", },
->  	{ .compatible = "qcom,ipq6018", },
->  	{ .compatible = "qcom,ipq8064", },
->  	{ .compatible = "qcom,ipq8074", },
-> diff --git a/drivers/cpufreq/qcom-cpufreq-nvmem.c b/drivers/cpufreq/qcom-cpufreq-nvmem.c
-> index 3a8ed723a23e..102f7f1b031c 100644
-> --- a/drivers/cpufreq/qcom-cpufreq-nvmem.c
-> +++ b/drivers/cpufreq/qcom-cpufreq-nvmem.c
-> @@ -200,6 +200,10 @@ static int qcom_cpufreq_kryo_name_version(struct device *cpu_dev,
->  	case QCOM_ID_IPQ9574:
->  		drv->versions = 1 << (unsigned int)(*speedbin);
->  		break;
-> +	case QCOM_ID_IPQ5424:
-> +	case QCOM_ID_IPQ5404:
-> +		drv->versions =  (*speedbin != 0x3b) ? BIT(0) : BIT(1);
 
-Perhaps:
+[...]
 
-drv->versions =  (*speedbin == 0x3b) ? BIT(1) : BIT(0);
+> +	usleep_range(CLK_EN_DELAY_MIN_US, CLK_EN_DELAY_MAX_US);
+> +
+> +	qcom_uniphy_pcie_init(phy);
+> +	return 0;
 
-But ultimately both work:
+Please add a newline before the return statement
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+[...]
+
+> +static int qcom_uniphy_pcie_probe(struct platform_device *pdev)
+> +{
+> +	struct phy_provider *phy_provider;
+> +	struct device *dev = &pdev->dev;
+> +	struct qcom_uniphy_pcie *phy;
+> +	struct phy *generic_phy;
+> +	int ret;
+> +
+> +	phy = devm_kzalloc(&pdev->dev, sizeof(*phy), GFP_KERNEL);
+> +	if (!phy)
+> +		return -ENOMEM;
+> +
+> +	platform_set_drvdata(pdev, phy);
+> +	phy->dev = &pdev->dev;
+> +
+> +	phy->data = of_device_get_match_data(dev);
+> +	if (!phy->data)
+> +		return -EINVAL;
+> +
+> +	phy->lanes = 1;
+> +	if (of_property_read_u32(dev_of_node(dev), "num-lanes", &phy->lanes))
+> +		dev_info(dev, "Not able to get num-lanes. Assuming 1\n");
+
+return dev_err_probe(dev, ret, "Couldn't read num-lanes\n");
+
+And please make num-lanes required in bindings there
+
+We don't want silent fallbacks in such cases, as it's easy to miss those and
+e.g. ship a product which would then run the PCIe link at half the speed
 
 Konrad
 
