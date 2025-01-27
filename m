@@ -1,168 +1,125 @@
-Return-Path: <linux-arm-msm+bounces-46213-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46214-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E54ADA1D357
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Jan 2025 10:28:44 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 18D5DA1D367
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Jan 2025 10:31:57 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BC8AA3A249F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Jan 2025 09:28:35 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 74A8D164D6A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Jan 2025 09:31:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E07881FDA6B;
-	Mon, 27 Jan 2025 09:28:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2975E1FCD1B;
+	Mon, 27 Jan 2025 09:31:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="r4NVy8Xk"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="TDrtoiZV"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f43.google.com (mail-ed1-f43.google.com [209.85.208.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCA421FC7CE
-	for <linux-arm-msm@vger.kernel.org>; Mon, 27 Jan 2025 09:28:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 862E61FC10C;
+	Mon, 27 Jan 2025 09:31:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737970115; cv=none; b=PiOMrSJMCo6kynxoZnbFSanNaYrWza3UAFrqyC9ZrkIthVAJp54wUziaoE6C1dnNLWCP0kZHseg+Ytrp4E9uDSW1laMOxy80yV7UWlu71sgogsnJKDFaQY6xArlmidbyDQruG3K2R5WYXczQLxM/YnxoB8zcyXAewnweqo+8M4o=
+	t=1737970313; cv=none; b=AxR9kwDkSYVVX0ukw9NQUizqFQQJDMVhVm72xUK053S0vqPRoo7dMrAsokeIGCWrPZlvyerIcKYdhH+nYADgCKinNGI0vuuG30b9jKC6ClQGYE8IpPQNAJaOdzqdDnCjIMMKX+Ne2Ipe6DDce+WGnZW9DXiYGJ7GqsTQufjrSCQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737970115; c=relaxed/simple;
-	bh=jG6C1oQBMCq9LAc/Rvpv8xIkgJhrX5pH93bT32/ipBg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=XZ2TdvT7HNLfewIV6LV+Ttm4UZ9LF47TdzTqWY5UYn+I3ctUMEolVgvOZP7wzkrK8lbCm5T42vT1Sxrvd6aQqAULobBJ27WdAqfTp46zR0LFig2BDXkUBYoLbmxtVg5YFFpg2PyxClcBFkNu5+MYHFz7ic5+dwcFYJ8eenDT4ro=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=r4NVy8Xk; arc=none smtp.client-ip=209.85.208.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f43.google.com with SMTP id 4fb4d7f45d1cf-5d0d32cd31aso6269053a12.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Jan 2025 01:28:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1737970111; x=1738574911; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=dijvCU0SPZdtVsHE2T2w5uYrQzB+N6hQhFYPYAMrz9o=;
-        b=r4NVy8Xk3Pa7Z0NHyi/B17zUAaG3GKol7Hg3cJP3bPDYO2a3G17GojahIe/oXNWoTQ
-         XbvJYN+VKlCLUaj4dI88iGL91QqTJFLALscNUVy+vubfGpVK+bsvmeCz/q78m0Z7sisn
-         SGHdM218geVKvvYXHGOK3NhPjPCkyxsr9pblbQzq6ELzqAfMXGNUO6JxR1lAbnoV8Lql
-         o3NVYKaDLoozB+9DZD+LsNa8skKHgFCW71GQC/S7nC2JfvKOAoJ541CAGUZ4ULitygyX
-         jowTkMNymJC/EP8x4AKBJ3L2zwFBRMEklQnwnsISyZ3z1BlOBUsNYR+5nQOIMkZRLL8Q
-         ZAcQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1737970111; x=1738574911;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=dijvCU0SPZdtVsHE2T2w5uYrQzB+N6hQhFYPYAMrz9o=;
-        b=IhsOamGy0Iep3Xp97EBiPVY1mQrBGuaTFnEtBYfmTuhb4q9mgSZh9ly7glL50ZNADb
-         NwzRu/uebu+VjTko9HFy9Ix9tcmJVkkY9ErGum6bNInlkHMTUcx7wY+/YaBHMk1LlP4X
-         zUdVEFdabgClP1ZCzXDW4RG/bqL5tzk45K+aA0iDRo1hUz7kx2GDKmuvS3O/5E8jg9G7
-         Y3Z/1oCdYm+KhLwlRU7X5RtnYgfSIzp5ibZfuGbABzUC/8cVh0kUSIRjIrfyVOiTk6bO
-         bUEiLdB3caSoqZNmeCHJAWJl8JB0ya43t4fpi4+FOH42XRPyyeFeepGtgJ/hrQ746O5i
-         5EWw==
-X-Forwarded-Encrypted: i=1; AJvYcCWyIAG9RmNWUsmsxTY9ES9peymzU0vHAB5k3FidQKh/Y4GlGCqjtRkYtZbhwPIzfQB2ChjZWlxgSW/Lj8LO@vger.kernel.org
-X-Gm-Message-State: AOJu0YytHVTm6UKaDiT0qIJ4CwBTuI1GTIja23Ro07V1fZ9hzqmYww81
-	aTmbwphUy2JwuD3Geq6oOChKM8IKDX/E+jjKYFU5DZLnUfL6jzYRY53Au40EPfU=
-X-Gm-Gg: ASbGncsrEVvCmsaUCGIELxX4ik+w1y9Rjnl/B+8wuR3SbbOhJFgdylV5L0uFVpSYroy
-	KwhoBY69ldv+qaoG52dgmOnGDhEx1QYqCpHnzJwll+H1Mj6D3y8r0YMjGv/EDJgUFmnZemWcORY
-	qXnrM2usuLepn7KKuAk7qhE2mKkiPIO1Lzwud5KFfmJLeihAvCe9GVKkaRsyqt/jbXLs9qahNki
-	M3CNA+ewHbPq68YeOg4JmYaYj+nM8YFMIQhbBvcOudKnUGJqU32p3csRa9w2YelrBvNSi6Ey/qW
-	/18KKTM/1BVLGeFP
-X-Google-Smtp-Source: AGHT+IG/PK0i4cjJBXR80fck8NTF0pr77nNVOKwW0u+ZnYmXiYMPZNiHwSdPWJd7JmifLLUGyuml+A==
-X-Received: by 2002:a50:9357:0:b0:5db:e91a:6baf with SMTP id 4fb4d7f45d1cf-5dbe91a6ce3mr42059947a12.14.1737970111005;
-        Mon, 27 Jan 2025 01:28:31 -0800 (PST)
-Received: from linaro.org ([2a02:2454:ff21:ef30:f64e:7d70:e55f:6da8])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5dc186d8b37sm5108857a12.72.2025.01.27.01.28.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 27 Jan 2025 01:28:30 -0800 (PST)
-Date: Mon, 27 Jan 2025 10:28:28 +0100
-From: Stephan Gerhold <stephan.gerhold@linaro.org>
-To: Luca Weiss <luca@lucaweiss.eu>
-Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-	Bjorn Andersson <andersson@kernel.org>,
-	Mathieu Poirier <mathieu.poirier@linaro.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Stephan Gerhold <stephan@gerhold.net>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Matti =?iso-8859-1?Q?Lehtim=E4ki?= <matti.lehtimaki@gmail.com>,
-	linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 6/9] ARM: dts: qcom: msm8226: Add smsm node
-Message-ID: <Z5dRvI9psN4hBqah@linaro.org>
-References: <20250126-msm8226-modem-v2-0-e88d76d6daff@lucaweiss.eu>
- <20250126-msm8226-modem-v2-6-e88d76d6daff@lucaweiss.eu>
+	s=arc-20240116; t=1737970313; c=relaxed/simple;
+	bh=XumFyZdHKitDhVwJJi/+ptumS5SFZLM4peBBzi3mGHA=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=rJWUFIrtEO2L5yTrCfcRh1uJea+45ur2XHowBzwFVGK2lo4+2w3BnOONPnJgAOlPKQkVPwCQeCLzXSBZgTpk4B4e9P9pJWMlbLsmfTc1FW8f4fSgIXvJ873TJWT2E+PZTxGX02mRMeniI3OMl0ZVqsiOzzX/y3w2z+sJNxdKeT0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=TDrtoiZV; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50R3UEnC004273;
+	Mon, 27 Jan 2025 09:31:47 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=UBra8mNAmYWR1KMdp/rIqu
+	yimsV+tW5VhTmFxCJg1AM=; b=TDrtoiZVmbgapyVPLLzDQGaK+QmV3RVEv5TlBx
+	d0VNiQ0TjpwNtG942ANVJNLaB90+J8JBdC5xBqKDwxM2p7GCITeiUL9rdrznzOvb
+	y2+w8TcD8RBZatrK8qU0od/fdFs8SPvwu+J5MUyQpnPMOJ4T5AXKd2naAj21V5nj
+	JSJNqTEcmbidLeeF8wLo8Au93QDKMWHwMynTzprYTReCViiYaCUl3b41bqLxHJZn
+	V9USaAl8eP+gciyzh5/8NqW91LtTjoYVFSLK31KBVkYNRpuEoWjWkG4AdVGRS+7s
+	FGKgIytAP4rCGXReRKYnjHo3O5u1qGZK4zWgFChncMWsPyLg==
+Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44e2988nw1-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 27 Jan 2025 09:31:46 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 50R9Vk0l025469
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 27 Jan 2025 09:31:46 GMT
+Received: from hu-srichara-blr.qualcomm.com (10.80.80.8) by
+ nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Mon, 27 Jan 2025 01:31:41 -0800
+From: Sricharan R <quic_srichara@quicinc.com>
+To: <andersson@kernel.org>, <mturquette@baylibre.com>, <sboyd@kernel.org>,
+        <robh@kernel.org>, <krzk+dt@kernel.org>, <conor+dt@kernel.org>,
+        <konradybcio@kernel.org>, <rafael@kernel.org>,
+        <viresh.kumar@linaro.org>, <ilia.lin@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-pm@vger.kernel.org>
+CC: <quic_srichara@quicinc.com>
+Subject: [PATCH 0/4] Enable cpufreq for IPQ5424
+Date: Mon, 27 Jan 2025 15:01:24 +0530
+Message-ID: <20250127093128.2611247-1-quic_srichara@quicinc.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250126-msm8226-modem-v2-6-e88d76d6daff@lucaweiss.eu>
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: Fd-RkSoCo2bLlY0AvCE5_Rlf9FpKj4DB
+X-Proofpoint-ORIG-GUID: Fd-RkSoCo2bLlY0AvCE5_Rlf9FpKj4DB
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-01-27_04,2025-01-27_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 bulkscore=0
+ mlxlogscore=692 lowpriorityscore=0 spamscore=0 malwarescore=0 phishscore=0
+ suspectscore=0 adultscore=0 clxscore=1011 priorityscore=1501
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2501270076
 
-On Sun, Jan 26, 2025 at 09:57:25PM +0100, Luca Weiss wrote:
-> From: Matti Lehtimäki <matti.lehtimaki@gmail.com>
-> 
-> Add smsm node for remoteproc cores.
-> 
-> Signed-off-by: Matti Lehtimäki <matti.lehtimaki@gmail.com>
-> Co-developed-by: Luca Weiss <luca@lucaweiss.eu>
-> Signed-off-by: Luca Weiss <luca@lucaweiss.eu>
+From: Sricharan Ramabadhran <quic_srichara@quicinc.com>
 
-Reviewed-by: Stephan Gerhold <stephan.gerhold@linaro.org>
+CPU on Qualcomm ipq5424 is clocked by huayra PLL with RCG support.
+Add support for the APSS PLL, RCG and clock enable for ipq5424.
+The PLL, RCG register space are clubbed. Hence adding new APSS driver
+for both PLL and RCG/CBC control. Also the L3 cache has a separate pll
+and needs to be scaled along with the CPU.
 
-> ---
->  arch/arm/boot/dts/qcom/qcom-msm8226.dtsi | 34 ++++++++++++++++++++++++++++++++
->  1 file changed, 34 insertions(+)
-> 
-> diff --git a/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi b/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi
-> index caaeeadf289f78d29403312738bbb714eaad74d2..7e0838af6c2d0dc26e0082471b70578bc627491d 100644
-> --- a/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi
-> +++ b/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi
-> @@ -253,6 +253,40 @@ adsp_smp2p_in: slave-kernel {
->  		};
->  	};
->  
-> +	smsm {
-> +		compatible = "qcom,smsm";
-> +		#address-cells = <1>;
-> +		#size-cells = <0>;
-> +
-> +		mboxes = <0>, <&apcs 13>, <&apcs 9>, <&apcs 19>;
-> +
-> +		apps_smsm: apps@0 {
-> +			reg = <0>;
-> +			#qcom,smem-state-cells = <1>;
-> +		};
-> +
-> +		modem_smsm: modem@1 {
-> +			reg = <1>;
-> +			interrupts = <GIC_SPI 26 IRQ_TYPE_EDGE_RISING>;
-> +			interrupt-controller;
-> +			#interrupt-cells = <2>;
-> +		};
-> +
-> +		adsp_smsm: adsp@2 {
-> +			reg = <2>;
-> +			interrupts = <GIC_SPI 157 IRQ_TYPE_EDGE_RISING>;
-> +			interrupt-controller;
-> +			#interrupt-cells = <2>;
-> +		};
-> +
-> +		wcnss_smsm: wcnss@7 {
-> +			reg = <7>;
-> +			interrupts = <GIC_SPI 144 IRQ_TYPE_EDGE_RISING>;
-> +			interrupt-controller;
-> +			#interrupt-cells = <2>;
-> +		};
-> +	};
-> +
->  	soc: soc {
->  		compatible = "simple-bus";
->  		#address-cells = <1>;
-> 
-> -- 
-> 2.48.1
-> 
+Md Sadre Alam (1):
+  cpufreq: qcom-nvmem: Enable cpufreq for ipq5424
+
+Sricharan Ramabadhran (3):
+  dt-bindings: clock: ipq5424-apss-clk: Add ipq5424 apss clock
+    controller
+  clk: qcom: apss-ipq5424: Add ipq5424 apss clock controller
+  arm64: dts: qcom: ipq5424: Enable cpufreq support
+
+ .../bindings/clock/qcom,ipq5424-apss-clk.yaml |  57 +++
+ arch/arm64/boot/dts/qcom/ipq5424.dtsi         |  71 ++++
+ drivers/clk/qcom/Kconfig                      |   7 +
+ drivers/clk/qcom/Makefile                     |   1 +
+ drivers/clk/qcom/apss-ipq5424.c               | 373 ++++++++++++++++++
+ drivers/cpufreq/cpufreq-dt-platdev.c          |   1 +
+ drivers/cpufreq/qcom-cpufreq-nvmem.c          |   5 +
+ include/dt-bindings/clock/qcom,apss-ipq.h     |   6 +
+ 8 files changed, 521 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/clock/qcom,ipq5424-apss-clk.yaml
+ create mode 100644 drivers/clk/qcom/apss-ipq5424.c
+
+-- 
+2.34.1
+
 
