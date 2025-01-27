@@ -1,87 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-46277-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46278-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 963B3A1D957
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Jan 2025 16:17:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 6CB75A1D959
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Jan 2025 16:19:26 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A7DAE3A7ADD
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Jan 2025 15:16:41 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id ADE8B3A00A2
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Jan 2025 15:19:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B520F84A35;
-	Mon, 27 Jan 2025 15:16:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 706D2EAD0;
+	Mon, 27 Jan 2025 15:19:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="lRybVIDH"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="YHtxTZGV"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D5265FDA7
-	for <linux-arm-msm@vger.kernel.org>; Mon, 27 Jan 2025 15:16:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7193527468;
+	Mon, 27 Jan 2025 15:19:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737990999; cv=none; b=TrMNNvZPmyQf/0QzNl7TzoIBB0NtofbooKxiMB8c/ifOKPycgEuFs4gIqM100WdzKRocTi2SWWhqjWqOtzLsVHeBgAvKgIS1kn4Has27zTH0Zf9t+DrjVS4z720e7OZ3D08gMQ+UcYvXfdIVSLW72zZL4Rp5sQG2mp5IZNOgyq4=
+	t=1737991160; cv=none; b=a7n5S3/aEPzuuhxKhVs7NrHapQsnrpxKW3xSlNLpTaDaAWXgX+seGaGehD802rL5RHhsKIjd9sdQRaiUCrbksXAamrxYTh+FipLt8Zic5HeJ+PqT3Y1PftdMPr7J95bR5JZepy6+WFZYe5Bug35+m4TbSECwbcfVZLBlnghmW2U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737990999; c=relaxed/simple;
-	bh=XXWwenXnSMIfC4eeFgueYgwPm2Um/6LbxvB2XdF7djg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=DlKL7xMw4EHGRdnLM40HOpBIl0KdYcHYLhAWduKbRqWT0PWuo4YpPBcxMocFmduI43j53MY7YJaVP4/mg/C6U8VjmXEaJs8M3qQZr7R3DKTWk4hSRkJbEgEjNNZe2iMmH0NpdVra5BNlHe+2DS7PcI3uVfRCVI3E3HvQRIYT2C8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=lRybVIDH; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50RCTZ4E021040
-	for <linux-arm-msm@vger.kernel.org>; Mon, 27 Jan 2025 15:16:37 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	content-transfer-encoding:content-type:date:from:in-reply-to
+	s=arc-20240116; t=1737991160; c=relaxed/simple;
+	bh=ij1anOFE+eE7na5ynO28+DL3r2Xi60tJYOti+UmJOjs=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=m0NVAyfe6HXt+puVcCXXyVMKSJfYCkmrPizn9Jd5ra59aoLv1QId1huoyAixPOQYcCFFN1i7vYp1Vlwd/dhmwBlqoa7nMIPMCCzw5VyJGWgfYf0e2dzYHMPKysjR2MmAEuTlcn4tZzzBrkcVnL5VKZ9l362xgSGQ5e4X0iit6hI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=YHtxTZGV; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50RDSXVo024818;
+	Mon, 27 Jan 2025 15:18:10 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	eiOVlvy8O2sljdqhnTACcFcT/c+BYziyN9TVv9igCSg=; b=lRybVIDH/erv8Rke
-	Huf178CITEZwh89jtxljjRNIzq6MtfNnY4DVt2h63q73kCiKDAD/gTfsXj+FB+Uj
-	pRbtnxm1o92a6I+EFD3TM09Vl7nAXJuH6mKMZ5PGytMUDTvq+2CAZuF1SYuMOHAJ
-	3CXyD920lvofbQB5GAEUzG5ZirwLhTgj/puBfkJ78x47kTAiGvsiitML7n/CuW3c
-	MFnJ9bhqy8rx+Z5eo4VWGUIKTRuBQZE3Di5UNlz41238pNf3f9R1k3OZGYZUw3ZT
-	sjp7NRj0cfSNM5IKTMushd+UqASJL0axMZz1mxgfknjiaetChpWnxHoIKfIDhw6L
-	b/jS6g==
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com [209.85.222.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44ea6s0acb-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 27 Jan 2025 15:16:37 +0000 (GMT)
-Received: by mail-qk1-f199.google.com with SMTP id af79cd13be357-7b6e43ed084so90807885a.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Jan 2025 07:16:37 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1737990996; x=1738595796;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=eiOVlvy8O2sljdqhnTACcFcT/c+BYziyN9TVv9igCSg=;
-        b=vuv1+ECHCD2lJFbEl7S7qzHTDQRbCcZ8H4dV+venLVuHCmI7XuMXeYx/3UgbCPzcTT
-         6aVq37vfjbtAbeTR40/0TUzveagB1nj1gx6GA3iY1lr/7GJc55zww/2F/rgytWJHiPit
-         w1etbh0q1J/RTiFCpb/YnJb6WDjVB8MWuWT8Vluv7c11ufNkR/E8WwwCHktoQeiVTdDv
-         8NEsddqxQ1M10/C/X0pen9eOftFWovUTnN4AIO0EcD0s2JA+LFjwVkqCrABpdzvLOm3M
-         b6gp9I+q3RYup6m+qLNQTrPloOiByFXKVywhSS4BhDRhjsQD1TQzw90lJsm2sDyVg38c
-         4yrw==
-X-Forwarded-Encrypted: i=1; AJvYcCWgZ5kcDp7wy5kv4d1D+eqS7CHexsPx6ieaO+BV/dTXhIu0RS8ei1R6Um4cNNpfATzRkOSa44frb6jY1T3A@vger.kernel.org
-X-Gm-Message-State: AOJu0YwQbzjuNiEKxuGo49JKfrBQBapCIcHX90/M18OU1XAw65G6W7lX
-	X4fmlH4QJkfata1dmsAPWDLMtqlK9OGdmpOB4wb2paJVpD5s2bPGJYUWRlpJIh5glJgQKEoewjk
-	YWc49s6vo7TsYkM+wbuWy8qUiSsUuJMA1e4C6wnsgOmf4zvyGli/WuBOgk9BA6IK4
-X-Gm-Gg: ASbGncscX0cAY93+lA0BPPP37w2CrVtWfrN2iXoWrp64FTtxPCmuXCk4MWA1lDzD6Mr
-	oFDeCVlmytkEyMjiEIAgLoZ6MsqSsmExzKPIY03kxGCa1wn/DT6UAhCCjahQCOzRqwhrjEoyukV
-	tB63ugt3p6u5p7AbaCi0n+SUD+5dZRpi9w71K/M2V25Rr5uyViVkX0EanAeqXMgP3o67L2BcnDM
-	NpKGjwCwOcW83L4nKjOccD7OyqTXreX6qSZCiy26AC1SCccOPL1k2RS5aRGlP6wXCuJfHRswrqC
-	7ufrNttFPkLxb6Z5tD/5gia49k7ht+ajONrVsSMa6aAuxTocGiOXV9XU3O0=
-X-Received: by 2002:a05:622a:1a23:b0:467:85f9:2a67 with SMTP id d75a77b69052e-46e12a940b8mr232903671cf.8.1737990995894;
-        Mon, 27 Jan 2025 07:16:35 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHHbQBaClGLDjf47vJiIgHk5bysqAnHMsfctaPHSAVkHPdBSwDmwLdwjqjUQMvLgQ8TfbrmWw==
-X-Received: by 2002:a05:622a:1a23:b0:467:85f9:2a67 with SMTP id d75a77b69052e-46e12a940b8mr232903471cf.8.1737990995484;
-        Mon, 27 Jan 2025 07:16:35 -0800 (PST)
-Received: from [192.168.65.90] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5dc186b37b6sm5388019a12.56.2025.01.27.07.16.32
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 27 Jan 2025 07:16:35 -0800 (PST)
-Message-ID: <60d02c55-0d18-4704-9126-8b8ffef5bd68@oss.qualcomm.com>
-Date: Mon, 27 Jan 2025 16:16:32 +0100
+	FHPcaRykKa2ZjBuodSdhXCcRAYTZ9namuKFkfbBbMZ4=; b=YHtxTZGV5KVpAQ2o
+	+qt3sTgWsHPn1UTVvJeCB31cWX05IneMzn+7wfeSwbC8ZO8awl6pFLydk7JvoTNF
+	l6h2d+Xa9nuiM52bESnDFydRjF7WbIs5OehMtw4TYPsA0SXS41aJHFi4Ks0u++1q
+	y3iLQsAc76LP/CW7Lhu1dPlTHRWzZCu/uhf1cftqU4YJbi5K8Q2i77nRpeuwGjbP
+	7HOwJijimCCAalOVXS5IG2y2GLQjr49xqC1dd23IrVLSys/+VOFUWnOyOP1cRjUU
+	S+6YEFKYHs3busPRSX5mn7O2YSHOnPCNM9ae40ebrhJJIYlneTLlmQLFvppc1IRq
+	6Vasow==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44eb2cr749-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 27 Jan 2025 15:18:09 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 50RFI8n9023759
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 27 Jan 2025 15:18:08 GMT
+Received: from [10.218.43.20] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 27 Jan
+ 2025 07:18:05 -0800
+Message-ID: <85769d2e-c1cc-42e3-bbc7-ec878118d2c7@quicinc.com>
+Date: Mon, 27 Jan 2025 20:48:01 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -89,85 +65,142 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 2/7] phy: qcom: Introduce PCIe UNIPHY 28LP driver
-To: Varadarajan Narayanan <quic_varada@quicinc.com>, lpieralisi@kernel.org,
-        kw@linux.com, manivannan.sadhasivam@linaro.org, robh@kernel.org,
-        bhelgaas@google.com, krzk+dt@kernel.org, conor+dt@kernel.org,
-        vkoul@kernel.org, kishon@kernel.org, andersson@kernel.org,
-        konradybcio@kernel.org, p.zabel@pengutronix.de,
-        dmitry.baryshkov@linaro.org, quic_nsekar@quicinc.com,
-        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-phy@lists.infradead.org
-References: <20250127072850.3777975-1-quic_varada@quicinc.com>
- <20250127072850.3777975-3-quic_varada@quicinc.com>
+Subject: Re: [PATCH V10] scsi: ufs: qcom: Enable UFS Shared ICE Feature
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+CC: <James.Bottomley@HansenPartnership.com>, <martin.petersen@oracle.com>,
+        <andersson@kernel.org>, <bvanassche@acm.org>, <ebiggers@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-scsi@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>,
+        Naveen Kumar Goud Arepalli
+	<quic_narepall@quicinc.com>,
+        Nitin Rawat <quic_nitirawa@quicinc.com>
+References: <20250109070352.8801-1-quic_rdwivedi@quicinc.com>
+ <20250117165157.euq56jnbizhgfjtf@thinkpad>
 Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <20250127072850.3777975-3-quic_varada@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
+From: Ram Kumar Dwivedi <quic_rdwivedi@quicinc.com>
+In-Reply-To: <20250117165157.euq56jnbizhgfjtf@thinkpad>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: fDpvh6b8BgGGC-gnUvgSEDymXO-XzVHq
-X-Proofpoint-ORIG-GUID: fDpvh6b8BgGGC-gnUvgSEDymXO-XzVHq
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: TWj_fDslwgwUmvuLqM5viSc_8TYmVvQ1
+X-Proofpoint-GUID: TWj_fDslwgwUmvuLqM5viSc_8TYmVvQ1
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
  definitions=2025-01-27_07,2025-01-27_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999 bulkscore=0
- phishscore=0 suspectscore=0 mlxscore=0 impostorscore=0 priorityscore=1501
- adultscore=0 malwarescore=0 clxscore=1015 spamscore=0 lowpriorityscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2411120000
- definitions=main-2501270122
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ lowpriorityscore=0 mlxscore=0 mlxlogscore=999 malwarescore=0 bulkscore=0
+ phishscore=0 adultscore=0 spamscore=0 impostorscore=0 clxscore=1015
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2501270122
 
-On 27.01.2025 8:28 AM, Varadarajan Narayanan wrote:
-> From: Nitheesh Sekar <quic_nsekar@quicinc.com>
+
+
+On 17-Jan-25 10:22 PM, Manivannan Sadhasivam wrote:
+> On Thu, Jan 09, 2025 at 12:33:52PM +0530, Ram Kumar Dwivedi wrote:
 > 
-> Add Qualcomm PCIe UNIPHY 28LP driver support present
-> in Qualcomm IPQ5332 SoC and the phy init sequence.
+> [...]
 > 
-> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> Signed-off-by: Nitheesh Sekar <quic_nsekar@quicinc.com>
-> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
-> ---
+>>  static void ufs_qcom_disable_lane_clks(struct ufs_qcom_host *host)
+>> @@ -439,6 +465,7 @@ static int ufs_qcom_hce_enable_notify(struct ufs_hba *hba,
+>>  		err = ufs_qcom_check_hibern8(hba);
+>>  		ufs_qcom_enable_hw_clk_gating(hba);
+>>  		ufs_qcom_ice_enable(host);
+>> +		ufs_qcom_config_ice_allocator(host);
+> 
+> This should be moved before ufs_qcom_ice_enable(), no?
 
-[...]
+Hi Mani,
 
-> +	usleep_range(CLK_EN_DELAY_MIN_US, CLK_EN_DELAY_MAX_US);
+This sequence is as per HPG guidelines.
+
+Thanks,
+Ram.
+
+> 
+>>  		break;
+>>  	default:
+>>  		dev_err(hba->dev, "%s: invalid status %d\n", __func__, status);
+>> @@ -932,6 +959,14 @@ static void ufs_qcom_set_host_params(struct ufs_hba *hba)
+>>  	host_params->hs_tx_gear = host_params->hs_rx_gear = ufs_qcom_get_hs_gear(hba);
+>>  }
+>>  
+>> +static void ufs_qcom_set_host_caps(struct ufs_hba *hba)
+>> +{
+>> +	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
+>> +
+>> +	if (host->hw_ver.major >= 0x5)
+>> +		host->caps |= UFS_QCOM_CAP_ICE_CONFIG;
+>> +}
+>> +
+>>  static void ufs_qcom_set_caps(struct ufs_hba *hba)
+>>  {
+>>  	hba->caps |= UFSHCD_CAP_CLK_GATING | UFSHCD_CAP_HIBERN8_WITH_CLK_GATING;
+>> @@ -940,6 +975,8 @@ static void ufs_qcom_set_caps(struct ufs_hba *hba)
+>>  	hba->caps |= UFSHCD_CAP_WB_EN;
+>>  	hba->caps |= UFSHCD_CAP_AGGR_POWER_COLLAPSE;
+>>  	hba->caps |= UFSHCD_CAP_RPM_AUTOSUSPEND;
+>> +
+>> +	ufs_qcom_set_host_caps(hba);
+>>  }
+>>  
+>>  /**
+>> diff --git a/drivers/ufs/host/ufs-qcom.h b/drivers/ufs/host/ufs-qcom.h
+>> index b9de170983c9..2975a9e545fa 100644
+>> --- a/drivers/ufs/host/ufs-qcom.h
+>> +++ b/drivers/ufs/host/ufs-qcom.h
+>> @@ -76,6 +76,12 @@ enum {
+>>  	UFS_MEM_CQIS_VS		= 0x8,
+>>  };
+>>  
+>> +/* QCOM UFS host controller Shared ICE registers */
+>> +enum {
+>> +	REG_UFS_MEM_ICE_CONFIG			= 0x260C,
+>> +	REG_UFS_MEM_ICE_NUM_CORE		= 0x2664,
+>> +};
+>> +
+> 
+> No, I asked for this change:
+> 
+> ```
+> diff --git a/drivers/ufs/host/ufs-qcom.h b/drivers/ufs/host/ufs-qcom.h
+> index b9de170983c9..9d1c9da51688 100644
+> --- a/drivers/ufs/host/ufs-qcom.h
+> +++ b/drivers/ufs/host/ufs-qcom.h
+> @@ -50,6 +50,9 @@ enum {
+>          */
+>         UFS_AH8_CFG                             = 0xFC,
+>  
+> +       REG_UFS_MEM_ICE_CONFIG                  = 0x260C,
+> +       REG_UFS_MEM_ICE_NUM_CORE                = 0x2664,
 > +
-> +	qcom_uniphy_pcie_init(phy);
-> +	return 0;
+>         REG_UFS_CFG3                            = 0x271C,
+>  
+>         REG_UFS_DEBUG_SPARE_CFG                 = 0x284C,
+> ```
+> 
+>>  #define UFS_CNTLR_2_x_x_VEN_REGS_OFFSET(x)	(0x000 + x)
+>>  #define UFS_CNTLR_3_x_x_VEN_REGS_OFFSET(x)	(0x400 + x)
+>>  
+>> @@ -110,6 +116,9 @@ enum {
+>>  /* bit definition for UFS_UFS_TEST_BUS_CTRL_n */
+>>  #define TEST_BUS_SUB_SEL_MASK	GENMASK(4, 0)  /* All XXX_SEL fields are 5 bits wide */
+>>  
+>> +/* bit definition for UFS Shared ICE config */
+> 
+> 'bit definition for REG_UFS_MEM_ICE_CONFIG register'
 
-Please add a newline before the return statement
+Hi Mani,
 
-[...]
+I have addressed this in the latest patchset.
 
-> +static int qcom_uniphy_pcie_probe(struct platform_device *pdev)
-> +{
-> +	struct phy_provider *phy_provider;
-> +	struct device *dev = &pdev->dev;
-> +	struct qcom_uniphy_pcie *phy;
-> +	struct phy *generic_phy;
-> +	int ret;
-> +
-> +	phy = devm_kzalloc(&pdev->dev, sizeof(*phy), GFP_KERNEL);
-> +	if (!phy)
-> +		return -ENOMEM;
-> +
-> +	platform_set_drvdata(pdev, phy);
-> +	phy->dev = &pdev->dev;
-> +
-> +	phy->data = of_device_get_match_data(dev);
-> +	if (!phy->data)
-> +		return -EINVAL;
-> +
-> +	phy->lanes = 1;
-> +	if (of_property_read_u32(dev_of_node(dev), "num-lanes", &phy->lanes))
-> +		dev_info(dev, "Not able to get num-lanes. Assuming 1\n");
+Thanks,
+Ram.
 
-return dev_err_probe(dev, ret, "Couldn't read num-lanes\n");
+> 
+> - Mani
+> 
 
-And please make num-lanes required in bindings there
-
-We don't want silent fallbacks in such cases, as it's easy to miss those and
-e.g. ship a product which would then run the PCIe link at half the speed
-
-Konrad
 
