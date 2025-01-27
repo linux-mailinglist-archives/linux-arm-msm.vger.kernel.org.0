@@ -1,189 +1,110 @@
-Return-Path: <linux-arm-msm+bounces-46291-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46292-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 55850A20078
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Jan 2025 23:22:21 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 52BEDA200BE
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Jan 2025 23:40:55 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8A8D218870E9
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Jan 2025 22:22:25 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B22B8165081
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Jan 2025 22:40:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2581D1DC04A;
-	Mon, 27 Jan 2025 22:21:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E22451DBB19;
+	Mon, 27 Jan 2025 22:40:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=lucaweiss.eu header.i=@lucaweiss.eu header.b="hJtWEkf0"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ohpJOPhh"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from ahti.lucaweiss.eu (ahti.lucaweiss.eu [128.199.32.197])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95BC41D88DB;
-	Mon, 27 Jan 2025 22:21:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=128.199.32.197
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B093A1D90B1;
+	Mon, 27 Jan 2025 22:40:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738016475; cv=none; b=lcqqx4ijASJ726V/DcZoTYNEGtOdIwcBSdOamqkaLTSlHmHbpi5RbmyXuxT4nCMi43ZNVXgQ1jqeGJpZzSa+3WBq+xMmFby2uB4FFOrfGtyka6qkyqKMj3j55ffUAnfsHllxtz3F6osvSG1xe/qQFiSrjsroYUGBmR5LB4B9Tkc=
+	t=1738017653; cv=none; b=k9Lm8Z6R0zdLCz5zBoqorG3E7pKKQhNF7/+IzdTH5Cs8LW/VqO3xuTd/6jTWslJ17cJm7irYObeukdYE8rtiqw9HThSFbik2HdOGPocgq4Fmy6nFj56LXx5V0PRPJ7Wrv+nwDOSa2fGUpwzJyzuhwC2TCAxLZSVa3GE9jePnYmQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738016475; c=relaxed/simple;
-	bh=w0V5EJfhyJzk1s2kIunL3i/Dw29dcV0O6rKeti3vG2s=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=PmL4R+UK+H1Ie+tiSegXK1sX1wrafXjJSqpzqWW7BclJCnqE4aIPYZqI7ZQIPocKISVWEYdk6s+MYzKnIbaMEER48YvrCPY3k7/YmW+MUb/FtBlGa6ExJSI+ycD6odF6LvdD5io4XpOcST6TdpBXdBUkaS2B/4x10ToimRhXlkU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=lucaweiss.eu; spf=pass smtp.mailfrom=lucaweiss.eu; dkim=pass (1024-bit key) header.d=lucaweiss.eu header.i=@lucaweiss.eu header.b=hJtWEkf0; arc=none smtp.client-ip=128.199.32.197
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=lucaweiss.eu
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lucaweiss.eu
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=lucaweiss.eu; s=s1;
-	t=1738016465; bh=w0V5EJfhyJzk1s2kIunL3i/Dw29dcV0O6rKeti3vG2s=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hJtWEkf0wy0zBVjSwI9GoVa2i+XB/UHTB+KJmYlyv18OFbmoBv7wZGGoA9M9eTeFC
-	 XQMEOrIuk4Juoy3JSClrfAiGkcnBn+VhGW0Sd/KHfwoKvzxqLobQzSEoqwVQoMM/ve
-	 tC9PohIIclJuE9wqCTMnqbwkYiJpbJ9W3Ig3aQvk=
-From: Luca Weiss <luca@lucaweiss.eu>
+	s=arc-20240116; t=1738017653; c=relaxed/simple;
+	bh=8n6GFq2wSsDW3UJiuOFend+qwj0qBJNXurbpJnrEFGY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=TzzsBsHkor5bfJmuFQoLw/pIT+mxNgUmpWuEkN7awGtpKXHTyGcPULo0x0ggUhyfxfY1NS8rvhlU9aOMMD6IX1sei5nm1cmE6oN37e7lUab33l1ZpQ0mbnMNUAi/+7YCYapEzz2EeihPRYA2QUqzJbIb36CHQtwQkZKxVADjFHM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ohpJOPhh; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB268C4CED2;
+	Mon, 27 Jan 2025 22:40:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1738017653;
+	bh=8n6GFq2wSsDW3UJiuOFend+qwj0qBJNXurbpJnrEFGY=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=ohpJOPhhj8jAFO655veGMIMxliz9kaesGQVF5VL6+7F5BqBXW4u4qQSBBJXDBtXxr
+	 apYbv9TPCKrf4WX09+K+RiquAl8cyDrw3vHsVWEhcFR9lrZaRXa+19n5eUc6RoGUpa
+	 miXj2dtTDf13Q8HmBY07woVRhn0n1SzgfC8dpgjsSZ+61Hj1YC2PS50zbhzGZw7Hwn
+	 +l/Hh6jSarFT7I6GLNUKC0BcdpZljClIcoe5IGmbc65uLER7aWrb+XkI1waAK7Sozq
+	 7Rx4xAq7EttpFoGQTwEyNC5rCth1qjUObYxA8ZIYA5ryhSK22fRU+SN3bjo/BsJVs0
+	 ztTRL2NHgxmhQ==
+Date: Mon, 27 Jan 2025 16:40:50 -0600
+From: Bjorn Andersson <andersson@kernel.org>
 To: Stephan Gerhold <stephan.gerhold@linaro.org>
-Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
- Bjorn Andersson <andersson@kernel.org>,
- Mathieu Poirier <mathieu.poirier@linaro.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>,
- Stephan Gerhold <stephan@gerhold.net>,
- Konrad Dybcio <konradybcio@kernel.org>,
- Matti =?UTF-8?B?TGVodGltw6RraQ==?= <matti.lehtimaki@gmail.com>,
- linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject:
- Re: [PATCH v2 3/9] remoteproc: qcom_q6v5_mss: Handle platforms with one power
- domain
-Date: Mon, 27 Jan 2025 23:21:04 +0100
-Message-ID: <2764902.mvXUDI8C0e@lucaweiss.eu>
-In-Reply-To: <Z5dKxZ-fri8RaTPo@linaro.org>
-References:
- <20250126-msm8226-modem-v2-0-e88d76d6daff@lucaweiss.eu>
- <20250126-msm8226-modem-v2-3-e88d76d6daff@lucaweiss.eu>
- <Z5dKxZ-fri8RaTPo@linaro.org>
+Cc: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>, 
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Felipe Balbi <balbi@kernel.org>, Wesley Cheng <quic_wcheng@quicinc.com>, 
+	Saravana Kannan <saravanak@google.com>, Thinh Nguyen <Thinh.Nguyen@synopsys.com>, 
+	Philipp Zabel <p.zabel@pengutronix.de>, Konrad Dybcio <konradybcio@kernel.org>, 
+	Frank Li <Frank.li@nxp.com>, linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3 00/12] usb: dwc3: qcom: Flatten dwc3 structure
+Message-ID: <hn5lcdbdmvdntmufgvzju2xsvxwplxeoechzgtxgmqkcswooxc@6zuqbfyriqnc>
+References: <20250113-dwc3-refactor-v3-0-d1722075df7b@oss.qualcomm.com>
+ <Z5fJFRMHIvKoN4cE@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <Z5fJFRMHIvKoN4cE@linaro.org>
 
-On maandag 27 januari 2025 09:58:45 Midden-Europese standaardtijd Stephan G=
-erhold wrote:
-> On Sun, Jan 26, 2025 at 09:57:22PM +0100, Luca Weiss wrote:
-> > For example MSM8974 has mx voltage rail exposed as regulator and only cx
-> > voltage rail is exposed as power domain. This power domain (cx) is
-> > attached internally in power domain and cannot be attached in this driv=
-er.
-> >=20
-> > Fixes: 8750cf392394 ("remoteproc: qcom_q6v5_mss: Allow replacing regula=
-tors with power domains")
-> > Co-developed-by: Matti Lehtim=C3=A4ki <matti.lehtimaki@gmail.com>
-> > Signed-off-by: Matti Lehtim=C3=A4ki <matti.lehtimaki@gmail.com>
-> > Signed-off-by: Luca Weiss <luca@lucaweiss.eu>
+On Mon, Jan 27, 2025 at 06:57:41PM +0100, Stephan Gerhold wrote:
+> On Mon, Jan 13, 2025 at 09:11:33PM -0800, Bjorn Andersson wrote:
+[..]
+> >  118 files changed, 8389 insertions(+), 670 deletions(-)
 > > ---
-> > Changes in v2:
-> >   - Move MSM8974 mx-supply from "fallback_proxy_supply" to
-> >     "proxy_supply" to match updated DT schema
-> >   - Add fixes tag
-> > ---
-> >  drivers/remoteproc/qcom_q6v5_mss.c | 20 +++++++++++++++++---
-> >  1 file changed, 17 insertions(+), 3 deletions(-)
-> >=20
-> > diff --git a/drivers/remoteproc/qcom_q6v5_mss.c b/drivers/remoteproc/qc=
-om_q6v5_mss.c
-> > index e78bd986dc3f256effce4470222c0a5faeea86ec..e2523b01febf393abfe5074=
-0a68b85a04011293c 100644
-> > --- a/drivers/remoteproc/qcom_q6v5_mss.c
-> > +++ b/drivers/remoteproc/qcom_q6v5_mss.c
-> > @@ -1828,6 +1828,13 @@ static int q6v5_pds_attach(struct device *dev, s=
-truct device **devs,
-> >  	if (!pd_names)
-> >  		return 0;
-> > =20
-> > +	/* Handle single power domain */
-> > +	if (dev->pm_domain) {
-> > +		devs[0] =3D dev;
-> > +		pm_runtime_enable(dev);
-> > +		return 1;
-> > +	}
-> > +
-> >  	while (pd_names[num_pds])
-> >  		num_pds++;
->=20
-> Hmm, I think you should put the above if condition below this loop and
-> verify that num_pds =3D=3D 1. Otherwise this would hide the error conditi=
-on
-> if the platform needs multple PDs, but someone only specifies one of
-> them in the DT. i.e.
->=20
-> 	if (num_pds =3D=3D 1 && dev->pm_domain) {
-> 		// ...
-> 	}
->=20
-> > =20
-> > @@ -1851,8 +1858,15 @@ static int q6v5_pds_attach(struct device *dev, s=
-truct device **devs,
-> >  static void q6v5_pds_detach(struct q6v5 *qproc, struct device **pds,
-> >  			    size_t pd_count)
-> >  {
-> > +	struct device *dev =3D qproc->dev;
-> >  	int i;
-> > =20
-> > +	/* Handle single power domain */
-> > +	if (dev->pm_domain && pd_count) {
->=20
-> Maybe if (pd_count =3D=3D 1 && dev->pm_domain) for consistency with the
-> above then.
+> 
+> This is quite a lot of code and new files for a temporary migration.
+> It's also difficult to test these changes fully, since there are
+> separate overlays for each SoC and sometimes even each board.
+> 
+> Would it be easier to just duplicate the dwc3-qcom driver for now?
+> Making a copy of the current dwc3-qcom.c would be just 1000 lines of
+> extra code, compared to more than 7000 for the overlay approach.
+> 
+> The copy (e.g. dwc3-qcom-legacy.c) would keep handling the old bindings
+> with the existing code (that is known to work to some extent). We can
+> then improve upon the main version without risk of breaking any old
+> DTBs. If we decide to drop support for the old DTBs at some point, we
+> can just drop dwc3-qcom-legacy.
+> 
+> This approach is also not pretty, but I think the risk and effort would
+> be lower than making sure the overlay approach works on all the affected
+> targets.
+> 
 
-Good suggestions, thanks!
+I like this suggestion.
 
->=20
-> > +		pm_runtime_disable(dev);
->=20
-> I'm guessing it does, but just to make sure: Have you verified that the
-> power domain is indeed voted for off after this call to
-> pm_runtime_disable()? Start the remoteproc and when it's booted inspect
-> /sys/kernel/debug/pm_genpd/pm_genpd_summary to see if the PD/remoteproc
-> dev is suspended.
+It's much more isolated and we know the current state of the driver
+works with the current dtbs out there - so backwards compatibility would
+be handled. I also did end up having to use separate compatibles for the
+old and new binding/driver, so this should be quite clean - i.e.
+nicer than the overlay-based path...
 
-Looks sane I think (modem: remoteproc@fc880000)
+The one drawback would be that devices that isn't updated to a new dtb
+would not gain the upcoming improved support for role switching, or any
+of the improvements in pm_runtime-support (as I assume we'd only care
+about the new driver). But I think that's worth the saving in
+complexity.
 
-htc-memul:~$ sudo cat /sys/kernel/debug/pm_genpd/pm_genpd_summary
-domain                          status          children        performance
-    /device                         runtime status                  managed=
- by
-=2D------------------------------------------------------------------------=
-=2D----
-oxili_cx                        off-0                           0
-    fdb00000.gpu                    suspended                   0          =
- SW
-camss_vfe                       off-0                           0
-camss_jpeg                      off-0                           0
-mdss                            on                              0
-    fd900000.display-subsystem      active                      0          =
- SW
-venus0                          off-0                           0
-cx_vfc                          off-0                           0
-cx_ao                           off-0                           0
-cx                              on                              0
-    fc880000.remoteproc             suspended                   0          =
- SW
-    fe200000.remoteproc             unsupported                 0          =
- SW
-    fb204000.remoteproc             suspended                   0          =
- SW
-usb_hs_hsic                     off-0                           0
-
-
-Regards
-Luca
-
->=20
-> Thanks,
-> Stephan
->=20
-
-
-
-
+Regards,
+Bjorn
 
