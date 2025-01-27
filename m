@@ -1,195 +1,159 @@
-Return-Path: <linux-arm-msm+bounces-46235-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46236-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 03D3FA1D6A8
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Jan 2025 14:25:55 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B98C7A1D6B4
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Jan 2025 14:26:53 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BF27F3A1EBF
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Jan 2025 13:25:42 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 14723164DFD
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Jan 2025 13:26:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2A4A51FF7D4;
-	Mon, 27 Jan 2025 13:25:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C805B1FF7B4;
+	Mon, 27 Jan 2025 13:26:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="QSGUOvEZ"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="YPjvXoNJ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.15])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCDFA1FF7B4;
-	Mon, 27 Jan 2025 13:25:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.15
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E09781FDE28;
+	Mon, 27 Jan 2025 13:26:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737984332; cv=none; b=odp24p0j+3utK+dhrDZp54Fqr5Vng5pVzNhMZP+6uWvNhaM5NdV3jnReXtHuLUHJ9+p6rObv2tN+KeceJ6ciDNuxculzSKgTCu3dOcTJhiFY4oV+ZkCrZ4Fo+Q3u7JVQz7ZaYMsyzG5qXlOrxlbJbWiuFkVQ7s7emVdSVz3ikUY=
+	t=1737984408; cv=none; b=OpXx+SMnLWv4Kp5JGRjJVMomrWCcukyyrnqCjENPG8OdfzdOctEtJ9wGF57YfmXLG9Uq/bzeQjzJ9aaMyNseNzX6DDZ2hp6oPHpIiAW3KnjlRAZTJOYtbitvRzcn9/jUJTp8wkGTrHWpOOo49gFDk3n+fBFTQxRODI1l8pirXoE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737984332; c=relaxed/simple;
-	bh=RjFj+btLOrA1I0c/0XDEPot6dd9rNyckywxmgkJzq3o=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=aEfhAR3RlQYiSsb42lAOvxkw+nUntoz6q6DHAY0pQYX9yAkuDsIcFi/ef/RPnfCGfMo6aaLv5F7HtRLQF2WK23ejmtY2BNY7EEaLm0JP2UncX78LDNu5Z20MP1wE0lxRljio5NohTrvoN6ZN1daJdMi5M+IsFEMnMgznBw9oovI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=QSGUOvEZ; arc=none smtp.client-ip=198.175.65.15
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1737984330; x=1769520330;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=RjFj+btLOrA1I0c/0XDEPot6dd9rNyckywxmgkJzq3o=;
-  b=QSGUOvEZzlCLg52m+Lkyf/+kcHVE68FvAFk33+V3UhwIx/K/THbEuyid
-   qJ438VnvterjDhGelKR5fP6BxrrxRkqifOI54cau6t1t8osjTRna9hBxM
-   No2vFYIs3XvcsO1WP4e5Biv+WmJTB68gdx3/u0mrAfgwMTVAD015W4iZ3
-   /IS6Kq3c9DS8MxtJuSPO9pAimIX5JPT9iSW8d4LmXW3YyQJxw6TCZ90TZ
-   /GjxSPzYFVZHfh4LDTMcdRhtiKIjHF1pelA8u+BGatnQUd04z2t7ouweY
-   lN5ljcLdmzwZ6ey8werqdArXQ+hfBfCOql1cBQHnUxfs2OPHqKl0LQjSz
-   w==;
-X-CSE-ConnectionGUID: WXPLNx9wSDWvyiA2ZoPUwA==
-X-CSE-MsgGUID: Ov3TekHxTxuVTp8Y/oIV5g==
-X-IronPort-AV: E=McAfee;i="6700,10204,11328"; a="42105354"
-X-IronPort-AV: E=Sophos;i="6.13,238,1732608000"; 
-   d="scan'208";a="42105354"
-Received: from fmviesa002.fm.intel.com ([10.60.135.142])
-  by orvoesa107.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Jan 2025 05:25:22 -0800
-X-CSE-ConnectionGUID: oOw//HyuRH2sXbDiVD3/cA==
-X-CSE-MsgGUID: F7vXYkyrSx2N1gt4t3xT9A==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; 
-   d="scan'208";a="131730368"
-Received: from smile.fi.intel.com ([10.237.72.58])
-  by fmviesa002.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Jan 2025 05:25:02 -0800
-Received: from andy by smile.fi.intel.com with local (Exim 4.98)
-	(envelope-from <andriy.shevchenko@intel.com>)
-	id 1tcP6l-00000005jpm-3fIe;
-	Mon, 27 Jan 2025 15:24:55 +0200
-Date: Mon, 27 Jan 2025 15:24:55 +0200
-From: Andy Shevchenko <andriy.shevchenko@intel.com>
-To: Arnd Bergmann <arnd@kernel.org>
-Cc: linux-kernel@vger.kernel.org, Arnd Bergmann <arnd@arndb.de>,
-	Michael Ellerman <mpe@ellerman.id.au>,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Damien Le Moal <dlemoal@kernel.org>, Jiri Kosina <jikos@kernel.org>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Corey Minyard <minyard@acm.org>, Peter Huewe <peterhuewe@gmx.de>,
-	Jarkko Sakkinen <jarkko@kernel.org>,
-	Tero Kristo <kristo@kernel.org>, Stephen Boyd <sboyd@kernel.org>,
-	Ian Abbott <abbotti@mev.co.uk>,
-	H Hartley Sweeten <hsweeten@visionengravers.com>,
-	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
-	Len Brown <lenb@kernel.org>,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
-	John Allen <john.allen@amd.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	Vinod Koul <vkoul@kernel.org>, Ard Biesheuvel <ardb@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Moritz Fischer <mdf@kernel.org>, Liviu Dudau <liviu.dudau@arm.com>,
-	Benjamin Tissoires <benjamin.tissoires@redhat.com>,
-	Andi Shyti <andi.shyti@kernel.org>,
-	Michael Hennerich <michael.hennerich@analog.com>,
-	Peter Rosin <peda@axentia.se>, Lars-Peter Clausen <lars@metafoo.de>,
-	Jonathan Cameron <jic23@kernel.org>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-	Markuss Broks <markuss.broks@gmail.com>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>,
-	Lee Jones <lee@kernel.org>, Jakub Kicinski <kuba@kernel.org>,
-	Shyam Sundar S K <Shyam-sundar.S-k@amd.com>,
-	Iyappan Subramanian <iyappan@os.amperecomputing.com>,
-	Yisen Zhuang <yisen.zhuang@huawei.com>,
-	Stanislaw Gruszka <stf_xl@wp.pl>, Kalle Valo <kvalo@kernel.org>,
-	Sebastian Reichel <sre@kernel.org>,
-	Tony Lindgren <tony@atomide.com>, Mark Brown <broonie@kernel.org>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
-	Xiang Chen <chenxiang66@hisilicon.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Heiko Stuebner <heiko@sntech.de>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Vaibhav Hiremath <hvaibhav.linux@gmail.com>,
-	Alex Elder <elder@kernel.org>, Jiri Slaby <jirislaby@kernel.org>,
-	Jacky Huang <ychuang3@nuvoton.com>, Helge Deller <deller@gmx.de>,
-	Christoph Hellwig <hch@lst.de>, Robin Murphy <robin.murphy@arm.com>,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Kees Cook <keescook@chromium.org>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
-	Anna Schumaker <anna@kernel.org>,
-	Masahiro Yamada <masahiroy@kernel.org>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Takashi Iwai <tiwai@suse.com>, linuxppc-dev@lists.ozlabs.org,
-	linux-ide@vger.kernel.org, openipmi-developer@lists.sourceforge.net,
-	linux-integrity@vger.kernel.org, linux-omap@vger.kernel.org,
-	linux-clk@vger.kernel.org, linux-pm@vger.kernel.org,
-	linux-crypto@vger.kernel.org, dmaengine@vger.kernel.org,
-	linux-efi@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	linux-fpga@vger.kernel.org, dri-devel@lists.freedesktop.org,
-	linux-input@vger.kernel.org, linux-i2c@vger.kernel.org,
-	linux-iio@vger.kernel.org, linux-stm32@st-md-mailman.stormreply.com,
-	linux-arm-kernel@lists.infradead.org, netdev@vger.kernel.org,
-	linux-leds@vger.kernel.org, linux-wireless@vger.kernel.org,
-	linux-rtc@vger.kernel.org, linux-scsi@vger.kernel.org,
-	linux-spi@vger.kernel.org, linux-amlogic@lists.infradead.org,
-	linux-rockchip@lists.infradead.org,
-	linux-samsung-soc@vger.kernel.org, greybus-dev@lists.linaro.org,
-	linux-staging@lists.linux.dev, linux-serial@vger.kernel.org,
-	linux-usb@vger.kernel.org, linux-fbdev@vger.kernel.org,
-	iommu@lists.linux.dev, linux-trace-kernel@vger.kernel.org,
-	kasan-dev@googlegroups.com, linux-hardening@vger.kernel.org,
-	linux-nfs@vger.kernel.org, linux-kbuild@vger.kernel.org,
-	alsa-devel@alsa-project.org, linux-sound@vger.kernel.org
-Subject: Re: [PATCH 00/34] address all -Wunused-const warnings
-Message-ID: <Z5eJJ199QwL0HVJT@smile.fi.intel.com>
-References: <20240403080702.3509288-1-arnd@kernel.org>
+	s=arc-20240116; t=1737984408; c=relaxed/simple;
+	bh=h0qT8iQaaqvhxmNxxU3dstNgJHiEo3wYtKUz1k0RERU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=L31F5izuIKbN4LPLacospsCwbmK3JtgtH5oYWnQps3xGwB+fKrOJoImdyfE/Pc6eT2SxRVUrmYgEh6BntN5anBlPxS6Yukrmwkq+9oNOmQNg5WH+j3vaYR27wuiRIxHjNmTyrTNPxKzjgOqFBgKYGt2LpVlKVbukNEExZbnRKpo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=YPjvXoNJ; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50R0tDO8001841;
+	Mon, 27 Jan 2025 13:26:42 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	RBirlOQuqZ9z97hxsMQLPN82U5nWcgrsp+jEESJprQ0=; b=YPjvXoNJBn2vMXt+
+	KL6CNuDsNmOpP8SvQLH0vV0BxJH3J3+4/7K8pKAxFHNJauPUky4MqTu05Hj/fOTt
+	hyVzimJ0uyYynQQl2T3Dhaid0/p0Oq+FkiiRUDaTa3PgyG6PQ5OVxItbJG1L9+Yw
+	yxmgEGpZhhZMTiX6VbZbNt0RxK6i9ZEYA7PPdWPDL5H8l8AZSa9Mj52Fc6EFox+b
+	x18xtRvM1pMJRz+oLTGe5IbXQHUikEmRVD63rkdx5v33M0j2Kfn2yzocHko6OlZa
+	38Qt2knM6Rl7FsafifryC7wn17JWX/Z7234bZVsH/81NJgdZPqek/D2yv3J5N8gu
+	6qx4mQ==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44dwg0sf0q-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 27 Jan 2025 13:26:41 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 50RDQe0j024936
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 27 Jan 2025 13:26:40 GMT
+Received: from [10.217.217.143] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 27 Jan
+ 2025 05:26:37 -0800
+Message-ID: <1add841d-84d8-48b7-af79-f81c7bd893bd@quicinc.com>
+Date: Mon, 27 Jan 2025 18:56:34 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240403080702.3509288-1-arnd@kernel.org>
-Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
-
-On Wed, Apr 03, 2024 at 10:06:18AM +0200, Arnd Bergmann wrote:
-> From: Arnd Bergmann <arnd@arndb.de>
-> 
-> Compilers traditionally warn for unused 'static' variables, but not
-> if they are constant. The reason here is a custom for C++ programmers
-> to define named constants as 'static const' variables in header files
-> instead of using macros or enums.
-> 
-> In W=1 builds, we get warnings only static const variables in C
-> files, but not in headers, which is a good compromise, but this still
-> produces warning output in at least 30 files. These warnings are
-> almost all harmless, but also trivial to fix, and there is no
-> good reason to warn only about the non-const variables being unused.
-> 
-> I've gone through all the files that I found using randconfig and
-> allmodconfig builds and created patches to avoid these warnings,
-> with the goal of retaining a clean build once the option is enabled
-> by default.
-> 
-> Unfortunately, there is one fairly large patch ("drivers: remove
-> incorrect of_match_ptr/ACPI_PTR annotations") that touches
-> 34 individual drivers that all need the same one-line change.
-> If necessary, I can split it up by driver or by subsystem,
-> but at least for reviewing I would keep it as one piece for
-> the moment.
-> 
-> Please merge the individual patches through subsystem trees.
-> I expect that some of these will have to go through multiple
-> revisions before they are picked up, so anything that gets
-> applied early saves me from resending.
-
-Arnd, can you refresh this one? It seems some misses still...
-I have got 3+ 0-day reports against one of the mux drivers.
-
-https://lore.kernel.org/all/?q=adg792a.c
-
--- 
-With Best Regards,
-Andy Shevchenko
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] arm64: dts: qcs6490-rb3gen2: Add vadc and adc-tm channels
+To: "Rob Herring (Arm)" <robh@kernel.org>
+CC: <andersson@kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <krzk+dt@kernel.org>,
+        <quic_jprakash@quicinc.com>, <quic_kamalw@quicinc.com>,
+        <conor+dt@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <konradybcio@kernel.org>
+References: <20250124070200.3969230-1-quic_kotarake@quicinc.com>
+ <173773232224.1805161.13299626383351520341.robh@kernel.org>
+Content-Language: en-US
+From: Rakesh Kota <quic_kotarake@quicinc.com>
+In-Reply-To: <173773232224.1805161.13299626383351520341.robh@kernel.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: VBu1Iv8lkn4sEHXohOKXJiq6eV1MDNCl
+X-Proofpoint-ORIG-GUID: VBu1Iv8lkn4sEHXohOKXJiq6eV1MDNCl
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-01-27_05,2025-01-27_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ phishscore=0 spamscore=0 malwarescore=0 lowpriorityscore=0 clxscore=1015
+ mlxlogscore=762 impostorscore=0 adultscore=0 bulkscore=0 mlxscore=0
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2501270107
 
 
+On 1/24/2025 8:56 PM, Rob Herring (Arm) wrote:
+> On Fri, 24 Jan 2025 12:32:00 +0530, Rakesh Kota wrote:
+>> Add support for vadc and adc-tm channels which are used for
+>> monitoring thermistors present on the platform.
+>>
+>> - Add the necessary includes for qcom,spmi-adc7-pm7325 and
+>>    qcom,spmi-adc7-pmk8350.
+>> - Add thermal zones for quiet-thermal, sdm-skin-thermal, and
+>>    xo-thermal, and define their polling delays and thermal sensors.
+>> - Configure the pm7325_temp_alarm node to use the pmk8350_vadc
+>>    channel for thermal monitoring.
+>> - Configure the pmk8350_adc_tm node to enable its thermal sensors
+>>    and define their registers and settings.
+>> - Configure the pmk8350_vadc node to define its channels and settings
+>>
+>> Signed-off-by: Rakesh Kota <quic_kotarake@quicinc.com>
+>> ---
+>>   arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts | 114 +++++++++++++++++++
+>>   1 file changed, 114 insertions(+)
+>>
+>
+> My bot found new DTB warnings on the .dts files added or changed in this
+> series.
+>
+> Some warnings may be from an existing SoC .dtsi. Or perhaps the warnings
+> are fixed by another series. Ultimately, it is up to the platform
+> maintainer whether these warnings are acceptable or not. No need to reply
+> unless the platform maintainer has comments.
+>
+> If you already ran DT checks and didn't see these error(s), then
+> make sure dt-schema is up to date:
+>
+>    pip3 install dtschema --upgrade
+>
+>
+> New warnings running 'make CHECK_DTBS=y for arch/arm64/boot/dts/qcom/' for 20250124070200.3969230-1-quic_kotarake@quicinc.com:
+>
+> arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dtb: pmic@2: pwm:nvmem: [[346, 347]] is too short
+> 	from schema $id: http://devicetree.org/schemas/mfd/qcom,spmi-pmic.yaml#
+> arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dtb: pwm: nvmem: [[346, 347]] is too short
+> 	from schema $id: http://devicetree.org/schemas/leds/leds-qcom-lpg.yaml#
+> arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dtb: pmic@0: adc@3100: 'oneOf' conditional failed, one must be fixed:
+> 	'#address-cells', '#size-cells', 'channel@103', 'channel@144', 'channel@146', 'channel@44', 'pmk8350-die-temp@3' do not match any of the regexes: 'pinctrl-[0-9]+'
+> 	'#address-cells', '#size-cells', 'channel@103', 'channel@144', 'channel@146', 'channel@44', 'interrupts', 'pmk8350-die-temp@3' do not match any of the regexes: 'pinctrl-[0-9]+'
+> 	'pmk8350-die-temp@3' does not match any of the regexes: '^channel@[0-9a-f]+$', 'pinctrl-[0-9]+'
+> 	['qcom,spmi-adc7'] is too short
+> 	'qcom,spmi-adc7' is not one of ['qcom,pm8226-iadc', 'qcom,pm8941-iadc']
+> 	'qcom,spmi-adc7' is not one of ['qcom,pmi8998-rradc', 'qcom,pm660-rradc']
+> 	from schema $id: http://devicetree.org/schemas/mfd/qcom,spmi-pmic.yaml#
+> arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dtb: adc@3100: 'pmk8350-die-temp@3' does not match any of the regexes: '^channel@[0-9a-f]+$', 'pinctrl-[0-9]+'
+> 	from schema $id: http://devicetree.org/schemas/iio/adc/qcom,spmi-vadc.yaml#
+
+Thank you for your review..!
+And After updating the dt-schema, I am also encountering the same error
+According to the documentation, I need to change the pmk8350-die-temp 
+channel name to channel@3. I will correct this in the next patch set.
+
+>
+>
+>
+>
 
