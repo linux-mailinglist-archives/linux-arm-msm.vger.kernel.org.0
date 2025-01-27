@@ -1,42 +1,42 @@
-Return-Path: <linux-arm-msm+bounces-46237-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46238-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 316CFA1D6BE
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Jan 2025 14:27:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 7921CA1D6DF
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Jan 2025 14:34:16 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B1E743A4454
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Jan 2025 13:27:41 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id DD1903A1BDF
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Jan 2025 13:34:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F1E1C1FF7C3;
-	Mon, 27 Jan 2025 13:27:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0C7E31FF7B3;
+	Mon, 27 Jan 2025 13:34:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=lucaweiss.eu header.i=@lucaweiss.eu header.b="1PuhvsZ6"
+	dkim=pass (1024-bit key) header.d=lucaweiss.eu header.i=@lucaweiss.eu header.b="4C/zL2ZF"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from ahti.lucaweiss.eu (ahti.lucaweiss.eu [128.199.32.197])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F00471FDE28;
-	Mon, 27 Jan 2025 13:27:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 462B41FF1DD;
+	Mon, 27 Jan 2025 13:34:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=128.199.32.197
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737984466; cv=none; b=dwNb/kFbVKWreIXsbj0qwnh/UKf1HdGfXkF1pAuDXo/n769e8OwbnbetnPEMmM5i9tQxdsHpq0IwSMRQcm17a0gQ+gDEU1Xo3SyMM1CrTLnSaWm66jFdPjE6fP96u2E2jFWUbCGW6aZkcZysq/acDHATA6uyFGVWz7hiEHR7keg=
+	t=1737984852; cv=none; b=foVAD6WD1dtwAhP6exi8fxEjSWoXAmzjWK/gRiMumbAZJkPCFa1oP43MIynknfLaBAkdx+enmn7lBi930X1SrUpm9EibuPJKT3h44i/U31FcHqPWP4h50kmRtZBGfoP3Rkr1mepfo9CBPyyD7XziKwWLCe7ieFcqDb9iDWT1kAU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737984466; c=relaxed/simple;
-	bh=3awZN8qD+Wh3DklafvAf15nuwxXe2cj/fWUxMcYVaOk=;
+	s=arc-20240116; t=1737984852; c=relaxed/simple;
+	bh=pu+twnQ09fT1+OR56Fzlqp4u+qfRzQi0cXq0ZIsbAcs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=oSPRIbULQOauUjTxAI3OkcrzI8np9N5lfX16j7l+zrgdCdSgkyeIsUl3qKSEGzN73IBsVMlLW2PFbRzYS37ixSgRByElY4A4rxDESMQLSU1PYOdq0wi01afiCkdrH+a3KYNfUIIMnZb2t6NLPIvIJIEjBgMbU10D6zMZ/3HaExY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=lucaweiss.eu; spf=pass smtp.mailfrom=lucaweiss.eu; dkim=pass (1024-bit key) header.d=lucaweiss.eu header.i=@lucaweiss.eu header.b=1PuhvsZ6; arc=none smtp.client-ip=128.199.32.197
+	 MIME-Version:Content-Type; b=QDimbpjW28Wi2KQOnBSdrUlrp35GuD/QFDLZOXgQabxf9rp8lY5g2QQJL94agtiwdZcIuN+3fEoMcBAIY8Dr4GtZ2mmt+3VKOrAyJm2SfzsCxF6uPn3znnW6jjk64ncmgtkR11pk8vn8gK4+24ADSJciOtp1XjxO/4Flpb6dB2o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=lucaweiss.eu; spf=pass smtp.mailfrom=lucaweiss.eu; dkim=pass (1024-bit key) header.d=lucaweiss.eu header.i=@lucaweiss.eu header.b=4C/zL2ZF; arc=none smtp.client-ip=128.199.32.197
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=lucaweiss.eu
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lucaweiss.eu
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=lucaweiss.eu; s=s1;
-	t=1737984463; bh=3awZN8qD+Wh3DklafvAf15nuwxXe2cj/fWUxMcYVaOk=;
+	t=1737984849; bh=pu+twnQ09fT1+OR56Fzlqp4u+qfRzQi0cXq0ZIsbAcs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1PuhvsZ67iPyoQxp/pmMdD7lKAmQDc5EzU/yKSld7Q2z9FiDtczEM482jDvSih0t6
-	 Bo1A6AfdEE9TETnNF3sdzi9LbmvfX4yWAMxjNDOVFoCBvg3hWDGVsyGhzT/hZjq9k/
-	 pRhKk5lYPPWsVJ0braKeyMjYtTiKBkNO0TCYSJ/A=
+	b=4C/zL2ZFnOXjH5R91W/rtheinwdKeIn12r8IIgshIeqvtuzDvCfJlmvnIw/H0m0e5
+	 vDvXzV66rfv04BEfLLOMWaswn9Gs0hn0NO/TrbMs0uwI6Ndj0G4+++T6lAFei8+ZkH
+	 vCScqtcGWvFleMuDf5AyiuOsLBY755t9QvQy9wfA=
 From: Luca Weiss <luca@lucaweiss.eu>
 To: Stephan Gerhold <stephan.gerhold@linaro.org>
 Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
@@ -48,14 +48,16 @@ Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
  Matti =?UTF-8?B?TGVodGltw6RraQ==?= <matti.lehtimaki@gmail.com>,
  linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 7/9] ARM: dts: qcom: msm8226: Add modem remoteproc node
-Date: Mon, 27 Jan 2025 14:27:40 +0100
-Message-ID: <3779260.mvXUDI8C0e@lucaweiss.eu>
-In-Reply-To: <Z5dPmbZY6h-7LGqS@linaro.org>
+Subject:
+ Re: [PATCH v2 9/9] ARM: dts: qcom: msm8226-samsung-matisse-common: Enable
+ modem
+Date: Mon, 27 Jan 2025 14:34:08 +0100
+Message-ID: <5638469.LvFx2qVVIh@lucaweiss.eu>
+In-Reply-To: <Z5dVc9yTynAsPDcZ@linaro.org>
 References:
  <20250126-msm8226-modem-v2-0-e88d76d6daff@lucaweiss.eu>
- <20250126-msm8226-modem-v2-7-e88d76d6daff@lucaweiss.eu>
- <Z5dPmbZY6h-7LGqS@linaro.org>
+ <20250126-msm8226-modem-v2-9-e88d76d6daff@lucaweiss.eu>
+ <Z5dVc9yTynAsPDcZ@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,88 +67,94 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset="utf-8"
 
-On maandag 27 januari 2025 10:19:21 Midden-Europese standaardtijd Stephan=20
+On maandag 27 januari 2025 10:44:19 Midden-Europese standaardtijd Stephan=20
 Gerhold wrote:
-> On Sun, Jan 26, 2025 at 09:57:26PM +0100, Luca Weiss wrote:
-> > Add a node for the modem remoteproc found on MSM8226.
+> On Sun, Jan 26, 2025 at 09:57:28PM +0100, Luca Weiss wrote:
+> > From: Matti Lehtim=C3=A4ki <matti.lehtimaki@gmail.com>
 > >=20
-> > For the apq8026 smartwatches, delete the modem reserved-memory again
-> > since they have very little RAM in the first place anyways, and all of
-> > these devices don't have functional modem firmware anyways - these
-> > watches don't even have GPS.
+> > Enable modem remoteproc on samsung,matisse-wifi & matisselte.
 > >=20
-> > Co-developed-by: Matti Lehtim=C3=A4ki <matti.lehtimaki@gmail.com>
 > > Signed-off-by: Matti Lehtim=C3=A4ki <matti.lehtimaki@gmail.com>
 > > Signed-off-by: Luca Weiss <luca@lucaweiss.eu>
 > > ---
-> >  .../boot/dts/qcom/qcom-apq8026-asus-sparrow.dts    |  7 ++
-> >  .../boot/dts/qcom/qcom-apq8026-huawei-sturgeon.dts |  7 ++
-> >  arch/arm/boot/dts/qcom/qcom-apq8026-lg-lenok.dts   |  7 ++
-> >  .../dts/qcom/qcom-apq8026-samsung-milletwifi.dts   |  2 +
-> >  .../qcom/qcom-msm8226-samsung-matisse-common.dtsi  |  6 +-
-> >  arch/arm/boot/dts/qcom/qcom-msm8226.dtsi           | 80 ++++++++++++++=
+> >  arch/arm/boot/dts/qcom/qcom-msm8226-samsung-matisse-common.dtsi | 7 ++=
 +++
-+++++
-> >  arch/arm/boot/dts/qcom/qcom-msm8926-htc-memul.dts  |  2 +
-> >  7 files changed, 109 insertions(+), 2 deletions(-)
+++
+> >  1 file changed, 7 insertions(+)
 > >=20
-> > diff --git a/arch/arm/boot/dts/qcom/qcom-apq8026-asus-sparrow.dts b/arc=
-h/
-arm/boot/dts/qcom/qcom-apq8026-asus-sparrow.dts
-> > index=20
-a2ca456012f1a070afc2805ae71ddbf6f5aac607..816b61ea504ee80d86dd4ccd1a15db687=
-f6a91ff=20
-100644
-> > --- a/arch/arm/boot/dts/qcom/qcom-apq8026-asus-sparrow.dts
-> > +++ b/arch/arm/boot/dts/qcom/qcom-apq8026-asus-sparrow.dts
-> > @@ -9,6 +9,8 @@
-> >  #include "pm8226.dtsi"
-> > =20
-> >  /delete-node/ &adsp_region;
-> > +/delete-node/ &mba_region;
-> > +/delete-node/ &mpss_region;
-> > =20
-> >  / {
-> >  	model =3D "ASUS ZenWatch 2";
-> > @@ -82,6 +84,11 @@ bluetooth {
-> >  	};
+> > diff --git a/arch/arm/boot/dts/qcom/qcom-msm8226-samsung-matisse-
+common.dtsi b/arch/arm/boot/dts/qcom/qcom-msm8226-samsung-matisse-common.dt=
+si
+> > index fbd568c7d6b7415d240aa1a2329d07cf9135274c..
+4155bfb2136022f2a85d69451c34f06ed2a700ac 100644
+> > --- a/arch/arm/boot/dts/qcom/qcom-msm8226-samsung-matisse-common.dtsi
+> > +++ b/arch/arm/boot/dts/qcom/qcom-msm8226-samsung-matisse-common.dtsi
+> > @@ -225,6 +225,13 @@ &blsp1_uart3 {
+> >  	status =3D "okay";
 > >  };
 > > =20
-> > +/* No (useful) modem on this device */
 > > +&modem {
-> > +	/delete-property/ memory-region;
-> > +};
+> > +	mx-supply =3D <&pm8226_l3>;
+> > +	pll-supply =3D <&pm8226_l8>;
 >=20
-> Rather than putting /delete-node/ and /delete-property/ on all devices
-> that do not need/use the modem, I think it would be cleaner if you make
-> the remoteproc related reserved-memory status =3D "disabled" by default
-> and enable it only where necessary together with the modem. The &modem
-> itself is status =3D "disabled" by default, so it makes sense to use the
-> same for the reserved memory as well. See e.g. the existing usage of
-> this pattern for &mpss_mem/&wcnss_mem/&venus_mem/&mba_mem in
-> msm8916.dtsi. Then you can drop the /delete-property/ here.
+> Hmmmmm, so I was looking at msm8926.dtsi downstream and it seems to
+> override the msm8226.dtsi modem/mss definition [1]:
+>=20
+>  1. ext-bhs-reg is dropped
+>  2. vdd_mss-supply is added
 
-That's a good point, I didn't realize you can disable a reserved-memory nod=
-e=20
-like that. And since often even APQ variants have useful modem firmware (e.=
-g.=20
-GPS) I didn't find something quickly I guess.
+That's the same what I found, and have working with more (currently hacky)=
+=20
+patches on msm8926-htc-memul. I decided against introducing it with this=20
+series since these patches have been pending for too long and initially whe=
+n I=20
+was doing 8926, I wasn't sure how to make this into a proper patch. Now my=
+=20
+idea is to introduce a "static const struct rproc_hexagon_res msm8926_mss"=
+=20
+with the compatible qcom,msm8926-mss-pil which has these two differences.
+I think that's a better idea than adding some extra conditionals around to=
+=20
+make the mss-supply optional and ext-bhs somehow optional in the driver bas=
+ed=20
+on dt.
 
 >=20
-> It would be even nicer to use the dynamic allocation
-> (size/alignment/alloc-ranges instead of reg), but I'm skeptical if this
-> will work properly on such an old platform...
+> This common include seems to cover both apq8026 (matissewifi) and
+> msm8926 (matisselte).
 
-IIRC I've read in msm8974 docs that dynamic allocation should be possible, =
-I=20
-can give it a try some day, both on 8974 and 8226.
+That's a very good point. I didn't think much about the matisse patches sin=
+ce=20
+they were introduced by Matti but yes... Either I add the msm8926 support i=
+n=20
+the same series already, or we just enable modem for matissewifi for now. I=
+=20
+think I'll opt for the latter since the series is already 9 patches long an=
+d I=20
+don't want to make it too complicated.
 
-Regards
-Luca
+>=20
+> Do we need to handle this difference?
+>=20
+> First time I see such a difference between variants of a single SoC.
+> Looking at all the overrides in msm8926.dtsi, it seems like they made
+> quite some rework for the "LTE variant".
+
+Yeah, no clue what they did here. But also I think Qualcomm stopped making =
+a=20
+thousand different variants of the same SoC (*cough* msm8974), nowadays the=
+y=20
+"only" make different variants which get different letters and numbers=20
+(sc7280=3Dqcm6490=3Dsm7325 etc).
 
 >=20
 > Thanks,
 > Stephan
+>=20
+> [1]: https://github.com/GalaxyTab4/android_kernel_samsung_matissewifi/blo=
+b/
+45f97bab323176fead18c8ddc20dc57d979904a3/arch/arm/boot/dts/msm8226/
+msm8926.dtsi#L32-L40
 >=20
 
 
