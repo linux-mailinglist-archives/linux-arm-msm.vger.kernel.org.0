@@ -1,87 +1,87 @@
-Return-Path: <linux-arm-msm+bounces-46226-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46227-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 80810A1D496
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Jan 2025 11:34:06 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9F00FA1D4CA
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Jan 2025 11:49:49 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id B7FBD1881C12
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Jan 2025 10:34:00 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B329D7A2AE7
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Jan 2025 10:49:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8CFB71FDE18;
-	Mon, 27 Jan 2025 10:33:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 538191FDE24;
+	Mon, 27 Jan 2025 10:49:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="IgfXBgRu"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="VGMMxiyM"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBFB51FDA8C
-	for <linux-arm-msm@vger.kernel.org>; Mon, 27 Jan 2025 10:33:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFF581D540
+	for <linux-arm-msm@vger.kernel.org>; Mon, 27 Jan 2025 10:49:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737974032; cv=none; b=CLwsNTxVUsnPBrBbTvmrH129Xdcl0iXCp9W+hcSOYn1kwv+xESWSI3eY8QQuEff7XDtIeQGy1erTGHAs2xIzH8IbBvkOhmzMUH2p/qOO7JXvtgMMadEHW4C+vo9YZQpfifXi9CG4UDXUo2mGk2Z3oTbWcvQkD0GETCuu0lmpOyM=
+	t=1737974982; cv=none; b=L8P7935WrPsD+PinxLS+VsNE/Bqa3AQllPHbVWsC1kpREDT+XCSB8A7MpPznV8vS/mCZX4wgJOUzWx9lkHxK37YLqNCrml+YDhWvukaNUbDdxydMaihEdG31EXbg/40fYUW4Fn1jG/n/Z+KYm/bfrnDugQ6JqSddX1dUYyPmAcg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737974032; c=relaxed/simple;
-	bh=/2jpubJ76LTJrMU6CNiePQvY30kXVSm/q0TgYoXBqjQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=pdT9OiOgU5Cio7JaHVCcwr0B/DQ++RuLpJ12fBRxcyRpHdh32xqu791zxSAM7d4DAQPTEsfvLr0tpBKkRHzNNwLRlrWu0nmyGiDat/+hVSy4/FrmSDGC0epLlpf2p8Ep05/cRNHNX8oWeP4mt0ZUqeqmfeI9uOfrbqyaOHkFGJY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=IgfXBgRu; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1737974982; c=relaxed/simple;
+	bh=xM40sLL6xyjfQcLpAX6AKDWuBZKYNh3BFNPCLLBGnbQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=k1xiKnKezOozJamYeosMs+TqJkmauFbPvG1WLjSRf2tDc3j+KkbifWOfgukcEudDF7/qfLlJk8Y1lq/fOB+Ls7/mxS9f1k4OoPdbf9P4JyQ8zi0mn7SrBvHqtF9k3kTvK0gTI0Hixyw7Y/1idqA/iezwrRrQ9y+IAzAQGNpJMyU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=VGMMxiyM; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50QNJvm5025544
-	for <linux-arm-msm@vger.kernel.org>; Mon, 27 Jan 2025 10:33:50 GMT
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50R2o4Mx031830
+	for <linux-arm-msm@vger.kernel.org>; Mon, 27 Jan 2025 10:49:39 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	content-transfer-encoding:content-type:date:from:in-reply-to
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	XO2U/FigudNpheyHXoXOoPHFQtk40Wecm2MIHQ46a/o=; b=IgfXBgRuoBpyzHLm
-	87T/vhiyRMqeaMA8yDAoh2daETixNkgOlovwRezDOvWS62leBJ6onvmyP8/2W2Vs
-	yaPhQkqGsrP0OxTjrYJ97Bius2/8L/kiC+YlOfB5g+/F8fD4KsgPJKlgd1hN4URI
-	wesiJdh/lGXLr8P+/20hVMv4Nogm3FANwqXW6TJ3uzJVyQDlO6f0rbDIItiUCSI+
-	VOqOvWf+tiZsRKwysHBwobzu8bkC9JklHyePd9urGKC/u2hhPAl3UHLFi6Q/JPuI
-	IoX2MRce2lT9eOU1Wqo6SYE498VlswjJeDMNGJQG8dhUXuOR995TqiEGMuRHaez9
-	w4/bmA==
+	adphgYyuraDm+8q9lCcomTmDXgUPSbCBsDgLoCmq7bo=; b=VGMMxiyMJDS7AYWD
+	AlCnYoJbFAIFUk65rKWCAY+7bByO4bXUeaqOnoZL2bzpFvKg8vmk10CU3mC9oc3T
+	ti2DZr0p2bEtLkwPTeSTdw0WFVew+jrWNZZtRL70+l2UsB5Fmpj58YOCJXsJuCuK
+	bflkB/K8472Ffn8Dowr/9yAQ89BeyczFtGUYmbYZDPCE0YmqFv2m85gVCCyh2YLb
+	m9MNIuKqcO/jRlymGXiaLp8E7OXR8DdfxZMUduhfzouxQEXwfni7FpXTWR2i5AuU
+	nwMwxxAMVl7Nwb7cXR037lq/+ihqKo7ZJGKrHuRqbFSD8H+kLOl/RL6H53jV4B5A
+	2Ui51w==
 Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com [209.85.160.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44dhu9hthg-1
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44dwg0s36c-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 27 Jan 2025 10:33:50 +0000 (GMT)
-Received: by mail-qt1-f198.google.com with SMTP id d75a77b69052e-46e4842dbd0so14155881cf.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Jan 2025 02:33:49 -0800 (PST)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 27 Jan 2025 10:49:39 +0000 (GMT)
+Received: by mail-qt1-f198.google.com with SMTP id d75a77b69052e-4679d6f9587so6558541cf.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Jan 2025 02:49:39 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1737974029; x=1738578829;
+        d=1e100.net; s=20230601; t=1737974978; x=1738579778;
         h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:to:subject:user-agent:mime-version:date:message-id
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=XO2U/FigudNpheyHXoXOoPHFQtk40Wecm2MIHQ46a/o=;
-        b=M1vxWwRpYWIF1yAZGncl15+aaDk4q66xylp33hSrlhg55WnxAXVV18sDDKKH21XALT
-         zZ9knDxm9ZLiBFXabKSRoDUPoepIp1xWbi2UfOzhSsmR4FhktIdnOpfT6VaGX5/Diyy9
-         5mcN0RzwzHrKFtsVcqa/wJalPKigV5g0HlbwHo8l23MSWoO84hoJ5a4SrO8SMj/IbouZ
-         bZDyetosBADaiSdblaXBzTtA4z2OqB60kGOwPbOPBnV/48wCHKk3JpPyUzVx8tiY7tCM
-         fCHTQEZnY4EjqFX1Hu+t1jGaCEEalxoxEUhDUEJKNxp+EcWfsLADGXFjWMXyo30i2Niv
-         PWig==
-X-Forwarded-Encrypted: i=1; AJvYcCVgxZ0PYLlNgx59ILXfwK1sJ870NJuEiDAj4zsbZVNEqCKL5L1gY7t5pGHtknF57q9zptkUM1pxMz7ibrDK@vger.kernel.org
-X-Gm-Message-State: AOJu0YzmTnXLP22Kk3iZBmYcdqWm9KR3CiEx0kBwoYqMUYVzVX8CPpmN
-	BZvyMiyH4HDxh/B4kr+tVte/yHmJMptq8VJnZg4Xj+BDhk5ML/5lpoqgB9lcHj7pZgQGc6UG3ZV
-	i1q0sQy6cm8pKbZAe2xEH7jAd6TNv3tkzduY6lMP7EgkpZnCyR4+hq9+Z8/PExKFc
-X-Gm-Gg: ASbGncs43ZS5K+Jbj14o4JX4Jt4cYxTNtQ41wzMBssMSeAMzmyPGA1a2gWfCQh22guM
-	jYZT9R0+K20OTUEeBrC9O4MWrNYnJCdJlGjko9aYwiZ8gni0XTvH/G0oFF6MpOG3eV7nwNFPAZ2
-	91iEGC9r0H6h9YiuppY74Kym/qCU8NSEtZdQwu/NLtmDXUzKy4ZcGHFT+XfGf96PhDR22mN4hVV
-	NvTbTRmiWG28zWaD2Q3IAq5u83eTzBbT5VwNqp/xMoiAHtnGGNIqvoQfBfTbUtVUlSWrWYVUy+s
-	/TJID82RiGyStBnMy6BQCeUPMop61bt8j01Gzjqj2z7P03ylbX2yJSSJ5vs=
-X-Received: by 2002:a05:622a:1803:b0:464:af83:ba34 with SMTP id d75a77b69052e-46e12b66e5amr244210311cf.10.1737974028682;
-        Mon, 27 Jan 2025 02:33:48 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IESlsEC/uSt6b1mkLIn8XmnzDYv15ZT2kv/xQfb7JQbhSlZz5OYDm9Co0pS+uRxerAZbiUQAQ==
-X-Received: by 2002:a05:622a:1803:b0:464:af83:ba34 with SMTP id d75a77b69052e-46e12b66e5amr244210171cf.10.1737974028369;
-        Mon, 27 Jan 2025 02:33:48 -0800 (PST)
+        bh=adphgYyuraDm+8q9lCcomTmDXgUPSbCBsDgLoCmq7bo=;
+        b=Ce2SaEPLpeWziojh8ARWVFEAwGeS3ygdXOfCDPN0Ag8/cIcz/sTIfXWB9jrytXNIof
+         NYAwvIYSFf6JMasmNjNJwt0lJSjyG5dZgVPwVkUSG84m/nl3EQd69BfAZiubN972Yc9t
+         wGsZdSga7ONJcSJLu9Pk31kJMnDi/TUuXhQYXHzcOo8t96Tf/EmDZENPbRIsrZBqJ5uA
+         +DMW/5kXFQtMOCe60WLo18druuYy3NU9SowW3Jtx9n55CUKW3nzCW9gfpz9CEntddfIE
+         uVMrpYC09tnvVeFeajFC/P2LlO12BpAQDvKMbEis3wCVS1mup5+uMWtsd7uAV7ePyQyp
+         EaCw==
+X-Forwarded-Encrypted: i=1; AJvYcCUbrblcNIcqi6KQke6IzVJ53JUZJxFib0XKsZRHe/PVGV4Afc5mXGHNr3IbiCw2FZtmC2IOSbAXrmjCJAHF@vger.kernel.org
+X-Gm-Message-State: AOJu0YwAvPWZjD5nJGt9zgmQFtnR8qrcR/fiD+GzdvRqjV+bEjNuCOrO
+	D9lNOwqZezV6BKZYOPUzqtyjT/k3IyORdiPvQtMDEL3cojz/fVN4vXY3Z7UngF4jdp06fcpAeZu
+	eYruAVjH7i5/3yyj3aK7Vhd/HgxeipYtRaOasRkcj7aoxFhy+LtejSzo1sk5qpAwy
+X-Gm-Gg: ASbGncvqD+/fN0IoprFJISUwI0IMJ47EJRZRL607+Rx+0R/JLAtRYw7IHsIpQlq2mX7
+	uiWw/BRCVGKJvBdYOdXNbec+f2g2IAUKE5eIoDLrI0ZWHvITs9fhe7/4Ti8oWhBMOfWa2eiHAeT
+	CPmNFNOSWCDXjpW6cysKCjUaRYBYz63O6kb/7xorD0sBNWKjn17bvDQjcFgjiZ2BUtx5i5ryvBI
+	wneD774nDoSE/sK3ke2j/s6GbLAczPyz1lIH8xrR75KE1tUTnU4RVkS0scGuTPi4kvEwXZH3B54
+	/CaGh4oqGd4xYtVOnxsG893r+U0tDJdD4mV1qyHJlB8JoRuTMWxnVLGwhBA=
+X-Received: by 2002:a05:622a:610:b0:467:6eee:1138 with SMTP id d75a77b69052e-46e4e726f1dmr121602771cf.6.1737974978607;
+        Mon, 27 Jan 2025 02:49:38 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHdnH4J6HaLZ6tC9UeTjZWaxwVuzqp/4HLK9P8eKFWexw6YCwzdP8ffhfgKmAo0wFiSbNS1AA==
+X-Received: by 2002:a05:622a:610:b0:467:6eee:1138 with SMTP id d75a77b69052e-46e4e726f1dmr121602601cf.6.1737974978120;
+        Mon, 27 Jan 2025 02:49:38 -0800 (PST)
 Received: from [192.168.65.90] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ab67b28ad13sm513244266b.41.2025.01.27.02.33.45
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ab6760b6f4bsm569985266b.90.2025.01.27.02.49.35
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 27 Jan 2025 02:33:47 -0800 (PST)
-Message-ID: <e697cc99-e96b-4e84-8b70-23c5ef015a0d@oss.qualcomm.com>
-Date: Mon, 27 Jan 2025 11:33:44 +0100
+        Mon, 27 Jan 2025 02:49:37 -0800 (PST)
+Message-ID: <71da0edf-9b2a-464e-8979-8e09f7828120@oss.qualcomm.com>
+Date: Mon, 27 Jan 2025 11:49:34 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -89,73 +89,126 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 4/7] arm64: dts: qcom: ipq9574: Reorder reg and
- reg-names
-To: Varadarajan Narayanan <quic_varada@quicinc.com>, bhelgaas@google.com,
-        lpieralisi@kernel.org, kw@linux.com, manivannan.sadhasivam@linaro.org,
-        robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
-        vkoul@kernel.org, kishon@kernel.org, andersson@kernel.org,
-        konradybcio@kernel.org, p.zabel@pengutronix.de,
-        dmitry.baryshkov@linaro.org, quic_nsekar@quicinc.com,
-        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-phy@lists.infradead.org
-References: <20250122063411.3503097-1-quic_varada@quicinc.com>
- <20250122063411.3503097-5-quic_varada@quicinc.com>
+Subject: Re: [PATCH v3 2/4] net: stmmac: dwmac-qcom-ethqos: Mask PHY mode if
+ configured with rgmii-id
+To: Krzysztof Kozlowski <krzk@kernel.org>,
+        Yijie Yang <quic_yijiyang@quicinc.com>,
+        Andrew Lunn <andrew+netdev@lunn.ch>,
+        "David S. Miller" <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>,
+        Paolo Abeni <pabeni@redhat.com>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>, Vinod Koul <vkoul@kernel.org>,
+        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+        Alexandre Torgue <alexandre.torgue@foss.st.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        Richard Cochran <richardcochran@gmail.com>
+Cc: netdev@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-stm32@st-md-mailman.stormreply.com,
+        linux-arm-kernel@lists.infradead.org
+References: <20250121-dts_qcs615-v3-0-fa4496950d8a@quicinc.com>
+ <20250121-dts_qcs615-v3-2-fa4496950d8a@quicinc.com>
+ <30450f09-83d4-4ff0-96b2-9f251f0c0896@kernel.org>
+ <48ce7924-bbb7-4a0f-9f56-681c8b2a21bd@quicinc.com>
+ <2bd19e9e-775d-41b0-99d4-accb9ae8262d@kernel.org>
 Content-Language: en-US
 From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <20250122063411.3503097-5-quic_varada@quicinc.com>
+In-Reply-To: <2bd19e9e-775d-41b0-99d4-accb9ae8262d@kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: mgl8GoNxljBZ63UDmSjf8rt5uyeyZC5E
-X-Proofpoint-ORIG-GUID: mgl8GoNxljBZ63UDmSjf8rt5uyeyZC5E
+X-Proofpoint-GUID: reTqUi_SyNPZmgHDA5l6Ut1CV15X5Jjg
+X-Proofpoint-ORIG-GUID: reTqUi_SyNPZmgHDA5l6Ut1CV15X5Jjg
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
  definitions=2025-01-27_04,2025-01-27_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 impostorscore=0
- phishscore=0 adultscore=0 mlxlogscore=997 suspectscore=0 malwarescore=0
- clxscore=1015 mlxscore=0 lowpriorityscore=0 bulkscore=0 priorityscore=1501
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2411120000
- definitions=main-2501270084
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ phishscore=0 spamscore=0 malwarescore=0 lowpriorityscore=0 clxscore=1015
+ mlxlogscore=999 impostorscore=0 adultscore=0 bulkscore=0 mlxscore=0
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2501270087
 
-On 22.01.2025 7:34 AM, Varadarajan Narayanan wrote:
-> The 'reg' & 'reg-names' constraints used in the bindings and dtsi
-> are different resulting in dt_bindings_check errors. Re-order
-> them to address following errors.
+On 22.01.2025 10:48 AM, Krzysztof Kozlowski wrote:
+> On 22/01/2025 09:56, Yijie Yang wrote:
+>>
+>>
+>> On 2025-01-21 20:47, Krzysztof Kozlowski wrote:
+>>> On 21/01/2025 08:54, Yijie Yang wrote:
+>>>> The Qualcomm board always chooses the MAC to provide the delay instead of
+>>>> the PHY, which is completely opposite to the suggestion of the Linux
+>>>> kernel.
+>>>
+>>>
+>>> How does the Linux kernel suggest it?
+>>>
+>>>> The usage of phy-mode in legacy DTS was also incorrect. Change the
+>>>> phy_mode passed from the DTS to the driver from PHY_INTERFACE_MODE_RGMII_ID
+>>>> to PHY_INTERFACE_MODE_RGMII to ensure correct operation and adherence to
+>>>> the definition.
+>>>> To address the ABI compatibility issue between the kernel and DTS caused by
+>>>> this change, handle the compatible string 'qcom,qcs404-evb-4000' in the
+>>>> code, as it is the only legacy board that mistakenly uses the 'rgmii'
+>>>> phy-mode.
+>>>>
+>>>> Signed-off-by: Yijie Yang <quic_yijiyang@quicinc.com>
+>>>> ---
+>>>>   .../net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c    | 18 +++++++++++++-----
+>>>>   1 file changed, 13 insertions(+), 5 deletions(-)
+>>>>
+>>>> diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
+>>>> index 2a5b38723635b5ef9233ca4709e99dd5ddf06b77..e228a62723e221d58d8c4f104109e0dcf682d06d 100644
+>>>> --- a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
+>>>> +++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
+>>>> @@ -401,14 +401,11 @@ static int ethqos_dll_configure(struct qcom_ethqos *ethqos)
+>>>>   static int ethqos_rgmii_macro_init(struct qcom_ethqos *ethqos)
+>>>>   {
+>>>>   	struct device *dev = &ethqos->pdev->dev;
+>>>> -	int phase_shift;
+>>>> +	int phase_shift = 0;
+>>>>   	int loopback;
+>>>>   
+>>>>   	/* Determine if the PHY adds a 2 ns TX delay or the MAC handles it */
+>>>> -	if (ethqos->phy_mode == PHY_INTERFACE_MODE_RGMII_ID ||
+>>>> -	    ethqos->phy_mode == PHY_INTERFACE_MODE_RGMII_TXID)
+>>>> -		phase_shift = 0;
+>>>> -	else
+>>>> +	if (ethqos->phy_mode == PHY_INTERFACE_MODE_RGMII_ID)
+>>>>   		phase_shift = RGMII_CONFIG2_TX_CLK_PHASE_SHIFT_EN;
+>>>>   
+>>>>   	/* Disable loopback mode */
+>>>> @@ -810,6 +807,17 @@ static int qcom_ethqos_probe(struct platform_device *pdev)
+>>>>   	ret = of_get_phy_mode(np, &ethqos->phy_mode);
+>>>>   	if (ret)
+>>>>   		return dev_err_probe(dev, ret, "Failed to get phy mode\n");
+>>>> +
+>>>> +	root = of_find_node_by_path("/");
+>>>> +	if (root && of_device_is_compatible(root, "qcom,qcs404-evb-4000"))
+>>>
+>>>
+>>> First, just check if machine is compatible, don't open code it.
+>>>
+>>> Second, drivers should really, really not rely on the machine. I don't
+>>> think how this resolves ABI break for other users at all.
+>>
+>> As detailed in the commit description, some boards mistakenly use the 
+>> 'rgmii' phy-mode, and the MAC driver has also incorrectly parsed and 
 > 
-> 	arch/arm64/boot/dts/qcom/ipq9574-rdp449.dtb: pcie@20000000: reg-names:0: 'parf' was expected
-> 
-> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
-> ---
->  arch/arm64/boot/dts/qcom/ipq9574.dtsi | 52 +++++++++++++++++----------
->  1 file changed, 34 insertions(+), 18 deletions(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/ipq9574.dtsi b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-> index 942290028972..d27c55c7f6e4 100644
-> --- a/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-> @@ -876,12 +876,16 @@ frame@b128000 {
->  
->  		pcie1: pcie@10000000 {
->  			compatible = "qcom,pcie-ipq9574";
-> -			reg =  <0x10000000 0xf1d>,
-> -			       <0x10000f20 0xa8>,
-> -			       <0x10001000 0x1000>,
-> -			       <0x000f8000 0x4000>,
-> -			       <0x10100000 0x1000>;
-> -			reg-names = "dbi", "elbi", "atu", "parf", "config";
-> +			reg = <0x000f8000 0x4000>,
-> +			      <0x10000000 0xf1d>,
-> +			      <0x10000f20 0xa8>,
-> +			      <0x10001000 0x1000>,
-> +			      <0x10100000 0x1000>;
+> That's a kind of an ABI now, assuming it worked fine.
 
-The unit address (the one after '@' in the node definition) is supposed to
-match the first 'reg' entry. So you need to update that and reorder the
-nodes accordingly.
+I'm inclined to think it's better to drop compatibility given we're talking
+about rather obscure boards here.
 
-Krzysztof, is this acceptable to pick up given the reg entries are being
-shuffled around?
+$ rg 'mode.*=.*"rgmii"' arch/arm64/boot/dts/qcom -l
+
+arch/arm64/boot/dts/qcom/sa8155p-adp.dts
+arch/arm64/boot/dts/qcom/qcs404-evb-4000.dts
+
+QCS404 seems to have zero interest from anyone (and has been considered
+for removal upstream..).
+
+The ADP doesn't see much traction either, last time around someone found
+a boot breaking issue months after it was committed.
 
 Konrad
 
