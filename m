@@ -1,48 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-46193-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46194-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 089CAA1D12A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Jan 2025 08:06:34 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 51BCCA1D145
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Jan 2025 08:16:37 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 626B33A366D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Jan 2025 07:06:26 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9FA56165E55
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Jan 2025 07:16:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F39421FBEAE;
-	Mon, 27 Jan 2025 07:06:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D73021F5413;
+	Mon, 27 Jan 2025 07:16:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LvKSiHlK"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ThE0+qvb"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAA9A15A86B;
-	Mon, 27 Jan 2025 07:06:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B05D802;
+	Mon, 27 Jan 2025 07:16:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737961591; cv=none; b=Mz5kwJl4QTRnkJYoU0dW6sWGjBPYJEDzrDrA8fHqrn8Cs3HfPyMax9aTUZ5nQNB8uhpJ6AQLdhtOpjdfnyvYdbT8VO0S8up6VsTwcw3bWLIf78UWvDhTGlVqwU70ySmpyrou8kDVZP4LWi3ogQt/60kC9jeLshvXQUrCCuTEpjE=
+	t=1737962193; cv=none; b=dYMS6/G3v/fZevX6XHJQjIynYROTuHxblRjIJtzUgabYX4IfeXTR9XGQn6LXGdWP+Tq5KNb3Ci0qxROzoYU+WDX1e4qkyNgBu9atnVQee8mMcUwwZOLogdnXr5ClGgI8LalQ/5PpEe9BKXOoghgE8rPbjHi/3tIsUlkR2iSZadY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737961591; c=relaxed/simple;
-	bh=1LCm8cd6mCgY5b/HBOzJAWvgVNcD5Ayq5tQncBGCQCU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=YjdfwdxdjcLh/FLG5lMQ/EoFmvFmLRIgofoN/V5Qft+PhCYNa/sTJ1DWmzyXUjCFf58paKGkgAvlSQL7ihEqAOBAYuyzAf6LhkAMyUua1SUIEW21CcH+EYFPF9ZmKvElg3tlpWFpCWvUwfiHO6tZLpV67smnkylyMEu6Wp2CTc8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LvKSiHlK; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C570C4CED2;
-	Mon, 27 Jan 2025 07:06:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1737961591;
-	bh=1LCm8cd6mCgY5b/HBOzJAWvgVNcD5Ayq5tQncBGCQCU=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=LvKSiHlKJz7ZBfs3uagJN3R70q7hnMhDKOgPyQiZa0UScOKAZALuV3p2peM398lyV
-	 jFV5YR9y+tcsXvOd38AfM4AwHRvf+iK3y/oLYaSXj56qnBGTZfl9jRpPORgjLA126g
-	 4llStabesR2RGZ0TCfdeJMvZ9527WSQpKu3lZ33APA+H7SYqkgIukdCi/XASFkY4oF
-	 18vvo9f0KDN43gOIrgdKSt0nGlOvVnL/DWvqiw2L1xYrr6eqOeQXeUF6Mk6DuHlgVw
-	 4MxlJqGnAq07+kh8i5ML70vuJhDwjJI67JKw5VEwRxBGCcICCAKE1oos0GB9uoqluO
-	 aHYqLHtuB22ag==
-Message-ID: <af27ae90-99d7-497f-b8f5-b8ca0b039753@kernel.org>
-Date: Mon, 27 Jan 2025 08:06:21 +0100
+	s=arc-20240116; t=1737962193; c=relaxed/simple;
+	bh=z2cZXoX2RfhWdkhkEOPCwIwymN0QDXu9XSFVJI2iz0Y=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=lQGqTCZ3FhcMs4+95H43DZvhKHeXE03byT2HPL3/2NDzAmstVBKWqlDqfEr4WLC18O3m2sWS46GBC5lVCjsSgoZzHpaJ9YUddEgjTVV80qHjxBfUpCxvTfhdeBHUqL8P25LsEkJt/gztMjJrFbsM5nn/5QcbY3BhKpOEfnNuQsY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ThE0+qvb; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50R2K2bF012758;
+	Mon, 27 Jan 2025 07:16:25 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	zbUBlCZwJD6OMgsm5bwkiEp7fSEDxHTpx/FoW/lN6nQ=; b=ThE0+qvbz4t6yUrh
+	EsQywVhqw2IQJThXE9lnpdktuhQimJ8/3/pN4wcAK82TTyPac09RxEFO9PF9yXD5
+	Hl8SKmSQE0qJakEAmxBEP7IW7smsjwg3KYqCqNlHUKx82GimskyzRKbhlYy4KuQ/
+	FTgZrfplE8CB0R0TW2cvl40QFWpxlgJCv4k8jSSUkQTjHBXK+pOzW5sShV0/n9hn
+	1COVyMCxEzAJ2vGwfptPs8z42PhqZBETNsmDMsJ0oWbWDz6h4cGxfqr/oVNyT8cw
+	r4aAHY17MoE1UwOtBcCjTv0M7MD26C2AVjSkp4CU+2INc200xfDqbgrdUSswemSU
+	5jyFAQ==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44du968tv6-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 27 Jan 2025 07:16:25 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 50R7GNUr031609
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 27 Jan 2025 07:16:23 GMT
+Received: from [10.219.0.139] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Sun, 26 Jan
+ 2025 23:16:18 -0800
+Message-ID: <9cad2d98-09fc-45b8-85b2-0ee08d0552dc@quicinc.com>
+Date: Mon, 27 Jan 2025 12:46:15 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,247 +65,97 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 5/8] soc: qcom: geni-se: Add support to load QUP SE
- Firmware via Linux subsystem
-To: Viken Dadhaniya <quic_vdadhani@quicinc.com>, andi.shyti@kernel.org,
- robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
- gregkh@linuxfoundation.org, jirislaby@kernel.org, broonie@kernel.or,
- andersson@kernel.org, konradybcio@kernel.org, johan+linaro@kernel.org,
- dianders@chromium.org, agross@kernel.org, linux-arm-msm@vger.kernel.org,
- linux-i2c@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-serial@vger.kernel.org,
- linux-spi@vger.kernel.org
-Cc: quic_msavaliy@quicinc.com, quic_anupkulk@quicinc.com
-References: <20250124105309.295769-1-quic_vdadhani@quicinc.com>
- <20250124105309.295769-6-quic_vdadhani@quicinc.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
+Subject: Re: [PATCH v8 0/2] Enable Bluetooth on qcs6490-rb3gen2 board
+To: Krzysztof Kozlowski <krzk@kernel.org>,
+        Bjorn Andersson
+	<andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring
+	<robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>,
+        Marcel Holtmann <marcel@holtmann.org>,
+        "Luiz Augusto
+ von Dentz" <luiz.dentz@gmail.com>
+CC: <quic_mohamull@quicinc.com>, <quic_hbandi@quicinc.com>,
+        <quic_anubhavg@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-bluetooth@vger.kernel.org>
+References: <20250127064940.1360404-1-quic_janathot@quicinc.com>
+ <2a277ce0-f4df-44b7-888b-202fef36f4c7@kernel.org>
 Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <20250124105309.295769-6-quic_vdadhani@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
+From: Janaki Ramaiah Thota <quic_janathot@quicinc.com>
+In-Reply-To: <2a277ce0-f4df-44b7-888b-202fef36f4c7@kernel.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-
-On 24/01/2025 11:53, Viken Dadhaniya wrote:
->  /* Common SE registers */
-> @@ -891,6 +896,445 @@ int geni_icc_disable(struct geni_se *se)
->  }
->  EXPORT_SYMBOL_GPL(geni_icc_disable);
->  
-> +/**
-> + * elf_phdr_valid: Function to validate elf header.
-> + * @phdr: A pointer to a elf header.
-> + *
-> + * This function validates elf header by comparing fields
-
-Drop "This function" and use imperative. It's redundant and you keep
-using it everywherre here
-
-
-...
-
-> +static int qup_fw_load(struct qup_se_rsc *rsc, const char *fw_name)
-> +{
-> +	int ret;
-> +	const struct firmware *fw;
-> +	struct device *dev = rsc->se->dev;
-> +
-> +	ret = request_firmware(&fw, fw_name, dev);
-> +	if (ret) {
-> +		dev_err(dev, "request_firmware failed for %d: %d\n", rsc->protocol, ret);
-> +		return ret;
-> +	}
-> +
-> +	ret = (rsc->protocol != GENI_SE_NONE) ? geni_load_se_fw(rsc, fw) : -EINVAL;
-
-Drop ternary operator. Not easy to read.
-
-> +
-> +	release_firmware(fw);
-> +
-> +	return ret;
-> +}
-
-> +
-> +/**
-> + * geni_load_se_firmware: Function to initiate firmware loading.
-> + * @se: Serial engine details.
-> + * @protocol: protocol from spi, i2c or uart for which firmware to
-> + * be loaded
-> + *
-> + * This function is called from the probe function of protocol driver.
-> + * if dtsi properties are configured to load QUP firmware and firmware
-> + * is already not loaded, it will start firmware loading. if dtsi
-> + * properties are not defined,it will skip loading firmware assuming
-> + * it is already loaded by TZ.
-> + *
-> + * return: Return 0 if no error, else return error value.
-> + */
-> +int geni_load_se_firmware(struct geni_se *se,
-> +			  enum geni_se_protocol_type protocol)
-> +{
-> +	struct qup_se_rsc rsc;
-> +	const char *fw_name;
-> +	int ret;
-> +
-> +	ret = device_property_read_string(se->wrapper->dev, "firmware-name", &fw_name);
-> +	if (ret)
-> +		return  -EINVAL;
-> +
-> +	rsc.se = se;
-> +	rsc.protocol = protocol;
-> +
-> +	/* Set default xfer mode to FIFO*/
-> +	rsc.mode = GENI_SE_FIFO;
-> +	of_property_read_u32(se->dev->of_node, "qcom,xfer-mode", &rsc.mode);
-> +	switch (rsc.mode) {
-> +	case GENI_SE_FIFO:
-> +	case GENI_SE_DMA:
-
-How value of 2 is acceptable? Your bindings said it is not.
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: vMadqQ51Xnv5U4iSb-7b7aEZtIkizWgf
+X-Proofpoint-ORIG-GUID: vMadqQ51Xnv5U4iSb-7b7aEZtIkizWgf
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-01-27_03,2025-01-27_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 impostorscore=0
+ bulkscore=0 malwarescore=0 mlxscore=0 mlxlogscore=856 adultscore=0
+ priorityscore=1501 spamscore=0 suspectscore=0 clxscore=1015
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2501270058
 
 
-> +	case GENI_GPI_DMA:
-> +		break;
-> +	default:
-> +		dev_err(se->dev, "Invalid xfer mode specified: %d\n", rsc.mode);
-> +		return -EINVAL;
-> +	}
-> +
-> +	ret = qup_fw_load(&rsc, fw_name);
-> +	if (ret) {
-> +		dev_err(se->dev,  "Firmware Loading failed for proto: %s Error: %d\n",
-> +			protocol_name[rsc.protocol], ret);
 
-Aren't you printing same error multiple times?
+On 1/27/2025 12:24 PM, Krzysztof Kozlowski wrote:
+> On 27/01/2025 07:49, Janaki Ramaiah Thota wrote:
+>> Resending the below  reviewed  patches after fixing the regulator warnings in v7 P1.
+>> - Patch 1/2 Add and enable BT node for qcs6490-rb3gen board.
+>> - Patch 2/2 Use the power sequencer for wcn6750.
+>>
+>> ----
+>> Changes from v7:
+>> * updated P1 & P2 with tag: Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>> * Link to v7: https://lore.kernel.org/lkml/20250107134157.211702-1-quic_janathot@quicinc.com/#t
+>>
+>> Changes from v6:
+>> * Elaborated the commit message with more information.
+>> * Link to v6: https://lore.kernel.org/lkml/20241223135700.22660-1-quic_janathot@quicinc.com/
+> These are entirely different patchsets - bindings only.
+> 
 
-> +		return ret;
-> +	}
-> +
-> +	dev_dbg(se->dev, "Firmware load for %s protocol is Success for xfer mode %d\n",
-> +		protocol_name[rsc.protocol], rsc.mode);
-> +	return ret;
-> +}
-> +EXPORT_SYMBOL_GPL(geni_load_se_firmware);
-> +
->  static int geni_se_probe(struct platform_device *pdev)
->  {
->  	struct device *dev = &pdev->dev;
-> diff --git a/include/linux/soc/qcom/geni-se.h b/include/linux/soc/qcom/geni-se.h
-> index 2996a3c28ef3..289fa6675d2b 100644
-> --- a/include/linux/soc/qcom/geni-se.h
-> +++ b/include/linux/soc/qcom/geni-se.h
-> @@ -1,6 +1,7 @@
->  /* SPDX-License-Identifier: GPL-2.0 */
->  /*
->   * Copyright (c) 2017-2018, The Linux Foundation. All rights reserved.
-> + * Copyright (c) 2023-2025 Qualcomm Innovation Center, Inc. All rights reserved.
->   */
->  
->  #ifndef _LINUX_QCOM_GENI_SE
-> @@ -72,6 +73,19 @@ struct geni_se {
->  	struct geni_icc_path icc_paths[3];
->  };
->  
-> +/**
-> + * struct qup_se_rsc - Structure containing se details protocol and xfer mode
-> + *
-> + * @mode: transfer mode se fifo, dma or gsi.
-> + * @protocol: Protocol spi or i2c or serial.
-> + * @se: Pointer to the concerned serial engine.
-> + */
-> +struct qup_se_rsc {
-> +	struct geni_se *se;
-> +	enum geni_se_xfer_mode mode;
-> +	enum geni_se_protocol_type protocol;
-> +};
-> +
->  /* Common SE registers */
->  #define GENI_FORCE_DEFAULT_REG		0x20
->  #define GENI_OUTPUT_CTRL		0x24
-> @@ -531,5 +545,8 @@ void geni_icc_set_tag(struct geni_se *se, u32 tag);
->  int geni_icc_enable(struct geni_se *se);
->  
->  int geni_icc_disable(struct geni_se *se);
-> +
-> +int geni_load_se_firmware(struct geni_se *se,
-> +			  enum geni_se_protocol_type protocol);
->  #endif
->  #endif
-> diff --git a/include/linux/soc/qcom/qup-fw-load.h b/include/linux/soc/qcom/qup-fw-load.h
-> new file mode 100644
-> index 000000000000..b9b58e81f5cb
-> --- /dev/null
-> +++ b/include/linux/soc/qcom/qup-fw-load.h
-> @@ -0,0 +1,179 @@
-> +/* SPDX-License-Identifier: GPL-2.0 */
-> +/*
-> + * Copyright (c) 2025 Qualcomm Innovation Center, Inc. All rights reserved.
-> + */
-> +#ifndef _LINUX_QCOM_QUP_FW_LOAD
-> +#define _LINUX_QCOM_QUP_FW_LOAD
-> +
-> +#include <linux/device.h>
-> +#include <linux/elf.h>
-> +#include <linux/firmware.h>
-> +#include <linux/kernel.h>
-> +
-> +/*Magic numbers*/
-> +#define MAGIC_NUM_SE			0x57464553
-> +
-> +/* Common SE registers*/
-> +#define GENI_INIT_CFG_REVISION		0x0
-> +#define GENI_S_INIT_CFG_REVISION	0x4
-> +#define GENI_FORCE_DEFAULT_REG		0x20
-> +#define GENI_CGC_CTRL			0x28
-> +#define GENI_CFG_REG0			0x100
-> +
-> +#define	QUPV3_SE_HW_PARAM_1		0xE28
+Thanks for the quick review Krzysztof,
+Initially we are getting below regulator warnings in patch version 5(v5)
+and we fixed those by patch 1 verion 7(v7-p1)
 
-Drop indentation after 'define'
+  arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dtb: bluetooth: 
+'enable-gpios' is a required property
+      from schema $id: 
+http://devicetree.org/schemas/net/bluetooth/qualcomm-bluetooth.yaml#
+  arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dtb: bluetooth: 
+'swctrl-gpios' is a required property
+      from schema $id: 
+http://devicetree.org/schemas/net/bluetooth/qualcomm-bluetooth.yaml#
+  arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dtb: bluetooth: 
+'vddio-supply' is a required property
+      from schema $id: 
+http://devicetree.org/schemas/net/bluetooth/qualcomm-bluetooth.yaml#
+  arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dtb: bluetooth: 
+'vddbtcxmx-supply' is a required property
+      from schema $id: 
+http://devicetree.org/schemas/net/bluetooth/qualcomm-bluetooth.yaml#
+  arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dtb: bluetooth: 
+'vddasd-supply' is a required property
+
+Explained complete history here : 
+https://lore.kernel.org/lkml/d3bd97d8-43fb-452b-adca-ad03eb628031@quicinc.com/
+
+> Why is this v8?
+> 
+
+To maintain complete history updated to v8
+
+Thanks,
+Janakiram
 
 
-Best regards,
-Krzysztof
+
 
