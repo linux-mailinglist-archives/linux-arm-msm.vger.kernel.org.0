@@ -1,164 +1,200 @@
-Return-Path: <linux-arm-msm+bounces-46191-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46192-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id EA743A1D11D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Jan 2025 08:02:26 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 04FCAA1D122
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Jan 2025 08:02:55 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 46B9E3A3DF7
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Jan 2025 07:02:19 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 2C61D7A1AEB
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Jan 2025 07:02:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8C9EA15A86B;
-	Mon, 27 Jan 2025 07:02:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 27D8A25A65E;
+	Mon, 27 Jan 2025 07:02:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="engWyvtB"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="NvgjpyKx"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55ECB25A65E;
-	Mon, 27 Jan 2025 07:02:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5725D15A86B
+	for <linux-arm-msm@vger.kernel.org>; Mon, 27 Jan 2025 07:02:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737961341; cv=none; b=cuk3IBTTMPVBOmWjTGRHl5WuHwV2RVeC7sB+1VcOis0EacTpMfc3V1Sg89yfkBklLRnWFUpTqpsbqgFFlavHoBUp6GLmCdEBaTcQEJmxLJaCaeaJwN+7tuojY9u/7MF7/lr+PG+9qkc5DdiKj4dFe2/Ah+0ftc+0QwNQzIQPbRQ=
+	t=1737961369; cv=none; b=cuQbacnc1BDJbxzhybBxG0XYnG2yPcdQECQzeX7nLQ70hKE+j4lWotnJsc71PYRaO22GkUnuGt2gU6vfbmdWhVZvxDJLqiEm7osEvHh2IGSbSNp+QlmzJKJWMwTaRGH8cm0ueB4kzvwA8YPDzAUZd3cqCEorNR02/t25p7XdJwM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737961341; c=relaxed/simple;
-	bh=iBvVy5fvDpZbPNoyqYfOPyUsiMYUjFm2ZuC9R6QzIZI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=f5+dnDKyQAn9XE4YpaIP0RvbakvyP5OkZuqd/4M0ZXoJCybYVIixnaVirJAYZfy9QWR1GGfMp/AHyMmpgl8NC1Gu2gAvlPFWnoBJN4WHlWi7MlmQceJZBPmkxM3bqSWwkpcdNHQdoADpVZ3Tp2/O/t51GbgUN9tKLqFFRndIqSk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=engWyvtB; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28B07C4CED2;
-	Mon, 27 Jan 2025 07:02:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1737961340;
-	bh=iBvVy5fvDpZbPNoyqYfOPyUsiMYUjFm2ZuC9R6QzIZI=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=engWyvtB72t4YTLOmU/zjbl1IlewgGPfAhs41eL1LZVfR6D5gZ348d3Di2X8R76bR
-	 9ixr+MuNYSL8J9JkGIOigsFEmpTJvtE05nzjpYF6yp3Afzs4fy/CA30jlqHqcu2mJe
-	 YxjF9EwCVjQXmSY30aN2U7KISge9rijjvv0ozchEepGl8j2p4RmXlMtzNeXEV6vwXE
-	 84BwTbV/VMqUcDtHe+Xif59ev288Z7N4nYreLMc34JSDzo8JzE6GwuF9w//+bH/foF
-	 7brNwsEUXY92q9aAsyhADD9NKVmHYLGf1/d9UQ1he4R3CFiGppS5rVMMLzODk0IkFy
-	 tbFtw2LhkLUww==
-Message-ID: <10060d39-87a4-4565-a2a6-80c93ac2266a@kernel.org>
-Date: Mon, 27 Jan 2025 08:02:12 +0100
+	s=arc-20240116; t=1737961369; c=relaxed/simple;
+	bh=Jjte7qF0T5d0DvKJnm0OUAEPba9vY7Yiy50vIJZMD0U=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=I187UBY57Pk/uApkb5rvvC1S8SLN8vpaus7J+vq25Q2gACYCgpCghJwUqAS+p+YZGuMS3EdDxmHfLeFWT4FA71lcQaSKEPHoCTt+codsCSEr6lAyjuVltwtaflIeQTVUKLGyTfJhQGB3mxoFrQTQkwDX9H96muFJGiMahqpjSpQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=NvgjpyKx; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50R4rd33022758
+	for <linux-arm-msm@vger.kernel.org>; Mon, 27 Jan 2025 07:02:46 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	tgoCbfdV7M1m7V98l9FOFOzCnmHIpGeMbHEp6hoi090=; b=NvgjpyKxjtfp7XXr
+	/g2TgBbi6vi9loYcZl18MxUEnW+aAY3w4mMcS3AV5ae4XCjjsLmHskUzPXXVx9v2
+	WLBrAGZoXW2fPAJRT0c/9d+0urXzaNh+bKLNSGKU3WenIao/h68edae9robd6MJV
+	s+5ml1+NUjacWuT7+z9GFtTfUFH8uKHElVFWDEe3EuDgQtYEqoYrPOXimkmEP3b8
+	p/yOpsL967L9eEB+GlB4NRVmaA7QHHWlecyOQCqwpjBzhFbwstej4fK9w+q1hNL0
+	3nqEjNDZV8L8nw7HkjaOGvjRiINbXXT8Qd797HovsvQligKf+SusXa+7x3qfPalq
+	ON84Sg==
+Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com [209.85.216.71])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44e3h2r81r-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 27 Jan 2025 07:02:46 +0000 (GMT)
+Received: by mail-pj1-f71.google.com with SMTP id 98e67ed59e1d1-2ef91d5c863so8441190a91.2
+        for <linux-arm-msm@vger.kernel.org>; Sun, 26 Jan 2025 23:02:46 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1737961365; x=1738566165;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=tgoCbfdV7M1m7V98l9FOFOzCnmHIpGeMbHEp6hoi090=;
+        b=Zg8fqkMEVwwqLgRGp9kxMpUSeIdQApBsSDnebsgQJy+BEolK5wWkSQ/36ghR5O3+zT
+         BB7HNy7XhUmOiqeq5THJiQU6hj5MJo1pVnXgfgcDQXaMICbJtG12s97n4RmE8690t80N
+         Er3rXtcFAzZWZACXf7xNbhkymfMVJusLosCB8BG6OyNxdhow7lDKgZIoz9R5epXETWmj
+         iEk5v3ylQzJCPUQ9JJA0B+KFOL7MTYVXzYNbQZws3dtnTVQTDCLw4RcZmPsy5TLQPYvJ
+         LZ16FUpnDLHg3kARM6uk/+DfFHgvE7/kp7x1JTbX4wSLnaAXQm1GB71OAaQccs3m2gKU
+         vDTw==
+X-Forwarded-Encrypted: i=1; AJvYcCXZ0IbMqj8yk53354fo+Lwd19Bzrh2y08c0XGNMJEFILksDN/SwA56rh6vnlyXzv+S5zHmTWzWwuUsq5BcO@vger.kernel.org
+X-Gm-Message-State: AOJu0YwljjAohyLzUn8zv0D/m5cmTYS4M1UZvInmwIBbR+TtBZo2CvjL
+	3jkFAKlazNY9uyQzDBivcH/M9iESssgy3URUcVvTjhV8vVnSE+bfLnYOwS/+XZcbuhYanfqprMT
+	BAFs3M5J0un16ijWxVevKGOUlttUiaetoa9M9WNDYGjz7lCupLdMbKT/8XWYobyuX
+X-Gm-Gg: ASbGncvl5SqUtvOIfYVY+dovR0evtPv1Xj+X263fITjPAYfrmE29gsL8kZBeKUOtlQp
+	IRDJpOd5P56KVhju1lslZMPAbpCrsrMxVqcdK44CyWbvjVhpM7nDC0hds/rR1SVQqH2ZMO09EOU
+	axmzJy9ebX44dDMvmVEGSVoIOA7pi25M0Tv93sMz3OZLS1NYtK60ZHK6J/mI2the+GlMwgNpjch
+	UqxI025gDThcJpi84asHa4AjXIGwXh6wpVEkI1GIEEv+OuaPAGCwxbJPCpKK2U9rKDLihe1VSfz
+	0EsybEANCr1SUjvPuw/jM5B7hvG41c8B
+X-Received: by 2002:a05:6a00:849:b0:725:f18a:da52 with SMTP id d2e1a72fcca58-72daf92a025mr60332172b3a.4.1737961365370;
+        Sun, 26 Jan 2025 23:02:45 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHmnfBQd58ik1bfdm6hTMz9F2AexOtE7DS7GHHU5uyQHC6Lp93kwmHY04I7t3BWGepUn3l+vg==
+X-Received: by 2002:a05:6a00:849:b0:725:f18a:da52 with SMTP id d2e1a72fcca58-72daf92a025mr60332143b3a.4.1737961364900;
+        Sun, 26 Jan 2025 23:02:44 -0800 (PST)
+Received: from hu-mojha-hyd.qualcomm.com ([202.46.23.25])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-72f8a6d2e8bsm6319674b3a.78.2025.01.26.23.02.42
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 26 Jan 2025 23:02:44 -0800 (PST)
+Date: Mon, 27 Jan 2025 12:32:40 +0530
+From: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+To: Manivannan Sadhasivam <mani@kernel.org>
+Cc: manivannan.sadhasivam@linaro.org, jassisinghbrar@gmail.com,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2] mailbox: qcom-ipcc: Reset CLEAR_ON_RECV_RD if set
+ from boot firmware
+Message-ID: <Z5cvkKPF+6WXJZtM@hu-mojha-hyd.qualcomm.com>
+References: <20241230075425.2534765-1-mukesh.ojha@oss.qualcomm.com>
+ <20250124075646.oc6ni5gp6c23ozp7@thinkpad>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 4/8] dt-bindings: serial: Add support for selecting
- data transfer mode
-To: Viken Dadhaniya <quic_vdadhani@quicinc.com>, andi.shyti@kernel.org,
- robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
- gregkh@linuxfoundation.org, jirislaby@kernel.org, broonie@kernel.or,
- andersson@kernel.org, konradybcio@kernel.org, johan+linaro@kernel.org,
- dianders@chromium.org, agross@kernel.org, linux-arm-msm@vger.kernel.org,
- linux-i2c@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-serial@vger.kernel.org,
- linux-spi@vger.kernel.org
-Cc: quic_msavaliy@quicinc.com, quic_anupkulk@quicinc.com
-References: <20250124105309.295769-1-quic_vdadhani@quicinc.com>
- <20250124105309.295769-5-quic_vdadhani@quicinc.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <20250124105309.295769-5-quic_vdadhani@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20250124075646.oc6ni5gp6c23ozp7@thinkpad>
+X-Proofpoint-GUID: V-WvL8f0HMPKikMHK8aqL6x15xpltM1A
+X-Proofpoint-ORIG-GUID: V-WvL8f0HMPKikMHK8aqL6x15xpltM1A
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-01-27_03,2025-01-27_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 clxscore=1015
+ phishscore=0 lowpriorityscore=0 adultscore=0 spamscore=0 mlxscore=0
+ bulkscore=0 priorityscore=1501 mlxlogscore=999 suspectscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2501270055
 
-On 24/01/2025 11:53, Viken Dadhaniya wrote:
-> Data transfer mode is fixed by TrustZone (TZ), which currently restricts
-> developers from modifying the transfer mode from the APPS side.
+On Fri, Jan 24, 2025 at 01:26:46PM +0530, Manivannan Sadhasivam wrote:
+> On Mon, Dec 30, 2024 at 01:24:25PM +0530, Mukesh Ojha wrote:
+> > For some SoCs, boot firmware is using the same IPCC instance used
+> > by Linux and it has kept CLEAR_ON_RECV_RD set which basically means
+> > interrupt pending registers are cleared when RECV_ID is read and the
+> > register automatically updates to the next pending interrupt/client
+> > status based on priority.
+> > 
+> > Clear the CLEAR_ON_RECV_RD if it is set from the boot firmware.
+> > 
 > 
-> Document the 'qcom,xfer-mode' properties to select the data transfer mode,
-> either GPI DMA (Generic Packet Interface) or non-GPI mode (PIO/CPU DMA).
-> 
-> UART controller can operate in one of two modes based on the
-> 'qcom,xfer-mode' property, and the firmware is loaded accordingly.
-> 
-> Co-developed-by: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
-> Signed-off-by: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
-> Signed-off-by: Viken Dadhaniya <quic_vdadhani@quicinc.com>
-> ---
-> 
-> v1 -> v2:
-> 
-> - Drop 'qcom,load-firmware' property and add 'firmware-name' property in
->   qup common driver.
-> - Update commit log.
-> 
-> v1 Link: https://lore.kernel.org/linux-kernel/20241204150326.1470749-4-quic_vdadhani@quicinc.com/
-> ---
-> ---
->  .../devicetree/bindings/serial/qcom,serial-geni-qcom.yaml | 8 ++++++++
->  1 file changed, 8 insertions(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/serial/qcom,serial-geni-qcom.yaml b/Documentation/devicetree/bindings/serial/qcom,serial-geni-qcom.yaml
-> index dd33794b3534..383773b32e47 100644
-> --- a/Documentation/devicetree/bindings/serial/qcom,serial-geni-qcom.yaml
-> +++ b/Documentation/devicetree/bindings/serial/qcom,serial-geni-qcom.yaml
-> @@ -56,6 +56,13 @@ properties:
->    reg:
->      maxItems: 1
->  
-> +  qcom,xfer-mode:
-> +    description: Set the value to 1 for non-GPI (FIFO/CPU DMA) mode and 3 for GPI DMA mode.
-> +      The default mode is FIFO.
-> +    $ref: /schemas/types.yaml#/definitions/uint32
-> +    enum: [1, 3]
-> +
-> +
+> Any user visible implications due to this?
+>
 
-Just one blank line, but anyway, this property should not be in three
-places. Do you really expect that each of serial engines within one
-GeniQUP will be configured differently by TZ?
+User visible impact is the case of missing interrupt.
 
-Best regards,
-Krzysztof
+We are accessing IPCC_REG_RECV_ID register both from qcom_ipcc_irq_fn()
+and from qcom_ipcc_pm_resume() and for some reason if
+qcom_ipcc_pm_resume() run just millisecond before qcom_ipcc_irq_fn after
+assertion of interrupt from the remote, qcom_ipcc_pm_resume reads the
+IPCC_REG_RECV_ID and clears it and when the same register read from the
+qcom_ipcc_irq_fn() it does not see the interrupt.
+
+> > Signed-off-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+> > ---
+> > Change in v2:
+> >  - Corrected email id in the Sob.
+> > 
+> >  drivers/mailbox/qcom-ipcc.c | 16 ++++++++++++++++
+> >  1 file changed, 16 insertions(+)
+> > 
+> > diff --git a/drivers/mailbox/qcom-ipcc.c b/drivers/mailbox/qcom-ipcc.c
+> > index 14c7907c6632..0b17a38ea6bf 100644
+> > --- a/drivers/mailbox/qcom-ipcc.c
+> > +++ b/drivers/mailbox/qcom-ipcc.c
+> > @@ -14,6 +14,7 @@
+> >  #include <dt-bindings/mailbox/qcom-ipcc.h>
+> >  
+> >  /* IPCC Register offsets */
+> > +#define IPCC_REG_CONFIG			0x08
+> >  #define IPCC_REG_SEND_ID		0x0c
+> >  #define IPCC_REG_RECV_ID		0x10
+> >  #define IPCC_REG_RECV_SIGNAL_ENABLE	0x14
+> > @@ -21,6 +22,7 @@
+> >  #define IPCC_REG_RECV_SIGNAL_CLEAR	0x1c
+> >  #define IPCC_REG_CLIENT_CLEAR		0x38
+> >  
+> > +#define IPCC_CLEAR_ON_RECV_RD		BIT(0)
+> >  #define IPCC_SIGNAL_ID_MASK		GENMASK(15, 0)
+> >  #define IPCC_CLIENT_ID_MASK		GENMASK(31, 16)
+> >  
+> > @@ -274,6 +276,7 @@ static int qcom_ipcc_pm_resume(struct device *dev)
+> >  static int qcom_ipcc_probe(struct platform_device *pdev)
+> >  {
+> >  	struct qcom_ipcc *ipcc;
+> > +	u32 config_value;
+> >  	static int id;
+> >  	char *name;
+> >  	int ret;
+> > @@ -288,6 +291,19 @@ static int qcom_ipcc_probe(struct platform_device *pdev)
+> >  	if (IS_ERR(ipcc->base))
+> >  		return PTR_ERR(ipcc->base);
+> >  
+> > +	/*
+> > +	 * It is possible that boot firmware is using the same IPCC instance
+> > +	 * as of the HLOS and it has kept CLEAR_ON_RECV_RD set which basically
+> > +	 * means Interrupt pending registers are cleared when RECV_ID is read.
+> > +	 * The register automatically updates to the next pending interrupt/client
+> > +	 * status based on priority.
+> > +	 */
+> > +	config_value = readl(ipcc->base + IPCC_REG_CONFIG);
+> > +	if (config_value & IPCC_CLEAR_ON_RECV_RD) {
+> 
+> Can't you just clear this bit always?
+
+We can do, but i wanted to be explicit here that something been done
+from bootloader which Linux would need to clear.
+
+I see this patch is merged in mainline.
+
+-Mukesh
+> 
+> - Mani
+> 
+> -- 
+> மணிவண்ணன் சதாசிவம்
 
