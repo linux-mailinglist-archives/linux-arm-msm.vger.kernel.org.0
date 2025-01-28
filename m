@@ -1,156 +1,169 @@
-Return-Path: <linux-arm-msm+bounces-46356-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46357-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id F0110A207D8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jan 2025 10:58:14 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 720D3A20825
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jan 2025 11:04:30 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 59B70168C53
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jan 2025 09:58:13 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C1ED7161AC9
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jan 2025 10:04:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8C6271A00E7;
-	Tue, 28 Jan 2025 09:57:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 10AEC19F104;
+	Tue, 28 Jan 2025 10:02:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="WDgwvBVJ"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="RstmT225"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DCC319CC11;
-	Tue, 28 Jan 2025 09:57:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B9F619F103;
+	Tue, 28 Jan 2025 10:02:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738058241; cv=none; b=a5EXcRepQaDWVn/tc2lveC54EGZ4rogdSeOvzqqQnOFUJBuUh8Dt/8G/VzHiWkDDaAQaCrbRlFk0EmCMPU33mayoF9lCEZfaEN+QYx6pwOazXZF+SOXgV5WLJgCNH5k5pQrgjRhrv4D22qGf8vmmUX482EquM1tro1Dlk5CeF4M=
+	t=1738058566; cv=none; b=GDrYB0GN994APWf2mTUUqkxjxE00UhgjHt2vZsxniISHjXh08C08vWx7DqPxs3z3C2RpCW0J1HOlF327q/mXRgyb/upe8d/cZudahlRlg0/xxeA0NW2aCgYg+8lDEtFEKr1/3u3E1K3jBIX1Jhe4EEy8wXnp7smqXaYiFbhnrzA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738058241; c=relaxed/simple;
-	bh=momNFG7HmrlvZT1BkDBQhwhSFM+A1S+Ius0MDXLSgYE=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:References:
-	 In-Reply-To:To:CC; b=kFq5eOdDPlCgqZ3qhQ6cSnsog5KvQ3Xh7fImFdCqKIHa4XPC133SFbqe0kI0JdFMOm4Q3E08oHmEwubmmq9/YZS96ZjKs4Wisz3c3nliWXBXB/PfS3T8LLC4FjZdfejxH0tTA8KL2l1Y65OZ4ZlVVEANkEv191MuQrT6zCQ8+R0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=WDgwvBVJ; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1738058566; c=relaxed/simple;
+	bh=wwE92+WBK8hl/Dx781FVGFXk/gvnWFzDgbYVdj6qle0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=Gjz/uIoQKYi+wvAdF9Vfv8s5QJdEkYZ71WnEMFn4yN2PBJIMXawpeF8aX/Aj2H1luzVB4fTKK9cAlExSTyrkbS2URZ9BZi7U614BxKfWMvJnyBdp/TLNV5JlynaJ4Znm/uAOn5Peqf8mWJ0oS/jjefY8jiBkJvX+fRsxVjlmoZs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=RstmT225; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50RMrVEP032644;
-	Tue, 28 Jan 2025 09:57:14 GMT
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50S9lWIJ018312;
+	Tue, 28 Jan 2025 10:02:40 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	dwccvR0I8r73vh8lHYvXtH8o48ByEI6FWFPxtm9adwg=; b=WDgwvBVJE2D2/KxU
-	9XB+urW8J5nhTHoVP9GRaTgyzjm82Ak7l6lbjyeu553dlDokms04hKsN53HdTSBj
-	Fmg98htiXJB3ufmh/UIJB9aA+E1CAWv68EqOKsOpBIklCn3x8C3PDl+k182B3Yn+
-	ocanCTGqITadhZJtJaLfVp+c43/looSXtz5/vFmo0jnJnwAtKCtW3/Z6+RUOJ2Fk
-	ADGeHc4aS2MQer/JuOoQpmGmE8FGspPY1bx/shTGpYR51PBWnCIKGZ3vU/2yJuCB
-	xCT9dWBV/U/e7oVmIGUOmKMcHoP7hyQP/0QW/Ts9ii5eXeTTnnvEbw5ihPA7eAwe
-	xiDL4A==
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44ekb893hw-1
+	IDLMrbpHNNym0vn68KNbcKFpIsk2STRx8jysXH0owU0=; b=RstmT2251xkkTHTB
+	lG47Hcnikx36wBgqzgt2fR7aSbHca73EidE/U9FvlyTOj43QLorrvi9YAGpytz7V
+	hUUNFnS3/UtROsgUjJ2F6NBWnBl7aP92Ts2H6Qh6BiIQ8/ma7flzkyI4ft/Hw4Ha
+	tuh5buT2iLCpfNqb+bLn6p/7XTI57jH3BcM1yojVm6POezZ8nWZw6HPmVghr7EiL
+	0bDdu9QwqMFxW1g9TxRwgRTNXpYsr4YOKAt9TxgdN7WEs/IzCsbXZ2LapmZwHqdu
+	92ttZKcHJLJbRrsaXugcKZOEDzsUNjlfYqfMxuxTZGqia4C8RKNrgapgYQxfPnS3
+	MSLC3Q==
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44evwug19j-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 28 Jan 2025 09:57:14 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 50S9vDKA023565
+	Tue, 28 Jan 2025 10:02:40 +0000 (GMT)
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 50SA2eR9017802
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 28 Jan 2025 09:57:13 GMT
-Received: from hu-vgarodia-hyd.qualcomm.com (10.80.80.8) by
- nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Tue, 28 Jan 2025 01:57:09 -0800
-From: Vikash Garodia <quic_vgarodia@quicinc.com>
-Date: Tue, 28 Jan 2025 15:24:39 +0530
-Subject: [PATCH v3 4/4] media: venus: hfi: add a check to handle OOB in sfr
- region
+	Tue, 28 Jan 2025 10:02:40 GMT
+Received: from [10.218.5.175] (10.80.80.8) by nasanex01c.na.qualcomm.com
+ (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 28 Jan
+ 2025 02:02:36 -0800
+Message-ID: <27aa8dc3-34b9-40e7-93bc-e52118b46138@quicinc.com>
+Date: Tue, 28 Jan 2025 15:32:28 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-ID: <20250128-venus_oob_2-v3-4-0144ecee68d8@quicinc.com>
-References: <20250128-venus_oob_2-v3-0-0144ecee68d8@quicinc.com>
-In-Reply-To: <20250128-venus_oob_2-v3-0-0144ecee68d8@quicinc.com>
-To: Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
-        Bryan O'Donoghue
-	<bryan.odonoghue@linaro.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Tomasz Figa <tfiga@chromium.org>,
-        Hans Verkuil <hans.verkuil@cisco.com>
-CC: Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        Mauro Carvalho Chehab
-	<mchehab+samsung@kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>,
-        Vikash Garodia <quic_vgarodia@quicinc.com>, <stable@vger.kernel.org>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1738058213; l=1564;
- i=quic_vgarodia@quicinc.com; s=20241104; h=from:subject:message-id;
- bh=momNFG7HmrlvZT1BkDBQhwhSFM+A1S+Ius0MDXLSgYE=;
- b=NKigmaM81Qvx7rxzs/VcFJgJclM18IxuHHnEQzN8n4fV1/mnHXpDcqaWY8hhRhG1IPM4K2z06
- eeHJRmxcLXWAQQJfl9nrZVEHZyurBs7NYFT+4z6S4F+4rJodcmnn6o9
-X-Developer-Key: i=quic_vgarodia@quicinc.com; a=ed25519;
- pk=LY9Eqp4KiHWxzGNKGHbwRFEJOfRCSzG/rxQNmvZvaKE=
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 2/2] arm64: dts: qcom: qcs8300: Add device node for
+ gfx_smmu
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, <andersson@kernel.org>
+CC: <konradybcio@kernel.org>, <robh@kernel.org>, <krzk+dt@kernel.org>,
+        <conor+dt@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        Prakash Gupta
+	<quic_guptap@quicinc.com>
+References: <20241227110024.30203-1-quic_pbrahma@quicinc.com>
+ <1c8af731-c551-4d72-84a0-f14d57bec4ec@oss.qualcomm.com>
+ <e7abe34c-9df9-425b-933e-cc744a63b80c@quicinc.com>
+ <41fd6b59-249d-4f19-9ff8-4ae169a6db05@oss.qualcomm.com>
+Content-Language: en-US
+From: Pratyush Brahma <quic_pbrahma@quicinc.com>
+In-Reply-To: <41fd6b59-249d-4f19-9ff8-4ae169a6db05@oss.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01c.na.qualcomm.com (10.45.79.139)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: n5SPmRUbSmkM6-D8fd8PaRILfsxTUvsC
-X-Proofpoint-ORIG-GUID: n5SPmRUbSmkM6-D8fd8PaRILfsxTUvsC
+X-Proofpoint-GUID: PhJwdjxkUgJJmyDXZkoK9E4KrRFFHZCt
+X-Proofpoint-ORIG-GUID: PhJwdjxkUgJJmyDXZkoK9E4KrRFFHZCt
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
  definitions=2025-01-28_03,2025-01-27_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 lowpriorityscore=0
- clxscore=1015 priorityscore=1501 spamscore=0 adultscore=0 phishscore=0
- bulkscore=0 malwarescore=0 mlxlogscore=960 suspectscore=0 impostorscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2411120000
- definitions=main-2501280077
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 spamscore=0
+ priorityscore=1501 clxscore=1015 lowpriorityscore=0 suspectscore=0
+ bulkscore=0 mlxscore=0 phishscore=0 malwarescore=0 mlxlogscore=889
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2501280077
 
-sfr->buf_size is in shared memory and can be modified by malicious user.
-OOB write is possible when the size is made higher than actual sfr data
-buffer. Cap the size to allocated size for such cases.
 
-Cc: stable@vger.kernel.org
-Fixes: d96d3f30c0f2 ("[media] media: venus: hfi: add Venus HFI files")
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Signed-off-by: Vikash Garodia <quic_vgarodia@quicinc.com>
----
- drivers/media/platform/qcom/venus/hfi_venus.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
-
-diff --git a/drivers/media/platform/qcom/venus/hfi_venus.c b/drivers/media/platform/qcom/venus/hfi_venus.c
-index 6b615270c5dae470c6fad408c9b5bc037883e56e..c3113420d266e61fcab44688580288d7408b50f4 100644
---- a/drivers/media/platform/qcom/venus/hfi_venus.c
-+++ b/drivers/media/platform/qcom/venus/hfi_venus.c
-@@ -1041,18 +1041,23 @@ static void venus_sfr_print(struct venus_hfi_device *hdev)
- {
- 	struct device *dev = hdev->core->dev;
- 	struct hfi_sfr *sfr = hdev->sfr.kva;
-+	u32 size;
- 	void *p;
- 
- 	if (!sfr)
- 		return;
- 
--	p = memchr(sfr->data, '\0', sfr->buf_size);
-+	size = sfr->buf_size;
-+	if (size > ALIGNED_SFR_SIZE)
-+		size = ALIGNED_SFR_SIZE;
-+
-+	p = memchr(sfr->data, '\0', size);
- 	/*
- 	 * SFR isn't guaranteed to be NULL terminated since SYS_ERROR indicates
- 	 * that Venus is in the process of crashing.
- 	 */
- 	if (!p)
--		sfr->data[sfr->buf_size - 1] = '\0';
-+		sfr->data[size - 1] = '\0';
- 
- 	dev_err_ratelimited(dev, "SFR message from FW: %s\n", sfr->data);
- }
+On 1/9/2025 8:56 PM, Konrad Dybcio wrote:
+> On 8.01.2025 1:10 PM, Pratyush Brahma wrote:
+>> On 12/30/2024 6:49 PM, Konrad Dybcio wrote:
+>>> On 27.12.2024 12:00 PM, Pratyush Brahma wrote:
+>>>> Add the device node for gfx smmu that is required for gpu
+>>>> specific address translations.
+>>>>
+>>>> This patch depends on the patch series [1] posted by Imran Shaik
+>>>> adding the clock support for gpu.
+>>>>
+>>>> [1] https://lore.kernel.org/all/802d32f1-ff7e-4d61-83f1-f804ee1750ed@oss.qualcomm.com/
+>>>>
+>>>> Signed-off-by: Pratyush Brahma <quic_pbrahma@quicinc.com>
+>>>> ---
+>>>>    arch/arm64/boot/dts/qcom/qcs8300.dtsi | 37 +++++++++++++++++++++++++++
+>>>>    1 file changed, 37 insertions(+)
+>>>>
+>>>> diff --git a/arch/arm64/boot/dts/qcom/qcs8300.dtsi b/arch/arm64/boot/dts/qcom/qcs8300.dtsi
+>>>> index 80226992a65d..8eb688e2df0a 100644
+>>>> --- a/arch/arm64/boot/dts/qcom/qcs8300.dtsi
+>>>> +++ b/arch/arm64/boot/dts/qcom/qcs8300.dtsi
+>>>> @@ -816,6 +816,43 @@
+>>>>                #power-domain-cells = <1>;
+>>>>            };
+>>>>    +        adreno_smmu: iommu@3da0000 {
+>>>> +            compatible = "qcom,qcs8300-smmu-500", "qcom,adreno-smmu",
+>>>> +                   "qcom,smmu-500", "arm,mmu-500";
+>>>> +            reg = <0x0 0x3da0000 0x0 0x20000>;
+>>>> +            #iommu-cells = <2>;
+>>>> +            #global-interrupts = <2>;
+>>>> +            dma-coherent;
+>>>> +
+>>>> +            power-domains = <&gpucc GPU_CC_CX_GDSC>;
+>>>> +            clocks = <&gcc GCC_GPU_MEMNOC_GFX_CLK>,
+>>>> +                 <&gcc GCC_GPU_SNOC_DVM_GFX_CLK>,
+>>>> +                 <&gpucc GPU_CC_AHB_CLK>,
+>>>> +                 <&gpucc GPU_CC_HLOS1_VOTE_GPU_SMMU_CLK>,
+>>>> +                 <&gpucc GPU_CC_CX_GMU_CLK>,
+>>>> +                 <&gpucc GPU_CC_HUB_CX_INT_CLK>,
+>>>> +                 <&gpucc GPU_CC_HUB_AON_CLK>;
+>>>> +            clock-names = "gcc_gpu_memnoc_gfx_clk",
+>>>> +                      "gcc_gpu_snoc_dvm_gfx_clk",
+>>>> +                      "gpu_cc_ahb_clk",
+>>>> +                      "gpu_cc_hlos1_vote_gpu_smmu_clk",
+>>>> +                      "gpu_cc_cx_gmu_clk",
+>>>> +                      "gpu_cc_hub_cx_int_clk",
+>>>> +                      "gpu_cc_hub_aon_clk";
+>>> Most of these entries look totally bogus, please make sure you only
+>>> reference the ones actually required
+>> These entries are exactly similar to the ones we use in sa8775p as well [1] and the usecases
+>> haven't changed between qcs8300 and sa8775p.
+>>
+>> Can you please let me know which entries you find irrelevant here?
+> Well, I'm particularly unsure about CX_GMU and the HUB clocks.
+> I >>don't think<< they don't have much to do with the SMMU, but please
+> check internally with someone who knows for sure
+I checked internally and found that these clocks are required for gpu 
+smmu operations
+as we don't use interconnect voting mechanism here as we do downstream. 
+Hence the
+list of clocks is same across all targets using gpu smmu as described in 
+[1] previously.
+> Konrad
 
 -- 
-2.34.1
+Thanks and Regards
+Pratyush Brahma
 
 
