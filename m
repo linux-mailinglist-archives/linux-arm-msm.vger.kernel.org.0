@@ -1,90 +1,85 @@
-Return-Path: <linux-arm-msm+bounces-46403-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46404-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id A0FC0A20E0F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jan 2025 17:09:25 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id C5320A20E15
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jan 2025 17:10:33 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0FD061615CD
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jan 2025 16:09:24 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 33765162B12
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jan 2025 16:10:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BFE2518D622;
-	Tue, 28 Jan 2025 16:09:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 928A118D622;
+	Tue, 28 Jan 2025 16:10:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="dx3jCmkf"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="YB75uTDa"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f45.google.com (mail-lf1-f45.google.com [209.85.167.45])
+Received: from mail-lf1-f47.google.com (mail-lf1-f47.google.com [209.85.167.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C885A198E65
-	for <linux-arm-msm@vger.kernel.org>; Tue, 28 Jan 2025 16:09:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8724E198E65
+	for <linux-arm-msm@vger.kernel.org>; Tue, 28 Jan 2025 16:10:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738080562; cv=none; b=RQPVdypKBQ+gNuqEXuWOTRRHh2PpDVVJSC7cljMqZMUHAdeZnC1lfJo2tT9dpYsg31MZPbaGg1Vi1KksjeG5I70TSLQjitdUachi2fjl38ckfVLrIJtYobuPlm3qVraVQiSzMBe0+uRxAp1S/IxTDkC7KkoX9jFuF4n+inH6Mr4=
+	t=1738080631; cv=none; b=IuFoNZ7iHdeOLLjIlnUUfblXTOBUfmChsV7iWcGZ5SJT2/fy8EsBzgMNOj7NQL8sl19nLmrJp/N7MEMPMKC2XJPyrjcBF8P4gSNY6YHJldzc4jPOOaC2b8kE+PEKqeN2hk/NTwo3OAol6e7U3Lq41LppkXBJtC6KegcBEXxgw4E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738080562; c=relaxed/simple;
-	bh=BEceo0pyOWNwrQgM5P+ElC1rpnayGRzLlO9HRB1nWeo=;
+	s=arc-20240116; t=1738080631; c=relaxed/simple;
+	bh=egOux6gcmaoTI0j9MjbYb0pXyysca3tnIQKYYnqVgV0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=DwabIHS/0Zt/39Y+btet7a36YJagiJq+gpf5a+O17WK1bg/b9aA9BqJ7wn8XPKhRyoW7dt+7sV02wfeM511xJN/w0umzaljB34I7ACPyvz/pA9mYXOqDinC8BqizbxzzRc1gxKWvnBumZEpthJZbQnPOQ81ZxahfYic5frnqHfI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=dx3jCmkf; arc=none smtp.client-ip=209.85.167.45
+	 Content-Type:Content-Disposition:In-Reply-To; b=UgePpmtxJYi2XleF0SLV6lPWoynyvxhdY9RvbOfOGUxSEIseTNR+H+VHTJD03FIBb+nMcizQzX3YP80ShE9lR6VcR10KBFGDMXnFTPp8/F/c90xed3y6nRl/GP0q2jgIc9lyyMF+DWtmUeP0r/6kP1gbWy569hsdw212LjRXKqQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=YB75uTDa; arc=none smtp.client-ip=209.85.167.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-53e3c47434eso6226438e87.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Jan 2025 08:09:20 -0800 (PST)
+Received: by mail-lf1-f47.google.com with SMTP id 2adb3069b0e04-53e384e3481so5562208e87.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Jan 2025 08:10:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1738080559; x=1738685359; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1738080628; x=1738685428; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=8hyWKduVNC9ouiWAJq4WnkCOtxjNZB1VnYrFoYk4udA=;
-        b=dx3jCmkfR2fG5MyNInak4Wl8/kJyRHvcvDkd+kYwncRIWwuH4O1imGSdVmwdZvXMup
-         o8SCsNc7isyz7PQodm1Mpo5ipYDbJ4+fxE9AZRm7mFskRF76ChN2jP7bEvttVRGisCbu
-         s+yS9N+sggF3Bj7TbZi7qHvMju42dF736dgNptJvGnbtyDfnC58513UQJ9RLvaqpGdap
-         f65GD40Wp86/kbSFQ2M/KTS3V7+d5WrI8/m3iNb7XwKHaBQLBpZCY/KrRGiTLWt5TCdo
-         fUHb8eJsouwpYBrogDTh8LgSo+XUJ7FPMOZrkYoxA6bBO0SrfoTQYS4Hsotw7/DZrMxz
-         kwug==
+        bh=nZf10GZliLRxUQeGZ7ym9uDe5C3UZVqCnkotswK+/Fo=;
+        b=YB75uTDavBK5y9lxFX/9KQGbQbaGviUhkQtoJc9VA3FaTESXtLTESxzEyPMKpZyr0l
+         lofCo9+m36uJxPSxi8ih7tMUCe7XFDSXOK8AR/tFJ9WZlb4W1IDCvm/VebHhAFT3B6S0
+         h9IE2gpfxu/iOQs5+eyepIKVjpj5nJdrIGluKJKN6xwBs9NyX1f8+DI6uwqFyY0iVV5Y
+         EhZ7xWlr8r/ztjUg9uyGA96kbUB2Aob04011LRN4qZ1R/WFASFNMwncUFNM89SAKKlgs
+         DWGxn/SQbgadqropC1kgXfiTfGrNOhe8e9Mq6YCAxjlwM5TysDk3OfkZ2QnNudULjRHE
+         SSng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738080559; x=1738685359;
+        d=1e100.net; s=20230601; t=1738080628; x=1738685428;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=8hyWKduVNC9ouiWAJq4WnkCOtxjNZB1VnYrFoYk4udA=;
-        b=PseyqPvjzDvp8iDIOgvtlU47R7jDPHRP4iWcdKdr75NPTG8wt7Sn1yGEdU77DW+N4+
-         gPkUkMOMNUOVvGxFGUrDklB30BiqNI+jzRFXlbA1iLxKw52Fbzhj4YYcGgDXoMngNLmE
-         /4TtVm+288xBjDuhTv4EpqrPlV1wQyF2jrjwZFVZAsb8t3uT3YMCRskcVSKlocqZcKZv
-         7E8vfcJnsw0Iec5MfoUi3u48U1dfAcX/lgphiBspy7VsdXipm8IhNUOZy8Vz7p4JtRrr
-         o/x9t8efVx/K6qwo599a5T+mcOWInVIRBwEioVi6fQ6235m90hqTphos2pPIaWbE+BQ3
-         o/hg==
-X-Forwarded-Encrypted: i=1; AJvYcCUEO2sLYcIhnrqLiFiQfXmtO7DfS49/vCoqBYi8n5kHbN2CP83ADIY1RLit8J+WE/2jKVq4/y9iYEDNAjCL@vger.kernel.org
-X-Gm-Message-State: AOJu0YzJ417TGTfK8IlzBLJLefmXAHCA24Nr0LKP5wyPixOhxlWcsSiy
-	b+Unxt+bqNB6lblKXfjLCylYGKCuvNprjF2Fc2/GdV6aGEnrKFFadUBFCr3L4IU=
-X-Gm-Gg: ASbGncvyM59zjciVvkxlcz/RhCI+kf5iGmEnGqUUr/Pe6uwWGXtG6sUT0+sgBwz7dOa
-	3p2T9aJlcCy3/6YoWcdcZAyynHSNJqqHQp+UcHwkKVoCqM2HNgVxRj/+L5v3HvYLJlEP3Jq07rO
-	mlOMRCaS+Uns7m84VQMqpZuF+ZJxsM4KDD3Zn+k85tg7aVtzwhNuevbHaQN8L3GIuAEoLje0KyV
-	I/aiF0gH3ta/CGPHzosABNTwl3/2GRt9OuRiz5D8m6/la3D5fmvtJOa28tHYrtRXbDY5m9XOLYY
-	oXU+BgPtehFBKxxB5rCRqHuftphRgTGgkMJipmMIgzVcx2yaGItRl5x8VT98g8VHeWlRcUvWtyC
-	6BuGuJg==
-X-Google-Smtp-Source: AGHT+IHC2sjROuFhZA0YjUt5mQF/zuLJNR2MX3vLn942u6zWQ2Beugmg5eWKUBTr/IVWHBJ5ABtFKg==
-X-Received: by 2002:a19:7618:0:b0:542:1b6b:1e89 with SMTP id 2adb3069b0e04-5439c216beemr12823836e87.7.1738080558882;
-        Tue, 28 Jan 2025 08:09:18 -0800 (PST)
+        bh=nZf10GZliLRxUQeGZ7ym9uDe5C3UZVqCnkotswK+/Fo=;
+        b=E7yB2K/XOiueQWFOG+pBFa0Hd3GCMwmqjCsMGorx6MjThtkWvZlvrHNoUMMPj142pd
+         UpK9PE8tuGz1CTDVI1SmjcK5w5lWuarhmvXVAVcKjoD3wM+DySJxByHZfEr4yBYlGiJm
+         eap1l3t+EaQDXr0UE5t8fwaqo/z+sT5jxeJmXALNUdYD/eZfVgeVlS0wTVOlIx3EokUD
+         fw5A7/Z6u8wl3/xze31RVUjPA7+XwFNDkfUfMuNhc9zrR82GeBrdykjib+BtVU6aAC/D
+         +BmF8etd4SogkzR17p+SrhLF4kjMqWnmkQ0TnVCJngo8LvBuOGBlx4S/wkZz+KGhfe+4
+         MCTQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUFlBO8kEOk6PR6V4rBowNTA3Jox7WB+OQIQO9KI21YpBfTCMEIe+dkgOkQ7JzNhVoNgMabpYaxAkDwSs6a@vger.kernel.org
+X-Gm-Message-State: AOJu0YzB2RfvSNESfjk6qLE+uENGW2UfmaUqmTTv+MrgmEAbdmXewqrN
+	sFShTykxUIiqQoYo/0ZcwvJkdiBxKNWWFjArFTuMD34xcSQ2gxX6JJJfbN/YamYLEWGVu1qrTvK
+	2kJo=
+X-Gm-Gg: ASbGncvDjky+taLoqctiX4KRnbydkvGqpMVMDe2lxymjsi+4nNuGEj0nga9UtYUxVFV
+	M6kOFCX2g06WxiqBevnb2Z/Bz9pZRe3/a3xmxsBVtJnewvBYO+7Y/hNU57otzndDiZaIMjOtShh
+	dNI+tRrz60K9Mtiwni8rX52Ulb+9uA9pY06ri6mh3vqw8Pp9NGQFqRIT2zGBkXF2ZOWQlsHgGW7
+	FOagDkEQaAe7+gGfFgbVxbRgv/Jl4ug0/LdBQNfEGJJKmYXjOufYvJYDVd2z3qSLl6JsORVc9eU
+	QsCjJmoZz7rEhbgkED9fG15fjAfET1nnbKvu/3F3/UtHSJx+woq9GJZF+tKWJZuG+VWrBiw=
+X-Google-Smtp-Source: AGHT+IH3bdg/f9LscmTQMikpEOOTfKvr/U/CMVxZsJUs0BVXmhJpdoCHO0gTm5dXPQNrCEOxQX19nA==
+X-Received: by 2002:ac2:4826:0:b0:542:9987:6e9f with SMTP id 2adb3069b0e04-5439c27d3e7mr11858528e87.53.1738080627598;
+        Tue, 28 Jan 2025 08:10:27 -0800 (PST)
 Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-543c836840fsm1670414e87.132.2025.01.28.08.09.16
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-543c83816b2sm1668905e87.233.2025.01.28.08.10.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 28 Jan 2025 08:09:17 -0800 (PST)
-Date: Tue, 28 Jan 2025 18:09:15 +0200
+        Tue, 28 Jan 2025 08:10:26 -0800 (PST)
+Date: Tue, 28 Jan 2025 18:10:24 +0200
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Ajit Pandey <quic_ajipan@quicinc.com>
-Cc: Bjorn Andersson <andersson@kernel.org>, 
-	Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>, 
-	Imran Shaik <quic_imrashai@quicinc.com>, Taniya Das <quic_tdas@quicinc.com>, 
-	linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	Jagadeesh Kona <quic_jkona@quicinc.com>, Satya Priya Kakitapalli <quic_skakitap@quicinc.com>, 
-	stable@vger.kernel.org
-Subject: Re: [PATCH] clk: qcom: clk-branch: Fix invert halt status bit check
- for votable clocks
-Message-ID: <sfrnlwwmoh5ic5c5r6b3mzh4dq2ud27qu3bclcm4p5vwfbckhw@utti7c4ejxr6>
-References: <20250128-push_fix-v1-1-fafec6747881@quicinc.com>
+To: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+Cc: andersson@kernel.org, konradybcio@kernel.org, 
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, Saranya R <quic_sarar@quicinc.com>
+Subject: Re: [PATCH] soc: qcom: pdr: Fix the potential deadlock
+Message-ID: <3upgcew4ulzxtjjnawqiu4jomm3mm5nf2kxworgeod23nurfrv@5ato4wq54mpm>
+References: <20250128080751.3718762-1-mukesh.ojha@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -93,30 +88,48 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250128-push_fix-v1-1-fafec6747881@quicinc.com>
+In-Reply-To: <20250128080751.3718762-1-mukesh.ojha@oss.qualcomm.com>
 
-On Tue, Jan 28, 2025 at 05:08:35PM +0530, Ajit Pandey wrote:
-> BRANCH_HALT_ENABLE and BRANCH_HALT_ENABLE_VOTED flags are used to check
-> halt status of branch clocks, which have an inverted logic for the halt
-> bit in CBCR register. However, the current logic in the _check_halt()
-> method only compares the BRANCH_HALT_ENABLE flags, ignoring the votable
-> branch clocks.
+On Tue, Jan 28, 2025 at 01:37:51PM +0530, Mukesh Ojha wrote:
+> When some client process A call pdr_add_lookup() to add the look up for
+> the service and does schedule locator work, later a process B got a new
+> server packet indicating locator is up and call pdr_locator_new_server()
+> which eventually sets pdr->locator_init_complete to true which process A
+> sees and takes list lock and queries domain list but it will timeout due
+> to deadlock as the response will queued to the same qmi->wq and it is
+> ordered workqueue and process B is not able to complete new server
+> request work due to deadlock on list lock.
 > 
-> Update the logic to correctly handle the invert logic for votable clocks
-> using the BRANCH_HALT_ENABLE_VOTED flags.
+>        Process A                        Process B
 > 
-> Fixes: 9092d1083a62 ("clk: qcom: branch: Extend the invert logic for branch2 clocks")
-> Cc: stable@vger.kernel.org
-> Signed-off-by: Ajit Pandey <quic_ajipan@quicinc.com>
-> ---
-> This patch update the logic to correctly handle the invert logic for votable
-> clocks using the BRANCH_HALT_ENABLE_VOTED flags.
-> ---
->  drivers/clk/qcom/clk-branch.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
+>                                      process_scheduled_works()
+> pdr_add_lookup()                      qmi_data_ready_work()
+>  process_scheduled_works()             pdr_locator_new_server()
+>                                          pdr->locator_init_complete=true;
+>    pdr_locator_work()
+>     mutex_lock(&pdr->list_lock);
 > 
+>      pdr_locate_service()                  mutex_lock(&pdr->list_lock);
+> 
+>       pdr_get_domain_list()
+>        pr_err("PDR: %s get domain list
+>                txn wait failed: %d\n",
+>                req->service_name,
+>                ret);
+> 
+> Fix it by removing the unnecessary list iteration as the list iteration
+> is already being done inside locator work, so avoid it here and just
+> call schedule_work() here.
+> 
+> Signed-off-by: Saranya R <quic_sarar@quicinc.com>
+> Signed-off-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Missing Fixes tag.
+
+> ---
+>  drivers/soc/qcom/pdr_interface.c | 8 +-------
+>  1 file changed, 1 insertion(+), 7 deletions(-)
+> 
 
 -- 
 With best wishes
