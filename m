@@ -1,48 +1,87 @@
-Return-Path: <linux-arm-msm+bounces-46386-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46387-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7B086A20A92
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jan 2025 13:30:39 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 08F90A20AC8
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jan 2025 13:53:40 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id BA7167A361A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jan 2025 12:30:29 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 4E5A4164893
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jan 2025 12:53:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 85CD319DFA2;
-	Tue, 28 Jan 2025 12:30:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 11AA31A38E1;
+	Tue, 28 Jan 2025 12:53:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OsmPZnKl"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="GfLKuMW+"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F3B02F29;
-	Tue, 28 Jan 2025 12:30:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC6F71A00F2
+	for <linux-arm-msm@vger.kernel.org>; Tue, 28 Jan 2025 12:53:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738067432; cv=none; b=hfrEgPOl+jsYNr77458PJRNmkJkQuqgnfmW4ZI77h6t9ZSEcc/fQ2aG18FY/B/trRrwiUx4ABVvqc+lCMqJQrMYiMhOJE9uTpPIZD+GecanyIXL4tub/l7QeqHxxDhcX5aBLBorhiNiQRlY6DA4hcWCGpEQgMQ4Nkd1aSsKGh1U=
+	t=1738068813; cv=none; b=CB40sNjPn2anAODPQ0hn3Tazz5oIMCfH4DaoSn7/NzPYbN+W9yJBYkWmwVIInQJh+XQ4OVPeKrzJHrjsVp9ifPgLktv8WEzYAO3nPJgZND2EVxYNycz8Z5U6/J/DnL+jmw60FsNZ2GNhucyIrWPfm9Kf8FV0/zD75FZIXVbZWFU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738067432; c=relaxed/simple;
-	bh=QyOoZd7UPQK8ox6uSZo8sq13eTCA+uLjpoc9Hps1+Q4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=jsln1ph8iTL1Ij1bLJ3l0UFvoSQLamfZuTDQWS5CM7SM9NbHC9LCQXCvPjXHTYjogyQpDXqs70qv0nRU+cTXt7SOI218iej+HgcXtz7ADqA+qtb75Y6xQI2tzDXcF/qMkn2n8wpfK3NPB6csXyyiKtrlsiY0LE/3lrOCV1xAYis=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OsmPZnKl; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41591C4CED3;
-	Tue, 28 Jan 2025 12:30:26 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1738067430;
-	bh=QyOoZd7UPQK8ox6uSZo8sq13eTCA+uLjpoc9Hps1+Q4=;
-	h=Date:Subject:To:References:From:In-Reply-To:From;
-	b=OsmPZnKl4XFKima6WKEvpbZTIyqfv+K3Vu8ZDm7vAKszr+y7GYY9+b2ayLb7X6Cos
-	 ukEYcpVLLeP/gvJ79LxQqB7l4ushpCuLLMXUnm1HNWvSmTFIZMY1qlylBWu4lQszrF
-	 nm4miHh0EocNw6rfN0Ed9Bm9wMCr7o11tg/cnpmsrVIKCYBPqjvETP80n18aBYE7s5
-	 BchwucYy538eL7+sLkMyrIUwxoSQ+dLAjnYFeJM6f2X4uSYUj8R45xe0KrRRIO8T/n
-	 lAcPl8c6egkbxVHiD+Gc3cJ0KMaFZ/+/x0GIb2BvBjNkzqV5LP81nFBZVuNEbRD1mu
-	 2sRvLmnsyHJnQ==
-Message-ID: <c3b6c20f-6e35-446d-a61d-f24611dd815d@kernel.org>
-Date: Tue, 28 Jan 2025 13:30:24 +0100
+	s=arc-20240116; t=1738068813; c=relaxed/simple;
+	bh=AmKBEMYbq3C1waUn1c3i1+nqUIo9we6DMiSCNRCXMuo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=CbOc1Hj9O+m8eRlq169zjnpg1xW/puxeQJcc5Jz8WeMffgRM/lXw2FPBSzhzRGgwM4uCj1d4yFuo4WFAaBJN8z5YZtPMGSVCM3DQ7g+KtGwfl4a6pEEOAvhGQa+g7ti8FH3Ti55TbOHfvwE7n6ESsLh1lNTWtBf00oLS1v8kmfM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=GfLKuMW+; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50S0DprC011347
+	for <linux-arm-msm@vger.kernel.org>; Tue, 28 Jan 2025 12:53:30 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	MV9sHX+bNUWcHes1enc1kOVtoMjibHPlM6e++jnw3fA=; b=GfLKuMW+eJwMrVKK
+	C4dzxdizExOpdLHR7oO9iv0y7WSELr6pViZR1rDuSXfVG0C+kFLZDwXb5eWRv3Y9
+	Ompc/HUe68D2Q/UoJ5S0gZJ5xJRwQ01sZjtwGgq1XONW7kvDtzagfg5mDvPjIimV
+	dAZAYoXnXVa6k9kPiaJSlY3sz2/Ucr6aXI2LFGaN1lmClelEEiBUzrDBLQddhwq0
+	VF+i/Nv8FVdsz+blETVhh6HMTbVPVpXRXZ1dW9xCKLzKJxvCY+nGIJXfaa4VnAGF
+	LrQ5tAZh9hUa+JCXckjwLApIIzJe/95G3v9+sm0XMSKXHSaqBUZOlFlXDPAAHqyd
+	TR0zXw==
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com [209.85.160.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44emgtscpg-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 28 Jan 2025 12:53:30 +0000 (GMT)
+Received: by mail-qt1-f199.google.com with SMTP id d75a77b69052e-467a437e5feso15364411cf.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Jan 2025 04:53:29 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1738068809; x=1738673609;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=MV9sHX+bNUWcHes1enc1kOVtoMjibHPlM6e++jnw3fA=;
+        b=dBWk+n3Sp0X9dYLt58n3NEULrOQFGHffSI4m3vaXGxn7O4Ribel8gIaMdO57lwb9qw
+         dirO3pDSHtGA/N9Vk6QVR4KbFMS9ASXCBctcZbdKWWWEORajuzloMy1n0ZgVm0El1pZ3
+         KNzw54PqF/gL++q1jv0au4Yv+GWEy6rBpApfwNH4rJlJAv1vbW9T2SqAx7biTuKBADdQ
+         ZXkqBfvh8X72Bn7rgDogDxE76a048YIFHLgMR2i1fHMhqDjJJL1huQ64gA4++mFikV0m
+         3jI7rrmZ9N0gdEzKM/BVHJnkUdPnZ/D7KlSIajRC7mPprUQpIYPw9nP3QeP8XdT9VMQh
+         ySeQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXDn3HCt/RIQnvQ/jQZGeYdRGuEDvIIiz9ti0+IjXp37n04QsspEEBiIe5FcQGVLzniMJYzHcSjLJTE2YUw@vger.kernel.org
+X-Gm-Message-State: AOJu0YwbhcxwCYAUCCv7nxnYxW+rsRbwFjfYM2wdulgediOLzudwqlVc
+	+Y56VbHOsfJ8B2+PD0recY1uE05wJwDGvmrBkAs/A9H08pjy1OiGdZmjfWdNq6crjBZZYzshAO2
+	8JKa2d4JvVxYcmOZ0dzN8DTm1qwu48g8R5Eh+P8uLwoDOKXV+kUGwBiK4xQLtWMz7
+X-Gm-Gg: ASbGncscEEVLF1ZR6j7ns7carU4IWExwYCr01ngdT1DvrbImKDpCoVRjCF1SfFtrwVj
+	QZWdKGdFYrpBdn+x/RDDv+diqAJdxo+fisXYINHZ1GAmcZOo8TF25PpMGtRkZJjwtdmrKgDTOGR
+	5HK27/WULbCHMQyv4yCAgxANBFw7a3wVACP+2dST6zN/RebuHu9Q01DhWthEYtQBBjGLm85k97k
+	Wg1/fu3o1FQetc0e2c5cs3/Zd2ntjs30p/+BAqd/FKa50fBpDufFFPnx3XZg/sqer5TUP+dWpVH
+	O4XgJYfkRIxPxFFF000wX01dZizn2LxnTW6+nSmI4RdQCqtVwFVucGAjzWE=
+X-Received: by 2002:a05:622a:242:b0:462:b46b:8bf8 with SMTP id d75a77b69052e-46e12bb2f1amr255168841cf.14.1738068808704;
+        Tue, 28 Jan 2025 04:53:28 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGm5ay2LvDoijzjcNRhCGL+J9QvFyvGFGKVSlosrn3eTzj4AlErQXYlgeiM6A+1c4sLY5PPLg==
+X-Received: by 2002:a05:622a:242:b0:462:b46b:8bf8 with SMTP id d75a77b69052e-46e12bb2f1amr255168571cf.14.1738068808299;
+        Tue, 28 Jan 2025 04:53:28 -0800 (PST)
+Received: from [192.168.65.90] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-46e66860246sm50383761cf.11.2025.01.28.04.53.23
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 28 Jan 2025 04:53:27 -0800 (PST)
+Message-ID: <b074baa0-07c5-450d-8531-e2b1d706df0b@oss.qualcomm.com>
+Date: Tue, 28 Jan 2025 13:53:21 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,100 +89,104 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/4] dt-bindings: clock: ipq5424-apss-clk: Add ipq5424
- apss clock controller
-To: Sricharan Ramabadhran <quic_srichara@quicinc.com>, andersson@kernel.org,
- mturquette@baylibre.com, sboyd@kernel.org, robh@kernel.org,
- krzk+dt@kernel.org, conor+dt@kernel.org, konradybcio@kernel.org,
- rafael@kernel.org, viresh.kumar@linaro.org, ilia.lin@kernel.org,
- linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-pm@vger.kernel.org
-References: <20250127093128.2611247-1-quic_srichara@quicinc.com>
- <20250127093128.2611247-2-quic_srichara@quicinc.com>
- <0c26af56-ed7a-4de8-ac47-7447298b87f0@kernel.org>
- <92836021-ee0e-4fb4-bf01-49b46a5af3a4@quicinc.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
+Subject: Re: [PATCH v3 2/4] PCI: dwc: Add ECAM support with iATU configuration
+To: Manivannan Sadhasivam <mani@kernel.org>,
+        Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+Cc: cros-qcom-dts-watchers@chromium.org,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+ <conor+dt@kernel.org>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Bjorn Helgaas <bhelgaas@google.com>, Jingoo Han <jingoohan1@gmail.com>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org,
+        quic_vbadigan@quicinc.com, quic_vpernami@quicinc.com,
+        quic_mrana@quicinc.com, mmareddy@quicinc.com,
+        Krishna chaitanya chundru <quic_krichai@quicinc.com>
+References: <20250121-enable_ecam-v3-0-cd84d3b2a7ba@oss.qualcomm.com>
+ <20250121-enable_ecam-v3-2-cd84d3b2a7ba@oss.qualcomm.com>
+ <20250124061237.he34clwukqwzqx2t@thinkpad>
 Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <92836021-ee0e-4fb4-bf01-49b46a5af3a4@quicinc.com>
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <20250124061237.he34clwukqwzqx2t@thinkpad>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
+X-Proofpoint-ORIG-GUID: kK9LC4Xb7kd7_hl_V22osgtz-dPbn5_s
+X-Proofpoint-GUID: kK9LC4Xb7kd7_hl_V22osgtz-dPbn5_s
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-01-28_04,2025-01-27_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 spamscore=0
+ suspectscore=0 adultscore=0 malwarescore=0 mlxlogscore=999 mlxscore=0
+ phishscore=0 impostorscore=0 priorityscore=1501 lowpriorityscore=0
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2501280096
 
-On 28/01/2025 12:15, Sricharan Ramabadhran wrote:
+On 24.01.2025 7:12 AM, Manivannan Sadhasivam wrote:
+> On Tue, Jan 21, 2025 at 02:32:20PM +0530, Krishna Chaitanya Chundru wrote:
+>> The current implementation requires iATU for every configuration
+>> space access which increases latency & cpu utilization.
+>>
+>> Designware databook 5.20a, section 3.10.10.3 says about CFG Shift Feature,
+>> which shifts/maps the BDF (bits [31:16] of the third header DWORD, which
+>> would be matched against the Base and Limit addresses) of the incoming
+>> CfgRd0/CfgWr0 down to bits[27:12]of the translated address.
+>>
+>> Configuring iATU in config shift feature enables ECAM feature to access the
+>> config space, which avoids iATU configuration for every config access.
+>>
+>> Add "ctrl2" into struct dw_pcie_ob_atu_cfg  to enable config shift feature.
+>>
+>> As DBI comes under config space, this avoids remapping of DBI space
+>> separately. Instead, it uses the mapped config space address returned from
+>> ECAM initialization. Change the order of dw_pcie_get_resources() execution
+>> to achieve this.
+>>
+>> Enable the ECAM feature if the config space size is equal to size required
+>> to represent number of buses in the bus range property, add a function
+>> which checks this. The DWC glue drivers uses this function and decide to
+>> enable ECAM mode or not.
+>>
+>> Signed-off-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
 > 
+> Some minor comments inline. Overall, the patch LGTM!
 > 
-> On 1/28/2025 1:04 PM, Krzysztof Kozlowski wrote:
->> On 27/01/2025 10:31, Sricharan R wrote:
->>> From: Sricharan Ramabadhran <quic_srichara@quicinc.com>
->>>
->>> The CPU core in ipq5424 is clocked by a huayra PLL with RCG support.
->>> The RCG and PLL have a separate register space from the GCC.
->>> Also the L3 cache has a separate pll and needs to be scaled along
->>> with the CPU.
->>>
->>> Co-developed-by: Md Sadre Alam <quic_mdalam@quicinc.com>
->>> Signed-off-by: Md Sadre Alam <quic_mdalam@quicinc.com>
->>> Signed-off-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
->>
->> Considering that there were multiple conflicting patches coming from
->> Qualcomm around IPQ SoCs and that we are in the merge window, I will
->> skip this patch.
->>
->> I suspect this duplicates the other chip as well, but that's your task
->> to sync up internally.
->>
-> ok, but this .yaml is specific to IPQ5424 and would not conflict with
-> IPQ5332. That said, will post it after merge window as a part of
-> V3 (for other patch changes) to avoid any confusion.
+>> ---
 
+[...]
 
-But maybe it is the same on ipq5332? or similar? Other works were
-totally de-synced and you ask community to sync them. That's not how it
-works.
+>> +bool dw_pcie_ecam_supported(struct dw_pcie_rp *pp)
+>> +{
+>> +	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
+>> +	struct platform_device *pdev = to_platform_device(pci->dev);
+>> +	struct resource *config_res, *bus_range;
+>> +	u64 bus_config_space_count;
+>> +
+>> +	bus_range = resource_list_first_type(&pp->bridge->windows, IORESOURCE_BUS)->res;
+>> +	if (!bus_range)
+>> +		return false;
+>> +
+>> +	config_res = platform_get_resource_byname(pdev, IORESOURCE_MEM, "config");
+>> +	if (!config_res)
+>> +		return false;
+>> +
+>> +	bus_config_space_count = resource_size(config_res) >> PCIE_ECAM_BUS_SHIFT;
+>> +
+>> +	return bus_config_space_count >= resource_size(bus_range);
+> 
+> return !!(bus_config_space_count >= resource_size(bus_range));
 
-Best regards,
-Krzysztof
+You made me think that there's some weird interaction here, but C99 says
+
+"Each of the operators < (less than), > (greater than), <= (less than or equal to),
+and >= (greater than or equal to) shall yield 1 if the specified relation is true and
+0 if it is false.89) The result has type int"
+
+so I'm not sure this is necessary
+
+Konrad
 
