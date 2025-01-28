@@ -1,46 +1,46 @@
-Return-Path: <linux-arm-msm+bounces-46418-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46417-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C6771A213C3
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jan 2025 22:54:30 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1E7FCA213BF
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jan 2025 22:54:25 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 930B97A36AA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jan 2025 21:53:36 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4A0A53A52F0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jan 2025 21:54:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 22FC11C3BF7;
-	Tue, 28 Jan 2025 21:54:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E175019994F;
+	Tue, 28 Jan 2025 21:54:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=lucaweiss.eu header.i=@lucaweiss.eu header.b="h70f7HiU"
+	dkim=pass (1024-bit key) header.d=lucaweiss.eu header.i=@lucaweiss.eu header.b="Sf75N78A"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from ahti.lucaweiss.eu (ahti.lucaweiss.eu [128.199.32.197])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B46C613AA2D;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FBC9194A7C;
 	Tue, 28 Jan 2025 21:54:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=128.199.32.197
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738101261; cv=none; b=WRcra/IogjSDvnPf09NqUMNWCN4jrIePYuZ02EtGRUezcAOtPw1Hoyv9AOO8F2qElsFuVR09k2Bq3b50DCHaUj7joT+KoBywhsBTUA3roM5EgVfKF7sE9DoJC4l6zEFm3rVqm26WG8peSrHRViIbT7oC9Ijv3YZhLQOJoXcquB0=
+	t=1738101260; cv=none; b=MVEeb5BK0xlDfhKN5MlyWy5FV9THKDiv+Z1xQ3BbfqOgAJteK/57lX2K7ZMoLcoij615H2m+ANBWhACZLGU68/wmYrucJxyYxObSFAgpC5dZ6wJQ6YilnkMkx9JY1MVt+q1o6FCY4xx7Asb2YZA92HWiMe0hW9JHCnluabUjCDU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738101261; c=relaxed/simple;
-	bh=4bJvsjwytAK2GBLweuI0nmIFLTPE8KYQ9nXcFZudi1E=;
+	s=arc-20240116; t=1738101260; c=relaxed/simple;
+	bh=bZ42tvTP9Bx+u9Ux/s1Yd/gsjV33gCyGJ+X4RE0wcy0=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=YlnR/9mAk30kolImLEwMMRaSUebzNgJzq4VmLkYduotftWRnZOzm9cyQncPbn4HQivX5GUX6RBR9GYAgkhKV73CuUr4vvi6IGqo+2GJ0wufaNx36oKWvsInRNYe30uopMlI/ZXEQJvpVsTk4VsMCJLXmym98PZRv9eEnWcDoSIQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=lucaweiss.eu; spf=pass smtp.mailfrom=lucaweiss.eu; dkim=pass (1024-bit key) header.d=lucaweiss.eu header.i=@lucaweiss.eu header.b=h70f7HiU; arc=none smtp.client-ip=128.199.32.197
+	 In-Reply-To:To:Cc; b=YghnEAb6l+bCTzxp66XqXSGPLd1HH5FyHpwtpDgCO+A4z2ccYGolnBKqwzjzomi4FQChs+2p7PLPc3HKDnOm08zYRQmciZtKAT2gNCSEYRUbMqDkdkTC3ImcB3SzwQqD2313n3A2CDbeidIJtPLCiCeo3jLz9kbE7VqChxHvvOg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=lucaweiss.eu; spf=pass smtp.mailfrom=lucaweiss.eu; dkim=pass (1024-bit key) header.d=lucaweiss.eu header.i=@lucaweiss.eu header.b=Sf75N78A; arc=none smtp.client-ip=128.199.32.197
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=lucaweiss.eu
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lucaweiss.eu
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=lucaweiss.eu; s=s1;
-	t=1738101257; bh=4bJvsjwytAK2GBLweuI0nmIFLTPE8KYQ9nXcFZudi1E=;
+	t=1738101257; bh=bZ42tvTP9Bx+u9Ux/s1Yd/gsjV33gCyGJ+X4RE0wcy0=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc;
-	b=h70f7HiUIpSLNu1yGTlBAhVLMPQxAa47OkeKLfQlsYI1eQxJGJyB6DAPIZ/ZgvZsz
-	 9+Yuv5Lk8EKGl0QzzDgoJURrpw4demSA5+jDofOhJ4s9vnZIgPpuAsIcScqEIJuakR
-	 FbwapeNY3fStmhSLWcopb7j2PyPVfAb5Q3AGfegA=
+	b=Sf75N78AJUABJDZ1S/bNGUoPNXYz6jOhGtg/kAXgfwuLJIdxcqYh1/UEZA8ChfPp6
+	 VmCgjBxIgdC9HZo/6w8iuUkADWcUJj+JS50B4RJJ23Rcx0l/H/LWhigXJqKQAMgu3x
+	 boSn8p03d+dCE4zUiyh06Da2okI/lV1EBV1QAr5s=
 From: Luca Weiss <luca@lucaweiss.eu>
-Date: Tue, 28 Jan 2025 22:53:59 +0100
-Subject: [PATCH 1/2] remoteproc: qcom_q6v5_pas: Use resource with CX PD for
- MSM8226
+Date: Tue, 28 Jan 2025 22:54:00 +0100
+Subject: [PATCH 2/2] remoteproc: qcom_q6v5_pas: Make single-PD handling
+ more robust
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -49,7 +49,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250128-pas-singlepd-v1-1-85d9ae4b0093@lucaweiss.eu>
+Message-Id: <20250128-pas-singlepd-v1-2-85d9ae4b0093@lucaweiss.eu>
 References: <20250128-pas-singlepd-v1-0-85d9ae4b0093@lucaweiss.eu>
 In-Reply-To: <20250128-pas-singlepd-v1-0-85d9ae4b0093@lucaweiss.eu>
 To: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, 
@@ -60,46 +60,70 @@ To: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
 Cc: linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org, 
  linux-kernel@vger.kernel.org, Luca Weiss <luca@lucaweiss.eu>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1219; i=luca@lucaweiss.eu;
- h=from:subject:message-id; bh=4bJvsjwytAK2GBLweuI0nmIFLTPE8KYQ9nXcFZudi1E=;
- b=owEBbQKS/ZANAwAIAXLYQ7idTddWAcsmYgBnmVIGK4fBIDVrbkhDyY6fGO7PPGt4vGAIBIGNc
- wa56G1fTRCJAjMEAAEIAB0WIQQ5utIvCCzakboVj/py2EO4nU3XVgUCZ5lSBgAKCRBy2EO4nU3X
- VpdsEADGyhGIWMch5RSdnpf5+8t/Rb25lRz6LMHo/UYg/S/8pi3pZNk6dJ6v5xfFrIIrynVQdQh
- iP8ZsiTsk1m/V9zD5Rbv3x6Y50TjqgkCGPMyNdcBHu9uSlEHtmmicbblartXe8YftJBm0rcqcvV
- S6PdxrJ8AvpQOf0qhIV7tVcIUDnDgAexDQwae85ELlc06JH1cclvazHZWX+FYqmITUxmzKLdcQr
- NjPqKEspk4PGmQwkq8VtlYF0EpaP/57EZLqo+wjUzxxk04eWOSRFbKzC5rJFe1L5Sq+0vgilns7
- 0U5x+G3fpUkw12gbXeDn2tcqWFAyxymWb0FdENBaCPfnapZ0CQ1zf2t9MyT52Pw6ZgTiLGGyOEk
- 5jtDTnJH+7rLT+1umlJ32OAjDPU+RNcf90+CCZdbuwrvYGttjg6U0Foph+xsq4Fl5TRHIDqitvD
- +cTSwQHhngr9JkgndRHN/CecWP3O+bi8FsIsDI00RiEpzt9q5rvvLK8vm/9vWpE5ZVip1nQ5nJf
- +K6mkSbt+C+hna/Gx5yQMzt0gNJkhRnsNkNlfxf7FO87yKphQ1Bc9rUngzzbrLSuG41AhbqLQ5X
- e9Z68H2cLgF+zqxJYy5nWnlirIgiezV8nIH3Ms2wEU5jGVX0Q4LLyqdtIMwt1OKQp1q+wDHW42M
- T/Yzex5T/glXiIQ==
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1647; i=luca@lucaweiss.eu;
+ h=from:subject:message-id; bh=bZ42tvTP9Bx+u9Ux/s1Yd/gsjV33gCyGJ+X4RE0wcy0=;
+ b=owEBbQKS/ZANAwAIAXLYQ7idTddWAcsmYgBnmVIHeiKS5ucRV4kUElMGaawyg1Is0kTdHKbDj
+ A3Gr/NoURCJAjMEAAEIAB0WIQQ5utIvCCzakboVj/py2EO4nU3XVgUCZ5lSBwAKCRBy2EO4nU3X
+ VtxPEACr1hzrfHV8kanNNP/4LXUpLc+DiWQpZP/gPuTjMCjgE5hqNpVbDHgOAPPIGEpExS+d9se
+ nfaJo8u/S0BZ/Ko5Vfx1O2wshh2otcQo4RP3I09tPV01k5Z8FxwQXKvKO5nOpJSnDQkqld0RYsQ
+ xa6x4g5c28+/n58Gck+E0wL/vezwbrskoMaeaWp6Cl+Ax+daEFZExJ0qsZnv9WVRJiN03lYGhtI
+ JJsZLKV0WmOmIrCgz2x3tKV8RUDaSSAuwk8HR5z78H0E3iwp0IxyLMXJRqBuLLIK7ElEpXtdf3J
+ HVwcyYiqyc4X9L5RUJbgot1ugS6h9ocW5J8MTY0yVuj/OunDDrboUIHuvsPTVgBHhyw4k8eB1Zw
+ a2tunRuWwC2DSAT11JtOPrQjzabP/6cp439MWJUaJoU5tzhlpAVYfYFeFpnOAFlMFVUftiGiCNI
+ rxg3jqfWhsRBWCtm05IH53rJXn72c6x/eYYMKwdkeHYNl01zIe3ZVkM21+9OKEQ4S1kfdJD7ZrA
+ 39wh0mx8T7jvnoRXNZd6xPvZqH9wjnbo+FstzCS0VEDN5m0uw5YBUJvztp+KIq1OjOHYVMmAkZc
+ QhLXZjhvxJxwHUtIzQShENhglpzkoHzrk1O4UmAkh5fFNxiKgrHRn/0fLIzbnj04NoxUcq5m2yk
+ jZOWXTVYbjlQw6A==
 X-Developer-Key: i=luca@lucaweiss.eu; a=openpgp;
  fpr=BD04DA24C971B8D587B2B8D7FAF69CF6CD2D02CD
 
-MSM8226 requires the CX power domain, so use the msm8996_adsp_resource
-which has cx under proxy_pd_names and is otherwise equivalent.
+Only go into the if condition for single-PD handling when there's
+actually just one power domain specified there. Otherwise it'll be an
+issue in the dts and we should fail in the regular code path.
+
+This also mirrors the latest changes in the qcom_q6v5_mss driver.
 
 Suggested-by: Stephan Gerhold <stephan.gerhold@linaro.org>
-Fixes: fb4f07cc9399 ("remoteproc: qcom: pas: Add MSM8226 ADSP support")
+Fixes: 17ee2fb4e856 ("remoteproc: qcom: pas: Vote for active/proxy power domains")
 Signed-off-by: Luca Weiss <luca@lucaweiss.eu>
 ---
- drivers/remoteproc/qcom_q6v5_pas.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/remoteproc/qcom_q6v5_pas.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
 diff --git a/drivers/remoteproc/qcom_q6v5_pas.c b/drivers/remoteproc/qcom_q6v5_pas.c
-index 88e7b84f223c0222a01e2a246a848f2889ac00b3..aca44bb6522f00cb525c4b816040445287444434 100644
+index aca44bb6522f00cb525c4b816040445287444434..c1e9bbae61770ccad3e22d132a411bc6ced7180f 100644
 --- a/drivers/remoteproc/qcom_q6v5_pas.c
 +++ b/drivers/remoteproc/qcom_q6v5_pas.c
-@@ -1319,7 +1319,7 @@ static const struct adsp_data sm8650_mpss_resource = {
- };
+@@ -509,16 +509,16 @@ static int adsp_pds_attach(struct device *dev, struct device **devs,
+ 	if (!pd_names)
+ 		return 0;
  
- static const struct of_device_id adsp_of_match[] = {
--	{ .compatible = "qcom,msm8226-adsp-pil", .data = &adsp_resource_init},
-+	{ .compatible = "qcom,msm8226-adsp-pil", .data = &msm8996_adsp_resource},
- 	{ .compatible = "qcom,msm8953-adsp-pil", .data = &msm8996_adsp_resource},
- 	{ .compatible = "qcom,msm8974-adsp-pil", .data = &adsp_resource_init},
- 	{ .compatible = "qcom,msm8996-adsp-pil", .data = &msm8996_adsp_resource},
++	while (pd_names[num_pds])
++		num_pds++;
++
+ 	/* Handle single power domain */
+-	if (dev->pm_domain) {
++	if (num_pds == 1 && dev->pm_domain) {
+ 		devs[0] = dev;
+ 		pm_runtime_enable(dev);
+ 		return 1;
+ 	}
+ 
+-	while (pd_names[num_pds])
+-		num_pds++;
+-
+ 	for (i = 0; i < num_pds; i++) {
+ 		devs[i] = dev_pm_domain_attach_by_name(dev, pd_names[i]);
+ 		if (IS_ERR_OR_NULL(devs[i])) {
+@@ -543,7 +543,7 @@ static void adsp_pds_detach(struct qcom_adsp *adsp, struct device **pds,
+ 	int i;
+ 
+ 	/* Handle single power domain */
+-	if (dev->pm_domain && pd_count) {
++	if (pd_count == 1 && dev->pm_domain) {
+ 		pm_runtime_disable(dev);
+ 		return;
+ 	}
 
 -- 
 2.48.1
