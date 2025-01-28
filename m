@@ -1,545 +1,275 @@
-Return-Path: <linux-arm-msm+bounces-46328-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46329-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 423A7A20527
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jan 2025 08:48:59 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id A1813A2052D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jan 2025 08:50:58 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 4F4C37A2243
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jan 2025 07:48:49 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id C09CE1882DFA
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jan 2025 07:51:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E03C61B041E;
-	Tue, 28 Jan 2025 07:48:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1C1C61DC197;
+	Tue, 28 Jan 2025 07:50:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="gCdNh9Lm"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="tDZ1cQuv"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF6B02AD2D;
-	Tue, 28 Jan 2025 07:48:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04D581DA116
+	for <linux-arm-msm@vger.kernel.org>; Tue, 28 Jan 2025 07:50:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738050532; cv=none; b=cJcX/iwME5IM1OwvI+b47uzuz6sGSXHmWpIigjmUZAA1PHm6sGO76usMtdqOlMQx9pHM+fofo3NC1xV7aDRd3DCZzn1BUJIdgLsFsJVI9aWL7rku98oSs5/RgLPs31Qa5OxWaBA1FljyEfnDe9EnLeSWR1PbxRByjbFgCmQQngc=
+	t=1738050656; cv=none; b=g16j6NlcrmMutbFTqTmvoEE2uC2GBlx9/A5UGEFCGirinHaVoJnhJTCO5pwyfiE4ADrFsGSALjImjgZ+TVug6+0A0PpX0Y9L1b/IzFnF5HSS52zLeGg6xCgY4IZsoW3tNRh1G9ZzxxFhipP21VmzoIVjLr7Vf4V7Vb1/7WX8DJI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738050532; c=relaxed/simple;
-	bh=nUsTPbSDCyusoGvI3Bg8Azv9QcjrBFaFCmRYLm4mDvA=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=IVVtpugEiuuSAZPfMZaYA71Fc5ef1DhTMjQQ4GHYOEZ902uF9iBTHhSKEob+r+CxyaNq4B57BJ9gNggfOKz0GxDYiDiLIML0acI+jv2VVb87ZPS1kAdS6jAkbIA9jBcC3LdhYI2KQCEc45cLCCRZX/EgBZPLOUR9w90fwlJk1oU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=gCdNh9Lm; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50S0Vf9V002698;
-	Tue, 28 Jan 2025 07:48:44 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=4s+SJUaGUDkO5ABlta4Jojct
-	rfP/Q2Dd5HccoK2RIM4=; b=gCdNh9LmKPAFKGYL9oI8otcf6WM7UlV/OLkcBxK2
-	/gfAXut3Qe7sDn0RfMj/qYxnm/1FRv9RDRB3AjIxJUJqiuhd3DfAkvk0L9ho9zqW
-	b4ymsrt497SAuuOddJywSoRQxn516WxMiAj7UOzhRmBZ6jzVnmdD4T7UQXK39SEA
-	s7xmHLsw6az5JF95nY2rvtdthyzn6576Of4LOKIXwD8DHDWUEKMgq8TS16GlaD6w
-	qfD3U2/nnVGzKDUp/o0fgSwutay2099xG5iaYGR26StnApfcrIgsk9myka3giN08
-	NqUyWsUZ4uxYF7iU1LE8gFYJEDg7OzS8JZMDqM9BCyubKA==
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44emry0qey-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 28 Jan 2025 07:48:44 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 50S7mh2f020707
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 28 Jan 2025 07:48:43 GMT
-Received: from hu-varada-blr.qualcomm.com (10.80.80.8) by
- nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Mon, 27 Jan 2025 23:48:38 -0800
-Date: Tue, 28 Jan 2025 13:18:34 +0530
-From: Varadarajan Narayanan <quic_varada@quicinc.com>
-To: Sricharan R <quic_srichara@quicinc.com>
-CC: <andersson@kernel.org>, <mturquette@baylibre.com>, <sboyd@kernel.org>,
-        <robh@kernel.org>, <krzk+dt@kernel.org>, <conor+dt@kernel.org>,
-        <konradybcio@kernel.org>, <rafael@kernel.org>,
-        <viresh.kumar@linaro.org>, <ilia.lin@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-pm@vger.kernel.org>
-Subject: Re: [PATCH 2/4] clk: qcom: apss-ipq5424: Add ipq5424 apss clock
- controller
-Message-ID: <Z5iL0p6AaY2G9s1v@hu-varada-blr.qualcomm.com>
-References: <20250127093128.2611247-1-quic_srichara@quicinc.com>
- <20250127093128.2611247-3-quic_srichara@quicinc.com>
+	s=arc-20240116; t=1738050656; c=relaxed/simple;
+	bh=MG/KEyTOG0beHjj5mCVZXamfoSVAwhsFi+qnKfCiLuU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=FFJgEYnkvQZq2ET4muLrrdTkgHbQL1SqtcLaUrYTZ115/G7/5ETsKq7+GOXdWKRf+Uq7zUtEuXRNDz9NEToye7VmaMoNJ1vl5sEY95jNzyO1a7D30UwfJFz+sPIalM3w8lcIZTG9Ym+mr/2GhC/4c1kKZViS8c1MsgmP6EeoqFg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=tDZ1cQuv; arc=none smtp.client-ip=209.85.128.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-436281c8a38so36764675e9.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Jan 2025 23:50:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1738050652; x=1738655452; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=OOFb7y58tFNRPYqhufNh7oHByxu0C+wf9P1ANbJwftE=;
+        b=tDZ1cQuv9BKmXJAVxOdhgQhxiX7Pw5qsFiHwmqdu5q2HOdl7/UDlqZayLjPQ/9JUom
+         hc1ooSXbpOWJ7fnG+AfII8Qb09ecsNarL6XTl1WPn5FfHkq0cXVrghlI95OzSFR0YYYU
+         RH5LhOrb4R7LZTcxyCKhwgZfJbyVC9kKicJ08gQMR1Oxgaa9/aBgITH3bWaAexlfFpq4
+         dpQ+MZevlLN0odI74XeO/mXsxTl/J88lu9KLOJxjzBcK9LEtFJQZn4+/nIIdkKvjlkzA
+         fANbnvoVdaTfYiwyd29UWntAqUtlBb0ZPyY6OcmgAWZzMfBOMxhidPB6Ivo+LVr8BMQ1
+         qhhA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1738050652; x=1738655452;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=OOFb7y58tFNRPYqhufNh7oHByxu0C+wf9P1ANbJwftE=;
+        b=gIbf+KvLH4K5F2Pc7f7rwi2+/VEUvww3Fr4jiQ8MAUBW+JT2m93dMgxuH44VIbAV+7
+         WxvYvXkc5kidVSNPN5lDQzKFz2aCTcHmdIn0nOAnjLrhLaZ9NCch2lsnkpHlyM2tXBYy
+         8uBk/KA0lhwLgqUYiQKeFqlepJNfPQwgqO0VH0dABh1+sOBvM3zrL2Ug003wdzDrQzqn
+         50nuAhbz5yZfusrGFw+aeLbsMRhTcxTN8xMj0aCOa+kaN/qYptwbWUt/vvqqWY1pJxM7
+         YBZryRQggpkInlPkI7CiMXLyvAjsdo8VTMmdg+e0ktcKUGvJpL1FGD8idohClg/M/N15
+         aStA==
+X-Forwarded-Encrypted: i=1; AJvYcCUliGjw1epEnINsx5e4l1GjxalJcqrEssf9EhuGg0hpRl0Ykz6fpOas+CndNzhA7QDVv9Ok77PBGghMyQlJ@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx5O/8q4uYW1ohQG9/8hD31dO5bKh/qBBEhw+SA/yg0vcEwtzZ3
+	HP0irIujUrEz05xfskpxwr8EdgyJ2gKeOyNfM1yejfpnr2wtHAqK7q2TzLbS7DI=
+X-Gm-Gg: ASbGnctC8gc6KbtBayAn/OdVl0HtUbDT7a6qCqihC36TqEbTAIe9n6IAs7bGLjFZ+zZ
+	tKkkKWHDdPhUrxpODrTjRxR6Nvd2MyYDCScG1kpaEMqHoGf5q33GA95UsI4elqcnpReo+YjcN5b
+	lEq3JF0SuiN1pkQMHjXzCCPxohME3JlSl00syWmkJ2ZSyNcFVK2OGeHryotm5LGNzJ8pIHKQmOL
+	v4lhUWvtPuqCTI31AobKNvsF+/R+D4ox0vb76NWQTUAh+g6PYa6D46oi0ZEvZLsDA34TwlmpI6U
+	TTpDn/RBcf+9GaFJyAYuQ/hu9bo=
+X-Google-Smtp-Source: AGHT+IGvcHuonreYl8FJS7BEfENZ3haFJQtN4o/+9tZemilFpHlPJ4n3jAOU8QPoqoIMrygq6Dv8lA==
+X-Received: by 2002:a05:600c:4f16:b0:434:fdf3:2c26 with SMTP id 5b1f17b1804b1-4389143a124mr366293885e9.19.1738050652198;
+        Mon, 27 Jan 2025 23:50:52 -0800 (PST)
+Received: from linaro.org ([2a02:2454:ff21:ef30:3210:3bfd:4b47:59da])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-438bd50233dsm156321715e9.15.2025.01.27.23.50.51
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 27 Jan 2025 23:50:51 -0800 (PST)
+Date: Tue, 28 Jan 2025 08:50:49 +0100
+From: Stephan Gerhold <stephan.gerhold@linaro.org>
+To: Luca Weiss <luca@lucaweiss.eu>
+Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+	Bjorn Andersson <andersson@kernel.org>,
+	Mathieu Poirier <mathieu.poirier@linaro.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Stephan Gerhold <stephan@gerhold.net>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Matti =?iso-8859-1?Q?Lehtim=E4ki?= <matti.lehtimaki@gmail.com>,
+	linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3 05/13] remoteproc: qcom_q6v5_mss: Add modem support on
+ MSM8226
+Message-ID: <Z5iMWeiZKFBbHPLF@linaro.org>
+References: <20250127-msm8226-modem-v3-0-67e968787eef@lucaweiss.eu>
+ <20250127-msm8226-modem-v3-5-67e968787eef@lucaweiss.eu>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <20250127093128.2611247-3-quic_srichara@quicinc.com>
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: OWIFAp6WvZHedOy-GZ9ULBHZkGhmuL1T
-X-Proofpoint-GUID: OWIFAp6WvZHedOy-GZ9ULBHZkGhmuL1T
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-01-28_02,2025-01-27_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501 mlxscore=0
- mlxlogscore=999 clxscore=1011 impostorscore=0 malwarescore=0 spamscore=0
- adultscore=0 bulkscore=0 lowpriorityscore=0 suspectscore=0 phishscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2411120000
- definitions=main-2501280058
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20250127-msm8226-modem-v3-5-67e968787eef@lucaweiss.eu>
 
-On Mon, Jan 27, 2025 at 03:01:26PM +0530, Sricharan R wrote:
-> From: Sricharan Ramabadhran <quic_srichara@quicinc.com>
->
-> CPU on Qualcomm ipq5424 is clocked by huayra PLL with RCG support.
-> Add support for the APSS PLL, RCG and clock enable for ipq5424.
-> The PLL, RCG register space are clubbed. Hence adding new APSS driver
-> for both PLL and RCG/CBC control. Also the L3 cache has a separate pll
-> and needs to be scaled along with the CPU.
->
-> Co-developed-by: Md Sadre Alam <quic_mdalam@quicinc.com>
-> Signed-off-by: Md Sadre Alam <quic_mdalam@quicinc.com>
-> Signed-off-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
+On Mon, Jan 27, 2025 at 11:45:37PM +0100, Luca Weiss wrote:
+> Add support for the external power block headswitch register needed by
+> MSM8226 and some other qcom platforms.
+> 
+> Co-developed-by: Matti Lehtimäki <matti.lehtimaki@gmail.com>
+> Signed-off-by: Matti Lehtimäki <matti.lehtimaki@gmail.com>
+> Signed-off-by: Luca Weiss <luca@lucaweiss.eu>
 > ---
->  drivers/clk/qcom/Kconfig        |   7 +
->  drivers/clk/qcom/Makefile       |   1 +
->  drivers/clk/qcom/apss-ipq5424.c | 373 ++++++++++++++++++++++++++++++++
->  3 files changed, 381 insertions(+)
->  create mode 100644 drivers/clk/qcom/apss-ipq5424.c
->
-> diff --git a/drivers/clk/qcom/Kconfig b/drivers/clk/qcom/Kconfig
-> index ef89d686cbc4..9a03257d67e0 100644
-> --- a/drivers/clk/qcom/Kconfig
-> +++ b/drivers/clk/qcom/Kconfig
-> @@ -190,6 +190,13 @@ config IPQ_APSS_6018
->  	  Say Y if you want to support CPU frequency scaling on
->  	  ipq based devices.
->
-> +config IPQ_APSS_5424
-> +	tristate "IPQ APSS Clock Controller"
-> +	help
-> +	  Support for APSS Clock controller on Qualcom IPQ5424 platform.
-> +	  Say Y if you want to support CPU frequency scaling on ipq based
-> +	  devices.
+>  drivers/remoteproc/qcom_q6v5_mss.c | 113 +++++++++++++++++++++++++++++++++++++
+>  1 file changed, 113 insertions(+)
+> 
+> diff --git a/drivers/remoteproc/qcom_q6v5_mss.c b/drivers/remoteproc/qcom_q6v5_mss.c
+> index 0e1b0934ceedd13d5790b798afc95d68a8314c75..32f35fe89416f167fe49be7ca02a24af842e0073 100644
+> --- a/drivers/remoteproc/qcom_q6v5_mss.c
+> +++ b/drivers/remoteproc/qcom_q6v5_mss.c
+> @@ -134,6 +134,11 @@
+>  #define BOOT_FSM_TIMEOUT                10000
+>  #define BHS_CHECK_MAX_LOOPS             200
+>  
+> +/* External power block headswitch */
+> +#define EXTERNAL_BHS_ON			BIT(0)
+> +#define EXTERNAL_BHS_STATUS		BIT(4)
+> +#define EXTERNAL_BHS_TIMEOUT_US		50
 > +
->  config IPQ_GCC_4019
->  	tristate "IPQ4019 Global Clock Controller"
->  	help
-> diff --git a/drivers/clk/qcom/Makefile b/drivers/clk/qcom/Makefile
-> index b09dbdc210eb..db15514e7367 100644
-> --- a/drivers/clk/qcom/Makefile
-> +++ b/drivers/clk/qcom/Makefile
-> @@ -28,6 +28,7 @@ obj-$(CONFIG_CLK_X1E80100_GPUCC) += gpucc-x1e80100.o
->  obj-$(CONFIG_CLK_X1E80100_TCSRCC) += tcsrcc-x1e80100.o
->  obj-$(CONFIG_CLK_QCM2290_GPUCC) += gpucc-qcm2290.o
->  obj-$(CONFIG_IPQ_APSS_PLL) += apss-ipq-pll.o
-> +obj-$(CONFIG_IPQ_APSS_5424) += apss-ipq5424.o
->  obj-$(CONFIG_IPQ_APSS_6018) += apss-ipq6018.o
->  obj-$(CONFIG_IPQ_GCC_4019) += gcc-ipq4019.o
->  obj-$(CONFIG_IPQ_GCC_5018) += gcc-ipq5018.o
-> diff --git a/drivers/clk/qcom/apss-ipq5424.c b/drivers/clk/qcom/apss-ipq5424.c
-> new file mode 100644
-> index 000000000000..2bd6ee7575dc
-> --- /dev/null
-> +++ b/drivers/clk/qcom/apss-ipq5424.c
-> @@ -0,0 +1,373 @@
-> +// SPDX-License-Identifier: GPL-2.0
-> +/*
-> + * Copyright (c) 2018, The Linux Foundation. All rights reserved.
-> + * Copyright (c) 2024, Qualcomm Innovation Center, Inc. All rights reserved.
-
-2025
-
-> + */
+>  struct reg_info {
+>  	struct regulator *reg;
+>  	int uV;
+> @@ -161,6 +166,7 @@ struct rproc_hexagon_res {
+>  	bool has_mba_logs;
+>  	bool has_spare_reg;
+>  	bool has_qaccept_regs;
+> +	bool has_ext_bhs_reg;
+>  	bool has_ext_cntl_regs;
+>  	bool has_vq6;
+>  };
+> @@ -180,6 +186,7 @@ struct q6v5 {
+>  	u32 halt_nc;
+>  	u32 halt_vq6;
+>  	u32 conn_box;
+> +	u32 ext_bhs;
+>  
+>  	u32 qaccept_mdm;
+>  	u32 qaccept_cx;
+> @@ -237,6 +244,7 @@ struct q6v5 {
+>  	bool has_mba_logs;
+>  	bool has_spare_reg;
+>  	bool has_qaccept_regs;
+> +	bool has_ext_bhs_reg;
+>  	bool has_ext_cntl_regs;
+>  	bool has_vq6;
+>  	u64 mpss_perm;
+> @@ -246,6 +254,7 @@ struct q6v5 {
+>  };
+>  
+>  enum {
+> +	MSS_MSM8226,
+>  	MSS_MSM8909,
+>  	MSS_MSM8916,
+>  	MSS_MSM8953,
+> @@ -1750,6 +1759,23 @@ static int q6v5_init_mem(struct q6v5 *qproc, struct platform_device *pdev)
+>  		qproc->qaccept_axi = args.args[2];
+>  	}
+>  
+> +	if (qproc->has_ext_bhs_reg) {
+> +		ret = of_parse_phandle_with_fixed_args(pdev->dev.of_node,
+> +						       "qcom,ext-bhs-reg",
+> +						       1, 0, &args);
+> +		if (ret < 0) {
+> +			dev_err(&pdev->dev, "failed to parse ext-bhs-reg index 0\n");
+> +			return -EINVAL;
+> +		}
 > +
-> +#include <linux/clk.h>
-> +#include <linux/clk-provider.h>
-> +#include <linux/err.h>
-> +#include <linux/kernel.h>
-> +#include <linux/module.h>
-> +#include <linux/platform_device.h>
-> +#include <linux/regmap.h>
+> +		qproc->conn_map = syscon_node_to_regmap(args.np);
+> +		of_node_put(args.np);
+> +		if (IS_ERR(qproc->conn_map))
+> +			return PTR_ERR(qproc->conn_map);
 > +
-> +#include <dt-bindings/clock/qcom,apss-ipq.h>
-> +#include <dt-bindings/arm/qcom,ids.h>
-> +
-> +#include "clk-alpha-pll.h"
-> +#include "clk-branch.h"
-> +#include "clk-rcg.h"
-> +#include "clk-regmap.h"
-> +#include "common.h"
-> +
-> +#define GPLL0_CLK_RATE		800000000
-> +#define CPU_NOM_CLK_RATE	1416000000
-> +#define CPU_TURBO_CLK_RATE	1800000000
-> +#define L3_NOM_CLK_RATE		984000000
-> +#define L3_TURBO_CLK_RATE	1272000000
-> +
-> +enum {
-> +	P_XO,
-> +	P_GPLL0,
-> +	P_APSS_PLL_EARLY,
-> +	P_L3_PLL,
-> +};
-> +
-> +struct apss_clk {
-> +	struct notifier_block cpu_clk_notifier;
-> +	struct clk_hw *hw;
-> +	struct device *dev;
-> +	struct clk *l3_clk;
-> +};
-> +
-> +/*
-> + * IPQ5424 Huayra PLL offsets are different from the one mentioned in the
-> + * clk-alpha-pll.c, hence define the IPQ5424 offsets here
-> + */
-
-This seems to be same as clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_HUAYRA_2290]
-in clk-alpha-pll.c. Please see if that can be used here.
-
-> +static const u8 ipq5424_pll_offsets[][PLL_OFF_MAX_REGS] = {
-> +	[CLK_ALPHA_PLL_TYPE_HUAYRA] =  {
-> +		[PLL_OFF_L_VAL] = 0x04,
-> +		[PLL_OFF_ALPHA_VAL] = 0x08,
-> +		[PLL_OFF_USER_CTL] = 0x0c,
-> +		[PLL_OFF_CONFIG_CTL] = 0x10,
-> +		[PLL_OFF_CONFIG_CTL_U] = 0x14,
-> +		[PLL_OFF_CONFIG_CTL_U1] = 0x18,
-> +		[PLL_OFF_TEST_CTL] = 0x1c,
-> +		[PLL_OFF_TEST_CTL_U] = 0x20,
-> +		[PLL_OFF_TEST_CTL_U1] = 0x24,
-> +		[PLL_OFF_STATUS] = 0x38,
-> +	},
-> +};
-> +
-> +static struct clk_alpha_pll ipq5424_apss_pll = {
-> +	.offset = 0x0,
-> +	.regs = ipq5424_pll_offsets[CLK_ALPHA_PLL_TYPE_HUAYRA],
-> +	.flags = SUPPORTS_DYNAMIC_UPDATE,
-> +	.clkr = {
-> +		.enable_reg = 0x0,
-> +		.enable_mask = BIT(0),
-> +		.hw.init = &(struct clk_init_data){
-> +			.name = "apss_pll",
-> +			.parent_data = &(const struct clk_parent_data) {
-> +				.fw_name = "xo-board-clk",
-> +			},
-> +			.parent_names = (const char *[]){ "xo-board-clk"},
-> +			.num_parents = 1,
-> +			.ops = &clk_alpha_pll_huayra_ops,
-> +		},
-> +	},
-> +};
-> +
-> +static const struct clk_parent_data parents_apss_silver_clk_src[] = {
-> +	{ .fw_name = "xo-board-clk" },
-> +	{ .fw_name = "gpll0" },
-> +	{ .hw = &ipq5424_apss_pll.clkr.hw },
-> +};
-> +
-> +static const struct parent_map parents_apss_silver_clk_src_map[] = {
-> +	{ P_XO, 0 },
-> +	{ P_GPLL0, 4 },
-> +	{ P_APSS_PLL_EARLY, 5 },
-> +};
-> +
-> +static const struct freq_tbl ftbl_apss_clk_src[] = {
-> +	F(GPLL0_CLK_RATE, P_GPLL0, 1, 0, 0),
-> +	F(CPU_NOM_CLK_RATE, P_APSS_PLL_EARLY, 1, 0, 0),
-> +	F(CPU_TURBO_CLK_RATE, P_APSS_PLL_EARLY, 1, 0, 0),
-> +	{ }
-> +};
-> +
-> +static struct clk_rcg2 apss_silver_clk_src = {
-> +	.cmd_rcgr = 0x0080,
-> +	.freq_tbl = ftbl_apss_clk_src,
-> +	.hid_width = 5,
-> +	.parent_map = parents_apss_silver_clk_src_map,
-> +	.clkr.hw.init = &(struct clk_init_data){
-> +		.name = "apss_silver_clk_src",
-> +		.parent_data = parents_apss_silver_clk_src,
-> +		.num_parents = ARRAY_SIZE(parents_apss_silver_clk_src),
-> +		.ops = &clk_rcg2_ops,
-> +		.flags = CLK_SET_RATE_PARENT,
-> +	},
-> +};
-> +
-> +static struct clk_branch apss_silver_core_clk = {
-> +	.halt_reg = 0x008c,
-> +	.clkr = {
-> +		.enable_reg = 0x008c,
-> +		.enable_mask = BIT(0),
-> +		.hw.init = &(struct clk_init_data){
-> +			.name = "apss_silver_core_clk",
-> +			.parent_hws = (const struct clk_hw *[]){
-> +				&apss_silver_clk_src.clkr.hw },
-> +			.num_parents = 1,
-> +			.flags = CLK_SET_RATE_PARENT | CLK_IS_CRITICAL,
-> +			.ops = &clk_branch2_ops,
-> +		},
-> +	},
-> +};
-> +
-> +static struct clk_alpha_pll ipq5424_l3_pll = {
-> +	.offset = 0x10000,
-> +	.regs = ipq5424_pll_offsets[CLK_ALPHA_PLL_TYPE_HUAYRA],
-> +	.flags = SUPPORTS_DYNAMIC_UPDATE,
-> +	.clkr = {
-> +		.enable_reg = 0x0,
-> +		.enable_mask = BIT(0),
-> +		.hw.init = &(struct clk_init_data){
-> +			.name = "l3_pll",
-> +			.parent_data = &(const struct clk_parent_data) {
-> +				.fw_name = "xo-board-clk",
-> +			},
-> +			.parent_names = (const char *[]){ "xo-board-clk"},
-> +			.num_parents = 1,
-> +			.ops = &clk_alpha_pll_huayra_ops,
-> +		},
-> +	},
-> +};
-> +
-> +static const struct clk_parent_data parents_l3_clk_src[] = {
-> +	{ .fw_name = "xo-board-clk" },
-> +	{ .fw_name = "gpll0" },
-> +	{ .hw = &ipq5424_l3_pll.clkr.hw },
-> +};
-> +
-> +static const struct parent_map parents_l3_clk_src_map[] = {
-> +	{ P_XO, 0 },
-> +	{ P_GPLL0, 4 },
-> +	{ P_L3_PLL, 5 },
-> +};
-> +
-> +static const struct freq_tbl ftbl_l3_clk_src[] = {
-> +	F(GPLL0_CLK_RATE, P_GPLL0, 1, 0, 0),
-> +	F(L3_NOM_CLK_RATE, P_L3_PLL, 1, 0, 0),
-> +	F(L3_TURBO_CLK_RATE, P_L3_PLL, 1, 0, 0),
-> +	{ }
-> +};
-> +
-> +static struct clk_rcg2 l3_clk_src = {
-> +	.cmd_rcgr = 0x10080,
-> +	.freq_tbl = ftbl_l3_clk_src,
-> +	.hid_width = 5,
-> +	.parent_map = parents_l3_clk_src_map,
-> +	.clkr.hw.init = &(struct clk_init_data){
-> +		.name = "l3_clk_src",
-> +		.parent_data = parents_l3_clk_src,
-> +		.num_parents = ARRAY_SIZE(parents_l3_clk_src),
-> +		.ops = &clk_rcg2_ops,
-> +		.flags = CLK_SET_RATE_PARENT,
-> +	},
-> +};
-> +
-> +static struct clk_branch l3_core_clk = {
-> +	.halt_reg = 0x1008c,
-> +	.clkr = {
-> +		.enable_reg = 0x1008c,
-> +		.enable_mask = BIT(0),
-> +		.hw.init = &(struct clk_init_data){
-> +			.name = "l3_clk",
-> +			.parent_hws = (const struct clk_hw *[]){
-> +				&l3_clk_src.clkr.hw },
-> +			.num_parents = 1,
-> +			.flags = CLK_SET_RATE_PARENT | CLK_IS_CRITICAL,
-> +			.ops = &clk_branch2_ops,
-> +		},
-> +	},
-> +};
-> +
-> +static const struct regmap_config apss_ipq5424_regmap_config = {
-> +	.reg_bits       = 32,
-> +	.reg_stride     = 4,
-> +	.val_bits       = 32,
-> +	.max_register   = 0x20000,
-> +	.fast_io        = true,
-> +};
-> +
-> +static struct clk_regmap *apss_ipq5424_clks[] = {
-> +	[APSS_PLL_EARLY] = &ipq5424_apss_pll.clkr,
-> +	[APSS_SILVER_CLK_SRC] = &apss_silver_clk_src.clkr,
-> +	[APSS_SILVER_CORE_CLK] = &apss_silver_core_clk.clkr,
-> +	[L3_PLL] = &ipq5424_l3_pll.clkr,
-> +	[L3_CLK_SRC] = &l3_clk_src.clkr,
-> +	[L3_CORE_CLK] = &l3_core_clk.clkr,
-> +
-> +};
-> +
-> +static const struct qcom_cc_desc apss_ipq5424_desc = {
-> +	.config = &apss_ipq5424_regmap_config,
-> +	.clks = apss_ipq5424_clks,
-> +	.num_clks = ARRAY_SIZE(apss_ipq5424_clks),
-> +};
-> +
-> +static const struct alpha_pll_config apss_pll_config = {
-> +	.l = 0x3b,
-> +	.config_ctl_val = 0x08200920,
-> +	.config_ctl_hi_val = 0x05008001,
-> +	.config_ctl_hi1_val = 0x04000000,
-> +	.test_ctl_val = 0x0,
-> +	.test_ctl_hi_val = 0x0,
-> +	.test_ctl_hi1_val = 0x0,
-> +	.user_ctl_val = 0x1,
-> +	.early_output_mask = BIT(3),
-> +	.aux2_output_mask = BIT(2),
-> +	.aux_output_mask = BIT(1),
-> +	.main_output_mask = BIT(0),
-> +};
-> +
-> +static const struct alpha_pll_config l3_pll_config = {
-> +	.l = 0x29,
-> +	.config_ctl_val = 0x08200920,
-> +	.config_ctl_hi_val = 0x05008001,
-> +	.config_ctl_hi1_val = 0x04000000,
-> +	.test_ctl_val = 0x0,
-> +	.test_ctl_hi_val = 0x0,
-> +	.test_ctl_hi1_val = 0x0,
-> +	.user_ctl_val = 0x1,
-> +	.early_output_mask = BIT(3),
-> +	.aux2_output_mask = BIT(2),
-> +	.aux_output_mask = BIT(1),
-> +	.main_output_mask = BIT(0),
-> +};
-> +
-> +static unsigned long get_l3_clk_from_tbl(unsigned long rate)
-> +{
-> +	struct clk_rcg2 *l3_rcg2 = container_of(&l3_clk_src.clkr, struct clk_rcg2, clkr);
-> +	u8 max_clk = sizeof(ftbl_apss_clk_src) / sizeof(struct freq_tbl);
-> +	u8 loop;
-> +
-> +	for (loop = 0; loop < max_clk; loop++)
-> +		if (ftbl_apss_clk_src[loop].freq == rate)
-> +			return l3_rcg2->freq_tbl[loop].freq;
-> +	return 0;
-> +}
-> +
-> +static int cpu_clk_notifier_fn(struct notifier_block *nb, unsigned long action,
-> +			       void *data)
-> +{
-> +	struct apss_clk *apss_ipq5424_cfg = container_of(nb, struct apss_clk, cpu_clk_notifier);
-> +	struct clk_notifier_data *cnd = (struct clk_notifier_data *)data;
-> +	struct device *dev = apss_ipq5424_cfg->dev;
-> +	unsigned long rate = 0, l3_rate;
-> +	int err = 0;
-
-No need to init 'err' here.
-
-> +
-> +	dev_dbg(dev, "action:%ld old_rate:%ld new_rate:%ld\n", action,
-> +		cnd->old_rate, cnd->new_rate);
-> +
-> +	switch (action) {
-> +	case PRE_RATE_CHANGE:
-> +		if (cnd->old_rate < cnd->new_rate)
-> +			rate = cnd->new_rate;
-> +	break;
-> +	case POST_RATE_CHANGE:
-> +		if (cnd->old_rate > cnd->new_rate)
-> +			rate = cnd->new_rate;
-> +	break;
-> +	};
-> +
-> +	if (!rate)
-> +		goto notif_ret;
-> +
-> +	l3_rate = get_l3_clk_from_tbl(rate);
-> +	if (!l3_rate) {
-> +		dev_err(dev, "Failed to get l3 clock rate from l3_tbl\n");
-> +		return NOTIFY_BAD;
+> +		qproc->ext_bhs = args.args[0];
 > +	}
 > +
-> +	err = clk_set_rate(apss_ipq5424_cfg->l3_clk, l3_rate);
-> +	if (err) {
-> +		dev_err(dev, "Failed to set l3 clock rate(%ld) err(%d)\n", l3_rate, err);
-> +		return NOTIFY_BAD;
-> +	}
-> +
-> +notif_ret:
-> +	return NOTIFY_OK;
-> +}
-> +
-> +static int apss_ipq5424_probe(struct platform_device *pdev)
+>  	if (qproc->has_ext_cntl_regs) {
+>  		ret = of_parse_phandle_with_fixed_args(pdev->dev.of_node,
+>  						       "qcom,ext-regs",
+> @@ -1871,6 +1897,34 @@ static void q6v5_pds_detach(struct q6v5 *qproc, struct device **pds,
+>  		dev_pm_domain_detach(pds[i], false);
+>  }
+>  
+> +static int q6v5_external_bhs_enable(struct q6v5 *qproc)
 > +{
-> +	struct device *dev = &pdev->dev;
-> +	struct apss_clk *apss_ipq5424_cfg;
-> +	struct regmap *regmap;
-> +	void __iomem *base;
-> +	int ret;
+> +	u32 val;
+> +	int ret = 0;
 > +
-> +	apss_ipq5424_cfg = devm_kzalloc(&pdev->dev, sizeof(struct apss_clk), GFP_KERNEL);
-> +	if (IS_ERR_OR_NULL(apss_ipq5424_cfg))
-> +		return PTR_ERR(apss_ipq5424_cfg);
+> +	/*
+> +	 * Enable external power block headswitch and wait for it to
+> +	 * stabilize
+> +	 */
+> +	regmap_set_bits(qproc->conn_map, qproc->ext_bhs, EXTERNAL_BHS_ON);
 > +
-> +	base = devm_platform_ioremap_resource(pdev, 0);
-> +	if (IS_ERR(base))
-> +		return PTR_ERR(base);
+> +	ret = regmap_read_poll_timeout(qproc->conn_map, qproc->ext_bhs,
+> +				       val, val & EXTERNAL_BHS_STATUS,
+> +				       1, EXTERNAL_BHS_TIMEOUT_US);
 > +
-> +	regmap = devm_regmap_init_mmio(dev, base, &apss_ipq5424_regmap_config);
-> +	if (!regmap)
-> +		return PTR_ERR(regmap);
-> +
-> +	clk_alpha_pll_configure(&ipq5424_l3_pll, regmap, &l3_pll_config);
-> +
-> +	clk_alpha_pll_configure(&ipq5424_apss_pll, regmap, &apss_pll_config);
-> +
-> +	ret = qcom_cc_really_probe(dev, &apss_ipq5424_desc, regmap);
-> +	if (ret)
-> +		return ret;
-> +
-> +	dev_dbg(&pdev->dev, "Registered APSS & L3 clock provider\n");
-> +
-> +	apss_ipq5424_cfg->dev = dev;
-> +	apss_ipq5424_cfg->hw = &apss_silver_clk_src.clkr.hw;
-> +	apss_ipq5424_cfg->cpu_clk_notifier.notifier_call = cpu_clk_notifier_fn;
-> +
-> +	apss_ipq5424_cfg->l3_clk = clk_hw_get_clk(&l3_core_clk.clkr.hw, "l3_clk");
-> +	if (IS_ERR(apss_ipq5424_cfg->l3_clk)) {
-> +		dev_err(&pdev->dev, "Failed to get L3 clk, %ld\n",
-> +			PTR_ERR(apss_ipq5424_cfg->l3_clk));
-> +		return PTR_ERR(apss_ipq5424_cfg->l3_clk);
+> +	if (ret) {
+> +		dev_err(qproc->dev, "External BHS timed out\n");
+> +		ret = -ETIMEDOUT;
 > +	}
 > +
-> +	ret = devm_clk_notifier_register(&pdev->dev, apss_ipq5424_cfg->hw->clk,
-> +					 &apss_ipq5424_cfg->cpu_clk_notifier);
-
-Use return devm_clk_notifier_register(...) and below lines can be skipped.
-
-Thanks
-Varada
-
-> +	if (ret)
-> +		return ret;
-> +
-> +	return 0;
+> +	return ret;
 > +}
 > +
-> +static const struct of_device_id apss_ipq5424_match_table[] = {
-> +	{ .compatible = "qcom,ipq5424-apss-clk" },
-> +	{ }
-> +};
-> +MODULE_DEVICE_TABLE(of, apss_ipq5424_match_table);
+> +static void q6v5_external_bhs_disable(struct q6v5 *qproc)
+> +{
+> +	regmap_clear_bits(qproc->conn_map, qproc->ext_bhs, EXTERNAL_BHS_ON);
+> +}
 > +
-> +static struct platform_driver apss_ipq5424_driver = {
-> +	.probe = apss_ipq5424_probe,
-> +	.driver = {
-> +		.name   = "apss-ipq5424-clk",
-> +		.of_match_table = apss_ipq5424_match_table,
-> +	},
-> +};
+>  static int q6v5_init_reset(struct q6v5 *qproc)
+>  {
+>  	qproc->mss_restart = devm_reset_control_get_exclusive(qproc->dev,
+> @@ -2021,6 +2075,7 @@ static int q6v5_probe(struct platform_device *pdev)
+>  	platform_set_drvdata(pdev, qproc);
+>  
+>  	qproc->has_qaccept_regs = desc->has_qaccept_regs;
+> +	qproc->has_ext_bhs_reg = desc->has_ext_bhs_reg;
+>  	qproc->has_ext_cntl_regs = desc->has_ext_cntl_regs;
+>  	qproc->has_vq6 = desc->has_vq6;
+>  	qproc->has_spare_reg = desc->has_spare_reg;
+> @@ -2079,6 +2134,12 @@ static int q6v5_probe(struct platform_device *pdev)
+>  		qproc->proxy_pd_count = ret;
+>  	}
+>  
+> +	if (qproc->has_ext_bhs_reg) {
+> +		ret = q6v5_external_bhs_enable(qproc);
+> +		if (ret < 0)
+> +			goto detach_proxy_pds;
+> +	}
 > +
-> +module_platform_driver(apss_ipq5424_driver);
-> +
-> +MODULE_DESCRIPTION("QCOM APSS IPQ5424 CLK Driver");
-> +MODULE_LICENSE("GPL v2");
->
-> --
-> 2.34.1
->
+>  	qproc->has_alt_reset = desc->has_alt_reset;
+>  	ret = q6v5_init_reset(qproc);
+>  	if (ret)
+> @@ -2143,6 +2204,9 @@ static void q6v5_remove(struct platform_device *pdev)
+>  	qcom_remove_smd_subdev(rproc, &qproc->smd_subdev);
+>  	qcom_remove_glink_subdev(rproc, &qproc->glink_subdev);
+>  
+> +	if (qproc->has_ext_bhs_reg)
+> +		q6v5_external_bhs_disable(qproc);
+
+Sorry, just seeing this now: I think this is like the "active_supply"
+you just added for MSM8926. It should get enabled when the modem is
+started, and disabled when it gets stopped.
+
+The calls to q6v5_external_bhs_enable() / q6v5_external_bhs_disable()
+should be next to
+
+	ret = q6v5_regulator_enable(qproc, qproc->active_regs,
+				    qproc->active_reg_count);
+
+and
+
+	q6v5_regulator_disable(qproc, qproc->active_regs,
+			       qproc->active_reg_count);
+
+, instead of being called in the driver probe()/remove() function.
+
+Downstream also has this next to the regulator_enable()/disable() [1]
+(drv->vreg = mss-supply).
+
+Thanks,
+Stephan
+
+[1]: https://git.codelinaro.org/clo/la/kernel/msm-3.10/-/blob/LA.BF.1.1.3-02310-8x26.0/arch/arm/mach-msm/pil-msa.c#L71-109
 
