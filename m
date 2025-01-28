@@ -1,158 +1,161 @@
-Return-Path: <linux-arm-msm+bounces-46425-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46430-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id CDB0FA214FC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jan 2025 00:30:22 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C17F0A21519
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jan 2025 00:37:37 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id D037F7A35E3
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jan 2025 23:29:27 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id EC7677A4793
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jan 2025 23:36:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0312B19E97B;
-	Tue, 28 Jan 2025 23:30:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 55E0E1F5600;
+	Tue, 28 Jan 2025 23:36:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="FynbZmYN"
+	dkim=pass (1024-bit key) header.d=lucaweiss.eu header.i=@lucaweiss.eu header.b="x5Q+gJec"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f54.google.com (mail-lf1-f54.google.com [209.85.167.54])
+Received: from ahti.lucaweiss.eu (ahti.lucaweiss.eu [128.199.32.197])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14FD4EAF6
-	for <linux-arm-msm@vger.kernel.org>; Tue, 28 Jan 2025 23:30:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6FE7EAF6;
+	Tue, 28 Jan 2025 23:36:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=128.199.32.197
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738107013; cv=none; b=sK2u92qNaat93bbUsIHdkGwE62lToXEBgsu1i/nbdm25+yiJAK7tpGmcU2wULO7LsbDNpkB4qBW4DE8M116d1ueV0zfAJlk6VazoX3sxeW2l9jnF3ISc8EudD0JeqFgIomZSNflsn2PVysibBIJB0VzjRbkkktytsigYRZWrMUw=
+	t=1738107390; cv=none; b=Agn+i6d3TVw47ow7PQmJFSBl1BRj2qNf66qfi3Ww1eEwJ5nw8eFoFwuSLaTFzmPA4x/ZRC8jCeGY2a3rp16+amTqPXP4cgHz/xRVAHfBotD95+immKCn/NR0svyXpJXvGzx/32x07Spb2/Lp22pbpwp0oWR1LA1CiU9zNqyMzEw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738107013; c=relaxed/simple;
-	bh=AoQY+c5VcXG/S8YRdxN/fq3Mvj3PlxvxDetuax7Kkt4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=cj1EGYcH6Vwy+fFkkm67h3TtCGdOoYOYiLZXGprZANeM30SaN/DAz+SUk1Rz7XV9KIFQXRSxO1xUNV6B1SjjkReUFVqRSRwSnuaxP2c4e9h9icDs0VC5zwJ0Zf5SZ2eCegghp4KNIIQVoEGC1Rfo7SLe5Ua2CUdLKKIfFnMlqIM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=FynbZmYN; arc=none smtp.client-ip=209.85.167.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f54.google.com with SMTP id 2adb3069b0e04-5401b7f7141so5564024e87.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Jan 2025 15:30:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1738107010; x=1738711810; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=GCdIOQOZjxbNyTUQojW1cV2x9p0MTk8H+1DJVjLtCTw=;
-        b=FynbZmYNn1MBLCgNpEvA7rpmBcYQl6SiX3Am7Ns/Ik4GOuZi8CBLD2V/utngZ0PBmr
-         pD8XXSGEuQUQ7kTeAOSWDMk1G6cQEQ0RCPBR5r4l0p2uCMRIQbGR+yqg2eb7c7BWf5jh
-         s23ilNKTmEefqVYqfUeQCCh7C+untCaBCMY10zCvPQIO6QNjDYZBl0sAM0mMvp/8uXdU
-         3wCxXqcAlQkb7E0okyrXZLN7pUARuz9lzd6Ub3/x7phHRQ9/hWbz7Ji9im7JeiB99DY1
-         Cq9tjZdIEOZL2WdWoN24MdWNjxWuIEx84MH1R+EkJurpu6sEfgWwlZu5/Y0HRZuEbTK1
-         KOPg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738107010; x=1738711810;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=GCdIOQOZjxbNyTUQojW1cV2x9p0MTk8H+1DJVjLtCTw=;
-        b=Vi6y6Lh0vQMc+tQQJSgMlCQOYbUPXsJANVWKV/SyujUBmcKT2nUB9bbSbHPi6ACk0N
-         JS0YM3SHWrWgS+vTMNM7+1KdlAlNOxaw0e4CvLO9nkt87+l5IEGBxUjyKJzhsJWH10+l
-         SsdWiBt/XkPmwHdrPD5dawsWGlpZpL6YiJhuZZSv4S1/Ilivb6EdrnseIoNSDSBwOIGy
-         iuOvnfWQjpXpeIN/KZILx8DXsAg7ZO6HmI/AYknqTaAML47iXyBBnjNTx6r53WZtTlXF
-         AP6OLSlhHpd5uv4UxiPe3D0y48ZTlZGaRY+D50Ct0sF26W9V4pR+J1OygSEslU2gcafn
-         Jn/w==
-X-Forwarded-Encrypted: i=1; AJvYcCXH1yKgm6KVHS4o/r+D+MYHSDtsr6+QodvJ1di6i5TP9d5WHzLdih0gb4Q999PO3JslUBkjTkzRozrYYmu2@vger.kernel.org
-X-Gm-Message-State: AOJu0YwheSqMqF7xzpu/uhG0ZAFSbzPQWcEjIKp7HOh63mfASkUPIceD
-	+34C3IhgzAGhkf2+4fJdlFXNNCZS4noRt8Plk33/LGNRhhRPJrKvcApMp4C6y7M=
-X-Gm-Gg: ASbGncsmPgd1UYhTZjxP/Er+EzWQSzWm9c6A0p0qH7dr8WuSdi9Rv9sgZsB2+Qaq1CX
-	vH/rVXZ67sbzrqj6quOBjNsrV/jF20YhmtLX9QndsepnrpAdV4YucgSuKBZPqC+xU4h2zO+op4l
-	KWiRguDqCtWrUU7qgY5HlX68Z87YWZ991UFX53xAfWa3Q9zrdkQlkigm5MPUY0qk81fiOVSDnBS
-	DGX9WdPkPOwaM4PyhW/jETeI2nDg/4kJWlVquT3uMMUjxK9+i7Uhj4Qnv+G7CokCxZVv9qbUviS
-	KK99oCWdLeKmTIEnOmKon/yGfBIQPbLK8VoxISfo7mDPyZZN9Kt/BXoEBHGyS6Jn+s5ZAxa1ZCY
-	ImZBV6A==
-X-Google-Smtp-Source: AGHT+IGsSzj2umsJFSiELH3hVwrmeoAzv74V1NRoAI/wxFSqdhTlVAp4+UKDIsFLwBpcMgZCU9U/bw==
-X-Received: by 2002:ac2:4108:0:b0:53e:395c:688e with SMTP id 2adb3069b0e04-543e4bd639fmr184709e87.10.1738107010100;
-        Tue, 28 Jan 2025 15:30:10 -0800 (PST)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-543c8368425sm1779115e87.121.2025.01.28.15.30.07
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 28 Jan 2025 15:30:08 -0800 (PST)
-Date: Wed, 29 Jan 2025 01:30:06 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Ekansh Gupta <quic_ekangupt@quicinc.com>
-Cc: srinivas.kandagatla@linaro.org, linux-arm-msm@vger.kernel.org, 
-	gregkh@linuxfoundation.org, quic_bkumar@quicinc.com, linux-kernel@vger.kernel.org, 
-	quic_chennak@quicinc.com, dri-devel@lists.freedesktop.org, arnd@arndb.de
-Subject: Re: [PATCH v2 5/5] misc: fastrpc: Modify context id mask to support
- polling mode
-Message-ID: <im7gi5ib7wnihu3ff4a2erqctne2pm2zf3wl4qmuejz4dfhf7e@z5au6vnm5por>
-References: <20250127044239.578540-1-quic_ekangupt@quicinc.com>
- <20250127044239.578540-6-quic_ekangupt@quicinc.com>
+	s=arc-20240116; t=1738107390; c=relaxed/simple;
+	bh=x6gQkQ4gVXHmFdfMkn1LTVVuiTDOy4PcZeJYpn2+DLY=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=u19hDvjSOHBo0dfYNuAs19HevsH21pTU5MMzza0U0V49Lc9ND9S27uAsFhpCAUqK5eb1cB3E2FuecpEGcbnZ2HMCGI/R4rKmJ9mRGD8ip6tqVn0fqylm9Cb9dCFE4SSAAu+zSZMNpZXkToBk3e01rFN182bCcggy0+F1ovr3lt8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=lucaweiss.eu; spf=pass smtp.mailfrom=lucaweiss.eu; dkim=pass (1024-bit key) header.d=lucaweiss.eu header.i=@lucaweiss.eu header.b=x5Q+gJec; arc=none smtp.client-ip=128.199.32.197
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=lucaweiss.eu
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lucaweiss.eu
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=lucaweiss.eu; s=s1;
+	t=1738107378; bh=x6gQkQ4gVXHmFdfMkn1LTVVuiTDOy4PcZeJYpn2+DLY=;
+	h=From:Subject:Date:To:Cc;
+	b=x5Q+gJecCy5iVMeg3ZmY9StkQcYk5j2LyjR2Nk+nesPg88sc+G+0UbRo6yhlLJSCN
+	 IsRzpCLYlAE/0xv7khGOMNACEHrZKPrDuhBge1jLm/gxstaT289KfYQcDlMGiIMUFc
+	 ooNXSu+W+uwBF8TuLJ2XiuEbgkadZp2BZSORc+TQ=
+From: Luca Weiss <luca@lucaweiss.eu>
+Subject: [PATCH v4 00/13] Modem support for MSM8226
+Date: Wed, 29 Jan 2025 00:35:32 +0100
+Message-Id: <20250129-msm8226-modem-v4-0-2b02ed7b7f1c@lucaweiss.eu>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250127044239.578540-6-quic_ekangupt@quicinc.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-B4-Tracking: v=1; b=H4sIAMRpmWcC/13OQQ6CMBCF4auQWVtTCrTVlfcwLho6lSYWTEeqh
+ nB3C3GhLP+XzJeZgDB6JDgWE0RMnvzQ56h3BbSd6a/IvM0NgouGl1yxQEELIVkYLAbmysaUKJ2
+ 2uoZ8c4/o/Gv1zpfcnafHEN8rn8SyfqVF+JOSYJyh1lZJK61x7nQbW/NET7THERYsVb/A9pVUZ
+ UAqPEittELcAvM8fwDgtgm97gAAAA==
+X-Change-ID: 20250107-msm8226-modem-f15a1e6f8d84
+To: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, 
+ Bjorn Andersson <andersson@kernel.org>, 
+ Mathieu Poirier <mathieu.poirier@linaro.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Stephan Gerhold <stephan@gerhold.net>, 
+ Konrad Dybcio <konradybcio@kernel.org>, 
+ =?utf-8?q?Matti_Lehtim=C3=A4ki?= <matti.lehtimaki@gmail.com>
+Cc: linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org, 
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ Luca Weiss <luca@lucaweiss.eu>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
+ Stephan Gerhold <stephan.gerhold@linaro.org>, 
+ Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3518; i=luca@lucaweiss.eu;
+ h=from:subject:message-id; bh=x6gQkQ4gVXHmFdfMkn1LTVVuiTDOy4PcZeJYpn2+DLY=;
+ b=owEBbQKS/ZANAwAIAXLYQ7idTddWAcsmYgBnmWnTIxBi0vijtcDpq4QcN+UZHQRIBOBQk20Qj
+ LyMULlWQqKJAjMEAAEIAB0WIQQ5utIvCCzakboVj/py2EO4nU3XVgUCZ5lp0wAKCRBy2EO4nU3X
+ VgJeD/9u4b8tOfdaKFIEnVtU/jLNZWoviNWVJdxLO5cBfePgqde6wLsiUuq3bUZovqoVr97Mj/I
+ TGZUwtNF4HlpgHmXL4E2sFWCuHos2Hw3T85kaP0eVgNKGAzJiKcMvqyK0fYiucnG8d5jaZHHboy
+ oO077l1ju1mu55NqDtjSbJL8sbYNJmryx68DUr1jRLpdkulTeedmeMP9LYFYhGHmCkbYHJo1RAv
+ K3Otw92dppABo6oAXrao5p+r2RikZALHU+jBj3f7n/K1f4459nf3j4Yr6FkswlPmlh99E+GnVv6
+ BqNI3IjjTdXqdVXQaajMRvEbv1s+EkEsfFf7c2FpTES8eQ42FnlNqGV6cklbvJz4TRRRAovo7c/
+ ymxgVFyhkJAuscmS0XsdAn9L/zShGaFbnkUVo5ArPE9hCyHCA8W0pc7rbwpj4+z1/zDSSNvKjni
+ nZWYo7YWvXdjMC8aMOSfe6OvI26tn76u+NYRwsh+9RQ+TUn365EAtlTKDUC1BSM08b0Eavxa4/b
+ f1JbaWtNjwlN6USNJrPeWuqmRRWxDswAJCgmfZYcQtkAfqSFXKonQYBiCIOjZ4xYzCZCunC+0q/
+ NekXvdjge64D9CAoPADMcMyGDL4sD7jIVRYusckJZMNHRNsvxEb4NWuFfwW+t/q2W3gk4KTaWhx
+ mLdT6NuadtRpeMg==
+X-Developer-Key: i=luca@lucaweiss.eu; a=openpgp;
+ fpr=BD04DA24C971B8D587B2B8D7FAF69CF6CD2D02CD
 
-On Mon, Jan 27, 2025 at 10:12:39AM +0530, Ekansh Gupta wrote:
-> DSP needs last 4 bits of context id to be 0 for polling mode to be
-> supported as setting of last 8 is intended for async mode(not yet
-> supported on upstream driver) and setting these bits restrics
-> writing to poll memory from DSP. Modify context id mask to ensure
-> polling mode is supported.
+This series adds support for modem remoteproc found on MSM8226.
+It also adds needed device tree nodes and enables modem used for
+location service on matisse-wifi.
 
-Shouldn't this commit come before the previous one?
+Also bam-dmux node is added for mobile data which is used on
+3G/4G-enabled devices.
 
-> 
-> Signed-off-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
-> ---
->  drivers/misc/fastrpc.c | 8 ++++----
->  1 file changed, 4 insertions(+), 4 deletions(-)
-> 
-> diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
-> index 257a741af115..ef56c793c564 100644
-> --- a/drivers/misc/fastrpc.c
-> +++ b/drivers/misc/fastrpc.c
-> @@ -40,7 +40,7 @@
->  #define FASTRPC_INIT_HANDLE	1
->  #define FASTRPC_DSP_UTILITIES_HANDLE	2
->  #define FASTRPC_MAX_STATIC_HANDLE (20)
-> -#define FASTRPC_CTXID_MASK (0xFF0)
-> +#define FASTRPC_CTXID_MASK (0xFF0000)
->  #define INIT_FILELEN_MAX (2 * 1024 * 1024)
->  #define INIT_FILE_NAMELEN_MAX (128)
->  #define FASTRPC_DEVICE_NAME	"fastrpc"
-> @@ -524,7 +524,7 @@ static void fastrpc_context_free(struct kref *ref)
->  		fastrpc_buf_free(ctx->buf);
->  
->  	spin_lock_irqsave(&cctx->lock, flags);
-> -	idr_remove(&cctx->ctx_idr, ctx->ctxid >> 4);
-> +	idr_remove(&cctx->ctx_idr, ctx->ctxid >> 16);
->  	spin_unlock_irqrestore(&cctx->lock, flags);
->  
->  	kfree(ctx->maps);
-> @@ -664,7 +664,7 @@ static struct fastrpc_invoke_ctx *fastrpc_context_alloc(
->  		spin_unlock_irqrestore(&cctx->lock, flags);
->  		goto err_idr;
->  	}
-> -	ctx->ctxid = ret << 4;
-> +	ctx->ctxid = ret << 16;
->  	spin_unlock_irqrestore(&cctx->lock, flags);
->  
->  	kref_init(&ctx->refcount);
-> @@ -2675,7 +2675,7 @@ static int fastrpc_rpmsg_callback(struct rpmsg_device *rpdev, void *data,
->  	if (len < sizeof(*rsp))
->  		return -EINVAL;
->  
-> -	ctxid = ((rsp->ctx & FASTRPC_CTXID_MASK) >> 4);
-> +	ctxid = ((rsp->ctx & FASTRPC_CTXID_MASK) >> 16);
->  
->  	spin_lock_irqsave(&cctx->lock, flags);
->  	ctx = idr_find(&cctx->ctx_idr, ctxid);
-> -- 
-> 2.34.1
-> 
+Signed-off-by: Luca Weiss <luca@lucaweiss.eu>
+---
+Changes in v4:
+- Drop mx from .proxy_pd_names for msm8974 as it's always a regulator
+  @Stephan: Please check that one also since I still picked up your R-b
+- Move q6v5_external_bhs_enable to just after regulator enable and
+  _disable to just before regulator disable, instead of them being in
+  _probe and _remove (Stephan)
+- Pick up tags
+- Link to v3: https://lore.kernel.org/r/20250127-msm8226-modem-v3-0-67e968787eef@lucaweiss.eu
 
+Changes in v3:
+- Include dt-bindings & driver patch for MSM8926 modem which is slightly
+  different
+- Include patch to add msm8926.dtsi with modified modem
+- Include patch to enable modem on MSM8926 HTC memul
+- In single-pd driver patch modify if conditions to only trigger for
+  8226, even for misconfigured dts (Stephan)
+- Don't /delete-node/ & /delete-property/ for no-modem smartwatches,
+  just make mpss_region & mba_region be disabled by default (Stephan)
+- Configure matisselts mss-supply correctly (Stephan)
+- Pick up tags
+- Link to v2: https://lore.kernel.org/r/20250126-msm8226-modem-v2-0-e88d76d6daff@lucaweiss.eu
+
+---
+Luca Weiss (8):
+      dt-bindings: remoteproc: qcom,msm8916-mss-pil: Add MSM8926
+      remoteproc: qcom_q6v5_mss: Handle platforms with one power domain
+      remoteproc: qcom_q6v5_mss: Add modem support on MSM8226
+      remoteproc: qcom_q6v5_mss: Add modem support on MSM8926
+      ARM: dts: qcom: msm8226: Add modem remoteproc node
+      ARM: dts: qcom: msm8226: Add BAM DMUX Ethernet/IP device
+      ARM: dts: qcom: Introduce dtsi for LTE-capable MSM8926
+      ARM: dts: qcom: msm8926-htc-memul: Enable modem
+
+Matti Lehtimäki (5):
+      dt-bindings: remoteproc: qcom,msm8916-mss-pil: Support platforms with one power domain
+      dt-bindings: remoteproc: qcom,msm8916-mss-pil: Add MSM8226
+      ARM: dts: qcom: msm8226: Add node for TCSR halt regs
+      ARM: dts: qcom: msm8226: Add smsm node
+      ARM: dts: qcom: msm8226-samsung-matisse-common: Enable modem
+
+ .../bindings/remoteproc/qcom,msm8916-mss-pil.yaml  |  64 ++++++-
+ arch/arm/boot/dts/qcom/msm8926.dtsi                |  11 ++
+ .../dts/qcom/qcom-apq8026-samsung-matisse-wifi.dts |   1 +
+ .../dts/qcom/qcom-apq8026-samsung-milletwifi.dts   |   2 +
+ .../dts/qcom/qcom-msm8226-microsoft-common.dtsi    |   6 +-
+ .../dts/qcom/qcom-msm8226-microsoft-dempsey.dts    |   1 +
+ .../dts/qcom/qcom-msm8226-microsoft-makepeace.dts  |   1 +
+ .../dts/qcom/qcom-msm8226-microsoft-moneypenny.dts |   1 +
+ .../qcom/qcom-msm8226-samsung-matisse-common.dtsi  |  19 ++-
+ arch/arm/boot/dts/qcom/qcom-msm8226.dtsi           | 147 ++++++++++++++++
+ arch/arm/boot/dts/qcom/qcom-msm8926-htc-memul.dts  |  14 +-
+ .../qcom/qcom-msm8926-microsoft-superman-lte.dts   |   1 +
+ .../boot/dts/qcom/qcom-msm8926-microsoft-tesla.dts |   1 +
+ .../dts/qcom/qcom-msm8926-motorola-peregrine.dts   |   2 +-
+ .../dts/qcom/qcom-msm8926-samsung-matisselte.dts   |   5 +
+ drivers/remoteproc/qcom_q6v5_mss.c                 | 186 ++++++++++++++++++++-
+ 16 files changed, 446 insertions(+), 16 deletions(-)
+---
+base-commit: 15fbefd533c38e72315c25ae3746005fddb4b8e3
+change-id: 20250107-msm8226-modem-f15a1e6f8d84
+
+Best regards,
 -- 
-With best wishes
-Dmitry
+Luca Weiss <luca@lucaweiss.eu>
+
 
