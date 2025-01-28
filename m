@@ -1,117 +1,185 @@
-Return-Path: <linux-arm-msm+bounces-46408-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46409-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 26583A20EDC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jan 2025 17:46:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 2550DA20EE8
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jan 2025 17:47:09 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5DDB33A6652
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jan 2025 16:46:10 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 608EB3A7B86
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jan 2025 16:46:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EB801194A67;
-	Tue, 28 Jan 2025 16:46:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CDB8419ABDE;
+	Tue, 28 Jan 2025 16:46:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=lucaweiss.eu header.i=@lucaweiss.eu header.b="EvCKDVws"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="DCI2rwHq"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from ahti.lucaweiss.eu (ahti.lucaweiss.eu [128.199.32.197])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB32B2904;
-	Tue, 28 Jan 2025 16:46:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=128.199.32.197
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DACF02904;
+	Tue, 28 Jan 2025 16:46:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738082773; cv=none; b=VsR4RdeCmq5RNXVzsbUnaXnfYGUgTcTeyhiTzBR/3L2eh0WWa3SC3ESyFaRl8PXaAtbH3XI3IwZ/bCFCnbuC1rf6GoU70BfLWLE7gpShxRuWxSxZhljJ5cRoAOxY9ZJ59Mlr29DbmbrPHFRQR8YjgRCukog7WLnXXIM0fmB++mY=
+	t=1738082805; cv=none; b=QUkbjiUWBW65a3mz9p+6GtnUE51RU0JkszVSVZtrfQl4G+U5ZVG7oCYpmpo14vQEEBng4LnpRFsxvXeEvtMwoLpRpeD1pScccJaydv19+1ByUXpWgd8xtePfELMubmThkjaSqwnsLCBXnzBDE0NMKIjQVBxM+Rlaiz478XLwrRE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738082773; c=relaxed/simple;
-	bh=8iqiBQ5n3/CNlhOEVwt898nMYFFRnFB3NHySPtLcSVc=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=U9HB6mFPYR5LfE0xUWXvriKe166SoJuYwx07Y5HBK0uRqk5cNUBfl7b2pscNMwEEVtc7jmoG9c0nNFk3vpWBzOo+vXYMelk/RyAbpQbXK+GI2mSfJ7xi1ngAiuoxvBI3J5L781H4cGDYscqAHK0IgnXJ0qtRDky/JNhTo32GCIw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=lucaweiss.eu; spf=pass smtp.mailfrom=lucaweiss.eu; dkim=pass (1024-bit key) header.d=lucaweiss.eu header.i=@lucaweiss.eu header.b=EvCKDVws; arc=none smtp.client-ip=128.199.32.197
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=lucaweiss.eu
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lucaweiss.eu
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=lucaweiss.eu; s=s1;
-	t=1738082769; bh=8iqiBQ5n3/CNlhOEVwt898nMYFFRnFB3NHySPtLcSVc=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EvCKDVwsnJsi8d0LF6pL0zfXmSbk7O05YoDFvcZHqABkhaK+oHXBqwbz0ZtZTLl3x
-	 annVc3NotUHQhd6QiHrrUcXjaZoywWQoGjW8nIjT7iS7KiDdkU27RLkguDvfCv7drm
-	 i98X95/PA+Mj8nhyxmeHI4uLtj/6Exr8umRCe1Ts=
-From: Luca Weiss <luca@lucaweiss.eu>
-To: Stephan Gerhold <stephan.gerhold@linaro.org>
-Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
- Bjorn Andersson <andersson@kernel.org>,
- Mathieu Poirier <mathieu.poirier@linaro.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>,
- Stephan Gerhold <stephan@gerhold.net>,
- Konrad Dybcio <konradybcio@kernel.org>,
- Matti =?UTF-8?B?TGVodGltw6RraQ==?= <matti.lehtimaki@gmail.com>,
- linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject:
- Re: [PATCH v3 11/13] ARM: dts: qcom: Introduce dtsi for LTE-capable MSM8926
-Date: Tue, 28 Jan 2025 17:46:09 +0100
-Message-ID: <12596489.O9o76ZdvQC@lucaweiss.eu>
-In-Reply-To: <Z5iQQQRtuUzTDRVW@linaro.org>
-References:
- <20250127-msm8226-modem-v3-0-67e968787eef@lucaweiss.eu>
- <20250127-msm8226-modem-v3-11-67e968787eef@lucaweiss.eu>
- <Z5iQQQRtuUzTDRVW@linaro.org>
+	s=arc-20240116; t=1738082805; c=relaxed/simple;
+	bh=JYOVQnyo0ahIAz2q7Kcd4sGIB3IeZB+FU/ghOBR59GI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=oGmv+Ve6zN1MJEtL1gICft8HtD7YUQIDViIum2Hwl4D3jf9QeAiXxCEzWdO1LkU13owR0s0M0gjzyDtyhTvMy9zoBnJ74E2lifR2GXmT+7/g5YpxLCLWdwlYU/qWVfMM7ebnsZEjmYhCyPkHyJn5P4x28b5ecyWu3kJDYr1OL0c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=DCI2rwHq; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50SAT6jS000946;
+	Tue, 28 Jan 2025 16:46:39 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	1cOivfFeB/eUmYrh4Uon3OR3ZvdSfHGK9cXmoZGGBSc=; b=DCI2rwHq8tQoYzfj
+	zRaYCPJR5uVLKRRtqOCvYXIeRrwLBpvXEMAHgxAt++RmubPgcs+VnKLGYvITPuun
+	KoRZinkwdiXsrnPftI+brN3Ii4jtAds1HyzGkYUxzpBJfdv770r8kkg2p/lT1NC7
+	c5RzETz8uzaI/KxA0KXJpyctQ1RJbXU+xT30dC6WFBT4rRG2MQ28uaKYbziSCzHw
+	zwCAHY5VaIkLqVJs/7U4JLpe0Tw7NXRH2fsbXUkUs6/fjqV7fwkFiAzE58Q/YH0k
+	IcQ6vSQjQM3pldTHid5wZLd8ukYNu7nqlJA4xd/jWHSCwo9Qcajs1wD8uHu/py2W
+	z9e4EA==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44ewh48wak-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 28 Jan 2025 16:46:38 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 50SGkcYN018843
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 28 Jan 2025 16:46:38 GMT
+Received: from [10.216.5.143] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 28 Jan
+ 2025 08:46:33 -0800
+Message-ID: <ae712489-3268-4786-9f4f-c30d53d324d6@quicinc.com>
+Date: Tue, 28 Jan 2025 22:16:30 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/2] arm64: dts: qcom: add wifi node for IPQ5332 based
+ RDP441
+To: Krzysztof Kozlowski <krzk@kernel.org>, <ath12k@lists.infradead.org>
+CC: <linux-wireless@vger.kernel.org>, Kalle Valo <kvalo@kernel.org>,
+        Rob
+ Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor
+ Dooley <conor+dt@kernel.org>,
+        Jeff Johnson <jjohnson@kernel.org>,
+        Bjorn
+ Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>
+References: <20250128091012.2574478-1-quic_rajkbhag@quicinc.com>
+ <20250128091012.2574478-3-quic_rajkbhag@quicinc.com>
+ <b3ff05c1-6424-4ace-a873-ddf1a0d3d07d@kernel.org>
+ <a752a135-9cd0-402b-b0fb-967491cfdaee@quicinc.com>
+ <7d23afc2-ccb0-4a57-afcc-c5ac01013ea2@kernel.org>
+Content-Language: en-US
+From: Raj Kumar Bhagat <quic_rajkbhag@quicinc.com>
+In-Reply-To: <7d23afc2-ccb0-4a57-afcc-c5ac01013ea2@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 00P8SaYMGofXQseVz_j9om20SrWwWXvr
+X-Proofpoint-ORIG-GUID: 00P8SaYMGofXQseVz_j9om20SrWwWXvr
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-01-28_04,2025-01-27_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 bulkscore=0
+ phishscore=0 suspectscore=0 spamscore=0 priorityscore=1501 mlxscore=0
+ malwarescore=0 adultscore=0 clxscore=1015 lowpriorityscore=0
+ mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2501280124
 
-On dinsdag 28 januari 2025 09:07:29 Midden-Europese standaardtijd Stephan 
-Gerhold wrote:
-> On Mon, Jan 27, 2025 at 11:45:43PM +0100, Luca Weiss wrote:
-> > MSM8926, while being 'just' an LTE-capable variant of MSM8226, the dts
-> > needs to slightly change since the modem doesn't use the ext-bhs-reg and
-> > needs mss-supply, therefore it gets a new compatible.
-> > 
-> > Since we already have two -common.dtsi files which are used on both
-> > APQ8026/MSM8226 and MSM8926 devices, change the setup a bit by removing
-> > the SoC include from those and requiring the device dts to pick the
-> > correct one.
-> > 
-> > Signed-off-by: Luca Weiss <luca@lucaweiss.eu>
-> > ---
-> >  arch/arm/boot/dts/qcom/msm8926.dtsi                           | 11 ++++++
-+++++
-> >  arch/arm/boot/dts/qcom/qcom-apq8026-samsung-matisse-wifi.dts  |  1 +
-> >  arch/arm/boot/dts/qcom/qcom-msm8226-microsoft-common.dtsi     |  6 +++++-
-> >  arch/arm/boot/dts/qcom/qcom-msm8226-microsoft-dempsey.dts     |  1 +
-> >  arch/arm/boot/dts/qcom/qcom-msm8226-microsoft-makepeace.dts   |  1 +
-> >  arch/arm/boot/dts/qcom/qcom-msm8226-microsoft-moneypenny.dts  |  1 +
-> >  .../boot/dts/qcom/qcom-msm8226-samsung-matisse-common.dtsi    |  6 +++++-
-> >  arch/arm/boot/dts/qcom/qcom-msm8926-htc-memul.dts             |  2 +-
-> >  .../arm/boot/dts/qcom/qcom-msm8926-microsoft-superman-lte.dts |  1 +
-> >  arch/arm/boot/dts/qcom/qcom-msm8926-microsoft-tesla.dts       |  1 +
-> >  arch/arm/boot/dts/qcom/qcom-msm8926-motorola-peregrine.dts    |  2 +-
-> >  arch/arm/boot/dts/qcom/qcom-msm8926-samsung-matisselte.dts    |  1 +
-> >  12 files changed, 30 insertions(+), 4 deletions(-)
-> > 
-> > diff --git a/arch/arm/boot/dts/qcom/msm8926.dtsi b/arch/arm/boot/dts/qcom/
-msm8926.dtsi
+On 1/28/2025 3:54 PM, Krzysztof Kozlowski wrote:
+> On 28/01/2025 10:41, Raj Kumar Bhagat wrote:
+>>>> +
+>>>> +	reserved-memory {
+>>>> +		#address-cells = <2>;
+>>>> +		#size-cells = <2>;
+>>>> +		ranges;
+>>>> +
+>>>> +		q6_region: wcss@4a900000 {
+>>>> +			reg = <0x0 0x4a900000 0x0 0x02b00000>;
+>>>> +			no-map;
+>>>> +		};
+>>>> +
+>>>> +		m3_dump: m3-dump@4d400000 {
+>>>
+>>> This fails with your wireless patchset.
+>>>
+>>
+>> Yes, this will fail with v4 wireless patch.
+>> We have v5 (yet to be sent) to read the correct reserved memory. Since,
+>> in v4 I was asked to address and send DTS patch separately, The corresponding
+>> driver patches are yet to be sent.
 > 
-> I'm personally not a big fan of mixing the naming with and without qcom-
-> prefix. But anyway:
+> 
+> So you send it to prove my point? OK, fine. So this patch confirms your
+> driver changes should be rejected.
+> 
 
-Same, but already all PMICs were renamed to get rid of the pmXXXX- prefix, and 
-there's even some new dts files that don't have the qcom- prefix anymore.
+There seems to be some confusion here.
 
-I can also send a patch to rename the .dtsi files to remove the prefix to be 
-at least consistent with the PMICs, and the .dts files we'd need to keep with 
-the original name to not cause any issues with the users of those - even 
-though there have also been plenty of cases where we renamed those.
+Based on the comments in v4, as quoted below:
+"Please post the updated DTS in a separate series after fixing all the issues
+pointed out by the DTS coding style."
 
-Regards
-Luca
+I understood that you wanted to review only the DT-related patches first
+before the driver implementation. Hence, this is posted separately before the
+v5 driver is posted.
 
+If I misunderstood, please let me know. We will continue with v5 of the original
+series 'wifi: ath12k: add Ath12k AHB driver support for IPQ5332'. The v5 will
+include dt-binding, driver, and reference DTS as well.
 
+>>
+>>>> +			reg = <0x0 0x4D400000 0x0 0x100000>;
+>>>> +			no-map;
+>>>> +		};
+>>>> +	};
+>>>>  };
+>>>>  
+>>>>  &blsp1_i2c1 {
+>>>> @@ -63,3 +104,16 @@ data-pins {
+>>>>  		};
+>>>>  	};
+>>>>  };
+>>>> +
+>>>> +&wifi0 {
+>>>> +	memory-region = <&q6_region>, <&m3_dump>;
+>>>> +	memory-region-names = "q6-region", "m3-dump";
+>>>
+>>> Binding said you have four items. I don't understand why this varies and
+>>> why this is 2 items instead.
+>>>
+>>
+>> In total we have 4 items, with minItems as 2.
+>> The other 2 items (q6-caldb & mlo-global-mem) functionalities are not yet enabled
+>> in ath12k driver. Hence these memory are not reserved yet.
+> 
+> That's not a valid reason to skip valid items. DTS is not dependent on
+> driver. Submit proper hardware description, not something carved to
+> match your driver.
+> 
 
+Sure, we can have all four reserved memory sections in the DTS. However, ath12k
+will not use all four reserved memory sections as of now. Once the functionality
+corresponding to q6-caldb and mlo-global-mem is enabled, these reserved memory
+sections will be used.
+
+In that case, we can also drop 'minItems' to 2 in the binding?
 
