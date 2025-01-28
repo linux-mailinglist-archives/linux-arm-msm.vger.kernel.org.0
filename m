@@ -1,142 +1,113 @@
-Return-Path: <linux-arm-msm+bounces-46321-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46322-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 38336A204EF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jan 2025 08:12:49 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id CE066A20504
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jan 2025 08:27:44 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 641887A1BEB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jan 2025 07:12:38 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3D78B188788D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jan 2025 07:27:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B09FF1BEF74;
-	Tue, 28 Jan 2025 07:12:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C06C819E7F8;
+	Tue, 28 Jan 2025 07:27:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="aXBuOYiL"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iXeAVvjm"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11524192D84;
-	Tue, 28 Jan 2025 07:12:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88B97383A5;
+	Tue, 28 Jan 2025 07:27:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738048359; cv=none; b=BCZrG998TfP34aXoZb7Lm5EczPp1EH2/bVvOhb3LApg9jQqWDRFKwaD38s6y8KVQhWFcto2PAlgNiC6+KdII3y3HL2ER4j7B9RI0fM9sf5vbKE+1Z1ith7J3I/i3auia8Qj5Esj0fquZosh+AWSOzGdzswnNIpkkkuch+trFFrc=
+	t=1738049258; cv=none; b=s02UfudNg/ZXVsKZ09blwKDUXdYkEaOWQ5wk0mI1BdLzawhI513AMwzMh08FtVo20RoYid1IaG2/Amm5eifdasc9dwhHu1bfHF0C5CedmdfnLaXrab6zxzYWvvtAW9mHrXXWU8S/2cyL0ezBumXeif902Vs2wsOxbjGr8Bo0//0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738048359; c=relaxed/simple;
-	bh=3Hq/aQRA6XtpaP8m2hWyIrpgOuAkx1dzItP3xXOz7g4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=aSAqEEM9FVEregXYfouzp7+sV6bcgth5HSGMgm8V5fQdsdz7dQ9jHGC3D7SEsU3e+9diUEAR+3DikfFhHubbvmIz5E5Y9KvntDbaeznaDOVCqcG/HF2ZnpuUXniKB/5fCOoO1ml9n5G6YryrVBtkIQLvgC4H6AzwOXbbyoEt+Cc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=aXBuOYiL; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50S5qXjC028267;
-	Tue, 28 Jan 2025 07:12:31 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	AD7gsPnSNQeBvV3Zwp8fvkKBiRLpeCVhXd7KYhv2Uz4=; b=aXBuOYiL/VNAPq+v
-	6PbIxhonFiLWK7Aw3beMaIpZQSWxncI5baciarnLZLbcACHy0jR14+JuY/ii0L9s
-	IEf3sPeF6R5yy7A7p1visnohnVCs1B043AvOS6Y5vxDK5RSE2IRap/SY6x+RxqXY
-	pstg5K18KjDKvy1hnGBI/qkJsHJHqXGsqh+GOaW8MIKCiSfftt2sU9dNMQCf71+w
-	8LVOUkKyd/nEQKdL+JVvE5YH5k6OWvuozylLIFmVaTrG0U2wb3SoqqMiCuIUn3yf
-	wG5YEOn4hJZkjMQohgGxZZM6qzKIt+iAd3mf18wyq/+73EDUqQkm56LAdjj6y7wY
-	Xci63g==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44esfq071d-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 28 Jan 2025 07:12:31 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 50S7CUIv032677
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 28 Jan 2025 07:12:30 GMT
-Received: from [10.152.195.140] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 27 Jan
- 2025 23:12:23 -0800
-Message-ID: <fe34b401-e9a8-4a69-853c-4bcd468e6cc7@quicinc.com>
-Date: Tue, 28 Jan 2025 12:42:19 +0530
+	s=arc-20240116; t=1738049258; c=relaxed/simple;
+	bh=+sa8ABbz7eaRoFnDc8THWn9YGk3681ZYFZ8XGntL9lU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Vo6tsVY9e2Zg7pSay+ExYfVHJd1QqgT7Uy6Dxo8gblipD/FLu08PTACrWZAHKH1LUbTHG/62pGJImyAcr7qXex69ieITUiJIMl2DKDQiQ0hzvsiWlyvP3jb00Hvg2DxH9UmdYJNGcOQABwBWhsCSpY3NZyrxW4D0qqffcAQcL1Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iXeAVvjm; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11601C4CED3;
+	Tue, 28 Jan 2025 07:27:36 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1738049257;
+	bh=+sa8ABbz7eaRoFnDc8THWn9YGk3681ZYFZ8XGntL9lU=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=iXeAVvjmyuQzKycAAB4vYhkz618HYojLKROyvVNIz6gW5RbcWYRCqTJCjUB3ZdHU8
+	 5jX+bGVaTjIns86RhL+l5RtMdsQIhjmvkpQJqDarfFPIkMDWw8lHoXiITg6fxytWh6
+	 hY3gV6aXcbTSmmWyWOp5FRAcQInjLf+UymGZAp9JjyusvT0bgUUvBoPOLV6kdt9YVT
+	 T+KIAgbNyhxOjTgwSur+7Wi2oqWFtq7BqAKAwG8AchHOfDUeQem6FY1/BSYeG29/Of
+	 XrKXKnTgj5OzdcqZOpTJZqvi4U1h3OsTcCnUh5uflGgWCy49RDQlnwjK0sbg2YjftJ
+	 IrzEXJAu32ROw==
+Date: Tue, 28 Jan 2025 08:27:34 +0100
+From: Krzysztof Kozlowski <krzk@kernel.org>
+To: Varadarajan Narayanan <quic_varada@quicinc.com>
+Cc: bhelgaas@google.com, lpieralisi@kernel.org, kw@linux.com, 
+	manivannan.sadhasivam@linaro.org, robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, 
+	vkoul@kernel.org, kishon@kernel.org, andersson@kernel.org, konradybcio@kernel.org, 
+	p.zabel@pengutronix.de, dmitry.baryshkov@linaro.org, quic_nsekar@quicinc.com, 
+	linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org
+Subject: Re: [PATCH v9 5/7] dt-bindings: PCI: qcom: Document the IPQ5332 PCIe
+ controller
+Message-ID: <20250128-astonishing-kingfisher-of-skill-babe3e@krzk-bin>
+References: <20250128062708.573662-1-quic_varada@quicinc.com>
+ <20250128062708.573662-6-quic_varada@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 2/4] dt-bindings: clock: update interconnect cells for
- ipq5424
-To: Krzysztof Kozlowski <krzk@kernel.org>
-CC: <andersson@kernel.org>, <mturquette@baylibre.com>, <sboyd@kernel.org>,
-        <robh@kernel.org>, <krzk+dt@kernel.org>, <conor+dt@kernel.org>,
-        <lpieralisi@kernel.org>, <kw@linux.com>,
-        <manivannan.sadhasivam@linaro.org>, <bhelgaas@google.com>,
-        <konradybcio@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-clk@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-pci@vger.kernel.org>,
-        <quic_srichara@quicinc.com>, <quic_varada@quicinc.com>
-References: <20250125035920.2651972-1-quic_mmanikan@quicinc.com>
- <20250125035920.2651972-3-quic_mmanikan@quicinc.com>
- <20250127-amethyst-capybara-from-uranus-5e6bf4@krzk-bin>
-Content-Language: en-US
-From: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
-In-Reply-To: <20250127-amethyst-capybara-from-uranus-5e6bf4@krzk-bin>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: HGZM0DjtlzhOkKvK2dHA0wC0vy-mq6IE
-X-Proofpoint-ORIG-GUID: HGZM0DjtlzhOkKvK2dHA0wC0vy-mq6IE
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-01-28_02,2025-01-27_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 spamscore=0
- adultscore=0 mlxlogscore=999 phishscore=0 lowpriorityscore=0
- suspectscore=0 bulkscore=0 priorityscore=1501 impostorscore=0
- clxscore=1015 malwarescore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2411120000 definitions=main-2501280053
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20250128062708.573662-6-quic_varada@quicinc.com>
 
-
-
-On 1/27/2025 12:57 PM, Krzysztof Kozlowski wrote:
-> On Sat, Jan 25, 2025 at 09:29:18AM +0530, Manikanta Mylavarapu wrote:
->> Interconnect cells differ between the IPQ5332 and IPQ5424.
->> Therefore, update the interconnect cells according to the SoC.
+On Tue, Jan 28, 2025 at 11:57:06AM +0530, Varadarajan Narayanan wrote:
+> Document the PCIe controller on IPQ5332 platform. IPQ5332 will
+> use IPQ9574 as the fall back compatible.
 > 
-> Why do they differ? Why they cannot be the same?
+> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
+> ---
+> v9: Remove superfluous ipq5332 constraint since the fallback is present
 > 
-
-Based on the comment received here [1], i updated interconnect cells to 2
-to accommodate icc tags for IPQ5424.
-
-[1]: https://lore.kernel.org/linux-arm-msm/20250119124551.nl5272bz36ozvlqu@thinkpad/
-
-I will update interconnect cells to 2 for IPQ5332 as well.
-
->>
->> Signed-off-by: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
->> ---
->>  .../devicetree/bindings/clock/qcom,ipq5332-gcc.yaml       | 8 ++++++--
->>  1 file changed, 6 insertions(+), 2 deletions(-)
->>
->> diff --git a/Documentation/devicetree/bindings/clock/qcom,ipq5332-gcc.yaml b/Documentation/devicetree/bindings/clock/qcom,ipq5332-gcc.yaml
->> index 1230183fc0a9..fac7922d2473 100644
->> --- a/Documentation/devicetree/bindings/clock/qcom,ipq5332-gcc.yaml
->> +++ b/Documentation/devicetree/bindings/clock/qcom,ipq5332-gcc.yaml
->> @@ -35,8 +35,6 @@ properties:
->>        - description: PCIE 2-lane PHY3 pipe clock source
->>  
->>    '#power-domain-cells': false
->> -  '#interconnect-cells':
->> -    const: 1
+> v8: Use ipq9574 as fallback compatible for ipq5332 along with ipq5424
 > 
-> Properties are always defined top-level or in other schema.
+> v7: Moved ipq9574 related changes to a separate patch
+>     Add 'global' interrupt
+> 
+> v6: Commit message update only. Add info regarding the moving of
+>     ipq9574 from 5 "reg" definition to 5 or 6 reg definition.
+> 
+> v5: Re-arrange 5332 and 9574 compatibles to handle fallback usage in dts
+> 
+> v4: * v3 reused ipq9574 bindings for ipq5332. Instead add one for ipq5332
+>     * DTS uses ipq9574 compatible as fallback. Hence move ipq9574 to be able
+>       to use the 'reg' section for both ipq5332 and ipq9574. Else, dtbs_check
+>       and dt_binding_check flag errors.
+> ---
 
-I will define it in top-level and initialize with 2.
+Same problems as ipq5424.
 
-Thanks & Regards,
-Manikanta.
+What's more, you are doing the same, so this is a conflicting change
+coming from the same company or even the same team.
+
+It is not the open source community's job, not the maintainer's job to
+coordinate tasks and teams in Qualcomm. Qualcomm people should
+coordinate their teams.
+
+It's merge window, you and your colleagues keep sending new versions of
+big patchsets with conflicting changes, without any coordination. Amount
+of patches is just overwhelming. Lack of coordination and any reflection
+is just discouraging.
+
+Can you slow down and actually sync to send something reasonable?
+
+And not during the merge window?
+
+Best regards,
+Krzysztof
+
 
