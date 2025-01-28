@@ -1,211 +1,136 @@
-Return-Path: <linux-arm-msm+bounces-46379-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46380-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 19C60A209F0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jan 2025 12:49:23 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 97966A209F5
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jan 2025 12:53:45 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3AE4518821A5
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jan 2025 11:49:27 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D044E3A4AF8
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jan 2025 11:53:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E6A2519F47E;
-	Tue, 28 Jan 2025 11:49:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B42E61A238B;
+	Tue, 28 Jan 2025 11:53:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="GXNI+uH3"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="VNtVR+ef"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6091519F13B
-	for <linux-arm-msm@vger.kernel.org>; Tue, 28 Jan 2025 11:49:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7BC519AA56
+	for <linux-arm-msm@vger.kernel.org>; Tue, 28 Jan 2025 11:53:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738064958; cv=none; b=bTlmSzzK9MqMTPVL6XklYI9GR08HA+IwH2VLdIQ+BYSaeSOVCuJTXkErVCJIh5ROJdWht/6roAtkZS56fW27Tl+LHdypN0/pvx6QUtMBObWAD27tqGWKDDA9RRDzOvTnFXT9HJwLJHO/HMpm1JMMcHnSSDUOo3ZlLrBNXgBoOSs=
+	t=1738065220; cv=none; b=NRPmliOc/06zPCIeVryrHTa8FKVaL7aTpE5H2vAdnr7y/krEbjO6i03wu+CMy1ijhXBZbLD/R8muQfA+N30KM4z4XzMvfkqN0m7uf4atqaxo9FtGFUpD1i+d3r5eFNyIP8ukXFs3Hnot08NOSlBZZWdNSk75QIr+EsqsWb4IeoA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738064958; c=relaxed/simple;
-	bh=hLf3J4DjMIUSXWpFAlaJabK1uiLzBJKg0YsOiU74pXo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=SRUdPd0J+LzvzK8sLuG7+A6a3ztW0CTEOP5drW2ro6CwckFiXd2AoVVTR1XNr0P0NTZN3ubVDDQO8A1tfc+D3Y2RH9i0frHL3LPsemLLJKTFKj0EtEZip7ezjzI6PIDD/bfzozd5Ly9kESj8H/3ScyxXFDnwROB4tZyXPOWTtHg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=GXNI+uH3; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50S9lXKC018319
-	for <linux-arm-msm@vger.kernel.org>; Tue, 28 Jan 2025 11:49:15 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	XMTiSyzPz9jN6LjslTgsVpii1bcW4uZ/GQwmU5IYtGc=; b=GXNI+uH3KnbxPjTH
-	l2oYdcER7tGYJgBtANdRnoZ0uQ6pWgrEbspZHPoVa40WG2Oavlge8j8jnGwVizFT
-	q33Agv3h2qa00wjQTSY+G3wkSXpJpEW4ECckhEsu3rR2NR1UWcTWZ/afkqUgDCjE
-	z0Rfg5PMqk0rSynv7picopekQWwArCWzu82QQSs0tucyzTm29wOY14YUOJTq1XK3
-	SjQ9SjBYPcQVMJYPl5f+xqVr9TzrdupIcFDOSmD+Pb6yVUPKRSjexJO9Y9Xueyt3
-	dliR6pykwpxPuiDmmYAQwxzZsl6TgOv7xtW9wRVMSNFWQ6MTeJiegKC9TnNXMTGR
-	KkXuEg==
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com [209.85.222.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44evwug9nk-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 28 Jan 2025 11:49:15 +0000 (GMT)
-Received: by mail-qk1-f198.google.com with SMTP id af79cd13be357-7b6f134dac1so141343285a.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Jan 2025 03:49:15 -0800 (PST)
+	s=arc-20240116; t=1738065220; c=relaxed/simple;
+	bh=thYreHVKI5SWRkq5Ra0cLWy8XMUJv5l48C+D+iV+2F8=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=T4AKmuIv9sF+LobAi7xEX3l7ziRV4s6tlIJ0Y6pRwvX9DH8YFPpZfhsZqQobioJoiHtL5dcGKwIlfojKkFvTGr4VCgZCGMpDqKQoqb36/RrODK1qoXQMC7MpYi/RuaDyhJj69jpM8V1LfmBSyS6RKZUZs8iS0hD6XuEE49R1yjE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=VNtVR+ef; arc=none smtp.client-ip=209.85.128.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-436203f1203so4244315e9.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Jan 2025 03:53:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1738065217; x=1738670017; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=iKMNbtERschnPULr7kKZxRmXBW6dOIFE/0WjjIKe8d0=;
+        b=VNtVR+efDbloL5UHhB2lan0N44xB9tVE9xDkSQOmKstwRvwC2sElEbv0AcOgQZTN7l
+         uDAwVwPGLf7Ob5EN23vgJ+ATWRZUxgfNn0Tf5B4V3c5RPfScNyrmaSmWzQFTD0VrJXr4
+         211HFAKB+WLIxeXAsZjL83fVG6sWaLClK7NcOttwLr2EdoVVxkyMkTnus5jgVboWSEV1
+         5s8zbNkf1BHRJ6mlntdO0u/pB38VPpsoq5djlnb5PDunud/GgJIvUO4/SJY9nNQz3rhy
+         rBURfSz/FXkSP09N6B1yTbzNNdE6h9Ccb2FCXpXX2JlQ3j0z5411UYjtToalNAIMFy91
+         8XfQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738064954; x=1738669754;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=XMTiSyzPz9jN6LjslTgsVpii1bcW4uZ/GQwmU5IYtGc=;
-        b=df8McIlBc7ghSTmR3AD5N0Tasu4N1yOjlmuy5gGJR5HN1rYakrdNFpTuCduuBbz//m
-         4BVRS+7EP6UtErE0ifew8KhnW8Vmlnp6s4mThYeekulskPsKoK6WsAmiPXFUPmCns8tq
-         wh2gVAI9cYTKulxIt1cMwcxvWhTG2TMWyK5eG4rIC/172CVdlISb93ei0MwiQ99az7ha
-         EKOg+GFNOLq+oV99TnIIUHIgxpCLSNMxutfzBFY7duT6R8SfsuE0SZ5GGe+0Y8hYJcKL
-         Y7V0HcYn9I92RrblfJFSlkKbPVJGpCmKgDDVpG+oyAQSjkUPTpSzjteQd4mkLJkmttNt
-         2i/Q==
-X-Forwarded-Encrypted: i=1; AJvYcCXGy6xKLYtINv9jDUFEoh7D4waryoJV3a99q1E8aCNYAL3u9UFMvUb7U7hp0ZmHKUN9SmSuobzXWJfVVNUI@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw7Sd8Q7EwJtwKoCM0QJmKr7j2UNa+8UDgR3nod9sgmt3mu7RbC
-	6FfuPwnF3chLTnE0/SOM9QrQLcjUTpaZ6B+TQrtkIkcC/Qvp1MI3iK/wy9hVS4CYtzE9N9iw9ob
-	Sy53EpWhw4/U1M8PlVsgmsigdJASHmABsbd3tLYXYprqP91j7mqWh1AN8Ea0e9vOk
-X-Gm-Gg: ASbGnct8+nULmCDeT2IcbDIkBbMeYtwbjpkR30tF9Rjbqx9PAb1MViPpns2g5dAlqt+
-	XeY5jT8DZFFTYy9X01ChIWaKAHeGRKB/A7gD8tiATQQVBFC+TBIzE+NvQqSQbNONq4spDCqLfQd
-	qRNRUIP9Qr/TEgSHIv+Rrp6MNVGwCB+NQL1yx8PFYnSyYXgmkts+lfYEnmlycNkwYUMrsJo9ETW
-	hMPvW4haea9edM9JdRRM2KTMbANIJFLlLjyQTfJBmHS65wuiHQS4ls3Dgy94P3n5RblRH3dLrX8
-	IcShpnPZAoaYE6/fAJV9h/u7CVGvRKvnlaL4Fn4m5d4cbndvzzYjDqF0RGE=
-X-Received: by 2002:a05:620a:d95:b0:7b6:c405:b586 with SMTP id af79cd13be357-7be8b30bf0amr1587055685a.8.1738064954084;
-        Tue, 28 Jan 2025 03:49:14 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHI1dJiPQTIhshRK4KWxNT9fbuaLY+4vOaJg+z5KunJ7ft3YpJ0l4tsvlrwy0o1H/pwbMZbNw==
-X-Received: by 2002:a05:620a:d95:b0:7b6:c405:b586 with SMTP id af79cd13be357-7be8b30bf0amr1587053485a.8.1738064953639;
-        Tue, 28 Jan 2025 03:49:13 -0800 (PST)
-Received: from [192.168.65.90] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ab6760fbbbasm770357666b.146.2025.01.28.03.49.11
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 28 Jan 2025 03:49:12 -0800 (PST)
-Message-ID: <42345315-0c64-417b-9e48-bc95a8d9e388@oss.qualcomm.com>
-Date: Tue, 28 Jan 2025 12:49:10 +0100
+        d=1e100.net; s=20230601; t=1738065217; x=1738670017;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=iKMNbtERschnPULr7kKZxRmXBW6dOIFE/0WjjIKe8d0=;
+        b=gGj6lf/k1S+l3WBXq9S5knTEC1n7BfIrQMHXXylqtIKm3X5ycMiqXNpKuZLWWSojSz
+         15mE45jVhkDSoo7BQnqggIaDxf076OfrcdIDFAV5rQ8bs7dJHST5AcLu6stLgOpjkVmx
+         gY7pfFDZ2Toc5Y5XEJn85clYibDZ+u09oBC7mfCzA6LIOJFccESe3SHbAkXXdw4uVOHK
+         fkw61auhKyjuecYJWXy0S6lAJ4DmJECoePRy30CwP6gq9IVCssZwI0IAblurRhjJUv6N
+         WSoHLWj7ftG1yk47BZZRCRGC19LBlQ0PSnbDJaoeqg4QrN3wkRzkfQgyTX3UncpsZoJC
+         zsTg==
+X-Forwarded-Encrypted: i=1; AJvYcCWPeFvb1w1LoqxgjqanDLvoZt1njoQWwMBSAkAtoxTrpCPSo7pz88Cfrb3XBzM7Nb2U5VIzN5fC+COFk4kv@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx9ESYBqFzwyrlO/YUOqYb1VOWbtOBsNR+4nw3uDdjVIMlYs9Db
+	Ja+VrJ2MrzyjB1DrM3b8D6m7s2COOL3CMncFo+9DxMAXuqSQ6TWC5wdkqqzH3cY=
+X-Gm-Gg: ASbGncutSo3SFyffMzIn9JwtwEJU62NXjGJ/JmYMYuwI1kFHKQz2WO1D0y9S33T2H62
+	6GxgdshT5eJdi75v2yzWkTbmAdQJdxgJpTy1rcqA8gk2QmjMpFcfASfS3QkFMq/aFJqH7zUxZxu
+	vIfqUsCFtf9bXTrvO0a6P1mLkMQHfq9ZKX8fQe4rj/E8aXg4q5eOpgCSWy49B8SVAwyD1c+hLbD
+	Iq4jG8UDxzyRPddQhYp5/PodVAmbr4xovseRcizZCNUtULmJNaBJO/EbqSaeB6i4CR4a/aBVtAm
+	FoIIkY/5IVXXOLHlmCK4qJIUS5Qa
+X-Google-Smtp-Source: AGHT+IHaKxNKbstmg/oVxzJ+41YPYsfc+Wp4zXa4sdTmv66gglPRj7ELhLUFhy9UduKgbaE7dDdkoQ==
+X-Received: by 2002:a05:600c:4ecd:b0:436:1ada:944d with SMTP id 5b1f17b1804b1-438b17b0bdcmr92799705e9.4.1738065216894;
+        Tue, 28 Jan 2025 03:53:36 -0800 (PST)
+Received: from krzk-bin.. ([178.197.218.98])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-438bd47f269sm169140195e9.8.2025.01.28.03.53.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 28 Jan 2025 03:53:36 -0800 (PST)
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 1/2] arm64: dts: qcom: sa8775p: Partially revert "arm64: dts: qcom: sa8775p: add QCrypto nodes"
+Date: Tue, 28 Jan 2025 12:53:32 +0100
+Message-ID: <20250128115333.95021-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] arm64: dts: qcs6490-rb3gen2: Add vadc and adc-tm channels
-To: Rakesh Kota <quic_kotarake@quicinc.com>, andersson@kernel.org,
-        konradybcio@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
-        conor+dt@kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc: quic_kamalw@quicinc.com, quic_jprakash@quicinc.com
-References: <20250124070200.3969230-1-quic_kotarake@quicinc.com>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <20250124070200.3969230-1-quic_kotarake@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: cXzy8r9eSY2FScgRUkpZYtZHX1rVfnWz
-X-Proofpoint-ORIG-GUID: cXzy8r9eSY2FScgRUkpZYtZHX1rVfnWz
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-01-28_04,2025-01-27_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 spamscore=0
- priorityscore=1501 clxscore=1015 lowpriorityscore=0 suspectscore=0
- bulkscore=0 mlxscore=0 phishscore=0 malwarescore=0 mlxlogscore=811
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2501280090
+Content-Transfer-Encoding: 8bit
 
-On 24.01.2025 8:02 AM, Rakesh Kota wrote:
-> Add support for vadc and adc-tm channels which are used for
-> monitoring thermistors present on the platform.
-> 
-> - Add the necessary includes for qcom,spmi-adc7-pm7325 and
->   qcom,spmi-adc7-pmk8350.
-> - Add thermal zones for quiet-thermal, sdm-skin-thermal, and
->   xo-thermal, and define their polling delays and thermal sensors.
-> - Configure the pm7325_temp_alarm node to use the pmk8350_vadc
->   channel for thermal monitoring.
-> - Configure the pmk8350_adc_tm node to enable its thermal sensors
->   and define their registers and settings.
-> - Configure the pmk8350_vadc node to define its channels and settings
-> 
-> Signed-off-by: Rakesh Kota <quic_kotarake@quicinc.com>
-> ---
+Partially revert commit 7ff3da43ef44 ("arm64: dts: qcom: sa8775p: add
+QCrypto nodes") by dropping the untested QCE device node.  Devicetree
+bindings test failures were reported on mailing list on 16th of January
+and after two weeks still no fixes:
 
-[...]
+  sa8775p-ride.dtb: crypto@1dfa000: compatible: 'oneOf' conditional failed, one must be fixed:
+    ...
+    'qcom,sa8775p-qce' is not one of ['qcom,ipq4019-qce', 'qcom,sm8150-qce']
 
-> +&pmk8350_adc_tm {
-> +	status = "okay";
-> +
-> +	sdm-skin-therm@3 {
-> +		reg = <3>;
-> +		io-channels = <&pmk8350_vadc PM7325_ADC7_AMUX_THM3_100K_PU>;
-> +		qcom,ratiometric;
-> +		qcom,hw-settle-time-us = <200>;
-> +	};
-> +
-> +	quiet-therm@1 {
-> +		reg = <1>;
-> +		io-channels = <&pmk8350_vadc PM7325_ADC7_AMUX_THM1_100K_PU>;
-> +		qcom,ratiometric;
-> +		qcom,hw-settle-time-us = <200>;
-> +	};
-> +
-> +	xo-therm@0 {
-> +		reg = <0>;
-> +		io-channels = <&pmk8350_vadc PMK8350_ADC7_AMUX_THM1_100K_PU>;
-> +		qcom,ratiometric;
-> +		qcom,hw-settle-time-us = <200>;
-> +	};
+Reported-by: Rob Herring <robh@kernel.org>
+Closes: https://lore.kernel.org/all/CAL_JsqJG_w9jyWjVR=QnPuJganG4uj9+9cEXZ__UAiCw2ZYZZA@mail.gmail.com/
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+---
+ arch/arm64/boot/dts/qcom/sa8775p.dtsi | 11 -----------
+ 1 file changed, 11 deletions(-)
 
-For nodes with a unit address (numbers after '@'), please sort them by that
-address (this will make it slightly out of sync with the alphabetically-sorted
-thermal-zones, but it is what it is sometimes
+diff --git a/arch/arm64/boot/dts/qcom/sa8775p.dtsi b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
+index 3394ae2d1300..23049cc58896 100644
+--- a/arch/arm64/boot/dts/qcom/sa8775p.dtsi
++++ b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
+@@ -2418,17 +2418,6 @@ cryptobam: dma-controller@1dc4000 {
+ 				 <&apps_smmu 0x481 0x00>;
+ 		};
+ 
+-		crypto: crypto@1dfa000 {
+-			compatible = "qcom,sa8775p-qce", "qcom,qce";
+-			reg = <0x0 0x01dfa000 0x0 0x6000>;
+-			dmas = <&cryptobam 4>, <&cryptobam 5>;
+-			dma-names = "rx", "tx";
+-			iommus = <&apps_smmu 0x480 0x00>,
+-				 <&apps_smmu 0x481 0x00>;
+-			interconnects = <&aggre2_noc MASTER_CRYPTO_CORE0 0 &mc_virt SLAVE_EBI1 0>;
+-			interconnect-names = "memory";
+-		};
+-
+ 		stm: stm@4002000 {
+ 			compatible = "arm,coresight-stm", "arm,primecell";
+ 			reg = <0x0 0x4002000 0x0 0x1000>,
+-- 
+2.43.0
 
-> +};
-> +
->  &pm8350c_pwm {
->  	nvmem = <&pmk8350_sdam_21>,
->  		<&pmk8350_sdam_22>;
-> @@ -789,6 +865,44 @@ &pmk8350_rtc {
->  	status = "okay";
->  };
->  
-> +&pmk8350_vadc {
-> +	channel@44 {
-> +		reg = <PMK8350_ADC7_AMUX_THM1_100K_PU>;
-> +		label = "xo_therm";
-> +		qcom,hw-settle-time = <200>;
-> +		qcom,pre-scaling = <1 1>;
-> +		qcom,ratiometric;
-> +	};
-> +
-> +	channel@103 {
-> +		reg = <PM7325_ADC7_DIE_TEMP>;
-> +		label = "pm7325_die_temp";
-> +		qcom,pre-scaling = <1 1>;
-> +	};
-> +
-> +	channel@144 {
-> +		reg = <PM7325_ADC7_AMUX_THM1_100K_PU>;
-> +		qcom,ratiometric;
-> +		qcom,hw-settle-time = <200>;
-> +		qcom,pre-scaling = <1 1>;
-> +		label = "pm7325_quiet_therm";
-> +	};
-> +
-> +	channel@146 {
-> +		reg = <PM7325_ADC7_AMUX_THM3_100K_PU>;
-> +		qcom,ratiometric;
-> +		qcom,hw-settle-time = <200>;
-> +		qcom,pre-scaling = <1 1>;
-> +		label = "pm7325_sdm_skin_therm";
-> +	};
-> +
-> +	pmk8350-die-temp@3 {
-> +		reg = <PMK8350_ADC7_DIE_TEMP>;
-> +		label = "pmk8350_die_temp";
-> +		qcom,pre-scaling = <1 1>;
-> +	};
-
-Similarly here
-
-Konrad
 
