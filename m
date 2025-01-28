@@ -1,308 +1,287 @@
-Return-Path: <linux-arm-msm+bounces-46334-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46333-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1E644A20595
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jan 2025 09:06:17 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 30E4BA20592
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jan 2025 09:06:13 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5363E3A5204
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jan 2025 08:06:09 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 71B633A48A9
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jan 2025 08:06:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 89DED1DF27F;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 456E01DE891;
 	Tue, 28 Jan 2025 08:05:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="XphX1Nxn"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="gsv2se+q"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE1DF1DE4D6;
-	Tue, 28 Jan 2025 08:05:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1344B8462
+	for <linux-arm-msm@vger.kernel.org>; Tue, 28 Jan 2025 08:05:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738051545; cv=none; b=ER01v/j1M4LE8ZaUbYfwGEq7jIuyAY94dkIlfGXhqOpF6LAWjn9NZmA202occy6lHcZlyxT9DTC++7GI1UnGEAAi6eeP34EAzZWCjDgQMZAv6MfyZvoqr+eG4V5faDI2JAyx8bj6dh3UmwBafj9Tpleqkc+Utb95QeeRMIMNyGk=
+	t=1738051545; cv=none; b=c/Jft+sDsNXrDRjTR8+D6FsCrO0aSV7TlInmU4L+YOV3WfKBVm+tkIYsz22Qat5/aHYZ+vw53pd1KNKXeuoOnvTQbg5+E4IFZ//V6Pa0JonsuuYqnxyI3WUhG3dr9IcZayioUFXbLpSoLfrzeX9DAYaqgMLo1uYVgC3s6rN7X3w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1738051545; c=relaxed/simple;
-	bh=phBb+xCD0Gr4v1dNFFrAkdZBDl6tfRRfhhScqXofeXs=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=E5bcVxEwNfFerR+Th6q30XT4/ZI9u/Gy4ib/p/NJZLNPx81q+G4/bmmDaKD6/ggYYisbxZGrd3/NV71tDhg+IDNkZNaECyPE/Y9oGuPHZJeFEYyq4tSKMmcc8Dx9utwbJbZnadxJ+++xPioFSaWxXY5jVM1snCE9PO1hZjNQUFk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=XphX1Nxn; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50S5r051029367;
-	Tue, 28 Jan 2025 08:05:32 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	IwHuX2a87T5teGsysN9gAkeNrqxFRYpu7qvmAA8g3xc=; b=XphX1Nxn2Ge6mTGU
-	ljVvtknAmdrbr54CicpvV3dyQ5A7AxX95qRKtrihau3qtgu4MLuc6HJFppDSMb5s
-	43gAxQPjjHGYil2dd8kZIvecPO48svAgtrqHqkfuz+XiBCdZIFghm56aJNLZ/h8l
-	dDZR3RUzMvj21zUEaWnNICa7ZT4tt2vaP8MRYFgpFwbKc+3qwqsvepsLcECqY8PU
-	3YPZeACbFSEzk6pAifpD/nTUsqinDR3oTUdJ+V2o80ECwwQ3wCD6SdLSdegu8ckT
-	hIuOqvHta1LPro4AIVQgER8e9luAn/Uz2BsqE2uC2WbQ+Q5Gd3L1z4PRiVGuTLLO
-	lgNAcg==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44esfq0a5a-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 28 Jan 2025 08:05:32 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 50S85Vta003178
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 28 Jan 2025 08:05:31 GMT
-Received: from hu-dikshita-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Tue, 28 Jan 2025 00:05:24 -0800
-From: Dikshita Agarwal <quic_dikshita@quicinc.com>
-To: <quic_vgarodia@quicinc.com>, <quic_abhinavk@quicinc.com>,
-        <mchehab@kernel.org>, <robh@kernel.org>, <krzk+dt@kernel.org>,
-        <p.zabel@pengutronix.de>
-CC: <hverkuil@xs4all.nl>, <sebastian.fricke@collabora.com>,
-        <bryan.odonoghue@linaro.org>, <dmitry.baryshkov@linaro.org>,
-        <neil.armstrong@linaro.org>, <nicolas@ndufresne.ca>,
-        <u.kleine-koenig@baylibre.com>, <stefan.schmidt@linaro.org>,
-        <lujianhua000@gmail.com>, <linux-arm-msm@vger.kernel.org>,
-        <linux-media@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <krzysztof.kozlowski@linaro.org>,
-        <johan@kernel.org>, <quic_dikshita@quicinc.com>
-Subject: [RFC PATCH v10 2/2] media: iris: enable video driver probe of SM8250 SoC
-Date: Tue, 28 Jan 2025 13:34:29 +0530
-Message-ID: <20250128080429.3911091-3-quic_dikshita@quicinc.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20250128080429.3911091-1-quic_dikshita@quicinc.com>
-References: <20250128080429.3911091-1-quic_dikshita@quicinc.com>
+	bh=Q0YF0DVZeFVEE1vVCuvD4EYSrmuqlryjxIBMgxE8T2E=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=JKb3kRSKqxv0Pbul2jlR6eX32XjnJHkxY21xjY4Q0rV0pydbxFLQgE6q08chvPJPEjfUxH2YYNwBbhSrTys6DLCYK3iOAbz8BU/Qv4MAmaPTauwThlxwCDotii+0VBwhmLlkwQH7ypq+lLwSN/w7OgZZHgMNYL6aGAsBj+4VSmk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=gsv2se+q; arc=none smtp.client-ip=209.85.128.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-436341f575fso58121615e9.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Jan 2025 00:05:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1738051541; x=1738656341; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=qEMfYzXmSLIgnMJtxwb+i6Gd8d/iSboKcUt4HSkm4vw=;
+        b=gsv2se+qhy/112hYZDKgd5EDkOr8F4BBLakH2jhMiA6UQzjRw9XiYMrOUuUDaMQ9Y3
+         RptUlttdNbH+Gg7ih/4N1XYfFNlB8aXzmBXh429dOOaMxrcGfjnBpS8qlYrlHOa6wFx1
+         obS4FCUo8owNau6u/Tyog+VERxUJOv+CudOXIh/iQ83Z1iRYJS+kcnEWltSNXC8rLTG8
+         PTgoBv9wMYQ/gqbjZ+N/NXwqY0dYx3FycemQrbwI0L61aWmfWqciPKNT6tGxeFJZGD3h
+         VJy8k1Z9b9kdGSpTBINcYQoU2ulz+IBoajFzHcP+zWANpC3ey4hPypJpueaBeHa76/2S
+         FSkQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1738051541; x=1738656341;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=qEMfYzXmSLIgnMJtxwb+i6Gd8d/iSboKcUt4HSkm4vw=;
+        b=mqm6sk7bx5OMsPY5W4sz+q2hiElF7gEqe8newFE0szPKByAEqtNBOm6Qo2Lb4pUmXr
+         fCF7VspfYcmHkP2DpAlunfpmuuGQnzA6tWjyzHmSf8NpQZiSRi6Q+UhPbLXZ9V+w5e9o
+         rlvizZ4CSPR4lkkoMygYBVesrVtwriMBgJuLpNbx31n9KbOfpexk6TJLeNm8cQ2XHCOX
+         lmtPK9X/5N3IJRw0jjTaYwUiyG5AcoiyIf4EBitfmEV2vd+eo8v/PwbZBkmlKwcOUxYe
+         hod2kLMt0ZIC8GtsX9PfnL/6pZj0ae0Gb+pjaX7H6lZd8IkSm+/CsDM3xwukJ9eFTw7J
+         VYcg==
+X-Forwarded-Encrypted: i=1; AJvYcCUr2oSwz3zRwWhUmd4GH7nSyzvIf4C50mFyesJ6Te0Vy85YnCDLkILeyQKns6vXHev0stGpM+ygXjBHc8Ja@vger.kernel.org
+X-Gm-Message-State: AOJu0YzD5ZPjFHG6spC9d+FPq/f+pMTWnTgEgN/2Qf5jGRl3KMC2IUv+
+	/pg9yho7JryT4I1w0R9kpHeAMuOzLjb+nhR9AQckV0ylggMiDWlY+TMmNOrCivQ3sd6IauokRkS
+	t
+X-Gm-Gg: ASbGncv7fJlL05OshMua1FZNpZ1Yei7FaVnyA8hPO/XE1E1Pc97lGWz95bFydl+EvLe
+	kFa/lT5t4yWv/MyWpeqIDMylq6ro4ccYyWsm5TpKx5VDpJ2DVx62F0dTO9H2BSqbUO/qbvbZ1JK
+	fcYoXuwLupRKCLrGqPoJbLUXRTzX/dx7Gh1YKyq+hAqx/R5XB5n1ErgDw3KwsvKCuHq/WS3w9wE
+	HyUgmwAlexb6RaDn5mqJ+JkAaxg2JJqyNPRJTXcFnPFVncCcqXnp+1TtQZMllOqbF3/wsxz0BUj
+	k00tQalblesfOv+AwUjmaek9hFs=
+X-Google-Smtp-Source: AGHT+IEUh1KxWHB9u86+B2/y74R2MigmbSK1pRU1jrbd6wN67RRwueEsOCnR5xhqWQ9cL9gUplaNNg==
+X-Received: by 2002:a05:600c:8712:b0:434:a802:e9a6 with SMTP id 5b1f17b1804b1-438913ce0b7mr434865235e9.7.1738051541203;
+        Tue, 28 Jan 2025 00:05:41 -0800 (PST)
+Received: from linaro.org ([2a02:2454:ff21:ef30:3210:3bfd:4b47:59da])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-438bd507fe8sm157336445e9.24.2025.01.28.00.05.40
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 28 Jan 2025 00:05:40 -0800 (PST)
+Date: Tue, 28 Jan 2025 09:05:38 +0100
+From: Stephan Gerhold <stephan.gerhold@linaro.org>
+To: Luca Weiss <luca@lucaweiss.eu>
+Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+	Bjorn Andersson <andersson@kernel.org>,
+	Mathieu Poirier <mathieu.poirier@linaro.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Stephan Gerhold <stephan@gerhold.net>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Matti =?iso-8859-1?Q?Lehtim=E4ki?= <matti.lehtimaki@gmail.com>,
+	linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3 09/13] ARM: dts: qcom: msm8226: Add modem remoteproc
+ node
+Message-ID: <Z5iP0nEm3P1RhLUu@linaro.org>
+References: <20250127-msm8226-modem-v3-0-67e968787eef@lucaweiss.eu>
+ <20250127-msm8226-modem-v3-9-67e968787eef@lucaweiss.eu>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: ywEsLvH9hedm0oemCZT_iKu1OamtuFF8
-X-Proofpoint-ORIG-GUID: ywEsLvH9hedm0oemCZT_iKu1OamtuFF8
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-01-28_02,2025-01-27_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 spamscore=0
- adultscore=0 mlxlogscore=999 phishscore=0 lowpriorityscore=0
- suspectscore=0 bulkscore=0 priorityscore=1501 impostorscore=0
- clxscore=1015 malwarescore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2411120000 definitions=main-2501280061
+In-Reply-To: <20250127-msm8226-modem-v3-9-67e968787eef@lucaweiss.eu>
 
-Initialize the platform data and enable video driver probe of SM8250
-SoC.
+On Mon, Jan 27, 2025 at 11:45:41PM +0100, Luca Weiss wrote:
+> Add a node for the modem remoteproc found on MSM8226.
+> 
+> Co-developed-by: Matti Lehtimäki <matti.lehtimaki@gmail.com>
+> Signed-off-by: Matti Lehtimäki <matti.lehtimaki@gmail.com>
+> Signed-off-by: Luca Weiss <luca@lucaweiss.eu>
 
-Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
----
- drivers/media/platform/qcom/iris/Makefile     |   1 +
- .../platform/qcom/iris/iris_platform_common.h |   1 +
- .../platform/qcom/iris/iris_platform_sm8250.c | 148 ++++++++++++++++++
- drivers/media/platform/qcom/iris/iris_probe.c |   4 +
- 4 files changed, 154 insertions(+)
- create mode 100644 drivers/media/platform/qcom/iris/iris_platform_sm8250.c
+Reviewed-by: Stephan Gerhold <stephan.gerhold@linaro.org>
 
-diff --git a/drivers/media/platform/qcom/iris/Makefile b/drivers/media/platform/qcom/iris/Makefile
-index ca31db847273..a746681e03cd 100644
---- a/drivers/media/platform/qcom/iris/Makefile
-+++ b/drivers/media/platform/qcom/iris/Makefile
-@@ -9,6 +9,7 @@ iris-objs += iris_buffer.o \
-              iris_hfi_gen2_packet.o \
-              iris_hfi_gen2_response.o \
-              iris_hfi_queue.o \
-+             iris_platform_sm8250.o \
-              iris_platform_sm8550.o \
-              iris_power.o \
-              iris_probe.o \
-diff --git a/drivers/media/platform/qcom/iris/iris_platform_common.h b/drivers/media/platform/qcom/iris/iris_platform_common.h
-index 189dd081ad0a..f6b15d2805fb 100644
---- a/drivers/media/platform/qcom/iris/iris_platform_common.h
-+++ b/drivers/media/platform/qcom/iris/iris_platform_common.h
-@@ -33,6 +33,7 @@ enum pipe_type {
- 	PIPE_4 = 4,
- };
- 
-+extern struct iris_platform_data sm8250_data;
- extern struct iris_platform_data sm8550_data;
- 
- enum platform_clk_type {
-diff --git a/drivers/media/platform/qcom/iris/iris_platform_sm8250.c b/drivers/media/platform/qcom/iris/iris_platform_sm8250.c
-new file mode 100644
-index 000000000000..360be452c1fa
---- /dev/null
-+++ b/drivers/media/platform/qcom/iris/iris_platform_sm8250.c
-@@ -0,0 +1,148 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+/*
-+ * Copyright (c) 2022-2024 Qualcomm Innovation Center, Inc. All rights reserved.
-+ */
-+
-+#include "iris_core.h"
-+#include "iris_ctrls.h"
-+#include "iris_platform_common.h"
-+#include "iris_resources.h"
-+#include "iris_hfi_gen1.h"
-+#include "iris_hfi_gen1_defines.h"
-+#include "iris_vpu_common.h"
-+
-+static struct platform_inst_fw_cap inst_fw_cap_sm8250[] = {
-+	{
-+		.cap_id = PIPE,
-+		.min = PIPE_1,
-+		.max = PIPE_4,
-+		.step_or_mask = 1,
-+		.value = PIPE_4,
-+		.hfi_id = HFI_PROPERTY_PARAM_WORK_ROUTE,
-+		.set = iris_set_pipe,
-+	},
-+	{
-+		.cap_id = STAGE,
-+		.min = STAGE_1,
-+		.max = STAGE_2,
-+		.step_or_mask = 1,
-+		.value = STAGE_2,
-+		.hfi_id = HFI_PROPERTY_PARAM_WORK_MODE,
-+		.set = iris_set_stage,
-+	},
-+	{
-+		.cap_id = DEBLOCK,
-+		.min = 0,
-+		.max = 1,
-+		.step_or_mask = 1,
-+		.value = 0,
-+		.hfi_id = HFI_PROPERTY_CONFIG_VDEC_POST_LOOP_DEBLOCKER,
-+		.set = iris_set_u32,
-+	},
-+};
-+
-+static struct platform_inst_caps platform_inst_cap_sm8250 = {
-+	.min_frame_width = 128,
-+	.max_frame_width = 8192,
-+	.min_frame_height = 128,
-+	.max_frame_height = 8192,
-+	.max_mbpf = 138240,
-+	.mb_cycles_vsp = 25,
-+	.mb_cycles_vpp = 200,
-+};
-+
-+static void iris_set_sm8250_preset_registers(struct iris_core *core)
-+{
-+	writel(0x0, core->reg_base + 0xB0088);
-+}
-+
-+static const struct icc_info sm8250_icc_table[] = {
-+	{ "cpu-cfg",    1000, 1000     },
-+	{ "video-mem",  1000, 15000000 },
-+};
-+
-+static const char * const sm8250_clk_reset_table[] = { "bus", "core" };
-+
-+static const struct bw_info sm8250_bw_table_dec[] = {
-+	{ ((4096 * 2160) / 256) * 60, 2403000 },
-+	{ ((4096 * 2160) / 256) * 30, 1224000 },
-+	{ ((1920 * 1080) / 256) * 60,  812000 },
-+	{ ((1920 * 1080) / 256) * 30,  416000 },
-+};
-+
-+static const char * const sm8250_pmdomain_table[] = { "venus", "vcodec0" };
-+
-+static const char * const sm8250_opp_pd_table[] = { "mx" };
-+
-+static const struct platform_clk_data sm8250_clk_table[] = {
-+	{IRIS_AXI_CLK,  "iface"        },
-+	{IRIS_CTRL_CLK, "core"         },
-+	{IRIS_HW_CLK,   "vcodec0_core" },
-+};
-+
-+static struct tz_cp_config tz_cp_config_sm8250 = {
-+	.cp_start = 0,
-+	.cp_size = 0x25800000,
-+	.cp_nonpixel_start = 0x01000000,
-+	.cp_nonpixel_size = 0x24800000,
-+};
-+
-+static const u32 sm8250_vdec_input_config_param_default[] = {
-+	HFI_PROPERTY_CONFIG_VIDEOCORES_USAGE,
-+	HFI_PROPERTY_PARAM_UNCOMPRESSED_FORMAT_SELECT,
-+	HFI_PROPERTY_PARAM_UNCOMPRESSED_PLANE_ACTUAL_CONSTRAINTS_INFO,
-+	HFI_PROPERTY_PARAM_BUFFER_COUNT_ACTUAL,
-+	HFI_PROPERTY_PARAM_VDEC_MULTI_STREAM,
-+	HFI_PROPERTY_PARAM_FRAME_SIZE,
-+	HFI_PROPERTY_PARAM_BUFFER_SIZE_ACTUAL,
-+	HFI_PROPERTY_PARAM_BUFFER_ALLOC_MODE,
-+};
-+
-+static const u32 sm8250_dec_ip_int_buf_tbl[] = {
-+	BUF_BIN,
-+	BUF_SCRATCH_1,
-+};
-+
-+static const u32 sm8250_dec_op_int_buf_tbl[] = {
-+	BUF_DPB,
-+};
-+
-+struct iris_platform_data sm8250_data = {
-+	.get_instance = iris_hfi_gen1_get_instance,
-+	.init_hfi_command_ops = &iris_hfi_gen1_command_ops_init,
-+	.init_hfi_response_ops = iris_hfi_gen1_response_ops_init,
-+	.vpu_ops = &iris_vpu2_ops,
-+	.set_preset_registers = iris_set_sm8250_preset_registers,
-+	.icc_tbl = sm8250_icc_table,
-+	.icc_tbl_size = ARRAY_SIZE(sm8250_icc_table),
-+	.clk_rst_tbl = sm8250_clk_reset_table,
-+	.clk_rst_tbl_size = ARRAY_SIZE(sm8250_clk_reset_table),
-+	.bw_tbl_dec = sm8250_bw_table_dec,
-+	.bw_tbl_dec_size = ARRAY_SIZE(sm8250_bw_table_dec),
-+	.pmdomain_tbl = sm8250_pmdomain_table,
-+	.pmdomain_tbl_size = ARRAY_SIZE(sm8250_pmdomain_table),
-+	.opp_pd_tbl = sm8250_opp_pd_table,
-+	.opp_pd_tbl_size = ARRAY_SIZE(sm8250_opp_pd_table),
-+	.clk_tbl = sm8250_clk_table,
-+	.clk_tbl_size = ARRAY_SIZE(sm8250_clk_table),
-+	.dma_mask = GENMASK(31, 29) - 1,
-+	.fwname = "qcom/vpu-1.0/venus.mbn",
-+	.pas_id = IRIS_PAS_ID,
-+	.inst_caps = &platform_inst_cap_sm8250,
-+	.inst_fw_caps = inst_fw_cap_sm8250,
-+	.inst_fw_caps_size = ARRAY_SIZE(inst_fw_cap_sm8250),
-+	.tz_cp_config_data = &tz_cp_config_sm8250,
-+	.hw_response_timeout = HW_RESPONSE_TIMEOUT_VALUE,
-+	.num_vpp_pipe = 4,
-+	.max_session_count = 16,
-+	.max_core_mbpf = (8192 * 4352) / 256,
-+	.input_config_params_default =
-+		sm8250_vdec_input_config_param_default,
-+	.input_config_params_default_size =
-+		ARRAY_SIZE(sm8250_vdec_input_config_param_default),
-+
-+	.dec_ip_int_buf_tbl = sm8250_dec_ip_int_buf_tbl,
-+	.dec_ip_int_buf_tbl_size = ARRAY_SIZE(sm8250_dec_ip_int_buf_tbl),
-+	.dec_op_int_buf_tbl = sm8250_dec_op_int_buf_tbl,
-+	.dec_op_int_buf_tbl_size = ARRAY_SIZE(sm8250_dec_op_int_buf_tbl),
-+};
-diff --git a/drivers/media/platform/qcom/iris/iris_probe.c b/drivers/media/platform/qcom/iris/iris_probe.c
-index 276461ade811..1b7aec817331 100644
---- a/drivers/media/platform/qcom/iris/iris_probe.c
-+++ b/drivers/media/platform/qcom/iris/iris_probe.c
-@@ -327,6 +327,10 @@ static const struct of_device_id iris_dt_match[] = {
- 		.compatible = "qcom,sm8550-iris",
- 		.data = &sm8550_data,
- 	},
-+	{
-+		.compatible = "qcom,sm8250-venus",
-+		.data = &sm8250_data,
-+	},
- 	{ },
- };
- MODULE_DEVICE_TABLE(of, iris_dt_match);
--- 
-2.34.1
-
+> ---
+>  .../dts/qcom/qcom-apq8026-samsung-milletwifi.dts   |  2 +
+>  .../qcom/qcom-msm8226-samsung-matisse-common.dtsi  |  6 +-
+>  arch/arm/boot/dts/qcom/qcom-msm8226.dtsi           | 82 ++++++++++++++++++++++
+>  arch/arm/boot/dts/qcom/qcom-msm8926-htc-memul.dts  |  2 +
+>  4 files changed, 90 insertions(+), 2 deletions(-)
+> 
+> diff --git a/arch/arm/boot/dts/qcom/qcom-apq8026-samsung-milletwifi.dts b/arch/arm/boot/dts/qcom/qcom-apq8026-samsung-milletwifi.dts
+> index 7d519156d91d156d801c477711751aba66cc3224..a8543ca7b5569549418683b6be320784eba1768c 100644
+> --- a/arch/arm/boot/dts/qcom/qcom-apq8026-samsung-milletwifi.dts
+> +++ b/arch/arm/boot/dts/qcom/qcom-apq8026-samsung-milletwifi.dts
+> @@ -12,6 +12,8 @@
+>  #include "pm8226.dtsi"
+>  
+>  /delete-node/ &adsp_region;
+> +/delete-node/ &mba_region;
+> +/delete-node/ &mpss_region;
+>  /delete-node/ &smem_region;
+>  
+>  / {
+> diff --git a/arch/arm/boot/dts/qcom/qcom-msm8226-samsung-matisse-common.dtsi b/arch/arm/boot/dts/qcom/qcom-msm8226-samsung-matisse-common.dtsi
+> index a15a44fc0181bf23e7531ecdc8978505ca48189d..fbd568c7d6b7415d240aa1a2329d07cf9135274c 100644
+> --- a/arch/arm/boot/dts/qcom/qcom-msm8226-samsung-matisse-common.dtsi
+> +++ b/arch/arm/boot/dts/qcom/qcom-msm8226-samsung-matisse-common.dtsi
+> @@ -8,6 +8,8 @@
+>  #include "pm8226.dtsi"
+>  
+>  /delete-node/ &adsp_region;
+> +/delete-node/ &mba_region;
+> +/delete-node/ &mpss_region;
+>  /delete-node/ &smem_region;
+>  
+>  / {
+> @@ -145,12 +147,12 @@ framebuffer@3200000 {
+>  			no-map;
+>  		};
+>  
+> -		mpss@8400000 {
+> +		mpss_region: mpss@8400000 {
+>  			reg = <0x08400000 0x1f00000>;
+>  			no-map;
+>  		};
+>  
+> -		mba@a300000 {
+> +		mba_region: mba@a300000 {
+>  			reg = <0x0a300000 0x100000>;
+>  			no-map;
+>  		};
+> diff --git a/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi b/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi
+> index 7e0838af6c2d0dc26e0082471b70578bc627491d..55bb070dcf489064f5b14902da1acd2762232ef9 100644
+> --- a/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi
+> +++ b/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi
+> @@ -213,6 +213,18 @@ smem_region: smem@3000000 {
+>  			no-map;
+>  		};
+>  
+> +		mpss_region: mpss@8000000 {
+> +			reg = <0x08000000 0x5100000>;
+> +			no-map;
+> +			status = "disabled";
+> +		};
+> +
+> +		mba_region: mba@d100000 {
+> +			reg = <0x0d100000 0x100000>;
+> +			no-map;
+> +			status = "disabled";
+> +		};
+> +
+>  		adsp_region: adsp@dc00000 {
+>  			reg = <0x0dc00000 0x1900000>;
+>  			no-map;
+> @@ -253,6 +265,31 @@ adsp_smp2p_in: slave-kernel {
+>  		};
+>  	};
+>  
+> +	smp2p-modem {
+> +		compatible = "qcom,smp2p";
+> +		qcom,smem = <435>, <428>;
+> +
+> +		interrupt-parent = <&intc>;
+> +		interrupts = <GIC_SPI 27 IRQ_TYPE_EDGE_RISING>;
+> +
+> +		mboxes = <&apcs 14>;
+> +
+> +		qcom,local-pid = <0>;
+> +		qcom,remote-pid = <1>;
+> +
+> +		modem_smp2p_out: master-kernel {
+> +			qcom,entry-name = "master-kernel";
+> +			#qcom,smem-state-cells = <1>;
+> +		};
+> +
+> +		modem_smp2p_in: slave-kernel {
+> +			qcom,entry-name = "slave-kernel";
+> +
+> +			interrupt-controller;
+> +			#interrupt-cells = <2>;
+> +		};
+> +	};
+> +
+>  	smsm {
+>  		compatible = "qcom,smsm";
+>  		#address-cells = <1>;
+> @@ -879,6 +916,51 @@ spmi_bus: spmi@fc4cf000 {
+>  			#interrupt-cells = <4>;
+>  		};
+>  
+> +		modem: remoteproc@fc880000 {
+> +			compatible = "qcom,msm8226-mss-pil";
+> +			reg = <0xfc880000 0x100>,
+> +			      <0xfc820000 0x020>;
+> +			reg-names = "qdsp6", "rmb";
+> +
+> +			interrupts-extended = <&intc GIC_SPI 24 IRQ_TYPE_EDGE_RISING>,
+> +					      <&modem_smp2p_in 0 IRQ_TYPE_EDGE_RISING>,
+> +					      <&modem_smp2p_in 1 IRQ_TYPE_EDGE_RISING>,
+> +					      <&modem_smp2p_in 2 IRQ_TYPE_EDGE_RISING>,
+> +					      <&modem_smp2p_in 3 IRQ_TYPE_EDGE_RISING>;
+> +			interrupt-names = "wdog", "fatal", "ready", "handover", "stop-ack";
+> +
+> +			clocks = <&gcc GCC_MSS_Q6_BIMC_AXI_CLK>,
+> +				 <&gcc GCC_MSS_CFG_AHB_CLK>,
+> +				 <&gcc GCC_BOOT_ROM_AHB_CLK>,
+> +				 <&xo_board>;
+> +			clock-names = "iface", "bus", "mem", "xo";
+> +
+> +			resets = <&gcc GCC_MSS_RESTART>;
+> +			reset-names = "mss_restart";
+> +
+> +			power-domains = <&rpmpd MSM8226_VDDCX>;
+> +			power-domain-names = "cx";
+> +
+> +			qcom,ext-bhs-reg = <&tcsr_regs_1 0x194>;
+> +			qcom,halt-regs = <&tcsr_regs_1 0x180 0x200 0x280>;
+> +
+> +			qcom,smem-states = <&modem_smp2p_out 0>;
+> +			qcom,smem-state-names = "stop";
+> +
+> +			memory-region = <&mba_region>, <&mpss_region>;
+> +
+> +			status = "disabled";
+> +
+> +			smd-edge {
+> +				interrupts = <GIC_SPI 25 IRQ_TYPE_EDGE_RISING>;
+> +
+> +				mboxes = <&apcs 12>;
+> +				qcom,smd-edge = <0>;
+> +
+> +				label = "modem";
+> +			};
+> +		};
+> +
+>  		tcsr_mutex: hwlock@fd484000 {
+>  			compatible = "qcom,msm8226-tcsr-mutex", "qcom,tcsr-mutex";
+>  			reg = <0xfd484000 0x1000>;
+> diff --git a/arch/arm/boot/dts/qcom/qcom-msm8926-htc-memul.dts b/arch/arm/boot/dts/qcom/qcom-msm8926-htc-memul.dts
+> index 3037344eb24055071cc77c9cfce0f1d0f95de921..18396623a91dd4bf4b66f01c1d983c391722f3b5 100644
+> --- a/arch/arm/boot/dts/qcom/qcom-msm8926-htc-memul.dts
+> +++ b/arch/arm/boot/dts/qcom/qcom-msm8926-htc-memul.dts
+> @@ -9,6 +9,8 @@
+>  #include "pm8226.dtsi"
+>  
+>  /delete-node/ &adsp_region;
+> +/delete-node/ &mba_region;
+> +/delete-node/ &mpss_region;
+>  /delete-node/ &smem_region;
+>  
+>  / {
+> 
+> -- 
+> 2.48.1
+> 
 
