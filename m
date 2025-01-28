@@ -1,149 +1,115 @@
-Return-Path: <linux-arm-msm+bounces-46412-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46413-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 99427A20FA3
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jan 2025 18:34:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 70796A20FAE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jan 2025 18:39:13 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 07251163FCB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jan 2025 17:34:49 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C9879166E90
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jan 2025 17:39:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B12661632D7;
-	Tue, 28 Jan 2025 17:34:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BFA1F1D515B;
+	Tue, 28 Jan 2025 17:39:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="FRP5Xavk"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Pdy+m9ai"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12BAE1EEE6;
-	Tue, 28 Jan 2025 17:34:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DBB51BDA91;
+	Tue, 28 Jan 2025 17:39:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738085685; cv=none; b=RmzRC5FLK8wAxoOqaZeb+lWSo3ZD6/6uWkiO7FqBBkPWAh/gL4qjn062IKty1F8GZnMlmv82OKKcskblBow77QfvuNlRhpHONlASZoqqHKPdEBPlMnE3hfTmQjoOcfcBeMPvHvDHPcy4TM5bPEGq7Hq2twNYsJq726kk0AnVPXI=
+	t=1738085949; cv=none; b=sSd9lkF86lozAnUL+zdRvsuJCXbYfAbj6x8DjU4K90HTLuXMs3okkYZoVPfZk7eIDFRKc12TP9xVPvG3anBQmlYXnUnXOg4rsmykNOjgyP9qkJSiVRNvewUqwKi3QwVGtJ56xkO/o2oSY1tnBEMh4YLrM07WChsDe8Tp3SWkUfc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738085685; c=relaxed/simple;
-	bh=Z3hziaJj19jRiKHPij/W67cwPZ0GjZ6AHXjd8gMHN0s=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=emNRBsK1afs04a34f+7T0im/cqFsBxC14AIzI1KYoqaTR9mHfJ3nnXKUMJ96d6GMm+/JL7/JXqZhOV2zUfkw1ew/f3XpjvbX161Wf8GC9spNjqqIsGkmEamJnle6XkZI0m8BdKRYVmAuNh1Zl28rQQD2cg6iOTROWpOZV+ijRRg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=FRP5Xavk; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50SFqVbj032373;
-	Tue, 28 Jan 2025 17:34:38 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	4E/11L6bTr/abK1jSaUDzqcbdGdMmdVqWMAVsWUG+4E=; b=FRP5Xavkct1J9Pvz
-	gUSLKTIu2z9q+uhaaQ3tMvvYYaUz/20xU10LcUQ5TUbalMWsEuwQGJsuJIhPsxic
-	HXOny3uNV3E6f3wbft52DYuUsfri2UZFqBeAsfVDNleJlaGtU9pzOfv/CRhQ6QkC
-	mew70Ob7aSvPY+H/a54Up/xcq47q+54f+8mZykqAhvs2+y6Rmc+DvNLdw9V4hb6Q
-	57Bkq6QaQQjCSvsW99egU1yUeFwNQHTJ2eXSQZat4s3Cs4gODMphgKoVd9vwZdf9
-	aqNtLqf4FsFh/eUfSCl+o8X9FcU7762NT4yxd74513SYrYzsTcxXwvXowlJIcyDW
-	ztxPtQ==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44f28y084n-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 28 Jan 2025 17:34:38 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 50SHYbjV024257
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 28 Jan 2025 17:34:37 GMT
-Received: from [10.216.5.143] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 28 Jan
- 2025 09:34:33 -0800
-Message-ID: <0de7039c-d94e-4857-922f-29274d8632d9@quicinc.com>
-Date: Tue, 28 Jan 2025 23:04:29 +0530
+	s=arc-20240116; t=1738085949; c=relaxed/simple;
+	bh=jjeI4vwu2iND+mSguPTJSTWaIvWFuRgs4M594184mbE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=WgqdDq/xqWoFZeXbiEG5r+zH+uIm6AB8kmYURFR+9az8pwkkPPVD6ETGI4lWftTgP0niIhR+hPDF34+ftyRKZrHJB2Ag/FZsy6bJ6zYPXw2FFqO/KTYRe6YEVXxN1LcDw35Raorhf9WNP36Kohb58cEcHon7/S4viXIvlmva5SE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Pdy+m9ai; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FFC2C4CED3;
+	Tue, 28 Jan 2025 17:39:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1738085949;
+	bh=jjeI4vwu2iND+mSguPTJSTWaIvWFuRgs4M594184mbE=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=Pdy+m9aiWaJ/5lwS/fspPrSkiIdjkugamqy269xrv+LCCC9inYpUsFjBqWwy60+Cy
+	 Kj1mby5Gpz4umZUm2gsuECX6Uul7b7VMD6pQ4yFWS+VkdjKGOHv9e/ljgyY244RhY2
+	 pyR2BIo+IvnmbRE3TRkQTRATvID14T7gNYtGImVVdv7yI6gmAdOIWlq5D6elEwdVQY
+	 QuXLqRs1NK9zKvTtYVY3EoDhsOtq9R6tui5JBohfJnBELy4qZpCYEfhX2Mbh08b+P4
+	 +0n83a3XIwfaxQr+AzMDsDs9+7BYeeTpwpoyJ06ZpT1jVw5B8Jo3RWx0GLjsk+WOk2
+	 S8elNmAkeEaJg==
+Date: Tue, 28 Jan 2025 11:39:08 -0600
+From: Rob Herring <robh@kernel.org>
+To: Imran Shaik <quic_imrashai@quicinc.com>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+	Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Ajit Pandey <quic_ajipan@quicinc.com>,
+	Taniya Das <quic_tdas@quicinc.com>,
+	Jagadeesh Kona <quic_jkona@quicinc.com>,
+	Satya Priya Kakitapalli <quic_skakitap@quicinc.com>,
+	linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+Subject: Re: [PATCH v4 0/6] Add support for GPUCC, CAMCC and VIDEOCC on
+ Qualcomm QCS8300 platform
+Message-ID: <20250128173908.GA3705252-robh@kernel.org>
+References: <20250109-qcs8300-mm-patches-new-v4-0-63e8ac268b02@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] dt-bindings: net: wireless: describe the ath12k AHB
- module
-To: Krzysztof Kozlowski <krzk@kernel.org>, <ath12k@lists.infradead.org>
-CC: <linux-wireless@vger.kernel.org>, Kalle Valo <kvalo@kernel.org>,
-        Rob
- Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor
- Dooley <conor+dt@kernel.org>,
-        Jeff Johnson <jjohnson@kernel.org>,
-        Bjorn
- Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>
-References: <20250128091012.2574478-1-quic_rajkbhag@quicinc.com>
- <20250128091012.2574478-2-quic_rajkbhag@quicinc.com>
- <0ca970e7-cc9a-4853-86de-5f01dc6d82a2@kernel.org>
- <1bd2dca3-1fa0-424d-95e8-cdb887f1d9e2@quicinc.com>
- <112fe636-1328-49f0-8f0a-395764e118c7@kernel.org>
-Content-Language: en-US
-From: Raj Kumar Bhagat <quic_rajkbhag@quicinc.com>
-In-Reply-To: <112fe636-1328-49f0-8f0a-395764e118c7@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: duoJqxOjIVtVhRNbowjgCOArEyuFRZEA
-X-Proofpoint-ORIG-GUID: duoJqxOjIVtVhRNbowjgCOArEyuFRZEA
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-01-28_04,2025-01-27_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 impostorscore=0
- mlxlogscore=999 clxscore=1015 priorityscore=1501 spamscore=0
- malwarescore=0 mlxscore=0 adultscore=0 phishscore=0 suspectscore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2501280129
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250109-qcs8300-mm-patches-new-v4-0-63e8ac268b02@quicinc.com>
 
-On 1/28/2025 3:51 PM, Krzysztof Kozlowski wrote:
-> On 28/01/2025 10:29, Raj Kumar Bhagat wrote:
->> On 1/28/2025 2:47 PM, Krzysztof Kozlowski wrote:
->>> On 28/01/2025 10:10, Raj Kumar Bhagat wrote:
->>>> Add device-tree bindings for the ATH12K module found in the IPQ5332
->>>> device.
->>>>
->>>> Signed-off-by: Raj Kumar Bhagat <quic_rajkbhag@quicinc.com>
->>>> ---
->>>>  .../net/wireless/qcom,ath12k-ahb.yaml         | 317 ++++++++++++++++++
->>>>  1 file changed, 317 insertions(+)
->>>>  create mode 100644 Documentation/devicetree/bindings/net/wireless/qcom,ath12k-ahb.yaml
->>>
->>> It was v4, now v1? So entire previous discussion and feedback is
->>> missing? Go to previous series and implement entire feedback. Then use
->>> proper versioning, proper changelog and make it obvious/understandable
->>> to us, instead of sending v1 after v4 in entirely separate thread.
->>>
->>
->> I was asked to send DTS as a separate series, this is a new series for
->> DTS hence stated with v1.
+On Thu, Jan 09, 2025 at 02:27:43PM +0530, Imran Shaik wrote:
+> This patch series add support for GPUCC, CAMCC and VIDEOCC on Qualcomm
+> QCS8300 platform.
 > 
+> Signed-off-by: Imran Shaik <quic_imrashai@quicinc.com>
+> ---
+> Changes in v4:
+> - Updated the commit text as per the comment from Bjorn.
+> - Fixed the CamCC QDSS clock offset.
+> - Link to v3: https://lore.kernel.org/all/20241024-qcs8300-mm-patches-v2-0-76c905060d0a@quicinc.com/
 > 
-> But we do not talk about DTS here, but bindings.
+> Changes in v3:
+> - Added new GPUCC and CAMCC binding headers for QCS8300 as per the review comments
+> - Updated the new bindings header files for GPUCC and CAMCC drivers. 
+> - Added the R-By tags received in v2.
+> - Link to v2: https://lore.kernel.org/r/20241024-qcs8300-mm-patches-v2-0-76c905060d0a@quicinc.com
 > 
+> Changes in v2:
+> - Updated commit text details in bindings patches as per the review comments.
+> - Sorted the compatible order and updated comment in VideoCC driver patch as per the review comments.
+> - Added the R-By tags received in V1.
+> - Link to v1: https://lore.kernel.org/r/20241018-qcs8300-mm-patches-v1-0-859095e0776c@quicinc.com
 > 
->> To address the undocumented ABIs we have changes in dt-binding and hence
+> Signed-off-by: Imran Shaik <quic_imrashai@quicinc.com>
 > 
-> That's v1 so how it could have changes in the first place? Unless this
-> is v5?
-> 
+> ---
+> Imran Shaik (6):
+>       dt-bindings: clock: qcom: Add GPU clocks for QCS8300
+>       clk: qcom: Add support for GPU Clock Controller on QCS8300
+>       dt-bindings: clock: qcom: Add CAMCC clocks for QCS8300
+>       clk: qcom: Add support for Camera Clock Controller on QCS8300
+>       dt-bindings: clock: qcom: Add QCS8300 video clock controller
+>       clk: qcom: Add support for Video Clock Controller on QCS8300
 
-Sure, I understand your point now.
-I shouldn't have sent dt-binding here along with DTS as v1. dt-binding should
-go with wireless patch-set in v5.
+I've applied the bindings patches because the .dts files using them are 
+already in Linus' tree.
 
-Let me know your thoughts on the next steps:
-1. I will send v5 for 'wifi: ath12k: add Ath12k AHB driver support for IPQ5332'
-   along with dt-binding.
+Bjorn, please stop taking dts changes without the bindings.
 
-2. In a separate series, I will send only DTS changes as v2, considering the
-   review comments in this version as v1 for DTS.
+Rob
 
