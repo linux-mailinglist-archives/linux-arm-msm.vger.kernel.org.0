@@ -1,197 +1,129 @@
-Return-Path: <linux-arm-msm+bounces-46330-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46331-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C4266A2054D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jan 2025 08:56:06 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7CC51A20587
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jan 2025 09:05:36 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E0D793A21D1
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jan 2025 07:55:58 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id C2580188657B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jan 2025 08:05:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1A83B1DE3BE;
-	Tue, 28 Jan 2025 07:56:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 858911953AD;
+	Tue, 28 Jan 2025 08:05:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="zQ6+2S+x"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="j9LMVcIZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18EAB1DDC0B
-	for <linux-arm-msm@vger.kernel.org>; Tue, 28 Jan 2025 07:55:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0D5D8462;
+	Tue, 28 Jan 2025 08:05:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738050962; cv=none; b=fXAV3oku85lu0VY3swzldHUI2BIYaC2/rUtDTQhxuEiYON1NeI9P7TummVAvEtuk8jM07kSoRGpLn1qj/TP+wf1A0xIDpjste6weDL6B1oweVbQNy+WECvS0gZVPDTWxkJX37S4pbtgVFTRWWobmWnbH9GSsmx5M2FkZ+LBZoTo=
+	t=1738051530; cv=none; b=VyoxWAodpK3JMGt6XmgHyWz+Ca/T0S84O6WCvgZqDDpbJYbceJ0bu0Bw/3H9amWzGdf6Luxg9pyfwM+h2Ol1k3VcOCvHXqgK7We8GHlWng/FMXQxAkkuib8LnQdU+W5QRB9UVaoC/VGnWLP4GyIfkpD+Khp1rIyPKs67sYSOklw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738050962; c=relaxed/simple;
-	bh=dyJMWoTyFqDpIWaShZkM/vjq7+zr/o67BwNI6Pz2B20=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=DspJ40nLHLNHFse0d6BWwXC40SGvyJivo6LZDMwBMJyZ7F1Ij15vgj7XlfyUp75UdGeeh6D0/TQ9BW/BHSGTLXwafd8l7+w+juKBYX6QKKyI5OxyzlVI3gqL/7YOW2UwQnFTYzcgXPBbI3i6YVexrrtt480U2+N8MHB5x4zh10k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=zQ6+2S+x; arc=none smtp.client-ip=209.85.221.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f51.google.com with SMTP id ffacd0b85a97d-38a88ba968aso5196742f8f.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Jan 2025 23:55:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1738050958; x=1738655758; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=SeMt2qiOiq2TY1WkHPRX1449FB8tJAQ1ui2jFxzGFaA=;
-        b=zQ6+2S+xmLqrhQgJIPFz7SSY6iWUngl9Te2n9CzB57z4yXUuEFv2UdFPJTAVFY8UXQ
-         IC1qh91CDFQIJkGNTCvx/ccJ4xVYP+BWZLY8kr1TltMhteTatznUJg/pzp2MiE4C1Fzs
-         zcudldI9fHkYmJFjvn4sS3DhEVJCuH5oR+csslYjqFugpR1v9lwtvx974oAwVN4rl4lE
-         3vn8o8bvgtbKSS8lLZddGO+PTRQaR8R1tm4BHl+/8BWS1RvIpkaZf0f8m4R75KiJAh1t
-         JT6cL9Xarl0Hp5yxZCoN1Bc2QbC+T28hjHRx+Aia6i+zRgGPxJeHRKt/G9Mavovw/oRW
-         DeXg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738050958; x=1738655758;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=SeMt2qiOiq2TY1WkHPRX1449FB8tJAQ1ui2jFxzGFaA=;
-        b=CSfdDvj0lfaPt3b4bXuHEa3IKJi3nAC5R9XsuKOEjGcAD1VTe07DJM+EauQ2RbkDqH
-         7KSNmyNtBDVwAbXqYTmmZ6dm8F9g+V1PTmFtWNTC5rhT7/E+xo9E+nMFTjfmu3xewcLN
-         m8mfxsBlBpZBhULsHYmXhZrk89GewqqI2hmZ/IRRPJTxbQNRnJBoZDyT0G8Vx8Jsm1Rt
-         Oh9LgQQssxAtemd2yK03Sy/X16+K9EJwAg0RVQLTQdqnraDdO6s5VCnRHy4Lra2xvf/H
-         XfxcvM6J6epqS3nH512C3YuXYaTvFtcbq0eooJ7gQq6QdW86pOJ7EbAgpl0yutv/Y5EV
-         eEUA==
-X-Forwarded-Encrypted: i=1; AJvYcCWenO0kzlqkjpnuJqpP7dLasfyy7CPC3691UJCGfKw+zCkb71TDbEJ8QfesKK/sG2QUgVVMY6d4i/ukNEvP@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw1JXFgkqshuHwhNFLGE9pu4fAWf6Ye4Qmm+ikqoJPIFgt2aLcd
-	/XuG+Ps/EmtZLZ8VSU73RPmU5Xmwz2i2qVsx75eM3Ag11zpghIf+9TygA0/V0Cs=
-X-Gm-Gg: ASbGncvaqrZD/UijTlofJRItOAODAT1/a3TfnvKRyCywuEfDBMdrc7Fe684ciIzcnFj
-	jqmfZobpPIoCvUGkjnkgNLETNj87d+N6LnlJ404hkFYK7OKnDPu5uFdcTQ+LQwB7XC2AzEHoPpn
-	q+csvgy5CATcowpmhAKqS6e9plOxifLKRC1ZBogYQe6+SkejG27YhjSldS6gxwOslJ1CsaDhaiW
-	a9p/q4tSz2/Bj5S3juZZVUPDjHTZCa9xPCRlyw8rl6D2Y0r3Qk2TZN8gAoKEBhN5EktxnB1Ijh9
-	54p3dfIgsCbQ7SD4dfqvAiTClRQ=
-X-Google-Smtp-Source: AGHT+IH7IH1478hNlcMLuY4hfHgnnoU18EMTRJjWDJe5Od7uVXg3AOxzEDdA3IpCgEWIWW15nNnM9g==
-X-Received: by 2002:a5d:6c61:0:b0:385:fe66:9f32 with SMTP id ffacd0b85a97d-38bf57be5c1mr42327597f8f.52.1738050958263;
-        Mon, 27 Jan 2025 23:55:58 -0800 (PST)
-Received: from linaro.org ([2a02:2454:ff21:ef30:3210:3bfd:4b47:59da])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38c2a17d70bsm13703056f8f.33.2025.01.27.23.55.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 27 Jan 2025 23:55:57 -0800 (PST)
-Date: Tue, 28 Jan 2025 08:55:56 +0100
-From: Stephan Gerhold <stephan.gerhold@linaro.org>
-To: Luca Weiss <luca@lucaweiss.eu>
-Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-	Bjorn Andersson <andersson@kernel.org>,
-	Mathieu Poirier <mathieu.poirier@linaro.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Stephan Gerhold <stephan@gerhold.net>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Matti =?iso-8859-1?Q?Lehtim=E4ki?= <matti.lehtimaki@gmail.com>,
-	linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3 06/13] remoteproc: qcom_q6v5_mss: Add modem support on
- MSM8926
-Message-ID: <Z5iNjMzKWG4zQkcR@linaro.org>
-References: <20250127-msm8226-modem-v3-0-67e968787eef@lucaweiss.eu>
- <20250127-msm8226-modem-v3-6-67e968787eef@lucaweiss.eu>
+	s=arc-20240116; t=1738051530; c=relaxed/simple;
+	bh=Jv1NoSnajnsYRwrGd9hpm0gdsLWKcyah3KPpZDeoVYQ=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=bArm1jyppqG/YB2ANEHkD/bUX1wUC/vRh71t39C07KpXjzIjfqLsGXa9XUxxLxyAvGsDI9P27+C0oFZgOOt4iwJYzngx3PXTR/XWQpbc6ZSW4CAs2b06aGmYNaqFxVZIazpinGZXn/aqDLq3LGU0ysHF4g45hzT1MjBCVeH5Hes=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=j9LMVcIZ; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50S5qgnp028350;
+	Tue, 28 Jan 2025 08:05:19 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=pp2c1xp201HQqn9cz+TIYg
+	cZ7RDSj3WdXgrJvPwHGLY=; b=j9LMVcIZRfqjpMHXCUPmJFkzRRqKBsZ/NW4JTS
+	nOhV3GUDGNCODDQ0ZnPLpLOQe4lFPAjfBkcEN9fK1IkmnIiPhj46Bzs5ShPbyBp0
+	kWtqyaAgKS6ZydcbxCTVxWirPmlCJSPWdnYLz6J49LYr5xm3smFTAAEj5cWeuCBS
+	+OLYanAswRWK0D3XosGw2IHD9iql8F8yfGyDGZ9kLUcqjFxMpGkk6AJPp6gqWw98
+	YTKBlrInqlOijs8+UM+fjJyczC+svSgsZBTcz5z4L/uqtTD0KfVGk+4lMtuCW1Z9
+	KhNoFGx/ZtAArAlEYOU6sbfHzpM8+hvN9MzDL0UpInNqdllw==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44esfq0a50-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 28 Jan 2025 08:05:19 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 50S85HnX006172
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 28 Jan 2025 08:05:17 GMT
+Received: from hu-dikshita-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Tue, 28 Jan 2025 00:05:10 -0800
+From: Dikshita Agarwal <quic_dikshita@quicinc.com>
+To: <quic_vgarodia@quicinc.com>, <quic_abhinavk@quicinc.com>,
+        <mchehab@kernel.org>, <robh@kernel.org>, <krzk+dt@kernel.org>,
+        <p.zabel@pengutronix.de>
+CC: <hverkuil@xs4all.nl>, <sebastian.fricke@collabora.com>,
+        <bryan.odonoghue@linaro.org>, <dmitry.baryshkov@linaro.org>,
+        <neil.armstrong@linaro.org>, <nicolas@ndufresne.ca>,
+        <u.kleine-koenig@baylibre.com>, <stefan.schmidt@linaro.org>,
+        <lujianhua000@gmail.com>, <linux-arm-msm@vger.kernel.org>,
+        <linux-media@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <krzysztof.kozlowski@linaro.org>,
+        <johan@kernel.org>, <quic_dikshita@quicinc.com>
+Subject: [RFC PATCH v10 0/2] Add helper module to select video driver
+Date: Tue, 28 Jan 2025 13:34:27 +0530
+Message-ID: <20250128080429.3911091-1-quic_dikshita@quicinc.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250127-msm8226-modem-v3-6-67e968787eef@lucaweiss.eu>
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: DAtI1cS7ySRS3Prdn9EpIZWebLSVJem7
+X-Proofpoint-ORIG-GUID: DAtI1cS7ySRS3Prdn9EpIZWebLSVJem7
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-01-28_02,2025-01-27_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 spamscore=0
+ adultscore=0 mlxlogscore=751 phishscore=0 lowpriorityscore=0
+ suspectscore=0 bulkscore=0 priorityscore=1501 impostorscore=0
+ clxscore=1015 malwarescore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2411120000 definitions=main-2501280061
 
-On Mon, Jan 27, 2025 at 11:45:38PM +0100, Luca Weiss wrote:
-> While MSM8926 being 'just' an LTE-capable variant of MSM8226 it appears
-> the modem setup has changed significantly, by requiring mss-supply and
-> not using the ext-bhs-reg.
-> 
-> Add a new compatible and new struct to support that.
-> 
-> Signed-off-by: Luca Weiss <luca@lucaweiss.eu>
+This is a RFC patch series from the original iris driver [1].
+The first patch introduces a helper module to select between venus and iris
+driver for plarform supported by both drivers.
+The second patch enables the probe of SM8250 with iris driver.
 
-I wonder if you could reuse &msm8974_mss here. Anyway, I suppose it's
-better to not allow the fallback_proxy_supply that MSM8974 has. I think
-it's fine as-is. :-)
+This is just a RFC series, will send a proper v10 of iris driver
+including these two patches, once everyone is OK with the changes.
 
-Reviewed-by: Stephan Gerhold <stephan.gerhold@linaro.org>
+[1]: https://lore.kernel.org/linux-media/20241212-qcom-video-iris-v9-0-e8c2c6bd4041@quicinc.com/
 
-> ---
->  drivers/remoteproc/qcom_q6v5_mss.c | 48 ++++++++++++++++++++++++++++++++++++++
->  1 file changed, 48 insertions(+)
-> 
-> diff --git a/drivers/remoteproc/qcom_q6v5_mss.c b/drivers/remoteproc/qcom_q6v5_mss.c
-> index 32f35fe89416f167fe49be7ca02a24af842e0073..cd7ea7bb345f558636f9414c43460b29b3be6f5c 100644
-> --- a/drivers/remoteproc/qcom_q6v5_mss.c
-> +++ b/drivers/remoteproc/qcom_q6v5_mss.c
-> @@ -257,6 +257,7 @@ enum {
->  	MSS_MSM8226,
->  	MSS_MSM8909,
->  	MSS_MSM8916,
-> +	MSS_MSM8926,
->  	MSS_MSM8953,
->  	MSS_MSM8974,
->  	MSS_MSM8996,
-> @@ -2621,11 +2622,58 @@ static const struct rproc_hexagon_res msm8226_mss = {
->  	.version = MSS_MSM8226,
->  };
->  
-> +static const struct rproc_hexagon_res msm8926_mss = {
-> +	.hexagon_mba_image = "mba.b00",
-> +	.proxy_supply = (struct qcom_mss_reg_res[]) {
-> +		{
-> +			.supply = "pll",
-> +			.uA = 100000,
-> +		},
-> +		{
-> +			.supply = "mx",
-> +			.uV = 1050000,
-> +		},
-> +		{}
-> +	},
-> +	.active_supply = (struct qcom_mss_reg_res[]) {
-> +		{
-> +			.supply = "mss",
-> +			.uV = 1050000,
-> +			.uA = 100000,
-> +		},
-> +		{}
-> +	},
-> +	.proxy_clk_names = (char*[]){
-> +		"xo",
-> +		NULL
-> +	},
-> +	.active_clk_names = (char*[]){
-> +		"iface",
-> +		"bus",
-> +		"mem",
-> +		NULL
-> +	},
-> +	.proxy_pd_names = (char*[]){
-> +		"cx",
-> +		NULL
-> +	},
-> +	.need_mem_protection = false,
-> +	.has_alt_reset = false,
-> +	.has_mba_logs = false,
-> +	.has_spare_reg = false,
-> +	.has_qaccept_regs = false,
-> +	.has_ext_bhs_reg = false,
-> +	.has_ext_cntl_regs = false,
-> +	.has_vq6 = false,
-> +	.version = MSS_MSM8926,
-> +};
-> +
->  static const struct of_device_id q6v5_of_match[] = {
->  	{ .compatible = "qcom,q6v5-pil", .data = &msm8916_mss},
->  	{ .compatible = "qcom,msm8226-mss-pil", .data = &msm8226_mss},
->  	{ .compatible = "qcom,msm8909-mss-pil", .data = &msm8909_mss},
->  	{ .compatible = "qcom,msm8916-mss-pil", .data = &msm8916_mss},
-> +	{ .compatible = "qcom,msm8926-mss-pil", .data = &msm8926_mss},
->  	{ .compatible = "qcom,msm8953-mss-pil", .data = &msm8953_mss},
->  	{ .compatible = "qcom,msm8974-mss-pil", .data = &msm8974_mss},
->  	{ .compatible = "qcom,msm8996-mss-pil", .data = &msm8996_mss},
-> 
-> -- 
-> 2.48.1
-> 
+Dikshita Agarwal (2):
+  media: iris: introduce helper module to select video driver
+  media: iris: enable video driver probe of SM8250 SoC
+
+ drivers/media/platform/qcom/Makefile          |   1 +
+ drivers/media/platform/qcom/iris/Makefile     |   1 +
+ drivers/media/platform/qcom/iris/iris_core.h  |   1 +
+ .../platform/qcom/iris/iris_platform_common.h |   1 +
+ .../platform/qcom/iris/iris_platform_sm8250.c | 148 ++++++++++++++++++
+ drivers/media/platform/qcom/iris/iris_probe.c |   7 +
+ drivers/media/platform/qcom/venus/core.c      |   5 +
+ .../platform/qcom/video_drv_helper/Makefile   |   4 +
+ .../qcom/video_drv_helper/video_drv_helper.c  |  70 +++++++++
+ .../qcom/video_drv_helper/video_drv_helper.h  |  11 ++
+ 10 files changed, 249 insertions(+)
+ create mode 100644 drivers/media/platform/qcom/iris/iris_platform_sm8250.c
+ create mode 100644 drivers/media/platform/qcom/video_drv_helper/Makefile
+ create mode 100644 drivers/media/platform/qcom/video_drv_helper/video_drv_helper.c
+ create mode 100644 drivers/media/platform/qcom/video_drv_helper/video_drv_helper.h
+
+-- 
+2.34.1
+
 
