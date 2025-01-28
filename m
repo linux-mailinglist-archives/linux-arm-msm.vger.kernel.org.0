@@ -1,180 +1,178 @@
-Return-Path: <linux-arm-msm+bounces-46422-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46423-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 76245A214EB
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jan 2025 00:11:02 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B9A05A214F1
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jan 2025 00:21:01 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 4FB097A339A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jan 2025 23:10:08 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 18F541674AD
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jan 2025 23:21:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 01C3D1E98E7;
-	Tue, 28 Jan 2025 23:10:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8D1791DE8BF;
+	Tue, 28 Jan 2025 23:20:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="oO3xkces"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="tbpMCJc2"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f44.google.com (mail-lf1-f44.google.com [209.85.167.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05FB2193402;
-	Tue, 28 Jan 2025 23:10:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8081419E82A
+	for <linux-arm-msm@vger.kernel.org>; Tue, 28 Jan 2025 23:20:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738105855; cv=none; b=lMbqAwM+pxeIVBFlkHHOHSI+dYJYP17vpG8BvesK5Z2/EePIhZb0xp9dwY3hsYm4rN2screjZSvKLCb6MuaHuVVd+yWcjbyIcYaliNhYlmMEAlo9gL5TlDLrqavx2be4BYaWCfme5nP5Azd8KR231KF9UPX09r1bxCg89Z18zyM=
+	t=1738106459; cv=none; b=H3d2U7a4Up7w9jxtCuaOzn20zun/T28fJQoj/LJLYSO+1OeEu6jTBjmwoMNYWIGyWzc9U4IVPpWeQycJFwRpdOFyIgiHG+8z//SVUAUQvXS1XfBW+FJ+KYmk4GnyDGGmAU64rYUcamseTD8zxRGc3KDrgGXIJ8zSTbqAcSz3imI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738105855; c=relaxed/simple;
-	bh=bNhJM9Dz+pFtEkrdraJnL0ogylvmTs5Iev48h4gj8Ck=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:To:CC; b=M/2xlKiuyer00BSAxANYuAwguP5BTLS+0Gg8p6IENVAZcNsx07nNWYQqmYqt74/fxK8+Swmegi1iSdP3FQ+O5lfTFlpzEGCKLfVwp0BLctFM+61DCKPZdurOQLal3Rfh8U2CJoIy53N3tcS3vHWXzodULLKPHBHe8+96tsx9Als=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=oO3xkces; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50SAD43Z026568;
-	Tue, 28 Jan 2025 23:10:45 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:message-id
-	:mime-version:subject:to; s=qcppdkim1; bh=yefMpW1C2aGI8kXUMOsgFx
-	+l8rC9VdtWe1kZ0PAixY4=; b=oO3xkcesNOb3pBCrnfnRe5Hl/nl8POcSMzCpFc
-	Skcj7pu19W5bXDwYWWyJJReSaNERC/nTsz2iFEmree7OM7ZWNHEHD05KcoSzByRe
-	w6Uk/L2l2ZUmE5wM+YT2gOHkmwpFEw5UVn/o8XN00bhkz3YuC52C/D1FOw14IYDV
-	88GKc5AoqSctwa3QRqpVHX0NJ1nFT6ckqkJ9hD2EloWim+d61GNt9PiHoDxws+qD
-	iNme3OyvE4rfVv6unvhJ7MmdBtzCY1lmK3YEP9Ncw2vxYPfHQjV0zLL/mhbTAQUA
-	fXvUXsBcu6l8Oy7PixwThmFPyeeAnM5m5eH1ioUXbYJrJR/g==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44ew9n9r2b-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 28 Jan 2025 23:10:45 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 50SNAiK9009833
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 28 Jan 2025 23:10:44 GMT
-Received: from abhinavk-linux1.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Tue, 28 Jan 2025 15:10:43 -0800
-From: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Date: Tue, 28 Jan 2025 15:10:27 -0800
-Subject: [PATCH] drm/msm/dp: account for widebus and yuv420 during mode
+	s=arc-20240116; t=1738106459; c=relaxed/simple;
+	bh=V345nqDJ1ZN9lgcQm7Ls6ssPXfR2l7YeTZlagHat9EE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=f8m0J88/7hX8aJEM95Clm+eutP63ROpgmSpA8dB9tNyIQjxZsTe0E5aRM5pEX+rRHi20PAIWOOuxdFvb0wsVVfY81q3MdcbZWA4a0Fpm33PPVmKJZJItyasbZw8kG/0ZDaqYTzJZwcvYgqnoHVY+AL6TKNQAO1cxzGJgRk3faBc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=tbpMCJc2; arc=none smtp.client-ip=209.85.167.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f44.google.com with SMTP id 2adb3069b0e04-5401b7f7141so5558455e87.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Jan 2025 15:20:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1738106455; x=1738711255; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=8nYDe6L0+19gf1NVMQt86eufjnNQxpIjp2WrtO88qBo=;
+        b=tbpMCJc2L7ck81SCDDQ5Kz95EkCyyTmi6WrqaaD102fmUCKEKrUR/ULJgfAiCwWHgh
+         WvPyka5Q2j/bdXuaSvwxZNwCMZ5m7z+zvTNMgDsIkVCiXTVTZj/8fPzjvb5LblqxHQ4j
+         VUYyw0FBI+QZXWQ7VyBRfwrlJ1S9I2DgUsILc1n3ajrQPNv0+Za10UYtreE3PxWTDPYT
+         SG397hH2evZ5XmD/SorHWNJb6r6B0v5/+fhDlpwsOBzIRjjvOAn5ikTfv095yW3LV0S8
+         XHvBSdHRCQscej9931YDsBOvpDmrM2Rd8EwCmZ/saZPc+ywofcOIO2ZfH6lxClxuKS4k
+         V+sw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1738106455; x=1738711255;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=8nYDe6L0+19gf1NVMQt86eufjnNQxpIjp2WrtO88qBo=;
+        b=nNmbvYJSeJkj1y+XHtnYgIlvnmk3HUs553LFadRqLHhmPXbkZhfDgF2lymbGnhEvBP
+         7fo3gDFVDYM4kf697MCIcJbpkB69d8HQhv44c/hkyjzR3N9fdLAMsv8CPnnbK4GAiVAw
+         sU0aARPxSrvjvc/ePHhH5JQ9qJ3HotSCi6vqtLqSJQzMGpeRaL211oNr+C/kfxD0rTCq
+         O10E2/2+3gTAJGFRBqxn/3DP98lrVySwgxTvT01XAJkSSdIGOaBhXeVha3Z6HX2DKyXY
+         2+Jr4Xicveg9fS0XHJo27SC0ifhabkehni5lmlZICQKkewa1C65tngHlRw92YJXU4xWL
+         z/oQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUWoFi/7O67PwBxmvJid2ybR66VJFKivqOdY6Z1hbu82XUvcm4IEn6LR4vvj+eOzr++UQRoMReLov3hoh/Z@vger.kernel.org
+X-Gm-Message-State: AOJu0YzcWuCNm/izj7jOLshYc6jED8IToN82xOOIDDvjfAKEHmj62Bmz
+	A0H+75psrKD1Jjk4E2K0CQnIZe3dNHzz5SElGXOX1ZkbxRqjGCqMd2MXbb/bcHE=
+X-Gm-Gg: ASbGncs2uMsOp2i9KDWQL8FQpf3eiD+dbk3yXIC3DEnLxWwd1+2iRbtN1xQG3I7qcoJ
+	FXS7XVlU8RTM70jG5VcUJmxMoSWBfi1HK2iJi10QJXaj3K390vXmla/LU0xm9Obs9awbusXjwRQ
+	Jj4ABOe2j3rVGmu3ZAh21ZG5oC77gdcFsko+NbwbJbLW5ppL2Y1aN6gVNM0tUnwlxUg+XjXE3vF
+	Yoz8/hUAzpiVObLaRwfX9AygqJ79scxwt4zF1vwvHukF6gJxzwp5wnocRsTls3G9OY7oGAVzv2G
+	TEt9TIdVIzDTKoUCUZo+8nh7JlvAcwULVlF+idBW990o1xvZBQ1SjNEJWnU6VGzwd3QNH1I=
+X-Google-Smtp-Source: AGHT+IH7ZMuRhx0kEJGVK8oPBDelzjeBZIDBRWzL0TWy2sbaG8ukqZNLJIeLzF9dCSPPjiUWD2Tu8w==
+X-Received: by 2002:a05:6512:3405:b0:53e:314e:6119 with SMTP id 2adb3069b0e04-543e4bf9da5mr225169e87.29.1738106455454;
+        Tue, 28 Jan 2025 15:20:55 -0800 (PST)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-543c838166esm1798379e87.235.2025.01.28.15.20.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 28 Jan 2025 15:20:53 -0800 (PST)
+Date: Wed, 29 Jan 2025 01:20:51 +0200
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
+	Simona Vetter <simona@ffwll.ch>, Kuogee Hsieh <quic_khsieh@quicinc.com>, 
+	Stephen Boyd <swboyd@chromium.org>, Paloma Arellano <quic_parellan@quicinc.com>, 
+	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] drm/msm/dp: account for widebus and yuv420 during mode
  validation
+Message-ID: <eksyfuzjekxkcm5fjxyjjbyu6nkreqdlkuy2eiijrcbeu2fd2f@74viz5tylch5>
+References: <20250128-dp-widebus-fix-v1-1-b66d2265596b@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-ID: <20250128-dp-widebus-fix-v1-1-b66d2265596b@quicinc.com>
-X-B4-Tracking: v=1; b=H4sIAOJjmWcC/x2MSQqAMAwAvyI5G6hBqfgV8WBtqrlUaXGB4t8NH
- mdgpkDmJJxhqAokviTLHhWauoJlm+PKKF4ZyFBnGrLoD7zFszszBnkwuNn2zjG15EGjI7Hqfzh
- O7/sB3RRV3WAAAAA=
-X-Change-ID: 20250127-dp-widebus-fix-fba78bbe242d
-To: Rob Clark <robdclark@gmail.com>,
-        Dmitry Baryshkov
-	<dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten
-	<marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, "Simona
- Vetter" <simona@ffwll.ch>,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        "Stephen
- Boyd" <swboyd@chromium.org>,
-        Paloma Arellano <quic_parellan@quicinc.com>
-CC: <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
-        "Abhinav
- Kumar" <quic_abhinavk@quicinc.com>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1738105843; l=2709;
- i=quic_abhinavk@quicinc.com; s=20240509; h=from:subject:message-id;
- bh=bNhJM9Dz+pFtEkrdraJnL0ogylvmTs5Iev48h4gj8Ck=;
- b=TSoIccbmYsisZ1vIphsvo9JGUt0NI2VguFVr0fxMABvrV4Im28gKY3qf6zdfOzhRitFo8IOrj
- dOvV1RD2QrXCHRtWijAiTWDFnLq1fXryacsh/OCvr4sp+iSs7EtM0oR
-X-Developer-Key: i=quic_abhinavk@quicinc.com; a=ed25519;
- pk=SD3D8dOKDDh6BoX3jEYjsHrTFwuIK8+o0cLPgQok9ys=
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: bRgq6rU025BvzHJqCCvMavao45LlY_Uu
-X-Proofpoint-ORIG-GUID: bRgq6rU025BvzHJqCCvMavao45LlY_Uu
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-01-28_04,2025-01-27_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0
- lowpriorityscore=0 spamscore=0 mlxscore=0 priorityscore=1501
- mlxlogscore=861 adultscore=0 malwarescore=0 phishscore=0 suspectscore=0
- impostorscore=0 clxscore=1015 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2411120000 definitions=main-2501280169
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250128-dp-widebus-fix-v1-1-b66d2265596b@quicinc.com>
 
-Widebus allows the DP controller to operate in 2 pixel per clock mode.
-The mode validation logic validates the mode->clock against the max
-DP pixel clock. However the max DP pixel clock limit assumes widebus
-is already enabled. Adjust the mode validation logic to only compare
-the adjusted pixel clock which accounts for widebus against the max DP
-pixel clock. Also fix the mode validation logic for YUV420 modes as in
-that case as well, only half the pixel clock is needed.
+On Tue, Jan 28, 2025 at 03:10:27PM -0800, Abhinav Kumar wrote:
+> Widebus allows the DP controller to operate in 2 pixel per clock mode.
+> The mode validation logic validates the mode->clock against the max
+> DP pixel clock. However the max DP pixel clock limit assumes widebus
+> is already enabled. Adjust the mode validation logic to only compare
+> the adjusted pixel clock which accounts for widebus against the max DP
+> pixel clock. Also fix the mode validation logic for YUV420 modes as in
+> that case as well, only half the pixel clock is needed.
+> 
+> Fixes: 757a2f36ab09 ("drm/msm/dp: enable widebus feature for display port")
+> Fixes: 6db6e5606576 ("drm/msm/dp: change clock related programming for YUV420 over DP")
+> Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+> ---
+>  drivers/gpu/drm/msm/dp/dp_display.c | 10 +++++-----
+>  drivers/gpu/drm/msm/dp/dp_drm.c     |  5 ++++-
+>  2 files changed, 9 insertions(+), 6 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+> index 24dd37f1682bf5016bb0efbeb44489061deff060..a4b420a2d9eb7f084194f443e84a4013c9b4ef0f 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_display.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
+> @@ -930,16 +930,16 @@ enum drm_mode_status msm_dp_bridge_mode_valid(struct drm_bridge *bridge,
+>  		return -EINVAL;
+>  	}
+>  
+> -	if (mode->clock > DP_MAX_PIXEL_CLK_KHZ)
+> -		return MODE_CLOCK_HIGH;
+> -
+>  	msm_dp_display = container_of(dp, struct msm_dp_display_private, msm_dp_display);
+>  	link_info = &msm_dp_display->panel->link_info;
+>  
+> -	if (drm_mode_is_420_only(&dp->connector->display_info, mode) &&
+> -	    msm_dp_display->panel->vsc_sdp_supported)
+> +	if ((drm_mode_is_420_only(&dp->connector->display_info, mode) &&
+> +	     msm_dp_display->panel->vsc_sdp_supported) || msm_dp_wide_bus_available(dp))
 
-Fixes: 757a2f36ab09 ("drm/msm/dp: enable widebus feature for display port")
-Fixes: 6db6e5606576 ("drm/msm/dp: change clock related programming for YUV420 over DP")
-Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
----
- drivers/gpu/drm/msm/dp/dp_display.c | 10 +++++-----
- drivers/gpu/drm/msm/dp/dp_drm.c     |  5 ++++-
- 2 files changed, 9 insertions(+), 6 deletions(-)
+I'd ask to move msm_dp_wide_bus_available to the next line, it makes it
+easier to read.
 
-diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-index 24dd37f1682bf5016bb0efbeb44489061deff060..a4b420a2d9eb7f084194f443e84a4013c9b4ef0f 100644
---- a/drivers/gpu/drm/msm/dp/dp_display.c
-+++ b/drivers/gpu/drm/msm/dp/dp_display.c
-@@ -930,16 +930,16 @@ enum drm_mode_status msm_dp_bridge_mode_valid(struct drm_bridge *bridge,
- 		return -EINVAL;
- 	}
- 
--	if (mode->clock > DP_MAX_PIXEL_CLK_KHZ)
--		return MODE_CLOCK_HIGH;
--
- 	msm_dp_display = container_of(dp, struct msm_dp_display_private, msm_dp_display);
- 	link_info = &msm_dp_display->panel->link_info;
- 
--	if (drm_mode_is_420_only(&dp->connector->display_info, mode) &&
--	    msm_dp_display->panel->vsc_sdp_supported)
-+	if ((drm_mode_is_420_only(&dp->connector->display_info, mode) &&
-+	     msm_dp_display->panel->vsc_sdp_supported) || msm_dp_wide_bus_available(dp))
- 		mode_pclk_khz /= 2;
- 
-+	if (mode_pclk_khz > DP_MAX_PIXEL_CLK_KHZ)
-+		return MODE_CLOCK_HIGH;
-+
- 	mode_bpp = dp->connector->display_info.bpc * num_components;
- 	if (!mode_bpp)
- 		mode_bpp = default_bpp;
-diff --git a/drivers/gpu/drm/msm/dp/dp_drm.c b/drivers/gpu/drm/msm/dp/dp_drm.c
-index d3e241ea6941615b8e274dd17426c2f8557f09b5..16b7913d1eefa8c2deb44df201a1977db23f4531 100644
---- a/drivers/gpu/drm/msm/dp/dp_drm.c
-+++ b/drivers/gpu/drm/msm/dp/dp_drm.c
-@@ -257,7 +257,10 @@ static enum drm_mode_status msm_edp_bridge_mode_valid(struct drm_bridge *bridge,
- 		return -EINVAL;
- 	}
- 
--	if (mode->clock > DP_MAX_PIXEL_CLK_KHZ)
-+	if (msm_dp_wide_bus_available(dp))
-+		mode_pclk_khz /= 2;
-+
-+	if (mode_pclk_khz > DP_MAX_PIXEL_CLK_KHZ)
- 		return MODE_CLOCK_HIGH;
- 
- 	/*
+With that fixed:
 
----
-base-commit: 2bd7708f11777d4fd436fcba62b57cff6a92e389
-change-id: 20250127-dp-widebus-fix-fba78bbe242d
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-Best regards,
+
+>  		mode_pclk_khz /= 2;
+>  
+> +	if (mode_pclk_khz > DP_MAX_PIXEL_CLK_KHZ)
+> +		return MODE_CLOCK_HIGH;
+> +
+>  	mode_bpp = dp->connector->display_info.bpc * num_components;
+>  	if (!mode_bpp)
+>  		mode_bpp = default_bpp;
+> diff --git a/drivers/gpu/drm/msm/dp/dp_drm.c b/drivers/gpu/drm/msm/dp/dp_drm.c
+> index d3e241ea6941615b8e274dd17426c2f8557f09b5..16b7913d1eefa8c2deb44df201a1977db23f4531 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_drm.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_drm.c
+> @@ -257,7 +257,10 @@ static enum drm_mode_status msm_edp_bridge_mode_valid(struct drm_bridge *bridge,
+>  		return -EINVAL;
+>  	}
+>  
+> -	if (mode->clock > DP_MAX_PIXEL_CLK_KHZ)
+> +	if (msm_dp_wide_bus_available(dp))
+> +		mode_pclk_khz /= 2;
+> +
+> +	if (mode_pclk_khz > DP_MAX_PIXEL_CLK_KHZ)
+>  		return MODE_CLOCK_HIGH;
+>  
+>  	/*
+> 
+> ---
+> base-commit: 2bd7708f11777d4fd436fcba62b57cff6a92e389
+> change-id: 20250127-dp-widebus-fix-fba78bbe242d
+> 
+> Best regards,
+> -- 
+> Abhinav Kumar <quic_abhinavk@quicinc.com>
+> 
+
 -- 
-Abhinav Kumar <quic_abhinavk@quicinc.com>
-
+With best wishes
+Dmitry
 
