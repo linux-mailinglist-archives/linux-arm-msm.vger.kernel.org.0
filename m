@@ -1,136 +1,141 @@
-Return-Path: <linux-arm-msm+bounces-46339-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46340-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 31D49A2065B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jan 2025 09:44:18 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id CF204A206AE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jan 2025 10:11:04 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 726C53A8D86
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jan 2025 08:44:10 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 233931626B7
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jan 2025 09:11:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 081611DF271;
-	Tue, 28 Jan 2025 08:43:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EA2CA1DDA39;
+	Tue, 28 Jan 2025 09:10:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IGuRR//H"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="TyziFVp1"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDBF31DF250;
-	Tue, 28 Jan 2025 08:42:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36CA0194C6A;
+	Tue, 28 Jan 2025 09:10:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738053779; cv=none; b=fz7eN5sSOpJGN6gh7ht8i/p3ymBvAIfHIdHUeNiZomeL9HMnGjLLlGUnyAmk/kflK1NnGFXs9PHAIauz83H7ukR6cs13Z/5GT0YyJHtMUQFAelS4LC8r4LPTTOVKeERsR/A966VHOV9+rSBNM1X7l1oTvD3Tq3dLxELfdmu48g4=
+	t=1738055459; cv=none; b=Z696GpbICuh0Hl3KF4+jfiR6D+ofQ8Y49LYiPa9+ZG9o78JeDfe7H4wrRlQmZLle5MHURQKe6N1fDsWTpEKAjWGI4Yw3N558l59LR5TQijCfBv74KbrjehhOdbaLb0ICZhztkGKNuZ+DhTUxxwaK3t5zy2FHAQyy3N6+9OTK0SU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738053779; c=relaxed/simple;
-	bh=odlb6+92LTfYeJcLKPY87bv0xB6K2iBjaAxL4Nwu4rY=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=EvuFmcTi+bXpH3Jh00y/4ZzUYgZ3yCnZGo+wK9+ioDTVCqkDqjCEzolhYRSYrQRT49Mbl4ig7Qp7L0bc9zci8xqEMkd59kWgphyd7VfIgLsBELz9FuHE8IlKzAYmQb0Yg96YafX7bqsd8+7cK+N+L8QRtpHeD/lILA8m3nyUJ9E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IGuRR//H; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 3E16EC4CED3;
-	Tue, 28 Jan 2025 08:42:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1738053779;
-	bh=odlb6+92LTfYeJcLKPY87bv0xB6K2iBjaAxL4Nwu4rY=;
-	h=From:Date:Subject:To:Cc:Reply-To:From;
-	b=IGuRR//HZGY/MQPUFtzyCd3Qc/cdimBlBPAJKPI4j1nI0AhFNMPVqII/5hYJDGpcQ
-	 qwk5VtEx6lI9aGDNXpQ/+Kxq0+Y2SUNlqOnXBbebGd75P+Fi4c93KfySTbflTv26mC
-	 DOjOppRNj4MLyHJdembXxl491A5PNipuey89oElTBe0lVIcBxdukM+Pwbmg55IvFlM
-	 y2P0fNYsPHMY0lk/dSiEhlf9DDl8PxjM38770YcYD8IFZL93sufU269HOB6eIVBxN/
-	 YDUIPRBscE2LqqLD/5u6i3e+z4InDEnncVeKAN9JqsIYZhsDJrYKdhmYArQMMoJeTo
-	 EkXyiKVrcOl5Q==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2F1B9C0218D;
-	Tue, 28 Jan 2025 08:42:59 +0000 (UTC)
-From: Anthony Ruhier via B4 Relay <devnull+aruhier.mailbox.org@kernel.org>
-Date: Tue, 28 Jan 2025 09:42:56 +0100
-Subject: [PATCH] power: supply: qcom_battmgr: abs() on POWER_NOW property
+	s=arc-20240116; t=1738055459; c=relaxed/simple;
+	bh=4d3wHbF3wJIq/GwbBA3D5+nUUKLfYJpNy7Cr0NNkF28=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=EVL1ovcuoqzSyj5e63UFpdw8S/4R03xrnOxiOI3RgkVvHjmiK/ERgykQJftcTfmg7KWk1xJdbeq2j+na/HRDbo4MB+4FaYVjWv+Uw0WzinuxMpgk7hA0JiEbe/syLf0vbdiAH4Tf0YCR1mPqsgOtONc3P7KpDpNx2+TeKS3SqA0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=TyziFVp1; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50S1rXK4030333;
+	Tue, 28 Jan 2025 09:10:51 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=O86IUGSvbzSBBPJGLArO4m
+	oxmwy/mflillW9udl+20U=; b=TyziFVp1GfdZ4ErQcBhPg4eVlV7ijsYFVNaC0+
+	rtHMyduL/09eOcjCCfM64lD7lZiHcz2mVh0slTfcQQcuuu48sTsDK09bRUqLsY2M
+	7HDsRfWi78XT1lifeDvUIHmRXztfuu2hwDSGQBDB4g/x7EguozIBu0SB+S3WgXpT
+	ETUrBtwgwkHpRrSPnx3ZAIkelMmiW9ZuxShidBW+P5vnTxUpH8Vp51K0Yh6nVxbe
+	Y3scyvNUU3iDr9Ocq+E0qnWxLpEF8PhucL1Y4SM+KVYvCif+HXsY6YXX9TEXzUfX
+	DwyHjqZVDbvo7JtwxrIcIHSrweZyTogx+BdPv2J/BwUE1Ldw==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44enyq0qyf-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 28 Jan 2025 09:10:51 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 50S9Ao1e029469
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 28 Jan 2025 09:10:50 GMT
+Received: from hu-rajkbhag-blr.qualcomm.com (10.80.80.8) by
+ nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Tue, 28 Jan 2025 01:10:46 -0800
+From: Raj Kumar Bhagat <quic_rajkbhag@quicinc.com>
+To: <ath12k@lists.infradead.org>
+CC: <linux-wireless@vger.kernel.org>, Kalle Valo <kvalo@kernel.org>,
+        "Rob
+ Herring" <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        "Conor
+ Dooley" <conor+dt@kernel.org>,
+        Jeff Johnson <jjohnson@kernel.org>,
+        "Bjorn
+ Andersson" <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        Raj Kumar Bhagat <quic_rajkbhag@quicinc.com>
+Subject: [PATCH 0/2] dt-bindings: net: wireless: add wifi node for IPQ5332
+Date: Tue, 28 Jan 2025 14:40:10 +0530
+Message-ID: <20250128091012.2574478-1-quic_rajkbhag@quicinc.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250128-patch-qcomm-bat-uint-power-v1-1-54a63d8ada92@mailbox.org>
-X-B4-Tracking: v=1; b=H4sIAJCYmGcC/x3MQQ6DIBAAwK+YPXcThUC1X2l6QFzqHgQKVE2Mf
- 5d4nMsckCkxZXg1ByRaOXPwFd2jATsb/yXkqRpEK1TbiR6jKXbGnw3LgqMp+GdfMIaNEqrnIJ3
- UsrdKQw1iIsf7nb8/53kBJDqtGWwAAAA=
-X-Change-ID: 20250128-patch-qcomm-bat-uint-power-5793f3638c56
-To: Sebastian Reichel <sre@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Anthony Ruhier <aruhier@mailbox.org>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2103;
- i=aruhier@mailbox.org; h=from:subject:message-id;
- bh=lSOxkdOf6gRdpUszCsRF5pZ7uZYHKUdsGgP+kJrQraU=;
- b=owGbwMvMwCVW2Nrw47jsO3/G02pJDOkzZkziyNm+UOVmxY1KtjcWd2cap2/oK358t8bUme1Wd
- vHZis6vHaUsDGJcDLJiiiwl+6OEb6t03HdYu5wFZg4rE8gQBi5OAZhIiCPDfzfPczHv5gZtuKa1
- ZfrHysAy+S1t/B5R0dMYvqQoKCZ1XmBkePOcddadw00mrxO8m19N33rN9bLsYoayC5xL3TW+/DX
- LZQcA
-X-Developer-Key: i=aruhier@mailbox.org; a=openpgp;
- fpr=F4A378DD8D494AE48EBA554CB00FBC7D08D231D9
-X-Endpoint-Received: by B4 Relay for aruhier@mailbox.org/default with
- auth_id=302
-X-Original-From: Anthony Ruhier <aruhier@mailbox.org>
-Reply-To: aruhier@mailbox.org
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: oTclhi1ceqE9v9nZuEXyXPa-ij4nACG9
+X-Proofpoint-GUID: oTclhi1ceqE9v9nZuEXyXPa-ij4nACG9
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-01-28_03,2025-01-27_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 impostorscore=0
+ mlxscore=0 priorityscore=1501 malwarescore=0 lowpriorityscore=0
+ phishscore=0 spamscore=0 bulkscore=0 adultscore=0 suspectscore=0
+ mlxlogscore=731 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2501280070
 
-From: Anthony Ruhier <aruhier@mailbox.org>
+The IPQ5332 has IEEE802.11be 2 GHz 2x2 AHB bus WiFi device. This patch
+series:
+- Describe IPQ5332 WiFi device for device-tree binding.
+- Add IPQ5332 wifi node and required reserved-memory in RDP441.
 
-The value for the POWER_NOW property is by default negative when the
-battery is discharging, positive when charging.
+Depends-On: [PATCH V2 0/2] mailbox: tmel-qmp: Introduce QCOM TMEL QMP mailbox driver
+Depends-On: [PATCH V3 0/8] Add new driver for WCSS secure PIL loading
+Link: https://lore.kernel.org/lkml/20241231054900.2144961-1-quic_srichara@quicinc.com/
+Link: https://lore.kernel.org/lkml/20250107101647.2087358-1-quic_gokulsri@quicinc.com/
 
-However on x1e laptops it breaks several userland tools that give a
-prediction of the battery run time (such as the acpi command, powertop
-or the waybar battery module), as these tools do not expect a negative
-value for /sys/class/power_supply/qcom-battmgr-bat/power_now. They
-estimate the battery run time by dividing the value of energy_full by
-power_now. The battery percentage is calculated by dividing energy_full
-by energy_now, therefore it is not impacted.
+NOTE:
+The Depends-On series '[PATCH V3 0/8] Add new driver for WCSS secure PIL
+loading' do not apply completely on ath/main ToT. One of the patch
+(https://lore.kernel.org/lkml/20250107101647.2087358-9-quic_gokulsri@quicinc.com/)
+fails to apply. This patch does changes in the file -
+arch/arm64/boot/dts/qcom/ipq5424.dtsi, which is in linux-next but not in
+ath/main as of now. Hence, skip this particular patch while applying
+depenency on ath/main for review.
 
-While having a negative number during discharge makes sense, it is not
-standard with how other battery drivers expose it. Instead, it seems
-standard to have a positive value for power_now, and rely on the status
-file instead to know if the battery is charging or discharging. It is
-what other x86 laptops do.
+Raj Kumar Bhagat (2):
+  dt-bindings: net: wireless: describe the ath12k AHB module
+  arm64: dts: qcom: add wifi node for IPQ5332 based RDP441
 
-Without the patch:
-    $ acpi
-    Battery 0: Discharging, 98%, discharging at zero rate - will never fully discharge.
+ .../net/wireless/qcom,ath12k-ahb.yaml         | 317 ++++++++++++++++++
+ arch/arm64/boot/dts/qcom/ipq5332-rdp441.dts   |  56 +++-
+ arch/arm64/boot/dts/qcom/ipq5332.dtsi         | 106 ++++++
+ 3 files changed, 478 insertions(+), 1 deletion(-)
+ create mode 100644 Documentation/devicetree/bindings/net/wireless/qcom,ath12k-ahb.yaml
 
-With the patch:
-    $ acpi
-    Battery 0: Discharging, 97%, 10:18:27 remaining
 
----
-Signed-off-by: Anthony Ruhier <aruhier@mailbox.org>
----
- drivers/power/supply/qcom_battmgr.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/drivers/power/supply/qcom_battmgr.c b/drivers/power/supply/qcom_battmgr.c
-index 47d29271ddf400b76dd5b0a1b8d1ba86c017afc0..3e2e0c5af2814df0eb0bfc408d4b3d26399ab4e4 100644
---- a/drivers/power/supply/qcom_battmgr.c
-+++ b/drivers/power/supply/qcom_battmgr.c
-@@ -530,7 +530,7 @@ static int qcom_battmgr_bat_get_property(struct power_supply *psy,
- 		val->intval = battmgr->status.current_now;
- 		break;
- 	case POWER_SUPPLY_PROP_POWER_NOW:
--		val->intval = battmgr->status.power_now;
-+		val->intval = abs(battmgr->status.power_now);
- 		break;
- 	case POWER_SUPPLY_PROP_CHARGE_FULL_DESIGN:
- 		if (unit != QCOM_BATTMGR_UNIT_mAh)
-
----
-base-commit: ffd294d346d185b70e28b1a28abe367bbfe53c04
-change-id: 20250128-patch-qcomm-bat-uint-power-5793f3638c56
-
-Best regards,
+base-commit: b5aeca2e66899430827b8afcad061201f3b7861b
+prerequisite-patch-id: d59a64ae7cc13f19fc6f27f8906c98ff5f97f3b2
+prerequisite-patch-id: 6c4774dac182e3cc7fa830c06936e34b2c3f4e21
+prerequisite-patch-id: 2ae372ac47365309e9d6a123dc9db69bd0f81cd7
+prerequisite-patch-id: 4feb9dd9bfff074118dc0ee327b53a45ddb535bb
+prerequisite-patch-id: efdd81a1f3309e3383ed996f3b1ebef8d2680705
+prerequisite-patch-id: 2fb2bcb350efe9cb0f85aefa1849fccb5e13ebd7
+prerequisite-patch-id: aea510292c2387e214523d6aaff52298f783e342
+prerequisite-patch-id: 6ca17cf991617a9c5664b812007547e914f44562
+prerequisite-patch-id: 74dc586eab1f42e73d53730084bc38be4677b816
 -- 
-Anthony Ruhier <aruhier@mailbox.org>
-
+2.34.1
 
 
