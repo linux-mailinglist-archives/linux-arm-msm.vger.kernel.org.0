@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-46343-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46344-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id C2E78A20720
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jan 2025 10:19:21 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4BD04A2073E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jan 2025 10:22:20 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2C1EC1650D9
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jan 2025 09:19:20 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 322E318824B4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jan 2025 09:22:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8D0971DF986;
-	Tue, 28 Jan 2025 09:17:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id ECE631E0086;
+	Tue, 28 Jan 2025 09:22:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CQYbxL51"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PBahelHu"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 388171DF74F;
-	Tue, 28 Jan 2025 09:17:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB6851DFD99;
+	Tue, 28 Jan 2025 09:22:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738055845; cv=none; b=tO49GClHl1AFbhYNgyH2zIxo4ZnD/u+szCV74uqxe6soIsKsQmRnNSx3KYBuF75Gaellz/kH1JUPyCzIR4NcDo1+8jpT5+1hfP0US4ijH5qQRQGL5j51hS7kykkbQLnWtQy/6DD2GLwhkshfuitEZdNlNrjR9J3792xXfcDiDyc=
+	t=1738056127; cv=none; b=Fen3uvbnXTRWwsapbS0eoMTmOFrTPMrdfKoXUBIc6AE9OTnZH3C39SN/MqtC/V6EulYM3BaqED+P55h41bJ+wVu1h6/mg5Um/lFb8fCdfjunkIrs5H0kdkXvVcfGzVGqDtonhRQ5wL6wOIOVT34YhzLXlFB+VO3+hqvjme2V3tU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738055845; c=relaxed/simple;
-	bh=yVSjSWszN/9BPiVWvmLAGyXUmEWeXoGABsqhdxrbxHY=;
+	s=arc-20240116; t=1738056127; c=relaxed/simple;
+	bh=ZGMtfJK8F/y9wYUABuXbsCjnUzFs+mshaotaFvxQtBA=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ELbh/HxJJvQyiMPa0E90vpy/7BuNgZ7t93MeTmPNQD0lKFNWEqmxkrhsbx1sKFQWDIfCuSvcLzOC3YTBZUOyk8TvVZDZ3dcpDPoFSsnrfDTkv1qb5mdmQmjIxm+6Eoo8JEdt4tk2yK7Dx0hRtJGJiAMQbuypfH0NFtB3L19zoMw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CQYbxL51; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADCE8C4CED3;
-	Tue, 28 Jan 2025 09:17:20 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=PdFT4oL1bDiJH7dr2oEWPnxXriPqssEoW48NlQt8xUU/uQkpm2PeTXBvjF47QGoXfW1Ep4HFXHfHtjzl6NTbayJ+jtfcQeOHEONmyU+a62tv2PbepnH1Q67pjqckWNZkoAPMZJlHUni6GTC//5uba1tF5xRY/aVpyJ7VFDZhmaY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PBahelHu; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 327D7C4CEE1;
+	Tue, 28 Jan 2025 09:22:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1738055844;
-	bh=yVSjSWszN/9BPiVWvmLAGyXUmEWeXoGABsqhdxrbxHY=;
+	s=k20201202; t=1738056127;
+	bh=ZGMtfJK8F/y9wYUABuXbsCjnUzFs+mshaotaFvxQtBA=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=CQYbxL51i05yY9ApsiCSV7X1Y4qEfFMN2t5ECbwMeJe9cayxyKcyrcQffNxHfeXDh
-	 jw990/p9l1lVXHKAHPGvxByNvwZtn53MKxKrX0K24RQ1P+lqYUjmrXZFi0nOxz/VA+
-	 9pmR3MgzPF1kfAHqnN4GOX8UHaLYiXnNoCWrQ7Fhzf9W3l+RylCb8w3wVbM6OHD/Vx
-	 BcoZcifkhvCLChigXHF0YzypF34n2j2ACITYlg4X01bqpBCEmJ9TFQtC24KT4bp3us
-	 eAzs8vpJ69nUjvkvuk82eZNFT5VTsm8jHcVxvAE8JeTobJVZKXk6W8WD5BDT5BABC7
-	 LDCFagq67+LsA==
-Message-ID: <0ca970e7-cc9a-4853-86de-5f01dc6d82a2@kernel.org>
-Date: Tue, 28 Jan 2025 10:17:18 +0100
+	b=PBahelHuMA+pwUqaBYu/kN9lXamu7webxLVzp9zsa8b1k1tPycvXMleSrKmOygvNU
+	 zCAWRMFZttb60xb/15alXrFy7e14yaOab+28DTwnzzNz7B85t87/mIGeESr1pkDFpE
+	 ul5IkSUve94owKZK0tnFWDlTMTnAAkChFl9GsTHWUR+RHFca5H16iCsdj9oq27Sup5
+	 p8LLcxluQPtmJkF0oR37giKW8Xzl/IHWZsWuaO3V/aK5ATD2XhqJp8FxVTeD7IlbzX
+	 EfrrhIAiTtuo1DDcJMfbr77gbhHTCEzbxb/1HWYf98CoB8bqJD/Tksz3YSoeHG1K6Q
+	 zMyORrcFYOa8Q==
+Message-ID: <b3ff05c1-6424-4ace-a873-ddf1a0d3d07d@kernel.org>
+Date: Tue, 28 Jan 2025 10:22:01 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,8 +50,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] dt-bindings: net: wireless: describe the ath12k AHB
- module
+Subject: Re: [PATCH 2/2] arm64: dts: qcom: add wifi node for IPQ5332 based
+ RDP441
 To: Raj Kumar Bhagat <quic_rajkbhag@quicinc.com>, ath12k@lists.infradead.org
 Cc: linux-wireless@vger.kernel.org, Kalle Valo <kvalo@kernel.org>,
  Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
@@ -60,7 +60,7 @@ Cc: linux-wireless@vger.kernel.org, Kalle Valo <kvalo@kernel.org>,
  Konrad Dybcio <konradybcio@kernel.org>, devicetree@vger.kernel.org,
  linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
 References: <20250128091012.2574478-1-quic_rajkbhag@quicinc.com>
- <20250128091012.2574478-2-quic_rajkbhag@quicinc.com>
+ <20250128091012.2574478-3-quic_rajkbhag@quicinc.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -106,26 +106,69 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20250128091012.2574478-2-quic_rajkbhag@quicinc.com>
+In-Reply-To: <20250128091012.2574478-3-quic_rajkbhag@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 28/01/2025 10:10, Raj Kumar Bhagat wrote:
-> Add device-tree bindings for the ATH12K module found in the IPQ5332
-> device.
-> 
-> Signed-off-by: Raj Kumar Bhagat <quic_rajkbhag@quicinc.com>
-> ---
->  .../net/wireless/qcom,ath12k-ahb.yaml         | 317 ++++++++++++++++++
->  1 file changed, 317 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/net/wireless/qcom,ath12k-ahb.yaml
+> +	/*                 Default Profile
+> +	 * +============+==============+=====================+
+> +	 * |            |              |                     |
+> +	 * | Region     | Start Offset |       Size          |
+> +	 * |            |              |                     |
+> +	 * +------------+--------------+---------------------+
+> +	 * |            |              |                     |
+> +	 * |            |              |                     |
+> +	 * |            |              |                     |
+> +	 * | WLAN Q6    |  0x4A900000  |       43MB          |
+> +	 * |            |              |                     |
+> +	 * |            |              |                     |
+> +	 * +------------+--------------+---------------------+
+> +	 * | M3 Dump    |  0x4D400000  |       1MB           |
+> +	 * +============+==============+=====================+
+> +	 * |                                                 |
+> +	 * |                                                 |
+> +	 * |                                                 |
+> +	 * |            Rest of memory for Linux             |
+> +	 * |                                                 |
+> +	 * |                                                 |
+> +	 * |                                                 |
+> +	 * +=================================================+
+> +	 */
+> +
+> +	reserved-memory {
+> +		#address-cells = <2>;
+> +		#size-cells = <2>;
+> +		ranges;
+> +
+> +		q6_region: wcss@4a900000 {
+> +			reg = <0x0 0x4a900000 0x0 0x02b00000>;
+> +			no-map;
+> +		};
+> +
+> +		m3_dump: m3-dump@4d400000 {
 
-It was v4, now v1? So entire previous discussion and feedback is
-missing? Go to previous series and implement entire feedback. Then use
-proper versioning, proper changelog and make it obvious/understandable
-to us, instead of sending v1 after v4 in entirely separate thread.
+This fails with your wireless patchset.
 
-I also do not understand why this is sent to arm soc. That's wireless patch.
+> +			reg = <0x0 0x4D400000 0x0 0x100000>;
+> +			no-map;
+> +		};
+> +	};
+>  };
+>  
+>  &blsp1_i2c1 {
+> @@ -63,3 +104,16 @@ data-pins {
+>  		};
+>  	};
+>  };
+> +
+> +&wifi0 {
+> +	memory-region = <&q6_region>, <&m3_dump>;
+> +	memory-region-names = "q6-region", "m3-dump";
+
+Binding said you have four items. I don't understand why this varies and
+why this is 2 items instead.
+
 
 Best regards,
 Krzysztof
