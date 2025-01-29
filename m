@@ -1,57 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-46549-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46550-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5B384A2239F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jan 2025 19:10:27 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id BF8ABA2241A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jan 2025 19:43:39 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id EF47E7A21A2
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jan 2025 18:09:32 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3117F1678F3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jan 2025 18:43:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4E48D1DE2DF;
-	Wed, 29 Jan 2025 18:10:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B0BA71E1041;
+	Wed, 29 Jan 2025 18:43:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=oldschoolsolutions.biz header.i=jens.glathe@oldschoolsolutions.biz header.b="UPQeY7k/"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="b2inzRpq"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mout.kundenserver.de (mout.kundenserver.de [217.72.192.73])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 613461917D9;
-	Wed, 29 Jan 2025 18:10:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.72.192.73
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24F1618FDC5;
+	Wed, 29 Jan 2025 18:43:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738174220; cv=none; b=Bz/3oF/C1FWukqtlz5682MwyMJEzsz+r6P8QMfE/lFg5szkdoOKiuMS7+463rQeU9gDJcpKys8v4B/iJs08Vcde1wJ3navoNazWf3LFgibiWUz/O9DbOZgCPDyR1uo/iaKZogKmxB086eiK6J/MqogKMeLvLWtV12jD3iIVvues=
+	t=1738176214; cv=none; b=q6Y9aLqPBEGU8H6PVy6PObqauUZbJS+L1pRL6RleeK3EuxQ2aG1gSVHyj1fJbYXXiByz76EzgAEl8/vXQSYsHA3sddf/pPIldmwvlvGiuoznN5KGGJisNEZVDxq9lAUz2kOb0SHrQhCKv5nIlnM2i91GhYsbfp7NLnE/WWAeAGU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738174220; c=relaxed/simple;
-	bh=gMOapHYKVwtDoMIzCsesAyRHGCdSk9BOTKS4hZgV0s8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=eNhNO7CoSjBjEde26TrphL61lvtm3cINtZJUqQDlkBB850WSaBJgJew98vdwTzQxMhWfrbhwikXrzZe+4GM5V0nAvAmkI+52hWd8eSG+MgTcGxKJUdofXxXyy3gZDNvxFLP9YfQb0By7qYebvnAr32bDsqhL0NKVh2VC9H5Idrc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=oldschoolsolutions.biz; spf=pass smtp.mailfrom=oldschoolsolutions.biz; dkim=pass (2048-bit key) header.d=oldschoolsolutions.biz header.i=jens.glathe@oldschoolsolutions.biz header.b=UPQeY7k/; arc=none smtp.client-ip=217.72.192.73
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=oldschoolsolutions.biz
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oldschoolsolutions.biz
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-	d=oldschoolsolutions.biz; s=s1-ionos; t=1738174203; x=1738779003;
-	i=jens.glathe@oldschoolsolutions.biz;
-	bh=0gH4fty1iZLIvHJirTG78ZCFfaqlvNXj5sdZpZQlg7Q=;
-	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
-	 References:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding:cc:content-transfer-encoding:
-	 content-type:date:from:message-id:mime-version:reply-to:subject:
-	 to;
-	b=UPQeY7k/+i15z5WYoVjxYADFcT9h4llHSrRGTt3wzITZNGDA+zO2ursUO1rhfwB2
-	 soXz6WJNDTHyGq14f22nqLCLhZD5/MaI35NbtoTEAHutQkakXCEuxrvloBVXA8mbp
-	 6szvL2282pVVCUWUsQEduUshF8oN0gHw0Z49Ga1I1EDO4hmu/KLUqiakW2WkCNeER
-	 BAymj6um/ruBZ67D5EEh20ZEdVuZslDSYRagqDvPAaCu7zoJkxCceYIIJNMbB1Jag
-	 cYSdgaFaoBds27qfmtnqRjlUy1NNOAEdvA6jWXDXRmf1rJP6Ko2h/MEGiTo5y0oBI
-	 x1gwfAkMI0P8e9hDUw==
-X-UI-Sender-Class: 55c96926-9e95-11ee-ae09-1f7a4046a0f6
-Received: from [192.168.0.152] ([62.226.41.231]) by mrelayeu.kundenserver.de
- (mreue108 [212.227.15.183]) with ESMTPSA (Nemesis) id
- 1MIdaF-1tixGI0eZR-006Tag; Wed, 29 Jan 2025 19:10:03 +0100
-Message-ID: <044ce59c-0e88-4af0-a1c4-85e5d845fc04@oldschoolsolutions.biz>
-Date: Wed, 29 Jan 2025 19:10:01 +0100
+	s=arc-20240116; t=1738176214; c=relaxed/simple;
+	bh=YOELrXPf8z4ANTH8fctGS3PLrp32Tu4IHcD/fjnkwAk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=r2ayL9/i2h/ZllvcMpKwDqlsy4cgJmbURK6dfUDYYWY4VLdVfL/0pIq8q5/asxbmsOHzezGeByNvKxnkRIT2283hL8xo5M3IT3tYf/eBhwNgikLsGPF4WtDgV5YjB2WMPUeyBNeRYpjV0KGZalqh5tBhAqVXHNiUIxHko9GNpwk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=b2inzRpq; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50TEqhqf004511;
+	Wed, 29 Jan 2025 18:43:29 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	Xm1Z+TeuIAmNDVrsterdveTQA0h+8LX64tVWfsTC4FE=; b=b2inzRpqzijBO8yk
+	51Zzoy9syLrQxhHISx2FiPowBQVzkTBHu391cq3Cyduxuzv4bskZcp7BUA8TguLG
+	FGQ4b+JWzyy7YdwOfbQOG7Qgfs6WYJMrIohHf9MEakaQSLlbTC/BG7bnS5WENbc2
+	mtXnIZzO5Li+6S3P53TWZWhR8TJZKUaiGwTh9G1G8L1gdOkZpf9wwQGL/Vp7FtdE
+	3QKmPDrae7OLHO+w98tM4UsCrDGIOmvptMrqY4r/BSYNKyQI7NSH+DIaTQN8asTM
+	BACl31FHnqUOwDVms4/5s/iQVxKKjYwq1BcHcl0H+I8TP+dfuRq9ucQgCWJ6+a2N
+	4fi2ig==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44fpfu8gx2-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 29 Jan 2025 18:43:29 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 50TIhSFn017246
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 29 Jan 2025 18:43:28 GMT
+Received: from [10.71.108.79] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 29 Jan
+ 2025 10:43:28 -0800
+Message-ID: <4761c8ad-6f02-45bf-8fc1-87e40b7702fe@quicinc.com>
+Date: Wed, 29 Jan 2025 10:43:21 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -59,100 +65,80 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/6] X1P42100 DT and PCIe PHY bits
-To: Konrad Dybcio <konradybcio@kernel.org>, Vinod Koul <vkoul@kernel.org>,
- Kishon Vijay Abraham I <kishon@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>
-Cc: Marijn Suijten <marijn.suijten@somainline.org>,
- linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-References: <20250125-topic-x1p4_dts-v1-0-02659a08b044@oss.qualcomm.com>
+Subject: Re: [PATCH] clk: qcom: dispcc-sm8750: Drop incorrect
+ CLK_SET_RATE_PARENT on byte intf parent
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Bjorn Andersson
+	<andersson@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen
+ Boyd <sboyd@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-clk@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+References: <20250129154519.209791-1-krzysztof.kozlowski@linaro.org>
 Content-Language: en-US
-From: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
-In-Reply-To: <20250125-topic-x1p4_dts-v1-0-02659a08b044@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:rgS6R69+EMZL6buCYSYarAw9vHwG1EFkx8Mhk7T/U3FkPpv/fzc
- 8qmgijp2hnWTkMPFrZBXf+iIqnXtK+xp9m8Bjv0S7gs93PuoUrVtcvo6hB5/s+2NFOOc/vR
- vuJ9PsiVgQtsNoFL7UVkOV8vNHd2wBURfQA0blb0k3k8gIv4DhFbev8vImSgumvP6yyYQph
- H7s80zEyT8LhH2TH5aX5w==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:OvsIYLMQuZg=;tMcbzYeFgKIQxJjLWn+8RXX3qjr
- spyXhKax0GKN1gsZXCWNYe3vcWhV6VfqcRsvepDGVZU6no1WoK9snvsht1b4+HZ7Buhm74X7z
- 1CThnypK/QcR7dga0xMpPRZrm8jWAk2ZPy9jfnfr1LcDo1rl59pf8T32mY6mvV1ucnq1Rgvts
- tBz1OmWLy35suheqTZja4GsjX7QDzPcVmXJlP9ZV3xkcT3aCGqDCMMbEw/6rX+yE4CZRMVu5I
- /HSQ4dMXnaQMMVmYfkLVToFNjBc/cVWGkDyC+TLrBZbND6YhNPm/8p0OyIQF3ArsWNfJxmdgO
- IO5oK50RGfA0YC7Azm2OnPuH6w4VoyMrE52vCEPmwabo5q/eKq/MPwJjJgJcnfqHaGRmcQIIz
- c7Lj5q1ps2jOcy70jTyOKO/fpO8KJlb0Rbve3Q95G3h8wfWC0Xcc7IXqzNZokhbZmaajNg4MX
- Jzz4ksbh5QgmHAMT514pN1rmeekCp5DtJ5C769FJAwYGC+vTsGIwOwCHtvk02xK7wN/Yt8tMv
- HC+iqkvx3MqkcmgkrAQKxKD3MZmfCjXSYMq5fJMN29S3oZ8PgcN48gCiD0bAn4QGidHqDvQJX
- YCGQ+ZCif3Zc5e9nCcS65K6JlN9WMCY/WXElR11Q+jp6G+TIhTQ3HuU+UCcILsrQGMpRkfiYw
- iokHENdkNuc1tU1TlLj8RPgsXxrAuYOncePB4wHpoOlruVAhlwikzQjaJD39BY2m+uViPt1jK
- YCSLHnL3WF5USJBRE/Xj7lSNlnY1nEHvtWG82R1/KVq4bfoNxZVvby1UkaJYxut2dVrg8ukS9
- Ds4sfxY9XBAunGZoGQcDH57/shDSM0F89owI24+Hij4IiwV90j13H0gcs2I8ZCVxfOJ7Y4Ndj
- gq/vPVHldigxaqgPWZKoHE9YMA4P4RHhWAN0QQev+5UhSxbR963AoOgDONqyecyCQUexIqAj0
- wIjdvlwGk0wHKQwqdFZC5fPMhqCeLkIMoIzcQc1TnUwTJVTa+wtxkSucAvZvOsMQy3hjCwqWI
- 7S5VDppJ4DREya4I8j7Ye32LHrrabSbUmluca9ZpJ91WLQLRn1xqhoS0TQQS5A/030Lf4oVgC
- SmUdLtS1tWamSzF9G+AJawyskAokC9QfGYtpwIA3CXOBrsbM7ORgQXh36iBszM22bphmCU58t
- INQw8eIivAmhcnrBAn5xtBh8vmrateD3NFIZegsw/xA==
+From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <20250129154519.209791-1-krzysztof.kozlowski@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: HoxU2DFGhxenA6KQ85beXwYbRfTUj1mj
+X-Proofpoint-ORIG-GUID: HoxU2DFGhxenA6KQ85beXwYbRfTUj1mj
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-01-29_04,2025-01-29_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ mlxlogscore=896 impostorscore=0 suspectscore=0 clxscore=1011 mlxscore=0
+ malwarescore=0 priorityscore=1501 phishscore=0 bulkscore=0 adultscore=0
+ spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2501290146
 
-On 25.01.25 04:31, Konrad Dybcio wrote:
-> X1P42100 is a(n indirect) derivative of X1E80100 - the silicon is
-> actually different and it's not a fused down part.
->
-> Introduce the DTS bits required to support it by mostly reusing the
-> X1E SoC and CRD DTSIs. The most notable differences from our software
-> PoV are a different GPU (support for which will be added later), 4
-> less CPUs and some nuances in the PCIe hardware.
->
-> This series very strictly depends on the NOCSR PCIe PHY reset patches.
->
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+
+
+On 1/29/2025 7:45 AM, Krzysztof Kozlowski wrote:
+> The parent of disp_cc_mdss_byte0_intf_clk clock should not propagate up
+> the rates, because this messes up entire clock hierarchy when setting
+> clock rates in MSM DSI driver.
+> 
+> The dsi_link_clk_set_rate_6g() first sets entire clock hierarchy rates
+> via dev_pm_opp_set_rate() on byte clock and then sets individual clock
+> rates, like pixel and byte_intf clocks, to proper frequencies.  Having
+> CLK_SET_RATE_PARENT caused that entire tree was re-calced and the byte
+> clock received halved frequency.  Drop CLK_SET_RATE_PARENT to fix this
+> and align with SM8550 and SM8650.
+> 
+> Fixes: f1080d8dab0f ("clk: qcom: dispcc-sm8750: Add SM8750 Display clock controller")
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> 
 > ---
-> Konrad Dybcio (6):
->        dt-bindings: phy: qcom,qmp-pcie: Add X1P42100 PCIe Gen4x4 PHY
->        dt-bindings: phy: qcom,qmp-pcie: Drop reset number constraints
->        phy: qcom: qmp-pcie: Add X1P42100 Gen4x4 PHY
->        arm64: dts: qcom: x1e80100: Wire up PCIe PHY NOCSR resets
->        arm64: dts: qcom: Commonize X1 CRD DTSI
->        arm64: dts: qcom: Add X1P42100 SoC and CRD
->
->   .../bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml   |   26 +-
->   arch/arm64/boot/dts/qcom/Makefile                  |    1 +
->   .../dts/qcom/{x1e80100-crd.dts =3D> x1-crd.dtsi}     |    7 -
->   arch/arm64/boot/dts/qcom/x1e80100-crd.dts          | 1270 +-----------=
---------
->   arch/arm64/boot/dts/qcom/x1e80100-pmics.dtsi       |    2 +-
->   arch/arm64/boot/dts/qcom/x1e80100.dtsi             |   44 +-
->   arch/arm64/boot/dts/qcom/x1p42100-crd.dts          |   17 +
->   arch/arm64/boot/dts/qcom/x1p42100.dtsi             |   81 ++
->   drivers/phy/qualcomm/phy-qcom-qmp-pcie.c           |   18 +
->   9 files changed, 148 insertions(+), 1318 deletions(-)
+> 
+> Fix for v6.14-rcX.
 > ---
-> base-commit: d7dfdec72fb32629d1affc32ff37a66a7fd1fb53
-> change-id: 20250125-topic-x1p4_dts-3b9509bce3a3
-> prerequisite-message-id: 20250121094140.4006801-1-quic_wenbyao@quicinc.c=
-om
-> prerequisite-patch-id: 719a1c1319a8f25be57f1e9bc68887684ff0d7cd
-> prerequisite-patch-id: 44ff71b8033fc91867a83a2f8f063fd0d9951d5e
->
-> Best regards,
+>   drivers/clk/qcom/dispcc-sm8750.c | 2 --
+>   1 file changed, 2 deletions(-)
+> 
+> diff --git a/drivers/clk/qcom/dispcc-sm8750.c b/drivers/clk/qcom/dispcc-sm8750.c
+> index 0358dff91da5..e9bca179998b 100644
+> --- a/drivers/clk/qcom/dispcc-sm8750.c
+> +++ b/drivers/clk/qcom/dispcc-sm8750.c
+> @@ -827,7 +827,6 @@ static struct clk_regmap_div disp_cc_mdss_byte0_div_clk_src = {
+>   			&disp_cc_mdss_byte0_clk_src.clkr.hw,
+>   		},
+>   		.num_parents = 1,
+> -		.flags = CLK_SET_RATE_PARENT,
+>   		.ops = &clk_regmap_div_ops,
+>   	},
+>   };
+> @@ -842,7 +841,6 @@ static struct clk_regmap_div disp_cc_mdss_byte1_div_clk_src = {
+>   			&disp_cc_mdss_byte1_clk_src.clkr.hw,
+>   		},
+>   		.num_parents = 1,
+> -		.flags = CLK_SET_RATE_PARENT,
+>   		.ops = &clk_regmap_div_ops,
+>   	},
+>   };
 
-Hi Konrad,
-
-I applied the series, and its successfully tested on Lenovo Thinkbook 16
-G7 QOY.=C2=A0[1] Thank you!
-
-[1]
-https://github.com/jglathe/linux_ms_dev_kit/commits/jg/ubuntu-qcom-x1e-6.1=
-3/
-
-Tested-by: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
-
-with best regards
-
-Jens
-
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 
