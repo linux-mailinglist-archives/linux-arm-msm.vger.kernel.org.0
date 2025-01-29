@@ -1,70 +1,70 @@
-Return-Path: <linux-arm-msm+bounces-46540-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46541-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 227D7A222CF
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jan 2025 18:24:17 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4A12FA222D1
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jan 2025 18:24:21 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 52F8718828EA
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jan 2025 17:24:21 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E9E8D166A9D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jan 2025 17:24:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8C2E61E0DD0;
-	Wed, 29 Jan 2025 17:23:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 580B11DFD99;
+	Wed, 29 Jan 2025 17:23:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="KoUpu0+s"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="GQUd2O2m"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f74.google.com (mail-wm1-f74.google.com [209.85.128.74])
+Received: from mail-wr1-f74.google.com (mail-wr1-f74.google.com [209.85.221.74])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A3AA1E1C36
-	for <linux-arm-msm@vger.kernel.org>; Wed, 29 Jan 2025 17:23:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.74
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54EBA1E0DCD
+	for <linux-arm-msm@vger.kernel.org>; Wed, 29 Jan 2025 17:23:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.74
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738171421; cv=none; b=Onsxo2LsEkraxNlYdfJMphiaRPsGx0oKep0+vC+rJyQG52lhjse9hDttXUqkJRrDXa2z1BQabHxsjozWVxL1b58cLZXPFjUW1IZOf+7GsSqhhrmBB9IrgyWO2cIKn3A3+uX7tYjz0jGhylaQPPaDd7cGUZdTXcQy1NsAIulMEbA=
+	t=1738171423; cv=none; b=Oo8skTaqd3xVyfEWgqyf4MtXyFzCDxLVJ+sQ9HbCjV90iESFdr0oZdHzJVWGexsSkNf1MMZ+ileeW1ocDzSB1+vUa0lULKtsuq2twFVXsxGvSgLb22jGCSXfhp2Xd60420JEftVLgL4feUqsypwAaEzjCMchP3O8h/WpP+w/GFQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738171421; c=relaxed/simple;
-	bh=XPNmo/FlP/BRMBwZNSeXSnV0XlcjcPy5hRJg1uWWx+w=;
+	s=arc-20240116; t=1738171423; c=relaxed/simple;
+	bh=n3JRGftdE7xuh9J8pm8BC9fK31LMHdkQa4vKMTD2NnU=;
 	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=dIj7NlIn9DZ7cUD2bW81cSzlRmsB71RUeeMni7myHdWGFW/dsxqLj1ULgEq6Dh4WJ6EJ1zsmMWRhJzXEIl8PCmtCGhENdhM9qid2qQXSG/Kye+hvSLIqEnOUExIqRKBbn3H58OnvIx2h9z4v0AJ5Of1IO/FT9lTGSkP5JH+j+Q0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--tabba.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=KoUpu0+s; arc=none smtp.client-ip=209.85.128.74
+	 To:Cc:Content-Type; b=kAk/YteV5pFSFd/uHiAtN74pTKXDVrHbUrBKLrA4wp5CYskHilEp/sue/hw9hxMaLaBUb1c0XVQZAT83zB7hsAk5Qzkgq7lIw+lTZvRpo9uLIWP6VjRXX/QAEiFnmfzOE4gp7deTYaHk4PVha/UxCvZHmU2OUgndRVmIRFenBxE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--tabba.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=GQUd2O2m; arc=none smtp.client-ip=209.85.221.74
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--tabba.bounces.google.com
-Received: by mail-wm1-f74.google.com with SMTP id 5b1f17b1804b1-43624b08181so5264615e9.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Jan 2025 09:23:38 -0800 (PST)
+Received: by mail-wr1-f74.google.com with SMTP id ffacd0b85a97d-385ded5e92aso2932457f8f.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Jan 2025 09:23:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1738171417; x=1738776217; darn=vger.kernel.org;
+        d=google.com; s=20230601; t=1738171420; x=1738776220; darn=vger.kernel.org;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=clAA2pQ0aAsHHtJcPdsprveMf7sd3Qr2fHuajtMaEDo=;
-        b=KoUpu0+sf9hFJLQ13uMhUCaFbqdcu2neAp+TKMYMoUVnRlWRqjKkVatfGPd4xBFxw2
-         tHfzYcXaOxFzIyoXxEl2orMbcVwito84uJocaY3rJYpoynA7a9ag9y0sN2lO/QxPV6CA
-         rM25GGC5I0csWy5rf+7P3Rm9umXHEGIBtmfZKUlXv7UGGbWBaPKxpUfZNpSP99Gn3qEE
-         DVRBfZD86O2Sf1rXRSXeIvlk4Uws5ZSBK/Sr/+XxFnNsSr302npX65a8rCKKwFnO+oYZ
-         f7qK0EvN0MvmABMgr1aqGpP8ypcK3bHCD8rl+CtKWY35VSi1+Bc2qRWUif8x6fKw92co
-         QUKQ==
+        bh=gJUlshLqVqxF/x1Q6yciZ2xZ0kPW08W616puHCRAMyA=;
+        b=GQUd2O2mBsj+urYK+gCpaT1jKJM5ngBRQ08XV/8WNC1JXAdUUiukXD5j/u37FBRbVz
+         fbSutEJR2beiQUF2rrQU0dYzH2GuvLJz0tLI26tpIfsK5ZkJGIC2M3Mabv/LOgj8usIc
+         bkopMHd5OOQknJ8vE+oZAl1DT6N+V7OQi+9rJEO8tUXqxsIuUhISWB01MTECtvqWpPTz
+         lmPsYR2hGX0iA8vszfpbTi3DJHqfEdFFjrHHscWpOAlDN7zPlFXhjwrOF5XjdOlVwUnu
+         GCpTTo7ZHvk2XZIxvWECepoHx0K53Nqrvk09mjRe+cmS2Iah5xk7LMviWtxiQ6APniPF
+         /4lw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738171417; x=1738776217;
+        d=1e100.net; s=20230601; t=1738171420; x=1738776220;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=clAA2pQ0aAsHHtJcPdsprveMf7sd3Qr2fHuajtMaEDo=;
-        b=t2fG4QboR4Y5c90Ggsv/0cXtTk89FmELf4z0E+NQSbF0CosLtYcFW+ri2JZ3XNAmBa
-         OhZhLsdNZLeWsciVZAZsZtpsG2wuAR/LAIVUrObTJlv1R/UmU0oNcQ80uW1TSF9GvRXm
-         sy70TrsXh9hh6x9hXMGtEoB0SqYKo+d7JV+YQeg+KjhFk5ZArUxWeG6hdMAdZjGmBLFz
-         zJfIiM99BYobc8F3DUR0LX8tVgkYY+6LWId22rhrnVNEyZGVUZL0h1UAZ2aWmE3hJ4+g
-         WJ0pul2idgIuC1+3NV+nbLk1u2wIgeZnI3fsPV/ndamTLJXLlmO5q1zHQ92ZUf7pqcrN
-         6zBQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWe6zfg+V8ecoh1WhrutVMK/zFc1KnG5YNlaE1N9dIlv8J2qv4QR3owCULkGra/+kVsFs2ez6b3gyqp0zIA@vger.kernel.org
-X-Gm-Message-State: AOJu0YwUn0sqrbw4DdgFfjTtG0bRKmVVZmJk1Cyrq0hUb3X3LpvkMYee
-	ot8ERvEz0/4CYWJdKwqQN548TPiFnvizv9nkZCceFSmbM3TQS70PKck7L3UPeIWZh3GBDUwYPw=
+        bh=gJUlshLqVqxF/x1Q6yciZ2xZ0kPW08W616puHCRAMyA=;
+        b=mTYWfjau3uksT7YdB/A48bzKkFsQbFR86sg/uSBrp9tY/7/a5TRuvx4b9dxEz5F2ye
+         nFOfk6qh9JM5OMLda86aLFf73dcgPZxV2IHVuT5Q2KKpmL8hFVpsofx9wP2Gf0AaMoJd
+         owGI07hLcZy8S5vYwKMmabq6w1s3/msPcBnv6aSpEyWrBT5bgtLbIayTWNUQ6Dz1SzIn
+         nRrfvvRA+/rrYfB7yPJt5mnkWeP4Lp86wLNmHNOXhP+uUmmBFh4AwImbwVBuLLnwhzIR
+         ETLX1hMtQDHt4EZAKxQhfkIIsFwnQPBJfRivgm3p0+eg4XKZQgWPH4cS6T45rbTiOUQc
+         BSfA==
+X-Forwarded-Encrypted: i=1; AJvYcCUMZCKwNAzKeyVm2ajA/cAqGwm/5W78b6NfJstH2TSplgT/EehefT3qfznPfJvrfBAON2y0vTh7WJCuQYV+@vger.kernel.org
+X-Gm-Message-State: AOJu0YzmoE0eU1KF2ZJ/PiaI9daoBQmW9BqC77kQKkz5C/+mWbhfM9/t
+	i1M0SkOBAw8KHs+14kUpIQgJ9xpNzZY0zzqtImL14GuXMyBYj3J/E4Q5GfhKAudEyn/J9x3+oQ=
 	=
-X-Google-Smtp-Source: AGHT+IH4Z/w8m7ect4Xjx7d6nFW4rotWrjkyMgHYG1tUIFYfo/owBhkDUsni5QfNbmeYmc7O93FGA8qkJQ==
-X-Received: from wmd22.prod.google.com ([2002:a05:600c:6056:b0:435:dde5:2c3b])
- (user=tabba job=prod-delivery.src-stubby-dispatcher) by 2002:a05:600c:b8d:b0:436:1b77:b5aa
- with SMTP id 5b1f17b1804b1-438e15e8307mr1177165e9.8.1738171417631; Wed, 29
- Jan 2025 09:23:37 -0800 (PST)
-Date: Wed, 29 Jan 2025 17:23:16 +0000
+X-Google-Smtp-Source: AGHT+IFusRcrVc4/78hZx6Io2rOdbnPNNEy+1FtewyjP5IWPByZvcuY2dAJE2DcSV4SFz55Z5sZ6LOwVmQ==
+X-Received: from wmgg8.prod.google.com ([2002:a05:600d:8:b0:436:e67f:5b4c])
+ (user=tabba job=prod-delivery.src-stubby-dispatcher) by 2002:adf:fa11:0:b0:385:e8aa:2a4e
+ with SMTP id ffacd0b85a97d-38c51b87e3fmr2896212f8f.31.1738171419742; Wed, 29
+ Jan 2025 09:23:39 -0800 (PST)
+Date: Wed, 29 Jan 2025 17:23:17 +0000
 In-Reply-To: <20250129172320.950523-1-tabba@google.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
@@ -74,9 +74,9 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 Mime-Version: 1.0
 References: <20250129172320.950523-1-tabba@google.com>
 X-Mailer: git-send-email 2.48.1.262.g85cc9f2d1e-goog
-Message-ID: <20250129172320.950523-8-tabba@google.com>
-Subject: [RFC PATCH v2 07/11] KVM: arm64: Refactor user_mem_abort()
- calculation of force_pte
+Message-ID: <20250129172320.950523-9-tabba@google.com>
+Subject: [RFC PATCH v2 08/11] KVM: arm64: Handle guest_memfd()-backed guest
+ page faults
 From: Fuad Tabba <tabba@google.com>
 To: kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org
 Cc: pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au, 
@@ -100,56 +100,195 @@ Cc: pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au,
 	jthoughton@google.com, tabba@google.com
 Content-Type: text/plain; charset="UTF-8"
 
-To simplify the code and to make the assumptions clearer,
-refactor user_mem_abort() by immediately setting force_pte to
-true if logging_active is true. Also, add a check to ensure that
-the assumption that logging_active is guaranteed to never be true
-for VM_PFNMAP memslot is true.
+Add arm64 support for handling guest page faults on guest_memfd
+backed memslots.
+
+For now, the fault granule is restricted to PAGE_SIZE.
 
 Signed-off-by: Fuad Tabba <tabba@google.com>
 ---
- arch/arm64/kvm/mmu.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ arch/arm64/kvm/mmu.c     | 84 ++++++++++++++++++++++++++--------------
+ include/linux/kvm_host.h |  5 +++
+ virt/kvm/kvm_main.c      |  5 ---
+ 3 files changed, 61 insertions(+), 33 deletions(-)
 
 diff --git a/arch/arm64/kvm/mmu.c b/arch/arm64/kvm/mmu.c
-index c9d46ad57e52..1ec362d0d093 100644
+index 1ec362d0d093..c1f3ddb88cb9 100644
 --- a/arch/arm64/kvm/mmu.c
 +++ b/arch/arm64/kvm/mmu.c
-@@ -1436,7 +1436,7 @@ static int user_mem_abort(struct kvm_vcpu *vcpu, phys_addr_t fault_ipa,
- 			  bool fault_is_perm)
+@@ -1430,6 +1430,33 @@ static bool kvm_vma_mte_allowed(struct vm_area_struct *vma)
+ 	return vma->vm_flags & VM_MTE_ALLOWED;
+ }
+ 
++static kvm_pfn_t faultin_pfn(struct kvm *kvm, struct kvm_memory_slot *slot,
++			     gfn_t gfn, bool write_fault, bool *writable,
++			     struct page **page, bool is_private)
++{
++	kvm_pfn_t pfn;
++	int ret;
++
++	if (!is_private)
++		return __kvm_faultin_pfn(slot, gfn, write_fault ? FOLL_WRITE : 0, writable, page);
++
++	*writable = false;
++
++	if (WARN_ON_ONCE(write_fault && memslot_is_readonly(slot)))
++		return KVM_PFN_ERR_NOSLOT_MASK;
++
++	ret = kvm_gmem_get_pfn(kvm, slot, gfn, &pfn, page, NULL);
++	if (!ret) {
++		*writable = write_fault;
++		return pfn;
++	}
++
++	if (ret == -EHWPOISON)
++		return KVM_PFN_ERR_HWPOISON;
++
++	return KVM_PFN_ERR_NOSLOT_MASK;
++}
++
+ static int user_mem_abort(struct kvm_vcpu *vcpu, phys_addr_t fault_ipa,
+ 			  struct kvm_s2_trans *nested,
+ 			  struct kvm_memory_slot *memslot, unsigned long hva,
+@@ -1437,24 +1464,25 @@ static int user_mem_abort(struct kvm_vcpu *vcpu, phys_addr_t fault_ipa,
  {
  	int ret = 0;
--	bool write_fault, writable, force_pte = false;
-+	bool write_fault, writable;
- 	bool exec_fault, mte_allowed;
+ 	bool write_fault, writable;
+-	bool exec_fault, mte_allowed;
++	bool exec_fault, mte_allowed = false;
  	bool device = false, vfio_allow_any_uc = false;
  	unsigned long mmu_seq;
-@@ -1448,6 +1448,7 @@ static int user_mem_abort(struct kvm_vcpu *vcpu, phys_addr_t fault_ipa,
- 	gfn_t gfn;
+ 	phys_addr_t ipa = fault_ipa;
+ 	struct kvm *kvm = vcpu->kvm;
+ 	struct kvm_mmu_memory_cache *memcache = &vcpu->arch.mmu_page_cache;
+-	struct vm_area_struct *vma;
++	struct vm_area_struct *vma = NULL;
+ 	short vma_shift;
+-	gfn_t gfn;
++	gfn_t gfn = ipa >> PAGE_SHIFT;
  	kvm_pfn_t pfn;
  	bool logging_active = memslot_is_logging(memslot);
-+	bool force_pte = logging_active;
- 	long vma_pagesize, fault_granule;
+-	bool force_pte = logging_active;
+-	long vma_pagesize, fault_granule;
++	bool is_private = kvm_mem_is_private(kvm, gfn);
++	bool force_pte = logging_active || is_private;
++	long vma_pagesize, fault_granule = PAGE_SIZE;
  	enum kvm_pgtable_prot prot = KVM_PGTABLE_PROT_R;
  	struct kvm_pgtable *pgt;
-@@ -1493,12 +1494,13 @@ static int user_mem_abort(struct kvm_vcpu *vcpu, phys_addr_t fault_ipa,
- 	 * logging_active is guaranteed to never be true for VM_PFNMAP
- 	 * memslots.
- 	 */
--	if (logging_active) {
--		force_pte = true;
-+	if (WARN_ON_ONCE(logging_active && (vma->vm_flags & VM_PFNMAP)))
-+		return -EFAULT;
-+
-+	if (force_pte)
- 		vma_shift = PAGE_SHIFT;
--	} else {
-+	else
- 		vma_shift = get_vma_page_shift(vma, hva);
--	}
+ 	struct page *page;
  
- 	switch (vma_shift) {
- #ifndef __PAGETABLE_PMD_FOLDED
+-	if (fault_is_perm)
++	if (fault_is_perm && !is_private)
+ 		fault_granule = kvm_vcpu_trap_get_perm_fault_granule(vcpu);
+ 	write_fault = kvm_is_write_fault(vcpu);
+ 	exec_fault = kvm_vcpu_trap_is_exec_fault(vcpu);
+@@ -1478,24 +1506,30 @@ static int user_mem_abort(struct kvm_vcpu *vcpu, phys_addr_t fault_ipa,
+ 			return ret;
+ 	}
+ 
++	mmap_read_lock(current->mm);
++
+ 	/*
+ 	 * Let's check if we will get back a huge page backed by hugetlbfs, or
+ 	 * get block mapping for device MMIO region.
+ 	 */
+-	mmap_read_lock(current->mm);
+-	vma = vma_lookup(current->mm, hva);
+-	if (unlikely(!vma)) {
+-		kvm_err("Failed to find VMA for hva 0x%lx\n", hva);
+-		mmap_read_unlock(current->mm);
+-		return -EFAULT;
+-	}
++	if (!is_private) {
++		vma = vma_lookup(current->mm, hva);
++		if (unlikely(!vma)) {
++			kvm_err("Failed to find VMA for hva 0x%lx\n", hva);
++			mmap_read_unlock(current->mm);
++			return -EFAULT;
++		}
+ 
+-	/*
+-	 * logging_active is guaranteed to never be true for VM_PFNMAP
+-	 * memslots.
+-	 */
+-	if (WARN_ON_ONCE(logging_active && (vma->vm_flags & VM_PFNMAP)))
+-		return -EFAULT;
++		/*
++		 * logging_active is guaranteed to never be true for VM_PFNMAP
++		 * memslots.
++		 */
++		if (WARN_ON_ONCE(logging_active && (vma->vm_flags & VM_PFNMAP)))
++			return -EFAULT;
++
++		vfio_allow_any_uc = vma->vm_flags & VM_ALLOW_ANY_UNCACHED;
++		mte_allowed = kvm_vma_mte_allowed(vma);
++	}
+ 
+ 	if (force_pte)
+ 		vma_shift = PAGE_SHIFT;
+@@ -1565,18 +1599,13 @@ static int user_mem_abort(struct kvm_vcpu *vcpu, phys_addr_t fault_ipa,
+ 		ipa &= ~(vma_pagesize - 1);
+ 	}
+ 
+-	gfn = ipa >> PAGE_SHIFT;
+-	mte_allowed = kvm_vma_mte_allowed(vma);
+-
+-	vfio_allow_any_uc = vma->vm_flags & VM_ALLOW_ANY_UNCACHED;
+-
+ 	/* Don't use the VMA after the unlock -- it may have vanished */
+ 	vma = NULL;
+ 
+ 	/*
+ 	 * Read mmu_invalidate_seq so that KVM can detect if the results of
+-	 * vma_lookup() or __kvm_faultin_pfn() become stale prior to
+-	 * acquiring kvm->mmu_lock.
++	 * vma_lookup() or faultin_pfn() become stale prior to acquiring
++	 * kvm->mmu_lock.
+ 	 *
+ 	 * Rely on mmap_read_unlock() for an implicit smp_rmb(), which pairs
+ 	 * with the smp_wmb() in kvm_mmu_invalidate_end().
+@@ -1584,8 +1613,7 @@ static int user_mem_abort(struct kvm_vcpu *vcpu, phys_addr_t fault_ipa,
+ 	mmu_seq = vcpu->kvm->mmu_invalidate_seq;
+ 	mmap_read_unlock(current->mm);
+ 
+-	pfn = __kvm_faultin_pfn(memslot, gfn, write_fault ? FOLL_WRITE : 0,
+-				&writable, &page);
++	pfn = faultin_pfn(kvm, memslot, gfn, write_fault, &writable, &page, is_private);
+ 	if (pfn == KVM_PFN_ERR_HWPOISON) {
+ 		kvm_send_hwpoison_signal(hva, vma_shift);
+ 		return 0;
+diff --git a/include/linux/kvm_host.h b/include/linux/kvm_host.h
+index e57cdf4e3f3f..42397fc4a1fb 100644
+--- a/include/linux/kvm_host.h
++++ b/include/linux/kvm_host.h
+@@ -1864,6 +1864,11 @@ static inline int memslot_id(struct kvm *kvm, gfn_t gfn)
+ 	return gfn_to_memslot(kvm, gfn)->id;
+ }
+ 
++static inline bool memslot_is_readonly(const struct kvm_memory_slot *slot)
++{
++	return slot->flags & KVM_MEM_READONLY;
++}
++
+ static inline gfn_t
+ hva_to_gfn_memslot(unsigned long hva, struct kvm_memory_slot *slot)
+ {
+diff --git a/virt/kvm/kvm_main.c b/virt/kvm/kvm_main.c
+index 40e4ed512923..9f913a7fc44b 100644
+--- a/virt/kvm/kvm_main.c
++++ b/virt/kvm/kvm_main.c
+@@ -2622,11 +2622,6 @@ unsigned long kvm_host_page_size(struct kvm_vcpu *vcpu, gfn_t gfn)
+ 	return size;
+ }
+ 
+-static bool memslot_is_readonly(const struct kvm_memory_slot *slot)
+-{
+-	return slot->flags & KVM_MEM_READONLY;
+-}
+-
+ static unsigned long __gfn_to_hva_many(const struct kvm_memory_slot *slot, gfn_t gfn,
+ 				       gfn_t *nr_pages, bool write)
+ {
 -- 
 2.48.1.262.g85cc9f2d1e-goog
 
