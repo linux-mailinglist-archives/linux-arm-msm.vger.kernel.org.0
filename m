@@ -1,206 +1,143 @@
-Return-Path: <linux-arm-msm+bounces-46514-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46515-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3CC04A21F10
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jan 2025 15:26:28 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id C8A4DA21F22
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jan 2025 15:31:11 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8CF71160151
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jan 2025 14:26:26 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 346C518844E0
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jan 2025 14:31:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4489F13BAE4;
-	Wed, 29 Jan 2025 14:26:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8D5252110E;
+	Wed, 29 Jan 2025 14:31:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="PdWseG1g"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="KWLqou2d"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f181.google.com (mail-lj1-f181.google.com [209.85.208.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79E6F7E1
-	for <linux-arm-msm@vger.kernel.org>; Wed, 29 Jan 2025 14:26:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD01B367
+	for <linux-arm-msm@vger.kernel.org>; Wed, 29 Jan 2025 14:31:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738160785; cv=none; b=eeoHKAgFghZJdQgkQd/Nbh41nnoYphdkeQ2F10qiiz6DkRTcxcPvk4NGQDlCg0HH6uKAqr0HvgUE036UtwksV+3p9M42KDbvk/B9J8cxXgj5AdqiK5jtBO+5CS+fjTgh8GXqzStftmE0nAP3o6dbXWv2M1W9fiq56DPSzqy00Lo=
+	t=1738161069; cv=none; b=JakzAED0de7QlMeJ7aV1Scxbs/P3Mz/OtTMBLJkiEsj6snfYGSiEV6aX3WGPTVswVjzvogoICDxmCbuTsG+B+WBYEljSE2NWw0uKfhHty1aomNX91YoZrKOSneMCuaPfigoomBkkSnG4q1AJsLrmnrZguaa74ezDNzKV58YNdjI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738160785; c=relaxed/simple;
-	bh=upO1szqsGrctpocpedrWQrUbVSGuOGiUp8W6bu7k4Ok=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=bR8fng4FlZNQ+j3ZOZoogWKHgUkvYINLgRZ2aDsqkcphuewoWlpKL9fB8oDZqs8VkjTw+5ZnXKvj0fH5/fF7gHB0dbv+0TuPPM0Uun/zDAWkJBdQLKkoRntwerfCXLaTSsV+hmvh0PrRfKAk7svAjHTGYFI06bA9ZVJ8RnxgIis=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=PdWseG1g; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50T4ZfCL023905
-	for <linux-arm-msm@vger.kernel.org>; Wed, 29 Jan 2025 14:26:22 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	Y90IeSV1c8E1ITAjBf3zASZwIa5fTfZk4/hpGgHosLc=; b=PdWseG1gZStW2kaH
-	gdJA6YppHYoKdzSdkAe7v/IzPNxTa37U9LXXyi1pec6AqJIOn1tWzdF6DDGMla7n
-	4NSW2eC28RcAUDkx2JAhjlcEq2pkvW8okvHYCOcC/CLVtub1y4z/YrY+IuAiELsi
-	ib5/xaRdokjLkYlOs0K4rIpVniXgX19pPjPe/CLa17LZgsWujNYPr4OHPp+ns4LT
-	1luN1IHlPHJ9BZEwKja9BdDojIqWVUknTerZp+GKNnzWm3wZhpljzA6EunWo02ab
-	Nb18AtYaf6vlmVxLaJrH6USNYARMPtUYytxoOnc6cAe+v/8YVdkoAzVQc+jrLJWf
-	cGEHDw==
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com [209.85.160.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44fdd8s0pw-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 29 Jan 2025 14:26:22 +0000 (GMT)
-Received: by mail-qt1-f197.google.com with SMTP id d75a77b69052e-467a437e5feso18110461cf.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Jan 2025 06:26:21 -0800 (PST)
+	s=arc-20240116; t=1738161069; c=relaxed/simple;
+	bh=qxPTAcisoQDpVdFupmLwBplqb0gawsQjilmvOQX5qPI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=k37ANgGBG9bxlWEDRPtBWQnR7h4EOdxJGGs9WMpq4EkGH0NteUR3j1Yduwr7S+ZoWXRmhOEGF+Bu0GNU3+rMcZw0CMUbR394D0L3Xl/5rMmSxDZNz2i89ZywYCCUcgEO3g/uXWaPsHOZa176j3L7gtrwoazZvM51DMK0mRdjwVI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=KWLqou2d; arc=none smtp.client-ip=209.85.208.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lj1-f181.google.com with SMTP id 38308e7fff4ca-303548a933aso62581441fa.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Jan 2025 06:31:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1738161066; x=1738765866; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=pVy4t4cB0UKE4FfYHqIFPU0/jXfWjWZ0p1/3jveveAc=;
+        b=KWLqou2dH8FTK2mtvfiGkam63CubB8+X6zk9A0vk1dpHAUj9EgltxqOGCnZI04v7P+
+         ry23qNRXNQHQ1i3fPQmOjG70/gsbCpd9p7NoywVAS3abYw04lUr3v+gKUp5y+Qgh8Ygw
+         wsrAJiNLmMsfbsPAtvbEQ9EpOJ3Zhw70dYLbXpV6dcWOcC3Z0xXyDB9f3lhRkwYGpR2x
+         Y0h9r4OSnzMnu9lStKNRh+nWlDDTzS4AReLaOXeLYnxPl+lQ4/nD4h38URO3byxoFHbe
+         qNNyLqxsFffUHXwLUrFVc5pMMCsP/kDxwo4AxA5kPhw/K+ezuH+yYkr3INqKMH7MyjW0
+         SMKA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738160778; x=1738765578;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Y90IeSV1c8E1ITAjBf3zASZwIa5fTfZk4/hpGgHosLc=;
-        b=IKGgvBAwNy688uWuBDnSvYOr9dC40p5p6VQKZ9Oon9mzthdbKELcQU/jLNM4z9xQ/H
-         jgXn0OZEGkKCDOKX/EfcmGH6solaxuhSWI2v+rfE5Duol7meNZwtqUwtmPif/9bUsJxo
-         C7XTrGPq306eMpz3ilevIw/LA65iNAfqX5KsQ084B6zGugrB65njGY40B6TgU0i1YqAu
-         FuYhlwQaDiqdMu4hmApLbaLzg8BOIsdUkv0Gr/DpQ/s467pDkOU/FSbyfGTcAzcrdRh1
-         2211KcMjzzYVcbFPQAVz8x63CIxh+i8g1zN5MQ4e/7Stl6uvG3N9fwgyfIOmpZwo7sBr
-         JeoA==
-X-Forwarded-Encrypted: i=1; AJvYcCWU+egEDYLvUw+5URAy4mDGl65NxNflLtZXEMdt0brZwKxVX8Bn8dj/Lh/+4hoJod7d6MRF7mBGshpdkUtL@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy/rwfchNq/sJCB8tVMJD6tUrXVXiUgU8rooagr7G2cTJ2+V2NR
-	ipb0iD9qKlHGV8yv35TSq2Po1wrwifEi/Zug+BZ6p6p5Am5/bVl0zm7MUs9Gto/ADBul3+YvXpK
-	fdTAh1Egk5mUXk/U/L76vpZUNAWOcU40tUqG6FeawqKun4/ykF5Ye1oFXFewo2b0r
-X-Gm-Gg: ASbGncup3N1PrCVbLlxWG0skyAjpaMQ1XY8Cn3fsU1Oxec6uy+qffleYsp+iEwcpCVI
-	Ybj5mpS1XEq8M99S9KKRwh0SXUpSkEXhfDFEfyb492xDFgcYU0c2dK1j/LAHGtxviAAicng8Nu9
-	jNQDkoJDW9vuxiozfItNeSY7lOPfRPe8DJinZC2do0EXNzABvpKrDfcyKbdmUhlfYJ3kcjj83OY
-	69q2ev+nNEk1TYH4dZgPvcIGHhEvLm/QXcVkqUvXjdJzzb68U0hn/GP6Ga2f2O8plLmcEnvlW5P
-	qC5j1SjskhjH99YrwwD/pAjR/rlMmfGuwxlLoT+zP+lbMiXVpl7L303QyaI=
-X-Received: by 2002:a05:622a:1496:b0:467:6486:78bb with SMTP id d75a77b69052e-46fd0a41b9fmr18841591cf.5.1738160778382;
-        Wed, 29 Jan 2025 06:26:18 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFCNf1RBTp6oWIGRWle1mL3ksQXz1UepkfqPVNPLNu7sLQ0Ep4heqkzXkKY2PW3Bx/m6WbeIg==
-X-Received: by 2002:a05:622a:1496:b0:467:6486:78bb with SMTP id d75a77b69052e-46fd0a41b9fmr18841291cf.5.1738160777971;
-        Wed, 29 Jan 2025 06:26:17 -0800 (PST)
-Received: from [192.168.65.90] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ab676114a73sm972451466b.162.2025.01.29.06.26.16
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 29 Jan 2025 06:26:17 -0800 (PST)
-Message-ID: <ba800255-e2b0-4b92-9ff0-f7ed744fec8c@oss.qualcomm.com>
-Date: Wed, 29 Jan 2025 15:26:15 +0100
+        d=1e100.net; s=20230601; t=1738161066; x=1738765866;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=pVy4t4cB0UKE4FfYHqIFPU0/jXfWjWZ0p1/3jveveAc=;
+        b=OjvjmbAjoXgcnPkvaX1J29V7Sw8fPlEd/q57eLVAGjVjbPN5vsHnLJzohUIaBd0+pW
+         L2fk5DX0p5zylKivvd6YSbQOVLb1VbUkBCLol4cuwV8j4tEjI65oVG91z6T5xD6byaMB
+         D0rk7iY0M/nbYYZLaucWj+T7Yf7i768ov1aTJ4pqKyN74W7khzbdc99QU1iQp9BKD+Hg
+         qVEoDfmV5Ipyx53GSVHjUJH/mbzOjl/jVWK6rUdkTymJHZ08f1JdUmVY82+XIelFSdql
+         CC/60LsBiV9V1P8yMNHPLjmRH0RdVDnai3zYiOQ+j+zVg0clomkWsMEjTLccHV72eH0t
+         p9Tg==
+X-Forwarded-Encrypted: i=1; AJvYcCU6jMeJ+t3TLgDMS6r8JgF2S7vP99f3myzhuWU7SpD0WnPI+TNTGFwfg0oP4S01Q0E8e3ftLFbfIcYuCth0@vger.kernel.org
+X-Gm-Message-State: AOJu0YxGAdKHe7p3wCdBoEan/9MbbWIk942qYBVKj3rjikcKkXjEZGOg
+	iA4ggcOcuiW+hnuoDWyfVJTS52RkL5vK9BF9tgW+MOybY01LVDbggAszejqyWd0VATwfiIp0wfZ
+	tc3k=
+X-Gm-Gg: ASbGncv9BRYauDyuD2IDqC4FDp6JWnyeDLRjLNEK6u9QNSTZadS1iBOeDEU5w1SHoKe
+	ATQZRQTIvmjoh+4dVJuryxVbssfXYOk32ET9C0pTsY5lLiGbF+VRXQz0zBEvm33EHrN0FYPNS9O
+	VHefZMUEOwd+c0yPPl+auXrxYJBtgYugEzNyOV/b3sHbRtNeF1PG9PSEL3NX4kFup2yVEr+f25E
+	tf+P3poaYDnc9joYoBU8b9f6WL4GNpEtivLFCJEjE0pl/ou3LoHkQQlIFt5nlusAHrddUhZNoj0
+	l1Zx94z5iAtZIPJhfZtBZAB2cuL7CBkgCcmtL2VVFLIo7NavcK4zwRJ0jfsDdB3USyi/Pos=
+X-Google-Smtp-Source: AGHT+IGiFX0DAOip+lO73WcET9swpVWNQ7eiRCrLXIVYnD59II5BJCbVk0x92HCSNEMStqdqKSHwqg==
+X-Received: by 2002:a2e:bc01:0:b0:302:29a5:6e01 with SMTP id 38308e7fff4ca-3079680c529mr12837351fa.2.1738161065789;
+        Wed, 29 Jan 2025 06:31:05 -0800 (PST)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-3076bc18ce8sm21731551fa.67.2025.01.29.06.31.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 29 Jan 2025 06:31:05 -0800 (PST)
+Date: Wed, 29 Jan 2025 16:31:03 +0200
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc: Rob Clark <robdclark@gmail.com>, 
+	Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
+	Simona Vetter <simona@ffwll.ch>, linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+	freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH RFC] drm/msm/dsi/phy: Program clock inverters in correct
+ register
+Message-ID: <kdnbhw2ng2kuhm2ynlmtxz4bnq6j243ktqwfvr4mgrr6w5uy7d@4j6cictf4tpu>
+References: <20250129115504.40080-1-krzysztof.kozlowski@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 2/2] arm64: dts: qcom: qcs8300: Add device node for
- gfx_smmu
-To: Pratyush Brahma <quic_pbrahma@quicinc.com>,
-        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, andersson@kernel.org
-Cc: konradybcio@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
-        conor+dt@kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Prakash Gupta <quic_guptap@quicinc.com>
-References: <20241227110024.30203-1-quic_pbrahma@quicinc.com>
- <1c8af731-c551-4d72-84a0-f14d57bec4ec@oss.qualcomm.com>
- <e7abe34c-9df9-425b-933e-cc744a63b80c@quicinc.com>
- <41fd6b59-249d-4f19-9ff8-4ae169a6db05@oss.qualcomm.com>
- <27aa8dc3-34b9-40e7-93bc-e52118b46138@quicinc.com>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <27aa8dc3-34b9-40e7-93bc-e52118b46138@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: Otb2x9xUsBuzws35ToLmURsUlE5oylB5
-X-Proofpoint-GUID: Otb2x9xUsBuzws35ToLmURsUlE5oylB5
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-01-29_02,2025-01-29_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 bulkscore=0
- clxscore=1015 spamscore=0 phishscore=0 adultscore=0 malwarescore=0
- lowpriorityscore=0 mlxlogscore=999 priorityscore=1501 impostorscore=0
- mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2501290117
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250129115504.40080-1-krzysztof.kozlowski@linaro.org>
 
-On 28.01.2025 11:02 AM, Pratyush Brahma wrote:
+On Wed, Jan 29, 2025 at 12:55:04PM +0100, Krzysztof Kozlowski wrote:
+> Since SM8250 all downstream sources program clock inverters in
+> PLL_CLOCK_INVERTERS_1 register and leave the PLL_CLOCK_INVERTERS as
+> reset value (0x0).  The most recent Hardware Programming Guide for 3 nm,
+> 4 nm, 5 nm and 7 nm PHYs also mention PLL_CLOCK_INVERTERS_1.
 > 
-> On 1/9/2025 8:56 PM, Konrad Dybcio wrote:
->> On 8.01.2025 1:10 PM, Pratyush Brahma wrote:
->>> On 12/30/2024 6:49 PM, Konrad Dybcio wrote:
->>>> On 27.12.2024 12:00 PM, Pratyush Brahma wrote:
->>>>> Add the device node for gfx smmu that is required for gpu
->>>>> specific address translations.
->>>>>
->>>>> This patch depends on the patch series [1] posted by Imran Shaik
->>>>> adding the clock support for gpu.
->>>>>
->>>>> [1] https://lore.kernel.org/all/802d32f1-ff7e-4d61-83f1-f804ee1750ed@oss.qualcomm.com/
->>>>>
->>>>> Signed-off-by: Pratyush Brahma <quic_pbrahma@quicinc.com>
->>>>> ---
->>>>>    arch/arm64/boot/dts/qcom/qcs8300.dtsi | 37 +++++++++++++++++++++++++++
->>>>>    1 file changed, 37 insertions(+)
->>>>>
->>>>> diff --git a/arch/arm64/boot/dts/qcom/qcs8300.dtsi b/arch/arm64/boot/dts/qcom/qcs8300.dtsi
->>>>> index 80226992a65d..8eb688e2df0a 100644
->>>>> --- a/arch/arm64/boot/dts/qcom/qcs8300.dtsi
->>>>> +++ b/arch/arm64/boot/dts/qcom/qcs8300.dtsi
->>>>> @@ -816,6 +816,43 @@
->>>>>                #power-domain-cells = <1>;
->>>>>            };
->>>>>    +        adreno_smmu: iommu@3da0000 {
->>>>> +            compatible = "qcom,qcs8300-smmu-500", "qcom,adreno-smmu",
->>>>> +                   "qcom,smmu-500", "arm,mmu-500";
->>>>> +            reg = <0x0 0x3da0000 0x0 0x20000>;
->>>>> +            #iommu-cells = <2>;
->>>>> +            #global-interrupts = <2>;
->>>>> +            dma-coherent;
->>>>> +
->>>>> +            power-domains = <&gpucc GPU_CC_CX_GDSC>;
->>>>> +            clocks = <&gcc GCC_GPU_MEMNOC_GFX_CLK>,
->>>>> +                 <&gcc GCC_GPU_SNOC_DVM_GFX_CLK>,
->>>>> +                 <&gpucc GPU_CC_AHB_CLK>,
->>>>> +                 <&gpucc GPU_CC_HLOS1_VOTE_GPU_SMMU_CLK>,
->>>>> +                 <&gpucc GPU_CC_CX_GMU_CLK>,
->>>>> +                 <&gpucc GPU_CC_HUB_CX_INT_CLK>,
->>>>> +                 <&gpucc GPU_CC_HUB_AON_CLK>;
->>>>> +            clock-names = "gcc_gpu_memnoc_gfx_clk",
->>>>> +                      "gcc_gpu_snoc_dvm_gfx_clk",
->>>>> +                      "gpu_cc_ahb_clk",
->>>>> +                      "gpu_cc_hlos1_vote_gpu_smmu_clk",
->>>>> +                      "gpu_cc_cx_gmu_clk",
->>>>> +                      "gpu_cc_hub_cx_int_clk",
->>>>> +                      "gpu_cc_hub_aon_clk";
->>>> Most of these entries look totally bogus, please make sure you only
->>>> reference the ones actually required
->>> These entries are exactly similar to the ones we use in sa8775p as well [1] and the usecases
->>> haven't changed between qcs8300 and sa8775p.
->>>
->>> Can you please let me know which entries you find irrelevant here?
->> Well, I'm particularly unsure about CX_GMU and the HUB clocks.
->> I >>don't think<< they don't have much to do with the SMMU, but please
->> check internally with someone who knows for sure
-> I checked internally and found that these clocks are required for gpu smmu operations
-> as we don't use interconnect voting mechanism here as we do downstream. Hence the
-> list of clocks is same across all targets using gpu smmu as described in [1] previously.
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> 
+> ---
+> 
+> Not tested except my work-in-progress oon SM8750. Not sure what is the
+> impact, so also no Fixes tag.
 
-I managed to dig up some documents too.. It seems you're right, however the order
-is supposed to be slightly different:
+I'd say,
 
-GPU_CC_CX_GMU_CLK
-GPU_CC_HUB_CX_INT_CLK
-GPU_CC_HLOS1_VOTE_GPU_SMMU_CLK
-GCC_GPU_MEMNOC_GFX_CLK
+Fixes: 1ef7c99d145c ("drm/msm/dsi: add support for 7nm DSI PHY/PLL")
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-Unsure if it *actually* matters given we've added them in a random order on a
-multitude of platforms and there haven't been any visible adverse effects.
+I didn't fully test this, but according to msm-4.14, msm-4.19 and
+display drivers techpack this change is required on all 7nm- PHYs
+(including the SM8150).
 
-With GPU_CC_AHB not being mentioned but it being quite reasonable to be there
-judging by its name. Enabling HLOS1_VOTE normally enables some more clocks (some
-known by Linux, some not), but here the docs are rather cryptic on that topic.
+> ---
+>  drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
+> index 7f6fb2a840d2..6646f8dbe457 100644
+> --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
+> +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
+> @@ -326,7 +326,7 @@ static void dsi_pll_commit(struct dsi_pll_7nm *pll, struct dsi_pll_config *confi
+>  	writel(pll->phy->cphy_mode ? 0x00 : 0x10,
+>  	       base + REG_DSI_7nm_PHY_PLL_CMODE_1);
+>  	writel(config->pll_clock_inverters,
+> -	       base + REG_DSI_7nm_PHY_PLL_CLOCK_INVERTERS);
+> +	       base + REG_DSI_7nm_PHY_PLL_CLOCK_INVERTERS_1);
+>  }
+>  
+>  static int dsi_pll_7nm_vco_set_rate(struct clk_hw *hw, unsigned long rate,
+> -- 
+> 2.43.0
+> 
 
-I'm not sure about SNoC_DVM on this one as well, but other SoCs require it so
-it's probably safe so assume this one does so as well
-
-I've verified the interrupt numbers, so please just alter the property order /
-whitespaces / general style of the node to match x1e80100.dtsi and we'll get
-this merged
-
-Konrad
+-- 
+With best wishes
+Dmitry
 
