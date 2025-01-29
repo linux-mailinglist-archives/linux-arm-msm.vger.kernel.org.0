@@ -1,313 +1,320 @@
-Return-Path: <linux-arm-msm+bounces-46485-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46486-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 525D4A21A6E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jan 2025 10:54:17 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2E45EA21A71
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jan 2025 10:54:53 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 0C9207A0750
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jan 2025 09:53:23 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6D75E1883FEB
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jan 2025 09:54:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 87FB91AF0AE;
-	Wed, 29 Jan 2025 09:54:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 293231AF0A4;
+	Wed, 29 Jan 2025 09:54:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="o6Sx/Rrh"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="a2seCfpt"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3C501ADFFB;
-	Wed, 29 Jan 2025 09:54:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3941D1ACEC2
+	for <linux-arm-msm@vger.kernel.org>; Wed, 29 Jan 2025 09:54:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738144449; cv=none; b=ASxaVTouRY9DzThpSHwNFITfMqm9hL40OIdom6bpP7Q0dJJfqnTEfCnuLEjThjtHa31z9hSXPKeMw7i5Psl4VJYuu7kUGthL1FP2PkSR+ppMgDHPntvxbqPgMlCPdny2mOc/qBlsWKGivN5NxUrKFruT1fYSqFWalZ8gPUX0jDE=
+	t=1738144490; cv=none; b=YjKu55ANqudorg9yZH3aaHunvlMDuPxSJU3IbRogK2Q04vpD/zbRTrRwpoWhijJ2+5+aBzBxE4bv8UQZBJP4mnRwSnpDvfMc62BSBzu3yweACnzGdhpZhg/xdcwGC8rCf61wqC3sSoy43TETjiWeF20j0QV6XDfKUNnKMgActwo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738144449; c=relaxed/simple;
-	bh=BgTN7qxz2qFIpjID3jYigzaGHpUiLrISwspFAg3E3L4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=tSNPQ40+FOy2HxGqNslFY1S41HcI9soMdnkkzHePddOKjD3AHA3Akfk9V5aV6EXmkvuNeAPPlJAZB79B1C8ba5/q2dPy7DXfa0mvYzWIlP/TI8lGk1lxVZlqOMnmc2NKxCeR/nET85yQCBIZ4qI2ZRdtM4aPA6G9O6ug4lVHBCI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=o6Sx/Rrh; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50T2gxxk020862;
-	Wed, 29 Jan 2025 09:53:48 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	sOddlnfAJR+6/qnsXse4j7jW+dDq8/iiERtouCUAD0g=; b=o6Sx/Rrhlmp5UJQr
-	sq/9XxLEyxqE4TuwjJ6YatzgsCCRVIW2ZM/h+6qu77TWInD4M78ZJsiXzkmp/G3Y
-	tkGxMeTQfCdFE0jO/lsLs9193Raq3lSqNz8b8LBoRRPNvSUDz5LOeaTzrHHkeVBJ
-	teMvWxGkB/leC4ALut8ep/xBWQpqfrrT4S+hiEt2RbinZwi8BNwO1CaTWP85ZZ0O
-	M66k8/ee/RnHfZ2FQ9fODeQV+aBfag5XnU3sR4ZMZbhI6TOyAAHtTWjogse6RqGB
-	s5hhSTZaEyviuOhDpj+x4hodpyFQIF1/5luO7YVlyGh2TRJYlttR5OoDrCUgdDzf
-	pNC0Kg==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44f7xfh0fk-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 29 Jan 2025 09:53:47 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 50T9rlUe002427
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 29 Jan 2025 09:53:47 GMT
-Received: from [10.50.59.27] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 29 Jan
- 2025 01:53:31 -0800
-Message-ID: <45c3676a-aafe-59e8-910d-af82031c24a6@quicinc.com>
-Date: Wed, 29 Jan 2025 15:23:22 +0530
+	s=arc-20240116; t=1738144490; c=relaxed/simple;
+	bh=Ox8DI1vNynztPQWAchfdWPkJnUKaI+A+oWm1MSYhJwE=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=YI5AXsIS8HQYR1CTcfrjx7+mfWdnME7Sv9+OO0s+LV1SVD0B1AmtHolS6VjvpIzxIkQJJs/EXJLpjxqTJ4Q2khfWhp/7z/KWH13ZV+EUZZcI2r9EFfBRomaJx/V5khoqoJtIN8xEaEopfKZQknHX6r4hhW/7CCI5nXxGsx3fvtA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=a2seCfpt; arc=none smtp.client-ip=209.85.221.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-385f06d0c8eso3637713f8f.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Jan 2025 01:54:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1738144486; x=1738749286; darn=vger.kernel.org;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=RV+18RR0KTt3CBdCSKWLJSx34O+SF91aNDW4i8G4/Gg=;
+        b=a2seCfptpw5i2t2EOhYvALbAFH7ihembaZR2qo3XQnBGGhJtvbqqDaXPyFmEZYEU12
+         yLo4cOsfuqCNF5BdcliO1v6aBbvbUekrbLtmwMxOcNWKGv83ZC/bkP4z3NukpsUWgizb
+         l0W6QgyTueOEHz6sVE/K4qccg3vtGIrzeGpBTGUqQuC1UvCcrGpzPTiKU/arDaosIQN2
+         aXu5wlnnr748LiE8IJY5LdVOOIxAne19yyuBNvh4Mzh79YGeYjF49q7SxSCliPmQNy6d
+         AWO2iJ+9JpDUjuDI8i2M2iMG7VbVzdTBVp4ZSjeqaxXPr5xr5WmIOMXL7LbVOQo7yjM/
+         gMzw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1738144486; x=1738749286;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=RV+18RR0KTt3CBdCSKWLJSx34O+SF91aNDW4i8G4/Gg=;
+        b=lucrkTJEM+3MFNWr7xQNz3puPl+xF6h4Q9XFtZYwAvjDjuvm4AoEgofVRosnWgVarY
+         50xeg4Tutri1DvpvzOgXji/cFuuVm3vdSb7mC9WfUnxBxU7eQRrneh7fPI2Fsh6yaKUV
+         oK9l7EQ8ADo1FP/NMX2mP1LlPc0hywnnlePFAKHfvSU8o7+HFUjAFcJMba6JEBErt6Zs
+         nWmXRuBBamU7n6i0S4Bqt83jqeK5b6Sv9omKOeGwcDfzgCtZFCTr6+IHDd//ikXAvfLw
+         YO+RwmMTI33AYLuVEIZEDHLwWU6wKYGWS2hFXc0bvXNg6+VH+3gecAguzEOewHhKP+VA
+         PaSQ==
+X-Gm-Message-State: AOJu0Yyp5kTWOIuzVJuuTLsGdh/zDR2Fc+IzSMezWE/rlTO94DTfOl4T
+	l0CCehe62b/168b4fB+HKjx+fjkqxY80U0cTIrbjjSQGmw3UmZ5774eevxQ+liU=
+X-Gm-Gg: ASbGnctXvCvsTVveBftdFjT4jl84DO3mt9REI7F1cH1bhDGhdv7jxDYyouVmTwrK8kI
+	6lRVYll0GA0cmAUiYLKHT11rRkVMJLHC7OXsUovFMTzrAHuK9/JGcd1+4h1S5AjBmLiTopPPXyM
+	KX9QDpHUHeFXKJQk7oVAIhMYV8A9MbagTl8ExxxFdplGW9O4LXnY6qjkMl6phwjOXR0KFS0F3t+
+	2obUvaCLSEoN3iXxJcSEGl6s/5e2/Qk04CzDuMVk9bz7TvHRk7FIjau2HV7XUtDKoDMe9p5dW65
+	nWZj1sGhZPCSDUjWBDfiUCMhAzdKS4F+qSy+
+X-Google-Smtp-Source: AGHT+IFE3iOWa3letRM4oLYRossTkUN4qcodFsJWk3LGyKChzeV++Cmqzm82g4wWBaVKxrQ5bck27w==
+X-Received: by 2002:a5d:47c2:0:b0:385:ee40:2d88 with SMTP id ffacd0b85a97d-38c5194655fmr1887566f8f.3.1738144486316;
+        Wed, 29 Jan 2025 01:54:46 -0800 (PST)
+Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:52eb:f6ff:feb3:451a])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38c2a1bbc8dsm16656002f8f.72.2025.01.29.01.54.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 29 Jan 2025 01:54:45 -0800 (PST)
+From: Neil Armstrong <neil.armstrong@linaro.org>
+Date: Wed, 29 Jan 2025 10:54:44 +0100
+Subject: [PATCH] arm64: dts: qcom: add all 7 coresight ETE nodes
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [RFC PATCH v10 1/2] media: iris: introduce helper module to
- select video driver
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC: <quic_vgarodia@quicinc.com>, <quic_abhinavk@quicinc.com>,
-        <mchehab@kernel.org>, <robh@kernel.org>, <krzk+dt@kernel.org>,
-        <p.zabel@pengutronix.de>, <hverkuil@xs4all.nl>,
-        <sebastian.fricke@collabora.com>, <bryan.odonoghue@linaro.org>,
-        <neil.armstrong@linaro.org>, <nicolas@ndufresne.ca>,
-        <u.kleine-koenig@baylibre.com>, <stefan.schmidt@linaro.org>,
-        <lujianhua000@gmail.com>, <linux-arm-msm@vger.kernel.org>,
-        <linux-media@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <krzysztof.kozlowski@linaro.org>,
-        <johan@kernel.org>
-References: <20250128080429.3911091-1-quic_dikshita@quicinc.com>
- <20250128080429.3911091-2-quic_dikshita@quicinc.com>
- <sb3beoyhnlcdfjbm37ogpdoph7m4fecpbuu3myglnpzblpnqhw@wdyskeps3uuh>
-Content-Language: en-US
-From: Dikshita Agarwal <quic_dikshita@quicinc.com>
-In-Reply-To: <sb3beoyhnlcdfjbm37ogpdoph7m4fecpbuu3myglnpzblpnqhw@wdyskeps3uuh>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: JMRudwU-uVJYECc4UmDh8K2dsyJxZ_Wc
-X-Proofpoint-GUID: JMRudwU-uVJYECc4UmDh8K2dsyJxZ_Wc
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-01-28_04,2025-01-27_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 malwarescore=0
- phishscore=0 mlxlogscore=999 adultscore=0 impostorscore=0 spamscore=0
- priorityscore=1501 clxscore=1015 mlxscore=0 lowpriorityscore=0 bulkscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2411120000
- definitions=main-2501290080
+Message-Id: <20250129-topic-sm8650-upstream-add-all-coresight-cpus-v1-1-96996d37df8e@linaro.org>
+X-B4-Tracking: v=1; b=H4sIAOP6mWcC/x3NQQqDMBBA0avIrDuQRBNsr1JcpMlUB9SETCwF8
+ e4NXb7N/ycIFSaBR3dCoQ8Lp71B3zoIi99nQo7NYJSxSps71pQ5oGyjswqPLLWQ39DHiH5dMaR
+ CwvNSMeRD0PeDHp1yr94O0JK50Ju//91zuq4fLzW3034AAAA=
+X-Change-ID: 20250129-topic-sm8650-upstream-add-all-coresight-cpus-a3418606b354
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, 
+ Yuanfang Zhang <quic_yuanfang@quicinc.com>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Neil Armstrong <neil.armstrong@linaro.org>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=4016;
+ i=neil.armstrong@linaro.org; h=from:subject:message-id;
+ bh=Ox8DI1vNynztPQWAchfdWPkJnUKaI+A+oWm1MSYhJwE=;
+ b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBnmfrlZg9ZioNJvPlgFjCjrFf8FfIkII8sExnBmVHw
+ 1kffo46JAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZ5n65QAKCRB33NvayMhJ0aImEA
+ DK+2kV+F/3Q6Fbrf0Nb17+Zag0CvGlwL/hg3wIti33/k6nLUURLwZHVDYmm6vEpi8i8sx1EhHe3duA
+ wdrYCeOhtMwDwm6W8Rcy+eC6gbJX7Tjz886tjIRkXxy1U/PCEFyd3a6C/bdPW/dYjVEY65RjCW3taY
+ NTQK7woNxNGIOxrkg4rgTqv1GOulRxHggcKQXT0UYqFYozm1rGrT9nVBAblq/UW12ZrHYfJv+UZW2V
+ Aa/sXMgu6X+CaWg60E9owoM+KMrlTSqWz5JqkLUmBTjKYg3LbVbUSAk+rk7iwixGNRW0FbYOnmq0wx
+ GVUGcvHMPRR3WegHKQEwGuZTLttcj50ngfB66Zf9NlI9VRe2cB6fXDTNmk1MSE1YgsHfrcRQf82NiT
+ R99pQh9147cwlfRIV7YcUWG5me6SmmjvNvKND1z/Y82zpWxEbVeAjKfMBr/zh/Zj934jA7TIX5tYSg
+ m8GjGfF+WGOiDt8QbAsi8un8iU1soNTDfS+o8McOiEnqzKCwkSB8sUHvfiIz70vwewLqdGerQDf4ao
+ dogwfj6Br5fK0sE8v87fo70mnrEiCXS4Uv+GbgFas8cdmHBRrJHQi5hIWJafybJTAXEwrkhtval3wH
+ 76g+HqNJN8Uu9BZFWDyCcbFvdmjdGs4IN2beeslObpHPidZXH/7IjWmQ8Spg==
+X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
+ fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
 
+Only CPU0 Embedded Trace Extension (ETE) was added, but there's one
+for all 7 CPUs, so add the missing ones.
 
+Fixes: 256e6937e48a ("arm64: dts: qcom: sm8650: Add coresight nodes")
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+---
+ arch/arm64/boot/dts/qcom/sm8650.dtsi | 163 ++++++++++++++++++++++++++++++++++-
+ 1 file changed, 161 insertions(+), 2 deletions(-)
 
-On 1/28/2025 9:44 PM, Dmitry Baryshkov wrote:
-> On Tue, Jan 28, 2025 at 01:34:28PM +0530, Dikshita Agarwal wrote:
->> Introduce a helper module with a kernel param to select between
->> venus and iris drivers for platforms supported by both drivers.
->>
->> Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
->> ---
->>  drivers/media/platform/qcom/Makefile          |  1 +
->>  drivers/media/platform/qcom/iris/iris_core.h  |  1 +
->>  drivers/media/platform/qcom/iris/iris_probe.c |  3 +
->>  drivers/media/platform/qcom/venus/core.c      |  5 ++
->>  .../platform/qcom/video_drv_helper/Makefile   |  4 ++
->>  .../qcom/video_drv_helper/video_drv_helper.c  | 70 +++++++++++++++++++
->>  .../qcom/video_drv_helper/video_drv_helper.h  | 11 +++
->>  7 files changed, 95 insertions(+)
->>  create mode 100644 drivers/media/platform/qcom/video_drv_helper/Makefile
->>  create mode 100644 drivers/media/platform/qcom/video_drv_helper/video_drv_helper.c
->>  create mode 100644 drivers/media/platform/qcom/video_drv_helper/video_drv_helper.h
->>
->> diff --git a/drivers/media/platform/qcom/Makefile b/drivers/media/platform/qcom/Makefile
->> index ea2221a202c0..15accde3bd67 100644
->> --- a/drivers/media/platform/qcom/Makefile
->> +++ b/drivers/media/platform/qcom/Makefile
->> @@ -2,3 +2,4 @@
->>  obj-y += camss/
->>  obj-y += iris/
->>  obj-y += venus/
->> +obj-y += video_drv_helper/
->> diff --git a/drivers/media/platform/qcom/iris/iris_core.h b/drivers/media/platform/qcom/iris/iris_core.h
->> index 37fb4919fecc..7108e751ff88 100644
->> --- a/drivers/media/platform/qcom/iris/iris_core.h
->> +++ b/drivers/media/platform/qcom/iris/iris_core.h
->> @@ -107,5 +107,6 @@ struct iris_core {
->>  
->>  int iris_core_init(struct iris_core *core);
->>  void iris_core_deinit(struct iris_core *core);
->> +extern bool video_drv_should_bind(struct device *dev, bool is_iris_driver);
-> 
-> s/extern //g
-> 
->>  
->>  #endif
->> diff --git a/drivers/media/platform/qcom/iris/iris_probe.c b/drivers/media/platform/qcom/iris/iris_probe.c
->> index 954cc7c0cc97..276461ade811 100644
->> --- a/drivers/media/platform/qcom/iris/iris_probe.c
->> +++ b/drivers/media/platform/qcom/iris/iris_probe.c
->> @@ -196,6 +196,9 @@ static int iris_probe(struct platform_device *pdev)
->>  	u64 dma_mask;
->>  	int ret;
->>  
->> +	if (!video_drv_should_bind(&pdev->dev, true))
->> +		return -ENODEV;
->> +
->>  	core = devm_kzalloc(&pdev->dev, sizeof(*core), GFP_KERNEL);
->>  	if (!core)
->>  		return -ENOMEM;
->> diff --git a/drivers/media/platform/qcom/venus/core.c b/drivers/media/platform/qcom/venus/core.c
->> index 77d48578ecd2..b38be7812efe 100644
->> --- a/drivers/media/platform/qcom/venus/core.c
->> +++ b/drivers/media/platform/qcom/venus/core.c
->> @@ -369,12 +369,17 @@ static int venus_add_dynamic_nodes(struct venus_core *core)
->>  static void venus_remove_dynamic_nodes(struct venus_core *core) {}
->>  #endif
->>  
->> +extern bool video_drv_should_bind(struct device *dev, bool is_iris_driver);
-> 
-> Use #include instead.
-> 
->> +
->>  static int venus_probe(struct platform_device *pdev)
->>  {
->>  	struct device *dev = &pdev->dev;
->>  	struct venus_core *core;
->>  	int ret;
->>  
->> +	if (!video_drv_should_bind(&pdev->dev, false))
->> +		return -ENODEV;
->> +
->>  	core = devm_kzalloc(dev, sizeof(*core), GFP_KERNEL);
->>  	if (!core)
->>  		return -ENOMEM;
->> diff --git a/drivers/media/platform/qcom/video_drv_helper/Makefile b/drivers/media/platform/qcom/video_drv_helper/Makefile
->> new file mode 100644
->> index 000000000000..82567e0392fb
->> --- /dev/null
->> +++ b/drivers/media/platform/qcom/video_drv_helper/Makefile
->> @@ -0,0 +1,4 @@
->> +# Makefile for Video driver helper
->> +
->> +obj-m := video_drv_helper.o
-> 
-> Always built as a module? And what if iris or venus are built into the
-> kernel?
-iris and venus are always built as module, and if we are adding the
-dependency of this module on IRIS && VENUS then this can't be Y I think.
-> Add a normal Kconfig symbol, tristate, no Kconfig string. Use depends on
-> IRIS && VENUS (and maybe default y) to let it be built only if both
-> drivers are enabled.
-> 
->> +
->> diff --git a/drivers/media/platform/qcom/video_drv_helper/video_drv_helper.c b/drivers/media/platform/qcom/video_drv_helper/video_drv_helper.c
->> new file mode 100644
->> index 000000000000..9009c2906e54
->> --- /dev/null
->> +++ b/drivers/media/platform/qcom/video_drv_helper/video_drv_helper.c
->> @@ -0,0 +1,70 @@
->> +// SPDX-License-Identifier: GPL-2.0-only
->> +/*
->> + * Copyright (c) 2025 Qualcomm Innovation Center, Inc. All rights reserved.
->> + */
->> +
->> +#include <linux/device.h>
->> +#include <linux/module.h>
->> +#include <linux/of.h>
->> +
->> +#include "video_drv_helper.h"
->> +
->> +/* The venus driver supports only hfi gen1 to communicate with the firmware while
->> + * the iris driver supports both hfi gen1 and hfi gen2.
->> + * The support of hfi gen1 is added to the iris driver with the intention that
->> + * it can support old gen1 interface based firmware, while enabling gen2 based future SOCs.
->> + * With this, the plan is to migrate older SOCs from venus to iris.
->> + * As of now, since the iris driver supports only entry level features and doesn't have
->> + * feature parity with the venus driver, a runtime-selection is provided to user via
->> + * module parameter 'prefer_venus' to select the driver.
->> + * This selection is available only for the SoCs which are supported by both venus
->> + * and iris eg: SM8250.
->> + * When the feature parity is achieved, the plan is to switch the default to point to
->> + * the iris driver, then gradually start removing platforms from venus.
->> + * Hardware supported by only venus - 8916, 8996, SDM660, SDM845, SC7180, SC7280
->> + * Hardware supported by only iris - SM8550
->> + * Hardware supported by both venus and iris - SM8250
->> + */
->> +
->> +#if !IS_REACHABLE(CONFIG_VIDEO_QCOM_VENUS) || !IS_REACHABLE(CONFIG_VIDEO_QCOM_IRIS)
->> +bool video_drv_should_bind(struct device *dev, bool is_iris_driver)
->> +{
->> +	/* If just a single driver is enabled, use it no matter what */
->> +	return true;
->> +}
->> +
->> +#else
-> 
-> Move the stub funtion to header.
-> 
->> +static bool prefer_venus = true;
->> +MODULE_PARM_DESC(prefer_venus, "Select whether venus or iris driver should be preferred");
->> +module_param(prefer_venus, bool, 0444);
->> +
->> +/* list all platforms supported by both venus and iris drivers */
->> +static const char *const venus_to_iris_migration[] = {
->> +	"qcom,sm8250-venus",
->> +	NULL,
->> +};
->> +
->> +bool video_drv_should_bind(struct device *dev, bool is_iris_driver)
-> 
-> The prefix is too broad, but maybe its fine.
-> 
->> +{
->> +	if (of_device_compatible_match(dev->of_node, venus_to_iris_migration))
->> +		return prefer_venus ? !is_iris_driver : is_iris_driver;
->> +
->> +	return true;
->> +}
->> +EXPORT_SYMBOL_GPL(video_drv_should_bind);
->> +#endif
->> +
->> +static int __init video_drv_helper_init(void)
->> +{
->> +	return 0;
->> +}
->> +
->> +static void __exit video_drv_helper_exit(void)
->> +{
->> +}
->> +
->> +module_init(video_drv_helper_init);
->> +module_exit(video_drv_helper_exit);
-> 
-> No need for this, please drop.
-> 
->> +
->> +MODULE_DESCRIPTION("A video driver helper module");
->> +MODULE_LICENSE("GPL");
->> diff --git a/drivers/media/platform/qcom/video_drv_helper/video_drv_helper.h b/drivers/media/platform/qcom/video_drv_helper/video_drv_helper.h
->> new file mode 100644
->> index 000000000000..6d835227fec2
->> --- /dev/null
->> +++ b/drivers/media/platform/qcom/video_drv_helper/video_drv_helper.h
->> @@ -0,0 +1,11 @@
->> +/* SPDX-License-Identifier: GPL-2.0-only */
->> +/*
->> + * Copyright (c) 2025 Qualcomm Innovation Center, Inc. All rights reserved.
->> + */
->> +
->> +#ifndef __VIDEO_DRV_HELPER_H__
->> +#define __VIDEO_DRV_HELPER_H__
->> +
->> +bool video_drv_should_bind(struct device *dev, bool is_iris_driver);
->> +
->> +#endif
->> -- 
->> 2.34.1
->>
-> 
+diff --git a/arch/arm64/boot/dts/qcom/sm8650.dtsi b/arch/arm64/boot/dts/qcom/sm8650.dtsi
+index 86684cb9a9325618ddb74458621cf4bbdc1cc0d1..d925d5e2c8182d522dd5b8e1fa0e253f5de2f7a7 100644
+--- a/arch/arm64/boot/dts/qcom/sm8650.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8650.dtsi
+@@ -365,7 +365,7 @@ cluster_sleep_1: cluster-sleep-1 {
+ 		};
+ 	};
+ 
+-	ete0 {
++	ete-0 {
+ 		compatible = "arm,embedded-trace-extension";
+ 
+ 		cpu = <&cpu0>;
+@@ -379,15 +379,174 @@ ete0_out_funnel_ete: endpoint {
+ 		};
+ 	};
+ 
++	ete-1 {
++		compatible = "arm,embedded-trace-extension";
++
++		cpu = <&cpu1>;
++
++		out-ports {
++			port {
++				ete1_out_funnel_ete: endpoint {
++					remote-endpoint = <&funnel_ete_in_ete1>;
++				};
++			};
++		};
++	};
++
++	ete-2 {
++		compatible = "arm,embedded-trace-extension";
++
++		cpu = <&cpu2>;
++
++		out-ports {
++			port {
++				ete2_out_funnel_ete: endpoint {
++					remote-endpoint = <&funnel_ete_in_ete2>;
++				};
++			};
++		};
++	};
++
++	ete-3 {
++		compatible = "arm,embedded-trace-extension";
++
++		cpu = <&cpu3>;
++
++		out-ports {
++			port {
++				ete3_out_funnel_ete: endpoint {
++					remote-endpoint = <&funnel_ete_in_ete3>;
++				};
++			};
++		};
++	};
++
++	ete-4 {
++		compatible = "arm,embedded-trace-extension";
++
++		cpu = <&cpu4>;
++
++		out-ports {
++			port {
++				ete4_out_funnel_ete: endpoint {
++					remote-endpoint = <&funnel_ete_in_ete4>;
++				};
++			};
++		};
++	};
++
++	ete-5 {
++		compatible = "arm,embedded-trace-extension";
++
++		cpu = <&cpu5>;
++
++		out-ports {
++			port {
++				ete5_out_funnel_ete: endpoint {
++					remote-endpoint = <&funnel_ete_in_ete5>;
++				};
++			};
++		};
++	};
++
++	ete-6 {
++		compatible = "arm,embedded-trace-extension";
++
++		cpu = <&cpu6>;
++
++		out-ports {
++			port {
++				ete6_out_funnel_ete: endpoint {
++					remote-endpoint = <&funnel_ete_in_ete6>;
++				};
++			};
++		};
++	};
++
++	ete-7 {
++		compatible = "arm,embedded-trace-extension";
++
++		cpu = <&cpu7>;
++
++		out-ports {
++			port {
++				ete7_out_funnel_ete: endpoint {
++					remote-endpoint = <&funnel_ete_in_ete7>;
++				};
++			};
++		};
++	};
++
+ 	funnel-ete {
+ 		compatible = "arm,coresight-static-funnel";
+ 
+ 		in-ports {
+-			port {
++			#address-cells = <1>;
++			#size-cells = <0>;
++
++			port@0 {
++				reg = <0>;
++
+ 				funnel_ete_in_ete0: endpoint {
+ 					remote-endpoint = <&ete0_out_funnel_ete>;
+ 				};
+ 			};
++
++			port@1 {
++				reg = <1>;
++
++				funnel_ete_in_ete1: endpoint {
++					remote-endpoint = <&ete1_out_funnel_ete>;
++				};
++			};
++
++			port@2 {
++				reg = <2>;
++
++				funnel_ete_in_ete2: endpoint {
++					remote-endpoint = <&ete2_out_funnel_ete>;
++				};
++			};
++
++			port@3 {
++				reg = <3>;
++
++				funnel_ete_in_ete3: endpoint {
++					remote-endpoint = <&ete3_out_funnel_ete>;
++				};
++			};
++
++			port@4 {
++				reg = <4>;
++
++				funnel_ete_in_ete4: endpoint {
++					remote-endpoint = <&ete4_out_funnel_ete>;
++				};
++			};
++
++			port@5 {
++				reg = <5>;
++
++				funnel_ete_in_ete5: endpoint {
++					remote-endpoint = <&ete5_out_funnel_ete>;
++				};
++			};
++
++			port@6 {
++				reg = <6>;
++
++				funnel_ete_in_ete6: endpoint {
++					remote-endpoint = <&ete6_out_funnel_ete>;
++				};
++			};
++
++			port@7 {
++				reg = <7>;
++
++				funnel_ete_in_ete7: endpoint {
++					remote-endpoint = <&ete7_out_funnel_ete>;
++				};
++			};
+ 		};
+ 
+ 		out-ports {
+
+---
+base-commit: da7e6047a6264af16d2cb82bed9b6caa33eaf56a
+change-id: 20250129-topic-sm8650-upstream-add-all-coresight-cpus-a3418606b354
+
+Best regards,
+-- 
+Neil Armstrong <neil.armstrong@linaro.org>
+
 
