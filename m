@@ -1,237 +1,520 @@
-Return-Path: <linux-arm-msm+bounces-46462-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46463-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id CECA5A216F4
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jan 2025 04:34:57 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5E305A21726
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jan 2025 05:58:04 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2D1DF1884F11
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jan 2025 03:35:02 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 86F5E3A4EA1
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jan 2025 04:57:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 00773188A3B;
-	Wed, 29 Jan 2025 03:34:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 82A4E18FC92;
+	Wed, 29 Jan 2025 04:58:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Wyw0KVaV"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="koUaawgy"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f177.google.com (mail-pl1-f177.google.com [209.85.214.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 585101552FD
-	for <linux-arm-msm@vger.kernel.org>; Wed, 29 Jan 2025 03:34:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17302190661;
+	Wed, 29 Jan 2025 04:57:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738121694; cv=none; b=olV+DSly3ueekCl52pR4UI5HLGYVQEuriIN178bizProOWa8kaV2pbptmqlwsPH5oYz7bWy/JT5jGenELQOc5B5HQ2floZs+f2kiSeenYQZBWzelo+ONTf/wYbw4poLOge8xBCX4AETn6BcAZsrIUqc8xQK56fRdtZ7RRup7Q+4=
+	t=1738126681; cv=none; b=SyxshD9gkJdZgmEp36v7obz0Q9h+IqVDpBh9siujxpyNxeMIIb6Q8Oc8OU2rghvLH6PrS2wmF+Zfycv5cxnLYweYgxZXswDhbBTSdJfUyLViICa8rGOWwSx/q2c8Xdgwvy2kjwUE+YYzWaSlf99DJH/UR9ilJRAjdMfCkk2z+Rk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738121694; c=relaxed/simple;
-	bh=v1L3PsKkt4rhGqLinyD6qhl7MiZRF1IP+NBCLPEbCkY=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Lov9zcysHVnbBH09NXKQr//U0OOGhp6UoVXM2rgm9TMJx3IGdZL96r32Pa8bKC6WxR1p/AKLRojOZAzHbEm8HH2xwGL2rrCC4egiPA0p9YUnA+V8h4oTv6mnaMp3vaV4CdCd4zy2bN9tOwtyWq6yCZPOw5t/iAALzSc53TQq4YQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Wyw0KVaV; arc=none smtp.client-ip=209.85.214.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pl1-f177.google.com with SMTP id d9443c01a7336-216325f516fso13275125ad.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Jan 2025 19:34:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1738121692; x=1738726492; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=FSEMixmPIS7Z8ruVPkos6z93kW0au3BNEj38QU0bOXo=;
-        b=Wyw0KVaVvzWhyVfJYAGq6L73mRAK0SL/pfTIiLsN7uNot+iQHUZ5+nY9hlB0kt8dFS
-         XTVaYypB92Y9h5g0jXJJxUFL25A00sdg8uKdwgsJekByykOm72eHNd2RWIlNB5gnrRPy
-         l9hLyfa7UtyNZuMhnyqbsi/KKuc/9eH9hHiXvg7oELnVRtRlFl2MP9aFBkRxZinKSb+v
-         pTCrTZDotEOLEAkiqW8BfY39mSLmCMocSaSy+6GsDtxe9SukyERq8SAtI7WU/+D5alhU
-         RkzxkzFUYnEzk44yg0I460GTrbpfdboycq8MUSlZ8eVJb1Rkc1167C0GXPMbzG9sE1Pv
-         xdLw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738121692; x=1738726492;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=FSEMixmPIS7Z8ruVPkos6z93kW0au3BNEj38QU0bOXo=;
-        b=xQUC5n+AkvShDNawvYD/6ia49beme0HjquLN9rFcNsHoG2LyFOM36HBuUPY1FyZ/kh
-         T4ROylvJLkTi++PavXW//GiPKTWr10I8JoLQ+w0g86Yv9kGlB1IW95nFXJTRC1EDpTZP
-         puc9hhBPeDRt7l+Kx9yNMrdpx77T8DL6SQ0x+srw6KIA/8Qf0ffAr3FfrlR5hzBMJKOs
-         5NDhlfLE82M9lgKf22r5nneAcEWXR9OqR/fjMYf52GznkN249o7RAXZedcSegpUu7cmL
-         X9N0PGSTbLAGqd2hQJ4Sv1VBo1ok6HrJtlDPnTFSDIrur31R/slokDSH+v84lF87DjD2
-         4i0Q==
-X-Forwarded-Encrypted: i=1; AJvYcCXabjuNx+GmSjTuf//1TksJ5qTTeFzSIuRT5BJbU0CvGv4B1d2Z57ZeceOy0917jovXdh/H37wam+0cS9Wu@vger.kernel.org
-X-Gm-Message-State: AOJu0Ywrfw+dewF3nOVMTC8z8/kcoQDMsBY2PR3Xqq9/OG3qMimdI95+
-	cyOaydghni1VfAhWKqwRCtC+cwHbSAUqhaHBCb7oIacDEb/VTTKJygHAvLc6lxb1CduM9J7REmR
-	tUIcNOHmXIAeCJaV5CSx5ZFxHDGw=
-X-Gm-Gg: ASbGncsSHdt6L8nYlRRORt5ZtDdTKKi55ycf6WSc0WJ6uQQyCFFe5/izdEqmD/pHEGa
-	uvqhXCg8QFweq94GP51kmiGv8WjmqHtLJA8LnGhuczStzrgkGfMsTRWqnxUqoVOD0KLXEGFf1
-X-Google-Smtp-Source: AGHT+IFbFQSYTvKU6Tn/jYbbxgPrehvkrB0XAVXsOwTCtBnwvAVfgVvZVo8IQ1hdLTPS9gNaQI/uOQ9lmAgGhGlB37U=
-X-Received: by 2002:a05:6a21:329c:b0:1e5:d3cc:4632 with SMTP id
- adf61e73a8af0-1ed7a5c5535mr1035370637.1.1738121692412; Tue, 28 Jan 2025
- 19:34:52 -0800 (PST)
+	s=arc-20240116; t=1738126681; c=relaxed/simple;
+	bh=tCjA9E/MTJm4K5OVcS4VSwyPkqlIUVgNnYne1uxqOcc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=aRV8bhciNU2UsItMnqKEonhFRWxQQeL3VV/+E8kxaewGZvNeBYqSJnTHufGMtQuOkF2y/K8hJZRzHWF2AeSQhPFWvkIW0pZYmtrZOvfEYm6LdhAL7KG4N7tJ772fbs5U17qwBpxslI3UWHS6tRGJr45iUhn9wbhAZA3wFzA8Z+Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=koUaawgy; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50T2gcGv013441;
+	Wed, 29 Jan 2025 04:57:53 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	EVO2srdWIUbC41cHCwL/XNTXRjZcRUJ8QcM6jmVVEeE=; b=koUaawgyDGEB4QA6
+	zeTx3PYDPIWiYi4JSVSDx2iFFfG2R5d2211Q0v7BkGYc1/RIaRV6Yuz7HEOkkdTb
+	jukmSGrUjND5+3OS1JNPB57zcaz4wJ8v0xkry5Xn7q4gVo4VEKTGJCQxuVvI5kAh
+	/CRMCPeD4hKgXWO1IYQdLEAUCkb54iRIDanQYIdav+jaBaNrhgUsTMGoteyeuzDd
+	8x9q6usocdaMveXSlDnHOa7CTlgwXCpEJ7F0yWqgvvKKANeNVFXLBxyMaVf3YNic
+	jLnO1KY40gidXfo1a7jDmUJZobOoUBZLhItF5ZoXvrkqNL3no5+uSiuK0/NzX3G1
+	mYIBGQ==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44f9ah0cs9-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 29 Jan 2025 04:57:53 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 50T4vpGW014012
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 29 Jan 2025 04:57:51 GMT
+Received: from [10.204.65.49] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 28 Jan
+ 2025 20:57:48 -0800
+Message-ID: <fec1e345-1ebb-467c-93d1-264ad0279096@quicinc.com>
+Date: Wed, 29 Jan 2025 10:27:45 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250122-msm-gpu-fault-fixes-next-v3-0-0afa00158521@gmail.com>
- <20250122-msm-gpu-fault-fixes-next-v3-1-0afa00158521@gmail.com>
- <Z5IjsqQ6vTdUXiGt@hu-guptap-hyd.qualcomm.com> <CACu1E7H5X2EfY9AG=xceaoZJkbumwnrsU4QvNbxd_A2wgVVOaQ@mail.gmail.com>
- <Z5KXwNPrdirVUn8Z@hu-guptap-hyd.qualcomm.com> <CACu1E7GOS+_biN=AuQwYK47ApRPFGygyD+U5X9d_4ReXKrzbfw@mail.gmail.com>
- <Z5i6GQDd5apN+a10@hu-guptap-hyd.qualcomm.com> <CAF6AEGstcrAJDBpPm-uQ+zSDVEhDJ4AQhCTDT-z9_8Nq0e35WQ@mail.gmail.com>
- <CACu1E7HErZAL=-GVQfKUAUK5bgK-X0qejt5os3f2UhkeZ1ptMQ@mail.gmail.com>
- <CAF6AEGsUjp+fp1_cN7SGYTh5WSQrU2mm92QsqA5rcSY1OtA8VQ@mail.gmail.com>
- <CACu1E7FyHwJ2mp5u3rDganYj80eDq3QJzLRFzxD9E9O7hEDiag@mail.gmail.com> <CAF6AEGugDxYjH63+Up_T_pt+jQ2D0m=x1tSg3fGPteu3XgR2qA@mail.gmail.com>
-In-Reply-To: <CAF6AEGugDxYjH63+Up_T_pt+jQ2D0m=x1tSg3fGPteu3XgR2qA@mail.gmail.com>
-From: Connor Abbott <cwabbott0@gmail.com>
-Date: Tue, 28 Jan 2025 22:34:41 -0500
-X-Gm-Features: AWEUYZnSb6QYpR0Fp9PLawYr9P-QPjVvmIEP1Nm8egoDpm1trM7-ebAtlM8-HK8
-Message-ID: <CACu1E7F0UTTapsLEUuKVFN0MF=kwhbSJqN2MU305Ab3cg+u_Lg@mail.gmail.com>
-Subject: Re: [PATCH v3 1/3] iommu/arm-smmu: Fix spurious interrupts with stall-on-fault
-To: Rob Clark <robdclark@gmail.com>
-Cc: Prakash Gupta <quic_guptap@quicinc.com>, Will Deacon <will@kernel.org>, 
-	Robin Murphy <robin.murphy@arm.com>, Joerg Roedel <joro@8bytes.org>, Sean Paul <sean@poorly.run>, 
-	Konrad Dybcio <konradybcio@kernel.org>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, iommu@lists.linux.dev, 
-	linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
-	freedreno@lists.freedesktop.org, Rob Clark <robdclark@chromium.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 2/5] misc: fastrpc: Introduce context params structure
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC: <srinivas.kandagatla@linaro.org>, <linux-arm-msm@vger.kernel.org>,
+        <gregkh@linuxfoundation.org>, <quic_bkumar@quicinc.com>,
+        <linux-kernel@vger.kernel.org>, <quic_chennak@quicinc.com>,
+        <dri-devel@lists.freedesktop.org>, <arnd@arndb.de>
+References: <20250127044239.578540-1-quic_ekangupt@quicinc.com>
+ <20250127044239.578540-3-quic_ekangupt@quicinc.com>
+ <dbyrbb4q2q2hrdarprfpbg4qnctjfp4uiwp6cqq6epg42ekeba@fyipe2jrhayz>
+Content-Language: en-US
+From: Ekansh Gupta <quic_ekangupt@quicinc.com>
+In-Reply-To: <dbyrbb4q2q2hrdarprfpbg4qnctjfp4uiwp6cqq6epg42ekeba@fyipe2jrhayz>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: oMQjzCU0tJmumgx6Ovhpf5RliWJgB9Zq
+X-Proofpoint-ORIG-GUID: oMQjzCU0tJmumgx6Ovhpf5RliWJgB9Zq
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-01-28_04,2025-01-27_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 lowpriorityscore=0
+ mlxlogscore=999 phishscore=0 malwarescore=0 priorityscore=1501
+ clxscore=1015 spamscore=0 impostorscore=0 adultscore=0 bulkscore=0
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2501290038
 
-On Tue, Jan 28, 2025 at 10:25=E2=80=AFPM Rob Clark <robdclark@gmail.com> wr=
-ote:
+
+
+
+On 1/27/2025 9:13 PM, Dmitry Baryshkov wrote:
+> On Mon, Jan 27, 2025 at 10:12:36AM +0530, Ekansh Gupta wrote:
+>> Add structure to invoke context parameterms. This structure is meant
+> Nit: for invoke context parameters.
+
+Ack.
+
 >
-> On Tue, Jan 28, 2025 at 6:31=E2=80=AFPM Connor Abbott <cwabbott0@gmail.co=
-m> wrote:
-> >
-> > On Tue, Jan 28, 2025 at 9:21=E2=80=AFPM Rob Clark <robdclark@gmail.com>=
- wrote:
-> > >
-> > > On Tue, Jan 28, 2025 at 2:15=E2=80=AFPM Connor Abbott <cwabbott0@gmai=
-l.com> wrote:
-> > > >
-> > > > On Tue, Jan 28, 2025 at 5:10=E2=80=AFPM Rob Clark <robdclark@gmail.=
-com> wrote:
-> > > > >
-> > > > > On Tue, Jan 28, 2025 at 3:08=E2=80=AFAM Prakash Gupta <quic_gupta=
-p@quicinc.com> wrote:
-> > > > > >
-> > > > > > On Thu, Jan 23, 2025 at 03:14:16PM -0500, Connor Abbott wrote:
-> > > > > > > On Thu, Jan 23, 2025 at 2:26=E2=80=AFPM Prakash Gupta <quic_g=
-uptap@quicinc.com> wrote:
-> > > > > > > >
-> > > > > > > > On Thu, Jan 23, 2025 at 09:00:17AM -0500, Connor Abbott wro=
-te:
-> > > > > > > > > On Thu, Jan 23, 2025 at 6:10=E2=80=AFAM Prakash Gupta <qu=
-ic_guptap@quicinc.com> wrote:
-> > > > > > > > > >
-> > > > > > > > > > On Wed, Jan 22, 2025 at 03:00:58PM -0500, Connor Abbott=
- wrote:
-> > > > > > > > > > The context would remain stalled till we write to CBn_R=
-ESUME. Which is done
-> > > > > > > > > > in qcom_adreno_smmu_resume_translation(). For a stalled=
- context further
-> > > > > > > > > > transactions are not processed and we shouldn't see fur=
-ther faults and
-> > > > > > > > > > or fault inerrupts. Do you observe faults with stalled =
-context?
-> > > > > > > > >
-> > > > > > > > > Yes. I've observed that on MMU-500 writing RESUME before =
-the interrupt
-> > > > > > > > > has been cleared doesn't clear SS. This happened with v2 =
-in the case
-> > > > > > > > > where there was already a devcoredump and drm/msm called
-> > > > > > > > > qcom_adreno_smmu_resume_translation() immediately from it=
-s fault
-> > > > > > > > > handler, and we'd get a storm of unhandled interrupts unt=
-il it was
-> > > > > > > > > disabled. Given that the architecture spec says we're sup=
-posed to
-> > > > > > > > > clear the interrupt first this may have been an attempt t=
-o "help"
-> > > > > > > > > developers.
-> > > > > > > > >
-> > > > > > > >
-> > > > > > > > Just to clarify, present sequence is:
-> > > > > > > > 1. context fault with stall enable. FSR.SS set.
-> > > > > > > > 2. Report fault to client
-> > > > > > > > 3. resume/terminate stalled transaction
-> > > > > > > > 4. clear FSR
-> > > > > > > >
-> > > > > > > > At what point when you try #2->#3->#4 or #4->#2->#3 sequenc=
-e, is FSR.SS
-> > > > > > > > cleared and interrupt storm is observed.
-> > > > > > >
-> > > > > > > With #2->#3->#4 FSR.SS is *not* cleared and there is a subseq=
-uent
-> > > > > > > interrupt storm with only FSR.SS asserted. With #4->#2->#3 th=
-ere is no
-> > > > > > > interrupt storm. From this we conclude that MMU-500 does not =
-clear
-> > > > > > > FSR.SS unless #4 happens before #3.
-> > > > > > >
-> > > > > > Thanks Connor for clarification. I get your point now. I think =
-it's
-> > > > > > expected interrupt storm with #2->#3->#4 sequence is expected. =
- With
-> > > > > > CONFIG_ARM_SMMU_QCOM_DEBUG enabled, context fault follows the s=
-equence of
-> > > > > > #1->#2->#4->#3, which is spec recommended.
-> > > > > >
-> > > > > > so, common fault handler can be modified to follow the same seq=
-uence, but I
-> > > > > > have concern regarding clearing FSR before reporting fault to c=
-lient.
-> > > > > > qcom_adreno_smmu_get_fault_info() is an example I gave but othe=
-r client
-> > > > > > handler may have similar expecation of fault register not chang=
-ed before
-> > > > > > client fault handler is called.
-> > > > >
-> > > > > Simple solution would be to move the clearing of FSR to after the
-> > > > > fault is reported.  It doesn't really matter if it is before or a=
-fter,
-> > > > > as long as it happens before the irq handler returns, AFAIU.  And
-> > > > > drm/msm will collect the fault info from the irq handler.
-> > > >
-> > > > As I said in the earlier mail: "From this we conclude that MMU-500
-> > > > does not clear FSR.SS unless #4 happens before #3." #4 is clearing =
-FSR
-> > > > and #3 is writing RESUME. So no, unfortunately it does actually mat=
-ter
-> > > > and we get a storm of unhandled IRQs if we don't clear FSR first. Y=
-our
-> > > > solution is what v2 did and it didn't work.
-> > >
-> > > So, just clear FSR also in the resume path
-> >
-> > Then we'd run the risk of incorrectly accepting a second fault if it
-> > happens immediately after we resume. Not terrible for our use-case
-> > where we only really need the first fault to be accurate and we
-> > disable stall-on-fault afterwards, but if you ever leave it on then it
-> > would result in another interrupt storm.
-> >
+>> to carry invoke context specific data. This structure is passed to
+>> internal invocation call to save the data in context. Examples of
+>> data intended to part of this structure are: CRC user memory address,
+>> poll timeout for invoke call, call priority etc.
+>>
+>> Signed-off-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
+>> ---
+>>  drivers/misc/fastrpc.c | 138 ++++++++++++++++++++++++++++++++++-------
+>>  1 file changed, 117 insertions(+), 21 deletions(-)
+>>
+>> diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
+>> index 1a936d462519..c29d5536195e 100644
+>> --- a/drivers/misc/fastrpc.c
+>> +++ b/drivers/misc/fastrpc.c
+>> @@ -254,6 +254,11 @@ struct fastrpc_invoke_ctx {
+>>  	struct fastrpc_channel_ctx *cctx;
+>>  };
+>>  
+>> +struct fastrpc_ctx_args {
+>> +	struct fastrpc_invoke_args *args;
+>> +	void __user *crc;
+>> +};
+> Why do we need a separate struct? Can we use fastrpc_invoke_ctx instead?
+
+As fastrpc_invoke_ctx structure is allocated and returned from fastrpc_context_alloc
+and getting fastrpc_context_free. I was thinking of keeping the user passed
+information in a different structure.
+
 >
-> Howso? We'd still be ensuring that #4 happens before #3?  If needed we
-> can add a param to resume_translation() so drm can tell it to only
-> clear FSR if it calls resume_translation from the interrupt handler,
-> or something like that.  But I don't want to lose capturing the FSR,
-> and I don't think we need to.
+>> +
+>>  struct fastrpc_session_ctx {
+>>  	struct device *dev;
+>>  	int sid;
+>> @@ -574,7 +579,7 @@ static void fastrpc_get_buff_overlaps(struct fastrpc_invoke_ctx *ctx)
+>>  
+>>  static struct fastrpc_invoke_ctx *fastrpc_context_alloc(
+>>  			struct fastrpc_user *user, u32 kernel, u32 sc,
+>> -			struct fastrpc_invoke_args *args)
+>> +			struct fastrpc_ctx_args *cargs)
+>>  {
+>>  	struct fastrpc_channel_ctx *cctx = user->cctx;
+>>  	struct fastrpc_invoke_ctx *ctx = NULL;
+>> @@ -605,7 +610,7 @@ static struct fastrpc_invoke_ctx *fastrpc_context_alloc(
+>>  			kfree(ctx);
+>>  			return ERR_PTR(-ENOMEM);
+>>  		}
+>> -		ctx->args = args;
+>> +		ctx->args = cargs->args;
+>>  		fastrpc_get_buff_overlaps(ctx);
+>>  	}
+>>  
+>> @@ -1133,7 +1138,7 @@ static int fastrpc_invoke_send(struct fastrpc_session_ctx *sctx,
+>>  
+>>  static int fastrpc_internal_invoke(struct fastrpc_user *fl,  u32 kernel,
+>>  				   u32 handle, u32 sc,
+>> -				   struct fastrpc_invoke_args *args)
+>> +				   struct fastrpc_ctx_args *cargs)
+>>  {
+>>  	struct fastrpc_invoke_ctx *ctx = NULL;
+>>  	struct fastrpc_buf *buf, *b;
+>> @@ -1151,7 +1156,7 @@ static int fastrpc_internal_invoke(struct fastrpc_user *fl,  u32 kernel,
+>>  		return -EPERM;
+>>  	}
+>>  
+>> -	ctx = fastrpc_context_alloc(fl, kernel, sc, args);
+>> +	ctx = fastrpc_context_alloc(fl, kernel, sc, cargs);
+>>  	if (IS_ERR(ctx))
+>>  		return PTR_ERR(ctx);
+>>  
+>> @@ -1233,6 +1238,7 @@ static int fastrpc_init_create_static_process(struct fastrpc_user *fl,
+>>  {
+>>  	struct fastrpc_init_create_static init;
+>>  	struct fastrpc_invoke_args *args;
+>> +	struct fastrpc_ctx_args *cargs;
+>>  	struct fastrpc_phy_page pages[1];
+>>  	char *name;
+>>  	int err;
+>> @@ -1307,15 +1313,25 @@ static int fastrpc_init_create_static_process(struct fastrpc_user *fl,
+>>  	args[2].length = sizeof(*pages);
+>>  	args[2].fd = -1;
+>>  
+>> +	cargs = kzalloc(sizeof(*cargs), GFP_KERNEL);
+>> +	if (!cargs) {
+>> +		err = -ENOMEM;
+>> +		goto err_invoke;
+>> +	}
+>> +
+>> +	cargs->args = args;
+>>  	sc = FASTRPC_SCALARS(FASTRPC_RMID_INIT_CREATE_STATIC, 3, 0);
+>>  
+>>  	err = fastrpc_internal_invoke(fl, true, FASTRPC_INIT_HANDLE,
+>> -				      sc, args);
+>> -	if (err)
+>> +				      sc, cargs);
+>> +	if (err) {
+>> +		kfree(cargs);
+> No, this should be a part of the error path.
+
+Ack.
+
 >
-> BR,
-> -R
+>>  		goto err_invoke;
+>> +	}
+>>  
+>>  	kfree(args);
+>>  	kfree(name);
+>> +	kfree(cargs);
+>>  
+>>  	return 0;
+>>  err_invoke:
+>> @@ -1351,6 +1367,7 @@ static int fastrpc_init_create_process(struct fastrpc_user *fl,
+>>  {
+>>  	struct fastrpc_init_create init;
+>>  	struct fastrpc_invoke_args *args;
+>> +	struct fastrpc_ctx_args *cargs;
+>>  	struct fastrpc_phy_page pages[1];
+>>  	struct fastrpc_map *map = NULL;
+>>  	struct fastrpc_buf *imem = NULL;
+>> @@ -1438,16 +1455,26 @@ static int fastrpc_init_create_process(struct fastrpc_user *fl,
+>>  	args[5].length = sizeof(inbuf.siglen);
+>>  	args[5].fd = -1;
+>>  
+>> +	cargs = kzalloc(sizeof(*cargs), GFP_KERNEL);
+>> +	if (!cargs) {
+>> +		err = -ENOMEM;
+>> +		goto err_invoke;
+>> +	}
+>> +
+>> +	cargs->args = args;
+>>  	sc = FASTRPC_SCALARS(FASTRPC_RMID_INIT_CREATE, 4, 0);
+>>  	if (init.attrs)
+>>  		sc = FASTRPC_SCALARS(FASTRPC_RMID_INIT_CREATE_ATTR, 4, 0);
+>>  
+>>  	err = fastrpc_internal_invoke(fl, true, FASTRPC_INIT_HANDLE,
+>> -				      sc, args);
+>> -	if (err)
+>> +				      sc, cargs);
+>> +	if (err) {
+>> +		kfree(cargs);
+> Likewise.
 
-Because we could clear FSR in the resume handler (ok), then resume,
-then fault again, then clear FSR again in arm_smmu_context_fault() and
-unintentionally acknowledge the fault without a corresponding resume.
-Again, it's not possible with drm/msm after this series since we
-disable stall-on-fault before resuming but still this means it's very
-fragile.
+Ack.
 
-To be clear, FSR should already be frozen until we resume, if the
-SMMUv2 architecture pseudocode is to be believed. So any fault that's
-recorded in the devcoredump will still be accurate with this patch,
-just subsequent faults might not be accurate.
+--ekansh
 
-Connor
+>
+>>  		goto err_invoke;
+>> +	}
+>>  
+>>  	kfree(args);
+>> +	kfree(cargs);
+>>  
+>>  	return 0;
+>>  
+>> @@ -1498,17 +1525,27 @@ static void fastrpc_session_free(struct fastrpc_channel_ctx *cctx,
+>>  static int fastrpc_release_current_dsp_process(struct fastrpc_user *fl)
+>>  {
+>>  	struct fastrpc_invoke_args args[1];
+>> -	int client_id = 0;
+>> +	struct fastrpc_ctx_args *cargs;
+>> +	int client_id = 0, err;
+>>  	u32 sc;
+>>  
+>>  	client_id = fl->client_id;
+>>  	args[0].ptr = (u64)(uintptr_t) &client_id;
+>>  	args[0].length = sizeof(client_id);
+>>  	args[0].fd = -1;
+>> +
+>> +	cargs = kzalloc(sizeof(*cargs), GFP_KERNEL);
+>> +	if (!cargs)
+>> +		return -ENOMEM;
+>> +
+>> +	cargs->args = args;
+>>  	sc = FASTRPC_SCALARS(FASTRPC_RMID_INIT_RELEASE, 1, 0);
+>>  
+>> -	return fastrpc_internal_invoke(fl, true, FASTRPC_INIT_HANDLE,
+>> -				       sc, &args[0]);
+>> +	err = fastrpc_internal_invoke(fl, true, FASTRPC_INIT_HANDLE,
+>> +				       sc, cargs);
+>> +	kfree(cargs);
+>> +
+>> +	return err;
+>>  }
+>>  
+>>  static int fastrpc_device_release(struct inode *inode, struct file *file)
+>> @@ -1643,22 +1680,33 @@ static int fastrpc_dmabuf_alloc(struct fastrpc_user *fl, char __user *argp)
+>>  static int fastrpc_init_attach(struct fastrpc_user *fl, int pd)
+>>  {
+>>  	struct fastrpc_invoke_args args[1];
+>> -	int client_id = fl->client_id;
+>> +	struct fastrpc_ctx_args *cargs;
+>> +	int client_id = fl->client_id, err;
+>>  	u32 sc;
+>>  
+>>  	args[0].ptr = (u64)(uintptr_t) &client_id;
+>>  	args[0].length = sizeof(client_id);
+>>  	args[0].fd = -1;
+>> +
+>> +	cargs = kzalloc(sizeof(*cargs), GFP_KERNEL);
+>> +	if (!cargs)
+>> +		return -ENOMEM;
+>> +
+>> +	cargs->args = args;
+>>  	sc = FASTRPC_SCALARS(FASTRPC_RMID_INIT_ATTACH, 1, 0);
+>>  	fl->pd = pd;
+>>  
+>> -	return fastrpc_internal_invoke(fl, true, FASTRPC_INIT_HANDLE,
+>> -				       sc, &args[0]);
+>> +	err = fastrpc_internal_invoke(fl, true, FASTRPC_INIT_HANDLE,
+>> +				       sc, cargs);
+>> +	kfree(cargs);
+>> +
+>> +	return err;
+>>  }
+>>  
+>>  static int fastrpc_invoke(struct fastrpc_user *fl, char __user *argp)
+>>  {
+>>  	struct fastrpc_invoke_args *args = NULL;
+>> +	struct fastrpc_ctx_args *cargs;
+>>  	struct fastrpc_invoke inv;
+>>  	u32 nscalars;
+>>  	int err;
+>> @@ -1679,9 +1727,16 @@ static int fastrpc_invoke(struct fastrpc_user *fl, char __user *argp)
+>>  			return -EFAULT;
+>>  		}
+>>  	}
+>> +	cargs = kzalloc(sizeof(*cargs), GFP_KERNEL);
+>> +	if (!cargs) {
+>> +		kfree(args);
+>> +		return -ENOMEM;
+>> +	}
+>>  
+>> -	err = fastrpc_internal_invoke(fl, false, inv.handle, inv.sc, args);
+>> +	cargs->args = args;
+>> +	err = fastrpc_internal_invoke(fl, false, inv.handle, inv.sc, cargs);
+>>  	kfree(args);
+>> +	kfree(cargs);
+>>  
+>>  	return err;
+>>  }
+>> @@ -1690,6 +1745,8 @@ static int fastrpc_get_info_from_dsp(struct fastrpc_user *fl, uint32_t *dsp_attr
+>>  				     uint32_t dsp_attr_buf_len)
+>>  {
+>>  	struct fastrpc_invoke_args args[2] = { 0 };
+>> +	struct fastrpc_ctx_args *cargs;
+>> +	int err;
+>>  
+>>  	/*
+>>  	 * Capability filled in userspace. This carries the information
+>> @@ -1706,8 +1763,15 @@ static int fastrpc_get_info_from_dsp(struct fastrpc_user *fl, uint32_t *dsp_attr
+>>  	args[1].length = dsp_attr_buf_len * sizeof(u32);
+>>  	args[1].fd = -1;
+>>  
+>> -	return fastrpc_internal_invoke(fl, true, FASTRPC_DSP_UTILITIES_HANDLE,
+>> -				       FASTRPC_SCALARS(0, 1, 1), args);
+>> +	cargs = kzalloc(sizeof(*cargs), GFP_KERNEL);
+>> +	if (!cargs)
+>> +		return -ENOMEM;
+>> +
+>> +	cargs->args = args;
+>> +	err = fastrpc_internal_invoke(fl, true, FASTRPC_DSP_UTILITIES_HANDLE,
+>> +				       FASTRPC_SCALARS(0, 1, 1), cargs);
+>> +	kfree(cargs);
+>> +	return err;
+>>  }
+>>  
+>>  static int fastrpc_get_info_from_kernel(struct fastrpc_ioctl_capability *cap,
+>> @@ -1794,6 +1858,7 @@ static int fastrpc_get_dsp_info(struct fastrpc_user *fl, char __user *argp)
+>>  static int fastrpc_req_munmap_impl(struct fastrpc_user *fl, struct fastrpc_buf *buf)
+>>  {
+>>  	struct fastrpc_invoke_args args[1] = { [0] = { 0 } };
+>> +	struct fastrpc_ctx_args *cargs;
+>>  	struct fastrpc_munmap_req_msg req_msg;
+>>  	struct device *dev = fl->sctx->dev;
+>>  	int err;
+>> @@ -1806,9 +1871,14 @@ static int fastrpc_req_munmap_impl(struct fastrpc_user *fl, struct fastrpc_buf *
+>>  	args[0].ptr = (u64) (uintptr_t) &req_msg;
+>>  	args[0].length = sizeof(req_msg);
+>>  
+>> +	cargs = kzalloc(sizeof(*cargs), GFP_KERNEL);
+>> +	if (!cargs)
+>> +		return -ENOMEM;
+>> +
+>> +	cargs->args = args;
+>>  	sc = FASTRPC_SCALARS(FASTRPC_RMID_INIT_MUNMAP, 1, 0);
+>>  	err = fastrpc_internal_invoke(fl, true, FASTRPC_INIT_HANDLE, sc,
+>> -				      &args[0]);
+>> +				      cargs);
+>>  	if (!err) {
+>>  		dev_dbg(dev, "unmmap\tpt 0x%09lx OK\n", buf->raddr);
+>>  		spin_lock(&fl->lock);
+>> @@ -1818,6 +1888,7 @@ static int fastrpc_req_munmap_impl(struct fastrpc_user *fl, struct fastrpc_buf *
+>>  	} else {
+>>  		dev_err(dev, "unmmap\tpt 0x%09lx ERROR\n", buf->raddr);
+>>  	}
+>> +	kfree(cargs);
+>>  
+>>  	return err;
+>>  }
+>> @@ -1852,6 +1923,7 @@ static int fastrpc_req_munmap(struct fastrpc_user *fl, char __user *argp)
+>>  static int fastrpc_req_mmap(struct fastrpc_user *fl, char __user *argp)
+>>  {
+>>  	struct fastrpc_invoke_args args[3] = { [0 ... 2] = { 0 } };
+>> +	struct fastrpc_ctx_args *cargs;
+>>  	struct fastrpc_buf *buf = NULL;
+>>  	struct fastrpc_mmap_req_msg req_msg;
+>>  	struct fastrpc_mmap_rsp_msg rsp_msg;
+>> @@ -1902,12 +1974,18 @@ static int fastrpc_req_mmap(struct fastrpc_user *fl, char __user *argp)
+>>  	args[2].ptr = (u64) (uintptr_t) &rsp_msg;
+>>  	args[2].length = sizeof(rsp_msg);
+>>  
+>> +	cargs = kzalloc(sizeof(*cargs), GFP_KERNEL);
+>> +	if (!cargs)
+>> +		return -ENOMEM;
+>> +
+>> +	cargs->args = args;
+>>  	sc = FASTRPC_SCALARS(FASTRPC_RMID_INIT_MMAP, 2, 1);
+>>  	err = fastrpc_internal_invoke(fl, true, FASTRPC_INIT_HANDLE, sc,
+>> -				      &args[0]);
+>> +				      cargs);
+>>  	if (err) {
+>>  		dev_err(dev, "mmap error (len 0x%08llx)\n", buf->size);
+>>  		fastrpc_buf_free(buf);
+>> +		kfree(cargs);
+>>  		return err;
+>>  	}
+>>  
+>> @@ -1942,17 +2020,20 @@ static int fastrpc_req_mmap(struct fastrpc_user *fl, char __user *argp)
+>>  	dev_dbg(dev, "mmap\t\tpt 0x%09lx OK [len 0x%08llx]\n",
+>>  		buf->raddr, buf->size);
+>>  
+>> +	kfree(cargs);
+>>  	return 0;
+>>  
+>>  err_assign:
+>>  	fastrpc_req_munmap_impl(fl, buf);
+>>  
+>> +	kfree(cargs);
+>>  	return err;
+>>  }
+>>  
+>>  static int fastrpc_req_mem_unmap_impl(struct fastrpc_user *fl, struct fastrpc_mem_unmap *req)
+>>  {
+>>  	struct fastrpc_invoke_args args[1] = { [0] = { 0 } };
+>> +	struct fastrpc_ctx_args *cargs;
+>>  	struct fastrpc_map *map = NULL, *iter, *m;
+>>  	struct fastrpc_mem_unmap_req_msg req_msg = { 0 };
+>>  	int err = 0;
+>> @@ -1982,14 +2063,21 @@ static int fastrpc_req_mem_unmap_impl(struct fastrpc_user *fl, struct fastrpc_me
+>>  	args[0].ptr = (u64) (uintptr_t) &req_msg;
+>>  	args[0].length = sizeof(req_msg);
+>>  
+>> +	cargs = kzalloc(sizeof(*cargs), GFP_KERNEL);
+>> +	if (!cargs)
+>> +		return -ENOMEM;
+>> +
+>> +	cargs->args = args;
+>>  	sc = FASTRPC_SCALARS(FASTRPC_RMID_INIT_MEM_UNMAP, 1, 0);
+>>  	err = fastrpc_internal_invoke(fl, true, FASTRPC_INIT_HANDLE, sc,
+>> -				      &args[0]);
+>> +				      cargs);
+>>  	if (err) {
+>>  		dev_err(dev, "unmmap\tpt fd = %d, 0x%09llx error\n",  map->fd, map->raddr);
+>> +		kfree(cargs);
+>>  		return err;
+>>  	}
+>>  	fastrpc_map_put(map);
+>> +	kfree(cargs);
+>>  
+>>  	return 0;
+>>  }
+>> @@ -2007,6 +2095,7 @@ static int fastrpc_req_mem_unmap(struct fastrpc_user *fl, char __user *argp)
+>>  static int fastrpc_req_mem_map(struct fastrpc_user *fl, char __user *argp)
+>>  {
+>>  	struct fastrpc_invoke_args args[4] = { [0 ... 3] = { 0 } };
+>> +	struct fastrpc_ctx_args *cargs;
+>>  	struct fastrpc_mem_map_req_msg req_msg = { 0 };
+>>  	struct fastrpc_mmap_rsp_msg rsp_msg = { 0 };
+>>  	struct fastrpc_mem_unmap req_unmap = { 0 };
+>> @@ -2051,8 +2140,13 @@ static int fastrpc_req_mem_map(struct fastrpc_user *fl, char __user *argp)
+>>  	args[3].ptr = (u64) (uintptr_t) &rsp_msg;
+>>  	args[3].length = sizeof(rsp_msg);
+>>  
+>> +	cargs = kzalloc(sizeof(*cargs), GFP_KERNEL);
+>> +	if (!cargs)
+>> +		return -ENOMEM;
+>> +
+>> +	cargs->args = args;
+>>  	sc = FASTRPC_SCALARS(FASTRPC_RMID_INIT_MEM_MAP, 3, 1);
+>> -	err = fastrpc_internal_invoke(fl, true, FASTRPC_INIT_HANDLE, sc, &args[0]);
+>> +	err = fastrpc_internal_invoke(fl, true, FASTRPC_INIT_HANDLE, sc, cargs);
+>>  	if (err) {
+>>  		dev_err(dev, "mem mmap error, fd %d, vaddr %llx, size %lld\n",
+>>  			req.fd, req.vaddrin, map->size);
+>> @@ -2072,11 +2166,13 @@ static int fastrpc_req_mem_map(struct fastrpc_user *fl, char __user *argp)
+>>  		fastrpc_req_mem_unmap_impl(fl, &req_unmap);
+>>  		return -EFAULT;
+>>  	}
+>> +	kfree(cargs);
+>>  
+>>  	return 0;
+>>  
+>>  err_invoke:
+>>  	fastrpc_map_put(map);
+>> +	kfree(cargs);
+>>  
+>>  	return err;
+>>  }
+>> -- 
+>> 2.34.1
+>>
+
 
