@@ -1,177 +1,258 @@
-Return-Path: <linux-arm-msm+bounces-46525-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46526-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 42D8EA22107
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jan 2025 16:56:58 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8F77FA22115
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jan 2025 16:58:57 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A0C623A35E3
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jan 2025 15:56:39 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AD4313A16BB
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jan 2025 15:58:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AAF0C1DE885;
-	Wed, 29 Jan 2025 15:56:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 39A7E1DE4F8;
+	Wed, 29 Jan 2025 15:58:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="JegPAI6V"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mL8V2FJY"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-il1-f169.google.com (mail-il1-f169.google.com [209.85.166.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DB9E1BD9E6
-	for <linux-arm-msm@vger.kernel.org>; Wed, 29 Jan 2025 15:56:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 765FE1A8F68
+	for <linux-arm-msm@vger.kernel.org>; Wed, 29 Jan 2025 15:58:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738166184; cv=none; b=H9lTyJYvrkHuTifIK+BhusM5OVD9+Jxm9tKRU8KpW3BczkW8VRSRmov8ZgRz8kmHBBpIKqKADyxS/sreDZOuwU9s4g+COFxzAdbOb1CNPhfqTbHVS4tC6Opo2MSoOyS+dLQfYSXkW43km9dvm5zoY7Wu8P551plXGhQzzjhvLiA=
+	t=1738166327; cv=none; b=ECki5afsPlfBrymd444yMvmRerXWtkRgkdoBa4pC2WHW8AkaHzt8jJl3/az4Ss1C5N7oFVWWAuHy7LKDitzDmGaWaXBn1lEeEBnGG0vJ7zDEMMpE8fdecOidLlCcAndlE0JMe1i8A4t6RTrYBM2U/9Y75AhO9z03Csy0Au5NLks=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738166184; c=relaxed/simple;
-	bh=Dt7xkAk4I2Scvbht6IKyvbEclkFIJDnQUwr7f8DbyTg=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=hX5CbbIpFVS7EI9H4/lhAzj3sMohM5Y6wDJiGY7a9TiC5t9vRVPzVaWKQKuYb+JNvk0h1RhDjPI6IoOkqEb5ltFFUPCXik84PMHGa5GgLNMug0jHlXJoH+3e993ftWp2G1XcB1PmmrHzMo1n12aFxvy6N4tGBO02FoypzqRNRWo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=JegPAI6V; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50TB51ga025544
-	for <linux-arm-msm@vger.kernel.org>; Wed, 29 Jan 2025 15:56:22 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:date:from:message-id:mime-version
-	:subject:to; s=qcppdkim1; bh=DxY0icfYFDPYpLy0SN45Y3l8ipVx2gW7otJ
-	CvY2psTE=; b=JegPAI6VLv/mjpZGwYAIvo4eRCROAsoZpDS6YXmEpZLTukASaZv
-	NoVT4yrXIbsmFWMmm9nTgPod+qJ6PazaDvd3gHcU/sbCn/hJkYhN2+Ak9IIAj9jI
-	nJsQOiJLRge7WVz3qfTv2K78W35fL7rl0elpnpUTim2k7etoRDXzawhPmwFuhSq4
-	KYE+cZmX/Mv1PM6iNzQVwhg5xVRlabDAlE5TmZWaDAAkXdsl7HTlwKQEmRYErjgZ
-	9LiUJQ7N6MSssjNOPLLn13Py8OIIAT3tpZozzoqiCqU6gOvTI5/MFvNKr+TcUomC
-	UQ8nEWooVrknm9A6XWELtfqi2P+u4S48oGw==
-Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com [209.85.214.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44fk500j80-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 29 Jan 2025 15:56:22 +0000 (GMT)
-Received: by mail-pl1-f200.google.com with SMTP id d9443c01a7336-2164fad3792so122735325ad.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Jan 2025 07:56:22 -0800 (PST)
+	s=arc-20240116; t=1738166327; c=relaxed/simple;
+	bh=c1Jihq/Gyq3OU3s4XJT+DK8Q8KInGyeizpQFC50A6uo=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=hCUz8i/CWQnNslPqKp8sQ+Fik6dgaieU4EVn/WlZtGG9OIfCGMDBvEDGmMHF6DaOr1GbdJIrb/FcJnDgxTWsLM74ppfW9PD2AlIbWo8+qKUOtkyOPIlRol1Yjb9UdBKYf0nAFlnySbGYEq0SUD4Vq6q4xDt0hNcP+ZQYc1HWLdc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mL8V2FJY; arc=none smtp.client-ip=209.85.166.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-il1-f169.google.com with SMTP id e9e14a558f8ab-3cfc1ff581dso15846945ab.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Jan 2025 07:58:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1738166324; x=1738771124; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Yyx2HnrHkqjaWL4grDrBJMJLyZTpqWFcrU3zWDmIiLc=;
+        b=mL8V2FJY22bkHa7aqRQ7oMtB+mKPTInQmn34tkrPZs94HDXdX73fE5uG4rh13R8jZt
+         zV5ZR/ybC6vN+gsBbZLRJNe9rr6Xxqiw9juX0xCX6T3In0ln4CR6pZmksnIkUUNoHKH8
+         OndHcvtLUPtSdUezbev05Yifetye5do7/4dFLQCdZR4SOw/lQQB3PIQxKDB87wX6rsdL
+         BsVScntbZa4Q+E+5xw+PIqsfeFrLeK/pt4WXKPp0SLK83Sn1JWbzoZSzlgnFbGkMdf7b
+         mzdaz3PjUXp5Q9JvDpJFSCYn1kijf2ta0tWWH9xQB4lFc2EOGWH052nNBuNK5EVE5gA1
+         r+Ew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738166181; x=1738770981;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=DxY0icfYFDPYpLy0SN45Y3l8ipVx2gW7otJCvY2psTE=;
-        b=czMzQaHygU7Q6abrKnXwxoP3p5W02ZFwJfN0sNEoLWUcGrxFZ0KhZ3A4+FcIh+MTQ+
-         4A/0OF60zJgELaA/Dhe7jUK0CpK2We4wZXquPjxP8A8V9fbVtVQyidn7yC+bco3/DWgG
-         N6i5kPsN5mcIwu+OOvsrwPhzU3XtYVVI79l4xUohsBjXO1+n6nOTKr9k5IXYQ17bX5jv
-         qGMyfl3Kce2mc9VqGe4b2Ospw+oHtU0BXdQNkkGog3mKQgq1+QY9Qrx53UAtAFT4YPLs
-         zu/TdbqtKVaeWkOCKTSLzIi1iEe3B7xkIhXPGbvgJwgms/BWFmSr07clTEcnjPfM6siH
-         8v+Q==
-X-Gm-Message-State: AOJu0YwBjGb+Sl17/ewTmh87UuPj5ausxStCA0jdeVDPRodeMtUPJfAr
-	X6zHGoEXkYWlkZL+MiEXhLTNKV/QA+VTKn0ozRPBl+YMfErQuLR+rOp/8nojbRXsECENzwV32sA
-	bcELrEruJ9gdl3pMpgjIDstA83Z6s4ntqTjUHiVvtvsasw/a/GhdgXAAHUmE21c8D
-X-Gm-Gg: ASbGncsGYtHoOJ4mBQja4SzDuM0Hnq+l5Y82mNrc/ba3jK5GoyTHc6oVZtEDdN0pY93
-	zjE52C9OvhzlYuVzDq3F2qNgEavkaCtLZ0i3Sb2CrYwqE2Hg47xbKkQ3VdTkQ5QiTf93BE4am2e
-	zNQjJ7IZo24r0AJEb/yxbfJbeFPSjBVRvWFDOtaFNHVwpB+GCcjsB1E6xupqlmK5VKdCXxC88L4
-	QCTbZSryTFFCRUlv1Syb8fnOiapV73zkyaKM6wCV3kO81pJd2Bl/lGp5NTOUEYq1aJYI4yK0N1A
-	ezff0OcliIBhdJ/nc6bsaAVJIxiC1IuO
-X-Received: by 2002:a17:903:244b:b0:212:67a5:ab2d with SMTP id d9443c01a7336-21dd7df2d21mr59553625ad.44.1738166181298;
-        Wed, 29 Jan 2025 07:56:21 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IF2B4B+YcV7qGpZDw1PDGvvKfkjXAwRuH8rb5D436/nFHKW3TBRf6iKCQFl+v3k5Lh4v3r6VA==
-X-Received: by 2002:a17:903:244b:b0:212:67a5:ab2d with SMTP id d9443c01a7336-21dd7df2d21mr59553325ad.44.1738166180910;
-        Wed, 29 Jan 2025 07:56:20 -0800 (PST)
-Received: from hu-mojha-hyd.qualcomm.com ([202.46.23.25])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-21da414edb3sm100898975ad.202.2025.01.29.07.56.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 29 Jan 2025 07:56:20 -0800 (PST)
-From: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
-To: andersson@kernel.org, konradybcio@kernel.org
-Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>, stable@vger.kernel.org,
-        Saranya R <quic_sarar@quicinc.com>
-Subject: [PATCH v2] soc: qcom: pdr: Fix the potential deadlock
-Date: Wed, 29 Jan 2025 21:25:44 +0530
-Message-Id: <20250129155544.1864854-1-mukesh.ojha@oss.qualcomm.com>
-X-Mailer: git-send-email 2.34.1
+        d=1e100.net; s=20230601; t=1738166324; x=1738771124;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Yyx2HnrHkqjaWL4grDrBJMJLyZTpqWFcrU3zWDmIiLc=;
+        b=aRzqvUAGWtKwEN9nHTP+ZBybbKF2PhOQctlwn4qnf9UXIuFLZEcLdsD02R468gPRjD
+         m6XTdWDKOw6QtA5oQw/1PEYy6lPUI5RZe+lSSicGzk6cuA2asWWjbIELxHUMhcCqrGsW
+         2nFe8k/g0qobIafm6/w+8/BADv+kgzOzspNKgcgajRottF7+gaoDHnUITpTVCMJGqRIr
+         rUsc3NhfDgCr9pN3Qunq2HmDxXcnA29NDgkkaOOU774XcreJ09PhxT+Eux7KTgeXTOfo
+         elYLtVrK1M7yTl0zOeJjuWvWuSXAVtDVkFjCHZb4gNCjF/7IKzOVBfAhJc2b73qnc23E
+         bfEQ==
+X-Forwarded-Encrypted: i=1; AJvYcCV6SQug3S5Pg5Em+YqAJ2X5nthBPMCGo7IX3WOukHFOgc51nUpKLNLZwicrYEd4H+LPFGQzOH2Zs20SDq6u@vger.kernel.org
+X-Gm-Message-State: AOJu0YyR90llG1oobepsbKfT1zEY1fLePuanKnwmor7tJQQuW27mZWPV
+	8R31sMruRXW1s0ESz1AK+TpWjbbCN03dslPQ+KNewtiKch6kIk7X2jvjnqdyJuZcdC4QUfiZz5r
+	w46ZLRNlZ/t2pUtnSQVTTyx0fyw4=
+X-Gm-Gg: ASbGnctyjgVRoAyStqNCjuHiYJM1Fi4pDUAYWIiBJ29q7LhdwMZulexfdLLwsmUQhLo
+	S/8qEmb+E7N90wzDdxGM2UZ/OtE1A5JxWZREsDvJGl3k+XVGfJKfwo2HTVA4AwpYMoLUAbtE/yp
+	KHrcyyuDgNwGHZDhl8trRpn/rNE6k8HA==
+X-Google-Smtp-Source: AGHT+IHnCFTfSAmMVBm2YjmSTGYFPFdPTEgRxK+qIu+I/T+Z+PCgdh1bWdqnU7KHBa1TMZ2xZtF0vpMUCLb2CtJzpM0=
+X-Received: by 2002:a92:cda7:0:b0:3ce:8b1b:2f with SMTP id e9e14a558f8ab-3cffe4b2c16mr28938375ab.17.1738166324333;
+ Wed, 29 Jan 2025 07:58:44 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: NcE_PPUE37unZhIWwWBwLrvI2RQRT8jL
-X-Proofpoint-ORIG-GUID: NcE_PPUE37unZhIWwWBwLrvI2RQRT8jL
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-01-29_03,2025-01-29_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 priorityscore=1501
- malwarescore=0 phishscore=0 suspectscore=0 mlxlogscore=999 clxscore=1015
- spamscore=0 lowpriorityscore=0 bulkscore=0 impostorscore=0 adultscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2411120000
- definitions=main-2501290128
+References: <20250122-msm-gpu-fault-fixes-next-v3-0-0afa00158521@gmail.com>
+ <20250122-msm-gpu-fault-fixes-next-v3-1-0afa00158521@gmail.com>
+ <Z5IjsqQ6vTdUXiGt@hu-guptap-hyd.qualcomm.com> <CACu1E7H5X2EfY9AG=xceaoZJkbumwnrsU4QvNbxd_A2wgVVOaQ@mail.gmail.com>
+ <Z5KXwNPrdirVUn8Z@hu-guptap-hyd.qualcomm.com> <CACu1E7GOS+_biN=AuQwYK47ApRPFGygyD+U5X9d_4ReXKrzbfw@mail.gmail.com>
+ <Z5i6GQDd5apN+a10@hu-guptap-hyd.qualcomm.com> <CAF6AEGstcrAJDBpPm-uQ+zSDVEhDJ4AQhCTDT-z9_8Nq0e35WQ@mail.gmail.com>
+ <CACu1E7HErZAL=-GVQfKUAUK5bgK-X0qejt5os3f2UhkeZ1ptMQ@mail.gmail.com>
+ <CAF6AEGsUjp+fp1_cN7SGYTh5WSQrU2mm92QsqA5rcSY1OtA8VQ@mail.gmail.com>
+ <CACu1E7FyHwJ2mp5u3rDganYj80eDq3QJzLRFzxD9E9O7hEDiag@mail.gmail.com>
+ <CAF6AEGugDxYjH63+Up_T_pt+jQ2D0m=x1tSg3fGPteu3XgR2qA@mail.gmail.com> <CACu1E7F0UTTapsLEUuKVFN0MF=kwhbSJqN2MU305Ab3cg+u_Lg@mail.gmail.com>
+In-Reply-To: <CACu1E7F0UTTapsLEUuKVFN0MF=kwhbSJqN2MU305Ab3cg+u_Lg@mail.gmail.com>
+From: Rob Clark <robdclark@gmail.com>
+Date: Wed, 29 Jan 2025 07:58:32 -0800
+X-Gm-Features: AWEUYZkqyL0XupB4dML0yNwAmFsGfqHPxcVGzGZq55r_jJ2AS-o5CA3GcwcpY1k
+Message-ID: <CAF6AEGv0-_Xh6adws+1WFTgX1vRSA4wLoDDZ7+RKgxpKgN-P0w@mail.gmail.com>
+Subject: Re: [PATCH v3 1/3] iommu/arm-smmu: Fix spurious interrupts with stall-on-fault
+To: Connor Abbott <cwabbott0@gmail.com>
+Cc: Prakash Gupta <quic_guptap@quicinc.com>, Will Deacon <will@kernel.org>, 
+	Robin Murphy <robin.murphy@arm.com>, Joerg Roedel <joro@8bytes.org>, Sean Paul <sean@poorly.run>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, iommu@lists.linux.dev, 
+	linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+	freedreno@lists.freedesktop.org, Rob Clark <robdclark@chromium.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-When some client process A call pdr_add_lookup() to add the look up for
-the service and does schedule locator work, later a process B got a new
-server packet indicating locator is up and call pdr_locator_new_server()
-which eventually sets pdr->locator_init_complete to true which process A
-sees and takes list lock and queries domain list but it will timeout due
-to deadlock as the response will queued to the same qmi->wq and it is
-ordered workqueue and process B is not able to complete new server
-request work due to deadlock on list lock.
+On Tue, Jan 28, 2025 at 7:34=E2=80=AFPM Connor Abbott <cwabbott0@gmail.com>=
+ wrote:
+>
+> On Tue, Jan 28, 2025 at 10:25=E2=80=AFPM Rob Clark <robdclark@gmail.com> =
+wrote:
+> >
+> > On Tue, Jan 28, 2025 at 6:31=E2=80=AFPM Connor Abbott <cwabbott0@gmail.=
+com> wrote:
+> > >
+> > > On Tue, Jan 28, 2025 at 9:21=E2=80=AFPM Rob Clark <robdclark@gmail.co=
+m> wrote:
+> > > >
+> > > > On Tue, Jan 28, 2025 at 2:15=E2=80=AFPM Connor Abbott <cwabbott0@gm=
+ail.com> wrote:
+> > > > >
+> > > > > On Tue, Jan 28, 2025 at 5:10=E2=80=AFPM Rob Clark <robdclark@gmai=
+l.com> wrote:
+> > > > > >
+> > > > > > On Tue, Jan 28, 2025 at 3:08=E2=80=AFAM Prakash Gupta <quic_gup=
+tap@quicinc.com> wrote:
+> > > > > > >
+> > > > > > > On Thu, Jan 23, 2025 at 03:14:16PM -0500, Connor Abbott wrote=
+:
+> > > > > > > > On Thu, Jan 23, 2025 at 2:26=E2=80=AFPM Prakash Gupta <quic=
+_guptap@quicinc.com> wrote:
+> > > > > > > > >
+> > > > > > > > > On Thu, Jan 23, 2025 at 09:00:17AM -0500, Connor Abbott w=
+rote:
+> > > > > > > > > > On Thu, Jan 23, 2025 at 6:10=E2=80=AFAM Prakash Gupta <=
+quic_guptap@quicinc.com> wrote:
+> > > > > > > > > > >
+> > > > > > > > > > > On Wed, Jan 22, 2025 at 03:00:58PM -0500, Connor Abbo=
+tt wrote:
+> > > > > > > > > > > The context would remain stalled till we write to CBn=
+_RESUME. Which is done
+> > > > > > > > > > > in qcom_adreno_smmu_resume_translation(). For a stall=
+ed context further
+> > > > > > > > > > > transactions are not processed and we shouldn't see f=
+urther faults and
+> > > > > > > > > > > or fault inerrupts. Do you observe faults with stalle=
+d context?
+> > > > > > > > > >
+> > > > > > > > > > Yes. I've observed that on MMU-500 writing RESUME befor=
+e the interrupt
+> > > > > > > > > > has been cleared doesn't clear SS. This happened with v=
+2 in the case
+> > > > > > > > > > where there was already a devcoredump and drm/msm calle=
+d
+> > > > > > > > > > qcom_adreno_smmu_resume_translation() immediately from =
+its fault
+> > > > > > > > > > handler, and we'd get a storm of unhandled interrupts u=
+ntil it was
+> > > > > > > > > > disabled. Given that the architecture spec says we're s=
+upposed to
+> > > > > > > > > > clear the interrupt first this may have been an attempt=
+ to "help"
+> > > > > > > > > > developers.
+> > > > > > > > > >
+> > > > > > > > >
+> > > > > > > > > Just to clarify, present sequence is:
+> > > > > > > > > 1. context fault with stall enable. FSR.SS set.
+> > > > > > > > > 2. Report fault to client
+> > > > > > > > > 3. resume/terminate stalled transaction
+> > > > > > > > > 4. clear FSR
+> > > > > > > > >
+> > > > > > > > > At what point when you try #2->#3->#4 or #4->#2->#3 seque=
+nce, is FSR.SS
+> > > > > > > > > cleared and interrupt storm is observed.
+> > > > > > > >
+> > > > > > > > With #2->#3->#4 FSR.SS is *not* cleared and there is a subs=
+equent
+> > > > > > > > interrupt storm with only FSR.SS asserted. With #4->#2->#3 =
+there is no
+> > > > > > > > interrupt storm. From this we conclude that MMU-500 does no=
+t clear
+> > > > > > > > FSR.SS unless #4 happens before #3.
+> > > > > > > >
+> > > > > > > Thanks Connor for clarification. I get your point now. I thin=
+k it's
+> > > > > > > expected interrupt storm with #2->#3->#4 sequence is expected=
+.  With
+> > > > > > > CONFIG_ARM_SMMU_QCOM_DEBUG enabled, context fault follows the=
+ sequence of
+> > > > > > > #1->#2->#4->#3, which is spec recommended.
+> > > > > > >
+> > > > > > > so, common fault handler can be modified to follow the same s=
+equence, but I
+> > > > > > > have concern regarding clearing FSR before reporting fault to=
+ client.
+> > > > > > > qcom_adreno_smmu_get_fault_info() is an example I gave but ot=
+her client
+> > > > > > > handler may have similar expecation of fault register not cha=
+nged before
+> > > > > > > client fault handler is called.
+> > > > > >
+> > > > > > Simple solution would be to move the clearing of FSR to after t=
+he
+> > > > > > fault is reported.  It doesn't really matter if it is before or=
+ after,
+> > > > > > as long as it happens before the irq handler returns, AFAIU.  A=
+nd
+> > > > > > drm/msm will collect the fault info from the irq handler.
+> > > > >
+> > > > > As I said in the earlier mail: "From this we conclude that MMU-50=
+0
+> > > > > does not clear FSR.SS unless #4 happens before #3." #4 is clearin=
+g FSR
+> > > > > and #3 is writing RESUME. So no, unfortunately it does actually m=
+atter
+> > > > > and we get a storm of unhandled IRQs if we don't clear FSR first.=
+ Your
+> > > > > solution is what v2 did and it didn't work.
+> > > >
+> > > > So, just clear FSR also in the resume path
+> > >
+> > > Then we'd run the risk of incorrectly accepting a second fault if it
+> > > happens immediately after we resume. Not terrible for our use-case
+> > > where we only really need the first fault to be accurate and we
+> > > disable stall-on-fault afterwards, but if you ever leave it on then i=
+t
+> > > would result in another interrupt storm.
+> > >
+> >
+> > Howso? We'd still be ensuring that #4 happens before #3?  If needed we
+> > can add a param to resume_translation() so drm can tell it to only
+> > clear FSR if it calls resume_translation from the interrupt handler,
+> > or something like that.  But I don't want to lose capturing the FSR,
+> > and I don't think we need to.
+> >
+> > BR,
+> > -R
+>
+> Because we could clear FSR in the resume handler (ok), then resume,
+> then fault again, then clear FSR again in arm_smmu_context_fault() and
+> unintentionally acknowledge the fault without a corresponding resume.
+> Again, it's not possible with drm/msm after this series since we
+> disable stall-on-fault before resuming but still this means it's very
+> fragile.
 
-       Process A                        Process B
+Alternatively we could use the return code from the fault handler
+(maybe, -EFAULT) to indicate that arm-smmu irq handler should
+terminate+resume immediately, rather than calling resume_translation()
+in the case that drm doesn't schedule fault_handler.  We can change
+both sides of the adreno_smmu_priv interface if needed to come up with
+something sensible.
 
-                                     process_scheduled_works()
-pdr_add_lookup()                      qmi_data_ready_work()
- process_scheduled_works()             pdr_locator_new_server()
-                                         pdr->locator_init_complete=true;
-   pdr_locator_work()
-    mutex_lock(&pdr->list_lock);
+> To be clear, FSR should already be frozen until we resume, if the
+> SMMUv2 architecture pseudocode is to be believed. So any fault that's
+> recorded in the devcoredump will still be accurate with this patch,
+> just subsequent faults might not be accurate.
 
-     pdr_locate_service()                  mutex_lock(&pdr->list_lock);
+I guess by default I'd be inclined to "trust but verify" that (and
+also on qcom,smmu-v2).
 
-      pdr_get_domain_list()
-       pr_err("PDR: %s get domain list
-               txn wait failed: %d\n",
-               req->service_name,
-               ret);
-
-Fix it by removing the unnecessary list iteration as the list iteration
-is already being done inside locator work, so avoid it here and just
-call schedule_work() here.
-
-Fixes: fbe639b44a82 ("soc: qcom: Introduce Protection Domain Restart helpers")
-CC: stable@vger.kernel.org
-Signed-off-by: Saranya R <quic_sarar@quicinc.com>
-Signed-off-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
----
-Changes in v2:
- - Added Fixes tag,
-
- drivers/soc/qcom/pdr_interface.c | 8 +-------
- 1 file changed, 1 insertion(+), 7 deletions(-)
-
-diff --git a/drivers/soc/qcom/pdr_interface.c b/drivers/soc/qcom/pdr_interface.c
-index 328b6153b2be..71be378d2e43 100644
---- a/drivers/soc/qcom/pdr_interface.c
-+++ b/drivers/soc/qcom/pdr_interface.c
-@@ -75,7 +75,6 @@ static int pdr_locator_new_server(struct qmi_handle *qmi,
- {
- 	struct pdr_handle *pdr = container_of(qmi, struct pdr_handle,
- 					      locator_hdl);
--	struct pdr_service *pds;
- 
- 	mutex_lock(&pdr->lock);
- 	/* Create a local client port for QMI communication */
-@@ -87,12 +86,7 @@ static int pdr_locator_new_server(struct qmi_handle *qmi,
- 	mutex_unlock(&pdr->lock);
- 
- 	/* Service pending lookup requests */
--	mutex_lock(&pdr->list_lock);
--	list_for_each_entry(pds, &pdr->lookups, node) {
--		if (pds->need_locator_lookup)
--			schedule_work(&pdr->locator_work);
--	}
--	mutex_unlock(&pdr->list_lock);
-+	schedule_work(&pdr->locator_work);
- 
- 	return 0;
- }
--- 
-2.34.1
-
+BR,
+-R
 
