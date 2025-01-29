@@ -1,321 +1,313 @@
-Return-Path: <linux-arm-msm+bounces-46483-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46485-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 30C9BA21A29
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jan 2025 10:44:48 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 525D4A21A6E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jan 2025 10:54:17 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 84E41162CF5
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jan 2025 09:44:46 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 0C9207A0750
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jan 2025 09:53:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 965CB1AF0A4;
-	Wed, 29 Jan 2025 09:43:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 87FB91AF0AE;
+	Wed, 29 Jan 2025 09:54:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="G55Jq52z"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="o6Sx/Rrh"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 798E01ACEC9
-	for <linux-arm-msm@vger.kernel.org>; Wed, 29 Jan 2025 09:43:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3C501ADFFB;
+	Wed, 29 Jan 2025 09:54:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738143835; cv=none; b=fAm7sdg7PTzxw3psKYEeLPJAGwK970bVDi3EFkLwzN6/N5nIpKLDOJhkvrEbqm6ILu5armx8ALNfNuo3CmLC1jzNwfzdzW5OoSLNPdISamO8Pihc+O2bgRaX1WOE+UO/MCtuO4Y4sEkiaXqFmq0zoZNGl4lmgE+UcvucXbft5Ao=
+	t=1738144449; cv=none; b=ASxaVTouRY9DzThpSHwNFITfMqm9hL40OIdom6bpP7Q0dJJfqnTEfCnuLEjThjtHa31z9hSXPKeMw7i5Psl4VJYuu7kUGthL1FP2PkSR+ppMgDHPntvxbqPgMlCPdny2mOc/qBlsWKGivN5NxUrKFruT1fYSqFWalZ8gPUX0jDE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738143835; c=relaxed/simple;
-	bh=ksZqVVWZ+PXeyE/WmXqMiQwQwvesvKOWalvs07xCLEc=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=baDVKCAfyY8G3NkaThu7Lj7TWz6ft7ut0+Mz4oFlqGjtuYsdCBw477rCAZCx1DeJY2mMQSy67BQoARWdknN5dyFD453J6AA7HsAmPLeIGLZo3oWvTYb+4oYgiI4POtyM5Eb4JNBzaNRSZ1+CslnEZ+ZkRdLOcBHVQIewVLuCd+Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=G55Jq52z; arc=none smtp.client-ip=209.85.221.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f51.google.com with SMTP id ffacd0b85a97d-38634c35129so5923800f8f.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Jan 2025 01:43:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1738143831; x=1738748631; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=6Xvw2fuwtxpucq2thDNCyLyQjhPYOuUtnvNRZsFhY3g=;
-        b=G55Jq52z68Z4T/VXI3PfTyiUd2HGLYA9Xdoz0i63CnSN7PsoupfghjdXS58Db4oYWU
-         g3YG2nzBeKlUwV7fL2nbyJdkC3gdjYs/F7O5Th8LYH1LzYrumr07GsWxr80e40roSjIF
-         AR2JvXDwgFiCQoCQuB/AMuWdCtXT44IWMg7abnBv6v7CcAO5NxZnxA824kLXTW33tfxM
-         MGAXy7OPp7S9fv9007mEAuC+IUPh/YdPOzCJNrsb2CJj1CgBlV5W4yPkOKEFUIyNAqiw
-         4A6YGJWeGeLJb2MZR2bzGoy9DeloVs2IxHxWf+nTcATH9RRFPqbUnUVArGJoxHxarRgC
-         5kww==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738143831; x=1738748631;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=6Xvw2fuwtxpucq2thDNCyLyQjhPYOuUtnvNRZsFhY3g=;
-        b=if3lSzfBilup5yhHCmJ8/d6M8O2ekpLHQHbcVmabjivQyCPe83radaIQcNElBrtcw1
-         4n6lX3hshd0lf/IJl9KJSjohwzWWZEYop6ySts8iQ1SJ1Q52ZSLEW2vULT46zA/p9UJt
-         1rqgUsM+1GDDiDviskfv8ZMHpF8Fz6NJwjCg09Q61qUTeljQ20Gw0rPCJ0m0SHIPa+5i
-         bHz+r9I+MBgpERRF37Mmov25Z/bAlQY64kMNa3Jecu11G9xp3+tOn3BTxL1XJHtcCet/
-         46irf/EkXgwptySurK8lEcJxf8/Gp+aZWlpWPG9vUsZQKTQ9zk+vJSNoOljPjlyRaiBk
-         Fliw==
-X-Gm-Message-State: AOJu0YxgOS3TJsoIVUc7JNb2jY8wtabIBEu6qa/GbS3oKKt9njTNgUt5
-	EcR4iNplnVN1m1tQNs5Av8awZpRKY/6xNV4/ttf5z4AFpCNvbGNvA/Jhx8arqIM=
-X-Gm-Gg: ASbGncuiDUR73GS1ZbaL8tJvt5GLjNy7ipOKIEjKuguL7XCMU3e2Vbeg3xBCumwu6pc
-	27QWVfVGbcCiSldvOC/etconsPxoDmzdaRybcUX+DzWt2McJGkkK3Vk7sFoGs61OJrNxugv6zdP
-	qEjvB4UAaIrf8nU0B+vmFcG5HA/wXmMHtECQDjVV/eCMlCH6KO4ehfRUDBRWesdZeP4g2LzQxZt
-	irCK+Yo+zTOWI1hDJb4Ee4XDqQX4OXIwWgVn4QL8zckecwWpS0asgb8kustxibFbd5wJFkvbV/1
-	PXUvP5VrT74Z4thsauR1DoDluF5RaIlG0JGT
-X-Google-Smtp-Source: AGHT+IFfAuZaKL4N6rhTvqCDQvxYZslbCF6HL09uYy0B4ru/anjijmlhPdX6FOB+/tFddIo/nxY75Q==
-X-Received: by 2002:a05:6000:1ac9:b0:38b:d8e0:a862 with SMTP id ffacd0b85a97d-38c52096d91mr1704667f8f.43.1738143831507;
-        Wed, 29 Jan 2025 01:43:51 -0800 (PST)
-Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:8261:5fff:fe11:bdda])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-438dcc81589sm16035205e9.33.2025.01.29.01.43.50
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 29 Jan 2025 01:43:51 -0800 (PST)
-From: Neil Armstrong <neil.armstrong@linaro.org>
-Date: Wed, 29 Jan 2025 10:43:46 +0100
-Subject: [PATCH v3 2/2] arm64: dts: qcom: sm8650: setup gpu thermal with
- higher temperatures
+	s=arc-20240116; t=1738144449; c=relaxed/simple;
+	bh=BgTN7qxz2qFIpjID3jYigzaGHpUiLrISwspFAg3E3L4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=tSNPQ40+FOy2HxGqNslFY1S41HcI9soMdnkkzHePddOKjD3AHA3Akfk9V5aV6EXmkvuNeAPPlJAZB79B1C8ba5/q2dPy7DXfa0mvYzWIlP/TI8lGk1lxVZlqOMnmc2NKxCeR/nET85yQCBIZ4qI2ZRdtM4aPA6G9O6ug4lVHBCI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=o6Sx/Rrh; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50T2gxxk020862;
+	Wed, 29 Jan 2025 09:53:48 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	sOddlnfAJR+6/qnsXse4j7jW+dDq8/iiERtouCUAD0g=; b=o6Sx/Rrhlmp5UJQr
+	sq/9XxLEyxqE4TuwjJ6YatzgsCCRVIW2ZM/h+6qu77TWInD4M78ZJsiXzkmp/G3Y
+	tkGxMeTQfCdFE0jO/lsLs9193Raq3lSqNz8b8LBoRRPNvSUDz5LOeaTzrHHkeVBJ
+	teMvWxGkB/leC4ALut8ep/xBWQpqfrrT4S+hiEt2RbinZwi8BNwO1CaTWP85ZZ0O
+	M66k8/ee/RnHfZ2FQ9fODeQV+aBfag5XnU3sR4ZMZbhI6TOyAAHtTWjogse6RqGB
+	s5hhSTZaEyviuOhDpj+x4hodpyFQIF1/5luO7YVlyGh2TRJYlttR5OoDrCUgdDzf
+	pNC0Kg==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44f7xfh0fk-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 29 Jan 2025 09:53:47 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 50T9rlUe002427
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 29 Jan 2025 09:53:47 GMT
+Received: from [10.50.59.27] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 29 Jan
+ 2025 01:53:31 -0800
+Message-ID: <45c3676a-aafe-59e8-910d-af82031c24a6@quicinc.com>
+Date: Wed, 29 Jan 2025 15:23:22 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [RFC PATCH v10 1/2] media: iris: introduce helper module to
+ select video driver
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC: <quic_vgarodia@quicinc.com>, <quic_abhinavk@quicinc.com>,
+        <mchehab@kernel.org>, <robh@kernel.org>, <krzk+dt@kernel.org>,
+        <p.zabel@pengutronix.de>, <hverkuil@xs4all.nl>,
+        <sebastian.fricke@collabora.com>, <bryan.odonoghue@linaro.org>,
+        <neil.armstrong@linaro.org>, <nicolas@ndufresne.ca>,
+        <u.kleine-koenig@baylibre.com>, <stefan.schmidt@linaro.org>,
+        <lujianhua000@gmail.com>, <linux-arm-msm@vger.kernel.org>,
+        <linux-media@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <krzysztof.kozlowski@linaro.org>,
+        <johan@kernel.org>
+References: <20250128080429.3911091-1-quic_dikshita@quicinc.com>
+ <20250128080429.3911091-2-quic_dikshita@quicinc.com>
+ <sb3beoyhnlcdfjbm37ogpdoph7m4fecpbuu3myglnpzblpnqhw@wdyskeps3uuh>
+Content-Language: en-US
+From: Dikshita Agarwal <quic_dikshita@quicinc.com>
+In-Reply-To: <sb3beoyhnlcdfjbm37ogpdoph7m4fecpbuu3myglnpzblpnqhw@wdyskeps3uuh>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250129-topic-sm8650-thermal-cpu-idle-v3-2-62ab1a64098d@linaro.org>
-References: <20250129-topic-sm8650-thermal-cpu-idle-v3-0-62ab1a64098d@linaro.org>
-In-Reply-To: <20250129-topic-sm8650-thermal-cpu-idle-v3-0-62ab1a64098d@linaro.org>
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Neil Armstrong <neil.armstrong@linaro.org>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=5019;
- i=neil.armstrong@linaro.org; h=from:subject:message-id;
- bh=ksZqVVWZ+PXeyE/WmXqMiQwQwvesvKOWalvs07xCLEc=;
- b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBnmfhV+wZw5NRkXJg1R+ekK4Gtloxz6iy3TVdvL8Ik
- R8IEgdWJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZ5n4VQAKCRB33NvayMhJ0RUVD/
- 9iK4QUsqg4UA+wkGqi1FNt6ChfbVafBaahle2a1GXUS0h00c/I0ZwRi71dBFYWOwOCh/vT9FnZxOTe
- RKrlBAfccHouiabtv8iIDLhC4dxAwEN1LBD+xe9QPQGJ+WnzB6nUiPRDbpr+voNyqECtOEuRJfFRPM
- 7tgQccmL0rnYw0v4T1f0qDlCbNmmGUmxLc9plrBcr/A9tspEh9SQTQWNqs192/YHVPDU6/6Z4ivyHA
- BlAsc3UKjqhxV64hFQkGX6im8ct6CwC2/xSUdM6GdNAkGGquwmbvPBYRmpKzxWaupRvhSe3YUtiRZS
- l27cxxlXDb9oXul2YwVwiIaC9bLEOqbMjtxADLAgsroAv/zXwzaSHmEk4sYGRoZM+2cBE3vE3Xw+UJ
- l/LO9Uusl5bf11fj5mVm2WE0m6QJUXHxs4jCV6BKoGp13G98qnkm7t6rjv9hioDm1UCje+9h9MwtUF
- CXFaiIRfExVf1KZ+WVfJucbzRUMM+nM1JmxbpifGYrg7jpfaw7A95jywJPkkHskgeTpGbVkXsVVa/s
- pfLWgTGOJP6M/+hYZA5IZPNyxOTuP69P3de9NYCrQP1cpK8MUrp0+WiD4C3GlA/HINVEGzeDJZk4Qv
- bLYxjhQrhL0TD6oBGUt1zZm7P4xBWHAJkwLO0EyuktIWuxC9XkUmhpGx1ocg==
-X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
- fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: JMRudwU-uVJYECc4UmDh8K2dsyJxZ_Wc
+X-Proofpoint-GUID: JMRudwU-uVJYECc4UmDh8K2dsyJxZ_Wc
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-01-28_04,2025-01-27_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 malwarescore=0
+ phishscore=0 mlxlogscore=999 adultscore=0 impostorscore=0 spamscore=0
+ priorityscore=1501 clxscore=1015 mlxscore=0 lowpriorityscore=0 bulkscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2411120000
+ definitions=main-2501290080
 
-On the SM8650, the dynamic clock and voltage scaling (DCVS) for the GPU
-is done from the HLOS, but the GPU can achieve a much higher temperature
-before failing according the the reference downstream implementation.
 
-Set higher temperatures in the GPU trip points corresponding to
-the temperatures provided by Qualcomm in the dowstream source, much
-closer to the junction temperature and with a higher critical
-temperature trip in the case the HLOS DCVS cannot handle the
-temperature surge.
 
-Fixes: 497624ed5506 ("arm64: dts: qcom: sm8650: Throttle the GPU when overheating")
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
----
- arch/arm64/boot/dts/qcom/sm8650.dtsi | 48 ++++++++++++++++++------------------
- 1 file changed, 24 insertions(+), 24 deletions(-)
-
-diff --git a/arch/arm64/boot/dts/qcom/sm8650.dtsi b/arch/arm64/boot/dts/qcom/sm8650.dtsi
-index 95509ce2713d4fcc3dbe0c5cd5827312d5681af4..e9fcf05cb084b7979ecf0f4712fed332e9f4b07a 100644
---- a/arch/arm64/boot/dts/qcom/sm8650.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8650.dtsi
-@@ -6173,19 +6173,19 @@ map0 {
- 
- 			trips {
- 				gpu0_alert0: trip-point0 {
--					temperature = <85000>;
-+					temperature = <95000>;
- 					hysteresis = <1000>;
- 					type = "passive";
- 				};
- 
- 				trip-point1 {
--					temperature = <90000>;
-+					temperature = <115000>;
- 					hysteresis = <1000>;
- 					type = "hot";
- 				};
- 
- 				trip-point2 {
--					temperature = <110000>;
-+					temperature = <125000>;
- 					hysteresis = <1000>;
- 					type = "critical";
- 				};
-@@ -6206,19 +6206,19 @@ map0 {
- 
- 			trips {
- 				gpu1_alert0: trip-point0 {
--					temperature = <85000>;
-+					temperature = <95000>;
- 					hysteresis = <1000>;
- 					type = "passive";
- 				};
- 
- 				trip-point1 {
--					temperature = <90000>;
-+					temperature = <115000>;
- 					hysteresis = <1000>;
- 					type = "hot";
- 				};
- 
- 				trip-point2 {
--					temperature = <110000>;
-+					temperature = <125000>;
- 					hysteresis = <1000>;
- 					type = "critical";
- 				};
-@@ -6239,19 +6239,19 @@ map0 {
- 
- 			trips {
- 				gpu2_alert0: trip-point0 {
--					temperature = <85000>;
-+					temperature = <95000>;
- 					hysteresis = <1000>;
- 					type = "passive";
- 				};
- 
- 				trip-point1 {
--					temperature = <90000>;
-+					temperature = <115000>;
- 					hysteresis = <1000>;
- 					type = "hot";
- 				};
- 
- 				trip-point2 {
--					temperature = <110000>;
-+					temperature = <125000>;
- 					hysteresis = <1000>;
- 					type = "critical";
- 				};
-@@ -6272,19 +6272,19 @@ map0 {
- 
- 			trips {
- 				gpu3_alert0: trip-point0 {
--					temperature = <85000>;
-+					temperature = <95000>;
- 					hysteresis = <1000>;
- 					type = "passive";
- 				};
- 
- 				trip-point1 {
--					temperature = <90000>;
-+					temperature = <115000>;
- 					hysteresis = <1000>;
- 					type = "hot";
- 				};
- 
- 				trip-point2 {
--					temperature = <110000>;
-+					temperature = <125000>;
- 					hysteresis = <1000>;
- 					type = "critical";
- 				};
-@@ -6305,19 +6305,19 @@ map0 {
- 
- 			trips {
- 				gpu4_alert0: trip-point0 {
--					temperature = <85000>;
-+					temperature = <95000>;
- 					hysteresis = <1000>;
- 					type = "passive";
- 				};
- 
- 				trip-point1 {
--					temperature = <90000>;
-+					temperature = <115000>;
- 					hysteresis = <1000>;
- 					type = "hot";
- 				};
- 
- 				trip-point2 {
--					temperature = <110000>;
-+					temperature = <125000>;
- 					hysteresis = <1000>;
- 					type = "critical";
- 				};
-@@ -6338,19 +6338,19 @@ map0 {
- 
- 			trips {
- 				gpu5_alert0: trip-point0 {
--					temperature = <85000>;
-+					temperature = <95000>;
- 					hysteresis = <1000>;
- 					type = "passive";
- 				};
- 
- 				trip-point1 {
--					temperature = <90000>;
-+					temperature = <115000>;
- 					hysteresis = <1000>;
- 					type = "hot";
- 				};
- 
- 				trip-point2 {
--					temperature = <110000>;
-+					temperature = <125000>;
- 					hysteresis = <1000>;
- 					type = "critical";
- 				};
-@@ -6371,19 +6371,19 @@ map0 {
- 
- 			trips {
- 				gpu6_alert0: trip-point0 {
--					temperature = <85000>;
-+					temperature = <95000>;
- 					hysteresis = <1000>;
- 					type = "passive";
- 				};
- 
- 				trip-point1 {
--					temperature = <90000>;
-+					temperature = <115000>;
- 					hysteresis = <1000>;
- 					type = "hot";
- 				};
- 
- 				trip-point2 {
--					temperature = <110000>;
-+					temperature = <125000>;
- 					hysteresis = <1000>;
- 					type = "critical";
- 				};
-@@ -6404,19 +6404,19 @@ map0 {
- 
- 			trips {
- 				gpu7_alert0: trip-point0 {
--					temperature = <85000>;
-+					temperature = <95000>;
- 					hysteresis = <1000>;
- 					type = "passive";
- 				};
- 
- 				trip-point1 {
--					temperature = <90000>;
-+					temperature = <115000>;
- 					hysteresis = <1000>;
- 					type = "hot";
- 				};
- 
- 				trip-point2 {
--					temperature = <110000>;
-+					temperature = <125000>;
- 					hysteresis = <1000>;
- 					type = "critical";
- 				};
-
--- 
-2.34.1
-
+On 1/28/2025 9:44 PM, Dmitry Baryshkov wrote:
+> On Tue, Jan 28, 2025 at 01:34:28PM +0530, Dikshita Agarwal wrote:
+>> Introduce a helper module with a kernel param to select between
+>> venus and iris drivers for platforms supported by both drivers.
+>>
+>> Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
+>> ---
+>>  drivers/media/platform/qcom/Makefile          |  1 +
+>>  drivers/media/platform/qcom/iris/iris_core.h  |  1 +
+>>  drivers/media/platform/qcom/iris/iris_probe.c |  3 +
+>>  drivers/media/platform/qcom/venus/core.c      |  5 ++
+>>  .../platform/qcom/video_drv_helper/Makefile   |  4 ++
+>>  .../qcom/video_drv_helper/video_drv_helper.c  | 70 +++++++++++++++++++
+>>  .../qcom/video_drv_helper/video_drv_helper.h  | 11 +++
+>>  7 files changed, 95 insertions(+)
+>>  create mode 100644 drivers/media/platform/qcom/video_drv_helper/Makefile
+>>  create mode 100644 drivers/media/platform/qcom/video_drv_helper/video_drv_helper.c
+>>  create mode 100644 drivers/media/platform/qcom/video_drv_helper/video_drv_helper.h
+>>
+>> diff --git a/drivers/media/platform/qcom/Makefile b/drivers/media/platform/qcom/Makefile
+>> index ea2221a202c0..15accde3bd67 100644
+>> --- a/drivers/media/platform/qcom/Makefile
+>> +++ b/drivers/media/platform/qcom/Makefile
+>> @@ -2,3 +2,4 @@
+>>  obj-y += camss/
+>>  obj-y += iris/
+>>  obj-y += venus/
+>> +obj-y += video_drv_helper/
+>> diff --git a/drivers/media/platform/qcom/iris/iris_core.h b/drivers/media/platform/qcom/iris/iris_core.h
+>> index 37fb4919fecc..7108e751ff88 100644
+>> --- a/drivers/media/platform/qcom/iris/iris_core.h
+>> +++ b/drivers/media/platform/qcom/iris/iris_core.h
+>> @@ -107,5 +107,6 @@ struct iris_core {
+>>  
+>>  int iris_core_init(struct iris_core *core);
+>>  void iris_core_deinit(struct iris_core *core);
+>> +extern bool video_drv_should_bind(struct device *dev, bool is_iris_driver);
+> 
+> s/extern //g
+> 
+>>  
+>>  #endif
+>> diff --git a/drivers/media/platform/qcom/iris/iris_probe.c b/drivers/media/platform/qcom/iris/iris_probe.c
+>> index 954cc7c0cc97..276461ade811 100644
+>> --- a/drivers/media/platform/qcom/iris/iris_probe.c
+>> +++ b/drivers/media/platform/qcom/iris/iris_probe.c
+>> @@ -196,6 +196,9 @@ static int iris_probe(struct platform_device *pdev)
+>>  	u64 dma_mask;
+>>  	int ret;
+>>  
+>> +	if (!video_drv_should_bind(&pdev->dev, true))
+>> +		return -ENODEV;
+>> +
+>>  	core = devm_kzalloc(&pdev->dev, sizeof(*core), GFP_KERNEL);
+>>  	if (!core)
+>>  		return -ENOMEM;
+>> diff --git a/drivers/media/platform/qcom/venus/core.c b/drivers/media/platform/qcom/venus/core.c
+>> index 77d48578ecd2..b38be7812efe 100644
+>> --- a/drivers/media/platform/qcom/venus/core.c
+>> +++ b/drivers/media/platform/qcom/venus/core.c
+>> @@ -369,12 +369,17 @@ static int venus_add_dynamic_nodes(struct venus_core *core)
+>>  static void venus_remove_dynamic_nodes(struct venus_core *core) {}
+>>  #endif
+>>  
+>> +extern bool video_drv_should_bind(struct device *dev, bool is_iris_driver);
+> 
+> Use #include instead.
+> 
+>> +
+>>  static int venus_probe(struct platform_device *pdev)
+>>  {
+>>  	struct device *dev = &pdev->dev;
+>>  	struct venus_core *core;
+>>  	int ret;
+>>  
+>> +	if (!video_drv_should_bind(&pdev->dev, false))
+>> +		return -ENODEV;
+>> +
+>>  	core = devm_kzalloc(dev, sizeof(*core), GFP_KERNEL);
+>>  	if (!core)
+>>  		return -ENOMEM;
+>> diff --git a/drivers/media/platform/qcom/video_drv_helper/Makefile b/drivers/media/platform/qcom/video_drv_helper/Makefile
+>> new file mode 100644
+>> index 000000000000..82567e0392fb
+>> --- /dev/null
+>> +++ b/drivers/media/platform/qcom/video_drv_helper/Makefile
+>> @@ -0,0 +1,4 @@
+>> +# Makefile for Video driver helper
+>> +
+>> +obj-m := video_drv_helper.o
+> 
+> Always built as a module? And what if iris or venus are built into the
+> kernel?
+iris and venus are always built as module, and if we are adding the
+dependency of this module on IRIS && VENUS then this can't be Y I think.
+> Add a normal Kconfig symbol, tristate, no Kconfig string. Use depends on
+> IRIS && VENUS (and maybe default y) to let it be built only if both
+> drivers are enabled.
+> 
+>> +
+>> diff --git a/drivers/media/platform/qcom/video_drv_helper/video_drv_helper.c b/drivers/media/platform/qcom/video_drv_helper/video_drv_helper.c
+>> new file mode 100644
+>> index 000000000000..9009c2906e54
+>> --- /dev/null
+>> +++ b/drivers/media/platform/qcom/video_drv_helper/video_drv_helper.c
+>> @@ -0,0 +1,70 @@
+>> +// SPDX-License-Identifier: GPL-2.0-only
+>> +/*
+>> + * Copyright (c) 2025 Qualcomm Innovation Center, Inc. All rights reserved.
+>> + */
+>> +
+>> +#include <linux/device.h>
+>> +#include <linux/module.h>
+>> +#include <linux/of.h>
+>> +
+>> +#include "video_drv_helper.h"
+>> +
+>> +/* The venus driver supports only hfi gen1 to communicate with the firmware while
+>> + * the iris driver supports both hfi gen1 and hfi gen2.
+>> + * The support of hfi gen1 is added to the iris driver with the intention that
+>> + * it can support old gen1 interface based firmware, while enabling gen2 based future SOCs.
+>> + * With this, the plan is to migrate older SOCs from venus to iris.
+>> + * As of now, since the iris driver supports only entry level features and doesn't have
+>> + * feature parity with the venus driver, a runtime-selection is provided to user via
+>> + * module parameter 'prefer_venus' to select the driver.
+>> + * This selection is available only for the SoCs which are supported by both venus
+>> + * and iris eg: SM8250.
+>> + * When the feature parity is achieved, the plan is to switch the default to point to
+>> + * the iris driver, then gradually start removing platforms from venus.
+>> + * Hardware supported by only venus - 8916, 8996, SDM660, SDM845, SC7180, SC7280
+>> + * Hardware supported by only iris - SM8550
+>> + * Hardware supported by both venus and iris - SM8250
+>> + */
+>> +
+>> +#if !IS_REACHABLE(CONFIG_VIDEO_QCOM_VENUS) || !IS_REACHABLE(CONFIG_VIDEO_QCOM_IRIS)
+>> +bool video_drv_should_bind(struct device *dev, bool is_iris_driver)
+>> +{
+>> +	/* If just a single driver is enabled, use it no matter what */
+>> +	return true;
+>> +}
+>> +
+>> +#else
+> 
+> Move the stub funtion to header.
+> 
+>> +static bool prefer_venus = true;
+>> +MODULE_PARM_DESC(prefer_venus, "Select whether venus or iris driver should be preferred");
+>> +module_param(prefer_venus, bool, 0444);
+>> +
+>> +/* list all platforms supported by both venus and iris drivers */
+>> +static const char *const venus_to_iris_migration[] = {
+>> +	"qcom,sm8250-venus",
+>> +	NULL,
+>> +};
+>> +
+>> +bool video_drv_should_bind(struct device *dev, bool is_iris_driver)
+> 
+> The prefix is too broad, but maybe its fine.
+> 
+>> +{
+>> +	if (of_device_compatible_match(dev->of_node, venus_to_iris_migration))
+>> +		return prefer_venus ? !is_iris_driver : is_iris_driver;
+>> +
+>> +	return true;
+>> +}
+>> +EXPORT_SYMBOL_GPL(video_drv_should_bind);
+>> +#endif
+>> +
+>> +static int __init video_drv_helper_init(void)
+>> +{
+>> +	return 0;
+>> +}
+>> +
+>> +static void __exit video_drv_helper_exit(void)
+>> +{
+>> +}
+>> +
+>> +module_init(video_drv_helper_init);
+>> +module_exit(video_drv_helper_exit);
+> 
+> No need for this, please drop.
+> 
+>> +
+>> +MODULE_DESCRIPTION("A video driver helper module");
+>> +MODULE_LICENSE("GPL");
+>> diff --git a/drivers/media/platform/qcom/video_drv_helper/video_drv_helper.h b/drivers/media/platform/qcom/video_drv_helper/video_drv_helper.h
+>> new file mode 100644
+>> index 000000000000..6d835227fec2
+>> --- /dev/null
+>> +++ b/drivers/media/platform/qcom/video_drv_helper/video_drv_helper.h
+>> @@ -0,0 +1,11 @@
+>> +/* SPDX-License-Identifier: GPL-2.0-only */
+>> +/*
+>> + * Copyright (c) 2025 Qualcomm Innovation Center, Inc. All rights reserved.
+>> + */
+>> +
+>> +#ifndef __VIDEO_DRV_HELPER_H__
+>> +#define __VIDEO_DRV_HELPER_H__
+>> +
+>> +bool video_drv_should_bind(struct device *dev, bool is_iris_driver);
+>> +
+>> +#endif
+>> -- 
+>> 2.34.1
+>>
+> 
 
