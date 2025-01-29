@@ -1,231 +1,234 @@
-Return-Path: <linux-arm-msm+bounces-46441-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46442-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id B9DDCA215DD
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jan 2025 01:57:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 8678CA2167C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jan 2025 03:21:25 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id E5D78188899C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jan 2025 00:57:59 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id BFA71188320D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jan 2025 02:21:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 46CAB15445D;
-	Wed, 29 Jan 2025 00:57:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B93D6189B91;
+	Wed, 29 Jan 2025 02:21:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="S/ncro+Y"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QStWeDDp"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-il1-f177.google.com (mail-il1-f177.google.com [209.85.166.177])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9538A17C208;
-	Wed, 29 Jan 2025 00:57:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0641B2AE7C
+	for <linux-arm-msm@vger.kernel.org>; Wed, 29 Jan 2025 02:21:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738112273; cv=none; b=YLFO5dBEm+iCSnTnn4u7dvFy9g6xJ9kxb+vTeBiIChNDowV0jhVWrZH4vjyAYBn/1VQhJLD00P6cF9h9YKFqpBM+11+uNhmunYeI6VaSU984qMzl9aOLL3zyqlemKqP+st/4jUx63Dt77JgZ1hyANDDsyq1n+WRuy1uaU6L1Xjo=
+	t=1738117280; cv=none; b=U50fwqxie//oxIKcgCyjgKleDv5F7ObmY0J8ymOsEV2Ytpep/xgdTkBTm6wUjg//qwom6PhDhrXMW+ULXNNY1xLQLTlxSmYcDq31sGURUUIfRbtcE8eEbzQ0qCT5hsyzma2Xi+SQy7tOn/livuxLiguN+gJnH0EX7HEtftssk/s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738112273; c=relaxed/simple;
-	bh=kXNBtubWSLYua7K0WgZtUGs1DjaGH7vAHICNXmS/Y3g=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=nE0X/pGokeIphaaT3iaqbU8nHM66e10G8xDzefWBEbexIzdt2K/b9cwFiuVQjGEMJ/71ijrfvQTotNRuALHyJQ7BNL9bMhfvdPbHcPtNAwa8uFDcdXN2p6PcyjFsFAXZ4fFgH8T5XTDp5bFs8UlbbF8fUJh/fntA0Voc4lQ8Gp0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=S/ncro+Y; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50SGIWKT023412;
-	Wed, 29 Jan 2025 00:57:24 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	ZQQkxtJswJ6G6AZ+K3wO4Z+prFLWuSaEOoIOI5kw36U=; b=S/ncro+YUYOUfehw
-	3qe9Aeht3KdfZgEirTupGm5ioCXnmoyAdIrzu/wqx0UjQiy2k/qEMMNnEcMmxKTU
-	eWjTYdGcZY3Gk2WcmpQAUz5KeONX1Js1p/L1c4WoMN5ehPd3+MbmSal1lkGiVxdE
-	gQdZi5mfoPM69A4GnHWrm1i85PicvJZd2n/UfylePBqVk30R5KZ8tZZkhu4Sge+P
-	4xXFrHmVUN+9kaUw9QV+q0hWKfRguuam7dtNQN4lyhlIrlpO6Tdoj+Sl5L20rUqb
-	8RZHvltRPyZ0CeQcV5L/gdJozg60VuOWL5EH1H5qZD1GQ56tJFO5i5ydNx/8vsek
-	3Lj9vg==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44f2mps0hv-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 29 Jan 2025 00:57:23 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 50T0vN0i023408
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 29 Jan 2025 00:57:23 GMT
-Received: from [10.133.33.41] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 28 Jan
- 2025 16:57:17 -0800
-Message-ID: <d5332d6d-237f-4b78-9eaf-2619bd97b7bd@quicinc.com>
-Date: Wed, 29 Jan 2025 08:57:12 +0800
+	s=arc-20240116; t=1738117280; c=relaxed/simple;
+	bh=w3SMyX0a0dgb8cpvXCVkuJ7QpKX+FGKyseLQKkgbXdM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=RznqocynyNtYVsThyGuTFPlRWm/nWkn9oKIth/oinMVN6/XyYn0LOpVRv1t3CMWjQUH5C3gdAiuaVUcCEYSqidXcLgvFUej+XzthybYWpElU06HELflMm/QHQKGFG51pWbLM6qlhHAhljI56FXYjQy+4gHSSjaM2WN74EZ/z8hU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QStWeDDp; arc=none smtp.client-ip=209.85.166.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-il1-f177.google.com with SMTP id e9e14a558f8ab-3ce873818a3so55468175ab.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Jan 2025 18:21:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1738117278; x=1738722078; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ZtnR7A7UffQmykf4aH6iAO9KgDfrU8EA6JB2nIaAYW0=;
+        b=QStWeDDp2cPDJKmS21wVxDiou0eetsmrT/0QWZen6aKA8hNMgBmqmAZGAC7el/0KfA
+         m4bzjs4hrtJLlC8CqUwNIZH31Nfbr2iU8UBhG9ucsoQyVaN+HOzxw7GF6OjtE/InHNWE
+         kFaYwDhSHuXN89rt0E7/D2ZzcMDXYr4QczQkKxICjD8k7xbfIkwakHQfKPM3O2s94kar
+         ZYjaPg14HINzUFiSJde2A5SHP6kWZn810+LxN2FI2/MhqrNi6ScdQ4YsbuyIKSks0/JV
+         r3YV5+11bTsWM9t7GZqHXPMUqz064zElRequfl3TP3XBZ6vTp0lHnAfBQFGW2GlRaPbC
+         UHqQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1738117278; x=1738722078;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=ZtnR7A7UffQmykf4aH6iAO9KgDfrU8EA6JB2nIaAYW0=;
+        b=e26YIB3CIC+jJnwDTxnfuJkrZg2KG/VQh00j9fFj1Aw9TgtPOehQ5N3Nansgo8o8eY
+         1R+aS4nMeurhFZXhnS2UVLd5KjTd6Mr63x0sWbg3RBNubgxwoqE1Z2K+FwtIrvZGlKsH
+         jk8E0B8rJsLJ/pTWLg8eyoNcum36ueISfbFt3B2P33PWYcQKNsjcRdPTWuPFOrjd0ks5
+         KaZjjpBT5pbK8olG8rlNBkIkPsJcw6zVJkcqdDcLwKdLckWtWwSbjV7CrnkmjyVpiZeC
+         WQanyLLc15eaTZp8lDBDS+9vfBK1R1pDkTdeW5FVRSjovwMA0fopgGKid58nZUB14pEs
+         qRLw==
+X-Forwarded-Encrypted: i=1; AJvYcCUx7NKoIOdM0rELxvJgNEudT2Z+LdweVprjNIltMg0waalc6vRDdOgKsOAQmbXx9YB8alu4NKqGWtkxiEwa@vger.kernel.org
+X-Gm-Message-State: AOJu0YzkmHaXve4QPWBWAm2rZYfaC01NFyE2qGN+0RNKG7EpvKWrzozm
+	iXbzQhug3YK4xfyvUCY0XDzK8m7REaI+SYD3pZPDg2h1R/o40nznhWLiRMToFDXddGmn2rvgRf7
+	H7Bsrg/twPSzA9BRKJXB5uN47Aio=
+X-Gm-Gg: ASbGncu6syf7iFPk8f1/HNUoZl2gWRJQEjk6IxTRa8uWEOO1fJcXLr9DH3g80jiVGJK
+	lYV1hVnidAD4R06Vd4PPYpFQZMHrbMpJSSJV4MrCuAtUKuPeLUmTzUdMAZJoD7WM67ctldFlcQw
+	==
+X-Google-Smtp-Source: AGHT+IHB6eolsV4aH/hplP2BpTqjii/IaDUSxjMDLt9An83E2DQ2Sqv+/y5nVv5os4CQTqahC3lJBJ0CAAndOUs/AC0=
+X-Received: by 2002:a05:6e02:198b:b0:3cf:fcc4:eff9 with SMTP id
+ e9e14a558f8ab-3cffe3e5dbemr15157515ab.8.1738117278041; Tue, 28 Jan 2025
+ 18:21:18 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v9 3/6] Coresight: Introduce a new struct coresight_path
-To: James Clark <james.clark@linaro.org>
-CC: Tingwei Zhang <quic_tingweiz@quicinc.com>,
-        Jinlong Mao
-	<quic_jinlmao@quicinc.com>, <coresight@lists.linaro.org>,
-        <linux-arm-kernel@lists.infradead.org>, <linux-kernel@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-stm32@st-md-mailman.stormreply.com>,
-        Suzuki K Poulose
-	<suzuki.poulose@arm.com>,
-        Mike Leach <mike.leach@linaro.org>,
-        "Alexander
- Shishkin" <alexander.shishkin@linux.intel.com>,
-        Maxime Coquelin
-	<mcoquelin.stm32@gmail.com>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>
-References: <20250124072537.1801030-1-quic_jiegan@quicinc.com>
- <20250124072537.1801030-4-quic_jiegan@quicinc.com>
- <538ae543-4c43-4df2-8adc-911096fe14dd@linaro.org>
-Content-Language: en-US
-From: Jie Gan <quic_jiegan@quicinc.com>
-In-Reply-To: <538ae543-4c43-4df2-8adc-911096fe14dd@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: eovWIWCKTdy6jmzv7fp1hOTXOvYeS8PS
-X-Proofpoint-ORIG-GUID: eovWIWCKTdy6jmzv7fp1hOTXOvYeS8PS
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-01-28_04,2025-01-27_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- malwarescore=0 clxscore=1015 lowpriorityscore=0 bulkscore=0 suspectscore=0
- mlxscore=0 adultscore=0 mlxlogscore=999 impostorscore=0 spamscore=0
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2501290006
+References: <20250122-msm-gpu-fault-fixes-next-v3-0-0afa00158521@gmail.com>
+ <20250122-msm-gpu-fault-fixes-next-v3-1-0afa00158521@gmail.com>
+ <Z5IjsqQ6vTdUXiGt@hu-guptap-hyd.qualcomm.com> <CACu1E7H5X2EfY9AG=xceaoZJkbumwnrsU4QvNbxd_A2wgVVOaQ@mail.gmail.com>
+ <Z5KXwNPrdirVUn8Z@hu-guptap-hyd.qualcomm.com> <CACu1E7GOS+_biN=AuQwYK47ApRPFGygyD+U5X9d_4ReXKrzbfw@mail.gmail.com>
+ <Z5i6GQDd5apN+a10@hu-guptap-hyd.qualcomm.com> <CAF6AEGstcrAJDBpPm-uQ+zSDVEhDJ4AQhCTDT-z9_8Nq0e35WQ@mail.gmail.com>
+ <CACu1E7HErZAL=-GVQfKUAUK5bgK-X0qejt5os3f2UhkeZ1ptMQ@mail.gmail.com>
+In-Reply-To: <CACu1E7HErZAL=-GVQfKUAUK5bgK-X0qejt5os3f2UhkeZ1ptMQ@mail.gmail.com>
+From: Rob Clark <robdclark@gmail.com>
+Date: Tue, 28 Jan 2025 18:21:06 -0800
+X-Gm-Features: AWEUYZnLX6CXtNjm5Fg1x_aeoKRaj1zqbCfN_3LTjAFaHbtGLWrCztq9g_rdAEY
+Message-ID: <CAF6AEGsUjp+fp1_cN7SGYTh5WSQrU2mm92QsqA5rcSY1OtA8VQ@mail.gmail.com>
+Subject: Re: [PATCH v3 1/3] iommu/arm-smmu: Fix spurious interrupts with stall-on-fault
+To: Connor Abbott <cwabbott0@gmail.com>
+Cc: Prakash Gupta <quic_guptap@quicinc.com>, Will Deacon <will@kernel.org>, 
+	Robin Murphy <robin.murphy@arm.com>, Joerg Roedel <joro@8bytes.org>, Sean Paul <sean@poorly.run>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, iommu@lists.linux.dev, 
+	linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+	freedreno@lists.freedesktop.org, Rob Clark <robdclark@chromium.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+On Tue, Jan 28, 2025 at 2:15=E2=80=AFPM Connor Abbott <cwabbott0@gmail.com>=
+ wrote:
+>
+> On Tue, Jan 28, 2025 at 5:10=E2=80=AFPM Rob Clark <robdclark@gmail.com> w=
+rote:
+> >
+> > On Tue, Jan 28, 2025 at 3:08=E2=80=AFAM Prakash Gupta <quic_guptap@quic=
+inc.com> wrote:
+> > >
+> > > On Thu, Jan 23, 2025 at 03:14:16PM -0500, Connor Abbott wrote:
+> > > > On Thu, Jan 23, 2025 at 2:26=E2=80=AFPM Prakash Gupta <quic_guptap@=
+quicinc.com> wrote:
+> > > > >
+> > > > > On Thu, Jan 23, 2025 at 09:00:17AM -0500, Connor Abbott wrote:
+> > > > > > On Thu, Jan 23, 2025 at 6:10=E2=80=AFAM Prakash Gupta <quic_gup=
+tap@quicinc.com> wrote:
+> > > > > > >
+> > > > > > > On Wed, Jan 22, 2025 at 03:00:58PM -0500, Connor Abbott wrote=
+:
+> > > > > > > The context would remain stalled till we write to CBn_RESUME.=
+ Which is done
+> > > > > > > in qcom_adreno_smmu_resume_translation(). For a stalled conte=
+xt further
+> > > > > > > transactions are not processed and we shouldn't see further f=
+aults and
+> > > > > > > or fault inerrupts. Do you observe faults with stalled contex=
+t?
+> > > > > >
+> > > > > > Yes. I've observed that on MMU-500 writing RESUME before the in=
+terrupt
+> > > > > > has been cleared doesn't clear SS. This happened with v2 in the=
+ case
+> > > > > > where there was already a devcoredump and drm/msm called
+> > > > > > qcom_adreno_smmu_resume_translation() immediately from its faul=
+t
+> > > > > > handler, and we'd get a storm of unhandled interrupts until it =
+was
+> > > > > > disabled. Given that the architecture spec says we're supposed =
+to
+> > > > > > clear the interrupt first this may have been an attempt to "hel=
+p"
+> > > > > > developers.
+> > > > > >
+> > > > >
+> > > > > Just to clarify, present sequence is:
+> > > > > 1. context fault with stall enable. FSR.SS set.
+> > > > > 2. Report fault to client
+> > > > > 3. resume/terminate stalled transaction
+> > > > > 4. clear FSR
+> > > > >
+> > > > > At what point when you try #2->#3->#4 or #4->#2->#3 sequence, is =
+FSR.SS
+> > > > > cleared and interrupt storm is observed.
+> > > >
+> > > > With #2->#3->#4 FSR.SS is *not* cleared and there is a subsequent
+> > > > interrupt storm with only FSR.SS asserted. With #4->#2->#3 there is=
+ no
+> > > > interrupt storm. From this we conclude that MMU-500 does not clear
+> > > > FSR.SS unless #4 happens before #3.
+> > > >
+> > > Thanks Connor for clarification. I get your point now. I think it's
+> > > expected interrupt storm with #2->#3->#4 sequence is expected.  With
+> > > CONFIG_ARM_SMMU_QCOM_DEBUG enabled, context fault follows the sequenc=
+e of
+> > > #1->#2->#4->#3, which is spec recommended.
+> > >
+> > > so, common fault handler can be modified to follow the same sequence,=
+ but I
+> > > have concern regarding clearing FSR before reporting fault to client.
+> > > qcom_adreno_smmu_get_fault_info() is an example I gave but other clie=
+nt
+> > > handler may have similar expecation of fault register not changed bef=
+ore
+> > > client fault handler is called.
+> >
+> > Simple solution would be to move the clearing of FSR to after the
+> > fault is reported.  It doesn't really matter if it is before or after,
+> > as long as it happens before the irq handler returns, AFAIU.  And
+> > drm/msm will collect the fault info from the irq handler.
+>
+> As I said in the earlier mail: "From this we conclude that MMU-500
+> does not clear FSR.SS unless #4 happens before #3." #4 is clearing FSR
+> and #3 is writing RESUME. So no, unfortunately it does actually matter
+> and we get a storm of unhandled IRQs if we don't clear FSR first. Your
+> solution is what v2 did and it didn't work.
 
+So, just clear FSR also in the resume path
 
-On 1/28/2025 7:54 PM, James Clark wrote:
-> 
-> 
-> On 24/01/2025 7:25 am, Jie Gan wrote:
->> Add 'struct coresight_path' to store the data that is needed by
->> coresight_enable_path/coresight_disable_path. The structure
->> will be transmitted to the helper and sink device to enable
->> related funcationalities.
->>
->> Signed-off-by: Jie Gan <quic_jiegan@quicinc.com>
->> ---
->>   drivers/hwtracing/coresight/coresight-core.c  | 87 ++++++++++++++-----
->>   drivers/hwtracing/coresight/coresight-etb10.c |  3 +-
->>   .../hwtracing/coresight/coresight-etm-perf.c  | 52 ++++++-----
->>   .../hwtracing/coresight/coresight-etm-perf.h  |  2 +-
->>   drivers/hwtracing/coresight/coresight-priv.h  | 21 +++--
->>   drivers/hwtracing/coresight/coresight-sysfs.c | 32 +++----
->>   .../hwtracing/coresight/coresight-tmc-etf.c   |  3 +-
->>   .../hwtracing/coresight/coresight-tmc-etr.c   |  6 +-
->>   drivers/hwtracing/coresight/coresight-trbe.c  |  4 +-
->>   drivers/hwtracing/coresight/ultrasoc-smb.c    |  3 +-
->>   10 files changed, 137 insertions(+), 76 deletions(-)
->>
-> 
-> [...]
-> 
-> 
->>       INIT_LIST_HEAD(path);
->> +    cs_path->path = path;
->> +    /*
->> +     * Since not all source devices have a defined trace_id function,
->> +     * make sure to check for it before use.
->> +     *
->> +     * Assert the mode is CS_MODE_SYSFS, the trace_id will be assigned
->> +     * again later if the mode is CS_MODE_PERF.
->> +     */
->> +    if (source_ops(source)->trace_id != NULL) {
->> +        rc = source_ops(source)->trace_id(source, CS_MODE_SYSFS, NULL);
-> 
-> I don't think we should do this. Doesn't this consume two trace IDs for 
-> each session? And I'm not even sure if it's released properly if it's 
-> overwritten.
-Yes, you are right, we may waste our trace ID here.
-> 
-> It should be possible to consolidate the all the trace ID allocation to 
-> a single step when building the path, or another function that gets 
-> called just after the path is built. At the moment the ID can be 
-> allocated from about 5 different places and it's quite hard to 
-> understand, especially with these new changes. I have some of it coded 
-> up, let me finish it off and I can share it.
-Waiting for your update. I am also looking forward to another solution.
+BR,
+-R
 
-> 
->> +        if(IS_VALID_CS_TRACE_ID(rc))
->> +            cs_path->trace_id = rc;
->> +        else
->> +            cs_path->trace_id = 0;
->> +    }
->> +    else
->> +        cs_path->trace_id = 0;
-> 
-> [...]
-> 
->> +/**
->> + * struct coresight_path - data needed by enable/disable path
->> + * @handle:        perf aux handle for ETM.
->> + * @path:        path from source to sink.
->> + * @trace_id:        trace_id of the whole path.
->> + */
->> +struct coresight_path {
->> +    struct perf_output_handle    *handle;
-> 
-> This is only needed to avoid adding *handle to the enable function call 
-> signature, but having it here implies it needs to be stored. And then we 
-> need to manage the lifecycle of it by nulling it on deletion. All of 
-> this can be avoided by just adding handle to enable().
-> 
-> Unrelated to this patch, but I'm not sure why we were passing around 
-> void* for handle either. It just makes the code hard to read and implies 
-> some flexibility that doesn't exist. It's always "struct 
-> perf_output_handle", so we can change void* to that in the enable 
-> functions. I also have a patch for this that I'll share in a bit.
-> 
-Thanks for support. I am totally agree with you. It's not related to the 
-patch series and it looks like a hack here.
-
-Waiting for your update.
-
->> +    struct list_head        *path;
->> +    u8                trace_id;
->> +};
->> +
->>   static inline void coresight_insert_barrier_packet(void *buf)
->>   {
->>       if (buf)
->> @@ -132,16 +144,15 @@ static inline void CS_UNLOCK(void __iomem *addr)
->>       } while (0);
->>   }
->> -void coresight_disable_path(struct list_head *path);
->> -int coresight_enable_path(struct list_head *path, enum cs_mode mode,
->> -              void *sink_data);
->> +void coresight_disable_path(struct coresight_path *cs_path);
->> +int coresight_enable_path(struct coresight_path *cs_path, enum 
->> cs_mode mode);
->>   struct coresight_device *coresight_get_sink(struct list_head *path);
-> 
-> This needs to be exported otherwise the build fails because you use it 
-> in a module in another commit. I assume you are building as static?
-> 
-> 
-Yes, you are right. I made a mistake here. I did not test it with build 
-as module. Sorry about the mistake.
-
-Thanks,
-Jie
-
-
+> Connor
+>
+> >
+> > BR,
+> > -R
+> >
+> > > > > The way CFIE disable is helping
+> > > > > with current patch indicates write FSR is unstalling context and =
+subsequent
+> > > > > transactions are faulted.
+> > > >
+> > > > No, it does not indicate that. The interrupt storm happens even whe=
+n
+> > > > there is exactly one context fault, and when the interrupt storm
+> > > > happens *only* FSR.SS is asserted. I've verified this with debug
+> > > > prints. Once more, MMU-500 will assert an interrupt when only FSR.S=
+S
+> > > > is asserted. This has nothing to do with subsequent transactions.
+> > > >
+> > > > > Do you stop getting interrupt storm after write
+> > > > > RESUME.
+> > > >
+> > > > Yes, as long as the write to RESUME happens after all other bits in
+> > > > FSR are cleared.
+> > > >
+> > > > > If you can mention your SCTLR configuration and FSR state in test
+> > > > > sequence, it would be clearer.
+> > > >
+> > > > SCTLR has both HUPCF and CFCFG enabled.
+> > > >
+> > > > >
+> > > > > An aside, If reducing delay between FSR and RESUME write helps th=
+en both
+> > > > > can be done as part of qcom_adreno_smmu_resume_translation(). Thi=
+s will
+> > > > > follow spec recommendation and also make sure fault registers are=
+ not
+> > > > > cleared before reporting fault to client.
+> > > I think this sequence should address the issue you are observing.
+> > >
+> > > > >
+> > > > > Thanks,
+> > > > > Prakash
 
