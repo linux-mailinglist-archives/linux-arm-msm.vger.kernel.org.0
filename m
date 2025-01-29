@@ -1,80 +1,81 @@
-Return-Path: <linux-arm-msm+bounces-46508-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46509-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1E0DCA21DF5
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jan 2025 14:39:31 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C354AA21E10
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jan 2025 14:43:28 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5CA2E165C02
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jan 2025 13:39:29 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 41D4F7A4467
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jan 2025 13:41:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9698C13D51E;
-	Wed, 29 Jan 2025 13:39:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5E99F1AAA1F;
+	Wed, 29 Jan 2025 13:42:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="U4u/oFdO"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="CwWI+9al"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
+Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D29086250
-	for <linux-arm-msm@vger.kernel.org>; Wed, 29 Jan 2025 13:39:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34940149E13
+	for <linux-arm-msm@vger.kernel.org>; Wed, 29 Jan 2025 13:42:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738157965; cv=none; b=DcTk6NNaPN7ZldOQQSe5aBKcpi/ZNg/GukUmpH7QyNy0qFxlYrF1Pl0GU7JDeJFo1tO8CxPDuSZRGa5oOMr/cJXou/aC1GXom/y8Oj5Y3R5LxwmAuaufesgP0eSDUQXvKTTxtzTdSWc8LF/CJKuKgr2MEi1xx4TQFJP7qrJ4hU8=
+	t=1738158131; cv=none; b=qk6/BYMwsoO5/be8FPZ7k1NuZo7gzaIrxLLL4F5HevLb/3dbJ+IZ9uOj7jcgLdDKmV7aau0Xkt2tKmFNV9Lnh/ClGKxB55Wc2iY0HIZYqrP0ry5ZL9BW3FmbKmH7NcNU6ebQWzyRR+zLXWJqtK01hLydqxupJUk9nNn8PuMWw4A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738157965; c=relaxed/simple;
-	bh=CDcRRXN0ifiuQSEQoQDUdUPg9kOvhCH+/uhLp/TkVuI=;
+	s=arc-20240116; t=1738158131; c=relaxed/simple;
+	bh=BAJM+GzmjWIW+a4U3bkKygCEeFmLorxN5GZq0A/810g=;
 	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=jD7vxoxbZPjFZxqoxUZMQKcn2oO5exfOVxFPedQ6NR6KVJpQCccpFAD95gD1Jxfj0gqDokOAlVAAWqgBLF+1raQA61laNz3TXiKgPLk7PDs/26j3R9Iujm+09/NJIdsZwRJ0dXWqo7m9LtH5nzHTc8Ee8i4mHym/Ki+kHP5sc7c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=U4u/oFdO; arc=none smtp.client-ip=209.85.128.52
+	 In-Reply-To:Content-Type; b=eawGoT8/8FoouHF84n1jCgo5s9l25GC0O48ViZehAiLezNfR5GpbYZygmHCdmgL/IfLyD6NPKfi7pH2RUd0Us6TkiguL0Y19BZShcaTdFGmqU+I6KQkk/A7aOU22VSATysPynrPFciND//sZRb4f6q1TngWdCZny/v28rtXkEg8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=CwWI+9al; arc=none smtp.client-ip=209.85.128.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-43634b570c1so48912285e9.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Jan 2025 05:39:23 -0800 (PST)
+Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-436ce2ab251so46016755e9.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Jan 2025 05:42:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1738157962; x=1738762762; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1738158120; x=1738762920; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:organization:autocrypt
          :content-language:references:cc:to:subject:reply-to:from:user-agent
          :mime-version:date:message-id:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=Y+K0sidwnuxavvy1AkJKNcWdrNuKvpIiQ4qgOISO6jE=;
-        b=U4u/oFdOcU3ycHMXhF9GP21Cx82wSVvJQVoRDBMAhyFSOmJLIL40dhZZlVMLrwZWfV
-         OHxxNp/MYmQaLQIRQ/tXK3hvkWxC4b6zfbLqoOG7KP9IN4p7PWc4ThKGTwRqAdNlDoyo
-         25XVLJiapWWyFcHnXNfVxHGF/ZhdUCUXPj6hfsQYB0YkosxX4PrMPMrCvSgGc+tRrGBa
-         Ci2H1X0e+wWYrOI+hPfRTnjugZVYqxVDOrBqG1fcLW5s1JYKaM7ETur3NJnRYdZQjHGR
-         0ymbm5TRHoP4fJtSzRAm2Qz0XH6aVJeLCq5YptiCNLlcuRJg+KAI6RRJxsunM0xRjRAc
-         3pRQ==
+        bh=AP7k7h9ea/UBkMvbKpIMPEYspWi5bqA4E3UuVud4pws=;
+        b=CwWI+9alfINqzkI5S3sn/r42yrtkXBys2Gzn7v7+H7YwlD6j0lEC7WaaAwlBsfQKxD
+         f4HH1nGR4GG44C7utJu8+ynAnq8r9pow0+nPA7CmDqStpqhz+fp6NYVKrfWOOIwzXHxj
+         AEPiZkGdcivuun/xwNCUbHVRDDTOJ9gj3uvGSY1aVhYmOhYgEBiVHclpihy8ZoDPihTY
+         7K1FwWpT+Ur53RuKhUN4rmqwCVKPm7zHndRP7h6rt9UoCSJmVDw4CGm9qfNnZzqLh2KW
+         1dKQnPXwGOkjB+wrJxT5JooS8Q44yYUIvJEDpuSTq40r1CVSx/6hZLuVTeJjXl1i5lmb
+         3E3A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738157962; x=1738762762;
+        d=1e100.net; s=20230601; t=1738158120; x=1738762920;
         h=content-transfer-encoding:in-reply-to:organization:autocrypt
          :content-language:references:cc:to:subject:reply-to:from:user-agent
          :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=Y+K0sidwnuxavvy1AkJKNcWdrNuKvpIiQ4qgOISO6jE=;
-        b=FBkw+9mS6RHbLs+CAjTVMMfPOicrEV7wwXDoth21UUlQnYaJ73+kyNhYIYVHQC0RBI
-         3pN//3aecYMsti5lDDMX4SroN83yCtc2wNORr0cZg64Iqprls5LOza+/wimxZMrMv9l2
-         qDF4dtKBFMtMc5EA3gnqqd37frsc9eOqADiQttouH1CTkQKAluXmDQmNIPiSdcobsPR2
-         49JE8pRdFB4JFzw8bEN/VlAilEipY83+TJEkM7+En4lc9vzuzxlirMXPV77lAeBDf3aD
-         d8PX35B3VoliVtQO7LLSkh15iwdfOKfofUhPXQWv9DDmrb1Nl6yYz7O1z6s/CjJs/xRK
-         BnyA==
-X-Gm-Message-State: AOJu0YxyB9JEMljs2MViM88WSnc/p4WdFuGi52d3QtJY7RMEN2XLzL0k
-	QWKIOJx54mG3MBSPbbe/1XET7H0z/2SHqe3ebz5WzwFC43gMIc4AOybcmdjFGUY=
-X-Gm-Gg: ASbGncsAhYzHQkHyMWeqN1kCT/65qcTqSjgmzvqyjpMqHFHDMR6F6bUBeqokHvJFoRP
-	SaT3M+76EkiaDCdxpUBaYQYTTrLe8+3BG54QRWreWKJ4UeoEX9r6L46hFjMXKAgdcAY0OOslqs9
-	TICjtXpr5JpPYFpHFHF5zhFaSxCAlBQ3obRZBvBZKMcy3Vw+uDEX4HI5/atvIRATp8LOgju4yl2
-	tbdPws9qcDZWJri1tdMqA55B93FLxNEU79Sfu+keMLSoUKORYdB5hL4u3WlFNQfTyNG8nBo0TVX
-	Yz5tcatcqJOkQmNCVbKbS/nzAOAHdOAvM11wWIERyd1p7oseUi10x34+rCFhGtSP1otK
-X-Google-Smtp-Source: AGHT+IEhSvgjfruwhcex+wivH//fD/wuaybIS2/hD16jD5+lAolzYLPk996GstOlH4QsZAZmUZU1Kg==
-X-Received: by 2002:a5d:47ab:0:b0:38a:87cc:fb2c with SMTP id ffacd0b85a97d-38c5195f506mr2941224f8f.18.1738157961709;
-        Wed, 29 Jan 2025 05:39:21 -0800 (PST)
+        bh=AP7k7h9ea/UBkMvbKpIMPEYspWi5bqA4E3UuVud4pws=;
+        b=pGCdDqepy2rRjsaO3tKJJzqNmiUM6GzF6GxS3IChvmelbxFP4NHgaxoyXVOtobmKKN
+         Cq1SucxevlagsOPS6BSz8EI9NageIv+BIvKvcUr2xSettNiYXEfiZIGm5I1Z0LZ9/aAG
+         v+zVvd63wyut3+zh0mIDMVvmnNI75+pvgE4h7AYHUmux0SmHIT76rzVPghpVTxCJwvWF
+         fPHC1lTFz/QEB7IrzqR2ZFucUD9iHWLk+seoWYA8Ryw6szfI6WezN2QqOJyEVISE3tho
+         23gpiXp9aLoLbrPiniPYe0BVOfXN3L2spu7HJQK+17N+bTH36Ekg0HcJYf9UtoovMTT1
+         HQmQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWmpy/mSnuX7AdfBz4HnA7Sf8rtf3QdYETgWs+4I3g618B8F+csRB5f2fmmNz0yb2JmPG5QsSmxyID2KieQ@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz+Qcs5CuuWX557WoKS9y37k0rnYsI9bPrnv8r6w69JvG1jo5d/
+	br1C9L90xmSCcIB5KDTL+FqTokDA5xhcd6RHUqACBHGVXLVr7m/z8MXiyAvaTTE=
+X-Gm-Gg: ASbGncu75v8gNfT+wl9rkLBYLV7F3uS0tJL+X61ksyhYm90DzsL2MaPzVYWXmYQouAr
+	7XHlChPLn8nK4LqtctqsmeeBKdNQauF5/DLC8a+ONF5qmqDs6V2k+eXQqBIsBz9Jd65cqeIywnG
+	LtsJRGf4kIws+SOGqsG9OZH2fq2RZm3Jv2xx2FoY3nIRITpCMLaNVd7fmzznSJkmrrb/89/cmVd
+	hQsxDCl5mlwVi5aYNDD7ytUfDstfMhxhz7rC558DSdA0IHP8aQM/zjcphXZWc8Ap/KpjZcfvmtd
+	mbP7KTLAPR3KFqp2z+oHZE8KcRrCf5u9b5q7AE6q3h3ho/NsW9TE0k+JSjqQ7UY/27Lf
+X-Google-Smtp-Source: AGHT+IFoLab9y7f/hkK62VeIWpo1/kGfbHUwJJYn20zRpDxsOGLqCH4IoYNW0DtIYMDLAzAlSW1dSw==
+X-Received: by 2002:a05:600c:870a:b0:434:a7b6:10e9 with SMTP id 5b1f17b1804b1-438dc3cbadcmr27767255e9.17.1738158120248;
+        Wed, 29 Jan 2025 05:42:00 -0800 (PST)
 Received: from ?IPV6:2a01:e0a:982:cbb0:b25e:a614:863b:566e? ([2a01:e0a:982:cbb0:b25e:a614:863b:566e])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38c2a1c3f8asm16757481f8f.86.2025.01.29.05.39.21
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-438dcc24cefsm23474375e9.15.2025.01.29.05.41.58
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 29 Jan 2025 05:39:21 -0800 (PST)
-Message-ID: <df4baaa2-0c31-4ecd-9c48-9a2cbf1ece4d@linaro.org>
-Date: Wed, 29 Jan 2025 14:39:20 +0100
+        Wed, 29 Jan 2025 05:41:59 -0800 (PST)
+Message-ID: <9d489930-9d2d-4b71-9b21-9c7918257b7c@linaro.org>
+Date: Wed, 29 Jan 2025 14:41:58 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -82,18 +83,27 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-From: Neil Armstrong <neil.armstrong@linaro.org>
+From: neil.armstrong@linaro.org
 Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH] arm64: dts: qcom: add all 7 coresight ETE nodes
-To: Luca Weiss <luca.weiss@fairphone.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Yuanfang Zhang <quic_yuanfang@quicinc.com>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20250129-topic-sm8650-upstream-add-all-coresight-cpus-v1-1-96996d37df8e@linaro.org>
- <D7EJURP1JU6R.1TNVVAGA939RR@fairphone.com>
+Subject: Re: [PATCH 2/2] phy: qcom: qmp-pcie: Add PHY register retention
+ support
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+ Manivannan Sadhasivam <mani@kernel.org>, Qiang Yu <quic_qianyu@quicinc.com>
+Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ "Wenbin Yao (Consultant)" <quic_wenbyao@quicinc.com>, vkoul@kernel.org,
+ kishon@kernel.org, p.zabel@pengutronix.de, abel.vesa@linaro.org,
+ manivannan.sadhasivam@linaro.org, quic_devipriy@quicinc.com,
+ linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org
+References: <20250121094140.4006801-1-quic_wenbyao@quicinc.com>
+ <20250121094140.4006801-3-quic_wenbyao@quicinc.com>
+ <CAA8EJppXQpDrdXzJsTE7HWs=POt7yFAw0JVZFabN6Ks3fhZiWQ@mail.gmail.com>
+ <a2cc5a5a-6cbd-7564-a8df-8af2a652de2f@quicinc.com>
+ <ya27ma6iah7ts6sj35payj6ek4z7m6y5v4pnxd6wtqrp3cbyta@ypvrzwa4bnfv>
+ <188a9efd-718e-4ac5-b89a-29f2713e1dba@quicinc.com>
+ <20250124070829.oar3hlkshkpam57d@thinkpad>
+ <88c29161-17a8-40c6-a94b-c894de15ca37@oss.qualcomm.com>
+ <df1f825f-66a4-4bab-9ca4-90d594f2cb36@linaro.org>
+ <d928e662-07ac-4255-8d6f-adeaefb3db46@oss.qualcomm.com>
 Content-Language: en-US, fr
 Autocrypt: addr=neil.armstrong@linaro.org; keydata=
  xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
@@ -120,229 +130,93 @@ Autocrypt: addr=neil.armstrong@linaro.org; keydata=
  4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
  QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
 Organization: Linaro
-In-Reply-To: <D7EJURP1JU6R.1TNVVAGA939RR@fairphone.com>
+In-Reply-To: <d928e662-07ac-4255-8d6f-adeaefb3db46@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 29/01/2025 13:18, Luca Weiss wrote:
-> Hi Neil,
-> 
-> On Wed Jan 29, 2025 at 10:54 AM CET, Neil Armstrong wrote:
->> Only CPU0 Embedded Trace Extension (ETE) was added, but there's one
->> for all 7 CPUs, so add the missing ones.
+On 29/01/2025 12:29, Konrad Dybcio wrote:
+> On 29.01.2025 9:29 AM, neil.armstrong@linaro.org wrote:
+>> On 25/01/2025 14:10, Konrad Dybcio wrote:
+>>> On 24.01.2025 8:08 AM, Manivannan Sadhasivam wrote:
+>>>> + Mayank (with whom I discussed this topic internally)
+>>>>
+>>>> On Fri, Jan 24, 2025 at 02:22:01PM +0800, Qiang Yu wrote:
+>>>>>
+>>>>> On 1/22/2025 5:43 PM, Dmitry Baryshkov wrote:
+>>>>>> On Wed, Jan 22, 2025 at 03:17:39PM +0800, Wenbin Yao (Consultant) wrote:
+>>>>>>> On 1/21/2025 6:36 PM, Dmitry Baryshkov wrote:
+>>>>>>>> On Tue, 21 Jan 2025 at 11:43, Wenbin Yao <quic_wenbyao@quicinc.com> wrote:
+>>>>>>>>> From: Qiang Yu <quic_qianyu@quicinc.com>
+>>>>>>>>>
+>>>>>>>>> Currently, BCR reset and PHY register setting are mandatory for every port
+>>>>>>>>> before link training. However, some QCOM PCIe PHYs support no_csr reset.
+>>>>>>>>> Different than BCR reset that is used to reset entire PHY including
+>>>>>>>>> hardware and register, once no_csr reset is toggled, only PHY hardware will
+>>>>>>>>> be reset but PHY registers will be retained,
+>>>>>>>> I'm sorry, I can't parse this.
+>>>>>>> The difference between no_csr reset and bcr reset is that no_csr reset
+>>>>>>> doesn't reset the phy registers. If a phy is enabled in UEFI, its registers
+>>>>>>> are programed. After Linux boot up, the registers will not be reset but
+>>>>>>> keep the value programmed by UEFI if we only do no_csr reset, so we can
+>>>>>>> skip phy setting.
+>>>>>> Please fix capitalization of the abbreviations (PHY, BCR) and add
+>>>>>> similar text to the commit message.
+>>>>>>
+>>>>>>>>> which means PHY setting can
+>>>>>>>>> be skipped during PHY init if PCIe link was enabled in booltloader and only
+>>>>>>>>> no_csr is toggled after that.
+>>>>>>>>>
+>>>>>>>>> Hence, determine whether the PHY has been enabled in bootloader by
+>>>>>>>>> verifying QPHY_START_CTRL register. If it is programmed and no_csr reset is
+>>>>>>>>> present, skip BCR reset and PHY register setting, so that PCIe link can be
+>>>>>>>>> established with no_csr reset only.
+>>>>>>>> This doesn't tell us why we want to do so. The general rule is not to
+>>>>>>>> depend on the bootloaders at all. The reason is pretty simple: it is
+>>>>>>>> hard to update bootloaders, while it is relatively easy to update the
+>>>>>>>> kernel. If the hardware team issues any kind of changes to the
+>>>>>>>> programming tables, the kernel will get them earlier than the
+>>>>>>>> bootloader.
+>>>
+>>> We're assuming that if a product has shipped, the sequences used to power up
+>>> the PHY in the bootloader (e.g. for NVMe) are already good.
+>>>
+>>> If some tragedy happens and an erratum is needed, we can always introduce a
+>>> small override with the existing driver infrastructure (i.e. adding a new
+>>> entry with a couple registers worth of programming sequence, leaving the other
+>>> values in tact)
 >>
->> Fixes: 256e6937e48a ("arm64: dts: qcom: sm8650: Add coresight nodes")
->> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+>> Assuming Linux will be always ran directly after the bootloader is a wild assumption.
 > 
-> The subject line is missing "sm8650"
+> Situations like
+> 
+> [normal boot chain] -> [... (resets the PHY and doesn't reprogram it)] -> Linux
+> 
+> are both so unlikely and so intentional-by-the-user that it doesn't seem
+> worth considering really.
 
-Damn, thx, I'll fix for v2
+In embedded/mobile/edge world, definitely, in compute/PC-like market, not really.
 
-Neil
+You'll have people add some custom bootloaders, hypervisors, who knows what...
 
 > 
-> Regards
-> Luca
+> If whatever sits in the middle *must* hard-reset the phy, it can save the
+> register state beforehand and restore them after the reset
 > 
->> ---
->>   arch/arm64/boot/dts/qcom/sm8650.dtsi | 163 ++++++++++++++++++++++++++++++++++-
->>   1 file changed, 161 insertions(+), 2 deletions(-)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/sm8650.dtsi b/arch/arm64/boot/dts/qcom/sm8650.dtsi
->> index 86684cb9a9325618ddb74458621cf4bbdc1cc0d1..d925d5e2c8182d522dd5b8e1fa0e253f5de2f7a7 100644
->> --- a/arch/arm64/boot/dts/qcom/sm8650.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/sm8650.dtsi
->> @@ -365,7 +365,7 @@ cluster_sleep_1: cluster-sleep-1 {
->>   		};
->>   	};
->>   
->> -	ete0 {
->> +	ete-0 {
->>   		compatible = "arm,embedded-trace-extension";
->>   
->>   		cpu = <&cpu0>;
->> @@ -379,15 +379,174 @@ ete0_out_funnel_ete: endpoint {
->>   		};
->>   	};
->>   
->> +	ete-1 {
->> +		compatible = "arm,embedded-trace-extension";
->> +
->> +		cpu = <&cpu1>;
->> +
->> +		out-ports {
->> +			port {
->> +				ete1_out_funnel_ete: endpoint {
->> +					remote-endpoint = <&funnel_ete_in_ete1>;
->> +				};
->> +			};
->> +		};
->> +	};
->> +
->> +	ete-2 {
->> +		compatible = "arm,embedded-trace-extension";
->> +
->> +		cpu = <&cpu2>;
->> +
->> +		out-ports {
->> +			port {
->> +				ete2_out_funnel_ete: endpoint {
->> +					remote-endpoint = <&funnel_ete_in_ete2>;
->> +				};
->> +			};
->> +		};
->> +	};
->> +
->> +	ete-3 {
->> +		compatible = "arm,embedded-trace-extension";
->> +
->> +		cpu = <&cpu3>;
->> +
->> +		out-ports {
->> +			port {
->> +				ete3_out_funnel_ete: endpoint {
->> +					remote-endpoint = <&funnel_ete_in_ete3>;
->> +				};
->> +			};
->> +		};
->> +	};
->> +
->> +	ete-4 {
->> +		compatible = "arm,embedded-trace-extension";
->> +
->> +		cpu = <&cpu4>;
->> +
->> +		out-ports {
->> +			port {
->> +				ete4_out_funnel_ete: endpoint {
->> +					remote-endpoint = <&funnel_ete_in_ete4>;
->> +				};
->> +			};
->> +		};
->> +	};
->> +
->> +	ete-5 {
->> +		compatible = "arm,embedded-trace-extension";
->> +
->> +		cpu = <&cpu5>;
->> +
->> +		out-ports {
->> +			port {
->> +				ete5_out_funnel_ete: endpoint {
->> +					remote-endpoint = <&funnel_ete_in_ete5>;
->> +				};
->> +			};
->> +		};
->> +	};
->> +
->> +	ete-6 {
->> +		compatible = "arm,embedded-trace-extension";
->> +
->> +		cpu = <&cpu6>;
->> +
->> +		out-ports {
->> +			port {
->> +				ete6_out_funnel_ete: endpoint {
->> +					remote-endpoint = <&funnel_ete_in_ete6>;
->> +				};
->> +			};
->> +		};
->> +	};
->> +
->> +	ete-7 {
->> +		compatible = "arm,embedded-trace-extension";
->> +
->> +		cpu = <&cpu7>;
->> +
->> +		out-ports {
->> +			port {
->> +				ete7_out_funnel_ete: endpoint {
->> +					remote-endpoint = <&funnel_ete_in_ete7>;
->> +				};
->> +			};
->> +		};
->> +	};
->> +
->>   	funnel-ete {
->>   		compatible = "arm,coresight-static-funnel";
->>   
->>   		in-ports {
->> -			port {
->> +			#address-cells = <1>;
->> +			#size-cells = <0>;
->> +
->> +			port@0 {
->> +				reg = <0>;
->> +
->>   				funnel_ete_in_ete0: endpoint {
->>   					remote-endpoint = <&ete0_out_funnel_ete>;
->>   				};
->>   			};
->> +
->> +			port@1 {
->> +				reg = <1>;
->> +
->> +				funnel_ete_in_ete1: endpoint {
->> +					remote-endpoint = <&ete1_out_funnel_ete>;
->> +				};
->> +			};
->> +
->> +			port@2 {
->> +				reg = <2>;
->> +
->> +				funnel_ete_in_ete2: endpoint {
->> +					remote-endpoint = <&ete2_out_funnel_ete>;
->> +				};
->> +			};
->> +
->> +			port@3 {
->> +				reg = <3>;
->> +
->> +				funnel_ete_in_ete3: endpoint {
->> +					remote-endpoint = <&ete3_out_funnel_ete>;
->> +				};
->> +			};
->> +
->> +			port@4 {
->> +				reg = <4>;
->> +
->> +				funnel_ete_in_ete4: endpoint {
->> +					remote-endpoint = <&ete4_out_funnel_ete>;
->> +				};
->> +			};
->> +
->> +			port@5 {
->> +				reg = <5>;
->> +
->> +				funnel_ete_in_ete5: endpoint {
->> +					remote-endpoint = <&ete5_out_funnel_ete>;
->> +				};
->> +			};
->> +
->> +			port@6 {
->> +				reg = <6>;
->> +
->> +				funnel_ete_in_ete6: endpoint {
->> +					remote-endpoint = <&ete6_out_funnel_ete>;
->> +				};
->> +			};
->> +
->> +			port@7 {
->> +				reg = <7>;
->> +
->> +				funnel_ete_in_ete7: endpoint {
->> +					remote-endpoint = <&ete7_out_funnel_ete>;
->> +				};
->> +			};
->>   		};
->>   
->>   		out-ports {
->>
->> ---
->> base-commit: da7e6047a6264af16d2cb82bed9b6caa33eaf56a
->> change-id: 20250129-topic-sm8650-upstream-add-all-coresight-cpus-a3418606b354
->>
->> Best regards,
+>> Yes, we should make use the noscr if the PHY is always programmed, but we should be
+>> always able to reprogram the PHY entirely to recover a faulty programmation.
 > 
+> We aren't considering any possibility of faulty programming - it's either
+> programmed, or not. And if the values configured by the bootloader are wrong,
+> the device's firmware is considered faulty.
+> 
+> Most devices probably follow the exact same magic values as our reference
+> boards (though these values relate to analog characteristics, so perhaps not
+> *all* of them, which is another argument for keeping the BL state) and these
+> are extensively tested internally before any production devices make it out
+> the door. Any updates deep into the product life are most likely just "nice
+> to have"s and not anything critical, and as I've mentioned, we can still have
+> overrides with the current logic inside this driver.
+> 
+> Konrad
 
 
